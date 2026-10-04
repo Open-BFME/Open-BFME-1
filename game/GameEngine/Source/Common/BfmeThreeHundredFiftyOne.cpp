@@ -1,8 +1,10 @@
 // retail 0x0112FBDC is STLport's stdio_streambuf_base vtable, emitted as a
 // COMDAT by game/stlport/StdioIstreambufDestructor.cpp (namespace _SgI).
 extern "C" const char __identifier("??_7stdio_streambuf_base@_SgI@@6B@")[];
-extern "C" unsigned char bfmeVftBasicStreambufChar[];
-#pragma comment(linker, "/alternatename:_bfmeVftBasicStreambufChar=??_7?$basic_streambuf@DV?$char_traits@D@_STL@@@_STL@@6B@")
+// The vftable of _STL::basic_streambuf<char, _STL::char_traits<char> > is
+// named straight from its own mangled name, so the object references retail's
+// defining symbol instead of a stand-in renamed by the linker.
+extern "C" unsigned char __identifier("??_7?$basic_streambuf@DV?$char_traits@D@_STL@@@_STL@@6B@")[];
 
 // retail 0x00832120 is _STL::locale::locale(), matched in
 // game/Libraries/Source/WWVegas/WWLib/stlport_locale_default_ctor.cpp. That
@@ -48,7 +50,7 @@ __declspec(noinline) BfmeThingTL *BfmeThingTL::bfmeBaseTL(void *what, int flag)
 {
 	void *baseWhat = what;
 	void *baseFlag = reinterpret_cast<void *>(static_cast<unsigned int>(flag));
-	m_bfmeVft = bfmeVftBasicStreambufChar;
+	m_bfmeVft = __identifier("??_7?$basic_streambuf@DV?$char_traits@D@_STL@@@_STL@@6B@");
 	m_bfmeBaseWhat = baseWhat != 0 ? baseWhat : &m_bfmeList0.m_head;
 	void *resolvedBaseFlag = baseFlag != 0 ? baseFlag : &m_bfmeList1.m_head;
 	__asm { lea ecx, [esi+0x4c] }
