@@ -5,8 +5,11 @@
 typedef unsigned char Bool;
 typedef unsigned char UnsignedByte;
 
-extern "C" const void *bfmeVftW3DVolumetricShadow[];
-#pragma comment(linker, "/alternatename:_bfmeVftW3DVolumetricShadow=??_7W3DVolumetricShadow@@6B@")
+// Retail vftable 0x011284CC for W3DVolumetricShadow, i.e.
+// ??_7W3DVolumetricShadow@@6B@ (targets/game/reverse/dir32_addresses.csv).
+// The declaration carries no C++ name: __identifier spells the retail symbol
+// exactly, so the store in the constructor references the defining name.
+extern "C" const void *__identifier("??_7W3DVolumetricShadow@@6B@")[];
 
 class Rva007B12F0Base
 {
@@ -75,7 +78,7 @@ W3DVolumetricShadow::W3DVolumetricShadow()
 	m_field5c = 0;
 	m_field60 = 20.0f;
 	m_field64 = 0;
-	*(unsigned int *)this = (unsigned int)bfmeVftW3DVolumetricShadow;
+	*(unsigned int *)this = (unsigned int)__identifier("??_7W3DVolumetricShadow@@6B@");
 	m_next = 0;
 	m_geometry = 0;
 	m_shadowLengthScale = 0.0f;
