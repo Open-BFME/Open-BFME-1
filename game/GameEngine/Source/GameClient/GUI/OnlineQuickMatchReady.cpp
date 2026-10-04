@@ -51,14 +51,16 @@ public:
     PopulateRemoteIPComboBoxEntry( const UnicodeString &source ) : UnicodeString( source ) {}
 };
 
-extern void GadgetComboBoxReset( GameWindow *comboBox );
-extern int GadgetComboBoxAddEntryPopulateRemoteIPComboBox(
-    GameWindow *comboBox, PopulateRemoteIPComboBoxEntry text, int color );
-extern void GadgetComboBoxSetSelectedPos( GameWindow *comboBox, int selected, bool dontHide );
+// Retail calls these through 5-byte ILT thunks; call the thunks directly.
+extern void j_00007004();
+extern void j_0002f338();
+extern void j_000439c3();
+extern void j_00037169();
 
-#pragma comment(linker, "/alternatename:?GadgetComboBoxReset@@YAXPAVGameWindow@@@Z=?j_00007004@@YAXXZ")
-#pragma comment(linker, "/alternatename:?GadgetComboBoxAddEntryPopulateRemoteIPComboBox@@YAHPAVGameWindow@@VPopulateRemoteIPComboBoxEntry@@H@Z=?j_0002f338@@YAXXZ")
-#pragma comment(linker, "/alternatename:?GadgetComboBoxSetSelectedPos@@YAXPAVGameWindow@@H_N@Z=?j_000439c3@@YAXXZ")
+typedef void ( __cdecl *GadgetComboBoxResetFn )( GameWindow * );
+typedef int ( __cdecl *GadgetComboBoxAddEntryFn )(
+    GameWindow *, PopulateRemoteIPComboBoxEntry, int );
+typedef void ( __cdecl *GadgetComboBoxSetSelectedPosFn )( GameWindow *, int, bool );
 
 template <typename T> const T &max( const T &a, const T &b )
 {
@@ -76,8 +78,6 @@ public:
 private:
     unsigned char m_unmodelled[ 0x10 ];
 };
-
-#pragma comment(linker, "/alternatename:?getNumPlayers@QuickMatchPreferences@@QAEHXZ=?j_00037169@@YAXXZ")
 
 class BfmeAptScreenOnlineQuickMatch
 {
@@ -97,15 +97,25 @@ bool BfmeAptScreenOnlineQuickMatch::rva005588E0Ready()
         return false;
 
     int color = GameSpyColor[ 0 ];
-    GadgetComboBoxReset( m_remoteIPCombo );
+    {
+        union { void ( *fn )(); GadgetComboBoxResetFn call; } u = { j_00007004 };
+        u.call( m_remoteIPCombo );
+    }
 
     UnicodeString text;
     for( int i = 1; i <= 2; ++i )
     {
         text.format( TheGameText->fetch( "GUI:PlayersVersusPlayers" ), i, i );
-        GadgetComboBoxAddEntryPopulateRemoteIPComboBox( m_remoteIPCombo, text, color );
+        union { void ( *fn )(); GadgetComboBoxAddEntryFn call; } u = { j_0002f338 };
+        u.call( m_remoteIPCombo, text, color );
     }
 
-    GadgetComboBoxSetSelectedPos( m_remoteIPCombo, max( 0, m_preferences.getNumPlayers() ), false );
+    {
+        typedef int ( QuickMatchPreferences::*Fn )();
+        union { void ( *fn )(); Fn call; } numPlayers = { j_00037169 };
+        int players = ( m_preferences.*numPlayers.call )();
+        union { void ( *fn )(); GadgetComboBoxSetSelectedPosFn call; } setPos = { j_000439c3 };
+        setPos.call( m_remoteIPCombo, max( 0, players ), false );
+    }
     return true;
 }
