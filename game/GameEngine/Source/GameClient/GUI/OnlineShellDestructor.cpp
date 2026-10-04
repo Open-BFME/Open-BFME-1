@@ -49,14 +49,13 @@ extern int g_Va012F4ACC;
 extern void HideInGameChat();
 extern void j_0003aae9();
 
-// The two OnlineShell vftable views this destructor restores.  The retail
-// names are C++-mangled vftable symbols that cannot be declared directly, so
-// a plain extern stands in for each and /alternatename binds it to the exact
-// ??_7 name dir32_addresses.csv records for that address.
-extern "C" const void *bfmeVftOnlineShellScreenBase[];
-extern "C" const void *bfmeVftOnlineShellS4Owner[];
-#pragma comment(linker, "/alternatename:_bfmeVftOnlineShellScreenBase=??_7BfmeAptScreenOnlineShell@@6BBfmeAptScreenBase@@@")
-#pragma comment(linker, "/alternatename:_bfmeVftOnlineShellS4Owner=??_7BfmeAptScreenOnlineShell@@6BS4Owner@@@")
+// The two OnlineShell vftable views this destructor restores.  They are the
+// primary BfmeAptScreenBase subobject table and the secondary S4Owner subobject
+// table of this class; __identifier names each mangled vftable symbol directly,
+// so no linker alias directive is needed (dir32_addresses.csv records both at
+// 0x01108F48 and 0x01108F44).
+extern "C" void *__identifier("??_7BfmeAptScreenOnlineShell@@6BBfmeAptScreenBase@@@")[];
+extern "C" void *__identifier("??_7BfmeAptScreenOnlineShell@@6BS4Owner@@@")[];
 
 class BfmeAptScreenOnlineShell : public _bfme_AptGameWindow
 {
@@ -76,8 +75,10 @@ private:
 
 BfmeAptScreenOnlineShell::~BfmeAptScreenOnlineShell()
 {
-    *(const void ***)( (char *)this ) = bfmeVftOnlineShellScreenBase;
-    *(const void ***)( (char *)this + 0x218 ) = bfmeVftOnlineShellS4Owner;
+    *(const void ***)( (char *)this ) = (const void **)
+        __identifier("??_7BfmeAptScreenOnlineShell@@6BBfmeAptScreenBase@@@");
+    *(const void ***)( (char *)this + 0x218 ) = (const void **)
+        __identifier("??_7BfmeAptScreenOnlineShell@@6BS4Owner@@@");
 
     if( g_Va012F4988 )
         HideInGameChat();
