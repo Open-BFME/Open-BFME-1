@@ -46,11 +46,9 @@ extern UpgradeCenter *TheUpgradeCenter;
 
 class Rva006083A0SoundUpgrade
 {
-public:
-	void buildMasks(unsigned int *first, unsigned int *second);
 };
 
-#pragma comment(linker, "/alternatename:?buildMasks@Rva006083A0SoundUpgrade@@QAEXPAI0@Z=?j_0000f187@@YAXXZ")
+extern void j_0000f187();
 
 class Rva00608FE0Element
 {
@@ -68,10 +66,6 @@ private:
 	_STL::vector<AsciiString, _STL::allocator<AsciiString> > m_vector03c;
 	unsigned char m_tail048[0x1c8];
 };
-
-#pragma comment(linker, "/alternatename:??0Rva00608FE0Element@@QAE@XZ=?j_0002a48c@@YAXXZ")
-#pragma comment(linker, "/alternatename:??0Rva00608FE0Element@@QAE@ABU0@@Z=?j_00042339@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1Rva00608FE0Element@@QAE@XZ=?j_00034158@@YAXXZ")
 
 void Rva00608FE0Element::parse(INI *ini)
 {
@@ -97,6 +91,8 @@ void Rva00608FE0Element::parse(INI *ini)
 	{
 		unsigned int localA[6];
 		unsigned int localB[6];
-		reinterpret_cast<Rva006083A0SoundUpgrade *>(this)->buildMasks(localA, localB);
+		typedef void (Rva006083A0SoundUpgrade::*Fn)(unsigned int *, unsigned int *);
+		union { void (*fn)(); Fn call; } u = { j_0000f187 };
+		(reinterpret_cast<Rva006083A0SoundUpgrade *>(this)->*u.call)(localA, localB);
 	}
 }

@@ -17418,5 +17418,15 @@
   "after_sha256": "c6e69eede4f636f9f7f0798c15f3758af0ca320f211731f0b5c428aa717b9bdf",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/Drawable/Behavior/Rva00608FE0ElementParse.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/Drawable/Behavior/Rva00608FE0ElementParse.cpp",
+  "old_name": "buildMasks",
+  "new_name": "j_0000f187",
+  "before_sha256": "347a8aec2b1a4619072d8817ab928bd288164d4c5512c0f762c92f19f21aab05",
+  "after_sha256": "72b1236829ae7ddfe71ffc66a21ce3a02f79aeaeb92aee77b0bf887a5f36cce4",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]
