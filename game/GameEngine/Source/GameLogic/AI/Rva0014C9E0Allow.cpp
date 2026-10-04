@@ -3,6 +3,8 @@
 // tests match the retail body. The address-derived owner name records the
 // missing source declaration for this filter.
 
+extern void j_00006eec(void);
+
 enum KindOfType
 {
 	KindOfType_Thunk
@@ -28,7 +30,6 @@ public:
 class BfmeCheckerNW
 {
 public:
-	char bfmeBusyNW();
 };
 
 class Rva0014C9E0Node
@@ -63,7 +64,14 @@ bool Rva0014C9E0::allow(Rva0014C9E0Node *obj) const
 			return false;
 
 		BfmeCheckerNW *checker = obj->m_checkerNW;
-		if (checker != 0 && checker->bfmeBusyNW())
+		typedef char (BfmeCheckerNW::*BusyNW)();
+		union
+		{
+			void (*raw)(void);
+			BusyNW member;
+		} busy;
+		busy.raw = j_00006eec;
+		if (checker != 0 && (checker->*busy.member)())
 			return false;
 
 		if (((Thing *)obj)->isKindOf((KindOfType)0x35))
