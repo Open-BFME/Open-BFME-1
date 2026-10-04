@@ -1,4 +1,4 @@
-// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // ??1BfmeRecordBQ@@QAE@XZ
 // The caller through ILT 0x0003DAD2 and the matched BfmeRecordBQ constructor
 // identify this record.  The OpenAudioFile diagnostics identify its +0x34
