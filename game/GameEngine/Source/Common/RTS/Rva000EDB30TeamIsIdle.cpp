@@ -18,12 +18,10 @@ class BfmeObjectVtbl { public: virtual void bfmeObjectSlot0(); };
 class BfmeObjectDlinkBase
 {
 public:
-	Object *dlink_next_TeamMemberList() const;
 };
 class BfmeObjectDlinkPad { public: unsigned char m_pad[0x64]; };
 
 extern void j_00001140();
-#pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVObject@@XZ=?j_00001140@@YAXXZ")
 
 class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
 	public BfmeObjectDlinkPad, public BfmeObjectVbptrCarrier
@@ -102,8 +100,12 @@ private:
 
 Bool Rva000EDB30Team::isIdle() const
 {
-	BfmeDlinkIterator<Object> iter(m_memberList,
-		BfmeObjectDlinkBase::dlink_next_TeamMemberList);
+	// Retail walks the member list through the incremental-link thunk
+	// ?j_00001140@@YAXXZ rather than a named accessor.
+	typedef Object *(BfmeObjectDlinkBase::*NextFn)() const;
+	union { void (*thunk)(); NextFn call; } next = { j_00001140 };
+
+	BfmeDlinkIterator<Object> iter(m_memberList, next.call);
 
 	for (; !iter.done(); iter.advance())
 	{
