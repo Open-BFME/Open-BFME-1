@@ -12,8 +12,6 @@
 // into two cursors when the group is its own aggregate member, so the
 // nesting here is what the byte-verified body witnesses, not a free choice.
 
-#pragma comment(linker, "/alternatename:??0BfmeTailBE@@QAE@ABU0@@Z=??0?$StringBase@D@@QAE@ABV0@@Z")
-
 inline void *operator new(unsigned int, void *p)
 {
 	return p;
@@ -23,10 +21,21 @@ struct BfmeFalseBE
 {
 };
 
-struct BfmeTailBE
+// The tail member is retail's StringBase<char> (the ledger's public narrow
+// StringBase copy at 0x00887B60), declared here only so the implicit copy ctor
+// below spells the call to that real body directly instead of a local stand-in
+// aliased onto it: the copy ctor is declared and never defined in this TU, so
+// the reference resolves to the out-of-line body the real header owns. Same
+// idiom as game/Libraries/Source/WWVegas/WWLib/RvaStringAccessor.cpp.
+template <class T>
+class StringBase
 {
-	char *m_p;
-	BfmeTailBE(const BfmeTailBE &);
+public:
+	StringBase(const StringBase &other);
+	~StringBase();
+
+private:
+	T *m_data;
 };
 
 struct BfmeGroup10BE
@@ -34,7 +43,7 @@ struct BfmeGroup10BE
 	int m_10;
 	int m_14;
 	int m_18;
-	BfmeTailBE m_1C;
+	StringBase<char> m_1C;
 	char m_20;
 };
 
