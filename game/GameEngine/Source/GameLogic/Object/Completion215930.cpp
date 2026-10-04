@@ -22,7 +22,6 @@ class Object { public:
 class FXList { public: bool bfmeIsBlocked(); void doFXObj(const Object *,const Object *) const; };
 class BfmeOwnFCB { public:
  void bfmeAfterFCB();
- void refreshRva00215650();
  virtual void pad00();
  virtual void pad04();
  virtual void pad08();
@@ -46,6 +45,8 @@ class BfmeOwnFCB { public:
  virtual void pad50();
  virtual float value54();
 };
+extern void j_00032c54();
+typedef void (BfmeOwnFCB::*Refresh215650)();
 struct FxData215930 { char bytes[0x48]; FXList *fx; };
 class Completion215930 { public:
  virtual void pad00();
@@ -63,7 +64,8 @@ void Completion215930::complete(int unused,bool play)
 {
  BfmeOwnFCB *base=(BfmeOwnFCB *)((char *)this-0x10);
  base->bfmeAfterFCB();
- base->refreshRva00215650();
+ union { void (*fn)(); Refresh215650 call; } refresh={j_00032c54};
+ (base->*refresh.call)();
  float value=base->value54();
  if (value == value18()) {
   object()->clear(BitFlags<304>(BitFlags<304>::kInit,0x42,0x43,0x44));
