@@ -3,8 +3,10 @@
 // +4, next-group at +0xC, first-script at +8. Same PoolAllocation delete
 // shape as ??1ScriptGroup@@MAE@XZ at 0x00352950.
 
-extern "C" const void *bfmeVftSnapshot[];
-#pragma comment(linker, "/alternatename:_bfmeVftSnapshot=??_7Snapshot@@6B@")
+// MSVC has no C++ spelling for a vftable symbol; the linker resolves the
+// mangled name directly (the __identifier idiom already used under
+// game/Libraries/Source/EA/Apt/). ??_7Snapshot@@6B@ is pinned at 0x00C73744.
+extern "C" const char __identifier("??_7Snapshot@@6B@")[];
 
 class ScriptPoolObject
 {
@@ -47,7 +49,8 @@ private:
 // ??1Rva00354A00Node@@QAE@XZ
 Rva00354A00Node::~Rva00354A00Node()
 {
-	*(volatile unsigned int *)&m_vftable = (unsigned int)bfmeVftSnapshot;
+	*(volatile unsigned int *)&m_vftable =
+		(unsigned int)(const void *)__identifier("??_7Snapshot@@6B@");
 	PoolAllocation<ScriptGroupPoolObject> *nextGroup =
 		*(PoolAllocation<ScriptGroupPoolObject> * volatile *)&m_nextGroup;
 	delete nextGroup;
