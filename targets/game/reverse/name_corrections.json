@@ -16088,5 +16088,25 @@
   "after_sha256": "59492ab49deca18c9e3a174de3731ea5cd474cb3f0219e20002790c29c5fdd08",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1795.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1795.cpp",
+  "old_name": "BfmeThingLP",
+  "new_name": "Gen001C9A10",
+  "before_sha256": "efb04478b8899d25addefb75ef4ce04279c8f81833a187cebb5dd70f927806b7",
+  "after_sha256": "3e41e524dd4dc6066df9d9f2c2f2c2131bf9d90b1947602a8a2d0ee34f457843",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WWLib/Rva8CB600RegistryCtor.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WWLib/Rva8CB600RegistryCtor.cpp",
+  "old_name": "BfmeRegistryVNF",
+  "new_name": "Rva00899560Pool",
+  "before_sha256": "9380c4be901713808c7e6345baa2081962f426c390c74c93409d35a27b4129af",
+  "after_sha256": "1219ef62b7aa56e20451f3caca7d7143788be885f34da7ce10a587496818f0c9",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

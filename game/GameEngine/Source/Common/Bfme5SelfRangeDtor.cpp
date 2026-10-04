@@ -11,19 +11,26 @@
 // shared zero register because one of them is set before the copy and the
 // other after. Putting both after lets MSVC share an xor and loses six bytes.
 
-void __cdecl bfmeFreeScalar(void *block);			// retail 0x00881EB0
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
+void __cdecl operator delete(void *block);			// retail 0x00881EB0
 
-extern "C" __declspec(dllimport) void *__cdecl BfmeMemMove(
-	void *destination, const void *source, unsigned int bytes);
+// Retail 0x0082E5F0 is the STLport node pool's private static
+// _STL::__node_alloc<true, 0>::_M_deallocate (same convention as
+// Bfme5ClearingDtor.cpp). The release helper below reaches it under that
+// real name instead of an invented free function.
+class Gen_001DB2C0;
 
-inline void bfmeRelease(void *block, unsigned int bytes)
+namespace _STL
 {
-	if (bytes > 0x80)
-		bfmeFreeScalar(block);
-	else
-		bfmeDeallocate(block, bytes);
+template <bool __threads, int __inst>
+class __node_alloc
+{
+	friend class ::Gen_001DB2C0;
+	static void __cdecl _M_deallocate(void *block, unsigned int bytes);
+};
 }
+
+extern "C" __declspec(dllimport) void *__cdecl memmove(
+	void *destination, const void *source, unsigned int bytes);
 
 inline int *bfmeCopyRange(int *destination, const int *first, const int *last)
 {
@@ -32,7 +39,7 @@ inline int *bfmeCopyRange(int *destination, const int *first, const int *last)
 
 	int bytes = (const char *)last - (const char *)first;
 
-	return (int *)((char *)BfmeMemMove(destination, first, bytes) + bytes);
+	return (int *)((char *)memmove(destination, first, bytes) + bytes);
 }
 
 class Gen_001DB2C0
@@ -41,6 +48,14 @@ public:
 	~Gen_001DB2C0(void);
 
 private:
+	static inline void bfmeRelease(void *block, unsigned int bytes)
+	{
+		if (bytes > 0x80)
+			::operator delete(block);
+		else
+			_STL::__node_alloc<true, 0>::_M_deallocate(block, bytes);
+	}
+
 	int *m_bfmeStart;					// +0x00
 	int *m_bfmeFinish;					// +0x04
 	int *m_bfmeEnd;						// +0x08

@@ -1,27 +1,42 @@
-class BfmeThingLP;
-
-class BfmeInnerLP
+// Retail spells this sweep's three callees under their defining names:
+// ?getFinalOverride@Overridable@@QBEPBV1@XZ (public const, upstream
+// Overridable.h; same TU-local stand-in convention as BfmeConv1002.cpp),
+// ?findWeaponTemplateSet@ThingTemplate@@QBEPBVWeaponTemplateSet@@ABV?$BitFlags@$0BB@@@@Z
+// (public const; the mask travels by reference so the call pushes the same
+// address), and ?handle@Gen001C9A10@@QAEXH@Z (same stand-in as
+// TargetFlags001F8080.cpp). The sweep's node/holder classes stay layout
+// views; only the call targets take the defining names.
+class Overridable
 {
 public:
-	BfmeThingLP *bfmeResolveLP(void);
+	const Overridable *getFinalOverride() const;
 };
 
-class BfmeThingLP
+template <int NUMBITS>
+class BitFlags;
+
+class WeaponTemplateSet;
+
+class ThingTemplate
 {
 public:
-	void *bfmeTestLP(unsigned int *mask);
+	const WeaponTemplateSet *findWeaponTemplateSet(const BitFlags<0x11> &flags) const;
 
 	int m_bfmeSpareLP;
-	BfmeInnerLP *m_bfmeInnerLP;
+	Overridable *m_bfmeInnerLP;
+};
+
+class Gen001C9A10
+{
+public:
+	void handle(int player);
 };
 
 class BfmeHolderLP
 {
 public:
-	void bfmeHitLP(unsigned int bit);
-
 	int m_bfmeSpareLP;
-	BfmeThingLP *m_bfmeThingLP;
+	ThingTemplate *m_bfmeThingLP;
 };
 
 class BfmeNodeLP
@@ -49,12 +64,12 @@ void BfmeOwnerLP::bfmeSweepLP(unsigned int bit)
 	{
 		BfmeHolderLP *holder = node->m_bfmeHolderLP;
 		unsigned int mask = 1 << (bit & 0x1f);
-		BfmeThingLP *thing = holder->m_bfmeThingLP;
+		ThingTemplate *thing = holder->m_bfmeThingLP;
 
 		if (thing && thing->m_bfmeInnerLP)
-			thing = thing->m_bfmeInnerLP->bfmeResolveLP();
+			thing = (ThingTemplate *)thing->m_bfmeInnerLP->getFinalOverride();
 
-		if (thing->bfmeTestLP(&mask))
-			holder->bfmeHitLP(bit);
+		if (thing->findWeaponTemplateSet((const BitFlags<0x11> &)mask))
+			((Gen001C9A10 *)holder)->handle(bit);
 	}
 }
