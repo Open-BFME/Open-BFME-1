@@ -91,7 +91,6 @@ struct BfmeMemberIndexIterator
 class BfmeMemberIndexMap
 {
 public:
-	BfmeMemberIndexIterator find(const Int &id);
 
 	BfmeMemberIndexNode *m_header;
 	unsigned char m_tail[8];
@@ -115,7 +114,9 @@ typedef _STL::list<Rva00243C40Object *> BfmeMemberList;
 
 extern void j_0001336d();
 extern void j_0002edcf();
+extern void j_0001f000();
 
+typedef void (BfmeMemberIndexMap::*BfmeFindCall)(BfmeMemberIndexIterator *, const Int &);
 typedef void (BfmeInnerCPB::*BfmeOneCall)(Int, Int);
 typedef void (AICommandInterface::*BfmeAttackCall)(Rva00243C40Object *,
 	Int, CommandSourceType);
@@ -153,7 +154,14 @@ void Rva00243C40HordeContainInterface::rva00243c40(
 		if (ai == 0)
 			continue;
 		Int memberID = member->m_id;
-		BfmeMemberIndexIterator index = m_memberIndices.find(memberID);
+		union
+		{
+			void *asVoid;
+			BfmeFindCall asMember;
+		} find;
+		find.asVoid = (void *)j_0001f000;
+		BfmeMemberIndexIterator index;
+		(m_memberIndices.*find.asMember)(&index, memberID);
 		UnsignedInt slot = (UnsignedInt)index.m_node->m_index;
 		Int slotCount = m_slots.size();
 
