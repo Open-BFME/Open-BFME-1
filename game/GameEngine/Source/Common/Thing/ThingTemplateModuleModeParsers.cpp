@@ -49,6 +49,7 @@ class INIException
 public:
 	INIException(Int code, const char *msg, ...);		///< direct call to 0x00850600
 	INIException(const INIException &other);
+	~INIException();
 
 private:
 	Int m_code;
