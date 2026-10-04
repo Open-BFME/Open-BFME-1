@@ -12,8 +12,12 @@ struct Rva008AE770Stack
 };
 
 extern Rva008AE770Stack Rva008AE770TheStack;
-bool __cdecl rva008C4A30(AptValue *);
-#pragma comment(linker, "/alternatename:?rva008C4A30@@YA_NPAVAptValue@@@Z=?d_008c4a30@@YAXXZ")
+// The retail body at 0x008C4A30 is reached through an incremental-link thunk
+// whose only proven signature is void(). The real body is __cdecl and returns
+// an AptBoolean-compatible bool in AL, so call it through a reinterpreted
+// function pointer rather than aliasing a second name onto one address.
+void d_008c4a30();
+typedef bool (__cdecl *Rva008C4A30Predicate)(AptValue *);
 
 AptBoolean *__cdecl rva008C6800(void *, int count)
 {
@@ -25,5 +29,5 @@ AptBoolean *__cdecl rva008C6800(void *, int count)
     AptValue *top = args[stk.m_count - 1];
     // The generated callee's void() placeholder hides its retail cdecl ABI:
     // the body reads one stack pointer and returns a Boolean in AL.
-    return AptBoolean::Create(rva008C4A30(top));
+    return AptBoolean::Create(((Rva008C4A30Predicate)(void *)d_008c4a30)(top));
 }
