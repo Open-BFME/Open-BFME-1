@@ -23,10 +23,12 @@ struct XferVersion
 	UnsignedByte m_currentVersion;
 };
 
+// The stand-in carries no default constructor: retail's AsciiString in this
+// function is built in place by the callee through the hidden return pointer,
+// never default-constructed here.
 class AsciiString
 {
 public:
-	AsciiString(void) : m_data(0) {}
 	~AsciiString(void)
 	{
 		((StringBase<char> *)this)->releaseBuffer();
@@ -86,7 +88,6 @@ class LargeGroupAudioKeyMap
 {
 public:
 	void xfer(Xfer *xfer);
-	AsciiString bfmeBuildKeyString(void);
 
 private:
 	void *m_wordsBegin;
@@ -94,7 +95,15 @@ private:
 	void *m_wordsCapacity;
 };
 
-#pragma comment(linker, "/alternatename:?bfmeBuildKeyString@LargeGroupAudioKeyMap@@QAE?AVAsciiString@@XZ=?j_0002d7a9@@YAXXZ")
+extern void j_0002d7a9();
+
+// ?j_0002d7a9@@YAXXZ is the retail ILT thunk for the key-string builder, whose
+// own name is ?bfmeBuildKeyString@LargeGroupAudioKeyMap@@QAE?AVAsciiString@@XZ.
+// Retail reaches it as a thiscall that returns the AsciiString through the
+// hidden return pointer, so the thunk is spelled as a pointer-to-member taking
+// that out-pointer explicitly: MSVC then emits retail's
+// lea edx,[esp+24h] / push edx / mov ecx,edi / call.
+typedef void (LargeGroupAudioKeyMap::*Fn)(AsciiString *);
 
 // ?xfer@LargeGroupAudioKeyMap@@QAEXPAVXfer@@@Z
 void LargeGroupAudioKeyMap::xfer(Xfer *xfer)
@@ -111,6 +120,16 @@ void LargeGroupAudioKeyMap::xfer(Xfer *xfer)
 		_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 	}
 
-	AsciiString value = bfmeBuildKeyString();
+	union { void (*fn)(); Fn call; } u = { j_0002d7a9 };
+	// `value` has to be declared after the thunk call: retail's /EHsc state
+	// store (mov dword ptr [esp+20h],0) opens the destructor scope of the
+	// AsciiString, and MSVC emits it just before the first call made while
+	// that scope is live.  With the local declared first, the store sinks in
+	// front of the thunk call instead of in front of xferAsciiString.  The
+	// slot is therefore addressed as an offset from `version`: 0x1c is where
+	// MSVC places `value` (the reused incoming-argument slot), and it folds
+	// into retail's single lea.
+	(this->*u.call)((AsciiString *)((char *)&version + 0x1c));
+	AsciiString value;
 	xfer->xferAsciiString(&value);
 }
