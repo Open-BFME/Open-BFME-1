@@ -22,13 +22,11 @@ struct BfmeKillContext
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ObjectCreationList.h
 class WeaponStore
 {
-public:
-	void bfmeCreate(void *owner, Object *object, void *position);
 };
 
 extern WeaponStore *TheWeaponStore;
 
-#pragma comment(linker, "/alternatename:?bfmeCreate@WeaponStore@@QAEXPAXPAVObject@@0@Z=?j_00035e5e@@YAXXZ")
+extern void j_00035e5e();
 
 class Gen_0028CA70
 {
@@ -47,11 +45,13 @@ private:
 void Gen_0028CA70::bfmeKill(void)
 {
 	Object *object = m_bfmeObject;
+	typedef void (WeaponStore::*CreateFn)(void *, Object *, void *);
+	union { void (*fn)(); CreateFn call; } create = { j_00035e5e };
 
 	if ((object->m_status[0] & 4) == 0 &&
 		(object->m_status[0] & 0x00080000) == 0)
 	{
-		TheWeaponStore->bfmeCreate(
+		(TheWeaponStore->*create.call)(
 			m_bfmeContext->m_bfmeOwner, object, object->m_cachedPos);
 	}
 
