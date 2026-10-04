@@ -42,6 +42,10 @@ Bool BitFlags<NUMBITS>::any() const
 
 typedef BitFlags<192> UpgradeMaskType;
 
+// retail calls ILT 0x00039E91 (-> body 0x002D6F40) for testForNone
+extern void j_00039e91();
+typedef Bool (UpgradeMaskType::*TestForNoneThunk)( const UpgradeMaskType &other ) const;
+
 class Rva002D70F0Mux
 {
 public:
@@ -67,9 +71,10 @@ public:
 Bool Rva002D70F0Mux::rva002d70f0( const UpgradeMaskType &keyMask ) const
 {
 	UpgradeMaskType activation, conflicting;
+	union { void (*fn)(); TestForNoneThunk call; } testForNoneViaIlt = { j_00039e91 };
 	getUpgradeActivationMasks( activation, conflicting );
 
-	if ( activation.any() && conflicting.testForNone( keyMask ) )
+	if ( activation.any() && (conflicting.*testForNoneViaIlt.call)( keyMask ) )
 	{
 		if ( requiresAllActivationUpgrades() )
 			return keyMask.testForAll( activation );
