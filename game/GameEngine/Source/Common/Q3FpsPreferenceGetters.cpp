@@ -28,6 +28,10 @@
 #include "PreRTS.h"
 #include "Common/UserPreferences.h"
 
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+
 /* Retail INLINES AsciiString::str() here -- `mov eax,[x] / test / lea eax,[eax+8]`
    -- and every shared shim forwards to StringBase<char>::str(), which is out of
    line in string_base.h, so a call is emitted instead.  That is the last seven

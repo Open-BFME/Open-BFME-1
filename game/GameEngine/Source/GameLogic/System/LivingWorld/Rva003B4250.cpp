@@ -5,6 +5,10 @@
 #include "Common/INI.h"
 #include <vector>
 
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+
 // The constructors, parser and army helpers are owned by
 // GameLogic/LivingWorld/INILivingWorldPlayerArmy.cpp. Keep only this TU's
 // campaign operation here so it does not emit alternate helper definitions.
