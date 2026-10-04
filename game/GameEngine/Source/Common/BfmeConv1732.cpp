@@ -38,7 +38,13 @@ public:
 	void bfmeSendZE(BfmeBZE *target, BfmeRoomZE room, float range);
 };
 
-extern BfmeA1087 *g_bfmeA1087;
+// 0x012F7FE0 is retail's terrain render object singleton, defined by
+// game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp
+// (matched data row ?TheTerrainRenderObject@@3PAVBaseHeightMapRenderObjClass@@A).
+// Only the global's spelling changes; the send call keeps the TU-local view.
+class BaseHeightMapRenderObjClass;
+
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 
 class BfmeOwnZE
 {
@@ -57,6 +63,6 @@ void BfmeOwnZE::bfmeTickZE(void *unused)
 
 	if (source && target && source->m_bfmeRangeZE != BfmeZeroRange
 		&& target->m_bfmeDZE && (target->m_bfmeDZE->m_bfmeFlagsZE & 1))
-		g_bfmeA1087->bfmeSendZE(target, source->m_bfmeRoomZE,
-			source->m_bfmeRangeZE);
+		reinterpret_cast<BfmeA1087 *>(TheTerrainRenderObject)->bfmeSendZE(target,
+			source->m_bfmeRoomZE, source->m_bfmeRangeZE);
 }
