@@ -8,6 +8,9 @@
 
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1
+// The allocator header comes first, outside the private->public hack: its
+// _M_deallocate is a private static, and the hack would re-mangle it public.
+#include <stl/_alloc.h>
 #define private public
 #include <hash_map>
 #include <set>
@@ -104,8 +107,17 @@ struct Rva00691ED0Less
 	bool operator()(const Rva00691ED0Key &, const Rva00691ED0Key &) const;
 };
 
-extern "C" void __cdecl Gen0002857EFreeListNode(void *node,
-	unsigned int bytes);
+// Retail hands these container nodes to the threaded small-object free list,
+// _STL::__node_alloc<true, 0>::_M_deallocate at 0x0082E5F0.  deallocate() is the
+// public spelling of that call: with a constant node size inside the 128-byte
+// _MAX_BYTES limit it inlines down to _M_deallocate(p, n).  <true, 0> is what
+// retail mangles as ?$__node_alloc@$00$0A, which the other node-release TUs
+// (BigBlockReleases, Q2NodePoolReleases) also resolve to 0x0082E5F0.
+static __forceinline void freeListNodeDeallocate(void *node,
+	unsigned int bytes)
+{
+	_STL::__node_alloc<true, 0>::deallocate(node, bytes);
+}
 
 struct Rva00693FB0TreeNode : public _STL::_Rb_tree_node_base
 {
@@ -131,7 +143,7 @@ public:
 					m_header->_M_right));
 		removed->m_value.m_name.~AsciiString();
 		if (removed != 0)
-			Gen0002857EFreeListNode(removed, sizeof(*removed));
+			freeListNodeDeallocate(removed, sizeof(*removed));
 		--m_nodeCount;
 	}
 
@@ -154,7 +166,6 @@ struct Gen0002857EListNode
 };
 
 void __cdecl operator delete(void *memory);
-#pragma comment(linker, "/alternatename:_Gen0002857EFreeListNode=?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")
 
 class Gen0002857EOwner
 {
@@ -182,7 +193,9 @@ private:
 	}
 };
 
-#pragma comment(linker, "/alternatename:?finishRemoval@Gen0002857EOwner@@QAEXPAVGen0002857E@@@Z=?j_00046d8a@@YAXXZ")
+// Retail calls the finishRemoval body through the incremental-link thunk at
+// 0x00046D8A, so the object must name the thunk itself.
+extern void j_00046d8a();
 
 void Gen0002857EOwner::Rva00693FB0()
 {
@@ -221,13 +234,15 @@ void Gen0002857EOwner::Rva00693FB0()
 						Gen0002857EListNode *previous = node->prev;
 						previous->next = next;
 						next->prev = previous;
-						Gen0002857EFreeListNode(node, sizeof(*node));
+						freeListNodeDeallocate(node, sizeof(*node));
 						break;
 					}
 				}
 			}
 
-			finishRemoval(reinterpret_cast<Gen0002857E *>(record));
+			typedef void (Gen0002857EOwner::*FinishRemoval)(Gen0002857E *value);
+			union { void (*fn)(); FinishRemoval call; } finish = { j_00046d8a };
+			(this->*finish.call)(reinterpret_cast<Gen0002857E *>(record));
 			record->~BfmeRecordBQ();
 			::operator delete(record);
 		}
