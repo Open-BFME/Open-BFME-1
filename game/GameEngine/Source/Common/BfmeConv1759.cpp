@@ -1,10 +1,28 @@
 extern const float BfmeZeroRange;
-extern float g_bfmeOffsetDF;
+
+// Retail 0x01098AD4 is MSVC's own literal pool entry __real@40200000 (2.5f),
+// not a global (same verdict as linked BfmeConv2032.cpp / Bfme5ThirtySeven.cpp
+// / Bfme5NinetyNine.cpp worklist rows). Spelled as the literal so the read
+// resolves to the defined compiler literal at the same address.
+extern void j_00043ced(void);
 
 class BfmeSrcBT
 {
 public:
-	float bfmeCalcBT(void *value);
+	// Retail calls this through ILT 0x00043CED (?j_00043ced@@YAXXZ ->
+	// FUN_004ed3b0, ?bfmeGapSq@Gen_000ED3B0@@QBEMPBV1@@Z). Routed through the
+	// thunk (same idiom as linked Rva00462DE0HashLookup.cpp) to preserve the
+	// retail ILT reloc; calling the body directly would retarget the call.
+	float bfmeCalcBT(void *value)
+	{
+		typedef float (BfmeSrcBT::*MemberThunk)(void *);
+		union {
+			void (*function)(void);
+			MemberThunk member;
+		} thunk;
+		thunk.function = j_00043ced;
+		return (this->*thunk.member)(value);
+	}
 };
 
 class BfmeDataBT
@@ -25,7 +43,7 @@ public:
 
 char BfmeOwnBT::bfmeTestBT(BfmeSrcBT *source, void *value)
 {
-	float delta = m_bfmeDataBT->m_bfmeHeightBT - g_bfmeOffsetDF;
+	float delta = m_bfmeDataBT->m_bfmeHeightBT - 2.5f;
 
 	if (delta < BfmeZeroRange)
 		return 0;
