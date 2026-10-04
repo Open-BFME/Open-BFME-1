@@ -69,10 +69,14 @@ public:
 
 typedef std::list< Coord3D > Coord3DList;
 
-class PlayerPosition
+// Retail's per-record destructor is the one real body at 0x0001F951, named
+// after the array whose element it destroys (see
+// game/GameEngine/Source/Common/Rva00078460Dtor.cpp).  Naming this record
+// type for that body keeps the call site on the defining symbol directly.
+class Rva00078460Elem
 {
 public:
-	~PlayerPosition();
+	~Rva00078460Elem();
 
 private:
 	char m_body[ 0x14 ];
@@ -80,12 +84,8 @@ private:
 
 struct MapPlayers
 {
-	PlayerPosition m_items[ 8 ];
+	Rva00078460Elem m_items[ 8 ];
 };
-
-// These are the retail ILT/body routes used by the corresponding members in
-// the already matched BFME map-cache family.
-#pragma comment(linker, "/alternatename:??1PlayerPosition@@QAE@XZ=??1Rva00078460Elem@@QAE@XZ")
 
 class MapMetaData
 {
