@@ -67,6 +67,118 @@ Q4_MID_BODY( 005E7620, char m_pad[ 0x1c ]; )
 Q4_MID_DECL( 005E7940,  )
 Q4_MID_BODY( 005E7940, char m_pad[ 0x34 ]; )
 
-Q4_MID_DECL( 005E5D90,  )
-Q4_MID_BODY( 005E5D90, char m_pad[ 0x84 ]; )
+class GameClientRandomVariable
+{
+public:
+	enum DistributionType { CONSTANT = 0, UNIFORM, GAUSSIAN };
+	float getValue(void) const;
+	DistributionType m_distribution;
+	float m_minimum;
+	float m_maximum;
+};
 
+struct BfmeQuad1189
+{
+	BfmeQuad1189(void)
+	{
+		m_bfme08 = 0;
+		m_bfme04 = 0;
+		m_bfme00 = 0;
+		m_bfme0c = 0;
+	}
+	int m_bfme00;
+	int m_bfme04;
+	int m_bfme08;
+	int m_bfme0c;
+};
+
+class BfmeBaseVUQ
+{
+public:
+	virtual ~BfmeBaseVUQ(void) { }
+};
+
+// The matched 133-byte BfmeA1189 body is also defined here.
+// VC7.1 uses it to emit the base-constructor call with retail's ECX setup.
+class BfmeA1189 : public BfmeBaseVUQ
+{
+public:
+	BfmeA1189(void);
+	BfmeQuad1189 m_bfme04[8];
+	float m_bfme84;
+};
+
+BfmeA1189::BfmeA1189(void)
+{
+	m_bfme84 = 0.0f;
+}
+
+class OwnerY005E5D90
+{
+public:
+	char m_pad00[0x20];
+	BfmeQuad1189 m_bfme04[8];
+	GameClientRandomVariable m_value;
+};
+
+class __declspec(novtable) BaseY005E5D90Primary
+{
+public:
+	virtual void b0(void);
+};
+
+class PolymorphicVptrBase01073760
+{
+public:
+	virtual void unusedVirtual(void);
+	virtual ~PolymorphicVptrBase01073760(void) { }
+};
+
+// The symbols.csv pin at 0x005EFF60 names this constructor. The matched
+// factory at 0x005E5D90 passes its owner after subtracting 0x14 from the receiver.
+class BaseY005E5D90
+	: public BaseY005E5D90Primary,
+	  public PolymorphicVptrBase01073760,
+	  public BfmeA1189
+{
+public:
+	BaseY005E5D90(OwnerY005E5D90 *owner);
+};
+
+BaseY005E5D90::BaseY005E5D90(OwnerY005E5D90 *owner)
+	: BaseY005E5D90Primary(),
+	  PolymorphicVptrBase01073760(),
+	  BfmeA1189()
+{
+	*(volatile unsigned int *)((unsigned char *)this + 0x08) = 0x0111279c;
+	*(volatile unsigned int *)this = 0x0111290c;
+	*(volatile unsigned int *)((unsigned char *)this + 0x04) = 0x011127b0;
+	OwnerY005E5D90 *source = *(OwnerY005E5D90 *volatile *)&owner;
+	m_bfme04[0] = source->m_bfme04[0];
+	m_bfme04[1] = source->m_bfme04[1];
+	m_bfme04[2] = source->m_bfme04[2];
+	m_bfme04[3] = source->m_bfme04[3];
+	m_bfme04[4] = source->m_bfme04[4];
+	m_bfme04[5] = source->m_bfme04[5];
+	m_bfme04[6] = source->m_bfme04[6];
+	m_bfme04[7] = source->m_bfme04[7];
+	m_bfme84 = source->m_value.getValue();
+}
+
+class GenY005E5D90 : public BaseY005E5D90
+{
+public:
+	GenY005E5D90(OwnerY005E5D90 *owner) : BaseY005E5D90(owner) { }
+	virtual void b0(void);
+};
+
+class HostY005E5D90
+{
+public:
+	GenY005E5D90 *create(void);
+};
+
+GenY005E5D90 *HostY005E5D90::create(void)
+{
+	return new GenY005E5D90((OwnerY005E5D90 *)((char *)this - 0x14));
+}
