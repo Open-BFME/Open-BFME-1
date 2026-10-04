@@ -361,70 +361,8 @@ void W3DShroud::setShroudLevel(Int x, Int y, W3DShroudLevel level, Bool textureO
 
 //-----------------------------------------------------------------------------
 ///Quickly sets the shroud level of entire map to a single value
-// ?fillShroudData@W3DShroud@@ present-unmatched
-void W3DShroud::fillShroudData(W3DShroudLevel level)
-{
-
-	Int x,y;
-	UnsignedShort pixel;
-
-	if (level < TheGlobalData->m_shroudAlpha)
-		level = TheGlobalData->m_shroudAlpha;
-
-#if defined(_DEBUG) || defined(_INTERNAL)
-	//convert value to pixel format
-	if (TheGlobalData && TheGlobalData->m_fogOfWarOn)
-	{
-		Int redVal = TheGlobalData->m_shroudColor.red;
-		Int greenVal = TheGlobalData->m_shroudColor.green;
-		Int blueVal = TheGlobalData->m_shroudColor.blue;
-//		Int redVal = (SHROUD_COLOR >> 16) & 0xff;
-//		Int greenVal = (SHROUD_COLOR >> 8) & 0xff;
-//		Int blueVal = SHROUD_COLOR & 0xff;
-		Int alphaVal = 255 - level;
-
-		pixel=((blueVal>>4)&0xf) | (((greenVal>>4)&0xf)<<4) | (((redVal>>4)&0xf)<<8) | (((alphaVal>>4)&0xf)<<12);
-	}
-	else
-#endif
-	{
-		UnsignedInt bluepixel = (UnsignedInt)((Real)level*((Real)(TheGlobalData->m_shroudColor.getAsInt()&0xff)/255.0f));
-		UnsignedInt greenpixel = (UnsignedInt)((Real)level*((Real)((TheGlobalData->m_shroudColor.getAsInt()&0xff00)>>8)/255.0f));
-		UnsignedInt redpixel = (UnsignedInt)((Real)level*((Real)((TheGlobalData->m_shroudColor.getAsInt()&0xff0000)>>16)/255.0f));
-//		UnsignedInt bluepixel = (UnsignedInt)((Real)level*((Real)(SHROUD_COLOR&0xff)/255.0f));
-//		UnsignedInt greenpixel = (UnsignedInt)((Real)level*((Real)((SHROUD_COLOR&0xff00)>>8)/255.0f));
-//		UnsignedInt redpixel = (UnsignedInt)((Real)level*((Real)((SHROUD_COLOR&0xff0000)>>16)/255.0f));
-
-		if (level == 255)
-		{	//unshrouded pixels should be fully lit
-			redpixel = 255;
-			greenpixel = 255;
-			bluepixel = 255;
-		}
-		pixel=( ((bluepixel&0xf8) >> 3) | ((greenpixel&0xfc)<<3) | ((redpixel&0xf8)<<8));
-	}
-
-	UnsignedShort *ptr=(UnsignedShort *)m_srcTextureData;
-	Int pitch = m_srcTexturePitch >> 1;	//2 bytes per pointer increment 
-	for (y=0; y<m_numCellsY; y++)
-	{
-		for (x=0; x<m_numCellsX; x++)
-			ptr[x]=pixel;
-		ptr	+= pitch;
-	}
-
-#ifdef DO_FOG_INTERPOLATION
-	//Set the final shroud state.  May differe from current state because of time interpolation.
-	W3DShroudLevel *cptr=m_finalFogData;
-	pitch = m_numCellsX;
-	for (y=0; y<m_numCellsY; y++)
-	{
-		for (x=0; x<m_numCellsX; x++)
-			cptr[x]=level;
-		ptr	+= pitch;
-	}
-#endif
-}
+// fillShroudData is owned by W3DShroud_fillShroudData.cpp (RVA 0x0071A520).
+// The BFME body calls packShroudPixel; the reference donor inlined other packing.
 
 // ?fillBorderShroudData@W3DShroud@@ present-unmatched
 void W3DShroud::fillBorderShroudData(W3DShroudLevel level, SurfaceClass* pDestSurface)
