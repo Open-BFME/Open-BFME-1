@@ -38,11 +38,15 @@ public:
 
 extern GameLogic *TheGameLogic;
 
+extern void j_0001b94b(void);
+
 class BFMEReportDamageSource
 {
 public:
 	void report(Object *owner, int setting);
 };
+
+typedef void (BFMEReportDamageSource::*BFMEReportDamageSourceFunction)(Object *, int);
 
 class Rva00227B60ContainDispatch
 {
@@ -102,7 +106,15 @@ void OpenContain::finishUpdate()
 
 	Object *owner = TheGameLogic->findObjectByID(m_secondObjectID);
 	if (owner != 0)
-		((BFMEReportDamageSource *)owner)->report(object, 1);
+	{
+		union
+		{
+			void (*raw)(void);
+			BFMEReportDamageSourceFunction member;
+		} report;
+		report.raw = j_0001b94b;
+		(((BFMEReportDamageSource *)owner)->*report.member)(object, 1);
+	}
 
 	if (std::find(m_containList.begin(), m_containList.end(), object) ==
 		m_containList.end())
