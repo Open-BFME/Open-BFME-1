@@ -24,7 +24,9 @@ public:
 void __cdecl operator delete( void *memory );
 void Gen0082E5F0( void *memory, unsigned int bytes );
 
-#pragma comment(linker, "/alternatename:?bfmeRelease@Gen_003CFC90@@QAEXXZ=?j_0004a5a7@@YAXXZ")
+// The dtor's first base release call goes through retail's ILT thunk at
+// 0x0004A5A7, so it is referenced by address, not by a spelled-out member.
+extern void j_0004a5a7();
 
 class HordeContainModuleDataBase
 {
@@ -59,10 +61,11 @@ public:
 	void **m_capacity;
 };
 
+// Cast target for the ILT-routed release call below; the member signature is
+// the one retail resolved at the thunk, so it is expressed as a member
+// function pointer type rather than a named member.
 class Gen_003CFC90
 {
-public:
-	void bfmeRelease();
 };
 
 class LargeGroupAudio : public SubsystemInterface,
@@ -80,7 +83,9 @@ public:
 // ??1LargeGroupAudio@@UAE@XZ
 LargeGroupAudio::~LargeGroupAudio()
 {
-	( (Gen_003CFC90 *)this )->bfmeRelease();
+	typedef void (Gen_003CFC90::*Fn)();
+	union { void (*fn)(); Fn call; } u = { j_0004a5a7 };
+	( ( (Gen_003CFC90 *)this )->*u.call )();
 
 	void **it = m_18.m_begin;
 	void **end = m_18.m_end;
