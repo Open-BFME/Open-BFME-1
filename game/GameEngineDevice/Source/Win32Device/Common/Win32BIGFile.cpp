@@ -84,54 +84,8 @@ Win32BIGFile::Win32BIGFile()
 // Win32BIGFile::openFile
 //============================================================================
 
-// The signature Zero Hour declares is BFME's two-argument openFile, and that one
-// is matched from Win32BIGFileOpen.cpp -- it is a bare forward, not this. What
-// stands here is Zero Hour's body, kept only so this translation unit still
-// compiles the way its eight matched rows were proven under. BFME's real body
-// moved into the four-argument overload and is matched from
-// Win32BIGFileOpenArchived.cpp; read that one, not this.
-// byte-exact reconstruction: game/GameEngineDevice/Source/Win32Device/Common/Win32BIGFileOpen.cpp
-// ?openFile@Win32BIGFile@@UAEPAVFile@@PBDH@Z present-unmatched
-File* Win32BIGFile::openFile( const Char *filename, Int access )
-{
-	const ArchivedFileInfo *fileInfo = getArchivedFileInfo(AsciiString(filename));
-
-	if (fileInfo == NULL) {
-		return NULL;
-	}
-
-	RAMFile *ramFile = NULL;
-	
-	if (BitTest(access, File::STREAMING)) 
-		ramFile = newInstance( StreamingArchiveFile );
-	else 
-		ramFile = newInstance( RAMFile );
-
-	ramFile->deleteOnClose();
-	if (ramFile->openFromArchive(m_file, fileInfo->m_filename, fileInfo->m_offset, fileInfo->m_size) == FALSE) {
-		ramFile->close();
-		ramFile = NULL;
-		return NULL;
-	}
-
-	if ((access & File::WRITE) == 0) {
-		// requesting read only access. Just return the RAM file.
-		return ramFile;
-	}
-
-	// whoever is opening this file wants write access, so copy the file to the local disk
-	// and return that file pointer.
-
-	File *localFile = TheLocalFileSystem->openFile(filename, access);
-	if (localFile != NULL) {
-		ramFile->copyDataToFile(localFile);
-	}
-
-	ramFile->close();
-	ramFile = NULL;
-
-	return localFile;
-}
+// The two-argument openFile is matched from Win32BIGFileOpen.cpp and the
+// four-argument body from Win32BIGFileOpenArchived.cpp; neither lives here.
 
 //============================================================================
 // Win32BIGFile::closeAllFiles
