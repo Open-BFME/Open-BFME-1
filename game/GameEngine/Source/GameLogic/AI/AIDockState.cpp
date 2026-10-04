@@ -76,13 +76,14 @@ public:
 	virtual void setGoalObject(Object *goalObject);
 
 	Object *getOwner() { return m_owner; }
-	Object *getGoalObject();
 
 	unsigned char m_machineFields04[0x0c];
 	Object *m_owner;
 };
 
-#pragma comment(linker, "/alternatename:?getGoalObject@StateMachine@@QAEPAVObject@@XZ=?j_0000e570@@YAXXZ")
+// Retail reaches the goal-object getter through the ILT thunk at 0x0000E570,
+// so the call site names the thunk directly instead of a stand-in member.
+extern void j_0000e570();
 
 // Slot 0 is the scalar deleting destructor onExit's `delete` goes through, and
 // halt sits one slot past setGoalObject, at +0x3C.
@@ -133,7 +134,12 @@ public:
 	virtual void onExit(StateExitType status);
 
 	Object *getMachineOwner() { return m_machine->getOwner(); }
-	Object *getMachineGoalObject() { return m_machine->getGoalObject(); }
+	Object *getMachineGoalObject()
+	{
+		typedef Object *(StateMachine::*Fn)();
+		union { void (*fn)(); Fn call; } u = { j_0000e570 };
+		return (m_machine->*u.call)();
+	}
 
 protected:
 	virtual ~AIDockState();
