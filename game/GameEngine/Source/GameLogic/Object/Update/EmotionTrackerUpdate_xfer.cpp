@@ -57,8 +57,9 @@ public:
 class Xfer; class MidVirtualSlot90Receiver;
 extern Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *xfer, void *value);
 
-#pragma comment(linker, "/alternatename:?xfer@Emotion@@QAEXPAVXfer@@@Z=?j_000091ec@@YAXXZ")
-#pragma comment(linker, "/alternatename:?insert_unique@?$_Rb_tree@UGen_t_000ef440_k4@@U1@U?$_Identity@UGen_t_000ef440_k4@@@_STL@@U?$less@UGen_t_000ef440_k4@@@3@V?$allocator@UGen_t_000ef440_k4@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@UGen_t_000ef440_k4@@U?$_Nonconst_traits@UGen_t_000ef440_k4@@@_STL@@@_STL@@_N@2@ABUGen_t_000ef440_k4@@@Z=?j_000499f9@@YAXXZ")
+// Retail routes Emotion::xfer and _Rb_tree::insert_unique through ILT thunks.
+extern void j_000091ec();
+extern void j_000499f9();
 
 class ModuleData;
 
@@ -138,6 +139,15 @@ struct Gen_t_000ef440_k4
 	int value;
 };
 
+// Retail's _Rb_tree::insert_unique returns pair<iterator, bool> through a
+// hidden pointer; the result is discarded, so only the out-pointer shape matters.
+struct InsertUniqueResult
+{
+	Gen_t_000ef440_k4 *m_iterator;
+	bool m_inserted;
+	InsertUniqueResult() {}
+};
+
 bool operator==(const Gen_t_000ef440_k4 &left, const Gen_t_000ef440_k4 &right)
 {
 	return left.value == right.value;
@@ -197,7 +207,9 @@ void EmotionTrackerUpdate::xfer(Xfer *xfer)
 		emotion = m_emotions.begin()[i];
 		if (xfer->isSaving() && emotion == m_currentEmotion)
 			m_currentEmotionIndex = i;
-		emotion->xfer(xfer);
+		typedef void (Emotion::*Fn)(Xfer *);
+		union { void (*fn)(); Fn call; } u = { j_000091ec };
+		(emotion->*u.call)(xfer);
 	}
 
 	xfer->xferInt(&m_currentEmotionIndex);
@@ -218,7 +230,10 @@ void EmotionTrackerUpdate::xfer(Xfer *xfer)
 				for (int i = 0; i < typeCount; ++i)
 				{
 					Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &type.value);
-					types->insert(type);
+					typedef InsertUniqueResult *(std::set<Gen_t_000ef440_k4>::*Fn)(InsertUniqueResult *, const Gen_t_000ef440_k4 &);
+					union { void (*fn)(); Fn call; } u = { j_000499f9 };
+					InsertUniqueResult inserted;
+					(types->*u.call)(&inserted, type);
 				}
 			}
 		}
