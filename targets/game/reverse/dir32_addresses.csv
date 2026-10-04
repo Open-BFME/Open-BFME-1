@@ -114,7 +114,7 @@ name,va
 ?$S46@?1??getClassMemoryPool@PropagandaTowerBehavior@@CAPAVMemoryPool@@XZ@4IA,0x012EF838
 ?$S51@?1??getClassMemoryPool@FireWeaponWhenDamagedBehavior@@CAPAVMemoryPool@@XZ@4IA,0x012EF7C8
 ?$S52@?1??getClassMemoryPool@FireWeaponWhenDeadBehavior@@CAPAVMemoryPool@@XZ@4IA,0x012EF7D0
-?$S7@?1??getClassMemoryPool@UpgradeSoundSelectorClientBehavior@@CAPAVMemoryPool@@XZ@4IA,0x012EF1C0
+?$S291@?1??getModuleNameKey@UpgradeSoundSelectorClientBehavior@@UBE?AW4NameKeyType@@XZ@4IA,0x012EF1C0
 ?$S95@?1??getClassMemoryPool@WeaponModeSpecialPowerUpdate@@CAPAVMemoryPool@@XZ@4IA,0x012F0234
 ??0?$CEdgeInfo@G@@QAE@XZ,0x00E0936C
 ??0?$CEdgeInfo@I@@QAE@XZ,0x00E09346
@@ -7882,7 +7882,7 @@ name,va
 ?TheUpgradeCenter@@3PAVUpgradeCenter@@A,0x012EF188
 ?TheUpgradeCenter@@3PAXA,0x012EF188
 ?TheUpgradeDiePool@?1??getClassMemoryPool@UpgradeDie@@CAPAVMemoryPool@@XZ@4PAV3@A,0x012EFC3C
-?TheUpgradeSoundSelectorClientBehaviorPool@?1??getClassMemoryPool@UpgradeSoundSelectorClientBehavior@@CAPAVMemoryPool@@XZ@4PAV3@A,0x012EF1BC
+?nk@?1??getModuleNameKey@UpgradeSoundSelectorClientBehavior@@UBE?AW4NameKeyType@@XZ@4W43@A,0x012EF1BC
 ?TheVersion@@3PAVVersion@@A,0x012ED644
 ?TheVeterancyCrateCollidePool@?1??getClassMemoryPool@VeterancyCrateCollide@@CAPAVMemoryPool@@XZ@4PAV3@A,0x012EFA30
 ?TheVeterancyNames@@3PAPBDA,0x012A9FB4

@@ -282,15 +282,16 @@ private:
 	char m_retailData[ 0x3C ];
 };
 
-// UpgradeSoundSelectorClientBehavior's pool getter is retail 0x00121FA0: it binds the
-// pool name "UpgradeSoundSelectorClientBehavior" and is reached only through that
-// class's vtable (0x0108AD18) slot 4 via ILT 0x000473FC. The ledger used to claim it as
-// Upgrade's; this TU-scoped declaration carries just the pool glue and constructor.
-// identity_evidence/20261003-upgrade-pool-getter-identity.md
+// Native module-name getter RVA00121FA0 occupies primary vtable slot 4,
+// reached through ILT000473FC. This existing narrow constructor/allocation view
+// gains only the proven const virtual getter; it reads no receiver fields.
+// The unmatched pool helper remains unresolved prior reconstruction debt.
+// identity_evidence/00121fa0-native-module-name-key.md
 class UpgradeSoundSelectorClientBehavior : public MemoryPoolObject
 {
 	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE( UpgradeSoundSelectorClientBehavior, "UpgradeSoundSelectorClientBehavior" )
 public:
+	virtual NameKeyType getModuleNameKey() const;
 	UpgradeSoundSelectorClientBehavior( Thing *thing, const ModuleData *moduleData );
 private:
 	char m_retailData[ 0x10 ];
@@ -420,3 +421,11 @@ Module *emit_GiantBirdSlowDeathBehavior( Thing *thing, const ModuleData *moduleD
 }
 
 } // namespace ModulePoolGlueBulk
+
+// Native module-name key at RVA00121FA0, not a memory-pool getter.
+// The existing declaration above is a narrow view; this method uses no layout.
+NameKeyType UpgradeSoundSelectorClientBehavior::getModuleNameKey() const
+{
+	static NameKeyType nk = NAMEKEY("UpgradeSoundSelectorClientBehavior");
+	return nk;
+}
