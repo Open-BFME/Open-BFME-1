@@ -13,7 +13,6 @@ struct RGBColor;
 class BfmeThingBXF
 {
 public:
-	void bfmeThenBXF(int value);
 };
 
 struct RGBColor
@@ -23,22 +22,53 @@ struct RGBColor
 	Real blue;
 };
 
+extern void j_0001c864();
+extern void j_0004067e();
+extern void j_00047b27();
+extern void j_00019a6a();
+extern void j_00026f35();
+
+// TU-local view of retail's 0x70-byte AudioEventRTS. The real copy constructor
+// and destructor (??0/??1AudioEventRTS) already have their own bodies in
+// AudioEventRTSCopyAndLifetime.cpp, so they are not defined here; retail calls
+// them through the ILTs at 0x00047B27 and 0x00026F35.
 class AudioEventRTS
 {
 public:
-	AudioEventRTS(const AudioEventRTS &right);
-	~AudioEventRTS();
-	void setObjectID(UnsignedInt objectID);
+	unsigned char m_storage[0x70];
+};
+
+// Retail's temp is a real object with a constructor and a destructor: that is
+// what puts the unwind table and the 0x70-byte stack slot in the frame. Both
+// bodies dispatch through the retail ILT rather than being written here.
+class AudioEventRTSTemp
+{
+public:
+	AudioEventRTSTemp(const AudioEventRTSTemp &right)
+	{
+		union
+		{
+			void (*address)();
+			void (AudioEventRTSTemp::*member)(const AudioEventRTSTemp &);
+		} call;
+		call.address = j_00047b27;
+		(this->*call.member)(right);
+	}
+	~AudioEventRTSTemp()
+	{
+		union
+		{
+			void (*address)();
+			void (AudioEventRTSTemp::*member)();
+		} call;
+		call.address = j_00026f35;
+		(this->*call.member)();
+	}
 
 private:
 	unsigned char m_storage[0x70];
 };
 
-#pragma comment(linker, "/alternatename:?friend_setUndetectedDefector@Object@@QAEX_N@Z=?j_0001c864@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeThenBXF@BfmeThingBXF@@QAEXH@Z=?j_0004067e@@YAXXZ")
-#pragma comment(linker, "/alternatename:??0AudioEventRTS@@QAE@ABV0@@Z=?j_00047b27@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setObjectID@AudioEventRTS@@QAEXI@Z=?j_00019a6a@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1AudioEventRTS@@QAE@XZ=?j_00026f35@@YAXXZ")
 #pragma comment(linker, "/alternatename:__ftol2=_ftol2")
 
 class Rva005A00B0AudioClient
@@ -73,7 +103,7 @@ public:
 
 class AudioManager;
 extern AudioManager *TheAudio;
-#define TheAudioClientUpdate ((Rva005A00B0AudioClient *)TheAudio)
+static inline Rva005A00B0AudioClient *TheAudioClientUpdateView() { return (Rva005A00B0AudioClient *)TheAudio; }
 
 struct Rva00367E30Logic
 {
@@ -87,9 +117,9 @@ extern const Real g_rva0107533C;
 
 class GameLogic;
 extern GameLogic *TheGameLogic;
+static inline Rva00367E30Logic *TheBfmeGameLogicView() { return (Rva00367E30Logic *)TheGameLogic; }
 
 #define Rva0107C6EC 0.02f
-#define TheBfmeGameLogic ((Rva00367E30Logic *)TheGameLogic)
 
 enum UpdateSleepTime
 {
@@ -142,13 +172,17 @@ private:
 
 #define BFME_HAVE_OBJECTID
 #define OBJECT_TU_MEMBERS \
-	void friend_setUndetectedDefector(bool); \
 	bool getIsUndetectedDefector() const { return (m_privateStatus & 2) != 0; } \
 	bool isEffectivelyDead() const { return (m_privateStatus & 1) != 0; } \
 	AIUpdateInterface *getAI() const { return m_ai; } \
 	ObjectID getID() const { return m_id; } \
 	const ObjectStatusBits &getStatusBits() const { return *(const ObjectStatusBits *)m_status; }
 #include "../object.h"
+
+// Retail calls these bodies through incremental-link thunks, so the calls are
+// Retail calls these bodies through incremental-link thunks, so each call site
+// dispatches through a member pointer whose ABI matches the retail member and
+// whose address is the thunk. No linker alias directive needed.
 
 class ObjectDefectionHelper : public ObjectHelper,
 	public BehaviorModuleInterface,
@@ -173,19 +207,38 @@ UpdateSleepTime ObjectDefectionHelper::update()
 	if (!obj->getIsUndetectedDefector())
 		return UPDATE_SLEEP_FOREVER;
 
-	UnsignedInt now = TheBfmeGameLogic->m_frame;
+	UnsignedInt now = TheBfmeGameLogicView()->m_frame;
 	if (now >= m_defectionDetectionEnd)
 	{
-		obj->friend_setUndetectedDefector(false);
+		union
+		{
+			void (*address)();
+			void (Object::*member)(bool);
+		} call;
+		call.address = j_0001c864;
+		(obj->*call.member)(false);
 		if (draw && m_doDefectorFX)
 		{
 			RGBColor white = {1, 1, 1};
-			draw->bfmeThenBXF((int)&white);
+			union
 			{
-				AudioEventRTS sound = *reinterpret_cast<AudioEventRTS *>(
-					(char *)TheAudioClientUpdate->getMiscAudio() + 0x2a0);
-				sound.setObjectID(obj->getID());
-				TheAudioClientUpdate->addAudioEvent(&sound);
+				void (*address)();
+				void (BfmeThingBXF::*member)(int);
+			} callBxf;
+			callBxf.address = j_0004067e;
+			(draw->*callBxf.member)((int)&white);
+			{
+				AudioEventRTSTemp sound = *reinterpret_cast<AudioEventRTSTemp *>(
+					(char *)TheAudioClientUpdateView()->getMiscAudio() + 0x2a0);
+				union
+				{
+					void (*address)();
+					void (AudioEventRTSTemp::*member)(UnsignedInt);
+				} callSetID;
+				callSetID.address = j_00019a6a;
+				(sound.*callSetID.member)(obj->getID());
+				TheAudioClientUpdateView()->addAudioEvent(
+					reinterpret_cast<AudioEventRTS *>(&sound));
 			}
 		}
 		return UPDATE_SLEEP_FOREVER;
@@ -194,7 +247,13 @@ UpdateSleepTime ObjectDefectionHelper::update()
 	if ((obj->getAI() != 0 && obj->isEffectivelyDead()) ||
 		(obj->m_status[0] & 0x2000))
 	{
-		obj->friend_setUndetectedDefector(false);
+		union
+		{
+			void (*address)();
+			void (Object::*member)(bool);
+		} call;
+		call.address = j_0001c864;
+		(obj->*call.member)(false);
 		return UPDATE_SLEEP_FOREVER;
 	}
 
@@ -208,12 +267,25 @@ UpdateSleepTime ObjectDefectionHelper::update()
 
 		if (lastPhase && !thisPhase)
 		{
-			draw->bfmeThenBXF(0);
+			union
 			{
-				AudioEventRTS sound = *reinterpret_cast<AudioEventRTS *>(
-					(char *)TheAudioClientUpdate->getMiscAudio() + 0x230);
-				sound.setObjectID(obj->getID());
-				TheAudioClientUpdate->addAudioEvent(&sound);
+				void (*address)();
+				void (BfmeThingBXF::*member)(int);
+			} callBxf;
+			callBxf.address = j_0004067e;
+			(draw->*callBxf.member)(0);
+			{
+				AudioEventRTSTemp sound = *reinterpret_cast<AudioEventRTSTemp *>(
+					(char *)TheAudioClientUpdateView()->getMiscAudio() + 0x230);
+				union
+				{
+					void (*address)();
+					void (AudioEventRTSTemp::*member)(UnsignedInt);
+				} callSetID;
+				callSetID.address = j_00019a6a;
+				(sound.*callSetID.member)(obj->getID());
+				TheAudioClientUpdateView()->addAudioEvent(
+					reinterpret_cast<AudioEventRTS *>(&sound));
 			}
 		}
 	}
