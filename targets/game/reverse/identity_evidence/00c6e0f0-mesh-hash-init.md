@@ -7,3 +7,16 @@ Canonical meshmdl.cpp globals LocationHash, DuplicateLocationHash and SideHash a
 The initial task packet supplied C6E030/040/050, whose actual native cleanup targets are C71320/C71330/C71350. Those are unrelated owners. That packet was rejected by instruction/relocation audit before source or ledger writes, its accepted claims released, and the parent authorized corrected targets.
 
 Source SHA256 d33a89750368823844888a0d0e0e2043e1c8d3c9c43a8298cddcd458b69275f0. Model gpt-6.1-sol. Run sol1843-crt-mesh.
+
+
+## Current compiler binding correction (2026-10-04)
+
+The source is unchanged (SHA256 `fcb1a437e3ed0d3c890bab52861f9324db37a56ae98d71896c92866e3f6a9d6e`). Upstream VertexMaterial allocator-macro cleanup changes compiler-generated ordinal numbering; it does not change these native bodies. The original object-bound evidence above remains historical evidence. Current-object bindings were independently checked against complete retail code bytes, actual COFF relocations, CRT slots, and callback boundaries.
+
+| Retail RVA | Previous object binding | Current object binding | Native extent |
+| --- | --- | --- | --- |
+| `0x00C6E0F0` | `_$E24` | `_$E23` | 12 bytes |
+| `0x00C6E100` | `_$E27` | `_$E26` | 12 bytes |
+| `0x00C6E110` | `_$E30` | `_$E29` | 12 bytes |
+
+Only the ledger object-symbol bindings change. Retail identities, extents, source, pins, data declarations, and row order remain unchanged. No new code, static-data, or runtime-layout coverage is claimed. Review: particlefactory-scratch/build/mesh-current75-audit/receipt.json SHA873d2a7129560a68ceb94288cddf8c2f76b1b69e6142b80b7439f0c3045acdff.
