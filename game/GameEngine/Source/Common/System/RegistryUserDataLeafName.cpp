@@ -11,6 +11,10 @@
 
 #include "Common/AsciiString.h"
 
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+
 bool GetStringFromRegistry(AsciiString path, AsciiString key, AsciiString &val);
 
 AsciiString GetRegistryUserDataLeafName(void)

@@ -3,6 +3,10 @@
 
 #include "AsciiString.h"
 
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+
 // Retail vtable 0x0107C7D0: BfmeParserBindingBaseVE's vftable, i.e.
 // ??_7BfmeParserBindingBaseVE@@6B@ (targets/game/reverse/dir32_addresses.csv).
 // The declaration carries no C++ name: __identifier spells the retail symbol
