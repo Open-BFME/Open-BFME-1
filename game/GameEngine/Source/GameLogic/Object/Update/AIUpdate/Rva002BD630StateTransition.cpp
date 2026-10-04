@@ -2,8 +2,6 @@
 //
 // Address-derived recovery for the BFME state transition body at 0x002BD630.
 
-#pragma comment(linker, "/alternatename:?find@Rva002BD630TeamFactory@@QAEPAXH@Z=?j_00044c2e@@YAXXZ")
-
 typedef int Int;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
@@ -16,6 +14,9 @@ struct Coord3D
 
 class Object;
 
+// ILT thunk reached through Rva002BD630TeamFactory::find(Int).
+extern void j_00044c2e();
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
@@ -26,7 +27,8 @@ public:
 class Rva002BD630TeamFactory
 {
 public:
-	void *find(Int id);
+	// find(Int) lives behind ILT thunk j_00044c2e; the caller invokes it
+	// through a member pointer declared locally in run().
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
@@ -110,7 +112,9 @@ Int Rva002BD630State::run()
 
 	Rva002BD630Machine *machine = m_machine;
 	Rva002BD630Object *object = (Rva002BD630Object *)TheGameLogic->findObjectByID(machine->m_teamID);
-	Team *teamResult = (Team *)TheBfmeTeamFactory->find(machine->m_otherID);
+	typedef void *(Rva002BD630TeamFactory::*Find)(Int);
+	union { void (*fn)(); Find call; } u = { j_00044c2e };
+	Team *teamResult = (Team *)(TheBfmeTeamFactory->*u.call)(machine->m_otherID);
 	if (object)
 	{
 		Coord3D *objectPosition = (Coord3D *)((char *)object + 0x38);
