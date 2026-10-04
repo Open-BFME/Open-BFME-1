@@ -17218,5 +17218,25 @@
   "after_sha256": "407a06475a3ceaaed6421afc639fb105f1f6d512170940d072366818888f65f1",
   "evidence": "targets/game/reverse/identity_evidence/0x00558be0-bank-type-pairings.md",
   "reason": "False cross-RVA bank delete/add alignment, not identifier rename. Deleted measured bank0x00558BE0.cpp belongs native00558BE0/341 now matched as existing address-owned ?dup_00558be0@@YAXXZ in OnlineQuickMatchInitGadget.cpp, native RET00558D34 followedINT3. Added measured bank0x002B26C0.cpp expressly owns distinct native002B26C0/756, still gen-dump in ledger and partialscore0.254, not an accepted conversion. No causal mapping exists between these four token pairs; neither bank rename nor semantic naming is approved. Bind only exact48e364.../407a064... snapshots."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00415aa0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/Rva00415AA0StringAssign.cpp",
+  "old_name": "BfmeOwnAU",
+  "new_name": "Rva00415AA0",
+  "before_sha256": "11157ace133b4a70abaca4263c273a18a3cc4b968111a7a020df2f6fa69cb5bd",
+  "after_sha256": "0fe952d5219d280eb43888ff9f931d71720851413dd1acb7f311661b419b1ac2",
+  "evidence": "targets/game/reverse/identity_evidence/00415aa0-char-string-updater.md",
+  "reason": "The bank explicitly marks its generated owner identity unknown; the caller proves an updater but not an EA owner name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00415aa0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/Rva00415AA0StringAssign.cpp",
+  "old_name": "UnicodeString",
+  "new_name": "Rva00415AA0",
+  "before_sha256": "11157ace133b4a70abaca4263c273a18a3cc4b968111a7a020df2f6fa69cb5bd",
+  "after_sha256": "0fe952d5219d280eb43888ff9f931d71720851413dd1acb7f311661b419b1ac2",
+  "evidence": "targets/game/reverse/identity_evidence/00415aa0-char-string-updater.md",
+  "reason": "False removed-type pairing: resolved calls prove StringBase<char>, supplied by the canonical header, not UnicodeString or the replacement receiver type."
  }
 ]
