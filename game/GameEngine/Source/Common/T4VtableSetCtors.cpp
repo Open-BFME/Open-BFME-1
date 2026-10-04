@@ -32,7 +32,7 @@
 // base slot again.
 //
 // THE STORED VALUES ARE THE VFTABLES dir32_addresses.csv NAMES AT THOSE
-// ADDRESSES, reached through bfmeVft aliases declared below.  The base-slot
+// ADDRESSES, declared below under their own names.  The base-slot
 // values 0x0110F9E4, 0x0110F9E8, 0x0110FA14, 0x0107375C, 0x01073760 and
 // 0x0110F978 are the second-base vftables V3InlineTwoBaseCopyCtors.cpp gives
 // the V3Vt classes, and each per-row pair is the two vftables the table records
@@ -53,69 +53,47 @@
 // Built with exception handling off: these bodies carry no unwind frame, and
 // the project default `-EHsc-` is parsed by cl as EHs ON, hence the directive.
 
-// Vftables named in dir32_addresses.csv, reached through linker aliases.
-extern "C" const void *bfmeVftV3Vt0110F978[];
-#pragma comment(linker, "/alternatename:_bfmeVftV3Vt0110F978=??_7V3Vt0110F978@@6B@")
-extern "C" const void *bfmeVftV3Vt01073760[];
-#pragma comment(linker, "/alternatename:_bfmeVftV3Vt01073760=??_7V3Vt01073760@@6B@")
-extern "C" const void *bfmeVftV3Vt0107375C[];
-#pragma comment(linker, "/alternatename:_bfmeVftV3Vt0107375C=??_7V3Vt0107375C@@6B@")
-extern "C" const void *bfmeVftV3Vt0110F9E4[];
-#pragma comment(linker, "/alternatename:_bfmeVftV3Vt0110F9E4=??_7V3Vt0110F9E4@@6B@")
-extern "C" const void *bfmeVftV3Vt0110FA14[];
-#pragma comment(linker, "/alternatename:_bfmeVftV3Vt0110FA14=??_7V3Vt0110FA14@@6B@")
-extern "C" const void *bfmeVftV3Vt0110F9E8[];
-#pragma comment(linker, "/alternatename:_bfmeVftV3Vt0110F9E8=??_7V3Vt0110F9E8@@6B@")
-extern "C" const void *bfmeVftV3Vt01111D90[];
-#pragma comment(linker, "/alternatename:_bfmeVftV3Vt01111D90=??_7V3Vt01111D90@@6B@")
-extern "C" const void *bfmeVftRva005EA430_V3Vt01111D90[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EA430_V3Vt01111D90=??_7Rva005EA430@@6BV3Vt01111D90@@@")
-extern "C" const void *bfmeVftRva005EA430_V3Vt0110F978[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EA430_V3Vt0110F978=??_7Rva005EA430@@6BV3Vt0110F978@@@")
-extern "C" const void *bfmeVftRva005EA400_V3Slot0N[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EA400_V3Slot0N=??_7Rva005EA400@@6BV3Slot0N@@@")
-extern "C" const void *bfmeVftRva005EA400_V3Slot1[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EA400_V3Slot1=??_7Rva005EA400@@6BV3Slot1@@@")
-extern "C" const void *bfmeVftRva005EA6F0_V3Vt01111D90[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EA6F0_V3Vt01111D90=??_7Rva005EA6F0@@6BV3Vt01111D90@@@")
-extern "C" const void *bfmeVftRva005EA6F0_V3Vt01073760[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EA6F0_V3Vt01073760=??_7Rva005EA6F0@@6BV3Vt01073760@@@")
-extern "C" const void *bfmeVftRva005EA6C0_V3Slot0N[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EA6C0_V3Slot0N=??_7Rva005EA6C0@@6BV3Slot0N@@@")
-extern "C" const void *bfmeVftRva005EA6C0_V3Slot1[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EA6C0_V3Slot1=??_7Rva005EA6C0@@6BV3Slot1@@@")
-extern "C" const void *bfmeVftRva005EB090_V3Vt01111D90[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EB090_V3Vt01111D90=??_7Rva005EB090@@6BV3Vt01111D90@@@")
-extern "C" const void *bfmeVftRva005EB090_V3Vt0107375C[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EB090_V3Vt0107375C=??_7Rva005EB090@@6BV3Vt0107375C@@@")
-extern "C" const void *bfmeVftRva005EA9B0_V3Vt01111D90[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EA9B0_V3Vt01111D90=??_7Rva005EA9B0@@6BV3Vt01111D90@@@")
-extern "C" const void *bfmeVftRva005EA9B0_V3Vt0110F9E4[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EA9B0_V3Vt0110F9E4=??_7Rva005EA9B0@@6BV3Vt0110F9E4@@@")
-extern "C" const void *bfmeVftRva005EA920_V3Slot0N[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EA920_V3Slot0N=??_7Rva005EA920@@6BV3Slot0N@@@")
-extern "C" const void *bfmeVftRva005EA920_V3Slot1[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EA920_V3Slot1=??_7Rva005EA920@@6BV3Slot1@@@")
-extern "C" const void *bfmeVftRva005EAE70_V3Vt01111D90[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EAE70_V3Vt01111D90=??_7Rva005EAE70@@6BV3Vt01111D90@@@")
-extern "C" const void *bfmeVftRva005EAE70_V3Vt0110FA14[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EAE70_V3Vt0110FA14=??_7Rva005EAE70@@6BV3Vt0110FA14@@@")
-extern "C" const void *bfmeVftRva005EADE0_V3Slot0N[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EADE0_V3Slot0N=??_7Rva005EADE0@@6BV3Slot0N@@@")
-extern "C" const void *bfmeVftRva005EADE0_V3Slot1[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EADE0_V3Slot1=??_7Rva005EADE0@@6BV3Slot1@@@")
-extern "C" const void *bfmeVftRva005EABB0_V3Vt01111D90[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EABB0_V3Vt01111D90=??_7Rva005EABB0@@6BV3Vt01111D90@@@")
-extern "C" const void *bfmeVftRva005EABB0_V3Vt0110F9E8[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EABB0_V3Vt0110F9E8=??_7Rva005EABB0@@6BV3Vt0110F9E8@@@")
-extern "C" const void *bfmeVftRva005EAB80_V3Slot0N[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EAB80_V3Slot0N=??_7Rva005EAB80@@6BV3Slot0N@@@")
-extern "C" const void *bfmeVftRva005EAB80_V3Slot1[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EAB80_V3Slot1=??_7Rva005EAB80@@6BV3Slot1@@@")
-extern "C" const void *bfmeVftRva005EB050_V3Vt01111D90[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EB050_V3Vt01111D90=??_7Rva005EB050@@6BV3Vt01111D90@@@")
-extern "C" const void *bfmeVftRva005EB050_V3Vt0107375C[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EB050_V3Vt0107375C=??_7Rva005EB050@@6BV3Vt0107375C@@@")
+// Vftables named in dir32_addresses.csv.  Every declaration carries no C++
+// name: __identifier spells the retail symbol exactly, so the stores below
+// reference the defining name itself and no linker alias is needed.
+//
+// The first seven are the second-base tables at 0x0110F978, 0x01073760,
+// 0x0107375C, 0x0110F9E4, 0x0110FA14, 0x0110F9E8 and 0x01111D90.  The
+// remaining twenty-four are the per-row pair: a class's own table (the
+// V3Vt-prefixed suffix) and its secondary base's table (the V3Slot-suffix)
+// four bytes below it.
+extern "C" const void *__identifier("??_7V3Vt0110F978@@6B@")[];        // 0x0110F978
+extern "C" const void *__identifier("??_7V3Vt01073760@@6B@")[];        // 0x01073760
+extern "C" const void *__identifier("??_7V3Vt0107375C@@6B@")[];        // 0x0107375C
+extern "C" const void *__identifier("??_7V3Vt0110F9E4@@6B@")[];        // 0x0110F9E4
+extern "C" const void *__identifier("??_7V3Vt0110FA14@@6B@")[];        // 0x0110FA14
+extern "C" const void *__identifier("??_7V3Vt0110F9E8@@6B@")[];        // 0x0110F9E8
+extern "C" const void *__identifier("??_7V3Vt01111D90@@6B@")[];        // 0x01111D90
+
+extern "C" const void *__identifier("??_7Rva005EA430@@6BV3Vt01111D90@@@")[];  // 0x01112B28
+extern "C" const void *__identifier("??_7Rva005EA430@@6BV3Vt0110F978@@@")[];  // 0x01112B24
+extern "C" const void *__identifier("??_7Rva005EA400@@6BV3Slot0N@@@")[];      // 0x01112B08
+extern "C" const void *__identifier("??_7Rva005EA400@@6BV3Slot1@@@")[];       // 0x01112B04
+extern "C" const void *__identifier("??_7Rva005EA6F0@@6BV3Vt01111D90@@@")[];  // 0x01112B28
+extern "C" const void *__identifier("??_7Rva005EA6F0@@6BV3Vt01073760@@@")[];  // 0x01112B24
+extern "C" const void *__identifier("??_7Rva005EA6C0@@6BV3Slot0N@@@")[];      // 0x01112B08
+extern "C" const void *__identifier("??_7Rva005EA6C0@@6BV3Slot1@@@")[];       // 0x01112B04
+extern "C" const void *__identifier("??_7Rva005EB090@@6BV3Vt01111D90@@@")[];  // 0x01112B28
+extern "C" const void *__identifier("??_7Rva005EB090@@6BV3Vt0107375C@@@")[];  // 0x01112B24
+extern "C" const void *__identifier("??_7Rva005EA9B0@@6BV3Vt01111D90@@@")[];  // 0x01112B28
+extern "C" const void *__identifier("??_7Rva005EA9B0@@6BV3Vt0110F9E4@@@")[];  // 0x01112B24
+extern "C" const void *__identifier("??_7Rva005EA920@@6BV3Slot0N@@@")[];      // 0x01112B08
+extern "C" const void *__identifier("??_7Rva005EA920@@6BV3Slot1@@@")[];       // 0x01112B04
+extern "C" const void *__identifier("??_7Rva005EAE70@@6BV3Vt01111D90@@@")[];  // 0x01112B28
+extern "C" const void *__identifier("??_7Rva005EAE70@@6BV3Vt0110FA14@@@")[];  // 0x01112B24
+extern "C" const void *__identifier("??_7Rva005EADE0@@6BV3Slot0N@@@")[];      // 0x01112B08
+extern "C" const void *__identifier("??_7Rva005EADE0@@6BV3Slot1@@@")[];       // 0x01112B04
+extern "C" const void *__identifier("??_7Rva005EABB0@@6BV3Vt01111D90@@@")[];  // 0x01112B28
+extern "C" const void *__identifier("??_7Rva005EABB0@@6BV3Vt0110F9E8@@@")[];  // 0x01112B24
+extern "C" const void *__identifier("??_7Rva005EAB80@@6BV3Slot0N@@@")[];      // 0x01112B08
+extern "C" const void *__identifier("??_7Rva005EAB80@@6BV3Slot1@@@")[];       // 0x01112B04
+extern "C" const void *__identifier("??_7Rva005EB050@@6BV3Vt01111D90@@@")[];  // 0x01112B28
+extern "C" const void *__identifier("??_7Rva005EB050@@6BV3Vt0107375C@@@")[];  // 0x01112B24
 
 // ---------------------------------------------------------------------------
 // 32 bytes, __thiscall(two args), first argument stored at +0x04, doubled
@@ -138,28 +116,39 @@ extern "C" const void *bfmeVftRva005EB050_V3Vt0107375C[];
 		s[ 2 ] = (unsigned int)OWN8;                                       \
 	}
 
-T4_ARG_AT_4_DOUBLE_AT_8( Rva005EE820, bfmeVftV3Vt0110F978,
-	bfmeVftRva005EA430_V3Vt01111D90, bfmeVftRva005EA430_V3Vt0110F978 )
-T4_ARG_AT_4_DOUBLE_AT_8( Rva005EE850, bfmeVftV3Vt0110F978,
-	bfmeVftRva005EA400_V3Slot0N, bfmeVftRva005EA400_V3Slot1 )
-T4_ARG_AT_4_DOUBLE_AT_8( Rva005EF580, bfmeVftV3Vt01073760,
-	bfmeVftRva005EA6F0_V3Vt01111D90, bfmeVftRva005EA6F0_V3Vt01073760 )
-T4_ARG_AT_4_DOUBLE_AT_8( Rva005EFAC0, bfmeVftV3Vt01073760,
-	bfmeVftRva005EA6C0_V3Slot0N, bfmeVftRva005EA6C0_V3Slot1 )
-T4_ARG_AT_4_DOUBLE_AT_8( Rva005FC3B0, bfmeVftV3Vt0107375C,
-	bfmeVftRva005EB090_V3Vt01111D90, bfmeVftRva005EB090_V3Vt0107375C )
-T4_ARG_AT_4_DOUBLE_AT_8( Rva005FD9B0, bfmeVftV3Vt0110F9E4,
-	bfmeVftRva005EA9B0_V3Vt01111D90, bfmeVftRva005EA9B0_V3Vt0110F9E4 )
-T4_ARG_AT_4_DOUBLE_AT_8( Rva005FDC20, bfmeVftV3Vt0110F9E4,
-	bfmeVftRva005EA920_V3Slot0N, bfmeVftRva005EA920_V3Slot1 )
-T4_ARG_AT_4_DOUBLE_AT_8( Rva005FE690, bfmeVftV3Vt0110FA14,
-	bfmeVftRva005EAE70_V3Vt01111D90, bfmeVftRva005EAE70_V3Vt0110FA14 )
-T4_ARG_AT_4_DOUBLE_AT_8( Rva005FE9A0, bfmeVftV3Vt0110FA14,
-	bfmeVftRva005EADE0_V3Slot0N, bfmeVftRva005EADE0_V3Slot1 )
-T4_ARG_AT_4_DOUBLE_AT_8( Rva005FFA40, bfmeVftV3Vt0110F9E8,
-	bfmeVftRva005EABB0_V3Vt01111D90, bfmeVftRva005EABB0_V3Vt0110F9E8 )
-T4_ARG_AT_4_DOUBLE_AT_8( Rva005FFA70, bfmeVftV3Vt0110F9E8,
-	bfmeVftRva005EAB80_V3Slot0N, bfmeVftRva005EAB80_V3Slot1 )
+T4_ARG_AT_4_DOUBLE_AT_8( Rva005EE820, __identifier("??_7V3Vt0110F978@@6B@"),
+	__identifier("??_7Rva005EA430@@6BV3Vt01111D90@@@"),
+	__identifier("??_7Rva005EA430@@6BV3Vt0110F978@@@") )
+T4_ARG_AT_4_DOUBLE_AT_8( Rva005EE850, __identifier("??_7V3Vt0110F978@@6B@"),
+	__identifier("??_7Rva005EA400@@6BV3Slot0N@@@"),
+	__identifier("??_7Rva005EA400@@6BV3Slot1@@@") )
+T4_ARG_AT_4_DOUBLE_AT_8( Rva005EF580, __identifier("??_7V3Vt01073760@@6B@"),
+	__identifier("??_7Rva005EA6F0@@6BV3Vt01111D90@@@"),
+	__identifier("??_7Rva005EA6F0@@6BV3Vt01073760@@@") )
+T4_ARG_AT_4_DOUBLE_AT_8( Rva005EFAC0, __identifier("??_7V3Vt01073760@@6B@"),
+	__identifier("??_7Rva005EA6C0@@6BV3Slot0N@@@"),
+	__identifier("??_7Rva005EA6C0@@6BV3Slot1@@@") )
+T4_ARG_AT_4_DOUBLE_AT_8( Rva005FC3B0, __identifier("??_7V3Vt0107375C@@6B@"),
+	__identifier("??_7Rva005EB090@@6BV3Vt01111D90@@@"),
+	__identifier("??_7Rva005EB090@@6BV3Vt0107375C@@@") )
+T4_ARG_AT_4_DOUBLE_AT_8( Rva005FD9B0, __identifier("??_7V3Vt0110F9E4@@6B@"),
+	__identifier("??_7Rva005EA9B0@@6BV3Vt01111D90@@@"),
+	__identifier("??_7Rva005EA9B0@@6BV3Vt0110F9E4@@@") )
+T4_ARG_AT_4_DOUBLE_AT_8( Rva005FDC20, __identifier("??_7V3Vt0110F9E4@@6B@"),
+	__identifier("??_7Rva005EA920@@6BV3Slot0N@@@"),
+	__identifier("??_7Rva005EA920@@6BV3Slot1@@@") )
+T4_ARG_AT_4_DOUBLE_AT_8( Rva005FE690, __identifier("??_7V3Vt0110FA14@@6B@"),
+	__identifier("??_7Rva005EAE70@@6BV3Vt01111D90@@@"),
+	__identifier("??_7Rva005EAE70@@6BV3Vt0110FA14@@@") )
+T4_ARG_AT_4_DOUBLE_AT_8( Rva005FE9A0, __identifier("??_7V3Vt0110FA14@@6B@"),
+	__identifier("??_7Rva005EADE0@@6BV3Slot0N@@@"),
+	__identifier("??_7Rva005EADE0@@6BV3Slot1@@@") )
+T4_ARG_AT_4_DOUBLE_AT_8( Rva005FFA40, __identifier("??_7V3Vt0110F9E8@@6B@"),
+	__identifier("??_7Rva005EABB0@@6BV3Vt01111D90@@@"),
+	__identifier("??_7Rva005EABB0@@6BV3Vt0110F9E8@@@") )
+T4_ARG_AT_4_DOUBLE_AT_8( Rva005FFA70, __identifier("??_7V3Vt0110F9E8@@6B@"),
+	__identifier("??_7Rva005EAB80@@6BV3Slot0N@@@"),
+	__identifier("??_7Rva005EAB80@@6BV3Slot1@@@") )
 
 // The same shape with one extra byte set true at +0x0C, written between the two
 // stores to +0x08 -- that is, after the inlined base constructor and before the
@@ -177,10 +166,10 @@ Rva005FC6E0::Rva005FC6E0( unsigned int a, unsigned int b )
 {
 	volatile unsigned int *s = (unsigned int *)this;
 	s[ 1 ] = a;
-	s[ 2 ] = (unsigned int)bfmeVftV3Vt0107375C;
+	s[ 2 ] = (unsigned int)__identifier("??_7V3Vt0107375C@@6B@");
 	*( (volatile unsigned char *)this + 0x0c ) = 1;
-	s[ 0 ] = (unsigned int)bfmeVftRva005EB050_V3Vt01111D90;
-	s[ 2 ] = (unsigned int)bfmeVftRva005EB050_V3Vt0107375C;
+	s[ 0 ] = (unsigned int)__identifier("??_7Rva005EB050@@6BV3Vt01111D90@@@");
+	s[ 2 ] = (unsigned int)__identifier("??_7Rva005EB050@@6BV3Vt0107375C@@@");
 }
 
 // ---------------------------------------------------------------------------
@@ -240,6 +229,6 @@ private:
 Rva005EE340::Rva005EE340( unsigned int a, unsigned int b )
 {
 	volatile unsigned int *s = (unsigned int *)this;
-	s[ 0 ] = (unsigned int)bfmeVftV3Vt01111D90;
+	s[ 0 ] = (unsigned int)__identifier("??_7V3Vt01111D90@@6B@");
 	s[ 1 ] = a;
 }
