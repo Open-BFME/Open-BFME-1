@@ -13,8 +13,10 @@ public:
 
 extern Radar *TheRadar;
 
-// BFME keeps the radar color refresh behind the existing ILT thunk.
-#pragma comment(linker, "/alternatename:?refreshObjectColor@Radar@@QAEXPAX@Z=?j_00011383@@YAXXZ")
+// BFME keeps the radar color refresh behind the existing ILT thunk
+// (0x00011383 -> Radar::refreshObjectColor, 0x00107A50), so the call is made
+// through the thunk address directly instead of a linker alias pragma.
+extern void j_00011383();
 
 class Drawable
 {
@@ -73,7 +75,9 @@ int __cdecl bfmeHelper760(void *value, int unused)
 	if (value)
 	{
 		Object *object = (Object *)value;
-		TheRadar->refreshObjectColor(object);
+		typedef void (Radar::*RefreshColor)(void *);
+		union { void (*fn)(); RefreshColor call; } refresh = { j_00011383 };
+		(TheRadar->*refresh.call)(object);
 		object->updateUpgradeModules();
 		Drawable *drawable = object->getDrawable();
 		if (drawable)
