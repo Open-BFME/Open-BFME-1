@@ -692,18 +692,8 @@ void OpenContain::removeFromContainViaIterator( ContainedItemsList::iterator it,
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Contain/OpenContain_onContaining.cpp
-// ?onContaining@OpenContain@@ present-unmatched
-void OpenContain::onContaining( Object *rider, Bool wasSelected )
-{
-	// Play audio
-	if( m_loadSoundsEnabled )
-	{
-		AudioEventRTS enterSound = *getObject()->getTemplate()->getSoundEnter();
-		enterSound.setObjectID(getObject()->getID());
-		TheAudio->addAudioEvent(&enterSound);
-	}
-}
+// OpenContain::onContaining lives in OpenContain_onContaining.cpp: the BFME
+// contain-interface body uses the indexed sound lookup and retail offsets.
 
 //-------------------------------------------------------------------------------------------------
 // ?getContainedItemsMass@OpenContain@@ present-unmatched
