@@ -1,15 +1,13 @@
 // cl: /DNDEBUG /MD /EHsc
 
-extern "C" const void *bfmeVftCategoryModuleInfo8[];
-#pragma comment(linker, "/alternatename:_bfmeVftCategoryModuleInfo8=??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@")
+// The retail vtables are real defining symbols, so they are named directly
+// (the same __identifier spelling used by the other vtable consumers).
+extern "C" int __identifier("??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@")[];
 extern "C" char CategoryModuleTemplate8_vtbl0;
 extern "C" char CategoryModuleTemplate8_vtbl4;
-extern "C" const void *bfmeVftTerrainCollisionModuleTemplate[];
-#pragma comment(linker, "/alternatename:_bfmeVftTerrainCollisionModuleTemplate=??_7TerrainCollisionModuleTemplate@FXParticleSystem@@6B@")
-extern "C" const void *bfmeVftTerrainCollisionModuleTemplate_TerrainCollisionCategoryBaseA[];
-#pragma comment(linker, "/alternatename:_bfmeVftTerrainCollisionModuleTemplate_TerrainCollisionCategoryBaseA=??_7TerrainCollisionModuleTemplate@FXParticleSystem@@6BTerrainCollisionCategoryBaseA@1@@")
-extern "C" const void *bfmeVftTerrainCollisionModuleTemplate_TerrainCollisionCategoryBaseB[];
-#pragma comment(linker, "/alternatename:_bfmeVftTerrainCollisionModuleTemplate_TerrainCollisionCategoryBaseB=??_7TerrainCollisionModuleTemplate@FXParticleSystem@@6BTerrainCollisionCategoryBaseB@1@@")
+extern "C" int __identifier("??_7TerrainCollisionModuleTemplate@FXParticleSystem@@6B@")[];
+extern "C" int __identifier("??_7TerrainCollisionModuleTemplate@FXParticleSystem@@6BTerrainCollisionCategoryBaseA@1@@")[];
+extern "C" int __identifier("??_7TerrainCollisionModuleTemplate@FXParticleSystem@@6BTerrainCollisionCategoryBaseB@1@@")[];
 
 namespace FXParticleSystem
 {
@@ -31,7 +29,8 @@ class __declspec(novtable) CategoryModuleInfo<8>
 public:
     CategoryModuleInfo()
     {
-        *(volatile unsigned int *)this = (unsigned int)bfmeVftCategoryModuleInfo8;
+        *(volatile unsigned int *)this =
+            (unsigned int)__identifier("??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@");
         m_a = true;
         m_b = true;
     }
@@ -104,9 +103,12 @@ TerrainCollisionModuleTemplate::TerrainCollisionModuleTemplate()
     : CategoryModuleTemplate<8>(),
       TerrainCollisionModuleInfo()
 {
-    *(unsigned int *)((unsigned char *)this + 0xc) = (unsigned int)bfmeVftTerrainCollisionModuleTemplate;
-    *(unsigned int *)((unsigned char *)this + 0) = (unsigned int)bfmeVftTerrainCollisionModuleTemplate_TerrainCollisionCategoryBaseA;
-    *(unsigned int *)((unsigned char *)this + 4) = (unsigned int)bfmeVftTerrainCollisionModuleTemplate_TerrainCollisionCategoryBaseB;
+    *(unsigned int *)((unsigned char *)this + 0xc) =
+        (unsigned int)__identifier("??_7TerrainCollisionModuleTemplate@FXParticleSystem@@6B@");
+    *(unsigned int *)((unsigned char *)this + 0) =
+        (unsigned int)__identifier("??_7TerrainCollisionModuleTemplate@FXParticleSystem@@6BTerrainCollisionCategoryBaseA@1@@");
+    *(unsigned int *)((unsigned char *)this + 4) =
+        (unsigned int)__identifier("??_7TerrainCollisionModuleTemplate@FXParticleSystem@@6BTerrainCollisionCategoryBaseB@1@@");
 }
 
 }
