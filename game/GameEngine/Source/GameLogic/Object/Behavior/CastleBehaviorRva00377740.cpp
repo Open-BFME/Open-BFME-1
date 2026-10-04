@@ -28,15 +28,10 @@
 //   j_0003df6e -> 0x00373B30 (matched Rva00373B30Receiver::update)
 //   j_000427df -> 0x00376C70
 //   j_0001cd41 -> 0x00377060 (CastleBehavior::rva00377060, see identity evidence)
-// The two flag locals are forty bytes each; retail zeroes them with the same
-// out-of-line forty-byte zeroing constructor the matched TenWordZeroing
-// Constructors TU owns (j_0000156e -> 0x001701A0), invoked here through the
-// same thunk-cast pattern instead of a second class declaration.
-
-struct Rva00377740Flags
-{
-	unsigned words[10];
-};
+// The forty-byte flag locals use the canonical out-of-line zeroing constructor
+// at 0x001701A0, declared by its owner in TenWordZeroingConstructors.cpp.
+#include "../../../Common/Rva001701A0Record.h"
+typedef Rva001701A0Record Rva00377740Flags;
 
 struct Rva00377740Data
 {
@@ -71,7 +66,6 @@ struct Rva00377740Interface
 	float timer;
 };
 
-extern void j_0000156e();
 extern void j_00007969();
 extern void j_000084d6();
 extern void j_0000a19b();
@@ -149,10 +143,8 @@ int Rva00377740Interface::Rva00377740()
 		{
 			state = 3;
 			Rva00377740Flags a, b;
-			call0<void>(j_0000156e, &a);
-			call0<void>(j_0000156e, &b);
-			b.words[6] |= 0x8000;
-			a.words[6] |= 0x10000;
+			((unsigned *)b.m_storage)[6] |= 0x8000;
+			((unsigned *)a.m_storage)[6] |= 0x10000;
 			call2<void, const Rva00377740Flags &, const Rva00377740Flags &>(j_0000a19b, owner(), b, a);
 			timer = data->wait30;
 			return 1;
@@ -163,9 +155,7 @@ int Rva00377740Interface::Rva00377740()
 		{
 			state = 4;
 			Rva00377740Flags a, b;
-			call0<void>(j_0000156e, &a);
-			call0<void>(j_0000156e, &b);
-			b.words[6] |= 0x10000;
+			((unsigned *)b.m_storage)[6] |= 0x10000;
 			Rva00377740Owner *p = owner();
 			call2<void, const Rva00377740Flags &, const Rva00377740Flags &>(j_0000a19b, p, b, a);
 			call2<void>(j_00026094, p, 5, false);
