@@ -43,8 +43,6 @@ public:
 	BodyModuleInterface *m_body;
 	unsigned char m_pad204[0x344 - 0x204];
 	unsigned char m_privateStatus;
-
-	void notifyModelConditionChanged();
 };
 
 class BfmeOwnerBUD
@@ -68,8 +66,7 @@ public:
 extern GameLogic *TheGameLogic;
 extern void j_0000fbaa();
 extern void j_0002ead2();
-
-#pragma comment(linker, "/alternatename:?notifyModelConditionChanged@Object@@QAEXXZ=?j_0002191d@@YAXXZ")
+extern void j_0002191d();
 
 typedef void (WallUpgradeUpdate::*WallUpgradeInitPartner)();
 
@@ -125,7 +122,10 @@ UpdateSleepTime WallUpgradeUpdate::update()
 		if ((owner->m_conditionFlags & 0x20000000) != 0)
 		{
 			owner->m_conditionFlags &= 0xdfffffff;
-			owner->notifyModelConditionChanged();
+			typedef void (Object::*ModelConditionNotify)();
+			union { void (*raw)(); ModelConditionNotify asMember; } notifyCast;
+			notifyCast.raw = j_0002191d;
+			(owner->*notifyCast.asMember)();
 		}
 		self[0x21] = 0;
 	}
