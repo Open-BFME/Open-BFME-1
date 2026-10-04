@@ -53,7 +53,15 @@ private:
 	UnsignedInt m_unmodelled2c;
 };
 
-#pragma comment(linker, "/alternatename:??4RadiusDecalTemplate@@QAEXABV0@@Z=??4Rva00458450@@QAEXABV0@@Z")
+// Retail's selection-decal assignment lives at 0x00458450 and is reached from
+// this constructor through ILT 0x00015744.  Its body and identity are the
+// verified Rva00458450 assignment, so the call is spelled against that name
+// directly instead of through a linker alias.
+class Rva00458450
+{
+public:
+	void operator=(const Rva00458450 &that);
+};
 
 class UpgradeTemplate;
 
@@ -189,16 +197,25 @@ ExperienceLevel &ExperienceLevel::operator=(const ExperienceLevel &that)
 	if (&that == this)
 		return *this;
 
+	// m_selectionDecal is assigned twice in retail; both calls reach the
+	// assignment body at 0x00458450 through ILT 0x00015744.  The stand-in
+	// RadiusDecalTemplate keeps its own constructor and destructor names, so
+	// the assignment is called through the verified Rva00458450 identity.
+	typedef void (Rva00458450::*SelectDecalAssign)(const Rva00458450 &source);
+	SelectDecalAssign assignSelectionDecal = &Rva00458450::operator=;
+
 	m_name = that.m_name;
 	m_requiredExperience = that.m_requiredExperience;
 	m_experienceAward = that.m_experienceAward;
 	m_experienceAwardOwnGuysDie = that.m_experienceAwardOwnGuysDie;
 	m_targetNames = that.m_targetNames;
-	m_selectionDecal = that.m_selectionDecal;
+	((*(Rva00458450 *)(void *)&m_selectionDecal).*assignSelectionDecal)(
+		*(const Rva00458450 *)(const void *)&that.m_selectionDecal);
 	m_levelUpTintColor = that.m_levelUpTintColor;
 	m_levelUpOCL = that.m_levelUpOCL;
 	m_modelConditionState = that.m_modelConditionState;
-	m_selectionDecal = that.m_selectionDecal;
+	((*(Rva00458450 *)(void *)&m_selectionDecal).*assignSelectionDecal)(
+		*(const Rva00458450 *)(const void *)&that.m_selectionDecal);
 	m_showLevelUpTint = that.m_showLevelUpTint;
 	AsciiStringVector *attributeModifiers = &m_attributeModifiers;
 	m_levelUpTintPreColorTime = that.m_levelUpTintPreColorTime;
