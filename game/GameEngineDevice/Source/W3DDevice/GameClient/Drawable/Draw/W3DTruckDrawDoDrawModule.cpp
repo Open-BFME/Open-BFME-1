@@ -1,5 +1,14 @@
-// ?d_00781660@@YAXXZ
-// partial score=0.9977431730986234 date=2026-09-26
+
+// The vtable at VA 0x011265B0 slot 9 contains ILT RVA 0x0001A041.
+// The matched constructor at RVA 0x0077FB20 installs that vtable.
+// The ILT jumps to this 4,431-byte body at RVA 0x00781660.
+
+// The first cab rotation reads matrix[0][1] through a volatile reference.
+// The probe shows that this emits retail's two x87 operand sequences.
+
+// This TU also defines Drawable::getWheelInfo at RVA 0x0077F6B0. Its matched
+// 17-byte body stays visible while MSVC compiles doDrawModule.
+
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WWAudio /Igame/Libraries/Source/Compression /Iinputs/reference/shims/sweep
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -18,17 +27,8 @@
 **	You should have received a copy of the GNU General Public License
 **	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-// Recovered BFME W3DTruckDraw::doDrawModule, RVA 0x00781660, 4431 bytes.
-// Ten x87 operand bytes remain different; this bank is not a source claim.
-// Native headers supply strings, coordinates, matrices, and render objects.
-// See targets/game/reverse/attempt_support/0x00781660-20260926.md.
-// Drawable::getWheelInfo must remain visible: its exact 17-byte body supplies
-// alias information that recovers the caller's integer register allocation.
-// It currently lives in DrawableFields.cpp; move its ledger/source ownership
-// alongside this body only when landing, rather than defining it twice.
-// The W3DTankTruckDraw cast below is the existing callee's legacy typed view.
-// Its 436-byte createEmitters body and no-argument thiscall ABI were verified
-// independently; that legacy name is not evidence for this caller's owner.
+// The W3DTankTruckDraw cast names the legacy typed view of the matched
+// createEmitters callee. It does not name this caller's owner.
 #include "basetype.h"
 #include "ascii_string.h"
 #include "rendobj.h"
@@ -212,6 +212,23 @@ public:
     Drawable *getDrawable() const { return drawable; }
     virtual void doDrawModule(const Matrix3D *);
 };
+static __forceinline void Rva00781660RotateCabZ(Matrix3D &matrix, float theta)
+{
+	float tmp1, tmp2;
+	float c, s;
+	c = cosf(theta);
+	s = sinf(theta);
+	tmp1 = matrix[0][0];
+	matrix[0][0] = (float)(c * tmp1 + s * (*(volatile float *)&matrix[0][1]));
+	matrix[0][1] = (float)(-s * tmp1 + c * (*(volatile float *)&matrix[0][1]));
+	tmp1 = matrix[1][0]; tmp2 = matrix[1][1];
+	matrix[1][0] = (float)(c * tmp1 + s * tmp2);
+	matrix[1][1] = (float)(-s * tmp1 + c * tmp2);
+	tmp1 = matrix[2][0]; tmp2 = matrix[2][1];
+	matrix[2][0] = (float)(c * tmp1 + s * tmp2);
+	matrix[2][1] = (float)(-s * tmp1 + c * tmp2);
+}
+
 void W3DTruckDraw::doDrawModule(const Matrix3D* transformMtx)
 {
 
@@ -268,7 +285,7 @@ void W3DTruckDraw::doDrawModule(const Matrix3D* transformMtx)
 		float deltaAngle = desiredAngle - m_curCabRotation;
 		deltaAngle *= moduleData->m_rotationDampingFactor;
 		m_curCabRotation += deltaAngle;
-		cabXfrm.Rotate_Z(m_curCabRotation);
+		Rva00781660RotateCabZ(cabXfrm, m_curCabRotation);
 		getRenderObject()->Capture_Bone( m_cabBone );
 		getRenderObject()->Control_Bone( m_cabBone, cabXfrm );
 		if (m_trailerBone && wheelInfo) {
