@@ -1,10 +1,13 @@
 // cl: /DNDEBUG /MD /EHsc
 // Clean C++ reconstruction of MaterialInfoClass::MaterialInfoClass().
 
-extern "C" void *bfmeVftDynamicVectorClassVertexMaterialClass[];
-extern "C" void *bfmeVftDynamicVectorClassBfmeHandleCX[];
-#pragma comment(linker, "/alternatename:_bfmeVftDynamicVectorClassVertexMaterialClass=??_7?$DynamicVectorClass@PAVVertexMaterialClass@@@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftDynamicVectorClassBfmeHandleCX=??_7?$DynamicVectorClass@VBfmeHandleCX@@@@6B@")
+// Retail vftables 0x0113C614 and 0x0113C62C
+// (targets/game/reverse/dir32_addresses.csv): DynamicVectorClass<VertexMaterialClass*>
+// and DynamicVectorClass<BfmeHandleCX>. The declarations carry no C++ name:
+// __identifier spells the retail symbol exactly, so the stores below reference
+// the defining name directly.
+extern "C" int __identifier("??_7?$DynamicVectorClass@PAVVertexMaterialClass@@@@6B@")[];
+extern "C" int __identifier("??_7?$DynamicVectorClass@VBfmeHandleCX@@@@6B@")[];
 
 class TextureClass
 {
@@ -55,7 +58,7 @@ public:
 		*(unsigned int *)(self + 8) = 0;
 		*(unsigned char *)(self + 0x0c) = 1;
 		*(unsigned char *)(self + 0x0d) = 0;
-		*(unsigned int *)self = (unsigned int)bfmeVftDynamicVectorClassVertexMaterialClass;
+		*(unsigned int *)self = (unsigned int)__identifier("??_7?$DynamicVectorClass@PAVVertexMaterialClass@@@@6B@");
 		*(unsigned int *)(self + 0x14) = 10;
 		*(unsigned int *)(self + 0x10) = 0;
 	}
@@ -72,7 +75,7 @@ public:
 		: TextureVectorBaseCtorShim(0, 0)
 	{
 		*(unsigned int *)((unsigned char *)this + 0x10) = 0;
-		*(unsigned int *)this = (unsigned int)bfmeVftDynamicVectorClassBfmeHandleCX;
+		*(unsigned int *)this = (unsigned int)__identifier("??_7?$DynamicVectorClass@VBfmeHandleCX@@@@6B@");
 		*(unsigned int *)((unsigned char *)this + 0x14) = 10;
 	}
 	~TextureVector();
