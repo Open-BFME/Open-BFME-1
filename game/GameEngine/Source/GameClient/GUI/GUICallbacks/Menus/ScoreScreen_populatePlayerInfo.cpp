@@ -566,6 +566,13 @@ struct Rva004E5DF0Stats
 
 typedef char CheckResponseSize[sizeof(PSResponse)==0x1f0 ? 1:-1];
 #include <bitset>
+
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+// Retail inlines ~UnicodeString: temporaries are released by a direct call to
+// StringBase<unsigned short>::releaseBuffer (0x008881D0), not the ??1UnicodeString stub.
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 class PlayerList; extern PlayerList* ThePlayerList;
 enum
 {

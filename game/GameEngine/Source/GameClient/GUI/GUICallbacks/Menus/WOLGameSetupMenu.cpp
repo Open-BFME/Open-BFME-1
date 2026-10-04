@@ -1074,6 +1074,13 @@ extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
 #include "GameNetwork/GUIUtil.h"
 #include "GameNetwork/GameSpy/GSConfig.h"
 
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+// Retail inlines ~UnicodeString: temporaries are released by a direct call to
+// StringBase<unsigned short>::releaseBuffer (0x008881D0), not the ??1UnicodeString stub.
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 // Complete local objects and by-value argument extents witnessed in retail.
 typedef char BfmeWolPeerResponseSize[sizeof(PeerResponse) == 0x330 ? 1 : -1];
 typedef char BfmeWolPeerRequestSize[sizeof(PeerRequest) == 0x194 ? 1 : -1];
