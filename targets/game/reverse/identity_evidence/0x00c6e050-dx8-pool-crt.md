@@ -9,3 +9,17 @@ The callbacks are independently established ObjectPoolClass destructors. DEFINE_
 Independent existing native COFF inspection established complete40-byte equality after both real DIR32 relocations plus operator-delete REL32 were applied, not masked similarity. Fresh scoped verification supplies the acceptance receipt. No new pool definition, semantic rename, pin, header, shim, or data row is introduced.
 
 LIMITATION: existing game mempool.h has a16-byte generic declaration while BFME native pool allocation bodies expose locking at offset0x10. This packet changes no source or globals and these callbacks never access that lock. Registration and callback code ownership are verified only; complete pool extent, static-data acceptance, runtime/layout correctness, whole-image linkage are expressly unresolved and not claimed.
+
+
+## Current compiler binding correction (2026-10-04)
+
+The source is unchanged (SHA256 `ebdf01492ec9a6913a303add874401a843ac368c0cf4b6d122f28e27fba79bf4`). Upstream VertexMaterial allocator-macro cleanup changes compiler-generated ordinal numbering; it does not change these native bodies. The original object-bound evidence above remains historical evidence. Current-object bindings were independently checked against complete retail code bytes, actual COFF relocations, CRT slots, and callback boundaries.
+
+| Retail RVA | Previous object binding | Current object binding | Native extent |
+| --- | --- | --- | --- |
+| `0x00C6E050` | `_$E22` | `_$E21` | 12 bytes |
+| `0x00C6E060` | `_$E25` | `_$E24` | 12 bytes |
+| `0x00C71350` | `_$E23` | `_$E22` | 40 bytes |
+| `0x00C71380` | `_$E26` | `_$E25` | 40 bytes |
+
+Only the ledger object-symbol bindings change. Retail identities, extents, source, pins, data declarations, and row order remain unchanged. No new code, static-data, or runtime-layout coverage is claimed. Review: literal-a/build/dx8-final75-analysis/receipt.json SHA5e9d6a2d961b05eb52c7eaf6949fb7a9c9c74f8f568d22500fb91399f6f4b757.
