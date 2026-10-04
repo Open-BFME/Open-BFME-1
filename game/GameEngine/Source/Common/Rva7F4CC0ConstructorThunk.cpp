@@ -1,5 +1,7 @@
-extern "C" const void *bfmeVftRva007F6D60Member2C[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva007F6D60Member2C=??_7Rva007F6D60Member2C@@6B@")
+// 0x011296B0 is the vftable Rva007F6D60ChildConstructor.cpp emits (ledger
+// dir32 row ??_7Rva007F6D60Member2C@@6B@); bfmeVftRva007F6D60Member2C was a
+// stand-in spelling, now named directly.
+extern "C" void *__identifier("??_7Rva007F6D60Member2C@@6B@")[];
 
 class SnapshotDupReplica
 {
@@ -38,5 +40,5 @@ struct Rva7F4CC0ConstructorThunk : Rva7F4CC0Primary
 	replica[2] = 0;
 	replica[3] = 0;
 	replica[1] = 0;
-	replica[0] = (unsigned int)bfmeVftRva007F6D60Member2C;
+	replica[0] = (unsigned int)__identifier("??_7Rva007F6D60Member2C@@6B@");
 }
