@@ -210,12 +210,15 @@ extern WindowManager *g_rva012F19E8WindowManager;
 extern GameTextInterface *TheGameText;
 extern BfmeAptScreenMapTransfer *g_rva012F496CBfmeAptScreenMapTransfer;
 extern const unsigned short BFMEEmptyString[];
-extern "C" void *bfmeVftRva0050FD90[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva0050FD90=??_7Rva0050FD90@@6B@")
+// Retail vftable for Rva0050FD90 (recorded as ??_7Rva0050FD90@@6B@ at
+// 0x01104FF8, targets/game/reverse/dir32_addresses.csv). Named directly
+// through __identifier, so the object references the retail symbol and needs
+// no linker alias.
+extern "C" void *__identifier("??_7Rva0050FD90@@6B@")[];
 
 BfmeAptScreenMapTransfer::BfmeAptScreenMapTransfer( void *context )
 {
-	*(void **)this = bfmeVftRva0050FD90;
+	*(void **)this = __identifier("??_7Rva0050FD90@@6B@");
 	m_game = (GameInfo *)context;
 	if( g_rva012F496CBfmeAptScreenMapTransfer )
 		return;
