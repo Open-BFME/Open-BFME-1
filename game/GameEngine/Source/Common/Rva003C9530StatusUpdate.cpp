@@ -30,14 +30,15 @@ extern void d_003c9470();
 class Object
 {
 public:
-    Rva003C9530Status getStatusBits() const;
-
-public:
     char m_pad00[ 0x8C ];
     unsigned char m_flag;
 };
 
-#pragma comment(linker, "/alternatename:?getStatusBits@Object@@QBE?AV?$BitFlags@$0CN@@@@XZ=?j_00017dfa@@YAXXZ")
+// Retail's getStatusBits call goes through the ILT thunk at 0x00017dfa, which
+// expects the hidden struct-return slot ahead of `this` and returns that slot
+// in eax; the local `bits` temp supplies the slot, exactly as the sret temp the
+// direct struct-returning call would have allocated.
+extern void j_00017dfa();
 
 class Rva003C9530Key
 {
@@ -60,7 +61,15 @@ bool Rva003C9530Owner::updateStatus( Rva003C9530Key *key,
 
     if( object->m_flag )
     {
-        *status = object->getStatusBits();
+        Rva003C9530Status bits;
+        typedef Rva003C9530Status * ( Object::*StatusBits )( Rva003C9530Status * ) const;
+        union
+        {
+            void (*plain)();
+            StatusBits member;
+        } target;
+        target.plain = j_00017dfa;
+        *status = *( object->*target.member )( &bits );
         return true;
     }
 
