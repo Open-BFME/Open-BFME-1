@@ -14,8 +14,6 @@ enum ObjectScriptStatusBit { OBJECT_STATUS_SCRIPT_DISABLED = 0x01 };
 typedef int Int;
 typedef bool Bool;
 
-#pragma comment(linker, "/alternatename:?_bfme_nextInInstanceList@BfmeTeamInstanceLink@@QAEPAV1@XZ=?j_00022a70@@YAXXZ")
-
 class BfmeObjNotify3F0
 {
 public:
@@ -50,6 +48,15 @@ struct Rva000D22A0ObjectDlinkPmf
 };
 
 extern void j_00001140(void);
+extern void j_00022a70();
+
+static BfmeTeamInstanceLink *bfmeNextTeamInstanceLink(BfmeTeamInstanceLink *link)
+{
+	typedef BfmeTeamInstanceLink *(BfmeTeamInstanceLink::*Function)();
+	union { void (*raw)(void); Function member; } fn;
+	fn.raw = j_00022a70;
+	return (reinterpret_cast<BfmeTeamInstanceLink *>(link)->*fn.member)();
+}
 
 class Overridable
 {
@@ -121,8 +128,8 @@ public:
 	void advance()
 	{
 		if (m_cur)
-			m_cur = (Rva000D22A0TeamView *)
-				((BfmeTeamInstanceLink *)m_cur)->_bfme_nextInInstanceList();
+			m_cur = (Rva000D22A0TeamView *)bfmeNextTeamInstanceLink(
+				(BfmeTeamInstanceLink *)m_cur);
 	}
 
 private:
