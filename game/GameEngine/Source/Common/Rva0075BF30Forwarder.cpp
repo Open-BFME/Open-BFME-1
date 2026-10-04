@@ -13,10 +13,19 @@
 // them: the local dies at the closing brace, so VC7.1 schedules both loads
 // ahead of the spill instead of anchoring the spill to the statement.
 
+// Retail calls the flag value through incremental-link thunk 0x0002CA61.
+extern void j_0002ca61();
+
 class ObjectAttemptDamageFlagHook
 {
 public:
-	int value();
+	int value()
+	{
+		typedef int (ObjectAttemptDamageFlagHook::*Fn)();
+		union { void (*raw)(); Fn member; } fn;
+		fn.raw = j_0002ca61;
+		return (this->*fn.member)();
+	}
 
 	unsigned char m_bfmeHeadZD[0x38];
 	unsigned char m_bfmeAtZD[0xc];

@@ -30,10 +30,19 @@ public:
 	void apply(DamageInfo *damageInfo);
 };
 
+// Retail calls the flag value through incremental-link thunk 0x0002CA61.
+extern void j_0002ca61();
+
 class ObjectAttemptDamageFlagHook
 {
 public:
-	int value();
+	int value()
+	{
+		typedef int (ObjectAttemptDamageFlagHook::*Fn)();
+		union { void (*raw)(); Fn member; } fn;
+		fn.raw = j_0002ca61;
+		return (this->*fn.member)();
+	}
 };
 
 // Existing clean source owns this method at 0x00414010; the retail call here
