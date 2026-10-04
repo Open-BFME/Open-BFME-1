@@ -68,7 +68,6 @@ class Gen_00417cb0
 {
 public:
 	void cleanup(bool incoming);
-	void tail(void *param);
 
 private:
 	unsigned char m_bfmeHead[0x10C];
@@ -78,7 +77,7 @@ private:
 	BfmeAudioSlot *m_bfmeSecond;		// +0x148
 };
 
-#pragma comment(linker, "/alternatename:?tail@Gen_00417cb0@@QAEXPAX@Z=?j_000294b5@@YAXXZ")
+extern void j_000294b5();				// ILT 0x000294B5 to body 0x00417A70
 
 // ?cleanup@Gen_00417cb0@@QAEX_N@Z
 void Gen_00417cb0::cleanup(bool incoming)
@@ -101,5 +100,9 @@ void Gen_00417cb0::cleanup(bool incoming)
 	}
 
 	if (incoming)
-		tail(0);
+	{
+		typedef void (Gen_00417cb0::*Tail)(void *);
+		union { void (*fn)(); Tail call; } tail = { j_000294b5 };
+		(this->*tail.call)(0);
+	}
 }
