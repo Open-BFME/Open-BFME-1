@@ -16378,5 +16378,65 @@
   "after_sha256": "04bc88e3b19dc8f8bca3e6586fc0a4f202abe359e2ad5769ad91563e8eb54ef2",
   "evidence": "targets/game/reverse/identity_evidence/model-condition-names-00ea6918.md",
   "reason": "The old free const-pointer array was an unowned reconstructed view, not a recovered declaration: independent ZH owns mutable pointers as BitFlags::s_bitNameList, and writable retail .data plus BFME readers prove only a 304-name sequence with NULL. Keep the semantic descriptor and add its exact RVA to identify the new conservative structural owner without asserting original BFME constness, class ownership or broader allocation. No old-symbol alias is introduced."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000b5710.cpp",
+  "new_path": "game/GameEngine/Source/Common/Audio/DynamicAudioEventInfo.cpp",
+  "old_name": "run",
+  "new_name": "Rva000AF9A0",
+  "before_sha256": "5a25dae5c4ccf4d3dcbd6bf1b3f97d5c9a7f0f3fcebaa293bcdbec698cfa7cdf",
+  "after_sha256": "49e5d1684f80b7a1848433725314faf3f4a2f3da691c38cc395804f2e0beb184",
+  "evidence": "targets/game/reverse/identity_evidence/000b5710-dynamic-audio-xfer.md",
+  "reason": "The old 609-byte bank entry run is now the independently identified DynamicAudioEventInfo::xferNoName. Token alignment pairs it with a separate ten-byte scalar helper; no descriptive run identity belongs to that helper. The dictionary caller, original-name handling, constructor/vtable chain and Xfer ABI establish the actual owner."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "m",
+  "new_name": "Rva000AF9C0",
+  "before_sha256": "0a25e3d3a8bcbd1fffc96abdfcdf3403801fca64cff03ae43c14c1613149f10d",
+  "after_sha256": "0c00f641da1e7099e821ad841ab2becfcfdf507e35eb3724c2d01207c928588a",
+  "evidence": "targets/game/reverse/identity_evidence/000b5710-dynamic-audio-xfer.md",
+  "reason": "The generated Gen_ scalar setter used generic m and an int argument without an independent method identity. Original ambient dictionary calls return float in ST0 and forward its bits to this helper. Preserve an address-qualified method because the unavailable base-setter spelling is not proved by the byte match."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "PhysicsBehavior",
+  "new_name": "Rva000B5710Owner",
+  "before_sha256": "0ea037fd479d0bd350064103c9a1da54f89420ef94cead5d11fcb12a8c38cd34",
+  "after_sha256": "d22ca87db70755ad20c5c87f9dd753469b0a99a9c4a5cbd0d85e54b11f81d62c",
+  "evidence": "targets/game/reverse/identity_evidence/000b5710-dynamic-audio-xfer.md",
+  "reason": "Independent original references through ILT0001AD2A are only the audio transfer and native dynamic-audio max-range override. Literal-backed INI MaxRange field +78 and dictionary float return prove an AudioEventInfo field store, not PhysicsBehavior::setExtraBounciness. Keep the helper address-qualified; the real base-setter spelling is unavailable."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "setExtraBounciness",
+  "new_name": "Rva000AF9D0",
+  "before_sha256": "0ea037fd479d0bd350064103c9a1da54f89420ef94cead5d11fcb12a8c38cd34",
+  "after_sha256": "d22ca87db70755ad20c5c87f9dd753469b0a99a9c4a5cbd0d85e54b11f81d62c",
+  "evidence": "targets/game/reverse/identity_evidence/000b5710-dynamic-audio-xfer.md",
+  "reason": "Independent original references through ILT0001AD2A are only the audio transfer and native dynamic-audio max-range override. Literal-backed INI MaxRange field +78 and dictionary float return prove an AudioEventInfo field store, not PhysicsBehavior::setExtraBounciness. Keep the helper address-qualified; the real base-setter spelling is unavailable."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "m",
+  "new_name": "Rva000AF9A0",
+  "before_sha256": "1a3441d8cf635ec8f8416cc679f309df6bb7ef8fad42d3914486c8daaa25cf7d",
+  "after_sha256": "e5b95743d19669866a91d1a5ad7b41026ff8581d0612fee8aff0dc7c14293289",
+  "evidence": "targets/game/reverse/identity_evidence/000b5710-dynamic-audio-xfer.md",
+  "reason": "The generated Gen_ scalar setter used generic m and an int argument without an independent method identity. Original ambient dictionary calls return float in ST0 and forward its bits to this helper. Preserve an address-qualified method because the unavailable base-setter spelling is not proved by the byte match."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "m",
+  "new_name": "Rva000AF9B0",
+  "before_sha256": "80c5474c5d58f20dfc15b1f6b8f83aafa69e292f184450edf04d67940eb6a1e9",
+  "after_sha256": "8a2898778b476bb55e8dd1973dd25f4b1c671fd9b286c597a123b817ee8f6ba5",
+  "evidence": "targets/game/reverse/identity_evidence/000b5710-dynamic-audio-xfer.md",
+  "reason": "The generated Gen_ scalar setter used generic m and an int argument without an independent method identity. Original ambient dictionary calls return float in ST0 and forward its bits to this helper. Preserve an address-qualified method because the unavailable base-setter spelling is not proved by the byte match."
  }
 ]
