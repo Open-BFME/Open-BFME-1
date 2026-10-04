@@ -19,8 +19,25 @@ public:
 	void finish();
 };
 
-#pragma comment(linker, "/alternatename:?invoke@S4Sink004135C0@@QAEXABVAsciiString@@_NHHH@Z=?j_000391c6@@YAXXZ")
-#pragma comment(linker, "/alternatename:?finish@S4Sink004135C0@@QAEXXZ=?j_0001a64f@@YAXXZ")
+// Retail calls the drawable's invoke/finish through the incremental-link
+// thunks at ILT 0x000391C6 and ILT 0x0001A64F, so the callee is named
+// directly and dispatched through a member pointer of the same signature.
+extern void j_000391c6();
+extern void j_0001a64f();
+
+static __forceinline void sink_invoke(S4Sink004135C0 *sink, const AsciiString &name, bool a, int b, int c, int d)
+{
+	typedef void (S4Sink004135C0::*Invoke)(const AsciiString &, bool, int, int, int);
+	union { void (*fn)(); Invoke call; } u = { j_000391c6 };
+	(sink->*u.call)(name, a, b, c, d);
+}
+
+static __forceinline void sink_finish(S4Sink004135C0 *sink)
+{
+	typedef void (S4Sink004135C0::*Finish)();
+	union { void (*fn)(); Finish call; } u = { j_0001a64f };
+	(sink->*u.call)();
+}
 
 class Object
 {
@@ -40,7 +57,14 @@ public:
 	bool testStatus(int) const;
 };
 
-#pragma comment(linker, "/alternatename:?testStatus@Object@@QBE_NH@Z=?j_000016a4@@YAXXZ")
+extern void j_000016a4();
+
+static __forceinline bool object_test_status(const Object *object, int status)
+{
+	typedef bool (Object::*TestStatus)(int) const;
+	union { void (*fn)(); TestStatus call; } u = { j_000016a4 };
+	return (object->*u.call)(status);
+}
 
 class Rva001F6960
 {
@@ -48,7 +72,14 @@ public:
 	void apply(S4Sink004135C0 *, int);
 };
 
-#pragma comment(linker, "/alternatename:?apply@Rva001F6960@@QAEXPAVS4Sink004135C0@@H@Z=?j_0002e64a@@YAXXZ")
+extern void j_0002e64a();
+
+static __forceinline void rva_apply(Rva001F6960 *self, S4Sink004135C0 *sink, int mode)
+{
+	typedef void (Rva001F6960::*Apply)(S4Sink004135C0 *, int);
+	union { void (*fn)(); Apply call; } u = { j_0002e64a };
+	(self->*u.call)(sink, mode);
+}
 
 // Retail spells this global `GlobalData *TheWritableGlobalData`; this TU only
 // reads the time of day, so it keeps a local view of that field and casts.
@@ -103,33 +134,33 @@ UpdateSleepTime BuildingBehavior::update()
 		AsciiString *name = moduleData->m_names;
 		for (int i = 0; i < 4; ++i)
 		{
-			sink->invoke(*name, false, 1, 0, 0);
+			sink_invoke(sink, *name, false, 1, 0, 0);
 			++name;
 		}
 		LocalGlobalDataView *global = (LocalGlobalDataView *)TheWritableGlobalData;
 		if (global->m_timeOfDay == 4)
-			sink->invoke(moduleData->m_names[0], true, 1, 0, 0);
-		((Rva001F6960 *)((char *)this - 0x10))->apply(sink, 0);
+			sink_invoke(sink, moduleData->m_names[0], true, 1, 0, 0);
+		rva_apply((Rva001F6960 *)((char *)this - 0x10), sink, 0);
 		m_needsRefresh = false;
-		sink->finish();
+		sink_finish(sink);
 	}
 
 	if (!m_started)
 	{
-		if (object->testStatus(10))
+		if (object_test_status(object, 10))
 		{
 			m_started = true;
 			for (int i = 0; i < 4; ++i)
 			{
 				if (((LocalGlobalDataView *)TheWritableGlobalData)->m_timeOfDay == 4 && i == 3)
-					sink->invoke(moduleData->m_names[i], true, 1, 0, 0);
+					sink_invoke(sink, moduleData->m_names[i], true, 1, 0, 0);
 				else if (i == 1 || i == 2)
-					sink->invoke(moduleData->m_names[i], true, 1, 0, 0);
+					sink_invoke(sink, moduleData->m_names[i], true, 1, 0, 0);
 				else
-					sink->invoke(moduleData->m_names[i], false, 1, 0, 0);
+					sink_invoke(sink, moduleData->m_names[i], false, 1, 0, 0);
 			}
-			((Rva001F6960 *)((char *)this - 0x10))->apply(sink, 1);
-			sink->finish();
+			rva_apply((Rva001F6960 *)((char *)this - 0x10), sink, 1);
+			sink_finish(sink);
 			return UPDATE_SLEEP_NONE;
 		}
 	}
@@ -138,20 +169,20 @@ UpdateSleepTime BuildingBehavior::update()
 
 	if (m_started)
 	{
-		if (object->testStatus(10))
+		if (object_test_status(object, 10))
 			return UPDATE_SLEEP_NONE;
 		m_started = false;
 		AsciiString *name = moduleData->m_names;
 		for (int i = 0; i < 4; ++i)
 		{
-			sink->invoke(*name, false, 1, 0, 0);
+			sink_invoke(sink, *name, false, 1, 0, 0);
 			++name;
 		}
 		LocalGlobalDataView *global = (LocalGlobalDataView *)TheWritableGlobalData;
 		if (global->m_timeOfDay == 4)
-			sink->invoke(moduleData->m_names[0], true, 1, 0, 0);
-		((Rva001F6960 *)((char *)this - 0x10))->apply(sink, 0);
-		sink->finish();
+			sink_invoke(sink, moduleData->m_names[0], true, 1, 0, 0);
+		rva_apply((Rva001F6960 *)((char *)this - 0x10), sink, 0);
+		sink_finish(sink);
 	}
 	return UPDATE_SLEEP_NONE;
 }
