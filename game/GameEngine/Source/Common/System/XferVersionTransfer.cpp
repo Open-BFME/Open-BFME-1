@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/GameEngine/Source/Common/System
 #include "xfer.h"
 
+void __cdecl operator delete[](void *);
+
 class Rva009D6430XferView
 {
 public:
@@ -67,6 +69,12 @@ XferException::XferException(const XferException &that)
 {
     text = 0;
     ((Rva00065C50Owner *)this)->attach((void *)&that);
+}
+
+// Native ThrowInfo unwind at 00040804 routes to this ten-byte destructor.
+XferException::~XferException(void)
+{
+    ::operator delete[](text);
 }
 
 Xfer &Xfer::operator==(Version &v)
