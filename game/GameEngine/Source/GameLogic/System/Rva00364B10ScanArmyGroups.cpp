@@ -62,8 +62,6 @@ public:
 class Overridable
 {
 public:
-	const Overridable *getFinalOverride() const;
-
 	void *m_vtable;
 	Overridable *m_nextOverride;
 	char m_unmodelled08[ 0x18 ];
@@ -72,7 +70,7 @@ public:
 
 // The retail call is the ILT at 0x000022BB; its body is the resolved
 // ?getFinalOverride@Overridable@@QBEPBV1@XZ at 0x00087A80.
-#pragma comment( linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ" )
+extern void j_000022bb();
 
 class Rva00364B10Summary
 {
@@ -117,7 +115,6 @@ class LivingWorldArmy
 {
 public:
 	virtual ~LivingWorldArmy();
-	AsciiString getName() const;
 
 	char m_unmodelled04[ 0x2C ];
 	Rva00364B10ArmyVector m_armies;
@@ -131,8 +128,8 @@ public:
 	char m_unmodelled7C[ 0x38 ];
 };
 
-// ?getName@LivingWorldArmy@@QBE?AVAsciiString@@XZ
-#pragma comment( linker, "/alternatename:?getName@LivingWorldArmy@@QBE?AVAsciiString@@XZ=?j_000041d3@@YAXXZ" )
+// The retail call is the ILT at 0x000041D3.
+extern void j_000041d3();
 
 class Rva00364B10ArmyGroup
 {
@@ -193,11 +190,17 @@ int Rva00364B10LivingWorldPlayerArmyCollection::scanArmyGroups(
 			{
 				do
 				{
-					if( army->getName().compare( expected ) == 0 )
+					typedef AsciiString ( LivingWorldArmy::*NameFn )() const;
+					union { void (*fn)(); NameFn call; } nameThunk = { j_000041d3 };
+					if( ( army->*nameThunk.call )().compare( expected ) == 0 )
 					{
 						Overridable *override = *reinterpret_cast<Overridable **>( reinterpret_cast<char *>( summary ) + 4 );
 						if( override != 0 && override->m_nextOverride != 0 )
-							override = (Overridable *)override->m_nextOverride->getFinalOverride();
+						{
+							typedef const Overridable *( Overridable::*FinalOverrideFn )() const;
+							union { void (*fn)(); FinalOverrideFn call; } overrideThunk = { j_000022bb };
+							override = (Overridable *)(override->m_nextOverride->*overrideThunk.call)();
+						}
 
 						if( override->m_name.compare( "RohanSamWithFrodoPowers", 0x17 ) == 0 )
 						{
