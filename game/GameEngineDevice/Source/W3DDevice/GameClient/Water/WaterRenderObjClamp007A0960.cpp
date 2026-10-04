@@ -1,7 +1,10 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
 // RVA 0x007A0960; established WaterRenderObjClass helper called by init and
 // replaceSkyboxTexture. Retail RenderObjClass material-info slot is +0x150.
-// Get_Texture returns a four-byte handle (007A0340: output store and ret 8).
+// All three retail calls go through ILT 000366DD to Gen_007A0340::bfmeGet.
+// ECX is material; stack args are a hidden four-byte result buffer and index.
+// The provider retains the pointed-to object at +4 (WORD) and returns with ret 8.
+// Keep the caller's Release_Ref cleanup and native owning-handle lifetimes.
 // The condition handle lives through the if body; each filter expression has
 // a distinct temporary cleanup. getFilter can throw: retain its EH states.
 // MaterialInfo: refcount +4 and texture count +0x30, read directly by retail.
@@ -41,12 +44,20 @@ public:
 
 };
 
+class Gen_007A0340
+{
+public:
+	BfmeHandleCX bfmeGet(int index) const;
+
+private:
+	int m_bfmeHead[9];					// +0x00
+	BfmeHandleCX *m_bfmeSlots;				// +0x24
+};
+
 class MaterialInfoClass
 {
 public:
 	virtual void v00();
-
-	BfmeHandleCX Get_Texture(Int index) const;
 
 	Int m_refCount;
 	char m_pad08[0x28];
@@ -154,13 +165,13 @@ void WaterRenderObjClass::clamp007A0960(RenderObjClass *mesh)
 	MaterialInfoClass *material = mesh->Get_Material_Info();
 
 	for (Int i = 0; i < material->m_textureCount; i++) {
-		BfmeHandleCX check = material->Get_Texture(i);
+		BfmeHandleCX check = ((const Gen_007A0340 *)material)->bfmeGet(i);
 		if (check.m_texture) {
 			{
-				material->Get_Texture(i).getFilter()->m_uAddrMode = 1;
+				((const Gen_007A0340 *)material)->bfmeGet(i).getFilter()->m_uAddrMode = 1;
 			}
 			{
-				material->Get_Texture(i).getFilter()->m_vAddrMode = 1;
+				((const Gen_007A0340 *)material)->bfmeGet(i).getFilter()->m_vAddrMode = 1;
 			}
 		}
 	}
