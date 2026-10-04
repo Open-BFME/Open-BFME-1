@@ -1,5 +1,5 @@
 // ?bfmeRunEQT@BfmeObjEQT@@QAEDPAX@Z
-// partial score=0.5758 date=2026-10-03
+// partial score=0.6932 date=2026-10-04
 struct Coord3D
 {
 	float x;
@@ -128,7 +128,8 @@ char BfmeObjEQT::bfmeRunEQT(void *arg)
 	_ReadWriteBarrier();
 	object = (Object *)arg;
 	const Coord3D *objectPosition = object->getPosition();
-	Coord3D victimPos = *objectPosition;
+	Coord3D victimPos;
+	victimPos.set(objectPosition);
 	*(unsigned int *)((unsigned char *)&origin + 8) = originZ;
 
 	Overridable *objectTemplate = (Overridable *)object->m_template;
