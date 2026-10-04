@@ -137,15 +137,29 @@ public:
 
 extern AudioManager *TheAudio;
 
-class Gen_001FE050;
+class FlagPairTarget;
+
+// TU-local ABI view of the existing provider in Gen002B2080Handle.cpp.
+class Gen_001F61B0
+{
+private:
+	void bfmeAccept(BfmeSeedTarget *target);
+	friend class Gen002B2080;
+};
+
+class Gen002B2080 : public Gen_001F61B0
+{
+public:
+	void handle(FlagPairTarget *target);
+
+private:
+	unsigned char m_beforeValue[0x14];
+	unsigned int m_value14;
+	int m_value18;
+};
 
 class Gen_001ED0C0
 {
-	friend class Gen_001FE050;
-
-	private:
-	void bfmeAccept(BfmeSeedTarget *target);
-
 private:
 	char m_bfmeBase[0x24];
 };
@@ -181,7 +195,10 @@ void Gen_001FE050::bfmeSeed(BfmeSeedTarget *target)
 	pair.second = 4;
 
 	target->bfmeSeed(&pair);
-	bfmeAccept(target);
+	// Retail +0x22 calls ILT 0x44C1 -> 0x2B2080 with this unchanged
+	// in ECX and target as its sole stack argument (provider returns ret 4).
+	reinterpret_cast<Gen002B2080 *>(this)->handle(
+		reinterpret_cast<FlagPairTarget *>(target));
 	target->takeAt8c(&m_bfmeItem30);
 	target->takeAt6c(&m_bfmeItem28);
 	target->takeAt8c(&m_bfmeItem31);
