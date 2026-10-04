@@ -1373,36 +1373,7 @@ void LANAPI::addGame( LANGameInfo *game )
 	}
 }
 
-// ?addPlayer@LANAPI@@IAEXPAVLANPlayer@@@Z present-unmatched
-void LANAPI::addPlayer( LANPlayer *player )
-{
-	if (!m_lobbyPlayers)
-	{
-		m_lobbyPlayers = player;
-		player->setNext(NULL);
-		return;
-	}
-	else
-	{
-		if (player->getName().compareNoCase(m_lobbyPlayers->getName()) < 0)
-		{
-			player->setNext(m_lobbyPlayers);
-			m_lobbyPlayers = player;
-			return;
-		}
-		else
-		{
-			LANPlayer *p = m_lobbyPlayers;
-			while (p->getNext() && p->getNext()->getName().compareNoCase(player->getName()) > 0)
-			{
-				p = p->getNext();
-			}
-			player->setNext(p->getNext());
-			p->setNext(player);
-			return;
-		}
-	}
-}
+// ?addPlayer@LANAPI@@IAEXPAVLANPlayer@@@Z lives in LANAPIAddPlayer.cpp (retail 0x00686FD0).
 
 // ?SetLocalIP@LANAPI@@UAE_NI@Z present-unmatched
 Bool LANAPI::SetLocalIP( UnsignedInt localIP )
