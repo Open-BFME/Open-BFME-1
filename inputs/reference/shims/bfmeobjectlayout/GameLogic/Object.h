@@ -588,7 +588,9 @@ public:
 	ObjectShroudStatus getShroudedStatus(Int playerIndex) const;
 
 	DisabledMaskType getDisabledFlags() const { return m_disabledMask; }
-	Bool isDisabled() const { return m_disabledMask.any(); }
+	// Retail's inline COMDAT (0x161D70) is `mov edx,[ecx+0x1A4]; test edx,edx; setne al`; m_disabledMask sits at
+	// +0x130 here, so only the accessor reads retail's offset.
+	Bool isDisabled() const { return ((const DisabledMaskType*)((const char*)this + 0x1A4))->any(); }
 	Bool clearDisabled( DisabledType type );
 
 	void setDisabled( DisabledType type );
