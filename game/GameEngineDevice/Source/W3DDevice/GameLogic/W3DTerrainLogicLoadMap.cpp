@@ -244,5 +244,3 @@ Bool W3DTerrainLogic::loadMapAbi(AsciiString filename,
 
 	return true;
 }
-
-#pragma comment(linker, "/alternatename:?loadMap@W3DTerrainLogic@@UAE_NVAsciiString@@_N@Z=?loadMapAbi@W3DTerrainLogic@@UAE_NVAsciiString@@PAVChunkInputStream@@_N2@Z")
