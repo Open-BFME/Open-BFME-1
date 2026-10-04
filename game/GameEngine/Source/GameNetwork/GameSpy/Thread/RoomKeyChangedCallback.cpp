@@ -105,6 +105,34 @@ public:
 	};
 };
 
+// Retail reaches PeerResponse's ctor and dtor through ILT thunks at
+// 0x00042069 and 0x00044733; the bodies are referenced through the thunks
+// directly, so the stand-in names are never emitted.
+extern void j_00042069();
+extern void j_00044733();
+
+// Raw storage for the local response: retail constructs and destroys it
+// through the thunks below, so no PeerResponse object is ever declared here.
+// The inline ctor/dtor exist to keep the unwind frame and the construction
+// state store that retail emits around the local.
+struct PeerResponseRaw
+{
+	PeerResponseRaw()
+	{
+		typedef void (PeerResponse::*PeerResponseThunk)();
+		union { void (*fn)(); PeerResponseThunk call; } ctor = { j_00042069 };
+		((*(PeerResponse *)bytes).*ctor.call)();
+	}
+	~PeerResponseRaw()
+	{
+		typedef void (PeerResponse::*PeerResponseThunk)();
+		union { void (*fn)(); PeerResponseThunk call; } dtor = { j_00044733 };
+		((*(PeerResponse *)bytes).*dtor.call)();
+	}
+
+	char bytes[sizeof(PeerResponse)];
+};
+
 typedef char PeerResponseSizeCheck[sizeof(PeerResponse) == 0x330 ? 1 : -1];
 
 class PeerRequest;
@@ -150,8 +178,9 @@ __declspec(noinline) static void getPlayerInfo(PeerThreadClass *thread,
 	peerGetPlayerFlagsA(peer, nick, roomType, &flags);
 }
 
-#pragma comment(linker, "/alternatename:??0PeerResponse@@QAE@XZ=?j_00042069@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1PeerResponse@@QAE@XZ=?j_00044733@@YAXXZ")
+// Retail reaches PeerResponse's ctor and dtor through ILT thunks at
+// 0x00042069 and 0x00044733; the bodies are referenced through the thunks
+// directly, so the stand-in names are never emitted.
 
 #pragma optimize("y", on)
 void roomKeyChangedCallback(PEER peer, RoomType roomType, const char *nick,
@@ -163,7 +192,8 @@ void roomKeyChangedCallback(PEER peer, RoomType roomType, const char *nick,
 
 	t->trackStatsForPlayer(roomType, nick, key, val);
 
-	PeerResponse resp;
+	PeerResponseRaw raw;
+	PeerResponse &resp = *(PeerResponse *)raw.bytes;
 	// Retail stores the BFME-specific response discriminator 0x16 here.
 	resp.peerResponseType = 22;
 	resp.nick = nick;
