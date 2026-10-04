@@ -64,6 +64,12 @@
 #include "GameLogic/Module/AIUpdate.h"
 #include "GameLogic/Module/StealthDetectorUpdate.h"
 
+// BitFlags<116>::xfer is retail's one out-of-line body (BitFlags116Xfer.cpp); do not emit a header copy.
+template<> void BitFlags<116>::xfer(Xfer *);
+// The header xfer copy no longer instantiates the count()/getSingleBitFromName() retail emits here.
+template Int BitFlags<116>::count() const;
+template Int BitFlags<116>::getSingleBitFromName(const char *);
+
 #ifdef _INTERNAL
 // for occasional debugging...
 //#pragma optimize("", off)

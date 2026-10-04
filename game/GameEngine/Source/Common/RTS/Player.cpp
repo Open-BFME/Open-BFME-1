@@ -102,6 +102,11 @@
 #include "GameLogic/Module/ProductionUpdate.h"
 #include "GameLogic/VictoryConditions.h"
 
+// BitFlags<116>::xfer is retail's one out-of-line body (BitFlags116Xfer.cpp); do not emit a header copy.
+template<> void BitFlags<116>::xfer(Xfer *);
+// The header xfer copy no longer instantiates the size() retail emits here.
+template Int BitFlags<116>::size() const;
+
 #include "GameNetwork/GameInfo.h"
 
 #ifdef _INTERNAL
