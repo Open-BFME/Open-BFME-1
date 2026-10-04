@@ -101,3 +101,61 @@ void BfmeThingFFF::bfmeStepFFF(BfmeSubFFF *list, void *entryPointer)
 
 	delete entry;
 }
+
+// Retail 0x0035AD00, 143B. Like 0x0035AB70, released records lose their
+// head and table index; retained records keep only the head node.
+class Rva0035AD00OwnedNode : public Rva0035B3D0RecordNode
+{
+public:
+	~Rva0035AD00OwnedNode() { ((Rva00354A60 *)this)->invoke(); }
+};
+
+struct Rva0035AD00Record
+{
+	int previous, next;
+	void *name;
+	unsigned char released, pad;
+	unsigned short references;
+	Rva0035B3D0RecordNode *nodes;
+};
+
+class Rva0035AD00Table
+{
+public:
+	void cleanup();
+	int *begin, *end, *capacity;
+	Rva0035AD00Record *records;
+	int unknown10, unknown14, freeHead, activeTail;
+};
+
+void Rva0035AD00Table::cleanup()
+{
+	Rva0035AD00Table *owner = this;
+	int index = owner->activeTail;
+	while (index != -1)
+	{
+		Rva0035AD00Record *record = owner->records + index;
+		int previous = record->previous;
+		if (record->released)
+		{
+			Rva0035B3D0RecordNode *node = record->nodes;
+			record->nodes = record->nodes->m_next;
+			((Rva00354A60 *)node)->invoke();
+			delete node;
+			((Rva00359530StringRecordTable *)owner)->release(index);
+		}
+		else
+		{
+			Rva0035B3D0RecordNode *first = record->nodes;
+			while (first->m_next)
+			{
+				Rva0035B3D0RecordNode *node = first->m_next;
+				Rva0035B3D0RecordNode *next = first->m_next->m_next;
+				delete ((Rva0035AD00OwnedNode *)node);
+				first->m_next = next;
+			}
+			record->references = 1;
+		}
+		index = previous;
+	}
+}
