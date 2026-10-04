@@ -1,6 +1,10 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/stringbaseascii /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WWDebug
 #include "Common/AsciiString.h"
 #include "rendobj.h"
+
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 extern RenderObjClass *Create_Render_Obj(const char *name);
 struct BfmeR1025;
 extern char bfmeGo1025F(BfmeR1025 *);
