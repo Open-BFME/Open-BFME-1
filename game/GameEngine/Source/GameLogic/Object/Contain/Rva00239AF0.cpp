@@ -27,7 +27,6 @@ public:
 class NameKeyGenerator
 {
 public:
-	UnsignedInt nameToKey(const char *name);
 };
 
 extern NameKeyGenerator *TheNameKeyGenerator;
@@ -43,7 +42,6 @@ public:
 class AttributeModifierDefinitionStore
 {
 public:
-	Int indexOf(Int key) const;
 };
 
 class Rva0036B140Item;
@@ -51,7 +49,6 @@ class Rva0036B140Item;
 class Rva0036B140Collection
 {
 public:
-	Rva0036B140Item *itemAt(Int index) const;
 };
 
 extern AttributeModifierDefinitionStore *TheAttributeModifierDefinitionStore;
@@ -67,9 +64,6 @@ class Rva00239AF0;
 class Object
 {
 public:
-	Player *getControllingPlayer(void) const;
-	Bool applyAttributeModifier(const AsciiString &name, Int duration);
-
 private:
 	friend class Rva00239AF0;
 	AttributeModifierPoolUpdate *findAttributeModifierPoolUpdate(void) const;
@@ -78,7 +72,6 @@ private:
 class Rva2225E0Filter
 {
 public:
-	Bool accepts(Object *object, Player *player);
 };
 
 struct BfmeMemberIndexNode;
@@ -109,7 +102,6 @@ typedef _STL::list<Object *> BfmeMemberList;
 class GameLogic
 {
 public:
-	Object *findObjectByID(Int key);
 };
 
 extern GameLogic *TheGameLogic;
@@ -142,13 +134,13 @@ public:
 #undef BFME_SLOT
 
 // These helpers are all matched elsewhere. Select the ILTs used by this body.
-#pragma comment(linker, "/alternatename:?nameToKey@NameKeyGenerator@@QAEIPBD@Z=?j_0003add7@@YAXXZ")
-#pragma comment(linker, "/alternatename:?indexOf@AttributeModifierDefinitionStore@@QBEHH@Z=?j_000268e6@@YAXXZ")
-#pragma comment(linker, "/alternatename:?itemAt@Rva0036B140Collection@@QBEPAVRva0036B140Item@@H@Z=?j_0001dbba@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
-#pragma comment(linker, "/alternatename:?accepts@Rva2225E0Filter@@QAE_NPAVObject@@PAVPlayer@@@Z=?j_0001da34@@YAXXZ")
-#pragma comment(linker, "/alternatename:?applyAttributeModifier@Object@@QAE_NABVAsciiString@@H@Z=?j_00037a56@@YAXXZ")
-#pragma comment(linker, "/alternatename:?findObjectByID@GameLogic@@QAEPAVObject@@H@Z=?j_0001f253@@YAXXZ")
+extern void j_0003add7();
+extern void j_000268e6();
+extern void j_0001dbba();
+extern void j_00020824();
+extern void j_0001da34();
+extern void j_00037a56();
+extern void j_0001f253();
 class Rva00239AF0
 {
 public:
@@ -176,24 +168,39 @@ void Rva00239AF0::rva00239AF0(const AsciiString &name,
 	else
 		nameData = g_bfmeEmptyAscii;
 
-	UnsignedInt key = TheNameKeyGenerator->nameToKey(nameData);
-	Int definitionIndex = TheAttributeModifierDefinitionStore->indexOf(key);
+	typedef UnsignedInt (NameKeyGenerator::*FnNameKey)(const char *);
+	union { void (*fn)(); FnNameKey call; } uNameKey = { j_0003add7 };
+	UnsignedInt key = (TheNameKeyGenerator->*uNameKey.call)(nameData);
+	typedef Int (AttributeModifierDefinitionStore::*FnIndexOf)(Int) const;
+	union { void (*fn)(); FnIndexOf call; } uIndexOf = { j_000268e6 };
+	Int definitionIndex =
+		(TheAttributeModifierDefinitionStore->*uIndexOf.call)(key);
+	typedef Rva0036B140Item *(Rva0036B140Collection::*FnItemAt)(Int) const;
+	union { void (*fn)(); FnItemAt call; } uItemAt = { j_0001dbba };
 	AttributeModifierDefinition *definition =
 		(AttributeModifierDefinition *)
-		((Rva0036B140Collection *)TheAttributeModifierDefinitionStore)->itemAt(
-			definitionIndex);
+		((Rva0036B140Collection *)TheAttributeModifierDefinitionStore
+			->*uItemAt.call)(definitionIndex);
 	if (definition != 0 && (definition->m_flags & 0x40) == 0)
 	{
+		typedef Player *(Object::*FnOwner)(void) const;
+		union { void (*fn)(); FnOwner call; } uOwner = { j_00020824 };
+		typedef Bool (Rva2225E0Filter::*FnFilter)(Object *, Player *);
+		union { void (*fn)(); FnFilter call; } uAccepts = { j_0001da34 };
+		typedef Bool (Object::*FnApply)(const AsciiString &, Int);
+		union { void (*fn)(); FnApply call; } uApply = { j_00037a56 };
 		while (node != members.end())
 		{
 			Object *object = *node;
 			if (filter == 0 ||
-				filter->accepts(object, (Player *)
-						owner->getControllingPlayer()))
-				object->applyAttributeModifier(name, duration);
+				(filter->*uAccepts.call)(object,
+					(Player *)(owner->*uOwner.call)()))
+				(object->*uApply.call)(name, duration);
 			++node;
 		}
 
+		typedef Object *(GameLogic::*FnFind)(Int);
+		union { void (*fn)(); FnFind call; } uFind = { j_0001f253 };
 		BfmeMemberIndexNode *memberIndex =
 			*(BfmeMemberIndexNode **)((char *)this + 0x30);
 		BfmeMemberIndexNode *entry = memberIndex->m_next;
@@ -201,12 +208,12 @@ void Rva00239AF0::rva00239AF0(const AsciiString &name,
 		{
 			do
 			{
-				Object *object = TheGameLogic->findObjectByID(entry->m_key);
+				Object *object = (TheGameLogic->*uFind.call)(entry->m_key);
 				if (object != 0 &&
 					(filter == 0 ||
-						filter->accepts(object, (Player *)
-								owner->getControllingPlayer())))
-					object->applyAttributeModifier(name, duration);
+						(filter->*uAccepts.call)(object,
+							(Player *)(owner->*uOwner.call)())))
+					(object->*uApply.call)(name, duration);
 				entry = (BfmeMemberIndexNode *)_STL::_Rb_global<bool>::_M_increment(
 					(_STL::_Rb_tree_node_base *)entry);
 			}
