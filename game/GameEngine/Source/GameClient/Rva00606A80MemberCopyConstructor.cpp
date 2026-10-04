@@ -4,12 +4,11 @@
 class AudioEventRTS
 {
 public:
-	AudioEventRTS(const AudioEventRTS &);
-	~AudioEventRTS();
 	char m_body[0x70];
 };
 
-#pragma comment(linker, "/alternatename:??0AudioEventRTS@@QAE@ABV0@@Z=?j_00047b27@@YAXXZ")
+// The audio event copy constructor is reached through retail ILT 0x00047B27.
+extern void j_00047b27(void);
 
 // Each item is a DynamicAudioEventRTS; the TUs that define that class emit its vftable.
 extern "C" int __identifier("??_7DynamicAudioEventRTS@@6B@");
@@ -20,8 +19,12 @@ struct Rva00606A80Item
 	AudioEventRTS m_audio;
 
 	Rva00606A80Item(const Rva00606A80Item &other)
-		: m_vft(&__identifier("??_7DynamicAudioEventRTS@@6B@")), m_audio(other.m_audio)
+		: m_vft(&__identifier("??_7DynamicAudioEventRTS@@6B@"))
 	{
+		typedef void (AudioEventRTS::*Copy)(const AudioEventRTS &);
+		union { void *address; Copy member; } call;
+		call.address = (void *)j_00047b27;
+		(this->m_audio.*call.member)(other.m_audio);
 	}
 };
 
