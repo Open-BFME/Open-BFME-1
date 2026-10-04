@@ -18,12 +18,17 @@ typedef int Int;
 
 class WeaponTemplate;
 
+// The base's one vtable slot has no recovered body, so it is declared pure:
+// retail's vtable stores a real address there, this TU only ever stores the
+// vtable pointer, and the pure declaration resolves to __purecall instead of
+// inventing a body. The destructor stays declared -- retail's vtable slot 0
+// needs a body that no TU has recovered yet (see targets/game/reverse).
 class GenBase002DF2B0
 {
 public:
 	GenBase002DF2B0();					// retail 0x002DF2B0
 	~GenBase002DF2B0();
-	virtual void slot();
+	virtual void slot() = 0;
 
 	char m_gap04[0x34 - 4];
 	WeaponTemplate *m_owner;
@@ -45,7 +50,7 @@ class Made001E6170 : public GenBase002DF2B0
 {
 public:
 	__declspec(noinline) Made001E6170();
-	virtual void slot();
+	virtual void slot() = 0;
 
 private:
 	RS_Member m_bfmeMember;					// +0x58

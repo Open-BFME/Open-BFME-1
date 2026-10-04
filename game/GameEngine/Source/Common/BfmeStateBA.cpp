@@ -4,26 +4,21 @@
 // Same family as 0x00185700: the state name goes into the by-value argument
 // the base initialiser takes.
 
-class StringBaseNarrowBA
-{
-protected:
-	StringBaseNarrowBA(const char *text) throw();
+// The by-value argument the base initialiser takes is the retail AsciiString:
+// 0x00888BC0 and 0x00887940 hold StringBase<char>'s C-string constructor and
+// destructor, both recovered in game/Libraries/Source/String/StringBase.cpp,
+// so the local base class is spelled with the header's own name instead of a
+// second, unreferenced StringBaseNarrowBA.
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-	StringBaseNarrowBA(const StringBaseNarrowBA &other) throw();
-
-	~StringBaseNarrowBA(void) throw();
-
-	char *m_bfmeNarrowBA;
-};
-
-class AsciiStringBA : public StringBaseNarrowBA
+class AsciiStringBA : public AsciiString
 {
 public:
-	AsciiStringBA(const char *text) throw() : StringBaseNarrowBA(text)
+	AsciiStringBA(const char *text) throw() : AsciiString(text)
 	{
 	}
 
-	AsciiStringBA(const AsciiStringBA &other) throw() : StringBaseNarrowBA(other)
+	AsciiStringBA(const AsciiStringBA &other) throw() : AsciiString(other)
 	{
 	}
 
