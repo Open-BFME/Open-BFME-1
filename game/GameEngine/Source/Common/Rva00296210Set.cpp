@@ -1,7 +1,6 @@
 // cl: /O2 /Ob0
 
-extern "C" void *bfmeVftLargeGroupAudioUpdateModuleDataBase[];
-#pragma comment(linker, "/alternatename:_bfmeVftLargeGroupAudioUpdateModuleDataBase=??_7LargeGroupAudioUpdateModuleDataBase@@6B@")
+extern "C" const char __identifier("??_7LargeGroupAudioUpdateModuleDataBase@@6B@")[];
 
 class Rva00296210
 {
@@ -14,7 +13,7 @@ public:
 
 Rva00296210 &Rva00296210::set(const Rva00296210 *p)
 {
-	m_vptr = bfmeVftLargeGroupAudioUpdateModuleDataBase;
+	m_vptr = (void *)__identifier("??_7LargeGroupAudioUpdateModuleDataBase@@6B@");
 	m_04 = p->m_04;
 	return *this;
 }
