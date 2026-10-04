@@ -16038,5 +16038,15 @@
   "after_sha256": "aa50c8bb62c774a0d228d66761af8e6b1c8ec956d322692279f17590ee986df0",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "WeaponTemplateSet",
+  "new_name": "Rva0090F2E0IndexedMasks",
+  "before_sha256": "a11a2a33c6b6661dd6bc17ad0cfcf2d134ea3a39facfce5d3342581caf840255",
+  "after_sha256": "8786454a69ae1827864de61db42312472ba531e8834eb97b1c65fba21dd661e8",
+  "evidence": "targets/game/reverse/identity_evidence/0090f2e0-unreferenced-indexed-load.md",
+  "reason": "Nothing in retail references 0x0090F2E0 and no caller or vtable proves the Zero Hour name getNthCommandSourceMask@WeaponTemplateSet; the body keeps an address-derived name."
  }
 ]
