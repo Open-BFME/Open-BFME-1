@@ -8,6 +8,10 @@
 // TurretState adds nothing of its own, so this class's members start at 0x24.
 #include "Common/AsciiString.h"
 
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+
 class StateMachine;
 
 class TurretStateMachine;
