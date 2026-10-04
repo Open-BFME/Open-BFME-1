@@ -61,6 +61,10 @@ public:
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 #include "unicode_string.h"
 
+// Retail inlines ~UnicodeString: temporaries are released by a direct call to
+// StringBase<unsigned short>::releaseBuffer (0x008881D0), not the ??1UnicodeString stub.
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 // The address pair vtable slot 55 hands back, and what a LANPlayer and a game
 // slot store. BfmeTransportAddress below is the same pair packed to six bytes,
 // which is what NetPacketAddress below spells -- so the two are the same object

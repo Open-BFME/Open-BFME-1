@@ -44,6 +44,10 @@
 #include "GameClient/KeyDefs.h"
 #include "GameClient/GameWindowManager.h"
 
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+
 // BFME changed showShellMap's result ABI from Zero Hour's void declaration.
 // Keep the ABI shim scoped to this translation unit.
 class Shell
