@@ -75,6 +75,9 @@ public:
 	Bool playbackFile(AsciiString file);
 };
 
+// This TU's view of the one game-logic object reached on the retail
+// singleton at 0x012F0898: three inline field reads plus the two-Bool
+// clearGameData, whose pinned retail ILT spelling carries this class name.
 class BfmeGameLogicPause
 {
 public:
@@ -138,7 +141,8 @@ extern BfmeObj947C *g_bfme947ObjC;
 // Retail singleton globals, named per targets/game/reverse/symbols.csv.
 extern Shell *TheShell;					// ?TheShell@@3PAVShell@@A @ 0x012F4B58
 extern WindowManager *g_rva012F19E8WindowManager;	// ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A @ 0x012F19E8
-extern BfmeGameLogicPause *g_012F0898;	// ?TheBfmeGameLogic@@3PAVGameLogic@@A @ 0x012F0898
+class GameLogic;	// pointer-type only: retail's global is ?TheBfmeGameLogic@@3PAVGameLogic@@A
+extern GameLogic *TheBfmeGameLogic;	// @ 0x012F0898
 extern GlobalData *TheWritableGlobalData;	// ?TheWritableGlobalData@@3PAVGlobalData@@A @ 0x012ED5C8
 extern GameState *TheGameState;			// ?TheGameState@@3PAVGameState@@A @ 0x012EF190
 extern RecorderClass *TheRecorder;		// ?TheRecorder@@3PAVRecorderClass@@A @ 0x012ED62C
@@ -147,11 +151,6 @@ extern Glo012F1028Type *Glo012F1028;	// ?Glo012F1028@@3PAVGlo012F1028Type@@A @ 0
 extern MessageStream *TheMessageStream;	// ?TheMessageStream@@3PAVMessageStream@@A @ 0x012ED5EC
 extern InGameUI *TheInGameUI;			// ?TheInGameUI@@3PAVInGameUI@@A @ 0x012F148C
 
-// The local spelling carries the pointer type the body needs; bind it to the
-// recorded game-logic singleton pin.
-#pragma comment(linker, "/alternatename:?g_012F0898@@3PAVBfmeGameLogicPause@@A=?TheBfmeGameLogic@@3PAVGameLogic@@A")
-
-#define TheBfmeGameLogic g_012F0898
 #define TheLivingWorldLogic Glo012F1028
 
 __declspec(noinline) void restartMissionMenu()
@@ -165,7 +164,7 @@ __declspec(noinline) void restartMissionMenu()
 		((Rva00465B80 *)g_rva012F19E8WindowManager)->apply();
 	}
 
-	Int gameMode = TheBfmeGameLogic->getGameMode();
+	Int gameMode = ((BfmeGameLogicPause *)TheBfmeGameLogic)->getGameMode();
 	AsciiString mapName = TheWritableGlobalData->m_mapName;
 	if (TheGameState->isInSaveDirectory(mapName))
 		mapName.set(TheGameState->getPristineMapName());
@@ -174,11 +173,11 @@ __declspec(noinline) void restartMissionMenu()
 	if (TheRecorder->getMode() == 0)
 		TheRecorder->stopRecording();
 
-	Int rankPointsStartedWith = TheBfmeGameLogic->getRankPointsToAddAtGameStart();
-	Int diff = TheBfmeGameLogic->getGlobalDifficulty();
+	Int rankPointsStartedWith = ((BfmeGameLogicPause *)TheBfmeGameLogic)->getRankPointsToAddAtGameStart();
+	Int diff = ((BfmeGameLogicPause *)TheBfmeGameLogic)->getGlobalDifficulty();
 	Int fps = TheGameEngine->getFramesPerSecondLimit();
 
-	TheBfmeGameLogic->clearGameData(false, false);
+	((BfmeGameLogicPause *)TheBfmeGameLogic)->clearGameData(false, false);
 	TheGameEngine->setQuitting(false);
 
 	if (TheLivingWorldLogic != 0)
