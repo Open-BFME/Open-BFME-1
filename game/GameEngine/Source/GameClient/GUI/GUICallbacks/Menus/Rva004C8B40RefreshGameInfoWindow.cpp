@@ -96,14 +96,6 @@ public:
     GameSlot *getSlot(int slotNum);
 };
 
-class Rva00098E70GameInfoView
-{
-public:
-    AsciiString getMap() const throw();
-};
-
-#pragma comment(linker, "/alternatename:?getMap@Rva00098E70GameInfoView@@QBE?AVAsciiString@@XZ=?getMap@GameInfo@@QBE?AVAsciiString@@XZ")
-
 struct MapMetaData
 {
     UnicodeString m_displayName;
@@ -233,15 +225,14 @@ void Rva004C8B40GameInfoWindowRefresh(GameInfo *gameInfo, UnicodeString gameName
     }
     else
     {
-        const char *noPath =
-            ((Rva00098E70GameInfoView *)gameInfo)->getMap().reverseFind('\\');
+        const char *noPath = gameInfo->getMap().reverseFind('\\');
         if (noPath)
         {
             ++noPath;
         }
         else
         {
-            noPath = ((Rva00098E70GameInfoView *)gameInfo)->getMap().str();
+            noPath = gameInfo->getMap().str();
         }
         map.translate(AsciiString(noPath));
     }
