@@ -6,17 +6,21 @@
 
 typedef void *Pointer;
 
+// Retail calls this slot through the ILT thunk at 0x006922E0, whose real
+// body is ?dup_006922e0@@YAXXZ; reference that body directly instead of
+// spelling an unresolvable member on it.
+extern void dup_006922e0();
+
 class Rva006925D0Wrapper
 {
 public:
-	void begin(Pointer output);
 	Pointer forward(Pointer output);
 };
 
-#pragma comment(linker, "/alternatename:?begin@Rva006925D0Wrapper@@QAEXPAX@Z=?dup_006922e0@@YAXXZ")
-
 Pointer Rva006925D0Wrapper::forward(Pointer output)
 {
-	begin(output);
+	typedef void (Rva006925D0Wrapper::*Begin)(Pointer);
+	union { void (*fn)(); Begin call; } begin = { dup_006922e0 };
+	(this->*begin.call)(output);
 	return output;
 }
