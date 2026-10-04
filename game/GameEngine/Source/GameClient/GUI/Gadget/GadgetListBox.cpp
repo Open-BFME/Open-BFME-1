@@ -2751,22 +2751,6 @@ bool GadgetListBoxIsFull(GameWindow *window)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-void GadgetListBoxSetBottomVisibleEntry( GameWindow *window, Int newPos )
-{
-	if (!window)
-		return;
-
-	ListboxData *listData = (ListboxData *)window->winGetUserData();
-	if (!listData)
-		return;
-
-	int prevPos = GadgetListBoxGetBottomVisibleEntry( window );
-
-	adjustDisplay(window, newPos - prevPos + 1, true);
-} // void GadgetListBoxSetTopVisibleEntry( GameWindow *window, Int newPos )
-
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
 Int GadgetListBoxGetTopVisibleEntry( GameWindow *window )
 {
 	if (!window)
