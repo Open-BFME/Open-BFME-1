@@ -46,3 +46,35 @@ The exported protected non-virtual destructors:
 Each address also carried `...@@MAE@XZ` (protected virtual), the label
 `fx_particle_system_category_accessors.cpp` compiles. The exported `IAE` row
 keeps `object-symbol=` that label. Retired: the nine `MAE` rows.
+
+## ConcreteModuleTemplate::clone and ConcreteModuleClass::createTemplate (per-member TUs)
+
+Each body below is exported under its full name; the kept row is that name.
+The retired row was either a name column cut short (a prefix of the export,
+naming no symbol) or the `U...ModuleTag` spelling of the same instantiation,
+which is the label the TU compiles and which the kept row maps through
+`object-symbol=`.
+
+| ordinal | ILT | body | retired spelling | source |
+|---|---|---|---|---|
+| 1394 | 0x0004183F | 0x005DAD20 | truncated | `StreakDrawConcreteModuleTemplateCloneThunk.cpp` |
+| 1392 | 0x00048D5B | 0x005DAD50 | truncated | `QuadDrawConcreteModuleTemplateCloneThunk.cpp` |
+| 1391 | 0x0003ADBE | 0x005DADB0 | truncated | `LightningDrawConcreteModuleTemplateCloneThunk.cpp` |
+| 1384 | 0x0002BCFB | 0x005DCD90 | truncated | `SphericalEmissionVelocityConcreteModuleTemplateCloneThunk.cpp` |
+| 1382 | 0x00016A40 | 0x005DCDC0 | alternate tag spelling | `HemisphericalEmissionVelocityConcreteModuleTemplateCloneThunk.cpp` |
+| 1381 | 0x00006CF3 | 0x005DCDF0 | alternate tag spelling | `CylindricalEmissionVelocityConcreteModuleTemplateCloneThunk.cpp` |
+| 1383 | 0x0003BE7B | 0x005DCE20 | alternate tag spelling | `OutwardEmissionVelocityConcreteModuleTemplateCloneThunk.cpp` |
+| 1388 | 0x00001825 | 0x005DCE80 | truncated | `LineEmissionVolumeConcreteModuleTemplateCloneThunk.cpp` |
+| 1385 | 0x0004622C | 0x005DCED0 | truncated | `BoxEmissionVolumeConcreteModuleTemplateCloneThunk.cpp` |
+| 1389 | 0x00045903 | 0x005DCF20 | truncated | `SphereEmissionVolumeConcreteModuleTemplateCloneThunk.cpp` |
+| 1386 | 0x0001A019 | 0x005DCF50 | truncated | `CylinderEmissionVolumeConcreteModuleTemplateCloneThunk.cpp` |
+| 1387 | 0x00046BAA | 0x005DCFA0 | truncated | `LightningEmissionConcreteModuleTemplateCloneThunk.cpp` |
+| 1393 | 0x0000A993 | 0x005DFAB0 | truncated | `RenderObjectDrawModuleTemplateCloneThunk.cpp` |
+| 1395 | 0x00008A0D | 0x005E2070 | truncated | `LifeEventModuleTemplateCloneThunk.cpp` |
+| 1396 | 0x00023A92 | 0x005E2110 | truncated | `TerrainCollisionModuleTemplateCloneThunk.cpp` |
+| 1455 | 0x00001FA5 | 0x005E3E30 | truncated | `ConcreteModuleClassDefaultModuleTag5CreateTemplateThunk.cpp` |
+| 1449 | 0x0002BDE1 | 0x005E41B0 | truncated | `ConcreteModuleClassDefaultModuleTag0CreateTemplateThunk.cpp` |
+| 1459 | 0x00010564 | 0x005E42E0 | truncated | `ConcreteModuleClassDefaultModuleTag0ACreateTemplateThunk.cpp` |
+| 1453 | 0x00041EF2 | 0x005E4400 | truncated | `ConcreteModuleClassDefaultModuleTag2CreateTemplateThunk.cpp` |
+| 1451 | 0x00043E46 | 0x005E4520 | truncated | `ConcreteModuleClassDefaultModuleTag1CreateTemplateThunk.cpp` |
+| 1457 | 0x000072BB | 0x005E4640 | truncated | `ConcreteModuleClassDefaultModuleTag6CreateTemplateThunk.cpp` |
