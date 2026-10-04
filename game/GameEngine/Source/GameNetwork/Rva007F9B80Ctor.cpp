@@ -17,14 +17,12 @@ class BfmeThingECMa;
 BfmeThingECMa *bfmeGoECMa(void);
 
 extern const void *g_0112B9C0[];
-extern "C" const void *bfmeVftRva00803080[];
-extern "C" const void *bfmeVftRva007F9C50_Base0[];
-extern "C" const void *bfmeVftRva007F9C50_Base4[];
-extern "C" const void *bfmeVftRva007F9C50_Base8[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva00803080=??_7Rva00803080@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftRva007F9C50_Base0=??_7Rva007F9C50@@6BRva007F9C50Base0@@@")
-#pragma comment(linker, "/alternatename:_bfmeVftRva007F9C50_Base4=??_7Rva007F9C50@@6BRva007F9C50Base4@@@")
-#pragma comment(linker, "/alternatename:_bfmeVftRva007F9C50_Base8=??_7Rva007F9C50@@6BRva007F9C50Base8@@@")
+// The four vftables this constructor stores, each spelled exactly as the object
+// that defines it spells it, so no linker alias is needed.
+extern "C" const void *__identifier("??_7Rva00803080@@6B@")[];
+extern "C" const void *__identifier("??_7Rva007F9C50@@6BRva007F9C50Base0@@@")[];
+extern "C" const void *__identifier("??_7Rva007F9C50@@6BRva007F9C50Base4@@@")[];
+extern "C" const void *__identifier("??_7Rva007F9C50@@6BRva007F9C50Base8@@@")[];
 
 class Rva007F9B80
 {
@@ -39,10 +37,10 @@ Rva007F9B80::Rva007F9B80(void *owner) throw()
 {
 	volatile unsigned int *base = (volatile unsigned int *)this;
 	base[1] = (unsigned int)g_0112B9C0;
-	base[2] = (unsigned int)bfmeVftRva00803080;
-	base[0] = (unsigned int)bfmeVftRva007F9C50_Base0;
-	base[1] = (unsigned int)bfmeVftRva007F9C50_Base4;
-	base[2] = (unsigned int)bfmeVftRva007F9C50_Base8;
+	base[2] = (unsigned int)__identifier("??_7Rva00803080@@6B@");
+	base[0] = (unsigned int)__identifier("??_7Rva007F9C50@@6BRva007F9C50Base0@@@");
+	base[1] = (unsigned int)__identifier("??_7Rva007F9C50@@6BRva007F9C50Base4@@@");
+	base[2] = (unsigned int)__identifier("??_7Rva007F9C50@@6BRva007F9C50Base8@@@");
 
 	unsigned int *slot = (unsigned int *)((char *)this + 0x28);
 	unsigned int count = 0x20;
