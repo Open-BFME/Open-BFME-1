@@ -17478,5 +17478,15 @@
   "after_sha256": "a6a658c090d928824d49f9bfcfad8a292fb6f6d161628d1388050e2ccf544260",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/Rva0051D690MainMenuHelper.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/Rva0051D690MainMenuHelper.cpp",
+  "old_name": "AudioEventRTS",
+  "new_name": "Rva0051D690EventStorage",
+  "before_sha256": "211df3f2268cc69688ab9dc15a9a28d7c09f253043fc50fdb11a203afeae67d0",
+  "after_sha256": "7192b1665fb48f93152db714484863a36efba5d2c3725957402c5070942099d6",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

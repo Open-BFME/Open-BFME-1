@@ -21,19 +21,41 @@ private:
 
 typedef unsigned int AudioHandle;
 
-class AudioEventRTS
+// Retail constructs and destroys this 0x70-byte AudioEventRTS (the MiscAudio
+// sound at +0xD90) through the incremental-link thunks 0x00047b27 and
+// 0x00026f35, so the two calls are written against the thunks themselves.
+extern void j_00047b27();
+extern void j_00026f35();
+
+// EA's AudioEventRTS is defined in
+// game/GameEngine/Source/Common/Audio/AudioEventRTSCopyAndLifetime.cpp and no
+// header on this TU's include path declares it, so only the pointer that
+// Rva0051D690Audio::addAudioEvent takes names it here.
+class AudioEventRTS;
+
+// The local event's storage and lifetime.  Its constructor and destructor
+// bodies are the two thunk calls retail makes, spelled on unnamed members, so
+// this object defines and references no name of the real class.
+class Rva0051D690EventStorage
 {
 public:
-	AudioEventRTS(const AudioEventRTS &source);
-	virtual void slot00();
-	~AudioEventRTS();
+	__forceinline Rva0051D690EventStorage(const Rva0051D690EventStorage &source)
+	{
+		union { void (*plain)(); void (Rva0051D690EventStorage::*call)(const Rva0051D690EventStorage &); }
+			target = { j_00047b27 };
+		(this->*target.call)(source);
+	}
+	__forceinline ~Rva0051D690EventStorage()
+	{
+		union { void (*plain)(); void (Rva0051D690EventStorage::*call)(); } target = { j_00026f35 };
+		(this->*target.call)();
+	}
 
-private:
-	char m_padding[0x6C];
+	// Retail's AudioEventRTS is 0x70 bytes and its slot 0 holds the vtable
+	// pointer; nothing here dispatches through it, so the whole object, vptr
+	// included, is carried as opaque padding.
+	char m_padding[0x70];
 };
-
-#pragma comment(linker, "/alternatename:??0AudioEventRTS@@QAE@ABV0@@Z=?j_00047b27@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1AudioEventRTS@@QAE@XZ=?j_00026f35@@YAXXZ")
 
 class Rva000B21A0Object
 {
@@ -147,10 +169,11 @@ void Rva0051D690Shell::restore()
 			!TheAudioClientUpdate->isCurrentlyPlaying(m_musicHandle))
 		{
 			TheAudioClientUpdate->slot6c(2, 1, 0);
-			AudioEventRTS event(*reinterpret_cast<AudioEventRTS *>(
+			Rva0051D690EventStorage event(*reinterpret_cast<Rva0051D690EventStorage *>(
 				reinterpret_cast<char *>(TheAudioClientUpdate->getMiscAudio()) + 0xD90));
 			reinterpret_cast<Rva000B21A0Object *>(&event)->setValue(2);
-			m_musicHandle = TheAudioClientUpdate->addAudioEvent(&event);
+			m_musicHandle = TheAudioClientUpdate->addAudioEvent(
+				reinterpret_cast<AudioEventRTS *>(&event));
 		}
 	}
 }
