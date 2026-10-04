@@ -1,27 +1,35 @@
 // Recovered interface dispatch at retail RVA 0x000D4770.
+//
+// The two leaf calls are real Object behaviour-module getters, not invented
+// members. Retail's ILT 0x0000DE9F fronts
+// ?getProjectileUpdateInterface@Object@@QBEPAVProjectileUpdateInterface@@XZ
+// (matched body at RVA 0x001BF630) and ILT 0x000351D9 fronts
+// ?getCountermeasuresBehaviorInterface@Object@@QBEPBVCountermeasuresBehaviorInterface@@XZ
+// (matched body at RVA 0x001BF670). Both are const members returning their
+// interface pointer, which is why both are declared const here; that is also
+// what makes the reference resolve against the matched definitions.
 
-class BfmeY982
+class ProjectileUpdateInterface
 {
 public:
 	virtual void unused0(void);
 	virtual void unused1(void);
 	virtual void apply(void *value);
-	BfmeY982 *bfmeConv982B(void);
 };
 
-class StructureCompletionInterface
+class CountermeasuresBehaviorInterface
 {
 public:
-	virtual void unused0(void);
-	virtual void finish(int enabled);
-	virtual void unused2(void);
-	virtual void unused3(void);
-	virtual void unused4(void);
-	virtual void unused5(void);
-	virtual void unused6(void);
-	virtual void unused7(void);
-	virtual void unused8(void);
-	virtual void begin(int enabled);
+	virtual void unused0(void) const;
+	virtual void finish(int enabled) const;
+	virtual void unused2(void) const;
+	virtual void unused3(void) const;
+	virtual void unused4(void) const;
+	virtual void unused5(void) const;
+	virtual void unused6(void) const;
+	virtual void unused7(void) const;
+	virtual void unused8(void) const;
+	virtual void begin(int enabled) const;
 };
 
 enum KindOfType;
@@ -35,7 +43,8 @@ public:
 class Object
 {
 public:
-	StructureCompletionInterface *getStructureCompletionInterface(void);
+	ProjectileUpdateInterface *getProjectileUpdateInterface(void) const;
+	const CountermeasuresBehaviorInterface *getCountermeasuresBehaviorInterface(void) const;
 
 private:
 	char m_padding[0x74];
@@ -49,8 +58,8 @@ void __stdcall rva000D4770InterfaceDispatch(Thing *thing, Object *object)
 	if (thing == 0 || object == 0 || !thing->isKindOf((KindOfType)0x67))
 		return;
 
-	StructureCompletionInterface *completion = object->getStructureCompletionInterface();
-	BfmeY982 *production = ((BfmeY982 *)thing)->bfmeConv982B();
+	const CountermeasuresBehaviorInterface *completion = object->getCountermeasuresBehaviorInterface();
+	ProjectileUpdateInterface *production = ((Object *)thing)->getProjectileUpdateInterface();
 	if (completion == 0 || production == 0)
 		return;
 
