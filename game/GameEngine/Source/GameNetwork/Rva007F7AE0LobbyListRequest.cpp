@@ -21,11 +21,8 @@ public:
 	void m();
 };
 
-class BfmeMsg1052 : public BfmeC994
-{
-public:
-	BfmeMsg1052(char *buffer, int capacity) : BfmeC994(buffer, capacity) {}
-};
+// Retail constructs this message with 0x007E8850 (??0BfmeC994); no derived ctor body exists.
+typedef BfmeC994 BfmeMsg1052;
 void Rva00800040JoinI64(const __int64 *parts, unsigned count,
 	char *dest, unsigned destSize, char separator);
 void Rva00800170Join(const char **parts, unsigned count,
