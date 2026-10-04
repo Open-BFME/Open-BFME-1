@@ -1,5 +1,5 @@
 // ?insertGame@@YAHPAVGameWindow@@PAVGameSpyStagingRoom@@_N@Z
-// partial score=0.51 date=2026-09-22
+// partial score=0.9973 date=2026-10-04
 // BFME LobbyUtils::insertGame reconstruction, retail 0x0062DB90.
 // The local declarations preserve the BFME member offsets and string ABI.
 
@@ -48,7 +48,8 @@ public:
 	Int getLength(void) const { return m_data ? m_data->m_length : 0; }
 	const unsigned short *str(void) const;
 	void translate(const AsciiString &stringSrc);
-	void format(const unsigned short *format, ...);
+	void format(UnicodeString format, ...);
+	UnicodeString &operator=(const UnicodeString &);
 };
 
 class AsciiString : private StringBase<char>
@@ -73,10 +74,16 @@ const char *AsciiString::str(void) const
 	return m_data ? m_data->m_text : g_bfmeEmptyAscii;
 }
 
-extern "C" const char *__cdecl strrchr(const char *, int);
 const char *AsciiString::reverseFind(char c) const
 {
-	return strrchr(str(), c);
+	const char *text = str();
+	const char *end = text + (m_data ? m_data->m_length : 0);
+	while (end != text)
+	{
+		if (*--end == c)
+			return end;
+	}
+	return 0;
 }
 
 #define TRUE 1
@@ -161,13 +168,22 @@ class GameTextInterface
 {
 public:
 	virtual ~GameTextInterface() {}
+	virtual void slot01() = 0;
+	virtual void slot02() = 0;
+	virtual void slot03() = 0;
+	virtual void slot04() = 0;
+	virtual void slot05() = 0;
+	virtual void slot06() = 0;
+	virtual void slot07() = 0;
+	virtual void slot08() = 0;
+	virtual void slot09() = 0;
 	virtual UnicodeString fetch(const char *label, Bool *exists = 0) = 0;
 };
 
 class ImageCollection
 {
 public:
-	Image *findImageByName(const char *name);
+	Image *findImageByName(const AsciiString &name);
 };
 
 class GameSpyConfigInterface
@@ -359,8 +375,8 @@ crc_ok:
 	Int width = 10, height = 10;
 	if (pingImages[0])
 	{
-		width = pingImages[0]->getImageWidth();
 		height = pingImages[0]->getImageHeight();
+		width = pingImages[0]->getImageWidth();
 	}
 	if (ping < TheGameSpyConfig->getPingCutoffGood())
 		GadgetListBoxAddEntryImage(win, pingImages[0], index, 6, width, height);
