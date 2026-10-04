@@ -9,16 +9,19 @@ typedef bool Bool;
 #define FALSE false
 #define NULL 0
 
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
-#pragma comment(linker, "/alternatename:?hasUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z=?j_0000ba37@@YAXXZ")
-#pragma comment(linker, "/alternatename:?affectedByUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z=?j_000077b6@@YAXXZ")
-#pragma comment(linker, "/alternatename:?hasUpgradeInProduction@Player@@QAE_NPBVUpgradeTemplate@@@Z=?j_00020c8e@@YAXXZ")
-#pragma comment(linker, "/alternatename:?canAffordUpgrade@UpgradeCenter@@QBE_NPAVPlayer@@PBVUpgradeTemplate@@PBVThingTemplate@@_N@Z=?j_0001cea9@@YAXXZ")
-#pragma comment(linker, "/alternatename:??0ProductionEntry@@QAE@XZ=?j_00047dfc@@YAXXZ")
-#pragma comment(linker, "/alternatename:?calcCostToBuild@UpgradeTemplate@@QBEHPAVPlayer@@PBVThingTemplate@@@Z=?j_0003f8d7@@YAXXZ")
-#pragma comment(linker, "/alternatename:?withdraw@Money@@QAEII_N@Z=?j_00041894@@YAXXZ")
-#pragma comment(linker, "/alternatename:?addToProductionQueue@ProductionUpdate@@IAEXPAVProductionEntry@@@Z=?j_000450f7@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva0036BB10FindCastleMemberBehavior@@YAPAVModule@@PBVObject@@@Z=?j_0000e6e7@@YAXXZ")
+// Retail calls each of the bodies below through an incremental-link thunk, so
+// this TU reaches them through the thunk addresses rather than through the
+// stand-in member/free names.
+extern void j_00020824();	// ILT -> Object::getControllingPlayer
+extern void j_0000ba37();	// ILT -> Object::hasUpgrade
+extern void j_000077b6();	// ILT -> Object::affectedByUpgrade
+extern void j_00020c8e();	// ILT -> Player::hasUpgradeInProduction
+extern void j_0001cea9();	// ILT -> UpgradeCenter::canAffordUpgrade
+extern void j_00047dfc();	// ILT -> ProductionEntry::ProductionEntry
+extern void j_0003f8d7();	// ILT -> UpgradeTemplate::calcCostToBuild
+extern void j_00041894();	// ILT -> Money::withdraw
+extern void j_000450f7();	// ILT -> ProductionUpdate::addToProductionQueue
+extern void j_0000e6e7();	// ILT -> rva0036BB10FindCastleMemberBehavior
 
 enum UpgradeType
 {
@@ -43,7 +46,6 @@ class UpgradeTemplate
 {
 public:
 	UpgradeType getUpgradeType() const { return m_type; }
-	Int calcCostToBuild(Player *player, const ThingTemplate *thingTemplate) const;
 
 	char m_bfmeBase[4];
 	UpgradeType m_type;
@@ -55,8 +57,6 @@ public:
 class UpgradeCenter
 {
 public:
-	Bool canAffordUpgrade(Player *player, const UpgradeTemplate *upgrade,
-		const ThingTemplate *thingTemplate, Bool forceCheck) const;
 };
 
 extern UpgradeCenter *TheUpgradeCenter;
@@ -64,14 +64,12 @@ extern UpgradeCenter *TheUpgradeCenter;
 class Money
 {
 public:
-	UnsignedInt withdraw(UnsignedInt amount, Bool playSound);
 };
 
 class Player
 {
 public:
 	Bool hasUpgradeComplete(const UpgradeTemplate *upgrade);
-	Bool hasUpgradeInProduction(const UpgradeTemplate *upgrade);
 	class Upgrade *addUpgrade(const UpgradeTemplate *upgrade, UpgradeStatusType status);
 
 	char m_bfmeHead[0x48];
@@ -105,30 +103,15 @@ public:
 	CastleMemberModuleData *m_data;
 };
 
-Module *rva0036BB10FindCastleMemberBehavior(const Object *object);
-
 class Object
 {
 public:
-	Player *getControllingPlayer() const;
-	Bool hasUpgrade(const UpgradeTemplate *upgrade) const;
-	Bool affectedByUpgrade(const UpgradeTemplate *upgrade) const;
 };
 
 class ProductionEntry
 {
 public:
-	enum ProductionEntryMagicEnum
-	{
-		ProductionEntry_GLUE_NOT_IMPLEMENTED = 0
-	};
-
-	ProductionEntry() throw();
 	virtual ~ProductionEntry();
-	static void *operator new(unsigned int size, ProductionEntryMagicEnum)
-	{
-		return ::operator new(size);
-	}
 
 	Int m_type;
 	char m_padding08[4];
@@ -139,6 +122,13 @@ public:
 	char m_padding2c[0xc];
 	Int m_productionQuantity;
 	char m_padding3c[0xc];
+};
+
+// View of ProductionEntry used only to reach its constructor through a
+// pointer-to-member, since the constructor is never called on real storage here.
+struct ProductionEntryCtor
+{
+	ProductionEntryCtor *construct();
 };
 
 struct BfmeProductionUpdateLayout
@@ -163,9 +153,6 @@ public:
 	virtual void slot10();
 	virtual Bool isUpgradeInQueue(const UpgradeTemplate *upgrade) const;
 
-	protected:
-	void addToProductionQueue(ProductionEntry *production);
-
 	public:
 	Object *getObject()
 	{
@@ -184,15 +171,37 @@ Bool ProductionUpdate::queueUpgrade(const UpgradeTemplate *upgradeArg, const Thi
 	if (upgrade == NULL)
 		return FALSE;
 
-	Player *player = getObject()->getControllingPlayer();
+	typedef Player *(Object::*GetControllingPlayer)() const;
+	typedef Bool (Object::*HasUpgrade)(const UpgradeTemplate *) const;
+	typedef Bool (Object::*AffectedByUpgrade)(const UpgradeTemplate *) const;
+	typedef Bool (Player::*HasUpgradeInProduction)(const UpgradeTemplate *);
+	typedef Bool (UpgradeCenter::*CanAffordUpgrade)(Player *, const UpgradeTemplate *, const ThingTemplate *, Bool) const;
+	typedef Int (UpgradeTemplate::*CalcCostToBuild)(Player *, const ThingTemplate *) const;
+	typedef UnsignedInt (Money::*Withdraw)(UnsignedInt, Bool);
+	typedef void (ProductionUpdate::*AddToQueue)(ProductionEntry *);
+	typedef ProductionEntryCtor *(ProductionEntryCtor::*Construct)();
+	typedef Module *(__cdecl *FindCastleMemberBehavior)(const Object *);
+
+	union { void (*fn)(); GetControllingPlayer call; } uControllingPlayer = { j_00020824 };
+	union { void (*fn)(); HasUpgrade call; } uHasUpgrade = { j_0000ba37 };
+	union { void (*fn)(); AffectedByUpgrade call; } uAffectedByUpgrade = { j_000077b6 };
+	union { void (*fn)(); HasUpgradeInProduction call; } uHasUpgradeInProduction = { j_00020c8e };
+	union { void (*fn)(); CanAffordUpgrade call; } uCanAffordUpgrade = { j_0001cea9 };
+	union { void (*fn)(); CalcCostToBuild call; } uCalcCostToBuild = { j_0003f8d7 };
+	union { void (*fn)(); Withdraw call; } uWithdraw = { j_00041894 };
+	union { void (*fn)(); AddToQueue call; } uAddToQueue = { j_000450f7 };
+	union { void (*fn)(); Construct call; } uCtor = { j_00047dfc };
+	union { void (*fn)(); FindCastleMemberBehavior call; } uFindCastleMemberBehavior = { j_0000e6e7 };
+
+	Player *player = (getObject()->*uControllingPlayer.call)();
 	if (upgrade->getUpgradeType() == UPGRADE_TYPE_PLAYER &&
-		TheUpgradeCenter->canAffordUpgrade(player, upgrade, thingTemplate, FALSE) == FALSE)
+		(TheUpgradeCenter->*uCanAffordUpgrade.call)(player, upgrade, thingTemplate, FALSE) == FALSE)
 		return FALSE;
 	if (upgrade->getUpgradeType() == UPGRADE_TYPE_OBJECT)
 	{
-		if (getObject()->hasUpgrade(upgrade) == TRUE)
+		if ((getObject()->*uHasUpgrade.call)(upgrade) == TRUE)
 			return FALSE;
-		if (getObject()->affectedByUpgrade(upgrade) == FALSE)
+		if ((getObject()->*uAffectedByUpgrade.call)(upgrade) == FALSE)
 			return FALSE;
 	}
 	if (isUpgradeInQueue(upgrade) == TRUE)
@@ -200,27 +209,32 @@ Bool ProductionUpdate::queueUpgrade(const UpgradeTemplate *upgradeArg, const Thi
 
 	if (upgrade->getUpgradeType() == UPGRADE_TYPE_PLAYER &&
 		(player->hasUpgradeComplete(upgrade) ||
-		 player->hasUpgradeInProduction(upgrade)))
+		 (player->*uHasUpgradeInProduction.call)(upgrade)))
 		return FALSE;
 
 	if (*reinterpret_cast<UnsignedInt *>(reinterpret_cast<char *>(this) + 0x14) >=
 		*reinterpret_cast<UnsignedInt *>(reinterpret_cast<char *>(*reinterpret_cast<ProductionUpdateModuleData **>(reinterpret_cast<char *>(this) - 0x1c)) + 0x28))
 		return FALSE;
 
-	production = new (ProductionEntry::ProductionEntry_GLUE_NOT_IMPLEMENTED) ProductionEntry;
+	ProductionEntry *allocated = static_cast<ProductionEntry *>(::operator new(0x48));
+	if (allocated != NULL)
+		production = reinterpret_cast<ProductionEntry *>(
+			(reinterpret_cast<ProductionEntryCtor *>(allocated)->*uCtor.call)());
+	else
+		production = NULL;
 	production->m_type = 2;
 	production->m_upgradeToResearch = upgrade;
 	production->m_productionID = 0;
 	production->m_productionQuantity = upgrade->m_bfmeLayout114;
-	production->m_cost = upgrade->calcCostToBuild(player, thingTemplate);
+	production->m_cost = (upgrade->*uCalcCostToBuild.call)(player, thingTemplate);
 
-	player->m_money.withdraw(production->m_cost, TRUE);
+	(player->m_money.*uWithdraw.call)(production->m_cost, TRUE);
 	Object *object = getObject();
-	Module *module = rva0036BB10FindCastleMemberBehavior(object);
+	Module *module = uFindCastleMemberBehavior.call(object);
 	if (module != NULL && module->m_data->m_isCastleMember)
 		*reinterpret_cast<float *>(reinterpret_cast<char *>(object) + 0x258) = (float)production->m_cost;
 
-	reinterpret_cast<ProductionUpdate *>(reinterpret_cast<char *>(this) - 0x20)->addToProductionQueue(production);
+	(reinterpret_cast<ProductionUpdate *>(reinterpret_cast<char *>(this) - 0x20)->*uAddToQueue.call)(production);
 	player->addUpgrade(upgrade, UPGRADE_STATUS_IN_PRODUCTION);
 	return TRUE;
 }
