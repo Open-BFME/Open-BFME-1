@@ -65,6 +65,9 @@ public:
 
 extern GameLogic *TheGameLogic;
 
+// Retail's const getGoalObject calls land on ILT 0x000479BA, not on a body.
+extern void j_000479ba();
+
 class AIGuardRetaliateMachine
 {
 public:
@@ -106,7 +109,9 @@ Bool GuardRetaliateExitConditions::shouldExit(const StateMachine *machine) const
 
 	if (m_conditionsToConsider & ATTACK_ExitIfOutsideRadius)
 	{
-		Coord2D objPos = *machine->getGoalObject()->getPosition();
+		typedef const Object *(StateMachine::*GoalObjectFn)() const;
+		union { void (*fn)(); GoalObjectFn call; } goal = { j_000479ba };
+		Coord2D objPos = *(machine->*goal.call)()->getPosition();
 		Coord2DLocal myPos = *machine->getOwner()->getPosition();
 		Coord2D deltaAggressor;
 		Coord2D myRange;
