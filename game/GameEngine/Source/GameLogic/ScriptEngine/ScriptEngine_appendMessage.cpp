@@ -378,15 +378,15 @@ extern GameLogic *TheGameLogic;					// 0x012F0898
 extern ScriptEngine *TheScriptEngine;				// 0x012F076C
 extern TeamFactory *TheTeamFactory;				// 0x012ED810
 
-// 0x012ED4D8 carries no ledger pin; the address-derived spelling already used
-// by game/GameEngine/Source/Common/T3CommandLineParsers.cpp is kept.
-extern Bool g_flag12ED4D8;					// 0x012ED4D8
+// This retail byte suppresses script-debug messages.
+// Its definition and command-line writer are in Common/T3CommandLineParsers.cpp.
+extern Bool ScriptDebugMessagesDisabled;					// 0x012ED4D8
 
 // ?_appendMessage@@YAXABVAsciiString@@_N1@Z
 static void _appendMessage(const AsciiString &str, Bool isTrueMessage,
 	Bool shouldPause)
 {
-	if (g_flag12ED4D8)
+	if (ScriptDebugMessagesDisabled)
 		return;
 	if (!TheScriptDebugWindowDLL)
 		return;
@@ -439,7 +439,7 @@ static void _appendMessage(const AsciiString &str, Bool isTrueMessage,
 static void _adjustVariable(const AsciiString &str, Int value,
 	Bool shouldPause, Bool showSeconds)
 {
-	if (g_flag12ED4D8)
+	if (ScriptDebugMessagesDisabled)
 		return;
 	if (TheScriptEngine->isTimeFast())
 		return;

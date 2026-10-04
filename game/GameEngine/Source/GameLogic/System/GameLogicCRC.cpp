@@ -44,7 +44,7 @@ class BfmeXferFW;
 class BfmeThingFW { public: void bfmeXferFW(BfmeXferFW *); };
 class CRCParameterCheck : public BfmeThingFW {};
 extern CRCParameterCheck* TheCRCParameterCheck;
-extern bool g_bfmeCRCForceAll, g_bfmeCRCSkipObjects, g_bfmeCRCSkipPartition, g_bfmeCRCSkipCollision, g_bfmeCRCSkipShroud, g_bfmeCRCSkipTaint, g_bfmeCRCSkipPlayers, g_bfmeCRCSkipAI;
+extern bool g_liteCRC, g_xObjectCRC, g_xPartitionCRC, g_xCollisionCRC, g_xShroudCRC, g_xTaintCRC, g_xPlayerCRC, g_xAICRC;
 // Global identities are independently anchored by retail initialization tags:
 // Partition/Collision/Shroud: stores at 0x0038A23D/0x0038A316/0x0038A2AB
 // are followed by their matching The... string tags at +0x13/+0x10/+0x10.
@@ -71,30 +71,30 @@ class GameLogic { public: unsigned int getCRC(BfmeByteStream*); char pad[0xa8]; 
 void setFPMode(); unsigned int GetGameLogicRandomSeedCRC();
 unsigned int GameLogic::getCRC(BfmeByteStream* stream) {
 	setFPMode();
-	BFMECRCWriter writer(g_bfmeCRCForceAll);
+	BFMECRCWriter writer(g_liteCRC);
 	Rva009D8630BlockWriter *xfer = &writer;
 	if (stream)
 		writer.open(stream);
 	if (TheCRCParameterCheck)
 		TheCRCParameterCheck->bfmeXferFW(reinterpret_cast<BfmeXferFW *>(&writer));
-	if (g_bfmeCRCForceAll || !g_bfmeCRCSkipObjects)
+	if (g_liteCRC || !g_xObjectCRC)
 	{
 		for (Object *obj = first; obj; obj = obj->next)
 			xfer->xferSnapshot(obj);
 	}
 	unsigned int seed = GetGameLogicRandomSeedCRC();
 	xfer->xferUnsignedInt(&seed);
-	if (g_bfmeCRCForceAll || !g_bfmeCRCSkipPartition)
+	if (g_liteCRC || !g_xPartitionCRC)
 		xfer->xferSnapshot(ThePartitionManager);
-	if (g_bfmeCRCForceAll || !g_bfmeCRCSkipCollision)
+	if (g_liteCRC || !g_xCollisionCRC)
 		xfer->xferSnapshot(TheCollisionManager);
-	if (g_bfmeCRCForceAll || !g_bfmeCRCSkipShroud)
+	if (g_liteCRC || !g_xShroudCRC)
 		xfer->xferSnapshot(TheShroudManager);
-	if (g_bfmeCRCForceAll || !g_bfmeCRCSkipTaint)
+	if (g_liteCRC || !g_xTaintCRC)
 		xfer->xferSnapshot(TheTaintManager);
-	if (g_bfmeCRCForceAll || !g_bfmeCRCSkipPlayers)
+	if (g_liteCRC || !g_xPlayerCRC)
 		xfer->xferSnapshot(ThePlayerList);
-	if (g_bfmeCRCForceAll || !g_bfmeCRCSkipAI)
+	if (g_liteCRC || !g_xAICRC)
 		xfer->xferSnapshot(TheAI);
 	writer.close();
 	return writer.crc;

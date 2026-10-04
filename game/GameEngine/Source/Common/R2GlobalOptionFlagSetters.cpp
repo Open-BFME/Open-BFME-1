@@ -27,14 +27,15 @@
 // IDENTITY IS NOT RECOVERED.
 
 extern unsigned int R2Mask012A6FA0;
-extern bool R2Flag012ED4DC;
-extern bool R2Flag012ED4DD;
-extern bool R2Flag012ED4DE;
-extern bool R2Flag012ED4DF;
-extern bool R2Flag012ED4E0;
-extern bool R2Flag012ED4E2;
-extern bool R2Flag012ED4E3;
-extern bool R2Flag012ED4E4;
+bool g_xObjectCRC = false;
+bool g_xPartitionCRC = false;
+bool g_xCollisionCRC = false;
+bool g_xShroudCRC = false;
+bool g_xTaintCRC = false;
+bool g_xTerrainLogicCRC = false;
+bool g_xPlayerCRC = false;
+bool g_xAICRC = false;
+extern bool g_verifyClientCRC;
 
 #define R2_SET_OPTION_BIT( NAME, BIT, FLAG )                              \
 	int NAME()                                                            \
@@ -44,11 +45,11 @@ extern bool R2Flag012ED4E4;
 		return 1;                                                           \
 	}
 
-R2_SET_OPTION_BIT( Rva00061180, 0x20, R2Flag012ED4DC )
-R2_SET_OPTION_BIT( Rva000611A0, 0x40, R2Flag012ED4DD )
-R2_SET_OPTION_BIT( Rva000611C0, 0x80, R2Flag012ED4DE )
-R2_SET_OPTION_BIT( Rva000611E0, 0x100, R2Flag012ED4DF )
-R2_SET_OPTION_BIT( Rva00061200, 0x200, R2Flag012ED4E0 )
-R2_SET_OPTION_BIT( Rva00061220, 0x400, R2Flag012ED4E2 )
-R2_SET_OPTION_BIT( Rva00061240, 0x800, R2Flag012ED4E3 )
-R2_SET_OPTION_BIT( Rva00061470, 0x1000, R2Flag012ED4E4 )
+R2_SET_OPTION_BIT( Rva00061180, 0x20, g_xObjectCRC )
+R2_SET_OPTION_BIT( Rva000611A0, 0x40, g_xPartitionCRC )
+R2_SET_OPTION_BIT( Rva000611C0, 0x80, g_xCollisionCRC )
+R2_SET_OPTION_BIT( Rva000611E0, 0x100, g_xShroudCRC )
+R2_SET_OPTION_BIT( Rva00061200, 0x200, g_xTaintCRC )
+R2_SET_OPTION_BIT( Rva00061220, 0x400, g_xPlayerCRC )
+R2_SET_OPTION_BIT( Rva00061240, 0x800, g_xAICRC )
+R2_SET_OPTION_BIT( Rva00061470, 0x1000, g_verifyClientCRC )

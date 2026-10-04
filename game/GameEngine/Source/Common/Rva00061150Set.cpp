@@ -8,11 +8,11 @@ int rva00061150Set()
 	return 1;
 }
 
-char g_rva00061460;
+char g_binaryDeepCRC;
 
 int rva00061460Set()
 {
-	g_rva00061460 = 1;
+	g_binaryDeepCRC = 1;
 	return 1;
 }
 

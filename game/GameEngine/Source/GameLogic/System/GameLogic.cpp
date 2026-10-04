@@ -8200,7 +8200,7 @@ extern unsigned g012A6F38;
 // `GlobalData *TheWritableGlobalData` by Common/Recorder.h; the field view below
 // is TU-local, so the pointer is cast back at its single use.
 extern Rva0038DA10PlayerList* g012ED748;
-extern bool g012ED4E5,g012ED4E6;
+extern bool g_deepCRC,g_liteCRC;
 class CRCParameterCheck;
 extern CRCParameterCheck *TheCRCParameterCheck;
 extern Rva000A2E60* g012ED63C;
@@ -8262,8 +8262,8 @@ void Rva0038DA10GameLogic::update(int phase) {
             BfmeByteStream* text=0;
             int player=g012ED748->player()->index();
             unsigned crc;
-            if (!g012ED4E5 && !g012ED4E6) {
-                g012ED4E6=true; crc=getCRC(0); g012ED4E6=false;
+            if (!g_deepCRC && !g_liteCRC) {
+                g_liteCRC=true; crc=getCRC(0); g_liteCRC=false;
             } else {
                 AsciiString name;
                 name.format("%d",frame);
@@ -8272,7 +8272,7 @@ void Rva0038DA10GameLogic::update(int phase) {
             }
             Rva0038DA10Message* m=g012ED5EC->slot34(0x449);
             m->rva0008AB50(crc); m->rva0008ACE0(frame); ((GameMessage*)m)->appendBooleanArgument(g012ED62C->rva000977F0()==1);
-            if (!g012ED4E5 && !g012ED4E6) ((GameMessage*)m)->appendBooleanArgument(false);
+            if (!g_deepCRC && !g_liteCRC) ((GameMessage*)m)->appendBooleanArgument(false);
             else rva0038B430(crc,player,frame,m,false,text);
         }
         if (TheCRCParameterCheck) reinterpret_cast<Rva00065A40 *>(TheCRCParameterCheck)->rva00065A40();

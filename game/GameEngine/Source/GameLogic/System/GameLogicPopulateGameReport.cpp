@@ -203,7 +203,7 @@ extern Bool g_xAICRC;
 extern Bool g_verifyClientCRC;
 extern Bool g_deepCRC;
 extern Bool g_liteCRC;
-extern Bool g_binaryDeepCRC;
+extern char g_binaryDeepCRC;
 extern Int NET_CRC_INTERVAL;
 extern Int g_debugCRCFromFrame;
 extern Int g_debugCRCUntilFrame;

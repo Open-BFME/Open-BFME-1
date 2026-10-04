@@ -92,10 +92,10 @@ public:
 extern GlobalData *TheWritableGlobalData;				///< retail [0x012ED5C8]
 extern UnsignedInt TheCommandLineFlags;					///< retail [0x012A6FA0]
 
-extern bool g_flag12ED4D8;								///< retail [0x012ED4D8]
-extern bool g_flag12ED4D9;								///< retail [0x012ED4D9]
-extern bool g_flag12ED4DA;								///< retail [0x012ED4DA]
-extern bool g_flag12ED4E8;								///< retail [0x012ED4E8]
+bool ScriptDebugMessagesDisabled = false;								///< retail [0x012ED4D8]
+bool g_flag12ED4D9 = false;								///< retail [0x012ED4D9]
+bool g_flag12ED4DA = false;								///< retail [0x012ED4DA]
+bool ignoreCRCMismatches = false;								///< retail [0x012ED4E8]
 extern bool g_flag12D6DA8;								///< retail [0x012D6DA8]
 
 // ?Rva00060910_parse@@YAHQAPADH@Z
@@ -222,7 +222,7 @@ Int Rva00060D00_parse(char *args[], int num)
 		TheWritableGlobalData->m_flagA90 = true;
 		TheWritableGlobalData->m_flagA95 = true;
 		g_flag12ED4DA = true;
-		g_flag12ED4D8 = true;
+		ScriptDebugMessagesDisabled = true;
 	}
 	return 1;
 }
@@ -317,7 +317,7 @@ Int Rva000608C0_parse(char *args[], int num)
 // ?Rva00061430_parse@@YAHQAPADH@Z
 Int Rva00061430_parse(char *args[], int num)
 {
-	g_flag12ED4E8 = true;
+	ignoreCRCMismatches = true;
 	TheCommandLineFlags |= 0x40000;
 	return 1;
 }

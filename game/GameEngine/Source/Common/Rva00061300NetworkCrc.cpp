@@ -5,8 +5,8 @@
 typedef unsigned int UnsignedInt;
 
 extern UnsignedInt TheCommandLineFlags;
-extern bool g_bfmeOnAPB;
-extern bool g_bfmeDoneAPB;
+bool g_deepCRC = false;
+extern bool g_liteCRC;
 #include "Common/INIException.h"
 
 struct Rva00889690Obj
@@ -54,10 +54,10 @@ extern Rva00889690Obj *g_rva00889690;
 
 int Rva00061300NetworkCrc(void)
 {
-	g_bfmeOnAPB = true;
+	g_deepCRC = true;
 	TheCommandLineFlags |= 0x10000;
 	g_rva00889690->registerCommand("debug.add l + NETWORK_CRC");
-	if (g_bfmeDoneAPB)
+	if (g_liteCRC)
 	{
 		throw INIException(3, "Do not specify both -deepCRC and -liteCRC in your commandline arguments.");
 	}

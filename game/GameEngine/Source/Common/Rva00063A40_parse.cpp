@@ -21,7 +21,7 @@ public:
 };
 
 extern GlobalData *TheWritableGlobalData;	///< retail [0x012ED5C8]
-extern bool g_flag12ED4D8;					///< retail [0x012ED4D8]
+extern bool ScriptDebugMessagesDisabled;					///< retail [0x012ED4D8]
 
 // ?Rva00063A40_parse@@YAHQAPADH@Z
 Int Rva00063A40_parse(char *args[], int num)
@@ -31,6 +31,6 @@ Int Rva00063A40_parse(char *args[], int num)
 		TheWritableGlobalData->m_list11E0.push_back(AsciiString(args[1]));
 		return 2;
 	}
-	g_flag12ED4D8 = true;
+	ScriptDebugMessagesDisabled = true;
 	return 2;
 }

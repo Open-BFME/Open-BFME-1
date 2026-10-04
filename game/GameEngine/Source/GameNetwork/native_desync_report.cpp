@@ -37,7 +37,7 @@ static __forceinline GameLogicBFMEShim *theGameLogicShim()
     return reinterpret_cast<GameLogicBFMEShim *>(TheGameLogic);
 }
 // Retail enable byte at VA 0x012ED4E4.
-extern unsigned char BfmeClientCRCCheckEnabled;
+extern bool g_verifyClientCRC;
 
 // The string accessors and lifetimes follow the retail StringBase layout.
 template <typename T> class StringBase
@@ -144,7 +144,7 @@ private:
 // ??0BFMEDesyncCheck@@QAE@XZ
 BFMEDesyncCheck::BFMEDesyncCheck()
 {
-	if (BfmeClientCRCCheckEnabled != 0)
+	if (g_verifyClientCRC != 0)
 	{
 		GameLogicBFMERetailLayout *logic = reinterpret_cast<GameLogicBFMERetailLayout *>( TheGameLogic );
 		if (logic->m_gameMode != 8 && logic->m_gameMode != 4)
@@ -160,7 +160,7 @@ BFMEDesyncCheck::BFMEDesyncCheck()
 // simulation state outside GameLogic::update; this is not a peer CRC exchange.
 void BFMEDesyncCheck::writeReportIfMismatched()
 {
-    if (BfmeClientCRCCheckEnabled == 0)
+    if (g_verifyClientCRC == 0)
         return;
     if (reinterpret_cast<GameLogicBFMERetailLayout *>(TheGameLogic)->m_gameMode == 8 ||
         reinterpret_cast<GameLogicBFMERetailLayout *>(TheGameLogic)->m_gameMode == 4)

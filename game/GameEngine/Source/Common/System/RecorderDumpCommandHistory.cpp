@@ -48,7 +48,7 @@ extern SpecialPowerStore* TheSpecialPowerStore;
 class GameClient;
 extern GameClient* TheGameClient;
 extern char* CommandsAt012ED5F4;
-extern bool FlagAt012ED4E5, FlagAt012ED4E6;
+extern bool g_deepCRC, g_liteCRC;
 extern int NET_CRC_INTERVAL;
 extern const char* RelationshipsAt012A9FC8[];
 
@@ -72,7 +72,7 @@ void RecorderClass::dumpCommandHistory0009A580(CommandDumpFile0009A580* file,uns
     else text.format("\n\n========================================================\nPlayer Index: %d, Name: %S(%s), Template: %s \n=========================================================\n",playerIndex,player->getPlayerDisplayName().str(),field0009A580<AsciiString>(player,0x1c).str(),read0009A580<PlayerTemplate*>(player,4)?read0009A580<PlayerTemplate*>(player,4)->getName().str():"NULL");
     write0009A580(file,text);
    }
-   if ((read0009A580<int>(message,0x10)!=0x449 || (!FlagAt012ED4E5 && !FlagAt012ED4E6 && NET_CRC_INTERVAL!=1)) && read0009A580<int>(message,0x10)!=0x446 && read0009A580<int>(message,0x10)>1000 && read0009A580<int>(message,0x10)<1999) {
+   if ((read0009A580<int>(message,0x10)!=0x449 || (!g_deepCRC && !g_liteCRC && NET_CRC_INTERVAL!=1)) && read0009A580<int>(message,0x10)!=0x446 && read0009A580<int>(message,0x10)>1000 && read0009A580<int>(message,0x10)<1999) {
    unsigned frame=message->getArgument(read0009A580<unsigned char>(message,0x18)-1)->timestamp;
    if (frame>maxFrame) break;
    AsciiString name=message->getCommandAsAsciiString();
