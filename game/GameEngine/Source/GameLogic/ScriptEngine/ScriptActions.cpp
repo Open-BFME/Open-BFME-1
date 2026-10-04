@@ -1798,22 +1798,7 @@ void ScriptActions::doCreateReinforcements(const AsciiString& team, const AsciiS
 	}
 }
 
-//-------------------------------------------------------------------------------------------------
-/** doMoveCameraTo */
-//-------------------------------------------------------------------------------------------------
-// Matched via MASM: game/masm_dumps/ScriptActions_doMoveCameraTo.asm
-// True body 0x2F24F0 size 186 (queue RVA 0x7A85DF was INSIDE unrelated FUN_00ba8400).
-// Retail uses getWaypointByName + TacticalView name-list fallback + View+0x60 moveCameraTo.
-void ScriptActions::doMoveCameraTo(const AsciiString& waypoint, Real sec, Real cameraStutterSec, Real easeIn, Real easeOut)
-{
-	for (Waypoint *way = TheTerrainLogic->getFirstWaypoint(); way; way = way->getNext()) {
-		if (way->getName() == waypoint) {
-			Coord3D destination = *way->getLocation();
-			TheTacticalView->moveCameraTo(&destination, sec*1000, cameraStutterSec*1000, true, easeIn*1000.0f, easeOut*1000.0f);			
-			break;
-		}
-	}
-}
+// Retail ScriptActions::doMoveCameraTo (0x002F24F0) is implemented in ScriptActions_doMoveCameraTo.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** doZoomCamera */
@@ -1914,23 +1899,7 @@ void ScriptActions::doOversizeTheTerrain(Int amount)
 	TheTacticalView->scrollBy(&offset);
 }
 
-//-------------------------------------------------------------------------------------------------
-/** doSetupCamera */
-//-------------------------------------------------------------------------------------------------
-// ?doSetupCamera@ScriptActions@@IAEXABVAsciiString@@MM0@Z present-unmatched
-void ScriptActions::doSetupCamera(const AsciiString& waypoint, Real zoom, Real pitch, const AsciiString& lookAtWaypoint)
-{
-	Waypoint *way = TheTerrainLogic->getWaypointByName(waypoint);
-	if (way==NULL) return;
-	Coord3D	pos = *way->getLocation();
-	Waypoint *lookat = TheTerrainLogic->getWaypointByName(lookAtWaypoint); 
-	if (lookat==NULL) return;
-	Coord3D destination = *lookat->getLocation();
-	TheTacticalView->moveCameraTo(&pos, 0, 0, true, 0.0f, 0.0f);			
-	TheTacticalView->cameraModLookToward(&destination);			
-	TheTacticalView->cameraModFinalPitch(pitch, 0.0f, 0.0f);
-	TheTacticalView->cameraModFinalZoom(zoom, 0.0f, 0.0f);
-}
+// Retail ScriptActions::doSetupCamera (0x002F25E0) is implemented in ScriptActions_doSetupCamera.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** doModCameraLookToward */
