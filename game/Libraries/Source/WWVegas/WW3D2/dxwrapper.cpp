@@ -90,6 +90,11 @@
 
 #include "shdlib.h"
 
+// Retail's operator= body (0x00905C80) is owned by ResolutionDescVectorAssign.cpp;
+// declare that specialization so this TU does not emit the header's copy.
+template <>
+VectorClass<ResolutionDescClass> &VectorClass<ResolutionDescClass>::operator=(VectorClass<ResolutionDescClass> const &vec);
+
 // Keep the already-claimed out-of-line accessor emitted after this body
 // switches to BFME layout views; this anchor is never read by game logic.
 typedef float (LightEnvironmentClass::*BfmePointRadiusAccessor)(int) const;

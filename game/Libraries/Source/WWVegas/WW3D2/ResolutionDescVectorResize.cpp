@@ -12,4 +12,9 @@ void __cdecl operator delete(void *) throw();
 #include "winbase_shim.h"
 #include "rddesc.h"
 
+// Retail's operator= body (0x00905C80) is owned by ResolutionDescVectorAssign.cpp;
+// declare that specialization so this TU does not emit the header's copy.
+template <>
+VectorClass<ResolutionDescClass> &VectorClass<ResolutionDescClass>::operator=(VectorClass<ResolutionDescClass> const &vec);
+
 template class VectorClass<ResolutionDescClass>;
