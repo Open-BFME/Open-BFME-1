@@ -16,13 +16,14 @@ public:
 	Rva001C0840 &set(const Rva001C0840Blk *p);
 };
 
-// Retail vtable VA 0x01085DBC; the alternate name defines no table.
-extern "C" void *bfmeVftDamageInfoOutput[];
-#pragma comment(linker, "/alternatename:_bfmeVftDamageInfoOutput=??_7DamageInfoOutput@@6B@")
+// Retail vtable VA 0x01085DBC: the table is emitted elsewhere under its own
+// class name, so it is referenced by that name rather than through a stand-in
+// plus a linker alias.
+extern "C" const char __identifier("??_7DamageInfoOutput@@6B@")[];
 
 Rva001C0840 &Rva001C0840::set(const Rva001C0840Blk *p)
 {
-	m.vptr = bfmeVftDamageInfoOutput;
+	m.vptr = (void *)__identifier("??_7DamageInfoOutput@@6B@");
 	m.a = p->a;
 	m.b = p->b;
 	m.c = p->c;
