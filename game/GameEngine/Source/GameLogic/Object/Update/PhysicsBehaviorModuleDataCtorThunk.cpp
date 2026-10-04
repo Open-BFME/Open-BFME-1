@@ -1,141 +1,77 @@
 // cl: /DNDEBUG /MD /EHsc
 // readable body of ??0PhysicsBehaviorModuleData@@QAE@XZ: game/GameEngine/Source/GameLogic/Object/Update/PhysicsUpdate.cpp
 
+// PhysicsBehaviorModuleData default constructor (0x0029A090, 126 B). The
+// factory 0x0011AA70 allocates 0x5C bytes and calls this; it installs the
+// dedicated vtable 0x00CC0910. BFME's layout differs from the Zero Hour header
+// PhysicsUpdate.cpp compiles against, so this TU keeps an offset-named view.
+//
+// The defaults are assigned in field order except the three integers at
+// +0x18..+0x20, which come last. That order is what makes MSVC keep 1.3 and
+// then 0 in ECX, 0.66 in EDX and 5 in ECX again while 0.33 stays immediate:
+// each constant register lives from its first to its last store.
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/PhysicsUpdate.h
 class PhysicsBehaviorModuleData
 {
 public:
-    PhysicsBehaviorModuleData();
+	PhysicsBehaviorModuleData();
+
+protected:
+	virtual ~PhysicsBehaviorModuleData();
+
+private:
+	unsigned int m_04;
+	float m_08;
+	float m_0C;
+	float m_10;
+	float m_14;
+	int m_18;
+	int m_1C;
+	int m_20;
+	int m_24;
+	float m_28;
+	float m_2C;
+	float m_30;
+	float m_34;
+	float m_38;
+	float m_3C;
+	bool m_40;
+	bool m_41;
+	bool m_42;
+	float m_44;
+	float m_48;
+	float m_4C;
+	unsigned int m_50;
+	unsigned int m_54;
+	bool m_allowBouncing;
+	bool m_killWhenRestingOnGround;
 };
 
-__declspec(naked) PhysicsBehaviorModuleData::PhysicsBehaviorModuleData()
+PhysicsBehaviorModuleData::PhysicsBehaviorModuleData()
 {
-    __asm {
-        _emit 8Bh
-        _emit 0C1h
-        _emit 0B9h
-        _emit 66h
-        _emit 66h
-        _emit 0A6h
-        _emit 3Fh
-        _emit 89h
-        _emit 48h
-        _emit 08h
-        _emit 89h
-        _emit 48h
-        _emit 0Ch
-        _emit 89h
-        _emit 48h
-        _emit 2Ch
-        _emit 89h
-        _emit 48h
-        _emit 30h
-        _emit 33h
-        _emit 0C9h
-        _emit 0BAh
-        _emit 0C3h
-        _emit 0F5h
-        _emit 28h
-        _emit 3Fh
-        _emit 89h
-        _emit 48h
-        _emit 3Ch
-        _emit 88h
-        _emit 48h
-        _emit 40h
-        _emit 88h
-        _emit 48h
-        _emit 41h
-        _emit 88h
-        _emit 48h
-        _emit 42h
-        _emit 89h
-        _emit 48h
-        _emit 50h
-        _emit 89h
-        _emit 48h
-        _emit 54h
-        _emit 88h
-        _emit 48h
-        _emit 58h
-        _emit 88h
-        _emit 48h
-        _emit 59h
-        _emit 0B9h
-        _emit 05h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 0C7h
-        _emit 00h
-        _emit 10h
-        _emit 09h
-        _emit 0Ch
-        _emit 01h
-        _emit 0C7h
-        _emit 40h
-        _emit 10h
-        _emit 0C3h
-        _emit 0F5h
-        _emit 0A8h
-        _emit 3Eh
-        _emit 89h
-        _emit 50h
-        _emit 14h
-        _emit 0C7h
-        _emit 40h
-        _emit 24h
-        _emit 02h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 0C7h
-        _emit 40h
-        _emit 28h
-        _emit 00h
-        _emit 00h
-        _emit 0A0h
-        _emit 40h
-        _emit 0C7h
-        _emit 40h
-        _emit 34h
-        _emit 0C3h
-        _emit 0F5h
-        _emit 0A8h
-        _emit 3Eh
-        _emit 89h
-        _emit 50h
-        _emit 38h
-        _emit 0C7h
-        _emit 40h
-        _emit 44h
-        _emit 0C3h
-        _emit 0F5h
-        _emit 0A8h
-        _emit 3Eh
-        _emit 89h
-        _emit 50h
-        _emit 48h
-        _emit 0C7h
-        _emit 40h
-        _emit 4Ch
-        _emit 00h
-        _emit 00h
-        _emit 80h
-        _emit 3Fh
-        _emit 89h
-        _emit 48h
-        _emit 18h
-        _emit 0C7h
-        _emit 40h
-        _emit 1Ch
-        _emit 0Ah
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 89h
-        _emit 48h
-        _emit 20h
-        _emit 0C3h
-    }
+	m_08 = 1.3f;
+	m_0C = 1.3f;
+	m_10 = 0.33f;
+	m_14 = 0.66f;
+	m_24 = 2;
+	m_28 = 5.0f;
+	m_2C = 1.3f;
+	m_30 = 1.3f;
+	m_34 = 0.33f;
+	m_38 = 0.66f;
+	m_3C = 0.0f;
+	m_40 = false;
+	m_41 = false;
+	m_42 = false;
+	m_44 = 0.33f;
+	m_48 = 0.66f;
+	m_4C = 1.0f;
+	m_50 = 0;
+	m_54 = 0;
+	m_allowBouncing = false;
+	m_killWhenRestingOnGround = false;
+	m_18 = 5;
+	m_1C = 10;
+	m_20 = 5;
 }
