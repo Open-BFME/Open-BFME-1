@@ -15,6 +15,10 @@
 #include "Common/WellKnownKeys.h"
 #include <map>
 #include <vector>
+
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 typedef _STL::pair<AsciiString,AsciiString> TeamKey0019B850;
 typedef _STL::pair<TeamKey0019B850,int> TeamPair0019B850;
 typedef _STL::pair<const TeamKey0019B850,int> TeamValue0019B850;

@@ -49,6 +49,10 @@
 #include "GameClient/MapUtil.h"
 #include "GameNetwork/GUIUtil.h"
 
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+
 //-------------------------------------------------------------------------------------------------
 // WindowLayout::hide is virtual in BFME (vtable slot 0x10) and non-virtual in
 // the vendored ZH header. Editing the header would touch every TU that includes

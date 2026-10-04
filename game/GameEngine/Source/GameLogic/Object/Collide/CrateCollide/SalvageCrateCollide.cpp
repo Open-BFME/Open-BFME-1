@@ -10,6 +10,10 @@
 #include "GameLogic/Object.h"
 #include "GameLogic/Module/SalvageCrateCollide.h"
 
+// Retail inlines ~UnicodeString: temporaries are released by a direct call to
+// StringBase<unsigned short>::releaseBuffer (0x008881D0), not the ??1UnicodeString stub.
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 struct BfmeSalvageModuleDataLayout
 {
 	char prefix[0x68];
