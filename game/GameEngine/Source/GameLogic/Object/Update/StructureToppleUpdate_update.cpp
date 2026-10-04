@@ -82,11 +82,17 @@ struct BfmeStructureToppleLastDamageInfoView
 
 class BfmeObjectModelCondition
 {
-	public:
-	void notifyModelConditionChanged();
 };
 
-#pragma comment(linker, "/alternatename:?notifyModelConditionChanged@BfmeObjectModelCondition@@QAEXXZ=?j_0002191d@@YAXXZ")
+// Retail reaches this thiscall member function through ILT thunk 0x0002191D.
+extern void j_0002191d();
+
+static __forceinline void notifyModelConditionChanged(BfmeObjectModelCondition *self)
+{
+	typedef void (BfmeObjectModelCondition::*Fn)();
+	union { void (*fn)(); Fn call; } u = { j_0002191d };
+	(self->*u.call)();
+}
 
 static __forceinline Bool bfmeStructureToppleDamageTypeFlag(Int damageType, UnsignedInt flags)
 {
@@ -180,16 +186,14 @@ UpdateSleepTime StructureToppleUpdate::update( void )
 			UnsignedInt *conditionFlags = (UnsignedInt *)((char *)building + 0x110);
 			if (*((unsigned char *)conditionFlags) & 0x20) {
 				conditionFlags[0] &= ~0x20;
-				((BfmeObjectModelCondition *)building)->
-					notifyModelConditionChanged();
+				notifyModelConditionChanged((BfmeObjectModelCondition *)building);
 			}
 			{
 				BitFlags<320> *modelConditions =
 					(BitFlags<320> *)((char *)building + 0x110);
 				if (!modelConditions->test(59)) {
 					modelConditions->set(59);
-					((BfmeObjectModelCondition *)building)->
-						notifyModelConditionChanged();
+					notifyModelConditionChanged((BfmeObjectModelCondition *)building);
 				}
 			}
 
