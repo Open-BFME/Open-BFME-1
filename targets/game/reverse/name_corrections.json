@@ -18438,5 +18438,15 @@
   "after_sha256": "023b5a4a452fabbbfe0e66a4c77f340b8362d49569e9475745514f4be01fd2aa",
   "evidence": "targets/game/reverse/identity_evidence/002ab0f0-specialenemysense-update.md",
   "reason": "The bank-only PartitionFilterBase had no witness. The filter table 0x01083B80 is recorded as ??_7Rva0025ED50RootFilter@@6B@ and the matched AutoPickUpUpdate::update uses that spelling; the DIR32 gate needs it."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0022f7e0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/Rva00415AA0StringAssign.cpp",
+  "old_name": "GarrisonContainModuleData",
+  "new_name": "Rva00415AA0",
+  "before_sha256": "137d2ee31e67e67d8684a6cb6f7b4643c11d2c6eb2db7309cd18f0fca1f5dc22",
+  "after_sha256": "7bb9713c1741e61f3a0ab0aab2bd058c97c2be6c3556d8e3ce906d251fd3cfd5",
+  "evidence": "targets/game/reverse/identity_evidence/0022f7e0-bank-store-macro.md",
+  "reason": "False cross-file pairing: the bank is the 0x0022F7E0 GarrisonContainModuleData constructor, while the new 0x00415AA0 StringBase<char> updater is a separate body. The Garrison constructor remains in GarrisonContainModuleDataCtorThunk.cpp; neither identity was renamed."
  }
 ]
