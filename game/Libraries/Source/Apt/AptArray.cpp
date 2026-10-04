@@ -2,8 +2,8 @@
 
 #include <cstring>
 
-extern void *(*WideAllocPtr)(unsigned int bytes);
-extern void (*WideFreePtr)(void *block);
+extern void *(*Rva008C5D70Alloc)(unsigned int bytes);
+extern void (*g_bfmeFreeDWF)(void *block);
 
 class BfmeN1242
 {
@@ -37,13 +37,13 @@ void BfmeN1242::bfmeReserve1242(int n)
 		grow = 8;
 
 	unsigned int bytes = (unsigned int)grow * 4;
-	void *block = WideAllocPtr(bytes);
+	void *block = Rva008C5D70Alloc(bytes);
 	memset(block, 0, bytes);
 
 	if (m_bfme20)
 	{
 		memcpy(block, m_bfme20, (unsigned int)m_bfme24 * 4);
-		WideFreePtr(m_bfme20);
+		g_bfmeFreeDWF(m_bfme20);
 		m_bfme20 = 0;
 	}
 

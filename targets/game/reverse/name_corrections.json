@@ -16758,5 +16758,15 @@
   "after_sha256": "722cb9897edc12358443505be744246c5a05019772cf495c3d2fcbfe4f250ddf",
   "evidence": "targets/game/reverse/identity_evidence/000a1310-scalar-state-lookup.md",
   "reason": "Original000A1310 consumes a scalar unsigned StateID and returns State* or throws canonical ErrorCode; the old BfmeHostABB iterator-by-value input and returning diagnostic contract are refuted by the complete caller/helper/exception graph. Keep an explicit address-qualified partial machine prefix rather than claiming the incompatible canonical StateMachine header."
+ },
+ {
+  "old_path": "game/Libraries/Source/Apt/AptArray.cpp",
+  "new_path": "game/Libraries/Source/Apt/AptArray.cpp",
+  "old_name": "WideAllocPtr",
+  "new_name": "Rva008C5D70Alloc",
+  "before_sha256": "7971d1d687b807788a7969f41c4d87c2fc0b71ac43ac0923a5945b37cdc7c4f9",
+  "after_sha256": "319f69d23f1a69564d3168ac6f57dc6447bc4d62f6f15d67fa39c9cb010bf64b",
+  "evidence": "targets/game/reverse/identity_evidence/01337828-apt-callback-owner.md",
+  "reason": "Retail allocator call at RVA008B8DA5 uses shared cell VA01337828, whose existing singleton matched data owner is Rva008C5D70Alloc. WideAllocPtr is an unresolved reference view, not a separate or independently proven EA identity. Use the existing owner without adding storage, pins or aliases."
  }
 ]
