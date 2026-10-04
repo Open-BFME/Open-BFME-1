@@ -2,11 +2,13 @@
 
 #include "ObjectDlinkPmf.h"
 
+// Retail ILT thunks these bodies route their calls through.
+extern void j_00001140();
+extern void j_000022bb();
+
 class Rva000F4640Overridable
 {
 public:
-	const Rva000F4640Overridable *getFinalOverride() const;
-
 	void *m_vtable;
 	Rva000F4640Overridable *m_nextOverride;
 };
@@ -77,6 +79,13 @@ private:
 
 	Rva000F4640DlinkIterator<Object> iterateTeamMemberList() const
 	{
+		// Retail passes the {pfn, -100, 0} PMF of
+		// Object::dlink_next_TeamMemberList, and calls it through the ILT
+		// thunk at 0x00401140 (?j_00001140@@YAXXZ). The linker is the only
+		// thing that can turn &BfmeObjectDlinkBase::dlink_next_TeamMemberList
+		// into that thunk address: MSVC 7.1 folds the PMF to immediates only
+		// for a compile-time `&Class::member` constant, so the stand-in name
+		// has to stay mapped onto the thunk.
 		return Rva000F4640DlinkIterator<Object>(m_head,
 			BfmeObjectDlinkBase::dlink_next_TeamMemberList);
 	}
@@ -101,7 +110,14 @@ int Rva000F4640Team::getTargetableCount() const
 			{
 				Rva000F4640Overridable *next = raw->m_nextOverride;
 				if (next != 0)
-					raw = (Rva000F4640Overridable *)next->getFinalOverride();
+				{
+					// Retail walks the override chain through the ILT thunk at
+					// 0x004022BB (?j_000022bb@@YAXXZ).
+					typedef const Rva000F4640Overridable *(
+						Rva000F4640Overridable::*GetFinal)() const;
+					union { void (*fn)(); GetFinal call; } u = { j_000022bb };
+					raw = (Rva000F4640Overridable *)(next->*u.call)();
+				}
 			}
 			Rva000F4640ThingTemplate *tmpl =
 				(Rva000F4640ThingTemplate *)raw;
@@ -114,7 +130,5 @@ int Rva000F4640Team::getTargetableCount() const
 	return retVal;
 }
 
-extern void j_00001140();
-extern void j_000022bb();
+// Stand-in PMF name for the retail ILT thunk; see iterateTeamMemberList().
 #pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVObject@@XZ=?j_00001140@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getFinalOverride@Rva000F4640Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
