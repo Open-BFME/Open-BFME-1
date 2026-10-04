@@ -30,6 +30,13 @@
 #include "Common/AsciiString.h"
 #include "Common/UnicodeString.h"
 #include <string.h>
+
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+// Retail inlines ~UnicodeString: temporaries are released by a direct call to
+// StringBase<unsigned short>::releaseBuffer (0x008881D0), not the ??1UnicodeString stub.
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 #pragma intrinsic(memcmp)
 template <> inline __declspec(noinline) int StringBase<char>::compare(const StringBase<char>& other) const {
     const int len = other.m_data ? other.m_data->length : 0;
