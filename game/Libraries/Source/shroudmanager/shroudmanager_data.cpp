@@ -83,15 +83,18 @@ public:
 // libc.lib's ..\build\intel\st_obj\ehvecdtr.obj under the reserved front-end
 // name ??_M@YGXPAXIHP6EX0@Z@Z (see
 // targets/game/reverse/identity_evidence/009f6d76-eh-vector-destructor-iterator.md).
-// The call below already pushes its four stack arguments in that function's
-// order -- base, element size, count, element destructor -- so the alternatename
-// resolves the local spelling onto the real library symbol.
-#pragma comment(linker, "/alternatename:?ArrayDeleteHelperBodyThunk@@YGXPAXII0@Z=??_M@YGXPAXIHP6EX0@Z@Z")
-// This alias supplies the element-destructor address passed to that helper.
-#pragma comment(linker, "/alternatename:?ElementDtorArrayCallback@@YAXXZ=??1Element@@QAE@XZ")
+// That is a reserved front-end name, not the mangling of any C++ declaration
+// this compiler can spell, so it is declared as an extern "C" __identifier and
+// reached through a local __stdcall view -- the same shape used by
+// game/GameEngine/Source/Common/BfmeConv723.cpp. The fourth argument is the
+// real Element destructor address, likewise spelled by __identifier, so this
+// file needs no linker alias.
+extern "C" void __cdecl __identifier("??_M@YGXPAXIHP6EX0@Z@Z")();
+extern "C" void __cdecl __identifier("??1Element@@QAE@XZ")();
 
-void __stdcall ArrayDeleteHelperBodyThunk(void *, unsigned, unsigned, void *);
-extern void __cdecl ElementDtorArrayCallback();
+typedef void (__stdcall *VectorDestructorIterator)(
+	void *base, unsigned int size, unsigned int count, void (*dtor)());
+
 extern void __cdecl operator delete[](void *);
 
 bool BfmeThingCDE::bfmeCheckABI()
@@ -149,8 +152,9 @@ void BfmeThingCDE::bfmeDtorCDE()
 	if (m_array != 0)
 	{
 		void *cookie = (char *)m_array - 4;
-		ArrayDeleteHelperBodyThunk(m_array, 0x10, *(unsigned *)cookie,
-			reinterpret_cast<void *>(ElementDtorArrayCallback));
+		((VectorDestructorIterator)__identifier("??_M@YGXPAXIHP6EX0@Z@Z"))(
+			m_array, 0x10, *(unsigned *)cookie,
+			__identifier("??1Element@@QAE@XZ"));
 		::operator delete[](cookie);
 	}
 	if (m_prev != 0)
