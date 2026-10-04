@@ -9,14 +9,15 @@ void BaseHeightMapScorchSetShader(const ShaderClass&);
 void BoxSetTexture(unsigned,TextureBaseClass*&);
 class DX8Wrapper{public:static void Apply_Render_State_Changes();static void Set_DX8_Render_State(unsigned long,unsigned);};
 // Retail's writable-global pointer (0x012ED5C8), defined once in
-// Common/GlobalData.cpp.  The canonical spelling is what links; the local view
-// below is only how this TU reads mode/highlight/apply82AA0, so it is cast at
-// use.
-class GlobalData;
+// Common/GlobalData.cpp.  The canonical spelling is what links; GlobalData's
+// setTimeOfDay (retail 0x00082AA0 through ILT 0x0000BA64) is called on it
+// directly, and the local ZoomSettings view below is only how this TU reads
+// mode/highlight, so it is cast at use.
+enum TimeOfDay{TIME_OF_DAY_INVALID,TIME_OF_DAY_MORNING,TIME_OF_DAY_AFTERNOON,TIME_OF_DAY_EVENING,TIME_OF_DAY_NIGHT,TIME_OF_DAY_INTERPOLATE,TIME_OF_DAY_COUNT};
+class GlobalData{public:bool setTimeOfDay(TimeOfDay tod);};
 extern GlobalData *TheWritableGlobalData;
 struct ZoomSettings{
  char pad0[0x218];int mode;char pad1[0xdbd-0x21c];bool highlight;
- void apply82AA0(int);
 };
 struct ZoomClient{char pad[0x3c];int frame;};
 // Retail's game-logic singleton (GameLogic *TheGameLogic, defined once in
@@ -114,7 +115,7 @@ int ScreenZoomFilter::set(FilterModes mode){
  if(ZoomPulse&&changed){
   if(ZoomFadeDirection<0&&!ZoomPulseDown){
    ZoomPulseDown=true;ZoomPulse=30;
-   ((ZoomSettings *)TheWritableGlobalData)->apply82AA0(savedMode);
+   TheWritableGlobalData->setTimeOfDay((TimeOfDay)savedMode);
    ZoomTerrain->apply(savedMode);
   }
   if(ZoomPulseDown){
@@ -122,7 +123,7 @@ int ScreenZoomFilter::set(FilterModes mode){
    if(ZoomPulse<1){ZoomPulseDown=false;ZoomPulse=0;zoomTacticalView()->setMode(0);zoomTacticalView()->setFilter(0);}
   }else{
    ZoomPulse+=3;
-   if(ZoomPulse>=30){ZoomPulseDown=true;zoomTacticalView()->setMode(15);zoomTacticalView()->setFilter(7);savedMode=((ZoomSettings *)TheWritableGlobalData)->mode;((ZoomSettings *)TheWritableGlobalData)->apply82AA0(4);ZoomTerrain->apply(4);}
+   if(ZoomPulse>=30){ZoomPulseDown=true;zoomTacticalView()->setMode(15);zoomTacticalView()->setFilter(7);savedMode=((ZoomSettings *)TheWritableGlobalData)->mode;TheWritableGlobalData->setTimeOfDay(TIME_OF_DAY_NIGHT);ZoomTerrain->apply(4);}
   }
  }
  if(mode>FM_NULL_MODE){

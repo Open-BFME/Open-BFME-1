@@ -118,26 +118,35 @@ private:
 class MapCache;
 extern MapCache *TheMapCache;
 
-class BfmeXfJF
+// BFME's TimeOfDay: six names (NONE MORNING AFTERNOON EVENING NIGHT
+// INTERPOLATE, name table 0x012A9FE0).
+enum TimeOfDay
 {
-public:
-	Bool bfmeLoadJF(Int timeOfDay);
+	TIME_OF_DAY_INVALID = 0,
+	TIME_OF_DAY_FIRST = 1,
+	TIME_OF_DAY_MORNING = TIME_OF_DAY_FIRST,
+	TIME_OF_DAY_AFTERNOON,
+	TIME_OF_DAY_EVENING,
+	TIME_OF_DAY_NIGHT,
+	TIME_OF_DAY_INTERPOLATE,
 
-	unsigned char m_bfmeHeadJF[0x218];
-	Int m_timeOfDay;
+	TIME_OF_DAY_COUNT
 };
 
-class GlobalData;
+// GlobalData view: setTimeOfDay is retail 0x00082AA0 (through ILT 0x0000BA64),
+// m_timeOfDay sits at +0x218.
+class GlobalData
+{
+public:
+	Bool setTimeOfDay(TimeOfDay tod);
+
+	unsigned char m_unreconstructed_0000[0x218];
+	TimeOfDay m_timeOfDay;				///< +0x218
+};
+
 extern GlobalData *TheWritableGlobalData;
 
-class BfmeGlobalData
-{
-public:
-	unsigned char m_bfmeHeadJF[0x218];
-	Int m_timeOfDay;
-};
-
-#define TheGlobalData ((BfmeGlobalData *)TheWritableGlobalData)
+#define TheGlobalData ((const GlobalData *)TheWritableGlobalData)
 
 class GameClient
 {
@@ -167,7 +176,7 @@ public:
 	virtual void pad58(void);
 	virtual void pad5c(void);
 	virtual void pad60(void);
-	virtual void setTimeOfDay(Int timeOfDay);
+	virtual void setTimeOfDay(TimeOfDay tod);
 };
 
 extern GameClient *TheGameClient;
@@ -230,7 +239,7 @@ Bool W3DTerrainLogic::loadMapAbi(AsciiString filename,
 		filename, stream, tailFlag, query) == false)
 		return false;
 
-	if (((BfmeXfJF *)TheWritableGlobalData)->bfmeLoadJF(TheGlobalData->m_timeOfDay))
+	if (TheWritableGlobalData->setTimeOfDay(TheGlobalData->m_timeOfDay))
 		TheGameClient->setTimeOfDay(TheGlobalData->m_timeOfDay);
 
 	return true;

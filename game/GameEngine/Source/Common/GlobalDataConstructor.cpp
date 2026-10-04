@@ -15,7 +15,7 @@
 // retail's stores where the two disagree, and its name from name_oracle, else
 // the INI key, else its offset. Unproven types keep their address:
 // BfmeGdCrcValue0BD0, m_rgb09bc/m_rgb09e0/m_pos0a04 (the per-light arrays
-// the time-of-day apply at 0x00082AA0 fills from m_terrainLighting[tod]) and m_lighting0734.
+// GlobalData::setTimeOfDay at 0x00082AA0 fills from m_terrainLighting[tod]) and m_lighting0734.
 //
 // Body, in retail order:
 //   * m_theOriginal registration, m_next = NULL, then the scalar defaults;
@@ -24,7 +24,7 @@
 //     m_soloPlayerHealthBonusForDifficulty[6] and eighteen consecutive
 //     ScoreKeeper Int fields. Spelling any of them out instead lets the global
 //     allocator hoist the constant into edi and spill every loop pointer;
-//   * m_standardPublicBones.clear(), the time-of-day apply bfmeLoadJF(m_timeOfDay) through ILT
+//   * m_standardPublicBones.clear(), setTimeOfDay(m_timeOfDay) through ILT
 //     0x0000BA64 (body 0x00082AA0 copies m_terrainLighting[tod]),
 //     m_weaponBonusSet = new WeaponBonusSet (132 x 1.0f);
 //   * the executable CRC: GetModuleFileNameA, TheFileSystem->openFile(buf,
@@ -180,13 +180,19 @@ hot:
 	return ((BigObfFallback)j_0003f508)(a, b);
 }
 
-// GlobalData's time-of-day apply at 0x00082AA0 (range-checks tod, then copies
-// m_terrainLighting[tod] into the per-light arrays), reached through ILT
-// 0x0000BA64 under its ledger spelling.
-class BfmeXfJF
+// BFME's TimeOfDay: six names (NONE MORNING AFTERNOON EVENING NIGHT
+// INTERPOLATE, name table 0x012A9FE0).
+enum TimeOfDay
 {
-public:
-	Bool bfmeLoadJF(Int tod);
+	TIME_OF_DAY_INVALID = 0,
+	TIME_OF_DAY_FIRST = 1,
+	TIME_OF_DAY_MORNING = TIME_OF_DAY_FIRST,
+	TIME_OF_DAY_AFTERNOON,
+	TIME_OF_DAY_EVENING,
+	TIME_OF_DAY_NIGHT,
+	TIME_OF_DAY_INTERPOLATE,
+
+	TIME_OF_DAY_COUNT
 };
 
 class SubsystemInterface
@@ -280,6 +286,9 @@ class GlobalData : public SubsystemInterface
 {
 public:
 	GlobalData();
+
+	// retail 0x00082AA0, reached through ILT 0x0000BA64
+	Bool setTimeOfDay( TimeOfDay tod );
 
 	static GlobalData *m_theOriginal;
 
@@ -401,7 +410,7 @@ public:
 	BFMERetailAsciiString m_getHealedAnimationName;				///< +0x20c
 	Real m_getHealedAnimationDisplayTimeInSeconds;				///< +0x210
 	Real m_getHealedAnimationZRisePerSecond;				///< +0x214
-	Int m_timeOfDay;				///< +0x218
+	TimeOfDay m_timeOfDay;				///< +0x218
 	Int m_weather;				///< +0x21c
 	Bool m_makeTrackMarks;				///< +0x220
 	Bool m_hideGarrisonFlags;				///< +0x221
@@ -999,7 +1008,7 @@ GlobalData::GlobalData()
 	m_1f4 = 0x64;
 	m_1f8 = 0x19;
 	m_1fc = 0x493e0;
-	m_timeOfDay = 2;
+	m_timeOfDay = TIME_OF_DAY_AFTERNOON;
 	m_weather = 0;
 	m_makeTrackMarks = FALSE;
 	m_hideGarrisonFlags = FALSE;
@@ -1219,7 +1228,7 @@ GlobalData::GlobalData()
 	m_networkDisconnectScreenNotifyTime = 0x3a98;
 	m_dbe = 0;
 	m_dbf = 0;
-	((BfmeXfJF *)this)->bfmeLoadJF(m_timeOfDay);
+	setTimeOfDay(m_timeOfDay);
 	m_b7d = 0;
 	m_str_b80.clear();
 	m_str_b84.clear();

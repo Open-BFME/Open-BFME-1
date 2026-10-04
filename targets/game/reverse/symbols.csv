@@ -15546,7 +15546,6 @@ name,address,notes
 ?apply1@Gen00522E00@@QAEXH@Z,0x00033F5F,route=0x00522300; typed callback address in00522E00; matched method takes unused int and bound complete receiver
 ?apply2@Gen00522E00@@QAEXH@Z,0x0001398A,route=0x00522360; typed callback address in00522E00; matched method takes unused int and bound complete receiver
 ?apply3@Gen00522E00@@QAEXH@Z,0x000365C5,route=0x005223C0; typed callback address in00522E00; matched method takes unused int and bound complete receiver
-?apply82AA0@ZoomSettings@@QAEXH@Z,0x0000BA64,retail ScreenZoomFilter set0x007D1F00 direct calls at0x007D1F71 and0x007D201C
 ?apply@BfmeHost4164E0@@QAEXHHHH@Z,0x0003A2A1,ILT to sibling apply body 0x00416440; callee of BfmeHost4164E0::setFlagged @ 0x4164E0
 ?apply@BfmeRva49250Control@@QAEXPAVBfmeRva49250Object@@@Z,0x00002D3D,assigned body helper for Rva00249250
 ?apply@BfmeRvaA760Object@@QAEXH@Z,0x000122AB,assigned body helper for Rva0024A760
@@ -77852,7 +77851,7 @@ name,address,notes
 ?bfmeListBP@BfmeBBP@@QAEPAPAVBfmeItemBP@@XZ,0x00021472
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
 ?bfmeListEBC@ArchiveFileSystem@@QAEXABVBfmeStrEBC@@00PAXH@Z,0x009C9510,pin archive list for BfmeConv2019
-?bfmeLoadJF@BfmeXfJF@@QAE_NH@Z,0x0000BA64,route=0x00082AA0; GlobalData ctor call at 0x000852CA passes this and m_timeOfDay; body copies m_terrainLighting[tod]
+?setTimeOfDay@GlobalData@@QAE_NW4TimeOfDay@@@Z,0x0000BA64,route=0x00082AA0; GlobalData ctor call at 0x000852CA passes this and m_timeOfDay; body is the ZH GlobalData::setTimeOfDay twin (identity_evidence/00082aa0-globaldata-settimeofday.md)
 ?bfmeLoadSJA@@YAXPAX0PAD@Z,0x0000150A,pin
 ?bfmeLocalUserMapsReady@@YA_NXZ,0x0003C565,ILT thunk to the local-user-maps probe (0x00109EB0) that gates getUserMapDir
 ?bfmeLocaleCtor@BfmeLocaleShim@@SAXXZ,0x00832120,BfmeThreeHundredFiftyOne TU-local ABI shim for _STL::locale default constructor
