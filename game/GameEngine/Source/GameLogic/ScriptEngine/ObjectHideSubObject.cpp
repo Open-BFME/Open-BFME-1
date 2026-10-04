@@ -20,7 +20,7 @@ public:
 	void invoke(const AsciiString &name, bool a, int b, int c, int d);
 };
 
-#pragma comment(linker, "/alternatename:?invoke@S4Sink004135C0@@QAEXABVAsciiString@@_NHHH@Z=?j_000391c6@@YAXXZ")
+extern void j_000391c6();
 
 class Drawable;
 
@@ -60,7 +60,9 @@ int ObjectHideSubObject(lua_State *state)
 
 	{
 		AsciiString name(lua_tostring(state, 2));
-		object->getDrawable()->invoke(
+		typedef void (S4Sink004135C0::*Invoke)(const AsciiString &, bool, int, int, int);
+		union { void (*fn)(); Invoke call; } u = { j_000391c6 };
+		(object->getDrawable()->*u.call)(
 			name, Rva00990210Lookup((Rva00990210Range *)state, 3) == 0, 0, 0, 0);
 	}
 	return 0;
