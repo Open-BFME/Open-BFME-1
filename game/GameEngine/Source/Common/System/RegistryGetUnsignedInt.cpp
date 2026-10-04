@@ -14,6 +14,9 @@
 
 #include "Common/AsciiString.h"
 
+// Retail runs the by-value AsciiString temporaries through releaseBuffer directly.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+
 static const char *registryString(const AsciiString &value)
 {
 	char *data = *reinterpret_cast<char *const *>(&value);
