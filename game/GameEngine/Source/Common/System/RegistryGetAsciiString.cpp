@@ -20,6 +20,13 @@
 
 #include "Common/AsciiString.h"
 
+// Retail inlines ~AsciiString: the by-value operands are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString()
+{
+	((StringBase<char> *)this)->releaseBuffer();
+}
+
 static const char *registryString(const AsciiString &value)
 {
 	char *data = *reinterpret_cast<char *const *>(&value);
