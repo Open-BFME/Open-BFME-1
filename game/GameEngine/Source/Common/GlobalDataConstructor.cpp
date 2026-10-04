@@ -162,7 +162,10 @@ public:
 void j_0003f508();
 typedef int (__cdecl *BigObfFallback)(int, int);
 
-#pragma comment(linker, "/alternatename:?getVersionNumber@Version@@QAEIXZ=?j_0001b76b@@YAXXZ")
+// Retail reaches Version::getVersionNumber through the ILT thunk 0x0001b76b,
+// which takes no arguments; the union at the call site below reaches it with
+// the thiscall ABI the member declaration already implies.
+extern void j_0001b76b();
 
 static __forceinline int protectCrc00062EF0(int a, int b)
 {
@@ -1272,7 +1275,7 @@ GlobalData::GlobalData()
 	}
 	if (TheVersion)
 	{
-		UnsignedInt version = TheVersion->getVersionNumber();
+		typedef UnsignedInt (Version::*Fn)(); union { void (*fn)(); Fn call; } u = { j_0001b76b }; UnsignedInt version = (TheVersion->*u.call)();
 		exeCRC = CRC_Memory((const unsigned char *)&version, 4, exeCRC);
 	}
 	m_bd0.m_value = protectCrc00062EF0(exeCRC, exeCRC);
