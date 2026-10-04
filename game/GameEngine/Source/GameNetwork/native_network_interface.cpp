@@ -3,10 +3,12 @@
 extern "C" __declspec(dllimport) int __stdcall QueryPerformanceFrequency(__int64 *frequency);
 extern "C" __declspec(dllimport) int __stdcall QueryPerformanceCounter(__int64 *counter);
 
-// Retail vtable at 0x0111A968, recorded as ??_7Network@@6B@; the extern binds
-// that symbol so the store relocates with the data in a linked build.
-extern "C" const void *bfmeVftNetwork[];
-#pragma comment(linker, "/alternatename:_bfmeVftNetwork=??_7Network@@6B@")
+// Retail vtable at 0x0111A968, its own name ??_7Network@@6B@. C++ has no
+// spelling for a vftable symbol (no class declares these entries here, and
+// no key function is defined in this TU, so no class declaration would emit
+// or name the vftable), so the extern carries the mangled name itself and the
+// store relocates against the real symbol.
+extern "C" const void *__identifier("??_7Network@@6B@")[];
 
 // The first thing this constructor does is run the base constructor at
 // 0x009A1A30, which the ledger carries as ??0SubsystemInterface@@QAE@XZ and
@@ -49,7 +51,7 @@ private:
 void *BFMENativeNetwork::construct()
 {
 	__identifier("??0SubsystemInterface@@QAE@XZ")();
-	m_vtable = (void *)bfmeVftNetwork;
+	m_vtable = (void *)__identifier("??_7Network@@6B@");
 	m_connectionManager = 0;
 	m_state = 0;
 	m_accumulator = 0;
