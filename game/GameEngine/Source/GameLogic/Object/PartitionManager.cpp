@@ -5541,30 +5541,6 @@ PartitionFilterRejectBehind::PartitionFilterRejectBehind( Object *obj )
 
 //-----------------------------------------------------------------------------
 
-// ?allow@PartitionFilterRejectBehind@@UAE_NPAVObject@@@Z present-unmatched
-Bool PartitionFilterRejectBehind::allow( Object *other )
-{
-	// objOther is guaranteed to be non-null, so we don't need to check (srj)
-
-//const Coord3D *pos = m_obj->getPosition();
-//const Coord3D *dir = m_obj->getUnitDirectionVector2D();
-	Vector3 dir = m_obj->getTransformMatrix()->Get_X_Vector();
-	dir.Normalize();
-//const Coord3D *otherPos = other->getPosition();
-
-	Coord3D v;
-	ThePartitionManager->getVectorTo( m_obj, other, FROM_CENTER_3D, v );
-
-	Real dot = dir.X * v.x + dir.Y * v.y + dir.Z * v.z;
-
-	if (dot > 0.0f)
-		return true;
-
-	return false;
-}
-
-
-
 //-----------------------------------------------------------------------------
 PartitionFilterLineOfSight::PartitionFilterLineOfSight(const Object *obj)
 {
