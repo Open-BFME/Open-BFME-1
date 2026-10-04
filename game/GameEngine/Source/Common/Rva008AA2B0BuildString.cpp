@@ -64,12 +64,15 @@ public:
 			g_bfmeStringPool1284->free(data);
 	}
 
-	Rva008A0320String &rva008A0320(int value);
-
 	BfmeStringData3AF0 *m_data;
 };
 
-#pragma comment(linker, "/alternatename:?rva008A0320@Rva008A0320String@@QAEAAV1@H@Z=?d_008a0320@@YAXXZ")
+// 0x008A0320 is a real body whose ledger name ?d_008a0320@@YAXXZ carries no
+// proven signature, so it is reached through a member-pointer cast: the body
+// takes (this, int) and returns a reference, and retail's caller passes this
+// in ecx, so the call must keep thiscall codegen.
+extern void __cdecl d_008a0320();
+typedef Rva008A0320String &(Rva008A0320String::*Fn008A0320)(int);
 
 class BfmeStrVKJ
 {
@@ -236,7 +239,10 @@ Rva008C3B60Node *rva008AA2B0(int unused, int count)
 				Rva008AE770TheStack.m_count - index - 1]->toInteger();
 			{
 				Rva008A0320String text;
-				text.rva008A0320(value);
+				{
+					union { void (*fn)(); Fn008A0320 call; } u = { d_008a0320 };
+					(text.*u.call)(value);
+				}
 				((BfmeStrVKJ *)&result)->bfmeAssignVKJ(
 					*(const BfmeStrVKJ *)&text);
 			}
