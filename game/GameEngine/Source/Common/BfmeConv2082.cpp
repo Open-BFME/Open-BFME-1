@@ -1,3 +1,7 @@
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+#include "Rva000A1310StateLookup.h"
+
 class BfmeThingXZ
 {
 public:
@@ -167,8 +171,7 @@ extern GameLogic *TheGameLogic;
 class BfmeHostXZ
 {
 public:
-	BfmeThingXZ *bfmeAcquireXZ(void *a);
-	int bfmeStartXZ(void *a, int d);
+	int bfmeStartXZ(unsigned int stateID, int d);
 
 	unsigned char m_bfmeHeadXZ[0x10];
 	BfmeOwnerXZ *m_bfmeOwnerXZ;
@@ -177,38 +180,13 @@ public:
 	int m_bfmeWhenXZ;
 };
 
-struct BfmeNodeABB
+int BfmeHostXZ::bfmeStartXZ(unsigned int stateID, int d)
 {
-	unsigned char m_bfmeHeadABB[0x14];
-	void *m_bfme14ABB;
-};
-
-struct BfmeIterABB
-{
-	BfmeNodeABB *m_bfmeNodeABB;
-};
-
-class BfmeSubABB
-{
-public:
-	void bfmeRangeABB(BfmeIterABB *first, BfmeIterABB *last);
-
-	BfmeNodeABB *m_bfmeHeadABB;
-};
-
-class BfmeHostABB
-{
-public:
-	void *bfmeFrontABB(BfmeIterABB last);
-
-	unsigned char m_bfmeHeadHABB[4];
-	BfmeSubABB m_bfme04ABB;
-};
-
-int BfmeHostXZ::bfmeStartXZ(void *a, int d)
-{
-	BfmeThingXZ *t = (BfmeThingXZ *)((BfmeHostABB *)this)->bfmeFrontABB(
-		*(BfmeIterABB *)&a);
+	State *state = reinterpret_cast<Rva000A1310StateMachine *>(this)->lookup(stateID);
+	// Lookup returns the native State address with no this adjustment. The
+	// existing local prefix is used only for the witnessed onEnter slot +0x10;
+	// BfmeSlotXZ below views the same address for onExit at +0x14.
+	BfmeThingXZ *t = reinterpret_cast<BfmeThingXZ *>(state);
 
 	if (m_bfmeSlotXZ)
 	{

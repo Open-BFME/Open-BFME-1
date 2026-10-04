@@ -16748,5 +16748,15 @@
   "after_sha256": "0f1a896d62215b963a002104c06c8bf434756d9ef98ecf62202295778af33aad",
   "evidence": "targets/game/reverse/identity_evidence/0023c5e0-opaque-owner.md",
   "reason": "The bank-only owner describes inferred selection behavior but has no class-name witness. Retail debug strings prove a HordeContain source file, not the member identity. Keep a fully opaque address owner and method instead of promoting the bank convenience name."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "BfmeHostABB",
+  "new_name": "Rva000A1310StateMachine",
+  "before_sha256": "5f4811ab9cf3038b854a540a652b276d4738a2da0cec8f9add5613cf10f1eb81",
+  "after_sha256": "722cb9897edc12358443505be744246c5a05019772cf495c3d2fcbfe4f250ddf",
+  "evidence": "targets/game/reverse/identity_evidence/000a1310-scalar-state-lookup.md",
+  "reason": "Original000A1310 consumes a scalar unsigned StateID and returns State* or throws canonical ErrorCode; the old BfmeHostABB iterator-by-value input and returning diagnostic contract are refuted by the complete caller/helper/exception graph. Keep an explicit address-qualified partial machine prefix rather than claiming the incompatible canonical StateMachine header."
  }
 ]

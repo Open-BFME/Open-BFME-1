@@ -75531,7 +75531,6 @@ name,address,notes
 ?bfmeAccepts@BfmeFourSlotEntry@@QAE_NPAVBfmeFourSlotSource@@HH@Z,0x002E85C,address-derived enabled-slot predicate
 ?bfmeAccepts@Gen_00684b90Holder@@QAEHPAX@Z,0x00004F6B,Open-BFME5 ILT the guard at 0x00684B90 asks its holder through
 ?bfmeAcquirePathfindCellInfo@@YAPAUPathfindCellInfo@@PAPAU1@PAVPathfindCell@@PBUICoord2D@@@Z,0x00021DA0,additive: retail call target of the red row ?checkPathCost@Pathfinder@@IAEHPAVObject@@ABVLocomotorSet@@PBUCoord3D@@2@Z
-?bfmeAcquireXZ@BfmeHostXZ@@QAEPAVBfmeThingXZ@@PAX@Z,0x000124D1,Open-BFME5 ILT thunk to 0x000A1310 called by the 0x0016AD90 start
 ?bfmeActME@BfmeThingME@@QAEXXZ,0x0000C4EB,pin
 ?bfmeActivate1236@BfmeNode1236@@QAEXXZ,0x008D2810,call target from exact 0x008BDD10 filtered node walk
 ?bfmeActive@BfmeSubF2C@@QAE_NXZ,0x00010758,ILT thunk to Gen_0026E570 bfmeActive
@@ -76483,7 +76482,6 @@ name,address,notes
 ?bfmeDetachCFF@BfmeOwnerCFF@@QAEXPAVBfmeThingCFF@@@Z,0x0004B367,pin
 ?bfmeDetachESR@BfmeOwnerESR@@QAEXPAVBfmeSubESR@@@Z,0x00040737,pin
 ?bfmeDetachXP@Rva00579160Manager@@QAEXH@Z,0x000144BB,Open-BFME5 ILT window detach the 0x00470570 close-all calls
-?bfmeDiagABB@@YGPAUBfmeNodeABB@@PAUBfmeIterABB@@PBX@Z,0x009F6D00,Open-BFME5 checked-iterator diagnostic the 0x000A1310 accessor calls when the range is empty
 ?bfmeDiffersTQ@BfmeStrTQ@@QBEHABV1@@Z,0x000220C5,pin compare for AudioEventTQ_bfmeSetNameTQ
 ?bfmeDisabled@Gen_00609320@@QBEEXZ,0x00048C4D,ILT uchar spelling for bfmeDisabled body 0x00609320; callee of test@Rva003BF540
 ?bfmeDisconnectUJC@@YAXPAUBfmeConnUJC@@H@Z,0x008EDA20,pin
@@ -78325,7 +78323,6 @@ name,address,notes
 ?bfmeRandom2B7@@YANHMPBDH@Z,0x0002CCA5,pin
 ?bfmeRandomPositive@@YAKK@Z,0x00879140,nbench abs_randwc remap; same body as ?bfmeRandomPositive@@YAHH@Z (u32 is unsigned long)
 ?bfmeRangeABA@BfmeListABA@@QAEXPAUBfmeIterABA@@0@Z,0x0001C017,Open-BFME5 ILT list range the 0x00224440 progress query calls
-?bfmeRangeABB@BfmeSubABB@@QAEXPAUBfmeIterABB@@0@Z,0x0004833D,Open-BFME5 ILT range fill the 0x000A1310 accessor calls
 ?bfmeRangeBase@WeaponTemplate@@ABEMPBVObject@@ABVWeaponBonus@@M@Z,0x00009598,Open-BFME5 ILT thunk to body 0x001E2670; ?getAttackRange@WeaponTemplate@@QBEM... at 0x001E2730 gets its unbonused range from it with the negated z of the position; address-derived name
 ?bfmeRangeESA@BfmeRecESA@@QAE?AUBfmePairESA@@XZ,0x000345AE,pin
 ?bfmeRangeErrorQX@BfmeThingQX@@QAEXXZ,0x000132CD,pin
@@ -81679,7 +81676,6 @@ name,address,notes
 ?g_bfmeDefaultYF@@3VBfmeRoomYF@@A,0x00F36E50
 ?g_bfmeDeltaAAW@@3MB,0x012F8230,Open-BFME5 frame delta the 0x006FD3C0 update adds and subtracts
 ?g_bfmeDepthVHM@@3HC,0x00F40588,pin
-?g_bfmeDescABB@@3PBXB,0x011E0004,Open-BFME5 descriptor the 0x000A1310 accessor passes to the diagnostic
 ?g_bfmeDescriptor3C0600@@3HA,0x012BA450,Open-BFME5 first descriptor registered by 0x006C0600 with ID 3
 ?g_bfmeDescriptor5C0600@@3HA,0x012F7F34,Open-BFME5 third descriptor registered by 0x006C0600 with ID 5
 ?g_bfmeDescriptor8C0600@@3HA,0x012F7F28,Open-BFME5 second descriptor registered by 0x006C0600 with ID 8

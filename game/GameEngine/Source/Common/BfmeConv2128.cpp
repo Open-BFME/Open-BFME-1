@@ -1,48 +1,15 @@
-struct BfmeNodeABB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
+#include "PreRTS.h"
+#include "Common/Errors.h"
+#include "Rva000A1310StateLookup.h"
+
+// Native scalar key, State* result, and ErrorCode enum throw; the old
+// iterator-by-value / returning-diagnostic declarations were false contracts.
+State *Rva000A1310StateMachine::lookup(unsigned int stateID)
 {
-	unsigned char m_bfmeHeadABB[0x14];
-	void *m_bfme14ABB;
-};
-
-struct BfmeIterABB
-{
-	BfmeNodeABB *m_bfmeNodeABB;
-};
-
-class BfmeSubABB
-{
-public:
-	void bfmeRangeABB(BfmeIterABB *first, BfmeIterABB *last);
-
-	BfmeNodeABB *m_bfmeHeadABB;
-};
-
-BfmeNodeABB *__stdcall bfmeDiagABB(BfmeIterABB *it, const void *desc);
-
-extern void *const g_bfmeDescABB;
-
-class BfmeHostABB
-{
-public:
-	void *bfmeFrontABB(BfmeIterABB last);
-
-	unsigned char m_bfmeHeadHABB[4];
-	BfmeSubABB m_bfme04ABB;
-};
-
-void *BfmeHostABB::bfmeFrontABB(BfmeIterABB last)
-{
-	BfmeIterABB first;
-
-	m_bfme04ABB.bfmeRangeABB(&first, &last);
-
-	BfmeNodeABB *n = first.m_bfmeNodeABB;
-
-	if (n == m_bfme04ABB.m_bfmeHeadABB)
-	{
-		last.m_bfmeNodeABB = (BfmeNodeABB *)0xdead0003;
-		n = bfmeDiagABB(&last, &g_bfmeDescABB);
-	}
-
-	return n->m_bfme14ABB;
+	std::map<unsigned int, State *>::iterator i = m_stateMap.find(stateID);
+	if (i == m_stateMap.end())
+		throw ERROR_BAD_ARG;
+	return i->second;
 }

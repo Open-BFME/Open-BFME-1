@@ -3,6 +3,7 @@
 // ?xfer@AIStateMachine@@MAEXPAVXfer@@@Z
 #include "ascii_string.h"
 #include "xfer.h"
+#include "../../Common/Rva000A1310StateLookup.h"
 #include <vector>
 
 struct Coord3DBase { float x, y, z; };
@@ -39,6 +40,8 @@ public:
 	_STL::vector<void *> m_objectsCached;
 };
 
+// Existing caller-local native State prefix: one vptr, ID at +4.
+// This is a layout view for serialization, not the sweep State definition.
 class State
 {
 public:
@@ -64,16 +67,9 @@ public:
 extern TerrainLogic *TheTerrainLogic;
 class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
-class BfmeThingXZ;
-class BfmeHostXZ
-{
-public:
-	BfmeThingXZ *bfmeAcquireXZ(void *);
-};
-
 class AIStateMachine;
 class BfmeSeedTarget;
-// Existing ILT pins retain address-derived aliases for the base xfer and state lookup.
+// Existing base-transfer ILT pin; the lookup uses its selected typed provider.
 class Gen_0014F150
 {
 	friend class AIStateMachine;
@@ -148,8 +144,7 @@ void AIStateMachine::xfer(Xfer *xfer)
 		id = m_temporaryState->getID();
 	*xfer == id;
 	if (xfer->IsLoading() && id != 0xF423F)
-		m_temporaryState = reinterpret_cast<State *>(
-			reinterpret_cast<BfmeHostXZ *>(this)->bfmeAcquireXZ(reinterpret_cast<void *>(id)));
+		m_temporaryState = reinterpret_cast<Rva000A1310StateMachine *>(this)->lookup(id);
 	if (m_temporaryState)
 		*xfer == *reinterpret_cast<Snapshot *>(m_temporaryState);
 	*xfer == m_temporaryStateFrameEnd;
