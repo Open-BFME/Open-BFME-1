@@ -92,28 +92,6 @@ BezierSegment::BezierSegment(const Coord3D& cp0, const Coord3D& cp1, const Coord
 
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/Bezier/BezierSegmentEvaluation.cpp
-// ?evaluateBezSegmentAtT@BezierSegment@@ present-unmatched
-void BezierSegment::evaluateBezSegmentAtT(Real tValue, Coord3D *outResult) const
-
-{
-	if (!outResult)
-		return;
-
-	D3DXVECTOR4	tVec(tValue * tValue * tValue, tValue * tValue, tValue, 1);
-
-	D3DXVECTOR4 xCoords(m_controlPoints[0].x, m_controlPoints[1].x, m_controlPoints[2].x, m_controlPoints[3].x);
-	D3DXVECTOR4 yCoords(m_controlPoints[0].y, m_controlPoints[1].y, m_controlPoints[2].y, m_controlPoints[3].y);
-	D3DXVECTOR4 zCoords(m_controlPoints[0].z, m_controlPoints[1].z, m_controlPoints[2].z, m_controlPoints[3].z);
-
-	D3DXVECTOR4 tResult;
-	D3DXVec4Transform(&tResult, &tVec, &BezierSegment::s_bezBasisMatrix);
-	
-	outResult->x = D3DXVec4Dot(&xCoords, &tResult);
-	outResult->y = D3DXVec4Dot(&yCoords, &tResult);
-	outResult->z = D3DXVec4Dot(&zCoords, &tResult);
-}
-
 //-------------------------------------------------------------------------------------------------
 // ?splitSegmentAtT@BezierSegment@@QBEXMAAV1@0@Z
 void BezierSegment::splitSegmentAtT(Real tValue, BezierSegment &outSeg1, BezierSegment &outSeg2) const
