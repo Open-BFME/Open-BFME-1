@@ -47,9 +47,11 @@ class Drawable
 {
 public:
 	const Matrix3D *getTransformMatrix() const;
-	bool getCurrentWorldspaceClientBonePositions(const char *boneName,
-		Matrix3D &transform) const;
 };
+
+// Retail routes this bone-position query through the incremental-link thunk
+// at 0x0003EC11, whose body is Drawable::getCurrentWorldspaceClientBonePositions.
+extern void j_0003ec11();
 
 class W3DDynamicLight
 {
@@ -89,8 +91,6 @@ public:
 	W3DDynamicLight *m_light;
 };
 
-#pragma comment(linker, "/alternatename:?getCurrentWorldspaceClientBonePositions@Drawable@@QBE_NPBDAAVMatrix3D@@@Z=?j_0003ec11@@YAXXZ")
-
 void W3DLightDraw::reactToTransformChange(const Matrix3D *, const Coord3D *, float)
 {
 	if (m_light)
@@ -101,7 +101,9 @@ void W3DLightDraw::reactToTransformChange(const Matrix3D *, const Coord3D *, flo
 			Matrix3D boneTransform;
 			const char *boneName = m_moduleData->boneName.str();
 			Drawable *draw = m_drawable;
-			if (draw->getCurrentWorldspaceClientBonePositions(boneName, boneTransform))
+			typedef bool (Drawable::*Fn)(const char *, Matrix3D &) const;
+			union { void (*fn)(); Fn call; } u = { j_0003ec11 };
+			if ((draw->*u.call)(boneName, boneTransform))
 				transform = boneTransform;
 		}
 		m_light->Set_Transform(transform);
