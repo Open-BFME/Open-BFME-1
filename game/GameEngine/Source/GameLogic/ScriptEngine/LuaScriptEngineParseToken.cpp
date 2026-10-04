@@ -58,8 +58,11 @@ private:
 extern void j_000262ba(void);
 extern void j_0003ed33(void);
 
+extern void j_00049ae4();
+
 typedef char *(BfmeLexEAN::*BfmeGetTailThunk)(void);
 typedef void (LuaScriptEngine::*LuaEventListThunk)(BfmeLexEAN *parser);
+typedef Int (XmlNameSlotList::*XmlFinishThunk)(void);
 
 union BfmeGetTailCast
 {
@@ -73,11 +76,17 @@ union LuaEventListCast
 	LuaEventListThunk member;
 };
 
-#pragma comment(linker, "/alternatename:?finish@XmlNameSlotList@@QAEHXZ=?j_00049ae4@@YAXXZ")
+union XmlFinishCast
+{
+	void (*raw)(void);
+	XmlFinishThunk member;
+};
 
 // ?rva002EC770ParseToken@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z
 void LuaScriptEngine::rva002EC770ParseToken(BfmeLexEAN *parser)
 {
+	XmlFinishCast finishCall;
+	finishCall.raw = &::j_00049ae4;
 	BfmeGetTailCast tailCall;
 	tailCall.raw = &::j_000262ba;
 	char *tail = (parser->*tailCall.member)();
@@ -85,7 +94,7 @@ void LuaScriptEngine::rva002EC770ParseToken(BfmeLexEAN *parser)
 	if (cmp != 0)
 		return;
 
-	Int status = ((XmlNameSlotList *)parser)->finish();
+	Int status = ((XmlNameSlotList *)parser->*finishCall.member)();
 	while (status != 0)
 	{
 		if (--status != 0)
@@ -106,6 +115,6 @@ void LuaScriptEngine::rva002EC770ParseToken(BfmeLexEAN *parser)
 			eventList.raw = &::j_0003ed33;
 			(this->*eventList.member)(parser);
 		}
-		status = ((XmlNameSlotList *)parser)->finish();
+		status = ((XmlNameSlotList *)parser->*finishCall.member)();
 	}
 }
