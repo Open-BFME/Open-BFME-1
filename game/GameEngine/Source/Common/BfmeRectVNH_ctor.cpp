@@ -9,7 +9,12 @@ class BfmeBaseVNH
 public:
 	BfmeBaseVNH(unsigned w, char f);
 	virtual ~BfmeBaseVNH();
-	virtual void handle();
+
+	// No second virtual: retail's vftable for this shape (??_7BfmeRectVNH@@6B@
+	// at 0x010ED9C0) holds one slot, the deleting destructor at 0x00407F36, and
+	// the word after it is 0x0042601C -- int3 padding.  The `handle()` this TU
+	// used to declare only to fill a second slot was invented, and its
+	// ?handle@BfmeBaseVNH@@UAEXXZ reference was this file's link blocker.
 
 	unsigned m_bfme04;
 	char m_bfme08;
