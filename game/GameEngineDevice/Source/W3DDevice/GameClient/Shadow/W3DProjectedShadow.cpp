@@ -1335,6 +1335,8 @@ struct BFMEShadowTypeInfo
 	Bool force;
 };
 
+extern void j_000193bc();
+
 class BFMEShadowManagerLayout
 {
 public:
@@ -1359,13 +1361,20 @@ Shadow *W3DProjectedShadowManager::addDecal(Shadow::ShadowTypeInfo *shadowInfo)
 {
 	BFMEShadowTypeInfo *info = (BFMEShadowTypeInfo *)shadowInfo;
 	BFMEShadowManagerLayout *manager = (BFMEShadowManagerLayout *)this;
+	// Retail calls the 13-argument core through ILT 0x000193BC (?j_000193bc@@YAXXZ).
+	union CoreRoute
+	{
+		void (*raw)();
+		W3DProjectedShadow *(BFMEShadowManagerLayout::*member)(W3DShadowTexture *, RenderObjClass *, ShadowType, Bool, Real, Real, Int, Real, Real, W3DProjectedShadow **, Bool, Drawable *, Bool);
+	} route;
+	route.raw = j_000193bc;
 
 	if (info == NULL)
 		return NULL;
 
 	if (info->type == (ShadowType)0x1000)
 	{
-		return manager->addShadowCore(
+		return (manager->*route.member)(
 			manager->getTexture(info->name),
 			NULL,
 			info->type,
@@ -1381,7 +1390,7 @@ Shadow *W3DProjectedShadowManager::addDecal(Shadow::ShadowTypeInfo *shadowInfo)
 			TRUE);
 	}
 
-	return manager->addShadowCore(
+	return (manager->*route.member)(
 		manager->getTexture(info->name),
 		NULL,
 		info->type,
@@ -1537,6 +1546,13 @@ W3DProjectedShadow* W3DProjectedShadowManager::addShadow(RenderObjClass *robj, S
 {
 	BFMEShadowTypeInfo *info = (BFMEShadowTypeInfo *)shadowInfo;
 	BFMEShadowManagerLayout *manager = (BFMEShadowManagerLayout *)this;
+	// Retail calls the 13-argument core through ILT 0x000193BC (?j_000193bc@@YAXXZ).
+	union CoreRoute
+	{
+		void (*raw)();
+		W3DProjectedShadow *(BFMEShadowManagerLayout::*member)(W3DShadowTexture *, RenderObjClass *, ShadowType, Bool, Real, Real, Int, Real, Real, W3DProjectedShadow **, Bool, Drawable *, Bool);
+	} route;
+	route.raw = j_000193bc;
 
 	if (info == NULL)
 		return NULL;
@@ -1567,7 +1583,7 @@ W3DProjectedShadow* W3DProjectedShadowManager::addShadow(RenderObjClass *robj, S
 			sizeY = box.Extent.Y * -2.0f;
 	}
 
-	return manager->addShadowCore(
+	return (manager->*route.member)(
 		texture,
 		robj,
 		type,
