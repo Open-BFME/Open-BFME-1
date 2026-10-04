@@ -1,5 +1,5 @@
 // ?bfmeErase1279@BfmeLookup1279@@QAEXAAUBfmeKey1279@@@Z
-// partial score=0.1864 date=2026-09-28
+// partial score=0.2431 date=2026-10-04
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // RVA 0089CC80 (617 B): erase one member from an Apt object's open-addressed
 // member table. Rva00899800TableSet.cpp calls it as
@@ -81,8 +81,8 @@ __forceinline Rva0089CC80Entry *BfmeLookup1279::find(const BfmeKey1279 &key, uns
     int low = slot - 8;
     int high;
     if (low < 0) {
-        low = 0;
         high = capacity > 16 ? 16 : capacity - 1;
+        low = 0;
     } else {
         high = slot + 8;
         if (high > capacity - 1) {
