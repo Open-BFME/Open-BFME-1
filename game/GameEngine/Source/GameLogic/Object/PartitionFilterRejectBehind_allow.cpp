@@ -9,11 +9,11 @@ typedef float Real;
 
 class BfmeDeltaOwner
 {
-public:
-	void bfmeDeltaTo(void *one, char *two);
 };
 
-#pragma comment(linker, "/alternatename:?bfmeDeltaTo@BfmeDeltaOwner@@QAEXPAXPAD@Z=?j_0002eb59@@YAXXZ")
+// The retail call goes through ILT 0x2eb59, so the delta-to target is reached
+// by address rather than by a resolved member name.
+extern void j_0002eb59();
 
 // BFME stores this filter's object pointer at +0x08.
 class Object
@@ -46,7 +46,9 @@ Bool PartitionFilterRejectBehind::allow(Object *other)
 		dir *= WWMath::Inv_Sqrt(len2);
 
 	Vector3 v;
-	((BfmeDeltaOwner *)m_obj)->bfmeDeltaTo(&v, (char *)other);
+	typedef void (BfmeDeltaOwner::*DeltaTo)(void *, char *);
+	union { void (*fn)(); DeltaTo call; } deltaTo = { j_0002eb59 };
+	(((BfmeDeltaOwner *)m_obj)->*deltaTo.call)(&v, (char *)other);
 
 	Real dot = dir.X * v.X + dir.Y * v.Y + dir.Z * v.Z;
 	if (dot > g_rva01075350)
