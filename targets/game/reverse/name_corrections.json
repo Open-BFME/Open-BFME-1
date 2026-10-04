@@ -17428,5 +17428,15 @@
   "after_sha256": "72b1236829ae7ddfe71ffc66a21ce3a02f79aeaeb92aee77b0bf887a5f36cce4",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv2079.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv2079.cpp",
+  "old_name": "bfmeFreeOneJT",
+  "new_name": "Rva009A5980",
+  "before_sha256": "d954a0faef87afed370156df730ef42477e3934db7cb7589b10f92c69ad04868",
+  "after_sha256": "3f1f56493b0119fb122ef9a5e081f2257ae7de25e96208170a8cbab251ed5278",
+  "evidence": "targets/game/reverse/identity_evidence/009a5980-release-wrapper-owner.md",
+  "reason": "Five independently decoded one-pointer cdecl calls in retail 009A4A60 target the distinct wrapper at 009A5980. Its existing unique matched and linked owner is Rva009A5980 in BfmeReleaseSetBZB.cpp, corroborated by six separate calls in 009A5B80. bfmeFreeOneJT has no definition; this caller view is rebound to the already-proven owner without adding an alias, pin, storage or semantic-name claim."
  }
 ]

@@ -16,7 +16,7 @@ public:
 	void *m_bfme290JT;
 };
 
-void bfmeFreeOneJT(void *q);
+void Rva009A5980(void *q);
 
 class Bucket
 {
@@ -29,19 +29,19 @@ public:
 void bfmeFreeJT(BfmeThingJT *p)
 {
 	if (p->m_bfme274JT != 0)
-		bfmeFreeOneJT(p->m_bfme274JT);
+		Rva009A5980(p->m_bfme274JT);
 
 	if (p->m_bfme28cJT != 0)
-		bfmeFreeOneJT(p->m_bfme28cJT);
+		Rva009A5980(p->m_bfme28cJT);
 
 	if (p->m_bfme288JT != 0)
-		bfmeFreeOneJT(p->m_bfme288JT);
+		Rva009A5980(p->m_bfme288JT);
 
 	if (p->m_bfme280JT != 0)
-		bfmeFreeOneJT(p->m_bfme280JT);
+		Rva009A5980(p->m_bfme280JT);
 
 	if (p->m_bfme268JT != 0)
-		bfmeFreeOneJT(p->m_bfme268JT);
+		Rva009A5980(p->m_bfme268JT);
 
 	p->m_bfme274JT = 0;
 	p->m_bfme28cJT = 0;
