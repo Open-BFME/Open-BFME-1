@@ -23,15 +23,30 @@ public:
 	virtual void draw();
 };
 
-// Same shell singleton and same two methods Rva0051D690MainMenuHelper.cpp uses.
+// Same shell singleton and same restore() that
+// Rva0051D690MainMenuHelper.cpp uses.
 class Rva0051D690Shell
 {
 public:
-	bool check();
 	void restore();
 
 	unsigned char m_unmodelled[ 0x59 ];
 	unsigned char m_flag59;
+};
+
+// The other half of that pair -- retail's `if (!TheShell || !TheShell->check())`
+// -- is the shell method at ILT 0x0002000E.  That slot only routes to 0x0057F250,
+// which the ledger owns as game/GameEngine/Source/Common/BfmeConv904.cpp's
+// ?bfmeGoMC@BfmeThingMC@@QAEHXZ: the same TheAudio global at 0x012ED668, the
+// same vtable call at +0xB0, the same bool-in-AL result.  BfmeThingMC is that
+// body's ledger class, a placeholder -- the real owner is the Shell -- so the
+// class is forward declared here and the cast at the use is the whole
+// translation.  Its ledger return type is int while retail tests only AL
+// (`test al,al` at +0x3C), hence the explicit (char) narrowing.
+class BfmeThingMC
+{
+public:
+	int bfmeGoMC();
 };
 
 class Rva0051D690Audio
@@ -87,7 +102,12 @@ extern CreditsManager *TheCredits;
 class Shell;
 extern Shell *TheShell;
 
-extern Rva0051D690Audio *TheAudioClientUpdate;
+// Retail's global at 0x012ED668 is EA's `AudioManager *TheAudio`, defined once in
+// game/GameEngine/Source/Common/Audio/GameAudio.cpp.  Rva0051D690Audio above is
+// this TU's view of the pointee, so the canonical global is forward declared and
+// the cast at the use is the whole translation.
+class AudioManager;
+extern AudioManager *TheAudio;
 extern GameWindowTransitionsHandler *TheTransitionHandler;
 // Retail's global at 0x012ED5C8 is EA's `GlobalData *TheWritableGlobalData`,
 // defined once in Common/GlobalData.cpp.  Rva006C9270GlobalData above is this
@@ -118,9 +138,9 @@ void BfmeAptScreenMainMenu::_bfme_creditsExit( const char *name )
 		delete TheCredits;
 		TheCredits = 0;
 	}
-	if ( !TheShell || !((Rva0051D690Shell *)TheShell)->check() )
+	if ( !TheShell || !(char)((BfmeThingMC *)TheShell)->bfmeGoMC() )
 	{
-		TheAudioClientUpdate->slot6c( 2, 1, 0 );
+		((Rva0051D690Audio *)TheAudio)->slot6c( 2, 1, 0 );
 		((Rva0051D690Shell *)TheShell)->restore();
 	}
 	TheTransitionHandler->reverse( AsciiString( "MainMenuToCreditsScreen" ) );

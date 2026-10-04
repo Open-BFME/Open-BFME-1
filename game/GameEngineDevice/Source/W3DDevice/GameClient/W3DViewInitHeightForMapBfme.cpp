@@ -167,7 +167,14 @@ public:
 	virtual void *getTriggerAreaByName(AsciiString name);
 };
 
-extern BfmeA1087 *g_bfmeA1087;
+// Retail's global at 0x012F7FE0 is EA's `BaseHeightMapRenderObjClass *
+// TheTerrainRenderObject`, defined once in
+// game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp.  BfmeA1087
+// above is this TU's view of the pointee (the +0x2FF4 slot W3DTerrainLogicExtent.cpp
+// reads as BfmeTerrainRenderObject::m_bfmeMap), so the global is forward declared
+// with its real type and the cast at the use is the whole translation.
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 extern TerrainLogic *TheTerrainLogic;
 
 class W3DView
@@ -203,7 +210,7 @@ void W3DView::initHeightForMap()
 {
 	reinterpret_cast<Gen_00459F00 *>(&m_heightField)->bfmeReset();
 
-	WorldHeightMap *map = g_bfmeA1087->m_map;
+	WorldHeightMap *map = ((BfmeA1087 *)TheTerrainRenderObject)->m_map;
 	if (map != 0)
 	{
 		m_heightField.initialize(map->m_data, map->m_dataSize, map->m_width,

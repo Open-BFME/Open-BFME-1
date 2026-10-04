@@ -56,6 +56,12 @@ class GiantBirdAttackMoveToState : public Rva000A19E0StateBase
 public:
 	GiantBirdAttackMoveToState( void *machine );
 
+	// Declared, not defined here: retail has no such copy in the constructor's
+	// own body, and the one the compiler emitted collided with
+	// GiantBirdAttackMoveToStateDeletingDestructor.cpp (LNK2005).  The complete
+	// destructor belongs to that translation unit.
+	virtual ~GiantBirdAttackMoveToState();
+
 private:
 	volatile unsigned char m_byte24;
 	char m_gap25[ 3 ];
