@@ -70,13 +70,29 @@ struct Rva00366890Element
 	char m_body[ 0x58 ];
 };
 
-class Rva003B4250StoreThunk
+// The retail call at 0x003B4250 goes through the incremental-link tail thunk
+// ?invoke@Rva00383820@@QAEXXZ, defined out of line in
+// GameEngine/Source/Common/MemberOffsetTailThunks.cpp. That member declares no
+// parameters because its body is `add ecx,368 / jmp` and inherits whatever
+// stack words its caller left behind, so the three retail arguments are
+// supplied through a member pointer of the store body's own shape and cleaned
+// up here, exactly as through the previous stand-in.
+class Rva00383820
 {
 public:
-	void append( const Rva00366890Element *value,
-		const AsciiString &first, const AsciiString &second );
+	void invoke();
 };
-#pragma comment(linker, "/alternatename:?append@Rva003B4250StoreThunk@@QAEXPBURva00366890Element@@ABVAsciiString@@1@Z=?invoke@Rva00383820@@QAEXXZ")
+
+typedef void ( Rva00383820::*Rva00383820NoArg )();
+typedef void ( Rva00383820::*Rva00383820Store )(
+	const Rva00366890Element *value,
+	const AsciiString &first, const AsciiString &second );
+
+union Rva00383820StoreCall
+{
+	Rva00383820NoArg m_noArg;
+	Rva00383820Store m_store;
+};
 
 class GameLogic;
 extern GameLogic *TheGameLogic;
@@ -120,9 +136,10 @@ void BfmeLivingWorldCampaignManager::rva003B4250(
 	{
 		if( m_playerArmies[ i ].getName().compare( guard ) == 0 )
 		{
-			Rva003B4250StoreThunk *store =
-				reinterpret_cast<Rva003B4250StoreThunk *>( TheGameLogic );
-			store->append(
+			Rva00383820 *store =
+				reinterpret_cast<Rva00383820 *>( TheGameLogic );
+			const Rva00383820StoreCall call = { &Rva00383820::invoke };
+			( store->*call.m_store )(
 				reinterpret_cast<const Rva00366890Element *>(
 					&m_playerArmies[ i ] ),
 				first, second );
