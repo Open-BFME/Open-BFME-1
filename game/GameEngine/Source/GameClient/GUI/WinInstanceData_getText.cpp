@@ -16,11 +16,6 @@ inline UnicodeString::UnicodeString(const UnicodeString &stringSrc)
 		*(const StringBase<unsigned short> *)&stringSrc);
 }
 
-// The canonical WWLib header omits this static member (see
-// SkirmishBattleHonorsConstructor.cpp for the same spelling).
-extern UnicodeString BFMEUnicodeEmptyStringMutable;
-#pragma comment(linker, "/alternatename:?BFMEUnicodeEmptyStringMutable@@3VUnicodeString@@A=?TheEmptyString@UnicodeString@@2V1@A")
-
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayString.h
 class DisplayString
 {
@@ -48,7 +43,7 @@ UnicodeString WinInstanceData::getTooltipText( void )
 {
 	if( m_tooltip )
 		return m_tooltip->getText();
-	return BFMEUnicodeEmptyStringMutable;
+	return UnicodeString::TheEmptyString;
 }
 
 // ?getText@WinInstanceData@@QAE?AVUnicodeString@@XZ
@@ -56,5 +51,5 @@ UnicodeString WinInstanceData::getText( void )
 {
 	if( m_text )
 		return m_text->getText();
-	return BFMEUnicodeEmptyStringMutable;
+	return UnicodeString::TheEmptyString;
 }
