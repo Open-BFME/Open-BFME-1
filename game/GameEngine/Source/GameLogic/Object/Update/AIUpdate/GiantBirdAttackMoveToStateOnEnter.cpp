@@ -261,7 +261,7 @@ public:
 	void run(void *position, void *goalData, void *unused, void *source);
 };
 
-#pragma comment(linker, "/alternatename:?run@Rva002BC260GoalOwner@@QAEXPAX000@Z=?j_0000795a@@YAXXZ")
+extern void j_0000795a();
 
 extern int g_012F02D4;
 #define g_Rva012F02D4 g_012F02D4
@@ -317,7 +317,10 @@ StateReturnType GiantBirdNormalFlightState::onEnter()
 		_ReadWriteBarrier();
 		float height = ai->m_goalHeight478;
 		goal.z = TheTerrainLogic->getGroundHeight(goal.x, goal.y, 0) + height;
-		((Rva002BC260GoalOwner *)ai)->run(&goal, &g_Rva012F02D4, 0, (void *)1);
+		typedef void (Rva002BC260GoalOwner::*Run)(void *, void *, void *, void *);
+		union { void (*fn)(); Run call; } runCast;
+		runCast.fn = j_0000795a;
+		(((Rva002BC260GoalOwner *)ai)->*runCast.call)(&goal, &g_Rva012F02D4, 0, (void *)1);
 		return ai->m_continue424 ? (StateReturnType)0 : (StateReturnType)-2;
 	}
 }
