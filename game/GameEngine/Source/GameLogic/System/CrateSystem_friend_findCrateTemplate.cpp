@@ -125,12 +125,30 @@ private:
 class CrateSystem
 {
 public:
+	const CrateTemplate *findCrateTemplate(AsciiString name) const;
 	CrateTemplate *friend_findCrateTemplate(AsciiString name);
 
 private:
 	char m_slice_pad[8];					// retail this+0x00 .. +0x07, untouched
 	_STL::vector<CrateTemplate *> m_crateTemplateVector;	// this+0x08
 };
+
+// readable body of ?findCrateTemplate@CrateSystem@@QBEPBVCrateTemplate@@VAsciiString@@@Z: game/GameEngine/Source/GameLogic/System/CrateSystem.cpp
+// The const twin, retail 0x00379440, 323 bytes, immediately before
+// friend_findCrateTemplate as in the reference's source order. Its bytes are
+// the same as friend_findCrateTemplate's; CrateSystem::newCrateTemplate
+// (call at 0x0037A3B9) reaches it through ILT 0x0001B8CE, which the ledger
+// pins under this name.
+const CrateTemplate *CrateSystem::findCrateTemplate(AsciiString name) const
+{
+	// search weapon list for name
+	for (Int i = 0; i < m_crateTemplateVector.size(); i++)
+		if(m_crateTemplateVector[i]->getName() == name) {
+			CrateTemplateOverride overridable(m_crateTemplateVector[i]);
+			return overridable;
+		}
+	return 0;
+}
 
 CrateTemplate *CrateSystem::friend_findCrateTemplate(AsciiString name)
 {
