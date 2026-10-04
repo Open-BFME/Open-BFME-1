@@ -172,14 +172,14 @@ private:
 	SceneListClass m_list_ec;
 };
 
-// Address-based callee retained as an external symbol; the cast supplies the
-// observed thiscall receiver at scene+0x34 and one RenderObjClass argument.
-extern void d_00943430(void);
-struct BfmeListMaintenanceThunk
+// Retail 0x00943430 is ?unlink@Gen_00943CF0@@AAEXPAX@Z (Gen_00943CF0_Unlink.cpp);
+// the receiver is the spatial-grid object embedded at scene+0x34.
+class SimpleSceneClass;
+class Gen_00943CF0
 {
-	void Call(RenderObjClass *obj);
+	friend class SimpleSceneClass;
+	void unlink(void *value);
 };
-typedef void (BfmeListMaintenanceThunk::*BfmeListMaintenance)(RenderObjClass *);
 
 // ?Remove_Render_Object@SimpleSceneClass@@UAEXPAVRenderObjClass@@@Z
 void SimpleSceneClass::Remove_Render_Object(RenderObjClass *obj)
@@ -198,9 +198,7 @@ void SimpleSceneClass::Remove_Render_Object(RenderObjClass *obj)
 
 	if (obj->m_bfme_unk_94 >= 0)
 	{
-		union { void *asVoid; BfmeListMaintenance asMember; } fnCast;
-		fnCast.asVoid = (void *)&d_00943430;
-		(reinterpret_cast<BfmeListMaintenanceThunk *>((unsigned char *)this + 0x34)->*fnCast.asMember)(obj);
+		((Gen_00943CF0 *)((unsigned char *)this + 0x34))->unlink(obj);
 	}
 
 	if (m_list_5c.Remove(node)) {
