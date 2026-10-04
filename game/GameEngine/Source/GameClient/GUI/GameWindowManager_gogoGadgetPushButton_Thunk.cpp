@@ -56,9 +56,6 @@ public:
 	GameWindow *owner;
 	char pad[0x2c];
 	WinInstanceData *instanceData;
-
-	int winSetOwner(GameWindow *owner);
-	void winSetUserData(void *data);
 };
 
 class GameWindowManager
@@ -139,13 +136,12 @@ public:
 };
 
 extern GameWindowManager *TheWindowManager;
-extern void GadgetRadioSetText(GameWindow *, UnicodeString);
 
-// Preserve the retail incremental-link call sites rather than resolving
-// these folded helpers directly.
-#pragma comment(linker, "/alternatename:?winSetOwner@GameWindow@@QAEHPAV1@@Z=?j_00047230@@YAXXZ")
-#pragma comment(linker, "/alternatename:?winSetUserData@GameWindow@@QAEXPAX@Z=?j_00002e69@@YAXXZ")
-#pragma comment(linker, "/alternatename:?GadgetRadioSetText@@YAXPAVGameWindow@@VUnicodeString@@@Z=?j_000424f1@@YAXXZ")
+// Retail reaches these three helpers through incremental-link entry points;
+// call the thunks directly instead of aliasing a folded name onto them.
+extern void j_00047230();
+extern void j_00002e69();
+extern void j_000424f1();
 
 // ?gogoGadgetPushButton@GameWindowManager@@UAEPAVGameWindow@@PAV2@PAVGameFont@@_N@Z
 GameWindow *GameWindowManager::gogoGadgetPushButton(GameWindow *parent,
@@ -156,11 +152,15 @@ GameWindow *GameWindowManager::gogoGadgetPushButton(GameWindow *parent,
 	GameWindow *button = TheWindowManager->create(parent);
 	if (button == 0)
 		return 0;
-	button->winSetOwner(parent->owner);
-	button->winSetUserData(0);
+	typedef int (GameWindow::*SetOwner)(GameWindow *);
+	union { void (*fn)(); SetOwner call; } setOwner = { j_00047230 };
+	(button->*setOwner.call)(parent->owner);
+	typedef void (GameWindow::*SetUserData)(void *) const;
+	union { void (*fn)(); SetUserData call; } setUserData = { j_00002e69 };
+	(button->*setUserData.call)(0);
 	assignDefaultGadgetLook(button, font, visual);
 	UnicodeString text = winTextLabelToText(parent->instanceData->textLabel);
 	if (text.getLength())
-		GadgetRadioSetText(button, text);
+		((void (__cdecl *)(GameWindow *, UnicodeString))(void *)j_000424f1)(button, text);
 	return button;
 }
