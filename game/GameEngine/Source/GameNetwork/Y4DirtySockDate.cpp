@@ -26,8 +26,9 @@ struct Rva007FF700Date
 
 	Rva007FF700Date();
 	int setDay( int day );
-	int setMonth( int month );
-	int setYear( int year );
+	__forceinline int setMonth( int month );
+	__forceinline int setYear( int year );
+	int setDate( int month, int day, int year );
 };
 
 /* The ordinary rule, and the bytes show all three tests: divisible by four,
@@ -127,4 +128,17 @@ int Rva007FF700Date::setYear( int year )
 		return 0;
 	}
 	return -3;
+}
+
+// Complete retail body at 0x007FF4F0: the existing month/year validation
+// helpers inline before the call to setDay. Keeping their result tests
+// preserves retail's separate month (-1) and year (-3) failure tails.
+int Rva007FF700Date::setDate( int month, int day, int year )
+{
+	int result;
+	if ( (result = setMonth( month )) != 0 )
+		return result;
+	if ( (result = setYear( year )) != 0 )
+		return result;
+	return setDay( day );
 }
