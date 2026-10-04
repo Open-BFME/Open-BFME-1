@@ -33,10 +33,6 @@ void bfmeEnsure005E86F0(void);
 void bfmeEnsure005E8720(void);
 void bfmeEnsure005E8750(void);
 
-// The shared single-destructor base vtable at VA 0x01073744 (dir32_addresses.csv).
-extern "C" void *bfmeVftSnapshotBase[4];
-#pragma comment(linker, "/alternatename:_bfmeVftSnapshotBase=??_7BfmeBaseVUQ@@6B@")
-
 namespace FXParticleSystem {
 
 struct ModuleCategoryEntry {
@@ -285,9 +281,13 @@ LightningEmissionInfo &LightningEmissionInfo::operator=(const LightningEmissionI
     return *this;
 }
 
+// These five destructors are empty on purpose: MSVC restores the base subobject
+// vptr itself, so each compiles to the retail 7-byte "mov dword ptr [ecx],
+// ??_7Snapshot@@6B@; ret". Snapshot is EA's BfmeBaseVUQ, the single-destructor
+// base table at VA 0x01073744, so the store needs no source-level spelling: an
+// explicit store of a vftable was dead-code-eliminated by the compiler.
 LightningEmissionInfo::~LightningEmissionInfo()
 {
-    *(void **)this = bfmeVftSnapshotBase;
 }
 
 EventModuleInfo::EventModuleInfo()
@@ -308,22 +308,18 @@ EventModuleInfo &EventModuleInfo::operator=(const EventModuleInfo &that)
 
 BoxEmissionVolumeInfo::~BoxEmissionVolumeInfo()
 {
-    *(void **)this = bfmeVftSnapshotBase;
 }
 
 SphereEmissionVolumeInfo::~SphereEmissionVolumeInfo()
 {
-    *(void **)this = bfmeVftSnapshotBase;
 }
 
 CylinderEmissionVolumeInfo::~CylinderEmissionVolumeInfo()
 {
-    *(void **)this = bfmeVftSnapshotBase;
 }
 
 LineEmissionVolumeInfo::~LineEmissionVolumeInfo()
 {
-    *(void **)this = bfmeVftSnapshotBase;
 }
 
 LineEmissionVolumeInfo &LineEmissionVolumeInfo::operator=(const LineEmissionVolumeInfo &that)
