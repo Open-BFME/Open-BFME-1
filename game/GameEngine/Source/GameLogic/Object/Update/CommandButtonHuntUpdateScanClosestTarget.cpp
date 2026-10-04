@@ -485,10 +485,11 @@ private:
 };
 
 // Both bodies are matched elsewhere; retail reaches them through their
-// incremental-link thunks, so route the calls the way retail spells them
-// (CommandButtonHuntUpdate_huntSpecialPower.cpp does the same for its ILTs).
-#pragma comment(linker, "/alternatename:?getPriority@AttackPriorityInfo@@QBEHPBVThingTemplate@@@Z=?j_0001641e@@YAXXZ")
-#pragma comment(linker, "/alternatename:?canDoSpecialPowerAtObject@ActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@PBVSpecialPowerTemplate@@I_N@Z=?j_00017bca@@YAXXZ")
+// incremental-link thunks, so reference the thunks directly, as retail spells
+// them (CommandButtonHuntUpdate_huntSpecialPower.cpp does the same for its
+// ILTs). Each caller below builds a local member pointer to its thunk.
+extern void j_0001641e();
+extern void j_00017bca();
 
 // ?scanClosestTarget@CommandButtonHuntUpdate@@IAEPAVObject@@XZ
 Object *CommandButtonHuntUpdate::scanClosestTarget()
@@ -540,7 +541,10 @@ Object *CommandButtonHuntUpdate::scanClosestTarget()
 				if (me->getRelationship(other) == RELATIONSHIP_ALLIES)
 					continue;
 			}
-			if (!TheActionManager->canDoSpecialPowerAtObject(
+			union { void (*fn)(); Bool (ActionManager::*call)(const Object *, const Object *,
+			CommandSourceType, const SpecialPowerTemplate *, UnsignedInt, Bool); }
+			canDoSpecialPowerAtObject = { j_00017bca };
+		if (!(TheActionManager->*canDoSpecialPowerAtObject.call)(
 				me, other, CMD_FROM_AI, spTemplate, 0, true))
 				continue;
 			if (isPlaceExplosive)
@@ -561,7 +565,11 @@ Object *CommandButtonHuntUpdate::scanClosestTarget()
 			Real dist = (Real)sqrt(me->getDistanceSquared(other));
 			Int curPriority = (Int)(data->m_scanRange - dist);
 			if (info)
-				curPriority = info->getPriority(other->getTemplate());
+			{
+				union { void (*fn)(); Int (AttackPriorityInfo::*call)(
+					const ThingTemplate *) const; } getPriority = { j_0001641e };
+				curPriority = (info->*getPriority.call)(other->getTemplate());
+			}
 			if (curPriority == 0)
 				continue;
 			Int modifier = (Int)(dist /
