@@ -44,10 +44,15 @@ public:
 
 	~vector();
 
-	void clear()
-	{
-		erase(m_start, m_finish);
-	}
+	// Out-of-line erase of a non-trivial element type lives in another TU,
+	// and retail reaches it through the incremental-link thunk its call site
+	// encodes -- one thunk per element type. clear() is specialized per element
+	// type below so that each body names its own thunk symbol directly instead
+	// of relying on a linker alias; the out-of-line copy of every clear that
+	// MSVC still emits calls that same thunk.
+	typedef T * (vector::*erase_fn)(T *first, T *last);
+
+	void clear();
 
 	T *erase(T *first, T *last);
 
@@ -58,16 +63,87 @@ private:
 };
 }
 
-#pragma comment(linker, "/alternatename:?erase@?$vector@UGen003A99D0@@V?$allocator@UGen003A99D0@@@_STL@@@_STL@@QAEPAUGen003A99D0@@PAU3@0@Z=?j_00020928@@YAXXZ")
-#pragma comment(linker, "/alternatename:?erase@?$vector@UGen003A9B60@@V?$allocator@UGen003A9B60@@@_STL@@@_STL@@QAEPAUGen003A9B60@@PAU3@0@Z=?j_000450ca@@YAXXZ")
-#pragma comment(linker, "/alternatename:?erase@?$vector@UGen003A9C30@@V?$allocator@UGen003A9C30@@@_STL@@@_STL@@QAEPAUGen003A9C30@@PAU3@0@Z=?j_00048c48@@YAXXZ")
-#pragma comment(linker, "/alternatename:?erase@?$vector@UGen003A9CF0@@V?$allocator@UGen003A9CF0@@@_STL@@@_STL@@QAEPAUGen003A9CF0@@PAU3@0@Z=?j_00037821@@YAXXZ")
-#pragma comment(linker, "/alternatename:?erase@?$vector@UGen003A9DC0@@V?$allocator@UGen003A9DC0@@@_STL@@@_STL@@QAEPAUGen003A9DC0@@PAU3@0@Z=?j_00026611@@YAXXZ")
-#pragma comment(linker, "/alternatename:?erase@?$vector@UGen003AA300@@V?$allocator@UGen003AA300@@@_STL@@@_STL@@QAEPAUGen003AA300@@PAU3@0@Z=?j_0002dfc4@@YAXXZ")
-#pragma comment(linker, "/alternatename:?erase@?$vector@UGen003AA1A0@@V?$allocator@UGen003AA1A0@@@_STL@@@_STL@@QAEPAUGen003AA1A0@@PAU3@0@Z=?j_0003578d@@YAXXZ")
-#pragma comment(linker, "/alternatename:?erase@?$vector@UGen003AA010@@V?$allocator@UGen003AA010@@@_STL@@@_STL@@QAEPAUGen003AA010@@PAU3@0@Z=?j_0003d3ac@@YAXXZ")
-#pragma comment(linker, "/alternatename:?erase@?$vector@UGen003AA0D0@@V?$allocator@UGen003AA0D0@@@_STL@@@_STL@@QAEPAUGen003AA0D0@@PAU3@0@Z=?j_0003cae2@@YAXXZ")
-#pragma comment(linker, "/alternatename:?erase@?$vector@UGen_t_003ab360_p12cd@@V?$allocator@UGen_t_003ab360_p12cd@@@_STL@@@_STL@@QAEPAUGen_t_003ab360_p12cd@@PAU3@0@Z=?j_00011e28@@YAXXZ")
+
+// Retail's converting ctor reaches every out-of-line vector::erase through the
+// incremental-link thunk the call site encodes, one per element type.
+extern void j_00020928();
+extern void j_000450ca();
+extern void j_00048c48();
+extern void j_00037821();
+extern void j_00026611();
+extern void j_0002dfc4();
+extern void j_0003578d();
+extern void j_0003d3ac();
+extern void j_0003cae2();
+extern void j_00011e28();
+
+template <class T, class A>
+void _STL::vector<T, A>::clear()
+{
+	erase(m_start, m_finish);
+}
+
+// Each of these is the same body: the thunk address read as a pointer-to-member
+// is a constant, so the indirect call folds back into a direct call to the thunk.
+template <> void _STL::vector<Gen003A99D0>::clear()
+{
+	union { void (*thunk)(); erase_fn at; } route = { j_00020928 };
+	(this->*route.at)(m_start, m_finish);
+}
+
+template <> void _STL::vector<Gen003A9B60>::clear()
+{
+	union { void (*thunk)(); erase_fn at; } route = { j_000450ca };
+	(this->*route.at)(m_start, m_finish);
+}
+
+template <> void _STL::vector<Gen003A9C30>::clear()
+{
+	union { void (*thunk)(); erase_fn at; } route = { j_00048c48 };
+	(this->*route.at)(m_start, m_finish);
+}
+
+template <> void _STL::vector<Gen003A9CF0>::clear()
+{
+	union { void (*thunk)(); erase_fn at; } route = { j_00037821 };
+	(this->*route.at)(m_start, m_finish);
+}
+
+template <> void _STL::vector<Gen003A9DC0>::clear()
+{
+	union { void (*thunk)(); erase_fn at; } route = { j_00026611 };
+	(this->*route.at)(m_start, m_finish);
+}
+
+template <> void _STL::vector<Gen003AA300>::clear()
+{
+	union { void (*thunk)(); erase_fn at; } route = { j_0002dfc4 };
+	(this->*route.at)(m_start, m_finish);
+}
+
+template <> void _STL::vector<Gen003AA1A0>::clear()
+{
+	union { void (*thunk)(); erase_fn at; } route = { j_0003578d };
+	(this->*route.at)(m_start, m_finish);
+}
+
+template <> void _STL::vector<Gen003AA010>::clear()
+{
+	union { void (*thunk)(); erase_fn at; } route = { j_0003d3ac };
+	(this->*route.at)(m_start, m_finish);
+}
+
+template <> void _STL::vector<Gen003AA0D0>::clear()
+{
+	union { void (*thunk)(); erase_fn at; } route = { j_0003cae2 };
+	(this->*route.at)(m_start, m_finish);
+}
+
+template <> void _STL::vector<Gen_t_003ab360_p12cd>::clear()
+{
+	union { void (*thunk)(); erase_fn at; } route = { j_00011e28 };
+	(this->*route.at)(m_start, m_finish);
+}
 
 class Rva003B6680
 {
