@@ -90267,3 +90267,5 @@ g_012F3934,0x012F3934,address-derived callback global; independently zeroed by r
 ??_C@_0CD@EFLFMFKB@DESTROYED_WHILST_BEING_CONSTRUCT@,0x00C73AE0,Retail model-condition name table RVA 0x00EA6918 slot 301 points to VA 0x01073AE0; full compiler literal DESTROYED_WHILST_BEING_CONSTRUCTED including NUL equals retail
 ??_C@_0L@EAJGOHPP@COLLAPSING?$AA@,0x00C73AD0,Retail model-condition name table RVA 0x00EA6918 slot 302 points to VA 0x01073AD0; full compiler literal COLLAPSING including NUL equals retail
 ??_C@_0BO@PIADKPDE@EMOTION_UNCONTROLLABLY_AFRAID?$AA@,0x00C73AAC,Retail model-condition name table RVA 0x00EA6918 slot 303 points to VA 0x01073AAC; full compiler literal EMOTION_UNCONTROLLABLY_AFRAID including NUL equals retail
+??1INIException@@QAE@XZ,0x00061BD0,INIException destructor: pmfnUnwind of retail ThrowInfo 0x00DDFC30 via ILT 0x0001460F (identity_evidence/00061bd0-iniexception-dtor-copyctor.md)
+??0INIException@@QAE@ABV0@@Z,0x00061BB0,INIException copy constructor: catchable-type copy ctor of retail ThrowInfo 0x00DDFC30 via ILT 0x00048621 (identity_evidence/00061bd0-iniexception-dtor-copyctor.md)
