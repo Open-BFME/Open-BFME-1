@@ -16438,5 +16438,75 @@
   "after_sha256": "8a2898778b476bb55e8dd1973dd25f4b1c671fd9b286c597a123b817ee8f6ba5",
   "evidence": "targets/game/reverse/identity_evidence/000b5710-dynamic-audio-xfer.md",
   "reason": "The generated Gen_ scalar setter used generic m and an int argument without an independent method identity. Original ambient dictionary calls return float in ST0 and forward its bits to this helper. Preserve an address-qualified method because the unavailable base-setter spelling is not proved by the byte match."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000b6030.cpp",
+  "new_path": "targets/game/reverse/attempts/0x000b6030.cpp",
+  "old_name": "AudioEventInfo",
+  "new_name": "Rva000B6030Info",
+  "before_sha256": "43640376b3ada5397bce84b5d0f11cef2e10ca2cce662a91ee6e642e9f3a6514",
+  "after_sha256": "d739c5c153d14ac72136c4cec192d268988a4cb9bb60bdf34e510042e95f6b11",
+  "evidence": "targets/game/reverse/identity_evidence/0x000b6030-ambient-parser-bank.md",
+  "reason": "False pairing: the old bank redefined AudioEventInfo as an eight-byte refcount shell. The canonical vendor declaration is now included and retained; this new address-qualified physical view models only independently decoded BFME vptr/refcount access and must not replace the canonical class."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000b6030.cpp",
+  "new_path": "targets/game/reverse/attempts/0x000b6030.cpp",
+  "old_name": "AudioEventInfoRef",
+  "new_name": "Rva000B6030InfoRef",
+  "before_sha256": "43640376b3ada5397bce84b5d0f11cef2e10ca2cce662a91ee6e642e9f3a6514",
+  "after_sha256": "d739c5c153d14ac72136c4cec192d268988a4cb9bb60bdf34e510042e95f6b11",
+  "evidence": "targets/game/reverse/identity_evidence/0x000b6030-ambient-parser-bank.md",
+  "reason": "The old bank invented AudioEventInfoRef destructor and assignment identities at 000877B0/00087750 without resolving their canonical providers. The original bodies establish a counted pointer holder, while selected providers use ThingRef and Rva00087750Ref. This experimental address-qualified view explicitly preserves that unresolved type identity; strict bytes alone do not prove the old holder spelling."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000b6030.cpp",
+  "new_path": "targets/game/reverse/attempts/0x000b6030.cpp",
+  "old_name": "AudioEventRTS",
+  "new_name": "Rva000B6030Event",
+  "before_sha256": "43640376b3ada5397bce84b5d0f11cef2e10ca2cce662a91ee6e642e9f3a6514",
+  "after_sha256": "d739c5c153d14ac72136c4cec192d268988a4cb9bb60bdf34e510042e95f6b11",
+  "evidence": "targets/game/reverse/identity_evidence/0x000b6030-ambient-parser-bank.md",
+  "reason": "False pairing: a removed ten-line shadow AudioEventRTS declaration is replaced by a clearly partial physical view of the parser-witnessed holder at event+8. This does not rename the actual audio event type or claim the partial view is its complete canonical definition."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000b6030.cpp",
+  "new_path": "targets/game/reverse/attempts/0x000b6030.cpp",
+  "old_name": "AudioManager",
+  "new_name": "Rva000B6030AudioManager",
+  "before_sha256": "43640376b3ada5397bce84b5d0f11cef2e10ca2cce662a91ee6e642e9f3a6514",
+  "after_sha256": "d739c5c153d14ac72136c4cec192d268988a4cb9bb60bdf34e510042e95f6b11",
+  "evidence": "targets/game/reverse/identity_evidence/0x000b6030-ambient-parser-bank.md",
+  "reason": "False pairing: canonical AudioManager remains forward-declared for TheAudio. The removed shadow class with seventy fake virtual slots is now an address-qualified ABI view for the independently decoded call at vslot118; its fake slot declarations never established the canonical full AudioManager definition."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000b6030.cpp",
+  "new_path": "targets/game/reverse/attempts/0x000b6030.cpp",
+  "old_name": "DynamicAudioEventInfo",
+  "new_name": "Rva000B6030DynamicInfo",
+  "before_sha256": "43640376b3ada5397bce84b5d0f11cef2e10ca2cce662a91ee6e642e9f3a6514",
+  "after_sha256": "d739c5c153d14ac72136c4cec192d268988a4cb9bb60bdf34e510042e95f6b11",
+  "evidence": "targets/game/reverse/identity_evidence/0x000b6030-ambient-parser-bank.md",
+  "reason": "False pairing: canonical DynamicAudioEventInfo is included and still supplies the real native override methods. The old bank shadow constructor had an extra BFME argument and refcount base incompatible with the vendor declaration. The A4-byte address-qualified allocation view is explicitly experimental scaffolding, not a replacement or renamed canonical class."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000b6030.cpp",
+  "new_path": "targets/game/reverse/attempts/0x000b6030.cpp",
+  "old_name": "DynamicAudioEventInfoRef",
+  "new_name": "Rva000B6030DynamicInfoRef",
+  "before_sha256": "43640376b3ada5397bce84b5d0f11cef2e10ca2cce662a91ee6e642e9f3a6514",
+  "after_sha256": "d739c5c153d14ac72136c4cec192d268988a4cb9bb60bdf34e510042e95f6b11",
+  "evidence": "targets/game/reverse/identity_evidence/0x000b6030-ambient-parser-bank.md",
+  "reason": "The old bank asserted an unbound DynamicAudioEventInfoRef::assign identity. Independent B5FD0 bytes establish raw counted-pointer assignment but its selected provider remains neutral Rva000B5FD0Ref. The address-qualified experimental output view avoids claiming that unresolved holder class identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000b6030.cpp",
+  "new_path": "targets/game/reverse/attempts/0x000b6030.cpp",
+  "old_name": "ThingTemplate",
+  "new_name": "Rva00416FA0Receiver",
+  "before_sha256": "43640376b3ada5397bce84b5d0f11cef2e10ca2cce662a91ee6e642e9f3a6514",
+  "after_sha256": "d739c5c153d14ac72136c4cec192d268988a4cb9bb60bdf34e510042e95f6b11",
+  "evidence": "targets/game/reverse/identity_evidence/0x000b6030-ambient-parser-bank.md",
+  "reason": "Original Object caller at VA005D0CBC..005D0CCE passes the drawable receiver as argument two and its final template as argument three. The parser sends argument two to00416FA0 and argument three to00087BD0; the old bank wrongly named argument two ThingTemplate. This correction preserves an address-qualified receiver pending independent canonical provider repair."
  }
 ]
