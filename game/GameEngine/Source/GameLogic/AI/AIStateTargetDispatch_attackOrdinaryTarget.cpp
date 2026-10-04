@@ -118,11 +118,14 @@ public:
 	virtual void slot122() = 0;
 	virtual Bool Rva0027CF60Slot123() const = 0;
 	virtual void slot124() = 0;
+	// Protected non-virtual: MSVC 7.1 mangles that exactly as the matched body
+	// ?needToRotate@AIUpdateInterface@@IAE_NXZ at 0x00271390.  (`I` is the
+	// protected access code; `U` would be a virtual member.)  So the call is
+	// referenced by its real name and needs no linker alias.
 protected:
 	friend class AIStateTargetDispatch;
-	Bool needToRotate();	// protected non-virtual, as the matched ?needToRotate@AIUpdateInterface@@IAE_NXZ mangles it
+	Bool needToRotate();
 public:
-	Real Rva0026EED0(Thing *target);
 	Bool bfmeBlocksFormationRefresh();
 	Bool blockedBy(Object *object);
 	Bool hasHigherPathPriority(AIUpdateInterface *other) const;
@@ -260,6 +263,12 @@ public:
 		Coord3D *destination);
 };
 
+// The retail call sites name ILT 0x00011252, not the member, so both go
+// through this member-pointer union initialised from the thunk.  Pathfinder is
+// non-polymorphic, so the union folds back into a direct thiscall.
+typedef Bool (Pathfinder::*AdjustToPossibleDestinationFn)(Object *object,
+	const LocomotorSet &locomotorSet, Coord3D *destination);
+
 struct AIContext
 {
 	char m_unmodelled_00[0xb5];
@@ -292,14 +301,24 @@ extern void j_00011252();
 // 0x0000A407 with one Thing* argument on the AI receiver.  The body has no
 // matched identity, so the call is made through the thunk the retail
 // relocation names rather than through an invented member name.
+//
+// Both retail calls to needToRotate name the matched body
+// ?needToRotate@AIUpdateInterface@@IAE_NXZ directly: `I` is MSVC 7.1's
+// protected-access code, so the declaration's `protected:` non-virtual shape
+// is exactly right and needs no linker alias.
 
-#pragma comment(linker, "/alternatename:?Rva0026EED0@AIUpdateInterface@@QAEMPAVThing@@@Z=?j_0000a407@@YAXXZ")
-// A qualified call from the derived class makes MSVC 7.1 mangle the access as
-// protected (U), while the matched body at 0x00271390 is the public virtual
-// ?needToRotate@AIUpdateInterface@@IAE_NXZ.  The name is aliased so the call
-// links to the body the ledger already owns.
-#pragma comment(linker, "/alternatename:?needToRotate@AIUpdateInterface@@UAE_NXZ=?needToRotate@AIUpdateInterface@@IAE_NXZ")
-#pragma comment(linker, "/alternatename:?adjustToPossibleDestination@Pathfinder@@QAE_NPAVObject@@ABVLocomotorSet@@PAUCoord3D@@@Z=?j_00011252@@YAXXZ")
+// AIUpdateInterface is polymorphic, so a pointer-to-member of it carries a
+// vtable offset and MSVC 7.1 emits an indirect `call [esp+N]`.  A
+// non-polymorphic stand-in lets the union fold back into the direct
+// thiscall `push ebx; mov ecx,esi; call j_0000a407` retail emits; the
+// receiver is a plain Object* in retail anyway.
+class Rva0026EED0Route
+{
+public:
+	Real call(Thing *target);
+};
+
+typedef Real (Rva0026EED0Route::*Rva0026EED0Fn)(Thing *target);
 
 void AIStateTargetDispatch::attackOrdinaryTarget(Thing *target)
 {
@@ -345,7 +364,13 @@ void AIStateTargetDispatch::attackOrdinaryTarget(Thing *target)
 		if (otherBlocks && otherAI->m_waitingForPath)
 			return;
 
-		Real distance = Rva0026EED0(target);
+		Real distance;
+	{
+		// Retail +0159 reaches the unconverted 0x0026EED0 body through ILT
+		// 0x0000A407 with one Thing* argument on the AI receiver.
+		union { void (*fn)(); Rva0026EED0Fn call; } u_0026eed0 = { j_0000a407 };
+		distance = (reinterpret_cast<Rva0026EED0Route *>(this)->*u_0026eed0.call)(target);
+	}
 		Real *closestDistance = reinterpret_cast<Real *>(reinterpret_cast<char *>(this) + 0x170);
 		if (distance < *closestDistance)
 			*closestDistance = distance;
@@ -363,7 +388,7 @@ void AIStateTargetDispatch::attackOrdinaryTarget(Thing *target)
 
 		if (m_blockedFrames == 0)
 			m_blockedFrames = 1;
-		if (!AIUpdateInterface::needToRotate())
+		if (!needToRotate())
 		{
 			if (!otherBlocks)
 			{
@@ -386,7 +411,7 @@ void AIStateTargetDispatch::attackOrdinaryTarget(Thing *target)
 			{
 				if (!otherAI->blockedBy(self))
 					return;
-				if (reinterpret_cast<AIStateTargetDispatch *>(otherAI)->AIUpdateInterface::needToRotate())
+				if (reinterpret_cast<AIStateTargetDispatch *>(otherAI)->needToRotate())
 					return;
 				if (hasHigherPathPriority(otherAI))
 					return;
@@ -425,20 +450,21 @@ void AIStateTargetDispatch::attackOrdinaryTarget(Thing *target)
 		if ((reinterpret_cast<const unsigned char *>(target)[0x344] & 8) != 0)
 			return;
 
-		if (isIdle())
+		union { void (*fn)(); AdjustToPossibleDestinationFn call; } u_00011252 = { j_00011252 };
+	if (isIdle())
 		{
 			Coord3D selfPosition;
 			selfPosition.x = self->m_cachedPos.x;
 			selfPosition.y = self->m_cachedPos.y;
 			selfPosition.z = self->m_cachedPos.z;
-			TheAI->m_pathfinder->adjustToPossibleDestination(self,
+			(TheAI->m_pathfinder->*u_00011252.call)(self,
 				*reinterpret_cast<const LocomotorSet *>(reinterpret_cast<char *>(this) + 0x1a8),
 				&selfPosition);
 			static_cast<AICommandInterface *>(this)->aiMoveToPosition(&selfPosition, CMD_FROM_AI);
 		}
 		if (otherAI->isIdle())
 		{
-			TheAI->m_pathfinder->adjustToPossibleDestination(reinterpret_cast<Object *>(target),
+			(TheAI->m_pathfinder->*u_00011252.call)(reinterpret_cast<Object *>(target),
 				*reinterpret_cast<const LocomotorSet *>(reinterpret_cast<char *>(otherAI) + 0x1a8),
 				&targetPosition);
 			static_cast<AICommandInterface *>(otherAI)->aiMoveToPosition(&targetPosition, CMD_FROM_AI);
