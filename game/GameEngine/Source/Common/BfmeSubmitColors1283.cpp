@@ -2,6 +2,12 @@
 
 void bfmeUnpackTwoColors1280(float *output, const unsigned int *colors);
 
+// Retail reached these bodies through incremental-link thunks; call the
+// thunks directly instead of aliasing a misspelled member name onto them.
+extern void d_008be760();
+extern void d_008b06c0();
+extern void d_008cc690();
+
 struct BfmeIterator1285 { void *m_data; unsigned m_extra; };
 class BfmeIteratorList1285
 {
@@ -70,13 +76,15 @@ public:
 		const unsigned int *colors, int a9, int a10, int a11);
 };
 
-#pragma comment(linker, "/alternatename:?create008BE760@BfmeSubmitter1283@@QAEXHPAXHHHHPAPAVBfmeNodeDX@@PAH@Z=?d_008be760@@YAXXZ")
-#pragma comment(linker, "/alternatename:?finish008B06C0@BfmeNodeDX@@QAEXXZ=?d_008b06c0@@YAXXZ")
-#pragma comment(linker, "/alternatename:?append@Rva008CF3C0State@@QAEXPAX0PAVRva008CF3C0String@@PAVRva008A9B00@@HHH@Z=?d_008cc690@@YAXXZ")
-
 void BfmeSubmitter1283::bfmeSubmit1283(int nodeArg, int a2, int a3, int a4, int a5, int a6, int a7,
 	float *a8, int a9, int a10, int a11, int a12)
 {
+	typedef void (BfmeSubmitter1283::*CreateFn)(int, void *, int, int, int, int, BfmeNodeDX **, int *);
+	union { void (*fn)(); CreateFn call; } create = { d_008be760 };
+	typedef void (BfmeNodeDX::*FinishFn)();
+	union { void (*fn)(); FinishFn call; } finish = { d_008b06c0 };
+	typedef void (Rva008CF3C0State::*AppendFn)(void *, void *, Rva008CF3C0String *, Rva008A9B00 *, int, int, int);
+	union { void (*fn)(); AppendFn call; } append = { d_008cc690 };
 	BfmeNodeDX *a1 = (BfmeNodeDX *)nodeArg;
 	float *colors = a8;
 	int created = 0;
@@ -85,7 +93,7 @@ void BfmeSubmitter1283::bfmeSubmit1283(int nodeArg, int a2, int a3, int a4, int 
 	if (input) {
 		if (!node) {
 			BfmeNodeDX *createdNode;
-			create008BE760(a2, input, a4, a5, a6, a7, &createdNode, &created);
+			(this->*create.call)(a2, input, a4, a5, a6, a7, &createdNode, &created);
 			node = createdNode;
 		}
 	}
@@ -107,11 +115,11 @@ void BfmeSubmitter1283::bfmeSubmit1283(int nodeArg, int a2, int a3, int a4, int 
 				it; it = ((BfmeIteratorList1285 *)a1)->bfmeNext1285(it)) {
 				if (strcmp((char *)it->m_data + 8, "__proto__") &&
 					strcmp((char *)it->m_data + 8, "prototype"))
-					((Rva008CF3C0State *)&Rva008AE770TheStack)->append(node, 0,
+					(((Rva008CF3C0State *)&Rva008AE770TheStack)->*append.call)(node, 0,
 						(Rva008CF3C0String *)it, (Rva008A9B00 *)(it->m_extra & ~1), 1, 1, 0);
 			}
 		}
-		node->finish008B06C0();
+		(node->*finish.call)();
 	}
 }
 
