@@ -193,6 +193,14 @@ void StringBase<T>::set(const StringBase<T> &src)
 	}
 }
 
+// Retail 0x008881B0 / 0x00888A90 (exports 594, 595), inside this block.
+template <typename T>
+StringBase<T> &StringBase<T>::operator=(const StringBase<T> &src)
+{
+	set(src);
+	return *this;
+}
+
 template <typename T>
 StringBase<T>::StringBase(const T *str)
 {
