@@ -13,6 +13,13 @@ typedef bool Bool;
 typedef int Int;
 typedef float Real;
 
+// Incremental-link thunks the retail body calls through directly.
+extern void j_00001140(void);
+extern void j_000022bb(void);
+extern void j_0002369b(void);
+extern void j_0002990b(void);
+extern void j_00029c08(void);
+
 class Object;
 class Player;
 class Team;
@@ -72,7 +79,6 @@ public:
 class Overridable
 {
 public:
-	const Overridable *getFinalOverride() const;
 	void *m_vptr;
 	Overridable *m_nextOverride;
 };
@@ -84,6 +90,21 @@ public:
 	unsigned int m_flagsC8;
 };
 
+// Retail 0x000022BB is an incremental-link thunk for
+// Overridable::getFinalOverride() const; call it through the same thiscall
+// shape the thunk preserves, with no linker alias involved.
+static __forceinline const Overridable *finalOverride(const Overridable *overridable)
+{
+	typedef const Overridable *(Overridable::*Fn)() const;
+	union
+	{
+		void (*fn)();
+		Fn call;
+	} u = { j_000022bb };
+
+	return (overridable->*u.call)();
+}
+
 template <class T>
 class BfmeOverride
 {
@@ -92,7 +113,7 @@ public:
 	{
 		const T *value = m_overridable;
 		if (value && value->m_nextOverride)
-			value = (const T *)value->m_nextOverride->getFinalOverride();
+			value = (const T *)finalOverride(value->m_nextOverride);
 		return value;
 	}
 
@@ -102,7 +123,6 @@ public:
 class BfmeObjectDlinkBase
 {
 public:
-	Object *dlink_next_TeamMemberList() const;
 	ThingTemplate *m_template;
 };
 
@@ -138,7 +158,6 @@ enum CommandSourceType
 class AICommandInterface
 {
 public:
-	void aiRepair(Object *target, CommandSourceType source);
 };
 
 class BfmeAIUpdateView
@@ -155,7 +174,7 @@ public:
 	const ThingTemplate *getTemplate() const
 	{
 		return m_template == 0 ? m_template : m_template->m_nextOverride ?
-			(const ThingTemplate *)m_template->m_nextOverride->getFinalOverride() : m_template;
+			(const ThingTemplate *)finalOverride(m_template->m_nextOverride) : m_template;
 	}
 
 	unsigned char m_pad_70[0x194];
@@ -195,13 +214,16 @@ private:
 class Team
 {
 public:
-	Player *getControllingPlayer() const;
-	Coord3D *getEstimateTeamPosition(Coord3D *position) const;
-
 	BfmeDlinkIterator<Object> iterate_TeamMemberList() const
 	{
-		return BfmeDlinkIterator<Object>(m_head,
-			BfmeObjectDlinkBase::dlink_next_TeamMemberList);
+		typedef Object *(BfmeObjectDlinkBase::*Fn)() const;
+		union
+		{
+			void (*fn)();
+			Fn call;
+		} next = { j_00001140 };
+
+		return BfmeDlinkIterator<Object>(m_head, next.call);
 	}
 
 private:
@@ -320,17 +342,7 @@ extern ScriptEngine *TheScriptEngine;
 extern PartitionManager *ThePartitionManager;
 extern Real g_bfmeDefaultBU;
 
-extern void j_00001140(void);
-extern void j_000022bb(void);
-extern void j_0002369b(void);
-extern void j_0002990b(void);
-extern void j_00029c08(void);
 
-#pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVObject@@XZ=?j_00001140@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Team@@QBEPAVPlayer@@XZ=?j_0002369b@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getEstimateTeamPosition@Team@@QBEPAUCoord3D@@PAU2@@Z=?j_0002990b@@YAXXZ")
-#pragma comment(linker, "/alternatename:?aiRepair@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z=?j_00029c08@@YAXXZ")
 
 class ScriptActions
 {
@@ -347,11 +359,23 @@ void ScriptActions::Rva00303670(const AsciiString &teamName, Real radius)
 
 	Coord3D teamPosition;
 	int radiusBits = *(int *)&radius;
+	typedef Coord3D *(Team::*EstimatePosFn)(Coord3D *) const;
+	union
+	{
+		void (*fn)();
+		EstimatePosFn call;
+	} estimatePos = { j_0002990b };
+	typedef Player *(Team::*ControllingPlayerFn)() const;
+	union
+	{
+		void (*fn)();
+		ControllingPlayerFn call;
+	} controllingPlayer = { j_0002369b };
 	BfmeWideResult result = ((BfmeWideForwardC *)ThePartitionManager)->
-		bfmeForwardWideC((int)team->getEstimateTeamPosition(&teamPosition),
+		bfmeForwardWideC((int)(team->*estimatePos.call)(&teamPosition),
 			radiusBits, 0,
 			(int)PartitionFilterPlayerAffiliation(
-				team->getControllingPlayer(), 2, true).link(
+				(team->*controllingPlayer.call)(), 2, true).link(
 					filterAddress(PartitionFilterAcceptByKindOf(
 						KindOfMaskType(KindOfMaskType::kInit, 7),
 						KINDOFMASK_NONE))), 1);
@@ -370,12 +394,22 @@ void ScriptActions::Rva00303670(const AsciiString &teamName, Real radius)
 					continue;
 				const ThingTemplate *thing = member->m_template;
 				if (thing && thing->m_nextOverride)
-					thing = (const ThingTemplate *)thing->m_nextOverride->getFinalOverride();
+					thing = (const ThingTemplate *)finalOverride(thing->m_nextOverride);
 				if ((thing->m_flagsC8 & 0x4000) != 0)
 				{
 					BfmeAIUpdateView *ai = member->m_ai;
 					if (ai)
-						ai->m_command.aiRepair(candidate, CMD_FROM_SCRIPT);
+					{
+						typedef void (AICommandInterface::*RepairFn)(Object *,
+							CommandSourceType);
+						union
+						{
+							void (*fn)();
+							RepairFn call;
+						} repair = { j_00029c08 };
+
+						(ai->m_command.*repair.call)(candidate, CMD_FROM_SCRIPT);
+					}
 				}
 			}
 			break;
