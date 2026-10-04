@@ -13,6 +13,13 @@ struct P6Elem003B1DF0
 	char m_body[ 0x10 ];
 };
 
+// Retail's overflow body at 0x003B1340 calls the linker-assigned
+// vector<W3DAnimationInfo>::_M_clear at 0x003B0E90, not a
+// vector<Gen_t_003b1bb0_p16cd>::_M_clear, so the call is made through that
+// instantiation instead of being aliased onto it. Only the name matters here;
+// the clear body itself lives in W3DAnimationInfoVectorClearBody.cpp.
+class W3DAnimationInfo;
+
 void __cdecl Bfme003B1DF0Construct(
 	P6Elem003B1DF0 *destination, const P6Elem003B1DF0 &value);
 
@@ -32,8 +39,6 @@ class __new_alloc
 public:
 	static void *__cdecl allocate(unsigned int bytes);
 };
-
-#pragma comment(linker, "/alternatename:?_M_clear@?$vector@UGen_t_003b1bb0_p16cd@@V?$allocator@UGen_t_003b1bb0_p16cd@@@_STL@@@_STL@@IAEXXZ=?_M_clear@?$vector@VW3DAnimationInfo@@V?$allocator@VW3DAnimationInfo@@@_STL@@@_STL@@IAEXXZ")
 
 template <class Type>
 __forceinline void construct(Type *destination, const Type &value)
@@ -75,6 +80,12 @@ template <class Type, class Allocator>
 class vector
 {
 protected:
+	// The overflow body below reaches the protected _M_clear of the
+	// vector<W3DAnimationInfo> instance the linker gave it; a friend, not a
+	// wider access level, because retail's name carries the protected code.
+	template <class FriendType, class FriendAllocator>
+	friend class vector;
+
 	void _M_insert_overflow(Type *position, const Type &value,
 		const __false_type &, unsigned int fillLength, bool atEnd);
 	void _M_clear();
@@ -126,7 +137,12 @@ void vector<Type, Allocator>::_M_insert_overflow(
 			newFinish = uninitialized_copy(position, last, newFinish);
 	}
 
-	_M_clear();
+	// Retail calls the linker-assigned vector<W3DAnimationInfo>::_M_clear here
+	// (0x003B0E90) with this in ecx. That clear is a real matched row in
+	// W3DAnimationInfoVectorClearBody.cpp, so it is called through its own name
+	// instead of being aliased onto the name this instantiation would mint.
+	reinterpret_cast<vector<W3DAnimationInfo,
+		allocator<W3DAnimationInfo> > *>(this)->_M_clear();
 
 	_M_finish = newFinish;
 	_M_start = newStart;
