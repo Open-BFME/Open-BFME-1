@@ -43,7 +43,14 @@ public:
 	Glo012F1028Sub *m_bfmeSub;
 };
 
-extern Glo012F1028Type *Glo012F1028;
+// Retail .data 0x012F1028 is EA's TheLivingWorldLogic
+// (game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp:35,
+// data_rows.csv ?TheLivingWorldLogic@@3PAVLivingWorldLogic@@A).  The
+// Glo012F1028 spelling here was the old address-derived pin; only this
+// reference moves to the defining name, and the local Glo012F1028Type view
+// still describes the +0x28 sub-object this body reads.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 
 class Glo012F1024Entry
 {
@@ -76,27 +83,65 @@ private:
 };
 
 // ?setCampaign@Glo012F1024Type@@QAEXPAVAsciiString@@@Z
+// The four calls this body makes are retail ILT thunks (VA 0x00045B88,
+// 0x0003B417, 0x0000577C, 0x0001FB18), whose ledger owners are the
+// ?j_XXXXXXXX@@YAXXZ gen-thunks, so each is reached through a member-call
+// cast exactly as GiantBirdGuardReturnState_update.cpp does.
+extern void j_00045b88();
+extern void j_0003b417();
+extern void j_0000577c();
+extern void j_0001fb18();
+
+typedef void (Glo012F1028Sub::*ConsumeCall)(AsciiString *);
+typedef void (GameLogic::*InvokeCall)();
+typedef int (Glo012F1024Type::*LookupCall)(AsciiString *);
+typedef void (Glo012F1024Entry::*StepFlagCall)();
+
 void Glo012F1024Type::setCampaign(AsciiString *key)
 {
-	Glo012F1028Sub *sub = Glo012F1028->m_bfmeSub;
+	Glo012F1028Sub *sub = ((Glo012F1028Type *)TheLivingWorldLogic)->m_bfmeSub;
 	if (sub != 0)
 	{
-		sub->consume(key);
+		union
+		{
+			void *asVoid;
+			ConsumeCall asMember;
+		} consumeCast;
+		consumeCast.asVoid = (void *)j_00045b88;
+		(sub->*consumeCast.asMember)(key);
 		sub->refresh003CAD90();
 	}
 
-	TheGameLogic->invoke();
+	union
+	{
+		void *asVoid;
+		InvokeCall asMember;
+	} invokeCast;
+	invokeCast.asVoid = (void *)j_0003b417;
+	(TheGameLogic->*invokeCast.asMember)();
 
 	if (TheWritableGlobalData->m_flag8E
 		|| (TheWritableGlobalData->m_at94.m_data != 0 && TheWritableGlobalData->m_at94.m_data[2] != 0))
 	{
-		int n = lookup(key);
+		union
+		{
+			void *asVoid;
+			LookupCall asMember;
+		} lookupCast;
+		lookupCast.asVoid = (void *)j_0000577c;
+		int n = (this->*lookupCast.asMember)(key);
 		m_bfmeIndex = n;
 		if (n != -1)
 		{
 			Glo012F1024Entry *start = m_bfmeEntries.m_bfmeStart;
 			m_at1C = start[n].m_flag;
-			start[n].stepFlag();
+			union
+			{
+				void *asVoid;
+				StepFlagCall asMember;
+			} stepFlagCast;
+			stepFlagCast.asVoid = (void *)j_0001fb18;
+			(start[n].*stepFlagCast.asMember)();
 		}
 		else
 			m_at1C = 0;
