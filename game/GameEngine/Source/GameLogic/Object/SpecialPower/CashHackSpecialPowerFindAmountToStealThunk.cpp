@@ -53,20 +53,24 @@ protected:
 	int findAmountToSteal() const;
 };
 
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
-#pragma comment(linker, "/alternatename:?hasScience@Player@@QBE_NW4ScienceType@@@Z=?j_0000943f@@YAXXZ")
+extern void j_00020824();
+extern void j_0000943f();
 
 int CashHackSpecialPower::findAmountToSteal() const
 {
 	const CashHackSpecialPowerModuleData *d = m_moduleData;
-	const Player *controller = m_object->getControllingPlayer();
+	typedef Player *(Object::*GetController)(void) const;
+	union { void (*fn)(); GetController call; } getController = { j_00020824 };
+	const Player *controller = (m_object->*getController.call)();
 	if (controller != 0)
 	{
+		typedef bool (Player::*HasScience)(ScienceType) const;
+		union { void (*fn)(); HasScience call; } hasScience = { j_0000943f };
 		for (const CashHackUpgrade *it = d->m_upgrades.begin();
 			it != d->m_upgrades.end();
 			++it)
 		{
-			if (controller->hasScience(it->m_science))
+			if ((controller->*hasScience.call)(it->m_science))
 				return it->m_amountToSteal;
 		}
 	}
