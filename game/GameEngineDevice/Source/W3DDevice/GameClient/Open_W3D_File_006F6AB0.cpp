@@ -9,7 +9,7 @@
 // call are absent here -- this is the plain single-argument form.
 //
 // Shape (matches d_006f2cc0.asm 0x006F6AB0):
-//   if (!g_012F8228 || !TheFileSystem) return NULL;
+//   if (!TheRva006F6330 || !TheFileSystem) return NULL;
 //   GameFileClass file(filename);          // ??0GameFileClass@@QAE@PBD@Z, matched, W3DFileSystem.cpp
 //   if (!file.m_fileExists) return NULL;   // compiler-generated dtor + SEH cleanup
 //   File *result = TheFileSystem->openFile(file.m_filePath, 0x41);
@@ -50,13 +50,14 @@ public:
 	File *openFile( const char *filename, int access );
 };
 
-extern int    *g_012F8228;
+class Rva006F6330;
+extern Rva006F6330 *TheRva006F6330;
 extern FileSystem *TheFileSystem;
 
 // ?d_006f6ab0@@YAXXZ -- address-derived; real name/signature not recovered.
 void *Rva006F6AB0_OpenW3DFile( const char *filename )
 {
-	if ( !g_012F8228 || !TheFileSystem )
+	if ( !TheRva006F6330 || !TheFileSystem )
 		return 0;
 
 	GameFileClass file( filename );

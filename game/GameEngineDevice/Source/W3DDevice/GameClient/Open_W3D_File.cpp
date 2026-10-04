@@ -26,13 +26,14 @@ public:
 	File *openFile( const char *filename, int access, int offset, int size );
 };
 
-extern int *g_012F8228;
+class Rva006F6330;
+extern Rva006F6330 *TheRva006F6330;
 extern FileSystem *TheFileSystem;
 
 // ?Open_W3D_File@@YAPAXPAX0PBD@Z
 void *Open_W3D_File( void *filename_arg, void *offset_arg, const char *size_arg )
 {
-	if ( !g_012F8228 || !TheFileSystem )
+	if ( !TheRva006F6330 || !TheFileSystem )
 		return 0;
 
 	GameFileClass file( (const char *)filename_arg );
