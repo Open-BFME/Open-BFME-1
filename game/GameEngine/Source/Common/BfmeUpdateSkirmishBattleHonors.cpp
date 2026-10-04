@@ -10,11 +10,6 @@
 #include "ascii_string.h"
 #include "unicode_string.h"
 
-// The canonical WWLib header omits the exported static member; the retail
-// const object is AsciiString::TheEmptyString at 0x01336E50.
-extern const AsciiString BFMEAsciiEmptyString;
-#pragma comment(linker, "/alternatename:?BFMEAsciiEmptyString@@3VAsciiString@@B=?TheEmptyString@AsciiString@@2V1@B")
-
 typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef float Real;
@@ -279,7 +274,7 @@ void _bfme_updateSkirmishBattleHonors(Player *player)
 	}
 
 	AsciiString favorite = ((const Open2Pref09D260 &)stats).fetch();
-	if (favorite.compare(BFMEAsciiEmptyString) == 0)
+	if (favorite.compare(AsciiString::TheEmptyString) == 0)
 	{
 		((Open2Pref09D1C0 &)stats).store(side);
 	}
