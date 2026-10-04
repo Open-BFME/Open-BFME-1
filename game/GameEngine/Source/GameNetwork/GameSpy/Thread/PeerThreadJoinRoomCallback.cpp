@@ -214,8 +214,37 @@ private:
 typedef char PeerThreadStatsOffsetCheck[
 	(sizeof(PeerThreadClass) >= 0xac) ? 1 : -1];
 
-#pragma comment(linker, "/alternatename:??0PeerResponse@@QAE@XZ=?j_00042069@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1PeerResponse@@QAE@XZ=?j_00044733@@YAXXZ")
+// Retail constructs and destroys PeerResponse through the incremental-link
+// thunks at 0x00042069 and 0x00044733 (both bodies walk the std::string
+// members), so the local objects are raw storage and the ctor/dtor calls are
+// issued against those two addresses directly.
+extern void j_00042069();
+extern void j_00044733();
+
+struct __declspec(align(4)) PeerResponseSlot
+{
+	__forceinline PeerResponseSlot(void)
+	{
+		union
+		{
+			void (*fn)();
+			void (PeerResponse::*ctor)();
+		} u = { j_00042069 };
+		(reinterpret_cast<PeerResponse *>(this)->*u.ctor)();
+	}
+
+	__forceinline ~PeerResponseSlot(void)
+	{
+		union
+		{
+			void (*fn)();
+			void (PeerResponse::*dtor)();
+		} u = { j_00044733 };
+		(reinterpret_cast<PeerResponse *>(this)->*u.dtor)();
+	}
+
+	char raw[sizeof(PeerResponse)];
+};
 
 #pragma optimize("y", on)
 void joinRoomCallback(PEER peer, PEERBool success, PEERJoinResult result,
@@ -239,7 +268,9 @@ void joinRoomCallback(PEER peer, PEERBool success, PEERJoinResult result,
 	case GroupRoom:
 		{
 			t->clearStatsForJoinCallback(GroupRoom);
-			PeerResponse resp;
+			PeerResponseSlot slot;
+			PeerResponse &resp =
+				*reinterpret_cast<PeerResponse *>(slot.raw);
 			resp.peerResponseType = 7;
 			resp.joinGroupRoom.id = t->getLocalRoomID();
 			resp.joinGroupRoom.ok = success;
@@ -255,7 +286,9 @@ void joinRoomCallback(PEER peer, PEERBool success, PEERJoinResult result,
 	case StagingRoom:
 		{
 			t->clearStatsForJoinCallback(StagingRoom);
-			PeerResponse resp;
+			PeerResponseSlot slot;
+			PeerResponse &resp =
+				*reinterpret_cast<PeerResponse *>(slot.raw);
 			resp.peerResponseType = 9;
 			resp.joinStagingRoom.id = t->getLocalRoomID();
 			resp.joinStagingRoom.ok = success;
