@@ -2101,24 +2101,6 @@ void PathfindZoneManager::allocateZones(void)
 	m_hierarchicalZones = MSGNEW("PathfindZoneInfo") zoneStorageType[m_zonesAllocated];
 }
 
-/* Allocate zone blocks for hierarchical pathfinding.   */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/PathfindZoneManager_allocateBlocks_Thunk.cpp
-// ?allocateBlocks@PathfindZoneManager@@QAEXABUIRegion2D@@@Z present-unmatched
-void PathfindZoneManager::allocateBlocks(const IRegion2D &globalBounds) 
-{
-	freeBlocks();
-
-	m_zoneBlockExtent.x = (globalBounds.hi.x-globalBounds.lo.x+1+ZONE_BLOCK_SIZE-1)/ZONE_BLOCK_SIZE;
-	m_zoneBlockExtent.y = (globalBounds.hi.y-globalBounds.lo.y+1+ZONE_BLOCK_SIZE-1)/ZONE_BLOCK_SIZE;
-
-	m_blockOfZoneBlocks = MSGNEW("PathfindZoneBlocks") ZoneBlock[(m_zoneBlockExtent.x)*(m_zoneBlockExtent.y)];
-	m_zoneBlocks = MSGNEW("PathfindZoneBlocks") ZoneBlockP[m_zoneBlockExtent.x];
-	Int i;
-	for (i=0; i<m_zoneBlockExtent.x; i++) {
-		m_zoneBlocks[i] = &m_blockOfZoneBlocks[i*(m_zoneBlockExtent.y)];
-	}
-}
-
 // ?reset@PathfindZoneManager@@QAEXXZ present-unmatched
 void PathfindZoneManager::reset(void)  ///< Called when the map is reset.
 {
