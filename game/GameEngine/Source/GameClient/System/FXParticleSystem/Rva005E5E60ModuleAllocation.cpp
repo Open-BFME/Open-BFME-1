@@ -12,12 +12,14 @@
 // recovered -- address-derived naming, per the near-twin lane's IDENTITY
 // POLICY.
 
-extern "C" const void *bfmeVftRva005EA560_V3Slot0N[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EA560_V3Slot0N=??_7Rva005EA560@@6BV3Slot0N@@@")
-extern "C" const void *bfmeVftRva005EA560_V3Slot1[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EA560_V3Slot1=??_7Rva005EA560@@6BV3Slot1@@@")
-extern "C" const void *bfmeVftRva005EA560_V3Slot2[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EA560_V3Slot2=??_7Rva005EA560@@6BV3Slot2@@@")
+// retail 0x01111F6C: the Rva005EA560 primary sub-object vftable this ctor
+// stamps at +0x00, spelled exactly as its defining object spells it
+// (targets/game/reverse/dir32_addresses.csv).
+extern "C" void *__identifier("??_7Rva005EA560@@6BV3Slot0N@@@")[];
+// retail 0x01111F68: the V3Slot1 secondary vftable stamped at +0x08.
+extern "C" void *__identifier("??_7Rva005EA560@@6BV3Slot1@@@")[];
+// retail 0x01111F54: the V3Slot2 secondary vftable stamped at +0x0C.
+extern "C" void *__identifier("??_7Rva005EA560@@6BV3Slot2@@@")[];
 
 struct Rva005E5E60Sys;
 extern void j_000151fe();
@@ -36,9 +38,9 @@ public:
 		typedef void (Rva005E5E60CtorShim::*CtorCall)(Rva005E5E60Sys &, const void *);
 		union { void (*raw)(); CtorCall method; } ctor = { j_000151fe };
 		(((Rva005E5E60CtorShim *)this)->*ctor.method)(sys, source);
-		*(volatile unsigned int *)this = (unsigned int)bfmeVftRva005EA560_V3Slot0N;
-		*(volatile unsigned int *)((unsigned char *)this + 0x08) = (unsigned int)bfmeVftRva005EA560_V3Slot1;
-		*(volatile unsigned int *)((unsigned char *)this + 0x0c) = (unsigned int)bfmeVftRva005EA560_V3Slot2;
+		*(volatile unsigned int *)this = (unsigned int)__identifier("??_7Rva005EA560@@6BV3Slot0N@@@");
+		*(volatile unsigned int *)((unsigned char *)this + 0x08) = (unsigned int)__identifier("??_7Rva005EA560@@6BV3Slot1@@@");
+		*(volatile unsigned int *)((unsigned char *)this + 0x0c) = (unsigned int)__identifier("??_7Rva005EA560@@6BV3Slot2@@@");
 	}
 
 private:
