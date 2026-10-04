@@ -66,12 +66,6 @@ public:
 class Object
 {
 public:
-	Weapon *getWeaponInWeaponSlot(WeaponSlotType slot) const
-	{
-		return reinterpret_cast<const WeaponSet *>(
-			reinterpret_cast<const unsigned char *>(this) + 0x264)->getWeaponInWeaponSlot(slot);
-	}
-
 	void setWeaponLock(int weaponSlot, int lockType);
 };
 
@@ -154,7 +148,9 @@ void SpecialAbilityUpdate::killSpecialObjects()
 		case SPECIAL_MISSILE_DEFENDER_LASER_GUIDED_MISSILES:
 		{
 			Object *object = m_object;
-			Weapon *weapon = object->getWeaponInWeaponSlot(PRIMARY_WEAPON);
+			// Retail calls WeaponSet directly with Object + 0x264 in ECX.
+			Weapon *weapon = reinterpret_cast<const WeaponSet *>(
+				reinterpret_cast<const unsigned char *>(object) + 0x264)->getWeaponInWeaponSlot(PRIMARY_WEAPON);
 			if ( weapon )
 			{
 				object->setWeaponLock(PRIMARY_WEAPON, 1);
