@@ -1,4 +1,13 @@
-void bfmeTwoBZB(void *what);
+void bfmeGo930C(void *what);
+
+// RVA 0x009A5980 is a separately padded five-byte tail function, not ILT.
+// The release-set helper calls it six times with one pointer and caller stack
+// cleanup. Preserve this wrapper rather than bypassing it for 0x009A58E0.
+// Keep the wrapper out of line so the caller retains its original call target.
+__declspec(noinline) void Rva009A5980(void *what)
+{
+	bfmeGo930C(what);
+}
 
 struct BfmeHolderBZB6
 {
@@ -26,32 +35,32 @@ void bfmeOneBZB(void *what)
 	BfmeHolderBZB6 *self = (BfmeHolderBZB6 *)what;
 
 	if (self->m_atB8)
-		bfmeTwoBZB(self->m_atB8);
+		Rva009A5980(self->m_atB8);
 	self->m_atB8 = 0;
 	self->m_atBC = 0;
 
 	if (self->m_atA0)
-		bfmeTwoBZB(self->m_atA0);
+		Rva009A5980(self->m_atA0);
 	self->m_atA0 = 0;
 	self->m_at34 = 0;
 
 	if (self->m_atA4)
-		bfmeTwoBZB(self->m_atA4);
+		Rva009A5980(self->m_atA4);
 	self->m_atA4 = 0;
 	self->m_at3C = 0;
 
 	if (self->m_atA8)
-		bfmeTwoBZB(self->m_atA8);
+		Rva009A5980(self->m_atA8);
 	self->m_atA8 = 0;
 	self->m_at24 = 0;
 
 	if (self->m_atAC)
-		bfmeTwoBZB(self->m_atAC);
+		Rva009A5980(self->m_atAC);
 	self->m_atAC = 0;
 	self->m_at28 = 0;
 
 	if (self->m_atB0)
-		bfmeTwoBZB(self->m_atB0);
+		Rva009A5980(self->m_atB0);
 	self->m_atB0 = 0;
 	self->m_at2C = 0;
 }
