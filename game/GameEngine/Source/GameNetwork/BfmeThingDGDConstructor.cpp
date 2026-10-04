@@ -74,8 +74,12 @@ public:
 	void *bfmeGoECKb( void );
 };
 
-extern "C" const void *bfmeVftRva0063A8D0[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva0063A8D0=??_7Rva0063A8D0@@6B@")
+// The root level's vfptr is the single-slot table of the 9-byte constructor at
+// retail 0x0063A8D0, the COMDAT C++ mangles as ??_7Rva0063A8D0@@6B@ (defined
+// by game/GameEngine/Source/Common/TinyVfptrCtors.cpp). A vftable symbol has
+// no C++ spelling, so take it verbatim by its mangled name, the way the other
+// vftable references in this tree do.
+extern "C" const void *__identifier( "??_7Rva0063A8D0@@6B@" )[];
 extern const void *g_0112B680[];
 extern const void *g_0112B800[];
 extern const void *g_0112B7F8[];
@@ -86,7 +90,7 @@ class Rva007F8090Root
 public:
 	Rva007F8090Root()
 	{
-		*(volatile unsigned *)&m_v4 = (unsigned)bfmeVftRva0063A8D0;
+		*(volatile unsigned *)&m_v4 = (unsigned)__identifier( "??_7Rva0063A8D0@@6B@" );
 		*(volatile unsigned *)&m_v8 = (unsigned)g_0112B680;
 	}
 
