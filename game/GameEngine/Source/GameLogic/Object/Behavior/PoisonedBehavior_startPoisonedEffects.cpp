@@ -71,8 +71,9 @@ public:
 	virtual Drawable *getDrawable();
 };
 
-#pragma comment(linker, "/alternatename:?frameToSleepTime@UpdateModule@@IAE?AW4UpdateSleepTime@@IIII@Z=?j_000202a7@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setWakeFrame@UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z=?j_000157da@@YAXXZ")
+// Retail calls these two UpdateModule members through incremental-link thunks.
+extern void j_000202a7();
+extern void j_000157da();
 
 __forceinline UnsignedInt *minimum(UnsignedInt *a, UnsignedInt *b)
 {
@@ -112,7 +113,10 @@ class PoisonedBehavior : public UpdateModule
 		UnsignedInt now = TheGameLogic->getFrame();
 		if (m_poisonOverallStopFrame == 0 || m_poisonOverallStopFrame == now)
 			return UPDATE_SLEEP_FOREVER;
-		return frameToSleepTime(m_poisonDamageFrame, m_poisonOverallStopFrame,
+		typedef UpdateSleepTime (UpdateModule::*Fn)(UnsignedInt, UnsignedInt,
+			UnsignedInt, UnsignedInt);
+		union { void (*fn)(); Fn call; } u = { j_000202a7 };
+		return (this->*u.call)(m_poisonDamageFrame, m_poisonOverallStopFrame,
 			UPDATE_SLEEP_FOREVER, UPDATE_SLEEP_FOREVER);
 	}
 
@@ -144,5 +148,7 @@ void PoisonedBehavior::startPoisonedEffects(const DamageInfo *damageInfo)
 	if (drawable)
 		drawable->setTintStatus();
 
-	setWakeFrame(getObject(), calcSleepTime());
+	typedef void (UpdateModule::*Fn)(Object *, UpdateSleepTime);
+	union { void (*fn)(); Fn call; } u = { j_000157da };
+	(this->*u.call)(getObject(), calcSleepTime());
 }
