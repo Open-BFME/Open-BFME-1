@@ -64,7 +64,7 @@ private:
     AnimateWindowManager *m_animateWindowManager;
 };
 
-#pragma comment(linker, "/alternatename:?doPush@Shell@@IAEXVAsciiString@@@Z=?j_00026792@@YAXXZ")
+extern void j_00026792();
 
 void Shell::shutdownComplete(WindowLayout *, Bool impendingPush)
 {
@@ -72,7 +72,9 @@ void Shell::shutdownComplete(WindowLayout *, Bool impendingPush)
 
     if (m_bfmeState4c)
     {
-        doPush(m_pendingPushName);
+        typedef void (Shell::*Fn)(AsciiString);
+        union { void (*fn)(); Fn call; } push = { j_00026792 };
+        (this->*push.call)(m_pendingPushName);
         m_bfmeState4c = false;
         m_pendingPushName.set("", 0);
     }
