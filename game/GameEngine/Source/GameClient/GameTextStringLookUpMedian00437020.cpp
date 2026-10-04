@@ -9,14 +9,20 @@
 //
 // The first three comparison sites use the authentic MSVCR71 _stricmp import
 // at VA 0x0135933c.  The two later record comparisons call the already-owned
-// compareStringLookUpLess body at 0x004367f0.  The declaration-only member
-// below preserves retail's thiscall argument materialization; its linker alias
-// routes it to that proven stdcall body, so this TU introduces no comparator
-// duplicate or unproven function identity.
+// compareStringLookUpLess body at 0x004367f0 through the stateless functor's
+// thiscall shape (the callee ignores ECX and pops its two arguments), so this
+// TU introduces no comparator duplicate or unproven function identity.
 
 extern const char g_bfmeEmptyAscii[];
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(
 	const char *left, const char *right);
+
+// The real comparator body owned by GameTextStringLookUpLess.cpp (RVA
+// 0x004367f0).  Retail reached it as a thiscall functor body that ignored ECX
+// and popped two arguments; the callee's own name is the free __stdcall one,
+// so the call is routed through a member pointer with that address.
+extern bool __stdcall compareStringLookUpLess(const void *left,
+	const void *right);
 
 class GameTextAsciiString00437020
 {
@@ -39,10 +45,7 @@ struct GameTextStringLookUp00437020
 struct GameTextStringCompare00437020
 {
 	void *state;
-	bool operator()(const void *, const void *) const;
 };
-
-#pragma comment(linker, "/alternatename:??RGameTextStringCompare00437020@@QBE_NPBX0@Z=?compareStringLookUpLess@@YG_NPBX0@Z")
 
 namespace _STL
 {
@@ -51,16 +54,20 @@ template <class Tp, class Compare>
 const Tp &game_text_median(const Tp &a, const Tp &b, const Tp &c,
 	Compare comp)
 {
+	typedef bool (GameTextStringCompare00437020::*Call)(const void *,
+		const void *) const;
+	union { bool (__stdcall *fn)(const void *, const void *); Call call; }
+		u = { compareStringLookUpLess };
 	if (_strcmpi(a.label->str(), b.label->str()) < 0)
 		if (_strcmpi(b.label->str(), c.label->str()) < 0)
 			return b;
-		else if (comp((const void *)&a, (const void *)&c))
+		else if ((comp.*u.call)((const void *)&a, (const void *)&c))
 			return c;
 		else
 			return a;
 	else if (_strcmpi(a.label->str(), c.label->str()) < 0)
 		return a;
-	else if (comp((const void *)&b, (const void *)&c))
+	else if ((comp.*u.call)((const void *)&b, (const void *)&c))
 		return c;
 	else
 		return b;
