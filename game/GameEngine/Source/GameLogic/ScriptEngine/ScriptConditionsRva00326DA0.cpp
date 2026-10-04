@@ -18,6 +18,15 @@ typedef UnsignedShort PlayerMaskType;
 
 #include "ascii_string.h"
 
+// Retail's callers reach these bodies through incremental-link thunks, so this
+// TU names the thunk addresses directly instead of the owning member.
+extern void j_00001140();
+extern void j_00022a70();
+extern void j_000022bb();
+extern void j_0003e80b();
+extern void j_00028560();
+extern void j_0004b4fc();
+
 class Parameter
 {
 public:
@@ -49,27 +58,36 @@ class ThingTemplate;
 
 class BfmeThingFactory
 {
-public:
-	const ThingTemplate *findTemplate( const AsciiString &name );
 };
 
+// Retail's TU inlines one recursion frame of getFinalOverride (the
+// m_nextOverride test stays at the call site) and reaches the recursive step
+// through the ILT thunk at 0x000022BB, so the thunk is a separate name here.
 class Overridable
 {
 public:
 	virtual ~Overridable();
+
 	const Overridable *getFinalOverride() const
 	{
 		if( m_nextOverride )
-			return m_nextOverride->getFinalOverride();
+			return m_nextOverride->getFinalOverrideThunk();
 		return this;
 	}
+
+	const Overridable *getFinalOverrideThunk() const
+	{
+		typedef const Overridable *( Overridable::*GetFinalOverride )() const;
+		union { void ( *fn )(); GetFinalOverride call; } getFinalOverride =
+			{ j_000022bb };
+		return ( this->*getFinalOverride.call )();
+	}
+
 	Overridable *m_nextOverride;
 };
 
 class ThingTemplate : public Overridable
 {
-public:
-	Bool isEquivalentTo( const ThingTemplate *other ) const;
 };
 
 template <class T>
@@ -109,7 +127,6 @@ class BfmePlayerObjectDlinkObject;
 class BfmeObjectDlinkBase
 {
 public:
-	BfmePlayerObjectDlinkObject *dlink_next_TeamMemberList() const;
 	BfmeOverride<ThingTemplate> m_template;
 };
 
@@ -150,8 +167,6 @@ public:
 	{
 		return m_template.operator->();
 	}
-
-	SpecialAbilityUpdateView *findSpecialAbilityUpdate( int type ) const;
 };
 
 #define callMemberFunction( object, ptrToMember ) ( ( object ).*( ptrToMember ) )
@@ -181,6 +196,46 @@ private:
 	GetNextFunc m_getNext;
 };
 
+// Retail's TeamMemberList step goes through the ILT at 0x00001140, so the
+// iterator's getNext member pointer is that address in a derived-base
+// adjustment pair rather than a real BfmeObjectDlinkBase member.
+typedef BfmePlayerObjectDlinkObject *( BfmeObjectDlinkBase::*GetNext0026DA0 )()
+	const;
+
+static __forceinline GetNext0026DA0 getNext0026DA0()
+{
+	union { void ( *fn )(); GetNext0026DA0 call; } u = { j_00001140 };
+	return u.call;
+}
+
+// Retail calls the ThingTemplate comparison and the special-ability lookup
+// straight through their ILT thunks; each thunk lives in its own helper so
+// MSVC 7.1 folds it into a plain call instead of an indirect one.
+static __forceinline Bool isEquivalentTo0026DA0(
+	const ThingTemplate *self, const ThingTemplate *other )
+{
+	typedef Bool ( ThingTemplate::*IsEquivalentTo )(
+		const ThingTemplate * ) const;
+	union { void ( *fn )(); IsEquivalentTo call; } u = { j_0003e80b };
+	return ( self->*u.call )( other );
+}
+
+// A non-virtually-derived carrier keeps MSVC 7.1 from emitting a vbase-offset
+// lookup at the call; retail passes `object` straight in ecx.
+struct SpecialAbilityLookup0026DA0
+{
+	typedef SpecialAbilityUpdateView *( SpecialAbilityLookup0026DA0::*Lookup )(
+		int ) const;
+};
+
+static __forceinline SpecialAbilityUpdateView *findSpecialAbilityUpdate0026DA0(
+	const BfmePlayerObjectDlinkObject *self, int type )
+{
+	union { void ( *fn )(); SpecialAbilityLookup0026DA0::Lookup call; } u =
+		{ j_0004b4fc };
+	return ( ( ( SpecialAbilityLookup0026DA0 * )self )->*u.call )( type );
+}
+
 class BfmePlayerTeamView
 {
 public:
@@ -191,7 +246,7 @@ public:
 	iterate_TeamMemberList() const
 	{
 		return BfmePlayerDlinkIterator<BfmePlayerObjectDlinkObject>( m_head,
-			BfmeObjectDlinkBase::dlink_next_TeamMemberList );
+			getNext0026DA0() );
 	}
 };
 
@@ -203,8 +258,6 @@ struct BfmePlayerTeamPrototypeInstances
 
 class BfmeTeamInstanceLink
 {
-public:
-	BfmeTeamInstanceLink *_bfme_nextInInstanceList();
 };
 
 class BfmePlayerTeamInstanceIterator
@@ -218,8 +271,13 @@ public:
 	void advance()
 	{
 		if( m_cur )
+		{
+			typedef BfmeTeamInstanceLink *( BfmeTeamInstanceLink::*Next )();
+			union { void ( *fn )(); Next call; } nextInInstanceList =
+				{ j_00022a70 };
 			m_cur = ( BfmePlayerTeamView * )
-				( ( BfmeTeamInstanceLink * )m_cur )->_bfme_nextInInstanceList();
+				( ( ( BfmeTeamInstanceLink * )m_cur )->*nextInInstanceList.call )();
+		}
 	}
 
 private:
@@ -257,13 +315,19 @@ extern ThingFactory *TheThingFactory;
 Bool ScriptConditions::rva00326da0(
 	Parameter *playerParameter, Parameter *templateParameter )
 {
+	typedef const ThingTemplate *( BfmeThingFactory::*FindTemplate )(
+		const AsciiString & );
+	union { void ( *fn )(); FindTemplate call; } findTemplate =
+		{ j_00028560 };
+
 	PlayerMaskType mask =
 		TheScriptEngine->unidentified_0034DB40( playerParameter );
 	Player *player = ThePlayerList->getPlayerFromMask( mask );
 	if( !player )
 		return false;
 
-	const ThingTemplate *wanted = ( ( BfmeThingFactory * )TheThingFactory )->findTemplate(
+	const ThingTemplate *wanted =
+		( ( ( BfmeThingFactory * )TheThingFactory )->*findTemplate.call )(
 		templateParameter->getString() );
 	if( !wanted )
 		return false;
@@ -288,10 +352,10 @@ Bool ScriptConditions::rva00326da0(
 				if( !object )
 					continue;
 
-				if( object->getTemplate()->isEquivalentTo( wanted ) )
+				if( isEquivalentTo0026DA0( object->getTemplate(), wanted ) )
 				{
 					SpecialAbilityUpdateView *ability =
-						object->findSpecialAbilityUpdate( 0x27 );
+						findSpecialAbilityUpdate0026DA0( object, 0x27 );
 					if( ability && ability->asSlot20()->slot08() )
 						return true;
 				}
@@ -302,9 +366,4 @@ Bool ScriptConditions::rva00326da0(
 	return false;
 }
 
-#pragma comment( linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVBfmePlayerObjectDlinkObject@@XZ=?j_00001140@@YAXXZ" )
-#pragma comment( linker, "/alternatename:?_bfme_nextInInstanceList@BfmeTeamInstanceLink@@QAEPAV1@XZ=?j_00022a70@@YAXXZ" )
-#pragma comment( linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ" )
-#pragma comment( linker, "/alternatename:?isEquivalentTo@ThingTemplate@@QBE_NPBV1@@Z=?j_0003e80b@@YAXXZ" )
-#pragma comment( linker, "/alternatename:?findTemplate@BfmeThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z=?j_00028560@@YAXXZ" )
-#pragma comment( linker, "/alternatename:?findSpecialAbilityUpdate@BfmePlayerObjectDlinkObject@@QBEPAVSpecialAbilityUpdateView@@H@Z=?j_0004b4fc@@YAXXZ" )
+
