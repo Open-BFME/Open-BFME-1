@@ -2,8 +2,9 @@
 // Retail 0x00945940 writes zero at +4 then 0x0113D01C at +0 and returns this.
 // The address-derived fields encode only the observed layout and store order.
 
-extern "C" const void *bfmeVftPolyRemover[];
-#pragma comment(linker, "/alternatename:_bfmeVftPolyRemover=??_7PolyRemover@@6B@")
+// The retail vftable symbol is referenced directly by its MSVC decorated name,
+// so no linker name-mapping stand-in is needed.
+extern "C" const void *__identifier("??_7PolyRemover@@6B@")[];
 
 struct Rva00945940Owner
 {
@@ -15,6 +16,6 @@ struct Rva00945940Owner
 Rva00945940Owner *Rva00945940Owner::initialize()
 {
 	field4 = 0;
-	field0 = (void *)bfmeVftPolyRemover;
+	field0 = (void *)__identifier("??_7PolyRemover@@6B@");
 	return this;
 }
