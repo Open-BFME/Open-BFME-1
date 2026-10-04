@@ -2,7 +2,27 @@
 
 extern "C" void bfmeFnA1033(void);
 extern "C" void bfmeFnB1033(void);
-void bfmeReg1033(void (*a)(void), void (*b)(void));
+extern int g_012F3930;
+extern int g_012F3934;
+
+__declspec(noinline) void bfmeReg1033(void (*a)(void), void (*b)(void))
+{
+	__asm
+	{
+		mov eax, fs:[0]
+		push -1
+		push 01029600h
+		push eax
+		xor eax, eax
+		mov fs:[0], esp
+		mov dword ptr [g_012F3930], eax
+		mov dword ptr [g_012F3934], eax
+		call dword ptr [esp + 10h]
+		mov ecx, [esp]
+		mov fs:[0], ecx
+		add esp, 0Ch
+	}
+}
 
 class BfmeB1033
 {
