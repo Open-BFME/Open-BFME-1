@@ -269,7 +269,14 @@ T StringBase<T>::getCharAt(int index) const
     return m_data ? m_data->data[index] : 0;
 }
 
-int StringBase<char>::compare(const char *str) const
+// Retail's copies of compare, compareNoCase, concat(const StringBase &),
+// startsWith/startsWithNoCase(const char *, const StringBase<char> &) and
+// endsWith(const char *) lie outside this file's block (0x00887080-0x00888F84):
+// header-inline COMDATs that other TUs emitted. Inline here as well, so this
+// object's copies are SELECT_ANY rather than exclusive definitions that collide
+// with theirs. noinline keeps the out-of-line calls retail's callers make.
+template <>
+inline __declspec(noinline) int StringBase<char>::compare(const char *str) const
 {
     const int strLen = str ? stringLength(str) : 0;
     const int len = m_data ? m_data->length : 0;
@@ -325,7 +332,8 @@ inline int StringBase<char>::compare(const char *str, int len) const
     return result;
 }
 
-int StringBase<wchar_t>::compare(const wchar_t *str, int len) const
+template <>
+inline int StringBase<wchar_t>::compare(const wchar_t *str, int len) const
 {
     Rva0005DC70Flags flags;
     flags.noCase = false;
@@ -334,14 +342,16 @@ int StringBase<wchar_t>::compare(const wchar_t *str, int len) const
     return Rva0005DC70CompareWideLengths(data, myLen, str, len, flags);
 }
 
-int StringBase<wchar_t>::compare(const StringBase<wchar_t> &str) const
+template <>
+inline __declspec(noinline) int StringBase<wchar_t>::compare(const StringBase<wchar_t> &str) const
 {
     int len = str.m_data ? str.m_data->length : 0;
     const wchar_t *data = str.m_data ? &str.m_data->data[0] : (const wchar_t *)g_bfmeEmptyUnicode;
     return compare(data, len);
 }
 
-int StringBase<wchar_t>::compare(const wchar_t *str) const
+template <>
+inline __declspec(noinline) int StringBase<wchar_t>::compare(const wchar_t *str) const
 {
     return compare(str, str ? stringLength(str) : 0);
 }
@@ -375,7 +385,8 @@ inline int StringBase<char>::compareNoCase(const char *str, int len) const
     return result;
 }
 
-int StringBase<wchar_t>::compareNoCase(const wchar_t *str, int len) const
+template <>
+inline int StringBase<wchar_t>::compareNoCase(const wchar_t *str, int len) const
 {
     const int myLen = m_data ? m_data->length : 0;
     const wchar_t *data = m_data ? &m_data->data[0] : (const wchar_t *)g_bfmeEmptyUnicode;
@@ -387,14 +398,16 @@ int StringBase<wchar_t>::compareNoCase(const wchar_t *str, int len) const
     return result;
 }
 
-int StringBase<wchar_t>::compareNoCase(const StringBase<wchar_t> &str) const
+template <>
+inline __declspec(noinline) int StringBase<wchar_t>::compareNoCase(const StringBase<wchar_t> &str) const
 {
     int len = str.m_data ? str.m_data->length : 0;
     const wchar_t *data = str.m_data ? &str.m_data->data[0] : (const wchar_t *)g_bfmeEmptyUnicode;
     return compareNoCase(data, len);
 }
 
-int StringBase<wchar_t>::compareNoCase(const wchar_t *str) const
+template <>
+inline __declspec(noinline) int StringBase<wchar_t>::compareNoCase(const wchar_t *str) const
 {
     return compareNoCase(str, str ? stringLength(str) : 0);
 }
@@ -415,7 +428,7 @@ bool StringBase<char>::endsWith(const StringBase<char> &str) const
 // off around this one call site rather than on the callee.
 #pragma inline_depth(0)
 template <>
-bool StringBase<char>::endsWith(const char *str) const
+inline __declspec(noinline) bool StringBase<char>::endsWith(const char *str) const
 {
     return endsWith(str, str ? (int)strlen(str) : 0);
 }
@@ -845,33 +858,36 @@ __declspec(noinline) bool StringBase<char>::startsWith(const char *str, int len)
 }
 
 template <>
-bool StringBase<char>::startsWith(const char *str) const
+inline __declspec(noinline) bool StringBase<char>::startsWith(const char *str) const
 {
     return startsWith(str, str ? stringLength(str) : 0);
 }
 
 template <>
-bool StringBase<char>::startsWith(const StringBase<char> &str) const
+inline __declspec(noinline) bool StringBase<char>::startsWith(const StringBase<char> &str) const
 {
     int len = str.m_data ? str.m_data->length : 0;
     const char *data = str.m_data ? str.m_data->data : "";
     return startsWith(data, len);
 }
-bool StringBase<char>::startsWithNoCase(const StringBase<char> &str) const
+template <>
+inline __declspec(noinline) bool StringBase<char>::startsWithNoCase(const StringBase<char> &str) const
 {
     const int len = str.m_data ? str.m_data->length : 0;
     const char *data = str.m_data ? &str.m_data->data[0] : "";
     return startsWithNoCase(data, len);
 }
 
-void StringBase<char>::concat(const StringBase<char> &str)
+template <>
+inline __declspec(noinline) void StringBase<char>::concat(const StringBase<char> &str)
 {
     const int len = str.m_data ? str.m_data->length : 0;
     const char *data = str.m_data ? &str.m_data->data[0] : "";
     concat(data, len);
 }
 
-void StringBase<wchar_t>::concat(const StringBase<wchar_t> &str)
+template <>
+inline __declspec(noinline) void StringBase<wchar_t>::concat(const StringBase<wchar_t> &str)
 {
     const int len = str.m_data ? str.m_data->length : 0;
     const wchar_t *data = str.m_data ? &str.m_data->data[0] : L"";
@@ -885,7 +901,8 @@ bool StringBase<char>::endsWithNoCase(const StringBase<char> &str) const
     return endsWithNoCase(data, len);
 }
 
-bool StringBase<char>::startsWithNoCase(const char *str) const
+template <>
+inline __declspec(noinline) bool StringBase<char>::startsWithNoCase(const char *str) const
 {
     return startsWithNoCase(str, str ? stringLength(str) : 0);
 }
