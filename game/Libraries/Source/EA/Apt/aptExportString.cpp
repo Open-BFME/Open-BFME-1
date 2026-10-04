@@ -42,22 +42,27 @@ public:
 };
 
 // Defining spelling: the global is a struct-typed object (?Rva008AE770TheStack@@3U...).
+// The body retail calls for createString is at 0x008cc940 and is linked as a
+// cdecl void() body, so the thiscall-with-6-arguments shape is recovered through
+// a member-pointer call instead of a renamed declaration.
 struct Rva008AE770Stack
 {
-	Rva00899770 *createString(void *value, int unused, BfmeStrVKI *name,
-		int one, int another, int zero);
 };
 
 extern Rva008AE770Stack Rva008AE770TheStack;
 class BfmeNestedBE;
 extern BfmeNestedBE *Rva008930C0AptLookup(int value);
 
-#pragma comment(linker, "/alternatename:?createString@Rva008AE770Stack@@QAEPAVRva00899770@@PAXHPAVBfmeStrVKI@@HHH@Z=?d_008cc940@@YAXXZ")
+// Body at 0x008cc940: ?d_008cc940@@YAXXZ.
+extern void d_008cc940();
 
 void aptExportString(const char *name, char *out)
 {
+	typedef Rva00899770 *(Rva008AE770Stack::*Fn)(void *value, int unused,
+		BfmeStrVKI *strName, int one, int another, int zero);
+	union { void (*fn)(); Fn call; } u = { d_008cc940 };
 	BfmeStrVKI value(name);
-	Rva00899770 *result = Rva008AE770TheStack.createString(
+	Rva00899770 *result = (Rva008AE770TheStack.*u.call)(
 		Rva008930C0AptLookup(0), 0, &value, 1, 1, 0);
 	result->exportString(out);
 }
