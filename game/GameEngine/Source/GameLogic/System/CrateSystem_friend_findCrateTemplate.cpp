@@ -86,7 +86,9 @@ class Overridable
 public:
 	const Overridable *getFinalOverride(void) const
 	{
-		return m_nextOverride ? m_nextOverride->getFinalOverride() : this;
+		if (m_nextOverride)
+			return m_nextOverride->getFinalOverride();
+		return this;
 	}
 
 protected:

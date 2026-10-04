@@ -24,17 +24,18 @@ public:
 	Overridable();
 	virtual ~Overridable();
 
-	const Overridable *friend_getFinalOverride() const
+	// Retail body of the friend ILT target (upstream's plain recursive walk).
+	Overridable *friend_getFinalOverride()
 	{
-		return m_nextOverride != 0
-			? m_nextOverride->friend_getFinalOverride()
-			: this;
+		if (m_nextOverride)
+			return m_nextOverride->friend_getFinalOverride();
+		return this;
 	}
 
-	const Overridable *getFinalOverride() const
+	// Call-site walk: the two retail inlined walks leave their deeper
+	// recursion as the const friend_getFinalOverride ILT 0x00048C61.
+	const Overridable *finalOverrideViaFriend() const
 	{
-		// The two retail inlined walks leave their deeper recursion as the
-		// const friend_getFinalOverride ILT 0x00048C61.
 		return m_nextOverride != 0
 			? m_nextOverride->friend_getFinalOverride()
 			: this;
@@ -97,9 +98,9 @@ public:
 	bool operator<(const ExperienceLevel &that) const
 	{
 		const ExperienceLevel *left = static_cast<const ExperienceLevel *>(
-			getFinalOverride());
+			finalOverrideViaFriend());
 		const ExperienceLevel *right = static_cast<const ExperienceLevel *>(
-			that.getFinalOverride());
+			that.finalOverrideViaFriend());
 
 		if (left == 0 || right == 0)
 			return false;

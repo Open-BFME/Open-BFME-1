@@ -5,7 +5,17 @@
 class Overridable
 {
 public:
-	Overridable *friend_getFinalOverride(void)
+	// Retail body of the friend ILT 0x00048C61 target (plain recursive walk).
+	__declspec(noinline) Overridable *friend_getFinalOverride(void)
+	{
+		if (m_next)
+			return m_next->friend_getFinalOverride();
+		return this;
+	}
+
+	// Call-site walk: one level unrolled inline, deeper recursion in the
+	// friend_getFinalOverride body above.
+	Overridable *finalOverrideUnrolled(void)
 	{
 		if (m_next)
 			return m_next->m_next ? m_next->m_next->friend_getFinalOverride() : m_next;
@@ -24,7 +34,7 @@ public:
 	bool isSharedNSync(void) const
 	{
 		SpecialPowerTemplate *self = const_cast<SpecialPowerTemplate *>(this);
-		return ((const SpecialPowerTemplate *)self->friend_getFinalOverride())->m_sharedNSync;
+		return ((const SpecialPowerTemplate *)self->finalOverrideUnrolled())->m_sharedNSync;
 	}
 
 private:

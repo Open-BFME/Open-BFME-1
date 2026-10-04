@@ -135,12 +135,20 @@ class Overridable
 {
 public:
 	virtual ~Overridable();
-	Overridable *friend_getFinalOverride()
+	// Retail body of the friend ILT 0x00048C61 target (plain recursive walk).
+	__declspec(noinline) Overridable *friend_getFinalOverride(void)
 	{
 		if (m_nextOverride)
-			return m_nextOverride->m_nextOverride
-				? m_nextOverride->m_nextOverride->friend_getFinalOverride()
-				: m_nextOverride;
+			return m_nextOverride->friend_getFinalOverride();
+		return this;
+	}
+
+	// Call-site walk: one level unrolled inline, deeper recursion in the
+	// friend_getFinalOverride body above.
+	Overridable *finalOverrideUnrolled()
+	{
+		if (m_nextOverride)
+			return m_nextOverride->m_nextOverride ? m_nextOverride->m_nextOverride->friend_getFinalOverride() : m_nextOverride;
 		return this;
 	}
 	Overridable *m_nextOverride;
@@ -152,7 +160,7 @@ public:
 	Int getSpecialPowerType() const
 	{
 		SpecialPowerTemplate *self = const_cast<SpecialPowerTemplate *>(this);
-		return ((const SpecialPowerTemplate *)self->friend_getFinalOverride())->m_type;
+		return ((const SpecialPowerTemplate *)self->finalOverrideUnrolled())->m_type;
 	}
 	Int rva00040a3e() const;
 	unsigned char m_prefix[0x0c];

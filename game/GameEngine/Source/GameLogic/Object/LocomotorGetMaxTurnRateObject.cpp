@@ -35,7 +35,17 @@ public:
 class Overridable
 {
 public:
-	const Overridable *getFinalOverride() const
+	// Out-of-line copy keeps upstream's body (retail digest).
+	__declspec(noinline) const Overridable *getFinalOverride() const
+	{
+		if (m_nextOverride != 0)
+			return m_nextOverride->getFinalOverride();
+		return this;
+	}
+
+	// One level of the chain inlined at the call sites, behind retail's
+	// null-template guard.
+	const Overridable *finalOverrideGuarded() const
 	{
 		if (this == 0)
 			return this;
@@ -88,13 +98,13 @@ Real Locomotor::getMaxTurnRate(Object *object) const
 	{
 		turnRate = g_rva001B5860TwoPi /
 			(Real)static_cast<const LocomotorTemplate *>(
-				m_template->getFinalOverride())->m_turnPeriod;
+				m_template->finalOverrideGuarded())->m_turnPeriod;
 	}
 	else
 	{
 		turnRate = g_rva001B5860TwoPi /
 			(Real)static_cast<const LocomotorTemplate *>(
-				m_template->getFinalOverride())->m_damagedTurnPeriod;
+				m_template->finalOverrideGuarded())->m_damagedTurnPeriod;
 	}
 
 	if (turnRate > m_maxTurnRate)

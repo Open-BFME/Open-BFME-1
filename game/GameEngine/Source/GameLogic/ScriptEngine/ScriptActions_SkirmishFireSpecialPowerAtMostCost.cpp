@@ -80,15 +80,20 @@ class Overridable
 public:
 	virtual ~Overridable();
 
-	Overridable *friend_getFinalOverride(void)
+	// Retail body of the friend ILT 0x00048C61 target (plain recursive walk).
+	__declspec(noinline) Overridable *friend_getFinalOverride(void)
 	{
 		if (m_nextOverride)
-		{
-			Overridable *next = m_nextOverride;
-			if (next->m_nextOverride)
-				return next->m_nextOverride->friend_getFinalOverride();
-			return next;
-		}
+			return m_nextOverride->friend_getFinalOverride();
+		return this;
+	}
+
+	// Call-site walk: one level unrolled inline, deeper recursion in the
+	// friend_getFinalOverride body above.
+	Overridable *finalOverrideUnrolled(void)
+	{
+		if (m_nextOverride)
+			return m_nextOverride->m_nextOverride ? m_nextOverride->m_nextOverride->friend_getFinalOverride() : m_nextOverride;
 		return this;
 	}
 
@@ -109,7 +114,7 @@ public:
 	{
 		const SpecialPowerTemplate *self =
 			(const SpecialPowerTemplate *)
-			const_cast<SpecialPowerTemplate *>(this)->friend_getFinalOverride();
+			const_cast<SpecialPowerTemplate *>(this)->finalOverrideUnrolled();
 		return self->m_radiusCursorRadius;
 	}
 

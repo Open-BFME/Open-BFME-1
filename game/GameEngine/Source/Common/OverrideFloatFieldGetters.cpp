@@ -8,7 +8,17 @@
 class Overridable
 {
 public:
-	const Overridable *getFinalOverride(void) const
+	// Out-of-line copy keeps upstream's body (retail digest).
+	__declspec(noinline) const Overridable *getFinalOverride(void) const
+	{
+		if (m_nextOverride != 0)
+			return m_nextOverride->getFinalOverride();
+		return this;
+	}
+
+	// One level of the chain inlined at the call sites, behind retail's
+	// null-template guard.
+	const Overridable *finalOverrideGuarded(void) const
 	{
 		if (this == 0)
 			return this;
@@ -57,24 +67,24 @@ private:
 
 float Rva001B59FloatView::getFirstFloat(void) const
 {
-	return m_value->getFinalOverride()->m_firstFloat;
+	return m_value->finalOverrideGuarded()->m_firstFloat;
 }
 
 float Rva001B59FloatView::getSecondFloat(void) const
 {
-	return m_value->getFinalOverride()->m_secondFloat;
+	return m_value->finalOverrideGuarded()->m_secondFloat;
 }
 
 float Rva001B59FloatView::getScaledFirst(const Rva001B59ScaleContext *context) const
 {
 	float scale = context->m_info->m_scale;
-	const Overridable *value = m_value->getFinalOverride();
+	const Overridable *value = m_value->finalOverrideGuarded();
 	return g_rva001B59ScaleConstant * value->m_firstScale * scale;
 }
 
 float Rva001B59FloatView::getScaledSecond(const Rva001B59ScaleContext *context) const
 {
 	float scale = context->m_info->m_scale;
-	const Overridable *value = m_value->getFinalOverride();
+	const Overridable *value = m_value->finalOverrideGuarded();
 	return g_rva001B59ScaleConstant * value->m_secondScale * scale;
 }

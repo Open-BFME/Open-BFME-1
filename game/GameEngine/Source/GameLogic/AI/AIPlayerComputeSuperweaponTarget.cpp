@@ -49,6 +49,13 @@ public:
 		return this;
 	}
 
+	Overridable *friend_getFinalOverride()
+	{
+		if (m_nextOverride)
+			return m_nextOverride->friend_getFinalOverride();
+		return this;
+	}
+
 	const Overridable *friend_getFinalOverride() const
 	{
 		if (m_nextOverride)

@@ -52,6 +52,15 @@ class Overridable
 public:
 	// A visible out-of-line body lets MSVC keep the name's data across the
 	// call, as retail does; the call itself still binds to the pinned ILT.
+	Overridable *friend_getFinalOverride()
+	{
+		if (m_nextOverride)
+			return m_nextOverride->friend_getFinalOverride();
+		return this;
+	}
+
+	// Retail's const twin (ILT 0x00048C61): one unrolled level, the deeper
+	// recursion lands in the non-const body above.
 	__declspec(noinline) const Overridable *friend_getFinalOverride() const
 	{
 		if (m_nextOverride)
@@ -59,10 +68,13 @@ public:
 		return this;
 	}
 
-	const Overridable *getFinalOverride() const
+	// Call-site walk: one retail inlined level, deeper recursion in the
+	// const friend_getFinalOverride ILT 0x00048C61.
+	const Overridable *finalOverrideViaConstFriend() const
 	{
-		if (m_nextOverride)
-			return m_nextOverride->friend_getFinalOverride();
+		const Overridable *next = m_nextOverride;
+		if (next)
+			return next->friend_getFinalOverride();
 		return this;
 	}
 
@@ -93,7 +105,7 @@ void LightPointSystem::rva0039CB60(BfmeUniqueIntegerStoreC8C0 *indices, const As
 {
 	for (unsigned int i = 0; i < m_levels.size(); ++i)
 	{
-		const LightPointLevel *level = (const LightPointLevel *)m_levels[i]->getFinalOverride();
+		const LightPointLevel *level = (const LightPointLevel *)m_levels[i]->finalOverrideViaConstFriend();
 		if (level->m_name.compare(name) == 0)
 		{
 			addLightPointLevelIndex(indices, i);

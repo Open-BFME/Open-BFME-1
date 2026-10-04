@@ -12,7 +12,17 @@ enum BodyDamageType
 class Overridable
 {
 public:
-	const Overridable *getFinalOverride(void) const
+	// Out-of-line copy keeps upstream's body (retail digest).
+	__declspec(noinline) const Overridable *getFinalOverride(void) const
+	{
+		if (m_nextOverride != 0)
+			return m_nextOverride->getFinalOverride();
+		return this;
+	}
+
+	// One level of the chain inlined at the call sites, behind retail's
+	// null-template guard.
+	const Overridable *finalOverrideGuarded(void) const
 	{
 		if (this == 0)
 			return this;
@@ -75,10 +85,10 @@ Real Locomotor::rva001B5A30(Object *object, BodyDamageType condition) const
 	Real result;
 	if (condition < TheWritableGlobalData->m_movementPenaltyDamageState)
 		result = (g_rva001B59ScaleConstant * g_rva001B59ScaleConstantNormalAlias) *
-			static_cast<const LocomotorTemplate *>(m_template->getFinalOverride())->m_lift;
+			static_cast<const LocomotorTemplate *>(m_template->finalOverrideGuarded())->m_lift;
 	else
 		result = (g_rva001B59ScaleConstantDamaged * g_rva001B59ScaleConstantDamagedAlias) *
-			static_cast<const LocomotorTemplate *>(m_template->getFinalOverride())->m_liftDamaged;
+			static_cast<const LocomotorTemplate *>(m_template->finalOverrideGuarded())->m_liftDamaged;
 
 	result *= scale;
 	if (result > m_value24)

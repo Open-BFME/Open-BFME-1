@@ -37,7 +37,7 @@ public:
 		return this;
 	}
 
-	Overridable *getFinalOverride()
+	Overridable *finalOverrideViaFriend()
 	{
 		if (m_nextOverride)
 			return m_nextOverride->friend_getFinalOverride();
@@ -82,7 +82,7 @@ void LightPointSystem::rva0039C260(
 	for (UnsignedInt i = 0; i < m_levels.size(); ++i)
 	{
 		LightPointLevel *level =
-			(LightPointLevel *)m_levels[i]->getFinalOverride();
+			(LightPointLevel *)m_levels[i]->finalOverrideViaFriend();
 		if (level->m_name.compare(name) == 0)
 		{
 			for (_STL::vector<Int>::iterator it = indices->m_vector08.begin();

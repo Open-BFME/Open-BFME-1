@@ -20,7 +20,7 @@ class Overridable
 public:
 	virtual ~Overridable();
 	Overridable *friend_getFinalOverride();
-	Overridable *getFinalOverride()
+	Overridable *finalOverrideViaFriend()
 	{
 		if (m_nextOverride)
 			return m_nextOverride->friend_getFinalOverride();
@@ -89,7 +89,7 @@ void parseLivingWorldObject00614F50( INI *ini )
 				if( reinterpret_cast<const int *>(ini)[2] == 2 )
 				{
 					object = manager->rva0060F620Clone(
-						(BfmeLivingWorldMapObject *)object->getFinalOverride());
+						(BfmeLivingWorldMapObject *)object->finalOverrideViaFriend());
 				}
 				isOverride = true;
 			}

@@ -42,13 +42,15 @@ class Overridable {
 public:
     void *vtable;
     Overridable *m_nextOverride;
-    const Overridable *friend_getFinalOverride() const
+    Overridable *friend_getFinalOverride()
     {
         if (m_nextOverride)
             return m_nextOverride->friend_getFinalOverride();
         return this;
     }
-    const Overridable *getFinalOverride() const
+    // Call-site walk: one retail inlined level, deeper recursion in the
+    // friend_getFinalOverride ILT 0x00048C61.
+    const Overridable *finalOverrideViaFriendIf() const
     {
         if (m_nextOverride)
             return m_nextOverride->friend_getFinalOverride();
@@ -187,13 +189,13 @@ GameMessage::Type Rva005ACF80Owner::issueSpecialPower(const CommandButton *comma
         msgType = GameMessage::MSG_SPECIAL;
         if (commandType == DO_COMMAND) {
             GameMessage *msg = TheMessageStream->appendMessage(msgType);
-            SpecialPowerTemplate *power = (SpecialPowerTemplate *)command->m_specialPower->getFinalOverride();
+            SpecialPowerTemplate *power = (SpecialPowerTemplate *)command->m_specialPower->finalOverrideViaFriendIf();
             msg->appendIntegerArgument(power->m_id);
             msg->appendIntegerArgument(command->m_options);
             msg->appendObjectIDArgument(specificSource);
             PickAndPlayInfo info;
             info.m_drawTarget = target;
-            power = (SpecialPowerTemplate *)command->m_specialPower->getFinalOverride();
+            power = (SpecialPowerTemplate *)command->m_specialPower->finalOverrideViaFriendIf();
             info.m_specialPowerType = power->m_type;
             pickAndPlayUnitVoiceResponse(TheInGameUI->getAllSelectedDrawables(), msgType, &info);
         }

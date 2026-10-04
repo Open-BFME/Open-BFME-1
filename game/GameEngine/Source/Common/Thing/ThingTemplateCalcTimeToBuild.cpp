@@ -16,7 +16,11 @@ class AsciiString { public: void *data; };
 class Overridable {
 public:
     void *vptr;
-    const Overridable *next;
+    Overridable *next;
+    Overridable *friend_getFinalOverride() {
+        if (next) return next->friend_getFinalOverride();
+        return this;
+    }
     const Overridable *friend_getFinalOverride() const {
         if (next) return next->friend_getFinalOverride();
         return this;

@@ -23,7 +23,17 @@
 class Overridable
 {
 public:
-	Overridable *friend_getFinalOverride(void)
+	// Retail body of the friend ILT 0x00048C61 target (plain recursive walk).
+	__declspec(noinline) Overridable *friend_getFinalOverride(void)
+	{
+		if (m_next)
+			return m_next->friend_getFinalOverride();
+		return this;
+	}
+
+	// Call-site walk: one level unrolled inline, deeper recursion in the
+	// friend_getFinalOverride body above.
+	Overridable *finalOverrideUnrolledLocals(void)
 	{
 		Overridable *first = m_next;
 		if (first == 0)
@@ -50,7 +60,7 @@ public:
 	unsigned int getReloadTime(void) const
 	{
 		SpecialPowerTemplate *self = const_cast<SpecialPowerTemplate *>(this);
-		const SpecialPowerTemplate *resolved = (const SpecialPowerTemplate *)self->friend_getFinalOverride();
+		const SpecialPowerTemplate *resolved = (const SpecialPowerTemplate *)self->finalOverrideUnrolledLocals();
 		unsigned int reload = resolved->m_reloadTime;
 		return reload;
 	}
