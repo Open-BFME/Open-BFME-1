@@ -15,11 +15,9 @@ public:
 };
 void *__cdecl operator new(unsigned int);
 
-// Retail vtables 0x0113C614 and 0x0113C62C; the alternate names define no table.
-extern "C" void *bfmeVftDynamicVectorClassVertexMaterialClass[];
-extern "C" void *bfmeVftDynamicVectorClassBfmeHandleCX[];
-#pragma comment(linker, "/alternatename:_bfmeVftDynamicVectorClassVertexMaterialClass=??_7?$DynamicVectorClass@PAVVertexMaterialClass@@@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftDynamicVectorClassBfmeHandleCX=??_7?$DynamicVectorClass@VBfmeHandleCX@@@@6B@")
+// Retail vtables 0x0113C614 and 0x0113C62C; named directly, no stand-in.
+extern "C" int __identifier("??_7?$DynamicVectorClass@PAVVertexMaterialClass@@@@6B@")[];
+extern "C" int __identifier("??_7?$DynamicVectorClass@VBfmeHandleCX@@@@6B@")[];
 
 class TextureClass
 {
@@ -69,7 +67,7 @@ public:
   VectorMax = 0;
   IsValid = true;
   IsAllocated = false;
-  Vtable = (unsigned)bfmeVftDynamicVectorClassVertexMaterialClass;
+  Vtable = (unsigned)__identifier("??_7?$DynamicVectorClass@PAVVertexMaterialClass@@@@6B@");
   GrowthStep = 10;
   ActiveCount = 0;
  }
@@ -102,7 +100,7 @@ public:
 	__forceinline TextureVector()
 		: TextureVectorBaseCtorShim(0, 0)
 	{
-		*(unsigned int *)this = (unsigned int)bfmeVftDynamicVectorClassBfmeHandleCX;
+		*(unsigned int *)this = (unsigned int)__identifier("??_7?$DynamicVectorClass@VBfmeHandleCX@@@@6B@");
   GrowthStep = 10;
   ActiveCount = 0;
 	}
