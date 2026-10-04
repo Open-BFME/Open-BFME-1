@@ -1,7 +1,9 @@
 // cl: /O2 /Ob0
 
-extern "C" const void *bfmeVftDamageInfoInput[];
-#pragma comment(linker, "/alternatename:_bfmeVftDamageInfoInput=??_7DamageInfoInput@@6B@")
+// The vfptr stored at m_00 is retail's own DamageInfoInput vftable,
+// ??_7DamageInfoInput@@6B@ at 0x01085DE0 (dir32_addresses.csv), declared here
+// under its real name, so no linker alias directive is needed.
+extern "C" const void *__identifier("??_7DamageInfoInput@@6B@")[];
 
 class Rva000ED2D0
 {
@@ -31,7 +33,7 @@ public:
 
 Rva000ED2D0::Rva000ED2D0()
 {
-	m_00 = (void *)bfmeVftDamageInfoInput;
+	m_00 = (void *)__identifier("??_7DamageInfoInput@@6B@");
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0x16;
