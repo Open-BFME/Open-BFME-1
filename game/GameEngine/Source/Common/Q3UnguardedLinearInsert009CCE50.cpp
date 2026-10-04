@@ -37,7 +37,8 @@ public:
 
 private:
 	StringBase(const StringBase<T> &other);
-	~StringBase(void);
+	void releaseBuffer(void);
+	~StringBase(void) { releaseBuffer(); }
 	struct Header
 	{
 		int m_references;
