@@ -23,6 +23,14 @@ enum SpecialPowerType
 class Object;
 class SpecialAbilityUpdate;
 
+// Route class for the member-pointer call below: it only names a signature,
+// the call itself goes to the retail ILT thunk.
+class Route00047CBC {};
+
+// Retail ILT thunks the calls below are routed through.
+extern void j_0004b4fc();
+extern void j_00047cbc();
+
 class PB_DeepBase
 {
 public:
@@ -161,6 +169,8 @@ class SpecialAbilityUpdate : public SpecialAbilityUpdateBase,
 class Object
 {
 public:
+	// Only ever taken by address into a union below: retail calls this through
+	// the ILT thunk j_0004b4fc, never through a definition in this TU.
 	SpecialAbilityUpdate *findSpecialAbilityUpdate(SpecialPowerType type) const;
 	void doCommandButtonAtObject(const CommandButton *commandButton, Object *object,
 		CommandSourceType source, Bool playVoiceResponse);
@@ -172,17 +182,14 @@ class CommandButtonHuntUpdate : public UpdateModule
 	protected:
 	UpdateSleepTime huntSpecialPower(AIUpdateInterface *ai);
 
+	// Only ever taken by address into a union below: retail calls this through
+	// the ILT thunk j_00047cbc, never through a definition in this TU.
 	Object *scanClosestTarget();
 
 private:
 	void *m_commandButtonName;
 	const CommandButton *m_commandButton;
 };
-
-#pragma comment(linker, "/alternatename:?friend_getFinalOverride@Overridable@@QAEPAV1@XZ=?j_00048c61@@YAXXZ")
-#pragma comment(linker, "/alternatename:?friend_getFinalOverride@Overridable@@QBEPBV1@XZ=?j_00048c61@@YAXXZ")
-#pragma comment(linker, "/alternatename:?findSpecialAbilityUpdate@Object@@QBEPAVSpecialAbilityUpdate@@W4SpecialPowerType@@@Z=?j_0004b4fc@@YAXXZ")
-#pragma comment(linker, "/alternatename:?scanClosestTarget@CommandButtonHuntUpdate@@IAEPAVObject@@XZ=?j_00047cbc@@YAXXZ")
 
 UpdateSleepTime CommandButtonHuntUpdate::huntSpecialPower(AIUpdateInterface *ai)
 {
@@ -197,7 +204,9 @@ UpdateSleepTime CommandButtonHuntUpdate::huntSpecialPower(AIUpdateInterface *ai)
 	const SpecialPowerTemplate *spTemplate = m_commandButton->getSpecialPowerTemplate();
 	if (spTemplate)
 	{
-		SpecialAbilityUpdate *spUpdate = obj->findSpecialAbilityUpdate(
+		typedef SpecialAbilityUpdate *(Object::*FindUpdate)(SpecialPowerType) const;
+		union { void (*fn)(); FindUpdate call; } findUpdate = { j_0004b4fc };
+		SpecialAbilityUpdate *spUpdate = (obj->*findUpdate.call)(
 			spTemplate->getSpecialPowerType());
 		if (spUpdate == 0)
 			return UPDATE_SLEEP_FOREVER;
@@ -205,7 +214,9 @@ UpdateSleepTime CommandButtonHuntUpdate::huntSpecialPower(AIUpdateInterface *ai)
 			return (UpdateSleepTime)data->m_scanFrames;
 	}
 
-	Object *victim = scanClosestTarget();
+	typedef Object *(Route00047CBC::*ScanClosestTarget)();
+	union { void (*fn)(); ScanClosestTarget call; } scanClosestTarget = { j_00047cbc };
+	Object *victim = (((Route00047CBC *)this)->*scanClosestTarget.call)();
 	if (victim)
 	{
 		obj->doCommandButtonAtObject(m_commandButton, victim, CMD_FROM_AI, false);
