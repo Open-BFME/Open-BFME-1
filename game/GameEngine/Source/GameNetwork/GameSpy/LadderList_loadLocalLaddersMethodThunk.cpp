@@ -57,54 +57,76 @@ namespace rts
 typedef std::set<AsciiString, rts::less_than_nocase<AsciiString> > FilenameList;
 
 // Retail spells this global `GlobalData *TheWritableGlobalData`; this TU only
-// calls getPath_UserData on it, so it keeps the local view and casts at the use.
+// reads the user-data path through it, so it keeps the local view and casts at
+// the use. Retail reaches that member through the ILT thunk ?j_000106ea@@YAXXZ,
+// so the call goes through a member pointer initialised with the thunk.
 class GlobalData;
 
 class Rva006C9270GlobalData
 {
 public:
-	AsciiString getPath_UserData() const;
+	typedef AsciiString (Rva006C9270GlobalData::*GetPathUserDataFn)() const;
 };
 
 extern GlobalData *TheWritableGlobalData;
 
+// Same story for the file list: retail calls the shared free __stdcall body
+// ?bfmeListAllEBC@@YGXABVBfmeStrEBC@@0PAXH@Z (see
+// game/GameEngine/Source/Common/BfmeConv2019.cpp) from this site, so the
+// thiscall member pointer is initialised with that routine's address.
 class FileSystem
 {
 public:
-	void getFileListInDirectory(const AsciiString &, const AsciiString &, FilenameList &, bool) const;
+	typedef void (FileSystem::*ListFilesFn)(const AsciiString &, const AsciiString &, FilenameList &, bool);
 };
 
+// Only forward declared: this TU never builds one, it only passes references.
+class BfmeStrEBC;
+
+extern void __stdcall bfmeListAllEBC(const BfmeStrEBC &, const BfmeStrEBC &, void *, int);
+
 extern FileSystem *TheFileSystem;
+
+// ?j_00028efc@@YAXXZ is the ILT thunk retail's checkLadder call goes through.
+extern void j_000106ea();
+extern void j_00028efc();
 
 class LadderList
 {
 private:
 	void loadLocalLadders();
-	void checkLadder(AsciiString, int);
+	typedef void (LadderList::*CheckLadderFn)(AsciiString, int);
 };
 
-#pragma comment(linker, "/alternatename:?getPath_UserData@Rva006C9270GlobalData@@QBE?AVAsciiString@@XZ=?j_000106ea@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getFileListInDirectory@FileSystem@@QBEXABVAsciiString@@0AAV?$set@VAsciiString@@U?$less_than_nocase@VAsciiString@@@rts@@V?$allocator@VAsciiString@@@_STL@@@_STL@@_N@Z=?bfmeListAllEBC@@YGXABVBfmeStrEBC@@0PAXH@Z")
-#pragma comment(linker, "/alternatename:?checkLadder@LadderList@@AAEXVAsciiString@@H@Z=?j_00028efc@@YAXXZ")
+// Kept: the retail call is the implicit teardown of
+// std::_Rb_tree<AsciiString, _Identity<AsciiString>, rts::less_than_nocase<...>,
+// allocator<AsciiString>>::~_Rb_tree. Only STLport's own template instantiates
+// that mangled name, and the set must stay a scope object with an implicit
+// destructor for the unwind state byte and the .text$x cleanup thunks to come
+// out identical, so it cannot be respelled or called through a member pointer.
 #pragma comment(linker, "/alternatename:??1?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less_than_nocase@VAsciiString@@@rts@@V?$allocator@VAsciiString@@@3@@_STL@@QAE@XZ=?j_000124db@@YAXXZ")
 
 // ?loadLocalLadders@LadderList@@AAEXXZ
 void LadderList::loadLocalLadders()
 {
 	AsciiString dirname;
+	union { void (*fn)(); Rva006C9270GlobalData::GetPathUserDataFn call; } path = { j_000106ea };
 	dirname.format(AsciiString("%sLoTRB4MEOnline\\Ladders\\"),
-		((Rva006C9270GlobalData *)TheWritableGlobalData)->getPath_UserData().str());
+		(((Rva006C9270GlobalData *)TheWritableGlobalData)->*path.call)().str());
 
 	FilenameList filenameList;
-	TheFileSystem->getFileListInDirectory(dirname, AsciiString("*.ini"), filenameList, true);
+	union { void (__stdcall *fn)(const BfmeStrEBC &, const BfmeStrEBC &, void *, int);
+		FileSystem::ListFilesFn call; } list = { bfmeListAllEBC };
+	(TheFileSystem->*list.call)(dirname, AsciiString("*.ini"), filenameList, true);
 
 	int index = -1;
 	FilenameList::iterator it = filenameList.begin();
+	union { void (*fn)(); LadderList::CheckLadderFn call; } check = { j_00028efc };
 	while (it != filenameList.end())
 	{
 		AsciiString filename = *it;
 		filename.toLower();
-		checkLadder(filename, index--);
+		(this->*check.call)(filename, index--);
 		++it;
 	}
 }
