@@ -688,36 +688,7 @@ void GameEngine::init( int argc, char *argv[] )
 /** -----------------------------------------------------------------------------------------------
 	* Reset all necessary parts of the game engine to be ready to accept new game data 
 	*/
-// byte-exact reconstruction: game/GameEngine/Source/Common/GameEngineReset.cpp
-// ?reset@GameEngine@@UAEXXZ present-unmatched
-void GameEngine::reset( void )
-{
-
-	WindowLayout *background = TheWindowManager->winCreateLayout("Menus/BlankWindow.wnd");
-	DEBUG_ASSERTCRASH(background,("We Couldn't Load Menus/BlankWindow.wnd"));
-	background->hide(FALSE);
-	background->bringForward();
-	background->getFirstWindow()->winClearStatus(WIN_STATUS_IMAGE);
-	Bool deleteNetwork = false;
-	if (TheGameLogic->isInMultiplayerGame())
-		deleteNetwork = true;
-
-	TheSubsystemList->resetAll();
-
-	if (deleteNetwork)
-	{
-		DEBUG_ASSERTCRASH(TheNetwork, ("Deleting NULL TheNetwork!"));
-		if (TheNetwork)
-			delete TheNetwork;
-		TheNetwork = NULL;
-	}
-	if(background)
-	{
-		background->destroyWindows();
-		background->deleteInstance();
-		background = NULL;
-	}
-}
+// Retail reset is defined in GameEngineReset.cpp.
 
 /// -----------------------------------------------------------------------------------------------
 DECLARE_PERF_TIMER(GameEngine_update)
