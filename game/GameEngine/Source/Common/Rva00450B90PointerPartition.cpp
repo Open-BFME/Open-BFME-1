@@ -1,43 +1,19 @@
 // cl: /O2 /D_STLP_USE_STATIC_LIB
 // stlport
-// Retail's caller at 0x00451E60 supplies the bidirectional iterator tag and
-// reaches this __partition body through the ILT at 0x00043004. The earlier
-// synthetic __uninitialized_copy pin cannot describe the in-place pointer
-// swaps; the three byte fields and six mask bits are all directly observable.
+// Four-slot cdecl leaf reached through ILT 0x00043004; returns the partition
+// iterator. fillMapMask passes pointers returned by MapCache::findMap.
 #include <algorithm>
+#include "Rva0055AE10MapPredicate.h"
 
-struct Rva00450B90Item
+// ??$__partition@PAPBVMapMetaData@@URva0055AE10MapPredicate@@@_STL@@YAPAPBVMapMetaData@@PAPBV1@0URva0055AE10MapPredicate@@ABUbidirectional_iterator_tag@0@@Z
+template const MapMetaData **_STL::__partition(const MapMetaData **,
+    const MapMetaData **, Rva0055AE10MapPredicate,
+    const _STL::bidirectional_iterator_tag &);
+
+// Native three-slot wrapper at 0x00451E60. Identical template wrappers cannot
+// establish its original name. The empty category's address is the fourth slot.
+const MapMetaData **rva00451E60Partition(const MapMetaData **first,
+    const MapMetaData **last, Rva0055AE10MapPredicate predicate)
 {
-	char m_beforeFlags[0x24];
-	bool m_flag24;
-	bool m_flag25;
-	bool m_flag26;
-};
-
-class Rva00450B90Predicate
-{
-public:
-	bool operator()(const Rva00450B90Item *item) const
-	{
-		if ((m_mask & 0x01) != 0 && item->m_flag26)
-			goto selected26;
-		if ((m_mask & 0x02) == 0 || item->m_flag26)
-			return false;
-
-	selected26:
-		if ((item->m_flag24 && (m_mask & 0x04) != 0)
-				|| (!item->m_flag24 && (m_mask & 0x08) != 0))
-			return false;
-
-		return !((item->m_flag25 && (m_mask & 0x10) != 0)
-			|| (!item->m_flag25 && (m_mask & 0x20) != 0));
-	}
-
-	unsigned int m_mask;
-};
-
-typedef Rva00450B90Item **(*Rva00450B90PartitionFn)(
-	Rva00450B90Item **, Rva00450B90Item **, Rva00450B90Predicate);
-
-Rva00450B90PartitionFn Rva00450B90PartitionAnchor =
-	&_STL::partition<Rva00450B90Item **, Rva00450B90Predicate>;
+    return _STL::__partition(first, last, predicate, _STL::random_access_iterator_tag());
+}
