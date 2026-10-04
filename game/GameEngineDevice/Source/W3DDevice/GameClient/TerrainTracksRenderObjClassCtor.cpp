@@ -33,8 +33,8 @@ struct TerrainTrackEdge
 	int value11;
 };
 
-extern "C" const void *bfmeVftTerrainTracksRenderObjClass[];
-#pragma comment(linker, "/alternatename:_bfmeVftTerrainTracksRenderObjClass=??_7TerrainTracksRenderObjClass@@6B@")
+// Retail vftable symbol, bound directly by its decorated name.
+extern "C" void *__identifier("??_7TerrainTracksRenderObjClass@@6B@")[];
 
 class TerrainTrackBase
 {
@@ -42,7 +42,7 @@ public:
 	TerrainTrackBase()
 	{
 		refCount = 1;
-		vtable = (unsigned int)bfmeVftTerrainTracksRenderObjClass;
+		vtable = (unsigned int)__identifier("??_7TerrainTracksRenderObjClass@@6B@");
 		listLink = 0;
 	}
 
