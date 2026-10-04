@@ -4,7 +4,7 @@
 // circleFade.tga.  Same device-global / chipset ladder as ScreenBWFilter::init
 // plus a texture-handle member at this+8.
 
-class BFMEWaterTrackTexture
+class TextureBaseClass
 {
 public:
 	void Release_Ref();
@@ -13,11 +13,11 @@ public:
 class BFMEWaterTrackTextureHandle
 {
 public:
-	BFMEWaterTrackTexture *m_texture;
+	TextureBaseClass *m_texture;
 	~BFMEWaterTrackTextureHandle()
 	{
 		if (m_texture)
-			m_texture->Release_Ref();
+			((TextureBaseClass *)m_texture)->Release_Ref();
 	}
 };
 
