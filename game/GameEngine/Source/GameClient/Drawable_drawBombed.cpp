@@ -17,12 +17,6 @@ typedef unsigned int UnsignedInt;
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-extern void j_000102a8();
-extern void j_00015b09();
-extern void j_0003b0b1();
-extern void j_000369a8();
-extern void j_00011df1();
-
 class Anim2DTemplate;
 class Anim2DCollection;
 
@@ -49,20 +43,16 @@ public:
 	UnsignedInt m_keepTillFrame[14];
 };
 
-// The icon-template table (VA 0x012F12EC) and the Anim2D collection
-// (VA 0x012F4CA8) are recorded globals in
-// targets/game/reverse/dir32_addresses.csv, so both externs are bound to the
-// recorded decorated symbols: a literal address here reads the wrong memory the
-// moment the data moves in a linked build.
-extern Anim2DTemplate *const *const s_animationTemplates;
-#pragma comment(linker, "/alternatename:?s_animationTemplates@@3QBQAVAnim2DTemplate@@B=?s_animationTemplates@Drawable@@0PAPAVAnim2DTemplate@@A")
+// The Anim2D collection (VA 0x012F4CA8) and the icon-template table
+// (VA 0x012F12EC) are recorded globals in
+// targets/game/reverse/dir32_addresses.csv, so both are bound to the recorded
+// decorated symbols: a literal address here reads the wrong memory the moment
+// the data moves in a linked build.  The template table is retail's private
+// static Drawable::s_animationTemplates
+// (?s_animationTemplates@Drawable@@0PAPAVAnim2DTemplate@@A), defined by
+// Drawable::initStaticImages in DrawableInitStaticImages.cpp; this body only
+// reads it.
 extern Anim2DCollection *TheAnim2DCollection;
-
-#pragma comment(linker, "/alternatename:?getIconInfo@Drawable@@QAEPAVDrawableIconInfo@@XZ=?j_000102a8@@YAXXZ")
-#pragma comment(linker, "/alternatename:??0Anim2D@@QAE@PAVAnim2DTemplate@@PAVAnim2DCollection@@@Z=?j_00015b09@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getCurrentFrameWidth@Anim2D@@QBEIXZ=?j_0003b0b1@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getCurrentFrameHeight@Anim2D@@QBEIXZ=?j_000369a8@@YAXXZ")
-#pragma comment(linker, "/alternatename:?draw@Anim2D@@QAEXHHHH@Z=?j_00011df1@@YAXXZ")
 
 class Drawable
 {
@@ -70,6 +60,7 @@ public:
 	DrawableIconInfo *getIconInfo();
 
 private:
+	static Anim2DTemplate **s_animationTemplates;
 	void drawBombed();
 };
 
@@ -116,7 +107,7 @@ void Drawable::drawBombed()
 		if (getIconInfo()->m_icon[6] == 0)
 		{
 			getIconInfo()->m_icon[6] = new Anim2D(
-				s_animationTemplates[6],
+				Drawable::s_animationTemplates[6],
 				TheAnim2DCollection);
 		}
 
