@@ -19,13 +19,41 @@ public:
 	int m_bfmeValueERW;
 };
 
-class BfmeSubERW
+// Retail reaches all three through the five-byte ILT thunks below, not
+// through a body of their own: dis_retail 0x001CAA80 shows
+// `mov ecx, ...; call ?j_0002369b@@YAXXZ`, `mov ecx, esi; call
+// ?j_000212d8@@YAXXZ` and `mov ecx, esi; call ?j_00016d0b@@YAXXZ`, and
+// the ledger defines exactly those names in game/gen_small/thunks_016,
+// _015 and _010. Spell the references as the ledger spells them; the
+// register cast below supplies the thiscall view the thunks tail-jump with.
+extern void j_0002369b();
+extern void j_000212d8();
+extern void j_00016d0b();
+
+class BfmeSubERWReceiver
 {
-public:
-	BfmeInfoERW *bfmeInfoERW();
-	char bfmeAERW();
-	char bfmeBERW();
 };
+
+template <class T> __forceinline T BfmeSubERWMember(void (*raw)())
+{
+	union
+	{
+		void (*raw)();
+		T member;
+	} fn;
+
+	fn.raw = raw;
+
+	return fn.member;
+}
+
+typedef BfmeInfoERW *(BfmeSubERWReceiver::*SubERWInfoFn)(void);
+typedef char (BfmeSubERWReceiver::*SubERWFlagFn)(void);
+
+#define SUB_ERW_CALL(T, obj, fn) \
+	(((BfmeSubERWReceiver *)(obj))->*BfmeSubERWMember<T>(fn))
+
+class BfmeSubERW;
 
 class BfmeHostERW
 {
@@ -44,7 +72,7 @@ int BfmeHostERW::bfmeQueryERW()
 
 	if (sub != 0)
 	{
-		BfmeInfoERW *info = sub->bfmeInfoERW();
+		BfmeInfoERW *info = SUB_ERW_CALL(SubERWInfoFn, sub, j_0002369b)();
 
 		if (info != 0)
 		{
@@ -55,7 +83,7 @@ int BfmeHostERW::bfmeQueryERW()
 			{
 				sub = m_bfmeSubERW;
 
-				if (sub != 0 && !sub->bfmeAERW() && !sub->bfmeBERW())
+				if (sub != 0 && !SUB_ERW_CALL(SubERWFlagFn, sub, j_000212d8)() && !SUB_ERW_CALL(SubERWFlagFn, sub, j_00016d0b)())
 					return info->m_bfmeValueERW;
 			}
 		}
