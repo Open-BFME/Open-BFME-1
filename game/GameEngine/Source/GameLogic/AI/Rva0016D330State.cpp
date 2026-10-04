@@ -73,14 +73,16 @@ public:
 	StateMachine *m_machine;
 };
 
-#pragma comment(linker, "/alternatename:?getGoalObject@StateMachine@@QAEPAVObject@@XZ=?j_0000e570@@YAXXZ")
-extern "C" void j_0000e570();
+// Retail calls this through the incremental-link thunk at 0x0000e570.
+extern void j_0000e570();
 
 int Rva0016D330State::rva0016D330()
 {
+	typedef Object *(StateMachine::*GoalObjectFn)();
+	union { void (*fn)(); GoalObjectFn call; } goalFn = { j_0000e570 };
 	StateMachine *machine = m_machine;
 	Object *owner = machine->m_owner;
-	Object *goal = machine->getGoalObject();
+	Object *goal = (machine->*goalFn.call)();
 	if (owner != 0 && goal != 0)
 	{
 		ContainModuleInterface *contain = owner->m_contain;
