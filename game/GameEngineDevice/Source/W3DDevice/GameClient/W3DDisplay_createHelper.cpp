@@ -5,9 +5,11 @@
 // function pointers (ILT 0x0002FB3F, 0x0003BE9E, 0x0003DFB4) and the block is
 // 0x18 bytes.
 
-void rva006fb780_fn_a(void);			// ILT 0x0002FB3F
-void rva006fb780_fn_b(void);			// ILT 0x0003BE9E
-void rva006fb780_fn_c(void);			// ILT 0x0003DFB4
+// The three constructor arguments are retail incremental-link thunks, spelled
+// as the names the ledger gives those bodies.
+extern void j_0002fb3f(void);
+extern void j_0003be9e(void);
+extern void j_0003dfb4(void);
 
 class Rva006FB780Product
 {
@@ -27,5 +29,5 @@ public:
 // ?create@Rva006FB780Host@@QAEPAVRva006FB780Product@@XZ
 Rva006FB780Product *Rva006FB780Host::create(void)
 {
-	return new Rva006FB780Product(rva006fb780_fn_a, rva006fb780_fn_b, rva006fb780_fn_c);
+	return new Rva006FB780Product(j_0002fb3f, j_0003be9e, j_0003dfb4);
 }
