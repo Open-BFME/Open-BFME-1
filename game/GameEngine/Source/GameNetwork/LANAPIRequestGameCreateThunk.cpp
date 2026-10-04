@@ -250,12 +250,38 @@ public:
 
 typedef char BfmeLANPreferencesSizeCheck[sizeof(LANPreferences) == 0x14 ? 1 : -1];
 
-// These are ILT routes already used by the target's retail callsites.  The
-// target bodies prove the generic thunk semantics: j_0001de8a is the
-// LANGameSlot default constructor, and j_000241bd writes the LANPlayer host
-// string at this+0x4c.
-#pragma comment(linker, "/alternatename:??0LANGameSlot@@QAE@XZ=?j_0001de8a@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setHost@LANGameSlot@@QAEXVAsciiString@@@Z=?j_000241bd@@YAXXZ")
+// These are the ILT routes the target's retail callsites jump through:
+// j_0001de8a is the LANGameSlot default constructor, and j_000241bd writes the
+// LANPlayer host string at this+0x4c.  Both are called through the signature
+// the callsite proves, so no linker alias is needed.
+extern void j_0001de8a(void);
+extern void j_000241bd(void);
+
+// Storage for a local LANGameSlot whose construction goes through the retail
+// ILT thunk: the holder keeps the compiler's unwind state machine (and the
+// ~LANGameSlot call at scope exit) while the construction call itself is the
+// thunk reference.
+class LANSlotStorage
+{
+public:
+	// The construction call itself is the retail ILT reference, inlined into
+	// the callsite so the unwind state store lands after it as retail does.
+	__forceinline LANSlotStorage(void)
+	{
+		typedef void (LANGameSlot::*LANGameSlotCtorFn)(void);
+		union { void (*fn)(void); LANGameSlotCtorFn call; } ctorFn = { j_0001de8a };
+		(reinterpret_cast<LANGameSlot *>(m_words)->*ctorFn.call)();
+	}
+
+	~LANSlotStorage(void)
+	{
+		reinterpret_cast<LANGameSlot *>(m_words)->~LANGameSlot();
+	}
+
+	UnsignedInt m_words[sizeof(LANGameSlot) / sizeof(UnsignedInt)];
+};
+
+typedef char BfmeLANSlotStorageSizeCheck[sizeof(LANSlotStorage) == 0x68 ? 1 : -1];
 
 class LANAPIInterface
 {
@@ -389,7 +415,8 @@ void LANAPI::RequestGameCreate(UnicodeString gameName, Bool isDirectConnect)
 	myGame->setName(name);
 
 	GameSlotConnectInfo connectInfo;
-	LANGameSlot newSlot;
+	LANSlotStorage newSlotStorage;
+	LANGameSlot &newSlot = *reinterpret_cast<LANGameSlot *>(newSlotStorage.m_words);
 	connectInfo.m_nat = 0;
 	connectInfo.m_port = 0;
 	newSlot.setState(SLOT_PLAYER, m_name, &connectInfo);
@@ -398,7 +425,9 @@ void LANAPI::RequestGameCreate(UnicodeString gameName, Bool isDirectConnect)
 	newSlot.setPort(localAddress->m_port);
 	newSlot.setLastHeard(0);
 	newSlot.setLogin(m_userName);
-	newSlot.setHost(m_hostName);
+	typedef void (LANGameSlot::*LANGameSlotSetHostFn)(AsciiString name);
+	union { void (*fn)(void); LANGameSlotSetHostFn call; } setHostFn = { j_000241bd };
+	(newSlot.*setHostFn.call)(m_hostName);
 
 	myGame->setSlot(0, newSlot);
 	myGame->setNext(0);
