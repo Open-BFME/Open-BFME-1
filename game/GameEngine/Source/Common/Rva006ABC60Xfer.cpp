@@ -51,10 +51,25 @@ public:
 };
 
 extern void __cdecl xferTree(Xfer *xfer, void *tree);
-extern Xfer *__cdecl Rva006B0850XferAsciiStringRealMap(Xfer *xfer, void *map);
+// Retail reaches the AsciiString->Real map xfer 0x006B0850 through ILT 0x000149D4.
+extern void j_000149d4();
+
+typedef Xfer *(__cdecl *XferMapFunction)(Xfer *xfer, void *map);
+
+union XferMapCast
+{
+	void (*raw)();
+	XferMapFunction function;
+};
+
+static __forceinline Xfer *xferStringRealMap(void (*thunk)(), Xfer *xfer, void *map)
+{
+	XferMapCast cast;
+	cast.raw = thunk;
+	return cast.function(xfer, map);
+}
 
 #pragma comment(linker, "/alternatename:?xferTree@@YAXPAVXfer@@PAX@Z=?j_00003544@@YAXXZ")
-#pragma comment(linker, "/alternatename:?Rva006B0850XferAsciiStringRealMap@@YAPAVXfer@@PAV1@PAX@Z=?j_000149d4@@YAXXZ")
 
 class Rva006ABC60
 {
@@ -109,7 +124,7 @@ void Rva006ABC60::xfer(Xfer *xfer)
 		xfer->xferReal(&record.m_tail4);
 		xfer->xferReal(&record.m_tail5);
 	}
-	Rva006B0850XferAsciiStringRealMap(xfer, record.m_map);
+	xferStringRealMap(j_000149d4, xfer, record.m_map);
 
 	for (int i = 0; i < 6; ++i)
 		for (int j = 0; j < 2; ++j)
