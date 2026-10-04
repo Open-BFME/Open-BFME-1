@@ -12,6 +12,8 @@ struct Gen_t_0019a890_p16cd
 	Gen_t_0019a890_p16cd &operator=(const Gen_t_0019a890_p16cd &);
 };
 
+extern void j_000351cf();
+
 namespace _STL
 {
 struct __false_type
@@ -66,7 +68,6 @@ class vector
 protected:
 	void _M_insert_overflow(Type *position, const Type &value,
 		const __false_type &, unsigned int fillLength, bool atEnd);
-	void _M_clear();
 
 	Type *_M_start;
 	Type *_M_finish;
@@ -115,7 +116,9 @@ void vector<Type, Allocator>::_M_insert_overflow(
 			newFinish = uninitialized_copy(position, last, newFinish);
 	}
 
-	_M_clear();
+	typedef void (vector<Type, Allocator>::*Fn)();
+	union { void (*fn)(); Fn call; } u = { j_000351cf };
+	(this->*u.call)();
 
 	_M_finish = newFinish;
 	_M_start = newStart;
@@ -123,7 +126,7 @@ void vector<Type, Allocator>::_M_insert_overflow(
 }
 }
 
-#pragma comment(linker, "/alternatename:?_M_clear@?$vector@UGen_t_0019a890_p16cd@@V?$allocator@UGen_t_0019a890_p16cd@@@_STL@@@_STL@@IAEXXZ=?j_000351cf@@YAXXZ")
-
+// The old buffer is released through the incremental-link thunk at
+// 0x000351cf, called directly above.
 template class _STL::vector<Gen_t_0019a890_p16cd,
 	_STL::allocator<Gen_t_0019a890_p16cd> >;
