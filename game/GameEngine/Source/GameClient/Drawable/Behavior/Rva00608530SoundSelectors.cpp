@@ -57,10 +57,19 @@ struct Rva00608530Primary
 
 struct Rva006083A0SoundUpgrade
 {
-	bool matchesObject(void *object);
+	char m_prefix[1];
 };
 
-#pragma comment(linker, "/alternatename:?matchesObject@Rva006083A0SoundUpgrade@@QAE_NPAX@Z=?j_000420b9@@YAXXZ")
+// ILT 0x000420B9 routes the 006083A0 upgrade/object match through its thunk.
+extern void j_000420b9();
+
+// The witness is a thiscall on the record; the callee is its ILT thunk.
+__forceinline bool matchesObjectViaThunk(void *record, void *object)
+{
+	typedef bool (Rva006083A0SoundUpgrade::*Fn)(void *);
+	union { void (*fn)(); Fn call; } u = { j_000420b9 };
+	return (((Rva006083A0SoundUpgrade *)record)->*u.call)(object);
+}
 
 struct Rva00608530SoundSelectorInterface
 {
@@ -90,7 +99,7 @@ Rva00608530Sound *Rva00608530SoundSelector::getIndexedSound(unsigned int index)
 	Rva00608FE0Vector::iterator finish = data->m_soundUpgrades.end();
 	for (; it != finish; ++it)
 	{
-		if (((Rva006083A0SoundUpgrade *)&*it)->matchesObject(upgrade))
+		if (matchesObjectViaThunk(&*it, upgrade))
 		{
 			Rva00608FE0Item *item = it->m_items[index];
 			if (item == 0)
@@ -116,7 +125,7 @@ bool Rva00608530SoundSelector::getSelectedValue(unsigned int *value)
 	Rva00608FE0Vector::iterator finish = data->m_soundUpgrades.end();
 	for (; it != finish; ++it)
 	{
-		if (((Rva006083A0SoundUpgrade *)&*it)->matchesObject(upgrade))
+		if (matchesObjectViaThunk(&*it, upgrade))
 		{
 			*value = it->m_field208;
 			if (it->m_field20C != 0)
