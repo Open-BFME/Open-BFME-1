@@ -7,13 +7,20 @@
 // The destructor witnesses the base size, texture field, and three Coord2D arrays.
 #include "ascii_string.h"
 
+extern void j_0001d606();
+extern void j_000336ae();
+
+// Empty routes for the two image ILT thunks: a member-pointer call through one
+// of these keeps the direct `call <thunk>` shape retail has, which a
+// pointer-to-member of a polymorphic class does not.
+class Route0001D606 {};
+class Route000336AE {};
+
 class BFMERetailAsciiString : public AsciiString
 {
 public:
 	BFMERetailAsciiString( const char *text );
 };
-
-#pragma comment(linker, "/alternatename:?releaseBuffer@AsciiString@@AAEXXZ=?releaseBuffer@BFMERetailAsciiString@@AAEXXZ")
 
 class SubsystemInterface
 {
@@ -41,12 +48,20 @@ private:
 	char m_base[0x504];
 };
 
+// Still needed: retail reaches the base ctor through ILT 0x0000DA58, but a
+// mem-initializer can only ever name a constructor, so the compiler emits the
+// only relocation it can there.  Routing the thunk through a member-pointer
+// union means inlining the base ctor, which moves MSVC's two base-subobject
+// vptr stores (0x01127A48 / 0x01127A34) ahead of the call and shifts the rest
+// of the body; defining the ctor out of line would add a new retail-looking
+// symbol.
 #pragma comment(linker, "/alternatename:??0Rva00597FC0Client@@QAE@XZ=?j_0000da58@@YAXXZ")
 
 class Image;
 class ImageCollection
 {
 public:
+	// retail calls this through ILT 0x0001D606, see Rva0079D9F0ImageSlot
 	const Image *findImageByName( const AsciiString &name );
 };
 
@@ -55,6 +70,7 @@ extern ImageCollection *TheMappedImageCollection;
 class Image
 {
 public:
+	// retail calls this through ILT 0x000336AE, see AptPalantir::AptPalantir
 	AsciiString getFilename() const;
 
 private:
@@ -62,16 +78,21 @@ private:
 	AsciiString m_filename;
 };
 
-#pragma comment(linker, "/alternatename:?findImageByName@ImageCollection@@QAEPBVImage@@ABVAsciiString@@@Z=?j_0001d606@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getFilename@Image@@QBE?AVAsciiString@@XZ=?j_000336ae@@YAXXZ")
-
 class Rva0079D9F0ImageSlot
 {
 public:
 	__forceinline Rva0079D9F0ImageSlot()
 	{
 		BFMERetailAsciiString name( "RadarViewBoxEdge" );
-		m_image = TheMappedImageCollection->findImageByName(
+		// retail calls ImageCollection::findImageByName through ILT
+		// 0x0001D606; the route keeps that a plain `call <thunk>`.
+		typedef const Image *(Route0001D606::*Find)( const AsciiString & );
+		union
+		{
+			void (*fn)();
+			Find call;
+		} u = { j_0001d606 };
+		m_image = (((Route0001D606 *)TheMappedImageCollection)->*u.call)(
 			*(const AsciiString *)&name );
 	}
 
@@ -166,7 +187,17 @@ AptPalantir::AptPalantir()
 {
 	if( m_image51c.m_image )
 	{
+		// j_000336AE is the ILT thunk retail calls for Image::getFilename; the
+		// by-value AsciiString it fills has to be consumed inside this
+		// expression or the compiler destroys it before the call below.
+		typedef AsciiString (Route000336AE::*Get)() const;
+		union
+		{
+			void (*fn)();
+			Get call;
+		} u = { j_000336ae };
 		m_texture520 = BFMEGetWaterTrackTexture(
-			bfmeString( m_image51c.m_image->getFilename() ), 1, 0 );
+			bfmeString(
+				((Route000336AE *)m_image51c.m_image->*u.call)() ), 1, 0 );
 	}
 }
