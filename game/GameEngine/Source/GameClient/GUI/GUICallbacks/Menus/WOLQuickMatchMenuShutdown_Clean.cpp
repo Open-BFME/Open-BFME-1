@@ -86,8 +86,7 @@ void RaiseGSMessageBox(void);
 typedef void (__fastcall *QuickMatchSaveFunction)(QuickMatchScreen *);
 typedef void (__fastcall *ImmediateShutdownFunction)(WindowLayout *);
 
-// ?WOLQuickMatchMenuShutdown@@YAXPAVWindowLayout@@PAX@Z
-#pragma comment(linker, "/alternatename:?WOLQuickMatchMenuShutdown@@YAXPAVWindowLayout@@PAX@Z=?WOLQuickMatchMenuShutdown@WindowLayout@@QAEXPAX@Z")
+// ?WOLQuickMatchMenuShutdown@WindowLayout@@QAEXPAX@Z
 void WindowLayout::WOLQuickMatchMenuShutdown(void *userData)
 {
 	GameWindow *textWindow = TheQuickMatchScreen->m_textWindow;
