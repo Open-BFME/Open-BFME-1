@@ -1,4 +1,15 @@
-// cl: /O2 /DNDEBUG /MD
+// cl: /O2 /DNDEBUG /MD /EHsc
+
+#pragma intrinsic(memcpy)
+extern "C" void *__cdecl memcpy(void *, const void *, unsigned int);
+
+struct BfmeStringPool3AF0
+{
+	void *m_unused;
+	void (__cdecl *free)(void *storage);
+};
+
+extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
 
 struct BfmeAllocVKJ
 {
@@ -21,11 +32,20 @@ public:
 	};
 
 private:
-
 	StringDataC *m_pData;
 
 public:
-	EAStringC(unsigned int nSize);
+	__declspec(noinline) EAStringC(unsigned int nSize);
+	EAStringC(const EAStringC &other) : m_pData(other.m_pData) { ++m_pData->m_uRefCount; }
+	~EAStringC()
+	{
+		StringDataC *data = m_pData;
+		if (--data->m_uRefCount == 0)
+			g_bfmeStringPool1284->free(data);
+	}
+
+	EAStringC rva0089E0C0(const EAStringC &other) const;
+	char *GetInternalBuffer() const { return reinterpret_cast<char *>(m_pData) + sizeof(StringDataC); }
 };
 
 // The shared empty string block at 0x012D5298, defined once in
@@ -49,4 +69,25 @@ EAStringC::EAStringC(unsigned int nSize)
 		m_pData = &g_rva012D5298Empty;
 		++g_rva012D5298Empty.m_uRefCount;
 	}
+}
+
+EAStringC EAStringC::rva0089E0C0(const EAStringC &other) const
+{
+	unsigned int thisSize = m_pData->m_uSize;
+	if (thisSize == 0)
+		return other;
+
+	unsigned int otherSize = other.m_pData->m_uSize;
+	if (otherSize == 0)
+		return *this;
+
+	EAStringC result(thisSize + otherSize);
+	EAStringC::StringDataC *resultData = result.m_pData;
+	char *dst = (char *)(resultData + 1);
+	memcpy(dst, GetInternalBuffer(), thisSize);
+	memcpy(dst + thisSize, other.GetInternalBuffer(), otherSize);
+	(dst + otherSize)[thisSize] = 0;
+	resultData->m_uSize = thisSize + otherSize;
+	m_pData->m_uHash = 0;
+	return result;
 }
