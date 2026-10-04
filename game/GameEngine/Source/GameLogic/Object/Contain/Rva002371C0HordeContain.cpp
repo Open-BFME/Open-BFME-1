@@ -22,11 +22,11 @@ struct Coord3D;
 
 class Pathfinder
 {
-public:
-	void updatePos(Object *, const Coord3D *);
 };
 
-#pragma comment(linker, "/alternatename:?updatePos@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@@Z=?j_00013647@@YAXXZ")
+// Retail calls this through ILT thunk 0x00013647; the call sites reference
+// the thunk's real symbol directly.
+extern void j_00013647();
 
 class AI
 {
@@ -106,6 +106,7 @@ private:
 
 void Rva002371C0HordeContain::rva002371c0()
 {
+	typedef void (Pathfinder::*UpdatePosFn)(Object *, const Coord3D *);
 	const BfmeMemberList &members =
 		((Rva002371C0MemberView *)((char *)this - 0xc4))->getMemberList();
 	for (BfmeMemberList::const_iterator it = members.begin();
@@ -113,8 +114,11 @@ void Rva002371C0HordeContain::rva002371c0()
 	{
 		Object *object = *it;
 		if (object != 0)
-			TheAI->pathfinder->updatePos(object,
+		{
+			union { void (*fn)(); UpdatePosFn call; } u = { j_00013647 };
+			(TheAI->pathfinder->*u.call)(object,
 				(const Coord3D *)((const char *)object + 0x38));
+		}
 	}
 
 	BfmeMemberIndexNode *entry = m_memberIndex->m_next;
@@ -125,8 +129,11 @@ void Rva002371C0HordeContain::rva002371c0()
 		{
 			Object *object = TheGameLogic->findObjectByID(key);
 			if (object != 0)
-				TheAI->pathfinder->updatePos(object,
+			{
+				union { void (*fn)(); UpdatePosFn call; } u = { j_00013647 };
+				(TheAI->pathfinder->*u.call)(object,
 					(const Coord3D *)((const char *)object + 0x38));
+			}
 		}
 		entry = (BfmeMemberIndexNode *)_STL::_Rb_global<bool>::_M_increment(
 			(_STL::_Rb_tree_node_base *)entry);

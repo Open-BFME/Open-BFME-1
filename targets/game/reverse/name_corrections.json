@@ -17338,5 +17338,15 @@
   "after_sha256": "d514818f906b2d496c4c30ee1edd8f05821c73eca91744c9751aa096e2473e7e",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Contain/Rva002371C0HordeContain.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/Rva002371C0HordeContain.cpp",
+  "old_name": "updatePos",
+  "new_name": "j_00013647",
+  "before_sha256": "0168459f14f68b5e479e09844149e0b7e931617b662bf012401a37653821b59f",
+  "after_sha256": "8778c207e0dd7a3d5228f0e5c6caff0d22cf8c25efd3b7fdf5311517f2df7549",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]
