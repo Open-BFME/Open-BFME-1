@@ -1540,50 +1540,8 @@ WinInputReturnCode GameWindowManager::winProcessMouseEvent( GameWindowMessage ms
 	* draw themselves, but will give their children an
 	* opportunity to draw */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/GameWindowManager_drawWindow_Thunk.cpp
-// ?drawWindow@GameWindowManager@@IAEHPAVGameWindow@@@Z present-unmatched
-Int GameWindowManager::drawWindow( GameWindow *window )
-{
-	GameWindow *child;
-
-	if( window == NULL )
-		return WIN_ERR_INVALID_WINDOW;
-
-	if( BitTest( window->m_status, WIN_STATUS_HIDDEN ) == FALSE )
-	{
-
-		if( !BitTest( window->m_status, WIN_STATUS_SEE_THRU ) && window->m_draw )
-			window->m_draw( window, &window->m_instData );
-
-		/// @todo visit list boxes and borders, this is stupid!
-		// for list boxes only draw the borders BEFORE the children
-		if( BitTest( window->winGetStyle(), GWS_SCROLL_LISTBOX ) )
-			if( BitTest( window->m_status, WIN_STATUS_BORDER ) == TRUE &&
-					!BitTest( window->m_status, WIN_STATUS_SEE_THRU ) )
-				window->winDrawBorder();
-
-		// draw children in reverse order just like the window list
-		child = window->m_child;
-		while( child && child->m_next )
-			child = child->m_next;
-
-		for( ; child; child = child->m_prev )
-				drawWindow( child );
-
-		//
-		// draw the border for the window AFTER the window contents AND the
-		// children contents have drawn
-		//
-		if( !BitTest( window->winGetStyle(), GWS_SCROLL_LISTBOX ) )
-			if( BitTest( window->m_status, WIN_STATUS_BORDER ) == TRUE &&
-					!BitTest( window->m_status, WIN_STATUS_SEE_THRU ) )
-				window->winDrawBorder();
-
-	}  // end if
-
-	return WIN_ERR_OK;
-
-}  // end drawWindow
+// Defined in GameWindowManager_drawWindow_Thunk.cpp: BFME virtual draw dispatch.
+// winRepaint calls the retail body through ILT 0x0002F009 -> RVA 0x0047CBE0.
 
 //-------------------------------------------------------------------------------------------------
 /** Draw the GUI in reverse order to correlate with clicking priority */
