@@ -15,6 +15,10 @@ public:
 	void aiExit(Object *objectToExit, CommandSourceType cmdSource);
 };
 
+// Retail calls the ILT stub 0x0000A5DD (gen_small ?j_0000a5dd), not the body.
+void j_0000a5dd(void);
+typedef void (AICommandInterface::*AiExitCall)(Object *, CommandSourceType);
+
 struct BfmeSubRQ
 {
 	unsigned char m_bfmeHead[0x20];
@@ -75,5 +79,7 @@ void __stdcall bfmeResetRQ(void *key)
 	BfmeSubRQ *sub = node->m_bfmeSub;
 	if (sub == 0)
 		return;
-	sub->m_bfmeInner.aiExit((Object *)0, (CommandSourceType)1);
+	union { void (*raw)(void); AiExitCall member; } call;
+	call.raw = j_0000a5dd;
+	(sub->m_bfmeInner.*call.member)((Object *)0, (CommandSourceType)1);
 }
