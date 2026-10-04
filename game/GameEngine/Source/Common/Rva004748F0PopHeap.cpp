@@ -31,10 +31,19 @@ struct Rva004748F0Compare
 	int m_state;
 };
 
-void bfmePushHeap00473D60(Rva004748F0Element *first, int holeIndex,
-	int topIndex, Rva004748F0Element value, Rva004748F0Compare comp);
+// Both retail call sites go through ILT thunks that are 5-byte jumps with
+// no argument handling of their own: 0x0047441F calls ?j_00049657@@YAXXZ
+// (push_heap) and 0x0047496E calls ?j_00018abb@@YAXXZ (adjust_heap, which
+// jumps straight back into the body defined below). The cdecl cleanup
+// stays with the caller, so reach the thunks through a cdecl pointer
+// carrying the helper's own signature; that keeps the pushed arguments
+// and the trailing `add esp, 0x20` identical to retail.
+extern void j_00049657();
+extern void j_00018abb();
 
-#pragma comment(linker, "/alternatename:?bfmePushHeap00473D60@@YAXPAURva004748F0Element@@HHU1@URva004748F0Compare@@@Z=?j_00049657@@YAXXZ")
+typedef void (__cdecl *PushHeapFn)(Rva004748F0Element *first,
+	int holeIndex, int topIndex, Rva004748F0Element value,
+	Rva004748F0Compare comp);
 
 void bfmeAdjustHeap00474330(Rva004748F0Element *first, int holeIndex,
 	int len, Rva004748F0Element value, Rva004748F0Compare comp)
@@ -54,15 +63,15 @@ void bfmeAdjustHeap00474330(Rva004748F0Element *first, int holeIndex,
 		first[holeIndex] = first[secondChild - 1];
 		holeIndex = secondChild - 1;
 	}
-	bfmePushHeap00473D60(first, holeIndex, topIndex, value, comp);
+	union { void (*fn)(); PushHeapFn call; } push = { j_00049657 };
+	push.call(first, holeIndex, topIndex, value, comp);
 }
-
-#pragma comment(linker, "/alternatename:?bfmeAdjustHeap00474330@@YAXPAURva004748F0Element@@HHU1@URva004748F0Compare@@@Z=?j_00018abb@@YAXXZ")
 
 void Rva004748F0PopHeap(Rva004748F0Element *first,
 	Rva004748F0Element *last, Rva004748F0Element *result,
 	Rva004748F0Element value, Rva004748F0Compare comp, int *)
 {
 	*result = *first;
-	bfmeAdjustHeap00474330(first, 0, last - first, value, comp);
+	union { void (*fn)(); PushHeapFn call; } adjust = { j_00018abb };
+	adjust.call(first, 0, last - first, value, comp);
 }
