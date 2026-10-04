@@ -31,9 +31,6 @@ class FXList;
 class FXListStore;
 extern FXListStore *TheFXListStore;
 
-extern "C" const void *bfmeVftCategoryModuleInfo8[];
-#pragma comment(linker, "/alternatename:_bfmeVftCategoryModuleInfo8=??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@")
-
 class GameClientRandomVariable
 {
 public:
@@ -53,6 +50,24 @@ class TrackingPtr
 
 class TerrainCollisionModuleTemplate;
 
+// The retail base template FXParticleSystem::CategoryModuleInfo<N> is declared
+// in fx_particle_system.h, which cannot be included here (this TU carries its
+// own stand-ins for names that header also declares). Mirroring the retail
+// shape - inline default ctor, key function left out-of-line - makes this TU
+// reference the retail vftable ??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@
+// directly, with no linker alias directive. MSVC 7.1 mangles the non-type
+// argument N as $0(N+1), so the retail $07 vftable is CategoryModuleInfo<8>'s.
+template <int Category>
+class CategoryModuleInfo
+{
+public:
+    CategoryModuleInfo() {}
+    virtual void unusedVirtual();
+
+protected:
+    ~CategoryModuleInfo() {}
+};
+
 class TerrainCollisionEventFXLookupShim
 {
 public:
@@ -68,18 +83,20 @@ public:
     virtual __declspec(nothrow) ~TerrainCollisionCategorySlice() {}
 };
 
+// The two flag bytes follow the vtable pointer in the retail subobject, so the
+// vtable pointer sits in its own base and this one carries only the flags.
 class TerrainCollisionFlagsSlice
 {
 public:
     TerrainCollisionFlagsSlice()
     {
-        *(volatile unsigned int *)this = (unsigned int)bfmeVftCategoryModuleInfo8;
         bool one = true;
-        *(volatile unsigned char *)((unsigned char *)this + 4) = one;
-        *(volatile unsigned char *)((unsigned char *)this + 5) = one;
+        m_flag0 = one;
+        m_flag1 = one;
     }
-    virtual void unusedVirtual();
-    virtual __declspec(nothrow) ~TerrainCollisionFlagsSlice() {}
+
+protected:
+    ~TerrainCollisionFlagsSlice() {}
 
 private:
     bool m_flag0;
@@ -119,6 +136,7 @@ struct TerrainCollisionModuleTemplateImage
 class TerrainCollisionParticleBase
     : public BfmeHolderCU,
       public TerrainCollisionCategorySlice,
+      public CategoryModuleInfo<8>,
       public TerrainCollisionFlagsSlice
 {
 public:
