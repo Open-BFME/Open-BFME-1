@@ -2,6 +2,30 @@
 // clean reconstruction of retail 0x00289580, 467 bytes
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
+// Retail calls these bodies through 5-byte ILT thunks, so each call site is a
+// plain thiscall `call rel32` naming ?j_XXXXXXXX@@YAXXZ. The pmf unions below
+// are spelled on deliberately non-polymorphic route classes: cl 7.1 only folds
+// a constant pointer-to-member into a direct thiscall for a non-virtual class.
+// On BoneFXUpdate itself (polymorphic) it emits mov eax, imm32 / call eax and
+// re-allocates registers across the whole update() body.
+// initTimes needs no route: its 5-byte ILT thunk at 0x0002F775 is itself a real
+// body named ?initTimes@BoneFXUpdate@@IAEXXZ and is pinned at that address, so a
+// direct member call already reaches retail. The old linker alias directive
+// named a ?j_XXXXXXXX@@YAXXZ symbol that does not exist in the reconstruction.
+extern void j_0002ef6e();
+extern void j_0001b1f3();
+extern void j_00019420();
+extern void j_000188cc();
+extern void j_0000d7b5();
+
+class BoneFXUpdateRoute
+{
+};
+
+class RandomVariableRoute
+{
+};
+
 typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
@@ -26,24 +50,18 @@ class ParticleSystemTemplate;
 
 class GameClientRandomVariable
 {
-	public:
-	float getValue() const;
-
 	private:
-	Int m_type;
-	float m_low;
-	float m_high;
+		Int m_type;
+		float m_low;
+		float m_high;
 };
 
 class GameLogicRandomVariable
 {
-	public:
-	float getValue() const;
-
 	private:
-	Int m_type;
-	float m_low;
-	float m_high;
+		Int m_type;
+		float m_low;
+		float m_high;
 };
 
 struct BaseBoneListInfo
@@ -143,16 +161,15 @@ public:
 
 protected:
 	void initTimes();
-	void doFXListAtBone(const FXList *, const Coord3D *);
-	void doOCLAtBone(const ObjectCreationList *, const Coord3D *);
-	void doParticleSystemAtBone(const ParticleSystemTemplate *, const Coord3D *);
 	void computeNextLogicFXTime(const BaseBoneListInfo *info, Int &nextFrame)
 	{
 		if (info->onlyOnce) {
 			nextFrame = -1;
 			return;
 		}
-		nextFrame = TheGameLogic->getFrame() + (Int)info->gameLogicDelay.getValue();
+		typedef float (RandomVariableRoute::*Fn)() const;
+		union { void (*fn)(); Fn call; } u = { j_000188cc };
+		nextFrame = TheGameLogic->getFrame() + (Int)(((RandomVariableRoute *)&info->gameLogicDelay)->*u.call)();
 	}
 	void computeNextClientFXTime(const BaseBoneListInfo *info, Int &nextFrame)
 	{
@@ -160,7 +177,9 @@ protected:
 			nextFrame = -1;
 			return;
 		}
-		nextFrame = TheGameLogic->getFrame() + (Int)info->gameClientDelay.getValue();
+		typedef float (RandomVariableRoute::*Fn)() const;
+		union { void (*fn)(); Fn call; } u = { j_0000d7b5 };
+		nextFrame = TheGameLogic->getFrame() + (Int)(((RandomVariableRoute *)&info->gameClientDelay)->*u.call)();
 	}
 
 private:
@@ -176,13 +195,6 @@ private:
 	Bool m_active;
 };
 
-#pragma comment(linker, "/alternatename:?initTimes@BoneFXUpdate@@IAEXXZ=?j_0002f775@@YAXXZ")
-#pragma comment(linker, "/alternatename:?doFXListAtBone@BoneFXUpdate@@IAEXPBVFXList@@PBUCoord3D@@@Z=?j_0002ef6e@@YAXXZ")
-#pragma comment(linker, "/alternatename:?doOCLAtBone@BoneFXUpdate@@IAEXPBVObjectCreationList@@PBUCoord3D@@@Z=?j_0001b1f3@@YAXXZ")
-#pragma comment(linker, "/alternatename:?doParticleSystemAtBone@BoneFXUpdate@@IAEXPBVParticleSystemTemplate@@PBUCoord3D@@@Z=?j_00019420@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getValue@GameLogicRandomVariable@@QBEMXZ=?j_000188cc@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getValue@GameClientRandomVariable@@QBEMXZ=?j_0000d7b5@@YAXXZ")
-
 UpdateSleepTime BoneFXUpdate::update()
 {
 	const BoneFXUpdateModuleData *d = m_moduleData;
@@ -195,15 +207,21 @@ UpdateSleepTime BoneFXUpdate::update()
 
 	for (Int i = 0; i < 8; ++i) {
 		if ((m_nextFXFrame[m_curBodyState][i] != -1) && (m_nextFXFrame[m_curBodyState][i] <= now)) {
-			doFXListAtBone(d->fxList[m_curBodyState][i].fx, &m_FXBonePositions[m_curBodyState][i]);
+			typedef void (BoneFXUpdateRoute::*Fn)(const FXList *, const Coord3D *);
+			union { void (*fn)(); Fn call; } u = { j_0002ef6e };
+			(((BoneFXUpdateRoute *)this)->*u.call)(d->fxList[m_curBodyState][i].fx, &m_FXBonePositions[m_curBodyState][i]);
 			computeNextLogicFXTime(&d->fxList[m_curBodyState][i], m_nextFXFrame[m_curBodyState][i]);
 		}
 		if ((m_nextOCLFrame[m_curBodyState][i] != -1) && (m_nextOCLFrame[m_curBodyState][i] <= now)) {
-			doOCLAtBone(d->ocl[m_curBodyState][i].ocl, &m_OCLBonePositions[m_curBodyState][i]);
+			typedef void (BoneFXUpdateRoute::*Fn)(const ObjectCreationList *, const Coord3D *);
+			union { void (*fn)(); Fn call; } u = { j_0001b1f3 };
+			(((BoneFXUpdateRoute *)this)->*u.call)(d->ocl[m_curBodyState][i].ocl, &m_OCLBonePositions[m_curBodyState][i]);
 			computeNextLogicFXTime(&d->ocl[m_curBodyState][i], m_nextOCLFrame[m_curBodyState][i]);
 		}
 		if ((m_nextParticleSystemFrame[m_curBodyState][i] != -1) && (m_nextParticleSystemFrame[m_curBodyState][i] <= now)) {
-			doParticleSystemAtBone(d->particleSystem[m_curBodyState][i].particleSysTemplate, &m_PSBonePositions[m_curBodyState][i]);
+			typedef void (BoneFXUpdateRoute::*Fn)(const ParticleSystemTemplate *, const Coord3D *);
+			union { void (*fn)(); Fn call; } u = { j_00019420 };
+			(((BoneFXUpdateRoute *)this)->*u.call)(d->particleSystem[m_curBodyState][i].particleSysTemplate, &m_PSBonePositions[m_curBodyState][i]);
 			computeNextClientFXTime(&d->particleSystem[m_curBodyState][i], m_nextParticleSystemFrame[m_curBodyState][i]);
 		}
 	}
