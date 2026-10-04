@@ -1,3 +1,10 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/mouselayout /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+// This caller only needs declarations; avoid emitting unused STL iostream data.
+#define _STLP_NO_IOSTREAMS
+#define Matrix4x4 Matrix4
+#include "GameClient/InGameUI.h"
+
 class Drawable;
 
 struct BfmeDrawableListNode
@@ -56,14 +63,8 @@ public:
 	bool bfmeHasMineClearingCommand() const;
 };
 
-class Drawable
-{
-private:
-	unsigned char m_padding00[0xfc];
-	Object *m_object;
-};
-
-class InGameUI
+// Retain the witnessed virtual-slot view for the still-opaque slot BC.
+class Rva00459060UI
 {
 public:
 	#define BFME_UI_SLOT(n) virtual void slot##n() = 0;
@@ -88,7 +89,6 @@ public:
 	BFME_UI_SLOT(62)
 	virtual const BfmeDrawableList *getAllSelectedDrawables() const = 0;
 	#undef BFME_UI_SLOT
-	bool bfmeGoJB() const;
 };
 
 class Rva00459060SelectionState
@@ -104,10 +104,11 @@ extern "C" int Rva00458FC0(bool mode);
 int Rva00458FC0(bool mode)
 {
 	int flags = 0;
-	if (!TheInGameUI->bfmeGoJB())
+	// Retail +9 calls ILT 0x000221E2 -> 0x0043EC00 (ECX this, Bool in AL).
+	if (!TheInGameUI->areSelectedObjectsControllable())
 		return flags;
 
-	const BfmeDrawableList *selected = TheInGameUI->getAllSelectedDrawables();
+	const BfmeDrawableList *selected = ((Rva00459060UI *)TheInGameUI)->getAllSelectedDrawables();
 	for (BfmeDrawableList::const_iterator it = selected->begin(); it != selected->end(); ++it)
 	{
 		Drawable *draw = *it;
@@ -137,7 +138,7 @@ int Rva00459060(bool mode)
 		flags = 0x64;
 	}
 	Rva00459060SelectionState *state =
-		(Rva00459060SelectionState *)TheInGameUI->slotBC();
+		(Rva00459060SelectionState *)((Rva00459060UI *)TheInGameUI)->slotBC();
 	if (state != 0)
 	{
 		if ((state->m_flags & 0x10) != 0)
