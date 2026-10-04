@@ -1,5 +1,5 @@
 // ?getPerUnitSound@Drawable@@QBEPBVAudioEventRTS@@ABVAsciiString@@@Z
-// partial score=0.951 date=2026-09-09
+// partial score=0.8041 date=2026-09-09
 class AudioEventRTS;
 class AsciiString;
 
