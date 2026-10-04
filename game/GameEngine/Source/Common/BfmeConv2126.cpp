@@ -29,15 +29,20 @@ __forceinline const char *bfmeNameText(const BFMERetailAsciiString &name)
 	return text != 0 ? text + 8 : "";
 }
 
+// Neither callee is a member of BfmeItemAM in retail: 0x0060AA10 is the shared
+// 32-byte name getter body (?dup_0060aa10@@YAXXZ) and 0x0061E3E0 the destructor
+// body (?d_0061e3e0@@YAXXZ).  Both run thiscall on the item, so the calls are
+// routed through a member-pointer typedef over the plain externs instead of
+// being given BfmeItemAM member names that do not exist.
+extern void dup_0060aa10();
+extern void d_0061e3e0();
+
 class BfmeItemAM
 {
-public:
-	BFMERetailAsciiString getName();
-	~BfmeItemAM();
 };
 
-#pragma comment(linker, "/alternatename:?getName@BfmeItemAM@@QAE?AVBFMERetailAsciiString@@XZ=?dup_0060aa10@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1BfmeItemAM@@QAE@XZ=?d_0061e3e0@@YAXXZ")
+typedef BFMERetailAsciiString (BfmeItemAM::*BfmeItemGetNameFn)();
+typedef void (BfmeItemAM::*BfmeItemDtorFn)();
 
 class BfmeHostCA
 {
@@ -100,6 +105,20 @@ public:
 
 void BfmeHostAAY::bfmeStep3AAY()
 {
+	union GetNameRoute
+	{
+		void (*fn)();
+		BfmeItemGetNameFn call;
+	};
+	union DtorRoute
+	{
+		void (*fn)();
+		BfmeItemDtorFn call;
+	};
+
+	const GetNameRoute getName = { dup_0060aa10 };
+	const DtorRoute dtor = { d_0061e3e0 };
+
 	for (BfmeItemMapAAY::iterator it = m_bfmeItemsAAY.begin();
 		it != m_bfmeItemsAAY.end(); ++it)
 	{
@@ -107,7 +126,8 @@ void BfmeHostAAY::bfmeStep3AAY()
 		if (item != 0)
 		{
 			reinterpret_cast<BfmeHostCA *>(this)->bfmeRemoveCA(
-				bfmeNameText(item->getName()));
+				bfmeNameText((item->*getName.call)()));
+			(item->*dtor.call)();
 			delete item;
 		}
 	}
