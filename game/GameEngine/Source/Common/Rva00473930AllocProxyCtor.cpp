@@ -22,13 +22,21 @@ private:
 	void *m_bfmePtr;
 };
 
-#pragma comment(linker, "/alternatename:?initialize@Rva00473930@@AAEXPA_NH@Z=?j_0000e7cd@@YAXXZ")
+// Retail routes this initializer call through the incremental-link thunk at
+// 0x0000E7CD (?j_0000e7cd@@YAXXZ), not through a body of this class's own.
+extern void j_0000e7cd();
+
+// Route holder: the call site is thiscall (this in ecx, args on the stack), so
+// only the member-pointer call shape matters; the class is irrelevant to codegen.
+class Route00473930 {};
 
 Rva00473930::Rva00473930( int flags )
 {
 	Bool ok;
 
-	initialize( &ok, 0 );
+	typedef void (Route00473930::*Initialize)( Bool *, int );
+	union { void (*fn)(); Initialize call; } initialize = { j_0000e7cd };
+	( ( ( Route00473930 * ) this )->*initialize.call )( &ok, 0 );
 
 	m_bfmePtr = _STL::__new_alloc::allocate( 0x18 );
 }
