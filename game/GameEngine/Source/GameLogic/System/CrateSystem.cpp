@@ -263,6 +263,7 @@ CrateTemplate *CrateSystem::newCrateTemplateOverride( CrateTemplate *crateToOver
 	return newOverride;
 }
 
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/System/CrateSystem_friend_findCrateTemplate.cpp
 // ?findCrateTemplate@CrateSystem@@QBEPBVCrateTemplate@@VAsciiString@@@Z present-unmatched
 const CrateTemplate *CrateSystem::findCrateTemplate(AsciiString name) const
 {
