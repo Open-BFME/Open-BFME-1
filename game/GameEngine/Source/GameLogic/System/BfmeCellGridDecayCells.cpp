@@ -15,6 +15,8 @@ private:
 class BfmeCellGrid
 {
 public:
+	~BfmeCellGrid();
+	void _bfme_reset();
 	void bfmeDecayCells(Real scale, Real subtract);
 
 private:
@@ -23,6 +25,11 @@ private:
 	unsigned char m_unreconstructed_00C[0x14 - 0x0C];
 	BfmeCell *m_cells;
 };
+
+BfmeCellGrid::~BfmeCellGrid()
+{
+	_bfme_reset();
+}
 
 void BfmeCellGrid::bfmeDecayCells(Real scale, Real subtract)
 {
