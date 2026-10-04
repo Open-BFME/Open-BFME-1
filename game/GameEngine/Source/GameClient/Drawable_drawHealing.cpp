@@ -9,8 +9,8 @@ extern void j_00015b09();
 extern void j_0003b0b1();
 extern void j_000369a8();
 extern void j_00011df1();
+extern void j_00019c63();
 
-#define TheBfmeGameLogic ((BfmeGameLogic *)TheGameLogic)
 #define g_iconTemplates (Drawable::s_animationTemplates)
 #define g_animCollection (TheAnim2DCollection)
 #define g_iconWidthScale 0.75f
@@ -86,6 +86,7 @@ class Anim2DCollection;
 class GameLogic;
 
 extern GameLogic *TheGameLogic;
+static inline BfmeGameLogic *TheBfmeGameLogicView() { return (BfmeGameLogic *)TheGameLogic; }
 extern Anim2DCollection *TheAnim2DCollection;
 
 class Anim2D
@@ -122,14 +123,40 @@ private:
 	int regionBottom;
 };
 
-#pragma comment(linker, "/alternatename:?getIconInfo@Drawable@@QAEPAVDrawableIconInfo@@XZ=?j_000102a8@@YAXXZ")
+// Retail builds the healing icon with a new-expression, so the constructor call
+// must remain inside one for MSVC 7.1 to emit the cleanup funclets retail has.
+// A thunk call through a member pointer inside a new-expression either loses the
+// funclets (inlined ctor) or leaves a locally-defined ctor symbol unresolved;
+// neither reproduces retail, so this one pragma stays.
 #pragma comment(linker, "/alternatename:??0Anim2D@@QAE@PAVAnim2DTemplate@@PAVAnim2DCollection@@@Z=?j_00015b09@@YAXXZ")
-#pragma comment(linker, "/alternatename:?ask@BfmeSubBIA@@QAEHXZ=?j_000022bb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeAskAIA@BfmeThingAIA@@QAE_NH@Z=?j_0003251f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getCurrentFrameWidth@Anim2D@@QBEIXZ=?j_0003b0b1@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getCurrentFrameHeight@Anim2D@@QBEIXZ=?j_000369a8@@YAXXZ")
-#pragma comment(linker, "/alternatename:?draw@Anim2D@@QAEXHHHH@Z=?j_00011df1@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeDropES@BfmeThingES@@QAEXH@Z=?j_00019c63@@YAXXZ")
+
+static __forceinline int askThunk002434D0(BfmeSubBIA *self)
+{
+	typedef int (BfmeSubBIA::*Ask)();
+	union { void (*fn)(); Ask call; } route = { j_000022bb };
+	return (self->*route.call)();
+}
+
+static __forceinline bool askAiaThunk002434D0(BfmeThingAIA *self, int kind)
+{
+	typedef bool (BfmeThingAIA::*Ask)(int);
+	union { void (*fn)(); Ask call; } route = { j_0003251f };
+	return (self->*route.call)(kind);
+}
+
+static __forceinline void dropEsThunk002434D0(BfmeThingES *self, int which)
+{
+	typedef void (BfmeThingES::*Drop)(int);
+	union { void (*fn)(); Drop call; } route = { j_00019c63 };
+	(self->*route.call)(which);
+}
+
+static __forceinline DrawableIconInfo *iconInfoThunk002434D0(Drawable *self)
+{
+	typedef DrawableIconInfo *(Drawable::*GetIconInfo)();
+	union { void (*fn)(); GetIconInfo call; } route = { j_000102a8 };
+	return (self->*route.call)();
+}
 
 void Drawable::drawHealing()
 {
@@ -138,7 +165,7 @@ void Drawable::drawHealing()
 	BfmeThingAIA *thing = obj->templateObject;
 	BfmeResolved *resolved = (BfmeResolved *)thing;
 	if (thing != 0 && thing->sub != 0)
-		resolved = (BfmeResolved *)(thing->sub->ask());
+		resolved = (BfmeResolved *)askThunk002434D0(thing->sub);
 	if ((resolved->flags & 0x400) != 0)
 		return;
 	if ((obj->status & 0x80000) != 0)
@@ -151,42 +178,51 @@ void Drawable::drawHealing()
 	float health = body->getHealth();
 	if (health != body->getMaxHealth())
 	{
-		frame = TheBfmeGameLogic->getFrame();
+		frame = TheBfmeGameLogicView()->getFrame();
 		if (frame > 0xf)
 		{
 			if (frame - body->getLastHealingTimestamp() <= 0xf)
 				showHealing = 1;
 		}
 	}
-	if (((BfmeThingAIA *)this)->bfmeAskAIA(7))
+	if (askAiaThunk002434D0((BfmeThingAIA *)this, 7))
 		typeIndex = 1;
-	else if (((BfmeThingAIA *)this)->bfmeAskAIA(9))
+	else if (askAiaThunk002434D0((BfmeThingAIA *)this, 9))
 		typeIndex = 2;
 	else
 		typeIndex = 0;
 
 	if (showHealing)
 	{
-		if (getIconInfo()->icons[typeIndex] == 0)
+		if (iconInfoThunk002434D0(this)->icons[typeIndex] == 0)
 		{
-			getIconInfo()->icons[typeIndex] = new Anim2D(
+			iconInfoThunk002434D0(this)->icons[typeIndex] = new Anim2D(
 				(Anim2DTemplate *)g_iconTemplates[typeIndex],
 				(Anim2DCollection *)g_animCollection);
 		}
 
-		Anim2D *icon = (Anim2D *)getIconInfo()->icons[typeIndex];
+		Anim2D *icon = (Anim2D *)iconInfoThunk002434D0(this)->icons[typeIndex];
 		if (icon != 0)
 		{
 			int barWidth = *(int *)((char *)this + 0x3cc) -
 				*(int *)((char *)this + 0x3c4);
-			int frameWidth = ((Anim2D *)getIconInfo()->icons[typeIndex])->getCurrentFrameWidth();
-			int frameHeight = ((Anim2D *)getIconInfo()->icons[typeIndex])->getCurrentFrameHeight();
+			union { void (*fn)(); unsigned int (Anim2D::*call)() const; } routeWidth =
+				{ j_0003b0b1 };
+			union { void (*fn)(); unsigned int (Anim2D::*call)() const; } routeHeight =
+				{ j_000369a8 };
+			union { void (*fn)(); void (Anim2D::*call)(int, int, int, int); } routeDraw =
+				{ j_00011df1 };
+			int frameWidth = (((Anim2D *)iconInfoThunk002434D0(this)->icons[typeIndex])
+				->*routeWidth.call)();
+			int frameHeight = (((Anim2D *)iconInfoThunk002434D0(this)->icons[typeIndex])
+				->*routeHeight.call)();
 			int screenX = (int)(*(int *)((char *)this + 0x3c4) + barWidth * g_iconWidthScale -
 				frameWidth * g_iconHalfScale);
 			int screenY = *(int *)((char *)this + 0x3c8) - frameHeight;
-			((Anim2D *)getIconInfo()->icons[typeIndex])->draw(screenX, screenY, frameWidth, frameHeight);
+			(((Anim2D *)iconInfoThunk002434D0(this)->icons[typeIndex])
+				->*routeDraw.call)(screenX, screenY, frameWidth, frameHeight);
 		}
 	}
 	else
-		((BfmeThingES *)this)->bfmeDropES(typeIndex);
+		dropEsThunk002434D0((BfmeThingES *)this, typeIndex);
 }

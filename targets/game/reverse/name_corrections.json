@@ -17828,5 +17828,15 @@
   "after_sha256": "7df3e094898cdf1f837d8737daecab1913a2e01b92249eee54bbebb145aeb190",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/Drawable_drawHealing.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/Drawable_drawHealing.cpp",
+  "old_name": "TheBfmeGameLogic",
+  "new_name": "j_00019c63",
+  "before_sha256": "7aadfc905f512bf209ed30d6ba15a060396961706e05e3b452dbfbd669bc589a",
+  "after_sha256": "deb31d55c10a84e3bd31fbe7ba074c38debf4d7a98580ba5567be3024da245a2",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]
