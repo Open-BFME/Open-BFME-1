@@ -71,12 +71,12 @@ public:
 class Object
 {
 public:
-	Player *getControllingPlayer() const;
 	unsigned char m_padding[0x74];
 	void *m_entryKey;
 };
 
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
+// Retail calls this through the ILT thunk at 0x00020824.
+extern void j_00020824();
 
 class ObjectModule
 {
@@ -156,10 +156,13 @@ void CostModifierUpgrade::removeUpgrade()
 	if (!isAlreadyUpgraded())
 		return;
 
+	typedef Player *(Object::*ControllingPlayer)() const;
+	union { void (*fn)(); ControllingPlayer call; } controllingPlayer = { j_00020824 };
+
 	const ModuleData *moduleData = getModuleData();
 	if (moduleData->m_usePlayerEntries)
 	{
-		Player *player = getObject()->getControllingPlayer();
+		Player *player = (getObject()->*controllingPlayer.call)();
 		if (player == 0)
 			return;
 		player->m_methods.m_counter.dec();
@@ -176,7 +179,7 @@ void CostModifierUpgrade::removeUpgrade()
 	}
 	else
 	{
-		Player *player = getObject()->getControllingPlayer();
+		Player *player = (getObject()->*controllingPlayer.call)();
 		if (player != 0)
 			player->m_methods.m_entries.bfmeRemove(
 				const_cast<ModuleData *>(moduleData), getObject()->m_entryKey);
