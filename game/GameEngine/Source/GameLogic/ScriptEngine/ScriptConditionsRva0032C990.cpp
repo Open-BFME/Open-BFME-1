@@ -1,14 +1,12 @@
-// ?rva0032C990@ScriptConditions@@IAE_NPAUParameter@@00@Z
-// partial score=0.625 date=2026-09-25
+// ?rva0032C990@ScriptConditions@@IAEEPAVParameter@@00@Z
+// Retail RVA 0x0032C990, 291 bytes. Dispatcher case 178 passes three
+// Parameter pointers through this ScriptConditions member. The body resolves
+// the player mask and upgrade, then counts matching objects in live teams.
+// The address-derived name preserves the behavior's unresolved retail name.
+// A separate TU keeps this recovery independent of the large dispatcher.
+
 // stlport
 // cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/objectdlink /Igame/Libraries/Source/WWVegas/WWLib
-// Retail RVA 0x0032C990, 291 bytes. The dispatcher passes three arguments through a member-function pointer.
-// Parameters: player mask, minimum count, upgrade name. Three nested loops
-// visit player prototypes, live Team instances, and Object team members.
-// Object PMF layout mirrors ObjectDlinkPmf.h; this local view additionally
-// declares hasUpgrade, which that narrow shim does not expose.
-// The raw body reloads Player+0x288 after the nested calls, so the circular
-// list head is read again for the closing comparison rather than cached.
 
 #include "ascii_string.h"
 #include <list>
@@ -16,7 +14,7 @@
 typedef bool Bool;
 typedef unsigned short PlayerMaskType;
 
-struct Parameter
+class Parameter
 {
 public:
 	unsigned char m_beforeInt[8];
@@ -114,9 +112,9 @@ private:
 	GetNextFunc m_getNext;
 };
 
-class ScriptConditions { protected: Bool rva0032C990(Parameter*,Parameter*,Parameter*); };
+class ScriptConditions { protected: unsigned char rva0032C990(Parameter*,Parameter*,Parameter*); };
 
-Bool ScriptConditions::rva0032C990(Parameter *playerParam, Parameter *thresholdParam,
+unsigned char ScriptConditions::rva0032C990(Parameter *playerParam, Parameter *thresholdParam,
 	Parameter *upgradeParam)
 {
 	PlayerMaskType mask =
@@ -144,9 +142,12 @@ Bool ScriptConditions::rva0032C990(Parameter *playerParam, Parameter *thresholdP
 				 !iter.done(); iter.advance())
 			{
 				Object *object = iter.cur();
-				if ((((unsigned char *)object)[0x94] & 0x20) == 0 &&
-					object->hasUpgrade(upgrade))
-					++count;
+				if (object)
+				{
+					if ((((unsigned char *)object)[0x94] & 0x20) == 0 &&
+						object->hasUpgrade(upgrade))
+						++count;
+				}
 			}
 			}
 	}
