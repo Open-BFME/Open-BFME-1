@@ -20,13 +20,14 @@ private:
 	Data *m_data;
 	StringBase() : m_data(0) {}
 	StringBase(const StringBase &other);
+	void releaseBuffer();
 };
 
 class AsciiString : private StringBase<char>
 {
 public:
 	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString();
+	~AsciiString() { releaseBuffer(); }
 };
 
 class Object
