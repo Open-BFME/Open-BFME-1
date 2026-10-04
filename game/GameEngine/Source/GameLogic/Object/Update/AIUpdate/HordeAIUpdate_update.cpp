@@ -255,7 +255,11 @@ public:
 
 #pragma comment(linker, "/alternatename:?bfmeBlocksFormationRefresh@BfmeHordeMember@@QAE_NXZ=?j_00044774@@YAXXZ")
 #pragma comment(linker, "/alternatename:?bfmeGetFormationRefreshValue@BfmeHordeOwner@@QAEIXZ=?j_00023727@@YAXXZ")
-#pragma comment(linker, "/alternatename:?update@AIUpdateInterface@@UAE?AW4UpdateSleepTime@@XZ=?j_00028772@@YAXXZ")
+// Retail reaches the base update through the 5-byte ILT 0x00028772
+// (?j_00028772@@YAXXZ), not the body itself. The ILT is entered with ECX at the
+// AIUpdateInterface subobject (this + 0x10); passing it through a __fastcall
+// pointer keeps ECX as the only register argument.
+extern void j_00028772();
 
 // ?update@HordeAIUpdate@@UAE?AW4UpdateSleepTime@@XZ
 UpdateSleepTime HordeAIUpdate::update()
@@ -264,7 +268,7 @@ UpdateSleepTime HordeAIUpdate::update()
 	ContainModuleInterface *contain = object->m_contain;
 	HordeContainInterface *horde = contain->getHordeContainInterface();
 	if (horde->slot108() == 1)
-		return AIUpdateInterface::update();
+		return ((UpdateSleepTime (__fastcall *)(void *))j_00028772)((char *)this + 0x10);
 
 	{
 		contain = object->m_contain;
@@ -289,5 +293,5 @@ UpdateSleepTime HordeAIUpdate::update()
 		}
 	}
 	horde->update();
-	return AIUpdateInterface::update();
+	return ((UpdateSleepTime (__fastcall *)(void *))j_00028772)((char *)this + 0x10);
 }
