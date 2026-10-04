@@ -7,8 +7,11 @@
 // store groups without embedding retail instructions.
 extern "C" void _ReadWriteBarrier();
 #pragma intrinsic(_ReadWriteBarrier)
-extern "C" const void *bfmeVftParticleSystemInfo[];
-#pragma comment(linker, "/alternatename:_bfmeVftParticleSystemInfo=??_7ParticleSystemInfo@FXParticleSystem@@6B@")
+// Retail installs vtable 0x01073878, which is ParticleSystemInfo's own
+// vftable symbol ??_7ParticleSystemInfo@FXParticleSystem@@6B@.  The
+// declaration carries no C++ name: __identifier spells the retail symbol
+// exactly, so the store below references the defining name.
+extern "C" int __identifier("??_7ParticleSystemInfo@FXParticleSystem@@6B@")[];
 
 namespace FXParticleSystem { class ParticleSystemInfo; }
 class FXParticleSystem::ParticleSystemInfo
@@ -24,7 +27,7 @@ FXParticleSystem::ParticleSystemInfo::ParticleSystemInfo()
 	unsigned char *bytes = reinterpret_cast<unsigned char *>( this );
 	unsigned int zero = 0;
 
-	dwords[0] = (unsigned int)bfmeVftParticleSystemInfo;
+	dwords[0] = (unsigned int)__identifier("??_7ParticleSystemInfo@FXParticleSystem@@6B@");
 	dwords[4] = zero;
 	dwords[5] = zero;
 	dwords[6] = zero;
