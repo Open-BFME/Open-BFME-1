@@ -60,6 +60,12 @@ public:
 	int winSetOwner(GameWindow *owner);
 };
 
+// winSetOwner is reached through retail's incremental-link thunk 0x47230,
+// and GadgetCheckBoxSetText through its thunk 0x18241.
+extern void j_00047230();
+extern void j_00018241();
+class RouteWinSetOwner {};
+
 class GameWindowManager
 {
 public:
@@ -138,11 +144,6 @@ public:
 };
 
 extern GameWindowManager *TheWindowManager;
-extern void GadgetCheckBoxSetText(GameWindow *, UnicodeString);
-
-// The retail calls use the incremental-link thunks, not the folded bodies.
-#pragma comment(linker, "/alternatename:?winSetOwner@GameWindow@@QAEHPAV1@@Z=?j_00047230@@YAXXZ")
-#pragma comment(linker, "/alternatename:?GadgetCheckBoxSetText@@YAXPAVGameWindow@@VUnicodeString@@@Z=?j_00018241@@YAXXZ")
 
 GameWindow *GameWindowManager::gogoGadgetCheckbox(GameWindow *parent,
 	GameFont *font, bool visual)
@@ -152,10 +153,14 @@ GameWindow *GameWindowManager::gogoGadgetCheckbox(GameWindow *parent,
 	GameWindow *checkbox = TheWindowManager->create(parent);
 	if (checkbox == 0)
 		return 0;
-	checkbox->winSetOwner(parent->owner);
+	typedef int (RouteWinSetOwner::*SetOwner)(GameWindow *);
+	union { void (*fn)(); SetOwner call; } setOwner = { j_00047230 };
+	(((RouteWinSetOwner *)checkbox)->*setOwner.call)(parent->owner);
 	assignDefaultGadgetLook(checkbox, font, visual);
 	UnicodeString text = winTextLabelToText(parent->instanceData->textLabel);
-	if (text.getLength())
-		GadgetCheckBoxSetText(checkbox, text);
+	if (text.getLength()) {
+		typedef void (__cdecl *SetText)(GameWindow *, UnicodeString);
+		((SetText)(void *)j_00018241)(checkbox, text);
+	}
 	return checkbox;
 }
