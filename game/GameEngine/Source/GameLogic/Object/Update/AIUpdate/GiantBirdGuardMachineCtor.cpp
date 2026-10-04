@@ -61,12 +61,14 @@ private:
 };
 
 extern int g_GiantBirdGuardOuterStateVTable;
-// C-linkage views of the retail tables ??_7Rva002C0470State@@6B@ and
-// ??_7Rva002BBCF0TailDtor@@6B@; the alternate names define no table.
-extern "C" int bfmeVftRva002C0470State[];
-extern "C" int bfmeVftRva002BBCF0TailDtor[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva002C0470State=??_7Rva002C0470State@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftRva002BBCF0TailDtor=??_7Rva002BBCF0TailDtor@@6B@")
+// The retail tables at 0x002C0470 and 0x002BBCF0 are the vftables of
+// Rva002C0470State (defined in StateSelfNamingCtorsWithFields.cpp) and
+// Rva002BBCF0TailDtor (VptrTailJumpDestructors.cpp).  C++ cannot spell a
+// vftable, so each is declared verbatim: __identifier names the defining
+// symbol, and the stores below reference that name directly rather than an
+// alternate name standing in for it.
+extern "C" int __identifier("??_7Rva002C0470State@@6B@")[];
+extern "C" int __identifier("??_7Rva002BBCF0TailDtor@@6B@")[];
 
 class GiantBirdGuardReturnState : public State
 {
@@ -97,7 +99,7 @@ public:
 	GiantBirdGuardIdleState( void *machine )
 		: State( (StateMachine *)machine, AsciiString( "GiantBirdGuardIdleState" ) )
 	{
-		m_vftable = bfmeVftRva002C0470State;
+		m_vftable = __identifier("??_7Rva002C0470State@@6B@");
 		m_int24 = 0;
 	}
 
@@ -149,7 +151,7 @@ public:
 GiantBirdGuardMachine::GiantBirdGuardMachine( Object *owner )
 	: AIGuardMachine( owner, AsciiString( "GiantBirdGuardMachine" ) )
 {
-	*reinterpret_cast<int **>( this ) = bfmeVftRva002BBCF0TailDtor;
+	*reinterpret_cast<int **>( this ) = __identifier("??_7Rva002BBCF0TailDtor@@6B@");
 
 	defineState( 0xB79B, (State *)new GiantBirdGuardReturnState( this ),
 		0xB799, 0xB798, 0 );
