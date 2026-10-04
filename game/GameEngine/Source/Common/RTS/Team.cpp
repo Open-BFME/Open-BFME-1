@@ -666,16 +666,8 @@ void TeamFactory::addTeamPrototypeToList(TeamPrototype* team)
 // keeps the ZH single-key typedef so other matched Team.cpp symbols stay green).
 
 // ------------------------------------------------------------------------
-// ?findTeamPrototype@TeamFactory@@QAEPAVTeamPrototype@@ABVAsciiString@@@Z present-unmatched
-TeamPrototype *TeamFactory::findTeamPrototype(const AsciiString& name)
-{
-	NameKeyType nk = NAMEKEY(name);
-	TeamPrototypeMap::iterator it = m_prototypes.find(nk);
-	if (it != m_prototypes.end())
-		return it->second;
-
-	return NULL;
-}
+// ?findTeamPrototype@TeamFactory@@QAEPAVTeamPrototype@@ABVAsciiString@@@Z lives in
+// TeamFactory_findTeamPrototypeByName_Thunk.cpp (retail 0x000F2320).
 
 // ------------------------------------------------------------------------
 // ?findTeamPrototypeByID@TeamFactory@@QAEPAVTeamPrototype@@I@Z present-unmatched
