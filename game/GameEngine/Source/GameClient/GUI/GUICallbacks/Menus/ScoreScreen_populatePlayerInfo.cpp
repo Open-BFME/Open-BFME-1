@@ -25,7 +25,7 @@ template<> inline bool StringBase<char>::isEmpty() const
 {
     return m_data == 0 || m_data->length == 0;
 }
-template<> __declspec(noinline) bool StringBase<char>::isNotEmpty() const
+template<> inline __declspec(noinline) bool StringBase<char>::isNotEmpty() const
 {
     return !isEmpty();
 }
