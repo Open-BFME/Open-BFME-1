@@ -3,11 +3,24 @@
 class Thing;
 class ModuleData;
 
+// Each vtable slot holds a real body address in retail, reached through an ILT
+// thunk; the slots are declared pure so the emitted vftable entries resolve to
+// __purecall instead of five undefined names that stop this object from
+// linking. The constructor only stores the vtable pointers, so the emitted
+// bytes are unchanged. Same convention as
+// game/GameEngine/Source/GameClient/System/FXParticleSystem/ParticleModuleStateCtor005FC800.cpp.
+
+// The base constructor is reached through the five-byte incremental-link thunk
+// at 0x00013462 (ledger ?j_00013462@@YAXXZ, target 0x006A6360), and the body
+// there is already matched as SpecialAbilityUpdate_ctor_Thunk.cpp's
+// ??0SpecialAbilityUpdate@@QAE@PAVThing@@PBVModuleData@@@Z, so the mem-initializer
+// below resolves to that file and needs no definition here.
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModule
 {
 public:
-	virtual void behaviorModuleAnchor();
+	virtual void behaviorModuleAnchor() = 0;
 
 private:
 	unsigned char m_data[8];
@@ -17,14 +30,14 @@ private:
 class BehaviorModuleInterface
 {
 public:
-	virtual void behaviorModuleInterfaceAnchor();
+	virtual void behaviorModuleInterfaceAnchor() = 0;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModuleInterface
 {
 public:
-	virtual void updateModuleInterfaceAnchor();
+	virtual void updateModuleInterfaceAnchor() = 0;
 
 private:
 	unsigned char m_data[12];
@@ -33,7 +46,7 @@ private:
 class ModuleInterface
 {
 public:
-	virtual void moduleInterfaceAnchor();
+	virtual void moduleInterfaceAnchor() = 0;
 
 private:
 	unsigned char m_data[196];
@@ -51,7 +64,7 @@ public:
 class ToggleMountedInterface
 {
 public:
-	virtual void toggleMountedInterfaceAnchor();
+	virtual void toggleMountedInterfaceAnchor() = 0;
 };
 
 class ToggleMountedSpecialAbilityUpdate : public SpecialAbilityUpdate,

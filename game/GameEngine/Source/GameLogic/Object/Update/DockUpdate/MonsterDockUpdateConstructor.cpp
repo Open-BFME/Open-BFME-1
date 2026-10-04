@@ -7,12 +7,21 @@ class ModuleData;
 // chain (object module, behavior interface, update interface) plus one further
 // interface at 0x20. The base constructor is declared only, so the call
 // resolves to the existing pin for
-// ??0SupplyCenterDockUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z at 0x00048EA5.
+// ??0SupplyCenterDockUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z at 0x00048EA5 --
+// that is the five-byte incremental-link thunk whose target 0x006CD4B0 still has
+// no ledger row, so the name has no definition yet.
+
+// Each vtable slot holds a real body address in retail, reached through an ILT
+// thunk; the slots are declared pure so the emitted vftable entries resolve to
+// __purecall instead of four undefined names that stop this object from
+// linking. The constructor only stores the vtable pointers, so the emitted
+// bytes are unchanged. Same convention as
+// game/GameEngine/Source/GameClient/System/FXParticleSystem/ParticleModuleStateCtor005FC800.cpp.
 
 class ObjectModuleBase
 {
 public:
-	virtual void objectModuleAnchor();
+	virtual void objectModuleAnchor() = 0;
 
 	const void *m_moduleData;				///< 0x04
 };
@@ -73,10 +82,10 @@ public:
 
 	// One override per polymorphic sub-object, so this class gets its own
 	// vtable for each and the constructor stores all four.
-	virtual void objectModuleAnchor();
-	virtual void behaviorAnchor();
-	virtual void updateAnchor();
-	virtual void dockAnchor();
+	virtual void objectModuleAnchor() = 0;
+	virtual void behaviorAnchor() = 0;
+	virtual void updateAnchor() = 0;
+	virtual void dockAnchor() = 0;
 
 	bool m_flag88;							///< 0x88
 	bool m_flag89;							///< 0x89
