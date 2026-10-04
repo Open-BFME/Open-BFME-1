@@ -44,7 +44,7 @@
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/CashHackSpecialPowerModuleDataCtorThunk.cpp
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/SpecialPower/CashHackSpecialPowerModuleDataConstructor.cpp
 // ??0CashHackSpecialPowerModuleData@@QAE@XZ present-unmatched
 CashHackSpecialPowerModuleData::CashHackSpecialPowerModuleData( void )
 {
