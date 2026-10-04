@@ -20,10 +20,14 @@ class PathfindZoneManager;
 
 // Opaque receiver for the unconverted retail body at this address. The
 // 0x228-byte size is witnessed by the caller's zone-block stride.
+// ILT 0x00008954 forwards to the retail worker at 0x00407030; no body is defined
+// for it in source, so the call is respelled through the ILT symbol.
+extern void j_00008954();
+
 class Rva00407030
 {
 public:
-	void process(PathfindCell **map, const IRegion2D &bounds,
+	typedef void (Rva00407030::*Process)(PathfindCell **map, const IRegion2D &bounds,
 		const IRegion2D &globalBounds, PathfindZoneManager *owner);
 
 private:
@@ -65,7 +69,8 @@ void PathfindZoneManager::bfmeCalcZonesIncrementalStep00408480(PathfindCell **ma
 				bounds.hi.x = globalBounds.hi.x;
 			if (bounds.hi.y > globalBounds.hi.y)
 				bounds.hi.y = globalBounds.hi.y;
-			m_zoneBlocks[xBlock][yBlock].process(map, bounds, globalBounds, this);
+			union { void (*fn)(); Rva00407030::Process call; } process = { j_00008954 };
+			(m_zoneBlocks[xBlock][yBlock].*process.call)(map, bounds, globalBounds, this);
 		}
 	}
 }
