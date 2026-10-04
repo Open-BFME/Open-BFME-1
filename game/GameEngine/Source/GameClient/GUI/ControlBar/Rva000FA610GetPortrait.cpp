@@ -9,8 +9,7 @@
 
 #include <string.h>
 
-void j_00016fae();
-#pragma comment(linker, "/alternatename:?initialize@Rva00016FAE@@QAEXXZ=?j_00016fae@@YAXXZ")
+extern void j_00016fae();
 
 // Buffer internals are owned by the existing StringBase implementation.
 template <typename T> struct StringInlineData;
@@ -79,16 +78,11 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
+// Retail calls the 0x00016FAE ILT thunk (a 5-byte thiscall slot) straight from
+// the two constructors, so the call is emitted against the thunk name.
 class Rva00016FAE
 {
-public:
-	__declspec(noinline) void initialize();
 };
-
-__declspec(noinline) void Rva00016FAE::initialize()
-{
-	j_00016fae();
-}
 
 class ZeroPrefix
 {
@@ -155,7 +149,9 @@ Rva000FA610::Rva000FA610(const unsigned char *source, int unused)
 	m_flag = 0;
 	m_value3c = 0;
 	m_value40 = -1;
-	m_value44.initialize();
+	typedef void (Rva00016FAE::*Init)();
+	union { void (*fn)(); Init call; } init = { j_00016fae };
+	(m_value44.*init.call)();
 }
 
 // ??0Rva000FA610@@QAE@XZ
@@ -169,7 +165,9 @@ Rva000FA610::Rva000FA610()
 	m_flag = 0;
 	m_value3c = 0;
 	m_value40 = -1;
-	m_value44.initialize();
+	typedef void (Rva00016FAE::*Init)();
+	union { void (*fn)(); Init call; } init = { j_00016fae };
+	(m_value44.*init.call)();
 }
 
 // ?getPortrait@Rva000FA610@@QAEPBVImage@@PAVPlayer@@@Z
