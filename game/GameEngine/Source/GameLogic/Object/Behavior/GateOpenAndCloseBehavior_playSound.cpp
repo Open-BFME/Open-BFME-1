@@ -23,6 +23,8 @@ public:
 extern void j_00008e86();
 extern void j_00026f35();
 
+namespace
+{
 class BfmeAudioEventRTS
 {
 public:
@@ -41,6 +43,7 @@ public:
 	}
 	unsigned char m_raw[0x70];
 };
+}
 
 class ClientSubsystem
 {
