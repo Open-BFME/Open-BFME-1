@@ -3,8 +3,6 @@
 typedef int Int;
 typedef bool Bool;
 
-#pragma comment(linker, "/alternatename:?getNthPlayer@PlayerList@@QAEPAVPlayer@@H@Z=?j_00044f30@@YAXXZ")
-
 class Player
 {
 public:
@@ -16,8 +14,11 @@ class PlayerList
 {
 public:
     int unidentified_000df510(Bool includeObservers);
-    Player *getNthPlayer(Int index);
 };
+
+// Retail reaches PlayerList::getNthPlayer through ILT thunk 0x00044F30
+// (?j_00044f30@@YAXXZ); the call sites therefore name the thunk.
+extern void j_00044f30();
 
 class GameLogic;
 
@@ -136,7 +137,9 @@ void BfmePlayerMapState::bfmeNewMap(Int field, Bool flag)
         return;
     }
 
-    Player *player = ThePlayerList->getNthPlayer(m_field);
+    typedef Player *(PlayerList::*GetNthPlayer)(Int index);
+    union { void (*fn)(); GetNthPlayer call; } getNth = { j_00044f30 };
+    Player *player = (ThePlayerList->*getNth.call)(m_field);
     if (!player)
         return;
 
