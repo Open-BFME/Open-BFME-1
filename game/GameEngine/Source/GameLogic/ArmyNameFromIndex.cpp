@@ -14,13 +14,13 @@ void __stdcall armyNameFromIndex(unsigned int index, AsciiString *out)
 	case 0:
 		out->set("TopArmy");
 		break;
-	case 1:
+	case 3:
 		out->set("BottomArmy");
 		break;
 	case 2:
 		out->set("RightArmy");
 		break;
-	case 3:
+	case 1:
 		out->set("LeftArmy");
 		break;
 	}
