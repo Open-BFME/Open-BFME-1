@@ -105,6 +105,7 @@ class INIException
 public:
 	INIException( Int code, const char *msg, ... );
 	INIException( const INIException &other );
+	~INIException();
 
 private:
 	Int m_code;

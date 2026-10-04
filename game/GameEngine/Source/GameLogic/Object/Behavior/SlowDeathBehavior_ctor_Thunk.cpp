@@ -50,6 +50,7 @@ class INIException
 public:
 	INIException(int, const char *, ...);
 	INIException(const INIException &);
+	~INIException();
 private:
 	int m_code;
 	int m_line;

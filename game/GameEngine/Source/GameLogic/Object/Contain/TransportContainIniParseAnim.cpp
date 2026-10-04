@@ -22,6 +22,7 @@ class INIException
 public:
     INIException(Int, const char *, ...);
     INIException(const INIException &);
+    ~INIException();
 
 private:
     Int m_code;
