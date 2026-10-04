@@ -205,23 +205,7 @@ inline Int IABS(Int x) {	if (x>=0) return x; return -x;};
 //=============================================================================
 /** Frees the w3d resources used to draw the terrain. */
 //=============================================================================
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapFreeMapResources.cpp
-// ?freeMapResources@BaseHeightMapRenderObjClass@@UAEHXZ present-unmatched
-Int BaseHeightMapRenderObjClass::freeMapResources(void)
-{
-#ifdef DO_SCORCH
-	freeScorchBuffers();
-#endif
-	REF_PTR_RELEASE(m_vertexMaterialClass);
-	REF_PTR_RELEASE(m_stageZeroTexture);
-	REF_PTR_RELEASE(m_stageOneTexture);
-	REF_PTR_RELEASE(m_stageTwoTexture);
-	REF_PTR_RELEASE(m_stageThreeTexture);
-	REF_PTR_RELEASE(m_destAlphaTexture);
-	REF_PTR_RELEASE(m_map);
-
-	return 0;
-}
+// freeMapResources is defined by BaseHeightMapFreeMapResources.cpp (retail 0x006CA4F0).
 
 #ifdef DO_SCORCH
 //=============================================================================
