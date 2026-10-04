@@ -70,14 +70,13 @@ class BfmeOwnerZZ
 {
 public:
 	Bool bfmeScanZZ(BfmeSubjectZZ *subject);
-	Bool bfmeTryZZ(BfmeItemZZ *item);
 
 private:
 	unsigned char m_bfmeStartZZ[4];
 	BfmeNodeZZ *m_bfmeListZZ;
 };
 
-#pragma comment(linker, "/alternatename:?bfmeTryZZ@BfmeOwnerZZ@@QAEDPAVBfmeItemZZ@@@Z=?j_000441a2@@YAXXZ")
+extern void j_000441a2();
 
 Bool BfmeOwnerZZ::bfmeScanZZ(BfmeSubjectZZ *subject)
 {
@@ -90,7 +89,9 @@ Bool BfmeOwnerZZ::bfmeScanZZ(BfmeSubjectZZ *subject)
 		{
 			BfmeItemZZ *member = node->m_bfmeItemZZ;
 			BfmeNodeZZ *next = node->m_bfmeNextZZ;
-			if (!hub->bfmeAcceptZZ(member, 0) && bfmeTryZZ(member))
+			typedef Bool (BfmeOwnerZZ::*TryFn)(BfmeItemZZ *item);
+			union { void (*fn)(); TryFn call; } try_ = { j_000441a2 };
+			if (!hub->bfmeAcceptZZ(member, 0) && (this->*try_.call)(member))
 				return false;
 			node = next;
 		}
