@@ -5,12 +5,12 @@
 // destructor family neighbour and landed ctor/copy/assign (0x005D6AD0,
 // 0x005D6BA0, 0x005D6C00) sit either side in the same TU family.
 
-extern "C" void *bfmeVftSnapshotBase[4];
-#pragma comment(linker, "/alternatename:_bfmeVftSnapshotBase=??_7BfmeBaseVUQ@@6B@")
-extern "C" const void *bfmeVftModuleTemplate[];
-#pragma comment(linker, "/alternatename:_bfmeVftModuleTemplate=??_7ModuleTemplate@FXParticleSystem@@6B@")
-extern "C" const void *bfmeVftCategoryModuleInfo5[];
-#pragma comment(linker, "/alternatename:_bfmeVftCategoryModuleInfo5=??_7?$CategoryModuleInfo@$04@FXParticleSystem@@6B@")
+// The three vftable stores below address the defining vftable symbols directly,
+// spelled by __identifier so the reference carries retail's own name; the stand-in
+// extern "C" arrays and their linker alias remaps (what this used to carry) are gone.
+extern "C" int __identifier("??_7BfmeBaseVUQ@@6B@")[];
+extern "C" int __identifier("??_7ModuleTemplate@FXParticleSystem@@6B@")[];
+extern "C" int __identifier("??_7?$CategoryModuleInfo@$04@FXParticleSystem@@6B@")[];
 
 namespace FXParticleSystem
 {
@@ -25,11 +25,11 @@ public:
 LightningEmissionModuleTemplate::~LightningEmissionModuleTemplate()
 {
 	unsigned char *info = this ? (unsigned char *)this + 8 : 0;
-	*(volatile unsigned int *)info = (unsigned int)bfmeVftSnapshotBase;
+	*(volatile unsigned int *)info = (unsigned int)__identifier("??_7BfmeBaseVUQ@@6B@");
 
 	unsigned char *base = this ? (unsigned char *)this + 4 : 0;
-	*(volatile unsigned int *)base = (unsigned int)bfmeVftCategoryModuleInfo5;
-	*(volatile unsigned int *)this = (unsigned int)bfmeVftModuleTemplate;
+	*(volatile unsigned int *)base = (unsigned int)__identifier("??_7?$CategoryModuleInfo@$04@FXParticleSystem@@6B@");
+	*(volatile unsigned int *)this = (unsigned int)__identifier("??_7ModuleTemplate@FXParticleSystem@@6B@");
 }
 
 }
