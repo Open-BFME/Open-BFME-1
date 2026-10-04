@@ -15,11 +15,23 @@ typedef unsigned int UnsignedInt;
 class Player;
 class Object;
 
+// Retail reaches each of the operations below through the already-emitted
+// image thunks (ILT stubs), so the callsites name the thunk directly through
+// a local pointer/member-pointer view instead of a neutral ledger identity
+// for the generated callee.
+extern void j_00001140();
+extern void j_000022bb();
+extern void j_00024d70();
+extern void j_00025806();
+extern void j_0002ae5f();
+extern void j_0002dc1d();
+extern void j_00030a21();
+extern void j_0003b15b();
+
 class Overridable
 {
 public:
 	virtual ~Overridable();
-	const Overridable *getFinalOverride() const;
 
 	Overridable *m_nextOverride;
 };
@@ -39,7 +51,16 @@ public:
 	{
 		const T *value = m_overridable;
 		if (value && value->m_nextOverride)
-			value = (const T *)value->m_nextOverride->getFinalOverride();
+		{
+			// Retail calls this through the ILT thunk at 0x000022bb.
+			union
+			{
+				void (*fn)();
+				const Overridable *(Overridable::*call)() const;
+			} u;
+			u.fn = j_000022bb;
+			value = (const T *)((value->m_nextOverride->*u.call)());
+		}
 		return value;
 	}
 
@@ -49,7 +70,6 @@ public:
 class BfmeObjectDlinkBase
 {
 public:
-	Object *dlink_next_TeamMemberList() const;
 	BfmeOverride<ThingTemplate> m_template; // retail Object+0x04
 };
 
@@ -84,7 +104,6 @@ public:
 class AICommandInterface
 {
 public:
-	void aiIdle(CommandSourceType source);
 };
 
 class BfmeAIUpdateView
@@ -97,7 +116,15 @@ public:
 class BfmeThingXV
 {
 public:
-	void bfmeStopXV();
+};
+
+// Flat receiver view for the address-named Object operation retail reaches
+// through the image thunk at 0x0002AE5F.  Object itself carries a virtual
+// base, and a member pointer taken on it makes the compiler emit a vbtable
+// adjustment that retail's direct thiscall does not have.
+class BfmeRva001CA2E0Receiver
+{
+public:
 };
 
 class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
@@ -113,8 +140,6 @@ public:
 	BfmeAIUpdateView *m_ai; // retail Object+0x204
 	unsigned char m_unmodelled_208[0x0c];
 	Object *m_containedBy; // retail Object+0x214
-
-	void rva001CA2E0();
 };
 
 typedef int (__cdecl *BfmeObjectVisitor)(void *, int);
@@ -157,8 +182,17 @@ class Team
 public:
 	BfmeDlinkIterator<Object> iterate_TeamMemberList() const
 	{
-		return BfmeDlinkIterator<Object>(m_head,
-			BfmeObjectDlinkBase::dlink_next_TeamMemberList);
+		// Retail walks the list through the image thunk at 0x00001140.  The
+		// pointer-to-member is folded to retail's {0x00401140, -100, 0}: the
+		// -100 is the virtual-base adjustment the compiler derives from
+		// Object's geometry, and the code slot takes the thunk's address.
+		union
+		{
+			void (*fn)();
+			Object *(BfmeObjectDlinkBase::*next)() const;
+		} u;
+		u.fn = j_00001140;
+		return BfmeDlinkIterator<Object>(m_head, u.next);
 	}
 
 private:
@@ -179,7 +213,6 @@ public:
 	virtual void _14() = 0; virtual void _15() = 0;
 	virtual void _16() = 0;
 	virtual Team *getTeamNamed(AsciiString name, Bool unused) = 0;
-	void notifyOfObjectCreationOrDestruction();
 };
 
 class BfmeScriptEngine_getPlayerMaskFromAsciiString
@@ -199,24 +232,6 @@ extern ScriptEngine *TheScriptEngine;
 extern PlayerList *ThePlayerList;
 extern int __cdecl bfmeHelper760(void *object, int userData);
 
-// These are typed as their real class operations, but their retail callsites
-// use the already-emitted image thunks.  The alternatenames keep those calls
-// direct without adding neutral ledger identities for generated callees.
-extern void j_00001140();
-extern void j_000022bb();
-extern void j_00024d70();
-extern void j_00025806();
-extern void j_0002ae5f();
-extern void j_0002dc1d();
-extern void j_00030a21();
-extern void j_0003b15b();
-
-#pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVObject@@XZ=?j_00001140@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?aiIdle@AICommandInterface@@QAEXW4CommandSourceType@@@Z=?j_00024d70@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeStopXV@BfmeThingXV@@QAEXXZ=?j_00025806@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva001CA2E0@Object@@QAEXXZ=?j_0002ae5f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?notifyOfObjectCreationOrDestruction@ScriptEngine@@QAEXXZ=?j_0003b15b@@YAXXZ")
 
 // The named Team::setControllingPlayer implementation is present-unmatched
 // at body 0x000F44C0.  Retail reaches it through the existing ILT/thunk at
@@ -259,6 +274,29 @@ void ScriptActions::doTransferTeamToPlayer(const AsciiString &teamName,
 	visit.asVoid = (void *)j_0002dc1d;
 	(((Rva000EDAB0VisitOwner *)theTeam)->*visit.asMember)(bfmeHelper760, 0);
 
+	// Retail dispatches the three per-member commands through the image
+	// thunks at 0x00025806, 0x0002ae5f and 0x00024d70; each view keeps the
+	// thunk's real thiscall shape while naming the thunk directly.
+	union
+	{
+		void (*fn)();
+		void (BfmeThingXV::*stopXV)();
+	} stopXV;
+	stopXV.fn = j_00025806;
+	typedef void (BfmeRva001CA2E0Receiver::*StopPath)();
+	union
+	{
+		void (*fn)();
+		StopPath stopPath;
+	} stopPath;
+	stopPath.fn = j_0002ae5f;
+	union
+	{
+		void (*fn)();
+		void (AICommandInterface::*idle)(CommandSourceType);
+	} idle;
+	idle.fn = j_00024d70;
+
 	BfmeDlinkIterator<Object> iter = theTeam->iterate_TeamMemberList();
 	while (!iter.done())
 	{
@@ -269,22 +307,29 @@ void ScriptActions::doTransferTeamToPlayer(const AsciiString &teamName,
 			const ThingTemplate *tmpl = containedBy->getTemplate();
 			if (tmpl->m_kindOf & 0x1000)
 			{
-				((BfmeThingXV *)containedBy)->bfmeStopXV();
-				containedBy->rva001CA2E0();
+				(((BfmeThingXV *)containedBy)->*stopXV.stopXV)();
+				(((BfmeRva001CA2E0Receiver *)containedBy)->*stopPath.stopPath)();
 				BfmeAIUpdateView *ai = containedBy->m_ai;
 				if (ai)
-					ai->m_command.aiIdle(CMD_FROM_AI);
+					(ai->m_command.*idle.idle)(CMD_FROM_AI);
 			}
 		}
 
-		((BfmeThingXV *)object)->bfmeStopXV();
-		object->rva001CA2E0();
+		(((BfmeThingXV *)object)->*stopXV.stopXV)();
+		(((BfmeRva001CA2E0Receiver *)object)->*stopPath.stopPath)();
 		BfmeAIUpdateView *ai = object->m_ai;
 		if (ai)
-			ai->m_command.aiIdle(CMD_FROM_AI);
+			(ai->m_command.*idle.idle)(CMD_FROM_AI);
 
 		iter.advance();
 	}
 
-	TheScriptEngine->notifyOfObjectCreationOrDestruction();
+	// Retail calls this through the image thunk at 0x0003b15b.
+	union
+	{
+		void (*fn)();
+		void (ScriptEngine::*notify)();
+	} notify;
+	notify.fn = j_0003b15b;
+	(TheScriptEngine->*notify.notify)();
 }
