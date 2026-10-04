@@ -1,10 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: CategoryModuleTemplate<5> empty dual-vtbl dtor.
 
-extern "C" const void *bfmeVftCategoryModuleInfo5[];
-#pragma comment(linker, "/alternatename:_bfmeVftCategoryModuleInfo5=??_7?$CategoryModuleInfo@$04@FXParticleSystem@@6B@")
-extern "C" const void *bfmeVftModuleTemplate[];
-#pragma comment(linker, "/alternatename:_bfmeVftModuleTemplate=??_7ModuleTemplate@FXParticleSystem@@6B@")
+// The retail vtables are named data symbols; declare them by their real name
+// (recorded in targets/game/reverse/dir32_addresses.csv) instead of via a
+// stand-in plus a linker alias.
+extern "C" int __identifier("??_7?$CategoryModuleInfo@$04@FXParticleSystem@@6B@")[];
+extern "C" int __identifier("??_7ModuleTemplate@FXParticleSystem@@6B@")[];
 
 namespace FXParticleSystem
 {
@@ -25,8 +26,8 @@ public:
 CategoryModuleTemplate<5>::~CategoryModuleTemplate()
 {
 	unsigned char *base = this ? (unsigned char *)this + 4 : 0;
-	*(volatile unsigned int *)base = (unsigned int)bfmeVftCategoryModuleInfo5;
-	*(volatile unsigned int *)this = (unsigned int)bfmeVftModuleTemplate;
+	*(volatile unsigned int *)base = (unsigned int)__identifier("??_7?$CategoryModuleInfo@$04@FXParticleSystem@@6B@");
+	*(volatile unsigned int *)this = (unsigned int)__identifier("??_7ModuleTemplate@FXParticleSystem@@6B@");
 }
 
 }
