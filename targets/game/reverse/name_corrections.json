@@ -17598,5 +17598,15 @@
   "after_sha256": "cab722fd4af8f57fca9e2ff4a8574df35cb6df3a8c32211eb922f4b101902316",
   "evidence": "targets/game/reverse/identity_evidence/001b4a50-native-cross-product.md",
   "reason": "Historical bank comparison: the partial source is archived byte-for-byte as 001b4a50-original-bank.cpp.txt, while the completed production body replaces only the generated address placeholder. The bank has no authoritative identity witness; retain an address-qualified owner instead of promoting its synthetic name. No established production identity is renamed."
+ },
+ {
+  "old_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShroudInitBfme.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShroudInitBfme.cpp",
+  "old_name": "PartitionManager",
+  "new_name": "Gen_008f7420",
+  "before_sha256": "e7b3f2ad58608cfc8e8911342ee02de7de0e5d1e914508e25613c5062226b5ff",
+  "after_sha256": "0cb24ee5ef4f3fb8044b4e5852738de039586641eaefab9e23db8558d2a3ffc8",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

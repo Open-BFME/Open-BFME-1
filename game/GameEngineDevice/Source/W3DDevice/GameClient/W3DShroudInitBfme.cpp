@@ -68,13 +68,16 @@ __forceinline void Rva0071A150ReleaseTexture(TextureClass *&texture)
 	}
 }
 
+// Retail call target 0x009056F0 is the real ?Validate_Texture_Size@TextureLoader@@SAXAAI0@Z
+// body (two reference arguments), defined by
+// game/Libraries/Source/WWVegas/WW3D2/TextureLoaderValidateTextureSize.cpp.
+// Declared here rather than included: textureloader.h carries the upstream
+// three-argument overload, which mangles differently.
 class TextureLoader
 {
 public:
 	static void Validate_Texture_Size(unsigned &width, unsigned &height);
 };
-
-#pragma comment(linker, "/alternatename:?Validate_Texture_Size@TextureLoader@@SAXAAI0@Z=?d_009056f0@@YAXXZ")
 
 void W3DRadarResetLock(void);
 char bfmeUnlock1179(void);
@@ -85,15 +88,16 @@ public:
 	Bool ReAcquireResources(void);
 };
 
-class PartitionManager
+// Retail call target 0x008F7420 is ?m@Gen_008f7420@@QAEXXZ (defined by
+// game/gen_small/fun_005.cpp), so the call is respelled onto that class and
+// member directly instead of a stand-in PartitionManager::notify.
+class Gen_008f7420
 {
 public:
-	void notify(void);
+	void m(void);
 };
 
-#pragma comment(linker, "/alternatename:?notify@PartitionManager@@QAEXXZ=?m@Gen_008f7420@@QAEXXZ")
-
-extern PartitionManager *TheShroudManager;
+extern Gen_008f7420 *TheShroudManager;
 #define ThePartitionManager TheShroudManager
 
 class Rva0071A150W3DShroud
@@ -154,7 +158,7 @@ void Rva0071A150W3DShroud::init(Rva0071A150WorldHeightMap *map,
 		dstTextureWidth = m_numCellsX + 2;
 		dstTextureHeight = m_numCellsY + 2;
 		W3DRadarResetLock();
-// ?Validate_Texture_Size@TextureLoader@@QAEXXZ absent-from-retail
+// Two-argument retail overload, matched at 0x009056F0 (no linker alias needed).
 		TextureLoader::Validate_Texture_Size(
 			(unsigned &)dstTextureWidth, (unsigned &)dstTextureHeight);
 		bfmeUnlock1179();
@@ -188,5 +192,5 @@ void Rva0071A150W3DShroud::init(Rva0071A150WorldHeightMap *map,
 		reinterpret_cast<W3DShroud *>(this)->ReAcquireResources();
 	}
 	if (ThePartitionManager)
-		ThePartitionManager->notify();
+		ThePartitionManager->m();
 }
