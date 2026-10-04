@@ -132,7 +132,6 @@ public:
 #pragma comment(linker, "/alternatename:?findBestSupplyCenter@ResourceGatheringManager@@QAEPAVObject@@PAV2@@Z=?j_00045df4@@YAXXZ")
 #pragma comment(linker, "/alternatename:?findBestSupplyWarehouse@ResourceGatheringManager@@QAEPAVObject@@PAV2@@Z=?j_00015960@@YAXXZ")
 #pragma comment(linker, "/alternatename:?aiDock@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z=?j_0002221e@@YAXXZ")
-#pragma comment(linker, "/alternatename:?aiBfmeCommand19@AICommandInterface@@QAEXPBVCoord3D@@W4CommandSourceType@@@Z=?j_00012774@@YAXXZ")
 
 class Rva002C6CC0AIUpdateView
 {
@@ -249,6 +248,11 @@ public:
 	virtual void slot028() const = 0;
 	virtual void slot02c(Bool hasBoxes) const = 0;
 };
+
+// ?aiBfmeCommand19@AICommandInterface@@QAEXPBVCoord3D@@W4CommandSourceType@@@Z
+// used to carry a linker alias onto ?j_00012774@@YAXXZ here.  This TU never
+// calls it (the Coord3D dispatch goes through Rva001565D0Sub::notify below),
+// so the alias was dead and is gone; the thunk is still reached from notify.
 
 class Rva002C6DD0PlayerView
 {
