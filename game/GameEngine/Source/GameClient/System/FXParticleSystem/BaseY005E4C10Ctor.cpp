@@ -8,8 +8,12 @@ class FXList;
 class FXListStore;
 extern FXListStore *TheFXListStore;
 
-extern "C" const void *bfmeVftCategoryModuleInfo8[];
-#pragma comment(linker, "/alternatename:_bfmeVftCategoryModuleInfo8=??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@")
+// The base vtable of FXParticleSystem::CategoryModuleInfo<7> (retail
+// 0x0107375C, dir32 row ??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@).
+// The mangled name is a compiler-generated vftable symbol, so it is declared
+// with __identifier rather than respelled; the stand-in
+// _bfmeVftCategoryModuleInfo8 alias is gone.
+extern "C" const void *__identifier("??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@")[];
 
 namespace FXParticleSystem
 {
@@ -58,7 +62,8 @@ class __declspec(novtable) CategoryInfoY005E4C10
 public:
 	__declspec(nothrow) CategoryInfoY005E4C10()
 	{
-		*(volatile unsigned int *)this = (unsigned int)bfmeVftCategoryModuleInfo8;
+		*(volatile unsigned int *)this =
+			(unsigned int)__identifier("??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@");
 		*(volatile unsigned char *)((unsigned char *)this + 4) = true;
 	}
 	virtual void unused();
