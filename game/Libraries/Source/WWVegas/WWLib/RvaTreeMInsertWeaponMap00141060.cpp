@@ -8,6 +8,7 @@
 // _M_key_compare is again a fresh functor pinned to its own retail address.
 
 struct BfmeRbTreeInsertWeaponAnchorHelper;
+template <int Bits> class BitFlags;
 
 namespace _STL
 {
@@ -160,7 +161,9 @@ _Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::_M_insert(
 	_Link_type z;
 
 	if (y == this->_M_header._M_data
-		|| (w == 0 && (x != 0 || _M_key_compare(KeyOfValue()(v), _S_key(y)))))
+		|| (w == 0 && (x != 0 || _M_key_compare(
+			reinterpret_cast<const BitFlags<17> &>(KeyOfValue()(v)),
+			reinterpret_cast<const BitFlags<17> &>(_S_key(y))))))
 	{
 		z = _M_create_node(v);
 		y->_M_left = z;
@@ -214,9 +217,22 @@ struct Rva00136490Value
 // ??RMapHelper@?$SparseMatchFinder@VWeaponTemplateSet@@V?$BitFlags@$0BB@@@@@QBE_NABV?$BitFlags@$0BB@@@0@Z
 // at rva 0x00010B1D; this tag names our own instantiation so it can be
 // pinned to that address additively.
-struct Rva00141060Compare
+class WeaponTemplateSet;
+
+template <class Set, class Flags>
+class SparseMatchFinder
 {
-	bool operator()(const int &a, const int &b) const;
+public:
+	struct MapHelper
+	{
+		bool operator()(const Flags &a, const Flags &b) const;
+	};
+};
+
+// The integer key stores the one-word weapon flags passed to retail's
+// MapHelper comparator through the thunk at 0x00010B1D.
+struct Rva00141060Compare : SparseMatchFinder<WeaponTemplateSet, BitFlags<17> >::MapHelper
+{
 };
 
 typedef _STL::pair<const int, Rva00136490Value> Rva00141060Pair;
