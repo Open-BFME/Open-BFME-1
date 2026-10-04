@@ -7,18 +7,20 @@
 typedef int Int;
 typedef bool Bool;
 
+// Retail routes these three calls through incremental-link thunks.
+extern void j_00001140();
+extern void j_000022bb();
+extern void j_0003e80b();
+
 class Overridable
 {
 public:
 	virtual ~Overridable();
-	const Overridable *getFinalOverride() const;
 	Overridable *m_nextOverride;
 };
 
 class ThingTemplate : public Overridable
 {
-public:
-	Bool isEquivalentTo(const ThingTemplate *tt) const;
 };
 
 class Object;
@@ -53,8 +55,11 @@ public:
 			value = 0;
 		} else {
 			Overridable *next = raw->m_nextOverride;
-			if (next != 0)
-				raw = (Overridable *)next->getFinalOverride();
+			if (next != 0) {
+				typedef const Overridable *(Overridable::*FinalOverrideFn)() const;
+				union { void (*fn)(); FinalOverrideFn call; } u = { j_000022bb };
+				raw = (Overridable *)(*next.*u.call)();
+			}
 			value = (const T *)raw;
 		}
 		return value;
@@ -66,7 +71,6 @@ public:
 class BfmeObjectDlinkBase
 {
 public:
-	Object *dlink_next_TeamMemberList() const;
 	BfmeOverride<ThingTemplate> m_template;
 };
 
@@ -132,8 +136,9 @@ private:
 public:
 	BfmeDlinkIterator<Object> iterate_TeamMemberList() const
 	{
-		return BfmeDlinkIterator<Object>(m_head,
-			BfmeObjectDlinkBase::dlink_next_TeamMemberList);
+		typedef Object *(BfmeObjectDlinkBase::*NextFunc)() const;
+		union { void (*fn)(); NextFunc call; } u = { j_00001140 };
+		return BfmeDlinkIterator<Object>(m_head, u.call);
 	}
 };
 
@@ -144,8 +149,10 @@ void Team::countObjectsByThingTemplate(Int count, const ThingTemplate *const *th
 	for (BfmeDlinkIterator<Object> iter = iterate_TeamMemberList();
 		!iter.done(); iter.advance()) {
 		const ThingTemplate *tmpl = iter.cur()->getTemplate();
+		typedef Bool (ThingTemplate::*IsEquivalentToFn)(const ThingTemplate *) const;
+		union { void (*fn)(); IsEquivalentToFn call; } isEquivalentTo = { j_0003e80b };
 		for (Int i = 0; i < count; ++i) {
-			if (!tmpl->isEquivalentTo(things[i]))
+			if (!(tmpl->*isEquivalentTo.call)(things[i]))
 				continue;
 
 			BfmeObjectStatusView *object = (BfmeObjectStatusView *)iter.cur();
@@ -160,6 +167,3 @@ void Team::countObjectsByThingTemplate(Int count, const ThingTemplate *const *th
 	}
 }
 
-#pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVObject@@XZ=?j_00001140@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isEquivalentTo@ThingTemplate@@QBE_NPBV1@@Z=?j_0003e80b@@YAXXZ")
