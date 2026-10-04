@@ -25,6 +25,17 @@ public:
 
 typedef BfmeThingESB *BfmeThingPtrESB;
 
+// Retail 0x0021C428 and 0x0021C435 call the thing-id accessor and the host's
+// other-add helper through the incremental-link ILT thunks at RVA 0x00020824
+// (?j_00020824@@YAXXZ, game/gen_small/thunks_015.cpp) and RVA 0x00034955
+// (?j_00034955@@YAXXZ, game/gen_small/thunks_025.cpp); both thunks keep the
+// receiver in ECX, so each call is spelled as the direct thunk call this
+// codebase already uses for retail ILT thunks.
+extern void j_00020824(void);
+extern void j_00034955(void);
+
+typedef int (__fastcall *BfmeThingIdESBCall)(BfmeThingESB *);
+
 struct BfmeNodeESB
 {
 	BfmeNodeESB *m_bfmeNextESB;
@@ -102,15 +113,35 @@ public:
 	virtual int bfmeSlot64ESB(int mode);
 
 	void bfmeAddESB(BfmeThingESB *thing);
-	void bfmeOtherESB(BfmeThingESB *thing);
 
 	unsigned char m_bfmeHeadESB[0x998];
 	BfmeNodeESB *m_bfmeListESB;
 };
 
+// Retail's tail call at 0x0021C47D is `push edi; mov ecx,esi; call <rel32>`
+// -- the thing pushed, the receiver in ECX -- and its target is RVA 0x00034955,
+// the incremental-link ILT thunk ?j_00034955@@YAXXZ (game/gen_small/
+// thunks_025.cpp) to the body at 0x00226790.  Nothing defines
+// ?bfmeOtherESB@BfmeHostESB@@QAEXPAVBfmeThingESB@@@Z: retail only ever reaches
+// it through that thunk, so the reference names the thunk and is issued through
+// the member-call shape this codebase already uses for ILT thunks (see
+// game/GameEngine/Source/GameLogic/AI/AIAttackMeleeHordeApproachTargetState_onEnter.cpp),
+// which is what supplies the pushed argument and the ECX receiver.
+struct Rva00034955Thunk
+{
+	void call(BfmeThingESB *thing);
+};
+
+union Rva00034955Call
+{
+	void (*raw)();
+	void (Rva00034955Thunk::*member)(BfmeThingESB *);
+};
+
 void BfmeHostESB::bfmeAddESB(BfmeThingESB *thing)
 {
-	if (thing->bfmeIdESB() != (*(BfmeThingESB **)((char *)this - 0x18))->bfmeIdESB() &&
+	if (((BfmeThingIdESBCall)j_00020824)(thing) !=
+		((BfmeThingIdESBCall)j_00020824)(*(BfmeThingESB **)((char *)this - 0x18)) &&
 		bfmeSlot64ESB(0))
 	{
 		BfmeNodeESB *head = m_bfmeListESB;
@@ -131,5 +162,7 @@ void BfmeHostESB::bfmeAddESB(BfmeThingESB *thing)
 		return;
 	}
 
-	bfmeOtherESB(thing);
+	Rva00034955Call otherAdd;
+	otherAdd.raw = j_00034955;
+	(reinterpret_cast<Rva00034955Thunk *>(this)->*otherAdd.member)(thing);
 }

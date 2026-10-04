@@ -39,7 +39,10 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl W3DHordeModelDrawFieldParse(MultiIniFieldParse &parse);
+// Retail pushes 0x00427179 here: the ILT thunk at RVA 0x00027179
+// (game/gen_small/gthunks_043.cpp, ?j_00027179@@YAXXZ) that reaches the real
+// builder at 0x00753A80, so the address taken is the thunk's, not the body's.
+extern void j_00027179(void);
 
 class W3DHordeModelDraw
 {
@@ -52,6 +55,6 @@ ModuleData *W3DHordeModelDraw::friend_newModuleData(INI *ini)
 {
 	W3DHordeModelDrawModuleData *data = new W3DHordeModelDrawModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &W3DHordeModelDrawFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))j_00027179);
 	return (ModuleData *)data;
 }

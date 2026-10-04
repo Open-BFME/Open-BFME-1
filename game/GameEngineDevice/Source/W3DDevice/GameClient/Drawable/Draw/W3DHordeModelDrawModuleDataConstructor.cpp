@@ -82,17 +82,9 @@ W3DHordeModelDrawModuleData::W3DHordeModelDrawModuleData()
 	m_194 = 100;
 }
 
-class W3DHordeModelDraw
-{
-public:
-	static ModuleData *friend_newModuleData(INI *ini);
-};
-
-// ?friend_newModuleData@W3DHordeModelDraw@@SAPAVModuleData@@PAVINI@@@Z
-ModuleData *W3DHordeModelDraw::friend_newModuleData(INI *ini)
-{
-	W3DHordeModelDrawModuleData *data = new W3DHordeModelDrawModuleData;
-	if (ini)
-		ini->initFromINI(data, (const FieldParse *)&W3DHordeModelDrawFieldParse);
-	return (ModuleData *)data;
-}
+// The module-data factory ?friend_newModuleData@W3DHordeModelDraw@@SAPAVModuleData@@PAVINI@@@Z
+// (retail 0x006BFC60) used to be duplicated here as well.  Its ledger owner is
+// game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/
+// W3DHordeModelDrawFriendNewModuleDataThunk.cpp, and two exclusive definitions
+// of that name cannot link, so this copy is gone; only this file's own ctor
+// body remains.
