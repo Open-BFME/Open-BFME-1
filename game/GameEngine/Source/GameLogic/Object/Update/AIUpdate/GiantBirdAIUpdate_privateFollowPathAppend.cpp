@@ -20,6 +20,13 @@ struct Coord3D
 	float z;
 };
 
+// Retail reaches these through incremental-link thunks; call them directly.
+extern void j_0000de68();
+extern void j_00035f8f();
+extern void j_000070cc();
+extern void j_00046a65();
+extern void j_0001e33a();
+
 class PathVector
 {
 public:
@@ -27,14 +34,24 @@ public:
 	{
 	}
 
-	~PathVector();
+	// Retail calls the vector's destructor through its incremental-link thunk.
+	~PathVector()
+	{
+		typedef void (PathVector::*Fn)();
+		union
+		{
+			void (*fn)();
+			Fn call;
+		} u = { j_0000de68 };
+		(this->*u.call)();
+	}
+
 	unsigned int size() const
 	{
 		return static_cast<unsigned int>(m_finish - m_start);
 	}
-	void push_back(const Coord3D &value);
 
-	private:
+private:
 	Coord3D *m_start;
 	Coord3D *m_finish;
 	Coord3D *m_endOfStorage;
@@ -60,7 +77,14 @@ public:
 	void initialize(unsigned int count, const Coord3D &value)
 	{
 		FalseType tag;
-		insertInitial(m_finish, value, tag, count, true);
+		typedef void (SinglePathVector::*Fn)(Coord3D *, const Coord3D &,
+			const FalseType &, unsigned int, bool);
+		union
+		{
+			void (*fn)();
+			Fn call;
+		} u = { j_000070cc };
+		(this->*u.call)(m_finish, value, tag, count, true);
 	}
 
 	~SinglePathVector()
@@ -77,25 +101,14 @@ public:
 	}
 
 	private:
-	void insertInitial(Coord3D *position, const Coord3D &value,
-		const FalseType &tag, unsigned int count, bool atEnd);
-
 	Coord3D *m_start;
 	Coord3D *m_finish;
 	Coord3D *m_endOfStorage;
 };
 
-#pragma comment(linker, "/alternatename:??1PathVector@@QAE@XZ=?j_0000de68@@YAXXZ")
-#pragma comment(linker, "/alternatename:?push_back@PathVector@@QAEXABUCoord3D@@@Z=?j_00035f8f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?insertInitial@SinglePathVector@@QAEXPAUCoord3D@@ABU2@ABUFalseType@@I_N@Z=?j_000070cc@@YAXXZ")
-#pragma comment(linker, "/alternatename:?appendGoalPath@AIStateMachine@@QAEXPBUCoord3D@@@Z=?j_00046a65@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getStateTypeForBird@AIUpdateInterface@@QBE?AW4AIStateType@@XZ=?j_0001e33a@@YAXXZ")
-
 class AIStateMachine
 {
 public:
-	void appendGoalPath(const Coord3D *position);
-
 	int getGoalPathSize() const
 	{
 		return static_cast<int>(m_goalPath.size());
@@ -150,8 +163,6 @@ public:
 	virtual void privateFollowPathAppend(const Coord3D *position,
 		CommandSourceType commandSource) = 0;
 
-	AIStateType getStateTypeForBird() const;
-
 	AIStateMachine *getStateMachine()
 	{
 		return *reinterpret_cast<AIStateMachine **>(
@@ -166,23 +177,47 @@ class GiantBirdAIUpdate : public AIUpdateInterface
 		CommandSourceType commandSource);
 };
 
+static __forceinline AIStateType birdStateType(const AIUpdateInterface *update)
+{
+	typedef AIStateType (AIUpdateInterface::*Fn)() const;
+	union
+	{
+		void (*fn)();
+		Fn call;
+	} u = { j_0001e33a };
+	return (update->*u.call)();
+}
+
 void GiantBirdAIUpdate::privateFollowPathAppend(const Coord3D *position,
 	CommandSourceType commandSource)
 {
 	*(reinterpret_cast<unsigned char *>(this) + 0x488) = 0;
 
-	if (getStateTypeForBird() == 0x3F6 && getStateMachine()->getGoalPathSize() > 0)
+	if (birdStateType(this) == 0x3F6 && getStateMachine()->getGoalPathSize() > 0)
 	{
-		getStateMachine()->appendGoalPath(position);
+		typedef void (AIStateMachine::*Fn)(const Coord3D *);
+		union
+		{
+			void (*fn)();
+			Fn call;
+		} u = { j_00046a65 };
+		(getStateMachine()->*u.call)(position);
 		return;
 	}
 
-	if (getStateTypeForBird() > 0x3E8 && getStateTypeForBird() < 0x3FC &&
-		getStateTypeForBird() != 0x3ED && getStateTypeForBird() != 0x3F4)
+	if (birdStateType(this) > 0x3E8 && birdStateType(this) < 0x3FC &&
+		birdStateType(this) != 0x3ED && birdStateType(this) != 0x3F4)
 	{
+		typedef void (PathVector::*Fn)(const Coord3D &);
+		union
+		{
+			void (*fn)();
+			Fn call;
+		} u = { j_00035f8f };
+
 		PathVector path;
-		path.push_back(*getStateMachine()->getGoalPosition());
-		path.push_back(*position);
+		(path.*u.call)(*getStateMachine()->getGoalPosition());
+		(path.*u.call)(*position);
 		privateFollowPath(&path, 0, commandSource, false);
 	}
 	else
