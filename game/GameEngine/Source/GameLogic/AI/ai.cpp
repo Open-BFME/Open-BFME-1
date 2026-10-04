@@ -348,8 +348,11 @@ public:
 	TAiData *m_next;
 };
 
-extern "C" void Gen0002857EFreeListNode(void *, unsigned int);
-#pragma comment(linker, "/alternatename:_Gen0002857EFreeListNode=?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")
+// The private STLport pool entry at RVA 0x0082E5F0 is a static __cdecl
+// member; refer to its exact symbol directly rather than through a
+// stand-in name.
+extern "C" void __cdecl __identifier("?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")(
+	void *node, unsigned int bytes);
 
 struct BfmeAIResetGroupNode
 {
@@ -392,7 +395,7 @@ public:
 		BfmeAIResetGroupNode *previous = node->m_previous;
 		previous->m_next = next;
 		next->m_previous = previous;
-		Gen0002857EFreeListNode(node, 0xc);
+		__identifier("?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")(node, 0xc);
 	}
 
 	__forceinline void pop_front()
