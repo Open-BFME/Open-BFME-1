@@ -88,12 +88,12 @@ public:
 };
 
 // The first method is the already matched body behind retail ILT 0x00009453.
-// The second method is the same base-building module call behind ILT 0x0000983B.
+// The base-building module call that sits behind ILT 0x0000983B is routed
+// through j_0000983b below rather than declared as a member here.
 class Gen_00371340
 {
 public:
 	Bool hasIncompleteStructure(BfmeY982 *argument);
-	Object *build(ThingTemplate *whatToBuild, Int slot, void *argument);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
@@ -117,7 +117,12 @@ public:
 };
 
 // This BFME ILT is a five-byte thunk to the retail base-building module body.
-#pragma comment(linker, "/alternatename:?build@Gen_00371340@@QAEPAVObject@@PAVThingTemplate@@HPAX@Z=?j_0000983b@@YAXXZ")
+// Retail calls it through the thunk, so the callers route thiscall member
+// calls through the same ILT address via a member-pointer union.
+extern void j_0000983b();
+
+typedef Object *(Gen_00371340::*BaseBuildFn)(ThingTemplate *whatToBuild, Int slot,
+	void *argument);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
@@ -213,7 +218,8 @@ void ScriptActions::doBuildBaseBuilding(const AsciiString &buildingType,
 	if (!player->canAffordBuild(templateValue))
 		return;
 
-	Object *newObject = base->build(templateValue, -2, 0);
+	union { void (*fn)(); BaseBuildFn call; } buildThunk = { j_0000983b };
+	Object *newObject = (base->*buildThunk.call)(templateValue, -2, 0);
 	if (!newObject)
 		return;
 	if (referenceName.isEmpty())
@@ -257,7 +263,8 @@ void ScriptActions::doBuildBaseBuildingInSlot(const AsciiString &buildingType,
 		return;
 
 	Int slotValue = slot->m_value;
-	Object *newObject = base->build(templateValue, slotValue, 0);
+	union { void (*fn)(); BaseBuildFn call; } buildThunk = { j_0000983b };
+	Object *newObject = (base->*buildThunk.call)(templateValue, slotValue, 0);
 	if (!newObject)
 		return;
 	if (referenceName.isEmpty())
