@@ -6812,27 +6812,6 @@ StateReturnType AIWaitState::update()
 //----------------------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AIAttackStateCtorThunk.cpp
-// ??0AIAttackState@@QAE@PAVStateMachine@@_N11PAVAttackExitConditionsInterface@@@Z present-unmatched
-AIAttackState::AIAttackState( StateMachine *machine, Bool follow, Bool attackingObject, Bool forceAttacking, AttackExitConditionsInterface* attackParameters) : 
-	State( machine , "AIAttackState"), 
-	m_attackMachine(NULL),
-	m_attackParameters(attackParameters), 
-	m_lockedWeaponOnEnter(NULL), 
-	m_follow(follow),
-	m_isAttackingObject(attackingObject),
-	m_isForceAttacking(forceAttacking),
-	m_victimTeam( NULL )
-{
-	m_originalVictimPos.zero();
-#ifdef STATE_MACHINE_DEBUG
-	if (machine->getWantsDebugOutput()) {
-		DEBUG_LOG(("Creating attack state follow %d, attacking object %d, force attacking %d\n", 
-			follow, attackingObject, forceAttacking));
-	}
-#endif
-}
-
 //----------------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AIAttackStateDestructors.cpp
 // ??1AIAttackState@@MAE@XZ present-unmatched

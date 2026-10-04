@@ -17,6 +17,7 @@ public:
 class NotifyWeaponFiredInterface
 {
 public:
+	NotifyWeaponFiredInterface();
 	virtual void notifyFired() = 0;
 	virtual void notifyNewVictimChosen( void *victim ) = 0;
 	virtual bool isWeaponSlotOkToFire( int slot ) const = 0;
@@ -85,4 +86,8 @@ AIAttackState::~AIAttackState()
 		m_attackMachine->deleteInstance();
 		m_attackMachine = 0;
 	}
+}
+
+NotifyWeaponFiredInterface::NotifyWeaponFiredInterface()
+{
 }
