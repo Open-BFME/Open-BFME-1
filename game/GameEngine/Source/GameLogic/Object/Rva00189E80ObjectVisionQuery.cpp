@@ -12,13 +12,14 @@
 typedef float Real;
 typedef bool Bool;
 
-extern "C" void *bfmeVftPartitionFilterSameMapStatus[];
-extern "C" void *bfmeVftRva0025ED50RootFilter[];
-extern "C" void *bfmeVftPartitionFilterRelationship[];
 extern const void *g_010956C4[];
-#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterSameMapStatus=??_7PartitionFilterSameMapStatus@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftRva0025ED50RootFilter=??_7Rva0025ED50RootFilter@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterRelationship=??_7PartitionFilterRelationship@@6B@")
+
+// The three filter tables retail stamps are the vftables of the real BFME
+// filter classes, named directly through __identifier (MSVC's way of
+// spelling a mangled symbol) instead of a linker alias stand-in.
+extern "C" void *__identifier("_7PartitionFilterSameMapStatus@@6B@")[];
+extern "C" void *__identifier("_7Rva0025ED50RootFilter@@6B@")[];
+extern "C" void *__identifier("_7PartitionFilterRelationship@@6B@")[];
 
 struct Coord3D
 {
@@ -61,13 +62,13 @@ public:
 	__forceinline explicit Rva00189E80SameMapFilter(const Object *object)
 		: PartitionFilter()
 	{
-		m_vptr = (unsigned int)bfmeVftPartitionFilterSameMapStatus;
+		m_vptr = (unsigned int)__identifier("_7PartitionFilterSameMapStatus@@6B@");
 		m_object = object;
 	}
 
 	~Rva00189E80SameMapFilter(void)
 	{
-		m_vptr = (unsigned int)bfmeVftRva0025ED50RootFilter;
+		m_vptr = (unsigned int)__identifier("_7Rva0025ED50RootFilter@@6B@");
 	}
 
 private:
@@ -92,7 +93,7 @@ public:
 
 	~Rva00189E80RelationshipShapedFilter(void)
 	{
-		m_vptr = (unsigned int)bfmeVftRva0025ED50RootFilter;
+		m_vptr = (unsigned int)__identifier("_7Rva0025ED50RootFilter@@6B@");
 	}
 
 private:
@@ -107,7 +108,7 @@ public:
 	__forceinline PartitionFilterRelationship(const Object *object, int flags, Bool state)
 		: PartitionFilter()
 	{
-		m_vptr = (unsigned int)bfmeVftPartitionFilterRelationship;
+		m_vptr = (unsigned int)__identifier("_7PartitionFilterRelationship@@6B@");
 		m_object = object;
 		m_flags = flags;
 		m_state = state;
@@ -115,7 +116,7 @@ public:
 
 	~PartitionFilterRelationship(void)
 	{
-		m_vptr = (unsigned int)bfmeVftRva0025ED50RootFilter;
+		m_vptr = (unsigned int)__identifier("_7Rva0025ED50RootFilter@@6B@");
 	}
 
 private:
