@@ -715,3 +715,10 @@ void W3DDrawMapPreview( GameWindow *window, WinInstanceData *instData)
 
 // W3DCommandBarHelpPopupDraw exact retail body is emitted by
 // W3DCommandBarHelpPopupDrawThunk.cpp.
+
+// The out-of-line Render2DSentenceClass::PendingSurfaceStruct dtor no longer
+// drags VectorClass<Render2DClass *> into this object implicitly; the three
+// ledgered members are asked for by name.
+template bool VectorClass<Render2DClass *>::operator==(const VectorClass<Render2DClass *> & vec) const;
+template int VectorClass<Render2DClass *>::ID(Render2DClass * const & object);
+template bool VectorClass<Render2DClass *>::Resize(int newsize, Render2DClass * const * array);

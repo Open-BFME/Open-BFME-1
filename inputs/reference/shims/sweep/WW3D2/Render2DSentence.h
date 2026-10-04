@@ -1,3 +1,4 @@
+// Sweep shim: ZH render2dsentence.h verbatim except PendingSurfaceStruct declares its dtor out of line (retail has the body; no TU may emit an implicit COMDAT copy). render2d.h is named by path because a quote include would no longer find the ZH sibling.
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -41,7 +42,7 @@
 #ifndef RENDER2DSENTENCE_H
 #define RENDER2DSENTENCE_H
 
-#include "render2d.h"
+#include "../../../CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2d.h"
 #include "refcount.h"
 #include "vector.h"
 #include "vector2i.h"
@@ -56,7 +57,6 @@ class	SurfaceClass;
 //
 //	Private data structures
 //
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 class FontCharsClassCharDataStruct : public W3DMPO
 {
 	W3DMPO_GLUE(FontCharsClassCharDataStruct)
@@ -68,7 +68,6 @@ public:
 
 enum { CHAR_BUFFER_LEN		= 32768 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 class FontCharsBuffer : public W3DMPO
 {
 	W3DMPO_GLUE(FontCharsBuffer)
@@ -77,7 +76,6 @@ public:
 };
 
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 class FontCharsClass : public W3DMPO, public RefCountClass 
 {
 	W3DMPO_GLUE(FontCharsClass)
@@ -128,31 +126,22 @@ private:
 	int									PixelOverlap;
 	int									PointSize;
 	StringClass							GDIFontName;
+	HFONT									OldGDIFont;
+	HBITMAP								OldGDIBitmap;
+	HBITMAP								GDIBitmap;	
+	HFONT									GDIFont;
 	uint8 *								GDIBitmapBits;
 	HDC									MemDC;
 	FontCharsClassCharDataStruct *					ASCIICharArray[256];
 	FontCharsClassCharDataStruct **					UnicodeCharArray;
-	// BFME moves 0x10 of this block past UnicodeCharArray: Grow_Unicode_Array
-	// @0x93D320 reads UnicodeCharArray at +0x44C and FirstUnicodeChar at
-	// +0x45C, where this header gives +0x45C and +0x460 - so 0x10 leaves the
-	// area before ASCIICharArray and reappears after the pointer. These four
-	// GDI handles are the group moved because nothing pins their position (a
-	// fourth, GDIFont, goes to the class tail so the gap here is 0xC while
-	// 0x10 still leaves the front);
-	// which members BFME really keeps here is NOT proven.
-	HFONT									OldGDIFont;
-	HBITMAP								OldGDIBitmap;
-	HBITMAP								GDIBitmap;	
 	uint16								FirstUnicodeChar;
 	uint16								LastUnicodeChar;
 	bool									IsBold;
-	HFONT									GDIFont;	// relocated to the tail; see the note above
 };
 
 /*
 ** Render2DSentenceClass
 */
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 class Render2DSentenceClass {
 public:
 	//Render2DSentenceClass( FontCharsClass * font );
@@ -220,7 +209,6 @@ private:
 	//
 	//	Private structures
 	//
-	// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 	struct SentenceDataStruct {
 		SurfaceClass *		Surface;
 		RectClass			ScreenRect;
@@ -230,8 +218,8 @@ private:
 		bool operator!= (const SentenceDataStruct &src)	{ return true; }
 	};
 
-	// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 	struct PendingSurfaceStruct {
+		// retail: out of line body ??1PendingSurfaceStruct (0x0005F5E0, Render2DSentenceClass_PendingSurfaceStruct_dtor.cpp)
 		~PendingSurfaceStruct();
 		SurfaceClass *								Surface;
 		DynamicVectorClass<Render2DClass *>	Renderers;
@@ -240,7 +228,6 @@ private:
 		bool operator!= (const PendingSurfaceStruct &src)	{ return true; }
 	};
 
-	// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 	struct RendererDataStruct {
 		Render2DClass *	Renderer;
 		SurfaceClass *		Surface;

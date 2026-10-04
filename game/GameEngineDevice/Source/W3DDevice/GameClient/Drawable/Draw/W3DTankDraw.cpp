@@ -770,3 +770,8 @@ void W3DTankDraw::loadPostProcess( void )
 	createEmitters();
 
 }  // end loadPostProcess
+
+// The out-of-line Render2DSentenceClass::PendingSurfaceStruct dtor no longer
+// drags VectorClass<Render2DClass *> into this object implicitly; the ledgered
+// ID(T const *) copy is asked for by name.
+template int VectorClass<Render2DClass *>::ID(Render2DClass * const * ptr);
