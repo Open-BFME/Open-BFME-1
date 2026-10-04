@@ -152,38 +152,10 @@ AsciiString Version::getAsciiBuildTime( void )
 	return timeStr;
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/VersionGetUnicodeBuildTimeThunk.cpp
-// ?getUnicodeBuildTime@Version@@ present-unmatched
-UnicodeString Version::getUnicodeBuildTime( void )
-{
-	UnicodeString build;
-	UnicodeString dateStr;
-	UnicodeString timeStr;
-
-	dateStr.translate(m_buildDate);
-	timeStr.translate(m_buildTime);
-	build.format(TheGameText->fetch("Version:BuildTime").str(), dateStr.str(), timeStr.str());
-
-	return build;
-}
-
 // ?getAsciiBuildLocation@Version@@ present-unmatched
 AsciiString Version::getAsciiBuildLocation( void )
 {
 	return AsciiString(m_buildLocation);
-}
-
-// byte-exact reconstruction: game/GameEngine/Source/Common/VersionGetUnicodeBuildLocationThunk.cpp
-// ?getUnicodeBuildLocation@Version@@ present-unmatched
-UnicodeString Version::getUnicodeBuildLocation( void )
-{
-	UnicodeString build;
-	UnicodeString machine;
-
-	machine.translate(AsciiString(m_buildLocation));
-	build.format(TheGameText->fetch("Version:BuildMachine").str(), machine.str());
-
-	return build;
 }
 
 // ?getAsciiBuildUser@Version@@ present-unmatched
@@ -192,15 +164,3 @@ AsciiString Version::getAsciiBuildUser( void )
 	return AsciiString(m_buildUser);
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/VersionGetUnicodeBuildUserThunk.cpp
-// ?getUnicodeBuildUser@Version@@ present-unmatched
-UnicodeString Version::getUnicodeBuildUser( void )
-{
-	UnicodeString build;
-	UnicodeString user;
-
-	user.translate(AsciiString(m_buildUser));
-	build.format(TheGameText->fetch("Version:BuildUser").str(), user.str());
-
-	return build;
-}
