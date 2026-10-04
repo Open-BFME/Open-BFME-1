@@ -35,6 +35,7 @@ public:
 
 extern Int GetGameLogicRandomValue(int minimum, int maximum, char *file, int line);
 extern void j_0003f4f9();
+extern void j_000362aa();
 
 struct Coord2D
 {
@@ -102,12 +103,12 @@ public:
 	virtual void _ai_03() = 0;
 	virtual Bool computeSuperweaponTarget(const SpecialPowerTemplate *power,
 		Coord3D *retPos, Int playerNdx, Real weaponRadius);
-
-public:
-	static void getPlayerStructureBounds(Region2D *bounds, Int playerNdx);
 };
 
-#pragma comment(linker, "/alternatename:?getPlayerStructureBounds@AIPlayer@@SAXPAURegion2D@@H@Z=?j_000362aa@@YAXXZ")
+// Retail's AIPlayer::getPlayerStructureBounds is reached through the
+// incremental-link thunk at 0x000362AA; both static call sites below go there
+// directly instead of through a linker alternate-name alias.
+typedef void (__cdecl *PlayerStructureBounds)(Region2D *, Int);
 
 class AISkirmishPlayer : public AIPlayer
 {
@@ -186,7 +187,8 @@ Bool AISkirmishPlayer::computeSuperweaponTarget(const SpecialPowerTemplate *powe
 	Coord3D *retPos, Int playerNdx, Real weaponRadius)
 {
 	Region2D bounds;
-	AIPlayer::getPlayerStructureBounds(&bounds, playerNdx);
+	union { void (*raw)(); PlayerStructureBounds route; } playerBounds = { j_000362aa };
+	playerBounds.route(&bounds, playerNdx);
 
 	if (power->getName().compare("SuperweaponClusterMines") == 0)
 	{
@@ -218,7 +220,8 @@ Bool AISkirmishPlayer::computeSuperweaponTarget(const SpecialPowerTemplate *powe
 		else
 		{
 			Region2D bounds;
-			AIPlayer::getPlayerStructureBounds(&bounds, getMyEnemyPlayerIndex());
+			union { void (*raw)(); PlayerStructureBounds route; } enemyBounds = { j_000362aa };
+			enemyBounds.route(&bounds, getMyEnemyPlayerIndex());
 			goalPos.x = bounds.lo.x + bounds.width() / 2.0f;
 			goalPos.y = bounds.lo.y + bounds.height() / 2.0f;
 		}
