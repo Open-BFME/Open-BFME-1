@@ -31,6 +31,7 @@ class Rva0045A000
 };
 
 extern Real getHeightAroundPos(Real x, Real y);
+extern void j_0000a8df(void);
 extern void j_00046fa1(void);
 extern void j_000312a0(void);
 
@@ -73,7 +74,8 @@ public:
 		Real easeIn, Real easeOut);
 
 private:
-	void buildCameraTransform(Matrix3D *transform);
+	// resetCamera reaches the transform builder through the ILT at 0x0000a8df,
+	// so buildCameraTransform is called via a member pointer (see below).
 
 	char m_padding00[0x08];
 	Coord3D m_pos;
@@ -128,16 +130,22 @@ private:
 	CameraResetAux m_cameraAux;
 };
 
-#pragma comment(linker, "/alternatename:?buildCameraTransform@W3DView@@AAEXPAVMatrix3D@@@Z=?j_0000a8df@@YAXXZ")
-
 void W3DView::resetCamera(const Coord3D *location, Int milliseconds,
 	Real easeIn, Real easeOut)
 {
+	typedef void (W3DView::*BuildTransform)(Matrix3D *);
+	union
+	{
+		void (*function)(void);
+		BuildTransform member;
+	} buildTransform;
+	buildTransform.function = j_0000a8df;
+
 	if (location == 0)
 		location = &m_pos;
 
 	m_cameraAux.slot17();
-	buildCameraTransform(&m_cameraTransform);
+	(this->*buildTransform.member)(&m_cameraTransform);
 	m_cameraMovementMode = 0;
 	m_rotatingCamera = false;
 	m_doingCameraUpdate = false;
@@ -180,7 +188,7 @@ void W3DView::resetCamera(const Coord3D *location, Int milliseconds,
 	m_cameraValueB *= m_cameraScale;
 	m_pitch = 1.0f;
 	m_field30 = 0;
-	buildCameraTransform(&m_cameraTransformScratch);
+	(this->*buildTransform.member)(&m_cameraTransformScratch);
 
 	if (milliseconds > 1)
 	{
