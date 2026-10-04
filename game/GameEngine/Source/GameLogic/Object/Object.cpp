@@ -6003,12 +6003,14 @@ Bool Object::canProduceUpgrade( const UpgradeTemplate *upgrade )
 //=============================================================================
 // Object::defect, and related methods                                        =
 //=============================================================================
+extern void j_00024d70();
+
+// Retail reaches AIUpdateInterface +0x20 through the ILT thunk j_00024d70.
 class Rva00024D70AICommandCall
 {
 public:
-	void invoke(int source);
+	unsigned char m_data[0x20];
 };
-#pragma comment(linker, "/alternatename:?invoke@Rva00024D70AICommandCall@@QAEXH@Z=?j_00024d70@@YAXXZ")
 
 // Retail calls cancelAndRefundAllProduction at vtable offset +0x34.
 class BfmeDefectProductionUpdateCall
@@ -6105,28 +6107,56 @@ public:
 	BfmeDirtyablePartitionData *m_partitionData;
 };
 
+extern void j_0004067e();
+
+// Retail reaches the Drawable +0x0 thunk j_0004067e.
 class Rva0004067ECall
 {
 public:
-	void invoke(int mode);
+	unsigned char m_data[1];
 };
-#pragma comment(linker, "/alternatename:?invoke@Rva0004067ECall@@QAEXH@Z=?j_0004067e@@YAXXZ")
 
+extern void j_00047b27();
+extern void j_00026f35();
+extern void j_00019a6a();
+extern void j_0003ac88();
+
+// Retail constructs, destroys and updates this event through the ILT thunks
+// 0x00047b27 (copy ctor), 0x00026f35 (dtor), 0x00019a6a and 0x0003ac88.
 class BfmeAudioEventRTS
 {
 public:
-	BfmeAudioEventRTS(const BfmeAudioEventRTS &other);
-	~BfmeAudioEventRTS(void);
-	void setObjectID(UnsignedInt objectID);
-	void setPlayerIndex(int playerIndex);
+	__forceinline BfmeAudioEventRTS(const BfmeAudioEventRTS &other)
+	{
+		typedef void (BfmeAudioEventRTS::*Fn)(const BfmeAudioEventRTS &other);
+		union { void (*fn)(); Fn call; } u = { j_00047b27 };
+		(this->*u.call)(other);
+	}
+
+	__forceinline ~BfmeAudioEventRTS(void)
+	{
+		typedef void (BfmeAudioEventRTS::*Fn)(void);
+		union { void (*fn)(); Fn call; } u = { j_00026f35 };
+		(this->*u.call)();
+	}
+
+	__forceinline void setObjectID(UnsignedInt objectID)
+	{
+		typedef void (BfmeAudioEventRTS::*Fn)(UnsignedInt objectID);
+		union { void (*fn)(); Fn call; } u = { j_00019a6a };
+		(this->*u.call)(objectID);
+	}
+
+	__forceinline void setPlayerIndex(int playerIndex)
+	{
+		typedef void (BfmeAudioEventRTS::*Fn)(int playerIndex);
+		union { void (*fn)(); Fn call; } u = { j_0003ac88 };
+		(this->*u.call)(playerIndex);
+	}
 
 private:
 	unsigned char m_data[0x70];
 };
-#pragma comment(linker, "/alternatename:??0BfmeAudioEventRTS@@QAE@ABV0@@Z=?j_00047b27@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1BfmeAudioEventRTS@@QAE@XZ=?j_00026f35@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setObjectID@BfmeAudioEventRTS@@QAEXI@Z=?j_00019a6a@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setPlayerIndex@BfmeAudioEventRTS@@QAEXH@Z=?j_0003ac88@@YAXXZ")
 
 struct Rva005A00B0MiscAudio
 {
@@ -6240,15 +6270,19 @@ void Object::defect(Team *newTeam, UnsignedInt detectionTime)
 
 	if (ai)
 	{
-		reinterpret_cast<Rva00024D70AICommandCall *>(
-			reinterpret_cast<char *>(ai) + 0x20)->invoke(2);
+		typedef void (Rva00024D70AICommandCall::*Fn)(int source);
+		union { void (*fn)(); Fn call; } u = { j_00024d70 };
+		(reinterpret_cast<Rva00024D70AICommandCall *>(
+			reinterpret_cast<char *>(ai) + 0x20)->*u.call)(2);
 	}
 
 	Drawable *drawable =
 		reinterpret_cast<BfmeDefectObjectVtableView *>(this)->getDrawable();
 	if (drawable)
 	{
-		reinterpret_cast<Rva0004067ECall *>(drawable)->invoke(0);
+		typedef void (Rva0004067ECall::*Fn)(int mode);
+		union { void (*fn)(); Fn call; } u = { j_0004067e };
+		(reinterpret_cast<Rva0004067ECall *>(drawable)->*u.call)(0);
 
 		Rva005A00B0MiscAudio *misc = ((Rva005A00B0AudioClient *)TheAudio)->getMiscAudio();
 		BfmeAudioEventRTS defectorTimerSound(misc->m_defectorTimerTickSound);
