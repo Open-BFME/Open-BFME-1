@@ -24,6 +24,11 @@ private:
 
 }
 
+// Kept: the five member constructions below are compiler-generated, not a
+// source-level call, so no spelling names the ILT directly. The union/member
+// pointer recipe reaches ?j_0004048a@@YAXXZ but drops the per-call EH state
+// stores and the member-init ordering, and an inline forwarding constructor
+// would define the STLport ctor in this TU over the matched 0x004D4F40 body.
 #pragma comment(linker, "/alternatename:??0?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QAE@XZ=?j_0004048a@@YAXXZ")
 
 class BFMENetworkLock;
@@ -52,30 +57,22 @@ public:
 	CriticalSectionClass();
 	~CriticalSectionClass();
 
+	// The old BuddyOwnedLock slot at +0xa8 is a sentry LockClass: retail
+	// stores a null pointer there in the constructor and the generated
+	// destructor calls LockClass's own destructor on it.
 	class LockClass
 	{
 	public:
+		LockClass() : m_lock(0) {}
 		LockClass(CriticalSectionClass &criticalSection);
 		~LockClass();
 
-	private:
-		char m_body[4];
+		LockClass *m_lock;
 	};
 
 private:
 	char m_body[8];
 };
-
-class BuddyOwnedLock
-{
-public:
-	BuddyOwnedLock() : m_lock(0) {}
-	~BuddyOwnedLock();
-
-	CriticalSectionClass::LockClass *m_lock;
-};
-
-#pragma comment(linker, "/alternatename:??1BuddyOwnedLock@@QAE@XZ=??1LockClass@CriticalSectionClass@@QAE@XZ")
 
 class BuddyThreadClass : public ThreadClass
 {
@@ -97,7 +94,7 @@ private:
 	_STL::basic_string<char, _STL::char_traits<char>, _STL::allocator<char> > m_error;
 	BFMENetworkLock *m_networkLock;
 	CriticalSectionClass m_criticalSection;
-	BuddyOwnedLock m_ownedLock;
+	CriticalSectionClass::LockClass m_ownedLock;
 };
 
 BuddyThreadClass::BuddyThreadClass(BFMENetworkLock *lock) :
