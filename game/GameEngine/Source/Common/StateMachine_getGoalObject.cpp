@@ -8,6 +8,7 @@
 typedef int ObjectID;
 
 class Object;
+class State;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
@@ -26,10 +27,11 @@ public:
 	Object *getGoalObject( void );
 
 private:
-	unsigned char m_unmodelled_00[ 0x1c ];
+	unsigned char m_unmodelled_00[ 0x18 ];
+	State *m_currentState;				// +0x1c
 	ObjectID m_goalObjectID;				// +0x20
 	unsigned char m_unmodelled_24[ 0x1c ];
-	unsigned char m_halted;				// +0x40
+	unsigned char m_locked;				// +0x40
 };
 
 // ?getGoalObject@StateMachine@@QAEPAVObject@@XZ
@@ -38,7 +40,10 @@ Object *StateMachine::getGoalObject( void )
 	return TheGameLogic->findObjectByID( m_goalObjectID );
 }
 
+// Retail 0x000A00A0 is one 12-byte body through RET at +0x0b.
+// Identity/extent: targets/game/reverse/identity_evidence/000a00a0-halt.md
 void StateMachine::halt( void )
 {
-	m_halted = 1;
+	m_locked = 1;
+	m_currentState = 0; // Halt does not call the current state's onExit.
 }
