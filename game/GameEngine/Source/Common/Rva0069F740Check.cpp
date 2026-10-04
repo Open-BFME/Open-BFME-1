@@ -8,6 +8,8 @@ extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
 	void *handle, unsigned long milliseconds);
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
 
+extern void j_0001815b();
+
 struct Rva0069F740Slot
 {
 	void *m_head;
@@ -25,7 +27,6 @@ class Rva0069F740Owner
 {
 public:
 	bool check();
-	Rva0069F740Ref getSlot(int group, int inner);
 
 	char m_pad0[0x95c];
 	void *m_mutex;
@@ -68,7 +69,9 @@ bool Rva0069F740Owner::check()
 		{
 			if (inner == m_current[group])
 			{
-				if (getSlot(group, inner).m_value != m_sentinel)
+				typedef Rva0069F740Ref (Rva0069F740Owner::*GetSlot)(int, int);
+				union { void (*fn)(); GetSlot call; } getSlot = { j_0001815b };
+				if ((this->*getSlot.call)(group, inner).m_value != m_sentinel)
 					return true;
 			}
 			else
