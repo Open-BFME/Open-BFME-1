@@ -1,12 +1,14 @@
 // cl: /O2
 // Retail RVA 0x005DB900. Destructor ILT 0x0003B8DB routes directly to the
 // matched SphericalEmissionVelocity specialization destructor at 0x005DB850.
-extern "C" void *bfmeVftSnapshotBase[4];
-#pragma comment(linker, "/alternatename:_bfmeVftSnapshotBase=??_7BfmeBaseVUQ@@6B@")
-extern "C" const void *bfmeVftCategoryModuleInfo4[];
-#pragma comment(linker, "/alternatename:_bfmeVftCategoryModuleInfo4=??_7?$CategoryModuleInfo@$03@FXParticleSystem@@6B@")
-extern "C" const void *bfmeVftModuleTemplate[];
-#pragma comment(linker, "/alternatename:_bfmeVftModuleTemplate=??_7ModuleTemplate@FXParticleSystem@@6B@")
+// The three vftable DATA symbols this destructor stores are named by their
+// defining mangled names; __identifier (MSVC's verbatim-name extension)
+// declares a reference to them without declaring the classes whose vftables
+// they are, so no linker alias stand-in is needed. Same technique as
+// game/GameEngine/Source/GameClient/Drawable/Behavior/RandomSoundSelectorClientBehaviorModuleDataDestructor.cpp
+extern "C" int __identifier("??_7BfmeBaseVUQ@@6B@")[];
+extern "C" int __identifier("??_7?$CategoryModuleInfo@$03@FXParticleSystem@@6B@")[];
+extern "C" int __identifier("??_7ModuleTemplate@FXParticleSystem@@6B@")[];
 
 namespace FXParticleSystem
 {
@@ -41,10 +43,10 @@ ConcreteModuleTemplate<ModuleTag<4,
     DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > >::~ConcreteModuleTemplate()
 {
 	unsigned char *info = this ? (unsigned char *)this + 8 : 0;
-	*(volatile unsigned int *)info = (unsigned int)bfmeVftSnapshotBase;
+	*(volatile unsigned int *)info = (unsigned int)__identifier("??_7BfmeBaseVUQ@@6B@");
 
 	unsigned char *base = this ? (unsigned char *)this + 4 : 0;
-	*(volatile unsigned int *)base = (unsigned int)bfmeVftCategoryModuleInfo4;
-	*(volatile unsigned int *)this = (unsigned int)bfmeVftModuleTemplate;
+	*(volatile unsigned int *)base = (unsigned int)__identifier("??_7?$CategoryModuleInfo@$03@FXParticleSystem@@6B@");
+	*(volatile unsigned int *)this = (unsigned int)__identifier("??_7ModuleTemplate@FXParticleSystem@@6B@");
 }
 }
