@@ -37,10 +37,6 @@ struct Rva0006AA90InsertResult
 class Rva0006AA90Vector
 {
 public:
-	Rva0006AA90InsertResult insertUnique(const Rva0006AA90Element &value);
-	Rva0006AA90InsertResult *insertUnique(volatile Rva0006AA90InsertResult *result,
-		const Rva0006AA90Element &value);
-
 	Rva0006AA90Element *m_start;
 	Rva0006AA90Element *m_finish;
 	Rva0006AA90Element *m_end;
@@ -49,7 +45,7 @@ public:
 	unsigned char m_reserved[2];
 };
 
-#pragma comment(linker, "/alternatename:?insertUnique@Rva0006AA90Vector@@QAEPAURva0006AA90InsertResult@@PCU2@ABURva0006AA90Element@@@Z=?j_00030053@@YAXXZ")
+extern void j_00030053();
 
 class Rva0006AB10Curve
 {
@@ -76,7 +72,10 @@ void Rva0006AB10Curve::set(float time, float value, int inTangent,
 	int outTangent)
 {
 	Rva0006AB10SetLocals locals(time, value, inTangent, outTangent);
-	Rva0006AA90InsertResult *inserted = m_points.insertUnique(
+	typedef Rva0006AA90InsertResult *(Rva0006AA90Vector::*Insert)(
+		volatile Rva0006AA90InsertResult *, const Rva0006AA90Element &);
+	union { void (*fn)(); Insert call; } insert = { j_00030053 };
+	Rva0006AA90InsertResult *inserted = (m_points.*insert.call)(
 		&locals.m_result, locals.m_point);
 	inserted->m_second;
 	m_current = m_points.m_finish;
