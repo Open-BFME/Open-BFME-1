@@ -9056,57 +9056,7 @@ void AIAttackAreaState::onExit( StateExitType status )
 //----------------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AIAttackAreaState_update_Bfme.cpp
 // ?update@AIAttackAreaState@@UAE?AW4StateReturnType@@XZ present-unmatched
-StateReturnType AIAttackAreaState::update()
-{
-	// look around for better victims every so often
-	UnsignedInt now = TheGameLogic->getFrame();
-	if (now >= m_nextEnemyScanTime)
-	{
-		Object* owner = getMachineOwner();
-
-		// if all of our weapons are out of ammo, can't hunt.
-		// (this can happen for units which never auto-reload, like the Raptor)
-		if (owner->isOutOfAmmo() && !owner->isKindOf(KINDOF_PROJECTILE))
-			return STATE_FAILURE;
-
-		// first time thru, add a random amount so that everyone doesn't scan on the same frame,
-		// to avoid "spikes". Note that this implementation ensures that this unit checks immediately
-		// upon entering this state, then wait a possibly-longer-than-usual time (due to randomness),
-		// then settle into a regular schedule.
-		m_nextEnemyScanTime = now + ENEMY_SCAN_RATE;
-
-		AIUpdateInterface *ai = owner->getAI();
-		if (ai->getAreaToGuard() == NULL) 
-			return STATE_FAILURE;
-
-		const AttackPriorityInfo *info = NULL;
-		info = ai->getAttackInfo();
-		PartitionFilterPolygonTrigger polyFilter(ai->getAreaToGuard());
-
-		// do NOT do line of sight check - we want to find everything
-		Object *victim = TheAI->findClosestEnemy( owner, 9999.9f, AI::CAN_ATTACK, info, &polyFilter );
-		m_attackMachine->setGoalObject( victim );
-
-		if (m_attackMachine->getCurrentStateID() == AI_IDLE && victim)	
-		{
-			m_attackMachine->setState( AI_ATTACK_OBJECT );
-		}
-		if (victim==NULL) {
-			return STATE_SUCCESS;
-		}
-	}
-
-	getMachine()->lock("AIAttackAreaState::update");	// The idle state in the sub machine can sometimes acquire targets. 
-												// It is important to not switch out of this state via a sub machine call. jba.
-	/* 
-		Note the use of CONVERT_SLEEP_TO_CONTINUE; even if the sub-machine
-		sleeps, we still need to be called every frame.
-	*/
-			/// @todo srj -- find a way to sleep for a number of frames here, if possible
-	StateReturnType ret = CONVERT_SLEEP_TO_CONTINUE(m_attackMachine->updateStateMachine());
-	getMachine()->unlock();
-	return ret;
-}
+// The retail override is owned by the reconstruction above; keep its virtual declaration.
 
 
 //----------------------------------------------------------------------------------------------------------
