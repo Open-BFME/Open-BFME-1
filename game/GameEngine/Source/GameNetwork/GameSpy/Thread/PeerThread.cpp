@@ -268,7 +268,7 @@ public:
 	std::string ladderIP( void ) { return m_ladderIP; }
 	UnsignedShort ladderPort( void ) { return m_ladderPort; }
 	std::string pingStr( void ) { return m_pingStr; }
-	std::string getPlayerName(Int idx) { return m_playerNames[idx]; }
+	std::string getPlayerName(Int idx); // defined at retail 0x00647810 in PeerThreadGetPlayerName.cpp
 	Int getPlayerWins(Int idx) { return m_playerWins[idx]; }
 	Int getPlayerLosses(Int idx) { return m_playerLosses[idx]; }
 	Int getPlayerProfileID(Int idx) { return m_playerProfileID[idx]; }
