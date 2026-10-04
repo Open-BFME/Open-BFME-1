@@ -1,6 +1,7 @@
 // cl: /O2 /DNDEBUG /DWIN32 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Retail action-template 434, UNIT_SET_MODELCONDITION_FOR_DURATION, RVA 0x002FABE0.
-// The final callee keeps its address token: Object::rva001D02C0 (0x001D02C0).
+// The final callee is reached through ILT thunk 0x00049D73, which forwards to
+// the landed body 0x001D02C0 (ObjectRva001D02C0.cpp); it is named directly.
 
 extern "C" int __cdecl memcmp(const void *, const void *, unsigned int);
 #pragma intrinsic(memcmp)
@@ -11,14 +12,15 @@ typedef bool Bool;
 typedef int Int;
 typedef float Real;
 
-// Landed body 0x001D02C0 (ObjectRva001D02C0.cpp), called through ILT 0x00049D73.
+// Landed body 0x001D02C0 (ObjectRva001D02C0.cpp); this call site targets the
+// retail ILT thunk 0x00049D73 that forwards to it, so name the thunk directly.
 class Object
 {
-public:
-	void rva001D02C0(Int condition, Int frames, Real percent);
 };
 
-#pragma comment(linker, "/alternatename:?rva001D02C0@Object@@QAEXHHM@Z=?j_00049d73@@YAXXZ")
+extern void j_00049d73();
+
+typedef void (Object::*SetModelConditionForDuration)(Int condition, Int frames, Real percent);
 
 class ScriptEngine
 {
@@ -86,5 +88,6 @@ void ScriptActions::doUnitSetModelConditionForDuration(
 	return;
 
 matched:
-	unit->rva001D02C0(condition, frames, percent);
+	union { void (*fn)(); SetModelConditionForDuration call; } u = { j_00049d73 };
+	(unit->*u.call)(condition, frames, percent);
 }
