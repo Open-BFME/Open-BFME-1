@@ -69,13 +69,14 @@ public:
 		StringBase<char> filename, WindowLayoutInfo *info, void *extra);
 };
 
+// The TU-local stand-in class stays empty: the loader it used to declare is
+// reached through the retail ILT thunk at 0x000429A6, not through a member.
 class BfmeAptManager
 {
-public:
-	void *loadLayout(AsciiString *filename, WindowLayoutInfo *info);
 };
 
-#pragma comment(linker, "/alternatename:?loadLayout@BfmeAptManager@@QAEPAXPAVAsciiString@@PAVWindowLayoutInfo@@@Z=?j_000429a6@@YAXXZ")
+// Retail ILT thunk for the 0x0046A870 loader body; called as a member below.
+extern void j_000429a6();
 
 class WindowManager;
 
@@ -108,12 +109,22 @@ Bool WindowLayoutInfo::load(AsciiString filename)
 	const char *begin = extension;
 	const char *end = begin + length;
 	void *result;
+
+	// j_000429a6 is a 5-byte ILT thunk; go through it as the member it stands
+	// in for so the thiscall and the reused argument slots come out the same.
+	typedef void *(BfmeAptManager::*LoadLayoutFn)(AsciiString *, WindowLayoutInfo *);
+	union
+	{
+		void (*thunk)();
+		LoadLayoutFn loadLayout;
+	} aptLoader = { j_000429a6 };
+
 	while (extension != end)
 	{
 		if (*extension == '.')
 		{
 			if (_strcmpi(extension, ".apt") == 0)
-				result = localAptManager()->loadLayout(&filename, this);
+				result = (localAptManager()->*aptLoader.loadLayout)(&filename, this);
 			else
 				result = TheWindowManager->winCreateFromScript(
 					*(StringBase<char> *)&filename, this, 0);
