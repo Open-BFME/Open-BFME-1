@@ -2,6 +2,7 @@
 // BFME W3DVideoBuffer allocation with its embedded 0x14-byte render state.
 
 void __cdecl W3DRadarResetLock(void);
+extern void j_0002d5ab();
 char __cdecl bfmeUnlock1179(void);
 
 class TextureLoader
@@ -22,8 +23,6 @@ private:
 	char m_surface[4];
 	unsigned int m_flags;
 };
-
-#pragma comment(linker, "/alternatename:?rva0073a050@Rva00739C70State@@QAE_NIIIIII@Z=?j_0002d5ab@@YAXXZ")
 
 class W3DRadarResetGuard
 {
@@ -104,9 +103,11 @@ bool W3DVideoBuffer::allocate(unsigned int width, unsigned int height, bool flag
 	}
 
 	int index = 0;
+	typedef bool (Rva00739C70State::*Fn)(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int);
+	union { void (*fn)(); Fn call; } u = { j_0002d5ab };
 	Rva00739C70State *state = m_states;
 	while (index < 1) {
-		if (!state->rva0073a050(m_texture_width, m_texture_height,
+		if (!(state->*u.call)(m_texture_width, m_texture_height,
 			m_width, m_height, state_format, 0))
 			return false;
 		++index;
