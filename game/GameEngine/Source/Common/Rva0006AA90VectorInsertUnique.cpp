@@ -26,13 +26,24 @@ struct Rva0006AA90InsertResult
 	bool m_second;
 };
 
-void *bfmeCurveFind(void *, void *, void *, unsigned int, int);
-#pragma comment(linker, "/alternatename:?bfmeCurveFind@@YAPAXPAX00IH@Z=?bfmeSendEventA19@@YAXPAX00IH@Z")
+// Retail 0x00049896 is the lower-bound helper the vector-insert body calls.
+// Its proven identity is bfmeSendEventA19 (a void-returning dispatch wrapper
+// that retail passes the raw pointers to), so declare that real name here and
+// reach its pointer-returning result through a call through it: the retail
+// body keeps the returned iterator in eax.
+void __cdecl bfmeSendEventA19(void *, void *, void *, unsigned int, int);
+
+typedef void *(__cdecl *Rva0006AA90CurveFind)(void *, void *, void *,
+	unsigned int, int);
+
+// Retail 0x00040566 is the ILT thunk the body reaches the vector insert
+// through; the thunk itself carries no signature, so call it through a
+// same-shaped member pointer (as the other recovered bodies do).
+extern void j_00040566();
 
 class Rva0006AA90Vector
 {
 public:
-	void *insert(void *position, const void *value);
 	Rva0006AA90InsertResult insertUnique(const Rva0006AA90Element &value);
 
 	Rva0006AA90Element *m_start;
@@ -42,8 +53,6 @@ public:
 	unsigned char m_flag;
 };
 
-#pragma comment(linker, "/alternatename:?insert@Rva0006AA90Vector@@QAEPAXPAXPBX@Z=?j_00040566@@YAXXZ")
-
 Rva0006AA90InsertResult Rva0006AA90Vector::insertUnique(
 	const Rva0006AA90Element &value)
 {
@@ -52,11 +61,17 @@ Rva0006AA90InsertResult Rva0006AA90Vector::insertUnique(
 	unsigned int code = *flag;
 	Rva0006AA90Element *start = m_start;
 	Rva0006AA90Element *finish = m_finish;
-	Rva0006AA90Element *position = (Rva0006AA90Element *)bfmeCurveFind(
-		start, finish, (void *)&value, code, 0);
+	Rva0006AA90Element *position = (Rva0006AA90Element *)((
+		Rva0006AA90CurveFind)(void *)bfmeSendEventA19)(
+			start, finish, (void *)&value, code, 0);
 	if (position == finish || value.m_key < position->m_key)
 	{
-		position = (Rva0006AA90Element *)insert(position, &value);
+		typedef void *(Rva0006AA90Vector::*Rva0006AA90Insert)(
+			void *, const void *);
+		union { void (*fn)(); Rva0006AA90Insert call; }
+			insertThunk = { j_00040566 };
+		position = (Rva0006AA90Element *)(this->*insertThunk.call)(
+			position, &value);
 		duplicate = false;
 	}
 	bool inserted = !duplicate;
