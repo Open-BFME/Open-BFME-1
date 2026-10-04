@@ -7,15 +7,14 @@
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
 
-class FatalErrorContext
+#include <exception>
+
+class FunctorNotSet : public std::exception
 {
 public:
-	FatalErrorContext();
-	char m_fields[0xc];
+	FunctorNotSet() : std::exception() {}
 };
 
-extern char g_missingTimedOperationMessage[];
-__declspec(noreturn) void __stdcall reportFatalError(FatalErrorContext *context, char *message);
 extern float g_millisecondsToSeconds;
 
 class TimedOperation
@@ -57,8 +56,7 @@ unsigned int TimedOperationNode::update(void)
 
 	if (operation == 0)
 	{
-		FatalErrorContext context;
-		reportFatalError(&context, g_missingTimedOperationMessage);
+		throw FunctorNotSet();
 	}
 
 	return operation->update(elapsedSeconds, firstCall);

@@ -7,15 +7,14 @@
 // apply2=0x00522360, apply3=0x005223C0). Same layout/throw path; only the
 // pushed vslot-call argument differs.
 
-class BfmeErr1043
+#include <exception>
+
+class FunctorNotSet : public std::exception
 {
 public:
-	BfmeErr1043();
-	char m_bfmePad[0xc];
+	FunctorNotSet() : std::exception() {}
 };
 
-extern char g_bfmeMsg1043[];
-__declspec(noreturn) void __stdcall bfmeFatal1043(BfmeErr1043 *e, char *m);
 
 class Rva005222A0Iface
 {
@@ -36,8 +35,7 @@ public:
 	{
 		if (m_p == 0)
 		{
-			BfmeErr1043 e;
-			bfmeFatal1043(&e, g_bfmeMsg1043);
+			throw FunctorNotSet();
 		}
 		return m_p;
 	}

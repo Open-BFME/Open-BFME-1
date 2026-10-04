@@ -5,18 +5,17 @@
 // the registration string is "AptGuiFX::MessageBoxShown".  The callback
 // forwards event code 1 through the object stored at this + 0x40.
 //
-// g_bfmeMsg1042 is a legacy relocation alias: retail DIR32 0x011E1CE4 is
-// MSVC ThrowInfo for FunctorNotSet/exception, not message text.
+// The throw below pushes retail ThrowInfo 0xDE1CE4 (FunctorNotSet),
+// which the compiler now emits itself for `throw FunctorNotSet()`.
 
-class BfmeErr1042
+#include <exception>
+
+class FunctorNotSet : public std::exception
 {
 public:
-	BfmeErr1042();
-	char m_bfmePad[0xc];
+	FunctorNotSet() : std::exception() {}
 };
 
-extern char g_bfmeMsg1042[];
-__declspec(noreturn) void __stdcall bfmeFatal1042(BfmeErr1042 *e, char *m);
 
 class Rva00522470Iface
 {
@@ -37,8 +36,7 @@ public:
 	{
 		if (m_p == 0)
 		{
-			BfmeErr1042 e;
-			bfmeFatal1042(&e, g_bfmeMsg1042);
+			throw FunctorNotSet();
 		}
 		return m_p;
 	}

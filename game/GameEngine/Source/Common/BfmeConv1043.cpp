@@ -1,15 +1,13 @@
 // Open-BFME5 conversions.
 
-class BfmeErr1043
+#include <exception>
+
+class FunctorNotSet : public std::exception
 {
 public:
-	BfmeErr1043();
-
-	char m_bfmePad[0xc];
+	FunctorNotSet() : std::exception() {}
 };
 
-extern char g_bfmeMsg1043[];
-__declspec(noreturn) void __stdcall bfmeFatal1043(BfmeErr1043 *e, char *m);
 
 class BfmeB1043
 {
@@ -32,9 +30,7 @@ void BfmeC1043::bfmeGo1043A(int a, int b)
 	BfmeB1043 *p = m_bfmeP;
 
 	if (p == 0) {
-		BfmeErr1043 e;
-
-		bfmeFatal1043(&e, g_bfmeMsg1043);
+		throw FunctorNotSet();
 	}
 
 	p->bfmeDo1043(a, b);
@@ -45,9 +41,7 @@ void BfmeC1043::bfmeGo1043B(int a, int b)
 	BfmeB1043 *p = m_bfmeP;
 
 	if (p == 0) {
-		BfmeErr1043 e;
-
-		bfmeFatal1043(&e, g_bfmeMsg1043);
+		throw FunctorNotSet();
 	}
 
 	p->bfmeDo1043(a, b);
@@ -74,9 +68,7 @@ void BfmeJ1043::bfmeGo1043D(int a, int b, int c)
 	BfmeK1043 *p = m_bfmeP;
 
 	if (p == 0) {
-		BfmeErr1043 e;
-
-		bfmeFatal1043(&e, g_bfmeMsg1043);
+		throw FunctorNotSet();
 	}
 
 	p->bfmeDo3_1043(a, b, c);
@@ -87,9 +79,7 @@ void BfmeJ1043::bfmeGo1043E(int a, int b, int c)
 	BfmeK1043 *p = m_bfmeP;
 
 	if (p == 0) {
-		BfmeErr1043 e;
-
-		bfmeFatal1043(&e, g_bfmeMsg1043);
+		throw FunctorNotSet();
 	}
 
 	p->bfmeDo3_1043(a, b, c);
@@ -115,9 +105,7 @@ void BfmeL1043::bfmeGo1043F(int a, int b, int c, int d)
 	BfmeM1043 *p = m_bfmeP;
 
 	if (p == 0) {
-		BfmeErr1043 e;
-
-		bfmeFatal1043(&e, g_bfmeMsg1043);
+		throw FunctorNotSet();
 	}
 
 	p->bfmeDo4_1043(a, b, c, d);
@@ -136,9 +124,7 @@ int BfmeN1043::bfmeGo1043H(int a, int b)
 	BfmeB1043 *p = m_bfmeP;
 
 	if (p == 0) {
-		BfmeErr1043 e;
-
-		bfmeFatal1043(&e, g_bfmeMsg1043);
+		throw FunctorNotSet();
 	}
 
 	p->bfmeDo1043(a, b);

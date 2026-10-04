@@ -1,15 +1,13 @@
 // Open-BFME5 conversions.
 
-class BfmeErr1042
+#include <exception>
+
+class FunctorNotSet : public std::exception
 {
 public:
-	BfmeErr1042();
-
-	char m_bfmePad[0xc];
+	FunctorNotSet() : std::exception() {}
 };
 
-extern char g_bfmeMsg1042[];
-__declspec(noreturn) void __stdcall bfmeFatal1042(BfmeErr1042 *e, char *m);
 
 class BfmeB1042
 {
@@ -39,9 +37,7 @@ void BfmeA1042N::bfmeGo1042D(void)
 	BfmeB1042N *p = m_bfmeP;
 
 	if (p == 0) {
-		BfmeErr1042 e;
-
-		bfmeFatal1042(&e, g_bfmeMsg1042);
+		throw FunctorNotSet();
 	}
 
 	p->bfmeDoN1042();
@@ -62,9 +58,7 @@ void BfmeA1042::bfmeGo1042A(int a)
 	BfmeB1042 *p = m_bfmeP;
 
 	if (p == 0) {
-		BfmeErr1042 e;
-
-		bfmeFatal1042(&e, g_bfmeMsg1042);
+		throw FunctorNotSet();
 	}
 
 	p->bfmeDo1042(a);
@@ -75,9 +69,7 @@ void BfmeA1042::bfmeGo1042B(int a)
 	BfmeB1042 *p = m_bfmeP;
 
 	if (p == 0) {
-		BfmeErr1042 e;
-
-		bfmeFatal1042(&e, g_bfmeMsg1042);
+		throw FunctorNotSet();
 	}
 
 	p->bfmeDo1042(a);
@@ -88,9 +80,7 @@ void BfmeA1042::bfmeGo1042C(int a)
 	BfmeB1042 *p = m_bfmeP;
 
 	if (p == 0) {
-		BfmeErr1042 e;
-
-		bfmeFatal1042(&e, g_bfmeMsg1042);
+		throw FunctorNotSet();
 	}
 
 	p->bfmeDo1042(a);

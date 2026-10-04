@@ -1,14 +1,13 @@
 // Open-BFME: the shared two-slot callback body at retail RVA 0x004C6000.
 
-class BfmeErr1043
+#include <exception>
+
+class FunctorNotSet : public std::exception
 {
 public:
-	BfmeErr1043();
-	char m_pad[0xc];
+	FunctorNotSet() : std::exception() {}
 };
 
-extern char g_bfmeMsg1043[];
-__declspec(noreturn) void __stdcall bfmeFatal1043(BfmeErr1043 *, char *);
 
 class Gen004C6000Callback
 {
@@ -29,8 +28,7 @@ public:
 	{
 		if (m_callback == 0)
 		{
-			BfmeErr1043 error;
-			bfmeFatal1043(&error, g_bfmeMsg1043);
+			throw FunctorNotSet();
 		}
 		return m_callback;
 	}

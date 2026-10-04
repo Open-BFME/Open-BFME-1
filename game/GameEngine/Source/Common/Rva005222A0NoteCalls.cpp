@@ -6,15 +6,14 @@
 // Three 66B twins at +0x3C (imm 0/2/3) and a 52B sibling at +0x40 (imm 0).
 // Same throw ILT/ThrowInfo as BfmeA1042::bfmeGo1042B at 0x00521EE0.
 
-class BfmeErr1042
+#include <exception>
+
+class FunctorNotSet : public std::exception
 {
 public:
-	BfmeErr1042();
-	char m_bfmePad[0xc];
+	FunctorNotSet() : std::exception() {}
 };
 
-extern char g_bfmeMsg1042[];
-__declspec(noreturn) void __stdcall bfmeFatal1042(BfmeErr1042 *e, char *m);
 
 class Rva005222A0Iface
 {
@@ -35,8 +34,7 @@ public:
 	{
 		if (m_p == 0)
 		{
-			BfmeErr1042 e;
-			bfmeFatal1042(&e, g_bfmeMsg1042);
+			throw FunctorNotSet();
 		}
 		return m_p;
 	}
