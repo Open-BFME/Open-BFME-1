@@ -84,13 +84,16 @@ private:
 	Rva000B0D10VectorStorage m_vector8c;
 };
 
-extern "C" const void *bfmeVftAudioEventInfo[];
-#pragma comment(linker, "/alternatename:_bfmeVftAudioEventInfo=??_7AudioEventInfo@@6B@")
+// Retail vtable 0x010818CC is AudioEventInfo's vftable, i.e.
+// ??_7AudioEventInfo@@6B@ (targets/game/reverse/dir32_addresses.csv).
+// The declaration carries no C++ name: __identifier spells the retail symbol
+// exactly, so the store below references the defining name.
+extern "C" int __identifier("??_7AudioEventInfo@@6B@")[];
 
 AudioEventInfo::AudioEventInfo()
 {
 	m_zero = 0;
-	m_vft = (int)bfmeVftAudioEventInfo;
+	m_vft = (int)(void *)__identifier("??_7AudioEventInfo@@6B@");
 	m_name = 0;
 	m_filename = 0;
 	m_volume = 0x42c80000;
