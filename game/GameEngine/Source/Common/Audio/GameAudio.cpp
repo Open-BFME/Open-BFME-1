@@ -916,23 +916,6 @@ AudioEventInfo *AudioManager::newAudioEventInfo( AsciiString audioName )
 }
 
 //-------------------------------------------------------------------------------------------------
-// Add an AudioEventInfo structure allocated elsewhere to the audio event list
-// ?addAudioEventInfo@AudioManager@@ present-unmatched
-void AudioManager::addAudioEventInfo( AudioEventInfo * newEvent )
-{
-  // Warning: Don't try to copy the structure. It may be a derived class
-  AudioEventInfo *eventInfo = findAudioEventInfo( newEvent->m_audioName );
-  if (eventInfo) 
-  {
-    DEBUG_CRASH(("Requested add of '%s' multiple times. Is this intentional? - jkmcd\n", newEvent->m_audioName.str()));
-    *eventInfo = *newEvent;
-  }
-  else
-  {
-    m_allAudioEventInfo[newEvent->m_audioName] = newEvent;
-  }
-}
-
 //-------------------------------------------------------------------------------------------------
 // ?findAudioEventInfo@AudioManager@@ present-unmatched
 AudioEventInfo *AudioManager::findAudioEventInfo( AsciiString eventName ) const
