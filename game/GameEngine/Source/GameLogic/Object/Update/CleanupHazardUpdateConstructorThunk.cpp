@@ -3,10 +3,8 @@
 #pragma intrinsic(_ReadWriteBarrier)
 extern "C" void _ReadWriteBarrier(void);
 
-extern "C" const void *bfmeVftExitInterface[];
-extern "C" const void *bfmeVftRva002D0480NestedDtor_ThirdMixin[];
-#pragma comment(linker, "/alternatename:_bfmeVftExitInterface=??_7ExitInterface@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftRva002D0480NestedDtor_ThirdMixin=??_7Rva002D0480NestedDtor@@6BRva002D0480NestedDtorThirdMixin@@@")
+extern "C" void *__identifier("??_7ExitInterface@@6B@")[];
+extern "C" void *__identifier("??_7Rva002D0480NestedDtor@@6BRva002D0480NestedDtorThirdMixin@@@")[];
 extern const void *g_010CB764[];
 extern const void *g_010CB6A0[];
 extern const void *g_010CB690[];
@@ -90,13 +88,13 @@ CleanupHazardUpdate::CleanupHazardUpdate(Thing *thing, const ModuleData *moduleD
     : CleanupHazardUpdateModule(thing, moduleData)
 {
     volatile unsigned int *words = (volatile unsigned int *)this;
-    words[8] = (unsigned int)bfmeVftExitInterface;
+    words[8] = (unsigned int)__identifier("??_7ExitInterface@@6B@");
     words[9] = 0;
     words[14] = 0;
     words[0] = (unsigned int)g_010CB764;
     words[3] = (unsigned int)g_010CB6A0;
     words[4] = (unsigned int)g_010CB690;
-    words[8] = (unsigned int)bfmeVftRva002D0480NestedDtor_ThirdMixin;
+    words[8] = (unsigned int)__identifier("??_7Rva002D0480NestedDtor@@6BRva002D0480NestedDtorThirdMixin@@@");
     words[10] = 0;
     words[11] = 0;
     words[12] = 0;
