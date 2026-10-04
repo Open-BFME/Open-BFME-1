@@ -10,6 +10,14 @@ struct Gen_t_0036a520_p16cd
 	char m_body[0x10];
 };
 
+// The retail overflow body releases its old buffer through the vector that
+// owns the retired storage, whose _M_clear is the 16-byte STLport body at
+// 0x00369A60 (game/gen_small/tgrid_111.cpp).
+struct Gen_t_00369a60_p16cd
+{
+	char m_body[0x10];
+};
+
 namespace _STL
 {
 template <class Destination, class Value>
@@ -29,8 +37,6 @@ class __new_alloc
 public:
 	static void *__cdecl allocate(unsigned int bytes);
 };
-
-#pragma comment(linker, "/alternatename:?_M_clear@?$vector@UGen_t_0036a520_p16cd@@V?$allocator@UGen_t_0036a520_p16cd@@@_STL@@@_STL@@IAEXXZ=?_M_clear@?$vector@UGen_t_00369a60_p16cd@@V?$allocator@UGen_t_00369a60_p16cd@@@_STL@@@_STL@@IAEXXZ")
 
 template <class Type>
 __forceinline void construct(Type *destination, const Type &value)
@@ -81,6 +87,19 @@ protected:
 	Type *_M_end_of_storage;
 };
 
+// The retired buffer is released through the 16-byte vector whose _M_clear
+// body is the retail one at 0x00369A60; _M_clear is protected, so reach it
+// through a local derived shim that inlines away to the call itself.
+struct ReleasedVectorHolder :
+	vector<Gen_t_00369a60_p16cd,
+		allocator<Gen_t_00369a60_p16cd> >
+{
+	__forceinline void Release()
+	{
+		_M_clear();
+	}
+};
+
 template <class Type, class Allocator>
 void vector<Type, Allocator>::_M_insert_overflow(
 	Type *position, const Type &value, const __false_type &,
@@ -123,7 +142,9 @@ void vector<Type, Allocator>::_M_insert_overflow(
 			newFinish = uninitialized_copy(position, last, newFinish);
 	}
 
-	_M_clear();
+	// The retired buffer is owned by the 16-byte vector whose _M_clear body is
+	// the retail one at 0x00369A60, so call it through its own instantiation.
+	((ReleasedVectorHolder *)this)->Release();
 
 	_M_finish = newFinish;
 	_M_start = newStart;
