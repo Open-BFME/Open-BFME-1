@@ -206,7 +206,6 @@ class AudioManager;
 extern AudioManager *TheAudio;
 extern unsigned char g_012F0239;
 extern void *g_012ED4FC;
-extern Real g_01098AD4;
 extern Real g_01083B6C;
 
 extern void j_000022bb(void);
@@ -416,7 +415,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 	Real lengthEstimate = delta.GetLengthEstimate2D();
 
 	Bool startSound;
-	if (lengthEstimate > g_01098AD4)
+	if (lengthEstimate > 2.5f)
 	{
 		startSound = 1;
 		if (g_012F0239 && g_012ED4FC)
@@ -536,9 +535,3 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 // ABI-compatible local spellings resolve to independently witnessed global pins.
 #pragma comment(linker, "/alternatename:?g_012F0239@@3EA=?Glo012F0239@@3_NA")
 #pragma comment(linker, "/alternatename:?g_012ED4FC@@3PAXA=?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A")
-
-// g_01098AD4 (retail VA 0x01098AD4, float 2.5f, also __real@40200000) is left
-// unresolved on purpose: no object in the tree defines that datum under any
-// spelling, so an alias to g_bfmeOffsetDF only moved the dangling name.  It
-// needs a data row and a defining TU, not a linker directive here.
-
