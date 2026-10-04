@@ -1,7 +1,9 @@
 // cl: /O2 /Ob0
 
-extern "C" const void *bfmeVftRva00265150RJFilter[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva00265150RJFilter=??_7Rva00265150RJFilter@@6B@")
+// Retail stores 0x00265150's vftable pointer directly; the vftable symbol is
+// compiler-emitted, so __identifier spells it and the char array type keeps the
+// decay-to-pointer a plain int would lose.
+extern "C" const char __identifier("??_7Rva00265150RJFilter@@6B@")[];
 
 class Rva00201EE0
 {
@@ -19,7 +21,7 @@ Rva00201EE0 &Rva00201EE0::set(int a, int b, char c)
 {
 	m_08 = a;
 	m_04 = 0;
-	m_00 = (void *)bfmeVftRva00265150RJFilter;
+	m_00 = (void *)__identifier("??_7Rva00265150RJFilter@@6B@");
 	m_0C = b;
 	m_10 = c;
 	return *this;
