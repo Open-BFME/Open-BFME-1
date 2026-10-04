@@ -12,8 +12,7 @@ extern __declspec(noreturn) void __stdcall _CxxThrowException(
 
 extern "C" unsigned char bfmeVftDWL[];
 extern "C" void *bfmeVft1043P[];
-extern "C" const void *bfmeVftShellGameLoadScreen[];
-#pragma comment(linker, "/alternatename:_bfmeVftShellGameLoadScreen=??_7ShellGameLoadScreen@@6B@")
+extern "C" const char __identifier("??_7ShellGameLoadScreen@@6B@")[];
 
 class __declspec(dllimport) exception
 {
@@ -72,7 +71,7 @@ private:
 Rva0033AF00::Rva0033AF00(int unused)
 {
 	(void)unused;
-	*reinterpret_cast<void **>(this) = bfmeVftShellGameLoadScreen;
+	*reinterpret_cast<void **>(this) = (void *)(size_t)__identifier("??_7ShellGameLoadScreen@@6B@");
 	typedef Rva0033AF00Editor *(__cdecl *GetEditorProc)(void);
 	GetEditorProc getEditor = (GetEditorProc)GetProcAddress(
 		*reinterpret_cast<RvaModuleHandle *>(reinterpret_cast<char *>(this) + 4),
