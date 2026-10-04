@@ -9,39 +9,20 @@
 // this, at -0x08 and -0x0C.  The copied label is a temporary, destroyed once
 // set has consumed it, and the global flag is raised afterwards.
 
-class AsciiStringXC
-{
-public:
-	AsciiStringXC(const AsciiStringXC &other);
-	~AsciiStringXC(void);
-
-	void set(const AsciiStringXC &other);
-
-private:
-	char *m_bfmeData;
-};
-
-class BfmeStrXC : private AsciiStringXC
-{
-public:
-	void bfmeSetXC(const AsciiStringXC &other)
-	{
-		set(other);
-	}
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class BfmeOwnerXC
 {
 public:
 	char m_bfmePad00[0x70];					// +0x00
-	AsciiStringXC m_bfmeLabel;				// +0x70
+	AsciiString m_bfmeLabel;				// +0x70
 };
 
 class BfmeTargetXC
 {
 public:
 	char m_bfmePad000[0x328];				// +0x000
-	BfmeStrXC m_bfmeLabel;					// +0x328
+	AsciiString m_bfmeLabel;					// +0x328
 };
 
 class BfmeStateXC
@@ -68,11 +49,14 @@ void CommandSetUpgrade::upgradeImplementation()
 	BfmeOwnerXC *owner = *(BfmeOwnerXC **)((char *)this - 0xC);
 
 	{
-		AsciiStringXC label(owner->m_bfmeLabel);
+		AsciiString label(owner->m_bfmeLabel);
 
-		BfmeStrXC *slot = &target->m_bfmeLabel;
+		AsciiString *slot = &target->m_bfmeLabel;
 
-		slot->bfmeSetXC(label);
+		// Retail calls StringBase<char>::set (0x00887C90) directly here; naming
+		// AsciiString::set would leave a COMDAT forwarder for the linker to keep
+		// instead of the retail body.
+		((StringBase<char> *)slot)->set(label);
 	}
 
 	((BfmeStateXC *)TheControlBar)->m_bfmeDirty = true;
