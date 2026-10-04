@@ -22,7 +22,6 @@ class Overridable
 {
 public:
 	virtual ~Overridable();
-	const Overridable *getFinalOverride() const;
 
 	Overridable *m_nextOverride;
 };
@@ -41,9 +40,13 @@ enum KindOfType
 
 class Thing
 {
-public:
-	Bool isKindOf(KindOfType kind) const;
+	// Only the const-ness of the pointer-to-member below is observed by the
+	// generated code; the isKindOf body is not recovered here.
 };
+
+// Retail routes these two calls through incremental-link thunks.
+extern void j_000022bb();
+extern void j_0003251f();
 
 class Object;
 typedef _STL::list<Object *> ObjectList;
@@ -98,11 +101,14 @@ public:
 
 void Object::rva001CD420(const ModelConditionFlags &flags, Bool forceReplace)
 {
+	typedef const Overridable *(Overridable::*FinalOverrideFn)() const;
+	union { void (*fn)(); FinalOverrideFn call; } finalOverride = { j_000022bb };
+
 	ThingTemplate *thingTemplate = m_template;
 	if (thingTemplate != 0 && thingTemplate->m_nextOverride != 0)
 	{
 		thingTemplate = const_cast<ThingTemplate *>(
-			reinterpret_cast<const ThingTemplate *>(thingTemplate->m_nextOverride->getFinalOverride()));
+			reinterpret_cast<const ThingTemplate *>((thingTemplate->m_nextOverride->*finalOverride.call)()));
 	}
 
 	Object *target;
@@ -113,7 +119,9 @@ void Object::rva001CD420(const ModelConditionFlags &flags, Bool forceReplace)
 	else
 	{
 		Object *container = m_containedBy;
-		if (container == 0 || !reinterpret_cast<const Thing *>(container)->isKindOf((KindOfType)0x6c))
+		typedef Bool (Thing::*IsKindOfFn)(KindOfType) const;
+		union { void (*fn)(); IsKindOfFn call; } isKindOf = { j_0003251f };
+		if (container == 0 || !(reinterpret_cast<const Thing *>(container)->*isKindOf.call)((KindOfType)0x6c))
 			return;
 		target = container;
 	}
@@ -138,5 +146,4 @@ void Object::rva001CD420(const ModelConditionFlags &flags, Bool forceReplace)
 	target->replaceModelConditionFlags(flags, forceReplace);
 }
 
-#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isKindOf@Thing@@QBE_NW4KindOfType@@@Z=?j_0003251f@@YAXXZ")
+
