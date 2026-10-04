@@ -100,7 +100,7 @@ CriticalSectionClass::CriticalSectionClass() : handle(NULL), locked(false)
 	#ifdef _UNIX
 		//assert(0);
 	#else
-		handle=W3DNEWARRAY char[sizeof(CRITICAL_SECTION)];
+		handle=::operator new(sizeof(CRITICAL_SECTION)); // retail 0x9DB420 calls scalar operator new 0x881F30
 		InitializeCriticalSection((CRITICAL_SECTION*)handle);
 	#endif
 }
@@ -112,7 +112,7 @@ CriticalSectionClass::~CriticalSectionClass()
 	#else
 		WWASSERT(!locked); // Can't delete locked mutex!
 		DeleteCriticalSection((CRITICAL_SECTION*)handle);
-		delete[] handle;
+		::operator delete(handle); // retail 0x9DB450 calls scalar operator delete 0x881EB0
 	#endif
 }
 
