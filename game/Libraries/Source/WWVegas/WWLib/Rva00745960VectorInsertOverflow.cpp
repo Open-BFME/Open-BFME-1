@@ -10,6 +10,16 @@ struct Rva007417A0Element
 	char bytes[ 24 ];
 };
 
+// Retail reached the element copy through the ILT thunk at 0x000349FF; the
+// call sites therefore name that thunk directly.
+extern void j_000349ff();
+
+static __forceinline void elementConstruct( void *destination, const void *source )
+{
+	typedef void (__cdecl *Fn)( void *, const void * );
+	( ( Fn )( void * )j_000349ff )( destination, source );
+}
+
 namespace _STL
 {
 struct __false_type
@@ -42,22 +52,13 @@ public:
 };
 
 template <class Type>
-void BfmeElementConstruct( void *destination, const Type &source );
-
-template <>
-void BfmeElementConstruct<Rva007417A0Element>(
-	void *destination, const Rva007417A0Element &source );
-
-template <class Type>
 __forceinline Type *uninitialized_copy( Type *first, Type *last, Type *result )
 {
 	if ( first != last )
 	{
 		do
 		{
-			BfmeElementConstruct<Rva007417A0Element>(
-				( Rva007417A0Element * )result,
-				( const Rva007417A0Element & )*first );
+			elementConstruct( result, &*first );
 			++first;
 			++result;
 		}
@@ -72,9 +73,7 @@ __forceinline Type *uninitialized_fill_n( Type *result, unsigned int count,
 {
 	for ( ; count > 0; --count )
 	{
-		BfmeElementConstruct<Rva007417A0Element>(
-			( Rva007417A0Element * )result,
-			( const Rva007417A0Element & )value );
+		elementConstruct( result, &value );
 		++result;
 	}
 	return result;
@@ -117,9 +116,7 @@ void vector<Type, Allocator>::_M_insert_overflow( Type *position,
 	Type *newFinish = uninitialized_copy( m_start, position, newStart );
 	if ( fillLength == 1 )
 	{
-		BfmeElementConstruct<Rva007417A0Element>(
-			( Rva007417A0Element * )newFinish,
-			( const Rva007417A0Element & )value );
+		elementConstruct( newFinish, &value );
 		++newFinish;
 	}
 	else
@@ -149,7 +146,5 @@ void vector<Type, Allocator>::_M_insert_overflow( Type *position,
 	m_end_of_storage = newStart + length;
 }
 }
-
-#pragma comment( linker, "/alternatename:??$BfmeElementConstruct@URva007417A0Element@@@_STL@@YAXPAURva007417A0Element@@ABU1@@Z=?j_000349ff@@YAXXZ" )
 
 template class _STL::vector<Gen_t_007463a0_p24cd, _STL::allocator<Gen_t_007463a0_p24cd> >;
