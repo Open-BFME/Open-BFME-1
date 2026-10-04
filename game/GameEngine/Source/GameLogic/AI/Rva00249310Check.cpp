@@ -85,7 +85,7 @@ public:
 	Bool preflight(Rva00249310Object *object, Bool mode);
 };
 
-#pragma comment(linker, "/alternatename:?preflight@Rva00249310Owner@@QAE_NPAVRva00249310Object@@_N@Z=?j_0002c836@@YAXXZ")
+extern void j_0002c836();
 
 class Rva00249310Interface
 {
@@ -96,7 +96,9 @@ public:
 Bool Rva00249310Interface::check(Rva00249310Object *object, Bool mode)
 {
 	Rva00249310Owner *owner = (Rva00249310Owner *)((char *)this - 0x20);
-	if (!owner->preflight(object, mode))
+	typedef Bool (Rva00249310Owner::*Fn)(Rva00249310Object *, Bool);
+	union { void (*fn)(); Fn call; } u = { j_0002c836 };
+	if (!((owner->*u.call)(object, mode)))
 		return false;
 
 	Rva00249310Contain *contain = object->m_contain;
