@@ -228,13 +228,11 @@ Bool TunnelTracker::isInContainer( Object *obj )
 }
 
 // ------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Contain/TunnelTracker_onTunnelCreated.cpp
-// ?onTunnelCreated@TunnelTracker@@ present-unmatched
-void TunnelTracker::onTunnelCreated( const Object *newTunnel )
-{
-	m_tunnelCount++;
-	m_tunnelIDs.push_back( newTunnel->getID() );
-}
+// onTunnelCreated is owned by RTS/TunnelTracker_onTunnelCreated.cpp: its
+// complete 56-byte retail body at RVA 0x000F8DD0 is reached through the packed
+// ILT entry 0x00038938 by BfmeConv979, BfmeConv1101 and CaveContain's genuine
+// tryToSetCaveIndex tail-call path. The 48-byte reference emitter here called
+// _M_create_node out of line and competed with that verified definition.
 
 // ------------------------------------------------------------------------
 // ?onTunnelDestroyed@TunnelTracker@@ present-unmatched
