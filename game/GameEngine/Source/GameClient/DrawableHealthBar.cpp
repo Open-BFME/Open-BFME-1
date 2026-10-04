@@ -200,11 +200,13 @@ public:
 	ModuleInterface m_interface;
 };
 
-// This is the matched real helper reached through ILT 0x00003A49.  The
-// address-derived alias is used only to make the existing retail call target
-// available to this TU; it does not assert a new semantic helper identity.
-extern Module *rva002B21E0FindWallUpgradeUpdate(const Object *object);
-#pragma comment(linker, "/alternatename:?rva002B21E0FindWallUpgradeUpdate@@YAPAVModule@@PBVObject@@@Z=?j_00003a49@@YAXXZ")
+// Retail calls the matched real helper reached through ILT 0x00003A49.  The
+// ILT thunk is a plain (void)-shaped symbol, so the call is issued through a
+// typed free-function pointer rather than through an invented extern; this
+// keeps the call target literal and drops the linker alias entirely.
+extern void j_00003a49();
+
+typedef Module *(__cdecl *FindWallUpgradeUpdatePF)(const Object *object);
 
 struct HealthBarRegionWords
 {
@@ -288,7 +290,7 @@ void Drawable::drawHealthBar()
 
 	if (objectIsKindOf(object, (KindOfType)0x95))
 	{
-		Module *module = rva002B21E0FindWallUpgradeUpdate(object);
+		Module *module = ((FindWallUpgradeUpdatePF)(void *)j_00003a49)(object);
 		if (module != 0 && !module->m_interface.gate())
 			return;
 	}
