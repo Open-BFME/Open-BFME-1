@@ -34,7 +34,7 @@ private:
 	AptValue *m_indirectValue;
 };
 
-extern AptValue *gpNullValue;
+extern AptValue *g_bfmeFallbackDB;
 
 int AptValue::toInteger() const
 {
@@ -46,7 +46,9 @@ int AptValue::toInteger() const
 	unsigned int type = m_valueBits & 0x3F;
 	switch (type)
 	{
+		// Retail maps both string tags to this arm; tag 42 follows +0x20.
 		case 1:
+		case 42:
 		{
 			const AptValue *value = this;
 			if (type != 1)
@@ -71,14 +73,7 @@ int AptValue::toInteger() const
 		case 6:
 			return static_cast<int>(m_float);
 
-		case 42:
-			if (this == gpNullValue)
-			{
-				return 0;
-			}
-			return 1;
-
 		default:
-			return this != gpNullValue;
+			return this != g_bfmeFallbackDB;
 	}
 }
