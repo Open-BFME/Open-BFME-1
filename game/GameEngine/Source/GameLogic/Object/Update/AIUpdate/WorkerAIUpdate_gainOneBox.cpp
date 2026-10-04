@@ -150,7 +150,7 @@ public:
 	}
 };
 
-#pragma comment(linker, "/alternatename:?setPlayingHandle@AudioEventRTS@@QAEXI@Z=?j_00040a52@@YAXXZ")
+extern void j_00040a52();
 
 Bool WorkerAIUpdate::gainOneBox(Int remainingStock)
 {
@@ -180,7 +180,15 @@ Bool WorkerAIUpdate::gainOneBox(Int remainingStock)
 		if (playDepleted && m_suppliesDepletedVoice.m_eventName.isEmpty() == false)
 		{
 			m_suppliesDepletedVoice.setObjectID(getObject()->getID());
-			m_suppliesDepletedVoice.setPlayingHandle(TheAudio->addAudioEvent(&m_suppliesDepletedVoice));
+			{
+				typedef void (AudioEventRTS::*SetPlayingHandle)(UnsignedInt);
+				union
+				{
+					void (*fn)();
+					SetPlayingHandle call;
+				} u = { j_00040a52 };
+				(m_suppliesDepletedVoice.*u.call)(TheAudio->addAudioEvent(&m_suppliesDepletedVoice));
+			}
 		}
 	}
 
