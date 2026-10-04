@@ -20,7 +20,10 @@ private:
     void *m_data;
 };
 
-#pragma comment(linker, "/alternatename:?set@BFMERetailAsciiString@@QAEXABV1@@Z=?set@?$StringBase@D@@QAEXABV1@@Z")
+// The three declarations below (StringBase<char>::set, and the two class
+// destructors) are layout-only in this TU: retail 0x002472D0 initialises the
+// Horse/HordeContain module data with plain stores and reaches no such call, so
+// no reference to them is emitted and no route to a retail body is needed.
 
 #include "ascii_string.h"
 
@@ -30,7 +33,6 @@ public:
     virtual void slot0();
     ~BfmeHordeContainSplitResultList();
 };
-#pragma comment(linker, "/alternatename:??1BfmeHordeContainSplitResultList@@QAE@XZ=?j_00017657@@YAXXZ")
 
 class AudioEventRTS
 {
@@ -39,7 +41,6 @@ public:
 private:
     unsigned char m_data[0x70];
 };
-#pragma comment(linker, "/alternatename:??1AudioEventRTS@@QAE@XZ=?j_00026f35@@YAXXZ")
 
 class Rva002472D0AudioEntry
 {
