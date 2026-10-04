@@ -201,3 +201,22 @@ are jump stubs, and a real name there was an over-claim.
 | 1556 | 0x00002DC9 | 0x005DFA80 | 0x00037F4C | ordinal 1601, getInstance body 0x005DEF70 | truncated |
 | 1557 | 0x0000625D | 0x005E20F0 | 0x00044BFC | ordinal 1602, getInstance body 0x005E0820 | truncated |
 | 1558 | 0x00038E74 | 0x005E2190 | 0x000124AE | ordinal 1603, getInstance body 0x005E0A70 | truncated |
+
+## ConcreteModuleTemplate destructors: exported name moved off ILT thunks
+
+`fx_particle_system_virtual_destructors.cpp` claimed three exported
+`ConcreteModuleTemplate<TAG>::~ConcreteModuleTemplate` names (plus a truncated
+copy of each) at incremental-link thunks that the export directory assigns to
+the base `XModuleTemplate` destructor. Each derived destructor body is `jmp`
+to that thunk, so the C++ `jmp base::~` byte-matched the thunk by coincidence.
+The real bodies were claimed only by generated `?j_<rva>` placeholders
+(`game/gen_small/thunks_037.cpp`, `gen-thunk`). The exported names are
+repointed to their bodies with `add_match.py --replace-rva` (which retires the
+placeholder), and the six thunk-anchored rows are tombstoned. The three thunks
+are left unclaimed.
+
+| ordinal | ILT | body | thunk it sat on | thunk owner (export) |
+|---|---|---|---|---|
+| 422 | 0x00016DBA | 0x005DF720 | 0x00027656 | ordinal 475 `??1RenderObjectDrawModuleTemplate@FXParticleSystem@@UAE@XZ` (body 0x005DE490) |
+| 424 | 0x0003DAAA | 0x005E1E30 | 0x00044E31 | ordinal 455 `??1LifeEventModuleTemplate@FXParticleSystem@@UAE@XZ` (body 0x005DDFE0) |
+| 425 | 0x0001BA81 | 0x005E1F40 | 0x00038410 | ordinal 486 `??1TerrainCollisionModuleTemplate@FXParticleSystem@@UAE@XZ` (body 0x005DE870) |
