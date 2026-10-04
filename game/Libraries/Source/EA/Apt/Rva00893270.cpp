@@ -112,14 +112,17 @@ extern BfmeNestedBE *Rva008930C0AptLookup(int value);
 struct Rva008AE770Stack { int m_count; };
 extern Rva008AE770Stack Rva008AE770TheStack;
 
+// Retail calls this seven-argument append at the body linked under
+// ?d_008cc690@@YAXXZ, so the call is spelled through a member-pointer union:
+// the object references the linked name directly, with no linker name alias.
+extern void d_008cc690();
+
 class Rva008CF3C0State
 {
-public:
-	void append(void *owner, void *scope, BfmeStrVKI *name,
-		Rva008A9B00 *node, int a, int b, int c);
 };
 
-#pragma comment(linker, "/alternatename:?append@Rva008CF3C0State@@QAEXPAX0PAVBfmeStrVKI@@PAVRva008A9B00@@HHH@Z=?d_008cc690@@YAXXZ")
+typedef void (Rva008CF3C0State::*Rva008CF3C0Append)(void *owner, void *scope,
+	BfmeStrVKI *name, Rva008A9B00 *node, int a, int b, int c);
 
 void Rva00893270(const char *first, const char *second)
 {
@@ -138,7 +141,8 @@ void Rva00893270(const char *first, const char *second)
 
 	((Rva008B2EA0Node *)node)->append((void *)second);
 	BfmeStrVKI name(first);
-	((Rva008CF3C0State *)&Rva008AE770TheStack)->append(
+	union { void (*fn)(); Rva008CF3C0Append call; } u = { d_008cc690 };
+	(((Rva008CF3C0State *)&Rva008AE770TheStack)->*u.call)(
 		Rva008930C0AptLookup(0), 0, &name,
 		node, 1, 1, 0);
 }
