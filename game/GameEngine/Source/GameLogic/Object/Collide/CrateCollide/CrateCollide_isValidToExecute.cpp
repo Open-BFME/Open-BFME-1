@@ -156,12 +156,12 @@ private:
 	Bool m_everExecuted;
 };
 
-#pragma comment(linker, "/alternatename:?isNeutralControlled@Object@@QBE_NXZ=?j_0001483a@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isKindOf@Thing@@QBE_NW4KindOfType@@@Z=?j_0003251f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isKindOfMulti@Thing@@QBE_NABV?$BitFlags@$0HE@@@0@Z=?j_0003dccb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isAboveTerrainOrWater@Thing@@QBE_NXZ=?j_00004386@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
-#pragma comment(linker, "/alternatename:?hasScience@Player@@QBE_NW4ScienceType@@@Z=?j_0000943f@@YAXXZ")
+extern void j_0001483a();
+extern void j_0003251f();
+extern void j_0003dccb();
+extern void j_00004386();
+extern void j_00020824();
+extern void j_0000943f();
 
 // ?isValidToExecute@CrateCollide@@MBE_NPBVObject@@@Z
 Bool CrateCollide::isValidToExecute(const Object *other) const
@@ -175,38 +175,67 @@ Bool CrateCollide::isValidToExecute(const Object *other) const
 	if (m_everExecuted)
 		return false;
 
-	if (other->isNeutralControlled())
-		return false;
+	{
+		typedef Bool (Object::*Fn)() const;
+		union { void (*fn)(); Fn call; } u = { j_0001483a };
+		if ((other->*u.call)())
+			return false;
+	}
 
 	const BfmeCrateCollideModuleData *md = getCrateCollideModuleData();
-	Bool validBuildingAttempt = md->m_isBuildingPickup &&
-		other->isKindOf(KINDOF_STRUCTURE);
+	Bool validBuildingAttempt;
+	{
+		typedef Bool (Thing::*Fn)(KindOfType) const;
+		union { void (*fn)(); Fn call; } u = { j_0003251f };
+		validBuildingAttempt = md->m_isBuildingPickup &&
+			(other->*u.call)(KINDOF_STRUCTURE);
+	}
 
 	if (other->getAIUpdateInterface() == 0 && !validBuildingAttempt)
 		return false;
 
-	if (!other->isKindOfMulti(md->m_kindof, md->m_kindofnot))
-		return false;
+	{
+		typedef Bool (Thing::*Fn)(const KindOfMaskType &,
+			const KindOfMaskType &) const;
+		union { void (*fn)(); Fn call; } u = { j_0003dccb };
+		if (!(other->*u.call)(md->m_kindof, md->m_kindofnot))
+			return false;
+	}
 
 	if (other->isEffectivelyDead())
 		return false;
 
-	if (getObject()->isAboveTerrainOrWater() && !validBuildingAttempt)
-		return false;
+	{
+		typedef Bool (Thing::*Fn)() const;
+		union { void (*fn)(); Fn call; } u = { j_00004386 };
+		if ((getObject()->*u.call)() && !validBuildingAttempt)
+			return false;
+	}
+
+	typedef Player *(Object::*GetPlayer)() const;
+	union { void (*fn)(); GetPlayer call; } uPlayer = { j_00020824 };
 
 	if (md->m_isForbidOwnerPlayer &&
-		getObject()->getControllingPlayer() == other->getControllingPlayer())
+		(getObject()->*uPlayer.call)() == (other->*uPlayer.call)())
 		return false;
 
 	if (md->m_isHumanOnlyPickup &&
-		other->getControllingPlayer() != 0 &&
-		other->getControllingPlayer()->getPlayerType() != 0)
+		(other->*uPlayer.call)() != 0 &&
+		(other->*uPlayer.call)()->getPlayerType() != 0)
 		return false;
 
 	if (md->m_pickupScience != SCIENCE_INVALID &&
-		other->getControllingPlayer() != 0 &&
-		!other->getControllingPlayer()->hasScience(md->m_pickupScience))
-		return false;
+		(other->*uPlayer.call)() != 0)
+	{
+		Bool hasScience;
+		{
+			typedef Bool (Player::*Fn)(ScienceType) const;
+			union { void (*fn)(); Fn call; } u = { j_0000943f };
+			hasScience = ((other->*uPlayer.call)()->*u.call)(md->m_pickupScience);
+		}
+		if (!hasScience)
+			return false;
+	}
 
 	return getObject()->getIsUndetectedDefector();
 }
