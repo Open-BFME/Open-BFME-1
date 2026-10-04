@@ -15,6 +15,7 @@
 #undef _STLP_DEFAULT_CONSTRUCTOR_BUG
 #include <vector>
 #include "Common/AsciiString.h"
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 #include <exception>
 
