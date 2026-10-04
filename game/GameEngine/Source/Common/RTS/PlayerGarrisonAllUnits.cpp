@@ -211,8 +211,11 @@ struct BfmePlayerTeamListNode
 
 typedef BitFlags<192> BfmeGarrisonKindOfMask;
 
-extern "C" void *bfmeVftPartitionFilter[];
-#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilter=??_7PartitionFilter@@6B@")
+// Retail stamps the PartitionFilter vftable itself; the canonical example
+// references ??_7PartitionFilter@@6B@ directly instead of aliasing a
+// stand-in spelling onto it.  PartitionManager.h's PartitionFilter
+// declaration already declares that vftable in this TU, so redeclaring it
+// here would be a redefinition.
 
 class PartitionFilterAcceptByKindOf : public PartitionFilter
 {
@@ -229,7 +232,7 @@ public:
 	BfmeGarrisonKindOfMask m_mustBeClear;
 	~PartitionFilterAcceptByKindOf()
 	{
-		*(UnsignedInt *)this = (UnsignedInt)bfmeVftPartitionFilter;
+		*(UnsignedInt *)this = (UnsignedInt)__identifier("??_7PartitionFilter@@6B@");
 	}
 };
 
