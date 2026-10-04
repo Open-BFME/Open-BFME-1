@@ -90268,3 +90268,31 @@ __CT??_R0?AVINIException@@@8??0INIException@@QAE@ABV0@@Z8,0x00DDFC08,INIExceptio
 __CTA1?AVINIException@@,0x00DDFC28,INIException catchable type array {1, CT 0x011DFC08}: CTA of retail ThrowInfo 0xDDFC30
 ??_7type_info@@6B@,0x00D45868,type_info vftable: first dword of every retail RTTI type descriptor (e.g. INIException TD VA 0x012A6FD4 holds VA 0x01145868)
 ??1Mid0112F304@@UAE@XZ,0x005BFA20,address-based native intermediate destructor ABI view; matched0084B410 state0 -> C55C00 -> ILT0002E40B ->005BFA20; native15B independently exact and DIR32 vfptr0112F304 agrees; no original class spelling asserted
+??_R0?AVCAtlException@ATL@@@8,0x00EA6830,CAtlException@ATL RTTI type descriptor: pointed to by retail catchable type 0xDDF978 field 1 (.?AVCAtlException@ATL@@ at VA 0x012A6830)
+__CT??_R0?AVCAtlException@ATL@@@84,0x00DDF978,CAtlException@ATL catchable type in CTA 0xDDF998: attrs/pmd/size from retail bytes
+__CTA1?AVCAtlException@ATL@@,0x00DDF998,CAtlException@ATL catchable type array of retail ThrowInfo 0xDDF9A0
+__TI1?AVCAtlException@ATL@@,0x00DDF9A0,CAtlException@ATL ThrowInfo: pushed before _CxxThrowException in retail (retail 0x5BA44)
+??_R0?AVXferException@@@8,0x00EA704C,XferException RTTI type descriptor: pointed to by retail catchable type 0xDDFE34 field 1 (.?AVXferException@@ at VA 0x012A704C)
+__CT??_R0?AVXferException@@@8??0XferException@@QAE@ABV0@@Z8,0x00DDFE34,XferException catchable type in CTA 0xDDFE54: attrs/pmd/size from retail bytes
+__CTA1?AVXferException@@,0x00DDFE54,XferException catchable type array of retail ThrowInfo 0xDDFE5C
+__TI1?AVXferException@@,0x00DDFE5C,XferException ThrowInfo: pushed before _CxxThrowException in retail (retail 0x65B1E and 190 more sites)
+??_R0?AW4ErrorCode@@@8,0x00EA716C,ErrorCode RTTI type descriptor: pointed to by retail catchable type 0xDDFFDC field 1 (.?AW4ErrorCode@@ at VA 0x012A716C)
+__CT??_R0?AW4ErrorCode@@@84,0x00DDFFDC,ErrorCode catchable type in CTA 0xDDFFFC: attrs/pmd/size from retail bytes
+__CTA1?AW4ErrorCode@@,0x00DDFFFC,ErrorCode catchable type array of retail ThrowInfo 0x0
+??_R0?AVFunctorNotSet@@@8,0x00EA739C,FunctorNotSet RTTI type descriptor: pointed to by retail catchable type 0xDE1CB4 field 1 (.?AVFunctorNotSet@@ at VA 0x012A739C)
+__CT??_R0?AVFunctorNotSet@@@8??0FunctorNotSet@@QAE@ABV0@@Z12,0x00DE1CB4,FunctorNotSet catchable type in CTA 0xDE1CD4: attrs/pmd/size from retail bytes
+__CTA2?AVFunctorNotSet@@,0x00DE1CD4,FunctorNotSet catchable type array of retail ThrowInfo 0xDE1CE4
+__TI2?AVFunctorNotSet@@,0x00DE1CE4,FunctorNotSet ThrowInfo: pushed before _CxxThrowException in retail (retail 0x7B811 and 25 more sites)
+??_R0?AVexception@@@8,0x00EA7380,std exception RTTI type descriptor: CT field 1 of retail catchable type 0xDE1C94 (.?AVexception@@ at VA 0x012A7380)
+__CT??_R0?AVexception@@@8??0exception@@QAE@ABV0@@Z12,0x00DE1C94,std exception catchable type size 12 copy ctor jmp-import thunk VA 0x00DF6F6A: second CT of FunctorNotSet CTA 0xDE1CD4
+??0exception@@QAE@ABV0@@Z,0x009F6F6A,std exception copy constructor: jmp [import] thunk named by retail catchable type 0xDE1C94 field copy ctor VA 0x00DF6F6A
+??0FunctorNotSet@@QAE@ABV0@@Z,0x00017107,FunctorNotSet copy constructor: copy ctor field of retail catchable type 0xDE1CB4 is ILT VA 0x00417107 jmp to body 0x7B850 (route=0x7B850)
+??_R0?AV_com_error@@@8,0x00EE6020,_com_error RTTI type descriptor: pointed to by retail catchable type 0xE51858 field 1 (.?AV_com_error@@ at VA 0x012E6020)
+__CT??_R0?AV_com_error@@@8??0_com_error@@QAE@ABV0@@Z16,0x00E51858,_com_error catchable type in CTA 0xE51874: attrs/pmd/size from retail bytes
+__CTA1?AV_com_error@@,0x00E51874,_com_error catchable type array of retail ThrowInfo 0xE5187C
+__TI1?AV_com_error@@,0x00E5187C,_com_error ThrowInfo: pushed before _CxxThrowException in retail (retail 0xAFDA5B comsupp comraise)
+??_R0H@8,0x00EC83B0,int RTTI type descriptor: pointed to by retail catchable type 0xE4549C field 1 (.H at VA 0x012C83B0)
+__CT??_R0H@84,0x00E4549C,int catchable type in CTA 0xE454B8: attrs/pmd/size from retail bytes
+__CTA1H,0x00E454B8,int catchable type array of retail ThrowInfo 0xE454C0
+__TI1H,0x00E454C0,int ThrowInfo: pushed before _CxxThrowException in retail (retail 0x850949 and 18 more sites)
+??_R0?AVtype_info@@@8,0x00EDBD90,type_info RTTI type descriptor: .?AVtype_info@@ at VA 0x012DBD90 holds type_info vftable VA 0x01145868
