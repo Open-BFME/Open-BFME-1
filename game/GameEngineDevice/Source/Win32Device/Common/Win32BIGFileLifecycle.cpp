@@ -22,12 +22,24 @@ protected:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/Common/Win32BIGFile.h
+class File;
+struct FileInfo;
+
 class Win32BIGFile : public ArchiveFile
 {
 public:
+	// All ten retail slots, in retail order (the compiler lays overloads out in reverse of declaration, so the four-argument openFile is declared first), so the vtable this TU emits is
+	// the complete 0x28-byte table (0x01143BE8) and not a partial copy.
 	virtual ~Win32BIGFile();
+	virtual bool getFileInfo( const AsciiString &filename, FileInfo *fileInfo ) const;
+	virtual File *openFile( const char *filename, int access, int offset, int size );
+	virtual File *openFile( const char *filename, int access );
+	virtual void closeAllFiles( void );
 	virtual AsciiString getName( void );
 	virtual AsciiString getPath( void );
+	virtual void setSearchPriority( int newPriority );
+	virtual void close( void );
+	virtual void setNameAndPath( const AsciiString &filename );
 
 protected:
 	AsciiString m_name;		// +0x24
