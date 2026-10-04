@@ -22,6 +22,10 @@
 
 #include "AsciiString.h"
 
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+
 #define ERROR_CORRUPT_FILE_FORMAT 0xDEAD0005
 
 class BfmeSubVE;
