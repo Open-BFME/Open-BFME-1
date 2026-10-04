@@ -23,12 +23,14 @@ public:
 	virtual void slot18();
 	virtual StateReturnType initDefaultState();
 
-	Object *getOwner() { return m_owner; }
 	Object *getGoalObject();
 
 	unsigned char m_machineFields04[0x0c];
 	Object *m_owner;
 };
+// TU-local owner read: retail inlines it; a member would emit a COMDAT copy.
+static __forceinline Object *getOwnerOf(StateMachine *machine) { return machine->m_owner; }
+
 
 #pragma comment(linker, "/alternatename:?getGoalObject@StateMachine@@QAEPAVObject@@XZ=?j_0000e570@@YAXXZ")
 
@@ -54,7 +56,7 @@ class AIBackAwayAndCowerState
 public:
 	virtual StateReturnType onEnter();
 
-	Object *getMachineOwner() { return m_machine->getOwner(); }
+	Object *getMachineOwner() { return getOwnerOf(m_machine); }
 	Object *getMachineGoalObject() { return m_machine->getGoalObject(); }
 
 	unsigned char m_stateFields04[0x18];

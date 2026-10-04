@@ -46,19 +46,17 @@ class Object;
 class StateMachine
 {
 public:
-	Object *getOwner()
-	{
-		return m_owner;
-	}
-
 	Object *getGoalObject();
 
-private:
+public:
 	unsigned char m_unreconstructed_00[ 0x10 ];
 	Object *m_owner;
 	unsigned char m_unreconstructed_14[ 0x1c - 0x14 ];
 	void *m_currentState;
 };
+// TU-local owner read: retail inlines it; a member would emit a COMDAT copy.
+static __forceinline Object *getOwnerOf(StateMachine *machine) { return machine->m_owner; }
+
 
 template <Int N>
 class BFMEVirtualSlots : public BFMEVirtualSlots< N - 1 >
@@ -189,7 +187,7 @@ private:
 
 StateReturnType Rva0016FB20AIHordeExitState::update()
 {
-	Object *obj = getMachine()->getOwner();
+	Object *obj = getOwnerOf(getMachine());
 	Object *goal = getMachine()->getGoalObject();
 	if (obj == 0 || goal == 0)
 		return STATE_FAILURE;

@@ -68,12 +68,13 @@ class Object;
 class StateMachine
 {
 public:
-	Object *getOwner() { return m_owner; }
-
 	virtual void slot00();
 	unsigned char m_machineFields04[0x0c];
 	Object *m_owner;
 };
+// TU-local owner read: retail inlines it; a member would emit a COMDAT copy.
+static __forceinline Object *getOwnerOf(StateMachine *machine) { return machine->m_owner; }
+
 
 class Rva0016D9C0Machine : public Snapshot
 {
@@ -109,7 +110,7 @@ void Rva0016D9C0State::xfer(Xfer *xfer)
 	xfer->xferBool(hasMachine);
 
 	if (hasMachine && m_stateMachine0016D9C0 == 0)
-		m_stateMachine0016D9C0 = new Rva0016D9C0Machine(m_machine->getOwner());
+		m_stateMachine0016D9C0 = new Rva0016D9C0Machine(getOwnerOf(m_machine));
 
 	if (hasMachine)
 		xfer->xferSnapshot(*m_stateMachine0016D9C0);

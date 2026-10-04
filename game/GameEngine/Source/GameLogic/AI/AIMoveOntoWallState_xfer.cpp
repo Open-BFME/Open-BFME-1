@@ -24,18 +24,16 @@ class StateMachine
 public:
 	virtual void slot00();
 
-	Object *getOwner()
-	{
-		return m_owner;
-	}
-
-private:
+public:
 	unsigned char m_machineFields04[0x0c];
 	Object *m_owner;
 	unsigned char m_machineFields14[0x10];
 	unsigned char m_goalPosition[0x0c];
 	unsigned char m_machineTail[0x14];
 };
+// TU-local owner read: retail inlines it; a member would emit a COMDAT copy.
+static __forceinline Object *getOwnerOf(StateMachine *machine) { return machine->m_owner; }
+
 
 class Xfer
 {
@@ -106,7 +104,7 @@ protected:
 
 	Object *getMachineOwner()
 	{
-		return m_machine->getOwner();
+		return getOwnerOf(m_machine);
 	}
 };
 
