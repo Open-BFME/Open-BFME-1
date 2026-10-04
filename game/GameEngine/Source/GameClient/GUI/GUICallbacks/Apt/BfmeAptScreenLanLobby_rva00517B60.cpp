@@ -7,6 +7,10 @@
 #include "GameClient/GameText.h"
 #include "GameNetwork/GameInfo.h"
 
+// Retail inlines ~UnicodeString: temporaries are released by a direct call to
+// StringBase<unsigned short>::releaseBuffer (0x008881D0), not the ??1UnicodeString stub.
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 struct TransportAddress
 {
 	TransportAddress() : m_ip( 0 ), m_port( 0 ) {}
