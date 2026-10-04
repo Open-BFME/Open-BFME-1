@@ -1,30 +1,16 @@
 // cl: /DNDEBUG /MD /EHsc
 
-template <typename T>
-class StringBase
+#include "../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+
+// The retail comparator has no additional EH cleanup state for the no-case comparison.
+template <>
+__declspec(nothrow) int StringBase<unsigned short>::compareNoCase(
+	const StringBase<unsigned short> &other) const;
+
+inline UnicodeString::~UnicodeString()
 {
-friend class UnicodeString;
-
-public:
-	__declspec(nothrow) int compareNoCase(const StringBase<T> &other) const;
-
-private:
-	~StringBase();
-
-	void *m_data;
-};
-
-class UnicodeString : private StringBase<unsigned short>
-{
-public:
-	~UnicodeString() {}
-
-	__declspec(nothrow) int compareNoCase(const UnicodeString &other) const
-	{
-		return ((const StringBase<unsigned short> *)this)->compareNoCase(
-			*(const StringBase<unsigned short> *)&other);
-	}
-};
+    ((StringBase<wchar_t> *)this)->releaseBuffer();
+}
 
 class MapMetaData
 {
@@ -32,7 +18,6 @@ public:
 	UnicodeString getFileName() const;
 };
 
-#pragma comment(linker, "/alternatename:?getFileName@MapMetaData@@QBE?AVUnicodeString@@XZ=?d_00451350@@YAXXZ")
 
 struct Q4Sort004566F0
 {

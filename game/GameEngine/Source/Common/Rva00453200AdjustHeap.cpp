@@ -3,12 +3,18 @@
 // STLport's comparator overload of __adjust_heap for a four-byte scalar.
 // twin of ??$__adjust_heap@PAHHHUQ4Cmp00344A60@@@_STL@@YAXPAHHHHUQ4Cmp00344A60@@@Z
 // (retail 0x00342D60, game/GameEngine/Source/Common/Rva00342D60AdjustHeap.cpp).
-// The comparator's own operator() is out of line and ICF-folded with the
-// pinned callee named BfmeCompAO (targets/game/reverse/symbols.csv, 0x00024055).
+// Retail's compare call routes through ILT 0x00024055 to the existing
+// Q4Sort004566F0 operator() body at RVA 0x00451F60.
 
-struct Q4Cmp00453BB0
+struct Q4Sort004566F0
 {
 	bool operator()(int left, int right) const;
+};
+
+// Keep the heap template identity while binding its stateless call to the
+// one existing comparator provider; the empty base needs no this adjustment.
+struct Q4Cmp00453BB0 : Q4Sort004566F0
+{
 };
 
 namespace _STL
