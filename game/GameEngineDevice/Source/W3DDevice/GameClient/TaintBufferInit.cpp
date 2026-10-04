@@ -84,10 +84,16 @@ public:
 	static void Validate_Texture_Size(unsigned &width, unsigned &height);
 };
 
-#pragma comment(linker, "/alternatename:?Validate_Texture_Size@TextureLoader@@SAXAAI0@Z=?d_009056f0@@YAXXZ")
+// The call resolves straight to the retail body at 0x009056F0, whose one identity
+// is the real ?Validate_Texture_Size@TextureLoader@@SAXAAI0@Z (game/Libraries/
+// Source/WWVegas/WW3D2/TextureLoaderValidateTextureSize.cpp); the alternate name
+// ?d_009056f0@@YAXXZ was the retired gen-dump scaffold for those same bytes.
 
 void W3DRadarResetLock(void);
 void W3DRadarResetUnlock(void);
+
+// retail routes this call through the ILT thunk at 0x0002CFE3
+extern void j_0002cfe3();
 
 class TaintBufferFillThunk
 {
@@ -95,7 +101,8 @@ public:
 	void fill(unsigned char alpha);
 };
 
-#pragma comment(linker, "/alternatename:?fill@TaintBufferFillThunk@@QAEXE@Z=?j_0002cfe3@@YAXXZ")
+// retail routes this call through the ILT thunk at 0x000357D3
+extern void j_000357d3();
 
 class TaintBufferReAcquireThunk
 {
@@ -103,17 +110,15 @@ public:
 	void reacquire(void);
 };
 
-#pragma comment(linker, "/alternatename:?reacquire@TaintBufferReAcquireThunk@@QAEXXZ=?j_000357d3@@YAXXZ")
-
-class BfmeTaintManager
+// The body this calls lives at 0x00880E30, whose one identity in the ledger is
+// ?m@Gen_00880e30@@QAEXXZ, so the class and member are spelled to that name.
+class Gen_00880e30
 {
 public:
-	void resetGrid(void);
+	void m(void);
 };
 
-extern BfmeTaintManager *TheTaintManager;
-
-#pragma comment(linker, "/alternatename:?resetGrid@BfmeTaintManager@@QAEXXZ=?m@Gen_00880e30@@QAEXXZ")
+extern Gen_00880e30 *TheTaintManager;
 
 class TaintBuffer
 {
@@ -142,6 +147,12 @@ void TaintBuffer::init(WorldHeightMap *map, Real worldCellSizeX,
 {
 	int dstTextureWidth = 0;
 	int dstTextureHeight = 0;
+	// Retail calls the taint fill through the ILT thunk at 0x0002CFE3, so the
+	// call target is named directly instead of through a stand-in member.
+	union { void (*fn)(); void (TaintBufferFillThunk::*call)(unsigned char); }
+		fillThunk = { j_0002cfe3 };
+	union { void (*fn)(); void (TaintBufferReAcquireThunk::*call)(void); }
+		reacquireThunk = { j_000357d3 };
 	m_cellWidth = worldCellSizeX;
 	m_cellHeight = worldCellSizeY;
 
@@ -182,7 +193,7 @@ void TaintBuffer::init(WorldHeightMap *map, Real worldCellSizeX,
 	}
 
 	if (TheWritableGlobalData && TheWritableGlobalData->m_taintOn)
-		reinterpret_cast<TaintBufferFillThunk *>(this)->fill(
+		(reinterpret_cast<TaintBufferFillThunk *>(this)->*fillThunk.call)(
 			TheWritableGlobalData->m_taintAlpha);
 
 	if (dstTextureWidth != m_dstTextureWidth ||
@@ -204,10 +215,10 @@ void TaintBuffer::init(WorldHeightMap *map, Real worldCellSizeX,
 		{
 			m_dstTextureWidth = dstTextureWidth;
 			m_dstTextureHeight = dstTextureHeight;
-			reinterpret_cast<TaintBufferReAcquireThunk *>(this)->reacquire();
+			(reinterpret_cast<TaintBufferReAcquireThunk *>(this)->*reacquireThunk.call)();
 		}
 
 	if (TheWritableGlobalData && TheWritableGlobalData->m_taintOn &&
 		TheTaintManager)
-		reinterpret_cast<BfmeTaintManager *>(TheTaintManager)->resetGrid();
+		TheTaintManager->m();
 }

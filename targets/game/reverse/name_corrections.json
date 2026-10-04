@@ -17728,5 +17728,15 @@
   "after_sha256": "91b33627c1ea9b099d211d1701b0a633f62bdc1d6d8cdf4e687db863d4ef4eb2",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/TaintBufferInit.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/TaintBufferInit.cpp",
+  "old_name": "BfmeTaintManager",
+  "new_name": "Gen_00880e30",
+  "before_sha256": "fa312e9160c7c81190a850acf23d0a9c5b5178085d616c6ccb9769a92eda56c8",
+  "after_sha256": "dfd471916b3b7c79b57c686333ab3638778b84e3c2d1d134b102ccd890c5dd5b",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]
