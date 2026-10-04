@@ -45,26 +45,30 @@ private:
 	unsigned char m_body[0x5C];
 };
 
-extern "C" const void *bfmeVftSnapshot[];
-#pragma comment(linker, "/alternatename:_bfmeVftSnapshot=??_7Snapshot@@6B@")
-
-class Rva007206E0Snapshot
+// The base class is retail's Snapshot.  Its vtable is pinned at 0x00C73744
+// (deleting destructor, crc, xfer, loadPostProcess; symbols.csv, 63
+// byte-verified references) and its virtual destructor is the matched 7-byte
+// body at 0x0005C520.  Naming the class is what removes the old
+// `_bfmeVftSnapshot` stand-in: the compiler's own base-vtable store in
+// ~W3DShrubBuffer then targets `??_7Snapshot@@6B@` by itself, and the scalar
+// deleting destructor calls `??1Snapshot@@UAE@XZ`.  The inline destructor keeps
+// that call inlined, exactly as retail has it.  This TU therefore emits its own
+// COMDAT copies of `??1Snapshot@@UAE@XZ`, `??_GSnapshot@@UAEPAXI@Z` and
+// `??_7Snapshot@@6B@`, byte-identical to
+// game/GameEngine/Source/Common/SubsystemSnapshotStateOwnerConstructor.cpp,
+// which stays their ledger source.
+class Snapshot
 {
 public:
+	virtual ~Snapshot(void) {}
+
 	virtual void crc(void) = 0;
 	virtual void xfer(void) = 0;
 	virtual void loadPostProcess(void) = 0;
-
-	~Rva007206E0Snapshot(void)
-	{
-		*(volatile unsigned int *)this = (unsigned int)bfmeVftSnapshot;
-	}
-
-private:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTreeBuffer.h
-class W3DShrubBuffer : public Rva007206E0Snapshot
+class W3DShrubBuffer : public Snapshot
 {
 public:
 	virtual ~W3DShrubBuffer(void);
@@ -83,6 +87,14 @@ private:
 	Rva007206E0TextureRef m_treeTexture;
 };
 
+// The 64-element m_treeTypes array is destroyed through the CRT array-dtor
+// helper, which takes the ELEMENT DESTRUCTOR'S ADDRESS as a 32-bit immediate
+// (`push offset ??1TTreeType@@QAE@XZ; push 40h; push 5Ch; lea; push; call
+// ??_M@YGXPAXIHP6EX0@Z@Z`, at +0x4b and again in the funclet).  The compiler
+// always materialises that address from the element type's own mangled
+// destructor name, so no clean C++ can make it the ILT at 0x00432CF9, and the
+// alternate name stays.  Removing it would need a hand-written push of the
+// thunk plus a call to the CRT helper, which no declaration can name.
 #pragma comment(linker, "/alternatename:??1TTreeType@@QAE@XZ=?j_00032cf9@@YAXXZ")
 // ??1W3DShrubBuffer@@UAE@XZ
 W3DShrubBuffer::~W3DShrubBuffer(void)
