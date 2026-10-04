@@ -1,0 +1,146 @@
+{
+  "validation_date_utc": "2026-10-04",
+  "upstream_url": "https://github.com/decompals/wibo",
+  "upstream_commit": "420a75b7f80435824c3a633571277f90ae056119",
+  "mimalloc_commit": "69c5c5c402bf0414ff4a366697ecbd5c7578dc02",
+  "patch_order": [
+    "stringfromguid2.patch",
+    "mapping-compatibility.patch"
+  ],
+  "prerequisite_guid_patch_sha256": "6a53db04b78e0d1104d1a6e95483898e62f0592f03e3e45635848b58166791fe",
+  "mapping_patch_sha256": "3dc3dbf159c3ec1fb9ee98697c1032d9ff30c7585598a0409467e196c27abd41",
+  "original_runtime_sha256": "3fd1768efb14a0e45555e3cb1a8646fc1dffb25a8991990f5959ade9db90686b",
+  "reviewed_linux_candidate_sha256": "c6addd458da551ef40860c737e637e973fb2c3b77c3a2ebb76632373b962a7e5",
+  "patched_source_sha256": {
+    "CMakeLists.txt": "96982586684d630ffb64b180e723e7c3a8665c1d11b04c034abe4a25687f8a97",
+    "src/errors.h": "0f383d0565dcae6dfe7fd0355cbc4e31f3f826847e29e391d0dd04cead4b1ca5",
+    "src/heap.h": "65e331691579d3273d818bdbf5b2a6149da6f31bb0bf421fa08f27347468041c",
+    "src/heap.cpp": "e6c399e7c2cdced34240cd0c6466c99b6842c70577736505ec179d0bdd0b838c",
+    "dll/kernel32/memoryapi.cpp": "4ef7f3326b1175860a5d3c8db29a6da6f76d6e563dd764845be2a93d2e248e1c",
+    "test/test_mapview_fixed.c": "1f15e94567443764e4b96fe746f46d26c8242c270ae3a0979882ee53eea229d2",
+    "dll/ole32.cpp": "2be36eaf0a880548b9c94984930a9a6de21c5589200c3e3d6688f922344196fd",
+    "dll/ole32.h": "678e8d867cf70fb4eb87083fe059dfa4fb54918b57578c8759d9acf65d4281c7",
+    "test/test_stringfromguid2.c": "667a604746067bdde4773b2756ab9a4df621d5b92d211393ba8057767a33e3e7"
+  },
+  "compiler_parity": [
+    {
+      "source": "game/GameEngine/Source/GameClient/Rva00452300MapPointerVector.cpp",
+      "source_sha256": "e85369dbde2124554a298bfdaf0e12dc5d8c6872158b69658a9327d7b3e25ea3",
+      "runs": {
+        "baseline": {
+          "sha256": "962e95f5fd2d78713c4b6999e8b80c0e37a4a65d15288208faf1d10d3bf3f6ee",
+          "nondebug_sha256": "32dfa7170bcfab3e02761e9389e595ae2ffa21dd55a26a5bff6b1cbcca882c94",
+          "size": 10059
+        },
+        "candidate": {
+          "sha256": "962e95f5fd2d78713c4b6999e8b80c0e37a4a65d15288208faf1d10d3bf3f6ee",
+          "nondebug_sha256": "32dfa7170bcfab3e02761e9389e595ae2ffa21dd55a26a5bff6b1cbcca882c94",
+          "size": 10059
+        }
+      },
+      "equal_nondebug": true,
+      "sections": 29,
+      "symbols": 67,
+      "relocations": 32,
+      "eh_symbols": [],
+      "data_sections": []
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineQuickMatchConstructor.cpp",
+      "source_sha256": "418cf0ad4f16c9655fcb1b341bf932a929e8ee65af19c47307b36b548ad95781",
+      "runs": {
+        "baseline": {
+          "sha256": "2d80324963f4a7d2191819062d218500b1d576d9147fb5576aafc72729f1da9d",
+          "nondebug_sha256": "d55c1c38a75917fc12ae2c7485d54e459cf9fe6e7aafb2f6bebafd41ee4966ec",
+          "size": 9801
+        },
+        "candidate": {
+          "sha256": "2d80324963f4a7d2191819062d218500b1d576d9147fb5576aafc72729f1da9d",
+          "nondebug_sha256": "d55c1c38a75917fc12ae2c7485d54e459cf9fe6e7aafb2f6bebafd41ee4966ec",
+          "size": 9801
+        }
+      },
+      "equal_nondebug": true,
+      "sections": 22,
+      "symbols": 91,
+      "relocations": 95,
+      "eh_symbols": [
+        "___CxxFrameHandler"
+      ],
+      "data_sections": [
+        ".rdata",
+        ".rdata",
+        ".rdata",
+        ".rdata",
+        ".rdata",
+        ".rdata",
+        ".rdata",
+        ".rdata",
+        ".rdata",
+        ".rdata",
+        ".xdata$x"
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/MapCacheAddMap.cpp",
+      "source_sha256": "7fab836cb694890906697233bc10a8c2a5682d85164aa7b7ded444f9bd2449e9",
+      "runs": {
+        "baseline": {
+          "sha256": "51e6c38cf6ebc02b751532fa86cee4cdcb9477ad01e0c48ef76fa9199568efa3",
+          "nondebug_sha256": "a3e3a705a7e112e7a5d4556931640d14723b9211b283bf398e736ac47aae13ca",
+          "size": 13158
+        },
+        "candidate": {
+          "sha256": "51e6c38cf6ebc02b751532fa86cee4cdcb9477ad01e0c48ef76fa9199568efa3",
+          "nondebug_sha256": "a3e3a705a7e112e7a5d4556931640d14723b9211b283bf398e736ac47aae13ca",
+          "size": 13158
+        }
+      },
+      "equal_nondebug": true,
+      "sections": 36,
+      "symbols": 118,
+      "relocations": 116,
+      "eh_symbols": [
+        "?getLength@?$StringBase@D@@QBEHXZ",
+        "___CxxFrameHandler"
+      ],
+      "data_sections": [
+        ".rdata",
+        ".rdata",
+        ".rdata",
+        ".rdata",
+        ".rdata",
+        ".rdata",
+        ".xdata$x"
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameLogic/Object/Object_bfmeTransferReplacementState.cpp",
+      "source_sha256": "84be0c6c4a21027b0730bbf5026f92e8bf502a559370553d59e026e43716ea78",
+      "runs": {
+        "baseline": {
+          "sha256": "c907e560d80e7eea5a02c07a14c2e6266c0ec5f3bdfef3dc4e74329005c5d96a",
+          "nondebug_sha256": "af7a507ad795f813b8f47682c402bd882e09a1534e4f082a286629712e73386f",
+          "size": 3522
+        },
+        "candidate": {
+          "sha256": "c907e560d80e7eea5a02c07a14c2e6266c0ec5f3bdfef3dc4e74329005c5d96a",
+          "nondebug_sha256": "af7a507ad795f813b8f47682c402bd882e09a1534e4f082a286629712e73386f",
+          "size": 3522
+        }
+      },
+      "equal_nondebug": true,
+      "sections": 10,
+      "symbols": 33,
+      "relocations": 26,
+      "eh_symbols": [
+        "___CxxFrameHandler"
+      ],
+      "data_sections": [
+        ".rdata",
+        ".xdata$x"
+      ]
+    }
+  ],
+  "scope": "Linux x86_64 Wibo; raw COFF equality is between runners using the same input and output paths, not a portable object hash guarantee."
+}

@@ -1,0 +1,129 @@
+--- a/dll/ole32.h
++++ b/dll/ole32.h
+@@ -7,5 +7,6 @@
+ HRESULT WINAPI CoInitialize(LPVOID pvReserved);
+ HRESULT WINAPI CoCreateInstance(const GUID *rclsid, LPVOID pUnkOuter, DWORD dwClsContext, const GUID *riid, GUEST_PTR *ppv);
+ HRESULT WINAPI CLSIDFromString(LPCWSTR lpsz, GUID *pclsid);
++int WINAPI StringFromGUID2(const GUID *rguid, LPWSTR lpsz, int cchMax);
+ 
+ } // namespace ole32
+--- a/dll/ole32.cpp
++++ b/dll/ole32.cpp
+@@ -129,6 +129,40 @@
+ 	return 0x80004003; // E_POINTER
+ }
+ 
++int WINAPI StringFromGUID2(const GUID *rguid, LPWSTR lpsz, int cchMax) {
++	HOST_CONTEXT_GUARD();
++	DEBUG_LOG("StringFromGUID2(%p, %p, %d)\n", rguid, lpsz, cchMax);
++	constexpr int kGuidStringLength = 39; // Includes braces and the terminator.
++	if (cchMax < kGuidStringLength) {
++		return 0;
++	}
++
++	const GUID guid = *rguid;
++	constexpr char kHexDigits[] = "0123456789ABCDEF";
++	WCHAR *cursor = lpsz;
++	auto writeHex = [&](uint32_t value, int digits) {
++		for (int shift = (digits - 1) * 4; shift >= 0; shift -= 4) {
++			*cursor++ = static_cast<WCHAR>(kHexDigits[(value >> shift) & 0xF]);
++		}
++	};
++	*cursor++ = '{';
++	writeHex(guid.Data1, 8);
++	*cursor++ = '-';
++	writeHex(guid.Data2, 4);
++	*cursor++ = '-';
++	writeHex(guid.Data3, 4);
++	*cursor++ = '-';
++	for (int i = 0; i < 8; ++i) {
++		if (i == 2) {
++			*cursor++ = '-';
++		}
++		writeHex(guid.Data4[i], 2);
++	}
++	*cursor++ = '}';
++	*cursor = 0;
++	return kGuidStringLength;
++}
++
+ HRESULT WINAPI CLSIDFromString(LPCWSTR lpsz, GUID *pclsid) {
+ 	HOST_CONTEXT_GUARD();
+ 
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -521,6 +521,7 @@
+         wibo_add_fixture_bin(NAME test_virtualquery SOURCES test/test_virtualquery.c)
+         wibo_add_fixture_bin(NAME test_createfilemapping SOURCES test/test_createfilemapping.c)
+         wibo_add_fixture_bin(NAME test_clsids SOURCES test/test_clsids.c COMPILE_OPTIONS -lole32)
++        wibo_add_fixture_bin(NAME test_stringfromguid2 SOURCES test/test_stringfromguid2.c COMPILE_OPTIONS -lole32)
+         wibo_add_fixture_bin(NAME test_rtl SOURCES test/test_rtl.c)
+         wibo_add_fixture_bin(NAME test_rtl_bitmap SOURCES test/test_rtl_bitmap.c)
+         wibo_add_fixture_bin(NAME test_ntquery SOURCES test/test_ntquery.c)
+--- /dev/null
++++ b/test/test_stringfromguid2.c
+@@ -0,0 +1,64 @@
++#include <windows.h>
++#include <objbase.h>
++#include <limits.h>
++
++/* A fresh contract fixture, not a recovered historical test. */
++#ifdef WIBO_TEST_NO_CRT
++#define CHECK(condition, code) do { if (!(condition)) return (code); } while (0)
++#else
++#include "test_assert.h"
++#define CHECK(condition, code) TEST_CHECK(condition)
++#endif
++#define SENTINEL ((WCHAR)0x55AA)
++
++static void fill_sentinel(WCHAR *buffer) {
++	int i;
++	for (i = 0; i < 64; ++i) buffer[i] = SENTINEL;
++}
++
++static int check_success(const GUID *guid, const WCHAR *expected, int capacity) {
++	WCHAR buffer[64];
++	int i;
++	fill_sentinel(buffer);
++	CHECK(StringFromGUID2(guid, buffer + 1, capacity) == 39, 1);
++	CHECK(buffer[0] == SENTINEL, 2);
++	for (i = 0; i < 39; ++i) CHECK(buffer[i + 1] == expected[i], 3);
++	for (i = 40; i < 64; ++i) CHECK(buffer[i] == SENTINEL, 4);
++	return 0;
++}
++
++int main(void) {
++	static const GUID mixed = {0x01234567, 0x89AB, 0xCDEF, {0x10, 0x32, 0x54, 0x76, 0x98, 0xBA, 0xDC, 0xFE}};
++	static const GUID zero = {0, 0, 0, {0, 0, 0, 0, 0, 0, 0, 0}};
++	static const GUID ones = {0xFFFFFFFF, 0xFFFF, 0xFFFF, {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}};
++	static const int capacities[] = {39, 40, 63};
++	static const int negative[] = {-1, INT_MIN};
++	static const char passed[] = "StringFromGUID2 fixture passed\n";
++	WCHAR buffer[64];
++	DWORD written;
++	int i, j, result;
++	for (i = 0; i < 3; ++i) {
++		result = check_success(&mixed, L"{01234567-89AB-CDEF-1032-547698BADCFE}", capacities[i]);
++		CHECK(result == 0, 10 + result);
++		result = check_success(&zero, L"{00000000-0000-0000-0000-000000000000}", capacities[i]);
++		CHECK(result == 0, 20 + result);
++		result = check_success(&ones, L"{FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF}", capacities[i]);
++		CHECK(result == 0, 30 + result);
++	}
++	for (i = 0; i < 39; ++i) {
++		fill_sentinel(buffer);
++		CHECK(StringFromGUID2(&mixed, buffer + 1, i) == 0, 40);
++		for (j = 0; j < 64; ++j) CHECK(buffer[j] == SENTINEL, 41);
++	}
++	for (i = 0; i < 2; ++i) {
++		fill_sentinel(buffer);
++		CHECK(StringFromGUID2(&mixed, buffer + 1, negative[i]) == 0, 42);
++		for (j = 0; j < 64; ++j) CHECK(buffer[j] == SENTINEL, 43);
++	}
++	WriteFile(GetStdHandle(STD_OUTPUT_HANDLE), passed, sizeof(passed) - 1, &written, NULL);
++	return 0;
++}
++
++#ifdef WIBO_TEST_NO_CRT
++void __cdecl guid_test_entry(void) { ExitProcess((UINT)main()); }
++#endif

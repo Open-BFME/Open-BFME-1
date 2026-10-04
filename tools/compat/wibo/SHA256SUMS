@@ -1,0 +1,8 @@
+6a53db04b78e0d1104d1a6e95483898e62f0592f03e3e45635848b58166791fe  stringfromguid2.patch
+3dc3dbf159c3ec1fb9ee98697c1032d9ff30c7585598a0409467e196c27abd41  mapping-compatibility.patch
+e47d6c47622859c2f8d1ece25d662fbb77689808b4f77016e7d258569cb9d6ec  LICENSE.wibo
+ed7b2f0c3cc3d49e682086586645c54c22ab2fffbbf7cf189e7cd0c6e9145e76  ../../tests/fixtures/wibo/minimal-map.c
+f77029c44a2a99ecbaf92392f13a8e8598305ffc358c877e9fad5153e296d646  ../../tests/fixtures/wibo/smoke.cpp
+b555f77a1d730f2b1eabcab262b67628d111ba9f616bcd8e17b392bcc5b826b4  ../../tests/fixtures/wibo/strict-import.c
+b0e18b7a509459c931044f5afbefca2bcd345020cd33412dd84967a44e84848a  verify.sh
+970325e20f9e8238c115e8e754f3908ec11dad9111a99047979018f6517415a4  validation.json

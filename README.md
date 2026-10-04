@@ -70,9 +70,10 @@ The MSVC 7.1 toolchain and baseline executables are committed (no LFS), so `git 
 ./build.sh               # verify every tracked function against retail   (.\build.cmd on Windows, same arguments)
 ```
 
-On Linux, use WineHQ's Wine 11 (`winehq-stable`) with a 32-bit prefix
-(`WINEARCH=win32 wineboot -i`); Ubuntu 24.04's Wine 9.0 hangs `cl.exe` on a few files. A full
-gate takes about 30 minutes on four cores.
+On Linux, use WineHQ Wine 11 (`winehq-stable`), a 32-bit prefix
+(`WINEARCH=win32 wineboot -i`). Ubuntu 24.04's Wine 9.0 hangs `cl.exe` on some files.
+[Optional link-only Wibo compatibility](tools/compat/wibo/README.md).
+Full gate: about 30 minutes on four cores.
 
 To check one function in seconds, pass its file or name:
 
