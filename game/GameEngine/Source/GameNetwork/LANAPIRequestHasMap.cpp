@@ -211,9 +211,11 @@ extern GameTextInterface *TheGameText;
 extern UnsignedInt BFMEComputeCRC(const UnsignedByte *data,
 	UnsignedInt length, UnsignedInt seed);
 
-// The BFME callsite passes the GameInfo object, not an AsciiString map name.
-Bool WouldMapTransfer(GameInfo *game);
-#pragma comment(linker, "/alternatename:?WouldMapTransfer@@YA_NPAVGameInfo@@@Z=?j_000393fb@@YAXXZ")
+// The BFME callsite passes the GameInfo object, not an AsciiString map name,
+// and reaches the test through the retail ILT thunk at 0x000393FB.
+extern void j_000393fb();
+
+typedef Bool (__cdecl *BfmeWouldMapTransfer)(GameInfo *);
 
 class LANAPI
 {
@@ -329,7 +331,7 @@ void LANAPI::RequestHasMap(void)
 			mapDisplayName.format(L"%hs",
 				TheGameState->getMapLeafName(
 					reinterpret_cast<GameInfo *>(m_currentGame)->getMap()).str());
-			willTransfer = WouldMapTransfer(
+			willTransfer = ((BfmeWouldMapTransfer)(void *)j_000393fb)(
 				reinterpret_cast<GameInfo *>(m_currentGame));
 		}
 		if (willTransfer)
