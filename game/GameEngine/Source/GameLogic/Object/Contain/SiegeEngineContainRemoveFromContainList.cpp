@@ -6,6 +6,15 @@
 
 class Player;
 
+// Retail's incremental-link thunks for the calls below; each body is reached
+// through its 5-byte ILT stub, so the calls name the thunk directly.
+extern void j_00020824();
+extern void j_0001da34();
+extern void j_000122ab();
+extern void j_0002191d();
+extern void j_00031525();
+extern void j_0003dee7();
+
 class SiegeEngineMemberAI
 {
 public:
@@ -90,20 +99,16 @@ public:
 	unsigned int m_status;
 	char m_gap[0x204 - 0x130];
 	SiegeEngineMemberAI *m_ai;
-	void apply(int value);
-	void notify(void);
 };
 
 class Object : public BfmeRvaA760Object
 {
 public:
-	Player *getControllingPlayer(void) const;
 };
 
 class Rva2225E0Filter
 {
 public:
-	bool accepts(Object *object, Player *player);
 };
 
 class SiegeEngineModuleData
@@ -114,18 +119,8 @@ public:
 	int m_capacity;
 };
 
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
-#pragma comment(linker, "/alternatename:?accepts@Rva2225E0Filter@@QAE_NPAVObject@@PAVPlayer@@@Z=?j_0001da34@@YAXXZ")
-#pragma comment(linker, "/alternatename:?apply@BfmeRvaA760Object@@QAEXH@Z=?j_000122ab@@YAXXZ")
-#pragma comment(linker, "/alternatename:?notify@BfmeRvaA760Object@@QAEXXZ=?j_0002191d@@YAXXZ")
-#pragma comment(linker, "/alternatename:?fill@BfmeRvaA760Output@@QAEXPAH@Z=?j_00031525@@YAXXZ")
-#pragma comment(linker, "/alternatename:?remove@Rva223440PointerList@@QAEXPAX@Z=?j_0003dee7@@YAXXZ")
-
 class BfmeRvaA760Output
 {
-public:
-	void fill(int *value);
-
 private:
 	char m_pad[4];
 };
@@ -133,7 +128,6 @@ private:
 class Rva223440PointerList
 {
 public:
-	void remove(void *value);
 };
 
 class SiegeEngineContain
@@ -164,15 +158,34 @@ void SiegeEngineContain::removeFromContainList(Object *object)
 	Object *member = object;
 	Object *owner = m_object;
 	SiegeEngineModuleData *moduleData = m_moduleData;
-	Player *player = owner->getControllingPlayer();
-	if (moduleData->m_filter.accepts(member, player))
+	Player *player;
+	{
+		typedef Player *(Object::*GetControllingPlayer)(void) const;
+		union { void (*fn)(); GetControllingPlayer call; } u = { j_00020824 };
+		player = (owner->*u.call)();
+	}
+	bool accepted;
+	{
+		typedef bool (Rva2225E0Filter::*Accepts)(Object *, Player *);
+		union { void (*fn)(); Accepts call; } u = { j_0001da34 };
+		accepted = (moduleData->m_filter.*u.call)(member, player);
+	}
+	if (accepted)
 	{
 		if (moduleData->m_capacity > 0)
 		{
 			int output;
-			m_list.fill(&output);
+			{
+				typedef void (BfmeRvaA760Output::*Fill)(int *);
+				union { void (*fn)(); Fill call; } u = { j_00031525 };
+				(m_list.*u.call)(&output);
+			}
 			--m_remaining;
-			member->apply(0x14);
+			{
+				typedef void (BfmeRvaA760Object::*Apply)(int);
+				union { void (*fn)(); Apply call; } u = { j_000122ab };
+				(member->*u.call)(0x14);
+			}
 			signed char status = (signed char)member->m_status;
 			if ((status >> 7) != 0)
 			{
@@ -180,7 +193,11 @@ void SiegeEngineContain::removeFromContainList(Object *object)
 				unsigned int statusWord = *statusPointer;
 				statusWord &= 0xffffff7f;
 				*statusPointer = statusWord;
-				member->notify();
+				{
+					typedef void (BfmeRvaA760Object::*Notify)(void);
+					union { void (*fn)(); Notify call; } u = { j_0002191d };
+					(member->*u.call)();
+				}
 			}
 			if (!member->m_ai)
 				goto finish;
@@ -192,9 +209,17 @@ fallback:
 	if ((member->m_flagsByte & 0x40) != 0)
 	{
 		member->m_flags &= 0xffffffbf;
-		member->notify();
+		{
+			typedef void (BfmeRvaA760Object::*Notify)(void);
+			union { void (*fn)(); Notify call; } u = { j_0002191d };
+			(member->*u.call)();
+		}
 	}
-	((Rva223440PointerList *)this)->remove(member);
+	{
+		typedef void (Rva223440PointerList::*Remove)(void *);
+		union { void (*fn)(); Remove call; } u = { j_0003dee7 };
+		(((Rva223440PointerList *)this)->*u.call)(member);
+	}
 
 finish:
 	return;
