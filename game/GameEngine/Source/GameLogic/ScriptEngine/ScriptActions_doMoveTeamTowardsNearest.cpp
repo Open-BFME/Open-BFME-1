@@ -140,41 +140,30 @@ public:
 
 class ThingFactory;
 
-extern "C" void *bfmeVftPartitionFilter[];
-extern "C" void *bfmeVftPartitionFilterThing[];
-extern "C" void *bfmeVftPartitionFilterPolygonTrigger[];
-extern "C" void *bfmeVftPartitionFilterSameMapStatus[];
-#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilter=??_7PartitionFilter@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterThing=??_7PartitionFilterThing@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterPolygonTrigger=??_7PartitionFilterPolygonTrigger@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterSameMapStatus=??_7PartitionFilterSameMapStatus@@6B@")
-
 class PartitionFilter
 {
 public:
-	PartitionFilter(void) {}
+	__forceinline PartitionFilter(void) { m_next = 0; }
+	virtual ~PartitionFilter(void) {}
+	virtual Bool allow(Object *object) = 0;
+	virtual Int getPlayerMask(void);
 	PartitionFilter *link(PartitionFilter *next);
 
-	unsigned int m_vptr;
 	PartitionFilter *m_next;
 };
 
 class PartitionFilterThing : public PartitionFilter
 {
 public:
-	PartitionFilterThing(const ThingTemplate *thingTemplate, Bool match)
+	__forceinline PartitionFilterThing(const ThingTemplate *thingTemplate, Bool match)
 		: PartitionFilter()
 	{
-		m_next = 0;
-		m_vptr = (unsigned int)bfmeVftPartitionFilterThing;
 		m_thingTemplate = thingTemplate;
 		m_match = match;
 	}
 
-	~PartitionFilterThing(void)
-	{
-		m_vptr = (unsigned int)bfmeVftPartitionFilter;
-	}
+protected:
+	virtual Bool allow(Object *object);
 
 	const ThingTemplate *m_thingTemplate;
 	Bool m_match;
@@ -183,18 +172,14 @@ public:
 class PartitionFilterPolygonTrigger : public PartitionFilter
 {
 public:
-	PartitionFilterPolygonTrigger(const PolygonTrigger *trigger)
+	__forceinline PartitionFilterPolygonTrigger(const PolygonTrigger *trigger)
 		: PartitionFilter()
 	{
-		m_next = 0;
-		m_vptr = (unsigned int)bfmeVftPartitionFilterPolygonTrigger;
 		m_trigger = trigger;
 	}
 
-	~PartitionFilterPolygonTrigger(void)
-	{
-		m_vptr = (unsigned int)bfmeVftPartitionFilter;
-	}
+protected:
+	virtual Bool allow(Object *object);
 
 	const PolygonTrigger *m_trigger;
 };
@@ -202,18 +187,14 @@ public:
 class PartitionFilterSameMapStatus : public PartitionFilter
 {
 public:
-	PartitionFilterSameMapStatus(const Object *object)
+	__forceinline PartitionFilterSameMapStatus(const Object *object)
 		: PartitionFilter()
 	{
-		m_next = 0;
-		m_vptr = (unsigned int)bfmeVftPartitionFilterSameMapStatus;
 		m_object = object;
 	}
 
-	~PartitionFilterSameMapStatus(void)
-	{
-		m_vptr = (unsigned int)bfmeVftPartitionFilter;
-	}
+protected:
+	virtual Bool allow(Object *object);
 
 	const Object *m_object;
 };
