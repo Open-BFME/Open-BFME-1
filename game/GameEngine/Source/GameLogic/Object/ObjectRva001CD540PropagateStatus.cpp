@@ -6,11 +6,10 @@
 // the 86-bit status mask and Bool argument; the adjacent 0x001CD420 helper
 // corroborates the containment path and class layout.
 //
-// The TU-local pointer overload is ABI-equivalent to the reference overload on
-// x86 and is exposed under the reference spelling by /alternatename below.  Its
-// top-level volatile qualifier is a source-level codegen lever: it makes VC7.1
-// preserve retail's EDI/EBX incoming-argument allocation without changing any
-// runtime operation.
+// The two external lookups are the witnessed ILT thunks ?j_000022bb@@YAXXZ
+// (Overridable::getFinalOverride) and ?j_0003251f@@YAXXZ (Thing::isKindOf);
+// they are called through a member-pointer union of the same signature, so the
+// object references the thunks directly and needs no alternate name.
 // stlport
 
 #define _STLP_NO_EXCEPTIONS 1
@@ -29,11 +28,13 @@ public:
 
 typedef BitFlags<86> ObjectStatusMaskType;
 
+extern void j_000022bb();
+extern void j_0003251f();
+
 class Overridable
 {
 public:
 	virtual ~Overridable();
-	const Overridable *getFinalOverride() const;
 
 	Overridable *m_nextOverride;
 };
@@ -53,7 +54,6 @@ enum KindOfType
 class Thing
 {
 public:
-	Bool isKindOf(KindOfType kind) const;
 };
 
 class Object;
@@ -112,14 +112,18 @@ public:
 
 void Object::rva001CD540(const ObjectStatusMaskType * volatile flags, Bool set)
 {
+	typedef const Overridable *(Overridable::*FinalOverride)() const;
+	typedef Bool (Thing::*IsKindOf)(KindOfType) const;
+
 	if (m_flag369 != 0)
 		return;
 
 	ThingTemplate *thingTemplate = m_template;
 	if (thingTemplate != 0 && thingTemplate->m_nextOverride != 0)
 	{
+		union { void (*fn)(); FinalOverride call; } u22bb = { j_000022bb };
 		thingTemplate = const_cast<ThingTemplate *>(
-			reinterpret_cast<const ThingTemplate *>(thingTemplate->m_nextOverride->getFinalOverride()));
+			reinterpret_cast<const ThingTemplate *>((thingTemplate->m_nextOverride->*u22bb.call)()));
 	}
 
 	Object *target;
@@ -128,7 +132,8 @@ void Object::rva001CD540(const ObjectStatusMaskType * volatile flags, Bool set)
 	else
 	{
 		Object *container = m_containedBy;
-		if (container == 0 || !reinterpret_cast<const Thing *>(container)->isKindOf((KindOfType)0x6c))
+		union { void (*fn)(); IsKindOf call; } u3251f = { j_0003251f };
+		if (container == 0 || !((reinterpret_cast<const Thing *>(container)->*u3251f.call)((KindOfType)0x6c)))
 			target = 0;
 		else
 			target = container;
@@ -158,6 +163,12 @@ void Object::rva001CD540(const ObjectStatusMaskType * volatile flags, Bool set)
 	}
 }
 
-#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isKindOf@Thing@@QBE_NW4KindOfType@@@Z=?j_0003251f@@YAXXZ")
+// The reference overload is the retail name of this body; nothing here calls it,
+// and the ledger anchors the 294 bytes at the TU-local pointer overload
+// (functions.csv note object-symbol=?rva001CD540@Object@@QAEXRBV?$BitFlags@$0FG@@@_N@Z),
+// which the byte verifier reads out of this object.  Callers outside this TU spell
+// the reference overload, so it still has to resolve here; deleting the alias would
+// leave them undefined, and giving the reference signature its own out-of-line body
+// would put a second retail-named definition at a non-retail address.  Retired when
+// the row's object-symbol is repointed at ?rva001CD540@Object@@QAEXABV?$BitFlags@$0FG@@@_N@Z.
 #pragma comment(linker, "/alternatename:?rva001CD540@Object@@QAEXABV?$BitFlags@$0FG@@@_N@Z=?rva001CD540@Object@@QAEXRBV?$BitFlags@$0FG@@@_N@Z")
