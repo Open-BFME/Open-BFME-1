@@ -4,6 +4,10 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
+// Retail reaches these two bodies through incremental-link thunks.
+extern void j_00001140();
+extern void j_000022bb();
+
 template <int NUMBITS>
 class BitFlags
 {
@@ -18,7 +22,6 @@ class Overridable
 {
 public:
 	virtual ~Overridable();
-	const Overridable *getFinalOverride() const;
 
 	Overridable *m_nextOverride;
 };
@@ -63,9 +66,12 @@ class BfmeOverride
 public:
 	const T *operator->() const
 	{
+		typedef const Overridable *(Overridable::*Fn)() const;
+		union { void (*fn)(); Fn call; } u = { j_000022bb };
+
 		const T *value = m_overridable;
 		if (value && value->m_nextOverride)
-			value = (const T *)value->m_nextOverride->getFinalOverride();
+			value = (const T *)((value->m_nextOverride)->*u.call)();
 		return value;
 	}
 
@@ -77,7 +83,6 @@ public:
 class BfmeObjectDlinkBase
 {
 public:
-	Object *dlink_next_TeamMemberList() const;
 	BfmeOverride<ThingTemplate> m_template;
 };
 
@@ -141,8 +146,10 @@ private:
 public:
 	BfmeDlinkIterator<Object> iterate_TeamMemberList() const
 	{
-		return BfmeDlinkIterator<Object>( m_head,
-			BfmeObjectDlinkBase::dlink_next_TeamMemberList );
+		typedef Object *(BfmeObjectDlinkBase::*Fn)() const;
+		union { void (*fn)(); Fn call; } u = { j_00001140 };
+
+		return BfmeDlinkIterator<Object>( m_head, u.call );
 	}
 };
 
@@ -161,9 +168,6 @@ Int Team::countObjects( KindOfMaskType setMask, KindOfMaskType clearMask )
 	return retVal;
 }
 
-#pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVObject@@@Z=?j_00001140@@YAXXZ")
-
-extern void j_000022bb();
-extern void j_00019bcd();
-#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
 #pragma comment(linker, "/alternatename:?testSetAndClear@?$BitFlags@$0HE@@@QBE_NABV1@0@Z=?j_00019bcd@@YAXXZ")
+
+
