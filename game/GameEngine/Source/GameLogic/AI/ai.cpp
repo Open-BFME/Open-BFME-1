@@ -882,31 +882,7 @@ Object *AI::findClosestAlly( const Object *me, Real range, UnsignedInt qualifier
 /**
  * Return the closest repulsor.
  */
-// ?findClosestRepulsor@AI@@QAEPAVObject@@PBV2@M@Z present-unmatched
-Object *AI::findClosestRepulsor( const Object *me, Real range)
-{
-
-	if (!getAiData()->m_enableRepulsors) {
-		return NULL;
-	}
-
-	// never target buildings (unless they can attack)
-	PartitionFilterRepulsor		filter(me);
-
-	// and only stuff that isn't stealthed (and not detected)
-	// (note that stealthed allies aren't hidden from us, but that's ok. jba.)
-	PartitionFilterRejectByObjectStatus filterStealth( MAKE_OBJECT_STATUS_MASK( OBJECT_STATUS_STEALTHED ), 
-																										 MAKE_OBJECT_STATUS_MASK2( OBJECT_STATUS_DETECTED, OBJECT_STATUS_DISGUISED ) );
-
-	PartitionFilter *filters[16];
-	Int numFilters = 0;
-
-	filters[numFilters++] = &filter;
-	filters[numFilters++] = &filterStealth;
-	filters[numFilters] = NULL;
-
-	return ThePartitionManager->getClosestObject( me, range, FROM_BOUNDINGSPHERE_2D, filters );
-}
+// Byte-exact BFME implementation: AIFindClosestRepulsor.cpp.
 /////////////////////////////
 
 //-------------------------------------------------------------------------------------------------
