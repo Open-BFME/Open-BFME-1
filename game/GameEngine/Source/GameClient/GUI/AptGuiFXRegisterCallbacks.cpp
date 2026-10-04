@@ -91,13 +91,11 @@ public:
 	#undef WINDOW_MANAGER_SLOT
 	virtual int loadAptWindow( AsciiString directory, AsciiString file,
 		int unknown1, int unknown2, int unknown3 ) = 0;
-	void registerAptCallback( const BFMERetailAsciiString &name,
-		BannerAptCallbackHolder callback );
 	void registerAptCallback( const AsciiString &name,
 		AptMapPreviewFunctorHolder callback );
 };
 
-#pragma comment(linker, "/alternatename:?registerAptCallback@WindowManager@@QAEXABVBFMERetailAsciiString@@VBannerAptCallbackHolder@@@Z=?j_00023083@@YAXXZ")
+extern void j_00023083();
 
 extern WindowManager *g_rva012F19E8WindowManager;
 extern int g_guiFxWindowHandle;
@@ -119,7 +117,10 @@ void registerGuiFXCallbacks00510FA0()
 	if( g_rva012F19E8WindowManager != 0 )
 	{
 		BFMERetailAsciiString name( "AptGuiFX::OnInitialized" );
-		g_rva012F19E8WindowManager->registerAptCallback( name,
+		typedef void (WindowManager::*Register)( const BFMERetailAsciiString &,
+			BannerAptCallbackHolder );
+		union { void (*fn)(); Register call; } reg = { j_00023083 };
+		( g_rva012F19E8WindowManager->*reg.call )( name,
 			BannerAptCallbackHolder(
 				j_000279df ) );
 	}
