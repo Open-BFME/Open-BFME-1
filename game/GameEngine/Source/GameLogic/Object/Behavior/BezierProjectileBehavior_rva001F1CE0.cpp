@@ -42,15 +42,13 @@ public:
 	void bfmeRunCOF(void *a, void *b, void *c, void *d);
 };
 
-class WeaponStore
-{
-public:
-	void bfmeCreate(void *owner, Object *object, void *position);
-};
-
-extern WeaponStore *TheWeaponStore;
-
-#pragma comment(linker, "/alternatename:?bfmeCreate@WeaponStore@@QAEXPAXPAVObject@@0@Z=?j_00035e5e@@YAXXZ")
+extern void j_00035e5e();
+extern void *TheWeaponStore;
+class Route0035E5E {};
+// retail reaches the weapon store create through ILT 0x00035E5E; the
+// thiscall target is unnamed here, so the call is spelled off the thunk.
+typedef void (Route0035E5E::*Rva0035E5ECreate)(void *owner, Object *object,
+		void *position);
 
 class Gen_001EFD20
 {
@@ -137,7 +135,8 @@ Bool BezierProjectileBehavior::rva001F1CE0(Object *other)
 		if (ocl != 0)
 		{
 			Coord3D *position = &object->m_position;
-			TheWeaponStore->bfmeCreate(ocl, object, position);
+			union { void (*fn)(); Rva0035E5ECreate call; } create = { j_00035e5e };
+			(((Route0035E5E *)TheWeaponStore)->*create.call)(ocl, object, position);
 		}
 	}
 	else
@@ -150,7 +149,8 @@ Bool BezierProjectileBehavior::rva001F1CE0(Object *other)
 		if (effect != 0)
 		{
 			Coord3D *position = &object->m_position;
-			TheWeaponStore->bfmeCreate(effect, object, position);
+			union { void (*fn)(); Rva0035E5ECreate call; } create = { j_00035e5e };
+			(((Route0035E5E *)TheWeaponStore)->*create.call)(effect, object, position);
 		}
 	}
 
