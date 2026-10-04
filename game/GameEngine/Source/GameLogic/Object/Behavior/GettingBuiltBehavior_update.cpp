@@ -114,8 +114,6 @@ public:
 	virtual void slot88() = 0;
 	virtual void slot8c() = 0;
 	virtual void clearRecentObjectState() = 0;
-
-	Bool bfmeGetRecentDamageSource(UnsignedInt *source, UnsignedInt reason) const;
 };
 
 class ModuleData
@@ -181,13 +179,8 @@ class GettingBuiltBehavior :
 	public GettingBuiltBehaviorUpdateModule,
 	public GettingBuiltBehaviorSecondaryInterface
 {
-	public:
+public:
 	virtual UpdateSleepTime update();
-
-	Bool rva001FF060();
-	void rva001FEC30();
-	void rva001FF5C0();
-	void rva001FE970();
 
 	Bool m_field24;
 	UnsignedInt m_field28;
@@ -209,7 +202,6 @@ public:
 	void *m_field14;
 	char m_pad18[0x0c];
 	Bool m_field24;
-	Bool checkValid();
 };
 
 class Module
@@ -223,9 +215,24 @@ public:
 
 class WeaponStore
 {
-public:
-	void bfmeCreate(void *list, Object *object, void *position);
 };
+
+// Retail routes these calls through incremental-link thunks at these addresses.
+extern void j_000402d2();
+extern void j_0004b015();
+extern void j_00035e5e();
+extern void j_0000e6e7();
+extern void j_00036449();
+extern void j_000329cf();
+extern void j_00035ee0();
+extern void j_0002ea14();
+
+// Carrier classes for the ILT-routed thiscalls: no bases, so the member
+// pointer needs no this-adjustment and the call folds to a direct call.
+class RecentSourceCarrier { };
+class ItemValidCarrier { };
+class WeaponCreateCarrier { };
+class GettingBuiltCarrier { };
 
 extern WeaponStore *TheWeaponStore;
 extern Real g_bfmeScaleBC;
@@ -233,22 +240,24 @@ extern const Real g_rva01075350;
 extern Real g_012ADC90;
 #define BfmeObjectCreationRange g_012ADC90
 
-Module *__cdecl rva0036BB10FindCastleMemberBehavior(const Object *object);
-
-#pragma comment(linker, "/alternatename:?bfmeGetRecentDamageSource@Object@@QBE_NPAII@Z=?j_000402d2@@YAXXZ")
-#pragma comment(linker, "/alternatename:?checkValid@BfmeItemE63@@QAE_NXZ=?j_0004b015@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeCreate@WeaponStore@@QAEXPAXPAVObject@@0@Z=?j_00035e5e@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva0036BB10FindCastleMemberBehavior@@YAPAVModule@@PBVObject@@@Z=?j_0000e6e7@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva001FF060@GettingBuiltBehavior@@QAE_NXZ=?j_00036449@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva001FEC30@GettingBuiltBehavior@@QAEXXZ=?j_000329cf@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva001FF5C0@GettingBuiltBehavior@@QAEXXZ=?j_00035ee0@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva001FE970@GettingBuiltBehavior@@QAEXXZ=?j_0002ea14@@YAXXZ")
-
 // ?update@GettingBuiltBehavior@@UAE?AW4UpdateSleepTime@@XZ
 UpdateSleepTime GettingBuiltBehavior::update()
 {
 	Object *object = m_object;
 	ModuleData *data = (ModuleData *)m_moduleData;
+	typedef Bool (RecentSourceCarrier::*RecentSourceFn)(UnsignedInt *, UnsignedInt) const;
+	union { void (*fn)(); RecentSourceFn call; } recentSource = { j_000402d2 };
+	typedef Bool (ItemValidCarrier::*ValidFn)();
+	union { void (*fn)(); ValidFn call; } itemValid = { j_0004b015 };
+	typedef void (WeaponCreateCarrier::*CreateFn)(void *, Object *, void *);
+	union { void (*fn)(); CreateFn call; } weaponCreate = { j_00035e5e };
+	typedef Module *(__cdecl *CastleMemberFn)(const Object *);
+	typedef Bool (GettingBuiltCarrier::*BoolFn)();
+	union { void (*fn)(); BoolFn call; } f001ff060 = { j_00036449 };
+	typedef void (GettingBuiltCarrier::*VoidFn)();
+	union { void (*fn)(); VoidFn call; } f001fec30 = { j_000329cf };
+	union { void (*fn)(); VoidFn call; } f001ff5c0 = { j_00035ee0 };
+	union { void (*fn)(); VoidFn call; } f001fe970 = { j_0002ea14 };
 	Bool objectDead = (object->m_privateStatus & 1) != 0;
 	if (m_field31 != objectDead && data->m_field2c)
 	{
@@ -260,13 +269,13 @@ UpdateSleepTime GettingBuiltBehavior::update()
 
 	UnsignedInt source = 0;
 	Bool hasRecentSource;
-	if (m_field35 || !object->bfmeGetRecentDamageSource(&source, 4))
+	if (m_field35 || !((RecentSourceCarrier *)object->*recentSource.call)(&source, 4))
 		hasRecentSource = false;
 	else
 		hasRecentSource = true;
 
 	GettingBuiltBehavior *primary = (GettingBuiltBehavior *)((char *)this);
-	Bool handled = primary->rva001FF060();
+	Bool handled = ((GettingBuiltCarrier *)primary->*f001ff060.call)();
 	GettingBuiltBehaviorSecondaryInterface *secondary;
 	BfmeItemE63 *item;
 	BodyModuleInterface *body;
@@ -281,10 +290,10 @@ UpdateSleepTime GettingBuiltBehavior::update()
 		secondary = (GettingBuiltBehaviorSecondaryInterface *)((char *)this + 0x20);
 		if (secondary->rva001FE4A0())
 		{
-		item = (BfmeItemE63 *)rva0036BB10FindCastleMemberBehavior(
+		item = (BfmeItemE63 *)((CastleMemberFn)(void *)j_0000e6e7)(
 			*(Object **)((char *)this + 0x08));
-			if (item != 0 && item->m_field14 != 0 && !item->m_field24 && item->checkValid())
-				goto handled_or_cleanup;
+		if (item != 0 && item->m_field14 != 0 && !item->m_field24 && ((ItemValidCarrier *)item->*itemValid.call)())
+			goto handled_or_cleanup;
 		}
 		else
 			goto handled_or_cleanup;
@@ -296,7 +305,7 @@ UpdateSleepTime GettingBuiltBehavior::update()
 		{
 			m_field34 = true;
 			if (data->m_ocl != 0)
-				TheWeaponStore->bfmeCreate(data->m_ocl, object, &object->m_position);
+				((WeaponCreateCarrier *)TheWeaponStore->*weaponCreate.call)(data->m_ocl, object, &object->m_position);
 		}
 
 		body = object->m_bodyModule;
@@ -309,15 +318,15 @@ UpdateSleepTime GettingBuiltBehavior::update()
 				body->clearRecentObjectState();
 		}
 
-		primary->rva001FF5C0();
+		((GettingBuiltCarrier *)primary->*f001ff5c0.call)();
 		return UPDATE_SLEEP_NONE;
 	}
 
 	cleanup:
-	primary->rva001FEC30();
+	((GettingBuiltCarrier *)primary->*f001fec30.call)();
 	handled_cleanup:
-	primary->rva001FF5C0();
-	primary->rva001FE970();
+	((GettingBuiltCarrier *)primary->*f001ff5c0.call)();
+	((GettingBuiltCarrier *)primary->*f001fe970.call)();
 	return UPDATE_SLEEP_UNREADY;
 
 	handled_or_cleanup:
