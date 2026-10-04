@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
-// RVA 0x0088C500: report a pure virtual function call through the debug sink.
+// CRT _purecall override at RVA 0x0088C500.
+// Identity: targets/game/reverse/identity_evidence/20261003-purecall-binding-audit.md
 class BfmeAwakenLog {
 public:
  virtual void slot00();
@@ -58,7 +59,7 @@ extern void *g_Rva00F36E5C;
 
 void _bfme_debugRecordCallsite(int kind);
 
-int rva0088C500PureVirtualReport()
+extern "C" int __cdecl _purecall(void)
 {
     _bfme_debugRecordCallsite(1);
     reinterpret_cast<BfmeAwakenDebug *>(g_Rva00F36E5C)->slot60();
