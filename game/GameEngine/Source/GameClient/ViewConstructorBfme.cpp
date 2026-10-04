@@ -69,13 +69,13 @@ private:
 };
 
 // The base vftable at VA 0x010F6940 is the pinned View table
-// (??_7View@@6B@, targets/game/reverse/symbols.csv).
-extern "C" void *bfmeViewVft[];
-#pragma comment(linker, "/alternatename:_bfmeViewVft=??_7View@@6B@")
+// (??_7View@@6B@, targets/game/reverse/symbols.csv).  The vftable has no
+// declarable C++ spelling, so it is named directly with __identifier.
+extern "C" void *__identifier("??_7View@@6B@")[];
 
 View::View()
 {
-	m_vftable = (void *)bfmeViewVft;
+	m_vftable = (void *)__identifier("??_7View@@6B@");
 	m_next = 0;
 	m_id = m_idNext++;
 	_ReadWriteBarrier();
