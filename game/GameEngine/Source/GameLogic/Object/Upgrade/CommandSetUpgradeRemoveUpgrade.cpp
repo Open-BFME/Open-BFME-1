@@ -17,11 +17,10 @@ class AsciiString : private StringBase<char>
 public:
 	AsciiString(const char *text) : StringBase<char>(text) {}
 	AsciiString(const AsciiString &source) : StringBase<char>(source) {}
-	int compare(const AsciiString &other) const;
 	~AsciiString() {}
 };
 
-#pragma comment(linker, "/alternatename:?compare@AsciiString@@QBEHABV1@@Z=?j_000220c5@@YAXXZ")
+extern void j_000220c5();
 
 class Object
 {
@@ -107,8 +106,14 @@ void CommandSetUpgrade::removeUpgrade()
 		return;
 
 	Object *object = m_object;
-	if (object->m_commandSetStringOverride.compare(*(const AsciiString *)
-		((const char *)m_moduleData + 0x70)) == 0)
+	typedef int (AsciiString::*CompareThunk)(const AsciiString &) const;
+	union
+	{
+		void (*function)();
+		CompareThunk call;
+	} compare = { j_000220c5 };
+	if ((object->m_commandSetStringOverride.*compare.call)(
+			*(const AsciiString *)((const char *)m_moduleData + 0x70)) == 0)
 		((Rva0022A620Obj *)object)->set("");
 	*(Bool *)((char *)TheControlBar + 0x24) = true;
 	setUpgradeExecuted(false);
