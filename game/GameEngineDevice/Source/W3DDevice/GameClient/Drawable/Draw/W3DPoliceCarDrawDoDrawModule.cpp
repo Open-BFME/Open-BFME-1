@@ -17,6 +17,8 @@ typedef float Real;
 
 class Matrix3D;
 
+extern void j_0001a041();
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 // Copied member by member: retail keeps pos.x and pos.y on the x87 stack across
 // the light setters and bit-copies pos.z. A POD struct copy gives a block copy
@@ -189,5 +191,13 @@ void W3DPoliceCarDraw::doDrawModule(const Matrix3D *transformMtx)
 		m_light->Set_Far_Attenuation_Range( 3, 20 );
 		m_light->Set_Position( Vector3( pos.x,pos.y,pos.z+floatAmt ) );
 	}
-	W3DTruckDraw::doDrawModule(transformMtx);
+	// Retail's qualified base call lands on the 5-byte ILT thunk 0x0001A041
+	// (?j_0001a041@@YAXXZ) that jumps to W3DTruckDraw::doDrawModule 0x00781660.
+	union BaseDrawRoute
+	{
+		void (*raw)();
+		void (W3DTruckDraw::*member)(const Matrix3D *);
+	} route;
+	route.raw = j_0001a041;
+	(this->*route.member)(transformMtx);
 }
