@@ -8,13 +8,11 @@
 #include "scene.h"
 #include "dx8wrapper.h"
 
+extern void j_0003c93e();
+
 class Rva006DED60RoadBuffer
 {
-public:
-	void rva006DC970(void *, void *);
 };
-
-#pragma comment(linker, "/alternatename:?rva006DC970@Rva006DED60RoadBuffer@@QAEXPAX0@Z=?j_0003c93e@@YAXXZ")
 
 class Gen_006CDF70Target : public RenderObjClass
 {
@@ -42,5 +40,7 @@ void Gen_006CDF70Target::bfmeInvoke(void *first, void *second)
 	Matrix3D transform(Transform);
 	DX8Wrapper::Set_Transform(D3DTS_WORLD, transform);
 	DX8Wrapper::Set_Material(m_vertexMaterialClass);
-	m_roadBuffer->rva006DC970(first, second);
+	typedef void (Rva006DED60RoadBuffer::*Fn)(void *, void *);
+	union { void (*fn)(); Fn call; } u = { j_0003c93e };
+	(m_roadBuffer->*u.call)(first, second);
 }
