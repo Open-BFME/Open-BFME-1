@@ -621,7 +621,12 @@ static __forceinline void AlphaSetTexture(unsigned int stage,
 	++Rva01340560TextureChanges;
 }
 
-extern void __stdcall Rva0090C610Invoke(void *argument);
+class Rva0090C610 { public: void invoke(); };
+static __forceinline void Rva0090C610Invoke(void *argument)
+{
+	union { void (Rva0090C610::*member)(); void (__stdcall *call)(void *); } thunk = { &Rva0090C610::invoke };
+	thunk.call(argument);
+}
 extern void __cdecl Rva006D4690Apply(void *argument);
 
 void AlphaTerrainTextureClass::Apply(unsigned int stage)
