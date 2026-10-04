@@ -6,6 +6,10 @@
 #include "GameNetwork/DownloadManager.h"
 #include "string_base.h"
 
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+
 DownloadManager::~DownloadManager()
 {
 	delete m_download;
