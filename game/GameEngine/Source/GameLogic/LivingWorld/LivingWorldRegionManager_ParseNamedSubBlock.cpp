@@ -35,16 +35,17 @@ private:
 	void *m_vtable;
 };
 
-class Rva0061AF80Region : public BfmeThingDCG
+// The ctor body at 0x0061AF80 is LivingWorldRegion's (vtable 0x01117258);
+// only its declaration is needed here, the definition lives in
+// LivingWorldRegionConstructor.cpp.
+class LivingWorldRegion : public BfmeThingDCG
 {
 public:
-	Rva0061AF80Region(const AsciiString &name);
+	LivingWorldRegion(const AsciiString &name);
 
 private:
 	char m_body[0xF0];
 };
-
-#pragma comment(linker, "/alternatename:??0Rva0061AF80Region@@QAE@ABVAsciiString@@@Z=?d_0061af80@@YAXXZ")
 
 #include <vector>
 
@@ -58,16 +59,16 @@ class LivingWorldRegionStore
 {
 public:
 	char m_pad[0x30];
-	std::vector<Rva0061AF80Region *> m_regions;
+	std::vector<LivingWorldRegion *> m_regions;
 };
 
 // ?parseNamedSubBlock@LivingWorldRegionManager@@SAXPAVINI@@PAX1PBX@Z
 void LivingWorldRegionManager::parseNamedSubBlock(
 	INI *ini, void *instance, void *store, const void *userData)
 {
-	Rva0061AF80Region *region = 0;
+	LivingWorldRegion *region = 0;
 	const char *token = ini->getNextToken();
-	region = new Rva0061AF80Region(AsciiString(token));
+	region = new LivingWorldRegion(AsciiString(token));
 	region->bfmeGoDCG(reinterpret_cast<BfmeOtherDCG *>(ini));
 
 	LivingWorldRegionStore *self =
