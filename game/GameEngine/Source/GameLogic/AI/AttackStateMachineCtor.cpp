@@ -100,16 +100,14 @@ extern void j_00035a53();
 extern void d_0016af70();
 Bool inWeaponRangeObject( State *thisState, void *userData );
 
-extern "C" void *bfmeVftAIAttackAimAtTargetState[];
-extern "C" void *bfmeVftAIAttackFireWeaponState[];
-extern "C" void *bfmeVftFailureState[];
-extern "C" void *bfmeVftAIWaitUntilFinishedFiringState[];
-extern "C" void *bfmeVftRva0016AB00TailDtor[];
-#pragma comment(linker, "/alternatename:_bfmeVftAIAttackAimAtTargetState=??_7AIAttackAimAtTargetState@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftAIAttackFireWeaponState=??_7AIAttackFireWeaponState@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftFailureState=??_7FailureState@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftAIWaitUntilFinishedFiringState=??_7AIWaitUntilFinishedFiringState@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftRva0016AB00TailDtor=??_7Rva0016AB00TailDtor@@6B@")
+// Retail's own vtables. Binding the decorated symbol directly makes each store
+// relocate against 0x1097C60 / 0x1097DC0 / 0x1097950 / 0x1097D40 / 0x1097168
+// exactly as retail does, with no stand-in name in between.
+extern "C" void *__identifier("??_7AIAttackAimAtTargetState@@6B@")[];
+extern "C" void *__identifier("??_7AIAttackFireWeaponState@@6B@")[];
+extern "C" void *__identifier("??_7FailureState@@6B@")[];
+extern "C" void *__identifier("??_7AIWaitUntilFinishedFiringState@@6B@")[];
+extern "C" void *__identifier("??_7Rva0016AB00TailDtor@@6B@")[];
 
 struct StateConditionInfo
 {
@@ -128,7 +126,7 @@ public:
 		Bool forceAttacking )
 		: State(machine, AsciiString("AIAttackAimAtTargetState"))
 	{
-		*(void **)this = bfmeVftAIAttackAimAtTargetState;
+		*(void **)this = __identifier("??_7AIAttackAimAtTargetState@@6B@");
 		m_attackingObject = attackingObject;
 		m_canTurnInPlace = false;
 		m_setLocomotor = false;
@@ -147,7 +145,7 @@ public:
 	Rva00180810FireState( StateMachine *machine, void *notify )
 		: State(machine, AsciiString("AIAttackFireWeaponState"))
 	{
-		*(void **)this = bfmeVftAIAttackFireWeaponState;
+		*(void **)this = __identifier("??_7AIAttackFireWeaponState@@6B@");
 		m_notify = notify;
 		m_finished = false;
 	}
@@ -162,7 +160,7 @@ public:
 	Rva00180810FailureState( StateMachine *machine )
 		: State(machine, AsciiString("FailureState"))
 	{
-		*(void **)this = bfmeVftFailureState;
+		*(void **)this = __identifier("??_7FailureState@@6B@");
 	}
 
 private:
@@ -204,7 +202,7 @@ public:
 	Rva00180810WaitState( StateMachine *machine )
 		: State(machine, AsciiString("AIWaitUntilFinishedFiringState"))
 	{
-		*(void **)this = bfmeVftAIWaitUntilFinishedFiringState;
+		*(void **)this = __identifier("??_7AIWaitUntilFinishedFiringState@@6B@");
 	}
 };
 
@@ -220,7 +218,7 @@ AttackStateMachine::AttackStateMachine(
 	Bool follow, Bool attackingObject, Bool forceAttacking )
 : StateMachine(obj, name, false)
 {
-	*(void **)this = bfmeVftRva0016AB00TailDtor;
+	*(void **)this = __identifier("??_7Rva0016AB00TailDtor@@6B@");
 
 	static const StateConditionInfo objectConditionsNormal[] =
 	{
