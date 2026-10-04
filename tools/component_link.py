@@ -396,10 +396,14 @@ def compile_driver(component, spec, out):
 def link(objs, driver, out):
     root, env = toolchain()
     libs = [root / "Vc7" / "lib" / "msvcrt.lib", root / "Vc7" / "lib" / "kernel32.lib"]
+    # link.exe treats an absolute POSIX path beginning with / as an option.
+    # Libraries may live outside ROOT, so keep native paths on Windows and
+    # ask the established Wine mapping for Windows paths on other hosts.
+    lib_args = [str(lib) if sys.platform == "win32" else build.wine_path(lib) for lib in libs]
     exe, mapfile = out / "component.exe", out / "component.map"
     command = [str(root / "Vc7" / "bin" / "link.exe"), "/NOLOGO", "/NODEFAULTLIB", "/INCREMENTAL:NO",
                "/MACHINE:X86", "/SUBSYSTEM:CONSOLE", "/VERBOSE", f"/MAP:{rel(mapfile)}", f"/OUT:{rel(exe)}",
-               rel(driver), *[rel(o) for o in objs], *[str(lib) for lib in libs]]
+               rel(driver), *[rel(o) for o in objs], *lib_args]
     assert not any(a.upper().startswith(("/FORCE", "/ALTERNATENAME")) for a in command)
     if sys.platform != "win32":
         command.insert(0, "wine")
