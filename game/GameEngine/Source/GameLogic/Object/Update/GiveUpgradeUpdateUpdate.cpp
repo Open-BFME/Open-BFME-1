@@ -114,20 +114,26 @@ public:
 extern GameLogic *TheGameLogic;
 #define g_rva01075350 0.0f
 
-#pragma comment(linker, "/alternatename:?update@UpdateModuleInterface@@QAE?AW4UpdateSleepTime@@XZ=?j_00044b0c@@YAXXZ")
-#pragma comment(linker, "/alternatename:?advanceUpdate@SpecialAbilityUpdate@@QAEXXZ=?j_0003d0eb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?checkTarget@SpecialAbilityUpdate@@QAE_NPAVObject@@@Z=?j_00008995@@YAXXZ")
+extern void j_00044b0c();
+extern void j_0003d0eb();
+extern void j_00008995();
 
 // ?update@GiveUpgradeUpdate@@UAE?AW4UpdateSleepTime@@XZ
 UpdateSleepTime GiveUpgradeUpdate::update()
 {
 	char *rawThis = reinterpret_cast<char *>(this);
+	typedef UpdateSleepTime (UpdateModuleInterface::*UpdateFn)();
+	union { void (*fn)(); UpdateFn call; } uUpdate = { j_00044b0c };
+	typedef void (SpecialAbilityUpdate::*AdvanceFn)();
+	union { void (*fn)(); AdvanceFn call; } uAdvance = { j_0003d0eb };
+	typedef bool (SpecialAbilityUpdate::*CheckTargetFn)(Object *);
+	union { void (*fn)(); CheckTargetFn call; } uCheckTarget = { j_00008995 };
 	Object *ownerObject = *reinterpret_cast<Object **>(rawThis - 8);
 	AIUpdateInterface *ownerAI =
 		*reinterpret_cast<AIUpdateInterface **>(reinterpret_cast<char *>(ownerObject) + 0x204);
 	CommandSourceType lastCommandSource = ownerAI->getLastCommandSource();
 	UpdateSleepTime baseSleepTime =
-		reinterpret_cast<UpdateModuleInterface *>(rawThis)->update();
+		(reinterpret_cast<UpdateModuleInterface *>(rawThis)->*uUpdate.call)();
 
 	if (lastCommandSource != CMD_FROM_AI)
 	{
@@ -137,7 +143,7 @@ UpdateSleepTime GiveUpgradeUpdate::update()
 	}
 
 	if (*reinterpret_cast<bool *>(rawThis + 0xd9))
-		reinterpret_cast<SpecialAbilityUpdate *>(rawThis - 0x10)->advanceUpdate();
+		(reinterpret_cast<SpecialAbilityUpdate *>(rawThis - 0x10)->*uAdvance.call)();
 
 	if (!*reinterpret_cast<bool *>(rawThis + 0xd8))
 	{
@@ -145,7 +151,7 @@ UpdateSleepTime GiveUpgradeUpdate::update()
 			*reinterpret_cast<ObjectID *>(rawThis + 0x9c));
 		if (target == 0 ||
 			(*reinterpret_cast<unsigned char *>(reinterpret_cast<char *>(target) + 0x344) & 1) != 0 ||
-			!reinterpret_cast<SpecialAbilityUpdate *>(rawThis - 0x10)->checkTarget(target))
+			!(reinterpret_cast<SpecialAbilityUpdate *>(rawThis - 0x10)->*uCheckTarget.call)(target))
 		{
 			*reinterpret_cast<bool *>(rawThis + 0xd9) = false;
 			reinterpret_cast<SpecialAbilityUpdate *>(rawThis - 0x10)->bfmeAbortAbility();
