@@ -6,7 +6,7 @@
 
 // This formatter has its own scratch buffer at VA 0x0134D4B8. The INI
 // exception constructor's g_bfmeFormatBuffer is the distinct VA 0x0130C650.
-extern char Rva0134D4B8FormatBuffer[2048];
+extern char Rva0134D4B8FormatBuffer[];
 extern "C" __declspec(dllimport) int __cdecl _vsnprintf(char *, unsigned int, const char *, va_list);
 // The block is allocated through the global `operator new[]`, the 17-byte
 // body at retail 0x00881F70 (??_U@YAPAXI@Z, matched in WWLib/mem_ops.cpp).
@@ -33,3 +33,8 @@ extern "C" BfmeFormattedText *__cdecl bfmeFormatText(BfmeFormattedText *result, 
 	}
 	return result;
 }
+
+// Native _vsnprintf receives capacity 0x7FF for this writable scratch view.
+// Own only that used range; the original allocation extent is not claimed.
+// See identity_evidence/0134d4b8-format-buffer-used-view.md.
+char Rva0134D4B8FormatBuffer[2047];
