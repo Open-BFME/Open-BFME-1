@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD -ICode/Libraries/Source/Compression/LZHCompress/CompLibHeader
+// cl: /DNDEBUG /MD -Igame/Libraries/Source/Compression/LZHCompress/CompLibHeader
 // RVA 0x00825D80: clear 274 short counters through the first pointer field.
 // The class identity has no matched caller, so this keeps its address.
 #include <string.h>
