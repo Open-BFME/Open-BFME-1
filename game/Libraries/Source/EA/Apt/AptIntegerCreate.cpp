@@ -1,8 +1,10 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // EA Apt integer factory.  Its callers are the named integer-producing Apt
 // handlers, and the body is the pooled Apt value constructor at 0x008A11E0.
-
-#pragma comment(linker, "/alternatename:?d_008a11e0@@YAXXZ=?Create@AptInteger@@SAPAV1@H@Z")
+// The retired gen-dump scaffold name ?d_008a11e0@@YAXXZ for these bytes needed
+// no linker alias: no object referenced it (functions.csv deleted that row in
+// favour of ?Create@AptInteger@@SAPAV1@H@Z), and game/gen_asm/d_008a0830.asm
+// still defines the scaffold PROC itself.
 
 struct Rva008D2A30Node
 {
@@ -46,6 +48,11 @@ extern Rva008D2A10 *g_rva008D2A10;
 // Retail RVA 0x008A11EE and 0x008A124E load VA 0x01337810,
 // the verified canonical GC-root pointer owned by Apt.cpp.
 extern Rva00899560Pool *g_rva01337810GcRoots;
+// The two vftables cannot be referenced by their own names here: __identifier
+// ("??_7AptValue@@6B@") is rejected with C2373 while this TU has a
+// polymorphic class of that name in scope, and the only way to drop that class
+// from the scope is to strip its virtual destructor, which changes the codegen
+// and breaks the byte match.  Keep the two redirects.
 extern "C" const void *bfmeVftAptValue[];
 #pragma comment(linker, "/alternatename:_bfmeVftAptValue=??_7AptValue@@6B@")
 extern "C" const void *bfmeVftAptInteger[];
