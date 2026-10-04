@@ -3,12 +3,9 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
 
 extern "C" char g_bfmeV1189[];
-extern "C" const void *bfmeVftRva005EA590[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EA590=??_7Rva005EA590@@6B@")
-extern "C" const void *bfmeVftRva005EA590_Rva005EA6C0Part0[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EA590_Rva005EA6C0Part0=??_7Rva005EA590@@6BRva005EA6C0Part0@@@")
-extern "C" const void *bfmeVftRva005EA590_Rva005EA6C0Part1[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EA590_Rva005EA6C0Part1=??_7Rva005EA590@@6BRva005EA6C0Part1@@@")
+extern "C" const char __identifier("??_7Rva005EA590@@6B@")[];
+extern "C" const char __identifier("??_7Rva005EA590@@6BRva005EA6C0Part0@@@")[];
+extern "C" const char __identifier("??_7Rva005EA590@@6BRva005EA6C0Part1@@@")[];
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 struct Rva005E5E60Sys;
@@ -115,9 +112,9 @@ public:
 Rva005EFB10::Rva005EFB10(Rva005E5E60Sys &sys, const void *source)
 	: Rva005EFB10Part0(&sys), PolymorphicVptrBase01073760(), BfmeA1189()
 {
-	*(volatile unsigned int *)((unsigned char *)this + 0x0c) = (unsigned int)bfmeVftRva005EA590;
-	*(volatile unsigned int *)this = (unsigned int)bfmeVftRva005EA590_Rva005EA6C0Part0;
-	*(volatile unsigned int *)((unsigned char *)this + 0x08) = (unsigned int)bfmeVftRva005EA590_Rva005EA6C0Part1;
+	*(volatile unsigned int *)((unsigned char *)this + 0x0c) = (unsigned int)__identifier("??_7Rva005EA590@@6B@");
+	*(volatile unsigned int *)this = (unsigned int)__identifier("??_7Rva005EA590@@6BRva005EA6C0Part0@@@");
+	*(volatile unsigned int *)((unsigned char *)this + 0x08) = (unsigned int)__identifier("??_7Rva005EA590@@6BRva005EA6C0Part1@@@");
 	_ReadWriteBarrier();
 	const Rva005EFB10SourceImage *sourceImage =
 		(const Rva005EFB10SourceImage *)source;
