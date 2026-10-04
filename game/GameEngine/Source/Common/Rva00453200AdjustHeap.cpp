@@ -6,10 +6,17 @@
 // Retail's compare call routes through ILT 0x00024055 to the existing
 // Q4Sort004566F0 operator() body at RVA 0x00451F60.
 
+// Retail calls the comparator through ILT 0x00024055 and push_heap through ILT
+// 0x000190C4 (-> 0x004529D0).
+extern void j_00024055();
+extern void j_000190c4();
+
 struct Q4Sort004566F0
 {
 	bool operator()(int left, int right) const;
 };
+
+typedef bool (Q4Sort004566F0::*Q4Sort004566F0Call)(int, int) const;
 
 // Keep the heap template identity while binding its stateless call to the
 // one existing comparator provider; the empty base needs no this adjustment.
@@ -31,8 +38,10 @@ namespace _STL
 		Distance secondChild = 2 * holeIndex + 2;
 		while (secondChild < length)
 		{
-			if (compare(*(first + secondChild),
-				*(first + (secondChild - 1))))
+			union { void (*raw)(void); Q4Sort004566F0Call member; } call;
+			call.raw = j_00024055;
+			if ((reinterpret_cast<const Q4Sort004566F0 *>(&compare)->*call.member)(
+				*(first + secondChild), *(first + (secondChild - 1))))
 			{
 				--secondChild;
 			}
@@ -45,7 +54,8 @@ namespace _STL
 			*(first + holeIndex) = *(first + (secondChild - 1));
 			holeIndex = secondChild - 1;
 		}
-		__push_heap(first, holeIndex, topIndex, value, compare);
+		((void (*)(RandomAccessIterator, Distance, Distance, Tp, Compare))
+			j_000190c4)(first, holeIndex, topIndex, value, compare);
 	}
 
 	template void __adjust_heap<int *, int, int, Q4Cmp00453BB0>(
