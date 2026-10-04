@@ -19,7 +19,6 @@ public:
 	{
 		if (Referent) {
 			Referent->Release_Ref();
-			Referent = 0;
 		}
 	}
 

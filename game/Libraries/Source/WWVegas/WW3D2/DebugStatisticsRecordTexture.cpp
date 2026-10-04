@@ -63,7 +63,6 @@ public:
 		if (Referent != 0)
 		{
 			Referent->Release_Ref();
-			Referent = 0;
 		}
 	}
 	RefCountPtr const &operator=(RefCountPtr const &other)
