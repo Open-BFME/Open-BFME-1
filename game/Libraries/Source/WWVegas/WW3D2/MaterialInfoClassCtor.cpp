@@ -22,7 +22,6 @@ public:
 		if (Referent != 0)
 		{
 			Referent->Release_Ref();
-			Referent = 0;
 		}
 	}
 
