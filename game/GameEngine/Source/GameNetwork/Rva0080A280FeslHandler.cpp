@@ -2,8 +2,12 @@
 // Retail 0x0080A280 has no caller or proven semantic owner, so this source
 // keeps the address-derived owner and method names.
 
-char *__cdecl ji_009f709c( const char *text, const char *find );
-#pragma comment( linker, "/alternatename:?ji_009f709c@@YAPADPBD0@Z=?ji_009f709c@@YAXXZ" )
+// Retail calls strstr through its ILT thunk ?ji_009f709c@@YAXXZ, which is
+// void-returning and takes no declared arguments; the real signature is
+// recovered through a local function pointer type.
+extern void __cdecl ji_009f709c();
+typedef char *( __cdecl *AptStringFindFn )( const char *text, const char *find );
+
 extern "C" __declspec( dllimport ) unsigned int __cdecl strlen(
 	const char *text );
 #pragma intrinsic( strlen )
@@ -108,7 +112,8 @@ void Rva0080A280Owner::rva0080A280( Rva0080A280Input *input )
 	if( m_state->m_text != 0 )
 	{
 		int length = strlen( name );
-		if( length == 0 || ji_009f709c( name, m_field58 + 0x8c ) != 0 )
+		AptStringFindFn find = (AptStringFindFn)ji_009f709c;
+		if( length == 0 || find( name, m_field58 + 0x8c ) != 0 )
 		{
 			char shortName[ 0x20 ];
 			reinterpret_cast< BfmeThingUPB * >( input )->bfmeGoUPB(
