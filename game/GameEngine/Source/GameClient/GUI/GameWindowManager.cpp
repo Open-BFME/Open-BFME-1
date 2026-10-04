@@ -1796,8 +1796,9 @@ struct BfmeModalWindowLayout
 	BfmeModalWindowLayout *volatile next;
 };
 
-extern "C" const void *bfmeVftRva0047CF90[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva0047CF90=??_7Rva0047CF90@@6B@")
+// Retail's modal-window vftable at 0x47CF90 is emitted by the single-shape
+// vfptr ctor TU as the COMDAT `??_7Rva0047CF90@@6B@`; name it directly.
+extern "C" const char __identifier("??_7Rva0047CF90@@6B@")[];
 
 class BfmeModalWindowDelete
 {
@@ -1823,7 +1824,7 @@ Int GameWindowManager::winSetModal( GameWindow *window )
 	if( modal != NULL )
 	{
 		// Put new entry at top of list
-		modal->vtable = (void *)bfmeVftRva0047CF90;
+		modal->vtable = (void *)__identifier("??_7Rva0047CF90@@6B@");
 		modal->window = window;
 		modal->next = (BfmeModalWindowLayout *)m_modalHead;
 		m_modalHead = (ModalWindow *)modal;
