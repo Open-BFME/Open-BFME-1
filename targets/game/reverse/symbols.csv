@@ -2820,7 +2820,6 @@ name,address,notes
 ??0DevastateSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,DevastateSpecialPowerModuleData base ctor
 ??0Dict@@QAE@H@Z,0x00002ECD,ParseObjectDataChunk 0x00088B70 Dict(Int) ctor thunk
 ??0DieModuleData@@QAE@XZ,0x0004A426,ModuleFactory ILT thunk to 0x001F7810; the byte-verified retail caller encodes it
-??0DieMuxData@@QAE@XZ,0x000057B8,pinharvest x1 (thunk)
 ??0DirectInputKeyboard@@QAE@XZ,0x000120D0,DirectInputKeyboard ctor thunk; createKeyboard@W3DGameClient factory REL32
 ??0DisplayString@@QAE@XZ,0x00020C25,W3DDisplayString constructor calls the DisplayString constructor through this retail ILT
 ??0DisplayStringManager@@QAE@XZ,0x0000F7A9
@@ -4069,7 +4068,6 @@ name,address,notes
 ??0UpgradeModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000C315,Open-BFME5 Upgrade module base call pin (ILT shared)
 ??0UpgradeModuleData@@QAE@XZ,0x00049AA3,pinharvest x1 (thunk)
 ??0UpgradeModuleDataSub@@QAE@XZ,0x0000F0A6,UpgradeModuleData subobject ctor ILT used by upgrade factories
-??0UpgradeMuxData@@QAE@XZ,0x000057B8,pinharvest x1 (thunk)
 ??0UpgradeSoundSelectorClientBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,UpgradeSoundSelectorClientBehavior ctor for friend_new
 ??0UpgradeSoundSelectorClientBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00005623,route=0x00121F60; UpgradeSoundSelectorClientBehavior constructor ILT routes to its dedicated vtable-setting body
 ??0UpgradeTemplate@@QAE@XZ,0x0001D39A,UpgradeCenter newUpgrade retail constructor thunk
