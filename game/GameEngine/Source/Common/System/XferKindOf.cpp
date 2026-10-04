@@ -210,7 +210,11 @@ public:
 	}
 };
 
-extern int bfmeLookup_000d1020(void *name); // ILT 0x0004AFFC
+template <unsigned int NUMBITS> class BitFlags
+{
+public:
+	static int getSingleBitFromName(const char *name);
+}; // ILT 0x0004AFFC
 
 class Xfer;
 
@@ -275,7 +279,7 @@ Xfer *__cdecl Rva0010C980XferKindOf(Xfer *xfer, KindOfType *kindOfData)
 	{
 		AsciiString kindOfName;
 		receiver->xferAsciiString(kindOfName);
-		Int bit = bfmeLookup_000d1020((void *)kindOfName.str());
+		Int bit = BitFlags<181>::getSingleBitFromName(kindOfName.str());
 		if (bit != -1)
 			*kindOfData = (KindOfType)bit;
 	}

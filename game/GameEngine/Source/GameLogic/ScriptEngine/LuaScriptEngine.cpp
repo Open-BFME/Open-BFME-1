@@ -111,7 +111,7 @@ int CurDrawableIsCurrentTargetKindof(lua_State *state)
 	if (drawable != 0 && drawable->m_owner != 0 && drawable->m_owner->m_target != 0) {
 		Object *target = TheGameLogic->findObjectByID(drawable->m_owner->m_target->m_targetID);
 		if (target != 0 && lua_gettop(state) > 0) {
-			int kind = BitFlags<17>::getSingleBitFromName(lua_tostring(state, 1));
+			int kind = BitFlags<181>::getSingleBitFromName(lua_tostring(state, 1));
 			if (target->isKindOf((KindOfType)kind)) {
 				lua_pushboolean(state, 1);
 				return 1;

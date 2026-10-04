@@ -19,7 +19,11 @@
 
 typedef unsigned int UnsignedInt;
 
-int bfmeLookup_000d1020(void *name);				// ILT 0x0004AFFC
+template <unsigned int NUMBITS> class BitFlags
+{
+public:
+	static int getSingleBitFromName(const char *name);
+};				// ILT 0x0004AFFC
 
 class Gen_000d1020
 {
@@ -62,7 +66,7 @@ public:
 // ?bfmeSet@Gen_000d1020@@QAE_NPAX@Z
 bool Gen_000d1020::bfmeSet(void *name)
 {
-	int index = bfmeLookup_000d1020(name);
+	int index = BitFlags<181>::getSingleBitFromName((const char *)name);
 
 	if (index >= 0)
 	{

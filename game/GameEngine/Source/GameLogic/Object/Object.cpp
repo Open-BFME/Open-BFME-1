@@ -63,6 +63,9 @@ private: \
 public:
 #define DEFINE_WEAPONCONDITIONMAP
 #include "Common/BitFlagsIO.h"
+
+// Retail KindOf lookup uses the 181-name table at VA 0x012AA068.
+template Int BitFlags<181>::getSingleBitFromName(const char *);
 #include "Common/BuildAssistant.h"
 #include "Common/Dict.h"
 #include "Common/GameEngine.h"

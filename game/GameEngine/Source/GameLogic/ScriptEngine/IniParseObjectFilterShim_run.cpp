@@ -68,7 +68,11 @@ public:
 	UnsignedInt m_useCount;
 };
 
-extern int bfmeLookup_000d1020(void *name);
+template <unsigned int NUMBITS> class BitFlags
+{
+public:
+	static int getSingleBitFromName(const char *name);
+};
 extern UnsignedInt bfmeInternAttributeEntry(Gen00043699 *entry);
 
 class IniParseObjectFilterShim
@@ -160,7 +164,7 @@ void IniParseObjectFilterShim::run(INI *ini, void *, void *store, const void *)
 				THROW_FILTER_ERROR("iniParseObjectFilter: You must specify a ruleset for your data (ANY, ALL, or NONE). You specified %s.", token);
 			if (entry.m_kind == 3)
 				THROW_FILTER_ERROR("ALL is specified for iniParseObjectFilter, so adding %s has no effect. Please remove entry.", token);
-			UnsignedInt bit = (UnsignedInt)bfmeLookup_000d1020((void *)(token + 1));
+			UnsignedInt bit = (UnsignedInt)BitFlags<181>::getSingleBitFromName(token + 1);
 			if (bit != 0xffffffff)
 				entry.m_firstPlain.m_values[bit >> 5] |= 1 << (bit & 31);
 			else
@@ -171,7 +175,7 @@ void IniParseObjectFilterShim::run(INI *ini, void *, void *store, const void *)
 		{
 			if (!hasRuleset)
 				THROW_FILTER_ERROR("iniParseObjectFilter: You must specify a ruleset for your data (ANY, ALL, or NONE). You specified %s.", token);
-			UnsignedInt bit = (UnsignedInt)bfmeLookup_000d1020((void *)(token + 1));
+			UnsignedInt bit = (UnsignedInt)BitFlags<181>::getSingleBitFromName(token + 1);
 			if (bit != 0xffffffff)
 				entry.m_secondPlain.m_values[bit >> 5] |= 1 << (bit & 31);
 			else
