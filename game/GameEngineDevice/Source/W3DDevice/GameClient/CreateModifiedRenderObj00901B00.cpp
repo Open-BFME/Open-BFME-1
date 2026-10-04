@@ -58,12 +58,8 @@ public:
  Rva00900FF0VecOfVec() : m_start(0),m_finish(0),m_end(0) {}
  Rva00900FF0VecOfVec(const Rva00900FF0VecOfVec &);
  ~Rva00900FF0VecOfVec();
- void push_back(const _STL::string &);
  char *m_start,*m_finish,*m_end;
 };
-#pragma comment(linker, "/alternatename:??0Rva00900FF0VecOfVec@@QAE@ABV0@@Z=?d_008ffb80@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1Rva00900FF0VecOfVec@@QAE@XZ=?j_0000b109@@YAXXZ")
-#pragma comment(linker, "/alternatename:?push_back@Rva00900FF0VecOfVec@@QAEXABV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@@Z=?j_00008f17@@YAXXZ")
 class Rva00900FF0 {
 public:
  Rva00900FF0(const char *,const char *,int,int,Rva00900FF0VecOfVec,Rva00900FF0VecOfVec,Rva00900FF0VecOfVec,int);
