@@ -16748,5 +16748,15 @@
   "after_sha256": "0f1a896d62215b963a002104c06c8bf434756d9ef98ecf62202295778af33aad",
   "evidence": "targets/game/reverse/identity_evidence/0023c5e0-opaque-owner.md",
   "reason": "The bank-only owner describes inferred selection behavior but has no class-name witness. Retail debug strings prove a HordeContain source file, not the member identity. Keep a fully opaque address owner and method instead of promoting the bank convenience name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x002ab0f0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/SpecialEnemySenseUpdateUpdate.cpp",
+  "old_name": "PartitionFilterBase",
+  "new_name": "Rva0025ED50RootFilter",
+  "before_sha256": "7a7e2c367cb253d0d67c8beb26dde84b73815722b8cadb6040cafc1a7aea7752",
+  "after_sha256": "023b5a4a452fabbbfe0e66a4c77f340b8362d49569e9475745514f4be01fd2aa",
+  "evidence": "targets/game/reverse/identity_evidence/002ab0f0-specialenemysense-update.md",
+  "reason": "The bank-only PartitionFilterBase had no witness. The filter table 0x01083B80 is recorded as ??_7Rva0025ED50RootFilter@@6B@ and the matched AutoPickUpUpdate::update uses that spelling; the DIR32 gate needs it."
  }
 ]
