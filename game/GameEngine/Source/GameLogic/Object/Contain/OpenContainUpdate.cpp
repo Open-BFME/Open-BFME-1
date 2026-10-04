@@ -3,6 +3,10 @@
 // Open-BFME: OpenContain::update at retail 0x00225600.
 // The update interface is a secondary base at +0x10 in the BFME object.
 
+extern void j_0002191d();
+extern void j_00004953();
+extern void j_0000ba50();
+
 typedef unsigned int UnsignedInt;
 typedef unsigned short PlayerMaskType;
 
@@ -20,7 +24,6 @@ enum ModelConditionFlagType
 class Object
 {
 public:
-	void notifyModelConditionChanged();
 	__forceinline void openContainUpdateClearAndSetModelConditionState(ModelConditionFlagType clearFlags,
 		ModelConditionFlagType setFlags)
 	{
@@ -39,7 +42,10 @@ public:
 			mov [ecx+0x110], edx
 			mov [ecx+0x110], eax
 		}
-		notifyModelConditionChanged();
+		// Retail calls this through the ILT thunk at 0x2191D.
+		typedef void (Object::*Fn)();
+		union { void (*fn)(); Fn call; } u = { j_0002191d };
+		(this->*u.call)();
 	}
 
 	char m_pad00[0x110];
@@ -77,13 +83,21 @@ public:
 	virtual UpdateSleepTime update() = 0;
 };
 
+// The two ILT-routed calls below go through thiscall member pointers. MSVC 7.1
+// only folds such a constant into a direct `mov ecx, this; call thunk` when the
+// class of the member function has no bases, so the calls are routed through
+// this base-less view of `this` rather than through OpenContain itself.
+class OpenContainEntry225600
+{
+public:
+	void pruneDeadWanters();
+	void finishUpdate();
+};
+
 class OpenContain : public OpenContainPrimaryBase, public OpenContainUpdateInterface
 {
 public:
 	virtual UpdateSleepTime update();
-
-	void pruneDeadWanters();
-	void finishUpdate();
 
 private:
 	char m_pad14[0x48];
@@ -94,12 +108,11 @@ private:
 	PlayerMaskType m_playerEnteredMask;
 };
 
-#pragma comment(linker, "/alternatename:?notifyModelConditionChanged@Object@@QAEXXZ=?j_0002191d@@YAXXZ")
-#pragma comment(linker, "/alternatename:?pruneDeadWanters@OpenContain@@QAEXXZ=?j_00004953@@YAXXZ")
-#pragma comment(linker, "/alternatename:?finishUpdate@OpenContain@@QAEXXZ=?j_0000ba50@@YAXXZ")
-
 UpdateSleepTime OpenContain::update()
 {
+	typedef void (OpenContainEntry225600::*Fn)();
+	OpenContainEntry225600 *entry = (OpenContainEntry225600 *)this;
+
 	m_playerEnteredMask = 0;
 	monitorConditionChanges();
 
@@ -113,8 +126,14 @@ UpdateSleepTime OpenContain::update()
 	}
 
 	if (m_objectEnterExitInfo)
-		pruneDeadWanters();
+	{
+		union { void (*fn)(); Fn call; } prune = { j_00004953 };
+		(entry->*prune.call)();
+	}
 
-	finishUpdate();
+	{
+		union { void (*fn)(); Fn call; } finish = { j_0000ba50 };
+		(entry->*finish.call)();
+	}
 	return UPDATE_SLEEP_NONE;
 }
