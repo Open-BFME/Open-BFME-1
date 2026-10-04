@@ -232,3 +232,25 @@ Each body's only row was the `?clone@?$ConcreteModuleTemplate@U...ModuleTag@...`
 label the per-member TU compiles; retail exports the same instantiation as the
 `V?$ModuleTag<...>` spelling. The row is corrected to the exported name with
 `add_match.py --correct-identity`, keeping `object-symbol=` the compiled label.
+
+## Other names sharing an exported FX body (same TU as the export)
+
+These addresses carry an exported FX name plus rows for names retail does not
+export anywhere: a truncated copy, the Zero Hour `ParticleSystemTemplate`
+spelling of a keyframe parser, a different FX instantiation that only shares
+the TU-local label, or an unrelated class whose code happens to be identical.
+With no identical-COMDAT folding in retail, the export decides. Each retired
+row lives in the same source as the kept exported row, so no file loses
+claimed bytes. `?freeZones@ZoneBlock@@IAEXXZ` keeps its `symbols.csv` pin at
+0x00012968, which is the ILT thunk the export assigns to
+`??1CylinderEmissionVolumeModuleTemplate@FXParticleSystem@@UAE@XZ`; that pin is
+left for a separate review.
+
+| ordinal | body | retired name | source |
+|---|---|---|---|
+| 41 | 0x005C18B0 | `??0?$CategoryModuleClassBase@$07$0A@@FXParticleSystem@@QAE@ABV?$CategoryModuleCl` | `obbox.cpp` |
+| 41 | 0x005C18B0 | `??0OBBoxClass@@QAE@PBVVector3@@H@Z` | `obbox.cpp` |
+| 442 | 0x005D65B0 | `??1?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?BOX_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?BOX_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVBoxEmissionVolumeModule@2@VBoxEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ` | `ConcreteModuleTemplateEmissionVolumeDestructor.cpp` |
+| 442 | 0x005D65B0 | `?freeZones@ZoneBlock@@IAEXXZ` | `ConcreteModuleTemplateEmissionVolumeDestructor.cpp` |
+| 1702 | 0x005EF1F0 | `?parseRGBColorKeyframe@ParticleSystemTemplate@@SAXPAVINI@@PAX1PBX@Z` | `ParticleSys.cpp` |
+| 1703 | 0x005EE370 | `?parseRandomKeyframe@ParticleSystemTemplate@@SAXPAVINI@@PAX1PBX@Z` | `ParticleSys.cpp` |
