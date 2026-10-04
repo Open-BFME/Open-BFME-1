@@ -100,10 +100,12 @@ public:
 	virtual void slot11();
 	virtual void slot12();
 	virtual Rva008022A0Owner *find( int id );
-	void resetHpState( Rva008022A0Owner *player );
 };
 
-#pragma comment(linker, "/alternatename:?resetHpState@Rva007F5D10HostLookup@@QAEXPAVRva008022A0Owner@@@Z=?Rva008014F0ResetHpState@@YGXPAVRva008022A0Owner@@@Z")
+// 0x008014F0 is the ledger's __stdcall body for
+// ?Rva008014F0ResetHpState@@YGXPAVRva008022A0Owner@@@Z (Y2FeslBufferAndChain.cpp);
+// call it directly instead of aliasing a member name to it.
+void __stdcall Rva008014F0ResetHpState( Rva008022A0Owner *owner );
 
 class Rva007F5D10Listener
 {
@@ -184,7 +186,18 @@ void Rva007F5D10GameBrowser::handlePendingActiveReply( Rva007E8810Message *messa
 	if ( ((Rva007E88A0 *)message)->Rva007E88A0::method() )
 	{
 		m_listener->notifyActive( id );
-		m_hosts->resetHpState( player );
+		// Retail reloads m_hosts into ecx after the indirect notifyActive call
+		// before the 0x008014F0 call; a thiscall-typed member pointer keeps that
+		// reload while the callee reference stays on the defining name.
+		typedef void (Rva007F5D10HostLookup::*ResetHpState)( Rva008022A0Owner * );
+		union ResetHpStateFn
+		{
+			void (__stdcall *plain)( Rva008022A0Owner * );
+			ResetHpState member;
+		} hp;
+		hp.plain = Rva008014F0ResetHpState;
+		ResetHpState resetHpState = hp.member;
+		( m_hosts->*resetHpState )( player );
 	}
 }
 
