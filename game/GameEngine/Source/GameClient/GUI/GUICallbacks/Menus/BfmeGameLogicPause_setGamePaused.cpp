@@ -48,8 +48,20 @@ public:
 	virtual void v30();
 	virtual void v34();
 	virtual void setCursor(int cursor);
+};
 
-	bool isCursorVisible();
+// Same declaration as the existing owner in R2PairedGuardTests.cpp. Retail's
+// call at 0x003834EF goes through ILT 0x00023FA6 to the complete 29-byte body
+// at 0x005A44B0. It receives this in ECX, takes no stack arguments and returns
+// with bare RET. Both exits define all of EAX: 1 when the bytes at +0x4DA1
+// and +0x4DA2 are nonzero, otherwise 0. Keep that owner's 32-bit int return ABI.
+class Rva005A44B0
+{
+public:
+	char m_leading[0x4DA1];
+	bool m_first;
+	bool m_second;
+	int test();
 };
 
 class BfmeAudioPause
@@ -108,7 +120,11 @@ void BfmeGameLogicPause::setGamePaused(bool paused, int pauseMode, bool affectMo
 	if (paused)
 	{
 		m_inputEnabledMemory = TheInGameUI->getInputEnabled();
-		m_mouseVisibleMemory = TheMouse->isCursorVisible();
+		// Retail stores only AL at 0x003834F4, without an Int-to-bool test.
+		// The proven 0/1 range is already a valid one-byte MSVC bool object
+		// representation, so write that byte through its unsigned-char view.
+		reinterpret_cast<unsigned char &>(m_mouseVisibleMemory) =
+			static_cast<unsigned char>(reinterpret_cast<Rva005A44B0 *>(TheMouse)->test());
 		if (affectMouse)
 		{
 			TheMouseVis->_bfme_setEngineVisibility(true);
