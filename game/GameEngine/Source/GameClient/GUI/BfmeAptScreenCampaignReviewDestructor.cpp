@@ -62,7 +62,7 @@ public:
 
 BfmeAptScreenCampaignReview::~BfmeAptScreenCampaignReview()
 {
-	_bfme_closeAptScreen(AsciiString("AptCampaignReview:"));
+	_bfme_closeAptScreen(AsciiString("AptCampaignReview::InitGadgets"));
 
 	if(TheShell)
 		TheShell->hide(false);
