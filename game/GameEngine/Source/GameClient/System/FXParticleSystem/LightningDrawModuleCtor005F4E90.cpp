@@ -2,12 +2,16 @@
 
 #include "game_client_random_variable.h"
 
-extern "C" const void *bfmeVftRva005EBD40_V3Head14[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EBD40_V3Head14=??_7Rva005EBD40@@6BV3Head14@@@")
-extern "C" const void *bfmeVftRva005EBD40_V3Vt0110F97C[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EBD40_V3Vt0110F97C=??_7Rva005EBD40@@6BV3Vt0110F97C@@@")
-extern "C" const void *bfmeVftRva005EBD40[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005EBD40=??_7Rva005EBD40@@6B@")
+// Retail class Rva005EBD40 (0x005EBD40) supplies the three data symbols this
+// ctor stamps into the object. A vftable and a type descriptor have no C++
+// spelling, so __identifier names the defining symbol directly instead of an
+// linker stand-in: no misspelled call can hide here.
+// Primary vftable of Rva005EBD40 (base V3Head14).
+extern "C" void *__identifier("??_7Rva005EBD40@@6BV3Head14@@@")[];
+// Secondary vftable of Rva005EBD40 for its V3Vt0110F97C base.
+extern "C" void *__identifier("??_7Rva005EBD40@@6BV3Vt0110F97C@@@")[];
+// Rva005EBD40's type descriptor (RTTI).
+extern "C" void *__identifier("??_7Rva005EBD40@@6B@")[];
 
 class Rva005F4E90RandomVariable
 {
@@ -127,9 +131,9 @@ Rva005F4E90LightningDrawModule::Rva005F4E90LightningDrawModule(
 {
 	unsigned char *destination = reinterpret_cast<unsigned char *>( this );
 
-	*(volatile unsigned int *)destination = (unsigned int)bfmeVftRva005EBD40_V3Head14;
-	*(volatile unsigned int *)( destination + 0x14 ) = (unsigned int)bfmeVftRva005EBD40_V3Vt0110F97C;
-	*(volatile unsigned int *)( destination + 0x18 ) = (unsigned int)bfmeVftRva005EBD40;
+	*(volatile unsigned int *)destination = (unsigned int)__identifier("??_7Rva005EBD40@@6BV3Head14@@@");
+	*(volatile unsigned int *)( destination + 0x14 ) = (unsigned int)__identifier("??_7Rva005EBD40@@6BV3Vt0110F97C@@@");
+	*(volatile unsigned int *)( destination + 0x18 ) = (unsigned int)__identifier("??_7Rva005EBD40@@6B@");
 
 	m_gcrv1 = source->m_gcrv1;
 	m_gcrv2 = source->m_gcrv2;
