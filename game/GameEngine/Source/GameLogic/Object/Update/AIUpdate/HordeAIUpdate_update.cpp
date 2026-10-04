@@ -181,7 +181,6 @@ public:
 class BfmeHordeOwner
 {
 public:
-	UnsignedInt bfmeGetFormationRefreshValue();
 };
 
 class GameLogic
@@ -210,8 +209,6 @@ class BfmeHordeMember : public HordeAIUpdateVirtualSlots<96>
 {
 public:
 	virtual Bool isIdle() const = 0;
-
-	Bool bfmeBlocksFormationRefresh();
 
 	UnsignedInt m_04;
 	Object *m_object;
@@ -253,13 +250,28 @@ public:
 	virtual UpdateSleepTime update();
 };
 
-#pragma comment(linker, "/alternatename:?bfmeBlocksFormationRefresh@BfmeHordeMember@@QAE_NXZ=?j_00044774@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeGetFormationRefreshValue@BfmeHordeOwner@@QAEIXZ=?j_00023727@@YAXXZ")
 // Retail reaches the base update through the 5-byte ILT 0x00028772
 // (?j_00028772@@YAXXZ), not the body itself. The ILT is entered with ECX at the
 // AIUpdateInterface subobject (this + 0x10); passing it through a __fastcall
 // pointer keeps ECX as the only register argument.
 extern void j_00028772();
+// Retail enters these two through their 5-byte ILTs
+// (?j_00044774@@YAXXZ and ?j_00023727@@YAXXZ), not the bodies themselves, and
+// each ILT is entered with ECX holding the thiscall object. A member pointer
+// initialised from the ILT address therefore reproduces the direct call the
+// object file makes, with no linker alias standing in for a name that nothing
+// defines.
+extern void j_00044774();
+extern void j_00023727();
+
+// The formation-refresh predicate this body used to call is a member of the
+// polymorphic BfmeHordeMember, and a pointer-to-member of a polymorphic class
+// can still need virtual dispatch, so the compiler emits an indirect call
+// through it. This plain, non-polymorphic holder takes the same signature and
+// keeps the single direct call the thunk receives.
+class Ilt44774Holder
+{
+};
 
 // ?update@HordeAIUpdate@@UAE?AW4UpdateSleepTime@@XZ
 UpdateSleepTime HordeAIUpdate::update()
@@ -281,10 +293,15 @@ UpdateSleepTime HordeAIUpdate::update()
 		}
 	}
 
-	if (!bfmeBlocksFormationRefresh())
+	typedef Bool (Ilt44774Holder::*BlocksFormationRefresh)();
+	union { void (*fn)(); BlocksFormationRefresh call; } blocks = { j_00044774 };
+
+	if (!(((Ilt44774Holder *)this)->*blocks.call)())
 	{
 		UnsignedInt frame = TheGameLogic->m_frame;
-		if (((BfmeHordeOwner *)m_object)->bfmeGetFormationRefreshValue() < frame - 5)
+		typedef UnsignedInt (BfmeHordeOwner::*FormationRefreshValue)();
+		union { void (*fn)(); FormationRefreshValue call; } refresh = { j_00023727 };
+		if ((((BfmeHordeOwner *)m_object)->*refresh.call)() < frame - 5)
 		{
 			if (horde->slot98())
 			{
