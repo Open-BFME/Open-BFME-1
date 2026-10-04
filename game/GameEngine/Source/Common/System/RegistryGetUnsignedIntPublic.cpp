@@ -14,6 +14,13 @@
 
 #include "Common/AsciiString.h"
 
+// Retail inlines ~AsciiString: every temporary here is released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString()
+{
+	((StringBase<char> *)this)->releaseBuffer();
+}
+
 bool getUnsignedIntFromRegistry(HKEY root, AsciiString path, AsciiString key, unsigned int &val);
 
 static const char *registryString(const AsciiString &value)
