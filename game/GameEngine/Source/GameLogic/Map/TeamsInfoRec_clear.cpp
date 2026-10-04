@@ -91,11 +91,15 @@ public:
 
 }
 
+// Retail calls leave this TU through the incremental-link thunks at ILT
+// 0x18129 (construct) and 0x2d6a5 (destructor); name them directly.
+extern void j_00018129();
+extern void j_0002d6a5();
+
 class Rva0019A1D0Member : public _STL::vector<void *>
 {
 public:
 	Rva0019A1D0Member *construct( int count ) throw();
-	~Rva0019A1D0Member() throw();
 };
 
 class Rva0019A1D0Tree : public _STL::_Rb_tree<
@@ -119,15 +123,17 @@ private:
 	short m_b;
 };
 
-#pragma comment(linker, "/alternatename:?construct@Rva0019A1D0Member@@QAEPAV1@H@Z=?j_00018129@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1Rva0019A1D0Member@@QAE@XZ=?j_0002d6a5@@YAXXZ")
-
 void TeamsInfoRec::clear()
 {
 	{
+		typedef Rva0019A1D0Member *(Rva0019A1D0Member::*FnConstruct)( int );
+		union { void (*fn)(); FnConstruct call; } construct_thunk = { j_00018129 };
+		typedef void (Rva0019A1D0Member::*FnDestruct)();
+		union { void (*fn)(); FnDestruct call; } destruct_thunk = { j_0002d6a5 };
 		Rva0019A1D0Member storage;
-		Rva0019A1D0Member *member = storage.construct( 1 );
+		Rva0019A1D0Member *member = (storage.*construct_thunk.call)( 1 );
 		m_member.swap( *member );
+		(storage.*destruct_thunk.call)();
 	}
 
 	if ( m_tree.m_nodeCount != 0 )
