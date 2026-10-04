@@ -11,6 +11,14 @@ typedef UnsignedShort PlayerMaskType;
 
 #include "ascii_string.h"
 
+// Retail reaches these bodies through incremental-link thunks; the call sites
+// below name the thunk directly instead of a stand-in mangled name.
+extern void j_00022a70();
+extern void j_0003e80b();
+extern void j_00028560();
+extern void j_0003df4b();
+extern void j_000239f2();
+
 class Parameter
 {
 public:
@@ -61,16 +69,22 @@ class ThingTemplate;
 
 
 
+// findTemplate is reached through the ILT at 0x00028560; the call site below
+// routes to that thunk through a pointer-to-member union.
 class BfmeThingFactory
 {
 public:
-	const ThingTemplate *findTemplate( const AsciiString &name );
 };
 
 class Overridable
 {
 public:
 	virtual ~Overridable();
+	// Retail calls the override walk through the ILT at 0x000022BB.  Routing
+	// it through a thunk-typed pointer-to-member makes MSVC 7.1 materialise the
+	// union and re-allocate this inlined getTemplate() chain, so the stand-in
+	// name stays and the pragma at the foot of the file still supplies the
+	// address.
 	const Overridable *getFinalOverride() const
 	{
 		if( m_nextOverride )
@@ -80,10 +94,10 @@ public:
 	Overridable *m_nextOverride;
 };
 
+// isEquivalentTo is reached through the ILT at 0x0003E80B.
 class ThingTemplate : public Overridable
 {
 public:
-	Bool isEquivalentTo( const ThingTemplate *other ) const;
 };
 
 template <class T>
@@ -123,6 +137,9 @@ class BfmePlayerObjectDlinkObject;
 class BfmeObjectDlinkBase
 {
 public:
+	// Retail's DLINK iterator stores this as a link-time constant pointer to
+	// member; no MSVC 7.1 cast can build that constant from a cdecl thunk, so
+	// the stand-in name stays and the pragma below still supplies the address.
 	BfmePlayerObjectDlinkObject *dlink_next_TeamMemberList() const;
 	BfmeOverride<ThingTemplate> m_template;
 };
@@ -133,11 +150,11 @@ public:
 	UnsignedByte m_pad[ 0x60 ];
 };
 
+// isInSet is reached through the ILT at 0x000239F2.
 class ObjectTypes
 {
 public:
 	virtual ~ObjectTypes();
-	Bool isInSet(const ThingTemplate *thing) const;
 };
 
 class ObjectTypesTemp
@@ -218,10 +235,10 @@ struct BfmePlayerTeamPrototypeInstances
 	BfmePlayerTeamView *m_teamInstanceList;
 };
 
+// _bfme_nextInInstanceList is reached through the ILT at 0x00022A70.
 class BfmeTeamInstanceLink
 {
 public:
-	BfmeTeamInstanceLink *_bfme_nextInInstanceList();
 };
 
 class BfmePlayerTeamInstanceIterator
@@ -235,8 +252,12 @@ public:
 	void advance()
 	{
 		if( m_cur )
+		{
+			typedef BfmeTeamInstanceLink *( BfmeTeamInstanceLink::*NextInstanceFn )();
+			union { void (*fn)(); NextInstanceFn call; } nextInstance = { j_00022a70 };
 			m_cur = ( BfmePlayerTeamView * )
-				( ( BfmeTeamInstanceLink * )m_cur )->_bfme_nextInInstanceList();
+				( ( ( BfmeTeamInstanceLink * )m_cur )->*nextInstance.call )();
+		}
 	}
 
 private:
@@ -260,7 +281,8 @@ struct BfmePlayerTeamListField
 class ScriptConditions
 {
 protected:
-	static void objectTypesFromParam(Parameter *, ObjectTypes *);
+	// objectTypesFromParam is reached through the ILT at 0x0003DF4B; the call
+	// site below casts that thunk to the cdecl two-pointer prototype.
 	Bool rva00326f40(Parameter *playerParameter, Parameter *typeParameter,
 		Parameter *comparisonParameter, Parameter *countParameter);
 };
@@ -286,9 +308,19 @@ Bool ScriptConditions::rva00326f40(
 	ObjectTypes *knownTypes = TheScriptEngine->getObjectTypes(typeParameter->getString());
 	ObjectTypesTemp temporaryTypes;
 	if (knownTypes)
-		objectTypesFromParam(typeParameter, temporaryTypes.m_types);
+	{
+		typedef void ( __cdecl *ObjectTypesFromParamFn )( Parameter *, ObjectTypes * );
+		( ( ObjectTypesFromParamFn )( void * )j_0003df4b )(
+			typeParameter, temporaryTypes.m_types );
+	}
 	else
-		wanted = localThingFactory()->findTemplate(typeParameter->getString());
+	{
+		typedef const ThingTemplate *(
+			BfmeThingFactory::*FindTemplateFn )( const AsciiString & );
+		union { void (*fn)(); FindTemplateFn call; } findTemplate = { j_00028560 };
+		wanted = ( localThingFactory()->*findTemplate.call )(
+			typeParameter->getString() );
+	}
 
 	for( BfmePlayerTeamListNode *it =
 			( ( BfmePlayerTeamListField * )player )->m_head->m_next;
@@ -313,9 +345,21 @@ Bool ScriptConditions::rva00326f40(
 
 				Bool typeMatches;
 				if (knownTypes)
-					typeMatches = temporaryTypes.m_types->isInSet(object->getTemplate());
+				{
+					typedef Bool (
+						ObjectTypes::*IsInSetFn )( const ThingTemplate * ) const;
+					union { void (*fn)(); IsInSetFn call; } isInSet = { j_000239f2 };
+					typeMatches = (
+						temporaryTypes.m_types->*isInSet.call )(object->getTemplate());
+				}
 				else
-					typeMatches = object->getTemplate()->isEquivalentTo(wanted);
+				{
+					typedef Bool (
+						ThingTemplate::*IsEquivalentToFn )( const ThingTemplate * ) const;
+					union { void (*fn)(); IsEquivalentToFn call; } isEquivalentTo = { j_0003e80b };
+					typeMatches = (
+						object->getTemplate()->*isEquivalentTo.call )(wanted);
+				}
 				if (typeMatches)
 				{
 					Rva00326F40Field210 *field = object->getField210();
@@ -341,10 +385,9 @@ Bool ScriptConditions::rva00326f40(
 }
 
 #pragma comment( linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVBfmePlayerObjectDlinkObject@@XZ=?j_00001140@@YAXXZ" )
-#pragma comment( linker, "/alternatename:?_bfme_nextInInstanceList@BfmeTeamInstanceLink@@QAEPAV1@XZ=?j_00022a70@@YAXXZ" )
 #pragma comment( linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ" )
-#pragma comment( linker, "/alternatename:?isEquivalentTo@ThingTemplate@@QBE_NPBV1@@Z=?j_0003e80b@@YAXXZ" )
-#pragma comment( linker, "/alternatename:?findTemplate@BfmeThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z=?j_00028560@@YAXXZ" )
+// The ObjectTypesTemp constructor stays stand-in-named too: dropping the
+// declaration makes the local trivially constructed, and MSVC 7.1 then widens
+// the frame by 0x10 and adds a redundant zero store before the constructor
+// call, so the 0x00326F40 bytes no longer match.
 #pragma comment( linker, "/alternatename:??0ObjectTypesTemp@@QAE@XZ=?j_0003e306@@YAXXZ" )
-#pragma comment( linker, "/alternatename:?objectTypesFromParam@ScriptConditions@@KAXPAVParameter@@PAVObjectTypes@@@Z=?j_0003df4b@@YAXXZ" )
-#pragma comment( linker, "/alternatename:?isInSet@ObjectTypes@@QBE_NPBVThingTemplate@@@Z=?j_000239f2@@YAXXZ" )
