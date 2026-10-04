@@ -49,6 +49,10 @@
 #include "Common/AsciiString.h"
 #include "Common/UnicodeString.h"
 
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+
 typedef bool Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;

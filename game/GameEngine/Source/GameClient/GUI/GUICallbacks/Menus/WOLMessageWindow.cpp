@@ -46,6 +46,10 @@
 #include "GameClient/GadgetTextEntry.h"
 #include "GameNetwork/IPEnumeration.h"
 
+// Retail inlines ~UnicodeString: temporaries are released by a direct call to
+// StringBase<unsigned short>::releaseBuffer (0x008881D0), not the ??1UnicodeString stub.
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 //-------------------------------------------------------------------------------------------------
 // WindowLayout::hide is virtual in BFME (vtable slot 0x10) and non-virtual in
 // the vendored ZH header. Editing the header would touch every TU that includes
