@@ -295,38 +295,7 @@ TextureClass * MeshMatDescClass::Get_Single_Texture(int pass,int stage) const
 	return Texture[pass][stage];
 }
 
-// ?Reset@MeshMatDescClass@@QAEXHHH@Z present-unmatched
-void MeshMatDescClass::Reset(int polycount,int vertcount,int passcount)
-{
-	PolyCount = polycount;
-	VertexCount = vertcount;
-	PassCount = passcount;
-
-	for (int array=0; array<MAX_COLOR_ARRAYS; array++) {
-		REF_PTR_RELEASE(ColorArray[array]);
-	}
-
-	for (int uvarray=0; uvarray<MAX_UV_ARRAYS; uvarray++) {
-		REF_PTR_RELEASE(UV[uvarray]);
-	}
-
-	for (int pass=0;pass<MAX_PASSES;pass++) {
-		for (int stage=0; stage < MAX_TEX_STAGES; stage++) {
-			UVSource[pass][stage] = -1;
-			REF_PTR_RELEASE(Texture[pass][stage]);
-			REF_PTR_RELEASE(TextureArray[pass][stage]);
-		}
-
-		DCGSource[pass] = VertexMaterialClass::MATERIAL;
-		DIGSource[pass] = VertexMaterialClass::MATERIAL;
-		Shader[pass] = 0;
-		REF_PTR_RELEASE(ShaderArray[pass]);
-
-		REF_PTR_RELEASE(Material[pass]);
-		REF_PTR_RELEASE(MaterialArray[pass]);
-
-	}
-}
+// Reset: retail body lives in MeshMatDescClass_Reset_BFME.cpp.
 
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshmatdesc.cpp
 void MeshMatDescClass::Init_Alternate(MeshMatDescClass & default_materials,MeshMatDescClass & alternate_materials)
