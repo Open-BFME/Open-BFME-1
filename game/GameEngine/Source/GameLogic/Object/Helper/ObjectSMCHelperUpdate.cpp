@@ -101,7 +101,6 @@ public:
 	virtual UpdateSleepTime update();
 
 private:
-	int framesUntilNext();
 	unsigned char m_padding[0xc];
 	Rva002571A0List m_timers;
 };
@@ -117,7 +116,12 @@ public:
 
 class GameLogic;
 extern GameLogic *TheGameLogic;
-#define TheBfmeGameLogic ((GameLogicFrameSource *)TheGameLogic)
+static inline GameLogicFrameSource *TheBfmeGameLogicView() { return (GameLogicFrameSource *)TheGameLogic; }
+
+// Retail ILT thunks: 0x00007D74 carries ObjectSMCHelper::framesUntilNext and
+// 0x0002191D carries Object::notifyModelConditionChanged.
+extern void j_00007d74();
+extern void j_0002191d();
 
 template <bool threads, int instance>
 class BfmeNodeAllocator
@@ -126,15 +130,28 @@ public:
 	static void __cdecl deallocate(void *node, UnsignedInt bytes);
 };
 
+// _STL::__node_alloc<threads, inst>::_M_deallocate is already declared by the
+// vendored STLport header <stl/_alloc.h> that <bitset> pulls in, with a
+// size_t byte count and with no friend able to reach it from this TU, so the
+// retail private-static `int` spelling cannot be respelled here.
 #pragma comment(linker, "/alternatename:?deallocate@?$BfmeNodeAllocator@$00$0A@@@SAXPAXI@Z=?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")
-
-#pragma comment(linker, "/alternatename:?framesUntilNext@ObjectSMCHelper@@AAEHXZ=?j_00007d74@@YAXXZ")
-#pragma comment(linker, "/alternatename:?notifyModelConditionChanged@Object@@QAEXXZ=?j_0002191d@@YAXXZ")
 
 UpdateSleepTime ObjectSMCHelper::update()
 {
-	UnsignedInt frame = TheBfmeGameLogic->m_frame;
+	UnsignedInt frame = TheBfmeGameLogicView()->m_frame;
 	Rva002571A0Node *node = m_timers.sentinel()->m_next;
+	// Both thunks take their receiver in ECX. Spelled __fastcall over the
+	// receiver, the constant target folds into retail's direct tail E9; the
+	// equivalent pointer-to-member union call leaves the result dropped and
+	// jumps through EAX instead.
+	typedef int (__fastcall *FramesUntilNext)(ObjectSMCHelper *);
+	FramesUntilNext framesUntilNextThunk = (FramesUntilNext)j_00007d74;
+	typedef void (Object::*NotifyModelConditionChanged)() const;
+	union
+	{
+		void (*fn)();
+		NotifyModelConditionChanged call;
+	} u_notifyModelConditionChanged = { j_0002191d };
 	while (node != m_timers.sentinel())
 	{
 		UnsignedInt endFrame = node->m_value.m_frame;
@@ -150,7 +167,7 @@ UpdateSleepTime ObjectSMCHelper::update()
 			if (object->m_modelConditionFlags.test(condition))
 			{
 				object->m_modelConditionFlags.reset(condition);
-				object->notifyModelConditionChanged();
+				(object->*u_notifyModelConditionChanged.call)();
 			}
 
 			Rva002571A0Node *next = old->m_next;
@@ -160,5 +177,5 @@ UpdateSleepTime ObjectSMCHelper::update()
 			BfmeNodeAllocator<true, 0>::deallocate(old, 0x10);
 		}
 	}
-	return (UpdateSleepTime)framesUntilNext();
+	return (UpdateSleepTime)framesUntilNextThunk(this);
 }
