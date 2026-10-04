@@ -12,7 +12,7 @@
 // cancel window is a flag byte (retail 0x012F7178, the slot Zero Hour's
 // onlineCancelWindow occupies) torn down through the ReleaseWindowLayout(0)
 // wrapper at 0x004C5490. startOnline is the dump body at 0x0062EA60.
-// The file statics mirror retail's .data block 0x012F7160..0x012F7178.
+// The file statics and shared flag mirror retail's .data block 0x012F7160..0x012F7178.
 
 #include <stdio.h>
 #include <string.h>
@@ -85,7 +85,7 @@ static Int checksLeftBeforeOnline = 0;				// 0x012F7164
 static Int timeThroughOnline = 0;					// 0x012F7168
 static Bool cantConnectBeforeOnline = false;		// 0x012F716D
 static char *configBuffer = NULL;					// 0x012F7174
-static Bool s_rva012F7178 = false;					// 0x012F7178
+extern volatile unsigned char g_rva012F7178PatchCheckLayoutActive;					// 0x012F7178
 
 GHTTPBool configCallback( GHTTPRequest request, GHTTPResult result,
 						  char * buffer, __int64 bufferLen, void * param )
@@ -107,10 +107,10 @@ GHTTPBool configCallback( GHTTPRequest request, GHTTPResult result,
 		if (!checkingForPatchBeforeGameSpy)
 			return GHTTPTrue;
 		--checksLeftBeforeOnline;
-		if (s_rva012F7178 && !checksLeftBeforeOnline)
+		if (g_rva012F7178PatchCheckLayoutActive && !checksLeftBeforeOnline)
 		{
 			Rva004C5490();
-			s_rva012F7178 = false;
+			g_rva012F7178PatchCheckLayoutActive = false;
 		}
 		cantConnectBeforeOnline = true;
 		if (!checksLeftBeforeOnline)
@@ -134,10 +134,10 @@ GHTTPBool configCallback( GHTTPRequest request, GHTTPResult result,
 	}
 
 	--checksLeftBeforeOnline;
-	if (s_rva012F7178 && !checksLeftBeforeOnline)
+	if (g_rva012F7178PatchCheckLayoutActive && !checksLeftBeforeOnline)
 	{
 		Rva004C5490();
-		s_rva012F7178 = false;
+		g_rva012F7178PatchCheckLayoutActive = false;
 	}
 
 	if (!checksLeftBeforeOnline)

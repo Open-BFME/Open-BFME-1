@@ -17,7 +17,7 @@ extern GlobalData *TheWritableGlobalData;
 
 static int timeThroughOnline;
 static int checksLeftBeforeOnline;
-static bool s_rva012F7178;
+extern volatile unsigned char g_rva012F7178PatchCheckLayoutActive;
 static char *configBuffer;
 void Rva004C5490();
 void d_0062ea60();
@@ -78,10 +78,10 @@ GHTTPBool __cdecl configHeadCallback(int request, GHTTPResult result, char *buff
                 if (serverLen == fileLen)
                 {
                     --checksLeftBeforeOnline;
-                    if (s_rva012F7178 && !checksLeftBeforeOnline)
+                    if (g_rva012F7178PatchCheckLayoutActive && !checksLeftBeforeOnline)
                     {
                         Rva004C5490();
-                        s_rva012F7178 = false;
+                        g_rva012F7178PatchCheckLayoutActive = false;
                     }
                     if (configBuffer)
                     {

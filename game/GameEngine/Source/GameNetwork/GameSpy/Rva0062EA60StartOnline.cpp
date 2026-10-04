@@ -46,7 +46,7 @@ public:
 };
 
 extern unsigned char checkingForPatchBeforeGameSpy;
-extern unsigned char onlineCancelFlag;
+extern volatile unsigned char g_rva012F7178PatchCheckLayoutActive;
 extern unsigned char cantConnectBeforeOnline;
 extern unsigned char mustDownloadPatch;
 extern unsigned char showOnlineShellFlag;
@@ -73,12 +73,12 @@ void patchBeforeOnlineCallback();
 
 void Rva0062EA60StartOnline()
 {
-    unsigned char hadCancel = onlineCancelFlag;
+    unsigned char hadCancel = g_rva012F7178PatchCheckLayoutActive;
     checkingForPatchBeforeGameSpy = 0;
     if (hadCancel)
     {
         j_00042a50();
-        onlineCancelFlag = 0;
+        g_rva012F7178PatchCheckLayoutActive = 0;
     }
 
     if (cantConnectBeforeOnline || queuedDownloads.size())

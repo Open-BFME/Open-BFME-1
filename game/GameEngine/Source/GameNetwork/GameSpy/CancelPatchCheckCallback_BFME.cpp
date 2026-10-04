@@ -19,7 +19,7 @@ struct BfmeThingBHG
 
 extern BfmeThingBHG *g_bfmeThingBHG;
 extern Bool s_asyncDNSLookupInProgress;
-extern volatile Bool reOpenPlayerInfoFlag;
+extern volatile unsigned char g_rva012F7178PatchCheckLayoutActive;
 extern Bool checkingForPatchBeforeGameSpy;
 extern int checksLeftBeforeOnline;
 
@@ -39,10 +39,10 @@ void CancelPatchCheckCallback(void)
 
 	checkingForPatchBeforeGameSpy = 0;
 	checksLeftBeforeOnline = 0;
-	if (reOpenPlayerInfoFlag)
+	if (g_rva012F7178PatchCheckLayoutActive)
 	{
 		b_00042a50();
-		reOpenPlayerInfoFlag = 0;
+		g_rva012F7178PatchCheckLayoutActive = 0;
 	}
 
 	queuedDownloads.clear();

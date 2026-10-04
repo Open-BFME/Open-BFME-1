@@ -10,7 +10,7 @@ enum GHTTPBool { GHTTPFalse = 0, GHTTPTrue = 1 };
 extern int timeThroughOnline;
 extern int checksLeftBeforeOnline;
 extern char *MOTDBuffer;
-extern bool g_rva012F7178ReleaseLayout;
+volatile unsigned char g_rva012F7178PatchCheckLayoutActive = 0;
 void Rva004C5490();
 // Defined by the matched retail body at 0x0062EA60 (Rva0062EA60StartOnline.cpp).
 extern void Rva0062EA60StartOnline();
@@ -31,9 +31,9 @@ GHTTPBool rva0062EE00MainMenuOnlineCallback(GHTTPRequest request, GHTTPResult re
 		copy[bufferLen - 1] = 0;
 	}
 	--checksLeftBeforeOnline;
-	if (g_rva012F7178ReleaseLayout && !checksLeftBeforeOnline) {
+	if (g_rva012F7178PatchCheckLayoutActive && !checksLeftBeforeOnline) {
 		Rva004C5490();
-		g_rva012F7178ReleaseLayout = false;
+		g_rva012F7178PatchCheckLayoutActive = false;
 	}
 	if (!checksLeftBeforeOnline)
 		Rva0062EA60StartOnline();
