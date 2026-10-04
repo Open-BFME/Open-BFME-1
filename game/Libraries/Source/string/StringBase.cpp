@@ -54,8 +54,7 @@ struct Rva0005C4B0WideTraits
 // The no-case wide compare is the private StringBase<wchar_t>::compareNoCaseRaw
 // body at 0x0009ECA0, reached the same way; the length-aware compare at
 // 0x0005DC70 is a five-argument cdecl helper (the last argument selects case
-// folding). Retail substitutes the shared empty UnicodeString buffer for a
-// null m_data.
+// folding). A null m_data reads str()'s TheNullChr (exported at 0x00C7388C).
 struct Rva0009ECA0NoCaseTraits
 {
     int compareNoCaseRaw(const wchar_t *a, const wchar_t *b, int len) const;
@@ -65,19 +64,20 @@ struct Rva0005DC70Flags
     bool noCase;
 };
 int __cdecl Rva0005DC70CompareWideLengths(const wchar_t *a, int aLen, const wchar_t *b, int bLen, Rva0005DC70Flags flags);
-extern const char g_bfmeEmptyUnicode[];
 
 
 // Per-character-type buffer lock. Retail guards each instantiation's shared
 // buffers with its own critical-section singleton: 0x008876E0 for char and
 // 0x008877A0 for wchar_t, both matched as standalone getters in
-// Common/Rva008876E0Singletons.cpp and inlined into every user here.
-extern "C" __declspec(dllimport) void __stdcall Rva01358E4CInit(void *body);
-extern "C" __declspec(dllimport) void __stdcall Rva01358D0CReset(void *body);
-struct BfmeLockTEA;
-extern "C" __declspec(dllimport) void __stdcall bfmeEnterTEA(BfmeLockTEA *lock);
-extern "C" __declspec(dllimport) void __stdcall bfmeLeaveTEA(BfmeLockTEA *lock);
-extern "C" __declspec(dllimport) void __cdecl bfmeFree1035(void *p);
+// Common/Rva008876E0Singletons.cpp and inlined into every user here. The
+// imports are retail's KERNEL32 IAT cells (imports.csv): 0x01358E4C
+// InitializeCriticalSection, 0x01358D0C DeleteCriticalSection, 0x01358D18
+// EnterCriticalSection, 0x01358E74 LeaveCriticalSection; the buffer release
+// calls MSVCR71 free (0x013593D4).
+extern "C" __declspec(dllimport) void __stdcall InitializeCriticalSection(void *section);
+extern "C" __declspec(dllimport) void __stdcall DeleteCriticalSection(void *section);
+extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(void *section);
+extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(void *section);
 
 class Rva008877A0Type
 {
@@ -88,11 +88,11 @@ public:
 	Rva008877A0Type()
 	{
 		m_flag18 = true;
-		Rva01358E4CInit(this);
+		InitializeCriticalSection(this);
 	}
 	~Rva008877A0Type()
 	{
-		Rva01358D0CReset(this);
+		DeleteCriticalSection(this);
 		m_flag18 = false;
 	}
 };
@@ -106,11 +106,11 @@ public:
 	Rva008876E0Type()
 	{
 		m_flag18 = true;
-		Rva01358E4CInit(this);
+		InitializeCriticalSection(this);
 	}
 	~Rva008876E0Type()
 	{
-		Rva01358D0CReset(this);
+		DeleteCriticalSection(this);
 		m_flag18 = false;
 	}
 };
@@ -146,12 +146,12 @@ public:
 	StringBaseScopedLock(L *lock) : m_lock(lock)
 	{
 		if (m_lock->m_flag18)
-			bfmeEnterTEA((BfmeLockTEA *)m_lock);
+			EnterCriticalSection(m_lock);
 	}
 	~StringBaseScopedLock()
 	{
 		if (m_lock->m_flag18)
-			bfmeLeaveTEA((BfmeLockTEA *)m_lock);
+			LeaveCriticalSection(m_lock);
 	}
 
 private:
@@ -165,7 +165,7 @@ void StringBase<T>::releaseBuffer()
 	if (m_data)
 	{
 		if (--m_data->ref_count == 0)
-			bfmeFree1035(m_data);
+			free(m_data);
 		m_data = 0;
 	}
 }
@@ -338,7 +338,7 @@ inline int StringBase<wchar_t>::compare(const wchar_t *str, int len) const
     Rva0005DC70Flags flags;
     flags.noCase = false;
     const int myLen = m_data ? m_data->length : 0;
-    const wchar_t *data = m_data ? &m_data->data[0] : (const wchar_t *)g_bfmeEmptyUnicode;
+    const wchar_t *data = this->str();
     return Rva0005DC70CompareWideLengths(data, myLen, str, len, flags);
 }
 
@@ -346,7 +346,7 @@ template <>
 inline __declspec(noinline) int StringBase<wchar_t>::compare(const StringBase<wchar_t> &str) const
 {
     int len = str.m_data ? str.m_data->length : 0;
-    const wchar_t *data = str.m_data ? &str.m_data->data[0] : (const wchar_t *)g_bfmeEmptyUnicode;
+    const wchar_t *data = str.str();
     return compare(data, len);
 }
 
@@ -389,7 +389,7 @@ template <>
 inline int StringBase<wchar_t>::compareNoCase(const wchar_t *str, int len) const
 {
     const int myLen = m_data ? m_data->length : 0;
-    const wchar_t *data = m_data ? &m_data->data[0] : (const wchar_t *)g_bfmeEmptyUnicode;
+    const wchar_t *data = this->str();
     Rva0009ECA0NoCaseTraits traits;
     int result = traits.compareNoCaseRaw(data, str, myLen < len ? myLen : len);
     if (result == 0) {
@@ -402,7 +402,7 @@ template <>
 inline __declspec(noinline) int StringBase<wchar_t>::compareNoCase(const StringBase<wchar_t> &str) const
 {
     int len = str.m_data ? str.m_data->length : 0;
-    const wchar_t *data = str.m_data ? &str.m_data->data[0] : (const wchar_t *)g_bfmeEmptyUnicode;
+    const wchar_t *data = str.str();
     return compareNoCase(data, len);
 }
 
@@ -468,7 +468,7 @@ bool StringBase<wchar_t>::endsWith(const wchar_t *str, int len) const
 bool StringBase<wchar_t>::endsWith(const StringBase<wchar_t> &str) const
 {
     int len = str.m_data ? str.m_data->length : 0;
-    const wchar_t *data = str.m_data ? &str.m_data->data[0] : (const wchar_t *)g_bfmeEmptyUnicode;
+    const wchar_t *data = str.str();
     return endsWith(data, len);
 }
 
