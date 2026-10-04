@@ -4,9 +4,8 @@
 // 0x0038DC4D). Retail inlines the active-grid pass whose standalone copy is
 // 0x001DF850, so that pass is defined here ahead of update.
 //
-// The parameter lookup below is the landed 0x001DE880 body
-// (VictorySystemParametersForPlayer.cpp), repeated so VC7.1 can see that it
-// writes no memory. With it visible, both per-case grid calls read
+// This TU owns the landed 0x001DE880 parameter lookup. Keeping its body
+// visible lets VC7.1 see that it writes no memory. Both per-case grid calls read
 // +0x108 once, cross-jump into one call block, and keep retail's EBX/EDI saves
 // ahead of the switch. Declared only, the two calls stay separate.
 
