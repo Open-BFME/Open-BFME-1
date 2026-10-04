@@ -254,3 +254,34 @@ left for a separate review.
 | 442 | 0x005D65B0 | `?freeZones@ZoneBlock@@IAEXXZ` | `ConcreteModuleTemplateEmissionVolumeDestructor.cpp` |
 | 1702 | 0x005EF1F0 | `?parseRGBColorKeyframe@ParticleSystemTemplate@@SAXPAVINI@@PAX1PBX@Z` | `ParticleSys.cpp` |
 | 1703 | 0x005EE370 | `?parseRandomKeyframe@ParticleSystemTemplate@@SAXPAVINI@@PAX1PBX@Z` | `ParticleSys.cpp` |
+
+## Byte-identical functions claimed at exported FX bodies (other TUs)
+
+`??0Keyframe@FXParticleSystem@@QAE@XZ` (ordinal 255, body 0x0005C6C0, a
+16-byte two-zero-store constructor) and
+`?getUV@ParticleSystemTemplate@FXParticleSystem@@QBEPBURegion2D@@XZ` (ordinal
+1638, body 0x0005CBA0) are exported. Other TUs claimed the same bodies under
+the names of unrelated functions whose code is identical. Retail has no
+identical-COMDAT folding, so those functions live at other addresses; their
+rows here are retired. `??0ChunkHeader@@QAE@XZ` (chunkio.cpp) is kept for now:
+chunkio.cpp links and `fx_particle_system.cpp` does not, so retiring it would
+lower LINKED.
+
+| ordinal | body | retired name | source |
+|---|---|---|---|
+| 255 | 0x0005C6C0 | `??0?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@_STL@@QAE@XZ` | `game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/DockUpdate.cpp` |
+| 255 | 0x0005C6C0 | `??0?$pair@VAsciiString@@M@_STL@@QAE@XZ` | `game/GameEngine/Source/Common/Audio/GameAudio.cpp` |
+| 255 | 0x0005C6C0 | `??0AssetIterator@@IAE@XZ` | `game/Libraries/Source/WWVegas/WW3D2/assetmgr.cpp` |
+| 255 | 0x0005C6C0 | `??0DLINK_TeamBuildQueue@TeamInQueue@@QAE@XZ` | `game/GameEngine/Source/GameLogic/AI/AIPlayer.cpp` |
+| 255 | 0x0005C6C0 | `??0DLINK_TeamInstanceList@Team@@QAE@XZ` | `game/GameEngine/Source/Common/RTS/Team.cpp` |
+| 255 | 0x0005C6C0 | `??0DLINK_TeamMemberList@Object@@QAE@XZ` | `game/GameEngine/Source/GameLogic/Object/Object.cpp` |
+| 255 | 0x0005C6C0 | `??0DLINK_TeamReadyQueue@TeamInQueue@@QAE@XZ` | `game/GameEngine/Source/GameLogic/AI/AIPlayer.cpp` |
+| 255 | 0x0005C6C0 | `??0LadderPref@@QAE@XZ` | `game/GameEngine/Source/Common/UserPreferences.cpp` |
+| 255 | 0x0005C6C0 | `??0LogicalDecalPoolClass@MultiFixedPoolDecalSystemClass@@QAE@XZ` | `game/Libraries/Source/WWVegas/WW3D2/decalsys.cpp` |
+| 255 | 0x0005C6C0 | `??0MemoryCounterClass@@QAE@XZ` | `game/Libraries/Source/WWVegas/WWDebug/wwmemlog.cpp` |
+| 255 | 0x0005C6C0 | `??0MemoryPoolFactory@@QAE@XZ` | `game/GameEngine/Source/Common/System/GameMemory.cpp` |
+| 255 | 0x0005C6C0 | `??0MorphKeyStruct@TimeCodedMorphKeysClass@@QAE@XZ` | `game/Libraries/Source/WWVegas/WW3D2/hmorphanim.cpp` |
+| 255 | 0x0005C6C0 | `??0PrototypeClass@@QAE@XZ` | `game/Libraries/Source/WWVegas/WW3D2/hlod.cpp` |
+| 255 | 0x0005C6C0 | `??0TextureLoadTaskListNodeClass@@QAE@XZ` | `game/Libraries/Source/WWVegas/WW3D2/textureloader.cpp` |
+| 255 | 0x0005C6C0 | `??0_Bit_iterator_base@_STL@@QAE@XZ` | `game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/DockUpdate.cpp` |
+| 1638 | 0x0005CBA0 | `?getName@Object@@QBEABVAsciiString@@XZ` | `game/GameEngine/Source/GameLogic/Object/Collide/CrateCollide/ConvertToCarBombCrateCollide.cpp` |
