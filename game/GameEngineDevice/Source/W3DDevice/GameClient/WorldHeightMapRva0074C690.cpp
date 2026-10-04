@@ -23,11 +23,12 @@ public:
 
 class TileData;
 
+extern void j_0002279b();
+
 class Rva006D5280
 {
 public:
 	Rva006D5280(unsigned, unsigned, unsigned);
-	void update(TileData **, int, int, int);
 
 	~Rva006D5280(void)
 	{
@@ -47,8 +48,6 @@ __forceinline static void bfmeAssignTextureHandle(TextureBaseClass *&destination
 		destination->Release_Ref();
 	destination = source.m_texture;
 }
-
-#pragma comment(linker, "/alternatename:?update@Rva006D5280@@QAEXPAPAVTileData@@HHH@Z=?j_0002279b@@YAXXZ")
 
 struct Rva0074C690Element36
 {
@@ -140,7 +139,9 @@ BfmeHandleCX WorldHeightMap::rva0074C690(int, int, int)
 		{
 			int textureSize = m_textureSlotsA[slot].m_textureSize << 6;
 			Rva006D5280 texture(textureSize, textureSize, 0x19);
-			texture.update(m_sourceTiles, m_textureSlotsA[slot].m_firstTile,
+			typedef void (Rva006D5280::*Fn)(TileData **, int, int, int);
+			union { void (*fn)(); Fn call; } u = { j_0002279b };
+			(texture.*u.call)(m_sourceTiles, m_textureSlotsA[slot].m_firstTile,
 				m_textureSlotsA[slot].m_tileCount,
 				m_textureSlotsA[slot].m_textureSize);
 
