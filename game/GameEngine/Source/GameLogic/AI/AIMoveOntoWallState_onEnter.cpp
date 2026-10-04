@@ -47,12 +47,7 @@ public:
 
 	public:
 	Object *getOwner() const { return m_owner; }
-	Object *getGoalObject();
-	void setGoalPosition( const Coord3D *position );
 };
-
-#pragma comment(linker, "/alternatename:?getGoalObject@StateMachine@@QAEPAVObject@@XZ=?j_0000e570@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setGoalPosition@StateMachine@@QAEXPBUCoord3D@@@Z=?j_0000314d@@YAXXZ")
 
 class MoveOntoWallStateMachine : public StateMachine
 {
@@ -69,8 +64,6 @@ public:
 	virtual void slot03();
 	virtual StateReturnType onEnter();
 
-	Object *getMachineOwner() const;
-
 private:
 	unsigned char m_stateFields[ 0x18 ];
 	StateMachine *m_machine;
@@ -78,15 +71,23 @@ private:
 	MoveOntoWallStateMachine *m_moveMachine;
 };
 
-#pragma comment(linker, "/alternatename:?getMachineOwner@AIMoveOntoWallState@@QBEPAVObject@@XZ=?j_0000e570@@YAXXZ")
+// Retail reaches these members through ILT thunks: the call sites resolve to
+// 0x0000E570 (getGoalObject) and 0x0000314D (setGoalPosition).
+extern void j_0000e570();
+extern void j_0000314d();
 
 // ?onEnter@AIMoveOntoWallState@@UAE?AW4StateReturnType@@XZ
 StateReturnType AIMoveOntoWallState::onEnter()
 {
+	typedef Object *(StateMachine::*GetGoalObject)();
+	union { void (*fn)(); GetGoalObject call; } getGoalObject = { j_0000e570 };
+	typedef void (StateMachine::*SetGoalPosition)( const Coord3D * );
+	union { void (*fn)(); SetGoalPosition call; } setGoalPosition = { j_0000314d };
+
 	m_moveMachine = new MoveOntoWallStateMachine(
 		m_machine->getOwner(), AsciiString( "MoveOntoWallStateMachine" ) );
-	m_moveMachine->setGoalObject( m_machine->getGoalObject() );
-	m_moveMachine->setGoalPosition( &m_machine->m_goalPosition );
+	m_moveMachine->setGoalObject( (m_machine->*getGoalObject.call)() );
+	(m_moveMachine->*setGoalPosition.call)( &m_machine->m_goalPosition );
 	m_moveMachine->initDefaultState();
 	return STATE_CONTINUE;
 }
