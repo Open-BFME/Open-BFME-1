@@ -58,6 +58,7 @@
 #endif
 
 //-------------------------------------------------------------------------------------------------
+// ??0W3DPropDrawModuleData@@ present-unmatched
 W3DPropDrawModuleData::W3DPropDrawModuleData() 
 {
 }
@@ -104,34 +105,12 @@ m_propAdded(false)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ??1W3DPropDraw@@ present-unmatched
+// ??1W3DPropDraw@@MAE@XZ
 W3DPropDraw::~W3DPropDraw( void )
 {
 }
 
-//-------------------------------------------------------------------------------------------------
-// ?reactToTransformChange@W3DPropDraw@@ present-unmatched
-void W3DPropDraw::reactToTransformChange( const Matrix3D *oldMtx, 
-																							 const Coord3D *oldPos, 
-																							 Real oldAngle )
-{
-	Drawable *draw = getDrawable();
-	if (m_propAdded) {
-		return;
-	}
-	if (draw->getPosition()->x==0.0f && draw->getPosition()->y == 0.0f) {
-		return;
-	}
-	m_propAdded = true;
-	const W3DPropDrawModuleData *moduleData = getW3DPropDrawModuleData();
-	if (!moduleData) {
-		return;
-	}
-	Real scale = draw->getScale();
-	TheTerrainRenderObject->addProp((Int)draw->getID(), *draw->getPosition(),
-		draw->getOrientation(), scale, moduleData->m_modelName);
-	
-}
+// ?reactToTransformChange@W3DPropDraw@@ is defined in W3DPropDrawReactToTransformChange.cpp (retail 0x00759560)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
