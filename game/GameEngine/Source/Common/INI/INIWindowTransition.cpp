@@ -20,6 +20,7 @@ class GameWindowTransitionsHandler
 {
 public:
 	TransitionGroup *getNewGroup( AsciiString name );
+	static const FieldParse m_gameWindowTransitionsFieldParseTable[];
 };
 
 // Retail calls the handler's getNewGroup through the five-byte ILT thunk at
@@ -39,13 +40,6 @@ extern void j_000480c7();
 template <class M> inline M bfmeMemberOf(void (*fn)()) { union { void (*f)(); M m; } u; u.f = fn; return u.m; }
 typedef TransitionGroup *(GameWindowTransitionsHandler::*GetNewGroup)(AsciiString name);
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
-class TransitionGroup
-{
-public:
-	static const FieldParse m_transitionGroupFieldParseTable[];
-};
-
 extern GameWindowTransitionsHandler *TheTransitionHandler;
 
 void INI::parseWindowTransitions( INI* ini )
@@ -56,6 +50,6 @@ void INI::parseWindowTransitions( INI* ini )
 	if( TheTransitionHandler )
 	{
 		TransitionGroup *group = (TheTransitionHandler->*bfmeMemberOf<GetNewGroup>(j_000480c7))( name );
-		ini->initFromINI( group, TransitionGroup::m_transitionGroupFieldParseTable );
+		ini->initFromINI( group, GameWindowTransitionsHandler::m_gameWindowTransitionsFieldParseTable );
 	}
 }

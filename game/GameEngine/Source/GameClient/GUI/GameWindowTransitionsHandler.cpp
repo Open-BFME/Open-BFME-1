@@ -161,6 +161,21 @@ public:
 
 extern MessageStream *TheMessageStream;
 
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
+class INI
+{
+public:
+	static void parseBool(INI *ini, void *instance, void *store, const void *userData);
+};
+
+struct FieldParse
+{
+	const char *token;
+	void (*parse)(INI *ini, void *instance, void *store, const void *userData);
+	const void *userData;
+	int offset;
+};
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class GameWindowTransitionsHandler
 {
@@ -169,6 +184,8 @@ public:
 	void setGroup(AsciiString groupName, Bool immediate);
 	void reverse(AsciiString groupName);
 	void remove(AsciiString groupName, Bool skipPending);
+	static void parseWindow(INI *ini, void *instance, void *store, const void *userData);
+	static const FieldParse m_gameWindowTransitionsFieldParseTable[];
 
 private:
 	// Private on purpose -- see the note at the top.
@@ -186,6 +203,14 @@ private:
 	int m_unknown50;					// +0x50
 	bool m_unknown54;					// +0x54
 	bool m_holdFireOnce;					// +0x55
+};
+
+// BFME keeps TransitionGroup's fireOnce flag at offset zero.
+const FieldParse GameWindowTransitionsHandler::m_gameWindowTransitionsFieldParseTable[] =
+{
+	{ "Window", GameWindowTransitionsHandler::parseWindow, 0, 0 },
+	{ "FireOnce", INI::parseBool, 0, 0 },
+	{ 0, 0, 0, 0 }
 };
 
 // ?update@GameWindowTransitionsHandler@@QAEXXZ

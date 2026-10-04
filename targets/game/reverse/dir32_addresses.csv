@@ -12634,7 +12634,7 @@ name,va
 ?m_timeBetweenRetries@NAT@@1HA,0x012B9E88
 ?m_timeForRoundTimeout@NAT@@1JA,0x012B9E9C
 ?m_timeToWaitForPort@NAT@@0HA,0x012B9E98
-?m_transitionGroupFieldParseTable@TransitionGroup@@2QBUFieldParse@@B,0x010F95A4
+?m_gameWindowTransitionsFieldParseTable@GameWindowTransitionsHandler@@2QBUFieldParse@@B,0x010F95A4
 ?m_upgradeFieldParseTable@UpgradeTemplate@@1QBUFieldParse@@B,0x01088B60
 ?m_vertexBuffer012F9D1C@W3DShaderManager@@1PAVShaderVertexBuffer@@A,0x012F9D1C
 ?m_waterSettingFieldParseTable@WaterSetting@@2QBUFieldParse@@B,0x010F6C00
@@ -16339,3 +16339,5 @@ _g_012F7014,0x012F7014
 ??_C@_0L@LGMACKMP@StartFrame?$AA@,0x0110C6BC
 ??_C@_08LGGHHKEP@EndFrame?$AA@,0x0110C6B0
 ??_C@_0BF@HFNHGOKC@FadeInUnfrozenSounds?$AA@,0x0110C7A8
+??_C@_06BKKJGDHO@Window?$AA@,0x010F95E0
+??_C@_08LFFNAJE@FireOnce?$AA@,0x010A9D54
