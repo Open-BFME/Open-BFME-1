@@ -8,6 +8,10 @@
 #include "GameClient/GadgetStaticText.h"
 #include "MainMenuUtils.h" // Generals overall-stat layout, before the Zero Hour HTTP API.
 
+// Retail inlines ~UnicodeString: temporaries are released by a direct call to
+// StringBase<unsigned short>::releaseBuffer (0x008881D0), not the ??1UnicodeString stub.
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 static OverallStats s_statsUSA, s_statsChina, s_statsGLA;
 
 // calcPercent at 0050B200 uses a reference-returning max and an inline

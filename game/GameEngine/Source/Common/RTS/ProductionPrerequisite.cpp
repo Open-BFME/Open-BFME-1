@@ -54,6 +54,10 @@
 #include "GameClient/Drawable.h"
 #include "GameClient/GameText.h"
 
+// Retail inlines ~UnicodeString: temporaries are released by a direct call to
+// StringBase<unsigned short>::releaseBuffer (0x008881D0), not the ??1UnicodeString stub.
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 class UpgradeTemplate;
 
 // BFME appends this vector after the two vectors in the Generals header. The
