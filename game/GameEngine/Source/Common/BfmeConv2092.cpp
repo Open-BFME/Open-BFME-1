@@ -156,6 +156,18 @@ public:
 	void *m_bfme08XT;
 };
 
+// The three non-sink calls in bfmeRunXT go through retail's incremental-link
+// ILT thunks, all matched in game/gen_small:
+//   0x000307E7 ?j_000307e7@@YAXXZ -> ?setStatus@Object@@QAEXABVBitFlags@...@_N@Z
+//   0x000348EC ?j_000348ec@@YAXXZ -> ?handle@Gen001C9A10@@QAEXH@Z
+//   0x000157DA ?j_000157da@@YAXXZ -> ?setWakeFrame@UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z
+// Each carries its receiver in ECX and its arguments on the stack, so the call
+// goes through a member pointer loaded from the thunk address: that keeps the
+// exact symbol the thunks own while still reaching the right ABI.
+extern void j_000307e7();
+extern void j_000348ec();
+extern void j_000157da();
+
 class BfmeHostXT
 {
 public:
@@ -180,13 +192,20 @@ void BfmeHostXT::bfmeRunXT()
 	memset(flags.m_bfmeBitsXT, 0, 12);
 	flags.m_bfmeBitsXT[1] |= 0x200000;
 
-	obj->applyRva1C7370(flags, true);
-	obj->clearCondition(0x16);
+	union { void (*entry)(); void (Object::*setStatus)(const ModelConditionFlags &, bool); } apply;
+	apply.entry = j_000307e7;
+	(obj->*apply.setStatus)(flags, true);
+
+	union { void (*entry)(); void (Object::*handle)(int); } clear;
+	clear.entry = j_000348ec;
+	(obj->*clear.handle)(0x16);
 
 	BfmeSinkXT *sink = obj->m_bfme204XT;
 
 	if (sink)
 		sink->bfmeNoteXT(8);
 
-	bfmeApplyXT(m_bfme08XT, 1);
+	union { void (*entry)(); void (BfmeHostXT::*setWakeFrame)(Object *, int); } wake;
+	wake.entry = j_000157da;
+	(this->*wake.setWakeFrame)(m_bfme08XT, 1);
 }

@@ -160,13 +160,26 @@ public:
 	BfmeSinkXT *m_bfme204XT;
 };
 
-// Existing caller-proven ABI view for the Object arm at ILT 0x000122AB.
-// Its public spelling is not asserted here.
+// Existing caller-proven ABI view for the Object arm at ILT 0x000122AB, whose
+// body is ?handle@Gen001C9AC0@@QAEXH@Z. It is reached through retail's
+// incremental-link ILT, matched as ?j_000122ab@@YAXXZ in game/gen_small.
 class BfmeObjE10
 {
 public:
 	void actionB(int value);
 };
+
+// The three non-sink calls all go through retail's ILT thunks, matched in
+// game/gen_small:
+//   0x000307E7 ?j_000307e7@@YAXXZ -> ?setStatus@Object@@QAEXABVBitFlags@...@_N@Z
+//   0x000122AB ?j_000122ab@@YAXXZ -> ?handle@Gen001C9AC0@@QAEXH@Z
+//   0x000157DA ?j_000157da@@YAXXZ -> ?setWakeFrame@UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z
+// Each takes its receiver in ECX and its arguments on the stack, so the call
+// goes through a member pointer loaded from the thunk address: that keeps the
+// exact symbol the thunks own and still reaches the right ABI.
+extern void j_000307e7();
+extern void j_000122ab();
+extern void j_000157da();
 
 class PB_DeepBase
 {
@@ -216,12 +229,23 @@ void EnragedBehavior::rva001FAF60()
 	memset(flags.m_bfmeBitsXT, 0, 12);
 	flags.m_bfmeBitsXT[1] |= 0x200000;
 
-	object->applyRva1C7370(flags, false);
-	((BfmeObjE10 *)object)->actionB(0x16);
+	union { void (*entry)(); void (Object::*setStatus)(const ModelConditionFlags &, bool); } apply;
+	apply.entry = j_000307e7;
+	(object->*apply.setStatus)(flags, false);
+
+	union { void (*entry)(); void (BfmeObjE10::*action)(int); } act;
+	act.entry = j_000122ab;
+	(((BfmeObjE10 *)object)->*act.action)(0x16);
 
 	BfmeSinkXT *sink = object->m_bfme204XT;
 	if (sink)
 		sink->slot127(0);
 
-	setWakeFrame(getObject(), 0x3fffffff);
+	// A single-inheritance view of the receiver: UpdateModule itself inherits
+	// PB_DeepBase plus two interfaces, so a member pointer into it would carry
+	// a this-adjustment the retail call does not have.
+	class WakeSetter { public: void setWakeFrame(Object *object, unsigned int whenToWakeUp); };
+	union { void (*entry)(); void (WakeSetter::*setWakeFrame)(Object *, unsigned int); } wake;
+	wake.entry = j_000157da;
+	(((WakeSetter *)this)->*(wake.setWakeFrame))(getObject(), 0x3fffffff);
 }
