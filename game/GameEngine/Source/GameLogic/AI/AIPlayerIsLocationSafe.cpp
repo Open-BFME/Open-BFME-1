@@ -264,19 +264,16 @@ enum DistanceCalculationType
 };
 
 // Retail vtables 0x01083B5C, 0x0109686C, 0x010956E4, 0x0109685C, 0x01083B80 and
-// 0x0109689C; the alternate names define no table.
-extern "C" void *bfmeVftPartitionFilter[];
-extern "C" void *bfmeVftRva00160BE0VptrZeroBlockObject[];
-extern "C" void *bfmeVftRva00149F20VptrZeroObject[];
-extern "C" void *bfmeVftRva001DCBB0Filter[];
-extern "C" void *bfmeVftRva0025ED50RootFilter[];
-extern "C" void *bfmeVftPartitionFilterPlayerAffiliation[];
-#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilter=??_7PartitionFilter@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftRva00160BE0VptrZeroBlockObject=??_7Rva00160BE0VptrZeroBlockObject@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftRva00149F20VptrZeroObject=??_7Rva00149F20VptrZeroObject@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftRva001DCBB0Filter=??_7Rva001DCBB0Filter@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftRva0025ED50RootFilter=??_7Rva0025ED50RootFilter@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterPlayerAffiliation=??_7PartitionFilterPlayerAffiliation@@6B@")
+// 0x0109689C.  Each is named directly with __identifier, the compiler-emitted
+// vftable symbol, so no linker alias is involved; the array type keeps the
+// decay-to-pointer that retail's `mov dword ptr [reg], imm32` needs.  Same
+// spelling as Libraries/Source/EA/Apt/AptBooleanCreate.cpp.
+extern "C" const char __identifier("??_7PartitionFilter@@6B@")[];
+extern "C" const char __identifier("??_7Rva00160BE0VptrZeroBlockObject@@6B@")[];
+extern "C" const char __identifier("??_7Rva00149F20VptrZeroObject@@6B@")[];
+extern "C" const char __identifier("??_7Rva001DCBB0Filter@@6B@")[];
+extern "C" const char __identifier("??_7Rva0025ED50RootFilter@@6B@")[];
+extern "C" const char __identifier("??_7PartitionFilterPlayerAffiliation@@6B@")[];
 
 class PartitionFilter
 {
@@ -304,12 +301,12 @@ public:
 		: m_first(first), m_second(second)
 	{
 		m_next = 0;
-		m_vptr = (unsigned int)bfmeVftRva00160BE0VptrZeroBlockObject;
+		m_vptr = (unsigned int)__identifier("??_7Rva00160BE0VptrZeroBlockObject@@6B@");
 	}
 
 	~PartitionFilterRejectByKindOf(void)
 	{
-		m_vptr = (unsigned int)bfmeVftPartitionFilter;
+		m_vptr = (unsigned int)__identifier("??_7PartitionFilter@@6B@");
 	}
 
 	VptrZeroBlock24 m_first;							// +0x08
@@ -326,14 +323,14 @@ public:
 		: PartitionFilter()
 	{
 		m_next = 0;
-		m_vptr = (unsigned int)bfmeVftRva00149F20VptrZeroObject;
+		m_vptr = (unsigned int)__identifier("??_7Rva00149F20VptrZeroObject@@6B@");
 		m_allowNonBuildings = allowNonBuildings;
 		m_allowInsignificant = allowInsignificant;
 	}
 
 	~Rva010956E4Filter(void)
 	{
-		m_vptr = (unsigned int)bfmeVftPartitionFilter;
+		m_vptr = (unsigned int)__identifier("??_7PartitionFilter@@6B@");
 	}
 
 	Bool m_allowNonBuildings;							// +0x08
@@ -351,14 +348,14 @@ public:
 		: PartitionFilter()
 	{
 		m_next = 0;
-		m_vptr = (unsigned int)bfmeVftRva001DCBB0Filter;
+		m_vptr = (unsigned int)__identifier("??_7Rva001DCBB0Filter@@6B@");
 		m_player = player;
 		m_match = match;
 	}
 
 	~Rva0109685CFilter(void)
 	{
-		m_vptr = (unsigned int)bfmeVftPartitionFilter;
+		m_vptr = (unsigned int)__identifier("??_7PartitionFilter@@6B@");
 	}
 
 	const Player *m_player;							// +0x08
@@ -373,12 +370,12 @@ public:
 	Rva01083B80Filter(void) : PartitionFilter()
 	{
 		m_next = 0;
-		m_vptr = (unsigned int)bfmeVftRva0025ED50RootFilter;
+		m_vptr = (unsigned int)__identifier("??_7Rva0025ED50RootFilter@@6B@");
 	}
 
 	~Rva01083B80Filter(void)
 	{
-		m_vptr = (unsigned int)bfmeVftPartitionFilter;
+		m_vptr = (unsigned int)__identifier("??_7PartitionFilter@@6B@");
 	}
 };
 
@@ -391,7 +388,7 @@ public:
 		: PartitionFilter()
 	{
 		m_next = 0;
-		m_vptr = (unsigned int)bfmeVftPartitionFilterPlayerAffiliation;
+		m_vptr = (unsigned int)__identifier("??_7PartitionFilterPlayerAffiliation@@6B@");
 		m_player = player;
 		m_match = match;
 		m_affiliation = affiliation;
@@ -399,7 +396,7 @@ public:
 
 	~PartitionFilterPlayerAffiliation(void)
 	{
-		m_vptr = (unsigned int)bfmeVftPartitionFilter;
+		m_vptr = (unsigned int)__identifier("??_7PartitionFilter@@6B@");
 	}
 
 	const Player *m_player;							// +0x08
