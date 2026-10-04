@@ -7,11 +7,13 @@
 // 0x000083E1, whose
 // thunk resolves to the matched _Rb_tree assignment body at 0x00424AC0.
 
+// The tail is assigned through ILT 0x000083E1; that thunk symbol is the only
+// name defined at the call target, so it is referenced directly and typed
+// through a member-pointer view without defining EvaMessageTail's assignment.
+extern "C" void __identifier("?j_000083e1@@YAXXZ")();
+
 class EvaMessageTail
 {
-public:
-	EvaMessageTail &operator=( const EvaMessageTail & );
-
 private:
 	char m_raw[ 12 ];
 };
@@ -34,7 +36,12 @@ struct EvaMessageInfo
 		m_field4 = that.m_field4;
 		m_field8 = that.m_field8;
 		m_fieldC = that.m_fieldC;
-		m_tail = that.m_tail;
+		union {
+			void (*thunk)();
+			void (EvaMessageTail::*assign)(const EvaMessageTail &);
+		} tail;
+		tail.thunk = &__identifier("?j_000083e1@@YAXXZ");
+		(m_tail.*tail.assign)(that.m_tail);
 		return *this;
 	}
 };
