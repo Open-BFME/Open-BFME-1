@@ -878,6 +878,7 @@ void BridgeBehavior::onDie( const DamageInfo *damageInfo )
 }  // end onDie
 
 // ------------------------------------------------------------------------------------------------
+#if 0 // ?handleObjectsOnBridgeOnDie@BridgeBehavior@@IAEXXZ is owned by BridgeBehaviorHandleObjectsOnDie.cpp (its retail copy is the BFME one; this ZH copy has a PhysicsBehavior branch retail lacks).  Two strong definitions collided at link; retail has exactly one.  The line count below is kept so every later __LINE__ is unchanged.
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/BridgeBehavior_handleObjectsOnBridgeOnDieMethodThunk.cpp
 // ?handleObjectsOnBridgeOnDie@BridgeBehavior@@IAEXXZ present-unmatched
@@ -966,6 +967,7 @@ void BridgeBehavior::handleObjectsOnBridgeOnDie( void )
 	}  // end if, terrainBridge
 
 }  // end handleObjectsOnBridgeDie
+#endif
 
 // ------------------------------------------------------------------------------------------------
 /** Set all the position, angle, and speed data we need to for a single scaffold object */

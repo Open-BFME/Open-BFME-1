@@ -3,7 +3,11 @@
 // Evidence: targets/game/reverse/identity_evidence/008a7270-native-allocation.md
 // Two-DWORD allocation header is witnessed by bfmePush at 00897300.
 // Explicit vptr uses the existing table identity; no new table or owner is asserted.
-extern "C" void *(*WideAllocPtr)(unsigned int);
+// 0x01337828 is owned as ?Rva008C5D70Alloc@@3P6APAXI@ZA by
+// game/Libraries/Source/EA/Apt/Rva008C4650HeaderedAlloc.cpp, so this TU uses
+// that spelling; `extern "C" ... WideAllocPtr` (symbol _WideAllocPtr) is
+// defined by nothing and left the reference unresolved.
+extern void *(__cdecl *Rva008C5D70Alloc)(unsigned int bytes);
 class BfmeItemDX;
 void __cdecl bfmePush(BfmeItemDX *);
 extern "C" void *bfmeVft1029A[];
@@ -28,7 +32,7 @@ public:
         m_callback20 = callback;
     }
     static void *operator new(unsigned int n) {
-        unsigned int *raw = (unsigned int *)WideAllocPtr(n+8);
+        unsigned int *raw = (unsigned int *)Rva008C5D70Alloc(n+8);
         void *p = raw + 2;
         bfmePush((BfmeItemDX *)p);
         return p;

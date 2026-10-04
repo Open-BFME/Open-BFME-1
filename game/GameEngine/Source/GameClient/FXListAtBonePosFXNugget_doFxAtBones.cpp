@@ -6,10 +6,11 @@
 
 enum { MAX_BONE_POINTS = 40 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-// Out-of-line empty ctor/dtor so the 40-element stack array goes through
-// __ehvec_ctor / __ehvec_dtor (size 0x0C, count 0x28). The world-space
-// output slot is a POD so the loop does not emit a per-iteration ctor.
+// Retail's empty Coord3D constructor (0x00083330) and destructor (0x0005BC40) are owned by
+// game/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehaviorHandleObjectsOnDie.cpp; a
+// second strong definition here collided at link.  Declared but not defined, exactly like
+// Vector4 below: __ehvec_ctor/__ehvec_dtor still emit their loops and their calls still reach
+// those two retail bodies.
 struct Coord3D
 {
 	Coord3D();
@@ -18,14 +19,6 @@ struct Coord3D
 	float y;
 	float z;
 };
-
-Coord3D::Coord3D()
-{
-}
-
-Coord3D::~Coord3D()
-{
-}
 
 struct WorldPos
 {

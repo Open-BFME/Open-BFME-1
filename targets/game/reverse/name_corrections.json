@@ -16188,5 +16188,15 @@
   "after_sha256": "a887d425d6dc61b09a50ecca5ae28dfb63acbcd53a2deaf9525c7e1aa9ec8cf2",
   "evidence": "docs/naming_evidence.md",
   "reason": "bfmeResetJQ is a Bfme<Verb><Suffix> generator placeholder, the invented family docs/naming_evidence.md lines 143-144 describe; its verdict rows in targets/game/reverse/re_attempts.log carry (identity unknown). The landed rva0058DD70 keeps the address token as AGENTS.md requires for an unproven method; no descriptive identity existed to preserve."
+ },
+ {
+  "old_path": "game/Libraries/Source/EA/Apt/Rva008A7270.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/Rva008A7270.cpp",
+  "old_name": "WideAllocPtr",
+  "new_name": "Rva008C5D70Alloc",
+  "before_sha256": "80614c97db46d31017d1d734a18124c101485be3f693b0df9c2e562533e70970",
+  "after_sha256": "8f0273ff692ad64fe76e8bd6b5c47de8e7a030bfcfa8980717788f6f75d17a0b",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

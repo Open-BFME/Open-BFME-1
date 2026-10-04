@@ -10,10 +10,12 @@
 //
 // Coord3D is the global non-trivial class: retail exposes its copy constructor
 // at 0x005BC20 and empty destructor at 0x005BC40.  This TU keeps that ABI and
-// uses the native static crossProduct operation; the legacy member helper has
-// a different volatile operand shape.  Coord3D has conflicting layouts in
+// reproduces the native static crossProduct operation; the legacy member helper
+// has a different volatile operand shape.  Coord3D has conflicting layouts in
 // other TUs, so this is intentionally a TU-local declaration rather than a
-// broad header edit.
+// broad header edit.  Only the copy constructor and the destructor stay class
+// members: the three numeric helpers are TU-local statics below so this object
+// defines no name coord3d.cpp owns exclusively (see their comment).
 
 #include <math.h>
 
@@ -37,39 +39,51 @@ public:
 		y = yValue;
 		z = zValue;
 	}
-	Coord3D(const Coord3D &that)
+	// The copy constructor is never called by name from this source, but VC7.1
+	// only elides the `return result` copy when the body is visible here:
+	// leaving the declaration unfulfilled makes it emit a real call and the
+	// frame grows from 0x18 to 0x24 (measured).  It is `inline` so /Gy puts it
+	// in a foldable COMDAT rather than an exclusive definition.
+	inline Coord3D(const Coord3D &that)
 	{
 		x = that.x;
 		y = that.y;
 		z = that.z;
 	}
 	~Coord3D() {}
-
-	__forceinline float length() const
-	{
-		return (float)sqrt(x * x + y * y + z * z);
-	}
-
-	__forceinline void normalize()
-	{
-		float len = length();
-		if (len != BfmeZeroRange)
-		{
-			float scale = g_bfmeDefaultBU / len;
-			x *= scale;
-			y *= scale;
-			z *= scale;
-		}
-	}
-
-	static __forceinline void crossProduct(const Coord3D *left,
-		const Coord3D *right, Coord3D *result)
-	{
-		result->x = left->y * right->z - left->z * right->y;
-		result->y = left->z * right->x - left->x * right->z;
-		result->z = left->x * right->y - left->y * right->x;
-	}
 };
+
+// length(), normalize() and the static crossProduct() are owned by
+// game/Libraries/Source/WWVegas/WWMath/coord3d.cpp, which emits each of them
+// once, exclusively.  Declaring them on the TU-local class instead makes VC7.1
+// outline the calls and loses the byte match, so their bodies have to stay --
+// but a member definition also mangles to the owning name.  TU-local static
+// free functions with internal linkage carry a bfme-local decorated name that
+// collides with nothing, and force-inlining keeps the emitted FP code identical.
+static __forceinline float bfmeCoord3DLength(const Coord3D *v)
+{
+	return (float)sqrt(v->x * v->x + v->y * v->y + v->z * v->z);
+}
+
+static __forceinline void bfmeCoord3DNormalize(Coord3D *v)
+{
+	float len = bfmeCoord3DLength(v);
+	if (len != BfmeZeroRange)
+	{
+		float scale = g_bfmeDefaultBU / len;
+		v->x *= scale;
+		v->y *= scale;
+		v->z *= scale;
+	}
+}
+
+static __forceinline void bfmeCoord3DCrossProduct(const Coord3D *left,
+	const Coord3D *right, Coord3D *result)
+{
+	result->x = left->y * right->z - left->z * right->y;
+	result->y = left->z * right->x - left->x * right->z;
+	result->z = left->x * right->y - left->y * right->x;
+}
 
 namespace FXParticleSystem
 {
@@ -142,15 +156,15 @@ Coord3D LightningEmissionModule::getVelocity(const Coord3D *, float speed,
 	along.x = m_end.x - m_start.x;
 	along.y = m_end.y - m_start.y;
 	along.z = m_end.z - m_start.z;
-	along.normalize();
+	bfmeCoord3DNormalize(&along);
 
 	Coord3D perp;
 	Coord3D up;
 	up.x = 0.0;
 	up.y = 0.0;
 	up.z = 1.0;
-	perp.crossProduct(&up, &along, &perp);
-	up.crossProduct(&along, &perp, &up);
+	bfmeCoord3DCrossProduct(&up, &along, &perp);
+	bfmeCoord3DCrossProduct(&along, &perp, &up);
 
 	Coord3D result;
 	result.x = perp.x * speed + up.x * radialSpeed;
@@ -191,15 +205,15 @@ Coord3D LineEmissionVolumeModule::getVelocity(const Coord3D *, float speed,
 	along.x = m_end.x - m_start.x;
 	along.y = m_end.y - m_start.y;
 	along.z = m_end.z - m_start.z;
-	along.normalize();
+	bfmeCoord3DNormalize(&along);
 
 	Coord3D perp;
 	Coord3D up;
 	up.x = 0.0;
 	up.y = 0.0;
 	up.z = 1.0;
-	perp.crossProduct(&up, &along, &perp);
-	up.crossProduct(&along, &perp, &up);
+	bfmeCoord3DCrossProduct(&up, &along, &perp);
+	bfmeCoord3DCrossProduct(&along, &perp, &up);
 
 	Coord3D result;
 	result.x = perp.x * speed + up.x * radialSpeed;
