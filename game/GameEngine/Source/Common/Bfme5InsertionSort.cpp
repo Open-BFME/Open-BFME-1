@@ -40,7 +40,7 @@ inline void bfmeUnguardedLinearInsert(int *last, int value)
 	*last = value;
 }
 
-__forceinline void bfmeLinearInsert(int *first, int *last, int value)
+static __forceinline void bfmeLinearInsert(int *first, int *last, int value)
 {
 	if (value < *first)
 	{
