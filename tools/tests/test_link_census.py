@@ -682,6 +682,8 @@ def _copy_call_body(home, target):
 @pytest.mark.parametrize("first,second", [
     # E8 is an immediate byte, not an opcode: the two functions return different constants.
     (bytes.fromhex("b8 e8 01 00 00 c3"), bytes.fromhex("b8 e8 02 00 00 c3")),
+    # E8 can also be a memory displacement byte, not a call instruction.
+    (bytes.fromhex("8b 80 e8 00 00 00 c3"), bytes.fromhex("8b 80 e8 01 00 00 c3")),
     # Blindly masking four bytes after that E8 even conceals NOP -> INT3.
     (bytes.fromhex("b8 e8 01 00 00 90 c3"), bytes.fromhex("b8 e8 01 00 00 cc c3")),
     # E8-shaped bytes may also be skipped inline data, not reachable call instructions.
@@ -689,7 +691,7 @@ def _copy_call_body(home, target):
     (_copy_call_body(0x1000, 0x1180), _copy_call_body(0x1100, 0x1190)),
     # Even equivalent copies need independent identity evidence; the pin is only a candidate.
     (_copy_call_body(0x1000, 0x1180), _copy_call_body(0x1100, 0x1180)),
-], ids=["immediate", "different-opcode", "inline-data", "different-callees", "same-callee"])
+], ids=["immediate", "memory-displacement", "different-opcode", "inline-data", "different-callees", "same-callee"])
 def test_unproven_ilt_second_copy_does_not_prove_call_target(tmp_path, monkeypatch, first, second):
     t = _second_copy_truth(tmp_path, monkeypatch, first, second)
     body = b"\xe8\0\0\0\0"
