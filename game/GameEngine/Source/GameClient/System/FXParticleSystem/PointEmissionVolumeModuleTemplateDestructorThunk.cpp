@@ -6,12 +6,12 @@
 // through the same ILT; landed neighbours (ctor 0x005D58B0, copy ctor
 // 0x005D5930, operator= 0x005D5980) sit either side in the same TU family.
 
-extern "C" const void *bfmeVftSnapshot[];
-#pragma comment(linker, "/alternatename:_bfmeVftSnapshot=??_7Snapshot@@6B@")
-extern "C" const void *bfmeVftCategoryModuleInfo5[];
-#pragma comment(linker, "/alternatename:_bfmeVftCategoryModuleInfo5=??_7?$CategoryModuleInfo@$04@FXParticleSystem@@6B@")
-extern "C" const void *bfmeVftModuleTemplate[];
-#pragma comment(linker, "/alternatename:_bfmeVftModuleTemplate=??_7ModuleTemplate@FXParticleSystem@@6B@")
+// Retail's own vftable symbols, spelled with __identifier so the object
+// references them directly instead of through a linker alternate name.
+extern "C" const unsigned char __identifier("??_7Snapshot@@6B@")[];
+extern "C" const unsigned char __identifier(
+	"??_7?$CategoryModuleInfo@$04@FXParticleSystem@@6B@")[];
+extern "C" const unsigned char __identifier("??_7ModuleTemplate@FXParticleSystem@@6B@")[];
 
 namespace FXParticleSystem
 {
@@ -26,11 +26,15 @@ public:
 PointEmissionVolumeModuleTemplate::~PointEmissionVolumeModuleTemplate()
 {
 	unsigned char *info = this ? (unsigned char *)this + 8 : 0;
-	*(volatile unsigned int *)info = (unsigned int)bfmeVftSnapshot;
+	*(volatile unsigned int *)info =
+		(unsigned int)__identifier("??_7Snapshot@@6B@");
 
 	unsigned char *base = this ? (unsigned char *)this + 4 : 0;
-	*(volatile unsigned int *)base = (unsigned int)bfmeVftCategoryModuleInfo5;
-	*(volatile unsigned int *)this = (unsigned int)bfmeVftModuleTemplate;
+	*(volatile unsigned int *)base =
+		(unsigned int)__identifier(
+			"??_7?$CategoryModuleInfo@$04@FXParticleSystem@@6B@");
+	*(volatile unsigned int *)this =
+		(unsigned int)__identifier("??_7ModuleTemplate@FXParticleSystem@@6B@");
 }
 
 }
