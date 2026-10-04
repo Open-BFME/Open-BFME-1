@@ -60,7 +60,7 @@ bool OptionPreferences::usesSystemMapDir(void)
 	if (it == m_prefs.end())
 		return true;
 
-	if (_strcmpi(it->m_value.str(), "y") == 0)
+	if (_strcmpi(it->m_value.str(), "yes") == 0)
 	{
 		return true;
 	}
