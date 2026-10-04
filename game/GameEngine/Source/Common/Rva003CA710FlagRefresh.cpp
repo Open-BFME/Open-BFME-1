@@ -1,6 +1,8 @@
 // Address-derived flag refresh at retail 0x003CA710.
 
-int __cdecl bfmeCallFHA(void *left, void *right);
+// Retail calls ILT 0x00041164, whose body is the existing two-word cdecl
+// provider at 0x003C92A0. Both pointer arguments are 32-bit values here.
+int __cdecl Rva003C92A0(int left, int right);
 
 struct Rva003CA710State
 {
@@ -59,7 +61,7 @@ void Rva003CA710Owner::refresh(bool includeDisabled, bool requireSecond)
 				if (requireSecond)
 				{
 					void *probe = entry->m_probe;
-					if (bfmeCallFHA(probe, probe) == 1)
+					if (Rva003C92A0((int)probe, (int)probe) == 1)
 						value = 1;
 				}
 				else
@@ -72,7 +74,7 @@ void Rva003CA710Owner::refresh(bool includeDisabled, bool requireSecond)
 			{
 				Rva003CA710Entry *entry = entries->m_begin[index];
 				void *probe = entry->m_probe;
-				if (bfmeCallFHA(probe, probe) == 1)
+				if (Rva003C92A0((int)probe, (int)probe) == 1)
 					value = 1;
 			}
 			else

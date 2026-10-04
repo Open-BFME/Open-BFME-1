@@ -17438,5 +17438,15 @@
   "after_sha256": "3f1f56493b0119fb122ef9a5e081f2257ae7de25e96208170a8cbab251ed5278",
   "evidence": "targets/game/reverse/identity_evidence/009a5980-release-wrapper-owner.md",
   "reason": "Five independently decoded one-pointer cdecl calls in retail 009A4A60 target the distinct wrapper at 009A5980. Its existing unique matched and linked owner is Rva009A5980 in BfmeReleaseSetBZB.cpp, corroborated by six separate calls in 009A5B80. bfmeFreeOneJT has no definition; this caller view is rebound to the already-proven owner without adding an alias, pin, storage or semantic-name claim."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva003CA710FlagRefresh.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva003CA710FlagRefresh.cpp",
+  "old_name": "bfmeCallFHA",
+  "new_name": "Rva003C92A0",
+  "before_sha256": "59fe777ea665bed54320d92350fe4aa4e0615e84a72aef5474baf9eea1666d91",
+  "after_sha256": "111dce096402796b69655da548239640a045785a58edd6b6016d33dd03d0de51",
+  "evidence": "targets/game/reverse/identity_evidence/003ca710-existing-hook-route.md",
+  "reason": "The retail call at 003CA76A targets ILT 00041164, independently decoded to existing Rva003C92A0. Two separate matched callers prove the same two-stack-word cdecl ABI and full EAX result. On the 32-bit target, pointer-to-int casts preserve both argument words while matching the existing provider signature; no semantic name, new provider, alias, pin or link-order change is introduced."
  }
 ]
