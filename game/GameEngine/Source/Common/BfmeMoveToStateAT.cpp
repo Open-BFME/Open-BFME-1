@@ -4,42 +4,33 @@
 // The state name goes straight into the by-value argument the base
 // initialiser takes, and the vftable is installed after the flag.
 
-class StringBaseNarrowAT
-{
-protected:
-	StringBaseNarrowAT(const char *text) throw();
+// The state name is built by the real AsciiString: retail's copy sites build
+// the temporary with a direct `call StringBase<char>::StringBase(char const*)`,
+// and ascii_string.h's inline AsciiString(const char *) is exactly that call --
+// no intermediate body, so the bytes are unchanged.
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-	StringBaseNarrowAT(const StringBaseNarrowAT &other) throw();
+class StateMachine;
 
-	~StringBaseNarrowAT(void) throw();
-
-	char *m_bfmeNarrowAT;
-};
-
-class AsciiStringAT : public StringBaseNarrowAT
+// The base initialiser this constructor calls is reached through ILT 0x00032182,
+// whose jump lands on rva 0x0014F280: the 149-byte matched
+// AIInternalMoveToState(StateMachine *, AsciiString) ctor
+// (game/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateCtor.cpp), whose
+// signature is the by-value state name this body pushes.  Only that ctor is
+// known here, so the base declares nothing else and the derived view below keeps
+// the two stores at the offsets retail writes (+0 vftable, +0x50 flag).
+class AIInternalMoveToState
 {
 public:
-	AsciiStringAT(const char *text) throw() : StringBaseNarrowAT(text)
-	{
-	}
-
-	AsciiStringAT(const AsciiStringAT &other) throw() : StringBaseNarrowAT(other)
-	{
-	}
-
-	~AsciiStringAT(void) throw()
-	{
-	}
+	AIInternalMoveToState(StateMachine *machine, AsciiString name);
 };
 
 extern "C" void *bfmeVftableAT[];			// retail 0x0109B370
 
-class BfmeMoveToStateAT
+class BfmeMoveToStateAT : public AIInternalMoveToState
 {
 public:
 	BfmeMoveToStateAT(void *owner);
-
-	void bfmeBaseInitAT(void *owner, AsciiStringAT name) throw();
 
 	void *m_bfmeVfptrAT;
 	char m_bfmePadAT[0x4c];
@@ -47,9 +38,9 @@ public:
 };
 
 BfmeMoveToStateAT::BfmeMoveToStateAT(void *owner)
+	: AIInternalMoveToState(reinterpret_cast<StateMachine *>(owner),
+		AsciiString("AIMoveToState"))
 {
-	bfmeBaseInitAT(owner, AsciiStringAT("AIMoveToState"));
-
 	m_bfmeReadyBfmeAT = 1;
 
 	m_bfmeVfptrAT = bfmeVftableAT;
