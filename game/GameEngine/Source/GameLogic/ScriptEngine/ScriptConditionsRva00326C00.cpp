@@ -20,6 +20,16 @@ typedef UnsignedShort PlayerMaskType;
 
 #include "ascii_string.h"
 
+// Retail reaches each of the six callees below through its incremental-link
+// thunk; every use spells the call as a code-address/member-pointer union so
+// no linker alias stand-in is needed.
+extern void j_00001140();
+extern void j_00022a70();
+extern void j_000022bb();
+extern void j_0003e80b();
+extern void j_00028560();
+extern void j_0000d3b9();
+
 class Parameter
 {
 public:
@@ -52,27 +62,54 @@ class ThingTemplate;
 class BfmeThingFactory
 {
 public:
-	const ThingTemplate *findTemplate( const AsciiString &name );
 };
+
+// Retail's BfmeThingFactory::findTemplate is reached through the
+// incremental-link thunk at 0x00028560.
+static __forceinline const ThingTemplate *findTemplate_thunk(
+	BfmeThingFactory *self, const AsciiString &name )
+{
+	typedef const ThingTemplate *( BfmeThingFactory::*Fn )( const AsciiString & );
+	union { void ( *fn )(); Fn call; } u = { j_00028560 };
+	return ( self->*u.call )( name );
+}
 
 class Overridable
 {
 public:
 	virtual ~Overridable();
-	const Overridable *getFinalOverride() const
-	{
-		if( m_nextOverride )
-			return m_nextOverride->getFinalOverride();
-		return this;
-	}
 	Overridable *m_nextOverride;
 };
+
+// Retail's Overridable::getFinalOverride inlines one level of the override
+// walk at every use and reaches the rest through the incremental-link thunk
+// at 0x000022bb.
+static __forceinline const Overridable *getFinalOverride_thunk(
+	const Overridable *self )
+{
+	if( self->m_nextOverride )
+	{
+		typedef const Overridable *( Overridable::*Fn )() const;
+		union { void ( *fn )(); Fn call; } u = { j_000022bb };
+		return ( self->m_nextOverride->*u.call )();
+	}
+	return self;
+}
 
 class ThingTemplate : public Overridable
 {
 public:
-	Bool isEquivalentTo( const ThingTemplate *other ) const;
 };
+
+// Retail's ThingTemplate::isEquivalentTo is reached through the
+// incremental-link thunk at 0x0003e80b.
+static __forceinline Bool isEquivalentTo_thunk(
+	const ThingTemplate *self, const ThingTemplate *other )
+{
+	typedef Bool ( ThingTemplate::*Fn )( const ThingTemplate * ) const;
+	union { void ( *fn )(); Fn call; } u = { j_0003e80b };
+	return ( self->*u.call )( other );
+}
 
 template <class T>
 class BfmeOverride
@@ -82,7 +119,7 @@ public:
 	{
 		if( !m_overridable )
 			return 0;
-		return ( const T * )m_overridable->getFinalOverride();
+		return ( const T * )getFinalOverride_thunk( m_overridable );
 	}
 
 	const T *m_overridable;
@@ -111,9 +148,20 @@ class BfmePlayerObjectDlinkObject;
 class BfmeObjectDlinkBase
 {
 public:
-	BfmePlayerObjectDlinkObject *dlink_next_TeamMemberList() const;
 	BfmeOverride<ThingTemplate> m_template;
 };
+
+// Retail's BfmeObjectDlinkBase::dlink_next_TeamMemberList is reached through
+// the incremental-link thunk at 0x00001140; the iterator below keeps that
+// code address as its member pointer and calls it indirectly.
+typedef BfmePlayerObjectDlinkObject *(
+	BfmeObjectDlinkBase::*BfmeTeamMemberNextFn )() const;
+
+static __forceinline BfmeTeamMemberNextFn nextTeamMemberList_thunk()
+{
+	union { void ( *fn )(); BfmeTeamMemberNextFn call; } u = { j_00001140 };
+	return u.call;
+}
 
 class BfmeObjectDlinkPad
 {
@@ -148,6 +196,24 @@ public:
 	virtual Bool slot36();
 };
 
+// unidentified_001BFE20 (ObjectTeamAndPlayer.cpp) is reached through the
+// incremental-link thunk at 0x0000d3b9. The object class has a virtual base,
+// so cl cannot fold a member pointer onto a plain code address for it; the
+// call is spelled on this ABI-neutral carrier (no bases, no vtable) instead,
+// which folds to the same `mov ecx,object; call j_0000d3b9`.
+class Rva00326C00ThunkCarrier
+{
+public:
+};
+
+static __forceinline Rva00326C00FoundSlot36 *unidentified_001BFE20_thunk(
+	BfmePlayerObjectDlinkObject *self )
+{
+	typedef Rva00326C00FoundSlot36 *( Rva00326C00ThunkCarrier::*Fn )() const;
+	union { void ( *fn )(); Fn call; } u = { j_0000d3b9 };
+	return ( ( ( Rva00326C00ThunkCarrier * )self )->*u.call )();
+}
+
 enum SpecialPowerType
 {
 	SPECIAL_INVALID = 0
@@ -162,8 +228,6 @@ public:
 	{
 		return m_template.operator->();
 	}
-
-	Rva00326C00FoundSlot36 *unidentified_001BFE20() const;
 };
 
 #define callMemberFunction( object, ptrToMember ) ( ( object ).*( ptrToMember ) )
@@ -203,7 +267,7 @@ public:
 	iterate_TeamMemberList() const
 	{
 		return BfmePlayerDlinkIterator<BfmePlayerObjectDlinkObject>( m_head,
-			BfmeObjectDlinkBase::dlink_next_TeamMemberList );
+			nextTeamMemberList_thunk() );
 	}
 };
 
@@ -216,8 +280,17 @@ struct BfmePlayerTeamPrototypeInstances
 class BfmeTeamInstanceLink
 {
 public:
-	BfmeTeamInstanceLink *_bfme_nextInInstanceList();
 };
+
+// Retail's BfmeTeamInstanceLink::_bfme_nextInInstanceList is reached through
+// the incremental-link thunk at 0x00022a70.
+static __forceinline BfmeTeamInstanceLink *nextInInstanceList_thunk(
+	BfmeTeamInstanceLink *self )
+{
+	typedef BfmeTeamInstanceLink *( BfmeTeamInstanceLink::*Fn )();
+	union { void ( *fn )(); Fn call; } u = { j_00022a70 };
+	return ( self->*u.call )();
+}
 
 class BfmePlayerTeamInstanceIterator
 {
@@ -231,7 +304,7 @@ public:
 	{
 		if( m_cur )
 			m_cur = ( BfmePlayerTeamView * )
-				( ( BfmeTeamInstanceLink * )m_cur )->_bfme_nextInInstanceList();
+				nextInInstanceList_thunk( ( BfmeTeamInstanceLink * )m_cur );
 	}
 
 private:
@@ -275,7 +348,8 @@ Bool ScriptConditions::rva00326c00(
 	if( !player )
 		return false;
 
-	const ThingTemplate *wanted = ( ( BfmeThingFactory * )TheThingFactory )->findTemplate(
+	const ThingTemplate *wanted = findTemplate_thunk(
+		( BfmeThingFactory * )TheThingFactory,
 		templateParameter->getString() );
 	if( !wanted )
 		return false;
@@ -300,9 +374,10 @@ Bool ScriptConditions::rva00326c00(
 				if( !object )
 					continue;
 
-				if( object->getTemplate()->isEquivalentTo( wanted ) )
+				if( isEquivalentTo_thunk( object->getTemplate(), wanted ) )
 				{
-					Rva00326C00FoundSlot36 *found = object->unidentified_001BFE20();
+					Rva00326C00FoundSlot36 *found =
+						unidentified_001BFE20_thunk( object );
 					if( found && !found->slot36() )
 						return true;
 				}
@@ -313,9 +388,3 @@ Bool ScriptConditions::rva00326c00(
 	return false;
 }
 
-#pragma comment( linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVBfmePlayerObjectDlinkObject@@XZ=?j_00001140@@YAXXZ" )
-#pragma comment( linker, "/alternatename:?_bfme_nextInInstanceList@BfmeTeamInstanceLink@@QAEPAV1@XZ=?j_00022a70@@YAXXZ" )
-#pragma comment( linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ" )
-#pragma comment( linker, "/alternatename:?isEquivalentTo@ThingTemplate@@QBE_NPBV1@@Z=?j_0003e80b@@YAXXZ" )
-#pragma comment( linker, "/alternatename:?findTemplate@BfmeThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z=?j_00028560@@YAXXZ" )
-#pragma comment( linker, "/alternatename:?unidentified_001BFE20@BfmePlayerObjectDlinkObject@@QBEPAVRva00326C00FoundSlot36@@XZ=?j_0000d3b9@@YAXXZ" )
