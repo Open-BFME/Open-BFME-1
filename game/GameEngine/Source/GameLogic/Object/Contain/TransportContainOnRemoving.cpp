@@ -192,7 +192,8 @@ void j_0001da34();
 class Rva2225E0Filter
 {
 public:
-	Bool accepts(Object *object, Player *player) { union {void (*raw)(); bool(Rva2225E0Filter::*member)(Object*,Player*);} c;c.raw=&j_0001da34;return (this->*c.member)(object,player); }
+	// The retail 72-byte owner is in Rva003A04A0FilterAccepts.cpp.
+	Bool accepts(Object *object, Player *player);
 };
 
 class TransportContainModuleData
