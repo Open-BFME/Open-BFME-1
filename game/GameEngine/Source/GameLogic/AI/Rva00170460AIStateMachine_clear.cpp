@@ -50,11 +50,10 @@ struct Coord3D
 
 class Rva00170460GoalHelper
 {
-public:
-	void setGoalObject(const Object *object);
+	unsigned char m_unreconstructed_000[0x1];
 };
 
-#pragma comment(linker, "/alternatename:?setGoalObject@Rva00170460GoalHelper@@QAEXPBVObject@@@Z=?j_00027b42@@YAXXZ")
+extern void j_00027b42();
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
@@ -85,7 +84,9 @@ void Rva00170460AIStateMachine::clear()
 	{
 		m_temporaryState->onExit(EXIT_RESET);
 		Object *goalObject = TheGameLogic->findObjectByID(m_goalObjectID);
-		((Rva00170460GoalHelper *)this)->setGoalObject(goalObject);
+		typedef void (Rva00170460GoalHelper::*Fn)(const Object *);
+		union { void (*fn)(); Fn call; } u = { j_00027b42 };
+		((Rva00170460GoalHelper *)this->*u.call)(goalObject);
 		((StateMachine *)this)->setGoalPosition(&m_goalPosition);
 		m_goalObjectID = 0;
 		m_temporaryState = 0;
