@@ -9,7 +9,12 @@ struct Gen_t_00069cc0_p16cd
 
 typedef _STL::vector<Gen_t_00069cc0_p16cd> Rva0006A9D0Vector;
 
-#pragma comment(linker, "/alternatename:??0?$vector@UGen_t_00069cc0_p16cd@@V?$allocator@UGen_t_00069cc0_p16cd@@@_STL@@@_STL@@QAE@ABV01@@Z=?j_0003ee4b@@YAXXZ")
+// Retail reaches the vector copy constructor through the incremental-link
+// thunk at 0x0003EE4B, so call that thunk directly instead of aliasing the
+// copy constructor's own name to it.  The copy is therefore built in place:
+// a real constructor would also emit STLport's default constructor, which
+// retail's inlined copy never does.
+extern void j_0003ee4b();
 
 class BfmeStateGQ
 {
@@ -20,17 +25,6 @@ public:
 class Rva0006A9D0State
 {
 public:
-	Rva0006A9D0State(const Rva0006A9D0State &other)
-		: m_value00(other.m_value00),
-		  m_value04(other.m_value04),
-		  m_values(other.m_values)
-	{
-		m_value18 = (int)m_values.end();
-		m_value28 = 0.0f;
-		m_value24 = 0.0f;
-		m_value20 = 0.0f;
-		m_value1C = 0.0f;
-	}
 	Rva0006A9D0State &operator=(const Rva0006A9D0State &other);
 
 	int m_value00;
@@ -46,8 +40,20 @@ public:
 
 Rva0006A9D0State &Rva0006A9D0State::operator=(const Rva0006A9D0State &other)
 {
-	Rva0006A9D0State copy(other);
+	char storage[sizeof(Rva0006A9D0State)];
+	Rva0006A9D0State *copy = reinterpret_cast<Rva0006A9D0State *>(storage);
+	copy->m_value00 = other.m_value00;
+	copy->m_value04 = other.m_value04;
+	typedef void (Rva0006A9D0Vector::*CopyFn)(const Rva0006A9D0Vector &);
+	union { void (*fn)(); CopyFn call; } u = { j_0003ee4b };
+	(copy->m_values.*u.call)(other.m_values);
+	copy->m_value18 = (int)copy->m_values.end();
+	copy->m_value28 = 0.0f;
+	copy->m_value24 = 0.0f;
+	copy->m_value20 = 0.0f;
+	copy->m_value1C = 0.0f;
 	reinterpret_cast<BfmeStateGQ *>(this)->bfmeSwapGQ(
-		reinterpret_cast<BfmeStateGQ *>(&copy));
+		reinterpret_cast<BfmeStateGQ *>(copy));
+	copy->m_values.~Rva0006A9D0Vector();
 	return *this;
 }
