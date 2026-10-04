@@ -7,21 +7,19 @@
 #include "Common/QuickmatchPreferences.h"
 #include "Common/QuotedPrintable.h"
 
+// Retail's private AsciiString is `class AsciiString : public StringBase<char>`
+// and inherits this `set(const char *, Int)` from it; the body at 0x00887D20 is
+// the one StringBase.cpp defines and the ledger matches as
+// `?set@?$StringBase@D@@QAEXPBDH@Z`. Call that definition by its real name.
+#include "string_base.h"
+
 extern const char g_rva01080FC0[2];
 extern char g_bfmeJpegExtendedMessage;
-
-class BfmeAsciiStringLengthSetter
-{
-public:
-	void set( const char *value, Int length );
-};
-
-#pragma comment(linker, "/alternatename:?set@BfmeAsciiStringLengthSetter@@QAEXPBDH@Z=?set@AsciiString@@QAEXPBDH@Z")
 
 void QuickMatchPreferences::setMapSelected(const AsciiString& mapName, Bool selected)
 {
 	const char *value = selected ? g_rva01080FC0 : &g_bfmeJpegExtendedMessage;
-	BfmeAsciiStringLengthSetter *preference;
-	(preference = reinterpret_cast<BfmeAsciiStringLengthSetter *>( &(*this)[AsciiStringToQuotedPrintable(mapName)] ),
+	StringBase<char> *preference;
+	(preference = reinterpret_cast<StringBase<char> *>( &(*this)[AsciiStringToQuotedPrintable(mapName)] ),
 		preference->set(value, value ? strlen(value) : 0));
 }
