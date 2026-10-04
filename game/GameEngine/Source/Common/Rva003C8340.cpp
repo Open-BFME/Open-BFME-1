@@ -33,7 +33,10 @@ public:
 	unsigned char m_enabled;
 };
 
-#pragma comment(linker, "/alternatename:?prepare@Rva003C8340@@QAEXPAVRva003C8340Item@@@Z=?d_003c7d20@@YAXXZ")
+// Retail calls the ownerless body at 0x003C7D20 (ret 4) with the item as its
+// only stack argument; that route is named directly now instead of a linker
+// alias for the never-defined member prepare.
+extern void d_003c7d20();
 
 void Rva003C8340::set(Rva003C8340Item *value)
 {
@@ -54,7 +57,9 @@ void Rva003C8340::set(Rva003C8340Item *value)
 		return;
 	}
 
-	prepare(value);
+	typedef void (Rva003C8340::*Prepare)(Rva003C8340Item *);
+	union { void (*fn)(); Prepare call; } u = { d_003c7d20 };
+	(this->*u.call)(value);
 	if (m_current == value)
 		return;
 
