@@ -61,6 +61,8 @@ public:
 	HordeTransportContainInterface *m_contain;
 };
 
+extern void j_000237b8();
+
 class BfmeRva493A0Object;
 class BfmeRva493A0Result;
 
@@ -81,17 +83,16 @@ public:
 		return *(HordeTransportContainModuleData **)((char *)this - 0x1c);
 	}
 
-	Bool preflight(Object *object, Bool checkCapacity) const;
 	virtual Bool isValidContainerFor(const Object *object, Bool checkCapacity) const;
 };
-
-#pragma comment(linker, "/alternatename:?preflight@HordeTransportContain@@QBE_NPAVObject@@_N@Z=?j_000237b8@@YAXXZ")
 
 // ?isValidContainerFor@HordeTransportContain@@UBE_NPBVObject@@_N@Z
 Bool HordeTransportContain::isValidContainerFor(const Object *object,
 	Bool checkCapacity) const
 {
-	if (!preflight((Object *)object, checkCapacity))
+	typedef Bool (HordeTransportContain::*Preflight)(Object *, Bool) const;
+	union { void (*fn)(); Preflight call; } preflight = { j_000237b8 };
+	if (!(this->*preflight.call)((Object *)object, checkCapacity))
 		return false;
 
 	HordeTransportContainInterface *contain =
