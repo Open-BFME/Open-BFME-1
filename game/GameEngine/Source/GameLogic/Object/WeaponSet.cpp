@@ -283,15 +283,16 @@ public:
 	unsigned int bits;
 };
 
-#pragma comment(linker, "/alternatename:?xfer@BfmeWeaponSetFlags@@QAEXPAVBfmeWeaponSetXferView@@@Z=?j_00044ce7@@YAXXZ")
+// Both retail callees are reached through 5-byte ILT thunks; reference those
+// thunks by name instead of aliasing a stand-in member name onto them.
+extern void j_00044ce7();
+extern void j_00028560();
 
 class BfmeThingFactory
 {
 public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
-
-#pragma comment(linker, "/alternatename:?findTemplate@BfmeThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z=?j_00028560@@YAXXZ")
 
 class BfmeThingLP
 {
@@ -366,15 +367,24 @@ void WeaponSet::xfer(Xfer *xfer)
 		BfmeWeaponSetFlags flags;
 
 		bfme->xferAsciiString(reinterpret_cast<AsciiString &>(templateName));
-		flags.xfer(bfme);
+		{
+			typedef void (BfmeWeaponSetFlags::*XferFn)(BfmeWeaponSetXferView *);
+			union { void (*fn)(); XferFn call; } u = { j_00044ce7 };
+			(flags.*u.call)(bfme);
+		}
 		if (!bfmeWeaponNameIsNotEmpty(templateName))
 		{
 			weaponSet->templateSet = NULL;
 		}
 		else
 		{
-			const ThingTemplate *thingTemplate = BfmeThingFactoryGlobal->findTemplate(
-				reinterpret_cast<AsciiString &>(templateName));
+			const ThingTemplate *thingTemplate;
+			{
+				typedef const ThingTemplate *(BfmeThingFactory::*FindFn)(const AsciiString &) const;
+				union { void (*fn)(); FindFn call; } u = { j_00028560 };
+				thingTemplate = (BfmeThingFactoryGlobal->*u.call)(
+					reinterpret_cast<AsciiString &>(templateName));
+			}
 			if (thingTemplate == NULL)
 			{
 				BfmeWeaponFormattedText error;
@@ -412,7 +422,11 @@ void WeaponSet::xfer(Xfer *xfer)
 				weaponSet->templateSet)->flags.bits;
 		}
 		bfme->xferAsciiString(reinterpret_cast<AsciiString &>(templateName));
-		flags.xfer(bfme);
+		{
+			typedef void (BfmeWeaponSetFlags::*XferFn)(BfmeWeaponSetXferView *);
+			union { void (*fn)(); XferFn call; } u = { j_00044ce7 };
+			(flags.*u.call)(bfme);
+		}
 	}
 
 	for (int i = 0; i < 4; ++i)
