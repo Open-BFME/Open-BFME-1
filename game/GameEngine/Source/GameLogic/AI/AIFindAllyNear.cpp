@@ -4,7 +4,8 @@
 // method at both calls through ILT 4650B. Retail returns with ret 0xC.
 // Local filter sizes 8/12/12/12/16/20 follow their stores and stack slots;
 // PartitionFilterRejectBuildings' matched constructor independently fixes its layout.
-// The other filters store retail vtables through bfmeVft aliases while their owners remain opaque.
+// The other filters get their retail vtables straight from the compiler's own
+// ??_7X@@6B@ symbols, so no linker alias stands in for them.
 // Canonical basetype.h supplies struct Coord3D and the fundamental typedefs.
 #include "basetype.h"
 
@@ -34,38 +35,24 @@ protected:
 	PartitionFilter *m_next;
 };
 
-extern "C" void *bfmeVftRva0025ED50RootFilter[];
-extern "C" void *bfmeVftRva00260180SelfFilter[];
-extern "C" void *bfmeVftRva0025ED50ObjectFilter[];
-extern "C" void *bfmeVftBfmeObjEQT[];
-extern "C" void *bfmeVftPartitionFilterRelationship[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva0025ED50RootFilter=??_7Rva0025ED50RootFilter@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftRva00260180SelfFilter=??_7Rva00260180SelfFilter@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftRva0025ED50ObjectFilter=??_7Rva0025ED50ObjectFilter@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftBfmeObjEQT=??_7BfmeObjEQT@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilterRelationship=??_7PartitionFilterRelationship@@6B@")
+// Each filter below is an ordinary (non-novtable) class, so VC7.1 emits its
+// own vftable under the retail name (??_7Rva0025ED50RootFilter@@6B@ and
+// friends) and installs that vftable pointer as the first act of the implicit
+// constructor. That store is byte for byte the one retail performs, so no
+// extern stand-in and no linker alias is needed.
 
-static __forceinline void setFilterVptr(void *filter, UnsignedInt value)
-{
-	*reinterpret_cast<UnsignedInt *>(filter) = value;
-}
-
-class __declspec(novtable) Rva0025ED50RootFilter : public PartitionFilter
+class Rva0025ED50RootFilter : public PartitionFilter
 {
 public:
-	Rva0025ED50RootFilter()
-	{
-		setFilterVptr(this, (UnsignedInt)bfmeVftRva0025ED50RootFilter);
-	}
+	Rva0025ED50RootFilter() {}
 	virtual ~Rva0025ED50RootFilter() {}
 };
 
-class __declspec(novtable) Rva00260180SelfFilter : public PartitionFilter
+class Rva00260180SelfFilter : public PartitionFilter
 {
 public:
 	Rva00260180SelfFilter(Object *object)
 	{
-		setFilterVptr(this, (UnsignedInt)bfmeVftRva00260180SelfFilter);
 		m_object = object;
 	}
 	virtual ~Rva00260180SelfFilter() {}
@@ -73,12 +60,11 @@ public:
 	Object *m_object;
 };
 
-class __declspec(novtable) Rva0025ED50ObjectFilter : public PartitionFilter
+class Rva0025ED50ObjectFilter : public PartitionFilter
 {
 public:
 	Rva0025ED50ObjectFilter(Object *object)
 	{
-		setFilterVptr(this, (UnsignedInt)bfmeVftRva0025ED50ObjectFilter);
 		m_object = object;
 	}
 	virtual ~Rva0025ED50ObjectFilter() {}
@@ -86,12 +72,11 @@ public:
 	Object *m_object;
 };
 
-class __declspec(novtable) BfmeObjEQT : public PartitionFilter
+class BfmeObjEQT : public PartitionFilter
 {
 public:
 	BfmeObjEQT(Object *object)
 	{
-		setFilterVptr(this, (UnsignedInt)bfmeVftBfmeObjEQT);
 		m_object = object;
 	}
 	virtual ~BfmeObjEQT() {}
@@ -110,12 +95,11 @@ private:
 	Bool m_acquireEnemies;
 };
 
-class __declspec(novtable) PartitionFilterRelationship : public PartitionFilter
+class PartitionFilterRelationship : public PartitionFilter
 {
 public:
 	PartitionFilterRelationship(Object *object, Int flags, Bool match)
 	{
-		setFilterVptr(this, (UnsignedInt)bfmeVftPartitionFilterRelationship);
 		m_object = object;
 		m_flags = flags;
 		m_match = match;
