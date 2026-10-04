@@ -16368,5 +16368,15 @@
   "after_sha256": "d79e55c6eb098ff062ab194c2ba78bf60a59694c70535395249f017632be925b",
   "evidence": "targets/game/reverse/identity_evidence/01337828-wide-allocator-consumers.md",
   "reason": "Both callback spellings identify the same retail VA 0x01337828 and cdecl void *(unsigned) ABI; adopt its already byte-verified single data owner instead of leaving an unresolved parallel global identity. No original EA name is claimed."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/parseModelConditionFlags.cpp",
+  "new_path": "game/GameEngine/Source/Common/parseModelConditionFlags.cpp",
+  "old_name": "ModelConditionNames",
+  "new_name": "Rva00EA6918ModelConditionNames",
+  "before_sha256": "f5318b0d95a9bafd81865f3ccb6a3a78718ba6026e36c7d062ce8fa2123d6f4c",
+  "after_sha256": "04bc88e3b19dc8f8bca3e6586fc0a4f202abe359e2ad5769ad91563e8eb54ef2",
+  "evidence": "targets/game/reverse/identity_evidence/model-condition-names-00ea6918.md",
+  "reason": "The old free const-pointer array was an unowned reconstructed view, not a recovered declaration: independent ZH owns mutable pointers as BitFlags::s_bitNameList, and writable retail .data plus BFME readers prove only a 304-name sequence with NULL. Keep the semantic descriptor and add its exact RVA to identify the new conservative structural owner without asserting original BFME constness, class ownership or broader allocation. No old-symbol alias is introduced."
  }
 ]
