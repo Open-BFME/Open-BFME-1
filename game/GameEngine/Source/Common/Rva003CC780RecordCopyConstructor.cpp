@@ -8,14 +8,14 @@
 
 class AudioEventRTS
 {
-public:
-	AudioEventRTS(const AudioEventRTS &other);
-
 private:
 	unsigned char m_data[0x70];
 };
 
-#pragma comment(linker, "/alternatename:??0AudioEventRTS@@QAE@ABV0@@Z=?j_00047b27@@YAXXZ")
+// Retail's calls into AudioEventRTS's copy constructor go through the ILT
+// thunk at 0x00047b27, so the union call below replaces the stand-in
+// spelling directly.
+extern void j_00047b27(void);
 
 // DynamicAudioEventRTS's retail vftable is compiler-emitted by
 // INIParseDynamicAudioEventRTS.cpp.  Reference its real decorated symbol so
@@ -28,8 +28,11 @@ struct Rva003CC780OwnedAudio
 	AudioEventRTS m_audio;
 
 	Rva003CC780OwnedAudio(const Rva003CC780OwnedAudio &other)
-		: m_vft(&__identifier("??_7DynamicAudioEventRTS@@6B@")), m_audio(other.m_audio)
+		: m_vft(&__identifier("??_7DynamicAudioEventRTS@@6B@"))
 	{
+		typedef void (AudioEventRTS::*Copy)(const AudioEventRTS &);
+		union { void (*fn)(); Copy call; } u = { j_00047b27 };
+		(this->m_audio.*u.call)(other.m_audio);
 	}
 };
 
