@@ -17678,5 +17678,15 @@
   "after_sha256": "b8b6b74f7f68aaaebf3901abf6ee919d16b5503a893cc65dadebefacb92fb9c7",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Contain/HorseHordeContainModuleDataDestructorThunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/HorseHordeContainModuleDataDestructorThunk.cpp",
+  "old_name": "AudioEventRTS",
+  "new_name": "Rva002469D0AudioEvent",
+  "before_sha256": "6f0e5e40e00e793446fb3518837528174407a028439d641b34aaedc50a5f7983",
+  "after_sha256": "774d853ae8f331a92d8e2cc5ab4f471459f6369cf7d2a67cc0810d1e88d793df",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

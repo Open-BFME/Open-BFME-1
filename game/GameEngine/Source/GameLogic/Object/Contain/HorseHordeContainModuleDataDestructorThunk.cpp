@@ -6,19 +6,19 @@
 #include <set>
 #include <vector>
 
+extern void j_00017657();
+extern void j_00026f35();
+
 class BFMERetailAsciiString
 {
 public:
 	~BFMERetailAsciiString() { releaseBuffer(); }
 
 	void releaseBuffer();
-	void set(const BFMERetailAsciiString &);
 
 private:
 	void *m_004;
 };
-
-#pragma comment(linker, "/alternatename:?set@BFMERetailAsciiString@@QAEXABV1@@Z=?set@?$StringBase@D@@QAEXABV1@@Z")
 
 #include "ascii_string.h"
 
@@ -29,18 +29,22 @@ public:
 	~BfmeHordeContainSplitResultList();
 };
 
-#pragma comment(linker, "/alternatename:??1BfmeHordeContainSplitResultList@@QAE@XZ=?j_00017657@@YAXXZ")
-
-class AudioEventRTS
+// Retail releases this record through the ILT thunk at 0x00026f35.  The name
+// stays address-derived so this layout witness cannot collide with the real
+// AudioEventRTS destructor (0x000B31F0, AudioEventRTSCopyAndLifetime.cpp).
+class Rva002469D0AudioEvent
 {
 public:
-	~AudioEventRTS();
+	~Rva002469D0AudioEvent()
+	{
+		typedef void (Rva002469D0AudioEvent::*Release)();
+		union { void (*fn)(); Release call; } u = { j_00026f35 };
+		(this->*u.call)();
+	}
 
 private:
 	unsigned char m_data[0x70];
 };
-
-#pragma comment(linker, "/alternatename:??1AudioEventRTS@@QAE@XZ=?j_00026f35@@YAXXZ")
 
 // The destructor only proves member layouts.  These names deliberately carry
 // the target RVA until a source or field witness gives the records identities.
@@ -52,8 +56,8 @@ public:
 private:
 	BFMERetailAsciiString m_00;
 	BFMERetailAsciiString m_04;
-	AudioEventRTS m_08;
-	AudioEventRTS m_78;
+	Rva002469D0AudioEvent m_08;
+	Rva002469D0AudioEvent m_78;
 };
 
 class Rva002469D0TwoAsciiEntry
@@ -127,7 +131,16 @@ HorseHordeContainModuleData::~HorseHordeContainModuleData()
 {
 	for (unsigned int i = 0; i < m_224.size(); ++i)
 	{
-		delete m_224[i];
+		// Retail releases each split-result record through the ILT thunk at
+		// 0x00017657, not through a local scalar deleting destructor.
+		typedef void (BfmeHordeContainSplitResultList::*Release)();
+		union { void (*fn)(); Release call; } u = { j_00017657 };
+		BfmeHordeContainSplitResultList *rec = m_224[i];
+		if (rec)
+		{
+			(rec->*u.call)();
+			::operator delete(rec);
+		}
 	}
 	m_224.clear();
 
