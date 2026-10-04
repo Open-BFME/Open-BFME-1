@@ -1,13 +1,21 @@
-class BfmeRoomYF
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+
+#include "ascii_string.h"
+
+// The room record is StringBase<char>-compatible.  Retail's twelve-byte
+// element stride plus the copy this body performs at both of its return paths
+// pin the shape: 0x00887B60 is
+// ??0?$StringBase@D@@AAE@ABV0@@Z, the out-of-line StringBase copy
+// constructor, and retail enters it directly (ECX = the hidden return slot,
+// one stack argument = the source), so the record copy touches only the
+// four-byte base and not the eight bytes behind it.
+class BfmeRoomYF : public AsciiString
 {
 public:
-	BfmeRoomYF(const BfmeRoomYF &other);
-	~BfmeRoomYF();
+	BfmeRoomYF(const AsciiString &other) : AsciiString(other) {}
 
-	unsigned char m_bfmeBytesYF[12];
+	unsigned char m_bfmeBytesYF[8];
 };
-
-extern BfmeRoomYF g_bfmeDefaultYF;
 
 class BfmeOwnerYF
 {
@@ -70,7 +78,9 @@ public:
 BfmeRoomYF BfmeOwnerYF::bfmeGetYF(unsigned int index)
 {
 	if (bfmeReadyYF(4) && index < m_bfmeCountYF)
-		return m_bfmeRoomsYF[index];
+		return BfmeRoomYF(static_cast<const AsciiString &>(m_bfmeRoomsYF[index]));
 
-	return g_bfmeDefaultYF;
+	// retail 0x01336E50: AsciiString::TheEmptyString, the shared default the
+	// miss path copies through the same StringBase constructor.
+	return BfmeRoomYF(AsciiString::TheEmptyString);
 }

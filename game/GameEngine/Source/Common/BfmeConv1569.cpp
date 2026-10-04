@@ -12,7 +12,13 @@ struct BfmeKeyVSC
 
 extern "C" BfmeKeyVSC *g_bfmeRouteKeys1282[0xb2];
 
-int bfmeCompareVSC(const char *left, const char *right);
+// Retail 0x009F6FA0 is the MSVCR71 _strcmpi import thunk (IAT slot
+// 0x0135933C); game/gen_small/imports_000.cpp lands it as the no-argument
+// jump stub ?ji_009f6fa0@@YAXXZ, and this call site supplies the two
+// arguments.  Same convention as game/Libraries/Source/EA/Apt/
+// Rva008B4260StringCompare.cpp.
+extern void ji_009f6fa0();
+typedef int (__cdecl *Rva009F6FA0Compare)(const char *left, const char *right);
 
 BfmeKeyVSC **bfmeFindVSC(const char *name)
 {
@@ -22,7 +28,7 @@ BfmeKeyVSC **bfmeFindVSC(const char *name)
 	for (i = 0; i < 0xb2; ++i)
 	{
 		if (g_bfmeRouteKeys1282[i]->m_bfme02 == length
-			&& bfmeCompareVSC(g_bfmeRouteKeys1282[i]->m_bfme08, name) == 0)
+			&& ((Rva009F6FA0Compare)ji_009f6fa0)(g_bfmeRouteKeys1282[i]->m_bfme08, name) == 0)
 			return &g_bfmeRouteKeys1282[i];
 	}
 

@@ -4,7 +4,9 @@
 // calls from +0x204, then sized delete 0x1F8 when flags&1. Retail body is 90B
 // (ghidra/gen_asm size 84 truncates the epilogue).
 
-extern "C" void *bfmeVft1045A[];
+// retail 0x0112C308: the Rva00800920Owner primary vftable this body stores at
+// +0x00, spelled exactly as its defining object spells it.
+extern "C" void *__identifier("??_7Rva00800920Owner@@6BRva00800920Primary@@@")[];
 // retail 0x0112C304: the Rva00800920Sec secondary vftable of Rva00800920Owner.
 extern "C" void *__identifier("??_7Rva00800920Owner@@6BRva00800920Sec@@@")[];
 
@@ -22,7 +24,20 @@ public:
 	char m_bfmePad[0x24];
 };
 
-void bfmeDeleteVMP( void *block, unsigned size );
+// retail 0x007F0170: the sized release this body calls when flags&1, defined
+// as the class operator delete ??3Gen007F0170@@SAXPAX@Z in
+// game/GameEngine/Source/Common/S3AllocatorOperatorNewDelete.cpp. Retail's
+// body reads one argument and returns, but the call sites push the size and
+// clean 8 bytes, so the call goes through that definition with a
+// two-argument pointer type -- the same shape
+// game/GameEngine/Source/GameNetwork/Y4FeslSubTest.cpp already carries.
+class Gen007F0170
+{
+public:
+	static void operator delete(void *block);
+};
+
+typedef void (__cdecl *Gen007F0170SizedFree)(void *block, unsigned int size);
 
 class Rva00800B70Owner
 {
@@ -42,7 +57,7 @@ void *Rva00800B70Owner::bfmeGo( unsigned char flags )
 {
 	int z = 0;
 
-	m_bfmeVfptr = bfmeVft1045A;
+	m_bfmeVfptr = __identifier("??_7Rva00800920Owner@@6BRva00800920Primary@@@");
 	m_bfmeVfptr2 = __identifier("??_7Rva00800920Owner@@6BRva00800920Sec@@@");
 	m_bfme08 = z;
 	m_bfme0c = z;
@@ -57,7 +72,7 @@ void *Rva00800B70Owner::bfmeGo( unsigned char flags )
 	} while( --n != 0 );
 
 	if( flags & 1 )
-		bfmeDeleteVMP( this, 0x1F8 );
+		((Gen007F0170SizedFree)&Gen007F0170::operator delete)( this, 0x1F8 );
 
 	return this;
 }

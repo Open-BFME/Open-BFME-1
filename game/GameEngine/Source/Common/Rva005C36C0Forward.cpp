@@ -5,7 +5,11 @@
 
 typedef float Real;
 
-extern const Real g_bfmeK1239;
+// Retail 0x01075334 is the single float defined once by
+// game/GameEngine/Source/Common/BfmeConv1813.cpp as ?g_bfmeDefaultBU@@3MA
+// (targets/game/reverse/data_rows.csv); this TU only reads it, so the
+// declaration drops `const` to mangle as the defining object spells it.
+extern Real g_bfmeDefaultBU;
 extern const Real g_rva0107533C;
 
 struct Rva005C36C0Vec3
@@ -53,7 +57,7 @@ Rva005C36C0Vec3 Rva005C36C0Owner::rva005C36C0(void *first, void *second)
 {
 	if (m_receiver != 0)
 		return m_receiver->rva005FAE40(m_value180,
-			(*(volatile Real *)&( (BfmeG1269 *)TheWritableGlobalData )->m_valueAB4 + g_bfmeK1239) * g_rva0107533C,
+			(*(volatile Real *)&( (BfmeG1269 *)TheWritableGlobalData )->m_valueAB4 + g_bfmeDefaultBU) * g_rva0107533C,
 			first, second);
 
 	return Rva005C36C0Vec3(0, 0, 0);
