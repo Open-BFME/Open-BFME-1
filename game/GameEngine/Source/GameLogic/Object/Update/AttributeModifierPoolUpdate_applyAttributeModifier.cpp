@@ -145,14 +145,16 @@ class AttributeModifierDefinitionStore {
     Int indexOf(Int key) const;
     Int valueAt(Int index) const;
     ModelConditionFlags rva0036B250ConditionsAt(Int modifierIndex) const;
-    ModelConditionFlags copyClearMask(Int modifierIndex) const;
     Int primaryValueAt(Int,const Object*)const;
     Int secondaryValueAt(Int,const Object*)const;
     Bool getValue(Int,Int,float*)const;
     AttributeModifierDefinition *findDefinition(UnsignedInt modifierIndex);
 };
 // 0x0036B330 twins the pinned 0x0036B250 getter (thiscall, hidden return, ret 8).
-#pragma comment(linker, "/alternatename:?copyClearMask@AttributeModifierDefinitionStore@@QBE?AV?$BitFlags@$0BEA@@@H@Z=?j_00018e3f@@YAXXZ")
+// Its ILT entry is the 5-byte thunk j_00018e3f (targets/game/reverse/symbols.csv
+// 0x00018E3F), which this body calls directly; the store's twin signature is
+// reached through a member-pointer cast at the call site.
+extern void j_00018e3f();
 extern AttributeModifierDefinitionStore *TheAttributeModifierDefinitionStore;
 // The global at 0x012F0898 is EA's `GameLogic *TheGameLogic`
 // (?TheGameLogic@@3PAVGameLogic@@A, defined in GameLogic.cpp); only that
@@ -225,7 +227,9 @@ Bool AttributeModifierPoolUpdate::applyAttributeModifier(const AsciiString&name,
     {
         ModelConditionFlags flags=TheAttributeModifierDefinitionStore->rva0036B250ConditionsAt(index);
         setConditions36A570(getObject(),flags);
-        flags=TheAttributeModifierDefinitionStore->copyClearMask(index);
+        typedef ModelConditionFlags (AttributeModifierDefinitionStore::*ClearMaskFn)(Int)const;
+        union { void (*fn)(); ClearMaskFn call; } clearMask={j_00018e3f};
+        flags=(TheAttributeModifierDefinitionStore->*clearMask.call)(index);
         clearConditions36A570(getObject(),flags);
         AttributeModifierEntry entry(index,name);
         Int length=duration;
