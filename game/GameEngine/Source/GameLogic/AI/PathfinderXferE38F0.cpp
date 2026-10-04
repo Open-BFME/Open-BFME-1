@@ -95,8 +95,8 @@ typedef Xfer &(__cdecl *XferIntArray512Fn)(Xfer &, Int (&)[512]);
 typedef Xfer &(__cdecl *XferFloatArray64Fn)(Xfer &, float (&)[64]);
 typedef void (__cdecl *XferIntPtrFn)(Xfer *, Int *);
 
-class MidVirtualSlot90Receiver;
-extern void __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *, void *);
+class Xfer; class MidVirtualSlot90Receiver;
+extern Xfer & __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *, void *);
 
 class PathfindCell
 {

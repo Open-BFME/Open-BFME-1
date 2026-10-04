@@ -144,8 +144,8 @@ protected:
 	virtual void xfer(Xfer *xfer);
 };
 
-class MidVirtualSlot90Receiver;
-void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
+class Xfer; class MidVirtualSlot90Receiver;
+Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 // Retail 0x21DBAF -> ILT 0x08CA1 -> the existing 25-byte 0x10C3E0 body.
 // It takes two stack pointers under cdecl; the caller cleans eight bytes.
 void Rva0010C3E0(MidVirtualSlot90Receiver *receiver, void *context);
@@ -187,8 +187,8 @@ void GarrisonContain::xfer(Xfer *xfer)
 	target->xferUnsignedShort(&pointDataCount);
 	for (i = 0; i < pointDataCount; ++i)
 	{
-		Rva0010C3C0((MidVirtualSlot90Receiver *)target, &self->m_garrisonPointData[i].object);
-		Rva0010C3C0((MidVirtualSlot90Receiver *)target, &self->m_garrisonPointData[i].targetID);
+		(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)target, &self->m_garrisonPointData[i].object);
+		(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)target, &self->m_garrisonPointData[i].targetID);
 		target->xferUnsignedInt(&self->m_garrisonPointData[i].placeFrame);
 		target->xferUnsignedInt(&self->m_garrisonPointData[i].lastEffectFrame);
 		Rva0010C3E0((MidVirtualSlot90Receiver *)xfer, &self->m_garrisonPointData[i].effect);

@@ -142,7 +142,7 @@ class MidVirtualSlot90Receiver;
 // Typed enum transfers (the 25-byte slot-0x90 forwarders).
 void Rva0010C020(MidVirtualSlot90Receiver *receiver, void *context);
 void Rva0010BE00(MidVirtualSlot90Receiver *receiver, void *context);
-void friend_xferObjectID(Xfer *xfer, ObjectID *id);
+class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 class Waypoint
 {
@@ -260,8 +260,8 @@ void AICommandParmsStorage::doXfer(Xfer *xfer)
 	Rva0010C020((MidVirtualSlot90Receiver *)xfer, &m_cmd);
 	Rva0010BE00((MidVirtualSlot90Receiver *)xfer, &m_cmdSource);
 	xfer->xferCoord3D(&m_pos);
-	friend_xferObjectID(xfer, &m_obj);
-	friend_xferObjectID(xfer, &m_otherObj);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_obj);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_otherObj);
 	xfer->xferAsciiString(&m_teamName);
 	xfer->xferAsciiString(&m_teamOwner);
 	Int numCoords = m_coords.size();

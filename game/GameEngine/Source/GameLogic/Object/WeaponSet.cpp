@@ -305,8 +305,8 @@ public:
 	Weapon *allocateNewWeapon(const WeaponTemplate *weaponTemplate, WeaponSlotType slot) const;
 };
 
-class MidVirtualSlot90Receiver;
-extern void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
+class Xfer; class MidVirtualSlot90Receiver;
+extern Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 struct BfmeWeaponTemplateSetView
 {

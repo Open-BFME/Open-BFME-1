@@ -101,7 +101,7 @@ public:
 
 extern AudioManager *TheAudio;
 
-void bfmeHandOver_0000C9B4(BfmeSeedTarget *target, void *item);
+class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 void bfmeHandOver_0000FFE2(BfmeSeedTarget *target, void *item);
 
 class Gen_00257D10
@@ -125,7 +125,7 @@ void Gen_00257D10::bfmeAccept(BfmeSeedTarget *target)
 	target->takeAt8C((char *)this + 0xDC);
 	target->takeAt74((char *)this + 0xA8);
 	target->takeAt74((char *)this + 0x28);
-	bfmeHandOver_0000C9B4(target, (char *)this + 0xAC);
+	(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)target, (char *)this + 0xAC);
 	target->takeAt60((char *)this + 0xB0);
 	target->takeAt78((char *)this + 0xC8);
 	target->takeAt78((char *)this + 0x24);

@@ -14,8 +14,8 @@ class FlagPairTarget { public:
  V(11);V(12);V(13);V(14);V(15);V(16);V(17);V(18);V(19);V(20);V(21);V(22);V(23);V(24);V(25);V(26);
  virtual void real(float*);V(28);virtual void uint32(unsigned*);V(30);virtual void uint16(unsigned short*);V(32);V(33);V(34);virtual void boolean(bool*);
 };
-class MidVirtualSlot90Receiver;
-void Rva0010C0A0(MidVirtualSlot90Receiver*,void*);void Rva0010C0C0(MidVirtualSlot90Receiver*,void*);void Rva0010C160(MidVirtualSlot90Receiver*,void*);void Rva0010C2E0(MidVirtualSlot90Receiver*,void*);void Rva0010C3C0(MidVirtualSlot90Receiver*,void*);
+class Xfer; class MidVirtualSlot90Receiver;
+void Rva0010C0A0(MidVirtualSlot90Receiver*,void*);void Rva0010C0C0(MidVirtualSlot90Receiver*,void*);void Rva0010C160(MidVirtualSlot90Receiver*,void*);void Rva0010C2E0(MidVirtualSlot90Receiver*,void*);Xfer & Rva0010C3C0(MidVirtualSlot90Receiver*,void*);
 class BfmeSeedTarget;
 class Gen_00212790 { public: void bfmeSeed(BfmeSeedTarget*); };
 class FlagXfer0020F000;
@@ -50,5 +50,5 @@ void Gen0020F330::handle(FlagPairTarget *target) {
   }
  }
  for(int i=0;i<4;++i) {target->real(&fac[i]);target->boolean(&fbc[i]);}
- fd0.xfer((FlagXfer0020F000*)target);Rva0010C3C0((MidVirtualSlot90Receiver*)target,&fcc);
+ fd0.xfer((FlagXfer0020F000*)target);(void)&Rva0010C3C0((MidVirtualSlot90Receiver*)target,&fcc);
 }

@@ -204,8 +204,8 @@ public:
 	float m_bfmeb0;
 };
 
-class MidVirtualSlot90Receiver;
-void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
+class Xfer; class MidVirtualSlot90Receiver;
+Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 void BfmeParticleSystemXferHandle(Xfer &xfer, void *value);
 
 void View::xfer(Xfer *xfer)

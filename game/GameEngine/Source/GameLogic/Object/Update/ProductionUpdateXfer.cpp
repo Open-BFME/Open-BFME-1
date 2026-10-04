@@ -141,7 +141,7 @@ extern "C" int g_guardTargetTypeThrowInfo;
 extern void *__cdecl operator new(unsigned int size);
 
 class BfmeSeedTarget;
-extern void __cdecl bfmeHandOver_0000C9B4(BfmeSeedTarget *target, void *item);
+class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 extern "C" void *bfmeVftVG[];
 
@@ -361,7 +361,7 @@ void ProductionUpdate::xfer(Xfer *xfer)
 	*xfer == update->m_constructionCompleteFrame;
 	UnsignedInt reserved = 0;
 	*xfer == reserved;
-	bfmeHandOver_0000C9B4((BfmeSeedTarget *)xfer, &update->m_objectID);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &update->m_objectID);
 	*xfer == update->m_unknownD0;
 	*xfer == update->m_unknownD4;
 

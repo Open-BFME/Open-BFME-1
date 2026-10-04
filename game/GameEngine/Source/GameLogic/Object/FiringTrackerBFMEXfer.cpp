@@ -71,7 +71,7 @@ public:
 	virtual void xferBool(bool &value);
 };
 
-void friend_xferObjectID(Xfer *xfer, ObjectID *id);
+class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 class Object;
 
@@ -186,8 +186,8 @@ void FiringTracker::xfer(Xfer *xfer)
 	XferVersion version(1, 2);
 	xfer->xferVersion(version);
 	xfer->xferInt(m_consecutiveShots);
-	friend_xferObjectID(xfer, &m_victimID);
-	friend_xferObjectID(xfer, &m_auxiliaryObjectID);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_victimID);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_auxiliaryObjectID);
 	xfer->xferUnsignedInt(m_frameToStartCooldown);
 	xfer->xferUnsignedInt(m_frameToForceReload);
 	xfer->xferUnsignedInt(m_lastShotFrame);

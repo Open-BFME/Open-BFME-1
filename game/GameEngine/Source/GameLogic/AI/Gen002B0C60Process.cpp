@@ -9,9 +9,9 @@ struct FlagPair2B0C60
 	unsigned char m_second;
 };
 
-class MidVirtualSlot90Receiver;
+class Xfer; class MidVirtualSlot90Receiver;
 
-void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
+Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 
 class FlagPairTarget
 {
@@ -95,5 +95,5 @@ void Gen002B0C60::process(FlagPairTarget *target)
 	else if (target->slot04())
 		m_at24 = 0;
 	if (flags.m_second >= 3)
-		Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_at28);
+		(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_at28);
 }

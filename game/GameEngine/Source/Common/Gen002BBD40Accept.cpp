@@ -51,8 +51,8 @@ public:
 	virtual void bfmeTakeAt8C(void *item);
 };
 
-class MidVirtualSlot90Receiver;
-void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
+class Xfer; class MidVirtualSlot90Receiver;
+Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 
 class Gen_002BBD40;
 
@@ -179,9 +179,9 @@ void Gen_002BBD40::bfmeAccept(BfmeSeedTarget *target)
 	pair.m_bfmeFirst = 1;
 	pair.m_bfmeSecond = 2;
 	target->bfmeSeed(&pair);
-	Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem0);
+	(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem0);
 	target->bfmeTakeAt74(&m_bfmeItem1);
-	Rva0010C3C0((MidVirtualSlot90Receiver *)target, (char *)this + 0x6C);
+	(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)target, (char *)this + 0x6C);
 	target->bfmeTakeAt60((char *)this + 0x50);
 	target->bfmeTakeAt60((char *)this + 0x5C);
 	target->bfmeTakeAt8C((char *)this + 0x68);

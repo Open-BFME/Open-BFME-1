@@ -76,8 +76,8 @@ public:
 
 // Retail callee Rva0010C3C0 (0x0010C3C0, MidVirtualSlot90Forwarders.cpp);
 // its second argument is an int-field address.
-class MidVirtualSlot90Receiver;
-void Rva0010C3C0(MidVirtualSlot90Receiver *, void *);
+class Xfer; class MidVirtualSlot90Receiver;
+Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *, void *);
 
 // ?apply@Gen_0025A590@@QAEXPAVBfmeSeedTarget@@@Z
 void Gen_0025A590::apply(BfmeSeedTarget *target)
@@ -95,8 +95,8 @@ void Gen_0025A590::apply(BfmeSeedTarget *target)
 	target->slot10(&pair);
 	target->slot09(&m_field38, 4);
 	target->slot29(&m_field3c);
-	Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_field40);
-	Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_field44);
+	(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_field40);
+	(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_field44);
 	target->slot24(&m_field48);
 	target->slot35(&m_field70);
 	target->slot35(&m_field60);

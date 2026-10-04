@@ -134,7 +134,7 @@ public:
 extern TeamFactory *TheTeamFactory;
 
 // Existing retail owner for the BFME ObjectID transfer ILT at 0x0000C9B4.
-extern void friend_xferObjectID(Xfer *xfer, ObjectID *objectID);
+class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 class TeamInQueueBase
 {
@@ -227,5 +227,5 @@ void TeamInQueue::xfer(Xfer *xfer)
 	xfer->xferBool(&m_sentToStartLocation);
 	xfer->xferBool(&m_stopQueueing);
 	xfer->xferBool(&m_reinforcement);
-	friend_xferObjectID(xfer, &m_reinforcementID);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_reinforcementID);
 }

@@ -60,7 +60,7 @@ public:
     virtual void reserved34();
     virtual void xferBool(bool*);
 };
-void friend_xferObjectID(Xfer*,ObjectID*);
+class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 class UpdateModule {
 protected:
     virtual void xfer(Xfer*);
@@ -123,7 +123,7 @@ void DockUpdate::xfer(Xfer*xfer)
 	m_approachPositionOwners.resize(vectorSize);
 	for( vectorIndex = 0; vectorIndex < vectorSize; ++vectorIndex )
 	{
-		friend_xferObjectID(xfer, &m_approachPositionOwners[vectorIndex] );
+		Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_approachPositionOwners[vectorIndex] );
 	}
 
 	// approach positions reached
@@ -138,7 +138,7 @@ void DockUpdate::xfer(Xfer*xfer)
 	}
 
 	// active docker
-	friend_xferObjectID(xfer, &m_activeDocker );
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_activeDocker );
 
 	// docker inside
 	xfer->xferBool( &m_dockerInside );

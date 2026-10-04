@@ -71,7 +71,7 @@ public:
 	int tagValue;
 };
 
-extern void friend_xferObjectID(Xfer *xfer, ObjectID *objectID);
+class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 typedef _STL::vector<ObjectID> ObjectIDVector;
 
@@ -98,7 +98,7 @@ Xfer *__cdecl Rva00372670XferObjectIDVector(Xfer *xfer, ObjectIDVector *vector)
 		ObjectID *current = vector->begin();
 		while (current != end)
 		{
-			friend_xferObjectID(xfer, current);
+			(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, current);
 			++current;
 		}
 	}
@@ -112,7 +112,7 @@ Xfer *__cdecl Rva00372670XferObjectIDVector(Xfer *xfer, ObjectIDVector *vector)
 		{
 			--count;
 			ObjectID value;
-			friend_xferObjectID(xfer, &value);
+			(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &value);
 			vector->push_back(value);
 		}
 	}

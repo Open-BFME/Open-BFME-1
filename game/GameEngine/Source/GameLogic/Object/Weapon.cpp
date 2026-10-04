@@ -3375,7 +3375,7 @@ struct BfmeWeaponLayout
 typedef char BfmeWeaponLayoutTemplateOffset[(offsetof(BfmeWeaponLayout, m_template) == 8) ? 1 : -1];
 typedef char BfmeWeaponLayoutVectorOffset[(offsetof(BfmeWeaponLayout, m_scatterTargetsUnused) == 0x44) ? 1 : -1];
 
-extern void friend_xferObjectID(Xfer *xfer, ObjectID *objectID);
+class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 extern void bfmeWeaponSlotXfer(Xfer *xfer, void *value);
 extern void bfmeWeaponStatusXfer(Xfer *xfer, void *value);
 #pragma comment(linker, "/alternatename:?bfmeWeaponSlotXfer@@YAXPAVXfer@@PAX@Z=?j_0002bfa8@@YAXXZ")
@@ -3404,7 +3404,7 @@ void Weapon::xfer( Xfer *xfer )
 		}
 	}
 
-	friend_xferObjectID(xfer, &weapon->m_projectileStreamID);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &weapon->m_projectileStreamID);
 	bfmeWeaponSlotXfer(xfer, &weapon->m_wslot);
 	bfme->xferUnsignedInt(weapon->m_ammoInClip);
 	bfme->xferUnsignedInt(weapon->m_whenWeCanFireAgain);

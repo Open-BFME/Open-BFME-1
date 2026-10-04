@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // 0x0037A610 transfers a versioned record through chained virtual writers.
 struct Version37A610 { unsigned char kind, version; };
-class MidVirtualSlot90Receiver { public:
+class Xfer; class MidVirtualSlot90Receiver { public:
  virtual void pad00();
  virtual void pad04();
  virtual void pad08();
@@ -39,9 +39,9 @@ class MidVirtualSlot90Receiver { public:
  virtual void pad88();
  virtual MidVirtualSlot90Receiver *slot8C(void *);
 };
-// The established declarations say void; retail callers consume EAX from
-// the forwarded slot 0x90. Cast only the return ABI at these call sites.
-void Rva0010C3C0(MidVirtualSlot90Receiver *,void *);
+// ObjectID now exposes its proved Xfer& return; view that same receiver
+// through this TU layout. Other void forwarder contracts remain unchanged.
+Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *,void *);
 void Rva0010C180(MidVirtualSlot90Receiver *,void *);
 void Rva0010C160(MidVirtualSlot90Receiver *,void *);
 void Rva0010C1A0(MidVirtualSlot90Receiver *,void *);
@@ -58,9 +58,9 @@ void VersionedRecord37A610::transfer(MidVirtualSlot90Receiver *target)
  MidVirtualSlot90Receiver *out = ((Writer37A610)Rva0010C1A0)(
   ((Writer37A610)Rva0010C160)(
    ((Writer37A610)Rva0010C180)(
-    ((Writer37A610)Rva0010C3C0)(target->version(&v),bytes+4)->slot7C(bytes+8),bytes+0xc),bytes+0x10),bytes+0x14);
+    ((MidVirtualSlot90Receiver *)&Rva0010C3C0(target->version(&v),bytes+4))->slot7C(bytes+8),bytes+0xc),bytes+0x10),bytes+0x14);
  out = out->slot6C(bytes+0x18)->slot8C(bytes+0x1c);
- out = ((Writer37A610)Rva0010C3C0)(((Writer37A610)Rva0010C200)(out->slot6C(bytes+0x20),bytes+0x24),bytes+0x28);
+ out = (MidVirtualSlot90Receiver *)&Rva0010C3C0(((Writer37A610)Rva0010C200)(out->slot6C(bytes+0x20),bytes+0x24),bytes+0x28);
  out->slot60(bytes+0x2c)->slot6C(bytes+0x38)->slot6C(bytes+0x3c)->slot6C(bytes+0x40)->slot6C(bytes+0x44);
  if (v.version >= 2) target->slot8C(bytes+0x1d);
 }

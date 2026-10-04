@@ -112,7 +112,7 @@ public:
 	virtual void xferBool(Bool *value);
 };
 
-extern void friend_xferObjectID(Xfer *xfer, ObjectID *objectID);
+class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 static const Int K_SIDES_DATA_VERSION_1 = 1;
 static const Int K_SIDES_DATA_VERSION_2 = 2;	// includes Team list.
@@ -2847,11 +2847,11 @@ void BuildListInfo::xfer( Xfer *xfer )
 	// m_renderObj we don't need to xfer this, its for the editor only
 	// m_shadowObj we don't need to xfer this, its for the editor only
 	// m_selected we don't need to xfer this, its for the editor only
-	friend_xferObjectID( xfer, &m_objectID );
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_objectID );
 	bfmeXfer->xferUnsignedInt( &m_objectTimestamp );
 	bfmeXfer->xferBool( &m_underConstruction );
 	for (Int i = 0; i < MAX_RESOURCE_GATHERERS; ++i)
-		friend_xferObjectID( xfer, &m_resourceGatherers[i] );
+		Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_resourceGatherers[i] );
 	bfmeXfer->xferBool( &m_isSupplyBuilding );
 	bfmeXfer->xferInt( &m_desiredGatherers );
 	bfmeXfer->xferBool( &m_priorityBuild );

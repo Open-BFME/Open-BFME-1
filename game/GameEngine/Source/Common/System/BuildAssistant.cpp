@@ -118,7 +118,7 @@ private: \
 	virtual MemoryPool *getObjectMemoryPool() { return ARGCLASS::getClassMemoryPool(); } \
 public:
 
-extern void friend_xferObjectID( Xfer *xfer, ObjectID *objectID );
+class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 #include "Common/BuildAssistant.h"
 #include "Common/GlobalData.h"
@@ -405,7 +405,7 @@ void BuildAssistant::xferTheSellList( Xfer *xfer )
 		for (i=0; i<count; i++) {
 			// add this object to the list of objects being sold
 			sellInfo = newInstance(ObjectSellInfo);
-			friend_xferObjectID(xfer, &sellInfo->m_id);
+			Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &sellInfo->m_id);
 			xfer->xferUnsignedInt(&sellInfo->m_sellFrame);
 			m_sellList.push_back( sellInfo );
 
@@ -414,7 +414,7 @@ void BuildAssistant::xferTheSellList( Xfer *xfer )
 		for( it = m_sellList.begin(); it != m_sellList.end(); ++it ) {
 			// get this object info
 			sellInfo = (*it);
-			friend_xferObjectID(xfer, &sellInfo->m_id);
+			Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &sellInfo->m_id);
 			xfer->xferUnsignedInt(&sellInfo->m_sellFrame);
 			count--;
 		}

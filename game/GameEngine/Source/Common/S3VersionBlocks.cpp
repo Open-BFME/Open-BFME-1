@@ -87,8 +87,8 @@ public:
 };
 
 void bfmeHandOver_00004B79(BfmeSeedTarget *target, void *item);		// ILT 0x00004B79
-class MidVirtualSlot90Receiver;		// 0x0010C3C0, defined in MidVirtualSlot90Forwarders.cpp
-void Rva0010C3C0(MidVirtualSlot90Receiver *target, void *item);
+class Xfer; class MidVirtualSlot90Receiver;		// 0x0010C3C0, defined in MidVirtualSlot90Forwarders.cpp
+Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *target, void *item);
 void bfmeHandOver_0000FFE2(BfmeSeedTarget *target, void *item);		// ILT 0x0000FFE2
 void bfmeHandOver_00020879(BfmeSeedTarget *target, void *item);		// ILT 0x00020879
 
@@ -480,7 +480,7 @@ void Gen_0016C350::bfmeSeed(BfmeSeedTarget *target)
 		target->bfmeTakeAt78(&m_bfmeItem4);
 		target->bfmeTakeAt30(m_bfmeHeld2);
 		target->bfmeTakeAt60(&m_bfmeItem5);
-		Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem6);
+		(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem6);
 		target->bfmeTakeAt8C(&m_bfmeItem0);
 		if ( version.m_bfmeVersion >= 2 )
 		{
@@ -644,8 +644,8 @@ void Gen_002B5250::bfmeSeed(BfmeSeedTarget *target)
 		target->bfmeTakeAt8C(&m_bfmeItem1);
 		target->bfmeTakeAt74(&m_bfmeItem3);
 		bfmeHandOver_00020879(target, &m_bfmeItem2);
-		Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem4);
-		Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem5);
+		(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem4);
+		(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem5);
 		target->bfmeTakeAt60(&m_bfmeItem6);
 		target->bfmeTakeAt8C(&m_bfmeItem7);
 		target->bfmeTakeAt8C(&m_bfmeItem8);
@@ -690,11 +690,11 @@ void Gen_002C1740::bfmeSeed(BfmeSeedTarget *target)
 		bfmeHandOver_0000FFE2(target, &m_bfmeItem2);
 		target->bfmeTakeAt78(&m_bfmeItem3);
 		target->bfmeTakeAt6C(&m_bfmeItem4);
-		Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem5);
-		Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem6);
+		(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem5);
+		(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem6);
 		target->bfmeTakeAt24(&m_bfmeItem7, 4);
 		target->bfmeTakeAt6C(&m_bfmeItem9);
-		Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem16);
+		(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem16);
 		target->bfmeTakeAt8C(&m_bfmeItem17);
 		target->bfmeTakeAt24(&m_bfmeItem18, 4);
 		target->bfmeTakeAt8C(&m_bfmeItem10);

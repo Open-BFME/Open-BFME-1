@@ -140,7 +140,7 @@ public:
 };
 
 extern AudioManager *TheAudio;
-void bfmeCalcTGC(void *target, int *item);
+class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 class Gen_001F61B0
 {
@@ -201,7 +201,7 @@ void Gen_001FC950::bfmeSeed(BfmeSeedTarget *target)
 
 	target->takeAt8c(&m_item2c);
 	target->takeAt78(&m_item38);
-	bfmeCalcTGC(target, &m_item20);
+	(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_item20);
 	target->takeAt78(&m_item3c);
 	TheAudio->takeItem148(target, &m_item40);
 	target->takeAt8c(&m_item44);

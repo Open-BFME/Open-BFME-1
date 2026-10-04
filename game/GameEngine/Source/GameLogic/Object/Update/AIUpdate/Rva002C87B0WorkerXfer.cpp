@@ -80,8 +80,8 @@ extern "C" BfmeFormattedText *__cdecl bfmeFormatText(
 	BfmeFormattedText *, int, const char *, ...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(void *, void *);
 extern int g_guardTargetTypeThrowInfo;
-class MidVirtualSlot90Receiver;
-extern void __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *, void *);
+class Xfer; class MidVirtualSlot90Receiver;
+extern Xfer & __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *, void *);
 
 class BfmeSubAccept_0002C41C
 {

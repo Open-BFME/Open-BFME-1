@@ -61,7 +61,7 @@ public:
 	virtual void xferAsciiString(AsciiString &text);
 };
 
-void friend_xferObjectID(Xfer *xfer, ObjectID *id);
+class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 class Drawable;
 
@@ -148,7 +148,7 @@ void Gen_001B1040::xfer(Xfer *xfer)
 	{
 		ObjectID objectID = INVALID_OBJECT_ID;
 		AsciiString name(g_Rva0107301CEmptyString);
-		friend_xferObjectID(xfer, &objectID);
+		Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &objectID);
 		xfer->xferAsciiString(name);
 
 		if (objectID != 0)
@@ -175,7 +175,7 @@ void Gen_001B1040::xfer(Xfer *xfer)
 		if (m_template != 0)
 			name.set(m_template->m_name);
 
-		friend_xferObjectID(xfer, &objectID);
+		Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &objectID);
 		xfer->xferAsciiString(name);
 	}
 }

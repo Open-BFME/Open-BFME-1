@@ -72,8 +72,8 @@ public:
 	virtual void xferInt(Int *value);
 };
 
-class MidVirtualSlot90Receiver;
-void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *objectID);
+class Xfer; class MidVirtualSlot90Receiver;
+Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *objectID);
 
 class RadarObject;
 

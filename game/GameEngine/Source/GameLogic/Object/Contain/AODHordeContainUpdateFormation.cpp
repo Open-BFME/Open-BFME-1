@@ -160,8 +160,8 @@ public:
 	virtual void xferTrackedFrame(UnsignedInt *frame) = 0;
 };
 
-class MidVirtualSlot90Receiver;
-void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *id);
+class Xfer; class MidVirtualSlot90Receiver;
+Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *id);
 
 class BfmeAODHordeContainOwner
 {

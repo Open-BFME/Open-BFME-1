@@ -21,8 +21,8 @@ class BfmeSeedTarget;
 void bfmeHandOver_0000240A( BfmeSeedTarget *target, void *item );
 void BfmeParticleSystemXferHandle( Xfer &xfer, void *value );
 void BfmeParticleSystemXferMatrix( Xfer &xfer, void *value );
-class MidVirtualSlot90Receiver;		// 0x0010C3C0, defined in MidVirtualSlot90Forwarders.cpp
-void Rva0010C3C0( MidVirtualSlot90Receiver *target, void *item );
+class Xfer; class MidVirtualSlot90Receiver;		// 0x0010C3C0, defined in MidVirtualSlot90Forwarders.cpp
+Xfer & Rva0010C3C0( MidVirtualSlot90Receiver *target, void *item );
 void bfmeHandOver_00001A50( BfmeSeedTarget *target, void *item );
 
 class Particle

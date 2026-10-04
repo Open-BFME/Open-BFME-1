@@ -50,7 +50,7 @@ public:
 	virtual void xferBool(bool *value);
 };
 
-void friend_xferObjectID(Xfer *xfer, ObjectID *id);
+class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule
@@ -89,11 +89,11 @@ void SlavedUpdate::xfer(Xfer *xfer)
 	version.minimum = 1;
 	version.current = 2;
 	xfer->xferVersion(&version);
-	friend_xferObjectID(xfer, &m_slaver);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_slaver);
 	xfer->xferCoord3D(&m_guardPointOffset);
 	xfer->xferInt(&m_framesToWait);
 	xfer->xferUser(&m_repairState, sizeof(m_repairState));
 	xfer->xferBool(&m_repairing);
 	if (version.current >= 2)
-		friend_xferObjectID(xfer, &m_version2ObjectID);
+		Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_version2ObjectID);
 }

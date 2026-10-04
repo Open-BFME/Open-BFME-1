@@ -62,7 +62,7 @@ public:
 };
 
 extern TerrainLogic *TheTerrainLogic;
-extern void __cdecl friend_xferObjectID(Xfer *, ObjectID *);
+class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 class BfmeThingXZ;
 class BfmeHostXZ
@@ -153,7 +153,7 @@ void AIStateMachine::xfer(Xfer *xfer)
 	if (m_temporaryState)
 		*xfer == *reinterpret_cast<Snapshot *>(m_temporaryState);
 	*xfer == m_temporaryStateFrameEnd;
-	friend_xferObjectID(xfer, &m_objectID60);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_objectID60);
 	if (version.data[1] >= 2)
 		*xfer == static_cast<Coord3DBase &>(m_coord64);
 }

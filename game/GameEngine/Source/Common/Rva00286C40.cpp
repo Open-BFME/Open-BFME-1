@@ -101,8 +101,8 @@ static __forceinline void callRva000D6CF0(void *self, BfmeSeedTarget *target)
 	(((Route0003573D *)self)->*route.call)(target);
 }
 
-class MidVirtualSlot90Receiver;		// 0x0010C3C0, defined in MidVirtualSlot90Forwarders.cpp
-void Rva0010C3C0(MidVirtualSlot90Receiver *target, void *value);
+class Xfer; class MidVirtualSlot90Receiver;		// 0x0010C3C0, defined in MidVirtualSlot90Forwarders.cpp
+Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *target, void *value);
 
 class Rva00286C40Self : public Gen_001ED0C0
 {
@@ -143,7 +143,7 @@ void Rva00286C40Self::Rva00286C40(BfmeSeedTarget *target)
 	callRva000D6CF0((char *)m_field40 + 0x14, target);
 	callRva000D6CF0((char *)m_field40 + 0x2c, target);
 
-	Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_field744);
+	(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_field744);
 
 	BfmeSubAccept_0002C41C *sub = &m_sub[0][0];
 	for (int outer = 4; outer != 0; --outer)

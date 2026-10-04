@@ -84,8 +84,8 @@ struct _Rb_global
 extern "C" XferException *__cdecl bfmeFormatText(XferException *, int, const char *, ...);
 extern "C" int g_guardTargetTypeThrowInfo;
 extern void __declspec(noreturn) __stdcall _CxxThrowException(void *, void *);
-class MidVirtualSlot90Receiver;
-void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
+class Xfer; class MidVirtualSlot90Receiver;
+Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 
 Xfer *xferObjectIDSet(Xfer *xfer, BfmeObjectIDTree *tree)
 {

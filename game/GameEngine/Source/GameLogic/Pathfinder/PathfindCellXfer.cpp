@@ -43,8 +43,8 @@ public:
 	virtual Xfer &xferBool(bool *);
 };
 
-class MidVirtualSlot90Receiver;		// 0x0010C3C0, defined in MidVirtualSlot90Forwarders.cpp
-extern void __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *, void *);
+class Xfer; class MidVirtualSlot90Receiver;		// 0x0010C3C0, defined in MidVirtualSlot90Forwarders.cpp
+extern Xfer & __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *, void *);
 
 struct PathfindCellInfo
 {

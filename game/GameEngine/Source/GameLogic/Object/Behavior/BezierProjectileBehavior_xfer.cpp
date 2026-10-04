@@ -53,8 +53,8 @@ public:
 
 class FlagPairTarget;
 class Gen002B2080 { public: void handle(FlagPairTarget*); };
-class MidVirtualSlot90Receiver;
-void Rva0010C3C0(MidVirtualSlot90Receiver*,void*);
+class Xfer; class MidVirtualSlot90Receiver;
+Xfer & Rva0010C3C0(MidVirtualSlot90Receiver*,void*);
 class BfmeSeedTarget;
 BfmeSeedTarget *bfmeHandOver_0000FFE2(BfmeSeedTarget*,void*);
 struct Coord3D;

@@ -45,7 +45,7 @@ public:
 	virtual void xferInt(int *value);
 };
 
-void friend_xferObjectID(Xfer *xfer, ObjectID *value);
+class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 class DockUpdate
 {
@@ -77,9 +77,9 @@ void RailedTransportDockUpdate::xfer(Xfer *xfer)
 	XferVersionInfo version = { 1, 1 };
 	xfer->xferVersion(&version);
 	DockUpdate::xfer(xfer);
-	friend_xferObjectID(xfer, &m_dockingObjectID);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_dockingObjectID);
 	xfer->xferReal(&m_pullInsideDistancePerFrame);
-	friend_xferObjectID(xfer, &m_unloadingObjectID);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_unloadingObjectID);
 	xfer->xferReal(&m_pushOutsideDistancePerFrame);
 	xfer->xferInt(&m_unloadCount);
 }

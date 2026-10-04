@@ -9,8 +9,8 @@
 // No semantic owner or record identity is asserted.
 #include <list>
 #include "System/xfer.h"
-class MidVirtualSlot90Receiver;
-void Rva0010C3C0(MidVirtualSlot90Receiver *, void *);
+class Xfer; class MidVirtualSlot90Receiver;
+Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *, void *);
 struct Rva00591F10Record { int word0, word4, word8; };
 typedef _STL::list<Rva00591F10Record> Rva00591F10List;
 struct Rva00591F10Cursor {

@@ -48,8 +48,8 @@ private:
 // Existing ILT 0x0000C9B4: canonical ObjectID transfer helper.  Its ABI is
 // cdecl(receiver, pointer), and the target body calls it once per member ID and
 // once for the designated target.
-class MidVirtualSlot90Receiver;
-void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
+class Xfer; class MidVirtualSlot90Receiver;
+Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 
 class AssaultTransportAIUpdate : public Gen_002B5250
 {

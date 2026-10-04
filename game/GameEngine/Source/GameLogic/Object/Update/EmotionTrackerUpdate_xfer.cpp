@@ -54,8 +54,8 @@ public:
 	virtual Xfer &xferBool(bool *value);
 };
 
-class MidVirtualSlot90Receiver;
-extern void Rva0010C3C0(MidVirtualSlot90Receiver *xfer, void *value);
+class Xfer; class MidVirtualSlot90Receiver;
+extern Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *xfer, void *value);
 
 #pragma comment(linker, "/alternatename:?xfer@Emotion@@QAEXPAVXfer@@@Z=?j_000091ec@@YAXXZ")
 #pragma comment(linker, "/alternatename:?insert_unique@?$_Rb_tree@UGen_t_000ef440_k4@@U1@U?$_Identity@UGen_t_000ef440_k4@@@_STL@@U?$less@UGen_t_000ef440_k4@@@3@V?$allocator@UGen_t_000ef440_k4@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@UGen_t_000ef440_k4@@U?$_Nonconst_traits@UGen_t_000ef440_k4@@@_STL@@@_STL@@_N@2@ABUGen_t_000ef440_k4@@@Z=?j_000499f9@@YAXXZ")

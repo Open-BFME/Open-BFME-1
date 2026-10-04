@@ -47,8 +47,8 @@ public:
  virtual float value_00e4();
 };
 extern View *TheTacticalView;
-class MidVirtualSlot90Receiver;
-void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
+class Xfer; class MidVirtualSlot90Receiver;
+Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 class XferException {
 public:
  XferException(int, const char *, ...);

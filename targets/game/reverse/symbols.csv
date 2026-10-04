@@ -75986,7 +75986,6 @@ name,address,notes
 ?bfmeCalcEBH@BfmeThingEBH@@QAEMM@Z,0x0001FEEC,pin
 ?bfmeCalcEFC@@YGMH@Z,0x0001FEEC,pin
 ?bfmeCalcEOC@@YAMPAX@Z,0x0000991C,pin
-?bfmeCalcTGC@@YAXPAXPAH@Z,0x0000C9B4,pin
 ?bfmeCalcVKH@@YGXPAUBfmeMat4VKH@@PAVBfmeThingVKH@@H@Z,0x009FACAD,pin
 ?bfmeCall1055@@YAXHP6AXXZPAUBfmeT1055@@@Z,0x00866FD0,pin
 ?bfmeCall1100@@YAXH@Z,0x00032759,pin
@@ -77547,7 +77546,6 @@ name,address,notes
 ?bfmeHandOver_00001A50@@YAXPAVBfmeSeedTarget@@PAX@Z,0x00001A50,Open-BFME5 ILT the __cdecl hand-over helper a seeder calls
 ?bfmeHandOver_0000240A@@YAXPAVBfmeSeedTarget@@PAX@Z,0x0000240A,Open-BFME5 ILT the __cdecl hand-over helper a seeder calls
 ?bfmeHandOver_00004B79@@YAXPAVBfmeSeedTarget@@PAX@Z,0x00004B79,Open-BFME5 ILT the __cdecl hand-over helper a version block calls
-?bfmeHandOver_0000C9B4@@YAXPAVBfmeSeedTarget@@PAX@Z,0x0000C9B4,Open-BFME5 ILT the __cdecl hand-over helper a seeder calls
 ?bfmeHandOver_0000FFE2@@YAXPAVBfmeSeedTarget@@PAX@Z,0x0000FFE2,Open-BFME5 ILT the __cdecl hand-over helper a seeder calls
 ?bfmeHandOver_00012C65@@YAXPAVBfmeSeedTarget@@PAX@Z,0x00012C65,Open-BFME5 ILT the __cdecl hand-over helper a seeder calls
 ?bfmeHandOver_00020586@@YAXPAVBfmeSeedTarget@@PAX@Z,0x00020586,Open-BFME5 ILT the __cdecl hand-over helper a seeder calls
@@ -79343,7 +79341,6 @@ name,address,notes
 ?bfmeThreeBZF@BfmeGlobalBZF@@QAEXH@Z,0x00029357,pin
 ?bfmeThreeCBB@BfmeThingCBB@@QAEXPAX@Z,0x0002D38A,pin
 ?bfmeThreeCED@BfmeThingCED@@QAE_NXZ,0x0004A9D0,pin
-?bfmeThreeCGF@@YAXPAXPAUBfmeSubCGF@@@Z,0x0000C9B4,pin
 ?bfmeThreeCNG@BfmeBCNG@@QAEXXZ,0x00013A61,pin
 ?bfmeThreeDVB@BfmeSubDVB@@QAEXPAX0@Z,0x00025BBC,pin
 ?bfmeThreeLF@@YAXXZ,0x0002795D,pin
@@ -79594,7 +79591,6 @@ name,address,notes
 ?bfmeWriteZO@BfmeItemZO@@QAEXPAVBfmeChunkZO@@@Z,0x0001C062
 ?bfmeXfer246FC@@YAXPAVXfer@@PAH@Z,0x00012576,additive: retail call target of the red row ?xfer@Pathfinder@@UAEXPAVXfer@@@Z
 ?bfmeXferFW@BfmeThingFW@@QAEXPAVBfmeXferFW@@@Z,0x0003DA69,route=0x00065D90; retail getCRC 0x003831B7 passes CRC writer to TheCRCParameterCheck; target exact body writes literal CRCParameterCheck then its AsciiString vector
-?bfmeXferObjectID@@YAXPAVBfmeXfer@@PAI@Z,0x0000C9B4,AODHordeContain xfer reaches the existing ObjectID transfer helper
 ?bfmeXferSiegeType@@YAXPAVXfer@@PAX@Z,0x00012508,retail SiegeDockingBehavior::xfer calls the 0x0010C440 enum forwarder through ILT 0x00012508
 ?bfmeZDeltaToCenter@BfmeBoundaryGeometry3D@@QBEMXZ,0x0087DBF0,GeometryInfo-compatible vertical center offset
 ?bfmeZeroKX@@YGXPAUBfmeVec3KX@@@Z,0x0002990B,pin
@@ -81340,7 +81336,6 @@ name,address,notes
 ?friend_startingMove@AIUpdateInterface@@QAEXXZ,0x0001246D,ILT called by AIInternalMoveToState computePath at 0x001725B0
 ?friend_turnTowardsAngle@TurretAI@@QAE_NMMM@Z,0x0004198E,TurretAI friend_turnTowardsAngle ILT to 0x0018E0B0
 ?friend_updateCellsTouched@PartitionData@@QAEXXZ,0x008F8BF0,Open-BFME5 canonical public facade called by Object wrapper 0x001BFD70; BFME unlinks dirty-list links at +0x14/+0x18 before tail-calling private updateCellsTouched at 0x008F8800
-?friend_xferObjectID@@YAXPAVXfer@@PAW4ObjectID@@@Z,0x0000C9B4,ObjectID xfer ILT called by BridgeBehavior::xfer
 ?g_00861ed0@@YAXHHHHHHHHHHHHHHHHHHHHH@Z,0x00861ED0,Open-BFME5 address-derived name; direct call target of 0x00862460; 21 dword args; identity not asserted
 ?g_01075954@@3MC,0x01075954,accessor-batch external float
 ?g_01076C24@@3MA,0x01076C24,Retail 0.01f progress scale; non-volatile spelling for clean range arithmetic; same object as established volatile spelling
@@ -88002,7 +87997,6 @@ name,address,notes
 ?xferInteger_44FD0@@YAXAAVXfer@@AAH@Z,0x00044FD0,FX particle system update integer xfer thunk
 ?xferInteger_4570F@@YAXAAVXfer@@AAH@Z,0x0004570F,FX particle system ParticleSystemInfo integer xfer thunk
 ?xferInteger_48851@@YAXAAVXfer@@AAH@Z,0x00048851,FX particle system wind integer xfer thunk
-?xferObjectID0010C3C0@@YAXPAVXfer@@PAI@Z,0x0000C9B4,"Previously reviewed10C3C025B helper: ObjectID literal,width4,virtual90; correctedunsignedObjectID pointer"
 ?xferRandomVariable@@YAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0003EE32,H1 GameClientRandomVariable xfer helper (thunk; body 0x0010C4D0) ??? pinned, ideally matched in game_client_random_variable.cpp
 ?xferRandomVariable_4570F@@YAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0004570F,FX particle system render-object random-variable xfer thunk
 ?xferRva003D6CB0@@YAAAVXfer@@AAV1@AAY0CAA@H@Z,0x000163E7,additive: retail call target of the red row ?xfer@Pathfinder@@UAEXPAVXfer@@@Z

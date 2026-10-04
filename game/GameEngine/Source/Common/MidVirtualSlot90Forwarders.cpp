@@ -18,6 +18,8 @@
 //
 // IDENTITY IS NOT RECOVERED.  Every name is derived from an address.
 
+class Xfer;
+
 class MidVirtualSlot90Receiver
 {
 public:
@@ -35,14 +37,14 @@ public:
 	BFME_SLOT90_PAD( 30 ) BFME_SLOT90_PAD( 31 ) BFME_SLOT90_PAD( 32 )
 	BFME_SLOT90_PAD( 33 ) BFME_SLOT90_PAD( 34 ) BFME_SLOT90_PAD( 35 )
 #undef BFME_SLOT90_PAD
-	virtual void dispatch( const void *table, void *context, int flags );
+	virtual Xfer &dispatch( const void *table, void *context, int flags );
 };
 
 #define BFME_SLOT90_FORWARD( NAME, TABLE )                                \
 	extern int TABLE;                                                     \
 	void NAME( MidVirtualSlot90Receiver *receiver, void *context )        \
 	{                                                                     \
-		receiver->dispatch( &TABLE, context, 4 );                         \
+		Xfer &result = receiver->dispatch( &TABLE, context, 4 );                         \
 	}
 
 BFME_SLOT90_FORWARD( Rva0010BDC0, g_slot90_0010BDC0 )
@@ -81,7 +83,14 @@ BFME_SLOT90_FORWARD( Rva0010C340, g_slot90_0010C340 )
 BFME_SLOT90_FORWARD( Rva0010C360, g_slot90_0010C360 )
 BFME_SLOT90_FORWARD( Rva0010C380, g_slot90_0010C380 )
 BFME_SLOT90_FORWARD( Rva0010C3A0, g_slot90_0010C3A0 )
-BFME_SLOT90_FORWARD( Rva0010C3C0, g_slot90_0010C3C0 )
+// ObjectID transfer preserves slot 0x90's Xfer receiver return in EAX.
+// The native StateMachine serializer uses it to continue its transfer chain.
+// Proof: targets/game/reverse/identity_evidence/0010c3c0-objectid-return.md.
+extern int g_slot90_0010C3C0;
+Xfer &Rva0010C3C0( MidVirtualSlot90Receiver *receiver, void *context )
+{
+	return receiver->dispatch( &g_slot90_0010C3C0, context, 4 );
+}
 BFME_SLOT90_FORWARD( Rva0010C3E0, g_slot90_0010C3E0 )
 BFME_SLOT90_FORWARD( Rva0010C400, g_slot90_0010C400 )
 BFME_SLOT90_FORWARD( Rva0010C420, g_slot90_0010C420 )

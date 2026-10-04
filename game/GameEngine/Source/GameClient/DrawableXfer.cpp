@@ -108,8 +108,8 @@ class Rva0041D290Override {public:Rva0041D290Override *rva00087a80(){return (Rva
 static __declspec(noinline) Rva0041D290Ref<Rva0041D290AudioInfo> rva00415c20() { static Rva0041D290Ref<Rva0041D290AudioInfo> marker; if(!marker.p) marker=new Rva0041D290AudioInfo(0);return marker; }
 extern void BfmeParticleSystemXferHandle(Xfer&,void*);
 extern void BfmeParticleSystemXferMatrix(Xfer&,void*);
-class MidVirtualSlot90Receiver;
-extern void Rva0010C3C0(MidVirtualSlot90Receiver*,void*); extern void Rva0010C1C0(MidVirtualSlot90Receiver*,void*);
+class Xfer; class MidVirtualSlot90Receiver;
+extern Xfer & Rva0010C3C0(MidVirtualSlot90Receiver*,void*); extern void Rva0010C1C0(MidVirtualSlot90Receiver*,void*);
 extern void Rva0010BE80(MidVirtualSlot90Receiver*,void*); class BfmeSeedTarget;extern void bfmeHandOver_00001A50(BfmeSeedTarget*,void*);
 class Rva0041D290ThingBase {public: virtual ~Rva0041D290ThingBase(); char bytes[0x5c];};
 class Rva0041D290SnapshotBase {

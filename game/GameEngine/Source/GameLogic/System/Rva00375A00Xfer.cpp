@@ -86,8 +86,8 @@ typedef _STL::_Rb_tree<int,
 	_STL::less<int>,
 	_STL::allocator<Rva000A3F30Pair> > Rva000A3F30Tree;
 
-class MidVirtualSlot90Receiver;
-extern void __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
+class Xfer; class MidVirtualSlot90Receiver;
+extern Xfer & __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 extern Xfer *__cdecl Rva00372670XferObjectIDVector(Xfer *xfer, ObjectIDVector *vector);
 
 class BfmeSeedTarget;

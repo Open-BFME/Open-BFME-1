@@ -9,8 +9,8 @@ struct XferException
 
 extern "C" XferException *__cdecl bfmeFormatText(
 	XferException *result, int tag, const char *format, ...);
-class MidVirtualSlot90Receiver;
-void __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *target);
+class Xfer; class MidVirtualSlot90Receiver;
+Xfer & __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *target);
 __declspec(noreturn) void __stdcall _CxxThrowException(void *object, void *throwInfo);
 extern int g_guardTargetTypeThrowInfo;
 

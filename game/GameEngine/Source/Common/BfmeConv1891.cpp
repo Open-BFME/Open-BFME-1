@@ -37,8 +37,8 @@ public:
 };
 
 // Retail callee Rva0010C3C0 (0x0010C3C0, MidVirtualSlot90Forwarders.cpp).
-class MidVirtualSlot90Receiver;
-void __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *item, void *slot);
+class Xfer; class MidVirtualSlot90Receiver;
+Xfer & __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *item, void *slot);
 
 class BfmeOwnerAC
 {
@@ -65,5 +65,5 @@ void BfmeOwnerAC::bfmeDoAC(BfmeItemAC *item)
 		return;
 
 	for (int i = 0; i < 10; i++)
-		Rva0010C3C0((MidVirtualSlot90Receiver *)item, &m_bfmeSlotsAC[i]);
+		(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)item, &m_bfmeSlotsAC[i]);
 }

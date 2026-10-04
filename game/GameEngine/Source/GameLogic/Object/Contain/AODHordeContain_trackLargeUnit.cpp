@@ -113,8 +113,8 @@ public:
 	virtual void xferTrackedFrame(UnsignedInt *frame) = 0;
 };
 
-class MidVirtualSlot90Receiver;
-void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
+class Xfer; class MidVirtualSlot90Receiver;
+Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 
 class BfmeAODHordeContainOwner
 {
@@ -197,7 +197,7 @@ void BfmeAODHordeContainOwner::xfer(BfmeXfer *xfer)
 	BfmeXferVersion version = { 1, 1 };
 	xfer->xferVersion(&version);
 	bfmeBaseXfer(xfer);
-	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_trackedLargeUnit);
+	(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_trackedLargeUnit);
 	xfer->xferLargeUnitValue(&m_largeUnitTailOff);
 	xfer->xferTrackedFrame(&m_lastLargeUnitFrame);
 	if (m_trackedLargeUnit != 0)

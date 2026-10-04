@@ -163,7 +163,7 @@ struct BfmeFormattedText
 extern "C" BfmeFormattedText *__cdecl bfmeFormatText(BfmeFormattedText *, int, const char *, ...);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(void *, void *);
 extern int g_guardTargetTypeThrowInfo;
-extern void friend_xferObjectID(Xfer *, ObjectID *);
+class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 // ?xfer@DozerAIUpdate@@MAEXPAVXfer@@@Z
 void DozerAIUpdate::xfer(Xfer *xfer)
@@ -190,7 +190,7 @@ void DozerAIUpdate::xfer(Xfer *xfer)
 	UnsignedInt *taskOrderFrame = &m_task[0].m_taskOrderFrame;
 	for (int i = 0; i < 3; ++i)
 	{
-		friend_xferObjectID(xfer, reinterpret_cast<ObjectID *>(taskOrderFrame - 1));
+		Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, reinterpret_cast<ObjectID *>(taskOrderFrame - 1));
 		xfer->xferUnsignedInt(taskOrderFrame);
 		taskOrderFrame += 2;
 	}

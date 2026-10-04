@@ -45,8 +45,8 @@ public:
 	virtual void bfmeTakeAt8C(void *item);
 };
 
-class MidVirtualSlot90Receiver;
-void Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
+class Xfer; class MidVirtualSlot90Receiver;
+Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 void Rva0010C3E0(MidVirtualSlot90Receiver *receiver, void *context);
 void Rva0010C400(MidVirtualSlot90Receiver *receiver, void *context);
 
@@ -86,7 +86,7 @@ void BfmeThingAXB::bfmeSendAXB(BfmeSrcAXB *src, BfmeFlagsAXB *flags)
 		Rva0010C3E0((MidVirtualSlot90Receiver *)src, m_bfmeField2C);
 		break;
 	case 2:
-		Rva0010C3C0((MidVirtualSlot90Receiver *)src, m_bfmeField2C);
+		(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)src, m_bfmeField2C);
 		break;
 	case 3:
 		break;

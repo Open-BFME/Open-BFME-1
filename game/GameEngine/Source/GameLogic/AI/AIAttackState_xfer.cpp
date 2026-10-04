@@ -102,7 +102,7 @@ protected:
 	void createAttackMachine(Object *owner);
 };
 
-extern void friend_xferObjectID(Xfer *xfer, ObjectID *id);
+class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 #pragma comment(linker, "/alternatename:?createAttackMachine@AIAttackState@@IAEXPAVObject@@@Z=?j_0004121d@@YAXXZ")
 
@@ -160,7 +160,7 @@ void AIAttackState::xfer(Xfer *xfer)
 		}
 	}
 
-	friend_xferObjectID(xfer, &m_bfmeAttackState48);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_bfmeAttackState48);
 	xfer->xferBool(&m_bfmeAttackState4C);
 	if (version.m_currentVersion > 1)
 		xfer->xferBool(&m_bfmeAttackState4D);

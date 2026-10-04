@@ -103,7 +103,7 @@ public:
 };
 
 // ILT 0x0000C9B4 -> 0x0010C3C0, the ObjectID helper BridgeBehavior::xfer calls.
-void friend_xferObjectID(Xfer *xfer, ObjectID *objectID);
+class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 // ILT 0x00012508 -> 0x0010C440, the enum forwarder onto Xfer slot 0x90.
 void bfmeXferSiegeType(Xfer *xfer, void *value);
 
@@ -158,7 +158,7 @@ void SiegeDockingBehavior::xfer(Xfer *xfer)
 			*xfer == m_entries[index]->m_int00;
 			*xfer == m_entries[index]->m_coord08;
 			*xfer == m_entries[index]->m_coord14;
-			friend_xferObjectID(xfer, &m_entries[index]->m_objectID20);
+			Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_entries[index]->m_objectID20);
 		}
 	}
 	else
@@ -173,7 +173,7 @@ void SiegeDockingBehavior::xfer(Xfer *xfer)
 			*xfer == entry->m_int00;
 			*xfer == entry->m_coord08;
 			*xfer == entry->m_coord14;
-			friend_xferObjectID(xfer, &entry->m_objectID20);
+			Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &entry->m_objectID20);
 			m_entries.push_back(entry);
 		}
 	}

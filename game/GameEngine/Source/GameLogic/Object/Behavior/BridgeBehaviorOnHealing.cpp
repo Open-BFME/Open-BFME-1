@@ -317,7 +317,7 @@ public:
 	virtual void xferBool(bool *value);
 };
 
-void friend_xferObjectID(Xfer *xfer, ObjectID *id);
+class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfo
@@ -456,7 +456,7 @@ void BridgeBehavior::xfer(Xfer *xfer)
 
 	ObjectID *towerID = (ObjectID *)(behavior + 0x2C);
 	for (int i = 0; i < 4; ++i, ++towerID)
-		friend_xferObjectID(xfer, towerID);
+		Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, towerID);
 
 	if (xfer->isLoading())
 	{
@@ -480,14 +480,14 @@ void BridgeBehavior::xfer(Xfer *xfer)
 			it != scaffoldIDs->end(); ++it)
 		{
 			scaffoldID = *it;
-			friend_xferObjectID(xfer, &scaffoldID);
+			Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &scaffoldID);
 		}
 	}
 	else
 	{
 		for (UnsignedInt i = 0; i < scaffoldCount; ++i)
 		{
-			friend_xferObjectID(xfer, &scaffoldID);
+			Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &scaffoldID);
 			scaffoldIDs->push_back(scaffoldID);
 		}
 	}

@@ -121,7 +121,7 @@ enum ObjectID
 	INVALID_OBJECT_ID = 0
 };
 
-void friend_xferObjectID(Xfer *xfer, ObjectID *id);
+class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 class BfmeThingEFE
 {
@@ -195,7 +195,7 @@ void ExperienceTracker::xfer(Xfer *xfer)
 	}
 
 	xfer->xferAsciiString(m_levelName);
-	friend_xferObjectID(xfer, &m_experienceSink);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &m_experienceSink);
 	xfer->xferReal(m_experienceScalar);
 	xfer->xferInt(m_currentLevel);
 	xfer->xferInt(m_unknown20);

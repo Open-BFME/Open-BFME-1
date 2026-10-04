@@ -34,7 +34,7 @@ enum ObjectID
 	INVALID_ID = 0
 };
 
-void friend_xferObjectID(Xfer *xfer, ObjectID *objectID);
+class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 class Object;
 
@@ -80,7 +80,7 @@ void Squad::xfer( Xfer *xfer )
 
 			// save object ID
 			objectID = *it;
-			friend_xferObjectID( xfer, &objectID );
+			Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &objectID );
 
 		}  // end for, it
 
@@ -101,7 +101,7 @@ void Squad::xfer( Xfer *xfer )
 		{
 
 			// read id
-			friend_xferObjectID( xfer, &objectID );
+			Rva0010C3C0((MidVirtualSlot90Receiver *)xfer, &objectID );
 
 			// put on list
 			m_objectIDs.push_back( objectID );

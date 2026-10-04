@@ -16518,5 +16518,185 @@
  "after_sha256": "07d6fca8008da85250e05f67a8ce72e877ea83705f5f4014dd040f79a14f8f0b",
  "evidence": "targets/game/reverse/identity_evidence/00061bd0-iniexception-dtor-copyctor.md",
  "reason": "Retail's INIException ThrowInfo names 0x00061BD0 as its destructor; 0x00139FF0 is a null-checked operator delete[] release referenced only by ILT 0x0001A5DC, so the INIException claim on it is refuted and it keeps an address-derived identity."
-}
+},
+ {
+  "old_path": "game/GameEngine/Source/Common/System/BuildAssistant.cpp",
+  "new_path": "game/GameEngine/Source/Common/System/BuildAssistant.cpp",
+  "old_name": "friend_xferObjectID",
+  "new_name": "Rva0010C3C0",
+  "before_sha256": "00a178005e917e345613dcaecf064d4ac5a519bbe403c3fd637051bbd8c3a643",
+  "after_sha256": "61dfe0751e946c92a92392af2a9a75a86f52bedc9039d041464f032c430bb73c",
+  "evidence": "targets/game/reverse/identity_evidence/0010c3c0-objectid-return.md",
+  "reason": "The old void ILT-only alias has no selected provider. Original call operands independently encode 0000C9B4 which jumps to 0010C3C0; native slot 90 and consuming callers prove an Xfer reference return. Bind this caller to the existing address-qualified provider with its corrected return contract instead of preserving a stale competing alias. No original free-function spelling is proved and the matched caller identity is unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/AIAttackState_xfer.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIAttackState_xfer.cpp",
+  "old_name": "friend_xferObjectID",
+  "new_name": "Rva0010C3C0",
+  "before_sha256": "6d6e379c1a0416fe4c7ec1e4e661d02d2ccceac33e67b73653ed89bd2bf81e7e",
+  "after_sha256": "41f8e14b7cfe0884318120382383682bb305874f2dc3a1589a45985fdf7d681d",
+  "evidence": "targets/game/reverse/identity_evidence/0010c3c0-objectid-return.md",
+  "reason": "The old void ILT-only alias has no selected provider. Original call operands independently encode 0000C9B4 which jumps to 0010C3C0; native slot 90 and consuming callers prove an Xfer reference return. Bind this caller to the existing address-qualified provider with its corrected return contract instead of preserving a stale competing alias. No original free-function spelling is proved and the matched caller identity is unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/AICommandParmsStorageXfer.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AICommandParmsStorageXfer.cpp",
+  "old_name": "friend_xferObjectID",
+  "new_name": "Rva0010C3C0",
+  "before_sha256": "bc31eb36947871e7f3c0f3abe5f4cd44de3e5835b152f223a6d5eb6b2226b231",
+  "after_sha256": "ac6b8112fbc79a305d4ce590d99b643856b7891497efa727b501d19c407b641a",
+  "evidence": "targets/game/reverse/identity_evidence/0010c3c0-objectid-return.md",
+  "reason": "The old void ILT-only alias has no selected provider. Original call operands independently encode 0000C9B4 which jumps to 0010C3C0; native slot 90 and consuming callers prove an Xfer reference return. Bind this caller to the existing address-qualified provider with its corrected return contract instead of preserving a stale competing alias. No original free-function spelling is proved and the matched caller identity is unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/AIStateMachine_xfer.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIStateMachine_xfer.cpp",
+  "old_name": "friend_xferObjectID",
+  "new_name": "Rva0010C3C0",
+  "before_sha256": "ae66a706ff91662b8fa83f1ee60bec43aeb1e7b1ae4f874904ce204805e221b8",
+  "after_sha256": "80c7e2327d1e232259bad7b39355382805b0219d6f26f633efe8ab3440c8d609",
+  "evidence": "targets/game/reverse/identity_evidence/0010c3c0-objectid-return.md",
+  "reason": "The old void ILT-only alias has no selected provider. Original call operands independently encode 0000C9B4 which jumps to 0010C3C0; native slot 90 and consuming callers prove an Xfer reference return. Bind this caller to the existing address-qualified provider with its corrected return contract instead of preserving a stale competing alias. No original free-function spelling is proved and the matched caller identity is unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/Squad_xfer.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Squad_xfer.cpp",
+  "old_name": "friend_xferObjectID",
+  "new_name": "Rva0010C3C0",
+  "before_sha256": "32c87cf65b0fe9fd92142ae15a697a48ca75ed7e2f66a73d736f019f8efb65e5",
+  "after_sha256": "cc23fe8a2542c63f5c94ff2dbf834c9b2506f5e5799fbcb1eb2eec020dd6628c",
+  "evidence": "targets/game/reverse/identity_evidence/0010c3c0-objectid-return.md",
+  "reason": "The old void ILT-only alias has no selected provider. Original call operands independently encode 0000C9B4 which jumps to 0010C3C0; native slot 90 and consuming callers prove an Xfer reference return. Bind this caller to the existing address-qualified provider with its corrected return contract instead of preserving a stale competing alias. No original free-function spelling is proved and the matched caller identity is unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/TeamInQueueXfer.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/TeamInQueueXfer.cpp",
+  "old_name": "friend_xferObjectID",
+  "new_name": "Rva0010C3C0",
+  "before_sha256": "54837c5142014c421a366878170469c6f8998758b0e41d1ad6060aa1f6fe977f",
+  "after_sha256": "228bce8978babac64dd6613981ec7c5f4620f8f356eb82d6b8c81619164f6a82",
+  "evidence": "targets/game/reverse/identity_evidence/0010c3c0-objectid-return.md",
+  "reason": "The old void ILT-only alias has no selected provider. Original call operands independently encode 0000C9B4 which jumps to 0010C3C0; native slot 90 and consuming callers prove an Xfer reference return. Bind this caller to the existing address-qualified provider with its corrected return contract instead of preserving a stale competing alias. No original free-function spelling is proved and the matched caller identity is unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Map/SidesList.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Map/SidesList.cpp",
+  "old_name": "friend_xferObjectID",
+  "new_name": "Rva0010C3C0",
+  "before_sha256": "7b73ea2f48735e764c7680f3913d444103e7e0166ef25d2383ad2b351d850e0b",
+  "after_sha256": "0c491dde673c27be743605dfb053533635ee9007742d5dd46caa239d60d88eb5",
+  "evidence": "targets/game/reverse/identity_evidence/0010c3c0-objectid-return.md",
+  "reason": "The old void ILT-only alias has no selected provider. Original call operands independently encode 0000C9B4 which jumps to 0010C3C0; native slot 90 and consuming callers prove an Xfer reference return. Bind this caller to the existing address-qualified provider with its corrected return contract instead of preserving a stale competing alias. No original free-function spelling is proved and the matched caller identity is unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehaviorOnHealing.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehaviorOnHealing.cpp",
+  "old_name": "friend_xferObjectID",
+  "new_name": "Rva0010C3C0",
+  "before_sha256": "bfb2472a34e5115a03d00130b7f5ba6eb057bdc7745220e18061a49209f0168a",
+  "after_sha256": "b77b7686df421844f84f7d11549db627427a602563998b5883a59d2a89b19ddf",
+  "evidence": "targets/game/reverse/identity_evidence/0010c3c0-objectid-return.md",
+  "reason": "The old void ILT-only alias has no selected provider. Original call operands independently encode 0000C9B4 which jumps to 0010C3C0; native slot 90 and consuming callers prove an Xfer reference return. Bind this caller to the existing address-qualified provider with its corrected return contract instead of preserving a stale competing alias. No original free-function spelling is proved and the matched caller identity is unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp",
+  "old_name": "friend_xferObjectID",
+  "new_name": "Rva0010C3C0",
+  "before_sha256": "7d4b1cae261417996131cefbad61e195a8f6c9cc210683a7dfbd4cd34af959c9",
+  "after_sha256": "750501df770128e89e74da3f4fcc4bdb2f08035bf82233c3a9791be00415fd35",
+  "evidence": "targets/game/reverse/identity_evidence/0010c3c0-objectid-return.md",
+  "reason": "The old void ILT-only alias has no selected provider. Original call operands independently encode 0000C9B4 which jumps to 0010C3C0; native slot 90 and consuming callers prove an Xfer reference return. Bind this caller to the existing address-qualified provider with its corrected return contract instead of preserving a stale competing alias. No original free-function spelling is proved and the matched caller identity is unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/ExperienceTrackerBFMEXfer.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/ExperienceTrackerBFMEXfer.cpp",
+  "old_name": "friend_xferObjectID",
+  "new_name": "Rva0010C3C0",
+  "before_sha256": "de4927ce7e6f75be24531c6f875753a30f3a4376778404cbea695d2cdb72e645",
+  "after_sha256": "ebcbf1eb2451db676e7a03ec6c7b22e398692241e3f0a90956b9fd580627b569",
+  "evidence": "targets/game/reverse/identity_evidence/0010c3c0-objectid-return.md",
+  "reason": "The old void ILT-only alias has no selected provider. Original call operands independently encode 0000C9B4 which jumps to 0010C3C0; native slot 90 and consuming callers prove an Xfer reference return. Bind this caller to the existing address-qualified provider with its corrected return contract instead of preserving a stale competing alias. No original free-function spelling is proved and the matched caller identity is unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/FiringTrackerBFMEXfer.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/FiringTrackerBFMEXfer.cpp",
+  "old_name": "friend_xferObjectID",
+  "new_name": "Rva0010C3C0",
+  "before_sha256": "a1efa46320ba22c17cd1139d64569b59b714a5b10c4dd7422c58a8f26492b43c",
+  "after_sha256": "9602c90e935d7e54b9d55635db7481809834379411389b8d302f91d5bdbc8833",
+  "evidence": "targets/game/reverse/identity_evidence/0010c3c0-objectid-return.md",
+  "reason": "The old void ILT-only alias has no selected provider. Original call operands independently encode 0000C9B4 which jumps to 0010C3C0; native slot 90 and consuming callers prove an Xfer reference return. Bind this caller to the existing address-qualified provider with its corrected return contract instead of preserving a stale competing alias. No original free-function spelling is proved and the matched caller identity is unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Gen001B1040ObjectTemplateXfer.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Gen001B1040ObjectTemplateXfer.cpp",
+  "old_name": "friend_xferObjectID",
+  "new_name": "Rva0010C3C0",
+  "before_sha256": "bed8831a53d92e4a203356dc125b41982e5bd0e360245b4402baf37c055ce775",
+  "after_sha256": "cfd55cc8fbaa1cff756a7e885a72e562ecb93431b50f23da0f11cc5b7c28e655",
+  "evidence": "targets/game/reverse/identity_evidence/0010c3c0-objectid-return.md",
+  "reason": "The old void ILT-only alias has no selected provider. Original call operands independently encode 0000C9B4 which jumps to 0010C3C0; native slot 90 and consuming callers prove an Xfer reference return. Bind this caller to the existing address-qualified provider with its corrected return contract instead of preserving a stale competing alias. No original free-function spelling is proved and the matched caller identity is unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerAIUpdate_xferMethodThunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerAIUpdate_xferMethodThunk.cpp",
+  "old_name": "friend_xferObjectID",
+  "new_name": "Rva0010C3C0",
+  "before_sha256": "69aed85c75cdeb915481004bcd04f002838029f11d631b9f9ee5073f8b680994",
+  "after_sha256": "dfd2db30b2c00321c9180335fc3d35644fea0f35d526c8fa87d95e9385fb2972",
+  "evidence": "targets/game/reverse/identity_evidence/0010c3c0-objectid-return.md",
+  "reason": "The old void ILT-only alias has no selected provider. Original call operands independently encode 0000C9B4 which jumps to 0010C3C0; native slot 90 and consuming callers prove an Xfer reference return. Bind this caller to the existing address-qualified provider with its corrected return contract instead of preserving a stale competing alias. No original free-function spelling is proved and the matched caller identity is unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/DockUpdateXferBfme.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/DockUpdateXferBfme.cpp",
+  "old_name": "friend_xferObjectID",
+  "new_name": "Rva0010C3C0",
+  "before_sha256": "28864c284cdd3a6cd67091276735a0d953d8eefadf0f933cf98f533b3a11d647",
+  "after_sha256": "e65e0b8ed6ea0e1c248f052e21365729ee3358979fd877f4320ec55f8d01855f",
+  "evidence": "targets/game/reverse/identity_evidence/0010c3c0-objectid-return.md",
+  "reason": "The old void ILT-only alias has no selected provider. Original call operands independently encode 0000C9B4 which jumps to 0010C3C0; native slot 90 and consuming callers prove an Xfer reference return. Bind this caller to the existing address-qualified provider with its corrected return contract instead of preserving a stale competing alias. No original free-function spelling is proved and the matched caller identity is unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/RailedTransportDockUpdateXfer.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/RailedTransportDockUpdateXfer.cpp",
+  "old_name": "friend_xferObjectID",
+  "new_name": "Rva0010C3C0",
+  "before_sha256": "cfe44e4b566e5b432b32daf8d9b1d9cce280e9ad1c9838a084a3875309c14c1b",
+  "after_sha256": "7bc251fc3a4181563b60f15062c5356f4a836f29ecc3a9a3d0f1004f52794b4f",
+  "evidence": "targets/game/reverse/identity_evidence/0010c3c0-objectid-return.md",
+  "reason": "The old void ILT-only alias has no selected provider. Original call operands independently encode 0000C9B4 which jumps to 0010C3C0; native slot 90 and consuming callers prove an Xfer reference return. Bind this caller to the existing address-qualified provider with its corrected return contract instead of preserving a stale competing alias. No original free-function spelling is proved and the matched caller identity is unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/ProductionUpdateXfer.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/ProductionUpdateXfer.cpp",
+  "old_name": "bfmeHandOver_0000C9B4",
+  "new_name": "Rva0010C3C0",
+  "before_sha256": "91e2805c58042b74c383f8a5c906adb82b8e5976b73e7b1c9c1ab0e485edbd32",
+  "after_sha256": "41480f35bbe20a40ed83a27338e9240de4d5a9ad973bb84a2f1d304ef4e4bc1b",
+  "evidence": "targets/game/reverse/identity_evidence/0010c3c0-objectid-return.md",
+  "reason": "The old void ILT-only alias has no selected provider. Original call operands independently encode 0000C9B4 which jumps to 0010C3C0; native slot 90 and consuming callers prove an Xfer reference return. Bind this caller to the existing address-qualified provider with its corrected return contract instead of preserving a stale competing alias. No original free-function spelling is proved and the matched caller identity is unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/SlavedUpdateXfer.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/SlavedUpdateXfer.cpp",
+  "old_name": "friend_xferObjectID",
+  "new_name": "Rva0010C3C0",
+  "before_sha256": "6a94fea923a126a056e5d74ce4ae9caa42555f3791d9a091a731dc8038ea9219",
+  "after_sha256": "316222514d7043d9d8a5b8e3f377063b7f308fdd4afcd1cf022a88fa7f84d5e6",
+  "evidence": "targets/game/reverse/identity_evidence/0010c3c0-objectid-return.md",
+  "reason": "The old void ILT-only alias has no selected provider. Original call operands independently encode 0000C9B4 which jumps to 0010C3C0; native slot 90 and consuming callers prove an Xfer reference return. Bind this caller to the existing address-qualified provider with its corrected return contract instead of preserving a stale competing alias. No original free-function spelling is proved and the matched caller identity is unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Weapon.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Weapon.cpp",
+  "old_name": "friend_xferObjectID",
+  "new_name": "Rva0010C3C0",
+  "before_sha256": "786096c6b1a8f920b764cb42ba765a60523901c13b8eb3c37cb2403903c343bf",
+  "after_sha256": "c938d1e3e6a4b1a1dfe02b92598a4964f7488b4db5b55626253ddcf3c4f9c644",
+  "evidence": "targets/game/reverse/identity_evidence/0010c3c0-objectid-return.md",
+  "reason": "The old void ILT-only alias has no selected provider. Original call operands independently encode 0000C9B4 which jumps to 0010C3C0; native slot 90 and consuming callers prove an Xfer reference return. Bind this caller to the existing address-qualified provider with its corrected return contract instead of preserving a stale competing alias. No original free-function spelling is proved and the matched caller identity is unchanged."
+ }
 ]
