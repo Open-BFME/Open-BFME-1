@@ -256,7 +256,7 @@ public:
 	RenderObjClass(void);
 	RenderObjClass(const RenderObjClass & src);
 	RenderObjClass & RenderObjClass::operator = (const RenderObjClass &);
-	virtual ~RenderObjClass(void)																					{ if (RenderHook) delete RenderHook; }
+	virtual ~RenderObjClass(void)																					{ if (RenderHook) { reinterpret_cast<RefCountClass *>(RenderHook)->Release_Ref(); RenderHook = 0; } }	// retail 0x0091FC10 releases +0x9C as a RefCountClass (dec [ecx+4], Delete_This via slot 0); it does not delete
 
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////
