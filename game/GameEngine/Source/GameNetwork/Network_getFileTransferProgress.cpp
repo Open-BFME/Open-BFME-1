@@ -5,6 +5,10 @@
 
 #include "PreRTS.h"
 
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+
 // Retail 0x00682640, Network vtable slot 24. Slots 20..24 are sendChat,
 // sendDisconnectChat, sendFile, sendFileAnnounce and this one -- Zero Hour's
 // declaration order, and their 8/4/12/8/8-byte returns line up with it.
