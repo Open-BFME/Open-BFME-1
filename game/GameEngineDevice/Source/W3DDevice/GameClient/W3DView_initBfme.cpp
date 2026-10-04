@@ -121,7 +121,7 @@ private:
 	unsigned char m_body[0xfc - 4];
 };
 
-class SubsystemInterface
+class W3DViewSubsystemBase
 {
 public:
 	virtual void init() = 0;
@@ -131,7 +131,7 @@ protected:
 	AsciiString m_name;
 };
 
-class W3DView : public View, public SubsystemInterface
+class W3DView : public View, public W3DViewSubsystemBase
 {
 public:
 	virtual void init();
