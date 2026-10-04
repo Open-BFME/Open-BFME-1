@@ -17,6 +17,10 @@ typedef unsigned short wchar_t;
 
 #include "Common/UnicodeString.h"
 
+// Retail inlines ~UnicodeString: temporaries are released by a direct call to
+// StringBase<unsigned short>::releaseBuffer (0x008881D0), not the ??1UnicodeString stub.
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 class Player;
 
 class ExperienceTracker
