@@ -1,11 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: DefaultModuleTemplate<0> empty dual-vtbl dtor (50B Sphere pattern).
-extern "C" const void *bfmeVftSnapshot[];
-#pragma comment(linker, "/alternatename:_bfmeVftSnapshot=??_7Snapshot@@6B@")
-extern "C" const void *bfmeVftCategoryModuleInfo0[];
-#pragma comment(linker, "/alternatename:_bfmeVftCategoryModuleInfo0=??_7?$CategoryModuleInfo@$0A@@FXParticleSystem@@6B@")
-extern "C" const void *bfmeVftModuleTemplate[];
-#pragma comment(linker, "/alternatename:_bfmeVftModuleTemplate=??_7ModuleTemplate@FXParticleSystem@@6B@")
+extern "C" void *__identifier("??_7Snapshot@@6B@")[];
+extern "C" void *__identifier("??_7?$CategoryModuleInfo@$0A@@FXParticleSystem@@6B@")[];
+extern "C" void *__identifier("??_7ModuleTemplate@FXParticleSystem@@6B@")[];
 
 namespace FXParticleSystem
 {
@@ -25,11 +22,11 @@ public:
 DefaultModuleTemplate<0>::~DefaultModuleTemplate()
 {
 	unsigned char *info = this ? (unsigned char *)this + 8 : 0;
-	*(volatile unsigned int *)info = (unsigned int)bfmeVftSnapshot;
+	*(volatile unsigned int *)info = (unsigned int)__identifier("??_7Snapshot@@6B@");
 
 	unsigned char *base = this ? (unsigned char *)this + 4 : 0;
-	*(volatile unsigned int *)base = (unsigned int)bfmeVftCategoryModuleInfo0;
-	*(volatile unsigned int *)this = (unsigned int)bfmeVftModuleTemplate;
+	*(volatile unsigned int *)base = (unsigned int)__identifier("??_7?$CategoryModuleInfo@$0A@@FXParticleSystem@@6B@");
+	*(volatile unsigned int *)this = (unsigned int)__identifier("??_7ModuleTemplate@FXParticleSystem@@6B@");
 }
 
 }
