@@ -122,22 +122,22 @@ typedef bool (*CallbackBase0019B030)(DataChunkInput &, DataChunkInfo *, void *);
 extern void j_0001579e();
 extern void j_0000f51a();
 extern void j_00013c6e();
-extern "C" int _bfmeVftVE[];
-extern "C" const void *bfmeVftBfmeParserBindingVE[];
-#pragma comment(linker, "/alternatename:_bfmeVftBfmeParserBindingVE=??_7BfmeParserBindingVE@@6B@")
 class ParserBase0019B030 {
 public:
   ParserBase0019B030(DataChunkInput *table, const AsciiString &name, const AsciiString &parent) {
-    vtable_ = _bfmeVftVE;
     table_ = table;
     parser_ = table->registerParser(name, parent, (CallbackBase0019B030)j_0001579e, this);
   }
   ~ParserBase0019B030() {
-    vtable_ = _bfmeVftVE;
     reinterpret_cast<BfmeSubVE *>(table_)->bfmeDropVE(parser_);
   }
+  // Retail base vtable 0x0107C7D0 and binding vtable 0x0109BFD4 hold two
+  // entries each; the two virtuals here are what give this class a vfptr at
+  // offset 0 (the slot retail's own vtable stores) and make the compiler emit
+  // the binding vtable this TU's inline constructor stores.
+  virtual void bfmeSlot0(void);
+  virtual void bfmeSlot1(void);
 protected:
-  void *vtable_;
   DataChunkInput *table_;
   UserParser *parser_;
 };
@@ -149,10 +149,11 @@ public:
   BfmeParserBindingVE(SidesList *owner, BuildListCallback0019B030 callback, DataChunkInput *table,
                       const AsciiString &name, const AsciiString &parent)
       : ParserBase0019B030(table, name, parent) {
-    vtable_ = bfmeVftBfmeParserBindingVE;
     owner_ = owner;
     callback_ = callback;
   }
+  virtual void bfmeSlot0(void);
+  virtual void bfmeSlot1(void);
 };
 
 void BfmeTableERJ::rva0019B030(void) {
