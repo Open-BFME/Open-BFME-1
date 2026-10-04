@@ -211,12 +211,10 @@ protected:
 	PartitionFilter *m_next;
 };
 
-extern "C" void *bfmeVftPartitionFilter[];
-extern "C" void *bfmeVftRva00149F20VptrZeroObject[];
-extern "C" void *bfmeVftRva0016D590VptrZeroObject[];
-#pragma comment(linker, "/alternatename:_bfmeVftPartitionFilter=??_7PartitionFilter@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftRva00149F20VptrZeroObject=??_7Rva00149F20VptrZeroObject@@6B@")
-#pragma comment(linker, "/alternatename:_bfmeVftRva0016D590VptrZeroObject=??_7Rva0016D590VptrZeroObject@@6B@")
+// Retail vftables, named as the linker sees them.
+extern "C" void *__identifier("??_7PartitionFilter@@6B@")[];
+extern "C" void *__identifier("??_7Rva00149F20VptrZeroObject@@6B@")[];
+extern "C" void *__identifier("??_7Rva0016D590VptrZeroObject@@6B@")[];
 extern const void *g_010956C4[];
 
 static __forceinline void setFilterVptr(void *filter, UnsignedInt value)
@@ -230,7 +228,7 @@ public:
 	Rva001DCBB0Filter(Object *object, unsigned char match);
 	~Rva001DCBB0Filter()
 	{
-		setFilterVptr(this, (UnsignedInt)bfmeVftPartitionFilter);
+		setFilterVptr(this, (UnsignedInt)__identifier("??_7PartitionFilter@@6B@"));
 	}
 
 	Player *m_player;
@@ -244,13 +242,13 @@ public:
 	PartitionFilterInsignificantBuildings(Bool allowNonBuildings,
 		Bool allowInsignificant)
 	{
-		setFilterVptr(this, (UnsignedInt)bfmeVftRva00149F20VptrZeroObject);
+		setFilterVptr(this, (UnsignedInt)__identifier("??_7Rva00149F20VptrZeroObject@@6B@"));
 		m_allowNonBuildings = allowNonBuildings;
 		m_allowInsignificant = allowInsignificant;
 	}
 	~PartitionFilterInsignificantBuildings()
 	{
-		setFilterVptr(this, (UnsignedInt)bfmeVftPartitionFilter);
+		setFilterVptr(this, (UnsignedInt)__identifier("??_7PartitionFilter@@6B@"));
 	}
 
 
@@ -271,7 +269,7 @@ public:
 
 	~PartitionFilterRelationship()
 	{
-		setFilterVptr(this, (UnsignedInt)bfmeVftPartitionFilter);
+		setFilterVptr(this, (UnsignedInt)__identifier("??_7PartitionFilter@@6B@"));
 	}
 
 	Object *m_object;
@@ -285,7 +283,7 @@ public:
 	PartitionFilterRejectBuildings(const Object *object);
 	~PartitionFilterRejectBuildings()
 	{
-		setFilterVptr(this, (UnsignedInt)bfmeVftPartitionFilter);
+		setFilterVptr(this, (UnsignedInt)__identifier("??_7PartitionFilter@@6B@"));
 	}
 
 
@@ -299,7 +297,7 @@ public:
 	Rva0017DDA0PairFilter(Object *object, Weapon *weapon,
 		TAiData **aiDataOut)
 	{
-		setFilterVptr(this, (UnsignedInt)bfmeVftRva0016D590VptrZeroObject);
+		setFilterVptr(this, (UnsignedInt)__identifier("??_7Rva0016D590VptrZeroObject@@6B@"));
 		m_object = object;
 		m_weapon = weapon;
 		_ReadWriteBarrier();
@@ -308,7 +306,7 @@ public:
 
 	~Rva0017DDA0PairFilter()
 	{
-		setFilterVptr(this, (UnsignedInt)bfmeVftPartitionFilter);
+		setFilterVptr(this, (UnsignedInt)__identifier("??_7PartitionFilter@@6B@"));
 	}
 
 
