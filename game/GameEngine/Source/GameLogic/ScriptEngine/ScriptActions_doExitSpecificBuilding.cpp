@@ -126,7 +126,6 @@ typedef ScriptEngine ScriptEngineByValue;
 extern ScriptEngine *TheScriptEngine;
 
 extern void j_000344c3();
-#pragma comment(linker, "/alternatename:?aiEvacuate@AICommandInterface@@QAEX_NW4CommandSourceType@@@Z=?j_000344c3@@YAXXZ")
 
 class ScriptActions
 {
@@ -148,7 +147,9 @@ void ScriptActions::doExitSpecificBuilding(const AsciiString &buildingName)
 	AIUpdateInterface *ai = theBuilding->getAIUpdateInterface();
 	if (ai)
 	{
-		ai->m_commands.aiEvacuate(false, CMD_FROM_SCRIPT);
+		typedef void (AICommandInterface::*Fn)(bool, CommandSourceType);
+		union { void (*fn)(); Fn call; } u = { j_000344c3 };
+		(ai->m_commands.*u.call)(false, CMD_FROM_SCRIPT);
 		return;
 	}
 
