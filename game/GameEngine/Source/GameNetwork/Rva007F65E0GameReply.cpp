@@ -25,11 +25,17 @@ public:
 	virtual bool valid( void );
 };
 
+// 0x007E88B0 is the getter the ledger defines as ?m@Gen_007e88b0@@QAEHXZ
+// (game/gen_small/fun_005.cpp); reach it through a cast like its other callers.
+class Gen_007e88b0
+{
+public:
+	int m( void );
+};
+
 class Rva007E8810Message
 {
 public:
-	int getError( void );                                             // 0x007E88B0
-
 	char m_head[ 0x28 ];
 	int m_txn;
 };
@@ -120,7 +126,7 @@ void Rva007F65E0Owner::handleGameLobbyReply( Rva007E8810Message *msg, int flag )
 	int gid = game.m_gid;
 	int lid = game.m_lid;
 	if( ((W3DVideoBuffer *)msg)->W3DVideoBuffer::valid() )
-		m_listener->notify( lid, gid, msg->getError() );
+		m_listener->notify( lid, gid, ((Gen_007e88b0 *)msg)->m() );
 	if( Rva00802A90Owner *lobby = findGameLobby( lid ) )
 	{
 		msg = (Rva007E8810Message *)msg->m_txn;

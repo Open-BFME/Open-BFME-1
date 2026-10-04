@@ -7,10 +7,17 @@
 // the returned entry's +8 active word is cleared.  The literal "peri" is the
 // only surviving entry name, so the handler name remains address-derived.
 
+// 0x007E88B0 is the getter the ledger defines as ?m@Gen_007e88b0@@QAEHXZ
+// (game/gen_small/fun_005.cpp); reach it through a cast like its other callers.
+class Gen_007e88b0
+{
+public:
+	int m( void );
+};
+
 class Rva007E8810Message
 {
 public:
-	int getError( void );
 };
 
 class Rva007FBC30GameKey
@@ -86,5 +93,5 @@ void BfmeThingZI::Rva007F72D0( Rva007E8810Message *msg )
 		peri->m_active = 0;
 	}
 
-	m_listener->onSlot12( lid, gid, msg->getError() );
+	m_listener->onSlot12( lid, gid, ((Gen_007e88b0 *)msg)->m() );
 }
