@@ -12,6 +12,10 @@
 #include "Common/STLTypedefs.h"
 #include "string_base.h"
 
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+
 typedef std::hash_map< AsciiString, unsigned char, rts::hash<AsciiString>, rts::equal_to<AsciiString> > Rva000F7310Map;
 
 extern Rva000F7310Map TheRva000F7310Map;
