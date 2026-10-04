@@ -31,12 +31,12 @@ struct BfmeShadowMeshModel
 };
 
 // Direct helper called by BfmeShadowMesh::Get_Deformed_Vertices.
-// Address-keyed shim: the helper body at 0x00925860 is still a dump, so the
-// name and the two-pointer thiscall ABI come from the symbols.csv pin
-// ?method@Rva00925860@@QAEXPAX0@Z (stack cleanup of 8 bytes).
+// The helper body at 0x00925860 is still the dump ?d_00925860@@YAXXZ, so the
+// thiscall (two pointer args, ret 8) is made through that name with the
+// extern + member-pointer union pattern.
+extern void d_00925860(void);
 struct Rva00925860
 {
-	void method(void *dst, void *tree);
 };
 
 class BfmeShadowMesh
@@ -130,7 +130,9 @@ void BfmeShadowBufferEntry::update()
 // sites in the order observed in the binary.
 void BfmeShadowMesh::Get_Deformed_Vertices(Vector3 *dst)
 {
-	((Rva00925860 *)m_model)->method(
+	typedef void (Rva00925860::*Helper)(void *dst, void *tree);
+	union { void (*fn)(void); Helper call; } helper = { d_00925860 };
+	(((Rva00925860 *)m_model)->*helper.call)(
 		dst,
 		m_field84 ? (void *)((RenderObjClass *)m_field84)->Get_HTree() : (void *)0);
 }
