@@ -86997,6 +86997,7 @@ name,address,notes
 ?s4drain00464CC0@S4Owner@@AAEXXZ,0x00029005,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00464E20 calls; autopin
 ?s4drain00464D70@S4Owner@@AAEXXZ,0x0004AA66,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00464E20 calls; autopin
 ?s5Table0059D600@@3UFieldParse@@B,0x0110C83C,Open-BFME7 retail field table used by the body at 0x0059D600; autopin
+?s5Table0059D600@@3QBUFieldParse@@B,0x0110C83C,Open-BFME7 retail field table used by the body at 0x0059D600; array spelling of the table
 ?s5Table0059D9E0@@3UFieldParse@@B,0x0110C8C0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0059D9E0 calls; autopin
 ?s5Table0059DE10@@3UFieldParse@@B,0x0110C948,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0059DE10 calls; autopin
 ?s5Table0059FB50@@3UFieldParse@@B,0x0110CC38,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0059FB50 calls; autopin
