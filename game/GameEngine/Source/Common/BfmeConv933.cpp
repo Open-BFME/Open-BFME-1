@@ -1,17 +1,20 @@
 // Open-BFME5 conversions.
 
-struct BfmeObj926C;
-
-class BfmeKey926C
-{
-public:
-	BfmeObj926C *bfmeFind926C();
-};
-
 struct BfmeObj926C
 {
 	char m_bfmePad[0x22c];
 	char *m_bfmeUse;
+};
+
+class Player;
+
+// retail 0x001BE3F0 (the body ILT 0x00020824 forwards to): the controlling
+// player of the object the key at -0x18 belongs to.  The ledger's defining
+// spelling at that address, so the call site spells it too.
+class Object
+{
+public:
+	Player *getControllingPlayer(void) const;
 };
 
 class BfmeThing933A
@@ -22,8 +25,8 @@ public:
 
 char *BfmeThing933A::bfmeGo933A()
 {
-	BfmeKey926C *k = *(BfmeKey926C **)((char *)this - 0x18);
-	BfmeObj926C *o = k->bfmeFind926C();
+	Object *k = *(Object **)((char *)this - 0x18);
+	BfmeObj926C *o = (BfmeObj926C *)k->getControllingPlayer();
 	return o->m_bfmeUse + 8;
 }
 
@@ -90,12 +93,6 @@ struct BfmeA933D
 	char m_bfmeFlag;
 };
 
-class BfmeSub933D
-{
-public:
-	void bfmeCall933D();
-};
-
 // RVA 0x0024CEE0: HordeTransportContain introduces this die-slot callback.
 // The ledger names HordeTransportContain::Rva0024CEE0; this opaque emission
 // view is retained through object-symbol. See diemodule-slot0-container-ondie.md.
@@ -105,11 +102,19 @@ public:
 	void bfmeGo933D(void *a);
 };
 
+// retail 0x0024C530 (the body ILT 0x0000A862 forwards to): the destructor the
+// flag at +0x152 guards, reached through an explicit destructor call.
+class __declspec(novtable) HordeTransportContain
+{
+public:
+	virtual ~HordeTransportContain();
+};
+
 void BfmeThing933D::bfmeGo933D(void *a)
 {
 	BfmeA933D *p = *(BfmeA933D **)((char *)this - 0x24);
 	if (p->m_bfmeFlag)
-		((BfmeSub933D *)((char *)this - 0x28))->bfmeCall933D();
+		((HordeTransportContain *)((char *)this - 0x28))->HordeTransportContain::~HordeTransportContain();
 }
 
 struct BfmeVec933F

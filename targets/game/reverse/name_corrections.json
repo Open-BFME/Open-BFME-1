@@ -16128,5 +16128,25 @@
   "after_sha256": "47ea50a70eb756f61b6175b2e13fcc89965e575ddb59d5b6224c17b3c4dac7a2",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1009.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1009.cpp",
+  "old_name": "BfmeSink1009",
+  "new_name": "Gen001C9AC0",
+  "before_sha256": "3a1cd637c8e98f7ca0067ee450cde02bae0f0da59b3025aec1d396b3bb219acb",
+  "after_sha256": "0c8c658f9a46e766f29e03c827d712a3ba1022813a9ac557a17139e5e995bf15",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1009.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1009.cpp",
+  "old_name": "BfmeSinkC1009",
+  "new_name": "Rva001E4160List",
+  "before_sha256": "3a1cd637c8e98f7ca0067ee450cde02bae0f0da59b3025aec1d396b3bb219acb",
+  "after_sha256": "0c8c658f9a46e766f29e03c827d712a3ba1022813a9ac557a17139e5e995bf15",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
  }
 ]

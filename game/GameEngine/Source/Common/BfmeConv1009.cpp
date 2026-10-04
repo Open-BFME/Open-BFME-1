@@ -1,9 +1,9 @@
 // Open-BFME5 conversions.
 
-class BfmeSink1009
+class Gen001C9AC0
 {
 public:
-	void bfmeSend1009(int a);
+	void handle(int player);					// retail 0x001C9AC0 via ILT 0x000122AB
 };
 
 struct BfmeOwner1009
@@ -19,7 +19,7 @@ public:
 
 	char m_bfmePad[4];
 	BfmeOwner1009 *m_bfmeOwner;
-	BfmeSink1009 *m_bfmeSink;
+	Gen001C9AC0 *m_bfmeSink;
 	char m_bfmePad2[0x20];
 	volatile int m_bfmeVal;
 };
@@ -31,42 +31,47 @@ void BfmeA1009::bfmeGo1009A()
 	m_bfmeVal = 0;
 
 	int mode = o->m_bfmeMode;
-	BfmeSink1009 *s = m_bfmeSink;
+	Gen001C9AC0 *s = m_bfmeSink;
 
 	if (mode == 1) {
-		s->bfmeSend1009(0x12);
+		s->handle(0x12);
 		return;
 	}
 
 	if (mode == 2)
-		s->bfmeSend1009(0x13);
+		s->handle(0x13);
 }
 
-class BfmeSinkC1009
+class Rva001E4160List
 {
 public:
-	char bfmeSend1009C(void *b, void *a);
+	bool any(void *first, void *second);				// retail 0x001E4160 via ILT 0x00004633
+};
+
+class Rva002DF120
+{
+public:
+	unsigned char test(void *first, void *second);			// retail 0x002DF120 via ILT 0x0001D813
 };
 
 class BfmeC1009
 {
 public:
 	char bfmeGo1009C(void *a, void *b);
-	char bfmeTry1009(void *a, void *b);
 
 	char m_bfmePad[0x58];
-	BfmeSinkC1009 *m_bfmeSink;
+	Rva001E4160List *m_bfmeSink;
 };
 
 char BfmeC1009::bfmeGo1009C(void *a, void *b)
 {
-	if (!bfmeTry1009(a, b))
+	if (!((Rva002DF120 *)this)->test(a, b))
 		return 0;
 
-	BfmeSinkC1009 *s = m_bfmeSink;
+	Rva001E4160List *s = m_bfmeSink;
 
 	if (!s)
 		return 0;
 
-	return s->bfmeSend1009C(b, a);
+	return s->any(b, a);
 }

@@ -15,8 +15,11 @@ public:
 	void run();
 };
 
-class Glo012F1028Type;
-extern Glo012F1028Type *Glo012F1028;
+// .data slot 0x012F1028. The owning row is the GameEngine::init site that
+// pushes EA's literal "TheLivingWorldLogic", so the canonical spelling of the
+// datum this reads is TheLivingWorldLogic, not an address-derived one.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 
 class Gen003BDE80Element
 {
@@ -43,7 +46,7 @@ void Gen003BDE80Element::process()
 
 	if (was && !m_byte1C && m_byte1F)
 	{
-		reinterpret_cast<Rva003BEED0 *>(Glo012F1028)->run();
+		reinterpret_cast<Rva003BEED0 *>(TheLivingWorldLogic)->run();
 		m_byte1F = 0;
 	}
 
