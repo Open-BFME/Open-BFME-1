@@ -108,6 +108,30 @@
 #include "visrasterizer.h"
 #include "meshgeometry.h"
 
+
+class BFMEVertexFVFInfo
+{
+public:
+	BFMEVertexFVFInfo(unsigned fvf, unsigned vertexSize);
+	void Rva00964150(unsigned fvf, unsigned vertexSize);
+
+private:
+	unsigned FVF;
+	unsigned fvf_size;
+	unsigned location_offset;
+	unsigned normal_offset;
+	unsigned blend_offset;
+	unsigned texcoord_offset[8];
+	unsigned diffuse_offset;
+	unsigned specular_offset;
+	unsigned format;
+};
+
+BFMEVertexFVFInfo::BFMEVertexFVFInfo(unsigned fvf, unsigned vertexSize)
+{
+    Rva00964150(fvf, vertexSize);
+}
+
 extern void W3DRadarResetLock(void);
 // Retail lock teardown tail-dispatches to RVA00905B10 and ignores AL.
 extern char bfmeUnlock1179(void);

@@ -6,10 +6,10 @@ public:
 	int m_bfmeRefsXZ;
 };
 
-class BfmeDynElemXZ
+class BFMEVertexFVFInfo
 {
 public:
-	void bfmeResetXZ(unsigned int fvf, int flag);
+	void Rva00964150(unsigned int fvf, unsigned int vertex_size);
 
 	unsigned char m_bfmePadXZ[0x40];
 };
@@ -42,7 +42,7 @@ extern const unsigned int BfmeDynamicFVFTable[15] = {
 extern bool BfmeDynamicDX8VertexBufferInUse[];
 unsigned short BfmeDynamicDX8VertexBufferSize[15] = {};
 extern unsigned short BfmeDynamicDX8VertexBufferOffset[];
-BfmeDynElemXZ BfmeDynamicVBSlots[15] = {};
+BFMEVertexFVFInfo BfmeDynamicVBSlots[15] = {};
 
 SortingVertexBufferClass *BfmeDynamicSortingVertexArray = 0;
 extern bool BfmeDynamicSortingVertexArrayInUse;
@@ -69,7 +69,7 @@ void DynamicVBAccessClass::_Deinit()
 		BfmeDynamicDX8VertexBufferSize[i] = 0x1388;
 		BfmeDynamicDX8VertexBufferOffset[i] = 0;
 
-		BfmeDynamicVBSlots[i].bfmeResetXZ(BfmeDynamicFVFTable[i], 0);
+		BfmeDynamicVBSlots[i].Rva00964150(BfmeDynamicFVFTable[i], 0);
 	}
 
 	SortingVertexBufferClass *sorting = BfmeDynamicSortingVertexArray;

@@ -6,10 +6,10 @@ public:
 	int m_bfmeRefsXZ;
 };
 
-class BfmeDynElemXZ
+class BFMEVertexFVFInfo
 {
 public:
-	void bfmeResetXZ(unsigned int fvf, int flag);
+	void Rva00964150(unsigned int fvf, unsigned int vertex_size);
 
 	unsigned char m_bfmePadXZ[0x40];
 };
@@ -19,7 +19,7 @@ extern "C" unsigned int _bfmeDynFvfXZ[];
 extern "C" unsigned char _bfmeDynInUseXZ[];
 extern "C" unsigned short _bfmeDynSizeXZ[];
 extern "C" unsigned short _bfmeDynOffsetXZ[];
-extern "C" BfmeDynElemXZ _bfmeDynElemXZ[];
+extern "C" BFMEVertexFVFInfo _bfmeDynElemXZ[];
 
 void bfmeResetDynXZ()
 {
@@ -43,6 +43,6 @@ void bfmeResetDynXZ()
 		_bfmeDynSizeXZ[i] = 0x1388;
 		_bfmeDynOffsetXZ[i] = 0;
 
-		_bfmeDynElemXZ[i].bfmeResetXZ(_bfmeDynFvfXZ[i], 0);
+		_bfmeDynElemXZ[i].Rva00964150(_bfmeDynFvfXZ[i], 0);
 	}
 }

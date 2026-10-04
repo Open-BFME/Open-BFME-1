@@ -17848,5 +17848,65 @@
   "after_sha256": "0ae87732f1e5ab0b9143572a05e842493aa6219a46cf2946c86b1dfb6025c219",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Link census: the referenced address is defined in the ledger under the new name (dir32_addresses.csv / functions.csv); the old spelling was a TU-local stand-in nothing defines, so the object could never link. Declaration-only, bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv2144.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv2144.cpp",
+  "old_name": "bfmeResetXZ",
+  "new_name": "Rva00964150",
+  "before_sha256": "15066b2b2eb87323c692f017523361db327b8563a5fccfb6f3e66290b4371503",
+  "after_sha256": "a9126e91e1835c25886caeee8fa269cb4164676471630e2f415b5eb6065c3380",
+  "evidence": "targets/game/reverse/identity_evidence/00964150-BFMEVertexFVFInfo.md",
+  "reason": "Retail 0x00964150 fills a 0x40-byte FVF record from an FVF and a vertex size (fifteen 0x40-stride slots at VA 0x013467F0), so Matrix3D::Set and the local stand-in names were wrong. The real member spelling is unproven, so the name carries the address. Bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WW3D2/BoxDynamicVBAccessCtor.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WW3D2/BoxDynamicVBAccessCtor.cpp",
+  "old_name": "bfmeResetXZ",
+  "new_name": "Rva00964150",
+  "before_sha256": "b10eb34591d1d35cac1aa3b3379806a50d13f1c7856f07c94cc906b5f2e9a3ed",
+  "after_sha256": "06c893e4a686e0f8662180cad9d83c2448a1341f84838cb12b080e48e1d6ea5c",
+  "evidence": "targets/game/reverse/identity_evidence/00964150-BFMEVertexFVFInfo.md",
+  "reason": "Retail 0x00964150 fills a 0x40-byte FVF record from an FVF and a vertex size (fifteen 0x40-stride slots at VA 0x013467F0), so Matrix3D::Set and the local stand-in names were wrong. The real member spelling is unproven, so the name carries the address. Bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WW3D2/DynamicVBAccessClassDeinitBFME.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WW3D2/DynamicVBAccessClassDeinitBFME.cpp",
+  "old_name": "bfmeResetXZ",
+  "new_name": "Rva00964150",
+  "before_sha256": "510157b5d8743799ca69dfa453f13265004a1bd95d514778b6a1a2486297d99d",
+  "after_sha256": "907539b875e1873d1850c9357af2ce888a9a10f0d815e2da9e4c70262b808bda",
+  "evidence": "targets/game/reverse/identity_evidence/00964150-BFMEVertexFVFInfo.md",
+  "reason": "Retail 0x00964150 fills a 0x40-byte FVF record from an FVF and a vertex size (fifteen 0x40-stride slots at VA 0x013467F0), so Matrix3D::Set and the local stand-in names were wrong. The real member spelling is unproven, so the name carries the address. Bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WWMath/Matrix3D_Set_Thunk.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WWMath/Matrix3D_Set_Thunk.cpp",
+  "old_name": "Set",
+  "new_name": "Rva00964150",
+  "before_sha256": "e681321c1499edc88485fefab5db26af0c38cd6ddf171ca2e21608dafecc0562",
+  "after_sha256": "570e953ec5e5b6c91d4878a6a30c5aa6896dea37364f25a6b9e02f1448e98b41",
+  "evidence": "targets/game/reverse/identity_evidence/00964150-BFMEVertexFVFInfo.md",
+  "reason": "Retail 0x00964150 fills a 0x40-byte FVF record from an FVF and a vertex size (fifteen 0x40-stride slots at VA 0x013467F0), so Matrix3D::Set and the local stand-in names were wrong. The real member spelling is unproven, so the name carries the address. Bytes unchanged."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00964150.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WWMath/Matrix3D_Set_Thunk.cpp",
+  "old_name": "Initialize",
+  "new_name": "Rva00964150",
+  "before_sha256": "b06aebe0f899c2eac1bdeef1634eef20ec94f959d919a65b3f8540a3557b313c",
+  "after_sha256": "570e953ec5e5b6c91d4878a6a30c5aa6896dea37364f25a6b9e02f1448e98b41",
+  "evidence": "targets/game/reverse/identity_evidence/00964150-BFMEVertexFVFInfo.md",
+  "reason": "Retail 0x00964150 fills a 0x40-byte FVF record from an FVF and a vertex size (fifteen 0x40-stride slots at VA 0x013467F0), so Matrix3D::Set and the local stand-in names were wrong. The real member spelling is unproven, so the name carries the address. Bytes unchanged."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "Set",
+  "new_name": "Rva00964150",
+  "before_sha256": "5a4eca71847a516d1c2d18c017621d3cda8ff782d63e916c1e2ffd1874e60c8a",
+  "after_sha256": "4f7dbb7547b5bc4213f40c9f5ab7d9575989aa567a87145bbdccc6735ff190ba",
+  "evidence": "targets/game/reverse/identity_evidence/00964150-BFMEVertexFVFInfo.md",
+  "reason": "Retail 0x00964150 fills a 0x40-byte FVF record from an FVF and a vertex size (fifteen 0x40-stride slots at VA 0x013467F0), so Matrix3D::Set and the local stand-in names were wrong. The real member spelling is unproven, so the name carries the address. Bytes unchanged."
  }
 ]

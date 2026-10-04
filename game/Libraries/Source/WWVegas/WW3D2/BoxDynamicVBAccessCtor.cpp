@@ -16,14 +16,14 @@ typedef unsigned int UnsignedInt;
 typedef unsigned short UnsignedShort;
 
 // Match the existing slot-storage owner in DynamicVBAccessClassDeinitBFME.cpp.
-class BfmeDynElemXZ
+class BFMEVertexFVFInfo
 {
 public:
-	void bfmeResetXZ(unsigned int fvf, int flag);
+	void Rva00964150(unsigned int fvf, unsigned int vertex_size);
 	unsigned char m_bfmePadXZ[0x40];
 };
 
-extern BfmeDynElemXZ BfmeDynamicVBSlots[];				// 0x013467F0
+extern BFMEVertexFVFInfo BfmeDynamicVBSlots[];				// 0x013467F0
 
 class BoxDynamicVBAccessClass
 {
@@ -34,7 +34,7 @@ public:
 private:
 	void bfmeAllocateSorting(void);					// retail 0x0091F5B0
 
-	BfmeDynElemXZ *m_bfmeSlot;					// +0x00
+	BFMEVertexFVFInfo *m_bfmeSlot;					// +0x00
 	UnsignedInt m_bfmeType;						// +0x04
 	UnsignedInt m_bfmeFVF;						// +0x08
 	UnsignedInt m_bfmeStart;					// +0x0C
