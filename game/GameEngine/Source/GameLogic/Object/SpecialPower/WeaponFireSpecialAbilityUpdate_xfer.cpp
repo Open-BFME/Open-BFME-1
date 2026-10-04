@@ -69,7 +69,10 @@ private:
 	void *m_weapon;
 };
 
-#pragma comment(linker, "/alternatename:?xfer@SpecialAbilityUpdate@@QAEXPAVXfer@@@Z=?j_000289f7@@YAXXZ")
+// The base serializer is reached through retail's ILT thunk ?j_000289f7@@YAXXZ
+// (retail RVA 0x000289F7); the call goes through a member-function pointer so no
+// local definition of SpecialAbilityUpdate::xfer is needed here.
+extern void j_000289f7();
 
 // ?xfer@WeaponFireSpecialAbilityUpdate@@QAEXPAVXfer@@@Z
 void WeaponFireSpecialAbilityUpdate::xfer(Xfer *xfer)
@@ -78,7 +81,9 @@ void WeaponFireSpecialAbilityUpdate::xfer(Xfer *xfer)
 	version.m_version = 1;
 	version.m_currentVersion = 2;
 	xfer->xferVersion(&version);
-	SpecialAbilityUpdate::xfer(xfer);
+	typedef void (SpecialAbilityUpdate::*Fn)(Xfer *);
+	union { void (*fn)(); Fn call; } base = { j_000289f7 };
+	((SpecialAbilityUpdate *)this->*base.call)(xfer);
 	if (xfer->skipTransfer0C())
 		return;
 	if (version.m_currentVersion < 2)
