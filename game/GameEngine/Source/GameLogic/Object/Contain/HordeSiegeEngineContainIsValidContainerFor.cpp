@@ -72,7 +72,16 @@ public:
 	}
 };
 
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
+// Retail calls Object::getControllingPlayer through the ILT thunk at 0x00020824;
+// the member pointer below reproduces that thiscall call site byte for byte.
+extern void j_00020824();
+
+static __forceinline Player *controllingPlayer(const Object *object)
+{
+	typedef Player *(Object::*Fn)() const;
+	union { void (*fn)(); Fn call; } u = { j_00020824 };
+	return (object->*u.call)();
+}
 
 // ?isValidContainerFor@HordeSiegeEngineContain@@UBE_NPBVObject@@_N@Z
 Bool HordeSiegeEngineContain::isValidContainerFor(const Object *object,
@@ -85,7 +94,7 @@ Bool HordeSiegeEngineContain::isValidContainerFor(const Object *object,
 	const Object *owner = getObject();
 	HordeSiegeEngineContainModuleData *data = getModuleData();
 	if (data->m_containFilter.accepts(rider,
-		owner->getControllingPlayer()))
+		controllingPlayer(owner)))
 	{
 		Int containMax = data->m_slotCapacity;
 		if (containMax > 0)
@@ -103,8 +112,8 @@ Bool HordeSiegeEngineContain::isValidContainerFor(const Object *object,
 			return TransportContain::isValidContainerFor(rider, checkCapacity);
 
 		sameOwner:
-			Player *ownerPlayer = getObject()->getControllingPlayer();
-			if (rider->getControllingPlayer() != ownerPlayer)
+			Player *ownerPlayer = controllingPlayer(getObject());
+			if (controllingPlayer(rider) != ownerPlayer)
 				return TransportContain::isValidContainerFor(rider, checkCapacity);
 			return true;
 		}
