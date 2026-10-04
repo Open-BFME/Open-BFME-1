@@ -164,9 +164,33 @@ extern PlayerList *ThePlayerList;
 extern MessageStream *TheMessageStream;
 extern InGameUI *TheInGameUI;
 
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
-#pragma comment(linker, "/alternatename:?findObjectByID@GameLogic@@QAEPAVObject@@H@Z=?j_0001f253@@YAXXZ")
-#pragma comment(linker, "/alternatename:?appendObjectIDArgument@GameMessage@@QAEXI@Z=?j_0002bcec@@YAXXZ")
+extern void j_00020824();
+extern void j_0001f253();
+extern void j_0002bcec();
+
+// Retail calls Object::getControllingPlayer through ILT 0x00020824.
+static __forceinline Player *callGetControllingPlayer(Object *object)
+{
+	typedef Player *(Object::*Fn)() const;
+	union { void (*fn)(); Fn call; } u = { j_00020824 };
+	return (object->*u.call)();
+}
+
+// Retail calls GameLogic::findObjectByID through ILT 0x0001f253.
+static __forceinline Object *callFindObjectByID(GameLogic *logic, int id)
+{
+	typedef Object *(GameLogic::*Fn)(int);
+	union { void (*fn)(); Fn call; } u = { j_0001f253 };
+	return (logic->*u.call)(id);
+}
+
+// Retail calls GameMessage::appendObjectIDArgument through ILT 0x0002bcec.
+static __forceinline void callAppendObjectIDArgument(GameMessage *message, UnsignedInt id)
+{
+	typedef void (GameMessage::*Fn)(UnsignedInt);
+	union { void (*fn)(); Fn call; } u = { j_0002bcec };
+	(message->*u.call)(id);
+}
 
 class TemporarilyDefectUpdate
 {
@@ -196,11 +220,11 @@ UpdateSleepTime TemporarilyDefectUpdate::update()
 		if (drawable != 0)
 		{
 			Player *localPlayer = ThePlayerList->m_localPlayer;
-			if (object->getControllingPlayer() == localPlayer)
+			if (callGetControllingPlayer(object) == localPlayer)
 			{
 				GameMessage *message = TheMessageStream->appendMessage(
 					GameMessage::MSG_REMOVE_FROM_SELECTED_GROUP);
-				message->appendObjectIDArgument(object->getID());
+				callAppendObjectIDArgument(message, object->getID());
 				TheInGameUI->deselectDrawable(drawable);
 			}
 		}
@@ -212,7 +236,7 @@ UpdateSleepTime TemporarilyDefectUpdate::update()
 	{
 		if (m_defectorID != zero)
 		{
-			Object *defector = logic->findObjectByID(m_defectorID);
+			Object *defector = callFindObjectByID(logic, m_defectorID);
 			if (defector == 0 || (*(const unsigned char *)((const char *)defector + 0x344) & 1) != 0)
 				m_defectorID = zero;
 			else
@@ -228,11 +252,11 @@ UpdateSleepTime TemporarilyDefectUpdate::update()
 	if (drawable != 0)
 	{
 		Player *localPlayer = ThePlayerList->m_localPlayer;
-		if (object->getControllingPlayer() == localPlayer)
+		if (callGetControllingPlayer(object) == localPlayer)
 		{
 			GameMessage *message = TheMessageStream->appendMessage(
 				GameMessage::MSG_REMOVE_FROM_SELECTED_GROUP);
-			message->appendObjectIDArgument(object->getID());
+			callAppendObjectIDArgument(message, object->getID());
 			TheInGameUI->deselectDrawable(drawable);
 		}
 	}
