@@ -1,168 +1,60 @@
 // cl: /DNDEBUG /MD /EHsc
 // readable body of ??0GarrisonContainModuleData@@QAE@XZ: game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain.cpp
 
+// GarrisonContainModuleData default constructor (0x0022F7E0, 153 B). It first
+// runs the 0x2F4-byte base constructor at 0x002472D0 (through ILT 0x0000ED77),
+// the body HorseHordeContain::friend_newModuleData allocates and calls, then
+// installs vtable 0x010ADE98 and sets its own defaults in field order. BFME's
+// layout differs from the Zero Hour header GarrisonContain.cpp compiles
+// against, so this TU keeps an offset-named view.
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/GarrisonContain.h
-class GarrisonContainModuleData
+class HorseHordeContainModuleData
 {
 public:
-    GarrisonContainModuleData();
+	HorseHordeContainModuleData();
+	virtual ~HorseHordeContainModuleData();
+
+private:
+	unsigned char m_pad[0x2f0];
 };
 
-__declspec(naked) GarrisonContainModuleData::GarrisonContainModuleData()
+class GarrisonContainModuleData : public HorseHordeContainModuleData
 {
-    __asm {
-        _emit 056h
-        _emit 08Bh
-        _emit 0F1h
-        _emit 0E8h
-        _emit 08Fh
-        _emit 0F5h
-        _emit 0DDh
-        _emit 0FFh
-        _emit 033h
-        _emit 0C0h
-        _emit 0B9h
-        _emit 000h
-        _emit 000h
-        _emit 080h
-        _emit 03Fh
-        _emit 089h
-        _emit 086h
-        _emit 0F4h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 086h
-        _emit 0F8h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 086h
-        _emit 0FCh
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 086h
-        _emit 000h
-        _emit 003h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 086h
-        _emit 004h
-        _emit 003h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 086h
-        _emit 008h
-        _emit 003h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 086h
-        _emit 00Ch
-        _emit 003h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 086h
-        _emit 010h
-        _emit 003h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 086h
-        _emit 014h
-        _emit 003h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 086h
-        _emit 018h
-        _emit 003h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 086h
-        _emit 024h
-        _emit 003h
-        _emit 000h
-        _emit 000h
-        _emit 0C7h
-        _emit 006h
-        _emit 098h
-        _emit 0DEh
-        _emit 00Ah
-        _emit 001h
-        _emit 089h
-        _emit 08Eh
-        _emit 01Ch
-        _emit 003h
-        _emit 000h
-        _emit 000h
-        _emit 0C7h
-        _emit 086h
-        _emit 020h
-        _emit 003h
-        _emit 000h
-        _emit 000h
-        _emit 066h
-        _emit 066h
-        _emit 0E6h
-        _emit 03Eh
-        _emit 0C7h
-        _emit 086h
-        _emit 028h
-        _emit 003h
-        _emit 000h
-        _emit 000h
-        _emit 0F0h
-        _emit 023h
-        _emit 074h
-        _emit 049h
-        _emit 0C7h
-        _emit 086h
-        _emit 02Ch
-        _emit 003h
-        _emit 000h
-        _emit 000h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 08Eh
-        _emit 030h
-        _emit 003h
-        _emit 000h
-        _emit 000h
-        _emit 0C7h
-        _emit 086h
-        _emit 034h
-        _emit 003h
-        _emit 000h
-        _emit 000h
-        _emit 09Ah
-        _emit 099h
-        _emit 099h
-        _emit 03Eh
-        _emit 0C7h
-        _emit 086h
-        _emit 038h
-        _emit 003h
-        _emit 000h
-        _emit 000h
-        _emit 0CDh
-        _emit 0CCh
-        _emit 0CCh
-        _emit 03Eh
-        _emit 08Bh
-        _emit 0C6h
-        _emit 05Eh
-        _emit 0C3h
-    }
+public:
+	GarrisonContainModuleData();
+	virtual ~GarrisonContainModuleData();
+
+private:
+	unsigned int m_2F4[10];
+	float m_31C;
+	float m_320;
+	unsigned int m_324;
+	float m_328;
+	int m_32C;
+	float m_330;
+	float m_334;
+	float m_338;
+};
+
+GarrisonContainModuleData::GarrisonContainModuleData()
+{
+	m_2F4[0] = 0;
+	m_2F4[1] = 0;
+	m_2F4[2] = 0;
+	m_2F4[3] = 0;
+	m_2F4[4] = 0;
+	m_2F4[5] = 0;
+	m_2F4[6] = 0;
+	m_2F4[7] = 0;
+	m_2F4[8] = 0;
+	m_2F4[9] = 0;
+	m_31C = 1.0f;
+	m_320 = 0.45f;
+	m_324 = 0;
+	m_328 = 999999.0f;
+	m_32C = 2;
+	m_330 = 1.0f;
+	m_334 = 0.3f;
+	m_338 = 0.4f;
 }
