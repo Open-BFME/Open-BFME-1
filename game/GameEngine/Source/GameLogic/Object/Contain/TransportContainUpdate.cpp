@@ -12,6 +12,7 @@
 // BitFlags::set(i, value), including its STLport wrapper, preserves the retail
 // test-before-write and mask allocation. reset(i) has a different code shape.
 extern float Rva012AEE3CTransportHealthRegenScale;
+extern void j_0000c1e9();
 
 
 typedef unsigned char Bool;
@@ -161,8 +162,6 @@ public:
 	virtual UpdateSleepTime update();
 };
 
-#pragma comment(linker, "/alternatename:?update@OpenContain@@UAE?AW4UpdateSleepTime@@XZ=?j_0000c1e9@@YAXXZ")
-
 class TransportContain : public OpenContain
 {
 public:
@@ -255,5 +254,10 @@ UpdateSleepTime TransportContain::update()
 	}
 
 finished:
-	return OpenContain::update();
+	{
+		// OpenContain::update is a retail ILT thunk at 0x0000C1E9; call it directly.
+		typedef UpdateSleepTime (OpenContain::*BaseUpdate)();
+		union { void (*fn)(); BaseUpdate call; } u = { j_0000c1e9 };
+		return (this->*u.call)();
+	}
 }
