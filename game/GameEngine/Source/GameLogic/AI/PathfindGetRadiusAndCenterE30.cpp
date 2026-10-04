@@ -121,7 +121,7 @@ public:
 	Int m_ignoreObstacleID;						// +0x844
 };
 
-void Pathfinder::getRadiusAndCenter( const Object *object, Int &radius, Bool &centerInCell )
+inline __declspec(noinline) void Pathfinder::getRadiusAndCenter( const Object *object, Int &radius, Bool &centerInCell )
 {
 	Real diameter;
 	Int maxRadius = 2;

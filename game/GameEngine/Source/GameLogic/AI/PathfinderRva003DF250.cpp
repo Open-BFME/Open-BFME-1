@@ -210,7 +210,7 @@ inline PathfindCell *Pathfinder::getCell( PathfindLayerEnum layer, Int cellX, In
 // Retail 0x003DEE30, matched in PathfindGetRadiusAndCenterE30.cpp; defined
 // out of line here as well, as in retail's AIPathfind.cpp, so the compiler
 // sees that it keeps neither reference.
-void Pathfinder::getRadiusAndCenter( const Object *object, Int &radius, Bool &centerInCell )
+inline __declspec(noinline) void Pathfinder::getRadiusAndCenter( const Object *object, Int &radius, Bool &centerInCell )
 {
 	Real diameter;
 	Int maxRadius = 2;

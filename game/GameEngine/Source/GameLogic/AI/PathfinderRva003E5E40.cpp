@@ -164,8 +164,20 @@ private:
 	PathfindLayer m_layers[16];			// +0x85c
 };
 
+// Retail rounds the floored value with fld/fistp, as the matched owner does.
+static __forceinline Int worldToCellFloor(Real f)
+{
+	Real floored = (Real)floor((double)f);
+	Int i;
+	__asm {
+		fld [floored]
+		fistp [i]
+	}
+	return i;
+}
+
 // Retail 0x003DEE30; logic of PathfindGetRadiusAndCenterE30.cpp.
-__declspec(noinline) void Pathfinder::getRadiusAndCenter( const Object *object, Int &radius, Bool &centerInCell )
+inline __declspec(noinline) void Pathfinder::getRadiusAndCenter( const Object *object, Int &radius, Bool &centerInCell )
 {
 	Real diameter;
 	Int maxRadius = 2;
@@ -190,7 +202,7 @@ __declspec(noinline) void Pathfinder::getRadiusAndCenter( const Object *object, 
 		object->getTemplate()->getFinalOverride())->m_level;
 	}
 
-	radius = REAL_TO_INT_FLOOR( diameter / 10.0f + g_pathfindCellCenterBias );
+	radius = worldToCellFloor( diameter / 10.0f + g_pathfindCellCenterBias );
 	centerInCell = false;
 	if (radius == 0) radius++;
 	if (radius & 1) {
@@ -206,16 +218,6 @@ __declspec(noinline) void Pathfinder::getRadiusAndCenter( const Object *object, 
 // Retail 0x003D7EC0; logic of pathfind_getcell.cpp.
 // Retail worldToCell floors through CRT floor and rounds with fistp (the BFME
 // REAL_TO_INT_FLOOR), not this file's _ftol cast; its own copy follows it.
-static __forceinline Int worldToCellFloor(Real f)
-{
-	Real floored = (Real)floor((double)f);
-	Int i;
-	__asm {
-		fld [floored]
-		fistp [i]
-	}
-	return i;
-}
 
 // One ANY-COMDAT copy per TU: every emission of worldToCell (retail 0x003D7EC0)
 // is this same inline, never-inlined body, so link.exe may keep any of them.

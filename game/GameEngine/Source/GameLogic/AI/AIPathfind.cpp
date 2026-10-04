@@ -12231,36 +12231,6 @@ void Pathfinder::changeBridgeState( PathfindLayerEnum layer, Bool repaired)
 	}
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/PathfindGetRadiusAndCenterE30.cpp
-// ?getRadiusAndCenter@Pathfinder@@IAEXPBVObject@@AAHAA_N@Z present-unmatched
-void Pathfinder::getRadiusAndCenter(const Object *object, Int &iRadius, Bool &center)
-{
-	enum {MAX_RADIUS = 2};
-	if (!object)
-	{
-		center = true;
-		iRadius = 0;
-		return;
-	}
-	Real diameter = 2*object->getGeometryInfo().getBoundingCircleRadius();
-	if (diameter>PATHFIND_CELL_SIZE_F && diameter<2.0f*PATHFIND_CELL_SIZE_F) {
-		diameter = 2.0f*PATHFIND_CELL_SIZE_F;
-	}
-	iRadius = REAL_TO_INT_FLOOR(diameter/PATHFIND_CELL_SIZE_F+0.3f);
-	center = false;	
-	if (iRadius==0) iRadius++;
-	if (iRadius&1) 
-	{
-		center = true;
-	}
-	iRadius /= 2;
-	if (iRadius > MAX_RADIUS) 
-	{
-		iRadius = MAX_RADIUS;
-		center = true;
-	}
-}
-
 /** 
  * Updates the goal cell for an ai unit.
  */

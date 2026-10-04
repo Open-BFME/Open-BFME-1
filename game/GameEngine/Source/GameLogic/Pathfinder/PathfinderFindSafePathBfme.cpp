@@ -249,7 +249,7 @@ private:
 // matches.  findSafePath needs it visible: only then does VC7.1 treat the
 // reference arguments as non-escaping, cache centerInCell in EBX for the search
 // loop and reuse its frame slot, as retail does.
-void Pathfinder::getRadiusAndCenter( const Object *object, Int &radius, Bool &centerInCell )
+inline __declspec(noinline) void Pathfinder::getRadiusAndCenter( const Object *object, Int &radius, Bool &centerInCell )
 {
 	Real diameter;
 	Int maxRadius = 2;

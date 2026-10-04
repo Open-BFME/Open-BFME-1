@@ -187,7 +187,7 @@ void Pathfinder::removeGoal003E3D20(Object *object)
 #undef REAL_TO_INT_FLOOR
 #define REAL_TO_INT_FLOOR(x) (fast_float2long_round((Real)floor((double)(x))))
 extern "C" __declspec(dllimport) double __cdecl floor(double);
-__declspec(noinline) void Pathfinder::getRadiusAndCenter(
+inline __declspec(noinline) void Pathfinder::getRadiusAndCenter(
 	const Object *object, Int &radius, Bool &centerInCell )
 {
 	Real diameter;
