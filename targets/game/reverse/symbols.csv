@@ -13198,7 +13198,7 @@ name,address,notes
 ?TheMouse@@3PAURva005A63D0Mouse@@A,0x012F4C5C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x005A63D0 calls; autopin
 ?TheMouse@@3PAVMouse@@A,0x012F4C5C,Open-BFME5 Mouse global used by InGameUI::setScrolling; capture/release and cursor vtable slots match the canonical interface
 ?TheMultiplayerSettings@@3PAVMultiplayerSettings@@A,0x012ED5FC,TheMultiplayerSettings singleton; DIR32 at Rva0051B560Host::bfmeProvide
-?TheNameKeyGenerator@@3PAVNameKeyGenerator@@A,0x012ED600,BFME global name-key generator pointer
+?TheNameKeyGenerator@@3PAVNameKeyGenerator@@A,0x00EED600,Native VA012ED600 minus imagebase400000; canonical NULL provider NameKeyGenerator.cpp; runtime GameEngine791B0 stores initialized generator
 ?TheNetwork@@3PAVNetworkInterface@@A,0x012F7714,BFME NetworkInterface global used by the GameEngine frame-pacing path
 ?TheNetwork@@3PAXA,0x012F7714,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00383690 calls; autopin
 ?TheNullChr@?1??str@?$StringBase@D@@QBEPBDXZ@4DB,0x0107388B,function-local static of StringBase<char>::str() (retail RVA 0x00C7388B); the 63-byte rts::hash<AsciiString> body at 0x000B8600 loads this address when m_data is null
