@@ -189,9 +189,10 @@ private:
  char m_extent[0x10];
 };
 class BfmeThingTC { public: void bfmeBaseTC(); };
-// C-linkage view of the retail table ??_7Rva005166B0@@6B@; defines no table.
-extern "C" void *bfmeVftRva005166B0[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva005166B0=??_7Rva005166B0@@6B@")
+// Direct reference to the retail table ??_7Rva005166B0@@6B@, spelled with
+// __identifier as the repo does elsewhere; defines no table. The array type
+// keeps the decay-to-pointer that retail's `mov dword ptr [eax], imm32` needs.
+extern "C" const char __identifier("??_7Rva005166B0@@6B@")[];
 // Opaque gadget hook. Existing17B base route479230 initializes the first
 // twelve bytes; real table11056DC has deleting-destructor/input/system slots.
 // The screen configures the remaining payload after this constructor returns.
@@ -201,7 +202,7 @@ public:
  LanLobbyTail()
  {
   ((BfmeThingTC *)this)->bfmeBaseTC();
-  m_vptr=bfmeVftRva005166B0;
+  m_vptr=(void *)__identifier("??_7Rva005166B0@@6B@");
  }
  ~LanLobbyTail();
 public:
