@@ -38,6 +38,7 @@
 // any of the five, so the names are address-derived and disclaim identity.
 
 #include <string.h>
+#include "Rva001701A0Record.h"
 
 #define BFME_TEN_WORD_ZEROING_CONSTRUCTOR( NAME )                             \
 	class NAME##Record                                                        \
@@ -53,6 +54,9 @@
 
 BFME_TEN_WORD_ZEROING_CONSTRUCTOR( Rva0016F640 )
 BFME_TEN_WORD_ZEROING_CONSTRUCTOR( Rva0016FE50 )
-BFME_TEN_WORD_ZEROING_CONSTRUCTOR( Rva001701A0 )
+Rva001701A0Record::Rva001701A0Record()
+{
+	memset(this, 0, sizeof(*this));
+}
 BFME_TEN_WORD_ZEROING_CONSTRUCTOR( Rva001C0990 )
 BFME_TEN_WORD_ZEROING_CONSTRUCTOR( Rva0028D8C0 )

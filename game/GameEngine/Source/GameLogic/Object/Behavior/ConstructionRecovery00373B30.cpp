@@ -1,5 +1,9 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Source/GameLogic/Object
 // stlport
+#define _STLP_USE_NEWALLOC 1
+#define _STLP_NO_EXCEPTIONS 1
+#include "CastleBehaviorRecovery.h"
+#include "../../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 enum NameKeyType { NAMEKEY_INVALID = 0 };
 enum DamageType { DAMAGE_TYPE_8 = 8 };
 enum DeathType { DEATH_TYPE_0 = 0 };
@@ -36,8 +40,6 @@ extern GameLogic* TheGameLogic;
 extern PlayerList* ThePlayerList;
 class AudioManager;
 extern AudioManager* TheAudio;
-extern void j_00013935();
-extern void j_0004B01A();
 template<class T> inline T& at(void* p,int n) { return *(T*)((char*)p+n); }
 struct DamageRecord00373B30 { char field00[12]; unsigned short field0c; char field0e[14]; float field1c; };
 class DamageSource00373B30 {
@@ -64,13 +66,10 @@ struct Audio00373B30 {
  virtual void v30(); virtual void v34(); virtual void v38(); virtual void v3c();
  virtual void v40(); virtual void add(const AudioEventRTS*);
 };
-struct Compare00373B30 {
- int compare(const char* s) { union {void* p; int (Compare00373B30::*f)(const char*); } u; u.p=(void*)j_0004B01A; return (this->*u.f)(s); }
-};
 class Rva00373B30Receiver {
 public:
  void update();
- void reset(bool b) { union {void* p; void (Rva00373B30Receiver::*f)(bool); } u; u.p=(void*)j_00013935; (this->*u.f)(b); }
+ void reset(bool b) { ((CastleBehavior*)this)->rva00372bd0(b); }
 };
 void Rva00373B30Receiver::update() {
  if(at<int*>(this,0xd0)==at<int*>(this,0xd4)) return;
@@ -85,13 +84,13 @@ void Rva00373B30Receiver::update() {
   DamageSource00373B30* damage=(DamageSource00373B30*)child->m_body;
   if(damage && damage->frame()>=at<unsigned>(this,0xb0) && damage->record() && damage->record()->field1c>0.0f) {
    Player* player=ThePlayerList->getPlayerFromMask(damage->record()->field0c);
-   if(player && player->getRelationship(object->getTeam())==0 && ((Compare00373B30*)((char*)player+0x1c))->compare("PlyrCreeps")!=0) { hostile=true; break; }
+   if(player && player->getRelationship(object->getTeam())==0 && ((StringBase<char>*)((char*)player+0x1c))->compare("PlyrCreeps")!=0) { hostile=true; break; }
   }
  }
  DamageSource00373B30* damage=(DamageSource00373B30*)object->m_body;
  if(damage && damage->frame()>=at<unsigned>(this,0xb0) && damage->record() && damage->record()->field1c>0.0f) {
   Player* player=ThePlayerList->getPlayerFromMask(damage->record()->field0c);
-  if(player && player->getRelationship(object->getTeam())==0 && ((Compare00373B30*)((char*)player+0x1c))->compare("PlyrCreeps")!=0) hostile=true;
+  if(player && player->getRelationship(object->getTeam())==0 && ((StringBase<char>*)((char*)player+0x1c))->compare("PlyrCreeps")!=0) hostile=true;
  }
  if(!(object->m_constructionPercent>=99.0f)) {
   if(at<unsigned>(TheGameLogic,0x3c)>=at<unsigned>(this,0xb0)+at<unsigned>(data,0x44)) expired=true;
@@ -116,11 +115,6 @@ effects:
 #include <algorithm>
 #include <hash_map>
 
-enum ObjectID
-{
-	INVALID_ID = 0,
-	FORCE_OBJECTID_TO_LONG_SIZE = 0x7ffffff
-};
 typedef _STL::hash_map<int, Object *, _STL::hash<int>,
 	_STL::equal_to<int> > CastleObjectMap00372BD0;
 
@@ -145,36 +139,6 @@ private:
 
 static inline Rva00367E30Logic *bfmeLogicView00373B30() { return (Rva00367E30Logic *)TheGameLogic; }
 
-struct CastleOwnedObjectVector00372BD0
-{
-	ObjectID *m_start;
-	ObjectID *m_finish;
-	ObjectID *m_capacity;
-
-	ObjectID *begin() { return m_start; }
-	ObjectID *end() { return m_finish; }
-	unsigned int size() { return (unsigned int)(m_finish - m_start); }
-	void clear() { m_finish = std::copy(m_finish, m_finish, m_start); }
-};
-
-struct CastleBehaviorModuleData00372BD0
-{
-	unsigned char m_pad00[0x50];
-	FXList *m_effects;
-};
-
-class CastleBehavior
-{
-public:
-	void rva00372bd0(Bool killOwnedObjects);
-
-private:
-	void *m_vtable;
-	CastleBehaviorModuleData00372BD0 *m_moduleData;
-	Object *m_object;
-	unsigned char m_pad0c[0xc4];
-	CastleOwnedObjectVector00372BD0 m_ownedObjectsD0;
-};
 
 class Rva00372BD0Calls {};
 
