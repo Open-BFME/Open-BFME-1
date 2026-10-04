@@ -364,21 +364,20 @@ public:
 	void prepare(void *first, void *second);
 };
 
+// privateMoveToPosition reaches these two state-machine bodies through the
+// retail ILT thunks 0x0002d308 and 0x00044319, not through a defining
+// symbol, so they are called through a member pointer whose address is the
+// thunk. Rva0016AD50/Rva0016AD90 exist only to type those pointers.
+extern void j_0002d308();
+extern void j_00044319();
+
 class Rva0016AD50
 {
-public:
-	void bfmeSnapshot();
 };
-
-#pragma comment(linker, "/alternatename:?bfmeSnapshot@Rva0016AD50@@QAEXXZ=?j_0002d308@@YAXXZ")
 
 class Rva0016AD90
 {
-public:
-	void setTemporaryState(StateID state, int frameCount);
 };
-
-#pragma comment(linker, "/alternatename:?setTemporaryState@Rva0016AD90@@QAEXW4StateID@@H@Z=?j_00044319@@YAXXZ")
 
 template<int N>
 class BfmeVirtualSlots : public BfmeVirtualSlots<N - 1>
@@ -624,12 +623,20 @@ void AIUpdateInterface::privateMoveToPosition(const Coord3D *position, CommandSo
 
 	if (!isIdle() && commandSource == CMD_FROM_AI)
 	{
-		reinterpret_cast<Rva0016AD50 *>(m_stateMachine)->bfmeSnapshot();
+		{
+			typedef void (Rva0016AD50::*Snapshot)();
+			union { void (*fn)(); Snapshot call; } u = { j_0002d308 };
+			(reinterpret_cast<Rva0016AD50 *>(m_stateMachine)->*u.call)();
+		}
 		reinterpret_cast<Rva002BC470StateAction *>(this)->prepare((void *)position, (void *)commandSource);
 		m_blockedFrames = 0;
 		m_isBlocked = 0;
 		m_isBlockedAndStuck = 0;
-		reinterpret_cast<Rva0016AD90 *>(m_stateMachine)->setTemporaryState(BFME_AI_MOVE_TO, 100);
+		{
+			typedef void (Rva0016AD90::*SetTemporaryState)(StateID, int);
+			union { void (*fn)(); SetTemporaryState call; } u = { j_00044319 };
+			(reinterpret_cast<Rva0016AD90 *>(m_stateMachine)->*u.call)(BFME_AI_MOVE_TO, 100);
+		}
 		return;
 	}
 
