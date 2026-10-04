@@ -292,8 +292,13 @@ public:
 	virtual Int read(void *buffer, Int bytes) = 0;
 };
 
-static void readUntilSemicolon( File *fp, char *buffer, int maxBufLen )
+// Retail 0x004843E0 passes all three arguments on the stack (cdecl).
+// Keep its existing body externally visible to the separately matched parsers.
+void readUntilSemicolon( File *fp, char *buffer, int maxBufLen )
 {
+	// Retail snapshots fp before the loop. External linkage otherwise makes
+	// MSVC 7.1 reload its argument slot in the loop; preserve the entry read.
+	File *file = *static_cast<File * volatile *>(&fp);
 	int i = 0;
 	Bool start = TRUE;
 
@@ -301,7 +306,7 @@ static void readUntilSemicolon( File *fp, char *buffer, int maxBufLen )
 	{
 
 		// get next character
-		reinterpret_cast<File_BFME_RetailRead *>(fp)->read(buffer + i, 1);
+		reinterpret_cast<File_BFME_RetailRead *>(file)->read(buffer + i, 1);
 
 		// make all whitespace characters spaces
 		if( isspace( buffer[ i ] ) ) 
