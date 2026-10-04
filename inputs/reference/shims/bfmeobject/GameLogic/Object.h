@@ -227,7 +227,7 @@ public:
 
 	Bool didEnter( const PolygonTrigger *pTrigger ) const;
 	Bool didExit( const PolygonTrigger *pTrigger ) const;
-	Bool testStatus( ObjectStatusTypes s ) const;
+	Bool testStatusRva001CC880( ObjectStatusTypes s ) const;
 	Bool hasSpecialPower( SpecialPowerType type ) const;
 
 protected:

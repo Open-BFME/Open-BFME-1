@@ -583,8 +583,8 @@ Bool Object::didExit( const PolygonTrigger *pTrigger ) const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?testStatus@Object@@QBE_NW4ObjectStatusTypes@@@Z
-Bool Object::testStatus( ObjectStatusTypes s ) const
+// ?testStatusRva001CC880@Object@@QBE_NW4ObjectStatusTypes@@@Z
+Bool Object::testStatusRva001CC880( ObjectStatusTypes s ) const
 {
 	if( m_status.test( s ) )
 		return TRUE;

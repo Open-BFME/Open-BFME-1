@@ -96,7 +96,7 @@ class Object
     Team *m_team;
     Player *getControllingPlayer() const;
     Module *findModule(NameKeyType) const;
-    bool testStatus(ObjectStatusTypes) const;
+    bool testStatusRva001CC880(ObjectStatusTypes) const;
     bool query(Object *, int);
 };
 class BFMESelectionStatusBits
@@ -235,7 +235,7 @@ void Drawable::react0041EBD0(const ReactionInfo0041EBD0 *info)
         }
     }
     if (!((BFMESelectionStatusBits *)object)->test(0x93) &&
-        !((BFMESelectionStatusBits *)object)->test(0x3e) && !object->testStatus(STATUS37))
+        !((BFMESelectionStatusBits *)object)->test(0x3e) && !object->testStatusRva001CC880(STATUS37))
     {
         Object *source = TheGameLogic->findObjectByID(info->m_08);
         if (source && !source->query((Object *)player, 1))
