@@ -58,6 +58,11 @@ public:
 	Bool bfmeIsNew(const BfmeThingDI *thing) const;
 };
 
+extern void j_00012e8b();
+class Route001F1620 {};
+typedef void (Route001F1620::*Rva001F1620Call)(Bool);
+// retail reaches 0x001F1620 through ILT 0x12E8B
+
 class BezierProjectileBehaviorModuleData
 {
 public:
@@ -89,7 +94,6 @@ public:
 	void rva001EFB20(Object *target);
 	void projectileFire();
 	void rva001F1B90(Bool flag);
-	void rva001F1620(Bool flag);
 	Bool rva001F1CE0(Object *other);
 
 private:
@@ -159,6 +163,9 @@ Bool BezierProjectileBehavior::rva001F1CE0(Object *other)
 	if (!data->m_killInsteadOfDestroy)
 		((BezierProjectileBehavior *)((char *)this - 0x20))->projectileFire();
 	else
-		((BezierProjectileBehavior *)((char *)this - 0x20))->rva001F1620(false);
+	{
+		union { void (*fn)(); Rva001F1620Call call; } route = { j_00012e8b };
+		(((Route001F1620 *)((char *)this - 0x20))->*route.call)(false);
+	}
 	return true;
 }
