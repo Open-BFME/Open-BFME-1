@@ -1,3 +1,7 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /Ob0 /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+#include "Common/GameMemory.h"
+#include "Common/Overridable.h"
+
 void __cdecl operator delete[](void *p);
 
 class BfmeOverride1137
@@ -5,9 +9,7 @@ class BfmeOverride1137
 public:
 	virtual void bfmeDeleteZB(int flag) = 0;
 
-	BfmeOverride1137 *bfmeFinalZB();
-
-	BfmeOverride1137 *m_bfme04ZB;
+	const Overridable *m_bfme04ZB;
 };
 
 class WeatherSetting;
@@ -32,7 +34,7 @@ static __forceinline BfmeOverride1137 *bfmeWalkZB(BfmeOverride1137 *p)
 	if (p->m_bfme04ZB == 0)
 		return p;
 
-	return p->m_bfme04ZB->bfmeFinalZB();
+	return (BfmeOverride1137 *)p->m_bfme04ZB->getFinalOverride();
 }
 
 class BfmeHostZB : public SubsystemInterface
@@ -54,11 +56,11 @@ BfmeHostZB::~BfmeHostZB()
 
 	if (g != 0)
 	{
-		BfmeOverride1137 *n = g->m_bfme04ZB;
+		const Overridable *n = g->m_bfme04ZB;
 
-		if ((n != 0 ? n->bfmeFinalZB() : g) != 0)
+		if ((n != 0 ? (BfmeOverride1137 *)n->getFinalOverride() : g) != 0)
 		{
-			BfmeOverride1137 *ov = (n != 0 ? n->bfmeFinalZB() : g);
+			BfmeOverride1137 *ov = (n != 0 ? (BfmeOverride1137 *)n->getFinalOverride() : g);
 
 			if (ov != 0)
 				ov->bfmeDeleteZB(1);
