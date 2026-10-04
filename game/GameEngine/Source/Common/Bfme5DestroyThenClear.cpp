@@ -7,7 +7,7 @@ class BfmeVecAW;
 
 void __cdecl bfmeDestroyRange(BfmeVecAW *vector);		// retail thunk 0x00034DC9 -> 0x00434DC9
 
-inline int *bfmeCopyRange(int *destination, const int *first, const int *last)
+static inline int *bfmeCopyRange(int *destination, const int *first, const int *last)
 {
 	if (first == last)
 		return destination;

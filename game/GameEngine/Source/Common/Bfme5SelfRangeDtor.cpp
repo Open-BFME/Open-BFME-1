@@ -32,7 +32,7 @@ class __node_alloc
 extern "C" __declspec(dllimport) void *__cdecl memmove(
 	void *destination, const void *source, unsigned int bytes);
 
-inline int *bfmeCopyRange(int *destination, const int *first, const int *last)
+static inline int *bfmeCopyRange(int *destination, const int *first, const int *last)
 {
 	if (first == last)
 		return destination;

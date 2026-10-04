@@ -71,7 +71,7 @@ Gen_003C55F0::Gen_003C55F0(void) : m_bfmeGapA(0), m_bfmeGapB(0)
 	m_bfmeThird.bfmeClear();
 }
 
-inline int *bfmeCopyRange(int *destination, const int *first, const int *last)
+static inline int *bfmeCopyRange(int *destination, const int *first, const int *last)
 {
 	if (first == last)
 		return destination;
