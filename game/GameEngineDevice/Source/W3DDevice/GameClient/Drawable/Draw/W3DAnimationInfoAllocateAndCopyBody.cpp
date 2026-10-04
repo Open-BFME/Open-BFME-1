@@ -17,6 +17,10 @@ private:
 	unsigned char m_data[16];
 };
 
+// Declared before the friend declarations below so they name this function
+// and not a fresh _STL-scope declaration.
+void j_0003D3C5(void);
+
 namespace _STL
 {
 // The node allocator's pool entry points are private STLport members
@@ -42,6 +46,11 @@ class allocator {};
 template <class Type, class Allocator>
 class vector
 {
+	// The thunk below needs this member's address, and taking it from outside
+	// the class would force public access, which changes the mangled name to
+	// the ?QAE form instead of retail's ?IAE one. The qualified friend form is
+	// the one MSVC 7.1 binds to the global declaration.
+	friend void ::j_0003D3C5(void);
 protected:
 	template <class Iterator>
 	Type *_M_allocate_and_copy(unsigned int, Iterator, Iterator);
@@ -83,11 +92,23 @@ template W3DAnimationInfo *vector<W3DAnimationInfo, allocator<W3DAnimationInfo> 
 	unsigned int, const W3DAnimationInfo *, const W3DAnimationInfo *);
 }
 
-extern void rva0003D3C5Target(void);
+typedef _STL::vector<W3DAnimationInfo, _STL::allocator<W3DAnimationInfo> > W3DAnimationInfoVector;
+typedef W3DAnimationInfo *(W3DAnimationInfoVector::*AllocateAndCopyMemberFn)(
+	unsigned int, const W3DAnimationInfo *, const W3DAnimationInfo *);
 
-#pragma comment(linker, "/alternatename:?rva0003D3C5Target@@YAXXZ=??$_M_allocate_and_copy@PBVW3DAnimationInfo@@@?$vector@VW3DAnimationInfo@@V?$allocator@VW3DAnimationInfo@@@_STL@@@_STL@@IAEPAVW3DAnimationInfo@@IPBV2@0@Z")
+// The retail thunk at 0x0003D3C5 is a bare tail jump to this TU's own
+// _M_allocate_and_copy, so it carries that member's address in a
+// function-local union and tail-calls it through the void() view: exactly the
+// five bytes the ledger verifies, with no linker alias involved.
+union W3DAnimationInfoAllocateAndCopyEntry
+{
+	void (__cdecl *thunk)();
+	AllocateAndCopyMemberFn body;
+};
 
 void j_0003D3C5(void)
 {
-	rva0003D3C5Target();
+	W3DAnimationInfoAllocateAndCopyEntry entry;
+	entry.body = &W3DAnimationInfoVector::_M_allocate_and_copy<const W3DAnimationInfo *>;
+	entry.thunk();
 }
