@@ -45,6 +45,9 @@
 // are all distinct, so the six rows are six types.
 //
 // IDENTITY IS NOT RECOVERED.  Every name is derived from an address.
+// The destructor at 005C7180 owns the 11-byte cleanup at 00C39A50:
+// FuncInfo 00E28F24 state 0 -> -1 maps to this object's $L702. It destroys
+// Mid0112F304 after adjusting the saved virtual-base receiver by -0x6C.
 //
 // WHAT THE BYTES CANNOT DECIDE.  The virtual base's contents beyond "it starts
 // with a vfptr", the member's width, and how the padding is split between the
