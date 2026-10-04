@@ -101,24 +101,48 @@ public:
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 
+// Retail routes these calls through incremental-link thunks at these addresses;
+// call them directly so the object references the thunk names.
+extern void j_0002369b();
+extern void j_0003add7();
+extern void j_0002ae23();
+extern void j_0000321a();
+extern void j_000179fe();
+extern void j_000022bb();
+extern void j_00041a56();
+
 void Object::onDisabledEdge(bool becomingDisabled)
 {
 	Player *controller;
 	Object *self = this;
 	Module *mod = 0;
-	controller = self->m_team ? self->m_team->getControllingPlayer() : 0;
+	typedef Player *(Team::*GetControllingPlayer)() const;
+	union { void (*fn)(); GetControllingPlayer call; } getControllingPlayer = { j_0002369b };
+	controller = self->m_team ? (self->m_team->*getControllingPlayer.call)() : 0;
 	if (controller)
 	{
-		static NameKeyType radar = TheNameKeyGenerator->nameToKey("RadarUpgrade");
-		mod = self->findModule(radar);
+		typedef NameKeyType (NameKeyGenerator::*NameToKey)(const char *);
+		union { void (*fn)(); NameToKey call; } nameToKey = { j_0003add7 };
+		static NameKeyType radar = (TheNameKeyGenerator->*nameToKey.call)("RadarUpgrade");
+		typedef Module *(Object::*FindModule)(NameKeyType) const;
+		union { void (*fn)(); FindModule call; } findModule = { j_0002ae23 };
+		mod = (self->*findModule.call)(radar);
 		if (mod)
 		{
 			if (mod->m_upgradeInterface.isAlreadyUpgraded())
 			{
 				if (becomingDisabled)
-					controller->removeRadar(mod->m_owner->m_disableProof);
+				{
+					typedef void (Player::*RemoveRadar)(bool);
+					union { void (*fn)(); RemoveRadar call; } removeRadar = { j_0000321a };
+					(controller->*removeRadar.call)(mod->m_owner->m_disableProof);
+				}
 				else
-					((Rva000CBFA0Player *)controller)->addRadar(mod->m_owner->m_disableProof);
+				{
+					typedef void (Rva000CBFA0Player::*AddRadar)(bool);
+					union { void (*fn)(); AddRadar call; } addRadar = { j_000179fe };
+					(((Rva000CBFA0Player *)controller)->*addRadar.call)(mod->m_owner->m_disableProof);
+				}
 			}
 		}
 	}
@@ -128,17 +152,18 @@ void Object::onDisabledEdge(bool becomingDisabled)
 	{
 		Overridable *templateObject = ((Thing *)finalTemplate)->m_template;
 		if (templateObject)
-			finalTemplate = (ThingTemplate *)templateObject->getFinalOverride();
+		{
+			typedef const Overridable *(Overridable::*GetFinalOverride)() const;
+			union { void (*fn)(); GetFinalOverride call; } getFinalOverride = { j_000022bb };
+			finalTemplate = (ThingTemplate *)(templateObject->*getFinalOverride.call)();
+		}
 	}
 	int power = finalTemplate->m_energyProduction;
 	if (power > 0 && controller)
-		controller->m_energy.adjustPower(power, !becomingDisabled);
+	{
+		typedef void (Energy::*AdjustPower)(int, bool);
+		union { void (*fn)(); AdjustPower call; } adjustPower = { j_00041a56 };
+		(controller->m_energy.*adjustPower.call)(power, !becomingDisabled);
+	}
 }
 
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Team@@QBEPAVPlayer@@XZ=?j_0002369b@@YAXXZ")
-#pragma comment(linker, "/alternatename:?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z=?j_0003add7@@YAXXZ")
-#pragma comment(linker, "/alternatename:?findModule@Object@@IBEPAVModule@@W4NameKeyType@@@Z=?j_0002ae23@@YAXXZ")
-#pragma comment(linker, "/alternatename:?removeRadar@Player@@QAEX_N@Z=?j_0000321a@@YAXXZ")
-#pragma comment(linker, "/alternatename:?addRadar@Player@@QAEX_N@Z=?j_000179fe@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?adjustPower@Energy@@QAEXH_N@Z=?j_00041a56@@YAXXZ")
