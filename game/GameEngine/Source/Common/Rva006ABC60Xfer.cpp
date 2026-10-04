@@ -50,9 +50,27 @@ public:
 	virtual Xfer &xferBool(Bool *value);
 };
 
-extern void __cdecl xferTree(Xfer *xfer, void *tree);
 // Retail reaches the AsciiString->Real map xfer 0x006B0850 through ILT 0x000149D4.
 extern void j_000149d4();
+// Retail reaches the STL tree xfer through ILT 0x00003544.
+extern void j_00003544();
+// Retail reaches the volume refresh helper through ILT 0x00019E6B.
+extern void j_00019e6b();
+
+typedef void(__cdecl *XferTreeFunction)(Xfer *xfer, void *tree);
+
+union XferTreeCast
+{
+	void (*raw)();
+	XferTreeFunction function;
+};
+
+static __forceinline void xferTreeThunk(void (*thunk)(), Xfer *xfer, void *tree)
+{
+	XferTreeCast cast;
+	cast.raw = thunk;
+	cast.function(xfer, tree);
+}
 
 typedef Xfer *(__cdecl *XferMapFunction)(Xfer *xfer, void *map);
 
@@ -69,13 +87,10 @@ static __forceinline Xfer *xferStringRealMap(void (*thunk)(), Xfer *xfer, void *
 	return cast.function(xfer, map);
 }
 
-#pragma comment(linker, "/alternatename:?xferTree@@YAXPAVXfer@@PAX@Z=?j_00003544@@YAXXZ")
-
 class Rva006ABC60
 {
 public:
 	void xfer(Xfer *xfer);
-	void refreshPair(int a, int b);
 
 private:
 	char m_pad0[4];
@@ -98,8 +113,6 @@ private:
 	char m_map[0x18];
 };
 
-#pragma comment(linker, "/alternatename:?refreshPair@Rva006ABC60@@QAEXHH@Z=?j_00019e6b@@YAXXZ")
-
 void Rva006ABC60::xfer(Xfer *xfer)
 {
 	register Rva006ABC60 &record = *this;
@@ -112,7 +125,7 @@ void Rva006ABC60::xfer(Xfer *xfer)
 		for (int j = 0; j < 2; ++j)
 			xfer->xferReal(&record.m_baseAndProduct[i * 2 + j]);
 
-	xferTree(xfer, record.m_tree);
+	xferTreeThunk(j_00003544, xfer, record.m_tree);
 	xfer->xferReal(&record.m_scale);
 	xfer->xferBool(&record.m_enabled);
 	if (record.m_enabled)
@@ -126,7 +139,10 @@ void Rva006ABC60::xfer(Xfer *xfer)
 	}
 	xferStringRealMap(j_000149d4, xfer, record.m_map);
 
+	typedef void (Rva006ABC60::*RefreshPair)(int, int);
+	union { void (*raw)(); RefreshPair call; } thunk = { j_00019e6b };
+
 	for (int i = 0; i < 6; ++i)
 		for (int j = 0; j < 2; ++j)
-			record.refreshPair(i, j);
+			(record.*thunk.call)(i, j);
 }
