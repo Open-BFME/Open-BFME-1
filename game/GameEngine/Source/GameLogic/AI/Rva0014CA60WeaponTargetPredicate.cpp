@@ -5,8 +5,9 @@ typedef int Int;
 typedef float Real;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
-// Retail's nameToKey returns this enum by value; MSVC mangles a by-value enum
-// return as ?AW4NameKeyType@@, the matched defining symbol (0x0008FFC0).
+// Retail calls nameToKey through the ILT thunk ?j_0003add7@@YAXXZ; it returns
+// this enum by value, so the member-pointer typedef spells it ?AW4NameKeyType@@
+// (retail's defining symbol is 0x0008FFC0).
 enum NameKeyType
 {
 	NAMEKEY_INVALID = 0,
@@ -27,17 +28,11 @@ class Module;
 
 class BfmeOutOfWeaponRangeTemplate
 {
-public:
-	Bool isLeechRangeWeapon() const;
 };
 
 class BfmeOutOfWeaponRangeWeapon
 {
 public:
-	Bool isWithinAttackRange(const BfmeOutOfWeaponRangeObject *source,
-		const BfmeOutOfWeaponRangeObject *target,
-		Int extra) const;
-
 	BfmeOutOfWeaponRangeTemplate *getTemplate() const
 	{
 		return *(BfmeOutOfWeaponRangeTemplate **)((const char *)this + 4);
@@ -50,8 +45,6 @@ class BfmeFourSlotEntry : public BfmeOutOfWeaponRangeWeapon
 
 class BfmeFourSlotTable
 {
-public:
-	BfmeFourSlotEntry *bfmeGet(Int slot);
 };
 
 class HordeContainInterface
@@ -176,24 +169,15 @@ public:
 
 class NameKeyGenerator
 {
-public:
-	NameKeyType nameToKey(const char *name);
 };
 
 class Module
 {
-public:
-	Bool is() const;
 };
 
 class Object
 {
 public:
-	Int getLayer() const;
-	Module *findModule(NameKeyType key) const;
-	Real getDistanceSquared(const Object *target) const;
-	Real getVisionRange() const;
-
 	char m_pad000[0x1fc];
 	ContainModule *m_contain;
 	char m_pad0200[4];
@@ -212,30 +196,27 @@ public:
 
 class BfmeOutOfWeaponRangeObject : public Object
 {
-public:
-	Bool isKindOf(KindOfType kind) const;
 };
 
 class Rva00266340
 {
-public:
-	Bool is() const;
 };
 
 extern AI *TheAI;
 extern NameKeyGenerator *TheNameKeyGenerator;
 
-#pragma comment(linker, "/alternatename:?isLeechRangeWeapon@BfmeOutOfWeaponRangeTemplate@@QBE_NXZ=?j_00028f74@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isWithinAttackRange@BfmeOutOfWeaponRangeWeapon@@QBE_NPBVBfmeOutOfWeaponRangeObject@@0H@Z=?j_0002e85c@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeGet@BfmeFourSlotTable@@QAEPAVBfmeFourSlotEntry@@H@Z=?j_0003c8e9@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isKindOf@BfmeOutOfWeaponRangeObject@@QBE_NW4KindOfType@@@Z=?j_0003251f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?is@Rva00266340@@QBE_NXZ=?j_00048112@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getLayer@Object@@QBEHXZ=?j_0003a391@@YAXXZ")
-#pragma comment(linker, "/alternatename:?findModule@Object@@IBEPAVModule@@W4NameKeyType@@@Z=?j_0002ae23@@YAXXZ")
-#pragma comment(linker, "/alternatename:?is@Module@@QBE_NXZ=?j_00048112@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getDistanceSquared@Object@@QBEMPBV1@@Z=?j_00043ced@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getVisionRange@Object@@QBEMXZ=?j_00014b4b@@YAXXZ")
-#pragma comment(linker, "/alternatename:?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z=?j_0003add7@@YAXXZ")
+// Retail calls every predicate below through an incremental-link thunk, so the
+// direct call target is the 5-byte ILT thunk `?j_...@@YAXXZ`, not the member.
+extern void j_00028f74();
+extern void j_0002e85c();
+extern void j_0003c8e9();
+extern void j_0003251f();
+extern void j_00048112();
+extern void j_0003a391();
+extern void j_0002ae23();
+extern void j_00043ced();
+extern void j_00014b4b();
+extern void j_0003add7();
 
 // ?rva0014ca60@@YA_NPAVBfmeOutOfWeaponRangeObject@@0@Z
 Bool __cdecl rva0014ca60(BfmeOutOfWeaponRangeObject *source,
@@ -254,14 +235,17 @@ Bool __cdecl rva0014ca60(BfmeOutOfWeaponRangeObject *source,
 	if ((status & 8) != 0 || ai->m_playerIdle)
 		onGround = true;
 
-	if (source->isKindOf(KINDOF_0014CA60_HORDE))
+	typedef Bool (BfmeOutOfWeaponRangeObject::*KindOf)(KindOfType) const;
+	union { void (*fn)(); KindOf call; } kindOf = { j_0003251f };
+
+	if ((source->*kindOf.call)(KINDOF_0014CA60_HORDE))
 	{
 		ContainModule *contain = source->m_contain;
 		if (!contain)
 			return false;
 
 		HordeContainInterface *horde = contain->slot26();
-		BfmeOutOfWeaponRangeObject *weaponObject = source->isKindOf(KINDOF_0014CA60_HORDE_MEMBER)
+		BfmeOutOfWeaponRangeObject *weaponObject = (source->*kindOf.call)(KINDOF_0014CA60_HORDE_MEMBER)
 			? horde->slot20()
 			: horde->slot61();
 		if (!weaponObject)
@@ -271,34 +255,54 @@ Bool __cdecl rva0014ca60(BfmeOutOfWeaponRangeObject *source,
 		BfmeFourSlotTable *weaponSet = weaponObject->weaponSet();
 		for (; slot < 4; ++slot)
 		{
-			BfmeFourSlotEntry *weapon = weaponSet->bfmeGet(slot);
+			typedef BfmeFourSlotEntry *(BfmeFourSlotTable::*SlotGet)(Int);
+			typedef Bool (BfmeOutOfWeaponRangeWeapon::*InRange)(const BfmeOutOfWeaponRangeObject *,
+				const BfmeOutOfWeaponRangeObject *, Int) const;
+			typedef Bool (BfmeOutOfWeaponRangeTemplate::*Leech)() const;
+			typedef Int (Object::*Layer)() const;
+			typedef Real (Object::*DistSq)(const Object *) const;
+			typedef Real (Object::*Vision)() const;
+			union { void (*fn)(); SlotGet call; } slotGet = { j_0003c8e9 };
+			union { void (*fn)(); InRange call; } inRange = { j_0002e85c };
+			union { void (*fn)(); Leech call; } leech = { j_00028f74 };
+			union { void (*fn)(); Layer call; } layer = { j_0003a391 };
+			union { void (*fn)(); DistSq call; } distSq = { j_00043ced };
+			union { void (*fn)(); Vision call; } vision = { j_00014b4b };
+			BfmeFourSlotEntry *weapon = (weaponSet->*slotGet.call)(slot);
 			if (!weapon)
 				continue;
-			if (weapon->isWithinAttackRange(source, target, 0))
+			if ((weapon->*inRange.call)(source, target, 0))
 				return true;
-			if (!weapon->getTemplate()->isLeechRangeWeapon())
+			BfmeOutOfWeaponRangeTemplate *tmpl = weapon->getTemplate();
+			if (!(tmpl->*leech.call)())
 				continue;
 			if (onGround)
 				goto rva0014ca60_fail;
-			Bool sameLayer = target->getLayer() == source->getLayer();
+			Bool sameLayer = (target->*layer.call)() == (source->*layer.call)();
 			if (sameLayer)
 				goto rva0014ca60_horde_distance;
 
 			{
-				if (!target->isKindOf(KINDOF_0014CA60_SIEGE_TARGET))
+				if (!(target->*kindOf.call)(KINDOF_0014CA60_SIEGE_TARGET))
 					continue;
 
+				typedef NameKeyType (NameKeyGenerator::*NameToKey)(const char *);
+				typedef Module *(Object::*FindModule)(NameKeyType) const;
+				typedef Bool (Rva00266340::*Is)() const;
+				union { void (*fn)(); NameToKey call; } nameToKey = { j_0003add7 };
+				union { void (*fn)(); FindModule call; } findModule = { j_0002ae23 };
+				union { void (*fn)(); Is call; } is = { j_00048112 };
 				static NameKeyType siegeDeploySpecialPowerKey =
-					TheNameKeyGenerator->nameToKey("SiegeDeploySpecialPower");
-				Module *module = target->findModule(siegeDeploySpecialPowerKey);
-			if (!module || !((Rva00266340 *)module)->is())
+					(TheNameKeyGenerator->*nameToKey.call)("SiegeDeploySpecialPower");
+				Module *module = (target->*findModule.call)(siegeDeploySpecialPowerKey);
+				if (!module || !(((Rva00266340 *)module)->*is.call)())
 					continue;
 
 			}
 
 			rva0014ca60_horde_distance:
-			Real distance = source->getDistanceSquared(target);
-			Real radius = source->getVisionRange();
+			Real distance = (source->*distSq.call)(target);
+			Real radius = (source->*vision.call)();
 			if (radius > TheAI->m_data->m_hordeAttackRadius)
 				radius = TheAI->m_data->m_hordeAttackRadius;
 			if (distance < radius * radius)
@@ -310,20 +314,34 @@ Bool __cdecl rva0014ca60(BfmeOutOfWeaponRangeObject *source,
 	BfmeFourSlotTable *weaponSet = source->weaponSet();
 	for (Int slot = 0; slot < 4; ++slot)
 	{
-		BfmeFourSlotEntry *weapon = weaponSet->bfmeGet(slot);
+		typedef BfmeFourSlotEntry *(BfmeFourSlotTable::*SlotGet)(Int);
+		typedef Bool (BfmeOutOfWeaponRangeWeapon::*InRange)(const BfmeOutOfWeaponRangeObject *,
+			const BfmeOutOfWeaponRangeObject *, Int) const;
+		typedef Bool (BfmeOutOfWeaponRangeTemplate::*Leech)() const;
+		typedef Int (Object::*Layer)() const;
+		typedef Real (Object::*DistSq)(const Object *) const;
+		typedef Real (Object::*Vision)() const;
+		union { void (*fn)(); SlotGet call; } slotGet = { j_0003c8e9 };
+		union { void (*fn)(); InRange call; } inRange = { j_0002e85c };
+		union { void (*fn)(); Leech call; } leech = { j_00028f74 };
+		union { void (*fn)(); Layer call; } layer = { j_0003a391 };
+		union { void (*fn)(); DistSq call; } distSq = { j_00043ced };
+		union { void (*fn)(); Vision call; } vision = { j_00014b4b };
+		BfmeFourSlotEntry *weapon = (weaponSet->*slotGet.call)(slot);
 		if (!weapon)
 			continue;
-		if (weapon->isWithinAttackRange(source, target, 0))
+		if ((weapon->*inRange.call)(source, target, 0))
 			return true;
-		if (!weapon->getTemplate()->isLeechRangeWeapon())
+		BfmeOutOfWeaponRangeTemplate *tmpl = weapon->getTemplate();
+		if (!(tmpl->*leech.call)())
 			continue;
 		if (onGround)
 			goto rva0014ca60_fail;
-		if (target->getLayer() != source->getLayer())
+		if ((target->*layer.call)() != (source->*layer.call)())
 			continue;
 
-		Real distance = source->getDistanceSquared(target);
-		Real radius = source->getVisionRange();
+		Real distance = (source->*distSq.call)(target);
+		Real radius = (source->*vision.call)();
 		if (radius > TheAI->m_data->m_hordeAttackRadius)
 			radius = TheAI->m_data->m_hordeAttackRadius;
 		if (distance < radius * radius)
