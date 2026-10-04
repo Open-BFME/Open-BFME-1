@@ -8,9 +8,9 @@
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-// The descriptor validity call is BfmeHostERT::bfmeQueryERT at 0x0039E780;
-// 0x000413B2 is its ILT.
-#pragma comment(linker, "/alternatename:?bfmeAmmoReady@Weapon@@QBE_NXZ=?j_0001b9a0@@YAXXZ")
+// 0x0001b9a0 is the ILT the retail body calls for its ammo-readiness test;
+// it is named here directly instead of through a linker alias.
+extern void j_0001b9a0();
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
@@ -54,7 +54,6 @@ class Weapon
 public:
 	virtual void unused();
 	UnsignedInt getRemainingAmmo(Bool countReloadingAsEmpty) const;
-	Bool bfmeAmmoReady() const;
 
 private:
 	WeaponStatus bfmeComputeStatus(Bool *valid) const;
@@ -102,7 +101,9 @@ WeaponStatus Weapon::bfmeComputeStatus(Bool *valid) const
 		if (now < m_whenWeCanFireAgain)
 			return OUT_OF_AMMO;
 		WeaponTemplate *templateForAmmo = m_template;
-		if (!templateForAmmo->m_ammo.bfmeQueryERT() || !bfmeAmmoReady())
+		typedef Bool (Weapon::*AmmoReadyFn)() const;
+		union { void (*fn)(); AmmoReadyFn call; } ammoReady = { j_0001b9a0 };
+		if (!templateForAmmo->m_ammo.bfmeQueryERT() || !(this->*ammoReady.call)())
 			return OUT_OF_AMMO;
 		return READY_TO_FIRE;
 	}
