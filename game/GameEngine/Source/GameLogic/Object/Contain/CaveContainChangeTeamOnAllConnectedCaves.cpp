@@ -68,7 +68,7 @@ public:
 		return m_modules;
 	}
 
-	Team *getTeam()
+	Team *getTeam() const
 	{
 		return m_team;
 	}
