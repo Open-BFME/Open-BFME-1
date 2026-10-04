@@ -16,9 +16,18 @@ struct BfmeP1226
 class BfmeR1226
 {
 public:
-	void bfmeAdd1226(void *a, void *b, int c);
 	void bfmeLine1226(char *a);
 };
+
+// Retail 0x008CCED0 is the gen-asm dump body ?d_008cced0@@YAXXZ (owned by
+// game/gen_asm/d_008cb600.asm); the bfmeAdd1226@BfmeR1226 spelling was a pin
+// for that address, not a definition.  The callee is thiscall with two stack
+// arguments, so route it through a member pointer (same convention as
+// Rva003855F0Transition.cpp); the self type must be complete or the compiler
+// emits a runtime adjustor.
+extern void d_008cced0();
+
+struct Rva008CCED0Self { int m_pad; };
 
 // The global stack object itself carries the defining name; the methods keep
 // their own pinned class spelling, so the access goes through a cast.
@@ -43,7 +52,9 @@ void BfmeA1226::bfmeDump1226(void *a, int k)
 		e = m_bfme04[k].m_bfme04[i];
 		if (e->m_bfme00 == 1) {
 			BfmeR1226 *stack = (BfmeR1226 *)&Rva008AE770TheStack;
-			stack->bfmeAdd1226(e->m_bfme04, a, -1);
+			union { void (*raw)(); void (Rva008CCED0Self::*member)(void *, void *, int); } add;
+			add.raw = d_008cced0;
+			((Rva008CCED0Self *)stack->*add.member)(e->m_bfme04, a, -1);
 			stack->bfmeLine1226(g_bfmeStr1226);
 		}
 	}
