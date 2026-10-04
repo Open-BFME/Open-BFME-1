@@ -37,10 +37,11 @@ struct Rva00899560Pool {
 class Rva008D2A10;
 extern Rva008D2A10 *g_rva008D2A10;
 extern Rva00899560Pool *g_rva8CD130IdleHook;
-extern "C" const void *bfmeVftAptValue[];
-#pragma comment(linker, "/alternatename:_bfmeVftAptValue=??_7AptValue@@6B@")
-extern "C" const void *bfmeVftAptInteger[];
-#pragma comment(linker, "/alternatename:_bfmeVftAptInteger=??_7AptInteger@@6B@")
+// Retail's Apt value vftables: AptValue's at VA 0x01135D68 and AptInteger's at
+// 0x01136400 (dir32_addresses.csv), each referenced here by its own decorated
+// name rather than through a stand-in the linker would have to alias.
+extern "C" const char __identifier("??_7AptValue@@6B@")[];
+extern "C" const char __identifier("??_7AptInteger@@6B@")[];
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned);
 __forceinline Rva8CD130Value *integerOne008CD740() {
  Rva008CD740Integer *v=(Rva008CD740Integer *)g_rva008D2A10;
@@ -52,10 +53,10 @@ __forceinline Rva8CD130Value *integerOne008CD740() {
  }
  v=(Rva008CD740Integer *)Rva008C5D70Alloc(12);
  if(v) {
-  v->m_vtable=(void *)bfmeVftAptValue;
+  v->m_vtable=(void *)__identifier("??_7AptValue@@6B@");
   v->m_flags=(v->m_flags&0xf0008007)|0x40008007;
   g_rva8CD130IdleHook->add(v);
-  v->m_vtable=(void *)bfmeVftAptInteger;
+  v->m_vtable=(void *)__identifier("??_7AptInteger@@6B@");
   v->m_value=1;
   return (Rva8CD130Value *)v;
  }
