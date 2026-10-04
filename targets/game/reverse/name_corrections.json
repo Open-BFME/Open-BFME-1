@@ -17229,4 +17229,15 @@
   "evidence": "targets/game/reverse/identity_evidence/00895a00-banked-handle-abi.md",
   "reason": "Replace the bank-only invented recipe label and false void-output lookup model with the independently proven hidden handle-return ABI; no witness names the method, so preserve its address."
  }
+,
+ {
+  "old_path": "targets/game/reverse/attempts/0x005082d0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/Rva005082D0.cpp",
+  "old_name": "populateQMSideComboBox",
+  "new_name": "rva005082D0",
+  "before_sha256": "1958abc822112c6e5c077000aaeb4699422cb8f2353327fc886916e3d57477e4",
+  "after_sha256": "05b5d14ee676d1187d963d3b38819d00e839d583c1e8bc76644fbc1e1037ebdd",
+  "evidence": "targets/game/reverse/identity_evidence/005082d0-method-name.md",
+  "reason": "The previous name came from a Zero Hour static helper. BFME's matched callers prove the menu receiver and arguments, and the retail selector scan has no row for 0x005082D0. The evidence does not establish the BFME member spelling."
+ }
 ]
