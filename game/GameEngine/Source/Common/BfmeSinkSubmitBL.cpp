@@ -40,9 +40,8 @@ public:
 class Rva004488B0FourBlockRecord
 {
 public:
-	void copy(const Rva004488B0Block &a, const Rva004488B0Block &b,
-		const Rva004488B0Block &c, const Rva004488B0Block &d);
-	void rva004498d0(AsciiStringBL name, int count);
+	// Its two bodies are only reached through the retail ILT thunks above;
+	// the call sites below type the thunk address directly.
 };
 
 class BfmeSinkBL
@@ -56,17 +55,27 @@ private:
 	Rva004488B0FourBlockRecord m_bfmeRecord;
 };
 
-#pragma comment(linker, "/alternatename:?copy@Rva004488B0FourBlockRecord@@QAEXABURva004488B0Block@@000@Z=?j_0002825e@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva004498d0@Rva004488B0FourBlockRecord@@QAEXVAsciiStringBL@@H@Z=?j_00043603@@YAXXZ")
+// Retail reaches both record bodies through incremental-link thunks at ILT
+// 0x0002825e and 0x00043603, so the object references those addresses
+// directly instead of locally declared out-of-line members.
+extern void j_0002825e();
+extern void j_00043603();
 
 void BfmeSinkBL::bfmeSubmitBL(AsciiStringBL name, int count,
 	BfmeBlobBL *first, BfmeBlobBL *second,
 	BfmeBlobBL *third, BfmeBlobBL *fourth)
 {
-	m_bfmeRecord.copy(
+	typedef void (Rva004488B0FourBlockRecord::*Copy)(
+		const Rva004488B0Block &, const Rva004488B0Block &,
+		const Rva004488B0Block &, const Rva004488B0Block &);
+	union { void (*fn)(); Copy call; } copy = { j_0002825e };
+	typedef void (Rva004488B0FourBlockRecord::*Submit)(AsciiStringBL, int);
+	union { void (*fn)(); Submit call; } submit = { j_00043603 };
+
+	(m_bfmeRecord.*copy.call)(
 		*(const Rva004488B0Block *)first,
 		*(const Rva004488B0Block *)second,
 		*(const Rva004488B0Block *)third,
 		*(const Rva004488B0Block *)fourth);
-	m_bfmeRecord.rva004498d0(name, count);
+	(m_bfmeRecord.*submit.call)(name, count);
 }
