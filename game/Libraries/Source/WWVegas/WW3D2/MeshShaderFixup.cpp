@@ -36,10 +36,7 @@ public:
 
 class MeshClass;
 
-char bfmeFixupThunk(MeshClass *mesh);
 extern void j_0002c43a();
-
-#pragma comment(linker, "/alternatename:?bfmeFixupThunk@@YADPAVMeshClass@@@Z=?j_0002c43a@@YAXXZ")
 
 class MeshClass
 {
@@ -115,7 +112,7 @@ char bfmeFixup(MeshClass *mesh)
 		{
 			MeshClass *subMesh = mesh->getSubMesh(index);
 
-			if (bfmeFixupThunk(subMesh))
+			if (((char (__cdecl *)(MeshClass *))(void *)j_0002c43a)(subMesh))
 				fixed = 1;
 
 			if (subMesh != 0 && --subMesh->m_refCount == 0)
