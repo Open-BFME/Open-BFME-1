@@ -14,10 +14,10 @@ extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 void W3DRadarResetLock();
 char bfmeUnlock1179();
 struct WaterDeviceScope007A5200 { WaterDeviceScope007A5200(){W3DRadarResetLock();} ~WaterDeviceScope007A5200(){bfmeUnlock1179();} };
-class BFMEWaterTrackTexture { public: void Release_Ref(); };
-class BFMEWaterTrackTextureHandle { public: BFMEWaterTrackTexture *m_texture; ~BFMEWaterTrackTextureHandle(){if(m_texture)m_texture->Release_Ref();} };
+class TextureBaseClass { public: void Release_Ref(); };
+class BFMEWaterTrackTextureHandle { public: TextureBaseClass *m_texture; ~BFMEWaterTrackTextureHandle(){if(m_texture)((TextureBaseClass *)m_texture)->Release_Ref();} };
 BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(char*,int,int);
-static inline void assignTexture(BFMEWaterTrackTexture *&dest,const BFMEWaterTrackTextureHandle &src) {
+static inline void assignTexture(TextureBaseClass *&dest,const BFMEWaterTrackTextureHandle &src) {
  if(src.m_texture) ++*(unsigned short*)((char*)src.m_texture+4);
  if(dest) dest->Release_Ref();
  dest=src.m_texture;
@@ -227,7 +227,7 @@ class WaterRenderObjClass { public:
  Shader007A5200 m_d4;
  VertexMaterialClass *m_d8,*m_dc;
  LightClass *m_e0;
- BFMEWaterTrackTexture *m_e4;
+ TextureBaseClass *m_e4;
  float m_e8,m_ec;
  Vector3 m_f0;
  float m_fc,m_100,m_104,m_108,m_10c,m_110;

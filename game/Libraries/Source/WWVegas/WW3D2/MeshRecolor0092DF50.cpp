@@ -38,6 +38,8 @@ struct BfmeHandleUZA
             p->Release_Ref();
     }
 };
+class TextureBaseClass { public: void Release_Ref(); };
+
 class BFMEWaterTrackTextureHandle
 {
   public:
@@ -45,7 +47,7 @@ class BFMEWaterTrackTextureHandle
     ~BFMEWaterTrackTextureHandle()
     {
         if (p)
-            p->Release_Ref();
+            ((TextureBaseClass *)p)->Release_Ref();
     }
 };
 class BfmeHandleCX
