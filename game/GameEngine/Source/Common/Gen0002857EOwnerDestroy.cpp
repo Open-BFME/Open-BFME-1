@@ -24,14 +24,34 @@ public:
 	Gen0002857EListNode *m_heads[9];
 };
 
-extern "C" void __cdecl Gen0002857EFreeListNode(void *node, unsigned int bytes);
 void __cdecl operator delete(void *memory);
-#pragma comment(linker, "/alternatename:_Gen0002857EFreeListNode=?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")
+
+// _STL::__node_alloc<true, 0>::_M_deallocate is private in the STLport
+// header (inputs/vendor/stlport/stl/_alloc.h), so the deallocate call goes
+// through a TU-local force-inlined helper that the template befriends.  The
+// helper never reaches the object file: cl folds it into the caller and the
+// only reference left is to the private static's own decorated name.
+static void __forceinline Gen0002857EFreeListNode(void *node, unsigned int bytes);
+
+namespace _STL
+{
+template <bool __threads, int __inst>
+class __node_alloc
+{
+private:
+	static void __cdecl _M_deallocate(void *__p, unsigned int __n);
+	friend void ::Gen0002857EFreeListNode(void *, unsigned int);
+};
+}
+
+static void __forceinline Gen0002857EFreeListNode(void *node, unsigned int bytes)
+{
+	_STL::__node_alloc<true, 0>::_M_deallocate(node, bytes);
+}
 
 class Gen0002857E
 {
 public:
-	void destruct();
 	__forceinline int getBucket() const { return m_bucket; }
 
 	char m_pad30[0x30];
@@ -42,11 +62,16 @@ public:
 	bool m_active;
 };
 
+// Retail reaches the owner helpers and the object's destructor through the
+// ILT thunks ?j_0001902e, ?j_00046d8a and ?j_0003dad2; the calls are routed
+// through compile-time constant member pointers so they stay direct calls.
+extern void j_0001902e();
+extern void j_00046d8a();
+extern void j_0003dad2();
+
 class Gen0002857EOwner
 {
 public:
-	void prepareRemoval(Gen0002857E *value);
-	void finishRemoval(Gen0002857E *value);
 	void destroy(Gen0002857E *value, int deferred);
 
 private:
@@ -55,17 +80,19 @@ private:
 	int m_accountingTotal;
 };
 
-#pragma comment(linker, "/alternatename:?prepareRemoval@Gen0002857EOwner@@QAEXPAVGen0002857E@@@Z=?j_0001902e@@YAXXZ")
-#pragma comment(linker, "/alternatename:?finishRemoval@Gen0002857EOwner@@QAEXPAVGen0002857E@@@Z=?j_00046d8a@@YAXXZ")
-#pragma comment(linker, "/alternatename:?destruct@Gen0002857E@@QAEXXZ=?j_0003dad2@@YAXXZ")
-
 void Gen0002857EOwner::destroy(Gen0002857E *value, int deferred)
 {
+	typedef void (Gen0002857EOwner::*OwnerCall)(Gen0002857E *);
+	typedef void (Gen0002857E::*ValueCall)();
+
 	if (value->m_active)
 		m_accountingTotal -= value->m_accountingValue;
 
 	if (!deferred)
-		prepareRemoval(value);
+	{
+		union { void (*fn)(); OwnerCall call; } u = { j_0001902e };
+		(this->*u.call)(value);
+	}
 
 	if (!value->m_active)
 	{
@@ -86,7 +113,13 @@ void Gen0002857EOwner::destroy(Gen0002857E *value, int deferred)
 		}
 	}
 
-	finishRemoval(value);
-	value->destruct();
+	{
+		union { void (*fn)(); OwnerCall call; } u = { j_00046d8a };
+		(this->*u.call)(value);
+	}
+	{
+		union { void (*fn)(); ValueCall call; } u = { j_0003dad2 };
+		(value->*u.call)();
+	}
 	::operator delete(value);
 }
