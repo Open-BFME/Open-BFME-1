@@ -105,20 +105,8 @@
 
 // GameWindow::~GameWindow ====================================================
 //=============================================================================
-// byte-exact reconstruction: game/GameEngine/Source/Common/GameWindowDestructorThunk.cpp
-// ??1GameWindow@@MAE@XZ present-unmatched
-GameWindow::~GameWindow( void )
-{
-
-	if(	m_inputData )
-		delete m_inputData;
-	m_inputData = NULL;
-	
-	if( m_editData )
-		delete m_editData;
-	m_editData = NULL;
-
-}  // end ~GameWindow
+// ??1GameWindow@@MAE@XZ is retail's 203 byte SEH destructor, defined (and verified) in
+// GameWindowDestructorThunk.cpp; a second, non-retail copy here won the link.
 
 // GameWindow::normalizeWindowRegion ==========================================
 /** Puts the upper left corner in the window's region.lo field */
