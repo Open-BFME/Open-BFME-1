@@ -11,6 +11,7 @@
 #include "System/xfer.h"
 #include "coord3d.h"
 #include "Thing/GameLogicObjectLookup.h"
+#include "Rva000A1310StateLookup.h"
 
 class Rva000A1510Version : public Xfer::Version { public:
     Rva000A1510Version() { data[0] = 1; data[1] = 2; }
@@ -27,16 +28,7 @@ Xfer &__cdecl Rva0010C3C0(MidVirtualSlot90Receiver *, void *);
 // preserves that proven provider identity and its existing stack ABI.
 typedef Xfer &(__cdecl *Rva000A1510Writer)(Xfer *, void *);
 
-struct BfmeNodeABB;
-struct BfmeIterABB { BfmeNodeABB *node; };
-class BfmeHostABB { public: void *bfmeFrontABB(BfmeIterABB); };
-
 struct Rva000A1510State { void *vptr; unsigned id04; };
-// The matched provider uses an opaque single-DWORD record and void* result.
-// Both callers here supply an unsigned state ID and consume the returned node
-// payload as State*. The constant member-pointer cast changes that source ABI
-// view while retaining the same proven provider symbol and thiscall cleanup.
-typedef Rva000A1510State *(BfmeHostABB::*Rva000A1510Lookup)(unsigned);
 struct Rva000A1510Node : _STL::_Rb_tree_node_base {
     unsigned key10;
     Rva000A1510State *state14;
@@ -71,8 +63,8 @@ void Rva000A1510Owner::transfer(Xfer *xfer)
     *xfer == currentID;
     if (version.data[1] >= 2 && currentID == 999999) return;
     if (xfer->IsLoading()) {
-        current1C = (reinterpret_cast<BfmeHostABB *>(this)->*
-            reinterpret_cast<Rva000A1510Lookup>(&BfmeHostABB::bfmeFrontABB))(currentID);
+        current1C = reinterpret_cast<Rva000A1510State *>(
+            reinterpret_cast<Rva000A1310StateMachine *>(this)->lookup(currentID));
     }
     bool all = false;
     *xfer == all;
@@ -102,8 +94,8 @@ void Rva000A1510Owner::transfer(Xfer *xfer)
         }
     } else {
         if (!current1C) {
-            current1C = (reinterpret_cast<BfmeHostABB *>(this)->*
-                reinterpret_cast<Rva000A1510Lookup>(&BfmeHostABB::bfmeFrontABB))(default18);
+            current1C = reinterpret_cast<Rva000A1510State *>(
+                reinterpret_cast<Rva000A1310StateMachine *>(this)->lookup(default18));
             if (!current1C) {
                 XferException error;
                 bfmeFormatText(&error, 5, 0);

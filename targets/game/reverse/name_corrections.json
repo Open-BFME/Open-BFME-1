@@ -17158,5 +17158,15 @@
     "after_sha256": "b878e3fed43cbdd40ddd27773c86fffc0a01febc7d2c13a033b940a89d9ee10a",
     "evidence": "targets/game/reverse/identity_evidence/000c4e80-canonical-object-and-player-view.md",
     "reason": "False correspondence: the partial duplicate Player declaration is removed; canonical Object still returns genuine Player*. The new address-qualified view only preserves independently native-proven word reads at +24/+2C and asserts no Player identity replacement."
+  },
+  {
+    "old_path": "game/GameEngine/Source/Common/Rva000A1510.cpp",
+    "new_path": "game/GameEngine/Source/Common/Rva000A1510.cpp",
+    "old_name": "BfmeHostABB",
+    "new_name": "Rva000A1310StateMachine",
+    "before_sha256": "1cb2776175f86e1bc4e598f56c4f2aa92c119c5b6793f579e1668db79f19762e",
+    "after_sha256": "90e5643923b0b43580896353779c0a3240c58e87cadd5fcd8c6e8e50c88a6572",
+    "evidence": "targets/game/reverse/identity_evidence/000a1510.md",
+    "reason": "BfmeHostABB was a generated opaque ABI witness; native A1310 lookup and its current canonical header prove the address-derived receiver and unsigned-key signature. Include that covered type instead of redeclaring the retired witness."
   }
 ]
