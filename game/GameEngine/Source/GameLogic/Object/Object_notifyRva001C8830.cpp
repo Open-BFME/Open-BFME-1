@@ -50,13 +50,13 @@ public:
 
 void j_0001343f();
 
+// Cast target for the ILT-routed drawable notify call at 0x001C8830.
 class BfmeNotifyThunk
 {
 public:
-	void notify(BfmeBlockVKP *block, int unused1, int unused2);
 };
 
-#pragma comment(linker, "/alternatename:?notify@BfmeNotifyThunk@@QAEXPAVBfmeBlockVKP@@HH@Z=?j_0001343f@@YAXXZ")
+typedef void (BfmeNotifyThunk::*NotifyFn)(BfmeBlockVKP *block, int unused1, int unused2);
 
 class BfmeUpdVKP
 {
@@ -70,13 +70,15 @@ class Drawable
 {
 };
 
+void j_0002d439();
+
+// Cast target for the ILT-routed drawable apply call at 0x001C8830.
 class DrawableApplyPendingThunk
 {
 public:
-    void apply(bool immediate);
 };
 
-#pragma comment(linker, "/alternatename:?apply@DrawableApplyPendingThunk@@QAEX_N@Z=?j_0002d439@@YAXXZ")
+typedef void (DrawableApplyPendingThunk::*ApplyFn)(bool immediate);
 
 class BfmeSelectionResult;
 
@@ -259,6 +261,9 @@ public:
 
 void Object::notifyRva001C8830(Player *player)
 {
+	union { void (*fn)(); NotifyFn call; } notify = { j_0001343f };
+	union { void (*fn)(); ApplyFn call; } apply = { j_0002d439 };
+
 	Drawable *drawable = getDrawable();
 	ThingTemplate *thing = m_template;
 	Object *other;
@@ -284,14 +289,14 @@ void Object::notifyRva001C8830(Player *player)
 	{
 		m_selectionFlags.clear(0);
 		if (m_drawable)
-			((BfmeNotifyThunk *)m_drawable)->notify(&m_conditionFlags, 0, 0);
+			(((BfmeNotifyThunk *)m_drawable)->*notify.call)(&m_conditionFlags, 0, 0);
 		if (m_ai)
 			m_ai->bfmeUpdateVKP();
 	}
 
 	if (drawable)
 	{
-		((DrawableApplyPendingThunk *)drawable)->apply(false);
+		(((DrawableApplyPendingThunk *)drawable)->*apply.call)(false);
 
 		if (!selection && !m_containedBy && !testStatus(0x25))
 		{
@@ -310,7 +315,7 @@ void Object::notifyRva001C8830(Player *player)
 	{
 		m_selectionFlags.set(0);
 		if (m_drawable)
-			((BfmeNotifyThunk *)m_drawable)->notify(&m_conditionFlags, 0, 0);
+			(((BfmeNotifyThunk *)m_drawable)->*notify.call)(&m_conditionFlags, 0, 0);
 		if (m_ai)
 			m_ai->bfmeUpdateVKP();
 	}
