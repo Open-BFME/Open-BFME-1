@@ -1,8 +1,10 @@
 // Retail 0x00237950..0x00237A59: complete return body.
 // Address-qualified identity. Native list/hash traversal and index layout
 // are independently shared with landed neighbour 0x002377A0.
-// Calls Object::getControllingPlayer and slot 0x28; broadcast uses the
-// exact existing ILT route to 0x004141C0.
+// Calls the controlling-player query at 0x00020824 and slot 0x28; broadcast
+// references the existing body at 0x000376CD, which jumps to 0x004141C0.
+// Both calls are made directly through the linked names, with no linker
+// name aliasing pragma.
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Source
 // stlport
 #define _STLP_USE_NEWALLOC 1
@@ -11,11 +13,9 @@
 #include <hash_map>
 #include <list>
 class Player;
-#define OBJECT_TU_MEMBERS Player *getControllingPlayer() const;
 #include "GameLogic/Object/object.h"
-class Rva004141C0 {public: void broadcast();};
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
-#pragma comment(linker, "/alternatename:?broadcast@Rva004141C0@@QAEXXZ=?d_000376cd@@YAXXZ")
+extern void j_00020824();
+extern void d_000376cd();
 struct PlayerList00237950 {char at000[12]; Player *m_local;};
 struct GlobalData00237950 {char at000[0xa76]; bool atA76;};
 class PlayerList;
@@ -40,15 +40,23 @@ public:
  char at000[0x30]; IndexNode00237950 *at030;
  void run();
 };
+class Rva004141C0 {};
+static __forceinline void broadcast00237950(void *drawable) {
+ typedef void (Rva004141C0::*Fn)();
+ union { void (*fn)(); Fn call; } u = { d_000376cd };
+ ((Rva004141C0*)drawable->*u.call)();
+}
 void MemberBroadcast00237950::run() {
+ typedef Player *(Object::*Gcp)() const;
+ union { void (*fn)(); Gcp call; } gcp = { j_00020824 };
  Player *localPlayer=((PlayerList00237950*)ThePlayerList)->m_local;
  bool forwardMembers=false;
  Object *owner=*(Object**)((char*)this-0xdc);
  if(owner) {
-  if(owner->getControllingPlayer()==localPlayer) {
+  if((owner->*gcp.call)()==localPlayer) {
    Drawable *drawable=owner->getDrawable();
    if(((GlobalData00237950*)TheWritableGlobalData)->atA76) {
-    if(drawable) ((Rva004141C0*)drawable)->broadcast();
+    if(drawable) broadcast00237950(drawable);
    } else forwardMembers=true;
   }
  }
@@ -58,7 +66,7 @@ void MemberBroadcast00237950::run() {
   Object *member=*it;
   if(member) {
    Drawable *drawable=member->getDrawable();
-   if(drawable && forwardMembers) ((Rva004141C0*)drawable)->broadcast();
+   if(drawable && forwardMembers) broadcast00237950(drawable);
   }
   ++it;
  }
@@ -69,7 +77,7 @@ void MemberBroadcast00237950::run() {
    Object *member=((GameLogic00237950*)TheGameLogic)->find(key);
    if(member) {
     Drawable *drawable=member->getDrawable();
-    if(drawable && forwardMembers) ((Rva004141C0*)drawable)->broadcast();
+    if(drawable && forwardMembers) broadcast00237950(drawable);
    }
   }
   entry=(IndexNode00237950*)_STL::_Rb_global<bool>::_M_increment((_STL::_Rb_tree_node_base*)entry);
