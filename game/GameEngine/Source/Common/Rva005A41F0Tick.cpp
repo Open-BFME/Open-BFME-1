@@ -41,10 +41,14 @@ private:
 	int m_counter;
 };
 
-#pragma comment(linker, "/alternatename:?reset@Rva005A41F0@@QAEXXZ=?j_0001ee93@@YAXXZ")
+extern void j_0001ee93();
 
 void Rva005A41F0::tick(void)
 {
+	// Retail calls the reset step through the incremental-link thunk at
+	// 0x0001EE93, so the reference goes to that thunk directly.
+	typedef void (Rva005A41F0::*Reset)(void);
+	union { void (*fn)(); Reset call; } reset = { j_0001ee93 };
 	m_events.clear();
 	unsigned int eventWord;
 	int eventValue;
@@ -55,7 +59,7 @@ void Rva005A41F0::tick(void)
 		unsigned int result = eventWord;
 		while ((unsigned char)result == 0xff)
 		{
-			reset();
+			(this->*reset.call)();
 			m_events.clear();
 			readEvent(event);
 			result = eventWord;
