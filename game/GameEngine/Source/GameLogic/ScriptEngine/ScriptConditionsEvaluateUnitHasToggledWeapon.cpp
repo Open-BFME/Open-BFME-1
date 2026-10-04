@@ -7,6 +7,15 @@
 
 #include "ascii_string.h"
 
+// Retail's incremental-link thunks. Each retail call site in this body goes
+// straight to one of these 5-byte ILT stubs, so the call targets are named
+// here directly instead of through a stand-in member function.
+extern void j_00001140();
+extern void j_00022a70();
+extern void j_0003e80b();
+extern void j_000225f7();
+extern void j_00028560();
+
 typedef bool Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -43,10 +52,10 @@ class ThingTemplate;
 
 class BfmeThingFactory
 {
-public:
-	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
+// The recursive call below is the only self-reference, so this TU emits its own
+// 26-byte copy of the body; no link-time name mapping is needed for it.
 class Overridable
 {
 public:
@@ -103,7 +112,6 @@ class BfmePlayerObjectDlinkObject;
 class BfmeObjectDlinkBase
 {
 public:
-	BfmePlayerObjectDlinkObject *dlink_next_TeamMemberList() const;
 	BfmeOverride<ThingTemplate> m_template;
 };
 
@@ -158,8 +166,11 @@ public:
 	BfmePlayerDlinkIterator<BfmePlayerObjectDlinkObject>
 	iterate_TeamMemberList() const
 	{
+		typedef BfmePlayerObjectDlinkObject *(BfmeObjectDlinkBase::*GetNextFunc)()
+			const;
+		union { void (*fn)(); GetNextFunc call; } u = { j_00001140 };
 		return BfmePlayerDlinkIterator<BfmePlayerObjectDlinkObject>(m_head,
-			BfmeObjectDlinkBase::dlink_next_TeamMemberList);
+			u.call);
 	}
 };
 
@@ -171,8 +182,6 @@ struct BfmePlayerTeamPrototypeInstances
 
 class BfmeTeamInstanceLink
 {
-public:
-	BfmeTeamInstanceLink *_bfme_nextInInstanceList();
 };
 
 class BfmePlayerTeamInstanceIterator
@@ -186,8 +195,12 @@ public:
 	void advance()
 	{
 		if (m_cur)
+		{
+			typedef BfmeTeamInstanceLink *(BfmeTeamInstanceLink::*Call)();
+			union { void (*fn)(); Call call; } u = { j_00022a70 };
 			m_cur = (BfmePlayerTeamView *)
-				((BfmeTeamInstanceLink *)m_cur)->_bfme_nextInInstanceList();
+				(((BfmeTeamInstanceLink *)m_cur)->*u.call)();
+		}
 	}
 
 private:
@@ -210,9 +223,15 @@ struct BfmePlayerTeamListField
 
 class Gen_001C4990
 {
-public:
-	Bool bfmeHasBit(Int bit) const;
 };
+
+// Retail reaches the bit test three times through ILT thunk 0x000225F7.
+static __forceinline Bool bfmeHasBitThunk(Gen_001C4990 *self, Int bit)
+{
+	typedef Bool (Gen_001C4990::*Call)(Int) const;
+	union { void (*fn)(); Call call; } u = { j_000225f7 };
+	return (self->*u.call)(bit);
+}
 
 class BfmeObjectStatusView
 {
@@ -246,8 +265,12 @@ Bool ScriptConditions::evaluateUnitHasToggledWeapon(
 	if (!player)
 		return false;
 
-	const ThingTemplate *wanted = ((BfmeThingFactory *)TheThingFactory)->findTemplate(
-		templateParameter->getString());
+	typedef const ThingTemplate *(BfmeThingFactory::*FindTemplate)(
+		const AsciiString &);
+	union { void (*fn)(); FindTemplate call; } find = { j_00028560 };
+	const ThingTemplate *wanted =
+		(((BfmeThingFactory *)TheThingFactory)->*find.call)(
+			templateParameter->getString());
 	if (!wanted)
 		return false;
 
@@ -271,12 +294,16 @@ Bool ScriptConditions::evaluateUnitHasToggledWeapon(
 				if (!object)
 					continue;
 
-				if (object->getTemplate()->isEquivalentTo(wanted))
+				typedef Bool (ThingTemplate::*IsEquivalentTo)(
+					const ThingTemplate *) const;
+				union { void (*fn)(); IsEquivalentTo call; } equiv =
+					{ j_0003e80b };
+				if ((*(object->getTemplate()).*equiv.call)(wanted))
 				{
 					Gen_001C4990 *flags = (Gen_001C4990 *)object;
-					if (flags->bfmeHasBit(0x18) ||
-						flags->bfmeHasBit(0x19) ||
-						flags->bfmeHasBit(0x1a) ||
+					if (bfmeHasBitThunk(flags, 0x18) ||
+						bfmeHasBitThunk(flags, 0x19) ||
+						bfmeHasBitThunk(flags, 0x1a) ||
 						(((BfmeObjectStatusView *)object)->m_status & 0x10000) != 0)
 						return true;
 				}
@@ -286,9 +313,3 @@ Bool ScriptConditions::evaluateUnitHasToggledWeapon(
 
 	return false;
 }
-#pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVBfmePlayerObjectDlinkObject@@XZ=?j_00001140@@YAXXZ")
-#pragma comment(linker, "/alternatename:?_bfme_nextInInstanceList@BfmeTeamInstanceLink@@QAEPAV1@XZ=?j_00022a70@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isEquivalentTo@ThingTemplate@@QBE_NPBV1@@Z=?j_0003e80b@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeHasBit@Gen_001C4990@@QBE_NH@Z=?j_000225f7@@YAXXZ")
-#pragma comment(linker, "/alternatename:?findTemplate@BfmeThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z=?j_00028560@@YAXXZ")
