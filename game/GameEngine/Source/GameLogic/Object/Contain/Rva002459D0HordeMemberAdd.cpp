@@ -104,13 +104,18 @@ private:
 	void applyMemberFormationState( Object *member );
 };
 
-// Each declaration is a real retail thunk.  The source names stay local to
-// this address-qualified reconstruction, while the calls retain their retail
-// targets and thiscall ABIs.
+// The retail ILT thunks the calls below must route through.
+extern void j_0001766b();
+extern void j_0000efa2();
+
+// Rva00244A80Element's default constructor is emitted from this declaration
+// whenever the local below is constructed, and MSVC 7.1 cannot take a ctor's
+// address through a member-function pointer, so its call site cannot be
+// redirected at the ILT.  Retail's default ctor is ILT 0x0001AACD; the copy
+// constructor is called from STLport's push_back instantiation in this same
+// object.  Retail's copy ctor is ILT 0x000128DC.
 #pragma comment(linker, "/alternatename:??0Rva00244A80Element@@QAE@XZ=?j_0001aacd@@YAXXZ")
 #pragma comment(linker, "/alternatename:??0Rva00244A80Element@@QAE@ABV0@@Z=?j_000128dc@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setSelectable@Drawable@@QAEX_N@Z=?j_0001766b@@YAXXZ")
-#pragma comment(linker, "/alternatename:?applyMemberFormationState@Rva002459D0Owner@@QAEXPAVObject@@@Z=?j_0000efa2@@YAXXZ")
 
 // ?rva002459d0@Rva002459D0Owner@@QAEXPAVObject@@PAHH@Z
 void Rva002459D0Owner::rva002459d0(
@@ -128,9 +133,25 @@ void Rva002459D0Owner::rva002459d0(
 		m_memberStates.push_back( element );
 	}
 
-	member->getDrawable()->setSelectable( false );
+	typedef void (Drawable::*SetSelectableCall)( Bool );
+	union
+	{
+		void (*raw)();
+		SetSelectableCall typed;
+	} setSelectable;
+	setSelectable.raw = j_0001766b;
+
+	(member->getDrawable()->*setSelectable.typed)( false );
 	m_base.onMember( member );
-	member->getDrawable()->setSelectable( true );
+	(member->getDrawable()->*setSelectable.typed)( true );
 	m_view.updateMember( member );
-	applyMemberFormationState( member );
+
+	typedef void (Rva002459D0Owner::*ApplyMemberFormationStateCall)( Object * );
+	union
+	{
+		void (*raw)();
+		ApplyMemberFormationStateCall typed;
+	} applyMemberFormationState;
+	applyMemberFormationState.raw = j_0000efa2;
+	(this->*applyMemberFormationState.typed)( member );
 }
