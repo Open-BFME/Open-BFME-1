@@ -1,13 +1,16 @@
 // cl: /DNDEBUG /MD /EHsc
 
-// BeaconClientUpdate::clientUpdate (retail 0x00603640) and the file-static
-// createParticleSystem helper it calls (retail 0x006032F0), ported from Zero
-// Hour's GameClient/Drawable/Update/BeaconClientUpdate.cpp.
+// BeaconClientUpdate::clientUpdate (retail 0x00603640), hideBeacon (retail
+// 0x00603520) and the file-static createParticleSystem helper both call
+// (retail 0x006032F0), ported from Zero Hour's
+// GameClient/Drawable/Update/BeaconClientUpdate.cpp.
 //
 // Identity: the vtable 0x01115248 installed by the matched constructor
 // 0x006030C0 routes its last slot (+0x28, ClientUpdateModule::clientUpdate)
 // through ILT 0x000369C6 to 0x00603640. The helper is reached only from there
-// and formats the twin's "BeaconSmoke%6.6X" / "BeaconSmokeFFFFFF" literals.
+// and hideBeacon, and formats the twin's "BeaconSmoke%6.6X" /
+// "BeaconSmokeFFFFFF" literals. hideBeacon is the twin's body call for call
+// (setShadowsEnabled 0x004140E0, the helper, findParticleSystem, stop).
 //
 // BFME changes against the twin: particle systems are held through the
 // intrusive ParticleSystemHandle (returned in a hidden slot the caller passes
@@ -79,6 +82,7 @@ class ParticleSystem
 public:
 	void attachToDrawable( const Drawable *draw );
 	void setPosition( const Coord3D *pos );
+	void stop( void );
 	ParticleSystemID getSystemID( void ) const { return m_systemID; }
 
 	unsigned char m_unmodelled_00[ 0x98 ];
@@ -136,6 +140,7 @@ public:
 	ParticleSystemTemplate *findTemplate( const AsciiString &name ) const;
 	ParticleSystemHandle createParticleSystem( const ParticleSystemTemplate *sysTemplate,
 		Bool createSlaves ) throw();
+	ParticleSystemHandle findParticleSystemByID( ParticleSystemID id ) throw();
 };
 
 extern ParticleSystemManager *TheParticleSystemManager;
@@ -159,6 +164,7 @@ public:
 	Bool isDrawableEffectivelyHidden( void ) const;
 	const Coord3D *getPosition( void ) const;
 	void setSelectable( Bool selectable );
+	void setShadowsEnabled( Bool enable );
 
 	unsigned char m_unmodelled_00[ 0xFC ];
 	Object *m_object;							// +0xFC
@@ -177,6 +183,14 @@ public:
 };
 
 extern Radar *TheRadar;
+
+// Drawable bool setter at 0x00411DD0 (stores +0x3AD and refreshes); not
+// setDrawableHidden (0x0041A230), so it keeps its address-derived ledger name.
+class Gen_00411DD0
+{
+public:
+	void bfmeSet( Bool value );
+};
 
 // InGameUI::deselectDrawable is slot 57 (+0xE4); see Drawable::setSelectable.
 #define BEACON_INGAMEUI_SLOT(n) virtual void unmodelledSlot##n() = 0;
@@ -235,6 +249,7 @@ class BeaconClientUpdate
 {
 public:
 	virtual void clientUpdate( void );
+	void hideBeacon( void );
 
 protected:
 	const BeaconClientUpdateModuleData *getBeaconClientUpdateModuleData() const { return m_moduleData; }
@@ -290,6 +305,41 @@ static ParticleSystemHandle createParticleSystem( Drawable *draw )
 		}
 	}
 	return system;
+}
+
+/**
+	Hide the beacon and stop its smoke, creating the system first so its ID is
+	known.
+
+	@ai-generated
+*/
+void BeaconClientUpdate::hideBeacon( void )
+{
+	Drawable *draw = getDrawable();
+	if (draw)
+	{
+		((Gen_00411DD0 *)draw)->bfmeSet( TRUE );
+		draw->setShadowsEnabled( FALSE );
+		draw->setSelectable( FALSE );
+		TheInGameUI->deselectDrawable( draw );
+	}
+
+	ParticleSystemHandle system;
+	if (draw && m_particleSystemID == INVALID_PARTICLE_SYSTEM_ID)
+	{
+		system = createParticleSystem( draw );
+		if (system)
+			m_particleSystemID = system->getSystemID();
+	}
+
+	// clean up particle system
+	if (m_particleSystemID != INVALID_PARTICLE_SYSTEM_ID)
+	{
+		ParticleSystemHandle system = TheParticleSystemManager->findParticleSystemByID( m_particleSystemID );
+
+		if( system )
+			system->stop();
+	}
 }
 
 /**
