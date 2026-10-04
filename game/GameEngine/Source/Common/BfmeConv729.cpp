@@ -1,5 +1,14 @@
-extern "C" void bfmeDtorCbDMB(void *what);
-extern "C" unsigned char bfmeVftDMB[];
+// Retail passes ILT 00001C80 to the MSVC 7.1 CRT array-destruction helper at
+// RVA 009F6D76, frees through the WWLib operator delete[] (0x00881EF0) and
+// operator delete (0x00881EB0) bodies, and writes the BfmeBaseVUQ vftable
+// (??_7BfmeBaseVUQ@@6B@) into the dying object. VC7.1 cannot spell the CRT
+// helper's reserved front-end name or a free __thiscall callback type in C++,
+// so both addresses are passed unchanged. Convention follows BfmeConv728.cpp.
+extern "C" void __cdecl __identifier("?j_00001c80@@YAXXZ")();
+extern "C" void __cdecl __identifier("??_M@YGXPAXIHP6EX0@Z@Z")();
+typedef void (__stdcall *VectorDestructorIterator)(
+	void *base, unsigned int size, int count, void (*dtor)());
+extern "C" int __identifier("??_7BfmeBaseVUQ@@6B@")[];
 
 class BfmeThingDMB
 {
@@ -8,22 +17,22 @@ public:
 	void *m_bfmeVft;
 };
 
-void __stdcall bfmeVecDtorDMB(void *base, unsigned int size, int count, void (*dtor)(void *));
-void bfmeFreeArrDMB(void *what);
-void bfmeFreeDMB(void *what);
+void __cdecl operator delete[](void *what);
+void __cdecl operator delete(void *what);
 
 void *BfmeThingDMB::bfmeGoDMB(unsigned char flags)
 {
 	if (flags & 2)
 	{
 		char *base = (char *)this - 4;
-		bfmeVecDtorDMB(this, 4, *(int *)base, bfmeDtorCbDMB);
+		((VectorDestructorIterator)__identifier("??_M@YGXPAXIHP6EX0@Z@Z"))(
+			this, 4, *(int *)base, __identifier("?j_00001c80@@YAXXZ"));
 		if (flags & 1)
-			bfmeFreeArrDMB(base);
+			operator delete[](base);
 		return base;
 	}
-	m_bfmeVft = bfmeVftDMB;
+	m_bfmeVft = __identifier("??_7BfmeBaseVUQ@@6B@");
 	if (flags & 1)
-		bfmeFreeDMB(this);
+		operator delete(this);
 	return this;
 }

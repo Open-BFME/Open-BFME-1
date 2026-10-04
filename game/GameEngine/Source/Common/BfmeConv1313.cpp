@@ -1,25 +1,30 @@
 // Open-BFME5 conversions.
+//
+// The retail calls land on ILT thunks (0x00039C2F, 0x0001E402, 0x0003F9EA,
+// 0x0000C9B4), so each reference is spelled as that thunk's real symbol, the
+// idiom BfmeConv1808.cpp uses. VC7.1 rejects __thiscall on a free function
+// pointer (C4234), so the thunks called with ecx = this go through a
+// member-function pointer, the idiom MilesAudioManagerRva006A5E60.cpp uses.
 
-extern void *g_bfmeVftTGE[];
+extern "C" void __cdecl __identifier("?j_00039c2f@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0001e402@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0003f9ea@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0000c9b4@@YAXXZ")(void *what, int *tail);
 
 extern "C" __declspec(dllimport) void *__stdcall SetErrorMode(int a);
+
+// 0x0111C9A8 is the W3D/Win32 GameEngine vftable; symbols.csv pins it as
+// ?g_bfme928Vft@@3PADA, the spelling BfmeConv928.cpp already uses.
+extern "C" char __identifier("?g_bfme928Vft@@3PADA")[];
 
 class BfmeThingTGE
 {
 public:
 	BfmeThingTGE();
-	void bfmeBaseTGE();
 	void *m_bfmeVft;
 	char m_bfmePad[0x58];
 	void *m_bfmeHandle;
 };
-
-BfmeThingTGE::BfmeThingTGE()
-{
-	bfmeBaseTGE();
-	m_bfmeVft = g_bfmeVftTGE;
-	m_bfmeHandle = SetErrorMode(1);
-}
 
 class BfmeSubTGB
 {
@@ -34,10 +39,42 @@ public:
 	void bfmeUseTGB(int a);
 };
 
+union BaseThunkTGE
+{
+	void (*raw)();
+	void (BfmeThingTGE::*member)();
+};
+
+union SetThunkTGB
+{
+	void (*raw)();
+	void (BfmeSubTGB::*member)(int);
+};
+
+union UseThunkTGB
+{
+	void (*raw)();
+	void (BfmeThingTGB::*member)(int);
+};
+
+BfmeThingTGE::BfmeThingTGE()
+{
+	BaseThunkTGE base;
+	base.raw = __identifier("?j_00039c2f@@YAXXZ");
+	(this->*base.member)();
+	m_bfmeVft = __identifier("?g_bfme928Vft@@3PADA");
+	m_bfmeHandle = SetErrorMode(1);
+}
+
 void BfmeThingTGB::bfmeGoTGB(int a)
 {
-	(*(BfmeSubTGB **)((char *)this - 0x18))->bfmeSetTGB(3);
-	bfmeUseTGB(a);
+	SetThunkTGB set;
+	set.raw = __identifier("?j_0001e402@@YAXXZ");
+	((*(BfmeSubTGB **)((char *)this - 0x18))->*set.member)(3);
+
+	UseThunkTGB use;
+	use.raw = __identifier("?j_0003f9ea@@YAXXZ");
+	(this->*use.member)(a);
 }
 
 struct BfmeArgTGC
@@ -78,9 +115,7 @@ public:
 	virtual void *bfmeGetTGC(BfmeArgTGC *p) = 0;
 };
 
-void bfmeCalcTGC(void *v, int *tail);
-
 void bfmeGoTGC(BfmeSourceTGC *src, BfmeArgTGC *p)
 {
-	bfmeCalcTGC(src->bfmeGetTGC(p), &p->m_bfmeTail);
+	__identifier("?j_0000c9b4@@YAXXZ")(src->bfmeGetTGC(p), &p->m_bfmeTail);
 }
