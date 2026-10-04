@@ -101,11 +101,15 @@ public:
 	BfmeParticleSystemHandle *m_lastHandle;
 };
 
+// ILT 0x12319 routes ParticleSystem::attachToDrawable; retail calls it
+// through the incremental-link thunk, so route the member call directly.
 class StructureToppleParticleSystemAttachShim
 {
-public:
-	void attachToDrawable(const Drawable *);
 };
+
+extern void j_00012319();
+// ILT 0x22AAC routes StructureToppleUpdate::doPhaseStuff.
+extern void j_00022aac();
 
 ParticleSystem *Make00001B18();
 
@@ -239,9 +243,6 @@ public:
 	void doPhaseStuff(StructureTopplePhaseType, const Coord3D *);
 };
 
-#pragma comment(linker, "/alternatename:?attachToDrawable@StructureToppleParticleSystemAttachShim@@QBEXPBVDrawable@@@Z=?j_00012319@@YAXXZ")
-#pragma comment(linker, "/alternatename:?doPhaseStuff@StructureToppleUpdate@@IAEXW4StructureTopplePhaseType@@PBUCoord3D@@@Z=?j_00022aac@@YAXXZ")
-
 static __forceinline Bool getDamageTypeFlag(unsigned int flags, Int damageType)
 {
 	return (flags & (1u << (damageType - 1))) != 0;
@@ -287,11 +288,15 @@ afterDelayFX:
 					&pos, 0, 1, 0) == 1)
 				{
 					sys->setPosition(&pos);
-					reinterpret_cast<StructureToppleParticleSystemAttachShim *>(sys.operator->())->attachToDrawable(drawable);
+					typedef void (StructureToppleParticleSystemAttachShim::*AttachFn)(const Drawable *);
+					union { void (*fn)(); AttachFn call; } attach = { j_00012319 };
+					(reinterpret_cast<StructureToppleParticleSystemAttachShim *>(sys.operator->())->*attach.call)(drawable);
 				}
 			}
 		}
 	}
 
-	doPhaseStuff(STPHASE_DELAY, &m_delayBurstLocation);
+	typedef void (StructureToppleUpdate::*PhaseFn)(StructureTopplePhaseType, const Coord3D *);
+	union { void (*fn)(); PhaseFn call; } phase = { j_00022aac };
+	(this->*phase.call)(STPHASE_DELAY, &m_delayBurstLocation);
 }
