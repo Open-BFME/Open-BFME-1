@@ -111,10 +111,10 @@ public:
 	Object *m_containedBy;
 };
 
-#pragma comment(linker, "/alternatename:?ask@BfmeSubBIA@@QAEHXZ=?j_000022bb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeAskAIA@BfmeThingAIA@@QAE_NH@Z=?j_0003251f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?notify@BfmeNotifyThunk@@QAEXPAVBfmeBlockVKP@@HH@Z=?j_0001343f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeUpdateVKP@BfmeUpdVKP@@QAEXXZ=?j_0003611a@@YAXXZ")
+extern void j_000022bb();
+extern void j_0003251f();
+extern void j_0001343f();
+extern void j_0003611a();
 
 void Object::rva001CCB20ApplyContainedCondition(int value)
 {
@@ -124,7 +124,11 @@ void Object::rva001CCB20ApplyContainedCondition(int value)
 	{
 		BfmeSubBIA *sub = thing->m_sub;
 		if (sub != 0)
-			resolved = (BfmeResolvedThing *)sub->ask();
+		{
+			typedef int (BfmeSubBIA::*Fn)();
+			union { void (*fn)(); Fn call; } u = { j_000022bb };
+			resolved = (BfmeResolvedThing *)(sub->*u.call)();
+		}
 	}
 	Object *object = this;
 	if ((resolved->m_flags & 0x1000) != 0)
@@ -134,7 +138,14 @@ void Object::rva001CCB20ApplyContainedCondition(int value)
 	else
 	{
 		Object *containedBy = m_containedBy;
-		if (containedBy == 0 || !((BfmeThingAIA *)containedBy)->bfmeAskAIA(0x6c))
+		if (containedBy != 0)
+		{
+			typedef Bool (BfmeThingAIA::*Fn)(int);
+			union { void (*fn)(); Fn call; } u = { j_0003251f };
+			if ((((BfmeThingAIA *)containedBy)->*u.call)(0x6c) == 0)
+				return;
+		}
+		else
 			return;
 		object = containedBy;
 	}
@@ -156,9 +167,17 @@ void Object::rva001CCB20ApplyContainedCondition(int value)
 		{
 			member->m_conditionFlags.set(value);
 			if (member->m_drawable != 0)
-				member->m_drawable->notify((BfmeBlockVKP *)&member->m_conditionFlags, 0, 0);
+			{
+				typedef void (BfmeNotifyThunk::*Fn)(BfmeBlockVKP *, int, int);
+				union { void (*fn)(); Fn call; } u = { j_0001343f };
+				(member->m_drawable->*u.call)((BfmeBlockVKP *)&member->m_conditionFlags, 0, 0);
+			}
 			if (member->m_ai != 0)
-				member->m_ai->bfmeUpdateVKP();
+			{
+				typedef void (BfmeUpdVKP::*Fn)();
+				union { void (*fn)(); Fn call; } u = { j_0003611a };
+				(member->m_ai->*u.call)();
+			}
 		}
 	}
 	UnsignedInt objectFlags = ((volatile UnsignedInt *)object->m_conditionFlags.m_bits)[(UnsignedInt)value >> 5];
@@ -166,8 +185,16 @@ void Object::rva001CCB20ApplyContainedCondition(int value)
 	{
 		object->m_conditionFlags.set(value);
 		if (object->m_drawable != 0)
-			object->m_drawable->notify((BfmeBlockVKP *)&object->m_conditionFlags, 0, 0);
+		{
+			typedef void (BfmeNotifyThunk::*Fn)(BfmeBlockVKP *, int, int);
+			union { void (*fn)(); Fn call; } u = { j_0001343f };
+			(object->m_drawable->*u.call)((BfmeBlockVKP *)&object->m_conditionFlags, 0, 0);
+		}
 		if (object->m_ai != 0)
-			object->m_ai->bfmeUpdateVKP();
+		{
+			typedef void (BfmeUpdVKP::*Fn)();
+			union { void (*fn)(); Fn call; } u = { j_0003611a };
+			(object->m_ai->*u.call)();
+		}
 	}
 }
