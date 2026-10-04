@@ -67,10 +67,11 @@ public:
 
 };
 
-// Retail 0x000326D2 is the thunk used by all four compact-token appends.
-#pragma comment(linker, "/alternatename:??YAsciiString@@QAEAAV0@PBD@Z=?j_000326d2@@YAXXZ")
-// Retail 0x00002667 is the thunk used by the one-argument fallback prefix check.
-#pragma comment(linker, "/alternatename:?startsWithNoCase@?$StringBase@D@@QBE_NPBD@Z=?j_00002667@@YAXXZ")
+// Both retail callees this TU needs are referenced directly by name: the
+// compact-token append thunk 0x000326D2 (?j_000326d2@@YAXXZ), and the matched
+// startsWithNoCase body 0x008875E0 that retail calls directly for the prefix
+// checks.  Neither needs a linker alias.
+extern void j_000326d2();
 
 class Rva0010E580GameState
 {
@@ -97,6 +98,17 @@ AsciiString Rva0010E580GameState::rva0010e580MapPathCode(
     const AsciiString &path) const
 {
     AsciiString prefix;
+
+    // Retail 0x000326D2 is the thunk all three compact-token appends go through.
+    // The two-argument prefix check keeps its real retail name
+    // (?startsWithNoCase@?$StringBase@D@@QBE_NPBDH@Z, body 0x008875E0): retail
+    // calls it directly rather than through the 0x00002667 thunk.
+    typedef AsciiString &(AsciiString::*AppendFn)(const char *);
+    union
+    {
+        void (*fn)();
+        AppendFn append;
+    } appendThunk = { j_000326d2 };
 
     if (((const StringBase<char> *)&path)->startsWithNoCase(
             rva0010e580String(g_012ABFC8),
@@ -135,17 +147,17 @@ AsciiString Rva0010E580GameState::rva0010e580MapPathCode(
                  rva0010e580UserCode
                      ? (int)strlen(rva0010e580UserCode) : 0))
     {
-        prefix += rva0010e580UserPrefix;
+        (prefix.*appendThunk.append)(rva0010e580UserPrefix);
 
         const int tailOffset =
             (int)strlen(rva0010e580UserCode);
-        prefix += path.str() + tailOffset;
+        (prefix.*appendThunk.append)(path.str() + tailOffset);
     }
     else if (path.startsWithNoCase(rva0010e580FallbackCode))
     {
         const int tailOffset =
             (int)strlen(rva0010e580FallbackCode);
-        prefix += path.str() + tailOffset;
+        (prefix.*appendThunk.append)(path.str() + tailOffset);
     }
     else
     {
