@@ -5,6 +5,11 @@ struct Rva00477050Element
 	char m_body[16];
 };
 
+// Retail routes element placement through the ILT thunk at 0x000410E2.
+extern void j_000410e2();
+// Retail routes vector::_M_clear through the ILT thunk at 0x000114FA.
+extern void j_000114fa();
+
 namespace _STL
 {
 struct __false_type
@@ -31,8 +36,14 @@ class __node_alloc
 static inline void *vectorLargeAllocate(unsigned int bytes) { return ::operator new(bytes); }
 static inline void *vectorSmallAllocate(unsigned int bytes) { return __node_alloc<true, 0>::_M_allocate(bytes); }
 
+// Retail's element placement is a cdecl free function reached through the
+// ILT thunk; the typedef keeps that signature without the stub name.
 template <class Type>
-void __cdecl BfmeElementConstruct(Type *destination, const Type &value);
+__forceinline void elementConstruct(Type *destination, const Type &value)
+{
+	typedef void (__cdecl *Fn)(Type *, const Type &);
+	((Fn)(void *)j_000410e2)(destination, value);
+}
 
 template <class Type>
 __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
@@ -41,7 +52,7 @@ __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
 	{
 		do
 		{
-			BfmeElementConstruct(result, *first);
+			elementConstruct(result, *first);
 			++first;
 			++result;
 		}
@@ -55,7 +66,7 @@ __forceinline Type *uninitialized_fill_n(Type *result, unsigned int count, const
 {
 	for (; count > 0; --count)
 	{
-		BfmeElementConstruct(result, value);
+		elementConstruct(result, value);
 		++result;
 	}
 	return result;
@@ -67,12 +78,19 @@ class vector
 protected:
 	void _M_insert_overflow(Type *position, const Type &value,
 		const __false_type &, unsigned int fillLength, bool atEnd);
-	void _M_clear();
 
 	Type *_M_start;
 	Type *_M_finish;
 	Type *_M_end_of_storage;
 };
+
+template <class Type, class Allocator>
+__forceinline void vectorClear(vector<Type, Allocator> *self)
+{
+	typedef void (vector<Type, Allocator>::*Fn)();
+	union { void (*fn)(); Fn call; } u = { j_000114fa };
+	(self->*u.call)();
+}
 
 template <class Type, class Allocator>
 void vector<Type, Allocator>::_M_insert_overflow(
@@ -101,7 +119,7 @@ void vector<Type, Allocator>::_M_insert_overflow(
 
 	if (fillLength == 1)
 	{
-		BfmeElementConstruct(newFinish, value);
+		elementConstruct(newFinish, value);
 		++newFinish;
 	}
 	else
@@ -115,7 +133,7 @@ void vector<Type, Allocator>::_M_insert_overflow(
 			newFinish = uninitialized_copy(position, _M_finish, newFinish);
 	}
 
-	_M_clear();
+	vectorClear(this);
 
 	_M_finish = newFinish;
 	_M_start = newStart;
@@ -123,8 +141,5 @@ void vector<Type, Allocator>::_M_insert_overflow(
 }
 
 }
-
-#pragma comment(linker, "/alternatename:??$BfmeElementConstruct@URva00477050Element@@@_STL@@YAXPAURva00477050Element@@ABU1@@Z=?j_000410e2@@YAXXZ")
-#pragma comment(linker, "/alternatename:?_M_clear@?$vector@URva00477050Element@@V?$allocator@URva00477050Element@@@_STL@@@_STL@@IAEXXZ=?j_000114fa@@YAXXZ")
 
 template class _STL::vector<Rva00477050Element, _STL::allocator<Rva00477050Element> >;
