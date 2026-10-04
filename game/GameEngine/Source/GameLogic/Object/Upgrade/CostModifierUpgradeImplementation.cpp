@@ -12,6 +12,8 @@
 
 typedef bool Bool;
 
+extern void j_00020824();
+
 class Rva000C9C40
 {
 public:
@@ -74,12 +76,9 @@ public:
 class Object
 {
 public:
-	Player *getControllingPlayer() const;
 	unsigned char m_padding[0x74];
 	void *m_entryKey;
 };
-
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
 
 class ObjectModule
 {
@@ -156,7 +155,9 @@ inline const T &min(const T &left, const T &right)
 // ?upgradeImplementation@CostModifierUpgrade@@MAEXXZ
 void CostModifierUpgrade::upgradeImplementation()
 {
-	Player *player = getObject()->getControllingPlayer();
+	typedef Player *(Object::*Fn)() const;
+	union { void (*fn)(); Fn call; } u = { j_00020824 };
+	Player *player = (getObject()->*u.call)();
 	const ModuleData *moduleData = getModuleData();
 
 	if (moduleData->m_usePlayerEntries)
