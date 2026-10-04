@@ -28,15 +28,22 @@ public:
 	virtual void experienceLevelCreateIface2Anchor();
 };
 
-class ExperienceLevelCreateBase : public BehaviorModule,
+// The base this constructor initialises is reached through ILT 0x00026CAB,
+// whose jump lands on rva 0x0024F450: the 64-byte matched
+// CreateModule(Thing *, ModuleData const *) -- the same base ctor
+// LockWeaponCreate reaches through the same stub
+// (game/GameEngine/Source/GameLogic/Object/Create/LockWeaponCreate.cpp).
+// Only its ctor signature is known here; the members this body never touches
+// are left to the class's own TU, so no retail header is redeclared.
+class CreateModule : public BehaviorModule,
 	public ExperienceLevelCreateIface1,
 	public ExperienceLevelCreateIface2
 {
 public:
-	ExperienceLevelCreateBase(Thing *thing, const ModuleData *moduleData);
+	CreateModule(Thing *thing, const ModuleData *moduleData);
 };
 
-class ExperienceLevelCreate : public ExperienceLevelCreateBase
+class ExperienceLevelCreate : public CreateModule
 {
 public:
 	ExperienceLevelCreate(Thing *thing, const ModuleData *moduleData);
@@ -44,6 +51,6 @@ public:
 
 // ??0ExperienceLevelCreate@@QAE@PAVThing@@PBVModuleData@@@Z
 ExperienceLevelCreate::ExperienceLevelCreate(Thing *thing, const ModuleData *moduleData)
-	: ExperienceLevelCreateBase(thing, moduleData)
+	: CreateModule(thing, moduleData)
 {
 }
