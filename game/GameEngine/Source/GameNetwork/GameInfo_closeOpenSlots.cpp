@@ -170,8 +170,10 @@ public:
 };
 
 extern GameTextInterface *TheGameText;
-extern "C" const void *bfmeVftGameSlot[];
-#pragma comment(linker, "/alternatename:_bfmeVftGameSlot=??_7GameSlot@@6B@")
+// Retail's GameSlot vftable lives at 0x01075D50 (dir32_addresses.csv records
+// both ??_7BfmeOwnVSW@@6B@ and ??_7GameSlot@@6B@ at that VA); this TU models
+// GameSlot with an explicit m_vtable slot, so bind the retail name directly.
+extern "C" const char __identifier("??_7GameSlot@@6B@")[];
 
 class GameSlot
 {
@@ -263,7 +265,7 @@ private:
 };
 
 GameSlot::GameSlot()
-	: m_vtable((void *)bfmeVftGameSlot),
+	: m_vtable((void *)__identifier("??_7GameSlot@@6B@")),
 	  m_name(),
 	  m_slotNameKeyText()
 {
@@ -293,15 +295,20 @@ void GameSlot::reset()
 	m_slotNameKeyText.clear();
 }
 
-// The retail caller reaches these bodies through the ILT entries.
+// The retail caller reaches this body through the ILT entry. The reference is
+// emitted by the compiler when it copies `newSlot` into the by-value parameter
+// of the call below; no declaration can respell it to ?j_00034c34@@YAXXZ.
 #pragma comment(linker, "/alternatename:??0GameSlot@@QAE@ABV0@@Z=?j_00034c34@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setSlot@GameInfo@@QAEXHVGameSlot@@@Z=?j_0001da39@@YAXXZ")
+
+// setSlot(Int, GameSlot) is called through its ILT thunk, so the body is
+// reached as a member call whose parameter stays by value (retail copies the
+// slot into the outgoing argument area itself).
+extern void j_0001da39();
 
 class GameInfo
 {
 public:
 	virtual void closeOpenSlots();
-	void setSlot(Int slot, GameSlot slotInfo);
 
 private:
 	char m_pad04[0x10];
@@ -329,7 +336,16 @@ void GameInfo::closeOpenSlots()
 			connectInfo.m_port = 0;
 			newSlot.setState(SLOT_CLOSED, UnicodeString::TheEmptyString,
 				(const GameSlotConnectInfo *)&connectInfo);
-			setSlot(i, newSlot);
+			typedef void (GameInfo::*SetSlotFn)(Int, GameSlot);
+			// setSlot is reached through its ILT thunk at 0x0001da39. The
+			// parameter stays by value so the compiler still copies the slot
+			// into the outgoing argument area, as retail does.
+			union
+			{
+				void (*fn)();
+				SetSlotFn call;
+			} setSlot = { j_0001da39 };
+			(this->*setSlot.call)(i, newSlot);
 		}
 	}
 }
