@@ -33,9 +33,11 @@ public:
 
 class GameWindow
 {
-public:
-	int winSetOwner(GameWindow *owner);
 };
+
+// winSetOwner is reached through retail's incremental-link thunk 0x47230.
+extern void j_00047230();
+class RouteWinSetOwner {};
 
 // The first argument is a factory input record, not an instantiated window.
 // The matched selector at78F8D0 writes its factory field at18 and forwards
@@ -96,7 +98,9 @@ GameWindow *GameWindowManager::gogoGadgetProgressBar(Rva0047D500FactoryInput *in
 	GameWindow *progressBar = TheWindowManager->create(input);
 	if (progressBar == 0)
 		return 0;
-	progressBar->winSetOwner(input->owner);
+	typedef int (RouteWinSetOwner::*SetOwner)(GameWindow *);
+	union { void (*fn)(); SetOwner call; } setOwner = { j_00047230 };
+	(((RouteWinSetOwner *)progressBar)->*setOwner.call)(input->owner);
 	assignDefaultGadgetLook(progressBar, defaultFont, defaultVisual);
 	return progressBar;
 }

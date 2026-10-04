@@ -34,8 +34,10 @@ class GameWindow
 {
 public:
 	void winSetUserData(void *data);
-	int winSetOwner(GameWindow *owner);
 };
+
+extern void j_00047230();
+class RouteWinSetOwner {};
 
 class GameWindowManager
 {
@@ -79,7 +81,6 @@ void GadgetTabControlCreateSubPanes(GameWindow *tabControl);
 void GadgetTabControlShowSubPane(GameWindow *tabControl, int pane);
 
 #pragma comment(linker, "/alternatename:?winSetUserData@GameWindow@@QAEXPAX@Z=?j_00002e69@@YAXXZ")
-#pragma comment(linker, "/alternatename:?winSetOwner@GameWindow@@QAEHPAV1@@Z=?j_00047230@@YAXXZ")
 #pragma comment(linker, "/alternatename:?GadgetTabControlComputeTabRegion@@YAXPAVGameWindow@@@Z=?j_00048365@@YAXXZ")
 #pragma comment(linker, "/alternatename:?GadgetTabControlCreateSubPanes@@YAXPAVGameWindow@@@Z=?j_0004b501@@YAXXZ")
 #pragma comment(linker, "/alternatename:?GadgetTabControlShowSubPane@@YAXPAVGameWindow@@H@Z=?j_00008936@@YAXXZ")
@@ -101,7 +102,9 @@ GameWindow *GameWindowManager::gogoGadgetTabControl(
 	GadgetTabControlComputeTabRegion(tabControl);
 	GadgetTabControlCreateSubPanes(tabControl);
 	GadgetTabControlShowSubPane(tabControl, 0);
-	tabControl->winSetOwner(record->m_owner);
+	typedef int (RouteWinSetOwner::*SetOwner)(GameWindow *);
+	union { void (*fn)(); SetOwner call; } setOwner = { j_00047230 };
+	(((RouteWinSetOwner *)tabControl)->*setOwner.call)(record->m_owner);
 	assignDefaultGadgetLook(tabControl, defaultFont, defaultVisual);
 	return tabControl;
 }
