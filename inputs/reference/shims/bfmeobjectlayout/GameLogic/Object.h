@@ -288,7 +288,9 @@ public:
 	BehaviorModule** getBehaviorModules() const { return m_behaviors; }
 
 	BodyModuleInterface* getBodyModule() const { return m_body; }
-	ContainModuleInterface* getContain() const { return m_contain; }
+	// Retail's inline COMDATs (0x4C3C10, 0x56A700) are `mov eax,[ecx+0x1FC]`; m_contain sits at +0x190
+	// here, pinned by matched bodies, so only the accessor reads retail's offset.
+	ContainModuleInterface* getContain() const { return *(ContainModuleInterface* const*)((const char*)this + 0x1FC); }
   StealthUpdate*          getStealth() const { return m_stealth; }
 	SpawnBehaviorInterface* getSpawnBehaviorInterface() const;
 	ProjectileUpdateInterface* getProjectileUpdateInterface() const;
