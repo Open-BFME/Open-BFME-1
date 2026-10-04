@@ -44,6 +44,7 @@ enum BodyDamageType
 };
 
 extern void j_00039301();
+extern void j_00012b70();
 
 class Drawable
 {
@@ -58,6 +59,8 @@ class ObjectSMCHelper
 public:
 	void setModelConditionState(Int condition, UnsignedInt frames);
 };
+
+typedef void (ObjectSMCHelper::*SetModelConditionStateCall)(Int, UnsignedInt);
 
 class GameLogic
 {
@@ -121,7 +124,10 @@ void Object::rva001CD6B0(BodyDamageType newState, Int variant)
 	if (TheDamageMap[newState] == 5)
 	{
 		if (m_modelConditionFlags.test(0x44))
-			m_smcHelper->setModelConditionState(0x12d, 0xf);
+		{
+			union { void (*fn)(); SetModelConditionStateCall call; } smc = { j_00012b70 };
+			(m_smcHelper->*smc.call)(0x12d, 0xf);
+		}
 	}
 
 	if (TheDamageMap[newState] != 5 && m_modelConditionFlags.test(4))
@@ -154,4 +160,4 @@ void Object::rva001CD6B0(BodyDamageType newState, Int variant)
 	}
 }
 
-#pragma comment(linker, "/alternatename:?setModelConditionState@ObjectSMCHelper@@QAEXHI@Z=?j_00012b70@@YAXXZ")
+
