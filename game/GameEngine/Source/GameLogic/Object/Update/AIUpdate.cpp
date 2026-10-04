@@ -5924,11 +5924,8 @@ AIStateType AIUpdateInterface::getAIStateType() const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?ignoreObstacle@AIUpdateInterface@@ present-unmatched
-void AIUpdateInterface::ignoreObstacle( const Object *obj )
-{
-	m_ignoreObstacleID = obj ? obj->getID() : INVALID_ID;
-}
+// ignoreObstacle is owned by AIUpdateInterfaceIgnoreObstacle.cpp (RVA 0x002739F0).
+// The ZH donor stored at +0x154; BFME uses +0x164 and CritterDesync logging.
 
 //-------------------------------------------------------------------------------------------------
 // ?ignoreObstacleID@AIUpdateInterface@@ present-unmatched
