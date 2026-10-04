@@ -89661,7 +89661,7 @@ _setnodevector,0x00999580,vendored=lua-4.0.1
 _setsockopt@20,0x0081BE50,vendored=gamespy-2004
 _shutdown@8,0x0081BE44,vendored=gamespy-2004
 _simpleexp,0x0099C810,decode_calls pin for _subexpr callee
-_skipWhitespace,0x008872B0,COFF-local symbol of the actual included SkipWhitespaceW.c helper; existing 46-byte wide skipWhitespace row object-symbol; private EAX input/output verified from trim caller and full helper body
+?skipWhitespace@@YAPAGPAG@Z,0x008872B0,COFF-local symbol of StringBase.cpp's file-static wide skipWhitespace (row ?skipWhitespace@@YAPA_WPA_W@Z object-symbol); private EAX input/output verified from the trim caller at 0x00888ED0
 _socket@12,0x0081BE1A,vendored=gamespy-2004
 _sprintf,0x009F6DE2,V2 lane: sprintf import thunk (targets/game/reverse/functions.csv gen-import ?ji_009f6de2@@YAXXZ names the same address)
 _sscanf,0x009F6FA6,MSVCR71 sscanf import thunk; IAT slot 0x01359494 used by CrateTemplate parser

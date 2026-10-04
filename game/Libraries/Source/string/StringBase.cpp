@@ -797,6 +797,52 @@ void StringBase<char>::trim()
 	}
 }
 
+// The wide trim and its scan call MSVCR71 iswspace through the IAT cell
+// (0x01359438) read as a plain pointer: a dllimport declaration lets MSVC hoist
+// the cell into a register across the removeLastChar loop, which retail does
+// not do.
+extern "C" int (__cdecl *_imp__iswspace)(unsigned short);
+
+// Retail 0x008872B0: file-static scan the wide trim calls (MSVC passes its
+// pointer in EAX and returns it in EAX).
+static __declspec(noinline) wchar_t *skipWhitespace(wchar_t *p)
+{
+	while (*p && _imp__iswspace(*p))
+		++p;
+	return p;
+}
+
+void StringBase<wchar_t>::trim()
+{
+	if (m_data)
+	{
+		// strip leading white space
+		wchar_t *c = skipWhitespace(peek());
+		if (c != peek())
+		{
+			int len = getLength() - (int)(c - peek());
+			if (len != 0)
+				ensureUniqueBufferOfSize(len, false, c, len, 0, 0);
+			else
+				releaseBuffer();
+		}
+
+		// clip trailing white space
+		if (m_data)
+		{
+			int index = m_data->length;
+			while (index > 0)
+			{
+				--index;
+				if (_imp__iswspace(getCharAt(index)))
+					removeLastChar();
+				else
+					break;
+			}
+		}
+	}
+}
+
 template class StringBase<char>;
 template class StringBase<wchar_t>;
 
