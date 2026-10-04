@@ -104,15 +104,14 @@ Image *_bfme_createMapPictureImage(const AsciiString &mapName)
 // Selection owns a freshly created map image and borrows the fallback.
 class MappedImageCollection
 {
-public:
-	const Image *findImageByName(const AsciiString &name);
 };
 
 extern MappedImageCollection *TheMappedImageCollection;
-extern Image *createMapPictureImage(const AsciiString &mapName);
 
-#pragma comment(linker, "/alternatename:?createMapPictureImage@@YAPAVImage@@ABVAsciiString@@@Z=?j_0004032c@@YAXXZ")
-#pragma comment(linker, "/alternatename:?findImageByName@MappedImageCollection@@QAEPBVImage@@ABVAsciiString@@@Z=?j_0001d606@@YAXXZ")
+// Retail reaches both callees through incremental-link thunks, so the calls
+// name the thunks directly: 0x0004032C and 0x0001D606.
+extern void j_0004032c();
+extern void j_0001d606();
 
 class MapMetaData
 {
@@ -148,14 +147,18 @@ void AptMapPreview::bfmeSetMapPicture(MapMetaData *map)
 	Image *picture = reinterpret_cast<Image *>(map);
 	if (map)
 	{
-		picture = createMapPictureImage(map->m_mapName);
+		typedef Image *(__cdecl *CreateFn)(const AsciiString &);
+		union { void (*fn)(); CreateFn call; } uCreate = { j_0004032c };
+		picture = uCreate.call(map->m_mapName);
 		m_pictureOwned = true;
 	}
 	if (!picture)
 	{
 		{
 			AsciiString missingMap("MissingMap");
-			picture = (Image *)TheMappedImageCollection->findImageByName(missingMap);
+			typedef const Image *(MappedImageCollection::*FindFn)(const AsciiString &);
+			union { void (*fn)(); FindFn call; } uFind = { j_0001d606 };
+			picture = (Image *)(TheMappedImageCollection->*uFind.call)(missingMap);
 		}
 		m_pictureOwned = false;
 	}
