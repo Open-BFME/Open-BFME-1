@@ -17,24 +17,25 @@ VeterancyCrateCollide::~VeterancyCrateCollide()
 {
 }
 
+// Retail calls through ILT thunks at these addresses; the member pointers below
+// carry the real signature so the call sites keep their exact code shape.
+extern void j_0001fde3();
+extern void j_0002a239();
+extern void j_00019ff1();
+extern void j_00020824();
+extern void j_0000a001();
+extern void j_00025ef5();
+
 class BfmeThing932D
 {
-	public:
-	char go();
 };
 
 class BfmeExperienceTrackerCall
 {
-	public:
-	Bool isTrainable() const;
 };
 
 class BfmeObjectCall
 {
-	public:
-	Bool isSignificantlyAboveTerrain() const;
-	Player *getControllingPlayer() const;
-	Bool isUsingAirborneLocomotor() const;
 };
 
 class BfmeVeterancyCrateData
@@ -49,16 +50,8 @@ class BfmeVeterancyCrateData
 
 class BfmeCrateCollideCall
 {
-	public:
-	Bool isValidToExecute(const Object *other) const;
 };
 
-#pragma comment(linker, "/alternatename:?go@BfmeThing932D@@QAEDXZ=?j_0001fde3@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isTrainable@BfmeExperienceTrackerCall@@QBE_NXZ=?j_0002a239@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isSignificantlyAboveTerrain@BfmeObjectCall@@QBE_NXZ=?j_00019ff1@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getControllingPlayer@BfmeObjectCall@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isUsingAirborneLocomotor@BfmeObjectCall@@QBE_NXZ=?j_0000a001@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isValidToExecute@BfmeCrateCollideCall@@QBE_NPBVObject@@@Z=?j_00025ef5@@YAXXZ")
 inline const BfmeVeterancyCrateData *getBfmeVeterancyCrateData(const VeterancyCrateCollide *module)
 {
 	return *reinterpret_cast<const BfmeVeterancyCrateData *const *>(
@@ -76,14 +69,18 @@ Bool VeterancyCrateCollide::isValidToExecute(const Object *other) const
 	if (!data)
 		return false;
 
-	if (!reinterpret_cast<const BfmeCrateCollideCall *>(this)->isValidToExecute(other))
+	typedef Bool (BfmeCrateCollideCall::*CrateCall)(const Object *) const;
+	union { void (*fn)(); CrateCall call; } uCrate = { j_00025ef5 };
+	if (!((reinterpret_cast<const BfmeCrateCollideCall *>(this)->*uCrate.call)(other)))
 		return false;
 
 	if ((*reinterpret_cast<const unsigned char *>(
 		reinterpret_cast<const char *>(other) + 0x344) & 1) != 0)
 		return false;
 
-	if (reinterpret_cast<const BfmeObjectCall *>(other)->isSignificantlyAboveTerrain())
+	typedef Bool (BfmeObjectCall::*AboveTerrainCall)() const;
+	union { void (*fn)(); AboveTerrainCall call; } uAbove = { j_00019ff1 };
+	if ((reinterpret_cast<const BfmeObjectCall *>(other)->*uAbove.call)())
 		return false;
 
 	if (getBfmeVeterancyCrateData(this) && getBfmeVeterancyCrateData(this)->m_addsOwnerVeterancy != 0)
@@ -91,10 +88,14 @@ Bool VeterancyCrateCollide::isValidToExecute(const Object *other) const
 
 	ExperienceTracker *tracker = *reinterpret_cast<ExperienceTracker *const *>(
 		reinterpret_cast<const char *>(other) + 0x210);
-	if (!tracker || !reinterpret_cast<const BfmeExperienceTrackerCall *>(tracker)->isTrainable())
+	typedef Bool (BfmeExperienceTrackerCall::*TrainableCall)() const;
+	union { void (*fn)(); TrainableCall call; } uTrainable = { j_0002a239 };
+	if (!tracker || !(reinterpret_cast<const BfmeExperienceTrackerCall *>(tracker)->*uTrainable.call)())
 		goto invalid;
 
-	if (!reinterpret_cast<BfmeThing932D *>(tracker)->go())
+	typedef char (BfmeThing932D::*GoCall)();
+	union { void (*fn)(); GoCall call; } uGo = { j_0001fde3 };
+	if (!(reinterpret_cast<BfmeThing932D *>(tracker)->*uGo.call)())
 		goto invalid;
 
 	if (*reinterpret_cast<const Int *>(reinterpret_cast<const char *>(tracker) + 0x28) > data->m_affectsUpToLevel)
@@ -102,11 +103,15 @@ Bool VeterancyCrateCollide::isValidToExecute(const Object *other) const
 
 	if (data->m_isPilot != 0)
 	{
+		typedef Player *(BfmeObjectCall::*ControllingPlayerCall)() const;
+		union { void (*fn)(); ControllingPlayerCall call; } uPlayer = { j_00020824 };
 		const Object *object = getBfmeVeterancyCrateObject(this);
-		if (reinterpret_cast<const BfmeObjectCall *>(other)->getControllingPlayer()
-			!= reinterpret_cast<const BfmeObjectCall *>(object)->getControllingPlayer())
+		if ((reinterpret_cast<const BfmeObjectCall *>(other)->*uPlayer.call)()
+			!= (reinterpret_cast<const BfmeObjectCall *>(object)->*uPlayer.call)())
 			goto invalid;
-		if (reinterpret_cast<const BfmeObjectCall *>(other)->isUsingAirborneLocomotor())
+		typedef Bool (BfmeObjectCall::*AirborneCall)() const;
+		union { void (*fn)(); AirborneCall call; } uAir = { j_0000a001 };
+		if ((reinterpret_cast<const BfmeObjectCall *>(other)->*uAir.call)())
 			goto invalid;
 	}
 
