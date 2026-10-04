@@ -101,8 +101,7 @@ extern void j_0003251f();
 extern void j_0003add7();
 extern void j_0003e77a();
 extern void j_00044f30();
-extern "C" const void *bfmeVftRadarObject[];
-#pragma comment(linker, "/alternatename:_bfmeVftRadarObject=??_7RadarObject@@6B@")
+extern "C" const char __identifier("??_7RadarObject@@6B@")[];
 
 static inline RadarPriorityType BfmeGetRadarPriority( const Object *object )
 {
@@ -703,7 +702,7 @@ allocate_radar_object:
 	if( rawObj != NULL )
 	{
 		allocated = (BfmeRadarObjectAdd *)rawObj;
-		allocated->m_vtable = (void *)bfmeVftRadarObject;
+		allocated->m_vtable = (void *)__identifier("??_7RadarObject@@6B@");
 		allocated->m_object = NULL;
 		allocated->m_next = NULL;
 		allocated->m_color = GameMakeColor( 255, 255, 255, 255 );
