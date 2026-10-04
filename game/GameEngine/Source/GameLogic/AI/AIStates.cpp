@@ -1229,8 +1229,6 @@ class BfmeOutOfWeaponRangeWeapon;
 class BfmeOutOfWeaponRangeStateMachine
 {
 public:
-	BfmeOutOfWeaponRangeObject *getGoalObject();
-
 	char m_unreconstructed_000[ 0x10 ];
 	BfmeOutOfWeaponRangeObject *m_owner;
 };
@@ -1244,20 +1242,15 @@ public:
 
 class BfmeOutOfWeaponRangeTemplate
 {
-public:
-	Bool isContactWeapon() const;
-	Bool isLeechRangeWeapon() const;
 };
 
 class BfmeOutOfWeaponRangeObject
 {
 public:
-	BfmeOutOfWeaponRangeWeapon *getCurrentWeapon( Int slot );
 	AIUpdateInterface *getAI() const
 	{
 		return *(AIUpdateInterface **)((char *)this + 0x204);
 	}
-	Bool isKindOf( KindOfType kind ) const;
 	BfmeOutOfWeaponRangeObject *getContainedBy() const
 	{
 		return *(BfmeOutOfWeaponRangeObject **)((char *)this + 0x214);
@@ -1270,7 +1263,6 @@ public:
 	{
 		return (const Coord3D *)((const char *)this + 0x38);
 	}
-	Bool isSignificantlyAboveTerrain() const;
 };
 
 class BfmeOutOfWeaponRangeWeapon
@@ -1280,17 +1272,10 @@ public:
 	{
 		return *(BfmeOutOfWeaponRangeTemplate **)((char *)this + 4);
 	}
-	Bool hasLeechRange() const;
-	Bool isWithinAttackRange( const BfmeOutOfWeaponRangeObject *source,
-		const BfmeOutOfWeaponRangeObject *target, Int extra ) const;
 };
 
 class BfmeOutOfWeaponRangePathfinder
 {
-public:
-	Bool isAttackViewBlockedByObstacle( const BfmeOutOfWeaponRangeObject *source,
-		const Coord3D *sourcePos, const BfmeOutOfWeaponRangeObject *target,
-		const Coord3D *targetPos );
 };
 
 // 0x012EF214 is retail's TheAI singleton (extern AI *TheAI comes from
@@ -1314,15 +1299,18 @@ public:
 };
 
 
-#pragma comment(linker, "/alternatename:?getGoalObject@BfmeOutOfWeaponRangeStateMachine@@QAEPAVBfmeOutOfWeaponRangeObject@@XZ=?j_0000e570@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getCurrentWeapon@BfmeOutOfWeaponRangeObject@@QAEPAVBfmeOutOfWeaponRangeWeapon@@H@Z=?j_00031a7f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isContactWeapon@BfmeOutOfWeaponRangeTemplate@@QBE_NXZ=?j_0000b8ac@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isLeechRangeWeapon@BfmeOutOfWeaponRangeTemplate@@QBE_NXZ=?j_00028f74@@YAXXZ")
-#pragma comment(linker, "/alternatename:?hasLeechRange@BfmeOutOfWeaponRangeWeapon@@QBE_NXZ=?j_0000b1a4@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isWithinAttackRange@BfmeOutOfWeaponRangeWeapon@@QBE_NPBVBfmeOutOfWeaponRangeObject@@0H@Z=?j_0002e85c@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isKindOf@BfmeOutOfWeaponRangeObject@@QBE_NW4KindOfType@@@Z=?j_0003251f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isSignificantlyAboveTerrain@BfmeOutOfWeaponRangeObject@@QBE_NXZ=?j_00019ff1@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isAttackViewBlockedByObstacle@BfmeOutOfWeaponRangePathfinder@@QAE_NPBVBfmeOutOfWeaponRangeObject@@PBUCoord3D@@01@Z=?j_00023042@@YAXXZ")
+// Retail reached these helpers through incremental-link thunks, so the calls
+// below name the thunk directly (through a member-function pointer cast) rather
+// than an undefined member of one of the local views above.
+extern void j_0000e570();  // BfmeOutOfWeaponRangeStateMachine::getGoalObject
+extern void j_00031a7f();  // BfmeOutOfWeaponRangeObject::getCurrentWeapon
+extern void j_0000b8ac();  // BfmeOutOfWeaponRangeTemplate::isContactWeapon
+extern void j_00028f74();  // BfmeOutOfWeaponRangeTemplate::isLeechRangeWeapon
+extern void j_0000b1a4();  // BfmeOutOfWeaponRangeWeapon::hasLeechRange
+extern void j_0002e85c();  // BfmeOutOfWeaponRangeWeapon::isWithinAttackRange
+extern void j_0003251f();  // BfmeOutOfWeaponRangeObject::isKindOf
+extern void j_00019ff1();  // BfmeOutOfWeaponRangeObject::isSignificantlyAboveTerrain
+extern void j_00023042();  // BfmeOutOfWeaponRangePathfinder::isAttackViewBlockedByObstacle
 
 // State transition conditions ----------------------------------------------------------------------------
 /**
@@ -1331,10 +1319,32 @@ public:
  */
 Bool outOfWeaponRangeObject( State *thisState, void* userData )
 {
+	typedef BfmeOutOfWeaponRangeObject *(BfmeOutOfWeaponRangeStateMachine::*GetGoalObject)();
+	typedef BfmeOutOfWeaponRangeWeapon *(BfmeOutOfWeaponRangeObject::*GetCurrentWeapon)(Int);
+	typedef Bool (BfmeOutOfWeaponRangeObject::*IsKindOf)(KindOfType) const;
+	typedef Bool (BfmeOutOfWeaponRangeTemplate::*IsContactWeapon)() const;
+	typedef Bool (BfmeOutOfWeaponRangeTemplate::*IsLeechRangeWeapon)() const;
+	typedef Bool (BfmeOutOfWeaponRangeObject::*IsAboveTerrain)() const;
+	typedef Bool (BfmeOutOfWeaponRangePathfinder::*IsViewBlocked)(
+		const BfmeOutOfWeaponRangeObject *, const Coord3D *,
+		const BfmeOutOfWeaponRangeObject *, const Coord3D *);
+	typedef Bool (BfmeOutOfWeaponRangeWeapon::*HasLeechRange)() const;
+	typedef Bool (BfmeOutOfWeaponRangeWeapon::*IsWithinAttackRange)(
+		const BfmeOutOfWeaponRangeObject *, const BfmeOutOfWeaponRangeObject *, Int) const;
+	union { void (*fn)(); GetGoalObject call; } getGoalObject = { j_0000e570 };
+	union { void (*fn)(); GetCurrentWeapon call; } getCurrentWeapon = { j_00031a7f };
+	union { void (*fn)(); IsKindOf call; } isKindOf = { j_0003251f };
+	union { void (*fn)(); IsContactWeapon call; } isContactWeapon = { j_0000b8ac };
+	union { void (*fn)(); IsLeechRangeWeapon call; } isLeechRangeWeapon = { j_00028f74 };
+	union { void (*fn)(); IsAboveTerrain call; } isAboveTerrain = { j_00019ff1 };
+	union { void (*fn)(); IsViewBlocked call; } isViewBlocked = { j_00023042 };
+	union { void (*fn)(); HasLeechRange call; } hasLeechRange = { j_0000b1a4 };
+	union { void (*fn)(); IsWithinAttackRange call; } isWithinAttackRange = { j_0002e85c };
+
 	BfmeOutOfWeaponRangeState *state = (BfmeOutOfWeaponRangeState *)thisState;
 	BfmeOutOfWeaponRangeObject *obj = state->m_machine->m_owner;
-	BfmeOutOfWeaponRangeObject *victim = state->m_machine->getGoalObject();
-	BfmeOutOfWeaponRangeWeapon *weapon = obj->getCurrentWeapon( 0 );
+	BfmeOutOfWeaponRangeObject *victim = (state->m_machine->*getGoalObject.call)();
+	BfmeOutOfWeaponRangeWeapon *weapon = (obj->*getCurrentWeapon.call)( 0 );
 
 	CRCDEBUG_LOG(("outOfWeaponRangeObject()\n"));
 	if (!victim)
@@ -1348,39 +1358,39 @@ Bool outOfWeaponRangeObject( State *thisState, void* userData )
 		if (ai) {
 			onGround = ai->isDoingGroundMovement();
 		}
-		if( obj->isKindOf(KINDOF_IMMOBILE) ) {
+		if( (obj->*isKindOf.call)(KINDOF_IMMOBILE) ) {
 			onGround = true;
 		}
 		// brutal special case for stinger soldiers, who
 		// generally don't have locomotors, but are still on the ground.
-		if (obj->isKindOf((KindOfType)0x53))
+		if ((obj->*isKindOf.call)((KindOfType)0x53))
 		{
 			onGround = true;
 		}
 		BfmeOutOfWeaponRangeObject *containedBy = obj->getContainedBy();
-		if( containedBy && (containedBy->isKindOf( KINDOF_STRUCTURE ) || !containedBy->isAirborneTarget()) )
+		if( containedBy && ((containedBy->*isKindOf.call)( KINDOF_STRUCTURE ) || !containedBy->isAirborneTarget()) )
 		{
 			//Contained objects on the ground -- garrisoned buildings for example!
 			onGround = true;
 		}
 		// srj sez: at tiny ranges, isAttackViewBlockedByObstacle() can return false positives,
 		// so just skip it for contact weapons
-		if (victim && !weapon->getTemplate()->isContactWeapon()
-			&& !weapon->getTemplate()->isLeechRangeWeapon() && onGround
-			&& !victim->isSignificantlyAboveTerrain())
+		if (victim && !(weapon->getTemplate()->*isContactWeapon.call)()
+			&& !(weapon->getTemplate()->*isLeechRangeWeapon.call)() && onGround
+			&& !(victim->*isAboveTerrain.call)())
 		{
-			viewBlocked = ((BfmeOutOfWeaponRangeAI *)TheAI)->pathfinder()->isAttackViewBlockedByObstacle(
+			viewBlocked = (((BfmeOutOfWeaponRangeAI *)TheAI)->pathfinder()->*isViewBlocked.call)(
 				obj, obj->getPosition(), victim, victim->getPosition());
 		}
 		// A weapon with leech range temporarily has unlimited range and is locked onto its target.
-		if (!weapon->hasLeechRange() && viewBlocked) 
+		if (!(weapon->*hasLeechRange.call)() && viewBlocked) 
 		{
 			//CRCDEBUG_LOG(("outOfWeaponRangeObject() - object %d (%s) view is blocked for attacking %d (%s)\n",
 			//	obj->getID(), obj->getTemplate()->getName().str(),
 			//	victim->getID(), victim->getTemplate()->getName().str()));
 			return true;
 		}
-		if (!weapon->hasLeechRange() && !weapon->isWithinAttackRange(obj, victim, 0))
+		if (!(weapon->*hasLeechRange.call)() && !(weapon->*isWithinAttackRange.call)(obj, victim, 0))
 		{
 			//CRCDEBUG_LOG(("outOfWeaponRangeObject() - object %d (%s) is out of range for attacking %d (%s)\n",
 			//	obj->getID(), obj->getTemplate()->getName().str(),
