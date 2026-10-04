@@ -298,6 +298,8 @@ protected:
 
 public:
 	AIUpdateInterface( Thing *thing, const ModuleData* moduleData );
+	// Retail 0x0026ED70; proven AI receiver, original method name unknown.
+	void setRva0026ED70(Int handle);
 	// virtual destructor prototype provided by memory pool declaration
 
 	virtual AIUpdateInterface* getAIUpdateInterface() { return this; }
