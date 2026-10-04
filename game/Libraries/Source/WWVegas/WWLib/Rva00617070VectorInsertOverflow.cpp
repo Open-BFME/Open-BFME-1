@@ -11,6 +11,16 @@ struct Gen_t_00617d60_p16cd
 	char m_body[16];
 };
 
+// Incremental-link thunks: the retail element construct (0x0004A296) and
+// vector::_M_clear (0x0001FD2F) are reached through their ILT stubs.
+extern void j_0004a296();
+extern void j_0001fd2f();
+
+// Address-only class shape for the _M_clear ILT thunk; no members.
+class ClearTarget00617070
+{
+};
+
 namespace _STL
 {
 struct __false_type
@@ -37,8 +47,15 @@ class __node_alloc
 static inline void *vectorLargeAllocate(unsigned int bytes) { return ::operator new(bytes); }
 static inline void *vectorSmallAllocate(unsigned int bytes) { return __node_alloc<true, 0>::_M_allocate(bytes); }
 
+// Retail element construction is reached through the ILT thunk at 0x0004A296,
+// which stands in for the placement-new construct this vector specializes.
 template <class Type>
-void __cdecl BfmeElementConstruct(Type *destination, const Type &value);
+static __forceinline void elementConstruct00617070(Type *destination,
+	const Type &value)
+{
+	typedef void (__cdecl *Ctor)(Type *, const Type &);
+	((Ctor)(void *)j_0004a296)(destination, value);
+}
 
 template <class Type>
 __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
@@ -47,7 +64,7 @@ __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
 	{
 		do
 		{
-			BfmeElementConstruct(result, *first);
+			elementConstruct00617070(result, *first);
 			++first;
 			++result;
 		}
@@ -62,7 +79,7 @@ __forceinline Type *uninitialized_fill_n(Type *result, unsigned int count,
 {
 	for (; count > 0; --count)
 	{
-		BfmeElementConstruct(result, value);
+		elementConstruct00617070(result, value);
 		++result;
 	}
 	return result;
@@ -108,7 +125,7 @@ void vector<Type, Allocator>::_M_insert_overflow(
 
 	if (fillLength == 1)
 	{
-		BfmeElementConstruct(newFinish, value);
+		elementConstruct00617070(newFinish, value);
 		++newFinish;
 	}
 	else
@@ -124,7 +141,7 @@ void vector<Type, Allocator>::_M_insert_overflow(
 			Type *cur = position;
 			do
 			{
-				BfmeElementConstruct(newFinish, *cur);
+				elementConstruct00617070(newFinish, *cur);
 				++cur;
 				++newFinish;
 			}
@@ -132,16 +149,15 @@ void vector<Type, Allocator>::_M_insert_overflow(
 		}
 	}
 
-	_M_clear();
+	typedef void (ClearTarget00617070::*ClearThunk)();
+	union { void (*fn)(); ClearThunk call; } clear = { j_0001fd2f };
+	(((ClearTarget00617070 *)this)->*clear.call)();
 
 	_M_finish = newFinish;
 	_M_start = newStart;
 	_M_end_of_storage = newStart + length;
 }
 }
-
-#pragma comment(linker, "/alternatename:??$BfmeElementConstruct@UGen_t_00617d60_p16cd@@@_STL@@YAXPAUGen_t_00617d60_p16cd@@ABU1@@Z=?j_0004a296@@YAXXZ")
-#pragma comment(linker, "/alternatename:?_M_clear@?$vector@UGen_t_00617d60_p16cd@@V?$allocator@UGen_t_00617d60_p16cd@@@_STL@@@_STL@@IAEXXZ=?j_0001fd2f@@YAXXZ")
 
 template class _STL::vector<Gen_t_00617d60_p16cd,
 	_STL::allocator<Gen_t_00617d60_p16cd> >;
