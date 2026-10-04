@@ -25,13 +25,16 @@ struct BfmeA1087ShroudView
 	Rva006C23B0Grid *getShroud() const { return grid; }
 };
 
-#pragma comment(linker, "/alternatename:?worldToRadar@Radar@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z=?j_00026099@@YAXXZ")
+// Retail reaches both radar helpers through incremental-link thunks:
+// ILT 0x26099 -> Radar::worldToRadar (0x106D20), ILT 0x827E -> the aspect
+// helper (0x106F20). The calls are routed through the thunks directly.
+extern void j_00026099();
+extern void j_0000827e();
+
+class Route012F7FE0 {};
 
 class Rva00106F20Radar
 {
-public:
-	void computeAspect(float *xRatio, float *yRatio);
-
 private:
 	struct Coord3D
 	{
@@ -49,8 +52,6 @@ private:
 	unsigned char pad00[0x143c];
 	Region3D mapExtent;
 };
-
-#pragma comment(linker, "/alternatename:?computeAspect@Rva00106F20Radar@@QAEXPAM0@Z=?j_0000827e@@YAXXZ")
 
 class W3DRadarResetSurface
 {
@@ -115,6 +116,20 @@ struct Rva006C23B0RadarPoint
 	int y;
 };
 
+static __forceinline void bfmeJ00026099(void *self, const Coord3D *world, ICoord2D *out)
+{
+	typedef bool (Route012F7FE0::*WorldToRadar)(const Coord3D *, ICoord2D *);
+	union { void (*fn)(); WorldToRadar call; } toRadar = { j_00026099 };
+	(((Route012F7FE0 *)self)->*toRadar.call)(world, out);
+}
+
+static __forceinline void bfmeJ0000827e(void *self, float *xRatio, float *yRatio)
+{
+	typedef int (Rva00106F20Radar::*ComputeAspect)(float *, float *) const;
+	union { void (*fn)(); ComputeAspect call; } aspect = { j_0000827e };
+	(((Rva00106F20Radar *)self)->*aspect.call)(xRatio, yRatio);
+}
+
 void W3DRadar::setShroudLevel(Int cellX, Int cellY, CellShroudStatus status)
 {
 	BfmeA1087ShroudView *terrain = (BfmeA1087ShroudView *)TheTerrainRenderObject;
@@ -137,19 +152,19 @@ void W3DRadar::setShroudLevel(Int cellX, Int cellY, CellShroudStatus status)
 	Radar *radarThis = (Radar *)this;
 	world.x = (float)mapMinX;
 	world.y = (float)mapMinY;
-	radarThis->worldToRadar((const Coord3D *)&world, (ICoord2D *)&radar);
+	bfmeJ00026099(radarThis, (const Coord3D *)&world, (ICoord2D *)&radar);
 	int radarMinX = radar.x;
 	int radarMinY = radar.y;
 
 	world.x = (float)mapMaxX;
 	world.y = (float)mapMaxY;
-	radarThis->worldToRadar((const Coord3D *)&world, (ICoord2D *)&radar);
+	bfmeJ00026099(radarThis, (const Coord3D *)&world, (ICoord2D *)&radar);
 	int radarMaxX = radar.x;
 	int radarMaxY = radar.y;
 
 	float xRatio;
 	float yRatio;
-	((Rva00106F20Radar *)this)->computeAspect(&xRatio, &yRatio);
+	bfmeJ0000827e(this, &xRatio, &yRatio);
 
 	if (xRatio > yRatio)
 	{
