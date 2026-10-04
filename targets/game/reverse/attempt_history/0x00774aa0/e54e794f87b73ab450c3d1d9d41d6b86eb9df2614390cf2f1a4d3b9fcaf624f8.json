@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "e54e794f87b73ab450c3d1d9d41d6b86eb9df2614390cf2f1a4d3b9fcaf624f8",
+  "symbol": "?run@Seat00774AA0Owner@@QAEXMHPAUSeatBones@@PAUSeatRecord@@H@Z",
+  "score_kind": "measured",
+  "score": 1.0,
+  "source": "// ?run@Seat00774AA0Owner@@QAEXMHPAUSeatBones@@PAUSeatRecord@@H@Z\n// partial score=1.0 date=2026-10-04\n// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\nstruct SeatRecord {char pad[0xac];unsigned char flags;};\nstruct SeatLogic {char pad[0x6b];bool flag;};\nstruct SeatState {char pad[0x54];bool flag;};\nextern SeatLogic *seatLogic;\nextern SeatState *seatState;\nstruct SeatBones {void **begin,**end;};\nclass Seat00774AA0Owner {\npublic:\n void run(float,int,SeatBones *,SeatRecord *,int);\n void add(void **);\n void validate(float,int,SeatRecord *,int);\n void turret(SeatRecord *);\n};\nstruct Seat00774AA0Receiver:SeatRecord{void barrel(Seat00774AA0Owner *);};\nvoid Seat00774AA0Owner::run(float a,int b,SeatBones *bones,SeatRecord *record,int e){\n if(!record)return;\n if(!(record->flags&16) && ((seatLogic && seatLogic->flag)||(seatState && seatState->flag))){\n  for(void **it=bones->begin;it!=bones->end;++it)add(it);\n  record->flags|=16;\n }\n validate(a,b,record,e);turret(record);static_cast<Seat00774AA0Receiver*>(record)->barrel(this);\n}\n"
+}
