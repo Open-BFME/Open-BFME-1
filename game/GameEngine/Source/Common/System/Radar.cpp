@@ -1400,49 +1400,6 @@ void Radar::createEvent( const Coord3D *world, RadarEventType type, Real seconds
 
 }  // end createEvent
 
-// ------------------------------------------------------------------------------------------------
-/** Create radar event using a specific colors from the player */
-// ------------------------------------------------------------------------------------------------
-// ?createPlayerEvent@Radar@@QAEXPAVPlayer@@PBUCoord3D@@W4RadarEventType@@M@Z present-unmatched
-void Radar::createPlayerEvent( Player *player, const Coord3D *world, 
-															 RadarEventType type, Real secondsToLive )
-{
-
-	// sanity
-	if( player == NULL || world == NULL )
-		return;
-
-	// figure out the two colors we should use
-	Color c;
-	UnsignedByte r, g, b, a;
-	RGBAColorInt color[ 2 ];
-
-	// color 1
-	c = player->getPlayerColor();
-	GameGetColorComponents( c, &r, &g, &b, &a );
-	color[ 0 ].red = r;
-	color[ 0 ].green = g;
-	color[ 0 ].blue = b;
-	color[ 0 ].alpha = a;
-
-	// the second will be a darker color 1
-	Real darkScale = 0.75f;
-	color[ 1 ] = color[ 0 ];
-	color[ 1 ].red -= REAL_TO_INT( color[ 0 ].red * darkScale );
-	if( color[ 1 ].red < 0 )
-		color[ 1 ].red = 0;
-	color[ 1 ].green -= REAL_TO_INT( color[ 0 ].green * darkScale );
-	if( color[ 1 ].green < 0 )
-		color[ 1 ].green = 0;
-	color[ 1 ].blue -= REAL_TO_INT( color[ 0 ].blue * darkScale );
-	if( color[ 1 ].blue < 0 )
-		color[ 1 ].blue = 0;
-
-	// create the events using these colors
-	internalCreateEvent( world, type, secondsToLive, &color[ 0 ], &color[ 1 ] );
-
-}  // end createPlayerEvent
-
 //-------------------------------------------------------------------------------------------------
 /** Create a new radar event */
 //-------------------------------------------------------------------------------------------------
