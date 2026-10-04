@@ -142,6 +142,21 @@ class CameraClass;
 #include "sphere.h"
 #include "boxrobj.h"
 
+// Retail 0x0097ACA0 is the 234-byte BFME assignment provided by
+// VectorClassModelNodeHlodAssignmentThunk.cpp.  The generic vector.h body
+// lacks its IsValid transitions; do not emit that 217-byte copy here.
+// Compiler-only access bridge for the protected nested type, not a retail
+// class.  No instance, runtime body, data, vtable or RTTI is emitted.
+namespace {
+struct Rva0097ACA0TypeAccess : HLodClass
+{
+	typedef ModelNodeClass Node;
+};
+}
+extern template VectorClass<Rva0097ACA0TypeAccess::Node> &
+VectorClass<Rva0097ACA0TypeAccess::Node>::operator =(
+	const VectorClass<Rva0097ACA0TypeAccess::Node> &);
+
 extern const float BfmeZeroRange;
 extern float g_bfmeDefaultBU;
 
