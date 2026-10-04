@@ -149,7 +149,6 @@ public:
 	ModelConditionFlags m_statusFlags;
 	char m_pad130[0xd4];
 	AIUpdate *m_ai;
-	void notifyModelConditionChanged();
 };
 
 class StateMachine
@@ -162,8 +161,6 @@ public:
 class TerrainLogic
 {
 public:
-	HarvestRecord *find(HarvestRecord *, float);
-	void process(HarvestRecord *, void *);
 };
 
 class HarvestRecord
@@ -183,9 +180,9 @@ public:
 	UnsignedInt m_frame;
 };
 
-#pragma comment(linker, "/alternatename:?find@TerrainLogic@@QAEPAVHarvestRecord@@PAV2@M@Z=?j_000226ab@@YAXXZ")
-#pragma comment(linker, "/alternatename:?process@TerrainLogic@@QAEXPAVHarvestRecord@@PAX@Z=?j_0001acbc@@YAXXZ")
-#pragma comment(linker, "/alternatename:?notifyModelConditionChanged@Object@@QAEXXZ=?j_0002191d@@YAXXZ")
+extern void j_000226ab();
+extern void j_0001acbc();
+extern void j_0002191d();
 
 extern TerrainLogic *TheTerrainLogic;
 extern GameLogic *TheGameLogic;
@@ -216,18 +213,26 @@ StateReturnType AIHarvestPrepareSiteState::update()
 {
 	HarvestTarget *target = m_machine->m_owner->m_ai->getHarvestTarget();
 	register UnsignedInt condition = 0x200000;
+	typedef void (Object::*NotifyCall)();
+	union { void *asVoid; NotifyCall asMember; } notifyCast;
+	notifyCast.asVoid = (void *)j_0002191d;
 	if (target != 0)
 	{
 		Object *ownerForFind = m_machine->m_owner;
-		HarvestRecord *record = TheTerrainLogic->find(
-			(HarvestRecord *)((char *)ownerForFind + 0x38),
-			target->getValue(0, 2));
+		typedef HarvestRecord *(TerrainLogic::*FindCall)(
+			HarvestRecord *, float);
+		union { void *asVoid; FindCall asMember; } findCast;
+		findCast.asVoid = (void *)j_000226ab;
+		HarvestRecord *record =
+			(TheTerrainLogic->*findCast.asMember)(
+				(HarvestRecord *)((char *)ownerForFind + 0x38),
+				target->getValue(0, 2));
 		if (record == 0)
 		{
 			StateMachine *machineForFind = m_machine;
 			HarvestRecord *fallbackRecord =
 				(HarvestRecord *)((char *)machineForFind + 0x24);
-			record = TheTerrainLogic->find(
+			record = (TheTerrainLogic->*findCast.asMember)(
 				fallbackRecord,
 				target->getValue(0, 2));
 			if (record == 0)
@@ -240,14 +245,17 @@ StateReturnType AIHarvestPrepareSiteState::update()
 		if (!owner->m_statusFlags.test(condition))
 		{
 			owner->m_statusFlags.set(condition);
-			owner->notifyModelConditionChanged();
+			(owner->*notifyCast.asMember)();
 		}
 		if (record->m_isFinished)
 			return STATE_SUCCESS;
 
 		if (TheGameLogic->m_frame >= m_frame)
 		{
-			TheTerrainLogic->process(record,
+			typedef void (TerrainLogic::*ProcessCall)(HarvestRecord *, void *);
+			union { void *asVoid; ProcessCall asMember; } processCast;
+			processCast.asVoid = (void *)j_0001acbc;
+			(TheTerrainLogic->*processCast.asMember)(record,
 				(void *)((char *)m_machine->m_owner + 0x38));
 			return STATE_SUCCESS;
 		}
@@ -257,7 +265,7 @@ StateReturnType AIHarvestPrepareSiteState::update()
 	if (!owner->m_statusFlags.test(condition))
 	{
 		owner->m_statusFlags.set(condition);
-		owner->notifyModelConditionChanged();
+		(owner->*notifyCast.asMember)();
 	}
 	return STATE_CONTINUE;
 }
