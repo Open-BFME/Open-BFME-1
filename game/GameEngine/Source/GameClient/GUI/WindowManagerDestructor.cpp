@@ -129,6 +129,7 @@ typedef _STL::hash_map<int, Gen_t_0046b960_p12cd,
 	_STL::hash<int>, _STL::equal_to<int>,
 	_STL::allocator<TgPair_hash_int_p12cd_0046b960> > MapB960;
 
+namespace {
 class BfmeVector
 {
 public:
@@ -149,6 +150,7 @@ public:
 	int *m_finish;
 	int *m_end;
 };
+}
 
 extern void __cdecl j_00018246();
 extern void __cdecl j_0002b314();

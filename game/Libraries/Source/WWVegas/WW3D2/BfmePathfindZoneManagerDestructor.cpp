@@ -32,6 +32,7 @@ struct BfmeVectorElement
 	char value[16];
 };
 
+namespace {
 class BfmeVector
 {
 public:
@@ -51,6 +52,7 @@ public:
 	BfmeVectorElement *m_finish;
 	BfmeVectorElement *m_end;
 };
+}
 
 class Rva00405B70Tree
 {

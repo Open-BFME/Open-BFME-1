@@ -48,6 +48,7 @@ struct BfmeVectorElement
 	char m_bfmeSize[0x0C];
 };
 
+namespace {
 class BfmeVector
 {
 public:
@@ -68,6 +69,7 @@ public:
 	BfmeVectorElement *m_finish;
     BfmeVectorElement *m_end;
 };
+}
 
 class PathfinderBaseFirst
 {
