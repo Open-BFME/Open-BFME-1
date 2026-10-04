@@ -53,9 +53,11 @@ public:
 	void setTurretEnabled(WhichTurretType turret, Bool enable);
 };
 
-#pragma comment(linker, "/alternatename:?getSpecialPowerModule@Object@@QBEPAVSpecialPowerModuleInterface@@PBVSpecialPowerTemplate@@@Z=?j_000401bf@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getWhichTurretForCurWeapon@AIUpdateInterface@@QBE?AW4WhichTurretType@@XZ=?j_000346a3@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setTurretEnabled@AIUpdateInterface@@QAEXW4WhichTurretType@@_N@Z=?j_0002abbc@@YAXXZ")
+// Retail reaches these three members through incremental-link thunks; call the
+// thunk directly instead of aliasing a stand-in name to it.
+extern void j_000401bf();
+extern void j_000346a3();
+extern void j_0002abbc();
 
 class BattlePlanUpdateModuleData
 {
@@ -107,7 +109,9 @@ void BattlePlanUpdate::onObjectCreated(void)
 		return;
 	}
 
-	m_specialPowerModule = obj->getSpecialPowerModule(data->m_specialPowerTemplate);
+	typedef SpecialPowerModuleInterface *(Object::*GetSpecialPowerModule)(const SpecialPowerTemplate *);
+	union { void (*fn)(); GetSpecialPowerModule call; } getSpecialPowerModule = { j_000401bf };
+	m_specialPowerModule = (obj->*getSpecialPowerModule.call)(data->m_specialPowerTemplate);
 
 	((AudioEventRTS *)((unsigned char *)this + 0xb4))->setEventName(data->m_bombardmentUnpackName);
 	((AudioEventRTS *)((unsigned char *)this + 0x274))->setEventName(data->m_bombardmentPackName);
@@ -130,10 +134,14 @@ void BattlePlanUpdate::onObjectCreated(void)
 	ai = m_object->getAI();
 	if (ai)
 	{
-		WhichTurretType tur = ai->getWhichTurretForCurWeapon();
+		typedef WhichTurretType (AIUpdateInterface::*GetWhichTurret)() const;
+		union { void (*fn)(); GetWhichTurret call; } getWhichTurret = { j_000346a3 };
+		WhichTurretType tur = (ai->*getWhichTurret.call)();
 		if (tur != TURRET_INVALID)
 		{
-			ai->setTurretEnabled(tur, false);
+			typedef void (AIUpdateInterface::*SetTurretEnabled)(WhichTurretType, Bool);
+			union { void (*fn)(); SetTurretEnabled call; } setTurretEnabled = { j_0002abbc };
+			(ai->*setTurretEnabled.call)(tur, false);
 		}
 	}
 }
