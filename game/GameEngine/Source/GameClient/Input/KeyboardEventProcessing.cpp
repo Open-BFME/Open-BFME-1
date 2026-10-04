@@ -73,17 +73,14 @@ struct BfmeFalseType
 {
 };
 
+// Retail reaches the 0x005A3C00 vector overflow body through ILT 0x00010E33.
+extern void j_00010e33();
+
 struct BfmeKeyboardEventVector
 {
 	KeyboardIO *begin;    // this+0x0c
 	KeyboardIO *end;      // this+0x10
 	KeyboardIO *capacity; // this+0x14
-
-	void Rva005A3C00InsertOverflow( KeyboardIO *where,
-		const KeyboardIO &value,
-		const BfmeFalseType &tag,
-		UnsignedInt count,
-		bool one );
 
     void push_back(const KeyboardIO &value)
     {
@@ -96,7 +93,11 @@ struct BfmeKeyboardEventVector
         else
         {
             BfmeFalseType tag;
-            Rva005A3C00InsertOverflow(end, value, tag, 1, true);
+            typedef void (BfmeKeyboardEventVector::*InsertOverflow)(KeyboardIO *where,
+                const KeyboardIO &value, const BfmeFalseType &tag,
+                UnsignedInt count, bool one);
+            union { void (*fn)(); InsertOverflow call; } overflow = { j_00010e33 };
+            (this->*overflow.call)(end, value, tag, 1, true);
         }
     }
 };
