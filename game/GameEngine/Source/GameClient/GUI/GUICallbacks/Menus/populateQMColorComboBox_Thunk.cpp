@@ -150,10 +150,9 @@ extern void GadgetComboBoxSetItemData(GameWindow *comboBox, Int item,
 extern void GadgetComboBoxSetSelectedPos(GameWindow *comboBox, Int item,
 	Bool dontHide = false);
 
-// AptScreenFactories.cpp still declares the helper in the source-authentic
-// static form.  Keep that call spelling routed to this member body without
-// putting a second implementation in the large WOL TU.
-#pragma comment(linker, "/alternatename:?populateQMColorComboBox@@YAXAAVQuickMatchPreferences@@@Z=?populateQMColorComboBox@BfmeAptScreenQuickMatchMenu@@QAEXAAVQuickMatchPreferences@@@Z")
+// WOLQuickMatchMenu.cpp keeps its own source-authentic static helper, whose
+// external definition of this same free name is what resolves the calls in
+// AptScreenFactories.cpp, so no linker alias is needed here.
 
 // ?populateQMColorComboBox@BfmeAptScreenQuickMatchMenu@@QAEXAAVQuickMatchPreferences@@@Z
 void BfmeAptScreenQuickMatchMenu::populateQMColorComboBox(
