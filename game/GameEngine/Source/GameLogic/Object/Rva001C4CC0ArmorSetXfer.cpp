@@ -86,7 +86,9 @@ extern int __cdecl bfmeLookupA(void *name);
 extern void __declspec(noreturn) __stdcall _CxxThrowException(void *, void *);
 extern int g_guardTargetTypeThrowInfo;
 
-#pragma comment(linker, "/alternatename:?xfer@?$BitFlags@$0L@@@QAEXPAVXfer@@@Z=?j_00042ac3@@YAXXZ")
+// Retail calls BitFlags<N>::xfer through the ILT thunk at RVA 0x42ac3, so the
+// thunk address is what the code actually references.
+extern void j_00042ac3();
 
 class Rva001C4CC0
 {
@@ -105,7 +107,9 @@ void Rva001C4CC0::xfer(Rva001C4CC0XferView *xfer)
 	xfer->xferVersion(version);
 	if (xfer->IsLightCRC())
 	{
-		reinterpret_cast<BitFlags<11> *>(this)->xfer(reinterpret_cast<Xfer *>(xfer));
+		typedef void (BitFlags<11>::*Fn)(Xfer *);
+		union { void (*fn)(); Fn call; } u = { j_00042ac3 };
+		(reinterpret_cast<BitFlags<11> *>(this)->*u.call)(reinterpret_cast<Xfer *>(xfer));
 		return;
 	}
 
