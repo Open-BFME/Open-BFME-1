@@ -35,9 +35,6 @@ class UserPreferences
 {
 public:
 	virtual ~UserPreferences();
-	void setBool( AsciiString key, bool value );
-	bool getBool( AsciiString key, bool defaultValue ) const;
-	virtual bool write();
 
 private:
 	unsigned char m_unmodelled[ 0x10 ];
@@ -52,9 +49,12 @@ public:
 
 #pragma comment(linker, "/alternatename:??0GameSpyMiscPreferences@@QAE@XZ=?j_000267e2@@YAXXZ")
 #pragma comment(linker, "/alternatename:??1GameSpyMiscPreferences@@UAE@XZ=?j_000141a0@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setBool@UserPreferences@@QAEXVAsciiString@@_N@Z=?j_00017cc9@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getBool@UserPreferences@@QBE_NVAsciiString@@_N@Z=?j_0002c7cd@@YAXXZ")
-#pragma comment(linker, "/alternatename:?write@UserPreferences@@UAE_NXZ=?j_00030495@@YAXXZ")
+
+// Retail reaches setBool, getBool and write through ILT thunks; the thunks are
+// the real call targets, so name them instead of aliasing the member names.
+extern void j_00017cc9();
+extern void j_0002c7cd();
+extern void j_00030495();
 
 extern const char g_rva01080FC0[2];
 extern char g_bfmeJpegExtendedMessage;
@@ -98,13 +98,20 @@ void BfmeAptScreenOnlineShell::_bfme_onlineAdvMode(
 		GameSpyMiscPreferences preferences;
 		if( setting )
 		{
-			preferences.setBool( AsciiString( "InAdvMode" ),
+			typedef void (UserPreferences::*SetBool)( AsciiString, bool );
+			union { void (*fn)(); SetBool call; } setBool = { j_00017cc9 };
+			(preferences.*setBool.call)( AsciiString( "InAdvMode" ),
 				output[ 0 ] == '1' || output[ 0 ] == 't' );
-			preferences.write();
+
+			typedef bool (UserPreferences::*Write)();
+			union { void (*fn)(); Write call; } write = { j_00030495 };
+			(preferences.*write.call)();
 		}
 		else
 		{
-			const char *source = preferences.getBool(
+			typedef bool (UserPreferences::*GetBool)( AsciiString, bool ) const;
+			union { void (*fn)(); GetBool call; } getBool = { j_0002c7cd };
+			const char *source = (preferences.*getBool.call)(
 				AsciiString( "InAdvMode" ), false )
 				? g_rva01080FC0 : &g_bfmeJpegExtendedMessage;
 			char *destination = output;
