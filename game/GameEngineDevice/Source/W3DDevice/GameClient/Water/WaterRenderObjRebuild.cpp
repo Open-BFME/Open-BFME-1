@@ -39,14 +39,25 @@ struct BFMEWaterPolygonTriggerTableView
 
 extern int *g_rva0018EC80;		// retail 0x012ACB50, defined in Rva0018EC80Get.cpp
 
+// Exact local ABI view from BfmeConv1539.cpp. Retail's call at
+// RVA 0x007A50C3 reaches that provider via the ILT at 0x00028B8C;
+// ECX is the unchanged receiver, with its list head at +0x2ac.
+struct BfmeNodeVOL;
+
+class BfmeOwnerVOL
+{
+public:
+	void bfmeClearVOL();
+	char m_bfmePad000[0x2ac];
+	BfmeNodeVOL *m_bfme2ac;
+};
+
 class WaterRenderObjClass
 {
 public:
 	void rebuildPolygonList007A50A0(int);
 
 private:
-	void updateMapOverrides() throw();
-
 	unsigned char m_unmodelled_00[ 0x2ac ];
 	std::list<Rva007A1230ArrayOwner *> m_polygonOwners;
 };
@@ -54,7 +65,7 @@ private:
 void WaterRenderObjClass::rebuildPolygonList007A50A0(int)
 {
 	BFMEWaterPolygonTriggerView *trigger = ((BFMEWaterPolygonTriggerTableView*)g_rva0018EC80)->m_head;
-	updateMapOverrides();
+	reinterpret_cast<BfmeOwnerVOL *>(this)->bfmeClearVOL();
 
 	for ( ; trigger; trigger = trigger->getNext() )
 	{
