@@ -15,8 +15,10 @@ typedef bool Bool;
 class Module;
 #define OBJECT_TU_MEMBERS \
 	Team* getTeam() const { return m_team; } \
-	Module* findModule(NameKeyType) const; \
-	void kill(DamageType, DeathType);
+	void kill(DamageType, DeathType); \
+	friend class CastleBehavior; \
+protected: \
+	Module* findModule(NameKeyType) const;
 #include "object.h"
 // Retail 0x00373B30. CastleBehavior receiver witnessed by neighbouring methods;
 // semantic method identity remains unknown. Caller: CastleBehavior update
@@ -170,9 +172,7 @@ __forceinline R call2(void (*p)(), void *self, A a, B b)
 	return (((Rva00372BD0Calls *)self)->*u.f)(a, b);
 }
 
-extern void j_00014506();
 extern void j_00026094();
-extern void j_0002ae23();
 extern void j_0002ec44();
 extern void j_0003bf11();
 extern void j_00045827();
@@ -193,21 +193,18 @@ void CastleBehavior::rva00372bd0(Bool killOwnedObjects)
 				if (child != 0) {
 					call1<void>(j_00045827, this, child);
 					if (killOwnedObjects) {
-						call2<void>(j_00014506, child,
-							(DamageType)8, (DeathType)0);
+						child->kill((DamageType)8, (DeathType)0);
 					} else {
 						static NameKeyType enragedKey =
 							TheNameKeyGenerator->nameToKey("EntEnragedUpdate");
-						Module *enraged = call1<Module *>(j_0002ae23, child,
-							enragedKey);
+						Module *enraged = child->findModule(enragedKey);
 						if (enraged != 0)
 							call2<void>(j_0002ec44, enraged,
 								(unsigned char)1, (unsigned char)1);
 
 						static NameKeyType lifetimeKey =
 							TheNameKeyGenerator->nameToKey("LifetimeUpdate");
-						Module *lifetime = call1<Module *>(j_0002ae23, child,
-							lifetimeKey);
+						Module *lifetime = child->findModule(lifetimeKey);
 						if (lifetime != 0)
 							call0<void>(j_0003bf11, lifetime);
 					}
