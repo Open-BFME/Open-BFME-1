@@ -1,7 +1,10 @@
 // cl: /O2 /Ob0
 
-extern "C" const void *bfmeVftBfmeBaseCC[];
-#pragma comment(linker, "/alternatename:_bfmeVftBfmeBaseCC=??_7BfmeBaseCC@@6B@")
+// Retail vftable 0x00D2162C: ??_7BfmeBaseCC@@6B@, the base vftable the base
+// destructor at 0x0073A4E0 restores (targets/game/reverse/symbols.csv).
+// The declaration carries no C++ name: __identifier spells the retail symbol
+// exactly, so the store below references the defining name.
+extern "C" const char __identifier("??_7BfmeBaseCC@@6B@")[];
 
 class Rva0081C2F0
 {
@@ -18,7 +21,7 @@ public:
 Rva0081C2F0 &Rva0081C2F0::set(int n)
 {
 	m_20 = 1.0f;
-	m_vt = (void *)bfmeVftBfmeBaseCC;
+	m_vt = (void *)__identifier("??_7BfmeBaseCC@@6B@");
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0;
