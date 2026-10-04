@@ -23,8 +23,12 @@ struct GameLogicFrameView
 class GameLogic;
 extern GameLogic *TheGameLogic;
 
-extern "C" const void *bfmeVftAISkirmishPlayer[];
-#pragma comment(linker, "/alternatename:_bfmeVftAISkirmishPlayer=??_7AISkirmishPlayer@@6B@")
+// Retail's vftable for AISkirmishPlayer is 0x01096FB0, pinned in symbols.csv as
+// ??_7AISkirmishPlayer@@6B@ and corroborated by Player::setPlayerType's
+// skirmish branch and by the destructor at 0x00168710 which reads the same
+// table.  The stand-in name below resolved nothing; __identifier spells the
+// compiler-emitted symbol so the reference links to that real definition.
+extern "C" const char __identifier("??_7AISkirmishPlayer@@6B@")[];
 
 class AIPlayer
 {
@@ -68,7 +72,7 @@ AISkirmishPlayer::AISkirmishPlayer(Player *player) :
 	m_frameToCheckEnemy(0),
 	m_currentEnemy(0)
 {
-	*(UnsignedInt *)this = (UnsignedInt)bfmeVftAISkirmishPlayer;
+	*(UnsignedInt *)this = (UnsignedInt)__identifier("??_7AISkirmishPlayer@@6B@");
 	m_skillsetSelector = ((GameLogicFrameView *)TheGameLogic)->m_frame;
 	player->m_canBuildUnits = 1;
 }
