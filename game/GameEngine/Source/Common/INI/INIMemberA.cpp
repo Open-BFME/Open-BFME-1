@@ -41,35 +41,40 @@ struct BfmeIniMemberEntry
 	int m_bfmeB;
 };
 
-// The destructor is QAE, not UAE, so it is not virtual -- yet it stores a
-// vtable pointer. That means the vptr comes from a base whose own destructor is
-// non-virtual: an interface with pure virtuals and no virtual destructor.
-class BfmeIniMemberInterface
+// TU-local view of the INILineBuffer base. Retail's destructor calls
+// INILineBuffer::clear() -- 0x009CBF50, owned by INILineBuffer.cpp -- on
+// `this` itself before it releases the line vector, and the vtable it stores
+// (0x01143B3C) opens with a deleting destructor, so that base sub-object is the
+// polymorphic one and it sits at offset 0. Its single slot is declared pure
+// here: this TU only writes the destructor, never instantiates the class, and
+// the compiler's own pure-virtual handler -- a CRT symbol every object already
+// links -- stands in for a body nothing defines.
+class INILineBuffer
 {
 public:
 	virtual void bfmeSlot0(void) = 0;
-};
 
-class INIMemberA : public BfmeIniMemberInterface
-{
-public:
-	__declspec(noinline) ~INIMemberA(void);
+	void clear(void);					// retail 0x009CBF50, defined by INILineBuffer.cpp
 
-	virtual void bfmeSlot0(void);
-
-private:
-	void bfmeCleanup(void);					// retail 0x009CBF50
-
-	int m_bfmeField4;					// +0x04
+protected:
+	char *m_bfmeBuffer;					// +0x04
 	BfmeIniMemberEntry *m_bfmeStart;			// +0x08
 	BfmeIniMemberEntry *m_bfmeFinish;			// +0x0C
 	BfmeIniMemberEntry *m_bfmeEndOfStorage;			// +0x10
 };
 
+// The destructor is QAE, not UAE, so it is not virtual -- yet it stores a
+// vtable pointer. That vptr is the base's, above.
+class INIMemberA : public INILineBuffer
+{
+public:
+	__declspec(noinline) ~INIMemberA(void);
+};
+
 // ??1INIMemberA@@QAE@XZ
 INIMemberA::~INIMemberA(void)
 {
-	bfmeCleanup();
+	INILineBuffer::clear();
 
 	if (m_bfmeStart != 0)
 	{
