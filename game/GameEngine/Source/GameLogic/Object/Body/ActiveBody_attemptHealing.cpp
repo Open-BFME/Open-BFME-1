@@ -22,6 +22,7 @@ struct HealingBodyFacet0020FBC0 {
  V(00);V(01);V(02);V(03);V(04);V(05);V(06);V(07);V(08);V(09);V(10);V(11);V(12);V(13);V(14);V(15);V(16);V(17);V(18);V(19);V(20);V(21);V(22);V(23);V(24);V(25);V(26);V(27);V(28);V(29);V(30);V(31);V(32);V(33);V(34);V(35);V(36);V(37);V(38); virtual void state(int);
 };
 class Object { public:
+ bool getAttributeModifierBonus(int, float *) const;
  void *vtable; HealingTemplate0020FBC0 *tmpl; char gap8[0x90-8]; unsigned int m_status; char gap94[0x1f0-0x94]; HealingBehavior0020FBC0 **m_behaviors; char gap1f4[12]; HealingBodyFacet0020FBC0 *body; char gap204[0x344-0x204]; unsigned int m_privateStatus;
  HealingTemplate0020FBC0 *getTemplate() const { HealingTemplate0020FBC0 *t=tmpl; if(!t)return 0; if(t->next)t=(HealingTemplate0020FBC0*)t->next->getFinalOverride();return t; }
 };
@@ -29,7 +30,7 @@ class GameLogic { public: char pad[0x3c]; unsigned frame; Object *findObjectByID
 extern GameLogic *TheGameLogic;
 class FXList { public: static void doFXObj(const FXList*,const Object*,const Object*); };
 struct HealingData0020FBC0 { char pad[0x48]; const FXList *fx; };
-struct HealingArmor001B0200 { float adjust(void*,Object*,int); };
+struct HealingArmor001B0200 { const float *m_kindMultipliers; char m_pad04[0x08]; float adjust(void*,Object*,int); };
 struct HealingPrimary0020FBC0 { V(00);V(01);V(02);V(03);V(04);V(05);V(06);V(07);V(08);V(09);V(10);V(11);V(12);V(13); virtual void validate(); virtual void fx(DamageInfo*); };
 class ActiveBody { public:
  virtual void attemptDamage(DamageInfo*); virtual void attemptHealing(DamageInfo*);
@@ -68,4 +69,81 @@ void ActiveBody::attemptHealing(DamageInfo *info) {
   }
  }
  primary->fx(info);
+}
+
+template <int N>
+class BitFlags
+{
+public:
+    BitFlags() {}
+    BitFlags(const BitFlags<N> &);
+private:
+    unsigned int m_bits[(N + 31) / 32];
+};
+typedef BitFlags<11> ArmorSetFlags;
+class ArmorTemplateSet;
+
+class ThingTemplate : public Overridable
+{
+public:
+    const ArmorTemplateSet *findArmorTemplateSet(const ArmorSetFlags &) const;
+};
+
+class BodyModuleFlagsSource001B0200
+{
+public:
+    virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0c();
+    virtual void slot10(); virtual void slot14(); virtual void slot18(); virtual void slot1c();
+    virtual void slot20(); virtual void slot24(); virtual void slot28(); virtual void slot2c();
+    virtual void slot30(); virtual void slot34();
+    virtual ArmorSetFlags slot38() const;
+};
+
+class GlobalData
+{
+public:
+    char m_bfmeHeadRW[0x0bac];
+    float m_attributeModifierArmorMaxBonus;
+};
+extern GlobalData *TheWritableGlobalData;
+extern float g_bfmeDefaultBU;
+
+float HealingArmor001B0200::adjust(void *damageInfo, Object *object, int)
+{
+    int kind = *(int *)((char *)damageInfo + 0x0c);
+    struct LocalSlots { union { float amount; float result; }; float multiplier; HealingArmor001B0200 * volatile receiver; };
+    LocalSlots slots;
+    float amount = *(float *)((char *)damageInfo + 0x18);
+    slots.receiver = this;
+    slots.amount = amount;
+    if (kind == 7)
+        return slots.amount;
+
+    Object *currentObject = object;
+    BodyModuleFlagsSource001B0200 *bodyModule =
+        *(BodyModuleFlagsSource001B0200 **)((char *)currentObject + 0x200);
+    slots.multiplier = 1.0f;
+    const ThingTemplate *thingTemplate =
+        (const ThingTemplate *)currentObject->getTemplate();
+    const ArmorTemplateSet *armorSet = thingTemplate->findArmorTemplateSet(
+        bodyModule->slot38());
+    if (armorSet != 0)
+        slots.multiplier = *(float *)(*(char **)((char *)armorSet + 4) + 0x5c);
+
+    slots.result = slots.multiplier * slots.amount;
+    if (kind != 8)
+    {
+        int multiplierKind = *(volatile int *)((char *)damageInfo + 0x0c);
+        slots.result *= slots.receiver->m_kindMultipliers[multiplierKind];
+        if (kind != 0)
+        {
+            float bonus = 0.0f;
+            currentObject->getAttributeModifierBonus(1, &bonus);
+            const float *selected = &TheWritableGlobalData->m_attributeModifierArmorMaxBonus;
+            if (bonus < *selected)
+                selected = &bonus;
+            return (g_bfmeDefaultBU - *selected) * slots.result;
+        }
+    }
+    return slots.result;
 }
