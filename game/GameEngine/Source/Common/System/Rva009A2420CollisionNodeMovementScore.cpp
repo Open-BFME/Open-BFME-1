@@ -42,12 +42,9 @@ public:
 	virtual int slot05() = 0;
 };
 
-// 0x0107FAA8 carries no symbols.csv pin; the constant-pool slot is named
-// address-derived and bound to the symbol dir32_addresses.csv records there.
-extern const Real g_0107FAA8;
-#pragma comment(linker, "/alternatename:?g_0107FAA8@@3PB=__real@42480000")
-
-#define Rva009A2420MoveThreshold g_0107FAA8
+// The 50.0f literal compiles to the pool constant __real@42480000 that
+// dir32_addresses.csv records at 0x0107FAA8.
+#define Rva009A2420MoveThreshold (50.0f)
 
 class Rva009A2420CollisionNode
 {
@@ -114,7 +111,3 @@ unsigned int Rva009A2420CollisionNode::getMovementScore(bool allowCache)
 	m_value84 = previous[2];
 	return score;
 }
-
-// Address-derived names whose address dir32_addresses.csv records: bind each to the
-// recorded symbol so the linked build resolves one object, not two.
-#pragma comment(linker, "/alternatename:?g_0107FAA8@@3MB=__real@42480000")
