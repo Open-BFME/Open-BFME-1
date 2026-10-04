@@ -2147,6 +2147,18 @@ struct BfmePlayerTeamFields
 	Player::PlayerTeamList m_playerTeamPrototypes;		///< retail this+0x288
 };
 
+// The retail ILT thunks the walks below call through.  Naming the thunk
+// itself keeps each of those calls an ordinary thiscall, so a declared view
+// method needs no linker alias to reach a real body:
+//   0x00001140 -> 0x000C8980  team member-list advance
+//   0x00022A70 -> 0x000C8A30  team instance-list advance
+//   0x00022BB -> 0x00087A80  final override
+//   0x00044C60 -> 0x000DF5A0  player relationship mask
+extern void j_00001140();
+extern void j_00022a70();
+extern void j_000022bb();
+extern void j_00044c60();
+
 class BfmeTeamInstanceLink
 {
 public:
@@ -2178,6 +2190,7 @@ class BfmePlayerObjectDlinkBase
 public:
 	BfmePlayerObjectDlinkObject *dlink_next_TeamMemberList() const;
 };
+
 
 class BfmePlayerObjectDlinkPad
 {
@@ -2387,28 +2400,23 @@ private:
 
 class BfmeShroudManagerHuntView
 {
-public:
-	void getMostValuableLocation(Int playerMask, Int value,
-		Coord3D *outLocation);
 };
 
 class BfmePlayerListHuntView
 {
+};
+
+// retail 0x008F7450, the shroud manager's most-valuable-location forwarder,
+// which is the body ?m@Gen_008f7450@@QAEXXZ names.
+class Gen_008f7450
+{
 public:
-	unsigned short getPlayersWithRelationship(Int playerIndex,
-		Int whichPlayerTypes, Bool exact);
+	void m();
 };
 
 extern PartitionManager *TheShroudManager;
-#pragma comment(linker, "/alternatename:?getMostValuableLocation@BfmeShroudManagerHuntView@@QAEXHHPAUCoord3D@@@Z=?m@Gen_008f7450@@QAEXXZ")
-#pragma comment(linker, "/alternatename:?getPlayersWithRelationship@BfmePlayerListHuntView@@QAEGHH_N@Z=?getPlayersWithRelationship@PlayerList@@QAEGHH_N@Z")
 
-extern void j_00001140();
-extern void j_000022a70();
-extern void j_000022bb();
 #pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmePlayerObjectDlinkBase@@QBEPAVBfmePlayerObjectDlinkObject@@@Z=?j_00001140@@YAXXZ")
-#pragma comment(linker, "/alternatename:?_bfme_nextInInstanceList@BfmePlayerTeamInstanceLink@@QAEPAV1@XZ=?j_000022a70@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getFinalOverride@BfmePlayerOverridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
 
 //=============================================================================
 // ?countObjectsByThingTemplate@Player@@QBEXHPBQBVThingTemplate@@_NPAH1@Z
@@ -2652,9 +2660,20 @@ void Player::setUnitsShouldHunt(Bool unitsShouldHunt, CommandSourceType source)
 	BfmePlayerHuntFields *self = (BfmePlayerHuntFields *)this;
 	self->m_unitsShouldHunt = unitsShouldHunt;
 
+	// Both callees are reached through retail's ILTs (0x00044C60 for the
+	// relationship mask, 0x008F7450 for the forwarder), which have no
+	// source-level argument list while the calls are thiscall, so each address
+	// is carried in the call's own member-pointer type.
+	typedef unsigned short (BfmePlayerListHuntView::*MaskFunc)(Int, Int, Bool);
+	union { void (*raw)(); MaskFunc member; } maskFunc;
+	maskFunc.raw = j_00044c60;
+	typedef void (BfmeShroudManagerHuntView::*LocationFunc)(Int, Int, Coord3D *);
+	union { void (Gen_008f7450::*raw)(); LocationFunc member; } locationFunc;
+	locationFunc.raw = &Gen_008f7450::m;
+
 	Coord3D pos;
-	((BfmeShroudManagerHuntView *)TheShroudManager)->getMostValuableLocation(
-		((BfmePlayerListHuntView *)ThePlayerList)->getPlayersWithRelationship(
+	(((BfmeShroudManagerHuntView *)TheShroudManager)->*locationFunc.member)(
+		(((BfmePlayerListHuntView *)ThePlayerList)->*maskFunc.member)(
 			getPlayerIndex(), ALLOW_ENEMIES, false),
 		0, &pos);
 	struct BfmePlayerTeamListField
