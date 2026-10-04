@@ -277,7 +277,7 @@ Bool Rva00099490RecorderClass::readReplayHeader(ReplayHeader &header)
 	GenrepBuffer genrep;
 	fread(&genrep.text, sizeof(char), 8, m_file);
 	genrep.text[8] = 0;
-	if (strncmp(genrep.text, "BFMERE", 8) != 0)
+	if (strncmp(genrep.text, "BFMEREPL", 8) != 0)
 	{
 		fclose(m_file);
 		m_file = 0;
