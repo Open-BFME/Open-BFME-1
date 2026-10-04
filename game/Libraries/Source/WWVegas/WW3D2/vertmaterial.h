@@ -72,7 +72,12 @@ struct _D3DMATERIAL8;
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.h
 class VertexMaterialClass : public W3DMPO, public RefCountClass
 {
-	W3DMPO_GLUE(VertexMaterialClass)
+	// BFME: retail has no W3D memory pool for VertexMaterialClass. Its allocations are
+	// the plain global operator new: VertexMaterialClass::Clone (0x0092EF30) and the
+	// preset loop in VertexMaterialClass::Init (0x00921EC0, push 0x6C / call
+	// 0x00881F30 = ??2@YAPAXI@Z) never touch a pool, and the retail image has no
+	// "VertexMaterialClass" pool-name string. The ZH W3DMPO_GLUE here made every
+	// user emit a getClassMemoryPool COMDAT retail does not have.
 
 	friend DX8Wrapper;
 

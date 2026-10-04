@@ -3,6 +3,7 @@
 // readable body of ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp
 #define Matrix4x4 Matrix4  // BFME renamed it
 #include "../../../../../Libraries/Source/WWVegas/WW3D2/rendobj.h"  // game/ WW3D2 BFME RenderObjClass must win over the reference tree's same-directory copy
+#include "../../../../../Libraries/Source/WWVegas/WW3D2/vertmaterial.h"  // game/ copy: retail VertexMaterialClass has no W3D pool, the reference copy emits getClassMemoryPool
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
 struct ID3DXBuffer {
     virtual long __stdcall QueryInterface(const void *, void **) = 0;
