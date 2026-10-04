@@ -199,5 +199,3 @@ Bool TerrainLogic::loadMapAbi(AsciiString filename, ChunkInputStream *stream,
 
 	return true;
 }
-
-#pragma comment(linker, "/alternatename:?loadMap@TerrainLogic@@UAE_NVAsciiString@@_N@Z=?loadMapAbi@TerrainLogic@@QAE_NVAsciiString@@PAVChunkInputStream@@_N2@Z")
