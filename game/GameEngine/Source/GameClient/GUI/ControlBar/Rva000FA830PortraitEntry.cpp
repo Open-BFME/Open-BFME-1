@@ -10,8 +10,6 @@ class Player;
 class Rva000FA830PortraitEntry
 {
 public:
-    const Image *getPortrait(Player *player);
-
     char m_prefix[0x30];
     Int m_stamp;
     char m_between[0x08];
@@ -22,7 +20,6 @@ public:
 class Rva000FA830PortraitList
 {
 public:
-    Rva000FA830PortraitEntry *getEntry(Int index);
     bool updateEntry(Int index, Int key, const Image **image);
     const Image *rva000FA800(Int index);
 
@@ -43,10 +40,11 @@ public:
 
 class GameLogic;
 extern GameLogic *TheGameLogic;
-#define TheGameLogicRva000FA830 ((GameLogicRva000FA830 *)TheGameLogic)
+static inline GameLogicRva000FA830 *TheGameLogicRva000FA830View() { return (GameLogicRva000FA830 *)TheGameLogic; }
 
-#pragma comment(linker, "/alternatename:?getEntry@Rva000FA830PortraitList@@QAEPAVRva000FA830PortraitEntry@@H@Z=?j_000055e7@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getPortrait@Rva000FA830PortraitEntry@@QAEPBVImage@@PAVPlayer@@@Z=?j_0000d2a6@@YAXXZ")
+// Retail calls the entry getter and the portrait getter through ILT thunks.
+extern void j_000055e7();
+extern void j_0000d2a6();
 
 bool Rva000FA830PortraitList::updateEntry(
     Int index, Int key, const Image **image)
@@ -65,18 +63,22 @@ bool Rva000FA830PortraitList::updateEntry(
         while (entry != end);
     }
 
-    entry = getEntry(index);
+    typedef Rva000FA830PortraitEntry *(Rva000FA830PortraitList::*Fn)(Int);
+    union { void (*fn)(); Fn call; } u = { j_000055e7 };
+    entry = (this->*u.call)(index);
     if (entry == 0 || entry->m_stamp != -1)
         return false;
 
-    entry->m_stamp = TheGameLogicRva000FA830->m_frame;
+    entry->m_stamp = TheGameLogicRva000FA830View()->m_frame;
     entry->m_key = key;
     if (image == 0)
     {
         return true;
     }
 
-    *image = entry->getPortrait(m_player);
+    typedef const Image *(Rva000FA830PortraitEntry::*Portrait)(Player *) const;
+    union { void (*fn)(); Portrait call; } p = { j_0000d2a6 };
+    *image = (entry->*p.call)(m_player);
     return true;
 }
 
@@ -89,5 +91,7 @@ const Image *Rva000FA830PortraitList::rva000FA800(Int index)
             reinterpret_cast<BfmeVecVLH *>(this)->bfmeAtVLH(index));
     if (!entry)
         return 0;
-    return entry->getPortrait(m_player);
+    typedef const Image *(Rva000FA830PortraitEntry::*Portrait)(Player *) const;
+    union { void (*fn)(); Portrait call; } p = { j_0000d2a6 };
+    return (entry->*p.call)(m_player);
 }
