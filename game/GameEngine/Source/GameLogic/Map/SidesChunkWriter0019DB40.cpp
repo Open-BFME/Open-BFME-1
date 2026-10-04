@@ -11,6 +11,10 @@
 #include "PreRTS.h"
 #include "Common/DataChunk.h"
 #include "GameLogic/SidesList.h"
+
+// Retail inlines ~AsciiString: temporaries are released by a direct call to
+// StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 struct SideEntry0019DB40 {
     BuildListInfo* field00;
     Dict field04;

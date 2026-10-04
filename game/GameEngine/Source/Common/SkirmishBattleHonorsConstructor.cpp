@@ -8,6 +8,10 @@
 #include "ascii_string.h"
 #include "unicode_string.h"
 
+// Retail inlines ~UnicodeString: temporaries are released by a direct call to
+// StringBase<unsigned short>::releaseBuffer (0x008881D0), not the ??1UnicodeString stub.
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 // unicode_string.h declares the exported static member, so the retail body's
 // empty-name compare reads the real object and no stand-in global is needed.
 
