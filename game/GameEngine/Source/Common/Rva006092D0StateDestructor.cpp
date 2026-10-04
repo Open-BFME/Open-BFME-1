@@ -155,12 +155,13 @@ private:
 	char m_tail[0x3c];
 };
 
-extern "C" const void *bfmeVftRva006092D0State[];
-#pragma comment(linker, "/alternatename:_bfmeVftRva006092D0State=??_7Rva006092D0State@@6B@")
-
+// Retail installs its own vftable for this class (0x01115AD0, named
+// ??_7Rva006092D0State@@6B@), which Rva006092D0StateConstructor.cpp emits
+// because it defines the constructor. This body names that real symbol
+// directly; __identifier needs no declaration in MSVC 7.1.
 Rva006092D0State::~Rva006092D0State()
 {
-	*(unsigned int *)this = (unsigned int)bfmeVftRva006092D0State;
+	*(unsigned int *)this = (unsigned int)__identifier("??_7Rva006092D0State@@6B@");
 	if (TheLivingWorldManager != 0)
 		((BfmeLivingWorldManager *)TheLivingWorldManager)->rva00615850();
 	if (localAudio() != 0 && localAudio()->slot40() == 1)
