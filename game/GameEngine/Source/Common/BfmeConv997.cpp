@@ -39,13 +39,15 @@ public:
 class GameClient;
 extern GameClient *TheGameClient;
 
+// retail reaches 0x00411CD0 through ILT 0x200D1
+extern void j_000200d1();
+
 class BfmeA997
 {
 public:
 	void bfmeGo997A(int a);
 	void bfmeGo997B(int a);
 	void bfmeGo997C(int a, int b);
-	void bfmeToggle997();
 
 	char m_bfmePad[0x124];
 	int m_bfmeMode;
@@ -62,7 +64,8 @@ void BfmeA997::bfmeGo997A(int a)
 {
 	if (m_bfmeOn) {
 		m_bfmeOn = 0;
-		bfmeToggle997();
+		union { void (*fn)(); void (BfmeA997::*call)(); } toggle = { j_000200d1 };
+		(this->*toggle.call)();
 	}
 
 	m_bfmeMode = 4;
@@ -75,7 +78,8 @@ void BfmeA997::bfmeGo997B(int a)
 {
 	if (m_bfmeOn != 1) {
 		m_bfmeOn = 1;
-		bfmeToggle997();
+		union { void (*fn)(); void (BfmeA997::*call)(); } toggle = { j_000200d1 };
+		(this->*toggle.call)();
 	}
 
 	m_bfmeMode = 3;
@@ -88,7 +92,8 @@ void BfmeA997::bfmeGo997C(int a, int b)
 {
 	if (m_bfmeOn != 1) {
 		m_bfmeOn = 1;
-		bfmeToggle997();
+		union { void (*fn)(); void (BfmeA997::*call)(); } toggle = { j_000200d1 };
+		(this->*toggle.call)();
 	}
 
 	m_bfmeMode = 5;
