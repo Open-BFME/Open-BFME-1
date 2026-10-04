@@ -45,8 +45,11 @@ struct ICoord2D
 	Int y;
 };
 
-struct Image
+// class, not struct: retail decorates every Image-typed name with PBVImage, so
+// the two static members below must mangle ?s_fullAmmo@Drawable@@0PBVImage@@B.
+class Image
 {
+public:
 	unsigned char m_unreconstructed_00[0x24];
 	// tools/name_oracle.py --class Image --offset 0x24 -> m_imageSize
 	// (confidence 1.00, layout_witness); same shape as the landed
@@ -238,16 +241,17 @@ extern Display *TheDisplay;
 
 #define TheGlobalData TheWritableGlobalData
 
-// The two ammo pip images (VA 0x012F12D4 / 0x012F12D8) are recorded in
-// targets/game/reverse/dir32_addresses.csv as Drawable's static members, so the
-// externs below are bound to those decorated symbols.
-extern const Image *const s_fullAmmo;
-#pragma comment(linker, "/alternatename:?s_fullAmmo@@3QBUImage@@B=?s_fullAmmo@Drawable@@0PBVImage@@B")
-extern const Image *const s_emptyAmmo;
-#pragma comment(linker, "/alternatename:?s_emptyAmmo@@3QBUImage@@B=?s_emptyAmmo@Drawable@@0PBVImage@@B")
-
 class Drawable
 {
+	// The two ammo pip images (VA 0x012F12D4 / 0x012F12D8) are recorded in
+	// targets/game/reverse/dir32_addresses.csv as Drawable's static members.
+	// Declaring them as members here makes every use mangle to
+	// ?s_fullAmmo@Drawable@@0PBVImage@@B / ?s_emptyAmmo@Drawable@@0PBVImage@@B,
+	// the names game/GameEngine/Source/GameClient/DrawableInitStaticImages.cpp:53
+	// defines, so no linker alias pragma is needed.
+	static const Image *s_fullAmmo;
+	static const Image *s_emptyAmmo;
+
 	Object *getObject() const
 	{
 		return *(Object **)((char *)this + 0xfc);
