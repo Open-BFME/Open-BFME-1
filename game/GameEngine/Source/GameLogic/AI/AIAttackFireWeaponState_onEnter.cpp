@@ -248,18 +248,26 @@ private:
 	Bool m_28;
 };
 
-#pragma comment(linker, "/alternatename:?testStatus@Object@@QBE_NH@Z=?j_000016a4@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setStatusBit@Object@@QAEXH_N@Z=?j_00032dee@@YAXXZ")
-#pragma comment(linker, "/alternatename:?preFireCurrentWeapon@Object@@QAEXPBV1@PBUCoord3D@@@Z=?j_0003960d@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getTeamTargetObject@Team@@QAEPAVObject@@XZ=?j_000296a9@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setTeamTargetObject@Team@@QAEXPBVObject@@@Z=?j_0002a88d@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isWithinAttackRange@Weapon@@QBE_NPBVObject@@0H@Z=?j_0002e85c@@YAXXZ")
-#pragma comment(linker, "/alternatename:?isWithinAttackRange@Weapon@@QBE_NPBVObject@@PBUCoord3D@@H@Z=?j_0002e951@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getStatus@Weapon@@QBE?AW4WeaponStatus@@XZ=?j_0000978c@@YAXXZ")
+// Retail routes every call below through an ILT thunk, so each stand-in
+// member is dispatched through a member-pointer union over that thunk
+// instead of a linker alias.
+// setGoalPosition keeps its alias: its thunk RVA 0x0000314D has no
+// ?j_000314d@@YAXXZ row or pin anywhere (gen-thunk neighbours are
+// 0x000314D0/D5/DA/DF), so the address is only reachable through the
+// pinned ?setGoalPosition@StateMachine name at that RVA.
+extern void j_000016a4();
+extern void j_00032dee();
+extern void j_0003960d();
+extern void j_000296a9();
+extern void j_0002a88d();
+extern void j_0002e85c();
+extern void j_0002e951();
+extern void j_0000978c();
+extern void j_00019349();
+extern void j_00028f74();
+extern void j_0003dc6c();
+
 #pragma comment(linker, "/alternatename:?setGoalPosition@StateMachine@@QAEXPBUCoord3D@@@Z=?j_000314d@@YAXXZ")
-#pragma comment(linker, "/alternatename:?m@Gen_001e1790@@QAEDXZ=?j_00019349@@YAXXZ")
-#pragma comment(linker, "/alternatename:?get@Rva001E1770ByteField@@QBEEXZ=?j_00028f74@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeCheckEQT@@YADPAVBfmeThingEQT@@PAXPAVBfmeHoldEQT@@@Z=?j_0003dc6c@@YAXXZ")
 
 StateReturnType AIAttackFireWeaponState::onEnter()
 {
@@ -312,7 +320,12 @@ StateReturnType AIAttackFireWeaponState::onEnter()
 	if (!obj->isKindOf((KindOfType)2))
 	{
 		Gen_001e1790 *templateA = (Gen_001e1790 *)weapon->m_template;
-		if (!templateA->m() && !((Rva001E1770ByteField *)weapon->m_template)->get() &&
+		typedef Int8 (Gen_001e1790::*GenFn_m)();
+		union { void (*fn)(); GenFn_m call; } gen_m_19349 = { j_00019349 };
+		typedef unsigned char (Rva001E1770ByteField::*RvaFn_get)() const;
+		union { void (*fn)(); RvaFn_get call; } rva_get_28f74 = { j_00028f74 };
+		if (!(templateA->*gen_m_19349.call)() &&
+			!(((Rva001E1770ByteField *)weapon->m_template)->*rva_get_28f74.call)() &&
 			((BfmeHordeMember *)ai)->bfmeBlocksFormationRefresh())
 			return STATE_FAILURE;
 	}
@@ -321,36 +334,65 @@ StateReturnType AIAttackFireWeaponState::onEnter()
 	{
 		Team *team = obj->getTeam();
 		TeamPrototype *prototype = team->getPrototype();
+		typedef Object *(Team::*TeamFn_getTarget)();
+		union { void (*fn)(); TeamFn_getTarget call; } team_get_296a9 = { j_000296a9 };
+		typedef void (Team::*TeamFn_setTarget)(const Object *);
+		union { void (*fn)(); TeamFn_setTarget call; } team_set_2a88d = { j_0002a88d };
 		if (*(const unsigned char *)((const char *)prototype + 0x1c2) &&
-			team->getTeamTargetObject() == 0)
-			obj->getTeam()->setTeamTargetObject(victim);
+			(team->*team_get_296a9.call)() == 0)
+			(obj->getTeam()->*team_set_2a88d.call)(victim);
 	}
 
 	Bool inRange;
 	if (victim)
-		inRange = weapon->isWithinAttackRange(obj, victim, 0);
+	{
+		typedef Bool (Weapon::*WeaponFn_rangeObj)(const Object *, const Object *, Int) const;
+		union { void (*fn)(); WeaponFn_rangeObj call; } range_obj_2e85c = { j_0002e85c };
+		inRange = (weapon->*range_obj_2e85c.call)(obj, victim, 0);
+	}
 	else
-		inRange = weapon->isWithinAttackRange(obj, m_machine->getGoalPosition(), 0);
+	{
+		typedef Bool (Weapon::*WeaponFn_rangePos)(const Object *, const Coord3D *, Int) const;
+		union { void (*fn)(); WeaponFn_rangePos call; } range_pos_2e951 = { j_0002e951 };
+		inRange = (weapon->*range_pos_2e951.call)(obj, m_machine->getGoalPosition(), 0);
+	}
 	if (!inRange)
 		return STATE_FAILURE;
 
-	if (!bfmeCheckEQT((BfmeThingEQT *)obj, (void *)victim,
+	typedef Int8 (__cdecl *CheckFn)(BfmeThingEQT *, void *, BfmeHoldEQT *);
+	if (!((CheckFn)(void *)j_0003dc6c)((BfmeThingEQT *)obj, (void *)victim,
 		(BfmeHoldEQT *)weapon))
 		return STATE_FAILURE;
-	if (weapon->getStatus() != WEAPON_STATUS_NONE)
-		return STATE_SUCCESS;
-
-	if (obj->testStatus(0x25) && (*(const unsigned char *)((const char *)TheGameLogic + 0x3c) & 1))
 	{
-		m_28 = true;
-		return STATE_CONTINUE;
+		typedef WeaponStatus (Weapon::*WeaponFn_getStatus)() const;
+		union { void (*fn)(); WeaponFn_getStatus call; } status_0978c = { j_0000978c };
+		if ((weapon->*status_0978c.call)() != WEAPON_STATUS_NONE)
+			return STATE_SUCCESS;
 	}
 
-	obj->setStatusBit(0xd, true);
-	Object *currentVictim = m_machine->getGoalObject();
-	obj->preFireCurrentWeapon(currentVictim, m_machine->getGoalPosition());
-	if (*(const unsigned char *)((const char *)weapon->m_template + 0x533) && victim)
-		m_machine->setGoalPosition((const Coord3D *)((const char *)victim + 0x38));
+	{
+		typedef Bool (Object::*ObjectFn_testStatus)(Int) const;
+		union { void (*fn)(); ObjectFn_testStatus call; } test_status_016a4 = { j_000016a4 };
+		if ((obj->*test_status_016a4.call)(0x25) &&
+			(*(const unsigned char *)((const char *)TheGameLogic + 0x3c) & 1))
+		{
+			m_28 = true;
+			return STATE_CONTINUE;
+		}
+	}
+
+	{
+		typedef void (Object::*ObjectFn_setStatusBit)(Int, Bool);
+		union { void (*fn)(); ObjectFn_setStatusBit call; } set_status_32dee = { j_00032dee };
+		typedef void (Object::*ObjectFn_preFire)(const Object *, const Coord3D *);
+		union { void (*fn)(); ObjectFn_preFire call; } pre_fire_3960d = { j_0003960d };
+
+		(obj->*set_status_32dee.call)(0xd, true);
+		Object *currentVictim = m_machine->getGoalObject();
+		(obj->*pre_fire_3960d.call)(currentVictim, m_machine->getGoalPosition());
+		if (*(const unsigned char *)((const char *)weapon->m_template + 0x533) && victim)
+			m_machine->setGoalPosition((const Coord3D *)((const char *)victim + 0x38));
+	}
 
 	return STATE_CONTINUE;
 }
