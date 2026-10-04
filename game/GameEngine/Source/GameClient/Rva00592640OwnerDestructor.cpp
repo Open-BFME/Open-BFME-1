@@ -57,17 +57,16 @@ static inline Rva0048EC80Manager *theDisplayStringManagerView()
 	return (Rva0048EC80Manager *)TheDisplayStringManager;
 }
 
-class S4Holder0046DBB0
+// The held-string table at VA 0x012F19E8 is recorded as
+// ?g_s4Holder@@3PAUS4Holder0046DBB0@@A in
+// targets/game/reverse/dir32_addresses.csv, and S4DrainStringVector.cpp views
+// the same object as a struct.  Declared as a struct here so this TU's extern
+// mangles to that recorded name directly, with no linker alias.
+struct S4Holder0046DBB0
 {
 };
 
-// The held-string table at VA 0x012F19E8 is recorded as
-// ?g_s4Holder@@3PAUS4Holder0046DBB0@@A in
-// targets/game/reverse/dir32_addresses.csv; MSVC spells the same type `V`
-// (class) where that record says `U` (struct), so the extern is bound to the
-// recorded symbol.
 extern S4Holder0046DBB0 *g_s4Holder;
-#pragma comment(linker, "/alternatename:?g_s4Holder@@3PAVS4Holder0046DBB0@@A=?g_s4Holder@@3PAUS4Holder0046DBB0@@A")
 
 typedef void (S4Holder0046DBB0::*S4HolderStringMember)(
 	const AsciiString *);
