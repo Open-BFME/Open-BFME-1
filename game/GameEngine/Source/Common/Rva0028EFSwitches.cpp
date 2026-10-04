@@ -27,9 +27,9 @@ bool Rva0028EF80Switch::accept(unsigned int value) const
 	switch (value)
 	{
 	case 1: case 2: case 8:
-		return false;
-	case 0: case 3: case 4: case 5: case 6: case 7: case 9:
 		return true;
+	case 0: case 3: case 4: case 5: case 6: case 7: case 9:
+		return false;
 	default:
 		return false;
 	}
