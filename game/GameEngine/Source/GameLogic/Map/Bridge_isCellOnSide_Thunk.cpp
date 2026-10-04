@@ -50,9 +50,17 @@ struct BridgeInfo
 	Coord3D toRight;
 };
 
-extern Bool LineInRegion(const Coord2D *p1, const Coord2D *p2,
-	const Region2D *clipRegion);
-#pragma comment(linker, "/alternatename:?LineInRegion@@YA_NPBUCoord2D@@0PBURegion2D@@@Z=?j_0001ffe1@@YAXXZ")
+// Retail's calls leave this TU through the incremental-link thunk at 0x1FFE1,
+// so the reference is made directly to the thunk, not to a stand-in name.
+extern void j_0001ffe1();
+
+static __forceinline Bool lineInRegionThunk(const Coord2D *p1,
+	const Coord2D *p2, const Region2D *clipRegion)
+{
+	typedef Bool (__cdecl *Fn)(const Coord2D *, const Coord2D *,
+		const Region2D *);
+	return ((Fn)(void *)j_0001ffe1)(p1, p2, clipRegion);
+}
 
 // Retail reads the scale from the constant pool at 0x0109C344, which stores
 // exactly this float.
@@ -99,14 +107,14 @@ Bool Bridge::isCellOnSide(const Region2D *cell)
 	sideStart.y = fromLeft.y;
 	sideEnd.x = toLeft.x;
 	sideEnd.y = toLeft.y;
-	if (LineInRegion(&sideStart, &sideEnd, cell))
+	if (lineInRegionThunk(&sideStart, &sideEnd, cell))
 		return true;
 
 	sideStart.x = fromRight.x;
 	sideStart.y = fromRight.y;
 	sideEnd.x = toRight.x;
 	sideEnd.y = toRight.y;
-	if (LineInRegion(&sideStart, &sideEnd, cell))
+	if (lineInRegionThunk(&sideStart, &sideEnd, cell))
 		return true;
 
 	fromLeft.x -= endVector.x;
@@ -122,14 +130,14 @@ Bool Bridge::isCellOnSide(const Region2D *cell)
 	sideStart.y = fromLeft.y;
 	sideEnd.x = toLeft.x;
 	sideEnd.y = toLeft.y;
-	if (LineInRegion(&sideStart, &sideEnd, cell))
+	if (lineInRegionThunk(&sideStart, &sideEnd, cell))
 		return true;
 
 	sideStart.x = fromRight.x;
 	sideStart.y = fromRight.y;
 	sideEnd.x = toRight.x;
 	sideEnd.y = toRight.y;
-	if (LineInRegion(&sideStart, &sideEnd, cell))
+	if (lineInRegionThunk(&sideStart, &sideEnd, cell))
 		return true;
 
 	return false;
