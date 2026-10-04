@@ -40,6 +40,11 @@ enum DisconnectReason
 	DISCONNECT_MAX
 };
 
+// Retail ILT thunks the PeerResponse constructor/destructor are reached
+// through.
+extern void j_00042069(void);
+extern void j_00044733(void);
+
 class PeerResponse
 {
 public:
@@ -95,6 +100,35 @@ public:
 
 typedef char PeerResponseSizeCheck[sizeof(PeerResponse) == 0x330 ? 1 : -1];
 
+// Retail constructs and destroys the automatic PeerResponse through the ILT
+// thunks above, never through a ctor/dtor symbol of its own. Hold the object in
+// raw storage with force-inlined thunk calls, so the generated construction,
+// scope-exit and unwind calls all name the thunks and no local PeerResponse
+// ctor/dtor symbol is emitted.
+class PeerResponseStorage
+{
+	char m_raw[sizeof(PeerResponse)];
+
+public:
+	__forceinline PeerResponseStorage(void)
+	{
+		typedef void (PeerResponseStorage::*Fn)(void);
+		union { void (*fn)(void); Fn call; } u = { j_00042069 };
+		PeerResponseStorage *p = this;
+		(p->*u.call)();
+	}
+
+	__forceinline ~PeerResponseStorage(void)
+	{
+		typedef void (PeerResponseStorage::*Fn)(void);
+		union { void (*fn)(void); Fn call; } u = { j_00044733 };
+		PeerResponseStorage *p = this;
+		(p->*u.call)();
+	}
+
+	PeerResponse *get(void) { return (PeerResponse *)m_raw; }
+};
+
 class PeerRequest;
 
 class GameSpyPeerMessageQueueInterface
@@ -130,9 +164,6 @@ public:
 	}
 };
 
-#pragma comment(linker, "/alternatename:??0PeerResponse@@QAE@XZ=?j_00042069@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1PeerResponse@@QAE@XZ=?j_00044733@@YAXXZ")
-
 #pragma optimize("y", on)
 void disconnectedCallback(PEER peer, const char *reason, void *param)
 {
@@ -140,7 +171,8 @@ void disconnectedCallback(PEER peer, const char *reason, void *param)
 	if (t)
 		t->markAsDisconnected();
 
-	PeerResponse resp;
+	PeerResponseStorage respStorage;
+	PeerResponse &resp = *respStorage.get();
 	resp.peerResponseType = PeerResponse::PEERRESPONSE_DISCONNECT;
 	std::string reasonStr(reason);
 	// 21 is a BFME disconnect reason past Zero Hour's DISCONNECT_MAX.
