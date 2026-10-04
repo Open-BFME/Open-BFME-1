@@ -1,5 +1,5 @@
-// ?d_00594ad0@@YAXXZ
-// partial score=0.5095 date=2026-10-03
+// ?method@Rva00594AD0@@QAEXPAVObject@@@Z
+// partial score=0.6126 date=2026-10-04
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/GameEngine/Include /Igame/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 #define private public
 #include "ascii_string.h"
@@ -37,22 +37,20 @@ private:
 	void *m_data;
 };
 
-class BfmeOtherDQC : public AsciiString
-{
-public:
-	BfmeOtherDQC() : AsciiString() { }
-	void bfmeCallDQC(void *);
-	~BfmeOtherDQC() { }
-};
-class BfmeSubDQC { public: char pad[0x84]; char tail[4]; };
+class BfmeSubDQC { public: char pad[0x84]; AsciiString tail; };
 class BfmeThingDQC
 {
 public:
-	BfmeOtherDQC *bfmeGoDQC(BfmeOtherDQC *);
+	AsciiString bfmeGoDQC();
 private:
 	void *vptr;
 	BfmeSubDQC *m_sub;
 };
+
+AsciiString BfmeThingDQC::bfmeGoDQC()
+{
+	return m_sub->tail;
+}
 
 class BFMERetailAsciiString : private StringBase<char>
 {
@@ -116,36 +114,39 @@ void Rva00594AD0::method(Object *object)
 		TheNameKeyGenerator->nameToKey("CostModifierUpgrade");
 	Module *module = object->findModule(costModifierKey);
 	Player *player = object->getControllingPlayer();
-	if (!module || !player || !g_mgr12ED748->isLocalAlliedWith(object))
+	if (module && player)
 	{
-		if (m_visible)
-			Rva00563F80::go();
-		m_visible = 0;
-		return;
+		bool allied = g_mgr12ED748->isLocalAlliedWith(object);
+		unsigned char wasVisible = m_visible;
+		if (allied)
+		{
+			if (!wasVisible)
+			{
+				Rva00563F50::go();
+				m_visible = 1;
+				m_valid = 0;
+			}
+
+			unsigned char kind = *(unsigned char *)((char *)*(void **)((char *)module + 4) + 0x80);
+			AsciiString valueView = ((BfmeThingDQC *)module)->bfmeGoDQC();
+			int currentValue = ((Rva0058B590Value *)module)->get(player);
+			if (m_valid && kind == m_kind &&
+				(kind != 0 || m_zero == 0) && currentValue == m_value)
+				return;
+
+			m_valid = 0;
+			UnicodeString text;
+			text.format(TheGameText->fetch(valueView, 0), module, currentValue);
+			static BFMERetailAsciiString aptText("APT:CostModifierUpgrade");
+			g_rva012F19E8WindowManager->setAptText((const AsciiString &)aptText, text);
+			m_valid = 1;
+			m_kind = kind;
+			m_zero = 0;
+			m_value = currentValue;
+			return;
+		}
 	}
-
-	if (!m_visible)
-	{
-		Rva00563F50::go();
-		m_visible = 1;
-		m_valid = 0;
-	}
-
-	unsigned char kind = *(unsigned char *)((char *)*(void **)((char *)module + 4) + 0x80);
-	BfmeOtherDQC valueView;
-	((BfmeThingDQC *)module)->bfmeGoDQC(&valueView);
-	int currentValue = ((Rva0058B590Value *)module)->get(player);
-	if (m_valid && kind == m_kind &&
-		(kind != 0 || m_zero == 0) && currentValue == m_value)
-		return;
-
-	m_valid = 0;
-	UnicodeString text;
-	text.format(TheGameText->fetch((const AsciiString &)valueView, 0), module, currentValue);
-	static BFMERetailAsciiString aptText("APT:CostModifierUpgrade");
-	g_rva012F19E8WindowManager->setAptText((const AsciiString &)aptText, text);
-	m_valid = 1;
-	m_kind = kind;
-	m_zero = 0;
-	m_value = currentValue;
+	if (m_visible)
+		Rva00563F80::go();
+	m_visible = 0;
 }
