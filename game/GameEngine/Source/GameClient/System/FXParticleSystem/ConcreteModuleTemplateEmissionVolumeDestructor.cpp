@@ -9,21 +9,24 @@
 //
 //   +0x00  ModuleTemplate                 ??_7ModuleTemplate@FXParticleSystem@@6B@
 //                                          0x01073758
-//   +0x04  CategoryModuleInfo<Category>   comdat vftable (bfmeVftCategoryModuleInfo5)
+//   +0x04  CategoryModuleInfo<Category>   comdat vftable
 //                                          0x0110F9AC
-//   +0x08  <Tag>EmissionVolumeInfo        base vftable (bfmeVftSnapshot)
+//   +0x08  <Tag>EmissionVolumeInfo        base vftable (Snapshot)
 //                                          0x01073744
 //
 // FXPS_V is deliberately left undefined, as in the retail TU that carried this
 // body, so the specialization's destructor mangles QAE@XZ (non-virtual).
 #include "fx_particle_system.h"
 
-extern "C" const void *bfmeVftSnapshot[];
-#pragma comment(linker, "/alternatename:_bfmeVftSnapshot=??_7Snapshot@@6B@")
-extern "C" const void *bfmeVftCategoryModuleInfo5[];
-#pragma comment(linker, "/alternatename:_bfmeVftCategoryModuleInfo5=??_7?$CategoryModuleInfo@$04@FXParticleSystem@@6B@")
-extern "C" const void *bfmeVftModuleTemplate[];
-#pragma comment(linker, "/alternatename:_bfmeVftModuleTemplate=??_7ModuleTemplate@FXParticleSystem@@6B@")
+// Each store below targets a base class' vftable by its retail name.  A
+// vftable has no C++ spelling, so __identifier names retail's mangled symbol
+// itself and the object references that symbol directly: no stand-in name and
+// no linker alias directive.  Snapshot is complete here, so its declaration
+// repeats the type the compiler already gave `const Snapshot::`vftable''
+// (void (__cdecl *const [4])(void)); any other spelling is a redefinition.
+extern "C" void (__cdecl *const __identifier("??_7Snapshot@@6B@")[4])(void);
+extern "C" const void *__identifier("??_7?$CategoryModuleInfo@$04@FXParticleSystem@@6B@")[];
+extern "C" const void *__identifier("??_7ModuleTemplate@FXParticleSystem@@6B@")[];
 
 namespace FXParticleSystem
 {
@@ -41,11 +44,11 @@ namespace FXParticleSystem
 ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::~ConcreteModuleTemplate()
 {
     unsigned char *info = this ? (unsigned char *)this + 8 : 0;
-    *(volatile unsigned int *)info = (unsigned int)bfmeVftSnapshot;
+    *(volatile unsigned int *)info = (unsigned int)__identifier("??_7Snapshot@@6B@");
 
     unsigned char *base = this ? (unsigned char *)this + 4 : 0;
-    *(volatile unsigned int *)base = (unsigned int)bfmeVftCategoryModuleInfo5;
-    *(volatile unsigned int *)this = (unsigned int)bfmeVftModuleTemplate;
+    *(volatile unsigned int *)base = (unsigned int)__identifier("??_7?$CategoryModuleInfo@$04@FXParticleSystem@@6B@");
+    *(volatile unsigned int *)this = (unsigned int)__identifier("??_7ModuleTemplate@FXParticleSystem@@6B@");
 }
 
 }
