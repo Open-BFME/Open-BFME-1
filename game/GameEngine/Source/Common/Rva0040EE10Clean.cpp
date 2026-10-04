@@ -1,13 +1,12 @@
 // cl: /O2 /Ob0
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
 class BfmeStrEE
 {
 public:
-	void set(const BfmeStrEE &);
 	void *m_data;
 };
-
-extern BfmeStrEE g_bfmeEmptyEE;
 
 class BfmeHoldEE
 {
@@ -22,11 +21,16 @@ public:
 	virtual void v7();
 };
 
+class BfmeStrVM0
+{
+public:
+	void bfmeRelVM0();
+};
+
 class BfmeObjEE
 {
 public:
 	void bfmeGoEE();
-	void bfmeRelEE();
 	char m_00[0x34];
 	BfmeHoldEE *m_34;
 	char m_38[0x28];
@@ -49,7 +53,10 @@ void BfmeObjEE::bfmeGoEE()
 	m_60 = 0;
 	if (p)
 	{
-		bfmeRelEE();
+		// Retail 0x0040ECA0 is BfmeStrVM0::bfmeRelVM0, defined once in
+		// game/GameEngine/Source/Common/BfmeConv1435.cpp. Minimal view;
+		// the cast is pointer-size neutral.
+		((BfmeStrVM0 *)this)->bfmeRelVM0();
 		m_34->v7();
 		m_34 = 0;
 	}
@@ -57,7 +64,10 @@ void BfmeObjEE::bfmeGoEE()
 	m_C4 = 0;
 	m_C8 = 0;
 	if (s->m_data && *(short *)((char *)s->m_data + 4))
-		s->set(g_bfmeEmptyEE);
+		// Retail pushes 0x01336E50, WWLib's AsciiString::TheEmptyString
+		// (defined once in BoneFXUpdate_initTimes.cpp), and calls the
+		// narrow StringBase<char>::set (0x00887C90, StringBase.cpp).
+		((StringBase<char> *)s)->set(AsciiString::TheEmptyString);
 	int n = -1;
 	m_E0 = n;
 	m_DC = n;
