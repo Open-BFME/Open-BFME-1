@@ -96,7 +96,7 @@ public:
 
 extern Display *TheDisplay;
 
-class S4Holder0046DBB0
+struct S4Holder0046DBB0
 {
 };
 
@@ -112,7 +112,6 @@ public:
 typedef void ( Rva0046DEF0::*Rva0046DEF0TakeName )( const AsciiString &name );
 
 extern S4Holder0046DBB0 *g_s4Holder;
-#pragma comment(linker, "/alternatename:?g_s4Holder@@3PAVS4Holder0046DBB0@@A=?g_s4Holder@@3PAUS4Holder0046DBB0@@A")
 
 // The gadget callback witnesses windows at +04/+08/+0C/+10 and children at
 // +14..+30. AptMapPreviewImages.cpp witnesses the Image at +34 and owned flag
