@@ -136,8 +136,6 @@ void j_00008d5f();
 void j_0003d5a0();
 void j_00046759();
 
-#pragma comment(linker, "/alternatename:?initData@W3DStatusCircle@@IAEHXZ=?j_00008d5f@@YAXXZ")
-
 struct Rva00726290Vector3
 {
 	Real x;
@@ -229,7 +227,11 @@ void Rva00726290W3DStatusCircle::Render(RenderInfoClass &)
 
 	IndexBufferClass *&indexBuffer = *(IndexBufferClass **)((char *)this + 0xd8);
 	if (indexBuffer == 0) {
-		((W3DStatusCircle *)this)->initData();
+		// Retail calls the ILT thunk at 0x00008D5F; the stand-in member
+		// ?initData@W3DStatusCircle@@IAEHXZ is never defined.
+		typedef int (W3DStatusCircle::*InitDataFn)();
+		union { void (*fn)(); InitDataFn call; } uInitData = { j_00008d5f };
+		(((W3DStatusCircle *)this)->*uInitData.call)();
 	}
 	if (indexBuffer == 0)
 		return;
