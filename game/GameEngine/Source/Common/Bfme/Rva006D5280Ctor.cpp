@@ -3,11 +3,15 @@
 // ref-counted 0x3c-byte texture owner, but width is a caller-supplied third
 // parameter here instead of the twin's constant 0x800.
 
-class Rva006D5280TextureBase
+// The shared 0x3c-byte base body is the real retail constructor owned by
+// Rva006D51B0Ctor.cpp (??0Rva006D51B0TextureBase@@QAE@IIIIII@Z, retail
+// 0x0090CF90); this near-twin's derived texture calls that name directly, so
+// this TU only declares it and never defines a copy of its own.
+class Rva006D51B0TextureBase
 {
 public:
-	Rva006D5280TextureBase(unsigned, unsigned, unsigned, unsigned, unsigned, unsigned);
-	virtual ~Rva006D5280TextureBase();
+	Rva006D51B0TextureBase(unsigned, unsigned, unsigned, unsigned, unsigned, unsigned);
+	virtual ~Rva006D51B0TextureBase();
 
 	unsigned m_refBits;
 	char m_body[0x34];
@@ -22,18 +26,14 @@ public:
 	void Release_Ref(void);
 };
 
-// Shared base body, now matched as Rva006D51B0Ctor.cpp's
-// ??0Rva006D51B0TextureBase@@QAE@IIIIII@Z (retail 0x0090CF90).
-#pragma comment(linker, "/alternatename:??0Rva006D5280TextureBase@@QAE@IIIIII@Z=??0Rva006D51B0TextureBase@@QAE@IIIIII@Z")
-
 extern int BfmeVfZQ;
 
-class Rva006D5280Texture : public Rva006D5280TextureBase
+class Rva006D5280Texture : public Rva006D51B0TextureBase
 {
 public:
 	Rva006D5280Texture(unsigned width, unsigned height, unsigned mip,
 		unsigned pool, unsigned renderTarget, unsigned reducible)
-		: Rva006D5280TextureBase(width, height, mip, pool, renderTarget, reducible)
+		: Rva006D51B0TextureBase(width, height, mip, pool, renderTarget, reducible)
 	{
 		*reinterpret_cast<unsigned *>(this) = reinterpret_cast<unsigned>(&BfmeVfZQ);
 	}
@@ -64,7 +64,7 @@ private:
 // ??0Rva006D5280@@QAE@III@Z
 Rva006D5280::Rva006D5280(unsigned a, unsigned b, unsigned c)
 {
-	Rva006D5280TextureBase *texture = new Rva006D5280Texture(b, a, c, 3, 1, 0);
+	Rva006D51B0TextureBase *texture = new Rva006D5280Texture(b, a, c, 3, 1, 0);
 	if (texture) {
 		++*reinterpret_cast<unsigned short *>(reinterpret_cast<char *>(texture) + 4);
 		if (m_texture.m_ptr)
