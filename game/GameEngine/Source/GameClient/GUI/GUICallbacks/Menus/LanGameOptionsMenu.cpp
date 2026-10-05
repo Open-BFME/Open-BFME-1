@@ -549,7 +549,8 @@ extern void *g_bfmeA1023;
 extern char g_bfmeBuf1023[];
 extern void lanUpdateSlotList004CAF70( void );
 struct BfmeObj935C;
-extern BfmeObj935C *g_bfme935GlobC;
+class BfmeAptScreenLanLobby;
+extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
 class Rva00516B50
 {
 public:
@@ -2132,8 +2133,8 @@ void d_004cc660( void )
 		UnicodeString old = GadgetStaticTextGetText(textEntryMapDisplay);
 		if (old.compare(mapDisplayName) != 0)
 		{
-			if (g_bfme935GlobC)
-				((Rva00516B50 *)g_bfme935GlobC)->apply();
+			if (reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby))
+				((Rva00516B50 *)reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby))->apply();
 			else
 				bfmeGo1023F();
 		}

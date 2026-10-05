@@ -4,13 +4,14 @@ struct BfmeThingBHG
 	bool m_bfmeFlag;
 };
 
-extern BfmeThingBHG *g_bfmeThingBHG;
+class BfmeAptScreenMainMenu;
+extern BfmeAptScreenMainMenu *g_rva012F49B4MainMenu;
 
 void bfmeTailBHG();
 
 void bfmeGoBHG()
 {
-	if (g_bfmeThingBHG != 0)
-		g_bfmeThingBHG->m_bfmeFlag = false;
+	if (reinterpret_cast<BfmeThingBHG * &>(g_rva012F49B4MainMenu) != 0)
+		reinterpret_cast<BfmeThingBHG * &>(g_rva012F49B4MainMenu)->m_bfmeFlag = false;
 	bfmeTailBHG();
 }

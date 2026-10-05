@@ -42,7 +42,8 @@ struct BfmeObj935C
 	char m_bfmeFlagTL;
 };
 
-extern BfmeObj935C *g_bfme935GlobC;
+class BfmeAptScreenLanLobby;
+extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
 
 void __stdcall bfmeFallbackTL();
 
@@ -133,8 +134,8 @@ void BfmeHostTL::bfmeApplyTL(int unused, BfmeUStrTL text)
 		}
 	}
 
-	if (g_bfme935GlobC != 0)
-		g_bfme935GlobC->m_bfmeFlagTL = 1;
+	if (reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby) != 0)
+		reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby)->m_bfmeFlagTL = 1;
 	else
 		bfmeFallbackTL();
 }

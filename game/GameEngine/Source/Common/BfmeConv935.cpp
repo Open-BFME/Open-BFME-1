@@ -45,12 +45,13 @@ struct BfmeObj935C
 	char m_bfmeFlag;
 };
 
-extern BfmeObj935C *g_bfme935GlobC;
+class BfmeAptScreenLanLobby;
+extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
 void bfmeTail935C(void);
 
 void bfmeGo935C(void)
 {
-	BfmeObj935C *p = g_bfme935GlobC;
+	BfmeObj935C *p = reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby);
 	if (p) {
 		p->m_bfmeFlag = 1;
 		return;

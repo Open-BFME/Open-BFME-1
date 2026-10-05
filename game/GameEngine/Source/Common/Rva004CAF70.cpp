@@ -19,7 +19,8 @@ struct Rva004CAF70Obj
 class LANAPI;
 
 extern char g_rva004CAF70_gate;
-extern Rva004CAF70Obj *g_rva004CAF70_obj;
+class BfmeAptScreenLanLobby;
+extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
 extern void *g_rva004CAF70_value;
 extern LANAPI *TheLAN;
 class GameWindow;
@@ -42,7 +43,7 @@ void lanUpdateSlotList004CAF70(void)
 		return;
 	if (g_rva004CAF70_gate != 0)
 		return;
-	Rva004CAF70Obj *p = g_rva004CAF70_obj;
+	Rva004CAF70Obj *p = reinterpret_cast<Rva004CAF70Obj * &>(g_rva012F4998LanLobby);
 	if (p != 0)
 	{
 		p->m_flag = 1;

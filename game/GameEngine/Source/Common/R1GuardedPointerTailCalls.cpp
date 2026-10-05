@@ -170,9 +170,10 @@ public:
 	void h005143D0();
 	void h00514560();
 };
-extern Glo00EF4988 *g_Glo00EF4988;
-void Rva00514D60() { if( g_Glo00EF4988 ) g_Glo00EF4988->h005143D0(); }
-void Rva00514D80() { if( g_Glo00EF4988 ) g_Glo00EF4988->h00514560(); }
+class Rva005127A0InGameChat;
+extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;
+void Rva00514D60() { if( reinterpret_cast<Glo00EF4988 * &>(g_Rva005127A0InGameChat) ) reinterpret_cast<Glo00EF4988 * &>(g_Rva005127A0InGameChat)->h005143D0(); }
+void Rva00514D80() { if( reinterpret_cast<Glo00EF4988 * &>(g_Rva005127A0InGameChat) ) reinterpret_cast<Glo00EF4988 * &>(g_Rva005127A0InGameChat)->h00514560(); }
 
 // ---------------------------------------------------------------- shape (c/d)
 // flag guard, free callee.  The five callees keep their ledger names.

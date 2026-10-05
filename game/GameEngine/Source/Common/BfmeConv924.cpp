@@ -131,14 +131,15 @@ public:
 };
 
 extern void *g_rva012F49D0;
-extern BfmeTwo924G *g_bfme924TwoG;
+class Rva005127A0InGameChat;
+extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;
 
 void bfmeGo924G(void)
 {
 	if (g_rva012F49D0)
 		static_cast<BfmeOne924G *>(g_rva012F49D0)->bfmeCall924G();
-	if (g_bfme924TwoG)
-		g_bfme924TwoG->bfmeTail924G();
+	if (reinterpret_cast<BfmeTwo924G * &>(g_Rva005127A0InGameChat))
+		reinterpret_cast<BfmeTwo924G * &>(g_Rva005127A0InGameChat)->bfmeTail924G();
 }
 
 void BfmeOne924G::bfmeCall924G()

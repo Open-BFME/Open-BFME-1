@@ -292,7 +292,7 @@ extern void j_00031818();
 extern void j_00043734();
 extern void j_0002cf84();
 extern void j_0001acee();
-extern void *g_Va012F4998;
+extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
 typedef char LanSize[(sizeof(BfmeAptScreenLanLobby)==0x3DC)?1:-1];
 BfmeAptScreenLanLobby::BfmeAptScreenLanLobby(void *context)
  :_bfme_AptGameWindow(context),m_state((Gen00529110Owner *)(BfmeAptScreenSecondary *)this,0),
@@ -301,9 +301,9 @@ BfmeAptScreenLanLobby::BfmeAptScreenLanLobby(void *context)
  m_tail.m_value=0;
  m_tail.m_flag0=false; m_tail.m_flag1=false; m_tail.m_flag2=false; m_tail.m_flag3=false;
  m_tail.m_kind=2; m_tail.m_flag4=false;
- if(g_Va012F4998==0)
+ if(reinterpret_cast<void * &>(g_rva012F4998LanLobby)==0)
  {
-  g_Va012F4998=this;
+  reinterpret_cast<void * &>(g_rva012F4998LanLobby)=this;
   LanRegistry *registry=(LanRegistry *)((char *)this+0x218);
   {
    LanMethodBits callback;callback.words[0]=(unsigned int)j_00017094;callback.words[1]=0;
@@ -357,3 +357,5 @@ BfmeAptScreenLanLobby::BfmeAptScreenLanLobby(void *context)
   }
  }
 }
+
+BfmeAptScreenLanLobby *g_rva012F4998LanLobby;

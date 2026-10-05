@@ -336,3 +336,5 @@ BfmeAptScreenInGameChat::BfmeAptScreenInGameChat( void *context )
 	}
 }
 
+
+Rva005127A0InGameChat *g_Rva005127A0InGameChat;

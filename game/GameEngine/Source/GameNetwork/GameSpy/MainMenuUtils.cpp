@@ -88,7 +88,8 @@ struct Rva012F49B4Thing
 	Bool m_flagAt259;
 };
 
-extern Rva012F49B4Thing *g_rva012F49B4;
+class BfmeAptScreenMainMenu;
+extern BfmeAptScreenMainMenu *g_rva012F49B4MainMenu;
 
 class BfmeStartDownloadingLayout
 {
@@ -258,7 +259,7 @@ void StartDownloadingPatches( void )
 		*(BfmeStartDownloadList *)&queuedDownloads;
 	if (downloadQueue.empty())
 	{
-		Rva012F49B4Thing *state = g_rva012F49B4;
+		Rva012F49B4Thing *state = reinterpret_cast<Rva012F49B4Thing * &>(g_rva012F49B4MainMenu);
 		if (state)
 			state->m_flagAt259 = FALSE;
 		return;
@@ -270,7 +271,7 @@ void StartDownloadingPatches( void )
 	layout->runInit();
 	layout->hide( FALSE );
 	layout->bringForward();
-	Rva012F49B4Thing *state = g_rva012F49B4;
+	Rva012F49B4Thing *state = reinterpret_cast<Rva012F49B4Thing * &>(g_rva012F49B4MainMenu);
 	if (state)
 		state->m_flagAt259 = FALSE;
 	DEBUG_ASSERTCRASH(TheDownloadManager, ("No download manager!"));

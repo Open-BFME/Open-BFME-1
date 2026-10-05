@@ -48,7 +48,8 @@ private:
 
 extern const void *BfmeAptScreenInGameChatVftable[];
 extern const void *BfmeAptScreenInGameChatSecondaryVftable[];
-extern void *g_obj12F4988;
+class Rva005127A0InGameChat;
+extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;
 
 class BfmeAptScreenInGameChat : public _bfme_AptGameWindow
 {
@@ -68,12 +69,12 @@ BfmeAptScreenInGameChat::~BfmeAptScreenInGameChat()
 	*(const void ***)( (char *)this + 0x218 ) =
 		BfmeAptScreenInGameChatSecondaryVftable;
 
-	if( g_obj12F4988 == this )
+	if( reinterpret_cast<void * &>(g_Rva005127A0InGameChat) == this )
 	{
 		{
 			AsciiString name( "AptInGameChat::InitGadgets" );
 			_bfme_closeAptScreen( name );
 		}
-		g_obj12F4988 = 0;
+		reinterpret_cast<void * &>(g_Rva005127A0InGameChat) = 0;
 	}
 }

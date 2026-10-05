@@ -59,7 +59,17 @@ public:
 extern WindowManager *g_rva012F19E8WindowManager;
 extern unsigned char g_aptLivingWorldInitialized;			// 0x0012F499D
 extern unsigned char g_aptLivingWorldVisible;			// 0x0012F499C
-extern BFMERetailAsciiString g_aptLivingWorldCachedName;	// 0x0012F49A0
+class AsciiString
+{
+public:
+	AsciiString(const char *text);
+	~AsciiString();
+
+private:
+	void *m_data;
+};
+
+AsciiString g_aptLivingWorldCachedName("LivingWorldUI.apt");
 extern void *g_aptLivingWorldWindowIndex;		// 0x0012F49A8 (g_bfmeV1064)
 
 void *bfmeMakeEYA( unsigned int low, unsigned int high );
@@ -80,7 +90,7 @@ void registerAptLivingWorldUICallbacks()
 		g_aptLivingWorldInitialized = false;
 		g_aptLivingWorldVisible = false;
 		int idx = g_rva012F19E8WindowManager->resolveAptWindow( BFMERetailAsciiString( "Apt\\" ),
-			BFMERetailAsciiString( g_aptLivingWorldCachedName ), 0, 0, -1 );
+			BFMERetailAsciiString( reinterpret_cast<const BFMERetailAsciiString &>(g_aptLivingWorldCachedName) ), 0, 0, -1 );
 		g_aptLivingWorldWindowIndex = bfmeMakeEYA( idx, idx );
 
 		if( g_rva012F19E8WindowManager )

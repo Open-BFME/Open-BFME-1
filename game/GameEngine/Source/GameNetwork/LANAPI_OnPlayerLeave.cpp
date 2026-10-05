@@ -167,7 +167,8 @@ public:
 };
 
 class BfmeObj935C;
-extern BfmeObj935C *g_bfme935GlobC;
+class BfmeAptScreenLanLobby;
+extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
 
 class BfmeQ1070
 {
@@ -291,14 +292,14 @@ void Rva0068A900LANAPI::OnPlayerLeave(UnicodeString player)
 			pref.write();
 		}
 
-		if (g_bfme935GlobC == 0)
+		if (reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby) == 0)
 		{
 			TheShell->pop();
 			LANbuttonPushed = true;
 		}
 		else
 		{
-			reinterpret_cast<BfmeQ1070 *>(g_bfme935GlobC)->bfmeGo1070A();
+			reinterpret_cast<BfmeQ1070 *>(reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby))->bfmeGo1070A();
 		}
 	}
 	else

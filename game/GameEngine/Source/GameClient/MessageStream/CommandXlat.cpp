@@ -613,7 +613,8 @@ extern GameWindowTransitionsHandler* TheTransitionHandler;
 class Glo012F1028Type;
 extern Glo012F1028Type* Glo012F1028;
 extern void* g_va012F71B4;
-extern void* g_va012F4988;
+class Rva005127A0InGameChat;
+extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;
 void rva00511CC0(int);
 void HideInGameChat();
 void rva0052B2A0();
@@ -845,7 +846,7 @@ GameMessageDisposition CommandTranslator::translateGameMessage(const GameMessage
   disp=DESTROY_MESSAGE; break;
  }
  case 0x69:
-  if(g_va012F71B4) { if(!g_va012F4988) rva00511CC0(3); else HideInGameChat(); }
+  if(g_va012F71B4) { if(!reinterpret_cast<void * &>(g_Rva005127A0InGameChat)) rva00511CC0(3); else HideInGameChat(); }
   disp=DESTROY_MESSAGE; break;
  case 0x6c:
   if(TheGameLogic->rva000652A0() && ((Rva004891C0*)TheTransitionHandler)->test()) rva0052B2A0();

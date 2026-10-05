@@ -17,7 +17,8 @@ struct BfmeThingBHG
 	Bool m_bfmeFlag;
 };
 
-extern BfmeThingBHG *g_bfmeThingBHG;
+class BfmeAptScreenMainMenu;
+extern BfmeAptScreenMainMenu *g_rva012F49B4MainMenu;
 extern Bool s_asyncDNSLookupInProgress;
 extern volatile unsigned char g_rva012F7178PatchCheckLayoutActive;
 extern Bool checkingForPatchBeforeGameSpy;
@@ -31,7 +32,7 @@ extern char *configBuffer;
 
 void CancelPatchCheckCallback(void)
 {
-	BfmeThingBHG *state = g_bfmeThingBHG;
+	BfmeThingBHG *state = reinterpret_cast<BfmeThingBHG * &>(g_rva012F49B4MainMenu);
 
 	s_asyncDNSLookupInProgress = 0;
 	if (state)

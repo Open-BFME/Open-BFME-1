@@ -256,7 +256,8 @@ class Gen_00688AB0Target
 public:
 	void bfmeForward(void *a0);		// retail 0x00012F03
 };
-extern Gen_00688AB0Target *TheBfmeTarget_00688AB0;			// 0x12f4998
+class BfmeAptScreenLanLobby;
+extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;			// 0x12f4998
 class Gen_006BC890Target
 {
 public:
@@ -575,8 +576,8 @@ bool Gen_00681DD0::bfmeForward(void *a0)
 // ?bfmeForward_00688AB0@@YGXPAX@Z
 void __stdcall bfmeForward_00688AB0(void *a0)
 {
-	if (TheBfmeTarget_00688AB0)
-		TheBfmeTarget_00688AB0->bfmeForward(a0);
+	if (reinterpret_cast<Gen_00688AB0Target * &>(g_rva012F4998LanLobby))
+		reinterpret_cast<Gen_00688AB0Target * &>(g_rva012F4998LanLobby)->bfmeForward(a0);
 }
 // ?bfmeForward@Gen_006BC890@@QAEXPAX@Z
 void Gen_006BC890::bfmeForward(void *a0)

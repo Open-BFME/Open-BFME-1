@@ -80,15 +80,16 @@ class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 extern BfmeDrop995 *g_bfmeDrop995;
 extern int g_guiFxWindowHandle;
-extern void *g_bfmeHeld995B;
+class Rva00510DC0DisplayView;
+extern Rva00510DC0DisplayView *Rva00510DC0Display;
 
 void bfmeGo995B(void)
 {
 	((BfmeLog995 *)g_rva012F19E8WindowManager)->bfmeLog995(g_guiFxWindowHandle, "HideToolTip", 0, 0, 0, 0, 0, 0);
 
-	if (g_bfmeHeld995B) {
-		g_bfmeDrop995->bfmeRelease995(g_bfmeHeld995B);
-		g_bfmeHeld995B = 0;
+	if (reinterpret_cast<void * &>(Rva00510DC0Display)) {
+		g_bfmeDrop995->bfmeRelease995(reinterpret_cast<void * &>(Rva00510DC0Display));
+		reinterpret_cast<void * &>(Rva00510DC0Display) = 0;
 	}
 }
 

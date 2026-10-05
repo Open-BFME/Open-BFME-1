@@ -508,7 +508,8 @@ public:
 	Bool m_flagAt259;
 };
 
-extern BfmeDownloadState *TheBfmeDownloadState;
+class BfmeAptScreenMainMenu;
+extern BfmeAptScreenMainMenu *g_rva012F49B4MainMenu;
 
 
 //-------------------------------------------------------------------------------------------------
@@ -555,8 +556,8 @@ WindowMsgHandledType DownloadMenuSystem( GameWindow *window, UnsignedInt msg,
       
 			if( controlID == buttonCancelID )
 			{
-				if( TheBfmeDownloadState )
-					TheBfmeDownloadState->m_flagAt259 = FALSE;
+				if( reinterpret_cast<BfmeDownloadState * &>(g_rva012F49B4MainMenu) )
+					reinterpret_cast<BfmeDownloadState * &>(g_rva012F49B4MainMenu)->m_flagAt259 = FALSE;
 				closeDownloadWindow();
 			}  // end if
 	

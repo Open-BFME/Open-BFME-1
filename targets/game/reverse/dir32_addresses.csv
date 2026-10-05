@@ -17676,3 +17676,6 @@ _g_012F7014,0x012F7014
 ??_C@_02OLOABKKD@ID?$AA@,0x0112BEAC
 ?m_containData@ControlBar@@1PAUContainEntry@1@A,0x012F3448
 ?theInputString@@3VAsciiString@@A,0x012F2574
+?g_rva012F4998LanLobby@@3PAVBfmeAptScreenLanLobby@@A,0x012F4998
+?g_rva012F49B4MainMenu@@3PAVBfmeAptScreenMainMenu@@A,0x012F49B4
+?g_aptLivingWorldCachedName@@3VAsciiString@@A,0x012F49A0

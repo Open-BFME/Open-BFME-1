@@ -201,7 +201,8 @@ private:
 class BfmeAptFunctorMarker {};
 
 struct Rva012F49B4Thing {};
-extern Rva012F49B4Thing *g_rva012F49B4;
+class BfmeAptScreenMainMenu;
+extern BfmeAptScreenMainMenu *g_rva012F49B4MainMenu;
 
 class Mouse
 {
@@ -319,10 +320,10 @@ BfmeAptScreenMainMenu::BfmeAptScreenMainMenu( void *context )
 		? 8 : 0 ),
 	m_ttd()
 {
-	if( g_rva012F49B4 == 0 )
+	if( reinterpret_cast<Rva012F49B4Thing * &>(g_rva012F49B4MainMenu) == 0 )
 	{
 		_bfme_AptGameWindow *registry = (_bfme_AptGameWindow *)( (char *)this + 0x218 );
-		g_rva012F49B4 = (Rva012F49B4Thing *)this;
+		reinterpret_cast<Rva012F49B4Thing * &>(g_rva012F49B4MainMenu) = (Rva012F49B4Thing *)this;
 
 		{
 			AsciiString logo( "LogoWithShadow" );
@@ -537,3 +538,5 @@ BfmeAptScreenMainMenu::BfmeAptScreenMainMenu( void *context )
 			m_b25a = true;
 	}
 }
+
+BfmeAptScreenMainMenu *g_rva012F49B4MainMenu;

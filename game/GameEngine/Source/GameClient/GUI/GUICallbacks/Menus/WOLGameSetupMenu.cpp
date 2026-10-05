@@ -1248,7 +1248,8 @@ public:
 	void set();
 };
 
-extern Rva00537C00 *s_popBackExtra;
+class BfmeAptScreenOnlineCustomMatch;
+extern BfmeAptScreenOnlineCustomMatch *TheBfmeOnlineCustomMatch;
 
 class BfmeWOLMapSelectLayout
 {
@@ -1544,8 +1545,8 @@ void PopBackToLobby( void )
 		return;
 	}
 
-	if (s_popBackExtra)
-		s_popBackExtra->set();
+	if (reinterpret_cast<Rva00537C00 * &>(TheBfmeOnlineCustomMatch))
+		reinterpret_cast<Rva00537C00 * &>(TheBfmeOnlineCustomMatch)->set();
 }
 
 void updateMapStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[], Bool onLoadScreen = FALSE );

@@ -1636,7 +1636,7 @@ private:
 	char m_unmodelled[ 0x3C ];
 };
 
-extern void *TheBfmeOnlineProfileSlot;   // 0x012F4AB4
+extern BfmeOnlineProfileScreen *TheBfmeOnlineProfileSlot;   // 0x012F4AB4
 
 // ?createAptScreenOnlineProfile@@YAPAXPAX@Z
 void *createAptScreenOnlineProfile( void *context )

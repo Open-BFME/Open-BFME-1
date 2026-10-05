@@ -53,7 +53,8 @@ extern unsigned char showOnlineShellFlag;
 extern std::list<QueuedDownload> queuedDownloads;
 // BFME's Apt window manager (0x012F19E8), not the game's TheWindowManager (0x012F1B40).
 extern WindowManager *g_rva012F19E8WindowManager;
-extern Rva0051D690 *g_rva012F49B4;
+class BfmeAptScreenMainMenu;
+extern BfmeAptScreenMainMenu *g_rva012F49B4MainMenu;
 extern GameTextInterface *TheGameText;
 extern ScriptEngine *TheScriptEngine;
 extern Shell *TheShell;
@@ -85,8 +86,8 @@ void Rva0062EA60StartOnline()
     {
         if (g_rva012F19E8WindowManager)
             g_rva012F19E8WindowManager->bfme_hideBackground(false);
-        if (g_rva012F49B4)
-            g_rva012F49B4->apply();
+        if (reinterpret_cast<Rva0051D690 * &>(g_rva012F49B4MainMenu))
+            reinterpret_cast<Rva0051D690 * &>(g_rva012F49B4MainMenu)->apply();
         if (cantConnectBeforeOnline)
         {
             MessageBoxOk(TheGameText->fetch("GUI:CannotConnectToServservTitle"),

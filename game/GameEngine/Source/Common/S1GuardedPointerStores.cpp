@@ -84,13 +84,14 @@ public:
 	bool m_flag;
 };
 
-extern Gen004C7470 *Data00EF49B4;
+class BfmeAptScreenMainMenu;
+extern BfmeAptScreenMainMenu *g_rva012F49B4MainMenu;
 
 void Rva004C7470();
 void Rva004C7470()
 {
-	if ( Data00EF49B4 )
+	if ( reinterpret_cast<Gen004C7470 * &>(g_rva012F49B4MainMenu) )
 	{
-		Data00EF49B4->m_flag = false;
+		reinterpret_cast<Gen004C7470 * &>(g_rva012F49B4MainMenu)->m_flag = false;
 	}
 }

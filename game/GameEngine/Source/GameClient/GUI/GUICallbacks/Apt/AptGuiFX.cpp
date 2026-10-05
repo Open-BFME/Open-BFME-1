@@ -123,3 +123,5 @@ void Rva00510DC0(UnicodeString *text, AsciiString *face, int size,
 	((BfmeLevelAN *)g_theWindowManager)->bfmeBuildAN((unsigned int)g_guiFxWindowHandle,
 		(int)"ShowToolTip", 2, (int)xTextArg, (int)yTextArg, 0, 0, 0);
 }
+
+Rva00510DC0DisplayView *Rva00510DC0Display;

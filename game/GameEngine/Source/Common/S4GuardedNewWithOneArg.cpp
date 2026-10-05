@@ -36,21 +36,21 @@
 // pinned to the addresses their REL32s resolve to through the ILT thunks in the
 // way.
 
-#define S4_GUARDED_NEW( NAME, DWORDS )                                         \
+#define S4_GUARDED_NEW( NAME, DWORDS, GUARDTYPE, GUARD )                                         \
 	struct S4Guarded##NAME                                                     \
 	{                                                                          \
 		int m_storage[ DWORDS ];                                               \
 		S4Guarded##NAME( int a );                                              \
 	};                                                                         \
-	extern void *g_s4Guard##NAME;                                              \
+	extern GUARDTYPE GUARD;                                              \
 	S4Guarded##NAME *s4mk##NAME( int a )                                       \
 	{                                                                          \
-		if ( g_s4Guard##NAME )                                                 \
+		if ( GUARD )                                                 \
 			return 0;                                                          \
 		return new S4Guarded##NAME( a );                                       \
 	}
 
-S4_GUARDED_NEW( 0055BA20, 44 )
+S4_GUARDED_NEW( 0055BA20, 44, void *, g_s4Guard0055BA20 )
 
 struct BfmeAptScreenOnlineHome
 {
@@ -58,16 +58,17 @@ struct BfmeAptScreenOnlineHome
 	BfmeAptScreenOnlineHome( int a );
 };
 
-extern void *g_s4Guard0055BAA0;
+extern void *TheBfmeOnlineHomeSlot;
 
 BfmeAptScreenOnlineHome *s4mk0055BAA0( int a )
 {
-	if ( g_s4Guard0055BAA0 )
+	if ( TheBfmeOnlineHomeSlot )
 		return 0;
 	return new BfmeAptScreenOnlineHome( a );
 }
 
-S4_GUARDED_NEW( 0055BB20, 47 )
+class BfmeAptScreenOnlineChat;
+S4_GUARDED_NEW( 0055BB20, 47, BfmeAptScreenOnlineChat *, TheBfmeOnlineChat )
 
 class BfmeAptScreenOnlineQuickMatch
 {
@@ -87,4 +88,5 @@ BfmeAptScreenOnlineQuickMatch *s4mk0055BC20( int a )
 	return new BfmeAptScreenOnlineQuickMatch( a );
 }
 
-S4_GUARDED_NEW( 0055BCA0, 124 )
+class BfmeAptScreenOnlineCustomMatch;
+S4_GUARDED_NEW( 0055BCA0, 124, BfmeAptScreenOnlineCustomMatch *, TheBfmeOnlineCustomMatch )

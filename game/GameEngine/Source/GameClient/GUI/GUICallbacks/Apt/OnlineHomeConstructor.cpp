@@ -351,3 +351,5 @@ BfmeAptScreenOnlineHome::BfmeAptScreenOnlineHome( int context )
 	rva00547730();
 }
 }
+
+void *TheBfmeOnlineHomeSlot;

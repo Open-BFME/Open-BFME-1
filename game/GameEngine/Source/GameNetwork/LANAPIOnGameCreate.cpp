@@ -28,7 +28,8 @@ extern bool LANbuttonPushed;
 // Retail global at VA 0x012F4998.  Its helper is called only on the success
 // path when the pointer is present; the helper identity remains address based.
 struct BfmeObj935C;
-extern BfmeObj935C *g_bfme935GlobC;
+class BfmeAptScreenLanLobby;
+extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
 
 // Address-qualified view of the actual no-argument thiscall helper.
 // ILT2A5B8 enters body51A5D0 directly; no this adjustment is needed here.
@@ -144,9 +145,9 @@ void LANAPI::OnGameCreate(LANAPIInterface::ReturnType ret)
 {
 	if (ret == LANAPIInterface::RET_OK)
 	{
-		if (g_bfme935GlobC)
+		if (reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby))
 		{
-			reinterpret_cast<Rva0051A5D0Receiver *>(g_bfme935GlobC)->Rva0051A5D0Advance();
+			reinterpret_cast<Rva0051A5D0Receiver *>(reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby))->Rva0051A5D0Advance();
 		}
 		else
 		{

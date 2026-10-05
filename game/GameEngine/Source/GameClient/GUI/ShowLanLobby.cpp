@@ -31,11 +31,12 @@ public:
 };
 
 extern Shell *TheShell;
-extern void *g_obj12F4998;
+class BfmeAptScreenLanLobby;
+extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
 
 // ?_bfme_showLanLobby@@YAXXZ
 void _bfme_showLanLobby( void )
 {
-	if( g_obj12F4998 == 0 )
+	if( reinterpret_cast<void * &>(g_rva012F4998LanLobby) == 0 )
 		TheShell->push( AsciiString( "LanLobby.apt" ), false );
 }

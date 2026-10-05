@@ -97,3 +97,5 @@ BfmeAptScreenOnlineCustomMatch::~BfmeAptScreenOnlineCustomMatch()
 			info->s08();
 	}
 }
+
+BfmeAptScreenOnlineCustomMatch *TheBfmeOnlineCustomMatch;

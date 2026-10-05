@@ -44,7 +44,8 @@ public:
     virtual ~BfmeAptScreenRef();
 };
 
-extern int g_Va012F4988;
+class Rva005127A0InGameChat;
+extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;
 extern int g_Va012F4ACC;
 extern void HideInGameChat();
 extern void j_0003aae9();
@@ -80,7 +81,7 @@ BfmeAptScreenOnlineShell::~BfmeAptScreenOnlineShell()
     *(const void ***)( (char *)this + 0x218 ) = (const void **)
         __identifier("??_7BfmeAptScreenOnlineShell@@6BS4Owner@@@");
 
-    if( g_Va012F4988 )
+    if( reinterpret_cast<int &>(g_Rva005127A0InGameChat) )
         HideInGameChat();
 
     for( BfmeAptScreenRef **it = m_refs.begin(); it != m_refs.end(); ++it )

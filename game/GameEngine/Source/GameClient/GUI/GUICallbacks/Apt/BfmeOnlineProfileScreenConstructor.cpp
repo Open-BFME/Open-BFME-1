@@ -329,3 +329,5 @@ BfmeOnlineProfileScreen::BfmeOnlineProfileScreen( void *context )
 		((void (__fastcall *)(BfmeOnlineProfileScreen *))j_00032849)(this);
 	}
 }
+
+BfmeOnlineProfileScreen *TheBfmeOnlineProfileSlot;

@@ -175,7 +175,8 @@ struct BfmeObj935C
 
 extern MapCache *TheMapCache;
 extern GameTextInterface *TheGameText;
-extern BfmeObj935C *g_bfme935GlobC;
+class BfmeAptScreenLanLobby;
+extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
 extern Bool __cdecl WouldMapTransfer(GameInfo *game);
 extern void __cdecl lanUpdateSlotList004CAF70(void);
 
@@ -253,8 +254,8 @@ void LANAPI::OnHasMap(BfmeNetAddress *sender, Bool status)
 			OnChat(UnicodeString(L"SYSTEM"), _bfme_localAddress(), text, 2);
 		}
 
-		if (g_bfme935GlobC != 0)
-			g_bfme935GlobC->m_rva00688CD0_26c = 1;
+		if (reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby) != 0)
+			reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby)->m_rva00688CD0_26c = 1;
 		else
 			lanUpdateSlotList004CAF70();
 	}

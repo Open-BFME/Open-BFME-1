@@ -29,15 +29,16 @@ public:
 	virtual void bfmeAt1264(int a, int b);
 };
 
-extern BfmeR1264 *g_bfme1264;
+class Rva00510DC0DisplayView;
+extern Rva00510DC0DisplayView *Rva00510DC0Display;
 
 void bfmeMark1264(BfmeVec1264 *a, BfmeVec1264 *b)
 {
-	if (!g_bfme1264)
+	if (!reinterpret_cast<BfmeR1264 * &>(Rva00510DC0Display))
 		return;
-	if (!g_bfme1264->bfmeReady1264())
+	if (!reinterpret_cast<BfmeR1264 * &>(Rva00510DC0Display)->bfmeReady1264())
 		return;
-	g_bfme1264->bfmeAt1264(
+	reinterpret_cast<BfmeR1264 * &>(Rva00510DC0Display)->bfmeAt1264(
 		(int)(*(volatile float *)&b->m_bfme00 * g_rva0107533C + a->m_bfme00 - Rva00510DC0DisplayWidth * g_rva0107533C + g_rva0107533C),
 		(int)(*(volatile float *)&b->m_bfme04 * g_rva0107533C + a->m_bfme04 - Rva00510DC0DisplayHeight * g_rva0107533C + g_rva0107533C));
 }

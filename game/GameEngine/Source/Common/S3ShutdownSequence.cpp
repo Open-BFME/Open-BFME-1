@@ -40,7 +40,8 @@ public:
 	virtual ~BfmeDeletable();
 };
 
-extern void *TheBfmeHeldResource;					// 0x012F4974
+class Rva00510DC0DisplayView;
+extern Rva00510DC0DisplayView *Rva00510DC0Display;					// 0x012F4974
 extern BfmeReleaseSink *TheBfmeReleaseSink;				// 0x012F12CC
 extern int g_guiFxWindowHandle;						// 0x012B7430
 // Retail 0x012F19E8 is the game-wide manager pointer EA defines as
@@ -56,11 +57,11 @@ extern void *g_rva012F49D0;					// 0x012F49D0
 // ?Gen_00510b50@@YAXXZ
 void Gen_00510b50(void)
 {
-	if (TheBfmeHeldResource)
+	if (reinterpret_cast<void * &>(Rva00510DC0Display))
 	{
-		TheBfmeReleaseSink->bfmeRelease(TheBfmeHeldResource);
+		TheBfmeReleaseSink->bfmeRelease(reinterpret_cast<void * &>(Rva00510DC0Display));
 
-		TheBfmeHeldResource = 0;
+		reinterpret_cast<void * &>(Rva00510DC0Display) = 0;
 	}
 
 	if (g_guiFxWindowHandle != -1)

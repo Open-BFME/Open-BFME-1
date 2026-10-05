@@ -327,27 +327,21 @@ public:
 };
 
 extern Gen_00C701B0Target TheBfmeObject_00C701B0;		// 0x12f48c8
-class Gen_00C701C0Target
+class AsciiString
 {
 public:
-	void bfmeForward(void);					// retail 0x0000D828
+	~AsciiString();
 };
 
-extern Gen_00C701C0Target TheBfmeObject_00C701C0;		// 0x12f4978
-class Gen_00C701D0Target
+extern AsciiString g_guiFxFile;		// 0x12f4978
+class UnicodeString
 {
 public:
-	void bfmeForward(void);					// retail 0x0003B304
+	~UnicodeString();
 };
 
-extern Gen_00C701D0Target TheBfmeObject_00C701D0;		// 0x12f498c
-class Gen_00C701E0Target
-{
-public:
-	void bfmeForward(void);					// retail 0x0000D828
-};
-
-extern Gen_00C701E0Target TheBfmeObject_00C701E0;		// 0x12f49a0
+extern UnicodeString g_unicode12F498C;		// 0x12f498c
+extern AsciiString g_aptLivingWorldCachedName;		// 0x12f49a0
 class Gen_00C701F0Target
 {
 public:
@@ -1095,17 +1089,17 @@ void bfmeForward_00C701B0(void)
 // ?bfmeForward_00C701C0@@YAXXZ
 void bfmeForward_00C701C0(void)
 {
-	TheBfmeObject_00C701C0.bfmeForward();
+	g_guiFxFile.~AsciiString();
 }
 // ?bfmeForward_00C701D0@@YAXXZ
 void bfmeForward_00C701D0(void)
 {
-	TheBfmeObject_00C701D0.bfmeForward();
+	g_unicode12F498C.~UnicodeString();
 }
 // ?bfmeForward_00C701E0@@YAXXZ
 void bfmeForward_00C701E0(void)
 {
-	TheBfmeObject_00C701E0.bfmeForward();
+	g_aptLivingWorldCachedName.~AsciiString();
 }
 // ?bfmeForward_00C701F0@@YAXXZ
 void bfmeForward_00C701F0(void)

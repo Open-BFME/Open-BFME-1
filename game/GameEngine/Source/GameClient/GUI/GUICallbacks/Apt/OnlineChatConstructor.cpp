@@ -331,3 +331,5 @@ BfmeAptScreenOnlineChat::BfmeAptScreenOnlineChat( int context )
 		}
 	}
 }
+
+BfmeAptScreenOnlineChat *TheBfmeOnlineChat;

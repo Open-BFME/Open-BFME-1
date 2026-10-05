@@ -169,7 +169,7 @@ void _bfme_closeAptScreen(const AsciiString &name);
 
 
 class BfmeAptScreenLanLobby;
-extern BfmeObj935C *g_bfme935GlobC;
+extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
 
 class __declspec(novtable) BfmeAptScreenLanLobby
 	: public _bfme_AptGameWindow, public BfmeAptFunctorMarker,
@@ -193,7 +193,7 @@ BfmeAptScreenLanLobby::~BfmeAptScreenLanLobby()
 	*(const void ***)((char *)this + 0x218) = (const void **)g_01105A74;
 	*(const void ***)((char *)this + 0x258) = (const void **)g_01105A28;
 
-	if (reinterpret_cast<BfmeAptScreenLanLobby *>(g_bfme935GlobC) == this)
+	if (reinterpret_cast<BfmeAptScreenLanLobby *>(reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby)) == this)
 	{
 		m_subStop.stop();
 		if (TheLAN)
@@ -214,6 +214,6 @@ BfmeAptScreenLanLobby::~BfmeAptScreenLanLobby()
 		m_prefs.slot03();
 		if (TheWindowManager)
 			TheWindowManager->slot40();
-		*(volatile unsigned int *)&g_bfme935GlobC = 0;
+		*(volatile unsigned int *)&reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby) = 0;
 	}
 }

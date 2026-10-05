@@ -164,7 +164,8 @@ extern Bool LANbuttonPushed;
 // Retail global at VA 0x012F4998; its two helpers keep address-derived
 // owners (0x0051A640 on success, 0x00516A80 before the failure box).
 struct BfmeObj935C;
-extern BfmeObj935C *g_bfme935GlobC;
+class BfmeAptScreenLanLobby;
+extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
 
 class BfmeC1013
 {
@@ -276,9 +277,9 @@ void LANAPI::OnGameJoin(ReturnType ret, LANGameInfo *theGame, LANMessage *msg)
 {
 	if (ret == RET_OK)
 	{
-		if (g_bfme935GlobC)
+		if (reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby))
 		{
-			reinterpret_cast<BfmeC1013 *>(g_bfme935GlobC)->bfmeGo1013C();
+			reinterpret_cast<BfmeC1013 *>(reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby))->bfmeGo1013C();
 		}
 		else
 		{
@@ -312,8 +313,8 @@ void LANAPI::OnGameJoin(ReturnType ret, LANGameInfo *theGame, LANMessage *msg)
 			UnicodeString title, body;
 			title = TheGameText->fetch("LAN:JoinFailed");
 			body = getErrorStringFromReturnType(ret);
-			if (g_bfme935GlobC)
-				reinterpret_cast<BfmeQ1063 *>(g_bfme935GlobC)->bfmeGo1063Q();
+			if (reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby))
+				reinterpret_cast<BfmeQ1063 *>(reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby))->bfmeGo1063Q();
 			MessageBoxOk(title, body, NULL);
 		}
 	}

@@ -12,7 +12,8 @@ public:
 	void bfmeStop1006();
 };
 
-extern BfmeRun1006 *g_bfmeRun1006;
+class BfmeAptScreenLanLobby;
+extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
 // retail 0x012F4B58: the shell singleton, whose one identity is
 // ?TheShell@@3PAVShell@@A.  The view above is this TU's own layout of it, so
 // the reference carries the defining name and the view is selected by a cast.
@@ -38,13 +39,13 @@ void BfmeA1006::bfmeGo1006A()
 	if (!m_bfmeVal)
 		return;
 
-	if (!g_bfmeRun1006) {
+	if (!reinterpret_cast<BfmeRun1006 * &>(g_rva012F4998LanLobby)) {
 		((BfmeStop1006 *)TheShell)->bfmeStop1006();
 		LANbuttonPushed = 1;
 		return;
 	}
 
-	g_bfmeRun1006->bfmeRun1006();
+	reinterpret_cast<BfmeRun1006 * &>(g_rva012F4998LanLobby)->bfmeRun1006();
 }
 
 struct BfmeObj1006

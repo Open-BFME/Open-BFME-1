@@ -157,7 +157,8 @@ class AudioManager;
 
 extern AudioManager *TheAudio;
 extern CampaignManager *TheLivingWorldLogic;
-extern Rva012F49B4Thing *g_rva012F49B4;
+class BfmeAptScreenMainMenu;
+extern BfmeAptScreenMainMenu *g_rva012F49B4MainMenu;
 extern WindowManager *g_theWindowManager;
 extern Mouse *TheMouse;
 extern Shell *TheShell;
@@ -186,8 +187,8 @@ void _bfme_leaveScoreScreen()
 	{
 		if ( TheLivingWorldLogic->hasFollowUp() )
 		{
-			if ( g_rva012F49B4 != 0 )
-				g_rva012F49B4->returnToShell();
+			if ( reinterpret_cast<Rva012F49B4Thing * &>(g_rva012F49B4MainMenu) != 0 )
+				reinterpret_cast<Rva012F49B4Thing * &>(g_rva012F49B4MainMenu)->returnToShell();
 			g_theWindowManager->returnToShell();
 			return;
 		}

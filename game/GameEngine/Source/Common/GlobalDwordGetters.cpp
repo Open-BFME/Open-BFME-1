@@ -54,14 +54,19 @@ extern Waypoint *g_waypointListHead;
 extern int g_Va012F4964;
 class BfmeAptScreenMapTransfer;
 extern BfmeAptScreenMapTransfer *g_rva012F496CBfmeAptScreenMapTransfer;
-extern int g_Va012F4988;
-extern int g_Va012F4998;
+class Rva005127A0InGameChat;
+extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;
+class BfmeAptScreenLanLobby;
+extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
 extern int g_Va012F49B0;
-extern int g_Va012F49B4;
+class BfmeAptScreenMainMenu;
+extern BfmeAptScreenMainMenu *g_rva012F49B4MainMenu;
 extern void *g_rva012F49D0;
-extern int g_Va012F49D4;
+class SkirmishScreenState;
+extern SkirmishScreenState *TheSkirmishScreenState;
 extern int g_Va012F49E4;
-extern int g_Va012F49FC;
+class BfmeAptScreenOnlineCustomMatch;
+extern BfmeAptScreenOnlineCustomMatch *TheBfmeOnlineCustomMatch;
 extern int g_Va012F4AAC;
 extern int g_Va012F4ABC;
 extern int g_Va012F4ACC;
@@ -132,7 +137,7 @@ int Rva001ADD20Get( void )
 
 int Rva003828F0Get( void )
 {
-	return g_Va012F4998;
+	return reinterpret_cast<int &>(g_rva012F4998LanLobby);
 }
 
 int Rva00382910Get( void )
@@ -167,7 +172,7 @@ int Rva0046ECB0Get( void )
 
 int Rva0049CA60Get( void )
 {
-	return g_Va012F4988;
+	return reinterpret_cast<int &>(g_Rva005127A0InGameChat);
 }
 
 int Rva004C1090Get( void )
@@ -182,7 +187,7 @@ int Rva004E9B20Get( void )
 
 int Rva004F0750Get( void )
 {
-	return g_Va012F49FC;
+	return reinterpret_cast<int &>(TheBfmeOnlineCustomMatch);
 }
 
 int Rva00510B40Get( void )
@@ -207,7 +212,7 @@ int Rva00569140Get( void )
 
 int Rva00570170Get( void )
 {
-	return g_Va012F49B4;
+	return reinterpret_cast<int &>(g_rva012F49B4MainMenu);
 }
 
 int Rva00588800Get( void )
@@ -222,7 +227,7 @@ int Rva005F08E0Get( void )
 
 int Rva00623790Get( void )
 {
-	return g_Va012F49D4;
+	return reinterpret_cast<int>(TheSkirmishScreenState);
 }
 
 int Rva0066CE50Get( void )

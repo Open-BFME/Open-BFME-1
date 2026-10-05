@@ -18458,5 +18458,65 @@
   "after_sha256": "7477ea667163cd4974746533d536bd14c0c665b0d4b6e30c61b0bc531a409f23",
   "evidence": "targets/game/reverse/identity_evidence/012d5a08-pointer-global.md",
   "reason": "respelled to the datum Bfme5PrefixCheck8C5680.cpp defines at 0x012D5A08"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1264.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1264.cpp",
+  "old_name": "BfmeR1264",
+  "new_name": "Rva00510DC0DisplayView",
+  "before_sha256": "8828c3141788ee495669ae4390c0a9f8023054f224c2c39421f82927d6a70d5f",
+  "after_sha256": "53452fb6ac3ab0d2c02b5eb1a30284e2eca1ac34a7f56a7f57d133836f585180",
+  "evidence": "targets/game/reverse/identity_evidence/012f4974-datum.md",
+  "reason": "respelled to the address owners Rva00510DC0Display (0x012F4974) and Rva005127A0InGameChat (0x012F4988; evidence 012f4988-datum.md)"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1264.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1264.cpp",
+  "old_name": "g_bfme1264",
+  "new_name": "Rva00510DC0Display",
+  "before_sha256": "8828c3141788ee495669ae4390c0a9f8023054f224c2c39421f82927d6a70d5f",
+  "after_sha256": "53452fb6ac3ab0d2c02b5eb1a30284e2eca1ac34a7f56a7f57d133836f585180",
+  "evidence": "targets/game/reverse/identity_evidence/012f4974-datum.md",
+  "reason": "respelled to the address owners Rva00510DC0Display (0x012F4974) and Rva005127A0InGameChat (0x012F4988; evidence 012f4988-datum.md)"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv924.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv924.cpp",
+  "old_name": "BfmeTwo924G",
+  "new_name": "Rva005127A0InGameChat",
+  "before_sha256": "2dbc8a2ac410dc72980df2b7422d6e44e9f3721fb6bebf3a0ab98576702e4282",
+  "after_sha256": "3b740374d49eb1783278f04d19a1440644c1ad81d4e1c34dad3f495751891f46",
+  "evidence": "targets/game/reverse/identity_evidence/012f4974-datum.md",
+  "reason": "respelled to the address owners Rva00510DC0Display (0x012F4974) and Rva005127A0InGameChat (0x012F4988; evidence 012f4988-datum.md)"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv995.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv995.cpp",
+  "old_name": "g_bfmeHeld995B",
+  "new_name": "Rva00510DC0Display",
+  "before_sha256": "8b24bedefd0e9a0a0d75f709fa96be8fb5360c3d08927c860edf40079eab0986",
+  "after_sha256": "5a74b9a4cf0b4a4832314de725771fbfd6186d863145a5ba9abc1face70155e0",
+  "evidence": "targets/game/reverse/identity_evidence/012f4974-datum.md",
+  "reason": "respelled to the address owners Rva00510DC0Display (0x012F4974) and Rva005127A0InGameChat (0x012F4988; evidence 012f4988-datum.md)"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/R1GuardedPointerTailCalls.cpp",
+  "new_path": "game/GameEngine/Source/Common/R1GuardedPointerTailCalls.cpp",
+  "old_name": "Glo00EF4988",
+  "new_name": "Rva005127A0InGameChat",
+  "before_sha256": "8509687e92964517aaf6e46214c7310ae9e943555c1c72b158c71344819992a9",
+  "after_sha256": "b0b0329be953319b5fc199126f1bbaf5eb27cbbba02ebc24e0c1901d5a7496dc",
+  "evidence": "targets/game/reverse/identity_evidence/012f4974-datum.md",
+  "reason": "respelled to the address owners Rva00510DC0Display (0x012F4974) and Rva005127A0InGameChat (0x012F4988; evidence 012f4988-datum.md)"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3ShutdownSequence.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3ShutdownSequence.cpp",
+  "old_name": "TheBfmeHeldResource",
+  "new_name": "Rva00510DC0Display",
+  "before_sha256": "48d377beae6d4dc197906d890a7f6662738d673c8e32f0254ccee327e02d783a",
+  "after_sha256": "dafad866e46d6f1f9b3ca6589382a2b80ecc3d4fe1eb71dce042ac89b86bb482",
+  "evidence": "targets/game/reverse/identity_evidence/012f4974-datum.md",
+  "reason": "respelled to the address owners Rva00510DC0Display (0x012F4974) and Rva005127A0InGameChat (0x012F4988; evidence 012f4988-datum.md)"
  }
 ]

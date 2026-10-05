@@ -31,11 +31,12 @@ struct BfmeObjECE
 };
 
 extern "C" unsigned char bfmeStrECE[];
-extern BfmeObjECE *g_bfmeObjECE;
+class BfmeAptScreenOnlineChat;
+extern BfmeAptScreenOnlineChat *TheBfmeOnlineChat;
 
 void bfmeGoECE()
 {
-	BfmeObjECE *o = g_bfmeObjECE;
+	BfmeObjECE *o = reinterpret_cast<BfmeObjECE * &>(TheBfmeOnlineChat);
 	if (o)
 		o->m_bfmeSub->bfmeCallECE((const char *)bfmeStrECE);
 }

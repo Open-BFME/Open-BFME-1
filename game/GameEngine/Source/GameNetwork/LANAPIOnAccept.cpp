@@ -92,7 +92,8 @@ struct BfmeObj935C
 	UnsignedByte m_bfmeFlag;             // +0x26C
 };
 
-extern BfmeObj935C *g_bfme935GlobC;    // retail data 0x012F4998
+class BfmeAptScreenLanLobby;
+extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;    // retail data 0x012F4998
 extern void lanUpdateSlotList004CAF70(void);        // ILT 0x00039202 -> body 0x004CAF70
 
 // The only LANAPI fields needed here are the established +0x3D/+0x40 pair.
@@ -193,8 +194,8 @@ void LANAPI::OnAccept(BfmeNetAddress *from, UnsignedInt status)
 					reinterpret_cast<GameSlot *>(rawSlot);
 				slot->m_isAccepted = true;
 
-				if (g_bfme935GlobC)
-					reinterpret_cast<Rva00516BB0 *>(g_bfme935GlobC)->bfmeSetSlot(
+				if (reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby))
+					reinterpret_cast<Rva00516BB0 *>(reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby))->bfmeSetSlot(
 					(UnsignedShort)player, 1);
 			}
 			else
@@ -205,8 +206,8 @@ void LANAPI::OnAccept(BfmeNetAddress *from, UnsignedInt status)
 					reinterpret_cast<GameSlot *>(rawSlot);
 				slot->unAccept();
 
-				if (g_bfme935GlobC)
-					reinterpret_cast<Rva00516BB0 *>(g_bfme935GlobC)->bfmeSetSlot(
+				if (reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby))
+					reinterpret_cast<Rva00516BB0 *>(reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby))->bfmeSetSlot(
 					(UnsignedShort)player, 0);
 			}
 			break;
@@ -223,7 +224,7 @@ void LANAPI::OnAccept(BfmeNetAddress *from, UnsignedInt status)
 	noAddress.m_port = 0;
 	_bfme_requestSerializedGameInfo(false, &noAddress);
 
-	BfmeObj935C *global = g_bfme935GlobC;
+	BfmeObj935C *global = reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby);
 	if (global)
 		global->m_bfmeFlag = 1;
 	else

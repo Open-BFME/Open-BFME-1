@@ -74,7 +74,8 @@ private:
 // bad pin under the same mangled name, this TU names the global after its
 // own address instead of reusing g_bfmeThingBHG.
 struct Rva012F49B4Thing;
-extern Rva012F49B4Thing *g_rva012F49B4;
+class BfmeAptScreenMainMenu;
+extern BfmeAptScreenMainMenu *g_rva012F49B4MainMenu;
 
 struct BfmeThingBHG : public _bfme_AptGameWindow
 {
@@ -90,9 +91,9 @@ private:
 // ??1BfmeThingBHG@@UAE@XZ
 BfmeThingBHG::~BfmeThingBHG()
 {
-	if( (void *)g_rva012F49B4 == (void *)this )
+	if( (void *)reinterpret_cast<Rva012F49B4Thing * &>(g_rva012F49B4MainMenu) == (void *)this )
 	{
 		m_comOwner.reset();
-		g_rva012F49B4 = 0;
+		reinterpret_cast<Rva012F49B4Thing * &>(g_rva012F49B4MainMenu) = 0;
 	}
 }
