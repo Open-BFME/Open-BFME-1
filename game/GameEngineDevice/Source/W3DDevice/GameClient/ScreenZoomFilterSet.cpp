@@ -104,8 +104,13 @@ virtual void setMode(int);virtual void pad45();virtual void setFilter(int);};
 class View;
 extern View *TheTacticalView;
 static inline ZoomView *zoomTacticalView() { return (ZoomView *)TheTacticalView; }
-extern int ZoomLastFrame,ZoomPulse,ZoomFadeDirection,ZoomFadeFrames,ZoomCurrentFrame;
-extern bool ZoomPulseDown;extern float ZoomFadeValue;
+extern int ZoomPulse;
+int ZoomLastFrame = 0;
+int ZoomFadeDirection = 0;
+int ZoomFadeFrames = 0;
+int ZoomCurrentFrame = 0;
+bool ZoomPulseDown = false;
+float ZoomFadeValue = 0.0f;
 enum FilterModes{FM_NULL_MODE};
 class ScreenZoomFilter{public:virtual int set(FilterModes);unsigned shader;TextureBaseClass *texture;int savedMode;};
 int ScreenZoomFilter::set(FilterModes mode){

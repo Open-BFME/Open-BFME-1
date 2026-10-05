@@ -221,6 +221,16 @@ struct Coord2D
 	Real y;
 };
 
+class ScreenBWFilter
+{
+protected:
+	static Int m_fadeFrames;
+	static Int m_fadeDirection;
+	static Int m_curFadeFrame;
+	static Real m_curFadeValue;
+	friend class Rva007D1020ScreenBWFilter;
+};
+
 class Rva007D1020ScreenBWFilter
 {
 	unsigned int m_dwBWPixelShader;
@@ -236,10 +246,6 @@ public:
 protected:
 	virtual Int set(FilterModes);
 	virtual void reset();
-	static Int m_fadeFrames;
-	static Int m_fadeDirection;
-	static Int m_curFadeFrame;
-	static Real m_curFadeValue;
 };
 
 // ?set@ScreenBWFilter@@MAEHW4FilterModes@@@Z
@@ -247,36 +253,36 @@ Int Rva007D1020ScreenBWFilter::set(FilterModes mode)
 {
 	if (mode > FM_NULL_MODE)
 	{
-		if (m_fadeDirection > 0)
+		if (ScreenBWFilter::m_fadeDirection > 0)
 		{
-			m_curFadeFrame++;
-			Int fade = m_curFadeFrame;
-			if (fade < m_fadeFrames)
+			ScreenBWFilter::m_curFadeFrame++;
+			Int fade = ScreenBWFilter::m_curFadeFrame;
+			if (fade < ScreenBWFilter::m_fadeFrames)
 			{
-				m_curFadeValue = (Real)fade / (Real)m_fadeFrames;
+				ScreenBWFilter::m_curFadeValue = (Real)fade / (Real)ScreenBWFilter::m_fadeFrames;
 			}
 			else
 			{
-				m_curFadeFrame = 0;
-				m_curFadeValue = 1.0f;
-				m_fadeDirection = 0;
+				ScreenBWFilter::m_curFadeFrame = 0;
+				ScreenBWFilter::m_curFadeValue = 1.0f;
+				ScreenBWFilter::m_fadeDirection = 0;
 			}
 		}
-		else if (m_fadeDirection < 0)
+		else if (ScreenBWFilter::m_fadeDirection < 0)
 		{
-			m_curFadeFrame++;
-			Int fade = m_curFadeFrame;
-			if (fade < m_fadeFrames)
+			ScreenBWFilter::m_curFadeFrame++;
+			Int fade = ScreenBWFilter::m_curFadeFrame;
+			if (fade < ScreenBWFilter::m_fadeFrames)
 			{
-				m_curFadeValue = 1.0f - (Real)fade / (Real)m_fadeFrames;
+				ScreenBWFilter::m_curFadeValue = 1.0f - (Real)fade / (Real)ScreenBWFilter::m_fadeFrames;
 			}
 			else
 			{
-				m_curFadeValue = 0.0f;
+				ScreenBWFilter::m_curFadeValue = 0.0f;
 				theTacticalView()->setMode(FM_NULL_MODE);
 				theTacticalView()->setFilter(0);
-				m_curFadeFrame = 0;
-				m_fadeDirection = 0;
+				ScreenBWFilter::m_curFadeFrame = 0;
+				ScreenBWFilter::m_fadeDirection = 0;
 			}
 		}
 
@@ -337,8 +343,8 @@ Int Rva007D1020ScreenBWFilter::set(FilterModes mode)
 		}
 
 		DX8Wrapper::Set_Pixel_Shader_Constant(1, &color, 1);
-		D3DXVECTOR4 c2(m_curFadeValue, m_curFadeValue,
-			m_curFadeValue, 1.0f);
+		D3DXVECTOR4 c2(ScreenBWFilter::m_curFadeValue, ScreenBWFilter::m_curFadeValue,
+			ScreenBWFilter::m_curFadeValue, 1.0f);
 		DX8Wrapper::Set_Pixel_Shader_Constant(2, &c2, 1);
 		return true;
 	}

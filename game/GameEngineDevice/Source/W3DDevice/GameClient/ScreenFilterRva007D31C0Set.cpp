@@ -102,19 +102,19 @@ virtual void setMode(int);virtual void pad45();virtual void setFilter(int);};
 class View;
 extern View *TheTacticalView;
 static inline FadeView *fadeTacticalView() { return (FadeView *)TheTacticalView; }
-extern int Rva007D31C0FadeDirection,Rva007D31C0FadeFrames,Rva007D31C0FadeCurrentFrame;extern float Rva007D31C0FadeValue;
+extern int ZoomFadeDirection,ZoomFadeFrames,ZoomCurrentFrame;extern float ZoomFadeValue;
 enum FilterModes {FM_NULL_MODE};
 class Rva007D31C0 { protected: virtual int set(FilterModes); };
 int Rva007D31C0::set(FilterModes mode) {
  if(mode>FM_NULL_MODE){
- if(Rva007D31C0FadeDirection>0){
-  int fade=++Rva007D31C0FadeCurrentFrame;
-  if(fade<Rva007D31C0FadeFrames)Rva007D31C0FadeValue=(float)fade/(float)Rva007D31C0FadeFrames;
-  else{Rva007D31C0FadeValue=1;Rva007D31C0FadeCurrentFrame=0;Rva007D31C0FadeDirection=0;}
- }else if(Rva007D31C0FadeDirection<0){
-  int fade=++Rva007D31C0FadeCurrentFrame;
-  if(fade<Rva007D31C0FadeFrames)Rva007D31C0FadeValue=1-(float)fade/(float)Rva007D31C0FadeFrames;
-  else{Rva007D31C0FadeValue=0;fadeTacticalView()->setMode(0);fadeTacticalView()->setFilter(0);Rva007D31C0FadeCurrentFrame=0;Rva007D31C0FadeDirection=0;}
+ if(ZoomFadeDirection>0){
+  int fade=++ZoomCurrentFrame;
+  if(fade<ZoomFadeFrames)ZoomFadeValue=(float)fade/(float)ZoomFadeFrames;
+  else{ZoomFadeValue=1;ZoomCurrentFrame=0;ZoomFadeDirection=0;}
+ }else if(ZoomFadeDirection<0){
+  int fade=++ZoomCurrentFrame;
+  if(fade<ZoomFadeFrames)ZoomFadeValue=1-(float)fade/(float)ZoomFadeFrames;
+  else{ZoomFadeValue=0;fadeTacticalView()->setMode(0);fadeTacticalView()->setFilter(0);ZoomCurrentFrame=0;ZoomFadeDirection=0;}
  }
 
  VertexMaterialClass *vmat=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);

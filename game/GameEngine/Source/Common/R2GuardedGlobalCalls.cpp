@@ -205,38 +205,43 @@ void Rva00588E40::run()
 	m_at18 = 0;
 }
 
-extern int R2Glob013071C8;
-extern int R2Glob013071C4;
-extern void *R2Glob013071C0;
+extern int ZoomCurrentFrame;
+extern int ZoomFadeFrames;
+extern int ZoomFadeDirection;
 extern int R2Glob012BC140;
-extern char R2Glob013071D0;
-extern int R2Glob013071B4;
-extern int R2Glob013071B0;
-extern int R2Glob013071AC;
+extern bool ZoomPulseDown;
+class ScreenBWFilter
+{
+protected:
+	static int m_curFadeFrame;
+	static int m_fadeFrames;
+	static int m_fadeDirection;
+	friend void __stdcall Rva0073B540(int, int);
+};
 extern int R2Glob0130720C;
 extern int R2Glob01307208;
 extern int R2Glob01307204;
 
 void Rva0073A860( int unused, void *value )
 {
-	R2Glob013071C8 = 0;
-	R2Glob013071C4 = 12;
-	R2Glob013071C0 = value;
+	ZoomCurrentFrame = 0;
+	ZoomFadeFrames = 12;
+	ZoomFadeDirection = (int)value;
 	R2Glob012BC140 = 1;
-	R2Glob013071D0 = 0;
+	ZoomPulseDown = 0;
 }
 
 // ?Rva0073B540@@YGXHH@Z
 void __stdcall Rva0073B540( int first, int second )
 {
-	R2Glob013071B4 = 0;
-	R2Glob013071B0 = first;
-	R2Glob013071AC = second;
-	R2Glob013071C8 = 0;
-	R2Glob013071C4 = 12;
-	R2Glob013071C0 = (void *)second;
+	ScreenBWFilter::m_curFadeFrame = 0;
+	ScreenBWFilter::m_fadeFrames = first;
+	ScreenBWFilter::m_fadeDirection = second;
+	ZoomCurrentFrame = 0;
+	ZoomFadeFrames = 12;
+	ZoomFadeDirection = second;
 	R2Glob012BC140 = 1;
-	R2Glob013071D0 = 0;
+	ZoomPulseDown = 0;
 	R2Glob0130720C = 0;
 	R2Glob01307208 = first;
 	R2Glob01307204 = second;

@@ -2,7 +2,7 @@
 
 extern int *g_bfmeA986B;
 extern int *g_bfmeB986B;
-extern int g_bfmeZero986B;
+extern int ZoomCurrentFrame;
 extern char *g_bfmePtr986B;
 extern char g_bfmeTarget986B[];
 
@@ -10,7 +10,7 @@ int bfmeCheck986B(void);
 
 int bfmeGo986B(void)
 {
-	g_bfmeZero986B = 0;
+	ZoomCurrentFrame = 0;
 
 	if (g_bfmeA986B && g_bfmeB986B && bfmeCheck986B()) {
 		g_bfmePtr986B = g_bfmeTarget986B;

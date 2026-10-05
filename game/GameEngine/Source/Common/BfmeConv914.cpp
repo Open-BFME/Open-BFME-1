@@ -2,14 +2,19 @@
 
 extern void *g_bfme914A;
 extern void *g_bfme914B;
-extern int g_bfme914Count;
+class ScreenBWFilter
+{
+protected:
+	static int m_curFadeFrame;
+	friend int bfmeGo914A();
+};
 extern void *g_bfme914Ptr;
 extern char g_bfme914Obj[];
 int bfmeTest914A(void);
 
 int bfmeGo914A(void)
 {
-	g_bfme914Count = 0;
+	ScreenBWFilter::m_curFadeFrame = 0;
 	if (g_bfme914A && g_bfme914B && bfmeTest914A()) {
 		g_bfme914Ptr = g_bfme914Obj;
 		return 1;

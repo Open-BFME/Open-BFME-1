@@ -100,19 +100,25 @@ virtual void setMode(int);virtual void pad45();virtual void setFilter(int);};
 // View *TheTacticalView in game/GameEngine/Source/GameClient/View.cpp.
 class View;extern View *TheTacticalView;
 static inline FadeView *fadeTacticalView(){return (FadeView *)TheTacticalView;}
-extern int Rva007D1AA0FadeDirection,Rva007D1AA0FadeFrames,Rva007D1AA0FadeCurrentFrame;extern float Rva007D1AA0FadeValue;
+class ScreenBWFilter
+{
+protected:
+ static int m_fadeDirection, m_fadeFrames, m_curFadeFrame;
+ static float m_curFadeValue;
+ friend class Rva007D1AA0;
+};
 enum FilterModes {FM_NULL_MODE};
 class Rva007D1AA0 { protected: virtual int set(FilterModes); };
 int Rva007D1AA0::set(FilterModes mode) {
  if(mode>FM_NULL_MODE){
- if(Rva007D1AA0FadeDirection>0){
-  int fade=++Rva007D1AA0FadeCurrentFrame;
-  if(fade<Rva007D1AA0FadeFrames)Rva007D1AA0FadeValue=(float)fade/(float)Rva007D1AA0FadeFrames;
-  else{Rva007D1AA0FadeValue=1;Rva007D1AA0FadeCurrentFrame=0;Rva007D1AA0FadeDirection=0;}
- }else if(Rva007D1AA0FadeDirection<0){
-  int fade=++Rva007D1AA0FadeCurrentFrame;
-  if(fade<Rva007D1AA0FadeFrames)Rva007D1AA0FadeValue=1-(float)fade/(float)Rva007D1AA0FadeFrames;
-  else{Rva007D1AA0FadeValue=0;fadeTacticalView()->setMode(0);fadeTacticalView()->setFilter(0);Rva007D1AA0FadeCurrentFrame=0;Rva007D1AA0FadeDirection=0;}
+ if(ScreenBWFilter::m_fadeDirection>0){
+  int fade=++ScreenBWFilter::m_curFadeFrame;
+  if(fade<ScreenBWFilter::m_fadeFrames)ScreenBWFilter::m_curFadeValue=(float)fade/(float)ScreenBWFilter::m_fadeFrames;
+  else{ScreenBWFilter::m_curFadeValue=1;ScreenBWFilter::m_curFadeFrame=0;ScreenBWFilter::m_fadeDirection=0;}
+ }else if(ScreenBWFilter::m_fadeDirection<0){
+  int fade=++ScreenBWFilter::m_curFadeFrame;
+  if(fade<ScreenBWFilter::m_fadeFrames)ScreenBWFilter::m_curFadeValue=1-(float)fade/(float)ScreenBWFilter::m_fadeFrames;
+  else{ScreenBWFilter::m_curFadeValue=0;fadeTacticalView()->setMode(0);fadeTacticalView()->setFilter(0);ScreenBWFilter::m_curFadeFrame=0;ScreenBWFilter::m_fadeDirection=0;}
  }
 
  VertexMaterialClass *vmat=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);

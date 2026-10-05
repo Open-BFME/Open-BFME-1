@@ -31,7 +31,7 @@ public:
 
 extern int *g_bfmeA986B;
 extern int *g_bfmeB986B;
-extern int g_bfmeZero986B;
+extern int ZoomCurrentFrame;
 extern char *g_bfmePtr986B;
 // Zoom-filter init reads the sibling target at VA 0x013071D4. The conversion
 // helper's g_bfmeTarget986B is the distinct VA 0x013071E4 object.
@@ -61,7 +61,7 @@ int ScreenZoomFilter::init()
 	int hr;
 
 	m_shader = 0;
-	g_bfmeZero986B = 0;
+	ZoomCurrentFrame = 0;
 
 	if (g_bfmeA986B != 0 && g_bfmeB986B != 0)
 	{
