@@ -102,7 +102,8 @@ extern GameWindowManager *TheWindowManager;
 extern GameClient *TheGameClient;
 class PlayerList;
 extern PlayerList *ThePlayerList;	// retail [0x012ED748]
-extern void *g_obj12F4C38;
+class BfmeAptScreenSpellStore;
+extern BfmeAptScreenSpellStore *g_purchaseScienceWindow;
 void *GadgetButtonGetData(GameWindow *window);
 
 class ControlBar {
@@ -183,7 +184,7 @@ void ControlBar::update()
 				--command->m_flashCount;
 		}
 	}
-	if (g_obj12F4C38 && *((unsigned char *)g_obj12F4C38 + 0x259))
+	if (reinterpret_cast<void * &>(g_purchaseScienceWindow) && *((unsigned char *)reinterpret_cast<void * &>(g_purchaseScienceWindow) + 0x259))
 		updateContextPurchaseScience();
 	if (m_UIDirty) {
 		evaluateContextUI();

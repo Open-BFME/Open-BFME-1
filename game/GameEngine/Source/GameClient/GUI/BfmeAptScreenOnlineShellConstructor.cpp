@@ -158,7 +158,8 @@ private:
 };
 
 class BfmeAptScreenRef;
-extern int g_bfmeFlagMG;
+class BfmeAptScreenOnlineShell;
+BfmeAptScreenOnlineShell *g_obj12F4ACC = 0;
 
 // These are the two by-value holder instantiations used by OnlineShell's
 // retail constructor.  Their real constructors are the matched bodies at
@@ -282,9 +283,9 @@ union OnlineShellMethodBits
 BfmeAptScreenOnlineShell::BfmeAptScreenOnlineShell( void *context )
 	: _bfme_AptGameWindow( context ), m_current( 0 ), m_fileName( "OnlineLogin" )
 {
-	if( g_bfmeFlagMG == 0 )
+	if( reinterpret_cast<int &>(g_obj12F4ACC) == 0 )
 	{
-		g_bfmeFlagMG = (int)this;
+		reinterpret_cast<int &>(g_obj12F4ACC) = (int)this;
 		ShellCallbackRegistry *registry =
 			(ShellCallbackRegistry *)( (char *)this + 0x218 );
 

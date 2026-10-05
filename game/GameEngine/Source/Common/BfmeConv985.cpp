@@ -24,7 +24,8 @@ public:
 	void bfmeDo985();
 };
 
-extern BfmeObj985 *g_bfmeObj985;
+class BfmeAptScreenQuitMenu;
+extern BfmeAptScreenQuitMenu *g_obj12F4B40;
 extern Shell *TheShell;
 // retail 0x012F19E8: the canonical spelling is
 // ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A, defined once in
@@ -47,7 +48,7 @@ void BfmeA985::bfmeGo985A(int unused)
 {
 	m_bfmeOwn = 1;
 
-	BfmeObj985 *p = g_bfmeObj985;
+	BfmeObj985 *p = reinterpret_cast<BfmeObj985 * &>(g_obj12F4B40);
 
 	if (!p)
 		return;
@@ -55,14 +56,14 @@ void BfmeA985::bfmeGo985A(int unused)
 		return;
 
 	p->m_bfmeFlag = 1;
-	g_bfmeObj985->m_bfmeMode = 2;
+	reinterpret_cast<BfmeObj985 * &>(g_obj12F4B40)->m_bfmeMode = 2;
 	TheShell->m_bfmeFlag = 1;
 	((BfmeHub985 *)g_rva012F19E8WindowManager)->bfmeDo985();
 }
 
 void __stdcall bfmeGo985B(int unused)
 {
-	BfmeObj985 *p = g_bfmeObj985;
+	BfmeObj985 *p = reinterpret_cast<BfmeObj985 * &>(g_obj12F4B40);
 
 	if (!p)
 		return;
@@ -70,7 +71,7 @@ void __stdcall bfmeGo985B(int unused)
 		return;
 
 	p->m_bfmeFlag = 1;
-	g_bfmeObj985->m_bfmeMode = 0;
+	reinterpret_cast<BfmeObj985 * &>(g_obj12F4B40)->m_bfmeMode = 0;
 	TheShell->m_bfmeFlag = 1;
 	((BfmeHub985 *)g_rva012F19E8WindowManager)->bfmeDo985();
 }

@@ -1313,7 +1313,8 @@ void * __stdcall createAptScreenInGameChat( void *context )
 // SpellStore.apt, retail 0x00105140, object 0x2D4 bytes.
 extern const void *BfmeAptScreenSpellStoreVftable[];
 extern const void *BfmeAptScreenSpellStoreSecondaryVftable[];
-extern void *g_obj12F4C38;
+class BfmeAptScreenSpellStore;
+extern BfmeAptScreenSpellStore *g_purchaseScienceWindow;
 
 class SpellStoreHolder
 {
@@ -1386,7 +1387,7 @@ BfmeAptScreenSpellStore::BfmeAptScreenSpellStore( void *context )
 
 	if( g_rva012F19E8WindowManager )
 	{
-		g_obj12F4C38 = this;
+		reinterpret_cast<void * &>(g_purchaseScienceWindow) = this;
 		SpellStoreRegistry *registry =
 			(SpellStoreRegistry *)( (char *)this + 0x218 );
 

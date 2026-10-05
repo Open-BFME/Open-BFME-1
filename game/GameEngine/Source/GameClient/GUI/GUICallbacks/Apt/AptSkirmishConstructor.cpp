@@ -199,7 +199,8 @@ public:
   virtual UnicodeString fetch(const char *, bool * = 0);
 };
 extern GameTextInterface *TheGameText;
-extern BfmeAptScreenSkirmish *Rva012F4B54Skirmish;
+class BfmeAptScreenSkirmish;
+BfmeAptScreenSkirmish *Rva012F4B54Skirmish = 0;
 extern const char *Rva012B8044Image;
 extern const char *Rva012B8048Image;
 extern const char *Rva012B804CImage;

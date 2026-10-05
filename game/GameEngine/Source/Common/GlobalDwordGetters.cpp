@@ -69,13 +69,20 @@ extern int g_Va012F49E4;
 class BfmeAptScreenOnlineCustomMatch;
 extern BfmeAptScreenOnlineCustomMatch *TheBfmeOnlineCustomMatch;
 extern int g_Va012F4AAC;
-extern int g_Va012F4ABC;
-extern int g_Va012F4ACC;
-extern int g_Va012F4AD4;
-extern int g_Va012F4B40;
-extern int g_Va012F4B44;
-extern int g_Va012F4B54;
-extern int g_Va012F4C38;
+class BfmeAptScreenOnlineQuickMatch;
+extern BfmeAptScreenOnlineQuickMatch *g_s4Guard0055BC20;
+class BfmeAptScreenOnlineShell;
+extern BfmeAptScreenOnlineShell *g_obj12F4ACC;
+class BfmeAptScreenOptions;
+extern BfmeAptScreenOptions *g_obj12F4AD4;
+class BfmeAptScreenQuitMenu;
+extern BfmeAptScreenQuitMenu *g_obj12F4B40;
+class BfmeAptScreenSaveLoad;
+extern BfmeAptScreenSaveLoad *TheAptSaveLoad;
+class BfmeAptScreenSkirmish;
+extern BfmeAptScreenSkirmish *Rva012F4B54Skirmish;
+class BfmeAptScreenSpellStore;
+extern BfmeAptScreenSpellStore *g_purchaseScienceWindow;
 
 extern int g_Va012F9CF4;
 extern int g_Va012F9D08;
@@ -143,27 +150,27 @@ int Rva003828F0Get( void )
 
 int Rva00382910Get( void )
 {
-	return g_Va012F4ACC;
+	return reinterpret_cast<int &>(g_obj12F4ACC);
 }
 
 int Rva003968E0Get( void )
 {
-	return g_Va012F4B40;
+	return reinterpret_cast<int &>(g_obj12F4B40);
 }
 
 int Rva003968F0Get( void )
 {
-	return g_Va012F4AD4;
+	return reinterpret_cast<int &>(g_obj12F4AD4);
 }
 
 int Rva00396900Get( void )
 {
-	return g_Va012F4B54;
+	return reinterpret_cast<int &>(Rva012F4B54Skirmish);
 }
 
 int Rva0043A5F0Get( void )
 {
-	return g_Va012F4C38;
+	return reinterpret_cast<int &>(g_purchaseScienceWindow);
 }
 
 int Rva0046ECB0Get( void )
@@ -198,12 +205,12 @@ int Rva00510B40Get( void )
 
 int Rva00558420Get( void )
 {
-	return g_Va012F4ABC;
+	return reinterpret_cast<int &>(g_s4Guard0055BC20);
 }
 
 int Rva00569130Get( void )
 {
-	return g_Va012F4B44;
+	return reinterpret_cast<int &>(TheAptSaveLoad);
 }
 
 int Rva00569140Get( void )

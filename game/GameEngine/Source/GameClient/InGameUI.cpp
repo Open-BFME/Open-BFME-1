@@ -2379,12 +2379,14 @@ class AptPalantir;
 extern AptPalantir *TheAptPalantir;
 class BannerUI;
 extern BannerUI *TheBannerUI;
-extern void *g_obj12F4C38;
+class BfmeAptScreenSpellStore;
+extern BfmeAptScreenSpellStore *g_purchaseScienceWindow;
 
 // Retail keyboard-scroll speed, 250.0f in .data at 0x012B54B8.
 extern Real g_bfmeKeyboardScrollSpeed012B54B8;
 // The 0x30-byte subsystem InGameUI::init creates at 0x012F4B78.
-extern void *g_bfmeSubsystem012F4B78;
+class Gen00587600;
+extern Gen00587600 *g_bfmeSubsystem012F4B78;
 
 // The by-value text argument goes through the TU's BfmeUnicodeStringArg view,
 // which records the unwind slot before loading the copy's `this` as retail
@@ -2535,10 +2537,10 @@ void InGameUI::update( void )
 
 	reinterpret_cast<BfmeUpdateSubsystem *>( TheAptPalantir )->update();
 	reinterpret_cast<BfmeUpdateSubsystem *>( TheBannerUI )->update();
-	Rva005999B0Screen *screen = static_cast<Rva005999B0Screen *>( g_obj12F4C38 );
+	Rva005999B0Screen *screen = static_cast<Rva005999B0Screen *>( reinterpret_cast<void * &>(g_purchaseScienceWindow) );
 	if( screen && screen->flag259 )
 		screen->frameUpdate();
-	static_cast<BfmeUpdateSubsystem *>( g_bfmeSubsystem012F4B78 )->update();
+	static_cast<BfmeUpdateSubsystem *>( reinterpret_cast<void * &>(g_bfmeSubsystem012F4B78) )->update();
 
 }  // end update
 

@@ -2,6 +2,17 @@
 // readable body of ?freeZones@ZoneBlock@@IAEXXZ: game/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 #include "fx_particle_system.h"
 #include "fx_particle_system_category.h"
+
+extern template FXParticleSystem::CategoryModuleClass<0> *
+    FXParticleSystem::CategoryModuleClassBase<0>::s_defaultModule;
+extern template FXParticleSystem::CategoryModuleClass<1> *
+    FXParticleSystem::CategoryModuleClassBase<1>::s_defaultModule;
+extern template FXParticleSystem::CategoryModuleClass<2> *
+    FXParticleSystem::CategoryModuleClassBase<2>::s_defaultModule;
+extern template FXParticleSystem::CategoryModuleClass<3> *
+    FXParticleSystem::CategoryModuleClassBase<3>::s_defaultModule;
+extern template FXParticleSystem::CategoryModuleClass<4> *
+    FXParticleSystem::CategoryModuleClassBase<4>::s_defaultModule;
 #include <memory.h>
 #include <memory>
 
@@ -1779,13 +1790,8 @@ extern const char g_01110868[];
 extern const char g_01110880[];
 extern const char g_0111088C[];
 extern const char g_01110874[];
-extern ConcreteModuleClass<DefaultModuleTag<0> > *defaultModuleTag0CurrentInstance;
-extern ConcreteModuleClass<DefaultModuleTag<1> > *defaultModuleTag1CurrentInstance;
-extern ConcreteModuleClass<DefaultModuleTag<2> > *defaultModuleTag2CurrentInstance;
-extern ConcreteModuleClass<DefaultModuleTag<3> > *defaultModuleTag3CurrentInstance;
 extern ConcreteModuleClass<DefaultModuleTag<6> > *defaultModuleTag6CurrentInstance;
 extern ConcreteModuleClass<DefaultModuleTag<7> > *defaultModuleTag7CurrentInstance;
-extern ConcreteModuleClass<OrthoEmissionVelocityModuleTag> *orthoEmissionVelocityCurrentInstance;
 extern ConcreteModuleClass<PointEmissionVolumeModuleTag> *pointEmissionVolumeCurrentInstance;
 extern void **defaultModuleTag0SourceAt8;
 extern void **defaultModuleTag0SourceAt4;
@@ -1870,7 +1876,7 @@ ConcreteModuleClass<DefaultModuleTag<0> >::ConcreteModuleClass()
     const void *first = *reinterpret_cast<void **>(defaultModuleTag0SourceAt8);
     void **self = reinterpret_cast<void **>(this);
     const void *second = *reinterpret_cast<void **>(defaultModuleTag0SourceAt4);
-    *reinterpret_cast<void **>(&defaultModuleTag0CurrentInstance) = this;
+    *reinterpret_cast<void **>(&CategoryModuleClass<0>::s_defaultModule) = this;
     self[0] = ( void *)&CATEGORY_MODULE_CLASS_0_VTABLE;
     self[1] = (void *)second;
     self[2] = (void *)first;
@@ -1901,7 +1907,7 @@ ConcreteModuleClass<DefaultModuleTag<1> >::ConcreteModuleClass()
     const void *first = *reinterpret_cast<void **>(defaultModuleTag1SourceAt8);
     void **self = reinterpret_cast<void **>(this);
     const void *second = *reinterpret_cast<void **>(defaultModuleTag1SourceAt4);
-    *reinterpret_cast<void **>(&defaultModuleTag1CurrentInstance) = this;
+    *reinterpret_cast<void **>(&CategoryModuleClass<1>::s_defaultModule) = this;
     self[0] = ( void *)g_01110838;
     self[1] = (void *)second;
     self[2] = (void *)first;
@@ -1933,7 +1939,7 @@ ConcreteModuleClass<DefaultModuleTag<2> >::ConcreteModuleClass()
     const void *first = *reinterpret_cast<void **>(defaultModuleTag2SourceAt8);
     void **self = reinterpret_cast<void **>(this);
     const void *second = *reinterpret_cast<void **>(defaultModuleTag2SourceAt4);
-    *reinterpret_cast<void **>(&defaultModuleTag2CurrentInstance) = this;
+    *reinterpret_cast<void **>(&CategoryModuleClass<2>::s_defaultModule) = this;
     self[0] = ( void *)g_0111085C;
     self[1] = (void *)second;
     self[2] = (void *)first;
@@ -1965,7 +1971,7 @@ ConcreteModuleClass<DefaultModuleTag<3> >::ConcreteModuleClass()
     const void *first = *reinterpret_cast<void **>(defaultModuleTag3SourceAt8);
     void **self = reinterpret_cast<void **>(this);
     const void *second = *reinterpret_cast<void **>(defaultModuleTag3SourceAt4);
-    *reinterpret_cast<void **>(&defaultModuleTag3CurrentInstance) = this;
+    *reinterpret_cast<void **>(&CategoryModuleClass<3>::s_defaultModule) = this;
     self[0] = ( void *)g_01110850;
     self[1] = (void *)second;
     self[2] = (void *)first;
@@ -2889,7 +2895,7 @@ ConcreteModuleClass<OrthoEmissionVelocityModuleTag>::ConcreteModuleClass()
     const void *first = *reinterpret_cast<void **>(orthoEmissionVelocitySourceAt8);
     void **self = reinterpret_cast<void **>(this);
     const void *second = *reinterpret_cast<void **>(orthoEmissionVelocitySourceAt4);
-    *reinterpret_cast<void **>(&orthoEmissionVelocityCurrentInstance) = this;
+    *reinterpret_cast<void **>(&CategoryModuleClass<4>::s_defaultModule) = this;
     self[0] = ( void *)g_01110880;
     self[1] = (void *)second;
     self[2] = (void *)first;

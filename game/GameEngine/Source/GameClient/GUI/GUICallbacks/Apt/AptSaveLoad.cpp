@@ -173,10 +173,12 @@ public:
 	bool m_field259;
 };
 
-extern void *g_obj12F4B40;
+class BfmeAptScreenQuitMenu;
+extern BfmeAptScreenQuitMenu *g_obj12F4B40;
 
 class AptSaveLoad;
-extern AptSaveLoad *TheAptSaveLoad;
+class BfmeAptScreenSaveLoad;
+BfmeAptScreenSaveLoad *TheAptSaveLoad = 0;
 
 extern const char *g_saveLoadRegistrations012B7E60[ 2 ];
 
@@ -231,7 +233,7 @@ BfmeAptScreenSaveLoad::~BfmeAptScreenSaveLoad()
 		}
 
 		_bfme_closeAptScreen( AsciiString( "AptSaveLoad::InitGadgets" ) );
-		TheAptSaveLoad = 0;
+		reinterpret_cast<AptSaveLoad * &>(TheAptSaveLoad) = 0;
 
 		if( TheGameLogic )
 			TheGameLogic->setGamePaused( m_pausedOnEntry260, 2, TRUE );
@@ -246,8 +248,8 @@ BfmeAptScreenSaveLoad::~BfmeAptScreenSaveLoad()
 				m_flag280 = TRUE;
 				break;
 			case 2:
-				if( g_obj12F4B40 )
-					static_cast<BfmeAptScreenQuitMenu *>( g_obj12F4B40 )->m_field259 = TRUE;
+				if( reinterpret_cast<void * &>(g_obj12F4B40) )
+					static_cast<BfmeAptScreenQuitMenu *>( reinterpret_cast<void * &>(g_obj12F4B40) )->m_field259 = TRUE;
 				m_flag280 = FALSE;
 				break;
 			case 3:

@@ -79,7 +79,8 @@ public:
 	Bool m_clientQuiet;
 };
 
-extern void *g_obj12F4B40;
+class BfmeAptScreenQuitMenu;
+extern BfmeAptScreenQuitMenu *g_obj12F4B40;
 extern Shell *TheShell;
 extern WindowManager *g_rva012F19E8WindowManager;	// retail 0x012F19E8
 extern VictoryConditionsInterface *TheVictoryConditions;
@@ -89,11 +90,11 @@ extern InGameUI *TheInGameUI;
 // ?surrenderQuitMenu@@YAXXZ
 void surrenderQuitMenu()
 {
-	QuitMenu *menu = static_cast<QuitMenu *>(g_obj12F4B40);
+	QuitMenu *menu = static_cast<QuitMenu *>(reinterpret_cast<void * &>(g_obj12F4B40));
 	if (menu && !menu->m_hidden)
 	{
 		menu->m_hidden = true;
-		static_cast<QuitMenu *>(g_obj12F4B40)->m_field25C = 0;
+		static_cast<QuitMenu *>(reinterpret_cast<void * &>(g_obj12F4B40))->m_field25C = 0;
 		TheShell->m_isShellActive = true;
 		g_rva012F19E8WindowManager->hideQuitMenu();
 	}

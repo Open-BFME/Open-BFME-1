@@ -43,7 +43,8 @@ public:
 };
 
 extern SkirmishGameInfo *g_bfmeCurrentCB;
-extern void *g_obj12F4B54;
+class BfmeAptScreenSkirmish;
+extern BfmeAptScreenSkirmish *Rva012F4B54Skirmish;
 
 class BfmeAptScreenSkirmish
 {
@@ -80,7 +81,7 @@ void BfmeAptScreenSkirmish::_bfme_close( int )
 			if( g_bfmeCurrentCB )
 				g_bfmeCurrentCB->m_state.reset( true );
 
-			void *screen = g_obj12F4B54;
+			void *screen = reinterpret_cast<void * &>(Rva012F4B54Skirmish);
 			g_bfmeCurrentCB = 0;
 			if( screen )
 				g_rva012F19E8WindowManager->hideQuitMenu();

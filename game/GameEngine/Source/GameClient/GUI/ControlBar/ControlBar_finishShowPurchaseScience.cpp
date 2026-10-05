@@ -235,9 +235,11 @@ class AptPalantir;
 class GameLogic;
 class ScriptEngine;
 class DisconnectMenu;
-extern PurchaseScienceWindow *g_purchaseScienceWindow;
+class BfmeAptScreenSpellStore;
+extern BfmeAptScreenSpellStore *g_purchaseScienceWindow;
 extern AptPalantir *TheAptPalantir;
-extern void *g_obj12F4B40;
+class BfmeAptScreenQuitMenu;
+extern BfmeAptScreenQuitMenu *g_obj12F4B40;
 extern GameLogic *TheGameLogic;
 extern ScriptEngine *TheScriptEngine;
 extern DisconnectMenu *TheDisconnectMenu;
@@ -249,7 +251,7 @@ extern void __cdecl HideDiplomacy();
 // ?finishShowPurchaseScience@@YAXXZ
 void finishShowPurchaseScience(void)
 {
-	if (g_purchaseScienceWindow != 0)
+	if (reinterpret_cast<PurchaseScienceWindow * &>(g_purchaseScienceWindow) != 0)
 		return;
 
 	if (TheInGameUI->slot85())
@@ -260,7 +262,7 @@ void finishShowPurchaseScience(void)
 	if (rva00592D60Ask() == false)
 		return;
 
-	if (g_obj12F4B40 != 0)
+	if (reinterpret_cast<void * &>(g_obj12F4B40) != 0)
 		return;
 
 	if ((unsigned char)((BfmeThingFGA *)TheGameLogic)->bfmeGoFGA())

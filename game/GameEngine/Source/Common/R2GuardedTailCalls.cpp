@@ -140,7 +140,7 @@ static inline Gen000290D2 *R2Ptr012F19E8()
 }
 
 #define R2_GUARDED_GLOBAL_FORWARD( NAME, GUARD )                          \
-	extern void *GUARD;                                                   \
+	/* Guard declarations are typed at their call sites. */                                                   \
 	void NAME()                                                           \
 	{                                                                     \
 		if ( GUARD )                                                      \
@@ -149,6 +149,7 @@ static inline Gen000290D2 *R2Ptr012F19E8()
 		}                                                                 \
 	}
 
+extern void *g_obj12F495C;
 R2_GUARDED_GLOBAL_FORWARD( Rva0050D910, g_obj12F495C )
 class BfmeAptScreenLanLobby;
 extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
@@ -157,9 +158,15 @@ void Rva00516690()
 	if (g_rva012F4998LanLobby)
 		R2Ptr012F19E8()->handle();
 }
-R2_GUARDED_GLOBAL_FORWARD( Rva0055BD40, R2Glob012F4ACC )
-R2_GUARDED_GLOBAL_FORWARD( Rva0056A810, R2Glob012F4B44 )
-R2_GUARDED_GLOBAL_FORWARD( Rva00579040, R2Glob012F4B54 )
+class BfmeAptScreenOnlineShell;
+extern BfmeAptScreenOnlineShell *g_obj12F4ACC;
+R2_GUARDED_GLOBAL_FORWARD( Rva0055BD40, g_obj12F4ACC )
+class BfmeAptScreenSaveLoad;
+extern BfmeAptScreenSaveLoad *TheAptSaveLoad;
+R2_GUARDED_GLOBAL_FORWARD( Rva0056A810, TheAptSaveLoad )
+class BfmeAptScreenSkirmish;
+extern BfmeAptScreenSkirmish *Rva012F4B54Skirmish;
+R2_GUARDED_GLOBAL_FORWARD( Rva00579040, Rva012F4B54Skirmish )
 
 // ---------------------------------------------------------------------------
 // (C)

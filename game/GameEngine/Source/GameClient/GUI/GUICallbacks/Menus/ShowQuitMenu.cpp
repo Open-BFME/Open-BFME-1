@@ -261,7 +261,8 @@ class ScriptEngine;
 class DisconnectMenu;
 
 extern Display *TheDisplay;
-extern void *g_obj12F4B40;
+class BfmeAptScreenQuitMenu;
+extern BfmeAptScreenQuitMenu *g_obj12F4B40;
 extern InGameUI *TheInGameUI;
 extern int g_Va012F49B0;
 extern GameLogic *TheGameLogic;
@@ -276,7 +277,7 @@ extern void HideDiplomacy();
 
 void showQuitMenu()
 {
-	if (g_obj12F4B40 != 0)
+	if (reinterpret_cast<void * &>(g_obj12F4B40) != 0)
 		return;
 
 	if (TheInGameUI->slot85())

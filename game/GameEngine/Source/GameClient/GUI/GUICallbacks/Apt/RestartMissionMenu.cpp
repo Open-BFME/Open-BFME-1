@@ -136,7 +136,8 @@ public:
 	AsciiString m_pendingFile;
 };
 
-extern BfmeObj947C *g_bfme947ObjC;
+class BfmeAptScreenQuitMenu;
+extern BfmeAptScreenQuitMenu *g_obj12F4B40;
 
 // Retail singleton globals, named per targets/game/reverse/symbols.csv.
 extern Shell *TheShell;					// ?TheShell@@3PAVShell@@A @ 0x012F4B58
@@ -155,11 +156,11 @@ extern InGameUI *TheInGameUI;			// ?TheInGameUI@@3PAVInGameUI@@A @ 0x012F148C
 
 __declspec(noinline) void restartMissionMenu()
 {
-	BfmeObj947C *menu = g_bfme947ObjC;
+	BfmeObj947C *menu = reinterpret_cast<BfmeObj947C * &>(g_obj12F4B40);
 	if (menu != 0 && !menu->m_hidden)
 	{
 		menu->m_hidden = true;
-		g_bfme947ObjC->m_field25c = 2;
+		reinterpret_cast<BfmeObj947C * &>(g_obj12F4B40)->m_field25c = 2;
 		TheShell->m_isShellActive = true;
 		((Rva00465B80 *)g_rva012F19E8WindowManager)->apply();
 	}

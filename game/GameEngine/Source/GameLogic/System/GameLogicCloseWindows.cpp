@@ -138,8 +138,10 @@ extern ControlBar *TheControlBar;
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern GameWindowManager *TheWindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
-extern BfmeObj947C *g_bfme947ObjC;
-extern void *g_quitMenuLayout;
+class BfmeAptScreenQuitMenu;
+extern BfmeAptScreenQuitMenu *g_obj12F4B40;
+class BfmeAptScreenOptions;
+extern BfmeAptScreenOptions *g_obj12F4AD4;
 
 // ?closeWindows@GameLogic@@QAEXXZ
 void GameLogic::closeWindows(void)
@@ -149,12 +151,12 @@ void GameLogic::closeWindows(void)
 	ResetInGameChat();
 	TheControlBar->hidePurchaseScience();
 	TheControlBar->hideSpecialPowerShortcut();
-	if (g_quitMenuLayout)
+	if (reinterpret_cast<void * &>(g_obj12F4AD4))
 	{
 		HideQuitMenu();
 		g_rva012F19E8WindowManager->vslot14();
 	}
-	if (g_bfme947ObjC)
+	if (reinterpret_cast<BfmeObj947C * &>(g_obj12F4B40))
 	{
 		HideSaveLoadMenu();
 		g_rva012F19E8WindowManager->vslot14();

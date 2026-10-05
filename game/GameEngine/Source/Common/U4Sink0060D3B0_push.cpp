@@ -317,7 +317,8 @@ public:
 };
 
 extern int BfmeSavedClientFrame;
-extern int Rva00579160Flag;
+class BfmeAptScreenSkirmish;
+extern BfmeAptScreenSkirmish *Rva012F4B54Skirmish;
 
 class GameLogic
 {
@@ -379,7 +380,7 @@ void U4Sink0060D3B0::push(bool showScoreScreen, bool arg2)
 				TheShell->showShell(false);
 				if (!_bfme_showScoreScreen() || !showScoreScreen)
 				{
-					if (Rva00579160Flag != 0)
+					if (reinterpret_cast<int &>(Rva012F4B54Skirmish) != 0)
 						TheShell->showShell(true);
 					else
 					{
@@ -390,7 +391,7 @@ void U4Sink0060D3B0::push(bool showScoreScreen, bool arg2)
 			}
 			else
 			{
-				if (Rva00579160Flag != 0)
+				if (reinterpret_cast<int &>(Rva012F4B54Skirmish) != 0)
 					TheShell->showShell(true);
 				else
 				{

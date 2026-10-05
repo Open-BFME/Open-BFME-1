@@ -62,7 +62,8 @@ private:
 
 void _bfme_closeAptScreen( const AsciiString &name );
 
-extern void *g_obj12F4ABC;
+class BfmeAptScreenOnlineQuickMatch;
+extern BfmeAptScreenOnlineQuickMatch *g_s4Guard0055BC20;
 
 class BfmeAptScreenOnlineQuickMatch : public BfmeAptGameWindow
 {
@@ -81,12 +82,12 @@ private:
 
 BfmeAptScreenOnlineQuickMatch::~BfmeAptScreenOnlineQuickMatch()
 {
-	if( this == g_obj12F4ABC )
+	if( this == reinterpret_cast<void * &>(g_s4Guard0055BC20) )
 	{
 		{
 			AsciiString name( "AptOnlineQuickMatch::InitGadgets" );
 			_bfme_closeAptScreen( name );
 		}
-		g_obj12F4ABC = 0;
+		reinterpret_cast<void * &>(g_s4Guard0055BC20) = 0;
 	}
 }

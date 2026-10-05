@@ -31,11 +31,12 @@ public:
 };
 
 extern Shell *TheShell;
-extern void *g_obj12F4ACC;
+class BfmeAptScreenOnlineShell;
+extern BfmeAptScreenOnlineShell *g_obj12F4ACC;
 
 // ?_bfme_showOnlineShell@@YAXXZ
 void _bfme_showOnlineShell( void )
 {
-	if( g_obj12F4ACC == 0 )
+	if( reinterpret_cast<void * &>(g_obj12F4ACC) == 0 )
 		TheShell->push( AsciiString( "OnlineShell.apt" ), false );
 }

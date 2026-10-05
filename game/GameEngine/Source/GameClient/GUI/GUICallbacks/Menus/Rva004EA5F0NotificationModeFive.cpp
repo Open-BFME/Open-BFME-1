@@ -85,7 +85,8 @@ extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime( void );
 
 extern GameTextInterface *TheGameText;
 #define TheGameText004EA5F0 (TheGameText)
-extern BfmeAptChatFriendLogIn *volatile g_d_012F4ACC;
+class BfmeAptScreenOnlineShell;
+extern BfmeAptScreenOnlineShell *g_obj12F4ACC;
 extern unsigned int g_Va012F423C;
 extern bool lastNotificationWasStatus;
 extern int numOnlineInNotification;
@@ -93,7 +94,7 @@ extern unsigned char g_Va012F4248;
 
 void bfme_notificationModeFive( AsciiString nick, UnicodeString message )
 {
-	if ( g_d_012F4ACC )
+	if ( reinterpret_cast<BfmeAptChatFriendLogIn *volatile &>(g_obj12F4ACC) )
 	{
 		if ( lastNotificationWasStatus && numOnlineInNotification > 1 )
 			message = TheGameText004EA5F0->fetch( "Buddy:MultipleOnlineNotification" );
@@ -102,7 +103,7 @@ void bfme_notificationModeFive( AsciiString nick, UnicodeString message )
 			message.format( message, nick.str() );
 
 		unsigned long now = timeGetTime();
-		BfmeAptChatFriendLogIn *onlineShell = g_d_012F4ACC;
+		BfmeAptChatFriendLogIn *onlineShell = reinterpret_cast<BfmeAptChatFriendLogIn *volatile &>(g_obj12F4ACC);
 		UnicodeString *messagePtr = &message;
 		g_Va012F423C = now + 3000;
 		g_Va012F4248 = 1;

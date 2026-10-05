@@ -2,6 +2,9 @@
 
 #include "fx_particle_system_category.h"
 
+extern template FXParticleSystem::CategoryModuleClass<0> *
+	FXParticleSystem::CategoryModuleClassBase<0>::s_defaultModule;
+
 // The category accessor TU already owns the four-byte head at 0x012F64E8.
 extern template FXParticleSystem::CategoryModuleClass<0> *
 	FXParticleSystem::CategoryModuleClass<0>::s_firstList;
@@ -35,7 +38,6 @@ typedef DefaultModuleTag<0> DefaultModuleTag0Tag;
 // declarations; their DIR32 relocations are checked against those operands.
 extern void **defaultModuleTag0SourceAt4;
 extern void **defaultModuleTag0SourceAt8;
-extern ConcreteModuleClass<DefaultModuleTag0Tag> *defaultModuleTag0CurrentInstance;
 extern void *defaultModuleTag0Vtable[];
 
 template <>
@@ -46,7 +48,7 @@ public:
 	{
 		void *sourceAt8 = *defaultModuleTag0SourceAt8;
 		void *sourceAt4 = *defaultModuleTag0SourceAt4;
-		defaultModuleTag0CurrentInstance = this;
+		CategoryModuleClass<0>::s_defaultModule = reinterpret_cast<CategoryModuleClass<0> *>(this);
 		m_sourceAt8 = sourceAt8;
 		m_sourceAt4 = sourceAt4;
 		m_next = reinterpret_cast<ConcreteModuleClass *>(CategoryModuleClass<0>::s_firstList);

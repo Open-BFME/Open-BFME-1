@@ -75,7 +75,8 @@ class WindowManager;
 
 extern WindowManager *g_rva012F19E8WindowManager;
 
-extern BfmeObj1006 *g_bfmeObj1006;
+class BfmeAptScreenSpellStore;
+extern BfmeAptScreenSpellStore *g_purchaseScienceWindow;
 
 class BfmeB1006
 {
@@ -91,7 +92,7 @@ void BfmeB1006::bfmeGo1006B(int unused)
 	if (!m_bfmeWant)
 		return;
 
-	BfmeObj1006 *p = g_bfmeObj1006;
+	BfmeObj1006 *p = reinterpret_cast<BfmeObj1006 * &>(g_purchaseScienceWindow);
 
 	if (p && !p->m_bfmeFlag) {
 		p->m_bfmeFlag = 1;

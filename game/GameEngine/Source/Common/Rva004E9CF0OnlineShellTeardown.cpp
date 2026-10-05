@@ -25,7 +25,8 @@ public:
 	virtual void slot8( void );
 };
 
-extern BfmeB1021 *g_d_012F4ACC;
+class BfmeAptScreenOnlineShell;
+extern BfmeAptScreenOnlineShell *g_obj12F4ACC;
 extern unsigned char g_g_012F4248;
 extern BfmeH1086 *g_h_012F4238;
 extern int numOnlineInNotification;
@@ -36,11 +37,11 @@ void bfmeGo1086B( void )
 	numOnlineInNotification = 0;
 	lastNotificationWasStatus = 0;
 
-	if( g_d_012F4ACC )
+	if( reinterpret_cast<BfmeB1021 * &>(g_obj12F4ACC) )
 	{
 		if( g_g_012F4248 )
 		{
-			g_d_012F4ACC->bfmeGo1021B();
+			reinterpret_cast<BfmeB1021 * &>(g_obj12F4ACC)->bfmeGo1021B();
 			g_g_012F4248 = 0;
 		}
 	}

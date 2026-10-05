@@ -16,7 +16,8 @@ public:
 extern WindowManager *g_rva012F19E8WindowManager;
 
 class AptSaveLoad;
-extern AptSaveLoad *TheAptSaveLoad;
+class BfmeAptScreenSaveLoad;
+extern BfmeAptScreenSaveLoad *TheAptSaveLoad;
 
 class BfmeGlobal_012f19e8
 {
@@ -50,7 +51,7 @@ void Rva56A8StateOwner::dispatchState(int state)
 				"closeDelayed", 1,
 				"OnClosed", 0, 0, 0, 0);
 			m_state = 9;
-			if (TheAptSaveLoad != 0)
+			if (reinterpret_cast<AptSaveLoad * &>(TheAptSaveLoad) != 0)
 				reinterpret_cast<BfmeGlobal_012f19e8 *>(g_rva012F19E8WindowManager)->bfmeCall_000290d2();
 		}
 		else if (currentState == 0x12)

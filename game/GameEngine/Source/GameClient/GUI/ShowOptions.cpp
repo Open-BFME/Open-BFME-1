@@ -33,7 +33,8 @@ public:
 };
 
 extern Shell *TheShell;
-extern void *g_obj12F4AD4;
+class BfmeAptScreenOptions;
+extern BfmeAptScreenOptions *g_obj12F4AD4;
 extern unsigned char g_optByte12F4AD0;
 unsigned char g_optByte12F4AD1;
 extern unsigned char g_optFlag12F4AD8;
@@ -60,7 +61,7 @@ void _bfme_showOptions( int a, int b )
 	g_optFlag12F4ADF = 0;
 	g_optFlag12F4AE0 = 0;
 	g_optFlag12F4AE1 = 0;
-	if( g_obj12F4AD4 == 0 )
+	if( reinterpret_cast<void * &>(g_obj12F4AD4) == 0 )
 	{
 		g_optByte12F4AD1 = (unsigned char)a;
 		g_optByte12F4AD0 = (unsigned char)b;

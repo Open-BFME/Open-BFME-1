@@ -208,12 +208,13 @@ public:
 
 extern int g_bfmePeerReqE8;
 extern int g_bfmePeerReqE4;
-extern int g_bfmeFlagMG;
+class BfmeAptScreenOnlineShell;
+extern BfmeAptScreenOnlineShell *g_obj12F4ACC;
 
 void __stdcall bfmeGoMG(int a)
 {
 	g_bfmePeerReqE8 = -1;
 	g_bfmePeerReqE4 = -1;
-	if (g_bfmeFlagMG)
+	if (reinterpret_cast<int &>(g_obj12F4ACC))
 		((BfmeObjMG *)g_rva012F19E8WindowManager)->bfmeDoMG();
 }

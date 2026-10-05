@@ -34,13 +34,14 @@ public:
 	void notify( void );
 };
 
-extern Gen00587600 *TheGen00587600;
+class Gen00587600;
+Gen00587600 *g_bfmeSubsystem012F4B78 = 0;
 extern unsigned char g_aptLivingWorldInitialized;
 
 // @?Rva0051A6E0@@YAXXZ 0x0051A6E0
 void Rva0051A6E0( void )
 {
-	Gen00587600 *object = TheGen00587600;
+	Gen00587600 *object = g_bfmeSubsystem012F4B78;
 	g_aptLivingWorldInitialized = 1;
 	if ( object )
 		object->notify();
@@ -49,7 +50,7 @@ void Rva0051A6E0( void )
 #define BFME_ATOI_MEMBER_CALL( NAME, WHICH )                              \
 	void NAME( const char *text )                                         \
 	{                                                                     \
-		TheGen00587600->apply( atoi( text ), WHICH );                     \
+		g_bfmeSubsystem012F4B78->apply( atoi( text ), WHICH );                     \
 	}
 
 // @?Rva0051A700@@YAXPBD@Z 0x0051A700
@@ -68,5 +69,5 @@ BFME_ATOI_MEMBER_CALL( Rva0051A7F0, 5 )
 // @?Rva0051A820@@YAXPBD@Z 0x0051A820
 void Rva0051A820( const char *text )
 {
-	TheGen00587600->applySingle( atoi( text ) );
+	g_bfmeSubsystem012F4B78->applySingle( atoi( text ) );
 }

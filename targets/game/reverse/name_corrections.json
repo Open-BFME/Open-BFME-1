@@ -18528,5 +18528,55 @@
   "after_sha256": "4409d2440d4ee904de7d1aadc82a2f46c70172eda7eb748ce6fff26a6f6e267d",
   "evidence": "targets/game/reverse/identity_evidence/0x006ecfe0-w3ddisplay-slot26.md",
   "reason": "The old bank inferred bfmeClearEVG from cleanup operations. Vtable slot 26 proves W3DDisplay ownership but gives no method name. No matched caller, export, or string supports bfmeClearEVG, so rva006ECFE0 keeps the body address."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/R2GuardedTailCalls.cpp",
+  "new_path": "game/GameEngine/Source/Common/R2GuardedTailCalls.cpp",
+  "old_name": "R2Glob012F4B54",
+  "new_name": "Rva012F4B54Skirmish",
+  "before_sha256": "1ce11a7c868506229ebb9cf2566861204c59adffb3526a113de46eaef1a7938c",
+  "after_sha256": "1f51cf206863acb97cbd608a19c90485531a8c1ef35ab997fca5e9a4c66908e4",
+  "evidence": "targets/game/reverse/identity_evidence/012F4B54-PointerIdentity.md",
+  "reason": "Callers take the owner's spelling for the Skirmish screen pointer."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/ShowSkirmish.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/ShowSkirmish.cpp",
+  "old_name": "g_obj12F4B54",
+  "new_name": "Rva012F4B54Skirmish",
+  "before_sha256": "45d66addd9b4930ad11c9371986965f85a7955c88afd1db315e254e2f5c20f32",
+  "after_sha256": "e4f3128c54bb7d60a622f67a8e6ce3422f27f9f36c9ba9b4610f1b527447a12e",
+  "evidence": "targets/game/reverse/identity_evidence/012F4B54-PointerIdentity.md",
+  "reason": "Callers take the owner's spelling for the Skirmish screen pointer."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/SkirmishScreenClose.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/SkirmishScreenClose.cpp",
+  "old_name": "g_obj12F4B54",
+  "new_name": "Rva012F4B54Skirmish",
+  "before_sha256": "03ad1df422f7dc9bec0e08ac37a521dce74d3122562990dc045eea9abbf1b087",
+  "after_sha256": "9959e2ef484c97a73a6109d85170b7d3807eeea0caf66fea35e32fdfc1103e3c",
+  "evidence": "targets/game/reverse/identity_evidence/012F4B54-PointerIdentity.md",
+  "reason": "Callers take the owner's spelling for the Skirmish screen pointer."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/SkirmishScreenDestructor.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/SkirmishScreenDestructor.cpp",
+  "old_name": "g_obj12F4B54",
+  "new_name": "Rva012F4B54Skirmish",
+  "before_sha256": "bced9944c85420c6f37a263c0d7ad1fb182b5c2584a65858bc476eb76b7dec98",
+  "after_sha256": "891b7f0d47a42be37cfb6d4ecc5018363b5b4b513c97e727d369a0b1e7c6bf45",
+  "evidence": "targets/game/reverse/identity_evidence/012F4B54-PointerIdentity.md",
+  "reason": "Callers take the owner's spelling for the Skirmish screen pointer."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/SkirmishScreenExit.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/SkirmishScreenExit.cpp",
+  "old_name": "g_obj12F4B54",
+  "new_name": "Rva012F4B54Skirmish",
+  "before_sha256": "788da457685f47015320d4bd59c971420da834bdd02e1c23bf2f6498f3ad68bd",
+  "after_sha256": "3df876504c8c6a430690843101623410fa8038b3cbd18073d7adfe146e0a641a",
+  "evidence": "targets/game/reverse/identity_evidence/012F4B54-PointerIdentity.md",
+  "reason": "Callers take the owner's spelling for the Skirmish screen pointer."
  }
 ]

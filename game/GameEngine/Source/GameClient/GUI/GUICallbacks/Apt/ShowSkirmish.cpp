@@ -31,11 +31,12 @@ public:
 };
 
 extern Shell *TheShell;
-extern void *g_obj12F4B54;
+class BfmeAptScreenSkirmish;
+extern BfmeAptScreenSkirmish *Rva012F4B54Skirmish;
 
 // ?_bfme_showSkirmish@@YAXXZ
 void _bfme_showSkirmish( void )
 {
-	if( g_obj12F4B54 == 0 )
+	if( reinterpret_cast<void * &>(Rva012F4B54Skirmish) == 0 )
 		TheShell->push( AsciiString( "Skirmish.apt" ), false );
 }

@@ -28,14 +28,15 @@ public:
 };
 
 class Shell;
-extern void *g_obj12F4B40;
+class BfmeAptScreenQuitMenu;
+extern BfmeAptScreenQuitMenu *g_obj12F4B40;
 extern Shell *TheShell;
 extern WindowManager *g_rva012F19E8WindowManager;	// retail [0x012F19E8]
 
 // ?HideSaveLoadMenu@@YAXXZ
 void HideSaveLoadMenu(void)
 {
-	SaveLoadMenu *menu = static_cast<SaveLoadMenu *>(g_obj12F4B40);
+	SaveLoadMenu *menu = static_cast<SaveLoadMenu *>(reinterpret_cast<void * &>(g_obj12F4B40));
 
 	if (!menu)
 		return;
@@ -44,7 +45,7 @@ void HideSaveLoadMenu(void)
 		return;
 
 	menu->m_hidden = true;
-	static_cast<SaveLoadMenu *>(g_obj12F4B40)->m_25c = 0;
+	static_cast<SaveLoadMenu *>(reinterpret_cast<void * &>(g_obj12F4B40))->m_25c = 0;
 	((InGameUI *)TheShell)->m_menuHidden = true;
 
 	g_rva012F19E8WindowManager->hideQuitMenu();

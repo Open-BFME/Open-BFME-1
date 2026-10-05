@@ -79,11 +79,12 @@ private:
 	int m_storage[ 31 ];
 };
 
-extern void *g_s4Guard0055BC20;
+class BfmeAptScreenOnlineQuickMatch;
+extern BfmeAptScreenOnlineQuickMatch *g_s4Guard0055BC20;
 
 BfmeAptScreenOnlineQuickMatch *s4mk0055BC20( int a )
 {
-	if ( g_s4Guard0055BC20 )
+	if ( reinterpret_cast<void * &>(g_s4Guard0055BC20) )
 		return 0;
 	return new BfmeAptScreenOnlineQuickMatch( a );
 }

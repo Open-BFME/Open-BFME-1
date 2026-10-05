@@ -159,7 +159,8 @@ extern Glo012F1028Type *Glo012F1028;
 
 extern unsigned int g_dword010EAD50;
 
-extern void *g_obj12F4B40;
+class BfmeAptScreenQuitMenu;
+extern BfmeAptScreenQuitMenu *g_obj12F4B40;
 
 class _bfme_AptGameWindow
 {
@@ -193,9 +194,9 @@ private:
 
 BfmeAptScreenQuitMenu::~BfmeAptScreenQuitMenu()
 {
-	if( this == g_obj12F4B40 )
+	if( this == reinterpret_cast<void * &>(g_obj12F4B40) )
 	{
-		g_obj12F4B40 = 0;
+		reinterpret_cast<void * &>(g_obj12F4B40) = 0;
 
 		if( TheInGameUI )
 			TheInGameUI->slot84( false );

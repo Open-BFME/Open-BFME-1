@@ -46,7 +46,8 @@ public:
 
 class Rva005127A0InGameChat;
 extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;
-extern int g_Va012F4ACC;
+class BfmeAptScreenOnlineShell;
+extern BfmeAptScreenOnlineShell *g_obj12F4ACC;
 extern void HideInGameChat();
 extern void j_0003aae9();
 
@@ -93,9 +94,9 @@ BfmeAptScreenOnlineShell::~BfmeAptScreenOnlineShell()
 
     m_refs.clear();
 
-    if( (void *)g_Va012F4ACC == this )
+    if( (void *)reinterpret_cast<int &>(g_obj12F4ACC) == this )
     {
         j_0003aae9();
-        g_Va012F4ACC = 0;
+        reinterpret_cast<int &>(g_obj12F4ACC) = 0;
     }
 }

@@ -153,7 +153,7 @@ class GameSpyInfoInterface;
 extern GameSpyInfoInterface *TheGameSpyInfo;
 // Retail reads 0x012F4AD0 here, the byte ShowOptions stores beside g_optByte12F4AD1 (0x012F4AD1).
 extern unsigned char g_optByte12F4AD0;
-extern void *g_quitMenuLayout;
+extern class BfmeAptScreenOptions *g_obj12F4AD4;
 extern void *g_Va012F4AE4;
 struct Rva006C9270GlobalData
 {
@@ -462,7 +462,7 @@ void BfmeAptScreenOptions::_bfme_save(const char *)
             }
         }
         options.write();
-        if (g_quitMenuLayout)
+        if (g_obj12F4AD4)
             ((Rva00465B80 *)Rva00579160TheManager)->apply();
         // The advanced page stores its controls, then returns to the standard page.
     }

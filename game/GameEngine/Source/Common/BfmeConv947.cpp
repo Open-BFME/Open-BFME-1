@@ -84,7 +84,8 @@ public:
 	void bfmeTailB947C();
 };
 
-extern BfmeObj947C *g_bfme947ObjC;
+class BfmeAptScreenQuitMenu;
+extern BfmeAptScreenQuitMenu *g_obj12F4B40;
 // retail 0x012F4B58: the one identity of that address is the shell singleton
 // ?TheShell@@3PAVShell@@A.  The view above is this TU's own layout of it, so
 // the reference carries the defining name and the view is selected by a cast.
@@ -102,12 +103,12 @@ void bfmeTailA947C(void);
 
 void bfmeGo947C(void)
 {
-	BfmeObj947C *p = g_bfme947ObjC;
+	BfmeObj947C *p = reinterpret_cast<BfmeObj947C * &>(g_obj12F4B40);
 	if (p) {
 		if (p->m_bfmeFlag)
 			return;
 		p->m_bfmeFlag = 1;
-		g_bfme947ObjC->m_bfmeVal = 0;
+		reinterpret_cast<BfmeObj947C * &>(g_obj12F4B40)->m_bfmeVal = 0;
 		((BfmeAux947C *)TheShell)->m_bfmeFlag = 1;
 		((BfmeGlob947C *)g_rva012F19E8WindowManager)->bfmeTailB947C();
 	} else {

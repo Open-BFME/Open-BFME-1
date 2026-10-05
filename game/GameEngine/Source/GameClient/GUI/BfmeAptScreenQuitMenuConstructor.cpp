@@ -208,7 +208,8 @@ extern Gen_00609320 *g_bfmeStateDF;
 
 extern const void *BfmeAptScreenQuitMenuVftable[];
 extern const void *BfmeAptScreenQuitMenuSecondaryVftable[];
-extern void *g_obj12F4B40;
+class BfmeAptScreenQuitMenu;
+BfmeAptScreenQuitMenu *g_obj12F4B40 = 0;
 extern const char *g_012B7E30;
 
 class __declspec(novtable) __multiple_inheritance BfmeAptScreenQuitMenu
@@ -256,9 +257,9 @@ BfmeAptScreenQuitMenu::BfmeAptScreenQuitMenu( void *context )
 	FunctorMethod callback;
 	QuitMenuMethodBits methodBits;
 
-	if( g_obj12F4B40 == 0 )
+	if( reinterpret_cast<void * &>(g_obj12F4B40) == 0 )
 	{
-		g_obj12F4B40 = this;
+		reinterpret_cast<void * &>(g_obj12F4B40) = this;
 		QuitMenuRegistry *registry =
 			(QuitMenuRegistry *)( (char *)this + 0x218 );
 

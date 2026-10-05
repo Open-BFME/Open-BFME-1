@@ -151,7 +151,8 @@ private:
 #include <cstring>
 // Existing legacy pin spelling; this constructor publishes the Options
 // singleton in the actual slot at 0x012F4AD4.
-extern void *g_quitMenuLayout;
+class BfmeAptScreenOptions;
+BfmeAptScreenOptions *g_obj12F4AD4 = 0;
 
 class OptionPreferences
 {
@@ -307,9 +308,9 @@ BfmeAptScreenOptions::BfmeAptScreenOptions( void *context )
 	m_field308 = false;
 	m_field30C = -1;
 
-	if( g_quitMenuLayout == 0 )
+	if( reinterpret_cast<void * &>(g_obj12F4AD4) == 0 )
 	{
-		g_quitMenuLayout = this;
+		reinterpret_cast<void * &>(g_obj12F4AD4) = this;
 		OptionsRegistry *registry =
 			(OptionsRegistry *)( (char *)this + 0x218 );
 

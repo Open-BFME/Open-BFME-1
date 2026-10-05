@@ -17680,3 +17680,10 @@ _g_012F7014,0x012F7014
 ?g_rva012F49B4MainMenu@@3PAVBfmeAptScreenMainMenu@@A,0x012F49B4
 ?g_aptLivingWorldCachedName@@3VAsciiString@@A,0x012F49A0
 ?windowMap@@3PAVGameWindow@@A,0x012F3C1C
+?g_s4Guard0055BC20@@3PAVBfmeAptScreenOnlineQuickMatch@@A,0x012F4ABC
+?g_obj12F4ACC@@3PAVBfmeAptScreenOnlineShell@@A,0x012F4ACC
+?g_obj12F4AD4@@3PAVBfmeAptScreenOptions@@A,0x012F4AD4
+?g_obj12F4B40@@3PAVBfmeAptScreenQuitMenu@@A,0x012F4B40
+?TheAptSaveLoad@@3PAVBfmeAptScreenSaveLoad@@A,0x012F4B44
+?g_bfmeSubsystem012F4B78@@3PAVGen00587600@@A,0x012F4B78
+?g_purchaseScienceWindow@@3PAVBfmeAptScreenSpellStore@@A,0x012F4C38

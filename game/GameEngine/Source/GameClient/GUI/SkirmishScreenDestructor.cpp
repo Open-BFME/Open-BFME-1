@@ -109,7 +109,8 @@ private:
 };
 
 extern WindowManager *g_rva012F19E8WindowManager;
-extern void *g_obj12F4B54;
+class BfmeAptScreenSkirmish;
+extern BfmeAptScreenSkirmish *Rva012F4B54Skirmish;
 // The three Skirmish vftables this destructor restores, each spelled exactly
 // as the object that defines it spells it: the primary view selected by the
 // Rva0057DA50Primary base at +0x00, the Rva00465200GameWindow base at +0x218
@@ -143,7 +144,7 @@ BfmeAptScreenSkirmish::~BfmeAptScreenSkirmish()
 	*(const void ***)((char *)this + 0x218) = __identifier("??_7BfmeAptScreenSkirmish@@6BRva00465200GameWindow@@@");
 	*(const void ***)((char *)this + 0x258) = __identifier("??_7BfmeAptScreenSkirmish@@6B@");
 
-	if( g_obj12F4B54 == this )
+	if( reinterpret_cast<void * &>(Rva012F4B54Skirmish) == this )
 	{
 		if( g_rva012F19E8WindowManager )
 		{
@@ -154,6 +155,6 @@ BfmeAptScreenSkirmish::~BfmeAptScreenSkirmish()
 			AsciiString name( "AptSkirmish::InitGadgets" );
 			_bfme_closeAptScreen( name );
 		}
-		g_obj12F4B54 = 0;
+		reinterpret_cast<void * &>(Rva012F4B54Skirmish) = 0;
 	}
 }

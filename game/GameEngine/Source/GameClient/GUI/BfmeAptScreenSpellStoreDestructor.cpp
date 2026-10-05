@@ -139,7 +139,8 @@ extern const void *BfmeAptScreenSpellStoreSecondaryVftable[];
 extern WindowManager *g_rva012F19E8WindowManager;
 extern InGameUI *TheInGameUI;
 extern Shell *TheShell;
-extern void *g_obj12F4C38;
+class BfmeAptScreenSpellStore;
+BfmeAptScreenSpellStore *g_purchaseScienceWindow = 0;
 
 BfmeAptScreenSpellStore::~BfmeAptScreenSpellStore()
 {
@@ -171,5 +172,5 @@ BfmeAptScreenSpellStore::~BfmeAptScreenSpellStore()
 	if( TheShell )
 		TheShell->hideShell( zero );
 
-	g_obj12F4C38 = (void *)zero;
+	reinterpret_cast<void * &>(g_purchaseScienceWindow) = (void *)zero;
 }

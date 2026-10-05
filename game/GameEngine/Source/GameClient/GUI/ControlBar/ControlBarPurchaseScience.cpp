@@ -53,7 +53,8 @@ struct PurchaseScienceWindow
 
 extern ScriptEngine *TheScriptEngine;
 extern PlayerList *ThePlayerList;
-extern PurchaseScienceWindow *g_purchaseScienceWindow;
+class BfmeAptScreenSpellStore;
+extern BfmeAptScreenSpellStore *g_purchaseScienceWindow;
 
 void finishShowPurchaseScience( void );
 void hidePurchaseScience( void );
@@ -94,7 +95,7 @@ void ControlBar::showPurchaseScience( void )
 // at +0x259.
 void ControlBar::togglePurchaseScience( void )
 {
-	if ( g_purchaseScienceWindow && g_purchaseScienceWindow->m_visible )
+	if ( reinterpret_cast<PurchaseScienceWindow * &>(g_purchaseScienceWindow) && reinterpret_cast<PurchaseScienceWindow * &>(g_purchaseScienceWindow)->m_visible )
 	{
 		hidePurchaseScience();
 		return;

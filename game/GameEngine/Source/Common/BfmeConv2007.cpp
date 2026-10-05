@@ -20,7 +20,8 @@ struct Rva00579160Manager
 	void bfmeRunEAH();
 };
 
-extern BfmeObj947C *g_bfme947ObjC;
+class BfmeAptScreenQuitMenu;
+extern BfmeAptScreenQuitMenu *g_obj12F4B40;
 extern Shell *TheShell;
 // Retail global 0x012F19E8; canonical definition in GameClient/GUI/WindowManager.cpp.
 class WindowManager;
@@ -28,7 +29,7 @@ extern WindowManager *g_rva012F19E8WindowManager;
 
 void bfmeOpenEAH(void *param)
 {
-	BfmeObj947C *obj = g_bfme947ObjC;
+	BfmeObj947C *obj = reinterpret_cast<BfmeObj947C * &>(g_obj12F4B40);
 
 	if (obj == 0)
 		return;
@@ -38,7 +39,7 @@ void bfmeOpenEAH(void *param)
 
 	obj->m_bfmeBusyEAH = 1;
 
-	g_bfme947ObjC->m_bfmeParamEAH = param;
+	reinterpret_cast<BfmeObj947C * &>(g_obj12F4B40)->m_bfmeParamEAH = param;
 
 	TheShell->m_bfmeFlagEAH = 1;
 

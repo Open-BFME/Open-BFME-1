@@ -77,9 +77,10 @@ public:
 void __cdecl bfmeNamedAudio0046F1A0(const char *text);
 
 class Gen00587600;
-extern Gen00587600 *TheGen00587600;
-static inline BfmeThingATB *TheThingATBView() { return (BfmeThingATB *)TheGen00587600; }
-static inline BfmeThingAZB *TheThingAZBView() { return (BfmeThingAZB *)TheGen00587600; }
+class Gen00587600;
+extern Gen00587600 *g_bfmeSubsystem012F4B78;
+static inline BfmeThingATB *TheThingATBView() { return (BfmeThingATB *)g_bfmeSubsystem012F4B78; }
+static inline BfmeThingAZB *TheThingAZBView() { return (BfmeThingAZB *)g_bfmeSubsystem012F4B78; }
 class BfmeLivingWorldCampaignManager;
 extern BfmeLivingWorldCampaignManager *TheLivingWorldCampaignManager;
 static inline BfmeOneCHF *TheLivingWorldView() { return (BfmeOneCHF *)TheLivingWorldCampaignManager; }

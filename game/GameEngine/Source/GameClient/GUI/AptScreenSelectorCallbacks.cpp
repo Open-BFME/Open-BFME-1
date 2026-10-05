@@ -65,7 +65,8 @@ public:
 
 extern MessageStream *TheMessageStream;
 extern Shell *TheShell;
-extern void *g_bfmeReadyAG;
+class BfmeAptScreenSaveLoad;
+extern BfmeAptScreenSaveLoad *TheAptSaveLoad;
 extern Rva00579160Manager *Rva00579160TheManager;
 // ?ThePlayerList@@3PAVPlayerList@@A -- retail 0x012ED748, defined once in
 // Common/RTS/PlayerList.cpp. The view above is this TU's own layout of it.
@@ -109,7 +110,7 @@ void BfmeAptScreenSaveLoad::_bfme_onClosed( const char *name )
 	(void)name;
 	if ( TheShell )
 		TheShell->m_bfmeFlagEAH = 1;
-	if ( g_bfmeReadyAG )
+	if ( reinterpret_cast<void * &>(TheAptSaveLoad) )
 		Rva00579160TheManager->bfmeRunEAH();
 }
 

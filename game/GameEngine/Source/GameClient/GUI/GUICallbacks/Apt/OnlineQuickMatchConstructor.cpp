@@ -207,7 +207,8 @@ private:
 
 class NAT;
 class WindowManager;
-extern void *g_obj12F4ABC;
+class BfmeAptScreenOnlineQuickMatch;
+BfmeAptScreenOnlineQuickMatch *g_s4Guard0055BC20 = 0;
 class ImageCollection;
 extern ImageCollection *TheMappedImageCollection;
 extern MapCache *TheMapCache;
@@ -232,9 +233,9 @@ BfmeAptScreenOnlineQuickMatch::BfmeAptScreenOnlineQuickMatch( int context )
 	m_slot70 = 0;
 	m_slot74 = 0;
 	m_slot78 = 0;
-	if( g_rva012F19E8WindowManager != 0 && g_obj12F4ABC == 0 )
+	if( g_rva012F19E8WindowManager != 0 && reinterpret_cast<void * &>(g_s4Guard0055BC20) == 0 )
 	{
-		g_obj12F4ABC = this;
+		reinterpret_cast<void * &>(g_s4Guard0055BC20) = this;
 
 		{
 			BFMERetailAsciiString name( "AptCustomMatchSelected" );

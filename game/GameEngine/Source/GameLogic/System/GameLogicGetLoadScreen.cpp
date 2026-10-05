@@ -27,7 +27,8 @@ extern WindowManager* g_rva012F19E8WindowManager;
 class Gen000290D2 {public:char pad000[0x1b8];void* at1b8;};
 class BfmeAptScreenLanLobby;
 extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
-extern void* R2Glob012F4ACC;
+class BfmeAptScreenOnlineShell;
+extern BfmeAptScreenOnlineShell *g_obj12F4ACC;
 extern const AsciiString Rva01336E50EmptyAscii;
 void j_00016473();
 inline void still00386190(AsciiString* p) { ((void (__cdecl*)(AsciiString*))j_00016473)(p); }
@@ -55,7 +56,7 @@ LoadScreen* GameLogic::getLoadScreen(bool loadingSaveGame) {
   if(reinterpret_cast<void * &>(g_rva012F4998LanLobby)) return (LoadScreen*)new LoadScreen0051BF30(m_gameMode);
   return (LoadScreen*)new MultiPlayerLoadScreen;
  case 5:
-  if(R2Glob012F4ACC) return (LoadScreen*)new LoadScreen0051BF30(m_gameMode);
+  if(reinterpret_cast<void* &>(g_obj12F4ACC)) return (LoadScreen*)new LoadScreen0051BF30(m_gameMode);
   return (LoadScreen*)new Rva00490A30;
  default: return 0;
  }

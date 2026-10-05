@@ -63,7 +63,8 @@ extern EstablishConnectionsMenu *TheEstablishConnectionsMenu;
 class BfmeAptScreenOnlineCustomMatch;
 extern BfmeAptScreenOnlineCustomMatch *TheBfmeOnlineCustomMatch;
 // OnlineQuickMatch singleton, identified by its 0x005587F0 destructor.
-extern void *g_obj12F4ABC;
+class BfmeAptScreenOnlineQuickMatch;
+extern BfmeAptScreenOnlineQuickMatch *g_s4Guard0055BC20;
 class FirewallHelperClass;
 extern FirewallHelperClass *TheFirewallHelper;
 FirewallHelperClass *createFirewallHelper();
@@ -111,7 +112,7 @@ void NAT::establishConnectionPaths() {
     if (!TheEstablishConnectionsMenu) {
         if (TheBfmeOnlineCustomMatch)
             TheEstablishConnectionsMenu = new Rva006709F0;
-        else if (g_obj12F4ABC)
+        else if (reinterpret_cast<void * &>(g_s4Guard0055BC20))
             TheEstablishConnectionsMenu = new Rva00670A10;
         else
             TheEstablishConnectionsMenu = new EstablishConnectionsMenu;

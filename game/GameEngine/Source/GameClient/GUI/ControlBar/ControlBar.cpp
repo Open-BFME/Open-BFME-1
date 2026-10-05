@@ -324,7 +324,8 @@ class Glo012F4B98Type;
 class HotKeyManager;
 extern HotKeyManager *TheHotKeyManager;
 extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;
-extern void *g_obj12F4C38;
+class BfmeAptScreenSpellStore;
+extern BfmeAptScreenSpellStore *g_purchaseScienceWindow;
 class AptPalantir;
 extern AptPalantir *TheAptPalantir;
 // No recovered source name exists for this retail selection cache.
@@ -332,7 +333,7 @@ extern volatile Drawable *g_Rva012F340C;
 #define BFME_CONTEXT_TRANSITION ((BfmeContextSwitchBfmeTransitionMD *)reinterpret_cast<BfmeTransitionMD *>(TheHotKeyManager))
 #define BFME_CONTEXT_INGAME_UI ((BfmeContextSwitchInGameUI *)TheInGameUI)
 #define BFME_CONTEXT_IN_GAME_CHAT g_Rva005127A0InGameChat
-#define BFME_CONTEXT_OBJECT_12F4C38 g_obj12F4C38
+#define BFME_CONTEXT_OBJECT_12F4C38 reinterpret_cast<void * &>(g_purchaseScienceWindow)
 #define BFME_CONTEXT_GAME_LOGIC ((BfmeContextSwitchGameLogicView *)TheGameLogic)
 #define BFME_CONTEXT_GLO_12F4B98 ((Rva0058C040 *)TheAptPalantir)
 #define BFME_CONTEXT_SELECTION_CACHE g_Rva012F340C
@@ -3475,7 +3476,8 @@ struct BfmePurchaseScienceWindowView
 	unsigned char m_hidden;
 };
 
-extern int g_Va012F4C38;
+class BfmeAptScreenSpellStore;
+extern BfmeAptScreenSpellStore *g_purchaseScienceWindow;
 class Shell;
 extern Shell *TheShell;
 
@@ -3496,7 +3498,7 @@ extern WindowManager *g_rva012F19E8WindowManager;
 void ControlBar::hidePurchaseScience( void )
 {
 	BfmePurchaseScienceWindowView *purchaseWindow =
-		reinterpret_cast<BfmePurchaseScienceWindowView *>(g_Va012F4C38);
+		reinterpret_cast<BfmePurchaseScienceWindowView *>(reinterpret_cast<int &>(g_purchaseScienceWindow));
 	if(purchaseWindow == NULL || purchaseWindow->m_hidden)
 		return;
 	purchaseWindow->m_hidden = TRUE;
