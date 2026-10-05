@@ -500,3 +500,8 @@ game/GameEngine/Source/GameNetwork/Rva007E8D30FeslSetField.cpp|member||m_24,7811
 game/GameEngine/Source/GameNetwork/Rva007E8D30FeslSetField.cpp|function||Rva007E8D30,635d6186c7aad1537675b8a3,gpt-6-astra,20261005162043-1bea3f,2026-10-05
 game/GameEngine/Source/GameNetwork/Rva007E8D30FeslSetField.cpp|function|Rva007E8810Message@|rva007E8EF0,0804756ce90a559df5ed3c0d,gpt-6-astra,20261005162043-1bea3f,2026-10-05
 game/GameEngine/Source/GameNetwork/Rva007E8D30FeslSetField.cpp|local|Rva007E8D30|p,9648ebc637284afaea2a16a5,gpt-6-astra,20261005162043-1bea3f,2026-10-05
+game/GameEngine/Source/Common/Bfme5ClearingDtor.cpp|type||BfmeDBaseA,3354eb24563efa515365ce3d,gpt-6-astra,20261005162043-0bf646,2026-10-05
+game/GameEngine/Source/Common/Bfme5ClearingDtor.cpp|member||m_bfmeNext,f2560ffc74b55341cf2518a6,gpt-6-astra,20261005162043-0bf646,2026-10-05
+game/GameEngine/Source/Common/Bfme5ClearingDtor.cpp|member||m_bfmePrev,99477610ee12bab2bf51855a,gpt-6-astra,20261005162043-0bf646,2026-10-05
+game/GameEngine/Source/Common/Bfme5ClearingDtor.cpp|member||m_bfmeNode,bbbfbfea61112b30d9b290cc,gpt-6-astra,20261005162043-0bf646,2026-10-05
+game/GameEngine/Source/Common/Bfme5ClearingDtor.cpp|member||m_bfmeList,61bd9d82bfe7562f53865c65,gpt-6-astra,20261005162043-0bf646,2026-10-05
