@@ -2773,7 +2773,7 @@ name,address,notes
 ??0CriticalSectionClass@@QAE@XZ,0x009DB420
 ??0CritterEmitterUpdateModuleDataInner@@QAE@XZ,0x0000F0A6,CritterEmitterUpdateModuleData +0x08 base member constructor called before the derived vtable store and paired with its matched destructor
 ??0CrushDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
-??0CtorTargetR0015C7A0@@QAE@PAVStateMachine@@_N11PAVAttackExitConditionsInterface@@@Z,0x0000BF3C,local ABI call view for AIAttackState constructor from 0x0015C7A0; target=0x0017C910
+??0AIAttackState@@QAE@PAVStateMachine@@_N11PAVAttackExitConditionsInterface@@@Z,0x0000BF3C,local ABI call view for AIAttackState constructor from 0x0015C7A0; target=0x0017C910
 ??0CullNodeStruct@AABTreeBuilderClass@@QAE@XZ,0x0096B500
 ??0CullSystemClass@@QAE@XZ,0x008E2140
 ??0CursorParticleSystemFXNugget@@QAE@XZ,0x0042B280,constructor run on the 0xEC-byte allocation in CursorParticleSystemFXNugget::parse at 0x0042CCA0; the INI keyword table at 0x00CF2130 names that parse callback CursorParticleSystem

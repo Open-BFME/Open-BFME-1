@@ -51,7 +51,7 @@ public:
 	virtual void setGoalObject(const Object *object);
 };
 
-class Rva0015C7A0GuardMachine : public StateMachine
+class AIGuardMachine : public StateMachine
 {
 public:
 	unsigned char m_body[0x0c];
@@ -99,7 +99,7 @@ public:
 	void getCenterPoint(Coord3D *position) const;
 };
 
-class FactorsR0015C7A0
+class TAiData
 {
 public:
 	unsigned char m_pad00[0x3c];
@@ -110,8 +110,8 @@ class AIRootR0015C7A0
 {
 public:
 	unsigned char m_pad00[0x14];
-	FactorsR0015C7A0 *m_factors;
-	const FactorsR0015C7A0 *getAiData() const { return m_factors; }
+	TAiData *m_factors;
+	const TAiData *getAiData() const { return m_factors; }
 };
 
 class AttackExitConditionsInterface
@@ -120,7 +120,7 @@ public:
 	virtual Bool shouldExit(const StateMachine *machine) const = 0;
 };
 
-class QR0015C7A0 : public AttackExitConditionsInterface
+class ExitConditions : public AttackExitConditionsInterface
 {
 public:
 	virtual Bool shouldExit(const StateMachine *machine) const
@@ -134,10 +134,10 @@ public:
 };
 
 // Retail calls AIAttackState through ILT 0x0000BF3C.
-class CtorTargetR0015C7A0
+class AIAttackState
 {
 public:
-	CtorTargetR0015C7A0(StateMachine *machine, Bool follow,
+	AIAttackState(StateMachine *machine, Bool follow,
 		Bool attackingObject, Bool forceAttacking,
 		AttackExitConditionsInterface *conditions);
 	virtual void slot00();
@@ -167,10 +167,10 @@ class AIGuardOuterState : public State
 {
 public:
 	virtual StateReturnType onEnter();
-	Rva0015C7A0GuardMachine *getGuardMachine() const { return (Rva0015C7A0GuardMachine *)getMachine(); }
+	AIGuardMachine *getGuardMachine() const { return (AIGuardMachine *)getMachine(); }
 	unsigned char m_pad20[4];
-	QR0015C7A0 m_exitConditions;
-	CtorTargetR0015C7A0 *m_attackState;
+	ExitConditions m_exitConditions;
+	AIAttackState *m_attackState;
 };
 
 extern void j_0000bf3c();
@@ -242,7 +242,7 @@ StateReturnType AIGuardOuterState::onEnter()
 	container = *reinterpret_cast<unsigned char **>(self + 0x1c);
 	GameLogic *logic = TheGameLogic;
 	Object *nemesis = logic->findObjectByID(
-		((Rva0015C7A0GuardMachine *)container)->getNemesisID());
+		((AIGuardMachine *)container)->getNemesisID());
 	if (!nemesis)
 		return STATE_SUCCESS;
 
@@ -287,7 +287,7 @@ StateReturnType AIGuardOuterState::onEnter()
 		((AIRootR0015C7A0 *)TheAI)->getAiData()->m_guardChaseUnitFrames;
 	m_exitConditions.m_conditionsToConsider = 7;
 
-	m_attackState = new CtorTargetR0015C7A0(
+	m_attackState = new AIAttackState(
 		getMachine(), false, true, false, &m_exitConditions);
 	m_attackState->m_machine->setGoalObject(nemesis);
 	StateReturnType result = m_attackState->onEnter();
