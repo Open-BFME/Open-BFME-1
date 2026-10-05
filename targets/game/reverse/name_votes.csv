@@ -916,3 +916,7 @@ game/GameEngine/Source/Common/Rva003C1EE0Select.cpp|type||Rva003C1EE0Pair,0b3473
 game/GameEngine/Source/Common/Rva003C1EE0Select.cpp|type||Rva003C1EE0Owner,524e7213c283db398a1c16ea,gpt-6-sol,20261005200150-879348,2026-10-05
 game/GameEngine/Source/Common/Rva003C1EE0Select.cpp|type||Rva003C1EE0Pair,0b347323d048b7e8abd74490,grok,20261005200138-21859a,2026-10-05
 game/GameEngine/Source/Common/Rva003C1EE0Select.cpp|type||Rva003C1EE0Owner,524e7213c283db398a1c16ea,grok,20261005200138-21859a,2026-10-05
+game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|param|drawImage|x0,3703e5575da32b63522d4ee1,gpt-6-sol,20261005200153-5ce637,2026-10-05
+game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|param|drawImage|y0,e7dbdfd952d037bf81734468,gpt-6-sol,20261005200153-5ce637,2026-10-05
+game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|param|drawImage|x1,ca62f7d6dfadf4f7cd6b0f14,gpt-6-sol,20261005200153-5ce637,2026-10-05
+game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|param|drawImage|y1,7fd4df376b85d5713689bafe,gpt-6-sol,20261005200153-5ce637,2026-10-05
