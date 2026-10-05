@@ -579,3 +579,7 @@ game/GameEngine/Source/Common/BfmeConv1334.cpp|function|BfmeThingUJA@|bfmeClearU
 game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldRegionManager_Rva003C8300.cpp|type||Rva003C8300Pair,046fcba349d382abac592dd2,gpt-6-astra,20261005162050-238a2a,2026-10-05
 game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldRegionManager_Rva003C8300.cpp|type||Rva003C8300State,fd9d35976af40acd89b617b1,gpt-6-astra,20261005162050-238a2a,2026-10-05
 game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldRegionManager_Rva003C8300.cpp|function|LivingWorldRegionManager@|rva003C8300,4870b59fd5d4a54c34cff3d8,gpt-6-astra,20261005162050-238a2a,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1209.cpp|member||m_bfme00,3ea2d0d9caf141a5689ec158,gpt-6-astra,20261005162013-2d06ab,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1209.cpp|member||m_bfme10,39e9a89f6e125e70d5e2ca69,gpt-6-astra,20261005162013-2d06ab,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1209.cpp|function|BfmeA1209@|bfmeOp1209,0cddad1a91a7c2829f2f961a,gpt-6-astra,20261005162013-2d06ab,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1209.cpp|param|BfmeA1209::bfmeOp1209|a,55181e8a092af8451c0ac6df,gpt-6-astra,20261005162013-2d06ab,2026-10-05
