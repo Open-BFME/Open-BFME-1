@@ -623,3 +623,5 @@ game/GameEngine/Source/Common/BfmeConv1070.cpp|member||m_bfme3a8,f22cca962eaeeda
 game/GameEngine/Source/Common/BfmeConv1070.cpp|function|BfmeQ1070@|bfmeGo1070A,9c7da3daf86ec3d16e5dc9e8,gpt-6-astra,20261005164459-e7dda4,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1070.cpp|function||bfmeGo1070B,092beb43de310f477609232f,gpt-6-astra,20261005164459-e7dda4,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1070.cpp|local|bfmeGo1070B|n,a020291c317c7fabe6e91370,gpt-6-astra,20261005164459-e7dda4,2026-10-05
+game/Libraries/Source/EA/Apt/ValuePredicates008C4940.cpp|function|ValuePredicates008C4940@|isType5_008C4960,4b20f5e5c4c399fad9aeea0b,gpt-6-astra,20261005164459-2fb34c,2026-10-05
+game/Libraries/Source/EA/Apt/ValuePredicates008C4940.cpp|function|ValuePredicates008C4940@|isType6_008C49A0,9fb8c34d94651f3cf73b4e1b,gpt-6-astra,20261005164459-2fb34c,2026-10-05
