@@ -35,7 +35,7 @@ public:
 extern Shell *TheShell;
 extern void *g_obj12F4AD4;
 extern unsigned char g_optByte12F4AD0;
-extern unsigned char g_optByte12F4AD1;
+unsigned char g_optByte12F4AD1;
 extern unsigned char g_optFlag12F4AD8;
 extern unsigned char g_optFlag12F4AD9;
 extern unsigned char g_optFlag12F4ADA;

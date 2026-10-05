@@ -30,7 +30,6 @@ public:
 };
 extern void (__stdcall *g_WW3D_ShutdownTextures)(int);
 extern DefaultStaticSortListClass *g_WW3D_SecondaryResource;
-extern unsigned char g_WW3D_SkipDeviceShutdown;
 
 class WW3D
 {
@@ -40,6 +39,7 @@ public:
 private:
 	static FrameGrabClass *Movie;
 	static bool IsInitted;
+	static bool Lite;
 	static bool IsCapturing;
 };
 
@@ -54,7 +54,7 @@ bool WW3D::Shutdown(void)
 		Movie = 0;
 	}
 	g_WW3D_ShutdownTextures(1);
-	if (!g_WW3D_SkipDeviceShutdown)
+	if (!Lite)
 	{
 		BfmeRadarResetGuard guard;
 		DX8Wrapper::Shutdown();

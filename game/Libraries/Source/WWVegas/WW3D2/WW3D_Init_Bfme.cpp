@@ -17,7 +17,6 @@ private:
 };
 
 void *g_WW3D_Hwnd;
-unsigned char g_WW3D_Lite;
 struct WW3DStaticSortGlobals
 {
 	void *defaultList;
@@ -35,12 +34,13 @@ public:
 
 private:
 	static bool IsInitted;
+	static bool Lite;
 };
 
 bool WW3D::Init(void *hwnd, char *, bool lite)
 {
 	g_WW3D_Hwnd = hwnd;
-	g_WW3D_Lite = lite;
+	Lite = lite;
 	if (!DX8Wrapper::Init(g_WW3D_Hwnd, lite))
 		return false;
 	timeBeginPeriod(1);

@@ -13,8 +13,8 @@
 // the load is a whole dword and the result is the return value.
 //
 // Every address lands in .data, so each one names a mutable global.  57
-// distinct globals are read by the 58 bodies (two bodies read the same one),
-// and each global is declared once here and named for the address it sits at.
+// distinct globals are read by the 58 bodies (two bodies read the same one).
+// Known identities retain their owning names; other cells use their addresses.
 // The address slot itself is filled by the patcher from the target binary and
 // the build checks that every reference to a given symbol resolves to one
 // address, so a global shared by two bodies is checked to be one global.
@@ -88,19 +88,19 @@ extern int g_Va013400F8;
 extern int g_Va0134052C;
 extern int g_Va01340578;
 extern int g_Va01341140;
-extern int g_Va01346DFC;
-extern int g_Va01346E00;
-extern int g_Va01346E04;
+namespace Debug_Statistics { extern int last_frame_sorting_polygons; }
+namespace Debug_Statistics { extern int last_frame_dx8_skin_vertices; }
+namespace Debug_Statistics { extern int last_frame_dx8_polygons; }
 extern int g_Va01346E08;
-extern int g_Va01346E2C;
-extern int g_Va01346E40;
+namespace Debug_Statistics { extern int last_frame_dx8_vertices; }
+namespace Debug_Statistics { extern int last_frame_dx8_renders; }
 extern int g_Va01346E48;
-extern int g_Va01346E50;
-extern int g_Va01346E5C;
+namespace Debug_Statistics { extern int last_frame_sorting_vertices; }
+namespace Debug_Statistics { extern int last_frame_dx8_skin_renders; }
 extern int g_Va0134B20C;
 extern int g_Va0134FBB0;
-extern int g_Va0135280C;
-extern int g_Va01352810;
+extern unsigned int FreeCount;
+extern unsigned int AllocateCount;
 
 int Rva00096A50Get( void )
 {
@@ -340,37 +340,37 @@ int Rva00937220Get( void )
 
 int Rva00937230Get( void )
 {
-	return g_Va01346E5C;
+	return Debug_Statistics::last_frame_dx8_skin_renders;
 }
 
 int Rva00937250Get( void )
 {
-	return g_Va01346E00;
+	return Debug_Statistics::last_frame_dx8_skin_vertices;
 }
 
 int Rva00937260Get( void )
 {
-	return g_Va01346E04;
+	return Debug_Statistics::last_frame_dx8_polygons;
 }
 
 int Rva00937270Get( void )
 {
-	return g_Va01346E2C;
+	return Debug_Statistics::last_frame_dx8_vertices;
 }
 
 int Rva009372B0Get( void )
 {
-	return g_Va01346DFC;
+	return Debug_Statistics::last_frame_sorting_polygons;
 }
 
 int Rva009372C0Get( void )
 {
-	return g_Va01346E50;
+	return Debug_Statistics::last_frame_sorting_vertices;
 }
 
 int Rva009372D0Get( void )
 {
-	return g_Va01346E40;
+	return Debug_Statistics::last_frame_dx8_renders;
 }
 
 int Rva00956A80Get( void )
@@ -385,11 +385,11 @@ int Rva009F8081Get( void )
 
 int Rva00AFE950Get( void )
 {
-	return g_Va01352810;
+	return AllocateCount;
 }
 
 int Rva00AFE960Get( void )
 {
-	return g_Va0135280C;
+	return FreeCount;
 }
 

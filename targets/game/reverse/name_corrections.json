@@ -18028,5 +18028,15 @@
   "after_sha256": "df6bd0f63df7e0147d8e0a59d3c089a3df060f308a014127b41fadf12ca0a670",
   "evidence": "targets/game/reverse/identity_evidence/00ef497c-Rva00510DC0DisplayWidth.md",
   "reason": "respelled to the datum AptGuiFX.cpp defines at 0x012F497C"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1264.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1264.cpp",
+  "old_name": "g_bfmeCy1264",
+  "new_name": "Rva00510DC0DisplayHeight",
+  "before_sha256": "df6bd0f63df7e0147d8e0a59d3c089a3df060f308a014127b41fadf12ca0a670",
+  "after_sha256": "8828c3141788ee495669ae4390c0a9f8023054f224c2c39421f82927d6a70d5f",
+  "evidence": "targets/game/reverse/identity_evidence/00ef4980-scalar-global.md",
+  "reason": "respelled to the datum AptGuiFX.cpp defines at 0x012F4980"
  }
 ]

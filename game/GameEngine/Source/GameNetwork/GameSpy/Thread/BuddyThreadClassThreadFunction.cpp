@@ -163,7 +163,7 @@ void Rva007EB270Shutdown();
 class ServiceHubImpl;
 ServiceHubImpl *createServiceHubImpl(void *,void *,void *,void *,void *,void *);
 extern Rva007E9D70 *g_Rva012F71BC;
-extern unsigned char g_Rva012F71B8, g_Rva012F71B9;
+extern unsigned char g_bfmeFlagAGA, g_bfmeFlagBGA;
 
 class BuddyThreadClass
 {
@@ -231,7 +231,7 @@ void BuddyThreadClass::Thread_Function()
                         bool m_2b7 = request.arg.login.m_2b7;
                         __int64 start = timeGetTime();
                         ((Rva007EAD00*)g_Rva012F71BC)->m(0x466e);
-                        while (!g_Rva012F71B8)
+                        while (!g_bfmeFlagAGA)
                         {
                             ((Gen_007ea640*)Rva007EB260Get())->m();
                             Rva007E9B70Get()->slot1(0x21);
@@ -244,8 +244,8 @@ void BuddyThreadClass::Thread_Function()
                                 break;
                             }
                         }
-                        if (!g_Rva012F71B8) break;
-                        if (g_Rva012F71B9)
+                        if (!g_bfmeFlagAGA) break;
+                        if (g_bfmeFlagBGA)
                         {
                             m_isConnecting=m_isConnected=false;
                             BuddyResponse failed;
@@ -404,8 +404,8 @@ void BuddyThreadClass::Thread_Function()
         ((Gen_007ea2f0*)g_Rva012F71BC)->m();
         Rva007EB650Shutdown(0);
         Rva007EB270Shutdown();
-        g_Rva012F71B9=0;
-        g_Rva012F71B8=0;
+        g_bfmeFlagBGA=0;
+        g_bfmeFlagAGA=0;
         g_Rva012F71BC=0;
     }
 }

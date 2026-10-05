@@ -15,7 +15,7 @@ class WindowManager;
 
 extern WindowManager *g_rva012F19E8WindowManager;
 extern char g_bfmeLitA1072[];
-extern char g_bfmeD1072;
+extern unsigned char g_optByte12F4AD1;
 
 class BfmeOwnAJ
 {
@@ -56,7 +56,7 @@ int BfmeQ1075::bfmeGo1075A(int code, unsigned char kind, char flags)
 	switch (m_bfmeStateAJ)
 	{
 		case 4:
-			if (g_bfmeD1072)
+			if (g_optByte12F4AD1)
 				((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAJ(m_bfmeSinkAJ, "assignClose", 1,
 					g_bfmeLitA1072, 0, 0, 0, 0);
 			else

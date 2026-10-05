@@ -15,7 +15,7 @@ class Rva005380A0
 {
 };
 
-char g_rva005380a0_id;
+extern unsigned int g_rva005380a0_id;
 
 void *rva005380a0(Rva005380A0 *obj)
 {

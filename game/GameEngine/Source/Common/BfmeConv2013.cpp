@@ -8,7 +8,7 @@ public:
 	virtual void __stdcall bfmeReleaseEAX();
 };
 
-extern int g_bfmeCountEAX;
+extern int g_bfme5MatPassCount;
 extern BfmeRefEAX *g_bfmeAEAX;
 extern BfmeRefEAX *g_bfmeBEAX;
 
@@ -30,7 +30,7 @@ BfmeHostEAX::~BfmeHostEAX()
 {
 	m_bfmeVftEAX = bfmeVftEAX;
 
-	if (--g_bfmeCountEAX == 0)
+	if (--g_bfme5MatPassCount == 0)
 	{
 		if (g_bfmeAEAX != 0)
 			g_bfmeAEAX->bfmeReleaseEAX();

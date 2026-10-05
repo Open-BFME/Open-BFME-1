@@ -254,12 +254,12 @@ void Rva006429B0::clear()
 }
 
 // No `this` at all: two globals.
-extern int g_Glo00F52810;
-extern int g_Glo00F5280C;
+extern unsigned int AllocateCount;
+extern unsigned int FreeCount;
 void Rva00AFE940()
 {
-	g_Glo00F52810 = 0;
-	g_Glo00F5280C = 0;
+	AllocateCount = 0;
+	FreeCount = 0;
 }
 
 // ------------------------------------------------------------------ shape (5)

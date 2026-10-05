@@ -23,7 +23,7 @@ void __cdecl operator delete(void *);
 struct SurfaceDesc { unsigned format,type,usage,pool,multisample,quality,width,height; };
 struct Resource { void **vt; };
 extern BfmeDX8VertexBuffer *rva012F9D1C;
-extern unsigned rva012F9D20;
+extern int ShaderQuadIndex;
 extern Resource *rva012F9D04, *rva012F9D08, *rva012F9D0C, *rva012F9D10;
 typedef long (__stdcall *GetTarget)(Resource*,unsigned,Resource**);
 typedef long (__stdcall *GetDesc)(Resource*,SurfaceDesc*);
@@ -36,7 +36,7 @@ class BfmeShaderShutdown { public: static void rva00716770(); };
 void BfmeShaderShutdown::rva00716770() {
  if(rva012F9D1C) { rva012F9D1C->Release_Ref(); rva012F9D1C=0; }
  rva012F9D1C=new BfmeDX8VertexBuffer(0x144,200,BfmeDX8VertexBuffer::USAGE_DYNAMIC,0);
- rva012F9D20=0;
+ ShaderQuadIndex=0;
  if(rva012F9D04 || rva012F9D08 || rva012F9D0C || rva012F9D10) return;
  ((GetTarget)reinterpret_cast<Resource *>(DX8Wrapper::_Get_D3D_Device8())->vt[38])(reinterpret_cast<Resource *>(DX8Wrapper::_Get_D3D_Device8()),0,&rva012F9D04);
  SurfaceDesc desc;

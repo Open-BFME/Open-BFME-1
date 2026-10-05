@@ -151,7 +151,7 @@ struct Rva00367E30Logic
 class GameSpyInfo;
 class GameSpyInfoInterface;
 extern GameSpyInfoInterface *TheGameSpyInfo;
-// Retail reads 0x012F4AD0 here, the byte ShowOptions stores beside g_bfmeD1072 (0x012F4AD1).
+// Retail reads 0x012F4AD0 here, the byte ShowOptions stores beside g_optByte12F4AD1 (0x012F4AD1).
 extern unsigned char g_optByte12F4AD0;
 extern void *g_quitMenuLayout;
 extern void *g_Va012F4AE4;

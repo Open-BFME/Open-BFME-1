@@ -10,7 +10,7 @@ public:
 	char m_bfmePad[0x34];
 };
 
-extern int g_bfme5MatPassCount;
+int g_bfme5MatPassCount;
 
 class Bfme5MaterialPass : public MaterialPassClass
 {

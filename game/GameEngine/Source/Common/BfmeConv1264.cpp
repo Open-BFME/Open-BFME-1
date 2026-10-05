@@ -2,7 +2,7 @@
 
 extern const float g_rva0107533C;
 extern int Rva00510DC0DisplayWidth;
-extern int g_bfmeCy1264;
+extern int Rva00510DC0DisplayHeight;
 
 struct BfmeVec1264
 {
@@ -39,5 +39,5 @@ void bfmeMark1264(BfmeVec1264 *a, BfmeVec1264 *b)
 		return;
 	g_bfme1264->bfmeAt1264(
 		(int)(*(volatile float *)&b->m_bfme00 * g_rva0107533C + a->m_bfme00 - Rva00510DC0DisplayWidth * g_rva0107533C + g_rva0107533C),
-		(int)(*(volatile float *)&b->m_bfme04 * g_rva0107533C + a->m_bfme04 - g_bfmeCy1264 * g_rva0107533C + g_rva0107533C));
+		(int)(*(volatile float *)&b->m_bfme04 * g_rva0107533C + a->m_bfme04 - Rva00510DC0DisplayHeight * g_rva0107533C + g_rva0107533C));
 }

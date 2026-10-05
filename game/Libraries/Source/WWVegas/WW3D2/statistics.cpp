@@ -19,11 +19,10 @@
 **	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-// Debug_Statistics counters from WW3D2/statistics.cpp, verbatim from the Zero
-// Hour reference. Only the accumulators this function touches are declared: the
-// real statistics.h drags in dx8wrapper.h and the DirectX 8 SDK headers, which
-// the fleet toolchains do not have, and the counters are file-static either way
-// so their addresses are relocated from retail, not from this TU.
+// Statistics snapshots use external linkage for the data ledger.
+// Local declarations avoid the reference header's DirectX SDK dependencies.
+
+int g_Va01346E48;
 
 namespace Debug_Statistics
 {
@@ -34,19 +33,18 @@ namespace Debug_Statistics
 	void Record_DX8_Polys_And_Vertices(int pcount, int vcount, const ShaderClass &shader);
 	extern int dx8_polygons;
 	extern int dx8_vertices;
-	extern int dx8_renders;
+	int dx8_renders;
 	extern int dx8_skin_polygons;
 	extern int dx8_skin_vertices;
 	extern int dx8_skin_renders;
 	extern int last_frame_dx8_skin_polygons;
-	extern int last_frame_dx8_skin_vertices;
-	extern int last_frame_dx8_skin_renders;
-	extern int last_frame_dx8_polygons;
-	extern int last_frame_dx8_vertices;
-	extern int last_frame_dx8_renders;
-	extern int last_frame_sorting_polygons;
-	extern int last_frame_sorting_vertices;
-	extern int last_frame_draw_calls;
+	int last_frame_dx8_skin_vertices;
+	int last_frame_dx8_skin_renders;
+	int last_frame_dx8_polygons;
+	int last_frame_dx8_renders;
+	int last_frame_dx8_vertices;
+	int last_frame_sorting_polygons;
+	int last_frame_sorting_vertices;
 }
 
 void Record_Texture_Begin();
@@ -87,21 +85,21 @@ void Debug_Statistics::Begin_Statistics()
 
 void Debug_Statistics::End_Statistics()
 {
+	static int end_rva01346E18;
 	static int end_dx8_polygons;
 	static int end_dx8_vertices;
 	static int end_sorting_polygons;
 	static int end_sorting_vertices;
-	static int end_draw_calls;
 
 	::Record_Texture_End();
 	last_frame_dx8_skin_polygons = dx8_skin_polygons;
 	last_frame_dx8_skin_vertices = dx8_skin_vertices;
 	last_frame_dx8_skin_renders = dx8_skin_renders;
+	g_Va01346E48 = end_rva01346E18;
 	last_frame_dx8_polygons = end_dx8_polygons;
 	last_frame_dx8_vertices = end_dx8_vertices;
 	last_frame_sorting_polygons = end_sorting_polygons;
 	last_frame_sorting_vertices = end_sorting_vertices;
-	last_frame_draw_calls = end_draw_calls;
 	last_frame_dx8_renders = dx8_renders;
 	DX8Wrapper::End_Statistics();
 }

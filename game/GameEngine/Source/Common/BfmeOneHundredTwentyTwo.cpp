@@ -4,7 +4,7 @@ extern int g_bfmeSlot00VA;
 extern int g_bfmeSlot01VA;
 extern int g_bfmeSlot02VA;
 extern int g_bfmeSlot03VA;
-extern int g_bfmeSlot04VA;
+unsigned int g_rva005380a0_id;
 extern int g_bfmeSlot05VA;
 extern int g_bfmeSlot06VA;
 extern int g_bfmeSlot07VA;
@@ -31,7 +31,7 @@ void bfmeAssignSlotsVA(void)
 	g_bfmeSlot01VA = 9;
 	g_bfmeSlot02VA = 10;
 	g_bfmeSlot03VA = 11;
-	g_bfmeSlot04VA = 12;
+	g_rva005380a0_id = 12;
 	g_bfmeSlot05VA = 13;
 	g_bfmeSlot06VA = 14;
 	g_bfmeSlot07VA = 15;

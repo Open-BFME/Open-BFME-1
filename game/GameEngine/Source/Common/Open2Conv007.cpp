@@ -19,8 +19,8 @@ extern "C" __declspec(dllimport) char * __cdecl strchr( const char *text, int c 
 // change test, which is what the leading `cmp` against the old state is.
 
 unsigned char g_open2Running = 1;
-extern unsigned int g_open2Started;
-extern unsigned int g_open2Accumulated;
+unsigned int g_open2Started;
+unsigned int g_open2Accumulated;
 
 // @?Rva00782E80@@YAXE@Z 0x00782E80
 void Rva00782E80( unsigned char running )

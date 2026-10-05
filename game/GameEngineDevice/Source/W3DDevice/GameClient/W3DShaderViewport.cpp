@@ -17,7 +17,7 @@ struct Resource {void **vt;};
 
 
 extern VertexBufferClass *ShaderQuadBuffer;
-extern int ShaderQuadIndex;
+int ShaderQuadIndex;
 // TU-local view of the tactical view singleton; the real class is GameClient/View.h's
 // View, which View.cpp defines as View *TheTacticalView at 0x012F1600.
 class ShaderViewportView {public:

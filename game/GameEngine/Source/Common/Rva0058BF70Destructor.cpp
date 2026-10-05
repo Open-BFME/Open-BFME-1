@@ -2,8 +2,7 @@
 
 void bfmeFreeBOG( void *block );
 void __cdecl rva0058BED0Register( int id, int value );
-extern int g_rva0058BED0ReadId;
-extern int g_rva0058BED0NextId;
+int g_rva0058BED0NextId;
 
 class Rva0058BF70Base
 {
@@ -33,7 +32,7 @@ private:
 
 Rva0058BF70Owner::Rva0058BF70Owner( int value ) :
 	m_released( false ),
-	m_block( (void *)g_rva0058BED0ReadId )
+	m_block( (void *)g_rva0058BED0NextId )
 {
 	++g_rva0058BED0NextId;
 	m_tail0 = 0;

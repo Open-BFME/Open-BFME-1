@@ -27,8 +27,8 @@ public:
 };
 
 extern GameSpyBuddyMessageQueueInterface *TheGameSpyBuddyMessageQueue;
-extern unsigned char g_bfmeFlagAGA;
-extern unsigned char g_bfmeFlagBGA;
+unsigned char g_bfmeFlagAGA;
+unsigned char g_bfmeFlagBGA;
 
 // ?bfmeOnEventGA@@YGXHPAXPBH@Z
 void __stdcall bfmeOnEventGA(int code, void *, const int *value)

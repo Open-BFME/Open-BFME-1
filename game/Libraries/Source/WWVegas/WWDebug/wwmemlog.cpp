@@ -95,8 +95,8 @@ bool WWMemoryLogClass::IsMemoryLogEnabled=true;
 bool WWMemoryLogClass::IsMemoryLogEnabled=false;
 #endif
 
-static unsigned AllocateCount;
-static unsigned FreeCount;
+unsigned AllocateCount;
+unsigned FreeCount;
 
 /*
 ** Name for each memory category.  I'm padding the array with some "undefined" strings in case

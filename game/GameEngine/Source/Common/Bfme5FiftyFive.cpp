@@ -68,7 +68,7 @@ BfmeHandleCX Gen_0092C9D0::bfmeGet(int row, int column) const
 }
 
 extern int g_bfmeBytesEA;					// retail 0x01346E58
-extern int g_bfmeCountEA;					// retail 0x01346E68
+namespace Debug_Statistics { extern int dx8_renders; }					// retail 0x01346E68
 extern int g_bfmeBlocksEA;					// retail 0x01346E6C
 
 // ?bfmeAccount@@YAXHH@Z
@@ -77,7 +77,7 @@ void __cdecl bfmeAccount(int bytes, int blocks)
 	g_bfmeBytesEA = g_bfmeBytesEA + bytes;
 	g_bfmeBlocksEA = g_bfmeBlocksEA + blocks;
 
-	++g_bfmeCountEA;
+	++Debug_Statistics::dx8_renders;
 }
 
 class BfmeNodeEA

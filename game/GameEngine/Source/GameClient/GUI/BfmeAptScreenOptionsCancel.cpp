@@ -121,7 +121,7 @@ struct Rva006C9270GlobalData
 	void *m_movieC68;									///< retail this+0xc68
 };
 
-extern char g_bfmeD1072;
+extern unsigned char g_optByte12F4AD1;
 extern void *g_quitMenuLayout;
 extern GameWindowManager *TheWindowManager;
 // The quit-menu hand-off goes to BFME's Apt window manager (0x012F19E8), not TheWindowManager.
@@ -197,7 +197,7 @@ void BfmeAptScreenOptions::_bfme_cancel( const char * )
 			GadgetComboBoxSetSelectedPos( m_comboResolution, m_resolutionIndex, false );
 		}
 
-		if( g_bfmeD1072 )
+		if( g_optByte12F4AD1 )
 		{
 			m_page = 3;
 			return;

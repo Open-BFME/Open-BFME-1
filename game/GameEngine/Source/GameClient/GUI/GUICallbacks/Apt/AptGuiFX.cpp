@@ -79,7 +79,7 @@ extern DisplayStringManager *TheDisplayStringManager;
 extern WindowManager *g_theWindowManager;
 extern FontLibrary *TheFontLibrary;
 int Rva00510DC0DisplayWidth = 0;
-extern int Rva00510DC0DisplayHeight;
+int Rva00510DC0DisplayHeight;
 extern int g_bfmeVal995B;
 
 extern "C" void _ReadWriteBarrier();

@@ -12476,14 +12476,14 @@ name,va
 ?lastNotificationWasStatus@@3_NA,0x012F4240
 ?lastSlotlistTime@@3IA,0x012F452C
 ?last_frame_draw_calls@Debug_Statistics@@3HA,0x01346E50
-?last_frame_dx8_polygons@Debug_Statistics@@3HA,0x01346E48
+?last_frame_dx8_polygons@Debug_Statistics@@3HA,0x01346E04
 ?last_frame_dx8_renders@Debug_Statistics@@3HA,0x01346E40
 ?last_frame_dx8_skin_polygons@Debug_Statistics@@3HA,0x01346E20
 ?last_frame_dx8_skin_renders@Debug_Statistics@@3HA,0x01346E5C
 ?last_frame_dx8_skin_vertices@Debug_Statistics@@3HA,0x01346E00
-?last_frame_dx8_vertices@Debug_Statistics@@3HA,0x01346E04
-?last_frame_sorting_polygons@Debug_Statistics@@3HA,0x01346E2C
-?last_frame_sorting_vertices@Debug_Statistics@@3HA,0x01346DFC
+?last_frame_dx8_vertices@Debug_Statistics@@3HA,0x01346E2C
+?last_frame_sorting_polygons@Debug_Statistics@@3HA,0x01346DFC
+?last_frame_sorting_vertices@Debug_Statistics@@3HA,0x01346E50
 ?learned@@3HA,0x01354930
 ?lifeEventRegistryHead@FXParticleSystem@@3PAV?$ConcreteModuleClass@V?$ModuleTag@$07$E?LIFE_EVENT_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIFE_EVENT_MODULE_NAME@2@3QBDBVLifeEventModule@2@VLifeEventModuleTemplate@2@VParticleLifeEventModule@2@VParticleLifeEventModuleTemplate@2@@FXParticleSystem@@@1@A,0x012F6508
 ?lifeEventSourceAt4@FXParticleSystem@@3PAPAXA,0x012F6D1C
@@ -17108,3 +17108,7 @@ _g_012F7014,0x012F7014
 ??_C@_05HCCPHNNO@Maps?2?$AA@,0x010892A8
 ??_C@_0P@OJEMNBIH@UserData?2Maps?2?$AA@,0x01089294
 ?TheAnimationSoundModuleManager@@3PAVAnimationSoundModuleManager@@A,0x012F10D0
+?g_rva005380a0_id@@3IA,0x012F4A00
+?Lite@WW3D@@0_NA,0x0133F465
+?FreeCount@@3IA,0x0135280C
+?AllocateCount@@3IA,0x01352810

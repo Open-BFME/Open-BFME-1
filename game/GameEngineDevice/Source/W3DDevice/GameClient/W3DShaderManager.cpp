@@ -349,7 +349,7 @@ static Int W3DShadersPassCount[W3DShaderManager::ST_MAX];	//number of passes for
 extern void *rva012F9D14; // BFME shader resource cleared by shutdown.
 extern void *rva012F9D18; // BFME shader resource cleared by shutdown.
 extern void *rva012F9D1C; // BFME vertex buffer cleared by shutdown.
-extern unsigned rva012F9D20; // BFME shader resource flag.
+extern int ShaderQuadIndex; // BFME quad-ring cursor.
 TextureClass *W3DShaderManager::m_Textures[8];
 W3DShaderManager::ShaderTypes W3DShaderManager::m_currentShader;
 FilterTypes W3DShaderManager::m_currentFilter=FT_NULL_FILTER; ///< Last filter that was set.
@@ -3172,7 +3172,7 @@ W3DShaderManager::W3DShaderManager(void)
 	rva012F9D14 = NULL;
 	rva012F9D18 = NULL;
 	rva012F9D1C = NULL;
-	rva012F9D20 = 0;
+	ShaderQuadIndex = 0;
 	Int i;
 	for (i=0; i<W3DShaderManager::ST_MAX; i++)
 	{	W3DShaders[i]=NULL;

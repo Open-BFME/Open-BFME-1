@@ -13,8 +13,8 @@ class WW3D { public: static void Sync(unsigned int); };
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
 void bfmeResetGlobals(void);
 extern Rva00785FD0Renderer *g_rva00785FD0Renderer;
-extern unsigned rva01346DD8, rva0130695C, rva01306958, rva0133F420, rva0133F424;
-extern unsigned rva01306968, rva01306960, rva01306964;
+extern unsigned rva01346DD8, g_open2SyncB, g_open2SyncA, rva0133F420, rva0133F424;
+extern unsigned rva01306968, g_open2Accumulated, g_open2Started;
 extern unsigned char g_open2Running;
 void BfmeThingSGA::bfmeOneSGA()
 {
@@ -25,18 +25,22 @@ void BfmeThingSGA::bfmeOneSGA()
  g_rva00785FD0Renderer->initializeRva0078C070();
  bfmeResetGlobals();
  rva01346DD8 = 0;
- rva0130695C = rva0133F420;
- rva01306958 = rva0133F424;
+ g_open2SyncB = rva0133F420;
+ g_open2SyncA = rva0133F424;
  WW3D::Sync(rva01306968);
- unsigned time = rva01306960;
+ unsigned time = g_open2Accumulated;
  if (g_open2Running) {
-  time += timeGetTime() - rva01306964;
+  time += timeGetTime() - g_open2Started;
   if (time - rva01306968 > 100) {
    time = rva01306968 + 100;
-   rva01306960 = time;
-   rva01306964 = timeGetTime();
+   g_open2Accumulated = time;
+   g_open2Started = timeGetTime();
   }
  }
  WW3D::Sync(time);
  rva01306968 = time;
 }
+
+unsigned int g_open2SyncA;
+
+unsigned int g_open2SyncB;
