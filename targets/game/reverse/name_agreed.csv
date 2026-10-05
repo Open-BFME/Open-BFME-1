@@ -300,3 +300,4 @@ game/GameEngine/Source/Common/BfmeConv1916.cpp|param|BfmeHostBR::xfer|x,xfer,gem
 game/GameEngine/Source/Common/BfmeConv815.cpp|type||BfmeThing171,WeaponTemplate,gpt-6-astra+grok,applied,2026-10-05
 game/GameEngine/Source/Common/BfmeConv912.cpp|member||m_bfmeHead,m_head,gpt-6-astra+grok,applied,2026-10-05
 game/GameEngine/Source/Common/BfmeConv912.cpp|local|BfmeThing912C::bfmeGo912C|n,node,gpt-6-astra+grok,applied,2026-10-05
+game/GameEngine/Source/Common/V4GuardedTailCallsWithArgs.cpp|member||m_at28,m_regionManager,claude-fable+gpt-6-astra,applied,2026-10-05

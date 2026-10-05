@@ -38,12 +38,12 @@ class Rva003BCA50
 public:
 	void forward( int a, int b, int c, int d, int e, int f, int g, int h );
 	char          m_pad00[ 0x28 ];
-	Gen003C8C60 * m_at28;
+	Gen003C8C60 * m_regionManager;
 };
 void Rva003BCA50::forward( int a, int b, int c, int d, int e, int f, int g, int h )
 {
-	if( m_at28 )
-		m_at28->handle( a, b, c, d, e, f, g, h );
+	if( m_regionManager )
+		m_regionManager->handle( a, b, c, d, e, f, g, h );
 }
 
 class Rva003BCA70
@@ -51,10 +51,10 @@ class Rva003BCA70
 public:
 	void forward( int a );
 	char          m_pad00[ 0x28 ];
-	Gen003C6340 * m_at28;
+	Gen003C6340 * m_regionManager;
 };
 void Rva003BCA70::forward( int a )
 {
-	if( m_at28 )
-		m_at28->handle( a );
+	if( m_regionManager )
+		m_regionManager->handle( a );
 }
