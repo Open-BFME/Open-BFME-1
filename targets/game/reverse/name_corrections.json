@@ -18038,5 +18038,25 @@
   "after_sha256": "8828c3141788ee495669ae4390c0a9f8023054f224c2c39421f82927d6a70d5f",
   "evidence": "targets/game/reverse/identity_evidence/00ef4980-scalar-global.md",
   "reason": "respelled to the datum AptGuiFX.cpp defines at 0x012F4980"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0089eb30.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0089eb30.cpp",
+  "old_name": "m_pData",
+  "new_name": "m_unused",
+  "before_sha256": "27deadeae08d6187e555b1b4a868db9e3b89d545673271117eebf0e30ef75b7b",
+  "after_sha256": "be41bf37ced9a199f29857b865f78a6c8018512f1adad7c6f081dc688f13bdc6",
+  "evidence": "targets/game/reverse/identity_evidence/0089eb30-owning-return-bank.md",
+  "reason": "False cross-owner pairing: m_pData remains in the owning string/header view; m_unused is the unrelated callback table word from the existing matched EAStringCReserveCtor.cpp. The bank changes return lifetime/context, not this field identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0089eb30.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0089eb30.cpp",
+  "old_name": "m_uRefCount",
+  "new_name": "m_unused",
+  "before_sha256": "27deadeae08d6187e555b1b4a868db9e3b89d545673271117eebf0e30ef75b7b",
+  "after_sha256": "be41bf37ced9a199f29857b865f78a6c8018512f1adad7c6f081dc688f13bdc6",
+  "evidence": "targets/game/reverse/identity_evidence/0089eb30-owning-return-bank.md",
+  "reason": "False cross-owner pairing: m_uRefCount remains in the owning string/header view; m_unused is the unrelated callback table word from the existing matched EAStringCReserveCtor.cpp. The bank changes return lifetime/context, not this field identity."
  }
 ]
