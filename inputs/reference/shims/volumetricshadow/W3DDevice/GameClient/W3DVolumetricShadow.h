@@ -89,6 +89,7 @@ protected:
 	void constructVolume(Vector3 *, Real, Int, Int);
 	void constructVolumeVB(Vector3 *, Real, Int, Int);
 	Bool allocateShadowVolume(Int, Int);
+	Bool allocateShadowVolume(Int, Int, Int);
 	void deleteShadowVolume(Int);
 	void resetShadowVolume(Int, Int);
 	W3DShadowGeometry *m_geometry;

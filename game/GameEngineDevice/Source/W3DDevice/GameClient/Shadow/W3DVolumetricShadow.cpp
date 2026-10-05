@@ -1983,7 +1983,6 @@ void W3DVolumetricShadow::updateVolumes(Real zoffset)
 
 /*floorZ is the assumed ground height below the model.  The code will try to extrude shadows just long enough to hit this point in order
 to reduce fill rate usage.*/
-// ?updateMeshVolume@W3DVolumetricShadow@@IAEXHHPBVMatrix3D@@ABVAABoxClass@@M@Z present-unmatched
 void W3DVolumetricShadow::updateMeshVolume(Int meshIndex, Int lightIndex, const Matrix3D *meshXform, const AABoxClass &meshBox, float floorZ )
 {
 	Vector3 lightPosObject;
@@ -2001,6 +2000,27 @@ void W3DVolumetricShadow::updateMeshVolume(Int meshIndex, Int lightIndex, const 
 
 	Matrix4x4 objectToWorld(*meshXform);
 	Matrix4x4 *prevXForm=&m_objectXformHistory[ lightIndex ][meshIndex];
+	struct Rva007BE000MeshRecordView
+	{
+		unsigned char m_beforeFlag[0x30];
+		unsigned char m_field30;
+		unsigned char m_tail[3];
+	};
+	struct Rva007BE000GeometryView
+	{
+		unsigned char m_beforeMeshes[0x14];
+		Rva007BE000MeshRecordView m_meshes[MAX_SHADOW_CASTER_MESHES];
+	};
+	Rva007BE000GeometryView *geometryView = (Rva007BE000GeometryView *)
+		((W3DVolumetricShadow *)((char *)this + 0x30))->m_geometry;
+	Int allocationFlags = 0;
+	if (*(unsigned char *)(meshIndex * sizeof(Rva007BE000MeshRecordView) + (unsigned int)geometryView + 0x44))
+	{
+		allocationFlags = 1;
+		isMeshRotating = true;
+	}
+	else
+	{
 
 	//
 	// build the shadow silhouette and construct shadow volume from
@@ -2069,6 +2089,7 @@ void W3DVolumetricShadow::updateMeshVolume(Int meshIndex, Int lightIndex, const 
 		isMeshRotating =true;
 #endif	//near light source
 #endif // CNC3
+	}
 
 	// get the light
 	lightPosWorld = TheW3DShadowManager->getLightPosWorld(lightIndex);
@@ -2078,10 +2099,10 @@ void W3DVolumetricShadow::updateMeshVolume(Int meshIndex, Int lightIndex, const 
 
 	// check if object has a limit/clamp on shadow length and adjust light
 	// position of necessary.
-	if (m_shadowLengthScale)
+	if (((W3DVolumetricShadow *)((char *)this + 0x30))->m_shadowLengthScale)
 	{	//Find light's distance from origin in xy plane
 		Real lightXYDistance = sqrt(lightPosWorld.X*lightPosWorld.X + lightPosWorld.Y * lightPosWorld.Y);
-		Real newZ=lightXYDistance*m_shadowLengthScale;
+		Real newZ=lightXYDistance*((W3DVolumetricShadow *)((char *)this + 0x30))->m_shadowLengthScale;
 
 		if (newZ > lightPosWorld.Z)
 		{	//clamped z component is higher than actual light position allows so adjust it.
@@ -2198,7 +2219,8 @@ void W3DVolumetricShadow::updateMeshVolume(Int meshIndex, Int lightIndex, const 
 			{	//this silhouette was built before and is being updated.
 				//this probably means it will change again in the future.
 				//make future updates faster by pre-caching face normals.
-				m_geometry->getMesh(meshIndex)->buildPolygonNormals();
+			((W3DShadowGeometryMesh *)(meshIndex * sizeof(Rva007BE000MeshRecordView) +
+				(unsigned int)((W3DVolumetricShadow *)((char *)this + 0x30))->m_geometry + 0x14))->buildPolygonNormals();
 			}
 			resetSilhouette(meshIndex);
 			buildSilhouette(meshIndex, &lightPosObject);
@@ -2208,7 +2230,7 @@ void W3DVolumetricShadow::updateMeshVolume(Int meshIndex, Int lightIndex, const 
 			// for this current shadow light, not the 0 index volume all the time
 			//
 			if (!m_shadowVolume[ lightIndex ][meshIndex])
-				allocateShadowVolume( lightIndex,meshIndex );
+				allocateShadowVolume( lightIndex,meshIndex, allocationFlags );
 			if( m_shadowVolumeVB[ lightIndex ][meshIndex] )
 			{	//Updating an existing vertex buffer shadow volume.  This means we're
 				//probably dealing with an animated mesh.  Update flags to reflect this fact.
@@ -2222,7 +2244,7 @@ void W3DVolumetricShadow::updateMeshVolume(Int meshIndex, Int lightIndex, const 
 					//release memory used to store vertices/polygons
 					resetShadowVolume( lightIndex,meshIndex );	//free vertex buffers since not used for dynamic.
 					//Resize the shadow volume since we'll need room to store the vertices in memory instead of VB.
-					allocateShadowVolume( lightIndex,meshIndex );
+					allocateShadowVolume( lightIndex,meshIndex, 0 );
 				}
 			}
 
