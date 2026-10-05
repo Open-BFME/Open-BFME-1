@@ -912,3 +912,5 @@ game/GameEngine/Source/Common/Q2TrailingZeroForwarders.cpp|local|compare|n,e476e
 game/GameEngine/Source/Common/Q2TrailingZeroForwarders.cpp|local|compare|c,3d1340d3f9fd122337061fd1,gpt-6-sol,20261005200151-2f05f2,2026-10-05
 game/GameEngine/Source/Common/Q2TrailingZeroForwarders.cpp|function||Q2LowerBound002E7EE0,03781d93503986265413ae38,grok,20261005200139-fc672e,2026-10-05
 game/GameEngine/Source/Common/Q2TrailingZeroForwarders.cpp|function||Rva004378F0,f6f4ce92cbe6d5e069da35f2,grok,20261005200139-fc672e,2026-10-05
+game/GameEngine/Source/Common/Rva003C1EE0Select.cpp|type||Rva003C1EE0Pair,0b347323d048b7e8abd74490,gpt-6-sol,20261005200150-879348,2026-10-05
+game/GameEngine/Source/Common/Rva003C1EE0Select.cpp|type||Rva003C1EE0Owner,524e7213c283db398a1c16ea,gpt-6-sol,20261005200150-879348,2026-10-05
