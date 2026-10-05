@@ -2,10 +2,17 @@
 
 // Retail 0x006F9FF0. Return a global byte.
 
-unsigned char g_get_006f9ff0;
+class WW3D
+{
+public:
+	static bool Are_Static_Sort_Lists_Enabled() { return AreStaticSortListsEnabled; }
+
+private:
+	static bool AreStaticSortListsEnabled;
+};
 
 // ?get_006f9ff0@@YAEXZ
 unsigned char get_006f9ff0(void)
 {
-	return g_get_006f9ff0;
+	return WW3D::Are_Static_Sort_Lists_Enabled();
 }

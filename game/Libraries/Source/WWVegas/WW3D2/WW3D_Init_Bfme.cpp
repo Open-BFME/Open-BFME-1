@@ -25,7 +25,6 @@ struct WW3DStaticSortGlobals
 };
 
 WW3DStaticSortGlobals g_WW3D_StaticSortGlobals;
-unsigned char g_WW3D_IsInitted;
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeBeginPeriod(unsigned long period);
 
@@ -33,6 +32,9 @@ class WW3D
 {
 public:
 	static bool Init(void *hwnd, char *defaultpal, bool lite);
+
+private:
+	static bool IsInitted;
 };
 
 bool WW3D::Init(void *hwnd, char *, bool lite)
@@ -46,6 +48,6 @@ bool WW3D::Init(void *hwnd, char *, bool lite)
 	g_WW3D_StaticSortGlobals.defaultList = list;
 	g_WW3D_StaticSortGlobals.currentList = list;
 	if (!lite)
-		g_WW3D_IsInitted = 1;
+		IsInitted = true;
 	return true;
 }

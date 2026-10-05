@@ -31,8 +31,10 @@ public:
 	static WW3DErrorType End_Render(bool flip_frame);
 	static void Activate_Snapshot(bool enabled) { SnapshotActivated = enabled; }
 
+private:
 	static bool IsInitted;
 	static bool IsRendering;
+public:
 	static bool SnapshotActivated;
 	static int FrameCount;
 };

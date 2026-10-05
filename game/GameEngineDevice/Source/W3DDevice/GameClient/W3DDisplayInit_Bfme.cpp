@@ -61,13 +61,13 @@ public:
     static bool Set_Render_Device(int,int,int,int,int,bool,bool,bool);
     static void Set_Prelit_Mode(PrelitModeEnum v) { Rva012D6D80=v; }
     static void Set_Collision_Box_Display_Mask(int);
-    static void Enable_Static_Sort_Lists(bool v) { Rva0133F42D=v; }
+    static void Enable_Static_Sort_Lists(bool v) { AreStaticSortListsEnabled=v; }
     static void Set_Thumbnail_Enabled(bool v) { Rva012D6D84=v; }
-    static void Set_Screen_UV_Bias(bool v) { Rva0133F42B=v; }
+    static void Set_Screen_UV_Bias(bool v) { IsScreenUVBiased=v; }
     static void Set_Texture_Bitdepth(int);
 private:
     static int Rva012D6D80;
-    static bool Rva0133F42D,Rva012D6D84,Rva0133F42B;
+    static bool AreStaticSortListsEnabled,Rva012D6D84,IsScreenUVBiased;
 };
 void bfmeSetSize(unsigned);
 class Render2DClass {

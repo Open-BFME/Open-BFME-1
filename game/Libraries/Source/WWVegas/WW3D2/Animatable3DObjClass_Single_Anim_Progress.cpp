@@ -18,7 +18,14 @@ enum
 	SINGLE_ANIM = 2
 };
 
-extern int WW3DSyncTime;					// 0x0133F420
+class WW3D
+{
+public:
+	static unsigned int Get_Sync_Time() { return SyncTime; }
+
+private:
+	static unsigned int SyncTime;
+};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/animobj.h
 class Animatable3DObjClass
@@ -46,7 +53,7 @@ void Animatable3DObjClass::Single_Anim_Progress( void )
 	if( CurMotionMode == SINGLE_ANIM )
 	{
 		ModeAnimFrame = Compute_Current_Frame( &ModeAnimDirection );
-		ModeAnimLastSyncTime = WW3DSyncTime;
+		ModeAnimLastSyncTime = WW3D::Get_Sync_Time();
 		m_unmodelled_F8 = false;
 	}
 }

@@ -78,6 +78,7 @@ public:
 	static void Update_Movie_Capture(void);
 	static bool Begin_Render(bool, bool, const Vector3 &, float, void (*)(void));
 
+private:
 	static bool IsInitted;
 	static bool IsRendering;
 	static bool IsCapturing;

@@ -1,7 +1,6 @@
-// Eight more small leaf shapes, each too few to earn a file; companion to
-// SmallLeafBodies.cpp, whose header applies here too.  Everything is read
-// straight off the instruction stream and IDENTITY IS NOT RECOVERED: every name
-// is derived from an address.
+// Eight more small leaf shapes, companion to SmallLeafBodies.cpp.
+// Function identities remain address-derived.
+// The WW3D static flags follow the native ww3d.h declarations.
 
 // mov eax,[ecx+<LEAD>] / add eax,<OFFSET> / ret -- a pointer member advanced
 // by a constant.
@@ -134,8 +133,16 @@ extern unsigned char g_Va012F499C;
 extern unsigned char g_Va012F499D;
 extern unsigned char g_Va0130E9F8;
 extern unsigned char g_Va01336E7C;
-extern unsigned char g_Va0133F428;
-extern unsigned char g_Va0133F42B;
+class WW3D
+{
+public:
+	static bool Is_Initted() { return IsInitted; }
+	static bool Is_Screen_UV_Biased() { return IsScreenUVBiased; }
+
+private:
+	static bool IsInitted;
+	static bool IsScreenUVBiased;
+};
 extern unsigned char g_Va0133F42C;
 extern unsigned char g_006fc8d0;
 extern unsigned char g_Va0133F451;
@@ -167,7 +174,7 @@ unsigned char Rva006D1C10GetFlag( void )
 
 unsigned char Rva006E7010GetFlag( void )
 {
-	return g_Va0133F428;
+	return WW3D::Is_Initted();
 }
 
 unsigned char Rva0078ABA0GetFlag( void )
@@ -177,7 +184,7 @@ unsigned char Rva0078ABA0GetFlag( void )
 
 unsigned char Rva0078AE10GetFlag( void )
 {
-	return g_Va0133F42B;
+	return WW3D::Is_Screen_UV_Biased();
 }
 
 unsigned char Rva007D6BE0GetFlag( void )

@@ -15,7 +15,10 @@ extern DX8MeshRendererClass *TheDX8MeshRenderer;
 class WW3D
 {
 public:
-	static bool IsMungeSortOnLoadEnabled;
+	static bool Is_Munge_Sort_On_Load_Enabled() { return MungeSortOnLoad; }
+
+private:
+	static bool MungeSortOnLoad;
 };
 
 class MeshModelClass
@@ -51,7 +54,7 @@ void MeshModelClass::rva0094E060SetSortLevel(bool flag)
 	if (CurMatDesc != level)
 	{
 		CurMatDesc = level;
-		if ((m_18flags & 0x10) && WW3D::IsMungeSortOnLoadEnabled)
+		if ((m_18flags & 0x10) && WW3D::Is_Munge_Sort_On_Load_Enabled())
 			compute_static_sort_levels();
 
 		TheDX8MeshRenderer->Invalidate(false);

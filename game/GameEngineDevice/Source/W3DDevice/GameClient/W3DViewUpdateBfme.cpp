@@ -19,7 +19,7 @@ class PolygonTrigger { public: bool bfmeContainsPointAt0018FA20(Coord3D&) const;
 class CameraShakeSystemClass { public: bool IsCameraShaking(); };
 extern CameraShakeSystemClass CameraShakerSystem;
 extern float FollowFactor007446A0;
-class WW3D { public: static unsigned int SyncTime, PreviousSyncTime; };
+class WW3D { public: static unsigned int Get_Frame_Time() { return SyncTime - PreviousSyncTime; } private: static unsigned int SyncTime, PreviousSyncTime; };
 // retail singleton: TerrainLogic *TheTerrainLogic (mangled ?TheTerrainLogic@@3PAVTerrainLogic@@A),
 // defined in GameLogic/Map/TerrainLogic.cpp. This TU only null-tests it.
 class TerrainLogic;
@@ -695,7 +695,7 @@ heightDone:
         setCameraTransform();
         if(didScriptedMovement && g_bfmeA1087) g_bfmeA1087->slot234(0);
     }
-    if(WW3D::SyncTime-WW3D::PreviousSyncTime) {
+    if(WW3D::Get_Frame_Time()) {
 float biasY;
 float biasX;
 float *biasYAddress=&biasY;

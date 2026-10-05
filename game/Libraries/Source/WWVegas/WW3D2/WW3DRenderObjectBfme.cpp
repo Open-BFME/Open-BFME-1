@@ -94,8 +94,10 @@ class WW3D
 public:
 	static bool Render(RenderObjClass &obj, RenderInfoClass &rinfo);
 
+private:
 	static bool IsInitted;
 	static bool AreStaticSortListsEnabled;
+public:
 	static StaticSortListClass *CurrentStaticSortLists;
 };
 

@@ -28,9 +28,14 @@ public:
 	static bool Render(SceneClass *, CameraClass *, bool, bool, const Vector3 &);
 	static bool Is_Snapshot_Activated(void) { return SnapshotActivated; }
 
+	static bool Are_Static_Sort_Lists_Enabled() { return AreStaticSortListsEnabled; }
+	static void Enable_Static_Sort_Lists(bool enabled) { AreStaticSortListsEnabled = enabled; }
+
+private:
 	static bool IsInitted;
 	static bool IsRendering;
 	static bool AreStaticSortListsEnabled;
+public:
 	static bool SnapshotActivated;
 	static StaticSortListClass *CurrentStaticSortLists;
 };
@@ -274,10 +279,10 @@ dx8_color_restored:
 // already owned by ww3d.cpp while preserving their inlined retail order.
 static void bfme_render_and_clear_static_sort_lists(RenderInfoClass &rinfo)
 {
-	bool old_enable = WW3D::AreStaticSortListsEnabled;
-	WW3D::AreStaticSortListsEnabled = false;
+	bool old_enable = WW3D::Are_Static_Sort_Lists_Enabled();
+	WW3D::Enable_Static_Sort_Lists(false);
 	WW3D::CurrentStaticSortLists->Render_And_Clear(rinfo);
-	WW3D::AreStaticSortListsEnabled = old_enable;
+	WW3D::Enable_Static_Sort_Lists(old_enable);
 }
 
 static void bfme_flush(RenderInfoClass &rinfo)

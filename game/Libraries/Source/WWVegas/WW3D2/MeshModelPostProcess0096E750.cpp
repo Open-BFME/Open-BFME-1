@@ -30,8 +30,10 @@ public:
 class WW3D
 {
 public:
-	static bool Is_Munge_Sort_On_Load_Enabled() { return IsMungeSortOnLoadEnabled; }
-	static bool IsMungeSortOnLoadEnabled;
+	static bool Is_Munge_Sort_On_Load_Enabled() { return MungeSortOnLoad; }
+
+private:
+	static bool MungeSortOnLoad;
 };
 
 class MeshModelClass

@@ -23,7 +23,11 @@ struct BfmeRadarResetGuard
 	~BfmeRadarResetGuard(void) { bfmeUnlock1179(); }
 };
 
-extern DefaultStaticSortListClass *g_WW3D_DefaultStaticSortList;
+class FrameGrabClass
+{
+public:
+	virtual ~FrameGrabClass();
+};
 extern void (__stdcall *g_WW3D_ShutdownTextures)(int);
 extern DefaultStaticSortListClass *g_WW3D_SecondaryResource;
 extern unsigned char g_WW3D_SkipDeviceShutdown;
@@ -33,6 +37,8 @@ class WW3D
 public:
 	static bool Shutdown(void);
 	// First block is inlined Stop_Movie_Capture: 0x133f42a is IsCapturing, not IsInitted.
+private:
+	static FrameGrabClass *Movie;
 	static bool IsInitted;
 	static bool IsCapturing;
 };
@@ -41,11 +47,11 @@ bool WW3D::Shutdown(void)
 {
 	if (IsCapturing)
 	{
-		DefaultStaticSortListClass *list = g_WW3D_DefaultStaticSortList;
+		FrameGrabClass *movie = Movie;
 		IsCapturing = 0;
-		if (list)
-			list->slot00(1);
-		g_WW3D_DefaultStaticSortList = 0;
+		if (movie)
+			delete movie;
+		Movie = 0;
 	}
 	g_WW3D_ShutdownTextures(1);
 	if (!g_WW3D_SkipDeviceShutdown)

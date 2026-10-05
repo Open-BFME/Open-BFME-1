@@ -6348,8 +6348,10 @@ name,va
 ?IsInitted@WW3D@@0_NA,0x0133F428
 ?IsInitted@WW3D@@2_NA,0x0133F428
 ?IsLocked@RegistryClass@@0_NA,0x0134ECE8
+?MungeSortOnLoad@WW3D@@0_NA,0x0133F42E
 ?IsMungeSortOnLoadEnabled@WW3D@@2_NA,0x0133F42E
 ?IsRenderToTexture@DX8Wrapper@@0_NA,0x01340548
+?IsRendering@WW3D@@0_NA,0x0133F429
 ?IsRendering@WW3D@@2_NA,0x0133F429
 ?IsScreenUVBiased@WW3D@@0_NA,0x0133F42B
 ?IsSortingEnabled@WW3D@@0_NA,0x012D6D74

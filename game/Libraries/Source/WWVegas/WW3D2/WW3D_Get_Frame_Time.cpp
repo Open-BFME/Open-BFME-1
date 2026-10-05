@@ -7,9 +7,11 @@
 class WW3D
 {
 public:
+	static unsigned int Get_Frame_Time(void);
+
+private:
 	static unsigned int SyncTime;
 	static unsigned int PreviousSyncTime;
-	static unsigned int Get_Frame_Time(void);
 };
 
 // ?Get_Frame_Time@WW3D@@SAIXZ
