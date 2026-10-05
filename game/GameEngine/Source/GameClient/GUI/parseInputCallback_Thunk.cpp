@@ -42,7 +42,7 @@ public:
 
 class WinInstanceData;
 
-extern AsciiString TheParsedCallbackName;				///< retail [0x012F2574]
+extern AsciiString theInputString;				///< retail [0x012F2574]
 extern NameKeyGenerator *TheNameKeyGeneratorShim;	///< retail [0x012ED600]
 class FunctionLexicon;
 extern FunctionLexicon *TheFunctionLexicon;			///< retail [0x012ED88C]
@@ -59,9 +59,9 @@ Bool parseInputCallback(char *token, WinInstanceData *instData, char *line, void
 	++p;
 
 	char *fieldText = strtok(p, "\"");
-	TheParsedCallbackName.StringBase<char>::set(fieldText, fieldText ? (Int)strlen(fieldText) : 0);
+	theInputString.StringBase<char>::set(fieldText, fieldText ? (Int)strlen(fieldText) : 0);
 
-	Int key = TheNameKeyGeneratorShim->nameToKey(TheParsedCallbackName.str());
+	Int key = TheNameKeyGeneratorShim->nameToKey(theInputString.str());
 	TheParsedCallbackResult = ((WindowLookupShim *)TheFunctionLexicon)->unidentified_00025CD4(key, 1);
 
 	return true;

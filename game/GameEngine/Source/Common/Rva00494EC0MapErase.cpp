@@ -22,7 +22,7 @@ struct Rva00494EC0Hash
  unsigned operator()(void *key) const { return (unsigned)key; }
 };
 typedef _STL::hash_map<void *, Rva00494EC0EntryView *, Rva00494EC0Hash> Rva00494EC0MapView;
-extern Rva00494EC0MapView g_rva00494EC0Map;
+Rva00494EC0MapView g_rva00494EC0Map;
 // ?Rva00494EC0@@YAXPAX@Z
 void __cdecl Rva00494EC0(void *p)
 {

@@ -85,7 +85,8 @@ public:
 };
 
 extern DisplayStringManager *TheDisplayStringManager;
-extern GlobalLanguageData *TheGlobalLanguageData;
+class GlobalLanguage;
+extern GlobalLanguage *TheGlobalLanguageData;
 extern FontLibrary *TheFontLibrary;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
@@ -115,10 +116,10 @@ void SuperweaponInfo::setFont(const AsciiString &fontName, Int pointSize, Bool b
 {
 	m_nameDisplayString->setFont(TheFontLibrary->getFont(
 		const_cast<AsciiString *>(&fontName),
-		(Real)TheGlobalLanguageData->adjustFontSize(pointSize), bold));
+		(Real)reinterpret_cast<GlobalLanguageData *>(TheGlobalLanguageData)->adjustFontSize(pointSize), bold));
 	m_timeDisplayString->setFont(TheFontLibrary->getFont(
 		const_cast<AsciiString *>(&fontName),
-		(Real)TheGlobalLanguageData->adjustFontSize(pointSize), bold));
+		(Real)reinterpret_cast<GlobalLanguageData *>(TheGlobalLanguageData)->adjustFontSize(pointSize), bold));
 }
 
 // ?drawName@SuperweaponInfo@@QAEXHHHH@Z

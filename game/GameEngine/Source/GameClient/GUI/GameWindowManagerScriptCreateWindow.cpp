@@ -116,9 +116,9 @@ void GadgetStaticTextSetText( GameWindow *g, UnicodeString text );
 void GadgetTextEntrySetText( GameWindow *g, UnicodeString text );
 
 static AsciiString theSystemString;
-static AsciiString theInputString;
+extern AsciiString theInputString;
 static AsciiString theTooltipString;
-static AsciiString theDrawString;
+extern AsciiString theDrawString;
 
 static GameWindow **stackPtr;
 static GameWindow *windowStack[ 10 ];

@@ -47,7 +47,8 @@ extern void j_0003413f();
 // through the witnessed-offset rvaF helper), so the real class is not redeclared.
 class GlobalData;
 extern GlobalData *TheWritableGlobalData;
-extern void *Rva012F1484;
+class GlobalLanguage;
+extern GlobalLanguage *TheGlobalLanguageData;
 extern void *ApplicationHWnd;
 
 enum WW3DErrorType { RvaWW3DErrorZero, RvaWW3DErrorOne };
@@ -86,7 +87,6 @@ class Rva006E6C10 {
     char data[0x30];
 public: Rva006E6C10(); void apply(); void setAndNotify(int);
 };
-#define TheGlobalLanguageData Rva012F1484
 
 // Retail 0x006ED5B0. BFME fields are accessed by witnessed offset because the
 // included Zero Hour W3DDisplay declaration does not describe this layout.

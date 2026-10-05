@@ -44,11 +44,13 @@ public:
 	BfmeSubBIA *m_sub;
 };
 
-extern BfmeGlobal012F18F0 *g_bfmeGlobal012F18F0;
+template<class T> class OVERRIDE;
+class WaterTransparencySetting;
+extern OVERRIDE<WaterTransparencySetting> TheWaterTransparency;
 
 static BfmeAskResult *bfmeAskResult()
 {
-	BfmeGlobal012F18F0 *g = g_bfmeGlobal012F18F0;
+	BfmeGlobal012F18F0 *g = *reinterpret_cast<BfmeGlobal012F18F0 **>(&TheWaterTransparency);
 	if (g == 0)
 		return 0;
 	if (g->m_sub == 0)

@@ -51,7 +51,8 @@ public:
 };
 extern DisplayStringManager *TheDisplayStringManager;
 class FontLibraryBFMERetail { public: GameFont *getFont(AsciiString*,float,unsigned char); };
-extern FontLibraryBFMERetail *TheFontLibrary;
+class FontLibrary;
+extern FontLibrary *TheFontLibrary;
 struct FontDesc { AsciiString name; int size; bool bold; };
 // View of the credits fonts read off the language singleton here.  The global
 // itself is retail's TheGlobalLanguageData, a GlobalLanguage*; that class is
@@ -144,7 +145,7 @@ void CreditsManager::update( void )
 				DisplayString *ds = TheDisplayStringManager->newDisplayString();
 				if(!ds)
 					return;
-				ds->setFont(TheFontLibrary->getFont(&reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->m_creditsTitleFont.name,
+				ds->setFont(reinterpret_cast<FontLibraryBFMERetail *>(TheFontLibrary)->getFont(&reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->m_creditsTitleFont.name,
 														reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->adjustFontSize(reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->m_creditsTitleFont.size),
 														reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->m_creditsTitleFont.bold));
 				ds->setText(cLine->m_text);
@@ -165,7 +166,7 @@ void CreditsManager::update( void )
 				DisplayString *ds = TheDisplayStringManager->newDisplayString();
 				if(!ds)
 					return;
-				ds->setFont(TheFontLibrary->getFont(&reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->m_creditsPositionFont.name,
+				ds->setFont(reinterpret_cast<FontLibraryBFMERetail *>(TheFontLibrary)->getFont(&reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->m_creditsPositionFont.name,
 														reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->adjustFontSize(reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->m_creditsPositionFont.size),
 														reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->m_creditsPositionFont.bold));
 				ds->setText(cLine->m_text);
@@ -186,7 +187,7 @@ void CreditsManager::update( void )
 				DisplayString *ds = TheDisplayStringManager->newDisplayString();
 				if(!ds)
 					return;
-				ds->setFont(TheFontLibrary->getFont(&reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->m_creditsNormalFont.name,
+				ds->setFont(reinterpret_cast<FontLibraryBFMERetail *>(TheFontLibrary)->getFont(&reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->m_creditsNormalFont.name,
 														reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->adjustFontSize(reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->m_creditsNormalFont.size),
 														reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->m_creditsNormalFont.bold));
 				ds->setText(cLine->m_text);
@@ -207,7 +208,7 @@ void CreditsManager::update( void )
 				DisplayString *ds = TheDisplayStringManager->newDisplayString();
 				if(!ds)
 					return;
-				ds->setFont(TheFontLibrary->getFont(&reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->m_creditsNormalFont.name,
+				ds->setFont(reinterpret_cast<FontLibraryBFMERetail *>(TheFontLibrary)->getFont(&reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->m_creditsNormalFont.name,
 														reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->adjustFontSize(reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->m_creditsNormalFont.size),
 														reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->m_creditsNormalFont.bold));
 				ds->setText(cLine->m_text);
@@ -222,7 +223,7 @@ void CreditsManager::update( void )
 				DisplayString *ds = TheDisplayStringManager->newDisplayString();
 				if(!ds)
 					return;
-				ds->setFont(TheFontLibrary->getFont(&reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->m_creditsNormalFont.name,
+				ds->setFont(reinterpret_cast<FontLibraryBFMERetail *>(TheFontLibrary)->getFont(&reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->m_creditsNormalFont.name,
 														reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->adjustFontSize(reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->m_creditsNormalFont.size),
 														reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->m_creditsNormalFont.bold));
 				ds->setText(cLine->m_secondText);

@@ -4,3 +4,4 @@
 // its TU-local cleanup. Disable inlining to preserve its constructor call.
 #include "ascii_string.h"
 AsciiString theDrawString;
+AsciiString theInputString;

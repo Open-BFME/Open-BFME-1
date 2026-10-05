@@ -88,7 +88,8 @@ struct BfmeOwnerVNY {
 class WindowLayout;
 class Drawable;
 struct Payload0044B800_1304 { unsigned int first, second; };
-extern "C" void *g_bfmeReplayControlAR;
+class GameWindow;
+extern GameWindow *m_replayWindow;
 
 struct Coord2D0044B800 { float x, y; };
 struct ICoord2D0044B800 { unsigned int x, y; };
@@ -361,7 +362,7 @@ InGameUI::InGameUI()
     m_uiMessages[k].timestamp = 0;
     m_uiMessages[k].color = 0;
   }
-  g_bfmeReplayControlAR = 0;
+  m_replayWindow = 0;
   m_messagesOn = true;
   m_superweaponPosition.x = 0.7f;
   m_superweaponPosition.y = 0.7f;

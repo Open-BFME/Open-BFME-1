@@ -136,11 +136,6 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
-struct ContainEntry
-{
-	GameWindow *control;
-	unsigned int objectID;
-};
 
 typedef void (*ContainIterateFunc)(Object *, void *);
 extern void j_0003fd5f();
@@ -568,6 +563,11 @@ protected:
 	char m_slice_padC[0x100 - 0x74];			// this+0x74 .. +0xFF, untouched
 	GameWindow *m_commandWindows[MAX_COMMANDS_PER_SET];	// this+0x100
 
+	struct ContainEntry
+	{
+		GameWindow *control;
+		unsigned int objectID;
+	};
 	static ContainEntry m_containData[MAX_COMMANDS_PER_SET];
 };
 
@@ -576,7 +576,7 @@ protected:
 // member it stands for.
 extern void j_0001df4d();
 
-ContainEntry ControlBar::m_containData[MAX_COMMANDS_PER_SET];
+ControlBar::ContainEntry ControlBar::m_containData[MAX_COMMANDS_PER_SET];
 
 // Retail registers this callback from populateStructureInventory at
 // 0x004AEE00 through the 0x00049549 ILT.  The callback receives the contained

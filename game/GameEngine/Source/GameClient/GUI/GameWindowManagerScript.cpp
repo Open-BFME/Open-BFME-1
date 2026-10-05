@@ -156,9 +156,9 @@ static GameWinInputFunc		inputFunc = NULL;
 static GameWinTooltipFunc	tooltipFunc = NULL;
 static GameWinDrawFunc			drawFunc = NULL;
 static AsciiString theSystemString;
-static AsciiString theInputString;
+extern AsciiString theInputString;
 static AsciiString theTooltipString;
-static AsciiString theDrawString;
+extern AsciiString theDrawString;
 
 // default visual properties
 static Color defEnabledColor		= 0;

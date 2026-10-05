@@ -169,7 +169,8 @@ public:
 	void bfmeForward(void);					// retail 0x000464D4
 };
 
-extern Gen_00C70030Target TheBfmeObject_00C70030;		// 0x12f15b0
+class TechAndSupplyImages;
+extern TechAndSupplyImages TheSupplyAndTechImageLocations;		// 0x12f15b0
 class Gen_00C70070Target
 {
 public:
@@ -211,7 +212,8 @@ public:
 	void bfmeForward(void);					// retail 0x0000D828
 };
 
-extern Gen_00C700C0Target TheBfmeObject_00C700C0;		// 0x12f2574
+class AsciiString;
+extern AsciiString theInputString;		// 0x12f2574
 class Gen_00C700D0Target
 {
 public:
@@ -225,14 +227,26 @@ public:
 	void bfmeForward(void);					// retail 0x0000D828
 };
 
-extern Gen_00C700E0Target TheBfmeObject_00C700E0;		// 0x12f257c
+class AsciiString;
+extern AsciiString theDrawString;		// 0x12f257c
 class Gen_00C70100Target
 {
 public:
 	void bfmeForward(void);					// retail 0x0001B7C5
 };
 
-extern Gen_00C70100Target TheBfmeObject_00C70100;		// 0x12f3354
+namespace _STL {
+template<class T> class allocator;
+template<class T> struct equal_to;
+template<class A, class B> struct pair;
+template<class K, class V, class H, class E, class A> class hash_map;
+template<class T, class A> class list;
+}
+class Rva00494EC0EntryView;
+struct Rva00494EC0Hash;
+extern _STL::hash_map<void *, Rva00494EC0EntryView *, Rva00494EC0Hash,
+    _STL::equal_to<void *>, _STL::allocator<_STL::pair<void * const, Rva00494EC0EntryView *> > >
+    g_rva00494EC0Map;		// 0x12f3354
 class Gen_00C70110Target
 {
 public:
@@ -246,21 +260,24 @@ public:
 	void bfmeForward(void);					// retail 0x000398FB
 };
 
-extern Gen_00C70120Target TheBfmeObject_00C70120;		// 0x12f3884
+class UnicodeString;
+extern _STL::list<UnicodeString, _STL::allocator<UnicodeString> > Rva00EF3884BriefingList;		// 0x12f3884
 class Gen_00C70130Target
 {
 public:
 	void bfmeForward(void);					// retail 0x0003B304
 };
 
-extern Gen_00C70130Target TheBfmeObject_00C70130;		// 0x12f3af8
+class UnicodeString;
+extern UnicodeString alt;		// 0x12f3af8
 class Gen_00C70140Target
 {
 public:
 	void bfmeForward(void);					// retail 0x0003B304
 };
 
-extern Gen_00C70140Target TheBfmeObject_00C70140;		// 0x12f3afc
+class UnicodeString;
+extern UnicodeString ctrl;		// 0x12f3afc
 class Gen_00C70150Target
 {
 public:
@@ -973,7 +990,7 @@ void bfmeForward_00C70020(void)
 // ?bfmeForward_00C70030@@YAXXZ
 void bfmeForward_00C70030(void)
 {
-	TheBfmeObject_00C70030.bfmeForward();
+	reinterpret_cast<Gen_00C70030Target *>(&TheSupplyAndTechImageLocations)->bfmeForward();
 }
 // ?bfmeForward_00C70070@@YAXXZ
 void bfmeForward_00C70070(void)
@@ -1003,7 +1020,7 @@ void bfmeForward_00C700B0(void)
 // ?bfmeForward_00C700C0@@YAXXZ
 void bfmeForward_00C700C0(void)
 {
-	TheBfmeObject_00C700C0.bfmeForward();
+	reinterpret_cast<Gen_00C700C0Target *>(&theInputString)->bfmeForward();
 }
 // ?bfmeForward_00C700D0@@YAXXZ
 void bfmeForward_00C700D0(void)
@@ -1013,12 +1030,12 @@ void bfmeForward_00C700D0(void)
 // ?bfmeForward_00C700E0@@YAXXZ
 void bfmeForward_00C700E0(void)
 {
-	TheBfmeObject_00C700E0.bfmeForward();
+	reinterpret_cast<Gen_00C700E0Target *>(&theDrawString)->bfmeForward();
 }
 // ?bfmeForward_00C70100@@YAXXZ
 void bfmeForward_00C70100(void)
 {
-	TheBfmeObject_00C70100.bfmeForward();
+	reinterpret_cast<Gen_00C70100Target *>(&g_rva00494EC0Map)->bfmeForward();
 }
 // ?bfmeForward_00C70110@@YAXXZ
 void bfmeForward_00C70110(void)
@@ -1028,17 +1045,17 @@ void bfmeForward_00C70110(void)
 // ?bfmeForward_00C70120@@YAXXZ
 void bfmeForward_00C70120(void)
 {
-	TheBfmeObject_00C70120.bfmeForward();
+	reinterpret_cast<Gen_00C70120Target *>(&Rva00EF3884BriefingList)->bfmeForward();
 }
 // ?bfmeForward_00C70130@@YAXXZ
 void bfmeForward_00C70130(void)
 {
-	TheBfmeObject_00C70130.bfmeForward();
+	reinterpret_cast<Gen_00C70130Target *>(&alt)->bfmeForward();
 }
 // ?bfmeForward_00C70140@@YAXXZ
 void bfmeForward_00C70140(void)
 {
-	TheBfmeObject_00C70140.bfmeForward();
+	reinterpret_cast<Gen_00C70140Target *>(&ctrl)->bfmeForward();
 }
 // ?bfmeForward_00C70150@@YAXXZ
 void bfmeForward_00C70150(void)

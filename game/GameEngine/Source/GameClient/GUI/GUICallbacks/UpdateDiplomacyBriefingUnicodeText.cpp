@@ -135,7 +135,7 @@ typedef _STL::list<UnicodeString> BriefingList;
 class BfmeGlobLF;
 extern BfmeGlobLF *g_bfmeGlobLF;
 #define theWindow ((GameWindow *)g_bfmeGlobLF)
-extern BriefingList Rva00EF3884BriefingList;
+BriefingList Rva00EF3884BriefingList;
 #define theBriefingList Rva00EF3884BriefingList
 
 void UpdateDiplomacyBriefingText(const UnicodeString &text, Bool clear)

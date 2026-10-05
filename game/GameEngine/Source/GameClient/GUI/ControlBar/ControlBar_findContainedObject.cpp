@@ -33,11 +33,6 @@ public:
 class GameLogic;
 extern GameLogic *TheGameLogic;
 
-struct ContainEntry
-{
-	GameWindow *control;
-	ObjectID objectID;
-};
 
 class ControlBar
 {
@@ -45,6 +40,11 @@ public:
 	Object *findContainedObject(GameWindow *win);
 
 	protected:
+	struct ContainEntry
+	{
+		GameWindow *control;
+		ObjectID objectID;
+	};
 	static ContainEntry m_containData[MAX_COMMANDS_PER_SET];
 };
 
