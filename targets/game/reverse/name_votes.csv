@@ -941,3 +941,4 @@ game/GameEngine/Source/GameLogic/AI/PathfinderClassifyFence.cpp|local|RealToIntF
 game/GameEngine/Source/GameLogic/AI/PathfinderClassifyFence.cpp|local|RealToIntCeil|t,93918d49bb95b23e25b6bfee,gpt-6-sol,20261005200437-f92a37,2026-10-05
 game/GameEngine/Source/GameLogic/AI/PathfinderClassifyFence.cpp|local|Pathfinder::classifyFence|c,4113a7eab70cea2c42150994,gpt-6-sol,20261005200437-f92a37,2026-10-05
 game/GameEngine/Source/GameLogic/AI/PathfinderClassifyFence.cpp|local|Pathfinder::classifyFence|s,0f07bac0186144c3eee4c374,gpt-6-sol,20261005200437-f92a37,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIAttackSwoopThenIdleStateMachineRva002BC870.cpp|type||Rva002BC870AI,3bbf3ee5503b5483340430ff,gpt-6-sol,20261005200140-15020b,2026-10-05
