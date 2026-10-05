@@ -99,6 +99,14 @@ public:
 		UnsignedInt flags = 0);
 };
 
+// The matched one-argument member at 0x00137E80 is reached through
+// retail ILT 0x00028560. Keep the singleton and newObject interface unchanged.
+class BfmeThingFactory
+{
+public:
+	const ThingTemplate *findTemplate(const AsciiString &name);
+};
+
 class UpgradeCenter
 {
 public:
@@ -251,7 +259,7 @@ UpdateSleepTime ObjectCreationUpgrade::update()
 		const ObjectCreationUpgradeModuleData *data = getObjectCreationUpgradeModuleData();
 		if (data != 0 && !isStringEmpty(data->m_thingToSpawn))
 		{
-			const ThingTemplate *tmplate = TheThingFactory->findTemplate(data->m_thingToSpawn);
+			const ThingTemplate *tmplate = reinterpret_cast<BfmeThingFactory *>(TheThingFactory)->findTemplate(data->m_thingToSpawn);
 			Object *obj = TheThingFactory->newObject(tmplate, getObject()->getTeam());
 			if (obj == 0)
 				return UPDATE_SLEEP_FOREVER;
