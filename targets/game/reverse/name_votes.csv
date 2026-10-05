@@ -780,3 +780,6 @@ game/GameEngine/Source/Common/RTS/ActionManagerCanEnterObject.cpp|member||m_ai20
 game/GameEngine/Source/Common/Recorder.cpp|local|RecorderClass::getReplayDir|tmp,0e8239d378f2cd6dc66d627c,gpt-6-sol,20261005184943-42627b,2026-10-05
 game/GameEngine/Source/Common/Rva0029BE60Sweep.cpp|type||Rva0029BE60Node,725fa67e9d7923bdee66c35c,gpt-6-sol,20261005184109-4f34f6,2026-10-05
 game/GameEngine/Source/Common/Rva0029BE60Sweep.cpp|type||Rva0029BE60Predicate,6e4e804e2d23e771f6d059b1,gpt-6-sol,20261005184109-4f34f6,2026-10-05
+game/GameEngine/Source/Common/Rva0029BE60Sweep.cpp|type||Rva0029BE60Node,725fa67e9d7923bdee66c35c,grok,20261005184103-dba032,2026-10-05
+game/GameEngine/Source/Common/Rva0029BE60Sweep.cpp|type||Rva0029BE60Predicate,6e4e804e2d23e771f6d059b1,grok,20261005184103-dba032,2026-10-05
+game/GameEngine/Source/Common/Rva0029BE60Sweep.cpp|type||Rva0029BE60,dc4fac70b83ea57d13a565b5,grok,20261005184103-dba032,2026-10-05
