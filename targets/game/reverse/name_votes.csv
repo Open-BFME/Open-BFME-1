@@ -408,3 +408,6 @@ game/GameEngine/Source/Common/BfmeConv930.cpp|type||BfmeThing930D,b0f9fc96a7ac81
 game/GameEngine/Source/Common/BfmeConv912.cpp|member||m_bfmeHead,156edda6641bd1bc360a2359,gpt-6-astra,20261005160655-29a344,2026-10-05
 game/GameEngine/Source/Common/BfmeConv912.cpp|local|bfmeGo912B|p,5e640e2c3864e77808339352,gpt-6-astra,20261005160655-29a344,2026-10-05
 game/GameEngine/Source/Common/BfmeConv912.cpp|local|BfmeThing912C::bfmeGo912C|n,6dbc338fa9c7aa42daf36fe1,gpt-6-astra,20261005160655-29a344,2026-10-05
+game/GameEngine/Source/Common/BfmeThreeHundredSixtyFive.cpp|member||m_bfmeVft,a72ab5e3deef2b66b8c4e7db,gpt-6-astra,20261005161655-bc745e,2026-10-05
+game/GameEngine/Source/Common/BfmeThreeHundredSixtyFive.cpp|member||m_bfmeSub,07f0af8870a0cccd57f3aaf2,gpt-6-astra,20261005161655-bc745e,2026-10-05
+game/GameEngine/Source/Common/BfmeThreeHundredSixtyFive.cpp|function|BfmeThingVH@|bfmeKillVH,a466031511b3d6139e5935a3,gpt-6-astra,20261005161655-bc745e,2026-10-05
