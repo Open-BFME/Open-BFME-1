@@ -41,7 +41,7 @@ struct Q2LowerBoundLess
 	bool operator()(const Q2LowerBoundElement20 &left, const AsciiString &right) const;
 };
 
-Q2LowerBoundElement20 *Q2LowerBound002E7EE0(
+Q2LowerBoundElement20 *__lower_bound(
 	Q2LowerBoundElement20 *first, Q2LowerBoundElement20 *last,
 	const Q2LowerBoundString &value, Q2LowerBoundLess comp, int *distance) throw();
 
@@ -92,7 +92,7 @@ Q2LowerBoundElement20 *Rva002EBF60Owner::findSorted(const AsciiString *param)
 
 			Q2LowerBoundElement20 *last = m_end;
             Q2LowerBoundElement20 *first = m_begin;
-			Q2LowerBoundElement20 *found = Q2LowerBound002E7EE0(
+			Q2LowerBoundElement20 *found = __lower_bound(
 				first, last, *(Q2LowerBoundString *)&local, Q2LowerBoundLess(), 0);
 
 			if (found != last && compare002EBF60(*(const AsciiString *)&found->m_key,*param) == 0)
