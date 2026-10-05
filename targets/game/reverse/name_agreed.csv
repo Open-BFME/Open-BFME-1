@@ -399,3 +399,7 @@ game/GameEngine/Source/GameClient/GUI/CrossFadeImage_draw.cpp|param|drawImage|y1
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/NetworkDirectConnectUpdateRemoteIPList.cpp|param|UnicodeString::UnicodeString#2|s,stringSrc,gpt-6-sol+grok,applied,2026-10-05
 game/GameEngine/Source/GameLogic/AI/AIGroup_setWeaponLockForGroup.cpp|member||m_bfmeFlag532,m_shareTimers,gpt-6-sol+grok,applied,2026-10-05
 game/GameEngine/Source/GameLogic/AI/AIGroup_setWeaponLockForGroup.cpp|member||m_18,m_whenWeCanFireAgain,gpt-6-sol+grok,applied,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorModuleDataCtorThunk.cpp|member||m_value08,m_firstHeight,gpt-6-sol+grok,applied,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorModuleDataCtorThunk.cpp|member||m_value0C,m_secondHeight,gpt-6-sol+grok,applied,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorModuleDataCtorThunk.cpp|member||m_value10,m_firstPercentIndent,gpt-6-sol+grok,applied,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorModuleDataCtorThunk.cpp|member||m_value14,m_secondPercentIndent,gpt-6-sol+grok,applied,2026-10-05

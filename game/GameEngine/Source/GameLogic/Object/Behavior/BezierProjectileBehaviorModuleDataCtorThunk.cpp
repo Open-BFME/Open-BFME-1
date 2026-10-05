@@ -26,10 +26,10 @@ public:
 
 private:
 	unsigned int m_moduleData;
-	unsigned int m_value08;
-	unsigned int m_value0C;
-	unsigned int m_value10;
-	unsigned int m_value14;
+	unsigned int m_firstHeight;
+	unsigned int m_secondHeight;
+	unsigned int m_firstPercentIndent;
+	unsigned int m_secondPercentIndent;
 	unsigned char m_killInsteadOfDestroy;
 	unsigned char m_flag19;
 	unsigned char m_pad1A[ 2 ];
@@ -68,10 +68,10 @@ private:
 // ??0BezierProjectileBehaviorModuleData@@QAE@XZ
 BezierProjectileBehaviorModuleData::BezierProjectileBehaviorModuleData()
 {
-	m_value08 = 0;
-	m_value0C = 0;
-	m_value10 = 0;
-	m_value14 = 0;
+	m_firstHeight = 0;
+	m_secondHeight = 0;
+	m_firstPercentIndent = 0;
+	m_secondPercentIndent = 0;
 	m_killInsteadOfDestroy = 0;
 	m_flag19 = 0;
 	m_effectFrame = 0;
