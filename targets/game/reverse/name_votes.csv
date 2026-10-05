@@ -447,3 +447,5 @@ game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||QR0
 game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||CtorTargetR0015C7A0,8d0ee96fcb39428e36ffdd02,gpt-6-astra,20261005160654-7bb705,2026-10-05
 game/GameEngine/Source/Common/BfmeConv930.cpp|local|StreakRendererClass::bfmeGo930D|s,a9e48aec32c410fb4eda5a83,gpt-6-astra,20261005160654-a65ebd,2026-10-05
 game/GameEngine/Source/Common/System/DataChunkTableOfContents.cpp|local|compare|n,8c99861e12a1cbc6f5f4cff0,gpt-6-astra,20261005161649-0b2668,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1742.cpp|type||BfmeStrDataAQ,4cd95332fe42db0426b86453,gpt-6-astra,20261005161649-0df4b4,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1742.cpp|type||BfmeStrAQ,8f623dbc7fd2034bc26bc65b,gpt-6-astra,20261005161649-0df4b4,2026-10-05
