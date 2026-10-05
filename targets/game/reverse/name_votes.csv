@@ -479,3 +479,4 @@ game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfme
 game/Libraries/Source/WWVegas/WW3D2/Gen_00945B20.cpp|member||m_bfmeThing,56d04848cdbef86a07007a0e,gpt-6-astra,20261005161655-e25596,2026-10-05
 game/Libraries/Source/WWVegas/WW3D2/Gen_00945B20.cpp|member||m_bfmeArrays,11a239e3bff8e2c82c7fb396,gpt-6-astra,20261005161655-e25596,2026-10-05
 game/Libraries/Source/WWVegas/WW3D2/Gen_00945B20.cpp|function|Gen_00945B20@|bfmeGet,0a7724a6dc0561f07f2aca19,gpt-6-astra,20261005161655-e25596,2026-10-05
+game/GameEngine/Source/Common/Rva003B9AD0PairCopyCtor.cpp|type||Rva003B9AD0First,c60410a6e0c7e08bb939099e,gpt-6-astra,20261005161655-f25708,2026-10-05
