@@ -591,35 +591,62 @@ struct SampleBuildData
 //-------------------------------------------------------------------------------------------------
 /** This will check the build conditions at the specified sample location point */
 //-------------------------------------------------------------------------------------------------
+// BFME's TerrainVisual::getTerrainTile occupies vtable slot +0x20 (not ZH's +0x14),
+// and TerrainType::m_restrictConstruction sits at +0x1C.
+class Rva000FBE90TerrainType
+{
+public:
+	Bool getRestrictConstruction( void ) { return m_restrictConstruction; }
+private:
+	UnsignedByte m_opaque00[ 0x1c ];
+	Bool m_restrictConstruction;
+};
+class Rva000FBE90TerrainVisual
+{
+public:
+	virtual void slot0(); virtual void slot1(); virtual void slot2(); virtual void slot3();
+	virtual void slot4(); virtual void slot5(); virtual void slot6(); virtual void slot7();
+	virtual TerrainType *getTerrainTile( Real x, Real y );
+};
+// BFME GlobalData keeps m_MinDistFromEdgeOfMapForBuild at +0xB30 (ZH +0x7A8).
+class Rva000FBE90GlobalData
+{
+public:
+	UnsignedByte m_opaque00[ 0xb30 ];
+	Real m_MinDistFromEdgeOfMapForBuild;
+};
+#define BFME_BUILD_GLOBALS ((const Rva000FBE90GlobalData *)TheGlobalData)
+
+// BFME replaces ZH's inline cell-type test with one Pathfinder call that takes
+// the sample point and LAYER_GROUND; retail 0x003D9610 is matched under this name.
+class BfmeAESF;
+class BfmeBESF;
+class BfmeHostESF
+{
+public:
+	char bfmeTestESF( BfmeAESF *a, BfmeBESF *b );
+};
+
+// Retail 0x000FBE90 / 210 bytes; BuildAssistant::isLocationLegalToBuild (0x000FFE30)
+// pushes this callback's address for its 30.0 and 10.0 resolution iterateFootprint passes.
 static void checkSampleBuildLocation( const Coord3D *samplePoint, void *userData )
 {
 	TerrainType *terrain;
 	SampleBuildData *sampleData = (SampleBuildData *)userData;
 
 	// get the terrain tile here
-	terrain = TheTerrainVisual->getTerrainTile( samplePoint->x, samplePoint->y );
+	terrain = ((Rva000FBE90TerrainVisual *)TheTerrainVisual)->getTerrainTile( samplePoint->x, samplePoint->y );
 	if( terrain )
 	{
 
 		// check for the restricts building flag
-		if( terrain->getRestrictConstruction() )
+		if( ((Rva000FBE90TerrainType *)terrain)->getRestrictConstruction() )
 			sampleData->terrainRestricted = TRUE;
 
 	}  // end if
 
-	Int cellX = REAL_TO_INT_FLOOR( samplePoint->x / PATHFIND_CELL_SIZE );
-	Int cellY = REAL_TO_INT_FLOOR( samplePoint->y / PATHFIND_CELL_SIZE );
-	
-	PathfindCell* cell = TheAI->pathfinder()->getCell( LAYER_GROUND, cellX, cellY );
-	if (!cell) {
+	if( ((BfmeHostESF *)TheAI->pathfinder())->bfmeTestESF( (BfmeAESF *)samplePoint, (BfmeBESF *)LAYER_GROUND ) )
 		sampleData->terrainRestricted = TRUE;
-	}	else {
-		enum PathfindCell::CellType type = cell->getType();
-		if ( (type == PathfindCell::CELL_WATER) || (type == PathfindCell::CELL_CLIFF) ||
-			(type == PathfindCell::CELL_IMPASSABLE)) {
-			sampleData->terrainRestricted = true;
-		}
-	}
 
 	//
 	// record the highest and lowest Z points from all the samples and do not allow
@@ -631,18 +658,19 @@ static void checkSampleBuildLocation( const Coord3D *samplePoint, void *userData
 		sampleData->hiZ = samplePoint->z;
 
 	// too close to edge of map?
-	if (TheGlobalData->m_MinDistFromEdgeOfMapForBuild > 0.0f)
+	if (BFME_BUILD_GLOBALS->m_MinDistFromEdgeOfMapForBuild > 0.0f)
 	{
-		if (samplePoint->x < sampleData->mapRegion.lo.x + TheGlobalData->m_MinDistFromEdgeOfMapForBuild
-				|| samplePoint->x > sampleData->mapRegion.hi.x - TheGlobalData->m_MinDistFromEdgeOfMapForBuild
-				|| samplePoint->y < sampleData->mapRegion.lo.y + TheGlobalData->m_MinDistFromEdgeOfMapForBuild
-				|| samplePoint->y > sampleData->mapRegion.hi.y - TheGlobalData->m_MinDistFromEdgeOfMapForBuild)
+		if (samplePoint->x < sampleData->mapRegion.lo.x + BFME_BUILD_GLOBALS->m_MinDistFromEdgeOfMapForBuild
+				|| samplePoint->x > sampleData->mapRegion.hi.x - BFME_BUILD_GLOBALS->m_MinDistFromEdgeOfMapForBuild
+				|| samplePoint->y < sampleData->mapRegion.lo.y + BFME_BUILD_GLOBALS->m_MinDistFromEdgeOfMapForBuild
+				|| samplePoint->y > sampleData->mapRegion.hi.y - BFME_BUILD_GLOBALS->m_MinDistFromEdgeOfMapForBuild)
 		{
 			sampleData->terrainRestricted = TRUE;
 		}
 	}
 
 }  // end checkSampleBuildLocation
+#undef BFME_BUILD_GLOBALS
 
 //-------------------------------------------------------------------------------------------------
 /** This function will call the user callback at each "sample point" across the footprint
