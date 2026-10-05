@@ -599,3 +599,6 @@ game/GameEngine/Source/GameLogic/AI/Rva001FC330Destructor.cpp|type||Rva1FC330Dee
 game/GameEngine/Source/GameLogic/AI/Rva001FC330Destructor.cpp|type||Rva1FC330Middle,54559320b282a73e6eaa6bc1,gpt-6-astra,20261005163943-907146,2026-10-05
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Gen0075FB90RecoilVectorRelease.cpp|type||Gen0075FB90Factory,922176a30e867e7c9768c4e3,gpt-6-astra,20261005163943-454c69,2026-10-05
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Gen0075FB90RecoilVectorRelease.cpp|local|Gen_0075FB90|p,6ffa160f5bbb6b3b82ed5e05,gpt-6-astra,20261005163943-454c69,2026-10-05
+game/GameEngine/Source/Common/Gen003BF540Owner_consume.cpp|member||m_bfmeSub,dc3348218d854eceeeaac12a,gpt-6-astra,20261005163943-1de2ed,2026-10-05
+game/GameEngine/Source/Common/Gen003BF540Owner_consume.cpp|param|Gen003BF540Owner::consume|b,b3e64492998e652d88c30353,gpt-6-astra,20261005163943-1de2ed,2026-10-05
+game/GameEngine/Source/Common/Gen003BF540Owner_consume.cpp|local|Gen003BF540Owner::consume|arg4,5e7d73141bd9c980ebfaf690,gpt-6-astra,20261005163943-1de2ed,2026-10-05
