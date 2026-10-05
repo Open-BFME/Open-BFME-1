@@ -59,7 +59,10 @@ import subprocess
 import sys
 import time
 import zlib
+from collections.abc import Mapping
 from pathlib import Path
+from types import MappingProxyType
+from weakref import WeakKeyDictionary
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
@@ -177,6 +180,9 @@ def index_tables(present, facts, selection, aliases=None):
 
 
 def require_common_index(index):
+    if type(index) is FrozenPredictionIndex:
+        index._tables()  # An exact-type instance must also be factory-issued.
+        return
     if index.get("common_schema") != COMMON_SCHEMA or not isinstance(index.get("common"), dict):
         raise SystemExit("link_check: census index lacks complete COMMON providers; rebuild it with "
                          "python3 tools/link_census.py --build --history")
@@ -303,6 +309,8 @@ def refresh(index, objects, truth):
     object files', so a fix in one file (a removed duplicate, a new datum) is
     seen when checking the others. Blockers of files not passed stay as the
     census saw them."""
+    if type(index) is FrozenPredictionIndex:
+        raise TypeError("frozen prediction index cannot be refreshed; rebuild it")
     require_common_index(index)
     positions = {index["objects"].index(obj.name): obj for obj in objects if obj.name in index["objects"]}
     if not positions:
@@ -411,6 +419,173 @@ def _prediction_tables_valid(index):
     return True
 
 
+class _NotFreezable(ValueError):
+    pass
+
+
+def _copy_prediction_value(value, active):
+    """Copy exact builtins only: no copy hooks, retained containers, or cycles."""
+    kind = type(value)
+    if kind in (type(None), bool, int, float, str, bytes):
+        return value
+    if kind not in (dict, list, tuple, set, frozenset) or id(value) in active:
+        raise _NotFreezable
+    active.add(id(value))
+    try:
+        if kind is dict:
+            return {_copy_prediction_value(key, active): _copy_prediction_value(item, active)
+                    for key, item in value.items()}
+        return kind(_copy_prediction_value(item, active) for item in value)
+    finally:
+        active.remove(id(value))
+
+
+def _prediction_consumers_valid(index):
+    """Conservative eligibility for consumers not covered by the native scan."""
+    selection = index["selection"]
+    if "owners" not in selection or "exceptions" not in selection:
+        return False
+    # judge_selected uses set intersection; sealing list owners as tuples
+    # would change the native TypeError instead of preserving its input path.
+    if any(type(found) not in (set, frozenset) for found in selection["owners"].values()):
+        return False
+    count = len(index["objects"])
+    def position(value):
+        return type(value) is int and 0 <= value < count
+    def strings(values):
+        return (type(values) in (set, frozenset, list, tuple) and
+                all(type(value) is str for value in values))
+    if any(holder is not None and not position(holder) for holder in selection["exceptions"].values()):
+        return False
+    for entries in index["common"].values():
+        for entry in entries:
+            if (type(entry) not in (tuple, list) or len(entry) != 2 or not position(entry[0]) or
+                    type(entry[1]) is not int or not 0 < entry[1] <= 0xFFFFFFFF):
+                return False
+    aliases = index.get("aliases", {})
+    if type(aliases) is not dict or any(type(name) is not str for name in aliases):
+        return False
+    for entries in aliases.values():
+        if type(entries) not in (tuple, list):
+            return False
+        if any(type(entry) not in (tuple, list) or len(entry) != 2 or
+               not position(entry[0]) or type(entry[1]) is not str for entry in entries):
+            return False
+    excuses = index.get("excuses")
+    if type(excuses) is not dict or not strings(excuses.get("runtime")):
+        return False
+    imported, stubs = excuses.get("imported"), excuses.get("stubs")
+    if any(type(table) is not dict or any(type(name) is not str for name in table)
+           for table in (imported, stubs)):
+        return False
+    if not all(strings(dlls) for dlls in imported.values()):
+        return False
+    for entries in stubs.values():
+        if type(entries) not in (set, frozenset, list, tuple):
+            return False
+        if any(type(entry) not in (list, tuple) or len(entry) != 2 or
+               any(type(value) is not str for value in entry) for entry in entries):
+            return False
+    return True
+
+
+def _seal_prediction_value(value):
+    if type(value) is dict:
+        return MappingProxyType({key: _seal_prediction_value(item) for key, item in value.items()})
+    if type(value) in (list, tuple):
+        return tuple(_seal_prediction_value(item) for item in value)
+    if type(value) in (set, frozenset):
+        return frozenset(_seal_prediction_value(item) for item in value)
+    return value
+
+
+def _prediction_index_api():
+    # Owned immutable object storage, not a cache of caller dictionaries or
+    # validator results. Weak keys release each payload with its issued handle;
+    # neither the registry nor an insertion helper is exposed by the API.
+    payloads = WeakKeyDictionary()
+
+    class FrozenPredictionIndex(Mapping):
+        """Opaque handle to factory-owned, recursively immutable prediction tables.
+
+        Only issued handles can read tables or skip repeated shape validation.
+        No instance slot stores a replaceable payload or a validation flag.
+        Updates require a new native index and a new factory call.
+        """
+        __slots__ = ("__weakref__",)
+        # Storage keys identify handles, never caller input objects. Mapping's
+        # content equality would recurse through this storage lookup.
+        __hash__ = object.__hash__
+        __eq__ = object.__eq__
+
+        def __new__(cls, *args, **kwargs):
+            raise TypeError("use freeze_prediction_index")
+
+        def __init_subclass__(cls, **kwargs):
+            raise TypeError("FrozenPredictionIndex cannot be subclassed")
+
+        def __setattr__(self, name, value):
+            raise TypeError("frozen prediction index cannot be mutated")
+
+        def __delattr__(self, name):
+            raise TypeError("frozen prediction index cannot be mutated")
+
+        def _tables(self):
+            try:
+                return payloads[self]
+            except KeyError:
+                raise TypeError("unregistered frozen prediction index") from None
+
+        def __getitem__(self, key):
+            return self._tables()[key]
+
+        def __iter__(self):
+            return iter(self._tables())
+
+        def __len__(self):
+            return len(self._tables())
+
+    def freeze_prediction_index(index):
+        """Opt in to a private prediction snapshot, or return an ineligible input unchanged.
+
+        Actual-MAP fields (even invalid/partial ones), receipts and refresh state
+        must retain their original native validation path. Only supported exact
+        builtins are copied; malformed consumer shapes are never normalized.
+        """
+        if type(index) is FrozenPredictionIndex:
+            index._tables()
+            return index
+        if type(index) is not dict:
+            return index
+        try:
+            snapshot = _copy_prediction_value(index, set())
+        except (_NotFreezable, RecursionError):
+            return index
+        # Eligibility belongs to the owned copy, not a previously inspected input.
+        selection = snapshot.get("selection")
+        if (type(selection) is not dict or
+                any(name in selection for name in ("weak_kept", "weak_addresses", "weak_locations", "weak_ambiguous")) or
+                selection.get("weak_receipt") is not None or
+                any(name in snapshot for name in ("_weak_token", "_weak_current_objects"))):
+            return index
+        try:
+            require_common_index(snapshot)
+        except SystemExit:
+            return index
+        if not _prediction_tables_valid(snapshot) or not _prediction_consumers_valid(snapshot):
+            return index
+        sealed = _seal_prediction_value(snapshot)
+        frozen = object.__new__(FrozenPredictionIndex)
+        payloads[frozen] = sealed
+        return frozen
+
+    return FrozenPredictionIndex, freeze_prediction_index
+
+
+FrozenPredictionIndex, freeze_prediction_index = _prediction_index_api()
+del _prediction_index_api
+
+
 def check_object(obj, index, truth, source=None, judge=None):
     """{unresolved, duplicates, comdat, addresses, selected, alias_target, alias_unknown} for one object
     against the index."""
@@ -420,7 +595,9 @@ def check_object(obj, index, truth, source=None, judge=None):
     data = _object_bytes(obj)
     common = link_census.common_definitions(obj, data=data)
     context = None
-    if not _prediction_tables_valid(index):
+    if type(index) is FrozenPredictionIndex:
+        pass  # Prediction-only by construction; all per-object checks below still run.
+    elif not _prediction_tables_valid(index):
         context = weak_context(index, truth)
     else:
         selection = index.get("selection", {})
