@@ -512,3 +512,9 @@ game/GameEngine/Source/Common/BfmeConv1214.cpp|local|bfmeGo1214|c,64739315722c4d
 game/GameEngine/Source/Common/Audio/AudioManagerInit.cpp|type||AudioSettings006B8220,9f6083ceb4cbe9fb72aa894d,gpt-6-astra,20261005161757-5286de,2026-10-05
 game/GameEngine/Source/Common/Audio/AudioManagerInit.cpp|type||GameLODManager006B8220,5a70382e2cba543e50908318,gpt-6-astra,20261005161757-5286de,2026-10-05
 game/GameEngine/Source/Common/Audio/AudioManagerInit.cpp|member||m_field44,d373ef69d7d0a360e2a12810,gpt-6-astra,20261005161757-5286de,2026-10-05
+game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|type||Template0017AEC0,38c3eb0d627738e5cf24c773,gpt-6-astra,20261005162032-f2ef3e,2026-10-05
+game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|type||Locomotor0017AEC0,e3fa7811611c8445143cd1d1,gpt-6-astra,20261005162032-f2ef3e,2026-10-05
+game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|type||Update0017AEC0,b4aae9a007ab7e9cedbe2c96,gpt-6-astra,20261005162032-f2ef3e,2026-10-05
+game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|type||Machine0017AEC0,336a306e453f0c334a59bac3,gpt-6-astra,20261005162032-f2ef3e,2026-10-05
+game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|type||WanderWaypointEntry0017AEC0,321312c80144900160c2c78a,gpt-6-astra,20261005162032-f2ef3e,2026-10-05
+game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|member||template004,ae70815019e7e35dca7f9b02,gpt-6-astra,20261005162032-f2ef3e,2026-10-05
