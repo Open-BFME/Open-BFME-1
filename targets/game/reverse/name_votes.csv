@@ -803,3 +803,4 @@ game/GameEngine/Source/GameLogic/Object/Behavior/EnragedBehaviorCtorThunk.cpp|me
 game/GameEngine/Source/GameLogic/Object/Behavior/EnragedBehaviorCtorThunk.cpp|member||m_f18,9547eb6ffc6d6b18b99b180a,gpt-6-sol,20261005184901-4c214b,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Behavior/EnragedBehaviorCtorThunk.cpp|member||m_f14,71cd2933d094ec54ba801aed,grok,20261005192417-f6dd4e,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Behavior/EnragedBehaviorCtorThunk.cpp|member||m_f18,9547eb6ffc6d6b18b99b180a,grok,20261005192417-f6dd4e,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/OathbreakersFadeAwayBehaviorFriendNewModuleDataThunk.cpp|local|OathbreakersFadeAwayBehavior::friend_newModuleData|p,21c8151ea2914151a9877e29,gpt-6-sol,20261005184922-370e19,2026-10-05
