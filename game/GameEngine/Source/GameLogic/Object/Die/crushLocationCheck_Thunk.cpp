@@ -75,10 +75,6 @@ public:
 		return (const Coord3D *)((char *)this + 0x38);
 	}
 
-	const GeometryInfo &getGeometryInfo() const
-	{
-		return *(const GeometryInfo *)((char *)this + 0xAC);
-	}
 };
 
 // ?crushLocationCheck@@YA?AW4CrushEnum@@PAVObject@@0@Z
@@ -94,7 +90,7 @@ __declspec(noinline) static CrushEnum crushLocationCheck(Object *crusherObject,
 	const Coord3D *pos = crusherObject->getPosition();
 	const Coord3D *otherPos = victimObject->getPosition();
 
-	Real crushPointOffsetDistance = victimObject->getGeometryInfo().getMajorRadius() * 0.5;
+	Real crushPointOffsetDistance = reinterpret_cast<const GeometryInfo *>(reinterpret_cast<const char *>(victimObject) + 0xAC)->getMajorRadius() * 0.5;
 
 	Coord3D crushPointOffset;
 	crushPointOffset.x = otherDir->x * crushPointOffsetDistance;
