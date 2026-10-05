@@ -65,3 +65,66 @@ const ThingTemplate *BfmeVecVLH::rva000F9670(int index)
 
 	return ((BfmeThingFactory *)TheThingFactory)->findTemplate(record->m_name);
 }
+
+extern "C" void _WriteBarrier(void);
+#pragma intrinsic(_WriteBarrier)
+
+typedef int Int;
+typedef unsigned int UnsignedInt;
+typedef float Real;
+
+class BfmeUseB980
+{
+public:
+	void *bfmeApply980B(int first, int second);
+};
+
+struct Rva00367E30Logic
+{
+	char m_prefix[0x3c];
+	UnsignedInt m_frame;
+};
+
+extern const Real g_rva01075350;
+extern Real g_bfmeDefaultBU;
+extern const Real g_bfmeUint32Scale;
+extern Rva00367E30Logic *TheBfmeGameLogic;
+
+class Rva000F9780
+{
+public:
+	Real method(Int index);
+
+private:
+	char m_prefix[0x10];
+	void *m_pointer10;
+};
+
+// ?method@Rva000F9780@@QAEMH@Z
+Real Rva000F9780::method(Int index)
+{
+	BfmeElemVLH *record = ((BfmeVecVLH *)this)->bfmeAtVLH(index);
+	if (record == 0)
+	{
+		_WriteBarrier();
+		return g_rva01075350;
+	}
+
+	Int *startFrame = (Int *)(record->m_opaque04 + (0x30 - 4));
+	if (*startFrame == -1)
+		return g_rva01075350;
+
+	void *pointer = m_pointer10;
+	const ThingTemplate *tmplate =
+		((BfmeThingFactory *)TheThingFactory)->findTemplate(record->m_name);
+	if (tmplate != 0)
+	{
+		Int buildTime = (Int)(long)((BfmeUseB980 *)tmplate)->bfmeApply980B(
+				(Int)(long)pointer,
+				*(Int *)(record->m_opaque04 + (0x34 - 4)));
+		if (buildTime > 0)
+			return ((Real)(UnsignedInt)TheBfmeGameLogic->m_frame - *startFrame) /
+				(Real)buildTime;
+	}
+	return g_bfmeDefaultBU;
+}
