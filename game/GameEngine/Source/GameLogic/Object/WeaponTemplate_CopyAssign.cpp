@@ -153,7 +153,7 @@ private:
 	int m_preAttackRandomAmount;
 	unsigned char m_passengerProportionalAttack;
 	// MaxAttackPassengers parses 32 bits here, but retail copies only this byte.
-	unsigned char m_b509;
+	unsigned char m_maxAttackPassengers;
 	unsigned char m_pad50a[2];
 	int m_firingDuration;
 	int m_continueAttackRange;
@@ -267,7 +267,7 @@ WeaponTemplate &WeaponTemplate::operator=(const WeaponTemplate &that)
 	m_preAttackDelay = that.m_preAttackDelay;
 	m_preAttackRandomAmount = that.m_preAttackRandomAmount;
 	m_passengerProportionalAttack = that.m_passengerProportionalAttack;
-	m_b509 = that.m_b509;
+	m_maxAttackPassengers = that.m_maxAttackPassengers;
 	m_firingDuration = that.m_firingDuration;
 	m_continueAttackRange = that.m_continueAttackRange;
 	m_infantryInaccuracyDist = that.m_infantryInaccuracyDist;

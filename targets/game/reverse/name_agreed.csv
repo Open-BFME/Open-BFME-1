@@ -411,3 +411,4 @@ game/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdateSetStatus.cpp|par
 game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateAction.cpp|member||m_10,m_valueMultiplier,gpt-6-sol+grok,applied,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateAction.cpp|member||m_14,m_bonusScience,gpt-6-sol+grok,applied,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateAction.cpp|member||m_18,m_bonusScienceMultiplier,gpt-6-sol+grok,applied,2026-10-05
+game/GameEngine/Source/GameLogic/Object/WeaponTemplate_CopyAssign.cpp|member||m_b509,m_maxAttackPassengers,gpt-6-sol+grok,applied,2026-10-05
