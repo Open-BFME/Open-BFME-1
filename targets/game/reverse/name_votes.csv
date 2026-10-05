@@ -856,3 +856,6 @@ game/GameEngine/Source/Common/ElementPayloadFill003ACD30.cpp|member||m_at00,4f8d
 game/GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp|param|GameWindowManager::winIsDigit|c,20531e640cf6bd412c279157,gpt-6-sol,20261005194534-f99653,2026-10-05
 game/GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp|param|GameWindowManager::winIsAscii|c,8ed745777b585e8591018258,gpt-6-sol,20261005194534-f99653,2026-10-05
 game/GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp|param|GameWindowManager::winIsAlNum|c,2ce94ba441193231b6b85e80,gpt-6-sol,20261005194534-f99653,2026-10-05
+game/GameEngine/Source/GameClient/GUI/MpGameSetupSetMap.cpp|member||m_flag10,bca4f18c871029d3d3d6c3e2,gpt-6-sol,20261005193517-558098,2026-10-05
+game/GameEngine/Source/GameClient/GUI/MpGameSetupSetMap.cpp|member||m_flag13,49fab830537078dbef9af8a0,gpt-6-sol,20261005193517-558098,2026-10-05
+game/GameEngine/Source/GameClient/GUI/MpGameSetupSetMap.cpp|member||m_flag14,57b034d5ecd3a44592a3e4d1,gpt-6-sol,20261005193517-558098,2026-10-05
