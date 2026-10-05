@@ -5,7 +5,7 @@
 #include <vector>
 #include "ascii_string.h"
 
-struct Rva003C1EE0Pair
+struct Coord2D
 {
 	float m_x;
 	float m_y;
@@ -49,12 +49,12 @@ struct Rva003C1EE0InputView
 	Rva003C1EE0NestedView *getNested() { return m_nestedEC; }
 };
 
-class Rva003C1EE0Owner
+class LivingWorldLogic
 {
 public:
-	void measurePair(Rva003C1EE0TempList *list, Rva003C1EE0Pair *out);
-	int select(void *input, void *candidate, Rva003C1EE0Pair *out);
-	// ?refreshManager@Rva003C1EE0Owner@@QAEX_N0@Z absent-from-retail
+	void measurePair(Rva003C1EE0TempList *list, Coord2D *out);
+	int select(void *input, void *candidate, Coord2D *out);
+	// ?refreshManager@LivingWorldLogic@@QAEX_N0@Z absent-from-retail
 	void refreshManager(bool includeDisabled, bool requireSecond)
 	{
 		((Rva003CA710Owner *)m_manager)->refresh(includeDisabled, requireSecond);
@@ -65,8 +65,8 @@ private:
 	void *m_manager;
 };
 
-int Rva003C1EE0Owner::select(void *input, void *candidate,
-	Rva003C1EE0Pair *out)
+int LivingWorldLogic::select(void *input, void *candidate,
+	Coord2D *out)
 {
 	Rva003C1EE0InputView *view = (Rva003C1EE0InputView *)input;
 	if (candidate == 0)

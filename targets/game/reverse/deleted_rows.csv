@@ -34006,3 +34006,4 @@ Gen_helpmd_00451e60,0x00451E60,"gen-shim scaffold placeholder superseded by the 
 ?bfmeFwdUC@BfmeOwnUC@@QAEXPAXVBfmeVecUC@@0000000@Z,0x00730F70,renamed to ?bfmeFwdUC@W3DTerrainVisual@@QAEXPAXVBfmeVecUC@@0000000@Z by tools/name_lane.py: two models agreed
 ?Q2LowerBound002E7EE0@@YAPAUQ2LowerBoundElement20@@PAU1@0ABUQ2LowerBoundString@@UQ2LowerBoundLess@@PAH@Z,0x002E7EE0,renamed to ?__lower_bound@@YAPAUQ2LowerBoundElement20@@PAU1@0ABUQ2LowerBoundString@@UQ2LowerBoundLess@@PAH@Z by tools/name_lane.py: two models agreed
 ?Rva004378F0@@YAXPAX000@Z,0x004378F0,renamed to ?upper_bound@@YAXPAX000@Z by tools/name_lane.py: two models agreed
+?select@Rva003C1EE0Owner@@QAEHPAX0PAURva003C1EE0Pair@@@Z,0x003C1EE0,renamed to ?select@LivingWorldLogic@@QAEHPAX0PAUCoord2D@@@Z by tools/name_lane.py: two models agreed
