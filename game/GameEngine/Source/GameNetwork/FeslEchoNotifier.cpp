@@ -49,8 +49,8 @@ private:
 	int m_transactionId;
 };
 
-extern char g_feslTransactionIdKey[];
-extern char g_feslTypeKey[];
+extern const char g_feslTransactionIdKey[4] = "TID";
+extern const char g_feslTypeKey[5] = "TYPE";
 
 // ?notifyEcho@FeslEchoNotifier@@QAEXXZ
 void FeslEchoNotifier::notifyEcho()

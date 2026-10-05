@@ -1,6 +1,15 @@
 // Open-BFME5 conversions.
 
-extern char g_bfmeVft969D1[];
+extern "C" void __identifier("?handle@Rva007F4BA0@@W3AEXXZ")();
+extern "C" void __identifier("?eq@Rva007F4B80@@QBEHPBVObj007F4B80@@HH@Z")();
+extern "C" void __identifier("?d_007f4bb0@@YAXXZ")();
+
+extern void * const g_bfmeVft969D1[3] =
+{
+	(void *)&__identifier("?handle@Rva007F4BA0@@W3AEXXZ"),
+	(void *)&__identifier("?eq@Rva007F4B80@@QBEHPBVObj007F4B80@@HH@Z"),
+	(void *)&__identifier("?d_007f4bb0@@YAXXZ"),
+};
 extern char g_bfmeVft969D2[];
 extern char g_bfmeVft969D3[];
 
@@ -20,7 +29,7 @@ public:
 
 void BfmeD969::bfmeGo969D()
 {
-	m_bfmeVft2 = g_bfmeVft969D1;
+	m_bfmeVft2 = (char *)g_bfmeVft969D1;
 	m_bfme08 = 0;
 	m_bfme0c = 0;
 	m_bfme10 = 0;

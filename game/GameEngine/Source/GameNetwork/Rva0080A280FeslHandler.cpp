@@ -88,7 +88,7 @@ public:
 	char *m_field58;
 };
 
-extern int g_bfmeKeyVHE;
+extern const char g_feslTransactionIdKey[4];
 void *Rva007F93E0( void *message, void *route, void *owner );
 
 void Rva0080A280Owner::rva0080A280( Rva0080A280Input *input )
@@ -98,10 +98,10 @@ void Rva0080A280Owner::rva0080A280( Rva0080A280Input *input )
 	BfmeThingRF *source = reinterpret_cast< BfmeThingRF * >( input );
 
 	message.m_category = input->m_field1c;
-	void *value = source->bfmeGoRF( &g_bfmeKeyVHE, (void *)-1 );
+	void *value = source->bfmeGoRF( const_cast<char *>(g_feslTransactionIdKey), (void *)-1 );
 	if( value != (void *)-1 )
 		reinterpret_cast< BfmeThingCIB * >( &message )->bfmeGoCIB(
-			&g_bfmeKeyVHE, value );
+			const_cast<char *>(g_feslTransactionIdKey), value );
 	message.m_field04 = input->m_field04;
 	message.m_field08 = input->m_field08;
 	message.m_field0c = input->m_field0c;

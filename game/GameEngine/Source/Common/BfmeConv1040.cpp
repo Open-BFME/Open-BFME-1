@@ -54,7 +54,17 @@ static const unsigned short *const g_bfmeApplyTableA =
 	(const unsigned short *)g_bfmeTableBZ;
 static const unsigned short *const g_bfmeApplyTableB =
 	(const unsigned short *)g_Rva01141808;
-extern const unsigned short g_bfmeApplyTableC[]; // retail 0x01141D08
+extern const unsigned short g_bfmeApplyTableC[64] =
+{
+	47, 47, 47, 47, 45, 43, 43, 43,
+	43, 43, 42, 41, 41, 40, 40, 40,
+	40, 35, 35, 35, 35, 33, 33, 33,
+	33, 32, 32, 32, 27, 27, 26, 26,
+	25, 25, 24, 24, 23, 23, 19, 19,
+	19, 19, 18, 18, 17, 16, 16, 16,
+	16, 16, 15, 11, 11, 11, 10, 10,
+	9, 8, 7, 5, 3, 3, 2, 2,
+};
 extern const short g_bfmeApplyTableD[64] =
 {
 	47, 47, 47, 47, 45, 43, 43, 43,

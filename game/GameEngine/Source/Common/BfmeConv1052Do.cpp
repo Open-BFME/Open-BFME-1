@@ -41,8 +41,8 @@ struct BfmeRecord00800C80
 	BfmeI1052 m_item;
 };
 
-extern char g_bfmeName1052[];
-extern int g_bfmeKeyCVHD;
+extern const char g_feslTransactionIdKey[4];
+extern const char g_feslTypeKey[5];
 
 class BfmeH1052
 {
@@ -67,8 +67,8 @@ void BfmeH1052::bfmeDo1052(int a, BfmeI1052 *p, int r)
 	msg.m_0c = f0c;
 	msg.m_1c = 0x50524F42;
 	msg.m_20 = fa ? (int)0xC0000000 : 0;
-	msg.addInt(g_bfmeName1052, r);
-	msg.addInt((const char *)&g_bfmeKeyCVHD, 1);
+	msg.addInt(g_feslTransactionIdKey, r);
+	msg.addInt((const char *)const_cast<char *>(g_feslTypeKey), 1);
 	Rva007F93E0(&msg, "->D", m_10);
 	((Gen_007e86c0 *)&msg)->m();
 }

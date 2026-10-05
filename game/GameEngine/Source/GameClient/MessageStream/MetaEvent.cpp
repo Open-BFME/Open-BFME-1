@@ -382,20 +382,7 @@ static const LookupListRec GameMessageMetaTypeNames[] =
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // PRIVATE DATA ///////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-static const FieldParse TheMetaMapFieldParseTable[] = 
-{
-
-	{ "Key",								INI::parseLookupList,						KeyNames, offsetof( MetaMapRec, m_key ) },	
-	{ "Transition",					INI::parseLookupList,						TransitionNames, offsetof( MetaMapRec, m_transition ) },		
-	{ "Modifiers",					INI::parseLookupList,						ModifierNames, offsetof( MetaMapRec, m_modState ) },		
-	{ "UseableIn",					INI::parseBitString32,					TheCommandUsableInNames, offsetof( MetaMapRec, m_usableIn ) },		
-	{ "Category",						INI::parseLookupList,						CategoryListName, offsetof( MetaMapRec, m_category ) },		
-	{ "Description",				INI::parseAndTranslateLabel,		0, offsetof( MetaMapRec, m_description ) },		
-	{ "DisplayName",				INI::parseAndTranslateLabel,		0, offsetof( MetaMapRec, m_displayName ) },		
-	
-	{ NULL,									NULL,														0, 0 }  // keep this last
-
-};
+extern const FieldParse TheMetaMapFieldParseTable[];
 
 // PRIVATE FUNCTIONS //////////////////////////////////////////////////////////////////////////////
 

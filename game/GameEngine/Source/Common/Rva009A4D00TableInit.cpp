@@ -15,11 +15,11 @@ typedef int (__cdecl *Fn009A8430)();
 
 extern int g_bfmeSharedJX;
 extern int g_0134C6D8[];
-extern short g_Rva01141D08[];
+extern const unsigned short g_bfmeApplyTableC[64];
 
 static int *const g_013571E0 = &g_bfmeSharedJX;
-static const short *const g_01141D08 = g_Rva01141D08;
-static const short *const g_01141D88 = g_Rva01141D08 + 64;
+static const short *const g_01141D08 = reinterpret_cast<const short *>(g_bfmeApplyTableC);
+static const short *const g_01141D88 = reinterpret_cast<const short *>(g_bfmeApplyTableC) + 64;
 
 typedef void (__cdecl *Rva009A8550Fn)(void *);
 extern Rva009A8550Fn volatile g_rva01356DA0;

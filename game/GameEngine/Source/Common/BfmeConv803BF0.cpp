@@ -33,7 +33,7 @@ public:
 	void bfmeGoVJH(int a) throw();
 };
 
-extern char g_bfmeName1052[];
+extern const char g_feslTransactionIdKey[4];
 extern char g_bfmeNumLobbies803BF0[];
 
 void BfmeOwner803BF0::go(BfmeSrc803BF0 *src)
@@ -42,10 +42,10 @@ void BfmeOwner803BF0::go(BfmeSrc803BF0 *src)
 	BfmeMsg803BF0 msg(buf, 0x40);
 	msg.m_category = 'LLST';
 	msg.addInt(g_bfmeNumLobbies803BF0, 1);
-	int tid = src->getInt(g_bfmeName1052, -1);
+	int tid = src->getInt(g_feslTransactionIdKey, -1);
 	if (tid != -1)
-		msg.addInt(g_bfmeName1052, tid);
+		msg.addInt(g_feslTransactionIdKey, tid);
 	send(&msg);
-	bfmeGoVJH(src->getInt(g_bfmeName1052, 0));
+	bfmeGoVJH(src->getInt(g_feslTransactionIdKey, 0));
 	((Gen_007e86c0 *)&msg)->m();
 }

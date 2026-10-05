@@ -118,7 +118,7 @@ public:
 };
 
 void *Rva007F93E0( void *message, void *route, void *owner );
-extern int g_bfmeKeyVHE;
+extern const char g_feslTransactionIdKey[4];
 
 void BfmeThingUNC::rva0080A3C0( Rva0080A3C0Input *input )
 {
@@ -128,9 +128,9 @@ void BfmeThingUNC::rva0080A3C0( Rva0080A3C0Input *input )
 	BfmeThingCIB *messageCIB = reinterpret_cast< BfmeThingCIB * >( &message );
 
 	message.m_category = input->m_field1c;
-	void *value = sourceRF->bfmeGoRF( &g_bfmeKeyVHE, (void *)-1 );
+	void *value = sourceRF->bfmeGoRF( const_cast<char *>(g_feslTransactionIdKey), (void *)-1 );
 	if( value != (void *)-1 )
-		messageCIB->bfmeGoCIB( &g_bfmeKeyVHE, value );
+		messageCIB->bfmeGoCIB( const_cast<char *>(g_feslTransactionIdKey), value );
 	message.m_field04 = input->m_field04;
 	message.m_field08 = input->m_field08;
 	message.m_field0c = input->m_field0c;
@@ -153,9 +153,9 @@ void BfmeThingUNC::rva0080A3C0( Rva0080A3C0Input *input )
 	BfmeC994 second( buffer, sizeof( buffer ) );
 	BfmeThingCIB *secondCIB = reinterpret_cast< BfmeThingCIB * >( &second );
 	second.m_category = input->m_field1c;
-	value = sourceRF->bfmeGoRF( &g_bfmeKeyVHE, (void *)-1 );
+	value = sourceRF->bfmeGoRF( const_cast<char *>(g_feslTransactionIdKey), (void *)-1 );
 	if( value != (void *)-1 )
-		secondCIB->bfmeGoCIB( &g_bfmeKeyVHE, value );
+		secondCIB->bfmeGoCIB( const_cast<char *>(g_feslTransactionIdKey), value );
 	second.m_field04 = input->m_field04;
 	second.m_field08 = input->m_field08;
 	second.m_field0c = input->m_field0c;
@@ -175,9 +175,9 @@ void BfmeThingUNC::rva0080A3C0( Rva0080A3C0Input *input )
 			BfmeThingCIB *playerCIB =
 				reinterpret_cast< BfmeThingCIB * >( &playerMessage );
 			playerMessage.m_category = input->m_field1c;
-			value = sourceRF->bfmeGoRF( &g_bfmeKeyVHE, (void *)-1 );
+			value = sourceRF->bfmeGoRF( const_cast<char *>(g_feslTransactionIdKey), (void *)-1 );
 			if( value != (void *)-1 )
-				playerCIB->bfmeGoCIB( &g_bfmeKeyVHE, value );
+				playerCIB->bfmeGoCIB( const_cast<char *>(g_feslTransactionIdKey), value );
 			playerMessage.m_field04 = input->m_field04;
 			playerMessage.m_field08 = input->m_field08;
 			playerMessage.m_field0c = input->m_field0c;

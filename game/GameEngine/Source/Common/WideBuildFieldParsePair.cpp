@@ -49,6 +49,98 @@ class WideMulti
 {
 };
 
+extern "C" void __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseColor@TintDrawableFXNugget@@SAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseFXList@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseCoord3D@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseGameClientRandomVariable@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseAngleReal@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseShakeType@ViewShakeFXNugget@@KAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseRva00427670Type@@YAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+
+extern const FieldParse AttachedModelFXNuggetFieldParse[] =
+{
+	{ "Modelname", __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xb4 },
+	{ "RandomlyRotate", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xb8 },
+	{ "ExpireTimer", __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xbc },
+	{ 0, 0, 0, 0 }
+};
+
+extern const FieldParse TintDrawableFXNuggetFieldParse[] =
+{
+	{ "Color", __identifier("?parseColor@TintDrawableFXNugget@@SAXPAVINI@@PAX1PBX@Z"), 0, 0xb4 },
+	{ "PreColorTime", __identifier("?parseUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xc0 },
+	{ "PostColorTime", __identifier("?parseUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xc4 },
+	{ "SustainedColorTime", __identifier("?parseUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xc8 },
+	{ "Frequency", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xcc },
+	{ "Amplitude", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xd0 },
+	{ 0, 0, 0, 0 }
+};
+
+extern const FieldParse FXListAtBonePosFXNuggetFieldParse[] =
+{
+	{ "FX", __identifier("?parseFXList@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xb4 },
+	{ "BoneName", __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xb8 },
+	{ 0, 0, 0, 0 }
+};
+
+extern const FieldParse ParticleSystemFXNuggetFieldParse[] =
+{
+	{ "Name", __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xb4 },
+	{ "Count", __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xb8 },
+	{ "Offset", __identifier("?parseCoord3D@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xbc },
+	{ "Radius", __identifier("?parseGameClientRandomVariable@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xc8 },
+	{ "Height", __identifier("?parseGameClientRandomVariable@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xd4 },
+	{ "InitialDelay", __identifier("?parseGameClientRandomVariable@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xe0 },
+	{ "RotateX", __identifier("?parseAngleReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xec },
+	{ "RotateY", __identifier("?parseAngleReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xf0 },
+	{ "RotateZ", __identifier("?parseAngleReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xf4 },
+	{ "OrientToObject", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xf8 },
+	{ "Ricochet", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x101 },
+	{ "AttachToObject", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xf9 },
+	{ "AttachToBone", __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xfc },
+	{ "CreateAtGroundHeight", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x100 },
+	{ "CreateBoneOverride", __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x104 },
+	{ "CreateBoneAtTarget", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x10c },
+	{ "TargetBoneOverride", __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x108 },
+	{ "TargetCoeff", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x110 },
+	{ "SystemLife", __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x114 },
+	{ "UseTargetOffset", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x118 },
+	{ "SetTargetMatrix", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x119 },
+	{ "TargetOffset", __identifier("?parseCoord3D@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x11c },
+	{ "OnlyIfOnLand", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x11a },
+	{ "OnlyIfOnWater", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x11b },
+	{ 0, 0, 0, 0 }
+};
+
+extern const FieldParse CursorParticleSystemFXNuggetFieldParse[] =
+{
+	{ "Anim2DTemplateName", __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xb4 },
+	{ "BurstCount", __identifier("?parseUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xb8 },
+	{ "ParticleLife", __identifier("?parseGameClientRandomVariable@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xbc },
+	{ "SystemLife", __identifier("?parseGameClientRandomVariable@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xc8 },
+	{ "DriftVelX", __identifier("?parseGameClientRandomVariable@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xd4 },
+	{ "DriftVelY", __identifier("?parseGameClientRandomVariable@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xe0 },
+	{ 0, 0, 0, 0 }
+};
+
+extern const FieldParse ViewShakeFXNuggetFieldParse[] =
+{
+	{ "Type", __identifier("?parseShakeType@ViewShakeFXNugget@@KAXPAVINI@@PAX1PBX@Z"), 0, 0xb4 },
+	{ 0, 0, 0, 0 }
+};
+
+extern const FieldParse TerrainScorchFXNuggetFieldParse[] =
+{
+	{ "Type", __identifier("?parseRva00427670Type@@YAXPAVINI@@PAX1PBX@Z"), 0, 0xb4 },
+	{ "Radius", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xb8 },
+	{ 0, 0, 0, 0 }
+};
+
 #define WIDE_FIELD_PARSE_PAIR( NAME, FIRST, SECOND )                      	extern const WideFieldParse WideTblA##NAME[];                         	extern const WideFieldParse WideTblB##NAME[];                         	class Rva##NAME                                                       	{                                                                     	public:                                                               		static void buildFieldParse( WideMulti &p );                      	};                                                                    	void Rva##NAME::buildFieldParse( WideMulti &p )                       	{                                                                     		MultiIniFieldParse &m = reinterpret_cast<MultiIniFieldParse &>( p ); 	m.add( reinterpret_cast<const FieldParse *>( WideTblA##NAME ), FIRST );	m.add( reinterpret_cast<const FieldParse *>( WideTblB##NAME ), SECOND );	}
 
 // Retail tables and pointer spellings are verified in identity_evidence/010f2480-FXListFieldParse.md.
@@ -197,17 +289,10 @@ NAMED_FIELD_PARSE_PAIR( 00427550, DynamicDecalFXNuggetFieldParse, FXNuggetFieldP
 NAMED_FIELD_PARSE_PAIR( 00427580, BuffNuggetFXNuggetFieldParse, FXNuggetFieldParse )
 NAMED_FIELD_PARSE_PAIR( 004275B0, LaserFXNuggetFieldParse, FXNuggetFieldParse )
 NAMED_FIELD_PARSE_PAIR( 004275E0, CameraShakerVolumeFXNuggetFieldParse, FXNuggetFieldParse )
-extern const WideFieldParse WideTblA00427640[];
-NAMED_FIELD_PARSE_PAIR( 00427640, reinterpret_cast<const FieldParse *>(WideTblA00427640), FXNuggetFieldParse )
-extern const WideFieldParse WideTblA00427780[];
-NAMED_FIELD_PARSE_PAIR( 00427780, reinterpret_cast<const FieldParse *>(WideTblA00427780), FXNuggetFieldParse )
-extern const WideFieldParse WideTblA004277B0[];
-NAMED_FIELD_PARSE_PAIR( 004277B0, reinterpret_cast<const FieldParse *>(WideTblA004277B0), FXNuggetFieldParse )
-extern const WideFieldParse WideTblA004277E0[];
-NAMED_FIELD_PARSE_PAIR( 004277E0, reinterpret_cast<const FieldParse *>(WideTblA004277E0), FXNuggetFieldParse )
-extern const WideFieldParse WideTblA00427810[];
-NAMED_FIELD_PARSE_PAIR( 00427810, reinterpret_cast<const FieldParse *>(WideTblA00427810), FXNuggetFieldParse )
-extern const WideFieldParse WideTblA00427C80[];
-NAMED_FIELD_PARSE_PAIR( 00427C80, reinterpret_cast<const FieldParse *>(WideTblA00427C80), FXNuggetFieldParse )
-extern const WideFieldParse WideTblA00427CB0[];
-NAMED_FIELD_PARSE_PAIR( 00427CB0, reinterpret_cast<const FieldParse *>(WideTblA00427CB0), FXNuggetFieldParse )
+NAMED_FIELD_PARSE_PAIR( 00427640, AttachedModelFXNuggetFieldParse, FXNuggetFieldParse )
+NAMED_FIELD_PARSE_PAIR( 00427780, TintDrawableFXNuggetFieldParse, FXNuggetFieldParse )
+NAMED_FIELD_PARSE_PAIR( 004277B0, FXListAtBonePosFXNuggetFieldParse, FXNuggetFieldParse )
+NAMED_FIELD_PARSE_PAIR( 004277E0, ParticleSystemFXNuggetFieldParse, FXNuggetFieldParse )
+NAMED_FIELD_PARSE_PAIR( 00427810, CursorParticleSystemFXNuggetFieldParse, FXNuggetFieldParse )
+NAMED_FIELD_PARSE_PAIR( 00427C80, ViewShakeFXNuggetFieldParse, FXNuggetFieldParse )
+NAMED_FIELD_PARSE_PAIR( 00427CB0, TerrainScorchFXNuggetFieldParse, FXNuggetFieldParse )

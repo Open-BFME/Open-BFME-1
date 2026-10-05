@@ -1,3 +1,6 @@
+// stlport
+#include <locale>
+
 // Retail 0x00840910, 40 bytes, split by the ledger across its two return arms.
 //
 // A 16-bit index bounded against 0x100 with an unsigned compare -- ax against
@@ -16,12 +19,12 @@
 
 typedef unsigned short UnsignedShort;
 
-extern int TheBfmeMaskTable[0x100];					// 0x0112EC4C
+extern "C" const _STL::ctype_base::mask __identifier("?_S_classic_table@?$ctype@D@_STL@@0QBW4mask@ctype_base@2@B")[257];					// 0x0112EC4C
 
 // ?Gen_00840910@@YGHHG@Z
 int __stdcall Gen_00840910(int mask, UnsignedShort index)
 {
-	if (index < 0x100 && (TheBfmeMaskTable[index] & mask) != 0)
+	if (index < 0x100 && (__identifier("?_S_classic_table@?$ctype@D@_STL@@0QBW4mask@ctype_base@2@B")[index + 1] & mask) != 0)
 		return 1;
 
 	return 0;

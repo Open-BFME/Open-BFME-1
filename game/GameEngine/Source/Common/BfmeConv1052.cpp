@@ -130,7 +130,7 @@ public:
 	void *bfmeGoRF(void *name, void *fallback);
 };
 
-extern char g_bfmeName1052[];
+extern const char g_feslTransactionIdKey[4];
 
 class BfmeH1052
 {
@@ -141,7 +141,7 @@ public:
 
 void BfmeH1052::bfmeGo1052H(BfmeI1052 *p)
 {
-	bfmeDo1052(0, p, (int)(long)reinterpret_cast<BfmeThingRF *>(p)->bfmeGoRF(g_bfmeName1052, 0));
+	bfmeDo1052(0, p, (int)(long)reinterpret_cast<BfmeThingRF *>(p)->bfmeGoRF(const_cast<char *>(g_feslTransactionIdKey), 0));
 }
 
 extern "C" void bfmeHook1052(void);

@@ -11,6 +11,8 @@
 // table at +0xC, and sets _M_delete at +0x10 only when both the table pointer
 // and the delete flag are true.
 
+extern "C" const unsigned int __identifier("?_S_classic_table@?$ctype@D@_STL@@0QBW4mask@ctype_base@2@B")[257];
+
 namespace _STL
 {
 
@@ -58,14 +60,13 @@ protected:
 	static const mask *classic_table();
 
 private:
-	static const mask _S_classic_table[257];
 	const mask *_M_ctype_table;
 	bool _M_delete;
 };
 
 inline const ctype<char>::mask *ctype<char>::classic_table()
 {
-	return &_S_classic_table[1];
+	return &__identifier("?_S_classic_table@?$ctype@D@_STL@@0QBW4mask@ctype_base@2@B")[1];
 }
 
 // ??0?$ctype@D@_STL@@QAE@PBI_NI@Z

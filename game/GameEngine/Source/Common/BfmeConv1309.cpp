@@ -3,7 +3,22 @@
 
 // Open-BFME5 conversions.
 
-extern void *g_bfmeVftTDA[];
+extern "C" void __identifier("?setFields_007EB760@Rva007EB8B0Log@@UAEXHH@Z")();
+extern "C" void __identifier("?bfmeGoELF@BfmeThingELF@@QAEXPAX@Z")();
+extern "C" void __identifier("?Rva007EB8B0@@YAXPAVRva007EB8B0Log@@IPBDZZ")();
+extern "C" void __identifier("?assertFailed@Rva007EB8B0Log@@QAEHPBD0H@Z")();
+extern "C" void __identifier("?errorFrom@Rva007EB8B0Log@@QAEHHPBD0H@Z")();
+extern "C" void __identifier("?bfmeDelTQD@BfmeThingTQD@@QAEPAXE@Z")();
+
+extern void * const g_bfmeVftTDA[6] =
+{
+	(void *)&__identifier("?setFields_007EB760@Rva007EB8B0Log@@UAEXHH@Z"),
+	(void *)&__identifier("?bfmeGoELF@BfmeThingELF@@QAEXPAX@Z"),
+	(void *)&__identifier("?Rva007EB8B0@@YAXPAVRva007EB8B0Log@@IPBDZZ"),
+	(void *)&__identifier("?assertFailed@Rva007EB8B0Log@@QAEHPBD0H@Z"),
+	(void *)&__identifier("?errorFrom@Rva007EB8B0Log@@QAEHHPBD0H@Z"),
+	(void *)&__identifier("?bfmeDelTQD@BfmeThingTQD@@QAEPAXE@Z"),
+};
 
 class BfmeSinkTDA
 {
@@ -27,7 +42,7 @@ public:
 
 void BfmeThingTDA::bfmeGoTDA()
 {
-	m_bfmeVft = g_bfmeVftTDA;
+	m_bfmeVft = (void *)g_bfmeVftTDA;
 	((BfmeSinkTDA *)bfmeGo929C())->bfmeDropTDA(m_bfmeItem, 0);
 }
 

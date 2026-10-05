@@ -67,7 +67,7 @@ BfmeThingVHC *BfmeThingVHC::bfmeInitVHC(BfmeMsgVHC *m)
 	return this;
 }
 
-extern int g_bfmeKeyCVHD;
+extern const char g_feslTypeKey[5];
 extern int g_bfmeKeyDVHD;
 
 class BfmeThingVHD
@@ -84,7 +84,7 @@ public:
 BfmeThingVHD *BfmeThingVHD::bfmeInitVHD(BfmeMsgVHC *m)
 {
 	bfmeBaseVHD(m);
-	m_bfme08 = m->bfmeGetVHC(&g_bfmeKeyCVHD, 0);
+	m_bfme08 = m->bfmeGetVHC(const_cast<char *>(g_feslTypeKey), 0);
 	m->bfmeGetStrVHC(&g_bfmeKeyDVHD, m_bfme0c, 0x100);
 	return this;
 }

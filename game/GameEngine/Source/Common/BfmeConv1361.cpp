@@ -20,14 +20,14 @@ public:
 	void *bfmeGoRF(void *key, void *fallback);
 };
 
-extern int g_bfmeKeyVHE;
+extern const char g_feslTransactionIdKey[4];
 
 void __stdcall bfmeCopyVHE(BfmeMsgVHE *dst, BfmeMsgVHE *src)
 {
 	dst->m_bfme1c = src->m_bfme1c;
-	int v = (int)(long)reinterpret_cast<BfmeThingRF *>(src)->bfmeGoRF(&g_bfmeKeyVHE, (void *)-1);
+	int v = (int)(long)reinterpret_cast<BfmeThingRF *>(src)->bfmeGoRF(const_cast<char *>(g_feslTransactionIdKey), (void *)-1);
 	if (v != -1)
-		dst->bfmeSetVHE(&g_bfmeKeyVHE, v);
+		dst->bfmeSetVHE(const_cast<char *>(g_feslTransactionIdKey), v);
 	dst->m_bfme04 = src->m_bfme04;
 	dst->m_bfme08 = src->m_bfme08;
 	dst->m_bfme0c = src->m_bfme0c;

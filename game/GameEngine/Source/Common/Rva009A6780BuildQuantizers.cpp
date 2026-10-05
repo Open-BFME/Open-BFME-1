@@ -1,6 +1,6 @@
 // Retail 009A6780: derive fixed-point reciprocal and scaled quantizer tables.
 #include <string.h>
-extern short g_Rva01141D08[];
+extern const unsigned short g_bfmeApplyTableC[64];
 extern const short g_bfmeApplyTableD[];
 extern const unsigned g_bfmeTableBZ[64];
 extern unsigned g_Rva01141808[];
@@ -23,7 +23,7 @@ struct Rva009A6780State {
 void Rva009A6780BuildQuantizers(Rva009A6780State* s, int)
 {
     int index=s->index;
-    double reciprocal=1.0/(g_Rva01141D08[index]*4);
+    double reciprocal=1.0/(reinterpret_cast<const short *>(g_bfmeApplyTableC)[index]*4);
     reciprocal*=g_Rva01142610;
     s->at0190[0][0]=(int)(reciprocal+0.5);
     s->at0390[0][0]=g_Rva01142008[index];

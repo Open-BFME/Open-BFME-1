@@ -19,7 +19,7 @@ public:
 // convention already used in this directory: the name claims an address and
 // nothing more. The two single-base externs below are deliberately untouched.
 extern void *g_bfmeRva0112B3ACVt;
-extern void *g_bfmeRva0112B3F0Vt;
+extern void * const g_bfmeVft969D1[3];
 extern void *g_bfmeRva0112B3FCVt;
 extern void *g_bfmeRva01118E58Vt;
 extern void *g_bfmeRva01129744Vt;
@@ -46,7 +46,7 @@ Bfme5Obj18 * __cdecl bfme5MakeObj18(void)
 		p = (Bfme5Obj18 *)q;
 		*(void *volatile *)&p->m_bfmeV4 = &g_bfmeRva0112B3ACVt;
 		*(void *volatile *)&p->m_bfmeV0 = &g_bfmeRva0112B3FCVt;
-		*(void *volatile *)&p->m_bfmeV4 = &g_bfmeRva0112B3F0Vt;
+		*(void *volatile *)&p->m_bfmeV4 = (void *)g_bfmeVft969D1;
 		p->m_bfme08 = 0;
 		p->m_bfme0c = 0;
 		p->m_bfme10 = 0;

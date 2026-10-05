@@ -1,3 +1,7 @@
+// cl: /MD
+// stlport
+#include <locale>
+
 // Character-classification members driven by three 256-entry tables: a byte
 // upper table, a byte lower table, and a dword mask table.  The tables are
 // DIR32 operands the patcher fills, but each one is referenced from several of
@@ -7,7 +11,7 @@ typedef unsigned short T2WChar;
 
 extern const char t2_upper_table[256];
 extern const char t2_lower_table[256];
-extern const unsigned int t2_mask_table[256];
+extern "C" const _STL::ctype_base::mask __identifier("?_S_classic_table@?$ctype@D@_STL@@0QBW4mask@ctype_base@2@B")[257];
 
 // The block copy is an indirect call through an import slot, so it is declared
 // as an imported function rather than the intrinsic the compiler would inline.
@@ -68,7 +72,7 @@ const T2WChar *T2WideCtype::isRange(const T2WChar *low, const T2WChar *high,
 {
 	while (low < high)
 	{
-		*vec = (*low < 0x100) ? t2_mask_table[*low] : 0;
+		*vec = (*low < 0x100) ? __identifier("?_S_classic_table@?$ctype@D@_STL@@0QBW4mask@ctype_base@2@B")[*low + 1] : 0;
 		++low;
 		++vec;
 	}

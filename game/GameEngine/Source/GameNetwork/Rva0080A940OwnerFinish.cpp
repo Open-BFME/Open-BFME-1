@@ -112,7 +112,7 @@ public:
 	int m_sequence;
 };
 
-extern int g_bfmeKeyVHE;
+extern const char g_feslTransactionIdKey[4];
 void *Rva007F93E0( void *message, void *route, void *owner );
 extern "C" char *strchr( const char *text, int character );
 extern "C" int strcmp( const char *left, const char *right );
@@ -161,7 +161,7 @@ bool Rva0080A940Owner::finish()
 	request.m_category = 'GLST';
 	request.m_field20 = (int)0xC0000000;
 	reinterpret_cast< BfmeThingCIB * >( &request )->bfmeGoCIB(
-		&g_bfmeKeyVHE, (void *)m_tid );
+		const_cast<char *>(g_feslTransactionIdKey), (void *)m_tid );
 
 	char *cursor = response;
 	for( ; remaining > 0; --remaining )

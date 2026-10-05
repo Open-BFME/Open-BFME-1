@@ -39,7 +39,7 @@ BfmeThingTQA::BfmeThingTQA()
 	m_bfme28 = 0;
 }
 
-extern void *g_bfmeVftTQD[];
+extern void * const g_bfmeVftTDA[6];
 
 class BfmeSinkTQD
 {
@@ -64,7 +64,7 @@ public:
 
 void *BfmeThingTQD::bfmeDelTQD(unsigned char flags)
 {
-	m_bfmeVft = g_bfmeVftTQD;
+	m_bfmeVft = (void *)g_bfmeVftTDA;
 	((BfmeSinkTQD *)bfmeGo929C())->bfmeDropTQD(m_bfmeItem, 0);
 	if (flags & 1)
 		bfmeFreeTQD(this, 0x14);

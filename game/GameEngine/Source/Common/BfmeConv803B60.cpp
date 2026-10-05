@@ -32,7 +32,7 @@ public:
 	void send(BfmeMsg803B60 *m) throw();
 };
 
-extern char g_bfmeName1052[];
+extern const char g_feslTransactionIdKey[4];
 
 void BfmeOwner803B60::go(BfmeSrc803B60 *src)
 {
@@ -40,9 +40,9 @@ void BfmeOwner803B60::go(BfmeSrc803B60 *src)
 	BfmeMsg803B60 msg(buf, 0x40);
 	msg.m_category = 'RLST';
 	msg.addInt("NUM-REGIONS", 0);
-	int tid = src->getInt(g_bfmeName1052, -1);
+	int tid = src->getInt(g_feslTransactionIdKey, -1);
 	if (tid != -1)
-		msg.addInt(g_bfmeName1052, tid);
+		msg.addInt(g_feslTransactionIdKey, tid);
 	send(&msg);
 	((Gen_007e86c0 *)&msg)->m();
 }

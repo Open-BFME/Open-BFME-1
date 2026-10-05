@@ -48,7 +48,7 @@ public:
 	void m();
 };
 
-extern int g_bfmeKeyVHE;
+extern const char g_feslTransactionIdKey[4];
 
 struct Rva00809520Entry
 {
@@ -103,7 +103,7 @@ void Gen0080AB50::process( unsigned int timestamp )
 	BfmeC994 summary( buffer, sizeof( buffer ) );
 	BfmeThingCIB *summaryCIB = reinterpret_cast< BfmeThingCIB * >( &summary );
 	summary.m_category = 'GLST';
-	summaryCIB->bfmeGoCIB( &g_bfmeKeyVHE, (void *)m_tid );
+	summaryCIB->bfmeGoCIB( const_cast<char *>(g_feslTransactionIdKey), (void *)m_tid );
 	summaryCIB->bfmeGoCIB( "LID", (void *)-2 );
 	summaryCIB->bfmeGoCIB( "NUM-GAMES", (void *)recentCount );
 	m_sender->bfmeSendVJH( reinterpret_cast< BfmeMsgVJH * >( &summary ) );

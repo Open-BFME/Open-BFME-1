@@ -16,7 +16,7 @@ public:
 // the mangled name ?g_Va0130A5A0@@3PAURva007EB810Diag@@A.
 struct Rva007EB810Diag;
 
-extern int vftable_01129D30;
+extern void * const g_bfmeVftTDA[6];
 extern void Rva007EB820(void);
 extern Rva007EB810Diag *g_Va0130A5A0;
 
@@ -30,7 +30,7 @@ void Rva007EBAA0(void)
 		*((int *)p + 2) = 0;
 		*((int *)p + 3) = 0;
 		*((int *)p + 4) = 0;
-		*(int *)p = (int)&vftable_01129D30;
+		*(int *)p = (int)g_bfmeVftTDA;
 		*((int *)p + 1) = (int)&Rva007EB820;
 		g_Va0130A5A0 = (Rva007EB810Diag *)p;
 	}
