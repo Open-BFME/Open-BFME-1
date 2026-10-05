@@ -949,3 +949,8 @@ game/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdateSetStatus.cpp|par
 game/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdateSetStatus.cpp|param|battlePlanSetPosition|p,7c8fdce6c370916c9787128a,grok,20261005200512-547af9,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdateSetStatus.cpp|param|setBattlePlan|s,edeef6ce858f9c57e20d2b4f,grok,20261005200512-547af9,2026-10-05
 game/GameEngine/Source/GameLogic/Object/WeaponTemplate_CopyAssign.cpp|member||m_b509,ea3e6db890d35eb33ab81e81,gpt-6-sol,20261005200742-232cea,2026-10-05
+game/GameEngine/Source/GameLogic/Object/WeaponTemplate_CopyAssign.cpp|member||m_d084,6cdc6c24a7b13bab4b75afd4,grok,20261005200817-172dab,2026-10-05
+game/GameEngine/Source/GameLogic/Object/WeaponTemplate_CopyAssign.cpp|member||m_d094,3574ee7e7be6bef5f2905eb8,grok,20261005200817-172dab,2026-10-05
+game/GameEngine/Source/GameLogic/Object/WeaponTemplate_CopyAssign.cpp|member||m_d0a4,1f94712377296864396aa2b3,grok,20261005200817-172dab,2026-10-05
+game/GameEngine/Source/GameLogic/Object/WeaponTemplate_CopyAssign.cpp|member||m_d4a8,2521f01e61cc6170773f4170,grok,20261005200817-172dab,2026-10-05
+game/GameEngine/Source/GameLogic/Object/WeaponTemplate_CopyAssign.cpp|member||m_b509,ea3e6db890d35eb33ab81e81,grok,20261005200817-172dab,2026-10-05

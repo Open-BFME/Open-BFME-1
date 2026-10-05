@@ -380,3 +380,4 @@ game/GameEngine/Source/GameLogic/AI/AIGroup_setWeaponLockForGroup.cpp|member||m_
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIAttackSwoopThenIdleStateMachineRva002BC870.cpp|type||Rva002BC870AI,AIUpdateInterface,gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdateSetStatus.cpp|param|battlePlanSetPosition|p,pos,gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdateSetStatus.cpp|param|setBattlePlan|s,plan,gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameLogic/Object/WeaponTemplate_CopyAssign.cpp|member||m_b509,m_maxAttackPassengers,gpt-6-sol+grok,agreed,2026-10-05
