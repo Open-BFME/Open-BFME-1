@@ -1,5 +1,5 @@
 // ?doDeploySiegeOnWaypoint@ScriptActions@@IAEXPAVParameter@@00@Z
-// partial score=0.78 date=2026-09-23
+// partial score=0.7855 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 //
