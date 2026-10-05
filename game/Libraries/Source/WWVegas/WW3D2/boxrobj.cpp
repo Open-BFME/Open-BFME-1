@@ -228,7 +228,7 @@ static Vector3						_BoxVertexNormals[NUM_BOX_VERTS] =
 
 bool										BoxRenderObjClass::IsInitted			= false;
 int										BoxRenderObjClass::DisplayMask		= 0;
-static VertexMaterialClass *		_BoxMaterial								= NULL;
+extern VertexMaterialClass *_BoxMaterial;
 static ShaderClass					_BoxShader;
 
 

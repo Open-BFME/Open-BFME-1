@@ -65,16 +65,17 @@ public:
 	int m_bfmeRef;
 };
 
-extern BfmeObj911C *g_bfme911Ptr;
+class VertexMaterialClass;
+extern VertexMaterialClass *_BoxMaterial;
 extern char g_bfme911Busy;
 
 void bfmeGo911C(void)
 {
-	BfmeObj911C *p = g_bfme911Ptr;
+	BfmeObj911C *p = reinterpret_cast<BfmeObj911C *>(_BoxMaterial);
 	if (p) {
 		if (--p->m_bfmeRef == 0)
 			p->bfmeRelease911C();
-		g_bfme911Ptr = 0;
+		_BoxMaterial = 0;
 	}
 	g_bfme911Busy = 0;
 }

@@ -43,8 +43,10 @@ public:
 	virtual void bfmeReleaseTXB(int f) = 0;
 };
 
-extern BfmeResTXB *g_bfmeOneTXB;
-extern BfmeResTXB *g_bfmeTwoTXB;
+class LocalFileSystem;
+class ArchiveFileSystem;
+extern LocalFileSystem *TheLocalFileSystem;
+extern ArchiveFileSystem *TheArchiveFileSystem;
 
 void bfmeFreeTXB(void *p);
 
@@ -58,12 +60,12 @@ public:
 void *BfmeThingTXB::bfmeDelTXB(unsigned char flags)
 {
 	m_bfmeVft = g_bfmeVftTXB;
-	if (g_bfmeOneTXB)
-		g_bfmeOneTXB->bfmeReleaseTXB(1);
-	g_bfmeOneTXB = 0;
-	if (g_bfmeTwoTXB)
-		g_bfmeTwoTXB->bfmeReleaseTXB(1);
-	g_bfmeTwoTXB = 0;
+	if (TheLocalFileSystem)
+		reinterpret_cast<BfmeResTXB *>(TheLocalFileSystem)->bfmeReleaseTXB(1);
+	TheLocalFileSystem = 0;
+	if (TheArchiveFileSystem)
+		reinterpret_cast<BfmeResTXB *>(TheArchiveFileSystem)->bfmeReleaseTXB(1);
+	TheArchiveFileSystem = 0;
 	if (flags & 1)
 		bfmeFreeTXB(this);
 	return this;

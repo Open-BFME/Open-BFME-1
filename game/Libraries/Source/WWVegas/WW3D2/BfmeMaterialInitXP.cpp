@@ -22,7 +22,7 @@ private:
 	char m_bfmeRaw[0x6C];
 };
 
-extern VertexMaterialClass *g_bfmeMaterialXP;			// retail 0x0134B210
+VertexMaterialClass *_BoxMaterial = 0;			// retail 0x0134B210
 extern int g_bfmeSourceXP;					// retail 0x012D6E40
 extern int g_bfmeTargetXP;					// retail 0x012D7300
 extern bool g_bfmeReadyXP;					// retail 0x0134B208
@@ -30,14 +30,14 @@ extern bool g_bfmeReadyXP;					// retail 0x0134B208
 // ?bfmeInitMaterialXP@@YAXXZ
 void bfmeInitMaterialXP(void)
 {
-	g_bfmeMaterialXP = new VertexMaterialClass;
+	_BoxMaterial = new VertexMaterialClass;
 
-	g_bfmeMaterialXP->Set_Ambient(0.0f, 0.0f, 0.0f);
-	g_bfmeMaterialXP->Set_Diffuse(0.0f, 0.0f, 0.0f);
-	g_bfmeMaterialXP->Set_Specular(0.0f, 0.0f, 0.0f);
-	g_bfmeMaterialXP->Set_Emissive(1.0f, 1.0f, 1.0f);
-	g_bfmeMaterialXP->Set_Opacity(1.0f);
-	g_bfmeMaterialXP->Set_Shininess(0.0f);
+	_BoxMaterial->Set_Ambient(0.0f, 0.0f, 0.0f);
+	_BoxMaterial->Set_Diffuse(0.0f, 0.0f, 0.0f);
+	_BoxMaterial->Set_Specular(0.0f, 0.0f, 0.0f);
+	_BoxMaterial->Set_Emissive(1.0f, 1.0f, 1.0f);
+	_BoxMaterial->Set_Opacity(1.0f);
+	_BoxMaterial->Set_Shininess(0.0f);
 
 	g_bfmeTargetXP = g_bfmeSourceXP;
 

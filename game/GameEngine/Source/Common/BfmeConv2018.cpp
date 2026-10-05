@@ -21,7 +21,7 @@ public:
 	unsigned char m_bfmeBodyEBB[0x28];
 };
 
-extern LocalFileSystem *TheLocalFileSystem;
+LocalFileSystem *TheLocalFileSystem = 0;
 extern ArchiveFileSystem *TheArchiveFileSystem;
 extern char g_rva00061DE0;
 
