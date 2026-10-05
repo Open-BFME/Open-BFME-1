@@ -72,10 +72,17 @@ public:
 
 extern GameLogic *TheGameLogic;
 
-class Rva002B8890DozerAIUpdate
+// Existing BFME thiscall provider at 002B6C40; declaration only.
+// Its receiver is the same ECX context carried by the caller below.
+class DozerAIUpdate
 {
 public:
 	bool findGoodBuildOrRepairPosition(const Object *me, const Object *target, Coord3D &positionOut);
+};
+
+class Rva002B8890DozerAIUpdate
+{
+public:
 
 	// The receiver is the BFME context carried in ECX although the retail
 	// spelling of the public helper is the static DozerAIUpdate name.
@@ -105,7 +112,7 @@ Object *Rva002B8890DozerAIUpdate::findGoodBuildOrRepairPositionAndTarget(
 					if (tower)
 					{
 						Coord3D tmp;
-						bool found = findGoodBuildOrRepairPosition(me, tower, tmp);
+						bool found = reinterpret_cast<DozerAIUpdate *>(this)->findGoodBuildOrRepairPosition(me, tower, tmp);
 						if (found && ai->isPathAvailable(&tmp))
 						{
 						float thisDistSqr = (me->m_position.y - tmp.y) * (me->m_position.y - tmp.y)
@@ -125,6 +132,6 @@ Object *Rva002B8890DozerAIUpdate::findGoodBuildOrRepairPositionAndTarget(
 			}
 	}
 
-	findGoodBuildOrRepairPosition(me, target, positionOut);
+	reinterpret_cast<DozerAIUpdate *>(this)->findGoodBuildOrRepairPosition(me, target, positionOut);
 	return target;
 }
