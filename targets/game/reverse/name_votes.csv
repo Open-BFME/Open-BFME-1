@@ -422,3 +422,4 @@ game/GameEngine/Source/Common/Bfme5IniNamedValue.cpp|param|bfme5ParseNamedValueB
 game/GameEngine/Source/Common/Bfme5IniNamedValue.cpp|local|bfme5ParseNamedValueB|v,82b0e0f08a7ab1c6b25c1c9f,gpt-6-astra,20261005160837-6c22c8,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1838.cpp|type||BfmeSinkXB,92165566e5bc5cd3d64e2aba,gpt-6-astra,20261005161148-df87a9,2026-10-05
 game/GameEngine/Source/Common/Bfme/Rva006DF050EraseTen.cpp|local|Rva006DF050::eraseKey|n,3e40608740d5bfc07ba0fea6,gpt-6-astra,20261005161757-d2a722,2026-10-05
+game/GameEngine/Source/Common/BfmeHostABD_bfmeAllocABD.cpp|member||m_bfme4CABD,6d9c69e09b487b5d3da6415f,gpt-6-astra,20261005160718-7d71f1,2026-10-05
