@@ -88,6 +88,7 @@ class Team;
 class ThingTemplate;
 class UpgradeTemplate;
 class Module;
+class UpdateModule;
 class Object;
 
 class ThingFactory
@@ -174,9 +175,14 @@ public:
 	int getID() const { return m_id; }
 	Team *getTeam() const { return m_team; }
 	Player *getControllingPlayer() const;
-	Module *findModule(NameKeyType key) const;
+	// Canonical Object.h wrapper: keep the lookup itself protected, as in
+	// the physical Object.cpp provider reached through retail ILT 0x0002AE23.
+	UpdateModule *findUpdateModule(NameKeyType key) const { return (UpdateModule *)findModule(key); }
 	void giveUpgrade(const UpgradeTemplate *upgrade);
 	void removeUpgrade(const UpgradeTemplate *upgrade);
+
+protected:
+	Module *findModule(NameKeyType key) const;
 
 private:
 	char m_pad48[0x74 - 0x48];
@@ -282,7 +288,7 @@ UpdateSleepTime ObjectCreationUpgrade::update()
 			obj->setPosition(&pos);
 
 			static NameKeyType slaveWatcherKey = TheNameKeyGenerator->nameToKey("SlaveWatcherBehavior");
-			BfmeThingBHA *slaveWatcher = (BfmeThingBHA *)getObject()->findModule(slaveWatcherKey);
+			BfmeThingBHA *slaveWatcher = (BfmeThingBHA *)getObject()->findUpdateModule(slaveWatcherKey);
 			if (slaveWatcher != 0)
 				slaveWatcher->bfmeGoBHA((void *)obj->getID());
 		}
