@@ -22,8 +22,14 @@ needs origin anyway). A window is a 10-minute lease its holder renews while
 it works (renew_window, compare-and-swap, keyed on the window's nonce), so a
 dead holder blocks master for at most ~10 minutes; `close --force` ends one.
 
-  python3 tools/publish_window.py status
-  python3 tools/publish_window.py open [--minutes 90] [--purpose TEXT]   # prints the token
+HOLD CAP. A window counts for at most MAX_HOLD_MINUTES from its opening, however
+often it is renewed: renew_window stops extending it, and every check and
+takeover treats it as expired, so a holder that keeps renewing cannot keep
+master indefinitely. Gate outside the window first (landing_service pregate)
+and open a new window for whatever remains.
+
+  python3 tools/publish_window.py status       # shows minutes held against the cap
+  python3 tools/publish_window.py open [--minutes 10] [--purpose TEXT]   # prints the token
   python3 tools/publish_window.py close TOKEN | --force   # --force is logged
   python3 tools/publish_window.py check        # exit 1 while someone else holds it
 """
@@ -46,6 +52,9 @@ TOKEN_ENV = "BFME_WINDOW_TOKEN"
 # so a crashed holder blocks master for at most this long -- never the 90
 # minutes the first version used (owner's request, 2026-09-30).
 LEASE_MINUTES = 10
+# The longest one window may hold master from its opening, renewals included;
+# it leaves room for one ~17-minute header-wide push gate.
+MAX_HOLD_MINUTES = 30
 FUTURE_SKEW = 300        # seconds of clock skew tolerated on a window commit
 
 
@@ -122,8 +131,19 @@ def valid(info):
             and isinstance(info.get("expires"), (int, float)))
 
 
+def hold_deadline(info):
+    """When the window stops counting however it is renewed (opened +
+    MAX_HOLD_MINUTES), or None when its metadata records no opening."""
+    opened = (info or {}).get("opened")
+    return opened + MAX_HOLD_MINUTES * 60 if isinstance(opened, (int, float)) else None
+
+
 def live(info, now=None):
-    return bool(info) and info.get("expires", 0) > (now or time.time())
+    now = now or time.time()
+    if not info or info.get("expires", 0) <= now:
+        return False
+    deadline = hold_deadline(info)
+    return deadline is None or now < deadline
 
 
 def _commit(body, root=None):
@@ -138,11 +158,17 @@ def _commit(body, root=None):
 def renew_window(nonce, minutes=LEASE_MINUTES, remote="origin", root=None):
     """Extend the window we hold by `minutes` from now: compare-and-swap on
     the current ref, and only while it still carries our nonce. Returns the
-    new expiry, or None when the window is no longer ours."""
+    new expiry, or None when the window is no longer ours or has reached its
+    hold cap (the extension never passes hold_deadline)."""
     current, info = read(remote, root)
     if not current or (info or {}).get("nonce") != nonce:
         return None
-    body = dict(info, expires=int(time.time() + minutes * 60))
+    now = time.time()
+    deadline = hold_deadline(info)
+    if deadline is not None and now >= deadline:
+        return None
+    expires = int(now + minutes * 60)
+    body = dict(info, expires=expires if deadline is None else min(expires, int(deadline)))
     new = _commit(body, root)
     pushed = _git("push", "-q", f"--force-with-lease={REF}:{current}", remote, f"+{new}:{REF}",
                   root=root, timeout=120)
@@ -154,14 +180,16 @@ def open_window(minutes=LEASE_MINUTES, purpose="", owner=None, remote="origin", 
     renew_window() (the ref's sha does not). Raises WindowHeld."""
     token, info = read(remote, root)
     if token and live(info):
+        until = min(info["expires"], hold_deadline(info) or info["expires"])
         raise WindowHeld(f"publish window held by {info.get('owner')} "
-                         f"({info.get('purpose', '')}) for {(info['expires'] - time.time()) / 60:.0f} more min")
+                         f"({info.get('purpose', '')}) for {(until - time.time()) / 60:.0f} more min")
     now = time.time()
     nonce = uuid.uuid4().hex
     new = _commit({"owner": owner or f"{os.environ.get('USERNAME') or os.environ.get('USER') or '?'}"
                                      f"@{socket.gethostname()}",
                    "host": socket.gethostname(), "purpose": purpose, "nonce": nonce,
-                   "opened": int(now), "expires": int(now + minutes * 60)}, root)
+                   "opened": int(now),
+                   "expires": int(now + min(minutes, MAX_HOLD_MINUTES) * 60)}, root)
     lease = f"--force-with-lease={REF}:{token or ''}"
     # the push hook skips refs/landing/* (a lock marker, like refs/claims/*)
     pushed = _git("push", "-q", lease, remote, f"+{new}:{REF}", root=root, timeout=120)
@@ -207,6 +235,9 @@ def check(remote="origin", root=None):
         token, info = read(remote, root)
     except RuntimeError as error:
         return True, f"{error}; not checking the publish window"
+    if token and info and info.get("expires", 0) > time.time() and not live(info):
+        return True, (f"the publish window held by {info.get('owner')} passed its "
+                      f"{MAX_HOLD_MINUTES}-minute hold cap; not honoured")
     if not token or not live(info):
         return True, ""
     if os.environ.get(TOKEN_ENV) in (token, info.get("nonce")) and os.environ.get(TOKEN_ENV):
@@ -232,8 +263,10 @@ def main(argv=None):
         return 0 if allowed else 1
     if args.action == "status":
         token, info = read(args.remote)
+        held = (f" held {(time.time() - info['opened']) / 60:.0f}/{MAX_HOLD_MINUTES} min"
+                if token and hold_deadline(info) is not None else "")
         print("no window" if not token else
-              f"{token[:10]} {'LIVE' if live(info) else 'expired'} {json.dumps(info, sort_keys=True)}")
+              f"{token[:10]} {'LIVE' if live(info) else 'expired'}{held} {json.dumps(info, sort_keys=True)}")
         return 0
     if args.action == "open":
         try:

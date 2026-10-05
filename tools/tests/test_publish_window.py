@@ -245,6 +245,42 @@ def test_a_dead_holder_blocks_only_until_its_short_lease_expires(clones):
     assert pw.check(root=clones["seat"]) == (True, "")
 
 
+def _later(monkeypatch, minutes):
+    real = pw.time.time
+    monkeypatch.setattr(pw.time, "time", lambda: real() + minutes * 60)
+
+
+def test_renewals_never_carry_a_window_past_its_hold_cap(clones, monkeypatch):
+    nonce = pw.open_window(owner="drainer", root=clones["service"])
+    opened = pw.read(root=clones["service"])[1]["opened"]
+    _later(monkeypatch, pw.MAX_HOLD_MINUTES - 2)
+    expires = pw.renew_window(nonce, pw.LEASE_MINUTES, root=clones["service"])
+    assert expires == opened + pw.MAX_HOLD_MINUTES * 60      # clipped to the cap
+    _later(monkeypatch, pw.MAX_HOLD_MINUTES + 1)
+    assert pw.renew_window(nonce, pw.LEASE_MINUTES, root=clones["service"]) is None
+
+
+def test_a_window_past_its_hold_cap_blocks_nothing_and_is_taken_over(clones, monkeypatch):
+    pw.open_window(owner="hog", root=clones["service"])
+    info = pw.read(root=clones["service"])[1]
+    body = dict(info, opened=info["opened"] - (pw.MAX_HOLD_MINUTES + 1) * 60)   # renewed all along
+    new = pw._commit(body, clones["service"])
+    _git(clones["service"], "push", "-q", "origin", f"+{new}:{pw.REF}")
+    allowed, why = pw.check(root=clones["seat"])
+    assert allowed and "hog" in why and "hold cap" in why
+    token = pw.open_window(owner="next", root=clones["seat"])
+    assert pw.read(root=clones["service"])[1]["nonce"] == token
+
+
+def test_open_caps_its_lease_and_status_shows_the_time_held(clones, monkeypatch, capsys):
+    pw.open_window(10 * pw.MAX_HOLD_MINUTES, owner="svc", root=clones["service"])
+    info = pw.read(root=clones["service"])[1]
+    assert info["expires"] - info["opened"] <= pw.MAX_HOLD_MINUTES * 60
+    monkeypatch.setattr(pw, "ROOT", clones["seat"])          # status reads the test origin
+    assert pw.main(["status"]) == 0
+    assert f"LIVE held 0/{pw.MAX_HOLD_MINUTES} min" in capsys.readouterr().out
+
+
 def test_the_drainer_renews_while_working_closes_and_logs_its_hold(world, monkeypatch):
     service, unit, origin = world
     monkeypatch.delenv(pw.TOKEN_ENV, raising=False)
