@@ -315,3 +315,4 @@ game/GameEngine/Source/Common/Bfme5IniNamedValue.cpp|local|bfme5ParseNamedValueA
 game/GameEngine/Source/Common/Bfme5IniNamedValue.cpp|local|bfme5ParseNamedValueB|v,count,gpt-6-astra+grok,blocked: game/GameEngine/Source/Common/Bfme5IniNamedValue.cpp: game\GameEngine\Source\Common\Bfme5IniNamedValue.cpp(52) : error C2065: 'v' : undeclared identif,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Update/Rva002A59F0BfmeReady.cpp|type||Gen_002A59F0,SpecialAbilityUpdate,gpt-6-astra+grok,blocked: game/GameEngine/Source/GameLogic/Object/Update/SpecialAbilityUpdate_update.cpp: game\GameEngine\Source\GameLogic\Object\Update\SpecialAbilityUpdate_up,2026-10-05
 game/GameEngine/Source/Common/Rva009A2350Init.cpp|member||m_00,m_owner,gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/Common/Rva009A2350Init.cpp|member||m_00,m_owner,gpt-6-sol+grok,applied,2026-10-05

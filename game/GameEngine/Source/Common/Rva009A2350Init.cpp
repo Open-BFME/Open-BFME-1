@@ -10,7 +10,7 @@ struct Rva009A2350Node
 
 class Rva009A2350
 {
-	Rva009A2350Node *m_00;
+	Rva009A2350Node *m_owner;
 	char pad[0x0C];
 	void *m_10;
 	void *m_14;
@@ -23,11 +23,11 @@ void Rva009A2350::init()
 {
 	if (m_10)
 		return;
-	char *p = (char *)m_00 + 8;
+	char *p = (char *)m_owner + 8;
 	m_10 = p;
 	void *q = *(void **)p;
 	m_14 = q;
 	if (q)
 		((void **)q)[4] = &m_14;
-	m_00->m_08 = (Rva009A2350Node *)this;
+	m_owner->m_08 = (Rva009A2350Node *)this;
 }
