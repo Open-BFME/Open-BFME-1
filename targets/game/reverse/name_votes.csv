@@ -454,3 +454,6 @@ game/GameEngine/Source/Common/Audio/Rva006B1E60ProviderState.cpp|type||Rva006B1E
 game/GameEngine/Source/Common/Audio/Rva006B1E60ProviderState.cpp|type||Rva006B1E60Owner,abf80a994d5038eab2a95bf4,gpt-6-astra,20261005161649-59521f,2026-10-05
 game/GameEngine/Source/Common/Rva0087EA20Copy.cpp|local|bfmeCopyA2|n,9bf7913fc4c0ebc0fa381a92,gpt-6-astra,20261005160700-f084dc,2026-10-05
 game/GameEngine/Source/Common/Rva0087EA20Copy.cpp|local|bfmeCopyA2|m,3b7b8feea3ef8770ffe45950,gpt-6-astra,20261005160700-f084dc,2026-10-05
+game/GameEngine/Source/GameLogic/Object/SpecialPower/SpecialPowerModule_initiateIntentToDoSpecialPower.cpp|member||m_dword28,c971f382c4638b23444f2492,gpt-6-astra,20261005161057-b74a61,2026-10-05
+game/GameEngine/Source/GameLogic/Object/SpecialPower/SpecialPowerModule_initiateIntentToDoSpecialPower.cpp|local|SpecialPowerModule::initiateIntentToDoSpecialPower|u,3597ed6feda0d79b93f03932,gpt-6-astra,20261005161057-b74a61,2026-10-05
+game/GameEngine/Source/GameLogic/Object/SpecialPower/SpecialPowerModule_initiateIntentToDoSpecialPower.cpp|local|SpecialPowerModule::initiateIntentToDoSpecialPower|tmpl,dc973b281609142527982a18,gpt-6-astra,20261005161057-b74a61,2026-10-05
