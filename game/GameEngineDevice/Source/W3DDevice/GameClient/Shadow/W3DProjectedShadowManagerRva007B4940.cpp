@@ -149,7 +149,7 @@ public:
 	Char m_pad38[0x58 - 0x38];
 	Rva007B4940Sub *m_first;	//retail +0x58
 	Rva007B4940Sub *m_second;	//retail +0x5c
-	void *m_at60;				//retail +0x60
+	void *m_robj;				//retail +0x60
 	Rva007B3B80 *m_next;		//retail +0x64
 };
 
@@ -236,7 +236,7 @@ Rva007B3B80 *W3DProjectedShadowManager::createShadowPairRva007B4940(
 	}
 
 	pairObj->m_at34 = value34;
-	void *&at60 = pairObj->m_at60;
+	void *&at60 = pairObj->m_robj;
 	at60 = robj;
 
 	if (pairObj->m_first)
