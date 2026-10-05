@@ -81,7 +81,17 @@ BFME_TABLE_REGISTER( Rva002CAB10, g_table_002CAB10 )
 BFME_TABLE_REGISTER( Rva00607930, g_table_00607930 )
 BFME_TABLE_REGISTER( Rva00756C50, g_table_00756C50 )
 BFME_TABLE_REGISTER( Rva007594E0, g_table_007594E0 )
-BFME_TABLE_REGISTER( Rva00122E10, g_table_00122E10 )
+// The repair field and complete terminator are verified in identity_evidence/0108aef4-RepairFieldParse.md.
+extern "C" void __identifier("?parsePercentToReal@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern const FieldParse g_table_00122E10[] =
+{
+    { "RepairHealthPercentPerSecond", __identifier("?parsePercentToReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 8 },
+    { 0, 0, 0, 0 }
+};
+void Rva00122E10(Gen00850920 *receiver)
+{
+    reinterpret_cast<MultiIniFieldParse *>(receiver)->add(g_table_00122E10, 0);
+}
 BFME_TABLE_REGISTER( Rva001238F0, g_table_001238F0 )
 BFME_TABLE_REGISTER( Rva00123990, g_table_00123990 )
 BFME_TABLE_REGISTER( Rva00123A90, g_table_00123A90 )

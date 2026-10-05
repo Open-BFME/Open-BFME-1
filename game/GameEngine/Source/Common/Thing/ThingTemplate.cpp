@@ -135,147 +135,219 @@ typedef std::map<AsciiString, BfmePerUnitSoundAudioEvent> BfmePerUnitSoundMap;
 */
 
 // NOTE NOTE NOTE -- s_objectFieldParseTable and s_objectReskinFieldParseTable must be updated in tandem -- see comment above
-const FieldParse ThingTemplate::s_objectFieldParseTable[] = 
+// BFME entries, offsets and callback routes are verified in identity_evidence/010910a0-ThingTemplateFieldParse.md.
+extern "C" void __identifier("?Rva000BDAF0IndexVectorParse@@YAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?bfmeMakeCF@@YAXPAX0@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?bfmeParseYW@@YAXPAX0PAUBfmeVecYW@@@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?bfmeParseZH@@YAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?d_00880020@@YAXXZ")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?d_00880780@@YAXXZ")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parse@EvaParseMessageFromIniShim@@SAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseAddModule@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseAndTranslateLabel@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseAngleReal@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseArmorTemplateSet@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseAsciiStringVector@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseBitString16@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseByte@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseByteSizedIndexList@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseColorInt@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseCoord3D@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseDurationUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseFrictionPerSec@@YAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseFromINI@?$BitFlags@$0HE@@@SAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseGeometryActive@GeometryInfo@@SAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseGeometryHeight@GeometryInfo@@SAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseGeometryIsSmall@GeometryInfo@@SAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseGeometryMajorRadius@GeometryInfo@@SAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseGeometryMinorRadius@GeometryInfo@@SAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseGeometryOffset@GeometryInfo@@SAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseGeometryRotationAnchorOffset@@YAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseGeometryType@GeometryInfo@@SAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseInheritableModule@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseModuleName@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parsePerUnitFX@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parsePerUnitSounds@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parsePercentToReal@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parsePrerequisites@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseRemoveModule@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseReplaceModule@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseUnsignedByte@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseUnsignedShort@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseWeaponTemplate@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseWeaponTemplateSet@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern const char *const ThingTemplateBrowserNames012AC410[];
+extern const char *const g_012AC510[];
+extern const char *const ThingTemplateDeadCollideSizeNames012AC4FC[];
+
+extern "C" const char *__identifier("?RadarPriorityNames@@3PAPBDA")[];
+extern "C" const char *__identifier("?BuildableStatusNames@@3PAPBDA")[];
+extern "C" const char *__identifier("?BuildCompletionNames@@3PAPBDA")[];
+extern "C" const char *__identifier("?EditorSortingNames@@3PAPBDA")[];
+extern "C" const char *const __identifier("?ThingTemplateBrowserNames012AC410@@3QBQBDB")[];
+extern "C" const char *const __identifier("?g_012AC510@@3QBQBDB")[];
+extern "C" const char *const __identifier("?ThingTemplateDeadCollideSizeNames012AC4FC@@3QBQBDB")[];
+extern "C" const char *__identifier("?TheShadowNames@@3PAPBDA")[];
+
+const FieldParse ThingTemplate::s_objectFieldParseTable[] =
 {
-	{ "DisplayName",					INI::parseAndTranslateLabel,					NULL,								offsetof( ThingTemplate, m_displayName ) },
-	{ "RadarPriority",				INI::parseByteSizedIndexList,					RadarPriorityNames, offsetof( ThingTemplate, m_radarPriority ) },
-	{ "TransportSlotCount",		INI::parseUnsignedByte,								NULL,		offsetof( ThingTemplate, m_transportSlotCount ) },
-	{ "FenceWidth",						INI::parseReal,												NULL,		offsetof( ThingTemplate, m_fenceWidth ) },
-	{ "FenceXOffset",					INI::parseReal,												NULL,		offsetof( ThingTemplate, m_fenceXOffset ) },
-	{ "IsBridge",							INI::parseBool,												NULL,		offsetof( ThingTemplate, m_isBridge ) },
-	{ "ArmorSet",							ThingTemplate::parseArmorTemplateSet, NULL, 0},
-	{ "WeaponSet",						ThingTemplate::parseWeaponTemplateSet,NULL, 0},
-	{ "VisionRange",					INI::parseReal,												NULL,		offsetof( ThingTemplate, m_visionRange ) },
-	{ "ShroudClearingRange",	INI::parseReal,												NULL,		offsetof( ThingTemplate, m_shroudClearingRange ) },
-	{ "ShroudRevealToAllRange",	INI::parseReal,											NULL,		offsetof( ThingTemplate, m_shroudRevealToAllRange ) },
-
-	{ "PlacementViewAngle",		INI::parseAngleReal,									NULL,		offsetof( ThingTemplate, m_placementViewAngle ) },
-
-	{ "FactoryExitWidth",			INI::parseReal,												NULL,		offsetof( ThingTemplate, m_factoryExitWidth ) },
-	{ "FactoryExtraBibWidth",	INI::parseReal,												NULL,		offsetof( ThingTemplate, m_factoryExtraBibWidth ) },
-																											
-	{ "SkillPointValue",			ThingTemplate::parseIntList,					(void*)LEVEL_COUNT,		offsetof( ThingTemplate, m_skillPointValues ) },
-	{ "ExperienceValue",			ThingTemplate::parseIntList,					(void*)LEVEL_COUNT,		offsetof( ThingTemplate, m_experienceValues ) },
-	{ "ExperienceRequired",		ThingTemplate::parseIntList,					(void*)LEVEL_COUNT,		offsetof( ThingTemplate, m_experienceRequired ) },
-	{ "IsTrainable",					INI::parseBool,												NULL,									offsetof( ThingTemplate, m_isTrainable ) },
-	{ "EnterGuard",						INI::parseBool,												NULL,									offsetof( ThingTemplate, m_enterGuard ) },
-	{ "HijackGuard",					INI::parseBool,												NULL,									offsetof( ThingTemplate, m_hijackGuard ) },
-
-	{ "Side",									INI::parseAsciiString,								NULL,	offsetof( ThingTemplate, m_defaultOwningSide ) },
-
-// NOTE NOTE NOTE -- s_objectFieldParseTable and s_objectReskinFieldParseTable must be updated in tandem -- see comment above
-	{ "Prerequisites",				ThingTemplate::parsePrerequisites,	0, 0 },
-	{ "Buildable",						INI::parseByteSizedIndexList,				BuildableStatusNames, offsetof( ThingTemplate, m_buildable) },
-	{ "BuildCost",						INI::parseUnsignedShort,						NULL,		offsetof( ThingTemplate, m_buildCost ) },
-	{ "BuildTime",						INI::parseReal,											NULL,		offsetof( ThingTemplate, m_buildTime ) },
-	{ "RefundValue",					INI::parseUnsignedShort,						NULL,   offsetof( ThingTemplate, m_refundValue ) },
-	{ "BuildCompletion",			INI::parseByteSizedIndexList,				BuildCompletionNames,		offsetof( ThingTemplate, m_buildCompletion ) },
-	{ "EnergyProduction",			INI::parseInt,											NULL,   offsetof( ThingTemplate, m_energyProduction ) },
-	{ "EnergyBonus",					INI::parseInt,											NULL,   offsetof( ThingTemplate, m_energyBonus ) },
-	{ "IsForbidden",					INI::parseBool,											NULL,		offsetof( ThingTemplate, m_isForbidden ) },
-	{ "IsPrerequisite",				INI::parseBool,											NULL,		offsetof( ThingTemplate, m_isPrerequisite ) },
-	{ "DisplayColor",					INI::parseColorInt,									NULL,		offsetof( ThingTemplate, m_displayColor ) },
-	{ "EditorSorting",				INI::parseByteSizedIndexList,				EditorSortingNames, offsetof( ThingTemplate, m_editorSorting ) },
-	{ "KindOf",								KindOfMaskType::parseFromINI,				NULL,		offsetof( ThingTemplate, m_kindof ) },
-	{ "CommandSet",						INI::parseAsciiString,							NULL,		offsetof( ThingTemplate, m_commandSetString ) },	
-	{ "BuildVariations",			INI::parseAsciiStringVector,				NULL,		offsetof( ThingTemplate, m_buildVariations ) },
-
-// NOTE NOTE NOTE -- s_objectFieldParseTable and s_objectReskinFieldParseTable must be updated in tandem -- see comment above
-	{ "Behavior",							ThingTemplate::parseModuleName,		(const void*)MODULETYPE_BEHAVIOR, offsetof(ThingTemplate, m_behaviorModuleInfo) },
-	{ "Body",									ThingTemplate::parseModuleName,		(const void*)999, offsetof(ThingTemplate, m_behaviorModuleInfo) },
-	{ "Draw",									ThingTemplate::parseModuleName,		(const void*)MODULETYPE_DRAW, offsetof(ThingTemplate, m_drawModuleInfo) },
-	{ "ClientUpdate",					ThingTemplate::parseModuleName,		(const void*)MODULETYPE_CLIENT_UPDATE, offsetof(ThingTemplate, m_clientUpdateModuleInfo) },
-// NOTE NOTE NOTE -- s_objectFieldParseTable and s_objectReskinFieldParseTable must be updated in tandem -- see comment above
-
-	{ "SelectPortrait",					INI::parseAsciiString,	NULL,		offsetof( ThingTemplate, m_selectedPortraitImageName ) },
-	{ "ButtonImage",						INI::parseAsciiString,	NULL,		offsetof( ThingTemplate, m_buttonImageName ) },
-	
-	//Code renderer handles these states now.
-	//{ "InventoryImageEnabled",	INI::parseAsciiString,	NULL,		offsetof( ThingTemplate, m_inventoryImage[ INV_IMAGE_ENABLED ] ) },
-	//{ "InventoryImageDisabled",	INI::parseAsciiString,	NULL,		offsetof( ThingTemplate, m_inventoryImage[ INV_IMAGE_DISABLED ] ) },
-	//{ "InventoryImageHilite",		INI::parseAsciiString,	NULL,		offsetof( ThingTemplate, m_inventoryImage[ INV_IMAGE_HILITE ] ) },
-	//{ "InventoryImagePushed",		INI::parseAsciiString,	NULL,		offsetof( ThingTemplate, m_inventoryImage[ INV_IMAGE_PUSHED ] ) },
-	
-	{ "UpgradeCameo1",		INI::parseAsciiString,	NULL,		offsetof( ThingTemplate, m_upgradeCameoUpgradeNames[ 0 ] ) },
-	{ "UpgradeCameo2",		INI::parseAsciiString,	NULL,		offsetof( ThingTemplate, m_upgradeCameoUpgradeNames[ 1 ] ) },
-	{ "UpgradeCameo3",		INI::parseAsciiString,	NULL,		offsetof( ThingTemplate, m_upgradeCameoUpgradeNames[ 2 ] ) },
-	{ "UpgradeCameo4",		INI::parseAsciiString,	NULL,		offsetof( ThingTemplate, m_upgradeCameoUpgradeNames[ 3 ] ) },
-	{ "UpgradeCameo5",		INI::parseAsciiString,	NULL,		offsetof( ThingTemplate, m_upgradeCameoUpgradeNames[ 4 ] ) },
-	
-// NOTE NOTE NOTE -- s_objectFieldParseTable and s_objectReskinFieldParseTable must be updated in tandem -- see comment above
-
-	{ "VoiceSelect",					INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_voiceSelect]) },
-	{ "VoiceGroupSelect",			INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_voiceGroupSelect]) },
-	{ "VoiceMove",						INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_voiceMove]) },
-	{ "VoiceAttack",					INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_voiceAttack]) },
-	{ "VoiceEnter",						INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_voiceEnter ]) },
-	{ "VoiceFear",						INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_voiceFear ]) },
-	{ "VoiceSelectElite",			INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_voiceSelectElite ]) },
-	{ "VoiceCreated",					INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_voiceCreated]) },
-	{ "VoiceTaskUnable",			INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_voiceTaskUnable ]) },
-	{ "VoiceTaskComplete",		INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_voiceTaskComplete ]) },
-	{ "VoiceMeetEnemy",				INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_voiceMeetEnemy]) },
-	{ "VoiceGarrison",				INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_voiceGarrison]) },
-#ifdef ALLOW_SURRENDER
-	{ "VoiceSurrender",				INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_voiceSurrender]) },
-#endif
-	{ "VoiceDefect",					INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_voiceDefect]) },
-	{ "VoiceAttackSpecial",		INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_voiceAttackSpecial ]) },	
-	{ "VoiceAttackAir",				INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_voiceAttackAir ]) },	
-	{ "VoiceGuard",						INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_voiceGuard ]) },	
-	{ "SoundMoveStart",				INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_soundMoveStart]) },
-	{ "SoundMoveStartDamaged",INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_soundMoveStartDamaged]) },
-	{ "SoundMoveLoop",				INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_soundMoveLoop]) },
-	{ "SoundMoveLoopDamaged",	INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_soundMoveLoopDamaged]) },
-	{ "SoundAmbient",					INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_soundAmbient ]) },
-	{ "SoundAmbientDamaged",	INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_soundAmbientDamaged ]) },
-	{ "SoundAmbientReallyDamaged",INI::parseDynamicAudioEventRTS,	NULL,offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_soundAmbientReallyDamaged ]) },
-	{ "SoundAmbientRubble",		INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_soundAmbientRubble]) },
-	{ "SoundStealthOn",       INI::parseDynamicAudioEventRTS,  NULL,  offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_soundStealthOn ]) },
-	{ "SoundStealthOff",      INI::parseDynamicAudioEventRTS,  NULL,  offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_soundStealthOff ]) },
-	{ "SoundCreated",					INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_soundCreated ]) },
-	{ "SoundOnDamaged",				INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_soundOnDamaged ]) },
-	{ "SoundOnReallyDamaged",	INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_soundOnReallyDamaged ]) },
-	{ "SoundEnter",						INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_soundEnter ]) },
-	{ "SoundExit",						INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_soundExit ]) },
-	{ "SoundPromotedVeteran",	INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_soundPromotedVeteran ]) },
-	{ "SoundPromotedElite",		INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_soundPromotedElite ]) },
-	{ "SoundPromotedHero",		INI::parseDynamicAudioEventRTS,	NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_soundPromotedHero ]) },
-	{ "SoundFallingFromPlane",INI::parseDynamicAudioEventRTS, NULL,		offsetof( ThingTemplate, m_audioarray.m_audio[TTAUDIO_soundFalling ]) },
-
-	{ "UnitSpecificSounds",		ThingTemplate::parsePerUnitSounds, NULL, offsetof(ThingTemplate, m_perUnitSounds) },
-	{ "UnitSpecificFX",				ThingTemplate::parsePerUnitFX, NULL, offsetof(ThingTemplate, m_perUnitFX) },
-	{ "Scale",								INI::parseReal,						NULL,		offsetof( ThingTemplate, m_assetScale ) },
-	{ "Geometry",							GeometryInfo::parseGeometryType,				NULL,  offsetof( ThingTemplate, m_geometryInfo ) },
-	{ "GeometryMajorRadius",	GeometryInfo::parseGeometryMajorRadius,	NULL,		offsetof( ThingTemplate, m_geometryInfo ) },
-	{ "GeometryMinorRadius",	GeometryInfo::parseGeometryMinorRadius,	NULL,		offsetof( ThingTemplate, m_geometryInfo ) },
-	{ "GeometryHeight",				GeometryInfo::parseGeometryHeight,			NULL,		offsetof( ThingTemplate, m_geometryInfo ) },
-	{ "GeometryIsSmall",			GeometryInfo::parseGeometryIsSmall,			NULL,		offsetof( ThingTemplate, m_geometryInfo ) },
-	{ "Shadow",								INI::parseBitString8,		TheShadowNames,		offsetof( ThingTemplate, m_shadowType ) },
-	{ "ShadowSizeX",					INI::parseReal,						NULL,	offsetof( ThingTemplate, m_shadowSizeX ) },
-	{ "ShadowSizeY",					INI::parseReal,						NULL,	offsetof( ThingTemplate, m_shadowSizeY ) },
-	{ "ShadowOffsetX",				INI::parseReal,						NULL,	offsetof( ThingTemplate, m_shadowOffsetX ) },
-	{ "ShadowOffsetY",				INI::parseReal,						NULL,	offsetof( ThingTemplate, m_shadowOffsetY ) },
-	{ "ShadowTexture",				INI::parseAsciiString,		NULL,	offsetof( ThingTemplate, m_shadowTextureName ) },
-	{ "OcclusionDelay",					INI::parseDurationUnsignedInt,		NULL, offsetof( ThingTemplate, m_occlusionDelay ) },
-	{ "AddModule",						ThingTemplate::parseAddModule,			NULL, 0 },
-	{ "RemoveModule",					ThingTemplate::parseRemoveModule,		NULL, 0 },
-	{ "ReplaceModule",				ThingTemplate::parseReplaceModule,	NULL, 0 },
-	{ "InheritableModule",		ThingTemplate::parseInheritableModule,	NULL, 0 },
-
-  { "OverrideableByLikeKind",		ThingTemplate::OverrideableByLikeKind,	NULL, 0 },
-
-	{ "Locomotor",						AIUpdateModuleData::parseLocomotorSet, NULL, 0 },
-	{ "InstanceScaleFuzziness",	INI::parseReal,					NULL, offsetof(ThingTemplate, m_instanceScaleFuzziness ) },
-	{ "StructureRubbleHeight",	INI::parseUnsignedByte,					NULL, offsetof(ThingTemplate, m_structureRubbleHeight ) },
-	{ "ThreatValue",						INI::parseUnsignedShort,		NULL, offsetof(ThingTemplate, m_threatValue ) }, 
-  { "MaxSimultaneousOfType",	ThingTemplate::parseMaxSimultaneous,		NULL, offsetof(ThingTemplate, m_maxSimultaneousOfType ) }, 
-  { "MaxSimultaneousLinkKey",	NameKeyGenerator::parseStringAsNameKeyType,		NULL, offsetof(ThingTemplate, m_maxSimultaneousLinkKey ) }, 
-	{ "CrusherLevel",					INI::parseUnsignedByte,			NULL, offsetof( ThingTemplate, m_crusherLevel ) },
-	{ "CrushableLevel",				INI::parseUnsignedByte,			NULL, offsetof( ThingTemplate, m_crushableLevel ) },
-
-	{ 0, 0, 0, 0 }  // keep this last
-
+	{ "Hotkey", __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x1C },
+	{ "ReviveText", __identifier("?parseAndTranslateLabel@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x14 },
+	{ "RecruitText", __identifier("?parseAndTranslateLabel@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x18 },
+	{ "DisplayName", __identifier("?parseAndTranslateLabel@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0xC },
+	{ "Description", __identifier("?parseAndTranslateLabel@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x10 },
+	{ "RadarPriority", __identifier("?parseByteSizedIndexList@INI@@SAXPAV1@PAX1PBX@Z"), __identifier("?RadarPriorityNames@@3PAPBDA"), 0x490 },
+	{ "TransportSlotCount", __identifier("?parseUnsignedByte@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x491 },
+	{ "FenceWidth", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x398 },
+	{ "FenceXOffset", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x39C },
+	{ "RemoveTerrainRadius", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3A0 },
+	{ "IsBridge", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x485 },
+	{ "ArmorSet", __identifier("?parseArmorTemplateSet@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z"), 0, 0x0 },
+	{ "WeaponSet", __identifier("?parseWeaponTemplateSet@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z"), 0, 0x0 },
+	{ "LocomotorSet", __identifier("?bfmeMakeCF@@YAXPAX0@Z"), 0, 0x0 },
+	{ "VisionRange", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3A4 },
+	{ "ShroudClearingRange", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3A8 },
+	{ "EmotionRange", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3AC },
+	{ "PlacementViewAngle", __identifier("?parseAngleReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3B0 },
+	{ "FactoryExitWidth", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3B4 },
+	{ "FactoryExtraBibWidth", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3B8 },
+	{ "IsTrainable", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x487 },
+	{ "Side", __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x28 },
+	{ "EditorName", __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x24 },
+	{ "Prerequisites", __identifier("?parsePrerequisites@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z"), 0, 0x0 },
+	{ "Buildable", __identifier("?parseByteSizedIndexList@INI@@SAXPAV1@PAX1PBX@Z"), __identifier("?BuildableStatusNames@@3PAPBDA"), 0x492 },
+	{ "BuildCost", __identifier("?parseUnsignedShort@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x47A },
+	{ "BountyValue", __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x448 },
+	{ "BuildTime", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3BC },
+	{ "BuildFadeInOnCreateList", __identifier("?parseAsciiStringVector@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x2E8 },
+	{ "BuildFadeInOnCreateTime", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x2F4 },
+	{ "RefundValue", __identifier("?parseUnsignedShort@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x47C },
+	{ "BuildCompletion", __identifier("?parseByteSizedIndexList@INI@@SAXPAV1@PAX1PBX@Z"), __identifier("?BuildCompletionNames@@3PAPBDA"), 0x493 },
+	{ "EnergyProduction", __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x418 },
+	{ "EnergyBonus", __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x41C },
+	{ "IsForbidden", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x488 },
+	{ "IsPrerequisite", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x484 },
+	{ "IsGrabbable", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x48B },
+	{ "IsHarvestable", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x48C },
+	{ "DisplayColor", __identifier("?parseColorInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x420 },
+	{ "EditorSorting", __identifier("?parseByteSizedIndexList@INI@@SAXPAV1@PAX1PBX@Z"), __identifier("?EditorSortingNames@@3PAPBDA"), 0x494 },
+	{ "Browser", __identifier("?Rva000BDAF0IndexVectorParse@@YAXPAVINI@@PAX1PBX@Z"), __identifier("?ThingTemplateBrowserNames012AC410@@3QBQBDB"), 0x358 },
+	{ "ThingClass", __identifier("?parseByteSizedIndexList@INI@@SAXPAV1@PAX1PBX@Z"), __identifier("?g_012AC510@@3QBQBDB"), 0x496 },
+	{ "DeadCollideSize", __identifier("?parseByteSizedIndexList@INI@@SAXPAV1@PAX1PBX@Z"), __identifier("?ThingTemplateDeadCollideSizeNames012AC4FC@@3QBQBDB"), 0x495 },
+	{ "KindOf", __identifier("?parseFromINI@?$BitFlags@$0HE@@@SAXPAVINI@@PAX1PBX@Z"), 0, 0xC8 },
+	{ "CommandSet", __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x2C },
+	{ "BuildVariations", __identifier("?parseAsciiStringVector@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x2D0 },
+	{ "EquivalentTo", __identifier("?parseAsciiStringVector@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x2DC },
+	{ "Behavior", __identifier("?parseModuleName@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z"), 0, 0x294 },
+	{ "Body", __identifier("?parseModuleName@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z"), reinterpret_cast<const void *>(0x3E7), 0x294 },
+	{ "Draw", __identifier("?parseModuleName@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z"), reinterpret_cast<const void *>(0x1), 0x2A0 },
+	{ "ClientUpdate", __identifier("?parseModuleName@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z"), reinterpret_cast<const void *>(0x2), 0x2AC },
+	{ "ClientBehavior", __identifier("?parseModuleName@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z"), reinterpret_cast<const void *>(0x3), 0x2B8 },
+	{ "SelectPortrait", __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x30 },
+	{ "ButtonImage", __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x34 },
+	{ "UpgradeCameo1", __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x38 },
+	{ "UpgradeCameo2", __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3C },
+	{ "UpgradeCameo3", __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x40 },
+	{ "UpgradeCameo4", __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x44 },
+	{ "UpgradeCameo5", __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x48 },
+	{ "VoicePriority", __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x430 },
+	{ "GroupVoiceThreshold", __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x434 },
+	{ "VoiceAmbushTimeout", __identifier("?parseDurationUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x438 },
+	{ "VoiceAmbushBlockingRadius", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x400 },
+	{ "EvaEventDieOwner", __identifier("?parse@EvaParseMessageFromIniShim@@SAXPAVINI@@PAX1PBX@Z"), 0, 0x44C },
+	{ "EvaEventDieAlly", __identifier("?parse@EvaParseMessageFromIniShim@@SAXPAVINI@@PAX1PBX@Z"), 0, 0x450 },
+	{ "EvaEventDieEnemy", __identifier("?parse@EvaParseMessageFromIniShim@@SAXPAVINI@@PAX1PBX@Z"), 0, 0x454 },
+	{ "EvaEventDamagedOwner", __identifier("?parse@EvaParseMessageFromIniShim@@SAXPAVINI@@PAX1PBX@Z"), 0, 0x458 },
+	{ "EvaEnemyUnitSightedEvent", __identifier("?parse@EvaParseMessageFromIniShim@@SAXPAVINI@@PAX1PBX@Z"), 0, 0x45C },
+	{ "UnitSpecificSounds", __identifier("?parsePerUnitSounds@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z"), 0, 0x328 },
+	{ "UnitSpecificFX", __identifier("?parsePerUnitFX@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z"), 0, 0x334 },
+	{ "Scale", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3C0 },
+	{ "Geometry", __identifier("?parseGeometryType@GeometryInfo@@SAXPAVINI@@PAX1PBX@Z"), 0, 0x60 },
+	{ "AdditionalGeometry", __identifier("?d_00880020@@YAXXZ"), 0, 0x60 },
+	{ "GeometryMajorRadius", __identifier("?parseGeometryMajorRadius@GeometryInfo@@SAXPAVINI@@PAX1PBX@Z"), 0, 0x60 },
+	{ "GeometryMinorRadius", __identifier("?parseGeometryMinorRadius@GeometryInfo@@SAXPAVINI@@PAX1PBX@Z"), 0, 0x60 },
+	{ "GeometryRotationAnchorOffset", __identifier("?parseGeometryRotationAnchorOffset@@YAXPAVINI@@PAX1PBX@Z"), 0, 0x60 },
+	{ "HealthBoxScale", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x410 },
+	{ "HealthBoxHeightOffset", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x414 },
+	{ "GeometryOffset", __identifier("?parseGeometryOffset@GeometryInfo@@SAXPAVINI@@PAX1PBX@Z"), 0, 0x60 },
+	{ "GeometryIsSmall", __identifier("?parseGeometryIsSmall@GeometryInfo@@SAXPAVINI@@PAX1PBX@Z"), 0, 0x60 },
+	{ "GeometryOther", __identifier("?d_00880780@@YAXXZ"), 0, 0xBC },
+	{ "GeometryHeight", __identifier("?parseGeometryHeight@GeometryInfo@@SAXPAVINI@@PAX1PBX@Z"), 0, 0x60 },
+	{ "GeometryContactPoint", __identifier("?bfmeParseZH@@YAXPAVINI@@PAX1PBX@Z"), 0, 0x60 },
+	{ "GeometryName", __identifier("?bfmeParseYW@@YAXPAX0PAUBfmeVecYW@@@Z"), 0, 0x60 },
+	{ "GeometryActive", __identifier("?parseGeometryActive@GeometryInfo@@SAXPAVINI@@PAX1PBX@Z"), 0, 0x60 },
+	{ "AttackContactPoint", __identifier("?bfmeParseZH@@YAXPAVINI@@PAX1PBX@Z"), 0, 0x60 },
+	{ "SwoopContactPoint", __identifier("?bfmeParseZH@@YAXPAVINI@@PAX1PBX@Z"), 0, 0x60 },
+	{ "Shadow", __identifier("?parseBitString16@INI@@SAXPAV1@PAX1PBX@Z"), __identifier("?TheShadowNames@@3PAPBDA"), 0x482 },
+	{ "ShadowSizeX", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3C8 },
+	{ "ShadowSizeY", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3CC },
+	{ "ShadowOffsetX", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3D0 },
+	{ "ShadowOffsetY", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3D4 },
+	{ "ShadowSunAngle", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3E0 },
+	{ "ShadowTexture", __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x4C },
+	{ "ShadowOpacityStart", __identifier("?parseUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x460 },
+	{ "ShadowOpacityFadeInTime", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3D8 },
+	{ "ShadowOpacityPeak", __identifier("?parseUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x464 },
+	{ "ShadowOpacityFadeOutTime", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3DC },
+	{ "ShadowOpacityEnd", __identifier("?parseUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x468 },
+	{ "ShadowMaxHeight", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3E4 },
+	{ "ShadowOverrideLODVisibility", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x48D },
+	{ "ShadowUseHouseColor", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x48E },
+	{ "ShadowIsRotatingWithObject", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x48F },
+	{ "OcclusionDelay", __identifier("?parseDurationUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x424 },
+	{ "AddModule", __identifier("?parseAddModule@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z"), 0, 0x0 },
+	{ "RemoveModule", __identifier("?parseRemoveModule@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z"), 0, 0x0 },
+	{ "ReplaceModule", __identifier("?parseReplaceModule@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z"), 0, 0x0 },
+	{ "InheritableModule", __identifier("?parseInheritableModule@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z"), 0, 0x0 },
+	{ "LiveCameraOffset", __identifier("?parseCoord3D@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x4B8 },
+	{ "LiveCameraPitch", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x4C4 },
+	{ "FormationWidth", __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x440 },
+	{ "FormationDepth", __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x43C },
+	{ "InstanceScaleFuzziness", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3C4 },
+	{ "StructureRubbleHeight", __identifier("?parseUnsignedByte@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x497 },
+	{ "ThreatValue", __identifier("?parseUnsignedShort@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x47E },
+	{ "ThreatRadius", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x40C },
+	{ "MaxSimultaneousOfType", __identifier("?parseUnsignedShort@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x480 },
+	{ "CrusherLevel", __identifier("?parseByte@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x499 },
+	{ "CrushableLevel", __identifier("?parseByte@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x49A },
+	{ "MountedCrusherLevel", __identifier("?parseByte@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x49B },
+	{ "MountedCrushableLevel", __identifier("?parseByte@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x49C },
+	{ "CrushKnockback", __identifier("?parseFrictionPerSec@@YAXPAVINI@@PAX1PBX@Z"), 0, 0x3F4 },
+	{ "CrushZFactor", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3F8 },
+	{ "UseCrushAttack", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x49D },
+	{ "CrushWeapon", __identifier("?parseWeaponTemplate@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x4A0 },
+	{ "CrushRevengeWeapon", __identifier("?parseWeaponTemplate@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x4A4 },
+	{ "MinCrushVelocityPercent", __identifier("?parsePercentToReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3EC },
+	{ "CrushDecelerationPercent", __identifier("?parsePercentToReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3F0 },
+	{ "RamPower", __identifier("?parseFrictionPerSec@@YAXPAVINI@@PAX1PBX@Z"), 0, 0x4A8 },
+	{ "RamZMult", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x4AC },
+	{ "ImmuneToShockwave", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x4B0 },
+	{ "CrushAllies", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x4B1 },
+	{ "CommandPoints", __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x4B4 },
+	{ "VoiceAttackChargeTimeout", __identifier("?parseDurationUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x428 },
+	{ "MaxDistanceForEngaged", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3E8 },
+	{ "EngagedStateTimeout", __identifier("?parseDurationUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x42C },
+	{ "ThreatLevel", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3FC },
+	{ "ForceLuaRegistration", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x4C8 },
+	{ "ShowHealthInSelectionDecal", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x4C9 },
+	{ "KeepSelectableWhenDead", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x4CA },
+	{ "IsAutoBuilt", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x4CB },
+	{ "CanPathThroughGates", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x4CC },
+	{ "ShouldClearShotsOnIdle", __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x4CD },
+	{ "SlopeLimitIndex", __identifier("?parseUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x444 },
+	{ "GeometryFrontAngle", __identifier("?parseAngleReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x404 },
+	{ "PathfindDiameter", __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x408 },
+	{ "SupplyOverride", __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x46C },
+	{ "DisplayMeleeDamage", __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x470 },
+	{ "DisplayRangedDamage", __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x474 },
+	{ "HeroSortOrder", __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x4D0 },
+	{ "ExperienceScalarTable", __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x58 },
+	{ 0, 0, 0, 0 }
 };
 // NOTE NOTE NOTE -- s_objectFieldParseTable and s_objectReskinFieldParseTable must be updated in tandem -- see comment above
 

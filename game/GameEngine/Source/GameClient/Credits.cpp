@@ -73,6 +73,20 @@
 //-----------------------------------------------------------------------------
 CreditsManager *TheCredits = NULL;
 
+// Retail Credits records and Style entries are verified in identity_evidence/010f0b78-CreditsFieldParse.md.
+extern const LookupListRec CreditsStyleNames010F0B50[] =
+{
+    { "TITLE", 0 },
+    { "MINORTITLE", 1 },
+    { "NORMAL", 2 },
+    { "COLUMN", 3 },
+    { 0, 0 }
+};
+
+class Gen_0040D4A0;
+extern "C" void __identifier("?rva0040D530@@YAXPAXPAVGen_0040D4A0@@@Z")(void *, Gen_0040D4A0 *);
+extern "C" void __identifier("?bfmeParseD780@@YAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+
 const FieldParse CreditsManager::m_creditsFieldParseTable[] = 
 {
 
@@ -82,9 +96,9 @@ const FieldParse CreditsManager::m_creditsFieldParseTable[] =
 	{ "TitleColor",					INI::parseColorInt,									NULL,	offsetof( CreditsManager, m_titleColor )  },
 	{ "MinorTitleColor",		INI::parseColorInt,									NULL,	offsetof( CreditsManager, m_positionColor )  },
 	{ "NormalColor",				INI::parseColorInt,									NULL,	offsetof( CreditsManager, m_normalColor )  },
-	{ "Style",							INI::parseLookupList,								CreditStyleNames,	offsetof( CreditsManager, m_currentStyle )  },
-	{ "Blank",							CreditsManager::parseBlank,					NULL,	NULL  },
-	{ "Text",								CreditsManager::parseText,					NULL,	NULL  },
+	{ "Style",							INI::parseLookupList,								CreditsStyleNames010F0B50,	offsetof( CreditsManager, m_currentStyle )  },
+	{ "Blank",							reinterpret_cast<INIFieldParseProc>(__identifier("?rva0040D530@@YAXPAXPAVGen_0040D4A0@@@Z")),					NULL,	NULL  },
+	{ "Text",								__identifier("?bfmeParseD780@@YAXPAVINI@@PAX1PBX@Z"),					NULL,	NULL  },
 
 	{ NULL,										NULL,													NULL, 0 }  // keep this last
 

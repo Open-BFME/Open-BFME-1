@@ -63,7 +63,6 @@ public:
 	void initFromINI(void *what, const FieldParse *parseTable);	///< direct call to 0x008520A0
 };
 
-extern const FieldParse TheThingTemplateFieldParse[];	///< retail [0x010910A0]
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 enum ModuleParseMode
@@ -82,6 +81,7 @@ protected:
 	static void parseInheritableModule(INI *, void *, void *, const void *);
 
 private:
+	static const FieldParse s_objectFieldParseTable[];
 	unsigned char m_unreconstructed_00[0x498];
 	char m_moduleParsingMode;				///< retail this+0x498
 };
@@ -98,7 +98,7 @@ void ThingTemplate::parseAddModule(INI *ini, void *instance, void *store, const 
 
 	self->m_moduleParsingMode = MODULEPARSE_ADD_REMOVE_REPLACE;
 
-	ini->initFromINI(self, TheThingTemplateFieldParse);
+	ini->initFromINI(self, ThingTemplate::s_objectFieldParseTable);
 
 	self->m_moduleParsingMode = oldMode;
 }
@@ -118,7 +118,7 @@ void ThingTemplate::parseInheritableModule(INI *ini, void *instance, void *store
 
 	self->m_moduleParsingMode = MODULEPARSE_INHERITABLE;
 
-	ini->initFromINI(self, TheThingTemplateFieldParse);
+	ini->initFromINI(self, ThingTemplate::s_objectFieldParseTable);
 
 	self->m_moduleParsingMode = oldMode;
 }

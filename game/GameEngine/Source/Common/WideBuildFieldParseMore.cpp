@@ -18,8 +18,8 @@
 //               order of the two statements and is not recoverable any other
 //               way
 //
-// IDENTITY IS NOT RECOVERED.  Names are address-derived; the tables are
-// undefined externs whose only role is to make cl emit `push offset`.
+// Builder names remain address-derived. Recovered tables use the verified
+// FieldParse declarations below; the remaining tables are unresolved externs.
 //
 // The receiver stays spelled WideMulti because every member body here is
 // matched under a name carrying it; respelling the parameter type would rename
@@ -59,8 +59,8 @@ public:
 	static void buildFieldParse( WideMulti &p );
 };
 
-extern const WideFieldParse WideTblA0013E170[];
-extern const WideFieldParse WideTblB0013E170[];
+extern "C" const FieldParse __identifier("?s_objectFieldParseTable@ThingTemplate@@0QBUFieldParse@@B")[];
+extern const FieldParse g_voiceFieldParse[];
 
 class Rva0013E170
 {
@@ -70,8 +70,8 @@ public:
 
 void Rva0013E170::buildFieldParse( WideMulti &p )
 {
-	WIDE_MULTI_APPEND( p, WideTblA0013E170, 0 );
-	WIDE_MULTI_APPEND( p, WideTblB0013E170, 224 );
+	WIDE_MULTI_APPEND( p, __identifier("?s_objectFieldParseTable@ThingTemplate@@0QBUFieldParse@@B"), 0 );
+	WIDE_MULTI_APPEND( p, g_voiceFieldParse, 224 );
 }
 
 extern const WideFieldParse WideTblA00212CD0[];
@@ -90,7 +90,7 @@ void Rva00212CD0::buildFieldParse( WideMulti &p )
 	WIDE_MULTI_APPEND( p, WideTblB00212CD0, 0 );
 }
 
-extern const WideFieldParse WideTblA00378170[];
+extern const FieldParse g_table_00122E10[];
 extern const WideFieldParse WideTblB00378170[];
 extern const WideFieldParse WideTblC00378170[];
 
@@ -102,7 +102,7 @@ public:
 
 void Rva00378170::buildFieldParse( WideMulti &p )
 {
-	WIDE_MULTI_APPEND( p, WideTblA00378170, 0 );
+	WIDE_MULTI_APPEND( p, g_table_00122E10, 0 );
 	WIDE_MULTI_APPEND( p, WideTblB00378170, 0 );
 	WIDE_MULTI_APPEND( p, WideTblC00378170, 0 );
 }

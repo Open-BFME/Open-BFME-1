@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-extern char g_bfmeStr1277[];
+extern const char g_bfmeStr1277[] = "UpgradeStatusType";
 
 struct BfmeOpt1277
 {
@@ -49,7 +49,7 @@ public:
 	virtual void bfmeVb1277_22();
 	virtual void bfmeVb1277_23();
 	virtual void bfmeVb1277_24();
-	virtual void bfmeEmit1277(char *s, void *p, int n);
+	virtual void bfmeEmit1277(const char *s, void *p, int n);
 };
 
 class BfmeA1277

@@ -109,22 +109,7 @@ void ChallengeGenerals::parseGeneralPersona(INI *ini, void *instance, void *stor
 }
 
 
-const FieldParse ChallengeGenerals::s_fieldParseTable[] = 
-{
-	{ "GeneralPersona0", ChallengeGenerals::parseGeneralPersona, NULL, offsetof( ChallengeGenerals, m_position[0] ) },
-	{ "GeneralPersona1", ChallengeGenerals::parseGeneralPersona, NULL, offsetof( ChallengeGenerals, m_position[1] ) },
-	{ "GeneralPersona2", ChallengeGenerals::parseGeneralPersona, NULL, offsetof( ChallengeGenerals, m_position[2] ) },
-	{ "GeneralPersona3", ChallengeGenerals::parseGeneralPersona, NULL, offsetof( ChallengeGenerals, m_position[3] ) },
-	{ "GeneralPersona4", ChallengeGenerals::parseGeneralPersona, NULL, offsetof( ChallengeGenerals, m_position[4] ) },
-	{ "GeneralPersona5", ChallengeGenerals::parseGeneralPersona, NULL, offsetof( ChallengeGenerals, m_position[5] ) },
-	{ "GeneralPersona6", ChallengeGenerals::parseGeneralPersona, NULL, offsetof( ChallengeGenerals, m_position[6] ) },
-	{ "GeneralPersona7", ChallengeGenerals::parseGeneralPersona, NULL, offsetof( ChallengeGenerals, m_position[7] ) },
-	{ "GeneralPersona8", ChallengeGenerals::parseGeneralPersona, NULL, offsetof( ChallengeGenerals, m_position[8] ) },
-	{ "GeneralPersona9", ChallengeGenerals::parseGeneralPersona, NULL, offsetof( ChallengeGenerals, m_position[9] ) },
-	{ "GeneralPersona10", ChallengeGenerals::parseGeneralPersona, NULL, offsetof( ChallengeGenerals, m_position[10] ) },
-	{ "GeneralPersona11", ChallengeGenerals::parseGeneralPersona, NULL, offsetof( ChallengeGenerals, m_position[11] ) },
-	{ 0, 0, 0, 0 }
-};
+extern "C" const FieldParse __identifier("?m_creditsFieldParseTable@CreditsManager@@2QBUFieldParse@@B")[];
 
 
 //-------------------------------------------------------------------------------------------------
@@ -134,7 +119,7 @@ void INI::parseChallengeModeDefinition( INI* ini )
 {
 	if( TheChallengeGenerals )
 	{
-		ini->initFromINI( TheChallengeGenerals, TheChallengeGenerals->getFieldParse() );
+		ini->initFromINI( TheChallengeGenerals, __identifier("?m_creditsFieldParseTable@CreditsManager@@2QBUFieldParse@@B") );
 	}
 }
 

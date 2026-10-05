@@ -95,7 +95,11 @@ BFME_SLOT90_FORWARD( Rva0010C3E0, g_slot90_0010C3E0 )
 BFME_SLOT90_FORWARD( Rva0010C400, g_slot90_0010C400 )
 BFME_SLOT90_FORWARD( Rva0010C420, g_slot90_0010C420 )
 BFME_SLOT90_FORWARD( Rva0010C440, g_slot90_0010C440 )
-BFME_SLOT90_FORWARD( Rva0010A660, g_slot90_0010A660 )
+extern const char g_bfmeStr1277[];
+void Rva0010A660(MidVirtualSlot90Receiver *receiver, void *context)
+{
+    Xfer &result = receiver->dispatch(g_bfmeStr1277, context, 4);
+}
 BFME_SLOT90_FORWARD( Rva0010BEA0, g_slot90_0010BEA0 )
 BFME_SLOT90_FORWARD( Rva0010BEC0, g_slot90_0010BEC0 )
 BFME_SLOT90_FORWARD( Rva0010BEE0, g_slot90_0010BEE0 )
@@ -105,7 +109,11 @@ BFME_SLOT90_FORWARD( Rva0010C060, g_slot90_0010C060 )
 BFME_SLOT90_FORWARD( Rva0010C1E0, g_slot90_0010C1E0 )
 BFME_SLOT90_FORWARD( Rva0010C220, g_slot90_0010C220 )
 BFME_SLOT90_FORWARD( Rva0010C240, g_slot90_0010C240 )
-BFME_SLOT90_FORWARD( Rva0010C260, g_slot90_0010C260 )
+extern const char BfmeXferDistributionTypeNames[];
+void Rva0010C260(MidVirtualSlot90Receiver *receiver, void *context)
+{
+    Xfer &result = receiver->dispatch(BfmeXferDistributionTypeNames, context, 4);
+}
 BFME_SLOT90_FORWARD( Rva00360860, g_slot90_00360860 )
 BFME_SLOT90_FORWARD( Rva003A3ED0, g_slot90_003A3ED0 )
 BFME_SLOT90_FORWARD( Rva003BC6E0, g_slot90_003BC6E0 )

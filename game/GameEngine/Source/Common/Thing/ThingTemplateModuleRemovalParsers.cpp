@@ -97,6 +97,7 @@ protected:
 	char m_unreconstructed58[0x498 - 0x58];
 	char m_moduleParsingMode;				// +0x498
 
+private:
 	static const FieldParse s_objectFieldParseTable[];
 	static const FieldParse *getFieldParse(void) { return s_objectFieldParseTable; }
 };

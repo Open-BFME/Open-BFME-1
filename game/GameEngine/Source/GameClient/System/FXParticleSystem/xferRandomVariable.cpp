@@ -16,9 +16,8 @@ public:
 	// 4-byte value pointer and the literal 4: the same
 	// xferEnum(const char *name, void *data, unsigned int size) shape as
 	// XferScienceElement.cpp's receiver->xferEnum("ScienceType", science, 4).
-	// The .rdata word at 0x010890F0 is not a pointer array at all: it is the
-	// string literal "GameClientRandomVariable::DistributionType", the enum
-	// type name. So there is no names-table global to link against.
+	// The enum type tag is a 43-byte const char array in retail .rdata.
+	// BfmeXferDistributionTypeNames owns those bytes for both transfer users.
 	virtual void xferEnum(const char *name, void *data, unsigned int size);
 };
 
@@ -42,6 +41,8 @@ public:
 };
 
 
+
+extern const char BfmeXferDistributionTypeNames[] = "GameClientRandomVariable::DistributionType";
 
 Xfer &xferRandomVariable(Xfer &xfer, GameClientRandomVariable &var)
 {
@@ -67,7 +68,7 @@ Xfer &xferRandomVariable(Xfer &xfer, GameClientRandomVariable &var)
 
 	xfer.xferReal(&locals.low);
 	xfer.xferReal(&locals.high);
-	xfer.xferEnum("GameClientRandomVariable::DistributionType", &type, 4);
+	xfer.xferEnum(BfmeXferDistributionTypeNames, &type, 4);
 
 	if (!xfer.isSaving()) {
 		var.setRange(locals.low, locals.high, type);
