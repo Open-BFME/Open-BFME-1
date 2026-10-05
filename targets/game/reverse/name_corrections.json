@@ -18286,7 +18286,17 @@
   "new_name": "m_pad",
   "before_sha256": "e54e794f87b73ab450c3d1d9d41d6b86eb9df2614390cf2f1a4d3b9fcaf624f8",
   "after_sha256": "ae6a807e40a5f19dc83144d64e0b29be13bde47002f9b9691bf0d446977ac9f9",
-  "evidence": "targets/game/reverse/identity_evidence/00774aa0-name-correction.md",
-  "reason": "The prior bank labels these TU-local views Seat... and pad only in a partial scratch; its verdict calls them typed scratch contracts. No retail caller, pin, or matched symbol proves those names, so the new views keep the owner RVA and the padding label."
+ "evidence": "targets/game/reverse/identity_evidence/00774aa0-name-correction.md",
+ "reason": "The prior bank labels these TU-local views Seat... and pad only in a partial scratch; its verdict calls them typed scratch contracts. No retail caller, pin, or matched symbol proves those names, so the new views keep the owner RVA and the padding label."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "SpyVisionUpdateModuleData",
+  "new_name": "Rva00377D70Data",
+  "before_sha256": "f2f323fefde914f3eb13729af74fc773b810e04bd78cbc3d63aea962170a5540",
+  "after_sha256": "c06a4db10d88a343fcbd1a56b97f46f2c173572618c42652e9ccc9760d3c81ff",
+  "evidence": "targets/game/reverse/identity_evidence/00377d70.md",
+  "reason": "The retail registry assigns CastleBehavior to factory 0x001144C0, and that factory calls ILT 0x00035E22 to this constructor. The chain refutes the SpyVisionUpdateModuleData label but does not reveal the C++ class spelling, so the replacement keeps the body RVA."
  }
 ]
