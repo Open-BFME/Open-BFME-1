@@ -728,3 +728,4 @@ game/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThreadPlayerInfoCallback.c
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DInGameUI_drawMoveHints.cpp|param|asciiText|s,f2e70adbc4d7ea91807d60bf,gpt-6-sol,20261005180207-510c12,2026-10-05
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DInGameUI_drawMoveHints.cpp|param|asciiText|s,f2e70adbc4d7ea91807d60bf,gpt-6-astra,20261005180540-0c45a0,2026-10-05
 game/Libraries/Source/WWVegas/WW3D2/Render2DClassAddTri.cpp|param|convertPosition006e|v,771be72b60306851a94c3fd9,gpt-6-sol,20261005181229-90a7f7,2026-10-05
+game/Libraries/Source/WWVegas/WW3D2/Render2DClassAddTri.cpp|param|convertPosition006e|v,7aed8037f7b3a6e26ae566f4,gpt-6-astra,20261005181645-cee91f,2026-10-05
