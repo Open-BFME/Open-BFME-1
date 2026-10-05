@@ -1,8 +1,9 @@
 // ?method@Rva0071A730@@QAEXXZ
-// partial score=1.0 date=2026-10-03
-// Retail 0x0071A730..0x0071AFC5 RET0; opaque receiver and method.
-// Texture literals are inputs, not proof of a W3DShrubBuffer owner.
-// D3DX wrappers and COM slots follow the raw retail instructions.
+// Retail spans [0x0071A730, 0x0071AFC6), returns at 0x0071AFC5, then pads with INT3.
+// No matched caller or vtable owner supports a semantic class or method name.
+// The source keeps a type and method name derived from the address.
+// The literals name two texture inputs. Retail does not reveal their owner.
+// D3DX and COM declarations follow the calls visible in retail.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/shims/sweep
 #define Matrix4x4 Matrix4
 #include "winbase_shim.h"
@@ -20,6 +21,18 @@ class BFMEWaterTrackTextureHandle { public:
  TextureClass *m_texture;
  ~BFMEWaterTrackTextureHandle() { if(m_texture) m_texture->Release_Ref(); }
 };
+// This local view uses StringClass's one pointer field and reproduces its cleanup call.
+namespace Rva0071A730Detail {
+struct StringClass {
+ TCHAR *m_Buffer;
+ StringClass(int n, bool temporary, volatile TCHAR &terminator) : m_Buffer(::StringClass::m_EmptyString) {
+  ((::StringClass*)this)->Get_String(n,temporary);
+  m_Buffer[0]=terminator;
+ }
+ ~StringClass() { ((::StringClass*)this)->~StringClass(); }
+ operator ::StringClass&() { return *(::StringClass*)this; }
+};
+}
 extern BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(char *,int,int);
 extern void BoxSetTexture(unsigned,TextureBaseClass *&);
 extern ShaderClass Rva00ED6E18;
@@ -135,7 +148,7 @@ __forceinline void setMatrix(unsigned n,const D3DXMATRIX &m) {
 }
 #define SETTSS(stage,state,value) \
  if(DX8Wrapper::TextureStageStates[stage][state]!=value) { \
-  if(WW3D::Is_Snapshot_Activated()) { StringClass name(0,true,StringClass::m_NullChar); DX8Wrapper::Get_DX8_Texture_Stage_State_Value_Name(name,(D3DTEXTURESTAGESTATETYPE)state,value); } \
+  if(WW3D::Is_Snapshot_Activated()) { Rva0071A730Detail::StringClass name(0,true,StringClass::m_NullChar); DX8Wrapper::Get_DX8_Texture_Stage_State_Value_Name(name,(D3DTEXTURESTAGESTATETYPE)state,value); } \
   DX8Wrapper::TextureStageStates[stage][state]=value; \
   IDirect3DDevice8 *d=DX8Wrapper::_Get_D3D_Device8(); (*(SetTSS**)d)[67](d,stage,state,value); \
   number_of_DX8_calls++; DX8Wrapper::texture_stage_state_changes++; \
@@ -166,9 +179,9 @@ void Rva0071A730::method() {
  }
  BoxSetTexture(0,*(TextureBaseClass**)&field44.p); BoxSetTexture(1,*(TextureBaseClass**)&field48.p);
  ShaderClass shader=Rva00ED6E18; *(unsigned*)&shader=(*(unsigned*)&shader&0xfe9fffff)|0x800000;
- // Expand the header setter to retain its inlined StringClass lifetime.
+ // The local StringClass view preserves the volatile terminator read.
  if(ShaderClass::ShaderDirty || *(unsigned*)&shader!=*(unsigned*)&DX8Wrapper::render_state.shader) {
-  DX8Wrapper::render_state.shader=shader; DX8Wrapper::render_state_changed|=0x8000; StringClass str(0,false,StringClass::m_NullChar);
+  DX8Wrapper::render_state.shader=shader; DX8Wrapper::render_state_changed|=0x8000; Rva0071A730Detail::StringClass str(0,false,StringClass::m_NullChar);
  }
  DX8Wrapper::Apply_Render_State_Changes();
  D3DXMATRIX current, inverse, scale, translate, center;
@@ -194,15 +207,8 @@ void Rva0071A730::method() {
  setMatrix(17,current); field4c=true;
 }
 
-// Evidence: ret at RVA0071AFC5 followed by INT3; ILT00001AE6 targets body.
-// EH FuncInfo VA0123C6A8 has six independent cleanup states, all prior=-1:
-// states0/1 cleanup VA0104CAD0/CADB -> ILT00430652 (texture handle);
-// states2..5 VA0104CAE6/CAF1/CAFC/CB07 -> ILT0041A41F (StringClass).
-// Scoped strict build: 1/1 body2198B, 2 complete literals, 13 float constants,
-// 81 DIR32 references verified. Full shared-header gate remains for the lead.
-// Queue patch: /home/deck/bfme_astra2/header_queue/n1-0071A730-string-order.patch
-// Original constructors stay untouched; only explicit volatile-terminator
-// overload callers acquire char-first scheduling. D3DX helper returns by value
-// preserve retail matrix copies; the native shim operator* instead expands math.
-// Scope of origin/screen locals is material: outer-scope locals yield2209B and
-// a 4-byte larger frame. Native string ctors yield2200B, not2198B.
+// ILT 0x00001AE6 targets this body, but no caller assigns it a semantic owner.
+// The EH record at VA 0x0123C6A8 has six cleanup states. States 0 and 1 release
+// the temporary texture handle. States 2 through 5 release StringClass objects.
+// The local string view preserves the volatile terminator read and cleanup call.
+// The D3DX helper returns matrices by value, as retail does.
