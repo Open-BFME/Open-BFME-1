@@ -859,3 +859,9 @@ game/GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp|param|GameWindowManag
 game/GameEngine/Source/GameClient/GUI/MpGameSetupSetMap.cpp|member||m_flag10,bca4f18c871029d3d3d6c3e2,gpt-6-sol,20261005193517-558098,2026-10-05
 game/GameEngine/Source/GameClient/GUI/MpGameSetupSetMap.cpp|member||m_flag13,49fab830537078dbef9af8a0,gpt-6-sol,20261005193517-558098,2026-10-05
 game/GameEngine/Source/GameClient/GUI/MpGameSetupSetMap.cpp|member||m_flag14,57b034d5ecd3a44592a3e4d1,gpt-6-sol,20261005193517-558098,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorModuleDataCtorThunk.cpp|member||m_value08,6cd5734c7425c294d4dc4e0c,gpt-6-sol,20261005195110-bc648d,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorModuleDataCtorThunk.cpp|member||m_value0C,f1c9171403664fdf63fc889e,gpt-6-sol,20261005195110-bc648d,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorModuleDataCtorThunk.cpp|member||m_value10,b6b7c4f07409cde080b9449e,gpt-6-sol,20261005195110-bc648d,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorModuleDataCtorThunk.cpp|member||m_value14,b56ad969d92127b0cfcc0373,gpt-6-sol,20261005195110-bc648d,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorModuleDataCtorThunk.cpp|member||m_value34,e7bfaef039cb1c9885138108,gpt-6-sol,20261005195110-bc648d,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorModuleDataCtorThunk.cpp|member||m_flag88,351a4c34ec444ef89aa26a2a,gpt-6-sol,20261005195110-bc648d,2026-10-05
