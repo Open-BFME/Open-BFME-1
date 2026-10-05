@@ -332,3 +332,8 @@ game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m
 game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_11,m_considerTransient,gpt-6-astra+gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1729.cpp|type||BfmeOwnUC,W3DTerrainVisual,gpt-6-astra+grok,applied,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1729.cpp|member||m_bfmeTgtUC,m_terrainRenderObject,gpt-6-astra+grok,applied,2026-10-05
+game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|type||BFMETransitionList,TransitionWindowList,gpt-6-astra+gpt-6-sol+grok,applied,2026-10-05
+game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|type||BFMETransitionZero,AsciiString,gpt-6-astra+gpt-6-sol+grok,applied,2026-10-05
+game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|member||m_bfmeFlag,m_fireOnce,gpt-6-astra+gpt-6-sol+grok,applied,2026-10-05
+game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|member||m_bfmeState,m_directionMultiplier,gpt-6-astra+gpt-6-sol+grok,applied,2026-10-05
+game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|member||m_bfmeCount,m_currentFrame,gpt-6-astra+gpt-6-sol+grok,applied,2026-10-05

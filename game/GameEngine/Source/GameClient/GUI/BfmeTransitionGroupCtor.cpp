@@ -1,3 +1,4 @@
+// cl: /Igame/Libraries/Source/WWVegas/WWLib
 // Construct the transition-group state and its 12-byte circular-list
 // sentinel.  The retail allocator call returns the sentinel address.
 
@@ -32,10 +33,10 @@ struct BFMETransitionGroupNode
 	void *m_value;
 };
 
-class BFMETransitionList
+class TransitionWindowList
 {
 public:
-	BFMETransitionList(void)
+	TransitionWindowList(void)
 	{
 		m_head = 0;
 		BFMETransitionGroupNode *node = static_cast<BFMETransitionGroupNode *>(
@@ -49,13 +50,7 @@ private:
 	void *m_head;
 };
 
-class BFMETransitionZero
-{
-public:
-	BFMETransitionZero(void) : m_value(0) {}
-
-	int m_value;
-};
+#include "ascii_string.h"
 
 class BFMETransitionGroup
 {
@@ -63,18 +58,18 @@ public:
 	BFMETransitionGroup(void);
 
 private:
-	unsigned char m_bfmeFlag;				// +0x00
+	unsigned char m_fireOnce;				// +0x00
 	char m_bfmePadding[3];
-	BFMETransitionList m_bfmeList;			// +0x04
-	int m_bfmeState;					// +0x08
-	int m_bfmeCount;					// +0x0C
-	BFMETransitionZero m_bfmeReserved;			// +0x10
+	TransitionWindowList m_bfmeList;			// +0x04
+	int m_directionMultiplier;					// +0x08
+	int m_currentFrame;					// +0x0C
+	AsciiString m_bfmeReserved;			// +0x10
 };
 
 // ??0BFMETransitionGroup@@QAE@XZ
 BFMETransitionGroup::BFMETransitionGroup(void)
 {
-	m_bfmeState = 1;
-	m_bfmeCount = 0;
-	m_bfmeFlag = 0;
+	m_directionMultiplier = 1;
+	m_currentFrame = 0;
+	m_fireOnce = 0;
 }
