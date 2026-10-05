@@ -672,3 +672,6 @@ game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|member||m_bfme
 game/GameEngine/Source/GameClient/GUI/ControlBar/CommandSetAssign.cpp|member||m_bfmeName,a12106ba5f820f6f7ab08e2f,gpt-6-sol,20261005175801-eaeed0,2026-10-05
 game/GameEngine/Source/GameClient/GUI/ControlBar/CommandSetAssign.cpp|member||m_bfmeCommands,4754f8ce0d5821f56a2be75f,gpt-6-sol,20261005175801-eaeed0,2026-10-05
 game/GameEngine/Source/GameClient/GUI/ControlBar/CommandSetAssign.cpp|member||m_bfmeTail,e72077a614e0fd6ef769a0e5,gpt-6-sol,20261005175801-eaeed0,2026-10-05
+game/GameEngine/Source/GameClient/GUI/ControlBar/CommandSetAssign.cpp|member||m_bfmeName,a12106ba5f820f6f7ab08e2f,gpt-6-astra,20261005180047-aa6f1e,2026-10-05
+game/GameEngine/Source/GameClient/GUI/ControlBar/CommandSetAssign.cpp|member||m_bfmeCommands,4754f8ce0d5821f56a2be75f,gpt-6-astra,20261005180047-aa6f1e,2026-10-05
+game/GameEngine/Source/GameClient/GUI/ControlBar/CommandSetAssign.cpp|member||m_bfmeTail,e72077a614e0fd6ef769a0e5,gpt-6-astra,20261005180047-aa6f1e,2026-10-05
