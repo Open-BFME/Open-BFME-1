@@ -184,8 +184,22 @@ WindowMsgHandledType ControlBarObserverSystem( GameWindow *window, UnsignedInt m
 //-----------------------------------------------------------------------------
 
 // byte-exact reconstruction: game/GameEngine/Source/Common/RTS/ControlBarPopulateObserverListThunk.cpp
-// ?populateObserverList@ControlBar@@QAEXXZ present-unmatched
-void ControlBar::populateObserverList( void )
+class Rva004A9CD0PlayerView
+{
+public:
+	PlayerType getPlayerType() const
+	{
+		return *(const PlayerType *)((const char *)this + 0x2c);
+	}
+};
+
+class ControlBarPopulateObserverListShim
+{
+public:
+	void populate(void);
+};
+
+void ControlBarPopulateObserverListShim::populate( void )
 {
 	Int currentButton = 0, i;
 	if(TheRecorder->isMultiplayer())
@@ -194,9 +208,10 @@ void ControlBar::populateObserverList( void )
 		for (i = 0; i < MAX_SLOTS; ++i)
 		{
 			AsciiString name;
-			name.format("player%d", i);
+			if (TheGameInfo)
+				name = *(AsciiString *)((char *)TheGameInfo->getSlot(i) + 0x2c);
 			Player *p = ThePlayerList->findPlayerWithNameKey(TheNameKeyGenerator->nameToKey(name));
-			if(p)
+			if(p && p->getPlayerTemplate())
 			{
 				if(p->isPlayerObserver())
 					continue;
@@ -211,7 +226,7 @@ void ControlBar::populateObserverList( void )
 				buttonPlayer[currentButton]->winSetStatus( WIN_STATUS_USE_OVERLAY_STATES );
 
 				const GameSlot *slot = TheGameInfo->getConstSlot(currentButton);
-				Color playerColor = p->getPlayerColor();
+				Color playerColor = *(Color *)((char *)p + 0x1c4);
 				Color backColor = GameMakeColor(0, 0, 0, 255);
 				staticTextPlayer[currentButton]->winSetEnabledTextColors( playerColor, backColor );
 				staticTextPlayer[currentButton]->winHide(FALSE);
@@ -237,10 +252,10 @@ void ControlBar::populateObserverList( void )
 	}
 	else
 	{
-		for(i =0; i < MAX_PLAYER_COUNT; ++i)
+		for(i =0; i < 32; ++i)
 		{
 			Player *p = ThePlayerList->getNthPlayer(i);
-			if(p && !p->isPlayerObserver() && p->getPlayerType() == PLAYER_HUMAN)
+			if(p && !p->isPlayerObserver() && ((Rva004A9CD0PlayerView *)p)->getPlayerType() == PLAYER_HUMAN)
 			{
 				DEBUG_ASSERTCRASH(currentButton < MAX_BUTTONS, ("ControlBar::populateObserverList trying to populate more buttons then we have"));
 				GadgetButtonSetData(buttonPlayer[currentButton], (void *)p);
@@ -252,7 +267,7 @@ void ControlBar::populateObserverList( void )
 				buttonPlayer[currentButton]->winHide(FALSE);
 				buttonPlayer[currentButton]->winSetStatus( WIN_STATUS_USE_OVERLAY_STATES );
 
-				Color playerColor = p->getPlayerColor();
+				Color playerColor = *(Color *)((char *)p + 0x1c4);
 				Color backColor = GameMakeColor(0, 0, 0, 255);
 				staticTextPlayer[currentButton]->winSetEnabledTextColors( playerColor, backColor );
 				staticTextPlayer[currentButton]->winHide(FALSE);
