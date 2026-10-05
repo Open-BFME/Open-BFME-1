@@ -937,3 +937,7 @@ game/GameEngine/Source/GameLogic/AI/AIGroup_setWeaponLockForGroup.cpp|member||m_
 game/GameEngine/Source/GameLogic/AI/AIGroup_setWeaponLockForGroup.cpp|member||m_18,1366f65258203119113f1206,gpt-6-sol,20261005200609-9b3630,2026-10-05
 game/GameEngine/Source/GameLogic/AI/AIGroup_setWeaponLockForGroup.cpp|member||m_bfmeFlag532,02e71ce5d913ec3ad477d4df,grok,20261005200701-30aeb6,2026-10-05
 game/GameEngine/Source/GameLogic/AI/AIGroup_setWeaponLockForGroup.cpp|member||m_18,1366f65258203119113f1206,grok,20261005200701-30aeb6,2026-10-05
+game/GameEngine/Source/GameLogic/AI/PathfinderClassifyFence.cpp|local|RealToIntFloor|t,9a4639a8088f77681a70c2b5,gpt-6-sol,20261005200437-f92a37,2026-10-05
+game/GameEngine/Source/GameLogic/AI/PathfinderClassifyFence.cpp|local|RealToIntCeil|t,93918d49bb95b23e25b6bfee,gpt-6-sol,20261005200437-f92a37,2026-10-05
+game/GameEngine/Source/GameLogic/AI/PathfinderClassifyFence.cpp|local|Pathfinder::classifyFence|c,4113a7eab70cea2c42150994,gpt-6-sol,20261005200437-f92a37,2026-10-05
+game/GameEngine/Source/GameLogic/AI/PathfinderClassifyFence.cpp|local|Pathfinder::classifyFence|s,0f07bac0186144c3eee4c374,gpt-6-sol,20261005200437-f92a37,2026-10-05
