@@ -13,6 +13,14 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
+// The matched one-argument member at 0x00137E80 is reached through
+// retail ILT 0x00028560. Keep the singleton and newObject interface unchanged.
+class BfmeThingFactory
+{
+public:
+	const ThingTemplate *findTemplate(const AsciiString &name);
+};
+
 extern ThingFactory *TheThingFactory;
 
 typedef _STL::list<int> Rva002381C0List;
@@ -97,7 +105,7 @@ bool Rva002381C0Owner::matchesTemplate(const ThingTemplate *expected)
 
 	char *holder = *(char **)((char *)this - 0xe0);
 	holder += 0x248;
-	const ThingTemplate *found = TheThingFactory->findTemplate(
+	const ThingTemplate *found = reinterpret_cast<BfmeThingFactory *>(TheThingFactory)->findTemplate(
 		*(AsciiString *)holder);
 	if (found != 0 && expected == found)
 		result = true;
