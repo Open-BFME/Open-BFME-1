@@ -352,3 +352,6 @@ game/GameEngine/Source/Common/Rva002CFC80TinyBodies.cpp|type||Rva002ED550,Partit
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/NetworkDirectConnectUpdateRemoteIPList.cpp|param|UnicodeString::UnicodeString#2|s,stringSrc,gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Behavior/EnragedBehaviorCtorThunk.cpp|member||m_f14,m_nextCallFrameAndPhase,gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Behavior/EnragedBehaviorCtorThunk.cpp|member||m_f18,m_indexInLogic,gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateAction.cpp|member||m_10,m_valueMultiplier,gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateAction.cpp|member||m_14,m_bonusScience,gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateAction.cpp|member||m_18,m_bonusScienceMultiplier,gpt-6-sol+grok,agreed,2026-10-05
