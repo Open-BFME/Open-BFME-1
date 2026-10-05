@@ -11,7 +11,7 @@ struct Rva007F00B0Allocator
 
 typedef void *(__cdecl *Rva007F00B0Allocate)(unsigned int, int);
 
-extern Rva007F00B0Allocator *g_Rva0130A5B0;
+Rva007F00B0Allocator *g_Rva0130A5B0;
 extern void *g_0112A5C4[];
 
 // The default callbacks this body installs are retail's pooled operator

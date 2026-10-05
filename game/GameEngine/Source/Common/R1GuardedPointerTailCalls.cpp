@@ -158,7 +158,9 @@ void Rva00382980() { if( g_Glo00EF3330 ) g_Glo00EF3330->h00489410(); }
 
 BFME_GUARDED_GLOBAL_CALL( Rva0050D3B0, Gen005847F0, g_Glo00EF4B70 )
 BFME_GUARDED_GLOBAL_CALL( Rva00730FE0, Gen0072F080, g_Glo00EF9D98 )
-BFME_GUARDED_GLOBAL_CALL( Rva00754A10, Gen00754850, g_Glo00F04B64 )
+class BfmeHelperYS;
+extern BfmeHelperYS *g_bfmeCurrentYS;
+void Rva00754A10() { if( g_bfmeCurrentYS ) ((Gen00754850 *)g_bfmeCurrentYS)->handle(); }
 
 class Glo00EF4988
 {

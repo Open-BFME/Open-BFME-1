@@ -18,16 +18,17 @@ void BfmeThing929B::bfmeGo929B(void *a, void *b)
 	fn(a, b);
 }
 
-extern void *g_bfme929Ptr;
+struct Rva007F00B0Allocator;
+extern Rva007F00B0Allocator *g_Rva0130A5B0;
 extern char g_bfme929Str[];
 void bfmeInit929C(char *s);
 
 void *bfmeGo929C(void)
 {
-	void *p = g_bfme929Ptr;
+	void *p = g_Rva0130A5B0;
 	if (!p) {
 		bfmeInit929C(g_bfme929Str);
-		p = g_bfme929Ptr;
+		p = g_Rva0130A5B0;
 	}
 	return p;
 }

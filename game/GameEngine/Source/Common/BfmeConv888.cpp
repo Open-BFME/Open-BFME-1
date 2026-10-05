@@ -45,16 +45,16 @@ struct BfmeListEYE
 	BfmeNodeEYE *m_bfmeHead;
 };
 
-// retail 0x012ED5DC: the one global pointer defined as `int *` in
-// Common/Rva00087480Get.cpp. The local view below supplies the member this
-// TU reads, exactly as for TheWritableGlobalData above.
-extern int *g_rva00087480;
+// Retail VA 0x012ED5DC holds the map-list holder pointer.
+// WorldHeightMap.cpp owns it; this use retains its local view.
+class BfmeMapObjectListHolder;
+extern BfmeMapObjectListHolder *BfmeTheMapObjectListHolder;
 extern void *g_bfmeCurEYE;
 
 void __cdecl bfmeGoEYE(void *a)
 {
 	g_bfmeCurEYE = a;
-	for (BfmeNodeEYE *n = reinterpret_cast<BfmeListEYE *>(g_rva00087480)->m_bfmeHead; n; n = n->m_bfmeNext)
+	for (BfmeNodeEYE *n = reinterpret_cast<BfmeListEYE *>(BfmeTheMapObjectListHolder)->m_bfmeHead; n; n = n->m_bfmeNext)
 		n->bfmeRunEYE();
 }
 

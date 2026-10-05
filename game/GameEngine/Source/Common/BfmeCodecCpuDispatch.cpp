@@ -166,6 +166,7 @@ struct BfmeCodecDispatchTable
 };
 
 static BfmeCodecDispatchTable g_bfmeCodecDispatch;
+int *(__cdecl *g_rva01356E64)(Rva009ACBA0Context *, int);
 static BfmeDispatchFn g_bfmeCodecDispatchOutlier;
 
 void __cdecl bfmeInstallCpuDispatchTable(void)
@@ -178,7 +179,7 @@ void __cdecl bfmeInstallCpuDispatchTable(void)
 		g_bfmeCodecDispatch.slot[15] = (BfmeDispatchFn)&bfmeFilterBlockMmx;
 		g_bfmeCodecDispatch.slot[23] = (BfmeDispatchFn)&bfmeFilterPairMmx;
 		g_bfmeCodecDispatch.slot[2] = (BfmeDispatchFn)&initPattern;
-		g_bfmeCodecDispatch.slot[1] = (BfmeDispatchFn)&Rva009B6D40;
+		g_rva01356E64 = (int *(__cdecl *)(Rva009ACBA0Context *, int))&Rva009B6D40;
 		g_bfmeCodecDispatch.slot[16] = (BfmeDispatchFn)&Rva009C2620Vp6FilterDiag4;
 		g_bfmeCodecDispatch.slot[24] = (BfmeDispatchFn)&Rva009C2320Vp6FilterDiag4;
 		g_bfmeCodecDispatch.slot[10] = (BfmeDispatchFn)&d_009bebb0;
@@ -210,7 +211,7 @@ void __cdecl bfmeInstallCpuDispatchTable(void)
 		g_bfmeCodecDispatch.slot[15] = (BfmeDispatchFn)&bfmeFilterBlockMmx;
 		g_bfmeCodecDispatch.slot[23] = (BfmeDispatchFn)&bfmeFilterPairMmx;
 		g_bfmeCodecDispatch.slot[2] = (BfmeDispatchFn)&initPattern;
-		g_bfmeCodecDispatch.slot[1] = (BfmeDispatchFn)&Rva009B6D40;
+		g_rva01356E64 = (int *(__cdecl *)(Rva009ACBA0Context *, int))&Rva009B6D40;
 		g_bfmeCodecDispatch.slot[16] = (BfmeDispatchFn)&Rva009BE180Vp6FilterWideV2;
 		g_bfmeCodecDispatch.slot[24] = (BfmeDispatchFn)&Rva009BD750Vp6FilterWide;
 		g_bfmeCodecDispatch.slot[10] = (BfmeDispatchFn)&Rva009B6D80;
@@ -239,7 +240,7 @@ void __cdecl bfmeInstallCpuDispatchTable(void)
 	g_bfmeCodecDispatch.slot[15] = (BfmeDispatchFn)&Rva009AF570FilterVert;
 	g_bfmeCodecDispatch.slot[23] = (BfmeDispatchFn)&Rva009AF6A0FilterHoriz;
 	g_bfmeCodecDispatch.slot[2] = (BfmeDispatchFn)&Rva009AF490SetupBounding;
-	g_bfmeCodecDispatch.slot[1] = (BfmeDispatchFn)&Rva009ACBA0SetupBounding;
+	g_rva01356E64 = &Rva009ACBA0SetupBounding;
 	g_bfmeCodecDispatch.slot[16] = (BfmeDispatchFn)&Rva009B18D0;
 	g_bfmeCodecDispatch.slot[24] = (BfmeDispatchFn)&Rva009B10E0;
 	g_bfmeCodecDispatch.slot[10] = (BfmeDispatchFn)&Rva009ACF90;

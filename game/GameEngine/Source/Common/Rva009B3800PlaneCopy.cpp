@@ -37,7 +37,8 @@ struct Rva009B3800Context
 	unsigned int m_strideUV;
 };
 
-typedef int *(__cdecl *Rva009B3800Setup)(Rva009B3800Context *, int);
+struct Rva009ACBA0Context;
+typedef int *(__cdecl *Rva009B3800Setup)(Rva009ACBA0Context *, int);
 typedef void (__cdecl *Rva009B3800Filter)(
 	Rva009B3800Context *, unsigned char *, unsigned int, int *);
 
@@ -65,7 +66,7 @@ void __cdecl Rva009B3800PlaneCopy(
 	else
 		selector = g_rva011428E8[tableIndex];
 
-	bounding = g_rva01356E64(ctx, selector);
+	bounding = g_rva01356E64((Rva009ACBA0Context *)ctx, selector);
 
 	plane = 0;
 	do

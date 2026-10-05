@@ -41,11 +41,12 @@ struct Rva008995E0Value : Rva00899560Value {
     union { bool m_value; Rva008995E0Value *m_next; };
     __forceinline Rva008995E0Value(bool x) : Rva00899560Value(5), m_value(x) {}
 };
-extern Rva008995E0Value *Rva013387D4;
+class Rva008D2A80;
+extern Rva008D2A80 *g_rva008D2A80;
 static __forceinline Rva008995E0Value *pooledBoolean(bool value) {
-    Rva008995E0Value *v = Rva013387D4;
+    Rva008995E0Value *v = (Rva008995E0Value *)g_rva008D2A80;
     if (v) {
-        Rva013387D4 = v->m_next;
+        g_rva008D2A80 = (Rva008D2A80 *)v->m_next;
         g_rva8CD130IdleHook->addPooled(v);
         v->m_value = value;
         return v;

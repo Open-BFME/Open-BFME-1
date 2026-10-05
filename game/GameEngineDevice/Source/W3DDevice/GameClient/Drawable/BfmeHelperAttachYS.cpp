@@ -51,7 +51,7 @@ BfmeHelperYS::BfmeHelperYS(void) :
 	m_rva00754F70Count24 = 0;
 }
 
-extern BfmeHelperYS *g_bfmeCurrentYS;				// retail 0x01304B64
+BfmeHelperYS *g_bfmeCurrentYS;				// retail 0x01304B64
 
 class Gen_00755E70
 {

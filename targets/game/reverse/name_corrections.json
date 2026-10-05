@@ -17998,5 +17998,25 @@
   "after_sha256": "f2f2d06ebbd012c3ece83f93bccbc36dccf1736ff4ba45ce9958f41e33448ee1",
   "evidence": "targets/game/reverse/identity_evidence/pointer-globals-012f4b50.md",
   "reason": "VA 0x012F4B50 holds the Apt score-screen object pointer; g_obj12F4B50 and Rva012F4B50ScoreScreen are both address-derived spellings, and the latter names the verified score-screen role. No EA name is proven. Bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1019.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1019.cpp",
+  "old_name": "BfmeS1019",
+  "new_name": "Rva007F00B0Allocator",
+  "before_sha256": "0ed7d41029a75b8adff71148b58006378435a32d92caeeb70b5420e5d04d190a",
+  "after_sha256": "b31a03bc00229db7461091f69964ff23892b3e6cc4427821d694d9146b2fe5c3",
+  "evidence": "targets/game/reverse/identity_evidence/0130a5b0-object-pointer.md",
+  "reason": "The pointer at VA 0x0130A5B0 holds the allocator interface that RVA 0x007F00B0 creates once and installs; BfmeS1019 was an invented placeholder type. No EA class name is proven, so the type carries the constructor's address. Bytes unchanged."
+ },
+ {
+  "old_path": "game/Libraries/Source/DirtySock/Rva007F0000Allocator.cpp",
+  "new_path": "game/Libraries/Source/DirtySock/Rva007F0000Allocator.cpp",
+  "old_name": "BfmeS1019",
+  "new_name": "Rva007F00B0Allocator",
+  "before_sha256": "18b3b3ee628799bc64c5a06c586f6c52263f38e479c53ba02b141efc8d510290",
+  "after_sha256": "daeeebdcc9d2354bc3ab71475970f7fe7c0c7b48710e72ace8203372cb7812ce",
+  "evidence": "targets/game/reverse/identity_evidence/0130a5b0-object-pointer.md",
+  "reason": "The pointer at VA 0x0130A5B0 holds the allocator interface that RVA 0x007F00B0 creates once and installs; BfmeS1019 was an invented placeholder type. No EA class name is proven, so the type carries the constructor's address. Bytes unchanged."
  }
 ]

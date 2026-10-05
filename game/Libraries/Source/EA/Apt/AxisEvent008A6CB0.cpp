@@ -40,7 +40,8 @@ struct Rva008A4C00Value : Rva00899560Value {
 // so forward-declare it and spell the reference with its defining type.
 class Rva008D2A10;
 extern Rva008D2A10 *g_rva008D2A10;
-extern Rva008A4C00Value *Rva008AF330Head;
+class Rva008D29A0;
+extern Rva008D29A0 *g_rva008D29A0;
 static __forceinline Rva008A1110Value *makeInteger(int value) {
     Rva008A1110Value *object = (Rva008A1110Value *)g_rva008D2A10;
     if (object) {
@@ -52,9 +53,9 @@ static __forceinline Rva008A1110Value *makeInteger(int value) {
     return new Rva008A1110Value(value);
 }
 static __forceinline Rva008A4C00Value *makeFloat(float value) {
-    Rva008A4C00Value *object = Rva008AF330Head;
+    Rva008A4C00Value *object = (Rva008A4C00Value *)g_rva008D29A0;
     if (object) {
-        Rva008AF330Head = object->m_next;
+        g_rva008D29A0 = (Rva008D29A0 *)object->m_next;
         g_rva8CD130IdleHook->addPooled(object);
         object->m_value = value;
         return object;

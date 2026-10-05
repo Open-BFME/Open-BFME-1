@@ -13,12 +13,13 @@ public:
 	int bfmeQuery(void);
 };
 
-extern Gen01304B64 *g_Va01304B64;
+class BfmeHelperYS;
+extern BfmeHelperYS *g_bfmeCurrentYS;
 extern int g_Va01304B5C;
 
 // @?Rva00755C80@@YAXXZ 0x00755C80
 void Rva00755C80(void)
 {
-	if (g_Va01304B64)
-		g_Va01304B5C = g_Va01304B64->bfmeQuery();
+	if (g_bfmeCurrentYS)
+		g_Va01304B5C = ((Gen01304B64 *)g_bfmeCurrentYS)->bfmeQuery();
 }

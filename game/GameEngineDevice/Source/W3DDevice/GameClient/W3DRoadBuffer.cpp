@@ -1675,11 +1675,7 @@ struct BfmeThingBWF
 	}
 };
 
-class BfmeMapObjectListHolder
-{
-public:
-	BfmeThingBWF *m_head;
-};
+class BfmeMapObjectListHolder;
 extern BfmeMapObjectListHolder *BfmeTheMapObjectListHolder;
 
 // BFME asset-reporting block, as in ImageLoad.cpp: while
@@ -1746,7 +1742,7 @@ void W3DRoadBuffer::addMapObjects()
 
 	BfmeThingBWF *pMapObj;
 	BfmeThingBWF *pMapObj2;
-	for (pMapObj = BfmeTheMapObjectListHolder->m_head; pMapObj; pMapObj = pMapObj->m_next) {
+	for (pMapObj = *reinterpret_cast<BfmeThingBWF **>(BfmeTheMapObjectListHolder); pMapObj; pMapObj = pMapObj->m_next) {
 		if (m_numRoads >= m_maxRoadSegments) {
 			break;
 		}

@@ -253,10 +253,7 @@ public:
 	virtual ~Rva0074ACB0MapObject();
 };
 
-struct BfmeMapObjectListHolder
-{
-	Rva0074ACB0MapObject *m_head;
-};
+class BfmeMapObjectListHolder;
 
 extern BfmeMapObjectListHolder *BfmeTheMapObjectListHolder;
 
@@ -289,10 +286,10 @@ public:
 // ZH WorldHeightMap.cpp's file-static helper, inlined here as in retail.
 static void freeListOfMapObjects()
 {
-	if (BfmeTheMapObjectListHolder->m_head)
+	if (*reinterpret_cast<Rva0074ACB0MapObject **>(BfmeTheMapObjectListHolder))
 	{
-		delete BfmeTheMapObjectListHolder->m_head;
-		BfmeTheMapObjectListHolder->m_head = 0;
+		delete *reinterpret_cast<Rva0074ACB0MapObject **>(BfmeTheMapObjectListHolder);
+		*reinterpret_cast<Rva0074ACB0MapObject **>(BfmeTheMapObjectListHolder) = 0;
 	}
 	g_Va012ED5E0.clear();
 }

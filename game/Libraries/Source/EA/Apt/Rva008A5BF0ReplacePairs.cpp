@@ -23,7 +23,8 @@ struct Rva00899560Pool {
   else { m_items[count]=node; count++; }
  }
 };
-extern Rva008D2A30Node *Rva008D2A30Head;
+class Rva008D2A80;
+extern Rva008D2A80 *g_rva008D2A80;
 extern Rva00899560Pool *g_rva8CD130IdleHook;
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned);
 extern const char vtable01135D68[];
@@ -37,9 +38,9 @@ struct Boolean008A58C0 {
  void *m_vtable; unsigned m_flags;
  union { Boolean008A58C0 *m_next; bool m_value; };
  static __forceinline Boolean008A58C0 *create(bool value) {
-  Boolean008A58C0 *object=(Boolean008A58C0*)Rva008D2A30Head;
+  Boolean008A58C0 *object=(Boolean008A58C0*)g_rva008D2A80;
   if(object) {
-   Rva008D2A30Head=(Rva008D2A30Node*)object->m_next;
+   g_rva008D2A80=(Rva008D2A80*)object->m_next;
    g_rva8CD130IdleHook->addPooled((Rva008D2A30Node*)object);
    object->m_value=value;
    return object;

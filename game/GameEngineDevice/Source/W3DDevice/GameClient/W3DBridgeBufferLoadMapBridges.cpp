@@ -91,10 +91,10 @@ struct BfmeThingBWF
 	Dict *getProperties() { return (Dict *)((char *)this + 0x24); }
 };
 
-// retail 0x012ED5DC: the one global pointer defined as `int *` in
-// Common/Rva00087480Get.cpp. The local view above supplies the head pointer
-// this TU reads.
-extern int *g_rva00087480;
+// Retail VA 0x012ED5DC holds the map-list holder pointer.
+// WorldHeightMap.cpp owns it; this use retains its local view.
+class BfmeMapObjectListHolder;
+extern BfmeMapObjectListHolder *BfmeTheMapObjectListHolder;
 
 class W3DBridgeBuffer
 {
@@ -109,7 +109,7 @@ protected:
 void W3DBridgeBuffer::loadBridges(W3DTerrainLogic *terrain, Bool saveGame)
 {
 	clearAllBridges();
-	for (BfmeThingBWF *node = *reinterpret_cast<BfmeThingBWF **>(g_rva00087480);
+	for (BfmeThingBWF *node = *reinterpret_cast<BfmeThingBWF **>(BfmeTheMapObjectListHolder);
 		node; node = node->m_next)
 	{
 		if (node->getFlag(4))

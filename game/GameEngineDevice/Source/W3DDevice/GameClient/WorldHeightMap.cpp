@@ -434,7 +434,7 @@ public:
 	void bfmeReset(void);					///< retail 0x00033F46
 };
 
-extern BfmeMapObjectListHolder *BfmeTheMapObjectListHolder;	///< retail [0x012ED5DC]
+BfmeMapObjectListHolder *BfmeTheMapObjectListHolder;	///< retail [0x012ED5DC]
 extern BfmeMapObjectExtra BfmeTheMapObjectExtra;		///< retail 0x012ED5E0
 
 /*static */ Int MapObject::countMapObjectsWithOwner(const AsciiString& n)

@@ -20,13 +20,17 @@ void bfmeRva00C6D830Initialize()
 void bfmeAssignSlotsVA();
 void *bfmeTwoTB();
 extern int g_bfmeCountWE;
-extern void *_Bfme_classic_locale;
+namespace _STL
+{
+class _Locale_impl;
+extern _Locale_impl *_Bfme_classic_locale;
+}
 void rva00C70CA0Release();
 
 void bfmeRva00C6D850InitializeLocale()
 {
     bfmeAssignSlotsVA();
-    _Bfme_classic_locale = bfmeTwoTB();
+    _STL::_Bfme_classic_locale = (_STL::_Locale_impl *)bfmeTwoTB();
     ++g_bfmeCountWE;
     atexit(rva00C70CA0Release);
 }

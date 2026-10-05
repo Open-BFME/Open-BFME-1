@@ -54,7 +54,11 @@ void BfmeThingTA::bfmeGoTA()
 }
 
 extern int g_bfmeCountTB;
-extern void *g_bfmePtrTB;
+namespace _STL
+{
+class _Locale_impl;
+extern _Locale_impl *_Bfme_classic_locale;
+}
 void bfmeOneTB(void);
 void *bfmeTwoTB(void);
 
@@ -68,7 +72,7 @@ BfmeThingTB *BfmeThingTB::bfmeGoTB()
 {
 	if (!g_bfmeCountTB) {
 		bfmeOneTB();
-		g_bfmePtrTB = bfmeTwoTB();
+		_STL::_Bfme_classic_locale = (_STL::_Locale_impl *)bfmeTwoTB();
 		++g_bfmeCountTB;
 	}
 	return this;

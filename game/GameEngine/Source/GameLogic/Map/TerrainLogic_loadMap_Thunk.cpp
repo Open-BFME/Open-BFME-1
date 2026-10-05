@@ -61,12 +61,13 @@ public:
 	}
 };
 
-// retail 0x012ED5DC: the one global pointer defined as `int *` in
-// Common/Rva00087480Get.cpp; this TU only wants its address.
-extern int *g_rva00087480;
+// Retail VA 0x012ED5DC holds the map-list holder pointer.
+// WorldHeightMap.cpp owns it; this use retains its local view.
+class BfmeMapObjectListHolder;
+extern BfmeMapObjectListHolder *BfmeTheMapObjectListHolder;
 
 static MapObject ***const TheMapObjectListPtr =
-	reinterpret_cast<MapObject ***>(&g_rva00087480);
+	reinterpret_cast<MapObject ***>(&BfmeTheMapObjectListHolder);
 
 class ChunkInputStream
 {
