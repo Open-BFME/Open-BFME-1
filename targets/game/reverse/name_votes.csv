@@ -775,3 +775,5 @@ game/GameEngine/Source/Common/PackShroudPixel.cpp|local|packShroudPixel|r,1c178b
 game/GameEngine/Source/Common/RTS/ActionManagerCanEnterObject.cpp|member||m_body200,e71893bcd0503f505a9ed58c,gpt-6-sol,20261005184954-9677f1,2026-10-05
 game/GameEngine/Source/Common/RTS/ActionManagerCanEnterObject.cpp|member||m_ai204,13c0f3770a80c11bd85c5aa5,gpt-6-sol,20261005184954-9677f1,2026-10-05
 game/GameEngine/Source/Common/RTS/ActionManagerCanEnterObject.cpp|local|BFMEActionManager::canEnterObject|m,0a6f04b11b149fdc5515b6c3,gpt-6-sol,20261005184954-9677f1,2026-10-05
+game/GameEngine/Source/Common/RTS/ActionManagerCanEnterObject.cpp|member||m_body200,e71893bcd0503f505a9ed58c,grok,20261005192529-d480e8,2026-10-05
+game/GameEngine/Source/Common/RTS/ActionManagerCanEnterObject.cpp|member||m_ai204,13c0f3770a80c11bd85c5aa5,grok,20261005192529-d480e8,2026-10-05

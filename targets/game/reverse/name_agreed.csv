@@ -344,3 +344,5 @@ game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m
 game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_11,m_considerTransient,gpt-6-astra+gpt-6-sol+grok,applied,2026-10-05
 game/GameEngine/Source/Common/Bfme5ListMemberDtors.cpp|type||BfmeDtorBaseW,UserPreferences,gpt-6-astra+gpt-6-sol+grok,blocked: hook: - symbols.csv line 9907: exact duplicate row for ??1UserPreferences@@UAE@XZ. Fix: drop the duplicate record(s) with tools/ledger_io.py keeping t,2026-10-05
 game/GameEngine/Source/Common/Bfme5ListMemberDtors.cpp|type||Gen_0009F7A0,SkirmishPreferences,gpt-6-astra+gpt-6-sol+grok,blocked: hook: - symbols.csv line 9907: exact duplicate row for ??1UserPreferences@@UAE@XZ. Fix: drop the duplicate record(s) with tools/ledger_io.py keeping t,2026-10-05
+game/GameEngine/Source/Common/RTS/ActionManagerCanEnterObject.cpp|member||m_body200,m_body,gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/Common/RTS/ActionManagerCanEnterObject.cpp|member||m_ai204,m_ai,gpt-6-sol+grok,agreed,2026-10-05
