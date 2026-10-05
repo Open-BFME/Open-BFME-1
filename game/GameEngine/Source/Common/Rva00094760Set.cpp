@@ -15,7 +15,7 @@ public:
 	void bar(void *);
 };
 
-Rva000946B0G *g_rva000946b0;
+extern void *TheOptionGroupTarget;
 
 class Rva00094760
 {
@@ -30,5 +30,5 @@ public:
 void Rva00094760::set(const Rva0036CA00Str &src)
 {
 	m_08 = src;
-	g_rva000946b0->bar(this);
+	reinterpret_cast<Rva000946B0G *>(TheOptionGroupTarget)->bar(this);
 }

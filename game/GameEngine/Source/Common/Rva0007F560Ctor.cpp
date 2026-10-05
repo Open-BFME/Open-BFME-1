@@ -10,9 +10,7 @@ public:
 	void *lookup( const AsciiString &name );
 };
 
-class Rva000946B0G;
-extern Rva000946B0G *g_rva000946b0;
-#define g_rva0007F560Factory ((Rva0007F560Factory *)g_rva000946b0)
+extern void *TheOptionGroupTarget;
 
 class Rva0007F560
 {
@@ -26,5 +24,5 @@ private:
 Rva0007F560::Rva0007F560( const char *name )
 {
 	AsciiString tmp( name );
-	m_ptr = g_rva0007F560Factory->lookup( tmp );
+	m_ptr = reinterpret_cast<Rva0007F560Factory *>(TheOptionGroupTarget)->lookup( tmp );
 }

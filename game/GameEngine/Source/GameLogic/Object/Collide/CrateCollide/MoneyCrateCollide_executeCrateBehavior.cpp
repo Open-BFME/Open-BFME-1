@@ -183,7 +183,8 @@ public:
 	virtual const MiscAudio *getMiscAudio() const = 0;
 };
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+class AudioManager;
+extern AudioManager *TheAudio;
 
 struct MoneyCrateCollideModuleDataSlice
 {
@@ -226,9 +227,9 @@ Bool MoneyCrateCollide::executeCrateBehavior(Object *other)
 		player->getScoreKeeper()->unidentified_0003a45e(money);
 	}
 
-	AudioEventRTS soundToPlay = TheAudioClientUpdate->getMiscAudio()->m_crateMoney;
+	AudioEventRTS soundToPlay = reinterpret_cast<Rva005A00B0AudioClient *>(TheAudio)->getMiscAudio()->m_crateMoney;
 	soundToPlay.setObjectID(other->getID());
-	TheAudioClientUpdate->addAudioEvent(&soundToPlay);
+	reinterpret_cast<Rva005A00B0AudioClient *>(TheAudio)->addAudioEvent(&soundToPlay);
 
 	return true;
 }

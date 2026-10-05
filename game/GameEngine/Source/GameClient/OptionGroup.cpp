@@ -25,7 +25,7 @@ class Rva00094300 { public: static void parseDefinition( INI *ini, void *instanc
 class Rva00094470 { public: static void parseDefinition( INI *ini, void *instance, void *store, const void *userData ); };
 
 extern AsciiString TheOptionGroupName;		// 0x012ED60C
-extern void *TheOptionGroupTarget;			// 0x012ED604
+void *TheOptionGroupTarget = 0;			// 0x012ED604
 
 void parseOptionGroup( INI *ini )
 {

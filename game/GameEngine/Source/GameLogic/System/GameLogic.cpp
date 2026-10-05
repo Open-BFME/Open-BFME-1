@@ -6720,7 +6720,8 @@ extern int forcedCRCFrame;
 // Retail's writable GlobalData global lives at 0x012ED5C8 and is declared as
 // `GlobalData *TheWritableGlobalData` by Common/Recorder.h; the field view below
 // is TU-local, so the pointer is cast back at its single use.
-extern Rva0038DA10PlayerList* g012ED748;
+class PlayerList;
+extern PlayerList *ThePlayerList;
 extern bool g_deepCRC,g_liteCRC;
 class CRCParameterCheck;
 extern CRCParameterCheck *TheCRCParameterCheck;
@@ -6781,7 +6782,7 @@ void Rva0038DA10GameLogic::update(int phase) {
         if (forcedCRCFrame!=-1U) generate=(frame>=forcedCRCFrame-((Rva0038DA10GlobalData*)TheWritableGlobalData)->rvaCB4-2 && frame<=forcedCRCFrame);
         if (generate) {
             BfmeByteStream* text=0;
-            int player=g012ED748->player()->index();
+            int player=reinterpret_cast<Rva0038DA10PlayerList *>(ThePlayerList)->player()->index();
             unsigned crc;
             if (!g_deepCRC && !g_liteCRC) {
                 g_liteCRC=true; crc=getCRC(0); g_liteCRC=false;

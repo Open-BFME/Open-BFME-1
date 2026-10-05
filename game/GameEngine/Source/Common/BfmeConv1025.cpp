@@ -96,7 +96,8 @@ public:
 	unsigned short bfmeLookup1025(int k, int a, int b);
 };
 
-extern BfmeD1025 *g_bfmeD1025;
+class PlayerList;
+extern PlayerList *ThePlayerList;
 
 class BfmeC1025
 {
@@ -111,7 +112,7 @@ public:
 int BfmeC1025::bfmeGo1025C(void)
 {
 	if (m_bfmeA != 0 && m_bfmeB != 0)
-		return g_bfmeD1025->bfmeLookup1025(m_bfmeB->m_bfmeKey, 4, 0);
+		return reinterpret_cast<BfmeD1025 *>(ThePlayerList)->bfmeLookup1025(m_bfmeB->m_bfmeKey, 4, 0);
 
 	return 0;
 }

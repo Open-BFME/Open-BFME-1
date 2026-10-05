@@ -36,7 +36,7 @@ private:
 	unsigned char m_unreconstructed_00[0x5EAC];				///< sizeof 0x5EAC
 };
 
-extern Win32Mouse *TheWin32Mouse;							///< retail 0x012ED240
+Win32Mouse *TheWin32Mouse = 0;							///< retail 0x012ED240
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DGameClient.h
 class W3DGameClient

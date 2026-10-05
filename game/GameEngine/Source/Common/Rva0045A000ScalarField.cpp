@@ -48,7 +48,8 @@ public:
 extern GenKey GenKey0012A79E0;
 extern GenKey GenKey0012A79F0;
 extern GenKey GenKey0012A79F8;
-extern GenTable GenTable0012ED5E0;
+class Dict;
+class MapObject { public: static Dict TheWorldDict; };
 // Retail's writable-global pointer (0x012ED5C8), defined once in
 // Common/GlobalData.cpp. This TU reads one float out of it at +0xE68 through
 // its own TU-local view, so the canonical declaration plus a cast keeps the
@@ -94,18 +95,18 @@ void Rva0045A000::initialize( const R3HeightSample *source, int unused,
 	int sourceWidth, int sourceHeight, int state )
 {
 	bool found;
-	float setting = GenTable0012ED5E0.lookup(
+	float setting = reinterpret_cast<GenTable *>(&MapObject::TheWorldDict)->lookup(
 		GenKey0012A79E0.fetch( &found ) );
 	if( !found )
 		setting = ((R3FieldGlobals *)TheWritableGlobalData)->m_default;
 	if( setting == g_rva01075350 )
 		return;
 
-	float low = GenTable0012ED5E0.lookup(
+	float low = reinterpret_cast<GenTable *>(&MapObject::TheWorldDict)->lookup(
 		GenKey0012A79F0.fetch( &found ) );
 	if( !found )
 		low = -9999999.0f;
-	float high = GenTable0012ED5E0.lookup(
+	float high = reinterpret_cast<GenTable *>(&MapObject::TheWorldDict)->lookup(
 		GenKey0012A79F8.fetch( &found ) );
 	if( !found )
 		high = 9999999.0f;

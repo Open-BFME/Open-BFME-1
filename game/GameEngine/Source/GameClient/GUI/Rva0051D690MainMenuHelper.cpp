@@ -130,7 +130,8 @@ public:
 class Shell;
 extern Shell *TheShell;
 
-extern Rva0051D690Audio *TheAudioClientUpdate;
+class AudioManager;
+extern AudioManager *TheAudio;
 // Retail's global at 0x012ED5C8 is EA's `GlobalData *TheWritableGlobalData`,
 // defined once in Common/GlobalData.cpp.  Rva0051D690GlobalData above is this
 // TU's view of the pointee, so the canonical global is forward declared and the
@@ -155,7 +156,7 @@ void Rva0051D690::apply()
 	m_flag25b = 0;
 	if (TheShell && !((Rva0051D690Shell *)TheShell)->check())
 	{
-		TheAudioClientUpdate->slot6c(2, 1, 0);
+		reinterpret_cast<Rva0051D690Audio *>(TheAudio)->slot6c(2, 1, 0);
 		((Rva0051D690Shell *)TheShell)->restore();
 	}
 	TheTransitionHandler->setGroup(AsciiString("MainMenuToSubMenu"));
@@ -165,14 +166,14 @@ void Rva0051D690Shell::restore()
 {
 	if (TheWritableGlobalData && !((Rva0051D690GlobalData *)TheWritableGlobalData)->m_noShellAudio)
 	{
-		if (TheAudioClientUpdate && TheAudioClientUpdate->getMiscAudio() &&
-			!TheAudioClientUpdate->isCurrentlyPlaying(m_musicHandle))
+		if (reinterpret_cast<Rva0051D690Audio *>(TheAudio) && reinterpret_cast<Rva0051D690Audio *>(TheAudio)->getMiscAudio() &&
+			!reinterpret_cast<Rva0051D690Audio *>(TheAudio)->isCurrentlyPlaying(m_musicHandle))
 		{
-			TheAudioClientUpdate->slot6c(2, 1, 0);
+			reinterpret_cast<Rva0051D690Audio *>(TheAudio)->slot6c(2, 1, 0);
 			Rva0051D690EventStorage event(*reinterpret_cast<Rva0051D690EventStorage *>(
-				reinterpret_cast<char *>(TheAudioClientUpdate->getMiscAudio()) + 0xD90));
+				reinterpret_cast<char *>(reinterpret_cast<Rva0051D690Audio *>(TheAudio)->getMiscAudio()) + 0xD90));
 			reinterpret_cast<Rva000B21A0Object *>(&event)->setValue(2);
-			m_musicHandle = TheAudioClientUpdate->addAudioEvent(
+			m_musicHandle = reinterpret_cast<Rva0051D690Audio *>(TheAudio)->addAudioEvent(
 				reinterpret_cast<AudioEventRTS *>(&event));
 		}
 	}

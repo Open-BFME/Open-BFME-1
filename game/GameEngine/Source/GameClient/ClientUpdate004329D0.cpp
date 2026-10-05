@@ -253,7 +253,8 @@ extern GameWindowManager *TheWindowManager;
 extern FadeView *FadeTacticalView;
 extern BfmeGlobal_012f076c *TheBfmeGlobal_012f076c;
 extern GameLogic *TheGameLogic;
-extern Players005999B0 *PlayerList005999B0;
+class PlayerList;
+extern PlayerList *ThePlayerList;
 class GameEngine;
 extern GameEngine *TheGameEngine;
 
@@ -328,7 +329,7 @@ void ClientUpdate004329D0::update() {
         || ((ScriptEngine *)TheBfmeGlobal_012f076c)->debugFrozen()
         || ((Rva00336EF0ByteField *)TheBfmeGlobal_012f076c)->get()
         || ((BfmeGameLogicPause *)TheGameLogic)->isGamePaused();
-    int localPlayerIndex = PlayerList005999B0 ? ((PlayerList004329D0 *)PlayerList005999B0)->getLocal()->getIndex() : 0;
+    int localPlayerIndex = reinterpret_cast<Players005999B0 *>(ThePlayerList) ? ((PlayerList004329D0 *)reinterpret_cast<Players005999B0 *>(ThePlayerList))->getLocal()->getIndex() : 0;
     freezeTime = freezeTime || (g_012B5348 == m_at000C);
     bool shroud = at<int>((*reinterpret_cast<Engine007629F0 **>(&TheGameEngine)),0x30)==1;
     if (!freezeTime && !at<bool>(TheGameLogic,0x11d)) {

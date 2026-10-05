@@ -58,7 +58,8 @@ public:
  V(15) V(16) V(17) V(18) V(19) V(1a) V(1b) V(1c) V(1d) V(1e) V(1f) V(20) V(21) V(22) V(23) V(24) V(25) V(26) V(27) V(28) V(29) V(2a) V(2b) V(2c) V(2d) V(2e) V(2f) V(30) V(31) V(32) V(33) V(34) V(35) V(36) V(37) V(38) V(39) V(3a) V(3b) V(3c) V(3d) V(3e) V(3f) V(40) V(41) V(42) V(43) V(44)
  virtual void v45(Rva0041D290AudioInfo*); virtual Rva0041D290Ref<Rva0041D290AudioInfo> v46(const AsciiString&);
 };
-extern Rva0041D290Audio *Rva012ed668;
+class AudioManager;
+extern AudioManager *TheAudio;
 class TintEnvelope { public: char bytes[0x50]; TintEnvelope() throw(); };
 class DrawableLocoInfo { public: char bytes[0x58]; DrawableLocoInfo() throw(); };
 class Anim2DTemplate { public: AsciiString getName() const; };
@@ -242,7 +243,7 @@ void Drawable::xfer(Xfer *x)
  char *p=(char*)this+0x60;
  Xfer::Version version; version.data[0]=1;version.data[1]=4; *x==version;
  if(x->IsLoading()) {
-#define KILL(O) if(field<Rva0041D290Ambient*>(p,O)){unsigned handle=field<unsigned>(field<Rva0041D290Ambient*>(p,O),0x10);Rva012ed668->v14(handle);delete field<Rva0041D290Ambient*>(p,O);field<Rva0041D290Ambient*>(p,O)=0;}
+#define KILL(O) if(field<Rva0041D290Ambient*>(p,O)){unsigned handle=field<unsigned>(field<Rva0041D290Ambient*>(p,O),0x10);reinterpret_cast<Rva0041D290Audio *>(TheAudio)->v14(handle);delete field<Rva0041D290Ambient*>(p,O);field<Rva0041D290Ambient*>(p,O)=0;}
  KILL(0xe4) KILL(0xe8) KILL(0xec)
 #undef KILL
  }
@@ -296,12 +297,12 @@ void Drawable::xfer(Xfer *x)
  if(custom){bool silence=m_ac==rva00415c20();*x==silence;
   if(x->IsLoading()){
    if(silence)full->rva0041abe0();
-   else{AsciiString name;*x==name;Rva0041D290Ref<Rva0041D290AudioInfo> base=Rva012ed668->v46(name);Rva0041D290Ref<Rva0041D290AudioInfo> info;bool success=true;
+   else{AsciiString name;*x==name;Rva0041D290Ref<Rva0041D290AudioInfo> base=reinterpret_cast<Rva0041D290Audio *>(TheAudio)->v46(name);Rva0041D290Ref<Rva0041D290AudioInfo> info;bool success=true;
     if(!base.p){info=new Rva0041D290AudioInfo(0);success=false;}else info=new Rva0041D290AudioInfo(*base.p,0);
     full->rva00417330(info);info.p->rva000b5710(x);
-    if(success){Rva012ed668->v45(info.p);
-     if(field<Rva0041D290Ambient*>(full,0x144)){unsigned handle=field<unsigned>(field<Rva0041D290Ambient*>(full,0x144),0x10);Rva012ed668->v13(handle);}
-     if(field<Rva0041D290Ambient*>(full,0x148)){unsigned handle=field<unsigned>(field<Rva0041D290Ambient*>(full,0x148),0x10);Rva012ed668->v13(handle);}
+    if(success){reinterpret_cast<Rva0041D290Audio *>(TheAudio)->v45(info.p);
+     if(field<Rva0041D290Ambient*>(full,0x144)){unsigned handle=field<unsigned>(field<Rva0041D290Ambient*>(full,0x144),0x10);reinterpret_cast<Rva0041D290Audio *>(TheAudio)->v13(handle);}
+     if(field<Rva0041D290Ambient*>(full,0x148)){unsigned handle=field<unsigned>(field<Rva0041D290Ambient*>(full,0x148),0x10);reinterpret_cast<Rva0041D290Audio *>(TheAudio)->v13(handle);}
      field<Rva0041D290Ref<Rva0041D290AudioInfo> >(full,0x10c).clear();m_ac=info;
     }
    }

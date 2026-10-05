@@ -81,7 +81,8 @@ public:
     virtual void slot15(); virtual void slot16();
     virtual unsigned int addAudioEvent(const AudioEventRTS *);
 };
-extern AudioManager *TheAudioClientUpdate;
+class AudioManager;
+extern AudioManager *TheAudio;
 
 
 class AIUpdateInterface {
@@ -141,11 +142,11 @@ void Rva00200DF0::onDie(const DamageInfo *damageInfo)
     if(listSize>0) {
         idx=GetGameLogicRandomValue(0,listSize-1,"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Behavior\\InstantDeathBehavior.cpp",169);
         AudioEventInfoRef sound=d->sounds[idx];
-        if(sound.ptr && TheAudioClientUpdate) {
+        if(sound.ptr && TheAudio) {
             Object *obj = getObject();
             ObjectID id = obj->id;
             AudioEventRTS event(sound,id);
-            TheAudioClientUpdate->addAudioEvent(&event);
+            TheAudio->addAudioEvent(&event);
         }
     }
     TheGameLogic->destroyObject(getObject());

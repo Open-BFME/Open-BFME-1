@@ -133,9 +133,7 @@ public:
 	virtual void removeAudioEvent(AudioHandle audioEvent);			// +0x4C
 };
 
-struct Rva005A00B0AudioClient;
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;	// TheAudio, 0x012ED668
-#define TheAudio ((AudioManager *)TheAudioClientUpdate)
+extern AudioManager *TheAudio;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable

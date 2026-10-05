@@ -1,4 +1,5 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug
+#include "shader.h"
 // Retail 0x007DAE30; vtable0x01128C0C slot5 -> thunk0x004148C6.
 // Matched Rva007DB820 constructor installs this vtable; original filter name unknown.
 class StringClass {
@@ -26,7 +27,7 @@ struct Device{DeviceVtable *v;};
 extern VertexMaterialClass *ScreenMaterial;
 extern unsigned TheBoxTextureDirtyMask;
 extern bool ScreenShaderDirty;
-extern unsigned ScreenOpaqueShader, ScreenCurrentShader;
+extern unsigned ScreenCurrentShader;
 extern bool ScreenSnapshot;
 extern unsigned ScreenRenderStates[];
 extern Device *ScreenDevice;
@@ -116,7 +117,7 @@ int Rva007DB820::set(FilterModes mode) {
  ScreenMaterial=vmat;
  TheBoxTextureDirtyMask|=0x4000;
  if(vmat)vmat->Release_Ref();
- if(ScreenShaderDirty||ScreenOpaqueShader!=ScreenCurrentShader){ScreenCurrentShader=ScreenOpaqueShader;TheBoxTextureDirtyMask|=0x8000;StringClass s;}
+ if(ScreenShaderDirty||ShaderClass::_PresetOpaqueShader.Get_Bits()!=ScreenCurrentShader){ScreenCurrentShader=ShaderClass::_PresetOpaqueShader.Get_Bits();TheBoxTextureDirtyMask|=0x8000;StringClass s;}
  {TextureHandle tex;BoxSetTexture(0,(TextureBaseClass*&)tex.p);}
  DX8Wrapper::Apply_Render_State_Changes();
  DX8Wrapper::Set_DX8_Render_State(23,8);

@@ -1,6 +1,7 @@
 extern "C" unsigned char bfmeVftSI[];
 
-extern int g_bfmeCountSI;
+class Win32Mouse;
+extern Win32Mouse *TheWin32Mouse;
 
 class BfmeThingSI
 {
@@ -13,6 +14,6 @@ public:
 void BfmeThingSI::bfmeResetSI()
 {
 	m_bfmeVft = bfmeVftSI;
-	g_bfmeCountSI = 0;
+	TheWin32Mouse = 0;
 	bfmeTailSI();
 }

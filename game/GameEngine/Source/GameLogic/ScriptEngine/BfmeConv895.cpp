@@ -59,11 +59,12 @@ struct BfmeGlobFFA
 	virtual void bfmeVirt55FFA(void *a, void *b, void *c, void *d, void *e, int z);
 };
 
-extern BfmeGlobFFA *g_bfmeObjFFA;
+class AudioManager;
+extern AudioManager *TheAudio;
 
 void __stdcall bfmeGoFFA(void *a, void *b, void *c, void *d, void *e)
 {
-	BfmeGlobFFA *g = g_bfmeObjFFA;
+	BfmeGlobFFA *g = reinterpret_cast<BfmeGlobFFA *>(TheAudio);
 	if (g)
 		g->bfmeVirt55FFA(a, b, c, d, e, 0);
 }

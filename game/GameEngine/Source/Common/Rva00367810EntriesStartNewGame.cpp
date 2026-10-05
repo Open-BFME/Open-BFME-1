@@ -19,7 +19,8 @@ struct Rva002EE330PlayerList {
     char m_unmodelled[0xc];
     void *m_campaign;
 };
-extern Rva002EE330PlayerList *ThePlayerList;
+class PlayerList;
+extern PlayerList *ThePlayerList;
 extern void j_0001e056();
 extern void j_0001df16();
 extern void j_0003fe09();
@@ -131,7 +132,7 @@ class Rva00367810Entries {
 void Rva00367810Entries::startNewGame() {
     if (!TheGameLogic->_bfme_isInLivingWorldCampaign()) return;
     m_busy=1;
-    Player *campaign=(Player*)ThePlayerList->m_campaign;
+    Player *campaign=(Player*)reinterpret_cast<Rva002EE330PlayerList *>(ThePlayerList)->m_campaign;
     if(campaign) {
         ByteBool saved=TheGameLogic->m_byte90;
         TheGameLogic->m_byte90=0;

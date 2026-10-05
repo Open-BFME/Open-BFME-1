@@ -737,7 +737,6 @@ public:
 
 extern int BfmeRenderWidth;
 extern int BfmeRenderHeight;
-extern int BfmeRenderBitDepth;
 extern bool BfmeRenderWindowed;
 
 void DX8Wrapper::Get_Render_Target_Resolution(int &width, int &height, int &bitDepth, bool &windowed)
@@ -751,14 +750,14 @@ void DX8Wrapper::Get_Render_Target_Resolution(int &width, int &height, int &bitD
 
 		width = info.m_bfmeWidth;
 		height = info.m_bfmeHeight;
-		bitDepth = BfmeRenderBitDepth;
+		bitDepth = BitDepth;
 		windowed = BfmeRenderWindowed;
 	}
 	else
 	{
 		width = BfmeRenderWidth;
 		height = BfmeRenderHeight;
-		bitDepth = BfmeRenderBitDepth;
+		bitDepth = BitDepth;
 		windowed = BfmeRenderWindowed;
 	}
 }

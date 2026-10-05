@@ -138,7 +138,8 @@ extern "C" __declspec(dllimport) double __cdecl ceil(double value);
 class GameLogic;
 extern GameLogic *TheGameLogic;
 class PlayerList;
-extern PlayerList *Rva002EE330ThePlayers;
+class PlayerList;
+extern PlayerList *ThePlayerList;
 extern GlobalData *TheWritableGlobalData;
 
 // InGameUI and TerrainLogic views with BFME's vtable slot positions, as in
@@ -253,7 +254,7 @@ Bool SupplyCenterDockUpdate::action(Object *docker, Object *drone)
 
 	if (((GameLogicShim *)TheGameLogic)->unidentified_0001e0ab())
 	{
-		Int playerCount = ((Rva002EE330PlayerListThunk *)Rva002EE330ThePlayers)->unidentified_000389f6(false);
+		Int playerCount = ((Rva002EE330PlayerListThunk *)ThePlayerList)->unidentified_000389f6(false);
 		Real scale = ((Rva00083240Thunk *)((char *)TheWritableGlobalData + 0xee0))->unidentified_00009e12(playerCount);
 		value *= scale;
 	}

@@ -41,12 +41,13 @@ public:
 
 class Display;
 extern Display *TheDisplay;
-extern BfmeB1019 *g_bfmeB1019;
+class AudioManager;
+extern AudioManager *TheAudio;
 
 void bfmeGo1019A(void)
 {
 	((BfmeA1019 *)TheDisplay)->bfmeStop1019(0);
-	g_bfmeB1019->bfmeRun1019(2, 1, 0);
+	reinterpret_cast<BfmeB1019 *>(TheAudio)->bfmeRun1019(2, 1, 0);
 }
 
 class BfmeS1019

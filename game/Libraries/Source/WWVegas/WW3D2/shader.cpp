@@ -67,7 +67,8 @@ unsigned long _PolygonCullMode = D3DCULL_CW;
 	DSTBLEND_ZERO, FOG_DISABLE, GRADIENT_MODULATE, SECONDARY_GRADIENT_DISABLE, TEXTURING_ENABLE, \
 	ALPHATEST_DISABLE, CULL_MODE_ENABLE, \
 	DETAILCOLOR_DISABLE, DETAILALPHA_DISABLE) )
-ShaderClass ShaderClass::_PresetOpaqueShader(SC_OPAQUE);
+// Retail stores this preset with the BFME primary-gradient bits.
+ShaderClass ShaderClass::_PresetOpaqueShader(0x0011581b);
 
 // Texturing, zbuffer, disabled zbuffer write, primary gradient, additive blending
 #define SC_ADDITIVE ( SHADE_CNST(PASS_LEQUAL, DEPTH_WRITE_DISABLE, COLOR_WRITE_ENABLE, SRCBLEND_ONE, \
@@ -172,7 +173,8 @@ ShaderClass ShaderClass::_PresetAdditiveSolidShader(SC_ADDITIVE_SOLID);
 	SRCBLEND_SRC_ALPHA, DSTBLEND_ONE_MINUS_SRC_ALPHA, FOG_DISABLE, GRADIENT_MODULATE, \
 	SECONDARY_GRADIENT_DISABLE, TEXTURING_DISABLE, \
 	ALPHATEST_DISABLE, CULL_MODE_ENABLE, DETAILCOLOR_DISABLE, DETAILALPHA_DISABLE) )
-ShaderClass ShaderClass::_PresetAlphaSolidShader(SC_ALPHA_SOLID);
+// Retail stores this preset with the BFME primary-gradient bits.
+ShaderClass ShaderClass::_PresetAlphaSolidShader(0x001098b3);
 
 // Texturing, no zbuffer reading/writing, no gradients, no blending, alpha
 // testing, no fogging - mostly for "pure" alpha-tested 2D objects.

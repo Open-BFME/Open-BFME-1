@@ -6,7 +6,7 @@ public:
 	void bar(void *);
 };
 
-Rva000946B0G *g_rva000946b0;
+extern void *TheOptionGroupTarget;
 
 class Rva000946B0
 {
@@ -16,5 +16,5 @@ public:
 
 void Rva000946B0::run()
 {
-	g_rva000946b0->bar(this);
+	reinterpret_cast<Rva000946B0G *>(TheOptionGroupTarget)->bar(this);
 }

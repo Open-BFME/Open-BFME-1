@@ -15,9 +15,9 @@
 typedef bool Bool;
 
 
-// The manager every notify-setter tail-jumps through is one global object at
+// The manager every notify-setter tail-jumps through is one global pointer at
 // 0x012ED604, spelled in the ledger as
-// ?g_rva000946b0@@3PAVRva000946B0G@@A; its member is the 0x0001A7DF ILT
+// ?TheOptionGroupTarget@@3PAXA; its member is the 0x0001A7DF ILT
 // (pinned as ?bar@Rva000946B0G@@QAEXPAX@Z).
 class Rva000946B0G
 {
@@ -25,7 +25,7 @@ public:
 	void bar(void *sender);					// ILT 0x0001A7DF
 };
 
-extern Rva000946B0G *g_rva000946b0;
+extern void *TheOptionGroupTarget;
 
 class Gen_000946D0
 {
@@ -134,7 +134,7 @@ void Gen_000946D0::bfmeSet(Bool value)
 {
 	m_bfmeValue = value;
 
-	g_rva000946b0->bar(this);
+	reinterpret_cast<Rva000946B0G *>(TheOptionGroupTarget)->bar(this);
 }
 
 // ?bfmeSet@Gen_00094700@@QAEXH@Z
@@ -142,7 +142,7 @@ void Gen_00094700::bfmeSet(int value)
 {
 	m_bfmeValue = value;
 
-	g_rva000946b0->bar(this);
+	reinterpret_cast<Rva000946B0G *>(TheOptionGroupTarget)->bar(this);
 }
 
 // ?bfmeSet@Gen_00094730@@QAEXH@Z
@@ -150,7 +150,7 @@ void Gen_00094730::bfmeSet(int value)
 {
 	m_bfmeValue = value;
 
-	g_rva000946b0->bar(this);
+	reinterpret_cast<Rva000946B0G *>(TheOptionGroupTarget)->bar(this);
 }
 
 // ?bfmeSet@Gen_00411DD0@@QAEX_N@Z

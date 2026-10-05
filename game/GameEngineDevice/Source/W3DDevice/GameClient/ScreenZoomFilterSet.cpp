@@ -1,10 +1,11 @@
-// cl: /DNDEBUG /MD
+// cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug
+#include "shader.h"
 // ScreenZoomFilter vtable 0x011289D4 slot 5 -> 0x0040C7E3 -> 0x007D1F00.
 // Slot 0 identifies matched ScreenZoomFilter::init at 0x007D2390.
 class TextureBaseClass;
 class VertexMaterialClass{public:virtual void Delete_This();int refs;enum PresetType{PRELIT_DIFFUSE};static VertexMaterialClass*Get_Preset(PresetType);void Release_Ref(){if(!--refs)Delete_This();}};
 extern VertexMaterialClass *ScreenMaterial;extern unsigned TheBoxTextureDirtyMask;
-class ShaderClass{unsigned x;};extern ShaderClass ScreenOpaqueShader;
+
 void BaseHeightMapScorchSetShader(const ShaderClass&);
 void BoxSetTexture(unsigned,TextureBaseClass*&);
 class DX8Wrapper{public:static void Apply_Render_State_Changes();static void Set_DX8_Render_State(unsigned long,unsigned);};
@@ -146,7 +147,7 @@ int ScreenZoomFilter::set(FilterModes mode){
   }
   VertexMaterialClass *vmat=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
   if(vmat)++vmat->refs;if(ScreenMaterial)ScreenMaterial->Release_Ref();ScreenMaterial=vmat;TheBoxTextureDirtyMask|=0x4000;if(vmat)vmat->Release_Ref();
-  BaseHeightMapScorchSetShader(ScreenOpaqueShader);BoxSetTexture(0,texture);DX8Wrapper::Apply_Render_State_Changes();DX8Wrapper::Set_DX8_Render_State(23,8);DX8Wrapper::Set_DX8_Render_State(14,0);DX8Wrapper::Apply_Render_State_Changes();return true;
+  BaseHeightMapScorchSetShader(ShaderClass::_PresetOpaqueShader);BoxSetTexture(0,texture);DX8Wrapper::Apply_Render_State_Changes();DX8Wrapper::Set_DX8_Render_State(23,8);DX8Wrapper::Set_DX8_Render_State(14,0);DX8Wrapper::Apply_Render_State_Changes();return true;
  }
  return false;
 }

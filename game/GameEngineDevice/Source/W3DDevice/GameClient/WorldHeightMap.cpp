@@ -441,7 +441,6 @@ public:
 };
 
 BfmeMapObjectListHolder *BfmeTheMapObjectListHolder;	///< retail [0x012ED5DC]
-extern BfmeMapObjectExtra BfmeTheMapObjectExtra;		///< retail 0x012ED5E0
 
 /*static */ Int MapObject::countMapObjectsWithOwner(const AsciiString& n)
 {
@@ -539,7 +538,7 @@ void WorldHeightMap::freeListOfMapObjects(void)
 		BfmeTheMapObjectListHolder->m_bfmeHead = 0;
 	}
 
-	BfmeTheMapObjectExtra.bfmeReset();
+	reinterpret_cast<BfmeMapObjectExtra *>(&MapObject::TheWorldDict)->bfmeReset();
 }
 
 

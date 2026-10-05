@@ -38,7 +38,8 @@ struct PlayerList363E30 {
     char field00[0xc];
     Player363E30 *field0c;
 };
-extern PlayerList363E30 *ThePlayerList;
+class PlayerList;
+extern PlayerList *ThePlayerList;
 class ThingFactory {
     public: Object *newObject(const ThingTemplate*,Team*,const BitFlags<86>&,unsigned);
 };
@@ -200,7 +201,7 @@ class ArmyObjectSpawner00363E30 {
     int field00,field04;
 };
 void ArmyObjectSpawner00363E30::spawn(const LivingWorldArmy *army,int count,_STL::list<Object*> *output) {
-    Player363E30 *player=ThePlayerList->field0c;
+    Player363E30 *player=reinterpret_cast<PlayerList363E30 *>(ThePlayerList)->field0c;
     if(!player)return;
     const ThingTemplate *thing=((BfmeThingFactory*)TheThingFactory)->findTemplate(army->getName());
     if(!thing)return;

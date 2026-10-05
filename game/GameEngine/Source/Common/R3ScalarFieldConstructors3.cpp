@@ -1,3 +1,5 @@
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug
+#include "shader.h"
 // Sixteen more bodies from the same shape as R3ScalarFieldConstructors.cpp --
 // fifteen constant-field constructors plus one setter that writes through a
 // global pointer.  Two mnemonic families land here: the ten-store group
@@ -45,7 +47,6 @@
 extern int Gen01128BD0;
 extern int Gen0111E188;
 extern int Gen01128BAC;
-extern int Gen012D6E2C;
 
 // ------------------------------------------------ family anchored at 0x0013A8B0
 
@@ -214,29 +215,6 @@ Rva0074AC80::Rva0074AC80()
 	m_1C = 0;
 	m_20 = 0;
 	m_24 = 0;
-}
-
-class Rva007D8880
-{
-public:
-	Rva007D8880();
-	int *m_00;
-	int m_04, m_08;
-	char m_0C, m_0D, m_0E, m_0F;
-	int m_10, m_14, m_18;
-};
-Rva007D8880::Rva007D8880()
-{
-	m_00 = &Gen01128BD0;
-	m_04 = 0;
-	m_08 = 0;
-	m_0C = 0;
-	m_0D = 0;
-	m_0E = 0;
-	m_0F = 0;
-	m_10 = 0;
-	m_14 = 0;
-	m_18 = 0;
 }
 
 // ------------------------------------------------ family anchored at 0x00299DE0
@@ -427,7 +405,7 @@ public:
 Rva00974F80::Rva00974F80()
 {
 	m_00 = 0;
-	m_04 = Gen012D6E2C;
+	m_04 = ShaderClass::_PresetAdditiveSpriteShader.Get_Bits();
 	m_08 = 0;
 	m_0C = 1.0f;
 	m_10 = 1.0f;
