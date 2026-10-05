@@ -35,15 +35,15 @@ public:
 	void bfmeGo912C();
 	void bfmeDo912C(BfmeNode912C *n);
 	char m_bfmePad[0xe4];
-	BfmeNode912C *m_bfmeHead;
+	BfmeNode912C *m_head;
 };
 
 void BfmeThing912C::bfmeGo912C()
 {
-	BfmeNode912C *n = m_bfmeHead;
-	while (n) {
-		bfmeDo912C(n);
-		n = n->m_next;
+	BfmeNode912C *node = m_head;
+	while (node) {
+		bfmeDo912C(node);
+		node = node->m_next;
 	}
 }
 
