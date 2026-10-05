@@ -1,11 +1,45 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringinline
 // BFME retail RVA 0x001645B0, 326 bytes.
 //
-// The declared AIPlayer method and the TeamPrototype loop identify this body.
+// The TeamPrototype unit loop and AIPlayer declaration identify the cost helper.
+//
 // BFME stores seven 12-byte unit records at TeamPrototype+0x130 and keeps the
-// record count at +0x184, so this TU models only the fields that the body reads.
+// count at +0x184. The build-idea override also reads the name at +0x14 and
+// maximum instance count at +0x1C4.
 
-#include "StringInline.h"
+extern char Rva006A16B0Empty[];
+
+template <typename T>
+class StringBase
+{
+    friend class AsciiString;
+    struct Data
+    {
+        int m_refCount;
+        int m_length;
+        T m_text[1];
+    };
+private:
+    StringBase() : m_data(0) {}
+    StringBase(const T *text);
+    StringBase(const StringBase &other);
+    ~StringBase();
+    Data *m_data;
+};
+
+class AsciiString : private StringBase<char>
+{
+public:
+    AsciiString() : StringBase<char>() {}
+    AsciiString(const char *text) : StringBase<char>(text) {}
+    AsciiString(const AsciiString &other) : StringBase<char>(other) {}
+    ~AsciiString() {}
+    void format(AsciiString fmt, ...);
+    const char *str() const
+    {
+        return m_data != 0 ? m_data->m_text : Rva006A16B0Empty;
+    }
+};
 
 typedef bool Bool;
 typedef int Int;
@@ -24,6 +58,8 @@ struct BfmeTeamTemplateInfo
 {
 	TCreateUnitsInfo m_unitsInfo[7];
 	Int m_numUnitsInfo;
+	char m_prefix[0x3c];
+	Int m_maxInstances;
 };
 
 struct BfmeUnitInfoCursor
@@ -51,8 +87,17 @@ public:
 		return (const BfmeUnitInfoCursor *)((const char *)this + 0x134);
 	}
 
+	Bool evaluateProductionCondition();
+	Int countTeamInstances();
+	const AsciiString &getName() const
+	{
+		return m_name;
+	}
+
 private:
-	char m_prefix[0x130];
+	char m_prefix[0x14];
+	AsciiString m_name;
+	char m_pad[0x118];
 	BfmeTeamTemplateInfo m_teamTemplate;
 };
 
@@ -125,17 +170,55 @@ private:
 	Data *m_aiData;
 };
 
+class Team;
+class Gen_001604e0
+{
+public:
+	Int m();
+};
+
+class TeamInQueue
+{
+public:
+	TeamInQueue *getNext()
+	{
+		return (TeamInQueue *)((Gen_001604e0 *)this)->m();
+	}
+	char m_prefix[0x1c];
+	Team *m_team;
+};
+
+class Team
+{
+public:
+	TeamPrototype *getPrototype() const
+	{
+		return *(TeamPrototype **)((const char *)this + 4);
+	}
+};
+
+extern void j_000077b1();
+
 class AIPlayer
 {
 protected:
+	virtual Bool isAGoodIdeaToBuildTeam(TeamPrototype *proto);
 	Bool isPossibleToBuildTeam(TeamPrototype *proto,
 		Bool requireIdleFactory, Bool &notEnoughMoney);
+	Bool rva00164750Check(TeamPrototype *proto)
+	{
+		typedef Bool (AIPlayer::*Call)(TeamPrototype *);
+		union { void (*raw)(); Call member; } call;
+		call.raw = j_000077b1;
+		return (this->*call.member)(proto);
+	}
 
 	Object *findFactory(const ThingTemplate *thing, Bool busyOK,
 		Int *buildIndex);
 
 private:
-	char m_prefix[0x0c];
+	TeamInQueue *m_teamBuildQueue;
+	char m_prefix[4];
 	Player *m_player;
 };
 
@@ -223,4 +306,64 @@ afterUnits:
 	if (!requireIdleFactory)
 		return true;
 	return false;
+}
+
+class GlobalData
+{
+public:
+	char m_prefix[0xa88];
+	Int m_debugAI;
+};
+
+class ScriptEngine
+{
+public:
+	void AppendDebugMessage(const AsciiString &message, Bool forcePause);
+};
+
+extern GlobalData *TheWritableGlobalData;
+extern ScriptEngine *TheScriptEngine;
+
+// AIPlayer's vtable at 0x010968B0 routes slot 25 through ILT 0x000320EC to this body.
+//
+// This method shares a source file with isPossibleToBuildTeam, so MSVC sees the matched helper body when it allocates stack slots.
+Bool AIPlayer::isAGoodIdeaToBuildTeam(TeamPrototype *proto)
+{
+	if (!proto->evaluateProductionCondition())
+		return false;
+
+	if (proto->countTeamInstances() >= proto->getTemplateInfo()->m_maxInstances)
+	{
+		if (TheWritableGlobalData->m_debugAI)
+		{
+			AsciiString str;
+			str.format(AsciiString("Team %s not chosen - %d already exist."),
+				proto->getName().str(), proto->countTeamInstances());
+			TheScriptEngine->AppendDebugMessage(str, false);
+		}
+		return false;
+	}
+
+	for (TeamInQueue *team = m_teamBuildQueue; team; team = team->getNext())
+		if (team->m_team->getPrototype() == proto)
+			return false;
+
+	if (rva00164750Check(proto))
+		return true;
+
+	Bool needMoney;
+	if (!isPossibleToBuildTeam(proto, true, needMoney))
+	{
+		if (TheWritableGlobalData->m_debugAI)
+		{
+			AsciiString str;
+			if (needMoney)
+				str.format(AsciiString("Team %s not chosen - Not enough money."), proto->getName().str());
+			else
+				str.format(AsciiString("Team %s not chosen - Factory/tech missing or busy."), proto->getName().str());
+			TheScriptEngine->AppendDebugMessage(str, false);
+		}
+		return false;
+	}
+	return true;
 }
