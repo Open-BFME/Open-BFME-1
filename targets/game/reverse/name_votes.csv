@@ -801,3 +801,5 @@ game/GameEngine/Source/GameLogic/LivingWorld/ParseAudioEventBlock.cpp|type||Rva0
 game/GameEngine/Source/GameLogic/LivingWorld/ParseAudioEventBlock.cpp|member||m_flag0C,3a3f92d555f8b4e30fe7138e,grok,20261005190908-257cfb,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Behavior/EnragedBehaviorCtorThunk.cpp|member||m_f14,71cd2933d094ec54ba801aed,gpt-6-sol,20261005184901-4c214b,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Behavior/EnragedBehaviorCtorThunk.cpp|member||m_f18,9547eb6ffc6d6b18b99b180a,gpt-6-sol,20261005184901-4c214b,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/EnragedBehaviorCtorThunk.cpp|member||m_f14,71cd2933d094ec54ba801aed,grok,20261005192417-f6dd4e,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/EnragedBehaviorCtorThunk.cpp|member||m_f18,9547eb6ffc6d6b18b99b180a,grok,20261005192417-f6dd4e,2026-10-05
