@@ -692,3 +692,7 @@ game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m
 game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|local|ExamineCellsStruct::cellCallback|p,85c87394e273334ba6c41a93,gpt-6-astra,20261005182802-1378cf,2026-10-05
 game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_10,3401d7c9e0218c2e307287d1,grok,20261005182633-eaec65,2026-10-05
 game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_11,555f7466608a66bec1c2d0fb,grok,20261005182633-eaec65,2026-10-05
+game/GameEngine/Source/GameLogic/AI/PathfinderAdjustToPossibleDestination.cpp|param|Coord3D#2|o,924f70c263abadec9959e3b0,gpt-6-sol,20261005175410-2b240d,2026-10-05
+game/GameEngine/Source/GameLogic/AI/PathfinderAdjustToPossibleDestination.cpp|local|getTemplate|d,80253f9ce309b32d033057bf,gpt-6-sol,20261005175410-2b240d,2026-10-05
+game/GameEngine/Source/GameLogic/AI/PathfinderAdjustToPossibleDestination.cpp|local|Pathfinder::adjustToPossibleDestination|zone1,456e42328f907d3e9198ba38,gpt-6-sol,20261005175410-2b240d,2026-10-05
+game/GameEngine/Source/GameLogic/AI/PathfinderAdjustToPossibleDestination.cpp|local|Pathfinder::adjustToPossibleDestination|zone2,4ed36d229afc145067784b73,gpt-6-sol,20261005175410-2b240d,2026-10-05
