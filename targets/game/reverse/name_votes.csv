@@ -813,3 +813,6 @@ game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdate
 game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateAction.cpp|member||m_10,316d397303381162b099b440,grok,20261005190742-722d86,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateAction.cpp|member||m_14,8ae5e738b46c4df2dd419e3e,grok,20261005190742-722d86,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateAction.cpp|member||m_18,75678cc1427f53752c3e055e,grok,20261005190742-722d86,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Upgrade/ObjectCreationUpgradeModuleDataConstructor.cpp|member||m_94,fb1a7d013d1df968d71420ee,grok,20261005192427-71b4d1,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Upgrade/ObjectCreationUpgradeModuleDataConstructor.cpp|member||m_98,54d1529796594a71f743b200,grok,20261005192427-71b4d1,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Upgrade/ObjectCreationUpgradeModuleDataConstructor.cpp|member||m_9c,b6a78aa64645d28526e420aa,grok,20261005192427-71b4d1,2026-10-05
