@@ -28,16 +28,16 @@
     "linked_bytes_prev_rule": "1583670",
     "linked_authored_prev_rule": "1355102"
   },
-  "declared_names": 460744,
-  "readable_names": 327208,
+  "declared_names": 465157,
+  "readable_names": 330934,
   "linked": 1421282,
   "linked_authored": 1194139,
   "linked_game_code": 8330862,
-  "authored": 5557763,
-  "vendored": 317967,
-  "generated": 1170391,
-  "library": 1053344,
-  "updated_at": "2026-10-04T16:57:34.871371+00:00",
-  "message_id": "1556349576175161476",
-  "run_id": "37218624570"
+  "authored": 5614305,
+  "vendored": 317895,
+  "generated": 1173543,
+  "library": 1053434,
+  "updated_at": "2026-10-05T21:38:25.634553+00:00",
+  "message_id": "1556782641980776550",
+  "run_id": "37377081069"
 }
