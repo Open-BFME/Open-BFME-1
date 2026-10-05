@@ -896,3 +896,4 @@ game/GameEngine/Source/GameLogic/Object/Contain/TransportContainModuleDataCtorTh
 game/GameEngine/Source/GameLogic/Object/Contain/TransportContainModuleDataCtorThunk.cpp|member||m_flag170,b45ad8f2959401aafdadd255,grok,20261005195103-42fc0c,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Contain/TransportContainModuleDataCtorThunk.cpp|member||m_flag171,5d2a884a1aa60bcb82169ed2,grok,20261005195103-42fc0c,2026-10-05
 game/GameEngine/Source/GameLogic/Object/ObjectAttemptHealingFromSoleBenefactor.cpp|member||m_bfme4CA,35fd2f164cf5be45126de22d,grok,20261005195245-ac55f0,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Update/Rva001F9C20Unknown.cpp|type||Rva001F9C20Thing,cdf965ff97cdfee560756124,grok,20261005193501-da1252,2026-10-05
