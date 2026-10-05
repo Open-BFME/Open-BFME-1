@@ -281,3 +281,7 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Rva00784090AptItemBounds.c
 game/GameEngine/Source/Common/BfmeConv1907.cpp|member||m_bfmeSlotIBA,m_sciences,claude-opus+gpt-6-astra,agreed,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1907.cpp|member||m_bfmeSlotLBA,m_upgradeMask,claude-opus+gpt-6-astra,agreed,2026-10-05
 game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|function|Shadow@|rva00459960,setOpacityFade,claude-fable+gpt-6-astra,agreed,2026-10-05
+game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||Rva0015C7A0GuardMachine,AIGuardMachine,gpt-6-astra+grok,agreed,2026-10-05
+game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||FactorsR0015C7A0,TAiData,gpt-6-astra+grok,agreed,2026-10-05
+game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||QR0015C7A0,ExitConditions,gpt-6-astra+grok,agreed,2026-10-05
+game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||CtorTargetR0015C7A0,AIAttackState,gpt-6-astra+grok,agreed,2026-10-05

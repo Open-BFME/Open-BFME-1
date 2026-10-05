@@ -441,3 +441,7 @@ game/GameEngine/Source/GameLogic/LivingWorld/DistanceUpdate003C5990.cpp|member||
 game/GameEngine/Source/GameLogic/LivingWorld/DistanceUpdate003C5990.cpp|member||m_28,c6dbe69503d3d3c06b83ef6b,gpt-6-astra,20261005161242-e31277,2026-10-05
 game/GameEngine/Source/GameLogic/LivingWorld/DistanceUpdate003C5990.cpp|param|contains|p,25428fcd48c9b68091dedf16,gpt-6-astra,20261005161242-e31277,2026-10-05
 game/GameEngine/Source/GameLogic/LivingWorld/DistanceUpdate003C5990.cpp|local|DistanceUpdate003C5990::update|p,315cf38c7fcc372c198695d8,gpt-6-astra,20261005161242-e31277,2026-10-05
+game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||Rva0015C7A0GuardMachine,0e5d1df8cef11fcbeb2e3f46,gpt-6-astra,20261005160654-7bb705,2026-10-05
+game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||FactorsR0015C7A0,a05001e9ab801bf9fd571659,gpt-6-astra,20261005160654-7bb705,2026-10-05
+game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||QR0015C7A0,77b88cd1f02d0c7abdfe99c6,gpt-6-astra,20261005160654-7bb705,2026-10-05
+game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||CtorTargetR0015C7A0,8d0ee96fcb39428e36ffdd02,gpt-6-astra,20261005160654-7bb705,2026-10-05
