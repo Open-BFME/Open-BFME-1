@@ -18208,5 +18208,15 @@
   "after_sha256": "8da51a155021d45ac426513218d256d8768fa260089ec29226238b7dbb79796f",
   "evidence": "targets/game/reverse/identity_evidence/0053fc00-staging-refresh.md",
   "reason": "Bank promotion: preserve existing caller and canonical callee/global identities; replace the incompatible slot facade and movie-pointer ABI with independently checked dispatch/level views; keep unproved bank member spellings as exact offsets, not new EA identities."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0016ee00.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva0016EE00.cpp",
+  "old_name": "DestinationSearch0016EE00",
+  "new_name": "Rva0016EE00",
+  "before_sha256": "cc9b40b2823943af4dd8adc3f380ecf6a51ff2cdc9ff963985ba8314b70ab0de",
+  "after_sha256": "139c36eeaa951d787087914d1fff945354a4700b399b89b8720300a733ac1d93",
+  "evidence": "targets/game/reverse/identity_evidence/0x0016ee00-address-derived.md",
+  "reason": "An earlier partial source used DestinationSearch0016EE00::find as its emitter name, but said the identity stayed address-derived. The matched caller proves the arguments and boolean use, while no retail symbol identifies that descriptive owner."
  }
 ]
