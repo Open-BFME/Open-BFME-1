@@ -27,12 +27,6 @@ struct Gen009F5040Item
 	virtual int getIndex();
 };
 
-struct BfmeNode912C
-{
-	char m_pad00[0xc];
-	BfmeNode912C *m_next;
-};
-
 struct Gen009F5040Counter
 {
 	int m_value;
@@ -44,12 +38,6 @@ struct Gen009F5040Bucket
 	Gen009F5040Counter *m_counter;
 	int m_pad04;
 	int m_pad08;
-};
-
-class BfmeThing912C
-{
-public:
-	void bfmeDo912C(BfmeNode912C *node);
 };
 
 class Gen009F5040
@@ -67,9 +55,9 @@ public:
 	Gen009F5040Node *m_node;
 };
 
-// The retail call sites load `this` into ecx before reaching the 0x009F4900
-// body, so the call shape is thiscall even though the body itself is a plain
-// __cdecl function taking all four arguments on the stack.
+// Retail passes ECX plus four stack arguments to 0x009F4900. That body
+// retains ECX for nested calls and returns RET16. The generated
+// zero-argument export below does not describe that native ABI.
 extern void d_009f4900();
 
 static __forceinline void calculate(Gen009F5040 *self, Gen009F5040Node *node,
@@ -129,7 +117,7 @@ void Gen009F5040::handle()
 		}
 		if (shouldProcess) {
 			remove(node);
-			((BfmeThing912C *)this)->bfmeDo912C((BfmeNode912C *)node);
+			linkNode_009F4D80(node);
 		}
 
 		node = m_node;
@@ -137,7 +125,7 @@ void Gen009F5040::handle()
 }
 
 // The retail call from handle() enters this body at 0x009F4D80.  Its two
-// intrusive links are distinct: remove() handles the +0x18/+0x1C pair while
+// intrusive links are distinct: handle() unlinks the +0x18/+0x1C pair while
 // this insertion uses the +0x10/+0x14 pair.
 void Gen009F5040::linkNode_009F4D80(Gen009F5040Node *node)
 {
