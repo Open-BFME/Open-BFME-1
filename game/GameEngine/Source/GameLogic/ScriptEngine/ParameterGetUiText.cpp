@@ -1,4 +1,5 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
+// cl: /Iinputs/reference/shims/zhcanonascii /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// stlport
 // Parameter::getUiText at RVA 0x00352E80: 3667 code bytes, one NOP,
 // and 344 bytes of native switch tables, ending at 0x00353E2C.
 // Named matched Condition::getUiText and ScriptAction::getUiText callers
@@ -17,9 +18,10 @@
 // trigraph results (?^ and ?]); preserve the actual compiled text.
 // Array operands: borders VA010E8430; buildability VA012AC3B0; surfaces
 // VA012B3E34; shake intensities VA012B3E40; spline names VA012B577C;
-// emotion names VA012A687C. The last two keep their address identity.
+// emotion names VA012A687C (BitFlags<10>::s_bitNameList). Spline names keep their address identity.
 extern "C" unsigned __cdecl strlen(const char *);
 #pragma intrinsic(strlen)
+#define __PLACEMENT_VEC_NEW_INLINE
 #include "ascii_string.h"
 #include "basetype.h"
 #include "Common/BorderColors.h"
@@ -34,7 +36,7 @@ extern const char *BuildableStatusNames[];
 extern const char *Surfaces[];
 extern const char *ShakeIntensities[];
 extern const char *Rva012B577CNames[];
-extern const char *Rva012A687CNames[];
+#include "Common/BitFlags.h"
 
 class Parameter {
 public:
@@ -249,7 +251,7 @@ AsciiString Parameter::getUiText() const {
  case Rva00352E80Type58: uiText.format("ModelCondition State: %s",uiString.str()); break;
  case Rva00352E80Type60: uiText.format("Reverb Room Type: %s",uiString.str()); break;
  case Rva00352E80Type63:
-  if(m_int>=0 && m_int<10) uiText.format("Emotion: %s",Rva012A687CNames[m_int]);
+  if(m_int>=0 && m_int<10) uiText.format("Emotion: %s",BitFlags<10>::getBitNames()[m_int]);
   else uiText="Emotion: ???";
   break;
  }

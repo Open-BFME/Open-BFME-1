@@ -1,0 +1,11 @@
+# Receiver and argument contract at RVA 0x0019BC00
+
+The complete 87-byte body takes an ECX receiver, an integer index, and two pointers to AsciiString values. Its two calls through ILT VA 0x00409304 convert StaticNameKey objects into NameKeyType values, and its two calls through ILT VA 0x0042AF90 set those values in the record's Dict at offset 0x0C. The prior signature spelled the two string arguments by value, and falsely declared the keys at VA 0x012A75C0 and 0x012A75B8 as Dict objects.
+
+Retail VA 0x00409304 contains E9 87 6f 08 00 and jumps to VA 0x00490290. That 33-byte body reads receiver+0, optionally reads receiver+4, caches the generated key at receiver+0, returns it in EAX, and uses a plain RET without consuming stack arguments. The existing matched row is StaticNameKey::key() const. Therefore the string pointer pushed before that call remains on the stack. Retail then pushes the returned key and calls VA 0x0042AF90, whose E9 cb d8 03 00 reaches the matched Dict::setAsciiString(NameKeyType, const AsciiString&) body at VA 0x00468860. The reference Common/Dict.h line 235 declares this exact two-argument contract, and the matched Dict.cpp implementation consumes a const-reference string. The two original caller stack values are thus string pointers, not four-byte by-value string objects.
+
+The key objects have initial words {0, 0x0107C834} and {0, 0x0107C828}; the literals are teamOwner and teamName. Common/WellKnownKeys.h independently declares both const StaticNameKey objects. The correction retains the existing address-derived owner and method name, retypes only the arguments and the two key and Dict operations, and preserves the full 87-byte extent. No wrapper, alias, forwarding body or inheritance is introduced.
+
+A different final ILT destination, a callee that consumes the pre-pushed string argument, a setter that receives a by-value string, a different key literal, or any changed retail instruction would refute the correction. Native method spelling remains unresolved.
+
+Raw evidence is under build/rlink/identity-data-1791188974/: body-0059bc00.log, key-body.log, callees-0019bc00.log, 012a75b8-data.log, 012a75c0-data.log, and the source and identity gate receipts.

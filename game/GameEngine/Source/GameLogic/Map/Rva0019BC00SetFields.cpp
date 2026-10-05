@@ -1,32 +1,13 @@
-// cl: /O2
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	int m_data;
-};
-
-class AsciiStringField
-{
-public:
-	void set(AsciiString *value);
-};
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Dict.h
-class Dict
-{
-public:
-	AsciiString *setAsciiString(AsciiString value);
-};
-
-extern Dict g_dictA;
-extern Dict g_dictB;
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringbaseascii /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas
+// stlport
+#define __PLACEMENT_VEC_NEW_INLINE
+#include "Common/Dict.h"
+#include "Common/WellKnownKeys.h"
 
 class Rva0019BC00Owner
 {
 public:
-	void apply(int index, AsciiString a, AsciiString b);
+	void apply(int index, const AsciiString &a, const AsciiString &b);
 	void prepare(int index);
 	void finish(int index);
 
@@ -35,11 +16,11 @@ private:
 	char *m_data;
 };
 
-void Rva0019BC00Owner::apply(int index, AsciiString a, AsciiString b)
+void Rva0019BC00Owner::apply(int index, const AsciiString &a, const AsciiString &b)
 {
 	prepare(index);
-	AsciiStringField *field = (AsciiStringField *)(m_data + (index << 4) + 0xC);
-	field->set(g_dictA.setAsciiString(a));
-	field->set(g_dictB.setAsciiString(b));
+	Dict *field = (Dict *)(m_data + (index << 4) + 0xC);
+	field->setAsciiString(TheKey_teamOwner.key(), a);
+	field->setAsciiString(TheKey_teamName.key(), b);
 	finish(index);
 }

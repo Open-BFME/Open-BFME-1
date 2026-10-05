@@ -2,7 +2,7 @@
 // stlport
 // Open-BFME7: the 86-bit (object status) instantiation of the buildDescription
 // twin at 0x001B9980 (BitFlags304BuildDescription.cpp): same template with the
-// status name table at VA 0x012A6670 (address-derived extern) -- retail
+// status name table at VA 0x012A6670 (BitFlags<86>::s_bitNameList) -- retail
 // 0x00209130 165 B.
 
 #include <bitset>
@@ -11,7 +11,6 @@
 typedef int Int;
 typedef bool Bool;
 
-extern const char *const Rva00209130StatusNames[];
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
@@ -28,6 +27,7 @@ public:
 	void buildDescription( AsciiString *str, Int maxPerLine ) const;
 
 private:
+	static const char *s_bitNameList[];
 	_STL::bitset<NUMBITS> m_bits;
 };
 
@@ -45,7 +45,7 @@ void BitFlags<NUMBITS>::buildDescription( AsciiString *str, Int maxPerLine ) con
 		if ( !m_bits._Unchecked_test( i ) )
 			continue;
 
-		const char *bitName = Rva00209130StatusNames[i];
+		const char *bitName = s_bitNameList[i];
 		if ( bitName == 0 )
 			continue;
 

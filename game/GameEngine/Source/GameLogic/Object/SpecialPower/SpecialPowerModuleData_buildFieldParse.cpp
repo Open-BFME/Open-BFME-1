@@ -65,7 +65,11 @@ public:
 	static void iniParseAnim( INI *ini, void *instance, void *store, const void *userData );
 };
 
-extern const char *const g_bfmeNames012A68B0[];		// 0x012A68B0, NONE..LEVEL
+extern const char *const g_bfmeNames012A68B0[] =
+{
+	"NONE", "LEADERSHIP", "FORMATION", "SPELL",
+	"WEAPON", "STRUCTURE", "LEVEL", 0
+};
 
 class SpecialPowerModuleData
 {

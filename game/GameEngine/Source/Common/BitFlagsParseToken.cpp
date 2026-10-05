@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHs-c- /D_STLP_USE_STATIC_LIB
+// cl: /Iinputs/reference/shims/zhcanonascii /DNDEBUG /DWIN32 /MD /EHs-c- /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // stlport
 
 // Open-BFME5: the seven per-instantiation routines the BitFlags INI parser
@@ -60,7 +60,10 @@
 // exceptions are off in the build line because retail's frames carry no
 // exception record at all.
 
+#define __PLACEMENT_VEC_NEW_INLINE
 #include <bitset>
+#include "Common/BitFlags.h"
+extern const char *const g_bfmeNames012A68B0[];
 
 typedef int Int;
 typedef bool Bool;
@@ -93,7 +96,9 @@ enum { BFME_INI_INVALID_NAME_LIST = 2 };
 
 #define BFME_INI_MIX_MESSAGE "you may not mix normal and +- ops in bitstring lists"
 
-#define BFME_BITFLAGS_PARSE_TOKEN( NAME, NUMBITS )                                  \
+#define BFME_BITFLAGS_NAMES static const char *const s_bitNameList[];
+
+#define BFME_BITFLAGS_PARSE_TOKEN( NAME, NUMBITS, NAMES, DECL )                                  \
 class NAME                                                                          \
 {                                                                                   \
 public:                                                                             \
@@ -102,7 +107,7 @@ public:                                                                         
 private:                                                                            \
 	void clear() { m_bits.reset(); }                                                \
                                                                                     \
-	static const char *const s_bitNameList[];                                       \
+	DECL                                                                          \
                                                                                     \
 	_STL::bitset<NUMBITS> m_bits;                                                    \
 };                                                                                  \
@@ -121,14 +126,14 @@ Bool NAME::parseToken( const char *token, Bool *foundNormal, Bool *foundAddOrSub
 	{                                                                               \
 		if ( *foundNormal )                                                         \
 			throw INIException( BFME_INI_INVALID_NAME_LIST, BFME_INI_MIX_MESSAGE ); \
-		m_bits._Unchecked_set( INI::scanIndexList( token + 1, s_bitNameList ) );     \
+		m_bits._Unchecked_set( INI::scanIndexList( token + 1, NAMES ) );     \
 		*foundAddOrSub = true;                                                      \
 	}                                                                               \
 	else if ( token[ 0 ] == '-' )                                                   \
 	{                                                                               \
 		if ( *foundNormal )                                                         \
 			throw INIException( BFME_INI_INVALID_NAME_LIST, BFME_INI_MIX_MESSAGE ); \
-		m_bits._Unchecked_reset( INI::scanIndexList( token + 1, s_bitNameList ) );   \
+		m_bits._Unchecked_reset( INI::scanIndexList( token + 1, NAMES ) );   \
 		*foundAddOrSub = true;                                                      \
 	}                                                                               \
 	else                                                                            \
@@ -137,17 +142,17 @@ Bool NAME::parseToken( const char *token, Bool *foundNormal, Bool *foundAddOrSub
 			throw INIException( BFME_INI_INVALID_NAME_LIST, BFME_INI_MIX_MESSAGE ); \
 		if ( !*foundNormal )                                                        \
 			clear();                                                                \
-		m_bits._Unchecked_set( INI::scanIndexList( token, s_bitNameList ) );         \
+		m_bits._Unchecked_set( INI::scanIndexList( token, NAMES ) );         \
 		*foundNormal = true;                                                        \
 	}                                                                               \
                                                                                     \
 	return true;                                                                    \
 }
 
-BFME_BITFLAGS_PARSE_TOKEN( Rva00141320BitFlagsParser, 11 )
-BFME_BITFLAGS_PARSE_TOKEN( Rva001EB180BitFlagsParser, 29 )
-BFME_BITFLAGS_PARSE_TOKEN( Rva0029C7B0BitFlagsParser, 11 )
-BFME_BITFLAGS_PARSE_TOKEN( Rva00368EA0BitFlagsParser, 7 )
-BFME_BITFLAGS_PARSE_TOKEN( Rva0061C870BitFlagsParser, 9 )
-BFME_BITFLAGS_PARSE_TOKEN( Rva00204770BitFlagsParser, 86 )
-BFME_BITFLAGS_PARSE_TOKEN( Rva00128510BitFlagsParser, 181 )
+BFME_BITFLAGS_PARSE_TOKEN( Rva00141320BitFlagsParser, 11, BitFlags<11>::getBitNames(), )
+BFME_BITFLAGS_PARSE_TOKEN( Rva001EB180BitFlagsParser, 29, s_bitNameList, BFME_BITFLAGS_NAMES )
+BFME_BITFLAGS_PARSE_TOKEN( Rva0029C7B0BitFlagsParser, 11, s_bitNameList, BFME_BITFLAGS_NAMES )
+BFME_BITFLAGS_PARSE_TOKEN( Rva00368EA0BitFlagsParser, 7, g_bfmeNames012A68B0, )
+BFME_BITFLAGS_PARSE_TOKEN( Rva0061C870BitFlagsParser, 9, s_bitNameList, BFME_BITFLAGS_NAMES )
+BFME_BITFLAGS_PARSE_TOKEN( Rva00204770BitFlagsParser, 86, BitFlags<86>::getBitNames(), )
+BFME_BITFLAGS_PARSE_TOKEN( Rva00128510BitFlagsParser, 181, s_bitNameList, BFME_BITFLAGS_NAMES )

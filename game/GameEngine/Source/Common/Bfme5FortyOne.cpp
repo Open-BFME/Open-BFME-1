@@ -1,8 +1,9 @@
-// Four more: two masked table reads, an assignment that hands the object
-// back, and a four-state test.
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// stlport
+// Two masked table reads, an assignment returning the receiver, and a four-state test.
 
 extern int g_bfmeTableDJa[];					// retail 0x012A9200
-extern int g_bfmeTableDJb[];					// retail 0x012A68D8
+#include "Common/BitFlags.h"
 
 class Gen_001C3F80
 {
@@ -35,7 +36,7 @@ private:
 int Gen_0020EC30::bfmeLookup(int index) const
 {
 	if (m_bfmeMask & (1 << (index & 31)))
-		return g_bfmeTableDJb[index];
+		return (int)BitFlags<11>::getBitNames()[index];
 
 	return 0;
 }

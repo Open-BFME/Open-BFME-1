@@ -81,10 +81,12 @@ class BitFlags
 public:
 	_STL::bitset<NUMBITS> m_bits;
 	void xfer(Xfer *xfer);
+	static const char **getBitNames() { return s_bitNameList; }
+private:
+	static const char *s_bitNameList[];
 };
 
 extern unsigned char g_bfmeTableDH[];
-extern const char *const Rva00209130StatusNames[];
 extern int __cdecl bfmeLookup_001c6340(void *name);
 extern "C" BfmeSubTwoExceptionBH *__cdecl bfmeFormatText(
 	BfmeSubTwoExceptionBH *exception, int reserved, const char *format, ...);
@@ -186,9 +188,9 @@ void BfmeSubTwoBH::bfmeSaveBH(BfmeAgentBH *ag)
 		xfer->integer(&count);
 		for (int i = 0; i < 86; ++i)
 		{
-			if (bits->_Unchecked_test(i) && Rva00209130StatusNames[i])
+			if (bits->_Unchecked_test(i) && BitFlags<86>::getBitNames()[i])
 			{
-				AsciiString name(Rva00209130StatusNames[i]);
+				AsciiString name(BitFlags<86>::getBitNames()[i]);
 				xfer->text(&name);
 				--count;
 			}

@@ -1,7 +1,8 @@
-// Three more: two masked table reads and a search that clears the entry it
-// finds.
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// stlport
+// Two masked table reads and a search that clears the matching entry.
 
-extern int g_bfmeTableENa[];					// retail 0x012A6670
+#include "Common/BitFlags.h"
 extern int g_bfmeTableENb[];					// retail 0x012A8D40
 
 class Gen_001C6300
@@ -17,7 +18,7 @@ private:
 int Gen_001C6300::bfmeLookup(unsigned int index) const
 {
 	if (m_bfmeWords[index >> 5] & (1 << (index & 31)))
-		return g_bfmeTableENa[index];
+		return (int)BitFlags<86>::getBitNames()[index];
 
 	return 0;
 }

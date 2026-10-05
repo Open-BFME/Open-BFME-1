@@ -92,8 +92,8 @@ struct BigObfSelectorRecord012B7788
 #define BFME_SELECT_BIG_BY_TIMESTAMP( NAME, RECORD ) \
 	BFME_SELECT_BY_TIMESTAMP_RECORD( NAME, RECORD, BigObfSelectorRecord, m_key, m_seed )
 
-BFME_SELECT_BY_STACK( Rva00072B80, g_twoBitSelectorRecord012A7304 )
-BFME_SELECT_BY_STACK( Rva00072C00, g_twoBitSelectorRecord012A7354 )
+BFME_SELECT_BIG_BY_STACK( Rva00072B80, g_ObfRecord012A7304 )
+BFME_SELECT_BIG_BY_STACK( Rva00072C00, g_ObfRecord012A7354 )
 BFME_SELECT_BIG_BY_STACK( Rva003C7EA0, g_ObfRecord012B4864 )
 BFME_SELECT_BIG_BY_STACK( Rva003C7EE0, g_ObfRecord012B488C )
 BFME_SELECT_BIG_BY_STACK( Rva00526430, g_ObfRecord012B7738 )
@@ -106,7 +106,16 @@ BFME_SELECT_BY_STACK( Rva0056CCC0, g_twoBitSelectorRecord012B7E70 )
 BFME_SELECT_BY_STACK( Rva0056CD40, g_twoBitSelectorRecord012B7EC0 )
 BFME_SELECT_BY_STACK( Rva0058F530, g_twoBitSelectorRecord012B829C )
 
-BFME_SELECT_BY_TIMESTAMP( Rva00062870, g_twoBitSelectorRecord012A6FF4 )
+extern BigObfSelectorRecord g_ObfRecord012A6FF4;
+void Rva00062870(int **outSecond, int **outFirst)
+{
+	unsigned int selector = 0;
+	__asm { rdtsc }
+	__asm { mov selector, eax }
+	unsigned int index = selector & 3;
+	*outSecond = (int *)g_ObfRecord012A6FF4.m_seed[index];
+	*outFirst = (int *)g_ObfRecord012A6FF4.m_key[index];
+}
 BFME_SELECT_BY_TIMESTAMP( Rva00099350, g_twoBitSelectorRecord012A7D38 )
 BFME_SELECT_BIG_BY_TIMESTAMP( Rva003875C0, g_ObfRecord012B446C )
 BFME_SELECT_BIG_BY_TIMESTAMP( Rva00387600, g_ObfRecord012B4494 )

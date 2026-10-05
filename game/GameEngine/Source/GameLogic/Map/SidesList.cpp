@@ -639,7 +639,6 @@ extern GameInfo *TheGameInfo;
 extern PlayerTemplateStore *ThePlayerTemplateStore;
 // 0x012A7918 is TheKey_playerName, already declared const by Common/WellKnownKeys.h.
 extern StaticNameKey g012A7920,g012A7930,g012A7938,g012A7940,g012A7948,g012A7988;
-extern StaticNameKey g012A75B8,g012A75C0,g012A75C8;
 
 void j_00032ec5(); void j_000238ad();
 class Rva001A0390Layout {
@@ -688,7 +687,7 @@ void SidesList::prepareForMP_or_Skirmish() {
     for(int idx=nodes[0].rva00;idx;) {
         nodes=self->rva630.rva0C;
         int next=nodes[idx].rva00;
-        AsciiString owner=nodes[idx].rva0C.getAsciiString(g012A75C0);
+        AsciiString owner=nodes[idx].rva0C.getAsciiString(TheKey_teamOwner);
         if(((const StringBase<char>*)&owner)->isEmpty() || ((const StringBase<char>*)&owner)->compare("PlyrCivilian")==0 || ((const StringBase<char>*)&owner)->compare("PlyrCreeps")==0)
             temp.rva630.erase(idx);
         else self->rva630.rva001977F0(idx);
@@ -715,9 +714,9 @@ void SidesList::prepareForMP_or_Skirmish() {
     temp.addSide(&dict);
     dict.clear();
     AsciiString teamName("team"); ((StringBase<char>*)&teamName)->concat("SkirmishHuman",13);
-    dict.setAsciiString(g012A75B8,teamName);
-    dict.setAsciiString(g012A75C0,AsciiString("SkirmishHuman"));
-    dict.setBool(g012A75C8,true);
+    dict.setAsciiString(TheKey_teamName,teamName);
+    dict.setAsciiString(TheKey_teamOwner,AsciiString("SkirmishHuman"));
+    dict.setBool(TheKey_teamIsSingleton,true);
     temp.rva630.rva0019BA40(&dict);
     temp.rva001A0290();
     for(int k=0;k<temp.rva28;++k)

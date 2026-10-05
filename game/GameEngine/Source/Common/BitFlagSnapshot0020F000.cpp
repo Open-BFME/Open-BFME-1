@@ -1,4 +1,5 @@
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /Iinputs/reference/shims/zhcanonascii /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// stlport
 struct FlagVersion0020F000
 {
 	unsigned char data[2];
@@ -11,6 +12,7 @@ struct FlagError0020F000
 	int tag;
 };
 
+#define __PLACEMENT_VEC_NEW_INLINE
 #include "ascii_string.h"
 
 extern "C" FlagError0020F000 *__cdecl bfmeFormatText(
@@ -68,7 +70,7 @@ public:
 };
 
 extern unsigned char g_bfmeTableDH[];
-extern int g_bfmeTableDJb[];
+#include "Common/BitFlags.h"
 int __cdecl bfmeLookupC(void *name);
 
 class BitFlagSnapshot0020F000
@@ -109,7 +111,7 @@ void BitFlagSnapshot0020F000::xfer(FlagXfer0020F000 *xfer)
 		{
 			if ((bits & (1 << (bit & 31))) != 0)
 			{
-				const char *name = reinterpret_cast<const char *>(g_bfmeTableDJb[bit]);
+				const char *name = BitFlags<11>::getBitNames()[bit];
 				if (name != 0)
 				{
 					AsciiString string(name);
