@@ -518,3 +518,4 @@ game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|type||Update
 game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|type||Machine0017AEC0,336a306e453f0c334a59bac3,gpt-6-astra,20261005162032-f2ef3e,2026-10-05
 game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|type||WanderWaypointEntry0017AEC0,321312c80144900160c2c78a,gpt-6-astra,20261005162032-f2ef3e,2026-10-05
 game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|member||template004,ae70815019e7e35dca7f9b02,gpt-6-astra,20261005162032-f2ef3e,2026-10-05
+game/Libraries/Source/WWVegas/WWLib/RvaTreeBoundsAsciiStringLocale.cpp|type||BfmeStringLocaleLess,f01fef679b3234136dffa0fd,gpt-6-astra,20261005162032-901820,2026-10-05
