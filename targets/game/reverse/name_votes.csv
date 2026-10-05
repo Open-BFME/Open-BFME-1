@@ -538,3 +538,4 @@ game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|function|Gen_0027FE
 game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cpp|member||m_field04,1b77a235257a867a7799d83d,gpt-6-astra,20261005162215-a9ca4a,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cpp|member||m_field08,4a39756220cd8d5429d25487,gpt-6-astra,20261005162215-a9ca4a,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cpp|member||m_field0c,d6a4b8b90dbfa54cb50b4983,gpt-6-astra,20261005162215-a9ca4a,2026-10-05
+game/GameEngine/Source/GameNetwork/Rva007F61E0HostedGameRequest.cpp|function||Rva007F5A70Callback,73cac4fa7040b3112747dee6,gpt-6-astra,20261005162021-9ae2e4,2026-10-05
