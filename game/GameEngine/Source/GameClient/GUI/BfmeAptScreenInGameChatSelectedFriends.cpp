@@ -90,7 +90,7 @@ class __multiple_inheritance BfmeAptScreenInGameChat
 {
 public:
 	void OnBttnAddFriend(const char *name);
-	void _bfme_onBttnRemoveFriend(const char *name);
+	void OnBttnRemoveFriend(const char *name);
 	Int rva00513BF0( GameWindow *list, void *selected, Int buddyMask, Bool skipStatusFilter );
 	Int _bfme_getInternetPlayerStatus( const UnicodeString &name );
 	Int rva00512890( Int profileID, UnicodeString &result );
@@ -321,8 +321,9 @@ void BfmeAptScreenInGameChat::OnBttnAddFriend( const char *name )
 	}
 }
 
-// @?_bfme_onBttnRemoveFriend@BfmeAptScreenInGameChat@@QAEXPBD@Z 0x00514DA0
-void BfmeAptScreenInGameChat::_bfme_onBttnRemoveFriend( const char *name )
+// The constructor at 0x005160E0 pairs AptInGameChat::OnBttnRemoveFriend with ILT 0x00018DD1.
+// @?OnBttnRemoveFriend@BfmeAptScreenInGameChat@@QAEXPBD@Z 0x00514DA0
+void BfmeAptScreenInGameChat::OnBttnRemoveFriend( const char *name )
 {
 	(void)name;
 
@@ -333,7 +334,6 @@ void BfmeAptScreenInGameChat::_bfme_onBttnRemoveFriend( const char *name )
 	Int count = g_Rva005127A0InGameChat->rva00513BF0(
 		g_Rva005127A0InGameChat->m_friendsList, &selected, 7, true );
 	Int *ids = selected.begin();
-
 	if( count > 0 )
 	{
 		UnicodeString title = TheGameText->fetch( "APT:RemoveFirendTitle", 0 );
@@ -350,7 +350,7 @@ void BfmeAptScreenInGameChat::_bfme_onBttnRemoveFriend( const char *name )
 		}
 		else
 		{
-			message = ( TheGameText->fetch( "APT:RemovieFriendMessageMulti", 0 ) );
+			message = TheGameText->fetch( "APT:RemovieFriendMessageMulti", 0 );
 		}
 
 		( (void( __cdecl * )( int, const UnicodeString &, const UnicodeString &,

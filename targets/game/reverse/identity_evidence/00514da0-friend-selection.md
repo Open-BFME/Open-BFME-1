@@ -6,9 +6,8 @@ The retail constructor at RVA 005160E0 registers the literal
 `AptInGameChat::OnBttnRemoveFriend`: RVA 005163EC pushes VA 011055CC,
 005163F5 loads EBP with ILT VA 00418DD1, and 0051641E stores that callback
 into the registration record passed at 00516429/00516435. The five-byte ILT
-00018DD1 jumps to body 00514DA0. This in-exe registration names the callback;
-the existing BFME screen-view class and bank's `_bfme_onBttnRemoveFriend`
-spelling are retained. No vtable-neighbour inference is used.
+00018DD1 jumps to body 00514DA0. The constructor selector proves the
+callback name is `OnBttnRemoveFriend`. The source uses that name.
 
 Raw unpacked retail bytes end in RET 4 at 00514FFE..00515000, with INT3
 starting at 00515001: 609 bytes. Ghidra independently created a 609-byte

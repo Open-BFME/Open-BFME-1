@@ -1,5 +1,5 @@
 // ?rva0053E870@BfmeAptScreenOnlineCustomMatch@@QAEXXZ
-// partial score=0.977 date=2026-09-28
+// partial score=0.733 date=2026-10-04
 // ?rva0053E870@BfmeAptScreenOnlineCustomMatch@@QAEXXZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
@@ -251,7 +251,8 @@ void BfmeAptScreenOnlineCustomMatch::rva0053E870()
 	GadgetListBoxGetSelected( m_gameList, &selected );
 	if( selected >= 0 )
 	{
-		int selectedID = (int)GadgetListBoxGetItemData( m_gameList, selected, 0 );
+		GameWindow *itemList = m_gameList;
+		int selectedID = (int)GadgetListBoxGetItemData( itemList, selected, 0 );
 		if( selectedID > 0 )
 		{
 			StagingRoomMap *srm = TheGameSpyInfo->getStagingRoomList();
