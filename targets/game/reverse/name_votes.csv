@@ -572,3 +572,7 @@ game/GameEngine/Source/Common/Rva007F0210Set.cpp|member||m_08,c76c0286069f83e952
 game/GameEngine/Source/Common/BfmeThreeHundredThirtyFour.cpp|member||m_bfmeOne,8f9e4eaba004fa3e62ecc79b,gpt-6-astra,20261005162034-e052bc,2026-10-05
 game/GameEngine/Source/Common/BfmeThreeHundredThirtyFour.cpp|member||m_bfmeTwo,be5b8e223ef2c03421d5dcaf,gpt-6-astra,20261005162034-e052bc,2026-10-05
 game/GameEngine/Source/Common/BfmeThreeHundredThirtyFour.cpp|member||m_bfmeThree,41d6bf17260cd2eba9e790fd,gpt-6-astra,20261005162034-e052bc,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1334.cpp|member||m_bfmeArray,fbe2f2ce13ba7e571e119bd6,gpt-6-astra,20261005161755-780a4e,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1334.cpp|member||m_bfmeCount,a717b790bac9521366d994b6,gpt-6-astra,20261005161755-780a4e,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1334.cpp|member||m_bfmeOwned,84c2078a36331426e5c607e6,gpt-6-astra,20261005161755-780a4e,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1334.cpp|function|BfmeThingUJA@|bfmeClearUJA,aa9fe53cd566bbcf22a80b8b,gpt-6-astra,20261005161755-780a4e,2026-10-05
