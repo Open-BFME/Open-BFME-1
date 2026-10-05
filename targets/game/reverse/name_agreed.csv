@@ -275,3 +275,4 @@ game/GameEngine/Source/Common/BfmeConv912.cpp|local|BfmeThing912C::bfmeGo912C|n,
 game/GameEngine/Source/GameLogic/AI/Rva001515C0Xfer.cpp|type||Rva001515C0,AIGroup,gemini+gpt-6-astra,agreed,2026-10-05
 game/GameEngine/Source/Common/Bfme5IniNamedValue.cpp|local|bfme5ParseNamedValueA|v,count,gpt-6-astra+grok,agreed,2026-10-05
 game/GameEngine/Source/Common/Bfme5IniNamedValue.cpp|local|bfme5ParseNamedValueB|v,count,gpt-6-astra+grok,agreed,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1838.cpp|type||BfmeSinkXB,Snapshot,gpt-6-astra+grok,agreed,2026-10-05
