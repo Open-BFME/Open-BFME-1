@@ -29,7 +29,7 @@ private:
 	unsigned char m_unmodelled[0x532];
 
 public:
-	Bool m_bfmeFlag532;
+	Bool m_shareTimers;
 };
 
 class Rva001E1880
@@ -49,7 +49,7 @@ public:
 	unsigned char m_unmodelled00[4];
 	WeaponTemplate *m_template;
 	unsigned char m_unmodelled08[0x10];
-	unsigned m_18;
+	unsigned m_whenWeCanFireAgain;
 
 private:
 	WeaponStatus bfmeComputeStatus( Bool *valid ) const;
@@ -89,12 +89,12 @@ Bool AIGroup::setWeaponLockForGroup( Int weaponSlot, Int lockType )
 				&Object::setWeaponLock))( weaponSlot, lockType ) )
 				any = true;
 
-			if ( weapon && weapon->m_template->m_bfmeFlag532 )
+			if ( weapon && weapon->m_template->m_shareTimers )
 			{
 				if ( weapon->bfmeComputeStatus( 0 ) )
 				{
 					Weapon *currentWeapon = object->getCurrentWeapon( (WeaponSlotType *)0 );
-					currentWeapon->m_18 = weapon->m_18;
+					currentWeapon->m_whenWeCanFireAgain = weapon->m_whenWeCanFireAgain;
 					reinterpret_cast<Rva001E1880 *>( currentWeapon )->set( 1 );
 				}
 			}
