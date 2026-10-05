@@ -29,8 +29,8 @@ extern AptPalantir *TheAptPalantir;
 // Retail global 0x012F19E8. EA's own name for this pointer; see
 // game/GameEngine/Source/GameClient/GUI/WindowManager.cpp for the definition.
 extern WindowManager *g_rva012F19E8WindowManager;
-extern unsigned char g_aptPalantirInitialized;
-extern unsigned char g_aptPalantirJewelBrightened;
+extern unsigned char g_aptPalantirClosed;
+extern unsigned char g_aptPalantirShowRequested;
 extern int g_aptPalantirWindow;
 extern char g_aptPalantirJewelName[];
 extern const char g_rva01080FC0[2];
@@ -39,8 +39,8 @@ extern const char g_rva01081238[];
 // ?aptPalantirOnInitialized@@YAXXZ
 void aptPalantirOnInitialized()
 {
-	g_aptPalantirInitialized = 0;
-	g_aptPalantirJewelBrightened = 0;
+	g_aptPalantirClosed = 0;
+	g_aptPalantirShowRequested = 0;
 	if( TheAptPalantir )
 		TheAptPalantir->initialize();
 

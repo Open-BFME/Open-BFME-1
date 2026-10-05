@@ -57,8 +57,8 @@ public:
 };
 
 extern WindowManager *g_rva012F19E8WindowManager;
-extern bool g_aptLivingWorldGuardA;			// 0x0012F499D
-extern bool g_aptLivingWorldGuardB;			// 0x0012F499C
+extern unsigned char g_aptLivingWorldInitialized;			// 0x0012F499D
+extern unsigned char g_aptLivingWorldVisible;			// 0x0012F499C
 extern BFMERetailAsciiString g_aptLivingWorldCachedName;	// 0x0012F49A0
 extern void *g_aptLivingWorldWindowIndex;		// 0x0012F49A8 (g_bfmeV1064)
 
@@ -75,10 +75,10 @@ extern void __cdecl bfmeAptLivingWorldOnRegionConqueredNoticeClosed();
 
 void registerAptLivingWorldUICallbacks()
 {
-	if( !g_aptLivingWorldGuardA && g_rva012F19E8WindowManager )
+	if( !g_aptLivingWorldInitialized && g_rva012F19E8WindowManager )
 	{
-		g_aptLivingWorldGuardA = false;
-		g_aptLivingWorldGuardB = false;
+		g_aptLivingWorldInitialized = false;
+		g_aptLivingWorldVisible = false;
 		int idx = g_rva012F19E8WindowManager->resolveAptWindow( BFMERetailAsciiString( "Apt\\" ),
 			BFMERetailAsciiString( g_aptLivingWorldCachedName ), 0, 0, -1 );
 		g_aptLivingWorldWindowIndex = bfmeMakeEYA( idx, idx );

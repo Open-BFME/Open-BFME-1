@@ -16570,3 +16570,9 @@ _g_012F7014,0x012F7014
 ?reOpenPlayerInfoFlag@@3_NC,0x012F70B0
 ?BfmeDynamicVBSlots@@3PAVBFMEVertexFVFInfo@@A,0x013467F0
 ?g_binaryDeepCRC@@3DA,0x012ED4E7
+?g_aptPalantirClosed@@3EA,0x012B7D84
+?g_aptLivingWorldVisible@@3EA,0x012F499C
+?g_aptLivingWorldInitialized@@3EA,0x012F499D
+?g_aptPalantirCallbacksRegistered@@3EA,0x012F4AFC
+?g_aptPalantirShowRequested@@3EA,0x012F4AFD
+?g_aptPalantirCloseRequested@@3EA,0x012F4AFE

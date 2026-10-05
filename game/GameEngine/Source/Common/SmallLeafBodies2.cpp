@@ -127,10 +127,10 @@ BFME_CHAIN_FLOAT_GETTER( Rva0043A7E0ChainedFloat, 0x4, 0x28 )
 BFME_CHAIN_FLOAT_GETTER( Rva007E4940ChainedFloat, 0x2C, 0x20 )
 
 // mov al,[<address>] / ret -- one byte read from a .data global.
-extern unsigned char g_Va012B7D84;
+extern unsigned char g_aptPalantirClosed;
 extern unsigned char g_Va012F13FC;
-extern unsigned char g_Va012F499C;
-extern unsigned char g_Va012F499D;
+extern unsigned char g_aptLivingWorldVisible;
+extern unsigned char g_aptLivingWorldInitialized;
 extern unsigned char g_Va0130E9F8;
 extern unsigned char g_Va01336E7C;
 class WW3D
@@ -149,17 +149,17 @@ extern unsigned char g_Va0133F451;
 
 unsigned char Rva0051A6C0GetFlag( void )
 {
-	return g_Va012F499D;
+	return g_aptLivingWorldInitialized;
 }
 
 unsigned char Rva0051A6D0GetFlag( void )
 {
-	return g_Va012F499C;
+	return g_aptLivingWorldVisible;
 }
 
 unsigned char Rva00563970GetFlag( void )
 {
-	return g_Va012B7D84;
+	return g_aptPalantirClosed;
 }
 
 unsigned char Rva006C5230GetFlag( void )

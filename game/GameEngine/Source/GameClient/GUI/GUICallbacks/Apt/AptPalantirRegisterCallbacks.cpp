@@ -116,12 +116,12 @@ extern WindowManager *g_rva012F19E8WindowManager;
 // Globals the retail image holds at fixed addresses.  dir32_addresses.csv
 // records the names below for these addresses; none of them is a literal
 // cast any more, so the linked build resolves them by name.
-extern unsigned char g_bfmeFlagMD;					// retail 0x012F4AFC
-extern unsigned char g_aptPalantirJewelBrightened;		// retail 0x012F4AFD
-extern bool g_bfmeFlagDMc;							// retail 0x012F4AFE
+extern unsigned char g_aptPalantirCallbacksRegistered;					// retail 0x012F4AFC
+extern unsigned char g_aptPalantirShowRequested;		// retail 0x012F4AFD
+extern unsigned char g_aptPalantirCloseRequested;							// retail 0x012F4AFE
 extern const char *volatile g_012B7D7C;	// retail 0x012B7D7C, player-side name; volatile keeps retail's eax load
 extern int g_aptPalantirWindow;						// retail 0x012B7D80
-extern unsigned char g_aptPalantirInitialized;		// retail 0x012B7D84
+extern unsigned char g_aptPalantirClosed;		// retail 0x012B7D84
 
 // retail 0x012F4B00: ?TheBfmeObject_00C701F0@@3VGen_00C701F0Target@@A
 class Gen_00C701F0Target;
@@ -150,7 +150,7 @@ void g_0042D09C();		// retail 0x0042D09C, RenderGlobe functor
 
 void d_00565f30()
 {
-	if( g_rva012F19E8WindowManager == 0 || g_bfmeFlagMD != 0 )
+	if( g_rva012F19E8WindowManager == 0 || g_aptPalantirCallbacksRegistered != 0 )
 		return;
 
 	int windowIndex = g_rva012F19E8WindowManager->loadAptWindow(
@@ -284,8 +284,8 @@ void d_00565f30()
 			PalantirFunctorSlot( reinterpret_cast<void *>( &g_0042D09C ) ) );
 	}
 
-	g_aptPalantirJewelBrightened = 0;
-	g_bfmeFlagDMc = false;
-	g_aptPalantirInitialized = 1;
-	g_bfmeFlagMD = 1;
+	g_aptPalantirShowRequested = 0;
+	g_aptPalantirCloseRequested = false;
+	g_aptPalantirClosed = 1;
+	g_aptPalantirCallbacksRegistered = 1;
 }

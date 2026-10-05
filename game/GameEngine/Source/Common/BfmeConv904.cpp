@@ -141,7 +141,7 @@ public:
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 
-extern char g_bfmeFlagMD;
+extern unsigned char g_aptPalantirCallbacksRegistered;
 // Retail global 0x012B7D80: the AptPalantir window index, `int
 // g_aptPalantirWindow` (defined in GUI/GUICallbacks/Apt/AptPalantir.cpp).  The
 // type already matches, so this is a pure respelling: the use needs no cast.
@@ -149,7 +149,7 @@ extern int g_aptPalantirWindow;
 
 void bfmeGoMD(void)
 {
-	if (g_bfmeFlagMD) {
+	if (g_aptPalantirCallbacksRegistered) {
 		((BfmeObjMD *)g_rva012F19E8WindowManager)->bfmeOneMD(g_aptPalantirWindow);
 		((BfmeObjMD *)g_rva012F19E8WindowManager)->bfmeTwoMD();
 	}

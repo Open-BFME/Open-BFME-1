@@ -11,8 +11,8 @@ public:
 // Retail global 0x012F19E8. EA's own name for this pointer; see
 // game/GameEngine/Source/GameClient/GUI/WindowManager.cpp for the definition.
 extern WindowManager *g_rva012F19E8WindowManager;
-extern bool g_aptLivingWorldVisible;
-extern bool g_aptLivingWorldClosing;
+unsigned char g_aptLivingWorldVisible = 0;
+unsigned char g_aptLivingWorldInitialized = 0;
 extern int g_aptLivingWorldWindowIndex;
 
 int AptLivingWorldWindowIndex( int low, int high );
@@ -36,6 +36,6 @@ void hideAptLivingWorldUI()
 			AptLivingWorldWindowIndex( g_aptLivingWorldWindowIndex,
 				g_aptLivingWorldWindowIndex ) );
 		g_aptLivingWorldVisible = false;
-		g_aptLivingWorldClosing = false;
+		g_aptLivingWorldInitialized = false;
 	}
 }

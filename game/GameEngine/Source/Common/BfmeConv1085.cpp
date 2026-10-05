@@ -22,22 +22,22 @@ extern WindowManager *g_rva012F19E8WindowManager;
 // TU only pushes its address as the open/shut interface argument, so the int is
 // cast at the use and the pushed bytes stay identical.
 extern int g_aptPalantirWindow;
-extern char g_bfmeF1085;
-extern char g_bfmeG1085;
-extern char g_bfmeH1085;
+extern unsigned char g_aptPalantirClosed;
+extern unsigned char g_aptPalantirShowRequested;
+extern unsigned char g_aptPalantirCloseRequested;
 
 void bfmeGo1085A(void)
 {
-	if (g_bfmeH1085) {
+	if (g_aptPalantirCloseRequested) {
 		((BfmeR1085 *)g_rva012F19E8WindowManager)->bfmeOpen1085((BfmeX1085 *)g_aptPalantirWindow);
-		g_bfmeF1085 = 1;
-		g_bfmeH1085 = 0;
-	} else if (!g_bfmeF1085) {
+		g_aptPalantirClosed = 1;
+		g_aptPalantirCloseRequested = 0;
+	} else if (!g_aptPalantirClosed) {
 		return;
 	}
-	if (!g_bfmeG1085) {
+	if (!g_aptPalantirShowRequested) {
 		((BfmeR1085 *)g_rva012F19E8WindowManager)->bfmeShut1085((BfmeX1085 *)g_aptPalantirWindow);
-		g_bfmeG1085 = 1;
+		g_aptPalantirShowRequested = 1;
 	}
 }
 

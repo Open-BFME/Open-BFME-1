@@ -26,8 +26,8 @@ extern char g_bfmeFmtD1071[];
 extern char g_bfmeFmtP1071[];
 extern char g_bfmeFmtQ1071[];
 extern char g_bfmeFmtR1071[];
-extern char g_bfmeF1071;
-extern char g_bfmeH1071;
+extern unsigned char g_aptPalantirClosed;
+extern unsigned char g_aptPalantirCloseRequested;
 
 extern "C" __declspec(dllimport) int __cdecl sprintf(char *b, char *f, int a);
 
@@ -42,16 +42,16 @@ void bfmeGo1071A(int a, char b)
 void bfmeGo1071B(char a)
 {
 	if (a) {
-		if (!g_bfmeF1071) {
-			g_bfmeH1071 = 1;
+		if (!g_aptPalantirClosed) {
+			g_aptPalantirCloseRequested = 1;
 			((BfmeR1071 *)g_rva012F19E8WindowManager)->bfmeOpen1071((BfmeX1071 *)g_aptPalantirWindow);
-			g_bfmeF1071 = 1;
-			g_bfmeH1071 = 0;
+			g_aptPalantirClosed = 1;
+			g_aptPalantirCloseRequested = 0;
 		}
 	} else {
-		if (!g_bfmeF1071 && !g_bfmeH1071) {
+		if (!g_aptPalantirClosed && !g_aptPalantirCloseRequested) {
 			((BfmeR1071 *)g_rva012F19E8WindowManager)->bfmeRun1071((BfmeX1071 *)g_aptPalantirWindow, g_bfmeFmtR1071, 0, 0, 0, 0, 0, 0);
-			g_bfmeH1071 = 1;
+			g_aptPalantirCloseRequested = 1;
 		}
 	}
 }

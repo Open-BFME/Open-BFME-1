@@ -35,13 +35,13 @@ public:
 };
 
 extern Gen00587600 *TheGen00587600;
-extern unsigned char g_Va012F499D;
+extern unsigned char g_aptLivingWorldInitialized;
 
 // @?Rva0051A6E0@@YAXXZ 0x0051A6E0
 void Rva0051A6E0( void )
 {
 	Gen00587600 *object = TheGen00587600;
-	g_Va012F499D = 1;
+	g_aptLivingWorldInitialized = 1;
 	if ( object )
 		object->notify();
 }

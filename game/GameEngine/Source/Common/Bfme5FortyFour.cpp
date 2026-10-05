@@ -123,14 +123,14 @@ void Gen_003D4B60::bfmeUnlink(void)
 	m_bfmePrev = 0;
 }
 
-extern bool g_bfmeFlagDMa;					// retail 0x012B7D84
-extern bool g_bfmeFlagDMb;					// retail 0x012F4AFD
-extern bool g_bfmeFlagDMc;					// retail 0x012F4AFE
+extern unsigned char g_aptPalantirClosed;					// retail 0x012B7D84
+extern unsigned char g_aptPalantirShowRequested;					// retail 0x012F4AFD
+extern unsigned char g_aptPalantirCloseRequested;					// retail 0x012F4AFE
 
 // ?bfmeQuiet@@YAHXZ
 int __cdecl bfmeQuiet(void)
 {
-	if (!g_bfmeFlagDMa && !g_bfmeFlagDMb && !g_bfmeFlagDMc)
+	if (!g_aptPalantirClosed && !g_aptPalantirShowRequested && !g_aptPalantirCloseRequested)
 		return 1;
 
 	return 0;

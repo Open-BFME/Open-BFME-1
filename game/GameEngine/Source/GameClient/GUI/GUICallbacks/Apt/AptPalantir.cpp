@@ -26,3 +26,9 @@
 typedef int Int;
 
 Int g_aptPalantirWindow = -1;
+// Retail callback bindings and accesses establish these state-byte roles.
+// Evidence: targets/game/reverse/identity_evidence/012b7d84-apt-palantir-living-world-flags.md
+unsigned char g_aptPalantirClosed = 1;
+unsigned char g_aptPalantirCallbacksRegistered = 0;
+unsigned char g_aptPalantirShowRequested = 0;
+unsigned char g_aptPalantirCloseRequested = 0;

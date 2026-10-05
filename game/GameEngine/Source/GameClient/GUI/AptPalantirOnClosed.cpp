@@ -14,13 +14,13 @@ extern WindowManager *g_rva012F19E8WindowManager;
 // (?g_aptPalantirWindow@@3HA), defined in
 // game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptPalantir.cpp.
 extern int g_aptPalantirWindow;
-extern char g_bfmeC1020;
-extern char g_bfmeD1020;
+extern unsigned char g_aptPalantirClosed;
+extern unsigned char g_aptPalantirCloseRequested;
 
 // ?aptPalantirOnClosed@@YAXXZ
 void aptPalantirOnClosed()
 {
 	((PalantirAptWindow *)g_rva012F19E8WindowManager)->close( g_aptPalantirWindow );
-	g_bfmeC1020 = 1;
-	g_bfmeD1020 = 0;
+	g_aptPalantirClosed = 1;
+	g_aptPalantirCloseRequested = 0;
 }
