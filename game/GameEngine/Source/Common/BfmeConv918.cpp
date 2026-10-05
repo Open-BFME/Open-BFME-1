@@ -1,4 +1,12 @@
 // Open-BFME5 conversions.
+// stlport
+#include <ostream>
+
+namespace _STL
+{
+extern ostream cerr;
+extern ostream clog;
+}
 
 extern char g_bfme918VftA[];
 
@@ -9,19 +17,16 @@ public:
 };
 
 
-extern char g_bfme918C[];
-
 void bfmeGo918C(void)
 {
-	int d = *(int *)(*(char **)g_bfme918C + 4);
-	*(char **)(g_bfme918C + d) = g_bfme918VftA;
-	((BfmeSub918P *)(g_bfme918C + 4))->bfmeDtor918P();
+	int d = *(int *)(*(char **)&_STL::cerr + 4);
+	*(char **)((char *)&_STL::cerr + d) = g_bfme918VftA;
+	((BfmeSub918P *)((char *)&_STL::cerr + 4))->bfmeDtor918P();
 }
-extern char g_bfme918D[];
 
 void bfmeGo918D(void)
 {
-	int d = *(int *)(*(char **)g_bfme918D + 4);
-	*(char **)(g_bfme918D + d) = g_bfme918VftA;
-	((BfmeSub918P *)(g_bfme918D + 4))->bfmeDtor918P();
+	int d = *(int *)(*(char **)&_STL::clog + 4);
+	*(char **)((char *)&_STL::clog + d) = g_bfme918VftA;
+	((BfmeSub918P *)((char *)&_STL::clog + 4))->bfmeDtor918P();
 }
