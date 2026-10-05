@@ -520,3 +520,7 @@ game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|type||Wander
 game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|member||template004,ae70815019e7e35dca7f9b02,gpt-6-astra,20261005162032-f2ef3e,2026-10-05
 game/Libraries/Source/WWVegas/WWLib/RvaTreeBoundsAsciiStringLocale.cpp|type||BfmeStringLocaleLess,f01fef679b3234136dffa0fd,gpt-6-astra,20261005162032-901820,2026-10-05
 game/GameEngine/Source/Common/BfmeConv991.cpp|type||BfmeB991,9d737297165d9a0ee5e203f7,gpt-6-astra,20261005161854-3f32d5,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1323.cpp|member||m_bfmeHr,909d9f704533f404a6af7c60,gpt-6-astra,20261005161854-7d8af8,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1323.cpp|member||m_bfmeName,07b52de40ac8fbdcfd04c504,gpt-6-astra,20261005161854-7d8af8,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1323.cpp|function|BfmeThingTTE@|bfmeGoTTE,c2c1ee87b82bad852284016c,gpt-6-astra,20261005161854-7d8af8,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1323.cpp|local|BfmeThingTTE::bfmeGoTTE|h,aa75ad73c19d42e87b4d04d9,gpt-6-astra,20261005161854-7d8af8,2026-10-05
