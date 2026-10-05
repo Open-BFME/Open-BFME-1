@@ -678,3 +678,11 @@ game/GameEngine/Source/GameClient/GUI/ControlBar/CommandSetAssign.cpp|member||m_
 game/GameEngine/Source/GameClient/GUI/ControlBar/CommandSetAssign.cpp|member||m_bfmeName,a12106ba5f820f6f7ab08e2f,grok,20261005175811-9d73e0,2026-10-05
 game/GameEngine/Source/GameClient/GUI/ControlBar/CommandSetAssign.cpp|member||m_bfmeCommands,4754f8ce0d5821f56a2be75f,grok,20261005175811-9d73e0,2026-10-05
 game/GameEngine/Source/GameClient/GUI/ControlBar/CommandSetAssign.cpp|member||m_bfmeTail,e72077a614e0fd6ef769a0e5,grok,20261005175811-9d73e0,2026-10-05
+game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_x00,6e700adaff5c1fba1be5f6c8,gpt-6-sol,20261005182408-7856bc,2026-10-05
+game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_y04,d5d8955fe096960226343219,gpt-6-sol,20261005182408-7856bc,2026-10-05
+game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_08,9843979801068296d4f0e5d8,gpt-6-sol,20261005182408-7856bc,2026-10-05
+game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_0c,2fee95384e6de415f883b578,gpt-6-sol,20261005182408-7856bc,2026-10-05
+game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_10,3401d7c9e0218c2e307287d1,gpt-6-sol,20261005182408-7856bc,2026-10-05
+game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_11,555f7466608a66bec1c2d0fb,gpt-6-sol,20261005182408-7856bc,2026-10-05
+game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_14,98369aad273bd544f6336533,gpt-6-sol,20261005182408-7856bc,2026-10-05
+game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|local|ExamineCellsStruct::cellCallback|p,85c87394e273334ba6c41a93,gpt-6-sol,20261005182408-7856bc,2026-10-05
