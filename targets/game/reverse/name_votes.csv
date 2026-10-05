@@ -467,3 +467,7 @@ game/GameEngine/Source/Common/BfmeConv1081.cpp|local|bfmeGo1081B|d,6ab1eb5fffddd
 game/GameEngine/Source/GameNetwork/V2FeslBrowserEvents.cpp|function||Rva007F79F0Callback,ad74e56e8a0ecb641c053fa2,gpt-6-astra,20261005161245-03a1bb,2026-10-05
 game/GameEngine/Source/GameClient/LivingWorld.cpp|member||m_at28,c9c1f8ecddd81d572e2a04cc,gpt-6-astra,20261005161755-e536f2,2026-10-05
 game/GameEngine/Source/GameClient/LivingWorld.cpp|function|Rva006092D0State@|rva00609360,dd84a4db6c1dcbef95216b06,gpt-6-astra,20261005161755-e536f2,2026-10-05
+game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp|member||field28,d135efeed7a7d4d36abfd64d,gpt-6-astra,20261005160658-cdd6c1,2026-10-05
+game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp|member||field00,7fc1ecf2176dc40a8ad085e4,gpt-6-astra,20261005160658-cdd6c1,2026-10-05
+game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp|local|isType|f,2d4c6b93c5019b34b3916c2c,gpt-6-astra,20261005160658-cdd6c1,2026-10-05
+game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp|local|aptArrayConcat|a,0e1e0ee3644295dc529162b5,gpt-6-astra,20261005160658-cdd6c1,2026-10-05
