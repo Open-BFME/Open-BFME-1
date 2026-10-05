@@ -129,7 +129,7 @@ class AudioEventRTS
     {
         return name;
     }
-    void battlePlanSetPosition(const Coord3D *p)
+    void battlePlanSetPosition(const Coord3D *pos)
     {
         typedef void (AudioEventRTS::*Fn)(const Coord3D *);
         union {
@@ -137,7 +137,7 @@ class AudioEventRTS
             Fn member;
         } c;
         c.raw = j_00001e88;
-        (this->*c.member)(p);
+        (this->*c.member)(pos);
     }
 };
 class AudioManager
@@ -259,7 +259,7 @@ class BattlePlanUpdate
         c.raw = j_0002a53b;
         (this->*c.member)();
     }
-    void setBattlePlan(BattlePlanStatus s)
+    void setBattlePlan(BattlePlanStatus plan)
     {
         typedef void (BattlePlanUpdate::*Fn)(BattlePlanStatus);
         union {
@@ -267,7 +267,7 @@ class BattlePlanUpdate
             Fn member;
         } c;
         c.raw = j_00037ab0;
-        (this->*c.member)(s);
+        (this->*c.member)(plan);
     }
 
   protected:
