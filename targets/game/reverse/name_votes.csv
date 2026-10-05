@@ -701,3 +701,8 @@ game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp|me
 game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp|member||m_coord08,c92f17bff776bb3bc379ffa9,gpt-6-sol,20261005181241-7a1e93,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp|member||m_coord14,c5e5a2a07231350614114a18,gpt-6-sol,20261005181241-7a1e93,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp|member||m_bool30,f2f9a5058d886689f43d487c,gpt-6-sol,20261005181241-7a1e93,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp|member||m_int00,1e0394fd87346081fd3985ed,gpt-6-astra,20261005181656-1a2ee9,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp|member||m_enum04,656804a3780fa2e6e24bd117,gpt-6-astra,20261005181656-1a2ee9,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp|member||m_coord08,c92f17bff776bb3bc379ffa9,gpt-6-astra,20261005181656-1a2ee9,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp|member||m_coord14,c5e5a2a07231350614114a18,gpt-6-astra,20261005181656-1a2ee9,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp|member||m_bool30,f2f9a5058d886689f43d487c,gpt-6-astra,20261005181656-1a2ee9,2026-10-05
