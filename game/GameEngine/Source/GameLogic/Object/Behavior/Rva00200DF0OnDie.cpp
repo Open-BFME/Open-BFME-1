@@ -1,15 +1,11 @@
-// ?onDie@Rva00200DF0@@UAEXPBVDamageInfo@@@Z
-// partial score=1.0 date=2026-10-03
+// Constructor RVA 0x00200BA0 installs the DieModuleInterface vtable at VA
+// 0x010A4DF0. Slot 0 reaches RVA 0x00200DF0 through ILT 0x0004AD63.
+// The RET4 instruction at RVA 0x00200FFA closes the 525-byte body.
+// Retail data has four vectors at offsets 0x34, 0x40, 0x4C, and 0x58.
+// The last vector retains audio info before playback.
 // stlport
 // cl: /DNDEBUG /MD /EHsc
 #include <vector>
-// Experimental bank for InstantDeathBehavior::onDie, RVA 0x00200DF0 (525B).
-// The entry's opaque class models the secondary DieModuleInterface receiver.
-// This draft intentionally keeps the matched SlowDeathBehavior donor's local
-// ABI declarations for measurement. They are NOT approved production headers:
-// adopt canonical Object/FXList/OCL/AudioEventRTS/AudioEventInfo and module types
-// before promoting; the BFME fourth vector and counted audio constructor are
-// absent from the existing ZH declarations. See the accompanying evidence note.
 
 extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(long volatile *);
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long volatile *);
