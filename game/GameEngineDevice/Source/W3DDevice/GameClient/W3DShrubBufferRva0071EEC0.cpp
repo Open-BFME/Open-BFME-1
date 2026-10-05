@@ -293,7 +293,7 @@ class W3DShrubBuffer
 {
   public:
 	void rva0071EEC0(CameraClass *, RefMultiListIterator<RenderObjClass> *);
-	void rva0071DAF0();
+	void updateTexture();
 
   protected:
 	void updateSway(const BreezeInfo &);
@@ -372,7 +372,7 @@ void W3DShrubBuffer::rva0071EEC0(CameraClass *camera, RefMultiListIterator<Rende
 	if (needTexture)
 	{
 		needTexture = false;
-		rva0071DAF0();
+		updateTexture();
 	}
 	if (!texture1450)
 		return;

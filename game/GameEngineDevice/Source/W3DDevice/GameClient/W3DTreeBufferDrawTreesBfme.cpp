@@ -306,7 +306,7 @@ public:
 class W3DTreeBuffer {
 public:
   void drawTrees(CameraClass *, RefMultiListIterator<RenderObjClass> *);
-  void rva007348A0();
+  void updateTexture();
 
 protected:
   void updateSway(const BreezeInfo &);
@@ -448,7 +448,7 @@ void W3DTreeBuffer::drawTrees(CameraClass *camera,
   isTerrainPass = false;
   if (needTexture) {
     needTexture = false;
-    rva007348A0();
+    updateTexture();
   }
   if (!texture1450)
     return;

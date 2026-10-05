@@ -1,8 +1,9 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Retail 0x0071DAF0 rebuilds the shrub texture collections and copies their handles.
 // The owner is witnessed by W3DShrubBuffer's constructor layout and the two
-// "Combined shrub ... texture" diagnostic literals. The BFME method spelling is
-// not known, so retain its address. See targets/game/reverse/identity_evidence/0071daf0.md.
+// "Combined shrub ... texture" diagnostic literals. See
+// targets/game/reverse/identity_evidence/0071daf0.md. EA's WorldBuilder build names
+// this address W3DShrubBuffer::updateTexture (ea_evidence.csv, strong chain+direct).
 
 #include "ascii_string.h"
 
@@ -87,7 +88,7 @@ struct Rva0071DAF0Type {
 };
 class W3DShrubBuffer {
 public:
- void rva0071DAF0();
+ void updateTexture();
  char prefix[0x1450];
  BFMEWaterTrackTextureHandle	texture1450,texture1454;
  Rva0094D1E0List list1458,list1480;
@@ -97,7 +98,7 @@ public:
 };
 typedef char Rva0071DAF0TypeSize[(sizeof(Rva0071DAF0Type) == 0x5c) ? 1 : -1];
 
-void W3DShrubBuffer::rva0071DAF0()
+void W3DShrubBuffer::updateTexture()
 {
 	list1458.clear(false);
 	list1480.clear(false);

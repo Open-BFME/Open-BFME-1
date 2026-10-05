@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Retail 0x007348A0 rebuilds the tree texture collections and copies their handles.
 // The owner is witnessed by W3DTreeBuffer's constructor layout and the two
-// "Combined tree ... texture" diagnostic literals. The BFME method spelling is
-// not known, so retain its address. See targets/game/reverse/identity_evidence/007348a0.md.
+// "Combined tree ... texture" diagnostic literals. See
+// targets/game/reverse/identity_evidence/007348a0.md. EA's WorldBuilder build names
+// this address W3DTreeBuffer::updateTexture (ea_evidence.csv, strong chain+direct;
+// Zero Hour declares W3DTreeBuffer::updateTexture(void)).
 
 #include "ascii_string.h"
 
@@ -85,7 +87,7 @@ struct Rva007348A0Type {
 };
 class W3DTreeBuffer {
 public:
- void rva007348A0();
+ void updateTexture();
  char prefix[0xb8];
  BFMEWaterTrackTextureHandle	textureB8,textureBC;
  Rva0094D1E0List listC0,listE8;
@@ -95,7 +97,7 @@ public:
 };
 typedef char Rva007348A0TypeSize[(sizeof(Rva007348A0Type) == 0x5c) ? 1 : -1];
 
-void W3DTreeBuffer::rva007348A0()
+void W3DTreeBuffer::updateTexture()
 {
 	listC0.clear(false);
 	listE8.clear(true);

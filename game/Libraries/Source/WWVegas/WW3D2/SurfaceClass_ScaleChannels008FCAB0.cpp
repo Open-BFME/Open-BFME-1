@@ -1,5 +1,6 @@
-// RVA 0x008FCAB0, 844 bytes. Surface channel scaling; identity remains address-derived.
-// The retail caller is 0x0090DF10. Keep the preferred attempt's descriptive name.
+// RVA 0x008FCAB0, 844 bytes. Surface channel scaling; the retail caller is 0x0090DF10.
+// EA's WorldBuilder build names this address SurfaceClass::TintSurface
+// (ea_evidence.csv, strong chain).
 // BFME stores its COM resource at +0 (Get_Description and DrawPixel witness it),
 // unlike the surviving ZH SurfaceClass header's RefCountClass base.
 // Visible Get_Description is byte-exact at 0x008FC5C0 and permits the native
@@ -82,7 +83,7 @@ public:
 	};
 
 	__declspec(noinline) void Get_Description(SurfaceDescription &surface_desc);
-	void ScaleChannels008FCAB0(float red, float green, float blue);
+	void TintSurface(float red, float green, float blue);
 
 private:
 	BfmeSurfaceResource008FCF40 *D3DSurface;
@@ -128,7 +129,7 @@ static __declspec(noinline) unsigned int Rva008FC4F0_PixelSize(
 
 // Retail +0 holds the COM surface; Get_Description and both adjacent methods
 // witness this layout, unlike the surviving ZH ref-counted wrapper.
-void SurfaceClass::ScaleChannels008FCAB0(float red, float green, float blue)
+void SurfaceClass::TintSurface(float red, float green, float blue)
 {
     if (!D3DSurface) return;
     SurfaceDescription sd;
