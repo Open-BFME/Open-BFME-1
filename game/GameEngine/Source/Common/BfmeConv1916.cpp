@@ -61,23 +61,23 @@ public:
 	Player *m_owner;
 };
 
-void BfmeHostBR::xfer(Xfer *x)
+void BfmeHostBR::xfer(Xfer *xfer)
 {
-	if (x->isLightCRC())
+	if (xfer->isLightCRC())
 		return;
 
 	XferVersion version;
 
 	version.m_version = 1;
 	version.m_currentVersion = 1;
-	x->xferVersion(&version);
+	xfer->xferVersion(&version);
 
 	int id;
 
-	if (x->isSaving())
+	if (xfer->isSaving())
 		id = ((BfmePlayerBR *)m_owner)->m_playerIndex;
 
-	x->xferInt(&id);
+	xfer->xferInt(&id);
 
 	m_owner = ThePlayerList->getNthPlayer(id);
 }

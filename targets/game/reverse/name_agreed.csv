@@ -296,3 +296,4 @@ game/GameEngine/Source/Common/BfmeConv1081.cpp|type||BfmeG1081,ExperienceTracker
 game/GameEngine/Source/Common/BfmeConv1838.cpp|type||BfmeSinkXB,Snapshot,gpt-6-astra+grok,applied,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1907.cpp|member||m_bfmeSlotIBA,m_sciences,claude-opus+gpt-6-astra,applied,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1907.cpp|member||m_bfmeSlotLBA,m_upgradeMask,claude-opus+gpt-6-astra,applied,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1916.cpp|param|BfmeHostBR::xfer|x,xfer,gemini+gpt-6-astra,applied,2026-10-05
