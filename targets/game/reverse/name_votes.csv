@@ -602,3 +602,17 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Gen0075FB90Recoi
 game/GameEngine/Source/Common/Gen003BF540Owner_consume.cpp|member||m_bfmeSub,dc3348218d854eceeeaac12a,gpt-6-astra,20261005163943-1de2ed,2026-10-05
 game/GameEngine/Source/Common/Gen003BF540Owner_consume.cpp|param|Gen003BF540Owner::consume|b,b3e64492998e652d88c30353,gpt-6-astra,20261005163943-1de2ed,2026-10-05
 game/GameEngine/Source/Common/Gen003BF540Owner_consume.cpp|local|Gen003BF540Owner::consume|arg4,5e7d73141bd9c980ebfaf690,gpt-6-astra,20261005163943-1de2ed,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|type||Rva0020BAE0Coord3D,f200bf2d08639f2552586ff8,gpt-6-astra,20261005164459-314c97,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|type||Rva0020BAE0Drawable,06f7f5c14b8eb135f69929ea,gpt-6-astra,20261005164459-314c97,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|type||Rva0020BAE0BodyModule,20f40897cdc73b1067b62c56,gpt-6-astra,20261005164459-314c97,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|type||Rva0020BAE0SlavedUpdate,2133580c84f94ee93e51b275,gpt-6-astra,20261005164459-314c97,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|type||Rva0020BAE0ModuleBase,eb1aa42e8d4f35810c4f77fb,gpt-6-astra,20261005164459-314c97,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|type||Rva0020BAE0BehaviorInterface,f565034a49bc537509cb485b,gpt-6-astra,20261005164459-314c97,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|type||Rva0020BAE0BehaviorModule,f294a2cd775ec5bd5a066432,gpt-6-astra,20261005164459-314c97,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|type||Rva0020BAE0SpawnBehaviorModuleData,4da7c202dec35b09444a0aa8,gpt-6-astra,20261005164459-314c97,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|member||m_unmodelled3AC,46df230391e6acded0c86356,gpt-6-astra,20261005164459-314c97,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|member||m_unmodelled038,343e8d03672b20a51bae28fe,gpt-6-astra,20261005164459-314c97,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|member||m_unmodelled200,800cc4484383ac15c31dc4ad,gpt-6-astra,20261005164459-314c97,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|member||m_unmodelled24C,c0f7fb7a8c533fcbd8646925,gpt-6-astra,20261005164459-314c97,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|param|add|a,84823c02445fb9af9d2e2b78,gpt-6-astra,20261005164459-314c97,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|param|sub|a,5c4b677b1b1799cb140b91ac,gpt-6-astra,20261005164459-314c97,2026-10-05
