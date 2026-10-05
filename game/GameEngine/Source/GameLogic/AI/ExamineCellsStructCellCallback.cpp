@@ -27,7 +27,7 @@ public:
 class Rva003D54E0 {
 public:
  Rva003D54E0();
- ICoord2D m_cell; int m_08,m_0c; char m_10,m_11;
+ ICoord2D m_cell; int m_08,m_0c; char m_centerInCell,m_considerTransient;
  int m_14,m_18,m_1c; char m_20,m_21;
  int m_24,m_28; char m_2c,m_2d,m_2e; int m_30;
 };
@@ -77,8 +77,8 @@ int ExamineCellsStruct::cellCallback(PathfindCell *from,PathfindCell *to,int to_
   // Its cell prefix is passed through the established ICoord2D pointer ABI.
   Rva003D54E0 info;
   info.m_cell.x=to_x; info.m_cell.y=to_y;
-  info.m_08=from->getLayer(); info.m_10=centerInCell; info.m_0c=radius;
-  info.m_11=false; info.m_14=3; info.m_18=m_20;
+  info.m_08=from->getLayer(); info.m_centerInCell=centerInCell; info.m_0c=radius;
+  info.m_considerTransient=false; info.m_14=3; info.m_18=m_20;
   if (!thePathfinder->bfmeStepE0930(obj,&info.m_cell,&m_previous) || info.m_30) return 1;
   ICoord2D newCellCoord; newCellCoord.x=to_x; newCellCoord.y=to_y;
   unsigned newCostSoFar=from->m_info->m_costSoFar+(((unsigned char)(to->m_packed>>24)&1)?2.5f:5.0f);
