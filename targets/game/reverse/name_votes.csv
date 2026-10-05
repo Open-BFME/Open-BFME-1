@@ -436,3 +436,8 @@ game/GameEngine/Source/GameClient/GUI/Line0078B040.cpp|param|emitLine0078B040|a,
 game/GameEngine/Source/GameClient/GUI/Line0078B040.cpp|param|emitLine0078B040|b,dded64e7ad4dc6a16c403c2e,gpt-6-astra,20261005160656-911b7a,2026-10-05
 game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value3C,f9cbcfefa59a469bebf0a402,gpt-6-astra,20261005160925-cdea69,2026-10-05
 game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|function|Shadow@|rva00459960,223a79d3a5e8a964c72e60eb,gpt-6-astra,20261005160925-cdea69,2026-10-05
+game/GameEngine/Source/GameLogic/LivingWorld/DistanceUpdate003C5990.cpp|member||m_begin04,c4d985f9b3b3760c22c58aef,gpt-6-astra,20261005161242-e31277,2026-10-05
+game/GameEngine/Source/GameLogic/LivingWorld/DistanceUpdate003C5990.cpp|member||m_end08,7be108ff740bdf9358217846,gpt-6-astra,20261005161242-e31277,2026-10-05
+game/GameEngine/Source/GameLogic/LivingWorld/DistanceUpdate003C5990.cpp|member||m_28,c6dbe69503d3d3c06b83ef6b,gpt-6-astra,20261005161242-e31277,2026-10-05
+game/GameEngine/Source/GameLogic/LivingWorld/DistanceUpdate003C5990.cpp|param|contains|p,25428fcd48c9b68091dedf16,gpt-6-astra,20261005161242-e31277,2026-10-05
+game/GameEngine/Source/GameLogic/LivingWorld/DistanceUpdate003C5990.cpp|local|DistanceUpdate003C5990::update|p,315cf38c7fcc372c198695d8,gpt-6-astra,20261005161242-e31277,2026-10-05
