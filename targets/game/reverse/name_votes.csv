@@ -432,3 +432,5 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Rva00784090AptItemBounds.c
 game/GameEngine/Source/Common/BfmeConv1907.cpp|member||m_bfmeLevelBA,3bba99048ec298aead04230e,gpt-6-astra,20261005161244-4c065f,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1907.cpp|member||m_bfmeSlotIBA,6d961d4e4af2b5879c2e7671,gpt-6-astra,20261005161244-4c065f,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1907.cpp|member||m_bfmeSlotLBA,544add33c878d59425cbac4f,gpt-6-astra,20261005161244-4c065f,2026-10-05
+game/GameEngine/Source/GameClient/GUI/Line0078B040.cpp|param|emitLine0078B040|a,825acd6c0b0c0a1a8a160adf,gpt-6-astra,20261005160656-911b7a,2026-10-05
+game/GameEngine/Source/GameClient/GUI/Line0078B040.cpp|param|emitLine0078B040|b,dded64e7ad4dc6a16c403c2e,gpt-6-astra,20261005160656-911b7a,2026-10-05
