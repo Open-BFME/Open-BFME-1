@@ -539,3 +539,4 @@ game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cp
 game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cpp|member||m_field08,4a39756220cd8d5429d25487,gpt-6-astra,20261005162215-a9ca4a,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cpp|member||m_field0c,d6a4b8b90dbfa54cb50b4983,gpt-6-astra,20261005162215-a9ca4a,2026-10-05
 game/GameEngine/Source/GameNetwork/Rva007F61E0HostedGameRequest.cpp|function||Rva007F5A70Callback,73cac4fa7040b3112747dee6,gpt-6-astra,20261005162021-9ae2e4,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1312.cpp|member||m_bfmeCritical,c6def138fca851eac8fddb2c,gpt-6-astra,20261005162021-886a9c,2026-10-05
