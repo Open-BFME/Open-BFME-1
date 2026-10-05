@@ -321,14 +321,15 @@ extern void j_0003367c(void);
 class BfmeTransitionMD;
 class Rva005127A0InGameChat;
 class Glo012F4B98Type;
-extern BfmeTransitionMD *g_bfmeTransitionMD;
+class HotKeyManager;
+extern HotKeyManager *TheHotKeyManager;
 extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;
 extern void *g_obj12F4C38;
 class AptPalantir;
 extern AptPalantir *TheAptPalantir;
 // No recovered source name exists for this retail selection cache.
 extern volatile Drawable *g_Rva012F340C;
-#define BFME_CONTEXT_TRANSITION ((BfmeContextSwitchBfmeTransitionMD *)g_bfmeTransitionMD)
+#define BFME_CONTEXT_TRANSITION ((BfmeContextSwitchBfmeTransitionMD *)reinterpret_cast<BfmeTransitionMD *>(TheHotKeyManager))
 #define BFME_CONTEXT_INGAME_UI ((BfmeContextSwitchInGameUI *)TheInGameUI)
 #define BFME_CONTEXT_IN_GAME_CHAT g_Rva005127A0InGameChat
 #define BFME_CONTEXT_OBJECT_12F4C38 g_obj12F4C38

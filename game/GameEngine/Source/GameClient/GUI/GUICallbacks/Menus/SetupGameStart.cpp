@@ -42,7 +42,8 @@ public:
 	void setGroup(AsciiString name, int i);
 };
 
-extern SetupGameStartCampaignManagerView *TheCampaignManager;
+class CampaignManager;
+extern CampaignManager *TheCampaignManager;
 // Canonical identity of the retail global at 0x012ED5C8, defined once by
 // game/GameEngine/Source/Common/GlobalData.cpp as
 // ?TheWritableGlobalData@@3PAVGlobalData@@A.  The member read keeps the local
@@ -53,7 +54,7 @@ extern Shell *TheShell;
 
 void setupGameStart(AsciiString mapName, int diff)
 {
-	TheCampaignManager->setGameDifficulty(diff);
+	reinterpret_cast<SetupGameStartCampaignManagerView *>(TheCampaignManager)->setGameDifficulty(diff);
 	AsciiString *pendingFile =
 		&((SetupGameStartGlobalDataView *)TheWritableGlobalData)->m_pendingFile;
 	pendingFile->set(mapName);

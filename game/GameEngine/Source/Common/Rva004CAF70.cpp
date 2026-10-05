@@ -22,7 +22,8 @@ extern char g_rva004CAF70_gate;
 extern Rva004CAF70Obj *g_rva004CAF70_obj;
 extern void *g_rva004CAF70_value;
 extern LANAPI *TheLAN;
-extern char g_rva004CAF70_a[];
+class GameWindow;
+extern GameWindow *comboBoxPlayer[8];
 extern char g_rva004CAF70_b[];
 extern char g_rva004CAF70_c[];
 extern char g_rva004CAF70_d[];
@@ -58,7 +59,7 @@ void lanUpdateSlotList004CAF70(void)
 		push offset g_rva004CAF70_d
 		push offset g_rva004CAF70_c
 		push offset g_rva004CAF70_b
-		push offset g_rva004CAF70_a
+		push offset comboBoxPlayer
 		call dword ptr [edx+0c0h]
 		push eax
 		call j_0001e4bb

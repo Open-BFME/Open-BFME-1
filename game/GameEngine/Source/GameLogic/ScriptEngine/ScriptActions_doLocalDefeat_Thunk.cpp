@@ -73,7 +73,8 @@ class BfmeGameClient
 public:
 	BfmeDefeatScreenHolder *m_defeatScreenHolder;
 };
-extern BfmeGameClient *TheGameClient;
+class GameClient;
+extern GameClient *TheGameClient;
 extern unsigned char BfmeDefeatScreenTable[];
 
 __declspec(noinline) void ScriptEngine::markMPLocalDefeatWindowShown()
@@ -108,7 +109,7 @@ void ScriptActions::doLocalDefeat()
 	TheGameLogic->closeWindows();
 	if (!m_suppressNewWindows && TheVictoryConditions && !localVictoryConditions()->amIObserver())
 	{
-		BfmeDefeatScreenHolder *holder = TheGameClient->m_defeatScreenHolder;
+		BfmeDefeatScreenHolder *holder = reinterpret_cast<BfmeGameClient *>(TheGameClient)->m_defeatScreenHolder;
 		if (holder)
 		{
 			AsciiString screen("Gui_DefeatScreen");

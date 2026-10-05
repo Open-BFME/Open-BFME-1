@@ -50,7 +50,8 @@ public:
 	virtual void bfmeReg1021(void *p);
 };
 
-extern BfmeN1021 *g_bfmeN1021;
+class GameWindowManager;
+extern GameWindowManager *TheWindowManager;
 
 class BfmeA1021
 {
@@ -65,7 +66,7 @@ public:
 
 void BfmeA1021::bfmeGo1021A(int unused)
 {
-	g_bfmeN1021->bfmeReg1021(m_bfmeP);
+	reinterpret_cast<BfmeN1021 *>(TheWindowManager)->bfmeReg1021(m_bfmeP);
 	m_bfmeState = 4;
 }
 
@@ -169,7 +170,7 @@ public:
 void BfmeF1021::bfmeGo1021F(int unused)
 {
 	bfmeStart1021(1);
-	g_bfmeN1021->bfmeReg1021(m_bfmeQ);
+	reinterpret_cast<BfmeN1021 *>(TheWindowManager)->bfmeReg1021(m_bfmeQ);
 	m_bfmeState = 3;
 }
 

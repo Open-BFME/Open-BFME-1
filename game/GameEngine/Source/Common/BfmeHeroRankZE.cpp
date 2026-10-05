@@ -99,7 +99,8 @@ public:
 	void bfmeStoreZE(const AsciiStringZE &key, const UnicodeStringZE &value);
 };
 
-extern BfmeTextZE *g_bfmeTextZE;					// retail 0x012F147C
+class GameTextInterface;
+extern GameTextInterface *TheGameText;					// retail 0x012F147C
 extern WindowManager *g_rva012F19E8WindowManager;	// retail 0x012F19E8
 
 // ?bfmeHeroRankZE@@YADH@Z
@@ -111,7 +112,7 @@ char bfmeHeroRankZE(int rank)
 
 	UnicodeStringZE value;
 
-	((UnicodeString &)value).format(g_bfmeTextZE->bfmeFetchZE(s_bfmeLabelZE, 0), rank);
+	((UnicodeString &)value).format(reinterpret_cast<BfmeTextZE *>(TheGameText)->bfmeFetchZE(s_bfmeLabelZE, 0), rank);
 
 	((BfmePalantirZE *)g_rva012F19E8WindowManager)->bfmeStoreZE(s_bfmeKeyZE, value);
 

@@ -314,7 +314,8 @@ public:
   virtual void slotD8() = 0;
   virtual GameWindow *winGetWindowFromId(GameWindow *, int) = 0;
 };
-extern Rva004FC7C0WindowManager *TheWindowManager;
+class GameWindowManager;
+extern GameWindowManager *TheWindowManager;
 class Rva004FC7C0Display {
 public:
   virtual void slot00() = 0;
@@ -616,8 +617,8 @@ WindowMsgHandledType WOLLobbyMenuSystem(GameWindow *window, UnsignedInt msg,
       if (rowSelected >= 0) {
         GadgetListBoxSetSelected(control, rowSelected);
         GameWindow *button =
-            TheWindowManager->winGetWindowFromId(window, buttonJoinID);
-        TheWindowManager->winSendSystemMsg(window, GBM_SELECTED,
+            reinterpret_cast<Rva004FC7C0WindowManager *>(TheWindowManager)->winGetWindowFromId(window, buttonJoinID);
+        reinterpret_cast<Rva004FC7C0WindowManager *>(TheWindowManager)->winSendSystemMsg(window, GBM_SELECTED,
                                            (WindowMsgData)button, buttonJoinID);
       }
     }
@@ -647,18 +648,18 @@ WindowMsgHandledType WOLLobbyMenuSystem(GameWindow *window, UnsignedInt msg,
       }
       Bool isBuddy = FALSE;
       if (profileID <= 0)
-        rcLayout = TheWindowManager->winCreateLayout(
+        rcLayout = reinterpret_cast<Rva004FC7C0WindowManager *>(TheWindowManager)->winCreateLayout(
             AsciiString("Menus/RCNoProfileMenu.wnd"));
       else {
         if (profileID == TheGameSpyInfo->getLocalProfileID()) {
-          rcLayout = TheWindowManager->winCreateLayout(
+          rcLayout = reinterpret_cast<Rva004FC7C0WindowManager *>(TheWindowManager)->winCreateLayout(
               AsciiString("Menus/RCLocalPlayerMenu.wnd"));
         } else if (TheGameSpyInfo->isBuddy(profileID)) {
-          rcLayout = TheWindowManager->winCreateLayout(
+          rcLayout = reinterpret_cast<Rva004FC7C0WindowManager *>(TheWindowManager)->winCreateLayout(
               AsciiString("Menus/RCBuddiesMenu.wnd"));
           isBuddy = TRUE;
         } else
-          rcLayout = TheWindowManager->winCreateLayout(
+          rcLayout = reinterpret_cast<Rva004FC7C0WindowManager *>(TheWindowManager)->winCreateLayout(
               AsciiString("Menus/RCNonBuddiesMenu.wnd"));
       }
       if (!rcLayout)
@@ -683,7 +684,7 @@ WindowMsgHandledType WOLLobbyMenuSystem(GameWindow *window, UnsignedInt msg,
       rcData->m_nick = aName;
       rcData->m_itemType = (isBuddy) ? ITEM_BUDDY : ITEM_NONBUDDY;
       rcMenu->winSetUserData((void *)rcData);
-      TheWindowManager->winSetLoneWindow(rcMenu);
+      reinterpret_cast<Rva004FC7C0WindowManager *>(TheWindowManager)->winSetLoneWindow(rcMenu);
     } else if (controlID == GetGameListBoxID()) {
       RightClickStruct *rc = (RightClickStruct *)mData2;
       WindowLayout *rcLayout = NULL;
@@ -703,7 +704,7 @@ WindowMsgHandledType WOLLobbyMenuSystem(GameWindow *window, UnsignedInt msg,
           const LadderInfo *linfo = TheLadderList->findLadder(
               theRoom->getLadderIP(), theRoom->getLadderPort());
           if (linfo) {
-            rcLayout = TheWindowManager->winCreateLayout(
+            rcLayout = reinterpret_cast<Rva004FC7C0WindowManager *>(TheWindowManager)->winCreateLayout(
                 AsciiString("Menus/RCGameDetailsMenu.wnd"));
             if (!rcLayout)
               break;
@@ -714,7 +715,7 @@ WindowMsgHandledType WOLLobbyMenuSystem(GameWindow *window, UnsignedInt msg,
             rcMenu->winHide(FALSE);
             rcMenu->winSetPosition(rc->mouseX, rc->mouseY);
             rcMenu->winSetUserData((void *)selectedID);
-            TheWindowManager->winSetLoneWindow(rcMenu);
+            reinterpret_cast<Rva004FC7C0WindowManager *>(TheWindowManager)->winSetLoneWindow(rcMenu);
           }
         }
       }

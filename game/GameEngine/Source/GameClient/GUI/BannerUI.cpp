@@ -6,10 +6,10 @@
 //
 // Several names here are ours rather than retail's, and it is worth being
 // explicit about which. The block keyword "BannerUI" comes from the registry,
-// so the settings class is named. The pointer at 0x012F4B70 is not: nothing in
-// the image names it, and the only matched rows that touch it are InGameUI's
-// constructor, destructor and update, which say where it is owned but not what
-// it is called. The parser name follows the keyword. The callback at 0x00582C70
+// so the settings class is named. The constructor names the singleton
+// TheBannerUI through the EA string at 0x0110B8F8; InGameUI owns the pointer
+// at 0x012F4B70. The parser name follows the keyword.
+// The callback at 0x00582C70
 // is installed by BannerUI's selected-entry routine at 0x00583190, and its
 // current-id global and removal member are likewise unnamed, so their names
 // below describe that proven ownership and behavior rather than claiming a

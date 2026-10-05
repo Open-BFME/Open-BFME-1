@@ -184,7 +184,8 @@ public:
 	virtual void drawImage(Image *image, Real x0, Real y0, Real x1, Real y1, Int color);	///< vtable +0xE0
 };
 
-extern MovieSourceShim *TheMovieSourceShim;				///< retail [0x012F148C]
+class InGameUI;
+extern InGameUI *TheInGameUI;				///< retail [0x012F148C]
 // Retail's global at 0x012F1270 is `Display *TheDisplay`, defined once in
 // game/GameEngine/Source/GameClient/Display.cpp.  This TU keeps its own
 // TU-local view of the pointee and casts at the use.
@@ -194,7 +195,7 @@ extern Display *TheDisplay;								///< retail [0x012F1270]
 // ?W3DCameoMovieDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
 void W3DCameoMovieDraw(GameWindow *window, WinInstanceData *instData)
 {
-	Image *image = TheMovieSourceShim->getCurrentMovieImage();
+	Image *image = reinterpret_cast<MovieSourceShim *>(TheInGameUI)->getCurrentMovieImage();
 	if (!image)
 		return;
 

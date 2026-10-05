@@ -28,7 +28,8 @@ public:
 	void bfmeDoMB(int f, void *p);
 };
 
-extern BfmeGlobMB *g_bfmeGlobMB;
+class ControlBar;
+extern ControlBar *TheControlBar;
 
 struct BfmeSlotMB
 {
@@ -55,7 +56,7 @@ void BfmeThingMB::bfmeGoMB(void *a)
 {
 	void *p = m_bfmeTab->m_bfmeArr[m_bfmeIdx].m_bfmeP;
 	if (p)
-		g_bfmeGlobMB->bfmeDoMB(0, p);
+		reinterpret_cast<BfmeGlobMB *>(TheControlBar)->bfmeDoMB(0, p);
 }
 
 class BfmeGlobMC

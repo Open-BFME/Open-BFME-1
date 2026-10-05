@@ -65,7 +65,8 @@ public:
     Bool dispatch(AsciiString *key, Bool shiftOnly);
 };
 
-extern BfmeTransitionMD *g_bfmeTransitionMD;
+class HotKeyManager;
+extern HotKeyManager *TheHotKeyManager;
 
 class HotKeyTranslator
 {
@@ -119,7 +120,7 @@ GameMessageDisposition HotKeyTranslator::translateGameMessage(const GameMessage 
         setHotKey(uKey, key);
         AsciiString aKey;
         aKey.translate(uKey);
-        if (g_bfmeTransitionMD && g_bfmeTransitionMD->dispatch(&aKey, shiftOnly))
+        if (reinterpret_cast<BfmeTransitionMD *>(TheHotKeyManager) && reinterpret_cast<BfmeTransitionMD *>(TheHotKeyManager)->dispatch(&aKey, shiftOnly))
             disp = DESTROY_MESSAGE;
     }
 

@@ -33,7 +33,8 @@ public:
 	void bfmeGo993A(int draw);
 };
 
-extern BfmeA993 *TheControlBar;
+class ControlBar;
+extern ControlBar *TheControlBar;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
@@ -108,7 +109,7 @@ void InGameUI::deselectDrawable( Drawable *draw )
 		evaluateSoloNexus();
 
 		// the control needs to update its context sensitive display now
-		TheControlBar->bfmeGo993A( (int)draw );
+		reinterpret_cast<BfmeA993 *>(TheControlBar)->bfmeGo993A( (int)draw );
 
 		for( int i = 0; i < 25; ++i )
 			resetEntry044( i );

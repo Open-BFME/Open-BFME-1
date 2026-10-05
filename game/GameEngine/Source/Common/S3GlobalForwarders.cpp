@@ -70,7 +70,8 @@ public:
 	void bfmeCall_00045ec1(void);					// retail 0x00045EC1
 };
 
-extern BfmeGlobal_012f142c *TheBfmeGlobal_012f142c;				// 0x012F142C
+class Eva;
+extern Eva *TheEva;				// 0x012F142C
 
 // 0x012F19E8 is retail's `WindowManager *g_rva012F19E8WindowManager`
 // (?g_rva012F19E8WindowManager@@3PAVWindowManager@@A, defined in
@@ -91,7 +92,8 @@ public:
 	void bfmeCall_0003514d(void);					// retail 0x0003514D
 };
 
-extern BfmeGlobal_012f4b70 *TheBfmeGlobal_012f4b70;				// 0x012F4B70
+class BannerUI;
+extern BannerUI *TheBannerUI;				// 0x012F4B70
 
 class BfmeGlobal_012f4b98
 {
@@ -117,7 +119,8 @@ public:
 	void bfmeCall_000459d5(void);					// retail 0x000459D5
 };
 
-extern BfmeGlobal_012f6928 *TheBfmeGlobal_012f6928;				// 0x012F6928
+class RayEffectSystem;
+extern RayEffectSystem *TheRayEffects;				// 0x012F6928
 
 class BfmeGlobal_012f706c
 {
@@ -150,7 +153,7 @@ void Gen_0006c170(void)
 // ?Gen_002ed8c0@@YAXXZ
 void Gen_002ed8c0(void)
 {
-	TheBfmeGlobal_012f4b70->bfmeCall_0003514d();
+	reinterpret_cast<BfmeGlobal_012f4b70 *>(TheBannerUI)->bfmeCall_0003514d();
 }
 
 // ?Gen_002ed950@@YAXXZ
@@ -174,7 +177,7 @@ void Gen_002eff20(void)
 // ?Gen_002f05d0@@YAXXZ
 void Gen_002f05d0(void)
 {
-	TheBfmeGlobal_012f142c->bfmeCall_00045ec1();
+	reinterpret_cast<BfmeGlobal_012f142c *>(TheEva)->bfmeCall_00045ec1();
 }
 
 // ?Gen_002f0dc0@@YAXXZ
@@ -192,13 +195,13 @@ void Gen_002f0f50(void)
 // ?Gen_0042e720@@YAXXZ
 void Gen_0042e720(void)
 {
-	TheBfmeGlobal_012f6928->bfmeCall_000459d5();
+	reinterpret_cast<BfmeGlobal_012f6928 *>(TheRayEffects)->bfmeCall_000459d5();
 }
 
 // ?Gen_0042e730@@YAXXZ
 void Gen_0042e730(void)
 {
-	TheBfmeGlobal_012f6928->bfmeCall_00030832();
+	reinterpret_cast<BfmeGlobal_012f6928 *>(TheRayEffects)->bfmeCall_00030832();
 }
 
 // ?Gen_0046ecf0@@YAXXZ

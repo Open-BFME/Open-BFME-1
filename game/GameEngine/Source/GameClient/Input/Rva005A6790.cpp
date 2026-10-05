@@ -14,7 +14,7 @@ extern WindowManager *g_rva012F19E8WindowManager;
 
 class Mouse;
 typedef Mouse Rva005A63D0Mouse;
-extern Rva005A63D0Mouse *TheMouse;
+extern Mouse *TheMouse;
 
 typedef void (__fastcall *Rva005A6790Slot38Fn)(Rva005A63D0Mouse *, int, int);
 struct Rva005A6790MouseVtable
@@ -50,7 +50,7 @@ int Rva005A6790Object::setValue(int value)
 	typedef bool (__fastcall *Check)(WindowManager *);
 	if (((Check)j_000423b6)(g_rva012F19E8WindowManager))
 	{
-		Rva005A63D0Mouse *mouse = TheMouse;
+		Rva005A63D0Mouse *mouse = reinterpret_cast<Rva005A63D0Mouse *>(TheMouse);
 		int cursorValue = m_value;
 		Rva005A6790MouseVtable *vtable =
 			*(Rva005A6790MouseVtable **)mouse;

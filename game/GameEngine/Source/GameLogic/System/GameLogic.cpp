@@ -6698,7 +6698,8 @@ public:
 extern Rva0038DA10Script* g012F076C;
 // 012F1600 is EA's tactical view singleton; GameClient/View.h declares TheTacticalView.
 extern Rva0038DA10CommandList *g012ED5F0, *g012ED5EC;
-extern Rva0038DA10Client* g012F1464;
+class GameClient;
+extern GameClient *TheGameClient;
 extern Rva0038DA10Network* g012F7714;
 extern Rva0038C1E0 g012F08A0;
 extern Rva0060D3D0* g012F706C;
@@ -6745,12 +6746,12 @@ void Rva0038DA10GameLogic::update(int phase) {
         bool freeze=(((Rva0038DA10View*)TheTacticalView)->slotD4() && !((Rva0038DA10View*)TheTacticalView)->slot74()) || g012F076C->rva00336F20();
         if (freeze) {
             if (g012ED5F0->slot30(0x1d)) g012F076C->rva00337040();
-            else { g012F1464->rvaC4=false; --depth; return; }
+            else { reinterpret_cast<Rva0038DA10Client *>(TheGameClient)->rvaC4=false; --depth; return; }
         }
     }
     rva15C.clear();
     if (rva11D) {
-        if (phase==1) { rva00383050(); g012F1464->rvaC4=true; }
+        if (phase==1) { rva00383050(); reinterpret_cast<Rva0038DA10Client *>(TheGameClient)->rvaC4=true; }
         --depth; return;
     }
     if (g012F7714 && phase==1) g012F7714->slot8C();
@@ -6860,7 +6861,7 @@ void Rva0038DA10GameLogic::update(int phase) {
             o->slot3C();
         }
         if(!rvaA0 && rva40) ++frame;
-        g012F1464->rvaC4=true;
+        reinterpret_cast<Rva0038DA10Client *>(TheGameClient)->rvaC4=true;
     }
     --depth;
 }

@@ -51,7 +51,8 @@ virtual void pad21();
 virtual void pad22();
 virtual void pad23();
 virtual void pad24();
-virtual void apply(int);};extern ZoomEnvironment *ZoomTerrain;
+virtual void apply(int);};class GameClient;
+extern GameClient *TheGameClient;
 class ZoomView{public:
 virtual void pad0();
 virtual void pad1();
@@ -121,14 +122,14 @@ int ScreenZoomFilter::set(FilterModes mode){
   if(ZoomFadeDirection<0&&!ZoomPulseDown){
    ZoomPulseDown=true;ZoomPulse=30;
    TheWritableGlobalData->setTimeOfDay((TimeOfDay)savedMode);
-   ZoomTerrain->apply(savedMode);
+   reinterpret_cast<ZoomEnvironment *>(TheGameClient)->apply(savedMode);
   }
   if(ZoomPulseDown){
    ZoomPulse-=3;
    if(ZoomPulse<1){ZoomPulseDown=false;ZoomPulse=0;zoomTacticalView()->setMode(0);zoomTacticalView()->setFilter(0);}
   }else{
    ZoomPulse+=3;
-   if(ZoomPulse>=30){ZoomPulseDown=true;zoomTacticalView()->setMode(15);zoomTacticalView()->setFilter(7);savedMode=((ZoomSettings *)TheWritableGlobalData)->mode;TheWritableGlobalData->setTimeOfDay(TIME_OF_DAY_NIGHT);ZoomTerrain->apply(4);}
+   if(ZoomPulse>=30){ZoomPulseDown=true;zoomTacticalView()->setMode(15);zoomTacticalView()->setFilter(7);savedMode=((ZoomSettings *)TheWritableGlobalData)->mode;TheWritableGlobalData->setTimeOfDay(TIME_OF_DAY_NIGHT);reinterpret_cast<ZoomEnvironment *>(TheGameClient)->apply(4);}
   }
  }
  if(mode>FM_NULL_MODE){

@@ -492,7 +492,8 @@ class Display { public:
     virtual Real getAverageFPS()=0;
 };
 extern GameWindowManager* TheWindowManager;
-extern GameText* TheGameText;
+class GameTextInterface;
+extern GameTextInterface *TheGameText;
 // Retail global 0x012F079C is EA's TheVictoryConditions, defined once in
 // game/GameEngine/Source/GameLogic/ScriptEngine/VictoryConditions.cpp. The
 // extern carries the canonical pointee type so the linked name is
@@ -675,7 +676,7 @@ void populatePlayerInfo( Player *player, Int pos)
 
 	if(Rva012F4180)
 	{
-		GadgetStaticTextSetText(win, TheGameText->fetch("GUI:Player"));
+		GadgetStaticTextSetText(win, reinterpret_cast<GameText *>(TheGameText)->fetch("GUI:Player"));
 	}
 	else
 		GadgetStaticTextSetText(win, player->getPlayerDisplayName());

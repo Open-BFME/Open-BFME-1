@@ -612,7 +612,8 @@ public:
   virtual void slot2C();
   virtual void __cdecl message(AsciiString, ...);
 };
-extern Rva00506720UI *TheInGameUI;
+class InGameUI;
+extern InGameUI *TheInGameUI;
 enum QMStatus {
   QM_IDLE,
   QM_JOININGQMCHANNEL,
@@ -678,7 +679,7 @@ void Rva00506720Layout::update(void *userData) {
                                       GameSpyColor[GSCOLOR_DEFAULT], -1);
           } else {
 
-            TheInGameUI->message(disconMunkee);
+            reinterpret_cast<Rva00506720UI *>(TheInGameUI)->message(disconMunkee);
           }
           TheGameSpyInfo->markAsDisconnectedAfterGameStart(resp.discon.reason);
         }

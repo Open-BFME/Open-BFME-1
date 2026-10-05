@@ -267,9 +267,11 @@ public:
 	void bfmeTail1095(void);
 };
 
-extern BfmeA1095 *g_bfmeA1095;
+class InGameUI;
+extern InGameUI *TheInGameUI;
 extern BfmeE1095 *g_bfmeE1095;
-extern BfmeZ1095 *g_bfmeZ1095;
+class Mouse;
+extern Mouse *TheMouse;
 extern BfmeT1095 *g_bfmeT1095;
 extern int g_bfmeV1095;
 
@@ -290,10 +292,10 @@ void BfmeW1095::bfmeGo1095B(void)
 {
 	m_bfme38 = 0;
 	m_bfme1c = 0;
-	g_bfmeA1095->bfmeSlot1095A_40(0);
+	reinterpret_cast<BfmeA1095 *>(TheInGameUI)->bfmeSlot1095A_40(0);
 	if (!m_bfme39)
 		g_bfmeE1095->bfmeSlot1095E_104(0);
-	g_bfmeZ1095->bfmeSlot1095Z_14(g_bfmeV1095);
+	reinterpret_cast<BfmeZ1095 *>(TheMouse)->bfmeSlot1095Z_14(g_bfmeV1095);
 	m_bfme148 = 0;
 	if (g_bfmeT1095)
 		g_bfmeT1095->bfmeTail1095();

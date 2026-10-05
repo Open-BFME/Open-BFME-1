@@ -121,7 +121,8 @@ class AudioManager;
 extern AudioManager *TheAudio;
 extern const AsciiString rva004BBFC0_emptyString;
 struct Rva004BBFC0Keyboard { unsigned int rva00[2]; unsigned int m_modifiers; };
-extern Rva004BBFC0Keyboard *rva004BBFC0_keyboard;
+class Keyboard;
+extern Keyboard *TheKeyboard;
 struct Rva004BBFC0PushButtonData { unsigned char rva00[0x1c]; AsciiString rva1c; unsigned int rva20; int rva24; };
 extern unsigned long rva004BBFC0_lastRepeat;
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
@@ -474,7 +475,7 @@ WindowMsgHandledType GadgetPushButtonInput( GameWindow *window,
 				// --------------------------------------------------------------------
                 case KEY_TAB:
                     if (BitTest(mData2,KEY_STATE_DOWN)) {
-                        if(rva004BBFC0_keyboard->m_modifiers & 0x10) TheWindowManager->winPrevTab(window);
+                        if(reinterpret_cast<Rva004BBFC0Keyboard *>(TheKeyboard)->m_modifiers & 0x10) TheWindowManager->winPrevTab(window);
                         else TheWindowManager->winNextTab(window);
                     }
                     break;

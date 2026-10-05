@@ -230,19 +230,22 @@ class Rva001A8820TerrainVisual;
 class ParticleSystemManager;
 class Rva0048EC80Manager;
 class Gen000290D2;
-struct InGameUI;
+class InGameUI;
 extern BfmeOwnVVD *g_bfmeSingletonVVD;
 extern Gen_005B42F0 *g_bfmeInstanceXE;
 extern SnowManager *TheSnowManager;
 extern CloudEffectSystem *TheCloudEffectSystem;
 extern CloudSystem *TheCloudSystem;
-extern Anim2DCollection *Rva012f4ca8;
-extern Keyboard0040F780 *KeyboardGlobal0040F780;
-extern BfmeGlobal_012f142c *TheBfmeGlobal_012f142c;
-extern Mouse *Mouse0040F780;
+extern Anim2DCollection *TheAnim2DCollection;
+class Keyboard;
+extern Keyboard *TheKeyboard;
+class Eva;
+extern Eva *TheEva;
+extern Mouse *TheMouse;
 extern GenFallback *GenFallback0012ED5C8;
 extern Rva00367810VirtualGate *Rva00367810TheVirtualGate;
-extern MovieControl0040F780 *Control0040F780;
+class GameWindowManager;
+extern GameWindowManager *TheWindowManager;
 extern MovieFactory0040E3B0 *MovieFactoryGlobal0040E3B0;
 extern FadeView *FadeTacticalView;
 extern BfmeGlobal_012f076c *TheBfmeGlobal_012f076c;
@@ -295,17 +298,17 @@ void ClientUpdate004329D0::update() {
     if (TheSnowManager) ((Dispatch004329D0 *)TheSnowManager)->v14();
     if (TheCloudEffectSystem) ((Dispatch004329D0 *)TheCloudEffectSystem)->v14();
     if (TheCloudSystem) ((Dispatch004329D0 *)TheCloudSystem)->v14();
-    ((Dispatch004329D0 *)Rva012f4ca8)->v14();
-    if (KeyboardGlobal0040F780) { ((Dispatch004329D0 *)KeyboardGlobal0040F780)->v14(); ((Dispatch004329D0 *)KeyboardGlobal0040F780)->v28(); }
-    ((Dispatch004329D0 *)TheBfmeGlobal_012f142c)->v14();
-    if (Mouse0040F780) { ((Dispatch004329D0 *)Mouse0040F780)->v14(); ((Dispatch004329D0 *)Mouse0040F780)->v2c(); }
+    ((Dispatch004329D0 *)TheAnim2DCollection)->v14();
+    if (reinterpret_cast<Keyboard0040F780 *>(TheKeyboard)) { ((Dispatch004329D0 *)reinterpret_cast<Keyboard0040F780 *>(TheKeyboard))->v14(); ((Dispatch004329D0 *)reinterpret_cast<Keyboard0040F780 *>(TheKeyboard))->v28(); }
+    ((Dispatch004329D0 *)reinterpret_cast<BfmeGlobal_012f142c *>(TheEva))->v14();
+    if (TheMouse) { ((Dispatch004329D0 *)TheMouse)->v14(); ((Dispatch004329D0 *)TheMouse)->v2c(); }
     bfmeGo924G();
     if (at<bool>(GenFallback0012ED5C8,0xbb6) || at<bool>(GenFallback0012ED5C8,0xbb7)) {
         ((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v1c();
         ((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v14();
         return;
     }
-    ((Dispatch004329D0 *)Control0040F780)->v14();
+    ((Dispatch004329D0 *)reinterpret_cast<MovieControl0040F780 *>(TheWindowManager))->v14();
     ((Dispatch004329D0 *)MovieFactoryGlobal0040E3B0)->v14();
     Rva0090F050();
     if (at<int>(GenFallback0012ED5C8,0xd08)>0) {
@@ -378,7 +381,7 @@ void ClientUpdate004329D0::update() {
                     at<unsigned int>(GenFallback0012ED5C8,0x2c)=m_at00C8;
                     at<unsigned int>(GenFallback0012ED5C8,0x30)=m_at00CC;
                     TheHeaderTemplateManager->refreshFonts004329D0();
-                    ((Gen_005a4400 *)Mouse0040F780)->m();
+                    ((Gen_005a4400 *)TheMouse)->m();
                     bfmeRun_004647E0();
                 } else m_at00C6=false;
                 m_at00C8=0;
@@ -387,7 +390,7 @@ void ClientUpdate004329D0::update() {
             }
             TheShell=new Shell;
             if (TheShell) TheShell->v04();
-            ((Dispatch004329D0 *)Control0040F780)->v14();
+            ((Dispatch004329D0 *)reinterpret_cast<MovieControl0040F780 *>(TheWindowManager))->v14();
             ((Dispatch004329D0 *)g_rva012F19E8WindowManager)->v14();
             ((Dispatch004329D0 *)TheInGameUI)->v188();
             TheShell->push(AsciiString("MainMenu.apt"),false);

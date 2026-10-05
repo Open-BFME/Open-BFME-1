@@ -94,7 +94,8 @@ public:
 	unsigned char m_resolutionChangePending;
 };
 
-extern ClientRoot4120 *TheGameClient;
+class GameClient;
+extern GameClient *TheGameClient;
 
 struct Rva005A63D0Mouse
 {
@@ -136,9 +137,9 @@ void BfmeOwnerHV::bfmeEndHV(int reason)
 	if (m_bfmeStateHV == 8 && reason == 3)
 	{
 		if (m_bfmeFlagHV)
-			TheGameClient->bfmeCloseHV();
+			reinterpret_cast<ClientRoot4120 *>(TheGameClient)->bfmeCloseHV();
 		else
-			TheGameClient->bfmeOpenHV();
+			reinterpret_cast<ClientRoot4120 *>(TheGameClient)->bfmeOpenHV();
 
 		((Rva005A63D0Mouse *)TheMouse)->bfmeSetHV(0);
 		m_bfmeStateHV = 0;

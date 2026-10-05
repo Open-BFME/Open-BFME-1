@@ -150,14 +150,16 @@ public:
 	virtual BfmePopupWindowLayout *winCreateLayout( BFMERetailAsciiString filename ) = 0;
 };
 
-extern BfmeGameText *TheGameText;
+class GameTextInterface;
+extern GameTextInterface *TheGameText;
 // Retail 0x012F1270 is EA's `Display *TheDisplay`, defined once in
 // game/GameEngine/Source/GameClient/Display.cpp. This TU only reads the
 // width/height vtable slots, so the reference carries the canonical spelling
 // and the observed vtable slice stays a TU-local view cast at each use.
 class Display;
 extern Display *TheDisplay;
-extern BfmeWindowManager *TheWindowManager;
+class GameWindowManager;
+extern GameWindowManager *TheWindowManager;
 
 class GameLogic;
 extern GameLogic *TheGameLogic;
@@ -188,7 +190,7 @@ void InGameUI::popupMessage( const AsciiString &identifier, Int x, Int y,
 
 	UpdateDiplomacyBriefingText( identifier, false );
 
-	UnicodeString message = TheGameText->fetch( identifier );
+	UnicodeString message = reinterpret_cast<BfmeGameText *>(TheGameText)->fetch( identifier );
 	self->m_popupMessageData = new PopupMessageData;
 	self->m_popupMessageData->message = message;
 	if( x > 100 )
@@ -215,6 +217,6 @@ void InGameUI::popupMessage( const AsciiString &identifier, Int x, Int y,
 		TheBfmeGameLogicView()->setGamePaused( TRUE, pauseMusic == FALSE, TRUE );
 
 	self->m_popupMessageData->layout =
-		TheWindowManager->winCreateLayout( BFMERetailAsciiString( "InGamePopupMessage.wnd" ) );
+		reinterpret_cast<BfmeWindowManager *>(TheWindowManager)->winCreateLayout( BFMERetailAsciiString( "InGamePopupMessage.wnd" ) );
 	self->m_popupMessageData->layout->runInit( 0 );
 }

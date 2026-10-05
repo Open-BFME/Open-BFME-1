@@ -68,7 +68,7 @@ class DrawableIconInfo { public: void *v; Anim2D *icon[14]; unsigned keep[14]; v
 extern const char *Rva012b4f5c[14];
 __forceinline int rvaIconIndex(const char *name){for(int i=0;i<14;++i)if(!_strcmpi(Rva012b4f5c[i],name))return i;return -1;}
 class Anim2DCollection { public: Anim2DTemplate *findTemplate(const AsciiString&); };
-extern Anim2DCollection *Rva012f4ca8;
+extern Anim2DCollection *TheAnim2DCollection;
 extern const char *Rva012b4f5c[14];
 class Rva0041D290VObject { public: virtual void v00(); V(01) V(02) virtual void v03(Xfer*); };
 class BuffManager:public Rva0041D290VObject { char bytes[0x19c]; public: BuffManager(int); };
@@ -285,8 +285,8 @@ void Drawable::xfer(Xfer *x)
  }else{
   if(m_280)full->rva00410f10()->clear();
   for(int i=0;i<icons;++i){*x==indexName;int index=rvaIconIndex(indexName.str());
-   *x==keep;full->rva00410f10()->keep[index]=keep;*x==templateName;Anim2DTemplate*t=Rva012f4ca8->findTemplate(templateName);if(!t)invalidData();
-   full->rva00410f10()->icon[index]=new Anim2D(t,Rva012f4ca8);x->operator==(*reinterpret_cast<Snapshot*>(full->rva00410f10()->icon[index]));
+   *x==keep;full->rva00410f10()->keep[index]=keep;*x==templateName;Anim2DTemplate*t=TheAnim2DCollection->findTemplate(templateName);if(!t)invalidData();
+   full->rva00410f10()->icon[index]=new Anim2D(t,TheAnim2DCollection);x->operator==(*reinterpret_cast<Snapshot*>(full->rva00410f10()->icon[index]));
   }
  }
  if(x->IsLoading()){m_fc=0;if(m_34d||m_34e)full->rva00411cd0();}

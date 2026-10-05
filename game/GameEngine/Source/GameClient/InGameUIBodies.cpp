@@ -481,7 +481,8 @@ public:
 	void update();
 };
 
-extern BfmeSelectionTranslator *TheSelectionTranslator;
+class SelectionTranslator;
+extern SelectionTranslator *TheSelectionTranslator;
 extern Radar *TheRadar;
 // Retail spells this global `View *TheTacticalView` (0x012F1600); the
 // TU-local slot shim is only reached through a cast, as everywhere else.
@@ -781,7 +782,7 @@ void InGameUI::setInputEnabled(Bool enable)
 	if (!wasEnabled && enable)
 	{
 		if (TheSelectionTranslator)
-			TheSelectionTranslator->setDragSelecting();
+			reinterpret_cast<BfmeSelectionTranslator *>(TheSelectionTranslator)->setDragSelecting();
 		setSelecting(false);
 		clearMode68(false);
 		setRadiusCursorNone();

@@ -125,13 +125,14 @@ public:
 	virtual void vfn38(void *obj);
 	virtual void vfn39(void *obj);
 };
-extern BfmeMgrF14 *g_mgr12F148C;
+class InGameUI;
+extern InGameUI *TheInGameUI;
 
 void __stdcall bfmeLookupAndSend7B0(void *key)
 {
 	void *obj = mgr12F076C()->vfn26(key);
 	if (obj) {
-		g_mgr12F148C->vfn38(obj);
+		reinterpret_cast<BfmeMgrF14 *>(TheInGameUI)->vfn38(obj);
 	}
 }
 
@@ -139,7 +140,7 @@ void __stdcall bfmeLookupAndSend7F0(void *key)
 {
 	void *obj = mgr12F076C()->vfn26(key);
 	if (obj) {
-		g_mgr12F148C->vfn39(obj);
+		reinterpret_cast<BfmeMgrF14 *>(TheInGameUI)->vfn39(obj);
 	}
 }
 

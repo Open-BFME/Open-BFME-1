@@ -198,7 +198,8 @@ private:
 	BannerMovieEntryVector m_entries;
 };
 
-extern BfmeGlobDXI *g_bfmeObjDXI;
+class BannerUI;
+extern BannerUI *TheBannerUI;
 
 void BfmeGlobDXI::bfmeUseDXI(int id)
 {
@@ -233,7 +234,7 @@ void BfmeGlobDXI::bfmeUseDXI(int id)
 
 void bfmeGoDXI(void *a)
 {
-	g_bfmeObjDXI->bfmeUseDXI(bfmeCvtDXI(a));
+	reinterpret_cast<BfmeGlobDXI *>(TheBannerUI)->bfmeUseDXI(bfmeCvtDXI(a));
 }
 
 extern "C" __declspec(dllimport) void __stdcall bfmeCloseDXK(void *h);

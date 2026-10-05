@@ -14,7 +14,8 @@ public:
 	BfmeV1024 *bfmeFind1024(int h);
 };
 
-extern BfmeM1024 *g_bfmeM1024;
+class ImageCollection;
+extern ImageCollection *TheMappedImageCollection;
 
 class BfmeSlots1024
 {
@@ -33,7 +34,7 @@ public:
 
 void BfmeA1024::bfmeGo1024A(int k, int h)
 {
-	BfmeV1024 *v = g_bfmeM1024->bfmeFind1024(h);
+	BfmeV1024 *v = reinterpret_cast<BfmeM1024 *>(TheMappedImageCollection)->bfmeFind1024(h);
 
 	if (v != 0)
 		*m_bfmeMap.bfmeSlot1024(k) = v;

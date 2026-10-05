@@ -28,8 +28,9 @@ struct DiplomacyWindow
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
-struct InGameUI
+class InGameUI
 {
+public:
 	unsigned char m_head[0x50];
 	bool m_diplomacyHidden;
 };

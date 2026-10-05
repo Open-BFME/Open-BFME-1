@@ -1,5 +1,8 @@
 // readable body of ?createReplayControl@InGameUI@@IAEXXZ: game/GameEngine/Source/GameClient/InGameUI.cpp
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
+class BannerUI;
+BannerUI *TheBannerUI = 0;
+
 class InGameUI
 {
 protected:

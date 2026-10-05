@@ -75,7 +75,8 @@ public:
 
 extern BfmeA1100 *g_bfmeA1100;
 extern BfmeB1100 *g_bfmeB1100;
-extern BfmeZ1100 *g_bfmeZ1100;
+class Mouse;
+extern Mouse *TheMouse;
 
 void __cdecl bfmeDo1100(int a);
 
@@ -98,6 +99,6 @@ void BfmeQ1100::bfmeGo1100B(void)
 	if (g_bfmeB1100->bfmeChk1100(8))
 		return;
 	bfmeDo1100(1);
-	if (g_bfmeZ1100)
-		g_bfmeZ1100->bfmeEnd1100(1);
+	if (reinterpret_cast<BfmeZ1100 *>(TheMouse))
+		reinterpret_cast<BfmeZ1100 *>(TheMouse)->bfmeEnd1100(1);
 }

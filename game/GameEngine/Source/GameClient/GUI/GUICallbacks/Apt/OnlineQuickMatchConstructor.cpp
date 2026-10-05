@@ -208,7 +208,8 @@ private:
 class NAT;
 class WindowManager;
 extern void *g_obj12F4ABC;
-extern MappedImageCollection *TheMappedImageCollection;
+class ImageCollection;
+extern ImageCollection *TheMappedImageCollection;
 extern MapCache *TheMapCache;
 extern GameSpyStagingRoom *TheGameSpyGame;
 extern NAT *TheNAT;
@@ -237,12 +238,12 @@ BfmeAptScreenOnlineQuickMatch::BfmeAptScreenOnlineQuickMatch( int context )
 
 		{
 			BFMERetailAsciiString name( "AptCustomMatchSelected" );
-			m_slot70 = (int)TheMappedImageCollection->findImageByName(
+			m_slot70 = (int)reinterpret_cast<MappedImageCollection *>(TheMappedImageCollection)->findImageByName(
 				reinterpret_cast<const AsciiString &>( name ) );
 		}
 		{
 			BFMERetailAsciiString name( "AptCustomMatchUnselected" );
-			m_slot74 = (int)TheMappedImageCollection->findImageByName(
+			m_slot74 = (int)reinterpret_cast<MappedImageCollection *>(TheMappedImageCollection)->findImageByName(
 				reinterpret_cast<const AsciiString &>( name ) );
 		}
 		{

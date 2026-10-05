@@ -303,7 +303,7 @@ static GameWindow *checkboxLimitSuperweapons = NULL;
 static GameWindow *comboBoxStartingCash = NULL;
 static GameWindow *windowMap = NULL;
 
-static GameWindow *comboBoxPlayer[MAX_SLOTS] = {NULL,NULL,NULL,NULL,
+GameWindow *comboBoxPlayer[MAX_SLOTS] = {NULL,NULL,NULL,NULL,
 																									 NULL,NULL,NULL,NULL };
 static GameWindow *buttonAccept[MAX_SLOTS] = {NULL,NULL,NULL,NULL,
 																								NULL,NULL,NULL,NULL };

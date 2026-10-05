@@ -225,8 +225,7 @@ public:
 unsigned int updateTimedOperations(void);
 
 #define GameLogicClient ((GameLogicClientUpdate *)TheGameLogic)
-extern ClientFrameSubsystem *TheGameClientClientUpdate;
-#define GameClientSubsystem TheGameClientClientUpdate
+#define GameClientSubsystem reinterpret_cast<ClientFrameSubsystem *>(TheGameClient)
 class WindowManager;
 extern WindowManager *g_theWindowManager;
 #define WindowManagerSubsystem ((ClientSubsystem *)g_theWindowManager)

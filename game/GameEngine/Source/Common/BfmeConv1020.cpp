@@ -173,7 +173,8 @@ public:
 	virtual void bfmeReg1020(BfmeM1020 *p);
 };
 
-extern BfmeN1020 *g_bfmeN1020;
+class GameWindowManager;
+extern GameWindowManager *TheWindowManager;
 
 class BfmeM1020
 {
@@ -186,6 +187,6 @@ public:
 
 void BfmeM1020::bfmeGo1020M(int unused)
 {
-	g_bfmeN1020->bfmeReg1020(this);
+	reinterpret_cast<BfmeN1020 *>(TheWindowManager)->bfmeReg1020(this);
 	m_bfmeState = 1;
 }

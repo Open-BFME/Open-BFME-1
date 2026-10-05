@@ -624,7 +624,8 @@ public:
   virtual void slot2C();
   virtual void __cdecl message(AsciiString, ...);
 };
-extern Rva00506720UI *TheInGameUI;
+class InGameUI;
+extern InGameUI *TheInGameUI;
 enum QMStatus {
   QM_IDLE,
   QM_JOININGQMCHANNEL,

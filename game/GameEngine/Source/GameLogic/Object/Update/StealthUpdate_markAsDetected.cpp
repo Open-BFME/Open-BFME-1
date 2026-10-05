@@ -42,7 +42,8 @@ extern GameLogic* TheGameLogic;
 struct Rva002AD380GameLogic { char pad[0x3c]; unsigned frame; unsigned getFrame() const {return frame;} };
 static __forceinline Rva002AD380GameLogic* stealthGameLogic() { return (Rva002AD380GameLogic*)TheGameLogic; }
 struct Rva002AD380ControlBar { char pad[0x24]; bool dirty; };
-extern Rva002AD380ControlBar* TheControlBar;
+class ControlBar;
+extern ControlBar *TheControlBar;
 struct Rva002AD380Drawable { char pad[0x3ac]; bool selected; };
 namespace _STL {
  template<> list<Object*>::list(const list<Object*>&);
@@ -191,7 +192,7 @@ class StealthUpdate { public:
 
 	Rva002AD380Drawable *draw = self->getDrawable();
 	if (draw && draw->selected)
-		TheControlBar->dirty=true;
+		reinterpret_cast<Rva002AD380ControlBar *>(TheControlBar)->dirty=true;
 }
 
 };

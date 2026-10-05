@@ -171,7 +171,8 @@ public:
 class MessageStream;
 extern MessageStream *TheMessageStream;
 
-extern BfmeRvaBA90GlobalC *g_bfmeRvaBA90GlobalC;
+class InGameUI;
+extern InGameUI *TheInGameUI;
 // Retail's global at 0x012ED5B8 is `PartitionManager *ThePartitionManager`
 // (game/GameEngine/Source/GameLogic/Object/PartitionManager.cpp defines it).
 // Declare it under that exact spelling; the narrow notify view is cast in.
@@ -198,7 +199,7 @@ void Rva0024BA90::update(BfmeRvaBA90Member *member)
 			BfmeRvaBA90GlobalBResult *value =
 				((BfmeRvaBA90GlobalB *)TheMessageStream)->fetch(0x3ec);
 			value->consume(member->m_index);
-			g_bfmeRvaBA90GlobalC->notify(ai);
+			reinterpret_cast<BfmeRvaBA90GlobalC *>(TheInGameUI)->notify(ai);
 		}
 		member->setMode(3, 1);
 	}

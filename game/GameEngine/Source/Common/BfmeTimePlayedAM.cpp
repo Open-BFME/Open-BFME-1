@@ -63,7 +63,8 @@ public:
 	virtual UnicodeString bfmeFetchAM(const char *label, int *exists) = 0;
 };
 
-extern BfmeTextAM *g_bfmeTextAM;			// retail 0x012F147C
+class GameTextInterface;
+extern GameTextInterface *TheGameText;			// retail 0x012F147C
 
 // ?bfmeTimePlayedAM@@YG?AVUnicodeStringAM@@M@Z
 UnicodeStringAM __stdcall bfmeTimePlayedAM(float seconds)
@@ -72,7 +73,7 @@ UnicodeStringAM __stdcall bfmeTimePlayedAM(float seconds)
 
 	int hours = (int)seconds / 60 / 60;
 
-	((UnicodeString &)text).format(g_bfmeTextAM->bfmeFetchAM("Apt:TimePlayed", 0), hours / 24, hours % 24);
+	((UnicodeString &)text).format(reinterpret_cast<BfmeTextAM *>(TheGameText)->bfmeFetchAM("Apt:TimePlayed", 0), hours / 24, hours % 24);
 
 	return text;
 }

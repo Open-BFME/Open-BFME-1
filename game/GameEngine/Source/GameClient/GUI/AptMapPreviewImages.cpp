@@ -106,7 +106,8 @@ class MappedImageCollection
 {
 };
 
-extern MappedImageCollection *TheMappedImageCollection;
+class ImageCollection;
+extern ImageCollection *TheMappedImageCollection;
 
 // Retail reaches both callees through incremental-link thunks, so the calls
 // name the thunks directly: 0x0004032C and 0x0001D606.
@@ -158,7 +159,7 @@ void AptMapPreview::bfmeSetMapPicture(MapMetaData *map)
 			AsciiString missingMap("MissingMap");
 			typedef const Image *(MappedImageCollection::*FindFn)(const AsciiString &);
 			union { void (*fn)(); FindFn call; } uFind = { j_0001d606 };
-			picture = (Image *)(TheMappedImageCollection->*uFind.call)(missingMap);
+			picture = (Image *)(reinterpret_cast<MappedImageCollection *>(TheMappedImageCollection)->*uFind.call)(missingMap);
 		}
 		m_pictureOwned = false;
 	}

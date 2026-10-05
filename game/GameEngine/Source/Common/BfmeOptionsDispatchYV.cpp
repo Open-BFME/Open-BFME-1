@@ -31,7 +31,7 @@ public:
 // once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp; this TU's
 // GameLogic class above is its view of that layout and mangles identically.
 extern GameLogic *TheGameLogic;
-extern ControlBar *g_bfmeRegistryYV;			// retail 0x012F33F8
+extern ControlBar *TheControlBar;			// retail 0x012F33F8
 
 // ?bfmeOptionsYV@@YGXH@Z
 void __stdcall bfmeOptionsYV(int unused)
@@ -52,8 +52,8 @@ void __stdcall bfmeOptionsYV(int unused)
 		name = &s_bfmeOptionsYV;
 	}
 
-	void *entry = g_bfmeRegistryYV->bfmeFindYV(*name);
+	void *entry = TheControlBar->bfmeFindYV(*name);
 
 	if (entry != 0)
-		g_bfmeRegistryYV->bfmeUseYV(0, entry);
+		TheControlBar->bfmeUseYV(0, entry);
 }

@@ -59,7 +59,8 @@ public:
 	bool m_bfmeDirty;
 };
 
-extern ControlBar5 *TheControlBar;
+class ControlBar;
+extern ControlBar *TheControlBar;
 
 class Gen_000D5E90
 {
@@ -124,7 +125,7 @@ void Gen_000D5E90::bfmeRemove(void *owner, void *extra)
 
 				((Gen_dtor_000d4030 *)entry)->~Gen_dtor_000d4030();
 				::operator delete(entry);
-				TheControlBar->m_bfmeDirty = true;
+				reinterpret_cast<ControlBar5 *>(TheControlBar)->m_bfmeDirty = true;
 				return;
 			}
 		}

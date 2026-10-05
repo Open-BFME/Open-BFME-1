@@ -228,7 +228,7 @@ class GlobalData;
 extern GlobalData *TheWritableGlobalData;
 struct Settings0040F780 {char bytes00[0x1278];bool field1278;};
 class Mouse {public: void _bfme_setEngineVisibility(bool);};
-extern Mouse *Mouse0040F780;
+extern Mouse *TheMouse;
 class BfmeObjDC {public:void bfmeGoDC();};
 class Display {public:void bfmeStopMovie();};
 class Watchdog {public:void update();};
@@ -304,7 +304,8 @@ struct Audio0040F780 {
 class AudioManager;
 extern AudioManager *TheAudio;
 struct MovieControl0040F780 { virtual void v00(); virtual void v04();virtual void v08();virtual void v0c();virtual void v10();virtual void update();};
-extern MovieControl0040F780 *Control0040F780;
+class GameWindowManager;
+extern GameWindowManager *TheWindowManager;
 struct Renderer0040F780 {
  virtual void renderer00();
  virtual void renderer01();
@@ -327,7 +328,8 @@ struct Renderer0040F780 {
 extern Renderer0040F780 *RendererGlobal0040F780;
 struct KeyEvent0040F780 {unsigned char type,byte01,flags,bytes03[5];};
 struct Keyboard0040F780:MovieControl0040F780 {char bytes04[8];KeyEvent0040F780 *first,*last;};
-extern Keyboard0040F780 *KeyboardGlobal0040F780;
+class Keyboard;
+extern Keyboard *TheKeyboard;
 __forceinline void priorityFailure0040F780() {
  _bfme_debugRecordCallsite(1);
  DebugGlobal00409E20->Begin_Report();
@@ -387,12 +389,12 @@ bool MovieOpen0040E3B0::update0040E680(bool skip) {
     field50=2;
     Transitions0040E3B0->setGroup(AsciiString("FadeInGameMovie"),false);
     ((Rva004893C0ByteSetter*)Transitions0040E3B0)->set();
-    Control0040F780->update();
+    reinterpret_cast<MovieControl0040F780 *>(TheWindowManager)->update();
    } else if(flags38&0x200) {
     field50=2;
     Transitions0040E3B0->setGroup(AsciiString("FadeScreenToWhite"),false);
     ((Rva004893C0ByteSetter*)Transitions0040E3B0)->set();
-    Control0040F780->update();
+    reinterpret_cast<MovieControl0040F780 *>(TheWindowManager)->update();
    } else if(skip) done=true;
   }
   break;
@@ -427,14 +429,14 @@ bool MovieOpen0040E3B0::play0040F780(AsciiString name,bool allowSkip,int flags) 
   unsigned pending=0;
   bool skipRequested=false;
   bool drawFrame=false;
-  Control0040F780->update();
-  Mouse0040F780->_bfme_setEngineVisibility(false);
+  reinterpret_cast<MovieControl0040F780 *>(TheWindowManager)->update();
+  TheMouse->_bfme_setEngineVisibility(false);
   bool alternateAudio=false;
   bool done;
   do {
-   KeyboardGlobal0040F780->update();
-   KeyEvent0040F780 *end=KeyboardGlobal0040F780->last;
-   for(KeyEvent0040F780 *k=KeyboardGlobal0040F780->first;k!=end;++k) {
+   reinterpret_cast<Keyboard0040F780 *>(TheKeyboard)->update();
+   KeyEvent0040F780 *end=reinterpret_cast<Keyboard0040F780 *>(TheKeyboard)->last;
+   for(KeyEvent0040F780 *k=reinterpret_cast<Keyboard0040F780 *>(TheKeyboard)->first;k!=end;++k) {
     if(k->type==1 && (k->flags&1) && allowSkip) {skipRequested=true;break;}
    }
    done=update0040E680(skipRequested);
@@ -456,13 +458,13 @@ bool MovieOpen0040E3B0::play0040F780(AsciiString name,bool allowSkip,int flags) 
   } while(!done);
   close();field60=false;
   ((Display*)this)->bfmeStopMovie();
-  KeyboardGlobal0040F780->update();
+  reinterpret_cast<Keyboard0040F780 *>(TheKeyboard)->update();
  }
  if(TheAudio) ((Audio0040F780 *)TheAudio)->resume();
  if(!SetThreadPriority(thread,0)) priorityFailure0040F780();
  if(!((Settings0040F780 *)TheWritableGlobalData)->field1278 && active) Rva009EBBE0(0);
  ((BfmeGameLogicPause *)TheGameLogic)->setGamePaused(false,0,false);
- if(flags&0x100000) {Transitions0040E3B0->reset(); Mouse0040F780->_bfme_setEngineVisibility(true);}
- Control0040F780->update();
+ if(flags&0x100000) {Transitions0040E3B0->reset(); TheMouse->_bfme_setEngineVisibility(true);}
+ reinterpret_cast<MovieControl0040F780 *>(TheWindowManager)->update();
  return true;
 }

@@ -10,7 +10,8 @@ public:
 	void bfmeDo977B(int a, void *x);
 };
 
-extern BfmeMgr977 *g_bfmeMgr977;
+class ControlBar;
+extern ControlBar *TheControlBar;
 
 class BfmeCampaignSwitch977
 {
@@ -53,10 +54,10 @@ void BfmeB977::bfmeGo977B(int unused)
 	BfmeRec977 *r = m_bfmeRec;
 
 	if (r && r->m_bfmeKind != 0) {
-		void *x = g_bfmeMgr977->bfmeFind977B(this);
+		void *x = reinterpret_cast<BfmeMgr977 *>(TheControlBar)->bfmeFind977B(this);
 
 		if (x)
-			g_bfmeMgr977->bfmeDo977B(0, x);
+			reinterpret_cast<BfmeMgr977 *>(TheControlBar)->bfmeDo977B(0, x);
 	}
 }
 
@@ -69,11 +70,11 @@ void __stdcall bfmeUpdateMaxPowerCommand(void *)
 		const char *name = ringCampaign
 			? "NonCommand_MaxRingPower" : "NonCommand_MaxEvenstarPower";
 		AsciiString label(name);
-		command = g_bfmeMgr977->bfmeFind977B((BfmeB977 *)&label);
+		command = reinterpret_cast<BfmeMgr977 *>(TheControlBar)->bfmeFind977B((BfmeB977 *)&label);
 	}
 
 	if (command)
-		g_bfmeMgr977->bfmeDo977B(0, command);
+		reinterpret_cast<BfmeMgr977 *>(TheControlBar)->bfmeDo977B(0, command);
 }
 
 class BfmeClock977

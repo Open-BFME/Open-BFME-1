@@ -75,7 +75,8 @@ public:
 	virtual UnicodeString bfmeFetchAL(const char *label, int *exists) = 0;
 };
 
-extern BfmeTextAL *g_bfmeTextAL;			// retail 0x012F147C
+class GameTextInterface;
+extern GameTextInterface *TheGameText;			// retail 0x012F147C
 
 class BfmeVersionAL
 {
@@ -90,7 +91,7 @@ UnicodeStringAL BfmeVersionAL::bfmeVersionTextAL(void)
 {
 	UnicodeStringAL text;
 
-	((UnicodeString &)text).format((UnicodeString)(((UnicodeStringAL &)g_bfmeTextAL->bfmeFetchAL("Version:Format2", 0)).bfmeTextAL()),
+	((UnicodeString &)text).format((UnicodeString)(((UnicodeStringAL &)reinterpret_cast<BfmeTextAL *>(TheGameText)->bfmeFetchAL("Version:Format2", 0)).bfmeTextAL()),
 			m_bfmeMajorAL, m_bfmeMinorAL);
 
 	return text;
