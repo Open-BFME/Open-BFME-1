@@ -47,20 +47,20 @@ public:
 	BfmeTgtUE *m_bfmeTgtUE;
 };
 
-class BfmeOwnUC
+class W3DTerrainVisual
 {
 public:
 	void bfmeFwdUC(void *first, BfmeVecUC value, void *third, void *fourth,
 		void *fifth, void *sixth, void *seventh, void *eighth, void *ninth);
 
 	unsigned char m_bfmeHeadUC[0x10];
-	BfmeOwnUE *m_bfmeTgtUC;
+	BfmeOwnUE *m_terrainRenderObject;
 };
 
-void BfmeOwnUC::bfmeFwdUC(void *first, BfmeVecUC value, void *third, void *fourth,
+void W3DTerrainVisual::bfmeFwdUC(void *first, BfmeVecUC value, void *third, void *fourth,
 	void *fifth, void *sixth, void *seventh, void *eighth, void *ninth)
 {
-	if (m_bfmeTgtUC)
-		m_bfmeTgtUC->bfmeFwdUE(first, *(BfmeVecUE *)&value, third, fourth, fifth, sixth, seventh,
+	if (m_terrainRenderObject)
+		m_terrainRenderObject->bfmeFwdUE(first, *(BfmeVecUE *)&value, third, fourth, fifth, sixth, seventh,
 			eighth, ninth);
 }
