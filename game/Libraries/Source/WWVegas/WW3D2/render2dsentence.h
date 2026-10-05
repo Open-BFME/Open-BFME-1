@@ -103,6 +103,7 @@ public:
 	void	Blit_Char( WCHAR ch, uint16 *dest_ptr, int dest_stride, int x, int y );
 
 private:
+	friend class Rva00941400Font;
 
 	//
 	//	Private methods

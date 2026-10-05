@@ -1,13 +1,13 @@
 // ?Get_Char_Data@Rva00941400Font@@QAEPBURva00941400CharRecord@@G@Z
-// partial score=1.0 date=2026-10-03
 // cl: /I. /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
-// Retail 0x009412F0..0x009413F3, RET4, then alignment: 260 bytes.
-// Matched FontCharsClass_Get_Char_Metric.cpp calls this address-qualified owner.
-// Preserve that spelling: the separate map-based Get_Char_Data is at 0x00941290.
-// The friend in render2dsentence.h exposes the existing private declarations;
-// the address-qualified fields below describe only this BFME array-backed view.
-// Strict add_match verified all 260 bytes and all four recorded DIR32 references.
+// The retail body spans 0x009412F0 through 0x009413F3 and returns with RET 4.
+// Two INT3 bytes follow it in the retail image.
+// FontCharsClass_Get_Char_Metric.cpp calls this method on Rva00941400Font.
+// FontCharsClass::Get_Char_Data at 0x00941290 handles the separate map lookup.
+// The friend declaration lets this class call FontCharsClass::Get_Char_Data and Grow_Unicode_Array.
+// The member offsets below describe this BFME font's character arrays.
+// The strict add_match check verified all 260 bytes and all four DIR32 references.
 #define Matrix4x4 Matrix4
 #define __PLACEMENT_VEC_NEW_INLINE
 #include "game/Libraries/Source/WWVegas/WW3D2/render2dsentence.h"
@@ -16,7 +16,7 @@ extern "C" __declspec(dllimport) DWORD WINAPI GetGlyphIndicesW(HDC,LPCWSTR,int,L
 class FontCharsClassGdiState;extern FontCharsClassGdiState *g_fontCharsGdiState0134AEAC;
 struct Rva009412F0GdiView {char m00[16];HDC m10;};
 struct Rva00941400CharRecord;
-// Existing generated loader target: retail thiscall / RET4.
+// The generated loader target uses thiscall, takes one stack argument, and returns with RET 4.
 void d_0093f440();
 class Rva00941400Font {
 public:
