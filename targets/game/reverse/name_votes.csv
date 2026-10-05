@@ -460,3 +460,7 @@ game/GameEngine/Source/GameLogic/Object/SpecialPower/SpecialPowerModule_initiate
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DStatusCircleCtorThunk.cpp|type||BfmeCircleShader,430119755c466a7153171854,gpt-6-astra,20261005161657-fd0981,2026-10-05
 game/Libraries/Source/Apt/Rva8CD520ConfigureState.cpp|function||rva8CD520ConfigureState,6d1f06349a33f3c30b54481e,gpt-6-astra,20261005161657-f6acbe,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1789.cpp|member||m_bfmeSlotLU,d9581471c65eb238cd013612,gpt-6-astra,20261005160840-bd4ee1,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1081.cpp|type||BfmeG1081,9d4d29a84b149b259940ea67,gpt-6-astra,20261005160840-222854,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1081.cpp|local|bfmeGo1081A|f,b480f45872c24d72f823e5a6,gpt-6-astra,20261005160840-222854,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1081.cpp|local|bfmeGo1081B|f,aec0fac326a062120ff755a5,gpt-6-astra,20261005160840-222854,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1081.cpp|local|bfmeGo1081B|d,6ab1eb5fffddd9d5ccff2f17,gpt-6-astra,20261005160840-222854,2026-10-05

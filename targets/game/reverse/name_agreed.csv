@@ -285,3 +285,4 @@ game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||Rva
 game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||FactorsR0015C7A0,TAiData,gpt-6-astra+grok,agreed,2026-10-05
 game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||QR0015C7A0,ExitConditions,gpt-6-astra+grok,agreed,2026-10-05
 game/GameEngine/Source/GameLogic/AI/AIGuardOuterState_onEnter_Bfme.cpp|type||CtorTargetR0015C7A0,AIAttackState,gpt-6-astra+grok,agreed,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1081.cpp|type||BfmeG1081,ExperienceTracker,gpt-6-astra+grok,agreed,2026-10-05
