@@ -946,3 +946,5 @@ game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIAttackSwoopThenIdleSta
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIAttackSwoopThenIdleStateMachineRva002BC870.cpp|function|AIAttackSwoopThenIdleStateMachine@|rva002BC870,5410ca74232dff5e73a37819,grok,20261005200127-9ac372,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdateSetStatus.cpp|param|battlePlanSetPosition|p,7c8fdce6c370916c9787128a,gpt-6-sol,20261005200447-858c24,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdateSetStatus.cpp|param|setBattlePlan|s,edeef6ce858f9c57e20d2b4f,gpt-6-sol,20261005200447-858c24,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdateSetStatus.cpp|param|battlePlanSetPosition|p,7c8fdce6c370916c9787128a,grok,20261005200512-547af9,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdateSetStatus.cpp|param|setBattlePlan|s,edeef6ce858f9c57e20d2b4f,grok,20261005200512-547af9,2026-10-05
