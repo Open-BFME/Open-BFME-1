@@ -33980,3 +33980,4 @@ Gen_helpmd_00451e60,0x00451E60,"gen-shim scaffold placeholder superseded by the 
 ?scaleToInt@BfmeThing171@@QAEHPAUBfmeArg171@@@Z,0x001E1710,renamed to ?scaleToInt@WeaponTemplate@@QAEHPAUBfmeArg171@@@Z by tools/name_lane.py: two models agreed
 ?bfmeFindRepresentativeSlot@MpGameSetup@@QAEHXZ,0x00524FB0,renamed to ?findRepresentativeSlot@MpGameSetup@@QAEHXZ by tools/name_lane.py: two models agreed
 ?rva00459960@Shadow@@QAEXHHHHHHHH@Z,0x00459960,renamed to ?setOpacityFade@Shadow@@QAEXHHHHHHHH@Z by tools/name_lane.py: two models agreed
+?xfer@Rva001515C0@@QAEXPAVXfer@@@Z,0x001515C0,renamed to ?xfer@AIGroup@@QAEXPAVXfer@@@Z by tools/name_lane.py: two models agreed

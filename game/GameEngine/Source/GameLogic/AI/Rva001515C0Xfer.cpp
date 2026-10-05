@@ -71,7 +71,7 @@ class Object
 class Xfer; class MidVirtualSlot90Receiver;		// 0x0010C3C0, defined in MidVirtualSlot90Forwarders.cpp
 extern Xfer & __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *xfer, void *value);
 
-class Rva001515C0
+class AIGroup
 {
 public:
 	void xfer(Xfer *xfer);
@@ -90,9 +90,9 @@ public:
 	void *m_value28;
 };
 
-void Rva001515C0::xfer(Xfer *xfer)
+void AIGroup::xfer(Xfer *xfer)
 {
-	Rva001515C0 *self = this;
+	AIGroup *self = this;
 	XferVersion version(1);
 	xfer->xferVersion(&version);
 	if (!xfer->isCRC())
