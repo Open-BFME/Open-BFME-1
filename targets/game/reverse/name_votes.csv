@@ -527,3 +527,4 @@ game/GameEngine/Source/Common/BfmeConv1323.cpp|local|BfmeThingTTE::bfmeGoTTE|h,a
 game/Libraries/Source/WWVegas/WW3D2/MeshModelInstallMaterials.cpp|member||m_texture50,8e06984094f11710a7575df6,gpt-6-astra,20261005162348-3928ed,2026-10-05
 game/GameEngine/Source/Common/Glo012F1028Sub_conquered.cpp|member||m_bfmeStart,f14b3c29547be78629472e06,gpt-6-astra,20261005162723-b5b5fa,2026-10-05
 game/GameEngine/Source/Common/Glo012F1028Sub_conquered.cpp|member||m_bfmeFinish,cd769b44830c89a338858aef,gpt-6-astra,20261005162723-b5b5fa,2026-10-05
+game/GameEngine/Source/Common/INI/Rva000C1E50MapCacheDefinition.cpp|local|Rva000C1E50::parseMapCacheDefinition|c,598f71a850311e94d3fae431,gpt-6-astra,20261005161857-19f7ea,2026-10-05
