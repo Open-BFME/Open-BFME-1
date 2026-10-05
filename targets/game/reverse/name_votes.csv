@@ -796,3 +796,6 @@ game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/NetworkDirectConnectUpd
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/NetworkDirectConnectUpdateRemoteIPList.cpp|param|UnicodeString::UnicodeString#2|s,d8c47d4aca896dcb335b6858,grok,20261005185618-f41bee,2026-10-05
 game/GameEngine/Source/GameClient/SubsystemRefreshCallbacks.cpp|param|d_001072a0|a3,9447eb8cb967f16cdcaa1b28,grok,20261005191959-1d3fd1,2026-10-05
 game/GameEngine/Source/GameClient/SubsystemRefreshCallbacks.cpp|param|d_001072f0|a3,544178a94ef753f57bab03dd,grok,20261005191959-1d3fd1,2026-10-05
+game/GameEngine/Source/GameLogic/LivingWorld/ParseAudioEventBlock.cpp|type||BfmeReleaseHolder,ed77345dca0346f7a3810693,grok,20261005190908-257cfb,2026-10-05
+game/GameEngine/Source/GameLogic/LivingWorld/ParseAudioEventBlock.cpp|type||Rva003B7780Owner,fc92716d531a618ceaf32cb4,grok,20261005190908-257cfb,2026-10-05
+game/GameEngine/Source/GameLogic/LivingWorld/ParseAudioEventBlock.cpp|member||m_flag0C,3a3f92d555f8b4e30fe7138e,grok,20261005190908-257cfb,2026-10-05
