@@ -583,3 +583,6 @@ game/GameEngine/Source/Common/BfmeConv1209.cpp|member||m_bfme00,3ea2d0d9caf141a5
 game/GameEngine/Source/Common/BfmeConv1209.cpp|member||m_bfme10,39e9a89f6e125e70d5e2ca69,gpt-6-astra,20261005162013-2d06ab,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1209.cpp|function|BfmeA1209@|bfmeOp1209,0cddad1a91a7c2829f2f961a,gpt-6-astra,20261005162013-2d06ab,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1209.cpp|param|BfmeA1209::bfmeOp1209|a,55181e8a092af8451c0ac6df,gpt-6-astra,20261005162013-2d06ab,2026-10-05
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00769370ModelConditionInfoValidateTurret.cpp|type||Rva00769370AsciiData,7e0b4e6e557f61791e500c50,gpt-6-astra,20261005161826-937e3d,2026-10-05
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00769370ModelConditionInfoValidateTurret.cpp|type||Rva00769370TurretInfo,efd987dce4f2a95bf1a89595,gpt-6-astra,20261005161826-937e3d,2026-10-05
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00769370ModelConditionInfoValidateTurret.cpp|type||Rva00769370ModelConditionInfo,0ab04bd58c62f51c077c7ba0,gpt-6-astra,20261005161826-937e3d,2026-10-05
