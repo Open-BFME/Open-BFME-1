@@ -434,3 +434,5 @@ game/GameEngine/Source/Common/BfmeConv1907.cpp|member||m_bfmeSlotIBA,6d961d4e4af
 game/GameEngine/Source/Common/BfmeConv1907.cpp|member||m_bfmeSlotLBA,544add33c878d59425cbac4f,gpt-6-astra,20261005161244-4c065f,2026-10-05
 game/GameEngine/Source/GameClient/GUI/Line0078B040.cpp|param|emitLine0078B040|a,825acd6c0b0c0a1a8a160adf,gpt-6-astra,20261005160656-911b7a,2026-10-05
 game/GameEngine/Source/GameClient/GUI/Line0078B040.cpp|param|emitLine0078B040|b,dded64e7ad4dc6a16c403c2e,gpt-6-astra,20261005160656-911b7a,2026-10-05
+game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|member||m_value3C,f9cbcfefa59a469bebf0a402,gpt-6-astra,20261005160925-cdea69,2026-10-05
+game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|function|Shadow@|rva00459960,223a79d3a5e8a964c72e60eb,gpt-6-astra,20261005160925-cdea69,2026-10-05
