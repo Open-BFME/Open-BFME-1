@@ -423,3 +423,9 @@ game/GameEngine/Source/Common/Bfme5IniNamedValue.cpp|local|bfme5ParseNamedValueB
 game/GameEngine/Source/Common/BfmeConv1838.cpp|type||BfmeSinkXB,92165566e5bc5cd3d64e2aba,gpt-6-astra,20261005161148-df87a9,2026-10-05
 game/GameEngine/Source/Common/Bfme/Rva006DF050EraseTen.cpp|local|Rva006DF050::eraseKey|n,3e40608740d5bfc07ba0fea6,gpt-6-astra,20261005161757-d2a722,2026-10-05
 game/GameEngine/Source/Common/BfmeHostABD_bfmeAllocABD.cpp|member||m_bfme4CABD,6d9c69e09b487b5d3da6415f,gpt-6-astra,20261005160718-7d71f1,2026-10-05
+game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Rva00784090AptItemBounds.cpp|local|Rva00785FD0Item::getRenderRegion|p,16fa8ad6c688eb2dbfb9aa86,gpt-6-astra,20261005160718-ee4557,2026-10-05
+game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Rva00784090AptItemBounds.cpp|local|Rva00785FD0Item::getRenderRegion|t,6c1ce827757e7ebfe21b9825,gpt-6-astra,20261005160718-ee4557,2026-10-05
+game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Rva00784090AptItemBounds.cpp|local|Rva00785FD0Item::getRenderRegion|v0,c9f3720b28932006e6a62359,gpt-6-astra,20261005160718-ee4557,2026-10-05
+game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Rva00784090AptItemBounds.cpp|local|Rva00785FD0Item::getRenderRegion|v1,eb55e7e7dfb925fadb4c0516,gpt-6-astra,20261005160718-ee4557,2026-10-05
+game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Rva00784090AptItemBounds.cpp|local|Rva00785FD0Item::getRenderRegion|v2,d4909d9cfb303bff58b22ca5,gpt-6-astra,20261005160718-ee4557,2026-10-05
+game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Rva00784090AptItemBounds.cpp|local|Rva00785FD0Item::getRenderRegion|q,eeed74f3db5cce216df81631,gpt-6-astra,20261005160718-ee4557,2026-10-05
