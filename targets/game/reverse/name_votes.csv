@@ -853,3 +853,6 @@ inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameCl
 inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameClient/LanguageFilter.cpp|param|LanguageFilter::readWord|file1,7790a7bf9d156cd435e5c139,gpt-6-sol,20261005184830-f5da59,2026-10-05
 inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameClient/LanguageFilter.cpp|local|LanguageFilter::readWord|c,b8f9dc41dc9efa8f3deebd65,gpt-6-sol,20261005184830-f5da59,2026-10-05
 game/GameEngine/Source/Common/ElementPayloadFill003ACD30.cpp|member||m_at00,4f8d97dd1725475526e07ec6,gpt-6-sol,20261005194851-7ae40d,2026-10-05
+game/GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp|param|GameWindowManager::winIsDigit|c,20531e640cf6bd412c279157,gpt-6-sol,20261005194534-f99653,2026-10-05
+game/GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp|param|GameWindowManager::winIsAscii|c,8ed745777b585e8591018258,gpt-6-sol,20261005194534-f99653,2026-10-05
+game/GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp|param|GameWindowManager::winIsAlNum|c,2ce94ba441193231b6b85e80,gpt-6-sol,20261005194534-f99653,2026-10-05
