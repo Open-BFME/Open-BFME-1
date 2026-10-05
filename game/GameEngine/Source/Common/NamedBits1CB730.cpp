@@ -3,9 +3,8 @@
 // ZH BitFlagsIO.h supplies the save/load algorithm; BFME adds the CRC route,
 // a two-byte version record aligned to four bytes, and XferException handling.
 // The table at VA 0x012A8D40 is shared with the established getSingleBitFromName
-// callee at RVA 0x001C0A30. Its existing template spelling is retained here;
-// that spelling is not new evidence for the table cardinality. This body
-// independently witnesses 116 flag bits and 16 bytes of storage.
+// callee at RVA 0x001C0A30. This body independently witnesses 116 flag bits
+// and 16 bytes of storage.
 // stlport
 #include <bitset>
 #include "Libraries/Source/WWVegas/WWLib/ascii_string.h"
@@ -76,7 +75,7 @@ void NamedBits1CB730::transfer(Xfer *xfer)
   AsciiString name;
   for (int i=0;i<count;++i) {
    xfer->text(&name);
-   int bit=BitFlags<13>::getSingleBitFromName(name.str());
+   int bit=BitFlags<116>::getSingleBitFromName(name.str());
    if (bit<0) {
     XferException error;
     bfmeFormatText(&error,0,0);

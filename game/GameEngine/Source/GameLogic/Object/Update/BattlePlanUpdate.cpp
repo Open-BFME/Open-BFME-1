@@ -68,7 +68,7 @@
 template<> void BitFlags<116>::xfer(Xfer *);
 // The header xfer copy no longer instantiates the count()/getSingleBitFromName() retail emits here.
 template Int BitFlags<116>::count() const;
-template Int BitFlags<116>::getSingleBitFromName(const char *);
+template Int BitFlags<11>::getSingleBitFromName(const char *);
 
 #ifdef _INTERNAL
 // for occasional debugging...
@@ -599,3 +599,20 @@ void BattlePlanUpdate::loadPostProcess( void )
 	UpdateModule::loadPostProcess();
 
 }  // end loadPostProcess
+
+// Verified retail name table at VA 0x012A68D8.
+template<> const char *BitFlags<11>::s_bitNameList[] =
+{
+	"VETERAN",
+	"ELITE",
+	"HERO",
+	"PLAYER_UPGRADE",
+	"WEAK_VERSUS_BASEDEFENSES",
+	"ALTERNATE_FORMATION",
+	"MOUNTED",
+	"PLAYER_UPGRADE_2",
+	"PLAYER_UPGRADE_3",
+	"UNBESIEGEABLE",
+	"AS_TOWER",
+	NULL
+};

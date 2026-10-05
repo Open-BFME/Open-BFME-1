@@ -90310,3 +90310,10 @@ _Rva0015C280Predicate,0x0015C280,cdecl bool(State*;void*) condition callback; re
 ?Rva00964150@BFMEVertexFVFInfo@@QAEXII@Z,0x00964150,identity-evidence=targets/game/reverse/identity_evidence/00964150-BFMEVertexFVFInfo.md; FVF layout initializer; EA member spelling unproven
 ?IsRendering@WW3D@@0_NA,0x0133F429,targets/game/reverse/identity_evidence/0133f420-WW3D-static-block.md; private static bool proved by retail accesses and native ww3d.h
 ?MungeSortOnLoad@WW3D@@0_NA,0x0133F42E,targets/game/reverse/identity_evidence/0133f420-WW3D-static-block.md; private static bool proved by retail accesses and native ww3d.h
+?getSingleBitFromName@?$BitFlags@$05@@SAHPBD@Z,0x000070A9,retail 6-name lookup table VA 0x012A6858;route=0x0037AA30;evidence=targets/game/reverse/identity_evidence/bitflags-name-lookup-family.md
+?getSingleBitFromName@?$BitFlags@$0FG@@@SAHPBD@Z,0x00026A3F,retail 86-name lookup table VA 0x012A6670;route=0x001C09C0;evidence=targets/game/reverse/identity_evidence/bitflags-name-lookup-family.md
+?getSingleBitFromName@?$BitFlags@$0HE@@@SAHPBD@Z,0x0004B218,retail 116-name lookup table VA 0x012A8D40;route=0x001C0A30;evidence=targets/game/reverse/identity_evidence/bitflags-name-lookup-family.md
+?getSingleBitFromName@?$BitFlags@$0L@@@SAHPBD@Z,0x00031246,retail 11-name lookup table VA 0x012A68D8;route=0x0020E380;evidence=targets/game/reverse/identity_evidence/bitflags-name-lookup-family.md
+?getSingleBitFromName@?$BitFlags@$09@@SAHPBD@Z,0x000448AF,retail 10-name lookup table VA 0x012A687C;route=0x0037A9D0;evidence=targets/game/reverse/identity_evidence/bitflags-name-lookup-family.md
+?getSingleBitFromName@?$BitFlags@$0BN@@@SAHPBD@Z,0x001C08D0,verified template object symbol at retail body;ILT 0x000052CC jumps here;evidence=targets/game/reverse/identity_evidence/bitflags-name-lookup-family.md
+?getSingleBitFromName@?$BitFlags@$0BDA@@@SAHPBD@Z,0x001C0930,verified template object symbol at retail body;ILT 0x000190F1 jumps here;evidence=targets/game/reverse/identity_evidence/bitflags-name-lookup-family.md

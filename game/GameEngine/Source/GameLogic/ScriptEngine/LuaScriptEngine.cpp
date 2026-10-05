@@ -192,7 +192,7 @@ int rva002E7740(lua_State *state)
 			Bool hit = 0;
 			const char *name = lua_tostring(state, 1);
 			LuaTargetStatus *status = (LuaTargetStatus *)owner->m_target;
-			int bit = BitFlags<45>::getSingleBitFromName(name);
+			int bit = BitFlags<86>::getSingleBitFromName(name);
 			if (bit != -1)
 				hit = status->isKindOf(bit);
 

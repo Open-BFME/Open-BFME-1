@@ -90,6 +90,7 @@ public:
 #include "Common/DynamicAudioEventInfo.h"
 #include "Common/AudioSettings.h"
 #include "Common/BitFlagsIO.h"
+template Int BitFlags<10>::getSingleBitFromName(const char *);
 #include "Common/BuildAssistant.h"
 #include "Common/ClientUpdateModule.h"
 #include "Common/DrawModule.h"
@@ -5537,3 +5538,19 @@ void parseFireEffect( INI *ini )
 	if( loadType != INI_LOAD_CREATE_OVERRIDES && loadType != INI_LOAD_BFME_TYPE_4 )
 		s_fireEffectSaved = s_fireEffectActive;
 }
+
+// Verified retail name table at VA 0x012A687C.
+template<> const char *BitFlags<10>::s_bitNameList[] =
+{
+	"TAUNT",
+	"CHEER",
+	"HERO_CHEER",
+	"POINT",
+	"FEAR",
+	"UNCONTROLLABLE_FEAR",
+	"TERROR",
+	"DOOM",
+	"QUARRELSOME",
+	"ALERT",
+	NULL
+};
