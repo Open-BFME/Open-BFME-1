@@ -377,3 +377,4 @@ game/GameEngine/Source/GameClient/GUI/CrossFadeImage_draw.cpp|param|drawImage|x1
 game/GameEngine/Source/GameClient/GUI/CrossFadeImage_draw.cpp|param|drawImage|y1,endY,gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngine/Source/GameLogic/AI/AIGroup_setWeaponLockForGroup.cpp|member||m_bfmeFlag532,m_shareTimers,gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngine/Source/GameLogic/AI/AIGroup_setWeaponLockForGroup.cpp|member||m_18,m_whenWeCanFireAgain,gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIAttackSwoopThenIdleStateMachineRva002BC870.cpp|type||Rva002BC870AI,AIUpdateInterface,gpt-6-sol+grok,agreed,2026-10-05
