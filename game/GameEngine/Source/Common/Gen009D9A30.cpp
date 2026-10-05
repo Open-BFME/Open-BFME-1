@@ -1,7 +1,6 @@
 // cl: /DNDEBUG /MD /O2
 // Clean C++ conversion of the AsciiString formatter at retail RVA 0x009D9A30.
 extern "C" void __cdecl bfmeAppend(void *stream, const char *format, ...);
-extern const char g_bfmeAsciiStringFormat[];
 extern const char g_bfmeEmptyAscii[];
 
 struct BfmeAsciiString
@@ -24,7 +23,7 @@ Gen009D9A30 *Gen009D9A30::bfmeEmit(BfmeAsciiString *value)
 	if (!m_pending)
 		bfmeAppend(this, 0);
 	const char *text = value->storage ? value->storage + 8 : g_bfmeEmptyAscii;
-	bfmeAppend(this, g_bfmeAsciiStringFormat, text);
+	bfmeAppend(this, "'%s' [ascii]\n", text);
 	m_pending = false;
 	return this;
 }

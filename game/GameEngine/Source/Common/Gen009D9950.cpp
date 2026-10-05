@@ -1,7 +1,6 @@
 // cl: /DNDEBUG /MD /O2
 // Clean C++ conversion of the integer RGBA-color formatter at retail RVA 0x009D9950.
 extern "C" void __cdecl bfmeAppend(void *stream, const char *format, ...);
-extern const char g_bfmeRGBAColorIntFormat[];
 
 struct BfmeRGBAColorInt
 {
@@ -25,7 +24,7 @@ Gen009D9950 *Gen009D9950::bfmeEmit(const BfmeRGBAColorInt *value)
 {
 	if (!m_pending)
 		bfmeAppend(this, 0);
-	bfmeAppend(this, g_bfmeRGBAColorIntFormat,
+	bfmeAppend(this, "r:%i,g:%i,b:%i,a:%i [irgba]\n",
 		value->r, value->g, value->b, value->a);
 	m_pending = false;
 	return this;

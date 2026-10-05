@@ -1,7 +1,6 @@
 // cl: /DNDEBUG /MD /O2
 // Clean C++ conversion of the real RGBA-color formatter at retail RVA 0x009D9900.
 extern "C" void __cdecl bfmeAppend(void *stream, const char *format, ...);
-extern const char g_bfmeRGBAColorRealFormat[];
 
 struct BfmeRGBAColorReal
 {
@@ -25,7 +24,7 @@ Gen009D9900 *Gen009D9900::bfmeEmit(const BfmeRGBAColorReal *value)
 {
 	if (!m_pending)
 		bfmeAppend(this, 0);
-	bfmeAppend(this, g_bfmeRGBAColorRealFormat,
+	bfmeAppend(this, "r:%1.3f,g:%1.3f,b:%1.3f,a:%1.3f [rgba]\n",
 		value->r, value->g, value->b, value->a);
 	m_pending = false;
 	return this;

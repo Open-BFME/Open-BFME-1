@@ -1,7 +1,6 @@
 // cl: /DNDEBUG /MD /O2
 // Clean C++ conversion of the 2D-region formatter at retail RVA 0x009D97E0.
 extern "C" void __cdecl bfmeAppend(void *stream, const char *format, ...);
-extern const char g_bfmeRegion2DFormat[];
 
 struct BfmeRegion2D
 {
@@ -25,7 +24,7 @@ Gen009D97E0 *Gen009D97E0::bfmeEmit(const BfmeRegion2D *value)
 {
 	if (!m_pending)
 		bfmeAppend(this, 0);
-	bfmeAppend(this, g_bfmeRegion2DFormat,
+	bfmeAppend(this, "x:%1.6f,y:%1.6f to x:%1.6f,y:%1.6f [region2d]\n",
 		value->x_min, value->y_min, value->x_max, value->y_max);
 	m_pending = false;
 	return this;
