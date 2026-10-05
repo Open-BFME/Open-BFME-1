@@ -785,3 +785,9 @@ game/GameEngine/Source/Common/Rva0029BE60Sweep.cpp|type||Rva0029BE60Predicate,6e
 game/GameEngine/Source/Common/Rva0029BE60Sweep.cpp|type||Rva0029BE60,dc4fac70b83ea57d13a565b5,grok,20261005184103-dba032,2026-10-05
 game/GameEngine/Source/Common/Rva002CFC80TinyBodies.cpp|type||Rva002ED550,265372f4b88ff7b75f4df2b1,gpt-6-sol,20261005184144-a4a462,2026-10-05
 game/GameEngine/Source/Common/Rva002CFC80TinyBodies.cpp|type||Rva002ED550,265372f4b88ff7b75f4df2b1,grok,20261005191527-ca10de,2026-10-05
+game/GameEngine/Source/Common/Rva003B2000Assign.cpp|member||m_04,2b484a077a93a828b671de86,grok,20261005190752-c4cf0d,2026-10-05
+game/GameEngine/Source/Common/Rva003B2000Assign.cpp|member||m_08,5dd29bc4382a2609ee454c28,grok,20261005190752-c4cf0d,2026-10-05
+game/GameEngine/Source/Common/Rva003B2000Assign.cpp|member||m_14,ec1e409fc2fa53a78ed5d937,grok,20261005190752-c4cf0d,2026-10-05
+game/GameEngine/Source/Common/Rva003B2000Assign.cpp|member||m_18,866c67a5e20ca67ed7fcc38a,grok,20261005190752-c4cf0d,2026-10-05
+game/GameEngine/Source/Common/Rva003B2000Assign.cpp|member||m_1C,130784154e90a48fc00cd867,grok,20261005190752-c4cf0d,2026-10-05
+game/GameEngine/Source/Common/Rva003B2000Assign.cpp|member||m_22,ca33e2515ede60be534fc00d,grok,20261005190752-c4cf0d,2026-10-05
