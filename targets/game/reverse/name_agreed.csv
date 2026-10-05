@@ -403,3 +403,5 @@ game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorModuleD
 game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorModuleDataCtorThunk.cpp|member||m_value0C,m_secondHeight,gpt-6-sol+grok,applied,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorModuleDataCtorThunk.cpp|member||m_value10,m_firstPercentIndent,gpt-6-sol+grok,applied,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorModuleDataCtorThunk.cpp|member||m_value14,m_secondPercentIndent,gpt-6-sol+grok,applied,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/EnragedBehaviorCtorThunk.cpp|member||m_f14,m_nextCallFrameAndPhase,gpt-6-sol+grok,applied,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/EnragedBehaviorCtorThunk.cpp|member||m_f18,m_indexInLogic,gpt-6-sol+grok,applied,2026-10-05

@@ -26,15 +26,15 @@ class UpdateModule : public PB_DeepBase, public EnragedBehaviorIface1,
 {
 public:
     UpdateModule(Thing *thing, const ModuleData *moduleData)
-        : PB_DeepBase(thing, moduleData), m_f14(0), m_f18(-1), m_f1c(-1) {}
+        : PB_DeepBase(thing, moduleData), m_nextCallFrameAndPhase(0), m_indexInLogic(-1), m_f1c(-1) {}
 
 protected:
     void setWakeFrame(Object *, UpdateSleepTime);
     Object *getObject() const { return m_object; }
 
 private:
-    unsigned int m_f14;
-    int m_f18;
+    unsigned int m_nextCallFrameAndPhase;
+    int m_indexInLogic;
     int m_f1c;
 };
 
