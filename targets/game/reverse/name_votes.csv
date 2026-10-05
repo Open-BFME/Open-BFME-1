@@ -449,3 +449,6 @@ game/GameEngine/Source/Common/BfmeConv930.cpp|local|StreakRendererClass::bfmeGo9
 game/GameEngine/Source/Common/System/DataChunkTableOfContents.cpp|local|compare|n,8c99861e12a1cbc6f5f4cff0,gpt-6-astra,20261005161649-0b2668,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1742.cpp|type||BfmeStrDataAQ,4cd95332fe42db0426b86453,gpt-6-astra,20261005161649-0df4b4,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1742.cpp|type||BfmeStrAQ,8f623dbc7fd2034bc26bc65b,gpt-6-astra,20261005161649-0df4b4,2026-10-05
+game/GameEngine/Source/Common/Audio/Rva006B1E60ProviderState.cpp|type||Rva006B1E60MutexGuard,538c6cd9c6d18c6ac69ef335,gpt-6-astra,20261005161649-59521f,2026-10-05
+game/GameEngine/Source/Common/Audio/Rva006B1E60ProviderState.cpp|type||Rva006B1E60Provider,a4fde499e8ef0d02c8c470e1,gpt-6-astra,20261005161649-59521f,2026-10-05
+game/GameEngine/Source/Common/Audio/Rva006B1E60ProviderState.cpp|type||Rva006B1E60Owner,abf80a994d5038eab2a95bf4,gpt-6-astra,20261005161649-59521f,2026-10-05
