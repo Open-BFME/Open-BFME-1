@@ -411,3 +411,7 @@ game/GameEngine/Source/Common/BfmeConv912.cpp|local|BfmeThing912C::bfmeGo912C|n,
 game/GameEngine/Source/Common/BfmeThreeHundredSixtyFive.cpp|member||m_bfmeVft,a72ab5e3deef2b66b8c4e7db,gpt-6-astra,20261005161655-bc745e,2026-10-05
 game/GameEngine/Source/Common/BfmeThreeHundredSixtyFive.cpp|member||m_bfmeSub,07f0af8870a0cccd57f3aaf2,gpt-6-astra,20261005161655-bc745e,2026-10-05
 game/GameEngine/Source/Common/BfmeThreeHundredSixtyFive.cpp|function|BfmeThingVH@|bfmeKillVH,a466031511b3d6139e5935a3,gpt-6-astra,20261005161655-bc745e,2026-10-05
+game/GameEngine/Source/Common/BfmeStateAY.cpp|type||BfmeStateAY,6bb348ae70da38fa4b012e38,gpt-6-astra,20261005161655-2195d7,2026-10-05
+game/GameEngine/Source/Common/BfmeStateAY.cpp|member||m_bfmeVfptrAY,fc2144929bdbaba81377c6c2,gpt-6-astra,20261005161655-2195d7,2026-10-05
+game/GameEngine/Source/Common/BfmeStateAY.cpp|member||m_bfmeFirstAY,9ca3276438f350cce9e35f7a,gpt-6-astra,20261005161655-2195d7,2026-10-05
+game/GameEngine/Source/Common/BfmeStateAY.cpp|member||m_bfmeSecondAY,8739ff1ad4788ed4ea3b6552,gpt-6-astra,20261005161655-2195d7,2026-10-05
