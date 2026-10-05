@@ -68,11 +68,11 @@ public:
 	unsigned char m_bfmeSlotGBA;
 	unsigned char m_bfmePadFourBA[0xf];
 	unsigned char m_bfmeSlotHBA[4];
-	unsigned char m_bfmeSlotIBA[4];
+	unsigned char m_sciences[4];
 	unsigned char m_bfmePadFiveBA[8];
 	unsigned char m_bfmeSlotJBA[4];
 	unsigned char m_bfmeSlotKBA[4];
-	unsigned char m_bfmeSlotLBA[4];
+	unsigned char m_upgradeMask[4];
 };
 
 void BfmeHostBA::bfmeSaveBA(Xfer *ag)
@@ -95,11 +95,11 @@ void BfmeHostBA::bfmeSaveBA(Xfer *ag)
 	if (info.m_bfmeLevelBA >= 2)
 	{
 		ag->bfmeWordBA(m_bfmeSlotJBA);
-		bfmeXferThreeBA(ag, m_bfmeSlotIBA);
+		bfmeXferThreeBA(ag, m_sciences);
 	}
 
 	if (info.m_bfmeLevelBA >= 3)
-		bfmeXferFourBA(ag, m_bfmeSlotLBA);
+		bfmeXferFourBA(ag, m_upgradeMask);
 
 	if (info.m_bfmeLevelBA >= 4)
 		ag->bfmeLateBA(m_bfmeSlotKBA);
