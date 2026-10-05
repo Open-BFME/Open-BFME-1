@@ -27,7 +27,7 @@ struct Region2D;
 #include "game/GameEngine/Source/Common/System/geometry.h"
 #define BFME_HAVE_COORD3D
 #define THING_TU_MEMBERS const Coord3D *getPosition() const { return &m_cachedPos; }
-#define OBJECT_TU_MEMBERS const GeometryInfo &getGeometryInfo() const { return *(const GeometryInfo *)&m_geometryInfo; } bool isUsingAirborneLocomotor() const;
+#define OBJECT_TU_MEMBERS bool isUsingAirborneLocomotor() const;
 #include "game/GameEngine/Source/GameLogic/Object/object.h"
 #undef THING_TU_MEMBERS
 #undef OBJECT_TU_MEMBERS
@@ -71,7 +71,7 @@ bool DozerAIUpdate::findGoodBuildOrRepairPosition(const Object *me,
 		ourPosition.z - theirPosition.z);
 	offset.Normalize();
 	// This scaler makes FindPositionAround bias towards our side
-	offset = offset * (target->getGeometryInfo().getMajorRadius() / 2);
+	offset = offset * (reinterpret_cast<const GeometryInfo *>(&target->m_geometryInfo)->getMajorRadius() / 2);
 
 	workingPosition.x += offset.X;
 	workingPosition.y += offset.Y;
