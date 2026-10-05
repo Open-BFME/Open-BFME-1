@@ -53,7 +53,9 @@ class PartitionManager;
 extern PartitionManager *ThePartitionManager;
 struct BfmePointFC;
 class BfmeTaintManager {public: void bfmeApplyCircleWorld(const BfmePointFC*,float,int,bool);};
-extern BfmeTaintManager *TheTaintManager;
+class TaintManager;
+extern TaintManager *TheTaintManager;
+
 class GameLogic {public: void destroyObject(Object*);};
 extern GameLogic *TheGameLogic;
 class TerrainArea001ACCC0 {
@@ -62,7 +64,7 @@ public:
  void clearOne001AC3D0(const void *position,int radius);
 };
 void TerrainArea001ACCC0::clear(const void *position,int radius) {
- if(!position||!TheTaintManager||!ThePartitionManager||!TheGameLogic)return;
+ if(!position||!(*reinterpret_cast<BfmeTaintManager **>(&TheTaintManager))||!ThePartitionManager||!TheGameLogic)return;
  BfmeWideResult iterator=((BfmeWideForwardC*)ThePartitionManager)->bfmeForwardWideC((int)position,radius,0,
   (int)&PartitionFilterAcceptByKindOf(BitFlags<192>(BitFlags<192>::kInit,151),KINDOFMASK_NONE),1);
  Object *object;
@@ -99,8 +101,8 @@ public:
 };
 extern TerrainVisual001AC3D0 *TheTerrainVisual;
 void TerrainArea001ACCC0::clearOne001AC3D0(const void *position,int radius) {
- if(!position||!TheTaintManager||!ThePartitionManager||!TheGameLogic)return;
- TheTaintManager->bfmeApplyCircleWorld((const BfmePointFC*)position,*(float*)&radius,128,true);
+ if(!position||!(*reinterpret_cast<BfmeTaintManager **>(&TheTaintManager))||!ThePartitionManager||!TheGameLogic)return;
+ (*reinterpret_cast<BfmeTaintManager **>(&TheTaintManager))->bfmeApplyCircleWorld((const BfmePointFC*)position,*(float*)&radius,128,true);
  BfmeWideResult iterator=((BfmeWideForwardC*)ThePartitionManager)->bfmeForwardWideC((int)position,radius,0,
   (int)&PartitionFilterAcceptByKindOf(BitFlags<192>(BitFlags<192>::kInit,173),KINDOFMASK_NONE),1);
  Object *object;

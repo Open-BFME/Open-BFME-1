@@ -17,7 +17,9 @@ public:
 	void bfmeSet(int *focus);
 };
 
-extern BfmeWindowManager *g_bfmeWindowManager;
+class CollisionManager;
+extern CollisionManager *TheCollisionManager;
+
 
 class Gen_0028B810
 {
@@ -34,11 +36,11 @@ private:
 int Gen_0028B810::bfmeUpdate(void)
 {
 	if (m_bfmeActive) {
-		if (g_bfmeWindowManager != 0) {
+		if ((*reinterpret_cast<BfmeWindowManager **>(&TheCollisionManager)) != 0) {
 			BfmeWindowNode *node = *reinterpret_cast<BfmeWindowNode **>(
 				reinterpret_cast<char *>(this) - 8);
 			int *focus = node != 0 ? &node->m_bfmeFocus : 0;
-			g_bfmeWindowManager->bfmeClear(focus);
+			(*reinterpret_cast<BfmeWindowManager **>(&TheCollisionManager))->bfmeClear(focus);
 		}
 
 		m_bfmeActive = 0;
@@ -48,11 +50,11 @@ int Gen_0028B810::bfmeUpdate(void)
 		return result->m_bfmeValue;
 	}
 
-	if (!m_bfmePending && g_bfmeWindowManager != 0) {
+	if (!m_bfmePending && (*reinterpret_cast<BfmeWindowManager **>(&TheCollisionManager)) != 0) {
 		BfmeWindowNode *node = *reinterpret_cast<BfmeWindowNode **>(
 			reinterpret_cast<char *>(this) - 8);
 		int *focus = node != 0 ? &node->m_bfmeFocus : 0;
-		g_bfmeWindowManager->bfmeSet(focus);
+		(*reinterpret_cast<BfmeWindowManager **>(&TheCollisionManager))->bfmeSet(focus);
 	}
 
 	return 1;

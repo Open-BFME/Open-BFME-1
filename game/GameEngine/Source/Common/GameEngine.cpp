@@ -945,3 +945,6 @@ AerialPathfinder *TheAerialPathfinder = 0;
 
 class LightPointSystem;
 LightPointSystem *TheLightPointSystem = 0;
+
+class TaintManager;
+TaintManager *TheTaintManager = 0;

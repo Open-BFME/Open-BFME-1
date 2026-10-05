@@ -9,7 +9,9 @@ typedef int Int;
 class PartitionManager;
 class RefCountClass;
 
-extern PartitionManager *TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 
 struct ShrubRecordMeshes
 {
@@ -35,5 +37,5 @@ private:
 void W3DShrubBuffer::stampShroudVisible(void)
 {
 	for (Int i = 0; i < m_count; ++i)
-		m_entries[i].m_visible = !TheShroudManager;
+		m_entries[i].m_visible = !(*reinterpret_cast<PartitionManager **>(&TheShroudManager));
 }

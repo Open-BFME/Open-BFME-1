@@ -186,7 +186,9 @@ extern AttributeModifierDefinitionStore *TheAttributeModifierDefinitionStore;
 // 0x00880E60 forwards through this+0xC to the matched world-point query
 // at 0x008814A0. Its callee reads x/y and returns int; the wrapper keeps ret4.
 class BfmeTaintManager {public: int queryAt00880E60(const Coord3D *);};
-extern BfmeTaintManager *TheTaintManager;
+class TaintManager;
+extern TaintManager *TheTaintManager;
+
 class FXList {public: static void doFXObj(const FXList *,const Object *,const Object *);};
 class AuraUpgradeInterface2803 {public: virtual bool slot00();};
 enum UpdateSleepTime {UPDATE_SLEEP_FOREVER_2803=0x3fffffff};
@@ -252,9 +254,9 @@ UpdateSleepTime AttributeModifierAuraUpdate::update() {
   }
   if(special && (other->getLayer()<17 || other->getLayer()>64)) continue;
   if(field2803<unsigned>(data,0x94)&2) {
-   if(TheTaintManager->queryAt00880E60(&field2803<Coord3D>(other,0x38))!=2) continue;
+   if((*reinterpret_cast<BfmeTaintManager **>(&TheTaintManager))->queryAt00880E60(&field2803<Coord3D>(other,0x38))!=2) continue;
   } else if(field2803<unsigned>(data,0x94)&4) {
-   if(TheTaintManager->queryAt00880E60(&field2803<Coord3D>(other,0x38))!=1) continue;
+   if((*reinterpret_cast<BfmeTaintManager **>(&TheTaintManager))->queryAt00880E60(&field2803<Coord3D>(other,0x38))!=1) continue;
   }
   if(endFrame && selected!=7) {
    Rva003679B0 *pool=reinterpret_cast<Rva003679B0 *>(other->findAttributeModifierPoolUpdate());

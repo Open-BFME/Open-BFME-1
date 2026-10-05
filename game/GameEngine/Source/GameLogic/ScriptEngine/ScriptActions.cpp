@@ -4390,7 +4390,9 @@ void ScriptActions::doRevealMapEntire(const AsciiString& playerName)
 	}
 }
 
-extern PartitionManager *TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 
 void ScriptActions::doRevealMapEntirePermanently( Bool reveal, const AsciiString& playerName )
 {
@@ -4404,9 +4406,9 @@ void ScriptActions::doRevealMapEntirePermanently( Bool reveal, const AsciiString
 			if (!*reinterpret_cast<void **>(reinterpret_cast<unsigned char *>(player) + 0x2c))
 			{
 				if (reveal)
-					TheShroudManager->revealMapForPlayerPermanently(i);
+					(*reinterpret_cast<PartitionManager **>(&(*reinterpret_cast<PartitionManager **>(&TheShroudManager))))->revealMapForPlayerPermanently(i);
 				else
-					TheShroudManager->undoRevealMapForPlayerPermanently(i);
+					(*reinterpret_cast<PartitionManager **>(&(*reinterpret_cast<PartitionManager **>(&TheShroudManager))))->undoRevealMapForPlayerPermanently(i);
 			}
 		}
 		return;
@@ -4417,9 +4419,9 @@ void ScriptActions::doRevealMapEntirePermanently( Bool reveal, const AsciiString
 		if (player)
 		{
 			if (reveal)
-				TheShroudManager->revealMapForPlayerPermanently(player->getPlayerIndex());
+				(*reinterpret_cast<PartitionManager **>(&(*reinterpret_cast<PartitionManager **>(&TheShroudManager))))->revealMapForPlayerPermanently(player->getPlayerIndex());
 			else
-				TheShroudManager->undoRevealMapForPlayerPermanently(player->getPlayerIndex());
+				(*reinterpret_cast<PartitionManager **>(&(*reinterpret_cast<PartitionManager **>(&TheShroudManager))))->undoRevealMapForPlayerPermanently(player->getPlayerIndex());
 		}
 	} while (mask);
 }
@@ -4438,7 +4440,7 @@ void ScriptActions::doShroudMapEntire(const AsciiString& playerName)
 			Player *player = ThePlayerList->getNthPlayer(i);
 			if (!*reinterpret_cast<void **>(reinterpret_cast<unsigned char *>(player) + 0x2c))
 			{
-				TheShroudManager->shroudMapForPlayer(i);
+				(*reinterpret_cast<PartitionManager **>(&(*reinterpret_cast<PartitionManager **>(&TheShroudManager))))->shroudMapForPlayer(i);
 			}
 		}
 		return;
@@ -4448,7 +4450,7 @@ void ScriptActions::doShroudMapEntire(const AsciiString& playerName)
 		Player *player = ThePlayerList->getEachPlayerFromMask(mask);
 		if (player)
 		{
-			TheShroudManager->shroudMapForPlayer(player->getPlayerIndex());
+			(*reinterpret_cast<PartitionManager **>(&(*reinterpret_cast<PartitionManager **>(&TheShroudManager))))->shroudMapForPlayer(player->getPlayerIndex());
 		}
 	} while (mask);
 }
@@ -6469,7 +6471,7 @@ void ScriptActions::doWaterChangeHeightOverTime( const AsciiString& waterName, R
 // tag "TheShroudManager", while ThePartitionManager is constructed just before
 // it at 0x012ED5B8.  The shroud read below reaches the former; every other
 // ThePartitionManager use in this file is a real partition call and is correct.
-extern PartitionManager *TheShroudManager;				///< retail 0x012ED5BC
+				///< retail 0x012ED5BC
 
 //-------------------------------------------------------------------------------------------------
 /** doBorderSwitch */
@@ -6494,14 +6496,14 @@ void ScriptActions::doBorderSwitch(Int borderToUse)
 
 	if (observerPlayerIndex != -1)
 	{
-		TheShroudManager->undoRevealMapForPlayerPermanently( observerPlayerIndex );
+		(*reinterpret_cast<PartitionManager **>(&(*reinterpret_cast<PartitionManager **>(&TheShroudManager))))->undoRevealMapForPlayerPermanently( observerPlayerIndex );
 	}
 
 	TheTerrainLogic->setActiveBoundary(borderToUse);
 
 	if (observerPlayerIndex != -1)
 	{
-		TheShroudManager->revealMapForPlayerPermanently( observerPlayerIndex );
+		(*reinterpret_cast<PartitionManager **>(&(*reinterpret_cast<PartitionManager **>(&TheShroudManager))))->revealMapForPlayerPermanently( observerPlayerIndex );
 	}
 	// BFME stops here: the retail body @0x2EFC50 returns straight after the
 	// reveal call, with no refreshShroudForLocalPlayer().

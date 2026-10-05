@@ -256,3 +256,5 @@ void RecorderClass::writeArgument(GameMessageArgumentDataType type, GameMessageA
         fwrite(&arg.wChar, sizeof(arg.wChar), 1, m_file);
     }
 }
+
+RecorderClass *TheRecorder = 0;

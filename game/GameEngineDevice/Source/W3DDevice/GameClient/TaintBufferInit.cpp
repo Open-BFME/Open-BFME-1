@@ -118,7 +118,9 @@ public:
 	void m(void);
 };
 
-extern Gen_00880e30 *TheTaintManager;
+class TaintManager;
+extern TaintManager *TheTaintManager;
+
 
 class TaintBuffer
 {
@@ -219,6 +221,6 @@ void TaintBuffer::init(WorldHeightMap *map, Real worldCellSizeX,
 		}
 
 	if (TheWritableGlobalData && TheWritableGlobalData->m_taintOn &&
-		TheTaintManager)
-		TheTaintManager->m();
+		(*reinterpret_cast<Gen_00880e30 **>(&TheTaintManager)))
+		(*reinterpret_cast<Gen_00880e30 **>(&TheTaintManager))->m();
 }

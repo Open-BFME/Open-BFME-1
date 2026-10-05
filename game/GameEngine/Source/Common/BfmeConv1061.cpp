@@ -34,7 +34,9 @@ public:
 	void bfmeTail1061(void);
 };
 
-extern BfmeT1061 *g_bfmeT1061;
+class GameEngine;
+extern GameEngine *TheGameEngine;
+
 
 class BfmeA1061
 {
@@ -49,7 +51,7 @@ void BfmeA1061::bfmeGo1061A(void)
 	m_bfmeSub.bfmeSlot1061S_1();
 	if (g_bfmeG1061)
 		g_bfmeG1061->bfmeSlot1061G_13();
-	g_bfmeT1061->bfmeTail1061();
+	(*reinterpret_cast<BfmeT1061 **>(&TheGameEngine))->bfmeTail1061();
 }
 
 class BfmeS1061

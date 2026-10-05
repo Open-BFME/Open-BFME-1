@@ -18448,5 +18448,15 @@
   "after_sha256": "7bb9713c1741e61f3a0ab0aab2bd058c97c2be6c3556d8e3ce906d251fd3cfd5",
   "evidence": "targets/game/reverse/identity_evidence/0022f7e0-bank-store-macro.md",
   "reason": "False cross-file pairing: the bank is the 0x0022F7E0 GarrisonContainModuleData constructor, while the new 0x00415AA0 StringBase<char> updater is a separate body. The Garrison constructor remains in GarrisonContainModuleDataCtorThunk.cpp; neither identity was renamed."
+ },
+ {
+  "old_path": "game/Libraries/Source/EA/Apt/DispatchLiteral008C5840.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/DispatchLiteral008C5840.cpp",
+  "old_name": "Prefix012D5A08",
+  "new_name": "rva012D5A08Prefix",
+  "before_sha256": "5e7ba60761a35fb6df4a57e4af646eb03f1bc212cd3a6b934ac1f12a1f1eefa9",
+  "after_sha256": "7477ea667163cd4974746533d536bd14c0c665b0d4b6e30c61b0bc531a409f23",
+  "evidence": "targets/game/reverse/identity_evidence/012d5a08-pointer-global.md",
+  "reason": "respelled to the datum Bfme5PrefixCheck8C5680.cpp defines at 0x012D5A08"
  }
 ]

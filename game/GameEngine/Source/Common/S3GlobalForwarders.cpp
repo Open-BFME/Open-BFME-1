@@ -22,7 +22,11 @@ public:
 	void bfmeCall_008f73f0(void);					// retail 0x008F73F0
 };
 
-extern BfmeGlobal_012ed5bc *TheBfmeGlobal_012ed5bc;				// 0x012ED5BC
+class RecorderClass;
+extern RecorderClass *TheRecorder;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+				// 0x012ED5BC
 
 class BfmeGlobal_012ed62c
 {
@@ -30,7 +34,7 @@ public:
 	void bfmeCall_0004a7a5(void);					// retail 0x0004A7A5
 };
 
-extern BfmeGlobal_012ed62c *TheBfmeGlobal_012ed62c;				// 0x012ED62C
+				// 0x012ED62C
 
 class BfmeGlobal_012ed668
 {
@@ -147,7 +151,7 @@ extern BfmeGlobal_012f7fe0 *TheBfmeGlobal_012f7fe0;				// 0x012F7FE0
 // ?Gen_0006c170@@YAXXZ
 void Gen_0006c170(void)
 {
-	TheBfmeGlobal_012ed62c->bfmeCall_0004a7a5();
+	(*reinterpret_cast<BfmeGlobal_012ed62c **>(&TheRecorder))->bfmeCall_0004a7a5();
 }
 
 // ?Gen_002ed8c0@@YAXXZ
@@ -183,7 +187,7 @@ void Gen_002f05d0(void)
 // ?Gen_002f0dc0@@YAXXZ
 void Gen_002f0dc0(void)
 {
-	TheBfmeGlobal_012ed5bc->bfmeCall_008f73f0();
+	(*reinterpret_cast<BfmeGlobal_012ed5bc **>(&TheShroudManager))->bfmeCall_008f73f0();
 }
 
 // ?Gen_002f0f50@@YAXXZ

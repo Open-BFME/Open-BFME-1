@@ -65,7 +65,9 @@ public:
 	CellShroudStatus getShroudStatusForPlayer( Int playerIndex, const Coord3D *position ) const;
 };
 
-extern PartitionManager *TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 
 class TacticalView
 {
@@ -280,7 +282,7 @@ void InGameUI::updateAndDrawWorldAnimations()
 		}
 
 		Int playerIndex = ThePlayerList->m_localPlayer->m_playerIndex;
-		if( TheShroudManager->getShroudStatusForPlayer( playerIndex, &wad->m_worldPos ) != CELLSHROUD_CLEAR )
+		if( (*reinterpret_cast<PartitionManager **>(&TheShroudManager))->getShroudStatusForPlayer( playerIndex, &wad->m_worldPos ) != CELLSHROUD_CLEAR )
 		{
 			it = it->m_next;
 			continue;

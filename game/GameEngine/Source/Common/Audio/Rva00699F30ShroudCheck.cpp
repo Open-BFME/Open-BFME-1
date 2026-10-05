@@ -38,7 +38,9 @@ class PartitionManager
 public:
     CellShroudStatus getShroudStatusForPlayer(int playerIndex, const Coord3D *pos) const;
 };
-extern PartitionManager *TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 
 struct Rva002EE330Player
 {
@@ -71,7 +73,7 @@ bool __stdcall Rva00699F30ShroudCheck(AudioEventRTS *event)
                 Rva002EE330PlayerList *players = (Rva002EE330PlayerList *)ThePlayerList;
                 if (players)
                 {
-                    PartitionManager *shroud = TheShroudManager;
+                    PartitionManager *shroud = (*reinterpret_cast<PartitionManager **>(&TheShroudManager));
                     if (shroud)
                     {
                         int playerIndex = players->m_localPlayer->m_playerIndex;

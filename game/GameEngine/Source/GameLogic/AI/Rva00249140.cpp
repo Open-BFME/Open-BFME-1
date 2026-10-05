@@ -144,7 +144,9 @@ public:
 	virtual void notify(BfmeRva9140AI *ai) = 0;
 };
 
-extern BfmeRva9140GlobalB *g_bfmeRva9140GlobalB;
+class MessageStream;
+extern MessageStream *TheMessageStream;
+
 
 // The global at retail 0x012F148C is InGameUI *TheInGameUI, defined once in
 // game/GameEngine/Source/GameClient/InGameUI.cpp.  Only the linked name may be
@@ -172,7 +174,7 @@ void Rva00249140::update(BfmeRva9140Member *member)
 		if (count == expected)
 		{
 			BfmeRva9140GlobalBResult *value =
-				g_bfmeRva9140GlobalB->fetch(0x3ec);
+				(*reinterpret_cast<BfmeRva9140GlobalB **>(&TheMessageStream))->fetch(0x3ec);
 			value->consume(member->m_index);
 			((BfmeRva9140GlobalC *)TheInGameUI)->notify(ai);
 		}

@@ -325,7 +325,9 @@ struct Renderer0040F780 {
  virtual void renderer0f();
  virtual void update();
 };
-extern Renderer0040F780 *RendererGlobal0040F780;
+class GameEngine;
+extern GameEngine *TheGameEngine;
+
 struct KeyEvent0040F780 {unsigned char type,byte01,flags,bytes03[5];};
 struct Keyboard0040F780:MovieControl0040F780 {char bytes04[8];KeyEvent0040F780 *first,*last;};
 class Keyboard;
@@ -449,7 +451,7 @@ bool MovieOpen0040E3B0::play0040F780(AsciiString name,bool allowSkip,int flags) 
     ((BfmeObjDC*)this)->bfmeGoDC();
     render(true);
     ((MovieControl0040F780*)Transitions0040E3B0)->update();
-    RendererGlobal0040F780->update();
+    (*reinterpret_cast<Renderer0040F780 **>(&TheGameEngine))->update();
     if(alternateAudio) {((Audio0040F780 *)TheAudio)->update();alternateAudio=false;}
     else alternateAudio=true;
     setFPMode();

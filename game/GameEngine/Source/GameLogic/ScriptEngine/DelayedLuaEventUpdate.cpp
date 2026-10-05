@@ -97,7 +97,9 @@ public:
 	BfmeWideResult bfmeForwardWideC(int, int, int, int, int);
 };
 
-extern BfmeWideForwardC *ThePartitionManager;
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
+
 
 class GameLogic
 {
@@ -162,7 +164,7 @@ UpdateSleepTime DelayedLuaEventUpdate::update()
 		relationshipFlags |= 1;
 
 	BfmeWideResult iterator =
-		ThePartitionManager->bfmeForwardWideC(
+		(*reinterpret_cast<BfmeWideForwardC **>(&ThePartitionManager))->bfmeForwardWideC(
 			(int)&object->m_position, m_radius, 0,
 			(int)PartitionFilterRelationship(object, relationshipFlags, false).link(
 				Rva0025ED50RootFilter().link(

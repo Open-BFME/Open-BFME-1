@@ -143,7 +143,9 @@ public:
 	BfmeWideResult bfmeForwardWideC(int, int, int, int, int);
 };
 
-extern BfmeWideForwardC *ThePartitionManager;
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
+
 
 // ?ObjectBroadcastEventToUnits@@YAHPAUlua_State@@@Z
 int ObjectBroadcastEventToUnits(lua_State *state)
@@ -184,7 +186,7 @@ int ObjectBroadcastEventToUnits(lua_State *state)
 	Rva001DCBB0Filter filter(object, 0);
 	int radiusBits = *(int *)&radius;
 	BfmeWideResult iterator =
-		((BfmeWideForwardC *)ThePartitionManager)->bfmeForwardWideC(
+		((BfmeWideForwardC *)(*reinterpret_cast<BfmeWideForwardC **>(&ThePartitionManager)))->bfmeForwardWideC(
 			(int)((char *)object + 0x38), radiusBits, 1,
 			(int)&filter, 1);
 

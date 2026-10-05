@@ -70,7 +70,9 @@ struct BfmeCfgUKD
 	float m_bfmeRate;
 };
 
-extern BfmeCfgUKD *g_bfmeCfgUKD;
+class GameEngine;
+extern GameEngine *TheGameEngine;
+
 
 class BfmeThingUKD
 {
@@ -85,7 +87,7 @@ public:
 
 int BfmeThingUKD::bfmeGoUKD()
 {
-	if (g_bfmeCfgUKD->m_bfmeMode == 1)
+	if ((*reinterpret_cast<BfmeCfgUKD **>(&TheGameEngine))->m_bfmeMode == 1)
 		m_bfmeAcc = m_bfmeBase;
-	return (int)(g_bfmeCfgUKD->m_bfmeRate * m_bfmeStep + m_bfmeAcc);
+	return (int)((*reinterpret_cast<BfmeCfgUKD **>(&TheGameEngine))->m_bfmeRate * m_bfmeStep + m_bfmeAcc);
 }

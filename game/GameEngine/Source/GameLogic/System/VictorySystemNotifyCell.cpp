@@ -89,7 +89,9 @@ public:
 		Int filter, Int sortMode);
 };
 
-extern BfmeWideForwardC *ThePartitionManager;
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
+
 
 struct BfmeVec1268
 {
@@ -117,7 +119,7 @@ void VictorySystem::bfmeNotifyCell(UnsignedInt playerIndex, BfmeVec1268 *pos)
 		return;
 
 	PlayerFilter002A1780 filter(ThePlayerList->getNthPlayer(playerIndex));
-	BfmeWideResult result = ThePartitionManager->bfmeForwardWideC(
+	BfmeWideResult result = (*reinterpret_cast<BfmeWideForwardC **>(&ThePartitionManager))->bfmeForwardWideC(
 		(Int)pos, m_field1c, 1, (Int)&filter, 0);
 	BfmeWideResultItem *end = result.m_value->m_items.end();
 	BfmeWideResultItem *cursor = result.m_value->m_cursor;

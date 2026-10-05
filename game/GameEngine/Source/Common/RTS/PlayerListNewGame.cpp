@@ -84,7 +84,9 @@ void d_001072f0();
 class ShroudManager { public: __declspec(noinline) void m_008F7380(int,void (*)(int,int,int)); };
 class Gen_012ED5C0 { public: void m_00880E10(void (*)()); };
 extern ShroudManager *TheShroudManager;
-extern Gen_012ED5C0 *g_012ED5C0;
+class TaintManager;
+extern TaintManager *TheTaintManager;
+
 struct T_008f8c30 { void m(int,void (*)(int,int,int)); };
 __declspec(noinline) void ShroudManager::m_008F7380(int tag,void (*refresh)(int,int,int))
 { ((T_008f8c30*)*(void**)((char*)this+12))->m(tag,refresh); }
@@ -125,7 +127,7 @@ void PlayerList::setLocalPlayer(Player *player)
     }
     if (TheShroudManager)
         TheShroudManager->m_008F7380(player->getPlayerIndex(), d_001072a0);
-    if (g_012ED5C0) g_012ED5C0->m_00880E10(d_001072f0);
+    if ((*reinterpret_cast<Gen_012ED5C0 **>(&TheTaintManager))) (*reinterpret_cast<Gen_012ED5C0 **>(&TheTaintManager))->m_00880E10(d_001072f0);
 }
 
 // ?newGame@PlayerList@@UAEXXZ

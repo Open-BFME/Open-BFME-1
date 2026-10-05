@@ -147,7 +147,9 @@ public:
 	BfmeWideResult bfmeForwardWideC(int, int, int, int, int);
 };
 
-extern BfmeWideForwardC *ThePartitionManager;
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
+
 
 // ?ObjectBroadcastEventToAllies@@YAHPAUlua_State@@@Z
 int ObjectBroadcastEventToAllies(lua_State *state)
@@ -188,7 +190,7 @@ int ObjectBroadcastEventToAllies(lua_State *state)
 	PartitionFilterRelationship relationship(object, 4, false);
 	int radiusBits = *(int *)&radius;
 	BfmeWideResult iterator =
-		((BfmeWideForwardC *)ThePartitionManager)->bfmeForwardWideC(
+		((BfmeWideForwardC *)(*reinterpret_cast<BfmeWideForwardC **>(&ThePartitionManager)))->bfmeForwardWideC(
 			(int)((char *)object + 0x38), radiusBits, 1,
 			(int)&relationship, 1);
 

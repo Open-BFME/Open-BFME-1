@@ -139,9 +139,9 @@ static __forceinline const char *rva0010f820String(const char *const *slot)
 // route code slots also consumed by matched map-path code.
 extern const char *PORTABLE_MAPS;
 extern const char *PORTABLE_USER_MAPS;
-const char *rva0010f820MapCode = "M";
-const char *rva0010f820UserCode = "U";
-const char *rva0010f820FallbackCode = "X";
+extern const char *rva0010e580MapsCode;
+extern const char *rva0010e580UserCode;
+extern const char *rva0010e580FallbackCode;
 
 AsciiString GameState::rva0010f820MapPathCode(const AsciiString &path) const
 {
@@ -165,7 +165,7 @@ AsciiString GameState::rva0010f820MapPathCode(const AsciiString &path) const
                  PORTABLE_MAPS,
                  PORTABLE_MAPS ? (int)strlen(PORTABLE_MAPS) : 0))
     {
-        const char *code = rva0010f820MapCode;
+        const char *code = rva0010e580MapsCode;
         ((StringBase<char> *)&prefix)->set(
             code, code ? (int)strlen(code) : 0);
 
@@ -179,14 +179,14 @@ AsciiString GameState::rva0010f820MapPathCode(const AsciiString &path) const
                  PORTABLE_USER_MAPS,
                  PORTABLE_USER_MAPS ? (int)strlen(PORTABLE_USER_MAPS) : 0))
     {
-        prefix = rva0010f820UserCode;
+        prefix = rva0010e580UserCode;
         const int tailOffset =
             (int)strlen(PORTABLE_USER_MAPS);
         ((StringBase<char> *)&prefix)->concat(path.str() + tailOffset);
     }
     else
     {
-        prefix = rva0010f820FallbackCode;
+        prefix = rva0010e580FallbackCode;
         ((StringBase<char> *)&prefix)->concat(
             *(const StringBase<char> *)&path);
     }

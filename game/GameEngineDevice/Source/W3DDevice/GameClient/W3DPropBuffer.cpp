@@ -357,13 +357,15 @@ void W3DPropBuffer::removePropsForConstruction(const Coord3D* pos, const Geometr
 // the engine-init tag block at 0x0038A1F0 stores 0x012ED5BC and then pushes the
 // tag "TheShroudManager", while ThePartitionManager is constructed just before it
 // at 0x012ED5B8.  Every shroud entry point in this tree reaches the former.
-extern PartitionManager *TheShroudManager;				///< retail 0x012ED5BC
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+				///< retail 0x012ED5BC
 
 void W3DPropBuffer::notifyShroudChanged()
 {
 	Int i;
 	for (i=0; i<m_numProps; i++) {
-		m_props[i].ss = TheShroudManager?OBJECTSHROUD_INVALID:OBJECTSHROUD_CLEAR;
+		m_props[i].ss = (*reinterpret_cast<PartitionManager **>(&TheShroudManager))?OBJECTSHROUD_INVALID:OBJECTSHROUD_CLEAR;
 	}
 }
 

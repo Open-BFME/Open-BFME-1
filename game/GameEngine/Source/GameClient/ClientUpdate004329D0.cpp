@@ -251,7 +251,9 @@ extern FadeView *FadeTacticalView;
 extern BfmeGlobal_012f076c *TheBfmeGlobal_012f076c;
 extern GameLogic *TheGameLogic;
 extern Players005999B0 *PlayerList005999B0;
-extern Engine007629F0 *EngineGlobal007629F0;
+class GameEngine;
+extern GameEngine *TheGameEngine;
+
 extern GhostObjectManager *TheGhostObjectManager;
 class AnimationSoundModuleManager;
 extern AnimationSoundModuleManager *TheAnimationSoundModuleManager;
@@ -325,7 +327,7 @@ void ClientUpdate004329D0::update() {
         || ((BfmeGameLogicPause *)TheGameLogic)->isGamePaused();
     int localPlayerIndex = PlayerList005999B0 ? ((PlayerList004329D0 *)PlayerList005999B0)->getLocal()->getIndex() : 0;
     freezeTime = freezeTime || (g_012B5348 == m_at000C);
-    bool shroud = at<int>(EngineGlobal007629F0,0x30)==1;
+    bool shroud = at<int>((*reinterpret_cast<Engine007629F0 **>(&TheGameEngine)),0x30)==1;
     if (!freezeTime && !at<bool>(TheGameLogic,0x11d)) {
         g_012B5348 = m_at000C;
         if (shroud) ((Dispatch004329D0 *)TheGhostObjectManager)->v18(0,0);
@@ -348,7 +350,7 @@ void ClientUpdate004329D0::update() {
             draw = next;
         }
         ((Dispatch004329D0 *)TheAnimationSoundModuleManager)->v14();
-        if (at<int>(EngineGlobal007629F0,0x30)==1)
+        if (at<int>((*reinterpret_cast<Engine007629F0 **>(&TheGameEngine)),0x30)==1)
             ((Rva0042F190Host *)this)->rva0042F190(((Logic004329D0 *)TheGameLogic)->getFrame(),true);
         else
             ((Rva0042F190Host *)this)->rva0042F190(((Logic004329D0 *)TheGameLogic)->getFrame(),false);

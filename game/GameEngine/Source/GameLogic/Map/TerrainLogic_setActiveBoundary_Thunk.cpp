@@ -136,7 +136,9 @@ public:
 extern TerrainLogic *TheTerrainLogic;
 extern Radar *TheRadar;
 extern PartitionManager *ThePartitionManager;
-extern PartitionManager *TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 // Retail's GameLogic singleton; only GameLogic.cpp defines it.  The local
 // GameLogic above is this TU's view of it.
 extern GameLogic *TheGameLogic;
@@ -176,7 +178,7 @@ void TerrainLogic::setActiveBoundary(Int newActiveBoundary)
 		ShroudRegionCall typed;
 	} shroudCall;
 	shroudCall.generic = &Gen_008f7390::m;
-	(TheShroudManager->*shroudCall.typed)(&region, 0.0f);
+	((*reinterpret_cast<PartitionManager **>(&TheShroudManager))->*shroudCall.typed)(&region, 0.0f);
 
 	Object *object = TheGameLogic->getFirstObject();
 	while (object != 0)

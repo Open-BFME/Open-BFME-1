@@ -70,7 +70,9 @@ struct BfmeWideResult {
 class BfmeWideForwardC {
 public: BfmeWideResult bfmeForwardWideC(int, float, int, int, int);
 };
-extern BfmeWideForwardC *ThePartitionManager;
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
+
 
 // ?ObjectCountNearbyEnemies@@YAHPAUlua_State@@@Z
 int ObjectCountNearbyEnemies(lua_State *state) {
@@ -82,7 +84,7 @@ int ObjectCountNearbyEnemies(lua_State *state) {
   int radius = (int)lua_tonumber(state, 2);
   Object *object = TheGameLogic->findObjectByID((int)objectID);
   if (object != 0) {
-    BfmeWideResult iterator = ThePartitionManager->bfmeForwardWideC(
+    BfmeWideResult iterator = (*reinterpret_cast<BfmeWideForwardC **>(&ThePartitionManager))->bfmeForwardWideC(
         (int)&object->m_position, (float)radius, 0,
         (int)PartitionFilterRelationship(object, 1, false).link(
             Rva0025ED50RootFilter().link(&Rva0025ED50ObjectFilter(object))),

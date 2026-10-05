@@ -221,9 +221,11 @@ private:
 };
 
 extern PartitionManager *ThePartitionManager;                             // 0x012ED5B8
-extern ShroudManager *TheShroudManager;                                   // 0x012ED5BC
-extern BfmeTaintManager *TheTaintManager;                                 // 0x012ED5C0
-extern CollisionManager *TheCollisionManager;                             // 0x012ED5C4
+ShroudManager *TheShroudManager = 0;                                   // 0x012ED5BC
+class TaintManager;
+extern TaintManager *TheTaintManager;
+                                 // 0x012ED5C0
+CollisionManager *TheCollisionManager = 0;                             // 0x012ED5C4
 extern GlobalData *TheWritableGlobalData;                                 // 0x012ED5C8
 class SidesList;
 extern SidesList *TheSidesList;                                      // 0x012EF428
@@ -258,7 +260,7 @@ void GameLogic::init(void)
 	TheShroudManager->rva008F7390(&extent, TheWritableGlobalData->m_partitionCellSize);
 	TheShroudManager->rva008F7370(TheWritableGlobalData->m_unlookPersistDuration);
 	ThePartitionManager->rva009F2650(7);
-	TheTaintManager->rva00880E20(&extent, TheWritableGlobalData->m_partitionCellSize);
+	(*reinterpret_cast<BfmeTaintManager **>(&TheTaintManager))->rva00880E20(&extent, TheWritableGlobalData->m_partitionCellSize);
 
 	TheGhostObjectManager = createGhostObjectManager();
 

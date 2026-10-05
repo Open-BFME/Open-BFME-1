@@ -81,7 +81,9 @@ extern ParticleSystemManager *TheParticleSystemManager;
 extern TerrainVisual *TheTerrainVisual;
 extern GhostObjectManager *TheGhostObjectManager;
 extern VictorySystem *TheVictorySystem;
-extern BfmeTaintManager *TheTaintManager;
+class TaintManager;
+extern TaintManager *TheTaintManager;
+
 extern WeatherSystem *TheWeatherSystem;
 void GameState::init()
 {
@@ -108,7 +110,7 @@ void GameState::init()
     addSnapshotBlock("CHUNK_TerrainVisual", TheTerrainVisual, SNAPSHOT_SAVELOAD);
     addSnapshotBlock("CHUNK_GhostObject", TheGhostObjectManager, SNAPSHOT_SAVELOAD);
     addSnapshotBlock("CHUNK_VictorySystem", TheVictorySystem, SNAPSHOT_SAVELOAD);
-    addSnapshotBlock("CHUNK_TaintManager", TheTaintManager, SNAPSHOT_SAVELOAD);
+    addSnapshotBlock("CHUNK_TaintManager", (*reinterpret_cast<BfmeTaintManager **>(&TheTaintManager)), SNAPSHOT_SAVELOAD);
     addSnapshotBlock("CHUNK_WeatherSystem", TheWeatherSystem, SNAPSHOT_SAVELOAD);
     addSnapshotBlock("CHUNK_TeamFactory", TheTeamFactory, SNAPSHOT_DEEPCRC_LOGICONLY);
     addSnapshotBlock("CHUNK_Players", ThePlayerList, SNAPSHOT_DEEPCRC_LOGICONLY);

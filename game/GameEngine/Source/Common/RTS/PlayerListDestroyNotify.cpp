@@ -78,7 +78,9 @@ public:
 // GameClient.cpp; only the pointee type may differ per TU, so it is forward
 // declared here and this TU's list view is applied at the use.
 class GameClient;
-extern PartitionManager *TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 extern ControlBar *TheControlBar;
 extern GameClient *TheGameClient;
 
@@ -88,8 +90,8 @@ void __stdcall destroyNotify(void *obj)
 {
 	if (!obj)
 		return;
-	if (TheShroudManager)
-		TheShroudManager->notify();
+	if ((*reinterpret_cast<PartitionManager **>(&TheShroudManager)))
+		(*reinterpret_cast<PartitionManager **>(&TheShroudManager))->notify();
 	TheControlBar->dropA(obj);
 	TheControlBar->dropB(obj);
 	BfmeLinkRV *n = ((ClientFrameSubsystem *)TheGameClient)->first();

@@ -9149,7 +9149,9 @@ void InGameUI::updateFloatingText( void )
 // tag "TheShroudManager", while ThePartitionManager is constructed just before
 // it at 0x012ED5B8.  The shroud read below reaches the former; every other
 // ThePartitionManager use in this file is a real partition call and is correct.
-extern PartitionManager *TheShroudManager;				///< retail 0x012ED5BC
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+				///< retail 0x012ED5BC
 
 //-------------------------------------------------------------------------------------------------
 /** Itterates through and draws each floating text */
@@ -9177,7 +9179,7 @@ void InGameUI::drawFloatingText( void )
 		// translate it's 3d pos into a 2d screen pos
 		if( !( TheTacticalView->*(*(RetailWorldToScreen *)&(*(void ***)TheTacticalView)[0x15C / sizeof( void *)]) )( &ftd->m_pos3D, &pos )
 			&& ftd->m_dString 
-			&& TheShroudManager->getShroudStatusForPlayer(playerNdx, &ftd->m_pos3D) == CELLSHROUD_CLEAR )
+			&& (*reinterpret_cast<PartitionManager **>(&TheShroudManager))->getShroudStatusForPlayer(playerNdx, &ftd->m_pos3D) == CELLSHROUD_CLEAR )
 		{
 			pos.y -= ftd->m_frameCount * floatingTextMoveUpSpeed / *reinterpret_cast<const Int *>( reinterpret_cast<const char *>( TheGameEngine ) + 0x34 );
 			Color dropColor;

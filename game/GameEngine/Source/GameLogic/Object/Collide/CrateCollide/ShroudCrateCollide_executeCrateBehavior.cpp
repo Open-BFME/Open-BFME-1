@@ -45,7 +45,9 @@ public:
 // the engine-init tag block at 0x0038A1F0 stores 0x012ED5BC and then pushes the
 // tag "TheShroudManager", while ThePartitionManager is constructed just before it
 // at 0x012ED5B8.  This entry point reaches the former.
-extern PartitionManager *TheShroudManager;				///< retail 0x012ED5BC
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+				///< retail 0x012ED5BC
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
@@ -158,7 +160,7 @@ protected:
 Bool ShroudCrateCollide::executeCrateBehavior(Object *other)
 {
 	Player *cratePlayer = other->getControllingPlayer();
-	TheShroudManager->revealMapForPlayer(cratePlayer->getPlayerIndex());
+	(*reinterpret_cast<PartitionManager **>(&TheShroudManager))->revealMapForPlayer(cratePlayer->getPlayerIndex());
 
 	AudioEventRTS soundToPlay = TheAudio->getMiscAudio()->m_crateShroud;
 	soundToPlay.setObjectID(other->getID());

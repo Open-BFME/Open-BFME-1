@@ -194,7 +194,9 @@ public:
 // the engine-init tag block at 0x0038A1F0 stores 0x012ED5BC and then pushes the
 // tag "TheShroudManager", while ThePartitionManager is constructed just before it
 // at 0x012ED5B8.  These entry points reach the former.
-extern PartitionManager *TheShroudManager;				///< retail 0x012ED5BC
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+				///< retail 0x012ED5BC
 
 // The mask resolver the ledger already pins on its ILT.
 class BfmeScriptEngine_getPlayerMaskFromAsciiString
@@ -247,7 +249,7 @@ void ScriptEngine::doNamedMapReveal(const AsciiString& revealName)
 
 	UnsignedShort playerMask = ((BfmeScriptEngine_getPlayerMaskFromAsciiString *)TheScriptEngine)->getPlayerMaskFromAsciiString(reveal->m_playerName, 0);
 
-	TheShroudManager->doShroudReveal(way->getLocation(), reveal->m_radiusToReveal, playerMask);
+	(*reinterpret_cast<PartitionManager **>(&TheShroudManager))->doShroudReveal(way->getLocation(), reveal->m_radiusToReveal, playerMask);
 }
 
 void ScriptEngine::undoNamedMapReveal(const AsciiString& revealName)
@@ -273,7 +275,7 @@ void ScriptEngine::undoNamedMapReveal(const AsciiString& revealName)
 
 	UnsignedShort playerMask = ((BfmeScriptEngine_getPlayerMaskFromAsciiString *)TheScriptEngine)->getPlayerMaskFromAsciiString(reveal->m_playerName, 0);
 
-	TheShroudManager->undoShroudReveal(way->getLocation(), reveal->m_radiusToReveal, playerMask);
+	(*reinterpret_cast<PartitionManager **>(&TheShroudManager))->undoShroudReveal(way->getLocation(), reveal->m_radiusToReveal, playerMask);
 }
 
 void ScriptEngine::removeNamedMapReveal(const AsciiString& revealName)

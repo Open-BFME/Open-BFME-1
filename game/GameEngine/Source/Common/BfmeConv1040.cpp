@@ -47,10 +47,11 @@ struct BfmeS1040
 
 extern void (__cdecl *g_bfmeHook1040)(BfmeS1040 *s);
 
-extern unsigned g_Rva01141708[], g_Rva01141808[];
+extern const unsigned g_bfmeTableBZ[64];
+extern unsigned g_Rva01141808[];
 
 static const unsigned short *const g_bfmeApplyTableA =
-	(const unsigned short *)g_Rva01141708;
+	(const unsigned short *)g_bfmeTableBZ;
 static const unsigned short *const g_bfmeApplyTableB =
 	(const unsigned short *)g_Rva01141808;
 extern const unsigned short g_bfmeApplyTableC[]; // retail 0x01141D08

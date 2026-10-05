@@ -308,7 +308,9 @@ public:
 	Bool rva000C4080(const Object *, const Object *, CommandSourceType);
 };
 
-extern BFMEActionManager *TheActionManager;
+class ActionManager;
+extern ActionManager *TheActionManager;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
@@ -495,7 +497,7 @@ protected:
 // value is one more step; docs/shape_levers.md, "Scratch registers rotate").
 void AIUpdateInterface::privateMoveToObject(Object *obj, CommandSourceType commandSource)
 {
-	if (!TheActionManager->rva000C4080(getObject(), obj, commandSource))
+	if (!(*reinterpret_cast<BFMEActionManager **>(&TheActionManager))->rva000C4080(getObject(), obj, commandSource))
 		return;
 	m_stateMachine->clear();
 	m_stateMachine->setGoalObject(obj);
@@ -523,7 +525,7 @@ void AIUpdateInterface::privateEnter(Object *object, CommandSourceType commandSo
 	if (!me->isMobile())
 		return;
 
-	if (TheActionManager->canEnterObject(me, object, commandSource, DONT_CHECK_CAPACITY, 0))
+	if ((*reinterpret_cast<BFMEActionManager **>(&TheActionManager))->canEnterObject(me, object, commandSource, DONT_CHECK_CAPACITY, 0))
 	{
 		m_stateMachine->clear();
 		m_stateMachine->setGoalObject(object);

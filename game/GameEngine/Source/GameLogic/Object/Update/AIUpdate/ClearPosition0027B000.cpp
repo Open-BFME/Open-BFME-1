@@ -95,7 +95,9 @@ public:
 	BfmeWideResult bfmeForwardWideC(int,int,int,int,int);
 };
 
-extern BfmeWideForwardC *ThePartitionManager;
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
+
 
 class AIUpdateInterface {
 public:
@@ -108,7 +110,7 @@ bool AIUpdateInterface::findClearPosition0027B000(float maxRadius,const Coord3D 
  if(!object) return false;
  float limit;
  if(10.0f>object->getRadius()) limit=10.0f; else limit=object->m_bfmeRadius;
-	BfmeWideResult iterator=ThePartitionManager->bfmeForwardWideC((int)center,*(int*)&maxRadius,0,
+	BfmeWideResult iterator=(*reinterpret_cast<BfmeWideForwardC **>(&ThePartitionManager))->bfmeForwardWideC((int)center,*(int*)&maxRadius,0,
 	 (int)&PartitionFilterAcceptByKindOf(flags,*(const BfmeSweepKindOfMask*)&KINDOFMASK_NONE),1);
  for(float radius=limit; radius<=maxRadius; radius+=limit) {
   float step=1.0f/limit;

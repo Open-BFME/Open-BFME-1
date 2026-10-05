@@ -20,7 +20,9 @@ class BfmeTaintManager
 {
 };
 
-extern BfmeTaintManager *TheTaintManager;
+class TaintManager;
+extern TaintManager *TheTaintManager;
+
 
 class Gen_00880e30
 {
@@ -194,8 +196,8 @@ void Rva00727E00::update(CameraClass *unused)
 		reinterpret_cast<TaintBuffer *>(this)->init(
 			reinterpret_cast<WorldHeightMap *>(map), m_cellWidth, m_cellHeight);
 
-		if (TheTaintManager != 0)
-			reinterpret_cast<Gen_00880e30 *>(TheTaintManager)->m();
+		if ((*reinterpret_cast<BfmeTaintManager **>(&TheTaintManager)) != 0)
+			reinterpret_cast<Gen_00880e30 *>((*reinterpret_cast<BfmeTaintManager **>(&TheTaintManager)))->m();
 
 		m_taintOn = TheWritableGlobalData->m_taintOn;
 		m_clear = 1;

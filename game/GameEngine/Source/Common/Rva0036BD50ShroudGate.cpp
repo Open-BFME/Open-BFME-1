@@ -21,7 +21,9 @@ public:
     CellShroudStatus getShroudStatusForPlayer(int playerIndex, const Coord3D *position) const;
 };
 struct Rva002EEDA0ShroudManager;
-extern Rva002EEDA0ShroudManager *Rva002EEDA0TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 
 struct Rva002EE330Player {
     char pad[0x24];
@@ -60,7 +62,7 @@ void Rva0036BD50Module::check(int)
         return;
 
     Rva0036BD50Owner *owner = *(Rva0036BD50Owner **)((char *)this - 4);
-    PartitionManager *shroud = (PartitionManager *)Rva002EEDA0TheShroudManager;
+    PartitionManager *shroud = (PartitionManager *)(*reinterpret_cast<Rva002EEDA0ShroudManager **>(&TheShroudManager));
     if (!shroud || !owner)
         return;
     Rva002EE330PlayerList *players = (Rva002EE330PlayerList *)ThePlayerList;

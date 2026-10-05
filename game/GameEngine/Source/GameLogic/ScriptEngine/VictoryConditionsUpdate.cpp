@@ -76,7 +76,9 @@ class PartitionManager {
   public:
     void revealMapForPlayerPermanently(int);
 };
-extern PartitionManager *TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 class InGameUI {
   public:
     virtual void slot0();
@@ -218,7 +220,7 @@ void VictoryConditions::update() {
             p->m_484 = frame;
             if (frame > 1) {
                 int playerIndex = p->m_playerIndex;
-                TheShroudManager->revealMapForPlayerPermanently(playerIndex);
+                (*reinterpret_cast<PartitionManager **>(&TheShroudManager))->revealMapForPlayerPermanently(playerIndex);
                 if (TheGameLogic->_bfme_isInLivingWorldCampaign() && p->isLocalPlayer())
                     TheInGameUI->message("GUI:YouHaveBeenDefeated");
                 else if (!TheGameLogic->isInSinglePlayerGame() && TheGameLogic->m_gameMode != 6)

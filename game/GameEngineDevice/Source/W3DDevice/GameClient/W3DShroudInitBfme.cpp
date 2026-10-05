@@ -97,8 +97,10 @@ public:
 	void m(void);
 };
 
-extern Gen_008f7420 *TheShroudManager;
-#define ThePartitionManager TheShroudManager
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
+#define ThePartitionManager (*reinterpret_cast<Gen_008f7420 **>(&TheShroudManager))
 
 class Rva0071A150W3DShroud
 {

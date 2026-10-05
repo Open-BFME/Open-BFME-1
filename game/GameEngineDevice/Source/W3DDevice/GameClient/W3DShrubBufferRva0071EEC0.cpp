@@ -78,7 +78,9 @@ struct Rva002EE330PlayerList
 class PlayerList;
 extern PlayerList *ThePlayerList;
 struct Rva002EEDA0ShroudManager;
-extern Rva002EEDA0ShroudManager *Rva002EEDA0TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 struct Coord3D;
 enum ObjectShroudStatus
 {
@@ -399,10 +401,10 @@ void W3DShrubBuffer::rva0071EEC0(CameraClass *camera, RefMultiListIterator<Rende
 		}
 		else if (trees[curTree].visible)
 		{
-			if (!ThePlayerList || !Rva002EEDA0TheShroudManager)
+			if (!ThePlayerList || !(*reinterpret_cast<Rva002EEDA0ShroudManager **>(&TheShroudManager)))
 				trees[curTree].fielda0 = 1;
 			if (!trees[curTree].fielda0)
-				trees[curTree].fielda0 = ((PartitionManager *)Rva002EEDA0TheShroudManager)
+				trees[curTree].fielda0 = ((PartitionManager *)(*reinterpret_cast<Rva002EEDA0ShroudManager **>(&TheShroudManager)))
 											 ->getPropShroudStatusForPlayer(
 												 localPlayer, (const Coord3D *)&trees[curTree].location);
 			if (trees[curTree].fielda0 < 3 && trees[curTree].fielda0 > 0 &&

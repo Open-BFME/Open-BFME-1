@@ -177,7 +177,9 @@ public:
 	BfmeWideResult bfmeForwardWideC(int, int, int, int, int);
 };
 
-extern BfmeWideForwardC *ThePartitionManager;
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
+
 
 struct PlayerHealSpecialPowerModuleData
 {
@@ -286,7 +288,7 @@ void PlayerHealSpecialPower::rva00263CA0(void *where,
 		dispatchList->dispatch(healOwner, (const Object *)where, 0, 0);
 
 	BfmeWideResult iterator =
-		ThePartitionManager->bfmeForwardWideC(
+		(*reinterpret_cast<BfmeWideForwardC **>(&ThePartitionManager))->bfmeForwardWideC(
 			(int)where,
 			*(Int *)&getModuleData()->m_healRadius, 0,
 			(int)Rva00263CA0RootFilter().link(), 1);

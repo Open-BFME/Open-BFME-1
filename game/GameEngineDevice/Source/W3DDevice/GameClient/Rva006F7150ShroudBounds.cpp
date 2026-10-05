@@ -26,7 +26,9 @@ public:
 		const Coord3D *position) const;
 };
 
-extern PartitionManager *TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 
 class BfmeCalc919G
 {
@@ -65,7 +67,7 @@ private:
 // ?check@Rva006F7150@@QAEHH@Z
 int Rva006F7150::check(int playerIndex)
 {
-    if (TheShroudManager != 0)
+    if ((*reinterpret_cast<PartitionManager **>(&TheShroudManager)) != 0)
     {
         if (m_matrixSource != 0)
         {
@@ -75,28 +77,28 @@ int Rva006F7150::check(int playerIndex)
         sample.x = m_destination.x;
         sample.y = m_destination.y;
         sample.z = m_destination.z;
-        if (TheShroudManager->getShroudStatusForPlayer(playerIndex, &sample) == CELLSHROUD_CLEAR)
+        if ((*reinterpret_cast<PartitionManager **>(&TheShroudManager))->getShroudStatusForPlayer(playerIndex, &sample) == CELLSHROUD_CLEAR)
             return 1;
         sample.x = m_radius + m_destination.x;
         sample.y = m_destination.y;
         sample.z = m_destination.z;
-        if (TheShroudManager->getShroudStatusForPlayer(playerIndex, &sample) == CELLSHROUD_CLEAR)
+        if ((*reinterpret_cast<PartitionManager **>(&TheShroudManager))->getShroudStatusForPlayer(playerIndex, &sample) == CELLSHROUD_CLEAR)
             return 1;
         sample.x = m_destination.x - m_radius;
         sample.y = m_destination.y;
         sample.z = m_destination.z;
-        if (TheShroudManager->getShroudStatusForPlayer(playerIndex, &sample) == CELLSHROUD_CLEAR)
+        if ((*reinterpret_cast<PartitionManager **>(&TheShroudManager))->getShroudStatusForPlayer(playerIndex, &sample) == CELLSHROUD_CLEAR)
             return 1;
         sample.x = m_destination.x;
         sample.y = m_radius;
         sample.y += m_destination.y;
         sample.z = m_destination.z;
-        if (TheShroudManager->getShroudStatusForPlayer(playerIndex, &sample) == CELLSHROUD_CLEAR)
+        if ((*reinterpret_cast<PartitionManager **>(&TheShroudManager))->getShroudStatusForPlayer(playerIndex, &sample) == CELLSHROUD_CLEAR)
             return 1;
         sample.x = m_destination.x;
         sample.y = m_destination.y - m_radius;
         sample.z = m_destination.z;
-        if (TheShroudManager->getShroudStatusForPlayer(playerIndex, &sample) == CELLSHROUD_CLEAR)
+        if ((*reinterpret_cast<PartitionManager **>(&TheShroudManager))->getShroudStatusForPlayer(playerIndex, &sample) == CELLSHROUD_CLEAR)
             return 1;
     }
     return 0;

@@ -21,10 +21,8 @@
 //               agree: 0x012ED5C4 takes "TheCollisionManager" twenty bytes
 //               later in the same block.
 //
-//   0x012ED5C0  unnamed. Nothing in .text stores to it -- 25 reads, no write --
-//               so whatever constructs it does so through a pointer, and the
-//               init block skips straight from 0x012ED5BC to 0x012ED5C4. It
-//               keeps an address-derived name until something proves one.
+//   0x012ED5C0  TheTaintManager. Startup passes this cell and its EA name to
+//               the registration helper at 0x00074D50, which stores through it.
 //
 // The two methods are forwarders of the same shape, `mov ecx,[ecx+0x0C]; jmp`,
 // which is why they are named for their addresses rather than guessed at: the
@@ -137,7 +135,9 @@ public:
 };
 
 extern ShroudManager *TheShroudManager;
-extern Gen_00880e10 *g_012ED5C0;
+class TaintManager;
+extern TaintManager *TheTaintManager;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList : public SubsystemInterface, public Snapshot
@@ -180,8 +180,8 @@ void PlayerList::setLocalPlayer( Player *player )
 
 	// Retail's tail call to the 0x00880E10 forwarder, with the one argument
 	// it consumes stored at [esp+4] on the way in; see the class comment.
-	if (g_012ED5C0)
-		( (g_012ED5C0->*( (void (Gen_00880e10::*)( SubsystemRefreshProc ) ) &Gen_00880e10::m )) )( d_001072f0 );
+	if ((*reinterpret_cast<Gen_00880e10 **>(&TheTaintManager)))
+		( ((*reinterpret_cast<Gen_00880e10 **>(&TheTaintManager))->*( (void (Gen_00880e10::*)( SubsystemRefreshProc ) ) &Gen_00880e10::m )) )( d_001072f0 );
 }
 
 //-----------------------------------------------------------------------------

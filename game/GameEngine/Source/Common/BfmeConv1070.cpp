@@ -57,7 +57,9 @@ public:
 	void bfmeTail1070(void);
 };
 
-extern BfmeT1070 *g_bfmeT1070;
+class GameEngine;
+extern GameEngine *TheGameEngine;
+
 
 class BfmeQ1070
 {
@@ -79,7 +81,7 @@ void BfmeQ1070::bfmeGo1070A(void)
 	m_bfmeSub.bfmeSlot1070S_1();
 	if (g_bfmeG1070)
 		g_bfmeG1070->bfmeSlot1070G_13();
-	g_bfmeT1070->bfmeTail1070();
+	(*reinterpret_cast<BfmeT1070 **>(&TheGameEngine))->bfmeTail1070();
 	((BfmeR1070 *)g_rva012F19E8WindowManager)->bfmeRun1070(m_bfme250, "CancelGame", 0, 0, 0, 0, 0, 0);
 }
 

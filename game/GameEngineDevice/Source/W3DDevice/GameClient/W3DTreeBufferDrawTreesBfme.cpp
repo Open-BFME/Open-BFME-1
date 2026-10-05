@@ -74,7 +74,11 @@ struct Rva002EE330PlayerList {
 class PlayerList;
 extern PlayerList *ThePlayerList;
 struct Rva002EEDA0ShroudManager;
-extern Rva002EEDA0ShroudManager *Rva002EEDA0TheShroudManager;
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 struct Coord3D;
 enum ObjectShroudStatus { RvaShroud0, RvaShroud1, RvaShroud2, RvaShroud3 };
 class PartitionManager {
@@ -382,7 +386,7 @@ class BfmeWideForwardC {
 public:
   BfmeWideResult bfmeForwardWideC(int, int, int, int, int);
 };
-extern BfmeWideForwardC *ThePartitionManager;
+
 class Team;
 enum Relationship { RvaRelation0, RvaRelation1, RvaRelation2 };
 class Player {
@@ -473,12 +477,12 @@ void W3DTreeBuffer::drawTrees(CameraClass *camera,
             types[type].data->sinkDistance / sinkFrames;
         trees[curTree].matrix.Set_Translation(trees[curTree].location);
       }
-      if (trees[curTree].visible && !useSmallBuffers && ThePartitionManager &&
+      if (trees[curTree].visible && !useSmallBuffers && (*reinterpret_cast<BfmeWideForwardC **>(&ThePartitionManager)) &&
           TheGameEngine->field30 == 1) {
         Rva00737B70Coord position;
         position.set(trees[curTree].location.X, trees[curTree].location.Y,
                      trees[curTree].location.Z);
-        BfmeWideResult result = ThePartitionManager->bfmeForwardWideC(
+        BfmeWideResult result = (*reinterpret_cast<BfmeWideForwardC **>(&ThePartitionManager))->bfmeForwardWideC(
             (int)&position, types[type].data->field60, 1, (int)&filter, 0);
         Object *object;
         while ((object = result.next()) != 0) {

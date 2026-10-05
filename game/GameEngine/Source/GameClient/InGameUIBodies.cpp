@@ -489,7 +489,9 @@ extern Radar *TheRadar;
 class View;
 extern View *TheTacticalView;
 static inline TacticalViewFadeShim *tacticalViewFadeShim() { return (TacticalViewFadeShim *)TheTacticalView; }
-extern PartitionManager *TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
@@ -757,10 +759,10 @@ void InGameUI::handleRadiusCursor()
 	{
 		tacticalViewFadeShim()->screenToTerrain(mousePos, &pos, false);
 
-		if (TheShroudManager && ThePlayerList)
+		if ((*reinterpret_cast<PartitionManager **>(&TheShroudManager)) && ThePlayerList)
 		{
 			Int playerIndex = ThePlayerList->m_localPlayer->m_playerIndex;
-			if (TheShroudManager->getShroudStatusForPlayer(playerIndex, &pos) != SHROUD_CLEAR)
+			if ((*reinterpret_cast<PartitionManager **>(&TheShroudManager))->getShroudStatusForPlayer(playerIndex, &pos) != SHROUD_CLEAR)
 				tacticalViewFadeShim()->screenToTerrain(mousePos, &pos, true);
 		}
 	}

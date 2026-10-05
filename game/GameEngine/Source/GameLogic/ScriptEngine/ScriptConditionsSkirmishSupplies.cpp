@@ -213,7 +213,9 @@ class BfmeThingDTJ { public: float bfmeGoDTJ(); };
 extern ScriptEngine *TheScriptEngine;
 extern PlayerList *ThePlayerList;
 extern NameKeyGenerator *TheNameKeyGenerator;
-extern BfmeWideForwardC *ThePartitionManager;
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
+
 
 class ScriptConditions {
 protected:
@@ -234,7 +236,7 @@ Bool ScriptConditions::evaluateSkirmishSuppliesWithinDistancePerimeter(
   Real distance = reinterpret_cast<BfmeThingDTJ *>(trigger)->bfmeGoDTJ() + p1->getReal();
   Real compareToValue = p3->getReal();
   Real maxValue = 0;
-  BfmeWideResult iter = ThePartitionManager->bfmeForwardWideC((int)&center, distance, 0,
+  BfmeWideResult iter = (*reinterpret_cast<BfmeWideForwardC **>(&ThePartitionManager))->bfmeForwardWideC((int)&center, distance, 0,
    (int)PartitionFilterAcceptByKindOf(KindOfMaskType(KindOfMaskType::INIT_ZERO, KINDOF_STRUCTURE),KINDOFMASK_NONE).link(
     PartitionFilterPlayerAffiliation(player, ALLOW_NEUTRAL, true).link(&PartitionFilterOnMap())), 0);
   while (Object *object = iter.next()) {

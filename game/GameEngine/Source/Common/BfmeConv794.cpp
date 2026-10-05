@@ -166,7 +166,9 @@ public:
 
 bool postTimedOp(LoadGameFadeHolder holder, void *key);
 
-extern GameMessageDispatcher *TheGameMessageDispatcher;
+class MessageStream;
+extern MessageStream *TheMessageStream;
+
 // The real GameLogic singleton (VA 0x012F0898), reached through this TU's own
 // view of the object.
 class GameLogic;
@@ -217,7 +219,7 @@ void BfmeGlobDXI::bfmeUseDXI(int id)
 
 	if (entry->m_type == 0)
 	{
-		GameMessage *message = TheGameMessageDispatcher->dispatchMessage(0x45D);
+		GameMessage *message = (*reinterpret_cast<GameMessageDispatcher **>(&TheMessageStream))->dispatchMessage(0x45D);
 		message->appendIntegerArgument(entry->m_argument);
 		return;
 	}

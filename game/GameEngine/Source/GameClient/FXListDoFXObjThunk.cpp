@@ -69,7 +69,9 @@ public:
 	CellShroudStatus getShroudStatusForPlayer(Int playerIndex, const Coord3D *position) const;
 };
 
-extern PartitionManager *TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
@@ -127,7 +129,7 @@ void FXList::doFXObj(const Object *primary, const Object *secondary) const
 			if (primary->getShroudedStatus(ThePlayerList->getLocalPlayer()->getPlayerIndex()) > OBJECTSHROUD_PARTIAL_CLEAR)
 				return;
 		}
-		else if (TheShroudManager->getShroudStatusForPlayer(
+		else if ((*reinterpret_cast<PartitionManager **>(&TheShroudManager))->getShroudStatusForPlayer(
 			ThePlayerList->getLocalPlayer()->getPlayerIndex(), primary->getPosition()) != CELLSHROUD_CLEAR)
 		{
 			return;

@@ -1,5 +1,5 @@
 // Compare a string against the current command prefix.
-extern const char *rva012D5A08Prefix;
+const char *rva012D5A08Prefix = "FSCommand:";
 extern "C" unsigned __cdecl strlen(const char *);
 extern "C" int __cdecl strncmp(const char *, const char *, unsigned);
 

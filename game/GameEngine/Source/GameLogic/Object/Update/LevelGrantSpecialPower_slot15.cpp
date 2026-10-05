@@ -160,7 +160,9 @@ public:
 	BfmeWideResult bfmeForwardWideC(Int, Int, Int, Int, Int);
 };
 
-extern BfmeWideForwardC *ThePartitionManager;
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
+
 
 class Object
 {
@@ -204,7 +206,7 @@ void LevelGrantSpecialPower::actionAt00260180()
 	if (data->m_useKindOf)
 	{
 		BfmeWideResult iterator =
-			ThePartitionManager->bfmeForwardWideC(
+			(*reinterpret_cast<BfmeWideForwardC **>(&ThePartitionManager))->bfmeForwardWideC(
 				(Int)&m_queryPosition, *(Int *)&data->m_radius, ITER_FASTEST,
 				(Int)(Rva00260180SelfFilter(object)
 					.link(&PartitionFilterRelationship(object, 4, false))
@@ -231,7 +233,7 @@ void LevelGrantSpecialPower::actionAt00260180()
 	else
 	{
 		BfmeWideResult iterator =
-			ThePartitionManager->bfmeForwardWideC(
+			(*reinterpret_cast<BfmeWideForwardC **>(&ThePartitionManager))->bfmeForwardWideC(
 				(Int)&m_queryPosition, *(Int *)&data->m_radius, ITER_FASTEST,
 				(Int)(Rva00260180SelfFilter(object)
 					.link(&PartitionFilterRelationship(object, 4, false))

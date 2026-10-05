@@ -257,7 +257,9 @@ static __forceinline void luna10RecordTransform(Object *object, unsigned frame)
 
 extern GameLogic *TheGameLogic;
 extern TerrainLogic *TheTerrainLogic;
-extern PartitionManager *TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 extern GameEngine *TheGameEngine;
 extern PlayerList *ThePlayerList;
 extern const Real g_rva01075350;
@@ -376,7 +378,7 @@ void BezierProjectileBehavior::projectileFireAtObjectOrPosition(Object *victim,
 			else
 				producerShrouded = false;
 
-			Bool cellClear = TheShroudManager->getShroudStatusForPlayer(
+			Bool cellClear = (*reinterpret_cast<PartitionManager **>(&TheShroudManager))->getShroudStatusForPlayer(
 				player, &m_flightPathEnd) == CELLSHROUD_CLEAR;
 
 			if (producerShrouded)

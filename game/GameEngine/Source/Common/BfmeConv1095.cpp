@@ -272,7 +272,9 @@ extern InGameUI *TheInGameUI;
 extern BfmeE1095 *g_bfmeE1095;
 class Mouse;
 extern Mouse *TheMouse;
-extern BfmeT1095 *g_bfmeT1095;
+class StatsCollector;
+extern StatsCollector *TheStatsCollector;
+
 extern int g_bfmeV1095;
 
 class BfmeW1095
@@ -297,6 +299,6 @@ void BfmeW1095::bfmeGo1095B(void)
 		g_bfmeE1095->bfmeSlot1095E_104(0);
 	reinterpret_cast<BfmeZ1095 *>(TheMouse)->bfmeSlot1095Z_14(g_bfmeV1095);
 	m_bfme148 = 0;
-	if (g_bfmeT1095)
-		g_bfmeT1095->bfmeTail1095();
+	if ((*reinterpret_cast<BfmeT1095 **>(&TheStatsCollector)))
+		(*reinterpret_cast<BfmeT1095 **>(&TheStatsCollector))->bfmeTail1095();
 }

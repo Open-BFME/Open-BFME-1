@@ -256,8 +256,12 @@ public:
 extern TerrainLogic *TheTerrainLogic;                         // 0x012EF4CC
 extern GhostObjectManager *TheGhostObjectManager;             // 0x012EF4FC
 extern PartitionManager *ThePartitionManager;                  // 0x012ED5B8
-extern PartitionManager *TheShroudManager;                     // 0x012ED5BC
-extern BfmeWindowManager *g_bfmeWindowManager;                 // 0x012ED5C4
+class CollisionManager;
+extern CollisionManager *TheCollisionManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+                     // 0x012ED5BC
+                 // 0x012ED5C4
 extern ScriptActionsInterface *TheScriptActions;               // 0x012F0620
 extern ScriptConditionsInterface *TheScriptConditions;         // 0x012F06B0
 extern BfmeJ1023 *g_bfmeJ1023;                                 // 0x012F1044
@@ -538,12 +542,12 @@ GameLogic::~GameLogic(void)
 	if (ThePartitionManager)
 		delete ThePartitionManager;
 	ThePartitionManager = 0;
-	if (TheShroudManager)
-		delete TheShroudManager;
-	TheShroudManager = 0;
-	if (g_bfmeWindowManager)
-		delete g_bfmeWindowManager;
-	g_bfmeWindowManager = 0;
+	if ((*reinterpret_cast<PartitionManager **>(&TheShroudManager)))
+		delete (*reinterpret_cast<PartitionManager **>(&TheShroudManager));
+	(*reinterpret_cast<PartitionManager **>(&TheShroudManager)) = 0;
+	if ((*reinterpret_cast<BfmeWindowManager **>(&TheCollisionManager)))
+		delete (*reinterpret_cast<BfmeWindowManager **>(&TheCollisionManager));
+	(*reinterpret_cast<BfmeWindowManager **>(&TheCollisionManager)) = 0;
 	if (TheScriptActions)
 		delete TheScriptActions;
 	TheScriptActions = 0;

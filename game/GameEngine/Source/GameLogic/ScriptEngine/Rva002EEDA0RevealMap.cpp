@@ -69,7 +69,9 @@ struct Rva002EE330PlayerList
 extern PlayerList *ThePlayerList;
 
 struct Rva002EEDA0ShroudManager;
-extern Rva002EEDA0ShroudManager *Rva002EEDA0TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 
 // ?rva002EEDA0@@YGXABVAsciiString@@@Z
 void __stdcall rva002EEDA0(const AsciiString &name)
@@ -84,7 +86,7 @@ void __stdcall rva002EEDA0(const AsciiString &name)
 		{
 			Player *player = ThePlayerList->getNthPlayer(i);
 			if (player->m_field2c == 0)
-				((PartitionManager *)Rva002EEDA0TheShroudManager)->revealMapForPlayer(i);
+				((PartitionManager *)(*reinterpret_cast<Rva002EEDA0ShroudManager **>(&TheShroudManager)))->revealMapForPlayer(i);
 		}
 	}
 	else
@@ -93,7 +95,7 @@ void __stdcall rva002EEDA0(const AsciiString &name)
 		{
 			Player *player = ThePlayerList->getEachPlayerFromMask(mask);
 			if (player != 0)
-				((PartitionManager *)Rva002EEDA0TheShroudManager)
+				((PartitionManager *)(*reinterpret_cast<Rva002EEDA0ShroudManager **>(&TheShroudManager)))
 					->revealMapForPlayer(player->m_playerIndex);
 		}
 	}

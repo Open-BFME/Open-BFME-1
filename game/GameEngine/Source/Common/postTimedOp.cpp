@@ -65,7 +65,7 @@ TimedOperationNode::TimedOperationNode(LoadGameFadeHolder holder, void *key)
 	m_key = key;
 }
 
-extern TimedOperationNode *g_timedOperationHead;
+TimedOperationNode *g_timedOperationHead = 0;
 extern unsigned int g_timedOperationSerial;
 
 // ?postTimedOp@@YA_NVLoadGameFadeHolder@@PAX@Z

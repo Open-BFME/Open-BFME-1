@@ -64,7 +64,9 @@ class PartitionManager
 public:
 	CellShroudStatus getShroudStatusForPlayer(Int playerIndex, const Coord3D *loc) const;
 };
-extern PartitionManager *TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 
 // Player +0x24 m_playerIndex and PlayerList +0xc m_local: name_oracle layout witness.
 class Player
@@ -284,7 +286,7 @@ Int WaterTracksObj::render(DX8VertexBufferClass	*vertexBuffer, Int batchStart, R
 	if (((const BFMECameraCullBox *)&rinfo.Camera)->Cull_Box(box))
 		return batchStart;
 
-	if (TheShroudManager)
+	if ((*reinterpret_cast<PartitionManager **>(&TheShroudManager)))
 	{
 		Int playerIndex = ThePlayerList ? ThePlayerList->getLocalPlayer()->getPlayerIndex() : 0;
 		Bool shrouded = true;
@@ -294,7 +296,7 @@ Int WaterTracksObj::render(DX8VertexBufferClass	*vertexBuffer, Int batchStart, R
 			pos.x = points[i].X;
 			pos.y = points[i].Y;
 			pos.z = waterHeight+1.5f;
-			if (TheShroudManager->getShroudStatusForPlayer(playerIndex, &pos) != CELLSHROUD_SHROUDED)
+			if ((*reinterpret_cast<PartitionManager **>(&TheShroudManager))->getShroudStatusForPlayer(playerIndex, &pos) != CELLSHROUD_SHROUDED)
 			{
 				shrouded = false;
 				break;

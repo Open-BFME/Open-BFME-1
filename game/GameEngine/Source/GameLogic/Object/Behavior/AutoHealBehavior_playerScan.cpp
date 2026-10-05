@@ -398,7 +398,9 @@ class BfmeWideForwardC
 public:
 	BfmeWideResult bfmeForwardWideC(Int pos, Real maxDist, Int dc, Int filters, Int order);
 };
-extern BfmeWideForwardC *ThePartitionManager;
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
+
 
 enum UpdateSleepTime
 {
@@ -536,7 +538,7 @@ UpdateSleepTime AutoHealBehavior::update()
 	}
 	else
 	{
-		BfmeWideResult iter = ThePartitionManager->bfmeForwardWideC(
+		BfmeWideResult iter = (*reinterpret_cast<BfmeWideForwardC **>(&ThePartitionManager))->bfmeForwardWideC(
 			(Int)obj->getPosition(), (Real)d->m_radius, FROM_CENTER_2D,
 			(Int)PartitionFilterRelationship(obj, PartitionFilterRelationship::ALLOW_ALLIES).link(
 				Rva0025ED50RootFilter().link(&PartitionFilterSameMapStatus(obj))),

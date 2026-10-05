@@ -171,7 +171,9 @@ class Radar { public: void removeObject(Object *); };
 extern Radar *TheRadar;
 
 class PartitionManager { public: void rva008F73C0(Rva00C9EE28Base *obj); };
-extern PartitionManager *TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 
 class AIGroup { public: bool remove(Object *); };
 class BfmeQ1086 { public: void bfmeGo1086A(); };
@@ -271,7 +273,7 @@ Object::~Object()
 	((BfmeQ1086 *)this)->bfmeGo1086A();
 
 	if (m_partitionData)
-		TheShroudManager->rva008F73C0(this);
+		(*reinterpret_cast<PartitionManager **>(&TheShroudManager))->rva008F73C0(this);
 
 	if (m_group)
 		m_group->remove(this);

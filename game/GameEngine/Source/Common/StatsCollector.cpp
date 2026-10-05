@@ -528,3 +528,5 @@ void StatsCollector::collectUnitCountStats()
 			++m_aiUnits;
 	}
 }
+
+StatsCollector *TheStatsCollector = 0;

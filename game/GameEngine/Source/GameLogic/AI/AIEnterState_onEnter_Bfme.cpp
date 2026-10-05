@@ -118,7 +118,9 @@ struct BFMEObjectAI
 	}
 };
 
-extern BFMEActionManager *TheActionManager;
+class ActionManager;
+extern ActionManager *TheActionManager;
+
 extern bool Glo012F0239;
 class CRCParameterCheck;
 extern CRCParameterCheck *TheCRCParameterCheck;
@@ -135,7 +137,7 @@ StateReturnType AIEnterState::onEnter()
 	Object *goal = ((BFMEGetGoalObject)j_0000e570)(m_machine);
 	if (goal)
 	{
-		if( !TheActionManager->canEnterObject(
+		if( !(*reinterpret_cast<BFMEActionManager **>(&TheActionManager))->canEnterObject(
 			obj, goal,
 			((BFMEAIUpdateCommandSource *)((BFMEObjectAI *)obj)->getAI())->getLastCommandSource(),
 			CHECK_CAPACITY, 0 ) )

@@ -4550,7 +4550,9 @@ Bool ActionManager::canFireWeapon( const Object *obj, const WeaponSlotType slot,
 // tag "TheShroudManager", while ThePartitionManager is constructed just before
 // it at 0x012ED5B8.  The shroud read below reaches the former; every other
 // ThePartitionManager use in this file is a real partition call and is correct.
-extern PartitionManager *TheShroudManager;				///< retail 0x012ED5BC
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+				///< retail 0x012ED5BC
 
 //------------------------------------------------------------------------------------------------
 Bool ActionManager::canOverrideSpecialPowerDestination( const Object *obj, const Coord3D *loc, SpecialPowerType spType, CommandSourceType commandSource )
@@ -4559,7 +4561,7 @@ Bool ActionManager::canOverrideSpecialPowerDestination( const Object *obj, const
 	if( spuInterface )
 	{
 		//But so long as it's not in the black areas of the map.
-		return TheShroudManager->getShroudStatusForPlayer( obj->getControllingPlayer()->getPlayerIndex(), loc ) != CELLSHROUD_SHROUDED;
+		return (*reinterpret_cast<PartitionManager **>(&TheShroudManager))->getShroudStatusForPlayer( obj->getControllingPlayer()->getPlayerIndex(), loc ) != CELLSHROUD_SHROUDED;
 	}
 	return false;
 }

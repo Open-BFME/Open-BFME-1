@@ -107,7 +107,9 @@ class BfmeWideForwardC
   public:
     BfmeWideResult bfmeForwardWideC(int, int, int, int, int);
 };
-extern BfmeWideForwardC *ThePartitionManager;
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
+
 class GameLogic
 {
   public:
@@ -152,7 +154,7 @@ void DrawableTiming0041E9E0::update()
             RootFilter0041E9E0 f2;
             f1.link(&f2);
             float radius = *(float *)((char *)t + 0x400);
-            BfmeWideResult iterator = ThePartitionManager->bfmeForwardWideC(
+            BfmeWideResult iterator = (*reinterpret_cast<BfmeWideForwardC **>(&ThePartitionManager))->bfmeForwardWideC(
                 (int)((BFMERopeDrawable *)this)->getPosition(),
                 *(int *)&radius, 1, (int)&f1, 0);
             Object *obj;

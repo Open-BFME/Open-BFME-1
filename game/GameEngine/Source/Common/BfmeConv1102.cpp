@@ -33,7 +33,9 @@ public:
 };
 
 extern BfmeG1102 *g_bfmeG1102;
-extern BfmeTl1102 *g_bfmeT1102;
+class GameEngine;
+extern GameEngine *TheGameEngine;
+
 
 class BfmeR1102
 {
@@ -56,6 +58,6 @@ void BfmeR1102::bfmeGo1102B(int a)
 	m_bfmeSub.bfmeSlot1102S_1();
 	if (g_bfmeG1102)
 		g_bfmeG1102->bfmeSlot1102G_13();
-	g_bfmeT1102->bfmeTail1102();
+	(*reinterpret_cast<BfmeTl1102 **>(&TheGameEngine))->bfmeTail1102();
 	m_bfme3a8 = 0;
 }

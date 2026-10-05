@@ -95,7 +95,9 @@ static __forceinline Rva005655C0PlayerList *thePlayers()
 	return (Rva005655C0PlayerList *)ThePlayerList;
 }
 
-extern PartitionManager *TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 
 class Rva006DF550
 {
@@ -139,11 +141,11 @@ void Rva006DF550::bfmeClampToArea(Coord3D *position)
 	}
 
 	int centerPlayer = thePlayers()->m_localPlayer0c->m_index24;
-	PartitionManager *centerShroud = TheShroudManager;
+	PartitionManager *centerShroud = (*reinterpret_cast<PartitionManager **>(&TheShroudManager));
 	bool centerVisible =
 		centerShroud->getShroudStatusForPlayer(centerPlayer, center) != 2;
 	int targetPlayer = thePlayers()->m_localPlayer0c->m_index24;
-	PartitionManager *targetShroud = TheShroudManager;
+	PartitionManager *targetShroud = (*reinterpret_cast<PartitionManager **>(&TheShroudManager));
 	bool targetVisible =
 		targetShroud->getShroudStatusForPlayer(targetPlayer, position) != 2;
 	if (centerVisible && !targetVisible)

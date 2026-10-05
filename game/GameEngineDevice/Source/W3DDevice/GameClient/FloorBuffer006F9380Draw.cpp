@@ -52,7 +52,9 @@ class Player { public: char m_unmodelled00[0x24]; int m_playerIndex; };
 class PlayerList { public: char m_unmodelled00[0xc]; Player *m_local; };
 extern PlayerList *ThePlayerList;
 class PartitionManager;
-extern PartitionManager *TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 class GlobalData { public: char m_unmodelled00[0x38]; bool m_useCloudMap; char m_unmodelled39[0x44-0x39]; bool m_useLightMap; };
 extern GlobalData *TheWritableGlobalData;
 // The floor buffer's own static shader object (W3DFloorBuffer.cpp keeps its
@@ -143,7 +145,7 @@ void FloorBuffer006F9380::draw(void *unused,bool skipTexture,TextureBaseClass *&
   }
   if(it==elements.end()) break;
   if(((Rva006F6F40FloorElement *)*it)->update()) field2a=true;
-  if(ThePlayerList && TheShroudManager) {
+  if(ThePlayerList && (*reinterpret_cast<PartitionManager **>(&TheShroudManager))) {
    int old=(*it)->field8c;
    int current=((Rva006F7150 *)*it)->check(player);
    if(current!=old) {

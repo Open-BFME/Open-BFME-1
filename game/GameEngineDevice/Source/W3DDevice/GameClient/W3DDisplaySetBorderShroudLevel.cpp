@@ -72,7 +72,9 @@ public:
 	unsigned char getTaintLevelByte006e(int x, int y);
 };
 
-extern BfmeTaintManager *TheTaintManager;
+class TaintManager;
+extern TaintManager *TheTaintManager;
+
 
 enum CellShroudStatus
 {
@@ -148,9 +150,9 @@ void W3DDisplay::setShroudLevel(int x, int y, CellShroudStatus setting)
 
 		TheTerrainRenderObject->notifyShroudChanged();
 		TaintBuffer *taintBuffer = TheTerrainRenderObject->getTaintBuffer();
-		if (taintBuffer && TheTaintManager) {
+		if (taintBuffer && (*reinterpret_cast<BfmeTaintManager **>(&TheTaintManager))) {
 			taintBuffer->setShroudLevel(
-				x, y, TheTaintManager->getTaintLevelByte006e(x, y), true);
+				x, y, (*reinterpret_cast<BfmeTaintManager **>(&TheTaintManager))->getTaintLevelByte006e(x, y), true);
 		}
 	}
 }

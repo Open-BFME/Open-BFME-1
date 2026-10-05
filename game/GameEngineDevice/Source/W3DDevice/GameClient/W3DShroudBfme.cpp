@@ -140,7 +140,9 @@ public:
 	UnsignedByte getTaintLevelByte006e(int x, int y);
 };
 
-extern BfmeTaintManager *TheTaintManager;
+class TaintManager;
+extern TaintManager *TheTaintManager;
+
 
 unsigned int packShroudPixel(UnsignedByte level);
 
@@ -286,10 +288,10 @@ void W3DShroud::setShroudLevel(int x, int y, UnsignedByte level, bool textureOnl
 
 		TaintBuffer *taintBuffer =
 			TheTerrainRenderObject->getTaintBuffer();
-		if (taintBuffer && TheTaintManager)
+		if (taintBuffer && (*reinterpret_cast<BfmeTaintManager **>(&TheTaintManager)))
 		{
 			taintBuffer->setShroudLevel(
-				x, y, TheTaintManager->getTaintLevelByte006e(x, y), true);
+				x, y, (*reinterpret_cast<BfmeTaintManager **>(&TheTaintManager))->getTaintLevelByte006e(x, y), true);
 		}
 	}
 }

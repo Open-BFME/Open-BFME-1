@@ -54,15 +54,15 @@ extern Rva00896AF0Tracker *g_bfmeTracker4310;
 extern "C" unsigned strlen(const char *);
 extern "C" int strncmp(const char *, const char *, unsigned);
 #pragma intrinsic(strlen)
-extern const char *Prefix012D5A08;
+extern const char *rva012D5A08Prefix;
 extern void (__cdecl *Callback01337858)(const char *, const char *);
-__forceinline bool prefix(const char *text) { return strncmp(text, Prefix012D5A08, strlen(Prefix012D5A08)) == 0; }
+__forceinline bool prefix(const char *text) { return strncmp(text, rva012D5A08Prefix, strlen(rva012D5A08Prefix)) == 0; }
 void DispatchLiteral008C5840(void *, const char **cursor)
 {
     const char **args = (const char **)(((unsigned)*cursor + 3) & ~3);
     *cursor = (const char *)(args + 2);
     if (prefix(args[0])) {
-        unsigned prefixLength = strlen(Prefix012D5A08);
+        unsigned prefixLength = strlen(rva012D5A08Prefix);
         Callback01337858(args[0] + prefixLength, args[1]);
         return;
     }

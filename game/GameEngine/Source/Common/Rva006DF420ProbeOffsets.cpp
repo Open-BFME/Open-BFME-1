@@ -76,7 +76,9 @@ struct Rva005655C0PlayerList
 // above is the TU-local view of the members read below.
 class PlayerList;
 extern PlayerList *ThePlayerList;
-extern PartitionManager *TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 
 class Rva006DF550
 {
@@ -111,7 +113,7 @@ bool Rva006DF550::bfmeProbeOffsets(Coord3D *position, float step)
 			if (m_polygon1c != 0)
 			{
 				int playerIndex = ((Rva005655C0PlayerList *)ThePlayerList)->m_localPlayer0c->m_index24;
-				if (TheShroudManager->getShroudStatusForPlayer(playerIndex,
+				if ((*reinterpret_cast<PartitionManager **>(&TheShroudManager))->getShroudStatusForPlayer(playerIndex,
 						&candidate) == 2)
 					continue;
 				if (!m_polygon1c->bfmeContainsPointAt0018FA20(candidate))

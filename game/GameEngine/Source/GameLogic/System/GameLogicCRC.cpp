@@ -60,7 +60,9 @@ extern CollisionManager* TheCollisionManager;
 class ShroudManager: public SystemBase, public Snapshot {};
 extern ShroudManager* TheShroudManager;
 class BfmeTaintManager: public SystemBase, public Snapshot {};
-extern BfmeTaintManager* TheTaintManager;
+class TaintManager;
+extern TaintManager *TheTaintManager;
+
 class PlayerList: public SystemBase, public Snapshot {};
 extern PlayerList* ThePlayerList;
 class AI: public SystemBase, public Snapshot {};
@@ -91,7 +93,7 @@ unsigned int GameLogic::getCRC(BfmeByteStream* stream) {
 	if (g_liteCRC || !g_xShroudCRC)
 		xfer->xferSnapshot(TheShroudManager);
 	if (g_liteCRC || !g_xTaintCRC)
-		xfer->xferSnapshot(TheTaintManager);
+		xfer->xferSnapshot((*reinterpret_cast<BfmeTaintManager **>(&TheTaintManager)));
 	if (g_liteCRC || !g_xPlayerCRC)
 		xfer->xferSnapshot(ThePlayerList);
 	if (g_liteCRC || !g_xAICRC)

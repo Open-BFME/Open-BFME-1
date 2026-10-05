@@ -2414,7 +2414,9 @@ public:
 	void m();
 };
 
-extern PartitionManager *TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 
 #pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmePlayerObjectDlinkBase@@QBEPAVBfmePlayerObjectDlinkObject@@@Z=?j_00001140@@YAXXZ")
 
@@ -2672,7 +2674,7 @@ void Player::setUnitsShouldHunt(Bool unitsShouldHunt, CommandSourceType source)
 	locationFunc.raw = &Gen_008f7450::m;
 
 	Coord3D pos;
-	(((BfmeShroudManagerHuntView *)TheShroudManager)->*locationFunc.member)(
+	(((BfmeShroudManagerHuntView *)(*reinterpret_cast<PartitionManager **>(&TheShroudManager)))->*locationFunc.member)(
 		(((BfmePlayerListHuntView *)ThePlayerList)->*maskFunc.member)(
 			getPlayerIndex(), ALLOW_ENEMIES, false),
 		0, &pos);

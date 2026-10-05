@@ -109,7 +109,9 @@ class BfmeWideForwardC
 public:
 	BfmeWideResult bfmeForwardWideC(Int, Real, Int, Int, Int);
 };
-extern BfmeWideForwardC *ThePartitionManager;
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
+
 
 struct Rva0025BD30Target;
 typedef Rva0025BD30Target *Rva0025BD30Key;
@@ -141,7 +143,9 @@ class BfmeTaintManager
 public:
 	void bfmeApplyCircleWorld(const BfmePointFC *point, Real radius, Int amount, Bool absolute);
 };
-extern BfmeTaintManager *TheTaintManager;
+class TaintManager;
+extern TaintManager *TheTaintManager;
+
 
 class FXList
 {
@@ -213,7 +217,7 @@ void TaintSpecialPower::after(const Coord3D *loc)
 	Real radius = data->m_radius;
 	Object *owner = m_object;
 
-	BfmeWideResult iterator = ThePartitionManager->bfmeForwardWideC((Int)loc, radius * 2.1f, 0,
+	BfmeWideResult iterator = (*reinterpret_cast<BfmeWideForwardC **>(&ThePartitionManager))->bfmeForwardWideC((Int)loc, radius * 2.1f, 0,
 		(Int)&PartitionFilterAcceptByKindOf(KindOfMaskType(KindOfMaskType::kInit, 151), KINDOFMASK_NONE), 1);
 
 	PointerIdentityTree0025BD30 matches;
@@ -228,7 +232,7 @@ void TaintSpecialPower::after(const Coord3D *loc)
 		TheGameLogic->destroyObject(candidate);
 	}
 
-	iterator = ThePartitionManager->bfmeForwardWideC((Int)loc, radius * 4.0f, 0,
+	iterator = (*reinterpret_cast<BfmeWideForwardC **>(&ThePartitionManager))->bfmeForwardWideC((Int)loc, radius * 4.0f, 0,
 		(Int)&PartitionFilterAcceptByKindOf(KindOfMaskType(KindOfMaskType::kInit, 151), KINDOFMASK_NONE), 1);
 
 	while (iterator.next(candidate))
@@ -242,7 +246,7 @@ void TaintSpecialPower::after(const Coord3D *loc)
 		point.x = candidate->m_position.x;
 		point.y = candidate->m_position.y;
 		point.z = candidate->m_position.z;
-		TheTaintManager->bfmeApplyCircleWorld((const BfmePointFC *)&point, radius, amount, true);
+		(*reinterpret_cast<BfmeTaintManager **>(&TheTaintManager))->bfmeApplyCircleWorld((const BfmePointFC *)&point, radius, amount, true);
 	}
 
 	((Rva003FD060TerrainLogic *)TheTerrainLogic)->clearArea001A64F0(loc, radius, 1);
@@ -264,5 +268,5 @@ void TaintSpecialPower::after(const Coord3D *loc)
 	union { void *raw; void (TaintSpecialPower::*fn)(const Coord3D *, void *); } bind;
 	bind.raw = (void *)j_000262bf;
 	(this->*bind.fn)(loc, &data->m_taintObject);
-	TheTaintManager->bfmeApplyCircleWorld((const BfmePointFC *)loc, radius, 0, true);
+	(*reinterpret_cast<BfmeTaintManager **>(&TheTaintManager))->bfmeApplyCircleWorld((const BfmePointFC *)loc, radius, 0, true);
 }

@@ -31,7 +31,9 @@ public:
 // Declare it under that exact spelling; the narrow call view is cast in.
 class PartitionManager;
 extern PartitionManager *ThePartitionManager;
-extern BfmeB1086 *g_bfmeB1086;
+class CollisionManager;
+extern CollisionManager *TheCollisionManager;
+
 extern BfmeC1086 *g_bfmeC1086;
 
 class BfmeQ1086
@@ -56,7 +58,7 @@ void BfmeQ1086::bfmeGo1086A(void)
 	if (m_bfme3b4)
 		((BfmeA1086 *)ThePartitionManager)->bfmeDrop1086A(&m_bfme6c);
 	if (m_bfme3b8)
-		g_bfmeB1086->bfmeDrop1086B(&m_bfme70);
+		(*reinterpret_cast<BfmeB1086 **>(&TheCollisionManager))->bfmeDrop1086B(&m_bfme70);
 	if (g_bfmeC1086)
 		g_bfmeC1086->bfmeDel1086(this);
 	m_bfme368 = 0;

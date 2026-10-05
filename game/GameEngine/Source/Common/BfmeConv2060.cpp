@@ -7,13 +7,14 @@ public:
 	void *m_bfmeKey;
 };
 
-extern BfmeEntryCK *g_bfmeListCK;
+class TimedOperationNode;
+extern TimedOperationNode *g_timedOperationHead;
 
 void __stdcall bfmeUnlinkCK(BfmeEntryCK *entry);
 
 static __forceinline BfmeEntryCK *bfmeFindCK(void *key)
 {
-	BfmeEntryCK *entry = g_bfmeListCK;
+	BfmeEntryCK *entry = (BfmeEntryCK *)g_timedOperationHead;
 
 	while (entry)
 	{
@@ -28,13 +29,13 @@ static __forceinline BfmeEntryCK *bfmeFindCK(void *key)
 
 bool __cdecl bfmeRemoveCK(void *key)
 {
-	BfmeEntryCK *head = g_bfmeListCK;
+	BfmeEntryCK *head = (BfmeEntryCK *)g_timedOperationHead;
 	BfmeEntryCK *entry = bfmeFindCK(key);
 
 	if (entry != 0)
 	{
 		if (entry == head)
-			g_bfmeListCK = entry->m_bfmeNext;
+			g_timedOperationHead = (TimedOperationNode *)entry->m_bfmeNext;
 		else
 			bfmeUnlinkCK(entry);
 	}

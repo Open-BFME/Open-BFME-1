@@ -72,7 +72,9 @@ public:
 };
 
 extern TerrainLogic *TheTerrainLogic;
-extern PartitionManager *TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 
 class ScriptActions
 {
@@ -89,9 +91,9 @@ void ScriptActions::doRevealMapAtWaypoint(const AsciiString &waypointName,
 	{
 		UnsignedShort playerMask =
 			bfmeScriptEngine()->getPlayerMaskFromAsciiString(playerName, 0);
-		TheShroudManager->doShroudReveal(&way->m_location,
+		(*reinterpret_cast<PartitionManager **>(&TheShroudManager))->doShroudReveal(&way->m_location,
 			radiusToReveal, playerMask);
-		TheShroudManager->undoShroudReveal(&way->m_location,
+		(*reinterpret_cast<PartitionManager **>(&TheShroudManager))->undoShroudReveal(&way->m_location,
 			radiusToReveal, playerMask);
 	}
 }

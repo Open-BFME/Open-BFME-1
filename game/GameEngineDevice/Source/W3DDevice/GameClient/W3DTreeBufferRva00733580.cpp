@@ -16,7 +16,9 @@ enum ObjectShroudStatus { RvaShroud0, RvaShroud1, RvaShroud2, RvaShroudFogged };
 class PartitionManager { public:
     ObjectShroudStatus getPropShroudStatusForPlayer(int,const Coord3D *) const;
 };
-extern PartitionManager *TheShroudManager;
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+
 class Player { public: char pad00[0x24]; int index; };
 class PlayerList { public: char pad00[0xc]; Player *localPlayer; };
 extern PlayerList *ThePlayerList;
@@ -70,7 +72,7 @@ void Rva00733580Owner::update(Rva00733580Record *tree)
     position.x = tree->location.X;
     position.y = tree->location.Y;
     position.z = tree->location.Z;
-    ObjectShroudStatus status = TheShroudManager->getPropShroudStatusForPlayer(playerIndex,&position);
+    ObjectShroudStatus status = (*reinterpret_cast<PartitionManager **>(&TheShroudManager))->getPropShroudStatusForPlayer(playerIndex,&position);
     if (status == RvaShroudFogged) {
         tree->toppleState = 2;
         return;
