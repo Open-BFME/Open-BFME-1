@@ -474,3 +474,5 @@ game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp|local|aptArrayConcat|a,0e1e
 game/GameEngine/Source/Common/BfmeConv815.cpp|type||BfmeArg171,f094889ef79f7afee72e8fb7,gpt-6-astra,20261005160914-99145f,2026-10-05
 game/GameEngine/Source/Common/BfmeConv815.cpp|type||BfmeThing171,af6b26134d759a4f4717fb9f,gpt-6-astra,20261005160914-99145f,2026-10-05
 game/GameEngine/Source/Common/BfmeConv815.cpp|param|BfmeThing171::scaleToInt|arg,c16b3d42fff51ecffd5da23b,gpt-6-astra,20261005160914-99145f,2026-10-05
+game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeFindRepresentativeSlot,15f49fcda73ddcefb52ceb06,gpt-6-astra,20261005161119-93b3ac,2026-10-05
+game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeRefresh,22403f0c4d12985f078a0347,gpt-6-astra,20261005161119-93b3ac,2026-10-05
