@@ -1,4 +1,4 @@
-extern void *g_bfmeWhatBKG;
+extern void *g_bfmeWhatBGE;
 
 class BfmeSubBKG
 {
@@ -8,5 +8,5 @@ public:
 
 void __stdcall bfmeGoBKG(BfmeSubBKG *sub, void *what)
 {
-	sub->bfmeDoBKG(g_bfmeWhatBKG, what);
+	sub->bfmeDoBKG(g_bfmeWhatBGE, what);
 }

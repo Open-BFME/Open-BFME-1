@@ -34,7 +34,6 @@ public:
 	void *m_bfme28;
 };
 
-extern BfmeStr1233 g_bfmeStr1233;
 // The shared empty EA string block at 0x012D5298 is defined once, as
 // EAStringC::StringDataC, in game/GameEngine/Source/Common/Data/Rva012D5298.cpp;
 // this TU keeps its own local view of the block and casts at each use.
@@ -44,6 +43,7 @@ public:
 	class StringDataC;
 };
 extern EAStringC::StringDataC g_rva012D5298Empty;
+BfmeStr1233 g_bfmeStr1233 = { (BfmeBuf1233 *)&g_rva012D5298Empty };
 extern BfmeAlloc1233 *g_bfmeAlloc1233;
 struct Rva008AE770Stack
 {

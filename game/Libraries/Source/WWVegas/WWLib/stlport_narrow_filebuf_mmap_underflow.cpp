@@ -115,6 +115,7 @@ private:
 	unsigned char m_regular_file;
 	unsigned char m_pad;
 
+protected:
 	static unsigned int _M_page_size;
 };
 

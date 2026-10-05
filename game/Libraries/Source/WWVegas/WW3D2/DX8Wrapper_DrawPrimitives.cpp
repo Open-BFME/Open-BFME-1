@@ -350,7 +350,9 @@ class DX8Wrapper
 		BUFFER_TYPE_INVALID
 	};
 
+protected:
 	static bool _EnableTriangleDraw;
+private:
 	static unsigned DrawPolygonLowBoundLimit;
 	static IDirect3DDevice8 *D3DDevice;
 	static BfmeApplyCapsView *CurrentCaps;

@@ -81,6 +81,11 @@ struct BigObfSelectorRecord012B7788
 };
 
 
+BigObfSelectorRecord g_ObfRecord012B90B8 = {
+	{ 0xC961F98F, 0xF88B8B8F, 0xBAEA698F, 0x5692630F, 0 },
+	{ 0xD9C9B94B, 0xB403CB4B, 0xEA46294B, 0x1ABE23CB, 0 }
+};
+
 // The constructors use the same two-bit selector helpers already recovered in
 // Q3SelectorRecordReaders.cpp and R3SelectorRecordReadersEbp.cpp.  VC7.1 has
 // no intrinsic for rdtsc, and neither esp nor ebp can be read as a C++ value,

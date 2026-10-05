@@ -34,7 +34,6 @@ void bfmeDrawFilterUV(int, int, Coord2D *);
 class DX8CapsLike { public: char pad[0x28]; char npatches; };
 extern DX8CapsLike *TheDX8Caps; // 0x01340578
 
-extern bool TheBoxFilterUVEnabled; // 0x012D6DAD
 
 void Rva00711600FilterDraw(unsigned color, unsigned mask, bool useAltCluster, unsigned altMaskValue)
 {
@@ -93,7 +92,7 @@ void Rva00711600FilterDraw(unsigned color, unsigned mask, bool useAltCluster, un
 			(*static_cast<void (*)(unsigned long, unsigned)>(&DX8Wrapper::Set_DX8_Render_State))(0x14, 6);
 		}
 
-		if (TheBoxFilterUVEnabled) {
+		if (DX8Wrapper::_Is_Triangle_Draw_Enabled()) {
 			Coord2D dims = { 1.0f, 1.0f };
 			bfmeDrawFilterUV((int)color, 0, &dims);
 		}

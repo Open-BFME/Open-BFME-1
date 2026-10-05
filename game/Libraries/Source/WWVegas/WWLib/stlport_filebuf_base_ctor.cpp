@@ -35,6 +35,8 @@ protected:
 
 }
 
+unsigned int _STL::_Filebuf_base::_M_page_size = 0x1000;
+
 struct BfmeSystemInfo
 {
 	unsigned int dwOemId;

@@ -1,4 +1,4 @@
-extern void *g_bfmeWhatBGE;
+void *g_bfmeWhatBGE = "ID";
 
 class BfmeSubBGE
 {

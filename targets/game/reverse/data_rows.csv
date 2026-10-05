@@ -479,3 +479,13 @@ _g_Rva00CF7608,0x010F7608,va,4,.rdata,game/GameEngine/Source/GameClient/GUI/Rva0
 ?g_ObfRecord012B829C@@3UBigObfSelectorRecord@@A,0x012B829C,va,40,.data,game/GameEngine/Source/Common/BigObfHookWrappers.cpp,matched,targets/game/reverse/identity_evidence/012b829c-data-identity.md,gpt-6.1-sol
 ?g_ObfRecord012B82C4@@3UBigObfSelectorRecord@@A,0x012B82C4,va,40,.data,game/GameEngine/Source/Common/BigObfHookWrappers.cpp,matched,targets/game/reverse/identity_evidence/012b82c4-data-identity.md,gpt-6.1-sol
 ?g_ObfRecord012B82EC@@3UBigObfSelectorRecord@@A,0x012B82EC,va,40,.data,game/GameEngine/Source/Common/BigObfHookWrappers.cpp,matched,targets/game/reverse/identity_evidence/012b82ec-data-identity.md,gpt-6.1-sol
+?m_connectionPairs@NAT@@1PAY167HA,0x012B9868,va,1568,.data,game/GameEngine/Source/GameNetwork/nat.cpp,matched,targets/game/reverse/identity_evidence/012b9868-data-identity.md,gpt-6.1-sol
+?m_timeBetweenRetries@NAT@@1HA,0x012B9E88,va,4,.data,game/GameEngine/Source/GameNetwork/nat.cpp,matched,targets/game/reverse/identity_evidence/012b9e88-data-identity.md,gpt-6.1-sol
+?groupTable0@LZHLDecoderStat@@2PAUGroup@1@A,0x012C5628,va,128,.data,game/Libraries/Source/Compression/LZHCompress/CompLibSource/Huff.cpp,matched,targets/game/reverse/identity_evidence/012c5628-data-identity.md,gpt-6.1-sol
+?symbolTable0@LZHLDecoderStat@@2PAFA,0x012C56A8,va,548,.data,game/Libraries/Source/Compression/LZHCompress/CompLibSource/Huff.cpp,matched,targets/game/reverse/identity_evidence/012c56a8-data-identity.md,gpt-6.1-sol
+?_M_page_size@_Filebuf_base@_STL@@1IA,0x012C7ED0,va,4,.data,game/Libraries/Source/WWVegas/WWLib/stlport_filebuf_base_ctor.cpp,matched,targets/game/reverse/identity_evidence/012c7ed0-data-identity.md,gpt-6.1-sol
+?g_ObfRecord012B90B8@@3UBigObfSelectorRecord@@A,0x012B90B8,va,40,.data,game/GameEngine/Source/Common/BigObfHookWrappers.cpp,matched,targets/game/reverse/identity_evidence/012b90b8-data-identity.md,gpt-6.1-sol
+?g_String012D5140@@3VBfmeStrVKI@@A,0x012D5140,va,4,.data,game/GameEngine/Source/Common/BfmeConv820.cpp,matched,targets/game/reverse/identity_evidence/012d5140-data-identity.md,gpt-6.1-sol
+?g_bfmeStr1233@@3UBfmeStr1233@@A,0x012D5978,va,4,.data,game/GameEngine/Source/Common/BfmeConv1233.cpp,matched,targets/game/reverse/identity_evidence/012d5978-data-identity.md,gpt-6.1-sol
+?_EnableTriangleDraw@DX8Wrapper@@1_NA,0x012D6DAD,va,1,.data,game/Libraries/Source/WWVegas/WW3D2/dxwrapper.cpp,matched,targets/game/reverse/identity_evidence/012d6dad-data-identity.md,gpt-6.1-sol
+?g_bfmeWhatBGE@@3PAXA,0x012C3BB8,va,4,.data,game/GameEngine/Source/Common/BfmeConv461.cpp,matched,targets/game/reverse/identity_evidence/012c3bb8-data-identity.md,gpt-6.1-sol

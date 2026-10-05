@@ -61,8 +61,10 @@ private:
 	int m_roundTimeout;
 	unsigned char m_applyMangledPort;
 
+protected:
 	static int m_connectionPairs[ 7 ][ 7 ][ 8 ];
 	static int m_timeBetweenRetries;
+private:
 	static int m_timeToWaitForPort;
 };
 

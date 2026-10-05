@@ -13,19 +13,26 @@ struct BfmeStringPool3AF0
 };
 
 extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
-extern BfmeRefEMI *g_bfmeRefEMIa;
-extern BfmeRefEMI *g_bfmeRefEMIb;
+struct BfmeHdrVKI;
+class BfmeStrVKI { public: BfmeHdrVKI *m_bfme00; };
+struct BfmeBuf1233;
+struct BfmeStr1233 { BfmeBuf1233 *m_bfme00; };
+class EAStringC { public: class StringDataC; };
+extern EAStringC::StringDataC g_rva012D5298Empty;
+
+BfmeStrVKI g_String012D5140 = { (BfmeHdrVKI *)&g_rva012D5298Empty };
+extern BfmeStr1233 g_bfmeStr1233;
 
 void bfmeGoEMIa()
 {
-	BfmeRefEMI *r = g_bfmeRefEMIa;
+	BfmeRefEMI *r = (BfmeRefEMI *)g_String012D5140.m_bfme00;
 	if (--r->m_bfmeCount == 0)
 		g_rva01337A30AllocPair->m_bfmeF1(r);
 }
 
 void bfmeGoEMIb()
 {
-	BfmeRefEMI *r = g_bfmeRefEMIb;
+	BfmeRefEMI *r = (BfmeRefEMI *)g_bfmeStr1233.m_bfme00;
 	if (--r->m_bfmeCount == 0)
 		g_rva01337A30AllocPair->m_bfmeF1(r);
 }

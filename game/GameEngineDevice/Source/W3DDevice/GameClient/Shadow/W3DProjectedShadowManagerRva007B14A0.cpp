@@ -218,7 +218,10 @@ public:
 	static bool Has_Stencil();
 	static void Get_DX8_Render_State_Value_Name(StringClass &, unsigned long, unsigned int);
 	static ShadowDecalDevice007B14A0 *_Get_D3D_Device8() { return D3DDevice; }
+	static bool _Is_Triangle_Draw_Enabled() { return _EnableTriangleDraw; }
+protected:
 	static bool _EnableTriangleDraw;
+public:
 
 	static __forceinline void Set_Material(VertexMaterialClass *vmat)
 	{
@@ -438,7 +441,7 @@ void W3DProjectedShadowManager::flush007B14A0(unsigned type, ShadowTexture007B6D
 	m_pDev->SetStreamSource(0, shadowDecalVertexBufferD3D, 0, sizeof(SHADOW_DECAL_VERTEX));
 	m_pDev->SetFVF(SHADOW_DECAL_FVF);
 
-	if (DX8Wrapper::_EnableTriangleDraw) {
+	if (DX8Wrapper::_Is_Triangle_Draw_Enabled()) {
 		Debug_Statistics::Record_DX8_Polys_And_Vertices(nShadowDecalPolysInBatch, nShadowDecalVertsInBatch, ShaderClass::_PresetOpaqueShader);
 		m_pDev->DrawIndexedPrimitive(4, nShadowDecalStartBatchVertex, 0,
 			nShadowDecalVertsInBatch, nShadowDecalStartBatchIndex, nShadowDecalPolysInBatch);
