@@ -528,3 +528,10 @@ game/Libraries/Source/WWVegas/WW3D2/MeshModelInstallMaterials.cpp|member||m_text
 game/GameEngine/Source/Common/Glo012F1028Sub_conquered.cpp|member||m_bfmeStart,f14b3c29547be78629472e06,gpt-6-astra,20261005162723-b5b5fa,2026-10-05
 game/GameEngine/Source/Common/Glo012F1028Sub_conquered.cpp|member||m_bfmeFinish,cd769b44830c89a338858aef,gpt-6-astra,20261005162723-b5b5fa,2026-10-05
 game/GameEngine/Source/Common/INI/Rva000C1E50MapCacheDefinition.cpp|local|Rva000C1E50::parseMapCacheDefinition|c,598f71a850311e94d3fae431,gpt-6-astra,20261005161857-19f7ea,2026-10-05
+game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|type||BfmeAttackForwardInfo,d63b09d31648d009bbc5fd23,gpt-6-astra,20261005161857-04274c,2026-10-05
+game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeMode,fb82531b705c5970fb7acc9a,gpt-6-astra,20261005161857-04274c,2026-10-05
+game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeValue,b1bdd81bef71ba7a29e2c26e,gpt-6-astra,20261005161857-04274c,2026-10-05
+game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeFirst,69e87c6afc37e0b40933b24a,gpt-6-astra,20261005161857-04274c,2026-10-05
+game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeSecond,a83dabc05029d4af15675354,gpt-6-astra,20261005161857-04274c,2026-10-05
+game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeInfo,190de83850fbaa264b4f1734,gpt-6-astra,20261005161857-04274c,2026-10-05
+game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|function|Gen_0027FED0@|bfmeRun,e36f057030d59e76e0ff1e49,gpt-6-astra,20261005161857-04274c,2026-10-05
