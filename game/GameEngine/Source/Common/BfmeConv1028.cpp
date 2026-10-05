@@ -21,12 +21,11 @@ BfmeA1028 *BfmeA1028::bfmeGo1028A(int a)
 	return this;
 }
 
-extern char g_bfmeTag1028[];
 void bfmeReport1028(int a, int b, char *t, int n);
 
 void __stdcall bfmeGo1028B(int a)
 {
-	bfmeReport1028(0, a - 1, g_bfmeTag1028, 0x2432);
+	bfmeReport1028(0, a - 1, "F:\\bfme\\Code\\gameenginedevice\\Source\\W3DDevice\\GameClient\\Drawable\\W3DScriptedModelDraw.cpp", 0x2432);
 }
 
 class BfmeSub1028

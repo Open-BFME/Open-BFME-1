@@ -83,12 +83,11 @@ public:
 };
 
 extern NameKeyGenerator *g_bfmeMap996;
-extern char g_bfmeDefault996[];
 
 void __stdcall bfmeGo996A(BfmeThing996 *t)
 {
 	BfmeX996 *x = t->bfmeGet996();
-	char *s = x ? x->bfmeName996() : g_bfmeDefault996;
+	char *s = x ? x->bfmeName996() : "(NULL)";
 
 	t->m_bfmeSlot->m_bfmeVal = (int)g_bfmeMap996->nameToKey(s);
 }

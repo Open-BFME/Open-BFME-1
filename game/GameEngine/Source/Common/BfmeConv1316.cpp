@@ -1,6 +1,5 @@
 // Open-BFME5 conversions.
 
-extern char g_bfmeInfoTKB[];
 extern void *g_bfmeVftTKB[];
 
 // The retail call at +0x09 targets 0x0090E3D0.  The ledger row for that
@@ -26,7 +25,7 @@ public:
 };
 
 BfmeThingTKB::BfmeThingTKB()
-	: BfmeThingSJ(reinterpret_cast<int>(g_bfmeInfoTKB))
+	: BfmeThingSJ(reinterpret_cast<int>("EXScorch01.tga"))
 {
 	m_bfmeVft = g_bfmeVftTKB;
 }

@@ -16,8 +16,6 @@ public:
 // GameNetwork/GameSpy/Thread/BuddyThreadClassThreadFunction.cpp.
 class BfmeQ1279;
 
-extern char g_bfmeStr1279A[];
-extern char g_bfmeStr1279B[];
 
 class BfmeA1279
 {
@@ -31,6 +29,6 @@ public:
 BfmeA1279::BfmeA1279(BfmeQ1279 *a)
 {
 	m_bfme00 = a;
-	reinterpret_cast< BfmeThingUPB * >( a )->bfmeGoUPB(g_bfmeStr1279A, m_bfme04, (void *)0x100);
-	reinterpret_cast< BfmeThingUPB * >( m_bfme00 )->bfmeGoUPB(g_bfmeStr1279B, m_bfme104, (void *)0x100);
+	reinterpret_cast< BfmeThingUPB * >( a )->bfmeGoUPB("ticket", m_bfme04, (void *)0x100);
+	reinterpret_cast< BfmeThingUPB * >( m_bfme00 )->bfmeGoUPB("challenge", m_bfme104, (void *)0x100);
 }

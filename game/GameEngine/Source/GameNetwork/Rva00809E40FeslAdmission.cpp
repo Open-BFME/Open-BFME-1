@@ -154,7 +154,6 @@ extern int g_bfmeKeyVHE;
 // rest have none, so they take the honest address-derived name.
 extern int g_bfmeKeyDVHD;			// 0x0112B588
 extern "C" char bfmeInfoDFI[];		// 0x0112B554 (aliases bfmeInfoDFJ)
-extern char g_bfmeStr1279A[];		// 0x01118E50
 extern void *g_0112C7C0;			// route slot handed to Rva007F93E0
 extern const char g_010F91BC[];
 extern const char g_01102DE0[];
@@ -255,7 +254,7 @@ void Rva00809E40Owner::rva00809E40( Rva007E8810Message *input )
 		request.m_category = 'EGRQ';
 		request.addString( g_010F91BC, first );
 		request.addInt( bfmeInfoDFI, record->m_powerSabotagedTillFrame );
-		request.addString( g_0112B590, g_bfmeStr1279A );
+		request.addString( g_0112B590, "ticket" );
 		m_sender->send( &request );
 	}
 }
