@@ -15,12 +15,12 @@
 // ControlBar::init (0x004A0F70, +0x4e0) fills from
 // "GeneralsExpPoints.wnd:ButtonRank3Number%d" -- Zero Hour's Rank3 array. The
 // per-button logic Zero Hour spells in line lives in the matched
-// ControlBar::bfmeQueryWD (0x004A09D0), and the "SCIENCE:Rank" level text that
+// ControlBar::GetPurchaseScienceStatus (0x004A09D0), and the "SCIENCE:Rank" level text that
 // Zero Hour commented out is live again.
 //
-// ControlBar::bfmeQueryWD (0x004A09D0, 268 bytes) sits just before this body
+// ControlBar::GetPurchaseScienceStatus (0x004A09D0, 268 bytes) sits just before this body
 // in retail's ControlBar.cpp and is carried here verbatim from
-// ControlBar_bfmeQueryWD.cpp (shape_levers.md "Compiler-private ABI: compile
+// ControlBar_GetPurchaseScienceStatus.cpp (shape_levers.md "Compiler-private ABI: compile
 // the static helper with its caller"): with the definition in view VC7.1 sees
 // that the query only writes through its out-pointers, so it keeps `found' in
 // BL across winHide exactly as retail does instead of re-reading the stack
@@ -107,7 +107,7 @@ private:
 	Int m_endGameTimer;                // +0x17080
 };
 
-// Retail inlines AsciiString::isEmpty() in bfmeQueryWD (`cmp word ptr
+// Retail inlines AsciiString::isEmpty() in GetPurchaseScienceStatus (`cmp word ptr
 // [eax+4],0` at +0x6b); the shim header forwards it out of line.
 static inline Bool inlineIsEmpty(const AsciiString &s)
 {
@@ -217,7 +217,7 @@ extern GameTextInterface *TheGameText;
 class ControlBar
 {
 public:
-	void bfmeQueryWD(Player *player, Int buttonIndex, const CommandButton **buttonOut,
+	void GetPurchaseScienceStatus(Player *player, Int buttonIndex, const CommandButton **buttonOut,
 	                 Bool *found, Bool *canPurchase, Bool *hasScience);
 	void setControlCommand(GameWindow *button, const CommandButton *commandButton);
 	const CommandSet *findCommandSet(const AsciiString &name);
@@ -239,8 +239,8 @@ extern ControlBar *TheControlBar;
 extern ScienceStore *TheScienceStore;
 #define TheBfmeGameLogic ((GameLogicPortraitShim *)TheGameLogic)
 
-// ?bfmeQueryWD@ControlBar@@QAEXPAVPlayer@@HPAPBVCommandButton@@PA_N22@Z present-unmatched
-void ControlBar::bfmeQueryWD(
+// ?GetPurchaseScienceStatus@ControlBar@@QAEXPAVPlayer@@HPAPBVCommandButton@@PA_N22@Z present-unmatched
+void ControlBar::GetPurchaseScienceStatus(
     Player *player,
     Int buttonIndex,
     const CommandButton **buttonOut,
@@ -333,7 +333,7 @@ void ControlBar::populatePurchaseScience(Player *player)
 		Bool found;
 		Bool canPurchase;
 		Bool hasScience;
-		bfmeQueryWD(player, i, &commandButton, &found, &canPurchase, &hasScience);
+		GetPurchaseScienceStatus(player, i, &commandButton, &found, &canPurchase, &hasScience);
 		GameWindow *win = m_sciencePurchaseWindowsRank3[i];
 		win->winHide(!found);
 		if (found)

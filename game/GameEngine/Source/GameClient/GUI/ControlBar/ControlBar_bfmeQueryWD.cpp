@@ -107,7 +107,7 @@ public:
 class ControlBar
 {
 public:
-    void bfmeQueryWD(
+    void GetPurchaseScienceStatus(
         Player *player,
         Int buttonIndex,
         const CommandButton **buttonOut,
@@ -131,8 +131,8 @@ extern ControlBar *TheControlBar;
 extern ScienceStore *TheScienceStore;
 #define TheBfmeGameLogic ((GameLogicPortraitShim *)TheGameLogic)
 
-// ?bfmeQueryWD@ControlBar@@QAEXPAVPlayer@@HPAPBVCommandButton@@PA_N11@Z
-void ControlBar::bfmeQueryWD(
+// ?GetPurchaseScienceStatus@ControlBar@@QAEXPAVPlayer@@HPAPBVCommandButton@@PA_N22@Z
+void ControlBar::GetPurchaseScienceStatus(
     Player *player,
     Int buttonIndex,
     const CommandButton **buttonOut,

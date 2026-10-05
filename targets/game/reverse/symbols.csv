@@ -78311,7 +78311,7 @@ name,address,notes
 ?bfmeQueryRallyOverride@@YAPAVObject@@PAV1@PBUCoord3D@@@Z,0x000159A6,typed cdecl helper called by QueueProductionExitUpdate::releaseLastExit
 ?bfmeQuerySG@BfmeSrcSG@@QAEHXZ,0x00039324,pin
 ?bfmeQueryWD@@YGXHHPA_N000@Z,0x0001CDB9,pin
-?bfmeQueryWD@ControlBar@@QAEXPAVPlayer@@HPAPBVCommandButton@@PA_N22@Z,0x0001CDB9,pin: ILT jmp to body 0x004A09D0 (matched ControlBar::bfmeQueryWD row object-symbol); called from populatePurchaseScience 0x004A0B90+0x7f with ecx=this and 6 dword args; callee ret 0x18
+?GetPurchaseScienceStatus@ControlBar@@QAEXPAVPlayer@@HPAPBVCommandButton@@PA_N22@Z,0x0001CDB9,pin: ILT jmp to body 0x004A09D0 (matched ControlBar::GetPurchaseScienceStatus row object-symbol; EA WorldBuilder label); called from populatePurchaseScience 0x004A0B90+0x7f with ecx=this and 6 dword args; callee ret 0x18
 ?bfmeRandom2B7@@YANHMPBDH@Z,0x0002CCA5,pin
 ?bfmeRandomPositive@@YAKK@Z,0x00879140,nbench abs_randwc remap; same body as ?bfmeRandomPositive@@YAHH@Z (u32 is unsigned long)
 ?bfmeRangeABA@BfmeListABA@@QAEXPAUBfmeIterABA@@0@Z,0x0001C017,Open-BFME5 ILT list range the 0x00224440 progress query calls
