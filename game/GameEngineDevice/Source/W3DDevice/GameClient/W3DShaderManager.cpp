@@ -3201,7 +3201,7 @@ struct BfmeShaderManagerStatics
 	DWORD m_glowVertexDeclaration;
 };
 
-extern BfmeShaderManagerStatics g_bfmeShaderManager;
+#define g_bfmeShaderManager (*reinterpret_cast<BfmeShaderManagerStatics *>(&W3DShaderManager::m_renderingToTexture))
 
 class BfmeVertexShaderLoader
 {

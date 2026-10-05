@@ -71,7 +71,7 @@ Int checksLeftBeforeOnline = 0;
 Int timeThroughOnline = 0; // used to avoid having old callbacks cause problems
 Bool mustDownloadPatch = FALSE;
 Bool cantConnectBeforeOnline = FALSE;
-static std::list<QueuedDownload> queuedDownloads;
+std::list<QueuedDownload> queuedDownloads;
 
 char *MOTDBuffer = NULL;
 static char *configBuffer = NULL;

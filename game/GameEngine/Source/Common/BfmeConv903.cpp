@@ -134,12 +134,13 @@ public:
 	virtual bool bfmeCheckLE();
 };
 
-extern BfmeGlobLE *g_bfmeGlobLE;
+class LANAPI;
+extern LANAPI *TheLAN;
 
 void bfmeGoLE(void)
 {
-	if (g_bfmeGlobLE && g_bfmeGlobLE->bfmeCheckLE())
-		g_bfmeGlobLE->bfmeActLE(1);
+	if (TheLAN && reinterpret_cast<BfmeGlobLE *>(TheLAN)->bfmeCheckLE())
+		reinterpret_cast<BfmeGlobLE *>(TheLAN)->bfmeActLE(1);
 }
 
 class BfmeGlobLF

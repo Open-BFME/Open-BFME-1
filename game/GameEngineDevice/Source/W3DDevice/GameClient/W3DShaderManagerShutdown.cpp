@@ -53,14 +53,19 @@ public:
 static ShaderInterface *W3DShaders[17];
 static FilterInterface *W3DFilters[10];
 
+enum FilterTypes { FT_NULL_FILTER = 0 };
+
 class W3DShaderManager
 {
 public:
 	static void shutdown();
 
+public:
+	enum ShaderTypes { ST_INVALID = 0 };
+
 protected:
-	static int m_currentShader;
-	static int m_currentFilter;
+	static ShaderTypes m_currentShader;
+	static FilterTypes m_currentFilter;
 	static ShaderVertexBuffer *m_vertexBuffer012F9D1C;
 	static ShaderComResource *m_resource012F9D14;
 	static ShaderComResource *m_resource012F9D18;
@@ -71,8 +76,8 @@ void W3DShaderManager::shutdown()
 {
 	BfmeShaderShutdown::releaseDependentResources();
 	
-	m_currentShader = 0;
-	m_currentFilter = 0;
+	m_currentShader = ST_INVALID;
+	m_currentFilter = FT_NULL_FILTER;
 
 	if (m_vertexBuffer012F9D1C) {
 		m_vertexBuffer012F9D1C->Release_Ref();

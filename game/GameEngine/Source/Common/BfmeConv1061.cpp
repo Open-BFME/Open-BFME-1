@@ -26,7 +26,8 @@ public:
 	virtual void bfmeSlot1061G_13(void);
 };
 
-extern BfmeG1061 *g_bfmeG1061;
+class LANAPI;
+extern LANAPI *TheLAN;
 
 class BfmeT1061
 {
@@ -49,8 +50,8 @@ public:
 void BfmeA1061::bfmeGo1061A(void)
 {
 	m_bfmeSub.bfmeSlot1061S_1();
-	if (g_bfmeG1061)
-		g_bfmeG1061->bfmeSlot1061G_13();
+	if (TheLAN)
+		reinterpret_cast<BfmeG1061 *>(TheLAN)->bfmeSlot1061G_13();
 	(*reinterpret_cast<BfmeT1061 **>(&TheGameEngine))->bfmeTail1061();
 }
 

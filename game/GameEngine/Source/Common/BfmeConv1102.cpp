@@ -32,7 +32,8 @@ public:
 	void bfmeTail1102(void);
 };
 
-extern BfmeG1102 *g_bfmeG1102;
+class LANAPI;
+extern LANAPI *TheLAN;
 class GameEngine;
 extern GameEngine *TheGameEngine;
 
@@ -56,8 +57,8 @@ void BfmeR1102::bfmeGo1102B(int a)
 		return;
 	}
 	m_bfmeSub.bfmeSlot1102S_1();
-	if (g_bfmeG1102)
-		g_bfmeG1102->bfmeSlot1102G_13();
+	if (TheLAN)
+		reinterpret_cast<BfmeG1102 *>(TheLAN)->bfmeSlot1102G_13();
 	(*reinterpret_cast<BfmeTl1102 **>(&TheGameEngine))->bfmeTail1102();
 	m_bfme3a8 = 0;
 }

@@ -216,8 +216,9 @@ class W3DShaderManager
 {
 public:
 	static IDirect3DTexture8 *getRenderTexture(void);
-	static bool m_renderingToTexture;
 	static bool isRenderingToTexture(void) { return m_renderingToTexture; }
+protected:
+	static bool m_renderingToTexture;
 };
 
 class RefCountClass

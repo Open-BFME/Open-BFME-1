@@ -25,7 +25,8 @@ public:
 class BfmeStateXC { public: void bfmeNotifyXC(int); };
 class GameSpyInfo;
 class GameSpyConfigInterface;
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameSpyConfigInterface *TheGameSpyConfig;
 struct PlayerRecord00532280 { char pad00[4]; AsciiString text04; char pad08[12]; int field14; unsigned int flags18; };
 class PlayerSlots00532280 {

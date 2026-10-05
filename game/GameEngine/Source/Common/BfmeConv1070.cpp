@@ -49,7 +49,8 @@ public:
 	virtual void bfmeSlot1070G_13(void);
 };
 
-extern BfmeG1070 *g_bfmeG1070;
+class LANAPI;
+extern LANAPI *TheLAN;
 
 class BfmeT1070
 {
@@ -79,8 +80,8 @@ void BfmeQ1070::bfmeGo1070A(void)
 		return;
 	m_bfme3a8 = 0;
 	m_bfmeSub.bfmeSlot1070S_1();
-	if (g_bfmeG1070)
-		g_bfmeG1070->bfmeSlot1070G_13();
+	if (TheLAN)
+		reinterpret_cast<BfmeG1070 *>(TheLAN)->bfmeSlot1070G_13();
 	(*reinterpret_cast<BfmeT1070 **>(&TheGameEngine))->bfmeTail1070();
 	((BfmeR1070 *)g_rva012F19E8WindowManager)->bfmeRun1070(m_bfme250, "CancelGame", 0, 0, 0, 0, 0, 0);
 }

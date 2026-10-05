@@ -160,6 +160,8 @@ class W3DShaderManager
 {
 public:
 	static IDirect3DTexture8 *getRenderTexture(void);
+	static bool isRenderingToTexture(void) { return m_renderingToTexture; }
+protected:
 	static bool m_renderingToTexture;
 };
 
@@ -400,7 +402,7 @@ bool Rva00722640W3DSmudgeManager::testHardwareSupport(void)
 			return false;
 		}
 
-		if (!W3DShaderManager::m_renderingToTexture)
+		if (!W3DShaderManager::isRenderingToTexture())
 			return false;
 
 		VertexMaterialClass *vmat =

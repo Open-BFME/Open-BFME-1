@@ -17687,3 +17687,4 @@ _g_012F7014,0x012F7014
 ?TheAptSaveLoad@@3PAVBfmeAptScreenSaveLoad@@A,0x012F4B44
 ?g_bfmeSubsystem012F4B78@@3PAVGen00587600@@A,0x012F4B78
 ?g_purchaseScienceWindow@@3PAVBfmeAptScreenSpellStore@@A,0x012F4C38
+?g_w3dMouseThreadRunLock@@3VMutexClass@@A,0x012F9800

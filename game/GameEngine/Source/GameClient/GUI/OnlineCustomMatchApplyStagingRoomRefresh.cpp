@@ -55,7 +55,8 @@ public:
 #undef GAMESPY_SLOT
 
 class GameSpyInfo;
-extern GameSpyInfo *TheGameSpyInfo;
+class GameSpyInfoInterface;
+extern GameSpyInfoInterface *TheGameSpyInfo;
 
 class BfmeLevelAN {
 public: char *bfmeBuildAN(unsigned int,int,int,int,int,int,int,int);

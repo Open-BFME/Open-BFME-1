@@ -84,7 +84,14 @@ extern BfmeAptScreenSkirmish *Rva012F4B54Skirmish;
 class BfmeAptScreenSpellStore;
 extern BfmeAptScreenSpellStore *g_purchaseScienceWindow;
 
-extern int g_Va012F9CF4;
+class W3DShaderManager
+{
+public:
+	enum ShaderTypes { ST_INVALID = 0 };
+protected:
+	static ShaderTypes m_currentShader;
+	friend int Rva007C5560Get(void);
+};
 extern int g_Va012F9D08;
 extern int g_Va01304B5C;
 extern int TheW3DHordeModelDrawCount;
@@ -290,7 +297,7 @@ int Rva0078AE30Get( void )
 
 int Rva007C5560Get( void )
 {
-	return g_Va012F9CF4;
+	return W3DShaderManager::m_currentShader;
 }
 
 int Rva007EB260Get( void )

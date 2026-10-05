@@ -17,11 +17,12 @@ struct Rva00627AA0Obj
 	virtual void slot6(Rva00627AA0Arg *arg);
 };
 
-Rva00627AA0Obj *g_rva00627AA0;
+class GameSpyBuddyMessageQueueInterface;
+extern GameSpyBuddyMessageQueueInterface *TheGameSpyBuddyMessageQueue;
 
 void rva00627AA0Call()
 {
 	Rva00627AA0Arg arg;
 	arg.m_value = 1;
-	g_rva00627AA0->slot6(&arg);
+	reinterpret_cast<Rva00627AA0Obj *>(TheGameSpyBuddyMessageQueue)->slot6(&arg);
 }

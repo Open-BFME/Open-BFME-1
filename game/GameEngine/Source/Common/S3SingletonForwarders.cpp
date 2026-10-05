@@ -418,7 +418,10 @@ public:
 	void bfmeForward(void);					// retail 0x00011D5B
 };
 
-extern Gen_00C708D0Target TheBfmeObject_00C708D0;		// 0x12f7180
+namespace _STL { template<class T> class allocator; template<class T, class A> class list; }
+class QueuedDownload;
+extern _STL::list<QueuedDownload, _STL::allocator<QueuedDownload> > queuedDownloads;
+#define TheBfmeObject_00C708D0 (*reinterpret_cast<Gen_00C708D0Target *>(&queuedDownloads))		// 0x12f7180
 class Gen_00C70900Target
 {
 public:
@@ -446,7 +449,9 @@ public:
 	void bfmeForward(void);					// retail 0x009DB350
 };
 
-extern Gen_00C709B0Target TheBfmeObject_00C709B0;		// 0x12f9800
+class MutexClass;
+extern MutexClass g_w3dMouseThreadRunLock;
+#define TheBfmeObject_00C709B0 (*reinterpret_cast<Gen_00C709B0Target *>(&g_w3dMouseThreadRunLock))		// 0x12f9800
 class Gen_00C709C0Target
 {
 public:

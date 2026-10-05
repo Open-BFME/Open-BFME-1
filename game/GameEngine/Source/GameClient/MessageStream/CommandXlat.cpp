@@ -612,7 +612,8 @@ extern GameWindowTransitionsHandler* TheTransitionHandler;
 // view of that object (its test() is a pinned callee), so the use casts.
 class Glo012F1028Type;
 extern Glo012F1028Type* Glo012F1028;
-extern void* g_va012F71B4;
+class GameSpyBuddyMessageQueueInterface;
+extern GameSpyBuddyMessageQueueInterface *TheGameSpyBuddyMessageQueue;
 class Rva005127A0InGameChat;
 extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;
 void rva00511CC0(int);
@@ -846,7 +847,7 @@ GameMessageDisposition CommandTranslator::translateGameMessage(const GameMessage
   disp=DESTROY_MESSAGE; break;
  }
  case 0x69:
-  if(g_va012F71B4) { if(!reinterpret_cast<void * &>(g_Rva005127A0InGameChat)) rva00511CC0(3); else HideInGameChat(); }
+  if(TheGameSpyBuddyMessageQueue) { if(!reinterpret_cast<void * &>(g_Rva005127A0InGameChat)) rva00511CC0(3); else HideInGameChat(); }
   disp=DESTROY_MESSAGE; break;
  case 0x6c:
   if(TheGameLogic->rva000652A0() && ((Rva004891C0*)TheTransitionHandler)->test()) rva0052B2A0();

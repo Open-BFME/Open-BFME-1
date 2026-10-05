@@ -180,7 +180,8 @@ extern BfmeHandleCX g_w3dMouseCursorTextures[50][21];
 extern void *g_w3dMouseCursorModels[50];
 extern void *g_w3dMouseCursorAnims[50];
 extern MouseThreadClass g_rva012F9808Object;
-extern unsigned char g_w3dMouseThreadRunLock;
+class MutexClass;
+extern MutexClass g_w3dMouseThreadRunLock;
 extern bool g_w3dMouseIsThread;
 // Retail's singleton at 0x012F4C5C is EA's Mouse *TheMouse; (defined once in
 // GameClient/Input/Mouse.cpp).  The Mouse class above is this TU's own view of
