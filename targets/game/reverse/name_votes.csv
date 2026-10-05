@@ -838,3 +838,4 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManag
 game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManagerRva007B4940.cpp|member||m_at34,a2761020ef5a2c9323c916b3,grok,20261005185305-0a702d,2026-10-05
 game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManagerRva007B4940.cpp|member||m_at60,930e926a9e941628cdf92411,grok,20261005185305-0a702d,2026-10-05
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainBackgroundReset.cpp|member||m_C0,87ddac45bb22fdfe014ecc9b,gpt-6-sol,20261005185701-3ab459,2026-10-05
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewCameraUpdateAlternateOneFrame.cpp|param|Lerp|t,1e7f3f43068dd66ebdd07fa7,gpt-6-sol,20261005185030-4f1619,2026-10-05
