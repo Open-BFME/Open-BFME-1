@@ -524,3 +524,4 @@ game/GameEngine/Source/Common/BfmeConv1323.cpp|member||m_bfmeHr,909d9f704533f404
 game/GameEngine/Source/Common/BfmeConv1323.cpp|member||m_bfmeName,07b52de40ac8fbdcfd04c504,gpt-6-astra,20261005161854-7d8af8,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1323.cpp|function|BfmeThingTTE@|bfmeGoTTE,c2c1ee87b82bad852284016c,gpt-6-astra,20261005161854-7d8af8,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1323.cpp|local|BfmeThingTTE::bfmeGoTTE|h,aa75ad73c19d42e87b4d04d9,gpt-6-astra,20261005161854-7d8af8,2026-10-05
+game/Libraries/Source/WWVegas/WW3D2/MeshModelInstallMaterials.cpp|member||m_texture50,8e06984094f11710a7575df6,gpt-6-astra,20261005162348-3928ed,2026-10-05
