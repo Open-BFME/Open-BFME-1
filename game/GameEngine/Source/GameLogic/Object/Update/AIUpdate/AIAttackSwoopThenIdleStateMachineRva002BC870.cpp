@@ -32,7 +32,7 @@ public:
 	unsigned char m_value46C;
 };
 
-class Rva002BC870AI
+class AIUpdateInterface
 {
 public:
 #define AI_SLOT(N) virtual void slot##N() = 0
@@ -59,10 +59,10 @@ public:
 class Object
 {
 public:
-	Rva002BC870AI *getAI() const { return m_ai; }
+	AIUpdateInterface *getAI() const { return m_ai; }
 
 	unsigned char m_head[0x204];
-	Rva002BC870AI *m_ai;
+	AIUpdateInterface *m_ai;
 };
 
 // Retail 0x002BC870 (139 bytes): slot 11 of the AIAttackSwoopThenIdleStateMachine
@@ -98,7 +98,7 @@ Bool AIAttackSwoopThenIdleStateMachine::rva002BC870() const
 
 		case 1013:
 		{
-			Rva002BC870AI *ai = m_owner->getAI();
+			AIUpdateInterface *ai = m_owner->getAI();
 			if (ai && ai->slot76())
 			{
 				Rva002BC870Target *target = ai->slot84();
