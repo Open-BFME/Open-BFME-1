@@ -10,14 +10,14 @@ public:
 	int m_bfmeD;						// +0x0C
 };
 
-extern int g_rva0073a610;					// retail 0x012F1400
+extern unsigned int HighlightColorIndex;					// retail 0x012F1400
 extern BfmeEntryFA g_bfmeTableFA[];				// retail 0x012B4FC8
 
 // ?bfmeLoad@@YAXPAH00H@Z
 void __cdecl bfmeLoad(int *first, int *second, int *third, int index)
 {
 	if (index == -1)
-		index = g_rva0073a610;
+		index = HighlightColorIndex;
 
 	*first = g_bfmeTableFA[index].m_bfmeA;
 	*second = g_bfmeTableFA[index].m_bfmeB;

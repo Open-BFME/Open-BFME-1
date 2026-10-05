@@ -37,11 +37,11 @@ public:
 
 extern FileSystem *TheFileSystem;
 
-extern char g_rva00061DE0[];
+extern char g_rva00061DE0;
 
 Int parseMod(char *args[], Int num)
 {
-	g_rva00061DE0[0] = 1;
+	g_rva00061DE0 = 1;
 	if (TheWritableGlobalData && num > 1)
 	{
 		AsciiString modPath = args[1];

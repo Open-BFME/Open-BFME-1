@@ -23,7 +23,7 @@ public:
 
 extern LocalFileSystem *TheLocalFileSystem;
 extern ArchiveFileSystem *TheArchiveFileSystem;
-extern char g_rva00061DE0[];
+extern char g_rva00061DE0;
 
 void bfmeInitFileSystemsEBB()
 {
@@ -34,5 +34,5 @@ void bfmeInitFileSystemsEBB()
 	TheArchiveFileSystem->bfmeInitEBB();
 
 	if (!TheLocalFileSystem->bfmeExistsEBB("shaders.big"))
-		g_rva00061DE0[0] = 1;
+		g_rva00061DE0 = 1;
 }

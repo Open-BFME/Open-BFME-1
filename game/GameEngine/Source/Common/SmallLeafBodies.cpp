@@ -59,12 +59,12 @@ extern unsigned char g_Va012F4126;
 extern unsigned char g_Va012F4970;
 extern volatile bool reOpenPlayerInfoFlag;
 extern unsigned char g_Va0130E9F8;
-extern char g_rva00061DE0[];
+extern char g_rva00061DE0;
 extern unsigned char g_Va0134CB4D;
 
 void Rva00061BE0SetFlag( void )
 {
-	g_rva00061DE0[0] = 0x01;
+	g_rva00061DE0 = 0x01;
 }
 
 void Rva00382870SetFlag( void )

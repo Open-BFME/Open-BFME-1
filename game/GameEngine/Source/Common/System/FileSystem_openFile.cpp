@@ -126,7 +126,7 @@ extern ArchiveFileSystem *TheArchiveFileSystem;
 extern LocalFileSystem *TheLocalFileSystem;
 extern char byte_134CA48[];
 extern char byte_134CB50[];
-extern char g_rva00061DE0[];
+extern char g_rva00061DE0;
 
 class FileSystem
 {
@@ -151,7 +151,7 @@ File *FileSystem::openFile( const char *filename, int access )
 		file = TheLocalFileSystem->openFile( modPath.str(), access );
 	}
 
-	if( !g_rva00061DE0[0] && file == NULL && TheArchiveFileSystem )
+	if( !g_rva00061DE0 && file == NULL && TheArchiveFileSystem )
 	{
 		if( !(access & 8) )
 			file = TheArchiveFileSystem->openFile( languagePath, access );
@@ -167,7 +167,7 @@ File *FileSystem::openFile( const char *filename, int access )
 			file = TheLocalFileSystem->openFile( filename, access );
 	}
 
-	if( g_rva00061DE0[0] && file == NULL && TheArchiveFileSystem )
+	if( g_rva00061DE0 && file == NULL && TheArchiveFileSystem )
 	{
 		if( !(access & 8) )
 		{
@@ -202,7 +202,7 @@ File *FileSystem::openFile( const char *filename, int access, int offset, int si
 		file = TheLocalFileSystem->openFile( modPath.str(), access, offset, size );
 	}
 
-	if( !g_rva00061DE0[0] && file == NULL && TheArchiveFileSystem )
+	if( !g_rva00061DE0 && file == NULL && TheArchiveFileSystem )
 	{
 		if( !(access & 8) )
 			file = TheArchiveFileSystem->openFile( languagePath, access, offset, size );
@@ -220,7 +220,7 @@ File *FileSystem::openFile( const char *filename, int access, int offset, int si
 
 	// Note the test order: the wide form checks TheArchiveFileSystem before
 	// file == NULL, where the narrow one above does it the other way round.
-	if( g_rva00061DE0[0] && TheArchiveFileSystem && file == NULL )
+	if( g_rva00061DE0 && TheArchiveFileSystem && file == NULL )
 	{
 		if( !(access & 8) )
 		{
