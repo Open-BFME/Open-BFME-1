@@ -900,3 +900,7 @@ game/GameEngine/Source/GameLogic/Object/Update/Rva001F9C20Unknown.cpp|type||Rva0
 game/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThreadCallbacks.cpp|param|BuddyThreadClass::statusCallback|arg,e5db992d6f01a2a07ba93ffe,gpt-6-sol,20261005194524-002ad9,2026-10-05
 game/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThreadCallbacks.cpp|param|BuddyThreadClass::messageCallback|arg,0c21ac15b8868088143cd6f4,gpt-6-sol,20261005194524-002ad9,2026-10-05
 game/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThreadCallbacks.cpp|param|BuddyThreadClass::requestCallback|arg,c4d306613e3e7d2a4d5fa46f,gpt-6-sol,20261005194524-002ad9,2026-10-05
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DSnowManagerRender.cpp|type||Rva00725710Caps,3ec726f3adb1539963e9c6b7,gpt-6-sol,20261005193543-9aafe1,2026-10-05
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DSnowManagerRender.cpp|type||Rva00725710Map,baf13bd1d9e27286e337b42f,gpt-6-sol,20261005193543-9aafe1,2026-10-05
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DSnowManagerRender.cpp|type||Rva00725710DeviceVtable,f5f6952a55fc1e73ee9949d4,gpt-6-sol,20261005193543-9aafe1,2026-10-05
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DSnowManagerRender.cpp|param|weather|p,7dac44a5c87a53843426bd4e,gpt-6-sol,20261005193543-9aafe1,2026-10-05
