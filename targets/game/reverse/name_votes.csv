@@ -535,3 +535,6 @@ game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeFirst
 game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeSecond,a83dabc05029d4af15675354,gpt-6-astra,20261005161857-04274c,2026-10-05
 game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeInfo,190de83850fbaa264b4f1734,gpt-6-astra,20261005161857-04274c,2026-10-05
 game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|function|Gen_0027FED0@|bfmeRun,e36f057030d59e76e0ff1e49,gpt-6-astra,20261005161857-04274c,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cpp|member||m_field04,1b77a235257a867a7799d83d,gpt-6-astra,20261005162215-a9ca4a,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cpp|member||m_field08,4a39756220cd8d5429d25487,gpt-6-astra,20261005162215-a9ca4a,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cpp|member||m_field0c,d6a4b8b90dbfa54cb50b4983,gpt-6-astra,20261005162215-a9ca4a,2026-10-05
