@@ -99,11 +99,11 @@ void Rva00785FD0Item::getRenderRegion(Rva00784090Point *minPt, Rva00784090Point 
 			Rva00784090TriangleList *list = entry->triangles();
 			if (list == 0)
 				break;
-			for (Rva00784090Triangle *t = list->begin; t != list->end; ++t)
+			for (Rva00784090Triangle *triangle = list->begin; triangle != list->end; ++triangle)
 			{
-				const Rva00784090Point &v0 = t->p0;
-				const Rva00784090Point &v1 = t->p1;
-				const Rva00784090Point &v2 = t->p2;
+				const Rva00784090Point &v0 = triangle->p0;
+				const Rva00784090Point &v1 = triangle->p1;
+				const Rva00784090Point &v2 = triangle->p2;
 				m_xform.apply(v0, p);
 				if (p.x < minPt->x)
 					minPt->x = p.x;
@@ -139,9 +139,9 @@ void Rva00785FD0Item::getRenderRegion(Rva00784090Point *minPt, Rva00784090Point 
 			Rva00784090QuadList *list = entry->quads();
 			if (list == 0)
 				break;
-			for (Rva00784090Quad *q = list->begin; q != list->end; ++q)
+			for (Rva00784090Quad *quad = list->begin; quad != list->end; ++quad)
 			{
-				const Rva00784090Point &v1 = q->p1;
+				const Rva00784090Point &v1 = quad->p1;
 				m_xform.apply(v1, p);
 				if (p.x < minPt->x)
 					minPt->x = p.x;
@@ -151,7 +151,7 @@ void Rva00785FD0Item::getRenderRegion(Rva00784090Point *minPt, Rva00784090Point 
 					minPt->y = p.y;
 				else if (maxPt->y < p.y)
 					maxPt->y = p.y;
-				const Rva00784090Point &v0 = q->p0;
+				const Rva00784090Point &v0 = quad->p0;
 				m_xform.apply(v0, p);
 				if (p.x < minPt->x)
 					minPt->x = p.x;
