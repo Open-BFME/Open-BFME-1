@@ -696,3 +696,8 @@ game/GameEngine/Source/GameLogic/AI/PathfinderAdjustToPossibleDestination.cpp|pa
 game/GameEngine/Source/GameLogic/AI/PathfinderAdjustToPossibleDestination.cpp|local|getTemplate|d,80253f9ce309b32d033057bf,gpt-6-sol,20261005175410-2b240d,2026-10-05
 game/GameEngine/Source/GameLogic/AI/PathfinderAdjustToPossibleDestination.cpp|local|Pathfinder::adjustToPossibleDestination|zone1,456e42328f907d3e9198ba38,gpt-6-sol,20261005175410-2b240d,2026-10-05
 game/GameEngine/Source/GameLogic/AI/PathfinderAdjustToPossibleDestination.cpp|local|Pathfinder::adjustToPossibleDestination|zone2,4ed36d229afc145067784b73,gpt-6-sol,20261005175410-2b240d,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp|member||m_int00,486f4585f4e03aa88fb3372a,gpt-6-sol,20261005181241-7a1e93,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp|member||m_enum04,0ee99e9a02ff9b184d27f7d5,gpt-6-sol,20261005181241-7a1e93,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp|member||m_coord08,c92f17bff776bb3bc379ffa9,gpt-6-sol,20261005181241-7a1e93,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp|member||m_coord14,c5e5a2a07231350614114a18,gpt-6-sol,20261005181241-7a1e93,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp|member||m_bool30,f2f9a5058d886689f43d487c,gpt-6-sol,20261005181241-7a1e93,2026-10-05
