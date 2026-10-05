@@ -1,3 +1,8 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+#include <deque>
+#include <windows.h>
+
 // Open-BFME5 conversions.
 
 // Retail 0x012F0898 is EA's GameLogic *TheGameLogic, defined once in
@@ -124,10 +129,16 @@ char BfmeD1024::bfmeGo1024D(int unused, int k, int v)
 
 class BfmeE1024;
 
-class BfmeP1024
+class AssetManagerImpl
 {
 public:
-	void bfmeReg1024(BfmeE1024 *p);
+	void UnloadAsset(BfmeE1024 *asset);
+
+	char m_unmodelled_000[0x20];
+	int m_bfmeCount;
+	char m_unmodelled_024[0x3c];
+	CRITICAL_SECTION m_bfmeLock;
+	_STL::deque<int> m_bfmeQueues[7];
 };
 
 class AssetRegistry;
@@ -136,10 +147,25 @@ extern AssetRegistry *g_theAssetRegistry;
 class BfmeE1024
 {
 public:
+	virtual void slot00();
+	virtual void slot04();
+	virtual void slot08();
+	virtual void slot0C();
+	virtual void slot10();
+	virtual void slot14();
+	virtual void slot18();
+	virtual void slot1C();
+	virtual void slot20();
+	virtual void slot24();
+	virtual void slot28();
+	virtual void slot2C();
+	virtual void slot30();
+	virtual void slot34();
+	virtual unsigned int slot38();
 	void bfmeGo1024E(void);
 
-	char m_bfmePad[4];
-	int m_bfmeFlags;
+	union { unsigned int m_bfmeFlags; volatile unsigned int m_bfmeFlagsShared; };
+	void *m_bfmeEntry;
 };
 
 void BfmeE1024::bfmeGo1024E(void)
@@ -150,8 +176,78 @@ void BfmeE1024::bfmeGo1024E(void)
 	if (g_theAssetRegistry == 0)
 		return;
 
-	((BfmeP1024 *)g_theAssetRegistry)->bfmeReg1024(this);
+	((AssetManagerImpl *)g_theAssetRegistry)->UnloadAsset(this);
 }
+
+void AssetManagerImpl::UnloadAsset(BfmeE1024 *item)
+{
+	if (!item->m_bfmeEntry || (item->m_bfmeFlagsShared & 0xff0000) == 0x70000)
+		return;
+
+	EnterCriticalSection(&m_bfmeLock);
+	while (((item->m_bfmeFlagsShared & 0xff0000) == 0x10000 ||
+		(item->m_bfmeFlagsShared & 0xff0000) == 0x50000) &&
+		m_bfmeQueues[(item->m_bfmeFlagsShared >> 16) & 0xff].front() == (int)item)
+	{
+		LeaveCriticalSection(&m_bfmeLock);
+		Sleep(1);
+		EnterCriticalSection(&m_bfmeLock);
+	}
+	while ((item->m_bfmeFlagsShared & 0xff0000) == 0x80000)
+	{
+		LeaveCriticalSection(&m_bfmeLock);
+		Sleep(1);
+		EnterCriticalSection(&m_bfmeLock);
+	}
+
+	unsigned int i = 0;
+	for (; i < m_bfmeQueues[(item->m_bfmeFlagsShared >> 16) & 0xff].size(); ++i)
+	{
+		if (m_bfmeQueues[(item->m_bfmeFlagsShared >> 16) & 0xff].begin()[i] == (int)item)
+			break;
+	}
+	m_bfmeQueues[(item->m_bfmeFlagsShared >> 16) & 0xff].begin()[i] =
+		m_bfmeQueues[(item->m_bfmeFlagsShared >> 16) & 0xff].begin()[
+			m_bfmeQueues[(item->m_bfmeFlagsShared >> 16) & 0xff].size() - 1];
+	m_bfmeQueues[(item->m_bfmeFlagsShared >> 16) & 0xff].pop_back();
+	LeaveCriticalSection(&m_bfmeLock);
+
+	item->m_bfmeFlags &= 0xfdffffff;
+	if ((item->m_bfmeFlagsShared & 0xff0000) == 0x30000)
+	{
+		m_bfmeCount -= item->slot38();
+		item->m_bfmeFlags = (item->m_bfmeFlagsShared & 0xff04ffff) | 0x40000;
+		if (m_bfmeCount < 0)
+			m_bfmeCount = 0;
+	}
+
+	switch ((item->m_bfmeFlagsShared >> 16) & 0xff)
+	{
+	case 0:
+		item->slot04();
+		item->m_bfmeFlags = (item->m_bfmeFlagsShared & 0xff01ffff) | 0x10000;
+	case 1:
+		item->slot08();
+		item->m_bfmeFlags = (item->m_bfmeFlagsShared & 0xff02ffff) | 0x20000;
+		m_bfmeCount += item->slot38();
+	case 2:
+		item->slot0C();
+		item->m_bfmeFlags = (item->m_bfmeFlagsShared & 0xff04ffff) | 0x40000;
+		m_bfmeCount -= item->slot38();
+		if (m_bfmeCount < 0)
+			m_bfmeCount = 0;
+	case 4:
+		item->slot14();
+		item->m_bfmeFlags = (item->m_bfmeFlagsShared & 0xff05ffff) | 0x50000;
+	case 5:
+		item->slot18();
+		item->m_bfmeFlags = (item->m_bfmeFlagsShared & 0xff06ffff) | 0x60000;
+	case 6:
+		item->slot1C();
+		item->m_bfmeFlags = (item->m_bfmeFlagsShared & 0xff07ffff) | 0x70000;
+	}
+}
+
 
 struct BfmeRec1024
 {
