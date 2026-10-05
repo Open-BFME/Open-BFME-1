@@ -664,3 +664,8 @@ game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|type||BFMETran
 game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|member||m_bfmeFlag,6d645b8862c76a0f77258be8,gpt-6-astra,20261005181706-42abde,2026-10-05
 game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|member||m_bfmeState,20ba045acd8b779311e6f5cb,gpt-6-astra,20261005181706-42abde,2026-10-05
 game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|member||m_bfmeCount,62fde4b2ee140dc1b038eedf,gpt-6-astra,20261005181706-42abde,2026-10-05
+game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|type||BFMETransitionList,c6a54c5c80e4728f4ca5ff21,grok,20261005181643-6eef79,2026-10-05
+game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|type||BFMETransitionZero,a2af096f8c0d080f00bcb7e6,grok,20261005181643-6eef79,2026-10-05
+game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|member||m_bfmeFlag,6d645b8862c76a0f77258be8,grok,20261005181643-6eef79,2026-10-05
+game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|member||m_bfmeState,20ba045acd8b779311e6f5cb,grok,20261005181643-6eef79,2026-10-05
+game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|member||m_bfmeCount,62fde4b2ee140dc1b038eedf,grok,20261005181643-6eef79,2026-10-05

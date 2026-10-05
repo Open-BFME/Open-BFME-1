@@ -320,3 +320,8 @@ game/GameEngine/Source/Common/Bfme5ListMemberDtors.cpp|type||BfmeDtorBaseW,UserP
 game/GameEngine/Source/Common/Bfme5ListMemberDtors.cpp|type||Gen_0009F7A0,SkirmishPreferences,gpt-6-astra+gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1729.cpp|type||BfmeOwnUC,W3DTerrainVisual,gpt-6-astra+grok,agreed,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1729.cpp|member||m_bfmeTgtUC,m_terrainRenderObject,gpt-6-astra+grok,agreed,2026-10-05
+game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|type||BFMETransitionList,TransitionWindowList,gpt-6-astra+gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|type||BFMETransitionZero,AsciiString,gpt-6-astra+gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|member||m_bfmeFlag,m_fireOnce,gpt-6-astra+gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|member||m_bfmeState,m_directionMultiplier,gpt-6-astra+gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|member||m_bfmeCount,m_currentFrame,gpt-6-astra+gpt-6-sol+grok,agreed,2026-10-05
