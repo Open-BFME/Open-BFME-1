@@ -146,7 +146,8 @@ private:
 struct Rva00579160Current : public GameInfo
 {
 };
-extern Rva00579160Current *Rva00579160TheCurrent;
+class SkirmishGameInfo;
+extern SkirmishGameInfo *TheSkirmishGameInfo;
 
 class SkirmishPreferences
 {
@@ -271,24 +272,24 @@ private:
 bool BfmeAptScreenSkirmish::rva0057BE50()
 {
 	register Int zero = 0;
-	if (Rva00579160TheCurrent == 0)
+	if (TheSkirmishGameInfo == 0)
 	{
-		Rva00579160TheCurrent =
-			(Rva00579160Current *)new Rva00003409Open2SlotOwner();
+		TheSkirmishGameInfo =
+			(SkirmishGameInfo *)new Rva00003409Open2SlotOwner();
 	}
-	else if (Rva00579160TheCurrent->m_inGame)
+	else if (reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->m_inGame)
 	{
-		Rva00579160TheCurrent->endGame();
+		reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->endGame();
 	}
 
-	Rva00579160TheCurrent->leaveGame();
-	Rva00579160TheCurrent->clearSlotList();
-	Rva00579160TheCurrent->reset();
+	reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->leaveGame();
+	reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->clearSlotList();
+	reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->reset();
 
-	GameSlot *slot0 = Rva00579160TheCurrent->getSlot(zero);
-	Rva00579160TheCurrent->m_slotData34 = *(UnsignedInt *)((char *)slot0 + 0x30);
-	Rva00579160TheCurrent->m_slotData38 = *(UnsignedInt *)((char *)slot0 + 0x34);
-	Rva00579160TheCurrent->enterGame();
+	GameSlot *slot0 = reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->getSlot(zero);
+	reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->m_slotData34 = *(UnsignedInt *)((char *)slot0 + 0x30);
+	reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->m_slotData38 = *(UnsignedInt *)((char *)slot0 + 0x34);
+	reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->enterGame();
 
 
 	GameSlot slot;
@@ -305,7 +306,7 @@ bool BfmeAptScreenSkirmish::rva0057BE50()
 	SkirmishRetailCallView *retailCalls = (SkirmishRetailCallView *)&m_honors;
 	slot.setColor(retailCalls->colorResult());
 	slot.setPlayerTemplate(retailCalls->factionResult());
-	Rva00579160TheCurrent->setSlot(zero, slot);
+	reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->setSlot(zero, slot);
 
 	if (slot.m_playerTemplate != PLAYERTEMPLATE_RANDOM &&
 		slot.m_playerTemplate != PLAYERTEMPLATE_OBSERVER)
@@ -333,7 +334,7 @@ bool BfmeAptScreenSkirmish::rva0057BE50()
 			connectInfo.m_port = 0;
 			slot.setState(SLOT_EASY_AI, UnicodeString::TheEmptyString, &connectInfo);
 		}
-		Rva00579160TheCurrent->setSlot(1, slot);
+		reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->setSlot(1, slot);
 	}
 	else
 	{
@@ -358,24 +359,24 @@ bool BfmeAptScreenSkirmish::rva0057BE50()
 			fallbackConnectInfo.m_port = 0;
 			slot.setState(SLOT_EASY_AI, UnicodeString::TheEmptyString, &fallbackConnectInfo);
 		}
-		Rva00579160TheCurrent->setSlot(1, slot);
+		reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->setSlot(1, slot);
 	}
-	ParseAsciiStringToGameInfo(Rva00579160TheCurrent,
+	ParseAsciiStringToGameInfo(reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo),
 		((Rva0000BAD7Owner *)&m_honors)->getSlotList(), true);
-	Rva00579160TheCurrent->setSeed(GetTickCount());
-	Rva00579160TheCurrent->setMap(
+	reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->setSeed(GetTickCount());
+	reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->setMap(
 		((Rva0009E830Prefs *)&m_honors)->getPreferredMap());
 
-	const MapMetaData *map = TheMapCache->findMap(Rva00579160TheCurrent->getMap());
+	const MapMetaData *map = TheMapCache->findMap(reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->getMap());
 	if (!map)
 	{
-		Rva00579160TheCurrent->setMapCRC(zero);
-		Rva00579160TheCurrent->setMapSize(zero);
+		reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->setMapCRC(zero);
+		reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->setMapSize(zero);
 	}
 	else
 	{
-		Rva00579160TheCurrent->setMapCRC(map->m_CRC);
-		Rva00579160TheCurrent->setMapSize(map->m_filesize);
+		reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->setMapCRC(map->m_CRC);
+		reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->setMapSize(map->m_filesize);
 	}
 
 	_bfme_updateProfileDisplay();

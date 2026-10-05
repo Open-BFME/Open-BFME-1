@@ -1,4 +1,11 @@
-// One more: the table of slot numbers, handed out one global at a time.
+// cl: /DNDEBUG /MD /D_STLP_USE_STATIC_LIB
+// stlport
+// STLport facet index initialization.
+
+#include <ostream>
+
+extern template _STL::locale::id
+_STL::num_put<char, _STL::ostreambuf_iterator<char, _STL::char_traits<char> > >::id;
 
 extern int g_bfmeSlot00VA;
 extern int g_bfmeSlot01VA;
@@ -6,7 +13,6 @@ extern int g_bfmeSlot02VA;
 extern int g_bfmeSlot03VA;
 unsigned int g_rva005380a0_id;
 extern int g_bfmeSlot05VA;
-extern int g_bfmeSlot06VA;
 extern int g_bfmeSlot07VA;
 extern int g_bfmeSlot08VA;
 extern int g_bfmeSlot09VA;
@@ -33,7 +39,7 @@ void bfmeAssignSlotsVA(void)
 	g_bfmeSlot03VA = 11;
 	g_rva005380a0_id = 12;
 	g_bfmeSlot05VA = 13;
-	g_bfmeSlot06VA = 14;
+	_STL::num_put<char>::id._M_index = 14;
 	g_bfmeSlot07VA = 15;
 	g_bfmeSlot08VA = 16;
 	g_bfmeSlot09VA = 17;

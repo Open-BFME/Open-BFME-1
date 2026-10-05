@@ -2,6 +2,9 @@
 
 #include "fx_particle_system_category.h"
 
+extern template FXParticleSystem::CategoryModuleClass<5> *
+    FXParticleSystem::CategoryModuleClassBase<5>::s_defaultModule;
+
 // The category accessor TU already owns the four-byte head at 0x012F64FC.
 extern template FXParticleSystem::CategoryModuleClass<5> *
 	FXParticleSystem::CategoryModuleClass<5>::s_firstList;
@@ -14,7 +17,7 @@ extern template FXParticleSystem::CategoryModuleClass<5> *
 // destructor symbols remain the independently matched definitions in
 // fx_particle_system_bulk.cpp; this inline semantic view is needed only so
 // MSVC7.1 materializes their body inside the guarded function-local static.
-// Retail also publishes the object as the current instance of its category
+// Retail also publishes the object as the default module of its category
 // (the store lands between the source loads and the member stores).
 
 namespace FXParticleSystem
@@ -30,12 +33,11 @@ class ConcreteModuleClass;
 typedef PointEmissionVolumeModuleTag PointEmissionVolumeTag;
 
 // Retail globals: +4 reads [0x012F6D58], +8 reads [0x012F6D5C], and the
-// chain head is [0x012F64FC].  The current-instance slot is
+// chain head is [0x012F64FC].  The category default slot is
 // [0x012F64D8].  These names are TU-local ABI
 // declarations; their DIR32 relocations are checked against those operands.
 extern void **pointEmissionVolumeSourceAt4;
 extern void **pointEmissionVolumeSourceAt8;
-extern ConcreteModuleClass<PointEmissionVolumeTag> *pointEmissionVolumeCurrentInstance;
 extern void *pointEmissionVolumeVtable[];
 
 template <>
@@ -46,7 +48,7 @@ public:
 	{
 		void *sourceAt8 = *pointEmissionVolumeSourceAt8;
 		void *sourceAt4 = *pointEmissionVolumeSourceAt4;
-		pointEmissionVolumeCurrentInstance = this;
+		CategoryModuleClass<5>::s_defaultModule = reinterpret_cast<CategoryModuleClass<5> *>(this);
 		m_sourceAt8 = sourceAt8;
 		m_sourceAt4 = sourceAt4;
 		m_next = reinterpret_cast<ConcreteModuleClass *>(CategoryModuleClass<5>::s_firstList);

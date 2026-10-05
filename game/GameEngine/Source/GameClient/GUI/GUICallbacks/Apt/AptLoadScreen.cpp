@@ -172,7 +172,8 @@ extern GameTextInterface *TheGameText;
 class GameSpyInfoInterface;
 extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameSpyStagingRoom *TheGameSpyGame;
-extern Rva00579160Current *Rva00579160TheCurrent;
+class SkirmishGameInfo;
+extern SkirmishGameInfo *TheSkirmishGameInfo;
 
 int bfmeAptLevel00465CE0(BfmeH1065 *window);
 
@@ -278,7 +279,7 @@ LoadScreen0051BF30::LoadScreen0051BF30(unsigned int mode)
 		m_bfme0008 = (BfmeH1065 *)m_layout10->m_windowList;
 		m_5C = bfmeAptLevel00465CE0(m_bfme0008);
 		g_rva012F19E8WindowManager->slot38(0);
-		if (Rva00579160TheCurrent == 0 && TheGameSpyInfo == 0)
+		if (TheSkirmishGameInfo == 0 && TheGameSpyInfo == 0)
 		{
 			UnicodeString blank((const unsigned short *)L" ");
 			g_rva012F19E8WindowManager->bfme_setAptText(AsciiString("GUI:Level"), blank);

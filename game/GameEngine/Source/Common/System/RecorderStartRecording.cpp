@@ -75,7 +75,8 @@ class NetworkInterface;
 extern NetworkInterface *TheNetwork;
 extern LANAPI *TheLAN;
 extern GameSpyStagingRoom *TheGameSpyGame;
-extern GameInfo *TheSkirmishGameInfo;
+class SkirmishGameInfo;
+extern SkirmishGameInfo *TheSkirmishGameInfo;
 extern int NET_CRC_INTERVAL;
 AsciiString GameInfoToAsciiString(const GameInfo *, bool=true);
 
@@ -150,8 +151,8 @@ void RecorderClass::Rva0009B6C0RecorderStart(int difficulty, int gameMode, int r
         }
     } else {
         if (TheSkirmishGameInfo) {
-            TheSkirmishGameInfo->setCRCInterval(NET_CRC_INTERVAL);
-            theSlotList=GameInfoToAsciiString(TheSkirmishGameInfo);
+            reinterpret_cast<GameInfo *>(TheSkirmishGameInfo)->setCRCInterval(NET_CRC_INTERVAL);
+            theSlotList=GameInfoToAsciiString(reinterpret_cast<GameInfo *>(TheSkirmishGameInfo));
             localIndex=0;
         } else {
             m_gameInfo.setCRCInterval(NET_CRC_INTERVAL);

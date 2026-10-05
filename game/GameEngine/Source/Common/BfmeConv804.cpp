@@ -8,11 +8,12 @@ public:
 	virtual bool bfmeAsk4ECC();
 };
 
-extern BfmeObjECC *g_bfmeObjECD;
+class SkirmishGameInfo;
+extern SkirmishGameInfo *TheSkirmishGameInfo;
 
 bool bfmeGoECD()
 {
-	BfmeObjECC *o = g_bfmeObjECD;
+	BfmeObjECC *o = reinterpret_cast<BfmeObjECC *>(TheSkirmishGameInfo);
 	if (!o)
 		return false;
 	return o->bfmeAsk4ECC();

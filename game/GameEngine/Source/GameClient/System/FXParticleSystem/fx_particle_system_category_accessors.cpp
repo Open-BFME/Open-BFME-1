@@ -29,9 +29,8 @@ CAT_BASE(5)
 CAT_BASE(6)
 CAT_BASE(7)
 
-// Category 0 here maps to the binary's category 8 (default/particle), which has a default.
+// Categories 0..7 register their default-capable module lists.
 CAT_DERIVED(0)
-// Categories 1..7 map to binary categories 0..6, all of which have defaults.
 CAT_DERIVED(1)
 CAT_DERIVED(2)
 CAT_DERIVED(3)
@@ -40,7 +39,7 @@ CAT_DERIVED(5)
 CAT_DERIVED(6)
 CAT_DERIVED(7)
 
-// Category 8 here maps to the binary's category 7 (wind), which has no default module.
+// Category 8 registers its module list without a category default.
 template <> CategoryModuleClass<8>::CategoryModuleClass(bool, const char *key, const char *name)
 {
     m_key = key;
@@ -75,10 +74,8 @@ template <> CategoryModuleClass<6>::~CategoryModuleClass() {}
 template <> CategoryModuleClass<7>::~CategoryModuleClass() {}
 template <> CategoryModuleClass<8>::~CategoryModuleClass() {}
 
-// Explicitly instantiate the simple accessor methods for every module category
-// used by the original binary. The literals are shifted because MSVC 7.1 encodes
-// template non-type arguments differently depending on the values present in the
-// translation unit; 0 maps to category 10 ($0A@) and 1..8 map to categories 0..7.
+// Explicitly instantiate the module categories present in retail. MSVC encodes
+// zero as $0A@ and integers 1..8 as $00..$07.
 template class CategoryModuleClass<0>;
 template class CategoryModuleClass<1>;
 template class CategoryModuleClass<2>;

@@ -44,7 +44,7 @@ private:
 	AptAnimation m_animation;
 };
 
-extern SkirmishGameInfo *g_bfmeCurrentCB;
+extern SkirmishGameInfo *TheSkirmishGameInfo;
 class BfmeAptScreenSkirmish;
 extern BfmeAptScreenSkirmish *Rva012F4B54Skirmish;
 extern WindowManager *g_rva012F19E8WindowManager;	// retail [0x012F19E8]
@@ -53,11 +53,11 @@ void BfmeAptScreenSkirmish::_bfme_exit( void * )
 {
 	m_animation.reset();
 
-	if( g_bfmeCurrentCB )
-		g_bfmeCurrentCB->m_state.reset( true );
+	if( TheSkirmishGameInfo )
+		TheSkirmishGameInfo->m_state.reset( true );
 
 	void *screen = reinterpret_cast<void * &>(Rva012F4B54Skirmish);
-	g_bfmeCurrentCB = 0;
+	TheSkirmishGameInfo = 0;
 	if( screen )
 		g_rva012F19E8WindowManager->hideQuitMenu();
 }

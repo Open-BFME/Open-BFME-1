@@ -8,10 +8,13 @@
 // destructor symbols remain the independently matched definitions in
 // fx_particle_system_bulk.cpp; this inline semantic view is needed only so
 // MSVC7.1 materializes their body inside the guarded function-local static.
-// Retail also publishes the object as the current instance of its category
+// Retail also publishes the object as the default module of its category
 // (the store lands between the source loads and the member stores).
 
 #include "fx_particle_system_category.h"
+
+extern template FXParticleSystem::CategoryModuleClass<6> *
+    FXParticleSystem::CategoryModuleClassBase<6>::s_defaultModule;
 
 // VA 0x012F6500 is owned by fx_particle_system_category_accessors.cpp.
 extern template FXParticleSystem::CategoryModuleClass<6> *
@@ -30,12 +33,11 @@ class ConcreteModuleClass;
 typedef DefaultModuleTag<6> DefaultModuleTag6Tag;
 
 // Retail globals: +4 reads [0x012F6C98], +8 reads [0x012F6C9C], and the
-// chain head is [0x012F6500].  The current-instance slot is
+// chain head is [0x012F6500].  The category default slot is
 // [0x012F64DC].  These names are TU-local ABI
 // declarations; their DIR32 relocations are checked against those operands.
 extern void **defaultModuleTag6SourceAt4;
 extern void **defaultModuleTag6SourceAt8;
-extern ConcreteModuleClass<DefaultModuleTag6Tag> *defaultModuleTag6CurrentInstance;
 extern void *defaultModuleTag6Vtable[];
 
 template <>
@@ -46,7 +48,7 @@ public:
 	{
 		void *sourceAt8 = *defaultModuleTag6SourceAt8;
 		void *sourceAt4 = *defaultModuleTag6SourceAt4;
-		defaultModuleTag6CurrentInstance = this;
+		CategoryModuleClass<6>::s_defaultModule = reinterpret_cast<CategoryModuleClass<6> *>(this);
 		m_sourceAt8 = sourceAt8;
 		m_sourceAt4 = sourceAt4;
 		m_next = reinterpret_cast<ConcreteModuleClass *>(CategoryModuleClass<6>::s_firstList);

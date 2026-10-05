@@ -115,7 +115,8 @@ extern void GadgetTextEntrySetText( GameWindow *window, UnicodeString text );
 extern UnicodeString GadgetComboBoxGetText( GameWindow *window );
 
 struct Rva00579160Current {};
-extern Rva00579160Current *Rva00579160TheCurrent;
+class SkirmishGameInfo;
+extern SkirmishGameInfo *TheSkirmishGameInfo;
 
 class BfmeAptScreenSkirmish { public: void personaAccept(int); void reloadHonors(); };
 
@@ -150,7 +151,7 @@ int Rva0057E9A0Screen::handleMessage( int message, void *argument, void *data )
 {
 	int result = defaultHandler( message, argument, data );
 
-	if( Rva00579160TheCurrent != 0 )
+	if( TheSkirmishGameInfo != 0 )
 		result = m_state.dispatch( message, argument, data );
 
 	switch( message )

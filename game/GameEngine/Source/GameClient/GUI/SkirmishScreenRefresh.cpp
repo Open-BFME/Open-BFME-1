@@ -29,7 +29,8 @@ private:
 	SkirmishScreenAnimation m_animation;
 };
 
-extern void *g_bfmeCurrentCB;
+class SkirmishGameInfo;
+extern SkirmishGameInfo *TheSkirmishGameInfo;
 
 #pragma intrinsic(_ReadWriteBarrier)
 extern "C" void _ReadWriteBarrier(void);
@@ -43,5 +44,5 @@ void BfmeAptScreenSkirmish::_bfme_refresh( void )
 	}
 
 	m_animation.reset();
-	m_state.apply( g_bfmeCurrentCB, true );
+	m_state.apply( TheSkirmishGameInfo, true );
 }

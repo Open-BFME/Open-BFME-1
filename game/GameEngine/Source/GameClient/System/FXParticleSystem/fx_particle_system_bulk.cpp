@@ -13,6 +13,12 @@ extern template FXParticleSystem::CategoryModuleClass<3> *
     FXParticleSystem::CategoryModuleClassBase<3>::s_defaultModule;
 extern template FXParticleSystem::CategoryModuleClass<4> *
     FXParticleSystem::CategoryModuleClassBase<4>::s_defaultModule;
+extern template FXParticleSystem::CategoryModuleClass<5> *
+    FXParticleSystem::CategoryModuleClassBase<5>::s_defaultModule;
+extern template FXParticleSystem::CategoryModuleClass<6> *
+    FXParticleSystem::CategoryModuleClassBase<6>::s_defaultModule;
+extern template FXParticleSystem::CategoryModuleClass<7> *
+    FXParticleSystem::CategoryModuleClassBase<7>::s_defaultModule;
 #include <memory.h>
 #include <memory>
 
@@ -1790,9 +1796,6 @@ extern const char g_01110868[];
 extern const char g_01110880[];
 extern const char g_0111088C[];
 extern const char g_01110874[];
-extern ConcreteModuleClass<DefaultModuleTag<6> > *defaultModuleTag6CurrentInstance;
-extern ConcreteModuleClass<DefaultModuleTag<7> > *defaultModuleTag7CurrentInstance;
-extern ConcreteModuleClass<PointEmissionVolumeModuleTag> *pointEmissionVolumeCurrentInstance;
 extern void **defaultModuleTag0SourceAt8;
 extern void **defaultModuleTag0SourceAt4;
 extern void **defaultModuleTag1SourceAt8;
@@ -2003,7 +2006,7 @@ ConcreteModuleClass<DefaultModuleTag<6> >::ConcreteModuleClass()
     const void *first = *reinterpret_cast<void **>(defaultModuleTag6SourceAt8);
     void **self = reinterpret_cast<void **>(this);
     const void *second = *reinterpret_cast<void **>(defaultModuleTag6SourceAt4);
-    *reinterpret_cast<void **>(&defaultModuleTag6CurrentInstance) = this;
+    *reinterpret_cast<void **>(&CategoryModuleClass<6>::s_defaultModule) = this;
     self[0] = ( void *)g_01110820;
     self[1] = (void *)second;
     self[2] = (void *)first;
@@ -2035,7 +2038,7 @@ ConcreteModuleClass<DefaultModuleTag<7> >::ConcreteModuleClass()
     const void *first = *reinterpret_cast<void **>(defaultModuleTag7SourceAt8);
     void **self = reinterpret_cast<void **>(this);
     const void *second = *reinterpret_cast<void **>(defaultModuleTag7SourceAt4);
-    *reinterpret_cast<void **>(&defaultModuleTag7CurrentInstance) = this;
+    *reinterpret_cast<void **>(&CategoryModuleClass<7>::s_defaultModule) = this;
     self[0] = ( void *)g_01110868;
     self[1] = (void *)second;
     self[2] = (void *)first;
@@ -2942,7 +2945,7 @@ ConcreteModuleClass<PointEmissionVolumeModuleTag>::ConcreteModuleClass()
     const void *first = *reinterpret_cast<void **>(pointEmissionVolumeSourceAt8);
     void **self = reinterpret_cast<void **>(this);
     const void *second = *reinterpret_cast<void **>(pointEmissionVolumeSourceAt4);
-    *reinterpret_cast<void **>(&pointEmissionVolumeCurrentInstance) = this;
+    *reinterpret_cast<void **>(&CategoryModuleClass<5>::s_defaultModule) = this;
     self[0] = ( void *)g_0111088C;
     self[1] = (void *)second;
     self[2] = (void *)first;

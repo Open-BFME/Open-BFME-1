@@ -31,7 +31,8 @@ public:
 	AsciiString getMap( void ) const;
 };
 
-extern GameInfo *TheSkirmishGameInfo;
+class SkirmishGameInfo;
+extern SkirmishGameInfo *TheSkirmishGameInfo;
 
 Bool SkirmishBattleHonors::write( void )
 {
@@ -39,13 +40,13 @@ Bool SkirmishBattleHonors::write( void )
 	{
 		AsciiString tmp;
 
-		tmp.format( "%d", TheSkirmishGameInfo->getConstSlot( 0 )->getColor() );
+		tmp.format( "%d", reinterpret_cast<GameInfo *>(TheSkirmishGameInfo)->getConstSlot( 0 )->getColor() );
 		( *this )["Color"] = tmp;
 
-		tmp.format( "%d", TheSkirmishGameInfo->getConstSlot( 0 )->getPlayerTemplate() );
+		tmp.format( "%d", reinterpret_cast<GameInfo *>(TheSkirmishGameInfo)->getConstSlot( 0 )->getPlayerTemplate() );
 		( *this )["PlayerTemplate"] = tmp;
 
-		( *this )["Map"] = TheSkirmishGameInfo->getMap();
+		( *this )["Map"] = reinterpret_cast<GameInfo *>(TheSkirmishGameInfo)->getMap();
 	}
 
 	return UserPreferences::write();

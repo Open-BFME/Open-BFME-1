@@ -69,7 +69,8 @@ public:
 	GameSlot *getSlot( int index );
 };
 
-extern GameInfo *g_bfmeCurrentCB;
+class SkirmishGameInfo;
+extern SkirmishGameInfo *TheSkirmishGameInfo;
 
 class PlayerTemplate
 {
@@ -139,7 +140,7 @@ private:
 
 void BfmeAptScreenSkirmish::tooltipPlayerLevelIcon( void * )
 {
-	GameInfo *current = g_bfmeCurrentCB;
+	GameInfo *current = reinterpret_cast<GameInfo *>(TheSkirmishGameInfo);
 	if( current == 0 )
 		return;
 	GameSlot *slot = current->getSlot( 0 );

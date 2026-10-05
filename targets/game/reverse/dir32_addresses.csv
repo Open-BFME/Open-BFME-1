@@ -7790,6 +7790,7 @@ name,va
 ?TheSidesList@@3PAVBfmeSidesList@@A,0x012EF428
 ?TheSidesList@@3PAVSidesList@@A,0x012EF428
 ?TheSkirmishGameInfo@@3PAVGameInfo@@A,0x012F7094
+?TheSkirmishGameInfo@@3PAVSkirmishGameInfo@@A,0x012F7094
 ?TheSkirmishScreenState@@3PAVSkirmishScreenState@@A,0x012F49D4
 ?TheSkyboxTextureSets@@3V?$hash_map@VAsciiString@@PAVSkyboxTextureSet@@U?$hash@VAsciiString@@@rts@@U?$equal_to@VAsciiString@@@4@V?$allocator@U?$pair@$$CBVAsciiString@@PAVSkyboxTextureSet@@@_STL@@@_STL@@@_STL@@A,0x012F1404
 ?TheSlavedUpdatePool@?1??getClassMemoryPool@SlavedUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x012F0048

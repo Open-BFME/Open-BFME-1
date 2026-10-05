@@ -41,7 +41,8 @@ public:
 	BfmeGameSlot *getSlot(int index);
 };
 
-extern BfmeGameInfo *g_bfmeCurrentCB;
+class SkirmishGameInfo;
+extern SkirmishGameInfo *TheSkirmishGameInfo;
 
 class BfmeAptScreenSkirmish
 {
@@ -52,6 +53,6 @@ public:
 // ?getPlayerName@BfmeAptScreenSkirmish@@QAEXAAVUnicodeString@@@Z
 void BfmeAptScreenSkirmish::getPlayerName(UnicodeString &dest)
 {
-	if(g_bfmeCurrentCB)
-		dest.set(g_bfmeCurrentCB->getSlot(0)->getName());
+	if(TheSkirmishGameInfo)
+		dest.set(reinterpret_cast<BfmeGameInfo *>(TheSkirmishGameInfo)->getSlot(0)->getName());
 }

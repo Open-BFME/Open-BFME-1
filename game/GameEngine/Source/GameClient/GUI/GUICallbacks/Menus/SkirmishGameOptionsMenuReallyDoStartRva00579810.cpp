@@ -54,7 +54,8 @@ private:
 struct Rva00579160Current : public GameInfo
 {
 };
-extern Rva00579160Current *Rva00579160TheCurrent;
+class SkirmishGameInfo;
+extern SkirmishGameInfo *TheSkirmishGameInfo;
 
 class SkirmishPreferences
 {
@@ -100,12 +101,12 @@ void Rva00579810ReallyDoStart()
 {
     SkirmishPreferences preferences;
     TheGameLogic->clearGameData(false, false);
-    TheWritableGlobalData->m_mapName = Rva00579160TheCurrent->getMap();
-    Rva00579160TheCurrent->startGame(0);
-    InitGameLogicRandom(Rva00579160TheCurrent->getSeed());
+    TheWritableGlobalData->m_mapName = reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->getMap();
+    reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->startGame(0);
+    InitGameLogicRandom(reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->getSeed());
 
     bool isSkirmish = true;
-    const MapMetaData *md = TheMapCache->findMap(Rva00579160TheCurrent->getMap());
+    const MapMetaData *md = TheMapCache->findMap(reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->getMap());
     if (md)
         isSkirmish = md->byte_24;
 

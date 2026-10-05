@@ -60,12 +60,13 @@ bool __cdecl bfmeIsSet(void)
 	return thing->m_bfmeField != 0;
 }
 
-extern void *g_bfmeCurrentCB;					// retail 0x012F7094
+class SkirmishGameInfo;
+extern SkirmishGameInfo *TheSkirmishGameInfo;					// retail 0x012F7094
 
 // ?bfmeIsCurrent@@YGEPAX@Z
 unsigned char __stdcall bfmeIsCurrent(void *thing)
 {
-	void *current = g_bfmeCurrentCB;
+	void *current = TheSkirmishGameInfo;
 
 	if (current && current == thing)
 		return 1;

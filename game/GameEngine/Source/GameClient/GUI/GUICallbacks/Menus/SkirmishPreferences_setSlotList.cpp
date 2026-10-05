@@ -6,7 +6,8 @@
 #include "Common/AsciiString.h"
 
 class GameInfo;
-extern GameInfo *TheSkirmishGameInfo;
+class SkirmishGameInfo;
+extern SkirmishGameInfo *TheSkirmishGameInfo;
 extern AsciiString GameInfoToAsciiString( const GameInfo *game, Bool includeSlots );
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SkirmishPreferences.h
@@ -27,5 +28,5 @@ public:
 
 void SkirmishPreferences::setSlotList( void )
 {
-	setAsciiString( "SlotList", GameInfoToAsciiString( TheSkirmishGameInfo, TRUE ) );
+	setAsciiString( "SlotList", GameInfoToAsciiString( reinterpret_cast<GameInfo *>(TheSkirmishGameInfo), TRUE ) );
 }
