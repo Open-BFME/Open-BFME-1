@@ -761,3 +761,11 @@ game/GameEngine/Source/Common/BfmeConv827.cpp|function||bfmeSend112,b164e213052b
 game/GameEngine/Source/Common/P6MemberVectorCopyConstructor.cpp|member||m_at04,e1e029f374e1b1fc55f50fba,grok,20261005190013-bde6d6,2026-10-05
 game/GameEngine/Source/Common/P6MemberVectorCopyConstructor.cpp|member||m_at08,f4e9b8a1b2cc392b5f3c24ec,grok,20261005190013-bde6d6,2026-10-05
 game/GameEngine/Source/Common/P6MemberVectorCopyConstructor.cpp|member||m_at0C,ef48f2d3c122b94501baa20f,grok,20261005190013-bde6d6,2026-10-05
+game/GameEngine/Source/Common/PackShroudPixel.cpp|local|packShroudPixel|s,ba1603790aa677772b6c61c5,gpt-6-sol,20261005184155-b288a0,2026-10-05
+game/GameEngine/Source/Common/PackShroudPixel.cpp|local|packShroudPixel|b,c1b83cef00e75670e57de71b,gpt-6-sol,20261005184155-b288a0,2026-10-05
+game/GameEngine/Source/Common/PackShroudPixel.cpp|local|packShroudPixel|g,9e5a0895344fad64103f5a50,gpt-6-sol,20261005184155-b288a0,2026-10-05
+game/GameEngine/Source/Common/PackShroudPixel.cpp|local|packShroudPixel|r,363ba7dcee4d01f883528d09,gpt-6-sol,20261005184155-b288a0,2026-10-05
+game/GameEngine/Source/Common/PackShroudPixel.cpp|local|packShroudPixel|v,505b5a413210b63e3675f01f,gpt-6-sol,20261005184155-b288a0,2026-10-05
+game/GameEngine/Source/Common/PackShroudPixel.cpp|local|packShroudPixel|p,21fd83c765b5fe9c8921e2f5,gpt-6-sol,20261005184155-b288a0,2026-10-05
+game/GameEngine/Source/Common/PackShroudPixel.cpp|local|packShroudPixel|t,1c5e216faa6bf800c51234fb,gpt-6-sol,20261005184155-b288a0,2026-10-05
+game/GameEngine/Source/Common/PackShroudPixel.cpp|local|packShroudPixel|q,b1ecb11ed1e6f857ebc045c8,gpt-6-sol,20261005184155-b288a0,2026-10-05
