@@ -370,6 +370,47 @@ def alias_judge():
     return _JUDGE[0]
 
 
+def _prediction_tables_valid(index):
+    """Cheap shape check before skipping the unusable prediction-only context.
+
+    Noncanonical tables still take weak_context's original validation path.
+    This does not validate a weak receipt or authorize a fallback route.
+    """
+    if type(index) is not dict:
+        return False
+    objects = index.get("objects")
+    selection = index.get("selection", {})
+    if (type(objects) not in (list, tuple) or any(type(obj) is not str for obj in objects) or
+            len(set(objects)) != len(objects) or type(selection) is not dict):
+        return False
+    owners, exceptions = selection.get("owners", {}), selection.get("exceptions", {})
+    tables = (index.get("strong"), index.get("comdat"), index.get("common"), owners, exceptions)
+    if any(type(table) is not dict or any(type(name) is not str for name in table) for table in tables):
+        return False
+    if any(type(found) not in (set, frozenset, list, tuple) or
+           any(type(obj) is not str for obj in found) for found in owners.values()):
+        return False
+    if any(holder is not None and type(holder) is not int for holder in exceptions.values()):
+        return False
+    if any(type(entries) not in (list, tuple) for entries in index["common"].values()):
+        return False
+    count = len(objects)
+    for positions in index["strong"].values():
+        if type(positions) not in (list, tuple):
+            return False
+        if any(type(position) is not int or not 0 <= position < count for position in positions):
+            return False
+    for entries in index["comdat"].values():
+        if type(entries) not in (list, tuple):
+            return False
+        for entry in entries:
+            if (type(entry) not in (list, tuple) or len(entry) != 3 or
+                    type(entry[0]) is not int or not 0 <= entry[0] < count or
+                    type(entry[1]) is not str or (entry[2] is not None and type(entry[2]) is not str)):
+                return False
+    return True
+
+
 def check_object(obj, index, truth, source=None, judge=None):
     """{unresolved, duplicates, comdat, addresses, selected, alias_target, alias_unknown} for one object
     against the index."""
@@ -378,8 +419,18 @@ def check_object(obj, index, truth, source=None, judge=None):
     require_common_index(index)
     data = _object_bytes(obj)
     common = link_census.common_definitions(obj, data=data)
+    context = None
+    if not _prediction_tables_valid(index):
+        context = weak_context(index, truth)
+    else:
+        selection = index.get("selection", {})
+        receipt = selected_receipt_digest(selection)
+        # Only actual-MAP receipts can authorize a weak fallback. Their full
+        # inventory, truth and current-provider validation must still run.
+        if receipt is not None and receipt == selection.get("weak_receipt"):
+            context = weak_context(index, truth)
     copies, defined, undefined, weaks = link_census.object_facts(
-        obj, truth, data=data, weak_context=weak_context(index, truth))
+        obj, truth, data=data, weak_context=context)
     own = index["objects"].index(obj.name) if obj.name in index["objects"] else None
     position = own if own is not None else len(index["objects"])
     strong, comdat = index["strong"], index["comdat"]
