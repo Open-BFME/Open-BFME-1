@@ -18518,5 +18518,15 @@
   "after_sha256": "dafad866e46d6f1f9b3ca6589382a2b80ecc3d4fe1eb71dce042ac89b86bb482",
   "evidence": "targets/game/reverse/identity_evidence/012f4974-datum.md",
   "reason": "respelled to the address owners Rva00510DC0Display (0x012F4974) and Rva005127A0InGameChat (0x012F4988; evidence 012f4988-datum.md)"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006ecfe0.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECFE0.cpp",
+  "old_name": "bfmeClearEVG",
+  "new_name": "rva006ECFE0",
+  "before_sha256": "e7f46392760cf4357fbf9dbfb87102f1726f111f318744d0a987aaba6297f902",
+  "after_sha256": "4409d2440d4ee904de7d1aadc82a2f46c70172eda7eb748ce6fff26a6f6e267d",
+  "evidence": "targets/game/reverse/identity_evidence/0x006ecfe0-w3ddisplay-slot26.md",
+  "reason": "The old bank inferred bfmeClearEVG from cleanup operations. Vtable slot 26 proves W3DDisplay ownership but gives no method name. No matched caller, export, or string supports bfmeClearEVG, so rva006ECFE0 keeps the body address."
  }
 ]
