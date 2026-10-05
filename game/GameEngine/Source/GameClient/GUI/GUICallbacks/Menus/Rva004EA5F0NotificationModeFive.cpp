@@ -87,15 +87,15 @@ extern GameTextInterface *TheGameText;
 #define TheGameText004EA5F0 (TheGameText)
 extern BfmeAptChatFriendLogIn *volatile g_d_012F4ACC;
 extern unsigned int g_Va012F423C;
-extern unsigned char g_Va012F4240;
-extern int g_Va012F4244;
+extern bool lastNotificationWasStatus;
+extern int numOnlineInNotification;
 extern unsigned char g_Va012F4248;
 
 void bfme_notificationModeFive( AsciiString nick, UnicodeString message )
 {
 	if ( g_d_012F4ACC )
 	{
-		if ( g_Va012F4240 && g_Va012F4244 > 1 )
+		if ( lastNotificationWasStatus && numOnlineInNotification > 1 )
 			message = TheGameText004EA5F0->fetch( "Buddy:MultipleOnlineNotification" );
 
 		if ( nick.isNotEmpty() )

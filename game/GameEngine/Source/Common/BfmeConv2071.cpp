@@ -1,8 +1,5 @@
-// The divisor at 0x012BB1CC is the .bss int the only definition of this
-// address spells g_006fb9c0 (W3DDevice/GameClient/Gen_006fb9c0_Ftol.cpp, whose
-// setter at 0x006FB9C0 stores (int)float into it).  Both spellings share the
-// address in dir32_addresses.csv; only that one has a definition.
-extern int g_006fb9c0;
+// The frame duration at 0x012BB1CC is defined in W3DView.cpp.
+extern int TheW3DFrameLengthInMsec;
 
 // The sub-object start retail calls through the ILT thunk 0x0002A1B2, which
 // jumps to ParabolicEase::setEaseTimes (0x00094970, Common/
@@ -48,7 +45,7 @@ void BfmeSetupGT::bfmeInitGT(int p1, int p2, int p3, int p4, int p5, int p6)
 	if (a < 1)
 		a = 0;
 
-	m_bfme1bcGT = a / g_006fb9c0;
+	m_bfme1bcGT = a / TheW3DFrameLengthInMsec;
 
 	if (m_bfme1bcGT < 1)
 		m_bfme1bcGT = 0;
@@ -56,7 +53,7 @@ void BfmeSetupGT::bfmeInitGT(int p1, int p2, int p3, int p4, int p5, int p6)
 	if (p2 < 1)
 		p2 = 1;
 
-	m_bfme1acGT = p2 / g_006fb9c0;
+	m_bfme1acGT = p2 / TheW3DFrameLengthInMsec;
 
 	if (m_bfme1acGT < 1)
 		m_bfme1acGT = 1;

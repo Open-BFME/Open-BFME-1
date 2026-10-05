@@ -28,13 +28,13 @@ public:
 extern BfmeB1021 *g_d_012F4ACC;
 extern unsigned char g_g_012F4248;
 extern BfmeH1086 *g_h_012F4238;
-extern int g_zero_012F4244;
-extern unsigned char g_zero_012F4240;
+extern int numOnlineInNotification;
+extern bool lastNotificationWasStatus;
 
 void bfmeGo1086B( void )
 {
-	g_zero_012F4244 = 0;
-	g_zero_012F4240 = 0;
+	numOnlineInNotification = 0;
+	lastNotificationWasStatus = 0;
 
 	if( g_d_012F4ACC )
 	{

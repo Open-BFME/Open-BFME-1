@@ -90,7 +90,7 @@ public:
 };
 
 extern GlobalData *TheWritableGlobalData;				///< retail [0x012ED5C8]
-extern UnsignedInt TheCommandLineFlags;					///< retail [0x012A6FA0]
+UnsignedInt TheCommandLineFlags = 0;					///< retail [0x012A6FA0]
 
 bool ScriptDebugMessagesDisabled = false;								///< retail [0x012ED4D8]
 bool g_flag12ED4D9 = false;								///< retail [0x012ED4D9]
@@ -324,7 +324,7 @@ Int Rva00061430_parse(char *args[], int num)
 
 extern Int g_value12A6F30;								///< retail [0x012A6F30]
 extern Int g_value12A6F34;								///< retail [0x012A6F34]
-extern Int g_value12A6F38;								///< retail [0x012A6F38]
+Int forcedCRCFrame = -1;								///< retail [0x012A6F38]
 extern Int g_value12A6FA8;								///< retail [0x012A6FA8]
 extern Int g_value12A6FB0;								///< retail [0x012A6FB0]
 extern Int g_value12A6FB4;								///< retail [0x012A6FB4]
@@ -377,7 +377,7 @@ Int Rva000613F0_parse(char *args[], int num)
 		Int value = atoi(args[1]);
 		if (value > 0)
 		{
-			g_value12A6F38 = value;
+			forcedCRCFrame = value;
 			g_value12A6FB4 = value;
 		}
 	}

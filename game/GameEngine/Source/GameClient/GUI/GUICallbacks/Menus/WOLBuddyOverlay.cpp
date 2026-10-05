@@ -129,8 +129,8 @@ void setUnignoreText( WindowLayout *layout, AsciiString nick, GPProfile id);
 void refreshIgnoreList( void );
 void showNotificationBox( AsciiString nick, UnicodeString message);
 void deleteNotificationBox( void );
-static Bool lastNotificationWasStatus = FALSE;
-static Int numOnlineInNotification = 0;
+Bool lastNotificationWasStatus = FALSE;
+Int numOnlineInNotification = 0;
 
 class BuddyControls
 {

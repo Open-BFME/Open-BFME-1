@@ -50,7 +50,7 @@ private:
 
 // The counter the constructor bumps. Nothing in the image names it; it is
 // reached by what this body does to it.
-extern int TheW3DHordeModelDrawCount;	// 0x01304B60
+int TheW3DHordeModelDrawCount = 0;	// 0x01304B60
 
 W3DHordeModelDraw::W3DHordeModelDraw( Thing *thing, const ModuleData *moduleData )
 	: W3DScriptedModelDraw( thing, moduleData ),

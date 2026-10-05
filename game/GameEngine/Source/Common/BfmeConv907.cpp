@@ -2,7 +2,7 @@
 
 extern char g_bfmeVftAQB[];
 extern char g_bfmeVftBQB[];
-extern int g_bfmeCountQB;
+extern int TheW3DHordeModelDrawCount;
 
 struct BfmeSubQB
 {
@@ -25,7 +25,7 @@ void BfmeThingQB::bfmeGoQB()
 {
 	m_bfmeVfA = g_bfmeVftAQB;
 	m_bfmeVfB = g_bfmeVftBQB;
-	--g_bfmeCountQB;
+	--TheW3DHordeModelDrawCount;
 	BfmeSubQB *s = m_bfmeSub;
 	if (s)
 		s->m_bfmeFirst = 0;

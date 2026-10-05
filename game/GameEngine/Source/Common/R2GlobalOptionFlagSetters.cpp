@@ -26,7 +26,7 @@
 //
 // IDENTITY IS NOT RECOVERED.
 
-extern unsigned int R2Mask012A6FA0;
+extern unsigned int TheCommandLineFlags;
 bool g_xObjectCRC = false;
 bool g_xPartitionCRC = false;
 bool g_xCollisionCRC = false;
@@ -40,7 +40,7 @@ extern bool g_verifyClientCRC;
 #define R2_SET_OPTION_BIT( NAME, BIT, FLAG )                              \
 	int NAME()                                                            \
 	{                                                                     \
-		R2Mask012A6FA0 |= BIT;                                              \
+		TheCommandLineFlags |= BIT;                                              \
 		FLAG = true;                                                        \
 		return 1;                                                           \
 	}

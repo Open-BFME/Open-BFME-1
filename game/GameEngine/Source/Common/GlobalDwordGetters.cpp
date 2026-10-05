@@ -70,7 +70,7 @@ extern int g_Va012F4C38;
 extern int g_Va012F9CF4;
 extern int g_Va012F9D08;
 extern int g_Va01304B5C;
-extern int g_Va01304B60;
+extern int TheW3DHordeModelDrawCount;
 // Retail's hubsingle.cpp assertion names this cell; createServiceHubImpl.cpp
 // owns its definition. Only the static pointer declaration is needed here.
 class ServiceHubImpl
@@ -244,7 +244,7 @@ int Rva007175A0Get( void )
 
 int Rva00751F30Get( void )
 {
-	return g_Va01304B60;
+	return TheW3DHordeModelDrawCount;
 }
 
 int Rva00751F40Get( void )
