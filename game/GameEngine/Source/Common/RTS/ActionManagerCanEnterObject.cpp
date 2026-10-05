@@ -332,8 +332,8 @@ public:
 	}
 	BehaviorModule **getBehaviorModules() const { return m_behaviors; }
 	ContainModuleInterface *getContain() const { return m_contain; }
-	BodyModuleInterface *getBodyModule() const { return m_body200; }
-	AIUpdateInterface *getAI() const { return m_ai204; }
+	BodyModuleInterface *getBodyModule() const { return m_body; }
+	AIUpdateInterface *getAI() const { return m_ai; }
 
 private:
 	char m_pad008[0x1a4 - 0x08];
@@ -342,8 +342,8 @@ private:
 	BehaviorModule **m_behaviors;
 	char m_pad1f4[0x1fc - 0x1f4];
 	ContainModuleInterface *m_contain;
-	BodyModuleInterface *m_body200;
-	AIUpdateInterface *m_ai204;
+	BodyModuleInterface *m_body;
+	AIUpdateInterface *m_ai;
 	char m_pad208[0x344 - 0x208];
 	UnsignedByte m_privateStatus;
 };

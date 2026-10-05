@@ -384,3 +384,5 @@ game/GameEngine/Source/GameLogic/Object/WeaponTemplate_CopyAssign.cpp|member||m_
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewPitchCameraOneFrame.cpp|param|Lerp|t,lerp,gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngine/Source/Common/Q2TrailingZeroForwarders.cpp|function||Q2LowerBound002E7EE0,__lower_bound,gpt-6-sol+grok,applied,2026-10-05
 game/GameEngine/Source/Common/Q2TrailingZeroForwarders.cpp|function||Rva004378F0,upper_bound,gpt-6-sol+grok,applied,2026-10-05
+game/GameEngine/Source/Common/RTS/ActionManagerCanEnterObject.cpp|member||m_body200,m_body,gpt-6-sol+grok,applied,2026-10-05
+game/GameEngine/Source/Common/RTS/ActionManagerCanEnterObject.cpp|member||m_ai204,m_ai,gpt-6-sol+grok,applied,2026-10-05
