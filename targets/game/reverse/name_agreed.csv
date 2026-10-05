@@ -349,3 +349,4 @@ game/GameEngine/Source/Common/RTS/ActionManagerCanEnterObject.cpp|member||m_ai20
 game/GameEngine/Source/Common/Rva0029BE60Sweep.cpp|type||Rva0029BE60Node,ProductionEntry,gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngine/Source/Common/Rva0029BE60Sweep.cpp|type||Rva0029BE60Predicate,ThingTemplate,gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngine/Source/Common/Rva002CFC80TinyBodies.cpp|type||Rva002ED550,PartitionFilterThing,gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/NetworkDirectConnectUpdateRemoteIPList.cpp|param|UnicodeString::UnicodeString#2|s,stringSrc,gpt-6-sol+grok,agreed,2026-10-05
