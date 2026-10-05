@@ -97,7 +97,8 @@ private:
 };
 
 extern GameLogic *TheGameLogic;
-extern Rva002BD630TeamFactory *TheBfmeTeamFactory;
+class TeamFactory;
+extern TeamFactory *TheTeamFactory;
 
 Int Rva002BD630State::run()
 {
@@ -114,7 +115,7 @@ Int Rva002BD630State::run()
 	Rva002BD630Object *object = (Rva002BD630Object *)TheGameLogic->findObjectByID(machine->m_teamID);
 	typedef void *(Rva002BD630TeamFactory::*Find)(Int);
 	union { void (*fn)(); Find call; } u = { j_00044c2e };
-	Team *teamResult = (Team *)(TheBfmeTeamFactory->*u.call)(machine->m_otherID);
+	Team *teamResult = (Team *)(((Rva002BD630TeamFactory *)TheTeamFactory)->*u.call)(machine->m_otherID);
 	if (object)
 	{
 		Coord3D *objectPosition = (Coord3D *)((char *)object + 0x38);

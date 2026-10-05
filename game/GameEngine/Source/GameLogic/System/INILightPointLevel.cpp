@@ -156,7 +156,7 @@ public:
 	unsigned char m_bfmeLevels[ 12 ];
 };
 
-extern LightPointSystem *g_bfmeSinkBRB;
+extern LightPointSystem *TheLightPointSystem;
 
 class INI
 {
@@ -176,7 +176,7 @@ private:
 
 void INI::parseLightPointLevel( INI *ini )
 {
-	if ( g_bfmeSinkBRB == 0 )
+	if ( TheLightPointSystem == 0 )
 		return;
 
 	AsciiString name( ini->getNextToken() );
@@ -184,7 +184,7 @@ void INI::parseLightPointLevel( INI *ini )
 	if ( ini->getLoadType() == 2 )
 	{
 		LightPointLevel *found =
-			g_bfmeSinkBRB->find( &g_bfmeSinkBRB->m_bfmeLevels, &name );
+			TheLightPointSystem->find( &TheLightPointSystem->m_bfmeLevels, &name );
 
 		if ( found == 0 )
 			throw INIException( 3, "Light point level %s not found in map.ini", name.str() );
@@ -210,6 +210,6 @@ void INI::parseLightPointLevel( INI *ini )
 
 		ini->initFromINI( level, g_010EBE44 );
 
-		g_bfmeSinkBRB->addLevel( level );
+		TheLightPointSystem->addLevel( level );
 	}
 }

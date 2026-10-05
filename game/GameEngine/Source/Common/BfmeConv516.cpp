@@ -9,7 +9,8 @@ public:
 	void bfmeDoBRB(BfmeSubBRB *sub, void *what);
 };
 
-extern BfmeSinkBRB *g_bfmeSinkBRB;
+class LightPointSystem;
+extern LightPointSystem *TheLightPointSystem;
 
 class BfmeThingBRB
 {
@@ -21,6 +22,6 @@ public:
 
 void BfmeThingBRB::bfmeGoBRB(void *what)
 {
-	if (g_bfmeSinkBRB != 0)
-		g_bfmeSinkBRB->bfmeDoBRB(&m_bfmeSub, what);
+	if (((BfmeSinkBRB *)TheLightPointSystem) != 0)
+		((BfmeSinkBRB *)TheLightPointSystem)->bfmeDoBRB(&m_bfmeSub, what);
 }

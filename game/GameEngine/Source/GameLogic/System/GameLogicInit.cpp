@@ -225,7 +225,8 @@ extern ShroudManager *TheShroudManager;                                   // 0x0
 extern BfmeTaintManager *TheTaintManager;                                 // 0x012ED5C0
 extern CollisionManager *TheCollisionManager;                             // 0x012ED5C4
 extern GlobalData *TheWritableGlobalData;                                 // 0x012ED5C8
-extern BfmeTableERJ *g_bfmeTableERJ;                                      // 0x012EF428
+class SidesList;
+extern SidesList *TheSidesList;                                      // 0x012EF428
 extern TerrainLogic *TheTerrainLogic;                                     // 0x012EF4CC
 extern Manager012EF4F0 *g_012EF4F0;                                       // 0x012EF4F0 TheBuffLogic
 extern GhostObjectManager *TheGhostObjectManager;                         // 0x012EF4FC
@@ -283,8 +284,8 @@ void GameLogic::init(void)
 	g_012EF4F0->init();
 	bfmeSetSubsystemName(g_012EF4F0, "TheBuffLogic");
 
-	g_bfmeTableERJ->rva0019B030();
-	g_bfmeTableERJ->rva0019F500();
+	((BfmeTableERJ *)TheSidesList)->rva0019B030();
+	((BfmeTableERJ *)TheSidesList)->rva0019F500();
 
 	m_gamePaused = false;
 	m_field11D = false;

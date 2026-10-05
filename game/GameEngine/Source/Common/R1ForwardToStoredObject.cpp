@@ -64,7 +64,8 @@ class Glo00EED810
 public:
 	void h000EF060( int value );
 };
-extern Glo00EED810 *g_Glo00EED810;
+class TeamFactory;
+extern TeamFactory *TheTeamFactory;
 
 class Rva0015B750
 {
@@ -73,7 +74,7 @@ public:
 	char m_lead[ 0x48 ];
 	int m_value;
 };
-void Rva0015B750::go() const { g_Glo00EED810->h000EF060( m_value ); }
+void Rva0015B750::go() const { ((Glo00EED810 *)TheTeamFactory)->h000EF060( m_value ); }
 
 class Glo00EF19E8
 {

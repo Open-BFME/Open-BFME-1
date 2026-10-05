@@ -73,7 +73,7 @@ struct DrawGroupInfo
 {
 	AsciiString m_fontName;
 };
-extern DrawGroupInfo *TheDrawGroupInfo;
+DrawGroupInfo *TheDrawGroupInfo = 0;
 
 // DrawGroupInfo::DrawGroupInfo is the 0x2C-byte constructor at 0x00421B80
 // ("Arial", size 10), still filed under its ledger name.

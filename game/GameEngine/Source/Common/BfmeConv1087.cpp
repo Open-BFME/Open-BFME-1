@@ -123,7 +123,8 @@ public:
 	int bfmeNext1087(int a);
 };
 
-extern BfmeC1087 *g_bfmeC1087;
+class ScienceStore;
+extern ScienceStore *TheScienceStore;
 extern BfmeP1087 *g_bfmeP1087;
 
 // Retail's global at 0x012ED748 is PlayerList.cpp's `PlayerList *ThePlayerList`
@@ -135,7 +136,7 @@ extern PlayerList *ThePlayerList;
 
 char __stdcall bfmeGo1087B(int a, int b)
 {
-	int e = g_bfmeC1087->bfmeFind1087(b + 0x10);
+	int e = ((BfmeC1087 *)TheScienceStore)->bfmeFind1087(b + 0x10);
 
 	if (e == -1)
 		return 0;

@@ -15,7 +15,7 @@ public:
 	void rva0039C260(BfmeUniqueIntegerStoreC8C0 *indices, void *context);
 };
 
-extern LightPointSystem *g_bfmeSinkBRB;
+extern LightPointSystem *TheLightPointSystem;
 
 class BfmeItemEUA
 {
@@ -29,8 +29,8 @@ private:
 
 void BfmeItemEUA::bfmeRunEUAe(void *context)
 {
-	if (g_bfmeSinkBRB)
+	if (TheLightPointSystem)
 	{
-		g_bfmeSinkBRB->rva0039C260(&m_at274, context);
+		TheLightPointSystem->rva0039C260(&m_at274, context);
 	}
 }

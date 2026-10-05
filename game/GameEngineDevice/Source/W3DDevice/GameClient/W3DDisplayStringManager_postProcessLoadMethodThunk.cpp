@@ -57,7 +57,7 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DrawGroupInfo.h
-class DrawGroupInfo
+struct DrawGroupInfo
 {
 public:
 	AsciiString m_fontName;

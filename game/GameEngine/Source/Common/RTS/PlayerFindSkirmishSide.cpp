@@ -88,7 +88,8 @@ public:
 	}
 };
 
-extern BfmeSidesList *TheSidesList;
+class SidesList;
+extern SidesList *TheSidesList;
 
 class Player
 {
@@ -103,12 +104,12 @@ private:
 // ?findSkirmishSide@Player@@QAE_NPAH@Z
 Bool Player::findSkirmishSide(int *index)
 {
-	int count = TheSidesList->m_numSkirmishSides;
+	int count = ((BfmeSidesList *)TheSidesList)->m_numSkirmishSides;
 	*index = 0;
 	for (int i = 0; i < count; ++i)
 	{
 		BfmeStringPresenceValue playerName =
-			TheSidesList->getSkirmishSideInfo(i)->m_dict.getAsciiString(
+			((BfmeSidesList *)TheSidesList)->getSkirmishSideInfo(i)->m_dict.getAsciiString(
 				GenKey0012A7918.fetch(), 0);
 		if (playerName == m_playerName)
 		{

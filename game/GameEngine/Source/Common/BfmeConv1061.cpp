@@ -58,7 +58,8 @@ public:
 	int bfmeAdd1061(char *s);
 };
 
-extern BfmeS1061 *g_bfmeS1061;
+class ObjectCreationListStore;
+extern ObjectCreationListStore *TheObjectCreationListStore;
 extern char g_bfmeLit1061[];
 
 class BfmeB1061
@@ -80,6 +81,6 @@ void BfmeB1061::bfmeGo1061B(void)
 		s = m_bfme5c + 8;
 	else
 		s = g_bfmeLit1061;
-	m_bfme58 = g_bfmeS1061->bfmeAdd1061(s);
+	m_bfme58 = ((BfmeS1061 *)TheObjectCreationListStore)->bfmeAdd1061(s);
 }
 

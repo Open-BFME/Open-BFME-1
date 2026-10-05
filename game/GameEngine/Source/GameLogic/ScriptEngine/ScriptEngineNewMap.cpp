@@ -206,7 +206,8 @@ public:
 	BfmeTableEntry m_entries[1];
 };
 
-extern BfmeTableERJ *g_bfmeTableERJ;
+class SidesList;
+extern SidesList *TheSidesList;
 
 struct BfmeStringHold
 {
@@ -340,12 +341,12 @@ void ScriptEngine::newMap(void)
 		--count;
 	} while (count != 0);
 
-	for (Int i = 0; i < g_bfmeTableERJ->getCount(); ++i)
+	for (Int i = 0; i < ((BfmeTableERJ *)TheSidesList)->getCount(); ++i)
 	{
 		Player *player = ThePlayerList->getNthPlayer(i);
 		m_currentPlayer = player;
         LatchRestore<AsciiString> restore(m_unidentifiedString, KEYNAME(player->getNameKey()));
-        BfmeTableEntry *entry = g_bfmeTableERJ->at(i);
+        BfmeTableEntry *entry = ((BfmeTableERJ *)TheSidesList)->at(i);
         BfmeTableValue *value = entry->m_value;
         if (value != 0)
         {

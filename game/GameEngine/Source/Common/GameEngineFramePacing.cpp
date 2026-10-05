@@ -230,8 +230,9 @@ extern ClientFrameSubsystem *TheGameClientClientUpdate;
 class WindowManager;
 extern WindowManager *g_theWindowManager;
 #define WindowManagerSubsystem ((ClientSubsystem *)g_theWindowManager)
-extern RadarSubsystem *TheRadarClientUpdate;
-#define Radar TheRadarClientUpdate
+class Radar;
+extern Radar *TheRadar;
+#define Radar ((RadarSubsystem *)TheRadar)
 extern MessageStream *TheMessageStream;
 #define MessageStreamSubsystem TheMessageStream
 class Keyboard;

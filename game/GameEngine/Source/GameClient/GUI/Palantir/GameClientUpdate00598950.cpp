@@ -15,7 +15,8 @@ class GameLogic { public: bool _bfme_isInMultiplayerGame(); };
 class GameLogicPortraitShim { public: bool isInMultiplayerOrSkirmishGame(); };
 extern GameLogic *TheGameLogic;
 class BfmeThingAOA { public: void bfmeGoAOA(); };
-extern BfmeThingAOA *Radar00598950;
+class Radar;
+extern Radar *TheRadar;
 class Rva000DF7F0 { public: int inactive() const; };
 class BfmeMemberRV;
 class BfmeThingRV { public: BfmeMemberRV *bfmePickRV(); };
@@ -91,7 +92,7 @@ void Rva00597FC0Client::update()
  ((Call00598950)j_00035431)(resourceSlot);
  Rva00592A90ResourceImageSlot *helpSlot=(Rva00592A90ResourceImageSlot*)field_488;
  ((Rva00593E60State*)helpSlot)->update();
- if(byte_4c) { if(Radar00598950) Radar00598950->bfmeGoAOA(); bfmeGo993B();byte_4c=false; }
+ if(byte_4c) { if(((BfmeThingAOA *)TheRadar)) ((BfmeThingAOA *)TheRadar)->bfmeGoAOA(); bfmeGo993B();byte_4c=false; }
  bool active=false;
  if(field_10->flags20 & 1) {
   if((field_10->flags20&4) && !(field_10->value24&0xff000000)) field_10->slot4();

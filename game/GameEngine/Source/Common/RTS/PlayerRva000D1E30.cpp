@@ -75,7 +75,8 @@ inline FindTeamD1E30 findTeamThunk() {
     u.raw=j_00029bef;
     return u.member;
 }
-extern SidesListD1E30 *TheSidesList;
+class SidesList;
+extern SidesList *TheSidesList;
 extern const StaticNameKey TheKey_playerName, TheKey_teamOwner, TheKey_teamName;
 #define KEY(name) ((name).key())
 class Player {
@@ -93,10 +94,10 @@ void Player::rva000D1E30(const AsciiString &pname) {
             return;
         skirmishNdx=foundIndex;
     }
-    Gen0035E3B0 *sourceScripts=TheSidesList->getSkirmishSide(skirmishNdx)->scripts;
+    Gen0035E3B0 *sourceScripts=((SidesListD1E30 *)TheSidesList)->getSkirmishSide(skirmishNdx)->scripts;
     if (sourceScripts) {
         Gen0035E3B0 *scripts=((Host0035E450 *)sourceScripts)->create();
-        SideInfoD1E30 *side=TheSidesList->getSide(m_playerIndex);
+        SideInfoD1E30 *side=((SidesListD1E30 *)TheSidesList)->getSide(m_playerIndex);
         Gen0035E3B0 *old=side->scripts;
         if (old) {
             ((Rva0035E510::BfmeNodeEAT *)scripts)->bfmeSwapEAT((Rva0035E510::BfmeNodeEAT *)old);
@@ -105,17 +106,17 @@ void Player::rva000D1E30(const AsciiString &pname) {
         }
         side->scripts=scripts;
     }
-    AsciiString originalPlayerName=TheSidesList->getSkirmishSide(skirmishNdx)->dict.getAsciiString(KEY(TheKey_playerName));
-    for (int i=TheSidesList->skirmishTeams.nodes[0].next; i; i=TheSidesList->skirmishTeams.nodes[i].next) {
-        if (TheSidesList->skirmishTeams.nodes[i].dict.getAsciiString(KEY(TheKey_teamOwner)).compare(originalPlayerName)==0) {
-            Dict teamDict(TheSidesList->skirmishTeams.nodes[i].dict);
+    AsciiString originalPlayerName=((SidesListD1E30 *)TheSidesList)->getSkirmishSide(skirmishNdx)->dict.getAsciiString(KEY(TheKey_playerName));
+    for (int i=((SidesListD1E30 *)TheSidesList)->skirmishTeams.nodes[0].next; i; i=((SidesListD1E30 *)TheSidesList)->skirmishTeams.nodes[i].next) {
+        if (((SidesListD1E30 *)TheSidesList)->skirmishTeams.nodes[i].dict.getAsciiString(KEY(TheKey_teamOwner)).compare(originalPlayerName)==0) {
+            Dict teamDict(((SidesListD1E30 *)TheSidesList)->skirmishTeams.nodes[i].dict);
             AsciiString teamName=teamDict.getAsciiString(KEY(TheKey_teamName));
             if (((const StringBase<char> &)teamName).compare(AsciiString("team")+originalPlayerName)==0)
                 teamDict.setAsciiString(KEY(TheKey_teamName),AsciiString("team")+pname);
             teamDict.setAsciiString(KEY(TheKey_teamOwner),pname);
             int index;
-            if ((TheSidesList->*findTeamThunk())(pname+"/"+teamName,&index)) ((BfmeIndexedNodesFM *)&TheSidesList->teams)->bfmeRelease(index);
-            ((Rva0019BE80TeamRec *)&TheSidesList->teams)->append(&teamDict);
+            if ((((SidesListD1E30 *)TheSidesList)->*findTeamThunk())(pname+"/"+teamName,&index)) ((BfmeIndexedNodesFM *)&((SidesListD1E30 *)TheSidesList)->teams)->bfmeRelease(index);
+            ((Rva0019BE80TeamRec *)&((SidesListD1E30 *)TheSidesList)->teams)->append(&teamDict);
         }
     }
 }

@@ -936,3 +936,12 @@ void updateTGAtoDDS()
 // processing necessary. Please note that this is a sleazy way to get this information,
 // but pending a better one, this'll have to do.
 extern const Bool TheSystemIsUnicode = (((void*) (::MessageBox)) == ((void*) (::MessageBoxW)));
+
+class PlayerAITypeSet;
+PlayerAITypeSet *ThePlayerAITypeSet = 0;
+
+class AerialPathfinder;
+AerialPathfinder *TheAerialPathfinder = 0;
+
+class LightPointSystem;
+LightPointSystem *TheLightPointSystem = 0;

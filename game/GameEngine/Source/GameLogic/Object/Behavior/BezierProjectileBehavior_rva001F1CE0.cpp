@@ -43,7 +43,8 @@ public:
 };
 
 extern void j_00035e5e();
-extern void *TheWeaponStore;
+class WeaponStore;
+extern WeaponStore *TheWeaponStore;
 class Route0035E5E {};
 // retail reaches the weapon store create through ILT 0x00035E5E; the
 // thiscall target is unnamed here, so the call is spelled off the thunk.

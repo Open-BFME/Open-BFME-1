@@ -20,10 +20,11 @@ public:
 	void parseBlock( INI *ini );
 };
 
-extern BfmePlayerAITypeSet *ThePlayerAITypeSet;		// 0x012ED740
+class PlayerAITypeSet;
+extern PlayerAITypeSet *ThePlayerAITypeSet;		// 0x012ED740
 
 // ?parsePlayerAIType@@YAXPAVINI@@@Z
 void parsePlayerAIType( INI *ini )
 {
-	ThePlayerAITypeSet->parseBlock( ini );
+	((BfmePlayerAITypeSet *)ThePlayerAITypeSet)->parseBlock( ini );
 }

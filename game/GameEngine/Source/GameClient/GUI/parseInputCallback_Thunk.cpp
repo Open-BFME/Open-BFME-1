@@ -44,7 +44,8 @@ class WinInstanceData;
 
 extern AsciiString TheParsedCallbackName;				///< retail [0x012F2574]
 extern NameKeyGenerator *TheNameKeyGeneratorShim;	///< retail [0x012ED600]
-extern WindowLookupShim *TheWindowLookupShim;			///< retail [0x012ED88C]
+class FunctionLexicon;
+extern FunctionLexicon *TheFunctionLexicon;			///< retail [0x012ED88C]
 extern void *TheParsedCallbackResult;					///< retail [0x012F255C]
 
 // ?parseInputCallback@@YA_NPADPAVWinInstanceData@@0PAX@Z
@@ -61,7 +62,7 @@ Bool parseInputCallback(char *token, WinInstanceData *instData, char *line, void
 	TheParsedCallbackName.StringBase<char>::set(fieldText, fieldText ? (Int)strlen(fieldText) : 0);
 
 	Int key = TheNameKeyGeneratorShim->nameToKey(TheParsedCallbackName.str());
-	TheParsedCallbackResult = TheWindowLookupShim->unidentified_00025CD4(key, 1);
+	TheParsedCallbackResult = ((WindowLookupShim *)TheFunctionLexicon)->unidentified_00025CD4(key, 1);
 
 	return true;
 }

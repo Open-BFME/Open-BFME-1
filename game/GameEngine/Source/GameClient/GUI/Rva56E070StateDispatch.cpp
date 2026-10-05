@@ -36,7 +36,7 @@ public:
 	void dispatch( void *first, void *second, bool selected, int state );
 };
 
-extern Rva005121A0Service *TheRva005121A0Service;
+extern GameState *TheGameState;
 extern unsigned long g_012F4B48;
 
 class Rva56E070StateOwner : public BfmeThingME
@@ -72,7 +72,7 @@ void Rva56E070StateOwner::finishCurrent()
 		finishTail();
 		return;
 	}
-	TheRva005121A0Service->dispatch(
+	((Rva005121A0Service *)TheGameState)->dispatch(
 		m_arg264, m_arg268, m_mode270 == 3, m_auxiliaryState );
 	finishTail();
 }

@@ -25,7 +25,8 @@ public:
 	unsigned char _bfme_allows( BfmePlayerSpecialPowerState *state, const SpecialPowerTemplate *tmpl );
 };
 
-extern BfmeSpecialPowerAllowanceStore *TheBfmeSpecialPowerAllowanceStore;	// 0x012F0FF8
+class LightPointSystem;
+extern LightPointSystem *TheLightPointSystem;	// 0x012F0FF8
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
@@ -41,8 +42,8 @@ private:
 // ?_bfme_allowsSpecialPower@Player@@QAEEPBVSpecialPowerTemplate@@@Z
 unsigned char Player::_bfme_allowsSpecialPower( const SpecialPowerTemplate *tmpl )
 {
-	if( TheBfmeSpecialPowerAllowanceStore )
-		return TheBfmeSpecialPowerAllowanceStore->_bfme_allows( &m_specialPowerState, tmpl );
+	if( ((BfmeSpecialPowerAllowanceStore *)TheLightPointSystem) )
+		return ((BfmeSpecialPowerAllowanceStore *)TheLightPointSystem)->_bfme_allows( &m_specialPowerState, tmpl );
 
 	return 1;
 }

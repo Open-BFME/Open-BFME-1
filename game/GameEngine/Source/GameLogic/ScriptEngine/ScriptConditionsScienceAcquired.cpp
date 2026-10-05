@@ -44,7 +44,8 @@ class GameLogic;
 // local view of the same global, so cast at the use.
 extern GameLogic *TheGameLogic;
 extern BfmeM1091 *g_bfmeM1091;
-extern BfmeC1091 *g_bfmeC1091;
+class ScienceStore;
+extern ScienceStore *TheScienceStore;
 // 0x012ED748 is retail's `PlayerList *ThePlayerList`; BfmeD1091 is this
 // TU's view of the getEachPlayer surface, so cast at the use.
 class PlayerList;
@@ -65,7 +66,7 @@ protected:
 bool ScriptConditions::evaluateScienceAcquired(
 	Parameter *playerParm, Parameter *scienceParm)
 {
-	int e = g_bfmeC1091->bfmeFind1091(
+	int e = ((BfmeC1091 *)TheScienceStore)->bfmeFind1091(
 		reinterpret_cast<int>(scienceParm) + 0x10);
 
 	if (e == -1)

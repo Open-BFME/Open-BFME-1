@@ -76,8 +76,9 @@ public:
 	void *find(int);
 };
 
-// retail 0x012ED810: ?TheBfmeTeamFactory@@3PAVRva002BD630TeamFactory@@A
-extern Rva002BD630TeamFactory *TheBfmeTeamFactory;
+// retail 0x012ED810: ?TheTeamFactory@@3PAVTeamFactory@@A
+class TeamFactory;
+extern TeamFactory *TheTeamFactory;
 
 class ScriptEngine
 {
@@ -190,7 +191,7 @@ void SequentialScript::xfer(Xfer *xfer)
 
 	if (xfer->isLoading())
 	{
-		m_teamToExecOn = (Team *)TheBfmeTeamFactory->find((int)teamID);
+		m_teamToExecOn = (Team *)((Rva002BD630TeamFactory *)TheTeamFactory)->find((int)teamID);
 		if (teamID != 0 && m_teamToExecOn == 0)
 		{
 			bfmeFormatText(&local.error, 5, 0);

@@ -48,14 +48,15 @@ private:
 	Rva002BC260Coord3D m_destination;
 };
 
-extern Rva002BC260Global *g_rva002bc260;
+class AerialPathfinder;
+extern AerialPathfinder *TheAerialPathfinder;
 
 void Rva002BC260Owner::run(void *arg1, void *arg2, void *arg3, void *arg4)
 {
 	Rva002BC260Goal *goal = &m_goal;
 	typedef void (Rva002BC260Global::*Init)(void *, void *, void *, void *, void *, void *);
 	union { void (*fn)(); Init call; } init = { j_0000a795 };
-	(g_rva002bc260->*init.call)(m_goalArguments, arg1, goal, arg2, arg3, arg4);
+	(((Rva002BC260Global *)TheAerialPathfinder)->*init.call)(m_goalArguments, arg1, goal, arg2, arg3, arg4);
 	goal->configure(1, 0xfa0, 0x447a0000, 0x447a0000, 0, 0);
 	typedef void (Rva002BC260Goal::*Finalize)();
 	union { void (*fn)(); Finalize call; } finalize = { j_00049ae9 };

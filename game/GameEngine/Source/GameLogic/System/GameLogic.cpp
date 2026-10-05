@@ -6709,7 +6709,10 @@ extern Rva0060D3D0* g012F706C;
 // and the two call sites reinterpret the real global rather than declaring a
 // second stand-in name at the same address.
 extern Rva0038DA10Terrain* g012EF4CC;
-extern Rva0038DA10System *g012F060C,*g012EF734,*g012ED5B8,*g012ED5C4,*g012ED5BC,*g012ED5C0,*g012ED83C,*g012F1044,*g012EF738,*g012EF504,*g012F079C,*g012F0888;
+extern Rva0038DA10System *g012F060C,*g012EF734,*g012ED5B8,*g012ED5C4,*g012ED5BC,*g012ED5C0,*g012F1044,*g012F079C,*g012F0888;
+extern WeaponStore *TheWeaponStore;
+extern LocomotorStore *TheLocomotorStore;
+extern BuildAssistant *TheBuildAssistant;
 extern Rva0038DA10Recorder* g012ED62C;
 extern Rva0038DA10GameInfo* g012F708C;
 extern int forcedCRCFrame;
@@ -6841,8 +6844,8 @@ void Rva0038DA10GameLogic::update(int phase) {
     }
     rva0038A6F0();
     if (phase==5) {
-        g012ED5BC->slot14();g012ED5C0->slot14();g012ED83C->slot14();g012F1044->slot14();
-        rva0038AE90();g012EF738->slot14();g012EF504->slot14();g012F079C->slot14();g012F0888->slot14();
+        g012ED5BC->slot14();g012ED5C0->slot14();((Rva0038DA10System *)TheBuildAssistant)->slot14();g012F1044->slot14();
+        rva0038AE90();((Rva0038DA10System *)TheWeaponStore)->slot14();((Rva0038DA10System *)TheLocomotorStore)->slot14();g012F079C->slot14();g012F0888->slot14();
         ((Rva00367810*)rva170)->rva00367810();
     }
     if (mode!=8 && mode!=4 && frame==1024 && !rva00102240()) {
