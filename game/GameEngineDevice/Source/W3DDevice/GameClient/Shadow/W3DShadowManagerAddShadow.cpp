@@ -118,7 +118,7 @@ public:
 };
 
 extern BfmeVolumetricShadowManager *g_01306F18;
-extern W3DProjectedShadowManager *g_01306DF0;
+extern W3DProjectedShadowManager *TheW3DProjectedShadowManager;
 extern BfmeShadowBufferManager007C3260 *g_01307178;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShadow.h
@@ -144,8 +144,8 @@ Shadow *W3DShadowManager::addShadow(
 		case SHADOW_ALPHA_DECAL_DYNAMIC:
 		case SHADOW_ADDITIVE_DECAL_DYNAMIC:
 		case SHADOW_MERGE_DECAL:
-			if (g_01306DF0)
-				return g_01306DF0->addShadow(robj, shadowInfo, draw);
+			if (TheW3DProjectedShadowManager)
+				return TheW3DProjectedShadowManager->addShadow(robj, shadowInfo, draw);
 			break;
 
 		case SHADOW_VOLUME:

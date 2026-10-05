@@ -11,8 +11,12 @@ void __cdecl operator delete(void *);
 // The existing W3DDisplay header is Zero Hour: it places initialized at +0x60.
 // This scratch TU uses the witnessed BFME layout and carries no ledger claim.
 class LightClass; class Render2DClass; class Rva006E6C10;
+class RTS3DScene; class RTS2DScene; class RTS3DInterfaceScene;
 class W3DDisplay { public:
     virtual void init();
+    static RTS3DScene *m_3DScene;
+    static RTS2DScene *m_2DScene;
+    static RTS3DInterfaceScene *m_3DInterfaceScene;
     char pad04[0x24]; Rva006E6C10 *p28; unsigned callback2c;
     char pad30[0x110]; unsigned char initialized140; char pad141[3];
     LightClass *lights144[4]; LightClass *lights154[4]; Render2DClass *render164;
@@ -38,9 +42,6 @@ extern Rva006F6330 *TheRva006F6330;
 extern void j_0002f9f0();
 extern void j_00048658();
 extern void j_0003413f();
-extern Rva00711B00 *Rva012F8060;
-extern RTS2DScene *Rva012F805C;
-extern Rva00712F60 *Rva012F8058;
 // Retail's global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData, defined
 // once in Common/GlobalData.cpp. Only its address is used here (every field goes
 // through the witnessed-offset rvaF helper), so the real class is not redeclared.
@@ -86,9 +87,6 @@ class Rva006E6C10 {
 public: Rva006E6C10(); void apply(); void setAndNotify(int);
 };
 #define TheGlobalLanguageData Rva012F1484
-#define m_3DInterfaceScene Rva012F8060
-#define m_2DScene Rva012F805C
-#define m_3DScene Rva012F8058
 
 // Retail 0x006ED5B0. BFME fields are accessed by witnessed offset because the
 // included Zero Hour W3DDisplay declaration does not describe this layout.
@@ -146,11 +144,11 @@ void W3DDisplay::init(void)
     if (rvaF<unsigned char>(this,0x140)) return;
     TheRva006F6330 = new Rva006F6330;
     WWMath::Init();
-    m_3DInterfaceScene = new Rva00711B00;
+    m_3DInterfaceScene = reinterpret_cast<RTS3DInterfaceScene *>(new Rva00711B00);
     reinterpret_cast<Rva006ED5B0Scene *>(m_3DInterfaceScene)->Set_Ambient_Light(Vector3(1,1,1));
     m_2DScene = new RTS2DScene;
     reinterpret_cast<Rva006ED5B0Scene *>(m_2DScene)->Set_Ambient_Light(Vector3(1,1,1));
-    m_3DScene = new Rva00712F60;
+    m_3DScene = reinterpret_cast<RTS3DScene *>(new Rva00712F60);
     int i;
     for (i=0; i<rvaF<int>(TheWritableGlobalData,0xa58); ++i) {
         rvaF<LightClass *>(this,0x144 + 4*i) = new LightClass(LightClass::DIRECTIONAL);

@@ -3,8 +3,8 @@
 // Open-BFME5: W3DShadowManager::ReAcquireResources, retail 0x007B7620,
 // converted out of a machine byte dump.
 //
-// Zero Hour asks two shadow managers to reacquire; BFME asks three, and all
-// three keep address-derived names here because none of them is settled:
+// Zero Hour asks two shadow managers to reacquire; BFME asks three. The
+// first two retain address-derived views; the third is W3DProjectedShadowManager:
 //
 //   0x01306F18  -> ILT 0x000443A0 -> 0x007B9810   (a dump)
 //   0x01307178  -> ILT 0x0000F9B6 -> 0x007C1180   (a dump)
@@ -45,7 +45,8 @@ public:
 };
 
 extern Gen_01306F18 *g_01306F18;
-extern Gen_01306DF0 *g_01306DF0;
+class W3DProjectedShadowManager;
+extern W3DProjectedShadowManager *TheW3DProjectedShadowManager;
 
 // 0x01307178 is W3DShadow.cpp's TheW3DShadowHelperManager, so the global is
 // spelled by its defining name here.  No header declares the class, so only a
@@ -72,7 +73,7 @@ Bool W3DShadowManager::ReAcquireResources( void )
 	if ((Gen_01307178 *)TheW3DShadowHelperManager && !((Gen_01307178 *)TheW3DShadowHelperManager)->ReAcquireResources())
 		ok = FALSE;
 
-	if (g_01306DF0 && !g_01306DF0->ReAcquireResources())
+	if (TheW3DProjectedShadowManager && !reinterpret_cast<Gen_01306DF0 *>(TheW3DProjectedShadowManager)->ReAcquireResources())
 		ok = FALSE;
 
 	return ok;

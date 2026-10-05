@@ -12,7 +12,8 @@ struct DecalInfo00299BB0 {
  DecalInfo00299BB0() : at9c(20.0f),ata0(false) {}
 };
 class Manager00299BB0 { public: virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0c(); virtual Result00299BB0* create(int,DecalInfo00299BB0*,DecalInfo00299BB0*); };
-extern Manager00299BB0* g_manager00299BB0;
+class ProjectedShadowManager;
+extern ProjectedShadowManager *TheProjectedShadowManager;
 class DecalCreate00299BB0 {
 public: void create();
  char pad00[4]; Config00299BB0* at04; Input00299BB0* at08; char pad0c[0x18]; Result00299BB0* at24;
@@ -29,7 +30,7 @@ void DecalCreate00299BB0::create() {
  info.at84=false; info.at85=true;
  info.at8c=info.at88=radius+radius;
  info.at94=info.at90=0.0f;
- at24=g_manager00299BB0->create(64,&info,&info);
+ at24=reinterpret_cast<Manager00299BB0 *>(TheProjectedShadowManager)->create(64,&info,&info);
  if(at24) {
   at24->at08=at08->at38;
   at24->bfmeSetABK(config->at0c);

@@ -63,7 +63,8 @@ public:
 class GenGamma { public: S3_H(0004AB42) S3_H(000131E2) S3_H(0001FE8D) S3_H(00048C70) S3_H(0000C919) };
 
 extern GenAlpha *TheAlpha;
-extern GenGamma *TheGamma;
+class W3DProjectedShadowManager;
+extern W3DProjectedShadowManager *TheW3DProjectedShadowManager;
 
 // 0x01307178 is W3DShadow.cpp's TheW3DShadowHelperManager, so the global is
 // spelled by its defining name here.  No header declares the class, so only a
@@ -78,7 +79,7 @@ extern W3DShadowHelperManager *TheW3DShadowHelperManager;
 		if( TheAlpha ) TheAlpha->h##A();                                  \
 		if( TheW3DShadowHelperManager )                                   \
 			((GenBeta *)TheW3DShadowHelperManager)->h##B();               \
-		if( TheGamma ) TheGamma->h##C();                                  \
+		if( TheW3DProjectedShadowManager ) reinterpret_cast<GenGamma *>(TheW3DProjectedShadowManager)->h##C();                                  \
 	}
 
 S3_TRIPLE( Rva007B7580, 00044062, 00015BF4, 0004AB42 )

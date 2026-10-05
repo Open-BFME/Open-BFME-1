@@ -8,7 +8,7 @@ public:
 	void rva007AFB50(Rva007AFB50Shadow *);
 };
 
-W3DProjectedShadowManager *g_rva007b13d0;
+extern W3DProjectedShadowManager *TheW3DProjectedShadowManager;
 
 class Rva007B13D0
 {
@@ -18,5 +18,5 @@ public:
 
 void Rva007B13D0::run()
 {
-	g_rva007b13d0->rva007AFB50(reinterpret_cast<Rva007AFB50Shadow *>(this));
+	TheW3DProjectedShadowManager->rva007AFB50(reinterpret_cast<Rva007AFB50Shadow *>(this));
 }

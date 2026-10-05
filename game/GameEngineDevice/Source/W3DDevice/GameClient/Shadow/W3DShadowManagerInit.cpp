@@ -30,7 +30,8 @@ public:
 };
 
 extern Gen_01306F18 *g_01306F18;
-extern Gen_01306DF0 *g_01306DF0;
+class W3DProjectedShadowManager;
+extern W3DProjectedShadowManager *TheW3DProjectedShadowManager;
 
 // 0x01307178 is W3DShadow.cpp's TheW3DShadowHelperManager, so the global is
 // spelled by its defining name here.  No header declares the class, so only a
@@ -53,8 +54,8 @@ Bool W3DShadowManager::init(void)
 	if ((Gen_01307178 *)TheW3DShadowHelperManager && ((Gen_01307178 *)TheW3DShadowHelperManager)->rva007C19E0())
 		((Gen_01307178 *)TheW3DShadowHelperManager)->ReAcquireResources();
 
-	if (g_01306DF0 && g_01306DF0->rva007AF630())
-		g_01306DF0->ReAcquireResources();
+	if (TheW3DProjectedShadowManager && reinterpret_cast<Gen_01306DF0 *>(TheW3DProjectedShadowManager)->rva007AF630())
+		reinterpret_cast<Gen_01306DF0 *>(TheW3DProjectedShadowManager)->ReAcquireResources();
 
 	return true;
 }

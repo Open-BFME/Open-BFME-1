@@ -25,7 +25,8 @@ public:
 };
 
 extern void *g_rva012F49D0;					// 0x012F49D0
-extern BfmeDeletable *TheBfmeSecondManager;				// 0x012F6DA4
+class PointGroupClass;
+extern PointGroupClass *TheBfmeSecondManager;				// 0x012F6DA4
 
 // ?Gen_00510b20@@YAXXZ
 void Gen_00510b20(void)
@@ -36,5 +37,5 @@ void Gen_00510b20(void)
 // ?Gen_005f3140@@YAXXZ
 void Gen_005f3140(void)
 {
-	delete TheBfmeSecondManager;
+	delete reinterpret_cast<BfmeDeletable *>(TheBfmeSecondManager);
 }

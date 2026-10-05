@@ -223,7 +223,7 @@ class GameSpyInfoInterface;
 extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameSpyPSMessageQueueInterface *TheGameSpyPSMessageQueue;
 class BfmeQueueEUG;
-extern BfmeQueueEUG *g_bfmeQueueEUG;
+
 extern GameTextInterface *TheGameText;
 extern Mouse *TheMouse;
 extern int *g_bfmeLimitsDF;
@@ -252,7 +252,7 @@ void __stdcall Rva0053AF50PlayerTooltip(GameSpyGameSlot *slot)
 	if (player)
 	{
 	Int profileID = player->m_profileID;
-	PSPlayerStats stats = reinterpret_cast<GameSpyPSMessageQueueInterface *>(g_bfmeQueueEUG)->findPlayerStatsByID(profileID);
+	PSPlayerStats stats = reinterpret_cast<GameSpyPSMessageQueueInterface *>(TheGameSpyPSMessageQueue)->findPlayerStatsByID(profileID);
 	if (stats.id == 0)
 	{
 		TheMouse->setCursorTooltip(uName, -1, NULL, 1.5f);

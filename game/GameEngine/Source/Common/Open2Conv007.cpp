@@ -40,7 +40,8 @@ void Rva00782E80( unsigned char running )
 
 class Open2Hub;
 
-extern Open2Hub *TheOpen2Hub;
+class Rva00785FD0Renderer;
+extern Rva00785FD0Renderer *g_rva00785FD0Renderer;
 extern unsigned int g_open2SyncA;
 extern unsigned int g_open2SyncB;
 extern int g_open2ResetA;
@@ -64,9 +65,9 @@ public:
 // @?Rva00783010@@YAXXZ 0x00783010
 void Rva00783010( void )
 {
-	if( TheOpen2Hub )
+	if( g_rva00785FD0Renderer )
 	{
-		TheOpen2Hub->finish();
+		reinterpret_cast<Open2Hub *>(g_rva00785FD0Renderer)->finish();
 		bfmeResetGlobals();
 		g_open2ResetA = 0;
 		g_open2ResetB = 0;

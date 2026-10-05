@@ -12,7 +12,7 @@ class BfmeThingSGA { public: void bfmeOneSGA(); };
 class WW3D { public: static void Sync(unsigned int); };
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
 void bfmeResetGlobals(void);
-extern Rva00785FD0Renderer *g_rva00785FD0Renderer;
+Rva00785FD0Renderer *g_rva00785FD0Renderer = 0;
 extern unsigned rva01346DD8, g_open2SyncB, g_open2SyncA, rva0133F420, rva0133F424;
 extern unsigned rva01306968, g_open2Accumulated, g_open2Started;
 extern unsigned char g_open2Running;

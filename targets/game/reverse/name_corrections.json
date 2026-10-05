@@ -18286,8 +18286,8 @@
   "new_name": "m_pad",
   "before_sha256": "e54e794f87b73ab450c3d1d9d41d6b86eb9df2614390cf2f1a4d3b9fcaf624f8",
   "after_sha256": "ae6a807e40a5f19dc83144d64e0b29be13bde47002f9b9691bf0d446977ac9f9",
- "evidence": "targets/game/reverse/identity_evidence/00774aa0-name-correction.md",
- "reason": "The prior bank labels these TU-local views Seat... and pad only in a partial scratch; its verdict calls them typed scratch contracts. No retail caller, pin, or matched symbol proves those names, so the new views keep the owner RVA and the padding label."
+  "evidence": "targets/game/reverse/identity_evidence/00774aa0-name-correction.md",
+  "reason": "The prior bank labels these TU-local views Seat... and pad only in a partial scratch; its verdict calls them typed scratch contracts. No retail caller, pin, or matched symbol proves those names, so the new views keep the owner RVA and the padding label."
  },
  {
   "old_path": "targets/game/reverse/functions.csv",
@@ -18298,5 +18298,35 @@
   "after_sha256": "c06a4db10d88a343fcbd1a56b97f46f2c173572618c42652e9ccc9760d3c81ff",
   "evidence": "targets/game/reverse/identity_evidence/00377d70.md",
   "reason": "The retail registry assigns CastleBehavior to factory 0x001144C0, and that factory calls ILT 0x00035E22 to this constructor. The chain refutes the SpyVisionUpdateModuleData label but does not reveal the C++ class spelling, so the replacement keeps the body RVA."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv982.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv982.cpp",
+  "old_name": "BfmeHub982",
+  "new_name": "Rva00785FD0Renderer",
+  "before_sha256": "dbb8308a84895d3ca34a9411732ce8dc9887fa1d4497bc0825d0aa805bd804d0",
+  "after_sha256": "553e03eb2c0f6495ef52f4cdb8acf9e7d30ed0f153afd549d72275c797e7eaca",
+  "evidence": "targets/game/reverse/identity_evidence/00f06954-pointer-global.md",
+  "reason": "invented pointee types unified to the one renderer type at 0x01306954"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Open2Conv007.cpp",
+  "new_path": "game/GameEngine/Source/Common/Open2Conv007.cpp",
+  "old_name": "Open2Hub",
+  "new_name": "Rva00785FD0Renderer",
+  "before_sha256": "8363e2745f16f24021bec334af80ce288dbea554d8020606f372cca1c6e5773d",
+  "after_sha256": "e7a521d09e79f5f7ba8926f27b40d5ef0e7a7ea9ac58cde56b4d56d7795bc0a8",
+  "evidence": "targets/game/reverse/identity_evidence/00f06954-pointer-global.md",
+  "reason": "invented pointee types unified to the one renderer type at 0x01306954"
+ },
+ {
+  "old_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Rva00786060AptRoundedBounds.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Rva00786060AptRoundedBounds.cpp",
+  "old_name": "BfmeHub982",
+  "new_name": "Rva00785FD0Renderer",
+  "before_sha256": "d6e535cf3d4393e0738a67c0c5bce83e02282b7f9cfca354fb296f2e7f61e5d5",
+  "after_sha256": "5c67b7fa475bfb84002a04e21c2351132031c05965ffa6fe6ea1d93f3b9c3efc",
+  "evidence": "targets/game/reverse/identity_evidence/00f06954-pointer-global.md",
+  "reason": "invented pointee types unified to the one renderer type at 0x01306954"
  }
 ]

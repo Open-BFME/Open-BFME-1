@@ -1,7 +1,7 @@
 // cl: /I. /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/psplayerstats /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 // 0x0065B350: look the key up in the pointer map at +0x5c; on success parse the
-// trimmed text and queue a type-4 response through g_bfmeQueueEUG slot 0x18,
+// trimmed text and queue a type-4 response through TheGameSpyPSMessageQueue slot 0x18,
 // then erase the key. The early return keeps the string at function scope,
 // which gives the find result its own frame slot as retail does.
 #define ASCIISTRING_H
@@ -33,7 +33,8 @@ public:
     virtual void slot18(const Rva0065B350Response &);
 };
 class BfmeQueueEUG;
-extern BfmeQueueEUG *g_bfmeQueueEUG;
+class GameSpyPSMessageQueueInterface;
+extern GameSpyPSMessageQueueInterface *TheGameSpyPSMessageQueue;
 class Gen_00654130 { public: void bfmeErase(void *); };
 struct Rva0065B350Payload { int word0, word4, word8; };
 class Rva0065B350 {
@@ -62,8 +63,8 @@ int Rva0065B350::handle(void *key, int status, const char *text, int, int)
             response.word0 = 4;
             response.word1D4 = parsed;
             response.word1D8 = type;
-            if (g_bfmeQueueEUG)
-                reinterpret_cast<Rva0065B350QueueView *>(g_bfmeQueueEUG)->slot18(response);
+            if (TheGameSpyPSMessageQueue)
+                reinterpret_cast<Rva0065B350QueueView *>(TheGameSpyPSMessageQueue)->slot18(response);
         }
     }
     reinterpret_cast<Gen_00654130 *>(this)->bfmeErase(key);
@@ -128,8 +129,8 @@ int Rva0065B350::method0065B100(void *key, int status,
     response.word1CC = firstValue;
     response.word1D0 = secondValue;
     response.word1C8 = static_cast<Rva0065B350Payload *>(found->second)->word8;
-    if (g_bfmeQueueEUG)
-        reinterpret_cast<Rva0065B350QueueView *>(g_bfmeQueueEUG)->slot18(response);
+    if (TheGameSpyPSMessageQueue)
+        reinterpret_cast<Rva0065B350QueueView *>(TheGameSpyPSMessageQueue)->slot18(response);
     reinterpret_cast<Gen_00654130 *>(this)->bfmeErase(key);
     return 1;
 }

@@ -634,7 +634,8 @@ struct Rva001A0390GameInfo {
 };
 struct Rva001A0390Template { char rva00[0x10c]; AsciiString rva10C; };
 struct Rva000E0F30 { Rva001A0390Template* rva000E0F30(NameKeyType key) { union { void (*entry)(); Rva001A0390Template* (Rva000E0F30::*method)(NameKeyType); } fn; fn.entry=&j_0002cd8b; return (this->*fn.method)(key); } };
-extern Rva001A0390GameInfo* g012F708C;
+class GameInfo;
+extern GameInfo *TheGameInfo;
 extern PlayerTemplateStore *ThePlayerTemplateStore;
 // 0x012A7918 is TheKey_playerName, already declared const by Common/WellKnownKeys.h.
 extern StaticNameKey g012A7920,g012A7930,g012A7938,g012A7940,g012A7948,g012A7988;
@@ -693,7 +694,7 @@ void SidesList::prepareForMP_or_Skirmish() {
         else self->rva630.rva001977F0(idx);
         idx=next;
     }
-    if(!g012F708C || !g012F708C->slot34()) {
+    if(!TheGameInfo || !reinterpret_cast<Rva001A0390GameInfo *>(TheGameInfo)->slot34()) {
         for(int j=0;j<temp.rva28;++j) {
             Dict& side=temp.rva2C[j].dict04();
             if(side.getType(g012A7988)!=Dict::DICT_ASCIISTRING) {

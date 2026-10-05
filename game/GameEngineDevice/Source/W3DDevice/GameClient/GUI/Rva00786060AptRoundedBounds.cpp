@@ -17,7 +17,8 @@ public:
 };
 class BfmeHub982 { public: void bfmeBegin982C(); void bfmeEnd982C(); };
 class BfmeHostDO { public: void bfmeApplyDO(const char *, int, int, int, int); };
-extern BfmeHub982 *g_bfmeHub982;
+class Rva00785FD0Renderer;
+extern Rva00785FD0Renderer *g_rva00785FD0Renderer;
 // retail 0x012F19E8: the one global definition is
 // WindowManager *g_rva012F19E8WindowManager (GUI/WindowManager.cpp).  BfmeHostDO
 // stays as the TU-local view the call is made through.
@@ -44,7 +45,7 @@ void applyRoundedBounds00786060(const char *name, int first, BoundsSource0078606
  rva00785FD0Flush();
  int saved = Rva00782E10::s_value;
  Rva00782E10::s_value = (int)&bfmeHelpWI;
- g_bfmeHub982->bfmeBegin982C();
+ reinterpret_cast<BfmeHub982 *>(g_rva00785FD0Renderer)->bfmeBegin982C();
  item->m_xform = g_Rva00F0692CTransform;
  Rva00784090Point minPt, extent;
  item->getRenderRegion(&minPt, &extent);
@@ -54,6 +55,6 @@ void applyRoundedBounds00786060(const char *name, int first, BoundsSource0078606
  extent.y = (float)(int)(extent.y + 0.5f);
  ((BfmeHostDO *)g_rva012F19E8WindowManager)->bfmeApplyDO(name, (int)&minPt, (int)&extent, first, fourth);
  Rva00782E10::s_value = saved;
- g_bfmeHub982->bfmeEnd982C();
+ reinterpret_cast<BfmeHub982 *>(g_rva00785FD0Renderer)->bfmeEnd982C();
 }
 

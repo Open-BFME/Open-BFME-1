@@ -171,10 +171,11 @@ public:
 	virtual void Add_Render_Object(RenderObjClass *object);
 };
 
+class RTS3DScene;
 class W3DDisplay
 {
 public:
-	static SceneClass *m_3DScene;
+	static RTS3DScene *m_3DScene;
 };
 
 // Retail 0x012ED5C8 is GlobalData *TheWritableGlobalData
@@ -329,7 +330,7 @@ void Rva00730590::init(void)
 	TerrainTracksRenderObjClassSystem *tracks =
 		new TerrainTracksRenderObjClassSystem;
 	TheTerrainTracksRenderObjClassSystem = tracks;
-	tracks->init(W3DDisplay::m_3DScene);
+	tracks->init(reinterpret_cast<SceneClass *>(W3DDisplay::m_3DScene));
 
 	W3DShadowManager *shadow = new W3DShadowManager;
 	TheW3DShadowManager = shadow;
@@ -339,7 +340,7 @@ void Rva00730590::init(void)
 	TheWaterRenderObj = m_waterRenderObject;
 	m_waterRenderObject->init(localWritableGlobalData()->m_waterPositionZ,
 		localWritableGlobalData()->m_waterExtentX, localWritableGlobalData()->m_waterExtentY,
-		W3DDisplay::m_3DScene,
+		reinterpret_cast<SceneClass *>(W3DDisplay::m_3DScene),
 		static_cast<WaterType>(localWritableGlobalData()->m_waterType));
 	m_waterRenderObject->Set_Position(
 		Vector3(localWritableGlobalData()->m_waterPositionX,
@@ -350,7 +351,7 @@ void Rva00730590::init(void)
 	smudge->init();
 
 	if (!Rva012F08A0 && localWritableGlobalData()->m_waterType != 1 && m_waterRenderObject)
-		W3DDisplay::m_3DScene->Add_Render_Object(
+		reinterpret_cast<SceneClass *>(W3DDisplay::m_3DScene)->Add_Render_Object(
 			static_cast<RenderObjClass *>(m_waterRenderObject));
 
 	if (m_waterRenderObject) {

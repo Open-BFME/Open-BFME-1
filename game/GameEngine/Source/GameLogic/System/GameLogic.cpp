@@ -6715,7 +6715,7 @@ extern WeaponStore *TheWeaponStore;
 extern LocomotorStore *TheLocomotorStore;
 extern BuildAssistant *TheBuildAssistant;
 extern Rva0038DA10Recorder* g012ED62C;
-extern Rva0038DA10GameInfo* g012F708C;
+extern GameInfo *TheGameInfo;
 extern int forcedCRCFrame;
 // Retail's writable GlobalData global lives at 0x012ED5C8 and is declared as
 // `GlobalData *TheWritableGlobalData` by Common/Recorder.h; the field view below
@@ -6774,7 +6774,7 @@ void Rva0038DA10GameLogic::update(int phase) {
     if (mode!=4 && mode!=8 && g012ED62C && first) {
         bool generate=false;
         if (g012ED62C->rva00097800()) {
-            unsigned interval=g012F708C->rva08;
+            unsigned interval=reinterpret_cast<Rva0038DA10GameInfo *>(TheGameInfo)->rva08;
             generate=(frame%interval)==0;
             if (mode==2) generate=false;
         }

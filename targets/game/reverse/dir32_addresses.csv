@@ -17113,3 +17113,5 @@ _g_012F7014,0x012F7014
 ?FreeCount@@3IA,0x0135280C
 ?AllocateCount@@3IA,0x01352810
 ?TheLightPointSystem@@3PAVLightPointSystem@@A,0x012F0FF8
+?TheBfmeSecondManager@@3PAVPointGroupClass@@A,0x012F6DA4
+?g_rva005F7FA0Resource@@3PAVStreakLineClass@@A,0x012F6E30

@@ -86,11 +86,11 @@ public:
 	RefCountedHandle getHandle() const;
 };
 
-// retail 0x012F9D28: the shader texture-handle table (BfmeHandleCX *[8]),
+// retail 0x012F9D28: the shader texture-handle table (BfmeHandleCX[8]),
 // defined by Rva00C6C520StaticInit.cpp. Declared by its defining name; the
 // table's 4-byte slots are written through the TextureHandle view this TU uses.
 class BfmeHandleCX;
-extern BfmeHandleCX *g_bfmeTableDU;
+extern BfmeHandleCX g_bfmeTableDU[8];
 
 class W3DShaderManager
 {

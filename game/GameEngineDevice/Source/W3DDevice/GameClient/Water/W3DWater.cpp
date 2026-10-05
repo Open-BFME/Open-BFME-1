@@ -1606,7 +1606,8 @@ struct BFMEWaterTerrainShroudView
 };
 
 // W3DShaderManager's texture slots (retail 0x012F9D28).
-extern TextureHandle g_bfmeTableDU[];
+class BfmeHandleCX;
+extern BfmeHandleCX g_bfmeTableDU[8];
 
 static __forceinline void BfmeSetTexture(unsigned stage)
 {
@@ -1616,7 +1617,7 @@ static __forceinline void BfmeSetTexture(unsigned stage)
 
 static __forceinline void BfmeSetTextureCache(Int stage, const TextureHandle &texture)
 {
-	g_bfmeTableDU[stage] = texture;
+	reinterpret_cast<TextureHandle *>(g_bfmeTableDU)[stage] = texture;
 }
 
 // BFME's _Set_DX8_Transform no longer mirrors the matrix into DX8Transforms.

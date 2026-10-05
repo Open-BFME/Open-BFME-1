@@ -116,7 +116,8 @@ public:
 	void bfmeEnd982C();
 };
 
-extern BfmeHub982 *g_bfmeHub982;
+class Rva00785FD0Renderer;
+extern Rva00785FD0Renderer *g_rva00785FD0Renderer;
 
 void bfmeStep982C(void);
 
@@ -127,12 +128,12 @@ void bfmeGo982C(BfmeT982 *t)
 
 	bfmeStep982C();
 
-	if (!g_bfmeHub982)
+	if (!g_rva00785FD0Renderer)
 		return;
 
-	g_bfmeHub982->bfmeBegin982C();
+	reinterpret_cast<BfmeHub982 *>(g_rva00785FD0Renderer)->bfmeBegin982C();
 	t->bfmeTouch982C();
-	g_bfmeHub982->bfmeEnd982C();
+	reinterpret_cast<BfmeHub982 *>(g_rva00785FD0Renderer)->bfmeEnd982C();
 }
 
 int __cdecl bfmeHelpWI(int color);

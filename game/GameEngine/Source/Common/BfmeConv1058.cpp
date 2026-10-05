@@ -112,7 +112,8 @@ public:
 	void bfmeUse1058(int r);
 };
 
-extern BfmeK1058 *g_bfmeK1058;
+class LadderList;
+extern LadderList *TheLadderList;
 void bfmeGet1058(int p, int *t);
 int bfmeConv1058(int p, int t);
 
@@ -130,7 +131,7 @@ void BfmeD1058::bfmeGo1058D(void)
 	int t;
 
 	bfmeGet1058(m_bfmeP, &t);
-	g_bfmeK1058->bfmeUse1058(bfmeConv1058(m_bfmeP, t));
+	reinterpret_cast<BfmeK1058 *>(TheLadderList)->bfmeUse1058(bfmeConv1058(m_bfmeP, t));
 }
 
 class BfmeSubE1058

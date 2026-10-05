@@ -83,7 +83,8 @@ public:
 	unsigned short m_refs;
 };
 
-extern TextureBaseClass *TheOpen2PublishedTexture;
+class BfmeHandleCX;
+extern BfmeHandleCX g_bfmeTableDU[8];
 
 class Rva00704AF0
 {
@@ -99,9 +100,9 @@ void Rva00704AF0::publish( void )
 {
 	if( m_texture )
 		++m_texture->m_refs;
-	if( TheOpen2PublishedTexture )
-		TheOpen2PublishedTexture->Release_Ref();
-	TheOpen2PublishedTexture = m_texture;
+	if( reinterpret_cast<TextureBaseClass **>(g_bfmeTableDU)[0] )
+		reinterpret_cast<TextureBaseClass **>(g_bfmeTableDU)[0]->Release_Ref();
+	reinterpret_cast<TextureBaseClass **>(g_bfmeTableDU)[0] = m_texture;
 	DX8Wrapper::Set_Index_Buffer( m_indexBuffer, 0 );
 	DX8Wrapper::Set_Vertex_Buffer( m_vertexBuffer, 0 );
 }

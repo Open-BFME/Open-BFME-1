@@ -53,7 +53,8 @@ class MapMetaData;
 class MapCache { public: const MapMetaData *findMap(AsciiString); void updateCache(); };
 extern MapCache *TheMapCache;
 class GameInfo { public: AsciiString getMap() const; };
-extern GameInfo *TheGameSpyGame;
+class GameSpyStagingRoom;
+extern GameSpyStagingRoom *TheGameSpyGame;
 // ILT 00029CEE -> 00457090 takes four cdecl stack arguments. Its
 // final argument is a pointer to a caller-owned AsciiString temporary,
 // which the caller destroys after return (unlike the ZH by-value API).
@@ -134,7 +135,7 @@ void Rva00503FA0InitializeMapSelectMenu()
 	winMapPreviewID = TheNameKeyGenerator->nameToKey( AsciiString("WOLMapSelectMenu.wnd:WinMapPreview") );
 	winMapPreview = TheWindowManager->winGetWindowFromId(parent, winMapPreviewID);
 
-	const MapMetaData *mmd = TheMapCache->findMap(TheGameSpyGame->getMap());
+	const MapMetaData *mmd = TheMapCache->findMap(reinterpret_cast<GameInfo *>(TheGameSpyGame)->getMap());
 	if (mmd)
 	{
 		usesSystemMapDir = *(const bool *)((const char *)mmd + 0x26);
@@ -176,7 +177,7 @@ void Rva00503FA0InitializeMapSelectMenu()
 	{
 		if (TheMapCache)
 			TheMapCache->updateCache();
-		rva00457090PopulateMapList( mapList, usesSystemMapDir, TRUE, TheGameSpyGame->getMap() );
+		rva00457090PopulateMapList( mapList, usesSystemMapDir, TRUE, reinterpret_cast<GameInfo *>(TheGameSpyGame)->getMap() );
 	}
 
 }  

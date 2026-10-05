@@ -9,7 +9,8 @@
 // the global even when another owner keeps the object alive.
 
 extern RefCountClass *g_rva005F4340Resource;
-extern RefCountClass *g_rva005F7FA0Resource;
+class StreakLineClass;
+extern StreakLineClass *g_rva005F7FA0Resource;
 
 void releaseRva005F4340Resource(void)
 {
@@ -24,7 +25,7 @@ void releaseRva005F7FA0Resource(void)
 {
 	if (g_rva005F7FA0Resource != 0)
 	{
-		g_rva005F7FA0Resource->Release_Ref();
+		reinterpret_cast<RefCountClass *>(g_rva005F7FA0Resource)->Release_Ref();
 		g_rva005F7FA0Resource = 0;
 	}
 }

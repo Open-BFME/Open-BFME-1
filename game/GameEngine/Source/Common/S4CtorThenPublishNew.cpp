@@ -43,9 +43,8 @@
 // duplicated -- but they publish into DIFFERENT globals, so the globals stay
 // four separate declarations.
 //
-// IDENTITY IS NOT RECOVERED.  Every name is derived from an address; callees are
-// declared, never defined, and pinned to the addresses their REL32s resolve to
-// through the ILT thunks in the way.
+// Publisher identities remain address-derived. Retail constructor evidence
+// identifies PointGroupClass and StreakLineClass; local allocation views retain their pins.
 
 void s4Second( void );
 
@@ -60,9 +59,9 @@ S4_MADE_CLASS( 0090F650, 11 )
 S4_MADE_CLASS( 00912580, 23 )
 S4_MADE_CLASS( 0091A730, 104 )
 
-#define S4_CTOR_THEN_PUBLISH( NAME, MADE )                                     \
+#define S4_CTOR_THEN_PUBLISH( NAME, MADE, TYPE, GLOBAL )                                     \
 	void s4First##NAME( void );                                                \
-	extern S4Made##MADE *g_s4Made##NAME;                                       \
+	extern TYPE *GLOBAL;                                       \
 	struct S4Publisher##NAME                                                   \
 	{                                                                          \
 		S4Publisher##NAME();                                                   \
@@ -71,10 +70,19 @@ S4_MADE_CLASS( 0091A730, 104 )
 	{                                                                          \
 		s4First##NAME();                                                       \
 		s4Second();                                                            \
-		g_s4Made##NAME = new S4Made##MADE;                                     \
+		GLOBAL = reinterpret_cast<TYPE *>(new S4Made##MADE);                                     \
 	}
 
-S4_CTOR_THEN_PUBLISH( 005F2D80, 0090F650 )
-S4_CTOR_THEN_PUBLISH( 005F36D0, 00912580 )
-S4_CTOR_THEN_PUBLISH( 005F6590, 0090F650 )
-S4_CTOR_THEN_PUBLISH( 005F8540, 0091A730 )
+class Gen0090F680;
+class PointGroupClass;
+class StreakLineClass;
+
+Gen0090F680 *TheGen012F6D88 = 0;
+PointGroupClass *TheBfmeSecondManager = 0;
+Gen0090F680 *TheGen012F6DFC = 0;
+StreakLineClass *g_rva005F7FA0Resource = 0;
+
+S4_CTOR_THEN_PUBLISH( 005F2D80, 0090F650, Gen0090F680, TheGen012F6D88 )
+S4_CTOR_THEN_PUBLISH( 005F36D0, 00912580, PointGroupClass, TheBfmeSecondManager )
+S4_CTOR_THEN_PUBLISH( 005F6590, 0090F650, Gen0090F680, TheGen012F6DFC )
+S4_CTOR_THEN_PUBLISH( 005F8540, 0091A730, StreakLineClass, g_rva005F7FA0Resource )

@@ -13,14 +13,15 @@ public:
 };
 
 extern BfmeA1062 *g_bfmeA1062;
-extern BfmeB1062 *g_bfmeB1062;
+class W3DProjectedShadowManager;
+extern W3DProjectedShadowManager *TheW3DProjectedShadowManager;
 
 void bfmeGo1062A(void)
 {
 	if (g_bfmeA1062)
 		g_bfmeA1062->bfmeF1062A();
-	if (g_bfmeB1062)
-		g_bfmeB1062->bfmeF1062B();
+	if (TheW3DProjectedShadowManager)
+		reinterpret_cast<BfmeB1062 *>(TheW3DProjectedShadowManager)->bfmeF1062B();
 }
 
 class BfmeC1062
