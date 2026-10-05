@@ -230,16 +230,11 @@ BuildAssistant::~BuildAssistant( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?init@BuildAssistant@@ present-unmatched
+// Retail 0x000FBE80 is a lone ret in SubsystemInterface slot 1 (init) of
+// BuildAssistant's table 0x010860D8: BFME no longer preallocates the position
+// array here; buildTiledLocations (0x000FC010) grows it on demand.
 void BuildAssistant::init( void )
 {
-
-	//
-	// allocate our array of positions that we use to assist ourselves when constructing
-	// a tiled array of locations to build things like walls
-	//
-	m_buildPositionSize = TheGlobalData->m_maxLineBuildObjects;
-	m_buildPositions = NEW Coord3D[ m_buildPositionSize ];
 
 }  // end init
 
