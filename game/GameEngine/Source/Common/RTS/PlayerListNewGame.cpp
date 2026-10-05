@@ -15,10 +15,10 @@ class StaticNameKey { public: NameKeyType key() const; };
 class NameKeyGenerator { public: NameKeyType nameToKey(const char *); };
 extern NameKeyGenerator *TheNameKeyGenerator;
 // Retail's defining decoration for 0x012A7918 is
-// ?TheKey_playerName@@3VStaticNameKey@@B: const, so the object lives in .bss.
+// The const key object has a writable cache and a retail name pointer in .data.
 extern const StaticNameKey TheKey_playerName;
-extern StaticNameKey TheKey_multiplayerIsLocal,
-    TheKey_playerIsHuman, TheKey_playerEnemies, TheKey_playerAllies;
+extern StaticNameKey TheKey_multiplayerIsLocal;
+extern const StaticNameKey TheKey_playerIsHuman, TheKey_playerEnemies, TheKey_playerAllies;
 
 class Dict
 {

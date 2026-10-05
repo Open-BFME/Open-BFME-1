@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/GameEngine/Include/Precompiled /Igame/GameEngine/Source/Common/System /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
+#define D3DXMATRIX _D3DXMATRIX
 #include <vector>
 /*
 **	Command & Conquer Generals Zero Hour(tm)

@@ -145,8 +145,8 @@ void BezierSegment::splitSegmentAtT(Real tValue, BezierSegment &outSeg1, BezierS
 
 //-------------------------------------------------------------------------------------------------
 // The Basis Matrix for a bezier segment
-// ?s_bezBasisMatrix@BezierSegment@@ present-unmatched
-const D3DXMATRIX BezierSegment::s_bezBasisMatrix(
+// Retail VA 0x012A8380 holds this sixteen-float basis matrix.
+const D3DXMATRIX BezierSegment::s_bezBasisMatrix = D3DXMATRIX(
 	-1.0f,  3.0f, -3.0f,  1.0f,
 	 3.0f, -6.0f,  3.0f,  0.0f,
 	-3.0f,  3.0f,  0.0f,  0.0f,

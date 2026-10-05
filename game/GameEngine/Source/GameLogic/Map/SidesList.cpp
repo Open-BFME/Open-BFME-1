@@ -638,7 +638,7 @@ class GameInfo;
 extern GameInfo *TheGameInfo;
 extern PlayerTemplateStore *ThePlayerTemplateStore;
 // 0x012A7918 is TheKey_playerName, already declared const by Common/WellKnownKeys.h.
-extern StaticNameKey g012A7920,g012A7930,g012A7938,g012A7940,g012A7948,g012A7988;
+extern const StaticNameKey TheKey_playerAIType;
 
 void j_00032ec5(); void j_000238ad();
 class Rva001A0390Layout {
@@ -681,7 +681,7 @@ void SidesList::prepareForMP_or_Skirmish() {
             ++temp.rva28; self->rva0019B640(i); }
         continue;
     keepSide:
-        { side->setBool(g012A7920,false); ++i; }
+        { side->setBool(TheKey_playerIsHuman,false); ++i; }
     }
     Rva001A0390TeamNode* nodes=self->rva630.rva0C;
     for(int idx=nodes[0].rva00;idx;) {
@@ -696,21 +696,21 @@ void SidesList::prepareForMP_or_Skirmish() {
     if(!TheGameInfo || !reinterpret_cast<Rva001A0390GameInfo *>(TheGameInfo)->slot34()) {
         for(int j=0;j<temp.rva28;++j) {
             Dict& side=temp.rva2C[j].dict04();
-            if(side.getType(g012A7988)!=Dict::DICT_ASCIISTRING) {
-                AsciiString faction=side.getAsciiString(g012A7938);
+            if(side.getType(TheKey_playerAIType)!=Dict::DICT_ASCIISTRING) {
+                AsciiString faction=side.getAsciiString(TheKey_playerFaction);
                 Rva001A0390Template* t=((Rva000E0F30 *)ThePlayerTemplateStore)->rva000E0F30(TheNameKeyGenerator->nameToKey(((const StringBase<char>*)&faction)->str()));
-                if(t && !((const StringBase<char>*)&t->rva10C)->isEmpty()) side.setAsciiString(g012A7988,t->rva10C);
+                if(t && !((const StringBase<char>*)&t->rva10C)->isEmpty()) side.setAsciiString(TheKey_playerAIType,t->rva10C);
             }
         }
     }
     Dict dict;
     dict.setAsciiString(TheKey_playerName,AsciiString("SkirmishHuman"));
-    dict.setBool(g012A7920,true);
-    dict.setUnicodeString(g012A7930,UnicodeString::TheEmptyString);
-    dict.setAsciiString(g012A7938,AsciiString("FactionCivilian"));
-    dict.setAsciiString(g012A7940,AsciiString::TheEmptyString);
-    dict.setAsciiString(g012A7948,AsciiString::TheEmptyString);
-    dict.setAsciiString(g012A7988,AsciiString("Multiplayer_Human"));
+    dict.setBool(TheKey_playerIsHuman,true);
+    dict.setUnicodeString(TheKey_playerDisplayName,UnicodeString::TheEmptyString);
+    dict.setAsciiString(TheKey_playerFaction,AsciiString("FactionCivilian"));
+    dict.setAsciiString(TheKey_playerEnemies,AsciiString::TheEmptyString);
+    dict.setAsciiString(TheKey_playerAllies,AsciiString::TheEmptyString);
+    dict.setAsciiString(TheKey_playerAIType,AsciiString("Multiplayer_Human"));
     temp.addSide(&dict);
     dict.clear();
     AsciiString teamName("team"); ((StringBase<char>*)&teamName)->concat("SkirmishHuman",13);

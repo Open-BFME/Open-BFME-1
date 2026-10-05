@@ -66,6 +66,11 @@ public:
 #define DEFINE_TIME_OF_DAY_NAMES
 
 #include "Common/INI.h"
+
+char *TimeOfDayNames[] =
+{
+	"NONE", "MORNING", "AFTERNOON", "EVENING", "NIGHT", "INTERPOLATE", 0
+};
 #include "Common/INIException.h"
 #include "Common/GameType.h"
 

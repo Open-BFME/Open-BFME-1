@@ -5,7 +5,7 @@
 #include "Common/AsciiString.h"
 
 // Name table whose first entry is "UNSPECIFIED", indexed by the signed byte at source +0x496.
-extern const char *const g_012AC510[];
+extern const char *const ThingClassNames012AC510[];
 
 // View of the record the matched Rva0013A820::reset clears (strings at +0x00..+0x10, +0x1C).
 class Rva0013A820
@@ -66,7 +66,7 @@ bool Rva0013C720Owner::build(Rva0013A820 *out, const Rva0013B2F0StringTable *mod
 	const Rva0013B990Template *source, const Gen_007622C0 *entry, int index)
 {
 	out->m_00.set(source->m_20);
-	out->m_04 = g_012AC510[source->m_496];
+	out->m_04 = ThingClassNames012AC510[source->m_496];
 	out->m_08 = moduleInfo->getField0(index);
 	out->m_0C = reinterpret_cast<const Rva0013B370StringTable *>(moduleInfo)->getField4(index);
 	out->m_10 = entry->method();

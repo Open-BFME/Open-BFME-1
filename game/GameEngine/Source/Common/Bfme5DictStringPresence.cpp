@@ -4,7 +4,10 @@ class BfmeStringPresenceValue
 {
 public:
 	~BfmeStringPresenceValue(void);
-	bool isEmpty(void) const;
+	bool isEmpty(void) const
+	{
+		return m_header == 0 || m_header->length == 0;
+	}
 
 private:
 	struct Header
@@ -16,15 +19,12 @@ private:
 	Header *m_header;
 };
 
-inline bool BfmeStringPresenceValue::isEmpty(void) const
-{
-	return m_header == 0 || m_header->length == 0;
-}
+enum NameKeyType { NAMEKEY_INVALID = 0 };
 
-class GenKey
+class StaticNameKey
 {
 public:
-	int fetch(void);
+	NameKeyType key() const;
 };
 
 class BfmeStringPresenceDict
@@ -33,7 +33,7 @@ public:
 	BfmeStringPresenceValue getAsciiString(int key, bool *exists) const;
 };
 
-extern GenKey GenKey0012A7918;
+extern const StaticNameKey TheKey_playerName;
 
 class BfmeStringPresenceOwner
 {
@@ -51,5 +51,5 @@ bool BfmeStringPresenceOwner::bfmeHasString(void) const
 	const BfmeStringPresenceDict *dict = &m_dict;
 	bool initialized;
 	return dict != 0 &&
-		dict->getAsciiString(GenKey0012A7918.fetch(), &initialized).isEmpty();
+		dict->getAsciiString(TheKey_playerName.key(), &initialized).isEmpty();
 }

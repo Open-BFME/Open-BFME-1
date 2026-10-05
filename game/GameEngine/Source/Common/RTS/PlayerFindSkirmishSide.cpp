@@ -50,10 +50,12 @@ public:
 	}
 };
 
-class GenKey
+enum NameKeyType { NAMEKEY_INVALID = 0 };
+
+class StaticNameKey
 {
 public:
-	int fetch(void);
+	NameKeyType key() const;
 };
 
 class BfmeStringPresenceDict
@@ -65,7 +67,7 @@ public:
 	BfmeStringPresenceValue getAsciiString(int key, bool *exists) const;
 };
 
-extern GenKey GenKey0012A7918;
+extern const StaticNameKey TheKey_playerName;
 
 struct BfmeSkirmishSide
 {
@@ -110,7 +112,7 @@ Bool Player::findSkirmishSide(int *index)
 	{
 		BfmeStringPresenceValue playerName =
 			((BfmeSidesList *)TheSidesList)->getSkirmishSideInfo(i)->m_dict.getAsciiString(
-				GenKey0012A7918.fetch(), 0);
+				TheKey_playerName.key(), 0);
 		if (playerName == m_playerName)
 		{
 			*index = i;

@@ -51,7 +51,7 @@ template<int N> class BitFlags { public:
  void xfer(Xfer *);
  static int getSingleBitFromName(const char *);
 };
-extern const char *names1CB730[];
+extern "C" const char *__identifier("?s_bitNameList@?$BitFlags@$0HE@@@0PAPBDA")[];
 class NamedBits1CB730 { _STL::bitset<116> bits; public: void transfer(Xfer *xfer); };
 void NamedBits1CB730::transfer(Xfer *xfer)
 {
@@ -62,8 +62,8 @@ void NamedBits1CB730::transfer(Xfer *xfer)
   int count=bits.count();
   xfer->integer(&count);
   for (int i=0;i<116;++i) {
-   if (bits._Unchecked_test(i) && names1CB730[i]) {
-    AsciiString name(names1CB730[i]);
+   if (bits._Unchecked_test(i) && __identifier("?s_bitNameList@?$BitFlags@$0HE@@@0PAPBDA")[i]) {
+    AsciiString name(__identifier("?s_bitNameList@?$BitFlags@$0HE@@@0PAPBDA")[i]);
     xfer->text(&name);
     --count;
    }

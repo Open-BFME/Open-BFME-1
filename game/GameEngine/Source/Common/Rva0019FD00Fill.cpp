@@ -28,13 +28,13 @@ public:
 	char m_body[0x14];
 };
 
-class GenKey
+class StaticNameKey
 {
 public:
-	int fetch();
+	NameKeyType key() const;
 };
 
-extern GenKey GenKey0012A7988;
+extern const StaticNameKey TheKey_playerAIType;
 
 struct Rva001A0320Record
 {
@@ -175,7 +175,7 @@ void Rva001A0320Owner::fill( int index, Rva0019A7D0Vector *out )
 	Rva0019A1D0Owner tree;
 	Bool exists;
 	AsciiString name = record->m_dict.getAsciiString(
-		(NameKeyType)GenKey0012A7988.fetch(), &exists );
+		(NameKeyType)TheKey_playerAIType.key(), &exists );
 	if ( exists )
 	{
 		int type = ThePlayerAITypeSet->find( &name );

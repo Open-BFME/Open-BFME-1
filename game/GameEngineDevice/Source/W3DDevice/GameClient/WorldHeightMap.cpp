@@ -49,6 +49,9 @@ extern W3DShadowManager *TheW3DShadowManager;
 #include "Common/ThingTemplate.h"
 #include "Common/WellKnownKeys.h"
 
+extern const StaticNameKey TheKey_playerAIType;
+const StaticNameKey TheKey_playerAIType("playerAIType");
+
 #include "GameLogic/PolygonTrigger.h"
 #include "GameLogic/SidesList.h"
 

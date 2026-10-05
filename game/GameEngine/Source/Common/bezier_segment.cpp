@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/GameEngine/Include/Precompiled /Igame/GameEngine/Source/Common/System /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
+#define D3DXMATRIX _D3DXMATRIX
 #include <vector>
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -144,10 +145,4 @@ void BezierSegment::splitSegmentAtT(Real tValue, BezierSegment &outSeg1, BezierS
 
 //-------------------------------------------------------------------------------------------------
 // The Basis Matrix for a bezier segment
-// ?BezierSegment::s_bezBasisMatrix present-unmatched
-const D3DXMATRIX BezierSegment::s_bezBasisMatrix(
-	-1.0f,  3.0f, -3.0f,  1.0f,
-	 3.0f, -6.0f,  3.0f,  0.0f,
-	-3.0f,  3.0f,  0.0f,  0.0f,
-	 1.0f,  0.0f,  0.0f,  0.0f
-);
+// The basis matrix is defined in Bezier/BezierSegment.cpp.

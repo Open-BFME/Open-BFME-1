@@ -3,7 +3,7 @@
 // Two masked table reads and a search that clears the matching entry.
 
 #include "Common/BitFlags.h"
-extern int g_bfmeTableENb[];					// retail 0x012A8D40
+extern "C" const char *__identifier("?s_bitNameList@?$BitFlags@$0HE@@@0PAPBDA")[];
 
 class Gen_001C6300
 {
@@ -36,7 +36,7 @@ private:
 int Gen_001C6390::bfmeLookup(unsigned int index) const
 {
 	if (m_bfmeWords[index >> 5] & (1 << (index & 31)))
-		return g_bfmeTableENb[index];
+		return reinterpret_cast<int>(__identifier("?s_bitNameList@?$BitFlags@$0HE@@@0PAPBDA")[index]);
 
 	return 0;
 }

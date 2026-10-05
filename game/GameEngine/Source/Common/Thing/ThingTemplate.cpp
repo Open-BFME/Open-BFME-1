@@ -182,7 +182,27 @@ extern "C" void __identifier("?parseUnsignedShort@INI@@SAXPAV1@PAX1PBX@Z")(INI *
 extern "C" void __identifier("?parseWeaponTemplate@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
 extern "C" void __identifier("?parseWeaponTemplateSet@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
 extern const char *const ThingTemplateBrowserNames012AC410[];
-extern const char *const g_012AC510[];
+extern const char *const ThingClassNames012AC510[];
+const char *const ThingClassNames012AC510[] =
+{
+	"UNSPECIFIED",
+	"HORDE_UNIT",
+	"CHARACTER_UNIT",
+	"CAVALRY_UNIT",
+	"MEDIUM_MONSTER",
+	"LARGE_MONSTER",
+	"PROP",
+	"CIV_BUILDING",
+	"WALL_PIECE",
+	"FACTION_BUILDING",
+	"LANDMARK_BUILDING",
+	"GROUND_COVER",
+	"BUSH",
+	"TREE",
+	"MACHINE",
+	"BUFF",
+	0
+};
 extern const char *const ThingTemplateDeadCollideSizeNames012AC4FC[];
 
 extern "C" const char *__identifier("?RadarPriorityNames@@3PAPBDA")[];
@@ -190,7 +210,7 @@ extern "C" const char *__identifier("?BuildableStatusNames@@3PAPBDA")[];
 extern "C" const char *__identifier("?BuildCompletionNames@@3PAPBDA")[];
 extern "C" const char *__identifier("?EditorSortingNames@@3PAPBDA")[];
 extern "C" const char *const __identifier("?ThingTemplateBrowserNames012AC410@@3QBQBDB")[];
-extern "C" const char *const __identifier("?g_012AC510@@3QBQBDB")[];
+extern "C" const char *const __identifier("?ThingClassNames012AC510@@3QBQBDB")[];
 extern "C" const char *const __identifier("?ThingTemplateDeadCollideSizeNames012AC4FC@@3QBQBDB")[];
 extern "C" const char *__identifier("?TheShadowNames@@3PAPBDA")[];
 
@@ -237,7 +257,7 @@ const FieldParse ThingTemplate::s_objectFieldParseTable[] =
 	{ "DisplayColor", __identifier("?parseColorInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x420 },
 	{ "EditorSorting", __identifier("?parseByteSizedIndexList@INI@@SAXPAV1@PAX1PBX@Z"), __identifier("?EditorSortingNames@@3PAPBDA"), 0x494 },
 	{ "Browser", __identifier("?Rva000BDAF0IndexVectorParse@@YAXPAVINI@@PAX1PBX@Z"), __identifier("?ThingTemplateBrowserNames012AC410@@3QBQBDB"), 0x358 },
-	{ "ThingClass", __identifier("?parseByteSizedIndexList@INI@@SAXPAV1@PAX1PBX@Z"), __identifier("?g_012AC510@@3QBQBDB"), 0x496 },
+	{ "ThingClass", __identifier("?parseByteSizedIndexList@INI@@SAXPAV1@PAX1PBX@Z"), __identifier("?ThingClassNames012AC510@@3QBQBDB"), 0x496 },
 	{ "DeadCollideSize", __identifier("?parseByteSizedIndexList@INI@@SAXPAV1@PAX1PBX@Z"), __identifier("?ThingTemplateDeadCollideSizeNames012AC4FC@@3QBQBDB"), 0x495 },
 	{ "KindOf", __identifier("?parseFromINI@?$BitFlags@$0HE@@@SAXPAVINI@@PAX1PBX@Z"), 0, 0xC8 },
 	{ "CommandSet", __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x2C },

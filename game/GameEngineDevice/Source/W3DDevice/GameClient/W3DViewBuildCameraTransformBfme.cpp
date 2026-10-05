@@ -148,6 +148,7 @@ class StaticNameKey
 	mutable NameKeyType m_key;
 	const char *m_name;
 public:
+	StaticNameKey(const char *name) : m_key(NAMEKEY_INVALID), m_name(name) {}
 	NameKeyType key() const;
 };
 class Dict
@@ -158,6 +159,7 @@ public:
 };
 class MapObject { public: static Dict TheWorldDict; };
 extern StaticNameKey CameraYawAngleKey;
+StaticNameKey CameraYawAngleKey("cameraYawAngle");
 
 // CameraClass::unused050 is slot 20; the raw transform begins at +0x18.
 #define CAMERA_UNUSED(n) virtual void unused##n() = 0;

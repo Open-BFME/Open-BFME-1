@@ -116,7 +116,7 @@ void Rva00062870(int **outSecond, int **outFirst)
 	*outSecond = (int *)g_ObfRecord012A6FF4.m_seed[index];
 	*outFirst = (int *)g_ObfRecord012A6FF4.m_key[index];
 }
-BFME_SELECT_BY_TIMESTAMP( Rva00099350, g_twoBitSelectorRecord012A7D38 )
+BFME_SELECT_BIG_BY_TIMESTAMP( Rva00099350, g_ObfRecord012A7D38 )
 BFME_SELECT_BIG_BY_TIMESTAMP( Rva003875C0, g_ObfRecord012B446C )
 BFME_SELECT_BIG_BY_TIMESTAMP( Rva00387600, g_ObfRecord012B4494 )
 BFME_SELECT_BY_TIMESTAMP( Rva0054D680, g_twoBitSelectorRecord012B79F4 )

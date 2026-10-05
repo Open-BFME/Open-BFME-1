@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 
-extern const char *names1CB730[];
+extern "C" const char *__identifier("?s_bitNameList@?$BitFlags@$0HE@@@0PAPBDA")[];
 
 void *Rva000EB110Get()
 {
-	return names1CB730;
+	return __identifier("?s_bitNameList@?$BitFlags@$0HE@@@0PAPBDA");
 }

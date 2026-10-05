@@ -15,8 +15,8 @@
 // WHAT THE BYTES SHOW.  `mov ecx,imm32` -- not `mov ecx,[imm32]` -- means the
 // receiver of the first two calls is a global OBJECT, taken by address, while
 // the fallback IS dereferenced first and so is a global POINTER.  The flag is
-// passed BY ADDRESS to the first call and read back after the second, so the
-// first callee writes it; it lives in the single `push ecx` of local space.
+// pushed before the key call remains on the stack for Dict::getReal, which
+// writes it; it lives in the single `push ecx` of local space.
 // The lookup returns in st0 and is stored with `fstp`, which fixes it as float;
 // the fallback copy is a plain dword move, which is how MSVC copies one float
 // to another when no arithmetic touches it.
@@ -32,9 +32,8 @@
 // standing at five addresses is exactly what verify_dir32_consistency exists to
 // catch, and the bytes cannot tell an array from five neighbours anyway.
 //
-// IDENTITY IS NOT RECOVERED.  Every name is derived from an address; the key
-// type's two words are declared only to give it the eight-byte size its
-// neighbours imply, and nothing reads them.
+// CameraYawAngleKey is a StaticNameKey consumed by Dict::getReal.
+// The other four key views and the receiver retain their address-derived names.
 
 class GenKey
 {
@@ -59,7 +58,9 @@ public:
 extern GenKey GenKey0012A79B8;
 extern GenKey GenKey0012A79C0;
 extern GenKey GenKey0012A79C8;
-extern GenKey GenKey0012A79D0;
+enum NameKeyType { NAMEKEY_INVALID = 0 };
+class StaticNameKey { public: NameKeyType key() const; };
+extern StaticNameKey CameraYawAngleKey;
 extern GenKey GenKey0012A79D8;
 // 0x012ED5E0 is retail's MapObject::TheWorldDict, the global Dict object this
 // lookup is a receiver for -- see the same declaration in
@@ -69,8 +70,8 @@ extern GenKey GenKey0012A79D8;
 // game/**/*.h declares MapObject or Dict (only a bare `class Dict;` forward
 // declaration in GameLogic/TerrainLogic.h), so the spelling is declared here to
 // emit retail's `?TheWorldDict@MapObject@@2VDict@@A`.  The table receiver is
-// read through the local GenTable view so the call keeps its retail ABI.
-class Dict;
+// read through GenTable for the four opaque keys and Dict for CameraYawAngleKey.
+class Dict { public: float getReal(NameKeyType, bool *) const; };
 class MapObject
 {
 public:
@@ -118,5 +119,11 @@ public:
 S3_LOAD( load0, GenKey0012A79B8, m_04, m_f0 )
 S3_LOAD( load1, GenKey0012A79C0, m_08, m_f1 )
 S3_LOAD( load2, GenKey0012A79C8, m_0c, m_f2 )
-S3_LOAD( load3, GenKey0012A79D0, m_10, m_f3 )
+void Rva006DF290::load3()
+{
+	bool found;
+	m_10 = MapObject::TheWorldDict.getReal(CameraYawAngleKey.key(), &found);
+	if (!found)
+		m_10 = localTheWritableGlobalData()->m_f3;
+}
 S3_LOAD( load4, GenKey0012A79D8, m_14, m_f4 )

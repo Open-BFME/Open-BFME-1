@@ -61,7 +61,7 @@ struct Rva00778000Owner
 	_STL::vector<Rva00777E40Element> m_records;
 };
 
-extern const char *const Rva00778000TimeOfDayNames[];
+extern char *TimeOfDayNames[];
 
 // ?Rva00778000Parse@@YAXPAVINI@@PAX1PBX@Z
 void Rva00778000Parse(INI *ini, void *instance, void *store, const void *userData)
@@ -80,7 +80,7 @@ void Rva00778000Parse(INI *ini, void *instance, void *store, const void *userDat
 	const char *timeOfDay = ini->getNextTokenOrNull(0);
 	if (timeOfDay)
 		value.m_unusedValue = INI::scanIndexList(timeOfDay,
-			Rva00778000TimeOfDayNames);
+			TimeOfDayNames);
 	else
 		value.m_unusedValue = 0;
 
