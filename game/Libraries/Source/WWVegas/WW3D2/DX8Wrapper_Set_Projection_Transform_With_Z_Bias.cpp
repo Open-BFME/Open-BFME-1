@@ -26,7 +26,9 @@ public:
 	static void Set_Projection_Transform_With_Z_Bias(const Matrix4 &matrix, float znear, float zfar);
 	static BfmeProjectionDevice *D3DDevice;
 	static float ZBias;
+protected:
 	static float ZNear;
+public:
 	static float ZFar;
 	static Matrix4 ProjectionMatrix;
 };

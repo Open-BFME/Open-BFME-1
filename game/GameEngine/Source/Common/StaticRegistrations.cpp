@@ -1,5 +1,6 @@
 // cl: /O2 /MD
-extern void *bfmeRva0130CE50RegistrationHead;
+struct BlockParse;
+extern BlockParse *theBlockParseList;
 extern void *bfmeRva012A7460RegistrationNext;
 extern void *bfmeRva012A746CRegistrationNext;
 extern void *bfmeRva012A7478RegistrationNext;
@@ -99,570 +100,570 @@ extern void *bfmeRva012B91F4RegistrationNext;
 
 void bfmeRva00C6A950LinkRegistration()
 {
-    bfmeRva012A7460RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A7460RegistrationNext;
+    bfmeRva012A7460RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A7460RegistrationNext);
 }
 
 void bfmeRva00C6A970LinkRegistration()
 {
-    bfmeRva012A746CRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A746CRegistrationNext;
+    bfmeRva012A746CRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A746CRegistrationNext);
 }
 
 void bfmeRva00C6A990LinkRegistration()
 {
-    bfmeRva012A7478RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A7478RegistrationNext;
+    bfmeRva012A7478RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A7478RegistrationNext);
 }
 
 void bfmeRva00C6A9B0LinkRegistration()
 {
-    bfmeRva012A7484RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A7484RegistrationNext;
+    bfmeRva012A7484RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A7484RegistrationNext);
 }
 
 void bfmeRva00C6A9D0LinkRegistration()
 {
-    bfmeRva012A7490RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A7490RegistrationNext;
+    bfmeRva012A7490RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A7490RegistrationNext);
 }
 
 void bfmeRva00C6A9F0LinkRegistration()
 {
-    bfmeRva012A749CRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A749CRegistrationNext;
+    bfmeRva012A749CRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A749CRegistrationNext);
 }
 
 void bfmeRva00C6AA10LinkRegistration()
 {
-    bfmeRva012A74A8RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A74A8RegistrationNext;
+    bfmeRva012A74A8RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A74A8RegistrationNext);
 }
 
 void bfmeRva00C6AA90LinkRegistration()
 {
-    bfmeRva012A7BBCRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A7BBCRegistrationNext;
+    bfmeRva012A7BBCRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A7BBCRegistrationNext);
 }
 
 void bfmeRva00C6AAE0LinkRegistration()
 {
-    bfmeRva012A829CRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A829CRegistrationNext;
+    bfmeRva012A829CRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A829CRegistrationNext);
 }
 
 void bfmeRva00C6AB00LinkRegistration()
 {
-    bfmeRva012A82A8RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A82A8RegistrationNext;
+    bfmeRva012A82A8RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A82A8RegistrationNext);
 }
 
 void bfmeRva00C6AB20LinkRegistration()
 {
-    bfmeRva012A82B4RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A82B4RegistrationNext;
+    bfmeRva012A82B4RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A82B4RegistrationNext);
 }
 
 void bfmeRva00C6B220LinkRegistration()
 {
-    bfmeRva012B4398RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B4398RegistrationNext;
+    bfmeRva012B4398RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B4398RegistrationNext);
 }
 
 void bfmeRva00C6AB40LinkRegistration()
 {
-    bfmeRva012A82C0RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A82C0RegistrationNext;
+    bfmeRva012A82C0RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A82C0RegistrationNext);
 }
 
 void bfmeRva00C6AB60LinkRegistration()
 {
-    bfmeRva012A82CCRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A82CCRegistrationNext;
+    bfmeRva012A82CCRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A82CCRegistrationNext);
 }
 
 void bfmeRva00C6AB80LinkRegistration()
 {
-    bfmeRva012A832CRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A832CRegistrationNext;
+    bfmeRva012A832CRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A832CRegistrationNext);
 }
 
 void bfmeRva00C6ABA0LinkRegistration()
 {
-    bfmeRva012A8408RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8408RegistrationNext;
+    bfmeRva012A8408RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A8408RegistrationNext);
 }
 
 void bfmeRva00C6ABC0LinkRegistration()
 {
-    bfmeRva012A8448RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8448RegistrationNext;
+    bfmeRva012A8448RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A8448RegistrationNext);
 }
 
 void bfmeRva00C6ABE0LinkRegistration()
 {
-    bfmeRva012A8484RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8484RegistrationNext;
+    bfmeRva012A8484RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A8484RegistrationNext);
 }
 
 void bfmeRva00C6AC00LinkRegistration()
 {
-    bfmeRva012A84C0RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A84C0RegistrationNext;
+    bfmeRva012A84C0RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A84C0RegistrationNext);
 }
 
 void bfmeRva00C6AC20LinkRegistration()
 {
-    bfmeRva012A84FCRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A84FCRegistrationNext;
+    bfmeRva012A84FCRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A84FCRegistrationNext);
 }
 
 void bfmeRva00C6AC40LinkRegistration()
 {
-    bfmeRva012A8514RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8514RegistrationNext;
+    bfmeRva012A8514RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A8514RegistrationNext);
 }
 
 void bfmeRva00C6AC60LinkRegistration()
 {
-    bfmeRva012A8548RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8548RegistrationNext;
+    bfmeRva012A8548RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A8548RegistrationNext);
 }
 
 void bfmeRva00C6AC80LinkRegistration()
 {
-    bfmeRva012A8560RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8560RegistrationNext;
+    bfmeRva012A8560RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A8560RegistrationNext);
 }
 
 void bfmeRva00C6ACA0LinkRegistration()
 {
-    bfmeRva012A8570RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8570RegistrationNext;
+    bfmeRva012A8570RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A8570RegistrationNext);
 }
 
 void bfmeRva00C6ACC0LinkRegistration()
 {
-    bfmeRva012A857CRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A857CRegistrationNext;
+    bfmeRva012A857CRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A857CRegistrationNext);
 }
 
 void bfmeRva00C6ACE0LinkRegistration()
 {
-    bfmeRva012A8588RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8588RegistrationNext;
+    bfmeRva012A8588RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A8588RegistrationNext);
 }
 
 void bfmeRva00C6AD00LinkRegistration()
 {
-    bfmeRva012A8594RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8594RegistrationNext;
+    bfmeRva012A8594RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A8594RegistrationNext);
 }
 
 void bfmeRva00C6AD20LinkRegistration()
 {
-    bfmeRva012A85ACRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A85ACRegistrationNext;
+    bfmeRva012A85ACRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A85ACRegistrationNext);
 }
 
 void bfmeRva00C6AD40LinkRegistration()
 {
-    bfmeRva012A86DCRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A86DCRegistrationNext;
+    bfmeRva012A86DCRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A86DCRegistrationNext);
 }
 
 void bfmeRva00C6AD60LinkRegistration()
 {
-    bfmeRva012A86ECRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A86ECRegistrationNext;
+    bfmeRva012A86ECRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A86ECRegistrationNext);
 }
 
 void bfmeRva00C6AD80LinkRegistration()
 {
-    bfmeRva012A86FCRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A86FCRegistrationNext;
+    bfmeRva012A86FCRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A86FCRegistrationNext);
 }
 
 void bfmeRva00C6ADA0LinkRegistration()
 {
-    bfmeRva012A8708RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8708RegistrationNext;
+    bfmeRva012A8708RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A8708RegistrationNext);
 }
 
 void bfmeRva00C6ADC0LinkRegistration()
 {
-    bfmeRva012A8754RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8754RegistrationNext;
+    bfmeRva012A8754RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A8754RegistrationNext);
 }
 
 void bfmeRva00C6ADE0LinkRegistration()
 {
-    bfmeRva012A8760RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8760RegistrationNext;
+    bfmeRva012A8760RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A8760RegistrationNext);
 }
 
 void bfmeRva00C6AE00LinkRegistration()
 {
-    bfmeRva012A876CRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A876CRegistrationNext;
+    bfmeRva012A876CRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A876CRegistrationNext);
 }
 
 void bfmeRva00C6AE20LinkRegistration()
 {
-    bfmeRva012A878CRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A878CRegistrationNext;
+    bfmeRva012A878CRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A878CRegistrationNext);
 }
 
 void bfmeRva00C6AE40LinkRegistration()
 {
-    bfmeRva012A879CRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A879CRegistrationNext;
+    bfmeRva012A879CRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A879CRegistrationNext);
 }
 
 void bfmeRva00C6AE60LinkRegistration()
 {
-    bfmeRva012A87A8RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A87A8RegistrationNext;
+    bfmeRva012A87A8RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A87A8RegistrationNext);
 }
 
 void bfmeRva00C6AE80LinkRegistration()
 {
-    bfmeRva012A87F4RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A87F4RegistrationNext;
+    bfmeRva012A87F4RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A87F4RegistrationNext);
 }
 
 void bfmeRva00C6AEA0LinkRegistration()
 {
-    bfmeRva012A884CRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A884CRegistrationNext;
+    bfmeRva012A884CRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A884CRegistrationNext);
 }
 
 void bfmeRva00C6AEC0LinkRegistration()
 {
-    bfmeRva012A8868RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8868RegistrationNext;
+    bfmeRva012A8868RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A8868RegistrationNext);
 }
 
 void bfmeRva00C6AEE0LinkRegistration()
 {
-    bfmeRva012A889CRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A889CRegistrationNext;
+    bfmeRva012A889CRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A889CRegistrationNext);
 }
 
 void bfmeRva00C6AF00LinkRegistration()
 {
-    bfmeRva012A88A8RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A88A8RegistrationNext;
+    bfmeRva012A88A8RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A88A8RegistrationNext);
 }
 
 void bfmeRva00C6AF20LinkRegistration()
 {
-    bfmeRva012A88C0RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A88C0RegistrationNext;
+    bfmeRva012A88C0RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A88C0RegistrationNext);
 }
 
 void bfmeRva00C6AF40LinkRegistration()
 {
-    bfmeRva012A88CCRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A88CCRegistrationNext;
+    bfmeRva012A88CCRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A88CCRegistrationNext);
 }
 
 void bfmeRva00C6AF60LinkRegistration()
 {
-    bfmeRva012A8900RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8900RegistrationNext;
+    bfmeRva012A8900RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A8900RegistrationNext);
 }
 
 void bfmeRva00C6AF80LinkRegistration()
 {
-    bfmeRva012A8BD0RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8BD0RegistrationNext;
+    bfmeRva012A8BD0RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A8BD0RegistrationNext);
 }
 
 void bfmeRva00C6AFA0LinkRegistration()
 {
-    bfmeRva012A8C4CRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8C4CRegistrationNext;
+    bfmeRva012A8C4CRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A8C4CRegistrationNext);
 }
 
 void bfmeRva00C6AFC0LinkRegistration()
 {
-    bfmeRva012A8CFCRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8CFCRegistrationNext;
+    bfmeRva012A8CFCRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012A8CFCRegistrationNext);
 }
 
 void bfmeRva00C6B010LinkRegistration()
 {
-    bfmeRva012ACD34RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012ACD34RegistrationNext;
+    bfmeRva012ACD34RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012ACD34RegistrationNext);
 }
 
 void bfmeRva00C6B030LinkRegistration()
 {
-    bfmeRva012ACFE8RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012ACFE8RegistrationNext;
+    bfmeRva012ACFE8RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012ACFE8RegistrationNext);
 }
 
 void bfmeRva00C6B100LinkRegistration()
 {
-    bfmeRva012AD1A4RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012AD1A4RegistrationNext;
+    bfmeRva012AD1A4RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012AD1A4RegistrationNext);
 }
 
 void bfmeRva00C6B160LinkRegistration()
 {
-    bfmeRva012B3C78RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B3C78RegistrationNext;
+    bfmeRva012B3C78RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B3C78RegistrationNext);
 }
 
 void bfmeRva00C6B180LinkRegistration()
 {
-    bfmeRva012B3C84RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B3C84RegistrationNext;
+    bfmeRva012B3C84RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B3C84RegistrationNext);
 }
 
 void bfmeRva00C6B1A0LinkRegistration()
 {
-    bfmeRva012B3FCCRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B3FCCRegistrationNext;
+    bfmeRva012B3FCCRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B3FCCRegistrationNext);
 }
 
 void bfmeRva00C6B1C0LinkRegistration()
 {
-    bfmeRva012B4120RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B4120RegistrationNext;
+    bfmeRva012B4120RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B4120RegistrationNext);
 }
 
 void bfmeRva00C6B1E0LinkRegistration()
 {
-    bfmeRva012B42E4RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B42E4RegistrationNext;
+    bfmeRva012B42E4RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B42E4RegistrationNext);
 }
 
 void bfmeRva00C6B200LinkRegistration()
 {
-    bfmeRva012B438CRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B438CRegistrationNext;
+    bfmeRva012B438CRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B438CRegistrationNext);
 }
 
 void bfmeRva00C6B260LinkRegistration()
 {
-    bfmeRva012B4654RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B4654RegistrationNext;
+    bfmeRva012B4654RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B4654RegistrationNext);
 }
 
 void bfmeRva00C6B280LinkRegistration()
 {
-    bfmeRva012B4680RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B4680RegistrationNext;
+    bfmeRva012B4680RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B4680RegistrationNext);
 }
 
 void bfmeRva00C6B2A0LinkRegistration()
 {
-    bfmeRva012B4690RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B4690RegistrationNext;
+    bfmeRva012B4690RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B4690RegistrationNext);
 }
 
 void bfmeRva00C6B2F0LinkRegistration()
 {
-    bfmeRva012B46F0RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B46F0RegistrationNext;
+    bfmeRva012B46F0RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B46F0RegistrationNext);
 }
 
 void bfmeRva00C6B310LinkRegistration()
 {
-    bfmeRva012B477CRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B477CRegistrationNext;
+    bfmeRva012B477CRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B477CRegistrationNext);
 }
 
 void bfmeRva00C6B330LinkRegistration()
 {
-    bfmeRva012B4848RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B4848RegistrationNext;
+    bfmeRva012B4848RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B4848RegistrationNext);
 }
 
 void bfmeRva00C6B350LinkRegistration()
 {
-    bfmeRva012B48F4RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B48F4RegistrationNext;
+    bfmeRva012B48F4RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B48F4RegistrationNext);
 }
 
 void bfmeRva00C6B370LinkRegistration()
 {
-    bfmeRva012B4900RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B4900RegistrationNext;
+    bfmeRva012B4900RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B4900RegistrationNext);
 }
 
 void bfmeRva00C6B3B0LinkRegistration()
 {
-    bfmeRva012B4D48RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B4D48RegistrationNext;
+    bfmeRva012B4D48RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B4D48RegistrationNext);
 }
 
 void bfmeRva00C6B430LinkRegistration()
 {
-    bfmeRva012B4E54RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B4E54RegistrationNext;
+    bfmeRva012B4E54RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B4E54RegistrationNext);
 }
 
 void bfmeRva00C6B490LinkRegistration()
 {
-    bfmeRva012B4E64RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B4E64RegistrationNext;
+    bfmeRva012B4E64RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B4E64RegistrationNext);
 }
 
 void bfmeRva00C6B640LinkRegistration()
 {
-    bfmeRva012B5250RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B5250RegistrationNext;
+    bfmeRva012B5250RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B5250RegistrationNext);
 }
 
 void bfmeRva00C6B660LinkRegistration()
 {
-    bfmeRva012B525CRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B525CRegistrationNext;
+    bfmeRva012B525CRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B525CRegistrationNext);
 }
 
 void bfmeRva00C6B680LinkRegistration()
 {
-    bfmeRva012B5268RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B5268RegistrationNext;
+    bfmeRva012B5268RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B5268RegistrationNext);
 }
 
 void bfmeRva00C6B6A0LinkRegistration()
 {
-    bfmeRva012B52C4RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B52C4RegistrationNext;
+    bfmeRva012B52C4RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B52C4RegistrationNext);
 }
 
 void bfmeRva00C6B6F0LinkRegistration()
 {
-    bfmeRva012B53ACRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B53ACRegistrationNext;
+    bfmeRva012B53ACRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B53ACRegistrationNext);
 }
 
 void bfmeRva00C6B7F0LinkRegistration()
 {
-    bfmeRva012B5724RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B5724RegistrationNext;
+    bfmeRva012B5724RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B5724RegistrationNext);
 }
 
 void bfmeRva00C6B8C0LinkRegistration()
 {
-    bfmeRva012B591CRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B591CRegistrationNext;
+    bfmeRva012B591CRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B591CRegistrationNext);
 }
 
 void bfmeRva00C6B8E0LinkRegistration()
 {
-    bfmeRva012B5928RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B5928RegistrationNext;
+    bfmeRva012B5928RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B5928RegistrationNext);
 }
 
 void bfmeRva00C6B980LinkRegistration()
 {
-    bfmeRva012B5D00RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B5D00RegistrationNext;
+    bfmeRva012B5D00RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B5D00RegistrationNext);
 }
 
 void bfmeRva00C6B9A0LinkRegistration()
 {
-    bfmeRva012B5D18RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B5D18RegistrationNext;
+    bfmeRva012B5D18RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B5D18RegistrationNext);
 }
 
 void bfmeRva00C6BA10LinkRegistration()
 {
-    bfmeRva012B652CRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B652CRegistrationNext;
+    bfmeRva012B652CRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B652CRegistrationNext);
 }
 
 void bfmeRva00C6BCE0LinkRegistration()
 {
-    bfmeRva012B8134RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B8134RegistrationNext;
+    bfmeRva012B8134RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B8134RegistrationNext);
 }
 
 void bfmeRva00C6BD00LinkRegistration()
 {
-    bfmeRva012B818CRegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B818CRegistrationNext;
+    bfmeRva012B818CRegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B818CRegistrationNext);
 }
 
 void bfmeRva00C6BD20LinkRegistration()
 {
-    bfmeRva012B8198RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B8198RegistrationNext;
+    bfmeRva012B8198RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B8198RegistrationNext);
 }
 
 void bfmeRva00C6BDD0LinkRegistration()
 {
-    bfmeRva012B8698RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B8698RegistrationNext;
+    bfmeRva012B8698RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B8698RegistrationNext);
 }
 
 void bfmeRva00C6BDF0LinkRegistration()
 {
-    bfmeRva012B86A4RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B86A4RegistrationNext;
+    bfmeRva012B86A4RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B86A4RegistrationNext);
 }
 
 void bfmeRva00C6BE20LinkRegistration()
 {
-    bfmeRva012B8968RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B8968RegistrationNext;
+    bfmeRva012B8968RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B8968RegistrationNext);
 }
 
 void bfmeRva00C6BE40LinkRegistration()
 {
-    bfmeRva012B8974RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B8974RegistrationNext;
+    bfmeRva012B8974RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B8974RegistrationNext);
 }
 
 void bfmeRva00C6BE60LinkRegistration()
 {
-    bfmeRva012B8A80RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B8A80RegistrationNext;
+    bfmeRva012B8A80RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B8A80RegistrationNext);
 }
 
 void bfmeRva00C6BE80LinkRegistration()
 {
-    bfmeRva012B8AD4RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B8AD4RegistrationNext;
+    bfmeRva012B8AD4RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B8AD4RegistrationNext);
 }
 
 void bfmeRva00C6C2D0LinkRegistration()
 {
-    bfmeRva012B9050RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B9050RegistrationNext;
+    bfmeRva012B9050RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B9050RegistrationNext);
 }
 
 void bfmeRva00C6C2F0LinkRegistration()
 {
-    bfmeRva012B9060RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B9060RegistrationNext;
+    bfmeRva012B9060RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B9060RegistrationNext);
 }
 
 void bfmeRva00C6C310LinkRegistration()
 {
-    bfmeRva012B9094RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B9094RegistrationNext;
+    bfmeRva012B9094RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B9094RegistrationNext);
 }
 
 void bfmeRva00C6C330LinkRegistration()
 {
-    bfmeRva012B90A0RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B90A0RegistrationNext;
+    bfmeRva012B90A0RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B90A0RegistrationNext);
 }
 
 void bfmeRva00C6C3B0LinkRegistration()
 {
-    bfmeRva012B9110RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B9110RegistrationNext;
+    bfmeRva012B9110RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B9110RegistrationNext);
 }
 
 void bfmeRva00C6C3D0LinkRegistration()
 {
-    bfmeRva012B91F4RegistrationNext = bfmeRva0130CE50RegistrationHead;
-    bfmeRva0130CE50RegistrationHead = &bfmeRva012B91F4RegistrationNext;
+    bfmeRva012B91F4RegistrationNext = theBlockParseList;
+    theBlockParseList = reinterpret_cast<BlockParse *>(&bfmeRva012B91F4RegistrationNext);
 }

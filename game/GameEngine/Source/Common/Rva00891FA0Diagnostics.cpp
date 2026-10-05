@@ -8,8 +8,8 @@ struct Rva00891FA0Record
     int kind;
 };
 
-extern int g_rva00891FA0Ready;
-extern int g_rva00891FA0Value;
+int g_rva00891FA0Ready;
+int g_rva00891FA0Value;
 extern "C" __declspec(dllimport) void __cdecl Rva00891FA0SendText(
     const char *text);
 extern "C" __declspec(dllimport) void __cdecl Rva00891FA0SendRecord(

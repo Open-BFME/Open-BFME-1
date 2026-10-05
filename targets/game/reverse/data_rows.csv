@@ -568,3 +568,7 @@ _g_Rva00CF7608,0x010F7608,va,4,.rdata,game/GameEngine/Source/GameClient/GUI/Rva0
 ?wcin@_STL@@3V?$basic_istream@GV?$char_traits@G@_STL@@@1@A,0x0130BFA8,va,104,.data,game/stlport/X4Iostream.cpp,matched,targets/game/reverse/identity_evidence/data-types-0130bd38-stlport-streams.md,gpt-6.1-sol
 ?wclog@_STL@@3V?$basic_ostream@GV?$char_traits@G@_STL@@@1@A,0x0130BD38,va,100,.data,game/stlport/X4Iostream.cpp,matched,targets/game/reverse/identity_evidence/data-types-0130bd38-stlport-streams.md,gpt-6.1-sol
 ?wcout@_STL@@3V?$basic_ostream@GV?$char_traits@G@_STL@@@1@A,0x0130BE70,va,100,.data,game/stlport/X4Iostream.cpp,matched,targets/game/reverse/identity_evidence/data-types-0130bd38-stlport-streams.md,gpt-6.1-sol
+?g_rva00891FA0Value@@3HA,0x013377F4,va,4,.data,game/GameEngine/Source/Common/Rva00891FA0Diagnostics.cpp,matched,targets/game/reverse/identity_evidence/00f377f4-Apt-diagnostics-value.md,gpt-6.1-sol
+?g_rva00891FA0Ready@@3HA,0x01337808,va,4,.data,game/GameEngine/Source/Common/Rva00891FA0Diagnostics.cpp,matched,targets/game/reverse/identity_evidence/00f37808-Apt-diagnostics-ready.md,gpt-6.1-sol
+?ZNear@DX8Wrapper@@1MA,0x0133F498,va,4,.data,game/Libraries/Source/WWVegas/WW3D2/dxwrapper.cpp,matched,targets/game/reverse/identity_evidence/00f3f498-DX8Wrapper-ZNear.md,gpt-6.1-sol
+?theBlockParseList@@3PAUBlockParse@@A,0x0130CE50,va,4,.data,game/GameEngine/Source/Common/INI/ini.cpp,matched,targets/game/reverse/identity_evidence/00f0ce50-INI-registration-head.md,gpt-6.1-sol
