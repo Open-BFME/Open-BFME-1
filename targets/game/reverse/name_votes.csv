@@ -707,3 +707,5 @@ game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp|me
 game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp|member||m_coord14,c5e5a2a07231350614114a18,gpt-6-astra,20261005181656-1a2ee9,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp|member||m_bool30,f2f9a5058d886689f43d487c,gpt-6-astra,20261005181656-1a2ee9,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Update/SpecialAbilityUpdate_startUnpacking.cpp|local|getType|p,29b3f8999b52c46ebe230c67,gpt-6-sol,20261005182000-c4453a,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Update/SpecialAbilityUpdate_startUnpacking.cpp|local|getType|p,0813cce11fa070ca3fdd37cc,gpt-6-astra,20261005182331-be6d90,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Update/SpecialAbilityUpdate_startUnpacking.cpp|local|SpecialAbilityUpdate::startUnpacking|d,1dc5627335703195b9c102ac,gpt-6-astra,20261005182331-be6d90,2026-10-05
