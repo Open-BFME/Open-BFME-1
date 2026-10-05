@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "769181f20ba39396a70c3300ead2178e44fe3320f14abb5a527c46d6d598b3dd",
+  "symbol": "?d_0052ae20@@YAXXZ",
+  "score_kind": "measured",
+  "score": 0.9221,
+  "source": "// ?d_0052ae20@@YAXXZ\n// partial score=0.9221 date=2026-10-05\n// cl: /DNDEBUG /MD /EHsc\n// The callback at 0x0052AE80 calls this helper as int __cdecl(int).\n// No caller or selector proves a semantic name for the helper. This source uses Rva0052AE20.\n// Retail returns at +0x4C. INT3 padding starts at +0x4D.\n// This draft copies the cursor before the bounds check.\n\nclass Rva003BDF70Owner {};\n\nvoid j_0002a62b();\n\ntemplate<class M> inline M memberAt0052AE20(void (*fn)())\n{\n\tunion { void (*f)(); M m; } value;\n\tvalue.f = fn;\n\treturn value.m;\n}\n\ninline int objectiveCount0052AE20(Rva003BDF70Owner *owner)\n{\n\ttypedef int (Rva003BDF70Owner::*Fn)();\n\treturn (owner->*memberAt0052AE20<Fn>(j_0002a62b))();\n}\n\nclass CampaignManager\n{\npublic:\n\tunsigned char isMissionObjectiveEligible(int index);\n};\n\nclass LivingWorldLogic;\nextern LivingWorldLogic *TheLivingWorldLogic;\n\nint Rva0052AE20(int n)\n{\n\tint remain = n;\n\tif (TheLivingWorldLogic == 0)\n\t\treturn -1;\n\n\tbool more = true;\n\tint count = objectiveCount0052AE20((Rva003BDF70Owner *)TheLivingWorldLogic);\n\tint cursor = 0;\n\tint current;\n\n\twhile (more)\n\t{\n\t\tcurrent = cursor;\n\t\tif (cursor >= count)\n\t\t\treturn -1;\n\t\t++cursor;\n\t\tif (!((CampaignManager *)TheLivingWorldLogic)->isMissionObjectiveEligible(current))\n\t\t\tcontinue;\n\t\tif (remain <= 0)\n\t\t\treturn current;\n\t\t--remain;\n\t}\n}\n"
+}
