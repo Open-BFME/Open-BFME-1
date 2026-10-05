@@ -920,3 +920,7 @@ game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|p
 game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|param|drawImage|y0,e7dbdfd952d037bf81734468,gpt-6-sol,20261005200153-5ce637,2026-10-05
 game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|param|drawImage|x1,ca62f7d6dfadf4f7cd6b0f14,gpt-6-sol,20261005200153-5ce637,2026-10-05
 game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|param|drawImage|y1,7fd4df376b85d5713689bafe,gpt-6-sol,20261005200153-5ce637,2026-10-05
+game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|param|drawImage|x0,3703e5575da32b63522d4ee1,grok,20261005200142-13d566,2026-10-05
+game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|param|drawImage|y0,e7dbdfd952d037bf81734468,grok,20261005200142-13d566,2026-10-05
+game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|param|drawImage|x1,ca62f7d6dfadf4f7cd6b0f14,grok,20261005200142-13d566,2026-10-05
+game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|param|drawImage|y1,7fd4df376b85d5713689bafe,grok,20261005200142-13d566,2026-10-05

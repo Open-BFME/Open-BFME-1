@@ -367,3 +367,7 @@ game/GameEngine/Source/Common/Q2TrailingZeroForwarders.cpp|function||Q2LowerBoun
 game/GameEngine/Source/Common/Q2TrailingZeroForwarders.cpp|function||Rva004378F0,upper_bound,gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngine/Source/Common/Rva003C1EE0Select.cpp|type||Rva003C1EE0Pair,Coord2D,gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngine/Source/Common/Rva003C1EE0Select.cpp|type||Rva003C1EE0Owner,LivingWorldLogic,gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|param|drawImage|x0,startX,gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|param|drawImage|y0,startY,gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|param|drawImage|x1,endX,gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|param|drawImage|y1,endY,gpt-6-sol+grok,agreed,2026-10-05
