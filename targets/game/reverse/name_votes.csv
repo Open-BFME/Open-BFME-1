@@ -924,3 +924,7 @@ game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|p
 game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|param|drawImage|y0,e7dbdfd952d037bf81734468,grok,20261005200142-13d566,2026-10-05
 game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|param|drawImage|x1,ca62f7d6dfadf4f7cd6b0f14,grok,20261005200142-13d566,2026-10-05
 game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|param|drawImage|y1,7fd4df376b85d5713689bafe,grok,20261005200142-13d566,2026-10-05
+game/GameEngine/Source/GameClient/GUI/CrossFadeImage_draw.cpp|param|drawImage|x0,e03d1e5cdff5013965d7c07e,gpt-6-sol,20261005200730-40746e,2026-10-05
+game/GameEngine/Source/GameClient/GUI/CrossFadeImage_draw.cpp|param|drawImage|y0,4651aef5faa87ab445942880,gpt-6-sol,20261005200730-40746e,2026-10-05
+game/GameEngine/Source/GameClient/GUI/CrossFadeImage_draw.cpp|param|drawImage|x1,aa88683c6f584faa9c4cd08c,gpt-6-sol,20261005200730-40746e,2026-10-05
+game/GameEngine/Source/GameClient/GUI/CrossFadeImage_draw.cpp|param|drawImage|y1,e2a0b9a02a0e1b53c245e200,gpt-6-sol,20261005200730-40746e,2026-10-05
