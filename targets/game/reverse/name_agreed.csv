@@ -357,3 +357,7 @@ game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdate
 game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateAction.cpp|member||m_18,m_bonusScienceMultiplier,gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManagerRva007B4940.cpp|member||m_at60,m_robj,gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewCameraUpdateAlternateOneFrame.cpp|param|Lerp|t,lerp,gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorModuleDataCtorThunk.cpp|member||m_value08,m_firstHeight,gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorModuleDataCtorThunk.cpp|member||m_value0C,m_secondHeight,gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorModuleDataCtorThunk.cpp|member||m_value10,m_firstPercentIndent,gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorModuleDataCtorThunk.cpp|member||m_value14,m_secondPercentIndent,gpt-6-sol+grok,agreed,2026-10-05
