@@ -78347,7 +78347,7 @@ name,address,notes
 ?bfmeRefreshEY@BfmeHostEY@@QAEXXZ,0x0094D450,pin refresh for BfmeConv2045
 ?bfmeRefreshFormation@BfmeHordeContainOwner@@QAEXXZ,0x0001798B,Open-BFME5 retail ILT called by delayed HordeContain refresh
 ?bfmeRefreshMessageOfTheDay@BfmeAptScreenOnlineHome@@QAEXXZ,0x0003FFDF,OnlineHome message of the day refresh helper
-?bfmeRefreshPartitionCells@Object@@QAEXXZ,0x000292DF,Open-BFME5 ILT thunk to body 0x001BFD70; Object virtual-base lookup at +0x68 reaches friend_getPartitionData slot 4 twice then calls the combined dirty-list unlink and cell update; bfme prefix records unrecovered retail spelling
+?updateShroudNow@Object@@QAEXXZ,0x000292DF,Open-BFME5 ILT thunk to body 0x001BFD70; Object virtual-base lookup at +0x68 reaches friend_getPartitionData slot 4 twice then calls the combined dirty-list unlink and cell update; EA WorldBuilder label Object::updateShroudNow (ea_evidence strong chain)
 ?bfmeRefreshXE@@YAXXZ,0x000106B3
 ?bfmeRefreshYH@BfmeOtherYH@@QAEXH@Z,0x0000BD7F,Open-BFME5 the refresh the label commit at 0x004D1080 calls on the global 0x012F19E8
 ?UnloadAsset@AssetManagerImpl@@QAEXPAVBfmeE1024@@@Z,0x009EF280,pin

@@ -113,7 +113,7 @@ class Object : public Thing
 public:
 	Player *getControllingPlayer(void) const;
 	void setShroudClearingRange(float range);
-	void bfmeRefreshPartitionCells(void);
+	void updateShroudNow(void);
 	Module *findUpdateModule(NameKeyType key) const { return findModule(key); }	// ZH twin accessor
 
 protected:
@@ -173,7 +173,7 @@ void SpecialPowerModule::createViewObject(const Coord3D *location)
 
 	viewObject->setPosition(location);
 	viewObject->setShroudClearingRange(visionRange);
-	viewObject->bfmeRefreshPartitionCells();
+	viewObject->updateShroudNow();
 
 	static NameKeyType key_DeletionUpdate = TheNameKeyGenerator->nameToKey("DeletionUpdate");
 	DeletionUpdate *dup = (DeletionUpdate *)viewObject->findUpdateModule(key_DeletionUpdate);

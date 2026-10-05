@@ -9,9 +9,9 @@
 // two retail virtual-base dispatches.
 //
 // The final canonical friend_updateCellsTouched facade unlinks PartitionData
-// from the dirty list and then updates its touched cells. The BFME-only Object
-// wrapper has no surviving source spelling, so its bfme-prefixed name remains
-// descriptive.
+// from the dirty list and then updates its touched cells. EA's WorldBuilder
+// build names this address Object::updateShroudNow
+// (targets/game/reverse/ea_evidence.csv, strong chain).
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionData
@@ -42,11 +42,11 @@ public:
 class Object : public BfmeObjectPrefix, virtual public BfmePartitionDataOwner
 {
 public:
-	void bfmeRefreshPartitionCells();
+	void updateShroudNow();
 };
 
-// ?bfmeRefreshPartitionCells@Object@@QAEXXZ
-void Object::bfmeRefreshPartitionCells()
+// ?updateShroudNow@Object@@QAEXXZ
+void Object::updateShroudNow()
 {
 	if (friend_getPartitionData())
 		friend_getPartitionData()->friend_updateCellsTouched();

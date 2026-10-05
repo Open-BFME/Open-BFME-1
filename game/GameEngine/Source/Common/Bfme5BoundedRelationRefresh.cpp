@@ -9,7 +9,7 @@
 class Object
 {
 public:
-	void bfmeRefreshPartitionCells(void);
+	void updateShroudNow(void);
 };
 
 class BfmeRelationRange
@@ -95,7 +95,7 @@ bool Gen_00283460::bfmeRefresh(BfmeRelationInput *input)
 				Object *object = range->bfmeResolve(input->m_bfmeKey);
 				if (object != 0) {
 					BfmeRefreshContext *context = m_bfmeContext;
-					object->bfmeRefreshPartitionCells();
+					object->updateShroudNow();
 					if (context->m_bfmeLink != 0)
 						bfmeLinkRelation(context->m_bfmeLink, object, 0);
 					return true;

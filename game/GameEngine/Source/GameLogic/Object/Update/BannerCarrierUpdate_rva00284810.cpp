@@ -105,7 +105,7 @@ class Object
 public:
 	void clearAndSetModelConditionFlags(const BfmeConditionFlags &clear,
 		const BfmeConditionFlags &set);
-	void bfmeRefreshPartitionCells();
+	void updateShroudNow();
 
 	unsigned char m_prefix[0x38];
 	Coord3D m_direction;
@@ -163,7 +163,7 @@ void BannerCarrierUpdate::rva00284810(BannerCarrierObjectName *entry,
 	const float length = (float)sqrt(directionX * directionX +
 		directionY * directionY + directionZ * directionZ);
 	if (length > 0.0f)
-		object->bfmeRefreshPartitionCells();
+		object->updateShroudNow();
 
 	FXList *const morphFX = moduleData->m_bannerMorphFX;
 	if (morphFX != 0 && playMorphFX && !morphFX->isEmpty())

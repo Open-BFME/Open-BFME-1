@@ -143,7 +143,7 @@ public:
 	virtual Gen_00411DD0 *getDrawable();
 
 	ObjectShroudStatus getShroudedStatus(Int playerIndex) const;
-	void bfmeRefreshPartitionCells();
+	void updateShroudNow();
 
 	char m_pad04[0x08 - 4];
 	char m_mtx[0x30];
@@ -409,10 +409,10 @@ void BezierProjectileBehavior::projectileFireAtObjectOrPosition(Object *victim,
 	}
 
 	m_lock.lock();
-	m_object->bfmeRefreshPartitionCells();
+	m_object->updateShroudNow();
 	luna10RecordTransform(m_object, TheGameLogic->m_frame);
 	m_lock.lock();
-	m_object->bfmeRefreshPartitionCells();
+	m_object->updateShroudNow();
 }
 
 
