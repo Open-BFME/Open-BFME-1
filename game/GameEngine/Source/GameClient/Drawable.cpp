@@ -149,7 +149,7 @@ template Int BitFlags<10>::getSingleBitFromName(const char *);
 #define VERY_TRANSPARENT_MATERIAL_PASS_OPACITY (0.001f)
 #define MATERIAL_PASS_OPACITY_FADE_SCALAR (0.8f)
 
-static const char *TheDrawableIconNames[] = 
+const char *TheDrawableIconNames[] =
 {
 	"DefaultHeal",
 	"StructureHeal",

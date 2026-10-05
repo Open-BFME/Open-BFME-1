@@ -117,7 +117,7 @@ void parseExtraFriction( INI *ini, void *, void *store, const void * )
 	*(Real *)store = TheRva001D5F40Scale * value;
 }
 
-extern const char *const TheRva001ECDC0Names[];
+extern const char *const TheWeaponSlotTypeNames[] = { "PRIMARY", "SECONDARY", "TERTIARY", 0 };
 
 template< int N > class BitFlags
 {
@@ -127,14 +127,14 @@ public:
 
 void parsePreferredAgainst( INI *ini, void *instance, void *, const void * )
 {
-	Int index = INI::scanIndexList( ini->getNextToken( 0 ), TheRva001ECDC0Names );
+	Int index = INI::scanIndexList( ini->getNextToken( 0 ), TheWeaponSlotTypeNames );
 	BitFlags< 116 >::parseFromINI( ini, instance,
 		(char *)instance + index * 24 + 0x28, 0 );
 }
 
 void parseOnlyAgainst( INI *ini, void *instance, void *, const void * )
 {
-	Int index = INI::scanIndexList( ini->getNextToken( 0 ), TheRva001ECDC0Names );
+	Int index = INI::scanIndexList( ini->getNextToken( 0 ), TheWeaponSlotTypeNames );
 	BitFlags< 116 >::parseFromINI( ini, instance,
 		(char *)instance + index * 24 + 0x88, 0 );
 }

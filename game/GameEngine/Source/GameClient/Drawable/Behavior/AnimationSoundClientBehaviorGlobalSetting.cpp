@@ -28,7 +28,7 @@ struct AnimationSoundClientBehaviorGlobalSetting
 
 // The single instance the block parses into, at 0x012B4D44. Nothing in the image
 // names it; the class name is the block keyword.
-extern AnimationSoundClientBehaviorGlobalSetting TheAnimationSoundClientBehaviorGlobalSetting;
+AnimationSoundClientBehaviorGlobalSetting TheAnimationSoundClientBehaviorGlobalSetting = { 50.0f };
 
 void parseAnimationSoundClientBehaviorGlobalSetting( INI *ini )
 {

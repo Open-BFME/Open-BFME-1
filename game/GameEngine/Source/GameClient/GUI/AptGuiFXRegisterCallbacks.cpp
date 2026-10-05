@@ -98,7 +98,7 @@ public:
 extern void j_00023083();
 
 extern WindowManager *g_rva012F19E8WindowManager;
-extern int g_guiFxWindowHandle;
+int g_guiFxWindowHandle = -1;
 AsciiString g_guiFxFile( "GuiFX.apt" );
 unsigned char g_guiFxLoaded = 0;
 extern void construct00510AC0();

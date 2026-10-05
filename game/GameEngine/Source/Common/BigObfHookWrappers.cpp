@@ -66,6 +66,14 @@ struct BigObfSelectorRecord
 	unsigned int m_seed[ 5 ];
 };
 
+struct BigObfSelectorRecord012B7788
+{
+	unsigned int m_key[ 4 ];
+	unsigned int m_padding;
+	unsigned int m_seed[ 4 ];
+};
+
+
 // The constructors use the same two-bit selector helpers already recovered in
 // Q3SelectorRecordReaders.cpp and R3SelectorRecordReadersEbp.cpp.  VC7.1 has
 // no intrinsic for rdtsc, and neither esp nor ebp can be read as a C++ value,
@@ -180,7 +188,7 @@ BFME_OBF_RECORD( 012B488C )
 BFME_OBF_RECORD( 012B7710 )
 BFME_OBF_RECORD( 012B7738 )
 BFME_OBF_RECORD( 012B7760 )
-BFME_OBF_RECORD( 012B7788 )
+extern BigObfSelectorRecord012B7788 g_ObfRecord012B7788;
 BFME_OBF_RECORD( 012B79A4 )
 BFME_OBF_RECORD( 012B79CC )
 BFME_OBF_RECORD( 012B79F4 )
@@ -296,3 +304,50 @@ BFME_OBF_WRAPPER( Rva00592FE0, g_Slot012BC6C8, Obf00590A70, Gen0058C6C0 )
 BFME_OBF_WRAPPER( Rva00593060, g_Slot012BC6C8, Obf00590B50, Gen0058C7F0 )
 BFME_OBF_WRAPPER( Rva005930E0, g_Slot012BC6C8, Obf00590C30, Gen0058C920 )
 BFME_OBF_WRAPPER( Rva0061A350, g_Slot012BE394, Obf00619E50, Gen00619540 )
+
+BigObfSelectorRecord g_ObfRecord012B446C =
+{
+	{ 0x891B11CFu, 0x41CB8B8Fu, 0x4DB15E4Fu, 0xC8B7990Fu, 0x00000000u },
+	{ 0x893F0B0Bu, 0x0167914Bu, 0x0119148Bu, 0xC49B83CBu, 0x00000000u }
+};
+BigObfSelectorRecord g_ObfRecord012B4494 =
+{
+	{ 0x90ACF7CFu, 0x2A71EA8Fu, 0xA33FF6CFu, 0x4699B30Fu, 0x00000000u },
+	{ 0xD8A8AD0Bu, 0x32FDE04Bu, 0xEB9FBC0Bu, 0x4699A9CBu, 0x00000000u }
+};
+BigObfSelectorRecord g_ObfRecord012B4864 =
+{
+	{ 0xA304C8CFu, 0x4C0DB60Fu, 0xFB8D274Fu, 0x0E9E4C8Fu, 0x00000000u },
+	{ 0xB30C900Bu, 0x048DEECBu, 0xA7A1278Bu, 0x4E9A144Bu, 0x00000000u }
+};
+BigObfSelectorRecord g_ObfRecord012B488C =
+{
+	{ 0x05A1838Fu, 0xBF03D98Fu, 0xE819478Fu, 0xC961F98Fu, 0x00000000u },
+	{ 0x0589C34Bu, 0xFB8B994Bu, 0xBCB5474Bu, 0xD9C9B94Bu, 0x00000000u }
+};
+BigObfSelectorRecord g_ObfRecord012B7710 =
+{
+	{ 0xA0C4440Au, 0x03F9454Au, 0x1F66AF0Au, 0x2EC99B0Au, 0x00000000u },
+	{ 0xA068164Bu, 0x4359050Bu, 0x5BC6AF4Bu, 0x6A41934Bu, 0x00000000u }
+};
+BigObfSelectorRecord g_ObfRecord012B7738 =
+{
+	{ 0x8120238Au, 0x9703760Au, 0x802CAD4Au, 0x3259BA0Au, 0x00000000u },
+	{ 0x99AC6BCBu, 0xCB03644Bu, 0xD8A8AD0Bu, 0x32FDE04Bu, 0x00000000u }
+};
+BigObfSelectorRecord g_ObfRecord012B7760 =
+{
+	{ 0x9703760Au, 0x802CAD4Au, 0x3259BA0Au, 0xF797AE4Au, 0x00000000u },
+	{ 0xCB03644Bu, 0xD8A8AD0Bu, 0x32FDE04Bu, 0xEB9FBC0Bu, 0x00000000u }
+};
+BigObfSelectorRecord012B7788 g_ObfRecord012B7788 =
+{
+	{ 0xC975038Au, 0xA0C4440Au, 0x03F9454Au, 0x1F66AF0Au },
+	0,
+	{ 0x9DF10BCBu, 0xA068164Bu, 0x4359050Bu, 0x5BC6AF4Bu }
+};
+BigObfSelectorRecord g_ObfRecord012B79A4 =
+{
+	{ 0xBB2C980Au, 0x0CADBECAu, 0xEB2D6D8Au, 0x06B6044Au, 0x00000000u },
+	{ 0xB30C900Bu, 0x048DEECBu, 0xA7A1278Bu, 0x4E9A144Bu, 0x00000000u }
+};

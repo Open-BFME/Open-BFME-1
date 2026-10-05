@@ -77,7 +77,13 @@ struct AudioView004092A0 {
 class AudioManager;
 extern AudioManager *TheAudio;
 static inline AudioView004092A0 *localAudio004092A0() { return (AudioView004092A0 *)TheAudio; }
-extern float Distance004092A0;
+struct FieldParse;
+struct AnimationSoundClientBehaviorGlobalSetting
+{
+ float m_minMicrophoneDistanceToDirty;
+ static const FieldParse m_fieldParseTable[];
+};
+extern AnimationSoundClientBehaviorGlobalSetting TheAnimationSoundClientBehaviorGlobalSetting;
 struct Node004092A0 {
  char bytes00[0x14]; Node004092A0 *next14, *prev18;
  void update006059F0();
@@ -92,7 +98,7 @@ void SpatialList004092A0::update() {
  const Position004092A0 *pos = localAudio004092A0()->position();
  Position004092A0 delta; delta.x=pos->x; delta.y=pos->y; delta.z=pos->z;
  delta.x -= position1c.x; delta.y -= position1c.y; delta.z -= position1c.z;
- if (delta.x*delta.x + delta.y*delta.y + delta.z*delta.z > Distance004092A0*Distance004092A0 && field14) {
+ if (delta.x*delta.x + delta.y*delta.y + delta.z*delta.z > TheAnimationSoundClientBehaviorGlobalSetting.m_minMicrophoneDistanceToDirty*TheAnimationSoundClientBehaviorGlobalSetting.m_minMicrophoneDistanceToDirty && field14) {
   if (field08) { field14->next14=field08; field08->prev18=field14; }
   field08=field10;
   if (!field0c) field0c=field14;

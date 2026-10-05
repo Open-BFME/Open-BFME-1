@@ -29,9 +29,8 @@
 // at one site means six distinct objects; collapsing them would still gate
 // green and still be wrong.
 //
-// IDENTITY IS NOT RECOVERED.  Names are addresses.  The DIR32 operands are
-// filled from retail and are not evidence, and nothing here says what the
-// entries mean or why a leftover register value is being used as a selector.
+// Constructor users identify shared records as integer keys and seeds.
+// The record and function names retain their address tokens.
 
 struct R3SelectorRecord
 {
@@ -39,20 +38,31 @@ struct R3SelectorRecord
 	int *m_second[ 5 ];
 };
 
-#define BFME_SELECT_BY_FRAME_REGISTER( NAME, RECORD )                         \
-	extern R3SelectorRecord RECORD;                                           \
+struct BigObfSelectorRecord
+{
+	unsigned int m_key[ 5 ];
+	unsigned int m_seed[ 5 ];
+};
+
+#define BFME_SELECT_BY_FRAME_REGISTER_RECORD( NAME, RECORD, TYPE, FIRST, SECOND )                 \
+	extern TYPE RECORD;                                                                              \
 	void NAME( int **outSecond, int **outFirst )                              \
 	{                                                                         \
 		unsigned int selector = 0;                                            \
 		__asm { mov selector, ebp }                                           \
 		unsigned int index = selector & 3;                                    \
-		*outSecond = RECORD.m_second[ index ];                                \
-		*outFirst = RECORD.m_first[ index ];                                  \
+		*outSecond = reinterpret_cast<int *>( RECORD.SECOND[ index ] );                                 \
+		*outFirst = reinterpret_cast<int *>( RECORD.FIRST[ index ] );                                   \
 	}
+
+#define BFME_SELECT_BY_FRAME_REGISTER( NAME, RECORD ) \
+	BFME_SELECT_BY_FRAME_REGISTER_RECORD( NAME, RECORD, R3SelectorRecord, m_first, m_second )
+#define BFME_SELECT_BIG_BY_FRAME_REGISTER( NAME, RECORD ) \
+	BFME_SELECT_BY_FRAME_REGISTER_RECORD( NAME, RECORD, BigObfSelectorRecord, m_key, m_seed )
 
 BFME_SELECT_BY_FRAME_REGISTER( Rva00072B40, g_r3Record012A72DC )
 BFME_SELECT_BY_FRAME_REGISTER( Rva00072BC0, g_r3Record012A732C )
-BFME_SELECT_BY_FRAME_REGISTER( Rva005263F0, g_r3Record012B7710 )
-BFME_SELECT_BY_FRAME_REGISTER( Rva00526470, g_r3Record012B7760 )
+BFME_SELECT_BIG_BY_FRAME_REGISTER( Rva005263F0, g_ObfRecord012B7710 )
+BFME_SELECT_BIG_BY_FRAME_REGISTER( Rva00526470, g_ObfRecord012B7760 )
 BFME_SELECT_BY_FRAME_REGISTER( Rva0058F570, g_r3Record012B82C4 )
 BFME_SELECT_BY_FRAME_REGISTER( Rva0058F5B0, g_r3Record012B82EC )

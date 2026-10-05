@@ -43,10 +43,10 @@ BFME_SENTINEL_PREDICATE( Rva008028A0, 0x8, -2 )
 // The same predicate over a module-level int instead of a member.  The DIR32
 // operand is copied from retail, so the NAME below is address-derived from the
 // datum's RVA and asserts nothing beyond "a four-byte object lives there".
-extern int Data00EB7430;
+extern int g_guiFxWindowHandle;
 
 bool Rva00510BF0();
 bool Rva00510BF0()
 {
-	return Data00EB7430 != -1;
+	return g_guiFxWindowHandle != -1;
 }

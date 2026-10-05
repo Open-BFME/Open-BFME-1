@@ -32,7 +32,7 @@ public:
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 
-extern BfmeX1074 *g_bfmeY1074;
+extern int g_guiFxWindowHandle;
 extern BfmeX1074 *g_bfmeV1074;
 extern char g_bfmeFmtD1074[];
 
@@ -46,7 +46,7 @@ void bfmeGo1074A(float a, float b)
 
 	_snprintf(buf1, 0x10, "%g", a * p->m_bfme00);
 	_snprintf(buf2, 0x10, "%g", b * p->m_bfme04);
-	((BfmeR1074 *)g_rva012F19E8WindowManager)->bfmeRun1074(g_bfmeY1074, "MoveToolTip", 2, buf1, buf2, 0, 0, 0);
+	((BfmeR1074 *)g_rva012F19E8WindowManager)->bfmeRun1074(reinterpret_cast<BfmeX1074 *>(g_guiFxWindowHandle), "MoveToolTip", 2, buf1, buf2, 0, 0, 0);
 }
 
 void bfmeGo1074B(int a, int b, int c)

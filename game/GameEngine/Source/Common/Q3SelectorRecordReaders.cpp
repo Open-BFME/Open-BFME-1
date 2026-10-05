@@ -37,9 +37,8 @@
 // IDENTITY IS NOT RECOVERED.  Function and record names are derived from
 // addresses.  The DIR32 operands are filled from retail and are not evidence.
 //
-// WHAT THE BYTES CANNOT DECIDE.  What the entries are (they are moved as raw
-// dwords), what the fifth entry of each array is for, and why a stack address or
-// a timestamp is being used as a two-bit selector.
+// Constructor users identify shared records as integer keys and seeds.
+// The other records retain their unproven pointer declarations.
 
 struct TwoBitSelectorRecord
 {
@@ -47,36 +46,59 @@ struct TwoBitSelectorRecord
 	int *m_second[ 5 ];
 };
 
-#define BFME_SELECT_BY_STACK( NAME, RECORD )                                  \
-	extern TwoBitSelectorRecord RECORD;                                       \
+struct BigObfSelectorRecord
+{
+	unsigned int m_key[ 5 ];
+	unsigned int m_seed[ 5 ];
+};
+
+struct BigObfSelectorRecord012B7788
+{
+	unsigned int m_key[ 4 ];
+	unsigned int m_padding;
+	unsigned int m_seed[ 4 ];
+};
+
+
+#define BFME_SELECT_BY_STACK_RECORD( NAME, RECORD, TYPE, FIRST, SECOND )                          \
+	extern TYPE RECORD;                                                                              \
 	void NAME( int **outSecond, int **outFirst )                              \
 	{                                                                         \
 		unsigned int selector = 0;                                            \
 		__asm { mov selector, esp }                                           \
 		unsigned int index = selector & 3;                                    \
-		*outSecond = RECORD.m_second[ index ];                                \
-		*outFirst = RECORD.m_first[ index ];                                  \
+		*outSecond = reinterpret_cast<int *>( RECORD.SECOND[ index ] );                                 \
+		*outFirst = reinterpret_cast<int *>( RECORD.FIRST[ index ] );                                   \
 	}
 
-#define BFME_SELECT_BY_TIMESTAMP( NAME, RECORD )                              \
-	extern TwoBitSelectorRecord RECORD;                                       \
+#define BFME_SELECT_BY_TIMESTAMP_RECORD( NAME, RECORD, TYPE, FIRST, SECOND )                      \
+	extern TYPE RECORD;                                                                              \
 	void NAME( int **outSecond, int **outFirst )                              \
 	{                                                                         \
 		unsigned int selector = 0;                                            \
 		__asm { rdtsc }                                                       \
 		__asm { mov selector, eax }                                           \
 		unsigned int index = selector & 3;                                    \
-		*outSecond = RECORD.m_second[ index ];                                \
-		*outFirst = RECORD.m_first[ index ];                                  \
+		*outSecond = reinterpret_cast<int *>( RECORD.SECOND[ index ] );                                 \
+		*outFirst = reinterpret_cast<int *>( RECORD.FIRST[ index ] );                                   \
 	}
+
+#define BFME_SELECT_BY_STACK( NAME, RECORD ) \
+	BFME_SELECT_BY_STACK_RECORD( NAME, RECORD, TwoBitSelectorRecord, m_first, m_second )
+#define BFME_SELECT_BIG_BY_STACK( NAME, RECORD ) \
+	BFME_SELECT_BY_STACK_RECORD( NAME, RECORD, BigObfSelectorRecord, m_key, m_seed )
+#define BFME_SELECT_BY_TIMESTAMP( NAME, RECORD ) \
+	BFME_SELECT_BY_TIMESTAMP_RECORD( NAME, RECORD, TwoBitSelectorRecord, m_first, m_second )
+#define BFME_SELECT_BIG_BY_TIMESTAMP( NAME, RECORD ) \
+	BFME_SELECT_BY_TIMESTAMP_RECORD( NAME, RECORD, BigObfSelectorRecord, m_key, m_seed )
 
 BFME_SELECT_BY_STACK( Rva00072B80, g_twoBitSelectorRecord012A7304 )
 BFME_SELECT_BY_STACK( Rva00072C00, g_twoBitSelectorRecord012A7354 )
-BFME_SELECT_BY_STACK( Rva003C7EA0, g_twoBitSelectorRecord012B4864 )
-BFME_SELECT_BY_STACK( Rva003C7EE0, g_twoBitSelectorRecord012B488C )
-BFME_SELECT_BY_STACK( Rva00526430, g_twoBitSelectorRecord012B7738 )
-BFME_SELECT_BY_STACK( Rva005264B0, g_twoBitSelectorRecord012B7788 )
-BFME_SELECT_BY_STACK( Rva0054D600, g_twoBitSelectorRecord012B79A4 )
+BFME_SELECT_BIG_BY_STACK( Rva003C7EA0, g_ObfRecord012B4864 )
+BFME_SELECT_BIG_BY_STACK( Rva003C7EE0, g_ObfRecord012B488C )
+BFME_SELECT_BIG_BY_STACK( Rva00526430, g_ObfRecord012B7738 )
+BFME_SELECT_BY_STACK_RECORD( Rva005264B0, g_ObfRecord012B7788, BigObfSelectorRecord012B7788, m_key, m_seed )
+BFME_SELECT_BIG_BY_STACK( Rva0054D600, g_ObfRecord012B79A4 )
 BFME_SELECT_BY_STACK( Rva0054D640, g_twoBitSelectorRecord012B79CC )
 BFME_SELECT_BY_STACK( Rva0054D6C0, g_twoBitSelectorRecord012B7A1C )
 BFME_SELECT_BY_STACK( Rva0054D700, g_twoBitSelectorRecord012B7A44 )
@@ -86,8 +108,8 @@ BFME_SELECT_BY_STACK( Rva0058F530, g_twoBitSelectorRecord012B829C )
 
 BFME_SELECT_BY_TIMESTAMP( Rva00062870, g_twoBitSelectorRecord012A6FF4 )
 BFME_SELECT_BY_TIMESTAMP( Rva00099350, g_twoBitSelectorRecord012A7D38 )
-BFME_SELECT_BY_TIMESTAMP( Rva003875C0, g_twoBitSelectorRecord012B446C )
-BFME_SELECT_BY_TIMESTAMP( Rva00387600, g_twoBitSelectorRecord012B4494 )
+BFME_SELECT_BIG_BY_TIMESTAMP( Rva003875C0, g_ObfRecord012B446C )
+BFME_SELECT_BIG_BY_TIMESTAMP( Rva00387600, g_ObfRecord012B4494 )
 BFME_SELECT_BY_TIMESTAMP( Rva0054D680, g_twoBitSelectorRecord012B79F4 )
 BFME_SELECT_BY_TIMESTAMP( Rva0054D740, g_twoBitSelectorRecord012B7A6C )
 BFME_SELECT_BY_TIMESTAMP( Rva0054D780, g_twoBitSelectorRecord012B7A94 )

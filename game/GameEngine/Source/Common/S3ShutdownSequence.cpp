@@ -42,7 +42,7 @@ public:
 
 extern void *TheBfmeHeldResource;					// 0x012F4974
 extern BfmeReleaseSink *TheBfmeReleaseSink;				// 0x012F12CC
-extern int TheBfmeHeldHandle;						// 0x012B7430
+extern int g_guiFxWindowHandle;						// 0x012B7430
 // Retail 0x012F19E8 is the game-wide manager pointer EA defines as
 // `WindowManager *g_rva012F19E8WindowManager` in
 // game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU only needs
@@ -63,11 +63,11 @@ void Gen_00510b50(void)
 		TheBfmeHeldResource = 0;
 	}
 
-	if (TheBfmeHeldHandle != -1)
+	if (g_guiFxWindowHandle != -1)
 	{
-		((Glo00EF19E8 *)g_rva012F19E8WindowManager)->h0046B2B0(TheBfmeHeldHandle);
+		((Glo00EF19E8 *)g_rva012F19E8WindowManager)->h0046B2B0(g_guiFxWindowHandle);
 
-		TheBfmeHeldHandle = -1;
+		g_guiFxWindowHandle = -1;
 	}
 
 	delete static_cast<BfmeDeletable *>(g_rva012F49D0);

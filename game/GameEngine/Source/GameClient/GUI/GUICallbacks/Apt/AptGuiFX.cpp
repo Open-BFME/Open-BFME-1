@@ -80,7 +80,7 @@ extern WindowManager *g_theWindowManager;
 extern FontLibrary *TheFontLibrary;
 int Rva00510DC0DisplayWidth = 0;
 int Rva00510DC0DisplayHeight;
-extern int g_bfmeVal995B;
+extern int g_guiFxWindowHandle;
 
 extern "C" void _ReadWriteBarrier();
 #pragma intrinsic(_ReadWriteBarrier)
@@ -120,6 +120,6 @@ void Rva00510DC0(UnicodeString *text, AsciiString *face, int size,
 	char *xTextArg = xText;
 	char *yTextArg = yText;
 	_ReadWriteBarrier();
-	((BfmeLevelAN *)g_theWindowManager)->bfmeBuildAN((unsigned int)g_bfmeVal995B,
+	((BfmeLevelAN *)g_theWindowManager)->bfmeBuildAN((unsigned int)g_guiFxWindowHandle,
 		(int)"ShowToolTip", 2, (int)xTextArg, (int)yTextArg, 0, 0, 0);
 }

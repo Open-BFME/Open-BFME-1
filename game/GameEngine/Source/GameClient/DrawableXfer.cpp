@@ -65,11 +65,11 @@ class Anim2DTemplate { public: AsciiString getName() const; };
 class Anim2DCollection;
 class Anim2D { public: char bytes[0x34]; Anim2D(Anim2DTemplate*,Anim2DCollection*);Anim2DTemplate *getTemplate()const{return *(Anim2DTemplate**)(bytes+0xc);} };
 class DrawableIconInfo { public: void *v; Anim2D *icon[14]; unsigned keep[14]; void clear(); };
-extern const char *Rva012b4f5c[14];
-__forceinline int rvaIconIndex(const char *name){for(int i=0;i<14;++i)if(!_strcmpi(Rva012b4f5c[i],name))return i;return -1;}
+extern const char *TheDrawableIconNames[14];
+__forceinline int rvaIconIndex(const char *name){for(int i=0;i<14;++i)if(!_strcmpi(TheDrawableIconNames[i],name))return i;return -1;}
 class Anim2DCollection { public: Anim2DTemplate *findTemplate(const AsciiString&); };
 extern Anim2DCollection *TheAnim2DCollection;
-extern const char *Rva012b4f5c[14];
+extern const char *TheDrawableIconNames[14];
 class Rva0041D290VObject { public: virtual void v00(); V(01) V(02) virtual void v03(Xfer*); };
 class BuffManager:public Rva0041D290VObject { char bytes[0x19c]; public: BuffManager(int); };
 class Rva0041D290DrawModule {public: virtual void v00(); V(01) V(02) V(03) V(04) V(05) V(06) V(07) V(08) V(09) V(0a) V(0b) V(0c) V(0d) V(0e) V(0f) V(10) virtual void v11(unsigned); V(12) V(13) V(14) V(15) V(16) V(17) V(18) V(19) V(1a) V(1b) V(1c) V(1d) V(1e) V(1f) V(20) V(21) V(22) V(23) V(24) V(25) V(26) V(27) V(28) V(29) V(2a) V(2b) V(2c) V(2d) V(2e) V(2f) V(30) V(31) virtual bool v32();};
@@ -277,7 +277,7 @@ void Drawable::xfer(Xfer *x)
  AsciiString indexName,templateName;unsigned keep;
  if(x->IsStoring()){
   for(unsigned char i=0;i<14;++i){if(!m_280||!full->rva00410f10()->icon[i])continue;
-   const char *name=Rva012b4f5c[i];field<StringBase<char> >(&indexName,0).set(name,name?strlen(name):0);*x==indexName;
+   const char *name=TheDrawableIconNames[i];field<StringBase<char> >(&indexName,0).set(name,name?strlen(name):0);*x==indexName;
    keep=full->rva00410f10()->keep[i];*x==keep;
    templateName=full->rva00410f10()->icon[i]->getTemplate()->getName();*x==templateName;
    x->operator==(*reinterpret_cast<Snapshot*>(full->rva00410f10()->icon[i]));
