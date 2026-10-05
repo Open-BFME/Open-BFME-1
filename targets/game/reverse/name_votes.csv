@@ -569,3 +569,6 @@ game/GameEngine/Source/Common/BfmeConv2070.cpp|member||m_bfme70GS,72edd69192561f
 game/GameEngine/Source/Common/BfmeConv2070.cpp|member||m_bfme74GS,08c711befb513e7e45feccd1,gpt-6-astra,20261005162034-c64df5,2026-10-05
 game/GameEngine/Source/Common/BfmeConv2070.cpp|param|BfmeStateGS::BfmeStateGS|a,909442ee826048a4db2a70f8,gpt-6-astra,20261005162034-c64df5,2026-10-05
 game/GameEngine/Source/Common/Rva007F0210Set.cpp|member||m_08,c76c0286069f83e952b8d65d,gpt-6-astra,20261005162034-42c38a,2026-10-05
+game/GameEngine/Source/Common/BfmeThreeHundredThirtyFour.cpp|member||m_bfmeOne,8f9e4eaba004fa3e62ecc79b,gpt-6-astra,20261005162034-e052bc,2026-10-05
+game/GameEngine/Source/Common/BfmeThreeHundredThirtyFour.cpp|member||m_bfmeTwo,be5b8e223ef2c03421d5dcaf,gpt-6-astra,20261005162034-e052bc,2026-10-05
+game/GameEngine/Source/Common/BfmeThreeHundredThirtyFour.cpp|member||m_bfmeThree,41d6bf17260cd2eba9e790fd,gpt-6-astra,20261005162034-e052bc,2026-10-05
