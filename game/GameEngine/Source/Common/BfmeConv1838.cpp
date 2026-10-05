@@ -20,7 +20,7 @@ public:
 	virtual void bfmeMarkedXB(BfmeMarkXB *mark);
 };
 
-class BfmeSinkXB
+class Snapshot
 {
 public:
 	virtual void bfmeS0XB();
@@ -42,7 +42,7 @@ public:
 	void bfmeOnXB(BfmeItemXB *item);
 
 	unsigned char m_bfmeHeadXB[0x284];
-	BfmeSinkXB *m_bfmeSinkXB;
+	Snapshot *m_bfmeSinkXB;
 };
 
 void BfmeHolderXB::bfmeOnXB(BfmeItemXB *item)
