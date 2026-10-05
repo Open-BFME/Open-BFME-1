@@ -730,3 +730,7 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/W3DInGameUI_drawMoveHints.cpp|
 game/Libraries/Source/WWVegas/WW3D2/Render2DClassAddTri.cpp|param|convertPosition006e|v,771be72b60306851a94c3fd9,gpt-6-sol,20261005181229-90a7f7,2026-10-05
 game/Libraries/Source/WWVegas/WW3D2/Render2DClassAddTri.cpp|param|convertPosition006e|v,7aed8037f7b3a6e26ae566f4,gpt-6-astra,20261005181645-cee91f,2026-10-05
 game/Libraries/Source/WWVegas/WW3D2/Render2DClassAddTri.cpp|param|convertPosition006e|v,7aed8037f7b3a6e26ae566f4,grok,20261005181621-5abfd1,2026-10-05
+inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/wwstring.cpp|local|StringClass::Get_String|temp_string,47218b74ad6c74677b4e9eb9,gpt-6-astra,20261005182318-617e88,2026-10-05
+inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/wwstring.cpp|local|StringClass::Free_String|temp_base,eac177d8952941ba0ecf914a,gpt-6-astra,20261005182318-617e88,2026-10-05
+inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/wwstring.cpp|local|StringClass::Format_Args|temp_buffer,7b947da95c0e84dfd5005bae,gpt-6-astra,20261005182318-617e88,2026-10-05
+inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/wwstring.cpp|local|StringClass::Format|temp_buffer,2a3c87ad71130ee0c1d8a7f3,gpt-6-astra,20261005182318-617e88,2026-10-05
