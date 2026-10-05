@@ -1,9 +1,9 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringinline
 //
 // GuiFX.apt window load plus its OnInitialized and ToolTipText callback
 // registrations.  Retail strings identify the window and both callbacks.
 
-#include "../../../../inputs/reference/shims/stringinline/StringInline.h"
+#include "StringInline.h"
 
 class BFMERetailAsciiString
 {
@@ -100,7 +100,7 @@ extern void j_00023083();
 extern WindowManager *g_rva012F19E8WindowManager;
 extern int g_guiFxWindowHandle;
 AsciiString g_guiFxFile( "GuiFX.apt" );
-extern unsigned char g_guiFxLoaded;
+unsigned char g_guiFxLoaded = 0;
 extern void construct00510AC0();
 extern void j_000279df();
 extern void j_0003ef8b();

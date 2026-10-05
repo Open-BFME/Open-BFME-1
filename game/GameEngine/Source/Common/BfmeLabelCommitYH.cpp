@@ -81,13 +81,8 @@ extern GlobalData *TheWritableGlobalData;		// retail 0x012ED5C8
 class Shell;
 
 extern Shell *TheShell;						// retail 0x012F4B58
-// NEEDS A DATUM: retail global 0x012F3E6D is the dirty flag this commit
-// raises (`mov byte ptr [0x012F3E6D], 1`).  dir32_addresses.csv pins it under
-// two spellings, ?g_bfmeDirtyYH@@3_NA and ?g_bfmeDirtyYH@@3EA, and
-// BfmeConv2123.cpp declares the `unsigned char` one for the matching clear --
-// but no TU defines either, and data_rows.csv has no row for the address, so
-// nothing can be respelled to.
-extern bool g_bfmeDirtyYH;					// retail 0x012F3E6D, UNDEFINED
+// Map selection commit flag at retail VA 0x012F3E6D.
+bool g_bfmeDirtyYH = false;					// retail 0x012F3E6D
 
 // ?bfmeCommitYH@@YAXVAsciiStringYH@@@Z
 void __cdecl bfmeCommitYH(AsciiStringYH label)

@@ -235,7 +235,7 @@ static Int MAX_DISCONNECTS[MAX_DISCONNECTS_COUNT] = {0, 5, 10, 25, 50};
 static bool isInQuickMatchInit = false;
 static const Image *quickMatchSelectedImage = 0;
 static const Image *quickMatchUnselectedImage = 0;
-static Int quickMatchMaxPingEntries = 0;
+Int quickMatchMaxPingEntries = 0;
 static Int quickMatchMaxPoints = 100;
 extern Int quickMatchMinPoints;
 

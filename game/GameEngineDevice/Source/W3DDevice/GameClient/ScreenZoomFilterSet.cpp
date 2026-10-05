@@ -104,7 +104,7 @@ virtual void setMode(int);virtual void pad45();virtual void setFilter(int);};
 class View;
 extern View *TheTacticalView;
 static inline ZoomView *zoomTacticalView() { return (ZoomView *)TheTacticalView; }
-extern int ZoomPulse;
+int ZoomPulse = 1;
 int ZoomLastFrame = 0;
 int ZoomFadeDirection = 0;
 int ZoomFadeFrames = 0;

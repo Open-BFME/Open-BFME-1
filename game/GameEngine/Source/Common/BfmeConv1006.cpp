@@ -18,7 +18,7 @@ extern BfmeRun1006 *g_bfmeRun1006;
 // the reference carries the defining name and the view is selected by a cast.
 class Shell;
 extern Shell *TheShell;
-extern char g_bfmeFlag1006;
+extern bool LANbuttonPushed;
 
 class BfmeA1006
 {
@@ -40,7 +40,7 @@ void BfmeA1006::bfmeGo1006A()
 
 	if (!g_bfmeRun1006) {
 		((BfmeStop1006 *)TheShell)->bfmeStop1006();
-		g_bfmeFlag1006 = 1;
+		LANbuttonPushed = 1;
 		return;
 	}
 

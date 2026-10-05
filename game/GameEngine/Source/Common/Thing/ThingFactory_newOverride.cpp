@@ -41,7 +41,7 @@ public:
 	void setCopiedFromDefault();
 };
 
-extern bool TheBfmeOverrideCopyInProgress;
+bool TheBfmeOverrideCopyInProgress = false;
 
 class SubsystemInterface
 {

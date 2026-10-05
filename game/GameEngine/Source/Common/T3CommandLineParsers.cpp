@@ -322,8 +322,8 @@ Int Rva00061430_parse(char *args[], int num)
 	return 1;
 }
 
-extern Int g_value12A6F30;								///< retail [0x012A6F30]
-extern Int g_value12A6F34;								///< retail [0x012A6F34]
+Int g_debugCRCFromFrame = -1;								///< retail [0x012A6F30]
+Int g_debugCRCUntilFrame = -1;								///< retail [0x012A6F34]
 Int forcedCRCFrame = -1;								///< retail [0x012A6F38]
 extern Int g_value12A6FA8;								///< retail [0x012A6FA8]
 extern Int g_value12A6FB0;								///< retail [0x012A6FB0]
@@ -336,7 +336,7 @@ Int Rva00061260_parse(char *args[], int num)
 	if (num > 1)
 	{
 		Int value = atoi(args[1]);
-		g_value12A6F30 = value;
+		g_debugCRCFromFrame = value;
 		TheCommandLineFlags |= 0x2000;
 		g_value12A6FA8 = value;
 	}
@@ -349,7 +349,7 @@ Int Rva000612B0_parse(char *args[], int num)
 	if (num > 1)
 	{
 		Int value = atoi(args[1]);
-		g_value12A6F34 = value;
+		g_debugCRCUntilFrame = value;
 		TheCommandLineFlags |= 0x4000;
 		g_value12A6FA8 = value;
 	}

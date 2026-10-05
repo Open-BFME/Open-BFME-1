@@ -56,7 +56,7 @@ extern unsigned char g_Va012F13FC;
 extern unsigned char g_Va012F1B23;
 extern unsigned char g_Va012F4125;
 extern unsigned char g_Va012F4126;
-extern unsigned char g_Va012F4970;
+extern unsigned char g_guiFxLoaded;
 extern volatile bool reOpenPlayerInfoFlag;
 extern unsigned char g_Va0130E9F8;
 extern char g_rva00061DE0;
@@ -94,7 +94,7 @@ void Rva004E0670SetFlag( void )
 
 void Rva00510DB0SetFlag( void )
 {
-	g_Va012F4970 = 0x01;
+	g_guiFxLoaded = 0x01;
 }
 
 void Rva00627C40SetFlag( void )

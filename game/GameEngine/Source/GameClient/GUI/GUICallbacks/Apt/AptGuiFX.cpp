@@ -78,7 +78,7 @@ extern Rva00510DC0DisplayView *Rva00510DC0Display;
 extern DisplayStringManager *TheDisplayStringManager;
 extern WindowManager *g_theWindowManager;
 extern FontLibrary *TheFontLibrary;
-extern int Rva00510DC0DisplayWidth;
+int Rva00510DC0DisplayWidth = 0;
 extern int Rva00510DC0DisplayHeight;
 extern int g_bfmeVal995B;
 

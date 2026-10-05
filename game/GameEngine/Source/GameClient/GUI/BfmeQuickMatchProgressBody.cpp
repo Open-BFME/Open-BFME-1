@@ -16,7 +16,7 @@ class GameWindow;
 
 void GadgetProgressBarSetProgress(GameWindow *g, int progress);
 
-extern int g_bfmeQuickMatchProgressDenom;
+extern int quickMatchMaxPingEntries;
 extern const double g_bfmeQuickMatchStepScale;
 
 class BfmeQuickMatchProgressBody
@@ -34,7 +34,7 @@ public:
 
 void BfmeQuickMatchProgressBody::update(void)
 {
-	int n = g_bfmeQuickMatchProgressDenom;
+	int n = quickMatchMaxPingEntries;
 	int progress;
 	if (n > 1)
 		progress = (int)((double)m_count * 50.0 / (double)(n - 1));

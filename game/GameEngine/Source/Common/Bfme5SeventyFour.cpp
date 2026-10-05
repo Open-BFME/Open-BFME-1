@@ -29,7 +29,7 @@ void __cdecl bfmeReplaceWords(unsigned short *first, unsigned short *last, const
 	}
 }
 
-extern int g_bfmeIndexFA;					// retail 0x012D5DC8
+int g_bfmeLeft1221 = -1;					// retail 0x012D5DC8
 extern int g_bfmeStateFA[];					// retail 0x013387E0
 
 // ?bfmeSeed@@YAXH@Z
@@ -37,7 +37,7 @@ void __cdecl bfmeSeed(int seed)
 {
 	int value = seed | 1;
 
-	g_bfmeIndexFA = 0;
+	g_bfmeLeft1221 = 0;
 
 	g_bfmeStateFA[0] = value;
 

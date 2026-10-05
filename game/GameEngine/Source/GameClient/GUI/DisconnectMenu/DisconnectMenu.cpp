@@ -20,7 +20,7 @@ class GameWindow;
 
 Int GadgetListBoxAddEntryText(GameWindow *listbox, UnicodeString text, Int color, Int row, Int column, Bool overwrite);	// ILT 0x0003FE86
 
-extern Int chatNormalColor;
+Int g_bfmeChatColor = (Int)0xFFFF0000;
 
 
 extern "C" __declspec(dllimport) int __cdecl sprintf(char *buffer,
@@ -91,5 +91,5 @@ void DisconnectMenu::_bfme_updateScreen()
 
 void DisconnectMenu::showChat(UnicodeString text)
 {
-	GadgetListBoxAddEntryText(m_textDisplayControl, text, chatNormalColor, -1, -1, true);
+	GadgetListBoxAddEntryText(m_textDisplayControl, text, g_bfmeChatColor, -1, -1, true);
 }

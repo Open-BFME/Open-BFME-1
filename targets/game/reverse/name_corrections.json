@@ -18018,5 +18018,15 @@
   "after_sha256": "daeeebdcc9d2354bc3ab71475970f7fe7c0c7b48710e72ace8203372cb7812ce",
   "evidence": "targets/game/reverse/identity_evidence/0130a5b0-object-pointer.md",
   "reason": "The pointer at VA 0x0130A5B0 holds the allocator interface that RVA 0x007F00B0 creates once and installs; BfmeS1019 was an invented placeholder type. No EA class name is proven, so the type carries the constructor's address. Bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1264.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1264.cpp",
+  "old_name": "g_bfmeCx1264",
+  "new_name": "Rva00510DC0DisplayWidth",
+  "before_sha256": "a66c523f882692590bd72514d569bde55938fba383a27d2f16cbb361065caeda",
+  "after_sha256": "df6bd0f63df7e0147d8e0a59d3c089a3df060f308a014127b41fadf12ca0a670",
+  "evidence": "targets/game/reverse/identity_evidence/00ef497c-Rva00510DC0DisplayWidth.md",
+  "reason": "respelled to the datum AptGuiFX.cpp defines at 0x012F497C"
  }
 ]

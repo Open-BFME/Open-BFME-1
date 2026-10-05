@@ -192,7 +192,7 @@ static TransitionHandler *localTheTransitionHandler()
 }
 
 extern _STL::string LastReplayFileName;
-extern Bool g_playMusic;
+extern Bool DontShowMainMenu;
 extern Bool ReplayWasPressed;
 
 static NameKeyType parentID;
@@ -237,7 +237,7 @@ public:
 // ?ScoreScreenInit@@YAXPAVWindowLayout@@PAX@Z
 void Rva004E8DC0ScoreScreen::init(WindowLayout *layout, void *)
 {
-	g_playMusic = TRUE;
+	DontShowMainMenu = TRUE;
 	buttonIsFinishCampaign = FALSE;
 
 	parentID = TheNameKeyGenerator->nameToKey(

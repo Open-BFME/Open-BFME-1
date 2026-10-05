@@ -218,7 +218,7 @@ extern MapCache *TheMapCache;
 extern GameTextInterface *TheGameText;
 extern MultiplayerSettings *TheMultiplayerSettings;
 extern GameWindow *listboxChatWindowLanGame;
-extern Int chatSystemColor;
+extern const Int chatSystemColor;
 
 extern Int GadgetListBoxAddEntryText(GameWindow *listbox, UnicodeString text,
 	Int color, Int row, Int column, Bool overwrite = true);

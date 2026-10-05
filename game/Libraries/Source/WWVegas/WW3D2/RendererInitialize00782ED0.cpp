@@ -15,7 +15,7 @@ void bfmeResetGlobals(void);
 extern Rva00785FD0Renderer *g_rva00785FD0Renderer;
 extern unsigned rva01346DD8, rva0130695C, rva01306958, rva0133F420, rva0133F424;
 extern unsigned rva01306968, rva01306960, rva01306964;
-extern unsigned char rva012BB85C;
+extern unsigned char g_open2Running;
 void BfmeThingSGA::bfmeOneSGA()
 {
  if (!g_rva00785FD0Renderer) {
@@ -29,7 +29,7 @@ void BfmeThingSGA::bfmeOneSGA()
  rva01306958 = rva0133F424;
  WW3D::Sync(rva01306968);
  unsigned time = rva01306960;
- if (rva012BB85C) {
+ if (g_open2Running) {
   time += timeGetTime() - rva01306964;
   if (time - rva01306968 > 100) {
    time = rva01306968 + 100;

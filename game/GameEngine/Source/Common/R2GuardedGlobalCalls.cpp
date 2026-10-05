@@ -208,7 +208,7 @@ void Rva00588E40::run()
 extern int ZoomCurrentFrame;
 extern int ZoomFadeFrames;
 extern int ZoomFadeDirection;
-extern int R2Glob012BC140;
+extern int ZoomPulse;
 extern bool ZoomPulseDown;
 class ScreenBWFilter
 {
@@ -227,7 +227,7 @@ void Rva0073A860( int unused, void *value )
 	ZoomCurrentFrame = 0;
 	ZoomFadeFrames = 12;
 	ZoomFadeDirection = (int)value;
-	R2Glob012BC140 = 1;
+	ZoomPulse = 1;
 	ZoomPulseDown = 0;
 }
 
@@ -240,7 +240,7 @@ void __stdcall Rva0073B540( int first, int second )
 	ZoomCurrentFrame = 0;
 	ZoomFadeFrames = 12;
 	ZoomFadeDirection = second;
-	R2Glob012BC140 = 1;
+	ZoomPulse = 1;
 	ZoomPulseDown = 0;
 	R2Glob0130720C = 0;
 	R2Glob01307208 = first;

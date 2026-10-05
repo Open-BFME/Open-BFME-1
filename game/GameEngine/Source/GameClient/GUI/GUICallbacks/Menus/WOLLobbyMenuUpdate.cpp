@@ -913,7 +913,7 @@ static GameWindow *parent, *buttonBack, *buttonHost, *buttonRefresh,
 static int parentWOLLobbyID, buttonBackID, buttonHostID, buttonRefreshID,
     buttonJoinID, buttonBuddyID, buttonEmoteID, textEntryChatID,
     listboxLobbyPlayersID, listboxLobbyChatID, comboLobbyGroupRoomsID;
-static bool DontShowMainMenu;
+extern bool DontShowMainMenu;
 void playerTooltip(GameWindow *, WinInstanceData *, unsigned);
 void GrabWindowInfo();
 void ToggleGameListType();

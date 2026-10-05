@@ -18,7 +18,7 @@ extern "C" __declspec(dllimport) char * __cdecl strchr( const char *text, int c 
 // argument, not on what was just written; and the whole body hangs off a
 // change test, which is what the leading `cmp` against the old state is.
 
-extern unsigned char g_open2Running;
+unsigned char g_open2Running = 1;
 extern unsigned int g_open2Started;
 extern unsigned int g_open2Accumulated;
 

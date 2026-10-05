@@ -15,8 +15,8 @@ public:
 extern const FieldParse g_bfmeBaseTableABF[];
 extern FieldParse g_bfmeTableABF[];
 extern int g_bfmeTableDJb;
-extern unsigned char g_bfmeGuardByteABF;
-extern unsigned int g_bfmeGuardDwordABF;
+
+unsigned int g_bfmeGuardDwordABF = 0;
 
 void bfmeBuildABF(MultiIniFieldParse *p);
 
@@ -27,7 +27,7 @@ void bfmeBuildABF(MultiIniFieldParse *p)
 	unsigned int mask = 1;
 	unsigned int zero = 0;
 
-	if ((g_bfmeGuardByteABF & mask) == 0)
+	if ((g_bfmeGuardDwordABF & mask) == 0)
 	{
 		g_bfmeGuardDwordABF |= mask;
 

@@ -259,14 +259,14 @@ void ScoreScreenEnableControls(Bool enable)
 }
 
 extern Bool DontShowMainMenu; //KRIS
-Bool g_playMusic = FALSE;
+extern Bool DontShowMainMenu;
 Bool ReplayWasPressed = FALSE;
 /** Initialize the ScoreScreen */
 //-------------------------------------------------------------------------------------------------
 void ScoreScreenInit( WindowLayout *layout, void *userData )
 {
 	//Play music after subsystems get reset including the audio...
-	g_playMusic = TRUE;
+	DontShowMainMenu = TRUE;
 	
 	if (TheGameSpyInfo)
 	{

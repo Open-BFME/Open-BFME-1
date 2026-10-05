@@ -80,8 +80,8 @@ struct IDirect3DVertexBuffer8;
 extern IDirect3DIndexBuffer8 *shadowIndexBufferD3D;
 extern IDirect3DVertexBuffer8 *shadowVertexBufferD3D;
 extern W3DBufferManager *TheW3DBufferManager; // 0x01306DE8
-extern unsigned BfmeShadowIndexCount; // 0x012BBEC4
-extern unsigned BfmeShadowVertexCount; // 0x012BBEC0
+extern int SHADOW_INDEX_SIZE; // 0x012BBEC4
+extern int SHADOW_VERTEX_SIZE; // 0x012BBEC0
 
 class W3DShadowHelperManager
 {
@@ -95,14 +95,14 @@ Bool W3DShadowHelperManager::ReAcquireResources(void)
 	reinterpret_cast<GenAlpha *>(this)->h00024D2A();
 
 	BfmeD3DDevice *device = (BfmeD3DDevice *)DX8Wrapper::_Get_D3D_Device8();
-	if (device->CreateIndexBuffer(BfmeShadowIndexCount + BfmeShadowIndexCount,
+	if (device->CreateIndexBuffer(SHADOW_INDEX_SIZE + SHADOW_INDEX_SIZE,
 		0x208, 101, 0,
 		(void **)&shadowIndexBufferD3D, 0) < 0)
 		return FALSE;
 
 	if (shadowVertexBufferD3D == 0)
 	{
-		if (device->CreateVertexBuffer(BfmeShadowVertexCount * 3 * 4, 0x208, 0, 0,
+		if (device->CreateVertexBuffer(SHADOW_VERTEX_SIZE * 3 * 4, 0x208, 0, 0,
 			(void **)&shadowVertexBufferD3D, 0) < 0)
 			return FALSE;
 	}

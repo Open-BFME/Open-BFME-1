@@ -69,7 +69,7 @@ public:
 
 extern Shell *TheShell;
 
-extern unsigned char g_bfmeDirtyYH;
+extern bool g_bfmeDirtyYH;
 extern int g_bfmeArgAAV;
 extern unsigned char g_bfmeFlagAAV;
 extern void *g_bfmePtrAAV;

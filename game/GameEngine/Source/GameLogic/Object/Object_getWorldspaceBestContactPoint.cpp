@@ -151,7 +151,7 @@ private:
 	unsigned char m_unreconstructed[0x24];
 };
 
-extern unsigned char g_contactPointDebug;
+extern bool g_bfmeDockingTraceActive;
 class CRCParameterCheck;
 extern CRCParameterCheck *TheCRCParameterCheck;
 
@@ -195,7 +195,7 @@ Bool Object::getWorldspaceBestContactPoint(Coord3D *pointOut,
 	const Coord3D *callerPos, const char *label, Int preference,
 	Int seed, Bool skipCollideTest) const
 {
-	if (g_contactPointDebug && TheCRCParameterCheck)
+	if (g_bfmeDockingTraceActive && TheCRCParameterCheck)
 	{
 		const char *skipCollideTestString;
 		UnsignedInt id = (skipCollideTestString =
@@ -236,7 +236,7 @@ Bool Object::getWorldspaceBestContactPoint(Coord3D *pointOut,
 		(const Coord3D *)&localCallerVector,
 		label, preference, seed, skipCollideTest))
 	{
-		if (g_contactPointDebug && TheCRCParameterCheck)
+		if (g_bfmeDockingTraceActive && TheCRCParameterCheck)
 			fprintf(TheCRCParameterCheck,
 				"Geometry.getBestContactPoint failed, return FALSE");
 		return false;
@@ -249,7 +249,7 @@ Bool Object::getWorldspaceBestContactPoint(Coord3D *pointOut,
 	Vector3 worldPoint = *transform * *(const Vector3 *)&localPoint;
 	pointOut->set(worldPoint.X, worldPoint.Y, worldPoint.Z);
 
-	if (g_contactPointDebug && TheCRCParameterCheck)
+	if (g_bfmeDockingTraceActive && TheCRCParameterCheck)
 	{
 		fprintf(TheCRCParameterCheck,
 			"Geometry.getBestContactPoint succeeded, pointOut=%g,%g,%g, return TRUE",

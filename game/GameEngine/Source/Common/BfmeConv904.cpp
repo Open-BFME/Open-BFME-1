@@ -205,14 +205,14 @@ public:
 	void bfmeDoMG();
 };
 
-extern int g_bfmeAMG;
-extern int g_bfmeBMG;
+extern int g_bfmePeerReqE8;
+extern int g_bfmePeerReqE4;
 extern int g_bfmeFlagMG;
 
 void __stdcall bfmeGoMG(int a)
 {
-	g_bfmeAMG = -1;
-	g_bfmeBMG = -1;
+	g_bfmePeerReqE8 = -1;
+	g_bfmePeerReqE4 = -1;
 	if (g_bfmeFlagMG)
 		((BfmeObjMG *)g_rva012F19E8WindowManager)->bfmeDoMG();
 }
