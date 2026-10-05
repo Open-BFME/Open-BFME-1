@@ -720,3 +720,6 @@ game/GameEngine/Source/GameNetwork/GameSpy/GenerateLadderGameResultsPacket.cpp|p
 game/GameEngine/Source/GameNetwork/GameSpy/GenerateLadderGameResultsPacket.cpp|param|concat#2|s,60d6b26388f408fb83f16086,gpt-6-astra,20261005182748-b05649,2026-10-05
 game/GameEngine/Source/GameNetwork/GameSpy/GenerateLadderGameResultsPacket.cpp|param|AsciiString#2|s,380583c8e8214e4dc173c943,grok,20261005182623-53ec24,2026-10-05
 game/GameEngine/Source/GameNetwork/GameSpy/GenerateLadderGameResultsPacket.cpp|param|concat#2|s,60d6b26388f408fb83f16086,grok,20261005182623-53ec24,2026-10-05
+game/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThreadPlayerInfoCallback.cpp|param|constructPeerResponse|p,d76e915593d832d52ac15f69,gpt-6-sol,20261005175750-795ddf,2026-10-05
+game/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThreadPlayerInfoCallback.cpp|param|destroyPeerResponse|p,85f0d9655082bcbb89b662fd,gpt-6-sol,20261005175750-795ddf,2026-10-05
+game/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThreadPlayerInfoCallback.cpp|local|playerInfoCallback|t,7cd79de5cf070224f4228b2a,gpt-6-sol,20261005175750-795ddf,2026-10-05
