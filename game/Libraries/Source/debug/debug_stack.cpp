@@ -29,7 +29,10 @@
 //
 // Stack walker
 //////////////////////////////////////////////////////////////////////////////
+// Retail adds fullPath to the declaration from this translation unit.
+#define relLine relLine, bool fullPath
 #include "../WWVegas/WWDebug/_pch.h"
+#undef relLine
 #include "dbghelp.h"
 
 extern "C" __declspec(dllimport) BOOL WINAPI ReadProcessMemory(
@@ -216,11 +219,10 @@ void DebugStackwalk::Signature::GetSymbol(unsigned addr, char *buf, unsigned buf
   buf+=wsprintf(buf,", %s:%i+0x%x",p,line.LineNumber,displacement);
 }
 
-// ?GetSymbol@Signature@@ present-unmatched
 void DebugStackwalk::Signature::GetSymbol(unsigned addr,
                                           char *bufMod, unsigned sizeMod, unsigned *relMod,
                                           char *bufSym, unsigned sizeSym, unsigned *relSym,
-                                          char *bufFile, unsigned sizeFile, unsigned *linePtr, unsigned *relLine)
+                                          char *bufFile, unsigned sizeFile, unsigned *linePtr, unsigned *relLine, bool fullPath)
 {
   InitDbghelp();
 
@@ -302,7 +304,7 @@ void DebugStackwalk::Signature::GetSymbol(unsigned addr,
     else
     {
       char *p=strrchr(line.FileName,'\\'); // use filename only, strip off path
-      p=p?p+1:line.FileName;
+      p=p&&!fullPath?p+1:line.FileName;
       strncpy(bufFile,p,sizeFile);
       bufFile[sizeFile-1]=0;
       if (linePtr)
