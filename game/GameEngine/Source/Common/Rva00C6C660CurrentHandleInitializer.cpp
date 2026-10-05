@@ -8,7 +8,14 @@ public:
     void *m();
 };
 
-extern Gen_0044f3c0 g_bfmeCurrentCZ;
+class BfmeThingCX;
+class BfmeHandleCX
+{
+public:
+    BfmeThingCX *m_bfmeThing;
+};
+
+BfmeHandleCX g_bfmeCurrentCZ;
 extern void j_000110d6();
 extern void bfmeForward_00C70B40();
 extern "C" int __cdecl atexit(void (__cdecl *callback)());
@@ -18,6 +25,6 @@ void Rva00C6C660InitializeCurrentHandle()
     typedef void *(Gen_0044f3c0::*Member)(void);
     union { void (*function)(void); Member method; } call;
     call.function = j_000110d6;
-    (g_bfmeCurrentCZ.*call.method)();
+    (reinterpret_cast<Gen_0044f3c0 &>(g_bfmeCurrentCZ).*call.method)();
     atexit(bfmeForward_00C70B40);
 }

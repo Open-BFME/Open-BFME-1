@@ -346,9 +346,10 @@ protected:
 static W3DFilterInterface *W3DFilters[10];
 static W3DShaderInterface *W3DShaders[W3DShaderManager::ST_MAX];
 static Int W3DShadersPassCount[W3DShaderManager::ST_MAX];	//number of passes for each of the above shaders
-extern void *rva012F9D14; // BFME shader resource cleared by shutdown.
-extern void *rva012F9D18; // BFME shader resource cleared by shutdown.
-extern void *rva012F9D1C; // BFME vertex buffer cleared by shutdown.
+struct ShaderComResource;
+extern ShaderComResource *__identifier("?m_resource012F9D14@W3DShaderManager@@1PAUShaderComResource@@A"); // BFME shader resource cleared by shutdown.
+extern ShaderComResource *__identifier("?m_resource012F9D18@W3DShaderManager@@1PAUShaderComResource@@A"); // BFME shader resource cleared by shutdown.
+extern VertexBufferClass *ShaderQuadBuffer; // BFME vertex buffer cleared by shutdown.
 extern int ShaderQuadIndex; // BFME quad-ring cursor.
 TextureClass *W3DShaderManager::m_Textures[8];
 W3DShaderManager::ShaderTypes W3DShaderManager::m_currentShader;
@@ -3169,9 +3170,9 @@ W3DShaderManager::W3DShaderManager(void)
 	m_newRenderSurface = NULL;
 	m_oldDepthSurface = NULL;
 	m_renderingToTexture = false;
-	rva012F9D14 = NULL;
-	rva012F9D18 = NULL;
-	rva012F9D1C = NULL;
+	__identifier("?m_resource012F9D14@W3DShaderManager@@1PAUShaderComResource@@A") = NULL;
+	__identifier("?m_resource012F9D18@W3DShaderManager@@1PAUShaderComResource@@A") = NULL;
+	ShaderQuadBuffer = NULL;
 	ShaderQuadIndex = 0;
 	Int i;
 	for (i=0; i<W3DShaderManager::ST_MAX; i++)
@@ -3192,16 +3193,7 @@ public:
 
 extern void j_0000cf8b();
 
-struct BfmeShaderManagerStatics
-{
-	DWORD m_padding00[5];
-	DWORD m_glowPixelShader;
-	DWORD m_glowVertexShader;
-	DWORD m_padding1c[2];
-	DWORD m_glowVertexDeclaration;
-};
-
-#define g_bfmeShaderManager (*reinterpret_cast<BfmeShaderManagerStatics *>(&W3DShaderManager::m_renderingToTexture))
+extern ShaderComResource *__identifier("?m_resource012F9D24@W3DShaderManager@@1PAUShaderComResource@@A");
 
 class BfmeVertexShaderLoader
 {
@@ -3255,9 +3247,9 @@ typedef BfmeMasterFilterEntry BfmeMasterFilterList[100];
 
 #define BFME_MASTER_SHADER_LIST MasterShaderList
 #define BFME_MASTER_FILTER_LIST MasterFilterList
-#define BFME_GLOW_VERTEX_DECLARATION (g_bfmeShaderManager.m_glowVertexDeclaration)
-#define BFME_GLOW_VERTEX_SHADER (g_bfmeShaderManager.m_glowVertexShader)
-#define BFME_GLOW_PIXEL_SHADER (g_bfmeShaderManager.m_glowPixelShader)
+#define BFME_GLOW_VERTEX_DECLARATION ((*reinterpret_cast<DWORD *>(&__identifier("?m_resource012F9D24@W3DShaderManager@@1PAUShaderComResource@@A"))))
+#define BFME_GLOW_VERTEX_SHADER ((*reinterpret_cast<DWORD *>(&__identifier("?m_resource012F9D18@W3DShaderManager@@1PAUShaderComResource@@A"))))
+#define BFME_GLOW_PIXEL_SHADER ((*reinterpret_cast<DWORD *>(&__identifier("?m_resource012F9D14@W3DShaderManager@@1PAUShaderComResource@@A"))))
 
 // W3DShaderManager::init =======================================================
 void W3DShaderManager::init(void)
@@ -3291,11 +3283,11 @@ void W3DShaderManager::init(void)
 			{ 0, 0x14, 1, 0, 5, 0 },
 			{ 0xff, 0, 0x11, 0, 0, 0 }
 		};
-		if (g_bfmeShaderManager.m_glowVertexDeclaration == 0) {
+		if ((*reinterpret_cast<DWORD *>(&__identifier("?m_resource012F9D24@W3DShaderManager@@1PAUShaderComResource@@A"))) == 0) {
 			BfmeShaderD3DDevice *device = (BfmeShaderD3DDevice *)DX8Wrapper::_Get_D3D_Device8();
 			if (device->CreateVertexShader(
-				declaration, &g_bfmeShaderManager.m_glowVertexDeclaration) < 0)
-				g_bfmeShaderManager.m_glowVertexDeclaration = 0;
+				declaration, &(*reinterpret_cast<DWORD *>(&__identifier("?m_resource012F9D24@W3DShaderManager@@1PAUShaderComResource@@A")))) < 0)
+				(*reinterpret_cast<DWORD *>(&__identifier("?m_resource012F9D24@W3DShaderManager@@1PAUShaderComResource@@A"))) = 0;
 		}
 
 		if (BfmeVertexShaderLoader::LoadAndCreateD3DShader(

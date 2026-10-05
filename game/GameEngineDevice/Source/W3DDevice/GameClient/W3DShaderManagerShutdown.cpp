@@ -66,11 +66,16 @@ public:
 protected:
 	static ShaderTypes m_currentShader;
 	static FilterTypes m_currentFilter;
-	static ShaderVertexBuffer *m_vertexBuffer012F9D1C;
 	static ShaderComResource *m_resource012F9D14;
 	static ShaderComResource *m_resource012F9D18;
 	static ShaderComResource *m_resource012F9D24;
 };
+
+class VertexBufferClass;
+extern VertexBufferClass *ShaderQuadBuffer;
+ShaderComResource *W3DShaderManager::m_resource012F9D14 = 0;
+ShaderComResource *W3DShaderManager::m_resource012F9D18 = 0;
+ShaderComResource *W3DShaderManager::m_resource012F9D24 = 0;
 
 void W3DShaderManager::shutdown()
 {
@@ -79,9 +84,9 @@ void W3DShaderManager::shutdown()
 	m_currentShader = ST_INVALID;
 	m_currentFilter = FT_NULL_FILTER;
 
-	if (m_vertexBuffer012F9D1C) {
-		m_vertexBuffer012F9D1C->Release_Ref();
-		m_vertexBuffer012F9D1C = 0;
+	if (ShaderQuadBuffer) {
+		reinterpret_cast<ShaderVertexBuffer *>(ShaderQuadBuffer)->Release_Ref();
+		ShaderQuadBuffer = 0;
 	}
 
 	if (m_resource012F9D14)

@@ -60,13 +60,10 @@ class Display;
 extern Display *TheDisplay;
 extern int g_bfmeGateBT;
 extern volatile int g_bfmeProbeBT;
-extern ShroudTexture g_bfmeCurrentCZ;
+class BfmeHandleCX;
+extern BfmeHandleCX g_bfmeCurrentCZ;
 
-class ScreenCrossFadeFilterUpdateFadeLevelShim
-{
-public:
-	static int m_curFadeFrame;
-};
+extern int __identifier("?m_curFadeFrame@ScreenCrossFadeFilter@@1HA");
 
 class W3DFilterInterface
 {
@@ -89,23 +86,23 @@ int ScreenCrossFadeFilter::init(void)
 	if (!TheDisplay)
 		return 0;
 
-	ScreenCrossFadeFilterUpdateFadeLevelShim::m_curFadeFrame = 0;
+	__identifier("?m_curFadeFrame@ScreenCrossFadeFilter@@1HA") = 0;
 
 	if (!g_bfmeGateBT)
 		return 0;
 	if (!g_bfmeProbeBT)
 		return 0;
 
-	g_bfmeCurrentCZ.bind(
+	reinterpret_cast<ShroudTexture &>(g_bfmeCurrentCZ).bind(
 		BFMEGetWaterTrackTexture((char *)"exmask_g.tga", 0, 0));
 
-	if (!g_bfmeCurrentCZ.m_texture)
+	if (!reinterpret_cast<ShroudTexture &>(g_bfmeCurrentCZ).m_texture)
 		return 0;
 
 	int result = 1;
-	g_bfmeCurrentCZ.getFilter()->m_uAddress = result;
-	g_bfmeCurrentCZ.getFilter()->m_vAddress = result;
-	g_bfmeCurrentCZ.getFilter()->m(0);
+	reinterpret_cast<ShroudTexture &>(g_bfmeCurrentCZ).getFilter()->m_uAddress = result;
+	reinterpret_cast<ShroudTexture &>(g_bfmeCurrentCZ).getFilter()->m_vAddress = result;
+	reinterpret_cast<ShroudTexture &>(g_bfmeCurrentCZ).getFilter()->m(0);
 
 	W3DFilters[4] = &screenCrossFadeFilter;
 	return result;

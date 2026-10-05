@@ -495,14 +495,16 @@ public:
 	void bfmeForward(void);					// retail 0x00030652
 };
 
-extern Gen_00C70B40Target TheBfmeObject_00C70B40;		// 0x1307214
+class BfmeHandleCX;
+extern BfmeHandleCX g_bfmeCurrentCZ;		// 0x1307214
 class Gen_00C70B50Target
 {
 public:
 	void bfmeForward(void);					// retail 0x00044120
 };
 
-extern Gen_00C70B50Target TheBfmeObject_00C70B50;		// 0x1307228
+class Rva007D6B70;
+extern Rva007D6B70 Rva007D6B70Instance01307228;		// 0x1307228
 class Gen_00C70B60Target
 {
 public:
@@ -523,7 +525,8 @@ public:
 	void bfmeForward(void);					// retail 0x000085B2
 };
 
-extern Gen_00C70BA0Target TheBfmeObject_00C70BA0;		// 0x1307348
+class Rva007DB820;
+extern Rva007DB820 RingFilterObject;		// 0x1307348
 class Gen_00C70BB0Target
 {
 public:
@@ -1203,12 +1206,12 @@ void bfmeForward_00C70B10(void)
 // ?bfmeForward_00C70B40@@YAXXZ
 void bfmeForward_00C70B40(void)
 {
-	TheBfmeObject_00C70B40.bfmeForward();
+	reinterpret_cast<Gen_00C70B40Target *>(&g_bfmeCurrentCZ)->bfmeForward();
 }
 // ?bfmeForward_00C70B50@@YAXXZ
 void bfmeForward_00C70B50(void)
 {
-	TheBfmeObject_00C70B50.bfmeForward();
+	reinterpret_cast<Gen_00C70B50Target *>(&Rva007D6B70Instance01307228)->bfmeForward();
 }
 // ?bfmeForward_00C70B60@@YAXXZ
 void bfmeForward_00C70B60(void)
@@ -1223,7 +1226,7 @@ void bfmeForward_00C70B70(void)
 // ?bfmeForward_00C70BA0@@YAXXZ
 void bfmeForward_00C70BA0(void)
 {
-	TheBfmeObject_00C70BA0.bfmeForward();
+	reinterpret_cast<Gen_00C70BA0Target *>(&RingFilterObject)->bfmeForward();
 }
 // ?bfmeForward_00C70BB0@@YAXXZ
 void bfmeForward_00C70BB0(void)

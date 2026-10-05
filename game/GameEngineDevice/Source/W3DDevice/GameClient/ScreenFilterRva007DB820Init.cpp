@@ -113,7 +113,8 @@ struct Rva007DB820Snap {
 // Retail 0x0130733C. Same static Rva007DB820::set already names Rva007DB820FadeCurrentFrame.
 extern int Rva007DB820FadeCurrentFrame;
 extern void *RingFilterSlot;
-extern char RingFilterObject;
+class Rva007DB820;
+extern Rva007DB820 RingFilterObject;
 
 class Rva007DB820 {
 public:

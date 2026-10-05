@@ -219,9 +219,9 @@ protected:
 	static int m_fadeDirection;
 	friend void __stdcall Rva0073B540(int, int);
 };
-extern int R2Glob0130720C;
-extern int R2Glob01307208;
-extern int R2Glob01307204;
+extern int __identifier("?m_curFadeFrame@ScreenCrossFadeFilter@@1HA");
+extern int __identifier("?m_fadeFrames@ScreenCrossFadeFilter@@1HA");
+extern int __identifier("?m_fadeDirection@ScreenCrossFadeFilter@@1HA");
 
 void Rva0073A860( int unused, void *value )
 {
@@ -243,9 +243,9 @@ void __stdcall Rva0073B540( int first, int second )
 	ZoomFadeDirection = second;
 	ZoomPulse = 1;
 	ZoomPulseDown = 0;
-	R2Glob0130720C = 0;
-	R2Glob01307208 = first;
-	R2Glob01307204 = second;
+	__identifier("?m_curFadeFrame@ScreenCrossFadeFilter@@1HA") = 0;
+	__identifier("?m_fadeFrames@ScreenCrossFadeFilter@@1HA") = first;
+	__identifier("?m_fadeDirection@ScreenCrossFadeFilter@@1HA") = second;
 }
 
 // Paired with the adjacent retail selector at 0x00739CC0; both are

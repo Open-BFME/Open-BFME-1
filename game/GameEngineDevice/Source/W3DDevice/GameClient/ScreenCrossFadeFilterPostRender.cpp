@@ -100,7 +100,8 @@ public:
 	IDirect3DBaseTexture8 *Peek_D3D_Base_Texture(void) const;
 };
 
-extern TextureBaseClass g_bfmeCurrentCZ;
+class BfmeHandleCX;
+extern BfmeHandleCX g_bfmeCurrentCZ;
 
 class ScreenCrossFadeFilterUpdateFadeLevelShim
 {
@@ -182,7 +183,7 @@ Bool ScreenCrossFadeFilter::postRender(FilterModes mode, Coord2D &scrollDelta,
 		// ?_Get_D3D_Device8@DX8Wrapper@@SAPAUBfmeDevice@@XZ present-unmatched
 		BfmeDevice *device = DX8Wrapper::_Get_D3D_Device8();
 		device->vt->SetTexture(device, 1,
-			g_bfmeCurrentCZ.Peek_D3D_Base_Texture());
+			reinterpret_cast<TextureBaseClass &>(g_bfmeCurrentCZ).Peek_D3D_Base_Texture());
 		radius = (1.0f - ScreenCrossFadeFilterUpdateFadeLevelShim::m_curFadeValue) * 2.0f;
 		if (radius <= 0)
 			radius = 0.01f;

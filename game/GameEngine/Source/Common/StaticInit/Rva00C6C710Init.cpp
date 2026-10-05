@@ -16,4 +16,4 @@ public:
 };
 extern "C" int __cdecl atexit(void (__cdecl *callback)());
 
-Rva007DB820 g_rva01307348Object;
+Rva007DB820 RingFilterObject;

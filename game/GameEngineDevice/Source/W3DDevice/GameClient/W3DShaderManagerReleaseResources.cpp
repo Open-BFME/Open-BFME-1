@@ -14,7 +14,8 @@ class ShaderTextureHandle { public:
  ~ShaderTextureHandle() { if(ptr) ptr->Release_Ref(); }
  ShaderTextureHandle &operator=(const ShaderTextureHandle &o) { if(o.ptr) o.ptr->Add_Ref(); if(ptr) ptr->Release_Ref(); ptr=o.ptr; return *this; }
 };
-extern ShaderVertexBufferRef *rva012F9D1C;
+class VertexBufferClass;
+extern VertexBufferClass *ShaderQuadBuffer;
 extern int ShaderQuadIndex;
 extern ShaderComResourceRef *rva012F9D0C, *rva012F9D04, *rva012F9D08, *rva012F9D10;
 // 0x012F9D28 is the shader texture-handle table (BfmeHandleCX[8]), defined by
@@ -24,7 +25,7 @@ class BfmeHandleCX;
 extern BfmeHandleCX g_bfmeTableDU[8];
 class BfmeShaderShutdown { public: static void releaseDependentResources(); };
 void BfmeShaderShutdown::releaseDependentResources() {
- if(rva012F9D1C) { rva012F9D1C->Release_Ref(); rva012F9D1C=0; }
+ if(ShaderQuadBuffer) { reinterpret_cast<ShaderVertexBufferRef *>(ShaderQuadBuffer)->Release_Ref(); ShaderQuadBuffer=0; }
  ShaderQuadIndex=0;
  if(rva012F9D0C) { ((ReleaseResource)rva012F9D0C->VTable[2])(rva012F9D0C); rva012F9D0C=0; }
  if(rva012F9D04) { ((ReleaseResource)rva012F9D04->VTable[2])(rva012F9D04); rva012F9D04=0; }

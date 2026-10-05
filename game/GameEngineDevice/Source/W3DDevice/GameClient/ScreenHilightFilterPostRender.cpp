@@ -25,7 +25,9 @@ extern bool HighlightRendering;
 class GlobalData;extern GlobalData *TheWritableGlobalData;
 struct Settings{char p[0xdbd];bool active;};
 static inline Settings *highlightSettings(){return (Settings *)TheWritableGlobalData;}
-extern unsigned HighlightFVF,number_of_DX8_calls,HighlightColorIndex;
+struct ShaderComResource;
+extern ShaderComResource *__identifier("?m_resource012F9D24@W3DShaderManager@@1PAUShaderComResource@@A");
+extern unsigned number_of_DX8_calls,HighlightColorIndex;
 struct Color{float x,y,z,w;};extern Color HighlightColors[];
 extern Color HighlightPixelConstants[];
 unsigned bfmeCurrentCU();struct Cu{unsigned f[8];};
@@ -49,7 +51,7 @@ bool ScreenHilightFilter::postRender(int mode,unsigned unused,bool&extra,Coord2D
   dev->v->SetRenderState(dev,22,1);dev->v->SetRenderState(dev,14,0);dev->v->SetRenderState(dev,7,0);
   dev->v->SetTextureStageState(dev,0,24,0);dev->v->SetTextureStageState(dev,1,24,0);
   dev->v->SetTexture(dev,0,texture[index+1]);dev->v->SetPixelShader(dev,pixelShader);
-  HighlightDevice->v->SetFVF(HighlightDevice,HighlightFVF);++number_of_DX8_calls;
+  HighlightDevice->v->SetFVF(HighlightDevice,reinterpret_cast<unsigned>(__identifier("?m_resource012F9D24@W3DShaderManager@@1PAUShaderComResource@@A")));++number_of_DX8_calls;
   dev->v->SetVertexShader(dev,vertexShader);
   color.x=HighlightColors[HighlightColorIndex].x-1.0f;color.y=HighlightColors[HighlightColorIndex].y-1.0f;color.z=HighlightColors[HighlightColorIndex].z-1.0f;color.w=0;
   if(memcmp(&color,HighlightPixelConstants,16)!=0){HighlightPixelConstants[0]=color;HighlightDevice->v->SetPixelShaderConstantF(HighlightDevice,0,&color.x,1);++number_of_DX8_calls;}

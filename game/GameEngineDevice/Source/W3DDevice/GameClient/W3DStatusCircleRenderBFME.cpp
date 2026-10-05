@@ -127,7 +127,7 @@ extern GameEngine *TheGameEngine;
 // Retail's singleton (0x012F076C), defined in ScriptEngine.cpp. Spelled with
 // the real pointee type so the mangled name matches the definition.
 extern ScriptEngine *TheScriptEngine;
-extern bool g_w3dStatusCircleNeedUpdate;
+extern bool __identifier("?m_needUpdate@W3DStatusCircle@@1_NA");
 extern float g_worldMatrix[16];
 extern unsigned char g_rva007A2330Flag;
 extern float g_bfmeDefaultBU;
@@ -242,7 +242,7 @@ void Rva00726290W3DStatusCircle::Render(RenderInfoClass &)
 	Rva00726290Matrix3D tm(true);
 	if (*(Bool *)(TheWritableGlobalData + 0xa9c) &&
 		*(Int *)((char *)TheGameLogic + 0x10c) != 4) {
-		if (g_w3dStatusCircleNeedUpdate)
+		if (__identifier("?m_needUpdate@W3DStatusCircle@@1_NA"))
 			((W3DStatusCircle *)this)->updateCircleVB();
 
 		VertexMaterialClass *vmat = *(VertexMaterialClass **)((char *)this + 0xe0);

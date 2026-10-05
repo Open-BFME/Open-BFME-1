@@ -18578,5 +18578,25 @@
   "after_sha256": "3df876504c8c6a430690843101623410fa8038b3cbd18073d7adfe146e0a641a",
   "evidence": "targets/game/reverse/identity_evidence/012F4B54-PointerIdentity.md",
   "reason": "Callers take the owner's spelling for the Skirmish screen pointer."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3SingletonForwarders.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3SingletonForwarders.cpp",
+  "old_name": "TheBfmeObject_00C70B50",
+  "new_name": "Rva007D6B70Instance01307228",
+  "before_sha256": "c2da42eb64bbc6aca4991886542273bacfc8154df7dab50d2b4df8af4db568c5",
+  "after_sha256": "457166f5f1eb04b11d091f00d27de2d226b3caec4a7da3f9d696747d65ee2e0c",
+  "evidence": "targets/game/reverse/identity_evidence/00f07228-datum-type.md",
+  "reason": "Callers take the owner's spelling for the 72-byte screen filter instance."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/StaticInit/Rva00C6C680Init.cpp",
+  "new_path": "game/GameEngine/Source/Common/StaticInit/Rva00C6C680Init.cpp",
+  "old_name": "g_rva01307228Object",
+  "new_name": "Rva007D6B70Instance01307228",
+  "before_sha256": "ef12a594390b40470f72c0472143c28127373488069510d45076b27c411de118",
+  "after_sha256": "13b9424147c63c0ca6685d912c64b11140a982ebfce326789b712da9ebb65124",
+  "evidence": "targets/game/reverse/identity_evidence/00f07228-datum-type.md",
+  "reason": "Callers take the owner's spelling for the 72-byte screen filter instance."
  }
 ]

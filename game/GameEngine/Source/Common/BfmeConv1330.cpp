@@ -27,13 +27,14 @@ public:
 	void bfmeCloseUDC();
 };
 
-extern BfmeSrcUDC *g_bfmeObjUDC;
+class BfmeHandleCX;
+extern BfmeHandleCX g_bfmeCurrentCZ;
 
 int bfmeGoUDC(void)
 {
-	if (g_bfmeObjUDC) {
-		g_bfmeObjUDC->bfmeCloseUDC();
-		g_bfmeObjUDC = 0;
+	if ((*reinterpret_cast<BfmeSrcUDC **>(&g_bfmeCurrentCZ))) {
+		(*reinterpret_cast<BfmeSrcUDC **>(&g_bfmeCurrentCZ))->bfmeCloseUDC();
+		(*reinterpret_cast<BfmeSrcUDC **>(&g_bfmeCurrentCZ)) = 0;
 	}
 	return 1;
 }
