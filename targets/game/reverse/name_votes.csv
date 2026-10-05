@@ -597,3 +597,5 @@ game/GameEngine/Source/GameLogic/AI/Rva001FC330Destructor.cpp|type||Rva1FC330Ifa
 game/GameEngine/Source/GameLogic/AI/Rva001FC330Destructor.cpp|type||Rva1FC330IfaceB,5893157e9e2fa2f82a24695a,gpt-6-astra,20261005163943-907146,2026-10-05
 game/GameEngine/Source/GameLogic/AI/Rva001FC330Destructor.cpp|type||Rva1FC330DeepBase,85d4595a261e0cbc036c79ac,gpt-6-astra,20261005163943-907146,2026-10-05
 game/GameEngine/Source/GameLogic/AI/Rva001FC330Destructor.cpp|type||Rva1FC330Middle,54559320b282a73e6eaa6bc1,gpt-6-astra,20261005163943-907146,2026-10-05
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Gen0075FB90RecoilVectorRelease.cpp|type||Gen0075FB90Factory,922176a30e867e7c9768c4e3,gpt-6-astra,20261005163943-454c69,2026-10-05
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Gen0075FB90RecoilVectorRelease.cpp|local|Gen_0075FB90|p,6ffa160f5bbb6b3b82ed5e05,gpt-6-astra,20261005163943-454c69,2026-10-05
