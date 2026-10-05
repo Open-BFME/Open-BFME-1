@@ -17,14 +17,14 @@ struct BfmeArg171
 	float f10;
 };
 
-struct BfmeThing171
+struct WeaponTemplate
 {
 	unsigned char pad[0x500];
 	int m_preAttackDelay;
 	int scaleToInt(BfmeArg171 *arg);
 };
 
-int BfmeThing171::scaleToInt(BfmeArg171 *arg)
+int WeaponTemplate::scaleToInt(BfmeArg171 *arg)
 {
 	return (int)((float)m_preAttackDelay * arg->f10);
 }
