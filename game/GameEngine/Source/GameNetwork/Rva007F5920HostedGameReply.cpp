@@ -15,6 +15,9 @@ class Rva007E8810Message
 public:
     int getError();
 };
+// Existing emitted getter at 0x007E88B0: a 32-bit read from receiver +0x24.
+struct Gen_007e88b0 { int m(); };
+
 class Rva007F5080Game
 {
 public:
@@ -85,7 +88,7 @@ private:
 void Rva007F5920Owner::handleHostedGameReply(Rva007E8810Message *msg)
 {
     if (reinterpret_cast<Rva007E88A0 *>(msg)->method()) {
-        int status = msg->getError();
+        int status = reinterpret_cast<Gen_007e88b0 *>(msg)->m();
         m_listener->v13(status);
         return;
     }
