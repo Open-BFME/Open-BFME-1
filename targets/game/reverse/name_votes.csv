@@ -593,3 +593,7 @@ game/GameEngine/Source/Common/BfmeThreeHundredSeventyOne.cpp|member||m_bfmeOne,e
 game/GameEngine/Source/Common/BfmeThreeHundredSeventyOne.cpp|member||m_bfmeTwo,d6bedb44ddaaec1ffbb66d55,gpt-6-astra,20261005164037-3d047a,2026-10-05
 game/GameEngine/Source/Common/BfmeThreeHundredSeventyOne.cpp|member||m_bfmeThree,02cfdb9eef9c5bab330e4ebd,gpt-6-astra,20261005164037-3d047a,2026-10-05
 game/GameEngine/Source/Common/BfmeThreeHundredSeventyOne.cpp|member||m_bfmeCount,ac61add5bc574c5c4c342170,gpt-6-astra,20261005164037-3d047a,2026-10-05
+game/GameEngine/Source/GameLogic/AI/Rva001FC330Destructor.cpp|type||Rva1FC330IfaceA,4db6da6f1d9e1a37813c32a2,gpt-6-astra,20261005163943-907146,2026-10-05
+game/GameEngine/Source/GameLogic/AI/Rva001FC330Destructor.cpp|type||Rva1FC330IfaceB,5893157e9e2fa2f82a24695a,gpt-6-astra,20261005163943-907146,2026-10-05
+game/GameEngine/Source/GameLogic/AI/Rva001FC330Destructor.cpp|type||Rva1FC330DeepBase,85d4595a261e0cbc036c79ac,gpt-6-astra,20261005163943-907146,2026-10-05
+game/GameEngine/Source/GameLogic/AI/Rva001FC330Destructor.cpp|type||Rva1FC330Middle,54559320b282a73e6eaa6bc1,gpt-6-astra,20261005163943-907146,2026-10-05
