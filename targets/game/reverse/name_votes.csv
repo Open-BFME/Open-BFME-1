@@ -807,3 +807,6 @@ game/GameEngine/Source/GameLogic/Object/Behavior/OathbreakersFadeAwayBehaviorFri
 game/GameEngine/Source/GameLogic/Object/Behavior/OathbreakersFadeAwayBehaviorFriendNewModuleDataThunk.cpp|member||m_bfme08,46435ebd5d8c90657423b51d,grok,20261005192431-fa3c32,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Update/DetachableRiderUpdate_update.cpp|member||m_flag20,4061321f8565b9088a369046,gpt-6-sol,20261005190429-f6285a,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Update/DetachableRiderUpdate_update.cpp|member||m_flag21,a81b56536d18319e8d0688c6,gpt-6-sol,20261005190429-f6285a,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateAction.cpp|member||m_10,316d397303381162b099b440,gpt-6-sol,20261005190439-4a0be5,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateAction.cpp|member||m_14,8ae5e738b46c4df2dd419e3e,gpt-6-sol,20261005190439-4a0be5,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateAction.cpp|member||m_18,75678cc1427f53752c3e055e,gpt-6-sol,20261005190439-4a0be5,2026-10-05
