@@ -840,3 +840,10 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManag
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainBackgroundReset.cpp|member||m_C0,87ddac45bb22fdfe014ecc9b,gpt-6-sol,20261005185701-3ab459,2026-10-05
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewCameraUpdateAlternateOneFrame.cpp|param|Lerp|t,1e7f3f43068dd66ebdd07fa7,gpt-6-sol,20261005185030-4f1619,2026-10-05
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewCameraUpdateAlternateOneFrame.cpp|param|Lerp|t,1e7f3f43068dd66ebdd07fa7,grok,20261005185328-62fc30,2026-10-05
+game/Libraries/Source/Apt/Rva008AE2E0BoundsGetter.cpp|type||BfmeNode008AE2E0,143ec3ce935d5a04daf68810,grok,20261005190858-13f95f,2026-10-05
+game/Libraries/Source/Apt/Rva008AE2E0BoundsGetter.cpp|member||m_bfme00,ca166e09b4610f55fbffa811,grok,20261005190858-13f95f,2026-10-05
+game/Libraries/Source/Apt/Rva008AE2E0BoundsGetter.cpp|member||m_bfme04,ba8c7c3c46c3fca73bdf788b,grok,20261005190858-13f95f,2026-10-05
+game/Libraries/Source/Apt/Rva008AE2E0BoundsGetter.cpp|member||m_bfme08,9e046506162ac19e4b7e6818,grok,20261005190858-13f95f,2026-10-05
+game/Libraries/Source/Apt/Rva008AE2E0BoundsGetter.cpp|member||m_bfme0c,11dc2a1f95b4a0884b845cc7,grok,20261005190858-13f95f,2026-10-05
+game/Libraries/Source/Apt/Rva008AE2E0BoundsGetter.cpp|member||m_bfme10,5198981961996e2216e73a18,grok,20261005190858-13f95f,2026-10-05
+game/Libraries/Source/Apt/Rva008AE2E0BoundsGetter.cpp|member||m_bfme14,6cdcb265174289fb8eb85101,grok,20261005190858-13f95f,2026-10-05
