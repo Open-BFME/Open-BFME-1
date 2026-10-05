@@ -1,21 +1,5 @@
 // Address-derived leaf bodies recovered from complete retail extents.
 
-class Rva000FDB30Dword
-{
-public:
-	unsigned int get() const;
-
-private:
-	char m_padding[8];
-	unsigned int m_value;
-};
-
-// ?get@Rva000FDB30Dword@@QBEIXZ
-unsigned int Rva000FDB30Dword::get() const
-{
-	return m_value;
-}
-
 // The carved boundary at 0x000957F0 contains only a return.
 void Rva000957F0Noop()
 {
