@@ -9,8 +9,8 @@
 // value in ecx, the latter would `ret 4`.
 //
 // ONE AXIS: the address of the global.  It rides a DIR32 relocation, whose four
-// bytes the gate takes from retail, so which global each body writes is not
-// evidence and is not reconstructed; all sixteen addresses are distinct.
+// bytes are verified against retail. The initialized scalar owners have
+// data rows; all sixteen addresses are distinct.
 //
 // IDENTITY IS NOT RECOVERED.  Every class name is derived from the retail RVA.
 
@@ -21,7 +21,6 @@
 		static void store( int value );                                     \
 		static int s_value;                                                 \
 	};                                                                     \
-	int NAME::s_value;                                                     \
 	void NAME::store( int value )                                          \
 	{                                                                      \
 		s_value = value;                                                    \
@@ -43,3 +42,18 @@ BFME_GLOBAL_STORE( Rva0075B2F0 )
 BFME_GLOBAL_STORE( Rva00782DF0 )
 BFME_GLOBAL_STORE( Rva00782E00 )
 BFME_GLOBAL_STORE( Rva00782E10 )
+
+int Rva0085A850::s_value;
+int Rva00882F80::s_value;
+int Rva00892340::s_value;
+int Rva00892360::s_value;
+int Rva008FE150::s_value;
+int Rva00937140::s_value;
+int Rva00956A70::s_value;
+int Rva009A58C0::s_value;
+int Rva006C5730::s_value;
+int Rva006E1BD0::s_value = 2;
+int Rva006E7040::s_value;
+int Rva00782DF0::s_value;
+int Rva00782E00::s_value;
+int Rva00782E10::s_value;

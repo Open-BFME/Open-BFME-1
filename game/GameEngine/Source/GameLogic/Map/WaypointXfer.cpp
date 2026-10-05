@@ -68,8 +68,8 @@ public:
 class Xfer; class MidVirtualSlot90Receiver;
 void Rva0010BE80(MidVirtualSlot90Receiver *receiver, void *context);
 Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
-// retail defines 0x012ACC30 as the static member Rva001A1A30::s_value
-// (see TinyGlobalStores.cpp), not as a free global.
+// 0x012ACC30 is the next auto-assigned waypoint id. Its address-derived
+// owner Rva001A1A30::s_value is defined in WaypointConstructor.cpp.
 class Rva001A1A30
 {
 public:

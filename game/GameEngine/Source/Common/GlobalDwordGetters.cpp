@@ -31,16 +31,19 @@
 class LookAtTranslator;
 extern LookAtTranslator *TheLookAtTranslator;
 
-// 0x012ACC30 is not a free global: retail defines it as the static member
-// Rva001A1A30::s_value (declared and defined in TinyGlobalStores.cpp), so the
-// reference is spelled with its defining name to link.
+// Rva001A1A30::s_value owns the next auto-assigned waypoint id at
+// 0x012ACC30 and is defined in WaypointConstructor.cpp.
 class Rva001A1A30
 {
 public:
 	static int s_value;
 };
 
-extern int g_Va012BA938;
+class Rva006E1BD0
+{
+public:
+	static int s_value;
+};
 extern int g_Va012D6DB0;
 extern int g_Va012D6DB4;
 extern int g_Va012D6DB8;
@@ -81,7 +84,11 @@ public:
 extern int g_Va0130A5A0;
 extern int g_Va0130B198;
 extern int g_Va01336E80;
-extern int g_Va01337824;
+class Rva00892360
+{
+public:
+	static int s_value;
+};
 extern int g_Va0133F460;
 extern int g_Va013400CC;
 extern int g_Va013400F8;
@@ -229,7 +236,7 @@ int Rva006C07C0Get( void )
 
 int Rva006E1920Get( void )
 {
-	return g_Va012BA938;
+	return Rva006E1BD0::s_value;
 }
 
 int Rva006E1A20Get( void )
@@ -295,7 +302,7 @@ int Rva0088CDE0Get( void )
 
 unsigned int AptGetSwfVersion( void )
 {
-	return g_Va01337824;
+	return Rva00892360::s_value;
 }
 
 int Rva008FD440Get( void )

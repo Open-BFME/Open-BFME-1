@@ -9,12 +9,11 @@
 
 // Retail 0x0113BD7C is RenderObjClass::AT_MIN_LOD (FLT_MAX, defined in
 // rendobj.cpp); the real header names it.  0x0113BD80 is AT_MAX_LOD (-1.0f)
-// beside it, but was not in this job's name list, so it keeps its extern.
+// in the same LOD sentinel pair defined by rendobj.cpp.
 #include "rendobj.h"
 
 class CameraClass;
 
-extern float g_Va0113BD80;
 
 #define BFME_VIRTUAL_EIGHT(a, b, c, d, e, f, g, h) \
 	virtual void Dummy##a(); virtual void Dummy##b(); \
@@ -94,7 +93,7 @@ float RingRenderObjClass::Get_Value(void) const
 float RingRenderObjClass::Get_Post_Increment_Value(void) const
 {
 	if (CurrentLOD == LODCount) {
-		return g_Va0113BD80;
+		return RenderObjClass::AT_MAX_LOD;
 	}
 
 	float polygon_count = (float)Get_Num_Polys() * 2.0F;

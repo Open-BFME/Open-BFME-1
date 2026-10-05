@@ -79,7 +79,7 @@ public:
 };
 
 extern "C" void __cdecl bfmeXferIntAX(Xfer *xfer, Int *value);
-// retail defines 0x012ACC30 as Rva001A1A30::s_value (see TinyGlobalStores.cpp)
+// Rva001A1A30::s_value owns 0x012ACC30 in WaypointConstructor.cpp.
 class Rva001A1A30
 {
 public:

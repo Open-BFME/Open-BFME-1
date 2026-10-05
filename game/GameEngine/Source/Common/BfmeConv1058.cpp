@@ -196,7 +196,13 @@ public:
 
 extern BfmeT1058 *g_bfmeT1058;
 extern int g_bfmeX1058;
-extern int g_bfmeY1058;
+class Rva0075B2F0
+{
+public:
+	static int s_value;
+};
+
+int Rva0075B2F0::s_value = -1;
 
 class BfmeE1058
 {
@@ -216,6 +222,6 @@ void BfmeE1058::bfmeGo1058E(void)
 {
 	bfmeBase1058();
 	m_bfme9c = g_bfmeX1058;
-	g_bfmeY1058 = g_bfmeT1058->bfmeNow1058();
+	Rva0075B2F0::s_value = g_bfmeT1058->bfmeNow1058();
 	m_bfmeSub.bfmeSet1058E(m_bfme1b8 != 0);
 }

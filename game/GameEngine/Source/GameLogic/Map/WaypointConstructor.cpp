@@ -22,13 +22,15 @@ enum { WAYPOINT_ID_AUTO = 0x7ffffffe };
 
 class Waypoint;
 extern Waypoint *g_waypointListHead;		// 0x012EF4D0
-// 0x012ACC30, next auto-assigned waypoint id.  Retail defines the dword as the
-// static member Rva001A1A30::s_value (see TinyGlobalStores.cpp).
+// 0x012ACC30 is the next auto-assigned waypoint id. Its address-derived
+// owner is defined here beside the constructor that assigns and advances it.
 class Rva001A1A30
 {
 public:
 	static int s_value;
 };
+
+int Rva001A1A30::s_value = 0x40000000;
 
 struct Gen_t_001a6d20_p4pod
 {
