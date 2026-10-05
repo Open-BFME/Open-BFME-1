@@ -18218,5 +18218,75 @@
   "after_sha256": "139c36eeaa951d787087914d1fff945354a4700b399b89b8720300a733ac1d93",
   "evidence": "targets/game/reverse/identity_evidence/0x0016ee00-address-derived.md",
   "reason": "An earlier partial source used DestinationSearch0016EE00::find as its emitter name, but said the identity stayed address-derived. The matched caller proves the arguments and boolean use, while no retail symbol identifies that descriptive owner."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00774aa0.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00774AA0.cpp",
+  "old_name": "Seat00774AA0Owner",
+  "new_name": "Rva00774AA0Owner",
+  "before_sha256": "e54e794f87b73ab450c3d1d9d41d6b86eb9df2614390cf2f1a4d3b9fcaf624f8",
+  "after_sha256": "ae6a807e40a5f19dc83144d64e0b29be13bde47002f9b9691bf0d446977ac9f9",
+  "evidence": "targets/game/reverse/identity_evidence/00774aa0-name-correction.md",
+  "reason": "The prior bank labels these TU-local views Seat... and pad only in a partial scratch; its verdict calls them typed scratch contracts. No retail caller, pin, or matched symbol proves those names, so the new views keep the owner RVA and the padding label."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00774aa0.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00774AA0.cpp",
+  "old_name": "Seat00774AA0Receiver",
+  "new_name": "Rva00774AA0Receiver",
+  "before_sha256": "e54e794f87b73ab450c3d1d9d41d6b86eb9df2614390cf2f1a4d3b9fcaf624f8",
+  "after_sha256": "ae6a807e40a5f19dc83144d64e0b29be13bde47002f9b9691bf0d446977ac9f9",
+  "evidence": "targets/game/reverse/identity_evidence/00774aa0-name-correction.md",
+  "reason": "The prior bank labels these TU-local views Seat... and pad only in a partial scratch; its verdict calls them typed scratch contracts. No retail caller, pin, or matched symbol proves those names, so the new views keep the owner RVA and the padding label."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00774aa0.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00774AA0.cpp",
+  "old_name": "SeatBones",
+  "new_name": "Rva00774AA0Bones",
+  "before_sha256": "e54e794f87b73ab450c3d1d9d41d6b86eb9df2614390cf2f1a4d3b9fcaf624f8",
+  "after_sha256": "ae6a807e40a5f19dc83144d64e0b29be13bde47002f9b9691bf0d446977ac9f9",
+  "evidence": "targets/game/reverse/identity_evidence/00774aa0-name-correction.md",
+  "reason": "The prior bank labels these TU-local views Seat... and pad only in a partial scratch; its verdict calls them typed scratch contracts. No retail caller, pin, or matched symbol proves those names, so the new views keep the owner RVA and the padding label."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00774aa0.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00774AA0.cpp",
+  "old_name": "SeatLogic",
+  "new_name": "Rva00774AA0LogicView",
+  "before_sha256": "e54e794f87b73ab450c3d1d9d41d6b86eb9df2614390cf2f1a4d3b9fcaf624f8",
+  "after_sha256": "ae6a807e40a5f19dc83144d64e0b29be13bde47002f9b9691bf0d446977ac9f9",
+  "evidence": "targets/game/reverse/identity_evidence/00774aa0-name-correction.md",
+  "reason": "The prior bank labels these TU-local views Seat... and pad only in a partial scratch; its verdict calls them typed scratch contracts. No retail caller, pin, or matched symbol proves those names, so the new views keep the owner RVA and the padding label."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00774aa0.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00774AA0.cpp",
+  "old_name": "SeatRecord",
+  "new_name": "Rva00774AA0Record",
+  "before_sha256": "e54e794f87b73ab450c3d1d9d41d6b86eb9df2614390cf2f1a4d3b9fcaf624f8",
+  "after_sha256": "ae6a807e40a5f19dc83144d64e0b29be13bde47002f9b9691bf0d446977ac9f9",
+  "evidence": "targets/game/reverse/identity_evidence/00774aa0-name-correction.md",
+  "reason": "The prior bank labels these TU-local views Seat... and pad only in a partial scratch; its verdict calls them typed scratch contracts. No retail caller, pin, or matched symbol proves those names, so the new views keep the owner RVA and the padding label."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00774aa0.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00774AA0.cpp",
+  "old_name": "SeatState",
+  "new_name": "Rva00774AA0StateView",
+  "before_sha256": "e54e794f87b73ab450c3d1d9d41d6b86eb9df2614390cf2f1a4d3b9fcaf624f8",
+  "after_sha256": "ae6a807e40a5f19dc83144d64e0b29be13bde47002f9b9691bf0d446977ac9f9",
+  "evidence": "targets/game/reverse/identity_evidence/00774aa0-name-correction.md",
+  "reason": "The prior bank labels these TU-local views Seat... and pad only in a partial scratch; its verdict calls them typed scratch contracts. No retail caller, pin, or matched symbol proves those names, so the new views keep the owner RVA and the padding label."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00774aa0.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00774AA0.cpp",
+  "old_name": "pad",
+  "new_name": "m_pad",
+  "before_sha256": "e54e794f87b73ab450c3d1d9d41d6b86eb9df2614390cf2f1a4d3b9fcaf624f8",
+  "after_sha256": "ae6a807e40a5f19dc83144d64e0b29be13bde47002f9b9691bf0d446977ac9f9",
+  "evidence": "targets/game/reverse/identity_evidence/00774aa0-name-correction.md",
+  "reason": "The prior bank labels these TU-local views Seat... and pad only in a partial scratch; its verdict calls them typed scratch contracts. No retail caller, pin, or matched symbol proves those names, so the new views keep the owner RVA and the padding label."
  }
 ]
