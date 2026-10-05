@@ -173,7 +173,8 @@ struct Rva0077B3F0Data
     bool HighDetailOnly;
 };
 
-extern Rva0077B3F0Terrain *g_va012EF4CC;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 extern Rva0077B3F0Manager *g_va012F64BC;
 extern U32 g_va012F8064;
 // Retail 0x012F1464 is EA's GameClient *TheGameClient, defined once in
@@ -270,7 +271,7 @@ void Rva0077B3F0::method(const Matrix3D *transform)
         pos.x = translation.X;
         pos.y = translation.Y;
         pos.z = translation.Z;
-        g_va012EF4CC->slot4C(pos.x, pos.y, &pos.z, 0);
+        reinterpret_cast<Rva0077B3F0Terrain *>(TheTerrainLogic)->slot4C(pos.x, pos.y, &pos.z, 0);
         if (h018)
             h018->rva005BDE00(&pos);
         else

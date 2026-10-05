@@ -246,7 +246,8 @@ class Eva;
 extern Eva *TheEva;
 extern Mouse *TheMouse;
 extern GenFallback *GenFallback0012ED5C8;
-extern Rva00367810VirtualGate *Rva00367810TheVirtualGate;
+class Display;
+extern Display *TheDisplay;
 class GameWindowManager;
 extern GameWindowManager *TheWindowManager;
 
@@ -310,8 +311,8 @@ void ClientUpdate004329D0::update() {
     if (TheMouse) { ((Dispatch004329D0 *)TheMouse)->v14(); ((Dispatch004329D0 *)TheMouse)->v2c(); }
     bfmeGo924G();
     if (at<bool>(GenFallback0012ED5C8,0xbb6) || at<bool>(GenFallback0012ED5C8,0xbb7)) {
-        ((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v1c();
-        ((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v14();
+        ((Dispatch004329D0 *)TheDisplay)->v1c();
+        ((Dispatch004329D0 *)TheDisplay)->v14();
         return;
     }
     ((Dispatch004329D0 *)reinterpret_cast<MovieControl0040F780 *>(TheWindowManager))->v14();
@@ -362,12 +363,12 @@ void ClientUpdate004329D0::update() {
     ((GameLogicClientUpdate *)TheGameLogic)->deleteLoadScreen();
     if (!at<bool>(TheGameLogic,0x11d)) {
         ((Dispatch004329D0 *)((char *)TheTerrainVisual+4))->v14();
-        ((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v14();
+        ((Dispatch004329D0 *)TheDisplay)->v14();
     } else {
-        ((Calls004329D0 *)Rva00367810TheVirtualGate)->rva0040DE00();
+        ((Calls004329D0 *)TheDisplay)->rva0040DE00();
     }
     if (!freezeTime) at<int>(TheParticleSystemManager,0x98)=localPlayerIndex;
-    ((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v1c();
+    ((Dispatch004329D0 *)TheDisplay)->v1c();
     ((Dispatch004329D0 *)Rva0048EC80TheManager)->v14();
     if (!at<bool>(TheGameLogic,0x11d)) {
         TheShell->v14();
@@ -379,11 +380,11 @@ void ClientUpdate004329D0::update() {
                 && (m_at00C8!=at<unsigned int>(GenFallback0012ED5C8,0x2c)
                     || m_at00CC!=at<unsigned int>(GenFallback0012ED5C8,0x30))) {
                 if (m_at00C6) {
-                    m_at00D4=((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v2c();
-                    m_at00D8=((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v30();
-                    m_at00DC=((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v38();
+                    m_at00D4=((Dispatch004329D0 *)TheDisplay)->v2c();
+                    m_at00D8=((Dispatch004329D0 *)TheDisplay)->v30();
+                    m_at00DC=((Dispatch004329D0 *)TheDisplay)->v38();
                 }
-                if (((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v44(m_at00C8,m_at00CC,m_at00D0,((Dispatch004329D0 *)Rva00367810TheVirtualGate)->v40())) {
+                if (((Dispatch004329D0 *)TheDisplay)->v44(m_at00C8,m_at00CC,m_at00D0,((Dispatch004329D0 *)TheDisplay)->v40())) {
                     at<unsigned int>(GenFallback0012ED5C8,0x2c)=m_at00C8;
                     at<unsigned int>(GenFallback0012ED5C8,0x30)=m_at00CC;
                     TheHeaderTemplateManager->refreshFonts004329D0();

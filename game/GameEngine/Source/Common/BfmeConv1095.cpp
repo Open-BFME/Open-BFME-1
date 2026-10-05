@@ -57,7 +57,8 @@ public:
 	BfmeZ1095B *bfmeGet1095(int a);
 };
 
-extern BfmeQ1095A *g_bfmeQ1095;
+class UpgradeCenter;
+extern UpgradeCenter *TheUpgradeCenter;
 
 // Retail's ScriptEngine global at 0x012F076C, spelled canonically so this TU
 // links against game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp's
@@ -77,7 +78,7 @@ void __stdcall bfmeGo1095A(int a, int b)
 		BfmeR1095 *r = ((BfmeD1095A *)ThePlayerList)->bfmeLook1095((short *)&a);
 
 		if (r) {
-			BfmeZ1095B *z = g_bfmeQ1095->bfmeGet1095(b);
+			BfmeZ1095B *z = reinterpret_cast<BfmeQ1095A *>(TheUpgradeCenter)->bfmeGet1095(b);
 
 			if (!z->m_bfme04)
 				r->bfmeAdd1095(z, 2);

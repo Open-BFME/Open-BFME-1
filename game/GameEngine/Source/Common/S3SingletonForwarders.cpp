@@ -114,13 +114,13 @@ public:
 };
 
 extern Gen_00C6FF30Target TheBfmeObject_00C6FF30;		// 0x12f10f4
-class Gen_00C6FF60Target
+class AudioEventRTS
 {
 public:
-	void bfmeForward(void);					// retail 0x00026F35
+	~AudioEventRTS();
 };
 
-extern Gen_00C6FF60Target TheBfmeObject_00C6FF60;		// 0x12f1318
+extern AudioEventRTS BfmeTheEmptyAudioEvent;		// 0x12f1318
 class Gen_00C6FFA0Target
 {
 public:
@@ -938,7 +938,7 @@ void bfmeForward_00C6FF30(void)
 // ?bfmeForward_00C6FF60@@YAXXZ
 void bfmeForward_00C6FF60(void)
 {
-	TheBfmeObject_00C6FF60.bfmeForward();
+	BfmeTheEmptyAudioEvent.~AudioEventRTS();
 }
 // ?bfmeForward_00C6FFA0@@YAXXZ
 void bfmeForward_00C6FFA0(void)

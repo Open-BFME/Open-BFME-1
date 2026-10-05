@@ -8,7 +8,8 @@ public:
 	virtual void destroy(int flag);
 };
 
-extern HeapNode *g_Va012EF4D0;
+class Waypoint;
+extern Waypoint *g_waypointListHead;
 
 class Bridge
 {
@@ -108,8 +109,8 @@ private:
 void TerrainLogic::reset()
 {
 	SnapshotView *first;
-	while (g_Va012EF4D0)
-		g_Va012EF4D0->destroy(1);
+	while (g_waypointListHead)
+		reinterpret_cast<HeapNode *>(g_waypointListHead)->destroy(1);
 
 	first = (SnapshotView *)((char *)this - 4);
 	Bridge *bridge = first->getFirstBridge();

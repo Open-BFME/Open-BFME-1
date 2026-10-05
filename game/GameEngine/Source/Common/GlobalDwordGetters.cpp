@@ -49,7 +49,8 @@ extern int g_Va012D6DB4;
 extern int g_Va012D6DB8;
 extern int g_Va012D7198;
 extern int g_Va012ED614;
-extern int g_Va012EF4D0;
+class Waypoint;
+extern Waypoint *g_waypointListHead;
 extern int g_Va012F4964;
 class BfmeAptScreenMapTransfer;
 extern BfmeAptScreenMapTransfer *g_rva012F496CBfmeAptScreenMapTransfer;
@@ -116,7 +117,7 @@ int Rva00096A50Get( void )
 
 int Rva001A19D0Get( void )
 {
-	return g_Va012EF4D0;
+	return reinterpret_cast<int>(g_waypointListHead);
 }
 
 int Rva001A1A20Get( void )
@@ -126,7 +127,7 @@ int Rva001A1A20Get( void )
 
 int Rva001ADD20Get( void )
 {
-	return g_Va012EF4D0;
+	return reinterpret_cast<int>(g_waypointListHead);
 }
 
 int Rva003828F0Get( void )

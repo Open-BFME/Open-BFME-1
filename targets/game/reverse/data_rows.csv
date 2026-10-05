@@ -498,3 +498,10 @@ _g_Rva00CF7608,0x010F7608,va,4,.rdata,game/GameEngine/Source/GameClient/GUI/Rva0
 ?TheOptionGroupTarget@@3PAXA,0x012ED604,va,4,.data,game/GameEngine/Source/GameClient/OptionGroup.cpp,matched,targets/game/reverse/identity_evidence/012ed604-identity-seat15-TheOptionGroupTarget.md,gpt-6.1-sol
 ?TheAudio@@3PAVAudioManager@@A,0x012ED668,va,4,.data,game/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,targets/game/reverse/identity_evidence/012ed668-identity-seat15-TheAudio.md,gpt-6.1-sol
 ?ThePlayerList@@3PAVPlayerList@@A,0x012ED748,va,4,.data,game/GameEngine/Source/Common/RTS/PlayerList.cpp,matched,targets/game/reverse/identity_evidence/012ed748-identity-seat15-ThePlayerList.md,gpt-6.1-sol
+?Owner0040A260@@3PAXA,0x012F10D8,va,4,.data,game/GameEngine/Source/GameClient/BuffTransfer0040A260.cpp,matched,targets/game/reverse/identity_evidence/012f10d8-Owner0040A260.md,gpt-6
+?TheSpecialPowerStore@@3PAVSpecialPowerStore@@A,0x012ED80C,va,4,.data,game/GameEngine/Source/Common/RTS/SpecialPower.cpp,matched,targets/game/reverse/identity_evidence/012ed80c-special-power-store.md,gpt-6
+?TheUpgradeCenter@@3PAVUpgradeCenter@@A,0x012EF188,va,4,.data,game/GameEngine/Source/Common/System/Upgrade.cpp,matched,targets/game/reverse/identity_evidence/012ef188-upgrade-center.md,gpt-6
+?g_waypointListHead@@3PAVWaypoint@@A,0x012EF4D0,va,4,.data,game/GameEngine/Source/GameLogic/Map/WaypointConstructor.cpp,matched,targets/game/reverse/identity_evidence/012ef4d0-waypoint-list.md,gpt-6
+?TheTerrainLogic@@3PAVTerrainLogic@@A,0x012EF4CC,va,4,.data,game/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp,matched,targets/game/reverse/identity_evidence/012ef4cc-terrain-logic.md,gpt-6
+?TheDisplay@@3PAVDisplay@@A,0x012F1270,va,4,.data,game/GameEngine/Source/GameClient/Display.cpp,matched,targets/game/reverse/identity_evidence/012f1270-display.md,gpt-6
+?BfmeTheEmptyAudioEvent@@3VAudioEventRTS@@A,0x012F1318,va,112,.data,game/GameEngine/Source/Common/Audio/BfmeTheEmptyAudioEventGlobal.cpp,matched,targets/game/reverse/identity_evidence/012f1318-empty-audio-event.md,gpt-6

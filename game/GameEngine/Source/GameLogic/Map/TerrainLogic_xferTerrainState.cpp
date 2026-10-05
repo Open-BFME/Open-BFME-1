@@ -140,7 +140,8 @@ public:
 	char m_pad20[0xb0 - 0x20];
 };
 
-extern Rva001A2D50Node *g_rva012EF4D0;
+class Waypoint;
+extern Waypoint *g_waypointListHead;
 
 struct Gen_t_001a6d20_p4pod
 {
@@ -282,14 +283,14 @@ void TerrainLogic::xferTerrainState(Xfer *xfer)
 				xfer->xferBool(&more);
 			} while (more);
 		}
-		for (Rva001A2D50Node *node = g_rva012EF4D0; node; node = node->m_next)
+		for (Rva001A2D50Node *node = reinterpret_cast<Rva001A2D50Node *>(g_waypointListHead); node; node = node->m_next)
 			((Rva001A1E20CellState *)node)->reset();
 		m_map550.clear();
 	}
 	else
 	{
 		Bool more = true;
-		for (Rva001A2D50Node *node = g_rva012EF4D0; node; node = node->m_next)
+		for (Rva001A2D50Node *node = reinterpret_cast<Rva001A2D50Node *>(g_waypointListHead); node; node = node->m_next)
 		{
 			xfer->xferBool(&more);
 			node->Rva001A7020(xfer);

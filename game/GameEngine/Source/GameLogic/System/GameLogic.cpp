@@ -6709,7 +6709,7 @@ extern Rva0060D3D0* g012F706C;
 // the local layout view of that object (its +0x0C slot is retail's m_pathfinder)
 // and the two call sites reinterpret the real global rather than declaring a
 // second stand-in name at the same address.
-extern Rva0038DA10Terrain* g012EF4CC;
+extern TerrainLogic *TheTerrainLogic;
 extern Rva0038DA10System *g012F060C,*g012EF734,*g012ED5B8,*g012ED5C4,*g012ED5BC,*g012ED5C0,*g012F1044,*g012F079C,*g012F0888;
 extern WeaponStore *TheWeaponStore;
 extern LocomotorStore *TheLocomotorStore;
@@ -6769,7 +6769,7 @@ void Rva0038DA10GameLogic::update(int phase) {
     ((Rva0038DA10AI *)TheAI)->rva0C->rva003DC190();
     setFPMode();
     if (first) {
-        g012F076C->slot14(); g012F060C->slot14(); g012EF4CC->system.slot14();
+        g012F076C->slot14(); g012F060C->slot14(); reinterpret_cast<Rva0038DA10Terrain *>(TheTerrainLogic)->system.slot14();
         if (g012EF734) g012EF734->slot14();
     }
     if (mode!=4 && mode!=8 && g012ED62C && first) {

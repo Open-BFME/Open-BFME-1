@@ -21,6 +21,9 @@ class AudioEventRTS
 public:
 	AudioEventRTS(const AsciiString &eventName, ObjectID ownerID);
 	~AudioEventRTS();
+
+private:
+	unsigned int m_storage[0x70 / sizeof(unsigned int)];
 };
 
 AudioEventRTS BfmeTheEmptyAudioEvent(AsciiString::TheEmptyString, INVALID_ID);

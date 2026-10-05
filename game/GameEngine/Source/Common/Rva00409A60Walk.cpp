@@ -46,14 +46,14 @@ public:
 	char m_04[0x40];
 };
 
-extern int g_bfmeGlob9A;
+extern void *Owner0040A260;
 
 class BfmeObj9A
 {
 public:
 	void bfmeGo9A(BfmeSrc9A *src);
 	char m_00[4];
-	int m_04;
+	void *m_04;
 	BfmeElem9A m_arr[1];
 };
 
@@ -67,8 +67,8 @@ void BfmeObj9A::bfmeGo9A(BfmeSrc9A *src)
 		return;
 	int n = 6;
 	src->virt78(&n);
-	g_bfmeGlob9A = m_04;
+	Owner0040A260 = m_04;
 	for (int i = 0; i < n; i++)
 		m_arr[i].virt0C(src);
-	g_bfmeGlob9A = 0;
+	Owner0040A260 = 0;
 }

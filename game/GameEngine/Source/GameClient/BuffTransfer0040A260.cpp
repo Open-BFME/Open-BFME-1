@@ -25,7 +25,7 @@ class ThingFactory { public: const ThingTemplate *findTemplate(const AsciiString
 extern ThingFactory *TheThingFactory;
 struct EffectFactory0040A260 { Snapshot0040A260 *create001B0E90(const ThingTemplate*,void*); };
 extern EffectFactory0040A260 *Effects0040A260;
-extern void *Owner0040A260;
+void *Owner0040A260 = 0;
 struct RGBColor { float red,green,blue; };
 struct BuffTransfer0040A260 {
  int field00; bool field04; char bytes05[3]; int field08,field0c,field10,field14;

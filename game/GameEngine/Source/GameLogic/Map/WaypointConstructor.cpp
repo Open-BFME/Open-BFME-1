@@ -21,7 +21,7 @@ struct Coord3D
 enum { WAYPOINT_ID_AUTO = 0x7ffffffe };
 
 class Waypoint;
-extern Waypoint *g_waypointListHead;		// 0x012EF4D0
+Waypoint *g_waypointListHead = 0;		// 0x012EF4D0
 // 0x012ACC30 is the next auto-assigned waypoint id. Its address-derived
 // owner is defined here beside the constructor that assigns and advances it.
 class Rva001A1A30

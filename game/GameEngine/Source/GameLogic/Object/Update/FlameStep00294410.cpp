@@ -207,7 +207,8 @@ class Body00294410 { public: virtual void slot00();
     virtual void slot08();
     virtual void slot09();
     virtual void notify(); };
-extern Terrain00294410* g_terrain00294410;
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 class AudioManager;
 extern AudioManager *TheAudio;
 struct FlamePrimary00294410 { char pad00[0x34]; int at34; void stopSound() { if(at34) { ((Audio00294410*)TheAudio)->remove(at34); at34=0; } } };
@@ -249,7 +250,7 @@ int FlameStep00294410::update() {
      float step=data->at40;
      for(int x=(int)(pos->x-radius);x<=pos->x+radius;x+=step) {
       for(int y=(int)(pos->y-radius);y<=pos->y+radius;y+=step) {
-       if(g_terrain00294410->height((float)x,(float)y)>config()->at38) {
+       if(reinterpret_cast<Terrain00294410 *>(TheTerrainLogic)->height((float)x,(float)y)>config()->at38) {
         Coord3D candidate; candidate.set((float)x,(float)y,pos->z);
         float dx=pos->x-candidate.x,dy=pos->y-candidate.y;
         float bx=pos->x-best.x,by=pos->y-best.y;
@@ -259,7 +260,7 @@ int FlameStep00294410::update() {
      }
      static NameKeyType key=TheNameKeyGenerator->nameToKey("EntEnragedUpdate");
      Module* enraged=obj->findModule(key);
-     if(g_terrain00294410->water(best.x,best.y,0,0)) {
+     if(reinterpret_cast<Terrain00294410 *>(TheTerrainLogic)->water(best.x,best.y,0,0)) {
       if(data->at44 && obj->m_ai) {
        obj->getAI00294410()->set(4);
        obj->m_ai->at337=true;
@@ -276,7 +277,7 @@ int FlameStep00294410::update() {
   }
   return 1;
  }
- if(obj->m_ai && !obj->m_ai->bfmeBlocksFormationRefresh() && g_terrain00294410->water(obj->m_cachedPos.x,obj->m_cachedPos.y,0,0)) {
+ if(obj->m_ai && !obj->m_ai->bfmeBlocksFormationRefresh() && reinterpret_cast<Terrain00294410 *>(TheTerrainLogic)->water(obj->m_cachedPos.x,obj->m_cachedPos.y,0,0)) {
   unsigned end=TheGameLogic->frame+15;
   at18=minimum00294410(at18,end);
   at30=false;

@@ -117,7 +117,8 @@ class UpgradeCenter;
 
 extern ScriptEngine *TheScriptEngine;
 extern UpgradeCenter *TheUpgradeCenter;
-extern void *TheSpecialPowerStore;
+class SpecialPowerStore;
+extern SpecialPowerStore *TheSpecialPowerStore;
 
 extern void j_00044e18();
 extern void j_0001df16();
