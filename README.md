@@ -15,9 +15,10 @@ Goal: rebuild BFME 1's retail executable byte for byte from source, and use that
 
 ### What the bars measure
 
-* **Rebuilt from source**: code rebuilding to the original exe's exact bytes, partly generated code or prebuilt libraries.
-* **Game code in C++**: the game's own code (no libraries) in C++.
-* **Linking**: the part of that code in files that link cleanly (link census).
+* **Rebuilt from source**: exact-byte rebuilds, including generated code and libraries.
+* **Game code in C++**: own code, excluding libraries.
+* **Linking**: that C++ linking cleanly (census).
+* **Readable names**: non-placeholder declarations, not proven EA identities. Daily deltas compare displayed percentages; `· 0.00` means unchanged.
 
 <details open>
 <summary><b>Progress over time and code map</b></summary>

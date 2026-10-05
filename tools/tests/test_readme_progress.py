@@ -164,3 +164,41 @@ def test_nothing_claims_the_game_is_100_percent_done():
 def test_blocks_always_fill_exactly_ten(value):
     text = daily.blocks(value, 100, daily.BLOCK["matched"])
     assert text.count(daily.BLOCK["matched"]) + text.count(daily.REST_BLOCK) == 10
+
+
+@pytest.mark.parametrize("before, after, change", [
+    (71.014, 71.016, "▲ 0.01"),
+    (71.016, 71.014, "▼ 0.01"),
+    (71.011, 71.014, "· 0.00"),
+    (71.01, 71.01, "· 0.00"),
+])
+def test_names_always_compare_the_displayed_percentages(before, after, change):
+    current = {**sample(), "declared_names": 100_000, "readable_names": round(after * 1000)}
+    old = previous(declared_names=100_000, readable_names=round(before * 1000))
+    text = daily.announcement(current, old)["embeds"][0]["description"]
+    assert f"**Readable names: {after:.2f}%**  {change}" in text
+    assert f">{change}<" in daily.render(current, old)
+    if change.startswith("·"):
+        assert f'class="muted" dx="10" font-size="13" font-weight="600">{change}<' in daily.render(current, old)
+
+
+def test_names_compare_shares_not_counts():
+    current = {**sample(), "declared_names": 400, "readable_names": 280}
+    old = previous(declared_names=200, readable_names=142)
+    assert "**Readable names: 70.00%**  ▼ 1.00" in daily.announcement(current, old)["embeds"][0]["description"]
+
+
+def test_first_names_measurement_has_no_invented_delta():
+    current = {**sample(), "declared_names": 200, "readable_names": 142}
+    for old in (None, previous()):
+        assert "**Readable names: 71.00%**\n" in daily.announcement(current, old)["embeds"][0]["description"]
+
+
+@pytest.mark.parametrize("counts", [
+    {"declared_names": 10}, {"readable_names": 5},
+    {"declared_names": 10, "readable_names": 11},
+    {"declared_names": 10, "readable_names": -1},
+])
+def test_invalid_names_counts_fail(counts):
+    with pytest.raises(ValueError, match="Invalid readable-names count"):
+        daily.measures({**sample(), **counts})

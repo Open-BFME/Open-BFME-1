@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the README card and the daily Discord post: three measures, three bars.
+"""Render the README card and the daily Discord post: four measures, four bars.
 
 Each measure has its own stated denominator:
 
@@ -69,7 +69,7 @@ def measures(current):
             linked is not None and not 0 <= linked <= linked_game <= total):
         raise ValueError("Invalid progress split")
     readable, names = current.get("readable_names"), current.get("declared_names")
-    if names is not None and not 0 <= readable <= names:
+    if (readable is None) != (names is None) or (names is not None and not 0 <= readable <= names):
         raise ValueError("Invalid readable-names count")
     return {"matched": (matched, total), "cpp": (cpp, game), "linked": (linked, linked_game), "names": (readable, names)}
 
@@ -87,20 +87,24 @@ def detail(current, key, value, denominator, what):
 def delta_since(previous, key, value, denominator):
     """The change in the bar's percentage since the last post, in points,
     measured from the figures that post saved; None when that post has no
-    such figure or the change rounds to 0.00."""
+    such figure or a byte measure's change rounds to 0.00. Names always compare
+    the displayed percentages, including an explicit zero."""
     try:
         was, was_over = measures(previous)[key] if previous else (None, None)
     except KeyError:
         return None  # a state saved before these figures existed
     if was is None:
         return None
+    if key == "names":
+        # Compare the printed percentages so a visible 0.01 change cannot lose its arrow.
+        return round(round(progress.percent(value, denominator), 2) - round(progress.percent(was, was_over), 2), 2)
     delta = progress.percent(value, denominator) - progress.percent(was, was_over)
     return delta if round(abs(delta), 2) else None
 
 
 def arrow(delta):
     """UP 0.21 / DOWN 0.05: the change since the last post, in percentage points."""
-    return f"{UP if delta > 0 else DOWN} {abs(delta):.2f}"
+    return f"{UP if delta > 0 else DOWN if delta < 0 else DOT} {abs(delta):.2f}"
 
 
 def render(current, previous=None):
@@ -118,7 +122,7 @@ def render(current, previous=None):
             number, width, text = f"{percent:.2f}%", 824 * percent / 100, detail(current, key, value, denominator, what)
             delta = delta_since(previous, key, value, denominator)
             if delta is not None:
-                moved = (f'<tspan class="{"up" if delta > 0 else "down"}" dx="10" font-size="13" '
+                moved = (f'<tspan class="{"up" if delta > 0 else "down" if delta < 0 else "muted"}" dx="10" font-size="13" '
                          f'font-weight="600">{arrow(delta)}</tspan>')
         body.append(f'''    <text x="28" y="{y}" class="strong" font-size="15" font-weight="600">{label}{moved}</text>
     <text x="852" y="{y}" class="strong" font-size="20" font-weight="700" text-anchor="end">{number}</text>
@@ -154,7 +158,7 @@ def blocks(value, total, block, width=WIDTH):
 
 
 def announcement(current, previous):
-    """The daily post: the card's three measures, then a link to the README."""
+    """The daily post: the card's four measures, then a link to the README."""
     rows = measures(current)
     lines = []
     for key, label, what in ROWS:
