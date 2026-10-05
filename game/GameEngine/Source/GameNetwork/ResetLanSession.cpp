@@ -48,7 +48,8 @@ public:
 };
 
 extern LANAPI *TheLAN;
-extern void *g_lanConnection;
+class GameWindow;
+extern GameWindow *windowMap;
 extern char g_lanEndpointBuffer[];
 
 void publishLanEndpoint( LANGameInfo *game, char *buffer,
@@ -61,9 +62,9 @@ void resetLanSession( int mode )
 {
 	if( mode < 2 )
 	{
-		if( g_lanConnection )
+		if( windowMap )
 			publishLanEndpoint( TheLAN->getCurrentGame(),
-				g_lanEndpointBuffer, g_lanConnection, 0 );
+				g_lanEndpointBuffer, windowMap, 0 );
 
 		if( mode == 0 )
 		{

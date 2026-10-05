@@ -294,14 +294,14 @@ static NameKeyType windowMapID = NAMEKEY_INVALID;
 // Window Pointers ------------------------------------------------------------------------
 static GameWindow *parentLanGameOptions = NULL;
 static GameWindow *buttonBack = NULL;
-static GameWindow *buttonStart = NULL;
+GameWindow *buttonStart = NULL;
 static GameWindow *buttonSelectMap = NULL;
 static GameWindow *buttonEmote = NULL;
 static GameWindow *textEntryChat = NULL;
 static GameWindow *textEntryMapDisplay = NULL;
 static GameWindow *checkboxLimitSuperweapons = NULL;
 static GameWindow *comboBoxStartingCash = NULL;
-static GameWindow *windowMap = NULL;
+GameWindow *windowMap = NULL;
 
 GameWindow *comboBoxPlayer[MAX_SLOTS] = {NULL,NULL,NULL,NULL,
 																									 NULL,NULL,NULL,NULL };
@@ -545,7 +545,7 @@ static Int getFirstSelectablePlayer(const GameInfo *game)
 void updateMapStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[], Bool onLoadScreen = FALSE );
 void positionStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[], GameWindow *mapWindow);
 void positionStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[], GameWindow *mapWindow, Bool onLoadScreen );
-extern void *g_bfmeA1023;
+
 extern char g_bfmeBuf1023[];
 extern void lanUpdateSlotList004CAF70( void );
 struct BfmeObj935C;
@@ -1411,9 +1411,9 @@ void LanGameOptionsMenuInit( WindowLayout *layout, void *userData )
 		((BfmeInitVirtualLanApi *)TheLAN)->RequestGameAnnounce();
 	}
 	lanUpdateSlotList004CAF70();
-	if (g_bfmeA1023 != 0)
+	if (windowMap != 0)
 		positionStartSpots(((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame(),
-			(GameWindow **)g_bfmeBuf1023, (GameWindow *)g_bfmeA1023, FALSE);
+			(GameWindow **)g_bfmeBuf1023, (GameWindow *)windowMap, FALSE);
 	TheTransitionHandler->setGroup("LanGameOptionsFade");
 
 	// animate controls

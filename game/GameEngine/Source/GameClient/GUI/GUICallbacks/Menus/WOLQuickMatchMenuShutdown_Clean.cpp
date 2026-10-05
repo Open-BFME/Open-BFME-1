@@ -71,10 +71,9 @@ class GameSpyInfoInterface;
 extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameEngine *TheGameEngine;
 extern QuickMatchScreen *TheQuickMatchScreen;
-extern GameWindow * volatile parentWOLQuickMatch;
-extern GameWindow * volatile buttonBack;
-extern const void *selectedImage;
-extern const void *unselectedImage;
+class Image;
+extern const Image *selectedImage;
+extern const Image *unselectedImage;
 extern volatile Bool isShuttingDown;
 extern Shell *TheShell;
 extern GameWindowTransitionsHandler *TheTransitionHandler;
@@ -98,15 +97,15 @@ void WindowLayout::WOLQuickMatchMenuShutdown(void *userData)
 	TheQuickMatchScreen = 0;
 	if (*(Bool *)userData)
 	{
-		parentWOLQuickMatch = 0;
-		buttonBack = 0;
+		reinterpret_cast<const Image *volatile &>(unselectedImage) = 0;
+		reinterpret_cast<const Image *volatile &>(selectedImage) = 0;
 		isShuttingDown = true;
 		((ImmediateShutdownFunction)j_00048e73)(this);
 		return;
 	}
 
-	parentWOLQuickMatch = 0;
-	buttonBack = 0;
+	reinterpret_cast<const Image *volatile &>(unselectedImage) = 0;
+	reinterpret_cast<const Image *volatile &>(selectedImage) = 0;
 	isShuttingDown = true;
 
 	TheShell->reverseAnimatewindow();

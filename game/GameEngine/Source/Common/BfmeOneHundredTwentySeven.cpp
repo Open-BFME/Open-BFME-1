@@ -5,7 +5,8 @@ extern int g_bfmeState01VJ;
 extern int g_bfmeState02VJ;
 extern int g_bfmeState03VJ;
 extern int g_bfmeState04VJ;
-extern int g_bfmeState05VJ;
+class GameWindow;
+extern GameWindow *listboxGameSetupChat;
 extern int g_bfmeState06VJ;
 extern int g_bfmeState07VJ;
 extern int g_bfmeState08VJ;
@@ -81,7 +82,7 @@ void bfmeClearStateVJ(void)
 	g_bfmeState02VJ = 0;
 	g_bfmeState03VJ = 0;
 	g_bfmeState04VJ = 0;
-	g_bfmeState05VJ = 0;
+	listboxGameSetupChat = 0;
 	g_bfmeState06VJ = 0;
 	g_bfmeState07VJ = 0;
 	g_bfmeState08VJ = 0;

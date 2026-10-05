@@ -51,7 +51,8 @@ extern int g_Va012D7198;
 extern int g_Va012ED614;
 class Waypoint;
 extern Waypoint *g_waypointListHead;
-extern int g_Va012F4964;
+class DisconnectMenu;
+extern DisconnectMenu *TheDisconnectMenu;
 class BfmeAptScreenMapTransfer;
 extern BfmeAptScreenMapTransfer *g_rva012F496CBfmeAptScreenMapTransfer;
 class Rva005127A0InGameChat;
@@ -177,7 +178,7 @@ int Rva0049CA60Get( void )
 
 int Rva004C1090Get( void )
 {
-	return g_Va012F4964;
+	return (int)TheDisconnectMenu;
 }
 
 int Rva004E9B20Get( void )

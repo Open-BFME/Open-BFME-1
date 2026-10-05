@@ -233,8 +233,8 @@ enum { GSCOLOR_DEFAULT = 0 };
 enum { MAX_DISCONNECTS_COUNT = 5 };
 static Int MAX_DISCONNECTS[MAX_DISCONNECTS_COUNT] = {0, 5, 10, 25, 50};
 static bool isInQuickMatchInit = false;
-static const Image *quickMatchSelectedImage = 0;
-static const Image *quickMatchUnselectedImage = 0;
+const Image *selectedImage = 0;
+const Image *unselectedImage = 0;
 Int quickMatchMaxPingEntries = 0;
 static Int quickMatchMaxPoints = 100;
 extern Int quickMatchMinPoints;
@@ -316,9 +316,9 @@ void BfmeAptScreenQuickMatchMenu::rva005091F0InitGadgets() {
   GadgetListBoxReset(m_quickMatchList);
   TheWindowManager->winSetFocus((GameWindow *)this);
 
-  quickMatchSelectedImage = TheMappedImageCollection->findImageByName(
+  selectedImage = TheMappedImageCollection->findImageByName(
       AsciiString("CustomMatch_selected"));
-  quickMatchUnselectedImage = TheMappedImageCollection->findImageByName(
+  unselectedImage = TheMappedImageCollection->findImageByName(
       AsciiString("CustomMatch_deselected"));
 
   QuickMatchPreferences pref;

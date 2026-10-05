@@ -144,14 +144,15 @@ public:
 };
 
 extern LANAPI *TheLAN;
-extern void *g_bfmeA1023;
+class GameWindow;
+extern GameWindow *windowMap;
 extern char g_bfmeBuf1023[];
 void bfmeEmit1023(void *a, char *b, void *c, int d);
 
 void bfmeGo1023F(void)
 {
-	if (g_bfmeA1023 != 0)
-		bfmeEmit1023(TheLAN->bfmeName1023(), g_bfmeBuf1023, g_bfmeA1023, 0);
+	if (windowMap != 0)
+		bfmeEmit1023(TheLAN->bfmeName1023(), g_bfmeBuf1023, windowMap, 0);
 }
 
 class BfmeH1023;

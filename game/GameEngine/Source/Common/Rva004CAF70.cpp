@@ -21,10 +21,11 @@ class LANAPI;
 extern char g_rva004CAF70_gate;
 class BfmeAptScreenLanLobby;
 extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
-extern void *g_rva004CAF70_value;
+
 extern LANAPI *TheLAN;
 class GameWindow;
 extern GameWindow *comboBoxPlayer[8];
+extern GameWindow *buttonStart;
 extern char g_rva004CAF70_b[];
 extern char g_rva004CAF70_c[];
 extern char g_rva004CAF70_d[];
@@ -51,7 +52,7 @@ void lanUpdateSlotList004CAF70(void)
 	}
 
 	__asm {
-		mov eax, dword ptr [g_rva004CAF70_value]
+		mov eax, dword ptr [buttonStart]
 		mov ecx, dword ptr [TheLAN]
 		mov edx, dword ptr [ecx]
 		push offset g_rva004CAF70_f

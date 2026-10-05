@@ -297,7 +297,7 @@ private:
 };
 
 extern WindowManager *g_rva012F19E8WindowManager;
-extern DisconnectMenu *TheDisconnectMenu;
+DisconnectMenu *TheDisconnectMenu = 0;
 void _bfme_closeAptScreen( const AsciiString &name );
 
 class Shell
@@ -1119,7 +1119,7 @@ void * __stdcall createAptScreenScoreScreen( void *context )
 
 extern const void *BfmeAptScreenCampaignReviewVftable[];
 extern const void *BfmeAptScreenCampaignReviewSecondaryVftable[];
-extern void *g_obj12F495C;
+void *g_obj12F495C = 0;
 
 // These are the three template specializations used by CampaignReview's
 // callbacks.  Their constructors are incremental-link thunks in retail; the

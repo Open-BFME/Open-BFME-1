@@ -149,7 +149,7 @@ static inline Gen000290D2 *R2Ptr012F19E8()
 		}                                                                 \
 	}
 
-R2_GUARDED_GLOBAL_FORWARD( Rva0050D910, R2Glob012F495C )
+R2_GUARDED_GLOBAL_FORWARD( Rva0050D910, g_obj12F495C )
 class BfmeAptScreenLanLobby;
 extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
 void Rva00516690()

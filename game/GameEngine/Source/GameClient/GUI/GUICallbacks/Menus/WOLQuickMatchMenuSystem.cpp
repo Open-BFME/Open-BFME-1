@@ -55,7 +55,7 @@ static Bool rva012F4801ButtonPushed;
 static bool rva012F4814, rva012F4809;
 static Int rva012F47F8BuddiesId;
 class Image;
-extern const Image *rva012F480CSelectedImage, *rva012F4810UnselectedImage;
+extern const Image *selectedImage, *unselectedImage;
 
 class Gen_00505530 {
 public:
@@ -343,8 +343,8 @@ WindowMsgHandledType BfmeAptScreenQuickMatchMenu::system(UnsignedInt msg,
         GadgetListBoxSetItemData(control, (void *)(!wasSelected), selected, 0);
         Int width = 10;
         Int height = 10;
-        const Image *img = (!wasSelected) ? rva012F480CSelectedImage
-                                          : rva012F4810UnselectedImage;
+        const Image *img = (!wasSelected) ? selectedImage
+                                          : unselectedImage;
         if (img) {
           int imageWidth = img->getImageWidth();
           width =

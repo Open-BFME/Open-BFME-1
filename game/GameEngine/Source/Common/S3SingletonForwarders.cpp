@@ -1,3 +1,12 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+#include "../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+#include <string>
+#include <list>
+class PeerResponse;
+extern template std::basic_string<char, std::char_traits<char>, std::allocator<char> >::~basic_string();
+#pragma inline_depth(1)
+
 // One hundred and nineteen singleton forwarders.
 //
 // Each is two instructions: load the ADDRESS of a global object into ecx and
@@ -278,13 +287,7 @@ public:
 
 class UnicodeString;
 extern UnicodeString ctrl;		// 0x12f3afc
-class Gen_00C70150Target
-{
-public:
-	void bfmeForward(void);					// retail 0x0003B304
-};
-
-extern Gen_00C70150Target TheBfmeObject_00C70150;		// 0x12f3b00
+extern UnicodeString shift;
 class Gen_00C70160Target
 {
 public:
@@ -292,34 +295,16 @@ public:
 };
 
 extern Gen_00C70160Target TheBfmeObject_00C70160;		// 0x12f3dc4
-class Gen_00C70170Target
-{
-public:
-	void bfmeForward(void);					// retail 0x0001642D
-};
-
-extern Gen_00C70170Target TheBfmeObject_00C70170;		// 0x12f4024
-class Gen_00C70180Target
-{
-public:
-	void bfmeForward(void);					// retail 0x0001642D
-};
-
-extern Gen_00C70180Target TheBfmeObject_00C70180;		// 0x12f406c
-class Gen_00C70190Target
-{
-public:
-	void bfmeForward(void);					// retail 0x0001642D
-};
-
-extern Gen_00C70190Target TheBfmeObject_00C70190;		// 0x12f418c
+extern std::string lookAtPlayerName;
+namespace PopupReplayState { extern std::string replayPath; }
+extern std::string LastReplayFileName;
 class Gen_00C701A0Target
 {
 public:
-	void bfmeForward(void);					// retail 0x0003C4CA
+	void bfmeForward(void);		// retail 0x0003C4CA
 };
 
-extern Gen_00C701A0Target TheBfmeObject_00C701A0;		// 0x12f463c
+extern std::list<PeerResponse> TheLobbyQueuedUTMs;
 class Gen_00C701B0Target
 {
 public:
@@ -334,12 +319,6 @@ public:
 };
 
 extern AsciiString g_guiFxFile;		// 0x12f4978
-class UnicodeString
-{
-public:
-	~UnicodeString();
-};
-
 extern UnicodeString g_unicode12F498C;		// 0x12f498c
 extern AsciiString g_aptLivingWorldCachedName;		// 0x12f49a0
 class Gen_00C701F0Target
@@ -1054,7 +1033,7 @@ void bfmeForward_00C70140(void)
 // ?bfmeForward_00C70150@@YAXXZ
 void bfmeForward_00C70150(void)
 {
-	TheBfmeObject_00C70150.bfmeForward();
+	shift.~UnicodeString();
 }
 // ?bfmeForward_00C70160@@YAXXZ
 void bfmeForward_00C70160(void)
@@ -1064,22 +1043,22 @@ void bfmeForward_00C70160(void)
 // ?bfmeForward_00C70170@@YAXXZ
 void bfmeForward_00C70170(void)
 {
-	TheBfmeObject_00C70170.bfmeForward();
+	lookAtPlayerName.~basic_string();
 }
 // ?bfmeForward_00C70180@@YAXXZ
 void bfmeForward_00C70180(void)
 {
-	TheBfmeObject_00C70180.bfmeForward();
+	PopupReplayState::replayPath.~basic_string();
 }
 // ?bfmeForward_00C70190@@YAXXZ
 void bfmeForward_00C70190(void)
 {
-	TheBfmeObject_00C70190.bfmeForward();
+	LastReplayFileName.~basic_string();
 }
 // ?bfmeForward_00C701A0@@YAXXZ
 void bfmeForward_00C701A0(void)
 {
-	TheBfmeObject_00C701A0.bfmeForward();
+	((Gen_00C701A0Target *)&TheLobbyQueuedUTMs)->bfmeForward();
 }
 // ?bfmeForward_00C701B0@@YAXXZ
 void bfmeForward_00C701B0(void)

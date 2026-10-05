@@ -17679,3 +17679,4 @@ _g_012F7014,0x012F7014
 ?g_rva012F4998LanLobby@@3PAVBfmeAptScreenLanLobby@@A,0x012F4998
 ?g_rva012F49B4MainMenu@@3PAVBfmeAptScreenMainMenu@@A,0x012F49B4
 ?g_aptLivingWorldCachedName@@3VAsciiString@@A,0x012F49A0
+?windowMap@@3PAVGameWindow@@A,0x012F3C1C

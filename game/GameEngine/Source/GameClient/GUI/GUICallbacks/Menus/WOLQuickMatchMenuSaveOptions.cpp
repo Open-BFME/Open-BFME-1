@@ -70,7 +70,7 @@ static Bool rva012F4801ButtonPushed;
 static bool rva012F4814, rva012F4809;
 static Int rva012F47F8BuddiesId;
 class Image;
-extern const Image *rva012F480CSelectedImage, *rva012F4810UnselectedImage;
+extern const Image *selectedImage, *unselectedImage;
 
 #include "GameNetwork/GameSpy/GSConfig.h"
 
