@@ -85,7 +85,6 @@ class WindowManager;
 // retail 0x012F19E8; the single definition is
 // game/GameEngine/Source/GameClient/GUI/WindowManager.cpp
 extern WindowManager *g_rva012F19E8WindowManager;
-extern char g_bfmeFmt1013[];
 
 char bfmeAsk1013(void);
 
@@ -106,7 +105,7 @@ void BfmeC1013::bfmeGo1013C()
 		return;
 
 	if (bfmeAsk1013()) {
-		((BfmeLog1013 *)g_rva012F19E8WindowManager)->bfmeLog1013(m_bfmeId, g_bfmeFmt1013, 0, 0, 0, 0, 0, 0);
+		((BfmeLog1013 *)g_rva012F19E8WindowManager)->bfmeLog1013(m_bfmeId, "JoinGame", 0, 0, 0, 0, 0, 0);
 		m_bfmeState = 9;
 	} else {
 		m_bfmeState = 1;

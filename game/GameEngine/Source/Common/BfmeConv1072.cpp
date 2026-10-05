@@ -13,9 +13,6 @@ class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 
 extern char g_bfmeFmtA1072[];
-extern char g_bfmeFmtB1072[];
-extern char g_bfmeFmtD1072[];
-extern char g_bfmeLitA1072[];
 extern unsigned char g_optByte12F4AD1;
 
 extern "C" __declspec(dllimport) int __cdecl sprintf(char *b, char *f, int a);
@@ -44,14 +41,14 @@ void BfmeQ1072::bfmeGo1072A(int a, int b)
 
 	sprintf(buf1, g_bfmeFmtA1072, m_bfme80[a]);
 	sprintf(buf2, g_bfmeFmtA1072, b);
-	((BfmeR1072 *)g_rva012F19E8WindowManager)->bfmeRun1072(m_bfme5c, g_bfmeFmtB1072, 2, buf1, buf2, 0, 0, 0);
+	((BfmeR1072 *)g_rva012F19E8WindowManager)->bfmeRun1072(m_bfme5c, "SetBarTo", 2, buf1, buf2, 0, 0, 0);
 }
 
 int BfmeQ1072::bfmeGo1072B(void)
 {
 	if (m_bfme258 == 1) {
 		if (g_optByte12F4AD1) {
-			((BfmeR1072 *)g_rva012F19E8WindowManager)->bfmeRun1072(m_bfme250, "assignOpen", 1, g_bfmeLitA1072, 0, 0, 0, 0);
+			((BfmeR1072 *)g_rva012F19E8WindowManager)->bfmeRun1072(m_bfme250, "assignOpen", 1, "online", 0, 0, 0, 0);
 			m_bfme258 = 3;
 		} else {
 			((BfmeR1072 *)g_rva012F19E8WindowManager)->bfmeRun1072(m_bfme250, "assignOpen", 1, "normal", 0, 0, 0, 0);
@@ -64,7 +61,7 @@ int BfmeQ1072::bfmeGo1072B(void)
 void BfmeQ1072::bfmeGo1072C(char a)
 {
 	if ((a & 1) && !(m_bfme3d4 & 1)) {
-		((BfmeR1072 *)g_rva012F19E8WindowManager)->bfmeRun1072(m_bfme250, g_bfmeFmtD1072, 0, 0, 0, 0, 0, 0);
+		((BfmeR1072 *)g_rva012F19E8WindowManager)->bfmeRun1072(m_bfme250, "EnableCreateGame", 0, 0, 0, 0, 0, 0);
 		m_bfme3d4 |= 1;
 	}
 	if ((a & 2) && !(m_bfme3d4 & 2)) {

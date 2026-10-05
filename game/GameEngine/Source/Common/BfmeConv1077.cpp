@@ -46,8 +46,6 @@ extern "C" __declspec(dllimport) int __cdecl _snprintf(char *b, unsigned int n, 
 BfmeX1077 *__cdecl bfmeMk1077(BfmeX1077 *a, BfmeX1077 *b);
 
 extern BfmeX1077 *g_bfmeV1077;
-extern char g_bfmeFmtM1077[];
-extern char g_bfmeFmtN1077[];
 
 void bfmeGo1077A(int a, float b, float c)
 {
@@ -73,7 +71,7 @@ void bfmeGo1077B(int a, float b, float c)
 	p = ((BfmeR1077 *)g_rva012F19E8WindowManager)->bfmeSlot1077R_11();
 	_snprintf(buf2, 0x10, "%g", b * p->m_bfme00);
 	_snprintf(buf3, 0x10, "%g", c * p->m_bfme04);
-	((BfmeR1077 *)g_rva012F19E8WindowManager)->bfmeRun1077(bfmeMk1077(g_bfmeV1077, g_bfmeV1077), g_bfmeFmtM1077, 3,
+	((BfmeR1077 *)g_rva012F19E8WindowManager)->bfmeRun1077(bfmeMk1077(g_bfmeV1077, g_bfmeV1077), "MoveRegionPopup", 3,
 		buf1, buf2, buf3, 0, 0);
 }
 
@@ -88,6 +86,6 @@ void bfmeGo1077C(int a, float b, float c)
 	p = ((BfmeR1077 *)g_rva012F19E8WindowManager)->bfmeSlot1077R_11();
 	_snprintf(buf2, 0x10, "%g", b * p->m_bfme00);
 	_snprintf(buf3, 0x10, "%g", c * p->m_bfme04);
-	((BfmeR1077 *)g_rva012F19E8WindowManager)->bfmeRun1077(bfmeMk1077(g_bfmeV1077, g_bfmeV1077), g_bfmeFmtN1077, 3,
+	((BfmeR1077 *)g_rva012F19E8WindowManager)->bfmeRun1077(bfmeMk1077(g_bfmeV1077, g_bfmeV1077), "MoveRegionConqueredNotice", 3,
 		buf1, buf2, buf3, 0, 0);
 }

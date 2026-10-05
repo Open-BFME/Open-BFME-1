@@ -81,11 +81,10 @@ extern WindowManager *g_rva012F19E8WindowManager;
 extern BfmeDrop995 *g_bfmeDrop995;
 extern int g_bfmeVal995B;
 extern void *g_bfmeHeld995B;
-extern char g_bfmeFmt995B[];
 
 void bfmeGo995B(void)
 {
-	((BfmeLog995 *)g_rva012F19E8WindowManager)->bfmeLog995(g_bfmeVal995B, g_bfmeFmt995B, 0, 0, 0, 0, 0, 0);
+	((BfmeLog995 *)g_rva012F19E8WindowManager)->bfmeLog995(g_bfmeVal995B, "HideToolTip", 0, 0, 0, 0, 0, 0);
 
 	if (g_bfmeHeld995B) {
 		g_bfmeDrop995->bfmeRelease995(g_bfmeHeld995B);

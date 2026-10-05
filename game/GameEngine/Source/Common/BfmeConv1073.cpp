@@ -21,8 +21,6 @@ static inline BfmeX1073 *bfmeX1073()
 {
 	return (BfmeX1073 *)g_aptPalantirWindow;
 }
-extern char g_bfmeFmtA1073[];
-extern char g_bfmeFmtB1073[];
 extern char g_bfmeLit1073[];
 
 class BfmeQ1073
@@ -38,11 +36,11 @@ public:
 void BfmeQ1073::bfmeGo1073A(char a)
 {
 	if ((a & 1) && (m_bfme3d4 & 1)) {
-		((BfmeR1073 *)g_rva012F19E8WindowManager)->bfmeRun1073(m_bfme250, g_bfmeFmtA1073, 0, 0, 0, 0, 0, 0);
+		((BfmeR1073 *)g_rva012F19E8WindowManager)->bfmeRun1073(m_bfme250, "DisableCreateGame", 0, 0, 0, 0, 0, 0);
 		m_bfme3d4 &= ~1;
 	}
 	if ((a & 2) && (m_bfme3d4 & 2)) {
-		((BfmeR1073 *)g_rva012F19E8WindowManager)->bfmeRun1073(m_bfme250, g_bfmeFmtB1073, 0, 0, 0, 0, 0, 0);
+		((BfmeR1073 *)g_rva012F19E8WindowManager)->bfmeRun1073(m_bfme250, "DisableJoinGame", 0, 0, 0, 0, 0, 0);
 		m_bfme3d4 &= ~2;
 	}
 }

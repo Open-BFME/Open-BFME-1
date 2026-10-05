@@ -16,7 +16,6 @@ public:
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 
-extern char g_bfmeFmtB1066[];
 extern const char g_rva01080FC0[2];
 
 struct BfmeM1066
@@ -67,7 +66,7 @@ void BfmeH1066::bfmeGo1066B(int a)
 	char *s = ((BfmeM1066 *)TheWritableGlobalData)->m_bfmea9f
 		? const_cast<char *>(g_rva01080FC0) : "0";
 
-	((BfmeR1066 *)g_rva012F19E8WindowManager)->bfmeRun1066(m_bfme250, g_bfmeFmtB1066, 1, s, 0, 0, 0, 0);
+	((BfmeR1066 *)g_rva012F19E8WindowManager)->bfmeRun1066(m_bfme250, "ShowDebugButtons", 1, s, 0, 0, 0, 0);
 	m_bfme258 = 1;
 	if (m_bfme259) {
 		m_bfme25a = 1;

@@ -30,7 +30,6 @@ public:
 // This TU keeps its local view type BfmeMgr19E and casts at the use.
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
-extern char g_bfmeEscAI[];
 
 // The Apt sink pointer this owner hands to the manager; same +0x250 slot the
 // matched BfmeStateXC and Rva00511260Owner views use.
@@ -63,7 +62,7 @@ int BfmeA1021::bfmeKey0052CDA0(int unused, int code, unsigned char kind, unsigne
 			if ((flags & 1) != 0 && m_bfmeState != 4)
 			{
 				((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAI(m_bfmeOwner->m_bfmeSink, "CallChild", 1,
-					g_bfmeEscAI, 0, 0, 0, 0);
+					"EscapeKeyPressed", 0, 0, 0, 0);
 
 				bfmeGo1021A(0);
 

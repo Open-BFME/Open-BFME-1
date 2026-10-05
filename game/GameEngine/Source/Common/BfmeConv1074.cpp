@@ -34,10 +34,7 @@ extern WindowManager *g_rva012F19E8WindowManager;
 
 extern BfmeX1074 *g_bfmeY1074;
 extern BfmeX1074 *g_bfmeV1074;
-extern char g_bfmeFmtH1074[];
 extern char g_bfmeFmtD1074[];
-extern char g_bfmeFmtJ1074[];
-extern char g_bfmeFmtK1074[];
 
 BfmeX1074 *__cdecl bfmeMk1074(BfmeX1074 *a, BfmeX1074 *b);
 
@@ -49,7 +46,7 @@ void bfmeGo1074A(float a, float b)
 
 	_snprintf(buf1, 0x10, "%g", a * p->m_bfme00);
 	_snprintf(buf2, 0x10, "%g", b * p->m_bfme04);
-	((BfmeR1074 *)g_rva012F19E8WindowManager)->bfmeRun1074(g_bfmeY1074, g_bfmeFmtH1074, 2, buf1, buf2, 0, 0, 0);
+	((BfmeR1074 *)g_rva012F19E8WindowManager)->bfmeRun1074(g_bfmeY1074, "MoveToolTip", 2, buf1, buf2, 0, 0, 0);
 }
 
 void bfmeGo1074B(int a, int b, int c)
@@ -59,8 +56,8 @@ void bfmeGo1074B(int a, int b, int c)
 	char buf3[0x10];
 
 	_snprintf(buf1, 0x10, g_bfmeFmtD1074, a);
-	_snprintf(buf2, 0x10, g_bfmeFmtJ1074, b);
-	_snprintf(buf3, 0x10, g_bfmeFmtJ1074, c);
-	((BfmeR1074 *)g_rva012F19E8WindowManager)->bfmeRun1074(bfmeMk1074(g_bfmeV1074, g_bfmeV1074), g_bfmeFmtK1074, 3,
+	_snprintf(buf2, 0x10, "%u", b);
+	_snprintf(buf3, 0x10, "%u", c);
+	((BfmeR1074 *)g_rva012F19E8WindowManager)->bfmeRun1074(bfmeMk1074(g_bfmeV1074, g_bfmeV1074), "CreateRegionPopup", 3,
 		buf1, buf2, buf3, 0, 0);
 }

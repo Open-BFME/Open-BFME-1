@@ -25,10 +25,7 @@ extern BfmeX1067 *g_bfmeV1067;
 // different global (0x012F49A8) and keeps its own name.
 extern int g_aptPalantirWindow;
 extern char g_bfmeFmtD1067[];
-extern char g_bfmeFmtB1067[];
 extern char g_bfmeLit1067[];
-extern char g_bfmeLitA1067[];
-extern char g_bfmeLitB1067[];
 
 extern "C" __declspec(dllimport) int __cdecl _snprintf(char *b, unsigned int n, char *f, int a);
 BfmeX1067 *__cdecl bfmeMk1067(BfmeX1067 *a, BfmeX1067 *b);
@@ -56,6 +53,6 @@ void bfmeGo1067B(int a, char b)
 	char *s;
 
 	_snprintf(buf, 0x10, g_bfmeFmtD1067, a);
-	s = b ? g_bfmeLitA1067 : g_bfmeLitB1067;
-	((BfmeR1067 *)g_rva012F19E8WindowManager)->bfmeRun1067(bfmeMk1067(g_bfmeV1067, g_bfmeV1067), g_bfmeFmtB1067, 2, buf, s, 0, 0, 0);
+	s = b ? "RegionConqueredNoticeEvil" : "RegionConqueredNoticeGood";
+	((BfmeR1067 *)g_rva012F19E8WindowManager)->bfmeRun1067(bfmeMk1067(g_bfmeV1067, g_bfmeV1067), "CreateRegionConqueredNotice", 2, buf, s, 0, 0, 0);
 }

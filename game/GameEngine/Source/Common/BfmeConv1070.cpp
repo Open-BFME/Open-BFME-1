@@ -21,7 +21,6 @@ extern WindowManager *g_rva012F19E8WindowManager;
 // cast at the use and the pushed bytes stay identical.
 extern int g_aptPalantirWindow;
 
-extern char g_bfmeFmtA1070[];
 extern char g_bfmeFmtD1070[];
 
 class BfmeSub1070
@@ -81,7 +80,7 @@ void BfmeQ1070::bfmeGo1070A(void)
 	if (g_bfmeG1070)
 		g_bfmeG1070->bfmeSlot1070G_13();
 	g_bfmeT1070->bfmeTail1070();
-	((BfmeR1070 *)g_rva012F19E8WindowManager)->bfmeRun1070(m_bfme250, g_bfmeFmtA1070, 0, 0, 0, 0, 0, 0);
+	((BfmeR1070 *)g_rva012F19E8WindowManager)->bfmeRun1070(m_bfme250, "CancelGame", 0, 0, 0, 0, 0, 0);
 }
 
 extern "C" __declspec(dllimport) int __cdecl sprintf(char *b, char *f, int a);

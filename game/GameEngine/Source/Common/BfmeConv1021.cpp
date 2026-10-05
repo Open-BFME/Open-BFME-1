@@ -81,7 +81,6 @@ public:
 // this TU's view of the same object, so the uses cast.
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
-extern char g_bfmeFmt1021B[];
 
 class BfmeB1021
 {
@@ -94,7 +93,7 @@ public:
 
 void BfmeB1021::bfmeGo1021B(void)
 {
-	((BfmeLog1021 *)g_rva012F19E8WindowManager)->bfmeLog1021(m_bfmeId, g_bfmeFmt1021B, 0, 0, 0, 0, 0, 0);
+	((BfmeLog1021 *)g_rva012F19E8WindowManager)->bfmeLog1021(m_bfmeId, "ChatMessageClose", 0, 0, 0, 0, 0, 0);
 }
 
 class BfmeE1021

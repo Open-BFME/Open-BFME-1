@@ -10,7 +10,6 @@ public:
 // This TU keeps its local view type BfmeMgr19E and casts at the use.
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
-extern char g_bfmeEscAI[];
 
 class BfmeHostAI
 {
@@ -55,7 +54,7 @@ int BfmeOwnAI::bfmeHandleAI(void *unused, int code, unsigned char kind, int flag
 	if (state == 1)
 	{
 		((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAI(m_bfmeHostAI->m_bfmeSinkAI, "CallChild", state,
-			g_bfmeEscAI, 0, 0, 0, 0);
+			"EscapeKeyPressed", 0, 0, 0, 0);
 		bfmeCloseAI(0);
 
 		return 1;

@@ -74,7 +74,6 @@ public:
 // ?bfmeRun1070@BfmeR1070@@QAEXPAVBfmeX1070@@PADH11111@Z.
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
-extern char g_bfmeFmtA1070[];
 
 class BfmeE976
 {
@@ -110,7 +109,7 @@ void Rva00517450LanLobby::rva00517450()
 	((void (__fastcall *)( GameEngine * ))j_00010f8c)( TheGameEngine );
 	self->m_state = 0;
 	BfmeX1070 *owner = self->m_actionOwner;
-	((BfmeR1070 *)g_rva012F19E8WindowManager)->bfmeRun1070( owner, g_bfmeFmtA1070, 0, 0, 0, 0, 0, 0 );
+	((BfmeR1070 *)g_rva012F19E8WindowManager)->bfmeRun1070( owner, "CancelGame", 0, 0, 0, 0, 0, 0 );
 	MessageBoxOk( TheGameText->fetch( "GUI:HostLeftTitle" ),
 		TheGameText->fetch( "GUI:HostLeft" ), 0 );
 }
