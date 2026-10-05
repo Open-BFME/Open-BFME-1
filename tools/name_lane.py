@@ -391,17 +391,23 @@ def cmd_next(args):
     # another vendor named it: this vote is the one that can land names
     files.sort(key=lambda f: not {vendor(m) for m in voted[f]} - {vendor(model)})
     served = 0
+    metadata = []
     for rel in files:
         text = read(rel)
         if len(text) > 15000:
             continue
         items = [i for i in owned(rel, text, rows, types) if open_key(state, key_of(rel, *i))]
         if len(items) >= (1 if voted[rel] else 3):
-            brief(rel, text, items, model, rows)
+            if args.list_only:
+                metadata.append({"file": rel, "chars": len(text), "kinds": dict(collections.Counter(i[0] for i in items))})
+            else:
+                brief(rel, text, items, model, rows)
             served += 1
             if served == args.count:
                 break
-    if not served:
+    if args.list_only:
+        print(json.dumps(metadata))
+    elif not served:
         print(f"No file is left for {model} to name.")
     return 0
 
@@ -835,6 +841,7 @@ def main():
     n.add_argument("--model", required=True, help="the model you are: opus, sonnet, gpt-5.6-sol, grok...")
     n.add_argument("--file", help="name this file instead of the next one in the queue")
     n.add_argument("--count", type=int, default=1, help="serve this many files in one go")
+    n.add_argument("--list-only", action="store_true", help="print queue file/size/kind metadata as JSON without creating sessions or exposing votes")
     s = sub.add_parser("submit")
     s.add_argument("answer")
     s.add_argument("--session", required=True)
