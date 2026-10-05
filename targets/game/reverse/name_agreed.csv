@@ -328,3 +328,5 @@ game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|member||m_bfme
 game/GameEngine/Source/GameClient/GUI/ControlBar/CommandSetAssign.cpp|member||m_bfmeName,m_name,gpt-6-astra+gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngine/Source/GameClient/GUI/ControlBar/CommandSetAssign.cpp|member||m_bfmeCommands,m_command,gpt-6-astra+gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngine/Source/GameClient/GUI/ControlBar/CommandSetAssign.cpp|member||m_bfmeTail,m_next,gpt-6-astra+gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_10,m_centerInCell,gpt-6-astra+gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_11,m_considerTransient,gpt-6-astra+gpt-6-sol+grok,agreed,2026-10-05
