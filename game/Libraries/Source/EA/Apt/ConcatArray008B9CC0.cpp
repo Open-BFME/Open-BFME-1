@@ -73,9 +73,9 @@ void *aptArrayConcat(Value008B9CC0 *self,int count) {
             Value008B9CC0 *v=reinterpret_cast<Value008B9CC0 *>(
                 Rva008AE770TheStack.m_rva01338750[Rva008AE770TheStack.field00-j-1]);
             if (v->isType(0x16)) {
-                Rva008B9C90HeaderedDeleting *a=(Rva008B9C90HeaderedDeleting *)v;
-                for (int k=0;k<a->field28;++k)
-                    out->set(out->field28,(Value008B9CC0 *)(a->m_elements[k]&~1u));
+                Rva008B9C90HeaderedDeleting *array=(Rva008B9C90HeaderedDeleting *)v;
+                for (int k=0;k<array->field28;++k)
+                    out->set(out->field28,(Value008B9CC0 *)(array->m_elements[k]&~1u));
             } else out->set(out->field28,v);
         }
         return out;
