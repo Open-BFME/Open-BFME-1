@@ -546,7 +546,7 @@ struct Rva006D4FF0Device
 };
 #undef ALPHA_DEVICE_SLOT
 
-extern unsigned int Rva01340594DX8Calls;
+extern unsigned int number_of_DX8_calls;
 extern unsigned int Rva01340568StageChanges;
 
 struct Rva006C9270Texture
@@ -606,7 +606,7 @@ static __forceinline void AlphaSetTexture(unsigned int stage,
 	if (stage >= 8)
 	{
 		reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTexture(stage, texture);
-		++Rva01340594DX8Calls;
+		++number_of_DX8_calls;
 		return;
 	}
 	if (Rva0133F478Textures[stage] == texture)
@@ -617,7 +617,7 @@ static __forceinline void AlphaSetTexture(unsigned int stage,
 	if (texture)
 		texture->AddRef();
 	reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTexture(stage, texture);
-	++Rva01340594DX8Calls;
+	++number_of_DX8_calls;
 	++Rva01340560TextureChanges;
 }
 
@@ -634,10 +634,10 @@ void AlphaTerrainTextureClass::Apply(unsigned int stage)
 	Rva0090C610Invoke((void *)stage);
 	Rva006D4690Apply((void *)stage);
 	reinterpret_cast<Rva006D4FF0Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTextureStageState(0, 1, 3);
-	++Rva01340594DX8Calls;
+	++number_of_DX8_calls;
 	++Rva01340568StageChanges;
 	reinterpret_cast<Rva006D4FF0Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTextureStageState(0, 2, 3);
-	++Rva01340594DX8Calls;
+	++number_of_DX8_calls;
 	++Rva01340568StageChanges;
 
 	// Now setup the texture pipeline.

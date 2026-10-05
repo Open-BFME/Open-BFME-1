@@ -12,10 +12,10 @@ struct Rva00903470Device
 {
 	Rva00903470Vtable *m_vtable;
 };
-extern unsigned int Rva01340594DX8Calls;
+extern unsigned int number_of_DX8_calls;
 
 void rva00903470DeviceSlot77(unsigned char value)
 {
 	reinterpret_cast<Rva00903470Device *>(DX8Wrapper::_Get_D3D_Device8())->m_vtable->m_slot77(reinterpret_cast<Rva00903470Device *>(DX8Wrapper::_Get_D3D_Device8()), value);
-	++Rva01340594DX8Calls;
+	++number_of_DX8_calls;
 }

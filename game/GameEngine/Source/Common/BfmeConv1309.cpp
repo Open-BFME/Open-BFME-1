@@ -135,7 +135,7 @@ struct BfmeCallsTDB
 	void (__stdcall *m_bfmeRunTDB)(BfmeObjTDB *o, int f);
 };
 
-extern int g_bfmeCountTDB;
+extern unsigned int number_of_DX8_calls;
 extern char g_bfmeDoneTDB;
 
 void bfmeStepTDB(void);
@@ -143,7 +143,7 @@ void bfmeStepTDB(void);
 void bfmeGoTDB(void)
 {
 	reinterpret_cast<BfmeObjTDB *>(DX8Wrapper::_Get_D3D_Device8())->m_bfmeCalls->m_bfmeRunTDB(reinterpret_cast<BfmeObjTDB *>(DX8Wrapper::_Get_D3D_Device8()), 0);
-	++g_bfmeCountTDB;
+	++number_of_DX8_calls;
 	bfmeStepTDB();
 	g_bfmeDoneTDB = 1;
 }

@@ -23,7 +23,7 @@ struct BfmeStateBQ
 
 extern BfmeStateBQ *g_bfmeStateBQ;
 extern int g_bfmeModeBQ;
-extern int g_bfme936Count;
+extern unsigned int number_of_DX8_calls;
 
 void __cdecl bfmeApplyBQ(void)
 {
@@ -39,5 +39,5 @@ void __cdecl bfmeApplyBQ(void)
 	reinterpret_cast<BfmeDevBQ *>(DX8Wrapper::_Get_D3D_Device8())->m_bfmeVtblBQ->m_bfmeSetBQ(reinterpret_cast<BfmeDevBQ *>(DX8Wrapper::_Get_D3D_Device8()),
 		*g_bfmeStateBQ->m_bfmeSourceBQ);
 
-	++g_bfme936Count;
+	++number_of_DX8_calls;
 }

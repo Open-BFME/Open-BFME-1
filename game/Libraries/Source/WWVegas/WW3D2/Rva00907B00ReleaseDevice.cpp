@@ -22,7 +22,7 @@ struct Rva006C9270Device
 	Rva00907B00DeviceVtable *m_vtable;
 };
 
-extern unsigned int Rva01340594DX8Calls;
+extern unsigned int number_of_DX8_calls;
 
 extern VertexBufferClass *Rva01341120VertexBuffers[];
 extern IndexBufferClass *Rva01341128IndexBuffer;
@@ -37,13 +37,13 @@ void DX8Wrapper::Release_Device( void )
 	for( unsigned stage = 0; stage < 8; ++stage )
 	{
 		reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8())->m_vtable->m_setTexture( reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8()), stage, zero );
-		++Rva01340594DX8Calls;
+		++number_of_DX8_calls;
 	}
 
 	reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8())->m_vtable->m_setStreamSource( reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8()), (unsigned)zero, zero, (unsigned)zero, (unsigned)zero );
-	++Rva01340594DX8Calls;
+	++number_of_DX8_calls;
 	reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8())->m_vtable->m_setIndices( reinterpret_cast<Rva006C9270Device *>(DX8Wrapper::_Get_D3D_Device8()), zero );
-	++Rva01340594DX8Calls;
+	++number_of_DX8_calls;
 
 	for( unsigned stream = 0; stream < 8; stream += 4 )
 	{

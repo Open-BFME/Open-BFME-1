@@ -28,13 +28,13 @@ struct BfmeObj936C
 	BfmeVt936C *m_bfmeVt;
 };
 
-extern int g_bfme936Count;
+extern unsigned int number_of_DX8_calls;
 
 void bfmeGo936C(void)
 {
 	BfmeObj936C *p = reinterpret_cast<BfmeObj936C *>(DX8Wrapper::_Get_D3D_Device8());
 	p->m_bfmeVt->m_bfmeFn(p);
-	++g_bfme936Count;
+	++number_of_DX8_calls;
 }
 
 void bfmeCall936F(int f);

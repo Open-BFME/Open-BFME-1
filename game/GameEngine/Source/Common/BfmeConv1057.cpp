@@ -121,7 +121,7 @@ struct BfmeE1057
 	BfmeVt1057 *m_bfmeVt;
 };
 
-extern int g_bfmeA1057;
+extern unsigned int number_of_DX8_calls;
 extern int g_bfmeB1057;
 
 void bfmeGo1057C(int a, int b, int c)
@@ -129,7 +129,7 @@ void bfmeGo1057C(int a, int b, int c)
 	BfmeE1057 *p = reinterpret_cast<BfmeE1057 *>(DX8Wrapper::_Get_D3D_Device8());
 
 	p->m_bfmeVt->m_bfmeFn(p, a, b, c);
-	g_bfmeA1057++;
+	number_of_DX8_calls++;
 	g_bfmeB1057++;
 }
 
