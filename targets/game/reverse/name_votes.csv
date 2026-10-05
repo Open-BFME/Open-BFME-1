@@ -616,3 +616,10 @@ game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateSt
 game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|member||m_unmodelled24C,c0f7fb7a8c533fcbd8646925,gpt-6-astra,20261005164459-314c97,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|param|add|a,84823c02445fb9af9d2e2b78,gpt-6-astra,20261005164459-314c97,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|param|sub|a,5c4b677b1b1799cb140b91ac,gpt-6-astra,20261005164459-314c97,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1070.cpp|type||BfmeG1070,fc2a50f1b1dc2344894b391a,gpt-6-astra,20261005164459-e7dda4,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1070.cpp|type||BfmeT1070,f5b57986653a8dbbcae2ace8,gpt-6-astra,20261005164459-e7dda4,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1070.cpp|member||m_bfme250,a763a2b5ead5930bc1936e25,gpt-6-astra,20261005164459-e7dda4,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1070.cpp|member||m_bfme3a8,f22cca962eaeeda9eecd84f0,gpt-6-astra,20261005164459-e7dda4,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1070.cpp|function|BfmeQ1070@|bfmeGo1070A,9c7da3daf86ec3d16e5dc9e8,gpt-6-astra,20261005164459-e7dda4,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1070.cpp|function||bfmeGo1070B,092beb43de310f477609232f,gpt-6-astra,20261005164459-e7dda4,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1070.cpp|local|bfmeGo1070B|n,a020291c317c7fabe6e91370,gpt-6-astra,20261005164459-e7dda4,2026-10-05
