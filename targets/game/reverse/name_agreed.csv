@@ -337,3 +337,6 @@ game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|type||BFMETran
 game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|member||m_bfmeFlag,m_fireOnce,gpt-6-astra+gpt-6-sol+grok,applied,2026-10-05
 game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|member||m_bfmeState,m_directionMultiplier,gpt-6-astra+gpt-6-sol+grok,applied,2026-10-05
 game/GameEngine/Source/GameClient/GUI/BfmeTransitionGroupCtor.cpp|member||m_bfmeCount,m_currentFrame,gpt-6-astra+gpt-6-sol+grok,applied,2026-10-05
+game/GameEngine/Source/GameClient/GUI/ControlBar/CommandSetAssign.cpp|member||m_bfmeName,m_name,gpt-6-astra+gpt-6-sol+grok,applied,2026-10-05
+game/GameEngine/Source/GameClient/GUI/ControlBar/CommandSetAssign.cpp|member||m_bfmeCommands,m_command,gpt-6-astra+gpt-6-sol+grok,applied,2026-10-05
+game/GameEngine/Source/GameClient/GUI/ControlBar/CommandSetAssign.cpp|member||m_bfmeTail,m_next,gpt-6-astra+gpt-6-sol+grok,applied,2026-10-05

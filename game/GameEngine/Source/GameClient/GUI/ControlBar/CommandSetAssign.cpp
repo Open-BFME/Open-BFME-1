@@ -35,9 +35,9 @@ public:
 	CommandSet &operator=(const CommandSet &other);
 
 private:
-	AsciiString m_bfmeName;					// +0x0C
-	CommandSetCommand *m_bfmeCommands[20];			// +0x10
-	Int m_bfmeTail;						// +0x60
+	AsciiString m_name;					// +0x0C
+	CommandSetCommand *m_command[20];			// +0x10
+	Int m_next;						// +0x60
 };
 
 // ??4CommandSet@@QAEAAV0@ABV0@@Z
@@ -45,12 +45,12 @@ CommandSet &CommandSet::operator=(const CommandSet &other)
 {
 	ScienceInfoBase::operator=(other);
 
-	m_bfmeName = other.m_bfmeName;
+	m_name = other.m_name;
 
 	for (Int i = 0; i < 20; ++i)
-		m_bfmeCommands[i] = other.m_bfmeCommands[i];
+		m_command[i] = other.m_command[i];
 
-	m_bfmeTail = other.m_bfmeTail;
+	m_next = other.m_next;
 
 	return *this;
 }
