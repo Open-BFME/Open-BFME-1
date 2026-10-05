@@ -13,6 +13,9 @@
 // the constructor's initializer list, on the layout the matched destructor
 // witnesses (GameClientDestructor00431380.cpp).  Members that no matched body
 // names keep address tokens.
+class VideoPlayerInterface;
+extern VideoPlayerInterface *TheVideoPlayer;
+
 #include "string_base.h"
 #include "ascii_string.h"
 #include <list>
@@ -149,7 +152,7 @@ extern TerrainVisual *TheTerrainVisual;
 extern Display *TheDisplay;
 extern Gen_0048C5B0 *TheHeaderTemplateManager;
 extern LanguageFilter *TheLanguageFilter;
-extern VideoPlayer *TheVideoPlayer;
+
 extern Anim2DCollection *TheAnim2DCollection;
 extern ImageCollection *TheMappedImageCollection;
 extern Keyboard *TheKeyboard;

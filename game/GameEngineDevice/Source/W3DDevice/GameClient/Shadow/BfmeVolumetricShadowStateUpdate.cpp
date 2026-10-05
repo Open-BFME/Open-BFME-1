@@ -1,5 +1,8 @@
 // cl: /DNDEBUG /MD /GR-
 
+class W3DShadowManager;
+extern W3DShadowManager *TheW3DShadowManager;
+
 typedef float Real;
 
 class Vector3
@@ -230,7 +233,7 @@ public:
 	}
 };
 
-extern Open27110B0Source *TheOpen27110B0Source;
+
 extern TerrainLogic *TheTerrainLogic;
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 extern const Real g_rva01075350;
@@ -268,7 +271,7 @@ void W3DVolumetricShadow::updateShadowState()
 	m_lightOffsetY = pos.Y;
 	m_lightOffsetZ = pos.Z;
 
-	const Open2Triple *light = TheOpen27110B0Source->fetch(0);
+	const Open2Triple *light = ((Open27110B0Source *&)TheW3DShadowManager)->fetch(0);
 	m_lightOffsetX = m_lightOffsetX - (Real)light->m_x;
 	m_lightOffsetY = m_lightOffsetY - (Real)light->m_y;
 	m_lightOffsetZ = *(volatile Real *)&m_lightOffsetZ - (Real)light->m_z;

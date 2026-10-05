@@ -1,5 +1,8 @@
 // Open-BFME5 conversions.
 
+class W3DVolumetricShadowManager;
+extern W3DVolumetricShadowManager *TheW3DVolumetricShadowManager;
+
 class BfmeA1062
 {
 public:
@@ -12,14 +15,13 @@ public:
 	void bfmeF1062B(void);
 };
 
-extern BfmeA1062 *g_bfmeA1062;
 class W3DProjectedShadowManager;
 extern W3DProjectedShadowManager *TheW3DProjectedShadowManager;
 
 void bfmeGo1062A(void)
 {
-	if (g_bfmeA1062)
-		g_bfmeA1062->bfmeF1062A();
+	if (((BfmeA1062 *&)TheW3DVolumetricShadowManager))
+		((BfmeA1062 *&)TheW3DVolumetricShadowManager)->bfmeF1062A();
 	if (TheW3DProjectedShadowManager)
 		reinterpret_cast<BfmeB1062 *>(TheW3DProjectedShadowManager)->bfmeF1062B();
 }

@@ -1621,27 +1621,6 @@ void DX8Wrapper::Get_Device_Resolution(int & set_w,int & set_h,int & set_bits,bo
 	return ;
 }
 
-// ?Get_Render_Target_Resolution@DX8Wrapper@@ present-unmatched
-void DX8Wrapper::Get_Render_Target_Resolution(int & set_w,int & set_h,int & set_bits,bool & set_windowed)
-{
-	WWASSERT(IsInitted);
-
-	if (CurrentRenderTarget != NULL) {
-		D3DSURFACE_DESC info;
-		CurrentRenderTarget->GetDesc (&info);
-
-		set_w				= info.Width;
-		set_h				= info.Height;
-		set_bits			= BitDepth;		// should we get the actual bit depth of the target?
-		set_windowed	= IsWindowed;	// this doesn't really make sense for render targets (shouldn't matter)...
-
-	} else {
-		Get_Device_Resolution (set_w, set_h, set_bits, set_windowed);
-	}
-
-	return ;
-}
-
 bool DX8Wrapper::Registry_Save_Render_Device( const char * sub_key )
 {
 	int	width, height, depth;

@@ -89,21 +89,21 @@ class Rva00899FC0 : public Rva00897670HeaderedDelete {
 struct Rva008A7B00Slot {
     virtual void slot00();
 };
-extern Rva00899FC0 *Va01337A7C;
+Rva00899FC0 *Va01337A7C = 0;
 extern char Va00CA5250[];
-extern Rva00899FC0 *Va01337A80;
+Rva00899FC0 *Va01337A80 = 0;
 extern char Va00CA52E0[];
-extern Rva00899FC0 *Va01337A84;
+Rva00899FC0 *Va01337A84 = 0;
 extern char Va00CA52F0[];
-extern Rva00899FC0 *Va01337A8C;
+Rva00899FC0 *Va01337A8C = 0;
 extern char Va00CA5360[];
-extern Rva00899FC0 *Va01337A90;
+Rva00899FC0 *Va01337A90 = 0;
 extern char Va00CA5380[];
-extern Rva00899FC0 *Va01337A94;
+Rva00899FC0 *Va01337A94 = 0;
 extern char Va00CA53D0[];
-extern Rva00899FC0 *Va01337A98;
+Rva00899FC0 *Va01337A98 = 0;
 extern char Va00CA6CB0[];
-extern Rva00899FC0 *Va01337A88;
+Rva00899FC0 *Va01337A88 = 0;
 extern char Va00CA5330[];
 Rva00899560Value *__stdcall rva008A7B00(Rva008A7B00Owner *owner, const Rva008A7B00String *key) {
     if (owner) {

@@ -98,7 +98,9 @@ private:
 	static bool IsInitted;
 	static bool AreStaticSortListsEnabled;
 public:
+private:
 	static StaticSortListClass *CurrentStaticSortLists;
+	public:
 };
 
 // ?Render@WW3D@@SA_NAAVRenderObjClass@@AAVRenderInfoClass@@@Z

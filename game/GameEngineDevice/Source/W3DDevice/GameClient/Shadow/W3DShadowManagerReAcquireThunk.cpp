@@ -21,6 +21,9 @@
 // `pop ebx; ret` with al already zero rather than clearing bl and reloading it,
 // which is the same `ok = FALSE; return ok` the other two arms spell out.
 
+class W3DVolumetricShadowManager;
+extern W3DVolumetricShadowManager *TheW3DVolumetricShadowManager;
+
 typedef bool Bool;
 
 #define TRUE true
@@ -44,7 +47,7 @@ public:
 	Bool ReAcquireResources( void );
 };
 
-extern Gen_01306F18 *g_01306F18;
+
 class W3DProjectedShadowManager;
 extern W3DProjectedShadowManager *TheW3DProjectedShadowManager;
 
@@ -67,7 +70,7 @@ Bool W3DShadowManager::ReAcquireResources( void )
 {
 	Bool ok = TRUE;
 
-	if (g_01306F18 && !g_01306F18->ReAcquireResources())
+	if (((Gen_01306F18 *&)TheW3DVolumetricShadowManager) && !((Gen_01306F18 *&)TheW3DVolumetricShadowManager)->ReAcquireResources())
 		ok = FALSE;
 
 	if ((Gen_01307178 *)TheW3DShadowHelperManager && !((Gen_01307178 *)TheW3DShadowHelperManager)->ReAcquireResources())

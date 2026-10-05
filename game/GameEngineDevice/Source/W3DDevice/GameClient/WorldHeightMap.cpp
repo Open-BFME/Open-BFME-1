@@ -1,5 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
+class W3DShadowManager;
+extern W3DShadowManager *TheW3DShadowManager;
+
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -918,7 +921,7 @@ struct LightingData00747FF0 {
 extern bool Flag0133F42F;
 extern LightingCoord00747FF0 Value012B4FC8,Value012B4FD8,Value012B4FE8;
 struct ShadowData00747FF0 { void *field00; unsigned int field04; };
-extern ShadowData00747FF0 *ShadowManager01306EEC;
+
 class Rva0074A680ParserRegistration {
 public:
  virtual ~Rva0074A680ParserRegistration();
@@ -1035,8 +1038,8 @@ bool Rva0074A680ParserRegistration::ParseLightingDataChunk(DataChunkInput &file,
 
 		if (!file.atEndOfChunk()) {
 			unsigned int shadowColor = file.readInt();
-			if (ShadowManager01306EEC) {
-				ShadowManager01306EEC->field04 = shadowColor;
+			if (((ShadowData00747FF0 *&)TheW3DShadowManager)) {
+				((ShadowData00747FF0 *&)TheW3DShadowManager)->field04 = shadowColor;
 			}
 		}
 

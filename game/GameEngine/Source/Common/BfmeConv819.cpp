@@ -1,3 +1,6 @@
+class W3DShadowManager;
+extern W3DShadowManager *TheW3DShadowManager;
+
 struct BfmeSubEMA
 {
 	unsigned char m_bfmeHead[4];
@@ -103,8 +106,8 @@ public:
 	void bfmeDoEMHb();
 };
 
-extern BfmeGlobEMHa *g_bfmeObjEMHa;
-extern BfmeGlobEMHb *g_bfmeObjEMHb;
+
+
 
 struct BfmeThingEMH
 {
@@ -116,7 +119,7 @@ struct BfmeThingEMH
 
 void BfmeThingEMH::bfmeGoEMHa()
 {
-	g_bfmeObjEMHa->bfmeDoEMHa();
+	((BfmeGlobEMHa *&)TheW3DShadowManager)->bfmeDoEMHa();
 	BfmeSubEMH *s = m_bfmeS;
 	if (s)
 		s->m_bfmeFlag = 1;
@@ -124,7 +127,7 @@ void BfmeThingEMH::bfmeGoEMHa()
 
 void BfmeThingEMH::bfmeGoEMHb()
 {
-	g_bfmeObjEMHb->bfmeDoEMHb();
+	((BfmeGlobEMHb *&)TheW3DShadowManager)->bfmeDoEMHb();
 	BfmeSubEMH *s = m_bfmeS;
 	if (s)
 		s->m_bfmeFlag = 0;

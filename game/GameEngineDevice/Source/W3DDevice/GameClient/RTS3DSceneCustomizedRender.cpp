@@ -16,6 +16,9 @@
 // witnessed by Rva006FEB10SceneRender.cpp. Model: gpt-6-astra.
 
 
+class W3DShadowManager;
+extern W3DShadowManager *TheW3DShadowManager;
+
 #define Matrix4x4 Matrix4
 
 #include "Lib/BaseType.h"
@@ -125,7 +128,7 @@ class BfmeGlobQE
 public:
 	unsigned char ready;
 };
-extern BfmeGlobQE *g_bfmeGlobQE;
+
 
 class __declspec(novtable) ParticleSystemManager
 {
@@ -317,9 +320,9 @@ void RTS3DScene::Customized_Render(RenderInfoClass &rinfo)
 		}
 	}
 
-	if (g_bfmeGlobQE && terrainObject && !ShaderClass::Is_Backface_Culling_Inverted() &&
+	if (((BfmeGlobQE *&)TheW3DShadowManager) && terrainObject && !ShaderClass::Is_Backface_Culling_Inverted() &&
 		m_extraPassPolygonMode == 0 && m_customPassMode == SCENE_PASS_DEFAULT)
-		g_bfmeGlobQE->ready = 1;
+		((BfmeGlobQE *&)TheW3DShadowManager)->ready = 1;
 
 	if (terrainObject && TheParticleSystemManager && m_extraPassPolygonMode == 0 &&
 		m_customPassMode == SCENE_PASS_DEFAULT)

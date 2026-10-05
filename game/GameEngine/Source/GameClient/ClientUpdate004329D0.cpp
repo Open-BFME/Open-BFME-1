@@ -7,6 +7,9 @@
 // ZH GameClient::update supplies the drawable/shroud loop; BFME-specific
 // callbacks and shell recreation are taken from retail, not guessed ZH code.
 // Address-qualified ABI views deliberately do not claim class identities.
+class VideoPlayerInterface;
+extern VideoPlayerInterface *TheVideoPlayer;
+
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 class Dispatch004329D0 {
@@ -246,7 +249,7 @@ extern GenFallback *GenFallback0012ED5C8;
 extern Rva00367810VirtualGate *Rva00367810TheVirtualGate;
 class GameWindowManager;
 extern GameWindowManager *TheWindowManager;
-extern MovieFactory0040E3B0 *MovieFactoryGlobal0040E3B0;
+
 extern FadeView *FadeTacticalView;
 extern BfmeGlobal_012f076c *TheBfmeGlobal_012f076c;
 extern GameLogic *TheGameLogic;
@@ -311,7 +314,7 @@ void ClientUpdate004329D0::update() {
         return;
     }
     ((Dispatch004329D0 *)reinterpret_cast<MovieControl0040F780 *>(TheWindowManager))->v14();
-    ((Dispatch004329D0 *)MovieFactoryGlobal0040E3B0)->v14();
+    ((Dispatch004329D0 *)((MovieFactory0040E3B0 *&)TheVideoPlayer))->v14();
     Rva0090F050();
     if (at<int>(GenFallback0012ED5C8,0xd08)>0) {
         unsigned long now = timeGetTime();

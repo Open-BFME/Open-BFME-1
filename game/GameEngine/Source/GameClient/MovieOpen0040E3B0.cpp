@@ -8,6 +8,9 @@
 // and counter helpers at 0x004893E0/0x00489410. Parameter-owned AsciiString
 // cleanup is emitted by the real StringBase-based header.
 // cl: /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+class VideoPlayerInterface;
+extern VideoPlayerInterface *TheVideoPlayer;
+
 #include "ascii_string.h"
 class Glo00EF3330 { public: void h004893E0(); void h00489410(); };
 class GameWindowTransitionsHandler {
@@ -63,7 +66,7 @@ struct MovieFactory0040E3B0 {
  virtual void v0b();
  virtual MovieStream0040E3B0 *open(AsciiString,int);
 };
-extern MovieFactory0040E3B0 *MovieFactoryGlobal0040E3B0;
+
 struct MovieOpen0040E3B0 {
  virtual void v00();
  virtual void v01();
@@ -342,7 +345,7 @@ bool MovieOpen0040E3B0::open(AsciiString name,int flags,int a,int b) {
  bool special=false;
  field59=true; field58=false;
  if(flags&0x40) special=true;
- stream34=MovieFactoryGlobal0040E3B0->open(name,flags);
+ stream34=((MovieFactory0040E3B0 *&)TheVideoPlayer)->open(name,flags);
  if(!stream34) return false;
  if(!stream34->start(buffer(special))) {close();return false;}
  field59=false;

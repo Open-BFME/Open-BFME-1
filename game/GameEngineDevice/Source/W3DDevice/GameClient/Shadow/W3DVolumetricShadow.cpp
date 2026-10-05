@@ -1,6 +1,9 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /DBFME_VOLUMETRIC_DELETE_LAYOUT /Iinputs/reference/shims/volumetricshadow /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 // readable body of ?Fabs@WWMath@@: game/Libraries/Source/WWVegas/WW3D2/coltest.cpp
+class W3DShadowHelperManager;
+extern W3DShadowHelperManager *TheW3DShadowHelperManager;
+
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -3579,7 +3582,7 @@ void W3DVolumetricShadowManager::renderStencilShadows( void )
 
 extern void BoxSetTexture(unsigned, TextureBaseClass*&);
 class Rva007C2CD0Receiver { public: void invoke(); };
-extern Rva007C2CD0Receiver* Rva01307178;
+
 class Gen0003D172 { public: void handle(int); };
 
 struct Rva007BFB90TextureRef {
@@ -3713,7 +3716,7 @@ void W3DVolumetricShadowManager::renderShadows( Bool forceStencilFill )
  	beY = bbox.Extent.Y;
  	beZ = bbox.Extent.Z;
 
-	if (Rva01307178) reinterpret_cast<W3DVolumetricShadowManager*>(Rva01307178)->renderShadows();
+	if (((Rva007C2CD0Receiver *&)TheW3DShadowHelperManager)) reinterpret_cast<W3DVolumetricShadowManager*>(((Rva007C2CD0Receiver *&)TheW3DShadowHelperManager))->renderShadows();
 
 	if (m_shadowList && *(const Bool*)((const char*)TheGlobalData+0x64))
 	{

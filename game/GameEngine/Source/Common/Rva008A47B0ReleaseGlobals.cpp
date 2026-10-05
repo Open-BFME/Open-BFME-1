@@ -7,6 +7,23 @@
 // global (0x01337A88) sits out of address order at the end, matching the
 // retail call order exactly.
 
+class Rva00899FC0;
+extern Rva00899FC0 *Va01337A7C;
+class Rva00899FC0;
+extern Rva00899FC0 *Va01337A80;
+class Rva00899FC0;
+extern Rva00899FC0 *Va01337A84;
+class Rva00899FC0;
+extern Rva00899FC0 *Va01337A88;
+class Rva00899FC0;
+extern Rva00899FC0 *Va01337A8C;
+class Rva00899FC0;
+extern Rva00899FC0 *Va01337A90;
+class Rva00899FC0;
+extern Rva00899FC0 *Va01337A94;
+class Rva00899FC0;
+extern Rva00899FC0 *Va01337A98;
+
 class Rva008A47B0Item
 {
 public:
@@ -14,56 +31,56 @@ public:
 	virtual void release();
 };
 
-extern Rva008A47B0Item *g_rva008A47B0_0;
-extern Rva008A47B0Item *g_rva008A47B0_1;
-extern Rva008A47B0Item *g_rva008A47B0_2;
-extern Rva008A47B0Item *g_rva008A47B0_3;
-extern Rva008A47B0Item *g_rva008A47B0_4;
-extern Rva008A47B0Item *g_rva008A47B0_5;
-extern Rva008A47B0Item *g_rva008A47B0_6;
-extern Rva008A47B0Item *g_rva008A47B0_7;
+
+
+
+
+
+
+
+
 
 void rva008A47B0ReleaseGlobals()
 {
 	Rva008A47B0Item *z = 0;
-	if (g_rva008A47B0_0 != z)
+	if (((Rva008A47B0Item *&)Va01337A7C) != z)
 	{
-		g_rva008A47B0_0->release();
-		g_rva008A47B0_0 = z;
+		((Rva008A47B0Item *&)Va01337A7C)->release();
+		((Rva008A47B0Item *&)Va01337A7C) = z;
 	}
-	if (g_rva008A47B0_1 != z)
+	if (((Rva008A47B0Item *&)Va01337A80) != z)
 	{
-		g_rva008A47B0_1->release();
-		g_rva008A47B0_1 = z;
+		((Rva008A47B0Item *&)Va01337A80)->release();
+		((Rva008A47B0Item *&)Va01337A80) = z;
 	}
-	if (g_rva008A47B0_2 != z)
+	if (((Rva008A47B0Item *&)Va01337A84) != z)
 	{
-		g_rva008A47B0_2->release();
-		g_rva008A47B0_2 = z;
+		((Rva008A47B0Item *&)Va01337A84)->release();
+		((Rva008A47B0Item *&)Va01337A84) = z;
 	}
-	if (g_rva008A47B0_3 != z)
+	if (((Rva008A47B0Item *&)Va01337A8C) != z)
 	{
-		g_rva008A47B0_3->release();
-		g_rva008A47B0_3 = z;
+		((Rva008A47B0Item *&)Va01337A8C)->release();
+		((Rva008A47B0Item *&)Va01337A8C) = z;
 	}
-	if (g_rva008A47B0_4 != z)
+	if (((Rva008A47B0Item *&)Va01337A90) != z)
 	{
-		g_rva008A47B0_4->release();
-		g_rva008A47B0_4 = z;
+		((Rva008A47B0Item *&)Va01337A90)->release();
+		((Rva008A47B0Item *&)Va01337A90) = z;
 	}
-	if (g_rva008A47B0_5 != z)
+	if (((Rva008A47B0Item *&)Va01337A94) != z)
 	{
-		g_rva008A47B0_5->release();
-		g_rva008A47B0_5 = z;
+		((Rva008A47B0Item *&)Va01337A94)->release();
+		((Rva008A47B0Item *&)Va01337A94) = z;
 	}
-	if (g_rva008A47B0_6 != z)
+	if (((Rva008A47B0Item *&)Va01337A98) != z)
 	{
-		g_rva008A47B0_6->release();
-		g_rva008A47B0_6 = z;
+		((Rva008A47B0Item *&)Va01337A98)->release();
+		((Rva008A47B0Item *&)Va01337A98) = z;
 	}
-	if (g_rva008A47B0_7 != z)
+	if (((Rva008A47B0Item *&)Va01337A88) != z)
 	{
-		g_rva008A47B0_7->release();
-		g_rva008A47B0_7 = z;
+		((Rva008A47B0Item *&)Va01337A88)->release();
+		((Rva008A47B0Item *&)Va01337A88) = z;
 	}
 }

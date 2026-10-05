@@ -18,6 +18,11 @@
 // Retail frees these arrays through operator delete[] (??_V@YAXPAX@Z,
 // 0x00881EF0). Without the declaration cl falls back to scalar
 // operator delete for the block, which is a different body at 0x00881EB0.
+class W3DShadowManager;
+extern W3DShadowManager *TheW3DShadowManager;
+class W3DVolumetricShadowManager;
+extern W3DVolumetricShadowManager *TheW3DVolumetricShadowManager;
+
 void __cdecl operator delete[](void *block);
 class Open2715D80Owner;
 
@@ -94,8 +99,8 @@ public:
 	void flush( void );
 };
 
-extern Open27110F0Sink *TheOpen27110F0Sink;
-extern Open27110F0Flusher *TheOpen27110F0Flusher;
+
+
 
 class Open2Triple;
 struct Triple006E2540;
@@ -110,11 +115,11 @@ public:
 // @?write@Sink006E2540@@QAEXPBVOpen2Triple5@@@Z 0x007110F0
 void Sink006E2540::write( const Open2Triple5 *record )
 {
-	if( TheOpen27110F0Sink )
+	if( ((Open27110F0Sink *&)TheW3DShadowManager) )
 	{
-		TheOpen27110F0Sink->submit( 0, record->m_x, record->m_y, record->m_z );
-		if( TheOpen27110F0Flusher )
-			TheOpen27110F0Flusher->flush();
+		((Open27110F0Sink *&)TheW3DShadowManager)->submit( 0, record->m_x, record->m_y, record->m_z );
+		if( ((Open27110F0Flusher *&)TheW3DVolumetricShadowManager) )
+			((Open27110F0Flusher *&)TheW3DVolumetricShadowManager)->flush();
 	}
 }
 

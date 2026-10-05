@@ -3,6 +3,9 @@
 // (93 bytes).  This is the callable start; 0x007B751E is only the interior
 // continuation containing the second and third pairs.
 
+class W3DVolumetricShadowManager;
+extern W3DVolumetricShadowManager *TheW3DVolumetricShadowManager;
+
 typedef bool Bool;
 
 // The first two BFME shadow submanager identities are intentionally kept
@@ -29,7 +32,7 @@ public:
 	Bool ReAcquireResources(void);
 };
 
-extern Gen_01306F18 *g_01306F18;
+
 class W3DProjectedShadowManager;
 extern W3DProjectedShadowManager *TheW3DProjectedShadowManager;
 
@@ -48,8 +51,8 @@ public:
 
 Bool W3DShadowManager::init(void)
 {
-	if (g_01306F18 && g_01306F18->rva007B9920())
-		g_01306F18->ReAcquireResources();
+	if (((Gen_01306F18 *&)TheW3DVolumetricShadowManager) && ((Gen_01306F18 *&)TheW3DVolumetricShadowManager)->rva007B9920())
+		((Gen_01306F18 *&)TheW3DVolumetricShadowManager)->ReAcquireResources();
 
 	if ((Gen_01307178 *)TheW3DShadowHelperManager && ((Gen_01307178 *)TheW3DShadowHelperManager)->rva007C19E0())
 		((Gen_01307178 *)TheW3DShadowHelperManager)->ReAcquireResources();

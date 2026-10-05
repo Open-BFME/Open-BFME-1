@@ -1,21 +1,22 @@
 // cl: /O2 /DNDEBUG /MD /EHsc
-// Retail RVA 0x008FD1F0 tail-jumps to WW3D::Get_Render_Target_Resolution.
+// Retail RVA 0x008FD1F0 tail-jumps to DX8Wrapper::Get_Render_Target_Resolution.
 
-class WW3D
+class DX8Wrapper
 {
-public:
+	friend class WW3D;
+protected:
 	static void Get_Render_Target_Resolution(int &width, int &height,
 		int &bit_depth, bool &windowed);
 };
 
-class Rva008FD1F0RenderTargetResolutionThunk
+class WW3D
 {
 public:
-	static void forward(int &width, int &height, int &bit_depth, bool &windowed);
+	static void Get_Render_Target_Resolution(int &width, int &height, int &bit_depth, bool &windowed);
 };
 
-void Rva008FD1F0RenderTargetResolutionThunk::forward(
+void WW3D::Get_Render_Target_Resolution(
 	int &width, int &height, int &bit_depth, bool &windowed)
 {
-	WW3D::Get_Render_Target_Resolution(width, height, bit_depth, windowed);
+	DX8Wrapper::Get_Render_Target_Resolution(width, height, bit_depth, windowed);
 }

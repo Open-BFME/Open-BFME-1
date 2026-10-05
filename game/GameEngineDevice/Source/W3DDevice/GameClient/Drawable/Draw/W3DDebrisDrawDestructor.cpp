@@ -1,5 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
+class W3DShadowManager;
+extern W3DShadowManager *TheW3DShadowManager;
+
 typedef bool Bool;
 
 #include "ascii_string.h"
@@ -63,7 +66,7 @@ class W3DDisplay
 public:
 	static RTS3DScene *m_3DScene;					// 0x012F8058
 };
-extern Gen0003AC38 *g_shadowManager;
+
 
 class W3DDebrisDraw : public DrawableModuleLayoutBase,
 	public DebrisDrawInterface
@@ -90,12 +93,12 @@ private:
 W3DDebrisDraw::~W3DDebrisDraw()
 {
 	register int zero = 0;
-	if ((void *)g_shadowManager != (void *)zero)
+	if ((void *)((Gen0003AC38 *&)TheW3DShadowManager) != (void *)zero)
 	{
 		void *shadow = m_shadow;
 		if (shadow != (void *)zero)
 		{
-			g_shadowManager->handle(shadow);
+			((Gen0003AC38 *&)TheW3DShadowManager)->handle(shadow);
 			*(volatile int *)&m_shadow = zero;
 		}
 	}

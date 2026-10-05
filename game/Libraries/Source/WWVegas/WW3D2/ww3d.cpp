@@ -735,20 +735,19 @@ public:
 	virtual long __stdcall bfmeGetModeInfo(BfmeDisplayModeInfo *info) = 0;
 };
 
-extern BfmeRenderDevice *TheBfmeRenderDevice;
 extern int BfmeRenderWidth;
 extern int BfmeRenderHeight;
 extern int BfmeRenderBitDepth;
 extern bool BfmeRenderWindowed;
 
-void WW3D::Get_Render_Target_Resolution(int &width, int &height, int &bitDepth, bool &windowed)
+void DX8Wrapper::Get_Render_Target_Resolution(int &width, int &height, int &bitDepth, bool &windowed)
 {
-	if (TheBfmeRenderDevice)
+	if (CurrentRenderTarget)
 	{
 		BfmeRadarResetGuard guard;
 		BfmeDisplayModeInfo info;
 
-		TheBfmeRenderDevice->bfmeGetModeInfo(&info);
+		((BfmeRenderDevice *)CurrentRenderTarget)->bfmeGetModeInfo(&info);
 
 		width = info.m_bfmeWidth;
 		height = info.m_bfmeHeight;
@@ -1650,6 +1649,7 @@ void WW3D::Toggle_Movie_Capture( const char * filename_base, float frame_rate )
  * HISTORY:                                                                                    *
  *   5/19/99    GTH : Created.                                                                 *
  *=============================================================================================*/
+// ?Start_Single_Frame_Movie_Capture@WW3D@@ present-unmatched
 void WW3D::Start_Single_Frame_Movie_Capture(const char *filename_base)
 {
 	Start_Movie_Capture(filename_base, 0.0f);

@@ -67,6 +67,9 @@
 // ---------------------------------------------------------------------------
 // (A)
 
+class W3DShadowManager;
+extern W3DShadowManager *TheW3DShadowManager;
+
 #define R2_TAIL_CALLEE( ADDR, TYPE )                                      \
 	class Gen##ADDR                                                       \
 	{                                                                     \
@@ -269,7 +272,7 @@ class Gen0003AC38
 public:
 	void handle( void *victim );
 };
-extern Gen0003AC38 *R2Ptr01306EEC;
+
 
 class Rva006FCE10
 {
@@ -282,7 +285,7 @@ void Rva006FCE10::release()
 {
 	if ( m_owned )
 	{
-		R2Ptr01306EEC->handle( m_owned );
+		((Gen0003AC38 *&)TheW3DShadowManager)->handle( m_owned );
 		m_owned = 0;
 	}
 }

@@ -9,6 +9,11 @@
 // W3DBufferManager singleton, and a thiscall back
 // through ILT 0x0003139A.
 
+struct IDirect3DVertexBuffer8;
+extern IDirect3DVertexBuffer8 *shadowVertexBufferD3D;
+struct IDirect3DIndexBuffer8;
+extern IDirect3DIndexBuffer8 *shadowIndexBufferD3D;
+
 typedef unsigned long ULONG;
 
 void W3DRadarResetLock(void);
@@ -58,21 +63,21 @@ public:
 	GenAlphaChunk *m_first;
 };
 
-extern BfmeComUnknown *TheBfmeComA;			// 0x01306F20
-extern BfmeComUnknown *TheBfmeComB;			// 0x01306F1C
+			// 0x01306F20
+			// 0x01306F1C
 extern W3DBufferManager *TheW3DBufferManager;	// 0x01306DE8
 
 // ?h00024D2A@GenAlpha@@QAEXXZ
 void GenAlpha::h00024D2A()
 {
 	BfmeRadarResetGuard guard;
-	if (TheBfmeComA)
-		TheBfmeComA->Release();
-	if (TheBfmeComB)
-		TheBfmeComB->Release();
+	if (((BfmeComUnknown *&)shadowIndexBufferD3D))
+		((BfmeComUnknown *&)shadowIndexBufferD3D)->Release();
+	if (((BfmeComUnknown *&)shadowVertexBufferD3D))
+		((BfmeComUnknown *&)shadowVertexBufferD3D)->Release();
 	Rva007ADB80Owner *owner = (Rva007ADB80Owner *)TheW3DBufferManager;
-	TheBfmeComA = 0;
-	TheBfmeComB = 0;
+	((BfmeComUnknown *&)shadowIndexBufferD3D) = 0;
+	((BfmeComUnknown *&)shadowVertexBufferD3D) = 0;
 	if (owner)
 	{
 		owner->releaseReferences();

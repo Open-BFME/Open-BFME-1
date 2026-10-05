@@ -20,6 +20,9 @@
 // explicit specialisation of the drawable hashtable destructor (retail calls
 // 0x00430CA0 out of line), and a plain `delete TheDrawGroupInfo`.
 
+class VideoPlayerInterface;
+extern VideoPlayerInterface *TheVideoPlayer;
+
 #include "string_base.h"
 #include "ascii_string.h"
 #include <list>
@@ -146,7 +149,7 @@ extern TerrainVisual *TheTerrainVisual;
 extern Display *TheDisplay;
 extern Gen_0048C5B0 *TheHeaderTemplateManager;
 extern LanguageFilter *TheLanguageFilter;
-extern VideoPlayer *TheVideoPlayer;
+
 extern Anim2DCollection *TheAnim2DCollection;
 extern ImageCollection *TheMappedImageCollection;
 extern Keyboard *TheKeyboard;
@@ -258,8 +261,8 @@ GameClient::~GameClient()
 	delete TheLanguageFilter;
 	TheLanguageFilter = NULL;
 
-	delete TheVideoPlayer;
-	TheVideoPlayer = NULL;
+	delete ((VideoPlayer *&)TheVideoPlayer);
+	((VideoPlayer *&)TheVideoPlayer) = NULL;
 
 	// destroy all translators
 	for( UnsignedInt i = 0; i < m_numTranslators; i++ )

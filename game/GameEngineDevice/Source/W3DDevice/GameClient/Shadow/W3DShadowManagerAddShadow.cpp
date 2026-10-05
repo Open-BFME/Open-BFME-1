@@ -33,6 +33,11 @@
 // are the ones the shadow managers' roles support; only the VALUES are
 // witnessed, by the table.
 
+class W3DVolumetricShadowManager;
+extern W3DVolumetricShadowManager *TheW3DVolumetricShadowManager;
+class W3DShadowHelperManager;
+extern W3DShadowHelperManager *TheW3DShadowHelperManager;
+
 #define NULL 0
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shadow.h
@@ -117,9 +122,9 @@ public:
 		Shadow::ShadowTypeInfo *shadowInfo, Drawable *draw);
 };
 
-extern BfmeVolumetricShadowManager *g_01306F18;
+
 extern W3DProjectedShadowManager *TheW3DProjectedShadowManager;
-extern BfmeShadowBufferManager007C3260 *g_01307178;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShadow.h
 class W3DShadowManager
@@ -152,13 +157,13 @@ Shadow *W3DShadowManager::addShadow(
 		case SHADOW_VOLUME_NON_SELF_1:
 		case SHADOW_VOLUME_NON_SELF_2:
 		case SHADOW_VOLUME_NON_SELF_3:
-			if (g_01306F18)
-				return g_01306F18->addShadow(robj, shadowInfo, draw);
+			if (((BfmeVolumetricShadowManager *&)TheW3DVolumetricShadowManager))
+				return ((BfmeVolumetricShadowManager *&)TheW3DVolumetricShadowManager)->addShadow(robj, shadowInfo, draw);
 			break;
 
 		case SHADOW_VOLUME_NEW:
-			if (g_01307178)
-				return g_01307178->createShadow(robj, shadowInfo, draw);
+			if (((BfmeShadowBufferManager007C3260 *&)TheW3DShadowHelperManager))
+				return ((BfmeShadowBufferManager007C3260 *&)TheW3DShadowHelperManager)->createShadow(robj, shadowInfo, draw);
 			break;
 
 		default:

@@ -46,6 +46,11 @@ public:
 	static void Begin_Scene_Inner(void);
 
 	static void *D3DDevice;
+
+	friend class WW3D;
+
+protected:
+	static void Get_Render_Target_Resolution(int &, int &, int &, bool &);
 };
 
 class DynamicVBAccessClass
@@ -74,7 +79,6 @@ namespace Debug_Statistics
 class WW3D
 {
 public:
-	static void Get_Render_Target_Resolution(int &, int &, int &, bool &);
 	static void Update_Movie_Capture(void);
 	static bool Begin_Render(bool, bool, const Vector3 &, float, void (*)(void));
 
@@ -147,7 +151,7 @@ clear_viewport:
 		_D3DVIEWPORT8 vp;
 		int width, height, bits;
 		bool windowed;
-		WW3D::Get_Render_Target_Resolution(width, height, bits, windowed);
+		DX8Wrapper::Get_Render_Target_Resolution(width, height, bits, windowed);
 		vp.X = 0;
 		vp.Y = 0;
 		vp.Width = width;

@@ -22,6 +22,8 @@ class StaticSortListClass;
 // BFME's scene-render overload returns a byte-wide success value.  The
 // adjacent layer overloads compare AL with one, and retail's epilogue is
 // `mov al,1`; keep that ABI while retaining the WW3D class ownership.
+static void bfme_render_and_clear_static_sort_lists(RenderInfoClass &);
+
 class WW3D
 {
 public:
@@ -37,7 +39,10 @@ private:
 	static bool AreStaticSortListsEnabled;
 public:
 	static bool SnapshotActivated;
+private:
 	static StaticSortListClass *CurrentStaticSortLists;
+	friend void bfme_render_and_clear_static_sort_lists(RenderInfoClass &);
+public:
 };
 
 #define MESH_RENDER_SNAPSHOT_ENABLED

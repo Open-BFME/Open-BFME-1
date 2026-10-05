@@ -4,6 +4,9 @@
 // Open-BFME5: VideoPlayer destructor ? clear global singleton then chain bases
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
+class VideoPlayerInterface;
+extern VideoPlayerInterface *TheVideoPlayer;
+
 class SubsystemInterface
 {
 public:
@@ -23,7 +26,7 @@ public:
 	virtual ~VideoPlayer();
 };
 
-extern VideoPlayer *TheVideoPlayer;
+
 
 // empty intermediate so MSVC emits its vtbl store then jumps to SubsystemInterface
 // ??1VideoPlayerBase@@ present-unmatched
@@ -34,6 +37,6 @@ VideoPlayerBase::~VideoPlayerBase()
 // ??1VideoPlayer@@UAE@XZ
 VideoPlayer::~VideoPlayer()
 {
-	if (this == TheVideoPlayer)
-		TheVideoPlayer = 0;
+	if (this == ((VideoPlayer *&)TheVideoPlayer))
+		((VideoPlayer *&)TheVideoPlayer) = 0;
 }

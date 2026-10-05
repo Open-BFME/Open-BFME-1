@@ -11,6 +11,11 @@
 // it writes indices[polygon*3..+2] then returns indices+polygon; ILT 0000C563.
 // Matrix4/Matrix3D inlines preserve the native construction/transpose copies.
 // All unknown interface slots and object prefixes remain opaque.
+struct IDirect3DVertexBuffer8;
+extern IDirect3DVertexBuffer8 *shadowVertexBufferD3D;
+struct IDirect3DIndexBuffer8;
+extern IDirect3DIndexBuffer8 *shadowIndexBufferD3D;
+
 #define Matrix4x4 Matrix4
 #include "matrix4.h"
 #include "shader.h"
@@ -138,8 +143,8 @@ struct ShadowDevice007BC270 {
  virtual void slot19c();
  virtual int __stdcall SetIndices(ShadowBuffer007BC270*);
 };
-extern ShadowBuffer007BC270* shadowVertexBufferD3D;
-extern ShadowBuffer007BC270* shadowIndexBufferD3D;
+
+
 extern ShadowBuffer007BC270* lastActiveVertexBuffer;
 extern int nShadowVertsInBuf,nShadowStartBatchVertex,nShadowIndicesInBuf,nShadowStartBatchIndex;
 extern int SHADOW_VERTEX_SIZE,SHADOW_INDEX_SIZE;
@@ -261,27 +266,27 @@ void W3DVolumetricShadow::RenderDynamicMeshVolume(int meshIndex,int lightIndex,c
   return;
  }
  if(nShadowVertsInBuf>SHADOW_VERTEX_SIZE-numVerts) {
-  if(shadowVertexBufferD3D->Lock(0,numVerts*sizeof(Vector3),(unsigned char**)&pvVertices,0x2000)!=0)return;
+  if(((ShadowBuffer007BC270 *&)shadowVertexBufferD3D)->Lock(0,numVerts*sizeof(Vector3),(unsigned char**)&pvVertices,0x2000)!=0)return;
   nShadowVertsInBuf=0; nShadowStartBatchVertex=0;
  } else {
-  if(shadowVertexBufferD3D->Lock(nShadowVertsInBuf*sizeof(Vector3),numVerts*sizeof(Vector3),(unsigned char**)&pvVertices,0x1000)!=0)return;
+  if(((ShadowBuffer007BC270 *&)shadowVertexBufferD3D)->Lock(nShadowVertsInBuf*sizeof(Vector3),numVerts*sizeof(Vector3),(unsigned char**)&pvVertices,0x1000)!=0)return;
  }
  if(pvVertices) memcpy(pvVertices,geometry->GetVertex(0),numVerts*sizeof(Vector3));
- shadowVertexBufferD3D->Unlock();
+ ((ShadowBuffer007BC270 *&)shadowVertexBufferD3D)->Unlock();
  if(nShadowIndicesInBuf>SHADOW_INDEX_SIZE-numIndex) {
-  if(shadowIndexBufferD3D->Lock(0,numIndex*sizeof(short),(unsigned char**)&pvIndices,0x2000)!=0)return;
+  if(((ShadowBuffer007BC270 *&)shadowIndexBufferD3D)->Lock(0,numIndex*sizeof(short),(unsigned char**)&pvIndices,0x2000)!=0)return;
   nShadowIndicesInBuf=0; nShadowStartBatchIndex=0;
  } else {
-  if(shadowIndexBufferD3D->Lock(nShadowIndicesInBuf*sizeof(short),numIndex*sizeof(short),(unsigned char**)&pvIndices,0x1000)!=0)return;
+  if(((ShadowBuffer007BC270 *&)shadowIndexBufferD3D)->Lock(nShadowIndicesInBuf*sizeof(short),numIndex*sizeof(short),(unsigned char**)&pvIndices,0x1000)!=0)return;
  }
  if(pvIndices) memcpy(pvIndices,geometry->GetPolygonIndex(0,(short*)pvIndices),numPolys*3*sizeof(short));
- shadowIndexBufferD3D->Unlock();
- m_pDev->SetIndices(shadowIndexBufferD3D);
+ ((ShadowBuffer007BC270 *&)shadowIndexBufferD3D)->Unlock();
+ m_pDev->SetIndices(((ShadowBuffer007BC270 *&)shadowIndexBufferD3D));
  Matrix4 mWorld(*meshXform);
  m_pDev->SetTransform(256,&mWorld.Transpose());
- if(shadowVertexBufferD3D!=lastActiveVertexBuffer) {
-  m_pDev->SetStreamSource(0,shadowVertexBufferD3D,0,sizeof(Vector3));
-  lastActiveVertexBuffer=shadowVertexBufferD3D;
+ if(((ShadowBuffer007BC270 *&)shadowVertexBufferD3D)!=lastActiveVertexBuffer) {
+  m_pDev->SetStreamSource(0,((ShadowBuffer007BC270 *&)shadowVertexBufferD3D),0,sizeof(Vector3));
+  lastActiveVertexBuffer=((ShadowBuffer007BC270 *&)shadowVertexBufferD3D);
  }
  if(DX8Wrapper::_Is_Triangle_Draw_Enabled()) {
   Debug_Statistics::Record_DX8_Polys_And_Vertices(numPolys,numVerts,ShaderClass::_PresetOpaqueShader);

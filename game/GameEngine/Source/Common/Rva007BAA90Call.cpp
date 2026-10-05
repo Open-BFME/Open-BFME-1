@@ -8,7 +8,8 @@ public:
 
 void j_00047f46();
 
-Rva007BAA90G *g_rva007baa90;
+class W3DVolumetricShadowManager;
+extern W3DVolumetricShadowManager *TheW3DVolumetricShadowManager;
 
 class Rva007BAA90
 {
@@ -21,5 +22,5 @@ void Rva007BAA90::run()
 	typedef void (Rva007BAA90G::*BarCall)(void *);
 	union { void *address; BarCall member; } call;
 	call.address = (void *)j_00047f46;
-	(g_rva007baa90->*call.member)(this);
+	(((Rva007BAA90G *)TheW3DVolumetricShadowManager)->*call.member)(this);
 }

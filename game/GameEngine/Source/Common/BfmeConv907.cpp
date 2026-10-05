@@ -1,5 +1,8 @@
 // Open-BFME5 conversions.
 
+class W3DShadowManager;
+extern W3DShadowManager *TheW3DShadowManager;
+
 extern char g_bfmeVftAQB[];
 extern char g_bfmeVftBQB[];
 extern int TheW3DHordeModelDrawCount;
@@ -83,7 +86,7 @@ public:
 	void bfmeThreeQE();
 };
 
-extern BfmeGlobQE *g_bfmeGlobQE;
+
 
 class BfmeThingQE
 {
@@ -99,8 +102,8 @@ void BfmeThingQE::bfmeGoQE()
 	bfmeOneQE();
 	if (m_bfmeSub)
 		m_bfmeSub->bfmeTwoQE();
-	if (g_bfmeGlobQE)
-		g_bfmeGlobQE->bfmeThreeQE();
+	if (((BfmeGlobQE *&)TheW3DShadowManager))
+		((BfmeGlobQE *&)TheW3DShadowManager)->bfmeThreeQE();
 }
 
 class BfmeObjQF

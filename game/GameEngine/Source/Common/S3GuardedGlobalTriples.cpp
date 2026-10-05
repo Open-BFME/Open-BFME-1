@@ -25,6 +25,9 @@
 // related, or what any of the fifteen members do -- only that the guard, the
 // order, and the tail position are as written.
 
+class W3DVolumetricShadowManager;
+extern W3DVolumetricShadowManager *TheW3DVolumetricShadowManager;
+
 #define S3_H( ADDR ) __declspec(noinline) void h##ADDR();
 
 struct GenAlphaNode
@@ -62,7 +65,7 @@ public:
 };
 class GenGamma { public: S3_H(0004AB42) S3_H(000131E2) S3_H(0001FE8D) S3_H(00048C70) S3_H(0000C919) };
 
-extern GenAlpha *TheAlpha;
+
 class W3DProjectedShadowManager;
 extern W3DProjectedShadowManager *TheW3DProjectedShadowManager;
 
@@ -76,7 +79,7 @@ extern W3DShadowHelperManager *TheW3DShadowHelperManager;
 #define S3_TRIPLE( NAME, A, B, C )                                        \
 	void NAME()                                                           \
 	{                                                                     \
-		if( TheAlpha ) TheAlpha->h##A();                                  \
+		if( ((GenAlpha *&)TheW3DVolumetricShadowManager) ) ((GenAlpha *&)TheW3DVolumetricShadowManager)->h##A();                                  \
 		if( TheW3DShadowHelperManager )                                   \
 			((GenBeta *)TheW3DShadowHelperManager)->h##B();               \
 		if( TheW3DProjectedShadowManager ) reinterpret_cast<GenGamma *>(TheW3DProjectedShadowManager)->h##C();                                  \

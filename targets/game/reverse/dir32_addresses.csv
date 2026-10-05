@@ -17455,3 +17455,4 @@ _g_012F7014,0x012F7014
 ??_C@_01MMEEDKFM@X?$AA@,0x01089284
 ??_C@_0L@FNKFHPMI@FSCommand?3?$AA@,0x011370D0
 ?TheTaintManager@@3PAVTaintManager@@A,0x012ED5C0
+?CurrentRenderTarget@DX8Wrapper@@1PAUIDirect3DSurface8@@A,0x01340538

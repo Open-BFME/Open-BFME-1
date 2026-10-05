@@ -18,6 +18,9 @@
 // before release is the self-assignment-safe order.  `mov eax,esi` returns the
 // receiver, which is what an assignment operator hands back.
 
+class W3DShadowManager;
+extern W3DShadowManager *TheW3DShadowManager;
+
 struct Open2Unknown;
 
 struct Open2UnknownVtbl
@@ -196,7 +199,7 @@ public:
 	const Open2Triple *fetch( int which );
 };
 
-extern Open27110B0Source *TheOpen27110B0Source;
+
 
 class Open2Triple5;
 struct Triple006E2540;
@@ -211,8 +214,8 @@ public:
 // @?read@Sink006E2540@@QAEXPAVOpen2Triple@@@Z 0x007110B0
 void Sink006E2540::read( Open2Triple *out )
 {
-	if( TheOpen27110B0Source )
-		*out = *TheOpen27110B0Source->fetch( 0 );
+	if( ((Open27110B0Source *&)TheW3DShadowManager) )
+		*out = *((Open27110B0Source *&)TheW3DShadowManager)->fetch( 0 );
 }
 
 // ---------------------------------------------------------------------------
