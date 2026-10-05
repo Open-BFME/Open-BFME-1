@@ -270,3 +270,5 @@ game/GameEngine/Source/Common/BfmeConv1778.cpp|type||BfmeInfoDB,Player,gemini+gr
 game/GameEngine/Source/Common/BfmeConv1778.cpp|type||BfmeOwnDB,InGameUI,gemini+grok,applied,2026-10-01
 game/GameEngine/Source/Common/BfmeConv930.cpp|type||BfmeThing930D,StreakRendererClass,gemini+grok,agreed,2026-10-01
 game/GameEngine/Source/Common/BfmeConv930.cpp|type||BfmeThing930D,StreakRendererClass,gemini+grok,applied,2026-10-01
+game/GameEngine/Source/Common/BfmeConv912.cpp|member||m_bfmeHead,m_head,gpt-6-astra+grok,agreed,2026-10-05
+game/GameEngine/Source/Common/BfmeConv912.cpp|local|BfmeThing912C::bfmeGo912C|n,node,gpt-6-astra+grok,agreed,2026-10-05

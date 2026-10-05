@@ -405,3 +405,6 @@ game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfme
 game/GameEngine/Source/Common/BfmeConv1778.cpp|type||BfmeInfoDB,bbedb7ef023245ec2eadaf9f,gemini,20261001115037-316f00,2026-10-01
 game/GameEngine/Source/Common/BfmeConv1778.cpp|type||BfmeOwnDB,02f79a5e8fa60c290e8fd179,gemini,20261001115037-316f00,2026-10-01
 game/GameEngine/Source/Common/BfmeConv930.cpp|type||BfmeThing930D,b0f9fc96a7ac81b8c9bf7aad,gemini,20261001115155-87b968,2026-10-01
+game/GameEngine/Source/Common/BfmeConv912.cpp|member||m_bfmeHead,156edda6641bd1bc360a2359,gpt-6-astra,20261005160655-29a344,2026-10-05
+game/GameEngine/Source/Common/BfmeConv912.cpp|local|bfmeGo912B|p,5e640e2c3864e77808339352,gpt-6-astra,20261005160655-29a344,2026-10-05
+game/GameEngine/Source/Common/BfmeConv912.cpp|local|BfmeThing912C::bfmeGo912C|n,6dbc338fa9c7aa42daf36fe1,gpt-6-astra,20261005160655-29a344,2026-10-05
