@@ -509,3 +509,6 @@ game/GameEngine/Source/Common/BfmeConv1214.cpp|member||m_bfme08,0daf5d75d34385b8
 game/GameEngine/Source/Common/BfmeConv1214.cpp|param|bfmeGo1214|a,7ce1a769217c5d305560ef6b,gpt-6-astra,20261005162043-674e99,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1214.cpp|local|bfmeGo1214|p,caab133ea9532147b68dc2de,gpt-6-astra,20261005162043-674e99,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1214.cpp|local|bfmeGo1214|c,64739315722c4d45223b314e,gpt-6-astra,20261005162043-674e99,2026-10-05
+game/GameEngine/Source/Common/Audio/AudioManagerInit.cpp|type||AudioSettings006B8220,9f6083ceb4cbe9fb72aa894d,gpt-6-astra,20261005161757-5286de,2026-10-05
+game/GameEngine/Source/Common/Audio/AudioManagerInit.cpp|type||GameLODManager006B8220,5a70382e2cba543e50908318,gpt-6-astra,20261005161757-5286de,2026-10-05
+game/GameEngine/Source/Common/Audio/AudioManagerInit.cpp|member||m_field44,d373ef69d7d0a360e2a12810,gpt-6-astra,20261005161757-5286de,2026-10-05
