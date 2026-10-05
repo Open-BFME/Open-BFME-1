@@ -161,7 +161,7 @@ extern Rva012F49B4Thing *g_rva012F49B4;
 extern WindowManager *g_theWindowManager;
 extern Mouse *TheMouse;
 extern Shell *TheShell;
-extern BfmeAptScreenScoreScreen *g_obj12F4B50;
+extern BfmeAptScreenScoreScreen *Rva012F4B50ScoreScreen;
 
 class LoadGameFadeHolder
 {
@@ -178,11 +178,11 @@ void postTimedOp( LoadGameFadeHolder holder, void *key );
 // ?_bfme_leaveScoreScreen@@YAXXZ
 void _bfme_leaveScoreScreen()
 {
-	if ( g_obj12F4B50 == 0 )
+	if ( Rva012F4B50ScoreScreen == 0 )
 		return;
 
 	((ClientSubsystem *)TheAudio)->slot6c( 2, 1, 0 );
-	if ( g_obj12F4B50->m_gameType == 0 )
+	if ( Rva012F4B50ScoreScreen->m_gameType == 0 )
 	{
 		if ( TheLivingWorldLogic->hasFollowUp() )
 		{

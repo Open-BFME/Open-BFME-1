@@ -127,7 +127,8 @@ public:
 // GameClient::reset loads 0x012F10D0 here, not TheEva. Eva.cpp's parseMiscEvaData
 // and EvaEventFXNugget bind TheEva to 0x012F142C (GameEngine::init). 0x012F10D0 is
 // the registry AnimationSoundClientBehavior unregisters from.
-extern BfmeResetSubsystem *g_animationSoundClientBehaviorGlobal;	///< retail 0x012F10D0
+class AnimationSoundModuleManager;
+extern AnimationSoundModuleManager *TheAnimationSoundModuleManager;	///< retail 0x012F10D0
 class CloudEffectSystem;
 class CloudSystem;
 extern CloudEffectSystem *TheCloudEffectSystem;
@@ -589,7 +590,7 @@ void GameClient::reset( void )
 	reinterpret_cast<BfmeResetTerrain *>(TheTerrainVisual)->reset();
 	reinterpret_cast<BfmeResetSubsystem *>(TheRayEffects)->reset();
 	reinterpret_cast<BfmeResetSubsystem *>(TheVideoPlayer)->reset();
-	g_animationSoundClientBehaviorGlobal->reset();
+	((BfmeResetSubsystem *)TheAnimationSoundModuleManager)->reset();
 	j_00041349();
 
 	BfmeResetSubsystem *subsystem = reinterpret_cast<BfmeResetSubsystem *>(TheSnowManager);

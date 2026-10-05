@@ -47,11 +47,12 @@ public:
 };
 
 extern BfmeRecJD *g_bfmeBeginJD;
-extern BfmeRecJD *g_bfmeEndJD;
+#include "../../Include/GameClient/Video.h"
+extern Video *g_bfmeVideoTableEnd;
 
 BfmeRecJD * __stdcall bfmeSlotAt(int index)
 {
-	if (index >= 0 && index < (int)(g_bfmeEndJD - g_bfmeBeginJD))
+	if (index >= 0 && index < (int)((BfmeRecJD *)g_bfmeVideoTableEnd - g_bfmeBeginJD))
 		return g_bfmeBeginJD + index;
 	return 0;
 }

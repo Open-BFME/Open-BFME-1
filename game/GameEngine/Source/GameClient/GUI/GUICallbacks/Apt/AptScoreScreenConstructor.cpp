@@ -176,7 +176,7 @@ public:
 
 extern WindowManager *g_rva012F19E8WindowManager;
 extern const char *Rva012B7F9CNames[11];
-extern BfmeAptScreenScoreScreen *Rva012F4B50ScoreScreen;
+BfmeAptScreenScoreScreen *Rva012F4B50ScoreScreen = 0;
 
 class BfmeAptScreenScoreScreen : public _bfme_AptGameWindow {
 public:

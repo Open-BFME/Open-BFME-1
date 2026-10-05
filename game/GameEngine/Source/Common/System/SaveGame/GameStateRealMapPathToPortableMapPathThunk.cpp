@@ -150,8 +150,8 @@ public:
 };
 
 const char *PORTABLE_SAVE = "Save\\";
-const char *PORTABLE_MAPS = "Maps\\";
-const char *PORTABLE_USER_MAPS = "UserData\\Maps\\";
+extern const char *PORTABLE_MAPS;
+extern const char *PORTABLE_USER_MAPS;
 
 static const char *findLastBackslashInRangeInclusive(const char *start,
                                                        const char *end)

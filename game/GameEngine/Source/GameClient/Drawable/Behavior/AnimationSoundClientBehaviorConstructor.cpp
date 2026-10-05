@@ -87,7 +87,8 @@ public:
 class AudioManager;
 extern AudioManager *TheAudio;
 class BfmeResetSubsystem;
-extern BfmeResetSubsystem *g_animationSoundClientBehaviorGlobal;
+class AnimationSoundModuleManager;
+extern AnimationSoundModuleManager *TheAnimationSoundModuleManager;
 
 class AnimationSoundClientBehavior : public DrawableModule, public ASCB_Iface
 {
@@ -125,7 +126,7 @@ AnimationSoundClientBehavior::AnimationSoundClientBehavior(Thing *thing, const M
 		maxScale = data->m_scaleLimit;
 	m_soundScale = maxScale * maxScale;
 
-	if (g_animationSoundClientBehaviorGlobal)
-		((Rva004091C0Registry *)g_animationSoundClientBehaviorGlobal)->rva_004091C0(
+	if (TheAnimationSoundModuleManager)
+		((Rva004091C0Registry *)TheAnimationSoundModuleManager)->rva_004091C0(
 			(Rva004091C0Node *)this);
 }

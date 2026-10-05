@@ -20,7 +20,8 @@ public:
 };
 
 class BfmeResetSubsystem;
-extern BfmeResetSubsystem *g_animationSoundClientBehaviorGlobal;
+class AnimationSoundModuleManager;
+extern AnimationSoundModuleManager *TheAnimationSoundModuleManager;
 
 class Rva00605710Root
 {
@@ -64,7 +65,7 @@ AnimationSoundClientBehavior::AnimationSoundClientBehavior(const Rva00605710Sour
 	: Rva00605710Middle(source), Rva00605710Iface(),
 	  field10(source.field10), next(0), prev(0)
 {
-	if (g_animationSoundClientBehaviorGlobal)
-		((Rva004091C0Registry *)g_animationSoundClientBehaviorGlobal)->rva_004091C0(
+	if (TheAnimationSoundModuleManager)
+		((Rva004091C0Registry *)TheAnimationSoundModuleManager)->rva_004091C0(
 			(Rva004091C0Node *)this);
 }

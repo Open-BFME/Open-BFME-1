@@ -107,14 +107,14 @@ class AudioManager;
 
 extern AudioManager *TheAudio;
 extern Shell *TheShell;
-extern void *g_obj12F4B50;
+extern BfmeAptScreenScoreScreen *Rva012F4B50ScoreScreen;
 
 // ?_bfme_showScoreScreen@@YA_NXZ
 Bool _bfme_showScoreScreen(void)
 {
 	Int type = 0;
 
-	if (g_obj12F4B50 != 0)
+	if (Rva012F4B50ScoreScreen != 0)
 		goto success;
 
 	if (TheRecorder != 0 && TheRecorder->getMode() == RECORDERMODETYPE_PLAYBACK)
@@ -150,9 +150,9 @@ Bool _bfme_showScoreScreen(void)
 		TheShell->push(AsciiString("ScoreScreen.apt"), false);
 
 		if (type == 0)
-			((BfmeAptScreenScoreScreen *)g_obj12F4B50)->_bfme_populateSinglePlayer();
+			((BfmeAptScreenScoreScreen *)Rva012F4B50ScoreScreen)->_bfme_populateSinglePlayer();
 		else
-			((BfmeAptScreenScoreScreen *)g_obj12F4B50)->_bfme_populateMultiPlayer(type);
+			((BfmeAptScreenScoreScreen *)Rva012F4B50ScoreScreen)->_bfme_populateMultiPlayer(type);
 	}
 
 success:

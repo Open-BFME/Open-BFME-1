@@ -31,7 +31,8 @@ public:
 	volatile float m_bfme24;
 };
 
-extern BfmeReg963 *g_bfmeReg963;
+class AnimationSoundModuleManager;
+AnimationSoundModuleManager *TheAnimationSoundModuleManager = 0;
 
 BfmeReg963::BfmeReg963()
 {
@@ -48,6 +49,6 @@ BfmeReg963::BfmeReg963()
 	m_bfme20 = 3.402823466e+38f;
 	m_bfme24 = 3.402823466e+38f;
 
-	if (g_bfmeReg963 == 0)
-		g_bfmeReg963 = this;
+	if (TheAnimationSoundModuleManager == 0)
+		TheAnimationSoundModuleManager = (AnimationSoundModuleManager *)this;
 }

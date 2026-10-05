@@ -17978,5 +17978,25 @@
   "after_sha256": "71000723d31b907bf466af2be11dd47ccb9b4636d219ebc8ced3782dd961c625",
   "evidence": "targets/game/reverse/identity_evidence/003e4680-radius-lifetime.md",
   "reason": "Historical bank comparison pairs its getCell with the pre-existing sibling accessor. New 003E4680 still calls native getCell at 003FBAB0; existing 003E49F0 retains independently verified 003FBB20. No native name is removed or transferred between equal-byte bodies. Original bank archived unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptScoreScreen.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptScoreScreen.cpp",
+  "old_name": "g_obj12F4B50",
+  "new_name": "Rva012F4B50ScoreScreen",
+  "before_sha256": "e581346bc45e35e846f7a8ae257c03df6263cf43bf362a028ad9fdd785327bc5",
+  "after_sha256": "1a50f574a39b062b9e831a5a755f48a72c495556b2de8cd78f5b9f45a25a5d04",
+  "evidence": "targets/game/reverse/identity_evidence/pointer-globals-012f4b50.md",
+  "reason": "VA 0x012F4B50 holds the Apt score-screen object pointer; g_obj12F4B50 and Rva012F4B50ScoreScreen are both address-derived spellings, and the latter names the verified score-screen role. No EA name is proven. Bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/ScoreScreenLeave.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/ScoreScreenLeave.cpp",
+  "old_name": "g_obj12F4B50",
+  "new_name": "Rva012F4B50ScoreScreen",
+  "before_sha256": "598837fc72a07496930d57f4d31c656d5fa9dc8077e1c736942b571cfdfbb68d",
+  "after_sha256": "f2f2d06ebbd012c3ece83f93bccbc36dccf1736ff4ba45ce9958f41e33448ee1",
+  "evidence": "targets/game/reverse/identity_evidence/pointer-globals-012f4b50.md",
+  "reason": "VA 0x012F4B50 holds the Apt score-screen object pointer; g_obj12F4B50 and Rva012F4B50ScoreScreen are both address-derived spellings, and the latter names the verified score-screen role. No EA name is proven. Bytes unchanged."
  }
 ]

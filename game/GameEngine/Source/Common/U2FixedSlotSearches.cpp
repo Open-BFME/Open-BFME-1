@@ -31,11 +31,12 @@ struct Rva0081C5C0Element
 };
 
 extern Rva0081C5C0Element *g_Rva0081C5C0Begin;
-extern Rva0081C5C0Element *g_Rva0081C5C0End;
+#include "../../Include/GameClient/Video.h"
+extern Video *g_bfmeVideoTableEnd;
 
 int Rva0081C5C0Count()
 {
-	return g_Rva0081C5C0End - g_Rva0081C5C0Begin;
+	return g_bfmeVideoTableEnd - (Video *)g_Rva0081C5C0Begin;
 }
 
 // 0x00806370 -- the second member of the same class, and what says the first

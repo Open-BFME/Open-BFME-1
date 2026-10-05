@@ -137,8 +137,8 @@ static __forceinline const char *rva0010f820String(const char *const *slot)
 // sees the same mutable pointer loads as the compact helper.  BC/C8 remain
 // direct address-derived lvalues because they are the Save prefix and its
 // route code slots also consumed by matched map-path code.
-const char *rva0010f820Maps = "Maps\\";
-const char *rva0010f820UserMaps = "UserData\\Maps\\";
+extern const char *PORTABLE_MAPS;
+extern const char *PORTABLE_USER_MAPS;
 const char *rva0010f820MapCode = "M";
 const char *rva0010f820UserCode = "U";
 const char *rva0010f820FallbackCode = "X";
@@ -162,26 +162,26 @@ AsciiString GameState::rva0010f820MapPathCode(const AsciiString &path) const
         ((StringBase<char> *)&prefix)->concat(tail, tailLength);
     }
     else if (((const StringBase<char> *)&path)->startsWithNoCase(
-                 rva0010f820Maps,
-                 rva0010f820Maps ? (int)strlen(rva0010f820Maps) : 0))
+                 PORTABLE_MAPS,
+                 PORTABLE_MAPS ? (int)strlen(PORTABLE_MAPS) : 0))
     {
         const char *code = rva0010f820MapCode;
         ((StringBase<char> *)&prefix)->set(
             code, code ? (int)strlen(code) : 0);
 
         const int tailOffset =
-            (int)strlen(rva0010f820Maps);
+            (int)strlen(PORTABLE_MAPS);
         const char *tail = path.str() + tailOffset;
         const int tailLength = tail ? (int)strlen(tail) : 0;
         ((StringBase<char> *)&prefix)->concat(tail, tailLength);
     }
     else if (((const StringBase<char> *)&path)->startsWithNoCase(
-                 rva0010f820UserMaps,
-                 rva0010f820UserMaps ? (int)strlen(rva0010f820UserMaps) : 0))
+                 PORTABLE_USER_MAPS,
+                 PORTABLE_USER_MAPS ? (int)strlen(PORTABLE_USER_MAPS) : 0))
     {
         prefix = rva0010f820UserCode;
         const int tailOffset =
-            (int)strlen(rva0010f820UserMaps);
+            (int)strlen(PORTABLE_USER_MAPS);
         ((StringBase<char> *)&prefix)->concat(path.str() + tailOffset);
     }
     else

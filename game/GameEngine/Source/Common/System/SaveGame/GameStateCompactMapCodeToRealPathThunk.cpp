@@ -88,9 +88,9 @@ static __forceinline const char *rva0010e580String(const char *const &value)
 }
 
 const char *rva0010e580MapsCode = "M";
-const char *rva0010e580MapsPrefix = "Maps\\";
+extern const char *PORTABLE_MAPS;
 const char *rva0010e580UserCode = "U";
-const char *rva0010e580UserPrefix = "UserData\\Maps\\";
+extern const char *PORTABLE_USER_MAPS;
 const char *rva0010e580FallbackCode = "X";
 
 // ?rva0010e580MapPathCode@GameState@@QBE?AVAsciiString@@ABV2@@Z
@@ -132,9 +132,9 @@ AsciiString Rva0010E580GameState::rva0010e580MapPathCode(
                      ? (int)strlen(rva0010e580MapsCode) : 0))
     {
         ((StringBase<char> *)&prefix)->concat(
-            rva0010e580MapsPrefix,
-            rva0010e580MapsPrefix
-                ? (int)strlen(rva0010e580MapsPrefix) : 0);
+            PORTABLE_MAPS,
+            PORTABLE_MAPS
+                ? (int)strlen(PORTABLE_MAPS) : 0);
 
         const int tailOffset =
             (int)strlen(rva0010e580MapsCode);
@@ -147,7 +147,7 @@ AsciiString Rva0010E580GameState::rva0010e580MapPathCode(
                  rva0010e580UserCode
                      ? (int)strlen(rva0010e580UserCode) : 0))
     {
-        (prefix.*appendThunk.append)(rva0010e580UserPrefix);
+        (prefix.*appendThunk.append)(PORTABLE_USER_MAPS);
 
         const int tailOffset =
             (int)strlen(rva0010e580UserCode);

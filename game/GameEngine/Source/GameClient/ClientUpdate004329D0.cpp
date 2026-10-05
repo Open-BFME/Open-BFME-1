@@ -250,7 +250,8 @@ extern GameLogic *TheGameLogic;
 extern Players005999B0 *PlayerList005999B0;
 extern Engine007629F0 *EngineGlobal007629F0;
 extern GhostObjectManager *TheGhostObjectManager;
-extern Gen_00409040Registry *g_012F10D0;
+class AnimationSoundModuleManager;
+extern AnimationSoundModuleManager *TheAnimationSoundModuleManager;
 extern Rva001A8820TerrainVisual *TheTerrainVisual;
 extern ParticleSystemManager *TheParticleSystemManager;
 extern Rva0048EC80Manager *Rva0048EC80TheManager;
@@ -343,7 +344,7 @@ void ClientUpdate004329D0::update() {
             draw->rva0041BE60();
             draw = next;
         }
-        ((Dispatch004329D0 *)g_012F10D0)->v14();
+        ((Dispatch004329D0 *)TheAnimationSoundModuleManager)->v14();
         if (at<int>(EngineGlobal007629F0,0x30)==1)
             ((Rva0042F190Host *)this)->rva0042F190(((Logic004329D0 *)TheGameLogic)->getFrame(),true);
         else

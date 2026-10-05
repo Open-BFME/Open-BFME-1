@@ -15,7 +15,8 @@ public:
     void unregister(AnimationSoundClientBehavior *);
 };
 
-extern AnimationSoundClientBehaviorGlobal *g_animationSoundClientBehaviorGlobal;
+class AnimationSoundModuleManager;
+extern AnimationSoundModuleManager *TheAnimationSoundModuleManager;
 
 class ASCB_RootBase
 {
@@ -47,7 +48,7 @@ public:
 // ??1AnimationSoundClientBehavior@@UAE@XZ
 AnimationSoundClientBehavior::~AnimationSoundClientBehavior()
 {
-    if (g_animationSoundClientBehaviorGlobal) {
-        g_animationSoundClientBehaviorGlobal->unregister(this);
+    if (TheAnimationSoundModuleManager) {
+        ((AnimationSoundClientBehaviorGlobal *)TheAnimationSoundModuleManager)->unregister(this);
     }
 }

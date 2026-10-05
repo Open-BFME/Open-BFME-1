@@ -12,7 +12,8 @@ public:
 
 class BfmeResetSubsystem;
 
-extern BfmeResetSubsystem *g_animationSoundClientBehaviorGlobal;
+class AnimationSoundModuleManager;
+extern AnimationSoundModuleManager *TheAnimationSoundModuleManager;
 
 // The position accessor is matched as BFMERopeDrawableGetPositionShim::get and
 // the notify helper as Gen_00409040Registry::m. Both declare a Coord3D that
@@ -54,7 +55,7 @@ void Rva00604EE0Module::reactToTransformChange(void *oldMatrix, const Coord3D *o
 		&& ((Rva00604EE0GetPosition)j_0004b12d)(rope)->IsExactlyEqualTo(*oldPosition))
 		return;
 
-	BfmeResetSubsystem *subsystem = g_animationSoundClientBehaviorGlobal;
+	BfmeResetSubsystem *subsystem = (BfmeResetSubsystem *)TheAnimationSoundModuleManager;
 	if (subsystem != 0)
 	{
 		Rva00604EE0Cast cast;

@@ -23,7 +23,8 @@ public:
 	void m(void *node);
 };
 
-extern Gen_00409040Registry *g_012F10D0;
+class AnimationSoundModuleManager;
+extern AnimationSoundModuleManager *TheAnimationSoundModuleManager;
 
 class Gen_00604be0
 {
@@ -33,6 +34,6 @@ public:
 
 void Gen_00604be0::n(void)
 {
-	if (g_012F10D0 != 0)
-		g_012F10D0->m((char *)this - 12);
+	if (TheAnimationSoundModuleManager != 0)
+		((Gen_00409040Registry *)TheAnimationSoundModuleManager)->m((char *)this - 12);
 }

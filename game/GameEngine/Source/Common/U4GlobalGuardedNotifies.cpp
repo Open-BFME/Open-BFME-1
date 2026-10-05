@@ -61,7 +61,8 @@ public:
 	void noteOwner( U4Owner00604C00 *o );
 };
 
-extern U4Notify *g_u4Notify;
+class AnimationSoundModuleManager;
+extern AnimationSoundModuleManager *TheAnimationSoundModuleManager;
 
 // ---------------------------------------------------------------- 0x006057C0
 
@@ -83,8 +84,8 @@ U4Assign006057C0 &U4Assign006057C0::operator=( const U4Assign006057C0 &other )
 		m_f04 = other.m_f04;
 		m_f08 = other.m_f08;
 		m_f10 = other.m_f10;
-		if ( g_u4Notify != 0 )
-			g_u4Notify->noteAssign( this );
+		if ( TheAnimationSoundModuleManager != 0 )
+			((U4Notify *)TheAnimationSoundModuleManager)->noteAssign( this );
 	}
 	return *this;
 }
@@ -100,8 +101,8 @@ public:
 void U4Inner00604C00::detach( void )
 {
 	U4Owner00604C00 *owner = (U4Owner00604C00 *)( (char *)this - 0x0C );
-	if ( g_u4Notify != 0 )
-		g_u4Notify->noteOwner( owner );
+	if ( TheAnimationSoundModuleManager != 0 )
+		((U4Notify *)TheAnimationSoundModuleManager)->noteOwner( owner );
 }
 
 // ---------------------------------------------------------------- 0x0060C2C0

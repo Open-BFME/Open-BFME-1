@@ -140,7 +140,8 @@ extern Rva00579160Manager *Rva00579160TheManager;
 extern GameWindowManager *TheWindowManager;
 extern FontLibrary *TheFontLibrary;
 extern Mouse *TheMouse;
-extern AnimationSoundClientBehaviorGlobal *g_animationSoundClientBehaviorGlobal;
+class AnimationSoundModuleManager;
+extern AnimationSoundModuleManager *TheAnimationSoundModuleManager;
 extern TerrainVisual *TheTerrainVisual;
 extern Display *TheDisplay;
 extern Gen_0048C5B0 *TheHeaderTemplateManager;
@@ -242,8 +243,8 @@ GameClient::~GameClient()
 	delete TheMouse;
 	TheMouse = NULL;
 
-	delete g_animationSoundClientBehaviorGlobal;
-	g_animationSoundClientBehaviorGlobal = NULL;
+	delete (AnimationSoundClientBehaviorGlobal *)TheAnimationSoundModuleManager;
+	TheAnimationSoundModuleManager = NULL;
 
 	delete TheTerrainVisual;
 	TheTerrainVisual = NULL;
