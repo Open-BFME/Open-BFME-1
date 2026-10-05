@@ -24,8 +24,8 @@
 //
 // ONE AXIS, AND IT IS A DATA ADDRESS.  Every one of the twenty-four names a
 // DIFFERENT record.  Within a body the two loads are always exactly 0x14 apart,
-// which is five dwords: the record holds two parallel five-entry dword arrays,
-// the second at +0x14, and only the first four entries of each are reachable
+// which is five dwords: the two dword banks start at zero and +0x14,
+// and only the first four entries of each are reachable
 // through `and eax,3`.  Across bodies the records step by 0x28 -- exactly the
 // size of that record -- and several runs are contiguous, so these are almost
 // certainly elements of one larger array.  That is an observation about
@@ -50,6 +50,13 @@ struct BigObfSelectorRecord
 {
 	unsigned int m_key[ 5 ];
 	unsigned int m_seed[ 5 ];
+};
+
+struct BigObfSelectorRecord012B7ABC
+{
+	unsigned int m_key[ 4 ];
+	unsigned int m_padding;
+	unsigned int m_seed[ 4 ];
 };
 
 struct BigObfSelectorRecord012B7788
@@ -99,12 +106,12 @@ BFME_SELECT_BIG_BY_STACK( Rva003C7EE0, g_ObfRecord012B488C )
 BFME_SELECT_BIG_BY_STACK( Rva00526430, g_ObfRecord012B7738 )
 BFME_SELECT_BY_STACK_RECORD( Rva005264B0, g_ObfRecord012B7788, BigObfSelectorRecord012B7788, m_key, m_seed )
 BFME_SELECT_BIG_BY_STACK( Rva0054D600, g_ObfRecord012B79A4 )
-BFME_SELECT_BY_STACK( Rva0054D640, g_twoBitSelectorRecord012B79CC )
-BFME_SELECT_BY_STACK( Rva0054D6C0, g_twoBitSelectorRecord012B7A1C )
-BFME_SELECT_BY_STACK( Rva0054D700, g_twoBitSelectorRecord012B7A44 )
-BFME_SELECT_BY_STACK( Rva0056CCC0, g_twoBitSelectorRecord012B7E70 )
-BFME_SELECT_BY_STACK( Rva0056CD40, g_twoBitSelectorRecord012B7EC0 )
-BFME_SELECT_BY_STACK( Rva0058F530, g_twoBitSelectorRecord012B829C )
+BFME_SELECT_BIG_BY_STACK( Rva0054D640, g_ObfRecord012B79CC )
+BFME_SELECT_BIG_BY_STACK( Rva0054D6C0, g_ObfRecord012B7A1C )
+BFME_SELECT_BIG_BY_STACK( Rva0054D700, g_ObfRecord012B7A44 )
+BFME_SELECT_BIG_BY_STACK( Rva0056CCC0, g_ObfRecord012B7E70 )
+BFME_SELECT_BIG_BY_STACK( Rva0056CD40, g_ObfRecord012B7EC0 )
+BFME_SELECT_BIG_BY_STACK( Rva0058F530, g_ObfRecord012B829C )
 
 extern BigObfSelectorRecord g_ObfRecord012A6FF4;
 void Rva00062870(int **outSecond, int **outFirst)
@@ -119,10 +126,10 @@ void Rva00062870(int **outSecond, int **outFirst)
 BFME_SELECT_BIG_BY_TIMESTAMP( Rva00099350, g_ObfRecord012A7D38 )
 BFME_SELECT_BIG_BY_TIMESTAMP( Rva003875C0, g_ObfRecord012B446C )
 BFME_SELECT_BIG_BY_TIMESTAMP( Rva00387600, g_ObfRecord012B4494 )
-BFME_SELECT_BY_TIMESTAMP( Rva0054D680, g_twoBitSelectorRecord012B79F4 )
-BFME_SELECT_BY_TIMESTAMP( Rva0054D740, g_twoBitSelectorRecord012B7A6C )
-BFME_SELECT_BY_TIMESTAMP( Rva0054D780, g_twoBitSelectorRecord012B7A94 )
-BFME_SELECT_BY_TIMESTAMP( Rva0054D7C0, g_twoBitSelectorRecord012B7ABC )
-BFME_SELECT_BY_TIMESTAMP( Rva0056CD00, g_twoBitSelectorRecord012B7E98 )
-BFME_SELECT_BY_TIMESTAMP( Rva0056CD80, g_twoBitSelectorRecord012B7EE8 )
+BFME_SELECT_BIG_BY_TIMESTAMP( Rva0054D680, g_ObfRecord012B79F4 )
+BFME_SELECT_BIG_BY_TIMESTAMP( Rva0054D740, g_ObfRecord012B7A6C )
+BFME_SELECT_BIG_BY_TIMESTAMP( Rva0054D780, g_ObfRecord012B7A94 )
+BFME_SELECT_BY_TIMESTAMP_RECORD( Rva0054D7C0, g_ObfRecord012B7ABC, BigObfSelectorRecord012B7ABC, m_key, m_seed )
+BFME_SELECT_BIG_BY_TIMESTAMP( Rva0056CD00, g_ObfRecord012B7E98 )
+BFME_SELECT_BIG_BY_TIMESTAMP( Rva0056CD80, g_ObfRecord012B7EE8 )
 BFME_SELECT_BY_TIMESTAMP( Rva00619B10, g_twoBitSelectorRecord012B90B8 )
