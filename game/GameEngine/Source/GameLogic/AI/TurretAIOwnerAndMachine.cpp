@@ -230,7 +230,6 @@ public:
 };
 
 extern GameLogic *TheGameLogic;
-extern char TurretAIFileName[];
 int GetGameLogicRandomValue(int, int, char *, int);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TurretAI.h
@@ -291,7 +290,7 @@ StateReturnType TurretAIIdleState::onEnter()
 	int delay = GetGameLogicRandomValue(
 		getTurretAI()->getMinIdleScanInterval(),
 		getTurretAI()->getMaxIdleScanInterval(),
-		TurretAIFileName, 0x4FE);
+		"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\TurretAI.cpp", 0x4FE);
 	NextIdleScan = now + delay;
 
 	TurretAI *turret = Machine->Turret;

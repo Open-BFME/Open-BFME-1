@@ -38,7 +38,6 @@ public:
 };
 
 extern GameLogic *TheGameLogic;
-extern char g_bfmeFmt1051B[];
 int GetGameLogicRandomValue(int, int, char *, int);
 
 class TerrainLogic
@@ -158,10 +157,10 @@ UpdateSleepTime OCLUpdate::update()
 		return UPDATE_SLEEP_NONE;
 	if (*(volatile UnsignedInt *)((const char *)this + 0x10) == 0)
 	{
-		setNextCreationFrame(g_bfmeFmt1051B);
+		setNextCreationFrame("F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\OCLUpdate.cpp");
 		return UPDATE_SLEEP_NONE;
 	}
-	setNextCreationFrameOrdered(g_bfmeFmt1051B);
+	setNextCreationFrameOrdered("F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\OCLUpdate.cpp");
 	if ((*(OCLUpdateModuleData *volatile *)((const char *)this - 0xc))->m_isCreateAtEdge)
 		creationCoord = TheTerrainLogic->findClosestEdgePoint(getObject()->getPosition());
 	else

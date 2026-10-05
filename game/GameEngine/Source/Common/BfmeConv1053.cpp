@@ -41,7 +41,6 @@ BfmeA1053 *BfmeA1053::bfmeGo1053A(void)
 class BfmeE1053;
 
 extern "C" void bfmeHook1053(void);
-extern char g_bfmeName1053[];
 extern int g_bfmeTab1053;
 void bfmeReg1053(int a, int b, char *n, int k, int *t, void (*fn)(void), BfmeE1053 *o, int f);
 
@@ -53,5 +52,5 @@ public:
 
 void BfmeE1053::bfmeGo1053E(int a, int b)
 {
-	bfmeReg1053(a, b, g_bfmeName1053, 8, &g_bfmeTab1053, bfmeHook1053, this, 0);
+	bfmeReg1053(a, b, "*", 8, &g_bfmeTab1053, bfmeHook1053, this, 0);
 }

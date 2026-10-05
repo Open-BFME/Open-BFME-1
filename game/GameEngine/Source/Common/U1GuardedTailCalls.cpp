@@ -93,8 +93,6 @@ public:
 };
 
 extern const char g_u4Separator[];
-extern const char g_u1False[];
-extern const char g_u1True[];
 extern const char g_u1Empty[];
 void __cdecl u1FormatPointer( INI *ini, void *value );
 INI *__cdecl u4FormatFloat( INI *ini, double value );
@@ -131,7 +129,7 @@ void u1Do_005C7410( void *a, void *b, void *c, U1ByteFlagged *d )
 {
 	INI *ini = (INI *)a;
 	u1BeginField( ini, b, c );
-	ini->u4Append( d->m_flag ? g_u1True : g_u1False );
+	ini->u4Append( d->m_flag ? "Yes" : "No" );
 	ini->u4Finish( 10 );
 }
 

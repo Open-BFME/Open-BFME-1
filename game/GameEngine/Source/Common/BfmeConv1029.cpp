@@ -49,7 +49,6 @@ BfmeB1029 *BfmeB1029::bfmeGo1029B(void)
 	return this;
 }
 
-extern char g_bfmeFmt1029[];
 int bfmeCount1029(int a, int b, char *f, int n);
 
 class BfmeC1029
@@ -64,7 +63,7 @@ public:
 
 int BfmeC1029::bfmeGo1029C(void)
 {
-	return bfmeCount1029(0, m_bfmeA, g_bfmeFmt1029, 0x54) + m_bfmeB + 1;
+	return bfmeCount1029(0, m_bfmeA, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\LargeGroupAudioUpdate.cpp", 0x54) + m_bfmeB + 1;
 }
 
 void bfmeNote1029(int i, char v);

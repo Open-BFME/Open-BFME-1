@@ -49,7 +49,6 @@ protected:
 	void setWakeFrame(Object *object, UpdateSleepTime wakeDelay);
 };
 
-extern char g_bfmeFmt1029[];
 
 class LargeGroupAudio;
 extern LargeGroupAudio *TheLargeGroupAudio;
@@ -85,7 +84,7 @@ void Gen00296F90::handle()
 
 	Object *object = m_object;
 	LargeGroupAudioUpdateModuleData *moduleData = m_moduleData;
-	int wakeDelay = GetGameLogicRandomValue(0, moduleData->m_a, g_bfmeFmt1029, 0x54) +
+	int wakeDelay = GetGameLogicRandomValue(0, moduleData->m_a, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\LargeGroupAudioUpdate.cpp", 0x54) +
 		moduleData->m_b + 1;
 	setWakeFrame(object, static_cast<UpdateSleepTime>(wakeDelay));
 

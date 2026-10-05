@@ -42,7 +42,6 @@ struct BfmeQ1041
 	void *m_bfmeR;
 };
 
-extern char g_bfmeFmt1041[];
 int bfmeCount1041(int a, void *p, char *f, int n);
 
 class BfmeE1041
@@ -62,7 +61,7 @@ void BfmeE1041::bfmeGo1041E(void)
 	int r;
 
 	if (p != 0)
-		r = bfmeCount1041(0, p, g_bfmeFmt1041, 0xcdc);
+		r = bfmeCount1041(0, p, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Weapon.cpp", 0xcdc);
 	else
 		r = 0;
 

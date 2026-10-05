@@ -1,6 +1,5 @@
 float __cdecl GetGameLogicRandomValueReal(float low, float high, char *file, int line);
 
-extern char g_bfmeFileAO[];
 
 class BfmeDataAO
 {
@@ -22,7 +21,7 @@ int BfmeOwnAO::bfmeRollAO(void)
 {
 	BfmeDataAO *data = m_bfmeDataAO;
 
-	if (GetGameLogicRandomValueReal(0.0f, 1.0f, g_bfmeFileAO, 0x44) < data->m_bfmeChanceAO)
+	if (GetGameLogicRandomValueReal(0.0f, 1.0f, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Collide\\CrateCollide\\SalvageCrateCollide.cpp", 0x44) < data->m_bfmeChanceAO)
 		return 2;
 
 	return 3;

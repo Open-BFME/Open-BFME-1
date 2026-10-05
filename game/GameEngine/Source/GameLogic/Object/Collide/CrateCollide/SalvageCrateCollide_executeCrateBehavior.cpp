@@ -63,7 +63,6 @@ public:
 };
 
 extern GameTextInterface *TheGameText;
-extern char g_bfmeFileAO[];
 extern float GetGameLogicRandomValueReal(float low, float high, char *file, Int line);
 
 class BfmeS1254;
@@ -142,7 +141,7 @@ Int SalvageCrateCollide::rva002181C0()
 {
 	const SalvageCrateCollideModuleDataSlice *modData =
 		getSalvageCrateCollideModuleData();
-	if (GetGameLogicRandomValueReal(0.0f, 1.0f, g_bfmeFileAO, 0x44) < modData->m_levelChance)
+	if (GetGameLogicRandomValueReal(0.0f, 1.0f, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Collide\\CrateCollide\\SalvageCrateCollide.cpp", 0x44) < modData->m_levelChance)
 		return 2;
 	return 3;
 }

@@ -1,6 +1,4 @@
 // cl: /Igame/Libraries/Source/WWVegas/WWLib
-extern "C" char g_bfmeNameZO[];
-extern "C" char g_bfmeNameItemZO[];
 
 #include "ascii_string.h"
 
@@ -81,7 +79,7 @@ public:
 
 void BfmeItemZO::bfmeWriteZO(BfmeChunkZO *out)
 {
-	out->bfmeOpenZO(g_bfmeNameItemZO, 1);
+	out->bfmeOpenZO("MPPositionInfo", 1);
 	out->bfmeWriteByteZO(m_bfmeFlag0ZO != 0);
 	out->bfmeWriteByteZO(m_bfmeFlag1ZO != 0);
 	out->bfmeWriteByteZO(m_bfmeFlag2ZO != 0);
@@ -109,7 +107,7 @@ public:
 
 void BfmeOwnerZO::bfmeSaveZO(BfmeChunkZO *out)
 {
-	out->bfmeOpenZO(g_bfmeNameZO, 0);
+	out->bfmeOpenZO("MPPositionList", 0);
 
 	for (int i = 0; i < 8; i++)
 		m_bfmeItemsZO[i].bfmeWriteZO(out);

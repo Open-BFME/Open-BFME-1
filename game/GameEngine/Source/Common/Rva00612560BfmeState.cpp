@@ -49,7 +49,6 @@ public:
 };
 
 extern BfmeGlobCC0 *g_bfmeGlobCC0;
-extern const char g_bfmeActiveLiteral[];
 
 // ?Rva00612560@@YGXVAsciiString@@@Z
 void __stdcall Rva00612560(AsciiString text)
@@ -57,7 +56,7 @@ void __stdcall Rva00612560(AsciiString text)
 	if (g_bfmeGlobCC0 != 0)
 	{
 		g_bfmeGlobCC0->v9();
-		if (text.bfmeCompare1294(g_bfmeActiveLiteral) == 0)
+		if (text.bfmeCompare1294("ACTIVE") == 0)
 		{
 			g_bfmeGlobCC0->m_active = 1;
 			if (g_bfmeGlobCC0->m_stateA8 == 0)

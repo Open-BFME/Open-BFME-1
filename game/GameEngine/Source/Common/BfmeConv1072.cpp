@@ -16,7 +16,6 @@ extern char g_bfmeFmtA1072[];
 extern char g_bfmeFmtB1072[];
 extern char g_bfmeFmtD1072[];
 extern char g_bfmeLitA1072[];
-extern char g_bfmeLitB1072[];
 extern char g_bfmeD1072;
 
 extern "C" __declspec(dllimport) int __cdecl sprintf(char *b, char *f, int a);
@@ -55,7 +54,7 @@ int BfmeQ1072::bfmeGo1072B(void)
 			((BfmeR1072 *)g_rva012F19E8WindowManager)->bfmeRun1072(m_bfme250, "assignOpen", 1, g_bfmeLitA1072, 0, 0, 0, 0);
 			m_bfme258 = 3;
 		} else {
-			((BfmeR1072 *)g_rva012F19E8WindowManager)->bfmeRun1072(m_bfme250, "assignOpen", 1, g_bfmeLitB1072, 0, 0, 0, 0);
+			((BfmeR1072 *)g_rva012F19E8WindowManager)->bfmeRun1072(m_bfme250, "assignOpen", 1, "normal", 0, 0, 0, 0);
 			m_bfme258 = 2;
 		}
 	}

@@ -56,7 +56,6 @@ private:
 	int m_line;
 };
 
-extern const char Rva010A65BCProbabilityError[];
 
 struct SlowDeathBehaviorModuleDataFacade
 {
@@ -117,7 +116,7 @@ SlowDeathBehavior::SlowDeathBehavior(Thing *thing, const ModuleData *data)
 	const SlowDeathBehaviorModuleDataFacade *moduleData =
 		(const SlowDeathBehaviorModuleDataFacade *)m_moduleData;
 	if (moduleData->m_probabilityModifier < 1)
-		throw INIException(3, Rva010A65BCProbabilityError);
+		throw INIException(3, "ProbabilityModifer must be >= 1.\n");
 
 	if (moduleData->m_fxBegin != moduleData->m_fxEnd)
 		m_hasLoadedEffect = true;

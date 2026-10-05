@@ -106,7 +106,6 @@ public:
 
 __declspec(dllimport) int __cdecl bfmeFmt1064(
 	char *buffer, unsigned size, char *format, int first, int second );
-extern char g_bfmeName1053[];
 
 static int textureMemory;
 static int textureCount;
@@ -173,7 +172,7 @@ void Record_Texture_End()
 				textureStatisticsString += "  ";
 				goto texture_status_done;
 				texture_status_missing:
-					textureStatisticsString += g_bfmeName1053;
+					textureStatisticsString += "*";
 				texture_status_done: ;
 				workingString.Format( "%4.4dkb         ", bytes / 1024 );
 				textureStatisticsString += workingString;

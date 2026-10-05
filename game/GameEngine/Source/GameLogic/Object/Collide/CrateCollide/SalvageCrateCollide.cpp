@@ -68,7 +68,6 @@ public:
 class GameLogic;
 class PlayerList;
 
-extern char g_bfmeFileAO[];
 extern GameLogic *TheGameLogic;
 extern PlayerList *ThePlayerList;		// retail [0x012ED748]
 extern void j_0002dcfe();
@@ -119,7 +118,7 @@ void SalvageCrateCollide::doMoney(Object *other)
 
 	if (md->minimumMoney != md->maximumMoney)
 		money = GetGameLogicRandomValue(md->minimumMoney, md->maximumMoney,
-			g_bfmeFileAO, 0xc4);
+			"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Collide\\CrateCollide\\SalvageCrateCollide.cpp", 0xc4);
 	else
 		money = md->minimumMoney;
 

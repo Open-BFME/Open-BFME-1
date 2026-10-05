@@ -24,7 +24,6 @@ struct BfmeDualDispatchOwner
 	BfmeSecondaryTarget **m_bfmeTargetEnd;
 };
 
-extern "C" const char g_bfmeDualDispatchSource[];
 int StructureCollapseRandom(int low, int high, const char *source, int line);
 
 class Gen_0028B910
@@ -48,7 +47,7 @@ void Gen_0028B910::bfmeDispatch(void *, void *, void *)
 	int fxCount = owner->m_bfmeFXEnd - owner->m_bfmeFXBegin;
 	if (fxCount > 0) {
 		int index = StructureCollapseRandom(0, fxCount - 1,
-			g_bfmeDualDispatchSource, 127);
+			"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\CritterEmitter.cpp", 127);
 		FXList *fx = owner->m_bfmeFXBegin[index];
 		Object *object = *reinterpret_cast<Object **>(
 			reinterpret_cast<char *>(this) - 0x18);
@@ -59,7 +58,7 @@ void Gen_0028B910::bfmeDispatch(void *, void *, void *)
 	int targetCount = owner->m_bfmeTargetEnd - owner->m_bfmeTargetBegin;
 	if (targetCount > 0) {
 		int index = StructureCollapseRandom(0, targetCount - 1,
-			g_bfmeDualDispatchSource, 138);
+			"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\CritterEmitter.cpp", 138);
 		BfmeSecondaryTarget *target = owner->m_bfmeTargetBegin[index];
 		if (target != 0) {
 			Object *object = *reinterpret_cast<Object **>(

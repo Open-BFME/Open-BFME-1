@@ -231,7 +231,6 @@ public:
 
 extern const Real g_rva01075350;
 extern const Real g_bfmeDefaultEG;
-extern char g_bfmeFmt1041[];
 extern TerrainLogic *TheTerrainLogic;
 extern Real GetGameLogicRandomValueReal(Real low, Real high, char *file,
 	Int line);
@@ -269,7 +268,7 @@ Coord3D WeaponTemplate::rva001e7c30(const Object *source,
 	else
 		targetLayer = TheTerrainLogic->getLayerForDestination(0, &position);
 
-	Real distance = minimumRadius < scatterRadius ? GetGameLogicRandomValueReal(minimumRadius, scatterRadius, g_bfmeFmt1041, 1468) : scatterRadius;
+	Real distance = minimumRadius < scatterRadius ? GetGameLogicRandomValueReal(minimumRadius, scatterRadius, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Weapon.cpp", 1468) : scatterRadius;
 
 	Real angle;
 	if (victim)
@@ -285,10 +284,10 @@ Coord3D WeaponTemplate::rva001e7c30(const Object *source,
 			normalizedY = inverseLength * temporary.y;
 		}
 		Real baseAngle = (Real)atan2(normalizedY, temporary.x);
-		angle = GetGameLogicRandomValueReal(baseAngle - g_bfmeDefaultEG, baseAngle + g_bfmeDefaultEG, g_bfmeFmt1041, 1482);
+		angle = GetGameLogicRandomValueReal(baseAngle - g_bfmeDefaultEG, baseAngle + g_bfmeDefaultEG, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Weapon.cpp", 1482);
 	}
 	else
-		angle = GetGameLogicRandomValueReal(0.0f, 6.28318530717958647692f, g_bfmeFmt1041, 1486);
+		angle = GetGameLogicRandomValueReal(0.0f, 6.28318530717958647692f, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Weapon.cpp", 1486);
 
 	temporary.x = distance * Cos(angle);
 	Real yOffset = distance * Sin(angle);
