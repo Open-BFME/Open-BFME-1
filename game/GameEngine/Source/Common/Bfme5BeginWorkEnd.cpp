@@ -1,5 +1,7 @@
 // Open-BFME5 conversions: a begin / forward / end wrapper family.
 
+class Image;
+
 class Bfme5Host
 {
 public:
@@ -56,7 +58,7 @@ public:
 	virtual void bfmeVM50();
 	virtual void bfmeVM51();
 	virtual void bfmeWorkD(int a, int b, int c, int d, int e, int f, int g);
-	virtual void bfmeWorkE(int a, int b, int c, int d, int e, int f, int g);
+	virtual void bfmeWorkE(const Image *a, float b, float c, float d, float e, int f, int g);
 	virtual void bfmeVM54();
 	virtual void bfmeEnd();
 
@@ -64,7 +66,7 @@ public:
 	void bfmeRunC(int a, int b, int c, int d, int e);
 	void bfmeRunA(int a, int b, int c, int d, int e, int f, int g);
 	void bfmeRunD(int a, int b, int c, int d, int e, int f, int g);
-	void bfmeRunE(int a, int b, int c, int d, int e, int f, int g);
+	void bfmeRunE(const Image *a, float b, float c, float d, float e, int f, int g);
 };
 
 void Bfme5Host::bfmeRunB(int a, int b, int c, int d, int e)
@@ -95,7 +97,7 @@ void Bfme5Host::bfmeRunD(int a, int b, int c, int d, int e, int f, int g)
 	bfmeEnd();
 }
 
-void Bfme5Host::bfmeRunE(int a, int b, int c, int d, int e, int f, int g)
+void Bfme5Host::bfmeRunE(const Image *a, float b, float c, float d, float e, int f, int g)
 {
 	bfmeBegin();
 	bfmeWorkE(a, b, c, d, e, f, g);
