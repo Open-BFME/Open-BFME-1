@@ -219,6 +219,21 @@ def test_cpp_names_reach_namespaced_and_member_data_only():
     assert data_rows.cpp_name("?$S1@?1??f@@YAXXZ@4IA") is None
 
 
+def test_template_static_data_access_decodes_literals_and_nested_types():
+    first = "?s_firstList@?$CategoryModuleClass@$0A@@FXParticleSystem@@1PAV12@A"
+    default = "?s_defaultModule@?$CategoryModuleClassBase@$04$00@FXParticleSystem@@1PAV?$CategoryModuleClass@$04@2@A"
+    facet = "?id@?$num_put@DV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@2V0locale@2@A"
+    assert data_rows._cpp_data_access(first) == (
+        "::FXParticleSystem::CategoryModuleClass<0 >::s_firstList",
+        "::FXParticleSystem::CategoryModuleClass<0 >", True)
+    assert data_rows.cpp_name(default) == "::FXParticleSystem::CategoryModuleClassBase<5, 1 >::s_defaultModule"
+    assert data_rows.cpp_name(facet) == (
+        "::_STL::num_put<char, ::_STL::ostreambuf_iterator<char, ::_STL::char_traits<char > > >::id")
+    assert data_rows.cpp_name(first.replace("@@1P", "@@0P")) is None
+    assert data_rows.cpp_name("?x@?$Owner@$1bad@@2HA") is None
+    assert data_rows.cpp_name("?x@0@2HA") is None
+
+
 def test_the_compiler_sizes_what_a_textual_lookup_gets_wrong():
     """The review's real-MSVC case: A::Element is char, B::Element is long, and
     `using namespace B` makes `Element values[2]` 8 bytes. A textual parser

@@ -180,15 +180,57 @@ def cpp_name(symbol):
     """The expression naming a data symbol in its own TU: `x` for a C `_x`,
     `::A::B::x` for global, public, or protected data. Protected static data
     is probed from a derived access scope; private members remain refused."""
-    if not symbol.startswith("?"):
-        return symbol[1:] if symbol.startswith("_") else None
-    m = re.match(r"^\?(\w+)@((?:\w+@)*)@([123])", symbol)
-    if not m or "?" in m.group(2):
-        return None
-    scopes = [part for part in m.group(2).split("@") if part]
-    if m.group(3) == "1" and not scopes:
-        return None
-    return "::" + "::".join(list(reversed(scopes)) + [m.group(1)])
+    return _cpp_data_access(symbol)[0]
+
+
+def _data_scopes(text, pos):
+    """Decode identifier scopes and templates with literal integral/type arguments.
+    Backreferences and local or anonymous scopes remain unsupported."""
+    primitive = {"D": "char", "E": "unsigned char", "F": "short", "G": "unsigned short",
+                 "H": "int", "I": "unsigned int", "J": "long", "K": "unsigned long",
+                 "M": "float", "N": "double", "_N": "bool", "_W": "wchar_t"}
+    scopes = []
+    while text[pos] != "@":
+        if text.startswith("?$", pos):
+            match = re.match(r"\?\$(\w+)@", text[pos:])
+            if not match:
+                raise ValueError("unsupported template name")
+            pos += len(match.group(0))
+            args = []
+            while text[pos] != "@":
+                if text.startswith("$0", pos):
+                    pos += 2
+                    negative = text[pos] == "?"
+                    pos += int(negative)
+                    if text[pos].isdigit():
+                        value = int(text[pos]) + 1
+                        pos += 1
+                    else:
+                        end = text.index("@", pos)
+                        digits = text[pos:end]
+                        if not digits or not re.fullmatch(r"[A-P]+", digits):
+                            raise ValueError("unsupported integral argument")
+                        value = int("".join(f"{ord(c) - ord('A'):x}" for c in digits), 16)
+                        pos = end + 1
+                    args.append(str(-value if negative else value))
+                elif text[pos] in "UV":
+                    nested, pos = _data_scopes(text, pos + 1)
+                    args.append("::" + "::".join(reversed(nested)))
+                else:
+                    code = text[pos:pos + 2] if text[pos] == "_" else text[pos]
+                    if code not in primitive:
+                        raise ValueError("unsupported type argument")
+                    args.append(primitive[code])
+                    pos += len(code)
+            scopes.append(match.group(1) + "<" + ", ".join(args) + " >")
+            pos += 1
+        else:
+            match = re.match(r"[A-Za-z_]\w*@", text[pos:])
+            if not match:
+                raise ValueError("unsupported scope")
+            scopes.append(match.group(0)[:-1])
+            pos += len(match.group(0))
+    return scopes, pos + 1
 
 
 def _cpp_data_access(symbol):
@@ -199,11 +241,16 @@ def _cpp_data_access(symbol):
     if not symbol.startswith("?"):
         expression = symbol[1:] if symbol.startswith("_") else None
         return expression, None, False
-    m = re.match(r"^\?(\w+)@((?:\w+@)*)@([123])", symbol)
-    if not m or "?" in m.group(2):
+    m = re.match(r"^\?(\w+)@", symbol)
+    if not m:
         return None, None, False
-    scopes = [part for part in m.group(2).split("@") if part]
-    protected = m.group(3) == "1"
+    try:
+        scopes, pos = _data_scopes(symbol, len(m.group(0)))
+    except (ValueError, IndexError):
+        return None, None, False
+    if symbol[pos:pos + 1] not in ("1", "2", "3"):
+        return None, None, False
+    protected = symbol[pos] == "1"
     if protected and not scopes:
         return None, None, False
     expression = "::" + "::".join(list(reversed(scopes)) + [m.group(1)])
@@ -241,7 +288,7 @@ def compiled_size(source, symbol):
     helper = _protected_probe_name(source, symbol, "size") if protected else None
     # a macro named like the symbol, a scope of it or the probe's own variable
     # would make sizeof measure something else: refuse (#error) instead
-    tokens = set(expression.replace("::", " ").split()) | {"data_row_sizeof"}
+    tokens = set(re.findall(r"[A-Za-z_]\w*", expression)) | {"data_row_sizeof"}
     if helper:
         tokens.add(helper)
     guards = "".join(f"#ifdef {token}\n#error data_row_probe: {token} is a macro here\n#endif\n"
@@ -292,7 +339,7 @@ def _type_probe(source, symbol, tag, preamble, value):
     probe = probe_dir / f"{source.stem}_{zlib.crc32((str(source) + symbol).encode()):08x}_{tag}{source.suffix}"
     obj = probe.with_suffix(".obj")
     helper = _protected_probe_name(source, symbol, tag) if protected else None
-    tokens = set(expression.replace("::", " ").split()) | {"data_row_kind", "drp_n", "drp_k"}
+    tokens = set(re.findall(r"[A-Za-z_]\w*", expression)) | {"data_row_kind", "drp_n", "drp_k"}
     if helper:
         tokens.add(helper)
     guards = "".join(f"#ifdef {token}\n#error data_row_probe: {token} is a macro here\n#endif\n"
