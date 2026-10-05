@@ -847,3 +847,4 @@ game/Libraries/Source/Apt/Rva008AE2E0BoundsGetter.cpp|member||m_bfme08,9e0465061
 game/Libraries/Source/Apt/Rva008AE2E0BoundsGetter.cpp|member||m_bfme0c,11dc2a1f95b4a0884b845cc7,grok,20261005190858-13f95f,2026-10-05
 game/Libraries/Source/Apt/Rva008AE2E0BoundsGetter.cpp|member||m_bfme10,5198981961996e2216e73a18,grok,20261005190858-13f95f,2026-10-05
 game/Libraries/Source/Apt/Rva008AE2E0BoundsGetter.cpp|member||m_bfme14,6cdcb265174289fb8eb85101,grok,20261005190858-13f95f,2026-10-05
+game/Libraries/Source/EA/Apt/Rva008B4370SetPackedChannels.cpp|member||field00,125c98acb52fb3115c57072d,gpt-6-sol,20261005184057-7b792e,2026-10-05
