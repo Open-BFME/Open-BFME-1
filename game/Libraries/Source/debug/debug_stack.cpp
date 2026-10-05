@@ -31,6 +31,10 @@
 //////////////////////////////////////////////////////////////////////////////
 // Retail adds fullPath to the declaration from this translation unit.
 #define relLine relLine, bool fullPath
+#include "../WWVegas/WWDebug/debug_stack.h"
+#undef relLine
+#include "../../../../inputs/reference/shims/debugvtable/debug/debug.h"
+#define relLine relLine, bool fullPath
 #include "../WWVegas/WWDebug/_pch.h"
 #undef relLine
 #include "dbghelp.h"
@@ -318,14 +322,20 @@ void DebugStackwalk::Signature::GetSymbol(unsigned addr,
 Debug& operator<<(Debug &dbg, const DebugStackwalk::Signature &sig)
 {
   dbg << sig.Size() << " addresses:\n";
-
   for (unsigned k=0;k<sig.Size();k++)
   {
-    char buf[512];
-    sig.GetSymbol(sig.GetAddress(k),buf,sizeof(buf));
-    dbg << buf << "\n";
+    char bufMod[128], bufSym[256], bufFile[256];
+    unsigned relMod, relSym, line, relLine;
+    sig.GetSymbol(sig.GetAddress(k),bufMod,sizeof(bufMod),&relMod,
+      bufSym,sizeof(bufSym),&relSym,bufFile,sizeof(bufFile),&line,&relLine,true);
+    dbg << bufFile << "(" << line << "):";
+    if (relLine) dbg << "+" << relLine;
+    dbg << " " << bufMod;
+    if (relMod) dbg << "+" << relMod;
+    dbg << " " << bufSym;
+    if (relSym) dbg << "+" << relSym;
+    dbg << "\n";
   }
-
   return dbg;
 }
 
