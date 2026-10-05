@@ -505,3 +505,7 @@ game/GameEngine/Source/Common/Bfme5ClearingDtor.cpp|member||m_bfmeNext,f2560ffc7
 game/GameEngine/Source/Common/Bfme5ClearingDtor.cpp|member||m_bfmePrev,99477610ee12bab2bf51855a,gpt-6-astra,20261005162043-0bf646,2026-10-05
 game/GameEngine/Source/Common/Bfme5ClearingDtor.cpp|member||m_bfmeNode,bbbfbfea61112b30d9b290cc,gpt-6-astra,20261005162043-0bf646,2026-10-05
 game/GameEngine/Source/Common/Bfme5ClearingDtor.cpp|member||m_bfmeList,61bd9d82bfe7562f53865c65,gpt-6-astra,20261005162043-0bf646,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1214.cpp|member||m_bfme08,0daf5d75d34385b80159831b,gpt-6-astra,20261005162043-674e99,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1214.cpp|param|bfmeGo1214|a,7ce1a769217c5d305560ef6b,gpt-6-astra,20261005162043-674e99,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1214.cpp|local|bfmeGo1214|p,caab133ea9532147b68dc2de,gpt-6-astra,20261005162043-674e99,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1214.cpp|local|bfmeGo1214|c,64739315722c4d45223b314e,gpt-6-astra,20261005162043-674e99,2026-10-05
