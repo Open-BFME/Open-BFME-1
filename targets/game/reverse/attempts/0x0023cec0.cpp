@@ -1,6 +1,6 @@
 // ?bfmeRefreshFormation@BfmeHordeContainOwner@@QAEXXZ
-// partial score=0.3476 date=2026-10-04
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_NO_EXCEPTIONS /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
+// partial score=0.502 date=2026-10-05
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_NO_EXCEPTIONS /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib /FAsc /Fa/Users/segrob/git/OpenBFME/wt-luna-7/build/0023cec0-sret.cod
 // stlport
 #include <bitset>
 
@@ -236,10 +236,9 @@ void BfmeHordeContainOwner::bfmeRefreshFormation()
 	}
 	else
 	{
-		BFMERetailStringBase<char> teamName =
-			reinterpret_cast<Rva00235D20Host *>(source)->copyStringAt240();
 		team = TheTeamFactory->findTeam(
-			*reinterpret_cast<const AsciiString *>(&teamName));
+			(const AsciiString &)
+			reinterpret_cast<Rva00235D20Host *>(source)->copyStringAt240());
 		if (!team)
 			return;
 	}
