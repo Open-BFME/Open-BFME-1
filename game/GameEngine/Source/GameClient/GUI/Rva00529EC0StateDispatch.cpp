@@ -90,7 +90,7 @@ private:
 class MpGameSetup
 {
 public:
-	int bfmeFindRepresentativeSlot( void );
+	int findRepresentativeSlot( void );
 	int getNextSelectablePlayer( int firstIndex );
 	bool handleStartPositionSelection( int index, int startPosition );
 	bool handlePlayerTemplateSelection( int index );
@@ -261,7 +261,7 @@ int Rva00529EC0State::dispatch( int message, void *argument, void *data )
 			{
 				int nextPlayer = ( (MpGameSetup *)this )->getNextSelectablePlayer( 0 );
 				if( nextPlayer < 0 )
-					nextPlayer = ( (MpGameSetup *)this )->bfmeFindRepresentativeSlot();
+					nextPlayer = ( (MpGameSetup *)this )->findRepresentativeSlot();
 				( (MpGameSetup *)this )->handleStartPositionSelection( nextPlayer, pos );
 			}
 			break;

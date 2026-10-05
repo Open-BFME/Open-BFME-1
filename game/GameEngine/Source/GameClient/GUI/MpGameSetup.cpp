@@ -119,7 +119,7 @@ public:
 	const StartPositionInfo *getStartPositionInfo(int slotIndex);
 	void shutdown(void);
 	void dispatchWindow(GameWindow *window);
-	int bfmeFindRepresentativeSlot(void);
+	int findRepresentativeSlot(void);
 	int getNextSelectablePlayer(int firstIndex);
 	bool handleStartPositionSelection(int index, int startPosition);
 	bool handlePlayerTemplateSelection(int index);
@@ -308,8 +308,8 @@ void MpGameSetup::dispatchWindow(GameWindow *window)
 
 // Prefer the local slot, except that a hosting observer is represented by the
 // first AI slot when one exists.
-// ?bfmeFindRepresentativeSlot@MpGameSetup@@QAEHXZ
-int MpGameSetup::bfmeFindRepresentativeSlot(void)
+// ?findRepresentativeSlot@MpGameSetup@@QAEHXZ
+int MpGameSetup::findRepresentativeSlot(void)
 {
 	if (m_first && !m_owner->bfmeContains(m_first))
 		m_first = 0;
