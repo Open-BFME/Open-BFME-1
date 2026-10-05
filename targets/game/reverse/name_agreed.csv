@@ -316,3 +316,5 @@ game/GameEngine/Source/Common/Bfme5IniNamedValue.cpp|local|bfme5ParseNamedValueB
 game/GameEngine/Source/GameLogic/Object/Update/Rva002A59F0BfmeReady.cpp|type||Gen_002A59F0,SpecialAbilityUpdate,gpt-6-astra+grok,blocked: game/GameEngine/Source/GameLogic/Object/Update/SpecialAbilityUpdate_update.cpp: game\GameEngine\Source\GameLogic\Object\Update\SpecialAbilityUpdate_up,2026-10-05
 game/GameEngine/Source/Common/Rva009A2350Init.cpp|member||m_00,m_owner,gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngine/Source/Common/Rva009A2350Init.cpp|member||m_00,m_owner,gpt-6-sol+grok,applied,2026-10-05
+game/GameEngine/Source/Common/Bfme5ListMemberDtors.cpp|type||BfmeDtorBaseW,UserPreferences,gpt-6-astra+gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/Common/Bfme5ListMemberDtors.cpp|type||Gen_0009F7A0,SkirmishPreferences,gpt-6-astra+gpt-6-sol+grok,agreed,2026-10-05

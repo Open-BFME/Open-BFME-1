@@ -645,3 +645,5 @@ game/GameEngine/Source/Common/Bfme5ListMemberDtors.cpp|type||BfmeDtorBaseW,43d77
 game/GameEngine/Source/Common/Bfme5ListMemberDtors.cpp|type||BfmeDtorBaseV,795c93f1daff7ab1bc2276d1,gpt-6-astra,20261005180554-a8455a,2026-10-05
 game/GameEngine/Source/Common/Bfme5ListMemberDtors.cpp|type||Gen_0009F7A0,a6a131b2fb3bdde50df66143,gpt-6-astra,20261005180554-a8455a,2026-10-05
 game/GameEngine/Source/Common/Bfme5ListMemberDtors.cpp|member||m_bfmeList,f9679995a58379bdfc176960,gpt-6-astra,20261005180554-a8455a,2026-10-05
+game/GameEngine/Source/Common/Bfme5ListMemberDtors.cpp|type||BfmeDtorBaseW,43d77952be5fd189d787ea13,grok,20261005180433-277cca,2026-10-05
+game/GameEngine/Source/Common/Bfme5ListMemberDtors.cpp|type||Gen_0009F7A0,a6a131b2fb3bdde50df66143,grok,20261005180433-277cca,2026-10-05
