@@ -1,5 +1,5 @@
 // ?evaluateTypeSighted@ScriptConditions@@IAE_NPAVParameter@@00@Z
-// partial score=0.261 date=2026-09-28
+// partial score=0.3763 date=2026-10-05
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Byte-matched BFME reconstruction of the TYPE_SIGHTED condition body.
 // stlport
@@ -45,6 +45,12 @@ public:
 	Real getVisionRange() const;
 };
 
+class BfmeP1087
+{
+public:
+	PlayerMaskType bfmeNext1087(Parameter *parameter);
+};
+
 class ScriptEngine
 {
 public:
@@ -76,7 +82,6 @@ public:
 	virtual void slot25() = 0;
 	virtual Object *getUnitNamed(Parameter *parameter) = 0;
 
-	PlayerMaskType unidentified_0034DB40(Parameter *parameter);
 };
 
 class PlayerList
@@ -104,16 +109,6 @@ public:
 			delete m_types;
 	}
 };
-
-namespace _STL
-{
-template <bool threads, int instance>
-class __node_alloc
-{
-public:
-	static void _M_deallocate(void *memory, unsigned int size);
-};
-}
 
 class PartitionFilter
 {
@@ -175,53 +170,55 @@ public:
 	Bool m_match;
 };
 
+#define _STLP_NO_EXCEPTIONS 1
+#include <vector>
+
 struct Rva0032CFC0Entry
 {
 	Object *object;
-	unsigned unknown04;
+	unsigned int unknown04;
 };
 
-class WideResultHandle
+struct WideResultHandle
 {
-	public:
-	Rva0032CFC0Entry *m_begin;
-	Rva0032CFC0Entry *m_end;
-	Rva0032CFC0Entry *m_endOfStorage;
+	_STL::vector<Rva0032CFC0Entry> m_items;
 	Rva0032CFC0Entry *m_cursor;
-	unsigned int m_refCount;
+	int m_refCount;
 };
 
-class BfmeWideResult
+struct Rva009F39F0Result
 {
-public:
-	WideResultHandle *m_value;
+	WideResultHandle *value;
+	Rva009F39F0Result();
+};
+
+struct BfmeWideResult
+{
+	Rva009F39F0Result m_value;
 
 	Object *next(Object *&object)
 	{
-		Rva0032CFC0Entry *current = m_value->m_cursor;
-		Rva0032CFC0Entry *end = m_value->m_end;
+		Rva0032CFC0Entry *end = (Rva0032CFC0Entry *)m_value.value->m_items.end();
+		Rva0032CFC0Entry *current = m_value.value->m_cursor;
 		if (current == end)
 			return 0;
 		object = (current++)->object;
-		m_value->m_cursor = current;
+		m_value.value->m_cursor = current;
 		return object;
+	}
+
+	__forceinline BfmeWideResult() : m_value() {}
+	__forceinline BfmeWideResult(const BfmeWideResult &that)
+		: m_value(that.m_value)
+	{
+		++m_value.value->m_refCount;
 	}
 	__forceinline ~BfmeWideResult()
 	{
-		WideResultHandle *value = m_value;
-		if (--value->m_refCount == 0)
+		if (--m_value.value->m_refCount == 0)
 		{
-			void *begin = value->m_begin;
-			if (begin)
-			{
-				int size = (int)((char *)value->m_endOfStorage -
-					(char *)begin);
-				size = (size >> 3) << 3;
-				if (size > 0x80)
-					::operator delete(begin);
-				else
-					_STL::__node_alloc<true, 0>::_M_deallocate(begin, size);
-			}
+			WideResultHandle *value = m_value.value;
+			value->m_items.~vector();
 			::operator delete(value);
 		}
 	}
@@ -253,30 +250,29 @@ Bool ScriptConditions::evaluateTypeSighted(Parameter *itemParameter,
 		return false;
 
 	PlayerMaskType playerMask =
-		TheScriptEngine->unidentified_0034DB40(playerParameter);
-	if (!playerMask)
-		return false;
+		((BfmeP1087 *)TheScriptEngine)->bfmeNext1087(playerParameter);
 
 	while (playerMask)
 	{
 		Player *player = ThePlayerList->getEachPlayerFromMask(playerMask);
 		ObjectTypesTemp types;
-		objectTypesFromParam(typeParameter,
+		objectTypesFromParam(*reinterpret_cast<Parameter *volatile *>(
+			&typeParameter),
 			types.m_types);
 
-		Rva001DCBB0Filter relationshipFilter(object, 0);
 		Rva0025ED50ObjectFilter objectFilter(object);
+		Rva001DCBB0Filter relationshipFilter(object, 0);
 		Rva0025ED50RootFilter rootFilter;
 		PartitionFilterPlayer playerFilter(player, true);
 
+		PartitionFilter *filterChain = playerFilter.link(rootFilter.link(
+			relationshipFilter.link(&objectFilter)));
 		Real visionRange = object->getVisionRange();
 		int visionRangeBits = *(int *)&visionRange;
 		BfmeWideResult iterator =
 			ThePartitionManager->bfmeForwardWideC(
-				(int)((char *)object + 0x38),
-				visionRangeBits, 0,
-				(int)playerFilter.link(rootFilter.link(
-					relationshipFilter.link(&objectFilter))), (int)player);
+				(int)((char *)object + 0x38), visionRangeBits, 0,
+				(int)filterChain, 0);
 
 		Object *other;
 		while (iterator.next(other))
