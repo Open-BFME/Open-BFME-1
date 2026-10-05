@@ -40,6 +40,14 @@ public:
     const ThingTemplate *findTemplate(const AsciiString &);
     Object *newObject(const ThingTemplate *, Team *, const BitFlags<86> &, unsigned);
 };
+
+// The matched one-argument member at 0x00137E80 is reached through
+// retail ILT 0x00028560. Keep the singleton and newObject interface unchanged.
+class BfmeThingFactory
+{
+public:
+    const ThingTemplate *findTemplate(const AsciiString &name);
+};
 extern ThingFactory *TheThingFactory;
 class TaintSpecialPower
 {
@@ -51,7 +59,7 @@ public:
 void TaintSpecialPower::bfmeBindCP(const Coord3D *location, void *name)
 {
     const ThingTemplate *thingTemplate =
-        TheThingFactory->findTemplate(*static_cast<const AsciiString *>(name));
+        reinterpret_cast<BfmeThingFactory *>(TheThingFactory)->findTemplate(*static_cast<const AsciiString *>(name));
     if (thingTemplate)
     {
         BitFlags<86> status;
