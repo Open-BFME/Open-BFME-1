@@ -631,3 +631,9 @@ game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12b0,ebcca53
 game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12b1,5fef4a549d0b28292930e12a,gpt-6-astra,20261005164922-45e287,2026-10-05
 game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12b2,989975624799a62b46844ccb,gpt-6-astra,20261005164922-45e287,2026-10-05
 game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12b3,382db9a8e0ca97dabac381d0,gpt-6-astra,20261005164922-45e287,2026-10-05
+game/GameEngine/Source/Common/Rva009A2350Init.cpp|member||m_08,3d27b3a08964213ee15ffb10,gpt-6-sol,20261005173743-6733c8,2026-10-05
+game/GameEngine/Source/Common/Rva009A2350Init.cpp|member||m_10,78f0f2e33bb1ae1fdc8c2d93,gpt-6-sol,20261005173743-6733c8,2026-10-05
+game/GameEngine/Source/Common/Rva009A2350Init.cpp|member||m_00,d9751520bef35bde30b3ba54,gpt-6-sol,20261005173743-6733c8,2026-10-05
+game/GameEngine/Source/Common/Rva009A2350Init.cpp|member||m_14,04bc272f1bd222ba51e5d34e,gpt-6-sol,20261005173743-6733c8,2026-10-05
+game/GameEngine/Source/Common/Rva009A2350Init.cpp|local|Rva009A2350::init|p,41a6d2f4b06e73230b95c57a,gpt-6-sol,20261005173743-6733c8,2026-10-05
+game/GameEngine/Source/Common/Rva009A2350Init.cpp|local|Rva009A2350::init|q,02111b7cc7166b64e5d18959,gpt-6-sol,20261005173743-6733c8,2026-10-05
