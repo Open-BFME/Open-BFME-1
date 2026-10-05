@@ -204,9 +204,9 @@ private:
 class SupplyCenterDockUpdateModuleData : public DockUpdateModuleData
 {
 public:
-	Real m_10;
-	Int m_14;
-	Real m_18;
+	Real m_valueMultiplier;
+	Int m_bonusScience;
+	Real m_bonusScienceMultiplier;
 };
 
 class SupplyCenterDockUpdate
@@ -250,7 +250,7 @@ Bool SupplyCenterDockUpdate::action(Object *docker, Object *drone)
 	getObject()->getAttributeModifierMultiplier(0xc, &multiplier);
 	value *= multiplier;
 	Rva00027D6DMoney *ownerPlayerMoney = ownerPlayer->getMoney();
-	value *= getSupplyCenterDockUpdateModuleData()->m_10;
+	value *= getSupplyCenterDockUpdateModuleData()->m_valueMultiplier;
 
 	if (((GameLogicShim *)TheGameLogic)->unidentified_0001e0ab())
 	{
@@ -261,9 +261,9 @@ Bool SupplyCenterDockUpdate::action(Object *docker, Object *drone)
 
 	value = (Real)((Rva000C97C0PlayerThunk *)ownerPlayer)->unidentified_00024938((Int)value);
 
-	if (ownerPlayer->hasScience((ScienceType)getSupplyCenterDockUpdateModuleData()->m_14))
+	if (ownerPlayer->hasScience((ScienceType)getSupplyCenterDockUpdateModuleData()->m_bonusScience))
 	{
-		value *= getSupplyCenterDockUpdateModuleData()->m_18;
+		value *= getSupplyCenterDockUpdateModuleData()->m_bonusScienceMultiplier;
 	}
 
 	Int finalValue = fast_float2long_round((Real)ceil(value));
