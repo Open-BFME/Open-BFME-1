@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-struct BfmeG1081
+struct ExperienceTracker
 {
 	char m_bfmePad[0x24];
 	char m_bfme24;
@@ -12,7 +12,7 @@ public:
 	char m_bfmePad[0x38];
 	char m_cachedPos;
 	char m_bfmePad1[0x1d7];
-	BfmeG1081 *m_bfme210;
+	ExperienceTracker *m_bfme210;
 };
 
 class BfmeP1081
