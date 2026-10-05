@@ -23,7 +23,7 @@ struct BfmeSetupTarget
 // retail 0x007E8AC0
 struct Rva007E8AC0 { void run(); };
 
-extern const char TheBfmeSetupText[];				// 0x011298AC
+// Retail 0x011298AC contains the NUL-terminated literal "TXN".
 
 
 extern int TheBfmeSetupValue_007E95A0;			// 0x0130A578
@@ -47,7 +47,7 @@ void __stdcall bfmeSetup_007E95A0(BfmeSetupTarget *thing)
 
 	thing->m_bfmeTag = 0x61636374;
 
-	thing->bfmeWrite(TheBfmeSetupText, value);
+	thing->bfmeWrite("TXN", value);
 }
 
 // ?bfmeSetup_007E95D0@@YGXPAUBfmeSetupTarget@@@Z
@@ -59,7 +59,7 @@ void __stdcall bfmeSetup_007E95D0(BfmeSetupTarget *thing)
 
 	thing->m_bfmeTag = 0x61636374;
 
-	thing->bfmeWrite(TheBfmeSetupText, value);
+	thing->bfmeWrite("TXN", value);
 }
 
 // ?bfmeSetup_007E98A0@@YGXPAUBfmeSetupTarget@@@Z
@@ -71,7 +71,7 @@ void __stdcall bfmeSetup_007E98A0(BfmeSetupTarget *thing)
 
 	thing->m_bfmeTag = 0x61636374;
 
-	thing->bfmeWrite(TheBfmeSetupText, value);
+	thing->bfmeWrite("TXN", value);
 }
 
 // ?bfmeSetup_007E98D0@@YGXPAUBfmeSetupTarget@@@Z
@@ -83,7 +83,7 @@ void __stdcall bfmeSetup_007E98D0(BfmeSetupTarget *thing)
 
 	thing->m_bfmeTag = 0x61636374;
 
-	thing->bfmeWrite(TheBfmeSetupText, value);
+	thing->bfmeWrite("TXN", value);
 }
 
 // ?bfmeSetup_007E9990@@YGXPAUBfmeSetupTarget@@@Z
@@ -95,7 +95,7 @@ void __stdcall bfmeSetup_007E9990(BfmeSetupTarget *thing)
 
 	thing->m_bfmeTag = 0x61636374;
 
-	thing->bfmeWrite(TheBfmeSetupText, value);
+	thing->bfmeWrite("TXN", value);
 }
 
 // ?bfmeSetup_007E99C0@@YGXPAUBfmeSetupTarget@@@Z
@@ -107,5 +107,5 @@ void __stdcall bfmeSetup_007E99C0(BfmeSetupTarget *thing)
 
 	thing->m_bfmeTag = 0x61636374;
 
-	thing->bfmeWrite(TheBfmeSetupText, value);
+	thing->bfmeWrite("TXN", value);
 }

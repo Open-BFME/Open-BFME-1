@@ -18,7 +18,6 @@ static inline BfmeR1078 *bfmeR1078View(void)
 	return (BfmeR1078 *)g_rva012F19E8WindowManager;
 }
 
-extern char g_bfmeFmt1078[];
 
 class BfmeSubA1078
 {
@@ -90,7 +89,7 @@ void BfmeQ1078::bfmeGo1078A(void)
 	m_bfme3cc = 0;
 	m_bfme3a8 = 0;
 	if (!(m_bfme3d4 & 2)) {
-		bfmeR1078View()->bfmeRun1078(m_bfme250, g_bfmeFmt1078, 0, 0, 0, 0, 0, 0);
+		bfmeR1078View()->bfmeRun1078(m_bfme250, "EnableJoinGame", 0, 0, 0, 0, 0, 0);
 		m_bfme3d4 |= 2;
 	}
 	if (TheLAN) {

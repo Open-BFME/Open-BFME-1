@@ -24,8 +24,6 @@ extern int g_aptPalantirWindow;
 
 extern char g_bfmeFmtD1071[];
 extern char g_bfmeFmtP1071[];
-extern char g_bfmeFmtQ1071[];
-extern char g_bfmeFmtR1071[];
 extern unsigned char g_aptPalantirClosed;
 extern unsigned char g_aptPalantirCloseRequested;
 
@@ -36,7 +34,7 @@ void bfmeGo1071A(int a, char b)
 	char buf[0x10] = "";
 
 	sprintf(buf, g_bfmeFmtD1071, a);
-	((BfmeR1071 *)g_rva012F19E8WindowManager)->bfmeRun1071((BfmeX1071 *)g_aptPalantirWindow, b ? g_bfmeFmtP1071 : g_bfmeFmtQ1071, 1, buf, 0, 0, 0, 0);
+	((BfmeR1071 *)g_rva012F19E8WindowManager)->bfmeRun1071((BfmeX1071 *)g_aptPalantirWindow, b ? g_bfmeFmtP1071 : "HideAlert", 1, buf, 0, 0, 0, 0);
 }
 
 void bfmeGo1071B(char a)
@@ -50,7 +48,7 @@ void bfmeGo1071B(char a)
 		}
 	} else {
 		if (!g_aptPalantirClosed && !g_aptPalantirCloseRequested) {
-			((BfmeR1071 *)g_rva012F19E8WindowManager)->bfmeRun1071((BfmeX1071 *)g_aptPalantirWindow, g_bfmeFmtR1071, 0, 0, 0, 0, 0, 0);
+			((BfmeR1071 *)g_rva012F19E8WindowManager)->bfmeRun1071((BfmeX1071 *)g_aptPalantirWindow, "Close", 0, 0, 0, 0, 0, 0);
 			g_aptPalantirCloseRequested = 1;
 		}
 	}

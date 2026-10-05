@@ -1,7 +1,3 @@
-extern "C" char g_bfmeSideNameA1294[];
-extern "C" char g_bfmeSideNameB1294[];
-extern "C" char g_bfmeSideNameC1294[];
-extern "C" char g_bfmeSideNameD1294[];
 
 extern const char g_Rva0107301CEmptyString[];
 
@@ -27,19 +23,19 @@ void *__cdecl bfmeLookupDL(void *ctx, int side)
 	switch (side)
 	{
 	case 0:
-		name = g_bfmeSideNameB1294;
+		name = "Rohan";
 		break;
 
 	case 1:
-		name = g_bfmeSideNameA1294;
+		name = "Gondor";
 		break;
 
 	case 2:
-		name = g_bfmeSideNameC1294;
+		name = "Mordor";
 		break;
 
 	case 3:
-		name = g_bfmeSideNameD1294;
+		name = "Isengard";
 		break;
 
 	default:

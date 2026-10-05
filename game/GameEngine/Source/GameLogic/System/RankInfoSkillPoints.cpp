@@ -14,10 +14,6 @@ public:
 class GameLogic;
 
 extern GameLogic *TheGameLogic;					// retail 0x012F0898
-extern char g_bfmeSideNameA1294[];
-extern char g_bfmeSideNameB1294[];
-extern char g_bfmeSideNameC1294[];
-extern char g_bfmeSideNameD1294[];
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/RankInfo.h
 class RankInfo
@@ -43,13 +39,13 @@ int RankInfo::getSkillPointsNeeded(const AsciiString &side) const
 		if (m_primary14 != -1)
 			return m_primary14;
 	} else {
-		if (side.bfmeCompare1294(g_bfmeSideNameA1294) == 0 && m_sideA18 != -1)
+		if (side.bfmeCompare1294("Gondor") == 0 && m_sideA18 != -1)
 			return m_sideA18;
-		if (side.bfmeCompare1294(g_bfmeSideNameB1294) == 0 && m_sideB1c != -1)
+		if (side.bfmeCompare1294("Rohan") == 0 && m_sideB1c != -1)
 			return m_sideB1c;
-		if (side.bfmeCompare1294(g_bfmeSideNameC1294) == 0 && m_sideC20 != -1)
+		if (side.bfmeCompare1294("Mordor") == 0 && m_sideC20 != -1)
 			return m_sideC20;
-		if (side.bfmeCompare1294(g_bfmeSideNameD1294) == 0 && m_sideD24 != -1)
+		if (side.bfmeCompare1294("Isengard") == 0 && m_sideD24 != -1)
 			return m_sideD24;
 	}
 	return m_default10;

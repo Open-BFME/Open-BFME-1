@@ -32,7 +32,6 @@ extern WindowManager *g_rva012F19E8WindowManager;
 extern unsigned char g_aptPalantirClosed;
 extern unsigned char g_aptPalantirShowRequested;
 extern int g_aptPalantirWindow;
-extern char g_aptPalantirJewelName[];
 extern const char g_rva01080FC0[2];
 extern const char g_rva01081238[];
 
@@ -55,5 +54,5 @@ void aptPalantirOnInitialized()
 			break;
 	}
 	g_rva012F19E8WindowManager->add( (void *)g_aptPalantirWindow,
-		g_aptPalantirJewelName, 1, (void *)jewel, 0, 0, 0, 0 );
+		"BrightenJewel", 1, (void *)jewel, 0, 0, 0, 0 );
 }

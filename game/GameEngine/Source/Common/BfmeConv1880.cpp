@@ -1,5 +1,4 @@
 extern const char g_rva01080FC0[2];
-extern "C" char g_bfmeExtendedZM[];
 extern "C" char g_bfmeFlagZM;
 
 void __cdecl bfmeCopyZM(void *unused, char *dest, char flag)
@@ -7,7 +6,7 @@ void __cdecl bfmeCopyZM(void *unused, char *dest, char flag)
 	if (dest == 0 || flag != 0)
 		return;
 
-	const char *src = g_bfmeFlagZM ? g_rva01080FC0 : g_bfmeExtendedZM;
+	const char *src = g_bfmeFlagZM ? g_rva01080FC0 : "0";
 	char *out = dest;
 
 	for (;;)

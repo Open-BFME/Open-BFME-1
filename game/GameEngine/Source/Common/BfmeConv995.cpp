@@ -93,8 +93,6 @@ void bfmeGo995B(void)
 	}
 }
 
-extern char g_bfmeFmtA995C[];
-extern char g_bfmeFmtB995C[];
 
 struct BfmeOwner995C
 {
@@ -120,8 +118,8 @@ void BfmeC995::bfmeGo995C(int unused)
 	if (m_bfmeState != 0xa)
 		return;
 
-	((BfmeLog995 *)g_rva012F19E8WindowManager)->bfmeLog995(m_bfmeOwner->m_bfmeId, g_bfmeFmtA995C, 1,
-			g_bfmeFmtB995C, 0, 0, 0, 0);
+	((BfmeLog995 *)g_rva012F19E8WindowManager)->bfmeLog995(m_bfmeOwner->m_bfmeId, "CallChild", 1,
+			"ClosePassword", 0, 0, 0, 0);
 
 	m_bfmeState = 1;
 	m_bfmeFlag = 0;

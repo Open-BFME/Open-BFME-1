@@ -83,8 +83,6 @@ public:
 class WindowManager;
 
 extern WindowManager *g_rva012F19E8WindowManager;
-extern char g_bfmeFmt1057[];
-extern char g_bfmeArg1057[];
 
 struct BfmeP1057
 {
@@ -107,7 +105,7 @@ public:
 
 void BfmeB1057::bfmeGo1057B(int unused)
 {
-	((BfmeLog1057 *)g_rva012F19E8WindowManager)->bfmeLog1057(m_bfmeP->m_bfmeId, g_bfmeFmt1057, 1, g_bfmeArg1057, 0, 0, 0, 0);
+	((BfmeLog1057 *)g_rva012F19E8WindowManager)->bfmeLog1057(m_bfmeP->m_bfmeId, "CallChild", 1, "ClosePassword", 0, 0, 0, 0);
 	m_bfmeState = 1;
 	m_bfmeFlag = 0;
 }

@@ -142,10 +142,6 @@ private:
 
 extern GameTextInterface *TheGameText;
 extern Mouse *TheMouse;
-extern char g_bfmeSideNameA1294[];
-extern char g_bfmeSideNameB1294[];
-extern char g_bfmeSideNameC1294[];
-extern char g_bfmeSideNameD1294[];
 extern const char *g_012B7DAC[];
 extern const char *g_012B7DD4[];
 
@@ -159,20 +155,20 @@ void Rva00566B10::method( void *selector )
 	const char *selectorName = (const char *)selector;
 	if( strcmp( selectorName,
 		"Skirmish/tooltipPlayerLevelIconGondor" ) == 0 )
-		side.set( g_bfmeSideNameA1294, 6 );
+		side.set( "Gondor", 6 );
 	else if( strcmp( selectorName,
 		"Skirmish/tooltipPlayerLevelIconRohan" ) == 0 )
-		side.set( g_bfmeSideNameB1294, 5 );
+		side.set( "Rohan", 5 );
 	else if( strcmp( selectorName,
 		"Skirmish/tooltipPlayerLevelIconIsengard" ) == 0 )
 	{
-		side = g_bfmeSideNameD1294;
+		side = "Isengard";
 		evilSide = true;
 	}
 	else if( strcmp( selectorName,
 		"Skirmish/tooltipPlayerLevelIconMordor" ) == 0 )
 	{
-		side = g_bfmeSideNameC1294;
+		side = "Mordor";
 		evilSide = true;
 	}
 	else

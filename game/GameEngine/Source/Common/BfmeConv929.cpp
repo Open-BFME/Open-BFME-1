@@ -20,14 +20,13 @@ void BfmeThing929B::bfmeGo929B(void *a, void *b)
 
 struct Rva007F00B0Allocator;
 extern Rva007F00B0Allocator *g_Rva0130A5B0;
-extern char g_bfme929Str[];
 void bfmeInit929C(char *s);
 
 void *bfmeGo929C(void)
 {
 	void *p = g_Rva0130A5B0;
 	if (!p) {
-		bfmeInit929C(g_bfme929Str);
+		bfmeInit929C("no FESL allocator defined\n");
 		p = g_Rva0130A5B0;
 	}
 	return p;

@@ -101,7 +101,6 @@ public:
 };
 
 extern const char g_rva01080FC0[2];
-extern char g_bfmeJpegExtendedMessage;
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
 class WindowLayout;
 void ReleaseWindowLayout(WindowLayout *layout);
@@ -151,7 +150,7 @@ void BfmeOne924G::bfmeCall924G()
 			((Rva005A6790Object *)TheLookAtTranslator)->setValue(state);
 
 		const char *message = m_bfmeSingle924G
-			? g_rva01080FC0 : &g_bfmeJpegExtendedMessage;
+			? g_rva01080FC0 : "0";
 		int mode = m_bfmeMode924G;
 		const char *button = mode == 2 ? "YesNo"
 			: mode == 1 ? "OkCancel"
@@ -163,7 +162,7 @@ void BfmeOne924G::bfmeCall924G()
 	else if (state == 3)
 	{
 		const char *message = m_bfmeHideSingle924G
-			? g_rva01080FC0 : &g_bfmeJpegExtendedMessage;
+			? g_rva01080FC0 : "0";
 		((BfmeLevelAN *)g_rva012F19E8WindowManager)->bfmeBuildAN(11,
 			(int)"HideMessageBox", 1, (int)message, 0, 0, 0, 0);
 		m_bfmeState924G = 0;

@@ -50,10 +50,6 @@ typedef void (LevelBarIconTarget::*SetLevelIcon)( AsciiString, void * );
 
 extern void j_0001e812();
 extern void j_00028c2c();
-extern char g_bfmeSideNameA1294[];
-extern char g_bfmeSideNameB1294[];
-extern char g_bfmeSideNameC1294[];
-extern char g_bfmeSideNameD1294[];
 extern const char *Rva012B8058Image;
 
 class BfmeAptScreenSkirmish
@@ -82,12 +78,12 @@ void BfmeAptScreenSkirmish::levelBar()
 	AsciiString sideName;
 	AsciiString next;
 	AsciiString current;
-	LEVEL_BAR_FOR_SIDE( g_bfmeSideNameA1294, 6,
+	LEVEL_BAR_FOR_SIDE( "Gondor", 6,
 		"APT:CurrentLevelA", "APT:NextLevelA", 0 );
-	LEVEL_BAR_FOR_SIDE( g_bfmeSideNameB1294, 5,
+	LEVEL_BAR_FOR_SIDE( "Rohan", 5,
 		"APT:CurrentLevelB", "APT:NextLevelB", 1 );
-	LEVEL_BAR_FOR_SIDE( g_bfmeSideNameD1294, 8,
+	LEVEL_BAR_FOR_SIDE( "Isengard", 8,
 		"APT:CurrentLevelC", "APT:NextLevelC", 2 );
-	LEVEL_BAR_FOR_SIDE( g_bfmeSideNameC1294, 6,
+	LEVEL_BAR_FOR_SIDE( "Mordor", 6,
 		"APT:CurrentLevelD", "APT:NextLevelD", 3 );
 }

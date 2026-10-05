@@ -60,13 +60,12 @@ public:
 
 struct Rva007F00B0Allocator;
 extern Rva007F00B0Allocator *g_Rva0130A5B0;
-extern char g_bfmeName1019[];
 void bfmeInit1019(char *n);
 
 void bfmeGo1019C(int a)
 {
 	if (g_Rva0130A5B0 == 0)
-		bfmeInit1019(g_bfmeName1019);
+		bfmeInit1019("no FESL allocator defined\n");
 
 	((BfmeS1019 *)g_Rva0130A5B0)->bfmeDoC1019(a, 0);
 }

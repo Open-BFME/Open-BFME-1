@@ -14,11 +14,10 @@
 #include "string_base.h"
 
 extern const char g_rva01080FC0[2];
-extern char g_bfmeJpegExtendedMessage;
 
 void QuickMatchPreferences::setMapSelected(const AsciiString& mapName, Bool selected)
 {
-	const char *value = selected ? g_rva01080FC0 : &g_bfmeJpegExtendedMessage;
+	const char *value = selected ? g_rva01080FC0 : "0";
 	StringBase<char> *preference;
 	(preference = reinterpret_cast<StringBase<char> *>( &(*this)[AsciiStringToQuotedPrintable(mapName)] ),
 		preference->set(value, value ? strlen(value) : 0));

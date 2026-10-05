@@ -14,9 +14,7 @@ extern WindowManager *g_rva012F19E8WindowManager;
 
 extern char g_bfmeFmtA1072[];
 extern char g_bfmeFmtB1072[];
-extern char g_bfmeFmtC1072[];
 extern char g_bfmeFmtD1072[];
-extern char g_bfmeFmtE1072[];
 extern char g_bfmeLitA1072[];
 extern char g_bfmeLitB1072[];
 extern char g_bfmeD1072;
@@ -54,10 +52,10 @@ int BfmeQ1072::bfmeGo1072B(void)
 {
 	if (m_bfme258 == 1) {
 		if (g_bfmeD1072) {
-			((BfmeR1072 *)g_rva012F19E8WindowManager)->bfmeRun1072(m_bfme250, g_bfmeFmtC1072, 1, g_bfmeLitA1072, 0, 0, 0, 0);
+			((BfmeR1072 *)g_rva012F19E8WindowManager)->bfmeRun1072(m_bfme250, "assignOpen", 1, g_bfmeLitA1072, 0, 0, 0, 0);
 			m_bfme258 = 3;
 		} else {
-			((BfmeR1072 *)g_rva012F19E8WindowManager)->bfmeRun1072(m_bfme250, g_bfmeFmtC1072, 1, g_bfmeLitB1072, 0, 0, 0, 0);
+			((BfmeR1072 *)g_rva012F19E8WindowManager)->bfmeRun1072(m_bfme250, "assignOpen", 1, g_bfmeLitB1072, 0, 0, 0, 0);
 			m_bfme258 = 2;
 		}
 	}
@@ -71,7 +69,7 @@ void BfmeQ1072::bfmeGo1072C(char a)
 		m_bfme3d4 |= 1;
 	}
 	if ((a & 2) && !(m_bfme3d4 & 2)) {
-		((BfmeR1072 *)g_rva012F19E8WindowManager)->bfmeRun1072(m_bfme250, g_bfmeFmtE1072, 0, 0, 0, 0, 0, 0);
+		((BfmeR1072 *)g_rva012F19E8WindowManager)->bfmeRun1072(m_bfme250, "EnableJoinGame", 0, 0, 0, 0, 0, 0);
 		m_bfme3d4 |= 2;
 	}
 }

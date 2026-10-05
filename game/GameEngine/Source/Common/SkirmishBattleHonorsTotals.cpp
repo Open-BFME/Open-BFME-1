@@ -4,10 +4,6 @@
 
 typedef int Int;
 
-extern char g_bfmeSideNameA1294[];
-extern char g_bfmeSideNameB1294[];
-extern char g_bfmeSideNameC1294[];
-extern char g_bfmeSideNameD1294[];
 
 template <class Type>
 class StringBase
@@ -56,14 +52,14 @@ Int SkirmishBattleHonors::getLosses(void) const
 {
 	AsciiString side;
 	Int total = 0;
-	side.set(g_bfmeSideNameA1294, 6);
+	side.set("Gondor", 6);
 	total += getLosses(side);
 
-	side.set(g_bfmeSideNameB1294, 5);
+	side.set("Rohan", 5);
 	total += getLosses(side);
-	side.set(g_bfmeSideNameD1294, 8);
+	side.set("Isengard", 8);
 	total += getLosses(side);
-	side.set(g_bfmeSideNameC1294, 6);
+	side.set("Mordor", 6);
 	total += getLosses(side);
 
 	return total;

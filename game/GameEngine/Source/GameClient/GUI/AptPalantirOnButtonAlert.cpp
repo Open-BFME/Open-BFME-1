@@ -45,11 +45,9 @@ class Rva006092D0State;
 extern Rva006092D0State *g_rva012F7048LivingWorld;
 extern WindowManager *g_rva012F19E8WindowManager;
 extern int g_aptPalantirWindow;
-extern char g_aptPalantirHeroPrefix[];
 extern char g_aptPalantirHeroOne[];
 extern char g_aptPalantirOne[];
 extern char g_aptPalantirNumberFormat[];
-extern char g_aptPalantirHideAlert[];
 
 extern "C" __declspec(dllimport) int __cdecl strncmp(
 	const char *left, const char *right, unsigned int count );
@@ -66,13 +64,13 @@ void aptPalantirOnButtonAlert( char *command )
 	{
 		case '1':
 		{
-			if( strncmp( g_aptPalantirHeroOne, g_aptPalantirHeroPrefix, 4 ) == 0 )
+			if( strncmp( g_aptPalantirHeroOne, "Hero", 4 ) == 0 )
 				TheAptPalantir->selectHero( atoi( g_aptPalantirOne ) - 1 );
 
 			char alertNumber[ 16 ] = "";
 			sprintf( alertNumber, g_aptPalantirNumberFormat, 1 );
 			g_rva012F19E8WindowManager->add( (void *)g_aptPalantirWindow,
-				g_aptPalantirHideAlert, 1, alertNumber, 0, 0, 0, 0 );
+				"HideAlert", 1, alertNumber, 0, 0, 0, 0 );
 			break;
 		}
 

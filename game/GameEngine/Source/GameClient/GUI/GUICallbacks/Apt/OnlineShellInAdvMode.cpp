@@ -57,7 +57,6 @@ extern void j_0002c7cd();
 extern void j_00030495();
 
 extern const char g_rva01080FC0[2];
-extern char g_bfmeJpegExtendedMessage;
 
 class BfmeAptScreenOnlineShell
 {
@@ -113,7 +112,7 @@ void BfmeAptScreenOnlineShell::_bfme_onlineAdvMode(
 			union { void (*fn)(); GetBool call; } getBool = { j_0002c7cd };
 			const char *source = (preferences.*getBool.call)(
 				AsciiString( "InAdvMode" ), false )
-				? g_rva01080FC0 : &g_bfmeJpegExtendedMessage;
+				? g_rva01080FC0 : "0";
 			char *destination = output;
 			char copied;
 			do

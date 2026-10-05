@@ -18,10 +18,6 @@ private:
 	void *m_data;
 };
 
-extern char g_bfmeSideNameA1294[];
-extern char g_bfmeSideNameB1294[];
-extern char g_bfmeSideNameC1294[];
-extern char g_bfmeSideNameD1294[];
 
 class Rva0046FBB0SideIndex
 {
@@ -31,13 +27,13 @@ public:
 
 int Rva0046FBB0SideIndex::get(StringBase<char> side)
 {
-	if (side.compareNoCase(g_bfmeSideNameB1294) == 0)
+	if (side.compareNoCase("Rohan") == 0)
 		return 0;
-	if (side.compareNoCase(g_bfmeSideNameA1294) == 0)
+	if (side.compareNoCase("Gondor") == 0)
 		return 1;
-	if (side.compareNoCase(g_bfmeSideNameC1294) == 0)
+	if (side.compareNoCase("Mordor") == 0)
 		return 2;
-	if (side.compareNoCase(g_bfmeSideNameD1294) == 0)
+	if (side.compareNoCase("Isengard") == 0)
 		return 3;
 	return 4;
 }

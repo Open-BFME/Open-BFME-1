@@ -22,7 +22,6 @@ int BfmeThingURB::bfmeGoURB()
 	return (m_bfmeFlags & 0xff0000) == 0x30000;
 }
 
-extern char g_bfmeNameURC[];
 
 // The formatter this constructor calls is at 0x007E8A80, matched and defined
 // as BfmeThingUPB::bfmeGoUPB in BfmeConv1339.cpp; the placeholder name here
@@ -50,7 +49,7 @@ public:
 BfmeThingURC::BfmeThingURC(BfmeSrcURC *p)
 {
 	m_bfmeOwner = p;
-	((BfmeThingUPB *)p)->bfmeGoUPB(g_bfmeNameURC, m_bfmeText, (void *)0x40);
+	((BfmeThingUPB *)p)->bfmeGoUPB("sessionId", m_bfmeText, (void *)0x40);
 }
 
 // The 0x0090C400 call is WW3D2's Get_Bits_Per_Pixel, whose argument is BFME's

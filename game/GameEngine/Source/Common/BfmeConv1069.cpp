@@ -16,9 +16,6 @@ public:
 class WindowManager;
 
 extern WindowManager *g_rva012F19E8WindowManager;
-extern char g_bfmeFmt1069[];
-extern char g_bfmeLitA1069[];
-extern char g_bfmeLitB1069[];
 
 class BfmeH1069
 {
@@ -38,7 +35,7 @@ void BfmeH1069::bfmeSet1069B(char a, char b)
 		return;
 	m_bfme1d5 = a;
 	if (a)
-		((BfmeR1069 *)g_rva012F19E8WindowManager)->bfmeRun1069(m_bfme34->m_bfme250, g_bfmeFmt1069, 1, g_bfmeLitA1069, 0, 0, 0, 0);
+		((BfmeR1069 *)g_rva012F19E8WindowManager)->bfmeRun1069(m_bfme34->m_bfme250, "CallChild", 1, "EnableButtonPlayGame", 0, 0, 0, 0);
 	else
-		((BfmeR1069 *)g_rva012F19E8WindowManager)->bfmeRun1069(m_bfme34->m_bfme250, g_bfmeFmt1069, 1, g_bfmeLitB1069, 0, 0, 0, 0);
+		((BfmeR1069 *)g_rva012F19E8WindowManager)->bfmeRun1069(m_bfme34->m_bfme250, "CallChild", 1, "DisableButtonPlayGame", 0, 0, 0, 0);
 }

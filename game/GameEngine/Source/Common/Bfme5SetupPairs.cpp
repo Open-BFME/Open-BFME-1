@@ -26,15 +26,8 @@ struct BfmeSetupRecord
 	unsigned int m_bfmeTag;					// +0x1C
 };
 
-extern const char TheBfmeSetupFirstText[];
-extern const char TheBfmeSetupSecondText007E94A0[];
-extern const char TheBfmeSetupSecondText007E94E0[];
 extern const char TheBfmeSetupSecondText007E9520[];
-extern const char TheBfmeSetupSecondText007E9560[];
-extern const char TheBfmeSetupSecondText007E9860[];
 extern const char TheBfmeSetupSecondText007F26A0[];
-extern const char TheBfmeSetupSecondText007F26E0[];
-extern const char TheBfmeSetupSecondText007F2720[];
 extern int TheBfmeSetupGlobal007E94A0;
 extern int TheBfmeSetupGlobal007E94E0;
 extern int TheBfmeSetupGlobal007E9520;
@@ -54,8 +47,8 @@ void __stdcall bfmeSetupPair_007E94A0(BfmeSetupRecord *record, int second)
 
 	record->m_bfmeTag = 0x61636374;					// 'acct'
 
-	record->bfmeWrite(TheBfmeSetupFirstText, value);
-	record->bfmeWrite(TheBfmeSetupSecondText007E94A0, second);
+	record->bfmeWrite("TXN", value);
+	record->bfmeWrite("name", second);
 }
 
 // ?bfmeSetupPair_007E94E0@@YGXPAUBfmeSetupRecord@@H@Z
@@ -67,8 +60,8 @@ void __stdcall bfmeSetupPair_007E94E0(BfmeSetupRecord *record, int second)
 
 	record->m_bfmeTag = 0x61636374;					// 'acct'
 
-	record->bfmeWrite(TheBfmeSetupFirstText, value);
-	record->bfmeWrite(TheBfmeSetupSecondText007E94E0, second);
+	record->bfmeWrite("TXN", value);
+	record->bfmeWrite("name", second);
 }
 
 // ?bfmeSetupPair_007E9520@@YGXPAUBfmeSetupRecord@@H@Z
@@ -80,7 +73,7 @@ void __stdcall bfmeSetupPair_007E9520(BfmeSetupRecord *record, int second)
 
 	record->m_bfmeTag = 0x61636374;					// 'acct'
 
-	record->bfmeWrite(TheBfmeSetupFirstText, value);
+	record->bfmeWrite("TXN", value);
 	record->bfmeWrite(TheBfmeSetupSecondText007E9520, second);
 }
 
@@ -93,8 +86,8 @@ void __stdcall bfmeSetupPair_007E9560(BfmeSetupRecord *record, int second)
 
 	record->m_bfmeTag = 0x61636374;					// 'acct'
 
-	record->bfmeWrite(TheBfmeSetupFirstText, value);
-	record->bfmeWrite(TheBfmeSetupSecondText007E9560, second);
+	record->bfmeWrite("TXN", value);
+	record->bfmeWrite("name", second);
 }
 
 // ?bfmeSetupPair_007E9860@@YGXPAUBfmeSetupRecord@@H@Z
@@ -106,8 +99,8 @@ void __stdcall bfmeSetupPair_007E9860(BfmeSetupRecord *record, int second)
 
 	record->m_bfmeTag = 0x61636374;					// 'acct'
 
-	record->bfmeWrite(TheBfmeSetupFirstText, value);
-	record->bfmeWrite(TheBfmeSetupSecondText007E9860, second);
+	record->bfmeWrite("TXN", value);
+	record->bfmeWrite("name", second);
 }
 
 // ?bfmeSetupPair_007F26A0@@YGXPAUBfmeSetupRecord@@H@Z
@@ -119,7 +112,7 @@ void __stdcall bfmeSetupPair_007F26A0(BfmeSetupRecord *record, int second)
 
 	record->m_bfmeTag = 0x72616E6B;					// 'rank'
 
-	record->bfmeWrite(TheBfmeSetupFirstText, value);
+	record->bfmeWrite("TXN", value);
 	record->bfmeWriteAlt(TheBfmeSetupSecondText007F26A0, second);
 }
 
@@ -132,8 +125,8 @@ void __stdcall bfmeSetupPair_007F26E0(BfmeSetupRecord *record, int second)
 
 	record->m_bfmeTag = 0x72616E6B;					// 'rank'
 
-	record->bfmeWrite(TheBfmeSetupFirstText, value);
-	record->bfmeWrite(TheBfmeSetupSecondText007F26E0, second);
+	record->bfmeWrite("TXN", value);
+	record->bfmeWrite("sessionId", second);
 }
 
 // ?bfmeSetupPair_007F2720@@YGXPAUBfmeSetupRecord@@H@Z
@@ -145,6 +138,6 @@ void __stdcall bfmeSetupPair_007F2720(BfmeSetupRecord *record, int second)
 
 	record->m_bfmeTag = 0x72616E6B;					// 'rank'
 
-	record->bfmeWrite(TheBfmeSetupFirstText, value);
-	record->bfmeWrite(TheBfmeSetupSecondText007F2720, second);
+	record->bfmeWrite("TXN", value);
+	record->bfmeWrite("sessionId", second);
 }

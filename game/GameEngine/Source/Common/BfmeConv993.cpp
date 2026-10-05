@@ -149,10 +149,7 @@ extern AptPalantir *TheAptPalantir;
 // (?g_aptPalantirWindow@@3HA), defined in
 // game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptPalantir.cpp.
 extern int g_aptPalantirWindow;
-// Retail 0x01081238 is the JPEG extended-message table text EA names
-// `char g_bfmeJpegExtendedMessage`, spelled ?g_bfmeJpegExtendedMessage@@3DA in
-// every matched TU that selects it.
-extern char g_bfmeJpegExtendedMessage;
+// Retail 0x01081238 contains the NUL-terminated literal "0".
 extern const char g_rva01080FC0[2];
 extern char g_bfmeFmt993B[];
 
@@ -160,7 +157,7 @@ void bfmeGo993B(void)
 {
 	char asked = CALL993(Rva00008ED1, TheAptPalantir, j_00008ed1)();
 
-	char *s = asked ? &g_bfmeJpegExtendedMessage : const_cast<char *>(g_rva01080FC0);
+	char *s = asked ? "0" : const_cast<char *>(g_rva01080FC0);
 
 	CALL993(Rva00015235, g_rva012F19E8WindowManager, j_00015235)
 		(g_aptPalantirWindow, g_bfmeFmt993B, 1, s, 0, 0, 0, 0);

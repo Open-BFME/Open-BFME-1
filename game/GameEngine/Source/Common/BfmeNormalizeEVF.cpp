@@ -2,7 +2,6 @@
 // the recursive mode-zero path builder produces an empty string.
 
 extern const char g_Rva0107301CEmptyString[];
-extern const char g_Rva0107531CBackslash[];
 
 struct BfmeHdrVKI
 {
@@ -63,5 +62,5 @@ void bfmeNormalizeEVF(void *node, BfmeStrVKI *text)
 	*text = g_Rva0107301CEmptyString;
 	bfmeApplyEVF(node, text, 0);
 	if (text->m_data->m_length == 0)
-		*text = g_Rva0107531CBackslash;
+		*text = "/";
 }

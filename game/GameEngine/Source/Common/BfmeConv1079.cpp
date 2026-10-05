@@ -19,9 +19,6 @@ static inline BfmeR1079 *bfmeR1079View(void)
 	return (BfmeR1079 *)g_rva012F19E8WindowManager;
 }
 
-extern char g_bfmeFmt1079[];
-extern char g_bfmeLitA1079[];
-extern char g_bfmeLitB1079[];
 
 class BfmeM1079
 {
@@ -127,7 +124,7 @@ void BfmeH1079::bfmeGo1079A(void)
 		return;
 	m_bfme1d5 = v;
 	if (v)
-		bfmeR1079View()->bfmeRun1079(m_bfme34->m_bfme250, g_bfmeFmt1079, 1, g_bfmeLitA1079, 0, 0, 0, 0);
+		bfmeR1079View()->bfmeRun1079(m_bfme34->m_bfme250, "CallChild", 1, "EnableButtonPlayGame", 0, 0, 0, 0);
 	else
-		bfmeR1079View()->bfmeRun1079(m_bfme34->m_bfme250, g_bfmeFmt1079, 1, g_bfmeLitB1079, 0, 0, 0, 0);
+		bfmeR1079View()->bfmeRun1079(m_bfme34->m_bfme250, "CallChild", 1, "DisableButtonPlayGame", 0, 0, 0, 0);
 }

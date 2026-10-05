@@ -48,7 +48,6 @@ public:
 // of the pointee; the casts at the uses are pointer-size neutral.
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
-extern char g_bfmeFmt1057[];
 
 class BfmeNotifyOwnerXC
 {
@@ -115,7 +114,7 @@ void BfmeStateXC::bfmeNotifyXC(int kind)
 	{
 	case 0:
 	{
-		((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAI(m_bfmeOwnerXC->m_bfmeSinkXC, g_bfmeFmt1057, 1,
+		((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAI(m_bfmeOwnerXC->m_bfmeSinkXC, "CallChild", 1,
 			"addFriend", 0, 0, 0, 0);
 		GadgetTextEntrySetText(m_bfmeWindow70XC, UnicodeString::TheEmptyString);
 		TheWindowManager->winSetFocus(m_bfmeWindow70XC);
@@ -123,7 +122,7 @@ void BfmeStateXC::bfmeNotifyXC(int kind)
 	}
 	case 1:
 	{
-		((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAI(m_bfmeOwnerXC->m_bfmeSinkXC, g_bfmeFmt1057, 1,
+		((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAI(m_bfmeOwnerXC->m_bfmeSinkXC, "CallChild", 1,
 			"addIgnore", 0, 0, 0, 0);
 		GadgetTextEntrySetText(m_bfmeWindow60XC, UnicodeString::TheEmptyString);
 		TheWindowManager->winSetFocus(m_bfmeWindow60XC);
@@ -131,7 +130,7 @@ void BfmeStateXC::bfmeNotifyXC(int kind)
 	}
 	case 2:
 	{
-		((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAI(m_bfmeOwnerXC->m_bfmeSinkXC, g_bfmeFmt1057, 1,
+		((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAI(m_bfmeOwnerXC->m_bfmeSinkXC, "CallChild", 1,
 			"removeFriend", 0, 0, 0, 0);
 		GadgetTextEntrySetText(m_bfmeWindow90XC, UnicodeString::TheEmptyString);
 		TheWindowManager->winSetFocus(m_bfmeWindow90XC);
@@ -139,7 +138,7 @@ void BfmeStateXC::bfmeNotifyXC(int kind)
 	}
 	case 3:
 	{
-		((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAI(m_bfmeOwnerXC->m_bfmeSinkXC, g_bfmeFmt1057, 1,
+		((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAI(m_bfmeOwnerXC->m_bfmeSinkXC, "CallChild", 1,
 			"removeIgnore", 0, 0, 0, 0);
 		GadgetTextEntrySetText(m_bfmeWindow80XC, UnicodeString::TheEmptyString);
 		TheWindowManager->winSetFocus(m_bfmeWindow80XC);
