@@ -26,7 +26,7 @@ FAKE = '''#!/usr/bin/env python3
 import json,sys,time
 from pathlib import Path
 if '--version' in sys.argv:
- print('opencode v2.0.18'); sys.exit()
+ print('opencode 1.18.34'); sys.exit()
 model=sys.argv[sys.argv.index('--model')+1]
 Path('selected-model.txt').write_text(model)
 prompt=sys.stdin.read()

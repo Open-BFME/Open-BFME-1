@@ -21,7 +21,7 @@ FAKE = '''#!/usr/bin/env python3
 import json,os,sys,time,subprocess
 from pathlib import Path
 if '--version' in sys.argv:
- print('opencode v2.0.18'); sys.exit()
+ print('opencode 1.18.34'); sys.exit()
 assert os.environ.get('PWD') == str(Path.cwd()), 'OpenCode location would use wrong PWD'
 model=sys.argv[sys.argv.index('--model')+1]
 Path('selected-model.txt').write_text(model)
@@ -89,6 +89,11 @@ class RouterTests(unittest.TestCase):
 
     def run_fleet(self, duration=5):
         return r.fleet(self.root, self.state, self.c, duration)
+
+    def test_opencode_command_uses_official_cli_flags(self):
+        self.assertEqual(
+            r.opencode_run_command('opencode-go/one#medium'),
+            ['run', '--auto', '--format', 'json', '--model', 'opencode-go/one#medium'])
 
     def recover_usage(self):
         with r.go_budget.database(self.state) as db:
@@ -267,7 +272,7 @@ class RouterTests(unittest.TestCase):
             self.assertEqual(r.discover_variants(self.c,self.root), {'opencode-go/one':['low','high'],'opencode-go/two':[]})
             self.assertEqual(call.call_args.args[0], [str(self.fake),'api','model.list'])
             startup=json.loads(call.call_args.kwargs['env']['OPENCODE_CONFIG_CONTENT'])
-            self.assertFalse(startup['warming'])
+            self.assertNotIn('warming', startup)
             self.assertIn({'action':'provider.use','resource':'*','effect':'deny'},startup['experimental']['policies'])
         for data in ['{"data":[]}', 'not json', '{"data":[{"providerID":"opencode-go","id":"one","variants":[{}]}]}']:
             with patch.object(r.subprocess,'run',side_effect=respond(data)):

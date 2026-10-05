@@ -340,7 +340,7 @@ def worker_env(model, cwd):
     for key in ('OPENCODE_ROUTE', 'OPENCODE_SIMULATE', 'OPENCODE_CONFIG_CONTENT'):
         env.pop(key, None)
     env['OPENCODE_CONFIG_CONTENT'] = json.dumps({
-        'model': model, 'warming': False,
+        'model': model,
         # The code-execution tool is a trap for workers: inside its JS sandbox only browser and
         # OpenCode-internal tools are discoverable, so a model that starts there concludes it has
         # no shell/read/edit and cannot compile (2026-09-28: 2 of ~10 Go Muse 1.2 attempts spent
@@ -349,8 +349,6 @@ def worker_env(model, cwd):
         'experimental': {'policies': [
             {'action': 'provider.use', 'resource': '*', 'effect': 'deny'},
             {'action': 'provider.use', 'resource': model.split('/')[0], 'effect': 'allow'},
-            {'action': 'permission', 'resource': 'subagent:*', 'effect': 'deny'},
-            {'action': 'permission', 'resource': 'shell:git *', 'effect': 'deny'},
         ]}})
     return env
 
@@ -387,9 +385,9 @@ def discover_variants(c, root):
     if (not c.get('variant_discovery', True) and not needs_zen) or not c['models']:
         return {}
     try:
-        # A standalone server often returns a pre-plugin empty snapshot in v2.
-        # The ordinary read-only API uses the settled background service.
-        # v2.0.18 can truncate a large catalog when stdout is a pipe. A private
+        # A background server can return a pre-plugin empty snapshot while its
+        # provider catalog is settling. The ordinary read-only API is retried.
+        # Some OpenCode CLI versions can truncate a large catalog when stdout is a pipe. A private
         # temporary file also avoids retaining provider settings in router state.
         with tempfile.TemporaryFile(mode='w+', encoding='utf-8') as output:
             subprocess.run([c['opencode'], 'api', 'model.list'], cwd=root,
@@ -789,8 +787,13 @@ def execution_ready(c):
         raise ValueError('Set go_overage_disabled=true in your local config after disabling '
                          'Go console Use balance. The CLI cannot verify that account setting.')
     version = subprocess.check_output([c['opencode'], '--version'], text=True, timeout=15).strip()
-    if not re.search(r'\bv2\.', version):
-        raise ValueError(f'OpenCode v2 required; found {version}')
+    if not version:
+        raise ValueError('OpenCode --version returned no version')
+
+
+def opencode_run_command(selection):
+    """Return the command supported by the official OpenCode CLI."""
+    return ['run', '--auto', '--format', 'json', '--model', selection]
 
 
 def fleet(root, state, c, duration, workers=None, until=None):
@@ -945,8 +948,8 @@ def fleet(root, state, c, duration, workers=None, until=None):
                             bootstrap = fleet_cgroup.BlockedBootstrap(
                                 [sys.executable, str(Path(__file__).resolve()), '_watch',
                                  str(c['timeout']), str(unit.path), c['opencode'],
-                                 'run', '--standalone', '--auto', '--format', 'json',
-                                 '--model', selection], cwd=cwd, env=worker_env(selection, cwd),
+                                 *opencode_run_command(selection)], cwd=cwd,
+                                 env=worker_env(selection, cwd),
                                 stdin=inp, stdout=out, stderr=err)
                             child = bootstrap.child
                         running[aid] = {'child': child, 'reader': (directory / 'events.jsonl').open(errors='replace'),

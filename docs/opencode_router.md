@@ -8,7 +8,7 @@ tests, and owns commits and integration.
 
 ## Setup
 
-Requires Python 3.10+, OpenCode **v2** (tested with 2.0.18), Git, and Linux with
+Requires Python 3.10+, the official OpenCode CLI (tested with 1.18.34), Git, and Linux with
 writable delegated cgroup v2. It reuses `fleet_cgroup.py` containment and
 `fleet_run.py` claims. There is no process-group-only alternative. On a systemd
 host without delegation, start the scheduler inside a delegated user scope,
@@ -29,9 +29,9 @@ Windows users need a Linux/WSL environment with delegation.
 
 The example acknowledgment is deliberately false. No credential belongs in
 router configuration. OpenCode reads its existing credentials. Only explicit
-`opencode-go/…` and verified-free `opencode/…` IDs are accepted; every invocation passes `--model`. An injected
-OpenCode policy denies other providers and nested subagents. Policies also deny
-Git tool commands; the worker prompt assigns VCS responsibility to the parent.
+`opencode-go/…` and verified-free `opencode/…` IDs are accepted; every invocation passes `--model` through the official `run --auto --format json` interface. The provider policy denies other providers. The worker prompt assigns VCS
+responsibility to the parent and tells workers not to launch subagents or Git
+commands; the v1 CLI does not expose the v2 permission-policy rules.
 OpenCode policies are not an OS sandbox against hostile code, and Console
 policies can override local policies. Use a trusted local OpenCode setup.
 
