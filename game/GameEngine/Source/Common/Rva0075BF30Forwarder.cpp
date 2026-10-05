@@ -45,6 +45,14 @@ public:
 	void operator=(const RadiusDecalTemplate &other);
 };
 
+// The retail assignment call at 0x0075BF43 goes through ILT 0x00015744
+// to the existing 93-byte member provider at 0x00458450.
+class Rva00458450
+{
+public:
+	void operator=(const Rva00458450 &other);
+};
+
 class Rva0075BF30Forwarder
 {
 public:
@@ -93,7 +101,8 @@ void Rva0075BF30Forwarder::apply(void *arg)
 	if (arg == 0)
 		return;
 
-	m_sub1CC = *(RadiusDecalTemplate *)arg;
+	reinterpret_cast<Rva00458450 &>(m_sub1CC) =
+		*static_cast<const Rva00458450 *>(arg);
 
 	ObjectAttemptDamageFlagHook *item = m_holder08->m_itemFC;
 
