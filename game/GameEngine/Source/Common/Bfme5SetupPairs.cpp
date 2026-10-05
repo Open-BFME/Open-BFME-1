@@ -7,8 +7,8 @@
 //
 // The tags read as ASCII little-endian, "acct" for five of them and "rank" for
 // three, which is the only thing that separates the two halves of the family.
-// Every string and global is a relocation, so a single extern per role serves
-// all eight: the build copies the real address in per call site.
+// String literals retain retail's exact contents; globals remain externs.
+// The build verifies each literal against the referenced retail address.
 
 // retail 0x007E8AC0: ?run@Rva007E8AC0@@QAEXXZ
 class Rva007E8AC0
@@ -26,8 +26,6 @@ struct BfmeSetupRecord
 	unsigned int m_bfmeTag;					// +0x1C
 };
 
-extern const char TheBfmeSetupSecondText007E9520[];
-extern const char TheBfmeSetupSecondText007F26A0[];
 extern int TheBfmeSetupGlobal007E94A0;
 extern int TheBfmeSetupGlobal007E94E0;
 extern int TheBfmeSetupGlobal007E9520;
@@ -74,7 +72,7 @@ void __stdcall bfmeSetupPair_007E9520(BfmeSetupRecord *record, int second)
 	record->m_bfmeTag = 0x61636374;					// 'acct'
 
 	record->bfmeWrite("TXN", value);
-	record->bfmeWrite(TheBfmeSetupSecondText007E9520, second);
+	record->bfmeWrite("email", second);
 }
 
 // ?bfmeSetupPair_007E9560@@YGXPAUBfmeSetupRecord@@H@Z
@@ -113,7 +111,7 @@ void __stdcall bfmeSetupPair_007F26A0(BfmeSetupRecord *record, int second)
 	record->m_bfmeTag = 0x72616E6B;					// 'rank'
 
 	record->bfmeWrite("TXN", value);
-	record->bfmeWriteAlt(TheBfmeSetupSecondText007F26A0, second);
+	record->bfmeWriteAlt("numberOfReporters", second);
 }
 
 // ?bfmeSetupPair_007F26E0@@YGXPAUBfmeSetupRecord@@H@Z

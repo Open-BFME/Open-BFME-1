@@ -83,7 +83,6 @@ struct Rva007EB810Diag
 Rva007EB810Diag *Rva007EB810Get();
 void *Rva007F93E0( void *message, void *route, void *owner );
 extern int g_bfmeKeyVHE;
-extern char g_bfmeLidKey[];
 
 class Gen0080AB50
 {
@@ -153,7 +152,7 @@ int Gen0080AB50::handle( unsigned int timestamp )
 			BfmeThingCIB *cib = reinterpret_cast< BfmeThingCIB * >( &message );
 			cib->bfmeGoCIB( &g_bfmeKeyVHE, (void *)m_field170 );
 			cib->bfmeGoCIB( (void *)"GID", (void *)entry->m_gameId );
-			cib->bfmeGoCIB( g_bfmeLidKey, (void *)-2 );
+			cib->bfmeGoCIB( "LID", (void *)-2 );
 
 			reinterpret_cast< BfmeThingVJJ * >( entry )->bfmeGoVJJ(
 				reinterpret_cast< BfmeMsgVJJ * >( &message ) );

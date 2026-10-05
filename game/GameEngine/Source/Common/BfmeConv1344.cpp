@@ -20,7 +20,6 @@ void BfmeThingUVA::bfmeGoUVA(const char *a, const char *b, const char *c)
 	Rva007E8640Copy(m_bfmeBuf + 0x142, 0x41, c ? c : g_bfmeEmptyUVA);
 }
 
-extern const char g_bfmeFileUVB[];
 // Retail .rdata at VA 0x0111C2A0: "false" including its NUL (6 bytes).
 // The diagnostic callers pass its address; no EA symbol name is proven.
 extern const char g_rva0111C2A0[] = "false";
@@ -60,6 +59,6 @@ int bfmeGoUVB(BfmeRecUVB *r, char *out)
 		Rva007E8640Copy(out + 1, 0x13, r->m_bfmeText);
 		return 1;
 	}
-	Rva007EB810Get()->fail(g_rva0111C2A0, g_bfmeFileUVB, 0x2e);
+	Rva007EB810Get()->fail(g_rva0111C2A0, "\\views\\feslbuild_main\\jabba\\fesl\\source\\util.cpp", 0x2e);
 	return 0;
 }

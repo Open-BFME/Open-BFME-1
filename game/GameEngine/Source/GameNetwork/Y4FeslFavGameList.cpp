@@ -49,8 +49,6 @@ public:
 };
 
 extern int g_bfmeKeyVHE;
-extern char g_bfmeLidKey[];
-extern char g_bfmeNumGamesKey[];
 
 struct Rva00809520Entry
 {
@@ -106,8 +104,8 @@ void Gen0080AB50::process( unsigned int timestamp )
 	BfmeThingCIB *summaryCIB = reinterpret_cast< BfmeThingCIB * >( &summary );
 	summary.m_category = 'GLST';
 	summaryCIB->bfmeGoCIB( &g_bfmeKeyVHE, (void *)m_tid );
-	summaryCIB->bfmeGoCIB( g_bfmeLidKey, (void *)-2 );
-	summaryCIB->bfmeGoCIB( g_bfmeNumGamesKey, (void *)recentCount );
+	summaryCIB->bfmeGoCIB( "LID", (void *)-2 );
+	summaryCIB->bfmeGoCIB( "NUM-GAMES", (void *)recentCount );
 	m_sender->bfmeSendVJH( reinterpret_cast< BfmeMsgVJH * >( &summary ) );
 
 	BfmeMsgVJH message;

@@ -482,10 +482,9 @@ int Rva007EC2E0( const char *text, char *dest, int destSize )
 	return written;
 }
 
-// Twenty-four letters, one per bit, in bit order from the least significant.
+// Each character names one bit, starting at the least significant.
 // A terminator in the table is what bounds the loop below, so the table's own
 // length is the number of flags this can name -- nothing else limits it.
-extern char g_Rva0112A410FlagLetters[];
 
 // Rva007EC780 lives in Y4TextToValue.c, which is C.  The two halves of this
 // module ended up split across a .c and a .cpp by two different lanes; the
@@ -513,7 +512,7 @@ int Rva007ECAF0( char *record, int size, const char *name, int flags )
 
 	p = Rva007EC730( record, strField, name );
 
-	for( pLetter = g_Rva0112A410FlagLetters;
+	for( pLetter = "@ABCDEFGHIJKLMNOPQRSTUVWXYZ0123";
 		flags != 0 && *pLetter != 0; flags >>= 1, pLetter++ )
 	{
 		if( ( flags & 1 ) != 0 )

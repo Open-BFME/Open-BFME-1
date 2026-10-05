@@ -51,8 +51,6 @@ private:
 
 extern char g_feslTransactionIdKey[];
 extern char g_feslTypeKey[];
-extern char g_feslUserIdKey[];
-extern char g_feslSecretKey[];
 extern char g_feslDirectRoute[];
 
 // ?notifyEcho@FeslEchoNotifier@@QAEXXZ
@@ -72,8 +70,8 @@ void FeslEchoNotifier::notifyEcho()
 	message.addInt( g_feslTypeKey, 1 );
 	if( m_userId[ 0 ] )
 	{
-		message.addString( g_feslUserIdKey, m_userId );
-		message.addString( g_feslSecretKey, m_secret );
+		message.addString( "UGID", m_userId );
+		message.addString( "SECRET", m_secret );
 	}
 	sendFeslMessage( &message, g_feslDirectRoute, m_connection );
 	reinterpret_cast< Gen_007e86c0 * >( &message )->m();

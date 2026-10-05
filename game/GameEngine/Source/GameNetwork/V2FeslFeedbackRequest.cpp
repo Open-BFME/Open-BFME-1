@@ -8,10 +8,7 @@ typedef __int64 FeslInt64;
 
 extern "C" int __cdecl sprintf( char *buffer, const char *format, ... );
 
-extern const char g_Rva012DAC04[];
 extern const char g_Rva012DAC14[];
-extern const char g_Rva012DAC20[];
-extern const char g_Rva012DAC30[];
 // retail 0x007E8AC0: ?run@Rva007E8AC0@@QAEXXZ
 class Rva007E8AC0
 {
@@ -67,7 +64,7 @@ void Rva007F1F60Feedback::addTargetIds( Rva007E8810Message *msg,
 	int limit = count;
 	for ( int i = 0; i < limit; ++i )
 	{
-		sprintf( key, g_Rva012DAC04, i );
+		sprintf( key, "targetIds.%d", i );
 		message->addInt( key, ids[ i ].id );
 	}
 	message->addInt( "targetIds.[]", count );
@@ -82,9 +79,9 @@ void Rva007F1F60Feedback::addChatLog( Rva007E8810Message *msg,
 	int limit = count;
 	for ( int i = 0; i < limit; ++i )
 	{
-		sprintf( key, g_Rva012DAC30, i );
+		sprintf( key, "chatLog.%d.userId", i );
 		message->addInt64( key, logs[ i ].userId );
-		sprintf( key, g_Rva012DAC20, i );
+		sprintf( key, "chatLog.%d.chat", i );
 		message->addString( key, logs[ i ].chat );
 	}
 	message->addInt( "chatLog.[]", count );

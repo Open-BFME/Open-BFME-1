@@ -50,7 +50,6 @@ struct Rva007EB810Diag
 
 extern "C" __declspec(dllimport) int __stdcall WaitForSingleObject(void *h, int t);
 Rva007EB810Diag *Rva007EB810Get(void);
-extern char g_bfmeMsg1037[];
 
 class BfmeH1037
 {
@@ -64,7 +63,7 @@ public:
 void BfmeH1037::bfmeGo1037H(void)
 {
 	if (WaitForSingleObject(m_bfmeHandle, -1) != 0)
-		Rva007EB810Get()->report(g_bfmeMsg1037);
+		Rva007EB810Get()->report("Error entering critical section\n");
 }
 
 class BfmeI1037
