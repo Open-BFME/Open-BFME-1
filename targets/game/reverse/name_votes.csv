@@ -415,3 +415,4 @@ game/GameEngine/Source/Common/BfmeStateAY.cpp|type||BfmeStateAY,6bb348ae70da38fa
 game/GameEngine/Source/Common/BfmeStateAY.cpp|member||m_bfmeVfptrAY,fc2144929bdbaba81377c6c2,gpt-6-astra,20261005161655-2195d7,2026-10-05
 game/GameEngine/Source/Common/BfmeStateAY.cpp|member||m_bfmeFirstAY,9ca3276438f350cce9e35f7a,gpt-6-astra,20261005161655-2195d7,2026-10-05
 game/GameEngine/Source/Common/BfmeStateAY.cpp|member||m_bfmeSecondAY,8739ff1ad4788ed4ea3b6552,gpt-6-astra,20261005161655-2195d7,2026-10-05
+game/GameEngine/Source/GameLogic/AI/Rva001515C0Xfer.cpp|type||Rva001515C0,9e3faa09440fbe4f892a3d2d,gpt-6-astra,20261005160702-02649d,2026-10-05
