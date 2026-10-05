@@ -944,3 +944,5 @@ game/GameEngine/Source/GameLogic/AI/PathfinderClassifyFence.cpp|local|Pathfinder
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIAttackSwoopThenIdleStateMachineRva002BC870.cpp|type||Rva002BC870AI,3bbf3ee5503b5483340430ff,gpt-6-sol,20261005200140-15020b,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIAttackSwoopThenIdleStateMachineRva002BC870.cpp|type||Rva002BC870AI,3bbf3ee5503b5483340430ff,grok,20261005200127-9ac372,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIAttackSwoopThenIdleStateMachineRva002BC870.cpp|function|AIAttackSwoopThenIdleStateMachine@|rva002BC870,5410ca74232dff5e73a37819,grok,20261005200127-9ac372,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdateSetStatus.cpp|param|battlePlanSetPosition|p,7c8fdce6c370916c9787128a,gpt-6-sol,20261005200447-858c24,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdateSetStatus.cpp|param|setBattlePlan|s,edeef6ce858f9c57e20d2b4f,gpt-6-sol,20261005200447-858c24,2026-10-05
