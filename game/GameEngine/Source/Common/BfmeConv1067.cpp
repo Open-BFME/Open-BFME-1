@@ -25,7 +25,6 @@ extern BfmeX1067 *g_bfmeV1067;
 // different global (0x012F49A8) and keeps its own name.
 extern int g_aptPalantirWindow;
 extern char g_bfmeFmtD1067[];
-extern char g_bfmeFmtA1067[];
 extern char g_bfmeFmtB1067[];
 extern char g_bfmeLit1067[];
 extern char g_bfmeLitA1067[];
@@ -48,7 +47,7 @@ void bfmeGo1067A(int a, BfmeN1067 *n)
 	_snprintf(buf, 0x10, g_bfmeFmtD1067, a);
 	q = n->m_bfme00;
 	s = q ? q + 8 : g_bfmeLit1067;
-	((BfmeR1067 *)g_rva012F19E8WindowManager)->bfmeRun1067((BfmeX1067 *)g_aptPalantirWindow, g_bfmeFmtA1067, 2, buf, s, 0, 0, 0);
+	((BfmeR1067 *)g_rva012F19E8WindowManager)->bfmeRun1067((BfmeX1067 *)g_aptPalantirWindow, "CreateRadarPing", 2, buf, s, 0, 0, 0);
 }
 
 void bfmeGo1067B(int a, char b)

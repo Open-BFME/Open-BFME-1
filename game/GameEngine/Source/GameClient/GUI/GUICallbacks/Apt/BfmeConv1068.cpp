@@ -23,8 +23,6 @@ extern WindowManager *g_rva012F19E8WindowManager;
 // cast at the use and the pushed bytes stay identical.
 extern int g_aptPalantirWindow;
 extern char g_bfmeFmtD1068[];
-extern char g_bfmeFmtA1068[];
-extern char g_bfmeFmtB1068[];
 
 extern "C" __declspec(dllimport) int __cdecl sprintf(char *b, char *f, int a);
 
@@ -36,7 +34,7 @@ void bfmeGo1068A(int a, int b)
 		v = 1;
 	sprintf((char *)&b, g_bfmeFmtD1068, a + 1);
 	sprintf((char *)&a, g_bfmeFmtD1068, v);
-	((BfmeR1068 *)g_rva012F19E8WindowManager)->bfmeRun1068((BfmeX1068 *)g_aptPalantirWindow, g_bfmeFmtA1068, 2, (char *)&b, (char *)&a, 0, 0, 0);
+	((BfmeR1068 *)g_rva012F19E8WindowManager)->bfmeRun1068((BfmeX1068 *)g_aptPalantirWindow, "SetHeroSelectButtonHealthBar", 2, (char *)&b, (char *)&a, 0, 0, 0);
 }
 
 void bfmeGo1068B(int a, int b)
@@ -47,5 +45,5 @@ void bfmeGo1068B(int a, int b)
 		v = 1;
 	sprintf((char *)&b, g_bfmeFmtD1068, a + 1);
 	sprintf((char *)&a, g_bfmeFmtD1068, v);
-	((BfmeR1068 *)g_rva012F19E8WindowManager)->bfmeRun1068((BfmeX1068 *)g_aptPalantirWindow, g_bfmeFmtB1068, 2, (char *)&b, (char *)&a, 0, 0, 0);
+	((BfmeR1068 *)g_rva012F19E8WindowManager)->bfmeRun1068((BfmeX1068 *)g_aptPalantirWindow, "SetHeroSelectButtonRankProgress", 2, (char *)&b, (char *)&a, 0, 0, 0);
 }

@@ -92,7 +92,6 @@ public:
 	void u4Finish( int radix );
 };
 
-extern const char g_u4Separator[];
 extern const char g_u1Empty[];
 void __cdecl u1FormatPointer( INI *ini, void *value );
 INI *__cdecl u4FormatFloat( INI *ini, double value );
@@ -114,7 +113,7 @@ inline void u1BeginField( INI *ini, void *depthValue, void *store )
 		while ( --depth );
 	}
 	ini->u4Append( store );
-	ini->u4Append( g_u4Separator );
+	ini->u4Append( " = " );
 }
 
 void u1Do_005C90D0( void *a, void *b, void *c, U1DwordFlagged *d )

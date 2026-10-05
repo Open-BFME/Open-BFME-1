@@ -14,7 +14,6 @@ public:
 };
 
 extern WindowManager *g_rva012F19E8WindowManager;	// retail 0x012F19E8
-extern char g_bfmeFmt1076[];
 
 extern bool j_000490a8(void);
 extern void j_00011464(void);
@@ -81,7 +80,7 @@ int BfmeQ1076::bfmeGo1076A(int a, char b, char c)
 	if (a != 0x15 || b != 1 || !(c & 1))
 		return 0;
 	if (m_bfme25c == 0 && m_bfme258 != 2)
-		((BfmeR1076 *)g_rva012F19E8WindowManager)->bfmeRun1076(m_bfme250, g_bfmeFmt1076, 0, 0, 0, 0, 0, 0);
+		((BfmeR1076 *)g_rva012F19E8WindowManager)->bfmeRun1076(m_bfme250, "EscapeButtonPressed", 0, 0, 0, 0, 0, 0);
 	else if (m_bfme25c != 0 && m_bfme258 == 0)
 		bfmeF1076();
 	else if (m_bfme25c == 0 && m_bfme258 == 2)

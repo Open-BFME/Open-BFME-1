@@ -9,7 +9,6 @@ public:
 };
 
 extern AptPalantir *TheAptPalantir;
-extern char g_aptPalantirSpellPrefix[];
 
 // ?aptPalantirOnButtonSpell@@YAXPAD@Z
 void aptPalantirOnButtonSpell( char *spell )
@@ -17,7 +16,7 @@ void aptPalantirOnButtonSpell( char *spell )
 	if( spell == 0 )
 		return;
 
-	if( strncmp( spell, g_aptPalantirSpellPrefix, 5 ) != 0 )
+	if( strncmp( spell, "Spell", 5 ) != 0 )
 		return;
 
 	TheAptPalantir->selectSpell( atoi( spell + 5 ) - 1 );

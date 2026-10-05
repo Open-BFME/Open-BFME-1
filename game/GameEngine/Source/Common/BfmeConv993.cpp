@@ -151,7 +151,6 @@ extern AptPalantir *TheAptPalantir;
 extern int g_aptPalantirWindow;
 // Retail 0x01081238 contains the NUL-terminated literal "0".
 extern const char g_rva01080FC0[2];
-extern char g_bfmeFmt993B[];
 
 void bfmeGo993B(void)
 {
@@ -160,5 +159,5 @@ void bfmeGo993B(void)
 	char *s = asked ? "0" : const_cast<char *>(g_rva01080FC0);
 
 	CALL993(Rva00015235, g_rva012F19E8WindowManager, j_00015235)
-		(g_aptPalantirWindow, g_bfmeFmt993B, 1, s, 0, 0, 0, 0);
+		(g_aptPalantirWindow, "HideScroll", 1, s, 0, 0, 0, 0);
 }

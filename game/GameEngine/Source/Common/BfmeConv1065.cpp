@@ -41,7 +41,6 @@ extern WindowManager *g_rva012F19E8WindowManager;
 extern int g_aptPalantirWindow;
 extern char g_bfmeFmtD1065[];
 extern char g_bfmeFmtF1065[];
-extern char g_bfmeFmtH1065[];
 extern char *g_bfmeTbl1065[];
 
 class BfmeH1065;
@@ -69,5 +68,5 @@ void bfmeGo1065C(int a)
 	char buf[0x10];
 
 	_snprintf(buf, 0x10, "%g", a * ((BfmeR1065 *)g_rva012F19E8WindowManager)->bfmeSlot1065R_11()->m_bfme04);
-	((BfmeR1065 *)g_rva012F19E8WindowManager)->bfmeRun1065((BfmeX1065 *)g_aptPalantirWindow, g_bfmeFmtH1065, 1, buf, 0, 0, 0, 0);
+	((BfmeR1065 *)g_rva012F19E8WindowManager)->bfmeRun1065((BfmeX1065 *)g_aptPalantirWindow, "ShowHelpBox", 1, buf, 0, 0, 0, 0);
 }

@@ -53,9 +53,7 @@ struct BfmeP1062
 
 extern BfmeP1062 *g_bfmeP1062;
 extern char g_bfmeLit1_1062[];
-extern char g_bfmeLit2_1062[];
 extern char g_bfmeLit3_1062[];
-extern char g_bfmeLitC1062[];
 
 class BfmeX1062;
 
@@ -90,11 +88,11 @@ void bfmeGo1062D(void)
 			s = g_bfmeLit1_1062;
 			break;
 		case 2:
-			s = g_bfmeLit2_1062;
+			s = "_selected";
 			break;
 		default:
 			s = g_bfmeLit3_1062;
 			break;
 	}
-	bfmeR1062View()->bfmeRun1062((BfmeX1062 *)g_aptPalantirWindow, g_bfmeLitC1062, 1, s, 0, 0, 0, 0);
+	bfmeR1062View()->bfmeRun1062((BfmeX1062 *)g_aptPalantirWindow, "UpdateSkillUpgradeButton", 1, s, 0, 0, 0, 0);
 }

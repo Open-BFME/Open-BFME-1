@@ -23,7 +23,6 @@ static inline BfmeX1073 *bfmeX1073()
 }
 extern char g_bfmeFmtA1073[];
 extern char g_bfmeFmtB1073[];
-extern char g_bfmeFmtG1073[];
 extern char g_bfmeLit1073[];
 
 class BfmeQ1073
@@ -66,5 +65,5 @@ void bfmeGo1073B(BfmeN1073 *n, float b, float c)
 	_snprintf(buf2, 0x10, "%g", c);
 	q = n->m_bfme00;
 	s = q ? q + 8 : g_bfmeLit1073;
-	((BfmeR1073 *)g_rva012F19E8WindowManager)->bfmeRun1073(bfmeX1073(), g_bfmeFmtG1073, 3, s, buf1, buf2, 0, 0);
+	((BfmeR1073 *)g_rva012F19E8WindowManager)->bfmeRun1073(bfmeX1073(), "MoveButtonFlash", 3, s, buf1, buf2, 0, 0);
 }

@@ -180,9 +180,8 @@ void BfmeF1021::bfmeGo1021F(int unused)
 extern int g_aptPalantirWindow;
 
 extern int g_bfmeTab1021[];
-extern char g_bfmeFmt1021G[];
 
 void bfmeGo1021G(int i)
 {
-	((BfmeLog1021 *)g_rva012F19E8WindowManager)->bfmeLog1021(g_aptPalantirWindow, g_bfmeFmt1021G, 1, g_bfmeTab1021[i], 0, 0, 0, 0);
+	((BfmeLog1021 *)g_rva012F19E8WindowManager)->bfmeLog1021(g_aptPalantirWindow, "SetPalantirFrameState", 1, g_bfmeTab1021[i], 0, 0, 0, 0);
 }

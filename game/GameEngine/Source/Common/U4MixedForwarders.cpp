@@ -122,7 +122,6 @@ public:
 };
 struct U4Rec005F7A30 { int m_first; };
 void u4Then005F7A30( INI *ini, void *instance, void *store, const void *userData );
-extern const char g_u4Separator[];
 void __cdecl u4FormatInt( INI *ini, int value );
 
 void u4Then005F7A30( INI *ini, void *instance, void *store, const void *userData )
@@ -138,7 +137,7 @@ void u4Then005F7A30( INI *ini, void *instance, void *store, const void *userData
 	}
 
 	ini->u4Append( store );
-	ini->u4Append( g_u4Separator );
+	ini->u4Append( " = " );
 	u4FormatInt( ini, ((const U4Rec005F7A30 *)userData)->m_first );
 	ini->u4Finish( 10 );
 }

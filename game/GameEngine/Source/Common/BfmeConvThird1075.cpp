@@ -14,7 +14,6 @@ public:
 class WindowManager;
 
 extern WindowManager *g_rva012F19E8WindowManager;
-extern char g_bfmeFmtAJ[];
 extern char g_bfmeLitA1072[];
 extern char g_bfmeD1072;
 
@@ -58,10 +57,10 @@ int BfmeQ1075::bfmeGo1075A(int code, unsigned char kind, char flags)
 	{
 		case 4:
 			if (g_bfmeD1072)
-				((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAJ(m_bfmeSinkAJ, g_bfmeFmtAJ, 1,
+				((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAJ(m_bfmeSinkAJ, "assignClose", 1,
 					g_bfmeLitA1072, 0, 0, 0, 0);
 			else
-				((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAJ(m_bfmeSinkAJ, g_bfmeFmtAJ, 1,
+				((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAJ(m_bfmeSinkAJ, "assignClose", 1,
 					"normal", 0, 0, 0, 0);
 			((BfmeOwnAJ *)this)->bfmeCloseAJ(0);
 			break;

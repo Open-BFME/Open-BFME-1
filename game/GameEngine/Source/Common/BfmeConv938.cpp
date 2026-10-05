@@ -23,13 +23,12 @@ void __stdcall bfmeGo938C(void *a)
 	bfmeCall938C(3, 4, 0);
 }
 
-extern char g_bfme938StrD[];
 extern char g_bfme938FnD[];
 void bfmeCall938D(char *a, char *b);
 
 void bfmeGo938D(void)
 {
-	bfmeCall938D(g_bfme938StrD, g_bfme938FnD);
+	bfmeCall938D("Animation2D", g_bfme938FnD);
 }
 
 class BfmeThing938F

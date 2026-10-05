@@ -41,7 +41,6 @@ static inline BfmeX1077 *bfmeX1077()
 	return (BfmeX1077 *)g_aptPalantirWindow;
 }
 extern char g_bfmeFmtD1077[];
-extern char g_bfmeFmtL1077[];
 
 extern "C" __declspec(dllimport) int __cdecl _snprintf(char *b, unsigned int n, char *f, ...);
 BfmeX1077 *__cdecl bfmeMk1077(BfmeX1077 *a, BfmeX1077 *b);
@@ -60,7 +59,7 @@ void bfmeGo1077A(int a, float b, float c)
 	_snprintf(buf1, 0x10, g_bfmeFmtD1077, a);
 	_snprintf(buf2, 0x10, "%g", b * p->m_bfme00);
 	_snprintf(buf3, 0x10, "%g", c * p->m_bfme04);
-	((BfmeR1077 *)g_rva012F19E8WindowManager)->bfmeRun1077(bfmeX1077(), g_bfmeFmtL1077, 3, buf1, buf2, buf3, 0, 0);
+	((BfmeR1077 *)g_rva012F19E8WindowManager)->bfmeRun1077(bfmeX1077(), "MoveRadarPing", 3, buf1, buf2, buf3, 0, 0);
 }
 
 void bfmeGo1077B(int a, float b, float c)

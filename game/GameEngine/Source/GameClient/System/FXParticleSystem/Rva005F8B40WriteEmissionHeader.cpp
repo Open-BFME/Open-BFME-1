@@ -152,7 +152,6 @@ public:
 	virtual ModuleClassEntry *getClass(void) const;
 };
 
-extern const char g_u4Separator[];
 
 namespace FXParticleSystem
 {
@@ -180,7 +179,7 @@ void Rva005F8B40WriteEmissionHeader(const void *self, File *file, unsigned int *
 		reinterpret_cast<_STL::basic_ostream<char, _STL::char_traits<char> > *>(&stream)->put(' ');
 	reinterpret_cast<_STL::basic_ostream<char, _STL::char_traits<char> > *>(&stream)->_M_put_nowiden(
 		FXParticleSystem::GetKey(FXParticleSystem::MODULE_CATEGORY_EMISSION_HEADER));
-	reinterpret_cast<_STL::basic_ostream<char, _STL::char_traits<char> > *>(&stream)->_M_put_nowiden(g_u4Separator);
+	reinterpret_cast<_STL::basic_ostream<char, _STL::char_traits<char> > *>(&stream)->_M_put_nowiden(" = ");
 	reinterpret_cast<_STL::basic_ostream<char, _STL::char_traits<char> > *>(&stream)->_M_put_nowiden(name);
 	reinterpret_cast<_STL::basic_ostream<char, _STL::char_traits<char> > *>(&stream)->_M_put_char('\n');
 	writeStreamText(*file,

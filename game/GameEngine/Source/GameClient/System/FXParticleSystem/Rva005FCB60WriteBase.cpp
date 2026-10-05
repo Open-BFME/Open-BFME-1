@@ -160,7 +160,6 @@ public:
 	virtual ModuleClassEntry *getClass(void) const;
 };
 
-extern const char g_u4Separator[];
 
 namespace FXParticleSystem
 {
@@ -188,7 +187,7 @@ void Rva005FCB60WriteBase(const void *self, File *file, unsigned int *flags)
 		reinterpret_cast<StreamWriter *>(&stream)->indent(' ');
 	reinterpret_cast<StreamWriter *>(&stream)->append(
 		FXParticleSystem::GetKey(FXParticleSystem::MODULE_CATEGORY_COLLISION));
-	reinterpret_cast<StreamWriter *>(&stream)->append(g_u4Separator);
+	reinterpret_cast<StreamWriter *>(&stream)->append(" = ");
 	reinterpret_cast<StreamWriter *>(&stream)->append(name);
 	reinterpret_cast<StreamWriter *>(&stream)->separate('\n');
 	writeStreamText(*file,
@@ -207,7 +206,7 @@ void Rva005F2E00WriteCollisionHeader(const void *self, File *file,
 		reinterpret_cast<StreamWriter *>(&stream)->indent(' ');
 	reinterpret_cast<StreamWriter *>(&stream)->append(
 		FXParticleSystem::GetKey((FXParticleSystem::ModuleCategory)6));
-	reinterpret_cast<StreamWriter *>(&stream)->append(g_u4Separator);
+	reinterpret_cast<StreamWriter *>(&stream)->append(" = ");
 	reinterpret_cast<StreamWriter *>(&stream)->append(name);
 	reinterpret_cast<StreamWriter *>(&stream)->separate('\n');
 	writeStreamText(*file,
