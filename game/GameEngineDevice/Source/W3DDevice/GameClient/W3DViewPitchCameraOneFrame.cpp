@@ -26,7 +26,7 @@ private:
 
 namespace WWMath
 {
-	inline Real Lerp(Real a, Real b, Real t) { return a + (b - a) * t; }
+	inline Real Lerp(Real a, Real b, Real lerp) { return a + (b - a) * lerp; }
 }
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
