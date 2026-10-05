@@ -302,3 +302,4 @@ game/GameEngine/Source/Common/BfmeConv912.cpp|member||m_bfmeHead,m_head,gpt-6-as
 game/GameEngine/Source/Common/BfmeConv912.cpp|local|BfmeThing912C::bfmeGo912C|n,node,gpt-6-astra+grok,applied,2026-10-05
 game/GameEngine/Source/Common/V4GuardedTailCallsWithArgs.cpp|member||m_at28,m_regionManager,claude-fable+gpt-6-astra,applied,2026-10-05
 game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeFindRepresentativeSlot,findRepresentativeSlot,gemini+gpt-6-astra+grok,applied,2026-10-05
+game/GameEngine/Source/GameClient/ShadowRva00459960.cpp|function|Shadow@|rva00459960,setOpacityFade,claude-fable+gpt-6-astra,applied,2026-10-05

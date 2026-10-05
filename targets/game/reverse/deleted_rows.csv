@@ -33979,3 +33979,4 @@ Gen_helpmd_00451e60,0x00451E60,"gen-shim scaffold placeholder superseded by the 
 ?d_00619c40@@YAXXZ,0x00619C40,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?rva00619C40@@YGXPAURva00619C40Entry@@HABVAsciiString@@@Z, a gate-required claim from game/GameEngine/Source/GameClient/LivingWorldRegionRva00619C40.cpp over the same 361-byte range. The game/gen_asm/d_006176a0.asm scaffold reproduces those bytes but carries no identity."
 ?scaleToInt@BfmeThing171@@QAEHPAUBfmeArg171@@@Z,0x001E1710,renamed to ?scaleToInt@WeaponTemplate@@QAEHPAUBfmeArg171@@@Z by tools/name_lane.py: two models agreed
 ?bfmeFindRepresentativeSlot@MpGameSetup@@QAEHXZ,0x00524FB0,renamed to ?findRepresentativeSlot@MpGameSetup@@QAEHXZ by tools/name_lane.py: two models agreed
+?rva00459960@Shadow@@QAEXHHHHHHHH@Z,0x00459960,renamed to ?setOpacityFade@Shadow@@QAEXHHHHHHHH@Z by tools/name_lane.py: two models agreed

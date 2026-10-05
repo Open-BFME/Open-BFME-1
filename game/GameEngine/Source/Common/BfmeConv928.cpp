@@ -136,7 +136,7 @@ public:
 	virtual void slot00(int);
 	virtual void slot04(int);
 	virtual void release();
-	void rva00459960(int, int, int, int, int, int, int, int);
+	void setOpacityFade(int, int, int, int, int, int, int, int);
 };
 
 class BfmeThing928F
@@ -178,7 +178,7 @@ void BfmeThing928F::bfmeOne928F()
 	for (_STL::list<Shadow *>::iterator it = pending.begin();
 		it != pending.end(); ++it)
 	{
-		(*it)->rva00459960(0, 0, 0, 0, 0, 0, 0, 0);
+		(*it)->setOpacityFade(0, 0, 0, 0, 0, 0, 0, 0);
 		(*it)->release();
 	}
 	pending.clear();

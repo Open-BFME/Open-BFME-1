@@ -47,7 +47,7 @@ public:
   union { void (*entry)(); Call member; } call;
   call.entry=j_0000dc7e; (this->*call.member)(value);
  }
- __forceinline void rva00459960(int a,int b,int c,int d,int e,int f,int g,int h) {
+ __forceinline void setOpacityFade(int a,int b,int c,int d,int e,int f,int g,int h) {
   typedef void (Rva00429080ShadowView::*Call)(int,int,int,int,int,int,int,int);
   typedef char WidthCheck[sizeof(Call)==sizeof(void(*)()) ? 1 : -1];
   union { void (*entry)(); Call member; } call;
@@ -150,7 +150,7 @@ void DynamicDecalFXNugget::doFXPos(const Coord3D *primary,
 		Int initialOpacity = (Int)(m_startingDelay > BfmeZeroRange
 			? BfmeZeroRange : (Real)m_opacityStart);
 		((Rva00429080ShadowView *)shadow)->setOpacity(initialOpacity);
-		((Rva00429080ShadowView *)shadow)->rva00459960(
+		((Rva00429080ShadowView *)shadow)->setOpacityFade(
 			(Int)(m_startingDelay * BFME_FRAME_SCALE),
 			(Int)(m_lifetime * BFME_FRAME_SCALE),
 			m_opacityStart,

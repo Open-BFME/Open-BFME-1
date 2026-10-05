@@ -43,7 +43,7 @@ extern GameClient *TheGameClient;
 class Shadow
 {
 public:
-	void rva00459960(int, int, int, int, int, int, int, int);
+	void setOpacityFade(int, int, int, int, int, int, int, int);
 };
 
 struct W3DProjectedShadow;
@@ -90,11 +90,11 @@ void W3DProjectedShadowManager::rva007AFB50(Rva007AFB50Shadow *shadow)
 		int span = shadow->m_50;
 		int a54 = shadow->m_54;
 		if (extra == -1)
-			reinterpret_cast<Shadow *>(shadow)->rva00459960(0, span, a40, 0, a48, 0, span, a54);
+			reinterpret_cast<Shadow *>(shadow)->setOpacityFade(0, span, a40, 0, a48, 0, span, a54);
 		else
 		{
 			span -= extra;
-			reinterpret_cast<Shadow *>(shadow)->rva00459960(0, span, a40, 0, a48, 0, span, a54);
+			reinterpret_cast<Shadow *>(shadow)->setOpacityFade(0, span, a40, 0, a48, 0, span, a54);
 		}
 		return;
 	}

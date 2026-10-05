@@ -38,10 +38,10 @@ public:
 	int m_opacityEndFrame;
 	int m_opacityEnd;
 
-	void rva00459960( int offset38, int offset3C, int value40, int offset44, int value48, int offset4C, int offset50, int value54 );
+	void setOpacityFade( int offset38, int offset3C, int value40, int offset44, int value48, int offset4C, int offset50, int value54 );
 };
 
-void Shadow::rva00459960( int offset38, int offset3C, int value40, int offset44, int value48, int offset4C, int offset50, int value54 )
+void Shadow::setOpacityFade( int offset38, int offset3C, int value40, int offset44, int value48, int offset4C, int offset50, int value54 )
 {
 	int currentFrame = ((ClientFrameSubsystem *)TheGameClient)->getFrame();
 	m_opacityStartFrame = currentFrame + offset38;
