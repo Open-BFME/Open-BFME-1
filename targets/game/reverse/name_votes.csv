@@ -726,3 +726,4 @@ game/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThreadPlayerInfoCallback.c
 game/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThreadPlayerInfoCallback.cpp|param|constructPeerResponse|p,d76e915593d832d52ac15f69,gpt-6-astra,20261005180035-db8488,2026-10-05
 game/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThreadPlayerInfoCallback.cpp|param|destroyPeerResponse|p,85f0d9655082bcbb89b662fd,gpt-6-astra,20261005180035-db8488,2026-10-05
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DInGameUI_drawMoveHints.cpp|param|asciiText|s,f2e70adbc4d7ea91807d60bf,gpt-6-sol,20261005180207-510c12,2026-10-05
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DInGameUI_drawMoveHints.cpp|param|asciiText|s,f2e70adbc4d7ea91807d60bf,gpt-6-astra,20261005180540-0c45a0,2026-10-05
