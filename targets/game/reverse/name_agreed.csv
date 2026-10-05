@@ -289,3 +289,4 @@ game/GameEngine/Source/Common/BfmeConv1081.cpp|type||BfmeG1081,ExperienceTracker
 game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp|local|aptArrayConcat|a,array,gpt-6-astra+grok,agreed,2026-10-05
 game/GameEngine/Source/Common/BfmeConv815.cpp|type||BfmeThing171,WeaponTemplate,gpt-6-astra+grok,agreed,2026-10-05
 game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeFindRepresentativeSlot,findRepresentativeSlot,gemini+gpt-6-astra+grok,agreed,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1916.cpp|param|BfmeHostBR::xfer|x,xfer,gemini+gpt-6-astra,agreed,2026-10-05
