@@ -429,3 +429,6 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Rva00784090AptItemBounds.c
 game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Rva00784090AptItemBounds.cpp|local|Rva00785FD0Item::getRenderRegion|v1,eb55e7e7dfb925fadb4c0516,gpt-6-astra,20261005160718-ee4557,2026-10-05
 game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Rva00784090AptItemBounds.cpp|local|Rva00785FD0Item::getRenderRegion|v2,d4909d9cfb303bff58b22ca5,gpt-6-astra,20261005160718-ee4557,2026-10-05
 game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Rva00784090AptItemBounds.cpp|local|Rva00785FD0Item::getRenderRegion|q,eeed74f3db5cce216df81631,gpt-6-astra,20261005160718-ee4557,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1907.cpp|member||m_bfmeLevelBA,3bba99048ec298aead04230e,gpt-6-astra,20261005161244-4c065f,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1907.cpp|member||m_bfmeSlotIBA,6d961d4e4af2b5879c2e7671,gpt-6-astra,20261005161244-4c065f,2026-10-05
+game/GameEngine/Source/Common/BfmeConv1907.cpp|member||m_bfmeSlotLBA,544add33c878d59425cbac4f,gpt-6-astra,20261005161244-4c065f,2026-10-05
