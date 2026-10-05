@@ -1,7 +1,6 @@
 // cl: /DNDEBUG /MD /O2
 // Clean C++ conversion of the 3D-region formatter at retail RVA 0x009D96B0.
 extern "C" void __cdecl bfmeAppend(void *stream, const char *format, ...);
-extern const char g_bfmeRegion3DFormat[];
 
 struct BfmeRegion3D
 {
@@ -27,7 +26,7 @@ Gen009D96B0 *Gen009D96B0::bfmeEmit(const BfmeRegion3D *value)
 {
 	if (!m_pending)
 		bfmeAppend(this, 0);
-	bfmeAppend(this, g_bfmeRegion3DFormat,
+	bfmeAppend(this, "x:%1.6f,y:%1.6f,z:%1.6f to x:%1.6f,y:%1.6f,z:%1.6f [region3d]\n",
 		value->x_min, value->y_min, value->z_min,
 		value->x_max, value->y_max, value->z_max);
 	m_pending = false;

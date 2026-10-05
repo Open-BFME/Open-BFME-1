@@ -33,7 +33,6 @@ struct Rva008CCED0Self { int m_pad; };
 // their own pinned class spelling, so the access goes through a cast.
 struct Rva008AE770Stack;
 extern Rva008AE770Stack Rva008AE770TheStack;
-extern char g_bfmeStr1226[];
 
 class BfmeA1226
 {
@@ -55,7 +54,7 @@ void BfmeA1226::bfmeDump1226(void *a, int k)
 			union { void (*raw)(); void (Rva008CCED0Self::*member)(void *, void *, int); } add;
 			add.raw = d_008cced0;
 			((Rva008CCED0Self *)stack->*add.member)(e->m_bfme04, a, -1);
-			stack->bfmeLine1226(g_bfmeStr1226);
+			stack->bfmeLine1226("runFrameActions");
 		}
 	}
 }

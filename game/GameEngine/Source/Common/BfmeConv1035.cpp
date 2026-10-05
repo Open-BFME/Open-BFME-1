@@ -134,7 +134,6 @@ void BfmeF1035::bfmeGo1035F(void)
 class BfmeG1035;
 
 extern char g_bfmeCh1035;
-extern char g_bfmeLit1035[];
 void bfmeFix1035(char **slot, char *lit, BfmeG1035 *o);
 
 class BfmeG1035
@@ -149,7 +148,7 @@ public:
 char *BfmeG1035::bfmeGo1035G(void)
 {
 	if (*m_bfmeName == g_bfmeCh1035)
-		bfmeFix1035(&m_bfmeName, g_bfmeLit1035, this);
+		bfmeFix1035(&m_bfmeName, "dyntex_%08x", this);
 
 	return m_bfmeName;
 }

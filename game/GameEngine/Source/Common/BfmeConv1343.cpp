@@ -1,10 +1,6 @@
 // Open-BFME5 conversions.
 
 extern void *g_bfmeVftUUA[];
-extern char g_bfmeFileUUA[];
-extern char g_bfmeMsgAUUA[];
-extern char g_bfmeMsgBUUA[];
-extern char g_bfmeMsgCUUA[];
 
 struct Rva007EB810Diag
 {
@@ -31,9 +27,9 @@ void BfmeThingUUA::bfmeGoUUA()
 {
 	m_bfmeVft = g_bfmeVftUUA;
 	if (m_bfmeRef)
-		Rva007EB810Get()->fail(g_bfmeMsgAUUA, g_bfmeFileUUA, 0x45);
+		Rva007EB810Get()->fail("mProtoPingRef == 0", "\\views\\feslbuild_main\\jabba\\fesl\\source\\gamebrowser\\gamebrowserpinger.cpp", 0x45);
 	if (m_bfmeQueue)
-		Rva007EB810Get()->fail(g_bfmeMsgBUUA, g_bfmeFileUUA, 0x46);
+		Rva007EB810Get()->fail("mPendingQueue == 0", "\\views\\feslbuild_main\\jabba\\fesl\\source\\gamebrowser\\gamebrowserpinger.cpp", 0x46);
 	if (m_bfmePending)
-		Rva007EB810Get()->fail(g_bfmeMsgCUUA, g_bfmeFileUUA, 0x47);
+		Rva007EB810Get()->fail("mNumPendingRequests == 0", "\\views\\feslbuild_main\\jabba\\fesl\\source\\gamebrowser\\gamebrowserpinger.cpp", 0x47);
 }

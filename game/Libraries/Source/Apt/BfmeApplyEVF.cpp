@@ -1,7 +1,6 @@
 // Open-BFME7: recursive Apt hierarchy path builder behind bfmeResetEVF and
 // bfmeNormalizeEVF; unnamed nodes get an "instance%ld" name registered in the
 // parent owner's table.
-extern const char g_Rva011370DCInstanceFormat[];
 extern char bfmeFmtDYG[];
 
 extern "C" int __cdecl sprintf(char *buffer, const char *format, ...);
@@ -148,7 +147,7 @@ void bfmeApplyEVF(void *raw_node, BfmeStrVKI *text, int mode)
 		int level = node->m_level;
 		BfmeStrVKI value;
 		((Rva8CD130String *)text)->rva0089EA60Append(separator);
-		rva0089EDF0(&value, g_Rva011370DCInstanceFormat, level);
+		rva0089EDF0(&value, "instance%ld", level);
 		((BfmeStrVKJ *)text)->bfmeAssignVKJ((const BfmeStrVKJ &)value);
 		node->m_text = value;
 		Rva008C4FA0Owner *owner = (Rva008C4FA0Owner *)parent->m_owner;
