@@ -794,3 +794,5 @@ game/GameEngine/Source/Common/Rva003B2000Assign.cpp|member||m_22,ca33e2515ede60b
 game/GameEngine/Source/GameClient/EvaMessageInfoCopy.cpp|member||m_field4,9324520f52b1cbe75c262b61,grok,20261005190111-8dc2ab,2026-10-05
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/NetworkDirectConnectUpdateRemoteIPList.cpp|param|UnicodeString::UnicodeString#2|s,d8c47d4aca896dcb335b6858,gpt-6-sol,20261005185332-338c79,2026-10-05
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/NetworkDirectConnectUpdateRemoteIPList.cpp|param|UnicodeString::UnicodeString#2|s,d8c47d4aca896dcb335b6858,grok,20261005185618-f41bee,2026-10-05
+game/GameEngine/Source/GameClient/SubsystemRefreshCallbacks.cpp|param|d_001072a0|a3,9447eb8cb967f16cdcaa1b28,grok,20261005191959-1d3fd1,2026-10-05
+game/GameEngine/Source/GameClient/SubsystemRefreshCallbacks.cpp|param|d_001072f0|a3,544178a94ef753f57bab03dd,grok,20261005191959-1d3fd1,2026-10-05
