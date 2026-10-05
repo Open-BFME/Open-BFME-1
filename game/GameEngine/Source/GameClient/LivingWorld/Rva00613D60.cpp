@@ -1,15 +1,36 @@
 // ?rva00613d60@Rva00613D60Owner@@QAEXPAURva00613D60Region@@@Z
-// partial score=0.9922 date=2026-10-04
+// Address-derived reconstruction of the retail body at RVA 0x00613D60.
+// Rva003C2530Owner::prepare at 0x003BCC70 reaches it through ILT 0x000309EA
+// and passes one pointer argument.
+// Retail returns with ret 4 at +0x201 and begins INT3 padding at +0x204,
+// for 516 bytes.
+// The body builds a map path from the argument and queues message 0x1E.
+// No evidence names the owner or method, so this source keeps address-derived names.
+//
 // cl: /DNDEBUG /MD /EHsc
 
-// Open-BFME5: retail RVA 0x00613D60, 516 bytes.  A living-world region hand
-// off: it stops an in-progress recording, drops the pause and the cursor,
-// builds "maps\<region>\<region>.map" into the writable global data, and
-// queues message 0x1E with the region's own three integers.  Neither the
-// owner class nor the method spelling is recovered, so both stay
-// address-derived.
-
 typedef bool Bool;
+typedef unsigned int UnsignedInt;
+
+class Rva0036CA00Str;
+
+class Rva00386090
+{
+public:
+	void set(Rva0036CA00Str *value);
+};
+
+class Rva003860F0
+{
+public:
+	void set(Rva0036CA00Str *first, Rva0036CA00Str *second,
+		Rva0036CA00Str *third);
+};
+
+class Rva00618E60FieldAddress { public: const void *get() const; };
+class Rva00618E70FieldAddress { public: const void *get() const; };
+class Rva00618E80FieldAddress { public: const void *get() const; };
+class Rva00618E90FieldAddress { public: const void *get() const; };
 
 struct RGBColor;
 
@@ -69,7 +90,7 @@ class RecorderClass
 {
 public:
 	RecorderModeType getMode(void);								///< ILT 0x00043EEB
-	void rva0001e745(void);										///< ILT 0x0001E745
+	void stopRecording(void);										///< ILT 0x0001E745
 };
 
 extern RecorderClass *TheRecorder;
@@ -123,7 +144,7 @@ struct Rva006C9270GlobalData
 
 extern Rva006C9270GlobalData *TheWritableGlobalData;
 
-void rva0002e8bb(int now);										///< ILT 0x0002E8BB
+void __cdecl InitGameLogicRandom(unsigned int now);										///< ILT 0x0002E8BB
 
 extern int (__cdecl *g_bfmeNowVNH)(void);
 
@@ -179,10 +200,16 @@ extern InGameUI *TheInGameUI;
 class Glo012F7090Type
 {
 public:
-	void rva0001b5db(AsciiString path);							///< ILT 0x0001B5DB
+								///< ILT 0x0001B5DB
 };
 
 extern Glo012F7090Type *Glo012F7090;
+
+class GameInfo
+{
+public:
+	void setMap(AsciiString path);
+};
 
 class Glo012F1028Type
 {
@@ -195,10 +222,10 @@ extern Glo012F1028Type *Glo012F1028;
 
 struct Rva00613D60Region
 {
-	int rva00040d31(void);										///< ILT 0x00040D31
-	int rva000149b6(void);										///< ILT 0x000149B6
-	int rva0003f31e(int value);									///< ILT 0x0003F31E
-	int rva00024505(int value);									///< ILT 0x00024505
+										///< ILT 0x00040D31
+										///< ILT 0x000149B6
+									///< ILT 0x0003F31E
+									///< ILT 0x00024505
 
 	char m_pad00[8];
 	AsciiString m_name;
@@ -213,7 +240,7 @@ public:
 void Rva00613D60Owner::rva00613d60(Rva00613D60Region *region)
 {
 	if (TheRecorder->getMode() == RECORDERMODETYPE_RECORD)
-		TheRecorder->rva0001e745();
+		TheRecorder->stopRecording();
 
 	((BfmeHost961 *)TheBfmeGameLogic)->bfmeFallback961(0, 0);
 	((BfmeZ1100 *)TheMouse)->bfmeEnd1100(0);
@@ -225,18 +252,20 @@ void Rva00613D60Owner::rva00613d60(Rva00613D60Region *region)
 	TheWritableGlobalData->m_mapPath.format(path);
 
 	if (Glo012F7090 != 0)
-		rva0002e8bb(g_bfmeNowVNH());
+		InitGameLogicRandom(g_bfmeNowVNH());
 	else
-		rva0002e8bb(0);
+		InitGameLogicRandom(0);
 
 	GameMessage *message = TheMessageStream->appendMessage(0x1E);
 
 	((BfmeGameLogicPause *)TheBfmeGameLogic)->setGamePaused(true, 1, false);
 	((BfmeGameLogicPause *)TheBfmeGameLogic)->setGamePaused(false, 1, false);
 
-	TheBfmeGameLogic->rva00010fc8(region->rva00040d31());
-	TheBfmeGameLogic->rva00001569(
-		region->rva00024505(region->rva0003f31e(region->rva000149b6())));
+	((Rva00386090 *)TheBfmeGameLogic)->set((Rva0036CA00Str *)((Rva00618E60FieldAddress *)region)->get());
+	((Rva003860F0 *)TheBfmeGameLogic)->set(
+		(Rva0036CA00Str *)((Rva00618E70FieldAddress *)region)->get(),
+		(Rva0036CA00Str *)((Rva00618E80FieldAddress *)region)->get(),
+		(Rva0036CA00Str *)((Rva00618E90FieldAddress *)region)->get());
 
 	((AptPalantir *)Glo012F4B98)->hide(true);
 	TheInGameUI->u10();
@@ -245,17 +274,17 @@ void Rva00613D60Owner::rva00613d60(Rva00613D60Region *region)
 	int extra;
 	if (Glo012F7090 != 0)
 	{
-		Glo012F7090->rva0001b5db(path);
+		((GameInfo *)Glo012F7090)->setMap(path);
 		message->appendIntegerArgument(6);
 		extra = Glo012F1028->m_at90;
 		message->appendIntegerArgument(extra);
+		message->appendIntegerArgument(0);
 	}
 	else
 	{
 		message->appendIntegerArgument(0);
 		extra = Glo012F1028->m_at90;
 		message->appendIntegerArgument(extra);
+		message->appendIntegerArgument(0);
 	}
-
-	message->appendIntegerArgument(0);
 }
