@@ -1,20 +1,19 @@
 // ?method@Rva001709E0@@QAEHXZ
-// partial score=1.0 date=2026-10-03
-// cl: /O2 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath
+// cl: /O2 /MD /EHsc /Igame/GameEngine/Source /Igame/Libraries/Source/WWVegas/WWMath
+// stlport
+// The matched callees at 0x001A7C20, 0x0009A510, and 0x000EF060 establish
+// the class names and method signatures used below.
 #include "coord3d.h"
-// Draft callee views and singleton names are UNBOUND until canonical headers/signatures are adopted.
-// Intended targets: Terrain 1A7C20, GameLogic9A510, TeamFactoryEF060,
-// Gen_001BF490 delegate1BF490; Coord3D lengthEstimate16A050 uses real header.
-// Singletons retail VA12EF4CC /12F0898 /12ED810 respectively.
-// Do not add duplicate alias pins for these existing identities.
-class Rva001709E0Object;
-class Rva001709E0Terrain { public: int getLayerForDestination(Rva001709E0Object *, const Coord3D *); };
-class Rva001709E0Logic { public: Rva001709E0Object *findObjectByID(int); };
-class Rva001709E0Team;
-class Rva001709E0Factory { public: Rva001709E0Team *findTeamByID(unsigned); };
-extern Rva001709E0Terrain *Rva001709E0TerrainGlobal;
-extern Rva001709E0Logic *Rva001709E0LogicGlobal;
-extern Rva001709E0Factory *Rva001709E0FactoryGlobal;
+#include "Common/Thing/GameLogicObjectLookup.h"
+extern GameLogic *TheGameLogic;
+
+enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1 };
+class TerrainLogic { public: PathfindLayerEnum getLayerForDestination(Object *, const Coord3D *); };
+extern TerrainLogic *TheTerrainLogic;
+class Team;
+typedef unsigned int TeamID;
+class TeamFactory { public: Team *findTeamByID(TeamID); };
+extern TeamFactory *TheTeamFactory;
 class Gen_001BF490 { public: void bfmeForward(void *); };
 class Rva001709E0AI {
 public:
@@ -144,8 +143,8 @@ public:
  virtual int slot7();
  virtual int slot8(int);
  char pad4[0x14]; int word18;
- __forceinline void set44(Rva001709E0Object *target) { *(unsigned *)((char *)this+0x44)=target?*(unsigned *)((char *)target+0x74):0; }
- __forceinline void set48(Rva001709E0Team *team) { *(unsigned *)((char *)this+0x48)=team?*(unsigned *)((char *)team+8):0; }
+ __forceinline void set44(Object *target) { *(unsigned *)((char *)this+0x44)=target?*(unsigned *)((char *)target+0x74):0; }
+ __forceinline void set48(Team *team) { *(unsigned *)((char *)this+0x48)=team?*(unsigned *)((char *)team+8):0; }
  __forceinline void set5c(const Coord3D *p) { *(Rva001709E0Words *)((char *)this+0x5c)=*(const Rva001709E0Words *)p; *((char *)this+0x68)=1; }
 
 };
@@ -173,23 +172,23 @@ public: int method();
 };
 int Rva001709E0::method()
 {
- Rva001709E0Object *obj=*(Rva001709E0Object **)((char *)machine+0x10);
+ Object *obj=*(Object **)((char *)machine+0x10);
  Rva001709E0AI *ai=*(Rva001709E0AI **)((char *)obj+0x204);
  guard=machine->slot10();
  switch(ai->slot109()) {
  case 0:
   *(Rva001709E0Words *)((char *)guard+0x50)=*(const Rva001709E0Words *)ai->slot104();
-  if(Rva001709E0TerrainGlobal->getLayerForDestination(obj,ai->slot104())!=1)
+  if(TheTerrainLogic->getLayerForDestination(obj,ai->slot104())!=1)
    *((char *)ai+0x33b)=1;
   break;
  case 1: {
-  Rva001709E0Object *target=Rva001709E0LogicGlobal->findObjectByID(ai->slot105());
+  Object *target=TheGameLogic->findObjectByID(ai->slot105());
   guard->set44(target);
   ((Gen_001BF490 *)obj)->bfmeForward(target);
   break;
  }
  case 2: {
-  Rva001709E0Team *team=Rva001709E0FactoryGlobal->findTeamByID(ai->slot106());
+  Team *team=TheTeamFactory->findTeamByID(ai->slot106());
   guard->set48(team);
   break;
  }
