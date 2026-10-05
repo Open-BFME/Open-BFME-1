@@ -481,3 +481,5 @@ game/Libraries/Source/WWVegas/WW3D2/Gen_00945B20.cpp|member||m_bfmeArrays,11a239
 game/Libraries/Source/WWVegas/WW3D2/Gen_00945B20.cpp|function|Gen_00945B20@|bfmeGet,0a7724a6dc0561f07f2aca19,gpt-6-astra,20261005161655-e25596,2026-10-05
 game/GameEngine/Source/Common/Rva003B9AD0PairCopyCtor.cpp|type||Rva003B9AD0First,c60410a6e0c7e08bb939099e,gpt-6-astra,20261005161655-f25708,2026-10-05
 game/GameEngine/Source/Common/BfmeConv1916.cpp|param|BfmeHostBR::xfer|x,bd2360668858266e59eabe97,gpt-6-astra,20261005160858-cee0ed,2026-10-05
+game/GameEngine/Source/Common/V4GuardedTailCallsWithArgs.cpp|type||Rva003BCA70,01c5a0811c4a9cac3b1d34bb,gpt-6-astra,20261005161124-cfd2a6,2026-10-05
+game/GameEngine/Source/Common/V4GuardedTailCallsWithArgs.cpp|member||m_at28,143e612cc337cc5d7dd9567d,gpt-6-astra,20261005161124-cfd2a6,2026-10-05
