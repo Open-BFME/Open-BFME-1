@@ -933,3 +933,5 @@ game/GameEngine/Source/GameClient/GUI/CrossFadeImage_draw.cpp|param|drawImage|x0
 game/GameEngine/Source/GameClient/GUI/CrossFadeImage_draw.cpp|param|drawImage|y0,4651aef5faa87ab445942880,grok,20261005200807-b813d4,2026-10-05
 game/GameEngine/Source/GameClient/GUI/CrossFadeImage_draw.cpp|param|drawImage|x1,aa88683c6f584faa9c4cd08c,grok,20261005200807-b813d4,2026-10-05
 game/GameEngine/Source/GameClient/GUI/CrossFadeImage_draw.cpp|param|drawImage|y1,e2a0b9a02a0e1b53c245e200,grok,20261005200807-b813d4,2026-10-05
+game/GameEngine/Source/GameLogic/AI/AIGroup_setWeaponLockForGroup.cpp|member||m_bfmeFlag532,02e71ce5d913ec3ad477d4df,gpt-6-sol,20261005200609-9b3630,2026-10-05
+game/GameEngine/Source/GameLogic/AI/AIGroup_setWeaponLockForGroup.cpp|member||m_18,1366f65258203119113f1206,gpt-6-sol,20261005200609-9b3630,2026-10-05
