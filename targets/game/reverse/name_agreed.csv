@@ -355,3 +355,4 @@ game/GameEngine/Source/GameLogic/Object/Behavior/EnragedBehaviorCtorThunk.cpp|me
 game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateAction.cpp|member||m_10,m_valueMultiplier,gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateAction.cpp|member||m_14,m_bonusScience,gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateAction.cpp|member||m_18,m_bonusScienceMultiplier,gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManagerRva007B4940.cpp|member||m_at60,m_robj,gpt-6-sol+grok,agreed,2026-10-05

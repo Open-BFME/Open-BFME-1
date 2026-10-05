@@ -835,3 +835,5 @@ game/GameEngine/Source/GameNetwork/ServiceHubImpl_ctor.cpp|member||m_2A8,736a272
 game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManagerRva007B4940.cpp|member||m_at60,930e926a9e941628cdf92411,gpt-6-sol,20261005185010-414670,2026-10-05
 game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManagerRva007B4940.cpp|local|W3DProjectedShadowManager::createShadowPairRva007B4940|texture1,efb1e708e4663b14fe72e584,gpt-6-sol,20261005185010-414670,2026-10-05
 game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManagerRva007B4940.cpp|local|W3DProjectedShadowManager::createShadowPairRva007B4940|texture2,719c4eb3a0357772a505a2d9,gpt-6-sol,20261005185010-414670,2026-10-05
+game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManagerRva007B4940.cpp|member||m_at34,a2761020ef5a2c9323c916b3,grok,20261005185305-0a702d,2026-10-05
+game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManagerRva007B4940.cpp|member||m_at60,930e926a9e941628cdf92411,grok,20261005185305-0a702d,2026-10-05
