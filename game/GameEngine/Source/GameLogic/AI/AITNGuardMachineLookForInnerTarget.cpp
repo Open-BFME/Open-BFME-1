@@ -1,12 +1,12 @@
 // ?lookForInnerTarget@AITNGuardMachine@@QAE_NXZ
-// partial score=0.45 date=2026-09-11
 // cl: /DNDEBUG /MD /EHsc
 // stlport
-// BFME layout reconstruction of AITNGuardMachine::lookForInnerTarget at
-// retail RVA 0x0018A240.  The ZH twin is the source of the scan logic;
-// these views carry only the BFME offsets witnessed by the retail body.
+// The AITNGuardIdleState update caller proves this method's name.
+// These ABI views give MSVC 7.1 the BFME offsets read by retail.
+// The visible GameLogic hash lookup preserves retail's lookup call sequence.
 
 #include <list>
+#include <hash_map>
 
 typedef int ObjectID;
 typedef unsigned int UnsignedInt;
@@ -210,10 +210,20 @@ private:
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
+typedef _STL::hash_map<int, Object *, _STL::hash<int>, _STL::equal_to<int> > GameLogicObjectHash;
+
 class GameLogic
 {
 public:
-	Object *findObjectByID(ObjectID id);
+	__declspec(noinline) Object *findObjectByID(ObjectID id)
+	{
+		if (id == 0)
+			return 0;
+		GameLogicObjectHash::iterator it = m_objHash.find((int)id);
+		if (it == m_objHash.end())
+			return 0;
+		return (*it).second;
+	}
 
 	UnsignedInt getFrame() const
 	{
@@ -223,6 +233,8 @@ public:
 private:
 	unsigned char m_beforeFrame[0x3c];
 	UnsignedInt m_frame;
+	unsigned char m_paddingToLookup[0xb0 - 0x40];
+	GameLogicObjectHash m_objHash;
 };
 
 class AIData
@@ -255,7 +267,7 @@ struct Coord3D
 	float z;
 };
 
-class Rva0018A240AITNGuardMachine : public StateMachine
+class AITNGuardMachine : public StateMachine
 {
 public:
 	void setNemesisID(ObjectID id)
@@ -273,7 +285,7 @@ private:
 };
 
 // ?lookForInnerTarget@AITNGuardMachine@@QAE_NXZ
-bool Rva0018A240AITNGuardMachine::lookForInnerTarget()
+bool AITNGuardMachine::lookForInnerTarget()
 {
 	Object *owner = getOwner();
 
