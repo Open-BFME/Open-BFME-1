@@ -371,3 +371,7 @@ game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|p
 game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|param|drawImage|y0,startY,gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|param|drawImage|x1,endX,gpt-6-sol+grok,agreed,2026-10-05
 game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp|param|drawImage|y1,endY,gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameClient/GUI/CrossFadeImage_draw.cpp|param|drawImage|x0,startX,gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameClient/GUI/CrossFadeImage_draw.cpp|param|drawImage|y0,startY,gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameClient/GUI/CrossFadeImage_draw.cpp|param|drawImage|x1,endX,gpt-6-sol+grok,agreed,2026-10-05
+game/GameEngine/Source/GameClient/GUI/CrossFadeImage_draw.cpp|param|drawImage|y1,endY,gpt-6-sol+grok,agreed,2026-10-05
