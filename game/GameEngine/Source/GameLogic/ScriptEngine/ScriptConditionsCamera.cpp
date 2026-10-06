@@ -60,12 +60,18 @@ private:
 class Parameter
 {
 public:
-	const AsciiString &getString(void) const { return m_string; }
-
-private:
 	unsigned char m_beforeString[0x10];
 	AsciiString m_string;
 };
+
+// Parameter::getString has no retail address (always inlined). A member here
+// emitted a ?getString@Parameter@@ COMDAT unlike the first copy in link order
+// (this view puts m_string at +0x10), so this TU reads it through a file-local
+// inline instead.
+static inline const AsciiString &parameterString(const Parameter *parameter)
+{
+	return parameter->m_string;
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PolygonTrigger.h
 class PolygonTrigger
@@ -244,7 +250,7 @@ protected:
 Bool ScriptConditions::evaluateCameraHitSpecificSplineWaypoint(Parameter *waypointParm)
 {
 	Waypoint *waypoint = TheTerrainLogic->getWaypointByName(
-		waypointParm->getString());
+		parameterString(waypointParm));
 	if (waypoint) {
 		View *view = TheTacticalView;
 		WaypointID id = waypoint->getID();
@@ -258,7 +264,7 @@ Bool ScriptConditions::evaluateCameraHitSpecificSplineWaypoint(Parameter *waypoi
 Bool ScriptConditions::evaluateCameraEnteredArea(Parameter *pTriggerParm)
 {
 	PolygonTrigger *pTrig = TheScriptEngine->getQualifiedTriggerAreaByName(
-		pTriggerParm->getString());
+		parameterString(pTriggerParm));
 	if (pTrig) {
 		Coord3D camera;
 		TheTacticalView->get3DCameraPosition(&camera);
