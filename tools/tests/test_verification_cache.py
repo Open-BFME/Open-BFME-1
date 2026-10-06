@@ -237,6 +237,9 @@ def test_combined_rows_detect_new_dir32_conflict(record_fixture, tmp_path, monke
     whitelist.write_text('')
     monkeypatch.setattr(real, 'ROOT', tmp_path)
     monkeypatch.setattr(real, 'DIR32_WHITELIST', whitelist)
+    # Synthetic references need no retail symbols or image bytes.
+    monkeypatch.setattr(real, 'load_symbol_map', lambda: {})
+    monkeypatch.setattr(real, 'retail_va_span', lambda: (0x400000, 0x500000))
     monkeypatch.setattr(real, 'read_dir32_addresses', lambda: {})
     monkeypatch.setattr(real, 'read_dir32_whitelist', lambda: set())
     monkeypatch.setattr(real, 'propose_dir32_addresses', lambda *a, **kw: None)
