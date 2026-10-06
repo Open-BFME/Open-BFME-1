@@ -18638,5 +18638,15 @@
   "after_sha256": "774df989b80efa7f53969ba6ad590087470bffb6d5c88980921d854f7ec281a8",
   "evidence": "targets/game/reverse/identity_evidence/009a8880-release-free-thunk-callee.md",
   "reason": "Retail's four calls land on the 5-byte thunk matched as Rva009A5980 (0x009A5980), not on bfmeGo930C's body at 0x009A58E0; bfmeGo930C keeps its name for that body."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/U4GlobalGuardedNotifies.cpp",
+  "new_path": "game/GameEngine/Source/Common/U4GlobalGuardedNotifies.cpp",
+  "old_name": "U4Notify",
+  "new_name": "Gen_00409040Registry",
+  "before_sha256": "ccfb62ee9800687f3c23eb11f9a649ade3f345e027adf63600278254473ba282",
+  "after_sha256": "e455cadd42358fbb5774a41d8bc993d895b4abccef3efeebef90b1a76a337850",
+  "evidence": "targets/game/reverse/identity_evidence/006057c0-assign-notify-callee.md",
+  "reason": "The notify call lands on 0x00409040, matched as Gen_00409040Registry::m; U4Notify::noteAssign is only a pin on the same body, and U4Notify stays for noteOwner."
  }
 ]

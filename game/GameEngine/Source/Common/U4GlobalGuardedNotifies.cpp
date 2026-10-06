@@ -57,8 +57,16 @@ class U4Assign006057C0;
 class U4Notify
 {
 public:
-	void noteAssign( U4Assign006057C0 *a );
 	void noteOwner( U4Owner00604C00 *o );
+};
+
+// 0x00409040 (reached through ILT 0x000281C8) is matched as
+// Gen_00409040Registry::m (Gen_00409040Registry_m.cpp), a thiscall taking one
+// pointer; the assignment below hands it the receiver.
+class Gen_00409040Registry
+{
+public:
+	void m( void *what );
 };
 
 class AnimationSoundModuleManager;
@@ -85,7 +93,7 @@ U4Assign006057C0 &U4Assign006057C0::operator=( const U4Assign006057C0 &other )
 		m_f08 = other.m_f08;
 		m_f10 = other.m_f10;
 		if ( TheAnimationSoundModuleManager != 0 )
-			((U4Notify *)TheAnimationSoundModuleManager)->noteAssign( this );
+			((Gen_00409040Registry *)TheAnimationSoundModuleManager)->m( this );
 	}
 	return *this;
 }
