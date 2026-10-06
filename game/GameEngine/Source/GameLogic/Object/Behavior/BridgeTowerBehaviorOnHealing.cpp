@@ -143,17 +143,8 @@ public:
 		return *(BehaviorModule ***)((const unsigned char *)this + 0x1F0);
 	}
 
-	bool isKindOf(KindOfType type) const
-	{
-		const ThingTemplate *finalTemplate = m_template;
-		if (finalTemplate && finalTemplate->m_nextOverride)
-			finalTemplate = (const ThingTemplate *)finalTemplate->m_nextOverride->getFinalOverride();
-		return finalTemplate->isKindOf(type);
-	}
-
 	ObjectID getID() const { return m_id; }
 
-private:
 	ThingTemplate *m_template;
 	unsigned char m_unreconstructed08[0x38 - 0x08];
 	unsigned char m_unreconstructed38[0x74 - 0x38];
@@ -161,6 +152,18 @@ private:
 	unsigned char m_unreconstructed78[0x200 - 0x78];
 	BodyModuleInterface *m_body;
 };
+
+// Object::isKindOf has no out-of-line retail body (always inlined). A member
+// spelling here emitted an ?isKindOf@Object@@ COMDAT unlike the first copy in
+// link order, so this TU reads the final template's kind bits through a
+// file-local inline instead.
+static inline bool objectIsKindOf(const Object *object, KindOfType type)
+{
+	const ThingTemplate *finalTemplate = object->m_template;
+	if (finalTemplate && finalTemplate->m_nextOverride)
+		finalTemplate = (const ThingTemplate *)finalTemplate->m_nextOverride->getFinalOverride();
+	return finalTemplate->isKindOf(type);
+}
 
 typedef _STL::hash_map<int, Object *, _STL::hash<int>, _STL::equal_to<int> > ObjectPtrHash;
 
@@ -241,8 +244,8 @@ void BridgeTowerBehavior::onHealing(DamageInfo *damageInfo)
 	{
 		Object *source = TheGameLogic->findObjectByID(damageInfo->m_sourceID);
 		if (source == NULL ||
-			(source->isKindOf(KINDOF_BRIDGE) == false &&
-			 source->isKindOf(KINDOF_BRIDGE_TOWER) == false))
+			(objectIsKindOf(source, KINDOF_BRIDGE) == false &&
+			 objectIsKindOf(source, KINDOF_BRIDGE_TOWER) == false))
 		{
 			for (int i = 0; i < 4; ++i)
 			{
