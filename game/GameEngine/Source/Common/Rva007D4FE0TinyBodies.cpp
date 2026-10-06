@@ -178,7 +178,10 @@ int Rva007E7840Body::body() const
 
 extern "C" char *__cdecl strcpy(char *, const char *);
 #pragma intrinsic(strcpy)
-extern char byte_134CA48[];
+// Retail .bss VA 0x0134CA48: the 256-byte directory buffer this setter
+// fills and FileSystem::getFileInfo (0x009C8C70) prefixes; the next datum is
+// TheFileSystem at 0x0134CB48. Defined once, here.
+char byte_134CA48[256];
 
 // ?Rva009C8660Body@@YAXPBD@Z
 void __cdecl Rva009C8660Body(const char *source)
