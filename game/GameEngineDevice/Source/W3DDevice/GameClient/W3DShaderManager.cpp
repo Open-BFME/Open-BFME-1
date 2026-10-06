@@ -3300,38 +3300,7 @@ void W3DShaderManager::init(void)
 	}
 }
 
-// W3DShaderManager::shutdown =======================================================
-/** Any shaders which allocate resources will be allowed to free them */
-//=============================================================================
-// ?shutdown@W3DShaderManager@@SAXXZ present-unmatched
-void W3DShaderManager::shutdown(void)
-{
-	if (m_newRenderSurface) m_newRenderSurface->Release();
-	if (m_renderTexture) m_renderTexture->Release();
-	if (m_oldRenderSurface) m_oldRenderSurface->Release();
-	if (m_oldDepthSurface) m_oldDepthSurface->Release();
-	m_renderTexture = NULL;
-	m_newRenderSurface = NULL;
-	m_oldDepthSurface = NULL;
-	m_oldRenderSurface = NULL;
-	m_currentShader = ST_INVALID;
-	m_currentFilter = FT_NULL_FILTER;
-	//release any assets associated with a shader (vertex/pixel shaders, textures, etc.)
-	for (Int i=0; i<W3DShaderManager::ST_MAX; i++) {
-		if (W3DShaders[i]) {
-			W3DShaders[i]->shutdown();
-		}
-	}
-
-	for (i=0; i < FT_MAX; i++)
-	{	
-		if (W3DFilters[i])
-		{
-			W3DFilters[i]->shutdown();
-		}
-	}
-
-}
+// W3DShaderManager::shutdown: retail 0x00717DA0, W3DShaderManagerShutdown.cpp.
 
 // W3DShaderManager::getShaderPasses =======================================================
 /** Return number of renderig passes required in perform the desired shader on current
