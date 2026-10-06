@@ -81290,7 +81290,6 @@ name,address,notes
 ?freeSockets@Rva0008FE00Owner@@AAEXXZ,0x000226E7,Open-BFME5 near-twin sibling of NameKeyGenerator::freeSockets; reuses the same pinned 0x226E7 callee
 ?freeStaticStrings@GameWindowManager@@UAEXXZ,0x00040B7E,GameWindowManager dtor call target (incremental-link thunk)
 ?freeTerrainBuffers@W3DTerrainBackground@@IAEXXZ,0x00044AA3,link thunk; called by allocateTerrainBuffers at 0x00728770
-?freeTerrainTracksResources@TerrainTracksRenderObjClass@@QAEHXZ,0x00014BC3,derived-ICF
 ?freeZones@ZoneBlock@@IAEXXZ,0x00012968,pinharvest x1 (thunk)
 ?friend_addToList@CommandSet@@QAEXPAPAV1@@Z,0x00037DDA,ControlBar newCommandSet retail list-link call ILT
 ?friend_adjustPowerForPlayer@Object@@QAEX_N@Z,0x00021297,Open-BFME5 retail object power adjustment thunk
