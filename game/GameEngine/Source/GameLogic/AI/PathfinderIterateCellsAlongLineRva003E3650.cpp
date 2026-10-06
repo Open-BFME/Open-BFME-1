@@ -53,7 +53,7 @@ public:
 #define BFME_GAMELOGIC_LOOKUP_VISIBLE
 #include "game/GameEngine/Source/Common/Thing/GameLogicObjectLookup.h"
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic; // GameLogic.cpp, VA 012F0898
 
 class PathfindCellInfo
 {
@@ -194,7 +194,7 @@ Int Pathfinder::iterateCellsAlongLine( const ICoord2D &start,
 
 		if (cell->getRawType() == 4)
 		{
-			Object *object = TheBfmeGameLogic->findObjectByID(
+			Object *object = TheGameLogic->findObjectByID(
 				cell->getObstacleID());
 			if (object)
 			{
