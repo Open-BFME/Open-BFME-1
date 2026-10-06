@@ -575,6 +575,14 @@ def zz_names(out):
         return {}, []
 
 
+# link.exe records the output file name inside the image, so the shifted link's name must be
+# exactly as long as the base link's, or .rdata differs by the length difference and every node
+# fails the shifted-layout check.
+BASE_TAG = "base"
+SHIFT_TAG = "shft"
+assert len(SHIFT_TAG) == len(BASE_TAG)
+
+
 def link(tag, inputs, order, entry, base, outdir):
     rsp = outdir / f"{tag}.rsp"
     rsp.write_text("\n".join(f'"{p}"' for p in inputs) + "\n", encoding="latin-1")
@@ -1652,8 +1660,8 @@ def cycle(args):
         shift = None
         if args.shift_base:   # the shifted link runs alongside; it is used when this iteration converges
             pool = concurrent.futures.ThreadPoolExecutor(1)
-            shift = pool.submit(link, "shift", inputs, order, entry, args.shift_base, out)
-        log, code, secs = link("base", inputs, order, entry, BASE, out)
+            shift = pool.submit(link, SHIFT_TAG, inputs, order, entry, args.shift_base, out)
+        log, code, secs = link(BASE_TAG, inputs, order, entry, BASE, out)
         d = diagnostics(log)
         if not (out / "base.map").exists():
             raise SystemExit(f"link_cycle: the base link wrote no map (exit {code}): {log[:2000]}")
@@ -1717,7 +1725,7 @@ def cycle(args):
 
 
 def measure(out, units, chunks, objs, R, rsecs, rimp, pins, have_shift, shift_base):
-    pe, I, isecs, limp = pe_view(out / "base.exe")
+    pe, I, isecs, limp = pe_view(out / (BASE_TAG + ".exe"))
     names, modified = zz_names(out)
     mapped = read_map((out / "base.map").read_text(encoding="latin-1"), BASE, names)
     ledger_starts = {}
@@ -1866,8 +1874,8 @@ class Shifted:
         self.starts = starts
         self.S, self.why = None, "no shifted link"
         self.failed = collections.Counter()
-        if have_shift and shift_base and (out / "shift.exe").exists():
-            _, S, ssecs, _ = pe_view(out / "shift.exe")
+        if have_shift and shift_base and (out / (SHIFT_TAG + ".exe")).exists():
+            _, S, ssecs, _ = pe_view(out / (SHIFT_TAG + ".exe"))
             if [(n, a, z) for n, a, z in ssecs.all] != [(n, a, z) for n, a, z in getattr(isecs, "all", ())]:
                 self.why = "shifted layout differs"
             else:
