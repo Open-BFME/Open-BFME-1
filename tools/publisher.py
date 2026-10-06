@@ -609,12 +609,17 @@ class Builder:
         if not (self.work / ".git").exists():
             self.work.mkdir(parents=True, exist_ok=True)
             git("init", "-q", str(self.work), cwd=self.home, env=self.env)
+            # the scrubbed environment drops the host's global config, and with
+            # it core.longpaths: deep reference trees fail to check out on Windows
+            self._git("config", "core.longpaths", "true")
         local = Path(source)
         if local.is_dir():                      # same host: borrow its objects, copy nothing
             objects = local / ".git" / "objects" if (local / ".git").is_dir() else local / "objects"
             (self.work / ".git" / "objects" / "info").mkdir(parents=True, exist_ok=True)
-            (self.work / ".git" / "objects" / "info" / "alternates").write_text(
-                objects.resolve().as_posix() + "\n", encoding="utf-8")
+            # bytes: a text-mode write on Windows ends the path in \r, which git
+            # rejects -- and then fetches (copies) every object instead
+            (self.work / ".git" / "objects" / "info" / "alternates").write_bytes(
+                objects.resolve().as_posix().encode() + b"\n")
         self._git("fetch", "-q", "--no-tags", str(source), *refs, timeout=3600)
 
     def bundle(self, job):
