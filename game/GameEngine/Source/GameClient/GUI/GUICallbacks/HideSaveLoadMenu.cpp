@@ -5,10 +5,17 @@
 // than reusing the pointer it already has. That is a second read of the global
 // in the source, not a spill -- writing it through the local reuses the register
 // and loses the reload.
-class WindowManager
+class WindowManager;
+
+// Both retail copies tail-call ILT 000290D2 -> 00465B80. The existing
+// address-qualified provider sets the manager byte at +1AC. Preserve its
+// declaration from TinyByteFieldSetters.cpp without claiming a semantic owner.
+class Rva00465B80
 {
 public:
-	void hideQuitMenu(void);
+	void apply();
+	char m_lead[0x1AC];
+	char m_flag;
 };
 
 struct SaveLoadMenu
@@ -48,5 +55,5 @@ void HideSaveLoadMenu(void)
 	static_cast<SaveLoadMenu *>(reinterpret_cast<void * &>(g_obj12F4B40))->m_25c = 0;
 	((InGameUI *)TheShell)->m_menuHidden = true;
 
-	g_rva012F19E8WindowManager->hideQuitMenu();
+	reinterpret_cast<Rva00465B80 *>(g_rva012F19E8WindowManager)->apply();
 }

@@ -27,7 +27,9 @@ Every raw section of the caller object, including its debug sections, is
 byte-identical. Across the complete relocation inventory, the sole change is
 REL32 at +10 hexadecimal, from the undefined old spelling to the existing
 provider. The two data relocations, sole function definition, directives,
-and metadata are unchanged. No extra function, vtable, or EH helper is emitted.
+and runtime/EH metadata are unchanged. The caller COFF header timestamp
+advances 64 seconds between these compilations; whole-object file equality
+is not claimed. No extra function, vtable, or EH helper is emitted.
 The declared-function check passes both before and after.
 
 The checked-in queue identified this stale undefined name, but its historical
