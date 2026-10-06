@@ -32,6 +32,13 @@ done <<< "$refs"
 """ + HOOK_LINE + "\n"
 
 
+SERVICE_CASES = [
+    {"name": "bad_file", "expect": "reject", "why": "the fake hook refuses bad* files",
+     "message": "add a bad file", "edits": [{"path": "bad_fixture.txt", "write": "x\n"}]},
+    {"name": "control", "expect": "pass", "why": "control", "message": "add a fine file",
+     "edits": [{"path": "fine_fixture.txt", "write": "x\n"}]}]
+
+
 def git(cwd, *args, check=True):
     got = subprocess.run(["git", *args], cwd=cwd, capture_output=True, text=True)
     if check and got.returncode:
@@ -53,10 +60,19 @@ class World:
         (self.seat / "tools").mkdir()
         for tool in ("publisher.py", "publisher_hook.py", "publisher_gate.py", "publisher_service.py"):
             (self.seat / "tools" / tool).write_bytes((TOOLS / tool).read_bytes())
+        # a minimal fixture set for promotion: one exploit the fake hook rejects,
+        # one benign control, and the ledger comparison
+        fixtures = self.seat / "tools" / "publisher_fixtures"
+        (fixtures / "svc").mkdir(parents=True)
+        (fixtures / "make_fixtures.py").write_bytes(
+            (TOOLS / "publisher_fixtures" / "make_fixtures.py").read_bytes())
+        (fixtures / "svc" / "cases.json").write_text(json.dumps(SERVICE_CASES))
+        (fixtures / "svc" / "ledger.sh").write_text("git ls-files | sort\n", newline="\n")
         (self.seat / ".githooks").mkdir()
         (self.seat / ".githooks" / "pre-push").write_text(FAKE_HOOK, newline="\n")
         (self.seat / MODE_FILE).parent.mkdir(parents=True, exist_ok=True)
         (self.seat / MODE_FILE).write_text(mode + "\n")
+        (self.seat / ".gitignore").write_text("__pycache__/\n")   # the hook imports tools/
         (self.seat / "a.txt").write_text("base\n")
         git(self.seat, "add", "-A")
         git(self.seat, "commit", "-q", "-m", "base")
@@ -232,3 +248,19 @@ def test_health_go_and_no_go(tmp_path):
     svc.append_csv(tmp_path / "metrics.csv", svc.METRIC_FIELDS, slow)
     report = svc.health(tmp_path, hours=1, now=now)
     assert not report["go"] and not report["checks"]["p95_latency"]["ok"]
+
+
+def test_promotion_without_a_fixture_set_is_refused(tmp_path):
+    """setup and auto_promote generate the fixture set for the commit being
+    promoted; a commit without one is never promoted (the rule is not skipped)."""
+    w = World(tmp_path, "shadow")
+    git(w.seat, "rm", "-q", "-r", "tools/publisher_fixtures/svc")
+    git(w.seat, "commit", "-q", "-m", "drop the fixture set")
+    git(w.seat, "push", "-q", "--no-verify", "origin", "HEAD:refs/heads/master")
+    git(w.seat, "fetch", "-q", "origin")
+    try:
+        w.service()
+        refused = None
+    except SystemExit as error:
+        refused = str(error)
+    assert refused and "cases.json" in refused

@@ -55,6 +55,69 @@ from publisher_hook import AUTH, MODE_FILES, MODES, RESULTS_REF, unauth_key  # n
 SERVICE = dict(pump_seconds=10.0, prune_origin=False, results_seconds=30.0, auto_promote=True,
                unauth_rate=1000.0, unauth_burst=200.0, link=[], toolchain_source=None)
 SHADOW_BRANCH = "publisher-shadow"
+FIXTURES = "tools/publisher_fixtures"
+
+
+def _generator(state):
+    """make_fixtures from the service's pinned bin/, never from the candidate."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "make_fixtures_pinned", Path(state) / "bin" / "make_fixtures.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def promote_with_fixtures(state, commit, repo, previous=None):
+    """Promote `commit` with a fixture set generated for exactly that commit.
+
+    publisher.promote refuses a checker without exploit fixtures, benign
+    controls and ledger_cmd, and so does this: nothing here skips the rule.
+    The cases are the commit's single tools/publisher_fixtures/*/cases.json
+    (or service.json `fixture_cases`) PLUS every case of the previously
+    promoted checker, so a commit cannot weaken its checker and drop the
+    exploit that shows it in the same change. ledger_cmd comes from the
+    publisher config, else `bash <that set's dir>/ledger.sh`. Returns
+    publisher.promote's (ok, report); a set that cannot be built is (False,
+    {"error": ...}) and nothing is promoted."""
+    state = Path(state)
+    svc = pub.read_json(state / "service.json", {}) or {}
+
+    def cases_at(rev):
+        listed = git("ls-tree", "-r", "--name-only", rev, "--", FIXTURES, cwd=repo,
+                     check=False).stdout.decode().split()
+        found = [p for p in listed if p.endswith("/cases.json")]
+        return [p for p in found if p == svc["fixture_cases"]] if svc.get("fixture_cases") else found
+
+    found = cases_at(commit)
+    if len(found) != 1:
+        return False, dict(error=f"{commit[:12]}: need exactly one {FIXTURES}/*/cases.json "
+                                 f"(service.json fixture_cases picks one); found {found}")
+    path = found[0]
+    cases = json.loads(git("show", f"{commit}:{path}", cwd=repo).stdout)
+    if previous:
+        names = {c["name"] for c in cases}
+        for old_path in cases_at(previous):
+            for case in json.loads(git("show", f"{previous}:{old_path}", cwd=repo).stdout):
+                if case["name"] not in names:          # a dropped exploit still has to fail
+                    cases.append(dict(case, name=f"previous_{case['name']}"))
+    where = state / "fixtures" / commit[:12]
+    if where.exists():
+        shutil.rmtree(where)
+    where.mkdir(parents=True)
+    (where / "cases.json").write_text(json.dumps(cases, indent=1), encoding="utf-8")
+    try:
+        _generator(state).build(where / "cases.json", where, rev=commit, repo=repo)
+    except Exception as error:  # noqa: BLE001 -- reported; nothing is promoted
+        return False, dict(error=f"fixture generation for {commit[:12]} failed: {error}")
+    cfg = pub.read_json(state / "config.json", {}) or {}
+    if not cfg.get("ledger_cmd"):
+        ledger = path.rsplit("/", 1)[0] + "/ledger.sh"
+        if git("cat-file", "-e", f"{commit}:{ledger}", cwd=repo, check=False).returncode:
+            return False, dict(error=f"no ledger_cmd in config and no {ledger} at {commit[:12]}")
+        cfg["ledger_cmd"] = f"bash {ledger}"
+        pub.write_json(state / "config.json", cfg)
+    return pub.promote(state, commit, where)
 METRIC_FIELDS = ("time", "unit", "operator", "outcome", "reason", "latency_s", "queue_depth",
                  "inflight", "builders_busy", "red_rate_100", "target")
 QUEUE_FIELDS = ("time", "target", "queue", "inflight", "builders_busy", "enqueued_total",
@@ -122,9 +185,10 @@ def setup(root, name, origin, source, commit="origin/master", builders=4, gate_a
     borrow(repo / ".git", mirror / "objects", objects)
     bin_dir = state / "bin"
     bin_dir.mkdir(exist_ok=True)
-    for tool in ("publisher.py", "publisher_hook.py", "publisher_service.py", "publisher_gate.py"):
+    for tool in ("publisher.py", "publisher_hook.py", "publisher_service.py", "publisher_gate.py",
+                 "publisher_fixtures/make_fixtures.py"):
         data = git("show", f"{commit}:tools/{tool}", cwd=source).stdout
-        (bin_dir / tool).write_bytes(data)
+        (bin_dir / Path(tool).name).write_bytes(data)
     lock = Path(host_lock or Path.home() / ".cache" / "open-bfme-build.lock")
     toolchains = state / "toolchains"
     gate = (f"BUILD_POOL={int(build_pool)} python3 tools/publisher_gate.py "
@@ -132,23 +196,36 @@ def setup(root, name, origin, source, commit="origin/master", builders=4, gate_a
             + "".join(f" --link {rel}" for rel in link)
             + (f" --toolchains '{toolchains.as_posix()}'" if link else "")
             + (f" {gate_args}" if gate_args else ""))
+    extra = dict(extra or {})
+    registry = extra.get("builders_registry") or {}
+    single = len({b.get("operator") for b in registry.values()}) < 2
+    if single:
+        # one host, one operator: cross-operator re-verification has nobody to
+        # ask and would hold every sampled green and lone red forever; it is
+        # switched off here, visibly (service.json "reverify"), until builders
+        # of a second operator are registered
+        extra.setdefault("reverify_share", 0.0)
+        extra.setdefault("reverify_red", False)
+        extra.setdefault("reverify_high_risk", False)
     settings = dict(branch=SHADOW_BRANCH, inbox=str(state / "inbox"), builders=int(builders),
                     gate=gate, clean_keep=["build/"], fair=False,
                     checker_paths=checker_paths or ["tools", ".githooks"],
-                    toolchain_paths=toolchain_paths or [], **(extra or {}))
+                    toolchain_paths=toolchain_paths or [], **extra)
     pub.main(["init", "--state", str(state), "--target", str(mirror),
               *[a for k, v in settings.items() for a in ("--set", f"{k}={json.dumps(v)}")]])
     svc = dict(SERVICE, **(pub.read_json(state / "service.json", {}) or {}))
     svc.update(name=name, origin=origin, mirror=str(mirror), shadow_target=str(mirror),
-               link=list(link), toolchain_source=toolchain_source, target_mode="shadow")
+               link=list(link), toolchain_source=toolchain_source, target_mode="shadow",
+               reverify="off: one builder operator" if single else "cross-operator")
     pub.write_json(state / "service.json", svc)
     service = Service(state, load=False)
     service.provision(commit)
     service.provision(master)
-    ok, report = pub.promote(state, commit)
+    ok, report = promote_with_fixtures(state, commit, source)
     if not ok:
         raise SystemExit(f"promotion of {commit} failed: {json.dumps(report)}")
     svc["promoted_tree"] = service.checker_tree(commit)
+    svc["promoted_commit"] = commit
     pub.write_json(state / "service.json", svc)
     return state
 
@@ -320,10 +397,15 @@ class Service:
         tree = self.checker_tree(master)
         if tree == self.svc.get("promoted_tree"):
             return
-        ok, report = pub.promote(self.pub.state, master)
-        self.svc["promoted_tree"] = tree
+        ok, report = promote_with_fixtures(self.dir, master, str(self.mirror),
+                                           previous=self.svc.get("promoted_commit"))
+        self.svc["promoted_tree"] = tree        # a refused tree is not retried every tick
+        if ok:
+            self.svc["promoted_commit"] = master
         self.save()
-        self.pub.event("auto_promote", commit=master, ok=ok)
+        self.pub = self._publisher()            # ledger_cmd may have been filled in
+        self.pub.event("auto_promote", commit=master, ok=ok, error=report.get("error"),
+                       fixtures=[(f["patch"], f["got"]) for f in report.get("fixtures") or ()])
 
     def resync(self, master):
         """Shadow only: when idle, put the shadow branch back on master."""

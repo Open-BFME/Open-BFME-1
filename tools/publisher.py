@@ -131,6 +131,7 @@ DEFAULTS = dict(
     target_red_batch=0.1, min_batch=2, fair=True,
     scope_required=True, serialize_scopes=True, retry_limit=3,
     builders_registry={}, stage_remote=None, reverify_share=0.1, reverify_red=True,
+    reverify_high_risk=True,
     high_risk=["**/*.h", "**/*.hpp", "**/*.hh", "**/*.hxx", "**/*.inl", "**/*.inc",
                "**/*baseline*", "**/*_known_red.txt", "**/*whitelist*", "**/gen_asm/**",
                "**/gen_small/**"],
@@ -1412,7 +1413,7 @@ class Publisher:
     def _needs_check(self, batch):
         verdict = batch.receipt.get("verdict")
         if verdict == "green":
-            if self._high_risk(batch):
+            if self._high_risk(batch) and self.cfg.get("reverify_high_risk", True):
                 return True
             draw = int(hashlib.sha256(f"check:{batch.tip}".encode()).hexdigest()[:8], 16) / 0xFFFFFFFF
             return draw < float(self.cfg["reverify_share"])
