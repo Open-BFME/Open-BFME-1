@@ -43,17 +43,23 @@ struct Rva003FD060TerrainLogic
 	virtual bool bfmeReachHN(BfmeVec3HN *a, BfmeVec3HN *b);
 };
 
-class BfmeAiHelperHN
+// TheAI's pathfinder at +0x0C; ILT 0x00033E06 -> 0x003EE780 is the matched
+// two-argument wrapper ?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@PBUCoord3D@@@Z
+// (PathfinderAttackViewForwarders.cpp).
+class Object;
+struct Coord3D;
+
+class Pathfinder
 {
 public:
-	bool bfmeBlockedHN(BfmeObjHN *o, BfmeVec3HN *b);
+	bool isAttackViewBlockedByObstacle(const Object *obj, const Coord3D *pos);
 };
 
 class AI
 {
 public:
 	unsigned char m_bfmeHeadHN[0xc];
-	BfmeAiHelperHN *m_bfmeHelperHN;
+	Pathfinder *m_pathfinder;
 };
 
 // Retail 0x012EF4CC is EA's singleton; only its type spelling matters for the
@@ -96,9 +102,9 @@ bool BfmeCheckHN::bfmeTestHN(BfmeVec3HN *p)
 
 	if (TheAI != 0)
 	{
-		BfmeAiHelperHN *h = TheAI->m_bfmeHelperHN;
+		Pathfinder *pathfinder = TheAI->m_pathfinder;
 
-		if (h->bfmeBlockedHN(m_bfme08HN, &b))
+		if (pathfinder->isAttackViewBlockedByObstacle((const Object *)m_bfme08HN, (const Coord3D *)&b))
 			return false;
 	}
 
