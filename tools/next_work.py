@@ -12,6 +12,8 @@ Sections, in priority order:
   2. Drift quick wins  immediate-only / imm+reg literal fixes from drift_report.csv
   3. Structural reconciliation  closest source-shape mismatches
   4. Ghidra-anchored absent  source literals identify an unclaimed retail function
+     (--tier similar: unclaimed functions nearest to matched code, tools/similar.py;
+      served on request only, never by the default pick)
   5. Rest of the ladder (pointer commands only, nothing computed)
 
 Usage:
@@ -979,8 +981,13 @@ def candidate_weight(candidate):
 
     The queues already rank themselves and the selector used to throw that
     ranking away, so every draw was worth the pool average."""
-    return yield_model.weight(
+    weight = yield_model.weight(
         candidate.get("size") or candidate.get("target_size") or 1)
+    if "similarity" in candidate:
+        # The similar tier ranks by resemblance to matched code; keep that order
+        # in the draw (score 1.0 keeps the full weight, 0.5 a quarter of it).
+        weight = max(1, round(weight * candidate["similarity"] ** 2))
+    return weight
 
 
 def deferred_note(candidates):
@@ -1172,8 +1179,22 @@ def packet_candidates(claimed):
     return out
 
 
+def similar_candidates(claimed, claimed_ranges):
+    """Unclaimed functions ranked by similarity to matched code (tools/similar.py).
+
+    The lead is a matched neighbour's source: the body that taught the layout,
+    inlined helper or idiom this one most likely needs. Like the anchored tier it
+    carries no identity -- recovering the name is part of the job."""
+    import similar
+    out = []
+    for c in similar.served_queue(claimed, claimed_ranges):
+        best = c["neighbours"][0]
+        out.append(dict(c, lead=f"{best['game']} {best['rva']} {best['name']}"))
+    return out
+
+
 def selected_queue(tier, drifts, structural, ghidra_absent, anchored, named,
-                   packets=(), finish=(), carved=()):
+                   packets=(), finish=(), carved=(), similar=()):
     queues = {
         "finish": ("near-landed body", finish),
         "carved": ("carved anonymous body", carved),
@@ -1183,6 +1204,7 @@ def selected_queue(tier, drifts, structural, ghidra_absent, anchored, named,
         "structural": ("structural reconciliation", structural),
         "ghidra": ("Ghidra-anchored absent function", ghidra_absent),
         "anchored": ("string-anchored unclaimed function", anchored),
+        "similar": ("similar to matched code", similar),
     }
     if tier:
         return queues[tier]
@@ -1318,6 +1340,14 @@ def print_candidate(label, candidate, meta, candidates=()):
                   f"the body decides which one it is")
         _print_stash(candidate)
         print(f"       start: {candidate['command']}")
+    elif label == "similar to matched code":
+        print(f"  {candidate['similarity']:.3f} {candidate['size']:>5}B "
+              f"{candidate['function']}  (anonymous — recovering the name is step 1)")
+        print(f"       {candidate['target_rva']} resembles matched {candidate['lead']}")
+        for lead in candidate["neighbours"]:
+            print(f"         {lead['score']:.3f} {lead['game']} {lead['rva']} {lead['source']}")
+        _print_stash(candidate)
+        print(f"       start: {candidate['command']}")
     elif label == "string-anchored unclaimed function":
         print(f"  {candidate['confidence']:<6} {candidate['size']:>5}B "
               f"{candidate['function']}  (anonymous — recovering the name is step 1)")
@@ -1447,7 +1477,7 @@ def main():
                     help="show complete ranked queues for humans/debugging")
     ap.add_argument("--tier",
                     choices=("finish", "carved", "packet", "named", "harvest", "structural",
-                             "ghidra", "anchored"),
+                             "ghidra", "anchored", "similar"),
                     help="choose from only this task lane")
     ap.add_argument("--min-score", type=float, default=0.9,
                     help="finish tier: lowest banked score to serve (default 0.9)")
@@ -1467,7 +1497,7 @@ def main():
     ledger = check_ledger()  # exit 2 happens in there; nothing below matters if red
     import build
     drifts = (drift_quick_wins()
-              if args.tier not in ("named", "structural", "ghidra", "carved") else [])
+              if args.tier not in ("named", "structural", "ghidra", "carved", "similar") else [])
     # Every tier below asks "is this address still open work?", and a gen-dump
     # row answers yes: it pins retail's bytes and holds no source. That rule
     # lives in build.load_claim_rows and nowhere else -- deriving it here a
@@ -1484,7 +1514,8 @@ def main():
             if row.get("target_size"):
                 claimed_ranges.append((start, start + int(row["target_size"])))
     structural = (structural_candidates(claimed, claimed_names, claimed_ranges)
-                  if args.tier not in ("named", "harvest", "ghidra", "anchored", "carved")
+                  if args.tier not in ("named", "harvest", "ghidra", "anchored", "carved",
+                                       "similar")
                   else [])
     finish = (finish_candidates(args.min_score, args.max_attempts, args.cooldown_days)
               if args.tier in (None, "finish") else [])
@@ -1499,7 +1530,9 @@ def main():
             claimed, claimed_names, claimed_ranges)
     else:
         anchored, anchored_note = [], "anchored tier not requested"
-    if args.tier not in ("named", "harvest", "structural", "anchored", "carved"):
+    similar_q = (similar_candidates(claimed, claimed_ranges)
+                 if args.tier == "similar" else [])
+    if args.tier not in ("named", "harvest", "structural", "anchored", "carved", "similar"):
         ghidra_absent, ghidra_meta = ghidra_absent_candidates(
             claimed, claimed_names)
     else:
@@ -1515,8 +1548,10 @@ def main():
         ghidra_absent, dropped_ghidra = drop_logged(ghidra_absent)
         anchored, dropped_anchored = drop_logged(anchored)
         carved, dropped_carved = drop_logged(carved)
+        similar_q, dropped_similar = drop_logged(similar_q)
         suppressed = (dropped_named + dropped_drift + dropped_structural
-                      + dropped_ghidra + dropped_anchored + dropped_carved)
+                      + dropped_ghidra + dropped_anchored + dropped_carved
+                      + dropped_similar)
 
     identity_conflicts = []
     if structural:
@@ -1535,7 +1570,8 @@ def main():
     ghidra_absent = apply_shard(ghidra_absent, args.shard)
     anchored = apply_shard(anchored, args.shard)
     carved = apply_shard(carved, args.shard)
-    for queue in (named, drifts, structural, ghidra_absent, anchored):
+    similar_q = apply_shard(similar_q, args.shard)
+    for queue in (named, drifts, structural, ghidra_absent, anchored, similar_q):
         annotate_stashes(queue)
     shard_meta = (None if args.shard is None else
                   {"index": args.shard[0], "count": args.shard[1]})
@@ -1550,6 +1586,7 @@ def main():
             "structural": structural,
             "ghidra_meta": ghidra_meta, "ghidra_absent": ghidra_absent,
             "anchored_meta": anchored_note, "anchored": anchored,
+            "similar": similar_q,
             "structural_meta": structural_meta,
             "suppressed_logged": suppressed,
             "shard": shard_meta,
@@ -1575,7 +1612,7 @@ def main():
     # the normal state of a near miss, and the stash is why it is served.
     finish = apply_shard(finish, args.shard)
     label, candidates = selected_queue(args.tier, drifts, structural, ghidra_absent,
-                                       anchored, named, packets, finish, carved)
+                                       anchored, named, packets, finish, carved, similar_q)
     if not candidates:
         candidate = None
     elif label == "near-landed body":
