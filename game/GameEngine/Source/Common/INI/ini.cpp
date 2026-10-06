@@ -660,48 +660,8 @@ void INI::parseQuotedAsciiString( INI* ini, void * /*instance*/, void *store, co
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/INI_getNextAsciiString_Thunk.cpp
-// ?getNextAsciiString@INI@@ present-unmatched
-AsciiString INI::getNextAsciiString()
-{
-	AsciiString result;
-
-	const char *token = getNextTokenOrNull();	// if null, just leave an empty string
-	if (token != NULL)
-	{
-		if (token[0] != '\"') 
-		{	
-			// if token is simply "
-			result.set( token );	// Start following the "
-		}
-		else
-		{
-			static char buff[INI_MAX_CHARS_PER_LINE];
-			buff[0] = 0;
-			if (strlen(token) > 1)
-			{
-				strcpy(buff, &token[1]);
-			} 
-
-			token = getNextTokenOrNull(getSepsQuote());
-			if (token) {
-				if (strlen(token) > 1 && token[1] != '\t')
-				{
-					strcat(buff, " ");
-				}
-				strcat(buff, token);
-				result.set(buff);
-			} else {
-				Int len = strlen(buff);
-				if (len && buff[len-1] == '"') { // strip off trailing quote jba. [2/12/2003]
-					buff[len-1] = 0;
-				}
-				result.set(buff);
-			}
-		}
-	}
-	return result;
-}
+// INI::getNextAsciiString: retail's body (0x008516E0) is
+// INI_getNextAsciiString_Thunk.cpp; Zero Hour's version is not defined here.
 
 //-------------------------------------------------------------------------------------------------
 /** Parse a string label, get the *translated* actual text from the label and store
