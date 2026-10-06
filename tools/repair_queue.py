@@ -10,6 +10,10 @@ tools/next_work.py serves these as tiers; this module builds them.
           row's own gate (tools/build.py SOURCE); a failure puts the line back.
           Exit 0 = the row passes the check and the line stays deleted: commit it
           with the fix. Repairs are credited: progress_v2 shows the debt shrinking.
+          Also served: tools/match_tiers.py tier C rows (<reverse>/match_tiers.csv;
+          pass: a regrade no longer puts the row in C) and diffexec logic/binding
+          divergences (build/diffexec/results.json or REPAIR_DIFFEXEC, JSON or JSONL;
+          pass: `tools/diffexec.py --row RVA` exits 0). Twin-body findings are left out.
   link    BFME2: rows the last link cycle did not place at their retail RVA, or
           placed but not self-strict, with the reason (build/link_cycle/
           link_status.csv, or REPAIR_LINK_STATUS). PASS TEST: the next cycle reports
@@ -144,6 +148,65 @@ def repair_items():
         })
     items.sort(key=lambda item: (item["check"] == "dir32", -item["size"]))
     return items
+
+
+MATCH_TIERS = f"{REV}/match_tiers.csv"
+DIFFEXEC = os.environ.get("REPAIR_DIFFEXEC") or str(ROOT / "build" / "diffexec" / "results.json")
+
+
+def diffexec_items(path=None):
+    """diffexec logic/binding divergences (a list, {"rows"|"results": [...]} or JSONL),
+    `(twin bodies)` findings left out: the code is equal, only the name differs."""
+    import json
+    path = Path(path or DIFFEXEC)
+    if not path.exists():
+        return []
+    text = path.read_text(encoding="utf-8-sig", errors="replace")
+    try:
+        data = json.loads(text)
+        rows = data if isinstance(data, list) else data.get("rows") or data.get("results") or []
+    except ValueError:
+        rows = [json.loads(l) for l in text.splitlines() if l.strip().startswith("{")]
+    items = []
+    for r in rows:
+        verdict = str(r.get("verdict", r.get("class", ""))).lower()
+        rva = r.get("target_rva", r.get("rva"))
+        if verdict not in ("logic", "binding") or "twin bodies" in str(r.get("reason", "")) or rva is None:
+            continue
+        rva = rva if isinstance(rva, str) else f"0x{int(rva):08X}"
+        items.append({
+            "tier": "repair", "check": f"diffexec-{verdict}", "target_rva": rva, "function": r.get("name", ""),
+            "source": r.get("source", ""), "size": int(r.get("size") or 0), "credit": int(r.get("size") or 0),
+            "why": str(r.get("reason", ""))[:300], "baseline": "", "baseline_line": "",
+            "pass_test": f"python3 tools/diffexec.py --row {rva}  (exit 0: no logic/binding divergence)",
+        })
+    return items
+
+
+def tier_c_items(seen=()):
+    """match_tiers.py tier C rows (contradicted) not already served from a baseline line."""
+    seen = set(seen)
+    items = []
+    for r in csv.DictReader(io.StringIO(_read(MATCH_TIERS))):
+        if r.get("tier") != "C" or (r["target_rva"].upper(), r["name"]) in seen:
+            continue
+        items.append({
+            "tier": "repair", "check": "tier-C", "target_rva": r["target_rva"], "function": r["name"],
+            "source": r["source"], "size": int(r["target_size"] or 0), "credit": int(r["target_size"] or 0),
+            "why": r.get("reasons", "")[:300], "baseline": "", "baseline_line": "",
+            "pass_test": "python3 tools/match_tiers.py --out build/match_tiers.csv: the row is no longer tier C",
+        })
+    return items
+
+
+def all_repair_items():
+    """Gate debt, then match_tiers tier C and diffexec divergences not already listed."""
+    items = repair_items()
+    seen = {(i["target_rva"].upper(), i["function"]) for i in items}
+    extra = [i for i in diffexec_items() if (i["target_rva"].upper(), i["function"]) not in seen]
+    seen |= {(i["target_rva"].upper(), i["function"]) for i in extra}
+    extra += tier_c_items(seen)
+    return items + sorted(extra, key=lambda i: -i["size"])
 
 
 def shell_quote(text):
@@ -298,6 +361,41 @@ def dest_tu(rva):
                                    "class's file, never a new one-function file"}
 
 
+REPAIR_EVERY = 3
+ROTATION = "build/next_work_rotation.json"
+
+
+def repair_turn(every=None, owner=None):
+    """Is this default pick a repair turn? About 1 pick in EVERY (--repair-every, else
+    BFME_REPAIR_EVERY, else 3; 1 = every pick, 0 = never first), rotated per agent
+    (BFME_CLAIM_OWNER) by a counter in the untracked build/next_work_rotation.json and
+    phase-shifted by the owner's name, so seats sharing a clock do not all repair at once."""
+    import hashlib
+    import json
+    if every is None:
+        env = os.environ.get("BFME_REPAIR_EVERY", "").strip()
+        every = int(env) if env.isdigit() else REPAIR_EVERY
+    if every <= 0:
+        return False
+    if every == 1:
+        return True
+    owner = owner or os.environ.get("BFME_CLAIM_OWNER") or "default"
+    path = ROOT / ROTATION
+    try:
+        state = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        state = {}
+    count = int(state.get(owner, 0))
+    state[owner] = count + 1
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(state, sort_keys=True), encoding="utf-8")
+    except OSError:
+        pass
+    phase = int(hashlib.sha256(owner.encode()).hexdigest(), 16) % every
+    return (count + phase) % every == 0
+
+
 def annotate_dest(candidates):
     """Add dest/dest_basis to queue candidates (new matches)."""
     for candidate in candidates:
@@ -333,7 +431,7 @@ def main(argv=None):
         ok, message = pass_test(args.line)
         print(message)
         return 0 if ok else 1
-    items, note = (repair_items(), f"{len(parse_debt())} baseline line(s)") if args.cmd == "repair" else link_items()
+    items, note = (all_repair_items(), f"{len(parse_debt())} baseline line(s), plus tier C / diffexec") if args.cmd == "repair" else link_items()
     print(note)
     for item in items[:args.limit]:
         print(f"  {item['size']:>6}B {item.get('check', '')} {item['target_rva']} {item['function'][:80]}")

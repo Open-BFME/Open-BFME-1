@@ -133,3 +133,44 @@ def test_a_removed_debt_line_is_reverified(tmp_path):
     (tmp_path / "Code/GameEngine/Loco.cpp").write_text("// fixed\n")
     git("add", "Code/GameEngine/Loco.cpp")
     assert rq.verify_removed(fail) == []                                   # staged: the hook builds it
+
+
+def test_repairs_are_capped_to_one_pick_in_n(tmp_path, monkeypatch):
+    rq, _, _ = load(tmp_path, "bfme2", LEDGER)
+    monkeypatch.delenv("BFME_REPAIR_EVERY", raising=False)
+    turns = [rq.repair_turn(owner="seat-a") for _ in range(9)]
+    assert sum(turns) == 3 and turns[:3].count(True) == 1                 # default: 1 in 3, rotated
+    assert sum(rq.repair_turn(4, owner="seat-b") for _ in range(8)) == 2
+    assert all(rq.repair_turn(1, owner="x") for _ in range(3))
+    assert not any(rq.repair_turn(0, owner="x") for _ in range(3))
+    monkeypatch.setenv("BFME_REPAIR_EVERY", "1")
+    assert rq.repair_turn(owner="seat-c")
+
+
+def test_off_turn_picks_skip_repairs_unless_nothing_else():
+    import next_work
+    repair = [{"function": "r", "target_rva": "0x1", "size": 4}]
+    named = [{"function": "n", "target_rva": "0x2", "size": 4}]
+    assert next_work.selected_queue(None, [], [], [], [], named, repair=repair, repair_turn=False)[1] == named
+    assert next_work.selected_queue(None, [], [], [], [], [], repair=repair, repair_turn=False)[1] == repair
+    assert next_work.selected_queue(None, [], [], [], [], named, repair=repair, repair_turn=True)[1] == repair
+
+
+def test_tier_c_and_diffexec_findings_feed_the_repair_queue(tmp_path):
+    rq, rev, src = load(tmp_path, "bfme2", LEDGER, [
+        ("reverse/gate_baseline.txt", "tail 0x00001000 ?a@Loco@@QAEXXZ\n"),
+        ("reverse/match_tiers.csv", "target_rva,target_size,name,source,tier,reasons\n"
+         "0x00001000,64,?a@Loco@@QAEXXZ,Code/GameEngine/Loco.cpp,C,gate:tail\n"
+         "0x00002000,32,?c@Body@@QAEXXZ,Code/GameEngine/Body.cpp,C,identity:wrong\n"
+         "0x00001080,64,?b@Loco@@QAEXXZ,Code/GameEngine/Loco.cpp,A,\n")])
+    dx = tmp_path / "results.jsonl"
+    dx.write_text('{"name":"?d@@YAXXZ","rva":"0x00004000","size":9,"source":"Code/d.cpp","verdict":"binding",'
+                  '"reason":"objects: call #0: retail rva:0x1 rebuilt rva:0x2"}\n'
+                  '{"name":"?e@@YAXXZ","rva":"0x00005000","size":9,"source":"Code/e.cpp","verdict":"binding",'
+                  '"reason":"objects: call #0 (twin bodies)"}\n'
+                  '{"name":"?f@@YAXXZ","rva":"0x00006000","size":9,"source":"Code/f.cpp","verdict":"none"}\n')
+    rq.DIFFEXEC = str(dx)
+    items = rq.all_repair_items()
+    assert [(i["check"], i["target_rva"]) for i in items] == [
+        ("tail", "0x00001000"), ("tier-C", "0x00002000"), ("diffexec-binding", "0x00004000")]
+    assert "diffexec.py --row 0x00004000" in items[2]["pass_test"]

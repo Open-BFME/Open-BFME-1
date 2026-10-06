@@ -1200,7 +1200,7 @@ def similar_candidates(claimed, claimed_ranges):
 
 
 def selected_queue(tier, drifts, structural, ghidra_absent, anchored, named,
-                   packets=(), finish=(), carved=(), similar=(), repair=(), link=()):
+                   packets=(), finish=(), carved=(), similar=(), repair=(), link=(), repair_turn=True):
     queues = {
         "repair": ("gate-debt repair", repair),
         "finish": ("near-landed body", finish),
@@ -1215,7 +1215,16 @@ def selected_queue(tier, drifts, structural, ghidra_absent, anchored, named,
     }
     if tier:
         return queues[tier]
-    # Repairs first: a row a gate excuses is wrong code already counted as
+    if not repair_turn:
+        # Repairs are capped (repair_queue.repair_turn): off-turn they wait unless
+        # nothing else is servable, so no seat is ever left idle.
+        order = [name for name in queues if name not in ("repair", "link", "similar")]
+        for name in order + ["repair", "link"]:
+            label, candidates = queues[name]
+            if candidates:
+                return label, candidates
+        return "validated queue", []
+    # On a repair turn, repairs first: a row a gate excuses is wrong code already counted as
     # progress; fixing it is credited (progress_v2 gate debt).
     for name in ("repair", "finish", "carved", "packet", "named", "harvest", "structural", "ghidra",
                  "anchored"):
@@ -1508,6 +1517,9 @@ def main():
                          f"(default {FINISH_COOLDOWN_DAYS}; 0 = no cooldown)")
     ap.add_argument("--shard", type=parse_shard, metavar="INDEX/COUNT",
                     help="stable zero-based partition for concurrent workers")
+    ap.add_argument("--repair-every", type=int, metavar="N",
+                    help="serve a repair on about 1 default pick in N, rotated per agent "
+                         "(default BFME_REPAIR_EVERY or 3; 1 = always, 0 = only when nothing else)")
     ap.add_argument("--include-logged", action="store_true",
                     help="keep candidates already recorded no-match in "
                          "targets/game/reverse/re_attempts.log (they are dropped by default)")
@@ -1596,7 +1608,7 @@ def main():
         annotate_stashes(queue)
     for queue in (named, ghidra_absent, anchored, carved):
         repair_queue.annotate_dest(queue)
-    repair = apply_shard(repair_queue.repair_items(), args.shard) if args.tier in (None, "repair") else []
+    repair = apply_shard(repair_queue.all_repair_items(), args.shard) if args.tier in (None, "repair") else []
     shard_meta = (None if args.shard is None else
                   {"index": args.shard[0], "count": args.shard[1]})
 
@@ -1644,8 +1656,10 @@ def main():
     # the normal state of a near miss, and the stash is why it is served.
     finish = apply_shard(finish, args.shard)
     repair_queue.annotate_dest(packets)
+    turn = args.tier is not None or repair_queue.repair_turn(args.repair_every)
     label, candidates = selected_queue(args.tier, drifts, structural, ghidra_absent,
-                                       anchored, named, packets, finish, carved, similar_q, repair=repair)
+                                       anchored, named, packets, finish, carved, similar_q, repair=repair,
+                                       repair_turn=turn)
     if not candidates:
         candidate = None
     elif label == "near-landed body":
