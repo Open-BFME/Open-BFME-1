@@ -18,22 +18,22 @@ public:
 	char m_bfmeFlag;
 };
 
-class BfmeHub985
-{
-public:
-	void bfmeDo985();
-};
-
 class BfmeAptScreenQuitMenu;
 extern BfmeAptScreenQuitMenu *g_obj12F4B40;
 extern Shell *TheShell;
 // retail 0x012F19E8: the canonical spelling is
 // ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A, defined once in
-// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU reaches the
-// same address through its own BfmeHub985 view, so it casts at the use; the
-// view keeps the callee's mangled spelling ?bfmeDo985@BfmeHub985@@QAEXXZ.
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp.
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
+
+// ILT 0x000290D2 -> 0x00465B80, matched ?apply@Rva00465B80@@QAEXXZ (sets the
+// byte at +0x1AC to 1), called on the window manager at 0x012F19E8.
+class Rva00465B80
+{
+public:
+	void apply();
+};
 
 class BfmeA985
 {
@@ -58,7 +58,7 @@ void BfmeA985::bfmeGo985A(int unused)
 	p->m_bfmeFlag = 1;
 	reinterpret_cast<BfmeObj985 * &>(g_obj12F4B40)->m_bfmeMode = 2;
 	TheShell->m_bfmeFlag = 1;
-	((BfmeHub985 *)g_rva012F19E8WindowManager)->bfmeDo985();
+	((Rva00465B80 *)g_rva012F19E8WindowManager)->apply();
 }
 
 void __stdcall bfmeGo985B(int unused)
@@ -73,15 +73,20 @@ void __stdcall bfmeGo985B(int unused)
 	p->m_bfmeFlag = 1;
 	reinterpret_cast<BfmeObj985 * &>(g_obj12F4B40)->m_bfmeMode = 0;
 	TheShell->m_bfmeFlag = 1;
-	((BfmeHub985 *)g_rva012F19E8WindowManager)->bfmeDo985();
+	((Rva00465B80 *)g_rva012F19E8WindowManager)->apply();
 }
 
-class BfmeArg985
+class UpgradeTemplate;
+
+class Object
 {
 public:
-	char bfmeHas985C(int v);
-	char bfmeBlocked985C(int v);
+	bool affectedByUpgrade(const UpgradeTemplate *upgradeTemplate) const;	// retail ILT 0x000077B6 -> 0x001C5A30
+	bool hasUpgrade(const UpgradeTemplate *upgradeTemplate) const;			// retail ILT 0x0000BA37 -> 0x001C9F50
 };
+
+// The row spells its argument BfmeArg985; the two calls on it are Object's.
+class BfmeArg985;
 
 class BfmeC985
 {
@@ -89,12 +94,14 @@ public:
 	char bfmeGo985C(BfmeArg985 *a);
 
 	char m_bfmePad[8];
-	int m_bfmeVal;
+	const UpgradeTemplate *m_bfmeVal;
 };
 
 char BfmeC985::bfmeGo985C(BfmeArg985 *a)
 {
-	if (a->bfmeHas985C(m_bfmeVal) && !a->bfmeBlocked985C(m_bfmeVal))
+	const Object *object = (const Object *)a;
+
+	if (object->affectedByUpgrade(m_bfmeVal) && !object->hasUpgrade(m_bfmeVal))
 		return 1;
 
 	return 0;

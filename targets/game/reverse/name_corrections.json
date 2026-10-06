@@ -18738,5 +18738,15 @@
   "after_sha256": "7e00671c952b0a9663094f544b15418c1ce39a4753590804e1f53cd20952cba2",
   "evidence": "targets/game/reverse/identity_evidence/00238680-gap-call-is-gen-000ed3b0.md",
   "reason": "The call goes through ILT 0x00043CED to 0x000ED3B0, matched as ?bfmeGapSq@Gen_000ED3B0@@QBEMPBV1@@Z; the Object::getDistanceSquared pin is defined nowhere and the ILT oracle contradicts it, so the call casts to the defining view class like the other matched callers."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv985.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv985.cpp",
+  "old_name": "BfmeHub985",
+  "new_name": "Rva00465B80",
+  "before_sha256": "2a2ad2948616be4926638344492a78110b4795433d097f94047fff8e63c0de64",
+  "after_sha256": "63bf2eafd3fc8ed61c639fcac5db334fac690a95e71ac705770a1e437b9c65f2",
+  "evidence": "targets/game/reverse/identity_evidence/00569340-bfmeconv985-calls-are-rva00465b80-apply.md",
+  "reason": "The call goes through ILT 0x000290D2 to 0x00465B80, matched as ?apply@Rva00465B80@@QAEXXZ; BfmeHub985::bfmeDo985 was a per-file placeholder spelling of that call and nothing defines it."
  }
 ]
