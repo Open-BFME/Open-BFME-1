@@ -40,7 +40,7 @@ public:
 	AptValue **m_stack;
 };
 
-extern AptValue *gpUndefinedValue;
+extern AptValue *g_bfmeFallbackDB;
 unsigned int AptGetSwfVersion();
 extern double g_bfmeFactorBW;
 void __cdecl d_008996b0(void);
@@ -54,7 +54,7 @@ void AptActionInterpreter::_FunctionAptActionEquals(
 
 	if (AptGetSwfVersion() == 7
 		&& (top->isUndefined() || under->isUndefined())
-		&& (result = gpUndefinedValue) != 0)
+		&& (result = g_bfmeFallbackDB) != 0)
 	{
 	}
 	else

@@ -4,8 +4,8 @@
 // undefined-operand fast path, then the two operands converted through
 // bfmeF1239, then a boolean packed through d_008996b0, then the same
 // pop-two-refs/push-result stack tail), but this sibling opcode's fast-path
-// fallback reads a different global (g_bfmeFallbackDB, not gpUndefinedValue)
-// and its "compare" is not `underValue < topValue`: both operands are
+// fallback reads the same retail cell (VA 0x013379BC, owned by
+// g_bfmeFallbackDB), and its "compare" is not `underValue < topValue`: both operands are
 // tested for exact equality against g_rva01075350 (0.0f), consistent with
 // the pinned name's "zero constant" origin -- an is-both-zero test rather
 // than a less-than.

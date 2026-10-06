@@ -49,7 +49,7 @@ public:
 	AptValue **m_stack;
 };
 
-extern AptValue *gpUndefinedValue;
+extern AptValue *g_bfmeFallbackDB;
 unsigned int AptGetSwfVersion();
 
 void AptActionInterpreter::_FunctionAptActionBitAnd(
@@ -61,7 +61,7 @@ void AptActionInterpreter::_FunctionAptActionBitAnd(
 
 	if (AptGetSwfVersion() == 7
 		&& (top->isUndefined() || under->isUndefined())
-		&& (result = gpUndefinedValue) != 0)
+		&& (result = g_bfmeFallbackDB) != 0)
 	{
 		// SWF 7 preserves undefined instead of coercing it through integer arithmetic.
 	}
@@ -97,7 +97,7 @@ void AptActionInterpreter::_FunctionAptActionBitOr(
 
 	if (AptGetSwfVersion() == 7
 		&& (top->isUndefined() || under->isUndefined())
-		&& (result = gpUndefinedValue) != 0)
+		&& (result = g_bfmeFallbackDB) != 0)
 	{
 		// SWF 7 preserves undefined instead of coercing it through integer arithmetic.
 	}
@@ -133,7 +133,7 @@ void AptActionInterpreter::_FunctionAptActionBitXor(
 
 	if (AptGetSwfVersion() == 7
 		&& (top->isUndefined() || under->isUndefined())
-		&& (result = gpUndefinedValue) != 0)
+		&& (result = g_bfmeFallbackDB) != 0)
 	{
 		// SWF 7 preserves undefined instead of coercing it through integer arithmetic.
 	}
@@ -169,7 +169,7 @@ void AptActionInterpreter::_FunctionAptActionBitLShift(
 
 	if (AptGetSwfVersion() == 7
 		&& (under->isUndefined() || top->isUndefined())
-		&& (result = gpUndefinedValue) != 0)
+		&& (result = g_bfmeFallbackDB) != 0)
 	{
 		// SWF 7 preserves undefined instead of coercing it through integer arithmetic.
 	}
@@ -205,7 +205,7 @@ void AptActionInterpreter::_FunctionAptActionBitRShift(
 
 	if (AptGetSwfVersion() == 7
 		&& (under->isUndefined() || top->isUndefined())
-		&& (result = gpUndefinedValue) != 0)
+		&& (result = g_bfmeFallbackDB) != 0)
 	{
 		// SWF 7 preserves undefined instead of coercing it through integer arithmetic.
 	}
