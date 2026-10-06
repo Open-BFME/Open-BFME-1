@@ -84,8 +84,23 @@ static inline Glo012F1024Type *localTheLivingWorldCampaignManager()
 class Glo012F1028Sub
 {
 public:
-	void first();
 	void bfmeNotify();
+};
+
+// ILT 0x00028051 -> 0x003C7350, matched as Rva003C7350Owner::markAll (sets
+// byte +0xA8 on every item of the holder vector at +0x30).
+class Rva003C7350Owner
+{
+public:
+	void markAll();
+};
+
+// ILT 0x0000A754 -> 0x003BEC30, matched as Rva003BEED0::finish on this same
+// object.
+class Rva003BEED0
+{
+public:
+	void finish();
 };
 
 class Glo012F4B98Type
@@ -102,7 +117,6 @@ class Rva003C1A50
 public:
 	void run();
 	void start(unsigned char mordor);
-	void refreshEntries003BEC30();
 
 private:
 	char m_pad00[0x28];
@@ -147,10 +161,10 @@ void Rva003C1A50::start(unsigned char mordor)
 	if (!gd->m_at8E)
 	{
 		if (!stringLive(gd->m_at94.data()))
-			m_at28->first();
+			((Rva003C7350Owner *)m_at28)->markAll();
 	}
 	m_at28->bfmeNotify();
-	refreshEntries003BEC30();
+	((Rva003BEED0 *)this)->finish();
 	reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->after();
 	--TheBfmeGameLogicView()->m_fp;
 }
