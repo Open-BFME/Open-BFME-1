@@ -14,30 +14,46 @@
 #include <vector>
 #include "unicode_string.h"
 
-struct Rva000F99C0Payload
+// The visitor call lands on the matched ?method@Rva00365C20Owner@@... at
+// 0x00365C20 (Rva00365C20PlayerArmyAppend.cpp, through ILT 0x00010A64), so the
+// call is spelled with that owner's parameter types: a record reference, two
+// ints, the six-word payload by value, an int and a tail reference.
+struct Rva00365C20SourceRecord;
+struct Rva00365C20Tail;
+
+struct Rva00365C20Payload6
 {
-	unsigned int m_words[ 6 ];
+	int m_00;
+	int m_04;
+	int m_08;
+	int m_0c;
+	int m_10;
+	int m_14;
+};
+
+class Rva00365C20Owner
+{
+public:
+	void method( const Rva00365C20SourceRecord &source00, int source08, int source0c,
+		Rva00365C20Payload6 source14, int index, const Rva00365C20Tail &source44 );
 };
 
 struct Rva000F99C0Record
 {
 	UnicodeString m_name;
 	unsigned char m_unmodelled04[ 4 ];
-	unsigned int m_word08;
-	unsigned int m_word0C;
+	int m_word08;
+	int m_word0C;
 	unsigned char m_unmodelled10[ 4 ];
-	Rva000F99C0Payload m_payload14;
+	Rva00365C20Payload6 m_payload14;
 	unsigned char m_unmodelled2C[ 0x14 ];
 	int m_word40;
 	unsigned char m_tail44[ 0x1C ];
 };
 
-class Rva00365C20Visitor
-{
-public:
-	void visit( const UnicodeString &name, unsigned int word08, unsigned int word0C,
-		Rva000F99C0Payload payload, int word40, const unsigned char *tail );
-};
+// The visitor argument's class keeps the address-derived name the matched
+// dispatch row mangles; it is the Rva00365C20Owner above.
+class Rva00365C20Visitor;
 
 class Rva000F99C0RecordDispatch
 {
@@ -52,6 +68,9 @@ private:
 void Rva000F99C0RecordDispatch::dispatch( Rva00365C20Visitor *visitor )
 {
 	for( unsigned int i = 0; i < m_records.size(); ++i )
-		visitor->visit( m_records[ i ].m_name, m_records[ i ].m_word08, m_records[ i ].m_word0C,
-			m_records[ i ].m_payload14, m_records[ i ].m_word40, m_records[ i ].m_tail44 );
+		( (Rva00365C20Owner *)visitor )->method(
+			*(const Rva00365C20SourceRecord *)&m_records[ i ].m_name,
+			m_records[ i ].m_word08, m_records[ i ].m_word0C,
+			m_records[ i ].m_payload14, m_records[ i ].m_word40,
+			*(const Rva00365C20Tail *)m_records[ i ].m_tail44 );
 }
