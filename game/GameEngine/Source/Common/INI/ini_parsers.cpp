@@ -558,28 +558,7 @@ void bfme_force_multi_ini_field_parse_add_emission(MultiIniFieldParse &p, const 
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/System/INIDefaultConstructorThunk.cpp
-// ??0INI@@QAE@XZ present-unmatched
-INI::INI( void )
-{
-
-	m_file							= NULL;
-  m_readBufferNext=m_readBufferUsed=0;
-	m_filename					= "None";
-	m_loadType					= INI_LOAD_INVALID;
-	m_lineNum						= 0;
-	m_seps							= " \n\r\t=";			///< make sure you update m_sepsPercent/m_sepsColon as well
-	m_sepsPercent				= " \n\r\t=%%";
-	m_sepsColon					= " \n\r\t=:";
-	m_sepsQuote					= "\"\n=";				///< stop at " = EOL
-	m_blockEndToken			= "END";
-	m_endOfFile					= FALSE;
-	m_buffer[0]					= 0;
-#if defined(_DEBUG) || defined(_INTERNAL)
-	m_curBlockStart[0]	= 0;
-#endif
-
-}
+// Retail INI::INI (0x00851230) is provided by INIDefaultConstructorThunk.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
