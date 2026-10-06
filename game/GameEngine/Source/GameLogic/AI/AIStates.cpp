@@ -1006,15 +1006,7 @@ const Coord3D *AIStateMachine::getGoalPathPosition( Int i ) const
 	return &m_goalPath[i];
 }
 
-//----------------------------------------------------------------------------------------------------------
-/**
- * Set the current goal waypoint. If we reach this waypoint and there 
- * are connections to further points, continue on.
- */
-void AIStateMachine::setGoalWaypoint( const Waypoint *way )
-{
-	m_goalWaypoint = way;
-}
+// AIStateMachine::setGoalWaypoint: retail 0x0016AEB0, AIStateMachineSetGoalWaypoint.cpp.
 
 //----------------------------------------------------------------------------------------------------------
 /**
