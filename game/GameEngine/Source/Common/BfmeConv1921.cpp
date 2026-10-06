@@ -1,3 +1,5 @@
+#include "../../../Libraries/Include/Lib/Coord3D.h"
+
 class BfmeResBX
 {
 public:
@@ -5,7 +7,21 @@ public:
 	int m_bfmeValueBX;
 };
 
-class BfmeOwnerBX
+// BFME's damage and death enums; the values match the kill(8, 0) call that
+// ScriptActions_KillHordeMembers.cpp spells DAMAGE_UNRESISTABLE, DEATH_NORMAL.
+enum DamageType
+{
+	DAMAGE_UNRESISTABLE = 8
+};
+
+enum DeathType
+{
+	DEATH_NORMAL = 0
+};
+
+// The owner held at this-8 is an Object. Thing is its polymorphic primary
+// base; only the eleventh virtual slot is called here.
+class Thing
 {
 public:
 	virtual void bfmeSlot00BX();
@@ -20,37 +36,29 @@ public:
 	virtual void bfmeSlot09BX();
 	virtual BfmeResBX *bfmeGetBX();
 
-	void bfmeAimBX(void *at);
-	void bfmeIdleBX(int mode, int flag);
+	void setPosition(const Coord3D *pos);			// retail ILT 0x0003A1A7 -> 0x00132CE0
 };
 
-class BfmeObjBX
+class Object : public Thing
 {
 public:
-	unsigned char m_bfmeHeadBX[0x38];
-	int m_bfmeAtBX;
-	unsigned char m_bfmeMidBX[0x308];
-	unsigned char m_bfmeFlagsBX;
+	void kill(DamageType damageType, DeathType deathType);	// retail ILT 0x00014506 -> 0x001C30F0
+
+	unsigned char m_bfmeHeadBX[0x38 - 4];
+	Coord3D m_bfmeAtBX;							// +0x38
+	unsigned char m_bfmeMidBX[0x344 - 0x44];
+	unsigned char m_bfmeFlagsBX;				// +0x344
 };
 
 // The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined
-// once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp. This TU
-// previously spelled it ?TheBfmeGameLogic@@3PAURva00367E30Logic@@A, a name
-// nothing defines. It now uses the canonical spelling and casts at the use; the
-// emitted bytes are unchanged because DIR32 relocations are masked.
-class GameLogic;
-
-extern GameLogic *TheGameLogic;
-
-struct Rva00367E30Logic
+// once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp.
+class GameLogic
 {
-	BfmeObjBX *bfmeFindBX(int id);
+public:
+	Object *findObjectByID(int id);				// retail ILT 0x0001F253 -> 0x0009A510
 };
 
-static __forceinline Rva00367E30Logic *theGameLogicView()
-{
-	return (Rva00367E30Logic *)TheGameLogic;
-}
+extern GameLogic *TheGameLogic;
 
 class BfmeCfgBX
 {
@@ -168,19 +176,19 @@ public:
 
 int BfmeHostBX::bfmeStartBX()
 {
-	BfmeOwnerBX *owner = *(BfmeOwnerBX **)((char *)this - 8);
+	Object *owner = *(Object **)((char *)this - 8);
 
 	if ((*(BfmeCfgBX **)((char *)this - 0xc))->m_bfmeOnBX != 0)
 	{
-		BfmeObjBX *o = 0;
+		Object *o = 0;
 
 		if (m_bfmeIdBX != 0)
-			o = theGameLogicView()->bfmeFindBX(m_bfmeIdBX);
+			o = TheGameLogic->findObjectByID(m_bfmeIdBX);
 
 		if (o != 0 && (o->m_bfmeFlagsBX & 1) == 0)
-			owner->bfmeAimBX(&o->m_bfmeAtBX);
+			owner->setPosition(&o->m_bfmeAtBX);
 		else
-			owner->bfmeIdleBX(8, 0);
+			owner->kill(DAMAGE_UNRESISTABLE, DEATH_NORMAL);
 	}
 
 	BfmeResBX *r = owner->bfmeGetBX();
