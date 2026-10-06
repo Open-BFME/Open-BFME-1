@@ -216,7 +216,10 @@ struct Rva00891B80Block
 	unsigned short m_ref;
 };
 
-extern Rva00891B80Block g_default012D5298;
+// The comparison uses the existing canonical owner at VA 0x012D5298.
+// Only its address is used here; the local block view remains unchanged.
+class EAStringC { public: class StringDataC; };
+extern EAStringC::StringDataC g_rva012D5298Empty;
 
 class BfmeStrVKK
 {
@@ -315,7 +318,7 @@ struct Rva0089BBF0Matrix
 
 // Preserve the existing repository spellings and declared types; they are
 // not all recovered retail names. The zero-valued definitions below own
-// their independently witnessed four-byte retail cells. Other globals remain
+// their independently witnessed retail storage. Other globals remain
 // extern declarations. No pointed-to member is touched here.
 
 // Defining name at 0x00F379BC: the fallback value database pointer, defined
@@ -327,7 +330,7 @@ int g_bfmeB1038 = 0;
 // Defining name at 0x00F37A20: pointer to Rva00898D60Target, the class the
 // matched 0x00898D60 body chains through (Rva00898D60GlobalTail.cpp).
 class Rva00898D60Target;
-extern Rva00898D60Target *g_Rva01337A20;
+Rva00898D60Target *g_Rva01337A20 = 0;
 Rva89A2C0Derived *g_Va013379B4 = 0;
 BfmeThingVDW *g_Va013379FC = 0;
 Rva89A540Derived *g_Va013379AC = 0;
@@ -344,7 +347,7 @@ Rva008A9B00 *g_Va013379F0 = 0;
 // Defining name at 0x00F37A28: the lazily built Apt global table, spelled
 // void* by the matched 0x00899800 body (Rva00899800TableSet.cpp).
 void *g_Rva01337A28Index = 0;
-extern Rva0089BBF0ColorTransform g_Va013379CC;
+Rva0089BBF0ColorTransform g_Va013379CC = {0};
 // Defining name at 0x00F37A08: the C-linkage 2x3 matrix block.
 extern "C" Rva0089BBF0Matrix g_bfmeD1206;
 BfmeA1029 *g_Va013379EC = 0;
@@ -354,7 +357,7 @@ BfmeA1029 *g_Va013379F8 = 0;
 BfmeA1029 *g_Va013379B8 = 0;
 BfmeA1029 *g_Va013379B0 = 0;
 BfmeA1029 *g_Va01337A2C = 0;
-extern void *g_Va013387B0[4];
+void *g_Va013387B0[4] = {0};
 
 // ---- helpers ------------------------------------------------------------
 
@@ -374,7 +377,7 @@ static __forceinline Rva008A9B00 *rva0089BBF0CreateString()
 	{
 		rva01338478FreeHead() = string->m_next;
 		g_rva8CD130IdleHook->addOrClear(string);
-		if (string->m_block != &g_default012D5298)
+		if (string->m_block != reinterpret_cast<Rva00891B80Block *>(&g_rva012D5298Empty))
 			((BfmeStrVKK *)&string->m_block)->bfmeTruncVKK(0);
 		return string;
 	}
