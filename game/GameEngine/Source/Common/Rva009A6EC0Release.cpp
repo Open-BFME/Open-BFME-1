@@ -1,7 +1,8 @@
 // Open-BFME5 conversion of the codec buffer release helper.
 
-// ILT 0x009A5980 reaches this matched free-and-dispatch helper at 0x009A58E0.
-void bfmeGo930C(void *what);
+// Each call targets 0x009A5980, the matched 5-byte tail jump that forwards to
+// the free-and-dispatch helper at 0x009A58E0.
+void Rva009A5980(void *what);
 
 struct Rva009A6EC0Buffer
 {
@@ -17,16 +18,16 @@ void Rva009A6EC0Release(void **what)
 	Rva009A6EC0Buffer *self = (Rva009A6EC0Buffer *)*what;
 	if (self != 0) {
 		if (self->m_at188 != 0)
-			bfmeGo930C(self->m_at188);
+			Rva009A5980(self->m_at188);
 		self->m_at188 = 0;
 		self->m_at180 = 0;
 
 		if (self->m_at18C != 0)
-			bfmeGo930C(self->m_at18C);
+			Rva009A5980(self->m_at18C);
 		self->m_at18C = 0;
 		self->m_at184 = 0;
 
-		bfmeGo930C(*what);
+		Rva009A5980(*what);
 		*what = 0;
 	}
 }

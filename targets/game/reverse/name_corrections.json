@@ -18748,5 +18748,15 @@
   "after_sha256": "63bf2eafd3fc8ed61c639fcac5db334fac690a95e71ac705770a1e437b9c65f2",
   "evidence": "targets/game/reverse/identity_evidence/00569340-bfmeconv985-calls-are-rva00465b80-apply.md",
   "reason": "The call goes through ILT 0x000290D2 to 0x00465B80, matched as ?apply@Rva00465B80@@QAEXXZ; BfmeHub985::bfmeDo985 was a per-file placeholder spelling of that call and nothing defines it."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva009A6EC0Release.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva009A6EC0Release.cpp",
+  "old_name": "bfmeGo930C",
+  "new_name": "Rva009A5980",
+  "before_sha256": "1b1c2fd6d8c9a824a2ec47ebcc424cf6e8868ef29aafc4803245ec202bb7b079",
+  "after_sha256": "474afdcd5d17e5ff885bf1c809341fed3ddb55d271151e7a2a54ff0162df5c7c",
+  "evidence": "targets/game/reverse/identity_evidence/009a6ec0-release-calls-tail-jump.md",
+  "reason": "Not a rename: retail 0x009A6EC0 calls the 5-byte tail jump at 0x009A5980 (ledger row Rva009A5980) three times, not bfmeGo930C at 0x009A58E0, which keeps its own name and row."
  }
 ]
