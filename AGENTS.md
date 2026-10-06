@@ -8,8 +8,8 @@ and easy to rebase. `docs/matching.md` covers byte matching and
 
 Live checks: jump tables, bytes past a row's extent, TU-local data, `gen-alias`
 only on a retail twin, unrecorded globals resolved by retail address.
-`body_guard_baseline.csv` and `identity_baseline.txt` only shrink;
-`hatch_counters.py` counts escape hatches. Pause bulk renames. Plan:
+`hatch_counters.py` counts escape hatches. Pause bulk renames. Pushes stay
+direct. Lanes and plan:
 `targets/game/reverse/analysis/verifier_upgrade_plan.md`.
 
 ## Setup

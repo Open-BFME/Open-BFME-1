@@ -86,3 +86,24 @@ matching as usual — rows the new checks flag will be served as a queue.
 2. Date for showing the new link-based series next to the current progress bars (step 5).
 3. BFME1 pause on bulk renames and raw dump harvests (step 9).
 4. A word cap for BFME2's AGENTS.md.
+
+## Upgrade lanes for fleet seats
+
+Pushes stay direct to `master`; the publisher only re-verifies pushed work
+afterwards and never blocks a push. Alongside matching:
+
+- **False rejects.** If a check refuses work you can show is correct, do not
+  work around it or edit the check in the same commit. Record
+  `python3 tools/re_log.py record <symbol> <rva> <size> blocked
+  "false-reject <check>: <evidence> t=<min> model=<model>"` and move on.
+  Tooling seats: `rg "false-reject" targets/game/reverse/re_attempts.log`,
+  reproduce, and fix the check with a regression test and a
+  `Verifier-Change:` trailer. `tools/tests/test_gate_exploits.py` must still
+  pass.
+- **Escape-hatch debt.** `targets/game/reverse/hatch_baseline.tsv` lists
+  hatches by file. Replacing one with real code or a real name and lowering
+  its count is credited repair work.
+- **Repairs.** `python3 tools/repair_queue.py repair` serves gate debt;
+  `tools/ilt_repair.py` applies thunk-table name repairs.
+- **Verification runners.** Volunteer machines run `tools/link_cycle.py` and
+  the nightly audit (`tools/audit/run_nightly.cmd`). Ask a maintainer first.
