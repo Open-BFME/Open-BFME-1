@@ -70,7 +70,7 @@ public:
 	int m_bfmeThird;					// +0x08
 };
 
-extern int g_bfmeDirtyCN;					// retail 0x012EF418
+extern unsigned int g_Rva00EEF418;					// retail 0x012EF418
 
 class Gen_0018F290
 {
@@ -85,7 +85,7 @@ private:
 // ?bfmeSetTriple@Gen_0018F290@@QAEXPBVBfmeTripleCN@@@Z
 void Gen_0018F290::bfmeSetTriple(const BfmeTripleCN *value)
 {
-	g_bfmeDirtyCN |= 1;
+	g_Rva00EEF418 |= 1;
 
 	m_bfmeTriple = *value;
 }
