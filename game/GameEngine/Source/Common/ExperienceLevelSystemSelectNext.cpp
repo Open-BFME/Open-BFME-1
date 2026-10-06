@@ -105,14 +105,14 @@ ExperienceLevel *ExperienceLevelSystem::rva003806D0(
 		Overridable *next = level->friend_getNextOverride();
 		if (next != 0)
 		{
-			const Overridable *final = next->friend_getNextOverride();
+			Overridable *final = next->friend_getNextOverride();
 			if (final == 0)
 			{
 				level = static_cast<ExperienceLevel *>(next);
 				goto checkLevel;
 			}
-			level = static_cast<ExperienceLevel *>(const_cast<Overridable *>(
-				final->friend_getFinalOverride()));
+			level = static_cast<ExperienceLevel *>(
+				final->friend_getFinalOverride());
 		}
 
 	checkLevel:
