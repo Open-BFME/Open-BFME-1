@@ -1407,16 +1407,7 @@ GameClient::DrawableTOCEntry *GameClient::findTOCEntryById( UnsignedShort id )
 // ------------------------------------------------------------------------------------------------
 /** Add an drawable TOC entry */
 // ------------------------------------------------------------------------------------------------
-// ?addTOCEntry@GameClient@@ present-unmatched
-void GameClient::addTOCEntry( AsciiString name, UnsignedShort id )
-{
-
-	DrawableTOCEntry tocEntry;
-	tocEntry.name = name;
-	tocEntry.id = id;
-	m_drawableTOC.push_back( tocEntry );
-
-}  // end addTOCEntry
+// GameClient::addTOCEntry (retail 0x00431C60) is matched in GameClientAddTOCEntry.cpp.
 
 // ------------------------------------------------------------------------------------------------
 static Bool shouldSaveDrawable(const Drawable* draw)
