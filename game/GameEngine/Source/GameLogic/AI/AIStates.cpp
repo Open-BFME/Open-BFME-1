@@ -6721,34 +6721,7 @@ void AIAttackState::crc( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Xfer Method */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/AIAttackState_xferMethodThunk.cpp
-// ?xfer@AIAttackState@@MAEXPAVXfer@@@Z present-unmatched
-void AIAttackState::xfer( Xfer *xfer )
-{
-  // version
-  XferVersion currentVersion = 1;
-  XferVersion version = currentVersion;
-  xfer->xferVersion( &version, currentVersion );
-
-	Bool hasMachine = m_attackMachine!=NULL;
-	
-	xfer->xferBool(&hasMachine);
-	xfer->xferCoord3D(&m_originalVictimPos);
-
-	if (hasMachine && m_attackMachine==NULL)	{
-		// create new state machine for attack behavior
-		m_attackMachine = newInstance(AttackStateMachine)(getMachineOwner(), this, "AIAttackMachine", m_follow, m_isAttackingObject, m_isForceAttacking  );
-	}
-	if (hasMachine) {
-		xfer->xferSnapshot(m_attackMachine);						///< state sub-machine for attack behavior
-	}
-	/* Not saved or loaded - passed in on creation.
-	Bool										m_follow;
-	Bool										m_isAttackingObject;								// if false, attacking position
-	AttackExitConditionsInterface*	m_attackParameters;					///< these are not owned by this, and will not be deleted on destruction
-	Bool										m_isForceAttacking
-	*/
-}  // end xfer
+// AIAttackState::xfer is defined in AIAttackState_xfer.cpp (retail 0x001843A0).
 
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
