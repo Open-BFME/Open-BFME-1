@@ -63,6 +63,8 @@ PROTECTED = (
     "tools/eol_guard.py", "tools/retired_guard.py", "tools/doc_budget.py",
     "tools/protected_paths.py", "tools/body_guard.py", "tools/dir32_record_guard.py",
     "tools/progress.py", "tools/hatch_counters.py", "tools/retail_inventory.py",
+    # the advisory audit: its judge allowlist (judges.json), canaries and harness
+    "tools/audit/*",
     # the hooks and CI that run all of the above
     ".githooks/*", ".github/workflows/*",
     # debt registers and exemption lists
