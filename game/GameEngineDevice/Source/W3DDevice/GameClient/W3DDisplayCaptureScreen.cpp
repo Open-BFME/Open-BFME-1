@@ -113,7 +113,8 @@ public:
 	virtual BfmeAwakenLog *slot6c(int first, int second);
 };
 
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void *g_Rva00F36E5C; // VA 01336E5C debug manager cell (data_rows.csv owner)
+#define TheBfmeAwakenDebug (static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C))
 extern void _bfme_debugRecordCallsite(int kind);
 extern void W3DRadarResetLock(void);
 extern char bfmeUnlock1179(void);

@@ -43,7 +43,8 @@ public:
 	virtual Rva0088A5F0Report *slot6C(const char *file, int line);
 };
 
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void *g_Rva00F36E5C; // VA 01336E5C debug manager cell (data_rows.csv owner)
+#define TheBfmeAwakenDebug (static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C))
 
 // ?_heap_abort@@YAXXZ
 void __cdecl _heap_abort(void)
