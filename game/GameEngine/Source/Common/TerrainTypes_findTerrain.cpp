@@ -36,11 +36,20 @@ struct BfmeAsciiStringData
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
+// Only the private release member the inlined destructor calls.
+template <class T> class StringBase
+{
+	friend class AsciiString;
+	void releaseBuffer();					// StringBase<char>: retail 0x00887940
+};
+
 class AsciiString
 {
 public:
 	AsciiString(const AsciiString &that);
-	~AsciiString();
+	// Retail releases each string by calling StringBase<char>::releaseBuffer
+	// (0x00887940) directly, not the ~AsciiString forwarder at 0x0005EE90.
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 	Int getLength(void) const { return m_data ? m_data->m_len : 0; }
 	const char *str(void) const { return m_data ? (const char *)(m_data + 1) : ""; }

@@ -113,6 +113,9 @@ TerrainType::~TerrainType( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// Retail's constructor is 0x000A71C0 (GameEngine::init calls it; see
+// targets/game/reverse/identity_evidence/subsystem-lifecycle-slots.md).
+// ??0TerrainTypeCollection@@ present-unmatched
 TerrainTypeCollection::TerrainTypeCollection( void )
 {
 
@@ -147,24 +150,8 @@ TerrainTypeCollection::~TerrainTypeCollection( void )
 //-------------------------------------------------------------------------------------------------
 /** Find a terrain type given the name */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/TerrainTypes_findTerrain.cpp
-// ?findTerrain@TerrainTypeCollection@@ present-unmatched
-TerrainType *TerrainTypeCollection::findTerrain( AsciiString name )
-{
-	TerrainType *terrain;
-
-	for( terrain = m_terrainList; terrain; terrain = terrain->friend_getNext() )
-	{
-
-		if( terrain->getName() == name )
-			return terrain;
-
-	}  // end for terrain
-
-	// not found
-	return NULL;
-
-}  // end findTerrain
+// TerrainTypeCollection::findTerrain is defined once, by its retail body (0x000A7AF0) in
+// game/GameEngine/Source/Common/TerrainTypes_findTerrain.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Allocate a new type, assign the name, and tie to type list */
