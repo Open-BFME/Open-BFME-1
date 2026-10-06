@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "0c7ba264519721160d97fb9b3ab15740b1aa371ca1db017a8eade50dbf57037b",
+  "symbol": "??0Rva001D9540@@QAE@ABV0@@Z",
+  "score_kind": "measured",
+  "score": 1.0,
+  "source": "// ??0Rva001D9540@@QAE@ABV0@@Z\n// partial score=1.0 date=2026-10-05\n// The 67-byte body matches every instruction outside relocation operands.\n// Inline size(), begin(), and end() accessors produce the retail register order.\n// Retail calls pass through thunks at 0x00044166, 0x00001D949, and 0x00018179.\n// The direct caller and all helper identities remain unproven, so add_match has\n// not verified this source.\nstruct Rva001D9540Alloc\n{\n\tchar m_pad;\n\n\tRva001D9540Alloc();\n\tRva001D9540Alloc(const Rva001D9540Alloc &other);\n};\n\nclass Rva001D9540\n{\npublic:\n\tRva001D9540(const Rva001D9540 &src);\n\n\tRva001D9540Alloc allocatorValue() const;\n\tvoid initializeBase(unsigned int count, const Rva001D9540Alloc &alloc);\n\tunsigned int size() const\n\t{\n\t\treturn (unsigned int)(m_end - m_begin);\n\t}\n\tvoid **begin() const { return m_begin; }\n\tvoid **end() const { return m_end; }\n\n\tvoid **m_begin;\n\tvoid **m_end;\n};\n\nextern \"C\" void **__cdecl copyValues(void **first, void **last, void **dst);\n\nRva001D9540::Rva001D9540(const Rva001D9540 &src)\n{\n\tinitializeBase(src.size(), src.allocatorValue());\n\n\tm_end = copyValues(src.begin(), src.end(), begin());\n}\n"
+}

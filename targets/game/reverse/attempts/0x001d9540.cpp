@@ -1,46 +1,41 @@
-// ??0BfmeVecCD@@QAE@ABV0@@Z (identity unknown)
-// partial score=0.80 date=2026-09-07
-// 65/67. This is the STLport vector<T*> COPY CONSTRUCTOR:
-//     _Vector_base(x.size(), x.get_allocator());
-//     _M_finish = __uninitialized_copy(x._M_start, x._M_finish, _M_start);
-// The pinned callee at 0x0001D949 confirms it. Its real name is
-// ??0?$_Vector_base@PBVLocomotorTemplate@@...@Z, so the element is
-// `const LocomotorTemplate *` and sizeof is 4, hence the `sar esi,2`.
-// Recovered: the allocator is returned BY VALUE through an sret pointer that
-// lands in the dead parameter home slot (lea eax,[esp+0x10] / push eax), which
-// needs a class with declared-not-defined ctor and copy ctor. A plain empty
-// POD would be returned in al instead. The three-argument cdecl copy and the
-// `return this` tail both match.
-// Residue: register allocation. retail ebx=src, edi=this, esi=count. MSVC
-// edi=src, esi=this. 28 diffs, all downstream of that.
-// Tried: hoisting the count into a local before the base call. It fixes the
-// first two instructions but costs 4 bytes elsewhere (69), because MSVC then
-// loads begin into eax instead of `sub esi,[ebx]` straight from memory.
-struct BfmeAllocCD
+// ??0Rva001D9540@@QAE@ABV0@@Z
+// partial score=1.0 date=2026-10-05
+// The 67-byte body matches every instruction outside relocation operands.
+// Inline size(), begin(), and end() accessors produce the retail register order.
+// Retail calls pass through thunks at 0x00044166, 0x00001D949, and 0x00018179.
+// The direct caller and all helper identities remain unproven, so add_match has
+// not verified this source.
+struct Rva001D9540Alloc
 {
-	char m_bfmePadCD;
+	char m_pad;
 
-	BfmeAllocCD();
-	BfmeAllocCD(const BfmeAllocCD &other);
+	Rva001D9540Alloc();
+	Rva001D9540Alloc(const Rva001D9540Alloc &other);
 };
 
-class BfmeVecCD
+class Rva001D9540
 {
 public:
-	BfmeVecCD(const BfmeVecCD &src);
+	Rva001D9540(const Rva001D9540 &src);
 
-	BfmeAllocCD bfmeAllocCD() const;
-	void bfmeBaseCD(unsigned int count, const BfmeAllocCD &alloc);
+	Rva001D9540Alloc allocatorValue() const;
+	void initializeBase(unsigned int count, const Rva001D9540Alloc &alloc);
+	unsigned int size() const
+	{
+		return (unsigned int)(m_end - m_begin);
+	}
+	void **begin() const { return m_begin; }
+	void **end() const { return m_end; }
 
-	void **m_bfmeBeginCD;
-	void **m_bfmeEndCD;
+	void **m_begin;
+	void **m_end;
 };
 
-extern "C" void **__cdecl bfmeCopyCD(void **first, void **last, void **dst);
+extern "C" void **__cdecl copyValues(void **first, void **last, void **dst);
 
-BfmeVecCD::BfmeVecCD(const BfmeVecCD &src)
+Rva001D9540::Rva001D9540(const Rva001D9540 &src)
 {
-	bfmeBaseCD(src.m_bfmeEndCD - src.m_bfmeBeginCD, src.bfmeAllocCD());
+	initializeBase(src.size(), src.allocatorValue());
 
-	m_bfmeEndCD = bfmeCopyCD(src.m_bfmeBeginCD, src.m_bfmeEndCD, m_bfmeBeginCD);
+	m_end = copyValues(src.begin(), src.end(), begin());
 }

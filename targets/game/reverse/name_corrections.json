@@ -18598,5 +18598,35 @@
   "after_sha256": "13b9424147c63c0ca6685d912c64b11140a982ebfce326789b712da9ebb65124",
   "evidence": "targets/game/reverse/identity_evidence/00f07228-datum-type.md",
   "reason": "Callers take the owner's spelling for the 72-byte screen filter instance."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001d9540.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001d9540.cpp",
+  "old_name": "BfmeAllocCD",
+  "new_name": "Rva001D9540Alloc",
+  "before_sha256": "a76ee8005a4f2705a98c992c97a453121cc8623e160348ae87031a2f15079624",
+  "after_sha256": "0c7ba264519721160d97fb9b3ab15740b1aa371ca1db017a8eade50dbf57037b",
+  "evidence": "targets/game/reverse/identity_evidence/001d9540-address-derived-bank-name.md",
+  "reason": "The old bank marks BfmeAllocCD identity unknown, and callers assign conflicting vector types to its getter. Rva001D9540Alloc preserves the retail address without claiming an element type."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001d9540.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001d9540.cpp",
+  "old_name": "BfmeVecCD",
+  "new_name": "Rva001D9540",
+  "before_sha256": "a76ee8005a4f2705a98c992c97a453121cc8623e160348ae87031a2f15079624",
+  "after_sha256": "0c7ba264519721160d97fb9b3ab15740b1aa371ca1db017a8eade50dbf57037b",
+  "evidence": "targets/game/reverse/identity_evidence/001d9540-address-derived-bank-name.md",
+  "reason": "The old bank marks BfmeVecCD identity unknown, and no caller or table names the owner. Rva001D9540 preserves the only verified locator."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001d9540.cpp",
+  "new_path": "targets/game/reverse/attempts/0x001d9540.cpp",
+  "old_name": "m_bfmePadCD",
+  "new_name": "m_pad",
+  "before_sha256": "a76ee8005a4f2705a98c992c97a453121cc8623e160348ae87031a2f15079624",
+  "after_sha256": "0c7ba264519721160d97fb9b3ab15740b1aa371ca1db017a8eade50dbf57037b",
+  "evidence": "targets/game/reverse/identity_evidence/001d9540-address-derived-bank-name.md",
+  "reason": "No layout witness gives m_bfmePadCD a semantic name, and the source models only one untyped padding byte as m_pad."
  }
 ]
