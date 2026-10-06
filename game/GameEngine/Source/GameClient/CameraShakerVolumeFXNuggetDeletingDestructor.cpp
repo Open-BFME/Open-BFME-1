@@ -7,7 +7,7 @@
 
 class CameraShakerVolumeFXNugget
 {
-protected:
+public:
 	virtual ~CameraShakerVolumeFXNugget();
 private:
 	friend void forceCameraShakerVolumeFXNuggetDeletingDestructor();

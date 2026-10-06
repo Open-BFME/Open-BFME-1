@@ -94,7 +94,9 @@ class AnimationSoundClientBehavior : public DrawableModule, public ASCB_Iface
 {
 public:
 	AnimationSoundClientBehavior(Thing *thing, const ModuleData *moduleData);
+protected:
 	virtual ~AnimationSoundClientBehavior();
+public:
 	virtual void ascbIfaceVslot();
 
 private:

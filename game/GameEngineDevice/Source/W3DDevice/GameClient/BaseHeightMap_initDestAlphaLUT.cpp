@@ -44,7 +44,7 @@ extern char bfmeUnlock1179(void);
 
 class BaseHeightMapRenderObjClass
 {
-	protected:
+	public:
 	void initDestAlphaLUT(void);
 
 private:
@@ -56,7 +56,7 @@ private:
 	float m_currentMinWaterOpacity;
 };
 
-// ?initDestAlphaLUT@BaseHeightMapRenderObjClass@@IAEXXZ
+// ?initDestAlphaLUT@BaseHeightMapRenderObjClass@@QAEXXZ
 void BaseHeightMapRenderObjClass::initDestAlphaLUT(void)
 {
 	if (!m_destAlphaTexture.m_texture)

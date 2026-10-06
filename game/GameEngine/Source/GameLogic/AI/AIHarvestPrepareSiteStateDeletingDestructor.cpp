@@ -7,7 +7,7 @@
 
 class AIHarvestPrepareSiteState
 {
-protected:
+public:
 	virtual ~AIHarvestPrepareSiteState();
 private:
 	friend void forceAIHarvestPrepareSiteStateDeletingDestructor();

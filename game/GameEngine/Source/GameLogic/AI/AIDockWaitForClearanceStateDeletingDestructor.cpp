@@ -7,7 +7,7 @@
 
 class AIDockWaitForClearanceState
 {
-protected:
+public:
 	virtual ~AIDockWaitForClearanceState();
 private:
 	friend void forceAIDockWaitForClearanceStateDeletingDestructor();

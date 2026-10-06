@@ -32,7 +32,7 @@ private: char m_rva0014f280_tail[0x2c];
 };
 class AIGuardReturnState: public AIInternalMoveToState {
 public: AIGuardReturnState(StateMachine *m):AIInternalMoveToState(m,"AIGuardReturn"){m_rva0015d1d0_50=0;}
-protected:virtual ~AIGuardReturnState();
+public:virtual ~AIGuardReturnState();
 private: unsigned int m_rva0015d1d0_50;
 };
 class AIGuardIdleState:public State {

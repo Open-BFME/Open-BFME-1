@@ -53,7 +53,9 @@ class AnimationSoundClientBehavior : public Rva00605710Middle,
 {
 public:
 	AnimationSoundClientBehavior(const Rva00605710Source &source);
+protected:
 	virtual ~AnimationSoundClientBehavior();
+public:
 	virtual void slot0();
 	virtual void slot1();
 	int field10;

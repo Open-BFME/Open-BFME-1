@@ -173,7 +173,7 @@ extern ControlBar *TheControlBar;
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
-public:
+protected:
 	void updateConstructionTextDisplay(Object *obj);
 
 private:

@@ -60,22 +60,23 @@ class AIDockWaitForClearanceState : public State
 {
 public:
     AIDockWaitForClearanceState(StateMachine *m) : State(m, "AIDockWaitForClearanceState"), m_enterFrame(0) {}
-protected:
+public:
     virtual ~AIDockWaitForClearanceState();
+protected:
     unsigned int m_enterFrame;
 };
 class AIDockAdvancePositionState : public AIInternalMoveToState
 {
 public:
     AIDockAdvancePositionState(StateMachine *m) : AIInternalMoveToState(m, "AIDockApproachState") {}
-protected:
+public:
     virtual ~AIDockAdvancePositionState();
 };
 class AIDockMoveToEntryState : public AIInternalMoveToState
 {
 public:
     AIDockMoveToEntryState(StateMachine *m) : AIInternalMoveToState(m, "AIDockMoveToEntryState") {}
-protected:
+public:
     virtual ~AIDockMoveToEntryState();
 };
 class AIDockMoveToDockState : public AIInternalMoveToState
@@ -90,7 +91,7 @@ class AIDockProcessDockState : public State
 public:
     AIDockProcessDockState(StateMachine *m) : State(m, "AIDockProcessDockState"), m_nextDockActionFrame(0), m_droneID(0) {}
     unsigned int m_nextDockActionFrame;
-protected:
+public:
     virtual ~AIDockProcessDockState();
 private:
     unsigned int m_droneID;
@@ -106,7 +107,7 @@ class AIDockMoveToRallyState : public AIInternalMoveToState
 {
 public:
     AIDockMoveToRallyState(StateMachine *m) : AIInternalMoveToState(m, "AIDockMoveToRallyState") {}
-protected:
+public:
     virtual ~AIDockMoveToRallyState();
 };
 

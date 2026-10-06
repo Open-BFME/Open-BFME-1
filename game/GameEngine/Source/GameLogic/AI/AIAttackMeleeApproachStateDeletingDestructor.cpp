@@ -8,7 +8,7 @@
 
 class AIAttackMeleeApproachState
 {
-protected:
+public:
 	virtual ~AIAttackMeleeApproachState();
 
 private:

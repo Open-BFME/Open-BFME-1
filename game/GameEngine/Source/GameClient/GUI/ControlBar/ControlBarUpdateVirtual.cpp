@@ -118,12 +118,13 @@ protected:
 	void populateSpecialPowerShortcut(Player *player);
 public:
 	void repopulateBuildTooltipLayout();
+protected:
 	void updateContextMultiSelect();
 protected:
 	void updateContextPurchaseScience();
 	void updateContextStructureInventory();
 	void updateContextUnderConstruction();
-private:
+protected:
 	void updateContextOCLTimer();
 protected:
 	void switchToContext(ControlBarContext context, Drawable *drawable);

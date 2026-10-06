@@ -7,7 +7,7 @@
 
 class AIDockMoveToEntryState
 {
-protected:
+public:
 	virtual ~AIDockMoveToEntryState();
 private:
 	friend void forceAIDockMoveToEntryStateDeletingDestructor();

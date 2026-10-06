@@ -7,7 +7,7 @@
 
 class AutoFindHealingUpdateModuleData
 {
-protected:
+public:
 	virtual ~AutoFindHealingUpdateModuleData();
 private:
 	friend void forceAutoFindHealingUpdateModuleDataDeletingDestructor();

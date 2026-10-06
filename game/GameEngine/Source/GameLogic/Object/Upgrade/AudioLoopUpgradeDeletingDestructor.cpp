@@ -7,7 +7,7 @@
 
 class AudioLoopUpgrade
 {
-protected:
+public:
 	virtual ~AudioLoopUpgrade();
 private:
 	friend void forceAudioLoopUpgradeDeletingDestructor();

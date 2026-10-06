@@ -132,7 +132,7 @@ private:
 
 class AODHordeContain : public HordeContain
 {
-public:
+protected:
 	virtual ~AODHordeContain();
 
 private:
@@ -143,7 +143,7 @@ private:
 	AODHordeContainElement24 m_arrayB[0x14];							///< retail this+0x614
 };
 
-// ??1AODHordeContain@@UAE@XZ
+// ??1AODHordeContain@@MAE@XZ
 AODHordeContain::~AODHordeContain()
 {
 }

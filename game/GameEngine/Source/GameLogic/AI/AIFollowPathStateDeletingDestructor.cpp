@@ -8,7 +8,7 @@
 
 class AIFollowPathState
 {
-protected:
+public:
 	virtual ~AIFollowPathState();
 
 private:

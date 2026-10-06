@@ -14,7 +14,7 @@ private:
 
 class AIGuardAttackAggressorState
 {
-protected:
+public:
 	virtual ~AIGuardAttackAggressorState();
 private:
 	friend void forceAIGuardAttackAggressorStateDeletingDestructor();

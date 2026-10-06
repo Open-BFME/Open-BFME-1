@@ -1,4 +1,4 @@
-// ?calcFlightPath@BezierProjectileBehavior@@QAE_N_N@Z
+// ?calcFlightPath@BezierProjectileBehavior@@AAE_N_N@Z
 // cl: /DNDEBUG /DWIN32 /MD /O2 /Ob2 /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // BezierProjectileBehavior::calcFlightPath, retail 0x001EF5E0, 902 bytes; ILT 0x00021BD9 is called by projectileFireAtObjectOrPosition.
@@ -86,8 +86,9 @@ public:
 
 class BezierProjectileBehavior
 {
-public:
+private:
 	Bool calcFlightPath(Bool recalcNumSegments);
+public:
 
 	void *m_vtable;
 	const BezierProjectileBehaviorModuleData *m_moduleData;

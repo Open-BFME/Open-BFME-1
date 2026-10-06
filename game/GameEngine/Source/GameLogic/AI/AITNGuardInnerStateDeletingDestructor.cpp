@@ -7,7 +7,7 @@
 
 class AITNGuardInnerState
 {
-protected:
+public:
 	virtual ~AITNGuardInnerState();
 private:
 	friend void forceAITNGuardInnerStateDeletingDestructor();

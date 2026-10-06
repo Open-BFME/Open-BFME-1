@@ -103,7 +103,7 @@ private:
 
 class ContestableContain : public GarrisonContain
 {
-public:
+protected:
 	virtual ~ContestableContain();
 
 private:
@@ -114,7 +114,7 @@ private:
 	_STL::list<Gen_p8pod> m_listC;										///< retail this+0x9D0
 };
 
-// ??1ContestableContain@@UAE@XZ
+// ??1ContestableContain@@MAE@XZ
 ContestableContain::~ContestableContain()
 {
 }

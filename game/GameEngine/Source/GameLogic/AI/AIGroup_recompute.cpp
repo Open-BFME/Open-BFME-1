@@ -1,4 +1,4 @@
-// ?recompute@AIGroup@@QAEXXZ
+// ?recompute@AIGroup@@AAEXXZ
 // Open-BFME: AIGroup::recompute, retail 0x00154B80, 276 bytes.
 //
 // BFME extends the Zero Hour recompute walk with the ground-path state reset,
@@ -127,7 +127,9 @@ class AIGroup
 {
 public:
 	bool getCenter(Coord3D *center);
+private:
 	void recompute(void);
+public:
 	friend class AIGroupRecomputePathDeleteArgument;
 
 private:

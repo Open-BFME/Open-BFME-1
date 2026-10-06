@@ -30,7 +30,7 @@ public:
 	virtual void bfmeVF61040();
 	virtual void bfmeVF71040();
 	virtual void bfmeFin1040(int n);
-protected:
+public:
 	virtual void removeUpgrade();
 };
 

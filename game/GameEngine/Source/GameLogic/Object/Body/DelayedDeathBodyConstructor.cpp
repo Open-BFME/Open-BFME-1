@@ -53,6 +53,7 @@ class DelayedDeathBody : public RespawnBody
 {
 public:
 	DelayedDeathBody( Thing *thing, const ModuleData *moduleData );
+protected:
 	virtual ~DelayedDeathBody();
 
 private:

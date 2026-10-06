@@ -134,7 +134,7 @@ class UpgradeModule : public ObjectModule,
 
 class CostModifierUpgrade : public UpgradeModule
 {
-	protected:
+	public:
 	virtual void removeUpgrade();
 };
 
@@ -150,7 +150,7 @@ inline const T &min(const T &left, const T &right)
 	return left < right ? left : right;
 }
 
-// ?removeUpgrade@CostModifierUpgrade@@MAEXXZ
+// ?removeUpgrade@CostModifierUpgrade@@UAEXXZ
 void CostModifierUpgrade::removeUpgrade()
 {
 	if (!isAlreadyUpgraded())

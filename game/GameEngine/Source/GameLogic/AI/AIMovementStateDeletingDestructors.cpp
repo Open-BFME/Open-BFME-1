@@ -6,7 +6,7 @@
 
 class AIWanderState
 {
-protected:
+public:
 	virtual ~AIWanderState();
 private:
 	friend void forceAIWanderStateDeletingDestructor();
@@ -14,7 +14,7 @@ private:
 
 class AIPanicState
 {
-protected:
+public:
 	virtual ~AIPanicState();
 private:
 	friend void forceAIPanicStateDeletingDestructor();

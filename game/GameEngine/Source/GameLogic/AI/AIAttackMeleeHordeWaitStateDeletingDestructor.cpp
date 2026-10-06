@@ -7,7 +7,7 @@
 
 class AIAttackMeleeHordeWaitState
 {
-protected:
+public:
 	virtual ~AIAttackMeleeHordeWaitState();
 private:
 	friend void forceAIAttackMeleeHordeWaitStateDeletingDestructor();

@@ -7,7 +7,7 @@
 
 class AIGuardReturnState
 {
-protected:
+public:
 	virtual ~AIGuardReturnState();
 private:
 	friend void forceAIGuardReturnStateDeletingDestructor();

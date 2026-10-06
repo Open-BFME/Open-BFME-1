@@ -65,6 +65,7 @@ class ArrowStormUpdate : public SpecialAbilityUpdate
 {
 public:
     ArrowStormUpdate(Thing *, const ModuleData *);
+protected:
     virtual ~ArrowStormUpdate();
 
 private:

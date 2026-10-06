@@ -39,12 +39,12 @@ struct Gen_t_000b0910_p8pod
 
 class AudioEventInfo
 {
-public:
+private:
 	static void parseVolumeSliderMultiplier( INI *ini, void *instance, void *store,
 		const void *userData );
 };
 
-// ?parseVolumeSliderMultiplier@AudioEventInfo@@SAXPAVINI@@PAX1PBX@Z
+// ?parseVolumeSliderMultiplier@AudioEventInfo@@CAXPAVINI@@PAX1PBX@Z
 void AudioEventInfo::parseVolumeSliderMultiplier( INI *ini, void *, void *store,
 	const void * )
 {

@@ -7,7 +7,7 @@
 
 class AIDockAdvancePositionState
 {
-protected:
+public:
 	virtual ~AIDockAdvancePositionState();
 private:
 	friend void forceAIDockAdvancePositionStateDeletingDestructor();

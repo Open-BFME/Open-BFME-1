@@ -147,7 +147,7 @@ void GadgetButtonDrawInverseClock(GameWindow *window, Int percent, Int color);
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
-public:
+protected:
 	void updateContextMultiSelect(void);
 
 private:
@@ -161,7 +161,7 @@ private:
 	Int m_buildUpClockColor;				// this+0x26C
 };
 
-// ?updateContextMultiSelect@ControlBar@@QAEXXZ
+// ?updateContextMultiSelect@ControlBar@@IAEXXZ
 void ControlBar::updateContextMultiSelect(void)
 {
 	Drawable *draw;

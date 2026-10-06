@@ -7,7 +7,7 @@
 
 class AITNGuardAttackAggressorState
 {
-protected:
+public:
 	virtual ~AITNGuardAttackAggressorState();
 private:
 	friend void forceAITNGuardAttackAggressorStateDeletingDestructor();

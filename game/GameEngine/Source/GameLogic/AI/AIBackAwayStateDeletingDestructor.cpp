@@ -7,7 +7,7 @@
 
 class AIBackAwayState
 {
-protected:
+public:
 	virtual ~AIBackAwayState();
 
 private:

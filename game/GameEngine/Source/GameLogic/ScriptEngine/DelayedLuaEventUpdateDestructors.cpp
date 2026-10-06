@@ -76,7 +76,7 @@ private:
 
 class DelayedLuaEventUpdate : public UpdateModule
 {
-public:
+protected:
 	virtual ~DelayedLuaEventUpdate();
 
 private:
@@ -88,7 +88,7 @@ private:
 	Gen_uw_00013156 m_member;					///< retail this+0x24
 };
 
-// ??1DelayedLuaEventUpdate@@UAE@XZ
+// ??1DelayedLuaEventUpdate@@MAE@XZ
 DelayedLuaEventUpdate::~DelayedLuaEventUpdate()
 {
 }

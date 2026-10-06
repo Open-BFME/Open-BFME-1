@@ -69,7 +69,7 @@ void SpawnBehavior::removeUpgrade()
 // 0x00212D20: slot 7 of DetachableRiderBody's table 0x010A7FC0 (ILT 0x0001C71A)
 class DetachableRiderBody : public UpgradeMux
 {
-protected:
+public:
 	virtual void removeUpgrade();
 };
 
@@ -80,7 +80,7 @@ void DetachableRiderBody::removeUpgrade()
 // 0x0027FFA0: slot 7 of AttributeModifierAuraUpdate's table 0x010BAD08 (ILT 0x00033703)
 class AttributeModifierAuraUpdate : public UpgradeMux
 {
-protected:
+public:
 	virtual void removeUpgrade();
 };
 
@@ -92,7 +92,7 @@ void AttributeModifierAuraUpdate::removeUpgrade()
 // 0x002899F0: slot 7 of BroadcastStealthUpdate's table 0x010BCAF0 (ILT 0x00020AC7)
 class BroadcastStealthUpdate : public UpgradeMux
 {
-protected:
+public:
 	virtual void removeUpgrade();
 };
 
@@ -104,7 +104,7 @@ void BroadcastStealthUpdate::removeUpgrade()
 // 0x002D3DD0: slot 7 of CastleUpgrade's table 0x010CC1B0 (ILT 0x0003AECC)
 class CastleUpgrade : public UpgradeMux
 {
-protected:
+public:
 	virtual void removeUpgrade();
 };
 
@@ -115,7 +115,7 @@ void CastleUpgrade::removeUpgrade()
 // 0x002D4CF0: slot 7 of DelayedUpgrade's table 0x010CC700 (ILT 0x00025BA3)
 class DelayedUpgrade : public UpgradeMux
 {
-protected:
+public:
 	virtual void removeUpgrade();
 };
 

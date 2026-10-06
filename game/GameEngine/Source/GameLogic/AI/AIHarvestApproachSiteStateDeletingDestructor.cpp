@@ -9,7 +9,7 @@
 
 class AIHarvestApproachSiteState
 {
-protected:
+public:
 	virtual ~AIHarvestApproachSiteState();
 
 private:

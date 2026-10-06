@@ -91,7 +91,7 @@ struct ArmorUpgradeModuleData
 
 class ArmorUpgrade
 {
-protected:
+public:
 	virtual void removeUpgrade();
 };
 

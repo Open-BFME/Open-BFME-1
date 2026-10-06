@@ -90,7 +90,9 @@ protected:
 	virtual ~AIPlayer();
 	void clearTeamsInQueue();
 
+public:
 	void removeAll_TeamBuildQueue( RemoveAllProc removeCallback );
+public:
 	void removeAll_TeamReadyQueue( RemoveAllProc removeCallback );
 
 private:
@@ -98,7 +100,7 @@ private:
 	TeamInQueue *m_readyQueueHead;				// +0x08
 };
 
-// ?removeAll_TeamBuildQueue@AIPlayer@@IAEXP6AXPAVTeamInQueue@@@Z@Z
+// ?removeAll_TeamBuildQueue@AIPlayer@@QAEXP6AXPAVTeamInQueue@@@Z@Z
 void AIPlayer::removeAll_TeamBuildQueue( RemoveAllProc removeCallback )
 {
 	while( m_buildQueueHead )
@@ -112,7 +114,7 @@ void AIPlayer::removeAll_TeamBuildQueue( RemoveAllProc removeCallback )
 	}
 }
 
-// ?removeAll_TeamReadyQueue@AIPlayer@@IAEXP6AXPAVTeamInQueue@@@Z@Z
+// ?removeAll_TeamReadyQueue@AIPlayer@@QAEXP6AXPAVTeamInQueue@@@Z@Z
 void AIPlayer::removeAll_TeamReadyQueue( RemoveAllProc removeCallback )
 {
 	while( m_readyQueueHead )

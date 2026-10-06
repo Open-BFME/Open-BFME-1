@@ -97,6 +97,7 @@ class AODHordeContain : public HorseHordeContainBase
 {
 public:
 	AODHordeContain(Thing *, const ModuleData *);
+protected:
 	virtual ~AODHordeContain();
 private:
 	_STL::vector<Gen_p24pod> m_vector;

@@ -27,7 +27,7 @@ private:
 
 class AISkirmishPlayer : public AIPlayer
 {
-public:
+protected:
 	virtual ~AISkirmishPlayer();
 
 private:

@@ -531,11 +531,14 @@ class ControlBar
 public:
 	void commandSetButtonWalk(const AsciiString &name);
 	void setControlCommand(GameWindow *window, const CommandButton *commandButton);
+protected:
 	void updateConstructionTextDisplay(Object *obj);
+protected:
 	void populateOCLTimer(Object *creatorObject);
 
-private:
+protected:
 	void updateContextOCLTimer(void);
+private:
 	CommandSet *findNonConstCommandSet(const AsciiString &name);
 	const CommandButton *findCommandButton(const AsciiString &name);
 	void setPortraitByObject(Object *obj);
@@ -667,7 +670,7 @@ void ControlBar::populateInvDataCallback(Object *obj, void *userData)
 // The static key sits at 0x012F3624 behind the initialised-once bit at
 // 0x012F3628.
 
-// ?updateContextOCLTimer@ControlBar@@AAEXXZ
+// ?updateContextOCLTimer@ControlBar@@IAEXXZ
 void ControlBar::updateContextOCLTimer( void )
 {
 	Object *obj = m_currentSelectedDrawable->getObject();
@@ -888,7 +891,7 @@ void ControlBar::commandSetButtonWalk( const AsciiString &name )
 // NameKeyGenerator::nameToKey takes a const char * here, not an AsciiString:
 // retail pushes the literal straight through and builds no temporary.
 
-// ?updateConstructionTextDisplay@ControlBar@@QAEXPAVObject@@@Z
+// ?updateConstructionTextDisplay@ControlBar@@IAEXPAVObject@@@Z
 void ControlBar::updateConstructionTextDisplay( Object *obj )
 {
 	UnicodeString text;
@@ -915,7 +918,7 @@ void ControlBar::updateConstructionTextDisplay( Object *obj )
 // findCommandButton temporary BEFORE calling nameToKey, so that statement
 // comes first here.
 
-// ?populateOCLTimer@ControlBar@@QAEXPAVObject@@@Z
+// ?populateOCLTimer@ControlBar@@IAEXPAVObject@@@Z
 void ControlBar::populateOCLTimer( Object *creatorObject )
 {
 

@@ -74,7 +74,7 @@ protected:
 
 class CastleMemberBehavior : public BehaviorModule
 {
-public:
+protected:
 	virtual ~CastleMemberBehavior();
 };
 

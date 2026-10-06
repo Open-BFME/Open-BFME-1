@@ -7,7 +7,7 @@
 
 class AIDockProcessDockState
 {
-protected:
+public:
 	virtual ~AIDockProcessDockState();
 private:
 	friend void forceAIDockProcessDockStateDeletingDestructor();

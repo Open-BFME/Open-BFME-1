@@ -32,7 +32,7 @@ class AIAttackAimAtTargetState : public State
 public:
 	AIAttackAimAtTargetState(StateMachine *machine, bool attackingObject, bool forceAttacking);
 
-protected:
+public:
 	virtual ~AIAttackAimAtTargetState();
 
 private:
@@ -61,7 +61,7 @@ class AIAttackFireWeaponState : public State
 public:
 	AIAttackFireWeaponState(StateMachine *machine, NotifyWeaponFiredInterface * notify);
 
-protected:
+public:
 	virtual ~AIAttackFireWeaponState();
 
 private:

@@ -100,7 +100,7 @@ protected:
 class CrateTemplate : public Overridable
 {
 public:
-	AsciiString getName(void) const;			// ILT 0x000259D7
+	AsciiString getName(void);			// ILT 0x000259D7
 };
 
 // The reference's OVERRIDE wrapper, for this one element type.

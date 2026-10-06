@@ -30,7 +30,7 @@ private:
 
 class AIAttackMeleeHordeApproachTargetState
 {
-protected:
+public:
 	virtual ~AIAttackMeleeHordeApproachTargetState();
 private:
 	friend void forceAIAttackMeleeHordeApproachTargetStateDeletingDestructor();
@@ -38,7 +38,7 @@ private:
 
 class AIAttackFireDuringApproachState
 {
-protected:
+public:
 	virtual ~AIAttackFireDuringApproachState();
 private:
 	friend void forceAIAttackFireDuringApproachStateDeletingDestructor();
@@ -46,7 +46,7 @@ private:
 
 class AIAttackMeleeSquishState
 {
-protected:
+public:
 	virtual ~AIAttackMeleeSquishState();
 private:
 	friend void forceAIAttackMeleeSquishStateDeletingDestructor();
@@ -54,7 +54,7 @@ private:
 
 class AIAttackMeleeEngageState
 {
-protected:
+public:
 	virtual ~AIAttackMeleeEngageState();
 private:
 	friend void forceAIAttackMeleeEngageStateDeletingDestructor();

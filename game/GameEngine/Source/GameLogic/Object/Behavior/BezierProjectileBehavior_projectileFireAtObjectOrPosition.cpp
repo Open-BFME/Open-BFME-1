@@ -268,7 +268,9 @@ class BezierProjectileBehavior : public UpdateModule
 {
 public:
 	void projectileFireAtObjectOrPosition(Object *victim, const Coord3D *victimPos);
+private:
 	Bool calcFlightPath(Bool recalcNumSegments);
+public:
 
 	void *m_vtable;
 	const BezierProjectileBehaviorModuleData *m_moduleData;

@@ -282,7 +282,9 @@ public:
 		CommandSourceType commandSource);
  UnsignedInt getID(void);
  Bool getMinMaxAndCenter(Coord2D *min, Coord2D *max, Coord3D *center);
+private:
 	void recompute(void);
+public:
 	Bool checkSpecial(const Coord3D *position, Int commandSource);
 
 private:

@@ -1,6 +1,6 @@
 // ?getUnpackCost@CastleBehavior@@QBEIPAVPlayer@@@Z
 // ?canPlayerAffordUnpack@CastleBehavior@@QBE_NPAVPlayer@@@Z
-// ?chargePlayerForUnpack@CastleBehavior@@QAEXXZ
+// ?chargePlayerForUnpack@CastleBehavior@@AAEXXZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /GX
 // stlport
 //
@@ -174,8 +174,9 @@ public:
 
 class CastleBehavior
 {
-public:
+private:
 	void chargePlayerForUnpack();
+public:
 	UnsignedInt getUnpackCost(Player *player) const;
 	Bool canPlayerAffordUnpack(Player *player) const;
 
@@ -187,7 +188,7 @@ private:
 	Real m_unpackedCost;				// +0xB4
 };
 
-// ?chargePlayerForUnpack@CastleBehavior@@QAEXXZ
+// ?chargePlayerForUnpack@CastleBehavior@@AAEXXZ
 void CastleBehavior::chargePlayerForUnpack()
 {
 	CastleBehaviorModuleData *data = m_moduleData;

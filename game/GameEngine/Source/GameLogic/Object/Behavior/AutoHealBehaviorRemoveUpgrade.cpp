@@ -26,7 +26,7 @@ public:
 	virtual void slot7();
 	virtual void slot8( int value );
 
-protected:
+public:
 	virtual void removeUpgrade();
 
 public:

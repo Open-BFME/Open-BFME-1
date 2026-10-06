@@ -7,7 +7,7 @@
 
 class AIFollowWaypointPathState
 {
-protected:
+public:
 	virtual ~AIFollowWaypointPathState();
 private:
 	friend void forceAIFollowWaypointPathStateDeletingDestructor();

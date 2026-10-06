@@ -96,7 +96,7 @@ class UpgradeModule : public ObjectModule,
 
 class CommandSetUpgrade : public UpgradeModule
 {
-protected:
+public:
 	virtual void removeUpgrade();
 };
 

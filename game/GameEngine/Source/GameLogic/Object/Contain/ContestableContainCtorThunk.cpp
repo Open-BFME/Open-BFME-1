@@ -54,6 +54,7 @@ class ContestableContain : public HordeGarrisonContain
 {
 public:
 	ContestableContain(Thing *, const ModuleData *);
+protected:
 	virtual ~ContestableContain();
 private:
 	unsigned char m_unreconstructed_99c[0x20];

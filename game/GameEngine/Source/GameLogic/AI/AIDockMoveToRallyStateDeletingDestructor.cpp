@@ -7,7 +7,7 @@
 
 class AIDockMoveToRallyState
 {
-protected:
+public:
 	virtual ~AIDockMoveToRallyState();
 private:
 	friend void forceAIDockMoveToRallyStateDeletingDestructor();

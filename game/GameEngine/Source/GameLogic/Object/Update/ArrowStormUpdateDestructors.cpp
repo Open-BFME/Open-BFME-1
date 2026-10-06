@@ -50,14 +50,14 @@ private:
 
 class ArrowStormUpdate : public SpecialAbilityUpdate
 {
-public:
+protected:
     virtual ~ArrowStormUpdate();
 
 private:
     _STL::list<int> m_specialObjectIDList;
 };
 
-// ??1ArrowStormUpdate@@UAE@XZ
+// ??1ArrowStormUpdate@@MAE@XZ
 ArrowStormUpdate::~ArrowStormUpdate()
 {
 }

@@ -41,11 +41,11 @@ public:
 
 class AnimationSoundClientBehavior : public ASCB_MiddleBase, public ASCB_Iface
 {
-public:
+protected:
     virtual ~AnimationSoundClientBehavior();
 };
 
-// ??1AnimationSoundClientBehavior@@UAE@XZ
+// ??1AnimationSoundClientBehavior@@MAE@XZ
 AnimationSoundClientBehavior::~AnimationSoundClientBehavior()
 {
     if (TheAnimationSoundModuleManager) {
