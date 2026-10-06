@@ -139,6 +139,8 @@ ledger_changed=0
 pins_changed=0
 wide_change=0
 baseline_changed=0
+body_baseline_changed=0
+dir32_record_changed=0
 attempts_changed=0
 while IFS= read -r path; do
     [ -z "${target_only_sources[$path]:-}" ] || continue
@@ -151,6 +153,9 @@ while IFS= read -r path; do
         # staged_sources, whose other consumers parse C++.
         game/*.c) staged_c_sources+=("$path") ;;
         targets/game/reverse/pin_consistency_baseline.csv) baseline_changed=1 ;;
+        targets/game/reverse/body_guard_baseline.csv) body_baseline_changed=1 ;;
+        # verify_dir32_addresses trusts this record, so a hand edit is a free pass.
+        targets/game/reverse/dir32_addresses.csv) dir32_record_changed=1 ;;
         # symbols.csv gets its own flag as well as ledger_changed: a PIN
         # DELETION is byte-verified by a different query than a ledger row is,
         # and only this file can trigger it.
@@ -312,6 +317,14 @@ fi
 # The baseline is a debt register that may only shrink. --write-baseline refuses
 # to grow it, but a hand-typed line is the same anti-pattern, so the committed
 # file is checked against HEAD as well.
+if [ "$body_baseline_changed" -ne 0 ]; then
+    python3 tools/body_guard.py --assert-shrink-only HEAD \
+        || fail "body_guard_baseline.csv grew (see above)"
+fi
+if [ "$dir32_record_changed" -ne 0 ]; then
+    python3 tools/dir32_record_guard.py --staged HEAD \
+        || fail "dir32_addresses.csv changed by hand (see above)"
+fi
 if [ "$baseline_changed" -ne 0 ]; then
     python3 tools/pin_consistency.py --assert-shrink-only HEAD \
         || fail "pin_consistency_baseline.csv grew (see above)"

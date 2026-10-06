@@ -100,7 +100,70 @@ EMIT_RE = re.compile(
 ASM_BLOCK_RE = re.compile(r"^\s*__asm\b")
 # Prefilter for sources worth scanning: naked bodies or emitted bytes. Plain
 # "_emit" also hits "__emit"; a false hit only costs reading one extra file.
-ASM_MARKER_GREP = r"__declspec[[:space:]]*\([[:space:]]*naked|_emit"
+ASM_MARKER_GREP = r"__declspec[[:space:]]*\([[:space:]]*naked|_emit|__asm"
+_ASM_STRIP_RE = re.compile(r'"(?:\\.|[^"\\\n])*"|\'(?:\\.|[^\'\\\n])*\'|/\*[\s\S]*?\*/|//[^\n]*')
+_ASM_BLOCK_RE = re.compile(r"\b_?_asm\s*\{([^{}]*)\}|\b_?_asm\b[^\n{]*")
+_CONTAINER_RE = re.compile(r"\b(?:namespace|class|struct|union|enum)\b[^()]*$|\bextern\s*$")
+# A body below this many instructions is the period idiom (cpuid, fnstcw), not a lift.
+ASM_ONLY_MIN_INSTRUCTIONS = 3
+
+
+def _top_level_blocks(text, base=0):
+    """(header, body, offset) for each brace block at depth 0 of `text`,
+    descending into namespace/class/extern blocks instead of returning them."""
+    depth, start, header_from = 0, None, 0
+    for index, char in enumerate(text):
+        if char == "{":
+            if depth == 0:
+                start = index
+            depth += 1
+        elif char == "}" and depth:
+            depth -= 1
+            if depth == 0:
+                segment = text[header_from:start]
+                cut = max(segment.rfind(";"), segment.rfind("}")) + 1
+                header = segment[cut:].strip()
+                header_at = base + header_from + cut + len(segment[cut:]) - len(segment[cut:].lstrip())
+                body = text[start + 1:index]
+                if _CONTAINER_RE.search(header) or header.endswith('extern "C"'):
+                    yield from _top_level_blocks(body, base + start + 1)
+                else:
+                    yield header, body, header_at
+                header_from = index + 1
+        elif char == ";" and depth == 0:
+            header_from = index + 1
+
+
+def asm_only_bodies(text):
+    """Functions whose whole body is mnemonic __asm: a lift without __emit.
+
+    progress counted these as C++ because the spray test keys on emitted bytes.
+    A function that holds nothing but `__asm { mov ...; call ... }` is a hand
+    disassembly the compiler merely assembles; mnemonic asm INSIDE real C++
+    (the cpuid idiom) is untouched."""
+    stripped = _ASM_STRIP_RE.sub(lambda m: re.sub(r"[^\n]", " ", m.group(0)), text)
+    lines = text.splitlines()
+    out = []
+    for header, body, offset in _top_level_blocks(stripped):
+        if "(" not in header or "__asm" not in body and "_asm" not in body:
+            continue
+        instructions = sum(
+            len([l for l in (m.group(1) or m.group(0)[5:]).replace(";", "\n").splitlines()
+                 if l.strip() and not l.strip().endswith(":")])
+            for m in _ASM_BLOCK_RE.finditer(body))
+        rest = _ASM_BLOCK_RE.sub(" ", body)
+        rest = re.sub(r"\breturn\s*;|[\s;]", "", rest)
+        if rest or instructions < ASM_ONLY_MIN_INSTRUCTIONS:
+            continue
+        header_line = stripped.count("\n", 0, offset)
+        out.append({
+            "symbol": symbol_comment(lines, header_line),
+            "signature": " ".join(header.split()),
+            "emitted": b"",
+            "naked": False,
+            "asm_only": True,
+        })
+    return out
 
 
 @lru_cache(maxsize=None)
@@ -230,6 +293,8 @@ def scan_naked_bodies(text):
             "emitted": bytes(emitted),
             "naked": naked,
         })
+    if "_asm" in text:
+        bodies.extend(asm_only_bodies(text))
     return tuple(bodies)
 
 
@@ -253,7 +318,7 @@ def naked_cpp_rows(matched, source_texts, target_reader=build.read_target_bytes)
         # real mnemonics at relocated call sites, so full byte equality cannot
         # prove them either; the discriminator is emitted mass. The period
         # _emit idiom (cpuid) is a few bytes of a body, a lift is most of it.
-        naked_bodies = [body for body in bodies if body["naked"]]
+        naked_bodies = [body for body in bodies if body["naked"] or body.get("asm_only")]
         symbols = {body["symbol"] for body in naked_bodies if body["symbol"]}
         emitted = {body["emitted"] for body in bodies if body["emitted"]}
         signatures = [body["signature"] for body in naked_bodies]
@@ -333,7 +398,7 @@ def naked_source_texts(matched, ref):
         texts = _batch_git_texts("HEAD", sorted(paths - disk_paths))
         for source in sources - tracked:
             text = (ROOT / source).read_bytes().decode("utf-8", errors="replace")
-            if NAKED_RE.search(text) or EMIT_RE.search(text):
+            if NAKED_RE.search(text) or EMIT_RE.search(text) or "_asm" in text:
                 disk_paths.add(source)
         for source in disk_paths:
             texts[source] = (ROOT / source).read_bytes().decode("utf-8", errors="replace")

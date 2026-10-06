@@ -199,7 +199,8 @@ def test_live_naked_and_clean_rows_are_distinguished():
     for key in naked:
         source = matched[key][1]
         assert source in texts and (
-            progress.NAKED_RE.search(texts[source])
+            any(body.get("asm_only") for body in progress.scan_naked_bodies(texts[source]))
+            or progress.NAKED_RE.search(texts[source])
             or progress.EMIT_RE.search(texts[source])), (
             f"{key} classified asm but {source} carries no naked or emit marker")
     clean = {key for key, (_, src) in matched.items()

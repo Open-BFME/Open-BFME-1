@@ -379,12 +379,13 @@ def read_object_symbols(data):
         aux_count = data[offset + 17]
         storage_class = data[offset + 16]
         symbols.append({"name": name, "value": value, "section": section_number,
-                        "aux": aux_count, "storage": storage_class})
+                        "aux": aux_count, "storage": storage_class,
+                        "type": u16(data, offset + 14)})
         for _ in range(aux_count):
             index += 1
             offset = symbol_table + index * 18
             symbols.append({"name": "", "value": 0, "section": 0, "aux": 0,
-                            "storage": 0})
+                            "storage": 0, "type": 0})
         index += 1
     return symbols
 
@@ -418,7 +419,8 @@ def _object_layout(path_str, mtime_ns, size):
     return data, sections, read_object_symbols(data)
 
 
-def read_object_symbol_bytes(path, symbol_name, expected_size=None, *, require_code=False):
+def read_object_symbol_bytes(path, symbol_name, expected_size=None, *, require_code=False,
+                             detail=False):
     stat = path.stat()
     data, sections, symbols = _object_layout(str(path), stat.st_mtime_ns, stat.st_size)
     resolved_name = symbol_name
@@ -464,6 +466,7 @@ def read_object_symbol_bytes(path, symbol_name, expected_size=None, *, require_c
             bytes_data = data[start:end]
 
             relocs = []
+            reloc_symbols = []
             for r in range(section["reloc_count"]):
                 ro = section["reloc_pointer"] + r * 10
                 rva = u32(data, ro)
@@ -471,7 +474,15 @@ def read_object_symbol_bytes(path, symbol_name, expected_size=None, *, require_c
                 rtype = u16(data, ro + 8)
                 if value <= rva < value + len(bytes_data):
                     relocs.append((rva - value, rtype, symbols[sym_idx]["name"]))
+                    reloc_symbols.append(symbols[sym_idx])
 
+            if detail:
+                # body_guard needs what the name list drops: the section the
+                # body lives in, where it starts, and WHICH symbol each
+                # relocation binds -- `.rdata` and `$L` names are not unique.
+                return bytes_data, relocs, {
+                    "section": symbol["section"], "value": value, "symbols": symbols,
+                    "sections": sections, "data": data, "reloc_symbols": reloc_symbols}
             return bytes_data, relocs
 
         index += 1
@@ -765,15 +776,26 @@ def source_extra_flags(source):
         except ValueError:
             return _ZH_FLAGS
         return _GENERALS_FLAGS
+    #
+    # The whole file is read. This used to read the first 2048 characters, so a
+    # directive below a long header comment was silently ignored and the file
+    # compiled with the base flags. Two directives that disagree are refused
+    # rather than resolved by position: which one "wins" is exactly the guess
+    # that hid the first bug.
     with source.open("r", encoding="utf-8-sig", errors="replace") as handle:
-        for line in handle.read(2048).splitlines():
-            if line.startswith("// cl:"):
-                # Use '-' style options so MSYS/Cygwin shells don't rewrite
-                # leading '/' arguments as Windows paths.
-                flags = [f.replace("/", "-", 1) if f.startswith("/") else f
-                         for f in line[len("// cl:") :].split()]
-                return [_resolve_toolchain_include_flag(flag) for flag in flags]
-    return []
+        directives = {tuple(line[len("// cl:"):].split())
+                      for line in handle.read().splitlines() if line.startswith("// cl:")}
+    if not directives:
+        return []
+    if len(directives) > 1:
+        raise SystemExit(
+            f"{source}: conflicting `// cl:` directives: "
+            + " | ".join(" ".join(d) for d in sorted(directives)) + ". Keep exactly one.")
+    # Use '-' style options so MSYS/Cygwin shells don't rewrite
+    # leading '/' arguments as Windows paths.
+    flags = [f.replace("/", "-", 1) if f.startswith("/") else f
+             for f in next(iter(directives))]
+    return [_resolve_toolchain_include_flag(flag) for flag in flags]
 
 
 def compiler_command(source, output):
@@ -2308,7 +2330,10 @@ def compile_function(row, symbol_map, output, *, retain_compiled=False):
     # for a row strict cannot prove. An ordinary conversion never takes the
     # fallback, and keeps full strictness.
     lib_member = (ROOT / row["source"]).suffix.lower() == LIB_SUFFIX
-    gen_alias = "gen-alias" in (row.get("notes") or "")
+    # The marker is a whole token. A substring test let any note that merely
+    # mentions gen-alias ("replaces borrowed gen-alias pattern") switch on the
+    # masked fallback, and with it every call site in the row.
+    gen_alias = gen_alias_marked(row.get("notes") or "")
 
     def resolve(masked):
         resolved = bytearray(compiled[:target_size])
@@ -2375,7 +2400,18 @@ def compile_function(row, symbol_map, output, *, retain_compiled=False):
         masked = lib_member
     if gen_alias and not lib_member and bytes(resolved) != target:
         alt_resolved, alt_unresolved, alt_covered, alt_sites = resolve(True)
-        if bytes(alt_resolved) == target:
+        # Masking admits ANY call target. Admit it only where the call strict
+        # resolution could not place lands on a body that is the named callee's
+        # twin in retail itself: same bytes, same resolved call targets
+        # (body_guard.callee_twin). Otherwise a gen-alias note is a licence to
+        # call anything.
+        # Rows that relied on the old unconditional mask when this check landed
+        # are keyed in body_guard_baseline.csv as `genalias`; fix and delete.
+        import body_guard
+        if bytes(alt_resolved) == target and (gen_alias_twins_only(
+                row, relocs, resolved, target, symbol_map)
+                or ("genalias", "0x%08X" % target_rva, row["name"])
+                in body_guard.read_baseline()):
             resolved, unresolved, covered = alt_resolved, alt_unresolved, alt_covered
             sites = alt_sites
             masked = True
@@ -2908,6 +2944,26 @@ def compile_rows(rows, sources, *, input_proof=None):
     return source_outputs
 
 
+def gen_alias_marked(notes):
+    return "gen-alias" in [part.strip() for part in re.split(r"[;,]", notes)]
+
+
+def gen_alias_twins_only(row, relocs, strict, target, symbol_map):
+    """True when every REL32 site strict resolution got wrong calls a retail
+    twin of the callee the object names (or the same body via another thunk)."""
+    import body_guard
+    target_rva = int(row["target_rva"], 16)
+    for offset, rtype, sym_name in relocs:
+        if rtype != 0x0014 or offset + 4 > len(target):
+            continue
+        if strict[offset:offset + 4] == target[offset:offset + 4]:
+            continue
+        dest = target_rva + offset + 4 + struct.unpack_from("<i", target, offset)[0]
+        if not body_guard.callee_twin(dest, symbol_map.get(sym_name, ())):
+            return False
+    return True
+
+
 def verified_patch_eligible(patch, target):
     """One verdict policy for fresh build patches and publication receipts.
 
@@ -3369,6 +3425,64 @@ def read_dir32_addresses(path=None):
         return {row["name"]: int(row["va"], 16) for row in csv.DictReader(handle)}
 
 
+ENCODED_ADDRESS_RE = re.compile(r"(?i)(?:rva|va|obj|data?|addr)_?([0-9a-f]{6,8})(?![0-9a-f])")
+
+
+def dir32_identities(recorded):
+    """What the ledger already says lives at an address: {va: names} from the
+    record, data_rows.csv's matched rows, and the function ledger."""
+    import data_rows
+    at = {}
+    for name, va in recorded.items():
+        at.setdefault(va, set()).add(name)
+    data = {}
+    for row in data_rows.load():
+        try:
+            va = int(row["address"], 16)
+        except (KeyError, ValueError):
+            continue
+        if row.get("address_kind") == "rva":
+            va += 0x400000
+        data[row["name"]] = va
+    return at, data
+
+
+def unowned_dir32_baseline():
+    """Unrecorded names already in the tree when the rule landed: keyed
+    ("dir32", base, name) lines in body_guard_baseline.csv, shrink-only."""
+    import body_guard
+    return {(base, name) for check, base, name in body_guard.read_baseline() if check == "dir32"}
+
+
+def unrecorded_dir32_problem(sym, base, identities, symbol_map=None):
+    """None when an address-resolved identity backs a DIR32 to a name the record
+    does not hold yet, else why not. A fresh decorated name is otherwise a free
+    pass: retail's dword is copied before comparison, so `extern T *g_anyName`
+    reading the wrong global byte-matches, and the next full gate would even
+    record it."""
+    at, data = identities
+    others = sorted(at.get(base, set()) - {sym})
+    if others:
+        return (f"retail 0x{base:08X} is already recorded as {others[0]}"
+                + (f" (+{len(others) - 1} more)" if len(others) > 1 else "")
+                + "; reference that name, not a new one")
+    encoded = ENCODED_ADDRESS_RE.search(sym)
+    if encoded:
+        value = int(encoded.group(1), 16)
+        if value in (base, base - 0x400000):
+            return None
+        return f"the name encodes 0x{value:08X} but retail reads 0x{base:08X}"
+    if data.get(sym) == base:
+        return None
+    if symbol_map is not None and sym in symbol_map:
+        import body_guard
+        if body_guard.callee_twin(base - 0x400000, symbol_map[sym]):
+            return None
+        return f"{sym} is a function the ledger places elsewhere, not at 0x{base:08X}"
+    return (f"nothing in the ledger owns 0x{base:08X}. Give the datum a data row first "
+            "(tools/add_data_match.py), or use an address name (g_Va<VA>)")
+
+
 def propose_dir32_addresses(sym2base, whitelist):
     """Offer the one address every matched reference gives each DIR32 symbol as the next
     dir32_addresses.csv. The full gate runs inside other agents' commit hooks, where a
@@ -3399,6 +3513,7 @@ def verify_dir32_addresses(rows):
     recorded = read_dir32_addresses()
     whitelist = read_dir32_whitelist()
     first, wrong, checked = {}, [], 0
+    unowned, identities, symbol_map = [], None, None
     for row, offset, sym, base in dir32_references(rows):
         # A base outside the image is a literal where we emit a relocation:
         # null_reloc.py's finding, with its own baseline, not an address.
@@ -3408,6 +3523,19 @@ def verify_dir32_addresses(rows):
         expected = recorded[sym] if sym in recorded else first.setdefault(sym, base)
         if base != expected:
             wrong.append((row, offset, sym, base, expected, sym in recorded))
+        elif sym not in recorded and not sym.startswith(("__imp_", "__real@")):
+            if identities is None:
+                identities, symbol_map = dir32_identities(recorded), load_symbol_map()
+                known = unowned_dir32_baseline()
+            problem = unrecorded_dir32_problem(sym, base, identities, symbol_map)
+            if problem and ("0x%08X" % base, sym) not in known:
+                unowned.append((row, offset, sym, problem))
+    if unowned:
+        print(f"DIR32 addresses: FAIL {len(unowned)} reference(s) to a name "
+              f"{DIR32_ADDRESSES.name} does not record and no ledger identity backs")
+        for row, offset, sym, problem in unowned[:12]:
+            print(f"    {row['name']} +0x{offset:x}: {sym}: {problem}")
+        raise SystemExit(1)
     if wrong:
         print(f"DIR32 addresses: FAIL {len(wrong)} reference(s) give a symbol a different "
               "address than the rest of the tree does")
@@ -3471,6 +3599,29 @@ def verify_dir32_consistency(rows, *, propose=True):
             print(f"    {s}: bases {[hex(b) for b in sorted(sym2base[s])]}"
                   + (f" (0x{recorded[s]:08X} is the one {DIR32_ADDRESSES.name} records)" if s in recorded else ""))
         print(f"    ... all {len(new)} with their bases: {report.relative_to(ROOT)}")
+        raise SystemExit(1)
+    # A name nothing records yet, read at one address, is what the delta path
+    # refuses unless the ledger already owns that address (see
+    # unrecorded_dir32_problem). The full gate judges the same rule so a header
+    # commit, which skips the delta path, cannot land one either.
+    identities, symbol_map, unowned = dir32_identities(recorded), load_symbol_map(), []
+    known = unowned_dir32_baseline()
+    for sym in sorted(sym2base.keys() - recorded.keys() - whitelist):
+        bases = sym2base[sym]
+        if (len(bases) != 1 or sym.startswith(("__imp_", "__real@"))
+                or not in_retail_image(base := next(iter(bases)))):
+            continue
+        problem = unrecorded_dir32_problem(sym, base, identities, symbol_map)
+        if problem and ("0x%08X" % base, sym) not in known:
+            unowned.append(f"{sym}: {problem}")
+    if unowned:
+        report = ROOT / "build" / "dir32_unowned.txt"
+        report.parent.mkdir(parents=True, exist_ok=True)
+        report.write_text("".join(line + "\n" for line in unowned))
+        print(f"DIR32 consistency: FAIL {len(unowned)} unrecorded name(s) no ledger identity backs")
+        for line in unowned[:12]:
+            print("    " + line)
+        print(f"    ... all {len(unowned)}: {report.relative_to(ROOT)}")
         raise SystemExit(1)
     print(f"DIR32 consistency: OK ({len(sym2base)} symbols; {len(inconsistent)} whitelisted, 0 new)")
     if propose:
@@ -3610,6 +3761,8 @@ def main(only=None):
         verify_string_refs(function_rows)
         verify_constant_refs(function_rows)
         verify_dir32_addresses(function_rows)
+        import body_guard
+        body_guard.verify(function_rows)
         return
     print("Full verification")
     # Identity, not bytes: verify_functions proves each row's bytes, and a
@@ -3659,6 +3812,8 @@ def main(only=None):
     run("string-refs", lambda: verify_string_refs(rows))
     run("constant-refs", lambda: verify_constant_refs(rows))
     run("dir32 consistency", lambda: verify_dir32_consistency(rows))
+    import body_guard
+    run("body guard", lambda: body_guard.verify(rows, full=True))
     run("pin consistency", pin_consistency.verify)
     run("source claims", verify_source_claims)
     import data_rows

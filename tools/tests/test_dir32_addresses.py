@@ -14,6 +14,10 @@ def _check(monkeypatch, refs, recorded, whitelist=()):
     monkeypatch.setattr(build, "read_dir32_addresses", lambda: dict(recorded))
     monkeypatch.setattr(build, "read_dir32_whitelist", lambda: set(whitelist))
     monkeypatch.setattr(build, "retail_va_span", lambda: (0x400000, 0x1416000))
+    # an unrecorded name must also be owned by the ledger (test_gate_exploits.py);
+    # these tests are about agreement, so the data ledger owns the one they use
+    monkeypatch.setattr(build, "dir32_identities", lambda recorded: ({}, {"?g_new@@3HA": 0x01300000}))
+    monkeypatch.setattr(build, "load_symbol_map", lambda: {})
     build.verify_dir32_addresses([ROW])
 
 

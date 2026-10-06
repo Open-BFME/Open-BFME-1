@@ -81,7 +81,7 @@ CHECKS = [
     # Retail has no identical-COMDAT folding, so a second real name on a body is
     # an over-claim however well the bytes match. Counts names, not addresses.
     ("one_identity.surplus",
-     "one_identity.py",
+     "one_identity.py --list",
      re.compile(r"^surplus names beyond one per body: (\d+)$", re.M),
      None,
      IMAGE,
@@ -96,6 +96,59 @@ CHECKS = [
      None),
 ]
 SOURCE = {c[0]: c[4] for c in CHECKS}
+
+# Counts alone let a fix pay for a new defect: retire one wrong name, add
+# another, and the number stands still. Each defect class therefore also has
+# its findings KEYED (address and name), recorded in the baseline as
+# `@ <label> <key>` lines, and any key the baseline does not hold fails even
+# when the count did not rise. Keys only ever leave the baseline.
+_ADDR_ROW = re.compile(r"^(0x[0-9A-Fa-f]{8})\s+\d+B\s+(\S+)\s*$")
+
+
+def _detail_keys(output, detail):
+    keys, address = set(), None
+    for line in output.splitlines():
+        if line[:2] == "0x":
+            address = line.split()[0] if detail in line else None
+            continue
+        stripped = line.strip()
+        if address and stripped.startswith("?"):
+            keys.add(f"{address} {stripped}")
+        elif address and stripped:
+            address = None
+    return keys
+
+
+def _ctor_keys(output):
+    keys, lines = set(), output.splitlines()
+    for index, line in enumerate(lines[:-1]):
+        match = _ADDR_ROW.match(line)
+        if match and "belongs to" in lines[index + 1]:
+            keys.add(f"{match.group(1)} {match.group(2)}")
+    return keys
+
+
+def _outlier_keys(output):
+    return {" ".join(line.split()[5:7]) for line in output.splitlines()
+            if "B vs family median" in line and "callers exist, none same-method" in line}
+
+
+def _surplus_keys(output):
+    keys = set()
+    for line in output.splitlines():
+        fields = line.split("\t")
+        if len(fields) > 2 and fields[0].startswith("0x"):
+            keys.update(f"{fields[0]} {name}" for name in fields[2:])
+    return keys
+
+
+KEYS = {
+    "multi_name.family": lambda out: _detail_keys(out, DETAIL["multi_name.family"]),
+    "multi_name.different": lambda out: _detail_keys(out, DETAIL["multi_name.different"]),
+    "size_outlier.indicted": _outlier_keys,
+    "ctor_vtable.contradicted": _ctor_keys,
+    "one_identity.surplus": _surplus_keys,
+}
 DETAIL = {c[0]: c[5] for c in CHECKS}
 TOOL = {c[0]: c[1] for c in CHECKS}
 
@@ -107,7 +160,7 @@ def read_baseline():
     out = {}
     for line in BASELINE.read_text(encoding="utf-8").splitlines():
         line = line.strip()
-        if not line or line.startswith("#"):
+        if not line or line.startswith("#") or line.startswith("@ "):
             continue
         key, _, value = line.partition("=")
         out[key.strip()] = int(value)
@@ -118,7 +171,8 @@ def measure():
     cache, found = {}, {}
     for label, tool, pattern, anchor, _source, _detail in CHECKS:
         if tool not in cache:
-            done = subprocess.run([sys.executable, str(ROOT / "tools" / tool)],
+            script, *args = tool.split()
+            done = subprocess.run([sys.executable, str(ROOT / "tools" / script), *args],
                                   capture_output=True, text=True, cwd=ROOT)
             if done.returncode != 0:
                 sys.exit(f"identity_guard: {tool} failed:\n{done.stderr.strip()}")
@@ -193,8 +247,61 @@ def object_verdict(worse, outputs):
                      + reasons[0]] + reasons[1:]
 
 
+def read_baseline_keys():
+    keys = set()
+    for line in BASELINE.read_text(encoding="utf-8").splitlines():
+        if line.startswith("@ "):
+            label, _, key = line[2:].strip().partition(" ")
+            keys.add((label, key))
+    return keys
+
+
+def found_keys(outputs):
+    return {(label, key) for label, extract in KEYS.items() if TOOL[label] in outputs
+            for key in extract(outputs[TOOL[label]])}
+
+
+def write_baseline_keys(found):
+    """Seed or retire keyed lines. Refuses to add a key to a baseline that
+    already has keys: growth is the move this file exists to forbid."""
+    text = BASELINE.read_text(encoding="utf-8")
+    old = read_baseline_keys()
+    if old and found - old:
+        sys.exit(f"identity_guard: refusing to add {len(found - old)} key(s) to a keyed baseline")
+    kept = [line for line in text.splitlines() if not line.startswith("@ ")]
+    body = "\n".join(kept).rstrip("\n") + "\n" + "".join(
+        f"@ {label} {key}\n" for label, key in sorted(found & old if old else found))
+    BASELINE.write_text(body, encoding="utf-8", newline="\n")
+
+
+def keyed_verdict(found, measured=None):
+    """(new, retired) keys against the baseline's keyed lines."""
+    baseline = read_baseline_keys()
+    measured = {label for label, _ in found} | set(measured or ())
+    return sorted(found - baseline), sorted(k for k in baseline - found if k[0] in measured)
+
+
 def main():
+    if sys.argv[1:] == ["--write-keys"]:
+        _found, outputs = measure()
+        write_baseline_keys(found_keys(outputs))
+        print(f"identity_guard: keyed baseline written ({len(read_baseline_keys())} keys)")
+        return 0
     baseline, (found, outputs) = read_baseline(), measure()
+    new_keys, retired_keys = keyed_verdict(
+        found_keys(outputs), {label for label in KEYS if TOOL[label] in outputs})
+    if new_keys:
+        print("identity_guard: FAIL — a finding the keyed baseline does not hold "
+              "(a fix elsewhere does not pay for it)", file=sys.stderr)
+        for label, key in new_keys[:20]:
+            print(f"    {label}: {key}", file=sys.stderr)
+        raise SystemExit(1)
+    if retired_keys:
+        print("identity_guard: FIXED — remove these keyed lines from the baseline in this "
+              "same commit", file=sys.stderr)
+        for label, key in retired_keys[:20]:
+            print(f"    @ {label} {key}", file=sys.stderr)
+        raise SystemExit(1)
     worse = {k: (found[k], baseline[k]) for k in found
              if k in baseline and found[k] > baseline[k]}
     missing = [k for k in found if k not in baseline]

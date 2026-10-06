@@ -94,6 +94,32 @@ def added_lift_lines(old, new, lines=None):
     return [(p, "%s  (%d such lines)" % (first, count)) for p, (first, count) in bad.items()]
 
 
+def added_asm_only_bodies(old, new, lines=None):
+    """Rule A2: a function whose whole body is mnemonic __asm is a lift too.
+
+    It needs no __emit, so Rule A cannot see it, and progress.py scored it as
+    C++ until it learned asm_only_bodies. Compare per file, by signature, so an
+    edit elsewhere in a file that already holds one is not charged for it."""
+    from progress import asm_only_bodies
+    if lines is None:
+        lines = collect_diff_lines(old, new)
+    # Reuse the one game/ diff Rules A and C read: only files with added lines.
+    paths = sorted({line[6:] for line in lines if line.startswith("+++ b/")
+                    and line[6:].startswith("game/") and line[6:].endswith(tuple(CPP_SUFFIXES))
+                    and not line[6:].startswith("game/gen_small/")})
+    bad = []
+    for path in paths:
+        def body_signatures(rev):
+            proc = subprocess.run(["git", "show", f"{rev}:{path}"], capture_output=True)
+            if proc.returncode != 0:
+                return set()
+            text = proc.stdout.decode("utf-8", errors="replace")
+            return {b["signature"] for b in asm_only_bodies(text)} if "_asm" in text else set()
+        added = body_signatures("" if new == ":" else new) - body_signatures(old)
+        bad += [(path, signature) for signature in sorted(added)]
+    return bad
+
+
 GEN_ASM = "game/gen_asm/"
 # The generator's whole vocabulary. Anything else in a dump file is a hand edit.
 GEN_ASM_LINE_RE = re.compile(
@@ -335,6 +361,12 @@ def main():
         print("A lift is not a conversion: it deletes the C++ this project exists to\n"
               "produce and moves progress.py C++ exact by +0. Convert to real C++, or\n"
               "leave the .asm dump alone (codegen blockers: game/masm_dumps/*.asm).",
+              file=sys.stderr)
+    for path, signature in added_asm_only_bodies(old, new, collected):
+        failed = True
+        print("conversion gate: %s adds a function whose whole body is __asm:\n"
+              "    %s\nMnemonic inline asm is a lift like __emit; convert it to C++, or put a "
+              "proven codegen blocker in game/masm_dumps/*.asm." % (path, signature),
               file=sys.stderr)
     for offence in gen_asm_offences(old, new, collected):
         failed = True

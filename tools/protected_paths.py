@@ -59,7 +59,8 @@ PROTECTED = (
     "tools/b_pin_check.py", "tools/name_regression.py", "tools/name_history.py",
     "tools/name_oracle.py", "tools/ea_name_guard.py", "tools/target_hooks.py",
     "tools/eol_guard.py", "tools/retired_guard.py", "tools/doc_budget.py",
-    "tools/protected_paths.py",
+    "tools/protected_paths.py", "tools/body_guard.py", "tools/dir32_record_guard.py",
+    "tools/progress.py",
     # the hooks and CI that run all of the above
     ".githooks/*", ".github/workflows/*",
     # debt registers and exemption lists
@@ -109,6 +110,25 @@ def _grown_counts(old, new):
             for k in after if after[k] > before.get(k, 0)}
 
 
+def _grown_counts_or_keys(old, new):
+    """identity_baseline.txt: its counts may not rise, and its keyed
+    `@ <label> <address> <name>` lines may not be added."""
+    grown = _grown_counts(old, new)
+    grown.update({line: line for line in lines_set(new) - lines_set(old) if line.startswith("@ ")})
+    return grown
+
+
+def _moved_addresses(old, new):
+    """dir32_addresses.csv: a recorded name's address never changes in a commit.
+    Additions are judged by tools/dir32_record_guard.py in both hooks."""
+    import csv
+    import io
+    before = {r["name"]: r["va"].upper() for r in csv.DictReader(io.StringIO(old))}
+    after = {r["name"]: r["va"].upper() for r in csv.DictReader(io.StringIO(new))}
+    return {n: f"{n}: {before[n]} -> {after[n]}" for n in before.keys() & after.keys()
+            if before[n] != after[n]}
+
+
 def _grown_findings(old, new):
     return {f: f for f in findings(new) - findings(old)}
 
@@ -117,7 +137,9 @@ def _grown_findings(old, new):
 SHRINK_ONLY = {
     "targets/game/reverse/full_gate_baseline.txt": (_grown_lines, None),
     "targets/game/reverse/dir32_known_red.txt": (_grown_lines, None),
-    "targets/game/reverse/identity_baseline.txt": (_grown_counts, None),
+    "targets/game/reverse/identity_baseline.txt": (_grown_counts_or_keys, None),
+    "targets/game/reverse/body_guard_baseline.csv": (_grown_lines, None),
+    "targets/game/reverse/dir32_addresses.csv": (_moved_addresses, None),
     "targets/game/reverse/alias_target_baseline.txt": (_grown_lines, None),
     "targets/game/reverse/name_oracle_baseline.csv": (_grown_findings, "tools/name_oracle.py"),
 }
