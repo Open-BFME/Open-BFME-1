@@ -89,22 +89,52 @@ public:
 	int m_bfme24;
 };
 
+class Player;
+class Parameter;
+
+// EA's ObjectShroudStatus: 1 and 2 are the two visible states.
+enum ObjectShroudStatus
+{
+	OBJECTSHROUD_INVALID,
+	OBJECTSHROUD_CLEAR,
+	OBJECTSHROUD_PARTIAL_CLEAR
+};
+
+class Object
+{
+public:
+	ObjectShroudStatus getShroudedStatus(int playerIndex) const;	// retail ILT 0x0002B81E -> 0x001C7B30
+};
+
+// The object the script engine's slot 26 returns, viewed for its fields.
 class BfmeE1092
 {
 public:
-	char bfmeSkip1092(BfmeR1092 *r);
-	int bfmeKind1092(int a);
 	char m_bfmePad[0x1a4];
 	int m_bfme1a4;
 	char m_bfmePad1[0x54];
 	BfmeF1092 *m_bfme1fc;
 };
 
-class BfmeD1092
+// Matched at 0x001CAEE0 under this address-derived owner; the caller passes
+// the Player from getEachPlayerFromMask as its argument.
+class BFMEObjectStealthQuery
 {
 public:
-	BfmeR1092 *bfmeGet1092(int h);
-	BfmeR1092 *bfmeLook1092(short *h);
+	bool isStealthedAndUndetected(const Object *viewer) const;		// retail ILT 0x00003B1B -> 0x001CAEE0
+};
+
+class PlayerList
+{
+public:
+	Player *getPlayerFromMask(unsigned short mask);				// retail ILT 0x0001DDE5 -> 0x000DF440
+	Player *getEachPlayerFromMask(unsigned short &maskToAdjust);	// retail ILT 0x0002EE60 -> 0x000DF4A0
+};
+
+class ScriptEngine
+{
+public:
+	unsigned short unidentified_0034DB40(Parameter *pSideParm);	// retail ILT 0x000230B5 -> 0x0034DB40
 };
 
 class BfmeP1092
@@ -137,20 +167,14 @@ public:
 	virtual void bfmeSlot1092P_24(void);
 	virtual void bfmeSlot1092P_25(void);
 	virtual BfmeE1092 * bfmeSlot1092P_26(int a);
-	int bfmeNext1092(int a);
 };
 
 // 0x012ED748 is retail's PlayerList singleton (game/GameEngine/Source/Common/RTS/PlayerList.cpp
-// defines `PlayerList *ThePlayerList`); only the address-derived lookups this TU
-// spells are still unnamed, so the global keeps its real spelling and the reads are cast.
-class PlayerList;
-
+// defines `PlayerList *ThePlayerList`).
 extern PlayerList *ThePlayerList;	// retail [0x012ED748]
 // 0x012F076C is retail's ScriptEngine singleton (defined once in
-// GameLogic/ScriptEngine/ScriptEngine.cpp). This TU reaches only the slots it
-// calls through its own view, so the global keeps the canonical spelling and
-// the view is taken by casting; bytes are unchanged.
-class ScriptEngine;
+// GameLogic/ScriptEngine/ScriptEngine.cpp). Its virtual slot 26 is reached
+// through the BfmeP1092 view by casting; bytes are unchanged.
 extern ScriptEngine *TheScriptEngine;
 
 static inline BfmeP1092 *theScriptEngineP1092() { return (BfmeP1092 *)TheScriptEngine; }
@@ -168,12 +192,12 @@ char __stdcall bfmeGo1092A(int a, int b)
 	h = e->m_bfme1fc->bfmeSlot1092F_76();
 	if (!(short)h)
 		return 0;
-	r = ((BfmeD1092 *)ThePlayerList)->bfmeGet1092(h);
+	r = (BfmeR1092 *)ThePlayerList->getPlayerFromMask((unsigned short)h);
 	if (!r)
 		return 0;
-	b = theScriptEngineP1092()->bfmeNext1092(a);
-	while ((short)b) {
-		if (r == ((BfmeD1092 *)ThePlayerList)->bfmeLook1092((short *)&b))
+	unsigned short mask = TheScriptEngine->unidentified_0034DB40((Parameter *)a);
+	while (mask) {
+		if (r == (BfmeR1092 *)ThePlayerList->getEachPlayerFromMask(mask))
 			return 1;
 	}
 	return 0;
@@ -187,15 +211,15 @@ char __stdcall bfmeGo1092B(int a, int b)
 		return 0;
 	if (e->m_bfme1a4 & 8)
 		return 0;
-	a = theScriptEngineP1092()->bfmeNext1092(b);
-	while ((short)a) {
-		BfmeR1092 *r = ((BfmeD1092 *)ThePlayerList)->bfmeLook1092((short *)&a);
+	unsigned short mask = TheScriptEngine->unidentified_0034DB40((Parameter *)b);
+	while (mask) {
+		BfmeR1092 *r = (BfmeR1092 *)ThePlayerList->getEachPlayerFromMask(mask);
 
-		if (!e->bfmeSkip1092(r)) {
+		if (!((BFMEObjectStealthQuery *)e)->isStealthedAndUndetected((const Object *)r)) {
 			int m = r->m_bfme24;
-			int k = e->bfmeKind1092(m);
+			ObjectShroudStatus k = ((const Object *)e)->getShroudedStatus(m);
 
-			if (k == 1 || k == 2)
+			if (k == OBJECTSHROUD_CLEAR || k == OBJECTSHROUD_PARTIAL_CLEAR)
 				return 1;
 		}
 	}
