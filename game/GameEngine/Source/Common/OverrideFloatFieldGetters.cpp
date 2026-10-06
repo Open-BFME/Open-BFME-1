@@ -38,7 +38,12 @@ public:
 	float m_secondScale;
 };
 
-extern volatile float g_rva001B59ScaleConstant;
+// The 0.2f scale constant at VA 0x012ACFE0. Retail keeps it in .data (bytes
+// cd cc 4c 3e; a separate 0.01f cell follows at 0x012ACFE4) and every reader,
+// these getters, BfmeConv2041.cpp and the Locomotor queries, flds it from the
+// absolute address, so it is a volatile float defined once here. The name is
+// address-derived: no export, string or EA path names the cell.
+volatile float g_rva001B59ScaleConstant = 0.2f;
 
 struct Rva001B59ScaleInfo
 {
