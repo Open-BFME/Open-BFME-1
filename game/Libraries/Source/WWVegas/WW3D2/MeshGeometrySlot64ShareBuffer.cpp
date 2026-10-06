@@ -30,21 +30,20 @@ protected:
 	int Alignment;
 };
 
-template <>
-__declspec(noinline)
-ShareBufferClass<MeshGeometrySlot64Element_00923F70>::ShareBufferClass(
-	int count, const char *msg, int alignment) :
+// A template definition plus the explicit instantiation below emits the
+// constructor as a COMDAT, like the copy MeshGeometryClassResetGeometryThunk.cpp
+// emits; an explicit specialization would be a second exclusive definition.
+template <class T>
+ShareBufferClass<T>::ShareBufferClass(int count, const char *msg, int alignment) :
 	Count(count),
 	Alignment(alignment)
 {
 	if (Alignment == 0) {
-		RawBuffer = (MeshGeometrySlot64Element_00923F70 *)MSGW3DNEWARRAY(msg)
-			char[Count * sizeof(MeshGeometrySlot64Element_00923F70)];
+		RawBuffer = (T *)MSGW3DNEWARRAY(msg) char[Count * sizeof(T)];
 		Array = RawBuffer;
 	} else {
-		RawBuffer = (MeshGeometrySlot64Element_00923F70 *)MSGW3DNEWARRAY(msg)
-			char[Count * sizeof(MeshGeometrySlot64Element_00923F70) + Alignment];
-		Array = (MeshGeometrySlot64Element_00923F70 *)(((unsigned int)RawBuffer + Alignment - 1) &
+		RawBuffer = (T *)MSGW3DNEWARRAY(msg) char[Count * sizeof(T) + Alignment];
+		Array = (T *)(((unsigned int)RawBuffer + Alignment - 1) &
 			~(unsigned int)(Alignment - 1));
 	}
 }
@@ -78,4 +77,5 @@ void ShareBufferClass<T>::Resize(int newsize)
 	Count = newsize;
 }
 
+template ShareBufferClass<MeshGeometrySlot64Element_00923F70>::ShareBufferClass(int, const char *, int);
 template void ShareBufferClass<MeshGeometrySlot64Element_00923F70>::Resize(int);
