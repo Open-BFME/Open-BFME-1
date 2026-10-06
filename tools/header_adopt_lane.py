@@ -455,15 +455,34 @@ def gate_cost(header, jobs):
     rows = H.ledger_sources(None)
     reached = H.dependents([header], H.graph(edges), macro)
     sources = sorted(p for p in reached if p in rows)
-    started = time.time()
-    with cf.ThreadPoolExecutor(jobs) as pool:
-        verdicts = list(pool.map(gate_one, sources))
+    # The way the pre-commit hook does it: one scoped build per ~24,000-character
+    # chunk of paths, BUILD_POOL compiles in parallel inside each.
+    started, red, chunk = time.time(), [], []
+    chunks = []
+    for source in sources:
+        if chunk and sum(len(p) + 3 for p in chunk) + len(source) > 24000:
+            chunks.append(chunk)
+            chunk = []
+        chunk.append(source)
+    if chunk:
+        chunks.append(chunk)
+    for paths in chunks:
+        if BFME2:
+            command, env = [sys.executable, "tools/build.py", *paths], dict(os.environ, MSYS_NO_PATHCONV="1")
+        else:
+            import bash_path
+            command = [bash_path.bash(), str(ROOT / "build.sh"), *paths]
+            env = {k: v for k, v in bash_path.env().items() if k != "MSYS_NO_PATHCONV"}
+        env["BUILD_POOL"] = str(jobs)
+        done = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, errors="replace", env=env)
+        if done.returncode:
+            red.append(f"chunk of {len(paths)} exited {done.returncode}: "
+                       + next((l for l in (done.stdout + done.stderr).splitlines() if "FAIL" in l or "error" in l), ""))
     seconds = time.time() - started
-    red = [s for s, v in zip(sources, verdicts) if v]
-    print(f"{header}: {len(sources)} dependent ledger sources; re-verified in {seconds:.0f}s with {jobs} jobs; "
-          f"{len(red)} red")
-    for source in red[:20]:
-        print(f"  red {source}")
+    print(f"{header}: {len(sources)} dependent ledger sources; scoped gate {seconds:.0f}s "
+          f"(BUILD_POOL={jobs}, {len(chunks)} chunk(s)); {len(red)} red chunk(s)")
+    for line in red[:20]:
+        print(f"  {line[:200]}")
     return {"header": header, "dependents": len(sources), "seconds": round(seconds, 1), "jobs": jobs, "red": red}
 
 
@@ -518,7 +537,13 @@ def run(args):
                      f"{len(passed)}/{len(sources)} sampled units adopt")
         for source in passed:
             (ROOT / source).write_bytes(best["texts"][source].encode("latin-1"))
-        rewrite_ledger([r for s in passed for r in best["renames"].get(s, [])])
+        renamed = [r for s in passed for r in best["renames"].get(s, [])]
+        rewrite_ledger(renamed)
+        if renamed:
+            # The hook verifies against the working-tree ledger, so units committed
+            # without these renames would pass and leave HEAD inconsistent.
+            print(f"  {len(renamed)} ledger row(s) renamed to the canonical class-key: commit "
+                  f"{LEDGER.relative_to(ROOT).as_posix()} in the same commit as their units")
         write_queue(name, header, failed)
         print(f"  applied: {len(passed)} units rewritten, {len(failed)} queued in {QUEUE.relative_to(ROOT).as_posix()}")
     return 0

@@ -275,8 +275,17 @@ def decide(name, sources=None, jobs=8, sample=None):
             candidates[offset][(size, k)] += 1
             names[offset][field] += 1
             types[(offset, size, k)][type_name] += 1
+    # A field past the majority sizeof that only a minority of views declares is
+    # that view's own claim (a pad-as-members view, a different type wearing the
+    # name): recorded, never frozen into the contract. The unit's gate decides it.
+    major_size = collections.Counter(L["size"] for L in good.values()).most_common(1)[0][0] if good else 0
+    outliers = []
     for offset in sorted(candidates):
         votes = candidates[offset]
+        if offset >= major_size and 2 * sum(votes.values()) < len(flat):
+            outliers.append({"offset": offset, "views": sum(votes.values()),
+                             "sources": sorted(s for s, items in flat.items() if any(o == offset for o, *_ in items))})
+            continue
         rule, pick = None, None
         if len(votes) == 1:
             rule, pick = "bytes", next(iter(votes))
@@ -374,6 +383,7 @@ def decide(name, sources=None, jobs=8, sample=None):
                      "retail_access": {"%#x" % k: v for k, v in access.items()},
                      "witness_offsets": sorted(witness), "retail_vtables": vtables},
         "queue": queue,
+        "outliers": outliers,
         "sources": sorted(good),
     }
 
