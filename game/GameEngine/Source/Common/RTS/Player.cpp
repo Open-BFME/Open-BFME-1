@@ -4004,27 +4004,7 @@ public:
 #define BFME_MISC_SOUND(m, off) (*(const AudioEventRTS *)((const UnsignedByte *)(m) + (off)))
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Player_addRadar_Thunk.cpp
-// ?addRadar@Player@@QAEX_N@Z present-unmatched
-void Player::addRadar( Bool disableProof )
-{
-	Bool hadRadar = hasRadar();
-
-	// increment count
-	++((BfmePlayerRadarFields *)this)->m_radarCount;
-
-	if( disableProof )
-		++((BfmePlayerRadarFields *)this)->m_disableProofRadarCount;// Disable proof is also in the normal refcount
-
-	if( !hadRadar && hasRadar()	&& okToPlayRadarEdgeSound() )
-	{
-		// This player just got radar, so play the "You have Radar!" sound
-		AudioEventRTS soundToPlay( BFME_MISC_SOUND(
-			((BfmeAudioManagerView *)TheAudio)->getMiscAudio(), 0x150) );
-		soundToPlay.setPlayerIndex(getPlayerIndex());
-		((BfmeAudioManagerView *)TheAudio)->addAudioEvent(&soundToPlay);
-	}
-}  // end addRadar
+// Player::addRadar: retail 0x000CBFA0, PlayerAddRadar.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** The parameter object has is taking its radar away from the player */

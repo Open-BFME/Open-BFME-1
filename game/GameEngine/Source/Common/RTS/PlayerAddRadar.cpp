@@ -105,12 +105,11 @@ public:
 extern AudioManager *TheAudio;
 
 // The old Player::addRadar claim at 0x000FB3F0 was a different two-argument
-// body. Keep Player as the base so okToPlayRadarEdgeSound mangles to its
-// matched ILT; this body retains its original COFF symbol while the ledger
-// records the proven Player::addRadar identity.
+// body; this one is the proven Player::addRadar and is emitted under that name.
 class Player
 {
 public:
+	void addRadar(Bool disableProof);
 	Bool okToPlayRadarEdgeSound(void);
 	Int getPlayerIndex(void) const { return m_playerIndex; }
 
@@ -132,13 +131,7 @@ static inline Bool playerHasRadar(const Player *player)
 	return player->m_radarCount > 0;
 }
 
-class Rva000CBFA0Player : public Player
-{
-public:
-	void addRadar(Bool disableProof);
-};
-
-void Rva000CBFA0Player::addRadar(Bool disableProof)
+void Player::addRadar(Bool disableProof)
 {
 	Bool hadRadar = playerHasRadar(this);
 	++m_radarCount;
