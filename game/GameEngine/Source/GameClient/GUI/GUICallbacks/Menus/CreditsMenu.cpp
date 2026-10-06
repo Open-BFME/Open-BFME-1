@@ -83,36 +83,9 @@ static GameWindow *parentMainMenu = NULL;
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-/** Initialize the single player menu */
+/** Initialize the single player menu: CreditsMenuInit (retail 0x004C6C60) is
+  * matched in CreditsMenuInit_Thunk.cpp. */
 //-------------------------------------------------------------------------------------------------
-void CreditsMenuInit( WindowLayout *layout, void *userData )
-{
-	TheShell->showShellMap(FALSE);
-	if(TheCredits)
-		delete TheCredits;
-	TheCredits = new CreditsManager;
-	TheCredits->load();
-	TheCredits->init();
-	
-	parentMainMenuID = TheNameKeyGenerator->nameToKey( AsciiString("CreditsMenu.wnd:ParentCreditsWindow") );
-	parentMainMenu = TheWindowManager->winGetWindowFromId( NULL, parentMainMenuID );
-
-
-	// show menu
-	layout->hide( FALSE );
-
-	// set keyboard focus to main parent
-	TheWindowManager->winSetFocus( parentMainMenu );
-
-
-
-	TheAudio->removeAudioEvent( AHSV_StopTheMusicFade );
-	AudioEventRTS event( AsciiString( "Credits" ) );
-	event.setShouldFade( TRUE );
-	TheAudio->addAudioEvent( &event );
-
-
-}  // end CreditsMenuInit
 
 //-------------------------------------------------------------------------------------------------
 /** single player menu shutdown method */
