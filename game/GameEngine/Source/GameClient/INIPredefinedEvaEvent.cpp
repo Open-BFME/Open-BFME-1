@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME: readable conversion of the predefined Eva-event field parser.
 // The INI registry row at 0x012B5250 names PredefinedEvaEvent and points
-// to this callback; its field-parse table is at 0x010F1B68.  The owner remains address-derived because the
-// retail image does not expose a matched source-level method name.
+// to this callback; its field-parse table is at 0x010F1B68.  EA's name for it
+// is Eva::iniParsePredefinedEvaEvent (the ILT slot confirms the decoration).
 
 #include "ascii_string.h"
 
@@ -151,17 +151,13 @@ public:
 	Rva00425C90Vector m_default;
 	char m_sideSounds[0x14];
 	Rva00425C90NameMap m_defaultNames;
+
+	static void iniParsePredefinedEvaEvent( INI *ini );
 };
 
 extern Eva *TheEva;
 
-class Rva00425C90PredefinedEvaEvent
-{
-public:
-	static void parse( INI *ini );
-};
-
-void Rva00425C90PredefinedEvaEvent::parse( INI *ini )
+void Eva::iniParsePredefinedEvaEvent( INI *ini )
 {
 	const char *token = ini->getNextToken();
 	BFMERetailAsciiString name( token );
