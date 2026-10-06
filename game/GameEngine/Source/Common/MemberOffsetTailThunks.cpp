@@ -219,7 +219,6 @@ BFME_OFFSET_TAIL_CALLEE( 0046C330 )
 BFME_OFFSET_TAIL_CALLEE( 004C5EF0 )
 BFME_OFFSET_TAIL_CALLEE( 004C6000 )
 BFME_OFFSET_TAIL_CALLEE( 004EA090 )
-BFME_OFFSET_TAIL_CALLEE( 00523380 )
 BFME_OFFSET_TAIL_CALLEE( 00588AD0 )
 BFME_OFFSET_TAIL_CALLEE( 0058B840 )
 BFME_OFFSET_TAIL_CALLEE( 0058BC20 )
@@ -400,7 +399,23 @@ BFME_OFFSET_TAIL_THUNK( Rva004BC6D0, Gen00887940, 28 )
 BFME_OFFSET_TAIL_THUNK( Rva004C5EE0, Gen004C5EF0, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva004C5FF0, Gen004C6000, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva004EA1B0, Gen004EA090, 4 )
-BFME_OFFSET_TAIL_THUNK( Rva00516BB0, Gen00523380, 604 )
+// Two stack words are inherited by the matched setter
+// Gen_00523380::bfmeSetSlot (0x00523380, via ILT 0x00048C89); the matched
+// caller LANAPI::OnAccept (0x006889B0) pushes a slot index and a byte value.
+class Gen_00523380
+{
+public:
+	void bfmeSetSlot( unsigned short index, unsigned char value );
+};
+class Rva00516BB0
+{
+public:
+	void bfmeSetSlot( unsigned short index, unsigned char value );
+};
+void Rva00516BB0::bfmeSetSlot( unsigned short index, unsigned char value )
+{
+	( (Gen_00523380 *)( (char *)this + 604 ) )->bfmeSetSlot( index, value );
+}
 BFME_OFFSET_TAIL_THUNK( Rva0052DBF0, Gen00887940, 4 )
 BFME_OFFSET_TAIL_THUNK( Rva005711D0, Gen00887940, 4 )
 BFME_OFFSET_TAIL_THUNK( Rva005896F0, Gen00588AD0, 104 )
