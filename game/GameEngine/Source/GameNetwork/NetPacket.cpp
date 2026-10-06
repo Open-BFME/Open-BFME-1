@@ -1801,18 +1801,18 @@ Bool NetPacket::isRoomForTimeOutGameStartMessage(NetCommandRef *msg) {
 /**
  * Returns true if there is room in the packet for this command.
  */
-// ?isRoomForLoadCompleteMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::isRoomForLoadCompleteMessage(NetCommandRef *msg) {
+	BfmeNetPacketFields *self = (BfmeNetPacketFields *)this;
 	Int len = 0;
 	NetCommandMsg *cmdMsg = (NetCommandMsg *)(msg->getCommand());
-	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
+	if (self->m_lastCommandType != cmdMsg->getNetCommandType()) {
 		++len;
 		len += sizeof(UnsignedByte);
 	}
-	if (m_lastRelay != msg->getRelay()) {
+	if (self->m_lastRelay != msg->getRelay()) {
 		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
 	}
-	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
+	if (self->m_lastPlayerID != cmdMsg->getPlayerID()) {
 		++len;
 		len += sizeof(UnsignedByte);
 	}
