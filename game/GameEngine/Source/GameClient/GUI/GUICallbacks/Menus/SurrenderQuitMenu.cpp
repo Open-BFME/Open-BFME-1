@@ -17,15 +17,17 @@ public:
 	Bool m_isShellActive;
 };
 
-class WindowManager
+class WindowManager;
+
+// Retail calls ILT 000290D2 -> the existing Rva00465B80::apply provider.
+// Preserve its declaration from TinyByteFieldSetters.cpp. This byte setter
+// establishes the +1AC write, not the manager's original semantic class.
+class Rva00465B80
 {
 public:
-	// Retail 0x012F19E8 is the game-wide manager pointer EA defines as
-	// `WindowManager *g_rva012F19E8WindowManager` in
-	// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp; this class is
-	// only this TU's view of the pointee, so the linked name is the canonical
-	// one and the header is not included here.
-	void hideQuitMenu();
+	void apply();
+	char m_lead[0x1AC];
+	char m_flag;
 };
 
 class VictoryConditionsInterface
@@ -96,7 +98,7 @@ void surrenderQuitMenu()
 		menu->m_hidden = true;
 		static_cast<QuitMenu *>(reinterpret_cast<void * &>(g_obj12F4B40))->m_field25C = 0;
 		TheShell->m_isShellActive = true;
-		g_rva012F19E8WindowManager->hideQuitMenu();
+		reinterpret_cast<Rva00465B80 *>(g_rva012F19E8WindowManager)->apply();
 	}
 
 	if (TheVictoryConditions->isLocalAlliedVictory())
