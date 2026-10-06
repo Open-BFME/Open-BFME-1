@@ -32,12 +32,19 @@ class BfmeC994 : public Rva007E86B0Base
 {
 public:
 	BfmeC994( char *buffer, int capacity );
-	void addInt( const char *key, int value );
 
 	char m_pad08[ 0x14 ];
 	unsigned int m_category;
 	unsigned int m_field20;
 	char m_tail24[ 0x10 ];
+};
+
+// The key/integer field writer at 0x007E88D0 is matched as BfmeThingCIB::bfmeGoCIB
+// (BfmeConv606.cpp); Rva007F1800FeslSearch.cpp calls it through the same view.
+class BfmeThingCIB
+{
+public:
+	void bfmeGoCIB( void *key, void *value );
 };
 
 class Rva008038F0Sender
@@ -91,7 +98,7 @@ void BfmeSinkSA::bfmeUseSA( int tid, int pid )
 
 	message.m_category = 'PENT';
 	message.m_field20 = player != 0 ? 0 : 'ntfn';
-	message.addInt( "TID", tid );
-	message.addInt( "PID", pid );
+	( (BfmeThingCIB *)&message )->bfmeGoCIB( (void *)"TID", (void *)tid );
+	( (BfmeThingCIB *)&message )->bfmeGoCIB( (void *)"PID", (void *)pid );
 	m_sender->send( &message );
 }
