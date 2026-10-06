@@ -494,6 +494,118 @@ answer names. Records are signed when `JUDGE_RUNNER_KEY` is set; use
 9. **Rollback.** Delete the ruleset; seats push as before. The journal and
    receipts stay; on restart the publisher settles a half-done publication.
 
+### Rollout: shadow, then enforce (2026-10-06)
+
+
+Two stages, each switched by one committed file, `targets/game/reverse/publisher_mode` (`off`,
+`shadow`, `enforce`). The pre-push hook reads it at the remote tip, never
+from the outgoing commits, so a push cannot change its own mode, and the
+file is a protected path (Verifier-Change trailer).
+
+**Stage A, shadow (shipped).** The last line of `.githooks/pre-push` runs
+`tools/publisher_hook.py` after every other check has passed. The push
+goes ahead unchanged. A detached process waits until the push has landed
+(the remote-tracking ref contains the tip), then submits the same range to
+`refs/submit/<operator>/<unit>` with its diff as scope. It cannot fail or
+slow the push; it only logs to `.git/publisher-hook.log`. The hook step
+costs about 0.3 s on Windows. A submission takes 0.7-1.1 s in the
+background against a local remote. The operator is the git author name,
+lowercased, with runs of other characters turned into `-`. In v1 it is
+UNAUTHENTICATED: the envelope is signed with a key anyone can derive from
+that name (`auth=none-v1`). An operator an admin later issues a real key
+to (`publisher.py operator`) can no longer be impersonated that way.
+
+The publisher host runs `tools/publisher_service.py`, one state directory
+per repository. In shadow it fetches `refs/heads/master` and
+`refs/submit/*` from origin and writes nothing there. It publishes to
+branch `publisher-shadow` of a local bare mirror, and its results go to
+the mirror's `refs/publisher/results`. The shadow checker follows master
+(auto-promotion), so a red unit is one that passed the seat's own hook but
+failed the pinned gate. When the service is idle it resets the shadow
+branch to master (`resync` event), so drift from units red here or
+commits pushed without a submission does not pile up. Per-unit rows
+(latency, verdict, red rate over the last 100 gated units, queue depth) go
+to `metrics.csv`, one row per minute to `queue.csv`, and the day's
+go/no-go to `health-<date>.json`.
+
+**This host** (`publisher_state\` next to the worktrees; both repos;
+setup already run):
+
+    publisher_state\run_publisher.cmd      start both (supervised, restarts on exit)
+    publisher_state\stop_publisher.cmd     stop both after the current step
+    py -3 publisher_state\bfme2\bin\publisher_service.py status --state publisher_state\bfme2
+    py -3 publisher_state\bfme2\bin\publisher_service.py health --state publisher_state\bfme2 [--hours 24]
+
+`run_publisher.sh` does the same from Git Bash. Builders: 8 for BFME2 and
+4 for BFME1, each gate at `BUILD_POOL=2`, so at most 24 compiles at once
+on 24 cores. A builder's HOME is its scratch dir, so `publisher_gate.py`
+hard-links its `~/.cache/open-bfme-build.lock` to the host's. Full builds
+(more than 8 TUs: header, toolchain and wide units) therefore serialize
+with every other clone's full builds on this PC. Per-file verifies take
+no lock and compete for cores only. Fleets building on this PC slow the
+gates; nothing else interferes. BFME2's `reference/open-bfme-1` comes from
+`state\toolchains\<gitlink sha>`, a clone the service provisions for every
+head and for any unit that moves the gitlink.
+
+**Measured on this PC** (the 12 master commits ending at 427e5d5309
+replayed through the real gate, 4 cold builders, scope serialization on,
+all green): 4 batches, 246 s wall (176 units/h), 67-79 s per gate
+including a 40,931-file first checkout, p95 latency 245 s. That is about 4x
+this fleet's 45 units/h. For BFME2 the same run without serialization
+gave 1,618 units/h and with it 147.
+
+**When this PC is off** nothing is lost. Shadow: seats push as before and
+submissions pile up on `refs/submit/*`. On restart they are ingested in
+landing order, and the gap shows as queue depth, not as latency. Enforce:
+pushes are refused and queued in the same way; master stops moving until
+the service is back, then drains the backlog.
+
+**Go/no-go for stage B** (`health`, 24 h window, all must pass): at least
+100 units finished; queue at most 40 at the end, mean depth in the last
+quarter at most 10 above the first, and at least 95% of enqueued units
+finished; p95 latency at most 30 min; red rate at most 3%, with every red
+unit looked at; at most 5% did not apply; a heartbeat row for 95% of the
+minutes; at most 5 errors and no refused receipt. Get GO on two
+consecutive days that include a fleet peak.
+
+**Stage B, enforce (prepared, not run).** In order:
+
+1. Promote the checker by hand (`publisher.py promote --state DIR <master
+   sha> --fixtures ...`). Auto-promotion stops in enforce.
+2. Land a commit that sets `targets/game/reverse/publisher_mode` to `enforce` (Verifier-Change). From
+   then on the hook submits synchronously and refuses the push (exit 3)
+   with `PUBLISHER-QUEUED <unit>` and how to check:
+   `python3 tools/publisher_hook.py status <unit>` (queued / pending /
+   landed / rejected, read from `refs/publisher/results` on origin). A seat
+   that keeps working on top of queued commits gets them left out of its
+   next unit, which is ordered `after` them. After a rejection: fix,
+   `git pull --rebase`, push again; identical bytes are the same unit.
+3. Within a minute the service sees the mode, fast-forwards origin master
+   itself, deletes the submit refs it ingested and publishes results.
+4. Admin, so `--no-verify` and other accounts cannot bypass the hook. This
+   is classic branch protection: it covers only branches matching
+   `master`, so `refs/submit/*` and `refs/claims/*` stay writable, and the
+   existing "Protect master" ruleset (no force push, no deletion) stays as
+   it is. `enforce_admins` is required because two other org admins push.
+
+       gh api -X PUT repos/Open-BFME/Open-BFME-1/branches/master/protection --input - <<'JSON'
+       {"required_status_checks": null, "enforce_admins": true,
+        "required_pull_request_reviews": null,
+        "restrictions": {"users": ["Ancalgonn"], "teams": [], "apps": []},
+        "allow_force_pushes": false, "allow_deletions": false}
+       JSON
+
+   Prove it: a push to master from any other account fails, and a push to
+   `refs/submit/x/y` from that account succeeds. Ancalgonn is also the
+   publisher's account. If a fleet on this PC pushes as Ancalgonn, only
+   its hook stops it (enforce mode). A dedicated bot account in the
+   restriction list closes that gap.
+
+**Rollback.** Land `targets/game/reverse/publisher_mode` = `shadow` (or `off`). The service keeps
+origin as its target until the units queued under enforce have landed,
+then goes back to the mirror. Remove the protection with
+`gh api -X DELETE repos/Open-BFME/Open-BFME-1/branches/master/protection`.
+
 ## Validation on 2026-09-04
 
 Targeted tests cover preserved attempts, terminal decoding, conservative cache
