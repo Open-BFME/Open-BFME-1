@@ -94,6 +94,9 @@
 // declare that specialization so this TU does not emit the header's copy.
 template <>
 VectorClass<ResolutionDescClass> &VectorClass<ResolutionDescClass>::operator=(VectorClass<ResolutionDescClass> const &vec);
+// Resize's retail body (0x00905DC0) is owned by ResolutionDescVectorResize.cpp.
+template <>
+bool VectorClass<ResolutionDescClass>::Resize(int newsize, ResolutionDescClass const *array);
 
 // Keep the already-claimed out-of-line accessor emitted after this body
 // switches to BFME layout views; this anchor is never read by game logic.
