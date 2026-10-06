@@ -40,22 +40,12 @@ public:
 		if (--data->m_refCount == 0)
 			reinterpret_cast<BfmeAllocVKJ *>(g_rva01337A30AllocPair)->free( data );
 	}
-	EAStringC &operator=( const EAStringC &other )
-	{
-		++other.m_pData->m_refCount;
-		EAStringData *oldData = m_pData;
-		if (--oldData->m_refCount == 0)
-			reinterpret_cast<BfmeAllocVKJ *>(g_rva01337A30AllocPair)->free( oldData );
-		m_pData = other.m_pData;
-		return *this;
-	}
-
 	EAStringC Mid( int count ) const;
 	EAStringC &rva0089F420( const char *characters );
 
-private:
 	EAStringData *m_pData;
 
+private:
 	const char *GetInternalBuffer() const
 	{
 		return reinterpret_cast<const char *>(m_pData) + sizeof(EAStringData);
@@ -68,6 +58,19 @@ inline EAStringC::EAStringC()
 	: m_pData( (EAStringData *)&g_rva012D5298Empty )
 {
 	++m_pData->m_refCount;
+}
+
+// EAStringC::operator= has no retail address (always inlined), and an in-class
+// member here emitted an ??4EAStringC COMDAT unlike the first copy in link
+// order, so this TU assigns through a file-local inline.
+static inline EAStringC &assignEAString( EAStringC &self, const EAStringC &other )
+{
+	++other.m_pData->m_refCount;
+	EAStringData *oldData = self.m_pData;
+	if (--oldData->m_refCount == 0)
+		reinterpret_cast<BfmeAllocVKJ *>(g_rva01337A30AllocPair)->free( oldData );
+	self.m_pData = other.m_pData;
+	return self;
 }
 
 EAStringC &EAStringC::rva0089F420( const char *characters )
@@ -84,7 +87,7 @@ EAStringC &EAStringC::rva0089F420( const char *characters )
 		++count;
 	}
 	EAStringC result;
-	result = Mid( count );
-	*this = result;
+	assignEAString( result, Mid( count ) );
+	assignEAString( *this, result );
 	return *this;
 }
