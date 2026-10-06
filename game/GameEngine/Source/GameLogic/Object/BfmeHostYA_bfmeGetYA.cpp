@@ -6,11 +6,17 @@
 
 class Player;
 
+// ILT 0x000022BB reaches the matched override-chain walker at 0x00087A80,
+// ?getFinalOverride@Overridable@@QBEPBV1@XZ (public, const, const result).
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride(void) const;
+};
+
 class LocomotorOverridable
 {
 public:
-	LocomotorOverridable *friend_getFinalOverride();
-
 	unsigned char m_bfmeHeadYA[4];
 	LocomotorOverridable *m_bfme04YA;
 };
@@ -61,7 +67,7 @@ float BfmeHostYA::bfmeGetYA()
 	{
 		ThingTemplate *finalOverride = (ThingTemplate *)m_bfme04YA;
 		if (finalOverride->m_bfme04YA != 0)
-			finalOverride = (ThingTemplate *)finalOverride->m_bfme04YA->friend_getFinalOverride();
+			finalOverride = (ThingTemplate *)((Overridable *)finalOverride->m_bfme04YA)->getFinalOverride();
 		buildTime = finalOverride->calcTimeToBuild(pl, -1);
 	}
 	return g_bfmeDefaultBU / (float)buildTime;

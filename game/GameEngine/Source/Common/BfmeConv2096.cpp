@@ -12,11 +12,17 @@ enum KindOfType
 #include "Thing/thing.h"
 #undef THING_TU_MEMBERS
 
+// ILT 0x000022BB reaches the matched override-chain walker at 0x00087A80,
+// ?getFinalOverride@Overridable@@QBEPBV1@XZ (public, const, const result).
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride(void) const;
+};
+
 class LocomotorOverridable
 {
 public:
-	LocomotorOverridable *friend_getFinalOverride();
-
 	unsigned char m_bfmeHeadYE[4];
 	LocomotorOverridable *m_bfme04YE;
 	unsigned char m_bfmeMidYE[0xcc];
@@ -40,7 +46,7 @@ static __forceinline LocomotorOverridable *bfmeFinalYE(LocomotorOverridable *p)
 	if (p->m_bfme04YE == 0)
 		return p;
 
-	return p->m_bfme04YE->friend_getFinalOverride();
+	return (LocomotorOverridable *)((Overridable *)p->m_bfme04YE)->getFinalOverride();
 }
 
 class BfmeHostYD
