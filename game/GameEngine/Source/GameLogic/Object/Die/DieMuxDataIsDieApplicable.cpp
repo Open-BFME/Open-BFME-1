@@ -36,7 +36,7 @@ class Object
 public:
 	// Typed semantic view of the BFME-only planar-delta helper. Its retail body
 	// subtracts this Object's cached position from the argument's position.
-	Coord3D getPlanarDirectionTo(const Object *other) const;
+	Coord3D bfmeGo941G(const Object *other) const;
 
 	const ObjectStatusMaskType &getStatusBits() const
 	{
@@ -110,7 +110,7 @@ Bool DieMuxData::isDieApplicable(
 	if (killer == 0)
 		return false;
 
-	Coord3D killerDirection = obj->getPlanarDirectionTo(killer);
+	Coord3D killerDirection = obj->bfmeGo941G(killer);
 	const Real killerAngle = normalizeAngle(
 		obj->getOrientation() - (Real)atan2(killerDirection.y, killerDirection.x));
 	const Real midpoint = (m_maxKillerAngle + m_minKillerAngle) * g_rva0107533C;

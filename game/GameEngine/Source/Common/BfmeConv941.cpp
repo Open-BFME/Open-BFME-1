@@ -33,11 +33,27 @@ void BfmeThing941F::bfmeGo941F(void *a)
 	bfmeTwo941F(a);
 }
 
-void __stdcall bfmeCall941G(void *a, char *b);
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
-void *__stdcall bfmeGo941G(void *a, void *b)
+// Matched callers DieMuxData::isDieApplicable (0x002551F0) and
+// Object::rva001E3E40 (0x001E3E40) reach 0x001E3E20 through ILT 0x0000B069
+// with ECX = this Object, the other Object pushed and a hidden Coord3D result
+// slot. The body keeps ECX and forwards the result slot and the other
+// Object's position (+0x38) to Object::bfmeDelta (ILT 0x0000B00F).
+class Object
 {
-	bfmeCall941G(a, (char *)b + 0x38);
-	return a;
+public:
+	Coord3D bfmeDelta(const Coord3D *pos) const;
+	Coord3D bfmeGo941G(const Object *other) const;
+
+private:
+	unsigned char m_bfmeHead[0x38];			// +0x00
+	Coord3D m_position;				// +0x38
+};
+
+// ?bfmeGo941G@Object@@QBE?AUCoord3D@@PBV1@@Z
+Coord3D Object::bfmeGo941G(const Object *other) const
+{
+	return bfmeDelta(&other->m_position);
 }
 

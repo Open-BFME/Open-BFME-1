@@ -34,8 +34,8 @@ public:
 	// the source where Zero Hour asks ThePartitionManager->getVectorTo.
 	Coord3D rva001E3E40(const Object *other) const;
 
-	// Pinned at 0x001E3E20 (reached through ILT 0x0000B069).
-	Coord3D getPlanarDirectionTo(const Object *other) const;
+	// Matched row at 0x001E3E20 (reached through ILT 0x0000B069).
+	Coord3D bfmeGo941G(const Object *other) const;
 
 private:
 	unsigned char m_fields[0xbc];
@@ -46,7 +46,7 @@ private:
 // when those radii overlap.
 Coord3D Object::rva001E3E40(const Object *other) const
 {
-	Coord3D delta = getPlanarDirectionTo(other);
+	Coord3D delta = bfmeGo941G(other);
 	Real dist = delta.length();
 	Real radii = other->m_real0BC + m_real0BC;
 	Coord3D result;

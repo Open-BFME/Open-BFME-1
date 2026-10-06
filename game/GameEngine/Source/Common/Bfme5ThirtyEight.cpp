@@ -45,36 +45,34 @@ void Gen_000E8870::bfmeAddB(int amount)
 		m_bfmeSecond = m_bfmeSecond + amount;
 }
 
-class BfmeVec2DG
+// class-gate: allow Coord3D BFME's Coord3D copy constructor (coord3d.h) is load-bearing for 0x00148960's by-value return; the POD canonical header changes the stores (1/4 FAIL).
+struct Coord3D
 {
-public:
-	float m_bfmeX;						// +0x00
-	float m_bfmeY;						// +0x04
-};
-
-class BfmeVec3DG
-{
-public:
-	BfmeVec3DG(void)
+	Coord3D(void)
 	{
 	}
 
-	BfmeVec3DG(const BfmeVec3DG &other)
+	Coord3D(const Coord3D &other)
 	{
-		m_bfmeX = other.m_bfmeX;
-		m_bfmeY = other.m_bfmeY;
-		m_bfmeZ = other.m_bfmeZ;
+		x = other.x;
+		y = other.y;
+		z = other.z;
 	}
 
-	float m_bfmeX;						// +0x00
-	float m_bfmeY;						// +0x04
-	float m_bfmeZ;						// +0x08
+	float x;						// +0x00
+	float y;						// +0x04
+	float z;						// +0x08
 };
 
-class Gen_00148960
+// The planar delta from this Object's position (+0x38/+0x3C) to `pos`, z = 0.
+// Callers reach it through ILT 0x0000B00F with ECX = the Object: matched
+// Object::rva001E2560 (0x001E2560) and Object::bfmeGo941G
+// (0x001E3E20), which passes the other Object's position. The method name is
+// not recovered; it keeps the ledger's established bfmeDelta.
+class Object
 {
 public:
-	BfmeVec3DG bfmeDelta(const BfmeVec2DG *point) const;
+	Coord3D bfmeDelta(const Coord3D *pos) const;
 
 private:
 	int m_bfmeHead[14];					// +0x00
@@ -82,14 +80,14 @@ private:
 	float m_bfmeY;						// +0x3C
 };
 
-// ?bfmeDelta@Gen_00148960@@QBE?AVBfmeVec3DG@@PBVBfmeVec2DG@@@Z
-BfmeVec3DG Gen_00148960::bfmeDelta(const BfmeVec2DG *point) const
+// ?bfmeDelta@Object@@QBE?AUCoord3D@@PBU2@@Z
+Coord3D Object::bfmeDelta(const Coord3D *pos) const
 {
-	BfmeVec3DG delta;
+	Coord3D delta;
 
-	delta.m_bfmeX = point->m_bfmeX - m_bfmeX;
-	delta.m_bfmeY = point->m_bfmeY - m_bfmeY;
-	delta.m_bfmeZ = 0.0f;
+	delta.x = pos->x - m_bfmeX;
+	delta.y = pos->y - m_bfmeY;
+	delta.z = 0.0f;
 
 	return delta;
 }

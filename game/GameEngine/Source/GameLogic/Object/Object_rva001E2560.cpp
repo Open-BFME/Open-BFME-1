@@ -65,7 +65,7 @@ extern const Real g_rva01075350;			///< retail 0x01075350, 0.0f
 class Object
 {
 public:
-	Coord3D rva00148960(const Coord3D *pos) const;	///< retail ILT 0x0000B00F -> 0x00148960
+	Coord3D bfmeDelta(const Coord3D *pos) const;	///< retail ILT 0x0000B00F -> 0x00148960
 	Coord3D rva001E2560(const Coord3D *pos) const;
 
 	unsigned char m_bfmeHeadDH[0xbc];
@@ -74,7 +74,7 @@ public:
 
 Coord3D Object::rva001E2560(const Coord3D *pos) const
 {
-	Coord3D delta = rva00148960(pos);
+	Coord3D delta = bfmeDelta(pos);
 	Real dist = delta.length();
 	Real radius = m_float0BC;
 	if (dist <= radius)
