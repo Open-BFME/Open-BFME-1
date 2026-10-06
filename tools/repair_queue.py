@@ -14,6 +14,9 @@ tools/next_work.py serves these as tiers; this module builds them.
           pass: a regrade no longer puts the row in C) and diffexec logic/binding
           divergences (build/diffexec/results.json or REPAIR_DIFFEXEC, JSON or JSONL;
           pass: `tools/diffexec.py --row RVA` exits 0). Twin-body findings are left out.
+          And boot-smoke crashes: rows `tools/boot_smoke.py --bisect` found break start-up
+          when their authored code is overlaid (build/boot/boot_queue.json or REPAIR_BOOT;
+          pass: `boot_smoke.py --overlay rva:RVA` reaches the menu).
   link    BFME2: rows the last link cycle did not place at their retail RVA, or
           placed but not self-strict, with the reason (build/link_cycle/
           link_status.csv, or REPAIR_LINK_STATUS). PASS TEST: the next cycle reports
@@ -183,6 +186,28 @@ def diffexec_items(path=None):
     return items
 
 
+BOOT_QUEUE = os.environ.get("REPAIR_BOOT") or str(ROOT / "build" / "boot" / "boot_queue.json")
+
+
+def boot_items(path=None):
+    """Rows whose authored code breaks start-up when overlaid in the boot image:
+    `tools/boot_smoke.py --bisect` halves a failing overlay down to them."""
+    import json
+    path = Path(path or BOOT_QUEUE)
+    if not path.exists():
+        return []
+    items = []
+    for r in json.loads(path.read_text(encoding="utf-8")).get("items", []):
+        items.append({
+            "tier": "repair", "check": "boot-crash", "target_rva": r["target_rva"], "function": r["name"],
+            "source": r["source"], "size": int(r.get("size") or 0), "credit": int(r.get("size") or 0),
+            "why": str(r.get("why", r.get("outcome", "")))[:300], "baseline": "", "baseline_line": "",
+            "pass_test": f"python3 tools/boot_smoke.py --game-dir SANDBOX --overlay rva:{r['target_rva']} "
+                         "--timeout 150  (exit 0: reached-menu with the row overlaid)",
+        })
+    return items
+
+
 def tier_c_items(seen=()):
     """match_tiers.py tier C rows (contradicted) not already served from a baseline line."""
     seen = set(seen)
@@ -200,10 +225,11 @@ def tier_c_items(seen=()):
 
 
 def all_repair_items():
-    """Gate debt, then match_tiers tier C and diffexec divergences not already listed."""
+    """Gate debt, then match_tiers tier C, diffexec divergences and boot-smoke
+    crashes not already listed."""
     items = repair_items()
     seen = {(i["target_rva"].upper(), i["function"]) for i in items}
-    extra = [i for i in diffexec_items() if (i["target_rva"].upper(), i["function"]) not in seen]
+    extra = [i for i in diffexec_items() + boot_items() if (i["target_rva"].upper(), i["function"]) not in seen]
     seen |= {(i["target_rva"].upper(), i["function"]) for i in extra}
     extra += tier_c_items(seen)
     return items + sorted(extra, key=lambda i: -i["size"])

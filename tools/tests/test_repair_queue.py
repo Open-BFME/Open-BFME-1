@@ -174,3 +174,18 @@ def test_tier_c_and_diffexec_findings_feed_the_repair_queue(tmp_path):
     assert [(i["check"], i["target_rva"]) for i in items] == [
         ("tail", "0x00001000"), ("tier-C", "0x00002000"), ("diffexec-binding", "0x00004000")]
     assert "diffexec.py --row 0x00004000" in items[2]["pass_test"]
+
+
+def test_boot_smoke_crashes_feed_the_repair_queue(tmp_path):
+    rq, rev, src = load(tmp_path, "bfme1", LEDGER, [])
+    q = tmp_path / "boot_queue.json"
+    q.write_text('{"tool": "boot_smoke", "items": [{"target_rva": "0x00003000", "name": "?g@@YAXXZ", '
+                 '"source": "game/g.cpp", "size": 12, "outcome": "crash-at-?g@@YAXXZ", '
+                 '"why": "boot smoke crash with this row overlaid alone"}]}')
+    rq.BOOT_QUEUE = str(q)
+    rq.DIFFEXEC = str(tmp_path / "none.json")
+    items = [i for i in rq.all_repair_items() if i["check"] == "boot-crash"]
+    assert [(i["target_rva"], i["function"], i["credit"]) for i in items] == [("0x00003000", "?g@@YAXXZ", 12)]
+    assert "boot_smoke.py --game-dir SANDBOX --overlay rva:0x00003000" in items[0]["pass_test"]
+    rq.BOOT_QUEUE = str(tmp_path / "missing.json")
+    assert rq.boot_items() == []
