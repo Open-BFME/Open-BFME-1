@@ -80963,7 +80963,6 @@ name,address,notes
 ?find@CustomPreferenceMapShim@@QAEPAUCustomMapNodeShim@@ABVAsciiString@@@Z,0x0000AEAC
 ?find@CustomPreferenceMapShim@@QAEPAUCustomMapNodeShim@@PAUCustomAsciiStringShim@@@Z,0x0000AEAC,CustomMatchPreferences getter map lookup shim
 ?find@DataChunkTableOfContentsFindMappingShim@@QAEPAVMapping@@ABVAsciiString@@@Z,0x00103CA0,DataChunkTableOfContents findMapping incremental-link thunk target through a TU-local forwarding shim
-?find@FontCharDataMap@@QAEPAUFontCharDataMapNode@@PAG@Z,0x0093DCE0,FontCharsClass character-data map lookup body
 ?find@GameLogicFindControlBarOverrideILT@@QBE_NABVAsciiString@@HAAPBVCommandButton@@@Z,0x00002509,GameLogic findControlBarOverride incremental-link thunk used by the callback walk
 ?find@GameLogicFindControlBarOverrideShim@@QBE_NABVAsciiString@@HAAPBVCommandButton@@@Z,0x00391B30,GameLogic findControlBarOverride incremental-link thunk target through a TU-local forwarding shim
 ?find@Gen009D7B80@@QBEPAUBfmeStringNode@@PBV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@@Z,0x009D7680,lookup body called by Gen009D7B80 operator[]

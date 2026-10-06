@@ -1,3 +1,5 @@
+#include "Rva0093DCE0TreeFind.h"
+
 struct FontCharsClassCharDataStruct;
 
 struct FontCharDataMapNode
@@ -9,7 +11,6 @@ struct FontCharDataMapNode
 class FontCharDataMap
 {
 public:
-	FontCharDataMapNode *find(unsigned short *character);
 	FontCharDataMapNode *m_end;
 };
 
@@ -35,7 +36,8 @@ const FontCharsClassCharDataStruct *FontCharsClass::Get_Char_Data(
 	{
 		FontCharDataMap *map = &font->m_characterData;
 		const FontCharsClassCharDataStruct *data;
-		FontCharDataMapNode *node = map->find(&character);
+		FontCharDataMapNode *node = reinterpret_cast<FontCharDataMapNode *>(
+			reinterpret_cast<const Rva0093DCE0Tree *>(map)->find(character));
 		if (node == map->m_end || (data = node->value) == 0)
 			data = font->loadCharacterData(originalCharacter);
 		if (data != reinterpret_cast<const FontCharsClassCharDataStruct *>(-1))
