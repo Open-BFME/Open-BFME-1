@@ -4,12 +4,13 @@ Many agents push to `origin/master` all day. Keep each change small, verified
 and easy to rebase. `docs/matching.md` covers byte matching and
 `docs/structural.md` manual reverse engineering.
 
-## Verifier upgrade in progress
+## Verifier upgrade
 
-`master` is locked until the tooling fixes are completed: keep work in local
-commits or banked attempts, do not retry pushes, rebase once this notice is
-gone. Add no `gen-alias` notes, data pins, alias rows or `__emit` lifts; pause
-bulk renames. Plan: `targets/game/reverse/analysis/verifier_upgrade_plan.md`.
+Live checks: jump tables, bytes past a row's extent, TU-local data, `gen-alias`
+only on a retail twin, unrecorded globals resolved by retail address.
+`body_guard_baseline.csv` and `identity_baseline.txt` only shrink;
+`hatch_counters.py` counts escape hatches. Pause bulk renames. Plan:
+`targets/game/reverse/analysis/verifier_upgrade_plan.md`.
 
 ## Setup
 

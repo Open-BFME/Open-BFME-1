@@ -1,6 +1,9 @@
 # Verifier upgrade and link-first plan (Open-BFME-1 and Open-BFME-2)
 
-Status: plan, October 2026. The checks below are being implemented; none has landed yet.
+Status (October 2026): steps 2 (publisher tool; not yet the only path to `master`),
+3 (gate checks), 4 (escape-hatch counters, shadow mode) and 5 (BFME2 link cycle) have
+landed in both repos where applicable; step 6 is partial (retail inventories). Steps 7–12
+are in progress.
 This file is identical in both repos. Numbers come from an audit of Open-BFME-1 @ e5ce116448 and
 Open-BFME-2 @ 22fb48d9ee; "measured" numbers were re-derived independently, "est." are estimates,
 and simulated gains are ceilings, not targets.
@@ -45,6 +48,10 @@ right sits outside those bytes. Measured on the audit commits:
 7. Queues serve only items with a machine pass test and say where the code goes.
 8. Only verified output counts; attempts and votes are reported separately; repairs are credited.
 9. Rule changes are versioned and shown next to the old numbers.
+10. Integration is scoped: each unit declares the paths it may touch (shared ledgers,
+    headers and build files count); units with overlapping scopes are serialized; the
+    final diff must stay inside its scope; incomplete units are never partially applied;
+    repeated equivalent failures on one target are capped. (Planned for the publisher.)
 
 ## Plan
 
