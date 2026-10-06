@@ -40,7 +40,9 @@ Gen008FF1B0 bfmeMakeXW(const char *name)
 // 0x008FEB80.  This is the same address-named owner constructed at 0x008FF1B0,
 // not the NetCommandRef destructor formerly used as an unrelated byte alias.
 // See targets/game/reverse/identity_evidence/20261003-factory-result-cleanup.md.
-Gen008FF1B0::~Gen008FF1B0()
+// Inline (still noinline) so this is a COMDAT like the other TUs' copies of
+// the same 12-byte body, not a second exclusive definition.
+inline Gen008FF1B0::~Gen008FF1B0()
 {
 	if (m_bfmeRefXW != 0)
 		static_cast<TextureClass *>(m_bfmeRefXW)->Release_Ref();
