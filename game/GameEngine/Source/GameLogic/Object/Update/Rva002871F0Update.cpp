@@ -51,10 +51,12 @@ class BfmeRvaA760Object
 {
 };
 
-class BfmeRvaA760ProbeInterface
+// The receiver is the object-filter whose accepts() is matched at 0x003A04A0
+// (Object/Rva003A04A0FilterAccepts.cpp); retail calls it through ILT
+// 0x0001DA34.
+struct Rva2225E0Filter
 {
-public:
-	Bool accepts(BfmeRvaA760Object *object, Int player);
+	Bool accepts(Object *object, Player *player);
 };
 
 class Rva002871F0Self
@@ -81,11 +83,11 @@ Bool Rva002871F0Self::Rva002871F0(RvaC4390Second *input)
 		return false;
 
 	Object *owner = *(Object **)((char *)self - 0x18);
-	BfmeRvaA760ProbeInterface *probe =
-		(BfmeRvaA760ProbeInterface *)((char *)filterOwner + 8);
+	Rva2225E0Filter *probe =
+		(Rva2225E0Filter *)((char *)filterOwner + 8);
 	if (probe->accepts(
-			(BfmeRvaA760Object *)resolved,
-			(Int)owner->getControllingPlayer()))
+			(Object *)resolved,
+			owner->getControllingPlayer()))
 	{
 		UnsignedInt ownerValue = owner->m_id;
 		if (interfaceValue->slot07() == (Int)ownerValue)

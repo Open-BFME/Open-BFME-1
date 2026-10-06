@@ -83,16 +83,18 @@ class BfmeRvaA760Object
 {
 };
 
-class BfmeRvaA760ProbeInterface
+// The receiver is the object-filter whose accepts() is matched at 0x003A04A0
+// (Object/Rva003A04A0FilterAccepts.cpp); retail calls it through ILT
+// 0x0001DA34.
+struct Rva2225E0Filter
 {
-public:
-	bool accepts(BfmeRvaA760Object *object, int player);
+	bool accepts(Object *object, Player *player);
 };
 
 struct BfmeFilterHolder
 {
 	char m_bfmeFields[8];
-	BfmeRvaA760ProbeInterface m_bfmeFilter;
+	Rva2225E0Filter m_bfmeFilter;
 };
 
 class Gen_00287130
@@ -124,8 +126,8 @@ bool Gen_00287130::bfmeAccept(RvaC4390Second *source)
 
 		Object *owner = *(Object **)((char *)this - 0x18);
 		Player *player = owner->getControllingPlayer();
-		BfmeRvaA760ProbeInterface *probe = (BfmeRvaA760ProbeInterface *)((char *)filterOwner + 8);
-		if (!probe->accepts((BfmeRvaA760Object *)first, (int)player))
+		Rva2225E0Filter *probe = (Rva2225E0Filter *)((char *)filterOwner + 8);
+		if (!probe->accepts((Object *)first, player))
 			return false;
 
 		int value = interfaceValue->bfmeValue();

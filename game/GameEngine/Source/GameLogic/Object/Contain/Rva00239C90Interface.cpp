@@ -23,10 +23,9 @@ class BfmeRvaA760Object
 {
 };
 
+// The filter argument's type name is part of this TU's matched row name.
 class BfmeRvaA760ProbeInterface
 {
-public:
-	bool accepts(BfmeRvaA760Object *object, int currentPlayer);
 };
 
 class Player
@@ -49,6 +48,14 @@ class Object
 
 	private:
 	AttributeModifierPoolUpdate *findAttributeModifierPoolUpdate() const;
+};
+
+// The receiver is the object-filter whose accepts() is matched at 0x003A04A0
+// (Object/Rva003A04A0FilterAccepts.cpp); retail calls it through ILT
+// 0x0001DA34.
+struct Rva2225E0Filter
+{
+	bool accepts(Object *object, Player *player);
 };
 
 class BfmeTargetXI
@@ -138,8 +145,8 @@ void Rva00239C90Interface::rva00239c90(
 		it != members.end(); ++it)
 	{
 		BfmeRvaA760Object *member = *it;
-		if (filter == 0 || filter->accepts(member,
-			(int)owner->getControllingPlayer()))
+		if (filter == 0 || ((Rva2225E0Filter *)filter)->accepts((Object *)member,
+			owner->getControllingPlayer()))
 			((BfmeOwnerXI *)member)->bfmeSendXI(message);
 	}
 
@@ -152,8 +159,8 @@ void Rva00239C90Interface::rva00239c90(
 			BfmeRvaA760Object *member =
 				TheGameLogic->findObjectByID(key);
 			if (member != 0
-				&& (filter == 0 || filter->accepts(member,
-					(int)owner->getControllingPlayer())))
+				&& (filter == 0 || ((Rva2225E0Filter *)filter)->accepts((Object *)member,
+					owner->getControllingPlayer())))
 				((BfmeOwnerXI *)member)->bfmeSendXI(message);
 		}
 		entry = (BfmeMemberIndexNode *)_STL::_Rb_global<bool>::_M_increment(
