@@ -30,7 +30,9 @@ struct Rva005710A0Record
 	UnicodeString m_name;
 };
 
-extern int g_color12B7FC8;
+// The list-box text color at VA 0x012B7FC8: retail .data holds -1 there, right
+// after the score screen's eleven-entry variable-name table (0x012B7F9C).
+int g_color12B7FC8 = -1;
 
 // upstream declarations: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Gadget.h
 UnicodeString GadgetTextEntryGetText( GameWindow *textEntry );
