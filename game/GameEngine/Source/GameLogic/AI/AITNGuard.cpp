@@ -600,60 +600,8 @@ StateReturnType AITNGuardIdleState::onEnter( void )
 }
 
 //--------------------------------------------------------------------------------------
-// ?update@AITNGuardIdleState@@ present-unmatched
-StateReturnType AITNGuardIdleState::update( void )
-{
-	//DEBUG_LOG(("AITNGuardIdleState frame %d: %08lx\n",TheGameLogic->getFrame(),getMachineOwner()));
-
-	UnsignedInt now = TheGameLogic->getFrame();
-	if (now < m_nextEnemyScanTime)
-		return STATE_SLEEP(m_nextEnemyScanTime - now);
-
-	m_nextEnemyScanTime = now + TheAI->getAiData()->m_guardEnemyScanRate;
-
-	getMachineOwner()->getAI()->friend_setGoalObject(NULL);
-
-#ifdef STATE_MACHINE_DEBUG
-	//getMachine()->setDebugOutput(true);
-#endif
-	Object *owner = getMachineOwner();
-	AIUpdateInterface *ai = owner->getAIUpdateInterface();
-	// Check to see if we have created a crate we need to pick up.
-	if (ai->getCrateID() != INVALID_ID) 
-	{
-		getMachine()->setState(AI_TN_GUARD_GET_CRATE);
-		return STATE_SLEEP(m_nextEnemyScanTime - now);
-	}
-
-	// if anyone is in the inner area, return success.
-	if (getGuardMachine()->lookForInnerTarget()) 
-	{
-		Object *nemesis = TheGameLogic->findObjectByID(getGuardMachine()->getNemesisID());
-		if (nemesis == NULL) 
-		{
-			DEBUG_LOG(("Unexpected NULL nemesis in AITNGuardAttackAggressorState.\n"));
-			return STATE_SLEEP(0);
-		}
-		if (getMachineOwner()->getContainedBy()) {
-			Object *bestTunnel = findBestTunnel(owner->getControllingPlayer(), nemesis->getPosition());
-			ExitInterface* goalExitInterface = bestTunnel->getContain() ? bestTunnel->getContain()->getContainExitInterface() : NULL;
-			if( goalExitInterface == NULL )
-				return STATE_FAILURE;
-
-			if( goalExitInterface->isExitBusy() )
-				return STATE_SLEEP(0);// Just wait a sec.
-			goalExitInterface->exitObjectInAHurry(getMachineOwner());
-			return STATE_SLEEP(0);
-		}
-		return STATE_SUCCESS;	// Transitions to AITNGuardInnerState.
-	}
-
-	if (!owner->getContainedBy() && findBestTunnel(owner->getControllingPlayer(), owner->getPosition())) {
-		return STATE_FAILURE;	 // go to AITNGuardReturnState, & enter a tunnel.
-	}
-
-	return STATE_SLEEP(m_nextEnemyScanTime - now);
-}
+// AITNGuardIdleState::update: retail's body (0x0018A910) is
+// AITNGuardIdleState_update_Bfme.cpp; Zero Hour's version is not defined here.
 
 //--------------------------------------------------------------------------------------
 // ?onExit@AITNGuardIdleState@@ present-unmatched
