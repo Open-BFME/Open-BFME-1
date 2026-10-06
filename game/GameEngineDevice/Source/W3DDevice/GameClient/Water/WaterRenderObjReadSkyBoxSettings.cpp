@@ -13,7 +13,12 @@ public:
 		((StringBase<char> *)this)->StringBase<char>::StringBase(
 			*(const StringBase<char> *)&that);
 	}
-	~AsciiString();
+	// Retail destroys each string by calling StringBase<char>::releaseBuffer
+	// (0x00887940) directly, not the out-of-line ~AsciiString forwarder.
+	~AsciiString()
+	{
+		((StringBase<char> *)this)->releaseBuffer();
+	}
 	AsciiString &operator=(const AsciiString &that)
 	{
 		((StringBase<char> *)this)->set(
