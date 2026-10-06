@@ -124,11 +124,14 @@ public:
 	void bfmeSetScalarIndex(int index);
 	void bfmeSetScalarBaseCount(int count);
 	void bfmeResetScalarBaseCount();
+	void bfmeSetCurrentExperience(Real experience);
 
 private:
 	void *m_vtable;
 	Object *m_parent;
-	unsigned char m_unreconstructed_008[0x28 - 0x08];
+	unsigned char m_unreconstructed_008[0x0C - 0x08];
+	Real m_float00C;
+	unsigned char m_unreconstructed_010[0x28 - 0x10];
 	int m_scalarIndex;
 	BfmeThingEFE *m_scalarTable;
 };
@@ -168,4 +171,12 @@ Real ExperienceTracker::bfmeScaleLivingWorldExperience(Real amount) const
 	}
 
 	return amount;
+}
+
+// Retail 0x001B2060 (reached through ILT 0x00034D29): stores the float
+// argument at +0x0C; ret 4. Its matched callers (0x00380110, 0x00380790)
+// push an x87-stored float.
+void ExperienceTracker::bfmeSetCurrentExperience(Real experience)
+{
+	m_float00C = experience;
 }
