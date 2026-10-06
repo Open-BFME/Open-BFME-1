@@ -167,10 +167,10 @@ struct BfmeObj935C;
 class BfmeAptScreenLanLobby;
 extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
 
-class BfmeC1013
+class AptLanLobby
 {
 public:
-	void bfmeGo1013C(void);
+	void OnGameJoin(void);
 };
 
 class BfmeQ1063
@@ -279,7 +279,7 @@ void LANAPI::OnGameJoin(ReturnType ret, LANGameInfo *theGame, LANMessage *msg)
 	{
 		if (reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby))
 		{
-			reinterpret_cast<BfmeC1013 *>(reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby))->bfmeGo1013C();
+			reinterpret_cast<AptLanLobby *>(reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby))->OnGameJoin();
 		}
 		else
 		{

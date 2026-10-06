@@ -88,10 +88,10 @@ extern WindowManager *g_rva012F19E8WindowManager;
 
 char bfmeAsk1013(void);
 
-class BfmeC1013
+class AptLanLobby
 {
 public:
-	void bfmeGo1013C();
+	void OnGameJoin();
 
 	char m_bfmePad[0x250];
 	int m_bfmeId;
@@ -99,7 +99,7 @@ public:
 	int m_bfmeState;
 };
 
-void BfmeC1013::bfmeGo1013C()
+void AptLanLobby::OnGameJoin()
 {
 	if (m_bfmeState != 8)
 		return;
