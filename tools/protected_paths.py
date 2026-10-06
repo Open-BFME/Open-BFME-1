@@ -60,12 +60,12 @@ PROTECTED = (
     "tools/name_oracle.py", "tools/ea_name_guard.py", "tools/target_hooks.py",
     "tools/eol_guard.py", "tools/retired_guard.py", "tools/doc_budget.py",
     "tools/protected_paths.py", "tools/body_guard.py", "tools/dir32_record_guard.py",
-    "tools/progress.py",
+    "tools/progress.py", "tools/hatch_counters.py", "tools/retail_inventory.py",
     # the hooks and CI that run all of the above
     ".githooks/*", ".github/workflows/*",
     # debt registers and exemption lists
     "targets/game/reverse/*baseline*", "targets/game/reverse/*_known_red.txt",
-    "targets/game/reverse/*whitelist*",
+    "targets/game/reverse/*whitelist*", "targets/game/reverse/retail_inventory/*",
 )
 
 TRAILER = re.compile(r"^Verifier-Change:[ \t]*(\S.{7,}?)[ \t]*$", re.MULTILINE)
