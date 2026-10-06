@@ -18718,5 +18718,15 @@
   "after_sha256": "884fe635bb0c1a2a2c1e64d5a11c20714a413aa214f01928e2c8fe448c6aee9a",
   "evidence": "targets/game/reverse/identity_evidence/000290d2-window-manager-call-is-rva00465b80-apply.md",
   "reason": "The call goes through ILT 0x000290D2 to 0x00465B80, matched as ?apply@Rva00465B80@@QAEXXZ; BfmeGlobal_012f19e8::bfmeCall_000290d2 only spelled the global and ILT addresses and nothing defines it."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "populateObserverList",
+  "new_name": "j_00036ba1",
+  "before_sha256": "d2c1d210499617c63fd73496f3b8c5397252adafa9e2c34c8d68f7e97a15d317",
+  "after_sha256": "447b7ff583be0da353d47eb431afffd9840952c703d4588e66264655144172c0",
+  "evidence": "targets/game/reverse/identity_evidence/004a9cd0-controlbar-populateobserverlist.md",
+  "reason": "0x00036BA1 is the 5-byte ILT thunk jumping to 0x004A9CD0; the name moves to that body (EA label, ILT oracle CONFIRMED) and the thunk is claimed by address as ?j_00036ba1@@YAXXZ."
  }
 ]

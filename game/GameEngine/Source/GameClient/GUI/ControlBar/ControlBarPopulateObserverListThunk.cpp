@@ -1,20 +1,13 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/GameEngine/Source/Common/System /Igame/GameEngine/Include /Igame/GameEngine/Include/Precompiled /game/Libraries/Source/WWVegas/WWLib
-// readable body of ?populateObserverList@ControlBar@@QAEXXZ: game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarObserver.cpp
+// cl: /O2 /MD
+// Incremental-link thunk 0x00036BA1 for ControlBar::populateObserverList, whose
+// body (0x004A9CD0) is game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarObserver.cpp.
+// Claimed by address, as the ILT convention says. Under /O2 a tail call with
+// no arguments is exactly `E9 rel32`, and `this` passes through in ecx. A free
+// function cannot name a member, so the extern carries the mangled name itself.
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
-class ControlBar
-{
-public:
-    void populateObserverList();
-};
+extern "C" void __identifier("?populateObserverList@ControlBar@@QAEXXZ")(void);
 
-class ControlBarPopulateObserverListShim
+void j_00036ba1(void)
 {
-public:
-    void populate();
-};
-
-void ControlBar::populateObserverList()
-{
-    ((ControlBarPopulateObserverListShim *)this)->populate();
+	__identifier("?populateObserverList@ControlBar@@QAEXXZ")();
 }

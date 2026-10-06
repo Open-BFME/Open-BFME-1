@@ -183,7 +183,6 @@ WindowMsgHandledType ControlBarObserverSystem( GameWindow *window, UnsignedInt m
 // PRIVATE FUNCTIONS //////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/ControlBarPopulateObserverListThunk.cpp
 class Rva004A9CD0PlayerView
 {
 public:
@@ -193,13 +192,9 @@ public:
 	}
 };
 
-class ControlBarPopulateObserverListShim
-{
-public:
-	void populate(void);
-};
-
-void ControlBarPopulateObserverListShim::populate( void )
+// EA's ControlBar::populateObserverList (0x004A9CD0; retail callers reach it
+// through ILT 0x00036BA1, see ControlBarPopulateObserverListThunk.cpp).
+void ControlBar::populateObserverList( void )
 {
 	Int currentButton = 0, i;
 	if(TheRecorder->isMultiplayer())
