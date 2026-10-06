@@ -76,20 +76,8 @@ static const Int edgeScrollSize = 3;
 static Mouse::MouseCursor prevCursor = Mouse::ARROW;
 
 //-----------------------------------------------------------------------------
-// ?setScrolling@LookAtTranslator@@ present-unmatched
-void LookAtTranslator::setScrolling(Int x)
-{
-	if (!TheInGameUI->getInputEnabled())
-		return;
-
-	prevCursor = TheMouse->getMouseCursor();
-	m_isScrolling = true;
-	TheInGameUI->setScrolling( TRUE );
-	TheTacticalView->setMouseLock( TRUE );
-	m_scrollType = x;
-	if(TheStatsCollector)
-		TheStatsCollector->startScrollTime();
-}
+// LookAtTranslator::setScrolling is defined once, by its retail body (0x005B51D0) in
+// LookAtTranslator_setScrolling_Bfme.cpp.
 
 //-----------------------------------------------------------------------------
 // ?stopScrolling@LookAtTranslator@@ present-unmatched
