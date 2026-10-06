@@ -98,7 +98,8 @@ inline UnsignedInt calcHashForString(const char* p)
 }
 
 /* ------------------------------------------------------------------------ */
-inline UnsignedInt calcHashForLowercaseString(const char* p)
+// Out of line in retail (0x0008F3C0): both nameToLowercaseKey copies call it.
+UnsignedInt calcHashForLowercaseString(const char* p)
 {
 	UnsignedInt result = 0; 
 	Byte *pp = (Byte*)p;
@@ -215,53 +216,9 @@ NameKeyType NameKeyGenerator::nameToKey(const char* nameString)
 }  // end nameToKey
 
 //------------------------------------------------------------------------------------------------- 
-// ?nameToLowercaseKey@NameKeyGenerator@@ present-unmatched
-NameKeyType NameKeyGenerator::nameToLowercaseKey(const char* nameString)
-{
-	Bucket *b;
-
-	UnsignedInt hash = calcHashForLowercaseString(nameString) % SOCKET_COUNT;
-
-	// hmm, do we have it already?
-	for (b = m_sockets[hash]; b; b = b->m_nextInSocket)
-	{
-		if (_strcmpi(nameString, b->m_nameString.str()) == 0)
-			return b->m_key; 
-	}
-
-	// nope, guess not. let's allocate it.
-	b = newInstance(Bucket);
-	b->m_key = (NameKeyType)m_nextID++;
-	b->m_nameString = nameString;
-	b->m_nextInSocket = m_sockets[hash];
-	m_sockets[hash] = b;
-
-	NameKeyType result = b->m_key;
-
-#if defined(_DEBUG) || defined(_INTERNAL)
-	// reality-check to be sure our hasher isn't going bad.
-	const Int maxThresh = 3;
-	Int numOverThresh = 0;
-	for (Int i = 0; i < SOCKET_COUNT; ++i)
-	{
-		Int numInThisSocket = 0;
-		for (b = m_sockets[i]; b; b = b->m_nextInSocket)
-			++numInThisSocket;
-
-		if (numInThisSocket > maxThresh)
-			++numOverThresh;
-	}
-	
-	// if more than a small percent of the sockets are getting deep, probably want to increase the socket count.
-	if (numOverThresh > SOCKET_COUNT/20)
-	{
-		DEBUG_CRASH(("hmm, might need to increase the number of bucket-sockets for NameKeyGenerator (numOverThresh %d = %f%%)\n",numOverThresh,(Real)numOverThresh/(Real)(SOCKET_COUNT/20)));
-	}
-#endif
-
-	return result;
-
-}  // end nameToLowercaseKey
+// NameKeyGenerator::nameToLowercaseKey: retail's body (0x00090140, reached
+// through ILT 0x00006DB6) is NameKeyGeneratorNameToLowercaseKeyIndexed.cpp.
+// Zero Hour's version is not defined here.
 
 //------------------------------------------------------------------------------------------------- 
 // Get a string out of the INI. Store it into a NameKeyType
