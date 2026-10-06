@@ -24,10 +24,13 @@ namespace _STL
 
 void __cdecl operator delete(void *block);
 
-class Gen_dtor_000d4030
+// Retail destroys the entry through ILT 0x00023218 -> 0x000D1980, the matched
+// vector-owner destructor ??1Rva000D1980@@QAE@XZ (R3VectorOwnerDestructors.cpp:
+// frees the vector at +0x04..+0x0C, the entry's three-pointer copy).
+class Rva000D1980
 {
 public:
-	~Gen_dtor_000d4030(void);
+	~Rva000D1980();
 };
 
 struct BfmeEntry5
@@ -123,7 +126,7 @@ void Gen_000D5E90::bfmeRemove(void *owner, void *extra)
 				next->m_bfmePrev = previous;
 				_STL::nodePoolDeallocate(node, 0x0c);
 
-				((Gen_dtor_000d4030 *)entry)->~Gen_dtor_000d4030();
+				((Rva000D1980 *)entry)->~Rva000D1980();
 				::operator delete(entry);
 				reinterpret_cast<ControlBar5 *>(TheControlBar)->m_bfmeDirty = true;
 				return;

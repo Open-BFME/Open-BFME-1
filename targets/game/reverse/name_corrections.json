@@ -18668,5 +18668,15 @@
   "after_sha256": "ab671f47bd02c98e8824a48332b3cd33b1fea78c4628f21c03cfebad0203adaf",
   "evidence": "targets/game/reverse/identity_evidence/00160430-not-anything-to-render.md",
   "reason": "0x00160430 reads a byte at +0xE5, but BFME's matched DX8FVFCategoryContainer ctor 0x009469B0 stores a dword at +0xE4 and AnythingToRender at +0xED; the ZH-derived gen-alias name is retired for the address-derived Rva00160430::get."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Bfme5EntryRemove.cpp",
+  "new_path": "game/GameEngine/Source/Common/Bfme5EntryRemove.cpp",
+  "old_name": "Gen_dtor_000d4030",
+  "new_name": "Rva000D1980",
+  "before_sha256": "bca665ec045f6407eeaf7399b87f79d2bae73c0787aa9fc409a27cf0f1e2b8fa",
+  "after_sha256": "02ae68804c1b6a04ae3de7b4198308e3f50e2b5fe241c280a5afcda623a14294",
+  "evidence": "targets/game/reverse/identity_evidence/000d5f30-entry-dtor-is-rva000d1980.md",
+  "reason": "The call goes through ILT 0x00023218 to 0x000D1980, matched as the vector-owner destructor ??1Rva000D1980@@QAE@XZ; Gen_dtor_000d4030 was only a pin spelling nothing defines and names a different address (0x000D4030)."
  }
 ]
