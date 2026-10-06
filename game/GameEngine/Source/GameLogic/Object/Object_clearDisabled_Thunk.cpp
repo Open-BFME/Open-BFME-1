@@ -77,10 +77,10 @@ struct Coord3D
 	float z;
 };
 
-// Retail's AudioEventRTS ctor/dtor are reached through ILT thunks at
-// 0x25306 / 0x26f35; the inline bodies below keep the call sites identical.
+// Retail's AudioEventRTS ctor is reached through the ILT thunk at 0x25306;
+// the inline body below keeps the call site identical. The dtor resolves
+// through its pin to the ILT at 0x26f35.
 extern void j_00025306();
-extern void j_00026f35();
 
 struct BfmeAudioCtorCall
 {
@@ -96,12 +96,7 @@ public:
 		union { void (*fn)(); Function member; } u = { j_00025306 };
 		(reinterpret_cast<BfmeAudioCtorCall *>(this)->*u.member)(eventName, ownerID);
 	}
-	__forceinline ~AudioEventRTS()
-	{
-		typedef void (BfmeAudioCtorCall::*Function)();
-		union { void (*fn)(); Function member; } u = { j_00026f35 };
-		(reinterpret_cast<BfmeAudioCtorCall *>(this)->*u.member)();
-	}
+	~AudioEventRTS();
 	AudioEventRTS &operator=(const AudioEventRTS &that);
 	void setPosition(const Coord3D *position);
 
