@@ -26,7 +26,8 @@ Rules (each finding carries its rule id):
 
 Only what the commit introduces is checked, so existing debt never blocks an
 unrelated edit. Everything runs on `git diff -U0` plus `git grep` lookups of the
-few addresses a commit touches, which keeps the hook path well under a second.
+few addresses a commit touches: about a second per commit in the hook, most of it
+parsing tu_map.csv, which is skipped when the ledger did not change.
 
 Usage:
   python3 tools/tu_ownership.py --staged [--shadow]   the commit hook
@@ -176,6 +177,23 @@ def registry():
     return reg
 
 
+def exempt():
+    """path -> classes a recorded decision lets that file keep privately.
+
+    Open-BFME-1's adopt_header.py records every shim the compiler refused to swap
+    for its header in header_adopt_blocked.tsv; a recorded refusal is a decision,
+    not a new copy, so B1 honours it (measured: 1 of 6 B1 replay findings).
+    """
+    out = collections.defaultdict(set)
+    p = LAYOUT.path("header_adopt_blocked.tsv")
+    if p.exists():
+        for line in p.read_text(encoding="utf-8", errors="replace").splitlines():
+            f = line.split("	")
+            if len(f) >= 2:
+                out[f[0]].add(f[1])
+    return out
+
+
 MEMBER = re.compile(r"^\s*(?!static\b|typedef\b|friend\b|enum\b|using\b|virtual\b|return\b)([A-Za-z_][\w:<>,\s*&]*?)\s*\b\w+\s*(\[[^\]]*\])?\s*;")
 
 
@@ -235,7 +253,7 @@ def check_classes(base, new, d, reg):
             continue
         spec = f":{path}" if new is None else f"{new}:{path}"
         text = git("show", spec)
-        allowed = set(ALLOW.findall(text))
+        allowed = set(ALLOW.findall(text)) | exempt().get(path, set())
         bodies = class_bodies(text)
         for name in sorted(new_names):
             if name in reg and name not in allowed and name in bodies and ROOT / reg[name] != ROOT / path \
@@ -252,7 +270,8 @@ def check_classes(base, new, d, reg):
 # ---------------------------------------------------------------- drivers
 def check(base, new, tumap=None, reg=None, rules=None):
     d = diff(base, new, [ledger(), LAYOUT.src.rstrip("/")])
-    tumap = tu_map.load(ROOT) if tumap is None else tumap
+    if tumap is None:
+        tumap = tu_map.load(ROOT) if ledger() in d else {}
     reg = registry() if reg is None else reg
     out = check_ledger(base, new, d, tumap) + check_defs(base, new, d) + check_classes(base, new, d, reg)
     return [f for f in out if not rules or f[0] in rules]
