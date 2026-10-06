@@ -259,84 +259,8 @@ const FieldParse WeaponTemplate::TheWeaponTemplateFieldParseTable[] =
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-//-------------------------------------------------------------------------------------------------
-// ??0WeaponTemplate@@QAE@XZ present-unmatched
-WeaponTemplate::WeaponTemplate() : m_nextTemplate(NULL)
-{
-
-	m_name													= "NoNameWeapon";
-	m_nameKey												= NAMEKEY_INVALID;
-	m_primaryDamage									= 0.0f;
-	m_primaryDamageRadius						= 0.0f;
-	m_secondaryDamage								= 0.0f;
-	m_secondaryDamageRadius					= 0.0f;
-	m_attackRange										= 0.0f;
-	m_minimumAttackRange						= 0.0f;
-	m_requestAssistRange						= 0.0f;
-	m_aimDelta											= 0.0f;
-	m_scatterRadius									= 0.0f;
-	m_scatterTargetScalar						= 0.0f;
-	m_shockWaveAmount								= 0.0f;
-	m_shockWaveRadius								= 0.0f;
-	m_shockWaveTaperOff							= 0.0f;
-	m_damageType										= DAMAGE_EXPLOSION;
-	m_deathType											= DEATH_NORMAL;
-	m_weaponSpeed										= 999999.0f;	// effectively instant
-	m_minWeaponSpeed								= 999999.0f;	// effectively instant
-	m_isScaleWeaponSpeed						= FALSE;
-	m_weaponRecoil									= 0.0f;		// no recoil
-	m_minTargetPitch								= -PI;
-	m_maxTargetPitch								= PI;
-	m_radiusDamageAngle							= PI;	// PI each way, so full circle
-	m_projectileName.clear();					// no projectile
-	m_projectileTmpl								= NULL;
-	for (Int i = LEVEL_FIRST; i <= LEVEL_LAST; ++i)
-	{
-		m_fireOCLNames[i].clear();
-		m_projectileDetonationOCLNames[i].clear();
-		m_projectileExhausts[i]					= NULL;
-		m_fireOCLs[i]										= NULL;
-		m_projectileDetonationOCLs[i]		= NULL;
-		m_fireFXs[i]										= NULL;
-		m_projectileDetonateFXs[i]			= NULL;
-	}
-	m_damageDealtAtSelfPosition			= false;
-	m_affectsMask										= (WEAPON_AFFECTS_ALLIES | WEAPON_AFFECTS_ENEMIES | WEAPON_AFFECTS_NEUTRALS);
-	// most projectile weapons don't want to collide with nontargeted enemies/allies or trees...
-	m_collideMask										= (WEAPON_COLLIDE_STRUCTURES);
-	m_reloadType										= AUTO_RELOAD;
-	m_prefireType										= PREFIRE_PER_SHOT;
-	m_clipSize											= 0;
-	m_continuousFireOneShotsNeeded	= INT_MAX;
-	m_continuousFireTwoShotsNeeded	= INT_MAX;
-	m_continuousFireCoastFrames			= 0;
- 	m_autoReloadWhenIdleFrames			= 0;
-	m_clipReloadTime								= 0;
-	m_minDelayBetweenShots					= 0;
-	m_maxDelayBetweenShots					= 0;
-	m_fireSoundLoopTime							= 0;
-	m_extraBonus										= NULL;
-	m_shotsPerBarrel								= 1;
-	m_antiMask											= WEAPON_ANTI_GROUND;	// but not air or projectile.
-	m_projectileStreamName.clear();
-	m_laserName.clear();
-	m_laserBoneName.clear();
-	m_historicBonusTime							= 0;
-	m_historicBonusCount						= 0;
-	m_historicBonusRadius						= 0;
-	m_historicBonusWeapon						= NULL;
-	m_leechRangeWeapon							= FALSE;
-	m_capableOfFollowingWaypoint		= FALSE;
-	m_isShowsAmmoPips								= FALSE;
-	m_allowAttackGarrisonedBldgs		= FALSE;
-	m_playFXWhenStealthed						= FALSE;
-	m_preAttackDelay								= 0;
-	m_continueAttackRange						= 0.0f;
-	m_infantryInaccuracyDist				= 0.0f;
-	m_damageStatusType							= OBJECT_STATUS_NONE;
-	m_suspendFXDelay								= 0;
-	m_dieOnDetonate						= FALSE;
-}
+// ------------------------------------------------------------------------------------------------
+// Retail WeaponTemplate::WeaponTemplate (0x001E74B0) is provided by WeaponTemplateConstructor.cpp.
 
 // ------------------------------------------------------------------------------------------------
 // Retail reset behavior is provided by WeaponStore_reset.cpp.
