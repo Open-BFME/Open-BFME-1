@@ -3,39 +3,8 @@
 
 #include <map>
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	struct Header
-	{
-		int ref_count;
-		unsigned short length;
-		unsigned short capacity;
-		T data[1];
-	};
-
-	StringBase();
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-	Header *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-
-	static AsciiString TheEmptyString;
-
-	int compare(const AsciiString &other) const;
-};
 
 namespace _STL
 {

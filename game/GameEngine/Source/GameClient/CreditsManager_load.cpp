@@ -7,35 +7,8 @@ typedef int Int;
 typedef float Real;
 typedef unsigned char Bool;
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringBase() : m_data(0) {}
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-
-	struct Data
-	{
-		Int m_refCount;
-		unsigned short m_length;
-		unsigned short m_capacity;
-		T m_text[1];
-	};
-	Data *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-};
 
 class Xfer;
 

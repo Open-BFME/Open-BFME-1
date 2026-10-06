@@ -5,30 +5,8 @@
 
 class AsciiString;
 
-template <class T> class StringBase
-{
-private:
-	friend class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-	struct Data
-	{
-		int refs;
-		int length;
-		T data[1];
-	};
-
-	Data *m_data;
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase &other);
-	void releaseBuffer();
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() { releaseBuffer(); }
-};
 
 class Object
 {

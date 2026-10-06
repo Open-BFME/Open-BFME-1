@@ -3,12 +3,7 @@
 
 #include "string_base.h"
 
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const AsciiString &that) : StringBase<char>(that) {}
-	~AsciiString() {}
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 enum DrawableID
 {

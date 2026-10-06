@@ -11,20 +11,7 @@
 #include <stl/_config.h>
 #undef _STLP_DEFAULT_CONSTRUCTOR_BUG
 
-template<class T> class StringBase {
- friend class AsciiString;
-private:
- StringBase():m_data(0) {} StringBase(const StringBase&); ~StringBase();
-public:
- void set(const StringBase&);
- StringBase &operator=(const StringBase& other){set(other);return *this;}
- void *m_data;
-};
-class AsciiString:private StringBase<char> {
-public:
- AsciiString(){} AsciiString(const AsciiString& s):StringBase<char>(s){} ~AsciiString(){}
- AsciiString&operator=(const AsciiString& s){StringBase<char>::operator=(s);return *this;}
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class NetFileAnnounceCommandMsg
 {

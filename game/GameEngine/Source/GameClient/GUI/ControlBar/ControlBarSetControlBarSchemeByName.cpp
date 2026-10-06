@@ -1,21 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 // Clean reconstruction of the BFME ControlBar scheme selector.
 
-template <typename T> class StringBase
-{
-private:
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-	void *m_data;
-	friend class AsciiString;
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-};
 
 class ControlBarSchemeManager
 {

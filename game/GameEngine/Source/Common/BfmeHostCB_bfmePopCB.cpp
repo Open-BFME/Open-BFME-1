@@ -16,9 +16,7 @@ public:
 	void set(const UnicodeString &o);
 };
 
-class AsciiString
-{
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Rva003A5450
 {

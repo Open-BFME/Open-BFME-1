@@ -5,35 +5,9 @@
 // (+0xB84) from CampaignManager::getCurrentMap. Named by the ZH body and
 // the MSG_NEW_GAME / GAME_SINGLE_PLAYER / InitRandom(0) tail.
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase() : m_data( 0 ) {}
-	StringBase( const T *text );
-	StringBase( const StringBase<T> &other );
-	~StringBase();
-
-	void set( const StringBase<T> &other );
-
-	void *m_data;
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString( const char *text ) : StringBase<char>( text ) {}
-	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-	~AsciiString() {}
-	AsciiString &operator=( const AsciiString &other )
-	{
-		set( other );
-		return *this;
-	}
-};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shell.h
 class Shell

@@ -6,19 +6,7 @@ class AsciiString;
 
 #include "string_base.h"
 
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-	Bool nextToken(AsciiString *token, const char *seps = 0);
-
-	const char *str() const
-	{
-		return m_data ? reinterpret_cast<const char *>(m_data) + 8 : "";
-	}
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Rva00204770BitFlagsParser
 {

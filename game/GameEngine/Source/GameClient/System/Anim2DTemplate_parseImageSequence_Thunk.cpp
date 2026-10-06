@@ -7,39 +7,8 @@ typedef int Int;
 typedef unsigned short UnsignedShort;
 typedef bool Bool;
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringBase() : m_data(0) {}
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-
-	struct Header
-	{
-		int m_refCount;
-		unsigned short m_len;
-		unsigned short m_capacity;
-	};
-
-	Header *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	~AsciiString() {}
-	const char *str() const
-	{
-		return m_data ? (const char *)(m_data + 1) : "";
-	}
-	void __cdecl format(AsciiString format, ...);
-};
 
 class Image {};
 

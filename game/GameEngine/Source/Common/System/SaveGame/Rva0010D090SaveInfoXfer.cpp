@@ -44,11 +44,7 @@ public:
     void set(const UnicodeString &s);
 };
 
-class AsciiString {
-public:
-    char *m_data;
-    static const AsciiString TheEmptyString;
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // ---- MidVirtualSlot90 forwarder (already matched/pinned) ----
 class MidVirtualSlot90Receiver;

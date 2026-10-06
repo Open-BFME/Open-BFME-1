@@ -18,37 +18,8 @@ template <typename T> struct Rva006239C0StringData
 	T m_text[1];
 };
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-	friend class UnicodeString;
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringBase() : m_data(0) {}
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-	Rva006239C0StringData<T> *m_data;
-
-public:
-	void set(const StringBase<T> &other);
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-
-	void format(AsciiString format, ...);
-
-	const char *str() const
-	{
-		return m_data ? m_data->m_text : "";
-	}
-};
 
 class UnicodeString : private StringBase<WideChar>
 {

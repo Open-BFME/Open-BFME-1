@@ -1,0 +1,51 @@
+{
+ "bases": [],
+ "bases_by": "zh",
+ "class": "AsciiString",
+ "evidence": {
+  "census": 60,
+  "retail_access": {
+   "0x0": {
+    "4": 8
+   }
+  },
+  "retail_member_rows": 8,
+  "retail_vtables": {},
+  "view_errors": 0,
+  "view_sizes": {
+   "1": 2,
+   "4": 58
+  },
+  "views": 60,
+  "witness_offsets": [],
+  "zh": {
+   "header": "CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h"
+  }
+ },
+ "fields": [
+  {
+   "decided_by": "zh",
+   "kind": "P",
+   "name": "m_data",
+   "name_by": "zh",
+   "offset": 0,
+   "retail_widths": {
+    "4": 8
+   },
+   "size": 4,
+   "type": "AsciiString::AsciiStringData*",
+   "views": 58,
+   "witness": null
+  }
+ ],
+ "key": "class",
+ "key_by": "bytes",
+ "ledger_keys": {
+  "class": 3659
+ },
+ "outliers": [],
+ "queue": [],
+ "size": 4,
+ "size_by": "zh",
+ "vslots": {}
+}
