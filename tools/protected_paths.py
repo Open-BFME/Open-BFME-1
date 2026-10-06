@@ -69,6 +69,7 @@ PROTECTED = (
     "tools/progress.py", "tools/hatch_counters.py", "tools/retail_inventory.py",
     # the advisory audit: its judge allowlist (judges.json), canaries and harness
     "tools/audit/*",
+    "tools/ilt_oracle.py", "tools/ilt_guard.py", "targets/game/reverse/ilt_windows.tsv",
     # the hooks and CI that run all of the above
     ".githooks/*", ".github/workflows/*",
     # debt registers and exemption lists
@@ -150,6 +151,7 @@ SHRINK_ONLY = {
     "targets/game/reverse/dir32_addresses.csv": (_moved_addresses, None),
     "targets/game/reverse/alias_target_baseline.txt": (_grown_lines, None),
     "targets/game/reverse/name_oracle_baseline.csv": (_grown_findings, "tools/name_oracle.py"),
+    "targets/game/reverse/ilt_contradicted_baseline.txt": (_grown_lines, "tools/ilt_guard.py"),
 }
 
 

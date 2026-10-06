@@ -98,6 +98,7 @@ python3 tools/doc_budget.py --staged || fail "doc budget (see above)"
 present() { [ -f "$1" ] || { echo "pre-commit: $1 is newer than this tree; rebase to enable its check" >&2; return 1; }; }
 present tools/ea_name_guard.py && { python3 tools/ea_name_guard.py --staged || fail "a name contradicts EA evidence (see above)"; }
 present tools/name_lane.py && { python3 tools/name_lane.py check --staged || fail "a placeholder was renamed outside the naming lane (see above)"; }
+present tools/ilt_guard.py && { python3 tools/ilt_guard.py --staged || fail "retail's thunk table contradicts a new name (see above)"; }
 # A literal image address matches bytes but breaks the linked build; name the global.
 python3 tools/link_debt.py --staged || fail "new hard-coded image address (see above)"
 # An /alternatename alias must name the body at its alias's pinned address.
