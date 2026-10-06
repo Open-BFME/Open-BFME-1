@@ -9040,43 +9040,5 @@ void AIFaceState::onExit( StateExitType status )
 }
 
 //----------------------------------------------------------------------------------------------------------
-// ?update@AIFaceState@@UAE?AW4StateReturnType@@XZ present-unmatched
-StateReturnType AIFaceState::update()
-{
-
-	Object *obj = getMachineOwner();
-	AIUpdateInterface *ai = obj->getAI();
-
-	const Coord3D* pos = getMachineGoalPosition();
-	if (m_obj)
-	{
-		Object *target = getMachineGoalObject();
-		if (!target)
-		{
-			// Nothing to face.
-			return STATE_FAILURE;	
-		}
-		pos = target->getPosition();
-	}
-	Real relAngle = ThePartitionManager->getRelativeAngle2D( obj, pos );
-
-	const Real REL_THRESH = 0.035f;	// about 2 degrees. (getRelativeAngle2D is current only accurate to about 1.25 degrees)
-	if( fabs( relAngle ) < REL_THRESH )
-	{
-		return STATE_SUCCESS;
-	}
-
-	// turnDelta = yawRate()	NO, do not get this, it is not useful. (srj)
-
-	if (m_canTurnInPlace)
-	{
-		Real desiredAngle = obj->getOrientation() + relAngle;
-		ai->setLocomotorGoalOrientation( desiredAngle );
-	}
-	else
-	{
-		ai->setLocomotorGoalPositionExplicit(*pos);
-	}
-
-	return STATE_CONTINUE;
-}
+// AIFaceState::update: retail's body (0x00189660) is AIFaceState_update_Bfme.cpp;
+// Zero Hour's version is not defined here.
