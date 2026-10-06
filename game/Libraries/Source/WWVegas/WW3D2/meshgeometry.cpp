@@ -209,42 +209,8 @@ MeshGeometryClass::MeshGeometryClass(const MeshGeometryClass & that) :
  * HISTORY:                                                                                    *
  *   11/9/2000  gth : Created.                                                                 *
  *=============================================================================================*/
-// ?MeshGeometryClass::operator= present-unmatched
-MeshGeometryClass & MeshGeometryClass::operator = (const MeshGeometryClass & that)
-{
-	if (this != &that) {
-		Flags = that.Flags;
-		SortLevel = that.SortLevel;
-		W3dAttributes = that.W3dAttributes;
-		PolyCount = that.PolyCount;
-		VertexCount = that.VertexCount;
-
-		BoundBoxMin = that.BoundBoxMin;
-		BoundBoxMax = that.BoundBoxMax;
-		BoundSphereCenter = that.BoundSphereCenter;
-		BoundSphereRadius = that.BoundSphereRadius;
-
-		REF_PTR_SET(MeshName,that.MeshName);
-		REF_PTR_SET(UserText,that.UserText);
-		REF_PTR_SET(Poly,that.Poly);
-		REF_PTR_SET(PolySurfaceType,that.PolySurfaceType);		
-		REF_PTR_SET(Vertex,that.Vertex);
-		REF_PTR_SET(VertexNorm,that.VertexNorm);
-		REF_PTR_SET(PlaneEq,that.PlaneEq);
-		REF_PTR_SET(VertexShadeIdx,that.VertexShadeIdx);
-		REF_PTR_SET(VertexBoneLink,that.VertexBoneLink);
-
-		// Clone the cull tree..
-		REF_PTR_RELEASE(CullTree);
-
-		if (that.CullTree) {
-			CullTree = NEW_REF(AABTreeClass, ());
-			*CullTree = *that.CullTree;
-			CullTree->Set_Mesh(this);
-		}
-	}
-	return * this;
-}
+// MeshGeometryClass::operator= exact retail body (0x00924930) is emitted by
+// MeshGeometryClassAssignment.cpp.
 
 
 /***********************************************************************************************
