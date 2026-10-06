@@ -2,12 +2,7 @@
 
 typedef float Real;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // BFME keeps the TeamTemplateInfo inside TeamPrototype.  The retail offsets
 // below are the fields shared with the authoritative Zero Hour layout:

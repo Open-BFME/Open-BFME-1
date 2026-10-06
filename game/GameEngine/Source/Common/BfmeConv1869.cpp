@@ -4,12 +4,7 @@
 
 typedef float Real;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 #define BFME_UNUSED_VIRTUALS_16(prefix) \
 	virtual void prefix##0() = 0; virtual void prefix##1() = 0; \

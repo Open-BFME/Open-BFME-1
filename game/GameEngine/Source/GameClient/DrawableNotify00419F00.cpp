@@ -16,10 +16,7 @@ class Player;
 class Module;
 class Drawable;
 
-struct Coord3D
-{
-    float x, y, z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 enum KindOfType
 {

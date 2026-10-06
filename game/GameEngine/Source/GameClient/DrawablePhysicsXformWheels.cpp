@@ -28,7 +28,7 @@ typedef int Int;
 #define NULL 0
 typedef float Real; typedef bool Bool;
 #define PI 3.14159265358979323846f
-struct Coord3D { float x,y,z; };
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 class Overridable { public: void *vtable; const Overridable *m_nextOverride; const Overridable *getFinalOverride() const; };
 class LocomotorTemplate: public Overridable { public: char pad8[0x84-8]; float m_accelPitchLimit,m_bounceKick,m_pitchStiffness,m_rollStiffness,m_pitchDamping,m_rollDamping; char pad9c[0xb4-0x9c]; float m_uniformAxialDamping; char padb8[0xd8-0xb8]; bool m_hasSuspension; char padd9[3]; float m_maximumWheelExtension; };
 class Locomotor { public: void *vtable; const LocomotorTemplate *m_template;

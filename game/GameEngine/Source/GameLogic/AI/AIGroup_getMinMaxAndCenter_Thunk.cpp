@@ -41,12 +41,7 @@ struct Coord2D
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	Real x;														///< +0x00
-	Real y;														///< +0x04
-	Real z;														///< +0x08
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class AIUpdateInterface;
 

@@ -20,10 +20,7 @@ struct Coord2D
 	float x, y;
 };
 
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class INI
 {

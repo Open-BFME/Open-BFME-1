@@ -1,10 +1,7 @@
 // ?Rva00699F30ShroudCheck@@YG_NPAVAudioEventRTS@@@Z
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
-struct Coord3D
-{
-    float x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventInfo.h
 struct AudioEventInfoSlice

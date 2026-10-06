@@ -39,10 +39,7 @@ struct Region2D
 	Coord2D lo, hi;
 };
 
-struct Coord3D
-{
-	Real x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // The shape vector's element. The ledger names its copy-assignment operator
 // (0x000FC640, reached through the 0x00040F43 thunk) by address, so the class

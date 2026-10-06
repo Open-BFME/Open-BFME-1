@@ -14,10 +14,7 @@ typedef bool Bool;
 
 enum StateReturnType { STATE_CONTINUE = 0 };
 
-struct Coord3D
-{
-	Real x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 extern UnsignedByte g_012F0239;
 extern void *g_012ED4FC;

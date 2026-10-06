@@ -14,12 +14,7 @@ template <> inline bool StringBase<char>::isEmpty() const
 	return !m_data || m_data->length == 0;
 }
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 // BFME layout as this body writes it: the decal position is a Coord3D at +0x08,
 // the angle at +0x20 and a flag byte at +0x64.  The layout witness names Shadow+0x08
