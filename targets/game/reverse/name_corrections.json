@@ -18658,5 +18658,15 @@
   "after_sha256": "5db9b569c77afc74a5deec4d98cd88665f66c39c944916dc99129b21453d2f28",
   "evidence": "targets/game/reverse/identity_evidence/001bd7d0-returns-position-by-value.md",
   "reason": "The getter call lands on 0x001BD7D0 via ILT 0x000228BD, matched as Rva001BD7D0::get; BfmeFiringTracker was only a pin spelling nothing defines, and the Object+0x1EC member stays FiringTracker."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "DX8FVFCategoryContainer",
+  "new_name": "Rva00160430",
+  "before_sha256": "65effba2756f27e52d2da563e598ab5c7e88445b26089af7f25fcc8c3354c7ae",
+  "after_sha256": "ab671f47bd02c98e8824a48332b3cd33b1fea78c4628f21c03cfebad0203adaf",
+  "evidence": "targets/game/reverse/identity_evidence/00160430-not-anything-to-render.md",
+  "reason": "0x00160430 reads a byte at +0xE5, but BFME's matched DX8FVFCategoryContainer ctor 0x009469B0 stores a dword at +0xE4 and AnythingToRender at +0xED; the ZH-derived gen-alias name is retired for the address-derived Rva00160430::get."
  }
 ]

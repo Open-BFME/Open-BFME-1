@@ -1,3 +1,23 @@
+// Retail 0x00160430 is `mov al,[ecx+0xE5]; ret`. It was claimed as
+// DX8FVFCategoryContainer::Anything_To_Render from the ZH layout, but BFME's
+// matched constructor at 0x009469B0 stores a dword at +0xE4 and the
+// sorting/AnythingToRender/AnyDelayedPassesToRender bytes at +0xEC..+0xEE, so
+// no caller or layout names this byte's owner.
+class Rva00160430
+{
+	char m_padding[0xE5];
+	unsigned char m_value;
+
+public:
+	unsigned char get() const;
+};
+
+// ?get@Rva00160430@@QBEEXZ
+unsigned char Rva00160430::get() const
+{
+	return m_value;
+}
+
 class Rva00205030
 {
 	unsigned int m_head;
