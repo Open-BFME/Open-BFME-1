@@ -4493,24 +4493,9 @@ void Drawable::preloadAssets( TimeOfDay timeOfDay )
 }  // end preloadAssets
 
 //-------------------------------------------------------------------------------------------------
-// Simply searches for the first occurrence of a specified client update module.
+// Drawable::findClientUpdateModule: retail's body (0x00415630) is in
+// Drawable_findClientUpdateModule.cpp.
 //-------------------------------------------------------------------------------------------------
-// ?findClientUpdateModule@Drawable@@QAEPAVClientUpdateModule@@W4NameKeyType@@@Z present-unmatched
-ClientUpdateModule* Drawable::findClientUpdateModule( NameKeyType key )
-{
-	ClientUpdateModule **clientModules = getClientUpdateModules();
-	if( clientModules )
-	{
-		while( *clientModules )
-		{
-			if( (*clientModules)->getModuleNameKey() == key )
-			{
-				return *clientModules;
-			}
-		}
-	}
-	return NULL;
-}
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */

@@ -1,6 +1,7 @@
-// Five walks and askings: a reading taken after a fix, a ring told what to do,
-// a list searched by key, a run told two things, and a list asked until one
-// answers.
+// Four walks and askings: a reading taken after a fix, a ring told what to do,
+// a run told two things, and a list asked until one answers. (The list
+// searched by key was Drawable::findClientUpdateModule, now in
+// GameClient/Drawable_findClientUpdateModule.cpp.)
 
 class BfmeOtherEF;
 
@@ -129,48 +130,6 @@ void BfmeThingEG::bfmeTellEG(void *what)
 
 		at = at->m_bfmeNext;
 	}
-}
-
-
-class BfmeItemEH
-{
-public:
-	virtual void bfmeSpare000EH(void) = 0;
-	virtual void bfmeSpare001EH(void) = 0;
-	virtual void bfmeSpare002EH(void) = 0;
-	virtual void bfmeSpare003EH(void) = 0;
-	virtual int bfmeKeyEH(void) = 0;
-};
-
-class BfmeThingEH
-{
-public:
-	BfmeItemEH *bfmeFindEH(int key);
-
-private:
-	unsigned char m_bfmeHead[0x154];	// 0x000
-	BfmeItemEH **m_bfmeList;		// 0x154
-};
-
-BfmeItemEH *BfmeThingEH::bfmeFindEH(int key)
-{
-	BfmeItemEH **at = m_bfmeList;
-
-	if (at != 0)
-	{
-		BfmeItemEH *item = *at;
-
-		while (item != 0)
-		{
-			if (item->bfmeKeyEH() == key)
-				return *at;
-
-			item = at[1];
-			++at;
-		}
-	}
-
-	return 0;
 }
 
 
