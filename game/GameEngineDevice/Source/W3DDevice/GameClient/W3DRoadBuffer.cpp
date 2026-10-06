@@ -3203,13 +3203,13 @@ void W3DRoadBuffer::rotateAbout(Vector2 *ptP, Vector2 center, Real angle)
 //=============================================================================
 // byte-exact reconstruction: game/GameEngine/Source/Common/W3DRoadBuffer_freeRoadBuffersMethodThunk.cpp
 extern void W3DRadarResetLock(void);
-extern void W3DRadarResetUnlock(void);
+extern char bfmeUnlock1179(void);
 
 class W3DRoadBufferResetGuard
 {
 public:
 	W3DRoadBufferResetGuard() { W3DRadarResetLock(); }
-	~W3DRoadBufferResetGuard() { W3DRadarResetUnlock(); }
+	~W3DRoadBufferResetGuard() { bfmeUnlock1179(); }
 };
 
 // BFME stores this counted texture immediately after the ZH-visible road

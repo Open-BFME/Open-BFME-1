@@ -31,13 +31,13 @@ public:
 };
 
 void W3DRadarResetLock(void);
-void W3DRadarResetUnlock(void);
+char bfmeUnlock1179(void);
 
 class WaterGridResetGuard
 {
 public:
 	WaterGridResetGuard(void) { W3DRadarResetLock(); }
-	~WaterGridResetGuard(void) { W3DRadarResetUnlock(); }
+	~WaterGridResetGuard(void) { bfmeUnlock1179(); }
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DWater.h

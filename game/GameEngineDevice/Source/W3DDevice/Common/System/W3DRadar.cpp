@@ -883,7 +883,7 @@ public:
 };
 
 extern void W3DRadarResetLock();
-extern void W3DRadarResetUnlock();
+extern char bfmeUnlock1179(void);
 
 void W3DRadar::reset( void )
 {
@@ -915,7 +915,7 @@ void W3DRadar::reset( void )
 	virtuals->slot20();
 	virtuals->slot28();
 	*reinterpret_cast<Bool *>(radar + 0x1468) = TRUE;
-	W3DRadarResetUnlock();
+	bfmeUnlock1179();
 }  // end reset
 
 //-------------------------------------------------------------------------------------------------

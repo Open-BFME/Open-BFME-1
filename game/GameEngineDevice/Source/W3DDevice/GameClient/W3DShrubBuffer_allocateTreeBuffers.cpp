@@ -178,7 +178,7 @@ public:
 extern void *g_Rva00F36E5C;
 extern void _bfme_debugRecordCallsite(int kind);
 extern void W3DRadarResetLock(void);
-extern void W3DRadarResetUnlock(void);
+extern char bfmeUnlock1179(void);
 extern int bfmeCheck986B(void);
 
 class BfmeShaderLoader
@@ -234,7 +234,7 @@ class BfmeRadarResetGuard
 {
 public:
 	BfmeRadarResetGuard(void) { W3DRadarResetLock(); }
-	~BfmeRadarResetGuard(void) { W3DRadarResetUnlock(); }
+	~BfmeRadarResetGuard(void) { bfmeUnlock1179(); }
 };
 
 void W3DShrubBuffer::allocateTreeBuffers(void)

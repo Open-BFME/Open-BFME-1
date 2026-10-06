@@ -153,7 +153,7 @@ public:
 extern void *g_Rva00F36E5C;
 extern void _bfme_debugRecordCallsite(int kind);
 extern void W3DRadarResetLock(void);
-extern void W3DRadarResetUnlock(void);
+extern char bfmeUnlock1179(void);
 extern void j_000315f2(void);
 extern void Rva008FCE00SurfaceOperation(void);
 
@@ -172,7 +172,7 @@ class Rva006F92D0ResetGuard
 {
 public:
 	Rva006F92D0ResetGuard(void) { W3DRadarResetLock(); }
-	~Rva006F92D0ResetGuard(void) { W3DRadarResetUnlock(); }
+	~Rva006F92D0ResetGuard(void) { bfmeUnlock1179(); }
 };
 
 class W3DFloorBuffer

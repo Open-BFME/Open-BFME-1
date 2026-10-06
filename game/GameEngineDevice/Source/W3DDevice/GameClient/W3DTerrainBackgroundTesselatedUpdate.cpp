@@ -41,11 +41,11 @@ struct IRegion2D
 
 // Scoped DX8 lock: retail brackets the refill with this pair.
 void W3DRadarResetLock( void );
-void W3DRadarResetUnlock( void );
+char bfmeUnlock1179(void);
 struct BfmeDX8ScopedLock
 {
 	BfmeDX8ScopedLock() { W3DRadarResetLock(); }
-	~BfmeDX8ScopedLock() { W3DRadarResetUnlock(); }
+	~BfmeDX8ScopedLock() { bfmeUnlock1179(); }
 };
 
 class TextureFilterClass;

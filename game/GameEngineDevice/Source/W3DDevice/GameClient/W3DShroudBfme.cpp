@@ -105,7 +105,7 @@ public:
 };
 
 void W3DRadarResetLock(void);
-void W3DRadarResetUnlock(void);
+char bfmeUnlock1179(void);
 
 void operator delete[](void *);
 
@@ -260,7 +260,7 @@ Bool W3DShroud::ReAcquireResources(void)
 	reinterpret_cast<Gen_00920a60 *>(
 		reinterpret_cast<ShroudTexture *>(&m_dstTexture)->getFilter())->m(0);
 	m_clearDstTexture = 1;
-	W3DRadarResetUnlock();
+	bfmeUnlock1179();
 	return 1;
 }
 

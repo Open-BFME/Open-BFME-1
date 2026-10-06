@@ -65,7 +65,7 @@ public:
 };
 
 void W3DRadarResetLock(void);
-void W3DRadarResetUnlock(void);
+char bfmeUnlock1179(void);
 
 class TaintBuffer
 {
@@ -112,6 +112,6 @@ Bool TaintBuffer::ReAcquireResources(void)
 	dstTexture->getFilter()->m_vAddress = 1;
 	reinterpret_cast<Gen_00920a60 *>(dstTexture->getFilter())->m(0);
 	m_clearDstTexture = 1;
-	W3DRadarResetUnlock();
+	bfmeUnlock1179();
 	return 1;
 }

@@ -90,7 +90,7 @@ public:
 // ?d_009056f0@@YAXXZ was the retired gen-dump scaffold for those same bytes.
 
 void W3DRadarResetLock(void);
-void W3DRadarResetUnlock(void);
+char bfmeUnlock1179(void);
 
 // retail routes this call through the ILT thunk at 0x0002CFE3
 extern void j_0002cfe3();
@@ -180,7 +180,7 @@ void TaintBuffer::init(WorldHeightMap *map, Real worldCellSizeX,
 		dstTextureHeight += 2;
 		W3DRadarResetLock();
 		TextureLoader::Validate_Texture_Size((unsigned &)dstTextureWidth, (unsigned &)dstTextureHeight);
-		W3DRadarResetUnlock();
+		bfmeUnlock1179();
 	}
 
 	m_cellLevels = new unsigned char[*(volatile int *)&m_numCellsX * m_numCellsY];

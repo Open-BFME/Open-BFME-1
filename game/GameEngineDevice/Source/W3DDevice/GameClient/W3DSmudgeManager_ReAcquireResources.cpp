@@ -33,7 +33,7 @@ private:
 W3DRadarResetSurface getBackBufferSurface006e(int index);
 
 void W3DRadarResetLock(void);
-void W3DRadarResetUnlock(void);
+char bfmeUnlock1179(void);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h
 class IndexBufferClass
@@ -101,7 +101,7 @@ class BfmeRadarResetLock
 {
 public:
 	BfmeRadarResetLock() { W3DRadarResetLock(); }
-	~BfmeRadarResetLock() { W3DRadarResetUnlock(); }
+	~BfmeRadarResetLock() { bfmeUnlock1179(); }
 };
 
 void W3DSmudgeManager::ReAcquireResources(void)

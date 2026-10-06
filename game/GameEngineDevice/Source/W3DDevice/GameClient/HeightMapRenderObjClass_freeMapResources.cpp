@@ -26,7 +26,7 @@
 typedef int Int;
 
 void W3DRadarResetLock(void);					// retail 0x00903090
-void W3DRadarResetUnlock(void);					// retail 0x00905B10
+char bfmeUnlock1179(void);					// retail 0x00905B10
 void deleteTerrainIndexArray(void *memory);
 
 class W3DTerrainBackground
@@ -63,7 +63,7 @@ Int HeightMapRenderObjClass::freeMapResources(void)
 
 		delete [] m_tiles;
 
-		W3DRadarResetUnlock();
+		bfmeUnlock1179();
 
 		m_tiles = 0;
 	}

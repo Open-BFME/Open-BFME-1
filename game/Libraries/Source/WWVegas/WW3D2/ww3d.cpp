@@ -700,13 +700,13 @@ bool WW3D::Set_Device_Resolution(int width,int height,int bits,int windowed, boo
  *   1/25/2001  gth : converted to dx8                                                         *
  *=============================================================================================*/
 void W3DRadarResetLock(void);
-void W3DRadarResetUnlock(void);
+char bfmeUnlock1179(void);
 
 class BfmeRadarResetGuard
 {
 public:
 	BfmeRadarResetGuard() { W3DRadarResetLock(); }
-	~BfmeRadarResetGuard() { W3DRadarResetUnlock(); }
+	~BfmeRadarResetGuard() { bfmeUnlock1179(); }
 };
 
 struct BfmeDisplayModeInfo

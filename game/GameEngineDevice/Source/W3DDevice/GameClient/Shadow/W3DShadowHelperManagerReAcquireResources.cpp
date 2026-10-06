@@ -15,13 +15,13 @@ typedef bool Bool;
 #define FALSE false
 
 void W3DRadarResetLock(void);
-void W3DRadarResetUnlock(void);
+char bfmeUnlock1179(void);
 
 class BfmeRadarResetLock
 {
 public:
 	BfmeRadarResetLock(void) { W3DRadarResetLock(); }
-	~BfmeRadarResetLock(void) { W3DRadarResetUnlock(); }
+	~BfmeRadarResetLock(void) { bfmeUnlock1179(); }
 };
 
 class GenAlpha

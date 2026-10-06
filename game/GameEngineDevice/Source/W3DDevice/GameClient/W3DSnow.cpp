@@ -89,13 +89,13 @@ static const BfmeSnowOverride *walkSnowOverride(const BfmeSnowOverride *setting)
 }
 
 void W3DRadarResetLock(void);
-void W3DRadarResetUnlock(void);
+char bfmeUnlock1179(void);
 
 class BfmeSnowResetLock
 {
 public:
 	BfmeSnowResetLock(void) { W3DRadarResetLock(); }
-	~BfmeSnowResetLock(void) { W3DRadarResetUnlock(); }
+	~BfmeSnowResetLock(void) { bfmeUnlock1179(); }
 };
 
 class BfmeSnowDeviceCaps

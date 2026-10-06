@@ -60,13 +60,13 @@ public:
 extern GameEngine *TheGameEngine;
 
 void W3DRadarResetLock(void);
-void W3DRadarResetUnlock(void);
+char bfmeUnlock1179(void);
 
 class BfmeRadarResetGuard
 {
 public:
 	BfmeRadarResetGuard() { W3DRadarResetLock(); }
-	~BfmeRadarResetGuard() { W3DRadarResetUnlock(); }
+	~BfmeRadarResetGuard() { bfmeUnlock1179(); }
 };
 
 class W3DTreeBuffer

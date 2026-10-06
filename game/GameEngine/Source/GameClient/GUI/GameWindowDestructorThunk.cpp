@@ -59,7 +59,7 @@ public:
 };
 
 extern void W3DRadarResetLock();
-extern void W3DRadarResetUnlock();
+extern char bfmeUnlock1179(void);
 
 class GameWindow
 {
@@ -94,6 +94,6 @@ GameWindow::~GameWindow()
 		if( m_anchor )
 			m_anchor->release( 1 );
 
-		W3DRadarResetUnlock();
+		bfmeUnlock1179();
 	}
 }

@@ -51,7 +51,7 @@ extern CRITICAL_SECTION g_bfmeRva012D6DE0CriticalSection;
 extern bool g_012D6DF8;
 
 extern void W3DRadarResetLock(void);
-extern void W3DRadarResetUnlock(void);
+extern char bfmeUnlock1179(void);
 
 void Rva0090F050()
 {
@@ -69,7 +69,7 @@ void Rva0090F050()
 	{
 		(*it)->releaseResources();
 	}
-	W3DRadarResetUnlock();
+	bfmeUnlock1179();
 	bool armed = g_012D6DF8;
 	TheBfmeObject_00C71060.m_end = TheBfmeObject_00C71060.m_begin;
 	if (armed)
