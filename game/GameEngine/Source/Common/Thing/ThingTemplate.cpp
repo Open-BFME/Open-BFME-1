@@ -76,6 +76,15 @@
 
 #include "Common/UnitTimings.h" //Contains the DO_UNIT_TIMINGS define jba.	
 
+// vector<ArmorTemplateSet>::_M_insert_overflow is retail 0x00144170, a body
+// without an EH frame (ArmorTemplateSetVectorInsertOverflowBody.cpp).  The
+// push_back in parseArmorTemplateSet would instantiate it under /EHsc as a
+// different COMDAT copy (link_census RetailTruth: "wrong") that the link keeps
+// ahead of retail's, so this TU only declares it.
+template <>
+void std::vector<ArmorTemplateSet, std::allocator<ArmorTemplateSet> >::_M_insert_overflow(
+	ArmorTemplateSet *, const ArmorTemplateSet &, const std::__false_type &, size_type, bool );
+
 #ifdef _INTERNAL
 // for occasional debugging...
 //#pragma optimize("", off)
@@ -1713,3 +1722,13 @@ ModuleData* ModuleInfo::friend_getNthData(Int i)
 	}
 	return NULL;
 }
+
+// The vector<ArmorTemplateSet> helpers this TU's rows hold were emitted as a
+// side effect of instantiating _M_insert_overflow, which it now only declares;
+// they are instantiated explicitly so this TU still supplies them.
+template ArmorTemplateSet *std::__uninitialized_copy<ArmorTemplateSet *, ArmorTemplateSet *>(
+	ArmorTemplateSet *, ArmorTemplateSet *, ArmorTemplateSet *, const std::__false_type & );
+template ArmorTemplateSet *std::__uninitialized_fill_n<ArmorTemplateSet *, unsigned int, ArmorTemplateSet>(
+	ArmorTemplateSet *, unsigned int, const ArmorTemplateSet &, const std::__false_type & );
+template void std::vector<ArmorTemplateSet, std::allocator<ArmorTemplateSet> >::_M_set(
+	ArmorTemplateSet *, ArmorTemplateSet *, ArmorTemplateSet * );
