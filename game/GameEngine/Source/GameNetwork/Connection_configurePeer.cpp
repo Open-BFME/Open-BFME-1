@@ -21,8 +21,8 @@ template <class T> class StringBase {
     friend class Connection;
 public:
     StringBase &operator=(const StringBase &other) { set(other); return *this; }
-private:
     void set(const StringBase &);
+private:
     void *data;
 };
 
