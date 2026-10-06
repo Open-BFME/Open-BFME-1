@@ -3147,16 +3147,8 @@ CellShroudStatus PartitionManager::getShroudStatusForPlayer(Int playerIndex, Int
 }
 
 //-----------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
-// ?getShroudStatusForPlayer@PartitionManager@@ present-unmatched
-CellShroudStatus PartitionManager::getShroudStatusForPlayer(Int playerIndex, const Coord3D *loc ) const
-{
-	Int x, y;
-
-	ThePartitionManager->worldToCell( loc->x, loc->y, &x, &y );
-
-	return getShroudStatusForPlayer( playerIndex, x, y );
-}
+// getShroudStatusForPlayer(Int, const Coord3D *) (retail 0x008F7430) is matched
+// in PartitionManagerShroudStatusForPlayer.cpp.
 
 
 //-----------------------------------------------------------------------------
