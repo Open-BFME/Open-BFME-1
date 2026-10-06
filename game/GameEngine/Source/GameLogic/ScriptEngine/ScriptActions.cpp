@@ -4228,44 +4228,7 @@ void ScriptActions::doRadarEnable(void)
 	((BfmeRadarHideField *)TheRadar)->m_radarHidden = false;
 }
 
-//-------------------------------------------------------------------------------------------------
-/** doCameraMotionBlurJump - zoom in at the current location, jump to waypoint, and zoom out.*/
-//-------------------------------------------------------------------------------------------------
-// ?doCameraMotionBlurJump@ScriptActions@@IAEXABVAsciiString@@_N@Z present-unmatched
-void ScriptActions::doCameraMotionBlurJump(const AsciiString& waypointName, Bool saturate)
-{
-	Waypoint *way = TheTerrainLogic->getWaypointByName(waypointName);
-	if (!way) {
-		return;
-	}
-
-	Bool passed = FALSE;	//assume all filters were applied correctly.
-	Coord3D pos = *way->getLocation();
-	if (TheTacticalView->setViewFilter(FT_VIEW_MOTION_BLUR_FILTER))
-	{
-		passed = TRUE;
-		if (saturate) {
-			if (!TheTacticalView->setViewFilterMode(FM_VIEW_MB_IN_AND_OUT_SATURATE))
-			{	//failed to set filter so restore default state
-				TheTacticalView->setViewFilter(FT_NULL_FILTER);
-				passed = FALSE;
-			}
-		} else {
-			if (!TheTacticalView->setViewFilterMode(FM_VIEW_MB_IN_AND_OUT_ALPHA))
-			{	//failed to set filter so restore default state
-				TheTacticalView->setViewFilter(FT_NULL_FILTER);
-				passed = FALSE;
-			};
-		}
-		if (passed)
-			TheTacticalView->setViewFilterPos(&pos);
-	}
-	if (!passed)
-	{	//if we failed to apply the filter, we still need to get the camera to the target
-		//so do it another way:
-		TheTacticalView->lookAt(&pos);
-	}
-}
+// ScriptActions::doCameraMotionBlurJump: retail 0x002F41C0, ScriptActions_doCameraMotionBlurJump.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** doCameraMotionBlurJump - zoom in at the current location, jump to waypoint, and zoom out.*/
