@@ -12,7 +12,9 @@ struct Rva8CD130StringData
 	char m_text[1];
 };
 
-extern char *__cdecl ji_009f709c(const char *haystack, const char *needle);
+// The CRT strstr, reached through its import thunk at 0x009F709C (as
+// EAStringCFind.cpp calls it).
+extern "C" char *__cdecl strstr(const char *haystack, const char *needle);
 
 class Rva8CD130String
 {
@@ -81,7 +83,7 @@ Int Rva8CD130String::find0089FF80(const char *text, Int start)
 	Int searchOffset = startByte;
 	if (searchOffset < 0)
 		searchOffset = 0;
-	char *found = ji_009f709c((char *)m_data + searchOffset + 8, text);
+	char *found = strstr((char *)m_data + searchOffset + 8, text);
 	if (found == 0)
 		return -1;
 
