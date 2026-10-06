@@ -1,16 +1,56 @@
 """One successful compile can prove an uncacheable census TU, never cache it."""
 import sys
 import os
+import subprocess
 import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from types import SimpleNamespace
+from unittest.mock import Mock
 
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import build
 import census_receipts as proofs
+
+
+@pytest.mark.parametrize('error', [
+    OSError('cache read failed'),
+    ValueError('invalid cache'),
+    TypeError('invalid cache shape'),
+    subprocess.SubprocessError('cache probe failed'),
+    SystemExit('cache probe exited'),
+], ids=['os-error', 'value-error', 'type-error', 'subprocess-error', 'system-exit'])
+def test_normal_cache_current_returns_false_on_expected_errors(tmp_path, monkeypatch, error):
+    source, output = tmp_path / 'unit.cpp', tmp_path / 'unit.obj'
+    current = Mock(side_effect=error)
+    monkeypatch.setattr(build, 'compile_is_current', current)
+
+    assert proofs._normal_cache_current(source, output) is False
+    current.assert_called_once_with(source, output)
+
+
+@pytest.mark.parametrize('current_result', [False, True])
+def test_normal_cache_current_preserves_boolean_result(tmp_path, monkeypatch, current_result):
+    source, output = tmp_path / 'unit.cpp', tmp_path / 'unit.obj'
+    current = Mock(return_value=current_result)
+    monkeypatch.setattr(build, 'compile_is_current', current)
+
+    assert proofs._normal_cache_current(source, output) is current_result
+    current.assert_called_once_with(source, output)
+
+
+def test_normal_cache_current_propagates_unexpected_error(tmp_path, monkeypatch):
+    source, output = tmp_path / 'unit.cpp', tmp_path / 'unit.obj'
+    error = RuntimeError('unexpected cache failure')
+    current = Mock(side_effect=error)
+    monkeypatch.setattr(build, 'compile_is_current', current)
+
+    with pytest.raises(RuntimeError) as caught:
+        proofs._normal_cache_current(source, output)
+    assert caught.value is error
+    current.assert_called_once_with(source, output)
 
 
 @pytest.mark.parametrize('exitcode', [0, 7])
