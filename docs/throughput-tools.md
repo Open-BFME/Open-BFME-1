@@ -443,11 +443,14 @@ then promote with `--fixtures OUT` and
 `ledger_cmd="bash tools/publisher_fixtures/bfme1/ledger.sh"`
 (`PUBLISHER_FULL_GATE=1` adds the full byte gate).
 
-Judges. `tools/judges.json` (protected) allowlists gpt-6-astra, gpt-6.1-sol,
-claude-opus-5-5 and claude-fable-5-1. `tools/judges.py` `judge_call(model,
-prompt)` runs only those models and records the model it called, never one the
-answer names. Records are signed when `JUDGE_RUNNER_KEY` is set; use
-`verify_record()` before counting a verdict.
+Judges. `tools/judges.json` (protected) is the repo's only judge allowlist:
+gpt-6-astra, gpt-6.1-sol, claude-opus-5-5 and claude-fable-5-1. `tools/judges.py`
+is the only runner: `judge_call(judge, prompt)` runs only those judges and
+records the model the CLI itself says answered, never one the answer or a
+`model=` note names; `counted()` decides in process, and a record read back from
+disk counts only through `verify_record(record, key)` (signed with
+`JUDGE_RUNNER_KEY`). The audit panel (`tools/audit/panel.py`), the name lane's
+`ask`, `model_routing.judge_allowed` and `variant_search` all go through it.
 
 ### Cutover runbook (admins)
 

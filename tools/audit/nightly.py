@@ -14,7 +14,7 @@ Steps
   3. sample   stratified + uniform, blinded packets (sampler.py)
   4. canaries one per defect class + benign controls, shuffled into the stream
   5. judges   independent first verdicts from two allowlisted families,
-              escalation on disagreement (judges.py); agreed/escalated defects on
+              escalation on disagreement (panel.py); agreed/escalated defects on
               natural rows -> judge-defect items
   6. metrics  recall/precision per class and judge, benign false positives,
               drift alerts against <state>/canary_history.jsonl
@@ -55,7 +55,7 @@ import canaries
 import common
 import components
 import findings
-import judges
+import panel
 import redteam
 import sampler
 
@@ -71,7 +71,7 @@ def judge_stream(items, first, escalate, workers, log):
     def one(entry):
         packet, label = entry
         try:
-            return packet, label, judges.panel(packet, first, escalate)
+            return packet, label, panel.panel(packet, first, escalate)
         except Exception as exc:  # one broken item never stops the night
             return packet, label, {"packet": packet["id"], "decision": "error", "error": repr(exc),
                                    "first": [], "escalated": None, "classes": []}
@@ -85,7 +85,7 @@ def judge_stream(items, first, escalate, workers, log):
 
 def accuses(classes, label):
     """A semantic finding, or the very structural class a canary planted."""
-    return bool(set(classes) & judges.SEMANTIC) or label in classes
+    return bool(set(classes) & panel.SEMANTIC) or label in classes
 
 
 def per_judge_results(judged):
@@ -96,7 +96,7 @@ def per_judge_results(judged):
             continue
         for rec in result["first"] + ([result["escalated"]] if result.get("escalated") else []):
             if rec.get("counted"):
-                got = judges.classes(rec)
+                got = panel.classes(rec)
                 out.setdefault(rec["judge"], []).append((label, got, accuses(got, label)))
         flagged = result["decision"] in ("agreed-defect", "escalated-defect", "single-defect")
         got = set(result["classes"]) if flagged else set()
@@ -186,7 +186,7 @@ def run(args, log):
         for packet, label, result in judged:
             if label != "natural" or result["decision"] not in ("agreed-defect", "escalated-defect", "single-defect"):
                 continue
-            if not set(result["classes"]) & judges.SEMANTIC:
+            if not set(result["classes"]) & panel.SEMANTIC:
                 continue  # structural only: components.py already measures and queues it
             row = private[packet["id"]]["row"]
             recs = result["first"] + ([result["escalated"]] if result.get("escalated") else [])
@@ -237,7 +237,7 @@ def run(args, log):
 
 
 def red_team(picked, seed, args, queue, log):
-    allow = judges.judges_by_id()
+    allow = panel.judges_by_id()
     proposer = allow[args.redteam_model]
     builds, out = 0, []
     rows = [(u, r) for u, why, r in picked if int(r.get("target_size") or 0) >= 16][:args.redteam]
@@ -245,7 +245,7 @@ def red_team(picked, seed, args, queue, log):
         packet, _ = sampler.build_packet({"sha": "HEAD", "strata": []}, row, seed + "rt")
         text = redteam.PROMPT.format(n=redteam.MAX_VARIANTS, retail=packet["retail"],
                                      source=packet["source_excerpt"], fence=sampler.nonce())
-        got = judges.invoke(proposer, text)
+        got = panel.invoke(proposer, text)
         variants = redteam.parse_variants(got["reply"])
         log(f"  redteam {row['target_rva']} {row['source']}: {len(variants)} variants from "
             f"{got['answering_model']}")

@@ -1,10 +1,21 @@
 {
- "version": 1,
- "note": "Allowlisted judge models (decision record, pillar 5). Protected: changes need a Verifier-Change trailer. A host may override a listed model's command via JUDGE_RUNNERS; it cannot add models.",
- "judges": {
-  "gpt-6-astra": {"family": "openai", "command": ["codex", "exec", "--model", "gpt-6-astra", "-"]},
-  "gpt-6.1-sol": {"family": "openai", "command": ["codex", "exec", "--model", "gpt-6.1-sol", "-"]},
-  "claude-opus-5-5": {"family": "anthropic", "command": ["claude", "-p", "--model", "claude-opus-5-5"]},
-  "claude-fable-5-1": {"family": "anthropic", "command": ["claude", "-p", "--model", "claude-fable-5-1"]}
- }
+ "_doc": "The judge allowlist (decision record, pillar 5): the only one in this repo. Protected path: edits need a Verifier-Change trailer. Read only through tools/judges.py, which launches the command itself and counts a verdict only when the CLI's own record (answer_model) names a model in the judge's accept list; a model named in the reply or in a model= note never counts. Schema and rules: tools/judges.py docstring. rank orders strength for escalation. {prompt_file} and {workdir} are substituted; with stdin=true the prompt is piped.",
+ "version": 2,
+ "judges": [
+  {"id": "gpt-6-astra", "family": "openai", "rank": 1,
+   "command": ["codex", "exec", "-m", "gpt-6-astra", "-s", "read-only", "--skip-git-repo-check", "--json", "-C", "{workdir}", "-"],
+   "stdin": true, "reply": "codex-json", "answer_model": "codex-rollout", "accept": ["gpt-6-astra"]},
+  {"id": "gpt-6.1-sol", "family": "openai", "rank": 2,
+   "command": ["codex", "exec", "-m", "gpt-6.1-sol", "-s", "read-only", "--skip-git-repo-check", "--json", "-C", "{workdir}", "-"],
+   "stdin": true, "reply": "codex-json", "answer_model": "codex-rollout", "accept": ["gpt-6.1-sol"]},
+  {"id": "claude-opus-5-5", "family": "anthropic", "rank": 2,
+   "command": ["claude", "-p", "--model", "claude-opus-5-5", "--output-format", "json", "--disallowedTools", "Bash,Edit,Write,WebFetch,WebSearch,Agent"],
+   "stdin": true, "reply": "claude-json", "answer_model": "claude-json", "accept": ["claude-opus-5-5"]},
+  {"id": "claude-fable-5-1", "family": "anthropic", "rank": 3,
+   "command": ["claude", "-p", "--model", "claude-fable-5-1", "--output-format", "json", "--disallowedTools", "Bash,Edit,Write,WebFetch,WebSearch,Agent"],
+   "stdin": true, "reply": "claude-json", "answer_model": "claude-json", "accept": ["claude-fable-5-1"]}
+ ],
+ "panel": {"first": ["gpt-6.1-sol", "claude-opus-5-5"], "escalate": ["claude-fable-5-1", "gpt-6.1-sol"]},
+ "proposers": ["gpt-6.1-sol", "gpt-6-astra"],
+ "timeout_s": 420
 }

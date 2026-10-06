@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
-"""Judge runner and two-family panel. Advisory: a verdict creates a queue item, never a refusal.
+"""Two-family judge panel for the audit. Advisory: a verdict creates a queue item, never a refusal.
 
-RUNNER. Only judges listed in tools/audit/judges.json (protected) are called.
-The runner launches the judge's command itself, in an empty scratch directory
-(the judge cannot read the repo, its notes or its commit messages), and records
-which model ANSWERED from the CLI's own record, not from the reply:
-  codex-rollout  Codex writes ~/.codex/sessions/**/rollout-*-<thread>.jsonl with
-                 the turn's model; the thread id comes from `--json` events.
-  claude-json    `claude -p --output-format json` reports usage per model.
-A verdict counts only when that recorded model is the one judges.json allows
-for the judge. A `model=` the reply claims for itself is ignored.
+RUNNER. Judges are called only through tools/judges.py, the repo's one judge
+runner, and only judges listed in tools/judges.json (protected) can be asked.
+The runner launches the CLI itself in an empty scratch directory (the judge
+cannot read the repo, its notes or its commit messages) and records which model
+ANSWERED from the CLI's own record. A verdict counts only when judges.counted()
+says so; a `model=` the reply claims for itself is dropped here and never read.
 
 PANEL. The first two judges (different families when both are available) each
 give an independent first verdict on the same blinded packet: separate
@@ -18,25 +15,23 @@ agreement on clean -> nothing; disagreement -> the strongest allowlisted judge
 not yet asked, again blind, decides. A panel that could only reach one family
 says so (independence: same-family) in every record.
 
-  python3 tools/audit/judges.py list
-  python3 tools/audit/judges.py ask JUDGE PACKET.json     # one verdict, for debugging
+  python3 tools/audit/panel.py list
+  python3 tools/audit/panel.py ask JUDGE PACKET.json      # one verdict, for debugging
 """
 import argparse
 import concurrent.futures
-import glob
 import json
-import os
 import re
-import shutil
 import subprocess
 import sys
-import tempfile
-import time
 from pathlib import Path
 
 import common
 
-CONFIG = Path(__file__).with_name("judges.json")
+sys.path.insert(1, str(Path(__file__).resolve().parents[1]))
+import judges  # noqa: E402  (tools/judges.py: the allowlist and the runner)
+
+CONFIG = judges.CONFIG
 CLASSES = ("wrong_callee", "wrong_data", "truncated_string", "switch_mapping", "private_class_copy",
            "unsupported_name", "raw_offsets", "prompt_injection", "other")
 VERDICTS = ("defect", "clean", "unsure")
@@ -81,11 +76,11 @@ need is below."""
 
 
 def config():
-    return json.loads(CONFIG.read_text(encoding="utf-8"))
+    return judges.config()
 
 
 def judges_by_id(cfg=None):
-    return {j["id"]: j for j in (cfg or config())["judges"]}
+    return judges.allowlist(cfg)
 
 
 def prompt(packet, fence=None):
@@ -127,93 +122,23 @@ def parse_reply(text):
     return None
 
 
-def codex_reply(stdout):
-    thread, text = None, ""
-    for line in stdout.splitlines():
-        try:
-            event = json.loads(line)
-        except ValueError:
-            continue
-        if event.get("type") == "thread.started":
-            thread = event.get("thread_id")
-        item = event.get("item") or {}
-        if event.get("type") == "item.completed" and item.get("type") == "agent_message":
-            text = item.get("text", "")
-    return thread, text
-
-
-def codex_model(thread):
-    """The model Codex recorded for the thread's turns, from its own session rollout."""
-    if not thread:
-        return None
-    home = os.environ.get("CODEX_HOME") or os.path.join(os.path.expanduser("~"), ".codex")
-    files = glob.glob(os.path.join(home, "sessions", "**", f"rollout-*{thread}.jsonl"), recursive=True)
-    models = set()
-    for path in files:
-        with open(path, encoding="utf-8", errors="replace") as fh:
-            for line in fh:
-                if '"turn_context"' in line or '"model"' in line:
-                    models.update(re.findall(r'"model":"([^"]+)"', line))
-    return sorted(models)[0] if len(models) == 1 else (",".join(sorted(models)) or None)
-
-
-def claude_reply(stdout):
-    try:
-        data = json.loads(stdout)
-    except ValueError:
-        return None, ""
-    usage = data.get("modelUsage") or {}
-    answered = [m for m, u in usage.items() if (u or {}).get("outputTokens", 1)]
-    return answered, data.get("result", "")
-
-
-def accepted(judge, answered):
-    """Does the recorded answering model belong to this judge's allowlist entry?"""
-    if not answered:
-        return False
-    models = answered if isinstance(answered, list) else answered.split(",")
-    return any(any(m == a or m.startswith(a + "-") or m.startswith(a + "[") for a in judge["accept"])
-               for m in models)
-
-
 def invoke(judge, text, timeout=None, runner=subprocess.run):
-    """Launch one allowlisted model on a prompt. Returns {reply, answering_model, error, seconds}."""
-    timeout = timeout or config().get("timeout_s", 420)
-    started = time.time()
-    out = {"judge": judge["id"], "family": judge["family"], "answering_model": None, "reply": "", "error": None}
-    with tempfile.TemporaryDirectory(prefix="audit-judge-") as work:
-        prompt_file = Path(work) / "prompt.txt"
-        prompt_file.write_text(text, encoding="utf-8")
-        cmd = [part.replace("{workdir}", work).replace("{prompt_file}", str(prompt_file))
-               for part in judge["command"]]
-        cmd[0] = shutil.which(cmd[0]) or cmd[0]  # npm shims are codex.cmd on Windows
-        try:
-            proc = runner(cmd, input=text if judge.get("stdin") else None, capture_output=True, text=True,
-                          encoding="utf-8", errors="replace", timeout=timeout, cwd=work)
-        except (OSError, subprocess.TimeoutExpired) as exc:
-            out["error"] = f"{type(exc).__name__}: {exc}"[:300]
-            out["seconds"] = round(time.time() - started, 1)
-            return out
-    if judge["reply"] == "codex-json":
-        thread, out["reply"] = codex_reply(proc.stdout)
-        out["answering_model"] = codex_model(thread)
-    else:
-        out["answering_model"], out["reply"] = claude_reply(proc.stdout)
-    if proc.returncode:
-        out["error"] = f"exit {proc.returncode}: {(proc.stderr or '')[-300:]}"
-    out["seconds"] = round(time.time() - started, 1)
-    return out
+    """Launch one allowlisted judge through the runner. Returns {reply, answering_model, error, seconds}."""
+    got = judges.judge_call(judge["id"], text, runner=runner, timeout=timeout)
+    return {"judge": judge["id"], "family": judge["family"], "answering_model": got.record["answering_model"],
+            "reply": got.reply, "error": got.record["error"], "seconds": got.record["seconds"],
+            "counted": got.counted, "record": got.record["id"]}
 
 
 def run_judge(judge, text, timeout=None, runner=subprocess.run):
     """Call one judge on a prompt. Returns the record the panel and the queue keep."""
     got = invoke(judge, text, timeout, runner)
-    record = {k: got[k] for k in ("judge", "family", "answering_model", "seconds") if k in got}
+    record = {k: got[k] for k in ("judge", "family", "answering_model", "seconds", "record")}
     record["verdict"] = parse_reply(got["reply"])
     record["error"] = None
     if record["verdict"] is None:
         record["error"] = got["error"] or ("no verdict object in reply: " + (got["reply"] or "")[:200])
-    record["counted"] = record["verdict"] is not None and accepted(judge, got["answering_model"])
+    record["counted"] = record["verdict"] is not None and got["counted"]
     if record["verdict"] is not None and not record["counted"]:
         record["error"] = (f"answering model {got['answering_model']!r} not allowlisted for {judge['id']}: "
                            "verdict discarded")
@@ -289,7 +214,7 @@ def main(argv=None):
             print(f"{j['id']:18} family={j['family']:9} rank={j['rank']} accept={','.join(j['accept'])}")
         return 0
     packet = json.loads(Path(args.packet).read_text(encoding="utf-8"))
-    print(json.dumps(run_judge(judges_by_id()[args.judge], prompt(packet)), indent=1))
+    print(json.dumps(run_judge(judges.judge(args.judge), prompt(packet)), indent=1))
     return 0
 
 
