@@ -87,11 +87,11 @@ typedef int (__cdecl *BfmeApplyERKResult)(BfmeThingERK *, BfmeThingERK *);
 class ScriptActions
 {
 protected:
-	void doFindHomeBaseOfPlayer(const AsciiString &playerName,
+	void doSetUnitReferenceToHomeBaseOfPlayer(const AsciiString &playerName,
 		const AsciiString &referenceName, Bool insideMap);
 };
 
-void ScriptActions::doFindHomeBaseOfPlayer(const AsciiString &playerName,
+void ScriptActions::doSetUnitReferenceToHomeBaseOfPlayer(const AsciiString &playerName,
 	const AsciiString &referenceName, Bool insideMap)
 {
 	UnsignedShort mask =
