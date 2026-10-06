@@ -116,7 +116,7 @@ BridgeInfo::BridgeInfo()
 /** Create a tower object for the bridge of the specified type (and therefore position) */
 // ------------------------------------------------------------------------------------------------
 // Bridge::createTower: retail's body (0x001A9730) is Bridge_createTower_Thunk.cpp;
-// Zero Hour's version is not defined here.  // end createTower
+// Zero Hour's version is not defined here.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
