@@ -11049,7 +11049,12 @@ name,address,notes
 ??_C@_01NOFIACDB@w?$AA@,0x01076DF8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00879240 calls; autopin
 ??_C@_02GMLFBBN@wb?$AA@,0x0107FF60,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x009AA970 calls; autopin
 ??_C@_02KEGNLNML@?0?5?$AA@,0x0109DF5C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00209130 calls; autopin
+??_C@_03FCCPIJGJ@Pos?$AA@,0x010AEC08,token of FieldParse entry 1 in LivingWorldAnimObject::m_fieldParseTable (retail .rdata 0x01115B60 points here; bytes at the VA are the literal)
+??_C@_04HMOGDGII@Xfer?$AA@,0x01115C0C,token of FieldParse entry 4 in LivingWorldAnimObject::m_fieldParseTable (retail .rdata 0x01115B60 points here; bytes at the VA are the literal)
+??_C@_05MPDBFDHF@Frame?$AA@,0x01115C20,token of FieldParse entry 2 in LivingWorldAnimObject::m_fieldParseTable (retail .rdata 0x01115B60 points here; bytes at the VA are the literal)
+??_C@_05NFIJOKEG@Model?$AA@,0x01115C28,token of FieldParse entry 0 in LivingWorldAnimObject::m_fieldParseTable (retail .rdata 0x01115B60 points here; bytes at the VA are the literal)
 ??_C@_06CHOPLBCB@WHO?5?$CFs?$AA@,0x00D311D8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00861470 calls; autopin
+??_C@_07OJONNFHM@HasAnim?$AA@,0x01115C14,token of FieldParse entry 3 in LivingWorldAnimObject::m_fieldParseTable (retail .rdata 0x01115B60 points here; bytes at the VA are the literal)
 ??_C@_08MBMCFODG@CrushDie?$AA@,0x00C908A8,pool-glue cascade static (back-solved)
 ??_C@_09CGHNGBD@y?$CF04d?4raw?$AA@,0x01142680,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x009AA970 calls; autopin
 ??_C@_09OMFJEEND@FXListDie?$AA@,0x00C908B4,pool-glue cascade static (back-solved)
@@ -11176,6 +11181,7 @@ name,address,notes
 ??_C@_0M@EADCCBCH@OpenContain?$AA@,0x00C90BA4,pool-glue cascade static (back-solved)
 ??_C@_0M@GEIMNDJL@CaveContain?$AA@,0x00C90BB4,pool-glue cascade static (back-solved)
 ??_C@_0M@GGMEMGKP@RadarUpdate?$AA@,0x00C90114,pool-glue cascade static (back-solved)
+??_C@_0M@JLGDCFDK@OrientAngle?$AA@,0x01115BFC,token of FieldParse entry 6 in LivingWorldAnimObject::m_fieldParseTable (retail .rdata 0x01115B60 points here; bytes at the VA are the literal)
 ??_C@_0M@JMMBKPFL@FloatUpdate?$AA@,0x00C905C0,pool-glue cascade static (back-solved)
 ??_C@_0M@MMBGCINN@HealContain?$AA@,0x00C90B10,pool-glue cascade static (back-solved)
 ??_C@_0M@OMMMPGOO@ProneUpdate?$AA@,0x00C901B4,pool-glue cascade static (back-solved)

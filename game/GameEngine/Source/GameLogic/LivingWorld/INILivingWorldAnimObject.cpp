@@ -38,6 +38,22 @@ class INI
 public:
 	const char *getNextToken( const char *seps = 0 );
 	void initFromINI( void *what, const FieldParse *parseTable );
+
+	static void parseAsciiString( INI *ini, void *instance, void *store, const void *userData );
+	static void parseBool( INI *ini, void *instance, void *store, const void *userData );
+	static void parseReal( INI *ini, void *instance, void *store, const void *userData );
+	static void parseCoord3D( INI *ini, void *instance, void *store, const void *userData );
+};
+
+typedef void (*INIFieldParseProc)( INI *ini, void *instance, void *store, const void *userData );
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
+struct FieldParse
+{
+	const char *token;
+	INIFieldParseProc parse;
+	const void *userData;
+	int offset;
 };
 
 struct Coord3DBase
@@ -102,6 +118,21 @@ static inline BfmeLivingWorldManagerIcons *livingWorldManager()
 {
 	return (BfmeLivingWorldManagerIcons *)TheLivingWorldManager;
 }
+
+// Retail .rdata 0x01115B60 (128 bytes), the table parseLivingWorldAnimObject
+// pushes: seven entries and a zero terminator, read from the image. "Xfer"
+// appears twice in retail. "Frame" is a parseReal into the field at +0x08.
+const FieldParse LivingWorldAnimObject::m_fieldParseTable[] =
+{
+	{ "Model",			INI::parseAsciiString,	0,	offsetof( LivingWorldAnimObject, m_model ) },
+	{ "Pos",			INI::parseCoord3D,		0,	offsetof( LivingWorldAnimObject, m_position ) },
+	{ "Frame",			INI::parseReal,			0,	offsetof( LivingWorldAnimObject, m_zero08 ) },
+	{ "HasAnim",		INI::parseBool,			0,	offsetof( LivingWorldAnimObject, m_hasAnim ) },
+	{ "Xfer",			INI::parseBool,			0,	offsetof( LivingWorldAnimObject, m_xfer ) },
+	{ "Xfer",			INI::parseBool,			0,	offsetof( LivingWorldAnimObject, m_xfer ) },
+	{ "OrientAngle",	INI::parseReal,			0,	offsetof( LivingWorldAnimObject, m_orientAngle ) },
+	{ 0,				0,						0,	0 }
+};
 
 LivingWorldAnimObject::LivingWorldAnimObject( const AsciiString &name ) :
 	m_hasAnim( false ),
