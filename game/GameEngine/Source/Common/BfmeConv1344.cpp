@@ -1,7 +1,5 @@
 // Open-BFME5 conversions.
 
-extern char g_bfmeEmptyUVA[];
-
 // Retail 0x007E8640: the bounded FESL string copy both helpers call.
 void Rva007E8640Copy(char *dst, unsigned n, const char *src);
 
@@ -16,8 +14,8 @@ public:
 void BfmeThingUVA::bfmeGoUVA(const char *a, const char *b, const char *c)
 {
 	Rva007E8640Copy(m_bfmeBuf + 0xa0, 0x41, a);
-	Rva007E8640Copy(m_bfmeBuf + 0x101, 0x41, b ? b : g_bfmeEmptyUVA);
-	Rva007E8640Copy(m_bfmeBuf + 0x142, 0x41, c ? c : g_bfmeEmptyUVA);
+	Rva007E8640Copy(m_bfmeBuf + 0x101, 0x41, b ? b : "");	// retail "" at 0x0107301C
+	Rva007E8640Copy(m_bfmeBuf + 0x142, 0x41, c ? c : "");
 }
 
 // Retail .rdata at VA 0x0111C2A0: "false" including its NUL (6 bytes).
