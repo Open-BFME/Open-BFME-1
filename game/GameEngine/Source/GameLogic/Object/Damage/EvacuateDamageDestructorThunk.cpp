@@ -51,14 +51,14 @@ struct EvacuationRecord
 
 class EvacuateDamage : public DamageModule
 {
-public:
+protected:
 	virtual ~EvacuateDamage();
 
 private:
 	std::list<EvacuationRecord> m_pendingEvacuations;
 };
 
-// ??1EvacuateDamage@@UAE@XZ
+// ??1EvacuateDamage@@MAE@XZ
 EvacuateDamage::~EvacuateDamage()
 {
 }

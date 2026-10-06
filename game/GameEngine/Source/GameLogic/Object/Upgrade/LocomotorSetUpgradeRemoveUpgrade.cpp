@@ -28,7 +28,7 @@ struct BfmeParent2C0
 
 class LocomotorSetUpgrade
 {
-protected:
+public:
 	virtual void removeUpgrade();
 };
 

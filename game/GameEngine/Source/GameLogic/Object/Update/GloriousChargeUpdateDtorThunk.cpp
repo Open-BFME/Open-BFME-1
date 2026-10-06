@@ -64,14 +64,14 @@ private:
 
 class GloriousChargeUpdate : public SpecialAbilityUpdate
 {
-public:
+protected:
 	virtual ~GloriousChargeUpdate();
 
 private:
 	_STL::list<int> m_specialObjectIDList;
 };
 
-// ??1GloriousChargeUpdate@@UAE@XZ
+// ??1GloriousChargeUpdate@@MAE@XZ
 GloriousChargeUpdate::~GloriousChargeUpdate()
 {
 	m_specialObjectIDList.clear();

@@ -78,7 +78,7 @@ public:
     virtual void slot14();
     virtual void slot18();
 
-protected:
+public:
     virtual void removeUpgrade();
 
 public:

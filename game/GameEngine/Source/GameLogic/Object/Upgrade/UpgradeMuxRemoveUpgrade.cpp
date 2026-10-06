@@ -21,7 +21,7 @@ protected:
 // 0x001FB260: slot 7 of FireWeaponWhenDamagedBehavior's table 0x010A3DE8 (ILT 0x0003F049)
 class FireWeaponWhenDamagedBehavior : public UpgradeMux
 {
-protected:
+public:
 	virtual void removeUpgrade();
 };
 
@@ -33,7 +33,7 @@ void FireWeaponWhenDamagedBehavior::removeUpgrade()
 // 0x001FBB80: slot 7 of FireWeaponWhenDeadBehavior's table 0x010A3F40 (ILT 0x0000A7A4)
 class FireWeaponWhenDeadBehavior : public UpgradeMux
 {
-protected:
+public:
 	virtual void removeUpgrade();
 };
 
@@ -126,7 +126,7 @@ void DelayedUpgrade::removeUpgrade()
 // 0x002D5F70: slot 7 of LevelUpUpgrade's table 0x010CCE50 (ILT 0x000319FD)
 class LevelUpUpgrade : public UpgradeMux
 {
-protected:
+public:
 	virtual void removeUpgrade();
 };
 

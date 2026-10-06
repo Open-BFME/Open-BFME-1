@@ -65,7 +65,9 @@ class ObjectSMCHelper : public ObjectHelper
 {
 public:
 	ObjectSMCHelper(Thing *thing, const ModuleData *moduleData);
+protected:
 	virtual ~ObjectSMCHelper();
+public:
 	virtual void moduleInterfaceAnchor();
 	virtual void behaviorModuleInterfaceAnchor();
 	virtual void updateModuleInterfaceAnchor();

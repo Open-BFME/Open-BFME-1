@@ -48,7 +48,7 @@ struct BfmeModelConditionUpgradeDataAAN
 
 class ModelConditionUpgrade
 {
-protected:
+public:
 	virtual void removeUpgrade();
 };
 

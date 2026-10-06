@@ -64,7 +64,7 @@ private:
 
 class GiantBirdSlowDeathBehavior : public Gen_dtor_00207da0
 {
-public:
+protected:
     virtual ~GiantBirdSlowDeathBehavior();
 
 private:
@@ -75,7 +75,7 @@ private:
     unsigned char m_unknownD4;
 };
 
-// ??1GiantBirdSlowDeathBehavior@@UAE@XZ
+// ??1GiantBirdSlowDeathBehavior@@MAE@XZ
 GiantBirdSlowDeathBehavior::~GiantBirdSlowDeathBehavior()
 {
 }

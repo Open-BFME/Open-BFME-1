@@ -147,7 +147,7 @@ typedef _STL::map<Int, Gen_t_000a3c70_p4pod> Rva0036F4D0Map;
 // The CastleBehavior destructor fixes m_object at +0x08 and the map at +0x108.
 class FoundationAIUpdate
 {
-public:
+protected:
 	virtual ~FoundationAIUpdate() {}
 
 protected:

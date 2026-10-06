@@ -33,6 +33,7 @@ public:
 	virtual void v44(); virtual void v45();
 	virtual bool isOn(int which) const;
 
+private:
 	void createListener();
 
 private:
@@ -45,7 +46,7 @@ private:
 	void *m_listener;
 };
 
-// ?createListener@MilesAudioManager@@QAEXXZ
+// ?createListener@MilesAudioManager@@AAEXXZ
 void MilesAudioManager::createListener()
 {
 	if (!(isOn(4) && m_selectedProvider < m_providerCount))

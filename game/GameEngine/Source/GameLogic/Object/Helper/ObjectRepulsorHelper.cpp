@@ -41,6 +41,7 @@ class ObjectRepulsorHelper : public ObjectHelper,
 {
 public:
 	ObjectRepulsorHelper(Thing *thing, const ModuleData *moduleData);
+protected:
 	virtual ~ObjectRepulsorHelper();
 };
 

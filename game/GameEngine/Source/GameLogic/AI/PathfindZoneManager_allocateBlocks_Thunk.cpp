@@ -40,8 +40,9 @@ class PathfindZoneManager
 public:
 	void allocateBlocks(const IRegion2D &globalBounds);
 
-private:
+protected:
 	void freeBlocks();
+private:
 
 	// BFME added pathfinder state ahead of the ZH fields, so this TU models the
 	// retail offsets without changing the shared ZH compatibility header.

@@ -104,7 +104,9 @@ public:
     virtual void update();
     virtual const char *GetSnapshotName();
     virtual void LoadPostProcess();
+protected:
     virtual void DoXfer(Xfer &);
+public:
     bool m_superweaponHiddenByScript; // +0xc
     bool m_inputEnabled; // +0xd
     bool m_field_00e; // +0xe

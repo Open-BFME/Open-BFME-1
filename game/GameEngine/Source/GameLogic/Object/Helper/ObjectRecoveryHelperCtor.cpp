@@ -48,6 +48,7 @@ class ObjectRecoveryHelper : public ObjectHelper,
 {
 public:
 	ObjectRecoveryHelper(Thing *thing, const ModuleData *moduleData);
+protected:
 	virtual ~ObjectRecoveryHelper();
 };
 

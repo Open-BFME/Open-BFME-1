@@ -28,7 +28,7 @@ private:
 
 class GrantStealthBehaviorModuleDataBase
 {
-public:
+protected:
 	virtual ~GrantStealthBehaviorModuleDataBase() {}
 private:
 	unsigned char m_pad[0x8];

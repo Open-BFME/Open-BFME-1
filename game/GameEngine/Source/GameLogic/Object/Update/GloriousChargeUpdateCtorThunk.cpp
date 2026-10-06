@@ -64,6 +64,7 @@ class GloriousChargeUpdate : public GloriousChargeSpecialAbilityUpdate
 {
 public:
 	GloriousChargeUpdate(Thing *, const ModuleData *);
+protected:
 	virtual ~GloriousChargeUpdate();
 private:
 	_STL::list<int> m_specialObjectIDList;

@@ -69,9 +69,11 @@ extern Display *TheDisplay;
 
 class IMEManager
 {
-public:
+protected:
 	void updateCandidateList(int candidateFlags);
+protected:
 	void resizeCandidateWindow(int pageSize);
+protected:
 	void openCandidateList(int candidateFlags);
 
 private:

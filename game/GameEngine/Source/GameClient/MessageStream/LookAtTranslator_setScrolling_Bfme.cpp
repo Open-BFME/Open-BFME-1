@@ -17,7 +17,7 @@ public:
 	virtual void v36() = 0; virtual void v37() = 0; virtual void v38() = 0; virtual void v39() = 0;
 	virtual void setScrolling(Bool value) = 0;
 
-	Bool getInputEnabled() const
+	Bool getInputEnabled()
 	{
 		return m_inputEnabled && m_inputAllowed;
 	}

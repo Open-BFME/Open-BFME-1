@@ -71,7 +71,7 @@ struct ObjectEnterExitMap
 
 class OpenContain
 {
-public:
+protected:
     void pruneDeadWanters();
 
 private:

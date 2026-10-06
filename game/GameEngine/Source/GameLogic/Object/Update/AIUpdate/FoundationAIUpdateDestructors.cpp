@@ -71,14 +71,14 @@ private:
 class FoundationAIUpdate : public UpdateModule,
 	public FoundationAIUpdateIface3
 {
-public:
+protected:
 	virtual ~FoundationAIUpdate();
 
 private:
 	Gen_dtor_000b33c0 m_member;
 };
 
-// ??1FoundationAIUpdate@@UAE@XZ
+// ??1FoundationAIUpdate@@MAE@XZ
 FoundationAIUpdate::~FoundationAIUpdate()
 {
 }

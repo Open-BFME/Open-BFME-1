@@ -74,7 +74,9 @@ extern GameWindowManager* TheWindowManager;
 class IMEManager { public:
 virtual bool serviceIMEMessage(void*,unsigned,int,int);
 void updateCompositionString();
+protected:
 void openCandidateList(int);
+protected:
 void updateCandidateList(int);
 protected:
 void closeCandidateList(int);

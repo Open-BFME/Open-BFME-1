@@ -66,7 +66,7 @@ private:
 
 class FoundationAIUpdate : public UpdateModule, public FoundationAIUpdateIface3
 {
-public:
+protected:
 	virtual ~FoundationAIUpdate();
 
 private:

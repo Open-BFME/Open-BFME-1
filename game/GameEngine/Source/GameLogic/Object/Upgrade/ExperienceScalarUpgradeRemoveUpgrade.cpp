@@ -26,7 +26,7 @@ struct Rva002D5120Other
 
 class ExperienceScalarUpgrade
 {
-protected:
+public:
 	virtual void removeUpgrade();
 };
 

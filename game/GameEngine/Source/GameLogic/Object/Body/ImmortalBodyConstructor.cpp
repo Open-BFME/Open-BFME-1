@@ -60,7 +60,9 @@ class ImmortalBody : public ActiveBody
 {
 public:
 	ImmortalBody( Thing *thing, const ModuleData *moduleData );
+protected:
 	virtual ~ImmortalBody();
+public:
 
 	virtual void internalChangeHealth( Real delta, Bool something );
 };

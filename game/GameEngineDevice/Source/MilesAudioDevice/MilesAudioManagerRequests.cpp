@@ -49,7 +49,7 @@ public:
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/MilesAudioDevice/MilesAudioManager.h
 class MilesAudioManager : public SoundManager
 {
-public:
+private:
 	bool checkForSample(AudioRequest *request);
 };
 

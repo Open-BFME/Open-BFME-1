@@ -7,7 +7,7 @@
 
 class EnragedBehavior
 {
-protected:
+public:
 	virtual ~EnragedBehavior();
 private:
 	friend void forceEnragedBehaviorDeletingDestructor();

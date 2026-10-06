@@ -29,7 +29,7 @@ private:
 
 class NamedTimerInfo
 {
-protected:
+public:
 	virtual ~NamedTimerInfo();
 
 private:

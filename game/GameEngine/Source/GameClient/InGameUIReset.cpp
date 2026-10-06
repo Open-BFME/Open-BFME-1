@@ -26,7 +26,7 @@ class DisplayString;
 
 class NamedTimerInfo
 {
-protected:
+public:
 	virtual ~NamedTimerInfo();
 public:
 	void deleteInstance() { delete this; }

@@ -7,7 +7,7 @@
 
 class DozerPrimaryIdleState
 {
-protected:
+public:
 	virtual ~DozerPrimaryIdleState();
 private:
 	friend void forceDozerPrimaryIdleStateDeletingDestructor();

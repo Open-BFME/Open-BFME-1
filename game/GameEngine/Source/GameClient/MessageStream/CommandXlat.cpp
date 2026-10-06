@@ -198,7 +198,7 @@ public:
  bool m_cameraRotateLeft; bool m_cameraRotateRight; bool m_cameraZoomIn; bool m_cameraZoomOut;
  bool field12b8; bool field12b9; bool field12ba; bool field12bb;
  bool isInForceAttackMode() const { return m_forceAttackMode; }
- bool getInputEnabled() const;
+ bool getInputEnabled();
  bool rva0043EC00() const;
  void rva0043CEC0();
 

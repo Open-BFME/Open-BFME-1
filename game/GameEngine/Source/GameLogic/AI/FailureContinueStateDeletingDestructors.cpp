@@ -19,7 +19,7 @@ class FailureState : public State
 {
 	friend void forceFailureStateDeletingDestructor();
 
-protected:
+public:
 	virtual ~FailureState() {}
 };
 

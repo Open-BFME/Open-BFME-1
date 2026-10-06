@@ -7,7 +7,7 @@
 
 class FloatUpdateModuleData
 {
-protected:
+public:
 	virtual ~FloatUpdateModuleData();
 private:
 	friend void forceFloatUpdateModuleDataDeletingDestructor();

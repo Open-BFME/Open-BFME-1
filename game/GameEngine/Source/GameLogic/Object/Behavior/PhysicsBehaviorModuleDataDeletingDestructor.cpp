@@ -7,7 +7,7 @@
 
 class PhysicsBehaviorModuleData
 {
-protected:
+public:
 	virtual ~PhysicsBehaviorModuleData();
 private:
 	friend void forcePhysicsBehaviorModuleDataDeletingDestructor();

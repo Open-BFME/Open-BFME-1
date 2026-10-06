@@ -94,6 +94,7 @@ public:
  unsigned m_namedTimerFlashColor;
  bool m_namedTimerUsedFlashColor, m_showNamedTimers;
  SuperweaponInfo *findSWInfo(int playerIndex,const AsciiString &powerName,ObjectID id,const SpecialPowerTemplate *powerTemplate);
+protected:
  virtual void DoXfer(Xfer &xferRef);
 };
 void InGameUI::DoXfer(Xfer &xferRef) {

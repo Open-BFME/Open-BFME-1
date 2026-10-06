@@ -42,6 +42,7 @@ class HighlanderBody : public ActiveBody
 {
 public:
 	HighlanderBody( Thing *thing, const ModuleData *moduleData );
+protected:
 	virtual ~HighlanderBody();
 };
 

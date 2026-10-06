@@ -46,7 +46,7 @@ public:
 	virtual void bfmeV7ZJ();
 	virtual void bfmeHideZJ(int how);
 
-protected:
+public:
 	virtual void removeUpgrade();
 };
 

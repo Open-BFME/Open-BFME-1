@@ -50,6 +50,7 @@ class ObjectDefectionHelper : public ObjectHelper
 {
 public:
 	static void forceDestructorEmission();
+protected:
 	virtual ~ObjectDefectionHelper();
 };
 

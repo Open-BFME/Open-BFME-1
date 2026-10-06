@@ -72,8 +72,9 @@ public:
     void clearAffected();
 };
 class GloriousChargeUpdate {
-public:
+protected:
     virtual UpdateSleepTime update();
+public:
     Object *getObject() const { return *(Object **)((char *)this-8); }
     Rva0025EC70Data *getData() const { return *(Rva0025EC70Data **)((char *)this-0xc); }
     unsigned char prefix004[0xd8];

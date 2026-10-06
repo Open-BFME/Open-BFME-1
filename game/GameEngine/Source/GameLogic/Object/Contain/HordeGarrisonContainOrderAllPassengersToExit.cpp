@@ -110,7 +110,7 @@ private:
 
 class HordeGarrisonContain : public BfmeRva249A20UpdateHead, public ContainModuleInterface
 {
-public:
+private:
 	virtual void orderAllPassengersToExit(CommandSourceType commandSource);
 
 private:
@@ -118,7 +118,7 @@ private:
 	ContainedItemsList m_containList;	// +0x38
 };
 
-// ?orderAllPassengersToExit@HordeGarrisonContain@@UAEXW4CommandSourceType@@@Z
+// ?orderAllPassengersToExit@HordeGarrisonContain@@EAEXW4CommandSourceType@@@Z
 void HordeGarrisonContain::orderAllPassengersToExit(CommandSourceType commandSource)
 {
 	ContainedItemsList riders(m_containList);

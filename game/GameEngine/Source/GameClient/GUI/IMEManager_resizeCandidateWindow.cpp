@@ -23,7 +23,7 @@ public:
 
 class IMEManager
 {
-public:
+protected:
 	void resizeCandidateWindow(int pageSize);
 
 private:

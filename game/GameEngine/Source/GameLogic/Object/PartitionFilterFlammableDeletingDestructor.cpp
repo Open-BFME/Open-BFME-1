@@ -7,7 +7,7 @@
 
 class PartitionFilterFlammable
 {
-protected:
+public:
 	virtual ~PartitionFilterFlammable();
 private:
 	friend void forcePartitionFilterFlammableDeletingDestructor();

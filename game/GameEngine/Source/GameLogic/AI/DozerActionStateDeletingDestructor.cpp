@@ -7,7 +7,7 @@
 
 class DozerActionState
 {
-protected:
+public:
 	virtual ~DozerActionState();
 private:
 	friend void forceDozerActionStateDeletingDestructor();

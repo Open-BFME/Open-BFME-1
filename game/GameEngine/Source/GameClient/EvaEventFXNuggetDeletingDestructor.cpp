@@ -7,7 +7,7 @@
 
 class EvaEventFXNugget
 {
-protected:
+public:
 	virtual ~EvaEventFXNugget();
 private:
 	friend void forceEvaEventFXNuggetDeletingDestructor();

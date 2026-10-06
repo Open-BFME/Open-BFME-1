@@ -59,6 +59,7 @@ class ObjectWeaponStatusHelper : public ObjectHelper,
 {
 public:
 	ObjectWeaponStatusHelper(Thing *thing, const ModuleData *moduleData);
+protected:
 	virtual ~ObjectWeaponStatusHelper();
 
 protected:

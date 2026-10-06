@@ -84,6 +84,7 @@ class HordeSiegeEngineContain : public HordeTransportContain
 {
 public:
 	HordeSiegeEngineContain(Thing *, const ModuleData *);
+protected:
 	virtual ~HordeSiegeEngineContain();
 private:
 	_STL::list<int> m_listA;

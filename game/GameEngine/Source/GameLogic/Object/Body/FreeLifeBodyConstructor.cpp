@@ -68,6 +68,7 @@ class FreeLifeBody : public RespawnBody
 {
 public:
 	FreeLifeBody( Thing *thing, const ModuleData *moduleData );
+protected:
 	virtual ~FreeLifeBody();
 
 private:

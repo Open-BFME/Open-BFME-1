@@ -7,7 +7,7 @@
 
 class LaserFXNugget
 {
-protected:
+public:
 	virtual ~LaserFXNugget();
 private:
 	friend void forceLaserFXNuggetDeletingDestructor();

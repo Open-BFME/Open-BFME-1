@@ -18,7 +18,7 @@ class NetAckBothCommandMsg : public NetCommandMsg
 {
 	friend void forceNetAckBothCommandMsgDeletingDestructor();
 
-protected:
+public:
 	virtual ~NetAckBothCommandMsg() {}
 };
 

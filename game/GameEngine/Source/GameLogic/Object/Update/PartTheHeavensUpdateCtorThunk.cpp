@@ -61,6 +61,7 @@ class PartTheHeavensUpdate : public UpdateModule
 {
 public:
 	PartTheHeavensUpdate(Thing *, const ModuleData *);
+protected:
 	virtual ~PartTheHeavensUpdate();
 
 private:

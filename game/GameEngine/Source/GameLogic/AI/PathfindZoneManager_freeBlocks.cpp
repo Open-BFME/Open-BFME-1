@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?freeBlocks@PathfindZoneManager@@AAEXXZ: game/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
+// readable body of ?freeBlocks@PathfindZoneManager@@IAEXXZ: game/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 
 // Open-BFME5: PathfindZoneManager::freeBlocks at retail 0x00403760, 92 bytes.
 // The body carried only a machine byte-dump row. The symbols.csv pin names it
@@ -87,8 +87,9 @@ class PathfindZoneManager
 public:
 	void bfmeAllocateBlocks(void);
 
-private:
+protected:
 	void freeBlocks(void);
+private:
 
 	unsigned char m_bfmeHead[0x23624];
 	Rva004029F0 *m_blockOfZoneBlocks;				// +0x23624
@@ -97,7 +98,7 @@ private:
 	int m_zoneBlockExtentY;					// +0x23630
 };
 
-// ?freeBlocks@PathfindZoneManager@@AAEXXZ
+// ?freeBlocks@PathfindZoneManager@@IAEXXZ
 void PathfindZoneManager::freeBlocks(void)
 {
 	delete [] m_blockOfZoneBlocks;

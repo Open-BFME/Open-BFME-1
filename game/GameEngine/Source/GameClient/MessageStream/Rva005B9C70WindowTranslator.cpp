@@ -44,7 +44,7 @@ public:
 extern View *TheTacticalView;
 class InGameUI {
 public:
-    bool getInputEnabled() const;
+    bool getInputEnabled();
     typedef bool (InGameUI::*Anchored)();
     struct Vtable { void *pad[53]; Anchored anchored; }; Vtable *vtable;
     bool isPlacementAnchored() { return (this->*(vtable->anchored))(); }

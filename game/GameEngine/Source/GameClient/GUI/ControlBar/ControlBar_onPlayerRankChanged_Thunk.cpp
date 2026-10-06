@@ -49,7 +49,7 @@ public:
 class InGameUI
 {
 public:
-	bool getInputEnabled(void) const { return m_inputEnabled && m_inputAllowed; }
+	bool getInputEnabled(void) { return m_inputEnabled && m_inputAllowed; }
 
 	unsigned char m_unreconstructed_00[0xD];
 	bool m_inputEnabled;				///< retail ui+0x0D

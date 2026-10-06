@@ -7,7 +7,7 @@
 
 class LockWeaponCreateModuleData
 {
-protected:
+public:
 	virtual ~LockWeaponCreateModuleData();
 private:
 	friend void forceLockWeaponCreateModuleDataDeletingDestructor();

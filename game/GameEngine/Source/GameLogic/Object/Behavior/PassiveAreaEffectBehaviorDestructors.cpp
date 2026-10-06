@@ -68,7 +68,7 @@ private:
 
 class PassiveAreaEffectBehavior : public UpdateModule
 {
-public:
+protected:
 	virtual ~PassiveAreaEffectBehavior();
 
 private:
@@ -76,7 +76,7 @@ private:
 	_STL::list<int> m_list;						///< retail this+0x24
 };
 
-// ??1PassiveAreaEffectBehavior@@UAE@XZ
+// ??1PassiveAreaEffectBehavior@@MAE@XZ
 PassiveAreaEffectBehavior::~PassiveAreaEffectBehavior()
 {
 }

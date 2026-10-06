@@ -17,7 +17,7 @@ class PhysicsBehaviorModuleData
 public:
 	PhysicsBehaviorModuleData();
 
-protected:
+public:
 	virtual ~PhysicsBehaviorModuleData();
 
 private:

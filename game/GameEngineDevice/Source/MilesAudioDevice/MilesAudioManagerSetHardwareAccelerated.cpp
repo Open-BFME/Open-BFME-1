@@ -187,6 +187,7 @@ public:
 	virtual void v44() = 0; virtual void v45() = 0;
 	virtual Bool isOn(int which) const = 0;
 	virtual UnsignedInt getProviderIndex(const AsciiString &providerName) const;
+private:
 	void createListener(void);
 
 private:

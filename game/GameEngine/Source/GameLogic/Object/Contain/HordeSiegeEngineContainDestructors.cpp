@@ -104,7 +104,7 @@ private:
 
 class HordeSiegeEngineContain : public SiegeEngineContainBase
 {
-public:
+protected:
 	virtual ~HordeSiegeEngineContain();
 
 private:
@@ -118,7 +118,7 @@ private:
 	_STL::list<int> m_listB;											///< retail this+0x104
 };
 
-// ??1HordeSiegeEngineContain@@UAE@XZ
+// ??1HordeSiegeEngineContain@@MAE@XZ
 HordeSiegeEngineContain::~HordeSiegeEngineContain()
 {
 }

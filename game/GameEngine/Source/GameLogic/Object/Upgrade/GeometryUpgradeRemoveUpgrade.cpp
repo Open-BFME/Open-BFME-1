@@ -137,7 +137,7 @@ public:
 
 class GeometryUpgrade : public BfmeOwnerVtbl
 {
-protected:
+public:
 	virtual void removeUpgrade();
 
 public:

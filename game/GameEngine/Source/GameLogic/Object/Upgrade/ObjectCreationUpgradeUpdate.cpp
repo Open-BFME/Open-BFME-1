@@ -1,4 +1,4 @@
-// ?update@ObjectCreationUpgrade@@UAE?AW4UpdateSleepTime@@XZ
+// ?update@ObjectCreationUpgrade@@MAE?AW4UpdateSleepTime@@XZ
 // cl: /DNDEBUG /MD /EHsc /DWIN32 /D_WINDOWS /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 
 // ObjectCreationUpgrade::update at retail 0x002D72F0, 552 bytes.
@@ -243,7 +243,7 @@ public:
 class ObjectCreationUpgrade : public OCU_GrandBase, public OCU_MidGrand,
 	public OCU_Iface1, public UpdateModuleInterface
 {
-public:
+protected:
 	virtual UpdateSleepTime update();
 
 protected:

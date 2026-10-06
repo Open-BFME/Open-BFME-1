@@ -194,11 +194,11 @@ class UpgradeModule : public BehaviorModule,
 
 class GarrisonUpgrade : public UpgradeModule
 {
-protected:
+public:
 	virtual void removeUpgrade();
 };
 
-// ?removeUpgrade@GarrisonUpgrade@@MAEXXZ
+// ?removeUpgrade@GarrisonUpgrade@@UAEXXZ
 void GarrisonUpgrade::removeUpgrade()
 {
 	Object *object = m_object;

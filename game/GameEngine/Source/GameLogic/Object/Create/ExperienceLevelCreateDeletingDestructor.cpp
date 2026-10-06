@@ -7,7 +7,7 @@
 
 class ExperienceLevelCreate
 {
-protected:
+public:
 	virtual ~ExperienceLevelCreate();
 private:
 	friend void forceExperienceLevelCreateDeletingDestructor();

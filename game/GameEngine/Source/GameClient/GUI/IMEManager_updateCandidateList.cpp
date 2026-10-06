@@ -49,7 +49,7 @@ typedef char UnicodeStringIs4[(sizeof(UnicodeString) == 4) ? 1 : -1];
 
 class IMEManager
 {
-public:
+protected:
 	void updateCandidateList(int candidateFlags);
 
 private:
@@ -69,7 +69,7 @@ private:
 	GameWindow *m_candidateDownArrow;
 };
 
-// ?updateCandidateList@IMEManager@@QAEXH@Z
+// ?updateCandidateList@IMEManager@@IAEXH@Z
 void IMEManager::updateCandidateList(int candidateFlags)
 {
 	if (m_candidateString)

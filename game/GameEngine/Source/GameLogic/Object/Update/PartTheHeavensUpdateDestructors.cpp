@@ -67,14 +67,14 @@ public:
 
 class PartTheHeavensUpdate : public UpdateModule
 {
-public:
+protected:
 	virtual ~PartTheHeavensUpdate();
 
 private:
 	PartTheHeavensUpdatePointee *m_pointee;
 };
 
-// ??1PartTheHeavensUpdate@@UAE@XZ
+// ??1PartTheHeavensUpdate@@MAE@XZ
 PartTheHeavensUpdate::~PartTheHeavensUpdate()
 {
 	if (m_pointee)

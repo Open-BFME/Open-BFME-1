@@ -7,7 +7,7 @@
 
 class LightPulseFXNugget
 {
-protected:
+public:
 	virtual ~LightPulseFXNugget();
 private:
 	friend void forceLightPulseFXNuggetDeletingDestructor();

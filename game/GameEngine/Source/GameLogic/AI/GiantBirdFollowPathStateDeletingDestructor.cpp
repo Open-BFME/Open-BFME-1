@@ -7,7 +7,7 @@
 
 class GiantBirdFollowPathState
 {
-protected:
+public:
 	virtual ~GiantBirdFollowPathState();
 private:
 	friend void forceGiantBirdFollowPathStateDeletingDestructor();
