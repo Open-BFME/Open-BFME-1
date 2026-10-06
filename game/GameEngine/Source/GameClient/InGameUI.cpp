@@ -9346,15 +9346,9 @@ void InGameUI::clearPopupMessageData( void )
 //-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
-/** Floating Text Destructor */
+/** Floating Text Destructor -- retail ??1FloatingTextData@@UAE@XZ (0x0043F550)
+ *  is matched in FloatingTextDataDtor.cpp with its one-slot vftable. */
 //-------------------------------------------------------------------------------------------------
-// ??1FloatingTextData@@MAE@XZ present-unmatched
-FloatingTextData::~FloatingTextData(void)
-{
-	if(m_dString)
-		TheDisplayStringManager->freeDisplayString( m_dString );
-	m_dString = NULL;
-}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
