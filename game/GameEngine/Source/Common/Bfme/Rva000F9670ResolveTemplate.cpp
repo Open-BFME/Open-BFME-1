@@ -88,7 +88,8 @@ struct Rva00367E30Logic
 extern const Real g_rva01075350;
 extern Real g_bfmeDefaultBU;
 extern const Real g_bfmeUint32Scale;
-extern Rva00367E30Logic *TheBfmeGameLogic;
+class GameLogic;
+extern GameLogic *TheGameLogic; // GameLogic.cpp, VA 012F0898
 
 class Rva000F9780
 {
@@ -123,7 +124,7 @@ Real Rva000F9780::method(Int index)
 				(Int)(long)pointer,
 				*(Int *)(record->m_opaque04 + (0x34 - 4)));
 		if (buildTime > 0)
-			return ((Real)(UnsignedInt)TheBfmeGameLogic->m_frame - *startFrame) /
+			return ((Real)(UnsignedInt)reinterpret_cast<Rva00367E30Logic *>(TheGameLogic)->m_frame - *startFrame) /
 				(Real)buildTime;
 	}
 	return g_bfmeDefaultBU;
