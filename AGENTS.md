@@ -6,11 +6,10 @@ and easy to rebase. `docs/matching.md` covers byte matching and
 
 ## Verifier upgrade in progress
 
-Gate checks land shortly (jump tables, extent tails, local statics,
-`gen-alias` tokens, data RVAs, thunk-table names). Until then, edit
-`tools/build.py`, `.githooks/` or baselines only to fix a verifier bug; add no
-`gen-alias` notes, data pins, alias rows or `__emit` lifts; pause bulk renames.
-Plan: `targets/game/reverse/analysis/verifier_upgrade_plan.md`.
+`master` is locked until the tooling fixes are completed: keep work in local
+commits or banked attempts, do not retry pushes, rebase once this notice is
+gone. Add no `gen-alias` notes, data pins, alias rows or `__emit` lifts; pause
+bulk renames. Plan: `targets/game/reverse/analysis/verifier_upgrade_plan.md`.
 
 ## Setup
 
