@@ -322,39 +322,7 @@ void GameInfo::init( void )
 	reset();
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/GameInfo_resetMethodThunk.cpp
-// ?reset@GameInfo@@UAEXXZ present-unmatched
-void GameInfo::reset( void )
-{
-	m_crcInterval = NET_CRC_INTERVAL;
-	m_inGame = false;
-	m_inProgress = false;
-	m_gameID = 0;
-	m_mapName = AsciiString("NOMAP");
-	m_mapMask = 0;
-	m_seed = GetTickCount(); //GameClientRandomValue(0, INT_MAX - 1);
-	m_useStats = TRUE;
-	m_surrendered = FALSE;
-  m_oldFactionsOnly = FALSE;
-	// Added By Sadullah Nader
-	// Initializations missing and needed
-//	m_localIP = 0; // BGC - actually we don't want this to be reset since the m_localIP is 
-										// set properly in the constructor of LANGameInfo which uses this as a base class.
-	m_mapCRC = 0;
-	m_mapSize = 0;
-  m_superweaponRestriction = 0; 
-  m_startingCash = TheGlobalData->m_defaultStartingCash;
-  
-	//
-
-	for (Int i=0; i<MAX_SLOTS; ++i)
-	{
-		if (m_slot[i])
-			m_slot[i]->reset();
-	}
-
-	m_preorderMask = 0;
-}
+// Retail GameInfo::reset (0x0061F440) is provided by GameInfo_resetMethodThunk.cpp.
 
 Bool GameInfo::isPlayerPreorder(Int index)
 {
