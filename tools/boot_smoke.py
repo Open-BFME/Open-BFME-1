@@ -77,8 +77,8 @@ unit's first byte (`authored_executed`). --bisect: when the overlay breaks
 start-up, halve it deterministically (with --probes only units that ran are
 candidates; each half runs alone) down to the rows that fail by themselves, and
 write them to build/boot/boot_queue.json (tools/repair_queue.py serves them as
-`boot-crash`). Run every launch under _impl/scratch/game_lock.py or the
-equivalent machine-wide lock.
+`boot-crash`). Hold a machine-wide lock around each launch: two games at once
+fight over focus, the sandbox and the profile.
 """
 import argparse
 import bisect
