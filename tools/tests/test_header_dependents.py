@@ -155,7 +155,7 @@ STUBS = ("check_case_collisions", "conversion_gate", "name_regression", "name_or
          "eol_guard", "retired_guard", "doc_budget", "ea_name_guard", "name_lane", "link_debt", "target_hooks",
          "layout_migration", "check_csv", "pin_consistency", "b_pin_check", "find_declared_unmatched",
          "delta_sources", "identity_guard", "adopt_header", "one_identity", "gate_baseline",
-         "class_gate", "ledger_guard")
+         "class_gate", "ledger_guard", "ilt_guard", "alias_guard", "hatch_counters", "tu_ownership")
 
 
 @pytest.fixture
@@ -189,6 +189,7 @@ def test_pre_commit_verifies_the_includers_of_a_staged_source(hook_repo):
     put(hook_repo, "game/Net/Inc.cpp", "void inc2() {}\n")
     result = hook(hook_repo, "pre-commit")
     assert result.returncode == 0, result.stderr
+    assert "newer than this tree" not in result.stderr  # STUBS covers every checker the hook runs
     assert "scoped gate over 2 dependent source(s)" in result.stderr
     assert (hook_repo / "built").read_text().splitlines()[:2] == ["game/Lib/Outer.cpp", "game/Net/Host.cpp"]
 

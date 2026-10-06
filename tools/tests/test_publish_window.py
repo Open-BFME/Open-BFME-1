@@ -74,6 +74,8 @@ def test_the_pre_push_hook_refuses_master_while_someone_else_holds_the_window(cl
     seat = clones["seat"]
     (seat / "tools").mkdir()
     shutil.copy(TOOLS / "publish_window.py", seat / "tools" / "publish_window.py")
+    # the hook's ledger guard runs before the window check; this seat has no ledgers
+    (seat / "tools" / "ledger_guard.py").write_text("raise SystemExit(0)\n")
     token = pw.open_window(30, purpose="header stack", owner="svc", root=clones["service"])
     hook = REPO / ".githooks" / "pre-push"
     line = "refs/heads/master " + "1" * 40 + " refs/heads/master " + "0" * 40 + "\n"
@@ -174,7 +176,7 @@ def test_a_narrow_scoped_record_never_skips_a_wider_gate(tmp_path):
     shutil.copy(TOOLS / "gate_evidence.py", repo / "tools" / "gate_evidence.py")
     for name in ("check_csv", "one_identity", "target_hooks", "conversion_gate", "name_regression",
                  "name_history", "name_oracle", "retired_guard", "doc_budget", "ea_name_guard",
-                 "pin_consistency", "b_pin_check", "delta_sources", "protected_paths"):
+                 "pin_consistency", "b_pin_check", "delta_sources", "protected_paths", "ledger_guard"):
         (repo / f"tools/{name}.py").write_text("import sys\nsys.exit(0)\n")
     (repo / "tools/layout_migration.py").write_text("import sys\nsys.exit(1)\n")
     (repo / "tools/header_dependents.py").write_text(
@@ -346,7 +348,7 @@ def test_an_ignored_included_input_that_changes_is_caught_by_the_next_push(tmp_p
     shutil.copy(TOOLS / "gate_evidence.py", repo / "tools" / "gate_evidence.py")
     for name in ("check_csv", "one_identity", "target_hooks", "conversion_gate", "name_regression",
                  "name_history", "name_oracle", "retired_guard", "doc_budget", "ea_name_guard",
-                 "pin_consistency", "b_pin_check", "delta_sources", "header_dependents"):
+                 "pin_consistency", "b_pin_check", "delta_sources", "header_dependents", "ledger_guard"):
         (repo / f"tools/{name}.py").write_text("import sys\nsys.exit(0)\n")
     (repo / "tools/layout_migration.py").write_text("import sys\nsys.exit(1)\n")
     (repo / "tools/verification_cache.py").write_text(

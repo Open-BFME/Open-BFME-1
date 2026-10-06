@@ -9,6 +9,9 @@ unset BFME_TARGET BFME_TARGET_SHA256
 # This mode is valid only for callers that independently prove untouched TUs;
 # publishing always uses the normal dependency-aware selection below.
 unset BUILD_RECOMPILE_ONLY
+# mktemp's /tmp paths and build.sh's /c/... script path reach native Python only
+# through Git Bash's path conversion; a caller's MSYS_NO_PATHCONV=1 disables it.
+unset MSYS_NO_PATHCONV MSYS2_ARG_CONV_EXCL
 
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"

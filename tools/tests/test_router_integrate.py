@@ -468,7 +468,9 @@ class PublishRealHookTest(PublishFixture):
         super().setUp()
         shebang, rest = real_race_guard().split('\n', 1)
         script = self.dest / '.git/hooks/pre-push'
-        script.write_text('%s\nprintf x >> "%s"\n%s' % (shebang, self.counter, rest))
+        # The ledger guard ahead of the race guard reads a game tree this fixture has not got.
+        inert = 'python3() { [ "$1" = tools/ledger_guard.py ] || command python3 "$@"; }\n'
+        script.write_text('%s\nprintf x >> "%s"\n%s%s' % (shebang, self.counter, inert, rest))
         script.chmod(0o755)
 
     def racer_lands(self, times):

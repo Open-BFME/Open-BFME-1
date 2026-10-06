@@ -9,6 +9,9 @@ import sys
 import pytest
 
 HOOK = Path(__file__).resolve().parents[2] / '.githooks' / 'pre-commit'
+# Checkers the hook runs only when the tree has them (its present() guard).
+PRESENT_GUARDED = ('ea_name_guard', 'name_lane', 'ilt_guard', 'alias_guard', 'hatch_counters',
+                   'tu_ownership')
 
 
 @pytest.fixture
@@ -46,6 +49,7 @@ git() {
         'config --get merge.union.driver') printf '%s\n' 'python3 tools/merge_rows.py %O %A %B %P' ;;
         'rev-parse --show-toplevel') printf '%s\n' "$PWD" ;;
         'rev-parse --git-path bfme-ledger-verified-tree') printf '%s\n' ledger-verified-tree ;;
+        'rev-parse -q --verify MERGE_HEAD') return 1 ;;
         'write-tree') if [ -f index-tree ]; then cat index-tree; else printf '%s\n' 0123456789abcdef0123456789abcdef01234567; fi ;;
         'diff --quiet -- tools/check_csv.py tools/b_pin_check.py') return "${DIRTY_CHECKER:-0}" ;;
         'diff --cached --name-only --diff-filter=ACMRT')
@@ -57,9 +61,10 @@ git() {
         'diff --quiet -- tools/name_regression.py'|'diff --quiet -- tools/name_oracle.py') return 0 ;;
         'diff --cached --quiet -- targets/game/reverse/functions.csv') return 1 ;;
         'diff --cached --quiet -- targets/game/reverse/symbols.csv'|'diff --cached --quiet -- targets/game/reverse/pin_consistency_baseline.csv') return 0 ;;
-        'diff --cached --quiet -- targets/game/reverse/full_gate_baseline.txt') return 0 ;;
+        'diff --cached --quiet -- targets/game/reverse/full_gate_baseline.txt targets/game/reverse/dir32_known_red.txt') return 0 ;;
         'diff --quiet -- targets/game/reverse/functions.csv') return 0 ;;
         'diff --quiet -- '*) return 0 ;;
+        'diff --name-only -z') return 0 ;;
         'diff --cached --name-only --diff-filter=ACM -- tools/*.py'|'diff --cached --name-only --diff-filter=A') return 0 ;;
         *) printf 'unexpected Git test invocation: %s\n' "$*" >&2; return 92 ;;
     esac
@@ -71,8 +76,11 @@ python3() {
         return
     fi
     printf '%s\n' "$*" >> guards
+    [ "$1" != "tools/${FAIL_TOOL:-}.py" ] || return 1
     case "$1" in
         tools/delta_sources.py) cat deltas ;;
+        tools/layout_migration.py) return 0 ;;
+        tools/ilt_guard.py|tools/alias_guard.py|tools/hatch_counters.py|tools/tu_ownership.py) return 0 ;;
         tools/find_declared_unmatched.py|tools/adopt_header.py|tools/class_gate.py|tools/ledger_guard.py|tools/name_oracle.py|tools/name_regression.py|tools/retired_guard.py) return 0 ;;
         tools/check_case_collisions.py|tools/conversion_gate.py|tools/check_csv.py|tools/pin_consistency.py|tools/identity_guard.py|tools/gate_baseline.py) return 0 ;;
         tools/b_pin_check.py) [ -z "${LATE_STAGE:-}" ] || printf '%s\n' feedfacefeedfacefeedfacefeedfacefeedface > index-tree; return 0 ;;
@@ -84,10 +92,18 @@ python3() {
 source ./hook
 ''', encoding='utf-8', newline='\n')
 
+    # A current tree has every checker; python3() above stands in for running them.
+    (root / 'tools').mkdir()
+    for tool in PRESENT_GUARDED:
+        (root / f'tools/{tool}.py').write_text('raise SystemExit(0)\n', encoding='utf-8')
+
     def run(paths, claimed=None, fail_chunk=0, broken_csv=False, build_pool=None,
             raw_selectors=False, staged_source=None, header_deps=None, header_rc=0,
-            late_stage=False, dirty_checker=False, stale_receipt=False):
+            late_stage=False, dirty_checker=False, stale_receipt=False,
+            missing_tools=(), fail_tool=None, extra_env=None):
         claimed = paths if claimed is None else claimed
+        for tool in missing_tools:
+            (root / f'tools/{tool}.py').unlink()
         if raw_selectors:
             selectors = paths
         else:
@@ -119,8 +135,16 @@ source ./hook
         env.pop('BUILD_POOL', None)
         if build_pool is not None:
             env['BUILD_POOL'] = build_pool
+        env.pop('FAIL_TOOL', None)
+        if fail_tool:
+            env['FAIL_TOOL'] = fail_tool
+        env.update(extra_env or {})
         result = subprocess.run([bash, 'run.sh'], cwd=root, env=env,
                                 capture_output=True, text=True, encoding='utf-8', timeout=60)
+        # The stubs above must model every call the hook makes. A call they do not know
+        # still "runs" (returning 92/93), so drift would pass silently without this.
+        assert 'unexpected Git test invocation' not in result.stderr, result.stderr
+        assert 'unexpected Python test invocation' not in result.stderr, result.stderr
         chunks = []
         for file in sorted((root / 'calls').glob('*.args'), key=lambda p: int(p.stem)):
             chunks.append([p.decode('utf-8') for p in file.read_bytes().split(b'\0')[:-1]])
@@ -271,3 +295,49 @@ def test_stale_receipt_is_cleared_even_when_the_hook_fails(hook_runner):
     result, _, root = hook_runner(long_paths(), fail_chunk=2, stale_receipt=True)
     assert result.returncode != 0
     assert not (root / 'ledger-verified-tree').exists()
+
+
+def test_checker_missing_from_an_older_tree_is_skipped_and_named(hook_runner):
+    # present(): the hook runs from the main checkout for every worktree, so a tree
+    # older than a checker says so and commits instead of refusing everything.
+    result, chunks, root = hook_runner(PATHS, missing_tools=['ilt_guard'])
+    assert result.returncode == 0, result.stderr
+    assert ('pre-commit: tools/ilt_guard.py is newer than this tree; rebase to enable its check'
+            in result.stderr)
+    guards = (root / 'guards').read_text()
+    assert 'tools/ilt_guard.py' not in guards
+    assert 'tools/alias_guard.py --staged' in guards
+    assert len(chunks) == 1
+
+
+def test_present_checkers_all_run_and_name_nothing_missing(hook_runner):
+    result, _, root = hook_runner(PATHS)
+    assert result.returncode == 0, result.stderr
+    assert 'newer than this tree' not in result.stderr
+    guards = (root / 'guards').read_text()
+    for tool in PRESENT_GUARDED:
+        assert f'tools/{tool}.py' in guards
+
+
+@pytest.mark.parametrize('tool,reason', [
+    ('ilt_guard', "retail's thunk table contradicts a new name"),
+    ('alias_guard', 'an alias binds a call to another body'),
+    ('hatch_counters', 'escape hatches grew'),
+])
+def test_a_present_checker_still_refuses(hook_runner, tool, reason):
+    result, chunks, _ = hook_runner(PATHS, fail_tool=tool)
+    assert result.returncode != 0
+    assert reason in result.stderr
+    assert 'PRE-COMMIT OK' not in result.stdout
+    assert not chunks
+
+
+@pytest.mark.parametrize('variable,value', [('MSYS_NO_PATHCONV', '1'), ('MSYS2_ARG_CONV_EXCL', '*')])
+def test_disabled_msys_path_conversion_does_not_break_the_hook(hook_runner, variable, value):
+    # Exported to type cl.exe flags by hand, this left native Python unable to open
+    # mktemp's /tmp/tmp.XXXX: "filtering claimed sources" failed on every commit.
+    paths = ['game/GameEngine/a.cpp', 'game/GameEngine/folder with spaces/b.cpp']
+    result, chunks, _ = hook_runner(paths, extra_env={variable: value})
+    assert result.returncode == 0, result.stderr
+    assert len(chunks) == 1
+    assert set(chunks[0]) == {f'row:0x{i + 0x1000:08X}:16:{p}' for i, p in enumerate(paths)}
