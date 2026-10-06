@@ -39,7 +39,10 @@ Gen0090BE20 bfmeMakeXY(const char *name)
 // Retail 90BE20 initializes this one-pointer owner. Factory 90BE70 constructs
 // that type in its hidden result; its FuncInfo E4A840 state0 dispatches this
 // returned object to 90BD50 (C5B800), distinct from ctor member cleanup5C640.
-Gen0090BE20::~Gen0090BE20()
+// Inline, as Get_HAnim.cpp's view of the same owner spells it: both TUs emit
+// this destructor as a COMDAT for their unwind funclets, and retail kept one
+// body (0x0090BD50) for both.
+inline Gen0090BE20::~Gen0090BE20()
 {
 	if (m_bfmeRefXY)
 		((TextureClass *)m_bfmeRefXY)->Release_Ref();
