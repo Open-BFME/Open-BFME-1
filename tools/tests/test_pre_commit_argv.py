@@ -45,6 +45,8 @@ if [ "$n" -eq "${FAIL_CHUNK:-0}" ]; then exit 23; fi
     (root / 'run.sh').write_text(r'''#!/usr/bin/env bash
 set -euo pipefail
 git() {
+        # FAIL_GIT names one invocation that fails, as a broken index or repository would.
+        [ "$*" != "${FAIL_GIT:-}" ] || { echo "fatal: $FAIL_GIT failed" >&2; return 128; }
         case "$*" in
         'config --get merge.union.driver') printf '%s\n' 'python3 tools/merge_rows.py %O %A %B %P' ;;
         'rev-parse --show-toplevel') printf '%s\n' "$PWD" ;;
@@ -65,7 +67,7 @@ git() {
         'diff --quiet -- targets/game/reverse/functions.csv') return 0 ;;
         'diff --quiet -- '*) return 0 ;;
         'diff --name-only -z') return 0 ;;
-        'diff --cached --name-only --diff-filter=ACM -- tools/*.py'|'diff --cached --name-only --diff-filter=A') return 0 ;;
+        'diff --cached --name-only -z --diff-filter=ACM -- tools/*.py'|'diff --cached --name-only --diff-filter=A') return 0 ;;
         *) printf 'unexpected Git test invocation: %s\n' "$*" >&2; return 92 ;;
     esac
 }
@@ -81,7 +83,8 @@ python3() {
         tools/delta_sources.py) cat deltas ;;
         tools/layout_migration.py) return 0 ;;
         tools/ilt_guard.py|tools/alias_guard.py|tools/hatch_counters.py|tools/tu_ownership.py) return 0 ;;
-        tools/find_declared_unmatched.py|tools/adopt_header.py|tools/class_gate.py|tools/ledger_guard.py|tools/name_oracle.py|tools/name_regression.py|tools/retired_guard.py) return 0 ;;
+        tools/find_declared_unmatched.py) cat > find-declared-stdin ;;
+        tools/adopt_header.py|tools/class_gate.py|tools/ledger_guard.py|tools/name_oracle.py|tools/name_regression.py|tools/retired_guard.py) return 0 ;;
         tools/check_case_collisions.py|tools/conversion_gate.py|tools/check_csv.py|tools/pin_consistency.py|tools/identity_guard.py|tools/gate_baseline.py) return 0 ;;
         tools/b_pin_check.py) [ -z "${LATE_STAGE:-}" ] || printf '%s\n' feedfacefeedfacefeedfacefeedfacefeedface > index-tree; return 0 ;;
         tools/target_hooks.py|tools/eol_guard.py|tools/doc_budget.py|tools/link_debt.py|tools/ea_name_guard.py|tools/name_lane.py) return 0 ;;
@@ -341,3 +344,29 @@ def test_disabled_msys_path_conversion_does_not_break_the_hook(hook_runner, vari
     assert result.returncode == 0, result.stderr
     assert len(chunks) == 1
     assert set(chunks[0]) == {f'row:0x{i + 0x1000:08X}:16:{p}' for i, p in enumerate(paths)}
+
+
+@pytest.mark.parametrize('listing,what,kwargs', [
+    ('diff --cached --name-only --diff-filter=ACMRT', 'listing staged files', {}),
+    ('diff --cached --name-only --diff-filter=A', 'listing added files', {}),
+    ('diff --cached --name-only -z --diff-filter=ACM -- tools/*.py', 'listing staged tools', {}),
+    ('diff --name-only -z', 'listing unstaged edits',
+     dict(staged_source='game/Inc/Low.h', header_deps=['game/A.cpp'])),
+    ('diff --name-only -z', 'listing unstaged edits', dict(staged_source='game/GameEngine/a.cpp')),
+])
+def test_a_failed_git_listing_refuses_instead_of_verifying_less(hook_runner, listing, what, kwargs):
+    # Read through `< <(git ...)`, a failed listing looked empty: no staged sources
+    # (early exit, nothing verified), no placement or tool check, no unstaged edits.
+    result, chunks, _ = hook_runner(PATHS, extra_env={'FAIL_GIT': listing}, **kwargs)
+    assert result.returncode != 0
+    assert f'PRE-COMMIT FAILED: {what} (see above)' in result.stderr
+    assert 'PRE-COMMIT OK' not in result.stdout
+    assert not chunks
+
+
+def test_find_declared_unmatched_reads_staged_sources_on_stdin(hook_runner):
+    source = 'game/GameEngine/folder with spaces/Edited.cpp'
+    result, _, root = hook_runner(PATHS, claimed=PATHS + [source], staged_source=source)
+    assert result.returncode == 0, result.stderr
+    assert 'tools/find_declared_unmatched.py --fail --staged --paths-from -' in (root / 'guards').read_text()
+    assert (root / 'find-declared-stdin').read_bytes() == source.encode() + b'\0'

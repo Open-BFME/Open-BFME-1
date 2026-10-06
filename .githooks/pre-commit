@@ -25,6 +25,16 @@ fail() {
     exit 1
 }
 
+# capture VAR WHAT CMD...: run CMD into a new temp file, store its path in VAR, and fail
+# naming WHAT if CMD fails. `< <(cmd)` and `$(cmd)` drop the producer's exit status, so a
+# failed listing read as an empty one and the hook verified less instead of refusing.
+capture() {
+    local captured
+    captured=$(mktemp) || fail "temporary file for $2"
+    "${@:3}" > "$captured" || { rm -f "$captured"; fail "$2 (see above)"; }
+    printf -v "$1" '%s' "$captured"
+}
+
 # Clones set up before tools/merge_rows.py existed never rerun setup_hooks.sh;
 # this is how they pick up the union driver (.gitattributes says why).
 union_driver="python3 tools/merge_rows.py %O %A %B %P"
@@ -41,13 +51,14 @@ python3 tools/check_case_collisions.py || fail "case-only path collision (see ab
 # A script under tools/ is neither a game/ source nor a ledger file, so nothing
 # else in this hook looks at it: one with a syntax error commits cleanly and only
 # fails when somebody next runs it. That has happened. One parse per staged tool
-# costs nothing and closes it.
-mapfile -t staged_tools < <(git diff --cached --name-only --diff-filter=ACM -- 'tools/*.py')
-if [ "${#staged_tools[@]}" -ne 0 ]; then
-    python3 - "${staged_tools[@]}" <<'PY' || fail "python syntax error in a staged tool (see above)"
-import ast, sys
+# costs nothing and closes it. The list goes through a file: as arguments, a few hundred
+# staged tools would pass Windows' 32,767-character command line.
+capture staged_tools_out "listing staged tools" git diff --cached --name-only -z --diff-filter=ACM -- 'tools/*.py'
+if [ -s "$staged_tools_out" ]; then
+    python3 - "$staged_tools_out" <<'PY' || { rm -f "$staged_tools_out"; fail "python syntax error in a staged tool (see above)"; }
+import ast, os, sys
 bad = 0
-for path in sys.argv[1:]:
+for path in map(os.fsdecode, open(sys.argv[1], "rb").read().split(b"\0")[:-1]):
     try:
         ast.parse(open(path, encoding="utf-8").read(), filename=path)
     except SyntaxError as exc:
@@ -56,6 +67,7 @@ for path in sys.argv[1:]:
 sys.exit(bad)
 PY
 fi
+rm -f "$staged_tools_out"
 
 # docs/lessons.md is deleted and must stay that way. It was designated the one doc
 # agents could extend without asking, and it grew to 82,688 words; the grant was
@@ -154,6 +166,7 @@ baseline_changed=0
 body_baseline_changed=0
 dir32_record_changed=0
 attempts_changed=0
+capture staged_out "listing staged files" git diff --cached --name-only --diff-filter=ACMRT
 while IFS= read -r path; do
     [ -z "${target_only_sources[$path]:-}" ] || continue
     case "$path" in
@@ -186,7 +199,8 @@ while IFS= read -r path; do
         mods/*) ;;
         *.h|inputs/reference/shims/*) wide_change=1 ;;
     esac
-done < <(git diff --cached --name-only --diff-filter=ACMRT)
+done < "$staged_out"
+rm -f "$staged_out"
 
 # A staged .cpp, .c or table that another file #includes compiles inside it, and the
 # pattern above misses .inl and .H headers: header_dependents names both, so widen.
@@ -217,12 +231,14 @@ fi
 # targets/game/reverse/attempts/ is named for the same reason: a banked near-miss body is
 # evidence for the next agent, never a compiled source, so it must sit outside
 # game/ where verify_source_claims would demand matched rows for it.
+capture added_out "listing added files" git diff --cached --name-only --diff-filter=A
 while IFS= read -r path; do
     case "$path" in
         worldbuilder/*|targets/worldbuilder/reverse/attempts/*|game/GameEngine/*|game/GameEngineDevice/*|game/Libraries/*|game/gen_small/*|game/gen_asm/*|game/masm_dumps/*|inputs/reference/shims/*|inputs/reference/CnC_Generals_Zero_Hour/*|tools/tests/*|inputs/toolchains/*|mods/*|targets/game/reverse/attempts/*) ;;
         *) fail "source added outside official tree: $path — see AGENTS.md 'File placement'" ;;
     esac
-done < <(git diff --cached --name-only --diff-filter=A | grep -E '\.(cpp|c|h|hpp|asm)$' || true)
+done < <(grep -E '\.(cpp|c|h|hpp|asm)$' "$added_out" || true)
+rm -f "$added_out"
 
 if [ "${#staged_sources[@]}" -eq 0 ] && [ "${#staged_c_sources[@]}" -eq 0 ] \
    && [ "$ledger_changed" -eq 0 ] \
@@ -251,15 +267,19 @@ if [ "$wide_change" -ne 0 ]; then
     if python3 tools/header_dependents.py --staged > "$header_deps_out"; then
         mapfile -t header_deps < "$header_deps_out"
         rm -f "$header_deps_out"
-        for path in $(git diff --cached --name-only --diff-filter=ACMRT); do
+        capture staged_out "listing staged files" git diff --cached --name-only --diff-filter=ACMRT
+        while IFS= read -r path; do
             case "$path" in
                 *.h|*.hpp|*.hh|*.hxx|*.inl|*.inc|inputs/reference/shims/*|game/*|inputs/*)
                     git diff --quiet -- "$path" || fail "unstaged edits in $path: the scoped header gate would verify the wrong bytes" ;;
             esac
-        done
+        done < "$staged_out"
+        rm -f "$staged_out"
         # The selection was read from the index; build.sh compiles the worktree copy.
         declare -A unstaged=()
-        while IFS= read -r -d '' path; do unstaged["$path"]=1; done < <(git diff --name-only -z)
+        capture unstaged_out "listing unstaged edits" git diff --name-only -z
+        while IFS= read -r -d '' path; do unstaged["$path"]=1; done < "$unstaged_out"
+        rm -f "$unstaged_out"
         for path in "${header_deps[@]}"; do
             [ -z "${unstaged[$path]:-}" ] || fail "unstaged edits in $path: the scoped header gate would verify the wrong bytes"
         done
@@ -287,9 +307,15 @@ fi
 
 # The build verifies file contents on disk; refuse if a file being committed
 # also has unstaged edits, or we would be proving the wrong bytes.
+# One `git diff` for the worktree, not one per source: 1,500 staged sources cost
+# ~1,500 Git processes here otherwise, and a path is matched exactly, not as a pathspec.
+capture unstaged_out "listing unstaged edits" git diff --name-only -z
+declare -A unstaged_paths=()
+while IFS= read -r -d '' path; do unstaged_paths["$path"]=1; done < "$unstaged_out"
+rm -f "$unstaged_out"
 dirty=()
 for path in "${staged_sources[@]}" "${staged_c_sources[@]}"; do
-    if ! git diff --quiet -- "$path"; then
+    if [ -n "${unstaged_paths[$path]:-}" ]; then
         dirty+=("$path")
     fi
 done
@@ -355,7 +381,9 @@ fi
 
 # 2) Every function defined in staged sources must be declared in the ledger.
 if [ "${#staged_sources[@]}" -ne 0 ]; then
-    python3 tools/find_declared_unmatched.py --fail --staged "${staged_sources[@]}" \
+    # On stdin, not argv: ~400 staged sources overflow Windows' 32,767-character command line.
+    printf '%s\0' "${staged_sources[@]}" \
+        | python3 tools/find_declared_unmatched.py --fail --staged --paths-from - \
         || fail "staged sources define functions the ledger does not declare (see above)"
 fi
 

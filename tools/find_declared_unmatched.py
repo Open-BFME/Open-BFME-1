@@ -3,9 +3,11 @@
 
 import csv
 import argparse
+import os
 import re
 import subprocess
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from build import ledger_object_symbol
@@ -232,12 +234,28 @@ def iter_definitions(text: str):
             symbol_comment = None
 
 
+def read_path_list(name):
+    """Paths listed in file `name` ('-': stdin), NUL-separated if it holds a NUL, else one per line."""
+    data = sys.stdin.buffer.read() if name == "-" else Path(name).read_bytes()
+    if b"\0" in data:
+        entries = data.split(b"\0")
+    else:
+        entries = [line.rstrip(b"\r") for line in data.split(b"\n")]
+    return [os.fsdecode(entry) for entry in entries if entry]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("paths", nargs="*", help="source files to inspect; defaults to every src/*.cpp")
     parser.add_argument("--fail", action="store_true", help="exit non-zero when unmatched functions are found")
     parser.add_argument("--staged", action="store_true", help="read paths from the git index")
+    parser.add_argument("--paths-from", metavar="FILE",
+                        help="also inspect the NUL- or newline-separated paths in FILE ('-': stdin); "
+                             "the pre-commit hook passes its list this way because Windows caps a "
+                             "command line at 32,767 characters")
     args = parser.parse_args()
+    if args.paths_from:
+        args.paths += read_path_list(args.paths_from)
 
     (declared, matched, matched_by_source, matched_sources,
      matched_aliases_by_source) = read_function_names(FUNCTIONS_CSV, args.staged)
@@ -255,13 +273,22 @@ def main():
 
     unmatched = []
     violations = []
-    source_paths = [ROOT / path for path in args.paths] if args.paths else sorted(SRC_DIR.rglob("*.cpp"))
+    # An empty --paths-from list inspects nothing, never the default tree.
+    source_paths = ([ROOT / path for path in args.paths] if args.paths or args.paths_from
+                    else sorted(SRC_DIR.rglob("*.cpp")))
+    staged_text = {}
+    if args.staged:
+        # One `git show` per file: 1,500 staged sources took minutes one at a time.
+        # Fetch concurrently; everything below still runs in the given order.
+        rel_paths = [p.relative_to(ROOT) for p in source_paths if p.suffix == ".cpp"]
+        with ThreadPoolExecutor(max_workers=min(8, os.cpu_count() or 1)) as pool:
+            staged_text = dict(zip(rel_paths, pool.map(git_show, rel_paths)))
     for source_path in source_paths:
         if source_path.suffix != ".cpp":
             continue
         rel_path = source_path.relative_to(ROOT)
         if args.staged:
-            text = git_show(rel_path)
+            text = staged_text[rel_path]
             if text is None:
                 continue
         else:
