@@ -248,22 +248,8 @@ void Dict::clear()
 }
 
 // -----------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/Dict_releaseData.cpp
-// ?releaseData@Dict@@ present-unmatched
-void Dict::releaseData()
-{
-	if (m_data)
-	{
-		if (--m_data->m_refCount == 0)
-		{
-			Dict::DictPair* src = m_data->peek();
-			for (Int i = 0; i < m_data->m_numPairsUsed; ++i, ++src)
-				src->clear();
-			TheDynamicMemoryAllocator->freeBytes(m_data);
-		}
-		m_data = 0;
-	}
-}
+// Dict::releaseData: retail's body (0x000681C0) is Dict_releaseData.cpp;
+// Zero Hour's version is not defined here.
 
 // -----------------------------------------------------
 Dict::Dict(Int numPairsToPreAllocate) : m_data(0)

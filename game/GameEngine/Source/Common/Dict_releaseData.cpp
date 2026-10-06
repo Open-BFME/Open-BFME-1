@@ -10,8 +10,9 @@
 // dynamic-memory allocator.
 //
 // The five-entry jump table is clear()'s switch: the three scalar types zero
-// the value word, DICT_ASCIISTRING releases through the narrow string's
-// destructor and DICT_UNICODESTRING through the wide one.
+// the value word, and the two string types clear() the string, which retail
+// compiles to direct calls to StringBase<char>::releaseBuffer (0x00887940)
+// and StringBase<unsigned short>::releaseBuffer (0x008881D0).
 
 extern "C" __declspec(dllimport) void __cdecl free(void *memblock);
 
@@ -72,10 +73,10 @@ public:
 					m_value = 0;
 					break;
 				case DICT_ASCIISTRING:
-					asAsciiString()->~AsciiString();
+					asAsciiString()->clear();
 					break;
 				case DICT_UNICODESTRING:
-					asUnicodeString()->~UnicodeString();
+					((StringBase<unsigned short> *)asUnicodeString())->clear();
 					break;
 			}
 		}
