@@ -30,7 +30,10 @@ public:
 
 RenderObjClass *Create_Render_Obj(const char *name);
 void Rva00739B30(RenderObjClass *object, bool geometry);
-void Rva00739900Forward(void *object, Real value);
+// The matched body at 0x00739900 (Common/Rva00739900Forward.cpp) takes its
+// opacity as the float's bit pattern; pass 1.0f and 0.0f the same way
+// W3DTreeBufferRva00736150.cpp does.
+unsigned char Rva00739900Forward(void *object, int value);
 
 struct Coord3D
 {
@@ -142,9 +145,9 @@ void W3DShrubBuffer::dispatch(Int index, Int request)
 		m_trees[index].m_pushAsideObject->Set_Transform(transform);
 	}
 	if (m_trees[index].m_toppleObject != 0)
-		Rva00739900Forward(m_trees[index].m_toppleObject, 1.0f);
+		Rva00739900Forward(m_trees[index].m_toppleObject, 0x3f800000);
 	if (m_trees[index].m_pushAsideObject != 0)
-		Rva00739900Forward(m_trees[index].m_pushAsideObject, 0.0f);
+		Rva00739900Forward(m_trees[index].m_pushAsideObject, 0);
 	if (m_treeTypes[type].m_data->m_effect != 0) {
 		Coord3D position;
 		position.x = m_trees[index].m_location.x;
