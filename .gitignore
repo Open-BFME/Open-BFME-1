@@ -36,3 +36,5 @@ inputs/reference/shims/sweep/D3DX8Math.h
 targets/game/reverse/*.tmp-*
 # re_log's scratch copy while it measures a stash (a killed probe can leave one)
 targets/game/reverse/attempts/.measure_*
+# tools/match_tiers.py output: regenerate it, never commit it (a fleet master makes it stale in minutes)
+targets/game/reverse/match_tiers.csv
