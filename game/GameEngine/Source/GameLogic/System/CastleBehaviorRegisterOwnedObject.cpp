@@ -19,7 +19,10 @@ enum ObjectStatusTypes { OBJECT_STATUS_00373220_5=5 };
 class Player;
 class Module;
 #define THING_TU_MEMBERS bool isKindOf(KindOfType) const;
-#define OBJECT_TU_MEMBERS Module* findModule(NameKeyType) const; void setStatusBit(int,bool); Player* getControllingPlayer() const; void clearStatus(ObjectStatusTypes);
+// Retail's Object::findModule (0x001BEE60) is a protected member, so the mangled
+// call name carries that access; only the friend may call it here.
+#define OBJECT_TU_MEMBERS void setStatusBit(int,bool); Player* getControllingPlayer() const; void clearStatus(ObjectStatusTypes); \
+	protected: Module* findModule(NameKeyType) const; friend class CastleBehavior;
 #include "object.h"
 template<class T> inline T& field373220(void* p,int n) { return *(T*)((char*)p+n); }
 class Overridable {

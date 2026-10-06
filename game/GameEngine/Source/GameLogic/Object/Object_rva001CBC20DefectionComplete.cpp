@@ -168,7 +168,6 @@ class Object
 {
 public:
 	void clearStatus(ObjectStatusTypes status);
-	Module *findModule(NameKeyType key) const;
 	void setStatus(const ObjectStatusMaskType &status, Bool set = true);
 	void bfmeAbortActiveSpecialAbilities() const;
 	void bfmeRefreshCompletedUpgrades(); // retail ILT 0x0001B9A5
@@ -176,7 +175,11 @@ public:
 	Module *getContain() const { return (Module *)m_contain; }
 	void *getAI() const { return m_ai; }
 
+	// Retail's Object::findModule (0x001BEE60) is a protected member, so the
+	// mangled call name carries that access.
 protected:
+	Module *findModule(NameKeyType key) const;
+
 	void *m_vtable;
 	unsigned char m_pad_004[0x90 - 4];
 	UnsignedInt m_status[3];

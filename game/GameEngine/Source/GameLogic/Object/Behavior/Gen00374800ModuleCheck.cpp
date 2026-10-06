@@ -20,8 +20,11 @@ public:
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
-public:
+	// Retail's Object::findModule (0x001BEE60) is a protected member, so the
+	// mangled call name carries that access; only the friend may call it here.
+protected:
 	Module *findModule(NameKeyType key) const;
+	friend class Gen_00374800;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h

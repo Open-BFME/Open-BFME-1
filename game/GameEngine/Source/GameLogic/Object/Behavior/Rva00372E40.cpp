@@ -36,7 +36,10 @@ public:
  unsigned char m_pad0C[0xCC];
  unsigned int m_kindOf0xd8;
 };
-#define OBJECT_TU_MEMBERS public: Module *findModule(NameKeyType) const; Player *getControllingPlayer() const; ProjectileUpdateInterface *getProjectileUpdateInterface() const;
+// Retail's Object::findModule (0x001BEE60) is a protected member, so the mangled
+// call name carries that access; only the friend may call it here.
+#define OBJECT_TU_MEMBERS public: Player *getControllingPlayer() const; ProjectileUpdateInterface *getProjectileUpdateInterface() const; \
+	protected: Module *findModule(NameKeyType) const; friend int Rva00372E40(void *, int, const void *, bool);
 #include "game/GameEngine/Source/GameLogic/Object/object.h"
 
 // Inherited bank view for the two witnessed virtual slots. This does not

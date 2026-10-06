@@ -78,11 +78,14 @@ class Object
 {
 public:
 	void bfmeAbortActiveSpecialAbilities() const;
-	// TU-scoped public ABI spelling for the protected retail Object::findModule call.
-	Module *findModule( NameKeyType key ) const;
 	void bfmeRefreshCompletedUpgrades();
 
 	void bfmeConv001C6E00( Object *object );
+
+protected:
+	// Retail's Object::findModule (0x001BEE60) is a protected member, so the
+	// mangled call name carries that access.
+	Module *findModule( NameKeyType key ) const;
 
 private:
 	char m_pad00[0x90];

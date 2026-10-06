@@ -14,7 +14,9 @@ enum NameKeyType {};
 class NameKeyGenerator { public: NameKeyType nameToKey(const char*); };
 extern NameKeyGenerator *TheNameKeyGenerator;
 class Module;
-class Object { public: Module *findModule(NameKeyType) const; };
+// Retail's Object::findModule (0x001BEE60) is a protected member, so the mangled
+// call name carries that access; only the friend may call it here.
+class Object { protected: Module *findModule(NameKeyType) const; friend void SetMemberPayload0036F1B0(_STL::vector<int> *,int); };
 typedef _STL::hash_map<int,Object*,_STL::hash<int>,_STL::equal_to<int> > ObjectPtrHash;
 class ObjectRegistry0036F1B0 {
  char pad[0xb0]; ObjectPtrHash objects;

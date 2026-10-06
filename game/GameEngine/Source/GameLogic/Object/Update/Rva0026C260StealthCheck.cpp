@@ -31,9 +31,13 @@ class Module;
 // The retail callee is Object::findModule(NameKeyType).
 class Object
 {
-public:
+	// Retail's Object::findModule (0x001BEE60) is a protected member, so the
+	// mangled call name carries that access; only the friend may call it here.
+protected:
 	Module *findModule(NameKeyType key) const;
+	friend class Rva0026C260Owner;
 
+public:
 	unsigned char m_pad00[0x90];
 	UnsignedInt m_status;
 };

@@ -79,7 +79,11 @@ public:
 	unsigned char m_pad44[0x23c - 0x44];
 	Team *m_team;
 
+	// Retail's Object::findModule (0x001BEE60) is a protected member, so the
+	// mangled call name carries that access; only the friend may call it here.
+protected:
 	Module *findModule(NameKeyType key) const;
+	friend class CastleBehavior;
 };
 
 class GameLogic

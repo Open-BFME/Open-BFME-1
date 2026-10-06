@@ -65,8 +65,13 @@ class Object
 {
 public:
 	Player *getControllingPlayer() const;
-	Module *findModule(NameKeyType) const;
 	const AsciiString &getCommandSetString() const;
+
+	// Retail's Object::findModule (0x001BEE60) is a protected member, so the
+	// mangled call name carries that access; only the friend may call it here.
+protected:
+	Module *findModule(NameKeyType) const;
+	friend class ScriptConditions;
 };
 
 class Rva0036E420Castle
