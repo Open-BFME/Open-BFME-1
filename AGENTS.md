@@ -4,6 +4,14 @@ Many agents push to `origin/master` all day. Keep each change small, verified
 and easy to rebase. `docs/matching.md` covers byte matching and
 `docs/structural.md` manual reverse engineering.
 
+## Verifier upgrade in progress
+
+Gate checks land shortly (jump tables, extent tails, local statics,
+`gen-alias` tokens, data RVAs, thunk-table names). Until then, edit
+`tools/build.py`, `.githooks/` or baselines only to fix a verifier bug; add no
+`gen-alias` notes, data pins, alias rows or `__emit` lifts; pause bulk renames.
+Flagged rows will be queued.
+
 ## Setup
 
 - `git pull --rebase origin master`. Once per host:
@@ -16,8 +24,8 @@ and easy to rebase. `docs/matching.md` covers byte matching and
 ## Work selection
 
 An explicit request or assigned lane overrides the queue. WorldBuilder work
-uses `python3 tools/worldbuilder.py next` and `docs/worldbuilder.md`; its
-ledger and verification are separate from the game's.
+uses `python3 tools/worldbuilder.py next` and `docs/worldbuilder.md`, with its
+own ledger and verification.
 
 1. **Linking first.** `tools/link_check.py next` claims the name
    alone blocking the most unlinked bytes; `near` lists files linking once
@@ -53,19 +61,18 @@ ledger and verification are separate from the game's.
    file's placeholder names. A name lands only when another vendor's model
    proposes it too; never rename placeholders by hand.
 
-Whether a body is open work is decided in one place, `tools/eligibility.py`;
-never re-derive it in a new tool.
+`tools/eligibility.py` alone decides whether a body is open work; never
+re-derive it.
 
-**Claim a body before you start it:** `python3 tools/claims.py claim 0xRVA`. If
-held, take another. Claims expire after 4 h. After your push,
-`python3 tools/claims.py release --landed` frees what landed; `release 0xRVA`
-frees a banked, blocked or abandoned body.
+**Claim a body first:** `python3 tools/claims.py claim 0xRVA` (if held, take
+another; claims expire after 4 h). After pushing, `claims.py release --landed`
+frees what landed; `release 0xRVA` frees a banked, blocked or abandoned body.
 
 **Before writing a body**, run `python3 tools/callees.py <rva> <size>` and use
 the callee names it prints. A link failure against a real retail body usually
 means a callee is named wrong, not a missing pin; never pin on a seat's say-so.
-For a callee with no signature it prints `inferred ABI:`; declare the callee
-that way before blaming your body.
+For a callee with no signature it prints `inferred ABI:`; declare it that way
+before blaming your body.
 
 **Small dependency repairs travel with the body.** If the scoped gate fails only
 on an unresolved callee the body really calls, prove that callee's identity and
@@ -75,23 +82,22 @@ meaning is unproven. Switch bodies when the evidence is ambiguous or the repair
 spreads.
 
 Finish or revert each body before the next. After several failed shapes or
-about 30 minutes without byte progress, take a fresh candidate; never leave a
-non-matching reconstruction in `game/`.
+about 30 minutes without byte progress take a fresh candidate; never leave a non-matching
+reconstruction in `game/`.
 
 ## Work the file
 
-`next_work.py` lists the other queued bodies in the same source file. That file
-is your unit of work: siblings share the layout, offsets and callee pins the
-first body needed. A shared header edit costs a full gate, so edit every
-dependent body and pay once.
+`next_work.py` lists the other queued bodies in the same file; work them
+together, since siblings share layout, offsets and callee pins. A shared header
+edit costs a full gate: edit every dependent body and pay once.
 
 ## Convert, verify, commit, push
 
-1. Make the smallest source and ledger change for one function. Several
-   sub-100-byte recoveries that follow one established pattern may share a
-   commit; verify each function and its identity separately.
-2. `./build.sh <file-or-symbol>`. If a command returns a process or session ID,
-   poll it; never launch a duplicate build.
+1. Make the smallest source and ledger change for one function. Sub-100-byte
+   recoveries following one established pattern may share a commit; verify
+   each function and its identity separately.
+2. `./build.sh <file-or-symbol>`. Poll any returned process or session ID;
+   never launch a duplicate build.
 3. Stage explicit paths only (never `git add .`); check every new ledger source
    is tracked.
 4. Commit normally; never bypass hooks (`--no-verify`). A commit that stages a
@@ -100,11 +106,10 @@ dependent body and pay once.
    Baselines may only shrink; never add a line to one to go green.
 5. `git pull --rebase origin master`, `git push`, then pull again; on rejection,
    rebase, recheck the ledger, retry.
-6. Before pushing, `python3 tools/progress.py origin/master` shows what your
-   session added.
+6. `python3 tools/progress.py origin/master` shows what your session added.
 
-Never `git stash pop` bare (worktrees share one stash): park work in a patch
-file or temp branch.
+Never bare `git stash pop` (worktrees share one stash); park work in a patch
+or temp branch.
 
 ## Verdicts and near misses
 
@@ -117,12 +122,12 @@ Record each session's outcome with
 `python3 tools/re_log.py record <symbol> <rva> <size> <status> <evidence>`, never
 by editing `re_attempts.log`: cite the real boundary, `t=<minutes>`, `model=`
 and, for a `partial` or long `blocked`, `blocker=<family>` (`tools/blockers.py`).
-Pass `--model` to `add_match.py`; fleet workers get it from `BFME_MODEL`.
+Pass `--model` to `add_match.py` (fleet workers: `BFME_MODEL`).
 
-Close but not exact? Bank it:
-`partial '<what is wrong>' --stash <your .cpp> --score <0..1>`, so the next
-agent starts from your body. No body, no `partial`: record `blocked`. For a
-0.9+ near miss, run `tools/probe.py` and check `docs/shape_levers.md` first.
+Bank a near miss for the next agent:
+`partial '<what is wrong>' --stash <your .cpp> --score <0..1>`; with no body,
+record `blocked`. For 0.9+, run `tools/probe.py` and read
+`docs/shape_levers.md` first.
 
 ## File placement
 
@@ -163,9 +168,8 @@ agent starts from your body. No body, no `partial`: record `blocked`. For a
   `?dup_XXXXXXXX@@YAXXZ` is a real body whose identity is unknown or disputed.
   Re-home a mis-anchored row to whichever fits its size. Never infer a
   funclet's `parent=` from adjacency.
-- Before quoting a `GlobalData` constant as behaviour, read the shipped value
-  with `tools/ini_value.py <Key>`: `ini.big` and `_patch222.big` override many
-  compiled defaults.
+- Read shipped `GlobalData` values with `tools/ini_value.py <Key>` before
+  quoting them: `ini.big` and `_patch222.big` override compiled defaults.
 
 ## Generated and vendored claims
 
