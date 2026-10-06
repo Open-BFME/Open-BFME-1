@@ -21,6 +21,12 @@ private:
 	StringBase(const StringBase<T> &that);
 	void releaseBuffer();
 
+public:
+	int getLength() const
+	{
+		return data ? *(unsigned short *)((char *)data + 4) : 0;
+	}
+
 protected:
 	void *data;
 };
@@ -38,10 +44,7 @@ public:
 	UnicodeString(const UnicodeString &that) : StringBase<unsigned short>(that) {}
 	~UnicodeString() { releaseBuffer(); }
 
-	int getLength() const
-	{
-		return data ? *(unsigned short *)((char *)data + 4) : 0;
-	}
+	using StringBase<unsigned short>::getLength;
 };
 
 // BFME's static-text factory copies an eight-byte input record.  Keep the
