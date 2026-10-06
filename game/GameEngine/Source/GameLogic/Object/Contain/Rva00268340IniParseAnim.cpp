@@ -48,7 +48,18 @@ public:
     static void iniParseAnim(INI *, void *, void *, const void *);
 };
 
-int bfmeLookup_001c62b0(void *name);
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
+template <int NUMBITS>
+class BitFlags
+{
+public:
+    static int getSingleBitFromName(const char *token);
+};
+
+// ModelConditionFlags is BitFlags<304> in BFME. Its name lookup is the matched
+// body at 0x001C0930 (DamageFX.cpp instantiates it), reached through ILT
+// 0x000190F1.
+typedef BitFlags<304> ModelConditionFlags;
 
 void Rva00268340Contain::iniParseAnim(INI *ini, void *, void *store, const void *)
 {
@@ -58,5 +69,5 @@ void Rva00268340Contain::iniParseAnim(INI *ini, void *, void *store, const void 
         throw INIException(3, "AnimState expected for TransportContain::iniParseAnim");
 
     token = ini->getNextToken();
-    *(int *)store = bfmeLookup_001c62b0((void *)token);
+    *(int *)store = ModelConditionFlags::getSingleBitFromName(token);
 }
