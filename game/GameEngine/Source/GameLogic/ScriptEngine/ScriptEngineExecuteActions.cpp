@@ -58,7 +58,7 @@ protected:
 	void Rva00343780(ScriptAction *action);
 	void setSway(ScriptAction *action);
 	void Rva003369d0(ScriptAction *action);
-	void Rva0033e040(ScriptAction *action);
+	void setPriorityThing(ScriptAction *action);
 	protected:
 	void setPriorityKind(ScriptAction *action);
 protected:
@@ -118,7 +118,7 @@ void ScriptEngine::executeActions(ScriptAction *head)
 		case 150: setTimer(action, false, true); break;
 		case 151: setTimer(action, true, true); break;
 		case 124: case 125: case 126: case 127: Rva003369d0(action); break;
-		case 132: Rva0033e040(action); break;
+		case 132: setPriorityThing(action); break;
 		case 133: setPriorityKind(action); break;
 		case 134: setPriorityDefault(action); break;
 		case 154: {

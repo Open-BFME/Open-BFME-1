@@ -2,7 +2,7 @@
 // stlport
 //
 // ScriptEngine::setPriorityThing at retail RVA 0x0033E040. The executeActions
-// caller and the pinned BFME helper set establish the address-derived identity.
+// caller and EA's own label (ea_evidence.csv) establish the identity.
 
 #include <vector>
 #include "ascii_string.h"
@@ -125,13 +125,13 @@ public:
 	void AppendDebugMessage(const AsciiString &message, Bool forcePause);
 
 	protected:
-	void Rva0033e040(ScriptAction *action);
+	void setPriorityThing(ScriptAction *action);
 };
 
 extern ScriptEngine *TheScriptEngine;
 
-// ?Rva0033e040@ScriptEngine@@IAEXPAVScriptAction@@@Z
-void ScriptEngine::Rva0033e040(ScriptAction *action)
+// ?setPriorityThing@ScriptEngine@@IAEXPAVScriptAction@@@Z
+void ScriptEngine::setPriorityThing(ScriptAction *action)
 {
 	AsciiString typeArgument = action->getParameter(1)->getString();
 	ObjectTypes *types = TheScriptEngine->getObjectTypes(typeArgument);
