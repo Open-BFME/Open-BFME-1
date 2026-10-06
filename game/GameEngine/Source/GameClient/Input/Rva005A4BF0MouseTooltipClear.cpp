@@ -9,11 +9,18 @@ struct Rva005A4BF0StringHeader
 	unsigned short capacity;
 };
 
+// Retail's clear() call lands on the wide releaseBuffer body (0x008881D0).
+template <typename T>
+class StringBase
+{
+	friend class Rva005A4BF0Mouse;
+	void releaseBuffer();
+};
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
+class UnicodeString : public StringBase<unsigned short>
 {
 public:
-	void clear();
 
 	Rva005A4BF0StringHeader *m_data;
 };
@@ -42,7 +49,7 @@ void Rva005A4BF0Mouse::clearTooltipIfHidden(unsigned char flag, unsigned char *o
 		if (!m_engineVisible || !m_scriptVisible)
 		{
 			bfmeGo995B();
-			tooltip->clear();
+			tooltip->StringBase<unsigned short>::releaseBuffer();
 			m_tooltipExtra = 0;
 		}
 	}

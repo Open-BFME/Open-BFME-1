@@ -6,11 +6,18 @@ extern "C" void * __cdecl memset(void *block, int value, unsigned int bytes);
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 
+// Retail's clear() calls land on the wide releaseBuffer body (0x008881D0).
+template <typename T>
+class StringBase
+{
+	friend class Mouse;
+	void releaseBuffer();
+};
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
+class UnicodeString : public StringBase<unsigned short>
 {
 public:
-	void clear();
 	void *m_data;
 };
 
@@ -88,8 +95,8 @@ void Mouse::init()
 	m_numAxes = 2;
 	m_forceFeedback = 0;
 	m_displayTooltip = 0;
-	m_tooltipString.clear();
-	m_cursorText.clear();
+	m_tooltipString.StringBase<unsigned short>::releaseBuffer();
+	m_cursorText.StringBase<unsigned short>::releaseBuffer();
 	m_stillTime = timeGetTime();
 
 	memset(m_mouseEvents, 0, sizeof(m_mouseEvents));

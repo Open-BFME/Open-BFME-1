@@ -16,6 +16,12 @@ template <typename T> class StringBase
 {
 	friend class UnicodeString;
 
+	public:
+	void clear(void)
+	{
+		releaseBuffer();
+	}
+
 	private:
 	void releaseBuffer();
 
@@ -31,10 +37,7 @@ class UnicodeString : private StringBase<unsigned short>
 public:
 	void translate(const AsciiString &src);
 
-	void clear(void)
-	{
-		StringBase<unsigned short>::releaseBuffer();
-	}
+	using StringBase<unsigned short>::clear;
 };
 
 class BuddyInfo
