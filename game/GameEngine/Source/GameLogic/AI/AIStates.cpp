@@ -6137,54 +6137,7 @@ StateReturnType AIPanicState::onEnter()
 	return ret;
 }
 
-//----------------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/AIPanicState_update_Thunk.cpp
-// ?update@AIPanicState@@UAE?AW4StateReturnType@@XZ present-unmatched
-StateReturnType AIPanicState::update()
-{
-	// do movement
-	StateReturnType status = AIInternalMoveToState::update();
-
-	Object *obj = getMachineOwner();
-	if (obj->isKindOf(KINDOF_CAN_BE_REPULSED)) {
-		m_timer--;
-		if (m_timer<0) {
-			m_timer = m_waitFrames;
-			Object* enemy = TheAI->findClosestRepulsor(getMachineOwner(), obj->getVisionRange());
-			if (enemy) {
-				return STATE_FAILURE;
-			}
-		}
-	}
-
-	// if move to has finished, move to next point on waypoint path
-	if (status == STATE_SUCCESS)
-	{
-		Object *obj = getMachineOwner();
-		AIUpdateInterface *ai = obj->getAI();
-
-		m_currentWaypoint = getNextWaypoint();
-		// if there are no links from this waypoint, we're done
-		if (m_currentWaypoint == NULL)	{
-			/// Trigger "end of waypoint path" scripts (jba)
-			ai->setCompletedWaypoint(m_priorWaypoint);
-			
-			return STATE_SUCCESS;
-		}
-		Locomotor* curLoco = ai->getCurLocomotor();
-		if (curLoco && curLoco->getWanderWidthFactor() > 0.0f) {
-			Int delta = REAL_TO_INT_FLOOR(curLoco->getWanderWidthFactor()+0.5f);
-			if (delta<1) delta = 1;
-			m_groupOffset.x = GameLogicRandomValue(-delta, delta)*PATHFIND_CELL_SIZE_F;
-			m_groupOffset.y = GameLogicRandomValue(-delta, delta)*PATHFIND_CELL_SIZE_F;
-		}
-		computeGoal(false);
-		computePath();
-		return STATE_CONTINUE;
-	}
-	// Never leave this state until told to.
-	return STATE_CONTINUE;
-}
+// AIPanicState::update (retail 0x0017B840) is matched in AIPanicState_update_Thunk.cpp.
 
 
 //----------------------------------------------------------------------------------------------------------
