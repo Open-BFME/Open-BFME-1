@@ -1556,26 +1556,8 @@ void AIIdleState::loadPostProcess( void )
  * Stake out our space.
  */
 DECLARE_PERF_TIMER(AIIdleState)
-// ?onEnter@AIIdleState@@UAE?AW4StateReturnType@@XZ present-unmatched
-StateReturnType AIIdleState::onEnter()
-{
-	USE_PERF_TIMER(AIIdleState)
-	Object *obj = getMachineOwner();
-	AIUpdateInterface *ai = obj->getAI();
-
-	// We could possibly not have ai here if we were constructed this frame. Strange but true. :-<
-	if (ai) 
-		ai->resetNextMoodCheckTime();
-
-	m_inited = true;
-
-	// reset the idle countdown so that we don't do expensive checks too often,
-	// randomized so we avoid spikes
-	m_initialSleepOffset = (UnsignedShort)GameLogicRandomValue(0, IDLE_COUNTDOWN_DELAY);
-
-	// never sleep at the start, since we have to do checkGoalPos first time thru
-	return STATE_CONTINUE;
-}
+// AIIdleState::onEnter: retail's body (0x00170020) is AIIdleState_onEnter.cpp;
+// Zero Hour's version is not defined here.
 
 class BfmeIdleAIUpdate : public BFMEVirtualSlots<96>
 {
