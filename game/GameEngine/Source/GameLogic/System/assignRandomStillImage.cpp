@@ -4,10 +4,15 @@
 typedef int Int;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
+template <typename T>
+class StringBase
 {
 public:
-	void set(const char *text, Int length);
+	void set(const T *text, Int length);
+};
+
+class AsciiString : public StringBase<char>
+{
 };
 
 extern Int GetGameClientRandomValue(Int low, Int high, char *file, Int line);

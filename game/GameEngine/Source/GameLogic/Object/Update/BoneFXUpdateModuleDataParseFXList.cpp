@@ -9,11 +9,16 @@ typedef float Real;
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *, const char *);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
+template <typename T>
+class StringBase
 {
 public:
-	void set(const char *, int);
+	void set(const T *, int);
+};
 
+class AsciiString : public StringBase<char>
+{
+public:
 	AsciiString &operator=(const char *text)
 	{
 		set(text, text ? strlen(text) : 0);

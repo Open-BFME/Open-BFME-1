@@ -8,11 +8,15 @@
 extern "C" __declspec(dllimport) char *__cdecl strncpy( char *dest, const char *src, unsigned int count );
 extern "C" unsigned int __cdecl strlen( const char *str );
 
-class AsciiString
+template <typename T>
+class StringBase
 {
 public:
-	void set( const char *str, int len );
+	void set( const T *str, int len );
+};
 
+class AsciiString : public StringBase<char>
+{
 private:
 	void *m_data;
 };

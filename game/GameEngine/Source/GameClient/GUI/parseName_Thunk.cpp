@@ -23,11 +23,16 @@ extern "C" __declspec(dllimport) char *__cdecl strtok(char *s, const char *delim
 extern "C" unsigned int __cdecl strlen(const char *s);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
+template <typename T>
+class StringBase
 {
 public:
-	void set(const char *s, Int len);					///< ILT thunk at 0x00887D20
+	void set(const T *s, Int len);					///< ILT thunk at 0x00887D20
+};
 
+class AsciiString : public StringBase<char>
+{
+public:
 	const char *str(void) const
 	{
 		return m_data ? (const char *)((unsigned char *)m_data + 8) : "";
