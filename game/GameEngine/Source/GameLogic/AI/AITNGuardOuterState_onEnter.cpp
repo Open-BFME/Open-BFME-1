@@ -103,11 +103,14 @@ public:
 	virtual void onExit( StateExitType status );
 	virtual StateReturnType update();
 
-	StateMachine *getMachine() { return m_machine; }
-
 	unsigned char m_stateFields[0x18];
 	StateMachine *m_machine;								///< this+0x1C
 };
+
+// State's machine pointer at +0x1C, read through a file-local inline: a member
+// getMachine() here emitted a ?getMachine@State@@ COMDAT reading +0x1C, while
+// the matched body under that name (0x00232180) reads +0x20.
+static inline StateMachine *machineOf(State *state) { return state->m_machine; }
 
 class AIAttackState : public State
 {
@@ -133,7 +136,7 @@ class AITNGuardOuterState : public State
 public:
 	virtual StateReturnType onEnter();
 
-	AITNGuardMachine *getGuardMachine() { return (AITNGuardMachine *)getMachine(); }
+	AITNGuardMachine *getGuardMachine() { return (AITNGuardMachine *)machineOf(this); }
 
 	unsigned char m_at20[4];
 	ExitConditions m_exitConditions;						///< this+0x24
@@ -156,9 +159,9 @@ StateReturnType AITNGuardOuterState::onEnter( void )
 	}
 	m_exitConditions.m_attackGiveUpFrame = TheGameLogic->getFrame() + TheAI->getAiData()->m_guardChaseUnitFrames;
 
-	m_attackState = new AIAttackState(getMachine(), false, true, false, &m_exitConditions);
+	m_attackState = new AIAttackState(machineOf(this), false, true, false, &m_exitConditions);
 
-	m_attackState->getMachine()->setGoalObject(nemesis);
+	machineOf(m_attackState)->setGoalObject(nemesis);
 
 	StateReturnType returnVal = m_attackState->onEnter();
 	if (returnVal == STATE_CONTINUE) {
