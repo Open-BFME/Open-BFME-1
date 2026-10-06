@@ -1,0 +1,28 @@
+{
+  "_doc": "tools/model_routing.py. success/failure: re_attempts.log statuses that count as one decided attempt; boundary findings (refuted, mis-anchored?, no-boundary, identity-suspect) and annotations count for nobody. floor: minimum Wilson lower bound on landed/decided before a model stops being routed a class, once it has min_attempts there. models: who may take a class ('*' = anyone measured). commands: how tools/variant_search.py calls a model ({model} is substituted; the prompt arrives on stdin, the answer is read from stdout).",
+  "success": ["landed", "converted", "solved", "mapped"],
+  "failure": ["blocked", "partial", "abandoned", "no-match", "not-convertible"],
+  "min_attempts": 40,
+  "floor": 0.03,
+  "classes": [
+    {"name": "tiny", "max_size": 48, "prefer": "cheap"},
+    {"name": "small", "max_size": 160, "prefer": "cheap"},
+    {"name": "medium", "max_size": 600, "floor": 0.02},
+    {"name": "large", "max_size": null, "floor": 0.01,
+     "models": ["claude-opus-5-5", "claude-fable-5.1", "gpt-6.1-sol", "gpt-6-astra", "gpt-6"]}
+  ],
+  "aliases": {
+    "opus-5.5": "claude-opus-5-5",
+    "claude-opus-5.5": "claude-opus-5-5",
+    "claude-opus-5": "claude-opus-5",
+    "codex": "codex",
+    "codex-gpt-5.6": "codex-gpt-5.6"
+  },
+  "cost": {
+    "claude-opus-5-5": 5, "claude-fable-5.1": 5, "gpt-6.1-sol": 5, "gpt-6-astra": 5, "gpt-6": 4
+  },
+  "commands": {
+    "default": "codex exec --model {model} -"
+  },
+  "variant_model": "gpt-6.1-sol"
+}
