@@ -41,7 +41,9 @@ public:
 	Int getPlayerIndex(void) const;
 };
 
-class StructureCompletionInterface
+// Returned by the 0x001BF670 getter (via ILT 0x000351D9), which the ledger
+// names Object::getCountermeasuresBehaviorInterface() const.
+class CountermeasuresBehaviorInterface
 {
 public:
 	virtual void slot00(void);
@@ -52,7 +54,7 @@ public:
 	virtual void slot14(void);
 	virtual void slot18(void);
 	virtual void slot1c(void);
-	virtual Bool slot20(void);
+	virtual Bool slot20(void) const;
 };
 
 class BFMEActionObject
@@ -87,7 +89,7 @@ public:
 	Relationship getRelationship(const Object *other) const;
 	Player *getControllingPlayer(void) const;
 	ObjectShroudStatus getShroudedStatus(Int playerIndex) const;
-	StructureCompletionInterface *getStructureCompletionInterface(void);
+	const CountermeasuresBehaviorInterface *getCountermeasuresBehaviorInterface(void) const;
 	ObjectID getSoleHealingBenefactor(void) const;
 
 	char m_pad00[0x74];
@@ -166,8 +168,8 @@ Bool ActionManager::canRepairObject(const Object *obj, const Object *objectToRep
 	if (((const Thing *)objectToRepair)->isKindOf( (KindOfType)0x95 ))
 		return false;
 
-	StructureCompletionInterface *completion =
-		const_cast<Object *>(objectToRepair)->getStructureCompletionInterface();
+	const CountermeasuresBehaviorInterface *completion =
+		objectToRepair->getCountermeasuresBehaviorInterface();
 	if (completion && completion->slot20())
 		return false;
 
