@@ -471,8 +471,15 @@ def test_scopes_overlap_on_shared_ledgers_headers_and_globs():
     assert not pub.in_scope("tools/x.py", dict(allow=["**"], forbid=["tools/**"]))
 
 
-def _concurrency(tmp_path, serialize):
+FUNCTIONS = "targets/game/reverse/functions.csv"
+HEADER = "name,export_rva,target_rva,target_size,source,status,notes"
+
+
+def _concurrency(tmp_path, serialize, same_row=True, graph=None):
     world = load.VirtualWorld(tmp_path, builders=3, jitter=0.0, serialize_scopes=serialize)
+    world.repo.headers[FUNCTIONS] = HEADER
+    if graph:
+        world.repo.graph = graph
     seen = []
     original = world.p._dispatch
 
@@ -480,7 +487,9 @@ def _concurrency(tmp_path, serialize):
         original(batch, digest)
         seen.append([u for b in world.p.inflight for u in b.units])
     world.p._dispatch = dispatch
-    shared = [world.submit("opA", paths=[f"x{i}.cpp", "functions.csv"]) for i in range(3)]
+    shared = [world.submit("opA", paths=[f"x{i}.cpp", FUNCTIONS],
+                           rows={FUNCTIONS: ["0x00401000" if same_row else f"0x0040{i}000"]})
+              for i in range(3)]
     loose = [world.submit("opB", paths=[f"y{i}.cpp"]) for i in range(3)]
     world.run([], 3 * 3600)
     done = {e["unit"]: e["ev"] for e in world.events() if e["ev"] in ("landed", "rejected")}
@@ -540,6 +549,10 @@ def test_equivalent_failures_are_refused_until_the_target_inputs_change(world):
         unit = attempt(n)
         settle(world.publisher())
         assert where(world, unit)[1]["reason"] == "gate"
+    # the shared ledger moving on is not a change of the target's inputs
+    world.submit({"functions.csv": "other rows\n"}, scope=["functions.csv"])
+    settle(world.publisher())
+    assert "functions.csv" in world.files()
     fourth = attempt(3, ledger=True)
     settle(world.publisher())
     assert where(world, fourth)[0] is None and refused() == ["retry-limit"]
@@ -552,3 +565,92 @@ def test_equivalent_failures_are_refused_until_the_target_inputs_change(world):
     again = attempt(5)
     settle(world.publisher())
     assert where(world, again)[1]["reason"] == "gate" and refused() == ["retry-limit"]
+
+
+# ---- row-level ledger scope and header dependencies ------------------------------
+def _diff(path, *lines):
+    return (f"diff --git a/{path} b/{path}\n--- a/{path}\n+++ b/{path}\n@@ -1 +1 @@\n"
+            + "".join(f"{line}\n" for line in lines)).encode()
+
+
+def test_ledger_rows_and_row_tokens_follow_the_ledger_key_rules():
+    ledgers = pub.DEFAULTS["row_ledgers"]
+    headers = {FUNCTIONS: HEADER, "targets/game/reverse/symbols.csv": "name,address,notes",
+               "reverse/data_rows.csv": "name,address,address_kind,size,section,source,status"}
+    diff = (_diff(FUNCTIONS, "-?a@@YAXXZ,,0x401000,10,x.cpp,matched,",
+                  '+?b@@YAXXZ,,0x00401000,10,x.cpp,matched,"note, with comma"',
+                  "+?c,,0x00402000,4,y.cpp,matched,")
+            + _diff("targets/game/reverse/symbols.csv", "+?g_x@@3HA,0x00500000,pin")
+            + _diff("reverse/data_rows.csv", "+?d@@3HA,0x00600000,va,4,.data,z.cpp,matched")
+            + _diff("targets/game/reverse/re_attempts.log", "+one attempt line")
+            + _diff("game/x.cpp", "+int a;"))
+    rows = pub.ledger_rows(diff, ledgers, headers.get)
+    assert rows[FUNCTIONS] == ["0x00401000", "0x00402000"]       # an edit is one row, RVAs normalised
+    assert rows["targets/game/reverse/symbols.csv"] == ["?g_x@@3HA"]
+    assert rows["reverse/data_rows.csv"] == ["0x00600000"]
+    assert len(rows["targets/game/reverse/re_attempts.log"]) == 1   # a line ledger keys whole lines
+    scope = pub.scope_from_diff(diff, ledgers, headers.get)
+    assert f"{FUNCTIONS}#0x00402000" in scope and "game/x.cpp" in scope and FUNCTIONS not in scope
+    # a header edit is a whole-file change
+    assert pub.scope_from_diff(_diff(FUNCTIONS, "-" + HEADER, "+" + HEADER + ",extra"),
+                               ledgers, headers.get) == [FUNCTIONS]
+    row = lambda key: dict(scope=dict(allow=[f"{FUNCTIONS}#{key}"]), paths=[FUNCTIONS],  # noqa: E731
+                           rows={FUNCTIONS: [key]})
+    whole = dict(scope=dict(allow=[FUNCTIONS]), paths=[FUNCTIONS], rows={FUNCTIONS: ["0x00409000"]})
+    assert not pub.scopes_overlap(row("0x00401000"), row("0x00402000"))   # disjoint rows
+    assert pub.scopes_overlap(row("0x00401000"), row("0x00401000"))       # positive control
+    assert pub.scopes_overlap(row("0x00401000"), whole)                    # a whole-file scope
+    assert not pub.in_scope(FUNCTIONS, dict(allow=[f"{FUNCTIONS}#0x00401000"]), "0x00402000")
+
+
+def test_disjoint_ledger_rows_run_together_and_the_same_row_serializes(tmp_path):
+    done, units, together, _ = _concurrency(tmp_path / "same", serialize=True, same_row=True)
+    assert together == 1 and all(done[u] == "landed" for u in units)
+    done, units, together, _ = _concurrency(tmp_path / "rows", serialize=True, same_row=False)
+    assert together == 3 and all(done[u] == "landed" for u in units)
+
+
+def test_a_header_overlaps_the_units_whose_sources_include_it(tmp_path):
+    graph = ({"a.h": {"game/x.cpp", "game/b.h"}, "b.h": {"game/y.cpp"}}, set())
+    world = load.VirtualWorld(tmp_path, builders=3, jitter=0.0)
+    world.repo.graph = graph
+    header = world.submit("opA", paths=["game/a.h"])
+    record = world.p.queue[header]
+    assert record["reach"] == ["game/b.h", "game/x.cpp", "game/y.cpp"]    # transitive, by name
+    x = world.submit("opB", paths=["game/x.cpp"])
+    y = world.submit("opB", paths=["game/y.cpp"])
+    z = world.submit("opB", paths=["game/z.cpp"])
+    q = world.p.queue
+    assert pub.scopes_overlap(q[header], q[x]) and pub.scopes_overlap(q[header], q[y])
+    assert not pub.scopes_overlap(q[header], q[z]) and not pub.scopes_overlap(q[x], q[y])
+    # macro includes count as including everything, except ignored STLport redirects
+    world.repo.graph = (graph[0], {"game/macro.cpp"})
+    assert "game/macro.cpp" in world.p._reach(["game/a.h"])
+    world.repo.graph = (graph[0], {"inputs/vendor/stlport/ctype.h"})
+    assert "inputs/vendor/stlport/ctype.h" not in world.p._reach(["game/a.h"])
+
+
+def test_rows_outside_the_declared_tokens_are_rejected_and_auto_scope_lands(tmp_path):
+    w = World(tmp_path)
+    w.commit({".gitattributes": "*.csv merge=union\n",
+              FUNCTIONS: HEADER + "\n?a,,0x00401000,4,a.cpp,matched,\n"})
+    git(w.seat, "push", "-q", str(w.origin), "HEAD:refs/heads/master")
+    w.commit({"g1.cpp": "1\n", FUNCTIONS: HEADER + "\n?a,,0x00401000,4,a.cpp,matched,\n"
+              "?b,,0x00402000,4,g1.cpp,matched,\n?c,,0x00403000,4,g1.cpp,matched,\n"})
+    sneaky = pub.submit(w.seat, "opA", w.key("opA"), "HEAD~1..HEAD", inbox=w.inbox,
+                        scope=["g1.cpp", f"{FUNCTIONS}#0x00402000"])
+    w.commit({"g2.cpp": "1\n", FUNCTIONS: HEADER + "\n?a,,0x00401000,4,a.cpp,matched,\n"
+              "?d,,0x00404000,4,g2.cpp,matched,\n"})
+    auto = pub.submit(w.seat, "opB", w.key("opB"), "HEAD~1..HEAD", inbox=w.inbox, scope="diff")
+    w.commit({"g3.cpp": "1\n", FUNCTIONS: HEADER + "\n?a,,0x00401000,4,a.cpp,matched,\n"
+              "?e,,0x00405000,4,g3.cpp,matched,\n"})
+    auto2 = pub.submit(w.seat, "opA", w.key("opA"), "HEAD~1..HEAD", inbox=w.inbox, scope="diff")
+    p = w.publisher()
+    settle(p)
+    state, record = where(w, sneaky)
+    assert state == "rejected" and record["paths"] == [f"{FUNCTIONS}#0x00403000"]
+    for unit in (auto, auto2):                                 # disjoint rows: both land
+        state, record = where(w, unit)
+        assert state == "landed" and f"{FUNCTIONS}#0x0040" in " ".join(record["scope"]["allow"])
+    text = git(w.origin, "show", f"master:{FUNCTIONS}")
+    assert "0x00404000" in text and "0x00405000" in text and "0x00403000" not in text

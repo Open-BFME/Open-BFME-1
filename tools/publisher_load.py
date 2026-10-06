@@ -19,6 +19,14 @@ landed), queue depth, gates run and builder utilization.
 
   python3 tools/publisher_load.py simulate [--builders 1,2,3,4,6] [--rate 300] [--hours 8]
   python3 tools/publisher_load.py loadtest --workdir DIR [--builders 3] [--minutes 60] [--scale 6]
+  python3 tools/publisher_load.py history --out F.json [--ref origin/master] [--days 7]
+  python3 tools/publisher_load.py simulate --footprints F.json ...   # replay real footprints
+
+`history` reads every non-merge commit of the last --days: its paths, the
+ledger rows it changes (row_ledgers) and the files that #include what it
+touches, and reports how often a commit overlaps another within +-15/30 min
+under row scope and under whole-file scope. `--footprints` replays those
+footprints in order as the simulated arrivals.
 """
 import argparse
 import hashlib
@@ -45,6 +53,8 @@ class VirtualRepo:
         self.bad = {"h0": frozenset()}
         self.is_bad = lambda unit: False
         self.composed = 0
+        self.headers = {}                   # ledger path -> header line
+        self.graph = ({}, set())            # include graph, as GitRepo.includers()
 
     def head(self):
         return self.tip
@@ -62,6 +72,12 @@ class VirtualRepo:
 
     def inputs_digest(self, head, scope):
         return "static"
+
+    def ledger_header(self, path):
+        return self.headers.get(path)
+
+    def includers(self):
+        return self.graph
 
     def is_ancestor(self, older, newer, limit=100000):
         while newer is not None and limit:
@@ -162,19 +178,41 @@ class VirtualWorld:
         self.serial = 0
         self.depth = []
 
-    def submit(self, operator, bad=False, paths=None, **extra):
+    def submit(self, operator, bad=False, paths=None, rows=None, **extra):
+        """A unit touching `paths` and, in row ledgers, the rows `rows`
+        ({path: [keys]}); its scope defaults to exactly that (row tokens)."""
         self.serial += 1
         i = self.serial
-        paths = paths or [f"u{i}"]
-        patch = (f"From {i:040x} Mon Sep 17 00:00:00 2001\nunit {i}\n" + "".join(
-            f"diff --git a/{p} b/{p}\n+{i}\n" for p in paths)).encode()
-        extra.setdefault("scope", dict(allow=list(paths)))
+        rows = rows or {}
+        paths = list(paths or ([] if rows else [f"u{i}"]))
+        body = "".join(f"diff --git a/{p} b/{p}\n+{i}\n" for p in paths if p not in rows)
+        for path, keys in rows.items():
+            body += f"diff --git a/{path} b/{path}\n" + "".join(
+                f"+{self._row(path, k)}\n" for k in keys)
+        patch = (f"From {i:040x} Mon Sep 17 00:00:00 2001\nunit {i}\n" + body).encode()
+        extra.setdefault("scope", dict(allow=pub.scope_from_diff(
+            patch, self.state.cfg["row_ledgers"], self.repo.ledger_header)))
         envelope = pub.signed(self.keys[operator], dict(
             v=1, operator=operator, sim_bad=bad, patch_sha256=hashlib.sha256(patch).hexdigest(),
             **extra))
         unit, reason = self.p.accept(envelope, patch)
         assert unit, reason
         return unit
+
+    def _row(self, path, key):
+        """A ledger line whose key column holds `key` (line ledgers: the key)."""
+        import csv
+        import io
+        header = self.repo.ledger_header(path)
+        column = pub.row_ledger(path, self.state.cfg["row_ledgers"])
+        if not header or not column:
+            return key
+        names = next(csv.reader([header]))
+        cells = [""] * len(names)
+        cells[names.index(column)] = key
+        line = io.StringIO()
+        csv.writer(line, lineterminator="").writerow(cells)
+        return line.getvalue()
 
     def run(self, arrivals, end):
         """arrivals: sorted [(t, operator, bad, extras)]; runs to time `end`."""
@@ -202,14 +240,84 @@ class VirtualWorld:
         return [json.loads(line) for line in (self.root / "events.jsonl").read_text().splitlines()]
 
 
+def history(repo, ref="origin/master", days=7):
+    """Footprints of the last `days` of non-merge commits: [{t, paths, rows}],
+    plus ledger headers and the include graph at `ref`."""
+    cfg = pub.DEFAULTS
+    log = pub.out("log", f"--since={int(days * 24)}.hours", "--no-merges", "--format=%H %ct", ref, cwd=repo)
+    headers, prints = {}, []
+
+    def header_of(path):
+        if path not in headers:
+            got = pub.git("show", f"{ref}:{path}", cwd=repo, check=False)
+            headers[path] = (got.stdout.split(b"\n", 1)[0].rstrip(b"\r").decode(errors="replace")
+                             if got.returncode == 0 else None)
+        return headers[path]
+    for line in reversed(log.splitlines()):
+        sha, stamp = line.split()
+        diff = pub.git("show", "--format=", "--no-renames", "-U0", "--no-ext-diff", sha,
+                       cwd=repo).stdout
+        prints.append(dict(sha=sha[:10], t=int(stamp), paths=pub.patch_paths(diff),
+                           rows=pub.ledger_rows(diff, cfg["row_ledgers"], header_of)))
+    by_name, macro = pub.scan_includes(repo, ref, cfg["include_globs"])
+    return dict(ref=pub.out("rev-parse", ref, cwd=repo), days=days, footprints=prints,
+                headers={k: v for k, v in headers.items() if v},
+                graph=[{k: sorted(v) for k, v in by_name.items()}, sorted(macro)])
+
+
+def _record(fp, graph, row_scope=True):
+    cfg = pub.DEFAULTS
+    if not row_scope:                         # the whole-file rule of the previous commit
+        return dict(scope=dict(allow=fp["paths"]), paths=fp["paths"], rows={}, reach=[])
+    allow = []
+    for path in fp["paths"]:
+        keys = fp["rows"].get(path)
+        allow += [f"{path}#{k}" for k in keys] if keys and "*" not in keys else [path]
+    return dict(scope=dict(allow=allow), paths=fp["paths"], rows=fp["rows"],
+                reach=pub.reach_of(fp["paths"], graph, cfg))
+
+
+def collisions(data, windows=(15, 30)):
+    """Share of commits overlapping at least one other commit within +-W min."""
+    graph = ({k: set(v) for k, v in data["graph"][0].items()}, set(data["graph"][1]))
+    prints = [fp for fp in data["footprints"] if fp["paths"]]
+    report = dict(commits=len(prints))
+    for row_scope in (True, False):
+        recs = [_record(fp, graph, row_scope) for fp in prints]
+        for w in windows:
+            hit, j0 = 0, 0
+            for i, fp in enumerate(prints):
+                while prints[j0]["t"] < fp["t"] - w * 60:
+                    j0 += 1
+                j = j0
+                while j < len(prints) and prints[j]["t"] <= fp["t"] + w * 60:
+                    if j != i and pub.scopes_overlap(recs[i], recs[j]):
+                        hit += 1
+                        break
+                    j += 1
+            report[f"{'row' if row_scope else 'whole_file'}_overlap_{w}min"] = round(hit / len(prints), 3)
+    report["touch_functions_csv"] = round(sum(
+        any(p.endswith("functions.csv") for p in fp["paths"]) for fp in prints) / len(prints), 3)
+    report["header_reach_wide"] = sum(1 for r in [_record(fp, graph) for fp in prints]
+                                      if r["reach"] == ["*"])
+    return report
+
+
 def simulate(builders=3, rate=300, hours=8, red=0.03, gate_fixed=60, gate_per_unit=20, jitter=0.2,
              max_batch=20, seed=1, warmup=1.0, workdir=None, blame=0.0, target=0.1,
-             shared=0.0):
+             shared=0.0, footprints=None, row_scope=True):
     """Poisson arrivals from the three operators; returns measurements."""
     world = VirtualWorld(workdir or tempfile.mkdtemp(prefix="pubsim-"), builders,
                          gate_fixed=gate_fixed, gate_per_unit=gate_per_unit, jitter=jitter,
-                         blame=blame, seed=seed, max_batch=max_batch, target_red_batch=target)
+                         blame=blame, seed=seed, max_batch=max_batch, target_red_batch=target,
+                         **({} if row_scope else {"row_ledgers": {}}))
     rng = world.rng
+    prints = None
+    if footprints:                            # replay real commits as the arrivals
+        world.repo.headers = dict(footprints["headers"])
+        world.repo.graph = ({k: set(v) for k, v in footprints["graph"][0].items()},
+                            set(footprints["graph"][1]))
+        prints = [fp for fp in footprints["footprints"] if fp["paths"]]
     end = hours * 3600.0
     arrivals, t = [], 0.0
     while t < end:
@@ -221,6 +329,9 @@ def simulate(builders=3, rate=300, hours=8, red=0.03, gate_fixed=60, gate_per_un
                 break
         # `shared`: share of units that also touch one shared ledger (serialized)
         extra = {"paths": [f"s{len(arrivals)}", "functions.csv"]} if rng.random() < shared else {}
+        if prints:
+            fp = prints[len(arrivals) % len(prints)]
+            extra = {"paths": fp["paths"], "rows": fp["rows"] if row_scope else {}}
         arrivals.append((t, name, rng.random() < red, extra))
     world.run(arrivals, end)
     p, ex, root = world.p, world.ex, world.root
@@ -236,7 +347,7 @@ def simulate(builders=3, rate=300, hours=8, red=0.03, gate_fixed=60, gate_per_un
     span = max(1e-9, (end - warmup * 3600) / 3600)
     late = [d for t_, d in depth_samples if t_ >= end - 3600]
     return dict(builders=builders, rate=rate, red=red, hours=hours, blame=blame, target=target,
-                shared=shared,
+                shared=shared, footprints=len(prints or ()), row_scope=row_scope,
                 sustained_per_h=round(len(landed) / span, 1),
                 latency_p50_min=round((pub.percentile(waits, 0.5) or 0) / 60, 1),
                 latency_p95_min=round((pub.percentile(waits, 0.95) or 0) / 60, 1),
@@ -391,6 +502,13 @@ def main(argv=None):
     s.add_argument("--target", type=float, default=0.1, help="target_red_batch")
     s.add_argument("--shared", type=float, default=0.0,
                    help="share of units that also touch functions.csv")
+    s.add_argument("--footprints", help="history JSON: replay real commit footprints")
+    s.add_argument("--whole-file", action="store_true", help="whole-file ledger scope (no rows)")
+    h = sub.add_parser("history")
+    h.add_argument("--out", required=True)
+    h.add_argument("--repo", default=".")
+    h.add_argument("--ref", default="origin/master")
+    h.add_argument("--days", type=float, default=7)
     lt = sub.add_parser("loadtest")
     lt.add_argument("--workdir", required=True)
     lt.add_argument("--builders", type=int, default=3)
@@ -400,14 +518,22 @@ def main(argv=None):
     lt.add_argument("--red", type=float, default=0.03)
     lt.add_argument("--target", type=float, default=0.25, help="target_red_batch (gate emits blame)")
     args = ap.parse_args(argv)
+    if args.action == "history":
+        data = history(args.repo, args.ref, args.days)
+        pub.write_json(Path(args.out), data)
+        print(json.dumps(collisions(data), indent=1))
+        return 0
     if args.action == "simulate":
+        prints = json.loads(Path(args.footprints).read_text()) if args.footprints else None
         for red in map(float, args.red.split(",")):
             for n in map(int, args.builders.split(",")):
                 with tempfile.TemporaryDirectory(prefix="pubsim-") as tmp:
                     print(json.dumps(simulate(n, args.rate, args.hours, red, args.gate_fixed,
                                               args.gate_per_unit, max_batch=args.max_batch,
                                               workdir=tmp, blame=args.blame,
-                                              target=args.target, shared=args.shared)), flush=True)
+                                              target=args.target, shared=args.shared,
+                                              footprints=prints,
+                                              row_scope=not args.whole_file)), flush=True)
         return 0
     print(json.dumps(loadtest(args.workdir, args.builders, args.rate, args.minutes, args.scale,
                               args.red, target=args.target), indent=1))
