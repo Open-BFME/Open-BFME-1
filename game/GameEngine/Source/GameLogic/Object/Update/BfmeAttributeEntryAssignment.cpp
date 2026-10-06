@@ -116,7 +116,10 @@ struct BfmeAttributeEntryPool
 	Gen_t_0039e9d0_p128pod *m_end;
 };
 
-extern BfmeAttributeEntryPool TheBfmeAttributePool;
+// Rva00C6B2C0PoolInitialization.cpp owns the 12-byte pool cell at VA 012F1000.
+struct Rva00EF1000Storage;
+extern Rva00EF1000Storage Rva00EF1000Global;
+#define TheBfmeAttributePool (reinterpret_cast<BfmeAttributeEntryPool &>(Rva00EF1000Global))
 extern void bfmeDestroyAttributeEntry(Gen_t_0039e9d0_p128pod *entry);
 
 void bfmeDestroyAttributePoolEntries()

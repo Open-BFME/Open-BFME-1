@@ -18,7 +18,10 @@ struct BfmeAttributePool
 	BfmeAttributeEntry *m_bfmeFinish;
 };
 
-extern BfmeAttributePool TheBfmeAttributePool;
+// Rva00C6B2C0PoolInitialization.cpp owns the 12-byte pool cell at VA 012F1000.
+struct Rva00EF1000Storage;
+extern Rva00EF1000Storage Rva00EF1000Global;
+#define TheBfmeAttributePool (reinterpret_cast<BfmeAttributePool &>(Rva00EF1000Global))
 
 struct BfmeAttributeHandle
 {
