@@ -27,8 +27,8 @@ public:
 	virtual void slot12(void) = 0;
 	virtual void slot13(void) = 0;
 	virtual void slot14(void) = 0;
-	virtual int getFrameAdvanceCount(void) = 0;
-	virtual int getFramePacingStatus(void) = 0;
+	virtual int IsFrameReady(void) = 0;
+	virtual int PeekFrameReady(void) = 0;
 	virtual void slot17(void) = 0;
 	virtual void slot18(void) = 0;
 	virtual void slot19(void) = 0;
@@ -267,7 +267,7 @@ bool GameEngine::_bfme_shouldSkipClientFrame(void)
 			{
 				if (m_clientFramePeriod > m_clientFrameCounter)
 				{
-					if (network->getFramePacingStatus() > 1)
+					if (network->PeekFrameReady() > 1)
 						return true;
 
 					++m_clientFrameCounter;
@@ -275,7 +275,7 @@ bool GameEngine::_bfme_shouldSkipClientFrame(void)
 						m_clientFrameLimit = (float)m_clientFrameCounter;
 					return false;
 				}
-				else if (network->getFramePacingStatus() > 3)
+				else if (network->PeekFrameReady() > 3)
 				{
 					if ((float)m_clientFramePeriod < m_clientFrameLimit)
 						m_clientFrameLimit = (float)m_clientFramePeriod;
@@ -297,14 +297,14 @@ void GameEngine::_bfme_updateNetworkAndLogic(int phase)
 		ready = !logic->isGamePaused();
 		if (TheNetwork != 0)
 		{
-			if (TheNetwork->getFrameAdvanceCount() > 0)
+			if (TheNetwork->IsFrameReady() > 0)
 			{
 				TheNetwork->beginUpdate();
 				TheNetwork->update(phase);
 				TheNetwork->endUpdate();
 				ready = true;
 				if (!TheNetwork->isPacketRouter())
-					TheNetwork->getFramePacingStatus();
+					TheNetwork->PeekFrameReady();
 			}
 			else
 			{

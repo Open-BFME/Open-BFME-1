@@ -86,7 +86,7 @@ public:
 	virtual void slot09(void); virtual void slot10(void); virtual void slot11(void);
 	virtual void slot12(void); virtual void slot13(void); virtual void slot14(void);
 	virtual void slot15(void);
-	virtual int getFramePacingStatus(void);
+	virtual int PeekFrameReady(void);
 	virtual int getFrameHeadroom(void);
 	virtual void slot18(void); virtual void slot19(void); virtual void slot20(void);
 	virtual void slot21(void); virtual void slot22(void); virtual void slot23(void);
@@ -331,7 +331,7 @@ void GameEngine::execute(void)
 				}
 				else
 				{
-					desired = (float)TheNetwork->getFramePacingStatus() * 0.1f + 0.7f;
+					desired = (float)TheNetwork->PeekFrameReady() * 0.1f + 0.7f;
 					if (!(desired < 1.0f))
 						desired = 1.0f;
 				}
