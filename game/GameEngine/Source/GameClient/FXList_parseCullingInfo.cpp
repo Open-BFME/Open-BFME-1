@@ -28,8 +28,8 @@ private:
 
 // Retail VA 0x0135933c is MSVCR71's _strcmpi import slot.  Keeping the
 // cached function pointer local reproduces the retail EBX/EBP register shape.
-typedef void *(__cdecl *LookupFn)(void *, void *);
-extern LookupFn g_lookup;
+extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *, const char *);
+typedef int (__cdecl *LookupFn)(const char *, const char *);
 
 // BFME's retail logic rate.
 #define BFME_LOGIC_FRAMES_PER_SECOND 5.0f
@@ -61,18 +61,18 @@ void FXList::parseCullingInfo(INI *ini, void *instance, void *store, const void 
 	const char *token = ini->getNextTokenOrNull(ini->getSepsColon());
 	if (token != 0)
 	{
-		LookupFn compare = g_lookup;
+		LookupFn compare = _strcmpi;
 		do
 		{
-			if (compare((void *)token, (void *)"TrackingSeconds") == 0)
+			if (compare(token, "TrackingSeconds") == 0)
 			{
 				list->m_trackingFrames = (UnsignedInt)(INI::scanReal(ini->getNextToken(0)) * BFME_LOGIC_FRAMES_PER_SECOND);
 			}
-			else if (compare((void *)token, (void *)"StartCullingAbove") == 0)
+			else if (compare(token, "StartCullingAbove") == 0)
 			{
 				list->m_cullTrackingMin = INI::scanUnsignedInt(ini->getNextToken(0));
 			}
-			else if (compare((void *)token, (void *)"CullAllAbove") == 0)
+			else if (compare(token, "CullAllAbove") == 0)
 			{
 				list->m_cullTrackingMax = INI::scanUnsignedInt(ini->getNextToken(0));
 			}
