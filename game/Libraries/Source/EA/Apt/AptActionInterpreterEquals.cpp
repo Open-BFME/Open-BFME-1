@@ -42,7 +42,6 @@ public:
 
 extern AptValue *g_bfmeFallbackDB;
 unsigned int AptGetSwfVersion();
-extern double g_bfmeFactorBW;
 void __cdecl d_008996b0(void);
 
 void AptActionInterpreter::_FunctionAptActionEquals(
@@ -66,7 +65,7 @@ void AptActionInterpreter::_FunctionAptActionEquals(
 		difference = (float)fabs(difference);
 
 		result = ((AptValue *(__cdecl *)(unsigned char))d_008996b0)(
-			difference < g_bfmeFactorBW);
+			difference < 0.001);	// __real@3f50624dd2f1a9fc, retail 0x01075D80
 	}
 
 	for (int index = 1; index <= 2; ++index)
