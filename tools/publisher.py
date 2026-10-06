@@ -54,6 +54,22 @@ PIECES.
              raises priority by one per `aging_minutes`, and a prerequisite
              inherits the priority of everything waiting on it, so zero-credit
              prerequisite work is not starved. A `wide` unit is gated alone.
+  SCOPE      Every unit declares the path globs it may touch (`scope.allow`,
+             optional `scope.forbid`; `**` crosses directories). No path is
+             exempt: shared ledgers (functions.csv, symbols.csv,
+             data_rows.csv, baselines), headers, build files, tools/ and
+             .githooks/ are scope like any other. Two units whose scopes
+             overlap (a path one touches is inside the other's scope, or the
+             same glob) are never in flight together: the later one waits,
+             it is not rejected. After the rebase each unit's own diff must
+             stay inside its scope, or it is rejected with the offending
+             paths (`out-of-scope`).
+  RETRIES    A gate-red unit is fingerprinted: its +/- lines outside
+             `ledger_paths` plus its target (its non-ledger scope globs).
+             After `retry_limit` (3) equivalent failures for one target, an
+             equivalent submission is refused (`retry-limit`) until the
+             target's inputs change: the blobs its scope covers at the head,
+             or the promoted checker.
   SUBMIT     Operators call `submit` instead of `git push`: the range becomes
              a format-patch unit plus an envelope signed with the operator's
              key, written to an inbox directory or pushed to
@@ -73,7 +89,8 @@ docs/throughput-tools.md, "Publisher".
   python3 tools/publisher.py init --state DIR --target URL [--set key=json ...]
   python3 tools/publisher.py operator --state DIR NAME [--rate 60 --burst 20 --infra]
   python3 tools/publisher.py promote --state DIR COMMIT [--fixtures DIR] [--accept-diff FILE]
-  python3 tools/publisher.py submit --operator NAME --key-file F (--inbox DIR | --remote URL) [RANGE]
+  python3 tools/publisher.py submit --operator NAME --key-file F (--inbox DIR | --remote URL)
+          (--scope GLOB ... [--forbid GLOB ...] | --scope-from-diff) [RANGE]
   python3 tools/publisher.py drain --state DIR [--once]
   python3 tools/publisher.py status --state DIR
 """
@@ -103,6 +120,9 @@ DEFAULTS = dict(
     builders=2, max_batch=20, poll_seconds=2.0, builder_prefix=[], clean_keep=["build/"],
     push_options=[], operators={}, infra_slots=2, aging_minutes=30.0, red_slow_lane=0.2,
     target_red_batch=0.1, min_batch=2, fair=True,
+    scope_required=True, serialize_scopes=True, retry_limit=3,
+    ledger_paths=["**/functions.csv", "**/symbols.csv", "**/data_rows.csv", "**/*baseline*",
+                  "**/*_known_red.txt", "**/*whitelist*"],
 )
 COMMITTER = "publisher"
 # what the builder process and the gate may inherit; everything else (tokens,
@@ -189,6 +209,82 @@ def scrubbed_env(home, **extra):
                GIT_ASKPASS="", SSH_ASKPASS="", GIT_SSH_COMMAND="false")
     env.update({k: str(v) for k, v in extra.items()})
     return env
+
+
+_GLOBS = {}
+
+
+def glob_match(path, pattern):
+    """fnmatch for repository paths: `*` and `?` stay inside one directory,
+    `**` crosses directories (`a/**/b` also matches `a/b`)."""
+    rx = _GLOBS.get(pattern)
+    if rx is None:
+        out, i = [], 0
+        while i < len(pattern):
+            if pattern.startswith("**/", i):
+                out.append("(?:.*/)?")
+                i += 3
+            elif pattern.startswith("**", i):
+                out.append(".*")
+                i += 2
+            elif pattern[i] == "*":
+                out.append("[^/]*")
+                i += 1
+            elif pattern[i] == "?":
+                out.append("[^/]")
+                i += 1
+            else:
+                out.append(re.escape(pattern[i]))
+                i += 1
+        rx = _GLOBS[pattern] = re.compile("".join(out) + r"\Z")
+    return rx.match(path) is not None
+
+
+def in_scope(path, scope):
+    return (any(glob_match(path, g) for g in scope.get("allow") or ())
+            and not any(glob_match(path, g) for g in scope.get("forbid") or ()))
+
+
+def scopes_overlap(a, b):
+    """Records a, b (with `scope` and `paths`) may not be in flight together."""
+    sa, sb = a.get("scope"), b.get("scope")
+    if not sa or not sb:
+        return True                         # an unscoped unit may touch anything
+    if set(sa["allow"]) & set(sb["allow"]):
+        return True
+    literal = lambda s: [g for g in s["allow"] if not set(g) & set("*?[")]  # noqa: E731
+    return (any(in_scope(p, sb) for p in list(a.get("paths") or ()) + literal(sa))
+            or any(in_scope(p, sa) for p in list(b.get("paths") or ()) + literal(sb)))
+
+
+def patch_paths(patch):
+    return sorted({m.decode(errors="replace") for m in
+                   re.findall(rb"^diff --git a/\S+ b/(\S+)$", patch, re.MULTILINE)} |
+                  {m.decode(errors="replace") for m in
+                   re.findall(rb"^diff --git a/(\S+) b/\S+$", patch, re.MULTILINE)})
+
+
+def approach(patch, scope, ledger):
+    """(target, fingerprint) of a unit: the target is its scope without ledger
+    globs; the fingerprint hashes its +/- lines outside ledger files (no
+    headers, messages, hashes or line numbers) with the target."""
+    target = hashlib.sha256(canonical(sorted(
+        g for g in (scope or {}).get("allow") or () if not any(glob_match(g, l) for l in ledger)
+    ))).hexdigest()[:16]
+    lines, keep = [], False
+    for line in patch.split(b"\n"):
+        line = line.rstrip(b"\r")
+        got = re.match(rb"^diff --git a/\S+ b/(\S+)$", line)
+        if got:
+            path = got.group(1).decode(errors="replace")
+            keep = not any(glob_match(path, l) for l in ledger)
+            if keep:
+                lines.append(b"F " + got.group(1))
+        elif re.match(rb"^From [0-9a-f]{40} ", line) or line == b"-- ":
+            keep = False                        # next commit's headers, or the signature
+        elif keep and line[:1] in (b"+", b"-") and not line.startswith((b"+++ ", b"--- ")):
+            lines.append(line.rstrip())
+    return target, hashlib.sha256(b"\n".join(lines) + b"\0" + target.encode()).hexdigest()[:24]
 
 
 def percentile(values, q):
@@ -477,19 +573,35 @@ class GitRepo:
         git("am", "--abort", cwd=self.dir, check=False)
         git("checkout", "-q", "-f", "--detach", base, cwd=self.dir)
         git("clean", "-qfd", cwd=self.dir)
+        self.unit_paths = {}
         for unit, patch in patches:
+            before = out("rev-parse", "HEAD", cwd=self.dir)
             got = git("-c", f"user.name={COMMITTER}", "-c", "user.email=", "am", "-q", "-3",
                       "--keep-cr", "--committer-date-is-author-date", str(patch),
                       cwd=self.dir, env=self.env, check=False)
             if got.returncode:
                 git("am", "--abort", cwd=self.dir, check=False)
                 return None, unit
+            # the unit's own diff as rebased: what diff-vs-scope judges
+            self.unit_paths[unit] = out("diff", "--name-only", "--no-renames", before, "HEAD",
+                                        cwd=self.dir).split("\n")
         tip = out("rev-parse", "HEAD", cwd=self.dir)
         git("update-ref", f"refs/publisher/tips/{tip}", tip, cwd=self.dir)   # keep it reachable
         return tip, None
 
     def tree(self, tip):
         return out("rev-parse", f"{tip}^{{tree}}", cwd=self.dir)
+
+    def inputs_digest(self, head, scope):
+        """sha256 over the blobs at `head` that `scope` covers."""
+        if getattr(self, "_listed", (None,))[0] != head:
+            listing = out("ls-tree", "-r", "--full-tree", head, cwd=self.dir).splitlines()
+            self._listed = (head, [line.split("\t", 1)[::-1] for line in listing])
+        h = hashlib.sha256()
+        for path, meta in self._listed[1]:
+            if in_scope(path, scope):
+                h.update(f"{path} {meta.split()[2]}\n".encode())
+        return h.hexdigest()
 
     def is_ancestor(self, older, newer):
         return git("merge-base", "--is-ancestor", older, newer, cwd=self.dir,
@@ -569,8 +681,19 @@ class Scheduler:
             if not changed:
                 break
         done_units = set(exclude) | set(landed)
+        serialize = self.state.cfg.get("serialize_scopes", True)
+        active = [records[u] for u in exclude if u in records]      # in flight now
+
+        def clear(key):
+            """No unit of `key` overlaps a unit in flight or already chosen."""
+            if not serialize:
+                return True
+            others = active + [recs[u] for u in chosen]
+            return not any(scopes_overlap(recs[u], o) for u in groups[key] for o in others)
 
         def ready(key, chosen):
+            if not clear(key):
+                return False
             for u in groups[key]:
                 for d in recs[u].get("after") or ():
                     if d not in done_units and d not in chosen and item_of.get(d) != key:
@@ -693,6 +816,19 @@ class Publisher:
         unit = hashlib.sha256(patch).hexdigest()[:20]
         if unit in self.queue or self.sched.state_of(unit):
             return unit, None                       # the same bytes are one unit
+        scope = envelope.get("scope")
+        if scope is not None:
+            allow, forbid = scope.get("allow"), scope.get("forbid") or []
+            if (not isinstance(allow, list) or not allow or not isinstance(forbid, list)
+                    or any(not isinstance(g, str) or not g or g.startswith("/") or ".." in g.split("/")
+                           for g in allow + forbid)):
+                return None, "bad-scope"
+            scope = dict(allow=list(allow), forbid=list(forbid))
+        elif self.cfg.get("scope_required", True):
+            return None, "no-scope"
+        target, fingerprint = approach(patch, scope, self.cfg["ledger_paths"])
+        if self._retry_refused(target, fingerprint, scope):
+            return None, "retry-limit"
         kind = envelope.get("kind") or "normal"
         if kind == "infra" and not self.cfg["operators"][op].get("infra"):
             kind = "normal"                          # only infra-flagged operators get the reserve
@@ -701,8 +837,8 @@ class Publisher:
                       bundle=envelope.get("bundle"), priority=envelope.get("priority") or 0,
                       submitted=envelope.get("time"), enqueued=self.clock(),
                       commits=patch.count(b"\nFrom ") + patch.startswith(b"From "),
-                      paths=sorted({m.decode(errors="replace") for m in
-                                    re.findall(rb"^diff --git a/\S+ b/(\S+)$", patch, re.MULTILINE)}),
+                      paths=patch_paths(patch), scope=scope, target=target,
+                      fingerprint=fingerprint,
                       sim_bad=bool(envelope.get("sim_bad")))
         (self.state.root / "queue" / f"{unit}.patch").write_bytes(patch)
         write_json(self.state.root / "queue" / f"{unit}.json", record)
@@ -756,8 +892,33 @@ class Publisher:
         verdict = "green" if where == "landed" else "red" if extra.get("reason") == "gate" else None
         if verdict:
             self.sched.outcome(record["operator"], verdict)
+        if verdict == "red" and record.get("fingerprint"):
+            self._retry_failed(record, extra.get("base"))
         self.event(where, unit=unit, operator=record["operator"], reason=extra.get("reason"),
                    wait=round(now - record["enqueued"], 1))
+
+    # ---- retry accounting -----------------------------------------------
+    def _target_inputs(self, scope, head=None):
+        head = head or self.head or self.repo.head()
+        if not scope or not head or not hasattr(self.repo, "inputs_digest"):
+            return None
+        return f"{self.checkers.current()}:{self.repo.inputs_digest(head, scope)}"
+
+    def _retry_failed(self, record, base):
+        path = self.state.root / "retries.json"
+        retries = read_json(path, {}) or {}
+        inputs = self._target_inputs(record.get("scope"), base)
+        entry = retries.get(record["target"])
+        if not entry or entry.get("inputs") != inputs:
+            entry = retries[record["target"]] = dict(inputs=inputs, failures={})
+        entry["failures"][record["fingerprint"]] = entry["failures"].get(record["fingerprint"], 0) + 1
+        write_json(path, retries)
+
+    def _retry_refused(self, target, fingerprint, scope):
+        entry = (read_json(self.state.root / "retries.json", {}) or {}).get(target)
+        if not entry or entry["failures"].get(fingerprint, 0) < int(self.cfg["retry_limit"]):
+            return False
+        return entry.get("inputs") == self._target_inputs(scope)   # changed inputs: try again
 
     def recover(self):
         """Settle a journalled publication left by a crash."""
@@ -846,7 +1007,18 @@ class Publisher:
             patches = [(u, self.state.root / "queue" / f"{u}.patch") for i in items for u in i]
             tip, bad = self.repo.compose(base, patches)
             if not bad:
-                return Batch(items, base, tip), []
+                outside = self._outside_scope([u for i in items for u in i])
+                if not outside:
+                    return Batch(items, base, tip), []
+                for unit in outside:                    # the rebased diff left its scope
+                    item = next((i for i in items if unit in i), None)
+                    if item is None:
+                        continue
+                    items.remove(item)                  # a bundle fails as a whole
+                    for u in item:
+                        self._finish(u, "rejected", reason="out-of-scope",
+                                     paths=outside.get(u, []), base=base)
+                continue
             item = next(i for i in items if bad in i)
             items.remove(item)
             if not final:
@@ -854,6 +1026,20 @@ class Publisher:
             for u in item:
                 self._finish(u, "rejected", reason="conflict", base=base)
         return None, []
+
+    def _outside_scope(self, units):
+        """{unit: [paths outside its scope]} for the last composition."""
+        found = {}
+        rebased = getattr(self.repo, "unit_paths", None) or {}
+        for unit in units:
+            record = self.queue.get(unit) or {}
+            if not record.get("scope"):
+                continue
+            paths = rebased.get(unit, record.get("paths") or [])
+            bad = sorted(p for p in paths if p and not in_scope(p, record["scope"]))
+            if bad:
+                found[unit] = bad
+        return found
 
     def step(self):
         """One non-blocking turn. Returns True when something changed.
@@ -1051,15 +1237,19 @@ def make_unit(repo, rev):
 
 
 def submit(repo, operator, key_file, rev="@{u}..HEAD", inbox=None, remote=None, kind="normal",
-           after=(), bundle=None, priority=0, extra=None):
+           after=(), bundle=None, priority=0, extra=None, scope=None, forbid=()):
     """Hand a unit to the publisher; returns its id. Operator side only: it
     needs the operator's key, never the publisher's credentials."""
     patch = make_unit(repo, rev)
     if not patch.strip():
         raise RuntimeError(f"nothing to submit in {rev}")
+    if scope == "diff":                     # declare exactly the paths the range touches
+        scope = patch_paths(patch)
     envelope = dict(v=1, operator=operator, patch_sha256=hashlib.sha256(patch).hexdigest(),
                     kind=kind, after=list(after), bundle=bundle, priority=priority,
                     time=time.time(), nonce=uuid.uuid4().hex, **(extra or {}))
+    if scope:
+        envelope["scope"] = dict(allow=list(scope), forbid=list(forbid))
     envelope = signed(read_key(key_file), envelope)
     unit = hashlib.sha256(patch).hexdigest()[:20]
     if inbox:
@@ -1156,6 +1346,11 @@ def main(argv=None):
     p.add_argument("--after", action="append", default=[])
     p.add_argument("--bundle")
     p.add_argument("--priority", type=float, default=0)
+    p.add_argument("--scope", action="append", default=[], metavar="GLOB",
+                   help="a path glob the unit may touch (repeat); ledgers and headers included")
+    p.add_argument("--forbid", action="append", default=[], metavar="GLOB")
+    p.add_argument("--scope-from-diff", action="store_true",
+                   help="declare exactly the paths the range touches")
     p = sub.add_parser("build", help="(internal) one isolated build; run by the executor")
     for flag in ("--state", "--slot", "--base", "--tip", "--checker"):
         p.add_argument(flag, required=True)
@@ -1194,8 +1389,12 @@ def main(argv=None):
         print(json.dumps(report, indent=1))
         return 0 if ok else 1
     if args.action == "submit":
+        scope = "diff" if args.scope_from_diff else args.scope
+        if not scope:
+            ap.error("submit needs --scope GLOB ... or --scope-from-diff")
         print(submit(Path.cwd(), args.operator, args.key_file, args.rev, args.inbox, args.remote,
-                     args.kind, args.after, args.bundle, args.priority))
+                     args.kind, args.after, args.bundle, args.priority, scope=scope,
+                     forbid=args.forbid))
         return 0
     if args.action == "build":
         receipt = Builder(State(args.state), args.slot).build(args.base, args.tip, args.checker)

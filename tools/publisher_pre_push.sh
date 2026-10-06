@@ -11,7 +11,8 @@
 # Installed by an operator on a fleet host (never by an agent), e.g. as the
 # first command of .git/hooks/pre-push:  bash tools/publisher_pre_push.sh "$@"
 # Environment: PUBLISHER_OPERATOR, PUBLISHER_KEY_FILE, and PUBLISHER_INBOX or
-# PUBLISHER_REMOTE; optional PUBLISHER_BRANCH (master), PUBLISHER_PY.
+# PUBLISHER_REMOTE; optional PUBLISHER_BRANCH (master), PUBLISHER_PY, and
+# PUBLISHER_SCOPE (space-separated globs; default: exactly the pushed paths).
 set -euo pipefail
 
 ZERO=0000000000000000000000000000000000000000
@@ -32,6 +33,11 @@ while read -r _local_ref local_sha remote_ref remote_sha; do
     args=(--operator "$PUBLISHER_OPERATOR" --key-file "$PUBLISHER_KEY_FILE")
     [ -n "${PUBLISHER_INBOX:-}" ] && args+=(--inbox "$PUBLISHER_INBOX")
     [ -n "${PUBLISHER_REMOTE:-}" ] && args+=(--remote "$PUBLISHER_REMOTE")
+    if [ -n "${PUBLISHER_SCOPE:-}" ]; then
+        for glob in $PUBLISHER_SCOPE; do args+=(--scope "$glob"); done
+    else
+        args+=(--scope-from-diff)
+    fi
     unit=$(python3 "$py" submit "${args[@]}" "$remote_sha..$local_sha")
     echo "PUBLISHER-SUBMITTED $unit $remote_sha..$local_sha" >&2
     status=1
