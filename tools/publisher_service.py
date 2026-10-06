@@ -403,7 +403,23 @@ class Service:
             submit_refs_pending=self.pending)])
 
     # -- the loop
+    def hold(self):
+        """One `run` per state: a second one (a supervisor restarted after its
+        window closed, say) exits instead of racing the first."""
+        self._lock = open(self.dir / "run.lock", "a+")
+        try:
+            if os.name == "nt":
+                import msvcrt
+                self._lock.seek(0)
+                msvcrt.locking(self._lock.fileno(), msvcrt.LK_NBLCK, 1)
+            else:
+                import fcntl
+                fcntl.flock(self._lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except OSError:
+            raise SystemExit(f"{self.dir}: another publisher_service run holds run.lock")
+
     def run(self, pump=True, until_drained=False, max_seconds=None, stop_file=None):
+        self.hold()
         started = time.time()
         stop_file = stop_file or self.dir / "STOP"
         while not stop_file.exists():
@@ -443,6 +459,7 @@ class Service:
         self.pub._flush(0)                       # kill in-flight builds; receipts are reused
         self.metrics()
         self.publish_results()
+        self._lock.close()
         return self.pub.status()
 
     def daily(self):
