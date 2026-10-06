@@ -1,27 +1,15 @@
 // cl: /D_STLP_USE_STATIC_LIB /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // stlport
 
-// Retail 0x0093FA70 is the non-const narrow-key tree find over the
-// map<UnsignedShort, UnsignedByte> whose _M_find body sits at 0x0093DCE0.
-// The owning map is not identified, so the wrapper keeps its address token.
+// Retail passes the unchanged receiver and a reference to the unsigned-short
+// key to 0093DCE0. The wrapper returns its node pointer in the caller's result
+// buffer. Neither this ABI nor the search proves the original mapped type.
 
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
 #include <map>
+#include "../../../Libraries/Source/WWVegas/WW3D2/Rva0093DCE0TreeFind.h"
 
 typedef unsigned short Rva0093FA70Key;
-typedef unsigned char Rva0093FA70Mapped;
-typedef _STL::pair<const Rva0093FA70Key, Rva0093FA70Mapped> Rva0093FA70Value;
-typedef _STL::_Rb_tree<Rva0093FA70Key, Rva0093FA70Value,
-	_STL::_Select1st<Rva0093FA70Value>, _STL::less<Rva0093FA70Key>,
-	_STL::allocator<Rva0093FA70Value> > Rva0093FA70Tree;
-
-extern void Rva0093DCE0Target();
-
-class Rva0093FA70FindRoute
-{
-public:
-    typedef void *(Rva0093FA70FindRoute::*Call)(const Rva0093FA70Key &) const;
-};
 
 struct Rva0093FA70Result
 {
@@ -37,7 +25,6 @@ public:
 
 Rva0093FA70Result Rva0093FA70Find::find(const Rva0093FA70Key &key) const
 {
-    union { void (*address)(); Rva0093FA70FindRoute::Call member; } route = { Rva0093DCE0Target };
     return Rva0093FA70Result(
-        (reinterpret_cast<const Rva0093FA70FindRoute *>(this)->*route.member)(key));
+        reinterpret_cast<const Rva0093DCE0Tree *>(this)->find(key));
 }
