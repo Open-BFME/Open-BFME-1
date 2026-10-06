@@ -43,7 +43,9 @@ class GameSlot
 {
 public:
     virtual void reset();
-    __declspec(noinline) UnicodeString getName() const;
+    // Inline as in the header, so the copy is a COMDAT like every other
+    // TU's; retail still calls it, so it stays out of line.
+    __declspec(noinline) UnicodeString getName() const { return m_name; }
 protected:
     SlotState m_state;
     char m_unrecovered08[0x20];
@@ -82,12 +84,6 @@ private:
     unsigned char m_unrecovered0D[0x4b];
     LANGameSlot m_slots[8];
 };
-
-// ?getName@GameSlot@@QBE?AVUnicodeString@@XZ
-UnicodeString GameSlot::getName() const
-{
-    return m_name;
-}
 
 // ?isUser@LANGameSlot@@QAE_NVUnicodeString@@@Z
 bool LANGameSlot::isUser(UnicodeString userName)
