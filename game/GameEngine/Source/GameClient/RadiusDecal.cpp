@@ -48,48 +48,8 @@
 #endif
 
 // ------------------------------------------------------------------------------------------------
-// ?createRadiusDecal@RadiusDecalTemplate@@ present-unmatched
-void RadiusDecalTemplate::createRadiusDecal(const Coord3D& pos, Real radius, const Player* owningPlayer, RadiusDecal& result) const
-{
-	result.clear();
-	
-	if (owningPlayer == NULL)
-	{
-		DEBUG_CRASH(("You MUST specify a non-NULL owningPlayer to createRadiusDecal. (srj)\n"));
-		return;
-	}
-
-	if (m_name.isEmpty() || radius <= 0.0f)
-		return;
-
-	// it is now considered nonEmpty, regardless of the state of m_decal, etc
-	result.m_empty = false;
-
-	if (!m_onlyVisibleToOwningPlayer ||
-			owningPlayer->getPlayerIndex() == ThePlayerList->getLocalPlayer()->getPlayerIndex())
-	{
-		Shadow::ShadowTypeInfo decalInfo;
-		decalInfo.allowUpdates = FALSE;										// shadow texture will never update
-		decalInfo.allowWorldAlign = TRUE;									// shadow image will wrap around world objects
-		decalInfo.m_type = m_shadowType;
-		strcpy(decalInfo.m_ShadowName, m_name.str());		// name of your texture
-		decalInfo.m_sizeX = radius*2;									// world space dimensions
-		decalInfo.m_sizeY = radius*2;									// world space dimensions
-
-		result.m_decal = TheProjectedShadowManager->addDecal(&decalInfo);
-		if (result.m_decal)
-		{
-			result.m_decal->setAngle(0.0f);
-			result.m_decal->setColor(m_color == 0 ? owningPlayer->getPlayerColor() : m_color);
-			result.m_decal->setPosition(pos.x, pos.y, pos.z);	
-			result.m_template = this;
-		}
-		else
-		{
-			DEBUG_CRASH(("Unable to add decal %s\n",decalInfo.m_ShadowName));
-		}
-	}
-}
+// RadiusDecalTemplate::createRadiusDecal(const Coord3D&, Real, const Player*, RadiusDecal&):
+// retail 0x00458C80 lives in RadiusDecalTemplate_createRadiusDecal.cpp.
 
 // ------------------------------------------------------------------------------------------------
 // ?xferRadiusDecalTemplate@RadiusDecalTemplate@@ present-unmatched
