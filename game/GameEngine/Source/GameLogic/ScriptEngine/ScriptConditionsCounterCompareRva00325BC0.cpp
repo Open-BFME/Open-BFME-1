@@ -53,10 +53,10 @@ extern ScriptEngine *TheScriptEngine;
 class ScriptConditions
 {
 protected:
-	bool evaluateCounterCompareRva00325BC0(Condition *condition);
+	bool evaluateCounterCounter(Condition *condition);
 };
 
-bool ScriptConditions::evaluateCounterCompareRva00325BC0(Condition *condition)
+bool ScriptConditions::evaluateCounterCounter(Condition *condition)
 {
 	union { void (*raw)(void); GetCounterFunction member; } getCounter;
 	getCounter.raw = j_000142b3;
