@@ -762,9 +762,9 @@ def test_remote_builders_fetch_from_the_stage_and_a_forging_one_is_quarantined(t
     cfg.update(stage_remote=stage.as_uri(), reverify_share=1.0)
     (w.state / "config.json").write_text(json.dumps(cfg))
     unit = w.submit({"remote1.txt": "1\n"})
-    settle(w.publisher())
+    settle(w.publisher(), limit=300)                  # two remote builds; slow under load
     state, record = where(w, unit)
-    assert state == "landed"
+    assert state == "landed", (w.state / "events.jsonl").read_text()[-3000:]
     staged = git(stage, "for-each-ref", "--format=%(refname)", "refs/publisher")
     assert f"refs/publisher/candidates/{record['tip']}" in staged and "refs/publisher/checkers/" in staged
     assert {p.name.split(".")[1] for p in (w.state / "logs").glob(f"{record['tip']}.*.log")} == {
