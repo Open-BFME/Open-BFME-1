@@ -680,68 +680,8 @@ void ScoreScaleUpTransition::init( GameWindow *win )
 
 }
 
-// ?update@ScoreScaleUpTransition@@UAEXH@Z present-unmatched
-void ScoreScaleUpTransition::update( Int frame )
-{
-	m_drawState = -1;
-	if(frame < SCORESCALEUPTRANSITION_START || frame > SCORESCALEUPTRANSITION_END)
-	{
-		DEBUG_ASSERTCRASH(FALSE, ("ScoreScaleUpTransition::update - Frame is out of the range the this update can handle %d", frame));
-		return;
-	}
-	switch (frame) {
-	case SCORESCALEUPTRANSITION_START:
-		{
-			if(m_isForward || !m_win)
-				break;
-			m_win->winHide(TRUE);
-			m_isFinished = TRUE;
-		}
-		break;
-	case SCORESCALEUPTRANSITION_1:
-		if(m_isForward)
-		{
-			AudioEventRTS buttonClick("GUIScoreScreenPictures");
-
-			if( TheAudio )
-			{
-				TheAudio->addAudioEvent( &buttonClick );
-			}  // end if
-
-			
-		}
-
-	case SCORESCALEUPTRANSITION_2:
-	case SCORESCALEUPTRANSITION_3:
-	case SCORESCALEUPTRANSITION_4:
-	case SCORESCALEUPTRANSITION_5:
-//	case SCORESCALEUPTRANSITION_6:
-//	case SCORESCALEUPTRANSITION_7:
-//	case SCORESCALEUPTRANSITION_8:
-//	case SCORESCALEUPTRANSITION_9:
-//	case SCORESCALEUPTRANSITION_10:
-//	case SCORESCALEUPTRANSITION_11:
-//	case SCORESCALEUPTRANSITION_12:
-//	case SCORESCALEUPTRANSITION_13:
-//	case SCORESCALEUPTRANSITION_14:
-//	case SCORESCALEUPTRANSITION_15:
-//	case SCORESCALEUPTRANSITION_16:
-//	case SCORESCALEUPTRANSITION_17:
-//	case SCORESCALEUPTRANSITION_18:
-//	case SCORESCALEUPTRANSITION_19:
-		if(m_win)
-			m_win->winHide(TRUE);
-		m_drawState = frame;
-		break;
-	case SCORESCALEUPTRANSITION_END:
-		{
-			if(!m_isForward || !m_win)
-				break;
-			m_win->winHide(FALSE);
-			m_isFinished = TRUE;
-		}
-	}	
-}
+// ?update@ScoreScaleUpTransition@@UAEXH@Z is defined once, by the
+// retail-matched body at 0x0059F410 (ScoreScaleUpTransition_update.cpp).
 
 // ?reverse@ScoreScaleUpTransition@@UAEXXZ present-unmatched
 void ScoreScaleUpTransition::reverse( void )
