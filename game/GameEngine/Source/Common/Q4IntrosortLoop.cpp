@@ -52,7 +52,73 @@
 
 #include <algorithm>
 
-#define Q4_SORT( T )                                                      	struct Q4Sort##T                                                      	{                                                                     		void *m_state;                                                    		bool operator()( int, int ) const;                                	};                                                                    	void q4Sort##T( int *first, int *last, Q4Sort##T comp )               	{                                                                     		_STL::sort( first, last, comp );                                  	}
+#define Q4_SORT_COMPARATOR( T )                                           \
+	struct Q4Sort##T                                                      \
+	{                                                                     \
+		void *m_state;                                                    \
+		bool operator()( int, int ) const;                                \
+	};
+
+#define Q4_SORT( T )                                                      \
+	void q4Sort##T( int *first, int *last, Q4Sort##T comp )               \
+	{                                                                     \
+		_STL::sort( first, last, comp );                                  \
+	}
+
+Q4_SORT_COMPARATOR( 0034BFC0 )
+Q4_SORT_COMPARATOR( 003D15A0 )
+Q4_SORT_COMPARATOR( 004566F0 )
+Q4_SORT_COMPARATOR( 004567A0 )
+Q4_SORT_COMPARATOR( 00483F70 )
+Q4_SORT_COMPARATOR( 005156D0 )
+Q4_SORT_COMPARATOR( 00533470 )
+Q4_SORT_COMPARATOR( 00755050 )
+
+// THIS TU EMITS NO HELPER COPY THAT RETAIL DISPROVES.  Instantiating `sort`
+// pulls in every helper, and these came out as COMDAT copies whose bytes
+// differ from retail's body at the name's address (link_census RetailTruth:
+// "wrong"), copies the link can keep ahead of a retail TU's: __partial_sort for
+// all eight comparators, and __median and __unguarded_partition for 003D15A0,
+// 00483F70, 005156D0 and 00533470 (003D15A0's retail bodies are
+// stlport_median_q4sort.cpp and stlport_unguarded_partition_q4sort.cpp, where
+// the comparator is inlined, not called).  Declaring those specializations,
+// never defining them, leaves each call an external reference.  __partial_sort
+// was also the only path to the heap helpers, so the __make_heap and sort_heap
+// copies this TU proves for 003D15A0 and 004567A0 are instantiated explicitly
+// below; their __adjust_heap/__push_heap for 003D15A0 are retail 0x003CDD00
+// and 0x003CC5F0 (stlport_adjust_heap_q4sort.cpp, stlport_push_heap_q4sort.cpp),
+// declared here for the same reason.
+#define Q4_SORT_EXTERNAL_PARTIAL_SORT( T )                                \
+	template <>                                                           \
+	void __partial_sort<int *, int, Q4Sort##T>( int *, int *, int *, int *, Q4Sort##T );
+
+#define Q4_SORT_EXTERNAL_PIVOT( T )                                       \
+	template <>                                                           \
+	const int &__median<int, Q4Sort##T>( const int &, const int &, const int &, Q4Sort##T ); \
+	template <>                                                           \
+	int *__unguarded_partition<int *, int, Q4Sort##T>( int *, int *, int, Q4Sort##T );
+
+namespace _STL
+{
+Q4_SORT_EXTERNAL_PARTIAL_SORT( 0034BFC0 )
+Q4_SORT_EXTERNAL_PARTIAL_SORT( 003D15A0 )
+Q4_SORT_EXTERNAL_PARTIAL_SORT( 004566F0 )
+Q4_SORT_EXTERNAL_PARTIAL_SORT( 004567A0 )
+Q4_SORT_EXTERNAL_PARTIAL_SORT( 00483F70 )
+Q4_SORT_EXTERNAL_PARTIAL_SORT( 005156D0 )
+Q4_SORT_EXTERNAL_PARTIAL_SORT( 00533470 )
+Q4_SORT_EXTERNAL_PARTIAL_SORT( 00755050 )
+
+Q4_SORT_EXTERNAL_PIVOT( 003D15A0 )
+Q4_SORT_EXTERNAL_PIVOT( 00483F70 )
+Q4_SORT_EXTERNAL_PIVOT( 005156D0 )
+Q4_SORT_EXTERNAL_PIVOT( 00533470 )
+
+template <>
+void __adjust_heap<int *, int, int, Q4Sort003D15A0>( int *, int, int, int, Q4Sort003D15A0 );
+template <>
+void __push_heap<int *, int, int, Q4Sort003D15A0>( int *, int, int, int, Q4Sort003D15A0 );
+}
 
 Q4_SORT( 0034BFC0 )
 Q4_SORT( 003D15A0 )
@@ -62,3 +128,8 @@ Q4_SORT( 00483F70 )
 Q4_SORT( 005156D0 )
 Q4_SORT( 00533470 )
 Q4_SORT( 00755050 )
+
+template void _STL::__make_heap<int *, Q4Sort003D15A0, int, int>( int *, int *, Q4Sort003D15A0, int *, int * );
+template void _STL::__make_heap<int *, Q4Sort004567A0, int, int>( int *, int *, Q4Sort004567A0, int *, int * );
+template void _STL::sort_heap<int *, Q4Sort003D15A0>( int *, int *, Q4Sort003D15A0 );
+template void _STL::sort_heap<int *, Q4Sort004567A0>( int *, int *, Q4Sort004567A0 );
