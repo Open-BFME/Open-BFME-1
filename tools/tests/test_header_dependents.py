@@ -154,7 +154,8 @@ def test_an_included_vendored_file_needs_the_full_gate(repo, capsys):
 STUBS = ("check_case_collisions", "conversion_gate", "name_regression", "name_oracle", "name_history",
          "eol_guard", "retired_guard", "doc_budget", "ea_name_guard", "name_lane", "link_debt", "target_hooks",
          "layout_migration", "check_csv", "pin_consistency", "b_pin_check", "find_declared_unmatched",
-         "delta_sources", "identity_guard", "adopt_header", "one_identity", "gate_baseline")
+         "delta_sources", "identity_guard", "adopt_header", "one_identity", "gate_baseline",
+         "class_gate", "ledger_guard")
 
 
 @pytest.fixture

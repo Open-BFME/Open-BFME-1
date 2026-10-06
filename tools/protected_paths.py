@@ -59,7 +59,7 @@ PROTECTED = (
     # ledger, identity and direction guards the hooks call
     "tools/check_csv.py", "tools/conversion_gate.py", "tools/identity_guard.py",
     "tools/multi_name.py", "tools/ctor_vtable.py", "tools/null_reloc.py",
-    "tools/size_outlier.py", "tools/one_identity.py", "tools/pin_consistency.py", "tools/class_gate.py",
+    "tools/size_outlier.py", "tools/one_identity.py", "tools/pin_consistency.py", "tools/class_gate.py", "tools/ledger_guard.py",
     "tools/b_pin_check.py", "tools/name_regression.py", "tools/name_history.py",
     "tools/name_oracle.py", "tools/ea_name_guard.py", "tools/target_hooks.py",
     "tools/eol_guard.py", "tools/retired_guard.py", "tools/doc_budget.py",

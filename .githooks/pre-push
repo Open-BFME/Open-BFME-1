@@ -45,6 +45,8 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
         fail "this fleet run lost its claim ($(head -1 "$BFME_RUN_DIR/claim_lost")); nothing from it may be pushed"
     fi
     [ "$local_sha" = "$ZERO" ] && continue   # deleting a remote ref
+    # The build below reads the working-tree ledgers: they must be the pushed commit's.
+    python3 tools/ledger_guard.py --commit "$local_sha" || fail "working-tree ledgers differ from $local_sha (see above)"
     window_check
 
     # The SHA on stdin is the destination tip advertised by THIS push

@@ -73,7 +73,7 @@ python3() {
     printf '%s\n' "$*" >> guards
     case "$1" in
         tools/delta_sources.py) cat deltas ;;
-        tools/find_declared_unmatched.py|tools/adopt_header.py|tools/class_gate.py|tools/name_oracle.py|tools/name_regression.py|tools/retired_guard.py) return 0 ;;
+        tools/find_declared_unmatched.py|tools/adopt_header.py|tools/class_gate.py|tools/ledger_guard.py|tools/name_oracle.py|tools/name_regression.py|tools/retired_guard.py) return 0 ;;
         tools/check_case_collisions.py|tools/conversion_gate.py|tools/check_csv.py|tools/pin_consistency.py|tools/identity_guard.py|tools/gate_baseline.py) return 0 ;;
         tools/b_pin_check.py) [ -z "${LATE_STAGE:-}" ] || printf '%s\n' feedfacefeedfacefeedfacefeedfacefeedface > index-tree; return 0 ;;
         tools/target_hooks.py|tools/eol_guard.py|tools/doc_budget.py|tools/link_debt.py|tools/ea_name_guard.py|tools/name_lane.py) return 0 ;;

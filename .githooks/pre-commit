@@ -132,6 +132,7 @@ if migration_marker=$(python3 tools/layout_migration.py detect "$layout_base" :)
     python3 tools/identity_guard.py || fail "identity guard (see above)"
     python3 tools/name_oracle.py --check --staged || fail "name oracle (see above)"
     python3 tools/adopt_header.py --check --staged || fail "header adoption (see above)"
+    python3 tools/ledger_guard.py --staged || fail "unstaged ledger edits would be verified instead of the staged ledger (see above)"
     BUILD_POOL="${BUILD_POOL:-4}" python3 tools/gate_baseline.py --check \
         || fail "full game gate after layout migration (see above)"
     echo "PRE-COMMIT OK (complete layout and both targets verified)"
@@ -232,6 +233,10 @@ fi
 if git diff --cached --quiet -- targets/game/reverse/full_gate_baseline.txt targets/game/reverse/dir32_known_red.txt; then :; else
     python3 tools/gate_baseline.py --validate || fail "full-gate baseline may only shrink (see above)"
 fi
+# The build reads the WORKING-TREE ledgers. An unstaged row edit (a rename the
+# staged units need) would make them verify green against rows this commit does
+# not contain, leaving HEAD inconsistent; refuse before anything is verified.
+python3 tools/ledger_guard.py --staged || fail "unstaged ledger edits would be verified instead of the staged ledger (see above)"
 if [ "$wide_change" -ne 0 ]; then
     # Byte-verify only the ledger sources the changed headers can reach
     # (tools/header_dependents.py widens on every doubt and exits 2 when it
