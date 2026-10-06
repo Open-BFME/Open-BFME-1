@@ -54,8 +54,21 @@ struct Rva000D46E0CountContext
 	Int m_limit;
 };
 
-// The visitor adjustCountMask hands to the walk; only its address is known.
-void rva000C9CC0Visit(Object *obj, void *user);
+// Address-derived: the guarded member call at 0x001BF380 (ILT 0x00039B5D),
+// defined in R1GuardedPointerTailCalls.cpp.
+class Rva001BF380
+{
+public:
+	void go();
+};
+
+// 0x000C9CC0 (15 bytes): the visitor adjustCountMask hands to the walk. It
+// runs the 0x001BF380 member on each object and keeps the walk going.
+Int rva000C9CC0Visit( Object *object, void * )
+{
+	reinterpret_cast<Rva001BF380 *>( object )->go();
+	return 1;
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
@@ -111,7 +124,7 @@ void Player::adjustCountMask(bool increment, int index)
 		i += 4;
 	} while (i - 1 < 32);
 	m_mask = (unsigned short)mask;
-	iterateObjects(rva000C9CC0Visit, 0);
+	iterateObjects(reinterpret_cast<PlayerObjectVisit>(rva000C9CC0Visit), 0);
 }
 
 // ?rva000D46E0CountVisit@@YAHPAVRva000D46E0Object@@PAX@Z
