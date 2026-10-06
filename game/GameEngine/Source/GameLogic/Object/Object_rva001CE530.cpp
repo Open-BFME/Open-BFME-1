@@ -130,10 +130,13 @@ public:
 class PlayerList;
 extern PlayerList *ThePlayerList;
 
-class BfmeThingXV
+// Retail calls ILT 0x00025806 -> 0x001BF300 on this Object, the matched
+// BfmeQ1086::bfmeGo1086A (BfmeConv1086.cpp); ObjectDestructor.cpp calls it
+// the same way.
+class BfmeQ1086
 {
 public:
-	void bfmeStopXV();
+	void bfmeGo1086A();
 };
 
 class Gen001C8010
@@ -206,7 +209,7 @@ void Object::rva001CE530()
 	if (TheAptPalantir != 0)
 		reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->m_subobject.update((Rva00595160Argument *)this);
 
-	((BfmeThingXV *)this)->bfmeStopXV();
+	((BfmeQ1086 *)this)->bfmeGo1086A();
 	((Gen001C8010 *)this)->setSold();
 
 	ObjectStatusMaskType status;
