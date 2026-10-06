@@ -1,4 +1,4 @@
-// cl: /O2 /Ob1 /GF /Gy /MD /EHsc /GR /DNDEBUG /DWIN32 /D_WINDOWS
+// cl: /O2 /Ob1 /GF /Gy /MD /EHsc /DNDEBUG /DWIN32 /D_WINDOWS
 
 // Byte-exact BFME reconstruction of ??0GameWindow@@QAE@XZ.  The BFME layout
 // is kept TU-local because the ordinary GameWindow reference header has the
@@ -17,7 +17,10 @@ class GameWindow
 {
 public:
 	GameWindow();
-	virtual void winDrawBorder( void ) = 0;
+
+protected:
+	// Retail vftable 0x010F7778 slot 0 is ??_GGameWindow@@MAEPAXI@Z (0x00479DD0).
+	virtual ~GameWindow();
 
 private:
 	void *m_bfmeAnchor;
