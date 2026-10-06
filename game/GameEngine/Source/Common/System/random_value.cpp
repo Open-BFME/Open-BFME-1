@@ -160,9 +160,13 @@ UnsignedInt GetGameLogicRandomSeed( void )
 	return theGameLogicBaseSeed;
 }
 
+// Retail calls the ILT thunk at 0x0000A984, whose jump lands on the packet CRC
+// at 0x00065250 (native_packet_crc.cpp), not WWLib's CRC_Memory at 0x009E19C0.
+UnsignedInt BFMEComputeCRC(const UnsignedByte *data, UnsignedInt length, UnsignedInt crc);
+
 UnsignedInt GetGameLogicRandomSeedCRC( void )
 {
-	return CRC_Memory( reinterpret_cast<const UnsignedByte *>( theGameLogicSeed ), sizeof( theGameLogicSeed ), 0 );
+	return BFMEComputeCRC( reinterpret_cast<const UnsignedByte *>( theGameLogicSeed ), sizeof( theGameLogicSeed ), 0 );
 }
 
 void InitRandom( void )
