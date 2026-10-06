@@ -185,37 +185,7 @@ void LanguageFilter::update() {
 
 wchar_t ignoredChars[] = L"-_*'\"";
 
-void LanguageFilter::filterLine(UnicodeString &line) 
-{
-	WideChar *buf = NEW WideChar[line.getLength()+1];
-	wcscpy(buf, line.str());
-
-	UnicodeString newLine(line);
-	UnicodeString token(L"");
-
-	while (newLine.nextToken(&token, UnicodeString(L" ;,.!?:=\\/><`~()&^%#\n\t"))) {
-		wchar_t *pos = wcsstr(buf, token.str());
-		if (pos == NULL) {
-			DEBUG_CRASH(("Couldn't find the token in its own string."));
-			continue;
-		}
-
-		Int len = token.getLength(); // need to get the length of the original word, not the unhaxor'd word.
-
-		unHaxor(token);
-		LangMapIter iter = m_wordList.find(token);
-		if (iter != m_wordList.end()) {
-			DEBUG_LOG(("Found word %ls in bad word list. Token was %ls\n", (*iter).first.str(), token.str()));
-			for (Int i = 0; i < len; ++i) {
-				*pos = L'*';
-				++pos;
-			}
-		}
-	}
-
-	line.set(buf);
-	delete[] buf;
-}
+// LanguageFilter::filterLine: retail 0x0044DB90 lives in LanguageFilter_filterLine.cpp.
 
 // ?unHaxor@LanguageFilter@@IAEXAAVUnicodeString@@@Z present-unmatched
 void LanguageFilter::unHaxor(UnicodeString &word) {
