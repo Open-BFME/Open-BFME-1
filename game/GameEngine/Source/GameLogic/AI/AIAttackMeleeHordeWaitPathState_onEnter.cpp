@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD
-// Retail 0x00175C00: enter the state using the machine goal and current frame.
+// AIAttackMeleeHordeWaitPathState::onEnter at retail 0x00175C00 (EA's name; the
+// ILT slot confirms it): enter the state using the machine goal and current frame.
 
 enum StateReturnType
 {
@@ -39,7 +40,7 @@ struct Rva00175C00StateMachine
     Rva00175C00Object *m_owner;
 };
 
-class Rva00175C00State
+class AIAttackMeleeHordeWaitPathState
 {
     char m_unknown[0x18];
     Rva00175C00StateMachine *m_machine;
@@ -57,7 +58,7 @@ void j_0000e570();
 typedef unsigned char (__fastcall *Rva00175C00IsGoalDestroyed)(Rva00175C00StateMachine *);
 typedef void *(__fastcall *Rva00175C00GetGoalObject)(Rva00175C00StateMachine *);
 
-StateReturnType Rva00175C00State::onEnter()
+StateReturnType AIAttackMeleeHordeWaitPathState::onEnter()
 {
     m_unknown28 = 0;
 
