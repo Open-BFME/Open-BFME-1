@@ -6318,36 +6318,8 @@ Real Object::getCarrierDeckHeight() const
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
-// ?getCountermeasuresBehaviorInterface@Object@@ present-unmatched
-CountermeasuresBehaviorInterface* Object::getCountermeasuresBehaviorInterface()
-{
-	for( BehaviorModule** i = getBehaviorModules(); *i; ++i )
-	{
-		CountermeasuresBehaviorInterface* cbi = (*i)->getCountermeasuresBehaviorInterface();
-		if( cbi )
-		{
-			return cbi;
-		}
-	}
-	return NULL;
-}
-
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
-// ?getCountermeasuresBehaviorInterface@Object@@ present-unmatched
-const CountermeasuresBehaviorInterface* Object::getCountermeasuresBehaviorInterface() const
-{
-	for( BehaviorModule** i = getBehaviorModules(); *i; ++i )
-	{
-		const CountermeasuresBehaviorInterface* cbi = (*i)->getCountermeasuresBehaviorInterface();
-		if( cbi )
-		{
-			return cbi;
-		}
-	}
-	return NULL;
-}
+// Both getCountermeasuresBehaviorInterface overloads (0x001BF6B0, const at
+// 0x001BF670) are emitted by their byte-exact reconstructions in ObjectFields.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?hasCountermeasures@Object@@QBE_NXZ present-unmatched
