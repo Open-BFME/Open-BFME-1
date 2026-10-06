@@ -110,6 +110,9 @@ class SpecialAbilityUpdate : public SpecialAbilityUpdateBase
 {
 public:
 	SpecialAbilityUpdate( Thing *, const ModuleData * );
+	// Retail ??1SpecialAbilityUpdate@@UAE@XZ (0x002AA910) is matched in
+	// SpecialAbilityUpdateDestructor.cpp; declared here so this TU emits no copy.
+	virtual ~SpecialAbilityUpdate();
 	virtual void specialAbilityAnchor();
 
 private:
