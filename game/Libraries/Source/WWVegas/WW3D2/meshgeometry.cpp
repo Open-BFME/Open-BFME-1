@@ -111,6 +111,9 @@
 
 #if (OPTIMIZE_PLANEEQ_RAM)
 static SimpleVecClass<Vector4> _PlaneEQArray(1024);
+// The ledger's SimpleVecClass<Vector4>::operator[] (0x009031E0) was emitted
+// by Zero Hour's get_planes, which this TU no longer defines.
+template Vector4 & SimpleVecClass<Vector4>::operator[](int);
 #endif
 
 
@@ -1499,22 +1502,8 @@ const Vector3 * MeshGeometryClass::Get_Vertex_Normal_Array(void)
  * HISTORY:                                                                                    *
  *   6/14/2001  gth : Created.                                                                 *
  *=============================================================================================*/
-// ?MeshGeometryClass::get_planes present-unmatched
-Vector4 * MeshGeometryClass::get_planes(bool create)
-{
-#if (OPTIMIZE_PLANEEQ_RAM)
-	_PlaneEQArray.Uninitialised_Grow(PolyCount);
-	return &(_PlaneEQArray[0]);
-#else
-	if (create && !PlaneEq) {
-		PlaneEq = NEW_REF(ShareBufferClass<Vector4>,(PolyCount, "MeshGeometryClass::PlaneEq"));
-	}
-	if (PlaneEq) {
-		return PlaneEq->Get_Array();
-	}
-	return NULL;
-#endif
-}
+// Retail's MeshGeometryClass::get_planes (0x00924FA0) is defined in
+// MeshGeometryClass_Get_Planes.cpp; this TU only calls it.
 
 
 /***********************************************************************************************
