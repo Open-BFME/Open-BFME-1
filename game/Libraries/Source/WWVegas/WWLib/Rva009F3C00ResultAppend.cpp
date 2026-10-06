@@ -3,23 +3,21 @@
 // The 103-byte method appends one two-int record to the shared result payload.
 // The constructor at 0x009F39F0 establishes the three vector pointers and the
 // cursor at offset 0x0C. Callers at 0x009F6600 and 0x009F4130 provide the two
-// record values, while the overflow call reaches the converted OCL vector body.
+// record values. The overflow call reaches the library's own two-int vector
+// _M_insert_overflow at 0x009F36F0, not the OCL Upgrades instance at 0x00262FE0,
+// so the two-int record keeps a type of its own.
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
-class OCLSpecialPowerModuleData
+struct IntPairRecord009F39F0
 {
-public:
-	struct Upgrades
-	{
-		int m_bfmeFirst;
-		int m_bfmeSecond;
-	};
+	int m_bfmeFirst;
+	int m_bfmeSecond;
 };
 
 struct Rva009F39F0Payload
 {
-	_STL::vector<OCLSpecialPowerModuleData::Upgrades> m_upgrades;
+	_STL::vector<IntPairRecord009F39F0> m_upgrades;
 	void *m_cursor;
 	int m_refCount;
 };
