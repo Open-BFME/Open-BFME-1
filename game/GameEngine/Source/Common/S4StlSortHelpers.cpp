@@ -76,6 +76,59 @@ struct S4SortElem12 { int m_a, m_b, m_c; };
 struct S4SortElem20 { int m_a, m_b, m_c, m_d, m_e; };
 struct S4SortElem8  { int m_a, m_b; };
 
+// THE HELPERS RETAIL PLACES IN OTHER TUs ARE ONLY DECLARED HERE.  Instantiating
+// the sorts above would otherwise emit this TU's own COMDAT copies of them, and
+// those copies differ from retail's body at the name's address (link_census
+// RetailTruth: "wrong") while the link keeps them ahead of the retail owners:
+// __adjust_heap 0x005757E0/0x009F3110/0x009F3190, __insertion_sort
+// 0x002E1170/0x00532080/0x002EB270, __unguarded_insertion_sort_aux
+// 0x002E0730/0x00530050/0x002EA750, __linear_insert
+// 0x002E0FE0/0x0052FE90/0x00531860/0x00573900/0x002EAF10, and
+// __unguarded_linear_insert 0x002E01A0/0x0052F280/0x002EA270, each in its own
+// stlport_*_s4sortelem*.cpp.  An explicit specialization that is declared and
+// never defined leaves each call an external reference to that body.
+struct S4Cmp002E1690;
+struct S4Cmp002EB8E0;
+struct S4Cmp00531FA0;
+struct S4Cmp00532740;
+struct S4Cmp00574DF0;
+struct S4Cmp00575AA0;
+struct S4Cmp009F3400;
+struct S4Cmp009F34B0;
+
+#define S4_EXTERNAL_ADJUST_HEAP( CMP )                                         \
+	template <>                                                                \
+	void __adjust_heap<S4SortElem8 *, int, S4SortElem8, CMP>(                  \
+		S4SortElem8 *, int, int, S4SortElem8, CMP );
+
+#define S4_EXTERNAL_LINEAR_INSERT( ELEM, CMP )                                 \
+	template <>                                                                \
+	void __linear_insert<ELEM *, ELEM, CMP>( ELEM *, ELEM *, ELEM, CMP );
+
+#define S4_EXTERNAL_INSERTION_SORT( ELEM, CMP )                                \
+	template <>                                                                \
+	void __insertion_sort<ELEM *, CMP>( ELEM *, ELEM *, CMP );                 \
+	template <>                                                                \
+	void __unguarded_insertion_sort_aux<ELEM *, ELEM, CMP>(                    \
+		ELEM *, ELEM *, ELEM *, CMP );                                         \
+	template <>                                                                \
+	void __unguarded_linear_insert<ELEM *, ELEM, CMP>( ELEM *, ELEM, CMP );    \
+	S4_EXTERNAL_LINEAR_INSERT( ELEM, CMP )
+
+namespace _STL
+{
+S4_EXTERNAL_ADJUST_HEAP( S4Cmp00575AA0 )
+S4_EXTERNAL_ADJUST_HEAP( S4Cmp009F3400 )
+S4_EXTERNAL_ADJUST_HEAP( S4Cmp009F34B0 )
+
+S4_EXTERNAL_INSERTION_SORT( S4SortElem12, S4Cmp002E1690 )
+S4_EXTERNAL_INSERTION_SORT( S4SortElem20, S4Cmp002EB8E0 )
+S4_EXTERNAL_INSERTION_SORT( S4SortElem12, S4Cmp00532740 )
+
+S4_EXTERNAL_LINEAR_INSERT( S4SortElem12, S4Cmp00531FA0 )
+S4_EXTERNAL_LINEAR_INSERT( S4SortElem12, S4Cmp00574DF0 )
+}
+
 #define S4_FINAL_INSERTION( NAME, ELEM )                                       \
 	struct S4Cmp##NAME                                                         \
 	{                                                                          \
