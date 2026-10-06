@@ -17,8 +17,10 @@ dir32_addresses.csv name, else the address-derived `g_<VA>`.
 
 Each converted PROC moves into its own `_TEXT$d<va>` segment, so references
 between two dumps of one file stay relocations. Bodies that are not exact,
-own an external switch table (a new public label), or need a name MASM cannot
-spell are left as they were; so are PROCs no live row names.
+own an external switch table (a new public label), call a name the gate's
+resolver does not know (build.load_symbol_map: row names and pins, not
+object-symbol= aliases) or need a name MASM cannot spell are left as they
+were; so are PROCs no live row names.
 
 Every rewritten source is then checked three ways, and restored if any fails:
   1. ml assembles it;
@@ -140,6 +142,14 @@ def plan(sources=None):
     for b in bodies:
         if sources is None or b["source"] in sources:
             by_source[b["source"]].append(b)
+    # the gate resolves a rel32 only through load_symbol_map (ledger row names and
+    # symbols.csv pins); an object-symbol= alias dump_relocs binds to is not there
+    gate_names = build.load_symbol_map()
+    rel32 = collections.defaultdict(set)
+    with (OUT / "relocs.csv").open(newline="", encoding="utf-8") as handle:
+        for r in csv.DictReader(handle):
+            if r["kind"] == "REL32":
+                rel32[r["body"]].add(r["symbol"])
     result, skipped = {}, collections.Counter()
     for source, rows in sorted(by_source.items()):
         asm = OUT / "asm" / f"{stem_of(source)}.asm"
@@ -160,6 +170,8 @@ def plan(sources=None):
                 skipped["external-table"] += 1
             elif block is None or any("lnm_" in x for x in block):
                 skipped["unsafe-name"] += 1
+            elif rel32[b["symbol"]] - set(gate_names) - {b["symbol"]}:
+                skipped["rel32-name-not-in-gate-map"] += 1
             elif not int(b["rel32"]) and not int(b["dir32"]):
                 skipped["no-references"] += 1
             else:
