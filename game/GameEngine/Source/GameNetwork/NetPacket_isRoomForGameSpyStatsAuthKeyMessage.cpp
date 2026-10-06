@@ -34,7 +34,7 @@ public:
 private:
 	StringBase();
 	StringBase(const StringBase &other);
-	~StringBase();
+	~StringBase() { releaseBuffer(); }
 	void releaseBuffer();
 	BfmeStringData *m_data;
 };
