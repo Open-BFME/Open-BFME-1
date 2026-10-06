@@ -2147,50 +2147,8 @@ Bool Weapon::isGoalPosWithinAttackRange(const Object *source, const Coord3D* goa
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getPercentReadyToFire@Weapon@@QBEMXZ present-unmatched
-Real Weapon::getPercentReadyToFire() const
-{
-	switch (getStatus())
-	{
-		case OUT_OF_AMMO:
-		case PRE_ATTACK:
-			return 0.0f;
-
-		case READY_TO_FIRE:
-			return 1.0f;
-
-		case BETWEEN_FIRING_SHOTS:
-		case RELOADING_CLIP:
-		{
-			UnsignedInt now = TheGameLogic->getFrame();
-			UnsignedInt nextShot = getPossibleNextShotFrame();
-			DEBUG_ASSERTCRASH(now >= m_whenLastReloadStarted, ("now >= m_whenLastReloadStarted"));
-			if (now >= nextShot)
-				return 1.0f;
-
-			DEBUG_ASSERTCRASH(nextShot >= m_whenLastReloadStarted, ("nextShot >= m_whenLastReloadStarted"));
-			UnsignedInt totalTime = nextShot - m_whenLastReloadStarted;
-			if (totalTime == 0)
-			{
-				return 1.0f;
-			}
-
-			UnsignedInt timeLeft = nextShot - now;
-			DEBUG_ASSERTCRASH(timeLeft <= totalTime, ("timeLeft <= totalTime"));
-			UnsignedInt timeSoFar = totalTime - timeLeft;
-			if (timeSoFar >= totalTime)
-			{
-				return 1.0f;
-			}
-			else
-			{
-				return (Real)timeSoFar / (Real)totalTime;
-			}
-		}
-	}
-	DEBUG_CRASH(("should not get here"));
-	return 0.0f;
-}
+// ?getPercentReadyToFire@Weapon@@QBEMXZ is defined once, by the
+// retail-matched body at 0x001E6C20 (Weapon_getPercentReadyToFire.cpp).
 
 //-------------------------------------------------------------------------------------------------
 // BFME widened the reference's bonus-only signature: its getAttackRange takes
