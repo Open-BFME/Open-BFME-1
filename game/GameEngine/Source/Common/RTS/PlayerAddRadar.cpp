@@ -113,12 +113,6 @@ class Player
 public:
 	Bool okToPlayRadarEdgeSound(void);
 	Int getPlayerIndex(void) const { return m_playerIndex; }
-	Bool hasRadar(void) const
-	{
-		if (m_radarDisabled && (m_disableProofRadarCount == 0))
-			return false;
-		return m_radarCount > 0;
-	}
 
 	char m_pad00[0x24];
 	Int m_playerIndex;
@@ -128,6 +122,16 @@ public:
 	Bool m_radarDisabled;
 };
 
+// Player::hasRadar is retail's out-of-line 0x000C9A80 body (Player.cpp). Retail
+// Player.cpp inlines it into addRadar; this TU-local static reproduces that
+// inline without emitting a second external ?hasRadar@Player@@QBE_NXZ.
+static inline Bool playerHasRadar(const Player *player)
+{
+	if (player->m_radarDisabled && (player->m_disableProofRadarCount == 0))
+		return false;
+	return player->m_radarCount > 0;
+}
+
 class Rva000CBFA0Player : public Player
 {
 public:
@@ -136,11 +140,11 @@ public:
 
 void Rva000CBFA0Player::addRadar(Bool disableProof)
 {
-	Bool hadRadar = hasRadar();
+	Bool hadRadar = playerHasRadar(this);
 	++m_radarCount;
 	if (disableProof)
 		++m_disableProofRadarCount;
-	if (!hadRadar && hasRadar() && okToPlayRadarEdgeSound())
+	if (!hadRadar && playerHasRadar(this) && okToPlayRadarEdgeSound())
 	{
 		AudioEventRTS soundToPlay = TheAudio->getMiscAudio()->m_radarOnlineSound;
 		soundToPlay.setPlayerIndex(getPlayerIndex());
