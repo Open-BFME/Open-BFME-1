@@ -102,6 +102,7 @@ present tools/name_lane.py && { python3 tools/name_lane.py check --staged || fai
 python3 tools/link_debt.py --staged || fail "new hard-coded image address (see above)"
 # An /alternatename alias must name the body at its alias's pinned address.
 present tools/alias_guard.py && { python3 tools/alias_guard.py --staged || fail "an alias binds a call to another body (see above)"; }
+present tools/hatch_counters.py && { python3 tools/hatch_counters.py --staged || fail "escape hatches grew or a retail inventory was hand-edited (see above)"; }
 
 # WorldBuilder has a separate image and ledger; verify it before the game-only
 # early exit, then keep its exclusive sources out of the game's source parser.
