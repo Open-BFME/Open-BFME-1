@@ -27,7 +27,15 @@ struct BfmeEntityEAN
 	char m_bfmePaddingEAN[3];
 };
 
-extern BfmeEntityEAN g_bfmeEntityTableEAN[]; // retail 0x012B3ED0
+// retail 0x012B3ED0: the five predefined XML entities bfmeExpandEAN scans.
+BfmeEntityEAN g_bfmeEntityTableEAN[5] =
+{
+	{ "lt", '<' },
+	{ "gt", '>' },
+	{ "amp", '&' },
+	{ "quot", '"' },
+	{ "apos", '\'' },
+};
 extern "C" __declspec(dllimport) int __cdecl strncmp(char *left, char *right, int count);
 extern "C" void *__cdecl memset(void *destination, int value, unsigned int count);
 #pragma intrinsic(memset)
