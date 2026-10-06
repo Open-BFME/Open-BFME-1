@@ -468,10 +468,11 @@ def update(allow_paths=(), reason=None):
             print("%-18s %7d -> %7d" % (hatch, t0[hatch], t1[hatch]))
 
 
-def blob_id(data):
-    """git's blob id of DATA (bytes), computed without a subprocess."""
-    import hashlib
-    return hashlib.sha1(b"blob %d\0" % len(data) + data).hexdigest()
+def blob_id(path, data):
+    """The blob id DATA (bytes) would be staged as at PATH: git applies the path's
+    eol/autocrlf filters, so the id agrees with `git add` on any checkout."""
+    return subprocess.run(["git", "hash-object", "--stdin", "--path=" + path], cwd=ROOT,
+                          input=data, capture_output=True).stdout.decode().strip()
 
 
 def _key_of(line):
@@ -496,7 +497,7 @@ def admit(path, reason, tokens=None, before=None, now=None):
     if not base.exists():
         return {"admitted": [], "refused": []}      # no register yet: nothing to admit into
     data = (ROOT / path).read_bytes() if (ROOT / path).exists() else b""
-    blob = blob_id(data)
+    blob = blob_id(path, data)
     new = scan(path, data.decode("utf-8", "replace")) if data else collections.Counter()
     head = {}
     for line in (read_blobs(["HEAD:" + BASELINE])["HEAD:" + BASELINE] or "").splitlines():

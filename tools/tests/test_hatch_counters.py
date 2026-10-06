@@ -336,8 +336,7 @@ def test_admit_restamps_an_earlier_tool_allowance_in_the_same_file(repo):
     sys.path.insert(0, str(repo.root / "tools"))
     repo.write(pins, repo.read(pins) + "?b@@3HA,0x00001004,tool\n")
     assert admit(repo, pins, "--tokens", "0x00001004").returncode == 0
-    before = hc.blob_id((repo.root / pins).read_bytes())
-    assert before == repo.git("hash-object", pins).strip()
+    before = repo.git("hash-object", pins).strip()
     repo.write(pins, repo.read(pins) + "?d@@3HA,0x0000100C,tool\n")
     env = dict(os.environ, HATCH_ROOT=str(repo.root), HATCH_NOW=str(T0 + 60))
     code = ("import sys; sys.path.insert(0, 'tools'); import hatch_counters as h; "

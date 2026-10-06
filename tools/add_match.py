@@ -283,6 +283,35 @@ def append_replacement_tombstone(path, replaced, successor_name, successor_rva,
     ledger_io.atomic_write_bytes(path, raw + record)
 
 
+# A compiler-made symbol C++ cannot spell: `_$E8` (a dynamic initializer), `$L123`
+# (an EH funclet label), `__ehhandler$...`, `??__E...`. A row for one of these can
+# only bind through `object-symbol=`, so that alias is not an escape hatch.
+COMPILER_LABEL = re.compile(r"(?:^|;)\s*object-symbol=(?:_?\$[A-Za-z]\w*|__ehhandler\$\S*|"
+                            r"__unwindfunclet\$\S*|__catch\$\S*|\?\?__[EF]\S*)\s*(?:;|$)")
+LEDGER_REL = "targets/game/reverse/functions.csv"
+
+
+def admit_compiler_label_alias(root, notes, rva, ledger_before):
+    """After verification: admit this row's object-symbol= in the escape-hatch register
+    (tools/hatch_counters.py) when it names a compiler label. Any other new alias row,
+    and any typed into functions.csv by hand, stays counted growth the register refuses
+    once enforced. Any append re-stamps admissions an earlier tool run left in this
+    working tree (they are bound to the ledger's blob, which this append changed)."""
+    import hatch_counters
+    if Path(hatch_counters.ROOT).resolve() != Path(root).resolve():
+        return                                  # a test-only --root has no register
+    label = bool(COMPILER_LABEL.search(notes or ""))
+    if not label:
+        register = Path(root) / hatch_counters.BASELINE
+        pending = re.search(rb"(?m)^object_symbol\t" + re.escape(LEDGER_REL.encode()) + rb"\t[^\n]*\tallow=",
+                            register.read_bytes() if register.exists() else b"")
+        if not pending:
+            return                              # nothing to admit or carry forward
+    hatch_counters.admit(LEDGER_REL, "add_match: verified row bound to a compiler label",
+                         tokens={f"0x{rva:08X}"} if label else set(),
+                         before=hatch_counters.blob_id(LEDGER_REL, ledger_before))
+
+
 def main():
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -647,6 +676,7 @@ def main():
         fail(f"verification failed (exit {result.returncode}) — append and "
              "marker strip REVERTED; nothing was changed")
     print("add_match: verified OK — row is live")
+    admit_compiler_label_alias(root, args.notes, rva, raw)
     remove_stash(rva, args.root)
     # Verified HERE is not landed: the commit may never be pushed, or be
     # rejected. Releasing now (force, anyone's claim -- the old behaviour) let
