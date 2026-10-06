@@ -85891,7 +85891,6 @@ name,address,notes
 ?pre@Gen0004A5A7@@QAEXXZ,0x0004A5A7,leading member call of the 0x003D0EE0 nested walk reached via incremental-link thunk; address-derived name
 ?preFireWeapon@Weapon@@QAEXPBVObject@@0PBUCoord3D@@@Z,0x001E8970,actual body; Object preFireCurrentWeapon at 0x001CDAD0 passes source Object victim Object and Coord3D; RET0C confirms three-pointer ABI
 ?preTeamDestroy@Rva000F4250PlayerCall@@QAEXPBVTeam@@@Z,0x00014DCB,Team destructor retail call via proven ILT
-?prefMapIncrement@@YAPAUPrefMapNodeShim@@PAU1@@Z,0x0082B870,alias for the STL tree stepper already pinned here as _Rb_global<bool>::_M_increment
 ?preflight@HordeTransportContain@@QBE_NPAVObject@@_N@Z,0x000237B8,HordeTransportContain validity preflight helper reaches retail 0x00226A80
 ?preflight@Rva00249310Owner@@QAE_NPAVRva00249310Object@@_N@Z,0x0002C836,secondary interface preflight call uses the existing incremental thunk
 ?preloadAssets@ParticleSystemManager@@UAEXW4TimeOfDay@@@Z,0x005cb720,vtable-slot ??_7W3DParticleSystemManager@@6BSubsystemInterface@@@ slot 14 anchors=7

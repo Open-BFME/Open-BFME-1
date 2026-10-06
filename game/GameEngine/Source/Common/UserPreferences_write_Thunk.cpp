@@ -46,7 +46,18 @@ struct PrefMapShim
 	PrefMapNodeShim *m_begin;
 };
 
-PrefMapNodeShim *prefMapIncrement(PrefMapNodeShim *node);
+// The map walk steps with STLport's out-of-line tree increment (retail call
+// target 0x0082B870, _Rb_global<bool>::_M_increment in STLRbGlobalBoolIncrementThunk.cpp).
+namespace _STL
+{
+struct _Rb_tree_node_base;
+
+template <class _Dummy>
+struct _Rb_global
+{
+	static _Rb_tree_node_base *_M_increment(_Rb_tree_node_base *node);
+};
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class UserPreferences
@@ -78,7 +89,7 @@ Bool UserPreferences::write(void)
 		while (node != (PrefMapNodeShim *)m_map)
 		{
 			fprintf(fp, "%s = %s\n", node->m_key.str(), node->m_value.str());
-			node = prefMapIncrement(node);
+			node = (PrefMapNodeShim *)_STL::_Rb_global<bool>::_M_increment((_STL::_Rb_tree_node_base *)node);
 		}
 
 		fclose(fp);
