@@ -1,9 +1,14 @@
+#include <string.h>
+
 // Open-BFME: 20-byte slot ring insert, retail 0x008A0890.
 
 class BfmeRingRef0890
 {
 public:
 	virtual void addRef();
+	// Matched ring clear at 0x008A07D0 calls this no-argument slot
+	// through the same record +0x10 value pointer. No vtable is emitted here.
+	virtual void slot04();
 
 	char m_pad[0x4c];
 	unsigned char *m_mid;
@@ -23,6 +28,7 @@ class BfmeRing008A0890
 {
 public:
 	void insert(int arg1, BfmeRingRef0890 *arg2, int arg3);
+	void removeRva008A09D0(BfmeRingRef0890 *value);
 	BfmeRingSlot0890 *nextSlot(BfmeRingSlot0890 *slot) const;
 
 	BfmeRingSlot0890 *m_begin;
@@ -119,4 +125,40 @@ void BfmeRouteManager1282::produce(void *entry, BfmeN1034 *node, int zero, int e
 	((BfmeN1034 *)self->m_read->m_arg1)->addRef();
 	self->m_read->m_ref = (BfmeRingRef0890 *)zero;
 	self->m_read = next;
+}
+
+// Retail [0x008A09D0, 0x008A0AF3): ECX is the same manager loaded from
+// 0x013377D8 by the matched insert caller; one value pointer, ret 4.
+// Removes the first matching kind-zero record from the 20-byte circular range.
+// The first-slot branch only advances the write pointer, as retail does.
+// The true member spelling is unproved, so its name retains the address.
+void BfmeRing008A0890::removeRva008A09D0(BfmeRingRef0890 *value)
+{
+    BfmeRingSlot0890 *head = m_write;
+    BfmeRingSlot0890 *tail = m_read;
+    BfmeRingSlot0890 *slot = m_write;
+    while (slot != m_read) {
+        if (slot->m_zero == 0 && slot->m_ref == value) {
+            if (slot < tail) {
+                value->slot04();
+                memmove(slot, slot + 1, (m_read - slot - 1) * sizeof(*slot));
+                BfmeRingSlot0890 *previous = m_read - 1;
+                if (previous < m_begin)
+                    previous = m_begin + m_capacity - 1;
+                m_read = previous;
+                return;
+            }
+            if (slot > head) {
+                value->slot04();
+                memmove(m_write + 1, m_write, (slot - m_write) * sizeof(*slot));
+                m_write = nextSlot(m_write);
+                return;
+            }
+            if (slot == head) {
+                m_write = nextSlot(head);
+                return;
+            }
+        }
+        slot = nextSlot(slot);
+    }
 }
