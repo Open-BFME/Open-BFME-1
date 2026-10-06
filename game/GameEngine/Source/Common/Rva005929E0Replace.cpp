@@ -18,10 +18,19 @@ public:
 		const UnicodeString &second,
 		const UnicodeString &third,
 		const UnicodeString &fourth );
-	~Rva00590010FourString();
 
 private:
 	char m_body[0x14];
+};
+
+// The record's destructor call goes through ILT 0x0003FA7B to 0x0058C4C0,
+// matched as ??1UpgradeMuxData@@QAE@XZ (UpgradeMuxData_dtor_Thunk.cpp: four
+// wide-string releases at +0x0C..+0x00); S2DeleteHeldObject.cpp reaches the
+// same body the same way.
+class UpgradeMuxData
+{
+public:
+	~UpgradeMuxData();
 };
 
 class Rva005929E0
@@ -50,7 +59,7 @@ void Rva005929E0::replace(
 	if (p != m_owned)
 	{
 		if (m_owned)
-			delete m_owned;
+			delete (UpgradeMuxData *)m_owned;
 		m_owned = p;
 	}
 }
