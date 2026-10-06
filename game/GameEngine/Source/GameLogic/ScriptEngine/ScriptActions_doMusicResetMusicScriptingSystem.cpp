@@ -36,10 +36,10 @@ extern ScriptEngine *TheScriptEngine;
 class ScriptActions
 {
 protected:
-	void doMusicResetMusicScriptingSystem(bool fadeout);
+	void doResetMusicScripting(bool fadeout);
 };
 
-void ScriptActions::doMusicResetMusicScriptingSystem(bool fadeout)
+void ScriptActions::doResetMusicScripting(bool fadeout)
 {
 	int pause = !fadeout;
 	int *pausePtr = &pause;
