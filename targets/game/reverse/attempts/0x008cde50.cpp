@@ -1,5 +1,5 @@
 // ?rva8CDE50Continue@@YAXPAVRva8CEE00State@@PAURva8CEE00Cursor@@@Z
-// partial score=0.419 date=2026-09-28
+// partial score=0.4223 date=2026-10-05
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // RVA 008CDE50, 907B. Existing opaque caller contract from 008CEE00.
 // String handles and hub ABI: docs/analysis/0x008985c0.md.
@@ -95,8 +95,8 @@ extern Rva8CD130Value *g_bfmeFallbackDB;
 class Rva008B2EA0Node { public: void append(void *); };
 
 void rva8CDE50Continue(Rva8CEE00State *state, Rva8CEE00Cursor *cursor) {
-    Rva8CD130Value *under=state->m_entries[state->m_count-2];
     Rva8CD130Value *top=state->m_entries[state->m_count-1];
+    Rva8CD130Value *under=state->m_entries[state->m_count-2];
     if (!under->undefined() && !top->undefined()) {
         int type=under->m_flags;
         int topType=top->m_flags&0x3f;
