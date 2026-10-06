@@ -9,8 +9,6 @@ typedef int Int;
 typedef float Real;
 typedef bool Bool;
 
-extern const Real g_bfmeDefaultBU;
-
 struct ICoord2D
 {
 	Int x;
@@ -121,8 +119,8 @@ Bool ProcessAnimateWindowSlideFromLeft::updateAnimateWindow(AnimateWindow *animW
 
 	if (endPos.x - curPos.x <= m_slowDownThreshold)
 		vel.x *= m_slowDownRatio;
-	if (vel.x < g_bfmeDefaultBU)
-		vel.x = g_bfmeDefaultBU;
+	if (vel.x < 1.0f)
+		vel.x = 1.0f;
 	animWin->setVel(vel);
 	return false;
 }
