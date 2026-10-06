@@ -342,21 +342,7 @@ Real Dict::getReal(NameKeyType key, Bool *exists/*=NULL*/) const
 }
 
 // -----------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/Dict_getAsciiString.cpp
-// ?getAsciiString@Dict@@ present-unmatched
-AsciiString Dict::getAsciiString(NameKeyType key, Bool *exists/*=NULL*/) const
-{
-	validate();
-	DictPair* pair = findPairByKey(key);
-	if (pair && pair->getType() == DICT_ASCIISTRING)
-	{
-		if (exists) *exists = true;
-		return *pair->asAsciiString();
-	}
-	DEBUG_ASSERTCRASH(exists != NULL,("dict key missing, or of wrong type\n"));	// only assert if they didn't check result
-	if (exists) *exists = false;
-	return AsciiString::TheEmptyString;
-}
+// Dict::getAsciiString: game/GameEngine/Source/Common/Dict_getAsciiString.cpp
 
 // -----------------------------------------------------
 UnicodeString Dict::getUnicodeString(NameKeyType key, Bool *exists/*=NULL*/) const
