@@ -8,7 +8,7 @@
 // the shared active mask and the two retail flag stores.
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
-struct Coord3D { float x,y,z; };
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 class Matrix3D;
 class Gen_00411DD0 { public: void bfmeSet(bool); };
 class StructureCollapsePosition { public: float x,y,z; };

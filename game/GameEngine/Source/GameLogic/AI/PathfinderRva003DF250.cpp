@@ -41,7 +41,7 @@ const ObjectID INVALID_ID = 0;
 #define PATHFIND_CELL_SIZE 10
 #define PATHFIND_CELL_SIZE_F 10.0f
 
-struct Coord3D { Real x, y, z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 struct ICoord2D { Int x, y; };
 struct IRegion2D { ICoord2D lo, hi; };
 

@@ -8,10 +8,7 @@
 // so the translation-unit class remains address-derived until an owner is
 // independently established.
 
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum DozerTask
 {

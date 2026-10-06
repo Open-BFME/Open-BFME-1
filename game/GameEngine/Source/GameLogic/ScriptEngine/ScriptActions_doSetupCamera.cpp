@@ -11,12 +11,7 @@ typedef bool Bool;
 typedef int Int;
 typedef float Real;
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Waypoint
 {

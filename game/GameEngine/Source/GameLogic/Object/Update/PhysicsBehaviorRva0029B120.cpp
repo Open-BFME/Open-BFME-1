@@ -8,7 +8,7 @@
 // condition bit 115, SPLATTED in the shipped table at VA 0x012A6918.
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
-struct Coord3D { float x, y, z; };
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 class ModuleData {
 public:
     char m_pad[0x59];

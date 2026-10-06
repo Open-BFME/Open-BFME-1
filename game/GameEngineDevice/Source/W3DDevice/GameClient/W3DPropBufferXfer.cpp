@@ -6,22 +6,7 @@ typedef int Int;
 typedef float Real;
 typedef bool Bool;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-
-	__forceinline Coord3D &operator+=(const Coord3D &other)
-	{
-		x += other.x;
-		y += other.y;
-		z += other.z;
-		return *this;
-	}
-
-
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct Matrix3D
 {

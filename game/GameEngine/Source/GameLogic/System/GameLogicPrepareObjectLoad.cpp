@@ -10,7 +10,7 @@
 // Vtable declarations describe positions only for uncalled slots.
 #define _STLP_USE_NEWALLOC 1
 #include <hash_map>
-struct Coord3D {float x,y,z;};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 // The override-chain walk is retail's ?getFinalOverride@Overridable@@QBEPBV1@XZ
 // at 0x00087A80 (through ILT 0x000022BB). Only the declaration is needed; the
 // chain node is reached by cast so no inheritance is invented here.

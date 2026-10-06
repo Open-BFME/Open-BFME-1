@@ -3,12 +3,7 @@
 // thiscall on the unit-timing state at 0x012F08A0; sole caller is
 // GameLogic::startNewGame (0x00395B6B) after the enable-byte test.
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct SYSTEMTIME
 {

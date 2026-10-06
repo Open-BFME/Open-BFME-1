@@ -12,12 +12,7 @@ enum PathfindLayerEnum
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // Absent-from-retail source-shaping helper: preserves both complete PathNode
 // copy bodies without defining a shared Coord3D assignment COMDAT. MSVC 7.1
