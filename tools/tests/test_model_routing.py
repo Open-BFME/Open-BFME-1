@@ -66,11 +66,18 @@ def test_runner_field_beats_self_declared_model(tmp_path):
 
 
 def test_judges_come_only_from_the_protected_list(tmp_path):
-    assert model_routing.judge_allowed("claude-opus-5-5", tmp_path / "absent.json")
-    assert not model_routing.judge_allowed("muse-spark", tmp_path / "absent.json")
+    # the repo's one allowlist, tools/judges.json, read through tools/judges.py
+    assert model_routing.judge_allowed("claude-opus-5-5")
+    assert model_routing.judge_allowed("claude-fable-5-1")
+    assert not model_routing.judge_allowed("muse-spark")
+    assert not model_routing.judge_allowed("claude-opus-5-5", tmp_path / "absent.json")   # fails closed
+    shipped = json.loads(model_routing.JUDGES.read_text(encoding="utf-8"))
+    shipped["judges"] = [j for j in shipped["judges"] if j["id"] == "gpt-6.1-sol"]
     judges = tmp_path / "judges.json"
-    judges.write_text(json.dumps({"judges": ["gpt-6.1-sol"]}), encoding="utf-8")
+    judges.write_text(json.dumps(shipped), encoding="utf-8")
     assert model_routing.judge_allowed("GPT-6.1-sol", judges)
+    assert not model_routing.judge_allowed("claude-opus-5-5", judges)
+    judges.write_text(json.dumps({"judges": ["claude-opus-5-5"]}), encoding="utf-8")       # old bare-name schema
     assert not model_routing.judge_allowed("claude-opus-5-5", judges)
 
 

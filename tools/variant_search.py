@@ -13,11 +13,13 @@ remaining diff is register allocation alone -- same instructions, operands
 equal once registers are masked -- does a blind permutation phase run, under
 its own trial cap.
 
-The model is called by this runner, never by the agent, and the result records
-which model answered (`runner=<model>` in the attempt note), so routing and
-audits can trust it. The call goes through tools/judge_call.py when the
-publisher's judge layer is installed, else through a command template from
-tools/model_routing.json (`commands`), with the prompt on stdin.
+The model is called by this runner, never by the agent. An allowlisted judge
+(tools/judges.json) is called through tools/judges.py, the repo's one judge
+runner, which reads the answering model from the CLI's own record; only then
+does the attempt note say `runner=<answering model>`. Any other model runs from
+a command template in tools/model_routing.json (`commands`, or --command), with
+the prompt on stdin, and the note says `model=<model>`: a claim, good for
+routing, never evidence.
 
 Nothing here lands a row. A win is written to build/variant_search/<rva>/win.cpp
 for tools/add_match.py and the normal gates.
@@ -162,13 +164,20 @@ def model_command(model, template=None):
     return [part.replace("{model}", model) for part in shlex.split(template)]
 
 
-def call_model(model, prompt, template=None, timeout=900):
-    """The model's raw answer. judge_call, when installed, owns provenance."""
-    try:
-        import judge_call  # noqa: F401  (publisher judge layer, when present)
-        return judge_call.call(model, prompt)
-    except ImportError:
-        pass
+def call_model(model, prompt, template=None, timeout=900, answered=None):
+    """The model's raw answer. For an allowlisted judge with no --command override the
+    judge runner calls it and appends the CLI-recorded answering model (None when the
+    record does not count) to `answered`; a template call appends None."""
+    import judges
+    if template is None and judges.allowed(model):
+        got = judges.judge_call(model, prompt, timeout=timeout)
+        if got.record["exit"] != 0:
+            raise RuntimeError(f"judge runner failed: {got.record['error']}")
+        if answered is not None:
+            answered.append(got.record["answering_model"] if got.counted else None)
+        return got.reply
+    if answered is not None:
+        answered.append(None)
     proc = subprocess.run(model_command(model, template), input=prompt, capture_output=True,
                           text=True, encoding="utf-8", errors="replace", timeout=timeout)
     if proc.returncode != 0:
@@ -275,7 +284,8 @@ def search(source, symbol, rva, size, *, model, n=12, rounds=4, jobs=12, templat
         raise ValueError("--n must be 8..16 (the amendment's band)")
     out = Path(out or OUT / f"0x{rva:08x}")
     out.mkdir(parents=True, exist_ok=True)
-    propose = propose or (lambda prompt: call_model(model, prompt, template))
+    answered = []
+    propose = propose or (lambda prompt: call_model(model, prompt, template, answered=answered))
     if make_scorer is None:
         import build
         symbol_map = build.load_symbol_map()
@@ -318,8 +328,11 @@ def search(source, symbol, rva, size, *, model, n=12, rounds=4, jobs=12, templat
         best_text, best, spent = blind_phase(best_text, best, make_scorer, permute_trials, jobs, seed)
         result["blind_trials"] = spent
         stop = "exact (blind phase)" if best["exact"] else "regalloc: blind trial cap"
+    # runner-attested only when every model call went through the judge runner and counted
+    attested = set(answered)
     result.update(best=best["fitness"], exact=best["exact"], diff_class=best["class"], stop=stop,
-                  seconds=round(time.monotonic() - started, 1))
+                  seconds=round(time.monotonic() - started, 1),
+                  answering_model=attested.pop() if len(attested) == 1 and None not in attested else None)
     (out / "best.cpp").write_text(best_text, encoding="latin-1", errors="replace")
     if best["exact"]:
         (out / "win.cpp").write_text(best_text, encoding="latin-1", errors="replace")
@@ -353,7 +366,8 @@ def main(argv=None):
                     permute_trials=args.permute_trials)
     print(json.dumps({k: v for k, v in result.items() if k != "rounds"}, indent=2))
     print(f"evidence: {OUT / f'0x{args.rva:08x}' / 'result.json'}")
-    print(f"attempt note: runner={model} t={len(result['rounds'])} "
+    who = f"runner={result['answering_model']}" if result["answering_model"] else f"model={model}"
+    print(f"attempt note: {who} t={len(result['rounds'])} "
           f"score={result['best']:.4f} variant-search {result['stop']}")
     return 0 if result["exact"] else 1
 

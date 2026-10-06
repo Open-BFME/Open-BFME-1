@@ -14,8 +14,9 @@ work with two rules from tools/model_routing.json:
 Task classes are retail size bands: the long tail (very large bodies, maths,
 macro-heavy code) sits in the top band, which only the strongest models and
 tools/variant_search.py are routed to. Judges are a separate, protected list:
-judge_allowed() answers from judges.json (see _impl decision record pillar 5)
-and nothing here can add a judge.
+judge_allowed() answers from tools/judges.json through tools/judges.py, the
+repo's one judge runner (decision record, pillar 5); nothing here can add a
+judge, and a missing or malformed list allows none.
 
 `model=` in the log is self-declared by the agent. It is good enough to stop
 routing work to a model that does not land it; it is never evidence for a
@@ -41,8 +42,6 @@ REVERSE = (ROOT / "targets" / "game" / "reverse"
 LOG = REVERSE / "re_attempts.log"
 CONFIG = ROOT / "tools" / "model_routing.json"
 JUDGES = ROOT / "tools" / "judges.json"
-# Pillar 5's initial allowlist, used only while no protected judges.json exists.
-DEFAULT_JUDGES = ("gpt-6-astra", "gpt-6.1-sol", "claude-opus-5-5", "claude-fable-5.1")
 FIELD = re.compile(r"(?:^|\s)(model|runner|t)=(\S+)")
 
 
@@ -153,11 +152,10 @@ def route(cls, stats, config):
 
 
 def judge_allowed(model, path=JUDGES):
-    """True only for models on the protected judge list."""
-    path = Path(path)
-    judges = (json.loads(path.read_text(encoding="utf-8")).get("judges", [])
-              if path.exists() else DEFAULT_JUDGES)
-    return model.strip().lower() in {j.lower() for j in judges}
+    """True only for models on the protected judge list (tools/judges.py decides)."""
+    sys.path.insert(0, str(ROOT / "tools"))
+    import judges
+    return judges.allowed(model, path)
 
 
 def report(stats, config, min_n=1):
