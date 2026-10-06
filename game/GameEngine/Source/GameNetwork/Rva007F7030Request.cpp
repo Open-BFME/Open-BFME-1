@@ -3,6 +3,23 @@
 // Callback VA00BF5790 independently decodes as a two-argument cdecl
 // forwarder to the one-argument thiscall body 007F5720.
 extern "C" void Rva007F5790Callback(void *, void *);
+
+class Rva007E8810Message;
+
+// The matched one-argument thiscall body at 0x007F5720.
+class Rva007F5720GameBrowser
+{
+public:
+    void handleLoginReply(Rva007E8810Message *message);
+};
+
+// Retail 0x007F5790..0x007F579E: the notifier callback request() passes below
+// loads its two cdecl stack arguments and hands the first (the reply message)
+// to the second's (the game browser's) handleLoginReply.
+extern "C" void Rva007F5790Callback(void *message, void *browser)
+{
+    ((Rva007F5720GameBrowser *)browser)->handleLoginReply((Rva007E8810Message *)message);
+}
 class BfmeC994 {
 public:
     BfmeC994(char *, int);
