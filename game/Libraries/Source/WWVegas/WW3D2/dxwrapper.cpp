@@ -2587,15 +2587,10 @@ void DX8Wrapper::Draw_Triangles(
 //
 // ----------------------------------------------------------------------------
 
-// ?Draw_Triangles@DX8Wrapper@@ present-unmatched
-void DX8Wrapper::Draw_Triangles(
-	unsigned short start_index,
-	unsigned short polygon_count,
-	unsigned short min_vertex_index,
-	unsigned short vertex_count)
-{
-	Draw(D3DPT_TRIANGLELIST,start_index,polygon_count,min_vertex_index,vertex_count);
-}
+// DX8Wrapper::Draw_Triangles(start_index, polygon_count, min_vertex_index,
+// vertex_count) is defined only by its byte-exact reconstruction in
+// game/Libraries/Source/WWVegas/WW3D2/DX8Wrapper_DrawPrimitives.cpp (0x00906DF0):
+// this upstream copy called the Generals Draw signature and won the link.
 
 // ----------------------------------------------------------------------------
 //
