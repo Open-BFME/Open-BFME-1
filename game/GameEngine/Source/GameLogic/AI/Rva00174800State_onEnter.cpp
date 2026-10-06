@@ -157,12 +157,14 @@ class CRCParameterCheck;
 // Pinned _bfmeRetailCritterDesyncLog (ILT 0x0003A17A -> 0x00065C80).
 extern "C" void bfmeRetailCritterDesyncLog(CRCParameterCheck *sink, const char *message);
 
-// Pinned ?removeGoal@Pathfinder@@QAEXPAVObject@@@Z (ILT 0x00015D02 ->
-// 0x003E3D20); TheAI+0x0C is the pathfinder (TheAI pin note, AIFearState).
+// ILT 0x00015D02 -> 0x003E3D20, the body matched as
+// ?removeGoal003E3D20@Pathfinder@@QAEXPAVObject@@@Z (PathfinderRemoveGoal003E3D20.cpp),
+// the spelling the other matched callers use; TheAI+0x0C is the pathfinder
+// (TheAI pin note, AIFearState).
 class Pathfinder
 {
 public:
-	void removeGoal(Object *object);
+	void removeGoal003E3D20(Object *object);
 };
 
 class AI
@@ -235,7 +237,7 @@ StateReturnType Rva00174800State::onEnter()
 		m_checkForPath = 1;
 		m_field58 = 0;
 
-		TheAI->pathfinder()->removeGoal(owner);
+		TheAI->pathfinder()->removeGoal003E3D20(owner);
 
 		Coord3D pos;
 		pos.set(&owner->m_position);
