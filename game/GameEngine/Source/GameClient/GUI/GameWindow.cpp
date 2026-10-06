@@ -756,17 +756,6 @@ Int GameWindow::winGetTextLength()
 
 }  // end WinGetText
 
-// GameWindow::winGetFont =====================================================
-/** Get the font being used by this window */
-//=============================================================================
-// ?winGetFont@GameWindow@@QAEPAVGameFont@@XZ present-unmatched
-GameFont *GameWindow::winGetFont( void )
-{
-
-	return m_instData.getFont();
-
-}  // end WinGetFont
-
 // GameWindow::winSetFont =====================================================
 /** Set font for text in this window */
 //=============================================================================
@@ -810,6 +799,18 @@ struct BfmeWindowFontLayout
 	DisplayString *text;								///< this+0x1CC
 	DisplayString *tooltip;								///< this+0x1D0
 };
+
+// GameWindow::winGetFont =====================================================
+/** Get the font being used by this window */
+//=============================================================================
+// Retail 0x00478540 (7 bytes), the getter just ahead of winSetFont at
+// 0x00478550; callers reach it through the ILT at 0x0002DB7D.
+GameFont *GameWindow::winGetFont( void )
+{
+
+	return ((BfmeWindowFontLayout *)this)->font;
+
+}  // end WinGetFont
 
 void GameWindow::winSetFont( GameFont *font )
 {
