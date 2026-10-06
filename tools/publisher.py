@@ -61,7 +61,16 @@ PIECES.
              .githooks/ are scope like any other. Two units whose scopes
              overlap (a path one touches is inside the other's scope, or the
              same glob) are never in flight together: the later one waits,
-             it is not rejected. After the rebase each unit's own diff must
+             it is not rejected. Row ledgers (`row_ledgers`: functions.csv
+             by target_rva, symbols.csv by name, data_rows.csv by address,
+             other union-merged ledgers by whole line) are scoped by row:
+             `targets/game/reverse/functions.csv#0x00401000` allows and
+             overlaps that row only; a plain path allows the whole file.
+             A unit's rows are read from its diff with the ledger's header.
+             A unit touching a file that others #include (by file name,
+             transitively, as header_dependents.py does; `#include MACRO`
+             counts as including everything) also overlaps every unit that
+             touches one of those includers. After the rebase each unit's own diff must
              stay inside its scope, or it is rejected with the offending
              paths (`out-of-scope`).
   RETRIES    A gate-red unit is fingerprinted: its +/- lines outside
@@ -121,6 +130,16 @@ DEFAULTS = dict(
     push_options=[], operators={}, infra_slots=2, aging_minutes=30.0, red_slow_lane=0.2,
     target_red_batch=0.1, min_batch=2, fair=True,
     scope_required=True, serialize_scopes=True, retry_limit=3,
+    row_ledgers={"**/functions.csv": "target_rva", "**/symbols.csv": "name",
+                 "**/data_rows.csv": "address", "**/deleted_rows.csv": "",
+                 "**/name_votes.csv": "", "**/name_agreed.csv": "", "**/re_attempts.log": "",
+                 "**/attempts.jsonl": ""},
+    include_globs=["*.h", "*.hpp", "*.hh", "*.hxx", "*.inl", "*.inc", "*.cpp", "*.c", "*.cc",
+                   "*.cxx", "*.def", "*.tbl"],
+    include_scan_seconds=120, reach_limit=3000,
+    # STLport's `#include _STLP_NATIVE_HEADER(x)` redirects reach only toolchain
+    # headers; header_dependents sends STLport changes to the full gate anyway
+    macro_include_ignore=["**/stlport/**"],
     ledger_paths=["**/functions.csv", "**/symbols.csv", "**/data_rows.csv", "**/*baseline*",
                   "**/*_known_red.txt", "**/*whitelist*"],
 )
@@ -240,21 +259,173 @@ def glob_match(path, pattern):
     return rx.match(path) is not None
 
 
-def in_scope(path, scope):
-    return (any(glob_match(path, g) for g in scope.get("allow") or ())
-            and not any(glob_match(path, g) for g in scope.get("forbid") or ()))
+def _entry(entry):
+    """'path-glob' -> (glob, None); 'path-glob#KEY' -> (glob, KEY)."""
+    glob, _, key = entry.partition("#")
+    return glob, (key or None)
+
+
+def _forbidden(scope, path, key):
+    return any(glob_match(path, g) and (k is None or k == key)
+               for g, k in map(_entry, scope.get("forbid") or ()))
+
+
+def in_scope(path, scope, key=None):
+    """May a unit with `scope` change `path` (row `key` of a row ledger; None
+    = the whole file)? A row token allows only its own row."""
+    return (any(glob_match(path, g) and (k is None or (key is not None and k == key))
+                for g, k in map(_entry, scope.get("allow") or ()))
+            and not _forbidden(scope, path, key))
+
+
+def scope_touches(scope, path, key=None):
+    """Could a unit with `scope` touch what (path, key) touches? key None means
+    the whole file, which every row token of that file touches."""
+    return (any(glob_match(path, g) and (k is None or key is None or k == key)
+                for g, k in map(_entry, scope.get("allow") or ()))
+            and not _forbidden(scope, path, key))
+
+
+def footprint(record):
+    """{(path, row key or None)} a unit's diff touches."""
+    rows = record.get("rows") or {}
+    items = set()
+    for path in record.get("paths") or ():
+        keys = rows.get(path)
+        if keys and "*" not in keys:
+            items.update((path, k) for k in keys)
+        else:
+            items.add((path, None))
+    return items
 
 
 def scopes_overlap(a, b):
-    """Records a, b (with `scope` and `paths`) may not be in flight together."""
+    """Records a, b (scope, paths, rows, reach) may not be in flight together."""
     sa, sb = a.get("scope"), b.get("scope")
     if not sa or not sb:
         return True                         # an unscoped unit may touch anything
     if set(sa["allow"]) & set(sb["allow"]):
         return True
-    literal = lambda s: [g for g in s["allow"] if not set(g) & set("*?[")]  # noqa: E731
-    return (any(in_scope(p, sb) for p in list(a.get("paths") or ()) + literal(sa))
-            or any(in_scope(p, sa) for p in list(b.get("paths") or ()) + literal(sb)))
+    fa, fb = footprint(a), footprint(b)
+    literal = lambda s: {_entry(g) for g in s["allow"] if not set(_entry(g)[0]) & set("*?[")}  # noqa: E731
+    ra, rb = set(a.get("reach") or ()), set(b.get("reach") or ())
+    plain = lambda f: {p for p, k in f if k is None}  # noqa: E731
+    if ("*" in ra and (plain(fb) or rb)) or ("*" in rb and (plain(fa) or ra)):
+        return True                         # a header included nearly everywhere
+    if ra & (rb | plain(fb)) or rb & plain(fa):
+        return True                         # one edits what the other's TUs include
+    return (any(scope_touches(sb, p, k) for p, k in fa | literal(sa) | {(r, None) for r in ra})
+            or any(scope_touches(sa, p, k) for p, k in fb | literal(sb) | {(r, None) for r in rb}))
+
+
+def row_ledger(path, ledgers):
+    """The key column of a row ledger ('' = the whole line), None otherwise."""
+    for glob, column in ledgers.items():
+        if glob_match(path, glob):
+            return column
+    return None
+
+
+def _norm_key(value):
+    value = value.strip()
+    try:
+        if value.lower().startswith("0x"):
+            return f"0x{int(value, 16):08X}"
+    except ValueError:
+        pass
+    return value
+
+
+def ledger_rows(diff, ledgers, header_of=None):
+    """{ledger path: {row keys}} that a diff adds, changes or deletes. A key is
+    the ledger's key column (RVAs normalised), or 'L<hash>' of the whole line
+    for line ledgers and rows it cannot read; '*' = the header changed."""
+    import csv
+    rows, path, column, header = {}, None, None, None
+    for raw in diff.split(b"\n"):
+        got = re.match(rb"^diff --git a/\S+ b/(\S+)$", raw)
+        if got:
+            path = got.group(1).decode(errors="replace")
+            column = row_ledger(path, ledgers)
+            header = header_of(path) if (column and header_of) else None
+            continue
+        if re.match(rb"^From [0-9a-f]{40} ", raw) or raw == b"-- ":
+            path = column = header = None       # the next commit's message, or the signature
+            continue
+        if column is None or raw[:1] not in (b"+", b"-") or raw.startswith((b"+++ ", b"--- ")):
+            continue
+        text = raw[1:].rstrip(b"\r").decode(errors="replace")
+        keys = rows.setdefault(path, set())
+        if header is not None and text == header:
+            keys.add("*")
+            continue
+        key = None
+        if column and header:
+            names = next(csv.reader([header]))
+            if column in names:
+                try:
+                    cells = next(csv.reader([text]))
+                    if len(cells) > names.index(column) and cells[names.index(column)].strip():
+                        key = _norm_key(cells[names.index(column)])
+                except (csv.Error, StopIteration):
+                    key = None
+        keys.add(key or "L" + hashlib.sha1(text.encode()).hexdigest()[:12])
+    return {p: sorted(k) for p, k in rows.items()}
+
+
+def scan_includes(cwd, rev, globs):
+    """({included file name, lower case: {paths}}, {paths with `#include MACRO`})
+    of every #include in `rev`, read with one git grep."""
+    by_name, macro = {}, set()
+    got = git("grep", "-I", "-i", "-E", r"^[[:space:]]*#[[:space:]]*include", rev, "--", *globs,
+              cwd=cwd, check=False, timeout=600)
+    for line in got.stdout.decode(errors="replace").splitlines():
+        _, path, text = (line.split(":", 2) + ["", ""])[:3]
+        hit = re.search(r'include\s*[<"]([^>"]+)[>"]', text, re.IGNORECASE)
+        if hit:
+            by_name.setdefault(hit.group(1).replace("\\", "/").rsplit("/", 1)[-1].lower(),
+                               set()).add(path)
+        elif re.search(r"include\s*[A-Za-z_]", text):
+            macro.add(path)
+    return by_name, macro
+
+
+def reach_of(paths, graph, cfg):
+    """Every file that #includes one of `paths`, transitively by file name;
+    ['*'] past reach_limit."""
+    by_name, macro = graph
+    macro = {m for m in macro if not any(glob_match(m, g) for g in cfg["macro_include_ignore"])}
+    frontier = {p.rsplit("/", 1)[-1].lower() for p in paths
+                if row_ledger(p, cfg["row_ledgers"]) is None}
+    if not any(name in by_name for name in frontier):
+        return []
+    seen, names = set(), set()
+    while frontier:
+        name = frontier.pop()
+        names.add(name)
+        # a file with `#include MACRO` may include anything (header_dependents' rule)
+        for path in set(by_name.get(name, ())) | macro:
+            if path not in seen:
+                seen.add(path)
+                base = path.rsplit("/", 1)[-1].lower()
+                if base not in names:
+                    frontier.add(base)
+        if len(seen) > int(cfg["reach_limit"]):
+            return ["*"]
+    return sorted(seen - set(paths))
+
+
+def scope_from_diff(diff, ledgers, header_of=None):
+    """The exact scope of a diff: its paths, row ledgers as row tokens."""
+    rows = ledger_rows(diff, ledgers, header_of)
+    out = []
+    for path in patch_paths(diff):
+        keys = rows.get(path)
+        if keys and "*" not in keys:
+            out += [f"{path}#{k}" for k in keys]
+        else:
+            out.append(path)
+    return out
 
 
 def patch_paths(patch):
@@ -264,13 +435,18 @@ def patch_paths(patch):
                    re.findall(rb"^diff --git a/(\S+) b/\S+$", patch, re.MULTILINE)})
 
 
+def target_globs(scope, ledger):
+    """A unit's target: its scope without whole-file ledger globs (row tokens
+    stay: they name the rows it is about)."""
+    return [g for g in (scope or {}).get("allow") or ()
+            if "#" in g or not any(glob_match(g, l) for l in ledger)]
+
+
 def approach(patch, scope, ledger):
     """(target, fingerprint) of a unit: the target is its scope without ledger
     globs; the fingerprint hashes its +/- lines outside ledger files (no
     headers, messages, hashes or line numbers) with the target."""
-    target = hashlib.sha256(canonical(sorted(
-        g for g in (scope or {}).get("allow") or () if not any(glob_match(g, l) for l in ledger)
-    ))).hexdigest()[:16]
+    target = hashlib.sha256(canonical(sorted(target_globs(scope, ledger)))).hexdigest()[:16]
     lines, keep = [], False
     for line in patch.split(b"\n"):
         line = line.rstrip(b"\r")
@@ -563,6 +739,7 @@ class GitRepo:
     def head(self):
         got = out("ls-remote", self.target, f"refs/heads/{self.branch}", cwd=self.dir).split()
         sha = got[0] if got else None
+        self._head = sha or getattr(self, "_head", None)
         if sha and git("cat-file", "-e", f"{sha}^{{commit}}", cwd=self.dir, check=False).returncode:
             git("fetch", "-q", "--no-tags", "target",
                 f"+refs/heads/{self.branch}:refs/publisher/head", cwd=self.dir)
@@ -573,7 +750,7 @@ class GitRepo:
         git("am", "--abort", cwd=self.dir, check=False)
         git("checkout", "-q", "-f", "--detach", base, cwd=self.dir)
         git("clean", "-qfd", cwd=self.dir)
-        self.unit_paths = {}
+        self.unit_paths, self.unit_diffs = {}, {}
         for unit, patch in patches:
             before = out("rev-parse", "HEAD", cwd=self.dir)
             got = git("-c", f"user.name={COMMITTER}", "-c", "user.email=", "am", "-q", "-3",
@@ -583,14 +760,41 @@ class GitRepo:
                 git("am", "--abort", cwd=self.dir, check=False)
                 return None, unit
             # the unit's own diff as rebased: what diff-vs-scope judges
-            self.unit_paths[unit] = out("diff", "--name-only", "--no-renames", before, "HEAD",
-                                        cwd=self.dir).split("\n")
+            diff = git("diff", "--no-renames", "-U0", "--binary", before, "HEAD",
+                       cwd=self.dir).stdout
+            self.unit_diffs[unit] = diff
+            self.unit_paths[unit] = patch_paths(diff)
         tip = out("rev-parse", "HEAD", cwd=self.dir)
         git("update-ref", f"refs/publisher/tips/{tip}", tip, cwd=self.dir)   # keep it reachable
         return tip, None
 
     def tree(self, tip):
         return out("rev-parse", f"{tip}^{{tree}}", cwd=self.dir)
+
+    def ledger_header(self, path):
+        """First line of a ledger at the last head read (cached per path)."""
+        cache = self.__dict__.setdefault("_headers", {})
+        if not getattr(self, "_head", None):
+            self.head()
+        if path not in cache and getattr(self, "_head", None):
+            got = git("show", f"{self._head}:{path}", cwd=self.dir, check=False)
+            cache[path] = (got.stdout.split(b"\n", 1)[0].rstrip(b"\r").decode(errors="replace")
+                           if got.returncode == 0 else None)
+        return cache.get(path)
+
+    def includers(self):
+        """({included file name (lower case): {paths including it}}, {paths
+        with a macro include}) at the last head; rescanned at most every
+        include_scan_seconds (stale edges only under-serialize: every batch
+        is still gated on its exact base)."""
+        cached = getattr(self, "_includes", None)
+        head = getattr(self, "_head", None) or self.head()
+        if cached and (cached[0] == head or
+                       time.time() - cached[1] < float(self.state.cfg["include_scan_seconds"])):
+            return cached[2]
+        graph = scan_includes(self.dir, head, self.state.cfg["include_globs"]) if head else ({}, set())
+        self._includes = (head, time.time(), graph)
+        return graph
 
     def inputs_digest(self, head, scope):
         """sha256 over the blobs at `head` that `scope` covers."""
@@ -839,6 +1043,9 @@ class Publisher:
                       commits=patch.count(b"\nFrom ") + patch.startswith(b"From "),
                       paths=patch_paths(patch), scope=scope, target=target,
                       fingerprint=fingerprint,
+                      rows=ledger_rows(patch, self.cfg["row_ledgers"],
+                                       getattr(self.repo, "ledger_header", None)),
+                      reach=self._reach(patch_paths(patch)),
                       sim_bad=bool(envelope.get("sim_bad")))
         (self.state.root / "queue" / f"{unit}.patch").write_bytes(patch)
         write_json(self.state.root / "queue" / f"{unit}.json", record)
@@ -897,12 +1104,22 @@ class Publisher:
         self.event(where, unit=unit, operator=record["operator"], reason=extra.get("reason"),
                    wait=round(now - record["enqueued"], 1))
 
+    def _reach(self, paths):
+        if not hasattr(self.repo, "includers"):
+            return []
+        return reach_of(paths, self.repo.includers(), self.cfg)
+
     # ---- retry accounting -----------------------------------------------
     def _target_inputs(self, scope, head=None):
+        """The checker plus the blobs the target's non-ledger globs cover at
+        head; ledger files change on nearly every commit, so they are not
+        inputs (row tokens name the target instead)."""
         head = head or self.head or self.repo.head()
         if not scope or not head or not hasattr(self.repo, "inputs_digest"):
             return None
-        return f"{self.checkers.current()}:{self.repo.inputs_digest(head, scope)}"
+        globs = [g for g in target_globs(scope, self.cfg["ledger_paths"]) if "#" not in g]
+        digest = self.repo.inputs_digest(head, dict(allow=globs)) if globs else "-"
+        return f"{self.checkers.current()}:{digest}"
 
     def _retry_failed(self, record, base):
         path = self.state.root / "retries.json"
@@ -1030,15 +1247,26 @@ class Publisher:
     def _outside_scope(self, units):
         """{unit: [paths outside its scope]} for the last composition."""
         found = {}
-        rebased = getattr(self.repo, "unit_paths", None) or {}
+        diffs = getattr(self.repo, "unit_diffs", None) or {}
         for unit in units:
             record = self.queue.get(unit) or {}
             if not record.get("scope"):
                 continue
-            paths = rebased.get(unit, record.get("paths") or [])
-            bad = sorted(p for p in paths if p and not in_scope(p, record["scope"]))
+            if unit in diffs:                   # the unit's own diff as rebased
+                paths = patch_paths(diffs[unit])
+                rows = ledger_rows(diffs[unit], self.cfg["row_ledgers"],
+                                   getattr(self.repo, "ledger_header", None))
+            else:
+                paths, rows = record.get("paths") or [], record.get("rows") or {}
+            bad = []
+            for path in paths:
+                keys = rows.get(path)
+                if keys and "*" not in keys:
+                    bad += [f"{path}#{k}" for k in keys if not in_scope(path, record["scope"], k)]
+                elif not in_scope(path, record["scope"]):
+                    bad.append(path)
             if bad:
-                found[unit] = bad
+                found[unit] = sorted(bad)
         return found
 
     def step(self):
@@ -1243,8 +1471,14 @@ def submit(repo, operator, key_file, rev="@{u}..HEAD", inbox=None, remote=None, 
     patch = make_unit(repo, rev)
     if not patch.strip():
         raise RuntimeError(f"nothing to submit in {rev}")
-    if scope == "diff":                     # declare exactly the paths the range touches
-        scope = patch_paths(patch)
+    if scope == "diff":                     # declare exactly the paths and rows it touches
+        base = rev.split("..")[0] if ".." in rev else f"{rev}~1"
+
+        def header_of(path):
+            got = git("show", f"{base}:{path}", cwd=repo, check=False)
+            return (got.stdout.split(b"\n", 1)[0].rstrip(b"\r").decode(errors="replace")
+                    if got.returncode == 0 else None)
+        scope = scope_from_diff(patch, DEFAULTS["row_ledgers"], header_of)
     envelope = dict(v=1, operator=operator, patch_sha256=hashlib.sha256(patch).hexdigest(),
                     kind=kind, after=list(after), bundle=bundle, priority=priority,
                     time=time.time(), nonce=uuid.uuid4().hex, **(extra or {}))
