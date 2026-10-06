@@ -17,8 +17,7 @@ ParticleSystem *Make00001B18();
 class BfmeParticleSystemHandle
 {
 public:
-	BfmeParticleSystemHandle(ParticleSystem *system = 0) :
-		m_system(system), m_previous(0), m_next(0) { }
+	BfmeParticleSystemHandle() : m_system(0), m_previous(0), m_next(0) { }
 	BfmeParticleSystemHandle(const BfmeParticleSystemHandle &that);
 	~BfmeParticleSystemHandle() throw();
 	operator bool() const { return m_system != 0; }
@@ -120,7 +119,7 @@ BfmeParticleSystemHandle ParticleSystemManager::findParticleSystemByID(
 	ParticleSystemID id )
 {
 	if (id == INVALID_PARTICLE_SYSTEM_ID)
-		return 0;
+		return BfmeParticleSystemHandle();
 
 	for (BfmeParticleSystemIterator it = m_systems.begin();
 		it != m_systems.end(); ++it)
@@ -129,5 +128,5 @@ BfmeParticleSystemHandle ParticleSystemManager::findParticleSystemByID(
 			return *it;
 	}
 
-	return 0;
+	return BfmeParticleSystemHandle();
 }
