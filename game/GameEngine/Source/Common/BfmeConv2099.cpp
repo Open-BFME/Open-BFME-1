@@ -1,8 +1,14 @@
+// ILT 0x000022BB reaches the matched override-chain walker at 0x00087A80,
+// ?getFinalOverride@Overridable@@QBEPBV1@XZ (public, const, const result).
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride(void) const;
+};
+
 class LocomotorOverridable
 {
 public:
-	LocomotorOverridable *friend_getFinalOverride();
-
 	unsigned char m_bfmeHeadYL[4];
 	LocomotorOverridable *m_bfme04YL;
 	unsigned char m_bfmeMidYL[0x124];
@@ -34,7 +40,7 @@ static __forceinline LocomotorOverridable *bfmeFinalYL(LocomotorOverridable *p)
 	if (p->m_bfme04YL == 0)
 		return p;
 
-	return p->m_bfme04YL->friend_getFinalOverride();
+	return (LocomotorOverridable *)((Overridable *)p->m_bfme04YL)->getFinalOverride();
 }
 
 class BfmeHostYL
