@@ -18648,5 +18648,15 @@
   "after_sha256": "e455cadd42358fbb5774a41d8bc993d895b4abccef3efeebef90b1a76a337850",
   "evidence": "targets/game/reverse/identity_evidence/006057c0-assign-notify-callee.md",
   "reason": "The notify call lands on 0x00409040, matched as Gen_00409040Registry::m; U4Notify::noteAssign is only a pin on the same body, and U4Notify stays for noteOwner."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/ObjectDamageAndWeapons.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/ObjectDamageAndWeapons.cpp",
+  "old_name": "BfmeFiringTracker",
+  "new_name": "Rva001BD7D0",
+  "before_sha256": "99278b3d6a2b4358b5c52468ae2471a50fce9f7ddd3c336723e0521c7465990c",
+  "after_sha256": "5db9b569c77afc74a5deec4d98cd88665f66c39c944916dc99129b21453d2f28",
+  "evidence": "targets/game/reverse/identity_evidence/001bd7d0-returns-position-by-value.md",
+  "reason": "The getter call lands on 0x001BD7D0 via ILT 0x000228BD, matched as Rva001BD7D0::get; BfmeFiringTracker was only a pin spelling nothing defines, and the Object+0x1EC member stays FiringTracker."
  }
 ]

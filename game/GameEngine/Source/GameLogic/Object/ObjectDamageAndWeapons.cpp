@@ -46,10 +46,11 @@
 //
 // Two spellings below are frozen by names that have to resolve, not chosen:
 //
-//   BfmeFiringTracker  ?bfmeGetLastShotPosition@BfmeFiringTracker@@... is the pin
-//                      for the +0x48 getter; the member itself stays
-//                      FiringTracker, which is what names +0x44, and the one call
-//                      site casts. Same object at Object+0x1EC either way.
+//   Rva001BD7D0        ?get@Rva001BD7D0@@... is the matched +0x48 getter at
+//                      0x001BD7D0 (ILT 0x000228BD); its owner class is unproven,
+//                      so the member stays FiringTracker, which is what names
+//                      +0x44, and the one call site casts. Same object at
+//                      Object+0x1EC either way.
 //   ObjectID           ?bfmeGetRecentDamageSource@Object@@QBE_NPAII@Z says
 //                      unsigned, ?bfmeDamageSourceCanCauseCower@Object@@QBE_NH@Z
 //                      says signed, and so does the findObjectByID pin that body
@@ -217,8 +218,9 @@ private:
 	WeaponStatus bfmeComputeStatus(Bool *unknown) const;
 };
 
-// The Object+0x1EC tracker, under the spelling its last-shot getter is pinned as.
-class BfmeFiringTracker;
+// The Object+0x1EC tracker, under the address-derived spelling of its last-shot
+// getter's row.
+class Rva001BD7D0;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/FiringTracker.h
 class FiringTracker
@@ -251,10 +253,10 @@ struct BfmeFiringPosition
 	BfmeFiringPositionWord z;
 };
 
-class BfmeFiringTracker
+class Rva001BD7D0
 {
 public:
-	BfmeFiringPosition bfmeGetLastShotPosition() const;
+	BfmeFiringPosition get() const;			// 0x001BD7D0 via ILT 0x000228BD
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
@@ -397,6 +399,6 @@ BfmeFiringPosition Object::bfmeGetLastShotPosition() const
 	empty.y.f = 0.0f;
 	empty.z.f = 0.0f;
 	return m_firingTracker
-		? reinterpret_cast<const BfmeFiringTracker *>(m_firingTracker)->bfmeGetLastShotPosition()
+		? reinterpret_cast<const Rva001BD7D0 *>(m_firingTracker)->get()
 		: empty;
 }
