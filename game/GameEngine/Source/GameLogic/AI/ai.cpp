@@ -94,26 +94,9 @@ void TAiData::addSideInfo(AISideInfo *infoToAdd)
 	m_sideInfo = infoToAdd;
 }
 
-// ?addFactionBuildList@TAiData@@QAEXPAVAISideBuildList@@@Z present-unmatched
-void TAiData::addFactionBuildList(AISideBuildList *buildList) 
-{
-
-	AISideBuildList *info = m_sideBuildLists;
-	while (info) {
-		if (buildList->m_side == info->m_side) {
-			if (info->m_buildList)
-				info->m_buildList->deleteInstance();
-			info->m_buildList = buildList->m_buildList;
-			buildList->m_buildList = NULL;
-			buildList->m_next = NULL;
-			buildList->deleteInstance();
-			return;
-		}
-		info = info->m_next;
-	}
-	buildList->m_next = m_sideBuildLists;
-	m_sideBuildLists = buildList;
-}
+// TAiData::addFactionBuildList: retail's body is matched in
+// TAiData_addFactionBuildList.cpp; the Zero Hour copy here was a second,
+// non-retail definition of the same name.
 
 // ??1TAiData@@QAE@XZ present-unmatched
 TAiData::~TAiData()
