@@ -15,6 +15,7 @@ private:
 	StringBase() : m_data(0) {}
 	StringBase(const T *text);
 	StringBase(const StringBase &other);
+	void releaseBuffer();
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
@@ -24,7 +25,9 @@ public:
 	AsciiString() { m_data = 0; }
 	AsciiString(const char *text) : StringBase<char>(text) {}
 	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString();
+	// Retail destroys these strings by calling StringBase<char>::releaseBuffer
+	// (0x00887940) directly, not the ~AsciiString forwarder at 0x0005EE90.
+	~AsciiString() { releaseBuffer(); }
 	void __cdecl format(AsciiString format, ...);
 	const char *str() const { return m_data ? m_data->data : ""; }
 };
