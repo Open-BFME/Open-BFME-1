@@ -34,6 +34,10 @@
 
 #include "rendobj.h"
 
+// Retail VA 0x0109B46C, binary32 1.5f. Keep its definition separate from
+// BfmeConv2211.cpp so VC7.1 preserves that consumer's x87 fadd.
+extern const float g_0109B46C = 1.5f;
+
 // The adjacent retail NaN retains its exact payload bits. Like infinity,
 // this union float-member read relies on the verified VC7.1 behavior.
 union Rva0112E8ACValue
