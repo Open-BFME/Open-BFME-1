@@ -317,28 +317,6 @@ StateMachine::StateMachine( Object *owner, AsciiString name )
 }
 
 //-----------------------------------------------------------------------------
-/**
- * Destructor.  Destroy any states attached to this machine.
- */
-// matched via game/masm_dumps/StateMachine_dtor.asm (true body 0xA1130/224; queue 0x9F27BE was pad; retail single-vptr layout)
-StateMachine::~StateMachine()
-{
-
-	// do not allow current state to exit
-	if (m_currentState)
-		m_currentState->onExit( EXIT_RESET );
-
-	std::map<StateID, State *>::iterator i;
-
-	// delete all states in the mapping
-	for( i = m_stateMap.begin(); i != m_stateMap.end(); ++i )
-	{
-		if ((*i).second)
-			(*i).second->deleteInstance();
-	}
-}
-
-//-----------------------------------------------------------------------------
 #ifdef STATE_MACHINE_DEBUG
 // ?getWantsDebugOutput@StateMachine@@ present-unmatched
 Bool StateMachine::getWantsDebugOutput() const 
