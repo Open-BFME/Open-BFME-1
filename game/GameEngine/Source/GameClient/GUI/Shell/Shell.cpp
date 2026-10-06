@@ -272,68 +272,7 @@ void Shell::hide( Bool hide )
 //-------------------------------------------------------------------------------------------------
 /** Push layout onto shell */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/Shell_push_Thunk.cpp
-// ?push@Shell@@QAEXVAsciiString@@_N@Z present-unmatched
-void Shell::push( AsciiString filename, Bool shutdownImmediate )
-{
-
-	// sanity
-	if( filename.isEmpty() )
-		return;
-	if(TheGameSpyInfo)
-			GameSpyCloseAllOverlays();
-
-
-#ifdef DEBUG_LOGGING
-	DEBUG_LOG(("Shell:push(%s) - stack was\n", filename.str()));
-	for (Int i=0; i<m_screenCount; ++i)
-	{
-		DEBUG_LOG(("\t\t%s\n", m_screenStack[i]->getFilename().str()));
-	}
-#endif
-
-	// make sure we have an available spot for another screen
-	if( m_screenCount >= MAX_SHELL_STACK )
-	{
-	
-		DEBUG_LOG(( "Unable to load screen '%s', max '%d' reached\n",
-								filename, MAX_SHELL_STACK ));
-		return;
-
-	}  // end if
-
-	// set a push as pending with the layout name passed in
-	m_pendingPush = TRUE;
-	m_pendingPushName = filename;
-
-	// get the top of the current stack
-	WindowLayout *currentTop = top();
-
-	//
-	// if we have someting on the top of the stack we won't do the push
-	// right now, we will instead shutdown the top, and when the top tells
-	// us it's done shutting down (via the shutdownComplete() method) we do
-	// the push then
-	//
-	if( currentTop && !currentTop->isHidden() )
-	{
-
-		// run the shutdown
-		currentTop->runShutdown( &shutdownImmediate );
-
-	}  // end if
-	else
-	{
-
-		// just call shutdownComplete() which will immediately cause the push to happen
-		shutdownComplete( NULL );
-
-	}  // end else
-
-//	if (TheIMEManager)
-//		TheIMEManager->detatch();
-
-}  // end push
+// Shell::push (retail 0x00580080) is matched in Shell_push_Thunk.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Pop top layout of the stack.  Note that we don't actually do the pop right here,
