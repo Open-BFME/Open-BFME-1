@@ -10,8 +10,8 @@
 // which is the pointer and the three floats this body writes.  The two callees
 // are pinned, not guessed: 0x0004AB6F is
 // ?pointInTrigger@PolygonTrigger@@QBE_NAAUICoord3D@@@Z (decoded out of
-// PartitionFilterPolygonTrigger::allow) and 0x00007AD6 is
-// ?getCenterPoint@PolygonTrigger@@QBEXPAUCoord3D@@@Z.  That fixes +0x1C as a
+// PartitionFilterPolygonTrigger::allow) and 0x00007AD6 reaches 0x0018F790,
+// ZH's PolygonTrigger::getCenterPoint body (see below).  That fixes +0x1C as a
 // PolygonTrigger* and +0x20 as a Coord3D, and it fixes the global at
 // 0x012EF4CC -- independently pinned as ?TheTerrainLogic@@3PAVTerrainLogic@@A
 // -- as the singleton whose virtual at +0x90 hands back a PolygonTrigger for
@@ -50,7 +50,24 @@ class PolygonTrigger
 {
 public:
 	bool pointInTrigger(ICoord3D &point) const;
-	void getCenterPoint(Coord3D *center) const;
+};
+
+// ILT 0x00007AD6 lands on 0x0018F790, matched (BfmeConv1263.cpp,
+// TerrainLogicCountTrees.cpp) as the opaque center getter below. Its body is
+// ZH's PolygonTrigger::getCenterPoint, but retail's thunk table contradicts
+// the ZH decoration ?getCenterPoint@PolygonTrigger@@QBEXPAUCoord3D@@@Z that
+// was pinned there, so this calls the matched row's name.
+struct BfmeVec1263
+{
+	float m_bfme00;
+	float m_bfme04;
+	float m_bfme08;
+};
+
+class BfmeA1263
+{
+public:
+	void bfmeGet1263(BfmeVec1263 *out);
 };
 
 class TerrainLogic
@@ -151,7 +168,7 @@ bool Rva006DF550::bfmeSetTriggerArea(const AsciiString &name, const Coord3D *pos
 		return false;
 	}
 
-	m_trigger1c->getCenterPoint(&m_center20);
+	((BfmeA1263 *)m_trigger1c)->bfmeGet1263((BfmeVec1263 *)&m_center20);
 	v54(position);
 	return true;
 }
