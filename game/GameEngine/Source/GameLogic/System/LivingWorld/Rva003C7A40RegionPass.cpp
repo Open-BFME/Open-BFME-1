@@ -26,17 +26,17 @@ struct Rva003C7A40Region
     Rva003C5820Output *m_output;
 };
 
-class Rva003C7A40Owner
+class LivingWorldRegionCampaign
 {
 public:
-    void rva003C7A40();
+    void InitPathfinder();
 private:
     char m_pad00[0x30];
     std::vector<Rva003C7A40Region *> m_regions;
     Rva003C5890Owner *m_collection;
 };
 
-void Rva003C7A40Owner::rva003C7A40()
+void LivingWorldRegionCampaign::InitPathfinder()
 {
     if (m_collection == 0)
         return;

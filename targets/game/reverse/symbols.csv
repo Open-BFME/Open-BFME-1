@@ -86730,7 +86730,7 @@ name,address,notes
 ?rva003C3B50@Glo012F1028Type@@QAEXPBUP6Elem003C3B50@@@Z,0x003C3B50,actual body receives the same 0x012F1028 global and appends a typed 0x60-byte record through its +0x68/+0x6C/+0x70 vector; campaign=luna36h-20260907;lane=expand07;model=gpt-5.6-sol-ultra
 ?rva003C3F40@Glo012F1028Type@@QAEXXZ,0x003C3F40,Address-derived callee body; aligned call at 003C4779 uses preserved manager ecx and no stack args; body uses ecx and bare ret; semantic name unavailable
 ?rva003C4740@Glo012F1028Type@@QAEXXZ,0x003C4740,RVA00585D60+B8 ILT18318; callee reads ECX manager+28/+34 and bare ret; semantic method unknown
-?rva003C7A40@Rva003C7A40Owner@@QAEXXZ,0x0002E88E,ILT jmp body 0x003C7A40; call site 0x003C9B60+0xA3 mov ecx esi no stack args; body ends bare ret; thiscall void; address-derived owner
+?InitPathfinder@LivingWorldRegionCampaign@@QAEXXZ,0x0002E88E,ILT jmp body 0x003C7A40; call site 0x003C9B60+0xA3 mov ecx esi no stack args; body ends bare ret; thiscall void; address-derived owner
 ?rva003C8160@LivingWorldRegionManager@@QAEPAVLivingWorldRegion@@PAUCoord3D@@@Z,0x003C8160,address-derived typed LivingWorldRegionManager member body proven by 0x003C8B90 this-preserving call and returned region pointer; campaign=luna36h-20260907;lane=expand02;model=gpt-5.6-sol-ultra
 ?rva003C8340@LivingWorldRegionManager@@QAEXPAVLivingWorldRegion@@@Z,0x003C8340,address-derived typed LivingWorldRegionManager member body whose matched layout consumes the selected-region pointer at this+0x08; campaign=luna36h-20260907;lane=expand02;model=gpt-5.6-sol-ultra
 ?rva003D2B80ReleaseRaw@@YAXXZ,0x00881EB0,deallocation call used by the four-child element callback

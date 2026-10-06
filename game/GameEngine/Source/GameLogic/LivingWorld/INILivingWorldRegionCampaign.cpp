@@ -47,11 +47,11 @@ private:
 };
 
 // Receiver of the 0x003C7A40 pass (called through ILT 0x0002E88E with the
-// new object in ECX); owner and method name not recovered.
-class Rva003C7A40Owner
+// new object in ECX): EA names it LivingWorldRegionCampaign::InitPathfinder.
+class LivingWorldRegionCampaign
 {
 public:
-	void rva003C7A40();
+	void InitPathfinder();
 };
 
 // Landed as ?step@Gen003C7B10Owner@@QAEXXZ (0x003C7B10, ILT 0x00019984).
@@ -90,7 +90,7 @@ void Rva003C9B60Parse( INI *ini )
 
 	ini->initFromINI( object, g_010EDC48 );
 
-	( (Rva003C7A40Owner *)object )->rva003C7A40();
+	( (LivingWorldRegionCampaign *)object )->InitPathfinder();
 	( (Gen003C7B10Owner *)object )->step();
 
 	manager->m_vector28.push_back( object );
