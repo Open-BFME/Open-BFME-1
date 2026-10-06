@@ -18758,5 +18758,25 @@
   "after_sha256": "474afdcd5d17e5ff885bf1c809341fed3ddb55d271151e7a2a54ff0162df5c7c",
   "evidence": "targets/game/reverse/identity_evidence/009a6ec0-release-calls-tail-jump.md",
   "reason": "Not a rename: retail 0x009A6EC0 calls the 5-byte tail jump at 0x009A5980 (ledger row Rva009A5980) three times, not bfmeGo930C at 0x009A58E0, which keeps its own name and row."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1912.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1912.cpp",
+  "old_name": "BfmeSubOneBH",
+  "new_name": "Rva001CB270BitFlags",
+  "before_sha256": "0312d7f2f3408c291ef853b010fe24ce03a45caa8951427e614336c703294636",
+  "after_sha256": "eafbbbadd1cffaaf6f20ca87f18d0c5874106a0e43f74d629262c2b23a299132",
+  "evidence": "targets/game/reverse/identity_evidence/001cb270-bitflags-member-callers.md",
+  "reason": "Not a rename of a proven class: the member is transferred through ILT 0x00026DD7 to 0x001CB270, the matched row Rva001CB270BitFlags::xfer; BfmeSubOneBH named only the ILT pin and no body defines it."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeOwnVUMXfer.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeOwnVUMXfer.cpp",
+  "old_name": "BfmeSubOneBH",
+  "new_name": "Rva001CB270BitFlags",
+  "before_sha256": "ac35cee2b9e502e04d63ee2261f42c05bde7c473eee450f54a2b741c876ed570",
+  "after_sha256": "6b69b3f423a74de75a4fbbd7a161998c3461a64c6342c7078b4d2a6f14add0fd",
+  "evidence": "targets/game/reverse/identity_evidence/001cb270-bitflags-member-callers.md",
+  "reason": "Not a rename of a proven class: the member is transferred through ILT 0x00026DD7 to 0x001CB270, the matched row Rva001CB270BitFlags::xfer; BfmeSubOneBH named only the ILT pin and no body defines it."
  }
 ]

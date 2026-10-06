@@ -135,10 +135,12 @@ public:
 	virtual void bfmeByteBH(unsigned char *dst);
 };
 
-class BfmeSubOneBH
+// Retail calls 0x001CB270 (through ILT 0x00026DD7) here: the matched
+// Rva001CB270BitFlags::xfer, the 0x28-byte 304-bit named-flag transfer.
+class Rva001CB270BitFlags
 {
 public:
-	void bfmeSaveBH(BfmeAgentBH *ag);
+	void xfer(Xfer *xfer);
 
 	unsigned char m_bfmePadBH[0x28];
 };
@@ -161,7 +163,7 @@ public:
 	unsigned char m_bfmeHeadBH[0x24];
 	unsigned char m_bfmeSlotABH[4];
 	unsigned char m_bfmePadOneBH[8];
-	BfmeSubOneBH m_bfmeSubOneBH;
+	Rva001CB270BitFlags m_bfmeSubOneBH;
 	BfmeSubTwoBH m_bfmeSubTwoBH;
 	unsigned char m_bfmeSlotDBH;
 	unsigned char m_bfmeStateBH;
@@ -237,7 +239,7 @@ void BfmeHostBH::bfmeSaveBH(BfmeAgentBH *ag)
 	ag->bfmeFillBH(&info);
 
 	ag->bfmeMarkBH(m_bfmeSlotABH);
-	m_bfmeSubOneBH.bfmeSaveBH(ag);
+	m_bfmeSubOneBH.xfer((Xfer *)ag);
 	m_bfmeSubTwoBH.bfmeSaveBH(ag);
 	ag->bfmeByteBH(&m_bfmeSlotDBH);
 
