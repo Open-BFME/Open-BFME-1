@@ -90330,3 +90330,4 @@ _Rva0015C280Predicate,0x0015C280,cdecl bool(State*;void*) condition callback; re
 ??_C@_03DCBBJBAA@amp?$AA@,0x00CE8CFC,Retail XML entity table VA 0x012B3ED0 slot 2 name pointer is VA 0x010E8CFC; full compiler literal amp including NUL equals retail and occurs once in the image
 ??_C@_04KJFGKBNM@quot?$AA@,0x00CE8CF4,Retail XML entity table VA 0x012B3ED0 slot 3 name pointer is VA 0x010E8CF4; full compiler literal quot including NUL equals retail and occurs once in the image
 ??_C@_04LBCJFAKL@apos?$AA@,0x00CE8CEC,Retail XML entity table VA 0x012B3ED0 slot 4 name pointer is VA 0x010E8CEC; full compiler literal apos including NUL equals retail and occurs once in the image
+?method@Rva007710F0Owner@@QAEXPAX0@Z,0x0003A8D7,ILT to the 0x007710F0 body (gen-dump d_007710f0); the 0x00774060 forwarder calls ILT 0x0003A8D7 with this in ECX and two stack words; the target 0x007710F0 keeps this in EBP and returns with ret 8
