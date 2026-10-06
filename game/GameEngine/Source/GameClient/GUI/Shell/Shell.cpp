@@ -667,53 +667,7 @@ void Shell::doPop( Bool impendingPush )
 	*       short circuiting the shutdown logic because there is no layout
 	*				to actually shutdown (ie, the stack is empty and we push) */
 //-------------------------------------------------------------------------------------------------
-// ?shutdownComplete@Shell@@QAEXPAVWindowLayout@@_N@Z present-unmatched
-void Shell::shutdownComplete( WindowLayout *screen, Bool impendingPush )
-{
-
-	// there should never be a pending push AND pop operation
-	DEBUG_ASSERTCRASH( m_pendingPush == FALSE || m_pendingPop == FALSE,
-										 ("There is a pending push AND pop in the shell.  Not allowed!\n") );	
-
-	// Reset the AnimateWindowManager
-	m_animateWindowManager->reset();
-
-	// check for pending push or pop
-	if( m_pendingPush )
-	{
-
-		// do the push
-		doPush( m_pendingPushName );
-
-		// no more pending pushy for you!
-		m_pendingPush = FALSE;
-		m_pendingPushName.set( "" );
-
-	}  // end if
-	else if( m_pendingPop )
-	{
-
-		// do the pop
-		doPop( impendingPush );
-				
-		// no more pending pop for you!
-		m_pendingPop = FALSE;
-
-	}  // end else if
-	
-	if(m_clearBackground)
-	{
-		if(m_background)
-		{
-			m_background->destroyWindows();
-			m_background->deleteInstance();
-			m_background = NULL;
-			m_clearBackground = FALSE;
-		}
-			
-	}
-
-}  // end shutdownComplete
+// Shell::shutdownComplete (retail 0x0057FD80) is matched in Shell_shutdownComplete.cpp.
 
 
 void Shell::registerWithAnimateManager( GameWindow *win, AnimTypes animType, Bool needsToFinish, UnsignedInt delayMS)
