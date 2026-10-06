@@ -53,8 +53,10 @@
 class MapMetaDataReader
 {
 public:
-	// Retail ctor (0x000C0EA0) is defined in MapMetaDataReader_ctor.cpp.
+	// Retail ctor (0x000C0EA0) and dtor (0x000C0B90) are defined in
+	// MapMetaDataReader_ctor.cpp.
 	MapMetaDataReader();
+	~MapMetaDataReader();
 	Region3D m_extent;
 	Int m_numPlayers;
 	Bool m_isMultiplayer;

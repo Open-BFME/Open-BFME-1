@@ -202,6 +202,7 @@ class MapMetaDataReader
 {
 public:
 	MapMetaDataReader();
+	~MapMetaDataReader();				// 0x000C0B90, MapMetaDataReader_ctor.cpp
 	Region3D m_extent;
 	Int m_numPlayers;
 	Bool m_isMultiplayer;
