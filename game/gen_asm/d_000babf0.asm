@@ -1,5 +1,20 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ??0?$StringBase@D@@AAE@PBD@Z:NEAR
+EXTERN ??0INIException@@QAA@HPBDZZ:NEAR
+EXTERN ?AudioGlobal004092A0@@3PAUAudioView004092A0@@A:BYTE
+EXTERN ?g_INIExceptionThrowInfo@@3HA:BYTE
+EXTERN ?g_lookup@@3P6APAXPAX0@ZA:BYTE
+EXTERN ?getNextTokenOrNull@INI@@QAEPBDPBD@Z:NEAR
+EXTERN ?j_000040de@@YAXXZ:NEAR
+EXTERN ?ji_009f6d00@@YAXXZ:NEAR
+EXTERN ?releaseBuffer@?$StringBase@D@@AAEXXZ:NEAR
+EXTERN __imp__InterlockedDecrement@4:BYTE
+EXTERN __imp__InterlockedIncrement@4:BYTE
+EXTERN _bfmeStrENF:BYTE
+EXTERN g_Va00FF8D78:NEAR
+EXTERN g_Va01082ED4:BYTE
 _TEXT SEGMENT
 
 ; retail @ 0x000BABF0 size 282
@@ -66,33 +81,58 @@ public ?d_000bd640@@YAXXZ
 ?d_000bd640@@YAXXZ ENDP
 
 ; retail @ 0x000BDD20 size 385
+_TEXT ENDS
+_TEXT$d004bdd20 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x004BDD20 size 385
 public ?d_000bdd20@@YAXXZ
 ?d_000bdd20@@YAXXZ PROC
-    db 64h, 0A1h, 00h, 00h, 00h, 00h, 8Bh, 4Ch, 24h, 04h, 6Ah, 0FFh, 68h, 78h, 8Dh, 0FFh
-    db 00h, 50h, 64h, 89h, 25h, 00h, 00h, 00h, 00h, 83h, 0ECh, 10h, 53h, 55h, 33h, 0DBh
-    db 53h, 0E8h, 7Ah, 2Ch, 79h, 00h, 8Bh, 0E8h, 3Bh, 0EBh, 0Fh, 84h, 1Ch, 01h, 00h, 00h
-    db 56h, 57h, 33h, 0F6h, 89h, 74h, 24h, 10h, 68h, 44h, 2Ch, 08h, 01h, 55h, 89h, 5Ch
-    db 24h, 30h, 0FFh, 15h, 3Ch, 93h, 35h, 01h, 83h, 0C4h, 08h, 85h, 0C0h, 0Fh, 84h, 85h
-    db 00h, 00h, 00h, 55h, 8Dh, 4Ch, 24h, 18h, 0E8h, 43h, 0AEh, 7Ch, 00h, 8Bh, 0Dh, 68h
-    db 0D6h, 2Eh, 01h, 8Bh, 01h, 8Dh, 54h, 24h, 14h, 52h, 8Dh, 54h, 24h, 1Ch, 52h, 0C6h
-    db 44h, 24h, 30h, 01h, 0FFh, 90h, 18h, 01h, 00h, 00h, 8Bh, 0F8h, 8Dh, 44h, 24h, 10h
-    db 3Bh, 0C7h, 74h, 16h, 8Bh, 07h, 3Bh, 0C3h, 74h, 0Ah, 83h, 0C0h, 04h, 50h, 0FFh, 15h
-    db 5Ch, 8Eh, 35h, 01h, 8Bh, 37h, 89h, 74h, 24h, 10h, 8Bh, 44h, 24h, 18h, 3Bh, 0C3h
-    db 0C6h, 44h, 24h, 28h, 01h, 74h, 1Ch, 8Bh, 0F8h, 83h, 0C0h, 04h, 50h, 0FFh, 15h, 54h
-    db 8Eh, 35h, 01h, 3Bh, 0C3h, 7Fh, 0Ch, 3Bh, 0FBh, 74h, 08h, 8Bh, 17h, 6Ah, 01h, 8Bh
-    db 0CFh, 0FFh, 12h, 8Dh, 4Ch, 24h, 14h, 88h, 5Ch, 24h, 28h, 0E8h, 50h, 9Bh, 7Ch, 00h
-    db 3Bh, 0F3h, 0Fh, 84h, 85h, 00h, 00h, 00h, 8Bh, 7Ch, 24h, 38h, 8Bh, 47h, 04h, 3Bh
-    db 47h, 08h, 74h, 1Ah, 3Bh, 0C3h, 74h, 10h, 3Bh, 0F3h, 89h, 30h, 74h, 0Ah, 8Dh, 46h
-    db 04h, 50h, 0FFh, 15h, 5Ch, 8Eh, 35h, 01h, 83h, 47h, 04h, 04h, 0EBh, 16h, 6Ah, 01h
-    db 6Ah, 01h, 8Dh, 4Ch, 24h, 40h, 51h, 8Dh, 54h, 24h, 1Ch, 52h, 50h, 8Bh, 0CFh, 0E8h
-    db 0AAh, 62h, 0F4h, 0FFh, 8Bh, 4Ch, 24h, 30h, 53h, 0E8h, 82h, 2Bh, 79h, 00h, 3Bh, 0F3h
-    db 8Bh, 0E8h, 0C7h, 44h, 24h, 28h, 0FFh, 0FFh, 0FFh, 0FFh, 74h, 16h, 8Dh, 46h, 04h, 50h
-    db 0FFh, 15h, 54h, 8Eh, 35h, 01h, 85h, 0C0h, 7Fh, 08h, 8Bh, 16h, 6Ah, 01h, 8Bh, 0CEh
-    db 0FFh, 12h, 3Bh, 0EBh, 0Fh, 85h, 0E8h, 0FEh, 0FFh, 0FFh, 5Fh, 5Eh, 8Bh, 4Ch, 24h, 18h
-    db 5Dh, 5Bh, 64h, 89h, 0Dh, 00h, 00h, 00h, 00h, 83h, 0C4h, 1Ch, 0C3h, 55h, 68h, 0D4h
-    db 2Eh, 08h, 01h, 8Dh, 44h, 24h, 20h, 6Ah, 03h, 50h, 0E8h, 71h, 27h, 79h, 00h, 83h
-    db 0C4h, 10h, 68h, 30h, 0FCh, 1Dh, 01h, 8Dh, 4Ch, 24h, 1Ch, 51h, 0E8h, 5Fh, 8Eh, 93h
-    db 00h
+    db 064h, 0A1h, 000h, 000h, 000h, 000h, 08Bh, 04Ch, 024h, 004h, 06Ah, 0FFh, 068h
+    dd g_Va00FF8D78
+    db 050h, 064h, 089h, 025h, 000h, 000h, 000h, 000h, 083h, 0ECh, 010h, 053h, 055h, 033h, 0DBh, 053h
+    call ?getNextTokenOrNull@INI@@QAEPBDPBD@Z
+    db 08Bh, 0E8h, 03Bh, 0EBh, 00Fh, 084h, 01Ch, 001h, 000h, 000h, 056h, 057h, 033h, 0F6h, 089h, 074h
+    db 024h, 010h, 068h
+    dd _bfmeStrENF
+    db 055h, 089h, 05Ch, 024h, 030h, 0FFh, 015h
+    dd ?g_lookup@@3P6APAXPAX0@ZA
+    db 083h, 0C4h, 008h, 085h, 0C0h, 00Fh, 084h, 085h, 000h, 000h, 000h, 055h, 08Dh, 04Ch, 024h, 018h
+    call ??0?$StringBase@D@@AAE@PBD@Z
+    db 08Bh, 00Dh
+    dd ?AudioGlobal004092A0@@3PAUAudioView004092A0@@A
+    db 08Bh, 001h, 08Dh, 054h, 024h, 014h, 052h, 08Dh, 054h, 024h, 01Ch, 052h, 0C6h, 044h, 024h, 030h
+    db 001h, 0FFh, 090h, 018h, 001h, 000h, 000h, 08Bh, 0F8h, 08Dh, 044h, 024h, 010h, 03Bh, 0C7h, 074h
+    db 016h, 08Bh, 007h, 03Bh, 0C3h, 074h, 00Ah, 083h, 0C0h, 004h, 050h, 0FFh, 015h
+    dd __imp__InterlockedIncrement@4
+    db 08Bh, 037h, 089h, 074h, 024h, 010h, 08Bh, 044h, 024h, 018h, 03Bh, 0C3h, 0C6h, 044h, 024h, 028h
+    db 001h, 074h, 01Ch, 08Bh, 0F8h, 083h, 0C0h, 004h, 050h, 0FFh, 015h
+    dd __imp__InterlockedDecrement@4
+    db 03Bh, 0C3h, 07Fh, 00Ch, 03Bh, 0FBh, 074h, 008h, 08Bh, 017h, 06Ah, 001h, 08Bh, 0CFh, 0FFh, 012h
+    db 08Dh, 04Ch, 024h, 014h, 088h, 05Ch, 024h, 028h
+    call ?releaseBuffer@?$StringBase@D@@AAEXXZ
+    db 03Bh, 0F3h, 00Fh, 084h, 085h, 000h, 000h, 000h, 08Bh, 07Ch, 024h, 038h, 08Bh, 047h, 004h, 03Bh
+    db 047h, 008h, 074h, 01Ah, 03Bh, 0C3h, 074h, 010h, 03Bh, 0F3h, 089h, 030h, 074h, 00Ah, 08Dh, 046h
+    db 004h, 050h, 0FFh, 015h
+    dd __imp__InterlockedIncrement@4
+    db 083h, 047h, 004h, 004h, 0EBh, 016h, 06Ah, 001h, 06Ah, 001h, 08Dh, 04Ch, 024h, 040h, 051h, 08Dh
+    db 054h, 024h, 01Ch, 052h, 050h, 08Bh, 0CFh
+    call ?j_000040de@@YAXXZ
+    db 08Bh, 04Ch, 024h, 030h, 053h
+    call ?getNextTokenOrNull@INI@@QAEPBDPBD@Z
+    db 03Bh, 0F3h, 08Bh, 0E8h, 0C7h, 044h, 024h, 028h, 0FFh, 0FFh, 0FFh, 0FFh, 074h, 016h, 08Dh, 046h
+    db 004h, 050h, 0FFh, 015h
+    dd __imp__InterlockedDecrement@4
+    db 085h, 0C0h, 07Fh, 008h, 08Bh, 016h, 06Ah, 001h, 08Bh, 0CEh, 0FFh, 012h, 03Bh, 0EBh, 00Fh, 085h
+    db 0E8h, 0FEh, 0FFh, 0FFh, 05Fh, 05Eh, 08Bh, 04Ch, 024h, 018h, 05Dh, 05Bh, 064h, 089h, 00Dh, 000h
+    db 000h, 000h, 000h, 083h, 0C4h, 01Ch, 0C3h, 055h, 068h
+    dd g_Va01082ED4
+    db 08Dh, 044h, 024h, 020h, 06Ah, 003h, 050h
+    call ??0INIException@@QAA@HPBDZZ
+    db 083h, 0C4h, 010h, 068h
+    dd ?g_INIExceptionThrowInfo@@3HA
+    db 08Dh, 04Ch, 024h, 01Ch, 051h
+    call ?ji_009f6d00@@YAXXZ
 ?d_000bdd20@@YAXXZ ENDP
+_TEXT$d004bdd20 ENDS
+_TEXT SEGMENT
 _TEXT ENDS
 END

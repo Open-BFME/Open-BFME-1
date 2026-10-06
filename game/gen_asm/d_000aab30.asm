@@ -1,5 +1,7 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ?fixUndefinedMicrophoneField@@YAXPAUMicrophoneSettingsRva000B4B70@@PQ1@M@Z:NEAR
 _TEXT SEGMENT
 
 ; ghidra: bounds-high  retail @ 0x000AAB30 size 33
@@ -653,13 +655,19 @@ public ?d_000b4a90@@YAXXZ
 ?d_000b4a90@@YAXXZ ENDP
 
 ; ghidra: bounds-high  retail @ 0x000B4B20 size 54
+_TEXT ENDS
+_TEXT$d004b4b20 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x004B4B20 size 54
 public ?d_000b4b20@@YAXXZ
 ?d_000b4b20@@YAXXZ PROC
-    db 56h, 57h, 8Bh, 0F0h, 8Bh, 0F9h, 0E8h, 0C5h, 0FEh, 0FFh, 0FFh, 0D9h, 04h, 37h, 0D9h, 0C0h
-    db 0D8h, 0C9h, 0D9h, 1Ch, 1Fh, 0DDh, 0D8h, 0D9h, 44h, 37h, 30h, 0D9h, 0C0h, 0D8h, 0C9h, 0D9h
-    db 5Ch, 1Fh, 30h, 0DDh, 0D8h, 0D9h, 44h, 37h, 60h, 0D9h, 0C0h, 0D8h, 0C9h, 0D9h, 5Ch, 1Fh
-    db 60h, 5Fh, 5Eh, 0DDh, 0D8h, 0C3h
+    db 056h, 057h, 08Bh, 0F0h, 08Bh, 0F9h
+    call ?fixUndefinedMicrophoneField@@YAXPAUMicrophoneSettingsRva000B4B70@@PQ1@M@Z
+    db 0D9h, 004h, 037h, 0D9h, 0C0h, 0D8h, 0C9h, 0D9h, 01Ch, 01Fh, 0DDh, 0D8h, 0D9h, 044h, 037h, 030h
+    db 0D9h, 0C0h, 0D8h, 0C9h, 0D9h, 05Ch, 01Fh, 030h, 0DDh, 0D8h, 0D9h, 044h, 037h, 060h, 0D9h, 0C0h
+    db 0D8h, 0C9h, 0D9h, 05Ch, 01Fh, 060h, 05Fh, 05Eh, 0DDh, 0D8h, 0C3h
 ?d_000b4b20@@YAXXZ ENDP
+_TEXT$d004b4b20 ENDS
+_TEXT SEGMENT
 
 ; ghidra: bounds-high  retail @ 0x000B4B70 size 519
 public ?d_000b4b70@@YAXXZ

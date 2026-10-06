@@ -1,5 +1,12 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ??0?$StringBase@D@@AAE@PBD@Z:NEAR
+EXTERN ??_7Rva007F01B0@@6B@:BYTE
+EXTERN ?j_000125cb@@YAXXZ:NEAR
+EXTERN g_Va00FFD1F8:NEAR
+EXTERN g_Va01088B20:BYTE
+EXTERN g_Va012ABE78:BYTE
 _TEXT SEGMENT
 
 ; ghidra: FUN_00504e40  retail @ 0x00104E40 size 98
@@ -816,18 +823,32 @@ public ?d_00109c10@@YAXXZ
 ?d_00109c10@@YAXXZ ENDP
 
 ; ghidra: FUN_00509eb0  retail @ 0x00109EB0 size 136
+_TEXT ENDS
+_TEXT$d00509eb0 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00509EB0 size 136
 public ?d_00109eb0@@YAXXZ
 ?d_00109eb0@@YAXXZ PROC
-    db 64h, 0A1h, 00h, 00h, 00h, 00h, 6Ah, 0FFh, 68h, 0F8h, 0D1h, 0FFh, 00h, 50h, 0A1h, 78h
-    db 0BEh, 2Ah, 01h, 64h, 89h, 25h, 00h, 00h, 00h, 00h, 83h, 0ECh, 08h, 85h, 0C0h, 7Dh
-    db 4Fh, 8Dh, 04h, 24h, 50h, 51h, 89h, 64h, 24h, 08h, 8Bh, 0CCh, 68h, 20h, 8Bh, 08h
-    db 01h, 0E8h, 0DAh, 0ECh, 77h, 00h, 51h, 89h, 64h, 24h, 10h, 8Bh, 0CCh, 68h, 1Ch, 30h
-    db 07h, 01h, 0C7h, 44h, 24h, 20h, 00h, 00h, 00h, 00h, 0E8h, 0C1h, 0ECh, 77h, 00h, 0C7h
-    db 44h, 24h, 1Ch, 0FFh, 0FFh, 0FFh, 0FFh, 0E8h, 0BFh, 86h, 0F0h, 0FFh, 83h, 0C4h, 0Ch, 84h
-    db 0C0h, 8Bh, 04h, 24h, 75h, 05h, 0B8h, 01h, 00h, 00h, 00h, 0A3h, 78h, 0BEh, 2Ah, 01h
-    db 33h, 0C9h, 85h, 0C0h, 0Fh, 95h, 0C1h, 8Ah, 0C1h, 8Bh, 4Ch, 24h, 08h, 64h, 89h, 0Dh
-    db 00h, 00h, 00h, 00h, 83h, 0C4h, 14h, 0C3h
+    db 064h, 0A1h, 000h, 000h, 000h, 000h, 06Ah, 0FFh, 068h
+    dd g_Va00FFD1F8
+    db 050h, 0A1h
+    dd g_Va012ABE78
+    db 064h, 089h, 025h, 000h, 000h, 000h, 000h, 083h, 0ECh, 008h, 085h, 0C0h, 07Dh, 04Fh, 08Dh, 004h
+    db 024h, 050h, 051h, 089h, 064h, 024h, 008h, 08Bh, 0CCh, 068h
+    dd g_Va01088B20
+    call ??0?$StringBase@D@@AAE@PBD@Z
+    db 051h, 089h, 064h, 024h, 010h, 08Bh, 0CCh, 068h
+    dd ??_7Rva007F01B0@@6B@
+    db 0C7h, 044h, 024h, 020h, 000h, 000h, 000h, 000h
+    call ??0?$StringBase@D@@AAE@PBD@Z
+    db 0C7h, 044h, 024h, 01Ch, 0FFh, 0FFh, 0FFh, 0FFh
+    call ?j_000125cb@@YAXXZ
+    db 083h, 0C4h, 00Ch, 084h, 0C0h, 08Bh, 004h, 024h, 075h, 005h, 0B8h, 001h, 000h, 000h, 000h, 0A3h
+    dd g_Va012ABE78
+    db 033h, 0C9h, 085h, 0C0h, 00Fh, 095h, 0C1h, 08Ah, 0C1h, 08Bh, 04Ch, 024h, 008h, 064h, 089h, 00Dh
+    db 000h, 000h, 000h, 000h, 083h, 0C4h, 014h, 0C3h
 ?d_00109eb0@@YAXXZ ENDP
+_TEXT$d00509eb0 ENDS
+_TEXT SEGMENT
 
 ; ghidra: FUN_00509f60  retail @ 0x00109F60 size 110
 public ?d_00109f60@@YAXXZ

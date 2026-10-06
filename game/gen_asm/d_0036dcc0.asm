@@ -1,5 +1,8 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ?Clock00200420@@3PAUFrame00200420@@A:BYTE
+EXTERN ?TheNetwork@@3PAVNetwork@@A:BYTE
 _TEXT SEGMENT
 
 ; ghidra: bounds-high  retail @ 0x0036DCC0 size 11
@@ -3211,14 +3214,24 @@ public ?d_00385e50@@YAXXZ
 ?d_00385e50@@YAXXZ ENDP
 
 ; ghidra: bounds-high  retail @ 0x00385E70 size 74
+_TEXT ENDS
+_TEXT$d00785e70 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00785E70 size 74
 public ?d_00385e70@@YAXXZ
 ?d_00385e70@@YAXXZ PROC
-    db 0A1h, 98h, 08h, 2Fh, 01h, 8Bh, 80h, 0Ch, 01h, 00h, 00h, 56h, 0BEh, 01h, 00h, 00h
-    db 00h, 3Bh, 0C6h, 74h, 05h, 83h, 0F8h, 05h, 75h, 16h, 8Bh, 0Dh, 14h, 77h, 2Fh, 01h
-    db 85h, 0C9h, 74h, 17h, 8Bh, 11h, 0FFh, 92h, 0B0h, 00h, 00h, 00h, 84h, 0C0h, 75h, 0Bh
-    db 0A1h, 98h, 08h, 2Fh, 01h, 83h, 78h, 3Ch, 06h, 72h, 09h, 0B8h, 03h, 00h, 00h, 00h
-    db 5Eh, 0C2h, 08h, 00h, 8Bh, 0C6h, 5Eh, 0C2h, 08h, 00h
+    db 0A1h
+    dd ?Clock00200420@@3PAUFrame00200420@@A
+    db 08Bh, 080h, 00Ch, 001h, 000h, 000h, 056h, 0BEh, 001h, 000h, 000h, 000h, 03Bh, 0C6h, 074h, 005h
+    db 083h, 0F8h, 005h, 075h, 016h, 08Bh, 00Dh
+    dd ?TheNetwork@@3PAVNetwork@@A
+    db 085h, 0C9h, 074h, 017h, 08Bh, 011h, 0FFh, 092h, 0B0h, 000h, 000h, 000h, 084h, 0C0h, 075h, 00Bh
+    db 0A1h
+    dd ?Clock00200420@@3PAUFrame00200420@@A
+    db 083h, 078h, 03Ch, 006h, 072h, 009h, 0B8h, 003h, 000h, 000h, 000h, 05Eh, 0C2h, 008h, 000h, 08Bh
+    db 0C6h, 05Eh, 0C2h, 008h, 000h
 ?d_00385e70@@YAXXZ ENDP
+_TEXT$d00785e70 ENDS
+_TEXT SEGMENT
 
 ; ghidra: bounds-high  retail @ 0x00386070 size 10
 public ?d_00386070@@YAXXZ
