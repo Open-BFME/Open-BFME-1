@@ -322,30 +322,8 @@ void ShellMenuSchemeManager::parseLinePart(INI *ini, void *instance, void* /*sto
 
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/ShellMenuSchemeManager_newShellMenuScheme_Thunk.cpp
-// ?newShellMenuScheme@ShellMenuSchemeManager@@QAEPAVShellMenuScheme@@VAsciiString@@@Z present-unmatched
-ShellMenuScheme *ShellMenuSchemeManager::newShellMenuScheme(AsciiString name)
-{
-	ShellMenuSchemeListIt it;
-	it = m_schemeList.begin();
-	name.toLower();
-	while(it != m_schemeList.end())
-	{
-		ShellMenuScheme *scheme = *it;
-		if(scheme->m_name.compare(name) == 0)
-		{
-			m_schemeList.erase( it );
-			delete scheme;
-			break;
-		}
-		else
-			++it;
-	}
-	ShellMenuScheme *newScheme = NEW ShellMenuScheme;
-	newScheme->m_name.set(name);
-	m_schemeList.push_back(newScheme);
-	return newScheme;
-}
+// ShellMenuSchemeManager::newShellMenuScheme is defined once, by its retail body
+// (0x005815E0) in ShellMenuSchemeManager_newShellMenuScheme_Thunk.cpp.
 
 void ShellMenuSchemeManager::init( void )
 {
