@@ -81,9 +81,9 @@ struct BfmeLODPresetInfo
 	Int m_height;
 };
 
-struct BfmeBenchProfile
+struct BenchProfile
 {
-	BfmeBenchProfile()
+	BenchProfile()
 		: m_cpuType(0), m_mhz(1), m_intBenchIndex(1.0f),
 		  m_floatBenchIndex(1.0f), m_memBenchIndex(1.0f) {}
 
@@ -103,7 +103,7 @@ public:
 	BfmeDynamicGameLODInfo m_dynamicGameLODInfo[5];
 	BfmeAudioLODInfo m_audioLODInfo[2];
 	BfmeLODPresetInfo m_lodPresets[5][32];
-	BfmeBenchProfile m_benchProfiles[16];
+	BenchProfile m_benchProfiles[16];
 
 	Int m_currentStaticLOD;
 	Int m_pendingStaticLOD;
@@ -131,7 +131,7 @@ public:
 	Int m_field1720;
 	Int m_field1724;
 	Int m_field1728;
-	Int m_field172c;
+	Int m_compositeBenchIndex;
 	Int m_field1730;
 	Int m_reallyLowMHz;
 	Int m_audioLowMHz;
@@ -164,7 +164,7 @@ GameLODManager::GameLODManager()
 	m_field1720 = 0;
 	m_field1724 = 0;
 	m_field1728 = 0;
-	m_field172c = 0;
+	m_compositeBenchIndex = 0;
 	m_field1730 = 0;
 	m_reallyLowMHz = 400;
 	m_audioLowMHz = 1500;
