@@ -55,3 +55,17 @@ def test_reference_tokens():
     assert R.tokens("??1Gen_dtor_00075d40@@UAE@XZ") == ["Gen_dtor_00075d40"]
     assert R.tokens("?f@C@@QAEXXZ") == ["f", "C"]
     assert R.tokens("??$f@H@@YAXXZ") is None
+
+
+def test_rewrite_ledger_follows_alias_emitters_and_keeps_object_symbol_parsable(tmp_path):
+    p = tmp_path / "functions.csv"
+    p.write_text("name,export_rva,target_rva,target_size,source,status,notes\n"
+                 "??1A@@MAE@XZ,,0x00000010,7,game/a.cpp,matched,base\n"
+                 "??1B@@MAE@XZ,,0x00000020,7,game/a.cpp,matched,alias;object-symbol=??1A@@MAE@XZ\n", encoding="utf-8")
+    renames = {(0x10, "??1A@@MAE@XZ"): "??1A@@UAE@XZ", (0x20, "??1B@@MAE@XZ"): "??1B@@UAE@XZ"}
+    assert R.rewrite_ledger(p, "target_rva", renames, lambda k: "ilt-verified=T1") == 2
+    rows = p.read_text(encoding="utf-8").splitlines()
+    assert rows[1] == "??1A@@UAE@XZ,,0x00000010,7,game/a.cpp,matched,base;ilt-verified=T1"
+    assert rows[2] == "??1B@@UAE@XZ,,0x00000020,7,game/a.cpp,matched,alias;object-symbol=??1A@@UAE@XZ;ilt-verified=T1"
+    import build
+    assert build.ledger_object_symbol({"name": "x", "notes": rows[2].split(",", 6)[6]}) == "??1A@@UAE@XZ"

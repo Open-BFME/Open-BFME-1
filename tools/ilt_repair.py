@@ -271,7 +271,7 @@ def build(files):
     return r.returncode == 0, (r.stdout + r.stderr)[-1500:]
 
 
-def rewrite_ledger(path, col, renames, note):
+def rewrite_ledger(path, col, renames, note, names=None):
     """renames: {(rva, old): new}. Rewrites matching rows in place; returns how many."""
     lines = path.read_bytes().decode("utf-8").split("\n")
     header = next(csv.reader([lines[0].rstrip("\r")]))
@@ -285,7 +285,16 @@ def rewrite_ledger(path, col, renames, note):
                 present.add(parsed[i][1])
             except (ValueError, IndexError):
                 pass
+    names = names if names is not None else {old: new for (_, old), new in renames.items()}
+    ki = header.index("notes") if "notes" in header else None
     for i, (cells, key) in parsed.items():
+        # an alias row's `object-symbol=<emitter>` must follow its emitter's rename (tools/build.py)
+        alias = re.search(r"(?:^|;)object-symbol=([^;]+)", cells[ki]) if ki is not None and ki < len(cells) else None
+        if key not in renames and not (alias and alias.group(1).strip() in names):
+            continue
+        if alias and alias.group(1).strip() in names:
+            old = alias.group(1).strip()
+            cells[ki] = cells[ki][:alias.start(1)] + names[old] + cells[ki][alias.start(1) + len(old):]
         if key in renames:
             if (key[0], renames[key]) in present:     # the address already carries the new name
                 lines[i] = None
@@ -293,14 +302,13 @@ def rewrite_ledger(path, col, renames, note):
                 continue
             present.add((key[0], renames[key]))
             cells[ni] = renames[key]
-            if "notes" in header:
-                k = header.index("notes")
-                tag = note(key)
-                cells[k] = (cells[k] + " " + tag).strip() if tag not in cells[k] else cells[k]
-            buf = __import__("io").StringIO()
-            csv.writer(buf, lineterminator="").writerow(cells)
-            lines[i] = buf.getvalue() + ("\r" if lines[i].endswith("\r") else "")
-            n += 1
+            if ki is not None:
+                tag = note(key)                      # `;`-separated: object-symbol= ends at `;`
+                cells[ki] = (cells[ki] + ";" + tag).lstrip(";") if tag not in cells[ki] else cells[ki]
+        buf = io.StringIO()
+        csv.writer(buf, lineterminator="").writerow(cells)
+        lines[i] = buf.getvalue() + ("\r" if lines[i].endswith("\r") else "")
+        n += 1
     path.write_bytes("\n".join(l for l in lines if l is not None).encode("utf-8"))
     return n
 
@@ -399,11 +407,14 @@ def apply_tu(items, limit, rows, skip=0):
             continue
         saved = {p: p.read_bytes() for p in (FUNCTIONS, SYMBOLS, TOMBSTONES)}
         tag = lambda k: f"ilt-verified=T1-access(efp={xs[0]['expected_false']})"
-        rewrite_ledger(FUNCTIONS, "target_rva", renames.get("functions", {}), tag)
+        every = {old: new for m in renames.values() for (_, old), new in m.items()}
+        rewrite_ledger(FUNCTIONS, "target_rva", renames.get("functions", {}), tag, every)
         tombstone(renames.get("functions", {}), xs[0]["expected_false"])
         relabel(originals, renames)
-        rewrite_ledger(SYMBOLS, "address", renames.get("pins", {}), tag)
-        good, log = build(sorted(p.relative_to(ROOT).as_posix() for p in originals))
+        rewrite_ledger(SYMBOLS, "address", renames.get("pins", {}), tag, every)
+        # build every file naming the member, not only the edited ones: a caller that sees the class
+        # some other way still references the old symbol
+        good, log = build(sorted(set(users) | {p.relative_to(ROOT).as_posix() for p in originals}))
         if good:
             landed.append((xs, renames, sorted(p.relative_to(ROOT).as_posix() for p in originals)))
             print(f"landed {cls}::{word} {old}->{new} ({len(originals)} file(s))", flush=True)
