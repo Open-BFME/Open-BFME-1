@@ -79,10 +79,7 @@ class Object
 public:
 	void onRemovedFrom(Object *removedFrom);
 	ContainModuleInterface *getContain() const { return m_contain; }
-	__forceinline void setStatus(const ObjectStatusMaskType &objectStatus, Bool set);
-	__forceinline void clearStatus(ObjectStatusMaskType objectStatus);
 
-private:
 	void *m_vtable;
 	void *m_template;
 	unsigned char m_pad008[0x88];
@@ -99,9 +96,13 @@ private:
 	PartitionData *m_partitionData;
 };
 
-__forceinline void Object::setStatus(const ObjectStatusMaskType &objectStatus, Bool set)
+// Object::setStatus's out-of-line body is ObjectStatusBits.cpp's (0x001C7370);
+// onRemovedFrom inlines a status clear. Member spellings here emitted a
+// ?setStatus@Object@@ COMDAT unlike that body, so this TU keeps the inlined
+// status update in file-local helpers.
+static __forceinline void objectSetStatus(Object *object, const ObjectStatusMaskType &objectStatus, Bool set)
 {
-	ObjectStatusMaskType &status = m_status;
+	ObjectStatusMaskType &status = object->m_status;
 	ObjectStatusMaskType oldStatus = status;
 
 	if (set)
@@ -111,17 +112,17 @@ __forceinline void Object::setStatus(const ObjectStatusMaskType &objectStatus, B
 
 	if (status != oldStatus)
 	{
-		if (oldStatus.test(2) != m_status.test(2))
+		if (oldStatus.test(2) != object->m_status.test(2))
 		{
-			if (m_partitionData)
-				m_partitionData->makeDirty();
+			if (object->m_partitionData)
+				object->m_partitionData->makeDirty();
 		}
 	}
 }
 
-__forceinline void Object::clearStatus(ObjectStatusMaskType objectStatus)
+static __forceinline void objectClearStatus(Object *object, ObjectStatusMaskType objectStatus)
 {
-	setStatus(objectStatus, false);
+	objectSetStatus(object, objectStatus, false);
 }
 
 // ?onRemovedFrom@Object@@QAEXPAV1@@Z
@@ -129,7 +130,7 @@ void Object::onRemovedFrom(Object *removedFrom)
 {
 	ContainModuleInterface *contain = removedFrom ? removedFrom->getContain() : 0;
 	if (contain)
-		clearStatus(reinterpret_cast<const ObjectStatusMaskType &>(
+		objectClearStatus(this, reinterpret_cast<const ObjectStatusMaskType &>(
 			contain->getStatus(this)));
 
 	m_containedFlags &= ~1;
