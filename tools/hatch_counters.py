@@ -115,6 +115,13 @@ def _db_bytes(arg):
     return n
 
 
+def _addr(cell):
+    try:
+        return "0x%08X" % int(cell.strip(), 16)
+    except ValueError:
+        return cell.strip()
+
+
 def scan(path, text):
     """Counter of (hatch, path, token) for one file's text."""
     out = collections.Counter()
@@ -123,10 +130,11 @@ def scan(path, text):
         rows = csv.reader(io.StringIO(text))
         next(rows, None)
         for cells in rows:
+            # keyed by address: a rename is not a new hatch (name gates judge names)
             if pin and len(cells) >= 2:
-                out[("pin", path, "%s@%s" % (cells[0], cells[1]))] += 1
+                out[("pin", path, _addr(cells[1]))] += 1
             elif not pin and len(cells) >= 7 and "object-symbol=" in cells[6]:
-                out[("object_symbol", path, "%s@%s" % (cells[0], cells[2]))] += 1
+                out[("object_symbol", path, _addr(cells[2]))] += 1
         return out
     if path.lower().endswith(".asm"):
         total = 0
