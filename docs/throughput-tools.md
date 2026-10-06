@@ -411,13 +411,43 @@ flight together (serialized, not rejected). A unit whose rebased diff leaves
 its scope is rejected with the paths (`out-of-scope`). After `retry_limit`
 (3) gate failures with the same approach (its +/- lines outside ledger files)
 for the same target, an equivalent submission is refused (`retry-limit`)
-until the blobs in the target's scope or the checker change. Cost: whole-file
-ledger scope serializes every unit that edits the same ledger. With 8 builders
-at 3% red the simulator gives 281/h when no unit shares a ledger, 270/h at
-10%, 231/h at 30% (queue grows) and 159/h at 60%. Units that each append
-`functions.csv` rows therefore need row-level ledger scope
-(`serialize_scopes` turns the rule off) before the publisher carries the
-fleet.
+until the blobs in the target's non-ledger scope or the checker change.
+
+Row scope (2026-10-06). Row ledgers are scoped by row: `functions.csv` by
+`target_rva`, `symbols.csv` by `name`, `data_rows.csv` by `address`, and the
+other union-merged ledgers by whole line. `--scope-from-diff` and the shim emit
+tokens such as `targets/game/reverse/functions.csv#0x00401000`. Units on
+different rows overlap only where they share another path. A unit that touches
+a file others `#include` (by file name, transitively, as
+`header_dependents.py` decides) overlaps every unit that touches one of those
+includers. Over the last 7 days of master (7,168 commits, 22% touching
+`functions.csv`), 16% of commits overlap another within 15 minutes under row
+scope, against 62% under whole-file scope. Replaying those footprints at 300/h
+(3% red, blame lines) gives 238/h with p95 48 min on 6 builders under row
+scope, against 121/h with p95 228 min under whole-file scope.
+
+Builders and re-verification. Builders are registered per host and operator
+(`publisher.py builder --state S NAME --operator OP [--command JSON --home DIR]`)
+and sign receipts with their own key. Remote builders fetch candidates from
+`stage_remote`. Every high-risk green (headers, baselines, whitelists,
+gen_asm/gen_small, checker paths), a `reverify_share` sample of the other
+greens, and every lone red are rebuilt by a different operator. Builders that
+lose the vote, or whose receipts do not verify, are quarantined
+(`quarantine.json`). Several publishers may run against one branch: a push is a
+fast-forward compare-and-swap, and the loser regates.
+
+Promotion fixtures. `promote` refuses without exploit and benign fixtures and
+without `ledger_cmd`. Generate the set on the head being promoted:
+`python3 tools/publisher_fixtures/make_fixtures.py tools/publisher_fixtures/bfme1/cases.json OUT --rev <sha>`,
+then promote with `--fixtures OUT` and
+`ledger_cmd="bash tools/publisher_fixtures/bfme1/ledger.sh"`
+(`PUBLISHER_FULL_GATE=1` adds the full byte gate).
+
+Judges. `tools/judges.json` (protected) allowlists gpt-6-astra, gpt-6.1-sol,
+claude-opus-5-5 and claude-fable-5-1. `tools/judges.py` `judge_call(model,
+prompt)` runs only those models and records the model it called, never one the
+answer names. Records are signed when `JUDGE_RUNNER_KEY` is set; use
+`verify_record()` before counting a verdict.
 
 ### Cutover runbook (admins)
 
