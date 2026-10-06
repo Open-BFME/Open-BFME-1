@@ -293,7 +293,8 @@ public:
 	virtual BfmeAwakenLog *v6c(int first, int second);
 };
 
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void *g_Rva00F36E5C; // VA 01336E5C debug manager cell (data_rows.csv owner)
+#define TheBfmeAwakenDebug (static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C))
 extern bool _bfme_debugReportingEnabled(void);
 extern void _bfme_debugRecordCallsite(int kind);
 extern void j_0000be88(void);

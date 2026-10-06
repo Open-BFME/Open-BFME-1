@@ -359,7 +359,8 @@ struct BfmeCsVHM
 extern BfmeCsVHM g_bfmeCsVHM;
 extern void *g_bfmeEventVHM;
 class BfmeAwakenDebug;
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void *g_Rva00F36E5C; // VA 01336E5C debug manager cell (data_rows.csv owner)
+#define TheBfmeAwakenDebug (static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C))
 struct BfmeDebug
 {
 	virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0C();
@@ -978,7 +979,8 @@ public:
 	virtual BfmeAwakenLog *slot6C(int first, int second);
 };
 
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void *g_Rva00F36E5C; // VA 01336E5C debug manager cell (data_rows.csv owner)
+#define TheBfmeAwakenDebug (static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C))
 extern void _bfme_debugRecordCallsite(int kind);
 
 // ?Reset_Device@DX8Wrapper@@ matched: retail 0x009082B0, 969 bytes

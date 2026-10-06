@@ -1838,7 +1838,8 @@ public:
 	virtual BfmeAwakenLog *slot6c(int first, int second);
 };
 
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void *g_Rva00F36E5C; // VA 01336E5C debug manager cell (data_rows.csv owner)
+#define TheBfmeAwakenDebug (static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C))
 extern void _bfme_debugRecordCallsite(int kind);
 
 static __forceinline BfmeMovieCaptureSurface9 *Bfme_Get_DX9_Front_Buffer(void)

@@ -11,7 +11,8 @@
 
 // Debug singleton pointer (0x01336E5C); same spelling as Debug::PreStaticInit.
 class BfmeAwakenDebug;
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void *g_Rva00F36E5C; // VA 01336E5C debug manager cell (data_rows.csv owner)
+#define TheBfmeAwakenDebug (static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C))
 
 // Callees under their ledger spellings.  In the Zero Hour ExceptionFilter these
 // positions are FlushOutput (0x0088A230), StartOutput (0x0088A8B0, varargs

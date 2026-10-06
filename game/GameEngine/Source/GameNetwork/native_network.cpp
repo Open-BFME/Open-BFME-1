@@ -411,7 +411,8 @@ public:
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
 
 class BfmeAwakenDebug;
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void *g_Rva00F36E5C; // VA 01336E5C debug manager cell (data_rows.csv owner)
+#define TheBfmeAwakenDebug (static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C))
 
 extern "C" unsigned int __stdcall BFMENetworkBackendThreadStart(void *backend)
 {
