@@ -1,6 +1,9 @@
 // Open-BFME5 conversion of the codec image-buffer release helper.
 
-void bfmeGo930C(void *what);
+// Retail calls the separately padded 5-byte free thunk at 0x009A5980
+// (BfmeReleaseSetBZB.cpp, a tail jump to 0x009A58E0), not bfmeGo930C
+// (0x009A58E0) itself.
+void Rva009A5980(void *what);
 
 struct Rva009A8880Buffer
 {
@@ -20,13 +23,13 @@ void Rva009A8880Release(void *what)
 	Rva009A8880Buffer *self = (Rva009A8880Buffer *)what;
 
 	if (self->m_at248 != 0)
-		bfmeGo930C(self->m_at248);
+		Rva009A5980(self->m_at248);
 	if (self->m_at250 != 0)
-		bfmeGo930C(self->m_at250);
+		Rva009A5980(self->m_at250);
 	if (self->m_at258 != 0)
-		bfmeGo930C(self->m_at258);
+		Rva009A5980(self->m_at258);
 	if (self->m_at260 != 0)
-		bfmeGo930C(self->m_at260);
+		Rva009A5980(self->m_at260);
 
 	self->m_at248 = 0;
 	self->m_at250 = 0;

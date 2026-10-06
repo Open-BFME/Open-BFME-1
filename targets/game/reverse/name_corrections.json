@@ -18628,5 +18628,15 @@
   "after_sha256": "0c7ba264519721160d97fb9b3ab15740b1aa371ca1db017a8eade50dbf57037b",
   "evidence": "targets/game/reverse/identity_evidence/001d9540-address-derived-bank-name.md",
   "reason": "No layout witness gives m_bfmePadCD a semantic name, and the source models only one untyped padding byte as m_pad."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva009A8880Release.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva009A8880Release.cpp",
+  "old_name": "bfmeGo930C",
+  "new_name": "Rva009A5980",
+  "before_sha256": "dfec92ad1451d0d03ed3d92b398dfdab7749cf95233e06a972b448192ecd912a",
+  "after_sha256": "774df989b80efa7f53969ba6ad590087470bffb6d5c88980921d854f7ec281a8",
+  "evidence": "targets/game/reverse/identity_evidence/009a8880-release-free-thunk-callee.md",
+  "reason": "Retail's four calls land on the 5-byte thunk matched as Rva009A5980 (0x009A5980), not on bfmeGo930C's body at 0x009A58E0; bfmeGo930C keeps its name for that body."
  }
 ]
