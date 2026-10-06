@@ -7,7 +7,7 @@
 class Rva0036CA00Str
 {
 public:
-	void set(const Rva0036CA00Str &other) { m_str.set(other.m_str); }
+	void set(const Rva0036CA00Str &other) { m_str.StringBase<char>::set(other.m_str); }
 
 private:
 	AsciiString m_str;

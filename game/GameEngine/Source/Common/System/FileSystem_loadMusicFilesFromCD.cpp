@@ -68,7 +68,7 @@ void FileSystem::loadMusicFilesFromCD()
 		if (!cdi)
 			continue;
 
-		cdRoot.set(cdi->getPath());
+		cdRoot.StringBase<char>::set(cdi->getPath());
 		if (TheArchiveFileSystem->loadBigFilesFromDirectory(cdRoot, "Music.big", 0))
 			break;
 	}

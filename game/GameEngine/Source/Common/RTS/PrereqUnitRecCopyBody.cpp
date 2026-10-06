@@ -20,7 +20,7 @@ extern "C" PrereqUnitRecCopyABI *__cdecl bfme_PrereqUnitRecCopy_E4AE0(
 	for (int count = last - first; count > 0; --count) {
 		result->unit = first->unit;
 		result->flags = first->flags;
-		result->name.set(first->name);
+		result->name.StringBase<char>::set(first->name);
 		++first;
 		++result;
 	}

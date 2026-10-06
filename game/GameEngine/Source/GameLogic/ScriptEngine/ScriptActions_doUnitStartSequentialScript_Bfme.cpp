@@ -100,9 +100,9 @@ void ScriptActions::doUnitStartSequentialScript(ScriptActionParameter *unitParam
 	Bfme5CtorA0 *sequentialScript = new(Bfme5CtorA0::GLUE_NOT_IMPLEMENTED, "") Bfme5CtorA0;
 	sequentialScript->m_objectID = object->getId();
 	AsciiString *nameA = &sequentialScript->m_nameA;
-	nameA->set(scriptNameOut);
+	nameA->StringBase<char>::set(scriptNameOut);
 	AsciiString *nameB = &sequentialScript->m_nameB;
-	nameB->set(scriptName);
+	nameB->StringBase<char>::set(scriptName);
 	sequentialScript->m_scriptToExecuteSequentially = script;
 	sequentialScript->m_timesToLoop = loopVal;
 	TheScriptEngine->appendSequentialScript(sequentialScript);

@@ -16,8 +16,8 @@ extern "C" Rva0036D9E0Entry *__cdecl Rva0036D9E0CopyRange(
 	int count = last - first;
 	while( count > 0 )
 	{
-		result->m_first.set(first->m_first);
-		result->m_second.set(first->m_second);
+		result->m_first.StringBase<char>::set(first->m_first);
+		result->m_second.StringBase<char>::set(first->m_second);
 		result->m_value = first->m_value;
 		++first;
 		++result;

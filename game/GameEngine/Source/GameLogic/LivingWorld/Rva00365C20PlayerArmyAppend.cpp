@@ -124,7 +124,7 @@ void Rva00365C20Owner::method( const Rva00365C20SourceRecord &source00,
 		return;
 
 	BfmeOwnVUM record;
-	record.m_04.set( source00.m_00 );
+	record.m_04.StringBase<char>::set( source00.m_00 );
 	record.m_08 = source08;
 	record.m_0c = source0c;
 	record.m_39 = source44.m_10;
@@ -135,7 +135,7 @@ void Rva00365C20Owner::method( const Rva00365C20SourceRecord &source00,
 	record.m_48 = source44.m_0c;
 	reinterpret_cast<StringBase<unsigned short> &>( record.m_78 ).set(
 		reinterpret_cast<const StringBase<unsigned short> &>( source44.m_14 ) );
-	record.m_4c.set( source44.m_18 );
+	record.m_4c.StringBase<char>::set( source44.m_18 );
 	record.m_28 = Rva00365C20ThreeWords();
 	record.m_34 = 1;
 	Rva00365C20PlayerArmy &army = m_playerArmies[ index ];

@@ -65,11 +65,11 @@ int Rva007638E0::method()
         AsciiString *preferred = (AsciiString *)(self + 0x1F4);
         if ((*(void **)preferred) != 0 &&
             *(unsigned short *)((char *)(*(void **)preferred) + 4) != 0)
-            local.set(*preferred);
+            local.StringBase<char>::set(*preferred);
         else
         {
             self = (char *)*(void **)(self - 8);
-            local.set(*(AsciiString *)(self + 0xE0));
+            local.StringBase<char>::set(*(AsciiString *)(self + 0xE0));
         }
         text = (*(void **)&local) ? (const char *)(*(void **)&local) + 8 : "";
         result = result->slot31(text, 0);
