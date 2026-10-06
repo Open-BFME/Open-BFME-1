@@ -1804,56 +1804,7 @@ void TeamPrototype::loadPostProcess( void )
 // ------------------------------------------------------------------------
 
 // ------------------------------------------------------------------------
-// ??0Team@@QAE@PAVTeamPrototype@@I@Z
-// Matched body: game/masm_dumps/Team_ctor.asm (exact 631B retail @ 0xF7790).
-// Queue 0xF7849 was INSIDE; BFME layout vs ZH blocks C++ byte-match.
-// Keep ZH C++ below so sibling COMDATs (DLINK_TeamInstanceList ctor) still emit.
-Team::Team(TeamPrototype *proto, TeamID id ) : 
-  m_id( id ),
-	m_proto(proto), 
-	m_enteredOrExited(false), 
-	m_active(false), 
-	m_seeEnemy(false), 
-	m_prevSeeEnemy(false), 
-	m_checkEnemySighted(false),
-	m_isRecruitablitySet(false),
-	m_isRecruitable(false),
-	m_destroyThreshold(0), 
-	m_curUnits(0), 
-	m_wasIdle(false)
-{
-	//Added By Sadullah Nader
-	//Initialization(s) inserted
-	m_created = FALSE;
-	
-	//
-	m_commonAttackTarget = INVALID_ID;
-
-	// allocate new relation map pools
-	m_playerRelations = newInstance(PlayerRelationMap);
-	m_teamRelations = newInstance(TeamRelationMap);
-
-	if (proto)
-	{
-		proto->prependTo_TeamInstanceList(this);
-		if (!proto->getTemplateInfo()->m_scriptOnAllClear.isEmpty() ||
-				!proto->getTemplateInfo()->m_scriptOnEnemySighted.isEmpty())
-		{
-			m_checkEnemySighted = true;	 // Only keep track of enemy sighted if there is a script that cares.
-		}
-		
-		AsciiString teamName = proto->getName();
-		teamName.concat(" - creating team instance.");
-		TheScriptEngine->AppendDebugMessage(teamName, false);
-	}
-
-	for (Int i = 0; i < MAX_GENERIC_SCRIPTS; ++i) 
-	{
-		m_shouldAttemptGenericScript[i] = true;
-	}
-
-	
-}
+// Team::Team(TeamPrototype *, TeamID) is defined in TeamConstructor.cpp.
 
 // ------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/TeamDestructorThunk.cpp
