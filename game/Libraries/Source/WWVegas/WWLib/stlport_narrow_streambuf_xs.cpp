@@ -20,7 +20,7 @@ struct BfmeFileBuf
 template <class T>
 inline const T &(min)(const T &a, const T &b)
 {
-	return a < b ? a : b;
+	return b < a ? b : a;
 }
 
 template <class CharT, class Traits>
@@ -64,7 +64,7 @@ int basic_streambuf<char, char_traits<char> >::xsgetn(char_type *s, int n)
 		int cnt = get->_cnt;
 		if (cnt > 0)
 		{
-			size_t chunk = (min)((size_t)(n - result), (size_t)cnt);
+			size_t chunk = (min)((size_t)cnt, (size_t)(n - result));
 			if (chunk != 0)
 				memcpy(s, get->_ptr, chunk);
 			result += (int)chunk;
@@ -97,7 +97,7 @@ int basic_streambuf<char, char_traits<char> >::xsputn(const char_type *s, int n)
 		int cnt = put->_cnt;
 		if (cnt > 0)
 		{
-			size_t chunk = (min)((size_t)(n - result), (size_t)cnt);
+			size_t chunk = (min)((size_t)cnt, (size_t)(n - result));
 			if (chunk != 0)
 				memcpy(put->_ptr, s, chunk);
 			result += (int)chunk;
