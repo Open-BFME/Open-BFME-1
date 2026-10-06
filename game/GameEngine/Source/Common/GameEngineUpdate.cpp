@@ -87,7 +87,8 @@ extern Rva009EB960 *Rva0134FAA0;
 extern Glo012F1028Type *Glo012F1028;
 extern ScriptEngine *TheScriptEngine;
 extern GameClient *TheGameClient;
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void *g_Rva00F36E5C; // VA 01336E5C debug manager cell (data_rows.csv owner)
+#define TheBfmeAwakenDebug (static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C))
 extern double g_bfmeFactorBW;
 
 #define FirstUpdateSubsystem ((UpdateSubsystem *)Rva0134FAA0)

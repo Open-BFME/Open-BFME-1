@@ -226,7 +226,8 @@ SLOT(80) SLOT(84) SLOT(88) SLOT(8C) SLOT(90)
 	virtual int slot94(char *buffer, int size, bool *inputAvailable) = 0;
 };
 
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void *g_Rva00F36E5C; // VA 01336E5C debug manager cell (data_rows.csv owner)
+#define TheBfmeAwakenDebug (static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C))
 extern void *g_activeObj12F0610;
 extern "C" void __identifier("?j_0003ebad@@YAXXZ")(const char *message);
 extern void __cdecl bfmeNotify1_574(void *state, void *activation);
