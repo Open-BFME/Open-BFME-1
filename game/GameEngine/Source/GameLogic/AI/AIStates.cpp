@@ -6119,46 +6119,6 @@ void AIWanderInPlaceState::loadPostProcess( void )
 
 
 //----------------------------------------------------------------------------------------------------------
-// ?update@AIWanderInPlaceState@@UAE?AW4StateReturnType@@XZ present-unmatched
-StateReturnType AIWanderInPlaceState::update()
-{
-	// do movement
-	StateReturnType status = AIInternalMoveToState::update();
-
-	Object *obj = getMachineOwner();
-	AIUpdateInterface *ai = getMachineOwner()->getAI();
-	if (!ai) return STATE_FAILURE;
-	if (obj->isKindOf(KINDOF_CAN_BE_REPULSED)) {
-		m_timer--;
-		if (m_timer<0) {
-			m_timer = m_waitFrames;
-			Object* enemy = TheAI->findClosestRepulsor(getMachineOwner(), obj->getVisionRange());
-			if (enemy) {
-				return STATE_FAILURE;
-			}
-		}
-	}
-	// if move to has finished, move to next point on waypoint path
-	if (status != STATE_CONTINUE)
-	{
-		Int delta = 3;
-		if (ai->getCurLocomotor()) {
-			delta = REAL_TO_INT_FLOOR( (ai->getCurLocomotor()->getWanderAboutPointRadius()/PATHFIND_CELL_SIZE_F) + 0.5f);
-		}
-		Coord3D offset;
-		offset.x = GameLogicRandomValue(-delta, delta)*PATHFIND_CELL_SIZE_F;
-		offset.y = GameLogicRandomValue(-delta, delta)*PATHFIND_CELL_SIZE_F;
-		m_goalPosition = m_origin;
-		m_goalPosition.x += offset.x;
-		m_goalPosition.y += offset.y;
-		AIInternalMoveToState::onEnter();
-		return STATE_CONTINUE;
-	}
-	// Never leave this state until told to.
-	return STATE_CONTINUE;
-}
-
-//----------------------------------------------------------------------------------------------------------
 // ?onExit@AIWanderInPlaceState@@UAEXW4StateExitType@@@Z present-unmatched
 void AIWanderInPlaceState::onExit( StateExitType status )
 {
