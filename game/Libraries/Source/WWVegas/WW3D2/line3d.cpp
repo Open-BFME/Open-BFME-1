@@ -267,12 +267,8 @@ RenderObjClass * Line3DClass::Clone(void) const
  *	  02/16/2001 HY  : Ported to DX8													                       *
  *=============================================================================================*/
 
-// ?Line3DClass::Render present-unmatched
-void Line3DClass::Render(RenderInfoClass & rinfo)
-{
-	// BFME: the byte-matched implementation is kept in the TU-local ABI
-	// candidate so this upstream stub remains available to the other slots.
-}
+// BFME: Line3DClass::Render (retail 0x00951AA0) is matched in
+// Line3DClass_Render.cpp; this TU's vtable reaches it there.
 
 /************************************************************************** 
  * Line3DClass::Scale -- Scale object                                     * 
