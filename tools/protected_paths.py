@@ -51,7 +51,9 @@ PROTECTED = (
     # evidence reuse and the publish window both decide whether a gate runs
     "tools/gate_evidence.py", "tools/publish_window.py",
     # the publisher decides what reaches master and with which checker
-    "tools/publisher.py", "tools/publisher_pre_push.sh",
+    "tools/publisher.py", "tools/publisher_pre_push.sh", "tools/publisher_fixtures/*",
+    # which models may judge, and how they are called (decision record, pillar 5)
+    "tools/judges.py", "tools/judges.json",
     # the linked-build rules
     "tools/link_census.py", "tools/link_debt.py", "tools/alias_guard.py",
     # ledger, identity and direction guards the hooks call

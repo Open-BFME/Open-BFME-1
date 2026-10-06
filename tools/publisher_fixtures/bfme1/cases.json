@@ -1,0 +1,39 @@
+[
+ {"name": "self_weakened_conversion_gate", "expect": "reject",
+  "why": "the candidate disables the conversion gate in its own tree and adds a lift; the pinned gate still runs (test_gate_exploits: added asm-only body)",
+  "message": "convert PublisherFixtureLift to exact C++",
+  "edits": [
+   {"path": "tools/conversion_gate.py", "append": "\n\ndef added_asm_only_bodies(old, new, lines=None):\n    return []\n"},
+   {"path": "game/PublisherFixtures/FixtureLift.cpp", "write": "// ?bfmeFixtureLift@@YAXHHH@Z\nvoid bfmeFixtureLift(int a, int b, int c)\n{\n\t__asm {\n\t\tmov eax, a\n\t\tpush eax\n\t\tmov eax, b\n\t\tpush eax\n\t\tadd esp, 8\n\t}\n}\n"}]},
+ {"name": "asm_only_body", "expect": "reject",
+  "why": "a mnemonic __asm body counts as a lift, not C++ (test_gate_exploits)",
+  "message": "add exact C++ for the CPUID probe",
+  "edits": [
+   {"path": "game/PublisherFixtures/FixtureProbe.cpp", "write": "// ?fixtureProbe@@YAHXZ\nint fixtureProbe(void)\n{\n    int features;\n    __asm { mov eax, 1 }\n    __asm { cpuid }\n    __asm { mov features, edx }\n    return features & 1;\n}\n"}]},
+ {"name": "disabled_push_hook", "expect": "reject",
+  "why": "the candidate empties its own pre-push hook and adds a lift; the overlaid hook still runs",
+  "message": "speed up the push hook",
+  "edits": [
+   {"path": ".githooks/pre-push", "write": "#!/usr/bin/env bash\nexit 0\n"},
+   {"path": "game/PublisherFixtures/FixtureLift2.cpp", "write": "// ?fixtureNaked@@YAXXZ\n__declspec(naked) void fixtureNaked(void)\n{\n\t__asm _emit 0xC3\n}\n"}]},
+ {"name": "baseline_growth", "expect": "reject",
+  "why": "shrink-only baselines may not grow, even with a Verifier-Change trailer (protected_paths rule 2; identity keys)",
+  "message": "identity baseline: record a known surplus\n\nVerifier-Change: fixture, growing a shrink-only baseline",
+  "edits": [
+   {"path": "targets/game/reverse/identity_baseline.txt", "append": "@ one_identity.surplus 0x00401000 ?publisherFixture@@YAXXZ\n"}]},
+ {"name": "undeclared_verifier_edit", "expect": "reject",
+  "why": "a verifier edit without a Verifier-Change trailer (protected_paths rule 1)",
+  "message": "tidy check_csv",
+  "edits": [
+   {"path": "tools/check_csv.py", "append": "\n# tidied\n"}]},
+ {"name": "benign_catalog_doc", "expect": "pass",
+  "why": "control: a catalog doc edit passes",
+  "message": "docs: note a shape lever source",
+  "edits": [
+   {"path": "docs/shape_levers.md", "append": "\n"}]},
+ {"name": "benign_new_test", "expect": "pass",
+  "why": "control: a new unprotected test file passes",
+  "message": "tests: a probe the publisher fixtures use",
+  "edits": [
+   {"path": "tools/tests/test_publisher_fixture_probe.py", "write": "def test_probe():\n    assert True\n"}]}
+]

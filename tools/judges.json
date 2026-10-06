@@ -1,0 +1,10 @@
+{
+ "version": 1,
+ "note": "Allowlisted judge models (decision record, pillar 5). Protected: changes need a Verifier-Change trailer. A host may override a listed model's command via JUDGE_RUNNERS; it cannot add models.",
+ "judges": {
+  "gpt-6-astra": {"family": "openai", "command": ["codex", "exec", "--model", "gpt-6-astra", "-"]},
+  "gpt-6.1-sol": {"family": "openai", "command": ["codex", "exec", "--model", "gpt-6.1-sol", "-"]},
+  "claude-opus-5-5": {"family": "anthropic", "command": ["claude", "-p", "--model", "claude-opus-5-5"]},
+  "claude-fable-5-1": {"family": "anthropic", "command": ["claude", "-p", "--model", "claude-fable-5-1"]}
+ }
+}
