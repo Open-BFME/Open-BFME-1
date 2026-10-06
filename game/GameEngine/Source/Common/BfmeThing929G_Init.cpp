@@ -26,7 +26,7 @@ void BfmeThing929G::bfmeInit929G()
 			++s;
 			if (c <= 'Z' && c >= 'A')
 				c += 32;
-			hash = (unsigned)((c ^ (int)hash) * 0x01000193);
+			hash = (unsigned)((c ^ (int)hash) * 16777619);	// 32-bit FNV prime (2^24 + 0x193): a constant, not an address
 			c = (signed char)*s;
 		}
 		while (c);

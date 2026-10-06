@@ -31,7 +31,12 @@ public:
 	ObjectLookupNode **m_bucketFinish;
 };
 
-#define TheGameLogic (*(GameLogic **)0x012F0898)
+extern GameLogic *TheGameLogic;
+
+// Retail loads TheGameLogic (0x012F0898) once for the bucket count and again
+// for the bucket array. A plain named read lets MSVC share one load; making
+// the first read volatile keeps retail's two loads.
+#define TheGameLogicNow (*(GameLogic * volatile *)&TheGameLogic)
 
 __forceinline unsigned int getBucketCount(GameLogic *gameLogic)
 {
@@ -68,7 +73,7 @@ CanAttackResult SpawnBehavior::getCanAnySlavesUseWeaponAgainstTarget(AbleToAttac
 		if (!id)
 			continue;
 
-		unsigned int bucketCount = getBucketCount(TheGameLogic);
+		unsigned int bucketCount = getBucketCount(TheGameLogicNow);
 		unsigned int bucketIndex = id % bucketCount;
 		ObjectLookupNode *object = TheGameLogic->m_bucketStart[bucketIndex];
 		while (object && object->id != id)
