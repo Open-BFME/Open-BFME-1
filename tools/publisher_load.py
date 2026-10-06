@@ -94,13 +94,29 @@ class VirtualRepo:
 
 
 class VirtualExecutor:
-    """N builder slots on a virtual clock; receipts are signed for real."""
+    """Registered builders (one slot each) on a virtual clock; receipts are
+    signed with each builder's own key. `liars` {builder: verdict} makes a
+    builder report that verdict whatever the truth."""
 
-    def __init__(self, n, clock, repo, key, duration, blame=lambda units: []):
-        self.n, self.clock, self.repo, self.key, self.duration = n, clock, repo, key, duration
+    def __init__(self, n, clock, repo, key, duration, blame=lambda units: [], builders=None):
+        self.clock, self.repo, self.duration = clock, repo, duration
+        self.builders = builders or {f"v{i}": dict(operator="local", key=key) for i in range(n)}
+        self.n = len(self.builders)
         self.blame = blame
+        self.liars = {}
+        self.quarantined = lambda: {}
         self.waiting, self.running = [], []
         self.busy_seconds, self._last = 0.0, 0.0
+
+    def operator_of(self, builder):
+        return (self.builders.get(builder) or {}).get("operator")
+
+    def builder_of(self, job):
+        return job.get("builder")
+
+    def _eligible(self, builder, job):
+        return (self.operator_of(builder) not in job["exclude"] and builder not in job["avoid"]
+                and builder not in self.quarantined())
 
     def _advance(self):
         now = self.clock()
@@ -108,18 +124,28 @@ class VirtualExecutor:
         self._last = now
         for job in [j for j in self.running if j["done"] <= now]:
             self.running.remove(job)
-            job["result"] = pub.signed(self.key, dict(
-                v=1, tip=job["tip"], base=job["base"], tree=self.repo.tree(job["tip"]),
-                checker=job["digest"], toolchain={}, exit=int(bool(self.repo.bad[job["tip"]])),
-                blame=self.blame(job["units"]) if self.repo.bad[job["tip"]] else [],
-                verdict="red" if self.repo.bad[job["tip"]] else "green"))
-        while self.waiting and len(self.running) < self.n:
-            job = self.waiting.pop(0)
-            job["done"] = now + self.duration(len(job["units"]))
+            bad = bool(self.repo.bad[job["tip"]])
+            verdict = self.liars.get(job["builder"]) or ("red" if bad else "green")
+            job["result"] = pub.signed(self.builders[job["builder"]]["key"], dict(
+                v=2, tip=job["tip"], base=job["base"], tree=self.repo.tree(job["tip"]),
+                checker=job["digest"], toolchain={}, exit=int(verdict == "red"), result=None,
+                blame=self.blame(job["units"]) if bad else [], builder=job["builder"],
+                verdict=verdict))
+        busy = {j["builder"] for j in self.running}
+        for job in list(self.waiting):
+            builder = next((b for b in self.builders if b not in busy and self._eligible(b, job)), None)
+            if builder is None:
+                continue
+            self.waiting.remove(job)
+            job["builder"], job["done"] = builder, now + self.duration(len(job["units"]))
             self.running.append(job)
+            busy.add(builder)
 
-    def submit(self, base, tip, digest, units):
-        job = dict(base=base, tip=tip, digest=digest, units=list(units), result=None, done=None)
+    def submit(self, base, tip, digest, units, spec=None, exclude_operators=(), avoid=()):
+        job = dict(base=base, tip=tip, digest=digest, units=list(units), result=None, done=None,
+                   exclude=set(exclude_operators), avoid=set(avoid), builder=None)
+        if not any(self._eligible(b, job) for b in self.builders):
+            return None
         self.waiting.append(job)
         self._advance()
         return job
@@ -157,7 +183,12 @@ class VirtualWorld:
         for name, op in (operators or {n: {} for n, _ in SHARES}).items():
             pub.new_key(self.root / "operators" / f"{name}.key")
             ops[name] = dict(dict(rate=1000, burst=40), **op, key_file=f"operators/{name}.key")
-        pub.write_json(self.root / "config.json", dict(cfg, target="virtual", builders=builders,
+        registry = {}                         # builders spread over three host operators
+        for i in range(builders):
+            pub.new_key(self.root / "builders" / f"v{i}.key")
+            registry[f"v{i}"] = dict(operator=f"host{'ABC'[i % 3]}", key_file=f"builders/v{i}.key")
+        pub.write_json(self.root / "config.json", dict(dict(builders_registry=registry), **cfg,
+                                                       target="virtual", builders=builders,
                                                        operators=ops))
         pub.new_key(self.root / "receipt.key")
         pub.write_json(self.root / "checkers.json", {"current": "sim", "history": []})
@@ -167,7 +198,10 @@ class VirtualWorld:
         rng = self.rng
         duration = lambda n: (gate_fixed + gate_per_unit * n) * rng.uniform(1 - jitter, 1 + jitter)  # noqa: E731
         self.ex = VirtualExecutor(builders, lambda: self.now[0], self.repo, self.state.receipt_key,
-                                  duration)
+                                  duration, builders={
+                                      b: dict(operator=e["operator"], key=self.state.builder_key(b))
+                                      for b, e in self.state.registry().items()})
+        self.ex.quarantined = self.state.quarantined
         self.p = pub.Publisher(self.state, repo=self.repo, executor=self.ex,
                                clock=lambda: self.now[0])
         self.repo.is_bad = lambda u: self.p.queue.get(u, {}).get("sim_bad", False)
@@ -423,9 +457,20 @@ def loadtest(workdir, builders=3, rate=300, minutes=60, scale=6.0, red=0.03, gat
     pub.write_json(state_dir / "config.json", dict(
         target=str(origin), builders=builders, max_batch=max_batch, operators=ops,
         inbox=str(inbox), checker_paths=["checker"], gate="bash checker/gate.sh",
-        poll_seconds=0.5, clean_keep=[], target_red_batch=target))
+        poll_seconds=0.5, clean_keep=[], target_red_batch=target, ledger_cmd="git ls-files",
+        reverify_share=0.0, reverify_red=False))     # one host: throughput, not re-verification
     pub.new_key(state_dir / "receipt.key")
-    ok, report = pub.promote(state_dir, base)
+    fixtures, manifest = root / "fixtures", []    # promotion needs an exploit and a control
+    fixtures.mkdir()
+    for name, expect in (("bad_fixture", "reject"), ("fine_fixture", "pass")):
+        _git(seat, "checkout", "-q", "--detach", base)
+        (seat / f"{name}.txt").write_text("x\n")
+        _git(seat, "add", f"{name}.txt")
+        _git(seat, "commit", "-q", "-m", name)
+        (fixtures / f"{name}.patch").write_bytes(pub.git("format-patch", "-1", "--stdout", cwd=seat).stdout)
+        manifest.append(dict(patch=f"{name}.patch", expect=expect))
+    (fixtures / "fixtures.json").write_text(json.dumps(manifest))
+    ok, report = pub.promote(state_dir, base, fixtures)
     assert ok, report
     state = pub.State(state_dir)
     publisher = pub.Publisher(state)
