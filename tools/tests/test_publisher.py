@@ -74,6 +74,7 @@ class World:
         return git(self.seat, "rev-parse", "HEAD")
 
     def submit(self, files, op="opA", **kw):
+        kw.setdefault("scope", list(files))
         self.commit(files)
         return pub.submit(self.seat, op, self.key(op), "HEAD~1..HEAD", inbox=self.inbox, **kw)
 
@@ -420,7 +421,7 @@ def test_submit_over_a_git_remote_and_continuous_drain(world, tmp_path):
             git(world.seat, "config", "user.name", "opB")     # the author says opB; the key says opA
             world.commit({f"r{i}.txt": "1\n"})
             unit = pub.submit(world.seat, "opA", world.key("opA"), "HEAD~1..HEAD",
-                              remote=str(submissions))
+                              remote=str(submissions), scope=[f"r{i}.txt"])
             for _ in range(300):
                 if where(world, unit)[0] == "landed":
                     break
@@ -449,3 +450,105 @@ def test_pre_push_shim_turns_a_master_push_into_a_submission(world):
     assert other.returncode == 0
     settle(world.publisher())
     assert "shim.txt" in world.files()
+
+
+# ---- scope, diff-vs-scope, retry accounting ------------------------------------
+def test_scopes_overlap_on_shared_ledgers_headers_and_globs():
+    unit = lambda allow, paths, forbid=(): dict(scope=dict(allow=allow, forbid=list(forbid)),  # noqa: E731
+                                                paths=paths)
+    ledger = "targets/game/reverse/functions.csv"
+    a = unit(["game/a.cpp", ledger], ["game/a.cpp", ledger])
+    b = unit(["game/b.cpp", ledger], ["game/b.cpp", ledger])
+    c = unit(["game/c.cpp"], ["game/c.cpp"])
+    header = unit(["game/include/**"], ["game/include/x.h"])
+    user = unit(["game/d.cpp", "game/include/x.h"], ["game/d.cpp", "game/include/x.h"])
+    tools = unit(["tools/**", ".githooks/*"], ["tools/build.py"])
+    builder = unit(["game/e.cpp", "tools/build.py"], ["game/e.cpp", "tools/build.py"])
+    assert pub.scopes_overlap(a, b)                    # the shared ledger is scope
+    assert pub.scopes_overlap(header, user) and pub.scopes_overlap(tools, builder)
+    assert not pub.scopes_overlap(a, c) and not pub.scopes_overlap(c, header)
+    assert pub.in_scope("game/include/y/z.h", header["scope"])
+    assert not pub.in_scope("tools/x.py", dict(allow=["**"], forbid=["tools/**"]))
+
+
+def _concurrency(tmp_path, serialize):
+    world = load.VirtualWorld(tmp_path, builders=3, jitter=0.0, serialize_scopes=serialize)
+    seen = []
+    original = world.p._dispatch
+
+    def dispatch(batch, digest):
+        original(batch, digest)
+        seen.append([u for b in world.p.inflight for u in b.units])
+    world.p._dispatch = dispatch
+    shared = [world.submit("opA", paths=[f"x{i}.cpp", "functions.csv"]) for i in range(3)]
+    loose = [world.submit("opB", paths=[f"y{i}.cpp"]) for i in range(3)]
+    world.run([], 3 * 3600)
+    done = {e["unit"]: e["ev"] for e in world.events() if e["ev"] in ("landed", "rejected")}
+    together = max(len(set(shared) & set(units)) for units in seen)
+    loose_together = max(len(set(loose) & set(units)) for units in seen)
+    return done, shared + loose, together, loose_together
+
+
+def test_overlapping_scopes_are_serialized_not_rejected(tmp_path):
+    done, units, together, loose_together = _concurrency(tmp_path / "on", serialize=True)
+    assert all(done[u] == "landed" for u in units)        # serialized, never rejected
+    assert together == 1 and loose_together == 3          # disjoint units still share a batch
+    # positive control: without the rule the three ledger units are in flight together
+    _, _, together_off, _ = _concurrency(tmp_path / "off", serialize=False)
+    assert together_off == 3
+
+
+def test_rebased_diff_outside_the_declared_scope_is_rejected(world):
+    sneaky = world.submit({"ok1.txt": "1\n", "tools/extra.py": "x = 1\n"}, scope=["ok1.txt"])
+    forbidden = world.submit({"ok2.txt": "1\n", "checker/gate.sh": "exit 0\n"},
+                             scope=["**"], forbid=["checker/**"])
+    good = world.submit({"ok3.txt": "1\n", "sub/ok4.txt": "1\n"}, scope=["ok3.txt", "sub/**"])
+    settle(world.publisher())
+    state, record = where(world, sneaky)
+    assert state == "rejected" and record["reason"] == "out-of-scope"
+    assert record["paths"] == ["tools/extra.py"]
+    state, record = where(world, forbidden)
+    assert state == "rejected" and record["paths"] == ["checker/gate.sh"]
+    assert where(world, good)[0] == "landed"              # negative control
+    assert "tools/extra.py" not in world.files() and "sub/ok4.txt" in world.files()
+    # a unit that declares no scope is not queued at all
+    world.commit({"noscope.txt": "1\n"})
+    pub.submit(world.seat, "opA", world.key("opA"), "HEAD~1..HEAD", inbox=world.inbox)
+    world.publisher().ingest()
+    reasons = [json.loads(p.read_text())["reason"] for p in (world.state / "inbox-rejected").glob("*.json")]
+    assert reasons == ["no-scope"]
+
+
+def test_equivalent_failures_are_refused_until_the_target_inputs_change(world):
+    target = ["bad_t.txt", "cfg.txt"]
+    world.submit({"cfg.txt": "v1\n"}, scope=["cfg.txt"])
+    settle(world.publisher())
+
+    def attempt(n, content="same approach\n", ledger=False):
+        files = {"bad_t.txt": content}
+        if ledger:                                       # ledger edits do not change the approach
+            files["functions.csv"] = f"row {n}\n"
+        world.commit(files, message=f"attempt {n}")
+        scope = target + (["functions.csv"] if ledger else [])
+        return pub.submit(world.seat, "opA", world.key("opA"), "HEAD~1..HEAD",
+                          inbox=world.inbox, scope=scope)
+
+    def refused():
+        return sorted(json.loads(p.read_text())["reason"]
+                      for p in (world.state / "inbox-rejected").glob("*.json"))
+    for n in range(3):
+        unit = attempt(n)
+        settle(world.publisher())
+        assert where(world, unit)[1]["reason"] == "gate"
+    fourth = attempt(3, ledger=True)
+    settle(world.publisher())
+    assert where(world, fourth)[0] is None and refused() == ["retry-limit"]
+    other = attempt(4, content="a different approach\n")      # negative control
+    settle(world.publisher())
+    assert where(world, other)[1]["reason"] == "gate"
+    # the target's inputs change (cfg.txt lands anew): the same approach may run again
+    world.submit({"cfg.txt": "v2\n"}, scope=["cfg.txt"])
+    settle(world.publisher())
+    again = attempt(5)
+    settle(world.publisher())
+    assert where(world, again)[1]["reason"] == "gate" and refused() == ["retry-limit"]

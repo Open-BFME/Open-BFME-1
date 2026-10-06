@@ -60,6 +60,9 @@ class VirtualRepo:
     def tree(self, tip):
         return f"T{tip}"
 
+    def inputs_digest(self, head, scope):
+        return "static"
+
     def is_ancestor(self, older, newer, limit=100000):
         while newer is not None and limit:
             if newer == older:
@@ -159,11 +162,13 @@ class VirtualWorld:
         self.serial = 0
         self.depth = []
 
-    def submit(self, operator, bad=False, **extra):
+    def submit(self, operator, bad=False, paths=None, **extra):
         self.serial += 1
         i = self.serial
-        patch = (f"From {i:040x} Mon Sep 17 00:00:00 2001\nunit {i}\n"
-                 f"diff --git a/u{i} b/u{i}\n").encode()
+        paths = paths or [f"u{i}"]
+        patch = (f"From {i:040x} Mon Sep 17 00:00:00 2001\nunit {i}\n" + "".join(
+            f"diff --git a/{p} b/{p}\n+{i}\n" for p in paths)).encode()
+        extra.setdefault("scope", dict(allow=list(paths)))
         envelope = pub.signed(self.keys[operator], dict(
             v=1, operator=operator, sim_bad=bad, patch_sha256=hashlib.sha256(patch).hexdigest(),
             **extra))
@@ -184,7 +189,7 @@ class VirtualWorld:
             self.now[0] = max(self.now[0], nxt)
             while i < len(arrivals) and arrivals[i][0] <= self.now[0]:
                 _, name, bad, extra = arrivals[i]
-                self.submit(name, bad, **extra)
+                self.submit(name, bad, **dict(extra))
                 i += 1
             for _ in range(50):
                 if not self.p.step():
@@ -198,7 +203,8 @@ class VirtualWorld:
 
 
 def simulate(builders=3, rate=300, hours=8, red=0.03, gate_fixed=60, gate_per_unit=20, jitter=0.2,
-             max_batch=20, seed=1, warmup=1.0, workdir=None, blame=0.0, target=0.1):
+             max_batch=20, seed=1, warmup=1.0, workdir=None, blame=0.0, target=0.1,
+             shared=0.0):
     """Poisson arrivals from the three operators; returns measurements."""
     world = VirtualWorld(workdir or tempfile.mkdtemp(prefix="pubsim-"), builders,
                          gate_fixed=gate_fixed, gate_per_unit=gate_per_unit, jitter=jitter,
@@ -213,7 +219,9 @@ def simulate(builders=3, rate=300, hours=8, red=0.03, gate_fixed=60, gate_per_un
             acc += share
             if r <= acc:
                 break
-        arrivals.append((t, name, rng.random() < red, {}))
+        # `shared`: share of units that also touch one shared ledger (serialized)
+        extra = {"paths": [f"s{len(arrivals)}", "functions.csv"]} if rng.random() < shared else {}
+        arrivals.append((t, name, rng.random() < red, extra))
     world.run(arrivals, end)
     p, ex, root = world.p, world.ex, world.root
     depth_samples = world.depth
@@ -228,6 +236,7 @@ def simulate(builders=3, rate=300, hours=8, red=0.03, gate_fixed=60, gate_per_un
     span = max(1e-9, (end - warmup * 3600) / 3600)
     late = [d for t_, d in depth_samples if t_ >= end - 3600]
     return dict(builders=builders, rate=rate, red=red, hours=hours, blame=blame, target=target,
+                shared=shared,
                 sustained_per_h=round(len(landed) / span, 1),
                 latency_p50_min=round((pub.percentile(waits, 0.5) or 0) / 60, 1),
                 latency_p95_min=round((pub.percentile(waits, 0.95) or 0) / 60, 1),
@@ -331,7 +340,8 @@ def loadtest(workdir, builders=3, rate=300, minutes=60, scale=6.0, red=0.03, gat
             patch = (patches / f"{n:05d}.patch").read_bytes()
             unit = hashlib.sha256(patch).hexdigest()[:20]
             envelope = pub.signed(keys[name], dict(v=1, operator=name, time=time.time(),
-                                                   patch_sha256=hashlib.sha256(patch).hexdigest()))
+                                                   patch_sha256=hashlib.sha256(patch).hexdigest(),
+                                                   scope=dict(allow=pub.patch_paths(patch))))
             inbox.mkdir(exist_ok=True)
             (inbox / f"{unit}.patch").write_bytes(patch)
             pub.write_json(inbox / f"{unit}.env.json", envelope)
@@ -379,6 +389,8 @@ def main(argv=None):
     s.add_argument("--max-batch", type=int, default=20)
     s.add_argument("--blame", type=float, default=0.0, help="share of red gates naming the culprit")
     s.add_argument("--target", type=float, default=0.1, help="target_red_batch")
+    s.add_argument("--shared", type=float, default=0.0,
+                   help="share of units that also touch functions.csv")
     lt = sub.add_parser("loadtest")
     lt.add_argument("--workdir", required=True)
     lt.add_argument("--builders", type=int, default=3)
@@ -395,7 +407,7 @@ def main(argv=None):
                     print(json.dumps(simulate(n, args.rate, args.hours, red, args.gate_fixed,
                                               args.gate_per_unit, max_batch=args.max_batch,
                                               workdir=tmp, blame=args.blame,
-                                              target=args.target)), flush=True)
+                                              target=args.target, shared=args.shared)), flush=True)
         return 0
     print(json.dumps(loadtest(args.workdir, args.builders, args.rate, args.minutes, args.scale,
                               args.red, target=args.target), indent=1))

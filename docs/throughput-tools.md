@@ -403,6 +403,22 @@ it fails. The publisher then probes the blamed unit alone instead of
 bisecting. Operators above 20% red lose half their rate and the spare
 capacity (slow lane).
 
+Scope rules (2026-10-06). Every unit declares the globs it may touch
+(`submit --scope GLOB ... [--forbid GLOB]`, or `--scope-from-diff`); there
+are no exempt paths, so ledgers, headers, build files, tools/ and .githooks/
+must be declared like sources. Two units with overlapping scopes are never in
+flight together (serialized, not rejected). A unit whose rebased diff leaves
+its scope is rejected with the paths (`out-of-scope`). After `retry_limit`
+(3) gate failures with the same approach (its +/- lines outside ledger files)
+for the same target, an equivalent submission is refused (`retry-limit`)
+until the blobs in the target's scope or the checker change. Cost: whole-file
+ledger scope serializes every unit that edits the same ledger. With 8 builders
+at 3% red the simulator gives 281/h when no unit shares a ledger, 270/h at
+10%, 231/h at 30% (queue grows) and 159/h at 60%. Units that each append
+`functions.csv` rows therefore need row-level ledger scope
+(`serialize_scopes` turns the rule off) before the publisher carries the
+fleet.
+
 ### Cutover runbook (admins)
 
 1. **Publisher host.** It holds the bot's push credential: a GitHub App or
@@ -438,7 +454,7 @@ capacity (slow lane).
    lands, and the publisher only logs `foreign_push`
    (`test_no_verify_direct_push_is_only_stopped_by_the_admin_ruleset`).
 7. **Fleets.** Replace `git push` with `python3 tools/publisher.py submit
-   --operator <name> --key-file <key> --remote origin <base>..HEAD` and read
+   --operator <name> --key-file <key> --remote origin --scope <glob> ... <base>..HEAD` and read
    `PUBLISHER-SUBMITTED`/the unit id. Hosts that still push can install
    `tools/publisher_pre_push.sh`, which turns a push to master into a
    submission. The harvest pipeline's API fast-forward must move to `submit`.
