@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Name what no binary names. Any model proposes names; a name lands only when a model from a
-different vendor proposed the same one independently.
+"""Name what no binary names. Any model proposes names; a name lands only when allowlisted judges
+from two vendors, each called by the judge runner, proposed the same one independently.
 
+    python3 tools/name_lane.py ask --judge JUDGE      the judge runner asks an allowlisted model (counts)
     python3 tools/name_lane.py next --model MODEL     one file of placeholder names, with evidence
-    python3 tools/name_lane.py submit ANSWER.json --session ID
+    python3 tools/name_lane.py submit ANSWER.json --session ID     a proposal (recorded, never counts)
     python3 tools/name_lane.py apply                  land agreed names, byte-gated, one commit per file
     python3 tools/name_lane.py status                 readable-names progress
     python3 tools/name_lane.py check --staged         (pre-commit) placeholders renamed by hand
@@ -14,6 +15,14 @@ one model alone was about 60% accurate and 2-9% misleading. Models from one vend
 training data, so their agreement is weaker evidence. Votes are stored as hashes salted with
 their key, so a session cannot copy an earlier proposal to fake agreement: a name's text enters
 the repo only once a second vendor matches it.
+
+Who voted (decision record, pillar 5). A vote counts only when tools/judges.py, the repo's one
+judge runner, called an allowlisted judge (tools/judges.json) and the CLI's own record says that
+judge answered: `ask` does this and appends a receipt, signed with JUDGE_RUNNER_KEY, binding the
+session's vote hashes to the judge (name_vote_receipts.jsonl). `next --model X` / `submit` record
+X as the CLI user typed it, so those votes are kept as proposals and never count, nor do votes
+from before receipts existed. Agreement, `apply` and the staged check all re-derive agreement from
+attested votes only, so a hand-written name_agreed.csv row lands nothing.
 """
 import argparse
 import collections
@@ -32,10 +41,12 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
+import judges  # noqa: E402
 import readability_metric as RM  # noqa: E402
 
 REVERSE = ROOT / "targets/game/reverse"
 VOTES, AGREED = REVERSE / "name_votes.csv", REVERSE / "name_agreed.csv"
+RECEIPTS = REVERSE / "name_vote_receipts.jsonl"
 LEDGER = REVERSE / "functions.csv"
 STORED = [LEDGER, REVERSE / "symbols.csv", REVERSE / "dir32_addresses.csv"]
 TOMBSTONES, ADOPT_BLOCKED = REVERSE / "deleted_rows.csv", REVERSE / "header_adopt_blocked.tsv"
@@ -175,6 +186,62 @@ def open_key(state, key):
 
 def digest(key, name):
     return hashlib.sha256(f"{key}|{canon(name)}".encode()).hexdigest()[:24]
+
+
+def votes_digest(rows):
+    return hashlib.sha256("\n".join(sorted(f"{v['key']}|{v['hash']}" for v in rows)).encode()).hexdigest()
+
+
+def receipts():
+    if not RECEIPTS.exists():
+        return []
+    out = []
+    for line in RECEIPTS.read_text(encoding="utf-8").splitlines():
+        try:
+            out.append(json.loads(line))
+        except ValueError:
+            continue
+    return [r for r in out if isinstance(r, dict)]
+
+
+def attested_sessions(votes, key=None):
+    """{session: judge} for sessions whose every vote the judge runner attested: a receipt signed
+    with the runner key, counted under today's allowlist, naming the judge as the votes' model and
+    hashing exactly the session's votes. Without the key nothing is attested."""
+    key = key or judges.runner_key()
+    if not key:
+        return {}
+    by_session = collections.defaultdict(list)
+    for v in votes:
+        by_session[v["session"]].append(v)
+    out = {}
+    for r in receipts():
+        rows = by_session.get(r.get("session"), [])
+        if (rows and judges.verify_record(r, key) and all(v["model"] == r["judge"] for v in rows)
+                and votes_digest(rows) == r.get("votes")):
+            out[r["session"]] = r["judge"]
+    return out
+
+
+def tally(votes, attested):
+    """key -> hash -> models, from attested votes only."""
+    out = collections.defaultdict(lambda: collections.defaultdict(set))
+    for v in votes:
+        if v["session"] in attested:
+            out[v["key"]][v["hash"]].add(v["model"])
+    return out
+
+
+def landable(key=None):
+    """agreed_state() rows whose name attested votes agree on (two vendors, two-vote lead)."""
+    votes = table(VOTES)
+    counts = tally(votes, attested_sessions(votes, key))
+    out = {}
+    for k, a in agreed_state().items():
+        mine = counts.get(k, {}).get(digest(k, a["name"]), set())
+        if mine and wins(mine, [ms for h, ms in counts[k].items() if h != digest(k, a["name"])]):
+            out[k] = a
+    return out
 
 
 @functools.lru_cache(maxsize=None)
@@ -379,7 +446,12 @@ def answer_key(kind, scope, ident):
 # ------------------------------------------------------------------ commands
 
 def cmd_next(args):
-    model = model_id(args.model)
+    return serve(model_id(args.model), args)
+
+
+def serve(model, args, runner=False):
+    """Serve files to `model`; returns [(session, prompt)]. runner=True: for the judge runner, which
+    reads one JSON reply instead of a submitted file, and nothing is printed."""
     rows, types, ea = ledger_rows(), type_counts(), ea_labelled()
     state = agreed_state()
     voted = collections.defaultdict(set)
@@ -391,7 +463,7 @@ def cmd_next(args):
     # another vendor named it: this vote is the one that can land names
     files.sort(key=lambda f: not {vendor(m) for m in voted[f]} - {vendor(model)})
     served = 0
-    metadata = []
+    metadata, sessions = [], []
     for rel in files:
         text = read(rel)
         if len(text) > 15000:
@@ -401,7 +473,7 @@ def cmd_next(args):
             if args.list_only:
                 metadata.append({"file": rel, "chars": len(text), "kinds": dict(collections.Counter(i[0] for i in items))})
             else:
-                brief(rel, text, items, model, rows)
+                sessions.append(brief(rel, text, items, model, rows, runner))
             served += 1
             if served == args.count:
                 break
@@ -409,10 +481,10 @@ def cmd_next(args):
         print(json.dumps(metadata))
     elif not served:
         print(f"No file is left for {model} to name.")
-    return 0
+    return sessions if runner else 0
 
 
-def brief(rel, text, items, model, rows):
+def brief(rel, text, items, model, rows, runner=False):
     sys.path.insert(0, str(ROOT / "tools/fleet"))
     import context_pack
     # neighbours say nothing about names, and every line here is paid for by the session reading it
@@ -430,7 +502,12 @@ def brief(rel, text, items, model, rows):
         return next((l for l in uses if declarator.search(l)), uses[0] if uses else "")[:90]
 
     listing = "\n".join(f"  {answer_key(k, s, i):44} {k:8} {declared_at(i)}" for k, s, i in items)
-    print(f"""NAME THE PLACEHOLDERS IN {rel}  (session {session}, model {model})
+    privacy = "" if runner else ("Write your answer with a file-writing tool, never inline in a shell command: "
+                                 "other sessions on\nthis machine can read command lines. ")
+    how = ("""Reply with ONE JSON object mapping each key below to a name or "skip", and nothing else.""" if runner else
+           f"""Write a JSON object mapping each key below to a name or "skip", then run:
+  python3 tools/name_lane.py submit <that file> --session {session}""")
+    prompt = (f"""NAME THE PLACEHOLDERS IN {rel}  (session {session}, model {model})
 
 This is decompiled BFME (SAGE engine) C++. A converter invented the names below from addresses,
 offsets or decompiler slots. Give each the name its original EA programmer most likely used,
@@ -439,12 +516,10 @@ functions and methods camelCase unless the class already uses CamelCase, params 
 Answer "skip" when you cannot justify a name: a skip costs nothing, a wrong name misleads readers.
 A name lands only when a model from a DIFFERENT VENDOR independently proposes the same one, so
 your proposal must be your own: do not take names from, or show yours to, another model or session.
-Write your answer with a file-writing tool, never inline in a shell command: other sessions on
-this machine can read command lines. If a stand-in type IS a real class that a game or Zero Hour
+{privacy}If a stand-in type IS a real class that a game or Zero Hour
 header declares, answer that class's name.
 
-Write a JSON object mapping each key below to a name or "skip", then run:
-  python3 tools/name_lane.py submit <that file> --session {session}
+{how}
 
 {listing}
 
@@ -452,6 +527,9 @@ Write a JSON object mapping each key below to a name or "skip", then run:
 {text}
 --- evidence
 """ + "\n".join(evidence) + "\n")
+    if not runner:
+        print(prompt)
+    return session, prompt
 
 
 def problem(kind, old, new, file_words, types, owner=""):
@@ -475,22 +553,65 @@ def problem(kind, old, new, file_words, types, owner=""):
 
 
 def cmd_submit(args):
-    path = SESSIONS / f"{args.session}.json"
+    """A proposal typed in by whoever ran `next`: recorded, never counted (pillar 5)."""
+    answers = json.loads(Path(args.answer).read_text(encoding="utf-8"))
+    return record_votes(args.session, answers)
+
+
+def cmd_ask(args):
+    """The judge runner asks an allowlisted judge to name a file; its votes count."""
+    try:
+        judges.judge(args.judge)
+    except judges.JudgeRefused as error:
+        fail(str(error))
+    if not judges.runner_key():
+        fail("ask needs JUDGE_RUNNER_KEY (the runner host's signing key): an unsigned vote could be anyone's, "
+             "so it would never count")
+    served = serve(args.judge, argparse.Namespace(file=args.file, count=args.count, list_only=False), runner=True)
+    for session, prompt in served:
+        got = judges.judge_call(args.judge, prompt)
+        answers = parse_answers(got.reply)
+        if not got.counted or answers is None:
+            (SESSIONS / f"{session}.json").unlink(missing_ok=True)
+            print(f"{session}: no counted answer ({got.record['error'] or 'answering model '}"
+                  f"{'' if got.record['error'] else repr(got.record['answering_model'])}); nothing recorded")
+            continue
+        record_votes(session, answers, got.record)
+    if not served:
+        print(f"No file is left for {args.judge} to name.")
+    return 0
+
+
+def parse_answers(reply):
+    """The last JSON object in a reply that maps keys to strings; None when there is none."""
+    for start in [i for i, c in enumerate(reply or "") if c == "{"][::-1]:
+        try:
+            obj, _ = json.JSONDecoder().raw_decode(reply[start:])
+        except ValueError:
+            continue
+        if isinstance(obj, dict) and obj and all(isinstance(v, str) for v in obj.values()):
+            return obj
+    return None
+
+
+def record_votes(session_id, answers, record=None):
+    """Record a session's votes. Only with `record` (a counted judge-runner record) does the session
+    get a signed receipt, and only then can its votes agree a name."""
+    path = SESSIONS / f"{session_id}.json"
     if not path.exists():
-        fail(f"unknown session {args.session}: run `next` in this checkout first")
+        fail(f"unknown session {session_id}: run `next` in this checkout first")
     session = json.loads(path.read_text())
     rel, model = session["file"], session["model"]
     text = read(rel)
     if hashlib.sha256(text.encode()).hexdigest() != session["sha"]:
         fail(f"{rel} changed since `next` served it; run `next` again")
-    answers = json.loads(Path(args.answer).read_text(encoding="utf-8"))
+    attest = record is not None and record.get("counted") and record.get("judge") == model
     unknown = set(answers) - {answer_key(*i) for i in session["items"]}
     if unknown:
         fail(f"keys not in this session: {', '.join(sorted(unknown)[:8])}")
     file_words, types, owners = set(WORD.findall(strip(text))), type_counts(), member_owners(strip(text))
-    earlier = collections.defaultdict(lambda: collections.defaultdict(set))
-    for v in table(VOTES):
-        earlier[v["key"]][v["hash"]].add(v["model"])
+    every = table(VOTES)
+    earlier = tally(every, attested_sessions(every))
     state = agreed_state()
     now = datetime.date.today().isoformat()
     votes, rejected, landed, taken = [], [], [], set()
@@ -509,15 +630,26 @@ def cmd_submit(args):
             continue
         taken |= {canon(answer)} if kind in NAMED else set()
         h = digest(key, answer)
-        votes.append({"key": key, "hash": h, "model": model, "session": args.session, "date": now})
+        votes.append({"key": key, "hash": h, "model": model, "session": session_id, "date": now})
         mine = earlier[key][h] | {model}
-        if open_key(state, key) and wins(mine, [ms for h2, ms in earlier[key].items() if h2 != h]):
+        if attest and open_key(state, key) and wins(mine, [ms for h2, ms in earlier[key].items() if h2 != h]):
             landed.append({"key": key, "name": spelling(answer, kind), "models": "+".join(sorted(mine)),
                            "status": "agreed", "date": now})
             state[key] = landed[-1]
     if not votes:
+        path.unlink()
+        if attest:
+            print(f"{rel}: {model} gave no valid name" + "".join(f"\n  rejected: {r}" for r in rejected))
+            return 0
         fail("no valid names to record" + "".join(f"\n  rejected: {r}" for r in rejected))
     append(VOTES, votes)
+    if attest:
+        receipt = {k: record[k] for k in ("id", "judge", "family", "answering_model", "exit", "prompt_sha256",
+                                          "reply_sha256", "started")}
+        receipt.update(session=session_id, votes=votes_digest(votes), date=now)
+        receipt["mac"] = judges.sign(receipt, judges.runner_key())
+        with RECEIPTS.open("a", encoding="utf-8", newline="\n") as f:
+            f.write(json.dumps(receipt, sort_keys=True) + "\n")
     if landed:
         append(AGREED, landed)
     path.unlink()
@@ -525,12 +657,15 @@ def cmd_submit(args):
         print("  rejected:", r)
     for a in landed:
         print(f"  AGREED: {a['key'].split('|')[-1]} -> {a['name']} ({a['models']})")
-    print(f"{rel}: {len(votes)} vote(s) recorded as hashes, {len(rejected)} rejected, {len(landed)} newly agreed")
-    done = commit([VOTES] + ([AGREED] if landed else []), f"name_lane: {model} votes on {Path(rel).name}, {len(landed)} name(s) agreed")
+    print(f"{rel}: {len(votes)} vote(s) recorded as hashes, {len(rejected)} rejected, {len(landed)} newly agreed"
+          + ("" if attest else "; a proposal from `next`/`submit`: it never counts toward agreement (pillar 5)"))
+    done = commit([VOTES] + ([RECEIPTS] if attest else []) + ([AGREED] if landed else []),
+                  f"name_lane: {model} {'votes' if attest else 'proposes'} on {Path(rel).name}, "
+                  f"{len(landed)} name(s) agreed")
     if done.returncode:
         fail("commit refused:\n" + (done.stdout + done.stderr)[-3000:])
     print("Committed. " + ("Run `python3 tools/name_lane.py apply` to land the agreed names, then push."
-                          if landed else "Push it; the names land when another vendor's model agrees."))
+                          if landed else "Push it; names land when judges from two vendors agree through `ask`."))
     return 0
 
 
@@ -697,7 +832,10 @@ def cmd_dispute(args):
 def cmd_apply(args):
     rows, types, ea = ledger_rows(), type_counts(), ea_labelled()
     todo = collections.defaultdict(list)
+    attested = landable()
     for key, a in agreed_state().items():
+        if key not in attested:
+            continue                       # agreed by self-declared votes, or written by hand: pillar 5
         if a["status"] == "agreed" or (args.retry_blocked and a["status"].startswith("blocked")):
             rel, kind, scope, ident = key.split("|")
             todo[rel].append((kind, scope, ident, a["name"], a["models"], key))
@@ -773,6 +911,13 @@ def cmd_status(args):
         print(f"  {kind:9} {100 * (1 - b / n):6.2f}% readable  ({b:,} placeholders of {n:,})")
     print(f"votes: {len(table(VOTES)):,}; agreed: {len(state)} (landed {count['applied']}, waiting {count['agreed']}, "
           f"blocked {count['blocked']}, stale {count['stale']}, disputed {count['disputed']})")
+    votes = table(VOTES)
+    attested = attested_sessions(votes)
+    waiting = [k for k, a in agreed_state().items() if a["status"] == "agreed"]
+    print(f"runner-attested votes: {sum(v['session'] in attested for v in votes):,}"
+          + ("" if judges.runner_key() else " (no JUDGE_RUNNER_KEY on this host: nothing can be verified)")
+          + f"; waiting names agreed without attested votes (apply skips them): "
+            f"{len(set(waiting) - set(landable()))}")
     return 0
 
 
@@ -811,7 +956,7 @@ def cmd_check(args):
                           if was != now and placeholder(was) and not placeholder(now)}
     if not any(coined.values()):
         return 0
-    allowed = {a["name"] for a in agreed_state().values()}
+    allowed = {a["name"] for a in landable().values()}
     allowed |= {w for r in csv.DictReader(io.StringIO(EA.read_text(encoding="utf-8"))) if r["kind"] == "name"
                 for w in WORD.findall(r["value"])}
     allowed |= {w for pin in STORED[1:] for w in WORD.findall(git("show", f":{pin.relative_to(ROOT).as_posix()}"))}
@@ -842,6 +987,10 @@ def main():
     n.add_argument("--file", help="name this file instead of the next one in the queue")
     n.add_argument("--count", type=int, default=1, help="serve this many files in one go")
     n.add_argument("--list-only", action="store_true", help="print queue file/size/kind metadata as JSON without creating sessions or exposing votes")
+    a = sub.add_parser("ask", help="the judge runner asks an allowlisted judge (tools/judges.json); its votes count")
+    a.add_argument("--judge", required=True, help="a judge id from tools/judges.json")
+    a.add_argument("--file", help="name this file instead of the next one in the queue")
+    a.add_argument("--count", type=int, default=1, help="ask about this many files")
     s = sub.add_parser("submit")
     s.add_argument("answer")
     s.add_argument("--session", required=True)
@@ -853,7 +1002,7 @@ def main():
     sub.add_parser("status")
     sub.add_parser("check").add_argument("--staged", action="store_true", required=True)
     args = ap.parse_args()
-    return {"next": cmd_next, "submit": cmd_submit, "apply": cmd_apply, "dispute": cmd_dispute, "status": cmd_status,
+    return {"ask": cmd_ask, "next": cmd_next, "submit": cmd_submit, "apply": cmd_apply, "dispute": cmd_dispute, "status": cmd_status,
             "check": cmd_check}[args.cmd](args)
 
 
