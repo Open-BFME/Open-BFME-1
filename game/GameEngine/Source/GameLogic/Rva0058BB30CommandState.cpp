@@ -28,7 +28,10 @@ public:
 	int m_mode_10c;
 };
 
-extern Glo012F1028Type *Glo012F1028;
+// Retail 0x012F1028 is TheLivingWorldLogic (data_rows.csv, defined in
+// LivingWorldLogic.cpp); this TU reads it through the Glo012F1028Type view.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 
 // Rva002EE330PlayerList is this TU's view of retail's player-list global at
 // 0x012ED748, used only as the argument of the ILT thunk below.  The global
@@ -99,8 +102,9 @@ void __fastcall Rva0058BB30CommandState::refresh()
 		return;
 	}
 
-	if (Glo012F1028 != 0 && Glo012F1028->m_flag_02c != 0 &&
-		Glo012F1028->m_flag_02d != 0)
+	if (TheLivingWorldLogic != 0 &&
+		((Glo012F1028Type *)TheLivingWorldLogic)->m_flag_02c != 0 &&
+		((Glo012F1028Type *)TheLivingWorldLogic)->m_flag_02d != 0)
 	{
 		record.m_player = 0;
 		record.m_commandSet = 0;
