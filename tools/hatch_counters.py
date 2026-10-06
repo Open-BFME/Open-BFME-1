@@ -41,6 +41,14 @@ Usage:
                                                         shrinks and moves only
   python3 tools/hatch_counters.py --allow PATH... --reason TEXT
                                                         also admit growth in PATHs (tool allowance)
+  python3 tools/hatch_counters.py --admit PATH --reason TEXT [--tokens T...]
+                                                        the same for one file, scoped: rescans
+                                                        only PATH (what tools call)
+
+Tools that write a hatch after checking it call admit() themselves (BFME2:
+pin_admission.py --add, add_match.py --pin; BFME1: add_match.py for a verified
+row whose object-symbol= names a compiler label), so a checked, tool-written
+hatch passes and a hand-written one is refused once the register is enforced.
   python3 tools/hatch_counters.py --write-baseline      first baseline only (refuses if one exists)
 """
 import argparse
@@ -460,8 +468,81 @@ def update(allow_paths=(), reason=None):
             print("%-18s %7d -> %7d" % (hatch, t0[hatch], t1[hatch]))
 
 
+def blob_id(data):
+    """git's blob id of DATA (bytes), computed without a subprocess."""
+    import hashlib
+    return hashlib.sha1(b"blob %d\0" % len(data) + data).hexdigest()
+
+
+def _key_of(line):
+    cells = line.split("\t")
+    return (cells[0], cells[1], cells[2]) if len(cells) >= 4 and cells[0] in HATCHES else None
+
+
+def admit(path, reason, tokens=None, before=None, now=None):
+    """Scoped tool allowance for one file: {"admitted": [keys], "refused": [keys]}.
+
+    Rescans only PATH and rewrites only PATH's register lines (no tree scan; the
+    register is filtered as text). A key holding more than HEAD's register grants is
+    admitted -- allow=<blob of PATH as it is now> -- when its token is in TOKENS (None:
+    every grown key) or when it already carries an allowance for BEFORE (the blob PATH
+    had before the calling tool's edit), which is re-stamped. Every other grown key is
+    written at HEAD's count, so the gate names it as a new occurrence. A frozen hatch
+    exits."""
+    path = path.replace("\\", "/")
+    if not reason or len(reason.strip()) < 8:
+        sys.exit("hatch_counters: admit needs a reason (8+ chars)")
+    base = ROOT / BASELINE
+    if not base.exists():
+        return {"admitted": [], "refused": []}      # no register yet: nothing to admit into
+    data = (ROOT / path).read_bytes() if (ROOT / path).exists() else b""
+    blob = blob_id(data)
+    new = scan(path, data.decode("utf-8", "replace")) if data else collections.Counter()
+    head = {}
+    for line in (read_blobs(["HEAD:" + BASELINE])["HEAD:" + BASELINE] or "").splitlines():
+        key = _key_of(line)
+        if key and key[1] == path:
+            head[key] = min(int(line.split("\t")[3]), head.get(key, 1 << 62))
+    header, keep, old_allow = [], [], {}
+    for line in base.read_text(encoding="utf-8").splitlines():
+        key = _key_of(line)
+        if key is None:
+            header.append(line)
+        elif key[1] != path:
+            keep.append((key, line))
+        else:
+            cells = line.split("\t")
+            if len(cells) > 4 and cells[4].startswith("allow="):
+                old_allow[key] = cells[4][6:]
+    tokens = None if tokens is None else {str(t) for t in tokens}
+    admitted, refused = [], []
+    for key in sorted(new):
+        n, h = new[key], head.get(key, 0)
+        if n <= h:
+            keep.append((key, "%s\t%s\t%s\t%d" % (key + (n,))))
+        elif tokens is None or key[2] in tokens or old_allow.get(key, "") in {before, blob} - {None}:
+            admitted.append(key)
+            keep.append((key, "%s\t%s\t%s\t%d\tallow=%s" % (key + (n, blob))))
+        else:
+            refused.append(key)
+            if h:
+                keep.append((key, "%s\t%s\t%s\t%d" % (key + (h,))))
+    if admitted:
+        ref = reference_totals(now)
+        for hatch in sorted({k[0] for k in admitted}):
+            total = sum(int(line.split("\t")[3]) for k, line in keep if k[0] == hatch)
+            if frozen(hatch, total, ref):
+                sys.exit("hatch_counters: hatch '%s' is frozen (total %d vs 24 h reference %d)"
+                         % (hatch, total, ref[hatch]))
+    keep.sort(key=lambda item: item[0])
+    base.write_text("\n".join(header + [line for _, line in keep]) + "\n", encoding="utf-8", newline="\n")
+    for key in admitted:
+        print("hatch_counters: admitted %s in %s: %s -- %s" % (key + (reason,)), file=sys.stderr)
+    return {"admitted": admitted, "refused": refused}
+
+
 def report():
-    head = read_blobs(["HEAD:" + BASELINE])["HEAD:" + BASELINE]
+    head =read_blobs(["HEAD:" + BASELINE])["HEAD:" + BASELINE]
     b = totals(parse(head or "")[0])
     t = totals(tree_scan())
     print("%-18s %10s %10s" % ("hatch", "register", "tree"))
@@ -477,7 +558,9 @@ def main(argv=None):
     g.add_argument("--update", action="store_true")
     g.add_argument("--allow", nargs="+", metavar="PATH")
     g.add_argument("--write-baseline", action="store_true")
+    g.add_argument("--admit", metavar="PATH")
     ap.add_argument("--reason")
+    ap.add_argument("--tokens", nargs="+", help="--admit only: admit just these tokens")
     ap.add_argument("--mode", choices=("shadow", "enforce"), default="enforce",
                     help="--write-baseline only: start in shadow (report, never refuse)")
     args = ap.parse_args(argv)
@@ -508,6 +591,11 @@ def main(argv=None):
             sys.exit("hatch_counters: %s exists; use --update (shrink/move) or --allow" % BASELINE)
         write(tree_scan(), mode=args.mode)
         return 0
+    if args.admit:
+        got = admit(args.admit, args.reason, args.tokens)
+        for key in got["refused"]:
+            print("hatch_counters: NOT admitted (token not in --tokens): %s in %s: %s" % key, file=sys.stderr)
+        return 1 if got["refused"] else 0
     update(args.allow or (), args.reason)
     return 0
 

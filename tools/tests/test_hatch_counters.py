@@ -305,3 +305,62 @@ def test_mode_may_go_shadow_to_enforce_but_not_back(repo):
     _set_mode(repo, "enforce")
     repo.git("add", ".")
     assert staged(repo).returncode == 0
+
+
+# ---- scoped tool allowance (admit): what pin/alias writers call after their own checks
+
+def admit(repo, path, *args):
+    return repo.tool("--admit", path, "--reason", "checked by the writing tool", *args)
+
+
+def test_admit_admits_only_the_named_tokens(repo):
+    pins = repo.lay["rev"] + "/symbols.csv"
+    repo.write(pins, repo.read(pins) + "?b@@3HA,0x00001004,tool\n?c@@3HA,0x00001008,hand\n")
+    got = admit(repo, pins, "--tokens", "0x00001004")
+    assert got.returncode == 1 and "0x00001008" in got.stderr               # the hand pin is not admitted
+    repo.git("add", ".")
+    got = staged(repo)
+    assert got.returncode == 1 and "pin +1" in got.stderr and "0x00001008" in got.stderr
+    assert "0x00001004" not in got.stderr                                     # the tool pin passes
+    repo.write(pins, repo.read(pins).replace("?c@@3HA,0x00001008,hand\n", ""))
+    repo.git("add", ".")
+    got = staged(repo)
+    assert got.returncode == 1 and "raised by hand" in got.stderr              # blob moved after admit
+    assert admit(repo, pins, "--tokens", "0x00001004").returncode == 0
+    repo.git("add", ".")
+    assert staged(repo).returncode == 0
+
+
+def test_admit_restamps_an_earlier_tool_allowance_in_the_same_file(repo):
+    pins = repo.lay["rev"] + "/symbols.csv"
+    sys.path.insert(0, str(repo.root / "tools"))
+    repo.write(pins, repo.read(pins) + "?b@@3HA,0x00001004,tool\n")
+    assert admit(repo, pins, "--tokens", "0x00001004").returncode == 0
+    before = hc.blob_id((repo.root / pins).read_bytes())
+    assert before == repo.git("hash-object", pins).strip()
+    repo.write(pins, repo.read(pins) + "?d@@3HA,0x0000100C,tool\n")
+    env = dict(os.environ, HATCH_ROOT=str(repo.root), HATCH_NOW=str(T0 + 60))
+    code = ("import sys; sys.path.insert(0, 'tools'); import hatch_counters as h; "
+            "r = h.admit(%r, 'second tool write', {'0x0000100C'}, before=%r); "
+            "sys.exit(1 if r['refused'] else 0)" % (pins, before))
+    assert subprocess.run([sys.executable, "-c", code], cwd=repo.root, env=env).returncode == 0
+    repo.git("add", ".")
+    assert staged(repo).returncode == 0                                       # both pins carry the new blob
+
+
+def test_admit_shrinks_and_leaves_other_files_alone(repo):
+    repo.write(repo.lay["src"], SOURCE.replace("__emit 0x90 ", ""))
+    other = repo.read(repo.lay["base"])
+    assert admit(repo, repo.lay["src"]).returncode == 0
+    after = repo.read(repo.lay["base"])
+    assert "\temit\t" not in "\t" + after
+    assert [l for l in other.splitlines() if repo.lay["src"] not in l] == \
+           [l for l in after.splitlines() if repo.lay["src"] not in l]
+    repo.git("add", ".")
+    assert staged(repo).returncode == 0
+
+
+def test_admit_respects_the_freeze(repo):
+    repo.write(repo.lay["src"], SOURCE + "void h() { __asm { __emit 0x90 } }\n" * 12)
+    got = admit(repo, repo.lay["src"])
+    assert got.returncode != 0 and "frozen" in got.stderr
