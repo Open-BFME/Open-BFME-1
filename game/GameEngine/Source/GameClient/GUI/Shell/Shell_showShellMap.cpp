@@ -13,18 +13,30 @@ struct BfmeStringData
 	unsigned short m_length;
 };
 
-class AsciiString
+// isEmpty/isNotEmpty are StringBase<char>'s header-inline members; their
+// COMDATs are retail 0x0005E4C0 and 0x0005E510.
+template <typename T>
+class StringBase
 {
 public:
-	AsciiString &operator=(const AsciiString &that);
+	Bool isEmpty() const
+	{
+		return m_data == 0 || ((const BfmeStringData *)m_data)->m_length == 0;
+	}
 
 	Bool isNotEmpty() const
 	{
-		return m_data != 0 && ((const BfmeStringData *)m_data)->m_length != 0;
+		return !isEmpty();
 	}
 
-private:
+protected:
 	void *m_data;
+};
+
+class AsciiString : public StringBase<char>
+{
+public:
+	AsciiString &operator=(const AsciiString &that);
 };
 
 class BfmeGlobalData
