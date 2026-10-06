@@ -115,46 +115,8 @@ NameKeyType NameKeyGenerator::nameToKey(const AsciiString& name)
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/NameKeyGenerator_keyToName.cpp
-// ?keyToName@NameKeyGenerator@@ present-unmatched
-// BFME's real body (0x8FD30) does NOT walk m_sockets -- it looks the key up in the
-// reverse key->Bucket hash_map instead (see NameKeyGenerator.h shim; the aux
-// structure and its find()/insert() call shapes are proven -- see
-// nameToKey(const char*) below, landed byte-exact using the same aux). The
-// AsciiString-ABI gap that used to block this (retail's out-of-line, guarded
-// StringBase<char> copy ctor at 0x887B60) is now also closed (AsciiString.h
-// shim's inline copy ctor forwards straight to it, matching the disassembly's
-// `push &src; mov ecx,&dest; call 0x887b60` shape exactly). What's LEFT
-// blocking is `hash_map<>::find()`'s inlined shape itself: retail's compiled
-// loop has ONE shared exit test after the `_M_find` search loop (`test
-// edx,edx` @0x8fd6d, reused for both the found and not-found cases -- i.e.
-// _M_find(key)'s own `__first && !equals(...)` loop condition IS the only
-// test, and the caller's `it != end()` folds into it with no separate check).
-// Every natural phrasing tried here (`if (it != end()) return ...; return
-// empty;`, materializing `KeyToBucketMap& m = ...` first, inverting to
-// `if (it == end()) return empty; return ...;`) compiles to TWO separate
-// tests instead (the loop's own found/not-found exit PLUS a second,
-// redundant `it == end()` check the optimizer doesn't fold away), producing
-// a close but non-byte-exact near miss (same instruction count in the ~90s,
-// same relocations, different branch/test arrangement -- see
-// targets/game/reverse/re_attempts.log). Left present-unmatched rather than land the
-// near-miss; nameToKey(const char*)'s success below shows the AsciiString/
-// aux-hash_map reconstruction itself is sound, so this is specifically a
-// `hash_map::find()`-inlining-shape gap.
-// byte-exact reconstruction: game/GameEngine/Source/Common/NameKeyGenerator_keyToName.cpp
-// ?keyToName@NameKeyGenerator@@QAE?AVAsciiString@@W4NameKeyType@@@Z present-unmatched
-AsciiString NameKeyGenerator::keyToName(NameKeyType key)
-{
-	for (Int i = 0; i < SOCKET_COUNT; ++i)
-	{
-		for (Bucket *b = m_sockets[i]; b; b = b->m_nextInSocket)
-		{
-			if (key == b->m_key)
-				return b->m_nameString;
-		}
-	}
-	return AsciiString::TheEmptyString;
-}
+// NameKeyGenerator::keyToName (retail 0x0008FD30) is matched in
+// NameKeyGenerator_keyToName.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // BFME's real body (0x8FFC0) additionally inserts into the reverse key->Bucket
