@@ -13,10 +13,10 @@ class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 
 
-class BfmeQ1064
+class AptLanLobby
 {
 public:
-	void bfmeGo1064A(void);
+	void OnGameCreate(void);
 	void bfmeSet1064B(char a);
 	char bfmeChk1064(void);
 	char m_bfmePad[0x250];
@@ -28,7 +28,7 @@ public:
 	int m_bfme3a8;
 };
 
-void BfmeQ1064::bfmeGo1064A(void)
+void AptLanLobby::OnGameCreate(void)
 {
 	if (m_bfme3a8 == 3) {
 		if (bfmeChk1064()) {
@@ -40,7 +40,7 @@ void BfmeQ1064::bfmeGo1064A(void)
 	}
 }
 
-void BfmeQ1064::bfmeSet1064B(char a)
+void AptLanLobby::bfmeSet1064B(char a)
 {
 	if (!m_bfme294 && a == m_bfme295)
 		return;

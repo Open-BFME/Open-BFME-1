@@ -76212,7 +76212,7 @@ name,address,notes
 ?bfmeCheckZE@@YADXZ,0x0001808E
 ?bfmeCheckZE@BfmeHostZE@@QAEDPAXPAVBfmeObjZE@@@Z,0x0001D813,opaque ABI alias for the proven predicate call at 0x002DD5B0
 ?bfmeCheckZK@BfmeOwnerZK@@QAEDXZ,0x00001C03,pin
-?bfmeChk1064@BfmeQ1064@@QAEDXZ,0x0001E533,pin
+?bfmeChk1064@AptLanLobby@@QAEDXZ,0x0001E533,pin
 ?bfmeChk1079@BfmeM1079@@QAEDXZ,0x000279CB,pin
 ?bfmeChk1083@BfmeB1083@@QAEDXZ,0x00022C96,pin
 ?bfmeChk1089@BfmeR1089@@QAEDXZ,0x000262B5,pin
