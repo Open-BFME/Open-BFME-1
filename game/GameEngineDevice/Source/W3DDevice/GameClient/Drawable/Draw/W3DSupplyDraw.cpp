@@ -79,48 +79,8 @@ W3DSupplyDraw::~W3DSupplyDraw()
 {
 }
 
-// ?updateDrawModuleSupplyStatus@W3DSupplyDraw@@UAEXHH@Z present-unmatched
-void W3DSupplyDraw::updateDrawModuleSupplyStatus( Int maxSupply, Int currentSupply )
-{
-	W3DModelDraw::updateDrawModuleSupplyStatus( maxSupply, currentSupply );
-
-	AsciiString boneName = getW3DSupplyDrawModuleData()->m_supplyBonePrefix;
-	if( m_totalBones == -1 )
-	{
-		m_totalBones = getDrawable()->getPristineBonePositions( boneName.str(), 1, NULL, NULL, INT_MAX );// The last arg is to guard the size of the arrays.  I am not passing any in, I am just counting bones.
-		m_lastNumberShown = m_totalBones;
-	}
-
-	// Figure the % of our bones we should show, and if it is a different % than last time
-	// start showing and hiding them.
-	Int bonesToShow = ceil(m_totalBones * ( currentSupply / (float)maxSupply ));
-	bonesToShow = min( bonesToShow, m_totalBones );
-
-	if( bonesToShow != m_lastNumberShown )
-	{
-		// Show/hide the bones that are now different, the indices between last and now (low, high].
-		Int lowIndex = min( m_lastNumberShown, bonesToShow );
-		Int highIndex = max( m_lastNumberShown, bonesToShow );
-		Bool hide = bonesToShow < m_lastNumberShown;
-		Int currentIndex = lowIndex + 1;
-
-		std::vector<ModelConditionInfo::HideShowSubObjInfo> boneVector;
-		while( currentIndex <= highIndex )
-		{
-			char buffer[16];
-			sprintf( buffer, "%s%02d", boneName.str(), currentIndex );
-			ModelConditionInfo::HideShowSubObjInfo info;
-			info.hide = hide;
-			info.subObjName = buffer;
-			boneVector.push_back(info);
-
-			++currentIndex;
-		}
-		doHideShowSubObjs(&boneVector);
-
-		m_lastNumberShown = bonesToShow;
-	}
-}
+// W3DSupplyDraw::updateDrawModuleSupplyStatus: retail's body (0x0077DDF0) is
+// W3DSupplyDrawUpdate.cpp; Zero Hour's version is not defined here.
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // BFME W3DSupplyDraw::updateDrawModuleSupplyStatus, retail 0x0077DDF0 (384B).
 //
 // The body is entered through the secondary W3DModelDrawInterface view.  Its
@@ -20,52 +20,10 @@ static const Int& bfmeMax(const Int& left, const Int& right)
 	return left > right ? left : right;
 }
 
-// Retail's AsciiString derives from StringBase<char>: its own copy ctor is the
-// forwarder at 0x0005EE50 and it holds nothing of its own, so a caller that
-// copies a string encodes the base body at 0x00887B60 directly. The delegation
-// has to be visible here for this TU to encode the same call.
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase(const StringBase<T> &src);
-
-	struct Header
-	{
-		int ref_count;
-		unsigned short length;
-		unsigned short capacity;
-		T data[1];
-	};
-
-	Header *m_data;
-};
-
-class AsciiString
-{
-public:
-	// Retail inlines this forwarder, so the call site encodes
-	// StringBase<char>'s copy ctor at 0x00887B60 directly.
-	AsciiString(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&other);
-	}
-	AsciiString(const char* text);
-	~AsciiString();
-
-	const char* str() const
-	{
-		if (m_data)
-			return reinterpret_cast<const char*>(m_data + 8);
-		return "";
-	}
-
-private:
-	int m_data;
-};
+// The canonical AsciiString: its inline constructors and destructor make the
+// call sites encode StringBase<char>'s bodies (0x00888BC0, 0x00887B60,
+// releaseBuffer 0x00887940) directly, as retail does.
+#include "ascii_string.h"
 
 struct Coord3D;
 class Matrix3D;
