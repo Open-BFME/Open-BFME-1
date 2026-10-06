@@ -293,6 +293,7 @@ class W3DShrubBuffer
 {
   public:
 	void rva0071EEC0(CameraClass *, RefMultiListIterator<RenderObjClass> *);
+protected:
 	void updateTexture();
 
   protected:

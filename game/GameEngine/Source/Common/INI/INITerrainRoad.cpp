@@ -30,7 +30,7 @@
 class TerrainRoadType
 {
 public:
-	AsciiString getName( void ) const;
+	AsciiString getName( void );
 	// Inline: retail reads the byte where the call would be -- mov cl,[eax+8]
 	// then test cl,cl -- so the kind flag is not behind a call.
 	Bool isBridge( void ) const { return m_isBridge; }

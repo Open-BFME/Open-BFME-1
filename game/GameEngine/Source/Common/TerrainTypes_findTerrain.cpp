@@ -70,7 +70,7 @@ private:
 class TerrainType
 {
 public:
-	AsciiString getName(void) const;			// ILT 0x00031985
+	AsciiString getName(void);			// ILT 0x00031985
 
 	TerrainType *friend_getNext(void) { return m_next; }
 

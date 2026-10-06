@@ -139,8 +139,9 @@ class GameLogic { public:
     Object* findObjectByID(int);
 };
 extern GameLogic* TheGameLogic;
-class WeaponFireSpecialAbilityUpdate { public:
+class WeaponFireSpecialAbilityUpdate { protected:
     virtual void triggerAbilityEffect();
+public:
     Data0026DA00* field04; Target0026DA00* field08;
     char pad0C[0xa0]; int fieldAC; Position0026DA00 fieldB0;
     char padBC[0x2c]; Weapon0026DA00* fieldE8;

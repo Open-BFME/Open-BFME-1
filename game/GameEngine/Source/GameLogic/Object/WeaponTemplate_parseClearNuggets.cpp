@@ -44,7 +44,7 @@ struct Rva001E3F90Node
 
 class WeaponTemplate
 {
-public:
+private:
 	static void parseClearNuggets(INI *ini, void *instance, void *store, const void *userData);
 
 private:

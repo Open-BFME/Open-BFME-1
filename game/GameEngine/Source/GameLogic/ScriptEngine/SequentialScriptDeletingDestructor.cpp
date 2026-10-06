@@ -7,7 +7,7 @@
 
 class SequentialScript
 {
-protected:
+public:
 	virtual ~SequentialScript();
 private:
 	friend void forceSequentialScriptDeletingDestructor();

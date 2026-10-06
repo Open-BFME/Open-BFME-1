@@ -71,7 +71,7 @@ class RespawnBody : public BehaviorModule,
 	public BehaviorModuleInterface,
 	public BodyModuleInterface
 {
-public:
+protected:
 	virtual ~RespawnBody();
 
 private:

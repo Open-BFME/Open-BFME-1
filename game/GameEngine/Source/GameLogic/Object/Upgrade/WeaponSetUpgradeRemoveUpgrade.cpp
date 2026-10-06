@@ -30,7 +30,7 @@ public:
 	virtual void bfmeV6TEB() = 0;
 	virtual void bfmeV7TEB() = 0;
 	virtual void bfmeDoTEB(int a) = 0;
-protected:
+public:
 	virtual void removeUpgrade();
 };
 

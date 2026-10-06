@@ -71,7 +71,7 @@ public:
 
 class SlaveWatcherBehavior : public SlaveWatcherUpdateModule
 {
-public:
+protected:
 	virtual ~SlaveWatcherBehavior();
 
 private:

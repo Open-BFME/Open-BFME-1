@@ -7,7 +7,7 @@
 
 class RespawnUpdate
 {
-protected:
+public:
 	virtual ~RespawnUpdate();
 private:
 	friend void forceRespawnUpdateDeletingDestructor();

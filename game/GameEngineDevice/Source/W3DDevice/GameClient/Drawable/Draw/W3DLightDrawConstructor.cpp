@@ -135,6 +135,7 @@ class W3DLightDraw : public DrawModule
 {
 public:
 	W3DLightDraw(Thing *, const ModuleData *);
+private:
 	virtual ~W3DLightDraw();
 
 private:

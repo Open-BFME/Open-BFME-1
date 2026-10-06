@@ -88,6 +88,7 @@ class RousingSpeechUpdate : public SpecialAbilityUpdate
 {
 public:
 	RousingSpeechUpdate(Thing *, const ModuleData *);
+protected:
     virtual ~RousingSpeechUpdate();
 
 private:
@@ -104,7 +105,7 @@ RousingSpeechUpdate::RousingSpeechUpdate(Thing *thing, const ModuleData *data)
 	m_speechObjectIDList.clear();
 }
 
-// ??1RousingSpeechUpdate@@UAE@XZ
+// ??1RousingSpeechUpdate@@MAE@XZ
 RousingSpeechUpdate::~RousingSpeechUpdate()
 {
 	m_speechObjectIDList.clear();

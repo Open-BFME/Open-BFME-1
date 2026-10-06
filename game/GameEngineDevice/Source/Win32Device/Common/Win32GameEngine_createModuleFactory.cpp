@@ -29,7 +29,7 @@ private:
 
 class Win32GameEngine
 {
-public:
+protected:
     virtual ModuleFactory *createModuleFactory();
 };
 

@@ -21,7 +21,7 @@ public:
 
 class W3DQuadrupedDraw : public W3DModelDraw, public W3DModelDrawInterface
 {
-public:
+protected:
 	virtual ~W3DQuadrupedDraw();
 };
 

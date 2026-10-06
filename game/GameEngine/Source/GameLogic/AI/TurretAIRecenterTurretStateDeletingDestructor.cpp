@@ -7,7 +7,7 @@
 
 class TurretAIRecenterTurretState
 {
-protected:
+public:
 	virtual ~TurretAIRecenterTurretState();
 private:
 	friend void forceTurretAIRecenterTurretStateDeletingDestructor();

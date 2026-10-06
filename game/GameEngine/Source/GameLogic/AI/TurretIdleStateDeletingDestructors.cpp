@@ -6,7 +6,7 @@
 
 class TurretAIIdleState
 {
-protected:
+public:
 	virtual ~TurretAIIdleState();
 private:
 	friend void forceTurretAIIdleStateDeletingDestructor();
@@ -14,7 +14,7 @@ private:
 
 class TurretAIIdleScanState
 {
-protected:
+public:
 	virtual ~TurretAIIdleScanState();
 private:
 	friend void forceTurretAIIdleScanStateDeletingDestructor();

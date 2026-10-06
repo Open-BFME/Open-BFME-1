@@ -66,7 +66,7 @@ public:
 	virtual void bfmeW6UYA() = 0;
 	virtual void bfmeW7UYA() = 0;
 	virtual void bfmeFinishUYA(int f) = 0;
-protected:
+public:
 	virtual void removeUpgrade();
 };
 

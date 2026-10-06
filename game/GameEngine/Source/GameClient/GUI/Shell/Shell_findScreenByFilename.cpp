@@ -51,7 +51,7 @@ private:
 class WindowLayout
 {
 public:
-	AsciiString getFilename(void);
+	AsciiString getFilename(void) const;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shell.h

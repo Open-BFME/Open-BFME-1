@@ -7,7 +7,7 @@
 
 class SoundFXNugget
 {
-protected:
+public:
 	virtual ~SoundFXNugget();
 private:
 	friend void forceSoundFXNuggetDeletingDestructor();

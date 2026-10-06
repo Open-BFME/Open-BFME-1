@@ -86,6 +86,7 @@ class SiegeEngineContain : public HordeTransportContainBase
 {
 public:
 	SiegeEngineContain(Thing *, const ModuleData *);
+protected:
 	virtual ~SiegeEngineContain();
 
 private:

@@ -25,14 +25,14 @@ class WindowLayout
 {
 public:
 	virtual ~WindowLayout();
-	AsciiString getFilename(void);
+	AsciiString getFilename(void) const;
 
 private:
 	AsciiString m_filenameString;
 };
 
-// ?getFilename@WindowLayout@@QAE?AVAsciiString@@XZ
-AsciiString WindowLayout::getFilename(void)
+// ?getFilename@WindowLayout@@QBE?AVAsciiString@@XZ
+AsciiString WindowLayout::getFilename(void) const
 {
 	return m_filenameString;
 }

@@ -119,7 +119,9 @@ public:
 	virtual void slot19();
 	virtual ObjectTypes *getObjectTypes(const AsciiString &objectTypeList);
 
+protected:
 	AttackPriorityInfo *findAttackInfo(const AsciiString &name, Bool addIfNotFound);
+public:
 	void AppendDebugMessage(const AsciiString &message, Bool forcePause);
 
 	protected:

@@ -7,7 +7,7 @@
 
 class ProneUpdateModuleData
 {
-protected:
+public:
 	virtual ~ProneUpdateModuleData();
 private:
 	friend void forceProneUpdateModuleDataDeletingDestructor();

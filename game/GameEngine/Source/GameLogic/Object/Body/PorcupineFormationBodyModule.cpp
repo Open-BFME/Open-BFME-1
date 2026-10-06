@@ -49,6 +49,7 @@ class PorcupineFormationBodyModule : public ActiveBody
 public:
 	PorcupineFormationBodyModule( Thing *thing, const ModuleData *moduleData );
 	virtual void attemptDamage(DamageInfo *damageInfo);
+protected:
 	virtual ~PorcupineFormationBodyModule();
 };
 

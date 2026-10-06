@@ -7,7 +7,7 @@
 
 class TurretState
 {
-protected:
+public:
 	virtual ~TurretState();
 private:
 	friend void forceTurretStateDeletingDestructor();

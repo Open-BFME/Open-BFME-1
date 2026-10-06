@@ -222,8 +222,9 @@ public:
 
 class W3DLightDraw : public DrawModule
 {
-public:
-	virtual ~W3DLightDraw();                                          // 00 -> 0x00758860
+private:
+	virtual ~W3DLightDraw();
+public:                                          // 00 -> 0x00758860
 
 protected:
 	virtual MemoryPool *getObjectMemoryPool();                        // 01 -> 0x001139D0

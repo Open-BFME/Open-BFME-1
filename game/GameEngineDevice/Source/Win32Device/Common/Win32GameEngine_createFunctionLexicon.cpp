@@ -22,7 +22,7 @@ public:
 
 class Win32GameEngine
 {
-public:
+protected:
 
 	virtual FunctionLexicon *createFunctionLexicon();
 };

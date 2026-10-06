@@ -59,7 +59,7 @@ public:
 
 class WallUpgradeUpdate
 {
-public:
+protected:
 	virtual UpdateSleepTime update();
 };
 
@@ -77,7 +77,7 @@ static __forceinline bool wallUpgradePartnerReady(const Object *partner)
 	return false;
 }
 
-// ?update@WallUpgradeUpdate@@UAE?AW4UpdateSleepTime@@XZ
+// ?update@WallUpgradeUpdate@@MAE?AW4UpdateSleepTime@@XZ
 UpdateSleepTime WallUpgradeUpdate::update()
 {
 	unsigned char *self = (unsigned char *)this;

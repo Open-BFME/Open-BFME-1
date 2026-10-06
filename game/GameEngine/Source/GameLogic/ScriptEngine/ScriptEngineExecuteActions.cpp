@@ -59,8 +59,9 @@ protected:
 	void setSway(ScriptAction *action);
 	void Rva003369d0(ScriptAction *action);
 	void Rva0033e040(ScriptAction *action);
-	public:
+	protected:
 	void setPriorityKind(ScriptAction *action);
+protected:
 	void setPriorityDefault(ScriptAction *action);
 	protected:
 	void Rva00345a50(ScriptAction *action, int randomMode, bool copyCounter, bool seconds);

@@ -46,6 +46,7 @@ class SlaveWatcherBehavior : public UpdateModule
 {
 public:
     SlaveWatcherBehavior(Thing *, const ModuleData *);
+protected:
     virtual ~SlaveWatcherBehavior();
 
 private:

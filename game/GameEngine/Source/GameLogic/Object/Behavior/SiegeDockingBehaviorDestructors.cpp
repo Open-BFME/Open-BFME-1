@@ -69,7 +69,7 @@ class SiegeDockingBehavior
 	: public UpdateModule,
 	  public SiegeDockingBehaviorSecondaryBase
 {
-public:
+protected:
 	virtual ~SiegeDockingBehavior();
 
 private:
@@ -78,7 +78,7 @@ private:
 	_STL::vector<int> m_vector;
 };
 
-// ??1SiegeDockingBehavior@@UAE@XZ
+// ??1SiegeDockingBehavior@@MAE@XZ
 SiegeDockingBehavior::~SiegeDockingBehavior()
 {
 	stopDocking();

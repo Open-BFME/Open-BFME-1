@@ -7,7 +7,7 @@
 
 class SupplyWarehouseCripplingBehaviorModuleData
 {
-protected:
+public:
 	virtual ~SupplyWarehouseCripplingBehaviorModuleData();
 private:
 	friend void forceSupplyWarehouseCripplingBehaviorModuleDataDeletingDestructor();

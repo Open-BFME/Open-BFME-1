@@ -71,7 +71,7 @@ private:
 class TerrainRoadType
 {
 public:
-	AsciiString getName(void) const;			// ILT 0x000215E9
+	AsciiString getName(void);			// ILT 0x000215E9
 
 	TerrainRoadType *friend_getNext(void) { return m_next; }
 

@@ -87,8 +87,9 @@ struct Rva0071DAF0Type {
  char suffix[0x10];
 };
 class W3DShrubBuffer {
-public:
+protected:
  void updateTexture();
+public:
  char prefix[0x1450];
  BFMEWaterTrackTextureHandle	texture1450,texture1454;
  Rva0094D1E0List list1458,list1480;

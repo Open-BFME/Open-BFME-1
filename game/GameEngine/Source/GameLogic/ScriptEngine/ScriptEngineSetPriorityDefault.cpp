@@ -69,9 +69,11 @@ private:
 
 class ScriptEngine
 {
-public:
+protected:
     AttackPriorityInfo *findAttackInfo(const AsciiString &name, Bool addIfNotFound);
+public:
     void AppendDebugMessage(const AsciiString &message, Bool forcePause);
+protected:
     void setPriorityDefault(ScriptAction *action);
 };
 

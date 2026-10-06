@@ -41,6 +41,7 @@ class RespawnBody : public ActiveBody
 {
 public:
 	RespawnBody(Thing *thing, const ModuleData *moduleData);
+protected:
 	virtual ~RespawnBody();
 };
 

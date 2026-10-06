@@ -81,7 +81,7 @@ extern Rva00889690Obj *g_rva00889690;
 
 class ShareExperienceBehavior
 {
-public:
+protected:
 	virtual UpdateSleepTime update();
 };
 

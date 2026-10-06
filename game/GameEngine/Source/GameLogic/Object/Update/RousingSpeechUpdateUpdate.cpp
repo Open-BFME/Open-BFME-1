@@ -84,14 +84,14 @@ public:
 
 class RousingSpeechUpdate
 {
-public:
+protected:
 	virtual UpdateSleepTime update();
 };
 
 extern void j_000087a6();
 extern void j_0002191d();
 
-// ?update@RousingSpeechUpdate@@UAE?AW4UpdateSleepTime@@XZ
+// ?update@RousingSpeechUpdate@@MAE?AW4UpdateSleepTime@@XZ
 UpdateSleepTime RousingSpeechUpdate::update()
 {
 	unsigned char *secondary = reinterpret_cast<unsigned char *>(this);

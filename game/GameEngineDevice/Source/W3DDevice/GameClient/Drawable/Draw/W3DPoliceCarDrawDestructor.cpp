@@ -47,7 +47,7 @@ private:
 
 class W3DPoliceCarDraw : public Gen_dtor_00781630
 {
-	public:
+	protected:
 	virtual ~W3DPoliceCarDraw();
 
 	private:
@@ -55,7 +55,7 @@ class W3DPoliceCarDraw : public Gen_dtor_00781630
 	float m_curFrame;
 };
 
-// ??1W3DPoliceCarDraw@@UAE@XZ
+// ??1W3DPoliceCarDraw@@MAE@XZ
 W3DPoliceCarDraw::~W3DPoliceCarDraw()
 {
 	if (m_light)

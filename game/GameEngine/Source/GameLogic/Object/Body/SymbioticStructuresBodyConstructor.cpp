@@ -59,6 +59,7 @@ class SymbioticStructuresBody : public ActiveBody
 {
 public:
 	SymbioticStructuresBody(Thing *thing, const ModuleData *moduleData);
+protected:
 	virtual ~SymbioticStructuresBody();
 
 private:

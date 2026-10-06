@@ -7,7 +7,7 @@
 
 class W3DShroudMaterialPassClass
 {
-protected:
+public:
 	virtual ~W3DShroudMaterialPassClass();
 private:
 	friend void forceW3DShroudMaterialPassClassDeletingDestructor();

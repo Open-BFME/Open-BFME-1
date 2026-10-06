@@ -1,4 +1,4 @@
-// ?checkConditionsForTeamNames@ScriptEngine@@QAEXPAVScript@@ABVAsciiString@@@Z
+// ?checkConditionsForTeamNames@ScriptEngine@@IAEXPAVScript@@ABVAsciiString@@@Z
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // BFME's map loader checks team-condition names before evaluating scripts.
 
@@ -169,6 +169,7 @@ class ScriptEngine
 {
 public:
     void AppendDebugMessage(const AsciiString &message, Bool forcePause);
+protected:
     void checkConditionsForTeamNames(Script *pScript, const AsciiString &scriptName);
 };
 

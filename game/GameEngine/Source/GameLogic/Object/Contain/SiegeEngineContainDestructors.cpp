@@ -104,7 +104,7 @@ private:
 
 class SiegeEngineContain : public SiegeEngineContainBase
 {
-public:
+protected:
 	virtual ~SiegeEngineContain();
 
 private:
@@ -117,7 +117,7 @@ private:
 	_STL::list<int> m_listB;											///< retail this+0x0FC
 };
 
-// ??1SiegeEngineContain@@UAE@XZ
+// ??1SiegeEngineContain@@MAE@XZ
 SiegeEngineContain::~SiegeEngineContain()
 {
 }

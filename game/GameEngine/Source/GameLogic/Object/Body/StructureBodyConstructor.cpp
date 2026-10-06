@@ -47,6 +47,7 @@ class StructureBody : public ActiveBody
 {
 public:
 	StructureBody( Thing *thing, const ModuleData *moduleData );
+protected:
 	virtual ~StructureBody();
 
 private:

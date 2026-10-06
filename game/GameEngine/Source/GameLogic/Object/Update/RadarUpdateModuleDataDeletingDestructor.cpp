@@ -7,7 +7,7 @@
 
 class RadarUpdateModuleData
 {
-protected:
+public:
 	virtual ~RadarUpdateModuleData();
 private:
 	friend void forceRadarUpdateModuleDataDeletingDestructor();

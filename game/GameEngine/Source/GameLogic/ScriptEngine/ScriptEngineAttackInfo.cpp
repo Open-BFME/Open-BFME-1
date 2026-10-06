@@ -87,6 +87,7 @@ public:
 	const AttackPriorityInfo *getAttackInfo(const AsciiString &name);
 	// Public because that is what its own ledger row says: the definition is
 	// ?findAttackInfo@ScriptEngine@@QAE..., and access is part of the name.
+protected:
 	AttackPriorityInfo *findAttackInfo(const AsciiString &name, Bool addIfNotFound);
 
 private:
@@ -190,7 +191,7 @@ extern void *g_Rva00F36E5C;
 bool _bfme_debugReportingEnabled(void);
 void _bfme_debugRecordCallsite(int kind);
 
-// ?findAttackInfo@ScriptEngine@@QAEPAVAttackPriorityInfo@@ABVAsciiString@@_N@Z
+// ?findAttackInfo@ScriptEngine@@IAEPAVAttackPriorityInfo@@ABVAsciiString@@_N@Z
 AttackPriorityInfo *ScriptEngine::findAttackInfo(const AsciiString &name, Bool addIfNotFound)
 {
 	Int i;

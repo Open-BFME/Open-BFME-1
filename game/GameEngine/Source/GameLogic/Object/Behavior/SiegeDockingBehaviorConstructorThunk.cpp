@@ -87,6 +87,7 @@ class SiegeDockingBehavior : public UpdateModule, public SiegeDockingBehaviorSec
 {
 public:
 	SiegeDockingBehavior(Thing *thing, const ModuleData *data);
+protected:
 	virtual ~SiegeDockingBehavior();
 
 private:

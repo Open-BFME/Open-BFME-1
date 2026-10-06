@@ -34,7 +34,7 @@ class GameWindow;
 class WindowLayout
 {
 public:
-	AsciiString getFilename(void);
+	AsciiString getFilename(void) const;
 	GameWindow *getFirstWindow(void)
 	{
 		return *(GameWindow **)((char *)this + 8);

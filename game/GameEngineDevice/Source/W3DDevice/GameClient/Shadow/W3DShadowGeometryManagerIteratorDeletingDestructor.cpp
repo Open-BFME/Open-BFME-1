@@ -7,7 +7,7 @@
 
 class W3DShadowGeometryManagerIterator
 {
-protected:
+public:
 	virtual ~W3DShadowGeometryManagerIterator();
 private:
 	friend void forceW3DShadowGeometryManagerIteratorDeletingDestructor();

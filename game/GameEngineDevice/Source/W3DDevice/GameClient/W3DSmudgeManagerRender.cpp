@@ -536,8 +536,9 @@ public:
 
 class W3DSmudgeManager : public SmudgeManager
 {
-public:
+private:
 	bool testHardwareSupport(void);
+public:
 	void render(RenderInfoClass &rinfo);
 
 	void *m_smudgeGroup;

@@ -26,7 +26,7 @@ extern NameKeyGenerator *TheNameKeyGenerator;
 class WindowLayout
 {
 public:
-	AsciiString getFilename(void);
+	AsciiString getFilename(void) const;
 };
 
 static NameKeyType buttonAddID = NAMEKEY_INVALID;

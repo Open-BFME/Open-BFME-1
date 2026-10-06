@@ -48,6 +48,7 @@ class StealthUpgrade
 {
 protected:
 	virtual void upgradeImplementation();
+public:
 	virtual void removeUpgrade();
 };
 

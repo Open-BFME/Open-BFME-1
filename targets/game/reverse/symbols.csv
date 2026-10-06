@@ -9207,9 +9207,9 @@ name,address,notes
 ??1PlayerUpgradeSpecialPower@@MAE@XZ,0x000231B9,destructor ILT to 0x00263FA0
 ??1PointEmissionVolumeModule@FXParticleSystem@@UAE@XZ,0x00023C8B,destructor ILT used by the PointEmissionVolumeModule scalar-deleting destructor
 ??1PoisonedBehavior@@MAE@XZ,0x000356C0,complete-destructor route for folded scalar wrapper 0x002B0C30
-??1PoisonedBehaviorModuleData@@MAE@XZ,0x000443FF,exact constructor 0x002029B0 and dedicated vtable 0x00CA53B8 establish the protected complete destructor called by wrapper 0x00202DB0
+??1PoisonedBehaviorModuleData@@UAE@XZ,0x000443FF,exact constructor 0x002029B0 and dedicated vtable 0x00CA53B8 establish the protected complete destructor called by wrapper 0x00202DB0;ilt-verified=T1-access(efp=1.63e-03)
 ??1PopupMessageData@@UAE@XZ,0x00047005,destructor ILT to 0x0043F4B0 used by the retail scalar deleting wrapper
-??1PorcupineFormationBodyModule@@UAE@XZ,0x0003B494,destructor ILT to 0x002141C0
+??1PorcupineFormationBodyModule@@MAE@XZ,0x0003B494,destructor ILT to 0x002141C0;ilt-verified=T1-access(efp=2.28e-03)
 ??1PorcupineFormationBodyModuleModuleData@@UAE@XZ,0x00019D0D,destructor ILT used by the PorcupineFormationBodyModuleModuleData scalar-deleting destructor
 ??1PreorderCreate@@MAE@XZ,0x00042D75,destructor ILT to 0x0024FEC0
 ??1PrereqUnitRec@ProductionPrerequisite@@QAE@XZ,0x000195FB,retail target of _Destroy<PrereqUnitRec> call; PrereqUnitRec dtor not yet in ledger
@@ -9228,7 +9228,7 @@ name,address,notes
 ??1ProductionSpeedBonusUpgrade@@MAE@XZ,0x00027A6B,vtable 0x00CCD95C slots name ProductionSpeedBonusUpgrade; protected complete destructor called by wrapper 0x002D7860
 ??1ProductionUpdateModuleDataBase@@UAE@XZ,0x0003BD59,Open-BFME5 base dtor pin
 ??1ProneUpdate@@MAE@XZ,0x00019AA1,vtable 0x00CC13F4 slots name ProneUpdate; protected complete destructor called by wrapper 0x0029FF70
-??1ProneUpdateModuleData@@MAE@XZ,0x0004A615,exact constructor 0x0029FE30 and dedicated vtable 0x00CC1290 establish the protected complete destructor called by wrapper 0x0029FFF0
+??1ProneUpdateModuleData@@UAE@XZ,0x0004A615,exact constructor 0x0029FE30 and dedicated vtable 0x00CC1290 establish the protected complete destructor called by wrapper 0x0029FFF0;ilt-verified=T1-access(efp=4.89e-03)
 ??1PropagandaTowerBehaviorMember@@QAE@XZ,0x00887940,PropagandaTowerBehavior dtor member at this+0x18; ICF-folded AsciiString releaseBuffer/destroy body
 ??1Q3EhMember000658A0@@QAE@XZ,0x000658A0,address-derived member destructor of the EH-guarded destructor family; read from the REL32 at its call site and followed through its ILT thunk
 ??1Q3EhMember005CE820@@QAE@XZ,0x005CE820,address-derived member destructor of the EH-guarded destructor family; read from the REL32 at its call site and followed through its ILT thunk
@@ -9244,7 +9244,7 @@ name,address,notes
 ??1RAMFile@@MAE@XZ,0x00029555,pinharvest x1 (thunk)
 ??1RTS3DScene@@UAE@XZ,0x0000A1F0,route=0x00713510; scalar deleting destructor retail call targets the matched RTS3DScene destructor through this ILT
 ??1RadarUpdate@@MAE@XZ,0x0000B037,vtable 0x00CC154C slots name RadarUpdate; protected complete destructor called by wrapper 0x002A02F0
-??1RadarUpdateModuleData@@MAE@XZ,0x00041BF5,exact constructor 0x002A01C0 and dedicated vtable 0x00CC1428 establish the protected complete destructor called by wrapper 0x002A03A0
+??1RadarUpdateModuleData@@UAE@XZ,0x00041BF5,exact constructor 0x002A01C0 and dedicated vtable 0x00CC1428 establish the protected complete destructor called by wrapper 0x002A03A0;ilt-verified=T1-access(efp=3.26e-03)
 ??1RadarUpgrade@@MAE@XZ,0x00021D55,vtable 0x00CCDB64 slots name RadarUpgrade; protected complete destructor called by wrapper 0x002D7BA0
 ??1RadiusDecal@@QAE@XZ,0x00458340,RadiusDecal destructor body at 0x00458340; callee of assigned RadiusDecalUpdate destructor
 ??1RadiusDecalUpdate@@UAE@XZ,0x00012EC7,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x002A04E0
@@ -9275,9 +9275,9 @@ name,address,notes
 ??1ReplayHeader@RecorderClass@@QAE@XZ,0x00011E9B,ILT jmp 0x00098450; RecorderClass::playbackFile 0x0009B150 calls it at +0x90 and +0x247 with ecx=&header after readReplayHeader; thiscall no args plain ret; body releases +0x48 +0x44 +0x30 UnicodeString and +0x28 +0x20 AsciiString = versionTimeString versionString replayName filename gameOptions of the ReplayHeader layout matched at 0x00099490
 ??1ReplenishUnitsBehavior@@UAE@XZ,0x0002CCB4,public complete destructor ILT called by scalar wrapper 0x002046E0; exact constructor 0x002044E0 installs dedicated vtable 0x010A5C44; matched body 0x00204B50
 ??1ResourceGatheringManager@@UAE@XZ,0x000386BD,ILT to the matched ResourceGatheringManager destructor at RVA 0x000E6140
-??1RespawnBody@@UAE@XZ,0x00020F40,destructor ILT to 0x002146A0
+??1RespawnBody@@MAE@XZ,0x00020F40,destructor ILT to 0x002146A0;ilt-verified=T1-access(efp=3.26e-03)
 ??1RespawnBodyModuleData@@UAE@XZ,0x0001BE1E,public complete destructor ILT called by scalar wrapper 0x00214AC0; exact constructor 0x002149D0 installs dedicated vtable 0x010A92C8; matched body 0x00211D40
-??1RespawnUpdate@@MAE@XZ,0x000347DE,vtable 0x00CC1A84 slots name RespawnUpdate; protected complete destructor called by wrapper 0x002A16C0
+??1RespawnUpdate@@UAE@XZ,0x000347DE,vtable 0x00CC1A84 slots name RespawnUpdate; protected complete destructor called by wrapper 0x002A16C0;ilt-verified=T1-access(efp=2.28e-03)
 ??1RetailLayoutString@@QAE@XZ,0x0000D828,BFME layout-string destructor ILT read out of the eh vector constructor argument
 ??1ReverseSoundTransition@@MAE@XZ,0x0003D028,vtable 0x00D0CAB8 slots name ReverseSoundTransition; protected complete destructor called by wrapper 0x0059EF60
 ??1RiderChangeContain@@MAE@XZ,0x0001CA80,protected complete destructor ILT called by scalar wrapper 0x0022A510; exact constructor 0x00229FB0 installs dedicated vtable 0x010ACAF0
@@ -9627,7 +9627,7 @@ name,address,notes
 ??1ScriptActions@@UAE@XZ,0x00013E9E,ILT for the ScriptActions destructor body at 0x002F1B80
 ??1SegLineRendererClass@@QAE@XZ,0x00960030,derived from ~ParticleBufferClass call site
 ??1SegmentedLineClass@@UAE@XZ,0x0094F9C0,0x009509B0 is the first slot of the table followed by exact SegmentedLine Clone and Class_ID methods; wrapper directly calls this body
-??1SequentialScript@@MAE@XZ,0x00033429,vtable 0x00CE7660 slots name SequentialScript; protected complete destructor called by wrapper 0x0033B270
+??1SequentialScript@@UAE@XZ,0x00033429,vtable 0x00CE7660 slots name SequentialScript; protected complete destructor called by wrapper 0x0033B270;ilt-verified=T1-access(efp=5.54e-03)
 ??1ServiceHubImpl@@UAE@XZ,0x007EA6F0,ServiceHubImpl complete destructor called by its scalar-deleting wrapper at 0x007EB140
 ??1ShareExperienceBehaviorModuleData@@UAE@XZ,0x0003E649,destructor ILT used by the ShareExperienceBehaviorModuleData scalar-deleting destructor
 ??1ShellGameLoadScreen@@MAE@XZ,0x0002842F,exact constructor 0x003367B0 and dedicated vtable 0x00CE7530 establish the protected complete destructor called by wrapper 0x003390A0
@@ -9639,7 +9639,7 @@ name,address,notes
 ??1SiegeDeploySpecialPower@@UAE@XZ,0x00016153,authentic scalar-deleting wrapper callee ILT; routes to matched complete destructor body 0x002664F0
 ??1SiegeDeploySpecialPowerModuleDataMemberA@@QAE@XZ,0x00026F35,Open-BFME5 pin
 ??1SiegeDockingBehaviorModuleData@@MAE@XZ,0x00006451,exact constructor 0x00205F60 and dedicated vtable 0x00CA61F0 establish the protected complete destructor called by wrapper 0x00206070
-??1SiegeEngineContain@@UAE@XZ,0x0004AB47,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x0022B870
+??1SiegeEngineContain@@MAE@XZ,0x0004AB47,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x0022B870;ilt-verified=T1-access(efp=8.48e-03)
 ??1SiegeEngineContainBase@@UAE@XZ,0x0003FF49,SiegeEngineContain/HordeSiegeEngineContain shared base destructor call target
 ??1SimpleSceneClass@@UAE@XZ,0x00943E70,Open-BFME5 RTS2DScene destructor base-call pin
 ??1SimpleSceneIterator@@UAE@XZ,0x00943CE0,0x00943CC0 occupies the destructor slot before the exact First Next Is_Done and Current_Item SimpleSceneIterator vtable entries
@@ -9658,7 +9658,7 @@ name,address,notes
 ??1SmudgeSet@@UAE@XZ,0x000056D7,authentic virtual SmudgeSet destructor callee; vtable 0x0111017C and matched constructor/destructor prove identity
 ??1SortingIndexBufferClass@@UAE@XZ,0x0091D300,0x0091D930 deleting destructor directly calls this class destructor
 ??1SortingNodeStruct@@QAE@XZ,0x0093B200
-??1SoundFXNugget@@MAE@XZ,0x000020F9,vtable 0x00CF33D8 slots name SoundFXNugget; protected complete destructor called by wrapper 0x00428B20
+??1SoundFXNugget@@UAE@XZ,0x000020F9,vtable 0x00CF33D8 slots name SoundFXNugget; protected complete destructor called by wrapper 0x00428B20;ilt-verified=T1-access(efp=4.24e-03)
 ??1SpawnBehaviorModuleDataMemberA@@QAE@XZ,0x00026AB2,Open-BFME5 pin
 ??1SpawnBehaviorModuleDataMemberB@@QAE@XZ,0x0001B97D,Open-BFME5 pin
 ??1SpawnPointProductionExitUpdate@@UAE@XZ,0x0003FF58,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x002D17A0
@@ -9774,7 +9774,7 @@ name,address,notes
 ??1StringBaseYW@@IAE@XZ,0x00887940,pin
 ??1StringBaseZA@@IAE@XZ,0x00887940,pin
 ??1StringClass@@QAE@XZ,0x009DB7A0,RenderDeviceDescClass string-member destructor calls; ICF with StringClass::Free_String
-??1StructureBody@@UAE@XZ,0x00040D40,destructor ILT to 0x00214B50
+??1StructureBody@@MAE@XZ,0x00040D40,destructor ILT to 0x00214B50;ilt-verified=T1-access(efp=6.20e-03)
 ??1StructureBodyModuleData@@UAE@XZ,0x0000A781,public complete destructor ILT called by scalar wrapper 0x00129460; exact constructor 0x001293C0 installs dedicated vtable 0x0108ED20
 ??1StructureCollapseFXVector@@QAE@XZ,0x00022D3B,Open-BFME5 StructureCollapse FX vector destructor thunk
 ??1StructureCollapseOCLVector@@QAE@XZ,0x00017477,Open-BFME5 StructureCollapse OCL vector destructor thunk
@@ -9818,12 +9818,12 @@ name,address,notes
 ??1SupplyTruckAIUpdateModuleDataBase@@UAE@XZ,0x00029D02,Open-BFME5 base pin
 ??1SupplyTruckAIUpdateModuleDataMember@@QAE@XZ,0x00026F35,Open-BFME5 pin
 ??1SupplyWarehouseCreate@@MAE@XZ,0x0003DE10,destructor ILT to 0x002504B0
-??1SupplyWarehouseCripplingBehaviorModuleData@@MAE@XZ,0x0003C4C0,exact constructor 0x0020D580 and dedicated vtable 0x00CA7048 establish the protected complete destructor called by wrapper 0x0020D8F0
+??1SupplyWarehouseCripplingBehaviorModuleData@@UAE@XZ,0x0003C4C0,exact constructor 0x0020D580 and dedicated vtable 0x00CA7048 establish the protected complete destructor called by wrapper 0x0020D8F0;ilt-verified=T1-access(efp=2.94e-03)
 ??1SupplyWarehouseDockUpdate@@MAE@XZ,0x0003F896,destructor ILT to 0x002CF6B0
 ??1SupplyWarehouseDockUpdateModuleData@@UAE@XZ,0x00012157,destructor ILT to 0x002CFB60
 ??1SurfaceClass@@QAE@XZ,0x008FC5B0,BFME four-byte SurfaceClass owner destructor direct body; reads the COM surface pointer and calls IUnknown vslot 2 Release when nonnull; campaign=luna36h-20260907;lane=expand13;model=gpt-5.6-sol-ultra
 ??1SwayClientUpdate@@UAE@XZ,0x00044035,exact constructor 0x006044E0 and dedicated vtable 0x011154F0 establish the complete destructor thunk called by wrapper 0x006045F0
-??1SymbioticStructuresBody@@UAE@XZ,0x0003C8C1,destructor ILT to 0x00214CC0
+??1SymbioticStructuresBody@@MAE@XZ,0x0003C8C1,destructor ILT to 0x00214CC0;ilt-verified=T1-access(efp=1.30e-03)
 ??1SymbioticStructuresBodyModuleData@@UAE@XZ,0x0002473A,public complete destructor ILT called by scalar wrapper 0x00129530; ModuleFactory registration and matched constructor 0x00128D20 establish identity
 ??1T2VBaseA@@UAE@XZ,0x000414BB,T2 lane: virtual base destructor reached by the 0xBC/0xB8 vbase stubs (ILT thunk)
 ??1T2VBaseB@@UAE@XZ,0x0083F810,T2 lane: virtual base destructor reached by the 0x94/0x90 vbase stubs
@@ -9833,7 +9833,7 @@ name,address,notes
 ??1T2Vb0084B510@@UAE@XZ,0x0084B510,T2 lane: same body as ??1Rva0084B510 in R4VirtualBaseDestructors.cpp
 ??1T2Vb0084B580@@UAE@XZ,0x0084B580,T2 lane: same body as ??1Rva0084B580 in R4VirtualBaseDestructors.cpp
 ??1TAiData@@UAE@XZ,0x00004499,exact constructor 0x0014B150 and dedicated vtable 0x01095754 establish the complete destructor thunk called by wrapper 0x0014AD90
-??1TBuff@@MAE@XZ,0x0003AF5D,vtable 0x00D1E134 slots name TBuff; protected complete destructor called by wrapper 0x006DB540
+??1TBuff@@EAE@XZ,0x0003AF5D,vtable 0x00D1E134 slots name TBuff; protected complete destructor called by wrapper 0x006DB540;ilt-verified=T1-access(efp=5.22e-03)
 ??1TTreeType@@QAE@XZ,0x00032CF9,W3DShrubBuffer 64-element m_treeTypes destructor ILT
 ??1TaintSpecialPower@@MAE@XZ,0x00020202,destructor ILT to 0x0026B6A0
 ??1TaintSpecialPowerModuleData@@UAE@XZ,0x0000A187,public complete destructor ILT called by scalar wrapper 0x0026B8B0; exact constructor 0x0026B870 installs dedicated vtable 0x010B8550
@@ -9874,10 +9874,10 @@ name,address,notes
 ??1TunnelContainModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1TunnelTracker@@UAE@XZ,0x0002A19E,exact TunnelTracker constructor 0x000F8980 and vtable 0x01085FD8 establish the complete destructor thunk called by scalar wrapper 0x000F8D50
 ??1TurretAI@@MAE@XZ,0x0003AC3D,TurretAI protected complete virtual destructor ILT; exact constructor 0x0018DED0 installs primary vtable 0x0109BBF4 and scalar wrapper 0x0018D860 calls this route to cleanup body 0x0018D600
-??1TurretAIIdleScanState@@MAE@XZ,0x0000F425,exact constructor 0x0018D9A0 and dedicated vtable 0x0109BCE0 establish the protected complete destructor called by wrapper 0x0018E560
-??1TurretAIIdleState@@MAE@XZ,0x0003F6AC,exact constructor 0x0018D930 and dedicated vtable 0x0109BC70 establish the protected complete destructor called by wrapper 0x0018E520
-??1TurretAIRecenterTurretState@@MAE@XZ,0x000319C1,vtable 0x00C9BDC0 slots name TurretAIRecenterTurretState; protected complete destructor called by wrapper 0x0018E5E0
-??1TurretState@@MAE@XZ,0x00032BF5,exact protected constructor 0x0018D890 and dedicated vtable 0x0109BC18 establish the protected complete destructor called by wrapper 0x0018E4F0
+??1TurretAIIdleScanState@@UAE@XZ,0x0000F425,exact constructor 0x0018D9A0 and dedicated vtable 0x0109BCE0 establish the protected complete destructor called by wrapper 0x0018E560;ilt-verified=T1-access(efp=2.28e-03)
+??1TurretAIIdleState@@UAE@XZ,0x0003F6AC,exact constructor 0x0018D930 and dedicated vtable 0x0109BC70 establish the protected complete destructor called by wrapper 0x0018E520;ilt-verified=T1-access(efp=9.78e-04)
+??1TurretAIRecenterTurretState@@UAE@XZ,0x000319C1,vtable 0x00C9BDC0 slots name TurretAIRecenterTurretState; protected complete destructor called by wrapper 0x0018E5E0;ilt-verified=T1-access(efp=4.57e-03)
+??1TurretState@@UAE@XZ,0x00032BF5,exact protected constructor 0x0018D890 and dedicated vtable 0x0109BC18 establish the protected complete destructor called by wrapper 0x0018E4F0;ilt-verified=T1-access(efp=3.26e-03)
 ??1TurretStateMachine@@MAE@XZ,0x00017CC4,exact constructor 0x0018DB60 and dedicated vtable 0x0109B828 establish the protected complete destructor called by wrapper 0x0018CF30; body 0x0018C2D0 resets this vtable and tail-jumps to StateMachine cleanup
 ??1U2Vb0084B480@@UAE@XZ,0x0084B480,U2 lane: vbase-entered class dtor called by the ??_D at 0x0084B6C0 and the ??_G at 0x0084B7C0; unnamed dump elsewhere
 ??1U2Vb0084B5F0@@UAE@XZ,0x0084B5F0,U2 lane: vbase-entered class dtor called by the ??_D at 0x0084B720 and the ??_G at 0x0084B880; unnamed dump elsewhere
@@ -9946,7 +9946,7 @@ name,address,notes
 ??1W3DProjectileStreamDraw@@UAE@XZ,0x000442D3,route=0x00369CF0; scalar deleting destructor retail call targets the matched W3DProjectileStreamDraw destructor through this ILT
 ??1W3DProjectileStreamResources@@QAE@XZ,0x00027EAD,Open-BFME5 W3DProjectileStreamDraw resource cleanup ILT pin
 ??1W3DPropDraw@@MAE@XZ,0x0002CA0C,route=0x00759350; scalar deleting destructor call target established by retail wrapper
-??1W3DQuadrupedDraw@@UAE@XZ,0x0001615D,route=0x00759770; scalar deleting destructor call target established by retail wrapper
+??1W3DQuadrupedDraw@@MAE@XZ,0x0001615D,route=0x00759770; scalar deleting destructor call target established by retail wrapper;ilt-verified=T1-access(efp=4.89e-03)
 ??1W3DQuadrupedDrawModuleDataBase@@UAE@XZ,0x0002C71E,Open-BFME5 pin
 ??1W3DQuadrupedElement@@QAE@XZ,0x0000D828,Open-BFME5 W3DQuadruped array element destructor pin
 ??1W3DRadar@@UAE@XZ,0x0001FD3E,route=0x006C1780; scalar deleting destructor retail call targets the matched W3DRadar destructor through this ILT
@@ -9954,10 +9954,10 @@ name,address,notes
 ??1W3DRopeDraw@@MAE@XZ,0x0000CC70,W3DRopeDraw deleting-destructor call through retail ILT
 ??1W3DRopeDrawRootBase@@UAE@XZ,0x0002B8C8,W3DRopeDraw destructor drawable-root-base call through retail ILT
 ??1W3DShadowGeometry@@UAE@XZ,0x00043F5E,route=0x007BBE20; scalar deleting destructor retail call targets the matched W3DShadowGeometry destructor through this ILT
-??1W3DShadowGeometryManagerIterator@@MAE@XZ,0x00010B3B,exact constructor 0x007B96B0 and dedicated vtable 0x00D284A8 establish the protected complete destructor called by wrapper 0x007BB4F0
+??1W3DShadowGeometryManagerIterator@@UAE@XZ,0x00010B3B,exact constructor 0x007B96B0 and dedicated vtable 0x00D284A8 establish the protected complete destructor called by wrapper 0x007BB4F0;ilt-verified=T1-access(efp=2.94e-03)
 ??1W3DShadowHelperManager@@QAE@XZ,0x007C19A0,Open-BFME5 shadow helper manager dtor (two refcounted members) from retail ~W3DShadowManager call site
 ??1W3DShadowTexture@@UAE@XZ,0x00019B82,route=0x007AF4E0; scalar deleting destructor retail call targets the matched W3DShadowTexture destructor through this ILT
-??1W3DShroudMaterialPassClass@@MAE@XZ,0x00016DC9,vtable 0x00D209C8 slots name W3DShroudMaterialPassClass; protected complete destructor called by wrapper 0x00702550
+??1W3DShroudMaterialPassClass@@UAE@XZ,0x00016DC9,vtable 0x00D209C8 slots name W3DShroudMaterialPassClass; protected complete destructor called by wrapper 0x00702550;ilt-verified=T1-access(efp=1.63e-03)
 ??1W3DSmudgeManager@@UAE@XZ,0x0002CED5,W3DSmudgeManager deleting destructor call ILT
 ??1W3DStreakDrawModuleData@@UAE@XZ,0x0003F3DC,route=0x0077D490; scalar deleting destructor call target established by retail wrapper
 ??1W3DSupplyDraw@@MAE@XZ,0x00028BD2,route=0x0077DBE0; scalar deleting destructor call target established by retail wrapper
@@ -11485,9 +11485,9 @@ name,address,notes
 ??_GPlayerHealSpecialPower@@MAEPAXI@Z,0x0000BD89,primary class vtable slot zero ILT to 0x00263B50
 ??_GPlayerUpgradeSpecialPower@@MAEPAXI@Z,0x00031174,primary class vtable slot zero ILT to 0x00264090
 ??_GPoisonedBehavior@@MAEPAXI@Z,0x00038A91,vtable 0x00CC4DCC slot zero routes through this ILT to scalar wrapper 0x002B0C30
-??_GPoisonedBehaviorModuleData@@MAEPAXI@Z,0x0002351A,dedicated vtable 0x00CA53B8 slot zero routes through this ILT to scalar wrapper 0x00202DB0
+??_GPoisonedBehaviorModuleData@@UAEPAXI@Z,0x0002351A,dedicated vtable 0x00CA53B8 slot zero routes through this ILT to scalar wrapper 0x00202DB0;ilt-verified=T1-access(efp=1.63e-03)
 ??_GPopupMessageData@@UAEPAXI@Z,0x000230C4,vtable slot zero ILT to the scalar deleting destructor at 0x0043F480
-??_GPorcupineFormationBodyModule@@UAEPAXI@Z,0x00007BD0,primary class vtable slot zero ILT to 0x002142A0
+??_GPorcupineFormationBodyModule@@MAEPAXI@Z,0x00007BD0,primary class vtable slot zero ILT to 0x002142A0;ilt-verified=T1-access(efp=2.28e-03)
 ??_GPreorderCreate@@MAEPAXI@Z,0x00049823,primary class vtable slot zero ILT to 0x0024FF90
 ??_GProcessAnimateWindowSlideFromBottom@@MAEPAXI@Z,0x0002A004,dedicated vtable 0x00CFA2A8 slot zero routes through this ILT to scalar wrapper 0x00497940
 ??_GProcessAnimateWindowSlideFromBottomTimed@@MAEPAXI@Z,0x00034798,dedicated vtable 0x00CFA21C slot zero routes through this ILT to scalar wrapper 0x00496830
@@ -11499,10 +11499,10 @@ name,address,notes
 ??_GProcessAnimateWindowSpiral@@MAEPAXI@Z,0x0003A43B,vtable 0x00CFA238 slot zero routes through this ILT to scalar wrapper 0x00496A40
 ??_GProductionSpeedBonusUpgrade@@MAEPAXI@Z,0x0002D466,vtable 0x00CCD95C slot zero routes through this ILT to scalar wrapper 0x002D7860
 ??_GProneUpdate@@MAEPAXI@Z,0x00012C2E,vtable 0x00CC13F4 slot zero routes through this ILT to scalar wrapper 0x0029FF70
-??_GProneUpdateModuleData@@MAEPAXI@Z,0x00028E43,dedicated vtable 0x00CC1290 slot zero routes through this ILT to scalar wrapper 0x0029FFF0
+??_GProneUpdateModuleData@@UAEPAXI@Z,0x00028E43,dedicated vtable 0x00CC1290 slot zero routes through this ILT to scalar wrapper 0x0029FFF0;ilt-verified=T1-access(efp=4.89e-03)
 ??_GQueueProductionExitUpdateModuleData@@MAEPAXI@Z,0x0002D79A,dedicated vtable 0x00C8CFC0 slot zero routes through this ILT to scalar wrapper 0x001259C0
 ??_GRadarUpdate@@MAEPAXI@Z,0x0002231D,vtable 0x00CC154C slot zero routes through this ILT to scalar wrapper 0x002A02F0
-??_GRadarUpdateModuleData@@MAEPAXI@Z,0x000400C0,dedicated vtable 0x00CC1428 slot zero routes through this ILT to scalar wrapper 0x002A03A0
+??_GRadarUpdateModuleData@@UAEPAXI@Z,0x000400C0,dedicated vtable 0x00CC1428 slot zero routes through this ILT to scalar wrapper 0x002A03A0;ilt-verified=T1-access(efp=3.26e-03)
 ??_GRadarUpgrade@@MAEPAXI@Z,0x00005AF6,vtable 0x00CCDB64 slot zero routes through this ILT to scalar wrapper 0x002D7BA0
 ??_GRailedTransportDockUpdate@@MAEPAXI@Z,0x00036877,primary vftable slot zero ILT to 0x002CE580
 ??_GRailedTransportDockUpdateModuleData@@UAEPAXI@Z,0x0000AEFC,vftable slot zero ILT to 0x002CE780
@@ -11515,8 +11515,8 @@ name,address,notes
 ??_GRepairDockUpdate@@MAEPAXI@Z,0x00022F16,primary class vftable slot zero ILT to 0x002CEEA0
 ??_GRepairDockUpdateModuleData@@UAEPAXI@Z,0x000389C4,class vftable slot zero ILT to 0x002CEF60
 ??_GRepairSpecialPower@@MAEPAXI@Z,0x00037DDF,primary class vtable slot zero ILT to 0x00264920
-??_GRespawnBody@@UAEPAXI@Z,0x00019970,primary class vtable slot zero ILT to 0x00214770
-??_GRespawnUpdate@@MAEPAXI@Z,0x0003138B,vtable 0x00CC1A84 slot zero routes through this ILT to scalar wrapper 0x002A16C0
+??_GRespawnBody@@MAEPAXI@Z,0x00019970,primary class vtable slot zero ILT to 0x00214770;ilt-verified=T1-access(efp=3.26e-03)
+??_GRespawnUpdate@@UAEPAXI@Z,0x0003138B,vtable 0x00CC1A84 slot zero routes through this ILT to scalar wrapper 0x002A16C0;ilt-verified=T1-access(efp=2.28e-03)
 ??_GReverseSoundTransition@@MAEPAXI@Z,0x00036B06,vtable 0x00D0CAB8 slot zero routes through this ILT to scalar wrapper 0x0059EF60
 ??_GRubbleRiseUpdate@@MAEPAXI@Z,0x00021C06,primary class vftable slot zero ILT to 0x002A37E0
 ??_GRunOffMapBehavior@@MAEPAXI@Z,0x00001366,primary class vtable slot zero ILT to 0x00205170
@@ -11530,7 +11530,7 @@ name,address,notes
 ??_GScoreKeeper@@UAEPAXI@Z,0x00026B75,exact ScoreKeeper constructor 0x000EA390 installs vtable 0x01084DF0 whose slot zero routes through this ILT to wrapper 0x000E9FE0
 ??_GScoreScaleUpTransition@@MAEPAXI@Z,0x00035A85,vtable 0x00D0CB30 slot zero routes through this ILT to scalar wrapper 0x0059F600
 ??_GScript@@MAEPAXI@Z,0x0002D510,dedicated vtable 0x00CE858C slot zero routes through this ILT to scalar wrapper 0x00355C60
-??_GSequentialScript@@MAEPAXI@Z,0x0003C5FB,vtable 0x00CE7660 slot zero routes through this ILT to scalar wrapper 0x0033B270
+??_GSequentialScript@@UAEPAXI@Z,0x0003C5FB,vtable 0x00CE7660 slot zero routes through this ILT to scalar wrapper 0x0033B270;ilt-verified=T1-access(efp=5.54e-03)
 ??_GShellGameLoadScreen@@MAEPAXI@Z,0x00005E1B,dedicated vtable 0x00CE7530 slot zero routes through this ILT to scalar wrapper 0x003390A0
 ??_GShroudCrateCollide@@MAEPAXI@Z,0x00021BB6,primary class vtable slot zero ILT to 0x00218800
 ??_GSiegeDeployHordeSpecialPower@@UAEPAXI@Z,0x00025612,unique primary vtable 0x010B71FC slot zero routes through this ILT to scalar wrapper 0x00265CD0; object-symbol=??_GGen_dtor_00265cd0@@UAEPAXI@Z
@@ -11538,7 +11538,7 @@ name,address,notes
 ??_GSlavedUpdate@@MAEPAXI@Z,0x000206B2,primary class vftable slot zero ILT to 0x002A43B0
 ??_GSlowDeathBehavior@@MAEPAXI@Z,0x00002BD0,vtable 0x00CA66B4 slot zero routes through this ILT to scalar wrapper 0x00207DA0
 ??_GSmartBombTargetHomingUpdate@@MAEPAXI@Z,0x0002E89D,primary class vtable slot zero ILT to 0x00287100
-??_GSoundFXNugget@@MAEPAXI@Z,0x0000C5E5,vtable 0x00CF33D8 slot zero routes through this ILT to scalar wrapper 0x00428B20
+??_GSoundFXNugget@@UAEPAXI@Z,0x0000C5E5,vtable 0x00CF33D8 slot zero routes through this ILT to scalar wrapper 0x00428B20;ilt-verified=T1-access(efp=4.24e-03)
 ??_GSpawnTownsmenBehavior@@MAEPAXI@Z,0x0002631E,vtable 0x00CA6DD4 slot zero routes through this ILT to scalar wrapper 0x0020CD70
 ??_GSpawnUnitBehavior@@MAEPAXI@Z,0x0000EC73,vtable 0x00CA6F94 slot zero routes through this ILT to scalar wrapper 0x0020D230
 ??_GSpecialDisguiseUpdate@@MAEPAXI@Z,0x0001A5D2,vtable 0x00CB7708 slot zero routes through this ILT to scalar wrapper 0x00267890
@@ -11554,7 +11554,7 @@ name,address,notes
 ??_GStealthUpdate@@MAEPAXI@Z,0x00035B7A,vtable 0x00CC457C slot zero routes through this ILT to scalar wrapper 0x002ACD50
 ??_GStealthUpgrade@@MAEPAXI@Z,0x0003B19C,vtable 0x00CCDE6C slot zero routes through this ILT to scalar wrapper 0x002D8100
 ??_GStopSpecialPower@@MAEPAXI@Z,0x00036179,primary class vtable slot zero ILT to 0x0026B4A0
-??_GStructureBody@@UAEPAXI@Z,0x00041132,primary class vtable slot zero ILT to 0x00214C30
+??_GStructureBody@@MAEPAXI@Z,0x00041132,primary class vtable slot zero ILT to 0x00214C30;ilt-verified=T1-access(efp=6.20e-03)
 ??_GStructureCollapseUpdate@@MAEPAXI@Z,0x0001555F,primary class vftable slot zero ILT to 0x002AE3A0
 ??_GStructureToppleUpdate@@MAEPAXI@Z,0x0002DE2A,primary class vftable slot zero ILT to 0x002AF3A0
 ??_GSubObjectsUpgrade@@MAEPAXI@Z,0x0002C1E2,vtable 0x00CCDFC4 slot zero routes through this ILT to scalar wrapper 0x002D84B0
@@ -11564,13 +11564,13 @@ name,address,notes
 ??_GSupplyCenterDockUpdateModuleData@@UAEPAXI@Z,0x00009F2A,class vftable slot zero ILT to 0x002CF5D0
 ??_GSupplyCenterProductionExitUpdate@@MAEPAXI@Z,0x000388C5,vtable 0x00CCB9F4 slot zero routes through this ILT to scalar wrapper 0x002D2490
 ??_GSupplyWarehouseCreate@@MAEPAXI@Z,0x0003F657,primary class vtable slot zero ILT to 0x00250570
-??_GSupplyWarehouseCripplingBehaviorModuleData@@MAEPAXI@Z,0x0000D10C,dedicated vtable 0x00CA7048 slot zero routes through this ILT to scalar wrapper 0x0020D8F0
+??_GSupplyWarehouseCripplingBehaviorModuleData@@UAEPAXI@Z,0x0000D10C,dedicated vtable 0x00CA7048 slot zero routes through this ILT to scalar wrapper 0x0020D8F0;ilt-verified=T1-access(efp=2.94e-03)
 ??_GSupplyWarehouseDockUpdate@@MAEPAXI@Z,0x0000D4A9,primary class vftable slot zero ILT to 0x002CF860
 ??_GSupplyWarehouseDockUpdateModuleData@@UAEPAXI@Z,0x0003C7F4,class vftable slot zero ILT to 0x002CFB30
 ??_GSwayClientUpdate@@UAEPAXI@Z,0x0003C420,constructor-installed vtable 0x011154F0 slot zero routes through this ILT to 0x006045F0
-??_GSymbioticStructuresBody@@UAEPAXI@Z,0x0002458C,primary class vtable slot zero ILT to 0x00214E70
+??_GSymbioticStructuresBody@@MAEPAXI@Z,0x0002458C,primary class vtable slot zero ILT to 0x00214E70;ilt-verified=T1-access(efp=1.30e-03)
 ??_GTAiData@@UAEPAXI@Z,0x00007941,constructor-installed vtable 0x01095754 slot zero routes through this ILT to 0x0014AD90
-??_GTBuff@@MAEPAXI@Z,0x00009444,vtable 0x00D1E134 slot zero routes through this ILT to scalar wrapper 0x006DB540
+??_GTBuff@@EAEPAXI@Z,0x00009444,vtable 0x00D1E134 slot zero routes through this ILT to scalar wrapper 0x006DB540;ilt-verified=T1-access(efp=5.22e-03)
 ??_GTaintSpecialPower@@MAEPAXI@Z,0x0000A493,primary class vtable slot zero ILT to 0x0026B770
 ??_GTeamInQueue@@MAEPAXI@Z,0x000475AA,vtable 0x00C96940 slot zero routes through this ILT to scalar wrapper 0x00161260
 ??_GTemporarilyDefectUpdate@@MAEPAXI@Z,0x00038A91,vtable 0x00CC4DCC slot zero routes through this ILT to scalar wrapper 0x002B0C30
@@ -11583,10 +11583,10 @@ name,address,notes
 ??_GTransportContain@@MAEPAXI@Z,0x00035E7C,vtable 0x00CAD4E8 slot zero routes through this ILT to scalar wrapper 0x0022D0B0
 ??_GTunnelContain@@MAEPAXI@Z,0x00040B42,vtable 0x00CADDB8 slot zero routes through this ILT to scalar wrapper 0x0022F0E0
 ??_GTunnelTracker@@UAEPAXI@Z,0x000123FF,exact TunnelTracker constructor 0x000F8980 installs vtable 0x01085FD8 whose slot zero routes through this ILT to wrapper 0x000F8D50
-??_GTurretAIIdleScanState@@MAEPAXI@Z,0x0003F152,dedicated vtable 0x0109BCE0 slot zero routes to scalar wrapper 0x0018E560
-??_GTurretAIIdleState@@MAEPAXI@Z,0x0001875F,dedicated vtable 0x0109BC70 slot zero routes to scalar wrapper 0x0018E520
-??_GTurretAIRecenterTurretState@@MAEPAXI@Z,0x00030F9E,vtable 0x00C9BDC0 slot zero routes through this ILT to scalar wrapper 0x0018E5E0
-??_GTurretState@@MAEPAXI@Z,0x0003BCDC,dedicated vtable 0x0109BC18 slot zero routes to scalar wrapper 0x0018E4F0
+??_GTurretAIIdleScanState@@UAEPAXI@Z,0x0003F152,dedicated vtable 0x0109BCE0 slot zero routes to scalar wrapper 0x0018E560;ilt-verified=T1-access(efp=2.28e-03)
+??_GTurretAIIdleState@@UAEPAXI@Z,0x0001875F,dedicated vtable 0x0109BC70 slot zero routes to scalar wrapper 0x0018E520;ilt-verified=T1-access(efp=9.78e-04)
+??_GTurretAIRecenterTurretState@@UAEPAXI@Z,0x00030F9E,vtable 0x00C9BDC0 slot zero routes through this ILT to scalar wrapper 0x0018E5E0;ilt-verified=T1-access(efp=4.57e-03)
+??_GTurretState@@UAEPAXI@Z,0x0003BCDC,dedicated vtable 0x0109BC18 slot zero routes to scalar wrapper 0x0018E4F0;ilt-verified=T1-access(efp=3.26e-03)
 ??_GTurretStateMachine@@MAEPAXI@Z,0x00042915,dedicated vtable 0x0109B828 slot zero routes through this ILT to scalar wrapper 0x0018CF30
 ??_GUnitCrateCollide@@MAEPAXI@Z,0x00027647,primary class vtable slot zero ILT to 0x00218990
 ??_GUnpauseSpecialPowerUpgrade@@MAEPAXI@Z,0x0002CF93,vtable 0x00CCE464 slot zero routes through this ILT to scalar wrapper 0x002D9860
@@ -11602,8 +11602,8 @@ name,address,notes
 ??_GW3DHordeModelDraw@@UAEPAXI@Z,0x000370B0,constructor-installed vtable 0x01122470 slot zero routes through this ILT to 0x00752FC0
 ??_GW3DHordeModelDrawModuleData@@UAEPAXI@Z,0x000444AE,constructor-installed vtable 0x01122348 slot zero routes through this ILT to 0x00752DD0
 ??_GW3DProjectedShadowManager@@UAEPAXI@Z,0x000352D3,constructor-installed vtable 0x01128404 slot zero routes through this ILT to 0x007B4FB0
-??_GW3DShadowGeometryManagerIterator@@MAEPAXI@Z,0x00022598,dedicated vtable 0x00D284A8 slot zero routes through this ILT to scalar wrapper 0x007BB4F0
-??_GW3DShroudMaterialPassClass@@MAEPAXI@Z,0x0003CA15,vtable 0x00D209C8 slot zero routes through this ILT to scalar wrapper 0x00702550
+??_GW3DShadowGeometryManagerIterator@@UAEPAXI@Z,0x00022598,dedicated vtable 0x00D284A8 slot zero routes through this ILT to scalar wrapper 0x007BB4F0;ilt-verified=T1-access(efp=2.94e-03)
+??_GW3DShroudMaterialPassClass@@UAEPAXI@Z,0x0003CA15,vtable 0x00D209C8 slot zero routes through this ILT to scalar wrapper 0x00702550;ilt-verified=T1-access(efp=1.63e-03)
 ??_GW3DSmudgeManager@@UAEPAXI@Z,0x00023281,W3DSmudgeManager vftable slot zero ILT
 ??_GW3DSupplyDrawModuleData@@UAEPAXI@Z,0x00014132,constructor-installed vtable 0x01125808 slot zero routes through this ILT to 0x0077DFD0
 ??_GW3DView@@MAEPAXI@Z,0x00041191,vtable 0x00D217A0 slot zero routes through this ILT to scalar wrapper 0x007463F0
@@ -83164,7 +83164,7 @@ name,address,notes
 ?getFilename@AudioEventRTS@@QAE?AVAsciiString@@XZ,0x0000B7D5,AudioManager getAudioLengthMS calls this retail ILT
 ?getFilename@INI@@QBE?AVAsciiString@@XZ,0x0002F04F,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0049C7C0 calls; autopin
 ?getFilename@Image@@QBE?AVAsciiString@@XZ,0x00520640,exact BFME Image filename getter body; 0x000336AE is its incremental-link thunk
-?getFilename@WindowLayout@@QAE?AVAsciiString@@XZ,0x00019D53,BFME WindowLayout +0x04 accessor: Shell::findScreenByFilename retail callsite passes WindowLayout receiver and hidden AsciiString return; ILT 0x00019D53 targets exact 32B StringBase<char> copy-accessor body at 0x004EA450
+?getFilename@WindowLayout@@QBE?AVAsciiString@@XZ,0x00019D53,BFME WindowLayout +0x04 accessor: Shell::findScreenByFilename retail callsite passes WindowLayout receiver and hidden AsciiString return; ILT 0x00019D53 targets exact 32B StringBase<char> copy-accessor body at 0x004EA450;ilt-verified=T1-access(efp=1.30e-03)
 ?getFilter@ShroudTexture@@QAEPAVShroudFilter@@XZ,0x0090DD50,BFME W3DShroud texture filter accessor used by ReAcquireResources
 ?getFinal@BfmeSubInnerD77@@QAEPAXXZ,0x000022BB,pin
 ?getFinalOverride@BfmeActiveBodySetOverridable@@QBEPBV1@XZ,0x000022BB,ActiveBody::setIndestructible override-chain helper ILT
@@ -83301,8 +83301,8 @@ name,address,notes
 ?getName@Rva8D0D80Value@@QAEXPAVRva8D0D80String@@@Z,0x008985C0,address-derived Apt value name helper called by 0x008D0D80
 ?getName@SpecialPowerTemplate@@QBE?AVAsciiString@@XZ,0x00005682
 ?getName@Team@@QBEABVAsciiString@@XZ,0x000EC5E0,out-of-line Team::getName: ZH twin returns m_proto->getName(); body reads Team+4 and returns TeamPrototype+0x10 m_name or the shared empty string; Team::updateState 0x000F4F30 calls it once through ILT 0x0003071F and inlines it three times
-?getName@TerrainRoadType@@QBE?AVAsciiString@@XZ,0x000215E9,returns AsciiString by value through a hidden out-param; used for the Redefining road/bridge messages
-?getName@TerrainType@@QBE?AVAsciiString@@XZ,0x00031985,Open-BFME5 ILT; the by-value name ?findTerrain@TerrainTypeCollection@@QAEPAVTerrainType@@VAsciiString@@@Z at 0x000A7AF0 compares each list entry on
+?getName@TerrainRoadType@@QAE?AVAsciiString@@XZ,0x000215E9,returns AsciiString by value through a hidden out-param; used for the Redefining road/bridge messages;ilt-verified=T1-access(efp=4.57e-03)
+?getName@TerrainType@@QAE?AVAsciiString@@XZ,0x00031985,Open-BFME5 ILT; the by-value name ?findTerrain@TerrainTypeCollection@@QAEPAVTerrainType@@VAsciiString@@@Z at 0x000A7AF0 compares each list entry on;ilt-verified=T1-access(efp=3.26e-03)
 ?getName@TransitionGroup@@QAE?AVAsciiString@@XZ,0x0001DBF6,Independently inspected retail ILT/body ABI; GUI method receiver and argument layout verified
 ?getName@Waypoint@@QBE?AVAsciiString@@XZ,0x000EE6D0,Canonical AsciiString return type of Waypoint::getName; native camera callers via ILT 0x0001026C and TeamTemplateInfo constructor 0x000EFEB0 prove Waypoint identity; body copies string at +8 through StringBase<char> copy ctor and returns hidden result with ret 4; proof=identity_evidence/000EFEB0-team-template-constructor.md
 ?getName@Waypoint@@QBE?AVBfmeWaypointNameString@@XZ,0x0001026C,ILT thunk reached by the matched doModCameraLookToward 0x002F8C60 and doModCameraFinalLookToward 0x002F8D70; alias spelling of Waypoint::getName whose by-value AsciiString return carries the aliased destructor

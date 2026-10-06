@@ -45,7 +45,7 @@ void FireWeaponWhenDeadBehavior::removeUpgrade()
 // 0x002043E0: slot 7 of ReplenishUnitsBehavior's table 0x010A5AC0 (ILT 0x0000F245)
 class ReplenishUnitsBehavior : public UpgradeMux
 {
-protected:
+public:
 	virtual void removeUpgrade();
 };
 
@@ -137,7 +137,7 @@ void LevelUpUpgrade::removeUpgrade()
 // 0x002D7A50: slot 7 of RadarUpgrade's table 0x010CDA50 (ILT 0x0003B200)
 class RadarUpgrade : public UpgradeMux
 {
-protected:
+public:
 	virtual void removeUpgrade();
 };
 
@@ -160,7 +160,7 @@ void SubObjectsUpgrade::removeUpgrade()
 // 0x002DA300: slot 7 of WeaponBonusUpgrade's table 0x010CE5B8 (ILT 0x00011E73)
 class WeaponBonusUpgrade : public UpgradeMux
 {
-protected:
+public:
 	virtual void removeUpgrade();
 };
 

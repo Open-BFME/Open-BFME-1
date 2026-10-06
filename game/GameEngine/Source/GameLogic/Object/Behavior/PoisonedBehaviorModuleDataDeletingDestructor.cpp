@@ -7,7 +7,7 @@
 
 class PoisonedBehaviorModuleData
 {
-protected:
+public:
 	virtual ~PoisonedBehaviorModuleData();
 private:
 	friend void forcePoisonedBehaviorModuleDataDeletingDestructor();

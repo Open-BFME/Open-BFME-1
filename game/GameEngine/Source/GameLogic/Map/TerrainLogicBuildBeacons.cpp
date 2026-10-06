@@ -182,6 +182,7 @@ private:
 	unsigned char m_unreconstructed_04[0x44];
 	_STL::list<Gen_t_001acc70_p4cd> m_beaconPaths;
 
+protected:
 	void buildBeacons(void);
 };
 

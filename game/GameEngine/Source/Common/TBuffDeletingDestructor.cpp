@@ -7,7 +7,7 @@
 
 class TBuff
 {
-protected:
+private:
 	virtual ~TBuff();
 private:
 	friend void forceTBuffDeletingDestructor();

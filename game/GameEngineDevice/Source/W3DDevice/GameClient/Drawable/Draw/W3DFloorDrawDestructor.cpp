@@ -50,7 +50,7 @@ public:
 
 class W3DFloorDraw : public Rva00759350TailDtor
 {
-public:
+protected:
 	virtual ~W3DFloorDraw();
 
 private:
@@ -58,7 +58,7 @@ private:
 	void *m_drawable;
 };
 
-// ??1W3DFloorDraw@@UAE@XZ
+// ??1W3DFloorDraw@@MAE@XZ
 W3DFloorDraw::~W3DFloorDraw()
 {
 	if ( m_moduleData )
