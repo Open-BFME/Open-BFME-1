@@ -313,47 +313,47 @@ struct Rva0089BBF0Matrix
 	float m_ty;
 };
 
-// The globals below carry retail's own names.  Each address is already
-// named in dir32_addresses.csv, so the declared type here is the one the
-// name mangles with; the value stored is the object this body builds, cast
-// to that pointer.  No member of any of these types is touched here.
+// Preserve the existing repository spellings and declared types; they are
+// not all recovered retail names. The zero-valued definitions below own
+// their independently witnessed four-byte retail cells. Other globals remain
+// extern declarations. No pointed-to member is touched here.
 
 // Defining name at 0x00F379BC: the fallback value database pointer, defined
 // as AptValue * by Bfme5AppendFallback8CAFF0.cpp
 // (?g_bfmeFallbackDB@@3PAVAptValue@@A), holding the kind-3 registry value.
 extern AptValue *g_bfmeFallbackDB;
 // Defining name at 0x00F37A04: a global int holding the 0x3C0-byte value.
-extern int g_bfmeB1038;
+int g_bfmeB1038 = 0;
 // Defining name at 0x00F37A20: pointer to Rva00898D60Target, the class the
 // matched 0x00898D60 body chains through (Rva00898D60GlobalTail.cpp).
 class Rva00898D60Target;
 extern Rva00898D60Target *g_Rva01337A20;
-extern Rva89A2C0Derived *g_Va013379B4;
-extern BfmeThingVDW *g_Va013379FC;
-extern Rva89A540Derived *g_Va013379AC;
+Rva89A2C0Derived *g_Va013379B4 = 0;
+BfmeThingVDW *g_Va013379FC = 0;
+Rva89A540Derived *g_Va013379AC = 0;
 // Defining name at 0x00F387D8: pointer to Rva00899C20Registry, the
 // find-1024 registry the matched 0x00899C20 body searches.
 struct Rva00899C20Registry;
-extern Rva00899C20Registry *g_Va013387D8;
+Rva00899C20Registry *g_Va013387D8 = 0;
 // Defining name at 0x00F3846C: pointer to BfmeMap1024, the map the matched
 // BfmeConv1024 body probes (BfmeConv1024.cpp).
 struct BfmeMap1024;
-extern BfmeMap1024 *g_bfmeMap1024;
-extern Rva89AA20Derived *g_Va01337A00;
-extern Rva008A9B00 *g_Va013379F0;
+BfmeMap1024 *g_bfmeMap1024 = 0;
+Rva89AA20Derived *g_Va01337A00 = 0;
+Rva008A9B00 *g_Va013379F0 = 0;
 // Defining name at 0x00F37A28: the lazily built Apt global table, spelled
 // void* by the matched 0x00899800 body (Rva00899800TableSet.cpp).
-extern void *g_Rva01337A28Index;
+void *g_Rva01337A28Index = 0;
 extern Rva0089BBF0ColorTransform g_Va013379CC;
 // Defining name at 0x00F37A08: the C-linkage 2x3 matrix block.
 extern "C" Rva0089BBF0Matrix g_bfmeD1206;
-extern BfmeA1029 *g_Va013379EC;
-extern BfmeA1029 *g_Va013379C4;
-extern BfmeA1029 *g_Va013379C8;
-extern BfmeA1029 *g_Va013379F8;
-extern BfmeA1029 *g_Va013379B8;
-extern BfmeA1029 *g_Va013379B0;
-extern BfmeA1029 *g_Va01337A2C;
+BfmeA1029 *g_Va013379EC = 0;
+BfmeA1029 *g_Va013379C4 = 0;
+BfmeA1029 *g_Va013379C8 = 0;
+BfmeA1029 *g_Va013379F8 = 0;
+BfmeA1029 *g_Va013379B8 = 0;
+BfmeA1029 *g_Va013379B0 = 0;
+BfmeA1029 *g_Va01337A2C = 0;
 extern void *g_Va013387B0[4];
 
 // ---- helpers ------------------------------------------------------------

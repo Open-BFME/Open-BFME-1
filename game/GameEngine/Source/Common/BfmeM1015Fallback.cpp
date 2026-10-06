@@ -4,7 +4,7 @@
 
 extern "C" int __cdecl strcmp(const char *a, const char *b);
 
-extern int g_bfmeRegisterClass1015;
+int g_bfmeRegisterClass1015 = 0;
 
 class BfmeM1015
 {
