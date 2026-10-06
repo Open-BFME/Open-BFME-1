@@ -19,7 +19,6 @@ extern LivingWorldLogic *TheLivingWorldLogic;
 // establish the member-call signatures used below.
 void d_003a44a0();
 void d_003c3480();
-void d_003c12a0();
 class Gen_003BEA30;
 // The singleton at 0x012F706C is retail's ?g_bfmeGameCW@@3PAVBfmeGameCW@@A
 // (dir32_addresses.csv); only the member registerItem is named under the
@@ -80,6 +79,7 @@ class Transfer003C3D90 {
 public:
     void transfer(Xfer *);
     int load003C4160(Xfer *);
+    void tail003C12A0(Xfer *);
     virtual void slot0(); virtual void reset();
     void records003C3BA0(Xfer *);
     char m_04[8]; std::vector<Rva003A5450 *> m_0C;
@@ -125,7 +125,7 @@ int Transfer003C3D90::load003C4160(Xfer *xfer) {
     Rva003C2830XferMissionObjectiveStateVector(xfer,&m_84);
     if(version.data[1]>=2) {
         union { void (*address)(); void (Transfer003C3D90::*method)(Xfer *); } tail;
-        tail.address = d_003c12a0;
+        tail.method = &Transfer003C3D90::tail003C12A0;
         (this->*tail.method)(xfer);
     }
     return version.data[1];

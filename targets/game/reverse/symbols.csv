@@ -79857,6 +79857,7 @@ name,address,notes
 ?clear@?$_List_base@UGen_t_006a3900_p4cd@@V?$allocator@UGen_t_006a3900_p4cd@@@_STL@@@_STL@@QAEXXZ,0x0069E7A0,gen-tgrid payload member
 ?clear@?$_List_base@UGen_t_00754a30_p12cd@@V?$allocator@UGen_t_00754a30_p12cd@@@_STL@@@_STL@@QAEXXZ,0x007546F0,gen-tgrid payload member
 ?clear@?$_List_base@UGen_t_00754dc0_p12cd@@V?$allocator@UGen_t_00754dc0_p12cd@@@_STL@@@_STL@@QAEXXZ,0x007546F0,gen-tgrid payload member
+?clear@?$_List_base@URva003C12A0Element@@V?$allocator@URva003C12A0Element@@@_STL@@@_STL@@QAEXXZ,0x003C0060,retail call at 0x003C1302 reaches ILT 0x0002AF95 then this body; clear destroys values at node+8 and frees 20-byte nodes; thiscall ECX=this
 ?clear@?$_List_base@UcrateCreationEntry@@V?$allocator@UcrateCreationEntry@@@_STL@@@_STL@@QAEXXZ,0x000331AE
 ?clear@?$_List_base@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAEXXZ,0x0001900B,LadderInfo AsciiString list clear helper pin
 ?clear@?$_List_base@VExperienceLevel@@V?$allocator@VExperienceLevel@@@_STL@@@_STL@@QAEXXZ,0x0037DCA0,body identity from exact typed clear destroying each ExperienceLevel virtually at E0-node +8 and resetting sentinel links; retail calls through ILT 0x0004278A;campaign=luna36h-20260907;lane=hlod;model=gpt-5.6-sol-ultra
