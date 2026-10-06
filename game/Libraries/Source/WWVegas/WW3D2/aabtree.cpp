@@ -896,54 +896,8 @@ int AABTreeClass::Cast_Semi_Infinite_Axis_Aligned_Ray_To_Polys(CullNodeStruct * 
  * HISTORY:                                                                                    *
  *   6/19/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?AABTreeClass::Cast_AABox_To_Polys present-unmatched
-bool AABTreeClass::Cast_AABox_To_Polys(CullNodeStruct * node,AABoxCollisionTestClass & boxtest)
-{
-	if (node->Get_Poly_Count() > 0) {
-		/*
-		** Simply loop through the polys in this node, checking each for collision
-		*/	  
-		TriClass tri;
-
-		const Vector3 * loc = Mesh->Get_Vertex_Array();
-		const TriIndex * polyverts = Mesh->Get_Polygon_Array();
-#if (!OPTIMIZE_PLANEEQ_RAM)
-		const Vector4 * norms = Mesh->Get_Plane_Array();
-#endif
-
-		int polyhit = -1;
-		int poly0 = node->Get_Poly0();
-		int polycount = node->Get_Poly_Count();
-
-		for (int poly_counter=0; poly_counter<polycount; poly_counter++) {
-
-			int poly_index = PolyIndices[poly0 + poly_counter];
-
-			tri.V[0] = &(loc[ polyverts[poly_index][0] ]);
-			tri.V[1] = &(loc[ polyverts[poly_index][1] ]);
-			tri.V[2] = &(loc[ polyverts[poly_index][2] ]);
-#if (!OPTIMIZE_PLANEEQ_RAM)
-			tri.N = (Vector3*)&(norms[poly_index]);
-#else
-			Vector3 normal;
-			tri.N = &normal;
-			tri.Compute_Normal();
-#endif
-			if (CollisionMath::Collide(boxtest.Box,boxtest.Move,tri,boxtest.Result)) {
-				polyhit = poly_index;
-			}
-
-			if (boxtest.Result->StartBad) {
-				return true;
-			}
-		}
-		if (polyhit != -1) {
-			boxtest.Result->SurfaceType = Mesh->Get_Poly_Surface_Type (polyhit);
-			return true;
-		}
-	}
-	return false;
-}
+// AABTreeClass::Cast_AABox_To_Polys: retail's body (0x0096AEE0) is
+// AABTreeClass_Cast_AABox_To_Polys_Thunk.cpp; Zero Hour's version is not defined here.
 
 
 /***********************************************************************************************
