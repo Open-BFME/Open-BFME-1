@@ -36,11 +36,14 @@ public:
 	int getLayer() const { return (m_bfme0CABE >> 6) & 0x3f; }
 };
 
+// Declared as PathfinderClearCellForDiameter.cpp defines the 0x003DC810 body.
+enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1, LAYER_LAST = 15 };
+
 class Pathfinder
 {
 public:
-	int clearCellForDiameter(int crusher, int cellX, int cellY, int layer,
-		int diameter, int attackerOnWall);
+	int clearCellForDiameter(unsigned int crusher, int cellX, int cellY, PathfindLayerEnum layer,
+		int pathDiameter, bool stopOnFail);
 };
 
 class Rva003D61C0
@@ -70,8 +73,8 @@ int Rva003D61C0::cellCallback(PathfindCell *previousCell, PathfindCell *currentC
 		}
 	}
 
-	if (m_pathfinder->clearCellForDiameter(0, currentCellX, currentCellY, currentCell->getLayer(),
-		m_diameter, 1) == m_diameter)
+	if (m_pathfinder->clearCellForDiameter(0, currentCellX, currentCellY,
+		(PathfindLayerEnum)currentCell->getLayer(), m_diameter, true) == m_diameter)
 	{
 		int currentCellLayer = currentCell->getLayer();
 

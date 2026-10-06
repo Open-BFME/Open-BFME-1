@@ -30,6 +30,10 @@
 // No /EHsc: retail registers no handler for the body.
 
 typedef int Int;
+typedef unsigned int UnsignedInt;
+typedef bool Bool;
+// Declared as PathfinderClearCellForDiameter.cpp defines the 0x003DC810 body.
+enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1, LAYER_LAST = 15 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindCell
@@ -45,7 +49,8 @@ public:
 class Pathfinder
 {
 public:
-	Int clearCellForDiameter( Int crusher, Int cellX, Int cellY, Int layer, Int diameter, Int attackerOnWall );
+	Int clearCellForDiameter( UnsignedInt crusher, Int cellX, Int cellY, PathfindLayerEnum layer,
+		Int pathDiameter, Bool stopOnFail );
 };
 
 class GroundPathPassableStruct
@@ -67,5 +72,5 @@ Int GroundPathPassableStruct::cellCallback( PathfindCell *previousCell,
 	}
 
 	return m_pathfinder->clearCellForDiameter( 0, currentCellX, currentCellY,
-		currentCell->getLayer(), m_diameter, 1 ) != m_diameter;
+		(PathfindLayerEnum)currentCell->getLayer(), m_diameter, true ) != m_diameter;
 }
