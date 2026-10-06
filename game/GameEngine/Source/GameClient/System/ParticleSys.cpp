@@ -3057,3 +3057,9 @@ static Real angleBetween(const Coord2D *vecA, const Coord2D *vecB)
 	
 	return -theta;
 }
+
+// Retail keeps ParticleSystem::getDriftVelocity out of line at 0x005C2800 with
+// no caller (callers_of.py: nothing reaches it; Particle::update inlines it).
+// Keep this TU's header inline emitted so the row has a carrier.
+static const Coord3D *(ParticleSystem::* volatile s_keepGetDriftVelocity)( void ) =
+	&ParticleSystem::getDriftVelocity;
