@@ -137,13 +137,5 @@ void Connection::setQuitting( UnsignedInt quitFrame ) {
 	m_openedTime = timeGetTime();
 }
 
-void Connection::doRetryMetrics() {
-	static Int numSeconds = 0;
-	time_t curTime = timeGetTime();
-
-	if ((curTime - m_retryMetricsTime) > 10000) {
-		m_retryMetricsTime = curTime;
-		++numSeconds;
-		m_numRetries = 0;
-	}
-}
+// Connection::doRetryMetrics (retail 0x00661D90) is defined in
+// Connection_doSend.cpp, whose doSend inlines it.
