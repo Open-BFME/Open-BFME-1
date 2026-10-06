@@ -1,5 +1,5 @@
-// ?d_00766aa0@@YAXXZ
-// partial score=0.9747069710055521 date=2026-09-26
+// ?forward00769C30@Rva00766AA0Owner@@QAE_NPAURva00766AA0Buffer@@VAsciiString@@PAPAX2@Z
+// partial score=0.9758 date=2026-10-06
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad
 // Retail 00766AA0: opaque owner retained from independently matched caller 00769C30.
 // Bank only: 3386/3386 bytes; 82 concrete differences after 144 relocation bytes.
@@ -12,7 +12,6 @@
 #include "meshmdl.h"
 #include "ascii_string.h"
 #include "coord3d.h"
-template <> inline const char *StringBase<char>::str()const{return m_data?m_data->data:"";}
 inline void Coord3D::set(float a,float b,float c){x=a;y=b;z=c;}
 struct Rva00766AA0Buffer {
  Coord3D point00,point0c;float width18;
