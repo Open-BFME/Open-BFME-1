@@ -53,11 +53,11 @@ class Rva00539110Owner
 	void *m_actionOwner;
 };
 
-class Gen0000C955
+class AptOnlineCustomMatch
 {
 public:
 	virtual void slot00();
-	void handle(bool accepted);
+	void OpenConnectionScreen(bool accepted);
 
 private:
 	char m_padding00[0x30];
@@ -66,7 +66,7 @@ private:
 	int m_acceptCount;
 };
 
-void Gen0000C955::handle(bool accepted)
+void AptOnlineCustomMatch::OpenConnectionScreen(bool accepted)
 {
 	if (windowManager19E() == 0)
 		return;

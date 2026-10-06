@@ -83709,7 +83709,7 @@ name,address,notes
 ?handle@Gen0000B23A@@QAEXXZ,0x0000B23A,niladic __thiscall tail-jump target of an absolute-operand forwarder; address-derived name
 ?handle@Gen0000B99C@@QAEXXZ,0x0000B99C,niladic __thiscall tail-jump target of an absolute-operand forwarder; address-derived name
 ?handle@Gen0000C5CC@@QAEXXZ,0x0000C5CC,address-derived callee of the load-ecx pointer tail-jump family; target read from the REL32 at its call sites
-?handle@Gen0000C955@@QAEX_N@Z,0x0000C955,address-derived guarded flag-forward callee; target read from the REL32 at 0x00539350 and 0x00539370
+?OpenConnectionScreen@AptOnlineCustomMatch@@QAEX_N@Z,0x0000C955,route=0x00539110; EA AptOnlineCustomMatch::OpenConnectionScreen (ILT oracle CONFIRMED); guarded flag-forward callee; target read from the REL32 at 0x00539350 and 0x00539370
 ?handle@Gen0000D828@@QAEXXZ,0x0000D828,niladic __thiscall tail-jump target of an absolute-operand forwarder; address-derived name
 ?handle@Gen0000DBA7@@QAEXXZ,0x0000DBA7,niladic __thiscall tail-jump target of an absolute-operand forwarder; address-derived name
 ?handle@Gen0000EAFC@@QAEXXZ,0x0000EAFC,niladic __thiscall tail-jump target of an absolute-operand forwarder; address-derived name

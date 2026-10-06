@@ -20,18 +20,15 @@
 // the same forwarder written twice with the flag flipped.
 //
 // IDENTITY.  The 0x00027F2A callee is proven GameWindow::winHide; the
-// 0x0000C955 callee's name stays address-derived.  The pushed byte is
+// 0x0000C955 callee is EA's AptOnlineCustomMatch::OpenConnectionScreen.  The pushed byte is
 // spelled bool because a bool argument compiles to exactly this push, but a
 // byte-wide enum would encode the same.
 
-#define BFME_FORWARD_CALLEE( ADDR )                                       \
-	class Gen##ADDR                                                       \
-	{                                                                     \
-	public:                                                               \
-		void handle( bool flag );                                         \
-	};
-
-BFME_FORWARD_CALLEE( 0000C955 )
+class AptOnlineCustomMatch
+{
+public:
+	void OpenConnectionScreen( bool flag );
+};
 
 // The 0x00027F2A callee is the retail thunk of GameWindow::winHide (see
 // ?winHide@GameWindow@@QAEH_N@Z in targets/game/reverse/functions.csv), so
@@ -76,10 +73,11 @@ extern BfmeAptScreenOnlineCustomMatch *TheBfmeOnlineCustomMatch;
 	void NAME();                                                          \
 	void NAME()                                                           \
 	{                                                                     \
-		Gen0000C955 *target = (Gen0000C955 *)TheBfmeOnlineCustomMatch;      \
+		AptOnlineCustomMatch *target =                                    \
+			(AptOnlineCustomMatch *)TheBfmeOnlineCustomMatch;               \
 		if ( target )                                                     \
 		{                                                                 \
-			target->handle( VALUE );                                       \
+			target->OpenConnectionScreen( VALUE );                         \
 		}                                                                 \
 	}
 

@@ -107,10 +107,10 @@ public:
 	void bfmeGo976E();
 };
 
-class Gen0000C955
+class AptOnlineCustomMatch
 {
 public:
-	void handle( bool value );
+	void OpenConnectionScreen( bool value );
 };
 
 class Rva005397D0AptScreen
@@ -168,7 +168,7 @@ bool BfmeAptScreenOnlineCustomMatch::Rva005406E0()
 						reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->leaveStagingRoom();
 
 					((BfmeE976 *)( (char *)this + 0x40 ))->bfmeGo976E();
-					((Gen0000C955 *)this)->handle( false );
+					((AptOnlineCustomMatch *)this)->OpenConnectionScreen( false );
 					TheWindowManager->refreshLayout( field34 );
 					field1B0 = ((Rva0001D606ImageCollection *)TheMappedImageCollection)->findImageByName( AsciiString( "AptLock" ) );
 					field1B4 = 0;

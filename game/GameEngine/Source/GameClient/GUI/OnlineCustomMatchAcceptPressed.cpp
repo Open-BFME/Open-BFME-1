@@ -11,7 +11,7 @@
 // The receiver is the BfmeAptScreenSecondary subobject the retail constructor
 // at 0x00545310 installs at +0x3C of BfmeAptScreenOnlineCustomMatch, which is
 // why the first call subtracts 0x3C.  That callee is pinned in
-// targets/game/reverse/symbols.csv at ILT 0x0000C955 as ?handle@Gen0000C955@@QAEX_N@Z.
+// targets/game/reverse/symbols.csv at ILT 0x0000C955 as ?OpenConnectionScreen@AptOnlineCustomMatch@@QAEX_N@Z.
 // No caller names this body, so its name keeps the address.
 
 #include <string>
@@ -160,10 +160,10 @@ public:
 
 // Pinned at ILT 0x0000C955 in targets/game/reverse/symbols.csv; the retail body sits at
 // 0x00539110 and reads the screen field at +0x1D0.
-class Gen0000C955
+class AptOnlineCustomMatch
 {
 public:
-	void handle( Bool value );
+	void OpenConnectionScreen( Bool value );
 };
 
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
@@ -182,7 +182,7 @@ public:
 // ?bfmeAcceptPressed@Rva0053DBE0Screen@@QAEX_N@Z
 void Rva0053DBE0Screen::bfmeAcceptPressed( Bool accepted )
 {
-	( (Gen0000C955 *)( (char *)this - 0x3C ) )->handle( accepted );
+	( (AptOnlineCustomMatch *)( (char *)this - 0x3C ) )->OpenConnectionScreen( accepted );
 
 	if( !accepted )
 		return;
