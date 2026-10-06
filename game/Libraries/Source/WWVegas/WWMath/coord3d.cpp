@@ -291,11 +291,6 @@ bool Coord3D::IsExactlyEqualTo(const Coord3D &that) const
     return x == that.x && y == that.y && z == that.z;
 }
 
-float Coord3D::length() const
-{
-    return (float)sqrt(x * x + y * y + z * z);
-}
-
 Coord3D &Coord3D::Negate()
 {
     x = -x;
