@@ -368,22 +368,9 @@ public:
 		m_color.red = m_color.green = m_color.blue = 0;
 	}
 
-	virtual void doFXObj(const Object* primary, const Object* /*secondary*/) const
-	{
-		if (primary)
-		{
-			Real radius = m_radius;
-
-			if (m_boundingCirclePct > 0)
-				radius = (primary->getGeometryInfo().getBoundingCircleRadius() * m_boundingCirclePct);
-
-			TheDisplay->createLightPulse(primary->getPosition(), &m_color, 1, radius, m_increaseFrames, m_decreaseFrames);
-		}
-		else
-		{
-			DEBUG_CRASH(("You must have a primary source for this effect"));
-		}
-	}
+	// BFME's object dispatch (retail 0x00428ED0) is matched in
+	// LightPulseFXNuggetEffects.cpp.
+	virtual void doFXObj(const Object* primary, const Object* secondary) const;
 
 	virtual void doFXPos(const Coord3D *primary, const Matrix3D* /*primaryMtx*/, const Real /*primarySpeed*/, const Coord3D * /*secondary*/, const Real /*overrideRadius*/ ) const
 	{
