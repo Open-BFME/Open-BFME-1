@@ -15,7 +15,11 @@ struct BfmeHdrVKI
 
 typedef void *(__cdecl *BfmeAllocFnVKI)(unsigned n);
 
-extern BfmeAllocFnVKI *g_bfmeAllocVKI;
+// Retail 0x01337A30 is the Apt allocator pair defined once as
+// g_rva01337A30AllocPair (data_rows.csv, game/Libraries/Source/Apt/Apt.cpp);
+// its first slot is the allocate function this body calls.
+struct BfmeStringPool3AF0;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 // The shared empty EA string block at 0x012D5298 is defined once, as
 // EAStringC::StringDataC, in game/GameEngine/Source/Common/Data/Rva012D5298.cpp;
 // this TU keeps its own local view of the block and casts at each use.
@@ -44,7 +48,7 @@ void BfmeStrVKI::bfmeSetVKI(const char *s)
 	}
 	int len = strlen(s);
 	unsigned sz = (len + 0xc) & ~3;
-	m_bfme00 = (BfmeHdrVKI *)(*g_bfmeAllocVKI)(sz);
+	m_bfme00 = (BfmeHdrVKI *)(*(BfmeAllocFnVKI *)g_rva01337A30AllocPair)(sz);
 	m_bfme00->m_bfme00 = 1;
 	m_bfme00->m_bfme04 = (unsigned short)(sz - 9);
 	m_bfme00->m_bfme02 = (unsigned short)len;
