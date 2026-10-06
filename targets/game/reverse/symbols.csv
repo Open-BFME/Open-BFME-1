@@ -9472,7 +9472,6 @@ name,address,notes
 ??1Rva00800780Addr@@QAE@XZ,0x007E86C0,jabba demangler connect-reply Addr dtor alias of 0x7E86C0
 ??1Rva00803890Base@@UAE@XZ,0x007FA650,FESL browser base dtor alias of Gen_007fa650; pin for 0x803890
 ??1Rva00808CB0LanGameEntry@@UAE@XZ,0x007E86C0,derived destructor body folded with Rva007E86B0Base at 0x007E86C0; constructor 0x00808CB0 installs vtable 0x011296B0 whose slot zero routes through scalar wrapper 0x007E8E70
-??1Rva00832090TailBase@@UAE@XZ,0x00832090,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva00887940MultiBase@@QAE@XZ,0x00887940,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva008881D0MultiBase@@QAE@XZ,0x008881D0,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva00891D40SizedDeleting@@UAE@XZ,0x00896060,destructor address decoded from the retail REL32 call site; name is address-derived
@@ -85450,8 +85449,8 @@ name,address,notes
 ?m@Gen_00409040Registry@@QAEXPAX@Z,0x00409040,Open-BFME5 address-derived name; call target of 0x00604BE0 via ILT 0x000281C8; identity not asserted
 ?m@Gen_00489270@@QAEXH@Z,0x0000CF95,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0059D9E0 calls; autopin
 ?m@Gen_007f9590@@QAEXH@Z,0x007F9590,already shim; pin alias ok
-?m@Gen_00832090@@QAEXXZ,0x00832090,compatibility alias retained for already-converted callers; authentic owning row is ??1Rva00832090TailBase@@UAE@XZ at the same retail body
 ?m@Gen_008f7440@@QAEXXZ,0x008F7440,compatibility alias retained for the gen_asm dump callers d_00702920 and d_00745370 (game/gen_asm is not hand-edited); authentic owning row is ?getPropShroudStatusForPlayer@PartitionManager@@QBE?AW4ObjectShroudStatus@@HPBUCoord3D@@@Z at the same retail body
+?m@Gen_00832090@@QAEXXZ,0x00832090,compatibility alias retained for already-converted callers; authentic owning row is ??1facet@locale@_STL@@MAE@XZ at the same retail body
 ?m@Gen_00944c50@@QAAXXZ,0x00944C50,cdecl ABI alias for retail Begin_Render call
 ?m@Glo012F1028Type@@QAEXABVAsciiString@@@Z,0x00030B3E,Retail3BCB403B ret4 noop; caller passes temporary AsciiString address; no invented behavior
 ?m@Rva007EAD00@@QAEXH@Z,0x007EAD00,body 0x007EAD00; Thread_Function 0x0063EB00 +0x31F ecx=[0x012F71BC] push 0x466E call with no cleanup: thiscall 1 int; 8B body mov ecx [ecx+4] then jmp ?send@Rva007EAC30Owner@@QAEXH@Z; address-derived

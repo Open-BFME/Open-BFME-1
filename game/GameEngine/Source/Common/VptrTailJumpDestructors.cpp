@@ -134,13 +134,25 @@ public:
 	virtual ~Rva0004B227TailBase();
 };
 
-class Rva00832090TailBase
+// STLport 4.5.3 locale::facet's destructor (src/locale_impl.cpp: an empty body).
+// Retail 0x00832090 re-seats the vptr to 0x0112E940, the facet vftable retail
+// RTTI names, and returns; the messages destructors at 0x00848A30/0x00848B20
+// and the facet destructors in stlport_locale_facet_destructors.cpp reach it as
+// ??1facet@locale@_STL@@MAE@XZ.
+namespace _STL
+{
+class locale
 {
 public:
-	virtual ~Rva00832090TailBase();
+	class facet
+	{
+	protected:
+		virtual ~facet();
+	};
 };
+}
 
-__declspec(noinline) Rva00832090TailBase::~Rva00832090TailBase() {}
+__declspec(noinline) _STL::locale::facet::~facet() {}
 
 class Rva008B2DF0TailBase
 {
