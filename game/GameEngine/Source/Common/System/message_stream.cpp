@@ -20,45 +20,8 @@ public:
 	virtual void removeMessage(GameMessage *message);
 };
 
-struct BFMEPlayer
-{
-	Int getPlayerIndex() const
-	{
-		return *(const Int *)((const unsigned char *)this + 0x24);
-	}
-};
-
-struct BFMEPlayerList
-{
-	BFMEPlayer *getLocalPlayer() const
-	{
-		return *(BFMEPlayer **)((const unsigned char *)this + 0x0C);
-	}
-};
-
-// retail [0x012ED748] EA's `PlayerList *ThePlayerList;`.  The TU-local view
-// struct above is the real thing under another name, so declare the canonical
-// spelling and drop the alias: the member function mangles to
-// ?getLocalPlayer@BFMEPlayerList@@QBEPAUBFMEPlayer@@XZ, which nothing defines.
-class PlayerList;
-extern PlayerList *ThePlayerList;
-
-static __forceinline BFMEPlayerList *thePlayers()
-{
-	return (BFMEPlayerList *)ThePlayerList;
-}
-
-GameMessage::GameMessage(Type type)
-{
-	m_playerIndex = thePlayers()->getLocalPlayer()->getPlayerIndex();
-	m_type = type;
-	m_argList = 0;
-	m_argTail = 0;
-	m_argCount = 0;
-	m_list = 0;
-	m_next = 0;
-	m_prev = 0;
-}
+// GameMessage::GameMessage(Type) (retail 0x0008A2A0) is defined in
+// MessageStream_append_insert.cpp, whose appendMessage/insertMessage inline it.
 
 // Layout of the retail GameMessageArgument (a MemoryPoolObject subclass we have
 // not converted): vtbl@0, m_next@0x4, m_data@0x8 (16-byte union, widest member
