@@ -4,7 +4,7 @@
 class AsciiString
 {
 public:
-	void set(const char *text);
+	AsciiString &operator=(const char *text);
 };
 
 void __stdcall armyNameFromIndex(unsigned int index, AsciiString *out)
@@ -12,16 +12,16 @@ void __stdcall armyNameFromIndex(unsigned int index, AsciiString *out)
 	switch (index)
 	{
 	case 0:
-		out->set("TopArmy");
+		*out = "TopArmy";
 		break;
 	case 3:
-		out->set("BottomArmy");
+		*out = "BottomArmy";
 		break;
 	case 2:
-		out->set("RightArmy");
+		*out = "RightArmy";
 		break;
 	case 1:
-		out->set("LeftArmy");
+		*out = "LeftArmy";
 		break;
 	}
 }

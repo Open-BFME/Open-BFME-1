@@ -10,7 +10,7 @@ extern "C" const char *lua_tostring(lua_State *state, int index);
 class AsciiString
 {
 public:
-	void set(const char *text);
+	AsciiString &operator=(const char *text);
 
 private:
 	void *m_data;
@@ -44,7 +44,7 @@ int CurDrawableSetTransitionAnimState(lua_State *state)
 	if (reinterpret_cast<LuaDrawableState *>(TheLuaScriptEngine)->m_drawable != 0) {
 		if (lua_gettop(state) > 0) {
 			reinterpret_cast<LuaDrawableState *>(TheLuaScriptEngine)->m_drawable
-				->m_transitionAnimState.set(lua_tostring(state, 1));
+				->m_transitionAnimState = lua_tostring(state, 1);
 			return 0;
 		}
 	}
