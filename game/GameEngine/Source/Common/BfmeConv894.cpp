@@ -13,8 +13,41 @@ public:
 // Retail: 0x012F0898 is EA's GameLogic *TheGameLogic (see
 // game/GameEngine/Source/GameLogic/System/GameLogic.cpp). This TU only needs
 // its 0x012F0898-facing views, so declare the canonical symbol and cast.
-class GameLogic;
+class Object;
+
+class GameLogic
+{
+public:
+	Object *findObjectByID(int id);		// retail ILT 0x0001F253 -> 0x0009A510
+};
+
 extern GameLogic *TheGameLogic;
+
+// The found object's field store and notify, matched under its
+// address-derived row name (Rva001BF2E0SetAndNotify.cpp); retail tail-jumps
+// to it through ILT 0x00028641 with this function's own stack argument.
+class Rva001BF2E0Source
+{
+public:
+	void setAndNotify(int value);
+};
+
+// UPDATE_SLEEP_NONE is 1 in EA's UpdateModule.h (bfmeGoFEC below returns
+// it or UPDATE_SLEEP_FOREVER, 0x3fffffff).
+enum UpdateSleepTime
+{
+	UPDATE_SLEEP_NONE = 1
+};
+
+struct BfmeThingFED;
+
+class UpdateModule
+{
+protected:
+	void setWakeFrame(Object *obj, UpdateSleepTime wakeDelay);	// retail ILT 0x000157DA -> 0x002B2040
+
+	friend struct BfmeThingFED;
+};
 
 struct BfmeThingFEA
 {
@@ -66,12 +99,6 @@ int BfmeThingFEC::bfmeGoFEC()
 	return 1;
 }
 
-class BfmeBaseFED
-{
-public:
-	void bfmeCallFED(void *p, int f);
-};
-
 struct BfmeThingFED
 {
 	void bfmeGoFED(void *a, int b, int c);
@@ -83,9 +110,9 @@ void BfmeThingFED::bfmeGoFED(void *a, int b, int c)
 {
 	if (c > b && c == 3)
 	{
-		void *p = *(void **)((char *)this - 0x18);
+		Object *p = *(Object **)((char *)this - 0x18);
 		m_bfmeK = 0x28;
-		((BfmeBaseFED *)((char *)this - 0x20))->bfmeCallFED(p, 1);
+		((UpdateModule *)((char *)this - 0x20))->setWakeFrame(p, UPDATE_SLEEP_NONE);
 	}
 }
 
@@ -232,23 +259,6 @@ void BfmeThingFEF::bfmeGoFEF(void *unused)
 	}
 }
 
-class BfmeResFEG
-{
-public:
-	void bfmeUseFEG(void *a);
-};
-
-class BfmeGlobFEG
-{
-public:
-	BfmeResFEG *bfmeLookFEG(int k);
-};
-
-static inline BfmeGlobFEG *g_bfmeObjFEG(void)
-{
-	return (BfmeGlobFEG *)TheGameLogic;
-}
-
 struct BfmeOwnFEG
 {
 	unsigned char m_bfmeHead[0x74];
@@ -268,8 +278,8 @@ void BfmeThingFEG::bfmeGoFEG(void *a)
 	BfmeOwnFEG *o = *(BfmeOwnFEG **)((char *)this - 4);
 	if (k != o->m_bfmeK)
 	{
-		BfmeResFEG *r = g_bfmeObjFEG()->bfmeLookFEG(k);
+		Object *r = TheGameLogic->findObjectByID(k);
 		if (r)
-			r->bfmeUseFEG(a);
+			((Rva001BF2E0Source *)r)->setAndNotify((int)a);
 	}
 }
