@@ -25,6 +25,8 @@ tools/next_work.py serves these as tiers; this module builds them.
   python3 tools/repair_queue.py link [--limit N]
   python3 tools/repair_queue.py dest 0xRVA
   python3 tools/repair_queue.py pass-test "<baseline line>"
+  python3 tools/repair_queue.py verify-removed     # pre-commit, when a debt line is deleted:
+                                                   # builds each such row's source not already staged
 """
 import argparse
 import bisect
@@ -37,7 +39,9 @@ import sys
 from functools import lru_cache
 from pathlib import Path
 
-ROOT = Path(os.environ.get("REPAIR_ROOT") or Path(__file__).resolve().parents[1])
+# The hooks run HEAD's copy through stdin (an edit cannot approve itself): no __file__ then.
+ROOT = Path(os.environ.get("REPAIR_ROOT")
+            or (Path(__file__).resolve().parents[1] if "__file__" in globals() else Path.cwd()))
 BFME1 = (ROOT / "targets" / "game" / "reverse").is_dir()
 REV = "targets/game/reverse" if BFME1 else "reverse"
 LEDGER = f"{REV}/functions.csv"
@@ -178,6 +182,58 @@ def pass_test(line, build_cmd=None):
                   f"{item['baseline']} -- commit it with the fix")
 
 
+def _git(*args):
+    return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True,
+                          encoding="utf-8", errors="replace")
+
+
+def removed_debt_sources():
+    """{source: [baseline lines]} for gate-debt lines the index deletes against HEAD.
+    A removal is credited as a repair, so each one is re-verified (rule 5)."""
+    out = {}
+    for path, kind in baseline_files():
+        old, new = _git("show", f"HEAD:{path}"), _git("show", f":{path}")
+        if old.returncode or old.stdout == new.stdout:
+            continue
+        gone = set(old.stdout.splitlines()) - set(new.stdout.splitlines())
+        for item in repair_items_from(path, kind, old.stdout):
+            if item["baseline_line"] in gone:
+                source = item["source"]
+                if source.startswith("("):
+                    source = locate_source(item["function"])
+                if source:                          # nothing spells it any more: nothing to verify
+                    out.setdefault(source, []).append(item["baseline_line"])
+    return out
+
+
+def verify_removed(build_cmd=None):
+    """Build each removed line's row source the commit does not already stage (the hook's
+    delta verify builds staged ones). Returns the failures."""
+    removed = removed_debt_sources()
+    if not removed:
+        return []
+    staged = set(_git("diff", "--cached", "--name-only").stdout.split())
+    failures = []
+    for source, lines in sorted(removed.items()):
+        if source in staged:
+            continue
+        cmd = (build_cmd or [sys.executable, str(ROOT / "tools" / "build.py")]) + [source]
+        if subprocess.run(cmd, cwd=ROOT).returncode != 0:
+            failures.append(f"{source}: removed {lines[0]!r} but the row still fails its check")
+    return failures
+
+
+def repair_items_from(path, kind, text):
+    """repair_items() for one baseline text (HEAD's, when judging a removal)."""
+    saved = _read
+    try:
+        others = {p for p, _ in baseline_files()} - {path}
+        globals()["_read"] = lambda rel: text if rel == path else ("" if rel in others else saved(rel))
+        return repair_items()
+    finally:
+        globals()["_read"] = saved
+
+
 # ---------------------------------------------------------------- link tier
 
 def link_items(path=None):
@@ -262,7 +318,13 @@ def main(argv=None):
         p.add_argument("--limit", type=int, default=20)
     sub.add_parser("dest").add_argument("rva")
     sub.add_parser("pass-test").add_argument("line")
+    sub.add_parser("verify-removed", help="hook: re-verify rows whose debt lines the index deletes")
     args = ap.parse_args(argv)
+    if args.cmd == "verify-removed":
+        failures = verify_removed()
+        for line in failures:
+            print(f"repair_queue: {line}", file=sys.stderr)
+        return 1 if failures else 0
     if args.cmd == "dest":
         got = dest_tu(int(args.rva, 16))
         print(f"{got['dest'] or '(no unit)'}  <- {got['basis']}")

@@ -110,3 +110,26 @@ def test_next_work_serves_repairs_before_new_matches():
     assert next_work.selected_queue(None, [], [], [], [], named, repair=[])[1] == named
     assert next_work.selected_queue("named", [], [], [], [], named, repair=repair)[1] == named
     assert next_work.selected_queue("repair", [], [], [], [], named, repair=repair)[1] == repair
+
+
+def test_a_removed_debt_line_is_reverified(tmp_path):
+    import subprocess
+    rq, rev, _ = load(tmp_path, "bfme2", LEDGER, [
+        ("reverse/gate_baseline.txt", "tail 0x00001000 ?a@Loco@@QAEXXZ\nstrnul 0x00002000 ?c@Body@@QAEXXZ\n"),
+        ("Code/GameEngine/Loco.cpp", "//\n"), ("Code/GameEngine/Body.cpp", "//\n")])
+
+    def git(*args):
+        return subprocess.run(["git", "-C", str(tmp_path), *args], capture_output=True, text=True, check=True)
+    git("init", "-q")
+    git("add", ".")
+    git("-c", "user.name=t", "-c", "user.email=", "commit", "-qm", "init")
+    fail, ok = [sys.executable, "-c", "raise SystemExit(1)"], [sys.executable, "-c", "pass"]
+    assert rq.verify_removed(fail) == []                                   # nothing removed
+    (rev / "gate_baseline.txt").write_text("strnul 0x00002000 ?c@Body@@QAEXXZ\n", newline="\n")
+    git("add", "reverse/gate_baseline.txt")
+    got = rq.verify_removed(fail)                                          # credited without a fix
+    assert len(got) == 1 and "Code/GameEngine/Loco.cpp" in got[0]
+    assert rq.verify_removed(ok) == []                                     # the row really passes
+    (tmp_path / "Code/GameEngine/Loco.cpp").write_text("// fixed\n")
+    git("add", "Code/GameEngine/Loco.cpp")
+    assert rq.verify_removed(fail) == []                                   # staged: the hook builds it

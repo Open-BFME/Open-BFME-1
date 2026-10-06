@@ -325,6 +325,13 @@ fi
 if [ "$body_baseline_changed" -ne 0 ]; then
     python3 tools/body_guard.py --assert-shrink-only HEAD \
         || fail "body_guard_baseline.csv grew (see above)"
+    # A deleted debt line is credited as a repair (next_work, progress_v2,
+    # agent_yield), so its row is re-verified: the delta verify builds staged
+    # sources, this builds the rest. HEAD's checker, so an edit cannot approve itself.
+    if git cat-file -e HEAD:tools/repair_queue.py 2>/dev/null; then
+        git show HEAD:tools/repair_queue.py | python3 - verify-removed \
+            || fail "a deleted gate-debt line's row still fails its check (see above)"
+    fi
 fi
 if [ "$dir32_record_changed" -ne 0 ]; then
     python3 tools/dir32_record_guard.py --staged HEAD \
