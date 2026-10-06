@@ -41,10 +41,7 @@ public:
 
     AsciiString &operator=(const AsciiString &other);
 
-    void concat(const char *text, Int length)
-    {
-        StringBase<char>::concat(text, length);
-    }
+    using StringBase<char>::concat;
 
     const char *str() const
     {

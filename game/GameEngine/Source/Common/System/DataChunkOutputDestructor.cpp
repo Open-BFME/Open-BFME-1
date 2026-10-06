@@ -13,7 +13,7 @@ class AsciiString : private StringBase<char>
 public:
     AsciiString(const AsciiString &other) : StringBase<char>(other) {}
     ~AsciiString() {}
-    void concat(const char *text, int length) { StringBase<char>::concat(text, length); }
+    using StringBase<char>::concat;
     const char *str() const { return m_data ? m_data->data : ""; }
 };
 
