@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWLib
 //
 // The destructor paired with Gen_00491880's matched three-string constructor
 // at 0x00491880.  The deleting wrapper at 0x004923A0 calls this body through
@@ -8,20 +8,19 @@
 // Rva00490470 window-owner dtor. Its +0x08 payload may later hold a
 // GameWindow, so inherited cleanup must run even though construction sets it null.
 
-class AsciiStringVX
+// Retail copies and destroys each string member through StringBase<char>'s
+// own bodies: the copy constructor 0x00887B60 and releaseBuffer 0x00887940.
+// ascii_string.h's inline AsciiString members reach exactly those.  The
+// constructors' parameter type keeps its AsciiStringVX spelling.
+#include "ascii_string.h"
+
+class AsciiStringVX;
+
+class BfmeStrVX : private AsciiString
 {
 public:
-	AsciiStringVX(const AsciiStringVX &other);
-	~AsciiStringVX(void);
-
-private:
-	char *m_bfmeData;
-};
-
-class BfmeStrVX : private AsciiStringVX
-{
-public:
-	BfmeStrVX(const AsciiStringVX &other) : AsciiStringVX(other) {}
+	BfmeStrVX(const AsciiStringVX &other)
+		: AsciiString(reinterpret_cast<const AsciiString &>(other)) {}
 	~BfmeStrVX(void) {}
 };
 
