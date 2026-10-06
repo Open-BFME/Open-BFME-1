@@ -71,7 +71,11 @@ struct INIMacroHash
 	}
 };
 
-extern INIMacroHash TheINIMacroHash;
+// Rva00C6DB80StaticInit.cpp owns the hash cell at VA 0130CE58 (its dynamic
+// initializer 0x00C6DB80 constructs it); this TU reads it through its own view.
+class Rva00C6DB80Init;
+extern Rva00C6DB80Init g_rva0130CE58;
+#define TheINIMacroHash (reinterpret_cast<INIMacroHash &>(g_rva0130CE58))
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
