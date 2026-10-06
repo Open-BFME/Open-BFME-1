@@ -54,7 +54,7 @@ public:
  ~Rva0044F4D0() { if(ptr) ptr->Release_Ref(); }
 private: TextureClass *ptr;
 };
-struct Coord2D { float x,y; };
+#include "../../../Libraries/Include/Lib/Coord2D.h"
 struct Region2D {Coord2D lo,hi;};
 struct ICoord2D {int x,y;};
 class Image {

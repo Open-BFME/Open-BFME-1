@@ -28,11 +28,7 @@ typedef float Real;
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 
-struct Coord2D
-{
-	Real x;
-	Real y;
-};
+#include "../../../Libraries/Include/Lib/Coord2D.h"
 
 struct ICoord2D
 {

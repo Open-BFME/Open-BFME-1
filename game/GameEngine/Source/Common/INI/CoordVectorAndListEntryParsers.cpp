@@ -15,10 +15,7 @@
 
 #define NULL 0
 
-struct Coord2D
-{
-	float x, y;
-};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

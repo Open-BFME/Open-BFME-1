@@ -9,11 +9,7 @@
 
 // cl: /DNDEBUG /MD /EHsc
 
-struct Coord2D
-{
-	float x;
-	float y;
-};
+#include "../../../Libraries/Include/Lib/Coord2D.h"
 
 struct Coord3D
 {

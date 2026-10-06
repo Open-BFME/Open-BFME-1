@@ -26,11 +26,7 @@ enum NameKeyType
 	NAMEKEY_INVALID = 0
 };
 
-struct Coord2D
-{
-	Real x;
-	Real y;
-};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

@@ -4,7 +4,7 @@
 // construct callers reach ILT 0x00049D2D; ZH flattenTerrain is the source twin.
 extern "C" __declspec(dllimport) double __cdecl floor(double);
 struct Coord3D {float x,y,z;};
-struct Coord2D {float x,y;};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 struct ICoord2D {int x,y;};
 class Object;
 extern void j_00042ccb();

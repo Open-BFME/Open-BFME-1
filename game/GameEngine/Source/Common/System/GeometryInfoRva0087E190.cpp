@@ -29,10 +29,7 @@ enum GeometryType
 	GEOMETRY_BOX
 };
 
-struct Coord2D
-{
-	Real x, y;
-};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 
 struct Region2D
 {

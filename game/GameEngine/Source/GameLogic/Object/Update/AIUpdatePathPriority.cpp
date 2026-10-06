@@ -6,7 +6,7 @@
 // the helper they emit independently matches Overridable::getFinalOverride.
 
 struct Coord3D { float x,y,z; };
-struct Coord2D { float x,y; };
+#include "../../../../../Libraries/Include/Lib/Coord2D.h"
 typedef bool Bool;
 enum ObjectID { INVALID_ID=0 };
 enum KindOfType { KINDOF_INFANTRY=8,KINDOF_VEHICLE=9,KINDOF_DOZER=14 };

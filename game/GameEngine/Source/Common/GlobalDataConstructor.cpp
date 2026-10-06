@@ -57,11 +57,7 @@ struct BfmeGdCoord3D
 	Real z;
 };
 
-struct Coord2D
-{
-	Real x;
-	Real y;
-};
+#include "../../../Libraries/Include/Lib/Coord2D.h"
 
 struct ICoord2D
 {

@@ -2,7 +2,7 @@
 #define BFME_STLP_NODE_ALLOC 1
 #include <list>
 
-struct Coord2D { float x; float y; };
+#include "../../../../../Libraries/Include/Lib/Coord2D.h"
 struct ICoord2D { int x; int y; };
 
 class Display

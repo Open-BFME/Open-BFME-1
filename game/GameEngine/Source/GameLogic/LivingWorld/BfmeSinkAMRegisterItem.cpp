@@ -23,7 +23,7 @@
 
 extern "C" AsciiString rva0060E7F0(int marker);
 
-struct Coord2D { float x; float y; };
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 
 class Vector3
 {

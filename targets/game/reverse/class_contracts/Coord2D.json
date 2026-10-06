@@ -1,0 +1,71 @@
+{
+ "bases": [],
+ "bases_by": "zh",
+ "class": "Coord2D",
+ "evidence": {
+  "census": 60,
+  "retail_access": {
+   "0x0": {
+    "4": 38
+   },
+   "0x4": {
+    "4": 38
+   }
+  },
+  "retail_member_rows": 24,
+  "retail_vtables": {},
+  "view_errors": 5,
+  "view_sizes": {
+   "8": 55
+  },
+  "views": 55,
+  "witness_offsets": [
+   0,
+   4
+  ],
+  "zh": {
+   "header": "CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h"
+  }
+ },
+ "fields": [
+  {
+   "decided_by": "bytes",
+   "kind": "f4",
+   "name": "x",
+   "name_by": "zh",
+   "offset": 0,
+   "retail_widths": {
+    "4": 38
+   },
+   "size": 4,
+   "type": "float",
+   "views": 55,
+   "witness": 4.9
+  },
+  {
+   "decided_by": "bytes",
+   "kind": "f4",
+   "name": "y",
+   "name_by": "zh",
+   "offset": 4,
+   "retail_widths": {
+    "4": 38
+   },
+   "size": 4,
+   "type": "float",
+   "views": 55,
+   "witness": 5.7
+  }
+ ],
+ "key": "struct",
+ "key_by": "bytes",
+ "ledger_keys": {
+  "class": 18,
+  "struct": 48
+ },
+ "outliers": [],
+ "queue": [],
+ "size": 8,
+ "size_by": "zh",
+ "vslots": {}
+}

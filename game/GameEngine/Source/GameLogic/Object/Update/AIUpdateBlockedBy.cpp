@@ -10,7 +10,7 @@
 // An opaque declaration adds 16 frame bytes and changes local copy scheduling.
 #include <math.h>
 struct Coord3D{Coord3D(){} Coord3D(const Coord3D&c):x(c.x),y(c.y),z(c.z){}float x,y,z;};
-struct Coord2D{float x,y;};
+#include "../../../../../Libraries/Include/Lib/Coord2D.h"
 struct ICoord2D{int x,y;};
 enum CrushSquishTestType{TEST_CRUSH_OR_SQUISH=2};
 // Numeric BFME-only kinds retain their decoded ordinals pending the name table.
