@@ -135,23 +135,8 @@ const FieldParse UpgradeTemplate::m_upgradeFieldParseTable[] =
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/UpgradeTemplateConstructor.cpp
-// ??0UpgradeTemplate@@QAE@XZ present-unmatched
-UpgradeTemplate::UpgradeTemplate( void )
-{
-	//Added By Sadullah Nader
-	//Initialization(s) inserted
-	m_cost = 0;
-	//
-	m_type = UPGRADE_TYPE_PLAYER;
-	m_nameKey = NAMEKEY_INVALID;
-	m_buildTime = 0.0f;
-	m_next = NULL;
-	m_prev = NULL;
-	m_buttonImage = NULL;
-	m_academyClassificationType = ACT_NONE;
-
-}  // end UpgradeTemplate
+// UpgradeTemplate::UpgradeTemplate: retail's body (0x0010ABD0) is
+// UpgradeTemplate.cpp; Zero Hour's version is not defined here.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
