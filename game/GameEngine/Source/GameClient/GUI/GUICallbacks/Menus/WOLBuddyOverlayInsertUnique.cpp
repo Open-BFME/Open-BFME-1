@@ -4,4 +4,17 @@
 #include "PreRTS.h"
 #include "GameNetwork/GameSpy/PeerDefs.h"
 
+// The tree's _M_insert is retail 0x004EBC90 (stlport_rb_tree_int_buddyinfo_insert.cpp);
+// instantiated here it came out as a different COMDAT copy (link_census
+// RetailTruth: "wrong") that the link kept ahead of retail's, so this TU only
+// declares it.
+typedef std::pair<const GPProfile, BuddyInfo> BuddyInfoPair;
+template <>
+std::_Rb_tree<GPProfile, BuddyInfoPair, std::_Select1st<BuddyInfoPair>, std::less<GPProfile>,
+	std::allocator<BuddyInfoPair> >::iterator
+std::_Rb_tree<GPProfile, BuddyInfoPair, std::_Select1st<BuddyInfoPair>, std::less<GPProfile>,
+	std::allocator<BuddyInfoPair> >::_M_insert(
+	std::_Rb_tree_node_base *, std::_Rb_tree_node_base *, const BuddyInfoPair &,
+	std::_Rb_tree_node_base * );
+
 template class std::map<GPProfile, BuddyInfo>;

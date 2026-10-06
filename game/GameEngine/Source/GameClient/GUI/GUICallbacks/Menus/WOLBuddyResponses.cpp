@@ -54,6 +54,18 @@ class BuddyInfo
 	~BuddyInfo();
 };
 typedef std::map<int, BuddyInfo> BuddyInfoMap;
+// The map's tree insert is retail 0x004EBC90 (stlport_rb_tree_int_buddyinfo_insert.cpp);
+// instantiated here it came out as a different COMDAT copy (link_census
+// RetailTruth: "wrong") that the link keeps ahead of retail's, so this TU only
+// declares it.
+typedef _STL::pair<const int, BuddyInfo> BuddyInfoPair;
+template <>
+_STL::_Rb_tree<int, BuddyInfoPair, _STL::_Select1st<BuddyInfoPair>, _STL::less<int>,
+	_STL::allocator<BuddyInfoPair> >::iterator
+_STL::_Rb_tree<int, BuddyInfoPair, _STL::_Select1st<BuddyInfoPair>, _STL::less<int>,
+	_STL::allocator<BuddyInfoPair> >::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *, const BuddyInfoPair &,
+	_STL::_Rb_tree_node_base * );
 class BuddyMessage
 {
   public:
@@ -542,3 +554,8 @@ void HandleBuddyResponses(void)
 		bfmeGo1086B();
 	}
 }
+
+// The retail tree insert above constructs its node through this _Construct; the
+// insert used to instantiate it here, so it is instantiated explicitly to keep
+// supplying it.
+template void _STL::_Construct<BuddyInfoPair, BuddyInfoPair>( BuddyInfoPair *, const BuddyInfoPair & );
