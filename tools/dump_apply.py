@@ -162,6 +162,7 @@ class Context:
 
     def __init__(self):
         self.ctx = D.load_context()
+        self.ctx.gate_spelling = True   # address names the byte gate's DIR32 rule accepts
         self.rows = D.dump_sources(self.ctx)
         self.gate_names = build.load_symbol_map()
 

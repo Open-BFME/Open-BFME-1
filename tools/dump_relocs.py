@@ -237,6 +237,19 @@ class Context:
         return None
 
     def owner(self, va):
+        """(symbol, addend, target_class, note) for a reference to va.
+
+        With gate_spelling set (tools/dump_apply.py, for committed sources) an
+        address name follows build.py's DIR32 rule: a name dir32_addresses.csv
+        records at that address (the first, sorted), else g_Va<VA>."""
+        sym, addend, cls, note = self._owner(va)
+        if getattr(self, "gate_spelling", False) and re.fullmatch(r"g_[0-9A-F]{8}", sym):
+            at = int(sym[2:], 16)
+            names = sorted(self.dir32.get(at, ()))
+            sym = names[0] if names else f"g_Va{at:08X}"
+        return sym, addend, cls, note
+
+    def _owner(self, va):
         """(symbol, addend, target_class, note) for a reference to va."""
         row = self.row_at(va)
         if row is not None:
@@ -721,6 +734,7 @@ def retail_reloc_authority(ctx, body, va, symbol, relocs, ambiguous, failures, t
                 sym, addend, cls, note = symbol, target - va, "self", ""
             else:
                 sym, addend, cls, note = ctx.owner(target)
+                sym = gate_dir32_name(ctx, sym, target - addend)
             relocs.append({"site": off, "kind": DIR32, "symbol": sym, "addend": addend, "target": target,
                            "cls": cls, "rule": "retail-reloc", "evidence": ";".join(x for x in (entry[3], note) if x),
                            "insn": entry[4] or f"dd {target:#x}", "insn_off": off})
@@ -825,11 +839,22 @@ def use_evidence(insns, ref, va, ctx):
     return None
 
 
+def gate_dir32_name(ctx, sym, base):
+    """With gate_spelling: build.py's DIR32 rule wants a name dir32_addresses.csv
+    records at the base address when it records any (sym itself if it is one)."""
+    if not getattr(ctx, "gate_spelling", False):
+        return sym
+    names = sorted(ctx.dir32.get(base, ()))
+    return sym if not names or sym in names else names[0]
+
+
 def make_reloc(ctx, ref, kind, target, rule, evidence, va, size, symbol):
     if va <= target < va + size:
         sym, addend, cls, note = symbol, target - va, "self", ""
     else:
         sym, addend, cls, note = ctx.owner(target)
+        if kind == DIR32:
+            sym = gate_dir32_name(ctx, sym, target - addend)
     return {"site": ref.off, "kind": kind, "symbol": sym, "addend": addend, "target": target,
             "cls": cls, "rule": rule, "evidence": ";".join(x for x in (evidence, note) if x),
             "insn": ref.text, "insn_off": ref.insn_off}
