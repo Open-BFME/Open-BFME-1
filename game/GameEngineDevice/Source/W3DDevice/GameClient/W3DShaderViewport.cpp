@@ -9,7 +9,7 @@
 // AppendLock constructor/destructor at 0x0091DE90/0x0091DF50 are matched C++.
 // Separate dimension scalars are significant: a Coord2D local changes MSVC 7.1
 // stack allocation despite otherwise identical instructions. No forced padding.
-struct Coord2D {float x,y;};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 struct Vec4Base {float x,y,z,w;};
 struct Vec4 : Vec4Base {Vec4(float a,float b,float c,float d){x=a;y=b;z=c;w=d;}};
 struct Vertex {Vec4Base pos;unsigned color;float u,v;};

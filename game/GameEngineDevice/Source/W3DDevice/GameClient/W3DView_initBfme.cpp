@@ -1,11 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // BFME W3DView::init, retail 0x00742700.
 
-struct Coord2D
-{
-	float x;
-	float y;
-};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 
 struct Coord3D
 {

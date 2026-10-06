@@ -14,11 +14,7 @@ extern const Real g_rva0107533C;
 extern Real g_bfmeDefaultBU;
 extern Real g_bfmeScaleB3;
 
-struct Coord2D
-{
-	Real x;
-	Real y;
-};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 
 enum FilterModes
 {

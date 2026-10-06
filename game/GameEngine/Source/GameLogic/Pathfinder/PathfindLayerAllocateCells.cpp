@@ -85,7 +85,7 @@ __forceinline long fast_float2long_round(float f)
 }
 
 // inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h:271,307,314,322
-struct Coord2D { Real x, y; };
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 struct ICoord2D { Int x, y; };
 
 struct Region2D { Coord2D lo, hi; };

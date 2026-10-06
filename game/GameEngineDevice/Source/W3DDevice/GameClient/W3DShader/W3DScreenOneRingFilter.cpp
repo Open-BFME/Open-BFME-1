@@ -4,7 +4,7 @@
 // Integer indices precede a 52-byte mapped-vertex update with two animated sine waves.
 // File-static wave factors retain retail loop invariance. The volatile u1 read keeps
 // the mapped-buffer reload before the object spread load, matching retail exactly.
-struct Coord2D{float x,y;};
+#include "../../../../../Libraries/Include/Lib/Coord2D.h"
 class DynamicIBAccessClass{public:class WriteLockClass{DynamicIBAccessClass*access;public:unsigned short*indices;WriteLockClass(DynamicIBAccessClass*);~WriteLockClass();};};
 struct Vertex{float x,y,z,rhw;unsigned color;float u0,v0,u1,v1,u2,v2,u3,v3;};
 class BoxDynamicVBAccessClass{public:class WriteLockClass{BoxDynamicVBAccessClass*access;public:Vertex*vertices;WriteLockClass(BoxDynamicVBAccessClass*);~WriteLockClass();};};

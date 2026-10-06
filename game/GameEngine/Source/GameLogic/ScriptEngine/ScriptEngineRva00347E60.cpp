@@ -94,7 +94,7 @@ struct NamedReveal
 	AsciiString m_playerName;
 };
 
-struct Coord2D { float x, y; };
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 
 struct BreezeInfo
 {

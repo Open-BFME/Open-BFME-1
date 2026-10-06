@@ -11,11 +11,7 @@ typedef float Real;
 typedef int Int;
 typedef bool Bool;
 
-struct Coord2D
-{
-	Real x;
-	Real y;
-};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 
 class Rva006BE630
 {

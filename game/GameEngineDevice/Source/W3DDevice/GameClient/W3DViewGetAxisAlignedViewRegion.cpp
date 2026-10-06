@@ -19,11 +19,7 @@ struct Coord3D : public Coord3DData
 	~Coord3D();
 };
 
-struct Coord2D
-{
-	Real x;
-	Real y;
-};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 
 struct Region3D
 {

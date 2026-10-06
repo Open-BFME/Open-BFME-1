@@ -7,11 +7,7 @@
 // dispatch tag is aliased onto the instance argument, the same stack-slot
 // trick the member push_back family uses on its value parameter.
 
-struct Coord2D
-{
-	float x;
-	float y;
-};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 
 struct LinearTarget
 {

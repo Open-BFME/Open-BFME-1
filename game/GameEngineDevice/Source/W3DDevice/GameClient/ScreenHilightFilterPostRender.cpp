@@ -16,7 +16,8 @@ struct DeviceVtable {
  char p7[4];long (__stdcall *SetPixelShaderConstantF)(Device*,unsigned,const float*,unsigned);
 };
 struct Device{DeviceVtable*v;};
-struct Coord2D{float x,y;};class Vector3{public:float X,Y,Z;};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
+class Vector3{public:float X,Y,Z;};
 class DX8Wrapper{public:static void Set_Render_Target(IDirect3DSurface8*,bool);static void Clear(bool,bool,bool,const Vector3&,float,float,unsigned);static void Set_DX8_Render_State(unsigned long,unsigned);static void Apply_Render_State_Changes();};
 extern Device *HighlightDevice;
 extern bool HighlightRendering;

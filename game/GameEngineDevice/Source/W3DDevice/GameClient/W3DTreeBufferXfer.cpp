@@ -54,10 +54,7 @@ private:
 	BfmeAsciiStringData *m_data;
 };
 
-struct Coord2D
-{
-	Real x, y;
-};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 
 struct Coord3D
 {

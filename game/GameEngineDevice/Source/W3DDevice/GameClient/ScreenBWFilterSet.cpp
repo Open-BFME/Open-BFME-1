@@ -215,11 +215,7 @@ enum FilterModes
 	FM_VIEW_BW_GREEN_AND_WHITE = 3
 };
 
-struct Coord2D
-{
-	Real x;
-	Real y;
-};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 
 class ScreenBWFilter
 {
