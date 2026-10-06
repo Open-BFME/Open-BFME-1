@@ -8,7 +8,6 @@
 //
 // The declarations are the model's, unchanged.
 
-// cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: preserve retail's out-of-line pinputs/reference/string call boundaries.
 
 class AsciiString;

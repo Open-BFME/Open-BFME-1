@@ -8,7 +8,6 @@ extern "C" __declspec(dllimport) void * __stdcall HeapAlloc(void *, unsigned lon
 extern "C" __declspec(dllimport) int __stdcall HeapFree(void *, unsigned long, void *);
 #include "dx8wrapper.h"
 
-// cl: /DNDEBUG /MD /EHsc
 // Open-BFME7: the W3D texture-stage reset at 0x006C9270 (559 B no
 // arguments).  Stages 0 and 1 get the default colour/alpha operation states
 // through DX8Wrapper's cached setter and two direct device calls each

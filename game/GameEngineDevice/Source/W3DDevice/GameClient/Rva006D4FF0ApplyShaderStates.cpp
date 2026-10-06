@@ -8,7 +8,6 @@ extern "C" __declspec(dllimport) void * __stdcall HeapAlloc(void *, unsigned lon
 extern "C" __declspec(dllimport) int __stdcall HeapFree(void *, unsigned long, void *);
 #include "dx8wrapper.h"
 
-// cl: /DNDEBUG /MD /EHsc
 // Open-BFME7: a W3D shader state block at 0x006D4FF0 (237 B; one stack
 // argument callee-cleaned).  After two calls that take the argument (the
 // callee-cleaned member-offset tail thunk at 0x0090C610 and the cdecl dump

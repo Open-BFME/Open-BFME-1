@@ -166,13 +166,22 @@ CLOSURE_SEEDS = "targets/game/reverse/game_end/seeds.json"
 #     ("A_victory", 1) identified (67, 29737) -> (66, 22614)
 #     ("A_victory", 1) UNCLAIMED  (1, 4125)   -> (2, 10814)   the same body, now unclaimed
 #     ("A_victory", 1) anonymous  (1, 5)      -> (2, 6694)
+# REBASED 2026-10-05 for four cells, all the wrong way and all deliberate:
+# three truncated naked lifts were retired as wrong claims (deleted_rows.csv,
+# 5876e6e929 and its session-8/9 siblings, 2026-10-04), so their bodies are
+# honestly UNCLAIMED again until native recoveries land:
+#     ("F_engine_quit", 0) ?logicMessageDispatcher@GameLogic 0x00397540 11543 B
+#     ("A_victory", 1)     ?startNewGame@GameLogic           0x00394260  7640 B
+#     ("D_desync", 1)      ?deleteLoadScreen@GameLogic       0x0038D100  1473 B
+#     ("E_leave", 2)       UNCLAIMED (2, 1495) -> (2, 3357): same count, larger
+#                          unclaimed body after the same retirements.
 CLOSURE_BASELINE = {
     ("A_victory", 0): {
         "UNCLAIMED": (0, 0), "ASM": (2, 1349), "SMALL": (0, 0), "LIB": (0, 0),
         "CPP": (6, 1383), "identified": (8, 2732), "anonymous": (0, 0)},
     ("A_victory", 1): {
-        "UNCLAIMED": (2, 10814), "ASM": (12, 12308), "SMALL": (1, 8), "LIB": (7, 595),
-        "CPP": (46, 5583), "identified": (66, 22614), "anonymous": (2, 6694)},
+        "UNCLAIMED": (3, 18454), "ASM": (3, 1116), "SMALL": (1, 8), "LIB": (11, 1070),
+        "CPP": (52, 8664), "identified": (67, 14978), "anonymous": (3, 14334)},
     ("A_victory", 2): {
         "UNCLAIMED": (2, 425), "ASM": (129, 109856), "SMALL": (44, 3984), "LIB": (71, 11394),
         "CPP": (760, 114122), "identified": (891, 183928), "anonymous": (115, 55853)},
@@ -198,8 +207,8 @@ CLOSURE_BASELINE = {
         "UNCLAIMED": (0, 0), "ASM": (0, 0), "SMALL": (0, 0), "LIB": (0, 0),
         "CPP": (2, 861), "identified": (2, 861), "anonymous": (0, 0)},
     ("D_desync", 1): {
-        "UNCLAIMED": (0, 0), "ASM": (1, 1473), "SMALL": (1, 8), "LIB": (0, 0),
-        "CPP": (10, 1223), "identified": (10, 2683), "anonymous": (2, 21)},
+        "UNCLAIMED": (1, 1473), "ASM": (0, 0), "SMALL": (1, 8), "LIB": (0, 0),
+        "CPP": (10, 1223), "identified": (9, 1210), "anonymous": (3, 1494)},
     ("D_desync", 2): {
         "UNCLAIMED": (0, 0), "ASM": (2, 269), "SMALL": (10, 1074), "LIB": (1, 31),
         "CPP": (26, 2424), "identified": (33, 3108), "anonymous": (6, 690)},
@@ -210,11 +219,11 @@ CLOSURE_BASELINE = {
         "UNCLAIMED": (0, 0), "ASM": (12, 7088), "SMALL": (1, 4), "LIB": (1, 58),
         "CPP": (196, 23116), "identified": (210, 30266), "anonymous": (0, 0)},
     ("E_leave", 2): {
-        "UNCLAIMED": (2, 1495), "ASM": (28, 31761), "SMALL": (22, 3243), "LIB": (24, 5973),
-        "CPP": (467, 72075), "identified": (509, 95113), "anonymous": (34, 19434)},
+        "UNCLAIMED": (2, 3357), "ASM": (13, 15980), "SMALL": (22, 3243), "LIB": (26, 6206),
+        "CPP": (484, 88079), "identified": (527, 105732), "anonymous": (20, 11133)},
     ("F_engine_quit", 0): {
-        "UNCLAIMED": (0, 0), "ASM": (2, 11837), "SMALL": (0, 0), "LIB": (0, 0),
-        "CPP": (4, 1633), "identified": (6, 13470), "anonymous": (0, 0)},
+        "UNCLAIMED": (1, 11543), "ASM": (0, 0), "SMALL": (0, 0), "LIB": (0, 0),
+        "CPP": (5, 1927), "identified": (5, 1927), "anonymous": (1, 11543)},
     ("F_engine_quit", 1): {
         "UNCLAIMED": (0, 0), "ASM": (16, 10640), "SMALL": (1, 3), "LIB": (5, 214),
         "CPP": (146, 22952), "identified": (155, 25640), "anonymous": (13, 8169)},
