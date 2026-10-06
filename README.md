@@ -13,11 +13,13 @@ Goal: rebuild BFME 1's retail executable byte for byte from source, and use that
 
 [![BFME 1 rebuild progress](docs/progress.svg)](tools/progress.py)
 
+[![rules-v2](docs/progress_v2.svg)](tools/progress_v2.py)
+
 ### What the bars measure
 
 * **Rebuilt from source**: code rebuilding to the original exe's exact bytes, partly generated code or prebuilt libraries.
 * **Game code in C++**: the game's own code (no libraries) in C++.
-* **Linking**: the part of that code in files that link cleanly (link census).
+* **Linking**: that code in files that link cleanly (link census).
 
 <details open>
 <summary><b>Progress over time and code map</b></summary>

@@ -37,11 +37,15 @@ jobs:
         env:
           DISCORD_PROGRESS_WEBHOOK: ${{ secrets.DISCORD_MAIN_PROGRESS_WEBHOOK }}
         run: python tools/readme_progress.py --discord
+      - name: Render the rules=v2 card next to the bars (what each bar is made of)
+        # never blocks the bars above: a v2 failure leaves yesterday's card
+        continue-on-error: true
+        run: python tools/progress_v2.py --today --svg docs/progress_v2.svg
       - name: Render the chart, the map and the interactive report
         run: python tools/progress_site.py render build/site/index.html --svg docs
       - name: Commit updated bar
         run: |
-          git add docs/progress.svg docs/progress_chart.svg docs/progress_map.svg docs/discord-main-progress.json             targets/game/reverse/progress_history.csv
+          git add docs/progress.svg docs/progress_chart.svg docs/progress_map.svg docs/discord-main-progress.json             targets/game/reverse/progress_history.csv docs/progress_v2.svg targets/game/reverse/progress_v2_history.csv
           if git diff --cached --quiet; then
             exit 0
           fi

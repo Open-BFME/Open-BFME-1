@@ -1,0 +1,2 @@
+date,commit,rules,total,byte_matched,recovered,authored,vendored,generated,library,dump,cpp_evidence,cpp_readable,cpp_address,link_receipt,link_placed,link_self_strict,link_closed_strict,matched_rows,pins,alias_rows,alternatename,emit,asm_bytes,gate_debt
+2026-10-06,2a4195170a,v2,9702173,8213457,5986480,5668585,317895,1173543,1053434,1349129,245427,3984136,1439022,,,,,172130,90325,47311,518,317266,5088604,1593
