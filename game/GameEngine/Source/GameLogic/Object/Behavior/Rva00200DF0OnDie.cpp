@@ -29,10 +29,13 @@ class FXList {
 public:
     bool bfmeIsBlocked();
     void doFXObj(const Object *, const Object *) const;
-    static void doFXObj(const FXList *fx, const Object *obj, const Object *victim) {
-        if (fx && !const_cast<FXList *>(fx)->bfmeIsBlocked()) fx->doFXObj(obj, victim);
-    }
 };
+// Retail inlines the static FXList::doFXObj wrapper here. Its out-of-line body
+// (0x00065DE0) is FXListDoFXObjStatic.cpp's, so this TU keeps the wrapper
+// file-local instead of emitting a second ?doFXObj@FXList@@SAX... copy.
+static inline void doFXObjInline(const FXList *fx, const Object *obj, const Object *victim) {
+    if (fx && !const_cast<FXList *>(fx)->bfmeIsBlocked()) fx->doFXObj(obj, victim);
+}
 class ObjectCreationList {
 public:
     void createInternal(const Object *, const Object *, unsigned int) const;
@@ -124,7 +127,7 @@ void Rva00200DF0::onDie(const DamageInfo *damageInfo)
     if(listSize>0) {
         idx=GetGameLogicRandomValue(0,listSize-1,"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Behavior\\InstantDeathBehavior.cpp",135);
         const FXList *fx=d->fx[idx];
-        FXList::doFXObj(fx,getObject(),0);
+        doFXObjInline(fx,getObject(),0);
     }
     listSize=d->ocls.size();
     if(listSize>0) {
