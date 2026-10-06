@@ -1,7 +1,10 @@
-class BfmeResEGE
+// Slot 13 of the message stream returns the appended message; the boolean
+// argument goes through ILT 0x000032AB -> 0x0008AB90, the matched
+// GameMessage::appendBooleanArgument.
+class GameMessage
 {
 public:
-	void bfmeUseEGE(int n);
+	void appendBooleanArgument(bool b);
 };
 
 class BfmeObjEGE
@@ -20,7 +23,7 @@ public:
 	virtual void bfmeV10();
 	virtual void bfmeV11();
 	virtual void bfmeV12();
-	virtual BfmeResEGE *bfmeGet13EGE(int id);
+	virtual GameMessage *bfmeGet13EGE(int id);
 };
 
 class BfmeObj2EGE
@@ -105,8 +108,8 @@ extern InGameUI *TheInGameUI;
 
 void bfmeGoEGEa()
 {
-	BfmeResEGE *r = ((BfmeObjEGE *)TheMessageStream)->bfmeGet13EGE(0x3eb);
-	r->bfmeUseEGE(1);
+	GameMessage *r = ((BfmeObjEGE *)TheMessageStream)->bfmeGet13EGE(0x3eb);
+	r->appendBooleanArgument(true);
 	((BfmeObj2EGE *)TheInGameUI)->bfmeVirt58EGE();
 }
 
@@ -118,11 +121,18 @@ struct BfmeNodeEGF
 	int m_bfmeFrame;
 };
 
+// ILT 0x0003D3B6 -> 0x0026E5F0, matched under this address-derived view of
+// the same subobject (BfmeConv1786.cpp).
+class BfmeOwnerQF
+{
+public:
+	char bfmeLinkedQF();
+};
+
 class BfmeSubEGF
 {
 public:
 	bool bfmeAskEGFa();
-	bool bfmeAskEGFb();
 
 	unsigned char m_bfmeHead[4];
 	BfmeNodeEGF *m_bfmeList;
@@ -189,7 +199,7 @@ bool BfmeThingEGF::bfmeGoEGFb()
 	case 4:
 		{
 			BfmeSubEGF *p = m_bfmeP;
-			if (p && p->bfmeAskEGFb())
+			if (p && ((BfmeOwnerQF *)p)->bfmeLinkedQF())
 				return true;
 		}
 		break;
@@ -201,7 +211,7 @@ bool BfmeThingEGF::bfmeGoEGFb()
 
 void bfmeGoEGEb()
 {
-	BfmeResEGE *r = ((BfmeObjEGE *)TheMessageStream)->bfmeGet13EGE(0x3eb);
-	r->bfmeUseEGE(1);
+	GameMessage *r = ((BfmeObjEGE *)TheMessageStream)->bfmeGet13EGE(0x3eb);
+	r->appendBooleanArgument(true);
 	((BfmeObj2EGE *)TheInGameUI)->bfmeVirt58EGE();
 }
