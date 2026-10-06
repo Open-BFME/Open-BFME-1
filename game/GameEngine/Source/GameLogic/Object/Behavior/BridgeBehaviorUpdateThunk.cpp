@@ -26,12 +26,11 @@
 #include "string_base.h"
 template<class T> inline bool StringBase<T>::isEmpty() const { return !m_data || !m_data->length; }
 template<> inline int StringBase<char>::compare(const char *s) const {
- int n=(int)strlen(s);
+ int n=s?(int)strlen(s):0;
  int len=m_data?m_data->length:0;
  const char *data=m_data?m_data->data:"";
  int c=memcmp(data,s,len<n?len:n);
- if(c) return c;
- return len-n;
+ return c?c:len-n;
 }
 #include "ascii_string.h"
 struct Coord3D { float x,y,z; };

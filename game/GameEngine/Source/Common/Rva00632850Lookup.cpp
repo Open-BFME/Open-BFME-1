@@ -23,11 +23,8 @@ template <> inline int StringBase<char>::compare(const char *text) const
 	int keyLength = m_data != 0 ? m_data->length : 0;
 	const char *keyData = m_data != 0 ? m_data->data :
 		"";
-	int count = keyLength < textLength ? keyLength : textLength;
-	int result = memcmp(keyData, text, count);
-	if (result != 0)
-		return result;
-	return keyLength - textLength;
+	int result = memcmp(keyData, text, keyLength < textLength ? keyLength : textLength);
+	return result ? result : keyLength - textLength;
 }
 
 struct Rva00632850Record

@@ -325,10 +325,8 @@ template <> inline int StringBase<char>::compare(const char *text) const {
     int length = text ? (int)strlen(text) : 0;
     int thisLength = m_data ? m_data->length : 0;
     const char *data = m_data ? m_data->data : "";
-    int count = thisLength < length ? thisLength : length;
-    int result = memcmp(data, text, count);
-    if (result != 0) return result;
-    return thisLength - length;
+    int result = memcmp(data, text, thisLength < length ? thisLength : length);
+    return result ? result : thisLength - length;
 }
 
 class UpgradeCenter;
