@@ -1,9 +1,11 @@
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
-class BfmeGlobal_012f19e8
+// ILT 0x000290D2 -> 0x00465B80, matched ?apply@Rva00465B80@@QAEXXZ (sets the
+// byte at +0x1AC to 1), called on the window manager at 0x012F19E8.
+class Rva00465B80
 {
 public:
-	void bfmeCall_000290d2(void);
+	void apply();
 };
 
 class BfmeAptScreenLanLobby;
@@ -24,5 +26,5 @@ public:
 void Rva00516A50::wrap(int)
 {
 	if (reinterpret_cast<void * &>(g_rva012F4998LanLobby))
-		((BfmeGlobal_012f19e8 *)g_rva012F19E8WindowManager)->bfmeCall_000290d2();
+		((Rva00465B80 *)g_rva012F19E8WindowManager)->apply();
 }

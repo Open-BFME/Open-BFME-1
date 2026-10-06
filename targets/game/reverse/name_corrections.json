@@ -18678,5 +18678,45 @@
   "after_sha256": "02ae68804c1b6a04ae3de7b4198308e3f50e2b5fe241c280a5afcda623a14294",
   "evidence": "targets/game/reverse/identity_evidence/000d5f30-entry-dtor-is-rva000d1980.md",
   "reason": "The call goes through ILT 0x00023218 to 0x000D1980, matched as the vector-owner destructor ??1Rva000D1980@@QAE@XZ; Gen_dtor_000d4030 was only a pin spelling nothing defines and names a different address (0x000D4030)."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva00516A50Call.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva00516A50Call.cpp",
+  "old_name": "BfmeGlobal_012f19e8",
+  "new_name": "Rva00465B80",
+  "before_sha256": "d9e4d12190d9adc0e47ef30fa7defd6e4ed18d4a5b17c4163a7ae38b3d3f25bb",
+  "after_sha256": "996e2e63a15692e75f96b70f456f501bd6c7291fa6cc2aa907a479e1f3b40c9f",
+  "evidence": "targets/game/reverse/identity_evidence/000290d2-window-manager-call-is-rva00465b80-apply.md",
+  "reason": "The call goes through ILT 0x000290D2 to 0x00465B80, matched as ?apply@Rva00465B80@@QAEXXZ; BfmeGlobal_012f19e8::bfmeCall_000290d2 only spelled the global and ILT addresses and nothing defines it."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp",
+  "old_name": "BfmeGlobal_012f19e8",
+  "new_name": "Rva00465B80",
+  "before_sha256": "5173e820edf2134360bd63fc063f6be5b2d37890cdf4c9cbbd63b02a5ee1740d",
+  "after_sha256": "b0383a30e3ca3b29ba50cf6026f45cd2c641354328e03482b7094f54b29561b9",
+  "evidence": "targets/game/reverse/identity_evidence/000290d2-window-manager-call-is-rva00465b80-apply.md",
+  "reason": "The call goes through ILT 0x000290D2 to 0x00465B80, matched as ?apply@Rva00465B80@@QAEXXZ; BfmeGlobal_012f19e8::bfmeCall_000290d2 only spelled the global and ILT addresses and nothing defines it."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/Rva56A8StateDispatch.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/Rva56A8StateDispatch.cpp",
+  "old_name": "BfmeGlobal_012f19e8",
+  "new_name": "Rva00465B80",
+  "before_sha256": "25be8b850b04bc0165d696864274ba0100206ce3371c3de3605c3f288245f40f",
+  "after_sha256": "d5849b1a51160ac2497c03e3b6f6d15311221e4f8f7912e6f423a3ab18b31b31",
+  "evidence": "targets/game/reverse/identity_evidence/000290d2-window-manager-call-is-rva00465b80-apply.md",
+  "reason": "The call goes through ILT 0x000290D2 to 0x00465B80, matched as ?apply@Rva00465B80@@QAEXXZ; BfmeGlobal_012f19e8::bfmeCall_000290d2 only spelled the global and ILT addresses and nothing defines it."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/Rva56A8StateTransitions.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/Rva56A8StateTransitions.cpp",
+  "old_name": "BfmeGlobal_012f19e8",
+  "new_name": "Rva00465B80",
+  "before_sha256": "dfb7d8e5a0f03950a25f35c13be7f76615d63fe46808862e1d3a55bdf2875d95",
+  "after_sha256": "884fe635bb0c1a2a2c1e64d5a11c20714a413aa214f01928e2c8fe448c6aee9a",
+  "evidence": "targets/game/reverse/identity_evidence/000290d2-window-manager-call-is-rva00465b80-apply.md",
+  "reason": "The call goes through ILT 0x000290D2 to 0x00465B80, matched as ?apply@Rva00465B80@@QAEXXZ; BfmeGlobal_012f19e8::bfmeCall_000290d2 only spelled the global and ILT addresses and nothing defines it."
  }
 ]
