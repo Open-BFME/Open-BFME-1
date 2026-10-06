@@ -104,7 +104,9 @@ STATUS. Prototype: queue, bisect, am-based batching, two-point fencing with
 an atomic leased push, exact-tip publication, receipts and recovery are
 tested on fixture repositories (tools/tests/test_landing_service.py,
 including the 2026-09-29 audit reproductions). It does not run anywhere yet;
-seats still push directly.
+seats still push directly. Superseded for publication by tools/publisher.py
+(pinned checker, isolated builders, signed receipts, continuous drain): this
+service's DEFAULT_GATE runs the candidate's own hook.
 
   python3 tools/landing_service.py enqueue <patch-file | commit> [--claim 0xRVA=LEASE ...]
   python3 tools/landing_service.py status

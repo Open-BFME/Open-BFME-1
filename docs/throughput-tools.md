@@ -375,6 +375,79 @@ when seats are restarted. Do not overwrite scripts underneath running shells.
 brief and attempt changes are ordinary tracked tools; existing copied seat
 controllers will not acquire all new behavior merely because Git advances.
 
+## Publisher (tools/publisher.py, 2026-10-05)
+
+The publisher is the only writer of master. Seats submit units; isolated
+builders gate them with a pinned checker; the publisher fast-forwards master
+only to a tip whose signed receipt names exactly the current head. Design,
+limits and commands are in the module docstring. It replaces
+`landing_service.py` for publication: that service ran the candidate's own
+pre-push, inherited credentials into unit `verify` commands, and slept ten
+minutes after every pass. The file imports nothing from this repository;
+BFME2 copies `publisher.py`, `publisher_load.py` and `publisher_pre_push.sh`
+unchanged.
+
+Capacity at 300 units/h. The gate model is 60 s + 20 s per unit per batch
+(Fable's 8 minutes per 20-unit batch); `publisher_load.py simulate`, 6 h:
+
+| red units | blame lines | builders | units/h | p95 wait |
+|---|---|---|---|---|
+| 1% | no | 4 | 290 | 16 min |
+| 3% | no | 8 | 291 | 15 min |
+| 3% | yes (90%) | 6 | 283 | 14 min |
+| 10% | either | 8 | 130-146 | over 3 h, queue grows |
+
+One builder tops out near 180 units/h even with no red units. Red units cost
+the most, so the checker should print `PUBLISHER-BLAME: <path>` for each path
+it fails. The publisher then probes the blamed unit alone instead of
+bisecting. Operators above 20% red lose half their rate and the spare
+capacity (slow lane).
+
+### Cutover runbook (admins)
+
+1. **Publisher host.** It holds the bot's push credential: a GitHub App or
+   deploy key that is the only bypass actor on master. Builders run as
+   another OS user (`builder_prefix`, e.g. `["sudo","-u","builder"]`) with no
+   credential. Build hosts need the toolchain and a warm `build/`
+   (`clean_keep`).
+2. **Init.**
+   `python3 tools/publisher.py init --state /srv/pub --target <origin URL>
+   --set 'checker_paths=["tools",".githooks","build.sh","build.cmd"]'
+   --set 'toolchain_paths=["inputs/toolchains"]' --set builders=6
+   --set 'submit_remote="<origin URL>"'`, and `--set gate=...` to the
+   pre-push call `landing_service.DEFAULT_GATE` makes.
+   The gate runs the bundle's `.githooks/pre-push`, overlaid on the candidate
+   and hidden from `git diff` (skip-worktree).
+3. **Operators.** Run `publisher.py operator --state /srv/pub <name>
+   --rate <units/h> --burst <n> [--infra]` once per operator fleet. Send the
+   printed key file to that fleet's host only. The key identifies the
+   operator; commit authors are ignored.
+4. **Checker.** Keep the exploit fixtures (`fixtures.json`: patch plus
+   `reject`/`pass`) on the publisher host. Set `ledger_cmd` to the full-ledger
+   check. Then run `publisher.py promote --state /srv/pub <master sha>
+   --fixtures <dir> [--accept-diff <file>]`. A later verifier commit counts
+   only after its own promotion; landing on master does not make it trusted.
+5. **Shadow.** Before the flip, drain into a scratch branch (`--set
+   'branch="publisher-shadow"'`) for a day. Compare its receipts and
+   rejections with direct pushes.
+6. **Ruleset (the flip).** In repository rules, add a branch ruleset on
+   `master` that restricts updates, blocks force pushes and deletions, and
+   bypasses only the publisher bot. `refs/submit/*` stays writable, as
+   `refs/claims/*` is today. Prove it: a `--no-verify` push and a GitHub API
+   fast-forward of master must both fail. Until then a direct push still
+   lands, and the publisher only logs `foreign_push`
+   (`test_no_verify_direct_push_is_only_stopped_by_the_admin_ruleset`).
+7. **Fleets.** Replace `git push` with `python3 tools/publisher.py submit
+   --operator <name> --key-file <key> --remote origin <base>..HEAD` and read
+   `PUBLISHER-SUBMITTED`/the unit id. Hosts that still push can install
+   `tools/publisher_pre_push.sh`, which turns a push to master into a
+   submission. The harvest pipeline's API fast-forward must move to `submit`.
+8. **Run.** `publisher.py drain --state /srv/pub` under a supervisor;
+   `status` prints queue depth per operator, p50/p95 wait and builders busy.
+   Exit criterion: queue depth flat for 24 h at peak load.
+9. **Rollback.** Delete the ruleset; seats push as before. The journal and
+   receipts stay; on restart the publisher settles a half-done publication.
+
 ## Validation on 2026-09-04
 
 Targeted tests cover preserved attempts, terminal decoding, conservative cache
