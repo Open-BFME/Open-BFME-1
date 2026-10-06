@@ -86,7 +86,7 @@ extern CRCParameterCheck *TheCRCParameterCheck;
 extern bool g_bfmeDockingTraceActive;
 extern "C" void bfmeRetailCritterDesyncLog( CRCParameterCheck *, const char *, ... );
 
-extern Real g_rva001AF610RingSpacing;
+Real g_rva001AF610RingSpacing = 5.0f;
 
 Real GetGameLogicRandomValueReal( Real lo, Real hi, char *file, Int line );
 Bool Rva001AEA80TryPosition( const Coord3D *center, Real dist, Real angle,
