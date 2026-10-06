@@ -24,7 +24,13 @@ public:
 			(const unsigned short *)value);
 	}
 	UnicodeString(const UnicodeString &);
-	~UnicodeString();
+	// Retail destroys each temporary by calling StringBase<unsigned short>::
+	// releaseBuffer (0x008881D0) directly, not the out-of-line ~UnicodeString
+	// forwarder at 0x0005EEA0 (a 5-byte jmp to that same body).
+	~UnicodeString()
+	{
+		((StringBase<unsigned short> *)this)->releaseBuffer();
+	}
 
 private:
 	unsigned short *m_data;
