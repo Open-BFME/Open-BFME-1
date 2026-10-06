@@ -10,14 +10,21 @@ void __cdecl operator delete[](void *) throw();
 
 class VertexMaterialClass;
 
-class TextureClass
+// texture.h declares Release_Ref on TextureBaseClass (retail 0x009EB7A0), the
+// spelling every other inline BfmeHandleCX::operator= copy calls.
+class TextureBaseClass
+{
+public:
+	void Release_Ref(void);
+};
+
+class TextureClass : public TextureBaseClass
 {
 public:
 	void Add_Ref(void)
 	{
 		++*reinterpret_cast<unsigned short *>(reinterpret_cast<char *>(this) + 4);
 	}
-	void Release_Ref(void);
 };
 
 class MaterialInfoClass
