@@ -9085,7 +9085,6 @@ pins	0x0004709B	??0ActiveShroudUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z
 pins	0x000470EB	??_GSquishCollideModuleData@@MAEPAXI@Z
 pins	0x000470F5	??1_ENUM_VALUE@EnumParameterClass@@QAE@XZ
 pins	0x000471A4	??1HordeSiegeEngineContainModuleData@@UAE@XZ
-pins	0x000471A4	??1SlaughterHordeContainModuleDataBase@@UAE@XZ
 pins	0x0004727B	??$__unguarded_linear_insert@PAHHP6A_NHH@Z@_STL@@YAXPAHHP6A_NHH@Z@Z
 pins	0x00047410	?construct_from@CategoryModuleTemplate06SubCopyShim@FXParticleSystem@@QAEXPBX@Z
 pins	0x00047429	?fillInsert@EvaCheckVecBase@@QAEXPAUEvaCheck@@IABU2@@Z

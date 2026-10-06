@@ -4777,7 +4777,7 @@ name,address,notes
 ??1BannerTimerMember@@QAE@XZ,0x0001D674,BannerUI +0x20 timer member destructor ILT proven by the virtual destructor call site
 ??1BannerType@@QAE@XZ,0x0001C88C,BannerType temporary destructor ILT after the missing-key insertion path
 ??1BannerTypeStoreMember@@QAE@XZ,0x00022F84,BannerUI +0x08 type-store destructor ILT proven by the virtual destructor call site
-??1Base000A1B30@@UAE@XZ,0x000A1B30,polymorphic primary base destructor tail-called by the 106-byte owned-pointer destructor family (Q4OwnedPtrDtors.cpp); address-derived name; identity not recovered
+??1State@@UAE@XZ,0x000A1B30,polymorphic primary base destructor tail-called by the 106-byte owned-pointer destructor family (Q4OwnedPtrDtors.cpp); address-derived name; identity not recovered ilt-verified=class-GED-dtor(efp=5.36e-04)
 ??1Base64Pipe@@UAE@XZ,0x009E1F00,authentic Base64Pipe complete destructor target adjacent to its matched constructor; vtable 0x011453E4 with named virtual slots proves identity
 ??1Base64Straw@@UAE@XZ,0x009E1F40,authentic Base64Straw complete destructor target adjacent to its matched constructor; vtable 0x011453F8 with named virtual slots proves identity
 ??1BaseHeightMapFloorElement@@UAE@XZ,0x00011C3E,route=0x006F8290; matched BaseHeightMap floor-buffer cleanup and scalar deleting wrapper both call this destructor
@@ -5278,7 +5278,6 @@ name,address,notes
 ??1Gen00043699@@QAE@XZ,0x00043699,Open-BFME5 ILT the element destructor the 136-byte-stride vector at 0x0039EA90 calls
 ??1Gen0004A1C4@@QAE@XZ,0x0004A1C4,Open-BFME5 ILT the element destructor the 188-byte-stride vector at 0x0013BFA0 calls
 ??1Gen000658A0@@QAE@XZ,0x000658A0,destructible member destroyed by the two-member destructor families (R4TwoMemberDestructors.cpp / R4VptrTailDestructors.cpp); address-derived name; identity not recovered
-??1Gen000A1B30@@UAE@XZ,0x000A1B30,base class destructor tail-called by the guarded-delete destructor family (R4OwnedPointerDestructors.cpp); address-derived name; identity not recovered
 ??1Gen000E5300@@QAE@XZ,0x00887940,Open-BFME5 ILT the element destructor the 12-byte-stride vector at 0x000E5300 calls
 ??1Gen000FF700@@QAE@XZ,0x000FF700,destructible member destroyed by the two-member destructor families (R4TwoMemberDestructors.cpp / R4VptrTailDestructors.cpp); address-derived name; identity not recovered
 ??1Gen000FF7D0@@QAE@XZ,0x000FF7D0,destructible member destroyed by the two-member destructor families (R4TwoMemberDestructors.cpp / R4VptrTailDestructors.cpp); address-derived name; identity not recovered
@@ -6010,7 +6009,7 @@ name,address,notes
 ??1Gen_dtor_00423700@@UAE@XZ,0x0004010B,gen-dtor class destructor
 ??1Gen_dtor_00423730@@UAE@XZ,0x00047D6B,gen-dtor class destructor
 ??1Gen_dtor_004255c0@@UAE@XZ,0x00002BC6,gen-dtor class destructor
-??1Gen_dtor_00426bd0@@UAE@XZ,0x00026A7B,gen-dtor class destructor
+??1Eva@@UAE@XZ,0x00026A7B,gen-dtor class destructor ilt-verified=class-GED-dtor(efp=2.15e-04)
 ??1Gen_dtor_00427410@@UAE@XZ,0x000033F0,gen-dtor class destructor
 ??1Gen_dtor_00428700@@UAE@XZ,0x00017422,gen-dtor class destructor
 ??1Gen_dtor_00428d70@@UAE@XZ,0x00022F34,gen-dtor class destructor
@@ -9036,7 +9035,7 @@ name,address,notes
 ??1Mem000658A0@@QAE@XZ,0x000658A0,subobject destructor called by the 76-byte pair destructors in BigPairMemberDtors.cpp
 ??1Mem00078B80@@QAE@XZ,0x00078B80,subobject destructor called by the 76-byte pair destructors in BigPairMemberDtors.cpp
 ??1Mem000B31F0@@QAE@XZ,0x000B31F0,subobject destructor called by the 79-byte two-subobject destructor family (Q4PairSubobjectDtors.cpp); address-derived name; the address is an ICF fold so no one recovered name can be chosen
-??1Mem00128C50@@QAE@XZ,0x00128C50,subobject destructor called by the 76-byte pair destructors in BigPairMemberDtors.cpp
+??1ActiveBodyModuleData@@UAE@XZ,0x00128C50,subobject destructor called by the 76-byte pair destructors in BigPairMemberDtors.cpp ilt-verified=class-GED-dtor(efp=2.15e-04)
 ??1Mem00129C80@@QAE@XZ,0x00129C80,member destructor called by the 67-byte two-member destructors in BigTwoMemberDtors.cpp
 ??1Mem00197BC0@@QAE@XZ,0x00197BC0,subobject destructor called by the 76-byte pair destructors in BigPairMemberDtors.cpp
 ??1Mem00197C60@@QAE@XZ,0x00197C60,subobject destructor called by the 76-byte pair destructors in BigPairMemberDtors.cpp
@@ -9325,7 +9324,6 @@ name,address,notes
 ??1Rva00028ECATailBase@@UAE@XZ,0x00028ECA,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva0002B8C8TailBase@@UAE@XZ,0x0002B8C8,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva0002FF31MultiBase@@UAE@XZ,0x0002FF31,base destructor address decoded from the retail REL32 tail jump; name is address-derived
-??1Rva00031D5ETailBase@@UAE@XZ,0x00031D5E,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva00032691FlatBase@@UAE@XZ,0x00032691,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva00033875TailBase@@UAE@XZ,0x00033875,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva00033A37FlatBase@@UAE@XZ,0x00033A37,base destructor address decoded from the retail REL32 tail jump; name is address-derived
@@ -9377,7 +9375,6 @@ name,address,notes
 ??1Rva00364980HeapElement@@QAE@XZ,0x000257ED,REL32 wide heap element destructor target from 0x00363D6A
 ??1Rva00365B40Record@@QAE@XZ,0x000257ED,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00365B40 calls; autopin
 ??1Rva003691A0OwnedRecord@@QAE@XZ,0x00024DB6,retail clean C++ delete loop calls the bounded 0x003691A0 record destructor through this ILT thunk
-??1Rva0036BBA0BehaviorModule@@UAE@XZ,0x00047C53,REL32 seven-byte base destructor target from CastleMemberBehavior 0x0036BC0A
 ??1Rva00386080AsciiStringElement@@QAE@XZ,0x00386080,Open-BFME5 address-qualified typed array-element destructor; complete 8B body adds 0x18 to ecx and tail-jumps to matched BFMERetailAsciiString::releaseBuffer; target ILT 0x0002A8E2
 ??1Rva00387480IntList@@QAE@XZ,0x00387480,Open-BFME5 address-qualified typed STLport int-list-base destructor; complete 66B body walks sentinel links and deallocates 0x0C-byte int nodes; target ILT 0x0000CD1F
 ??1Rva00387FB0IntVector@@QAE@XZ,0x00387FB0,Open-BFME5 address-qualified typed three-pointer int-vector base destructor; complete 45B body uses +0x00 and +0x08 and dispatches scalar/deallocate at 0x80; target ILT 0x000392AC
@@ -9424,7 +9421,7 @@ name,address,notes
 ??1Rva0048C200String@@QAE@XZ,0x00887940,StringBase compatible destructor body
 ??1Rva0048D530CandidateString@@QAE@XZ,0x0003B304,candidate UnicodeString element destructor from IMEManager closeCandidateList
 ??1Rva00490470@@UAE@XZ,0x0004634E,ILT thunk to the window-owner destructor body 0x00490470 (tail-jumped from ~Rva00490A30 0x00490AC0)
-??1Rva00491DB0Base@@UAE@XZ,0x0004634E,Rva00491DB0 linked base destructor thunk
+??1LoadScreen@@UAE@XZ,0x0004634E,Rva00491DB0 linked base destructor thunk ilt-verified=class-GED-dtor(efp=8.79e-03)
 ??1Rva00491DB0String@@QAE@XZ,0x00887940,Rva00491DB0 AsciiString-compatible member destructor
 ??1Rva004948B0Base@@UAE@XZ,0x009A1A40,Rva004948B0 SubsystemInterface-compatible base destructor
 ??1Rva0049B890Elem@@QAE@XZ,0x000351D4,ILT thunk to the vector<Gen0049B890> destructor 0x0049B890 called twelve times by 0x0049C020
@@ -9652,7 +9649,7 @@ name,address,notes
 ??1SkirmishPreferences@@UAE@XZ,0x0009F7A0,vtable 0x010806B0 whose ctor 0x0009F7C0 loads "Skirmish.ini" (ZH SkirmishPreferences ctor) and splits the BFME "UserNames" value on commas into the list at +0x14; dtor clears that list via ILT 0x00021CD3 and frees its 0xc header node then ~UserPreferences ILT 0x0003F25B; ILT 0x00046B82
 ??1SkirmishScreenState@@QAE@XZ,0x0000B42E,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x00529110
 ??1SlaughterHordeContainModuleData@@UAE@XZ,0x0000EF75,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x0022B220
-??1SlaughterHordeContainModuleDataBase@@UAE@XZ,0x000471A4,Open-BFME5 pin
+??1SiegeEngineContainModuleData@@UAE@XZ,0x000471A4,Open-BFME5 pin ilt-verified=class-GED-dtor(efp=5.17e-04)
 ??1SlaveWatcherBehaviorModuleData@@UAE@XZ,0x0002F36F,destructor ILT used by the SlaveWatcherBehaviorModuleData scalar-deleting destructor
 ??1SlavedUpdate@@MAE@XZ,0x000393DD,destructor ILT to 0x002A41D0
 ??1SlowDeathBehavior@@MAE@XZ,0x00032691,vtable 0x00CA66B4 slots name SlowDeathBehavior; protected complete destructor called by wrapper 0x00207DA0
