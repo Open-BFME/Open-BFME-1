@@ -210,6 +210,8 @@ class Context:
                 self.alias.setdefault(obj, []).append(rva)
         self.pins = {}
         for name, rva in pins:
+            if image.size <= rva < image.base + image.size:
+                rva -= image.base      # legacy VA-form pins (too large for an RVA)
             self.pins.setdefault(name, []).append(rva)
         self.data = data_ledger or {}
         self.consensus = consensus or {}
@@ -408,14 +410,19 @@ def bind(ctx, row, name, sym_index, symbols, info, objdata, sections, retail_tar
     if own_section and name not in ctx.defs:
         # a label or table of this body; a named function sharing a
         # non-COMDAT .text is placed by its own row instead (below)
-        return image.base + rva + sym["value"] - info["value"], "self"
+        target = image.base + rva + sym["value"] - info["value"]
+        if target != retail_target and ctx.canon(target) == ctx.canon(retail_target):
+            return retail_target, "self"   # recursion through the ILT thunk
+        return target, "self"
 
     def pick(cands):   # one definition per name in a link; ICF/dup rows give several
         vas = [image.base + c for c in cands]
         canon_retail = ctx.canon(retail_target)
         for v in vas:
             if v == retail_target or ctx.canon(v) == canon_retail:
-                return v
+                # the same body reached through its incremental-link thunk:
+                # address-taken and recursive references use the thunk too
+                return retail_target
         return vas[0]
 
     if sym is not None and sym["section"] == -1:
@@ -683,7 +690,7 @@ def worst(verdicts):
 
 
 def diff_row(ctx, row, compiled, relocs, info=None, objdata=None, sections=None,
-             budget_ms=2000):
+             budget_ms=2000, emulate_identical=False):
     """Run retail and rebuilt for one row; returns the result record."""
     require_unicorn()
     began = time.perf_counter()
@@ -709,6 +716,12 @@ def diff_row(ctx, row, compiled, relocs, info=None, objdata=None, sections=None,
         ctx.phantom_bytes[address] = bytes(objdata[sec["raw_pointer"] + sym["value"]:][:min(n, 0x1000)])
     retail = ctx.image.read(rva, size)
     record["bytes_equal"] = code == retail
+    if record["bytes_equal"] and not phantoms and not emulate_identical:
+        # Same bytes in the same memory: both runs are the same run. Emulating
+        # proves nothing more, and skipping keeps the full-ledger pass cheap.
+        record.update(verdict="none", reason="identical after linker resolution",
+                      divergent_sites=[], ms=round((time.perf_counter() - began) * 1000, 1))
+        return record
     in_site = set()
     for site in sites:
         in_site.update(range(site["offset"], site["offset"] + 4))
@@ -805,14 +818,15 @@ def object_body(row):
     return compiled, relocs, info, objdata, sections
 
 
-def diff_ledger_row(ctx, row, budget_ms):
+def diff_ledger_row(ctx, row, budget_ms, emulate_identical=False):
     try:
         body = object_body(row)
     except LookupError as error:
         return {"name": row["name"], "rva": row["target_rva"], "size": int(row["target_size"]),
                 "source": row["source"], "verdict": "inconclusive", "reason": str(error)[:200]}
     try:
-        return diff_row(ctx, row, *body, budget_ms=budget_ms)
+        return diff_row(ctx, row, *body, budget_ms=budget_ms,
+                        emulate_identical=emulate_identical)
     except Exception as error:   # one row's harness failure must not end a sweep
         return {"name": row["name"], "rva": row["target_rva"], "size": int(row["target_size"]),
                 "source": row["source"], "verdict": "inconclusive",
@@ -850,8 +864,8 @@ def _init(map_path):
 
 
 def _work(args):
-    row, budget = args
-    return diff_ledger_row(_CTX, row, budget)
+    row, budget, emulate = args
+    return diff_ledger_row(_CTX, row, budget, emulate)
 
 
 def disasm(ctx, record, row):
@@ -884,6 +898,8 @@ def main(argv=None):
     ap.add_argument("--jobs", type=int, default=1)
     ap.add_argument("--budget-ms", type=int, default=2000, help="per-row wall budget")
     ap.add_argument("--json", action="store_true", help="one JSON record per row")
+    ap.add_argument("--emulate-identical", action="store_true",
+                    help="also emulate rows whose linked bytes equal retail (harness audit)")
     ap.add_argument("--disasm", action="store_true", help="with --row: retail/rebuilt listing")
     args = ap.parse_args(argv)
     require_unicorn()
@@ -905,11 +921,11 @@ def main(argv=None):
             build.compile_rows(rows, sources)
     if args.jobs > 1 and len(rows) > 1:
         with multiprocessing.Pool(args.jobs, _init, (args.map,)) as pool:
-            results = pool.map(_work, [(r, args.budget_ms) for r in rows], chunksize=8)
+            results = pool.map(_work, [(r, args.budget_ms, args.emulate_identical) for r in rows], chunksize=8)
         ctx = None
     else:
         ctx = load_context(args.map)
-        results = [diff_ledger_row(ctx, r, args.budget_ms) for r in rows]
+        results = [diff_ledger_row(ctx, r, args.budget_ms, args.emulate_identical) for r in rows]
     bad = 0
     for row, record in zip(rows, results):
         bad += record["verdict"] in ("logic", "binding")
