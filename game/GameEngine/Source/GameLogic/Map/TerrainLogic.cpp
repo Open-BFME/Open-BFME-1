@@ -84,34 +84,10 @@ WaterHandle TerrainLogic::m_gridWaterHandle;
 
 // Waypoint ///////////////////////////////////////////////////////////////////////////////////////
 
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// ??0Waypoint@@QAE@W4WaypointID@@VAsciiString@@PBUCoord3D@@111_N@Z present-unmatched
-Waypoint::Waypoint(WaypointID id, AsciiString name, const Coord3D *pLoc, AsciiString label1, AsciiString label2, 
-									 AsciiString label3, Bool biDirectional) :
-m_name(name),
-m_pNext(NULL),
-m_location(*pLoc),
-m_id(id),
-m_pathLabel1(label1),
-m_pathLabel2(label2),
-m_pathLabel3(label3),
-m_numLinks(0),
-m_biDirectional(biDirectional)
-{
-	Int i;
-	for (i=0; i<MAX_LINKS; i++) {
-		m_links[i] = NULL;
-	}
-}  // end Waypoint
-
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// ??1Waypoint@@MAE@XZ present-unmatched
-Waypoint::~Waypoint()
-{
-
-}  // end ~Waypoint
+// Retail's Waypoint constructors and destructor (0x001AB600, 0x001AB8B0,
+// 0x001ABA80) and their one-slot vtable 0x0109C3DC live in
+// WaypointConstructor.cpp. Zero Hour's memory-pool versions are not defined
+// here: they emitted a second, two-slot ??_7Waypoint@@6B@ that retail lacks.
 
 // Bridge ////////////////////////////////////////////////////////////////////////////////////////
 
