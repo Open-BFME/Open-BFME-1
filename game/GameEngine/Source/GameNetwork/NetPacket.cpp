@@ -1010,7 +1010,6 @@ void NetPacket::FillBufferWithKeepAliveCommand(UnsignedByte *buffer, NetCommandR
 	++offset;
 }
 
-// ?FillBufferWithDisconnectKeepAliveCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
 void NetPacket::FillBufferWithDisconnectKeepAliveCommand(UnsignedByte *buffer, NetCommandRef *msg) {
 	NetDisconnectKeepAliveCommandMsg *cmdMsg = (NetDisconnectKeepAliveCommandMsg *)(msg->getCommand());
 	UnsignedShort offset = 0;

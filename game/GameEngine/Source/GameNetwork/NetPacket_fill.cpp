@@ -14,8 +14,9 @@
 // cannot take that declaration without also losing NEW_NETCOMMANDREF and
 // deleteInstance, which the rest of that file uses.
 //
-// The keep-alive serialiser is 0x00677240's body; the file announce one is
-// 0x0067D880 and the file one 0x0067D740, each Zero Hour's field for field. The
+// The file announce serialiser is 0x0067D880 and the file one 0x0067D740,
+// each Zero Hour's field for field. (0x00677240 is NetPacket.cpp's
+// FillBufferWithDisconnectKeepAliveCommand.) The
 // two file serialisers pair with GetFileAnnounceCommandSize at 0x0067D460 and
 // GetFileCommandSize at 0x0067D410: the same header, the filename with its
 // terminator, then the payload, adding up to the namelen + 0xE those helpers
@@ -126,35 +127,9 @@ public:
 class NetPacket
 {
 protected:
-	static void FillBufferWithKeepAliveCommand(UnsignedByte *buffer, NetCommandRef *msg);
 	static void FillBufferWithFileAnnounceMessage(UnsignedByte *buffer, NetCommandRef *msg);
 	static void FillBufferWithFileMessage(UnsignedByte *buffer, NetCommandRef *msg);
 };
-
-void NetPacket::FillBufferWithKeepAliveCommand(UnsignedByte *buffer, NetCommandRef *msg)
-{
-	NetCommandMsg *cmdMsg = msg->getCommand();
-	UnsignedShort offset = 0;
-
-	buffer[offset] = 'T';
-	++offset;
-	buffer[offset] = cmdMsg->getNetCommandType();
-	offset += sizeof(UnsignedByte);
-
-	buffer[offset] = 'R';
-	++offset;
-	UnsignedByte newRelay = msg->getRelay();
-	buffer[offset] = newRelay;
-	offset += sizeof(UnsignedByte);
-
-	buffer[offset] = 'P';
-	++offset;
-	buffer[offset] = cmdMsg->getPlayerID();
-	offset += sizeof(UnsignedByte);
-
-	buffer[offset] = 'D';
-	++offset;
-}
 
 // ?FillBufferWithFileAnnounceMessage@NetPacket@@KAXPAEPAVNetCommandRef@@@Z
 void NetPacket::FillBufferWithFileAnnounceMessage(UnsignedByte *buffer, NetCommandRef *msg)
