@@ -39,21 +39,9 @@ void __cdecl bfmePush(BfmeItemDX *item)
 	g_bfmeHeadDX = item;
 }
 
-// ?bfmeRemove@@YAXPAVBfmeItemDX@@@Z
-void __cdecl bfmeRemove(BfmeItemDX *item)
-{
-	BfmeItemDX *previous = bfmeLinksDX(item)->m_bfmePrev;
-	BfmeItemDX *next = bfmeLinksDX(item)->m_bfmeNext;
-
-	if (previous != 0)
-		bfmeLinksDX(previous)->m_bfmeNext = next;
-
-	if (next != 0)
-		bfmeLinksDX(next)->m_bfmePrev = previous;
-
-	if (g_bfmeHeadDX == item)
-		g_bfmeHeadDX = next;
-}
+// The matching remove (?bfmeRemove@@YAXPAVBfmeItemDX@@@Z, 0x00897330) is the
+// inline AptGCShutdown.cpp expands into rva00897360 right after it; that TU
+// emits its out-of-line copy.
 
 class BfmeNodeDX
 {
