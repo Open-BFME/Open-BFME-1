@@ -61,7 +61,9 @@ public:
 class FXList
 {
 public:
-	Bool isEmpty() const;
+	// Retail calls the 188-byte body at 0x0042DAA0 (via ILT 0x00011F77) that
+	// FXList_bfmeIsBlocked.cpp defines; other callers spell it the same way.
+	Bool bfmeIsBlocked();
 	void doFXPos(const Coord3D *primary, const Matrix3D *primaryMtx,
 		Real primarySpeed, const Coord3D *secondary) const;
 };
@@ -154,7 +156,7 @@ void StructureToppleUpdate::doDamageLine(Object *building, const WeaponTemplate 
 			getDamageTypeFlag(d->m_damageFXTypes, lastDamageInfo->m_damageType))
 		{
 			FXList *crushingFX = d->m_crushingFXList;
-			if (crushingFX != 0 && !crushingFX->isEmpty())
+			if (crushingFX != 0 && !crushingFX->bfmeIsBlocked())
 				crushingFX->doFXPos(&target, 0, 0.0f, 0);
 		}
 	}
@@ -168,7 +170,7 @@ void StructureToppleUpdate::doDamageLine(Object *building, const WeaponTemplate 
 		getDamageTypeFlag(d->m_damageFXTypes, lastDamageInfo->m_damageType))
 	{
 		FXList *crushingFX = d->m_crushingFXList;
-		if (crushingFX != 0 && !crushingFX->isEmpty())
+		if (crushingFX != 0 && !crushingFX->bfmeIsBlocked())
 			crushingFX->doFXPos(&target, 0, 0.0f, 0);
 	}
 
