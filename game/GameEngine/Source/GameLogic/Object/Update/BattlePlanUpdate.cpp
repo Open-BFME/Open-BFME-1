@@ -64,6 +64,12 @@
 #include "GameLogic/Module/AIUpdate.h"
 #include "GameLogic/Module/StealthDetectorUpdate.h"
 
+// BFME defines BitFlags<116>::parseFromINI once, out of line (retail
+// 0x00129810, BitFlagsParseFromINI.cpp); reference that body instead of
+// instantiating BitFlagsIO.h's Zero Hour template here.
+template <>
+void KindOfMaskType::parseFromINI(INI *ini, void *instance, void *store, const void *userData);
+
 // BitFlags<116>::xfer is retail's one out-of-line body (BitFlags116Xfer.cpp); do not emit a header copy.
 template<> void BitFlags<116>::xfer(Xfer *);
 // The header xfer copy no longer instantiates the count()/getSingleBitFromName() retail emits here.

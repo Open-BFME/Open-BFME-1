@@ -54,6 +54,12 @@
 
 #include "GameLogic/Weapon.h"
 
+// BFME defines BitFlags<116>::parseFromINI once, out of line (retail
+// 0x00129810, BitFlagsParseFromINI.cpp); reference that body instead of
+// instantiating BitFlagsIO.h's Zero Hour template here.
+template <>
+void KindOfMaskType::parseFromINI(INI *ini, void *instance, void *store, const void *userData);
+
 
 #ifdef _INTERNAL
 // for occasional debugging...

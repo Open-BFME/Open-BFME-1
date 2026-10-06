@@ -47,6 +47,12 @@
 // INCLUDES ///////////////////////////////////////////////////////////////////////////////////////
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
+// BFME defines BitFlags<116>::parseFromINI once, out of line (retail
+// 0x00129810, BitFlagsParseFromINI.cpp); reference that body instead of
+// instantiating BitFlagsIO.h's Zero Hour template here.
+template <>
+void KindOfMaskType::parseFromINI(INI *ini, void *instance, void *store, const void *userData);
+
 #include "Common/Module.h"
 
 template <class T> struct BFMEFactoryInstanceSize
