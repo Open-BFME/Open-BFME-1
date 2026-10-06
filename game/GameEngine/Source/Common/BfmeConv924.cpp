@@ -14,10 +14,22 @@ struct BfmeNodeLC
 	int m_bfmeD;
 };
 
+// Every lookup below calls ILT 0x00046538, which jumps to the matched
+// GameWindow::winGetUserData (0x00478C70): BfmeKeyLC is a GameWindow and
+// BfmeNodeLC its user data.
+class GameWindow
+{
+public:
+	void *winGetUserData();
+};
+
 class BfmeKeyLC
 {
 public:
-	BfmeNodeLC *bfmeFindLC();
+	BfmeNodeLC *bfmeFindLC()
+	{
+		return (BfmeNodeLC *)((GameWindow *)this)->winGetUserData();
+	}
 };
 
 void bfmeGo924A(BfmeKeyLC *k, char v)
