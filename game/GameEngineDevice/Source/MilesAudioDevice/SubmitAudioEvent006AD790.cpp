@@ -13,9 +13,9 @@ class AudioEventRTS { public:
     unsigned int getSoundClass() const;
     void *vptr; int dword_4; Info006AD790 *info_8; unsigned handle_c;
 };
-class Rva00691200Holder { public: Rva00691200Holder(const Rva00691200Holder&); ~Rva00691200Holder(); AudioEventRTS *ptr; };
 class Rva006A1790EventRef { public:
-    ~Rva006A1790EventRef() { ((Rva00691200Holder*)this)->~Rva00691200Holder(); }
+    // 0x00691200: the counted-handle release Rva006A3200EntryList.cpp emits.
+    ~Rva006A1790EventRef();
     AudioEventRTS *ptr;
 };
 class Rva006A3200Owner { public: Rva006A1790EventRef newEventCopy(const AudioEventRTS*); };
