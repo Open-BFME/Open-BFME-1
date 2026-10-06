@@ -106,6 +106,10 @@
 template<> void BitFlags<116>::xfer(Xfer *);
 // The header xfer copy no longer instantiates the size() retail emits here.
 template Int BitFlags<116>::size() const;
+// NameKeyGenerator::nameToKey(const AsciiString&) is retail's 0x00066F40 body
+// (NameKeyGenerator.cpp). Calling it here made this TU emit the ZH header inline
+// with this file's +4 AsciiString data offset (retail adds 8) ahead of it in the
+// link, so the AsciiString keys below go through the const char* overload.
 
 #include "GameNetwork/GameInfo.h"
 
@@ -583,7 +587,7 @@ void Player::init(const PlayerTemplate* pt)
 
 		m_playerDisplayName = UnicodeString::TheEmptyString;
 		m_playerName = AsciiString::TheEmptyString;
-		m_playerNameKey = NAMEKEY(AsciiString::TheEmptyString);
+		m_playerNameKey = NAMEKEY(AsciiString::TheEmptyString.str());
 		m_playerType = PLAYER_COMPUTER;
 
 		// neutral is always "allied" with self -- this is the only thing ever allied with neutral!
@@ -1043,7 +1047,7 @@ void Player::setDefaultTeam(void) {
 void Player::initFromDict(const Dict* d)
 {
 	AsciiString tmplname = d->getAsciiString(TheKey_playerFaction);
-	const PlayerTemplate* pt = ThePlayerTemplateStore->findPlayerTemplate(NAMEKEY(tmplname));
+	const PlayerTemplate* pt = ThePlayerTemplateStore->findPlayerTemplate(NAMEKEY(tmplname.str()));
 	DEBUG_ASSERTCRASH(pt != NULL, ("PlayerTemplate %s not found -- this is an obsolete map (please open and resave in WB)\n",tmplname.str()));
 	
 	init(pt);
@@ -1051,7 +1055,7 @@ void Player::initFromDict(const Dict* d)
 	m_playerDisplayName = d->getUnicodeString(TheKey_playerDisplayName);
 	AsciiString pname = d->getAsciiString(TheKey_playerName);
 	m_playerName = pname;
-	m_playerNameKey = NAMEKEY(pname);
+	m_playerNameKey = NAMEKEY(pname.str());
 
 	Bool exists;
 	Bool skirmish = false;
@@ -1066,7 +1070,7 @@ void Player::initFromDict(const Dict* d)
 		for (Int spIdx = 0; spIdx < TheSidesList->getNumSkirmishSides(); ++spIdx)
 		{
 			AsciiString spTemplateName = TheSidesList->getSkirmishSideInfo(spIdx)->getDict()->getAsciiString(TheKey_playerFaction);
-			const PlayerTemplate* spt = ThePlayerTemplateStore->findPlayerTemplate(NAMEKEY(spTemplateName));
+			const PlayerTemplate* spt = ThePlayerTemplateStore->findPlayerTemplate(NAMEKEY(spTemplateName.str()));
 			if (spt && spt->getSide() == getSide()) 
 			{
 				skirmish = true;
@@ -1095,7 +1099,7 @@ void Player::initFromDict(const Dict* d)
 			AsciiString  qualTemplatePlayerName;
 			for (i=0; i<TheSidesList->getNumSkirmishSides(); i++) {
 				AsciiString templateName = TheSidesList->getSkirmishSideInfo(i)->getDict()->getAsciiString(TheKey_playerFaction);
-				pt = ThePlayerTemplateStore->findPlayerTemplate(NAMEKEY(templateName));
+				pt = ThePlayerTemplateStore->findPlayerTemplate(NAMEKEY(templateName.str()));
 				if (pt && pt->getSide() == mySide) {
 					qualTemplatePlayerName.format("%s%d", TheSidesList->getSkirmishSideInfo(i)->getDict()->getAsciiString(TheKey_playerName).str(), m_mpStartIndex);
 					found = true;
@@ -1133,7 +1137,7 @@ void Player::initFromDict(const Dict* d)
 		AsciiString  qualTemplatePlayerName;
 		for (skirmishNdx=0; skirmishNdx<TheSidesList->getNumSkirmishSides(); skirmishNdx++) {
 			AsciiString templateName = TheSidesList->getSkirmishSideInfo(skirmishNdx)->getDict()->getAsciiString(TheKey_playerFaction);
-			pt = ThePlayerTemplateStore->findPlayerTemplate(NAMEKEY(templateName));
+			pt = ThePlayerTemplateStore->findPlayerTemplate(NAMEKEY(templateName.str()));
 			if (pt && pt->getSide() == mySide) {
 				qualTemplatePlayerName.format("%s%d", TheSidesList->getSkirmishSideInfo(skirmishNdx)->getDict()->getAsciiString(TheKey_playerName).str(), m_mpStartIndex);
 				found = true;
@@ -1218,11 +1222,11 @@ void Player::initFromDict(const Dict* d)
 					for (j = 0; j < MAX_GENERIC_SCRIPTS; ++j) {
 						AsciiString keyName;
 						keyName.format("%s%d", TheNameKeyGenerator->keyToName(TheKey_teamGenericScriptHook).str(), j);
-						tmpStr = teamDict.getAsciiString(NAMEKEY(keyName), &exists);
+						tmpStr = teamDict.getAsciiString(NAMEKEY(keyName.str()), &exists);
 						if (exists && !tmpStr.isEmpty())
 						{
 							newName.format("%s%d", tmpStr.str(), m_mpStartIndex);
-							teamDict.setAsciiString(NAMEKEY(keyName), newName);
+							teamDict.setAsciiString(NAMEKEY(keyName.str()), newName);
 						}
 					}
 
@@ -2619,7 +2623,7 @@ UnsignedInt Player::getSupplyBoxValue()
 // ?getProductionTimeChangePercent@Player@@QBEMVAsciiString@@@Z present-unmatched
 Real Player::getProductionTimeChangePercent( AsciiString buildTemplateName ) const 
 { 
-  ProductionChangeMap::const_iterator it = m_productionTimeChanges.find(NAMEKEY(buildTemplateName));
+  ProductionChangeMap::const_iterator it = m_productionTimeChanges.find(NAMEKEY(buildTemplateName.str()));
   if (it != m_productionTimeChanges.end()) 
 	{
 		return (*it).second;
@@ -2632,7 +2636,7 @@ Real Player::getProductionTimeChangePercent( AsciiString buildTemplateName ) con
 // ?getProductionVeterancyLevel@Player@@QBE?AW4VeterancyLevel@@VAsciiString@@@Z present-unmatched
 VeterancyLevel Player::getProductionVeterancyLevel( AsciiString buildTemplateName ) const 
 { 
-	NameKeyType templateNameKey = NAMEKEY(buildTemplateName);
+	NameKeyType templateNameKey = NAMEKEY(buildTemplateName.str());
   ProductionVeterancyMap::const_iterator it = m_productionVeterancyLevels.find(templateNameKey);
   if (it != m_productionVeterancyLevels.end()) 
 	{

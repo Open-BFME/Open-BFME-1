@@ -3420,7 +3420,9 @@ void Object::updateObjValuesFromMapProperties(Dict* properties)
 	{
 		AsciiString keyName;
 		keyName.format("%s%d", TheNameKeyGenerator->keyToName(TheKey_objectGrantUpgrade).str(), upgradeNum);
-		valStr = properties->getAsciiString(NAMEKEY(keyName), &exists);
+		// const char* overload: the ZH header's inline nameToKey(const AsciiString&)
+		// would emit a +4-offset copy ahead of retail's 0x00066F40 body in the link.
+		valStr = properties->getAsciiString(NAMEKEY(keyName.str()), &exists);
 
 		if (exists) 
 		{
@@ -4093,7 +4095,8 @@ void Object::xfer( Xfer *xfer )
 
 			// read module name
 			xfer->xferAsciiString( &moduleIdentifier );
-			NameKeyType moduleIdentifierKey = TheNameKeyGenerator->nameToKey(moduleIdentifier);
+			// const char* overload, as in updateObjValuesFromMapProperties above
+			NameKeyType moduleIdentifierKey = TheNameKeyGenerator->nameToKey(moduleIdentifier.str());
 
 			// find the module with this identifier in the module list
 			module = NULL;
