@@ -205,10 +205,11 @@ enum ObjectID
 	OBJECT_ID_INVALID = 0
 };
 
-class BfmeTeam
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
+class Team
 {
 public:
-	Player *bfmeGetControllingPlayer() const;
+	Player *getControllingPlayer() const;	// retail 0x000EC8F0 (ILT 0x0002369B)
 };
 
 class GameLogic
@@ -256,7 +257,7 @@ public:
 	unsigned char m_pad208[0x214 - 0x208];
 	Object *m_containedBy;
 	unsigned char m_pad218[0x23C - 0x218];
-	BfmeTeam *m_team;
+	Team *m_team;
 };
 
 void Object::notifyRva001C8830(Player *player)
@@ -310,7 +311,7 @@ void Object::notifyRva001C8830(Player *player)
 		}
 	}
 
-	Player *owner = m_team ? m_team->bfmeGetControllingPlayer() : 0;
+	Player *owner = m_team ? m_team->getControllingPlayer() : 0;
 	if (player == owner && !m_selectionFlags.test(0))
 	{
 		m_selectionFlags.set(0);
