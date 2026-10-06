@@ -301,3 +301,45 @@ def test_output_root_groups_preserve_independent_verdicts(tmp_path):
                                   "other .asm": {"ambiguous": 1}}
     assert summary["status"] == {"exact": 1, "failed": 1, "ambiguous": 1}
     assert [row["status"] for row in summaries] == list(statuses)
+
+
+# ----------------------------------------------------------------- retail .reloc authority
+
+def test_retail_reloc_promotes_a_listed_cmp_and_drops_an_unlisted_one():
+    # cmp eax, imm32 is never relocated by the heuristics; retail's .reloc decides
+    code = (b"\x3d" + struct.pack("<I", DATA + 0x10)            # cmp eax, g   (site listed)
+            + b"\x3d" + struct.pack("<I", DATA + 0x20)          # cmp eax, n   (not listed)
+            + b"\xc3")
+    ctx = context()
+    ctx.reloc_sites = [BODY + 1]
+    c = run(code, ctx)
+    assert [(r["site"], r["symbol"], r["rule"]) for r in c["relocs"]] == [(1, "g_00403010", "retail-reloc")]
+    assert not c["ambiguous"] and not c["failures"] and c["literal"] == {6}
+
+
+def test_retail_reloc_demotes_a_heuristic_imm_it_does_not_list():
+    # push 1000000h equals a row start: the heuristics call it an address, retail does not
+    row = 0x401800
+    code = b"\x68" + struct.pack("<I", row) + b"\xc3"
+    ctx = context(rows=[(row, 0x10, "?f@@YAXXZ")])
+    assert [r["rule"] for r in run(code, ctx)["relocs"]] == ["imm"]           # negative control: no table
+    ctx.reloc_sites = []
+    c = run(code, ctx)
+    assert not c["relocs"] and not c["failures"] and c["literal"] == {1}
+
+
+def test_retail_reloc_site_no_dir32_covers_fails_the_body():
+    # bytes rewritten after link (protection stub): retail lists a site mid-instruction
+    code = b"\xa1" + struct.pack("<I", DATA + 0x10) + b"\xc3"
+    ctx = context()
+    ctx.reloc_sites = [BODY + 1]
+    assert not run(code, ctx)["failures"]                                    # agreeing table passes
+    ctx.reloc_sites = [BODY + 2]
+    assert {f[0] for f in run(code, ctx)["failures"]} == {"retail-reloc-conflict"}
+
+
+def test_retail_relocs_parses_highlow_blocks_and_stops_at_padding():
+    import retail_relocs
+    block = struct.pack("<II", 0x5000, 12) + struct.pack("<HH", 0x3000 | 0x10, 0)
+    sites, padding, used = retail_relocs.parse_blocks(block + b"\0" * 16)
+    assert (sites, padding, used) == ([0x5010], 1, 12)

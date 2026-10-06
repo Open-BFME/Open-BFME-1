@@ -684,13 +684,80 @@ def classify(body, va, ctx, symbol, extra_entries=()):
             value = struct.unpack_from("<I", body, o)[0]
             if ctx.in_image(value) and value >= ctx.base + 0x1000:
                 ambiguous.append((o, value, ctx.section(value), "unreached-dword", "", ""))
+    literal = retail_reloc_authority(ctx, body, va, symbol, relocs, ambiguous, failures, tables, info)
     relocs.sort(key=lambda r: r["site"])
     sites = [r["site"] for r in relocs]
     for a, b in zip(sites, sites[1:]):
         if b < a + 4:
             failures.append(("overlapping-relocations", a, ""))
     return {"relocs": relocs, "ambiguous": sorted(ambiguous), "failures": failures, "info": info,
-            "analysis": result, "tables": tables}
+            "analysis": result, "tables": tables, "literal": literal}
+
+
+def retail_reloc_authority(ctx, body, va, symbol, relocs, ambiguous, failures, tables, info):
+    """Settle and check this body against retail's own base relocations (tools/retail_relocs.py).
+
+    ctx.reloc_sites (sorted VAs; absent in fixtures) is link.exe's list of
+    every absolute-address dword. An ambiguous dword AT a listed site becomes a
+    DIR32 (rule `retail-reloc`); one at no listed site is a number and leaves
+    the ambiguous list (returned as `literal` sites, so verification does not
+    call it a stray address), as does an `imm` DIR32 the heuristics chose at an
+    unlisted site (`push 1000000h` equals a row start: a number). Any other
+    recovered DIR32 retail does not list, or a
+    listed site in the body no DIR32 covers, fails the body
+    (`retail-reloc-conflict`): its bytes are not what link.exe relocated (the
+    unpacked image's protection stubs, e.g. 0x461F00, were rewritten after link).
+    Edits relocs/ambiguous/failures in place; returns the literal sites.
+    """
+    reloc_sites = getattr(ctx, "reloc_sites", None)
+    if reloc_sites is None:
+        return set()
+    listed = set(reloc_sites[bisect.bisect_left(reloc_sites, va):bisect.bisect_left(reloc_sites, va + len(body))])
+    literal, keep = set(), []
+    for entry in ambiguous:
+        off, target = entry[0], entry[1]
+        if va + off in listed and off + 4 <= len(body):
+            if va <= target < va + len(body):
+                sym, addend, cls, note = symbol, target - va, "self", ""
+            else:
+                sym, addend, cls, note = ctx.owner(target)
+            relocs.append({"site": off, "kind": DIR32, "symbol": sym, "addend": addend, "target": target,
+                           "cls": cls, "rule": "retail-reloc", "evidence": ";".join(x for x in (entry[3], note) if x),
+                           "insn": entry[4] or f"dd {target:#x}", "insn_off": off})
+            info["retail-reloc-promoted"] += 1
+        elif entry[3].startswith("imm-") or entry[3] == "embedded-data-dword":
+            literal.add(off)
+            info["retail-reloc-literal"] += 1
+        else:
+            keep.append(entry)
+    ambiguous[:] = keep
+    offsets = {s - va for s in listed}
+    # an imm32 the heuristics called an address (`push 1000000h` equals a row
+    # start, `push 400000h` the image base) is a number when retail lists no site
+    demoted = [r for r in relocs if r["kind"] == DIR32 and r["rule"] == "imm" and r["site"] not in offsets]
+    for r in demoted:
+        relocs.remove(r)
+        literal.add(r["site"])
+        info["retail-reloc-demoted"] += 1
+    have = {r["site"] for r in relocs if r["kind"] == DIR32}
+    for off in sorted(have - offsets):
+        failures.append(("retail-reloc-conflict", off, "DIR32 retail's .reloc does not list"))
+    still_open = {a[0] for a in keep}  # unreached bytes: the body stays ambiguous anyway
+    for site in sorted(listed):
+        if site - va not in have and site - va not in still_open:
+            failures.append(("retail-reloc-conflict", site - va, "retail .reloc site no DIR32 covers"))
+    for t in tables:
+        for r in t["relocs"]:
+            if t["va"] + r["site"] not in reloc_sites_set(ctx):
+                failures.append(("retail-reloc-conflict", r["insn_off"], f"table {t['va']:#x}+{r['site']:#x}"))
+    return literal
+
+
+def reloc_sites_set(ctx):
+    cached = getattr(ctx, "_reloc_set", None)
+    if cached is None:
+        cached = ctx._reloc_set = frozenset(ctx.reloc_sites)
+    return cached
 
 
 def noreturn_call(ctx, insn):
@@ -1090,7 +1157,7 @@ def process_source(source, rows, ctx):
             continue
         extra = [g - va for g in ctx.ghidra_in(va, size)]
         c = classify(retail, va, ctx, symbol, extra)
-        c["analysis"]["ambiguous_sites"] = {a[0] for a in c["ambiguous"]}
+        c["analysis"]["ambiguous_sites"] = {a[0] for a in c["ambiguous"]} | c["literal"]
         summary["rel32"] = sum(r["kind"] == REL32 for r in c["relocs"])
         summary["dir32"] = sum(r["kind"] == DIR32 for r in c["relocs"])
         summary["ambiguous"] = len(c["ambiguous"])
@@ -1172,6 +1239,8 @@ Context.ghidra_in = _ghidra_in
 def load_context():
     ctx = Context()
     ctx._ghidra_sorted = sorted(ctx.ghidra)
+    import retail_relocs
+    ctx.reloc_sites = [ctx.base + s for s in retail_relocs.site_rvas()]
     return ctx
 
 
