@@ -433,38 +433,10 @@ void Path::prependNode( const Coord3D *pos, PathfindLayerEnum layer )
 }
 
 /**
- * Create a new node at the tail of the path
+ * Create a new node at the tail of the path: Path::appendNode(const Coord3D *,
+ * PathfindLayerEnum) (retail 0x0016A4B0) is matched in PathNodeInsertion.cpp.
  */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/Path_appendNode.cpp
-// ?appendNode@Path@@QAEXPBUCoord3D@@W4PathfindLayerEnum@@@Z present-unmatched
-void Path::appendNode( const Coord3D *pos, PathfindLayerEnum layer )
-{
-	if (m_isOptimized && m_pathTail) 
-	{
-		/* Check for duplicates. */
-		if (pos->x == m_pathTail->getPosition()->x && pos->y == m_pathTail->getPosition()->y) {
-			DEBUG_LOG(("Warning - Path Seg length == 0, ignoring. john a.\n"));
-			return;
-		}
-	}
-	PathNode *node = newInstance(PathNode);
 
-	node->setPosition( pos );
-	node->setLayer(layer);
-
-	m_path = node->appendToList( m_path );
-
-	if (m_isOptimized && m_pathTail) 
-	{
-		m_pathTail->setNextOptimized(node);
-	}
-
-	m_pathTail = node;
-
-#ifdef CPOP_STARTS_FROM_PREV_SEG
-	m_cpopRecentStart = NULL;
-#endif
-}
 /**
  * Create a new node at the tail of the path
  */
