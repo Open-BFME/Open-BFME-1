@@ -67,13 +67,14 @@ public:
 	void bfmeAccept(BfmeSeedTarget *);
 };
 
-class Rva002BD630TeamFactory
+class Team;
+
+// ILT 0x00044C2E -> 0x000EF060, the matched TeamFactory::findTeamByID row.
+class TeamFactory
 {
 public:
-	void *find(Int);
+	Team *findTeamByID(unsigned int id);
 };
-
-class TeamFactory;
 extern TeamFactory *TheTeamFactory;
 
 class Rva0018C480Team
@@ -147,5 +148,5 @@ void Rva0018C480Owner::xfer(Rva0018C480Xfer *xfer)
 
 	Int teamID = m_team ? m_team->getID() : 0;
 	xfer->xferInt(&teamID);
-	m_team = reinterpret_cast<Rva0018C480Team *>(reinterpret_cast<Rva002BD630TeamFactory *>(TheTeamFactory)->find(teamID));
+	m_team = reinterpret_cast<Rva0018C480Team *>(TheTeamFactory->findTeamByID(teamID));
 }

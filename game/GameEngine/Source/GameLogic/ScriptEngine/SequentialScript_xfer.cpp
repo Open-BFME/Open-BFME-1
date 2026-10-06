@@ -70,14 +70,12 @@ public:
 	virtual void xferBool(bool &);
 };
 
-class Rva002BD630TeamFactory
+// retail 0x012ED810: ?TheTeamFactory@@3PAVTeamFactory@@A
+class TeamFactory
 {
 public:
-	void *find(int);
+	Team *findTeamByID(unsigned int id);	// ILT 0x00044C2E -> 0x000EF060
 };
-
-// retail 0x012ED810: ?TheTeamFactory@@3PAVTeamFactory@@A
-class TeamFactory;
 extern TeamFactory *TheTeamFactory;
 
 class ScriptEngine
@@ -191,7 +189,7 @@ void SequentialScript::xfer(Xfer *xfer)
 
 	if (xfer->isLoading())
 	{
-		m_teamToExecOn = (Team *)((Rva002BD630TeamFactory *)TheTeamFactory)->find((int)teamID);
+		m_teamToExecOn = TheTeamFactory->findTeamByID(teamID);
 		if (teamID != 0 && m_teamToExecOn == 0)
 		{
 			bfmeFormatText(&local.error, 5, 0);

@@ -140,16 +140,10 @@ public:
 
 class TeamPrototype;
 
-// Pin ?find@Rva002BD630TeamFactory@@QAEPAXH@Z @ 0x00044C2E
-class Rva002BD630TeamFactory
-{
-public:
-	void *find(Int teamID);
-};
-
 class TeamFactory
 {
 public:
+	Team *findTeamByID(UnsignedInt id);	// ILT 0x00044C2E -> 0x000EF060
 	Team *createTeamOnPrototype(TeamPrototype *proto);
 };
 
@@ -368,7 +362,7 @@ void TeamPrototype::xfer(Xfer *xfer)
 		for (UnsignedShort i = 0; i < teamInstanceCount; ++i)
 		{
 			xfer->xferTeamID(&frame.teamID);
-			Team *teamInstance = (Team *)((Rva002BD630TeamFactory *)TheTeamFactory)->find((Int)frame.teamID);
+			Team *teamInstance = TheTeamFactory->findTeamByID(frame.teamID);
 			if (teamInstance == 0)
 			{
 				teamInstance = TheTeamFactory->createTeamOnPrototype(this);
