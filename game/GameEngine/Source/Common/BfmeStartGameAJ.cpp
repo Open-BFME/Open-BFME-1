@@ -3,19 +3,15 @@
 //
 // Open-BFME5: the start-game announcement at retail 0x00649DB0, 177 bytes.
 // The room is marked closed, then the peer library is told to start with the
-// game number as its message.
+// game number as its message. The room field at +0xC0 is an STLport string:
+// retail pushes "closedplaying" and its end (+13) and calls ILT 0x0002B297 ->
+// 0x000A5810, basic_string<char>::assign(const char *, const char *), which is
+// what operator=(const char *) inlines to.
 
 #include "ascii_string.h"
+#include <string>
 
 extern "C" void peerStartGameA(void *peer, const char *message, int reportIntention);
-
-class BfmeRoomAJ
-{
-public:
-	void bfmeSetAJ(const char *key, const char *value);
-
-	char m_bfmePadRAJ[4];
-};
 
 class BfmeSessionAJ
 {
@@ -25,8 +21,8 @@ public:
 	char m_bfmePadAAJ[0x90];
 	int m_bfmeNumberAJ;
 	char m_bfmePadBAJ[0x2c];
-	BfmeRoomAJ m_bfmeRoomAJ;
-	char m_bfmePadCAJ[788];
+	_STL::string m_bfmeRoomAJ;				// +0xC0
+	char m_bfmePadCAJ[780];
 	char m_bfmeStartedAJ;
 };
 
@@ -36,7 +32,7 @@ void BfmeSessionAJ::bfmeStartAJ(void *peer)
 
 	message.format(AsciiString("%d"), m_bfmeNumberAJ);
 
-	m_bfmeRoomAJ.bfmeSetAJ("closedplaying", "");
+	m_bfmeRoomAJ = "closedplaying";
 
 	peerStartGameA(peer, message.str(), 2);
 
