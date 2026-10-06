@@ -41,7 +41,7 @@ public:
 
 struct BfmeThingFBA
 {
-	float bfmeGoFBAThunk(void *a);
+	float bfmeGoFBA(void *a);
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
@@ -102,7 +102,7 @@ void ScriptEngine::Rva00345910(ScriptAction *action, Bool flag)
 	{
 		BfmeThingFBA *thing = TheScriptEngine->unidentified6c(action->getParameter(1)->m_string);
 		if (thing)
-			result = thing->bfmeGoFBAThunk(*(void **)&paramValue);
+			result = thing->bfmeGoFBA(*(void **)&paramValue);
 	}
 	counter->m_value = (int)result;
 }
