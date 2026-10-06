@@ -46,7 +46,12 @@ struct LargeGroupAudioKeyRecord : public _STL::_Rb_tree_node_base
 	unsigned int m_useCount;				// +0x18
 };
 
-extern LargeGroupAudioKeyRecord *g_lgaKeyRecordSentinel;
+// The key-record tree at VA 012F1050 is defined (and constructed by $E
+// initializer 0x00C6B390) in Rva00C6B390StaticInitializers.cpp; its first
+// word is the header node this TU walks from.
+struct Rva00C6B390Init;
+extern Rva00C6B390Init g_rva012F1050;
+#define g_lgaKeyRecordSentinel (*reinterpret_cast<LargeGroupAudioKeyRecord **>(&g_rva012F1050))
 
 class LargeGroupAudioKeyMap :
 	public _STL::vector<void *, _STL::allocator<void *> >
