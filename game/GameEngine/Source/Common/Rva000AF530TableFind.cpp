@@ -23,11 +23,8 @@ inline int StringBase<char>::compareNoCase( const StringBase<char> &str ) const
 	const char *thatData = str.m_data ? &str.m_data->data[ 0 ] : (const char *)"";
 	int thisLen = m_data ? m_data->length : 0;
 	const char *thisData = m_data ? &m_data->data[ 0 ] : (const char *)"";
-	int n = thisLen < thatLen ? thisLen : thatLen;
-	int c = _memicmp( thisData, thatData, n );
-	if ( c != 0 )
-		return c;
-	return thisLen - thatLen;
+	int c = _memicmp( thisData, thatData, thisLen < thatLen ? thisLen : thatLen );
+	return c ? c : thisLen - thatLen;
 }
 
 class Rva000C2A30Owner
