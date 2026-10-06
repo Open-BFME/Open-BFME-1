@@ -16,14 +16,10 @@ public:
 		return (m_valueBits >> 30 & 1) != 0;
 	}
 
+	float toNumber();	// retail 0x008983D0, AptValue_toNumber.cpp
+
 private:
 	unsigned int m_valueBits;
-};
-
-class BfmeE1239 : public AptValue
-{
-public:
-	float bfmeF1239();
 };
 
 class AptActionInterpreter
@@ -57,8 +53,8 @@ void AptActionInterpreter::_FunctionAptActionLessThan(
 	}
 	else
 	{
-		float topValue = ((BfmeE1239 *)top)->bfmeF1239();
-		float underValue = ((BfmeE1239 *)under)->bfmeF1239();
+		float topValue = top->toNumber();
+		float underValue = under->toNumber();
 
 		result = ((AptValue *(__cdecl *)(unsigned char))d_008996b0)(
 			underValue < topValue);
