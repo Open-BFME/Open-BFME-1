@@ -12997,7 +12997,6 @@ name,address,notes
 ?Set_Position@RenderObjClass@@UAEXABVVector3@@@Z,0x00920220
 ?Set_Position_Retail@RetailAABoxRenderObjBase@@QAEXABVVector3@@@Z,0x00920220,AABoxRenderObjClass constructor at 0x00957880 calls RenderObjClass::Set_Position
 ?Set_Priority@ThreadClass@@QAEXH@Z,0x009DB540,25-byte unclaimed body immediately ahead of the Execute candidate
-?Set_Projection_Transform_With_Z_Bias@CameraApplyProjectionCall@@SAXABVMatrix4@@MM@Z,0x00907120,Parent full506B retail review caches near/far transposed projection and BFME ZBias correction before DX8 SetTransform; Apply call00933252; TU-local ABI view of canonical projection helper
 ?Set_Render_Device@DX8Wrapper@@KA_NHHHHH_N00@Z,0x0090B020,pinharvest x5 (body)
 ?Set_Render_Device@DX8Wrapper@@KA_NPBDHHHH_N@Z,0x0090B850,pinharvest x3 (body)
 ?Set_Render_Target@DX8Wrapper@@SAXPAUIDirect3DSurface8@@_N@Z,0x009052B0,packet 00906fa0 -- Set_Render_Target(IDirect3DSwapChain8*) calling Set_Render_Target(IDirect3DSurface8*,bool)

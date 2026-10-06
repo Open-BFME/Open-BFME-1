@@ -1163,24 +1163,11 @@ WWINLINE void DX8Wrapper::Set_Shader(const ShaderClass& shader)
 	SNAPSHOT_SAY(("DX8Wrapper::Set_Shader(%s)\n",shader.Get_Description(str)));
 }
 
-WWINLINE void DX8Wrapper::Set_Projection_Transform_With_Z_Bias(const Matrix4x4& matrix, float znear, float zfar)
-{
-	ZFar=zfar;
-	ZNear=znear;
-	ProjectionMatrix=matrix.Transpose();
-
-	if (!Get_Current_Caps()->Support_ZBias() && ZNear!=ZFar) {
-		Matrix4x4 tmp=ProjectionMatrix;
-		float tmp_zbias=ZBias;
-		tmp_zbias*=(1.0f/16.0f);
-		tmp_zbias*=1.0f / (ZFar - ZNear);
-		tmp[2][2]-=tmp_zbias*tmp[3][2];
-		DX8CALL(SetTransform(D3DTS_PROJECTION,(D3DMATRIX*)&tmp));
-	}
-	else {
-		DX8CALL(SetTransform(D3DTS_PROJECTION,(D3DMATRIX*)&ProjectionMatrix));
-	}
-}
+// BFME keeps DX8Wrapper::Set_Projection_Transform_With_Z_Bias out of line:
+// retail's 506-byte body is at 0x907120 (the older always-software Z-bias
+// variant, DX8Wrapper_Set_Projection_Transform_With_Z_Bias.cpp) and
+// CameraClass::Apply calls it at 0x933252. The ZH inline body is dropped so
+// callers emit that call.
 
 // BFME keeps DX8Wrapper::Set_DX8_ZBias out of line: retail's body is at
 // 0x905990 and Set_Default_Global_Render_States @0x9081D0 calls it. The ZH
