@@ -41,3 +41,26 @@ targets/worldbuilder/reverse/attempts/*.cpp -text
 targets/worldbuilder/reverse/*.json text eol=lf
 targets/worldbuilder/*.json text eol=lf
 targets/worldbuilder/dependencies/*.csv text eol=lf
+
+# Game ledgers are LF in the index (research 17: on Windows clones with
+# core.autocrlf=true, ledgers picked up CRLF lines, and a rebased union merge
+# came out 
+). Pinned per file type so a new ledger is covered on arrival.
+targets/game/reverse/*.csv text eol=lf
+targets/game/reverse/*.tsv text eol=lf
+targets/game/reverse/*.txt text eol=lf
+targets/game/reverse/*.log text eol=lf
+targets/game/reverse/*.json text eol=lf
+targets/game/reverse/**/*.csv text eol=lf
+targets/game/reverse/**/*.tsv text eol=lf
+# Still CRLF in the index and too large to renormalise outside a publish
+# window (every in-flight branch would conflict on every line). They keep
+# today's autocrlf behaviour until one commit renormalises each of them;
+# that commit deletes its line here.
+targets/game/reverse/functions.csv !text !eol
+targets/game/reverse/symbols.csv !text !eol
+targets/game/reverse/re_attempts.log !text !eol
+targets/game/reverse/name_corrections.json !text !eol
+targets/game/reverse/field_names.csv !text !eol
+targets/game/reverse/exports.csv !text !eol
+targets/game/reverse/zh_sweep/drift_report.csv !text !eol
