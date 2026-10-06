@@ -20,8 +20,8 @@ public:
 
 void Rva009CC470::reset()
 {
-	m_00.clear();
-	m_04.clear();
+	m_00.StringBase<char>::clear();
+	m_04.StringBase<char>::clear();
 	m_08 = 0;
 	m_0C = 0;
 }

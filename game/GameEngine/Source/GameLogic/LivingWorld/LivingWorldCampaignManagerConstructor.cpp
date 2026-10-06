@@ -38,6 +38,6 @@ LivingWorldCampaignManager::LivingWorldCampaignManager(void) :
 	m_name18(AsciiString::TheEmptyString)
 {
 	m_field24 = m_field20 = 0;
-	m_name08.clear();
-	m_name0C.clear();
+	m_name08.StringBase<char>::clear();
+	m_name0C.StringBase<char>::clear();
 }

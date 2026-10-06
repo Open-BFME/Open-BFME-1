@@ -21,5 +21,5 @@ Rva00283DF0ExpLevelDrawEntry::Rva00283DF0ExpLevelDrawEntry()
 {
     m_field04 = 0;
     m_locomotor.StringBase<char>::set("", 0);
-    m_unitType.clear();
+    m_unitType.StringBase<char>::clear();
 }

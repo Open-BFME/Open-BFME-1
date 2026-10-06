@@ -178,10 +178,10 @@ void WinInstanceData::init( void )
 	m_style = 0;
 	m_status = WIN_STATUS_NONE;
 	m_owner = 0;
-	m_textLabelString.clear();
-	m_tooltipString.clear();
+	m_textLabelString.StringBase<char>::clear();
+	m_tooltipString.StringBase<char>::clear();
 	m_tooltipDelay = -1; ///< default value
-	m_decoratedNameString.clear();
+	m_decoratedNameString.StringBase<char>::clear();
 
 	m_imageOffset.x = 0;
 	m_imageOffset.y = 0;

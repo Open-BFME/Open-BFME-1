@@ -80,7 +80,7 @@ WindowVideo::WindowVideo()
 	m_playType = WINDOW_PLAY_MOVIE_ONCE;
 	m_win = 0;
 	m_videoBuffer = 0;
-	m_movieName.clear();
+	m_movieName.StringBase<char>::clear();
 	m_state = WINDOW_VIDEO_STATE_STOP;
 }
 

@@ -26,6 +26,6 @@ private:
 
 Gen003A4310::~Gen003A4310()
 {
-	m_fieldA.clear();
-	m_fieldB.clear();
+	m_fieldA.StringBase<char>::clear();
+	m_fieldB.StringBase<char>::clear();
 }

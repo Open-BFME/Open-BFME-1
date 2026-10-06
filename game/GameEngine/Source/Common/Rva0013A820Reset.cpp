@@ -35,16 +35,16 @@ public:
 
 void Rva0013A820::reset()
 {
-	m_00.clear();
-	m_04.clear();
-	m_08.clear();
-	m_0C.clear();
-	m_10.clear();
-	m_1C.clear();
-	m_20.clear();
-	m_28.clear();
-	m_3C.clear();
-	m_44.clear();
+	m_00.StringBase<char>::clear();
+	m_04.StringBase<char>::clear();
+	m_08.StringBase<char>::clear();
+	m_0C.StringBase<char>::clear();
+	m_10.StringBase<char>::clear();
+	m_1C.StringBase<char>::clear();
+	m_20.StringBase<char>::clear();
+	m_28.StringBase<char>::clear();
+	m_3C.StringBase<char>::clear();
+	m_44.StringBase<char>::clear();
 	m_40 = 0;
 	m_38 = 0;
 	m_34 = 0;

@@ -34,7 +34,7 @@ public:
 BfmeOwnVUE::BfmeOwnVUE()
 	: m_bfme10(0)
 {
-	m_bfme04.clear();
-	m_bfme0c.clear();
-	m_bfme08.clear();
+	m_bfme04.StringBase<char>::clear();
+	m_bfme0c.StringBase<char>::clear();
+	m_bfme08.StringBase<char>::clear();
 }
