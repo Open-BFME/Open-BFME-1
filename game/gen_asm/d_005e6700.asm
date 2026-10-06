@@ -1,5 +1,21 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ??_7BaseY005E7360Pairs@@6B@:BYTE
+EXTERN ??_7BaseY005E7360Secondary@@6B@:BYTE
+EXTERN ??_7T1Base_005EFD60@@6BDefaultColorModuleInfo@FXParticleSystem@@@:BYTE
+EXTERN ??_7T1Base_005EFD60@@6BT1A1_005DD290@@@:BYTE
+EXTERN ??_7T1Base_005EFD60@@6BT1P1_005EFD60@@@:BYTE
+EXTERN ??_7T1Base_005EFD60@@6BT1P2_005EFD60@@@:BYTE
+EXTERN ??_7T4Derived_005EFD10@@6BT1A1_005DD290@@@:BYTE
+EXTERN ??_7T4Derived_005EFD10@@6BT4A2_01073760@@@:BYTE
+EXTERN ??_7T4Derived_005EFD10@@6BT4A2_0111081C@@@:BYTE
+EXTERN ?j_0003d64f@@YAXXZ:NEAR
+EXTERN __real@4f800000:BYTE
+EXTERN _bfmeVft0ZL:BYTE
+EXTERN _bfmeVft1ZL:BYTE
+EXTERN _bfmeVft2ZL:BYTE
+EXTERN g_Va011108E0:BYTE
 _TEXT SEGMENT
 
 ; ghidra: FUN_009e6700  retail @ 0x005E6700 size 66
@@ -1339,17 +1355,35 @@ public ?d_005ec3a0@@YAXXZ
 ?d_005ec3a0@@YAXXZ ENDP
 
 ; ghidra: FUN_009ec3e0  retail @ 0x005EC3E0 size 128
+_TEXT ENDS
+_TEXT$d009ec3e0 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x009EC3E0 size 128
 public ?d_005ec3e0@@YAXXZ
 ?d_005ec3e0@@YAXXZ PROC
-    db 53h, 56h, 8Bh, 74h, 24h, 0Ch, 57h, 56h, 8Bh, 0D9h, 0E8h, 60h, 12h, 0A5h, 0FFh, 85h
-    db 0F6h, 0C7h, 03h, 0ACh, 30h, 11h, 01h, 0C7h, 43h, 14h, 0A8h, 30h, 11h, 01h, 0C7h, 43h
-    db 18h, 0A4h, 30h, 11h, 01h, 74h, 05h, 8Dh, 46h, 1Ch, 0EBh, 02h, 33h, 0C0h, 0C7h, 43h
-    db 1Ch, 0E0h, 08h, 11h, 01h, 8Dh, 70h, 04h, 05h, 84h, 00h, 00h, 00h, 8Dh, 7Bh, 20h
-    db 0B9h, 20h, 00h, 00h, 00h, 0F3h, 0A5h, 8Bh, 10h, 8Dh, 8Bh, 0A0h, 00h, 00h, 00h, 89h
-    db 11h, 8Bh, 50h, 04h, 89h, 51h, 04h, 8Bh, 40h, 08h, 89h, 41h, 08h, 5Fh, 5Eh, 0C7h
-    db 03h, 8Ch, 30h, 11h, 01h, 0C7h, 43h, 14h, 88h, 30h, 11h, 01h, 0C7h, 43h, 18h, 84h
-    db 30h, 11h, 01h, 0C7h, 43h, 1Ch, 70h, 30h, 11h, 01h, 8Bh, 0C3h, 5Bh, 0C2h, 04h, 00h
+    db 053h, 056h, 08Bh, 074h, 024h, 00Ch, 057h, 056h, 08Bh, 0D9h
+    call ?j_0003d64f@@YAXXZ
+    db 085h, 0F6h, 0C7h, 003h
+    dd ??_7T4Derived_005EFD10@@6BT1A1_005DD290@@@
+    db 0C7h, 043h, 014h
+    dd ??_7T4Derived_005EFD10@@6BT4A2_0111081C@@@
+    db 0C7h, 043h, 018h
+    dd ??_7T4Derived_005EFD10@@6BT4A2_01073760@@@
+    db 074h, 005h, 08Dh, 046h, 01Ch, 0EBh, 002h, 033h, 0C0h, 0C7h, 043h, 01Ch
+    dd g_Va011108E0
+    db 08Dh, 070h, 004h, 005h, 084h, 000h, 000h, 000h, 08Dh, 07Bh, 020h, 0B9h, 020h, 000h, 000h, 000h
+    db 0F3h, 0A5h, 08Bh, 010h, 08Dh, 08Bh, 0A0h, 000h, 000h, 000h, 089h, 011h, 08Bh, 050h, 004h, 089h
+    db 051h, 004h, 08Bh, 040h, 008h, 089h, 041h, 008h, 05Fh, 05Eh, 0C7h, 003h
+    dd ??_7T1Base_005EFD60@@6BT1A1_005DD290@@@
+    db 0C7h, 043h, 014h
+    dd ??_7T1Base_005EFD60@@6BT1P1_005EFD60@@@
+    db 0C7h, 043h, 018h
+    dd ??_7T1Base_005EFD60@@6BT1P2_005EFD60@@@
+    db 0C7h, 043h, 01Ch
+    dd ??_7T1Base_005EFD60@@6BDefaultColorModuleInfo@FXParticleSystem@@@
+    db 08Bh, 0C3h, 05Bh, 0C2h, 004h, 000h
 ?d_005ec3e0@@YAXXZ ENDP
+_TEXT$d009ec3e0 ENDS
+_TEXT SEGMENT
 
 ; ghidra: FUN_009ec4c0  retail @ 0x005EC4C0 size 73
 public ?d_005ec4c0@@YAXXZ
@@ -2017,27 +2051,40 @@ public ?d_005ee7b0@@YAXXZ
 ?d_005ee7b0@@YAXXZ ENDP
 
 ; ghidra: FUN_009ee8a0  retail @ 0x005EE8A0 size 285
+_TEXT ENDS
+_TEXT$d009ee8a0 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x009EE8A0 size 285
 public ?d_005ee8a0@@YAXXZ
 ?d_005ee8a0@@YAXXZ PROC
-    db 8Bh, 0C1h, 8Bh, 4Ch, 24h, 04h, 89h, 48h, 04h, 0C7h, 40h, 08h, 78h, 0F9h, 10h, 01h
-    db 0C7h, 40h, 0Ch, 0D0h, 28h, 11h, 01h, 33h, 0D2h, 89h, 50h, 10h, 89h, 50h, 14h, 8Dh
-    db 48h, 10h, 89h, 51h, 08h, 89h, 51h, 0Ch, 83h, 0C1h, 08h, 89h, 51h, 08h, 89h, 51h
-    db 0Ch, 83h, 0C1h, 08h, 89h, 51h, 08h, 89h, 51h, 0Ch, 83h, 0C1h, 08h, 89h, 51h, 08h
-    db 89h, 51h, 0Ch, 83h, 0C1h, 08h, 89h, 51h, 08h, 89h, 51h, 0Ch, 83h, 0C1h, 08h, 89h
-    db 51h, 08h, 89h, 51h, 0Ch, 56h, 83h, 0C1h, 08h, 89h, 51h, 08h, 89h, 51h, 0Ch, 0C7h
-    db 00h, 0E8h, 2Ah, 11h, 01h, 0C7h, 40h, 08h, 0E4h, 2Ah, 11h, 01h, 0C7h, 40h, 0Ch, 0D0h
-    db 2Ah, 11h, 01h, 83h, 0C1h, 08h, 8Bh, 4Ch, 24h, 0Ch, 8Bh, 71h, 0Ch, 89h, 70h, 10h
-    db 8Bh, 71h, 10h, 89h, 70h, 14h, 8Bh, 71h, 14h, 89h, 70h, 18h, 8Bh, 71h, 18h, 89h
-    db 70h, 1Ch, 8Bh, 71h, 1Ch, 89h, 70h, 20h, 8Bh, 71h, 20h, 89h, 70h, 24h, 8Bh, 71h
-    db 24h, 89h, 70h, 28h, 8Bh, 71h, 28h, 89h, 70h, 2Ch, 8Bh, 71h, 2Ch, 89h, 70h, 30h
-    db 8Bh, 71h, 30h, 89h, 70h, 34h, 8Bh, 71h, 34h, 89h, 70h, 38h, 8Bh, 71h, 38h, 89h
-    db 70h, 3Ch, 8Bh, 71h, 3Ch, 89h, 70h, 40h, 8Bh, 71h, 40h, 89h, 70h, 44h, 8Bh, 71h
-    db 44h, 89h, 70h, 48h, 8Bh, 49h, 48h, 89h, 48h, 4Ch, 0D9h, 40h, 10h, 0D9h, 50h, 50h
-    db 0C7h, 40h, 58h, 01h, 00h, 00h, 00h, 8Bh, 48h, 1Ch, 3Bh, 0CAh, 5Eh, 75h, 08h, 89h
-    db 50h, 54h, 0DDh, 0D8h, 0C2h, 08h, 00h, 0D9h, 40h, 18h, 8Bh, 50h, 14h, 0D8h, 0E1h, 2Bh
-    db 0CAh, 85h, 0C9h, 89h, 4Ch, 24h, 04h, 0DBh, 44h, 24h, 04h, 7Dh, 06h, 0D8h, 05h, 58h
-    db 53h, 07h, 01h, 0DEh, 0F9h, 0D9h, 58h, 54h, 0DDh, 0D8h, 0C2h, 08h, 00h
+    db 08Bh, 0C1h, 08Bh, 04Ch, 024h, 004h, 089h, 048h, 004h, 0C7h, 040h, 008h
+    dd ??_7BaseY005E7360Secondary@@6B@
+    db 0C7h, 040h, 00Ch
+    dd ??_7BaseY005E7360Pairs@@6B@
+    db 033h, 0D2h, 089h, 050h, 010h, 089h, 050h, 014h, 08Dh, 048h, 010h, 089h, 051h, 008h, 089h, 051h
+    db 00Ch, 083h, 0C1h, 008h, 089h, 051h, 008h, 089h, 051h, 00Ch, 083h, 0C1h, 008h, 089h, 051h, 008h
+    db 089h, 051h, 00Ch, 083h, 0C1h, 008h, 089h, 051h, 008h, 089h, 051h, 00Ch, 083h, 0C1h, 008h, 089h
+    db 051h, 008h, 089h, 051h, 00Ch, 083h, 0C1h, 008h, 089h, 051h, 008h, 089h, 051h, 00Ch, 056h, 083h
+    db 0C1h, 008h, 089h, 051h, 008h, 089h, 051h, 00Ch, 0C7h, 000h
+    dd _bfmeVft0ZL
+    db 0C7h, 040h, 008h
+    dd _bfmeVft1ZL
+    db 0C7h, 040h, 00Ch
+    dd _bfmeVft2ZL
+    db 083h, 0C1h, 008h, 08Bh, 04Ch, 024h, 00Ch, 08Bh, 071h, 00Ch, 089h, 070h, 010h, 08Bh, 071h, 010h
+    db 089h, 070h, 014h, 08Bh, 071h, 014h, 089h, 070h, 018h, 08Bh, 071h, 018h, 089h, 070h, 01Ch, 08Bh
+    db 071h, 01Ch, 089h, 070h, 020h, 08Bh, 071h, 020h, 089h, 070h, 024h, 08Bh, 071h, 024h, 089h, 070h
+    db 028h, 08Bh, 071h, 028h, 089h, 070h, 02Ch, 08Bh, 071h, 02Ch, 089h, 070h, 030h, 08Bh, 071h, 030h
+    db 089h, 070h, 034h, 08Bh, 071h, 034h, 089h, 070h, 038h, 08Bh, 071h, 038h, 089h, 070h, 03Ch, 08Bh
+    db 071h, 03Ch, 089h, 070h, 040h, 08Bh, 071h, 040h, 089h, 070h, 044h, 08Bh, 071h, 044h, 089h, 070h
+    db 048h, 08Bh, 049h, 048h, 089h, 048h, 04Ch, 0D9h, 040h, 010h, 0D9h, 050h, 050h, 0C7h, 040h, 058h
+    db 001h, 000h, 000h, 000h, 08Bh, 048h, 01Ch, 03Bh, 0CAh, 05Eh, 075h, 008h, 089h, 050h, 054h, 0DDh
+    db 0D8h, 0C2h, 008h, 000h, 0D9h, 040h, 018h, 08Bh, 050h, 014h, 0D8h, 0E1h, 02Bh, 0CAh, 085h, 0C9h
+    db 089h, 04Ch, 024h, 004h, 0DBh, 044h, 024h, 004h, 07Dh, 006h, 0D8h, 005h
+    dd __real@4f800000
+    db 0DEh, 0F9h, 0D9h, 058h, 054h, 0DDh, 0D8h, 0C2h, 008h, 000h
 ?d_005ee8a0@@YAXXZ ENDP
+_TEXT$d009ee8a0 ENDS
+_TEXT SEGMENT
 
 ; ghidra: FUN_009eea60  retail @ 0x005EEA60 size 207
 public ?d_005eea60@@YAXXZ

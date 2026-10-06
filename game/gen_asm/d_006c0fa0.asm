@@ -1,5 +1,8 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ?DrawPixel@SurfaceClass@@QAEXIII@Z:NEAR
+EXTERN g_Va012F7F44:BYTE
 _TEXT SEGMENT
 
 ; ghidra: FUN_00ac0fa0  retail @ 0x006C0FA0 size 577
@@ -180,14 +183,25 @@ public ?d_006c1cd0@@YAXXZ
 ?d_006c1cd0@@YAXXZ ENDP
 
 ; ghidra: FUN_00ac1d00  retail @ 0x006C1D00 size 80
+_TEXT ENDS
+_TEXT$d00ac1d00 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00AC1D00 size 80
 public ?d_006c1d00@@YAXXZ
 ?d_006c1d00@@YAXXZ PROC
-    db 85h, 0C0h, 7Ch, 23h, 85h, 0F6h, 7Ch, 1Fh, 3Dh, 80h, 00h, 00h, 00h, 7Dh, 18h, 81h
-    db 0FEh, 80h, 00h, 00h, 00h, 7Dh, 10h, 8Bh, 0Dh, 44h, 7Fh, 2Fh, 01h, 51h, 56h, 50h
-    db 8Bh, 0CBh, 0E8h, 0D9h, 0B0h, 23h, 00h, 85h, 0FFh, 7Ch, 24h, 85h, 0F6h, 7Ch, 20h, 81h
-    db 0FFh, 80h, 00h, 00h, 00h, 7Dh, 18h, 81h, 0FEh, 80h, 00h, 00h, 00h, 7Dh, 10h, 8Bh
-    db 15h, 44h, 7Fh, 2Fh, 01h, 52h, 56h, 57h, 8Bh, 0CBh, 0E8h, 0B1h, 0B0h, 23h, 00h, 0C3h
+    db 085h, 0C0h, 07Ch, 023h, 085h, 0F6h, 07Ch, 01Fh, 03Dh, 080h, 000h, 000h, 000h, 07Dh, 018h, 081h
+    db 0FEh, 080h, 000h, 000h, 000h, 07Dh, 010h, 08Bh, 00Dh
+    dd g_Va012F7F44
+    db 051h, 056h, 050h, 08Bh, 0CBh
+    call ?DrawPixel@SurfaceClass@@QAEXIII@Z
+    db 085h, 0FFh, 07Ch, 024h, 085h, 0F6h, 07Ch, 020h, 081h, 0FFh, 080h, 000h, 000h, 000h, 07Dh, 018h
+    db 081h, 0FEh, 080h, 000h, 000h, 000h, 07Dh, 010h, 08Bh, 015h
+    dd g_Va012F7F44
+    db 052h, 056h, 057h, 08Bh, 0CBh
+    call ?DrawPixel@SurfaceClass@@QAEXIII@Z
+    db 0C3h
 ?d_006c1d00@@YAXXZ ENDP
+_TEXT$d00ac1d00 ENDS
+_TEXT SEGMENT
 
 ; ghidra: FUN_00ac1d70  retail @ 0x006C1D70 size 304
 public ?d_006c1d70@@YAXXZ

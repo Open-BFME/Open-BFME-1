@@ -1,5 +1,29 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ?BfmeBoundaryZero3D@@3MB:BYTE
+EXTERN ?ClientAt012F1464@@3PAVClient0009A580@@A:BYTE
+EXTERN ?FadeTacticalView@@3PAVFadeView@@A:BYTE
+EXTERN ?GenFallback0012ED5C8@@3PAVGenFallback@@A:BYTE
+EXTERN ?Open2OpenPastSeparators@@YAPAVFile@@ABVAsciiString@@@Z:NEAR
+EXTERN ?PlayerList005999B0@@3PAUPlayers005999B0@@A:BYTE
+EXTERN ?TheBfmeObject_00C70AB0@@3VGen_00C70AB0Target@@A:BYTE
+EXTERN ?TheOpen2Hub@@3PAVOpen2Hub@@A:BYTE
+EXTERN ?d_0073ad70@@YAXXZ:NEAR
+EXTERN ?g_Rva00F0692CTransform@@3URva007845D0Transform@@A:BYTE
+EXTERN ?g_rva00785FD0Dirty@@3DA:BYTE
+EXTERN ?j_0000db57@@YAXXZ:NEAR
+EXTERN ?j_00012e3b@@YAXXZ:NEAR
+EXTERN ?j_0002b81e@@YAXXZ:NEAR
+EXTERN ?j_0002d0d8@@YAXXZ:NEAR
+EXTERN ?j_00040bc4@@YAXXZ:NEAR
+EXTERN ?j_00049062@@YAXXZ:NEAR
+EXTERN ?rva00785FD0Flush@@YAXXZ:NEAR
+EXTERN g_Va01306930:BYTE
+EXTERN g_Va01306934:BYTE
+EXTERN g_Va01306938:BYTE
+EXTERN g_Va0130693C:BYTE
+EXTERN g_Va01306940:BYTE
 _TEXT SEGMENT
 
 ; retail @ 0x006F60E0 size 29
@@ -24,18 +48,35 @@ public ?d_0071fed0@@YAXXZ
 ?d_0071fed0@@YAXXZ ENDP
 
 ; retail @ 0x0073AED0 size 135
+_TEXT ENDS
+_TEXT$d00b3aed0 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00B3AED0 size 135
 public ?d_0073aed0@@YAXXZ
 ?d_0073aed0@@YAXXZ PROC
-    db 51h, 8Bh, 0Dh, 00h, 16h, 2Fh, 01h, 8Bh, 01h, 56h, 0FFh, 90h, 0ACh, 01h, 00h, 00h
-    db 0D9h, 5Ch, 24h, 04h, 8Bh, 74h, 24h, 0Ch, 8Bh, 0CEh, 0E8h, 4Ch, 7Fh, 8Dh, 0FFh, 84h
-    db 0C0h, 75h, 61h, 0D9h, 44h, 24h, 04h, 0D8h, 1Dh, 50h, 53h, 07h, 01h, 0DFh, 0E0h, 0F6h
-    db 0C4h, 05h, 7Bh, 50h, 0A1h, 48h, 0D7h, 2Eh, 01h, 85h, 0C0h, 8Bh, 8Eh, 0FCh, 00h, 00h
-    db 00h, 74h, 08h, 8Bh, 50h, 0Ch, 8Bh, 42h, 24h, 0EBh, 02h, 33h, 0C0h, 85h, 0C9h, 74h
-    db 0Bh, 50h, 0E8h, 0F7h, 08h, 8Fh, 0FFh, 83h, 0F8h, 02h, 7Fh, 28h, 8Bh, 0CEh, 0E8h, 24h
-    db 2Ch, 8Dh, 0FFh, 0A1h, 0C8h, 0D5h, 2Eh, 01h, 8Ah, 88h, 81h, 0Ah, 00h, 00h, 84h, 0C9h
-    db 74h, 07h, 8Bh, 0CEh, 0E8h, 27h, 0FEh, 0FFh, 0FFh, 0A1h, 64h, 14h, 2Fh, 01h, 0FFh, 80h
-    db 0C0h, 00h, 00h, 00h, 5Eh, 59h, 0C3h
+    db 051h, 08Bh, 00Dh
+    dd ?FadeTacticalView@@3PAVFadeView@@A
+    db 08Bh, 001h, 056h, 0FFh, 090h, 0ACh, 001h, 000h, 000h, 0D9h, 05Ch, 024h, 004h, 08Bh, 074h, 024h
+    db 00Ch, 08Bh, 0CEh
+    call ?j_00012e3b@@YAXXZ
+    db 084h, 0C0h, 075h, 061h, 0D9h, 044h, 024h, 004h, 0D8h, 01Dh
+    dd ?BfmeBoundaryZero3D@@3MB
+    db 0DFh, 0E0h, 0F6h, 0C4h, 005h, 07Bh, 050h, 0A1h
+    dd ?PlayerList005999B0@@3PAUPlayers005999B0@@A
+    db 085h, 0C0h, 08Bh, 08Eh, 0FCh, 000h, 000h, 000h, 074h, 008h, 08Bh, 050h, 00Ch, 08Bh, 042h, 024h
+    db 0EBh, 002h, 033h, 0C0h, 085h, 0C9h, 074h, 00Bh, 050h
+    call ?j_0002b81e@@YAXXZ
+    db 083h, 0F8h, 002h, 07Fh, 028h, 08Bh, 0CEh
+    call ?j_0000db57@@YAXXZ
+    db 0A1h
+    dd ?GenFallback0012ED5C8@@3PAVGenFallback@@A
+    db 08Ah, 088h, 081h, 00Ah, 000h, 000h, 084h, 0C9h, 074h, 007h, 08Bh, 0CEh
+    call ?d_0073ad70@@YAXXZ
+    db 0A1h
+    dd ?ClientAt012F1464@@3PAVClient0009A580@@A
+    db 0FFh, 080h, 0C0h, 000h, 000h, 000h, 05Eh, 059h, 0C3h
 ?d_0073aed0@@YAXXZ ENDP
+_TEXT$d00b3aed0 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00750590 size 25
 public ?d_00750590@@YAXXZ
@@ -177,11 +218,16 @@ public ?d_00784030@@YAXXZ
 ?d_00784030@@YAXXZ ENDP
 
 ; retail @ 0x007852E0 size 19
+_TEXT ENDS
+_TEXT$d00b852e0 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00B852E0 size 19
 public ?d_007852e0@@YAXXZ
 ?d_007852e0@@YAXXZ PROC
-    db 0E8h, 8Bh, 0FFh, 0FFh, 0FFh, 85h, 0C0h, 74h, 07h, 8Bh, 10h, 8Bh, 0C8h, 0FFh, 62h, 34h
-    db 33h, 0C0h, 0C3h
+    call ?Open2OpenPastSeparators@@YAPAVFile@@ABVAsciiString@@@Z
+    db 085h, 0C0h, 074h, 007h, 08Bh, 010h, 08Bh, 0C8h, 0FFh, 062h, 034h, 033h, 0C0h, 0C3h
 ?d_007852e0@@YAXXZ ENDP
+_TEXT$d00b852e0 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00786060 size 301
 public ?d_00786060@@YAXXZ
@@ -215,21 +261,48 @@ public ?d_00786c70@@YAXXZ
 ?d_00786c70@@YAXXZ ENDP
 
 ; retail @ 0x007874F0 size 191
+_TEXT ENDS
+_TEXT$d00b874f0 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00B874F0 size 191
 public ?d_007874f0@@YAXXZ
 ?d_007874f0@@YAXXZ PROC
-    db 51h, 0A1h, 54h, 69h, 30h, 01h, 85h, 0C0h, 0Fh, 84h, 0AFh, 00h, 00h, 00h, 8Bh, 4Ch
-    db 24h, 08h, 85h, 0C9h, 0Fh, 84h, 0A3h, 00h, 00h, 00h, 8Bh, 01h, 56h, 0FFh, 50h, 08h
-    db 8Bh, 0F0h, 85h, 0F6h, 89h, 74h, 24h, 04h, 0Fh, 84h, 8Eh, 00h, 00h, 00h, 8Bh, 15h
-    db 2Ch, 69h, 30h, 01h, 8Dh, 4Eh, 10h, 89h, 11h, 0A1h, 30h, 69h, 30h, 01h, 89h, 41h
-    db 04h, 8Bh, 15h, 34h, 69h, 30h, 01h, 89h, 51h, 08h, 0A1h, 38h, 69h, 30h, 01h, 89h
-    db 41h, 0Ch, 8Bh, 15h, 3Ch, 69h, 30h, 01h, 89h, 51h, 10h, 0A1h, 40h, 69h, 30h, 01h
-    db 89h, 41h, 14h, 8Bh, 44h, 24h, 10h, 83h, 0F8h, 0FFh, 74h, 22h, 85h, 0C0h, 74h, 40h
-    db 83h, 0F8h, 01h, 75h, 47h, 8Dh, 4Ch, 24h, 04h, 51h, 0B9h, 78h, 69h, 30h, 01h, 0E8h
-    db 64h, 5Bh, 8Ah, 0FFh, 0C6h, 05h, 50h, 69h, 30h, 01h, 01h, 5Eh, 59h, 0C3h, 0A1h, 78h
-    db 69h, 30h, 01h, 39h, 00h, 74h, 19h, 8Dh, 54h, 24h, 04h, 52h, 0B9h, 78h, 69h, 30h
-    db 01h, 0E8h, 2Eh, 96h, 8Bh, 0FFh, 0C6h, 05h, 50h, 69h, 30h, 01h, 01h, 5Eh, 59h, 0C3h
-    db 0E8h, 2Bh, 0EAh, 0FFh, 0FFh, 8Bh, 0CEh, 0E8h, 0B6h, 1Ah, 8Ch, 0FFh, 5Eh, 59h, 0C3h
+    db 051h, 0A1h
+    dd ?TheOpen2Hub@@3PAVOpen2Hub@@A
+    db 085h, 0C0h, 00Fh, 084h, 0AFh, 000h, 000h, 000h, 08Bh, 04Ch, 024h, 008h, 085h, 0C9h, 00Fh, 084h
+    db 0A3h, 000h, 000h, 000h, 08Bh, 001h, 056h, 0FFh, 050h, 008h, 08Bh, 0F0h, 085h, 0F6h, 089h, 074h
+    db 024h, 004h, 00Fh, 084h, 08Eh, 000h, 000h, 000h, 08Bh, 015h
+    dd ?g_Rva00F0692CTransform@@3URva007845D0Transform@@A
+    db 08Dh, 04Eh, 010h, 089h, 011h, 0A1h
+    dd g_Va01306930
+    db 089h, 041h, 004h, 08Bh, 015h
+    dd g_Va01306934
+    db 089h, 051h, 008h, 0A1h
+    dd g_Va01306938
+    db 089h, 041h, 00Ch, 08Bh, 015h
+    dd g_Va0130693C
+    db 089h, 051h, 010h, 0A1h
+    dd g_Va01306940
+    db 089h, 041h, 014h, 08Bh, 044h, 024h, 010h, 083h, 0F8h, 0FFh, 074h, 022h, 085h, 0C0h, 074h, 040h
+    db 083h, 0F8h, 001h, 075h, 047h, 08Dh, 04Ch, 024h, 004h, 051h, 0B9h
+    dd ?TheBfmeObject_00C70AB0@@3VGen_00C70AB0Target@@A
+    call ?j_0002d0d8@@YAXXZ
+    db 0C6h, 005h
+    dd ?g_rva00785FD0Dirty@@3DA
+    db 001h, 05Eh, 059h, 0C3h, 0A1h
+    dd ?TheBfmeObject_00C70AB0@@3VGen_00C70AB0Target@@A
+    db 039h, 000h, 074h, 019h, 08Dh, 054h, 024h, 004h, 052h, 0B9h
+    dd ?TheBfmeObject_00C70AB0@@3VGen_00C70AB0Target@@A
+    call ?j_00040bc4@@YAXXZ
+    db 0C6h, 005h
+    dd ?g_rva00785FD0Dirty@@3DA
+    db 001h, 05Eh, 059h, 0C3h
+    call ?rva00785FD0Flush@@YAXXZ
+    db 08Bh, 0CEh
+    call ?j_00049062@@YAXXZ
+    db 05Eh, 059h, 0C3h
 ?d_007874f0@@YAXXZ ENDP
+_TEXT$d00b874f0 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00788A00 size 29
 public ?d_00788a00@@YAXXZ

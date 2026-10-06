@@ -1,5 +1,12 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ?FadeTacticalView@@3PAVFadeView@@A:BYTE
+EXTERN ?g_byteBuffer@@3PAV?$ShareBufferClass@E@@A:BYTE
+EXTERN ?g_floatBuffer@@3PAV?$ShareBufferClass@M@@A:BYTE
+EXTERN ?g_vector3Buffer@@3PAV?$ShareBufferClass@VVector3@@@@A:BYTE
+EXTERN ?g_vector4Buffer@@3PAV?$ShareBufferClass@VVector4@@@@A:BYTE
+EXTERN __real@4000000000000000:BYTE
 _TEXT SEGMENT
 
 ; ghidra: FUN_009f0120  retail @ 0x005F0120 size 286
@@ -146,18 +153,35 @@ public ?d_005f3750@@YAXXZ
 ?d_005f3750@@YAXXZ ENDP
 
 ; ghidra: FUN_009f3910  retail @ 0x005F3910 size 141
+_TEXT ENDS
+_TEXT$d009f3910 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x009F3910 size 141
 public ?d_005f3910@@YAXXZ
 ?d_005f3910@@YAXXZ PROC
-    db 0A1h, 0C8h, 6Dh, 2Fh, 01h, 56h, 33h, 0F6h, 3Bh, 0C6h, 74h, 19h, 8Bh, 50h, 04h, 8Bh
-    db 0C8h, 83h, 0C0h, 04h, 4Ah, 3Bh, 0D6h, 89h, 10h, 75h, 04h, 8Bh, 01h, 0FFh, 10h, 89h
-    db 35h, 0C8h, 6Dh, 2Fh, 01h, 0A1h, 0CCh, 6Dh, 2Fh, 01h, 3Bh, 0C6h, 74h, 19h, 8Bh, 50h
-    db 04h, 8Bh, 0C8h, 83h, 0C0h, 04h, 4Ah, 3Bh, 0D6h, 89h, 10h, 75h, 04h, 8Bh, 11h, 0FFh
-    db 12h, 89h, 35h, 0CCh, 6Dh, 2Fh, 01h, 0A1h, 0D0h, 6Dh, 2Fh, 01h, 3Bh, 0C6h, 74h, 19h
-    db 8Bh, 50h, 04h, 8Bh, 0C8h, 83h, 0C0h, 04h, 4Ah, 3Bh, 0D6h, 89h, 10h, 75h, 04h, 8Bh
-    db 01h, 0FFh, 10h, 89h, 35h, 0D0h, 6Dh, 2Fh, 01h, 0A1h, 0D4h, 6Dh, 2Fh, 01h, 3Bh, 0C6h
-    db 74h, 19h, 8Bh, 50h, 04h, 8Bh, 0C8h, 83h, 0C0h, 04h, 4Ah, 3Bh, 0D6h, 89h, 10h, 75h
-    db 04h, 8Bh, 11h, 0FFh, 12h, 89h, 35h, 0D4h, 6Dh, 2Fh, 01h, 5Eh, 0C3h
+    db 0A1h
+    dd ?g_vector3Buffer@@3PAV?$ShareBufferClass@VVector3@@@@A
+    db 056h, 033h, 0F6h, 03Bh, 0C6h, 074h, 019h, 08Bh, 050h, 004h, 08Bh, 0C8h, 083h, 0C0h, 004h, 04Ah
+    db 03Bh, 0D6h, 089h, 010h, 075h, 004h, 08Bh, 001h, 0FFh, 010h, 089h, 035h
+    dd ?g_vector3Buffer@@3PAV?$ShareBufferClass@VVector3@@@@A
+    db 0A1h
+    dd ?g_vector4Buffer@@3PAV?$ShareBufferClass@VVector4@@@@A
+    db 03Bh, 0C6h, 074h, 019h, 08Bh, 050h, 004h, 08Bh, 0C8h, 083h, 0C0h, 004h, 04Ah, 03Bh, 0D6h, 089h
+    db 010h, 075h, 004h, 08Bh, 011h, 0FFh, 012h, 089h, 035h
+    dd ?g_vector4Buffer@@3PAV?$ShareBufferClass@VVector4@@@@A
+    db 0A1h
+    dd ?g_floatBuffer@@3PAV?$ShareBufferClass@M@@A
+    db 03Bh, 0C6h, 074h, 019h, 08Bh, 050h, 004h, 08Bh, 0C8h, 083h, 0C0h, 004h, 04Ah, 03Bh, 0D6h, 089h
+    db 010h, 075h, 004h, 08Bh, 001h, 0FFh, 010h, 089h, 035h
+    dd ?g_floatBuffer@@3PAV?$ShareBufferClass@M@@A
+    db 0A1h
+    dd ?g_byteBuffer@@3PAV?$ShareBufferClass@E@@A
+    db 03Bh, 0C6h, 074h, 019h, 08Bh, 050h, 004h, 08Bh, 0C8h, 083h, 0C0h, 004h, 04Ah, 03Bh, 0D6h, 089h
+    db 010h, 075h, 004h, 08Bh, 011h, 0FFh, 012h, 089h, 035h
+    dd ?g_byteBuffer@@3PAV?$ShareBufferClass@E@@A
+    db 05Eh, 0C3h
 ?d_005f3910@@YAXXZ ENDP
+_TEXT$d009f3910 ENDS
+_TEXT SEGMENT
 
 ; ghidra: FUN_009f3b50  retail @ 0x005F3B50 size 29
 public ?d_005f3b50@@YAXXZ
@@ -759,15 +783,23 @@ public ?d_005fa400@@YAXXZ
 ?d_005fa400@@YAXXZ ENDP
 
 ; ghidra: FUN_009fa450  retail @ 0x005FA450 size 83
+_TEXT ENDS
+_TEXT$d009fa450 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x009FA450 size 83
 public ?d_005fa450@@YAXXZ
 ?d_005fa450@@YAXXZ PROC
-    db 83h, 0ECh, 18h, 8Bh, 44h, 24h, 1Ch, 0D9h, 44h, 24h, 24h, 8Bh, 4Ch, 24h, 20h, 0DCh
-    db 05h, 90h, 0FDh, 07h, 01h, 8Bh, 54h, 24h, 24h, 6Ah, 00h, 89h, 44h, 24h, 10h, 0D9h
-    db 5Ch, 24h, 0Ch, 89h, 44h, 24h, 04h, 68h, 0FFh, 0FFh, 0AAh, 0CCh, 8Dh, 44h, 24h, 08h
-    db 89h, 4Ch, 24h, 18h, 89h, 4Ch, 24h, 0Ch, 8Bh, 0Dh, 00h, 16h, 2Fh, 01h, 50h, 8Dh
-    db 44h, 24h, 18h, 89h, 54h, 24h, 20h, 8Bh, 11h, 50h, 0FFh, 52h, 2Ch, 83h, 0C4h, 18h
-    db 0C2h, 0Ch, 00h
+    db 083h, 0ECh, 018h, 08Bh, 044h, 024h, 01Ch, 0D9h, 044h, 024h, 024h, 08Bh, 04Ch, 024h, 020h, 0DCh
+    db 005h
+    dd __real@4000000000000000
+    db 08Bh, 054h, 024h, 024h, 06Ah, 000h, 089h, 044h, 024h, 010h, 0D9h, 05Ch, 024h, 00Ch, 089h, 044h
+    db 024h, 004h, 068h, 0FFh, 0FFh, 0AAh, 0CCh, 08Dh, 044h, 024h, 008h, 089h, 04Ch, 024h, 018h, 089h
+    db 04Ch, 024h, 00Ch, 08Bh, 00Dh
+    dd ?FadeTacticalView@@3PAVFadeView@@A
+    db 050h, 08Dh, 044h, 024h, 018h, 089h, 054h, 024h, 020h, 08Bh, 011h, 050h, 0FFh, 052h, 02Ch, 083h
+    db 0C4h, 018h, 0C2h, 00Ch, 000h
 ?d_005fa450@@YAXXZ ENDP
+_TEXT$d009fa450 ENDS
+_TEXT SEGMENT
 
 ; ghidra: FUN_009fa670  retail @ 0x005FA670 size 68
 public ?d_005fa670@@YAXXZ

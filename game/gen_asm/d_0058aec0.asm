@@ -1,5 +1,12 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ??_7?$BlitTransRemapXlat@E@@6B@:BYTE
+EXTERN ?TheControlBar@@3PAURva002AD380ControlBar@@A:BYTE
+EXTERN ?j_000022bb@@YAXXZ:NEAR
+EXTERN ?j_0000fb0a@@YAXXZ:NEAR
+EXTERN ?j_00043702@@YAXXZ:NEAR
+EXTERN g_Va010373B8:NEAR
 _TEXT SEGMENT
 
 ; ghidra: bounds-high  retail @ 0x0058AEC0 size 50
@@ -680,16 +687,26 @@ public ?d_0058d6e0@@YAXXZ
 ?d_0058d6e0@@YAXXZ ENDP
 
 ; ghidra: bounds-high  retail @ 0x0058D820 size 101
+_TEXT ENDS
+_TEXT$d0098d820 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0098D820 size 101
 public ?d_0058d820@@YAXXZ
 ?d_0058d820@@YAXXZ PROC
-    db 64h, 0A1h, 00h, 00h, 00h, 00h, 6Ah, 0FFh, 68h, 0B8h, 73h, 03h, 01h, 50h, 64h, 89h
-    db 25h, 00h, 00h, 00h, 00h, 8Bh, 01h, 8Bh, 49h, 04h, 8Dh, 0Ch, 49h, 8Dh, 4Ch, 0C8h
-    db 08h, 8Bh, 40h, 04h, 8Bh, 09h, 83h, 0ECh, 0Ch, 3Bh, 0C8h, 74h, 27h, 8Bh, 49h, 08h
-    db 33h, 0C0h, 0C7h, 04h, 24h, 38h, 57h, 0Fh, 01h, 89h, 4Ch, 24h, 04h, 89h, 44h, 24h
-    db 08h, 8Bh, 0Dh, 0F8h, 33h, 2Fh, 01h, 8Dh, 14h, 24h, 52h, 89h, 44h, 24h, 18h, 0E8h
-    db 8Eh, 5Eh, 0ABh, 0FFh, 8Bh, 4Ch, 24h, 0Ch, 64h, 89h, 0Dh, 00h, 00h, 00h, 00h, 83h
-    db 0C4h, 18h, 0C2h, 04h, 00h
+    db 064h, 0A1h, 000h, 000h, 000h, 000h, 06Ah, 0FFh, 068h
+    dd g_Va010373B8
+    db 050h, 064h, 089h, 025h, 000h, 000h, 000h, 000h, 08Bh, 001h, 08Bh, 049h, 004h, 08Dh, 00Ch, 049h
+    db 08Dh, 04Ch, 0C8h, 008h, 08Bh, 040h, 004h, 08Bh, 009h, 083h, 0ECh, 00Ch, 03Bh, 0C8h, 074h, 027h
+    db 08Bh, 049h, 008h, 033h, 0C0h, 0C7h, 004h, 024h
+    dd ??_7?$BlitTransRemapXlat@E@@6B@
+    db 089h, 04Ch, 024h, 004h, 089h, 044h, 024h, 008h, 08Bh, 00Dh
+    dd ?TheControlBar@@3PAURva002AD380ControlBar@@A
+    db 08Dh, 014h, 024h, 052h, 089h, 044h, 024h, 018h
+    call ?j_00043702@@YAXXZ
+    db 08Bh, 04Ch, 024h, 00Ch, 064h, 089h, 00Dh, 000h, 000h, 000h, 000h, 083h, 0C4h, 018h, 0C2h, 004h
+    db 000h
 ?d_0058d820@@YAXXZ ENDP
+_TEXT$d0098d820 ENDS
+_TEXT SEGMENT
 
 ; ghidra: bounds-high  retail @ 0x0058D8A0 size 40
 public ?d_0058d8a0@@YAXXZ
@@ -1134,13 +1151,21 @@ public ?d_0058fde0@@YAXXZ
 ?d_0058fde0@@YAXXZ ENDP
 
 ; ghidra: bounds-high  retail @ 0x0058FE20 size 50
+_TEXT ENDS
+_TEXT$d0098fe20 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0098FE20 size 50
 public ?d_0058fe20@@YAXXZ
 ?d_0058fe20@@YAXXZ PROC
-    db 56h, 8Bh, 0B0h, 0FCh, 00h, 00h, 00h, 8Bh, 46h, 04h, 85h, 0C0h, 75h, 0Ch, 56h, 50h
-    db 0E8h, 0D5h, 0FCh, 0A7h, 0FFh, 83h, 0C4h, 08h, 5Eh, 0C3h, 8Bh, 48h, 04h, 85h, 0C9h, 74h
-    db 05h, 0E8h, 75h, 24h, 0A7h, 0FFh, 56h, 50h, 0E8h, 0BDh, 0FCh, 0A7h, 0FFh, 83h, 0C4h, 08h
-    db 5Eh, 0C3h
+    db 056h, 08Bh, 0B0h, 0FCh, 000h, 000h, 000h, 08Bh, 046h, 004h, 085h, 0C0h, 075h, 00Ch, 056h, 050h
+    call ?j_0000fb0a@@YAXXZ
+    db 083h, 0C4h, 008h, 05Eh, 0C3h, 08Bh, 048h, 004h, 085h, 0C9h, 074h, 005h
+    call ?j_000022bb@@YAXXZ
+    db 056h, 050h
+    call ?j_0000fb0a@@YAXXZ
+    db 083h, 0C4h, 008h, 05Eh, 0C3h
 ?d_0058fe20@@YAXXZ ENDP
+_TEXT$d0098fe20 ENDS
+_TEXT SEGMENT
 
 ; ghidra: bounds-high  retail @ 0x005906F0 size 15
 public ?d_005906f0@@YAXXZ

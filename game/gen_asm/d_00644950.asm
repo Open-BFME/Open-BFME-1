@@ -1,5 +1,10 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ?TheGameSpyPeerMessageQueue@@3PAVGameSpyPeerMessageQueueInterface@@A:BYTE
+EXTERN ?Thread_Function@PeerThreadClass@@UAEXXZ:NEAR
+EXTERN ?j_00042069@@YAXXZ:NEAR
+EXTERN ?j_00044733@@YAXXZ:NEAR
 _TEXT SEGMENT
 
 ; ghidra: FUN_00a44950  retail @ 0x00644950 size 68
@@ -1176,15 +1181,25 @@ public ?d_0064fb90@@YAXXZ
 ?d_0064fb90@@YAXXZ ENDP
 
 ; ghidra: Catch@00a51054  retail @ 0x00651054 size 81
+_TEXT ENDS
+_TEXT$d00a51054 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00A51054 size 81
 public ?d_00651054@@YAXXZ
 ?d_00651054@@YAXXZ PROC
-    db 0B3h, 12h, 8Dh, 8Dh, 0C0h, 0F9h, 0FFh, 0FFh, 89h, 65h, 0F0h, 88h, 5Dh, 0FCh, 0E8h, 02h
-    db 10h, 9Fh, 0FFh, 8Bh, 0Dh, 0C8h, 71h, 2Fh, 01h, 8Dh, 95h, 0C0h, 0F9h, 0FFh, 0FFh, 0C7h
-    db 85h, 0C0h, 0F9h, 0FFh, 0FFh, 01h, 00h, 00h, 00h, 0C7h, 85h, 0B4h, 0FAh, 0FFh, 0FFh, 03h
-    db 00h, 00h, 00h, 8Bh, 01h, 52h, 0C6h, 45h, 0FCh, 13h, 0FFh, 50h, 20h, 8Dh, 8Dh, 0C0h
-    db 0F9h, 0FFh, 0FFh, 88h, 5Dh, 0FCh, 0E8h, 94h, 36h, 9Fh, 0FFh, 0B8h, 00h, 0FFh, 0A4h, 00h
+    db 0B3h, 012h, 08Dh, 08Dh, 0C0h, 0F9h, 0FFh, 0FFh, 089h, 065h, 0F0h, 088h, 05Dh, 0FCh
+    call ?j_00042069@@YAXXZ
+    db 08Bh, 00Dh
+    dd ?TheGameSpyPeerMessageQueue@@3PAVGameSpyPeerMessageQueueInterface@@A
+    db 08Dh, 095h, 0C0h, 0F9h, 0FFh, 0FFh, 0C7h, 085h, 0C0h, 0F9h, 0FFh, 0FFh, 001h, 000h, 000h, 000h
+    db 0C7h, 085h, 0B4h, 0FAh, 0FFh, 0FFh, 003h, 000h, 000h, 000h, 08Bh, 001h, 052h, 0C6h, 045h, 0FCh
+    db 013h, 0FFh, 050h, 020h, 08Dh, 08Dh, 0C0h, 0F9h, 0FFh, 0FFh, 088h, 05Dh, 0FCh
+    call ?j_00044733@@YAXXZ
+    db 0B8h
+    dd ?Thread_Function@PeerThreadClass@@UAEXXZ + 0370h
     db 0C3h
 ?d_00651054@@YAXXZ ENDP
+_TEXT$d00a51054 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Catch@00a510a5  retail @ 0x006510A5 size 6
 public ?d_006510a5@@YAXXZ
