@@ -29,6 +29,10 @@ RULES (the commit gate, --staged):
      lands; the lift commit's total becomes the new reference.
   5. The retail inventories (tools/retail_inventory.py) are tool-owned: a
      staged change to them is regenerated and must match byte for byte.
+  6. A register line `# mode: shadow` reports rule 1-4 findings without
+     refusing (the 48 h shadow before enforcement). `# mode: enforce` (also
+     the default) refuses; enforce may never go back to shadow. Rule 5, a
+     deleted register and a wrong first register are refused in both modes.
 
 Usage:
   python3 tools/hatch_counters.py --staged              the commit gate
@@ -179,10 +183,22 @@ def parse(text):
     return counts, allow
 
 
-def render(counts, allow=None):
+MODE = re.compile(r"^# mode: (shadow|enforce)[ \t]*$", re.MULTILINE)
+STATE = {"mode": "enforce"}
+
+
+def mode_of(text):
+    """`# mode: shadow` reports growth without refusing it (the 48 h shadow); the default and
+    `# mode: enforce` refuse. Shadow -> enforce is one line; enforce -> shadow is refused."""
+    m = MODE.search(text or "")
+    return m.group(1) if m else "enforce"
+
+
+def render(counts, allow=None, mode="enforce"):
     allow = allow or {}
     out = ["# Escape-hatch register, shrink-only. Written by tools/hatch_counters.py; you may lower or",
-           "# delete lines by hand (re-verified), never raise or add them. hatch\tpath\ttoken\tcount"]
+           "# delete lines by hand (re-verified), never raise or add them. hatch\tpath\ttoken\tcount",
+           "# mode: %s" % mode]
     for key in sorted(counts):
         if counts[key] <= 0:
             continue
@@ -292,15 +308,24 @@ def frozen(hatch, new_total, ref_totals):
 # ---------------------------------------------------------------- the gate
 
 def check_staged():
+    """(errors, warnings, hard): `errors` are reported only while the register is in
+    `# mode: shadow`; `hard` (inventory edits, a deleted or downgraded register) always fail."""
+    hard = []
+    errors, warnings = _check_staged(hard)
+    return errors, warnings, hard
+
+
+def _check_staged(hard):
     errors, warnings = [], []
     changed = git("diff", "--cached", "--name-only", "--no-renames", "-z").split("\0")
     inv = [p for p in changed if p.startswith(INVENTORY_DIR)]
     if inv:
-        errors += check_inventory(inv)
+        hard += check_inventory(inv)
     touched = [p for p in changed if relevant(p)]
     if not touched and BASELINE not in changed:
         return errors, warnings                     # nothing this gate reads was staged
     staged_base = read_blobs([":" + BASELINE])[":" + BASELINE]
+    STATE["mode"] = mode_of(staged_base)
     parents = ["HEAD"]
     merge_head = git("rev-parse", "-q", "--verify", "MERGE_HEAD").strip()
     if merge_head:
@@ -312,8 +337,10 @@ def check_staged():
     introduced = all(t is None for t in parent_texts.values())
     if staged_base is None:
         if not introduced:
-            errors.append("%s deleted; the register may shrink line by line, never disappear" % BASELINE)
+            hard.append("%s deleted; the register may shrink line by line, never disappear" % BASELINE)
         return errors, warnings                     # register not introduced yet
+    if STATE["mode"] == "shadow" and any(MODE.search(t or "") and mode_of(t) == "enforce" for t in parent_texts.values()):
+        hard.append("%s: '# mode: enforce' may not go back to shadow" % BASELINE)
     if BASELINE not in changed and not merge_head:
         # Only the touched files' lines matter: filter before parsing the 40k-line register.
         want = set(touched)
@@ -324,7 +351,7 @@ def check_staged():
     if introduced:
         # The commit that introduces the register must record the tree exactly (one full scan, once).
         if b1 != dict(tree_scan()):
-            errors.append("%s does not match the tree; write it with --write-baseline" % BASELINE)
+            hard.append("%s does not match the tree; write it with --write-baseline" % BASELINE)
         return errors, warnings
     b0 = {}
     for text in parent_texts.values():
@@ -382,9 +409,9 @@ def check_inventory(paths):
 
 # ---------------------------------------------------------------- writers
 
-def write(counts, allow=None):
+def write(counts, allow=None, mode="enforce"):
     (ROOT / BASELINE).parent.mkdir(parents=True, exist_ok=True)
-    (ROOT / BASELINE).write_text(render(counts, allow), encoding="utf-8", newline="\n")
+    (ROOT / BASELINE).write_text(render(counts, allow, mode), encoding="utf-8", newline="\n")
 
 
 def update(allow_paths=(), reason=None):
@@ -418,7 +445,7 @@ def update(allow_paths=(), reason=None):
         for k in grown:
             allow[k] = ids[k[1]]
             print("allowed: %s +%d in %s: %s -- %s" % (k[0], new[k] - old.get(k, 0), k[1], k[2], reason))
-    write(new, allow)
+    write(new, allow, mode_of(old_text))
     t0, t1 = totals(old), totals(new)
     for hatch in HATCHES:
         if t0[hatch] != t1[hatch]:
@@ -443,10 +470,17 @@ def main(argv=None):
     g.add_argument("--allow", nargs="+", metavar="PATH")
     g.add_argument("--write-baseline", action="store_true")
     ap.add_argument("--reason")
+    ap.add_argument("--mode", choices=("shadow", "enforce"), default="enforce",
+                    help="--write-baseline only: start in shadow (report, never refuse)")
     args = ap.parse_args(argv)
     if args.staged:
         t = time.time()
-        errors, warnings = check_staged()
+        errors, warnings, hard = check_staged()
+        if errors and STATE["mode"] == "shadow":
+            for e in errors:
+                print("hatch_counters: SHADOW (not enforced): " + e, file=sys.stderr)
+            errors = []
+        errors += hard
         for w in warnings[:20]:
             print("hatch_counters: note: " + w + " -- `tools/hatch_counters.py --update` tightens it",
                   file=sys.stderr)
@@ -464,7 +498,7 @@ def main(argv=None):
     if args.write_baseline:
         if (ROOT / BASELINE).exists():
             sys.exit("hatch_counters: %s exists; use --update (shrink/move) or --allow" % BASELINE)
-        write(tree_scan())
+        write(tree_scan(), mode=args.mode)
         return 0
     update(args.allow or (), args.reason)
     return 0

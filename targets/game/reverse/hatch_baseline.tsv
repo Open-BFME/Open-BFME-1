@@ -1,5 +1,6 @@
 # Escape-hatch register, shrink-only. Written by tools/hatch_counters.py; you may lower or
 # delete lines by hand (re-verified), never raise or add them. hatch	path	token	count
+# mode: shadow
 address_global	game/GameEngine/Source/Common/Audio/AudioSettingsCtorThunk.cpp	g_Va0112E8AC	13
 address_global	game/GameEngine/Source/Common/Bfme/Rva00C6DAD0StaticInit.cpp	g_Rva0107301CEmptyString	2
 address_global	game/GameEngine/Source/Common/Bfme/Rva00C6DB00StaticInit.cpp	g_Rva0107301CEmptyString	2

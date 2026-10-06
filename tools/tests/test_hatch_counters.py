@@ -266,3 +266,42 @@ def test_register_cannot_be_deleted_or_introduced_wrong(repo):
     assert first.tool("--write-baseline").returncode == 0
     first.git("add", ".")
     assert staged(first).returncode == 0
+
+
+def _set_mode(repo, mode):
+    base = repo.read(repo.lay["base"])
+    repo.write(repo.lay["base"], base.replace("# mode: enforce", "# mode: " + mode).replace(
+        "# mode: shadow", "# mode: " + mode))
+
+
+def test_shadow_mode_reports_growth_without_refusing(repo):
+    base = repo.read(repo.lay["base"])
+    repo.write(repo.lay["base"], base.replace("# mode: enforce", "# mode: shadow"))
+    repo.git("add", ".")
+    assert "may not go back" in staged(repo).stderr                    # the fixture register says enforce
+    repo.write(repo.lay["base"], base.replace("# mode: enforce\n", ""))
+    repo.commit("legacy register", when=T0 - DAY)
+    repo.write(repo.lay["base"], base.replace("# mode: enforce", "# mode: shadow"))
+    repo.commit("shadow", when=T0 - DAY + 1)
+    repo.write(repo.lay["src"], SOURCE + "void h() { __asm { __emit 0x90 } }\n")
+    repo.git("add", ".")
+    got = staged(repo)
+    assert got.returncode == 0 and "SHADOW (not enforced): emit +1" in got.stderr
+
+
+def test_mode_may_go_shadow_to_enforce_but_not_back(repo):
+    assert "# mode: enforce" in repo.read(repo.lay["base"])
+    _set_mode(repo, "shadow")
+    repo.git("add", ".")
+    got = staged(repo)
+    assert got.returncode == 1 and "may not go back to shadow" in got.stderr
+    repo.git("reset", "-q", "--hard", "HEAD")
+    # a register without a mode line (written before modes existed) may be put in shadow once
+    base = repo.read(repo.lay["base"])
+    repo.write(repo.lay["base"], base.replace("# mode: enforce\n", ""))
+    repo.commit("legacy register", when=T0 - DAY)
+    repo.write(repo.lay["base"], base.replace("# mode: enforce", "# mode: shadow"))
+    repo.commit("shadow", when=T0 - DAY + 1, paths=[repo.lay["base"]])
+    _set_mode(repo, "enforce")
+    repo.git("add", ".")
+    assert staged(repo).returncode == 0
