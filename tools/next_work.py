@@ -8,6 +8,12 @@ view of the complete queues. No network, no compiling — runs in seconds.
 
 Sections, in priority order:
   0. Ledger health   tools/check_csv.py — a corrupt ledger aborts everything (exit 2)
+  R. Repair       gate debt (body_guard_baseline.csv, full_gate_baseline.txt): the
+                  check, the row, and a pass test that deletes the baseline line
+                  (tools/repair_queue.py)
+  New matches (carved, named, Ghidra, anchored, packets) carry `dest`: the unit
+  the row belongs in (EA file evidence, then address contiguity), never a fresh
+  one-function file.
   1. Reloc-named  an unclaimed function whose mangled name a byte-true call proved
   2. Drift quick wins  immediate-only / imm+reg literal fixes from drift_report.csv
   3. Structural reconciliation  closest source-shape mismatches
@@ -1194,8 +1200,9 @@ def similar_candidates(claimed, claimed_ranges):
 
 
 def selected_queue(tier, drifts, structural, ghidra_absent, anchored, named,
-                   packets=(), finish=(), carved=(), similar=()):
+                   packets=(), finish=(), carved=(), similar=(), repair=(), link=()):
     queues = {
+        "repair": ("gate-debt repair", repair),
         "finish": ("near-landed body", finish),
         "carved": ("carved anonymous body", carved),
         "packet": ("Zero Hour work packet", packets),
@@ -1208,7 +1215,9 @@ def selected_queue(tier, drifts, structural, ghidra_absent, anchored, named,
     }
     if tier:
         return queues[tier]
-    for name in ("finish", "carved", "packet", "named", "harvest", "structural", "ghidra",
+    # Repairs first: a row a gate excuses is wrong code already counted as
+    # progress; fixing it is credited (progress_v2 gate debt).
+    for name in ("repair", "finish", "carved", "packet", "named", "harvest", "structural", "ghidra",
                  "anchored"):
         label, candidates = queues[name]
         if candidates:
@@ -1273,6 +1282,16 @@ def named_size_label(candidate):
 
 def print_candidate(label, candidate, meta, candidates=()):
     print(f"== selected work: {label} (drawn from {meta['pool']}) ==")
+    if label == "gate-debt repair":
+        print(f"  {candidate['size']:>5}B  {candidate['check']}  {candidate['function']}")
+        print(f"       {candidate['target_rva']} in {candidate['source']}")
+        print(f"       why: {candidate['why']}")
+        print(f"       start: fix the row in {candidate['source']}; done when the pass test passes:")
+        print(f"       pass test: {candidate['pass_test']}")
+        print(f"       credit: {candidate['credit']:,} bytes (a repair counts: progress_v2 gate debt)")
+        return
+    if candidate.get("dest_basis"):
+        print(f"  goes in: {candidate.get('dest') or '(no unit yet)'}  <- {candidate['dest_basis']}")
     if label == "near-landed body":
         print(f"  {candidate['target_size']:>5}B  {candidate['function']}")
         print(f"       {candidate['target_rva']} is still a dump ({candidate['source']}); "
@@ -1418,7 +1437,7 @@ def print_ranked(args, ledger, drifts, structural, ghidra_meta, ghidra_absent,
             _print_stash(candidate)
             print(f"       start: {candidate['command']}")
 
-    if args.tier not in ("named", "structural", "ghidra", "carved"):
+    if args.tier not in ("repair", "link", "named", "structural", "ghidra", "carved"):
         print(f"\n== 2. drift quick wins: literal-only diffs ({len(drifts)}) ==")
         for candidate in drifts[:args.limit]:
             print(f"  {candidate['aligned_pct']:>3}% {candidate['class']:<14} "
@@ -1428,7 +1447,7 @@ def print_ranked(args, ledger, drifts, structural, ghidra_meta, ghidra_absent,
             print("       fix the literal in source, then byte-verify: "
                   f"{candidate['command']}")
 
-    if args.tier not in ("named", "harvest", "ghidra", "carved"):
+    if args.tier not in ("repair", "link", "named", "harvest", "ghidra", "carved"):
         shown = structural[:args.limit]
         print(f"\n== 3. structural reconciliation — manual RE ({len(structural)} "
               f"address(es); workflow: docs/structural.md) ==")
@@ -1476,7 +1495,7 @@ def main():
     ap.add_argument("--ranked", action="store_true",
                     help="show complete ranked queues for humans/debugging")
     ap.add_argument("--tier",
-                    choices=("finish", "carved", "packet", "named", "harvest", "structural",
+                    choices=("repair", "link", "finish", "carved", "packet", "named", "harvest", "structural",
                              "ghidra", "anchored", "similar"),
                     help="choose from only this task lane")
     ap.add_argument("--min-score", type=float, default=0.9,
@@ -1494,7 +1513,9 @@ def main():
                          "targets/game/reverse/re_attempts.log (they are dropped by default)")
     args = ap.parse_args()
 
-    ledger = check_ledger()  # exit 2 happens in there; nothing below matters if red
+    ledger = check_ledger()
+    global repair_queue
+    import repair_queue  # after the health check: a corrupt ledger exits first  # exit 2 happens in there; nothing below matters if red
     import build
     drifts = (drift_quick_wins()
               if args.tier not in ("named", "structural", "ghidra", "carved", "similar") else [])
@@ -1573,6 +1594,9 @@ def main():
     similar_q = apply_shard(similar_q, args.shard)
     for queue in (named, drifts, structural, ghidra_absent, anchored, similar_q):
         annotate_stashes(queue)
+    for queue in (named, ghidra_absent, anchored, carved):
+        repair_queue.annotate_dest(queue)
+    repair = apply_shard(repair_queue.repair_items(), args.shard) if args.tier in (None, "repair") else []
     shard_meta = (None if args.shard is None else
                   {"index": args.shard[0], "count": args.shard[1]})
 
@@ -1587,6 +1611,7 @@ def main():
             "ghidra_meta": ghidra_meta, "ghidra_absent": ghidra_absent,
             "anchored_meta": anchored_note, "anchored": anchored,
             "similar": similar_q,
+            "repair": repair,
             "structural_meta": structural_meta,
             "suppressed_logged": suppressed,
             "shard": shard_meta,
@@ -1595,6 +1620,13 @@ def main():
         return
 
     if args.ranked:
+        if args.tier in (None, "repair"):
+            print(f"== R. gate-debt repairs ({len(repair)}) ==")
+            for candidate in repair[:args.limit]:
+                print(f"  {candidate['size']:>5}B {candidate['check']} {candidate['target_rva']} "
+                      f"{candidate['function'][:70]}  ({candidate['source']})")
+                print(f"       pass test: {candidate['pass_test']}")
+            print()
         print_ranked(args, ledger, drifts, structural, ghidra_meta,
                      ghidra_absent, suppressed, named, named_note, structural_meta,
                      finish, carved)
@@ -1611,8 +1643,9 @@ def main():
     # The finish tier is never log-filtered: a deferral AFTER a banked body is
     # the normal state of a near miss, and the stash is why it is served.
     finish = apply_shard(finish, args.shard)
+    repair_queue.annotate_dest(packets)
     label, candidates = selected_queue(args.tier, drifts, structural, ghidra_absent,
-                                       anchored, named, packets, finish, carved, similar_q)
+                                       anchored, named, packets, finish, carved, similar_q, repair=repair)
     if not candidates:
         candidate = None
     elif label == "near-landed body":
