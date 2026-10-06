@@ -18,7 +18,14 @@
 // before release is the self-assignment-safe order.  `mov eax,esi` returns the
 // receiver, which is what an assignment operator hands back.
 
-class W3DShadowManager;
+class Vector3;
+
+// ?getLightPosWorld@W3DShadowManager@@QAEAAVVector3@@H@Z, retail 0x007B7820 (ILT 0x0000BEB0)
+class W3DShadowManager
+{
+public:
+	Vector3 &getLightPosWorld( int lightIndex );
+};
 extern W3DShadowManager *TheW3DShadowManager;
 
 struct Open2Unknown;
@@ -193,12 +200,6 @@ public:
 	int m_z;
 };
 
-class Open27110B0Source
-{
-public:
-	const Open2Triple *fetch( int which );
-};
-
 
 
 class Open2Triple5;
@@ -214,8 +215,8 @@ public:
 // @?read@Sink006E2540@@QAEXPAVOpen2Triple@@@Z 0x007110B0
 void Sink006E2540::read( Open2Triple *out )
 {
-	if( ((Open27110B0Source *&)TheW3DShadowManager) )
-		*out = *((Open27110B0Source *&)TheW3DShadowManager)->fetch( 0 );
+	if( TheW3DShadowManager )
+		*out = (const Open2Triple &)TheW3DShadowManager->getLightPosWorld( 0 );
 }
 
 // ---------------------------------------------------------------------------
