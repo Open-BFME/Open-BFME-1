@@ -1362,38 +1362,8 @@ FontCharsClass::Get_Char_Width (WCHAR ch)
 //	Blit_Char
 //
 ////////////////////////////////////////////////////////////////////////////////////
-void
-// ?Blit_Char@FontCharsClass@@QAEXGPAGHHH@Z present-unmatched
-FontCharsClass::Blit_Char (WCHAR ch, uint16 *dest_ptr, int dest_stride, int x, int y)
-{
-	const FontCharsClassCharDataStruct	* data = Get_Char_Data( ch );
-	if ( data != NULL && data->Width != 0 ) {
-
-		//
-		//	Setup the src and destination pointers
-		//
-		int dest_inc		= (dest_stride >> 1);
-		uint16 *src_ptr	= data->Buffer;
-		dest_ptr				+= (dest_inc * y) + x;
-
-		//
-		//	Simply copy the data from the src buffer to the destination
-		//
-		for ( int row = 0; row < CharHeight; row ++ ) {
-			for ( int col = 0; col < data->Width; col ++ ) {
-				uint16 curData = *src_ptr;
-				if (col<PixelOverlap) {
-					curData |= dest_ptr[col];
-				} 
-				dest_ptr[col] = curData;
-				src_ptr++;
-			}
-			dest_ptr	+= dest_inc;
-		}		
-	}
-
-	return ;
-}
+// ?Blit_Char@FontCharsClass@@QAEXGPAGHHH@Z is defined once, by the
+// retail-matched body at 0x00941530 (FontCharsClass_Blit_Char_BFME.cpp).
 
 
 ////////////////////////////////////////////////////////////////////////////////////
