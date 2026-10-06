@@ -54,6 +54,8 @@ PROTECTED = (
     "tools/publisher.py", "tools/publisher_pre_push.sh", "tools/publisher_fixtures/*",
     # which models may judge, and how they are called (decision record, pillar 5)
     "tools/judges.py", "tools/judges.json",
+    "tools/publisher_gate.py", "tools/publisher_hook.py", "tools/publisher_service.py",
+    "targets/game/reverse/publisher_mode",
     # the linked-build rules
     "tools/link_census.py", "tools/link_debt.py", "tools/alias_guard.py",
     # ledger, identity and direction guards the hooks call
