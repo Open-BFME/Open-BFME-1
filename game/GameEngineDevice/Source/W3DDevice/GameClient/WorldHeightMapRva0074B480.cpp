@@ -92,7 +92,9 @@ public:
 	virtual void rva006D1D80(IRegion2D *region, WorldHeightMap *map, Int mode) = 0;
 };
 
-extern Rva0074B480TerrainAbi *TheTerrainRenderObject;
+// BaseHeightMap.cpp owns the pointer (data_rows.csv, VA 012F7FE0).
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 
 class WorldHeightMap
 {
@@ -164,5 +166,6 @@ void WorldHeightMap::rva0074B480(const Coord3D *pos, Real radius, Bool value)
 	region.hi.x = maxX;
 	region.hi.y = maxY;
 	if (TheTerrainRenderObject != 0)
-		TheTerrainRenderObject->rva006D1D80(&region, this, 0);
+		reinterpret_cast<Rva0074B480TerrainAbi *>(TheTerrainRenderObject)
+			->rva006D1D80(&region, this, 0);
 }
