@@ -232,7 +232,9 @@ HOWTO = ("  Add a trailer line to the commit message saying why the check change
 def check_staged(message_file):
     if git("rev-parse", "-q", "--verify", "MERGE_HEAD").returncode == 0:
         return 0                        # a merge is judged per commit by the push hook
-    staged = git("diff", "--cached", "--name-only", "--diff-filter=ACMRDT", check=True).stdout.split()
+    # --no-renames: a protected file moved to an unprotected path is listed under its old name too
+    staged = git("diff", "--cached", "--name-only", "--no-renames", "--diff-filter=ACMRDT",
+                 check=True).stdout.split()
     hits = protected(staged)
     if not hits:
         return 0

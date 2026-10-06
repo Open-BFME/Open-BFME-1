@@ -200,3 +200,21 @@ def test_the_commit_msg_hook_refuses_a_judges_json_edit_without_the_trailer(tmp_
     refused = hook("add a judge\n")
     assert refused.returncode == 1 and "tools/judges.json" in refused.stderr
     assert hook("add a judge\n\nVerifier-Change: owner adds a judge after review\n").returncode == 0
+
+
+def test_moving_judges_json_out_of_the_protected_paths_is_refused_too(tmp_path):
+    repo = tmp_path / "repo"
+    (repo / "tools").mkdir(parents=True)
+    git(tmp_path, "init", "-q", str(repo))
+    git(repo, "config", "user.name", "t")
+    git(repo, "config", "user.email", "t@example.com")
+    shutil.copy(TOOLS / "protected_paths.py", repo / "tools" / "protected_paths.py")
+    shutil.copy(TOOLS / "judges.json", repo / "tools" / "judges.json")
+    git(repo, "add", ".")
+    git(repo, "commit", "-q", "-m", "base")
+    git(repo, "mv", "tools/judges.json", "judges.json")          # git sees a rename: only the new name
+    (repo / "MSG").write_text("tidy\n")
+    checker = git(repo, "show", "HEAD:tools/protected_paths.py").stdout
+    got = subprocess.run([sys.executable, "-", "--commit-msg", str(repo / "MSG")], input=checker, cwd=repo,
+                         capture_output=True, text=True)
+    assert got.returncode == 1 and "tools/judges.json" in got.stderr
