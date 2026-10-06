@@ -26,7 +26,6 @@ class SubsystemInterface
 {
 public:
 	virtual ~SubsystemInterface();
-	virtual void bfmeS1ZB() = 0;
 };
 
 static __forceinline BfmeOverride1137 *bfmeWalkZB(BfmeOverride1137 *p)
