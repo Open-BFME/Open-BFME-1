@@ -1,6 +1,8 @@
 .386
 .model flat
 ; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ?ClientAt012F1464@@3PAVClient0009A580@@A:BYTE
+EXTERN ?TheParticleSystemManager@@3PAVParticleSystemManager@@A:BYTE
 EXTERN ?allocate@__new_alloc@_STL@@SAPAXI@Z:NEAR
 EXTERN ?j_00001b18@@YAXXZ:NEAR
 EXTERN ?j_0000d7b5@@YAXXZ:NEAR
@@ -12,10 +14,8 @@ EXTERN ?j_0003a373@@YAXXZ:NEAR
 EXTERN ?j_00042a87@@YAXXZ:NEAR
 EXTERN ?set@?$StringBase@D@@QAEXABV1@@Z:NEAR
 EXTERN __ftol2:NEAR
-EXTERN g_0103A6C0:NEAR
-EXTERN g_0110FE48:BYTE
-EXTERN g_012F1464:BYTE
-EXTERN g_012F64BC:BYTE
+EXTERN g_Va0103A6C0:NEAR
+EXTERN g_Va0110FE48:BYTE
 
 ; ??0ParticleSystem@@QAE@PBVParticleSystemTemplate@@W4ParticleSystemID@@_N@Z
 ; Exact 1426B retail @ 0x005CF850; factory new(0x1E0)+call from create @0x5C33E0; queue 0x6E2296 was helper epilogue
@@ -26,12 +26,12 @@ _TEXT$d009cf850 SEGMENT BYTE PUBLIC FLAT 'CODE'
 public ??0ParticleSystem@@QAE@PBVParticleSystemTemplate@@W4ParticleSystemID@@_N@Z
 ??0ParticleSystem@@QAE@PBVParticleSystemTemplate@@W4ParticleSystemID@@_N@Z PROC
     db 06Ah, 0FFh, 068h
-    dd g_0103A6C0
+    dd g_Va0103A6C0
     db 064h, 0A1h, 000h, 000h, 000h, 000h, 050h, 064h, 089h, 025h, 000h, 000h, 000h, 000h, 083h, 0ECh
     db 01Ch, 053h, 055h, 056h, 08Bh, 0F1h, 057h, 089h, 074h, 024h, 010h
     call ?j_0003128c@@YAXXZ
     db 033h, 0DBh, 0C7h, 006h
-    dd g_0110FE48
+    dd g_Va0110FE48
     db 089h, 09Eh, 098h, 000h, 000h, 000h, 089h, 09Eh, 09Ch, 000h, 000h, 000h, 089h, 05Ch, 024h, 034h
     db 089h, 09Eh, 0BCh, 000h, 000h, 000h, 089h, 09Eh, 060h, 001h, 000h, 000h, 089h, 09Eh, 064h, 001h
     db 000h, 000h, 089h, 09Eh, 068h, 001h, 000h, 000h, 089h, 09Eh, 070h, 001h, 000h, 000h, 089h, 09Eh
@@ -75,7 +75,7 @@ public ??0ParticleSystem@@QAE@PBVParticleSystemTemplate@@W4ParticleSystemID@@_N@
     call ?j_0000d7b5@@YAXXZ
     call __ftol2
     db 089h, 086h, 024h, 001h, 000h, 000h, 08Bh, 00Dh
-    dd g_012F1464
+    dd ?ClientAt012F1464@@3PAVClient0009A580@@A
     db 08Bh, 011h, 0FFh, 052h, 068h, 089h, 086h, 028h, 001h, 000h, 000h, 08Bh, 047h, 020h, 089h, 086h
     db 02Ch, 001h, 000h, 000h, 039h, 05Fh, 020h, 00Fh, 094h, 0C1h, 088h, 08Eh, 0A6h, 001h, 000h, 000h
     db 08Bh, 057h, 024h, 089h, 056h, 024h, 089h, 09Eh, 084h, 001h, 000h, 000h, 08Bh, 047h, 07Ch, 089h
@@ -125,7 +125,7 @@ public ??0ParticleSystem@@QAE@PBVParticleSystemTemplate@@W4ParticleSystemID@@_N@
     db 024h, 018h, 089h, 05Ch, 024h, 01Ch, 089h, 086h, 09Ch, 000h, 000h, 000h, 08Bh, 044h, 024h, 018h
     db 03Bh, 0C3h, 074h, 009h, 08Dh, 04Ch, 024h, 014h, 089h, 048h, 008h, 0EBh, 00Eh, 08Bh, 044h, 024h
     db 014h, 08Dh, 054h, 024h, 014h, 089h, 090h, 098h, 000h, 000h, 000h, 0A1h
-    dd g_012F64BC
+    dd ?TheParticleSystemManager@@3PAVParticleSystemManager@@A
     db 08Bh, 0B8h, 080h, 000h, 000h, 000h, 06Ah, 014h, 0C6h, 044h, 024h, 038h, 008h, 089h, 044h, 024h
     db 048h
     call ?allocate@__new_alloc@_STL@@SAPAXI@Z

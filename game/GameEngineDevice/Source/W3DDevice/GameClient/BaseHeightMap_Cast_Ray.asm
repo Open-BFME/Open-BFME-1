@@ -3,15 +3,15 @@
 ; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
 EXTERN ?Collide@CollisionMath@@SA_NABVLineSegClass@@ABVAABoxClass@@PAUCastResultStruct@@@Z:NEAR
 EXTERN ?Collide@CollisionMath@@SA_NABVLineSegClass@@ABVTriClass@@PAUCastResultStruct@@@Z:NEAR
+EXTERN ?R3FieldSampleScale010F653C@@3MA:BYTE
+EXTERN ?g_bfmeADL@@3MA:BYTE
+EXTERN ?g_bfmeDirectionWeight1285@@3MA:BYTE
+EXTERN ?g_bfmeScaleBK@@3MA:BYTE
 EXTERN ?j_00035233@@YAXXZ:NEAR
 EXTERN ?j_00040115@@YAXXZ:NEAR
 EXTERN ?j_00044aa8@@YAXXZ:NEAR
+EXTERN __imp_?i_009f7030@@YAXXZ:BYTE
 EXTERN __imp__floor:BYTE
-EXTERN g_0107533C:BYTE
-EXTERN g_01075C70:BYTE
-EXTERN g_01075C74:BYTE
-EXTERN g_010F653C:BYTE
-EXTERN g_01359394:BYTE
 
 ; ?Cast_Ray@BaseHeightMapRenderObjClass@@UAE_NAAVRayCollisionTestClass@@@Z
 ; Exact 2839 retail bytes @ 0x006CDF90; queue RVA 0x0096A3CA was MISPLACED
@@ -35,28 +35,28 @@ public ?Cast_Ray@BaseHeightMapRenderObjClass@@UAE_NAAVRayCollisionTestClass@@@Z
     db 000h, 000h, 000h, 000h, 000h, 000h, 000h, 0C7h, 084h, 024h, 0B0h, 000h, 000h, 000h, 000h, 000h
     db 000h, 000h, 08Bh, 040h, 010h, 083h, 0C0h, 040h, 08Bh, 0D0h, 0F7h, 0DAh, 089h, 054h, 024h, 014h
     db 08Bh, 051h, 008h, 0DBh, 044h, 024h, 014h, 08Bh, 049h, 00Ch, 003h, 0D0h, 0D8h, 00Dh
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 089h, 054h, 024h, 014h, 003h, 0C8h, 053h, 0D9h, 094h, 024h, 0E0h, 000h, 000h, 000h, 056h, 0DBh
     db 044h, 024h, 01Ch, 089h, 04Ch, 024h, 01Ch, 057h, 08Bh, 0BCh, 024h, 0A0h, 001h, 000h, 000h, 0D8h
     db 00Dh
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 08Dh, 077h, 00Ch, 0DBh, 044h, 024h, 020h, 056h, 08Dh, 08Ch, 024h, 048h, 001h, 000h, 000h, 089h
     db 06Ch, 024h, 040h, 0D8h, 00Dh
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 089h, 06Ch, 024h, 068h, 089h, 06Ch, 024h, 048h, 0C7h, 084h, 024h, 08Ch, 000h, 000h, 000h, 060h
     db 0FFh, 09Fh, 044h, 0D9h, 09Ch, 024h, 0E4h, 000h, 000h, 000h, 0C7h, 084h, 024h, 098h, 000h, 000h
     db 000h, 060h, 03Fh, 0A1h, 044h, 0D9h, 084h, 024h, 0ECh, 000h, 000h, 000h, 0D8h, 0C1h, 0D9h, 084h
     db 024h, 0E4h, 000h, 000h, 000h, 0D8h, 0C3h, 0D9h, 09Ch, 024h, 080h, 001h, 000h, 000h, 0D8h, 00Dh
-    dd g_0107533C
+    dd ?g_bfmeADL@@3MA
     db 0D9h, 084h, 024h, 080h, 001h, 000h, 000h, 0D8h, 00Dh
-    dd g_0107533C
+    dd ?g_bfmeADL@@3MA
     db 0D9h, 0C9h, 0D9h, 09Ch, 024h, 084h, 000h, 000h, 000h, 0D9h, 09Ch, 024h, 088h, 000h, 000h, 000h
     db 0D8h, 0A4h, 024h, 0ECh, 000h, 000h, 000h, 0D9h, 09Ch, 024h, 0D4h, 000h, 000h, 000h, 0D9h, 084h
     db 024h, 0E4h, 000h, 000h, 000h, 0D8h, 0E1h, 0D9h, 09Ch, 024h, 0D8h, 000h, 000h, 000h, 0DDh, 0D8h
     db 0D9h, 084h, 024h, 0D4h, 000h, 000h, 000h, 0D8h, 00Dh
-    dd g_0107533C
+    dd ?g_bfmeADL@@3MA
     db 0D9h, 084h, 024h, 0D8h, 000h, 000h, 000h, 0D8h, 00Dh
-    dd g_0107533C
+    dd ?g_bfmeADL@@3MA
     db 0D9h, 0C9h, 0D9h, 09Ch, 024h, 090h, 000h, 000h, 000h, 0D9h, 09Ch, 024h, 094h, 000h, 000h, 000h
     call ?j_00044aa8@@YAXXZ
     db 08Bh, 016h, 08Bh, 046h, 004h, 08Bh, 04Eh, 008h, 089h, 054h, 024h, 024h, 08Bh, 057h, 018h, 089h
@@ -91,50 +91,50 @@ public ?Cast_Ray@BaseHeightMapRenderObjClass@@UAE_NAAVRayCollisionTestClass@@@Z
     db 08Bh, 08Ch, 024h, 0BCh, 000h, 000h, 000h, 089h, 054h, 024h, 030h, 089h, 044h, 024h, 034h, 089h
     db 04Ch, 024h, 038h, 0D9h, 044h, 024h, 024h, 083h, 0ECh, 008h, 0D8h, 05Ch, 024h, 038h, 0DFh, 0E0h
     db 0F6h, 0C4h, 041h, 075h, 061h, 0D9h, 044h, 024h, 038h, 0D8h, 00Dh
-    dd g_01075C70
+    dd ?g_bfmeScaleBK@@3MA
     db 0DDh, 01Ch, 024h, 0FFh, 015h
     dd __imp__floor
     db 0D9h, 05Ch, 024h, 020h, 083h, 0C4h, 008h, 0D9h, 044h, 024h, 018h, 0DBh, 09Ch, 024h, 008h, 001h
     db 000h, 000h, 0D9h, 044h, 024h, 024h, 0D8h, 00Dh
-    dd g_01075C70
+    dd ?g_bfmeScaleBK@@3MA
     db 08Bh, 0ACh, 024h, 008h, 001h, 000h, 000h, 083h, 0ECh, 008h, 0DDh, 01Ch, 024h, 0FFh, 015h
-    dd g_01359394
+    dd __imp_?i_009f7030@@YAXXZ
     db 0D9h, 05Ch, 024h, 020h, 083h, 0C4h, 008h, 0D9h, 044h, 024h, 018h, 0DBh, 09Ch, 024h, 000h, 001h
     db 000h, 000h, 08Bh, 094h, 024h, 000h, 001h, 000h, 000h, 089h, 054h, 024h, 03Ch, 0EBh, 05Fh, 0D9h
     db 044h, 024h, 02Ch, 0D8h, 00Dh
-    dd g_01075C70
+    dd ?g_bfmeScaleBK@@3MA
     db 0DDh, 01Ch, 024h, 0FFh, 015h
     dd __imp__floor
     db 0D9h, 05Ch, 024h, 020h, 083h, 0C4h, 008h, 0D9h, 044h, 024h, 018h, 0DBh, 09Ch, 024h, 00Ch, 001h
     db 000h, 000h, 0D9h, 044h, 024h, 030h, 0D8h, 00Dh
-    dd g_01075C70
+    dd ?g_bfmeScaleBK@@3MA
     db 08Bh, 0ACh, 024h, 00Ch, 001h, 000h, 000h, 083h, 0ECh, 008h, 0DDh, 01Ch, 024h, 0FFh, 015h
-    dd g_01359394
+    dd __imp_?i_009f7030@@YAXXZ
     db 0D9h, 05Ch, 024h, 020h, 083h, 0C4h, 008h, 0D9h, 044h, 024h, 018h, 0DBh, 09Ch, 024h, 0F8h, 000h
     db 000h, 000h, 08Bh, 084h, 024h, 0F8h, 000h, 000h, 000h, 089h, 044h, 024h, 03Ch, 0D9h, 044h, 024h
     db 028h, 083h, 0ECh, 008h, 0D8h, 05Ch, 024h, 03Ch, 0DFh, 0E0h, 0F6h, 0C4h, 041h, 075h, 061h, 0D9h
     db 044h, 024h, 03Ch, 0D8h, 00Dh
-    dd g_01075C70
+    dd ?g_bfmeScaleBK@@3MA
     db 0DDh, 01Ch, 024h, 0FFh, 015h
     dd __imp__floor
     db 0D9h, 05Ch, 024h, 020h, 083h, 0C4h, 008h, 0D9h, 044h, 024h, 018h, 0DBh, 09Ch, 024h, 0FCh, 000h
     db 000h, 000h, 0D9h, 044h, 024h, 028h, 0D8h, 00Dh
-    dd g_01075C70
+    dd ?g_bfmeScaleBK@@3MA
     db 08Bh, 0B4h, 024h, 0FCh, 000h, 000h, 000h, 083h, 0ECh, 008h, 089h, 074h, 024h, 06Ch, 0DDh, 01Ch
     db 024h, 0FFh, 015h
-    dd g_01359394
+    dd __imp_?i_009f7030@@YAXXZ
     db 0D9h, 05Ch, 024h, 020h, 083h, 0C4h, 008h, 0D9h, 044h, 024h, 018h, 0DBh, 09Ch, 024h, 0F4h, 000h
     db 000h, 000h, 08Bh, 084h, 024h, 0F4h, 000h, 000h, 000h, 0EBh, 05Fh, 0D9h, 044h, 024h, 030h, 0D8h
     db 00Dh
-    dd g_01075C70
+    dd ?g_bfmeScaleBK@@3MA
     db 0DDh, 01Ch, 024h, 0FFh, 015h
     dd __imp__floor
     db 0D9h, 05Ch, 024h, 020h, 083h, 0C4h, 008h, 0D9h, 044h, 024h, 018h, 0DBh, 09Ch, 024h, 004h, 001h
     db 000h, 000h, 0D9h, 044h, 024h, 034h, 0D8h, 00Dh
-    dd g_01075C70
+    dd ?g_bfmeScaleBK@@3MA
     db 08Bh, 0B4h, 024h, 004h, 001h, 000h, 000h, 083h, 0ECh, 008h, 089h, 074h, 024h, 06Ch, 0DDh, 01Ch
     db 024h, 0FFh, 015h
-    dd g_01359394
+    dd __imp_?i_009f7030@@YAXXZ
     db 0D9h, 05Ch, 024h, 020h, 083h, 0C4h, 008h, 0D9h, 044h, 024h, 018h, 0DBh, 09Ch, 024h, 0C8h, 000h
     db 000h, 000h, 08Bh, 084h, 024h, 0C8h, 000h, 000h, 000h, 03Bh, 0F0h, 089h, 044h, 024h, 044h, 0C7h
     db 084h, 024h, 0CCh, 000h, 000h, 000h, 0FFh, 0FFh, 000h, 000h, 089h, 07Ch, 024h, 018h, 089h, 0B4h
@@ -154,38 +154,38 @@ public ?Cast_Ray@BaseHeightMapRenderObjClass@@UAE_NAAVRayCollisionTestClass@@@Z
     db 0FFh, 08Bh, 044h, 024h, 064h, 08Bh, 08Ch, 024h, 0CCh, 000h, 000h, 000h, 048h, 08Dh, 055h, 0FFh
     db 089h, 054h, 024h, 01Ch, 0DBh, 044h, 024h, 01Ch, 08Bh, 054h, 024h, 03Ch, 089h, 044h, 024h, 01Ch
     db 08Bh, 044h, 024h, 044h, 0D8h, 00Dh
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 049h, 0DBh, 044h, 024h, 01Ch, 089h, 04Ch, 024h, 01Ch, 08Bh, 04Ch, 024h, 018h, 042h, 0D8h, 00Dh
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 040h, 0DBh, 044h, 024h, 01Ch, 089h, 054h, 024h, 01Ch, 041h, 0D8h, 00Dh
-    dd g_010F653C
+    dd ?R3FieldSampleScale010F653C@@3MA
     db 0D9h, 09Ch, 024h, 080h, 001h, 000h, 000h, 0DBh, 044h, 024h, 01Ch, 089h, 044h, 024h, 01Ch, 0D8h
     db 00Dh
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 0DBh, 044h, 024h, 01Ch, 089h, 04Ch, 024h, 01Ch, 0D8h, 00Dh
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 0D9h, 09Ch, 024h, 0D4h, 000h, 000h, 000h, 0DBh, 044h, 024h, 01Ch, 0D8h, 00Dh
-    dd g_010F653C
+    dd ?R3FieldSampleScale010F653C@@3MA
     db 0D9h, 09Ch, 024h, 0D8h, 000h, 000h, 000h, 0D9h, 0C0h, 0D8h, 0C3h, 0D9h, 084h, 024h, 0D4h, 000h
     db 000h, 000h, 0D8h, 0C3h, 0D9h, 09Ch, 024h, 0E0h, 000h, 000h, 000h, 0D9h, 084h, 024h, 0D8h, 000h
     db 000h, 000h, 0D8h, 084h, 024h, 080h, 001h, 000h, 000h, 0D9h, 09Ch, 024h, 0E4h, 000h, 000h, 000h
     db 0D8h, 00Dh
-    dd g_0107533C
+    dd ?g_bfmeADL@@3MA
     db 0D9h, 084h, 024h, 0E0h, 000h, 000h, 000h, 0D8h, 00Dh
-    dd g_0107533C
+    dd ?g_bfmeADL@@3MA
     db 0D9h, 084h, 024h, 0E4h, 000h, 000h, 000h, 0D8h, 00Dh
-    dd g_0107533C
+    dd ?g_bfmeADL@@3MA
     db 0D9h, 09Ch, 024h, 08Ch, 001h, 000h, 000h, 0D9h, 0C9h, 08Bh, 094h, 024h, 08Ch, 001h, 000h, 000h
     db 0D9h, 09Ch, 024h, 080h, 000h, 000h, 000h, 089h, 094h, 024h, 088h, 000h, 000h, 000h, 0D9h, 09Ch
     db 024h, 084h, 000h, 000h, 000h, 0D8h, 0E2h, 0D9h, 09Ch, 024h, 0E8h, 000h, 000h, 000h, 0D9h, 084h
     db 024h, 0D4h, 000h, 000h, 000h, 0D8h, 0E1h, 0D9h, 09Ch, 024h, 0ECh, 000h, 000h, 000h, 0DDh, 0D8h
     db 0DDh, 0D8h, 0D9h, 084h, 024h, 0D8h, 000h, 000h, 000h, 0D8h, 0A4h, 024h, 080h, 001h, 000h, 000h
     db 0D9h, 084h, 024h, 0E8h, 000h, 000h, 000h, 0D8h, 00Dh
-    dd g_0107533C
+    dd ?g_bfmeADL@@3MA
     db 0D9h, 084h, 024h, 0ECh, 000h, 000h, 000h, 0D8h, 00Dh
-    dd g_0107533C
+    dd ?g_bfmeADL@@3MA
     db 0D9h, 0CAh, 0D8h, 00Dh
-    dd g_0107533C
+    dd ?g_bfmeADL@@3MA
     db 0D9h, 09Ch, 024h, 098h, 001h, 000h, 000h, 08Bh, 084h, 024h, 098h, 001h, 000h, 000h, 089h, 084h
     db 024h, 094h, 000h, 000h, 000h, 0D9h, 09Ch, 024h, 08Ch, 000h, 000h, 000h, 08Bh, 044h, 024h, 020h
     db 040h, 0D9h, 09Ch, 024h, 090h, 000h, 000h, 000h, 089h, 044h, 024h, 020h, 083h, 0F8h, 003h, 00Fh
@@ -200,10 +200,10 @@ public ?Cast_Ray@BaseHeightMapRenderObjClass@@UAE_NAAVRayCollisionTestClass@@@Z
     db 08Bh, 074h, 024h, 01Ch, 03Bh, 074h, 024h, 020h, 00Fh, 08Fh, 0FEh, 002h, 000h, 000h, 08Dh, 06Eh
     db 001h, 08Bh, 054h, 024h, 040h, 08Bh, 082h, 0F4h, 02Fh, 000h, 000h, 08Bh, 050h, 010h, 08Bh, 0CEh
     db 02Bh, 0CAh, 089h, 04Ch, 024h, 014h, 0DBh, 044h, 024h, 014h, 08Bh, 0D7h, 08Bh, 0DEh, 0D8h, 00Dh
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 0D9h, 05Ch, 024h, 024h, 02Bh, 050h, 010h, 083h, 0FDh, 001h, 089h, 054h, 024h, 014h, 0DBh, 044h
     db 024h, 014h, 08Bh, 0D7h, 0D8h, 00Dh
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 0D9h, 05Ch, 024h, 028h, 08Bh, 048h, 008h, 08Bh, 040h, 00Ch, 07Dh, 01Dh, 033h, 0DBh, 0EBh, 020h
     db 039h, 07Ch, 024h, 020h, 00Fh, 085h, 01Dh, 0FFh, 0FFh, 0FFh, 05Fh, 05Eh, 05Bh, 032h, 0C0h, 05Dh
     db 081h, 0C4h, 08Ch, 001h, 000h, 000h, 0C2h, 004h, 000h, 03Bh, 0F1h, 07Ch, 003h, 08Dh, 059h, 0FFh
@@ -211,44 +211,44 @@ public ?Cast_Ray@BaseHeightMapRenderObjClass@@UAE_NAAVRayCollisionTestClass@@@Z
     db 044h, 024h, 040h, 00Fh, 0AFh, 0CAh, 08Bh, 080h, 0F4h, 02Fh, 000h, 000h, 08Bh, 050h, 024h, 003h
     db 0CBh, 00Fh, 0B7h, 00Ch, 04Ah, 089h, 04Ch, 024h, 014h, 08Bh, 0D6h, 08Bh, 0DDh, 0DBh, 044h, 024h
     db 014h, 0D8h, 00Dh
-    dd g_010F653C
+    dd ?R3FieldSampleScale010F653C@@3MA
     db 0D9h, 05Ch, 024h, 02Ch, 08Bh, 048h, 010h, 02Bh, 0D1h, 042h, 089h, 054h, 024h, 014h, 0DBh, 044h
     db 024h, 014h, 08Bh, 0CFh, 0D8h, 00Dh
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 0D9h, 05Ch, 024h, 030h, 02Bh, 048h, 010h, 085h, 0EDh, 089h, 04Ch, 024h, 014h, 0DBh, 044h, 024h
     db 014h, 08Bh, 0D7h, 0D8h, 00Dh
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 0D9h, 05Ch, 024h, 034h, 08Bh, 048h, 008h, 08Bh, 040h, 00Ch, 07Dh, 004h, 033h, 0DBh, 0EBh, 007h
     db 03Bh, 0E9h, 07Ch, 003h, 08Dh, 059h, 0FFh, 085h, 0FFh, 07Dh, 004h, 033h, 0D2h, 0EBh, 007h, 03Bh
     db 0F8h, 07Ch, 003h, 08Dh, 050h, 0FFh, 08Bh, 044h, 024h, 040h, 00Fh, 0AFh, 0CAh, 08Bh, 080h, 0F4h
     db 02Fh, 000h, 000h, 08Bh, 050h, 024h, 003h, 0CBh, 00Fh, 0B7h, 00Ch, 04Ah, 089h, 04Ch, 024h, 014h
     db 08Bh, 0D6h, 08Bh, 0CFh, 0DBh, 044h, 024h, 014h, 0D8h, 00Dh
-    dd g_010F653C
+    dd ?R3FieldSampleScale010F653C@@3MA
     db 0D9h, 05Ch, 024h, 038h, 08Bh, 058h, 010h, 02Bh, 0D3h, 042h, 089h, 054h, 024h, 014h, 0DBh, 044h
     db 024h, 014h, 08Dh, 057h, 001h, 0D8h, 00Dh
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 0D9h, 05Ch, 024h, 048h, 02Bh, 048h, 010h, 041h, 085h, 0EDh, 089h, 04Ch, 024h, 014h, 0DBh, 044h
     db 024h, 014h, 08Bh, 0DDh, 0D8h, 00Dh
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 0D9h, 05Ch, 024h, 04Ch, 08Bh, 048h, 008h, 08Bh, 040h, 00Ch, 07Dh, 004h, 033h, 0DBh, 0EBh, 007h
     db 03Bh, 0E9h, 07Ch, 003h, 08Dh, 059h, 0FFh, 085h, 0D2h, 07Dh, 004h, 033h, 0D2h, 0EBh, 007h, 03Bh
     db 0D0h, 07Ch, 003h, 08Dh, 050h, 0FFh, 08Bh, 044h, 024h, 040h, 00Fh, 0AFh, 0CAh, 08Bh, 080h, 0F4h
     db 02Fh, 000h, 000h, 08Bh, 050h, 024h, 003h, 0CBh, 00Fh, 0B7h, 00Ch, 04Ah, 089h, 04Ch, 024h, 014h
     db 08Bh, 0D6h, 0DBh, 044h, 024h, 014h, 0D8h, 00Dh
-    dd g_010F653C
+    dd ?R3FieldSampleScale010F653C@@3MA
     db 0D9h, 05Ch, 024h, 050h, 08Bh, 048h, 010h, 02Bh, 0D1h, 089h, 054h, 024h, 014h, 0DBh, 044h, 024h
     db 014h, 08Bh, 0CFh, 08Dh, 057h, 001h, 0D8h, 00Dh
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 0D9h, 05Ch, 024h, 068h, 02Bh, 048h, 010h, 041h, 083h, 0FDh, 001h, 089h, 04Ch, 024h, 014h, 0DBh
     db 044h, 024h, 014h, 08Bh, 0DEh, 0D8h, 00Dh
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 0D9h, 05Ch, 024h, 06Ch, 08Bh, 048h, 008h, 08Bh, 040h, 00Ch, 07Dh, 004h, 033h, 0DBh, 0EBh, 007h
     db 03Bh, 0F1h, 07Ch, 003h, 08Dh, 059h, 0FFh, 085h, 0D2h, 07Dh, 004h, 033h, 0D2h, 0EBh, 007h, 03Bh
     db 0D0h, 07Ch, 003h, 08Dh, 050h, 0FFh, 00Fh, 0AFh, 0CAh, 08Bh, 054h, 024h, 040h, 08Bh, 082h, 0F4h
     db 02Fh, 000h, 000h, 08Bh, 050h, 024h, 003h, 0CBh, 00Fh, 0B7h, 004h, 04Ah, 089h, 044h, 024h, 014h
     db 08Dh, 04Ch, 024h, 024h, 089h, 04Ch, 024h, 058h, 0DBh, 044h, 024h, 014h, 08Dh, 04Ch, 024h, 074h
     db 08Dh, 054h, 024h, 030h, 08Dh, 044h, 024h, 048h, 0D8h, 00Dh
-    dd g_010F653C
+    dd ?R3FieldSampleScale010F653C@@3MA
     db 089h, 04Ch, 024h, 054h, 08Dh, 04Ch, 024h, 054h, 089h, 054h, 024h, 05Ch, 0D9h, 05Ch, 024h, 070h
     db 089h, 044h, 024h, 060h
     call ?j_00035233@@YAXXZ

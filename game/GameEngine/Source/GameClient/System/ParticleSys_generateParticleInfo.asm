@@ -1,7 +1,15 @@
 .386
 .model flat
 ; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ??_7?$CategoryModuleInfo@$01@FXParticleSystem@@6B@:BYTE
+EXTERN ??_7DefaultModule2Base@@6BBfmeHolderCU@@@:BYTE
+EXTERN ??_7DefaultModule2Base@@6BDefaultModule2CategorySlice@FXParticleSystem@@@:BYTE
+EXTERN ??_7DefaultModule2Base@@6BDefaultModule2SecondarySlice@FXParticleSystem@@@:BYTE
+EXTERN ??_7DefaultModule2SecondarySlice@FXParticleSystem@@6B@:BYTE
+EXTERN ??_7Rva005E7A30@@6BPolymorphicVptrBase01073744@@@:BYTE
+EXTERN ??_7Rva005E7A30@@6BPolymorphicVptrBase0110F9E8@@@:BYTE
 EXTERN ??_7Rva005EA080@@6BT4P0_Rva005E9AE0@@@:BYTE
+EXTERN ??_7Rva005EA0D0@@6B@:BYTE
 EXTERN ??_7Rva005EB1F0@@6B@:BYTE
 EXTERN ??_7Rva005EB1F0@@6BV3Slot0N@@@:BYTE
 EXTERN ??_7Rva005EB1F0@@6BV3Slot1@@@:BYTE
@@ -16,16 +24,8 @@ EXTERN ?j_0000d7b5@@YAXXZ:NEAR
 EXTERN ?j_00013994@@YAXXZ:NEAR
 EXTERN ?j_0002a9f5@@YAXXZ:NEAR
 EXTERN ?j_000438f6@@YAXXZ:NEAR
-EXTERN g_0103CD4B:NEAR
-EXTERN g_0103CD68:NEAR
-EXTERN g_0110F9E8:BYTE
-EXTERN g_0111089C:BYTE
-EXTERN g_011126F8:BYTE
-EXTERN g_0111270C:BYTE
-EXTERN g_01112A98:BYTE
-EXTERN g_01113188:BYTE
-EXTERN g_0111318C:BYTE
-EXTERN g_01113190:BYTE
+EXTERN g_Va0103CD4B:NEAR
+EXTERN g_Va0103CD68:NEAR
 
 ; ?generateParticleInfo@ParticleSystem@@IAEPBVParticleInfo@@HH@Z
 ; Exact 1257 retail bytes @ 0x006008AF
@@ -40,9 +40,9 @@ public ?generateParticleInfo@ParticleSystem@@IAEPBVParticleInfo@@HH@Z
     db 05Fh, 05Eh, 059h, 0C2h, 004h, 000h, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh
     db 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 08Bh, 0C1h, 08Bh, 04Ch, 024h, 004h, 089h, 048h
     db 004h, 0C7h, 040h, 008h
-    dd g_0110F9E8
+    dd ??_7?$CategoryModuleInfo@$01@FXParticleSystem@@6B@
     db 0C7h, 040h, 00Ch
-    dd g_01112A98
+    dd ??_7Rva005EA0D0@@6B@
     db 0C7h, 040h, 040h, 001h, 000h, 000h, 000h, 0B9h, 000h, 000h, 080h, 03Fh, 089h, 048h, 010h, 089h
     db 048h, 014h, 089h, 048h, 018h, 033h, 0C9h, 089h, 048h, 01Ch, 089h, 048h, 020h, 089h, 048h, 024h
     db 089h, 048h, 028h, 089h, 048h, 02Ch, 089h, 048h, 030h, 089h, 048h, 034h, 089h, 048h, 038h, 089h
@@ -61,21 +61,21 @@ public ?generateParticleInfo@ParticleSystem@@IAEPBVParticleInfo@@HH@Z
     db 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh
     db 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 06Ah
     db 0FFh, 068h
-    dd g_0103CD4B
+    dd g_Va0103CD4B
     db 064h, 0A1h, 000h, 000h, 000h, 000h, 050h, 064h, 089h, 025h, 000h, 000h, 000h, 000h, 083h, 0ECh
     db 010h, 053h, 056h, 08Bh, 0F1h, 057h, 089h, 074h, 024h, 00Ch, 0C7h, 046h, 004h
-    dd g_0110F9E8
+    dd ??_7?$CategoryModuleInfo@$01@FXParticleSystem@@6B@
     db 033h, 0DBh, 0B8h, 000h, 000h, 080h, 03Fh, 089h, 05Ch, 024h, 024h, 0C7h, 046h, 008h
-    dd g_01112A98
+    dd ??_7Rva005EA0D0@@6B@
     db 089h, 046h, 00Ch, 089h, 046h, 010h, 089h, 046h, 014h, 089h, 05Eh, 018h, 089h, 05Eh, 01Ch, 089h
     db 05Eh, 020h, 089h, 05Eh, 024h, 089h, 05Eh, 028h, 089h, 05Eh, 02Ch, 089h, 05Eh, 030h, 089h, 05Eh
     db 034h, 089h, 05Eh, 038h, 0C7h, 046h, 03Ch, 001h, 000h, 000h, 000h, 08Bh, 07Ch, 024h, 02Ch, 08Dh
     db 044h, 024h, 010h, 050h, 08Bh, 0CFh, 0C7h, 006h
     dd ??_7Rva005EA080@@6BT4P0_Rva005E9AE0@@@
     db 0C7h, 046h, 004h
-    dd g_0111270C
+    dd ??_7Rva005E7A30@@6BPolymorphicVptrBase0110F9E8@@@
     db 0C7h, 046h, 008h
-    dd g_011126F8
+    dd ??_7Rva005E7A30@@6BPolymorphicVptrBase01073744@@@
     call ?j_000438f6@@YAXXZ
     db 08Dh, 04Fh, 020h, 0C6h, 044h, 024h, 024h, 002h
     call ?j_0000d7b5@@YAXXZ
@@ -124,21 +124,21 @@ public ?generateParticleInfo@ParticleSystem@@IAEPBVParticleInfo@@HH@Z
     db 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh
     db 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 0CCh, 06Ah, 0FFh
     db 068h
-    dd g_0103CD68
+    dd g_Va0103CD68
     db 064h, 0A1h, 000h, 000h, 000h, 000h, 050h, 064h, 089h, 025h, 000h, 000h, 000h, 000h, 051h, 08Bh
     db 044h, 024h, 014h, 053h, 056h, 057h, 08Bh, 07Ch, 024h, 024h, 057h, 08Bh, 0F1h, 050h, 089h, 074h
     db 024h, 014h
     call ?j_0002a9f5@@YAXXZ
     db 0C7h, 046h, 014h
-    dd g_0111089C
+    dd ??_7DefaultModule2SecondarySlice@FXParticleSystem@@6B@
     db 0C7h, 046h, 018h
-    dd g_0110F9E8
+    dd ??_7?$CategoryModuleInfo@$01@FXParticleSystem@@6B@
     db 0C7h, 006h
-    dd g_01113190
+    dd ??_7DefaultModule2Base@@6BBfmeHolderCU@@@
     db 0C7h, 046h, 014h
-    dd g_0111318C
+    dd ??_7DefaultModule2Base@@6BDefaultModule2SecondarySlice@FXParticleSystem@@@
     db 0C7h, 046h, 018h
-    dd g_01113188
+    dd ??_7DefaultModule2Base@@6BDefaultModule2CategorySlice@FXParticleSystem@@@
     db 08Dh, 05Eh, 01Ch, 08Bh, 0CBh, 0C7h, 044h, 024h, 018h, 000h, 000h, 000h, 000h
     call ?j_000033eb@@YAXXZ
     db 0C7h, 006h

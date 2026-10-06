@@ -1,7 +1,14 @@
 .386
 .model flat
 ; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ?BfmeBoundaryZero3D@@3MB:BYTE
+EXTERN ?BfmeSubdualCapERD@@3MB:BYTE
+EXTERN ?Rva012ef214@@3PAVRva0041D290Manager@@A:BYTE
+EXTERN ?Rva012ef4cc@@3PAVRva0041D290Client@@A:BYTE
 EXTERN ?forward@Rva0000DAADBridgeThunk@@QAE_NPBURegion2D@@@Z:NEAR
+EXTERN ?g_bfmeDirectionWeight1285@@3MA:BYTE
+EXTERN ?g_bfmeK1266C@@3MA:BYTE
+EXTERN ?g_bfmeScaleBK@@3MA:BYTE
 EXTERN ?getBridgeHeight@Bridge@@QAEMPBUCoord3D@@PAU2@@Z:NEAR
 EXTERN ?isPointOnBridge@Bridge@@QAE_NPBUCoord3D@@@Z:NEAR
 EXTERN ?j_00017e27@@YAXXZ:NEAR
@@ -10,14 +17,7 @@ EXTERN ?j_0001cf49@@YAXXZ:NEAR
 EXTERN ?j_0002c106@@YAXXZ:NEAR
 EXTERN ?j_00041862@@YAXXZ:NEAR
 EXTERN __imp__floor:BYTE
-EXTERN g_01075334:BYTE
-EXTERN g_01075344:BYTE
-EXTERN g_01075350:BYTE
-EXTERN g_01075C70:BYTE
-EXTERN g_01075C74:BYTE
-EXTERN g_0109C34C:BYTE
-EXTERN g_012EF214:BYTE
-EXTERN g_012EF4CC:BYTE
+EXTERN g_Va0109C34C:BYTE
 
 ; ?classifyCells@PathfindLayer@@QAEXXZ
 ; Exact 1405 retail bytes @ 0x003FC790
@@ -39,14 +39,14 @@ public ?classifyCells@PathfindLayer@@QAEXXZ
     db 033h, 0D0h, 08Bh, 044h, 024h, 030h, 089h, 056h, 00Ch, 08Bh, 07Bh, 014h, 08Bh, 06Bh, 010h, 003h
     db 0F8h, 089h, 07Ch, 024h, 018h, 0DBh, 044h, 024h, 018h, 003h, 0E9h, 08Bh, 04Bh, 038h, 089h, 06Ch
     db 024h, 014h, 0D8h, 00Dh
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 08Dh, 044h, 024h, 020h, 050h, 0C7h, 044h, 024h, 01Ch, 000h, 000h, 000h, 000h, 0D9h, 054h, 024h
     db 028h, 0D8h, 005h
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 0D9h, 05Ch, 024h, 048h, 0DBh, 044h, 024h, 018h, 0D8h, 00Dh
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 0D9h, 054h, 024h, 024h, 0D8h, 005h
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 0D9h, 05Ch, 024h, 044h
     call ?isPointOnBridge@Bridge@@QAE_NPBUCoord3D@@@Z
     db 084h, 0C0h, 074h, 008h, 0C7h, 044h, 024h, 018h, 001h, 000h, 000h, 000h, 08Bh, 04Ch, 024h, 020h
@@ -85,26 +85,26 @@ public ?classifyCells@PathfindLayer@@QAEXXZ
     call ?j_00017e27@@YAXXZ
     db 08Bh, 046h, 00Ch, 025h, 0FFh, 01Fh, 0FCh, 0FFh, 00Dh, 000h, 010h, 000h, 000h, 089h, 046h, 00Ch
     db 08Bh, 00Dh
-    dd g_012EF214
+    dd ?Rva012ef214@@3PAVRva0041D290Manager@@A
     db 08Bh, 049h, 00Ch, 03Bh, 069h, 014h, 07Ch, 01Ch, 03Bh, 069h, 01Ch, 07Fh, 017h, 03Bh, 079h, 018h
     db 07Ch, 012h, 03Bh, 079h, 020h, 07Fh, 00Dh, 08Bh, 051h, 010h, 08Bh, 0CFh, 0C1h, 0E1h, 004h, 003h
     db 00Ch, 0AAh, 0EBh, 002h, 033h, 0C9h, 08Bh, 051h, 00Ch, 0C1h, 0E0h, 006h, 033h, 0C2h, 025h, 000h
     db 0F0h, 003h, 000h, 033h, 0D0h, 089h, 051h, 00Ch, 0D9h, 044h, 024h, 020h, 08Bh, 044h, 024h, 028h
     db 0D8h, 005h
-    dd g_01075344
+    dd ?g_bfmeK1266C@@3MA
     db 089h, 044h, 024h, 05Ch, 0D9h, 05Ch, 024h, 054h, 0D9h, 044h, 024h, 024h, 0D8h, 005h
-    dd g_01075344
+    dd ?g_bfmeK1266C@@3MA
     db 0D9h, 05Ch, 024h, 058h, 08Bh, 076h, 00Ch, 08Bh, 0CEh, 083h, 0E1h, 007h, 080h, 0F9h, 005h, 00Fh
     db 084h, 091h, 000h, 000h, 000h, 081h, 0E6h, 000h, 0F0h, 003h, 000h, 081h, 0FEh, 000h, 010h, 000h
     db 000h, 00Fh, 084h, 07Fh, 000h, 000h, 000h, 08Bh, 044h, 024h, 058h, 08Bh, 00Dh
-    dd g_012EF4CC
+    dd ?Rva012ef4cc@@3PAVRva0041D290Client@@A
     db 08Bh, 011h, 06Ah, 001h, 06Ah, 000h, 06Ah, 001h, 050h, 08Bh, 044h, 024h, 064h, 050h, 0FFh, 052h
     db 01Ch, 0D8h, 005h
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 06Ah, 000h, 08Dh, 04Ch, 024h, 058h, 051h, 0D9h, 05Ch, 024h, 01Ch, 08Bh, 04Bh, 038h
     call ?getBridgeHeight@Bridge@@QAEMPBUCoord3D@@PAU2@@Z
     db 0D8h, 05Ch, 024h, 014h, 0DFh, 0E0h, 0F6h, 0C4h, 005h, 07Ah, 040h, 08Bh, 015h
-    dd g_012EF214
+    dd ?Rva012ef214@@3PAVRva0041D290Manager@@A
     db 08Bh, 042h, 00Ch, 03Bh, 068h, 014h, 07Ch, 01Ch, 03Bh, 068h, 01Ch, 07Fh, 017h, 03Bh, 078h, 018h
     db 07Ch, 012h, 03Bh, 078h, 020h, 07Fh, 00Dh, 08Bh, 040h, 010h, 08Bh, 00Ch, 0A8h, 0C1h, 0E7h, 004h
     db 003h, 0F9h, 0EBh, 002h, 033h, 0FFh, 08Bh, 04Fh, 00Ch, 080h, 0E1h, 007h, 080h, 0F9h, 004h, 074h
@@ -120,35 +120,35 @@ public ?classifyCells@PathfindLayer@@QAEXXZ
     db 0D9h, 084h, 024h, 09Ch, 000h, 000h, 000h, 0D8h, 0A4h, 024h, 090h, 000h, 000h, 000h, 0D9h, 0C0h
     db 0DEh, 0C9h, 0D9h, 0C1h, 0D8h, 0CAh, 0DEh, 0C1h, 0D9h, 0C2h, 0D8h, 0CBh, 0DEh, 0C1h, 0D9h, 0FAh
     db 0D9h, 005h
-    dd g_01075350
+    dd ?BfmeBoundaryZero3D@@3MB
     db 0D9h, 0C1h, 0DAh, 0E9h, 0DFh, 0E0h, 0F6h, 0C4h, 044h, 07Bh, 00Eh, 0D8h, 03Dh
-    dd g_01075334
+    dd ?BfmeSubdualCapERD@@3MB
     db 0D9h, 0C0h, 0DEh, 0CBh, 0DEh, 0C9h, 0EBh, 002h, 0DDh, 0D8h, 0D9h, 0C9h, 083h, 0ECh, 008h, 0D8h
     db 00Dh
-    dd g_0109C34C
+    dd g_Va0109C34C
     db 0D9h, 05Ch, 024h, 06Ch, 0D8h, 00Dh
-    dd g_0109C34C
+    dd g_Va0109C34C
     db 0D9h, 05Ch, 024h, 070h, 0D9h, 084h, 024h, 090h, 000h, 000h, 000h, 0D8h, 064h, 024h, 06Ch, 0D8h
     db 00Dh
-    dd g_01075C70
+    dd ?g_bfmeScaleBK@@3MA
     db 0DDh, 01Ch, 024h, 0FFh, 015h
     dd __imp__floor
     db 0D9h, 05Ch, 024h, 01Ch, 083h, 0C4h, 008h, 0D9h, 044h, 024h, 014h, 0DBh, 05Ch, 024h, 050h, 0D9h
     db 084h, 024h, 08Ch, 000h, 000h, 000h, 0D8h, 064h, 024h, 068h, 08Bh, 054h, 024h, 050h, 083h, 0ECh
     db 008h, 089h, 053h, 018h, 0D8h, 00Dh
-    dd g_01075C70
+    dd ?g_bfmeScaleBK@@3MA
     db 0DDh, 01Ch, 024h, 0FFh, 015h
     dd __imp__floor
     db 0D9h, 05Ch, 024h, 01Ch, 083h, 0C4h, 008h, 0D9h, 044h, 024h, 014h, 0DBh, 05Ch, 024h, 060h, 0D9h
     db 084h, 024h, 094h, 000h, 000h, 000h, 0D8h, 044h, 024h, 064h, 08Bh, 044h, 024h, 060h, 083h, 0ECh
     db 008h, 089h, 043h, 01Ch, 0D8h, 00Dh
-    dd g_01075C70
+    dd ?g_bfmeScaleBK@@3MA
     db 0DDh, 01Ch, 024h, 0FFh, 015h
     dd __imp__floor
     db 0D9h, 05Ch, 024h, 01Ch, 083h, 0C4h, 008h, 0D9h, 044h, 024h, 014h, 0DBh, 05Ch, 024h, 070h, 0D9h
     db 084h, 024h, 098h, 000h, 000h, 000h, 0D8h, 044h, 024h, 068h, 08Bh, 04Ch, 024h, 070h, 083h, 0ECh
     db 008h, 089h, 04Bh, 020h, 0D8h, 00Dh
-    dd g_01075C70
+    dd ?g_bfmeScaleBK@@3MA
     db 0DDh, 01Ch, 024h, 0FFh, 015h
     dd __imp__floor
     db 0D9h, 05Ch, 024h, 01Ch, 083h, 0C4h, 008h, 0D9h, 044h, 024h, 014h, 0DBh, 05Ch, 024h, 04Ch, 08Bh
@@ -158,7 +158,7 @@ public ?classifyCells@PathfindLayer@@QAEXXZ
     db 000h, 000h, 08Bh, 043h, 00Ch, 033h, 0FFh, 03Bh, 0C5h, 07Eh, 073h, 08Bh, 0FFh, 08Bh, 043h, 004h
     db 08Bh, 04Ch, 024h, 01Ch, 08Bh, 00Ch, 088h, 08Bh, 044h, 029h, 00Ch, 003h, 0CDh, 0C1h, 0E8h, 00Ch
     db 083h, 0E0h, 03Fh, 083h, 0F8h, 001h, 074h, 005h, 083h, 0F8h, 010h, 07Ch, 03Dh, 08Bh, 015h
-    dd g_012EF214
+    dd ?Rva012ef214@@3PAVRva0041D290Manager@@A
     db 08Bh, 072h, 00Ch, 08Bh, 053h, 010h, 08Bh, 043h, 014h, 003h, 054h, 024h, 01Ch, 003h, 0C7h, 03Bh
     db 056h, 014h, 07Ch, 023h, 03Bh, 056h, 01Ch, 07Fh, 01Eh, 03Bh, 046h, 018h, 07Ch, 019h, 03Bh, 046h
     db 020h, 07Fh, 014h, 08Bh, 076h, 010h, 0C1h, 0E0h, 004h, 003h, 004h, 096h, 085h, 0C0h, 074h, 007h

@@ -1,17 +1,17 @@
 .386
 .model flat
 ; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ?BfmeBoundaryZero3D@@3MB:BYTE
+EXTERN ?BfmeSubdualCapERD@@3MB:BYTE
+EXTERN ?R3FieldSampleScale010F653C@@3MA:BYTE
+EXTERN ?g_bfmeScaleBK@@3MA:BYTE
+EXTERN ?g_bfmeSubB3@@3NA:BYTE
+EXTERN ?g_pathfindDoubleCellSize@@3MB:BYTE
 EXTERN ?j_00027a43@@YAXXZ:NEAR
 EXTERN ?j_00042479@@YAXXZ:NEAR
 EXTERN __imp__floor:BYTE
 EXTERN __real@481c4000:BYTE
-EXTERN g_01075334:BYTE
-EXTERN g_01075350:BYTE
-EXTERN g_01075C70:BYTE
-EXTERN g_0107C640:BYTE
-EXTERN g_01096418:BYTE
-EXTERN g_010977E0:BYTE
-EXTERN g_010F653C:BYTE
+EXTERN g_Va01096418:BYTE
 
 ; ?getHeightMapHeight@BaseHeightMapRenderObjClass@@QBEMMMPAUCoord3D@@@Z
 ; Exact 957 retail bytes @ 0x006CBB50; queue RVA 0x00B020E9 was MISPLACED
@@ -27,11 +27,11 @@ public ?getHeightMapHeight@BaseHeightMapRenderObjClass@@QBEMMMPAUCoord3D@@@Z
     db 083h, 0ECh, 02Ch, 057h, 08Bh, 0F9h, 08Bh, 087h, 0F4h, 02Fh, 000h, 000h, 085h, 0C0h, 075h, 029h
     db 08Bh, 044h, 024h, 03Ch, 085h, 0C0h, 074h, 014h, 0C7h, 000h, 000h, 000h, 000h, 000h, 0C7h, 040h
     db 004h, 000h, 000h, 000h, 000h, 0C7h, 040h, 008h, 000h, 000h, 080h, 03Fh, 0D9h, 005h
-    dd g_01075350
+    dd ?BfmeBoundaryZero3D@@3MB
     db 05Fh, 083h, 0C4h, 02Ch, 0C2h, 00Ch, 000h, 0D9h, 044h, 024h, 034h, 053h, 0D8h, 00Dh
-    dd g_01075C70
+    dd ?g_bfmeScaleBK@@3MA
     db 055h, 056h, 083h, 0ECh, 008h, 0D9h, 05Ch, 024h, 048h, 0D9h, 044h, 024h, 04Ch, 0D8h, 00Dh
-    dd g_01075C70
+    dd ?g_bfmeScaleBK@@3MA
     db 0D9h, 05Ch, 024h, 04Ch, 0D9h, 044h, 024h, 048h, 0DDh, 01Ch, 024h, 0FFh, 015h
     dd __imp__floor
     db 0D9h, 05Ch, 024h, 018h, 0D9h, 044h, 024h, 04Ch, 0DDh, 01Ch, 024h, 0FFh, 015h
@@ -54,16 +54,16 @@ public ?getHeightMapHeight@BaseHeightMapRenderObjClass@@QBEMMMPAUCoord3D@@@Z
     db 018h, 0DBh, 044h, 024h, 018h, 0D9h, 044h, 024h, 044h, 0D8h, 05Ch, 024h, 040h, 0DFh, 0E0h, 0F6h
     db 0C4h, 041h, 075h, 025h, 00Fh, 0B7h, 012h, 089h, 054h, 024h, 018h, 0DBh, 044h, 024h, 018h, 0D9h
     db 0CAh, 0D8h, 0E2h, 0D9h, 005h
-    dd g_01075334
+    dd ?BfmeSubdualCapERD@@3MB
     db 0D8h, 064h, 024h, 044h, 0DEh, 0C9h, 0D9h, 0C9h, 0D8h, 0E2h, 0D8h, 04Ch, 024h, 040h, 0EBh, 025h
     db 00Fh, 0B7h, 044h, 079h, 002h, 089h, 044h, 024h, 018h, 0DBh, 044h, 024h, 018h, 0D9h, 0CAh, 0D8h
     db 0E2h, 0D9h, 005h
-    dd g_01075334
+    dd ?BfmeSubdualCapERD@@3MB
     db 0D8h, 064h, 024h, 040h, 0DEh, 0C9h, 0D9h, 0C9h, 0D8h, 0E2h, 0D8h, 04Ch, 024h, 044h, 08Bh, 044h
     db 024h, 048h, 0DEh, 0C1h, 085h, 0C0h, 0D8h, 0C1h, 0D8h, 00Dh
-    dd g_010F653C
+    dd ?R3FieldSampleScale010F653C@@3MA
     db 0D9h, 05Ch, 024h, 018h, 0DDh, 0D8h, 00Fh, 084h, 0B5h, 001h, 000h, 000h, 0D9h, 005h
-    dd g_01075334
+    dd ?BfmeSubdualCapERD@@3MB
     db 08Dh, 046h, 001h, 0D8h, 064h, 024h, 040h, 00Fh, 0AFh, 0C5h, 003h, 0C3h, 08Dh, 056h, 0FFh, 00Fh
     db 0AFh, 0D5h, 083h, 0C6h, 002h, 00Fh, 0AFh, 0F5h, 066h, 08Bh, 02Ch, 041h, 066h, 089h, 06Ch, 024h
     db 01Ch, 00Fh, 0B7h, 06Ch, 079h, 002h, 003h, 0D3h, 003h, 0F3h, 066h, 08Bh, 01Ch, 079h, 089h, 06Ch
@@ -71,41 +71,41 @@ public ?getHeightMapHeight@BaseHeightMapRenderObjClass@@QBEMMMPAUCoord3D@@@Z
     db 0EBh, 089h, 06Ch, 024h, 014h, 00Fh, 0B7h, 06Ch, 041h, 004h, 0DBh, 044h, 024h, 014h, 089h, 05Ch
     db 024h, 020h, 00Fh, 0B7h, 05Ch, 024h, 01Ch, 0D9h, 05Ch, 024h, 014h, 0D9h, 044h, 024h, 044h, 0DCh
     db 02Dh
-    dd g_0107C640
+    dd ?g_bfmeSubB3@@3NA
     db 02Bh, 0EBh, 089h, 06Ch, 024h, 01Ch, 08Bh, 06Ch, 024h, 010h, 00Fh, 0B7h, 044h, 041h, 002h, 0DBh
     db 044h, 024h, 01Ch, 02Bh, 0EFh, 0D8h, 04Ch, 024h, 040h, 00Fh, 0B7h, 07Ch, 051h, 002h, 0D9h, 044h
     db 024h, 014h, 0D8h, 0CBh, 089h, 06Ch, 024h, 01Ch, 08Bh, 06Ch, 024h, 010h, 00Fh, 0B7h, 014h, 051h
     db 0DEh, 0C1h, 02Bh, 0C7h, 0D8h, 04Ch, 024h, 044h, 02Bh, 0DAh, 0DBh, 044h, 024h, 01Ch, 089h, 044h
     db 024h, 01Ch, 00Fh, 0B7h, 044h, 071h, 002h, 02Bh, 0C5h, 0D8h, 0CBh, 0D9h, 044h, 024h, 014h, 0D8h
     db 04Ch, 024h, 040h, 0DEh, 0C1h, 0D8h, 0CAh, 0DEh, 0C1h, 0D8h, 00Dh
-    dd g_010F653C
+    dd ?R3FieldSampleScale010F653C@@3MA
     db 0D9h, 05Ch, 024h, 038h, 0DBh, 044h, 024h, 01Ch, 089h, 044h, 024h, 01Ch, 00Fh, 0B7h, 004h, 071h
     db 08Bh, 04Ch, 024h, 020h, 02Bh, 0C1h, 0D8h, 0CAh, 0DBh, 044h, 024h, 01Ch, 0D8h, 04Ch, 024h, 040h
     db 0DEh, 0C1h, 0D8h, 04Ch, 024h, 044h, 089h, 05Ch, 024h, 044h, 0DBh, 044h, 024h, 044h, 089h, 044h
     db 024h, 044h, 0D8h, 0CBh, 0DBh, 044h, 024h, 044h, 0D8h, 04Ch, 024h, 040h, 0DEh, 0C1h, 0D8h, 0CAh
     db 0DEh, 0C1h, 0DDh, 0DAh, 0DDh, 0D8h, 0D8h, 00Dh
-    dd g_010F653C
+    dd ?R3FieldSampleScale010F653C@@3MA
     db 0D9h, 005h
-    dd g_01075350
+    dd ?BfmeBoundaryZero3D@@3MB
     db 0D8h, 0C9h, 0D9h, 044h, 024h, 038h, 0D8h, 00Dh
-    dd g_010977E0
+    dd ?g_pathfindDoubleCellSize@@3MB
     db 0DEh, 0E9h, 0D9h, 05Ch, 024h, 024h, 0D9h, 044h, 024h, 038h, 0D8h, 00Dh
-    dd g_01075350
+    dd ?BfmeBoundaryZero3D@@3MB
     db 0D9h, 0C9h, 0D8h, 00Dh
-    dd g_010977E0
+    dd ?g_pathfindDoubleCellSize@@3MB
     db 0DEh, 0E9h, 0D9h, 05Ch, 024h, 028h, 0D9h, 005h
-    dd g_01096418
+    dd g_Va01096418
     db 0D9h, 044h, 024h, 028h, 0D8h, 04Ch, 024h, 028h, 0D9h, 044h, 024h, 024h, 0D8h, 04Ch, 024h, 024h
     db 0DEh, 0C1h, 0D8h, 005h
     dd __real@481c4000
     db 0D9h, 05Ch, 024h, 040h, 0D9h, 005h
-    dd g_01075350
+    dd ?BfmeBoundaryZero3D@@3MB
     db 0D9h, 044h, 024h, 040h, 0DAh, 0E9h, 0DFh, 0E0h, 0F6h, 0C4h, 044h, 07Bh, 026h, 08Bh, 04Ch, 024h
     db 040h, 0DDh, 0D8h, 051h
     call ?j_00027a43@@YAXXZ
     db 0D9h, 044h, 024h, 024h, 0D8h, 0C9h, 0D9h, 05Ch, 024h, 024h, 0D9h, 044h, 024h, 028h, 0D8h, 0C9h
     db 0D9h, 05Ch, 024h, 028h, 0D8h, 00Dh
-    dd g_01096418
+    dd g_Va01096418
     db 08Bh, 044h, 024h, 048h, 08Bh, 054h, 024h, 024h, 0D9h, 058h, 008h, 08Bh, 04Ch, 024h, 028h, 089h
     db 010h, 089h, 048h, 004h, 0D9h, 044h, 024h, 018h, 05Eh, 05Dh, 05Bh, 05Fh, 083h, 0C4h, 02Ch, 0C2h
     db 00Ch, 000h, 08Bh, 044h, 024h, 048h, 085h, 0C0h, 074h, 014h, 0C7h, 000h, 000h, 000h, 000h, 000h
@@ -114,7 +114,7 @@ public ?getHeightMapHeight@BaseHeightMapRenderObjClass@@QBEMMMPAUCoord3D@@@Z
     call ?j_00042479@@YAXXZ
     db 00Fh, 0B7h, 0D0h, 05Eh, 089h, 054h, 024h, 044h, 05Dh, 05Bh, 0DBh, 044h, 024h, 03Ch, 05Fh, 0D8h
     db 00Dh
-    dd g_010F653C
+    dd ?R3FieldSampleScale010F653C@@3MA
     db 083h, 0C4h, 02Ch, 0C2h, 00Ch, 000h
 ?getHeightMapHeight@BaseHeightMapRenderObjClass@@QBEMMMPAUCoord3D@@@Z ENDP
 _TEXT$d00acbb50 ENDS

@@ -1,6 +1,12 @@
 .386
 .model flat
 ; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ?BfmeBoundaryZero3D@@3MB:BYTE
+EXTERN ?Glo012F0239@@3_NA:BYTE
+EXTERN ?Rva012ef4cc@@3PAVRva0041D290Client@@A:BYTE
+EXTERN ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A:BYTE
+EXTERN ?TheMixFileInfoPool@@3HA:BYTE
+EXTERN ?g_bfmeK1266C@@3MA:BYTE
 EXTERN ?j_000059c0@@YAXXZ:NEAR
 EXTERN ?j_00005e48@@YAXXZ:NEAR
 EXTERN ?j_00010ea1@@YAXXZ:NEAR
@@ -36,37 +42,31 @@ EXTERN ?j_00049f3f@@YAXXZ:NEAR
 EXTERN ?j_0004a980@@YAXXZ:NEAR
 EXTERN ?j_0004b3b7@@YAXXZ:NEAR
 EXTERN __bfmeNullNameXZ:BYTE
-EXTERN g_01075344:BYTE
-EXTERN g_01075350:BYTE
-EXTERN g_01099D80:BYTE
-EXTERN g_010EF088:BYTE
-EXTERN g_010EF0D4:BYTE
-EXTERN g_010EF118:BYTE
-EXTERN g_010EF16C:BYTE
-EXTERN g_010EF1B8:BYTE
-EXTERN g_010EF1F8:BYTE
-EXTERN g_010EF238:BYTE
-EXTERN g_010EF278:BYTE
-EXTERN g_010EF2C8:BYTE
-EXTERN g_010EF314:BYTE
-EXTERN g_010EF354:BYTE
-EXTERN g_010EF3A0:BYTE
-EXTERN g_010EF3E0:BYTE
-EXTERN g_010EF420:BYTE
-EXTERN g_010EF460:BYTE
-EXTERN g_010EF4A0:BYTE
-EXTERN g_010EF4EC:BYTE
-EXTERN g_010EF538:BYTE
-EXTERN g_010EF584:BYTE
-EXTERN g_010EF5C4:BYTE
-EXTERN g_010EF610:BYTE
-EXTERN g_010EF65C:BYTE
-EXTERN g_010EF69C:BYTE
-EXTERN g_012ED4FC:BYTE
-EXTERN g_012EF4CC:BYTE
-EXTERN g_012F0239:BYTE
-EXTERN g_012F1060:BYTE
-EXTERN g_012F1094:BYTE
+EXTERN g_Va01099D80:BYTE
+EXTERN g_Va010EF088:BYTE
+EXTERN g_Va010EF0D4:BYTE
+EXTERN g_Va010EF118:BYTE
+EXTERN g_Va010EF16C:BYTE
+EXTERN g_Va010EF1B8:BYTE
+EXTERN g_Va010EF1F8:BYTE
+EXTERN g_Va010EF238:BYTE
+EXTERN g_Va010EF278:BYTE
+EXTERN g_Va010EF2C8:BYTE
+EXTERN g_Va010EF314:BYTE
+EXTERN g_Va010EF354:BYTE
+EXTERN g_Va010EF3A0:BYTE
+EXTERN g_Va010EF3E0:BYTE
+EXTERN g_Va010EF420:BYTE
+EXTERN g_Va010EF460:BYTE
+EXTERN g_Va010EF4A0:BYTE
+EXTERN g_Va010EF4EC:BYTE
+EXTERN g_Va010EF538:BYTE
+EXTERN g_Va010EF584:BYTE
+EXTERN g_Va010EF5C4:BYTE
+EXTERN g_Va010EF610:BYTE
+EXTERN g_Va010EF65C:BYTE
+EXTERN g_Va010EF69C:BYTE
+EXTERN g_Va012F1060:BYTE
 
 ; ?internalFindPath@Pathfinder@@MAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBUCoord3D@@2@Z
 ; Exact 2347 retail bytes @ 0x003F0340; Ghidra ENTRY 2347.
@@ -78,15 +78,15 @@ _TEXT$d007f0340 SEGMENT BYTE PUBLIC FLAT 'CODE'
 public ?internalFindPath@Pathfinder@@MAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBUCoord3D@@2@Z
 ?internalFindPath@Pathfinder@@MAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBUCoord3D@@2@Z PROC
     db 0A1h
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 081h, 0ECh, 088h, 000h, 000h, 000h, 055h, 056h, 057h, 033h, 0FFh, 03Bh, 0C7h, 08Bh, 0F1h, 074h
     db 00Eh, 068h
-    dd g_010EF69C
+    dd g_Va010EF69C
     db 050h
     call ?j_0003a17a@@YAXXZ
     db 083h, 0C4h, 008h, 08Bh, 0ACh, 024h, 098h, 000h, 000h, 000h, 08Dh, 044h, 024h, 00Ch, 050h, 08Dh
     db 04Ch, 024h, 020h, 051h, 055h, 08Bh, 0CEh, 089h, 03Dh
-    dd g_012F1060
+    dd g_Va012F1060
     db 0C6h, 044h, 024h, 018h, 001h, 089h, 07Ch, 024h, 028h
     call ?j_000461ff@@YAXXZ
     db 08Bh, 0CDh, 0C6h, 044h, 024h, 044h, 001h
@@ -94,33 +94,33 @@ public ?internalFindPath@Pathfinder@@MAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBU
     db 085h, 0C0h, 074h, 03Bh, 08Bh, 0CDh
     call ?j_00020824@@YAXXZ
     db 083h, 078h, 02Ch, 001h, 075h, 02Eh, 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 08Bh, 015h
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 074h, 018h, 03Bh, 0D7h, 074h, 014h, 068h
-    dd g_010EF65C
+    dd g_Va010EF65C
     db 052h
     call ?j_0003a17a@@YAXXZ
     db 08Bh, 015h
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 083h, 0C4h, 008h, 0C6h, 044h, 024h, 044h, 000h, 0EBh, 006h, 08Bh, 015h
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 0D9h, 005h
-    dd g_01075350
+    dd ?BfmeBoundaryZero3D@@3MB
     db 08Bh, 08Ch, 024h, 0A4h, 000h, 000h, 000h, 0D9h, 001h, 0DAh, 0E9h, 0DFh, 0E0h, 0F6h, 0C4h, 044h
     db 07Ah, 03Bh, 0D9h, 005h
-    dd g_01075350
+    dd ?BfmeBoundaryZero3D@@3MB
     db 0D9h, 041h, 004h, 0DAh, 0E9h, 0DFh, 0E0h, 0F6h, 0C4h, 044h, 07Ah, 029h, 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 074h, 042h, 03Bh, 0D7h, 074h, 03Eh, 068h
-    dd g_010EF610
+    dd g_Va010EF610
     db 052h
     call ?j_0003a17a@@YAXXZ
     db 083h, 0C4h, 008h, 05Fh, 05Eh, 033h, 0C0h, 05Dh, 081h, 0C4h, 088h, 000h, 000h, 000h, 0C2h, 010h
     db 000h, 08Ah, 046h, 008h, 084h, 0C0h, 075h, 029h, 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 074h, 012h, 03Bh, 0D7h, 074h, 00Eh, 068h
-    dd g_010EF5C4
+    dd g_Va010EF5C4
     db 052h
     call ?j_0003a17a@@YAXXZ
     db 083h, 0C4h, 008h, 05Fh, 05Eh, 033h, 0C0h, 05Dh, 081h, 0C4h, 088h, 000h, 000h, 000h, 0C2h, 010h
@@ -130,20 +130,20 @@ public ?internalFindPath@Pathfinder@@MAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBU
     db 050h, 08Dh, 04Ch, 024h, 04Ch, 051h, 08Bh, 0CEh, 089h, 054h, 024h, 058h
     call ?j_00041bff@@YAXXZ
     db 08Ah, 044h, 024h, 00Ch, 084h, 0C0h, 075h, 03Ch, 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 074h, 017h, 0A1h
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 03Bh, 0C7h, 074h, 00Eh, 068h
-    dd g_010EF584
+    dd g_Va010EF584
     db 050h
     call ?j_0003a17a@@YAXXZ
     db 083h, 0C4h, 008h, 0D9h, 044h, 024h, 02Ch, 0D8h, 005h
-    dd g_01075344
+    dd ?g_bfmeK1266C@@3MA
     db 0D9h, 05Ch, 024h, 02Ch, 0D9h, 044h, 024h, 030h, 0D8h, 005h
-    dd g_01075344
+    dd ?g_bfmeK1266C@@3MA
     db 0D9h, 05Ch, 024h, 030h, 053h, 08Dh, 054h, 024h, 030h, 052h, 0C6h, 086h, 03Ch, 008h, 000h, 000h
     db 000h, 08Bh, 00Dh
-    dd g_012EF4CC
+    dd ?Rva012ef4cc@@3PAVRva0041D290Client@@A
     db 057h
     call ?j_0001c675@@YAXXZ
     db 08Bh, 0F8h, 08Dh, 044h, 024h, 028h, 050h, 08Dh, 04Ch, 024h, 034h, 051h, 08Bh, 0CEh, 089h, 07Ch
@@ -153,11 +153,11 @@ public ?internalFindPath@Pathfinder@@MAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBU
     db 0CEh
     call ?j_00020671@@YAXXZ
     db 08Bh, 0D8h, 085h, 0DBh, 075h, 024h, 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 00Fh, 084h, 01Fh, 007h, 000h, 000h, 0A1h
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 085h, 0C0h, 00Fh, 084h, 012h, 007h, 000h, 000h, 068h
-    dd g_010EF538
+    dd g_Va010EF538
     db 0E9h, 0FFh, 006h, 000h, 000h, 08Dh, 04Ch, 024h, 028h, 051h, 08Dh, 054h, 024h, 034h, 052h, 08Bh
     db 0CEh
     call ?j_000171e8@@YAXXZ
@@ -165,11 +165,11 @@ public ?internalFindPath@Pathfinder@@MAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBU
     db 044h, 024h, 034h, 051h, 08Bh, 04Ch, 024h, 034h, 052h, 057h, 050h, 051h, 055h, 08Bh, 0CEh
     call ?j_00049f3f@@YAXXZ
     db 084h, 0C0h, 075h, 024h, 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 00Fh, 084h, 0C2h, 006h, 000h, 000h, 0A1h
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 085h, 0C0h, 00Fh, 084h, 0B5h, 006h, 000h, 000h, 068h
-    dd g_010EF4EC
+    dd g_Va010EF4EC
     db 0E9h, 0A2h, 006h, 000h, 000h, 08Dh, 054h, 024h, 05Ch, 052h, 08Dh, 044h, 024h, 050h, 050h, 08Bh
     db 0CEh
     call ?j_000171e8@@YAXXZ
@@ -178,65 +178,65 @@ public ?internalFindPath@Pathfinder@@MAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBU
     db 08Dh, 04Ch, 024h, 04Ch, 051h, 050h, 08Bh, 0CEh, 089h, 044h, 024h, 030h
     call ?j_00047384@@YAXXZ
     db 08Bh, 0F8h, 085h, 0FFh, 075h, 024h, 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 00Fh, 084h, 06Fh, 006h, 000h, 000h, 0A1h
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 085h, 0C0h, 00Fh, 084h, 062h, 006h, 000h, 000h, 068h
-    dd g_010EF4A0
+    dd g_Va010EF4A0
     db 0E9h, 04Fh, 006h, 000h, 000h, 08Dh, 054h, 024h, 018h, 052h, 08Dh, 044h, 024h, 034h, 050h, 08Bh
     db 0CEh
     call ?j_000171e8@@YAXXZ
     db 08Bh, 003h, 085h, 0C0h, 075h, 025h, 0A1h
-    dd g_012F1094
+    dd ?TheMixFileInfoPool@@3HA
     db 085h, 0C0h, 075h, 005h
     call ?j_0003d1a9@@YAXXZ
     db 08Dh, 04Ch, 024h, 018h, 051h, 053h, 068h
-    dd g_012F1094
+    dd ?TheMixFileInfoPool@@3HA
     call ?j_00021da0@@YAXXZ
     db 083h, 0C4h, 00Ch, 089h, 003h, 0EBh, 007h, 0C7h, 040h, 00Ch, 000h, 000h, 000h, 000h, 03Bh, 0FBh
     db 074h, 063h, 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 074h, 017h, 0A1h
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 085h, 0C0h, 074h, 00Eh, 068h
-    dd g_010EF460
+    dd g_Va010EF460
     db 050h
     call ?j_0003a17a@@YAXXZ
     db 083h, 0C4h, 008h, 08Dh, 054h, 024h, 018h, 052h, 08Dh, 044h, 024h, 050h, 050h, 08Bh, 0CEh
     call ?j_000171e8@@YAXXZ
     db 08Bh, 007h, 085h, 0C0h, 075h, 025h, 0A1h
-    dd g_012F1094
+    dd ?TheMixFileInfoPool@@3HA
     db 085h, 0C0h, 075h, 005h
     call ?j_0003d1a9@@YAXXZ
     db 08Dh, 04Ch, 024h, 018h, 051h, 057h, 068h
-    dd g_012F1094
+    dd ?TheMixFileInfoPool@@3HA
     call ?j_00021da0@@YAXXZ
     db 083h, 0C4h, 00Ch, 089h, 007h, 0EBh, 007h, 0C7h, 040h, 00Ch, 000h, 000h, 000h, 000h, 08Bh, 057h
     db 00Ch, 080h, 0E2h, 007h, 080h, 0FAh, 004h, 075h, 03Eh, 08Bh, 007h, 085h, 0C0h, 074h, 005h, 08Bh
     db 040h, 020h, 0EBh, 002h, 033h, 0C0h, 03Bh, 086h, 044h, 008h, 000h, 000h, 074h, 029h, 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 074h, 017h, 0A1h
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 085h, 0C0h, 074h, 00Eh, 068h
-    dd g_010EF420
+    dd g_Va010EF420
     db 050h
     call ?j_0003a17a@@YAXXZ
     db 083h, 0C4h, 008h, 0C6h, 086h, 03Ch, 008h, 000h, 000h, 001h, 0EBh, 027h, 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 074h, 017h, 0A1h
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 085h, 0C0h, 074h, 00Eh, 068h
-    dd g_010EF3E0
+    dd g_Va010EF3E0
     db 050h
     call ?j_0003a17a@@YAXXZ
     db 083h, 0C4h, 008h, 0C6h, 086h, 03Ch, 008h, 000h, 000h, 000h, 08Bh, 0CDh
     call ?j_00042a37@@YAXXZ
     db 084h, 0C0h, 00Fh, 084h, 0B1h, 000h, 000h, 000h, 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 074h, 017h, 0A1h
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 085h, 0C0h, 074h, 00Eh, 068h
-    dd g_010EF3A0
+    dd g_Va010EF3A0
     db 050h
     call ?j_0003a17a@@YAXXZ
     db 083h, 0C4h, 008h, 053h, 08Bh, 0CFh
@@ -253,15 +253,15 @@ public ?internalFindPath@Pathfinder@@MAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBU
     db 08Bh, 0CEh
     call ?j_00032b5f@@YAXXZ
     db 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 074h, 027h, 08Bh, 00Dh
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 085h, 0C9h, 074h, 01Dh, 085h, 0FFh, 0B8h
-    dd g_01099D80
+    dd g_Va01099D80
     db 075h, 005h, 0B8h
     dd __bfmeNullNameXZ
     db 050h, 068h
-    dd g_010EF354
+    dd g_Va010EF354
     db 051h
     call ?j_0003a17a@@YAXXZ
     db 083h, 0C4h, 00Ch, 05Bh, 08Bh, 0C7h, 05Fh, 05Eh, 05Dh, 081h, 0C4h, 088h, 000h, 000h, 000h, 0C2h
@@ -295,11 +295,11 @@ public ?internalFindPath@Pathfinder@@MAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBU
     db 00Fh, 0B7h, 0C0h, 050h, 08Dh, 044h, 024h, 040h, 050h, 08Dh, 08Eh, 09Ch, 00Ch, 000h, 000h
     call ?j_0004375c@@YAXXZ
     db 00Fh, 0B7h, 0C8h, 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 089h, 04Ch, 024h, 018h, 074h, 017h, 0A1h
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 085h, 0C0h, 074h, 00Eh, 068h
-    dd g_010EF314
+    dd g_Va010EF314
     db 050h
     call ?j_0003a17a@@YAXXZ
     db 083h, 0C4h, 008h, 08Bh, 054h, 024h, 024h, 039h, 054h, 024h, 018h, 074h, 048h, 08Bh, 04Ch, 024h
@@ -310,11 +310,11 @@ public ?internalFindPath@Pathfinder@@MAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBU
     db 08Bh, 0CFh
     call ?j_0004b3b7@@YAXXZ
     db 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 00Fh, 084h, 00Fh, 003h, 000h, 000h, 0A1h
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 085h, 0C0h, 00Fh, 084h, 002h, 003h, 000h, 000h, 068h
-    dd g_010EF2C8
+    dd g_Va010EF2C8
     db 0E9h, 0EFh, 002h, 000h, 000h, 08Bh, 094h, 024h, 0A0h, 000h, 000h, 000h, 08Bh, 042h, 010h, 055h
     db 050h, 08Bh, 044h, 024h, 060h, 050h, 08Dh, 04Ch, 024h, 03Ch, 051h, 08Bh, 0CEh
     call ?j_0003b359@@YAXXZ
@@ -323,29 +323,29 @@ public ?internalFindPath@Pathfinder@@MAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBU
     db 08Bh, 0CFh
     call ?j_0004b3b7@@YAXXZ
     db 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 00Fh, 084h, 0B6h, 002h, 000h, 000h, 0A1h
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 085h, 0C0h, 00Fh, 084h, 0A9h, 002h, 000h, 000h, 068h
-    dd g_010EF278
+    dd g_Va010EF278
     db 0E9h, 096h, 002h, 000h, 000h, 08Bh, 094h, 024h, 0A0h, 000h, 000h, 000h, 08Bh, 042h, 010h, 08Bh
     db 08Ch, 024h, 0A4h, 000h, 000h, 000h, 055h, 050h, 08Bh, 044h, 024h, 030h, 050h, 051h, 08Bh, 0CEh
     call ?j_0003b359@@YAXXZ
     db 084h, 0C0h, 075h, 027h, 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 074h, 017h, 0A1h
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 085h, 0C0h, 074h, 00Eh, 068h
-    dd g_010EF238
+    dd g_Va010EF238
     db 050h
     call ?j_0003a17a@@YAXXZ
     db 083h, 0C4h, 008h, 0C6h, 086h, 03Ch, 008h, 000h, 000h, 001h, 08Ah, 086h, 03Ch, 008h, 000h, 000h
     db 084h, 0C0h, 00Fh, 085h, 0B9h, 000h, 000h, 000h, 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 074h, 017h, 0A1h
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 085h, 0C0h, 074h, 00Eh, 068h
-    dd g_010EF1F8
+    dd g_Va010EF1F8
     db 050h
     call ?j_0003a17a@@YAXXZ
     db 083h, 0C4h, 008h, 08Dh, 04Ch, 024h, 064h
@@ -360,11 +360,11 @@ public ?internalFindPath@Pathfinder@@MAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBU
     db 08Dh, 04Ch, 024h, 064h, 051h, 055h, 08Bh, 0CEh, 0C6h, 044h, 024h, 07Dh, 001h
     call ?j_0004a980@@YAXXZ
     db 084h, 0C0h, 075h, 027h, 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 074h, 017h, 0A1h
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 085h, 0C0h, 074h, 00Eh, 068h
-    dd g_010EF1B8
+    dd g_Va010EF1B8
     db 050h
     call ?j_0003a17a@@YAXXZ
     db 083h, 0C4h, 008h, 0C6h, 086h, 03Ch, 008h, 000h, 000h, 001h, 053h, 08Bh, 0CFh
@@ -396,32 +396,32 @@ public ?internalFindPath@Pathfinder@@MAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBU
     db 08Bh, 0CEh
     call ?j_00032b5f@@YAXXZ
     db 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 074h, 027h, 08Bh, 00Dh
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 085h, 0C9h, 074h, 01Dh, 085h, 0DBh, 0B8h
-    dd g_01099D80
+    dd g_Va01099D80
     db 075h, 005h, 0B8h
     dd __bfmeNullNameXZ
     db 050h, 068h
-    dd g_010EF16C
+    dd g_Va010EF16C
     db 051h
     call ?j_0003a17a@@YAXXZ
     db 083h, 0C4h, 00Ch, 08Bh, 0C3h, 05Bh, 05Fh, 05Eh, 05Dh, 081h, 0C4h, 088h, 000h, 000h, 000h, 0C2h
     db 010h, 000h, 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 074h, 037h, 0A1h
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 085h, 0C0h, 074h, 00Eh, 068h
-    dd g_010EF118
+    dd g_Va010EF118
     db 050h
     call ?j_0003a17a@@YAXXZ
     db 083h, 0C4h, 008h, 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 074h, 017h, 0A1h
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 085h, 0C0h, 074h, 00Eh, 068h
-    dd g_010EF0D4
+    dd g_Va010EF0D4
     db 050h
     call ?j_0003a17a@@YAXXZ
     db 083h, 0C4h, 008h, 08Bh, 0CEh, 0C6h, 086h, 03Ch, 008h, 000h, 000h, 000h
@@ -429,11 +429,11 @@ public ?internalFindPath@Pathfinder@@MAEPAVPath@@PAVObject@@ABVLocomotorSet@@PBU
     db 08Bh, 0CBh
     call ?j_0004b3b7@@YAXXZ
     db 0A0h
-    dd g_012F0239
+    dd ?Glo012F0239@@3_NA
     db 084h, 0C0h, 074h, 017h, 0A1h
-    dd g_012ED4FC
+    dd ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
     db 085h, 0C0h, 074h, 00Eh, 068h
-    dd g_010EF088
+    dd g_Va010EF088
     db 050h
     call ?j_0003a17a@@YAXXZ
     db 083h, 0C4h, 008h, 05Bh, 05Fh, 05Eh, 033h, 0C0h, 05Dh, 081h, 0C4h, 088h, 000h, 000h, 000h, 0C2h

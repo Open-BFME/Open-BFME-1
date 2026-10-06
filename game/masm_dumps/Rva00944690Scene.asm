@@ -11,7 +11,7 @@ EXTERN ?j_00009165@@YAXXZ:NEAR
 EXTERN ?rva00944430@Rva00944430@@AAEXPAPAXPAVCameraClass@@PBM@Z:NEAR
 EXTERN ?second@Gen_00943CF0@@AAEXPAX000@Z:NEAR
 EXTERN ?unlink@Gen_00943CF0@@AAEXPAX@Z:NEAR
-EXTERN g_0105DA98:NEAR
+EXTERN g_Va0105DA98:NEAR
 
 ; Boundary repair of the pre-existing 0x009446F0/1075B ASM span.
 ; This still-unconverted whole function is 0x00944690/552B.
@@ -24,7 +24,7 @@ _TEXT$d00d44690 SEGMENT BYTE PUBLIC FLAT 'CODE'
 public ?method@Rva00944690Scene@@UAEXPAVCameraClass@@@Z
 ?method@Rva00944690Scene@@UAEXPAVCameraClass@@@Z PROC
     db 06Ah, 0FFh, 068h
-    dd g_0105DA98
+    dd g_Va0105DA98
     db 064h, 0A1h, 000h, 000h, 000h, 000h, 050h, 064h, 089h, 025h, 000h, 000h, 000h, 000h, 083h, 0ECh
     db 020h, 053h, 08Bh, 0D9h, 08Bh, 083h, 0C4h, 000h, 000h, 000h, 055h, 08Dh, 08Bh, 0C0h, 000h, 000h
     db 000h, 03Bh, 0C1h, 056h, 057h, 089h, 05Ch, 024h, 010h, 089h, 044h, 024h, 02Ch, 089h, 04Ch, 024h

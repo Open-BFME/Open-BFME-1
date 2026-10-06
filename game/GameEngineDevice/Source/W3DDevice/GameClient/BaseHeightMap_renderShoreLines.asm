@@ -10,53 +10,53 @@ EXTERN ??1DynamicIBAccessClass@@QAE@XZ:NEAR
 EXTERN ??1WriteLockClass@BoxDynamicVBAccessClass@@QAE@XZ:NEAR
 EXTERN ??1WriteLockClass@DynamicIBAccessClass@@QAE@XZ:NEAR
 EXTERN ?BaseHeightMapScorchSetZBias@@YAXH@Z:NEAR
+EXTERN ?BaseHeightMapScorchStageChanges@@3IA:BYTE
+EXTERN ?BfmeBoundaryZero3D@@3MB:BYTE
 EXTERN ?BoxSetTexture@@YAXIAAPAVTextureBaseClass@@@Z:NEAR
+EXTERN ?D3DCallCount@DX8Wrapper@@0IA:BYTE
+EXTERN ?D3DDevice@DX8Wrapper@@0PAUBfmeDevice@@A:BYTE
 EXTERN ?Draw_Triangles@DX8Wrapper@@SAXGGGG@Z:NEAR
 EXTERN ?Free_String@StringClass@@AAEXXZ:NEAR
+EXTERN ?GenFallback0012ED5C8@@3PAVGenFallback@@A:BYTE
 EXTERN ?Get_DX8_Render_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z:NEAR
 EXTERN ?Get_DX8_Texture_Stage_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z:NEAR
 EXTERN ?Get_Preset@VertexMaterialClass@@SAPAV1@W4PresetType@1@@Z:NEAR
 EXTERN ?Get_String@StringClass@@AAEXH_N@Z:NEAR
+EXTERN ?R3FieldSampleScale010F653C@@3MA:BYTE
 EXTERN ?Rva00903060Get@@YAHXZ:NEAR
+EXTERN ?Rva012D6DFCShaderDirty@@3_NA:BYTE
+EXTERN ?Rva0133F451Snapshot@@3_NA:BYTE
+EXTERN ?Rva0133F49CChanged@@3IA:BYTE
+EXTERN ?Rva01340EC0Shader@@3IA:BYTE
+EXTERN ?Rva01340EC4Material@@3PAVVertexMaterialClass@@A:BYTE
+EXTERN ?ScreenRenderStateChanges@@3IA:BYTE
 EXTERN ?Set_Index_Buffer@DX8Wrapper@@SAXABVDynamicIBAccessClass@@G@Z:NEAR
 EXTERN ?Set_Vertex_Buffer@DX8Wrapper@@SAXABVDynamicVBAccessClass@@@Z:NEAR
+EXTERN ?g_bfmeCh1035@@3DA:BYTE
+EXTERN ?g_bfmeDirectionWeight1285@@3MA:BYTE
+EXTERN ?g_worldMatrix@@3PAMA:BYTE
 EXTERN ?j_000489a5@@YAXXZ:NEAR
+EXTERN ?m_EmptyString@StringClass@@0PADA:BYTE
 EXTERN __ftol2:NEAR
-EXTERN g_0104A23C:NEAR
-EXTERN g_01075350:BYTE
-EXTERN g_01075C74:BYTE
-EXTERN g_010F653C:BYTE
-EXTERN g_012D6DFC:BYTE
-EXTERN g_012D6E1C:BYTE
-EXTERN g_012D9124:BYTE
-EXTERN g_012ED5C8:BYTE
-EXTERN g_0133F451:BYTE
-EXTERN g_0133F49C:BYTE
-EXTERN g_0133FA0C:BYTE
-EXTERN g_013403A0:BYTE
-EXTERN g_01340534:BYTE
-EXTERN g_01340564:BYTE
-EXTERN g_01340568:BYTE
-EXTERN g_01340594:BYTE
-EXTERN g_01340EC0:BYTE
-EXTERN g_01340EC4:BYTE
-EXTERN g_0134108C:BYTE
-EXTERN g_01341090:BYTE
-EXTERN g_01341094:BYTE
-EXTERN g_01341098:BYTE
-EXTERN g_0134109C:BYTE
-EXTERN g_013410A0:BYTE
-EXTERN g_013410A4:BYTE
-EXTERN g_013410A8:BYTE
-EXTERN g_013410AC:BYTE
-EXTERN g_013410B0:BYTE
-EXTERN g_013410B4:BYTE
-EXTERN g_013410B8:BYTE
-EXTERN g_013410BC:BYTE
-EXTERN g_013410C0:BYTE
-EXTERN g_013410C4:BYTE
-EXTERN g_013410C8:BYTE
-EXTERN g_0134ECC8:BYTE
+EXTERN g_Va0104A23C:NEAR
+EXTERN g_Va012D6E1C:BYTE
+EXTERN g_Va0133FA0C:BYTE
+EXTERN g_Va013403A0:BYTE
+EXTERN g_Va01341090:BYTE
+EXTERN g_Va01341094:BYTE
+EXTERN g_Va01341098:BYTE
+EXTERN g_Va0134109C:BYTE
+EXTERN g_Va013410A0:BYTE
+EXTERN g_Va013410A4:BYTE
+EXTERN g_Va013410A8:BYTE
+EXTERN g_Va013410AC:BYTE
+EXTERN g_Va013410B0:BYTE
+EXTERN g_Va013410B4:BYTE
+EXTERN g_Va013410B8:BYTE
+EXTERN g_Va013410BC:BYTE
+EXTERN g_Va013410C0:BYTE
+EXTERN g_Va013410C4:BYTE
+EXTERN g_Va013410C8:BYTE
 
 ; ?renderShoreLines@BaseHeightMapRenderObjClass@@IAEXPAVCameraClass@@@Z
 ; Exact 2268 retail bytes @ 0x006CCE70; queue 0x00935424 was INSIDE foreign body (not prologue).
@@ -70,13 +70,13 @@ _TEXT$d00acce70 SEGMENT BYTE PUBLIC FLAT 'CODE'
 public ?renderShoreLines@BaseHeightMapRenderObjClass@@IAEXPAVCameraClass@@@Z
 ?renderShoreLines@BaseHeightMapRenderObjClass@@IAEXPAVCameraClass@@@Z PROC
     db 055h, 08Bh, 0ECh, 083h, 0E4h, 0F8h, 06Ah, 0FFh, 068h
-    dd g_0104A23C
+    dd g_Va0104A23C
     db 064h, 0A1h, 000h, 000h, 000h, 000h, 050h, 064h, 089h, 025h, 000h, 000h, 000h, 000h, 081h, 0ECh
     db 08Ch, 000h, 000h, 000h, 0A1h
-    dd g_012ED5C8
+    dd ?GenFallback0012ED5C8@@3PAVGenFallback@@A
     db 053h, 055h, 056h, 057h, 08Bh, 0F9h, 08Ah, 088h, 08Ch, 000h, 000h, 000h, 084h, 0C9h, 089h, 07Ch
     db 024h, 01Ch, 00Fh, 084h, 089h, 007h, 000h, 000h, 0D9h, 005h
-    dd g_01075350
+    dd ?BfmeBoundaryZero3D@@3MB
     db 0D9h, 087h, 018h, 030h, 000h, 000h, 0DAh, 0E9h, 0DFh, 0E0h, 0F6h, 0C4h, 044h, 00Fh, 08Bh, 070h
     db 007h, 000h, 000h, 08Bh, 087h, 0C4h, 030h, 000h, 000h, 033h, 0EDh, 03Bh, 0C5h, 00Fh, 084h, 060h
     db 007h, 000h, 000h
@@ -93,87 +93,87 @@ public ?renderShoreLines@BaseHeightMapRenderObjClass@@IAEXPAVCameraClass@@@Z
     db 0DBh, 044h, 024h, 074h, 089h, 044h, 024h, 058h
     call __ftol2
     db 08Bh, 097h, 0F4h, 02Fh, 000h, 000h, 08Ah, 00Dh
-    dd g_012D6DFC
+    dd ?Rva012D6DFCShaderDirty@@3_NA
     db 08Bh, 05Ah, 024h, 089h, 044h, 024h, 034h, 0A1h
-    dd g_012D6E1C
+    dd g_Va012D6E1C
     db 083h, 0E0h, 0FBh, 083h, 0C8h, 003h, 084h, 0C9h, 089h, 05Ch, 024h, 03Ch, 089h, 06Ch, 024h, 018h
     db 075h, 008h, 03Bh, 005h
-    dd g_01340EC0
+    dd ?Rva01340EC0Shader@@3IA
     db 074h, 040h, 08Bh, 015h
-    dd g_0133F49C
+    dd ?Rva0133F49CChanged@@3IA
     db 0A3h
-    dd g_01340EC0
+    dd ?Rva01340EC0Shader@@3IA
     db 0A1h
-    dd g_012D9124
+    dd ?m_EmptyString@StringClass@@0PADA
     db 055h, 081h, 0CAh, 000h, 080h, 000h, 000h, 055h, 08Dh, 04Ch, 024h, 018h, 089h, 015h
-    dd g_0133F49C
+    dd ?Rva0133F49CChanged@@3IA
     db 089h, 044h, 024h, 018h
     call ?Get_String@StringClass@@AAEXH_N@Z
     db 08Ah, 00Dh
-    dd g_0134ECC8
+    dd ?g_bfmeCh1035@@3DA
     db 08Bh, 054h, 024h, 010h, 088h, 00Ah, 08Dh, 04Ch, 024h, 010h
     call ?Free_String@StringClass@@AAEXXZ
     db 055h
     call ?Get_Preset@VertexMaterialClass@@SAPAV1@W4PresetType@1@@Z
     db 08Bh, 0F0h, 083h, 0C4h, 004h, 085h, 0F6h, 074h, 003h, 0FFh, 046h, 004h, 0A1h
-    dd g_01340EC4
+    dd ?Rva01340EC4Material@@3PAVVertexMaterialClass@@A
     db 085h, 0C0h, 074h, 013h, 08Bh, 050h, 004h, 08Bh, 0C8h, 083h, 0C0h, 004h, 04Ah, 085h, 0D2h, 089h
     db 010h, 075h, 004h, 08Bh, 001h, 0FFh, 010h, 08Bh, 00Dh
-    dd g_0133F49C
+    dd ?Rva0133F49CChanged@@3IA
     db 081h, 0C9h, 000h, 040h, 000h, 000h, 085h, 0F6h, 089h, 035h
-    dd g_01340EC4
+    dd ?Rva01340EC4Material@@3PAVVertexMaterialClass@@A
     db 089h, 00Dh
-    dd g_0133F49C
+    dd ?Rva0133F49CChanged@@3IA
     db 074h, 00Bh, 0FFh, 04Eh, 004h, 075h, 006h, 08Bh, 016h, 08Bh, 0CEh, 0FFh, 012h, 08Dh, 087h, 090h
     db 030h, 000h, 000h, 050h, 06Ah, 000h
     call ?BoxSetTexture@@YAXIAAPAVTextureBaseClass@@@Z
     db 08Bh, 00Dh
-    dd g_0133F49C
+    dd ?Rva0133F49CChanged@@3IA
     db 0A1h
-    dd g_013403A0
+    dd g_Va013403A0
     db 081h, 0E1h, 0FFh, 0FFh, 0FBh, 0FFh, 083h, 0C9h, 001h, 0BEh, 008h, 000h, 000h, 000h, 083h, 0C4h
     db 008h, 03Bh, 0C6h, 0C7h, 005h
-    dd g_0134108C
+    dd ?g_worldMatrix@@3PAMA
     db 000h, 000h, 080h, 03Fh, 0C7h, 005h
-    dd g_01341090
+    dd g_Va01341090
     db 000h, 000h, 000h, 000h, 0C7h, 005h
-    dd g_01341094
+    dd g_Va01341094
     db 000h, 000h, 000h, 000h, 0C7h, 005h
-    dd g_01341098
+    dd g_Va01341098
     db 000h, 000h, 000h, 000h, 0C7h, 005h
-    dd g_0134109C
+    dd g_Va0134109C
     db 000h, 000h, 000h, 000h, 0C7h, 005h
-    dd g_013410A0
+    dd g_Va013410A0
     db 000h, 000h, 080h, 03Fh, 0C7h, 005h
-    dd g_013410A4
+    dd g_Va013410A4
     db 000h, 000h, 000h, 000h, 0C7h, 005h
-    dd g_013410A8
+    dd g_Va013410A8
     db 000h, 000h, 000h, 000h, 0C7h, 005h
-    dd g_013410AC
+    dd g_Va013410AC
     db 000h, 000h, 000h, 000h, 0C7h, 005h
-    dd g_013410B0
+    dd g_Va013410B0
     db 000h, 000h, 000h, 000h, 0C7h, 005h
-    dd g_013410B4
+    dd g_Va013410B4
     db 000h, 000h, 080h, 03Fh, 0C7h, 005h
-    dd g_013410B8
+    dd g_Va013410B8
     db 000h, 000h, 000h, 000h, 0C7h, 005h
-    dd g_013410BC
+    dd g_Va013410BC
     db 000h, 000h, 000h, 000h, 0C7h, 005h
-    dd g_013410C0
+    dd g_Va013410C0
     db 000h, 000h, 000h, 000h, 0C7h, 005h
-    dd g_013410C4
+    dd g_Va013410C4
     db 000h, 000h, 000h, 000h, 0C7h, 005h
-    dd g_013410C8
+    dd g_Va013410C8
     db 000h, 000h, 080h, 03Fh, 089h, 00Dh
-    dd g_0133F49C
+    dd ?Rva0133F49CChanged@@3IA
     db 00Fh, 084h, 08Fh, 000h, 000h, 000h, 0A0h
-    dd g_0133F451
+    dd ?Rva0133F451Snapshot@@3_NA
     db 084h, 0C0h, 074h, 054h, 08Bh, 015h
-    dd g_012D9124
+    dd ?m_EmptyString@StringClass@@0PADA
     db 06Ah, 001h, 06Ah, 000h, 08Dh, 04Ch, 024h, 018h, 089h, 054h, 024h, 018h
     call ?Get_String@StringClass@@AAEXH_N@Z
     db 0A0h
-    dd g_0134ECC8
+    dd ?g_bfmeCh1035@@3DA
     db 08Bh, 04Ch, 024h, 010h, 088h, 001h, 056h, 08Dh, 054h, 024h, 014h, 068h, 0A8h, 000h, 000h, 000h
     db 052h, 0C7h, 084h, 024h, 0B0h, 000h, 000h, 000h, 000h, 000h, 000h, 000h
     call ?Get_DX8_Render_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z
@@ -181,29 +181,29 @@ public ?renderShoreLines@BaseHeightMapRenderObjClass@@IAEXPAVCameraClass@@@Z
     db 0FFh, 0FFh
     call ?Free_String@StringClass@@AAEXXZ
     db 0A1h
-    dd g_01340534
+    dd ?D3DDevice@DX8Wrapper@@0PAUBfmeDevice@@A
     db 056h, 068h, 0A8h, 000h, 000h, 000h, 089h, 035h
-    dd g_013403A0
+    dd g_Va013403A0
     db 08Bh, 008h, 050h, 0FFh, 091h, 0E4h, 000h, 000h, 000h, 08Bh, 00Dh
-    dd g_01340594
+    dd ?D3DCallCount@DX8Wrapper@@0IA
     db 0A1h
-    dd g_01340564
+    dd ?ScreenRenderStateChanges@@3IA
     db 041h, 040h, 089h, 00Dh
-    dd g_01340594
+    dd ?D3DCallCount@DX8Wrapper@@0IA
     db 0A3h
-    dd g_01340564
+    dd ?ScreenRenderStateChanges@@3IA
     db 06Ah, 001h
     call ?BaseHeightMapScorchSetZBias@@YAXH@Z
     db 0A1h
-    dd g_0133FA0C
+    dd g_Va0133FA0C
     db 083h, 0C4h, 004h, 085h, 0C0h, 00Fh, 084h, 091h, 000h, 000h, 000h, 0A0h
-    dd g_0133F451
+    dd ?Rva0133F451Snapshot@@3_NA
     db 084h, 0C0h, 074h, 052h, 08Bh, 015h
-    dd g_012D9124
+    dd ?m_EmptyString@StringClass@@0PADA
     db 06Ah, 001h, 06Ah, 000h, 08Dh, 04Ch, 024h, 018h, 089h, 054h, 024h, 018h
     call ?Get_String@StringClass@@AAEXH_N@Z
     db 0A0h
-    dd g_0134ECC8
+    dd ?g_bfmeCh1035@@3DA
     db 08Bh, 04Ch, 024h, 010h, 088h, 001h, 06Ah, 000h, 08Dh, 054h, 024h, 014h, 06Ah, 00Bh, 052h, 0C7h
     db 084h, 024h, 0B0h, 000h, 000h, 000h, 001h, 000h, 000h, 000h
     call ?Get_DX8_Texture_Stage_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z
@@ -211,17 +211,17 @@ public ?renderShoreLines@BaseHeightMapRenderObjClass@@IAEXPAVCameraClass@@@Z
     db 0FFh, 0FFh
     call ?Free_String@StringClass@@AAEXXZ
     db 0A1h
-    dd g_01340534
+    dd ?D3DDevice@DX8Wrapper@@0PAUBfmeDevice@@A
     db 06Ah, 000h, 06Ah, 00Bh, 06Ah, 000h, 0C7h, 005h
-    dd g_0133FA0C
+    dd g_Va0133FA0C
     db 000h, 000h, 000h, 000h, 08Bh, 008h, 050h, 0FFh, 091h, 00Ch, 001h, 000h, 000h, 08Bh, 00Dh
-    dd g_01340594
+    dd ?D3DCallCount@DX8Wrapper@@0IA
     db 0A1h
-    dd g_01340568
+    dd ?BaseHeightMapScorchStageChanges@@3IA
     db 041h, 040h, 089h, 00Dh
-    dd g_01340594
+    dd ?D3DCallCount@DX8Wrapper@@0IA
     db 0A3h
-    dd g_01340568
+    dd ?BaseHeightMapScorchStageChanges@@3IA
     db 08Bh, 087h, 0C4h, 030h, 000h, 000h, 085h, 0C0h, 00Fh, 084h, 065h, 003h, 000h, 000h, 06Ah, 000h
     db 068h, 000h, 008h, 000h, 000h, 06Ah, 005h, 06Ah, 002h, 08Dh, 08Ch, 024h, 090h, 000h, 000h, 000h
     call ??0BoxDynamicVBAccessClass@@QAE@IIGI@Z
@@ -246,28 +246,28 @@ public ?renderShoreLines@BaseHeightMapRenderObjClass@@IAEXPAVCameraClass@@@Z
     db 000h, 08Bh, 0C7h, 00Fh, 0AFh, 044h, 024h, 028h, 003h, 0C2h, 00Fh, 0B7h, 02Ch, 043h, 089h, 06Ch
     db 024h, 014h, 00Fh, 0B7h, 06Ch, 043h, 002h, 0DBh, 044h, 024h, 014h, 089h, 06Ch, 024h, 014h, 08Bh
     db 06Ch, 024h, 028h, 0D8h, 00Dh
-    dd g_010F653C
+    dd ?R3FieldSampleScale010F653C@@3MA
     db 003h, 0C5h, 0DBh, 044h, 024h, 014h, 08Dh, 004h, 043h, 00Fh, 0B7h, 058h, 002h, 0D8h, 00Dh
-    dd g_010F653C
+    dd ?R3FieldSampleScale010F653C@@3MA
     db 00Fh, 0B7h, 000h, 08Bh, 06Ch, 024h, 030h, 089h, 05Ch, 024h, 014h, 08Bh, 05Ch, 024h, 030h, 083h
     db 0C6h, 02Ch, 0DBh, 044h, 024h, 014h, 089h, 044h, 024h, 014h, 08Bh, 0C2h, 02Bh, 0C5h, 0D8h, 00Dh
-    dd g_010F653C
+    dd ?R3FieldSampleScale010F653C@@3MA
     db 08Bh, 0EFh, 02Bh, 0EBh, 083h, 0C6h, 02Ch, 0D9h, 05Ch, 024h, 04Ch, 083h, 0C6h, 02Ch, 0DBh, 044h
     db 024h, 014h, 089h, 044h, 024h, 014h, 0D8h, 00Dh
-    dd g_010F653C
+    dd ?R3FieldSampleScale010F653C@@3MA
     db 0D9h, 05Ch, 024h, 038h, 0DBh, 044h, 024h, 014h, 089h, 06Ch, 024h, 014h, 0D8h, 00Dh
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 0D9h, 054h, 024h, 05Ch, 0D9h, 09Eh, 07Ch, 0FFh, 0FFh, 0FFh, 0DBh, 044h, 024h, 014h, 0D8h, 00Dh
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 0D9h, 056h, 080h, 0D9h, 0CAh, 0D9h, 05Eh, 084h, 08Bh, 059h, 004h, 089h, 05Eh, 098h, 033h, 0DBh
     db 089h, 05Eh, 09Ch, 040h, 089h, 044h, 024h, 014h, 0DBh, 044h, 024h, 014h, 045h, 083h, 0C6h, 02Ch
     db 0D8h, 00Dh
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 0D9h, 054h, 024h, 014h, 0D9h, 09Eh, 07Ch, 0FFh, 0FFh, 0FFh, 0D9h, 0C9h, 0D9h, 05Eh, 080h, 0D9h
     db 05Eh, 084h, 08Bh, 041h, 008h, 089h, 046h, 098h, 08Bh, 044h, 024h, 014h, 089h, 05Eh, 09Ch, 089h
     db 046h, 0A8h, 08Bh, 044h, 024h, 04Ch, 089h, 06Ch, 024h, 014h, 0DBh, 044h, 024h, 014h, 089h, 046h
     db 0B0h, 0D8h, 00Dh
-    dd g_01075C74
+    dd ?g_bfmeDirectionWeight1285@@3MA
     db 0D9h, 056h, 0ACh, 08Bh, 041h, 00Ch, 089h, 046h, 0C4h, 08Bh, 044h, 024h, 05Ch, 089h, 05Eh, 0C8h
     db 0D9h, 05Eh, 0D8h, 089h, 046h, 0D4h, 08Bh, 044h, 024h, 038h, 089h, 046h, 0DCh, 08Bh, 049h, 010h
     db 089h, 04Eh, 0F0h, 089h, 05Eh, 0F4h, 057h, 052h, 08Bh, 054h, 024h, 024h, 08Bh, 08Ah, 0F4h, 02Fh
@@ -300,15 +300,15 @@ public ?renderShoreLines@BaseHeightMapRenderObjClass@@IAEXPAVCameraClass@@@Z
     call ?Draw_Triangles@DX8Wrapper@@SAXGGGG@Z
     db 083h, 0C4h, 010h, 08Bh, 04Ch, 024h, 018h, 08Bh, 087h, 0C4h, 030h, 000h, 000h, 033h, 0EDh, 03Bh
     db 0C8h, 089h, 06Ch, 024h, 020h, 089h, 06Ch, 024h, 024h, 00Fh, 085h, 09Bh, 0FCh, 0FFh, 0FFh, 0A1h
-    dd g_013403A0
+    dd g_Va013403A0
     db 0BEh, 007h, 000h, 000h, 000h, 03Bh, 0C6h, 00Fh, 084h, 08Bh, 000h, 000h, 000h, 0A0h
-    dd g_0133F451
+    dd ?Rva0133F451Snapshot@@3_NA
     db 084h, 0C0h, 074h, 050h, 08Bh, 015h
-    dd g_012D9124
+    dd ?m_EmptyString@StringClass@@0PADA
     db 06Ah, 001h, 06Ah, 000h, 08Dh, 04Ch, 024h, 020h, 089h, 054h, 024h, 020h
     call ?Get_String@StringClass@@AAEXH_N@Z
     db 0A0h
-    dd g_0134ECC8
+    dd ?g_bfmeCh1035@@3DA
     db 08Bh, 04Ch, 024h, 018h, 088h, 001h, 056h, 08Dh, 054h, 024h, 01Ch, 068h, 0A8h, 000h, 000h, 000h
     db 052h, 089h, 0B4h, 024h, 0B0h, 000h, 000h, 000h
     call ?Get_DX8_Render_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z
@@ -316,49 +316,49 @@ public ?renderShoreLines@BaseHeightMapRenderObjClass@@IAEXPAVCameraClass@@@Z
     db 0FFh, 0FFh
     call ?Free_String@StringClass@@AAEXXZ
     db 0A1h
-    dd g_01340534
+    dd ?D3DDevice@DX8Wrapper@@0PAUBfmeDevice@@A
     db 056h, 068h, 0A8h, 000h, 000h, 000h, 089h, 035h
-    dd g_013403A0
+    dd g_Va013403A0
     db 08Bh, 008h, 050h, 0FFh, 091h, 0E4h, 000h, 000h, 000h, 08Bh, 00Dh
-    dd g_01340594
+    dd ?D3DCallCount@DX8Wrapper@@0IA
     db 0A1h
-    dd g_01340564
+    dd ?ScreenRenderStateChanges@@3IA
     db 041h, 040h, 089h, 00Dh
-    dd g_01340594
+    dd ?D3DCallCount@DX8Wrapper@@0IA
     db 0A3h
-    dd g_01340564
+    dd ?ScreenRenderStateChanges@@3IA
     db 06Ah, 000h
     call ?BaseHeightMapScorchSetZBias@@YAXH@Z
     db 083h, 0C4h, 004h, 0C6h, 005h
-    dd g_012D6DFC
+    dd ?Rva012D6DFCShaderDirty@@3_NA
     db 001h, 08Bh, 08Ch, 024h, 09Ch, 000h, 000h, 000h, 064h, 089h, 00Dh, 000h, 000h, 000h, 000h, 05Fh
     db 05Eh, 05Dh, 05Bh, 08Bh, 0E5h, 05Dh, 0C2h, 004h, 000h, 0A1h
-    dd g_013403A0
+    dd g_Va013403A0
     db 0BEh, 007h, 000h, 000h, 000h, 03Bh, 0C6h, 00Fh, 084h, 089h, 000h, 000h, 000h, 0A0h
-    dd g_0133F451
+    dd ?Rva0133F451Snapshot@@3_NA
     db 084h, 0C0h, 074h, 04Eh, 08Bh, 015h
-    dd g_012D9124
+    dd ?m_EmptyString@StringClass@@0PADA
     db 06Ah, 001h, 06Ah, 000h, 08Dh, 04Ch, 024h, 020h, 089h, 054h, 024h, 020h
     call ?Get_String@StringClass@@AAEXH_N@Z
     db 0A0h
-    dd g_0134ECC8
+    dd ?g_bfmeCh1035@@3DA
     db 08Bh, 04Ch, 024h, 018h, 088h, 001h, 056h, 08Dh, 054h, 024h, 01Ch, 068h, 0A8h, 000h, 000h, 000h
     db 052h, 0C6h, 084h, 024h, 0B0h, 000h, 000h, 000h, 006h
     call ?Get_DX8_Render_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z
     db 083h, 0C4h, 00Ch, 08Dh, 04Ch, 024h, 018h, 0C6h, 084h, 024h, 0A4h, 000h, 000h, 000h, 005h
     call ?Free_String@StringClass@@AAEXXZ
     db 0A1h
-    dd g_01340534
+    dd ?D3DDevice@DX8Wrapper@@0PAUBfmeDevice@@A
     db 056h, 068h, 0A8h, 000h, 000h, 000h, 089h, 035h
-    dd g_013403A0
+    dd g_Va013403A0
     db 08Bh, 008h, 050h, 0FFh, 091h, 0E4h, 000h, 000h, 000h, 08Bh, 00Dh
-    dd g_01340594
+    dd ?D3DCallCount@DX8Wrapper@@0IA
     db 0A1h
-    dd g_01340564
+    dd ?ScreenRenderStateChanges@@3IA
     db 041h, 040h, 089h, 00Dh
-    dd g_01340594
+    dd ?D3DCallCount@DX8Wrapper@@0IA
     db 0A3h
-    dd g_01340564
+    dd ?ScreenRenderStateChanges@@3IA
     db 08Dh, 04Ch, 024h, 044h, 0C6h, 084h, 024h, 0A4h, 000h, 000h, 000h, 004h
     call ??1WriteLockClass@DynamicIBAccessClass@@QAE@XZ
     db 08Dh, 04Ch, 024h, 050h, 0C6h, 084h, 024h, 0A4h, 000h, 000h, 000h, 003h

@@ -2,6 +2,10 @@
 .model flat
 ; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
 EXTERN ??3@YAXPAX@Z:NEAR
+EXTERN ?BfmeBoundaryZero3D@@3MB:BYTE
+EXTERN ?R3FieldSlope1096CF4@@3MA:BYTE
+EXTERN ?Rva012ef4cc@@3PAVRva0041D290Client@@A:BYTE
+EXTERN ?TheMixFileInfoPool@@3HA:BYTE
 EXTERN ?j_0000145b@@YAXXZ:NEAR
 EXTERN ?j_00005e48@@YAXXZ:NEAR
 EXTERN ?j_0000ca68@@YAXXZ:NEAR
@@ -35,12 +39,8 @@ EXTERN ?j_00048d29@@YAXXZ:NEAR
 EXTERN ?j_0004b3b7@@YAXXZ:NEAR
 EXTERN __ftol2:NEAR
 EXTERN __real@4f800000:BYTE
-EXTERN g_01075350:BYTE
-EXTERN g_01096CF4:BYTE
-EXTERN g_012B4B10:BYTE
-EXTERN g_012B4B38:BYTE
-EXTERN g_012EF4CC:BYTE
-EXTERN g_012F1094:BYTE
+EXTERN g_Va012B4B10:BYTE
+EXTERN g_Va012B4B38:BYTE
 
 ; ?findGroundPath@Pathfinder@@QAEPAVPath@@PBUCoord3D@@0H_N@Z
 ; Exact 2045 retail bytes @ 0x003F2160
@@ -66,9 +66,9 @@ public ?findGroundPath@Pathfinder@@QAEPAVPath@@PBUCoord3D@@0H_N@Z
     db 083h, 0C4h, 004h, 0EBh, 00Bh, 08Dh, 08Eh, 09Ch, 00Ch, 000h, 000h
     call ?j_00010fa5@@YAXXZ
     db 0D9h, 005h
-    dd g_01075350
+    dd ?BfmeBoundaryZero3D@@3MB
     db 0D9h, 007h, 0DAh, 0E9h, 0DFh, 0E0h, 0F6h, 0C4h, 044h, 07Ah, 016h, 0D9h, 005h
-    dd g_01075350
+    dd ?BfmeBoundaryZero3D@@3MB
     db 0D9h, 047h, 004h, 0DAh, 0E9h, 0DFh, 0E0h, 0F6h, 0C4h, 044h, 00Fh, 08Bh, 0C3h, 003h, 000h, 000h
     db 08Ah, 046h, 008h, 084h, 0C0h, 00Fh, 084h, 0B8h, 003h, 000h, 000h, 08Bh, 00Fh, 08Bh, 057h, 004h
     db 08Bh, 047h, 008h, 089h, 04Ch, 024h, 038h, 08Bh, 00Bh, 089h, 054h, 024h, 03Ch, 08Bh, 053h, 004h
@@ -77,7 +77,7 @@ public ?findGroundPath@Pathfinder@@QAEPAVPath@@PBUCoord3D@@0H_N@Z
     call ?j_00041bff@@YAXXZ
     db 08Bh, 04Ch, 024h, 078h, 08Dh, 044h, 024h, 038h, 050h, 0C6h, 086h, 03Ch, 008h, 000h, 000h, 000h
     db 051h, 08Bh, 00Dh
-    dd g_012EF4CC
+    dd ?Rva012ef4cc@@3PAVRva0041D290Client@@A
     call ?j_0001c675@@YAXXZ
     db 08Bh, 0F8h, 08Dh, 054h, 024h, 014h, 052h, 08Dh, 044h, 024h, 03Ch, 050h, 08Bh, 0CEh, 089h, 07Ch
     db 024h, 018h
@@ -120,15 +120,15 @@ public ?findGroundPath@Pathfinder@@QAEPAVPath@@PBUCoord3D@@0H_N@Z
     call ?j_00020671@@YAXXZ
     db 08Bh, 0E8h, 085h, 0EDh, 089h, 06Ch, 024h, 010h, 00Fh, 084h, 099h, 001h, 000h, 000h, 08Bh, 045h
     db 000h, 085h, 0C0h, 075h, 026h, 0A1h
-    dd g_012F1094
+    dd ?TheMixFileInfoPool@@3HA
     db 085h, 0C0h, 075h, 005h
     call ?j_0003d1a9@@YAXXZ
     db 08Dh, 04Ch, 024h, 014h, 051h, 055h, 068h
-    dd g_012F1094
+    dd ?TheMixFileInfoPool@@3HA
     call ?j_00021da0@@YAXXZ
     db 083h, 0C4h, 00Ch, 089h, 045h, 000h, 0EBh, 007h, 0C7h, 040h, 00Ch, 000h, 000h, 000h, 000h, 08Bh
     db 054h, 024h, 07Ch, 08Bh, 044h, 024h, 078h, 08Bh, 00Dh
-    dd g_012EF4CC
+    dd ?Rva012ef4cc@@3PAVRva0041D290Client@@A
     db 052h, 050h
     call ?j_0001c675@@YAXXZ
     db 08Dh, 04Ch, 024h, 024h, 051h, 050h, 08Bh, 0CEh
@@ -137,11 +137,11 @@ public ?findGroundPath@Pathfinder@@QAEPAVPath@@PBUCoord3D@@0H_N@Z
     db 024h, 030h, 052h, 08Dh, 044h, 024h, 028h, 050h, 08Bh, 0CEh
     call ?j_000171e8@@YAXXZ
     db 08Bh, 007h, 085h, 0C0h, 075h, 025h, 0A1h
-    dd g_012F1094
+    dd ?TheMixFileInfoPool@@3HA
     db 085h, 0C0h, 075h, 005h
     call ?j_0003d1a9@@YAXXZ
     db 08Dh, 04Ch, 024h, 030h, 051h, 057h, 068h
-    dd g_012F1094
+    dd ?TheMixFileInfoPool@@3HA
     call ?j_00021da0@@YAXXZ
     db 083h, 0C4h, 00Ch, 089h, 007h, 0EBh, 007h, 0C7h, 040h, 00Ch, 000h, 000h, 000h, 000h, 08Bh, 04Ch
     db 024h, 078h
@@ -194,9 +194,9 @@ public ?findGroundPath@Pathfinder@@QAEPAVPath@@PBUCoord3D@@0H_N@Z
     db 024h, 01Bh, 089h, 08Ch, 024h, 080h, 000h, 000h, 000h, 0EBh, 011h, 08Bh, 08Ch, 024h, 080h, 000h
     db 000h, 000h, 08Bh, 0BCh, 024h, 084h, 000h, 000h, 000h, 08Dh, 049h, 000h, 08Bh, 007h, 08Bh, 014h
     db 08Dh
-    dd g_012B4B38
+    dd g_Va012B4B38
     db 00Fh, 0B7h, 028h, 00Fh, 0B7h, 040h, 004h, 003h, 0EAh, 08Bh, 014h, 08Dh
-    dd g_012B4B10
+    dd g_Va012B4B10
     db 0C6h, 044h, 00Ch, 014h, 000h, 08Bh, 04Fh, 00Ch, 003h, 0C2h, 050h, 0C1h, 0E9h, 006h, 083h, 0E1h
     db 03Fh, 055h, 051h, 08Bh, 0CEh, 089h, 06Ch, 024h, 028h, 089h, 044h, 024h, 02Ch
     call ?j_00020671@@YAXXZ
@@ -224,11 +224,11 @@ public ?findGroundPath@Pathfinder@@QAEPAVPath@@PBUCoord3D@@0H_N@Z
     db 08Bh, 044h, 08Ch, 054h, 080h, 07Ch, 004h, 014h, 000h, 00Fh, 084h, 000h, 001h, 000h, 000h, 08Bh
     db 047h, 00Ch, 0A8h, 007h, 00Fh, 085h, 0F5h, 000h, 000h, 000h, 0C1h, 0E8h, 012h, 0A8h, 001h, 00Fh
     db 085h, 0EAh, 000h, 000h, 000h, 085h, 0D2h, 0C6h, 044h, 00Ch, 014h, 001h, 075h, 025h, 0A1h
-    dd g_012F1094
+    dd ?TheMixFileInfoPool@@3HA
     db 085h, 0C0h, 075h, 005h
     call ?j_0003d1a9@@YAXXZ
     db 08Dh, 04Ch, 024h, 01Ch, 051h, 057h, 068h
-    dd g_012F1094
+    dd ?TheMixFileInfoPool@@3HA
     call ?j_00021da0@@YAXXZ
     db 083h, 0C4h, 00Ch, 089h, 007h, 0EBh, 007h, 0C7h, 042h, 00Ch, 000h, 000h, 000h, 000h, 08Bh, 057h
     db 00Ch, 08Bh, 044h, 024h, 020h, 06Ah, 000h, 053h, 0C1h, 0EAh, 006h, 083h, 0E2h, 03Fh, 052h, 050h
@@ -239,7 +239,7 @@ public ?findGroundPath@Pathfinder@@QAEPAVPath@@PBUCoord3D@@0H_N@Z
     db 08Bh, 04Ch, 024h, 078h, 03Bh, 0CBh, 08Bh, 0E8h, 07Dh, 032h, 08Bh, 0C3h, 02Bh, 0C1h, 08Dh, 014h
     db 080h, 0D1h, 0E2h, 085h, 0EDh, 089h, 054h, 024h, 078h, 0DBh, 044h, 024h, 078h, 089h, 06Ch, 024h
     db 078h, 0D8h, 00Dh
-    dd g_01096CF4
+    dd ?R3FieldSlope1096CF4@@3MA
     db 0DBh, 044h, 024h, 078h, 07Dh, 006h, 0D8h, 005h
     dd __real@4f800000
     db 0DEh, 0C1h
