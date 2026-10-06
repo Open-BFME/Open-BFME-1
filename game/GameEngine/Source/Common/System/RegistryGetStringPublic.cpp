@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/asciistring_downloadmanager /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 /*
 ** Command & Conquer Generals Zero Hour(tm)
 ** Copyright 2025 Electronic Arts Inc.
@@ -12,7 +12,9 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-#include "Common/AsciiString.h"
+// The canonical header: its inline ~StringBase lets the temporaries call
+// releaseBuffer (0x00887940) directly, as retail does.
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 bool getStringFromRegistry(HKEY root, AsciiString path, AsciiString key, AsciiString &val);
 
