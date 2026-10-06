@@ -43,7 +43,10 @@ extern void Rva009EBAC0(int);
 // TU-local view of the 0x012EF1D8 template singleton; the global takes the
 // canonical spelling, defined once in Common/Thing/ThingFactory.cpp.
 class ThingFactory; extern ThingFactory *TheThingFactory;
-struct Rva002FE590Globals {char pad00[0x11fc]; bool flag11fc;}; extern Rva002FE590Globals *TheGlobalData;
+struct Rva002FE590Globals {char pad00[0x11fc]; bool flag11fc;};
+// GlobalData.cpp owns the 0x012ED5C8 pointer (data_rows.csv); TheGlobalData is its const view.
+class GlobalData; extern GlobalData *TheWritableGlobalData;
+#define TheGlobalData (reinterpret_cast<const Rva002FE590Globals *>(TheWritableGlobalData))
 struct Rva002FE590Parameter {char pad00[8]; int value08;};
 struct Rva002FE590List { char storage[20]; Rva002FE590List(){call0<void>(j_0002fb80,this);} ~Rva002FE590List(){call0<void>(j_00015d7a,this);} };
 template<class R,class A,class B> __forceinline R call2(void (*p)(), void *self,A a,B b) {
