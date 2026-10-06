@@ -9,42 +9,25 @@
 // ExperienceLevelSystem's vector begins at +0x20 and its default level is at
 // +0x2c.  Keep the vendor STLport vector spelling here: the retail loop is
 // the ordinary index/size form, without a separate empty-vector branch.
-// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc-
+// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc- /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
-
-extern "C" int __cdecl memcmp(const void *, const void *, unsigned int);
-#pragma intrinsic(memcmp)
 
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1
 #include <vector>
 
-class AsciiString
+#include "ascii_string.h"
+
+// The header-inline StringBase<char>::compare; its COMDAT is retail 0x0005FEB0.
+template <> inline int StringBase<char>::compare(const StringBase<char> &str) const
 {
-public:
-	int compare(const AsciiString &other) const
-	{
-		int otherLength = other.m_data ?
-			*(const unsigned short *)(other.m_data + 4) : 0;
-		const char *otherText = other.m_data ? other.m_data + 8 : "";
-		int thisLength = m_data ?
-			*(const unsigned short *)(m_data + 4) : 0;
-		const char *thisText = m_data ? m_data + 8 : "";
-		int length = thisLength < otherLength ? thisLength : otherLength;
-		int result = memcmp(thisText, otherText, length);
-		if (result != 0)
-			return result;
-		return thisLength - otherLength;
-	}
-
-	bool operator==(const AsciiString &other) const
-	{
-		return compare(other) == 0;
-	}
-
-private:
-	char *m_data;
-};
+	int otherLength = str.m_data ? str.m_data->length : 0;
+	const char *otherData = str.m_data ? str.m_data->data : (const char *)"";
+	int length = m_data ? m_data->length : 0;
+	const char *data = m_data ? m_data->data : (const char *)"";
+	int result = memcmp(data, otherData, length < otherLength ? length : otherLength);
+	return result ? result : length - otherLength;
+}
 
 struct BfmeVec
 {
@@ -88,7 +71,7 @@ BfmeVec *ExperienceLevelSystem::findExperienceScalarTable(
 	for (int index = 0; index < m_scalarTables.size(); ++index)
 	{
 		ExperienceScalarTable *table = m_scalarTables[index];
-		if (table->getName() == name)
+		if (table->getName().StringBase<char>::compare(name) == 0)
 			return table->getValues();
 	}
 	return m_defaultTableValues;

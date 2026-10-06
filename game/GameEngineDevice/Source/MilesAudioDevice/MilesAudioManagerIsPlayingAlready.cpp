@@ -16,6 +16,16 @@ struct BfmeAsciiStringData
 
 #include "ascii_string.h"
 
+template <> inline int StringBase<char>::compare(const StringBase<char> &str) const
+{
+	int otherLength = str.m_data ? str.m_data->length : 0;
+	const char *otherData = str.m_data ? str.m_data->data : (const char *)"";
+	int length = m_data ? m_data->length : 0;
+	const char *data = m_data ? m_data->data : (const char *)"";
+	int result = memcmp(data, otherData, length < otherLength ? length : otherLength);
+	return result ? result : length - otherLength;
+}
+
 class AudioEventRTS
 {
 public:
@@ -54,7 +64,7 @@ bool MilesAudioManager::isPlayingAlready(AudioEventRTS *event) const
 	{
 		for (it = playingSounds.begin(); it != playingSounds.end(); ++it)
 		{
-			if ((*it)->audioEventRTS->getEventName().compare(event->getEventName()) == 0)
+			if ((*it)->audioEventRTS->getEventName().StringBase<char>::compare(event->getEventName()) == 0)
 				return true;
 		}
 	}
@@ -62,7 +72,7 @@ bool MilesAudioManager::isPlayingAlready(AudioEventRTS *event) const
 	{
 		for (it = playing3DSounds.begin(); it != playing3DSounds.end(); ++it)
 		{
-			if ((*it)->audioEventRTS->getEventName().compare(event->getEventName()) == 0)
+			if ((*it)->audioEventRTS->getEventName().StringBase<char>::compare(event->getEventName()) == 0)
 				return true;
 		}
 	}

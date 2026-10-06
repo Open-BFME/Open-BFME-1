@@ -12,6 +12,16 @@
 
 #include "ascii_string.h"
 
+template <> inline int StringBase<char>::compare(const StringBase<char> &str) const
+{
+	int otherLength = str.m_data ? str.m_data->length : 0;
+	const char *otherData = str.m_data ? str.m_data->data : (const char *)"";
+	int length = m_data ? m_data->length : 0;
+	const char *data = m_data ? m_data->data : (const char *)"";
+	int result = memcmp(data, otherData, length < otherLength ? length : otherLength);
+	return result ? result : length - otherLength;
+}
+
 class Gen_006f9800
 {
 public:
@@ -27,7 +37,7 @@ private:
 // ?bfmeMatches@Gen_006f9800@@QBEHHABVAsciiString@@@Z
 int Gen_006f9800::bfmeMatches(int kind, const AsciiString &name) const
 {
-	if (kind == m_bfmeKind && m_bfmeName.compare(name) == 0)
+	if (kind == m_bfmeKind && m_bfmeName.StringBase<char>::compare(name) == 0)
 		return 1;
 
 	return 0;

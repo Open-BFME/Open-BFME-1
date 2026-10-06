@@ -8,6 +8,16 @@
 
 #include "ascii_string.h"
 
+template <> inline int StringBase<char>::compare(const StringBase<char> &str) const
+{
+	int otherLength = str.m_data ? str.m_data->length : 0;
+	const char *otherData = str.m_data ? str.m_data->data : (const char *)"";
+	int length = m_data ? m_data->length : 0;
+	const char *data = m_data ? m_data->data : (const char *)"";
+	int result = memcmp(data, otherData, length < otherLength ? length : otherLength);
+	return result ? result : length - otherLength;
+}
+
 typedef bool Bool;
 typedef int Int;
 
@@ -56,7 +66,7 @@ void Rva00743BF0Owner::rva00743BF0(const AsciiString &name)
 	for (entry = TheTacticalView->getRva00743BF0Entries(); entry != 0;
 		entry = entry->m_next)
 	{
-		if (entry->m_name.compare(name) == 0)
+		if (entry->m_name.StringBase<char>::compare(name) == 0)
 			break;
 	}
 

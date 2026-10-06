@@ -4,17 +4,20 @@
 //
 // Retail walks the std::list sentinel stored at manager+0.  A node links at
 // +0x00 and stores its HeaderTemplate at +0x08.  HeaderTemplate's name is the
-// inline AsciiString at +0x04.  The lookup compares the by-value query's
-// ushort length/data with that name, then releases the automatic query on
-// both the match and no-match exits.
+// inline AsciiString at +0x04.  The lookup compares the by-value query with
+// that name through StringBase<char>::compare, then releases the automatic
+// query on both the match and no-match exits.
 
-// The shared empty AsciiString sentinel (targets/game/reverse/symbols.csv
-// pins _g_bfmeEmptyAscii at retail 0x0107388B); a null StringBase reads it.
-extern const char g_bfmeEmptyAscii[];
+extern "C" int __cdecl memcmp( const void *left, const void *right, unsigned int count );
+#pragma intrinsic(memcmp)
 
 template <typename T> class StringBase
 {
 friend class AsciiString;
+
+public:
+	// Header-inline; its COMDAT is retail 0x0005FEB0.
+	int compare( const StringBase<T> &str ) const;
 
 // The shared StringBase bodies own the refcounted allocation; this TU keeps
 // the actual data-bearing layout while using their declarations at the ABI.
@@ -36,28 +39,23 @@ protected:
 	Header *m_data;
 };
 
-extern "C" int __cdecl memcmp( const void *left, const void *right, unsigned int count );
-#pragma intrinsic(memcmp)
+template <> inline int StringBase<char>::compare( const StringBase<char> &str ) const
+{
+	int otherLength = str.m_data ? str.m_data->length : 0;
+	const char *otherData = str.m_data ? str.m_data->data : (const char *)"";
+	int length = m_data ? m_data->length : 0;
+	const char *data = m_data ? m_data->data : (const char *)"";
+	int result = memcmp( data, otherData, length < otherLength ? length : otherLength );
+	return result ? result : length - otherLength;
+}
 
-class AsciiString : private StringBase<char>
+class AsciiString : public StringBase<char>
 {
 public:
 	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
 	~AsciiString()
 	{
 		((StringBase<char> *)this)->StringBase<char>::releaseBuffer();
-	}
-	int compare( const AsciiString &other ) const
-	{
-		int otherLength = other.m_data ? other.m_data->length : 0;
-		const char *otherText = other.m_data ? other.m_data->data : g_bfmeEmptyAscii;
-		int thisLength = m_data ? m_data->length : 0;
-		const char *thisText = m_data ? m_data->data : g_bfmeEmptyAscii;
-		int length = thisLength < otherLength ? thisLength : otherLength;
-		int result = memcmp( thisText, otherText, length );
-		if( result != 0 )
-			return result;
-		return thisLength - otherLength;
 	}
 };
 

@@ -23,6 +23,16 @@
 
 #include "ascii_string.h"
 
+template <> inline int StringBase<char>::compare(const StringBase<char> &str) const
+{
+	int otherLength = str.m_data ? str.m_data->length : 0;
+	const char *otherData = str.m_data ? str.m_data->data : (const char *)"";
+	int length = m_data ? m_data->length : 0;
+	const char *data = m_data ? m_data->data : (const char *)"";
+	int result = memcmp(data, otherData, length < otherLength ? length : otherLength);
+	return result ? result : length - otherLength;
+}
+
 typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
@@ -98,7 +108,7 @@ int rva000D4360(Thing *arg0, Rva000D4360Peer *arg1)
 
 	const Rva000D4360Template *tmpl = arg0->getTemplate();
 
-	if (tmpl->m_name.compare(arg1->m_peer->m_name) != 0)
+	if (tmpl->m_name.StringBase<char>::compare(arg1->m_peer->m_name) != 0)
 		goto returnTrue;
 
 	if (*(UnsignedInt *)((char *)arg0 + 0x90) & 4)

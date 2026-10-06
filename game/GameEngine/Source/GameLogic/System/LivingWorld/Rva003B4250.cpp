@@ -5,6 +5,16 @@
 #include "Common/INI.h"
 #include <vector>
 
+template <> inline int StringBase<char>::compare(const StringBase<char> &str) const
+{
+	int otherLength = str.m_data ? str.m_data->length : 0;
+	const char *otherData = str.m_data ? str.m_data->data : (const char *)"";
+	int length = m_data ? m_data->length : 0;
+	const char *data = m_data ? m_data->data : (const char *)"";
+	int result = memcmp(data, otherData, length < otherLength ? length : otherLength);
+	return result ? result : length - otherLength;
+}
+
 // Retail inlines ~AsciiString: temporaries are released by a direct call to
 // StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
 inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
@@ -134,7 +144,8 @@ void BfmeLivingWorldCampaignManager::rva003B4250(
 	UnsignedInt i = 0;
 	for( ; i < m_playerArmies.size(); ++i )
 	{
-		if( m_playerArmies[ i ].getName().compare( guard ) == 0 )
+		if( ((const StringBase<char> *)&m_playerArmies[ i ].getName())->compare(
+				*(const StringBase<char> *)&guard ) == 0 )
 		{
 			Rva00383820 *store =
 				reinterpret_cast<Rva00383820 *>( TheGameLogic );

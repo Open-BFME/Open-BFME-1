@@ -4,6 +4,16 @@
 
 #include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
+template <> inline int StringBase<char>::compare(const StringBase<char> &str) const
+{
+	int otherLength = str.m_data ? str.m_data->length : 0;
+	const char *otherData = str.m_data ? str.m_data->data : (const char *)"";
+	int length = m_data ? m_data->length : 0;
+	const char *data = m_data ? m_data->data : (const char *)"";
+	int result = memcmp(data, otherData, length < otherLength ? length : otherLength);
+	return result ? result : length - otherLength;
+}
+
 class Image;
 
 class GameLogicPortraitShim
@@ -101,7 +111,7 @@ const Image * __cdecl _bfme_getSelectedPortraitImage(
 	if (((GameLogicPortraitShim *)TheGameLogic)->isInMultiplayerOrSkirmishGame())
 	{
 		static AsciiString gandalfTemplate("GondorGandalf");
-		if (portraitTemplate->m_name.compare(gandalfTemplate) == 0 &&
+		if (portraitTemplate->m_name.StringBase<char>::compare(gandalfTemplate) == 0 &&
 			(objectTemplate->m_kindOfWord & GANDALF_MOUNTED_MASK) == 0)
 		{
 			static const Image *gandalfTheGrey = 0;

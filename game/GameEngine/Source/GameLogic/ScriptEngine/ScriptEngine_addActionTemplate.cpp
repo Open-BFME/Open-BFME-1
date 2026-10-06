@@ -6,6 +6,16 @@
 
 #include "Common/AsciiString.h"
 
+template <> inline int StringBase<char>::compare(const StringBase<char> &str) const
+{
+	int otherLength = str.m_data ? str.m_data->length : 0;
+	const char *otherData = str.m_data ? str.m_data->data : (const char *)"";
+	int length = m_data ? m_data->length : 0;
+	const char *data = m_data ? m_data->data : (const char *)"";
+	int result = memcmp(data, otherData, length < otherLength ? length : otherLength);
+	return result ? result : length - otherLength;
+}
+
 enum { MAX_PARMS = 12 };
 
 class Template
@@ -37,7 +47,8 @@ void BfmeScriptEngineTemplates::addActionTemplate(Template *tmpl)
 {
 	for (int templateIndex = 0; templateIndex < 543; ++templateIndex)
 	{
-		if (m_actionTemplates[templateIndex].m_internalName.compare(tmpl->m_internalName) == 0)
+		if (((const StringBase<char> *)&m_actionTemplates[templateIndex].m_internalName)->compare(
+				*(const StringBase<char> *)&tmpl->m_internalName) == 0)
 		{
 			m_actionTemplates[templateIndex].m_uiName = tmpl->m_uiName;
 			m_actionTemplates[templateIndex].m_uiName2 = tmpl->m_uiName2;

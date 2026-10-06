@@ -19,6 +19,16 @@ struct Rva003568C0AsciiStringData
 
 #include "ascii_string.h"
 
+template <> inline int StringBase<char>::compare(const StringBase<char> &str) const
+{
+	int otherLength = str.m_data ? str.m_data->length : 0;
+	const char *otherData = str.m_data ? str.m_data->data : (const char *)"";
+	int length = m_data ? m_data->length : 0;
+	const char *data = m_data ? m_data->data : (const char *)"";
+	int result = memcmp(data, otherData, length < otherLength ? length : otherLength);
+	return result ? result : length - otherLength;
+}
+
 struct Rva003568C0Record
 {
 	int m_previous;
@@ -59,7 +69,7 @@ int Rva00359330StringRecordTable::findNameIndex(AsciiString *name)
 			Rva003568C0Record *record = &records[begin[middle]];
 			AsciiString *recordName =
 				(AsciiString *)((char *)record + 8);
-			int comparison = name->compare(*recordName);
+			int comparison = name->StringBase<char>::compare(*recordName);
 			if (comparison == 0)
 				return middle;
 			if (comparison < 0)
@@ -120,7 +130,7 @@ int Rva00359530StringRecordTable::findNameIndex(AsciiString *name)
 			Rva00356A60Record *record = &records[begin[middle]];
 			AsciiString *recordName =
 				(AsciiString *)((char *)record + 8);
-			int comparison = name->compare(*recordName);
+			int comparison = name->StringBase<char>::compare(*recordName);
 			if (comparison == 0)
 				return middle;
 			if (comparison < 0)

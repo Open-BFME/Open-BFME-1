@@ -26,6 +26,16 @@
 #include "PreRTS.h"
 #include "Common/AsciiString.h"
 
+template <> inline int StringBase<char>::compare(const StringBase<char> &str) const
+{
+	int otherLength = str.m_data ? str.m_data->length : 0;
+	const char *otherData = str.m_data ? str.m_data->data : (const char *)"";
+	int length = m_data ? m_data->length : 0;
+	const char *data = m_data ? m_data->data : (const char *)"";
+	int result = memcmp(data, otherData, length < otherLength ? length : otherLength);
+	return result ? result : length - otherLength;
+}
+
 typedef _STL::pair<AsciiString, AsciiString> BfmeStringPairKey;
 
 namespace _STL
@@ -34,9 +44,10 @@ template <> struct less<BfmeStringPairKey>
 {
 	bool operator()( const BfmeStringPairKey &left, const BfmeStringPairKey &right ) const
 	{
-		return left.first.compare( right.first ) < 0
-			|| ( !( right.first.compare( left.first ) < 0 )
-				&& left.second.compare( right.second ) < 0 );
+		typedef const StringBase<char> *Base;
+		return ((Base)&left.first)->compare( *(Base)&right.first ) < 0
+			|| ( !( ((Base)&right.first)->compare( *(Base)&left.first ) < 0 )
+				&& ((Base)&left.second)->compare( *(Base)&right.second ) < 0 );
 	}
 };
 }

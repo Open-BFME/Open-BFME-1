@@ -17,6 +17,16 @@ struct AsciiStringHeader
 
 #include "ascii_string.h"
 
+template <> inline int StringBase<char>::compare(const StringBase<char> &str) const
+{
+	int otherLength = str.m_data ? str.m_data->length : 0;
+	const char *otherData = str.m_data ? str.m_data->data : (const char *)"";
+	int length = m_data ? m_data->length : 0;
+	const char *data = m_data ? m_data->data : (const char *)"";
+	int result = memcmp(data, otherData, length < otherLength ? length : otherLength);
+	return result ? result : length - otherLength;
+}
+
 const AsciiString AsciiString::TheEmptyString;
 
 class GameClientRandomVariable
@@ -113,17 +123,17 @@ void BoneFXUpdateInitTimesShim::initTimes()
 	int now = boneFXGameLogic()->getFrame();
 
 	for (i = 0; i < BONE_FX_MAX_BONES; ++i) {
-		if (d->m_fxList[m_curBodyState][i].boneName.compare(AsciiString::TheEmptyString) != 0) {
+		if (d->m_fxList[m_curBodyState][i].boneName.StringBase<char>::compare(AsciiString::TheEmptyString) != 0) {
 			m_nextFXFrame[m_curBodyState][i] = now + (int)d->m_fxList[m_curBodyState][i].gameLogicDelay.getValue();
 		} else {
 			m_nextFXFrame[m_curBodyState][i] = -1;
 		}
-		if (d->m_OCL[m_curBodyState][i].boneName.compare(AsciiString::TheEmptyString) != 0) {
+		if (d->m_OCL[m_curBodyState][i].boneName.StringBase<char>::compare(AsciiString::TheEmptyString) != 0) {
 			m_nextOCLFrame[m_curBodyState][i] = now + (int)d->m_OCL[m_curBodyState][i].gameLogicDelay.getValue();
 		} else {
 			m_nextOCLFrame[m_curBodyState][i] = -1;
 		}
-		if (d->m_particleSystem[m_curBodyState][i].boneName.compare(AsciiString::TheEmptyString) != 0) {
+		if (d->m_particleSystem[m_curBodyState][i].boneName.StringBase<char>::compare(AsciiString::TheEmptyString) != 0) {
 			m_nextParticleSystemFrame[m_curBodyState][i] = now + (int)d->m_particleSystem[m_curBodyState][i].gameClientDelay.getValue();
 		} else {
 			m_nextParticleSystemFrame[m_curBodyState][i] = -1;

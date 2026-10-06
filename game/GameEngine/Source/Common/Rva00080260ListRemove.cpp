@@ -5,6 +5,16 @@
 // contradicts retail's ret 4; retain an address-qualified identity.
 #include <memory>
 #include "ascii_string.h"
+
+template <> inline int StringBase<char>::compare(const StringBase<char> &str) const
+{
+	int otherLength = str.m_data ? str.m_data->length : 0;
+	const char *otherData = str.m_data ? str.m_data->data : (const char *)"";
+	int length = m_data ? m_data->length : 0;
+	const char *data = m_data ? m_data->data : (const char *)"";
+	int result = memcmp(data, otherData, length < otherLength ? length : otherLength);
+	return result ? result : length - otherLength;
+}
 struct Rva00080260Node {
     Rva00080260Node *next, *previous;
     AsciiString value;
@@ -21,7 +31,7 @@ void Rva00080260List::remove(const AsciiString &value)
     Rva00080260Node *node = end->next;
     while (node != end) {
         Rva00080260Node *next = node->next;
-        if (value.compare(node->value) == 0) {
+        if (value.StringBase<char>::compare(node->value) == 0) {
             Rva00080260Node *previous = node->previous;
             previous->next = next;
             next->previous = previous;

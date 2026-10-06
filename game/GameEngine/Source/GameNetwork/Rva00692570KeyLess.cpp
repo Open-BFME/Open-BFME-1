@@ -8,6 +8,16 @@ extern "C" int __cdecl memcmp(const void *buf1, const void *buf2, unsigned int c
 
 #include "ascii_string.h"
 
+template <> inline int StringBase<char>::compare(const StringBase<char> &str) const
+{
+	int otherLength = str.m_data ? str.m_data->length : 0;
+	const char *otherData = str.m_data ? str.m_data->data : (const char *)"";
+	int length = m_data ? m_data->length : 0;
+	const char *data = m_data ? m_data->data : (const char *)"";
+	int result = memcmp(data, otherData, length < otherLength ? length : otherLength);
+	return result ? result : length - otherLength;
+}
+
 struct Rva00692570Key
 {
 	unsigned primary;
@@ -28,5 +38,5 @@ bool Rva00692570Less::operator()(const Rva00692570Key &left, const Rva00692570Ke
 		return true;
 	if (left.primary > right.primary)
 		return false;
-	return left.secondary.compare(right.secondary) < 0;
+	return left.secondary.StringBase<char>::compare(right.secondary) < 0;
 }

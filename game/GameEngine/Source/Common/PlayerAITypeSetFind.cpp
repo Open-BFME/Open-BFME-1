@@ -14,6 +14,16 @@ struct BfmeAsciiStringData
 
 #include "ascii_string.h"
 
+template <> inline int StringBase<char>::compare(const StringBase<char> &str) const
+{
+	int otherLength = str.m_data ? str.m_data->length : 0;
+	const char *otherData = str.m_data ? str.m_data->data : (const char *)"";
+	int length = m_data ? m_data->length : 0;
+	const char *data = m_data ? m_data->data : (const char *)"";
+	int result = memcmp(data, otherData, length < otherLength ? length : otherLength);
+	return result ? result : length - otherLength;
+}
+
 class SubsystemInterface
 {
 private:
@@ -60,7 +70,7 @@ int PlayerAITypeSet::find(AsciiString *name)
 	int index = 0;
 	for (; (unsigned int)index < self->m_types.size(); ++index)
 	{
-		if (self->m_types[index].m_name.compare(*name) == 0)
+		if (self->m_types[index].m_name.StringBase<char>::compare(*name) == 0)
 			return index;
 	}
 	return -1;

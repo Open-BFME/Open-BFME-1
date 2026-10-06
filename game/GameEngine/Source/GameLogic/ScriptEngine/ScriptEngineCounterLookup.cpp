@@ -9,6 +9,16 @@
 // A named insertion result completes pair temporaries before computing the
 // returned counter address, matching the retail10-state unwind map.
 #include "ascii_string.h"
+
+template <> inline int StringBase<char>::compare(const StringBase<char> &str) const
+{
+	int otherLength = str.m_data ? str.m_data->length : 0;
+	const char *otherData = str.m_data ? str.m_data->data : (const char *)"";
+	int length = m_data ? m_data->length : 0;
+	const char *data = m_data ? m_data->data : (const char *)"";
+	int result = memcmp(data, otherData, length < otherLength ? length : otherLength);
+	return result ? result : length - otherLength;
+}
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
 #include <map>
 #include <utility>
@@ -33,9 +43,9 @@ template<> struct less<Rva00344C50Key>
 {
 	bool operator()(const Rva00344C50Key &left, const Rva00344C50Key &right) const
 	{
-		return left.first.compare(right.first) < 0
-			|| (!(right.first.compare(left.first) < 0)
-				&& left.second.compare(right.second) < 0);
+		return left.first.StringBase<char>::compare(right.first) < 0
+			|| (!(right.first.StringBase<char>::compare(left.first) < 0)
+				&& left.second.StringBase<char>::compare(right.second) < 0);
 	}
 };
 }
