@@ -5,7 +5,7 @@
 // Both upgrade predicates are evaluated. A transition clears the incoming
 // damage flag and zeroes the amount according to module flag68.
 class UpgradeTemplate; class Module; struct DamageInfo { unsigned char before20[0x20]; unsigned char flag20; };
-enum NameKeyType;
+enum NameKeyType { NAMEKEY_INVALID = 0, FORCE_NAMEKEYTYPE_LONG = 0x7fffffff };
 class Player { public: bool hasUpgradeComplete(const UpgradeTemplate*); };
 class Object { public:
  Player *getControllingPlayer() const;
@@ -16,7 +16,7 @@ protected:
  Module *findModule(NameKeyType) const;
  friend struct Rva00212980Owner;
 };
-class NameKeyGenerator { public: unsigned int nameToKey(const char*); };
+class NameKeyGenerator { public: NameKeyType nameToKey(const char*); };
 extern NameKeyGenerator *TheNameKeyGenerator;
 class LifetimeUpdate { public: void setLifetimeRange(unsigned int,unsigned int); };
 class FXList { public: static void doFXObj(const FXList*,const Object*,const Object*); };

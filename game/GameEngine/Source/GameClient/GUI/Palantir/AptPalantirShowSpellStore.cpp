@@ -1,6 +1,10 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
-typedef unsigned int NameKeyType;
+enum NameKeyType
+{
+	NAMEKEY_INVALID = 0,
+	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
+};
 typedef unsigned int WindowMsgData;
 
 class NameKeyGenerator

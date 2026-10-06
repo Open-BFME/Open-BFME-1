@@ -35,7 +35,11 @@ public:
 extern EstablishConnectionsMenu *TheEstablishConnectionsMenu;	///< retail 0x012F363C
 extern int buttonQuitID;										///< retail 0x012F39C0
 
-typedef unsigned int NameKeyType;
+enum NameKeyType
+{
+	NAMEKEY_INVALID = 0,
+	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
+};
 
 class NameKeyGenerator
 {
@@ -153,7 +157,7 @@ static void InitEstablishConnectionsDialog( void )
 		BFMERetailAsciiString button( "EstablishConnectionsScreen.wnd:ButtonQuit" );
 		buttonQuitID = TheNameKeyGenerator->nameToKey( button.str() );
 	}
-	buttonQuitWindow = localWindowManager()->winGetWindowFromId( 0, buttonQuitID );
+	buttonQuitWindow = localWindowManager()->winGetWindowFromId( 0, (NameKeyType)buttonQuitID );
 }
 
 static BfmeEstablishWindowLayout *establishConnectionsLayout;

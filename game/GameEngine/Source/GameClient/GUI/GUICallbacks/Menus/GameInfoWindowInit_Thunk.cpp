@@ -2,7 +2,11 @@
 
 #include "../../../../../../../inputs/reference/shims/stringinline/StringInline.h"
 
-typedef unsigned int NameKeyType;
+enum NameKeyType
+{
+	NAMEKEY_INVALID = 0,
+	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
+};
 
 class GameWindow;
 class WindowLayout;
@@ -90,13 +94,13 @@ static GameWindow *listBoxPlayers = 0;
 static GameWindow *winCrates = 0;
 static GameWindow *winSuperWeapons = 0;
 static GameWindow *winFreeForAll = 0;
-static NameKeyType parentID = 0;
-static NameKeyType staticTextGameNameID = 0;
-static NameKeyType staticTextMapNameID = 0;
-static NameKeyType listBoxPlayersID = 0;
-static NameKeyType winCratesID = 0;
-static NameKeyType winSuperWeaponsID = 0;
-static NameKeyType winFreeForAllID = 0;
+static NameKeyType parentID = NAMEKEY_INVALID;
+static NameKeyType staticTextGameNameID = NAMEKEY_INVALID;
+static NameKeyType staticTextMapNameID = NAMEKEY_INVALID;
+static NameKeyType listBoxPlayersID = NAMEKEY_INVALID;
+static NameKeyType winCratesID = NAMEKEY_INVALID;
+static NameKeyType winSuperWeaponsID = NAMEKEY_INVALID;
+static NameKeyType winFreeForAllID = NAMEKEY_INVALID;
 static WindowLayout *gameInfoWindowLayout = 0;
 static UnicodeString TheEmptyString;
 
