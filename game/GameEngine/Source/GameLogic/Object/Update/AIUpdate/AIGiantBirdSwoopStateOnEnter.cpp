@@ -71,7 +71,7 @@ struct Coord2D
 	~Coord2D();
 };
 
-Coord2D::~Coord2D()
+inline Coord2D::~Coord2D()
 {
 	_ReadWriteBarrier();
 }
