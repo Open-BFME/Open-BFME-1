@@ -1,0 +1,868 @@
+{
+  "scope": "Failed-attempt bank only; diagnostic target bindings do not create physical ledger owners",
+  "source": "targets/game/reverse/attempts/0x00940b40.cpp",
+  "source_sha256": "96b7450aa447c56aaabd8cf8ed3dae63de1bb5628721848cd114dfc2efe919da",
+  "object_sha256": "2c8b5ff67d5884a95e33f627318c4e2ed245226d94a9c876dae2e3e76c5822f6",
+  "proposed_bindings": {
+    "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z": "0093FD80",
+    "?insertUnique@Rva0093DCE0Tree@@QAE?AURva0093FE40Result@@ABURva0093FD80Value@@@Z": "0093FE40",
+    "?insertUnique@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@U2@ABURva0093FD80Value@@@Z": "009401F0",
+    "?insert@Rva00940B40Map@@QAE?AURva0093FD80Iterator@@U2@ABURva0093FD80Value@@@Z": "00940790",
+    "??ARva00940B40Map@@QAEAAPAXABG@Z": "00940B40"
+  },
+  "results": [
+    {
+      "name": "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z",
+      "rva": "0093FD80",
+      "size": 178,
+      "exact": true,
+      "matching_bytes": 178,
+      "differences": [],
+      "calls": [
+        {
+          "offset": 47,
+          "symbol": "?_M_allocate@?$__node_alloc@$00$0A@@_STL@@CAPAXI@Z",
+          "target_rva": "0082E540"
+        },
+        {
+          "offset": 59,
+          "symbol": "?Rva0093DD20Copy@@YAXPAEPBE@Z",
+          "target_rva": "0093DD20"
+        },
+        {
+          "offset": 86,
+          "symbol": "?_M_allocate@?$__node_alloc@$00$0A@@_STL@@CAPAXI@Z",
+          "target_rva": "0082E540"
+        },
+        {
+          "offset": 98,
+          "symbol": "?Rva0093DD20Copy@@YAXPAEPBE@Z",
+          "target_rva": "0093DD20"
+        },
+        {
+          "offset": 151,
+          "symbol": "?_Rebalance@?$_Rb_global@_N@_STL@@SAXPAU_Rb_tree_node_base@2@AAPAU32@@Z",
+          "target_rva": "0082C9D0"
+        }
+      ],
+      "raw_hex": "538b5c2410558b6c2418568bf13b1e5774418b44242485c075128b44241885c07531668b4500663b431072276a18e8000000008bf88d4f105551e800000000897b0c8b068b480c83c40c3bd9753689780ceb316a18e8000000008bf88d57105552e800000000897b088b0683c40c3bd8750a8978048b0689780ceb083b5808750389780833c0895f0489470889470c8b0e83c1045157e8000000008b460483c408408946048b44241489385f5e5d5bc21400",
+      "resolved_hex": "538b5c2410558b6c2418568bf13b1e5774418b44242485c075128b44241885c07531668b4500663b431072276a18e88de7eeff8bf88d4f105551e861dfffff897b0c8b068b480c83c40c3bd9753689780ceb316a18e866e7eeff8bf88d57105552e83adfffff897b088b0683c40c3bd8750a8978048b0689780ceb083b5808750389780833c0895f0489470889470c8b0e83c1045157e8b5cbeeff8b460483c408408946048b44241489385f5e5d5bc21400",
+      "retail_hex": "538b5c2410558b6c2418568bf13b1e5774418b44242485c075128b44241885c07531668b4500663b431072276a18e88de7eeff8bf88d4f105551e861dfffff897b0c8b068b480c83c40c3bd9753689780ceb316a18e866e7eeff8bf88d57105552e83adfffff897b088b0683c40c3bd8750a8978048b0689780ceb083b5808750389780833c0895f0489470889470c8b0e83c1045157e8b5cbeeff8b460483c408408946048b44241489385f5e5d5bc21400",
+      "unresolved": [],
+      "masked": false
+    },
+    {
+      "name": "?insertUnique@Rva0093DCE0Tree@@QAE?AURva0093FE40Result@@ABURva0093FD80Value@@@Z",
+      "rva": "0093FE40",
+      "size": 148,
+      "exact": true,
+      "matching_bytes": 148,
+      "differences": [],
+      "calls": [
+        {
+          "offset": 77,
+          "symbol": "?_M_decrement@?$_Rb_global@_N@_STL@@SAPAU_Rb_tree_node_base@2@PAU32@@Z",
+          "target_rva": "0082B8E0"
+        },
+        {
+          "offset": 106,
+          "symbol": "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z",
+          "target_rva": "0093FD80"
+        }
+      ],
+      "raw_hex": "538b5c240c558be98b5500568b720485f6578bfab1017421668b03eb038d4900663b46108bfe0f92c184c974058b7608eb038b760c85f675e784c98bc774153b7a0875076a00535757eb1757e80000000083c404668b5010663b1373246a005357568d442428508bcde8000000008b088b4424145f5e5d8908c64004015bc208008b4c24145f5e5d8901c64104008bc15bc20800",
+      "resolved_hex": "538b5c240c558be98b5500568b720485f6578bfab1017421668b03eb038d4900663b46108bfe0f92c184c974058b7608eb038b760c85f675e784c98bc774153b7a0875076a00535757eb1757e84fbaeeff83c404668b5010663b1373246a005357568d442428508bcde8d2feffff8b088b4424145f5e5d8908c64004015bc208008b4c24145f5e5d8901c64104008bc15bc20800",
+      "retail_hex": "538b5c240c558be98b5500568b720485f6578bfab1017421668b03eb038d4900663b46108bfe0f92c184c974058b7608eb038b760c85f675e784c98bc774153b7a0875076a00535757eb1757e84fbaeeff83c404668b5010663b1373246a005357568d442428508bcde8d2feffff8b088b4424145f5e5d8908c64004015bc208008b4c24145f5e5d8901c64104008bc15bc20800",
+      "unresolved": [],
+      "masked": false
+    },
+    {
+      "name": "?insertUnique@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@U2@ABURva0093FD80Value@@@Z",
+      "rva": "009401F0",
+      "size": 601,
+      "exact": true,
+      "matching_bytes": 601,
+      "differences": [],
+      "calls": [
+        {
+          "offset": 43,
+          "symbol": "?insertUnique@Rva0093DCE0Tree@@QAE?AURva0093FE40Result@@ABURva0093FD80Value@@@Z",
+          "target_rva": "0093FE40"
+        },
+        {
+          "offset": 93,
+          "symbol": "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z",
+          "target_rva": "0093FD80"
+        },
+        {
+          "offset": 127,
+          "symbol": "?_M_increment@?$_Rb_global@_N@_STL@@SAPAU_Rb_tree_node_base@2@PAU32@@Z",
+          "target_rva": "0082B870"
+        },
+        {
+          "offset": 153,
+          "symbol": "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z",
+          "target_rva": "0093FD80"
+        },
+        {
+          "offset": 197,
+          "symbol": "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z",
+          "target_rva": "0093FD80"
+        },
+        {
+          "offset": 223,
+          "symbol": "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z",
+          "target_rva": "0093FD80"
+        },
+        {
+          "offset": 247,
+          "symbol": "?insertUnique@Rva0093DCE0Tree@@QAE?AURva0093FE40Result@@ABURva0093FD80Value@@@Z",
+          "target_rva": "0093FE40"
+        },
+        {
+          "offset": 301,
+          "symbol": "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z",
+          "target_rva": "0093FD80"
+        },
+        {
+          "offset": 325,
+          "symbol": "?insertUnique@Rva0093DCE0Tree@@QAE?AURva0093FE40Result@@ABURva0093FD80Value@@@Z",
+          "target_rva": "0093FE40"
+        },
+        {
+          "offset": 349,
+          "symbol": "?_M_decrement@?$_Rb_global@_N@_STL@@SAPAU_Rb_tree_node_base@2@PAU32@@Z",
+          "target_rva": "0082B8E0"
+        },
+        {
+          "offset": 401,
+          "symbol": "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z",
+          "target_rva": "0093FD80"
+        },
+        {
+          "offset": 428,
+          "symbol": "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z",
+          "target_rva": "0093FD80"
+        },
+        {
+          "offset": 446,
+          "symbol": "?_M_increment@?$_Rb_global@_N@_STL@@SAPAU_Rb_tree_node_base@2@PAU32@@Z",
+          "target_rva": "0082B870"
+        },
+        {
+          "offset": 507,
+          "symbol": "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z",
+          "target_rva": "0093FD80"
+        },
+        {
+          "offset": 534,
+          "symbol": "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z",
+          "target_rva": "0093FD80"
+        },
+        {
+          "offset": 579,
+          "symbol": "?insertUnique@Rva0093DCE0Tree@@QAE?AURva0093FE40Result@@ABURva0093FD80Value@@@Z",
+          "target_rva": "0093FE40"
+        }
+      ],
+      "raw_hex": "83ec0853568b742418578bf98b073b70080f85f50000008b470485c077228b442420508d4c2410518bcfe8000000008b108b4424185f5e89105b83c408c20c008b5c2420668b03668b4e10663bc8761c6a005356568b742428568bcfe8000000005f8bc65e5b83c408c20c00720f8b4424185f89305e5b83c408c20c0056e8000000008b0f83c4043bc1751c5653568b7424246a00568bcfe8000000005f8bc65e5b83c408c20c00668b0b663b4810733d8b4e0c85c98bcf751a5653568b7424246a0056e8000000005f8bc65e5b83c408c20c008b7424186a0053505056e8000000005f8bc65e5b83c408c20c00538d542410528bcfe8000000008b088b4424185f5e89085b83c408c20c003bf0754a8b480c668b51108b442420663b10731c568b74241c50516a00568bcfe8000000005f8bc65e5b83c408c20c00508d442410508bcfe8000000008b088b4424185f5e89085b83c408c20c005556e8000000008b6c2428668b4d0083c404663b4e100f92c384db744566394810733f8b480c85c98bcf751b8b74241c5055506a0056e8000000005d5f8bc65e5b83c408c20c006a005556568b74242c56e8000000005d5f8bc65e5b83c408c20c0056e80000000083c40484db0f94c184db7558668b5500663956100f92c184c9744d3b077406663b5010733f8b4e0c85c98bcf751b5655568b7424286a0056e8000000005d5f8bc65e5b83c408c20c008b74241c6a0055505056e8000000005d5f8bc65e5b83c408c20c003ad975108b44241c5d5f89305e5b83c408c20c00558d542414528bcfe8000000008b088b44241c5d5f5e89085b83c408c20c00",
+      "resolved_hex": "83ec0853568b742418578bf98b073b70080f85f50000008b470485c077228b442420508d4c2410518bcfe821fcffff8b108b4424185f5e89105b83c408c20c008b5c2420668b03668b4e10663bc8761c6a005356568b742428568bcfe82ffbffff5f8bc65e5b83c408c20c00720f8b4424185f89305e5b83c408c20c0056e8fdb5eeff8b0f83c4043bc1751c5653568b7424246a00568bcfe8f3faffff5f8bc65e5b83c408c20c00668b0b663b4810733d8b4e0c85c98bcf751a5653568b7424246a0056e8c7faffff5f8bc65e5b83c408c20c008b7424186a0053505056e8adfaffff5f8bc65e5b83c408c20c00538d542410528bcfe855fbffff8b088b4424185f5e89085b83c408c20c003bf0754a8b480c668b51108b442420663b10731c568b74241c50516a00568bcfe85ffaffff5f8bc65e5b83c408c20c00508d442410508bcfe807fbffff8b088b4424185f5e89085b83c408c20c005556e88fb5eeff8b6c2428668b4d0083c404663b4e100f92c384db744566394810733f8b480c85c98bcf751b8b74241c5055506a0056e8fbf9ffff5d5f8bc65e5b83c408c20c006a005556568b74242c56e8e0f9ffff5d5f8bc65e5b83c408c20c0056e8beb4eeff83c40484db0f94c184db7558668b5500663956100f92c184c9744d3b077406663b5010733f8b4e0c85c98bcf751b5655568b7424286a0056e891f9ffff5d5f8bc65e5b83c408c20c008b74241c6a0055505056e876f9ffff5d5f8bc65e5b83c408c20c003ad975108b44241c5d5f89305e5b83c408c20c00558d542414528bcfe809faffff8b088b44241c5d5f5e89085b83c408c20c00",
+      "retail_hex": "83ec0853568b742418578bf98b073b70080f85f50000008b470485c077228b442420508d4c2410518bcfe821fcffff8b108b4424185f5e89105b83c408c20c008b5c2420668b03668b4e10663bc8761c6a005356568b742428568bcfe82ffbffff5f8bc65e5b83c408c20c00720f8b4424185f89305e5b83c408c20c0056e8fdb5eeff8b0f83c4043bc1751c5653568b7424246a00568bcfe8f3faffff5f8bc65e5b83c408c20c00668b0b663b4810733d8b4e0c85c98bcf751a5653568b7424246a0056e8c7faffff5f8bc65e5b83c408c20c008b7424186a0053505056e8adfaffff5f8bc65e5b83c408c20c00538d542410528bcfe855fbffff8b088b4424185f5e89085b83c408c20c003bf0754a8b480c668b51108b442420663b10731c568b74241c50516a00568bcfe85ffaffff5f8bc65e5b83c408c20c00508d442410508bcfe807fbffff8b088b4424185f5e89085b83c408c20c005556e88fb5eeff8b6c2428668b4d0083c404663b4e100f92c384db744566394810733f8b480c85c98bcf751b8b74241c5055506a0056e8fbf9ffff5d5f8bc65e5b83c408c20c006a005556568b74242c56e8e0f9ffff5d5f8bc65e5b83c408c20c0056e8beb4eeff83c40484db0f94c184db7558668b5500663956100f92c184c9744d3b077406663b5010733f8b4e0c85c98bcf751b5655568b7424286a0056e891f9ffff5d5f8bc65e5b83c408c20c008b74241c6a0055505056e876f9ffff5d5f8bc65e5b83c408c20c003ad975108b44241c5d5f89305e5b83c408c20c00558d542414528bcfe809faffff8b088b44241c5d5f5e89085b83c408c20c00",
+      "unresolved": [],
+      "masked": false
+    },
+    {
+      "name": "?insert@Rva00940B40Map@@QAE?AURva0093FD80Iterator@@U2@ABURva0093FD80Value@@@Z",
+      "rva": "00940790",
+      "size": 31,
+      "exact": true,
+      "matching_bytes": 31,
+      "differences": [],
+      "calls": [
+        {
+          "offset": 21,
+          "symbol": "?insertUnique@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@U2@ABURva0093FD80Value@@@Z",
+          "target_rva": "009401F0"
+        }
+      ],
+      "raw_hex": "8b44240c8b542408568b74240850518bc4568910e8000000008bc65ec20c00",
+      "resolved_hex": "8b44240c8b542408568b74240850518bc4568910e847faffff8bc65ec20c00",
+      "retail_hex": "8b44240c8b542408568b74240850518bc4568910e847faffff8bc65ec20c00",
+      "unresolved": [],
+      "masked": false
+    },
+    {
+      "name": "??ARva00940B40Map@@QAEAAPAXABG@Z",
+      "rva": "00940B40",
+      "size": 121,
+      "exact": false,
+      "matching_bytes": 106,
+      "differences": [
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87
+      ],
+      "calls": [
+        {
+          "offset": 89,
+          "symbol": "?insertUnique@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@U2@ABURva0093FD80Value@@@Z",
+          "target_rva": "009401F0"
+        }
+      ],
+      "raw_hex": "83ec0853568b318b460485c0578b7c24188bd67417668b1f6639581072078bd08b4008eb038b400c85c075ec3bd67409668b07663b42107334668b07668944240c8d44240c50518bc4c74424180000000089108d54242052e8000000008b44241883c0145f5e5b83c408c204005f5e8d42145b83c408c20400",
+      "resolved_hex": "83ec0853568b318b460485c0578b7c24188bd67417668b1f6639581072078bd08b4008eb038b400c85c075ec3bd67409668b07663b42107334668b07668944240c8d44240c50518bc4c74424180000000089108d54242052e853f6ffff8b44241883c0145f5e5b83c408c204005f5e8d42145b83c408c20400",
+      "retail_hex": "83ec0853568b318b460485c0578b7c24188bd67417668b1f6639581072078bd08b4008eb038b400c85c075ec3bd67409668b07663b42107334668b07668944240c8d44240c50518bc489108d54242052c744241c00000000e853f6ffff8b44241883c0145f5e5b83c408c204005f5e8d42145b83c408c20400",
+      "unresolved": [],
+      "masked": false
+    }
+  ],
+  "emitted_code": [
+    {
+      "name": "??2@YAPAXIPAX@Z",
+      "section": 3,
+      "size": 5,
+      "sha256": "99712f5745d56904d51e658eeac81bb39a7a2acb4c8834e9af91b4ef58557a0d",
+      "relocations": []
+    },
+    {
+      "name": "?__stl_new@_STL@@YAPAXI@Z",
+      "section": 5,
+      "size": 5,
+      "sha256": "e8ebd827d1f36d7cfa5e5220610aa6370284d1589989363f48ac40166362d449",
+      "relocations": [
+        [
+          1,
+          20,
+          "??2@YAPAXI@Z"
+        ]
+      ]
+    },
+    {
+      "name": "??0Rva0093FD80Iterator@@QAE@PAU_Rb_tree_node_base@_STL@@@Z",
+      "section": 7,
+      "size": 11,
+      "sha256": "0d9d4797ad8c81da5b9f78b6e3eba5066720c9a41fbd098a5dac1e8581c3c29c",
+      "relocations": []
+    },
+    {
+      "name": "??0Rva0093FD80Iterator@@QAE@ABU0@@Z",
+      "section": 9,
+      "size": 13,
+      "sha256": "9c375493fe6e8516cd7ebdc429fa91c81045e81d62b4225dc8b83f1e3b160f39",
+      "relocations": []
+    },
+    {
+      "name": "??ERva0093FD80Iterator@@QAEAAU0@XZ",
+      "section": 11,
+      "size": 20,
+      "sha256": "91fef5345ea8e3ad605955bd187e2a6298597bd1b80684faf95cf3d33272d5b3",
+      "relocations": [
+        [
+          7,
+          20,
+          "?_M_increment@?$_Rb_global@_N@_STL@@SAPAU_Rb_tree_node_base@2@PAU32@@Z"
+        ]
+      ]
+    },
+    {
+      "name": "??FRva0093FD80Iterator@@QAEAAU0@XZ",
+      "section": 13,
+      "size": 20,
+      "sha256": "91fef5345ea8e3ad605955bd187e2a6298597bd1b80684faf95cf3d33272d5b3",
+      "relocations": [
+        [
+          7,
+          20,
+          "?_M_decrement@?$_Rb_global@_N@_STL@@SAPAU_Rb_tree_node_base@2@PAU32@@Z"
+        ]
+      ]
+    },
+    {
+      "name": "??0Rva0093FE40Result@@QAE@ABURva0093FD80Iterator@@_N@Z",
+      "section": 15,
+      "size": 20,
+      "sha256": "4ee0c1f4effd1bccad802255b17e059e319414c731f7308d1fcac441812f2aef",
+      "relocations": []
+    },
+    {
+      "name": "?key@Rva0093DCE0Tree@@CAABGPAU_Rb_tree_node_base@_STL@@@Z",
+      "section": 17,
+      "size": 8,
+      "sha256": "cec9d2591b1683293de1dd07e71da8252d05885813f43c588797e7b00a4a3f8e",
+      "relocations": []
+    },
+    {
+      "name": "?allocate@?$__node_alloc@$00$0A@@_STL@@SAPAXI@Z",
+      "section": 19,
+      "size": 29,
+      "sha256": "f548258349135104a3e5b8d7b6ca545c89178f9865f7b053bd5a844f7e81a940",
+      "relocations": [
+        [
+          16,
+          20,
+          "??2@YAPAXI@Z"
+        ],
+        [
+          25,
+          20,
+          "?_M_allocate@?$__node_alloc@$00$0A@@_STL@@CAPAXI@Z"
+        ]
+      ]
+    },
+    {
+      "name": "??R?$less@G@_STL@@QBE_NABG0@Z",
+      "section": 21,
+      "size": 21,
+      "sha256": "5fb925a89a0cc9f87d3974a7fa1413a89760f05d037aa3db03e3221422c0d724",
+      "relocations": []
+    },
+    {
+      "name": "?create@Rva0093DCE0Tree@@CAPAURva0093DCE0Node@@ABURva0093FD80Value@@@Z",
+      "section": 23,
+      "size": 31,
+      "sha256": "d971bd9143f2606df242d0946c0231b6adbfe44b96fc02fb3980be1029194476",
+      "relocations": [
+        [
+          4,
+          20,
+          "?_M_allocate@?$__node_alloc@$00$0A@@_STL@@CAPAXI@Z"
+        ],
+        [
+          20,
+          20,
+          "?Rva0093DD20Copy@@YAXPAEPBE@Z"
+        ]
+      ]
+    },
+    {
+      "name": "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z",
+      "section": 25,
+      "size": 178,
+      "sha256": "db49fb327f00093b20622bc9feda011d4fffbfdbeb7c1dc0e709f33ed77b1719",
+      "relocations": [
+        [
+          47,
+          20,
+          "?_M_allocate@?$__node_alloc@$00$0A@@_STL@@CAPAXI@Z"
+        ],
+        [
+          59,
+          20,
+          "?Rva0093DD20Copy@@YAXPAEPBE@Z"
+        ],
+        [
+          86,
+          20,
+          "?_M_allocate@?$__node_alloc@$00$0A@@_STL@@CAPAXI@Z"
+        ],
+        [
+          98,
+          20,
+          "?Rva0093DD20Copy@@YAXPAEPBE@Z"
+        ],
+        [
+          151,
+          20,
+          "?_Rebalance@?$_Rb_global@_N@_STL@@SAXPAU_Rb_tree_node_base@2@AAPAU32@@Z"
+        ]
+      ]
+    },
+    {
+      "name": "?insertUnique@Rva0093DCE0Tree@@QAE?AURva0093FE40Result@@ABURva0093FD80Value@@@Z",
+      "section": 27,
+      "size": 148,
+      "sha256": "2476d86b8c9ee0a795a4f22c3a6405b902b2a05cb8436c83b5c071a39ccd9264",
+      "relocations": [
+        [
+          77,
+          20,
+          "?_M_decrement@?$_Rb_global@_N@_STL@@SAPAU_Rb_tree_node_base@2@PAU32@@Z"
+        ],
+        [
+          106,
+          20,
+          "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z"
+        ]
+      ]
+    },
+    {
+      "name": "?insertUnique@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@U2@ABURva0093FD80Value@@@Z",
+      "section": 29,
+      "size": 601,
+      "sha256": "4eb970cfce6a5effa7e0df6c6146021c8d4aa59c7bb1116103cb4c4bb6be351e",
+      "relocations": [
+        [
+          43,
+          20,
+          "?insertUnique@Rva0093DCE0Tree@@QAE?AURva0093FE40Result@@ABURva0093FD80Value@@@Z"
+        ],
+        [
+          93,
+          20,
+          "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z"
+        ],
+        [
+          127,
+          20,
+          "?_M_increment@?$_Rb_global@_N@_STL@@SAPAU_Rb_tree_node_base@2@PAU32@@Z"
+        ],
+        [
+          153,
+          20,
+          "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z"
+        ],
+        [
+          197,
+          20,
+          "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z"
+        ],
+        [
+          223,
+          20,
+          "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z"
+        ],
+        [
+          247,
+          20,
+          "?insertUnique@Rva0093DCE0Tree@@QAE?AURva0093FE40Result@@ABURva0093FD80Value@@@Z"
+        ],
+        [
+          301,
+          20,
+          "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z"
+        ],
+        [
+          325,
+          20,
+          "?insertUnique@Rva0093DCE0Tree@@QAE?AURva0093FE40Result@@ABURva0093FD80Value@@@Z"
+        ],
+        [
+          349,
+          20,
+          "?_M_decrement@?$_Rb_global@_N@_STL@@SAPAU_Rb_tree_node_base@2@PAU32@@Z"
+        ],
+        [
+          401,
+          20,
+          "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z"
+        ],
+        [
+          428,
+          20,
+          "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z"
+        ],
+        [
+          446,
+          20,
+          "?_M_increment@?$_Rb_global@_N@_STL@@SAPAU_Rb_tree_node_base@2@PAU32@@Z"
+        ],
+        [
+          507,
+          20,
+          "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z"
+        ],
+        [
+          534,
+          20,
+          "?insert@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@PAU_Rb_tree_node_base@_STL@@0ABURva0093FD80Value@@0@Z"
+        ],
+        [
+          579,
+          20,
+          "?insertUnique@Rva0093DCE0Tree@@QAE?AURva0093FE40Result@@ABURva0093FD80Value@@@Z"
+        ]
+      ]
+    },
+    {
+      "name": "?insert@Rva00940B40Map@@QAE?AURva0093FD80Iterator@@U2@ABURva0093FD80Value@@@Z",
+      "section": 31,
+      "size": 31,
+      "sha256": "a77c9ee9dad70a5bb7089c0e96e424b8a9931500ae2855000960a3a195e75aa9",
+      "relocations": [
+        [
+          21,
+          20,
+          "?insertUnique@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@U2@ABURva0093FD80Value@@@Z"
+        ]
+      ]
+    },
+    {
+      "name": "??ARva00940B40Map@@QAEAAPAXABG@Z",
+      "section": 33,
+      "size": 121,
+      "sha256": "3adf4d976b2f79b3e99b98a9dd0f998e51b59039b07adf6daf2353f0fe127117",
+      "relocations": [
+        [
+          89,
+          20,
+          "?insertUnique@Rva0093DCE0Tree@@QAE?AURva0093FD80Iterator@@U2@ABURva0093FD80Value@@@Z"
+        ]
+      ]
+    }
+  ],
+  "all_sections": [
+    {
+      "number": 1,
+      "name": ".drectve",
+      "raw_size": 103,
+      "raw_pointer": 1380,
+      "reloc_count": 0,
+      "reloc_pointer": 0,
+      "characteristics": 1051136,
+      "sha256": "d118c3a3e42ed885e25ac95b31a39493645bbb19db8083ff40d8e0972e6cdc27"
+    },
+    {
+      "number": 2,
+      "name": ".debug$S",
+      "raw_size": 166,
+      "raw_pointer": 1483,
+      "reloc_count": 0,
+      "reloc_pointer": 0,
+      "characteristics": 1108344896,
+      "sha256": "f63daa878659023f1c52da8866d012daedc5dfdb09acd475b7e45dc9b98b9572"
+    },
+    {
+      "number": 3,
+      "name": ".text",
+      "raw_size": 5,
+      "raw_pointer": 1649,
+      "reloc_count": 0,
+      "reloc_pointer": 0,
+      "characteristics": 1615859744,
+      "sha256": "99712f5745d56904d51e658eeac81bb39a7a2acb4c8834e9af91b4ef58557a0d"
+    },
+    {
+      "number": 4,
+      "name": ".debug$F",
+      "raw_size": 16,
+      "raw_pointer": 1654,
+      "reloc_count": 1,
+      "reloc_pointer": 1670,
+      "characteristics": 1108348992,
+      "sha256": "c7e4c1710b88bf20174f8416b99307b3444349dd4cae479cca80b83efbf29fac"
+    },
+    {
+      "number": 5,
+      "name": ".text",
+      "raw_size": 5,
+      "raw_pointer": 1680,
+      "reloc_count": 1,
+      "reloc_pointer": 1685,
+      "characteristics": 1615859744,
+      "sha256": "e8ebd827d1f36d7cfa5e5220610aa6370284d1589989363f48ac40166362d449"
+    },
+    {
+      "number": 6,
+      "name": ".debug$F",
+      "raw_size": 16,
+      "raw_pointer": 1695,
+      "reloc_count": 1,
+      "reloc_pointer": 1711,
+      "characteristics": 1108348992,
+      "sha256": "5e1dd3941a60be865a4a496d6ba17b2f29af437ab24dcddc2e65b4480d69c257"
+    },
+    {
+      "number": 7,
+      "name": ".text",
+      "raw_size": 11,
+      "raw_pointer": 1721,
+      "reloc_count": 0,
+      "reloc_pointer": 0,
+      "characteristics": 1615859744,
+      "sha256": "0d9d4797ad8c81da5b9f78b6e3eba5066720c9a41fbd098a5dac1e8581c3c29c"
+    },
+    {
+      "number": 8,
+      "name": ".debug$F",
+      "raw_size": 16,
+      "raw_pointer": 1732,
+      "reloc_count": 1,
+      "reloc_pointer": 1748,
+      "characteristics": 1108348992,
+      "sha256": "4f07436b3fbfa2801a4120669c9cdd85213a5cae755f98d4060eee227f6d919a"
+    },
+    {
+      "number": 9,
+      "name": ".text",
+      "raw_size": 13,
+      "raw_pointer": 1758,
+      "reloc_count": 0,
+      "reloc_pointer": 0,
+      "characteristics": 1615859744,
+      "sha256": "9c375493fe6e8516cd7ebdc429fa91c81045e81d62b4225dc8b83f1e3b160f39"
+    },
+    {
+      "number": 10,
+      "name": ".debug$F",
+      "raw_size": 16,
+      "raw_pointer": 1771,
+      "reloc_count": 1,
+      "reloc_pointer": 1787,
+      "characteristics": 1108348992,
+      "sha256": "1612bc87cbad16a21c6ff4262089c2948568de1c265ad2932b6ce554facc4842"
+    },
+    {
+      "number": 11,
+      "name": ".text",
+      "raw_size": 20,
+      "raw_pointer": 1797,
+      "reloc_count": 1,
+      "reloc_pointer": 1817,
+      "characteristics": 1615859744,
+      "sha256": "91fef5345ea8e3ad605955bd187e2a6298597bd1b80684faf95cf3d33272d5b3"
+    },
+    {
+      "number": 12,
+      "name": ".debug$F",
+      "raw_size": 16,
+      "raw_pointer": 1827,
+      "reloc_count": 1,
+      "reloc_pointer": 1843,
+      "characteristics": 1108348992,
+      "sha256": "a9cc1df79d17255670fe92375eb1a53746c00a1ed42a7430b49f39f5bbc91f68"
+    },
+    {
+      "number": 13,
+      "name": ".text",
+      "raw_size": 20,
+      "raw_pointer": 1853,
+      "reloc_count": 1,
+      "reloc_pointer": 1873,
+      "characteristics": 1615859744,
+      "sha256": "91fef5345ea8e3ad605955bd187e2a6298597bd1b80684faf95cf3d33272d5b3"
+    },
+    {
+      "number": 14,
+      "name": ".debug$F",
+      "raw_size": 16,
+      "raw_pointer": 1883,
+      "reloc_count": 1,
+      "reloc_pointer": 1899,
+      "characteristics": 1108348992,
+      "sha256": "a9cc1df79d17255670fe92375eb1a53746c00a1ed42a7430b49f39f5bbc91f68"
+    },
+    {
+      "number": 15,
+      "name": ".text",
+      "raw_size": 20,
+      "raw_pointer": 1909,
+      "reloc_count": 0,
+      "reloc_pointer": 0,
+      "characteristics": 1615859744,
+      "sha256": "4ee0c1f4effd1bccad802255b17e059e319414c731f7308d1fcac441812f2aef"
+    },
+    {
+      "number": 16,
+      "name": ".debug$F",
+      "raw_size": 16,
+      "raw_pointer": 1929,
+      "reloc_count": 1,
+      "reloc_pointer": 1945,
+      "characteristics": 1108348992,
+      "sha256": "01e7157326be48ca6a70798600fb448c3a8e0728cd27d71426c52b7b7bf0875f"
+    },
+    {
+      "number": 17,
+      "name": ".text",
+      "raw_size": 8,
+      "raw_pointer": 1955,
+      "reloc_count": 0,
+      "reloc_pointer": 0,
+      "characteristics": 1615859744,
+      "sha256": "cec9d2591b1683293de1dd07e71da8252d05885813f43c588797e7b00a4a3f8e"
+    },
+    {
+      "number": 18,
+      "name": ".debug$F",
+      "raw_size": 16,
+      "raw_pointer": 1963,
+      "reloc_count": 1,
+      "reloc_pointer": 1979,
+      "characteristics": 1108348992,
+      "sha256": "4f62415e5d73e12940e7a8b44512df02652faa8c603a60763c650b5d842866e8"
+    },
+    {
+      "number": 19,
+      "name": ".text",
+      "raw_size": 29,
+      "raw_pointer": 1989,
+      "reloc_count": 2,
+      "reloc_pointer": 2018,
+      "characteristics": 1615859744,
+      "sha256": "f548258349135104a3e5b8d7b6ca545c89178f9865f7b053bd5a844f7e81a940"
+    },
+    {
+      "number": 20,
+      "name": ".debug$F",
+      "raw_size": 16,
+      "raw_pointer": 2038,
+      "reloc_count": 1,
+      "reloc_pointer": 2054,
+      "characteristics": 1108348992,
+      "sha256": "3189256c1a38d710ff3248bd7d14292626a11a981bca2793b1d9b10f3c84a800"
+    },
+    {
+      "number": 21,
+      "name": ".text",
+      "raw_size": 21,
+      "raw_pointer": 2064,
+      "reloc_count": 0,
+      "reloc_pointer": 0,
+      "characteristics": 1615859744,
+      "sha256": "5fb925a89a0cc9f87d3974a7fa1413a89760f05d037aa3db03e3221422c0d724"
+    },
+    {
+      "number": 22,
+      "name": ".debug$F",
+      "raw_size": 16,
+      "raw_pointer": 2085,
+      "reloc_count": 1,
+      "reloc_pointer": 2101,
+      "characteristics": 1108348992,
+      "sha256": "2d94480f6b1cb4b43c9b8867315ed8632e94e7fae71d70b60b665eb7cc17a80f"
+    },
+    {
+      "number": 23,
+      "name": ".text",
+      "raw_size": 31,
+      "raw_pointer": 2111,
+      "reloc_count": 2,
+      "reloc_pointer": 2142,
+      "characteristics": 1615859744,
+      "sha256": "d971bd9143f2606df242d0946c0231b6adbfe44b96fc02fb3980be1029194476"
+    },
+    {
+      "number": 24,
+      "name": ".debug$F",
+      "raw_size": 16,
+      "raw_pointer": 2162,
+      "reloc_count": 1,
+      "reloc_pointer": 2178,
+      "characteristics": 1108348992,
+      "sha256": "4807ab6bcb286da82bc01624920472d47099ee4e17b21c6145d3186d15a32e7f"
+    },
+    {
+      "number": 25,
+      "name": ".text",
+      "raw_size": 178,
+      "raw_pointer": 2188,
+      "reloc_count": 5,
+      "reloc_pointer": 2366,
+      "characteristics": 1615859744,
+      "sha256": "db49fb327f00093b20622bc9feda011d4fffbfdbeb7c1dc0e709f33ed77b1719"
+    },
+    {
+      "number": 26,
+      "name": ".debug$F",
+      "raw_size": 16,
+      "raw_pointer": 2416,
+      "reloc_count": 1,
+      "reloc_pointer": 2432,
+      "characteristics": 1108348992,
+      "sha256": "738a757cd4115990da5f51179a44c934399916a1eef7394ba7298fc764021776"
+    },
+    {
+      "number": 27,
+      "name": ".text",
+      "raw_size": 148,
+      "raw_pointer": 2442,
+      "reloc_count": 2,
+      "reloc_pointer": 2590,
+      "characteristics": 1615859744,
+      "sha256": "2476d86b8c9ee0a795a4f22c3a6405b902b2a05cb8436c83b5c071a39ccd9264"
+    },
+    {
+      "number": 28,
+      "name": ".debug$F",
+      "raw_size": 16,
+      "raw_pointer": 2610,
+      "reloc_count": 1,
+      "reloc_pointer": 2626,
+      "characteristics": 1108348992,
+      "sha256": "9918a65e72010ea54becd72cc444bc2289154c8da233f8b4abfeab9c87df4943"
+    },
+    {
+      "number": 29,
+      "name": ".text",
+      "raw_size": 601,
+      "raw_pointer": 2636,
+      "reloc_count": 16,
+      "reloc_pointer": 3237,
+      "characteristics": 1615859744,
+      "sha256": "4eb970cfce6a5effa7e0df6c6146021c8d4aa59c7bb1116103cb4c4bb6be351e"
+    },
+    {
+      "number": 30,
+      "name": ".debug$F",
+      "raw_size": 16,
+      "raw_pointer": 3397,
+      "reloc_count": 1,
+      "reloc_pointer": 3413,
+      "characteristics": 1108348992,
+      "sha256": "884483c8704e1cc291dcaa6d00cc609d34121dd3f026c2e73c6165b6350eda9f"
+    },
+    {
+      "number": 31,
+      "name": ".text",
+      "raw_size": 31,
+      "raw_pointer": 3423,
+      "reloc_count": 1,
+      "reloc_pointer": 3454,
+      "characteristics": 1615859744,
+      "sha256": "a77c9ee9dad70a5bb7089c0e96e424b8a9931500ae2855000960a3a195e75aa9"
+    },
+    {
+      "number": 32,
+      "name": ".debug$F",
+      "raw_size": 16,
+      "raw_pointer": 3464,
+      "reloc_count": 1,
+      "reloc_pointer": 3480,
+      "characteristics": 1108348992,
+      "sha256": "bf86cb37eeab31ae057be7785ef011670ff01ad2317edef40432d3fda9ae346f"
+    },
+    {
+      "number": 33,
+      "name": ".text",
+      "raw_size": 121,
+      "raw_pointer": 3490,
+      "reloc_count": 1,
+      "reloc_pointer": 3611,
+      "characteristics": 1615859744,
+      "sha256": "3adf4d976b2f79b3e99b98a9dd0f998e51b59039b07adf6daf2353f0fe127117"
+    },
+    {
+      "number": 34,
+      "name": ".debug$F",
+      "raw_size": 16,
+      "raw_pointer": 3621,
+      "reloc_count": 1,
+      "reloc_pointer": 3637,
+      "characteristics": 1108348992,
+      "sha256": "c96850f639edf03c235ad6e43a1655900f66a875fc931509538386c1c7e69a70"
+    }
+  ],
+  "limits": [
+    "Only the listed principal bodies were byte compared. Additional emitted helper copies are inventoried, not accepted as new physical owners.",
+    "The shared owning constructor, destructor, sentinel release, finder, getter, and unwind integration were not attempted.",
+    "The complete 21-TU/2331-row family acceptance gates were not run; no production source, ledger, or pin was changed.",
+    "The observed allocator binding debt and external reconstruction ODR qualification remain.",
+    "No linked-byte gain or production conversion gain is claimed."
+  ],
+  "base_commit": "5e62b91875d4f5a16c11398edf834ed116e2646a",
+  "measurement": "The exact comparison covers every byte of each listed principal extent after resolving each COFF call to the independently observed retail target; no masking is used.",
+  "source_archive": "targets/game/reverse/attempt_history/0x00940b40/96b7450aa447c56aaabd8cf8ed3dae63de1bb5628721848cd114dfc2efe919da.json",
+  "source_path_note": "The source field records the temporary active stash path used for compilation. The unchanged check_csv guard requires removal of active stashes for an RVA already owned by exact C++; the complete source is retained by the normal banking tool in source_archive."
+}
