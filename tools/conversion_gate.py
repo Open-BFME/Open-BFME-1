@@ -20,7 +20,9 @@ Rule B: a matched RVA that had at least one clean-C++ source in OLD must
 
 Rule C: game/gen_asm/ is machine output and stays that way. C1 every added
         line there must match the grammar the retired generator emitted, so a
-        lift of a NAMED function cannot be expressed in the directory at all; C2 every added
+        lift of a NAMED function cannot be expressed in the directory at all,
+        unless the whole new file is exactly what tools/dump_apply.py writes
+        from the old one (symbolic relocations, re-derived here, not trusted); C2 every added
         ledger row pointing there is anonymous (?d_<rva>@@YAXXZ, notes
         gen-dump), so a dump can never squat an identity byte-verification
         cannot falsify; C3 a wave commit may not touch any other file under
@@ -144,7 +146,7 @@ def gen_asm_offences(old, new, lines=None):
     """Rule C. Returns a list of human-readable offences, empty when clean."""
     offences = []
     path = None
-    dump_rows, other_code_edits = [], set()
+    dump_rows, other_code_edits, c1 = [], set(), {}
     old_ledger = layout_history.path_at(old, LEDGER, layout_history.OLD_LEDGER,
                                          root=Path.cwd())
     existing = {(r["name"], r["target_rva"], r["target_size"],
@@ -164,8 +166,8 @@ def gen_asm_offences(old, new, lines=None):
         body = line[1:]
         if path.startswith(GEN_ASM):
             if added and not GEN_ASM_LINE_RE.match(body):
-                offences.append("C1 %s: not generator output: %s"
-                                % (path, body.strip()[:80]))
+                c1.setdefault(path, []).append("C1 %s: not generator output: %s"
+                                               % (path, body.strip()[:80]))
         elif path == LEDGER:
             if not added:
                 continue
@@ -178,6 +180,9 @@ def gen_asm_offences(old, new, lines=None):
         elif path.startswith("game/"):
             other_code_edits.add(path)
 
+    for path, found in c1.items():
+        if not tool_reproduced(old, new, path):
+            offences.extend(found)
     for fields in dump_rows:
         name, rva, notes = fields[0], fields[2], fields[6] if len(fields) > 6 else ""
         expected = "?d_%08x@@YAXXZ" % int(rva, 16)
@@ -193,6 +198,39 @@ def gen_asm_offences(old, new, lines=None):
                         "so a deleted C++ body cannot ride inside an unreadable "
                         "diff" % ", ".join(sorted(other_code_edits)))
     return offences
+
+
+_DUMP_APPLY = []
+
+
+def tool_reproduced(old, new, path):
+    """C1's one exception: the new blob is byte-for-byte what tools/dump_apply.py
+    writes when re-run on the OLD blob of the same path (reproduce(), which
+    reads only that text, the ledger and the retail tables). Anything else --
+    a hand edit, tool output from another base, one changed byte -- is refused."""
+    base, staged = blob(old, path), blob(new, path)
+    if base is None or staged is None:
+        return False
+    try:
+        import dump_apply
+        if not _DUMP_APPLY:
+            _DUMP_APPLY.append(dump_apply.Context())
+        text, _ = dump_apply.reproduce(path, base.decode("utf-8"), _DUMP_APPLY[0])
+    except Exception as exc:  # any failure to reproduce is a refusal
+        print("conversion gate: %s: dump_apply could not reproduce it (%s)" % (path, exc), file=sys.stderr)
+        return False
+    if text is None:
+        return False
+    if b"\r\n" in base:
+        text = text.replace("\n", "\r\n")
+    return text.encode("utf-8") == staged
+
+
+def blob(rev, path):
+    """Raw bytes of path at rev (":" = the index), or None."""
+    spec = (":%s" if rev == ":" else rev + ":%s") % path
+    proc = subprocess.run(["git", "show", spec], capture_output=True)
+    return proc.stdout if proc.returncode == 0 else None
 
 
 class _MissingSource(Exception):

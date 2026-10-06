@@ -842,10 +842,13 @@ ENDP = re.compile(r"^(\S+)\s+ENDP\b")
 DB_TOKEN = re.compile(r"^(?:0?([0-9A-Fa-f]+)[hH]|(\d+))$")
 
 
-def parse_source(path):
-    """{proc name: bytes or None when the body is not a pure db dump}."""
+def parse_source(path, text=None):
+    """{proc name: bytes or None when the body is not a pure db dump}; `text`
+    replaces the file's content (tools/dump_apply.py reads a committed blob)."""
     procs, current, chunks, pure = {}, None, [], True
-    for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+    if text is None:
+        text = path.read_text(encoding="utf-8", errors="replace")
+    for line in text.splitlines():
         stripped = line.split(";", 1)[0].strip()
         if not stripped:
             continue
@@ -1131,9 +1134,10 @@ def verify_file(obj_path, bodies, symbol_va, in_image):
 
 # --------------------------------------------------------------------------- driver
 
-def process_source(source, rows, ctx):
-    """Analyse, emit and verify one dump source: (relocations, ambiguous, body summaries, tables)."""
-    procs = parse_source(ROOT / source)
+def process_source(source, rows, ctx, text=None, out=None):
+    """Analyse, emit and verify one dump source: (relocations, ambiguous, body summaries, tables).
+    `text` stands for the source's content, `out` for OUT (asm/ and obj/ under it)."""
+    procs = parse_source(ROOT / source, text)
     items, summaries, all_relocs, all_ambiguous, all_tables = [], [], [], [], []
     for row in sorted(rows, key=lambda r: int(r["target_rva"], 16)):
         symbol = build.ledger_object_symbol(row)
@@ -1181,18 +1185,19 @@ def process_source(source, rows, ctx):
             items.append((t["label"], t["va"], t["bytes"], t["relocs"],
                           {"insns": {}, "ambiguous_sites": set()}, summary, True))
     if items:
-        finish_source(source, items, ctx)
+        finish_source(source, items, ctx, out or OUT)
     return all_relocs, all_ambiguous, summaries, all_tables
 
 
-def finish_source(source, items, ctx):
+def finish_source(source, items, ctx, out=None):
     """Emit, assemble and verify; writes each summary's status."""
     def fail_all(reason, detail=""):
         for item in items:
             item[5]["_hard"].append((reason, 0, detail))
 
     stem = re.sub(r"[^A-Za-z0-9_]+", "_", Path(source).with_suffix("").as_posix())
-    asm_path, obj_path = OUT / "asm" / f"{stem}.asm", OUT / "obj" / f"{stem}.obj"
+    out = out or OUT
+    asm_path, obj_path = out / "asm" / f"{stem}.asm", out / "obj" / f"{stem}.obj"
     try:
         text, rename = emit_asm(source, [(s, va, b, r, t) for s, va, b, r, _, _, t in items])
         asm_path.write_text(text, encoding="utf-8", newline="\n")

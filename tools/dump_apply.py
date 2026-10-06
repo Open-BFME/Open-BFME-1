@@ -22,6 +22,11 @@ resolver does not know (build.load_symbol_map: row names and pins, not
 object-symbol= aliases) or need a name MASM cannot spell are left as they
 were; so are PROCs no live row names.
 
+The analysis runs on the file's own text (dump_relocs.process_source with
+`text=`), never on build/ leftovers, so reproduce() is a pure function of
+that text and the tree's tables; tools/conversion_gate.py rule C1 accepts a
+game/gen_asm/ edit only when reproduce() on the base blob gives the new blob.
+
 Every rewritten source is then checked three ways, and restored if any fails:
   1. ml assembles it;
   2. dump_relocs.verify_file on the new object: relocations exactly the
@@ -30,7 +35,6 @@ Every rewritten source is then checked three ways, and restored if any fails:
   3. (--gate) tools/build.py byte-verifies the source's rows with the gate's
      own resolver.
 
-  python3 tools/dump_relocs.py --all                 # first: build/dump_relocs/
   python3 tools/dump_apply.py --all --gate           # rewrite + verify every eligible source
   python3 tools/dump_apply.py game/gen_asm/d_X.asm   # one source
   python3 tools/dump_apply.py --all --dry-run        # count only
@@ -135,50 +139,74 @@ def rewrite(source_text, convert, blocks, externs):
     return "\n".join(out)
 
 
-def plan(sources=None):
-    """{source: [symbols to convert]} and per-source skip counts."""
-    bodies = list(csv.DictReader((OUT / "bodies.csv").open(newline="", encoding="utf-8")))
-    by_source = collections.defaultdict(list)
-    for b in bodies:
-        if sources is None or b["source"] in sources:
-            by_source[b["source"]].append(b)
-    # the gate resolves a rel32 only through load_symbol_map (ledger row names and
-    # symbols.csv pins); an object-symbol= alias dump_relocs binds to is not there
-    gate_names = build.load_symbol_map()
-    rel32 = collections.defaultdict(set)
-    with (OUT / "relocs.csv").open(newline="", encoding="utf-8") as handle:
-        for r in csv.DictReader(handle):
-            if r["kind"] == "REL32":
-                rel32[r["body"]].add(r["symbol"])
-    result, skipped = {}, collections.Counter()
-    for source, rows in sorted(by_source.items()):
-        asm = OUT / "asm" / f"{stem_of(source)}.asm"
+def eligible(b, block, rel32, gate_names):
+    """None when body summary `b` converts, else the reason it stays raw."""
+    if b["status"] != "exact":
+        return "status-" + b["status"]
+    if int(b["tables"]):
+        return "external-table"
+    if block is None or any("lnm_" in x for x in block):
+        return "unsafe-name"
+    if rel32 - set(gate_names) - {b["symbol"]}:
+        # the gate resolves a rel32 only through load_symbol_map (ledger row names
+        # and symbols.csv pins); an object-symbol= alias dump_relocs binds to is not there
+        return "rel32-name-not-in-gate-map"
+    if not int(b["rel32"]) and not int(b["dir32"]):
+        return "no-references"
+    return None
+
+
+class Context:
+    """What reproduce() reads besides the file: dump_relocs' retail context, the
+    ledger's live dump rows and the gate's rel32 names. Loaded once per process."""
+
+    def __init__(self):
+        self.ctx = D.load_context()
+        self.rows = D.dump_sources(self.ctx)
+        self.gate_names = build.load_symbol_map()
+
+
+def reproduce(source, base_text, context, skipped=None):
+    """(converted text, [converted body summaries]) that this tool produces from
+    `base_text` as `source`, or (None, []) when it converts nothing. Deterministic
+    in base_text, the ledger, the retail image and the reverse/ tables: it is what
+    conversion_gate.py's rule C1 re-runs against a committed blob."""
+    skipped = collections.Counter() if skipped is None else skipped
+    base_text = base_text.replace("\r\n", "\n")
+    rows = context.rows.get(source)
+    if not rows or HEADER in base_text:
+        skipped["already-applied" if rows else "no-live-rows"] += 1
+        return None, []
+    with tempfile.TemporaryDirectory() as tmp:
+        out = Path(tmp)
+        (out / "asm").mkdir()
+        (out / "obj").mkdir()
+        relocs, _, summaries, _ = D.process_source(source, rows, context.ctx, text=base_text, out=out)
+        asm = out / "asm" / f"{stem_of(source)}.asm"
         if not asm.exists():
-            skipped["no-generated-asm"] += len(rows)
-            continue
-        blocks, _ = generated_blocks(asm.read_text(encoding="utf-8"))
-        text = (ROOT / source).read_text(encoding="utf-8", errors="replace")
-        if HEADER in text:
-            skipped["already-applied"] += len(rows)
-            continue
+            skipped["no-generated-asm"] += len(summaries)
+            return None, []
+        blocks, externs = generated_blocks(asm.read_text(encoding="utf-8"))
+        rel32 = collections.defaultdict(set)
+        for r in relocs:
+            if r["kind"] == D.REL32:
+                rel32[r["body"]].add(r["symbol"])
         convert = []
-        for b in rows:
-            block = blocks.get(b["symbol"])
-            if b["status"] != "exact":
-                skipped["status-" + b["status"]] += 1
-            elif int(b["tables"]):
-                skipped["external-table"] += 1
-            elif block is None or any("lnm_" in x for x in block):
-                skipped["unsafe-name"] += 1
-            elif rel32[b["symbol"]] - set(gate_names) - {b["symbol"]}:
-                skipped["rel32-name-not-in-gate-map"] += 1
-            elif not int(b["rel32"]) and not int(b["dir32"]):
-                skipped["no-references"] += 1
+        for b in summaries:
+            why = eligible(b, blocks.get(b["symbol"]), rel32[b["symbol"]], context.gate_names)
+            if why:
+                skipped[why] += 1
             else:
                 convert.append(b)
-        if convert:
-            result[source] = convert
-    return result, skipped
+        if not convert:
+            return None, []
+        text = rewrite(base_text, [b["symbol"] for b in convert], blocks, externs)
+        obj = out / "check.obj"
+        assemble(text, obj)
+        errors = {k: v for k, v in verify_object(obj, convert, context.ctx).items() if v}
+        if errors:
+            raise RuntimeError(f"verify: {next(iter(errors.items()))}")
+    return text, convert
 
 
 def assemble(text, obj):
@@ -230,51 +258,39 @@ def gate_bisect(sources):
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("sources", nargs="*")
-    ap.add_argument("--all", action="store_true")
-    ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("--gate", action="store_true", help="also run tools/build.py on each rewritten source")
-    ap.add_argument("--limit", type=int, default=0, help="at most N sources (batching)")
+    ap.add_argument("--all", action="store_true", help="every .asm source with live dump rows")
+    ap.add_argument("--dry-run", action="store_true", help="convert and verify, write nothing")
+    ap.add_argument("--gate", action="store_true", help="also run tools/build.py on the rewritten sources")
     ap.add_argument("--report", type=Path, default=OUT / "apply.json")
     args = ap.parse_args(argv)
     if not args.all and not args.sources:
         ap.error("name sources or --all")
-    todo, skipped = plan(None if args.all else set(args.sources))
-    if args.limit:
-        todo = dict(list(todo.items())[:args.limit])
-    report = {"skipped_bodies": dict(skipped), "sources": {}, "applied_bodies": 0, "applied_bytes": 0,
-              "restored_sources": 0}
-    if args.dry_run:
-        report["applied_bodies"] = sum(len(v) for v in todo.values())
-        report["applied_bytes"] = sum(int(b["size"]) for v in todo.values() for b in v)
-        print(json.dumps(report | {"sources": len(todo)}, indent=1))
-        return 0
-    ctx = D.load_context()
+    context = Context()
+    sources = sorted(context.rows) if args.all else [s.replace("\\", "/") for s in args.sources]
+    skipped = collections.Counter()
+    report = {"sources": {}, "applied_bodies": 0, "applied_bytes": 0, "restored_sources": 0}
     originals = {}
-    with tempfile.TemporaryDirectory() as tmp:
-        for source, rows in todo.items():
-            path = ROOT / source
-            original = path.read_bytes()
-            blocks, externs = generated_blocks((OUT / "asm" / f"{stem_of(source)}.asm").read_text(encoding="utf-8"))
-            entry = {"bodies": len(rows), "bytes": sum(int(b["size"]) for b in rows), "status": "applied"}
-            try:
-                text = rewrite(original.decode("utf-8", "replace").replace("\r\n", "\n"),
-                               [b["symbol"] for b in rows], blocks, externs)
-                obj = Path(tmp) / f"{stem_of(source)}.obj"
-                assemble(text, obj)
-                errors = {k: v for k, v in verify_object(obj, rows, ctx).items() if v}
-                if errors:
-                    raise RuntimeError(f"verify: {next(iter(errors.items()))}")
-            except (ValueError, RuntimeError, StopIteration) as exc:
-                entry.update(status="refused", detail=str(exc)[-400:])
-                report["sources"][source] = entry
-                print(f"refused {source}: {str(exc)[-200:]}", file=sys.stderr)
-                continue
-            crlf = b"\r\n" in original
-            path.write_bytes((text.replace("\n", "\r\n") if crlf else text).encode("utf-8"))
-            originals[source] = original
-            report["sources"][source] = entry
-            print(f"rewrote {source}: {entry['bodies']} bodies, {entry['bytes']} B", file=sys.stderr)
-    if args.gate and originals:
+    for source in sources:
+        path = ROOT / source
+        original = path.read_bytes()
+        try:
+            text, convert = reproduce(source, original.decode("utf-8", "replace"), context, skipped)
+        except (ValueError, RuntimeError, StopIteration) as exc:
+            report["sources"][source] = {"status": "refused", "detail": str(exc)[-400:]}
+            print(f"refused {source}: {str(exc)[-200:]}", file=sys.stderr)
+            continue
+        if text is None:
+            continue
+        entry = {"bodies": len(convert), "bytes": sum(int(b["size"]) for b in convert), "status": "applied"}
+        report["sources"][source] = entry
+        if args.dry_run:
+            originals[source] = None
+            continue
+        crlf = b"\r\n" in original
+        path.write_bytes((text.replace("\n", "\r\n") if crlf else text).encode("utf-8"))
+        originals[source] = original
+        print(f"rewrote {source}: {entry['bodies']} bodies, {entry['bytes']} B", file=sys.stderr)
+    if args.gate and originals and not args.dry_run:
         for source, tail in gate_bisect(sorted(originals)):
             (ROOT / source).write_bytes(originals.pop(source))
             report["sources"][source].update(status="restored", detail=tail[-600:])
@@ -283,6 +299,7 @@ def main(argv=None):
     for source in originals:
         report["applied_bodies"] += report["sources"][source]["bodies"]
         report["applied_bytes"] += report["sources"][source]["bytes"]
+    report["skipped_bodies"] = dict(skipped)
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=1), encoding="utf-8")
     print(json.dumps({k: v for k, v in report.items() if k != "sources"}, indent=1))
