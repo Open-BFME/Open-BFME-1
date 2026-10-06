@@ -3636,73 +3636,8 @@ void Object::updateObjValuesFromMapProperties(Dict* properties)
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 //-------------------------------------------------------------------------------------------------
-void Object::onDisabledEdge(Bool becomingDisabled)
-{
-	// rip through the behavior modules and call the onDisabledEdge for any modules that care
-	for( BehaviorModule **module = m_behaviors; *module; ++module )
-		(*module)->onDisabledEdge( becomingDisabled );
-
-	DozerAIInterface *dozerAI = getAI() ? getAI()->getDozerAIInterface() : NULL;
-	if( becomingDisabled  &&  dozerAI )
-	{
-		// Have to say goodbye to the thing we might be building or repairing so someone else can do it.
-		if( dozerAI->getCurrentTask() != DOZER_TASK_INVALID )
-			dozerAI->cancelTask( dozerAI->getCurrentTask() );
-	}
-
-	Player* controller = getControllingPlayer();
-	// can be called during game teardown, thus controller can be null
-	if (controller)
-	{
-		//@todo jkmcd - Colin suggested we rewrite this to use the interface stuff. I agree, but need
-		// to get some more bugs fixed today. 
-		static NameKeyType radar = NAMEKEY("RadarUpgrade");
-		Module *mod = mod = findModule(radar);
-		if (mod) {
-			RadarUpgrade *radarMod = (RadarUpgrade*) mod;
-			if (radarMod->isAlreadyUpgraded()) {
-				// Need to decrement the count here, because we own a radar upgrade
-				if (becomingDisabled) {
-					controller->removeRadar(radarMod->getIsDisableProof());
-				} else {
-					controller->addRadar(radarMod->getIsDisableProof());
-				}
-			}
-		}
-	}
-
-	// We will need to adjust power ... somehow ...
-	Int powerToAdjust = getTemplate()->getEnergyProduction();
-	
-	if( powerToAdjust > 0 )
-	{
-		// We can't affect something that consumes, or else we go low power which removes the consumption
-		// which makes us not low power so we add the consumption so we go low power...
-		// This check also guaards the IsDisabled in friend_adjustPower above
-		static NameKeyType powerPlant = NAMEKEY("PowerPlantUpgrade");
-		static NameKeyType overCharge = NAMEKEY("OverchargeBehavior");
-		
-		Module* mod = findModule(powerPlant);
-		if (mod) {
-			PowerPlantUpgrade *powerPlantMod = (PowerPlantUpgrade*) mod;
-			if (powerPlantMod->isAlreadyUpgraded()) {
-				powerToAdjust += getTemplate()->getEnergyBonus();
-			}
-		}
-		
-		mod = findModule(overCharge);
-		if (mod) {
-			OverchargeBehavior *overChargeMod = (OverchargeBehavior*) mod;
-			if (overChargeMod->isOverchargeActive()) {
-				powerToAdjust += getTemplate()->getEnergyBonus();
-			}
-		}
-		
-		// Now, adjust the power for the player.
-		if (controller)
-			controller->getEnergy()->adjustPower(powerToAdjust, !becomingDisabled);
-	}
-}
+// Object::onDisabledEdge: retail's body (0x001C3550) is Object_onDisabledEdge_Thunk.cpp;
+// Zero Hour's version is not defined here.
 
 //-------------------------------------------------------------------------------------------------
 /** Object CRC implemtation */
