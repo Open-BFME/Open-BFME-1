@@ -45,7 +45,6 @@ struct Shadow
 
 extern float g_bfmeUint32Scale;
 extern const float g_01075954;
-extern float g_bfmeScaleB3;
 extern "C" void _ReadWriteBarrier();
 #pragma intrinsic(_ReadWriteBarrier)
 
@@ -74,7 +73,7 @@ void BfmePrimaryFV::bfmeAdvanceFV(volatile int delta)
 	second_value->m_value58 = (second *= const_cast<volatile float &>(g_01075954), doubled);
 	saveSecondFV(&scaled_second, second);
 	second_value->m_value5c = doubled;
-	int opacity = (int)(curves->m_curve3c.evaluate(encoded) * g_bfmeScaleB3);
+	int opacity = (int)(curves->m_curve3c.evaluate(encoded) * 255.0f);	// __real@437f0000, retail 0x01084068
 	m_shadow->setOpacity(opacity);
 	*(unsigned int *)&m_shadow->m_value58->m_value20 = *(unsigned int *)&scaled_second;
 	m_shadow->m_value5c->m_value20 = -scaled_second;
