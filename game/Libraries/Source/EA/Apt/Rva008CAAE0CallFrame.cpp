@@ -37,7 +37,7 @@ public:
 
 	bool isUndefined() const
 	{
-		return ((unsigned char)~(m_valueBits >> 15) & 1) != 0;
+		return ((m_valueBits >> 15) & 1) == 0;
 	}
 	bool GetMaxRefCountHit() const
 	{

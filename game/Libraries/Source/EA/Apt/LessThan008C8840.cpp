@@ -13,7 +13,7 @@ public:
     AptValue *m_indirectValue;
     float toNumber();
     int toInteger() const;
-    bool isUndefined() const { return ((unsigned char)~(m_valueBits >> 15) & 1) != 0; }
+    bool isUndefined() const { return ((m_valueBits >> 15) & 1) == 0; }
     bool flag30() const { return ((m_valueBits >> 30) & 1) != 0; }
     bool isString() const { return ((m_valueBits & 63)==1 || (m_valueBits & 63)==42) && !isUndefined(); }
     int type() const { return m_valueBits & 63; }
