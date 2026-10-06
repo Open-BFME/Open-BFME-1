@@ -1906,19 +1906,8 @@ void AIInternalMoveToState::loadPostProcess( void )
 	startMoveSound();
 }  // end loadPostProcess
 
-// ?getAdjustsDestination@AIInternalMoveToState@@IBE_NXZ present-unmatched
-Bool AIInternalMoveToState::getAdjustsDestination() const 
-{ 
-	const Object *obj = getMachineOwner();
-	if (obj->testStatus(OBJECT_STATUS_PARACHUTING))
-		return false;
-
-	const AIUpdateInterface* ai = obj->getAI();
-	if (ai && !ai->isAllowedToAdjustDestination())
-		return false;
-
-	return m_adjustDestinations; 
-}
+// AIInternalMoveToState::getAdjustsDestination is defined once, by the
+// retail-matched body at 0x001724B0 (AIInternalMoveToStateGetAdjustsDestination.cpp).
 
 /**
  * (Re)compute a path to the goal position, if we are on our own, 
