@@ -3,9 +3,11 @@
 // NetPacket::addDisconnectChatCommand, retail 0x0067FC80, 532 bytes.
 // NetPacket::addChatCommand, retail 0x0067FF20, 703 bytes.
 //
-// addCommand's jump table pins both addresses; each opens with the isRoomFor
-// guard already landed in NetPacket.cpp: isRoomForDisconnectChatMessage
-// (0x0067DD40) and isRoomForChatMessage (0x0067DDE0).
+// NetPacket::isRoomForChatMessage, retail 0x0067DDE0, 170 bytes.
+//
+// addCommand's jump table pins both add addresses; each opens with its isRoomFor
+// guard: isRoomForDisconnectChatMessage (0x0067DD40, landed in NetPacket.cpp)
+// and isRoomForChatMessage (0x0067DDE0, defined here).
 //
 // Structurally both are NetPacket_addFileCommand.cpp's shape (the same
 // 'T'/'R'/'P'/'C' header run, the same 'D', the same command bookkeeping and
@@ -129,7 +131,7 @@ public:
 
 protected:
 	Bool isRoomForDisconnectChatMessage(NetCommandRef *msg);	// 0x0067DD40, landed
-	Bool isRoomForChatMessage(NetCommandRef *msg);				// 0x0067DDE0, landed
+	Bool isRoomForChatMessage(NetCommandRef *msg);				// 0x0067DDE0, below
 	Bool addDisconnectChatCommand(NetCommandRef *msg);
 	Bool addChatCommand(NetCommandRef *msg);
 
@@ -146,6 +148,44 @@ public:
 	UnsignedByte m_lastRelay;						// this+0x1FC
 };
 
+
+// Retail 0x0067DDE0, 170 bytes. It lives with its only caller, addChatCommand:
+// its getText call must bind to the StringBase<UnsignedShort> getter behind
+// ILT 0x00025338 (body 0x00675310), which only this TU's NetChatCommandMsg
+// view can name.
+Bool NetPacket::isRoomForChatMessage(NetCommandRef *msg) {
+	Bool needNewCommandID = false;
+	Int len = 0;
+	NetChatCommandMsg *cmdMsg = (NetChatCommandMsg *)(msg->getCommand());
+	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
+		++len;
+		len += sizeof(UnsignedByte);
+	}
+	if (m_lastFrame != cmdMsg->getExecutionFrame()) {
+		len += sizeof(UnsignedInt) + sizeof(UnsignedByte);
+	}
+	if (m_lastRelay != msg->getRelay()) {
+		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
+	}
+	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
+		++len;
+		len += sizeof(UnsignedByte);
+		needNewCommandID = true;
+	}
+	if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == true)) {
+		len += sizeof(UnsignedShort) + sizeof(UnsignedByte);
+	}
+
+	++len; // the 'D'
+	len += sizeof(UnsignedByte); // string length
+	UnsignedByte textLen = (UnsignedByte)cmdMsg->getText().getLength();
+	len += textLen * sizeof(UnsignedShort);
+	len += sizeof(Int); // playerMask
+	if ((len + m_packetLen) > MAX_PACKET_SIZE) {
+		return false;
+	}
+	return true;
+}
 
 Bool NetPacket::addDisconnectChatCommand(NetCommandRef *msg) {
 	if (isRoomForDisconnectChatMessage(msg)) {

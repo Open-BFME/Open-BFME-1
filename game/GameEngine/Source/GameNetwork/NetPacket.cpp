@@ -1908,41 +1908,7 @@ Bool NetPacket::isRoomForDisconnectChatMessage(NetCommandRef *msg) {
 
 // addChatCommand is defined in NetPacket_addChatFamily.cpp.
 
-// ?isRoomForChatMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z
-Bool NetPacket::isRoomForChatMessage(NetCommandRef *msg) {
-	BfmeNetPacketFields *self = (BfmeNetPacketFields *)this;
-	Bool needNewCommandID = FALSE;
-	Int len = 0;
-	NetChatCommandMsg *cmdMsg = (NetChatCommandMsg *)(((BfmeNetCommandRef *)msg)->m_command);
-	if (self->m_lastCommandType != cmdMsg->getNetCommandType()) {
-		++len;
-		len += sizeof(UnsignedByte);
-	}
-	if (self->m_lastFrame != cmdMsg->getExecutionFrame()) {
-		len += sizeof(UnsignedInt) + sizeof(UnsignedByte);
-	}
-	if (self->m_lastRelay != ((BfmeNetCommandRef *)msg)->m_relay) {
-		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
-	}
-	if (self->m_lastPlayerID != cmdMsg->getPlayerID()) {
-		++len;
-		len += sizeof(UnsignedByte);
-		needNewCommandID = TRUE;
-	}
-	if (((self->m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == TRUE)) {
-		len += sizeof(UnsignedShort) + sizeof(UnsignedByte);
-	}
-
-	++len; // the 'D'
-	len += sizeof(UnsignedByte); // string length
-	UnsignedByte textLen = bfmeStringLength(cmdMsg->getText());
-	len += textLen * sizeof(UnsignedShort);
-	len += sizeof(Int); // playerMask
-	if ((len + m_packetLen) > MAX_PACKET_SIZE) {
-		return FALSE;
-	}
-	return TRUE;
-}
+// isRoomForChatMessage is defined in NetPacket_addChatFamily.cpp.
 
 // ?addPacketRouterAckCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::addPacketRouterAckCommand(NetCommandRef *msg) {
