@@ -7700,42 +7700,8 @@ void AIEnterState::loadPostProcess( void )
 }  // end loadPostProcess
 
 //----------------------------------------------------------------------------------------------------------
-// ?onEnter@AIEnterState@@UAE?AW4StateReturnType@@XZ present-unmatched
-StateReturnType AIEnterState::onEnter()
-{
-	m_entryToClear = INVALID_ID;
-
-	Object* obj = getMachineOwner();
-	Object* goal = getMachineGoalObject();
-	if (goal)
-	{
-		if( !TheActionManager->canEnterObject( obj, goal, obj->getAI()->getLastCommandSource(), CHECK_CAPACITY ) )
-			return STATE_FAILURE;	
-
-		m_goalPosition = *goal->getPosition();
-
-		ContainModuleInterface* contain = goal->getContain();
-		if (contain)
-		{
-			contain->onObjectWantsToEnterOrExit(obj, WANTS_TO_ENTER);
-			m_entryToClear = goal->getID();
-		}
-	}
-	else
-	{
-		return STATE_FAILURE;
-	}
-
-	// tell the pathfinder to ignore the enterable object
-	AIUpdateInterface *ai = obj->getAI();
-	ai->ignoreObstacle( getMachineGoalObject() );
-	if (ai->getCurLocomotor()) 
-	{
-		ai->getCurLocomotor()->setAllowInvalidPosition(true);
-	}
-	setAdjustsDestination(false);
-	return AIInternalMoveToState::onEnter();
-}
+// AIEnterState::onEnter: retail's body (0x0017D8C0) is AIEnterState_onEnter_Bfme.cpp;
+// Zero Hour's version is not defined here.
 
 //----------------------------------------------------------------------------------------------------------
 // Retail reads four fields the vendored headers place elsewhere: the state's
