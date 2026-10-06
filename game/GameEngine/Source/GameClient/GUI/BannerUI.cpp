@@ -199,7 +199,8 @@ struct BfmeGlobalDataMovieState
 
 extern Display *TheDisplay;
 extern GlobalData *TheWritableGlobalData;
-extern int TheCurrentBannerMovie;
+// Selected banner movie id; retail .data VA 012B8188 starts at -1 (none).
+int TheCurrentBannerMovie = -1;
 
 template <typename T> class BannerStringBase
 {
