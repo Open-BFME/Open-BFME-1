@@ -550,10 +550,9 @@ template<class T> inline int StringBase<T>::compare(const T* s, int len) const {
     int n = m_data ? m_data->length : 0;
     const T* p = m_data ? m_data->data : "";
     int c = memcmp(p, s, n < len ? n : len);
-    if(c!=0) return c;
-    return n-len;
+    return c ? c : n-len;
 }
-template<class T> inline int StringBase<T>::compare(const T* s) const { return compare(s, strlen(s)); }
+template<class T> inline int StringBase<T>::compare(const T* s) const { return compare(s, s ? strlen(s) : 0); }
 template<class T> inline void StringBase<T>::concat(const T* s) { concat(s, strlen(s)); }
 
 // Address-only ILT adapters below use the existing ?j_XXXXXXXX identities.
