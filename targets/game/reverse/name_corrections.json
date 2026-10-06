@@ -18728,5 +18728,15 @@
   "after_sha256": "447b7ff583be0da353d47eb431afffd9840952c703d4588e66264655144172c0",
   "evidence": "targets/game/reverse/identity_evidence/004a9cd0-controlbar-populateobserverlist.md",
   "reason": "0x00036BA1 is the 5-byte ILT thunk jumping to 0x004A9CD0; the name moves to that body (EA label, ILT oracle CONFIRMED) and the thunk is claimed by address as ?j_00036ba1@@YAXXZ."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Contain/Rva00238680Receiver.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/Rva00238680Receiver.cpp",
+  "old_name": "Object",
+  "new_name": "Gen_000ED3B0",
+  "before_sha256": "05e53cba8bf059616affc38ea04052b0f6f5213ceab9122a6f321c29d0c7684f",
+  "after_sha256": "7e00671c952b0a9663094f544b15418c1ce39a4753590804e1f53cd20952cba2",
+  "evidence": "targets/game/reverse/identity_evidence/00238680-gap-call-is-gen-000ed3b0.md",
+  "reason": "The call goes through ILT 0x00043CED to 0x000ED3B0, matched as ?bfmeGapSq@Gen_000ED3B0@@QBEMPBV1@@Z; the Object::getDistanceSquared pin is defined nowhere and the ILT oracle contradicts it, so the call casts to the defining view class like the other matched callers."
  }
 ]

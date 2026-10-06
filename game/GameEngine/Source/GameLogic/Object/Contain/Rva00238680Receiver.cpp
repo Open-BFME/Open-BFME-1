@@ -7,7 +7,15 @@ class Object
 {
 public:
     Object *bfmeResolveMeleeTarget(int);
-    float getDistanceSquared(const Object *) const;
+};
+
+// ILT 0x00043CED -> 0x000ED3B0, the matched radius-adjusted planar gap
+// squared ?bfmeGapSq@Gen_000ED3B0@@QBEMPBV1@@Z (Bfme5NinetyEight.cpp); other
+// matched callers reach it through the same view.
+class Gen_000ED3B0
+{
+public:
+    float bfmeGapSq(const Gen_000ED3B0 *other) const;
 };
 
 class Rva00238680Object
@@ -50,7 +58,7 @@ bool Rva00238680Receiver::rva00238680(Rva00238680Object *target)
         Object *found = logic->findObjectByID(objectIdAt100);
         if (!found)
             return false;
-        char close = ((Object *)target)->getDistanceSquared(*(Object **)((char *)this - 0xDC)) < Rva00238680Limit;
+        char close = ((Gen_000ED3B0 *)target)->bfmeGapSq(*(Gen_000ED3B0 **)((char *)this - 0xDC)) < Rva00238680Limit;
         Object *foundParent = found->bfmeResolveMeleeTarget(0);
         Object *targetParent = ((Object *)target)->bfmeResolveMeleeTarget(0);
         if (targetParent == foundParent)
