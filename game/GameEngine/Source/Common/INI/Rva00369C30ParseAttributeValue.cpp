@@ -41,7 +41,9 @@ public:
 	int find( const char *name ) const;
 };
 
-extern Rva003678E0AttributeLookup *TheAttributeModifierDefinitionStore;
+// AttributeModifierDefinitionStore.cpp owns the 0x012F07E4 pointer (data_rows.csv).
+class AttributeModifierDefinitionStore;
+extern AttributeModifierDefinitionStore *TheAttributeModifierDefinitionStore;
 
 class Rva00369B90AttributeValues
 {
@@ -66,7 +68,8 @@ void Rva00369C30::parseAttributeValue( INI *ini, void *instance, void *, const v
 {
 	Rva00369C30Entry entry;
 	const char *name = ini->getNextToken();
-	entry.m_attribute = TheAttributeModifierDefinitionStore->find( name );
+	entry.m_attribute = reinterpret_cast<Rva003678E0AttributeLookup *>(
+		TheAttributeModifierDefinitionStore )->find( name );
 	if( !entry.m_attribute )
 		throw INIException( 3, "Attribute '%s' not found", name );
 
