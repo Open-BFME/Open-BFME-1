@@ -11,12 +11,12 @@ public:
 	const char *getNextSubToken( const char *expected );
 	const char *getNextToken( const char *separators );
 	const char *getNextTokenOrNull( const char *separators );
-	const char *getSeps( void ) const { return m_seps; }
+	const char *getSepsColon( void ) const { return m_sepsColon; }
 	static Real scanReal( const char *token );
 
 private:
 	char m_padding[ 0x41c ];
-	const char *m_seps;
+	const char *m_sepsColon;
 };
 
 class Rva0006AB90FunctionCurve
@@ -50,18 +50,18 @@ void Rva0006AF00FunctionCurve::parseKey( INI *ini, void *, void *,
 
 	for ( count = 0; count < 2; ++count )
 	{
-		const char *token = ini->getNextTokenOrNull( ini->getSeps() );
+		const char *token = ini->getNextTokenOrNull( ini->getSepsColon() );
 		if ( token == 0 )
 			break;
 
 		if ( inTangent == 0 && token[ 0 ] == 'I' && token[ 1 ] == 0 )
 		{
-			inValue = ((ScanReal)j_0000fcc2)( ini->getNextToken( ini->getSeps() ) );
+			inValue = ((ScanReal)j_0000fcc2)( ini->getNextToken( ini->getSepsColon() ) );
 			inTangent = &inValue;
 		}
 		else if ( outTangent == 0 && token[ 0 ] == 'O' && token[ 1 ] == 0 )
 		{
-			outValue = ((ScanReal)j_0000fcc2)( ini->getNextToken( ini->getSeps() ) );
+			outValue = ((ScanReal)j_0000fcc2)( ini->getNextToken( ini->getSepsColon() ) );
 			outTangent = &outValue;
 		}
 		else
