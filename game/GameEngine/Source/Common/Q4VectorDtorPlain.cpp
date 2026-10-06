@@ -40,6 +40,14 @@
 #define Q4_PLAIN_ELEM( T )                                                	struct T                                                              	{                                                                     		char m_body[ 0x14 ];                                              		T();                                                              		T( const T & );                                                   		~T();                                                             		T &operator=( const T & );                                        	};                                                                    	template class _STL::vector<T >;
 
 Q4_PLAIN_ELEM( Gen00134590 )
+// vector<Gen002E9E10>::_M_insert_overflow is retail 0x002EB770
+// (Rva002EB770VectorInsertOverflow.cpp).  Instantiated with this vector it came
+// out as a different COMDAT copy (link_census RetailTruth: "wrong") that the
+// link keeps ahead of retail's, so the explicit instantiation leaves it out.
+struct Gen002E9E10;
+template <>
+void _STL::vector<Gen002E9E10, _STL::allocator<Gen002E9E10> >::_M_insert_overflow(
+	Gen002E9E10 *, const Gen002E9E10 &, const _STL::__false_type &, size_type, bool );
 Q4_PLAIN_ELEM( Gen002E9E10 )
 Q4_PLAIN_ELEM( Gen00351970 )
 Q4_PLAIN_ELEM( Gen00351980 )
