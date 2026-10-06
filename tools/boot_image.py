@@ -566,10 +566,11 @@ def chunk_paths(path, n):
 def write_scaffold(r, pieces, path, names=None):
     """COFF objects (several when the pieces exceed MAX_SECTIONS): one section per
     retail piece, DIR32/DIR32NB/REL32 relocations against the owning piece's
-    label (addend in place), __imp_ and ___ImageBase externals, `_boot_entry`
-    and a `_bootp_<rva>` public at each piece start. Overlay pieces are not in
+    label (addend in place), __imp_ and ___ImageBase externals, and a
+    `_bootp_<rva>` public at each piece start. Overlay pieces are not in
     them: a reference into one names the authored definition, and every name in
-    `names` {name: rva} outside the overlay is defined here at its retail address.
+    `names` {name: rva} outside the overlay (`_boot_entry` too) is defined here at
+    its retail address.
     Returns (the import symbols referenced, the object paths)."""
     own = [p for p in pieces if p.unit is None]
     chunks = [own[i:i + MAX_SECTIONS] for i in range(0, len(own), MAX_SECTIONS)]
@@ -581,7 +582,6 @@ def write_scaffold(r, pieces, path, names=None):
         if p.unit is None and name not in ABSOLUTE:
             c, k = home[p.start]
             defs[c].append((name, k, rva - p.start + p.pad))
-    entry = next(p for p in own if p.start <= r.entry < p.start + p.size)
     imports, paths = set(), chunk_paths(path, len(chunks))
     for c, chunk in enumerate(chunks):
         syms = Symbols()
@@ -592,8 +592,6 @@ def write_scaffold(r, pieces, path, names=None):
         if c == 0:
             for name in sorted(set(names or ()) & set(ABSOLUTE)):
                 syms.add(name, -1, ABSOLUTE[name])
-        if home[entry.start][0] == c:
-            syms.add("_boot_entry", home[entry.start][1], r.entry - entry.start + entry.pad)
         sections = []
         for p in chunk:
             s0, _, raw = next(v for v in r.secs.values() if v[0] <= p.start < v[0] + v[1])
@@ -770,13 +768,21 @@ def funclet_label(r, o, rva, size):
     return None
 
 
-def find_units(r, rows, objs):
+def find_units(r, rows, objs, current=None):
     """(units sorted by RVA, refusals [(row, why)]): one unit per object section
-    (COMDAT) or funclet slice holding the rows."""
+    (COMDAT) or funclet slice holding the rows. `current(source, object)` decides
+    whether an object is its source's current compile (default: build.py's
+    deps-cache proof); a stale object is refused, never overlaid."""
     tstart, tsize, _ = r.secs[".text"]
-    units, refused = {}, []
+    units, refused, fresh = {}, [], {}
+    if current is None:
+        def current(source, obj):
+            return source.suffix.lower() == build.LIB_SUFFIX or build.compile_is_current(source, obj)
     for row in rows:
         rva, size = int(row["target_rva"], 16), int(row["target_size"] or 0)
+        if rva < ILT[1]:                    # the linker's thunks stay retail's: no source emits them
+            refused.append((row, "in-ilt"))
+            continue
         try:
             p = build.row_object(row)
         except SystemExit:
@@ -784,6 +790,11 @@ def find_units(r, rows, objs):
         o = objs.get(p) if p else None
         if o is None:
             refused.append((row, "no-object"))
+            continue
+        if p not in fresh:
+            fresh[p] = current(ROOT / row["source"], p)
+        if not fresh[p]:
+            refused.append((row, "stale-object"))
             continue
         secs, syms, _ = o
         name = (re.search(r"(?:^|;)object-symbol=([^;]+)", row.get("notes", "")) or [None, row["name"]])[1]
@@ -801,10 +812,7 @@ def find_units(r, rows, objs):
         whole = s.flags & COMDAT and y.value == 0 and not s.name.startswith(".text$x")
         off, n = (0, s.size) if whole else (y.value, size)
         start = rva - (y.value - off)
-        if start < ILT[1]:                  # the linker's thunks stay retail's: no source emits them
-            refused.append((row, "in-ilt"))
-            continue
-        if start + n > tstart + tsize:
+        if start < ILT[1] or start + n > tstart + tsize:
             refused.append((row, "outside-text"))
             continue
         key = (str(p), y.sec, off, start)
@@ -835,7 +843,7 @@ def identities(r):
                 add(row["name"], a - RETAIL_BASE if row["address_kind"] == "va" else a)
     with open(REVERSE / "dir32_addresses.csv", newline="", encoding="utf-8") as f:
         for row in csv.DictReader(f):
-            add(row["name"], int(row["va"], 16))
+            add(row["name"], int(row["va"], 16) - RETAIL_BASE)
     with open(REVERSE / "symbols.csv", newline="", encoding="utf-8") as f:
         for row in csv.DictReader(f):
             if row["address"].startswith("0x"):
@@ -1008,13 +1016,13 @@ def unit_names(u):
             if u.off <= v < u.off + u.size}
 
 
-def overlay_plan(r, sites, rows, objs=None):
+def overlay_plan(r, sites, rows, objs=None, current=None):
     """(admitted units, refusals [(row, why)], names {name: rva}) for the rows;
     `names` holds every name the units reference or define, each one address."""
     if objs is None:
         import link_cycle
         objs = link_cycle.Objects([])
-    units, refused = find_units(r, rows, objs)
+    units, refused = find_units(r, rows, objs, current)
     kept = []
     for u in units:
         if kept and u.rva < kept[-1].rva + kept[-1].size:
@@ -1251,6 +1259,7 @@ def build_image(base=0x10000000, out=OUT, tag="boot", overlay=(), status=LINK_ST
         ov["specs"] = list(overlay)
     for stale in list(out.glob("scaffold*.obj")) + list(out.glob("overlay*.obj")):
         stale.unlink()
+    names = dict(names, _boot_entry=r.entry)    # retail's CRT start, in the scaffold or an authored unit
     used, objfiles = write_scaffold(r, pieces, out / "scaffold.obj", names)
     if units:
         more, paths = write_overlay(pieces, out / "overlay.obj", names)

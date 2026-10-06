@@ -171,8 +171,8 @@ def overlay(retail):
     sites, _ = boot_image.all_sites(retail)
     rows = boot_image.overlay_rows([OVERLAY_SET])
 
-    def plan(objs=None):
-        units, refused, names = boot_image.overlay_plan(retail, sites, rows, objs)
+    def plan(objs=None):            # admission logic only: every built object counts as current
+        units, refused, names = boot_image.overlay_plan(retail, sites, rows, objs, lambda source, obj: True)
         return {u.rva: u for u in units}, {int(x["target_rva"], 16): why for x, why in refused}, names
     return plan
 
@@ -237,6 +237,15 @@ def test_wrong_byte_is_refused(overlay):
         return secs, syms, bytes(data)
     _, refused, _ = overlay(MutatedObjects(u.path, edit))
     assert refused.get(u.rva) == "bytes-differ"
+
+
+@needs_overlay
+def test_stale_object_is_refused(retail):
+    sites, _ = boot_image.all_sites(retail)
+    rows = boot_image.overlay_rows([OVERLAY_SET])
+    units, refused, _ = boot_image.overlay_plan(retail, sites, rows, None, lambda source, obj: False)
+    assert not units
+    assert {why for _, why in refused} <= {"stale-object", "in-ilt", "no-object"}
 
 
 @pytest.fixture(scope="module")
