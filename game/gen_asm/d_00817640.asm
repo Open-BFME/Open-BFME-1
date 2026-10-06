@@ -1,5 +1,21 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ??0INIException@@QAA@HPBDZZ:NEAR
+EXTERN ?BfmeBoundaryZero3D@@3MB:BYTE
+EXTERN ?BfmeSubdualCapERD@@3MB:BYTE
+EXTERN ?MovieFactoryGlobal0040E3B0@@3PAUMovieFactory0040E3B0@@A:BYTE
+EXTERN ?bfmeGoBCF@BfmeThingBCF@@QAEXXZ:NEAR
+EXTERN ?g_INIExceptionThrowInfo@@3HA:BYTE
+EXTERN ?getNextToken@INI@@QAEPBDPBD@Z:NEAR
+EXTERN ?j_0002f04f@@YAXXZ:NEAR
+EXTERN ?ji_009f6d00@@YAXXZ:NEAR
+EXTERN ?releaseBuffer@?$StringBase@D@@AAEXXZ:NEAR
+EXTERN ?scanReal@INI@@SAMPBD@Z:NEAR
+EXTERN g_Va01054728:NEAR
+EXTERN g_Va0112CE88:BYTE
+EXTERN g_Va0112CEB0:BYTE
+EXTERN g_Va0112CF08:BYTE
 _TEXT SEGMENT
 
 ; ghidra: FUN_00c17640  retail @ 0x00817640 size 1225
@@ -1215,31 +1231,61 @@ public ?d_0081d520@@YAXXZ
 ?d_0081d520@@YAXXZ ENDP
 
 ; ghidra: FUN_00c1d600  retail @ 0x0081D600 size 341
+_TEXT ENDS
+_TEXT$d00c1d600 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00C1D600 size 341
 public ?d_0081d600@@YAXXZ
 ?d_0081d600@@YAXXZ PROC
-    db 6Ah, 0FFh, 68h, 28h, 47h, 05h, 01h, 64h, 0A1h, 00h, 00h, 00h, 00h, 50h, 64h, 89h
-    db 25h, 00h, 00h, 00h, 00h, 83h, 0ECh, 14h, 55h, 56h, 57h, 8Bh, 7Ch, 24h, 30h, 8Dh
-    db 44h, 24h, 0Ch, 50h, 8Bh, 0CFh, 0E8h, 24h, 1Ah, 81h, 0FFh, 8Bh, 0Dh, 90h, 0B1h, 30h
-    db 01h, 8Bh, 11h, 50h, 0C7h, 44h, 24h, 2Ch, 00h, 00h, 00h, 00h, 0FFh, 52h, 58h, 8Dh
-    db 4Ch, 24h, 0Ch, 8Bh, 0F0h, 0C7h, 44h, 24h, 28h, 0FFh, 0FFh, 0FFh, 0FFh, 0E8h, 0EEh, 0A2h
-    db 06h, 00h, 85h, 0F6h, 0Fh, 84h, 0C1h, 00h, 00h, 00h, 8Bh, 6Ch, 24h, 38h, 85h, 0EDh
-    db 0Fh, 84h, 0B5h, 00h, 00h, 00h, 0C6h, 46h, 60h, 01h, 0C7h, 44h, 24h, 38h, 0FFh, 0FFh
-    db 7Fh, 0FFh, 33h, 0F6h, 6Ah, 00h, 8Bh, 0CFh, 0E8h, 0F3h, 32h, 03h, 00h, 50h, 0E8h, 5Dh
-    db 50h, 03h, 00h, 0D8h, 15h, 50h, 53h, 07h, 01h, 83h, 0C4h, 04h, 0DFh, 0E0h, 0F6h, 0C4h
-    db 01h, 75h, 42h, 0D8h, 15h, 34h, 53h, 07h, 01h, 0DFh, 0E0h, 0F6h, 0C4h, 41h, 7Ah, 35h
-    db 0D9h, 44h, 24h, 38h, 0D8h, 05h, 08h, 0CFh, 12h, 01h, 0D9h, 0C1h, 0DEh, 0D9h, 0DFh, 0E0h
-    db 0F6h, 0C4h, 41h, 75h, 20h, 0D9h, 54h, 24h, 38h, 46h, 83h, 0FEh, 0Fh, 0D9h, 5Ch, 0B5h
-    db 0FCh, 7Ch, 0B1h, 8Bh, 4Ch, 24h, 20h, 5Fh, 5Eh, 5Dh, 64h, 89h, 0Dh, 00h, 00h, 00h
-    db 00h, 83h, 0C4h, 20h, 0C3h, 8Dh, 44h, 24h, 38h, 0DDh, 0D8h, 50h, 8Bh, 0CFh, 0E8h, 6Ch
-    db 19h, 81h, 0FFh, 8Bh, 0F0h, 8Bh, 0CFh, 0C7h, 44h, 24h, 28h, 01h, 00h, 00h, 00h, 0E8h
-    db 1Ch, 31h, 03h, 00h, 8Bh, 0Eh, 50h, 51h, 68h, 0B0h, 0CEh, 12h, 01h, 8Dh, 54h, 24h
-    db 18h, 6Ah, 08h, 52h, 0E8h, 0F7h, 2Eh, 03h, 00h, 83h, 0C4h, 14h, 68h, 30h, 0FCh, 1Dh
-    db 01h, 8Dh, 44h, 24h, 10h, 50h, 0E8h, 0E5h, 95h, 1Dh, 00h, 8Dh, 4Ch, 24h, 14h, 51h
-    db 8Bh, 0CFh, 0E8h, 28h, 19h, 81h, 0FFh, 8Bh, 10h, 52h, 68h, 88h, 0CEh, 12h, 01h, 8Dh
-    db 44h, 24h, 20h, 6Ah, 09h, 50h, 0C7h, 44h, 24h, 38h, 02h, 00h, 00h, 00h, 0E8h, 0BDh
-    db 2Eh, 03h, 00h, 83h, 0C4h, 10h, 68h, 30h, 0FCh, 1Dh, 01h, 8Dh, 4Ch, 24h, 1Ch, 51h
-    db 0E8h, 0ABh, 95h, 1Dh, 00h
+    db 06Ah, 0FFh, 068h
+    dd g_Va01054728
+    db 064h, 0A1h, 000h, 000h, 000h, 000h, 050h, 064h, 089h, 025h, 000h, 000h, 000h, 000h, 083h, 0ECh
+    db 014h, 055h, 056h, 057h, 08Bh, 07Ch, 024h, 030h, 08Dh, 044h, 024h, 00Ch, 050h, 08Bh, 0CFh
+    call ?j_0002f04f@@YAXXZ
+    db 08Bh, 00Dh
+    dd ?MovieFactoryGlobal0040E3B0@@3PAUMovieFactory0040E3B0@@A
+    db 08Bh, 011h, 050h, 0C7h, 044h, 024h, 02Ch, 000h, 000h, 000h, 000h, 0FFh, 052h, 058h, 08Dh, 04Ch
+    db 024h, 00Ch, 08Bh, 0F0h, 0C7h, 044h, 024h, 028h, 0FFh, 0FFh, 0FFh, 0FFh
+    call ?releaseBuffer@?$StringBase@D@@AAEXXZ
+    db 085h, 0F6h, 00Fh, 084h, 0C1h, 000h, 000h, 000h, 08Bh, 06Ch, 024h, 038h, 085h, 0EDh, 00Fh, 084h
+    db 0B5h, 000h, 000h, 000h, 0C6h, 046h, 060h, 001h, 0C7h, 044h, 024h, 038h, 0FFh, 0FFh, 07Fh, 0FFh
+    db 033h, 0F6h, 06Ah, 000h, 08Bh, 0CFh
+    call ?getNextToken@INI@@QAEPBDPBD@Z
+    db 050h
+    call ?scanReal@INI@@SAMPBD@Z
+    db 0D8h, 015h
+    dd ?BfmeBoundaryZero3D@@3MB
+    db 083h, 0C4h, 004h, 0DFh, 0E0h, 0F6h, 0C4h, 001h, 075h, 042h, 0D8h, 015h
+    dd ?BfmeSubdualCapERD@@3MB
+    db 0DFh, 0E0h, 0F6h, 0C4h, 041h, 07Ah, 035h, 0D9h, 044h, 024h, 038h, 0D8h, 005h
+    dd g_Va0112CF08
+    db 0D9h, 0C1h, 0DEh, 0D9h, 0DFh, 0E0h, 0F6h, 0C4h, 041h, 075h, 020h, 0D9h, 054h, 024h, 038h, 046h
+    db 083h, 0FEh, 00Fh, 0D9h, 05Ch, 0B5h, 0FCh, 07Ch, 0B1h, 08Bh, 04Ch, 024h, 020h, 05Fh, 05Eh, 05Dh
+    db 064h, 089h, 00Dh, 000h, 000h, 000h, 000h, 083h, 0C4h, 020h, 0C3h, 08Dh, 044h, 024h, 038h, 0DDh
+    db 0D8h, 050h, 08Bh, 0CFh
+    call ?j_0002f04f@@YAXXZ
+    db 08Bh, 0F0h, 08Bh, 0CFh, 0C7h, 044h, 024h, 028h, 001h, 000h, 000h, 000h
+    call ?bfmeGoBCF@BfmeThingBCF@@QAEXXZ
+    db 08Bh, 00Eh, 050h, 051h, 068h
+    dd g_Va0112CEB0
+    db 08Dh, 054h, 024h, 018h, 06Ah, 008h, 052h
+    call ??0INIException@@QAA@HPBDZZ
+    db 083h, 0C4h, 014h, 068h
+    dd ?g_INIExceptionThrowInfo@@3HA
+    db 08Dh, 044h, 024h, 010h, 050h
+    call ?ji_009f6d00@@YAXXZ
+    db 08Dh, 04Ch, 024h, 014h, 051h, 08Bh, 0CFh
+    call ?j_0002f04f@@YAXXZ
+    db 08Bh, 010h, 052h, 068h
+    dd g_Va0112CE88
+    db 08Dh, 044h, 024h, 020h, 06Ah, 009h, 050h, 0C7h, 044h, 024h, 038h, 002h, 000h, 000h, 000h
+    call ??0INIException@@QAA@HPBDZZ
+    db 083h, 0C4h, 010h, 068h
+    dd ?g_INIExceptionThrowInfo@@3HA
+    db 08Dh, 04Ch, 024h, 01Ch, 051h
+    call ?ji_009f6d00@@YAXXZ
 ?d_0081d600@@YAXXZ ENDP
+_TEXT$d00c1d600 ENDS
+_TEXT SEGMENT
 
 ; ghidra: FUN_00c1d760  retail @ 0x0081D760 size 74
 public ?d_0081d760@@YAXXZ

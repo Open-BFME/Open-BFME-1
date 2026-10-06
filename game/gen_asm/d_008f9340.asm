@@ -1,5 +1,10 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ?CopyIndexed@VectorProcessorClass@@SAXPAEPBEPBIH@Z:NEAR
+EXTERN ?CopyIndexed@VectorProcessorClass@@SAXPAM0PBIH@Z:NEAR
+EXTERN ?CopyIndexed@VectorProcessorClass@@SAXPAVVector3@@PBV2@PBIH@Z:NEAR
+EXTERN ?CopyIndexed@VectorProcessorClass@@SAXPAVVector4@@PBV2@PBIH@Z:NEAR
 _TEXT SEGMENT
 
 ; retail @ 0x008F9340 size 21
@@ -323,40 +328,64 @@ public ?d_00910f10@@YAXXZ
 ?d_00910f10@@YAXXZ ENDP
 
 ; retail @ 0x009124F0 size 51
+_TEXT ENDS
+_TEXT$d00d124f0 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00D124F0 size 51
 public ?d_009124f0@@YAXXZ
 ?d_009124f0@@YAXXZ PROC
-    db 85h, 0DBh, 74h, 2Ch, 39h, 7Eh, 08h, 7Dh, 0Dh, 8Bh, 06h, 6Ah, 00h, 8Dh, 0Ch, 3Fh
-    db 51h, 8Bh, 0CEh, 0FFh, 50h, 08h, 8Bh, 54h, 24h, 04h, 8Bh, 43h, 0Ch, 8Bh, 4Eh, 04h
-    db 57h, 52h, 50h, 51h, 0E8h, 0D7h, 0E0h, 1Eh, 00h, 8Bh, 46h, 04h, 83h, 0C4h, 10h, 0C3h
-    db 33h, 0C0h, 0C3h
+    db 085h, 0DBh, 074h, 02Ch, 039h, 07Eh, 008h, 07Dh, 00Dh, 08Bh, 006h, 06Ah, 000h, 08Dh, 00Ch, 03Fh
+    db 051h, 08Bh, 0CEh, 0FFh, 050h, 008h, 08Bh, 054h, 024h, 004h, 08Bh, 043h, 00Ch, 08Bh, 04Eh, 004h
+    db 057h, 052h, 050h, 051h
+    call ?CopyIndexed@VectorProcessorClass@@SAXPAVVector3@@PBV2@PBIH@Z
+    db 08Bh, 046h, 004h, 083h, 0C4h, 010h, 0C3h, 033h, 0C0h, 0C3h
 ?d_009124f0@@YAXXZ ENDP
+_TEXT$d00d124f0 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x009138D0 size 51
+_TEXT ENDS
+_TEXT$d00d138d0 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00D138D0 size 51
 public ?d_009138d0@@YAXXZ
 ?d_009138d0@@YAXXZ PROC
-    db 85h, 0DBh, 74h, 2Ch, 39h, 7Eh, 08h, 7Dh, 0Dh, 8Bh, 06h, 6Ah, 00h, 8Dh, 0Ch, 3Fh
-    db 51h, 8Bh, 0CEh, 0FFh, 50h, 08h, 8Bh, 54h, 24h, 04h, 8Bh, 43h, 0Ch, 8Bh, 4Eh, 04h
-    db 57h, 52h, 50h, 51h, 0E8h, 0F7h, 0CDh, 1Eh, 00h, 8Bh, 46h, 04h, 83h, 0C4h, 10h, 0C3h
-    db 33h, 0C0h, 0C3h
+    db 085h, 0DBh, 074h, 02Ch, 039h, 07Eh, 008h, 07Dh, 00Dh, 08Bh, 006h, 06Ah, 000h, 08Dh, 00Ch, 03Fh
+    db 051h, 08Bh, 0CEh, 0FFh, 050h, 008h, 08Bh, 054h, 024h, 004h, 08Bh, 043h, 00Ch, 08Bh, 04Eh, 004h
+    db 057h, 052h, 050h, 051h
+    call ?CopyIndexed@VectorProcessorClass@@SAXPAVVector4@@PBV2@PBIH@Z
+    db 08Bh, 046h, 004h, 083h, 0C4h, 010h, 0C3h, 033h, 0C0h, 0C3h
 ?d_009138d0@@YAXXZ ENDP
+_TEXT$d00d138d0 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00913910 size 51
+_TEXT ENDS
+_TEXT$d00d13910 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00D13910 size 51
 public ?d_00913910@@YAXXZ
 ?d_00913910@@YAXXZ PROC
-    db 85h, 0DBh, 74h, 2Ch, 39h, 7Eh, 08h, 7Dh, 0Dh, 8Bh, 06h, 6Ah, 00h, 8Dh, 0Ch, 3Fh
-    db 51h, 8Bh, 0CEh, 0FFh, 50h, 08h, 8Bh, 54h, 24h, 04h, 8Bh, 43h, 0Ch, 8Bh, 4Eh, 04h
-    db 57h, 52h, 50h, 51h, 0E8h, 27h, 0C5h, 1Eh, 00h, 8Bh, 46h, 04h, 83h, 0C4h, 10h, 0C3h
-    db 33h, 0C0h, 0C3h
+    db 085h, 0DBh, 074h, 02Ch, 039h, 07Eh, 008h, 07Dh, 00Dh, 08Bh, 006h, 06Ah, 000h, 08Dh, 00Ch, 03Fh
+    db 051h, 08Bh, 0CEh, 0FFh, 050h, 008h, 08Bh, 054h, 024h, 004h, 08Bh, 043h, 00Ch, 08Bh, 04Eh, 004h
+    db 057h, 052h, 050h, 051h
+    call ?CopyIndexed@VectorProcessorClass@@SAXPAM0PBIH@Z
+    db 08Bh, 046h, 004h, 083h, 0C4h, 010h, 0C3h, 033h, 0C0h, 0C3h
 ?d_00913910@@YAXXZ ENDP
+_TEXT$d00d13910 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00913950 size 51
+_TEXT ENDS
+_TEXT$d00d13950 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00D13950 size 51
 public ?d_00913950@@YAXXZ
 ?d_00913950@@YAXXZ PROC
-    db 85h, 0DBh, 74h, 2Ch, 39h, 7Eh, 08h, 7Dh, 0Dh, 8Bh, 06h, 6Ah, 00h, 8Dh, 0Ch, 3Fh
-    db 51h, 8Bh, 0CEh, 0FFh, 50h, 08h, 8Bh, 54h, 24h, 04h, 8Bh, 43h, 0Ch, 8Bh, 4Eh, 04h
-    db 57h, 52h, 50h, 51h, 0E8h, 0A7h, 0C4h, 1Eh, 00h, 8Bh, 46h, 04h, 83h, 0C4h, 10h, 0C3h
-    db 33h, 0C0h, 0C3h
+    db 085h, 0DBh, 074h, 02Ch, 039h, 07Eh, 008h, 07Dh, 00Dh, 08Bh, 006h, 06Ah, 000h, 08Dh, 00Ch, 03Fh
+    db 051h, 08Bh, 0CEh, 0FFh, 050h, 008h, 08Bh, 054h, 024h, 004h, 08Bh, 043h, 00Ch, 08Bh, 04Eh, 004h
+    db 057h, 052h, 050h, 051h
+    call ?CopyIndexed@VectorProcessorClass@@SAXPAEPBEPBIH@Z
+    db 08Bh, 046h, 004h, 083h, 0C4h, 010h, 0C3h, 033h, 0C0h, 0C3h
 ?d_00913950@@YAXXZ ENDP
+_TEXT$d00d13950 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00917B10 size 85
 public ?d_00917b10@@YAXXZ

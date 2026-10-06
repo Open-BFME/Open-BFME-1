@@ -1,5 +1,9 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ?Rva0130EA00GuardWords@@3HA:BYTE
+EXTERN ?memset32@@YAXPAXHI@Z:NEAR
+EXTERN g_Va0130EA04:BYTE
 _TEXT SEGMENT
 
 ; retail @ 0x0087DD30 size 20
@@ -209,16 +213,27 @@ public ?d_008824b0@@YAXXZ
 ?d_008824b0@@YAXXZ ENDP
 
 ; retail @ 0x008824E0 size 104
+_TEXT ENDS
+_TEXT$d00c824e0 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00C824E0 size 104
 public ?d_008824e0@@YAXXZ
 ?d_008824e0@@YAXXZ PROC
-    db 8Bh, 44h, 24h, 04h, 56h, 8Bh, 0F1h, 89h, 46h, 08h, 0A1h, 00h, 0EAh, 30h, 01h, 85h
-    db 0C0h, 0C7h, 06h, 00h, 00h, 00h, 00h, 74h, 2Dh, 57h, 8Dh, 3Ch, 85h, 00h, 00h, 00h
-    db 00h, 57h, 2Bh, 0CFh, 68h, 0Dh, 0F0h, 0ADh, 0Bh, 51h, 0E8h, 0D1h, 0FEh, 0FFh, 0FFh, 8Bh
-    db 56h, 08h, 57h, 8Dh, 44h, 32h, 0Ch, 68h, 0Dh, 0F0h, 0ADh, 0Bh, 50h, 0E8h, 0BEh, 0FEh
-    db 0FFh, 0FFh, 83h, 0C4h, 18h, 5Fh, 0A1h, 04h, 0EAh, 30h, 01h, 85h, 0C0h, 74h, 15h, 8Bh
-    db 4Eh, 08h, 51h, 68h, 0DEh, 0C0h, 0ADh, 0DEh, 83h, 0C6h, 0Ch, 56h, 0E8h, 9Fh, 0FEh, 0FFh
-    db 0FFh, 83h, 0C4h, 0Ch, 5Eh, 0C2h, 04h, 00h
+    db 08Bh, 044h, 024h, 004h, 056h, 08Bh, 0F1h, 089h, 046h, 008h, 0A1h
+    dd ?Rva0130EA00GuardWords@@3HA
+    db 085h, 0C0h, 0C7h, 006h, 000h, 000h, 000h, 000h, 074h, 02Dh, 057h, 08Dh, 03Ch, 085h, 000h, 000h
+    db 000h, 000h, 057h, 02Bh, 0CFh, 068h, 00Dh, 0F0h, 0ADh, 00Bh, 051h
+    call ?memset32@@YAXPAXHI@Z
+    db 08Bh, 056h, 008h, 057h, 08Dh, 044h, 032h, 00Ch, 068h, 00Dh, 0F0h, 0ADh, 00Bh, 050h
+    call ?memset32@@YAXPAXHI@Z
+    db 083h, 0C4h, 018h, 05Fh, 0A1h
+    dd g_Va0130EA04
+    db 085h, 0C0h, 074h, 015h, 08Bh, 04Eh, 008h, 051h, 068h, 0DEh, 0C0h, 0ADh, 0DEh, 083h, 0C6h, 00Ch
+    db 056h
+    call ?memset32@@YAXPAXHI@Z
+    db 083h, 0C4h, 00Ch, 05Eh, 0C2h, 004h, 000h
 ?d_008824e0@@YAXXZ ENDP
+_TEXT$d00c824e0 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00882550 size 42
 public ?d_00882550@@YAXXZ

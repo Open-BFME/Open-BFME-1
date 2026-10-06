@@ -1,5 +1,7 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ?j_0002385d@@YAXXZ:NEAR
 _TEXT SEGMENT
 
 ; ghidra: FUN_00b24a20  retail @ 0x00724A20 size 2388
@@ -158,10 +160,16 @@ public ?d_00724a20@@YAXXZ
 ?d_00724a20@@YAXXZ ENDP
 
 ; retail @ 0x00755000 size 20
+_TEXT ENDS
+_TEXT$d00b55000 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00B55000 size 20
 public ?d_00755000@@YAXXZ
 ?d_00755000@@YAXXZ PROC
-    db 51h, 8Bh, 11h, 51h, 8Bh, 0C4h, 89h, 10h, 8Dh, 44h, 24h, 04h, 50h, 0E8h, 4Bh, 0E8h
-    db 8Ch, 0FFh, 59h, 0C3h
+    db 051h, 08Bh, 011h, 051h, 08Bh, 0C4h, 089h, 010h, 08Dh, 044h, 024h, 004h, 050h
+    call ?j_0002385d@@YAXXZ
+    db 059h, 0C3h
 ?d_00755000@@YAXXZ ENDP
+_TEXT$d00b55000 ENDS
+_TEXT SEGMENT
 _TEXT ENDS
 END

@@ -1,5 +1,7 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ??1BFMERetailAsciiString@@QAE@XZ:NEAR
 _TEXT SEGMENT
 
 ; ghidra: Unwind@00ff2620  retail @ 0x00BF2620 size 8
@@ -21,10 +23,16 @@ public ?d_00bf26a0@@YAXXZ
 ?d_00bf26a0@@YAXXZ ENDP
 
 ; ghidra: Unwind@00ff2743  retail @ 0x00BF2743 size 11
+_TEXT ENDS
+_TEXT$d00ff2743 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00FF2743 size 11
 public ?d_00bf2743@@YAXXZ
 ?d_00bf2743@@YAXXZ PROC
-    db 8Bh, 4Dh, 10h, 83h, 0C1h, 14h, 0E9h, 0DAh, 0B0h, 41h, 0FFh
+    db 08Bh, 04Dh, 010h, 083h, 0C1h, 014h
+    jmp ??1BFMERetailAsciiString@@QAE@XZ
 ?d_00bf2743@@YAXXZ ENDP
+_TEXT$d00ff2743 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@00ff2764  retail @ 0x00BF2764 size 8
 public ?d_00bf2764@@YAXXZ

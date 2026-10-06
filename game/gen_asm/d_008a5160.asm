@@ -1,5 +1,22 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ?Create@AptBoolean@@SAPAV1@_N@Z:NEAR
+EXTERN ?Rva008A5250KeyTable@@3QBHB:BYTE
+EXTERN ?Rva008A5250LastKey@@3IA:BYTE
+EXTERN ?Rva008AE770TheStack@@3URva008AE770Stack@@A:BYTE
+EXTERN ?arraySortScriptFunction008B9850@@YAHPAI0@Z:NEAR
+EXTERN ?bfmeQuery1279@BfmeQuery1279@@QAEXPAXHPAPAX1@Z:NEAR
+EXTERN ?bfmeTheCBC@@3HA:BYTE
+EXTERN ?d_008cf5a0@@YAXXZ:NEAR
+EXTERN ?g_bfmeArgBase@@3PAPAVAptValue@@A:BYTE
+EXTERN ?ji_009f6ec6@@YAXXZ:NEAR
+EXTERN ?ji_009f70a8@@YAXXZ:NEAR
+EXTERN ?ji_009f7d80@@YAXXZ:NEAR
+EXTERN ?toInteger@AptValue@@QBEHXZ:NEAR
+EXTERN _compareValues008B90F0:NEAR
+EXTERN g_Va01338450:BYTE
+EXTERN g_Va01338454:BYTE
 _TEXT SEGMENT
 
 ; retail @ 0x008A5160 size 121
@@ -16,18 +33,36 @@ public ?d_008a5160@@YAXXZ
 ?d_008a5160@@YAXXZ ENDP
 
 ; retail @ 0x008A5250 size 130
+_TEXT ENDS
+_TEXT$d00ca5250 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00CA5250 size 130
 public ?d_008a5250@@YAXXZ
 ?d_008a5250@@YAXXZ PROC
-    db 0A1h, 50h, 87h, 33h, 01h, 8Bh, 0Dh, 48h, 87h, 33h, 01h, 56h, 8Bh, 35h, 0ACh, 87h
-    db 33h, 01h, 8Bh, 0D6h, 80h, 0E2h, 03h, 80h, 0FAh, 01h, 57h, 8Bh, 7Ch, 88h, 0FCh, 75h
-    db 54h, 0C1h, 0EEh, 11h, 83h, 0FEh, 20h, 7Ch, 28h, 83h, 0FEh, 7Eh, 7Fh, 23h, 56h, 0E8h
-    db 24h, 1Eh, 15h, 00h, 83h, 0C4h, 04h, 8Bh, 0CFh, 8Bh, 0F0h, 0E8h, 70h, 30h, 0FFh, 0FFh
-    db 3Bh, 0F0h, 0Fh, 94h, 0C0h, 50h, 0E8h, 15h, 44h, 0FFh, 0FFh, 83h, 0C4h, 04h, 5Fh, 5Eh
-    db 0C3h, 83h, 0FEh, 14h, 7Dh, 07h, 8Bh, 34h, 0B5h, 0B0h, 64h, 13h, 01h, 8Bh, 0CFh, 0E8h
-    db 4Ch, 30h, 0FFh, 0FFh, 3Bh, 0F0h, 0Fh, 94h, 0C0h, 50h, 0E8h, 0F1h, 43h, 0FFh, 0FFh, 83h
-    db 0C4h, 04h, 5Fh, 5Eh, 0C3h, 6Ah, 00h, 0E8h, 0E4h, 43h, 0FFh, 0FFh, 83h, 0C4h, 04h, 5Fh
-    db 5Eh, 0C3h
+    db 0A1h
+    dd ?g_bfmeArgBase@@3PAPAVAptValue@@A
+    db 08Bh, 00Dh
+    dd ?Rva008AE770TheStack@@3URva008AE770Stack@@A
+    db 056h, 08Bh, 035h
+    dd ?Rva008A5250LastKey@@3IA
+    db 08Bh, 0D6h, 080h, 0E2h, 003h, 080h, 0FAh, 001h, 057h, 08Bh, 07Ch, 088h, 0FCh, 075h, 054h, 0C1h
+    db 0EEh, 011h, 083h, 0FEh, 020h, 07Ch, 028h, 083h, 0FEh, 07Eh, 07Fh, 023h, 056h
+    call ?ji_009f70a8@@YAXXZ
+    db 083h, 0C4h, 004h, 08Bh, 0CFh, 08Bh, 0F0h
+    call ?toInteger@AptValue@@QBEHXZ
+    db 03Bh, 0F0h, 00Fh, 094h, 0C0h, 050h
+    call ?Create@AptBoolean@@SAPAV1@_N@Z
+    db 083h, 0C4h, 004h, 05Fh, 05Eh, 0C3h, 083h, 0FEh, 014h, 07Dh, 007h, 08Bh, 034h, 0B5h
+    dd ?Rva008A5250KeyTable@@3QBHB
+    db 08Bh, 0CFh
+    call ?toInteger@AptValue@@QBEHXZ
+    db 03Bh, 0F0h, 00Fh, 094h, 0C0h, 050h
+    call ?Create@AptBoolean@@SAPAV1@_N@Z
+    db 083h, 0C4h, 004h, 05Fh, 05Eh, 0C3h, 06Ah, 000h
+    call ?Create@AptBoolean@@SAPAV1@_N@Z
+    db 083h, 0C4h, 004h, 05Fh, 05Eh, 0C3h
 ?d_008a5250@@YAXXZ ENDP
+_TEXT$d00ca5250 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x008A52F0 size 59
 public ?d_008a52f0@@YAXXZ
@@ -411,14 +446,28 @@ public ?d_008ae470@@YAXXZ
 ?d_008ae470@@YAXXZ ENDP
 
 ; retail @ 0x008AE770 size 75
+_TEXT ENDS
+_TEXT$d00cae770 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00CAE770 size 75
 public ?d_008ae770@@YAXXZ
 ?d_008ae770@@YAXXZ PROC
-    db 0A1h, 50h, 87h, 33h, 01h, 8Bh, 15h, 48h, 87h, 33h, 01h, 8Bh, 4Ch, 90h, 0F8h, 56h
-    db 83h, 7Ch, 24h, 0Ch, 03h, 57h, 8Bh, 7Ch, 90h, 0FCh, 7Ch, 06h, 8Bh, 74h, 90h, 0F4h
-    db 0EBh, 02h, 33h, 0F6h, 0E8h, 67h, 9Bh, 0FEh, 0FFh, 56h, 05h, 00h, 40h, 00h, 00h, 50h
-    db 8Bh, 44h, 24h, 14h, 57h, 50h, 6Ah, 00h, 50h, 0B9h, 48h, 87h, 33h, 01h, 0E8h, 0EDh
-    db 0Dh, 02h, 00h, 0A1h, 0BCh, 79h, 33h, 01h, 5Fh, 5Eh, 0C3h
+    db 0A1h
+    dd ?g_bfmeArgBase@@3PAPAVAptValue@@A
+    db 08Bh, 015h
+    dd ?Rva008AE770TheStack@@3URva008AE770Stack@@A
+    db 08Bh, 04Ch, 090h, 0F8h, 056h, 083h, 07Ch, 024h, 00Ch, 003h, 057h, 08Bh, 07Ch, 090h, 0FCh, 07Ch
+    db 006h, 08Bh, 074h, 090h, 0F4h, 0EBh, 002h, 033h, 0F6h
+    call ?toInteger@AptValue@@QBEHXZ
+    db 056h, 005h, 000h, 040h, 000h, 000h, 050h, 08Bh, 044h, 024h, 014h, 057h, 050h, 06Ah, 000h, 050h
+    db 0B9h
+    dd ?Rva008AE770TheStack@@3URva008AE770Stack@@A
+    call ?d_008cf5a0@@YAXXZ
+    db 0A1h
+    dd ?bfmeTheCBC@@3HA
+    db 05Fh, 05Eh, 0C3h
 ?d_008ae770@@YAXXZ ENDP
+_TEXT$d00cae770 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x008AE7C0 size 693
 public ?d_008ae7c0@@YAXXZ
@@ -911,16 +960,24 @@ public ?d_008b9020@@YAXXZ
 ?d_008b9020@@YAXXZ ENDP
 
 ; retail @ 0x008B9080 size 107
+_TEXT ENDS
+_TEXT$d00cb9080 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00CB9080 size 107
 public ?d_008b9080@@YAXXZ
 ?d_008b9080@@YAXXZ PROC
-    db 0A1h, 0BCh, 79h, 33h, 01h, 56h, 8Bh, 74h, 24h, 08h, 8Bh, 4Eh, 04h, 8Bh, 0D1h, 83h
-    db 0E2h, 3Fh, 80h, 0FAh, 16h, 75h, 52h, 0C1h, 0E9h, 0Fh, 0F6h, 0D1h, 0F6h, 0C1h, 01h, 75h
-    db 48h, 8Bh, 56h, 28h, 85h, 0D2h, 7Eh, 41h, 8Bh, 4Eh, 20h, 8Bh, 09h, 83h, 0E1h, 0FEh
-    db 57h, 75h, 02h, 8Bh, 0C8h, 8Dh, 42h, 0FFh, 85h, 0C0h, 8Bh, 0F9h, 89h, 46h, 28h, 74h
-    db 18h, 8Bh, 4Eh, 20h, 8Dh, 14h, 85h, 00h, 00h, 00h, 00h, 52h, 8Dh, 41h, 04h, 50h
-    db 51h, 0E8h, 0F0h, 0DDh, 13h, 00h, 83h, 0C4h, 0Ch, 8Bh, 4Eh, 28h, 8Bh, 56h, 20h, 8Bh
-    db 0C7h, 0C7h, 04h, 8Ah, 00h, 00h, 00h, 00h, 5Fh, 5Eh, 0C3h
+    db 0A1h
+    dd ?bfmeTheCBC@@3HA
+    db 056h, 08Bh, 074h, 024h, 008h, 08Bh, 04Eh, 004h, 08Bh, 0D1h, 083h, 0E2h, 03Fh, 080h, 0FAh, 016h
+    db 075h, 052h, 0C1h, 0E9h, 00Fh, 0F6h, 0D1h, 0F6h, 0C1h, 001h, 075h, 048h, 08Bh, 056h, 028h, 085h
+    db 0D2h, 07Eh, 041h, 08Bh, 04Eh, 020h, 08Bh, 009h, 083h, 0E1h, 0FEh, 057h, 075h, 002h, 08Bh, 0C8h
+    db 08Dh, 042h, 0FFh, 085h, 0C0h, 08Bh, 0F9h, 089h, 046h, 028h, 074h, 018h, 08Bh, 04Eh, 020h, 08Dh
+    db 014h, 085h, 000h, 000h, 000h, 000h, 052h, 08Dh, 041h, 004h, 050h, 051h
+    call ?ji_009f6ec6@@YAXXZ
+    db 083h, 0C4h, 00Ch, 08Bh, 04Eh, 028h, 08Bh, 056h, 020h, 08Bh, 0C7h, 0C7h, 004h, 08Ah, 000h, 000h
+    db 000h, 000h, 05Fh, 05Eh, 0C3h
 ?d_008b9080@@YAXXZ ENDP
+_TEXT$d00cb9080 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x008B91F0 size 308
 public ?d_008b91f0@@YAXXZ
@@ -1013,17 +1070,36 @@ public ?d_008b9850@@YAXXZ
 ?d_008b9850@@YAXXZ ENDP
 
 ; retail @ 0x008B9930 size 124
+_TEXT ENDS
+_TEXT$d00cb9930 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00CB9930 size 124
 public ?d_008b9930@@YAXXZ
 ?d_008b9930@@YAXXZ PROC
-    db 8Bh, 44h, 24h, 04h, 8Bh, 48h, 04h, 8Bh, 0D1h, 83h, 0E2h, 3Fh, 80h, 0FAh, 16h, 75h
-    db 65h, 0C1h, 0E9h, 0Fh, 0F6h, 0D1h, 0F6h, 0C1h, 01h, 75h, 5Bh, 8Bh, 4Ch, 24h, 08h, 85h
-    db 0C9h, 75h, 1Dh, 8Bh, 48h, 28h, 8Bh, 50h, 20h, 68h, 0F0h, 90h, 0CBh, 00h, 6Ah, 04h
-    db 51h, 52h, 0E8h, 19h, 0E4h, 13h, 00h, 0A1h, 0BCh, 79h, 33h, 01h, 83h, 0C4h, 10h, 0C3h
-    db 8Bh, 15h, 48h, 87h, 33h, 01h, 8Bh, 0Dh, 50h, 87h, 33h, 01h, 8Bh, 4Ch, 91h, 0FCh
-    db 8Bh, 50h, 28h, 8Bh, 40h, 20h, 68h, 50h, 98h, 0CBh, 00h, 6Ah, 04h, 89h, 0Dh, 50h
-    db 84h, 33h, 01h, 8Bh, 49h, 28h, 52h, 50h, 89h, 0Dh, 54h, 84h, 33h, 01h, 0E8h, 0DDh
-    db 0E3h, 13h, 00h, 83h, 0C4h, 10h, 0A1h, 0BCh, 79h, 33h, 01h, 0C3h
+    db 08Bh, 044h, 024h, 004h, 08Bh, 048h, 004h, 08Bh, 0D1h, 083h, 0E2h, 03Fh, 080h, 0FAh, 016h, 075h
+    db 065h, 0C1h, 0E9h, 00Fh, 0F6h, 0D1h, 0F6h, 0C1h, 001h, 075h, 05Bh, 08Bh, 04Ch, 024h, 008h, 085h
+    db 0C9h, 075h, 01Dh, 08Bh, 048h, 028h, 08Bh, 050h, 020h, 068h
+    dd _compareValues008B90F0
+    db 06Ah, 004h, 051h, 052h
+    call ?ji_009f7d80@@YAXXZ
+    db 0A1h
+    dd ?bfmeTheCBC@@3HA
+    db 083h, 0C4h, 010h, 0C3h, 08Bh, 015h
+    dd ?Rva008AE770TheStack@@3URva008AE770Stack@@A
+    db 08Bh, 00Dh
+    dd ?g_bfmeArgBase@@3PAPAVAptValue@@A
+    db 08Bh, 04Ch, 091h, 0FCh, 08Bh, 050h, 028h, 08Bh, 040h, 020h, 068h
+    dd ?arraySortScriptFunction008B9850@@YAHPAI0@Z
+    db 06Ah, 004h, 089h, 00Dh
+    dd g_Va01338450
+    db 08Bh, 049h, 028h, 052h, 050h, 089h, 00Dh
+    dd g_Va01338454
+    call ?ji_009f7d80@@YAXXZ
+    db 083h, 0C4h, 010h, 0A1h
+    dd ?bfmeTheCBC@@3HA
+    db 0C3h
 ?d_008b9930@@YAXXZ ENDP
+_TEXT$d00cb9930 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x008B9CC0 size 619
 public ?d_008b9cc0@@YAXXZ
@@ -1107,14 +1183,20 @@ public ?d_008bac30@@YAXXZ
 ?d_008bac30@@YAXXZ ENDP
 
 ; retail @ 0x008BD760 size 71
+_TEXT ENDS
+_TEXT$d00cbd760 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00CBD760 size 71
 public ?d_008bd760@@YAXXZ
 ?d_008bd760@@YAXXZ PROC
-    db 51h, 8Dh, 44h, 24h, 08h, 50h, 8Bh, 44h, 24h, 0Ch, 8Dh, 54h, 24h, 04h, 52h, 6Ah
-    db 00h, 50h, 0E8h, 79h, 0F9h, 0FFh, 0FFh, 8Bh, 44h, 24h, 08h, 8Bh, 48h, 54h, 85h, 0C9h
-    db 74h, 06h, 8Bh, 50h, 58h, 89h, 51h, 58h, 8Bh, 48h, 58h, 85h, 0C9h, 74h, 06h, 8Bh
-    db 50h, 54h, 89h, 51h, 54h, 0C7h, 40h, 54h, 00h, 00h, 00h, 00h, 0C7h, 40h, 58h, 00h
-    db 00h, 00h, 00h, 59h, 0C2h, 04h, 00h
+    db 051h, 08Dh, 044h, 024h, 008h, 050h, 08Bh, 044h, 024h, 00Ch, 08Dh, 054h, 024h, 004h, 052h, 06Ah
+    db 000h, 050h
+    call ?bfmeQuery1279@BfmeQuery1279@@QAEXPAXHPAPAX1@Z
+    db 08Bh, 044h, 024h, 008h, 08Bh, 048h, 054h, 085h, 0C9h, 074h, 006h, 08Bh, 050h, 058h, 089h, 051h
+    db 058h, 08Bh, 048h, 058h, 085h, 0C9h, 074h, 006h, 08Bh, 050h, 054h, 089h, 051h, 054h, 0C7h, 040h
+    db 054h, 000h, 000h, 000h, 000h, 0C7h, 040h, 058h, 000h, 000h, 000h, 000h, 059h, 0C2h, 004h, 000h
 ?d_008bd760@@YAXXZ ENDP
+_TEXT$d00cbd760 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x008C3BA0 size 90
 public ?d_008c3ba0@@YAXXZ

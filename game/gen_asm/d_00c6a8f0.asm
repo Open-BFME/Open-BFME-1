@@ -1,5 +1,20 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ?j_000057b3@@YAXXZ:NEAR
+EXTERN g_Va012EF648:BYTE
+EXTERN g_Va012EF670:BYTE
+EXTERN g_Va012EF698:BYTE
+EXTERN g_Va012EF6C0:BYTE
+EXTERN g_Va012EF6C4:BYTE
+EXTERN g_Va012EF6C8:BYTE
+EXTERN g_Va012EF6CC:BYTE
+EXTERN g_Va012EF6D0:BYTE
+EXTERN g_Va012EF6D4:BYTE
+EXTERN g_Va012EF6D8:BYTE
+EXTERN g_Va012EF6DC:BYTE
+EXTERN g_Va012EF6E0:BYTE
+EXTERN g_Va012EF6E4:BYTE
 _TEXT SEGMENT
 
 ; retail @ 0x00C6A8F0 size 22
@@ -389,18 +404,47 @@ public ?d_00c6b030@@YAXXZ
 ?d_00c6b030@@YAXXZ ENDP
 
 ; retail @ 0x00C6B050 size 131
+_TEXT ENDS
+_TEXT$d0106b050 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0106B050 size 131
 public ?d_00c6b050@@YAXXZ
 ?d_00c6b050@@YAXXZ PROC
-    db 6Ah, 74h, 6Ah, 27h, 6Ah, 2Ch, 6Ah, 2Bh, 6Ah, 2Ah, 6Ah, 29h, 6Ah, 28h, 6Ah, 00h
-    db 0B9h, 48h, 0F6h, 2Eh, 01h, 0E8h, 49h, 0A7h, 39h, 0FFh, 6Ah, 75h, 6Ah, 2Dh, 6Ah, 32h
-    db 6Ah, 31h, 6Ah, 30h, 6Ah, 2Fh, 6Ah, 2Eh, 6Ah, 00h, 0B9h, 70h, 0F6h, 2Eh, 01h, 0E8h
-    db 2Fh, 0A7h, 39h, 0FFh, 6Ah, 76h, 6Ah, 33h, 6Ah, 38h, 6Ah, 37h, 6Ah, 36h, 6Ah, 35h
-    db 6Ah, 34h, 6Ah, 00h, 0B9h, 98h, 0F6h, 2Eh, 01h, 0E8h, 15h, 0A7h, 39h, 0FFh, 33h, 0C0h
-    db 0A3h, 0C0h, 0F6h, 2Eh, 01h, 0A3h, 0C4h, 0F6h, 2Eh, 01h, 0A3h, 0C8h, 0F6h, 2Eh, 01h, 0A3h
-    db 0CCh, 0F6h, 2Eh, 01h, 0A3h, 0D0h, 0F6h, 2Eh, 01h, 0A3h, 0D4h, 0F6h, 2Eh, 01h, 0A3h, 0D8h
-    db 0F6h, 2Eh, 01h, 0A3h, 0DCh, 0F6h, 2Eh, 01h, 0A3h, 0E0h, 0F6h, 2Eh, 01h, 0A3h, 0E4h, 0F6h
-    db 2Eh, 01h, 0C3h
+    db 06Ah, 074h, 06Ah, 027h, 06Ah, 02Ch, 06Ah, 02Bh, 06Ah, 02Ah, 06Ah, 029h, 06Ah, 028h, 06Ah, 000h
+    db 0B9h
+    dd g_Va012EF648
+    call ?j_000057b3@@YAXXZ
+    db 06Ah, 075h, 06Ah, 02Dh, 06Ah, 032h, 06Ah, 031h, 06Ah, 030h, 06Ah, 02Fh, 06Ah, 02Eh, 06Ah, 000h
+    db 0B9h
+    dd g_Va012EF670
+    call ?j_000057b3@@YAXXZ
+    db 06Ah, 076h, 06Ah, 033h, 06Ah, 038h, 06Ah, 037h, 06Ah, 036h, 06Ah, 035h, 06Ah, 034h, 06Ah, 000h
+    db 0B9h
+    dd g_Va012EF698
+    call ?j_000057b3@@YAXXZ
+    db 033h, 0C0h, 0A3h
+    dd g_Va012EF6C0
+    db 0A3h
+    dd g_Va012EF6C4
+    db 0A3h
+    dd g_Va012EF6C8
+    db 0A3h
+    dd g_Va012EF6CC
+    db 0A3h
+    dd g_Va012EF6D0
+    db 0A3h
+    dd g_Va012EF6D4
+    db 0A3h
+    dd g_Va012EF6D8
+    db 0A3h
+    dd g_Va012EF6DC
+    db 0A3h
+    dd g_Va012EF6E0
+    db 0A3h
+    dd g_Va012EF6E4
+    db 0C3h
 ?d_00c6b050@@YAXXZ ENDP
+_TEXT$d0106b050 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C6B100 size 21
 public ?d_00c6b100@@YAXXZ

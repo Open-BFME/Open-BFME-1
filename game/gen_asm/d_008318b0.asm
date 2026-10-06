@@ -1,5 +1,18 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ??1?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@XZ:NEAR
+EXTERN ??3@YAXPAX@Z:NEAR
+EXTERN ?TheBfmeObject_00C70CC0@@3VGen_00C70CC0Target@@A:BYTE
+EXTERN ?_Bfme_classic_locale@_STL@@3PAV_Locale_impl@1@A:BYTE
+EXTERN ?_M_do_lock@?$_STLP_mutex_spin@$0A@@_STL@@SAXPCJ@Z:NEAR
+EXTERN ?_S_free_list@?$__node_alloc@$00$0A@@_STL@@0PAPAU_Obj@12@A:BYTE
+EXTERN ?_S_lock@?$_Node_Alloc_Lock@$00$0A@@_STL@@2U_STLP_mutex_base@2@A:BYTE
+EXTERN ?name@locale@_STL@@QBE?AV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@2@XZ:NEAR
+EXTERN __imp__setlocale:BYTE
+EXTERN g_Va01054C19:NEAR
+EXTERN g_Va0130BCA4:BYTE
+EXTERN g_Va0130BCB8:BYTE
 _TEXT SEGMENT
 
 ; ghidra: FUN_00c318b0  retail @ 0x008318B0 size 52
@@ -1062,32 +1075,60 @@ public ?d_008366c0@@YAXXZ
 ?d_008366c0@@YAXXZ ENDP
 
 ; ghidra: FUN_00c366e0  retail @ 0x008366E0 size 362
+_TEXT ENDS
+_TEXT$d00c366e0 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00C366E0 size 362
 public ?d_008366e0@@YAXXZ
 ?d_008366e0@@YAXXZ PROC
-    db 6Ah, 0FFh, 68h, 19h, 4Ch, 05h, 01h, 64h, 0A1h, 00h, 00h, 00h, 00h, 50h, 64h, 89h
-    db 25h, 00h, 00h, 00h, 00h, 83h, 0ECh, 14h, 53h, 55h, 56h, 33h, 0F6h, 89h, 74h, 24h
-    db 0Ch, 8Bh, 0Dh, 0A0h, 0BCh, 30h, 01h, 8Bh, 01h, 57h, 8Bh, 0E9h, 0FFh, 50h, 04h, 89h
-    db 6Ch, 24h, 14h, 8Bh, 5Ch, 24h, 38h, 8Bh, 0Bh, 8Bh, 11h, 0C7h, 44h, 24h, 2Ch, 01h
-    db 00h, 00h, 00h, 0FFh, 52h, 04h, 68h, 0A4h, 0BCh, 30h, 01h, 0C7h, 44h, 24h, 3Ch, 0A4h
-    db 0BCh, 30h, 01h, 0E8h, 28h, 60h, 0FFh, 0FFh, 83h, 0C4h, 04h, 8Bh, 0Dh, 0A0h, 0BCh, 30h
-    db 01h, 8Bh, 01h, 0C6h, 44h, 24h, 2Ch, 02h, 0FFh, 50h, 08h, 8Bh, 0Bh, 8Dh, 54h, 24h
-    db 18h, 89h, 0Dh, 0A0h, 0BCh, 30h, 01h, 52h, 8Bh, 0CBh, 0C6h, 44h, 24h, 30h, 01h, 89h
-    db 35h, 0A4h, 0BCh, 30h, 01h, 0E8h, 16h, 0FEh, 0FFh, 0FFh, 8Bh, 30h, 8Bh, 48h, 04h, 0A1h
-    db 0B8h, 0BCh, 30h, 01h, 8Bh, 3Dh, 0B4h, 0BCh, 30h, 01h, 2Bh, 0CEh, 2Bh, 0C7h, 3Bh, 0C8h
-    db 75h, 0Dh, 33h, 0D2h, 0F3h, 0A6h, 75h, 07h, 0B8h, 01h, 00h, 00h, 00h, 0EBh, 02h, 33h
-    db 0C0h, 8Bh, 4Ch, 24h, 18h, 84h, 0C0h, 8Bh, 44h, 24h, 20h, 0Fh, 94h, 44h, 24h, 38h
-    db 2Bh, 0C1h, 85h, 0C9h, 8Bh, 0F1h, 74h, 39h, 3Dh, 80h, 00h, 00h, 00h, 76h, 08h, 51h
-    db 0E8h, 0FBh, 0B6h, 04h, 00h, 0EBh, 27h, 8Dh, 78h, 0FFh, 0C1h, 0EFh, 03h, 68h, 54h, 0B2h
-    db 30h, 01h, 8Dh, 3Ch, 0BDh, 0C0h, 0B1h, 30h, 01h, 0E8h, 92h, 5Fh, 0FFh, 0FFh, 8Bh, 07h
-    db 89h, 06h, 89h, 37h, 0C7h, 05h, 54h, 0B2h, 30h, 01h, 00h, 00h, 00h, 00h, 83h, 0C4h
-    db 04h, 8Ah, 44h, 24h, 38h, 84h, 0C0h, 74h, 23h, 8Dh, 4Ch, 24h, 18h, 51h, 8Bh, 0CBh
-    db 0E8h, 8Bh, 0FDh, 0FFh, 0FFh, 8Bh, 00h, 50h, 6Ah, 00h, 0FFh, 15h, 84h, 94h, 35h, 01h
-    db 83h, 0C4h, 08h, 8Dh, 4Ch, 24h, 18h, 0E8h, 21h, 0FCh, 7Dh, 0FFh, 8Bh, 74h, 24h, 34h
-    db 0C7h, 06h, 00h, 00h, 00h, 00h, 8Bh, 55h, 00h, 8Bh, 0CDh, 0FFh, 52h, 04h, 89h, 2Eh
-    db 8Bh, 45h, 00h, 8Bh, 0CDh, 0C7h, 44h, 24h, 10h, 01h, 00h, 00h, 00h, 0C6h, 44h, 24h
-    db 2Ch, 00h, 0FFh, 50h, 08h, 8Bh, 4Ch, 24h, 24h, 5Fh, 8Bh, 0C6h, 5Eh, 5Dh, 5Bh, 64h
-    db 89h, 0Dh, 00h, 00h, 00h, 00h, 83h, 0C4h, 20h, 0C3h
+    db 06Ah, 0FFh, 068h
+    dd g_Va01054C19
+    db 064h, 0A1h, 000h, 000h, 000h, 000h, 050h, 064h, 089h, 025h, 000h, 000h, 000h, 000h, 083h, 0ECh
+    db 014h, 053h, 055h, 056h, 033h, 0F6h, 089h, 074h, 024h, 00Ch, 08Bh, 00Dh
+    dd ?_Bfme_classic_locale@_STL@@3PAV_Locale_impl@1@A
+    db 08Bh, 001h, 057h, 08Bh, 0E9h, 0FFh, 050h, 004h, 089h, 06Ch, 024h, 014h, 08Bh, 05Ch, 024h, 038h
+    db 08Bh, 00Bh, 08Bh, 011h, 0C7h, 044h, 024h, 02Ch, 001h, 000h, 000h, 000h, 0FFh, 052h, 004h, 068h
+    dd g_Va0130BCA4
+    db 0C7h, 044h, 024h, 03Ch
+    dd g_Va0130BCA4
+    call ?_M_do_lock@?$_STLP_mutex_spin@$0A@@_STL@@SAXPCJ@Z
+    db 083h, 0C4h, 004h, 08Bh, 00Dh
+    dd ?_Bfme_classic_locale@_STL@@3PAV_Locale_impl@1@A
+    db 08Bh, 001h, 0C6h, 044h, 024h, 02Ch, 002h, 0FFh, 050h, 008h, 08Bh, 00Bh, 08Dh, 054h, 024h, 018h
+    db 089h, 00Dh
+    dd ?_Bfme_classic_locale@_STL@@3PAV_Locale_impl@1@A
+    db 052h, 08Bh, 0CBh, 0C6h, 044h, 024h, 030h, 001h, 089h, 035h
+    dd g_Va0130BCA4
+    call ?name@locale@_STL@@QBE?AV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@2@XZ
+    db 08Bh, 030h, 08Bh, 048h, 004h, 0A1h
+    dd g_Va0130BCB8
+    db 08Bh, 03Dh
+    dd ?TheBfmeObject_00C70CC0@@3VGen_00C70CC0Target@@A
+    db 02Bh, 0CEh, 02Bh, 0C7h, 03Bh, 0C8h, 075h, 00Dh, 033h, 0D2h, 0F3h, 0A6h, 075h, 007h, 0B8h, 001h
+    db 000h, 000h, 000h, 0EBh, 002h, 033h, 0C0h, 08Bh, 04Ch, 024h, 018h, 084h, 0C0h, 08Bh, 044h, 024h
+    db 020h, 00Fh, 094h, 044h, 024h, 038h, 02Bh, 0C1h, 085h, 0C9h, 08Bh, 0F1h, 074h, 039h, 03Dh, 080h
+    db 000h, 000h, 000h, 076h, 008h, 051h
+    call ??3@YAXPAX@Z
+    db 0EBh, 027h, 08Dh, 078h, 0FFh, 0C1h, 0EFh, 003h, 068h
+    dd ?_S_lock@?$_Node_Alloc_Lock@$00$0A@@_STL@@2U_STLP_mutex_base@2@A
+    db 08Dh, 03Ch, 0BDh
+    dd ?_S_free_list@?$__node_alloc@$00$0A@@_STL@@0PAPAU_Obj@12@A
+    call ?_M_do_lock@?$_STLP_mutex_spin@$0A@@_STL@@SAXPCJ@Z
+    db 08Bh, 007h, 089h, 006h, 089h, 037h, 0C7h, 005h
+    dd ?_S_lock@?$_Node_Alloc_Lock@$00$0A@@_STL@@2U_STLP_mutex_base@2@A
+    db 000h, 000h, 000h, 000h, 083h, 0C4h, 004h, 08Ah, 044h, 024h, 038h, 084h, 0C0h, 074h, 023h, 08Dh
+    db 04Ch, 024h, 018h, 051h, 08Bh, 0CBh
+    call ?name@locale@_STL@@QBE?AV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@2@XZ
+    db 08Bh, 000h, 050h, 06Ah, 000h, 0FFh, 015h
+    dd __imp__setlocale
+    db 083h, 0C4h, 008h, 08Dh, 04Ch, 024h, 018h
+    call ??1?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@XZ
+    db 08Bh, 074h, 024h, 034h, 0C7h, 006h, 000h, 000h, 000h, 000h, 08Bh, 055h, 000h, 08Bh, 0CDh, 0FFh
+    db 052h, 004h, 089h, 02Eh, 08Bh, 045h, 000h, 08Bh, 0CDh, 0C7h, 044h, 024h, 010h, 001h, 000h, 000h
+    db 000h, 0C6h, 044h, 024h, 02Ch, 000h, 0FFh, 050h, 008h, 08Bh, 04Ch, 024h, 024h, 05Fh, 08Bh, 0C6h
+    db 05Eh, 05Dh, 05Bh, 064h, 089h, 00Dh, 000h, 000h, 000h, 000h, 083h, 0C4h, 020h, 0C3h
 ?d_008366e0@@YAXXZ ENDP
+_TEXT$d00c366e0 ENDS
+_TEXT SEGMENT
 
 ; ghidra: FUN_00c36850  retail @ 0x00836850 size 108
 public ?d_00836850@@YAXXZ

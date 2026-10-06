@@ -1,5 +1,61 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ??1?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@XZ:NEAR
+EXTERN ??3@YAXPAX@Z:NEAR
+EXTERN ?BFMEEmptyUnicodeString@@3GB:BYTE
+EXTERN ?Rva006A16B0Empty@@3PADA:BYTE
+EXTERN ?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z:NEAR
+EXTERN ?d_009d9110@@YAXXZ:NEAR
+EXTERN ?d_009d9160@@YAXXZ:NEAR
+EXTERN ?g_bfmeAsciiStringFormat@@3QBDB:BYTE
+EXTERN ?g_bfmeByteFormat@@3QBDB:BYTE
+EXTERN ?g_bfmeICoord2DFormat@@3QBDB:BYTE
+EXTERN ?g_bfmeICoord3DFormat@@3QBDB:BYTE
+EXTERN ?g_bfmeIRegion2DFormat@@3QBDB:BYTE
+EXTERN ?g_bfmeIRegion3DFormat@@3QBDB:BYTE
+EXTERN ?g_bfmeInt64Format@@3QBDB:BYTE
+EXTERN ?g_bfmeIntegerFormat@@3QBDB:BYTE
+EXTERN ?g_bfmeRGBAColorIntFormat@@3QBDB:BYTE
+EXTERN ?g_bfmeScalarByteFormat@@3QBDB:BYTE
+EXTERN ?g_bfmeShortFormat@@3QBDB:BYTE
+EXTERN ?g_bfmeSignedByteFormat@@3QBDB:BYTE
+EXTERN ?g_bfmeUnsignedByteFormat@@3QBDB:BYTE
+EXTERN ?g_bfmeUnsignedIntFormat@@3QBDB:BYTE
+EXTERN ?g_bfmeUnsignedShortFormat@@3QBDB:BYTE
+EXTERN ?g_guardTargetTypeThrowInfo@@3HA:BYTE
+EXTERN ?getBufferForRead@?$StringBase@D@@QAEPADH@Z:NEAR
+EXTERN ?getBufferForRead@?$StringBase@G@@QAEPAGH@Z:NEAR
+EXTERN ?j_00008f17@@YAXXZ:NEAR
+EXTERN ?j_0000b109@@YAXXZ:NEAR
+EXTERN ?j_0003b318@@YAXXZ:NEAR
+EXTERN ?ji_009f6d00@@YAXXZ:NEAR
+EXTERN ?releaseBuffer@?$StringBase@D@@AAEXXZ:NEAR
+EXTERN ?releaseBuffer@?$StringBase@G@@AAEXXZ:NEAR
+EXTERN _bfmeFormatText:NEAR
+EXTERN g_Va010611A2:NEAR
+EXTERN g_Va01080294:BYTE
+EXTERN g_Va0108ED1C:BYTE
+EXTERN g_Va010E8B00:BYTE
+EXTERN g_Va01140290:BYTE
+EXTERN g_Va01142704:BYTE
+EXTERN g_Va01144274:BYTE
+EXTERN g_Va0114427C:BYTE
+EXTERN g_Va01144284:BYTE
+EXTERN g_Va01144530:BYTE
+EXTERN g_Va011445D0:BYTE
+EXTERN g_Va011445D8:BYTE
+EXTERN g_Va011445F4:BYTE
+EXTERN g_Va01144608:BYTE
+EXTERN g_Va01144658:BYTE
+EXTERN g_Va01144688:BYTE
+EXTERN g_Va011446A0:BYTE
+EXTERN g_Va011446AC:BYTE
+EXTERN g_Va011446B8:BYTE
+EXTERN g_Va01144734:BYTE
+EXTERN g_Va01144770:BYTE
+EXTERN g_Va011447C8:BYTE
+EXTERN g_Va011447F8:BYTE
 _TEXT SEGMENT
 
 ; ghidra: FUN_00dd9a30  retail @ 0x009D9A30 size 66
@@ -33,351 +89,520 @@ public ?d_009d9c00@@YAXXZ
 ?d_009d9c00@@YAXXZ ENDP
 
 ; ghidra: FUN_00dd9d90  retail @ 0x009D9D90 size 5472
+_TEXT ENDS
+_TEXT$d00dd9d90 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00DD9D90 size 5472
 public ?d_009d9d90@@YAXXZ
 ?d_009d9d90@@YAXXZ PROC
-    db 55h, 8Bh, 0ECh, 83h, 0E4h, 0F8h, 6Ah, 0FFh, 68h, 0A2h, 11h, 06h, 01h, 64h, 0A1h, 00h
-    db 00h, 00h, 00h, 50h, 64h, 89h, 25h, 00h, 00h, 00h, 00h, 81h, 0ECh, 88h, 02h, 00h
-    db 00h, 53h, 56h, 57h, 8Bh, 7Dh, 08h, 8Bh, 07h, 6Ah, 04h, 8Dh, 8Ch, 24h, 0F8h, 00h
-    db 00h, 00h, 51h, 8Bh, 0CFh, 0FFh, 50h, 0Ch, 83h, 0F8h, 04h, 0Fh, 85h, 08h, 15h, 00h
-    db 00h, 8Bh, 17h, 50h, 8Dh, 84h, 24h, 0E4h, 00h, 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h
-    db 0Ch, 83h, 0F8h, 04h, 0Fh, 85h, 0EFh, 14h, 00h, 00h, 81h, 0BCh, 24h, 0F4h, 00h, 00h
-    db 00h, 41h, 4Ch, 41h, 45h, 0Fh, 85h, 0DEh, 14h, 00h, 00h, 8Bh, 84h, 24h, 0E0h, 00h
-    db 00h, 00h, 3Dh, 31h, 53h, 54h, 52h, 74h, 0Bh, 3Dh, 32h, 53h, 54h, 52h, 0Fh, 85h
-    db 0C5h, 14h, 00h, 00h, 33h, 0F6h, 3Dh, 31h, 53h, 54h, 52h, 89h, 0B4h, 24h, 0E4h, 00h
-    db 00h, 00h, 74h, 11h, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 0E8h, 00h, 00h, 00h, 50h
-    db 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 38h, 01h, 00h, 00h
-    db 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 83h, 0F8h, 04h, 0Fh, 85h, 8Ah, 14h, 00h, 00h, 0F6h
-    db 84h, 24h, 34h, 01h, 00h, 00h, 01h, 0Fh, 84h, 7Ch, 14h, 00h, 00h, 89h, 74h, 24h
-    db 0Ch, 89h, 74h, 24h, 10h, 89h, 74h, 24h, 14h, 89h, 0B4h, 24h, 9Ch, 02h, 00h, 00h
-    db 89h, 0B4h, 24h, 0C4h, 00h, 00h, 00h, 89h, 0B4h, 24h, 0C8h, 00h, 00h, 00h, 89h, 0B4h
-    db 24h, 0CCh, 00h, 00h, 00h, 8Bh, 17h, 6Ah, 04h, 8Dh, 44h, 24h, 34h, 50h, 8Bh, 0CFh
-    db 0C6h, 84h, 24h, 0A4h, 02h, 00h, 00h, 01h, 32h, 0DBh, 0FFh, 52h, 0Ch, 83h, 0F8h, 04h
-    db 0Fh, 85h, 0E7h, 12h, 00h, 00h, 8Bh, 75h, 0Ch, 8Dh, 0A4h, 24h, 00h, 00h, 00h, 00h
-    db 8Bh, 44h, 24h, 30h, 3Dh, 44h, 4Eh, 45h, 00h, 0Fh, 84h, 0F3h, 12h, 00h, 00h, 3Dh
-    db 32h, 75h, 6Eh, 65h, 0Fh, 87h, 1Eh, 0Bh, 00h, 00h, 0Fh, 84h, 0C8h, 0Ah, 00h, 00h
-    db 3Dh, 72h, 65h, 76h, 00h, 0Fh, 87h, 7Ch, 06h, 00h, 00h, 0Fh, 84h, 31h, 06h, 00h
-    db 00h, 3Dh, 64h, 32h, 72h, 00h, 0Fh, 87h, 99h, 02h, 00h, 00h, 0Fh, 84h, 0CCh, 01h
-    db 00h, 00h, 3Dh, 34h, 36h, 69h, 00h, 0Fh, 87h, 6Fh, 01h, 00h, 00h, 0Fh, 84h, 11h
-    db 01h, 00h, 00h, 3Dh, 64h, 32h, 63h, 00h, 0Fh, 84h, 99h, 00h, 00h, 00h, 3Dh, 64h
-    db 33h, 63h, 00h, 0Fh, 85h, 96h, 13h, 00h, 00h, 8Bh, 17h, 6Ah, 04h, 8Dh, 44h, 24h
-    db 60h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 44h, 24h, 64h, 50h
-    db 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 44h, 24h, 68h, 50h, 8Bh, 0CFh
-    db 0FFh, 52h, 0Ch, 84h, 0DBh, 75h, 1Fh, 8Bh, 54h, 24h, 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh
-    db 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0E9h, 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h
-    db 0C2h, 0E8h, 0FAh, 0F1h, 0FFh, 0FFh, 8Bh, 4Ch, 24h, 64h, 0D9h, 44h, 24h, 64h, 8Bh, 54h
-    db 24h, 60h, 8Bh, 44h, 24h, 5Ch, 51h, 52h, 50h, 83h, 0ECh, 18h, 0DDh, 5Ch, 24h, 10h
-    db 0D9h, 84h, 24h, 84h, 00h, 00h, 00h, 0DDh, 5Ch, 24h, 08h, 0D9h, 84h, 24h, 80h, 00h
-    db 00h, 00h, 0DDh, 1Ch, 24h, 68h, 0F8h, 47h, 14h, 01h, 0E8h, 71h, 0F1h, 0FFh, 0FFh, 83h
-    db 0C4h, 28h, 0E9h, 0CBh, 11h, 00h, 00h, 8Bh, 17h, 6Ah, 04h, 8Dh, 44h, 24h, 54h, 50h
-    db 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 44h, 24h, 58h, 50h, 8Bh, 0CFh
-    db 0FFh, 52h, 0Ch, 84h, 0DBh, 75h, 1Fh, 8Bh, 54h, 24h, 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh
-    db 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0E9h, 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h
-    db 0C2h, 0E8h, 7Ah, 0F1h, 0FFh, 0FFh, 8Bh, 4Ch, 24h, 54h, 0D9h, 44h, 24h, 54h, 8Bh, 54h
-    db 24h, 50h, 51h, 52h, 83h, 0ECh, 10h, 0DDh, 5Ch, 24h, 08h, 0D9h, 44h, 24h, 68h, 0DDh
-    db 1Ch, 24h, 68h, 0C8h, 47h, 14h, 01h, 0E8h, 04h, 0F1h, 0FFh, 0FFh, 83h, 0C4h, 1Ch, 0E9h
-    db 5Eh, 11h, 00h, 00h, 8Bh, 07h, 6Ah, 08h, 8Dh, 8Ch, 24h, 0BCh, 00h, 00h, 00h, 51h
-    db 8Bh, 0CFh, 0FFh, 50h, 0Ch, 84h, 0DBh, 75h, 1Fh, 8Bh, 54h, 24h, 0Ch, 8Bh, 4Ch, 24h
-    db 10h, 2Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0E9h, 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h
-    db 1Fh, 03h, 0C2h, 0E8h, 18h, 0F1h, 0FFh, 0FFh, 8Bh, 84h, 24h, 0BCh, 00h, 00h, 00h, 8Bh
-    db 8Ch, 24h, 0B8h, 00h, 00h, 00h, 50h, 51h, 50h, 51h, 68h, 0ECh, 42h, 14h, 01h, 0E8h
-    db 0ACh, 0F0h, 0FFh, 0FFh, 83h, 0C4h, 14h, 0E9h, 06h, 11h, 00h, 00h, 3Dh, 74h, 6Eh, 69h
-    db 00h, 0Fh, 85h, 38h, 12h, 00h, 00h, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 0ECh, 00h
-    db 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 84h, 0DBh, 75h, 1Fh, 8Bh, 54h, 24h, 0Ch
-    db 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0E9h, 0D1h, 0FAh, 8Bh
-    db 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 0B5h, 0F0h, 0FFh, 0FFh, 8Bh, 84h, 24h, 0E8h, 00h
-    db 00h, 00h, 50h, 50h, 68h, 0DCh, 42h, 14h, 01h, 0E9h, 0ACh, 10h, 00h, 00h, 8Bh, 17h
-    db 6Ah, 04h, 8Dh, 84h, 24h, 0ACh, 00h, 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh
-    db 17h, 6Ah, 04h, 8Dh, 84h, 24h, 0B0h, 00h, 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch
-    db 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 0B4h, 00h, 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h
-    db 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 0B8h, 00h, 00h, 00h, 50h, 8Bh, 0CFh, 0FFh
-    db 52h, 0Ch, 84h, 0DBh, 75h, 1Fh, 8Bh, 54h, 24h, 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh
-    db 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0E9h, 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h
-    db 0E8h, 3Bh, 0F0h, 0FFh, 0FFh, 8Bh, 8Ch, 24h, 0B4h, 00h, 00h, 00h, 0D9h, 84h, 24h, 0B4h
-    db 00h, 00h, 00h, 8Bh, 94h, 24h, 0B0h, 00h, 00h, 00h, 8Bh, 84h, 24h, 0ACh, 00h, 00h
-    db 00h, 51h, 8Bh, 8Ch, 24h, 0ACh, 00h, 00h, 00h, 52h, 50h, 51h, 83h, 0ECh, 20h, 0DDh
-    db 5Ch, 24h, 18h, 0D9h, 84h, 24h, 0E0h, 00h, 00h, 00h, 0DDh, 5Ch, 24h, 10h, 0D9h, 84h
-    db 24h, 0DCh, 00h, 00h, 00h, 0DDh, 5Ch, 24h, 08h, 0D9h, 84h, 24h, 0D8h, 00h, 00h, 00h
-    db 0DDh, 1Ch, 24h, 68h, 70h, 47h, 14h, 01h, 0E8h, 93h, 0EFh, 0FFh, 0FFh, 83h, 0C4h, 34h
-    db 0E9h, 0EDh, 0Fh, 00h, 00h, 3Dh, 64h, 33h, 72h, 00h, 0Fh, 84h, 73h, 02h, 00h, 00h
-    db 3Dh, 77h, 61h, 72h, 00h, 0Fh, 84h, 99h, 00h, 00h, 00h, 3Dh, 62h, 67h, 72h, 00h
-    db 0Fh, 85h, 09h, 11h, 00h, 00h, 8Bh, 17h, 6Ah, 04h, 8Dh, 44h, 24h, 70h, 50h, 8Bh
-    db 0CFh, 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 44h, 24h, 74h, 50h, 8Bh, 0CFh, 0FFh
-    db 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 44h, 24h, 78h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch
-    db 84h, 0DBh, 75h, 1Fh, 8Bh, 54h, 24h, 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h, 0ABh
-    db 0AAh, 0AAh, 2Ah, 0F7h, 0E9h, 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 6Dh
-    db 0EFh, 0FFh, 0FFh, 8Bh, 4Ch, 24h, 74h, 0D9h, 44h, 24h, 74h, 8Bh, 54h, 24h, 70h, 8Bh
-    db 44h, 24h, 6Ch, 51h, 52h, 50h, 83h, 0ECh, 18h, 0DDh, 5Ch, 24h, 10h, 0D9h, 84h, 24h
-    db 94h, 00h, 00h, 00h, 0DDh, 5Ch, 24h, 08h, 0D9h, 84h, 24h, 90h, 00h, 00h, 00h, 0DDh
-    db 1Ch, 24h, 68h, 34h, 47h, 14h, 01h, 0E8h, 0E4h, 0EEh, 0FFh, 0FFh, 83h, 0C4h, 28h, 0E9h
-    db 3Eh, 0Fh, 00h, 00h, 84h, 0DBh, 74h, 0Fh, 68h, 94h, 02h, 08h, 01h, 0E8h, 0CEh, 0EEh
-    db 0FFh, 0FFh, 83h, 0C4h, 04h, 32h, 0DBh, 8Bh, 17h, 6Ah, 04h, 8Dh, 44h, 24h, 48h, 50h
-    db 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 44h, 24h, 44h, 85h, 0C0h, 75h, 31h, 8Bh, 54h, 24h
-    db 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0E9h, 0D1h, 0FAh
-    db 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 0E4h, 0EEh, 0FFh, 0FFh, 68h, 84h, 42h, 14h
-    db 01h, 0E8h, 8Ah, 0EEh, 0FFh, 0FFh, 83h, 0C4h, 04h, 0E9h, 0E6h, 0Eh, 00h, 00h, 85h, 0C0h
-    db 0C7h, 44h, 24h, 3Ch, 00h, 00h, 00h, 00h, 0Fh, 86h, 0D6h, 0Eh, 00h, 00h, 8Dh, 8Ch
-    db 24h, 54h, 01h, 00h, 00h, 0F7h, 0D9h, 89h, 4Ch, 24h, 40h, 0C7h, 44h, 24h, 18h, 10h
-    db 00h, 00h, 00h, 39h, 44h, 24h, 18h, 77h, 07h, 0B8h, 10h, 00h, 00h, 00h, 0EBh, 04h
-    db 2Bh, 44h, 24h, 3Ch, 8Bh, 17h, 50h, 8Dh, 84h, 24h, 58h, 01h, 00h, 00h, 50h, 8Bh
-    db 0CFh, 0FFh, 52h, 0Ch, 8Bh, 54h, 24h, 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h, 0ABh
-    db 0AAh, 0AAh, 2Ah, 0F7h, 0E9h, 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 6Dh
-    db 0EEh, 0FFh, 0FFh, 8Bh, 4Ch, 24h, 3Ch, 51h, 68h, 7Ch, 42h, 14h, 01h, 0E8h, 0Eh, 0EEh
-    db 0FFh, 0FFh, 83h, 0C4h, 08h, 0C7h, 44h, 24h, 20h, 00h, 00h, 00h, 00h, 8Dh, 49h, 00h
-    db 0F6h, 44h, 24h, 20h, 07h, 75h, 0Dh, 68h, 1Ch, 0EDh, 08h, 01h, 0E8h, 0EFh, 0EDh, 0FFh
-    db 0FFh, 83h, 0C4h, 04h, 8Bh, 44h, 24h, 20h, 8Bh, 54h, 24h, 40h, 8Dh, 84h, 04h, 54h
-    db 01h, 00h, 00h, 8Dh, 0Ch, 10h, 3Bh, 4Ch, 24h, 44h, 73h, 13h, 0Fh, 0B6h, 10h, 52h
-    db 68h, 74h, 42h, 14h, 01h, 0E8h, 0C6h, 0EDh, 0FFh, 0FFh, 83h, 0C4h, 08h, 0EBh, 0Dh, 68h
-    db 04h, 27h, 14h, 01h, 0E8h, 0B7h, 0EDh, 0FFh, 0FFh, 83h, 0C4h, 04h, 8Bh, 44h, 24h, 20h
-    db 40h, 83h, 0F8h, 10h, 89h, 44h, 24h, 20h, 72h, 0A6h, 68h, 00h, 8Bh, 0Eh, 01h, 0E8h
-    db 9Ch, 0EDh, 0FFh, 0FFh, 83h, 0C4h, 04h, 0C7h, 44h, 24h, 20h, 00h, 00h, 00h, 00h, 90h
-    db 8Bh, 44h, 24h, 20h, 8Bh, 4Ch, 24h, 40h, 8Dh, 84h, 04h, 54h, 01h, 00h, 00h, 8Dh
-    db 14h, 08h, 3Bh, 54h, 24h, 44h, 73h, 2Ah, 8Ah, 00h, 3Ch, 20h, 0Fh, 0B6h, 0C0h, 77h
-    db 05h, 0B8h, 2Eh, 00h, 00h, 00h, 50h, 68h, 90h, 02h, 14h, 01h, 0E8h, 5Fh, 0EDh, 0FFh
-    db 0FFh, 8Bh, 44h, 24h, 28h, 83h, 0C4h, 08h, 40h, 83h, 0F8h, 10h, 89h, 44h, 24h, 20h
-    db 72h, 0BEh, 68h, 94h, 02h, 08h, 01h, 0E8h, 44h, 0EDh, 0FFh, 0FFh, 8Bh, 54h, 24h, 1Ch
-    db 8Bh, 4Ch, 24h, 40h, 0B8h, 10h, 00h, 00h, 00h, 03h, 0D0h, 89h, 54h, 24h, 1Ch, 8Bh
-    db 54h, 24h, 44h, 03h, 0C8h, 03h, 0D0h, 8Bh, 44h, 24h, 48h, 83h, 0C4h, 04h, 3Bh, 0C8h
-    db 89h, 4Ch, 24h, 3Ch, 89h, 54h, 24h, 40h, 0Fh, 82h, 0B5h, 0FEh, 0FFh, 0FFh, 0E9h, 71h
-    db 0Dh, 00h, 00h, 8Bh, 07h, 6Ah, 04h, 8Dh, 8Ch, 24h, 84h, 00h, 00h, 00h, 51h, 8Bh
-    db 0CFh, 0FFh, 50h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 88h, 00h, 00h, 00h, 50h
-    db 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 8Ch, 00h, 00h, 00h
-    db 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 90h, 00h, 00h
-    db 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 94h, 00h
-    db 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 98h
-    db 00h, 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 84h, 0DBh, 75h, 1Fh, 8Bh, 54h, 24h
-    db 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0E9h, 0D1h, 0FAh
-    db 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 0D4h, 0ECh, 0FFh, 0FFh, 8Bh, 8Ch, 24h, 94h
-    db 00h, 00h, 00h, 0D9h, 84h, 24h, 94h, 00h, 00h, 00h, 8Bh, 94h, 24h, 90h, 00h, 00h
-    db 00h, 8Bh, 84h, 24h, 8Ch, 00h, 00h, 00h, 51h, 8Bh, 8Ch, 24h, 8Ch, 00h, 00h, 00h
-    db 52h, 8Bh, 94h, 24h, 8Ch, 00h, 00h, 00h, 50h, 8Bh, 84h, 24h, 8Ch, 00h, 00h, 00h
-    db 51h, 52h, 50h, 83h, 0ECh, 30h, 0DDh, 5Ch, 24h, 28h, 0D9h, 84h, 24h, 0D8h, 00h, 00h
-    db 00h, 0DDh, 5Ch, 24h, 20h, 0D9h, 84h, 24h, 0D4h, 00h, 00h, 00h, 0DDh, 5Ch, 24h, 18h
-    db 0D9h, 84h, 24h, 0D0h, 00h, 00h, 00h, 0DDh, 5Ch, 24h, 10h, 0D9h, 84h, 24h, 0CCh, 00h
-    db 00h, 00h, 0DDh, 5Ch, 24h, 08h, 0D9h, 84h, 24h, 0C8h, 00h, 00h, 00h, 0DDh, 1Ch, 24h
-    db 68h, 0B8h, 46h, 14h, 01h, 0E8h, 06h, 0ECh, 0FFh, 0FFh, 83h, 0C4h, 4Ch, 0E9h, 60h, 0Ch
-    db 00h, 00h, 8Bh, 17h, 6Ah, 01h, 8Dh, 44h, 24h, 29h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch
-    db 8Bh, 44h, 24h, 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0C8h, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h
-    db 0E9h, 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 21h, 0ECh, 0FFh, 0FFh, 0Fh
-    db 0B6h, 4Ch, 24h, 25h, 51h, 68h, 98h, 42h, 14h, 01h, 0E8h, 0C1h, 0EBh, 0FFh, 0FFh, 83h
-    db 0C4h, 08h, 0E9h, 1Bh, 0Ch, 00h, 00h, 3Dh, 72h, 74h, 73h, 61h, 0Fh, 87h, 3Eh, 03h
-    db 00h, 00h, 0Fh, 84h, 73h, 02h, 00h, 00h, 3Dh, 4Bh, 4Fh, 4Ch, 42h, 0Fh, 84h, 94h
-    db 00h, 00h, 00h, 3Dh, 52h, 43h, 53h, 44h, 0Fh, 84h, 89h, 00h, 00h, 00h, 3Dh, 4Bh
-    db 4Ch, 42h, 45h, 0Fh, 85h, 26h, 0Dh, 00h, 00h, 8Bh, 4Ch, 24h, 0Ch, 8Bh, 44h, 24h
-    db 10h, 3Bh, 0C8h, 0Fh, 84h, 58h, 0Ch, 00h, 00h, 2Bh, 0C1h, 8Bh, 0C8h, 0B8h, 0ABh, 0AAh
-    db 0AAh, 2Ah, 0F7h, 0E9h, 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 8Dh, 44h, 02h, 0FFh, 0E8h
-    db 0ACh, 0EBh, 0FFh, 0FFh, 8Bh, 4Ch, 24h, 10h, 8Bh, 51h, 0F4h, 52h, 68h, 30h, 45h, 14h
-    db 01h, 0E8h, 4Ah, 0EBh, 0FFh, 0FFh, 8Bh, 44h, 24h, 18h, 83h, 0E8h, 0Ch, 89h, 44h, 24h
-    db 18h, 8Bh, 08h, 8Bh, 40h, 08h, 83h, 0C4h, 08h, 2Bh, 0C1h, 85h, 0C9h, 0Fh, 84h, 91h
-    db 0Bh, 00h, 00h, 3Dh, 80h, 00h, 00h, 00h, 76h, 0Eh, 51h, 0E8h, 0C0h, 78h, 0EAh, 0FFh
-    db 83h, 0C4h, 04h, 0E9h, 7Ch, 0Bh, 00h, 00h, 50h, 51h, 0E8h, 0F1h, 3Fh, 0E5h, 0FFh, 83h
-    db 0C4h, 08h, 0E9h, 6Dh, 0Bh, 00h, 00h, 8Bh, 07h, 6Ah, 01h, 8Dh, 4Ch, 24h, 2Bh, 51h
-    db 8Bh, 0CFh, 0FFh, 50h, 0Ch, 83h, 0F8h, 01h, 0Fh, 85h, 0F9h, 0Bh, 00h, 00h, 8Ah, 44h
-    db 24h, 27h, 84h, 0C0h, 75h, 0Ch, 88h, 84h, 24h, 90h, 01h, 00h, 00h, 0E9h, 0E1h, 00h
-    db 00h, 00h, 3Ch, 0FFh, 8Bh, 17h, 75h, 64h, 6Ah, 04h, 8Dh, 84h, 24h, 0Ch, 01h, 00h
-    db 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 83h, 0F8h, 04h, 0Fh, 85h, 0EDh, 0Bh, 00h, 00h
-    db 8Bh, 94h, 24h, 0C8h, 00h, 00h, 00h, 8Bh, 8Ch, 24h, 0C4h, 00h, 00h, 00h, 2Bh, 0D1h
-    db 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0EAh, 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h
-    db 8Bh, 0D0h, 8Bh, 84h, 24h, 08h, 01h, 00h, 00h, 3Bh, 0C2h, 0Fh, 83h, 0E2h, 0Bh, 00h
-    db 00h, 8Dh, 14h, 40h, 8Bh, 0Ch, 91h, 8Dh, 94h, 24h, 90h, 01h, 00h, 00h, 8Bh, 0FFh
-    db 8Ah, 01h, 41h, 88h, 02h, 42h, 84h, 0C0h, 75h, 0F6h, 0EBh, 77h, 0Fh, 0B6h, 0C8h, 0Fh
-    db 0B6h, 0C0h, 89h, 4Ch, 24h, 18h, 50h, 8Dh, 8Ch, 24h, 94h, 01h, 00h, 00h, 51h, 8Bh
-    db 0CFh, 0FFh, 52h, 0Ch, 8Bh, 4Ch, 24h, 18h, 3Bh, 0C1h, 0Fh, 85h, 0C9h, 0Bh, 00h, 00h
-    db 8Bh, 0D1h, 8Dh, 44h, 24h, 1Fh, 50h, 8Dh, 8Ch, 24h, 94h, 01h, 00h, 00h, 51h, 8Dh
-    db 8Ch, 24h, 84h, 01h, 00h, 00h, 0C6h, 84h, 14h, 98h, 01h, 00h, 00h, 00h, 0E8h, 35h
-    db 0Ch, 66h, 0FFh, 8Dh, 94h, 24h, 7Ch, 01h, 00h, 00h, 52h, 8Dh, 8Ch, 24h, 0C8h, 00h
-    db 00h, 00h, 0C6h, 84h, 24h, 0A0h, 02h, 00h, 00h, 02h, 0E8h, 18h, 0E8h, 62h, 0FFh, 8Dh
-    db 8Ch, 24h, 7Ch, 01h, 00h, 00h, 0C6h, 84h, 24h, 9Ch, 02h, 00h, 00h, 01h, 0E8h, 1Ah
-    db 0BDh, 63h, 0FFh, 81h, 7Ch, 24h, 30h, 4Bh, 4Fh, 4Ch, 42h, 75h, 15h, 8Bh, 07h, 6Ah
-    db 01h, 6Ah, 04h, 8Bh, 0CFh, 0FFh, 50h, 14h, 81h, 7Ch, 24h, 30h, 4Bh, 4Fh, 4Ch, 42h
-    db 74h, 04h, 84h, 0DBh, 75h, 1Fh, 8Bh, 54h, 24h, 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh
-    db 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0E9h, 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h
-    db 0E8h, 0Bh, 0EAh, 0FFh, 0FFh, 81h, 7Ch, 24h, 30h, 4Bh, 4Fh, 4Ch, 42h, 75h, 60h, 8Dh
-    db 8Ch, 24h, 90h, 01h, 00h, 00h, 51h, 68h, 0D0h, 45h, 14h, 01h, 0E8h, 9Fh, 0E9h, 0FFh
-    db 0FFh, 83h, 0C4h, 08h, 8Dh, 54h, 24h, 1Fh, 52h, 8Dh, 84h, 24h, 94h, 01h, 00h, 00h
-    db 50h, 8Dh, 8Ch, 24h, 50h, 01h, 00h, 00h, 0E8h, 8Bh, 0Bh, 66h, 0FFh, 8Dh, 8Ch, 24h
-    db 48h, 01h, 00h, 00h, 51h, 8Dh, 4Ch, 24h, 10h, 0C6h, 84h, 24h, 0A0h, 02h, 00h, 00h
-    db 03h, 0E8h, 71h, 0E7h, 62h, 0FFh, 8Dh, 8Ch, 24h, 48h, 01h, 00h, 00h, 0C6h, 84h, 24h
-    db 9Ch, 02h, 00h, 00h, 01h, 0E8h, 73h, 0BCh, 63h, 0FFh, 0E9h, 0B5h, 09h, 00h, 00h, 8Dh
-    db 94h, 24h, 90h, 01h, 00h, 00h, 52h, 68h, 0ACh, 46h, 14h, 01h, 0E8h, 3Fh, 0E9h, 0FFh
-    db 0FFh, 83h, 0C4h, 08h, 0B3h, 01h, 0E9h, 99h, 09h, 00h, 00h, 84h, 0DBh, 75h, 1Fh, 8Bh
-    db 54h, 24h, 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0E9h
-    db 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 62h, 0E9h, 0FFh, 0FFh, 8Bh, 07h
-    db 6Ah, 01h, 8Dh, 4Ch, 24h, 2Ch, 51h, 33h, 0DBh, 8Bh, 0CFh, 89h, 5Ch, 24h, 30h, 0FFh
-    db 50h, 0Ch, 8Bh, 44h, 24h, 28h, 3Dh, 0FFh, 00h, 00h, 00h, 75h, 12h, 8Bh, 17h, 6Ah
-    db 04h, 8Dh, 44h, 24h, 2Ch, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 44h, 24h, 28h, 89h
-    db 5Ch, 24h, 34h, 3Bh, 0C3h, 0C6h, 84h, 24h, 9Ch, 02h, 00h, 00h, 04h, 74h, 36h, 8Bh
-    db 1Fh, 50h, 50h, 8Dh, 4Ch, 24h, 3Ch, 0E8h, 94h, 0D3h, 0EAh, 0FFh, 50h, 8Bh, 0CFh, 0FFh
-    db 53h, 0Ch, 8Bh, 4Ch, 24h, 28h, 51h, 8Dh, 4Ch, 24h, 38h, 0E8h, 80h, 0D3h, 0EAh, 0FFh
-    db 8Bh, 54h, 24h, 28h, 0C6h, 04h, 10h, 00h, 8Bh, 44h, 24h, 34h, 85h, 0C0h, 74h, 05h
-    db 83h, 0C0h, 08h, 0EBh, 05h, 0B8h, 8Bh, 38h, 07h, 01h, 50h, 68h, 0Ch, 45h, 14h, 01h
-    db 0E8h, 8Bh, 0E8h, 0FFh, 0FFh, 83h, 0C4h, 08h, 8Dh, 4Ch, 24h, 34h, 32h, 0DBh, 0C6h, 84h
-    db 24h, 9Ch, 02h, 00h, 00h, 01h, 0E8h, 0A5h, 0D0h, 0EAh, 0FFh, 0E9h, 0D4h, 08h, 00h, 00h
-    db 3Dh, 6Ch, 6Fh, 6Fh, 62h, 0Fh, 84h, 0A4h, 00h, 00h, 00h, 3Dh, 65h, 74h, 79h, 62h
-    db 74h, 5Bh, 3Dh, 31h, 75h, 6Eh, 65h, 0Fh, 85h, 0F2h, 09h, 00h, 00h, 8Bh, 07h, 6Ah
-    db 01h, 8Dh, 4Ch, 24h, 1Ch, 51h, 8Bh, 0CFh, 0C7h, 44h, 24h, 20h, 00h, 00h, 00h, 00h
-    db 0FFh, 50h, 0Ch, 84h, 0DBh, 75h, 1Fh, 8Bh, 54h, 24h, 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh
-    db 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0E9h, 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h
-    db 0C2h, 0E8h, 6Ah, 0E8h, 0FFh, 0FFh, 8Bh, 54h, 24h, 18h, 52h, 68h, 0A0h, 46h, 14h, 01h
-    db 0E8h, 0Bh, 0E8h, 0FFh, 0FFh, 83h, 0C4h, 08h, 0E9h, 65h, 08h, 00h, 00h, 8Bh, 07h, 6Ah
-    db 01h, 8Dh, 4Ch, 24h, 2Ah, 51h, 8Bh, 0CFh, 0FFh, 50h, 0Ch, 84h, 0DBh, 75h, 1Fh, 8Bh
-    db 54h, 24h, 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0E9h
-    db 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 22h, 0E8h, 0FFh, 0FFh, 0Fh, 0BEh
-    db 44h, 24h, 26h, 50h, 50h, 68h, 0ACh, 42h, 14h, 01h, 0E9h, 1Bh, 08h, 00h, 00h, 8Bh
-    db 17h, 6Ah, 01h, 8Dh, 44h, 24h, 28h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 84h, 0DBh, 75h
-    db 1Fh, 8Bh, 54h, 24h, 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah
-    db 0F7h, 0E9h, 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 0E0h, 0E7h, 0FFh, 0FFh
-    db 0Fh, 0B6h, 4Ch, 24h, 24h, 51h, 68h, 0D0h, 42h, 14h, 01h, 0E8h, 80h, 0E7h, 0FFh, 0FFh
-    db 83h, 0C4h, 08h, 0E9h, 0DAh, 07h, 00h, 00h, 8Bh, 17h, 6Ah, 02h, 8Dh, 44h, 24h, 1Ch
-    db 50h, 8Bh, 0CFh, 0C7h, 44h, 24h, 20h, 00h, 00h, 00h, 00h, 0FFh, 52h, 0Ch, 84h, 0DBh
-    db 75h, 1Fh, 8Bh, 54h, 24h, 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh
-    db 2Ah, 0F7h, 0E9h, 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 8Fh, 0E7h, 0FFh
-    db 0FFh, 8Bh, 4Ch, 24h, 18h, 51h, 68h, 0A0h, 46h, 14h, 01h, 0E8h, 30h, 0E7h, 0FFh, 0FFh
-    db 83h, 0C4h, 08h, 0E9h, 8Ah, 07h, 00h, 00h, 3Dh, 69h, 62h, 67h, 72h, 0Fh, 87h, 1Fh
-    db 04h, 00h, 00h, 0Fh, 84h, 80h, 03h, 00h, 00h, 3Dh, 64h, 33h, 63h, 69h, 0Fh, 87h
-    db 0A2h, 01h, 00h, 00h, 0Fh, 84h, 1Ch, 01h, 00h, 00h, 8Bh, 0C8h, 81h, 0E9h, 33h, 75h
-    db 6Eh, 65h, 0Fh, 84h, 0BEh, 00h, 00h, 00h, 49h, 74h, 6Bh, 81h, 0E9h, 30h, 0BDh, 0F4h
-    db 03h, 0Fh, 85h, 88h, 08h, 00h, 00h, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 0F0h, 00h
-    db 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 0F4h
-    db 00h, 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 84h, 0DBh, 75h, 1Fh, 8Bh, 54h, 24h
-    db 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0E9h, 0D1h, 0FAh
-    db 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 0F4h, 0E6h, 0FFh, 0FFh, 8Bh, 8Ch, 24h, 0F0h
-    db 00h, 00h, 00h, 8Bh, 94h, 24h, 0ECh, 00h, 00h, 00h, 51h, 52h, 68h, 14h, 44h, 14h
-    db 01h, 0E9h, 0E4h, 06h, 00h, 00h, 8Bh, 07h, 6Ah, 04h, 8Dh, 4Ch, 24h, 6Ch, 51h, 8Bh
-    db 0CFh, 0C7h, 44h, 24h, 70h, 00h, 00h, 00h, 00h, 0FFh, 50h, 0Ch, 84h, 0DBh, 75h, 1Fh
-    db 8Bh, 54h, 24h, 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h
-    db 0E9h, 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 0A1h, 0E6h, 0FFh, 0FFh, 8Bh
-    db 54h, 24h, 68h, 52h, 68h, 0A0h, 46h, 14h, 01h, 0E8h, 42h, 0E6h, 0FFh, 0FFh, 83h, 0C4h
-    db 08h, 0E9h, 9Ch, 06h, 00h, 00h, 8Bh, 07h, 6Ah, 03h, 8Dh, 4Ch, 24h, 1Ch, 51h, 8Bh
-    db 0CFh, 0C7h, 44h, 24h, 20h, 00h, 00h, 00h, 00h, 0FFh, 50h, 0Ch, 84h, 0DBh, 75h, 1Fh
-    db 8Bh, 54h, 24h, 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h
-    db 0E9h, 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 51h, 0E6h, 0FFh, 0FFh, 8Bh
-    db 54h, 24h, 18h, 52h, 68h, 0A0h, 46h, 14h, 01h, 0E8h, 0F2h, 0E5h, 0FFh, 0FFh, 83h, 0C4h
-    db 08h, 0E9h, 4Ch, 06h, 00h, 00h, 8Bh, 07h, 6Ah, 04h, 8Dh, 8Ch, 24h, 0D8h, 00h, 00h
-    db 00h, 51h, 8Bh, 0CFh, 0FFh, 50h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 0DCh, 00h
-    db 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 0E0h
-    db 00h, 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 84h, 0DBh, 75h, 1Fh, 8Bh, 54h, 24h
-    db 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0E9h, 0D1h, 0FAh
-    db 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 0E4h, 0E5h, 0FFh, 0FFh, 8Bh, 8Ch, 24h, 0DCh
-    db 00h, 00h, 00h, 8Bh, 94h, 24h, 0D8h, 00h, 00h, 00h, 8Bh, 84h, 24h, 0D4h, 00h, 00h
-    db 00h, 51h, 52h, 50h, 68h, 6Ch, 43h, 14h, 01h, 0E8h, 72h, 0E5h, 0FFh, 0FFh, 83h, 0C4h
-    db 10h, 0E9h, 0CCh, 05h, 00h, 00h, 3Dh, 64h, 32h, 72h, 69h, 0Fh, 84h, 2Fh, 01h, 00h
-    db 00h, 3Dh, 64h, 33h, 72h, 69h, 74h, 5Dh, 3Dh, 6Ch, 61h, 65h, 72h, 0Fh, 85h, 0ECh
-    db 06h, 00h, 00h, 8Bh, 17h, 6Ah, 04h, 8Dh, 44h, 24h, 5Ch, 50h, 8Bh, 0CFh, 0FFh, 52h
-    db 0Ch, 84h, 0DBh, 75h, 1Fh, 8Bh, 54h, 24h, 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h
-    db 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0E9h, 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h
-    db 6Ch, 0E5h, 0FFh, 0FFh, 8Bh, 4Ch, 24h, 58h, 0D9h, 44h, 24h, 58h, 51h, 83h, 0ECh, 08h
-    db 0DDh, 1Ch, 24h, 68h, 88h, 46h, 14h, 01h, 0E8h, 03h, 0E5h, 0FFh, 0FFh, 83h, 0C4h, 10h
-    db 0E9h, 5Dh, 05h, 00h, 00h, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 20h, 01h, 00h, 00h
-    db 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 24h, 01h, 00h
-    db 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 28h, 01h
-    db 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 2Ch
-    db 01h, 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h
-    db 30h, 01h, 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h
-    db 24h, 34h, 01h, 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 84h, 0DBh, 75h, 1Fh, 8Bh
-    db 54h, 24h, 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0E9h
-    db 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 0C2h, 0E4h, 0FFh, 0FFh, 8Bh, 8Ch
-    db 24h, 30h, 01h, 00h, 00h, 8Bh, 94h, 24h, 2Ch, 01h, 00h, 00h, 8Bh, 84h, 24h, 28h
-    db 01h, 00h, 00h, 51h, 8Bh, 8Ch, 24h, 28h, 01h, 00h, 00h, 52h, 8Bh, 94h, 24h, 28h
-    db 01h, 00h, 00h, 50h, 8Bh, 84h, 24h, 28h, 01h, 00h, 00h, 51h, 52h, 50h, 68h, 0C8h
-    db 43h, 14h, 01h, 0E8h, 38h, 0E4h, 0FFh, 0FFh, 83h, 0C4h, 1Ch, 0E9h, 92h, 04h, 00h, 00h
-    db 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 0FCh, 00h, 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h
-    db 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 00h, 01h, 00h, 00h, 50h, 8Bh, 0CFh, 0FFh
-    db 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 04h, 01h, 00h, 00h, 50h, 8Bh, 0CFh
-    db 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 08h, 01h, 00h, 00h, 50h, 8Bh
-    db 0CFh, 0FFh, 52h, 0Ch, 84h, 0DBh, 75h, 1Fh, 8Bh, 54h, 24h, 0Ch, 8Bh, 4Ch, 24h, 10h
-    db 2Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0E9h, 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh
-    db 03h, 0C2h, 0E8h, 19h, 0E4h, 0FFh, 0FFh, 8Bh, 8Ch, 24h, 04h, 01h, 00h, 00h, 8Bh, 94h
-    db 24h, 00h, 01h, 00h, 00h, 8Bh, 84h, 24h, 0FCh, 00h, 00h, 00h, 51h, 8Bh, 8Ch, 24h
-    db 0FCh, 00h, 00h, 00h, 52h, 50h, 51h, 68h, 5Ch, 44h, 14h, 01h, 0E8h, 9Fh, 0E3h, 0FFh
-    db 0FFh, 83h, 0C4h, 14h, 0E9h, 0F9h, 03h, 00h, 00h, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h
-    db 10h, 01h, 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h
-    db 24h, 14h, 01h, 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh
-    db 84h, 24h, 18h, 01h, 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h
-    db 8Dh, 84h, 24h, 1Ch, 01h, 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 84h, 0DBh, 75h
-    db 1Fh, 8Bh, 54h, 24h, 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah
-    db 0F7h, 0E9h, 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 80h, 0E3h, 0FFh, 0FFh
-    db 8Bh, 8Ch, 24h, 18h, 01h, 00h, 00h, 8Bh, 94h, 24h, 14h, 01h, 00h, 00h, 8Bh, 84h
-    db 24h, 10h, 01h, 00h, 00h, 51h, 8Bh, 8Ch, 24h, 10h, 01h, 00h, 00h, 52h, 50h, 51h
-    db 68h, 0E0h, 44h, 14h, 01h, 0E8h, 06h, 0E3h, 0FFh, 0FFh, 83h, 0C4h, 14h, 0E9h, 60h, 03h
-    db 00h, 00h, 3Dh, 74h, 79h, 62h, 75h, 0Fh, 87h, 0E1h, 01h, 00h, 00h, 0Fh, 84h, 99h
-    db 01h, 00h, 00h, 3Dh, 72h, 62h, 67h, 72h, 0Fh, 84h, 0C7h, 00h, 00h, 00h, 3Dh, 65h
-    db 67h, 6Eh, 72h, 74h, 4Dh, 3Dh, 74h, 72h, 68h, 73h, 0Fh, 85h, 6Fh, 04h, 00h, 00h
-    db 8Bh, 17h, 6Ah, 02h, 8Dh, 44h, 24h, 4Ch, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 84h, 0DBh
-    db 75h, 1Fh, 8Bh, 54h, 24h, 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh
-    db 2Ah, 0F7h, 0E9h, 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 0EFh, 0E2h, 0FFh
-    db 0FFh, 0Fh, 0BFh, 44h, 24h, 48h, 50h, 50h, 68h, 14h, 43h, 14h, 01h, 0E9h, 0E8h, 02h
-    db 00h, 00h, 8Bh, 17h, 6Ah, 04h, 8Dh, 44h, 24h, 7Ch, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch
-    db 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 80h, 00h, 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h
-    db 0Ch, 84h, 0DBh, 75h, 1Fh, 8Bh, 54h, 24h, 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h
-    db 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0E9h, 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h
-    db 9Ch, 0E2h, 0FFh, 0FFh, 8Bh, 4Ch, 24h, 7Ch, 0D9h, 44h, 24h, 7Ch, 8Bh, 54h, 24h, 78h
-    db 51h, 52h, 83h, 0ECh, 10h, 0DDh, 5Ch, 24h, 08h, 0D9h, 84h, 24h, 90h, 00h, 00h, 00h
-    db 0DDh, 1Ch, 24h, 68h, 58h, 46h, 14h, 01h, 0E8h, 23h, 0E2h, 0FFh, 0FFh, 83h, 0C4h, 1Ch
-    db 0E9h, 7Dh, 02h, 00h, 00h, 8Bh, 07h, 6Ah, 04h, 8Dh, 8Ch, 24h, 9Ch, 00h, 00h, 00h
-    db 51h, 8Bh, 0CFh, 0FFh, 50h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 0A0h, 00h, 00h
-    db 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 0A4h, 00h
-    db 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 0A8h
-    db 00h, 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 84h, 0DBh, 75h, 1Fh, 8Bh, 54h, 24h
-    db 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0E9h, 0D1h, 0FAh
-    db 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 04h, 0E2h, 0FFh, 0FFh, 8Bh, 8Ch, 24h, 0A4h
-    db 00h, 00h, 00h, 0D9h, 84h, 24h, 0A4h, 00h, 00h, 00h, 8Bh, 94h, 24h, 0A0h, 00h, 00h
-    db 00h, 8Bh, 84h, 24h, 9Ch, 00h, 00h, 00h, 51h, 8Bh, 8Ch, 24h, 9Ch, 00h, 00h, 00h
-    db 52h, 50h, 51h, 83h, 0ECh, 20h, 0DDh, 5Ch, 24h, 18h, 0D9h, 84h, 24h, 0D0h, 00h, 00h
-    db 00h, 0DDh, 5Ch, 24h, 10h, 0D9h, 84h, 24h, 0CCh, 00h, 00h, 00h, 0DDh, 5Ch, 24h, 08h
-    db 0D9h, 84h, 24h, 0C8h, 00h, 00h, 00h, 0DDh, 1Ch, 24h, 68h, 08h, 46h, 14h, 01h, 0E8h
-    db 5Ch, 0E1h, 0FFh, 0FFh, 83h, 0C4h, 34h, 0E9h, 0B6h, 01h, 00h, 00h, 8Bh, 17h, 6Ah, 01h
-    db 8Dh, 44h, 24h, 23h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 84h, 0DBh, 75h, 1Fh, 8Bh, 54h
-    db 24h, 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0E9h, 0D1h
-    db 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 73h, 0E1h, 0FFh, 0FFh, 0Fh, 0B6h, 44h
-    db 24h, 1Fh, 50h, 50h, 68h, 0BCh, 42h, 14h, 01h, 0E9h, 6Ch, 01h, 00h, 00h, 3Dh, 74h
-    db 6Eh, 69h, 75h, 0Fh, 84h, 1Fh, 01h, 00h, 00h, 3Dh, 74h, 68h, 73h, 75h, 0Fh, 84h
-    db 0D5h, 00h, 00h, 00h, 3Dh, 72h, 74h, 73h, 75h, 0Fh, 85h, 90h, 02h, 00h, 00h, 84h
-    db 0DBh, 75h, 1Fh, 8Bh, 54h, 24h, 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h, 0ABh, 0AAh
-    db 0AAh, 2Ah, 0F7h, 0E9h, 0D1h, 0FAh, 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 1Eh, 0E1h
-    db 0FFh, 0FFh, 8Bh, 17h, 6Ah, 01h, 8Dh, 44h, 24h, 30h, 33h, 0DBh, 50h, 8Bh, 0CFh, 89h
-    db 5Ch, 24h, 34h, 0FFh, 52h, 0Ch, 8Bh, 44h, 24h, 2Ch, 3Dh, 0FFh, 00h, 00h, 00h, 75h
-    db 12h, 8Bh, 17h, 6Ah, 04h, 8Dh, 44h, 24h, 30h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 8Bh
-    db 44h, 24h, 2Ch, 89h, 5Ch, 24h, 38h, 3Bh, 0C3h, 0C6h, 84h, 24h, 9Ch, 02h, 00h, 00h
-    db 05h, 74h, 3Bh, 8Bh, 1Fh, 8Dh, 0Ch, 00h, 51h, 50h, 8Dh, 4Ch, 24h, 40h, 0E8h, 0EDh
-    db 0D3h, 0EAh, 0FFh, 50h, 8Bh, 0CFh, 0FFh, 53h, 0Ch, 8Bh, 54h, 24h, 2Ch, 52h, 8Dh, 4Ch
-    db 24h, 3Ch, 0E8h, 0D9h, 0D3h, 0EAh, 0FFh, 8Bh, 4Ch, 24h, 2Ch, 66h, 0C7h, 04h, 48h, 00h
-    db 00h, 8Bh, 44h, 24h, 38h, 85h, 0C0h, 74h, 05h, 83h, 0C0h, 08h, 0EBh, 05h, 0B8h, 8Ch
-    db 38h, 07h, 01h, 50h, 68h, 0F4h, 45h, 14h, 01h, 0E8h, 42h, 0E0h, 0FFh, 0FFh, 83h, 0C4h
-    db 08h, 8Dh, 4Ch, 24h, 38h, 32h, 0DBh, 0C6h, 84h, 24h, 9Ch, 02h, 00h, 00h, 01h, 0E8h
-    db 0ECh, 0D0h, 0EAh, 0FFh, 0E9h, 8Bh, 00h, 00h, 00h, 8Bh, 17h, 6Ah, 02h, 8Dh, 44h, 24h
-    db 50h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 84h, 0DBh, 75h, 1Fh, 8Bh, 54h, 24h, 0Ch, 8Bh
-    db 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0E9h, 0D1h, 0FAh, 8Bh, 0C2h
-    db 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 46h, 0E0h, 0FFh, 0FFh, 0Fh, 0B7h, 44h, 24h, 4Ch, 50h
-    db 50h, 68h, 28h, 43h, 14h, 01h, 0EBh, 42h, 8Bh, 17h, 6Ah, 04h, 8Dh, 84h, 24h, 0D4h
-    db 00h, 00h, 00h, 50h, 8Bh, 0CFh, 0FFh, 52h, 0Ch, 84h, 0DBh, 75h, 1Fh, 8Bh, 54h, 24h
-    db 0Ch, 8Bh, 4Ch, 24h, 10h, 2Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 2Ah, 0F7h, 0E9h, 0D1h, 0FAh
-    db 8Bh, 0C2h, 0C1h, 0E8h, 1Fh, 03h, 0C2h, 0E8h, 04h, 0E0h, 0FFh, 0FFh, 8Bh, 84h, 24h, 0D0h
-    db 00h, 00h, 00h, 50h, 50h, 68h, 04h, 43h, 14h, 01h, 0E8h, 0A1h, 0DFh, 0FFh, 0FFh, 83h
-    db 0C4h, 0Ch, 32h, 0DBh, 8Bh, 17h, 6Ah, 04h, 8Dh, 44h, 24h, 34h, 50h, 8Bh, 0CFh, 0FFh
-    db 52h, 0Ch, 83h, 0F8h, 04h, 0Fh, 84h, 25h, 0EDh, 0FFh, 0FFh, 33h, 0F6h, 56h, 8Dh, 8Ch
-    db 24h, 0BCh, 00h, 00h, 00h, 6Ah, 01h, 51h, 0E8h, 83h, 0B0h, 0FFh, 0FFh, 83h, 0C4h, 0Ch
-    db 68h, 5Ch, 0FEh, 1Dh, 01h, 8Dh, 94h, 24h, 0BCh, 00h, 00h, 00h, 52h, 0E8h, 4Eh, 0BBh
-    db 01h, 00h, 8Dh, 8Ch, 24h, 0C4h, 00h, 00h, 00h, 0C6h, 84h, 24h, 9Ch, 02h, 00h, 00h
-    db 00h, 0E8h, 43h, 0FFh, 62h, 0FFh, 8Dh, 4Ch, 24h, 0Ch, 0C7h, 84h, 24h, 9Ch, 02h, 00h
-    db 00h, 0FFh, 0FFh, 0FFh, 0FFh, 0E8h, 2Fh, 0FFh, 62h, 0FFh, 0B0h, 01h, 8Bh, 8Ch, 24h, 94h
-    db 02h, 00h, 00h, 64h, 89h, 0Dh, 00h, 00h, 00h, 00h, 5Fh, 5Eh, 5Bh, 8Bh, 0E5h, 5Dh
-    db 0C3h, 6Ah, 00h, 8Dh, 84h, 24h, 3Ch, 01h, 00h, 00h, 6Ah, 00h, 50h, 0E8h, 1Eh, 0B0h
-    db 0FFh, 0FFh, 83h, 0C4h, 0Ch, 68h, 5Ch, 0FEh, 1Dh, 01h, 8Dh, 8Ch, 24h, 3Ch, 01h, 00h
-    db 00h, 51h, 0E8h, 0E9h, 0BAh, 01h, 00h, 6Ah, 00h, 8Dh, 94h, 24h, 70h, 01h, 00h, 00h
-    db 6Ah, 01h, 52h, 0E8h, 0F8h, 0AFh, 0FFh, 0FFh, 83h, 0C4h, 0Ch, 68h, 5Ch, 0FEh, 1Dh, 01h
-    db 8Dh, 84h, 24h, 70h, 01h, 00h, 00h, 50h, 0E8h, 0C3h, 0BAh, 01h, 00h, 6Ah, 00h, 8Dh
-    db 8Ch, 24h, 78h, 01h, 00h, 00h, 6Ah, 01h, 51h, 0E8h, 0D2h, 0AFh, 0FFh, 0FFh, 83h, 0C4h
-    db 0Ch, 68h, 5Ch, 0FEh, 1Dh, 01h, 8Dh, 94h, 24h, 78h, 01h, 00h, 00h, 52h, 0E8h, 9Dh
-    db 0BAh, 01h, 00h, 6Ah, 00h, 8Dh, 84h, 24h, 68h, 01h, 00h, 00h, 6Ah, 00h, 50h, 0E8h
-    db 0ACh, 0AFh, 0FFh, 0FFh, 83h, 0C4h, 0Ch, 68h, 5Ch, 0FEh, 1Dh, 01h, 8Dh, 8Ch, 24h, 68h
-    db 01h, 00h, 00h, 51h, 0E8h, 77h, 0BAh, 01h, 00h, 6Ah, 00h, 8Dh, 94h, 24h, 8Ch, 01h
-    db 00h, 00h, 6Ah, 01h, 52h, 0E8h, 86h, 0AFh, 0FFh, 0FFh, 83h, 0C4h, 0Ch, 68h, 5Ch, 0FEh
-    db 1Dh, 01h, 8Dh, 84h, 24h, 8Ch, 01h, 00h, 00h, 50h, 0E8h, 51h, 0BAh, 01h, 00h, 50h
-    db 68h, 0D8h, 45h, 14h, 01h, 8Dh, 8Ch, 24h, 48h, 01h, 00h, 00h, 6Ah, 00h, 51h, 0E8h
-    db 5Ch, 0AFh, 0FFh, 0FFh, 83h, 0C4h, 10h, 68h, 5Ch, 0FEh, 1Dh, 01h, 8Dh, 94h, 24h, 44h
-    db 01h, 00h, 00h, 52h, 0E8h, 27h, 0BAh, 01h, 00h, 8Bh, 8Ch, 24h, 94h, 02h, 00h, 00h
-    db 5Fh, 5Eh, 32h, 0C0h, 64h, 89h, 0Dh, 00h, 00h, 00h, 00h, 5Bh, 8Bh, 0E5h, 5Dh, 0C3h
+    db 055h, 08Bh, 0ECh, 083h, 0E4h, 0F8h, 06Ah, 0FFh, 068h
+    dd g_Va010611A2
+    db 064h, 0A1h, 000h, 000h, 000h, 000h, 050h, 064h, 089h, 025h, 000h, 000h, 000h, 000h, 081h, 0ECh
+    db 088h, 002h, 000h, 000h, 053h, 056h, 057h, 08Bh, 07Dh, 008h, 08Bh, 007h, 06Ah, 004h, 08Dh, 08Ch
+    db 024h, 0F8h, 000h, 000h, 000h, 051h, 08Bh, 0CFh, 0FFh, 050h, 00Ch, 083h, 0F8h, 004h, 00Fh, 085h
+    db 008h, 015h, 000h, 000h, 08Bh, 017h, 050h, 08Dh, 084h, 024h, 0E4h, 000h, 000h, 000h, 050h, 08Bh
+    db 0CFh, 0FFh, 052h, 00Ch, 083h, 0F8h, 004h, 00Fh, 085h, 0EFh, 014h, 000h, 000h, 081h, 0BCh, 024h
+    db 0F4h, 000h, 000h, 000h, 041h, 04Ch, 041h, 045h, 00Fh, 085h, 0DEh, 014h, 000h, 000h, 08Bh, 084h
+    db 024h, 0E0h, 000h, 000h, 000h, 03Dh, 031h, 053h, 054h, 052h, 074h, 00Bh, 03Dh, 032h, 053h, 054h
+    db 052h, 00Fh, 085h, 0C5h, 014h, 000h, 000h, 033h, 0F6h, 03Dh, 031h, 053h, 054h, 052h, 089h, 0B4h
+    db 024h, 0E4h, 000h, 000h, 000h, 074h, 011h, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h, 024h, 0E8h, 000h
+    db 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h, 024h, 038h
+    db 001h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 083h, 0F8h, 004h, 00Fh, 085h, 08Ah, 014h
+    db 000h, 000h, 0F6h, 084h, 024h, 034h, 001h, 000h, 000h, 001h, 00Fh, 084h, 07Ch, 014h, 000h, 000h
+    db 089h, 074h, 024h, 00Ch, 089h, 074h, 024h, 010h, 089h, 074h, 024h, 014h, 089h, 0B4h, 024h, 09Ch
+    db 002h, 000h, 000h, 089h, 0B4h, 024h, 0C4h, 000h, 000h, 000h, 089h, 0B4h, 024h, 0C8h, 000h, 000h
+    db 000h, 089h, 0B4h, 024h, 0CCh, 000h, 000h, 000h, 08Bh, 017h, 06Ah, 004h, 08Dh, 044h, 024h, 034h
+    db 050h, 08Bh, 0CFh, 0C6h, 084h, 024h, 0A4h, 002h, 000h, 000h, 001h, 032h, 0DBh, 0FFh, 052h, 00Ch
+    db 083h, 0F8h, 004h, 00Fh, 085h, 0E7h, 012h, 000h, 000h, 08Bh, 075h, 00Ch, 08Dh, 0A4h, 024h, 000h
+    db 000h, 000h, 000h, 08Bh, 044h, 024h, 030h, 03Dh, 044h, 04Eh, 045h, 000h, 00Fh, 084h, 0F3h, 012h
+    db 000h, 000h, 03Dh, 032h, 075h, 06Eh, 065h, 00Fh, 087h, 01Eh, 00Bh, 000h, 000h, 00Fh, 084h, 0C8h
+    db 00Ah, 000h, 000h, 03Dh, 072h, 065h, 076h, 000h, 00Fh, 087h, 07Ch, 006h, 000h, 000h, 00Fh, 084h
+    db 031h, 006h, 000h, 000h, 03Dh, 064h, 032h, 072h, 000h, 00Fh, 087h, 099h, 002h, 000h, 000h, 00Fh
+    db 084h, 0CCh, 001h, 000h, 000h, 03Dh, 034h, 036h, 069h, 000h, 00Fh, 087h, 06Fh, 001h, 000h, 000h
+    db 00Fh, 084h, 011h, 001h, 000h, 000h, 03Dh, 064h, 032h, 063h, 000h, 00Fh, 084h, 099h, 000h, 000h
+    db 000h, 03Dh, 064h, 033h, 063h, 000h, 00Fh, 085h, 096h, 013h, 000h, 000h, 08Bh, 017h, 06Ah, 004h
+    db 08Dh, 044h, 024h, 060h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 044h
+    db 024h, 064h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 044h, 024h, 068h
+    db 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 084h, 0DBh, 075h, 01Fh, 08Bh, 054h, 024h, 00Ch, 08Bh, 04Ch
+    db 024h, 010h, 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h
+    db 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 04Ch, 024h, 064h, 0D9h, 044h, 024h, 064h, 08Bh, 054h, 024h, 060h, 08Bh, 044h, 024h, 05Ch
+    db 051h, 052h, 050h, 083h, 0ECh, 018h, 0DDh, 05Ch, 024h, 010h, 0D9h, 084h, 024h, 084h, 000h, 000h
+    db 000h, 0DDh, 05Ch, 024h, 008h, 0D9h, 084h, 024h, 080h, 000h, 000h, 000h, 0DDh, 01Ch, 024h, 068h
+    dd g_Va011447F8
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 028h, 0E9h, 0CBh, 011h, 000h, 000h, 08Bh, 017h, 06Ah, 004h, 08Dh, 044h, 024h, 054h
+    db 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 044h, 024h, 058h, 050h, 08Bh
+    db 0CFh, 0FFh, 052h, 00Ch, 084h, 0DBh, 075h, 01Fh, 08Bh, 054h, 024h, 00Ch, 08Bh, 04Ch, 024h, 010h
+    db 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh
+    db 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 04Ch, 024h, 054h, 0D9h, 044h, 024h, 054h, 08Bh, 054h, 024h, 050h, 051h, 052h, 083h, 0ECh
+    db 010h, 0DDh, 05Ch, 024h, 008h, 0D9h, 044h, 024h, 068h, 0DDh, 01Ch, 024h, 068h
+    dd g_Va011447C8
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 01Ch, 0E9h, 05Eh, 011h, 000h, 000h, 08Bh, 007h, 06Ah, 008h, 08Dh, 08Ch, 024h, 0BCh
+    db 000h, 000h, 000h, 051h, 08Bh, 0CFh, 0FFh, 050h, 00Ch, 084h, 0DBh, 075h, 01Fh, 08Bh, 054h, 024h
+    db 00Ch, 08Bh, 04Ch, 024h, 010h, 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h, 0FAh
+    db 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 084h, 024h, 0BCh, 000h, 000h, 000h, 08Bh, 08Ch, 024h, 0B8h, 000h, 000h, 000h, 050h, 051h
+    db 050h, 051h, 068h
+    dd ?g_bfmeInt64Format@@3QBDB
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 014h, 0E9h, 006h, 011h, 000h, 000h, 03Dh, 074h, 06Eh, 069h, 000h, 00Fh, 085h, 038h
+    db 012h, 000h, 000h, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h, 024h, 0ECh, 000h, 000h, 000h, 050h, 08Bh
+    db 0CFh, 0FFh, 052h, 00Ch, 084h, 0DBh, 075h, 01Fh, 08Bh, 054h, 024h, 00Ch, 08Bh, 04Ch, 024h, 010h
+    db 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh
+    db 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 084h, 024h, 0E8h, 000h, 000h, 000h, 050h, 050h, 068h
+    dd ?g_bfmeIntegerFormat@@3QBDB
+    db 0E9h, 0ACh, 010h, 000h, 000h, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h, 024h, 0ACh, 000h, 000h, 000h
+    db 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h, 024h, 0B0h, 000h, 000h
+    db 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h, 024h, 0B4h, 000h
+    db 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h, 024h, 0B8h
+    db 000h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 084h, 0DBh, 075h, 01Fh, 08Bh, 054h, 024h
+    db 00Ch, 08Bh, 04Ch, 024h, 010h, 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h, 0FAh
+    db 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 08Ch, 024h, 0B4h, 000h, 000h, 000h, 0D9h, 084h, 024h, 0B4h, 000h, 000h, 000h, 08Bh, 094h
+    db 024h, 0B0h, 000h, 000h, 000h, 08Bh, 084h, 024h, 0ACh, 000h, 000h, 000h, 051h, 08Bh, 08Ch, 024h
+    db 0ACh, 000h, 000h, 000h, 052h, 050h, 051h, 083h, 0ECh, 020h, 0DDh, 05Ch, 024h, 018h, 0D9h, 084h
+    db 024h, 0E0h, 000h, 000h, 000h, 0DDh, 05Ch, 024h, 010h, 0D9h, 084h, 024h, 0DCh, 000h, 000h, 000h
+    db 0DDh, 05Ch, 024h, 008h, 0D9h, 084h, 024h, 0D8h, 000h, 000h, 000h, 0DDh, 01Ch, 024h, 068h
+    dd g_Va01144770
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 034h, 0E9h, 0EDh, 00Fh, 000h, 000h, 03Dh, 064h, 033h, 072h, 000h, 00Fh, 084h, 073h
+    db 002h, 000h, 000h, 03Dh, 077h, 061h, 072h, 000h, 00Fh, 084h, 099h, 000h, 000h, 000h, 03Dh, 062h
+    db 067h, 072h, 000h, 00Fh, 085h, 009h, 011h, 000h, 000h, 08Bh, 017h, 06Ah, 004h, 08Dh, 044h, 024h
+    db 070h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 044h, 024h, 074h, 050h
+    db 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 044h, 024h, 078h, 050h, 08Bh, 0CFh
+    db 0FFh, 052h, 00Ch, 084h, 0DBh, 075h, 01Fh, 08Bh, 054h, 024h, 00Ch, 08Bh, 04Ch, 024h, 010h, 02Bh
+    db 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h
+    db 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 04Ch, 024h, 074h, 0D9h, 044h, 024h, 074h, 08Bh, 054h, 024h, 070h, 08Bh, 044h, 024h, 06Ch
+    db 051h, 052h, 050h, 083h, 0ECh, 018h, 0DDh, 05Ch, 024h, 010h, 0D9h, 084h, 024h, 094h, 000h, 000h
+    db 000h, 0DDh, 05Ch, 024h, 008h, 0D9h, 084h, 024h, 090h, 000h, 000h, 000h, 0DDh, 01Ch, 024h, 068h
+    dd g_Va01144734
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 028h, 0E9h, 03Eh, 00Fh, 000h, 000h, 084h, 0DBh, 074h, 00Fh, 068h
+    dd g_Va01080294
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 004h, 032h, 0DBh, 08Bh, 017h, 06Ah, 004h, 08Dh, 044h, 024h, 048h, 050h, 08Bh, 0CFh
+    db 0FFh, 052h, 00Ch, 08Bh, 044h, 024h, 044h, 085h, 0C0h, 075h, 031h, 08Bh, 054h, 024h, 00Ch, 08Bh
+    db 04Ch, 024h, 010h, 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h, 0FAh, 08Bh, 0C2h
+    db 0C1h, 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 068h
+    dd g_Va01144284
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 004h, 0E9h, 0E6h, 00Eh, 000h, 000h, 085h, 0C0h, 0C7h, 044h, 024h, 03Ch, 000h, 000h
+    db 000h, 000h, 00Fh, 086h, 0D6h, 00Eh, 000h, 000h, 08Dh, 08Ch, 024h, 054h, 001h, 000h, 000h, 0F7h
+    db 0D9h, 089h, 04Ch, 024h, 040h, 0C7h, 044h, 024h, 018h, 010h, 000h, 000h, 000h, 039h, 044h, 024h
+    db 018h, 077h, 007h, 0B8h, 010h, 000h, 000h, 000h, 0EBh, 004h, 02Bh, 044h, 024h, 03Ch, 08Bh, 017h
+    db 050h, 08Dh, 084h, 024h, 058h, 001h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 054h
+    db 024h, 00Ch, 08Bh, 04Ch, 024h, 010h, 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h
+    db 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 04Ch, 024h, 03Ch, 051h, 068h
+    dd g_Va0114427C
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 008h, 0C7h, 044h, 024h, 020h, 000h, 000h, 000h, 000h, 08Dh, 049h, 000h, 0F6h, 044h
+    db 024h, 020h, 007h, 075h, 00Dh, 068h
+    dd g_Va0108ED1C
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 004h, 08Bh, 044h, 024h, 020h, 08Bh, 054h, 024h, 040h, 08Dh, 084h, 004h, 054h, 001h
+    db 000h, 000h, 08Dh, 00Ch, 010h, 03Bh, 04Ch, 024h, 044h, 073h, 013h, 00Fh, 0B6h, 010h, 052h, 068h
+    dd g_Va01144274
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 008h, 0EBh, 00Dh, 068h
+    dd g_Va01142704
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 004h, 08Bh, 044h, 024h, 020h, 040h, 083h, 0F8h, 010h, 089h, 044h, 024h, 020h, 072h
+    db 0A6h, 068h
+    dd g_Va010E8B00
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 004h, 0C7h, 044h, 024h, 020h, 000h, 000h, 000h, 000h, 090h, 08Bh, 044h, 024h, 020h
+    db 08Bh, 04Ch, 024h, 040h, 08Dh, 084h, 004h, 054h, 001h, 000h, 000h, 08Dh, 014h, 008h, 03Bh, 054h
+    db 024h, 044h, 073h, 02Ah, 08Ah, 000h, 03Ch, 020h, 00Fh, 0B6h, 0C0h, 077h, 005h, 0B8h, 02Eh, 000h
+    db 000h, 000h, 050h, 068h
+    dd g_Va01140290
+    call ?d_009d9110@@YAXXZ
+    db 08Bh, 044h, 024h, 028h, 083h, 0C4h, 008h, 040h, 083h, 0F8h, 010h, 089h, 044h, 024h, 020h, 072h
+    db 0BEh, 068h
+    dd g_Va01080294
+    call ?d_009d9110@@YAXXZ
+    db 08Bh, 054h, 024h, 01Ch, 08Bh, 04Ch, 024h, 040h, 0B8h, 010h, 000h, 000h, 000h, 003h, 0D0h, 089h
+    db 054h, 024h, 01Ch, 08Bh, 054h, 024h, 044h, 003h, 0C8h, 003h, 0D0h, 08Bh, 044h, 024h, 048h, 083h
+    db 0C4h, 004h, 03Bh, 0C8h, 089h, 04Ch, 024h, 03Ch, 089h, 054h, 024h, 040h, 00Fh, 082h, 0B5h, 0FEh
+    db 0FFh, 0FFh, 0E9h, 071h, 00Dh, 000h, 000h, 08Bh, 007h, 06Ah, 004h, 08Dh, 08Ch, 024h, 084h, 000h
+    db 000h, 000h, 051h, 08Bh, 0CFh, 0FFh, 050h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h, 024h, 088h
+    db 000h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h, 024h
+    db 08Ch, 000h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h
+    db 024h, 090h, 000h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh
+    db 084h, 024h, 094h, 000h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h
+    db 08Dh, 084h, 024h, 098h, 000h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 084h, 0DBh, 075h
+    db 01Fh, 08Bh, 054h, 024h, 00Ch, 08Bh, 04Ch, 024h, 010h, 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah
+    db 0F7h, 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 08Ch, 024h, 094h, 000h, 000h, 000h, 0D9h, 084h, 024h, 094h, 000h, 000h, 000h, 08Bh, 094h
+    db 024h, 090h, 000h, 000h, 000h, 08Bh, 084h, 024h, 08Ch, 000h, 000h, 000h, 051h, 08Bh, 08Ch, 024h
+    db 08Ch, 000h, 000h, 000h, 052h, 08Bh, 094h, 024h, 08Ch, 000h, 000h, 000h, 050h, 08Bh, 084h, 024h
+    db 08Ch, 000h, 000h, 000h, 051h, 052h, 050h, 083h, 0ECh, 030h, 0DDh, 05Ch, 024h, 028h, 0D9h, 084h
+    db 024h, 0D8h, 000h, 000h, 000h, 0DDh, 05Ch, 024h, 020h, 0D9h, 084h, 024h, 0D4h, 000h, 000h, 000h
+    db 0DDh, 05Ch, 024h, 018h, 0D9h, 084h, 024h, 0D0h, 000h, 000h, 000h, 0DDh, 05Ch, 024h, 010h, 0D9h
+    db 084h, 024h, 0CCh, 000h, 000h, 000h, 0DDh, 05Ch, 024h, 008h, 0D9h, 084h, 024h, 0C8h, 000h, 000h
+    db 000h, 0DDh, 01Ch, 024h, 068h
+    dd g_Va011446B8
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 04Ch, 0E9h, 060h, 00Ch, 000h, 000h, 08Bh, 017h, 06Ah, 001h, 08Dh, 044h, 024h, 029h
+    db 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 044h, 024h, 00Ch, 08Bh, 04Ch, 024h, 010h, 02Bh, 0C8h
+    db 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 00Fh, 0B6h, 04Ch, 024h, 025h, 051h, 068h
+    dd ?g_bfmeByteFormat@@3QBDB
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 008h, 0E9h, 01Bh, 00Ch, 000h, 000h, 03Dh, 072h, 074h, 073h, 061h, 00Fh, 087h, 03Eh
+    db 003h, 000h, 000h, 00Fh, 084h, 073h, 002h, 000h, 000h, 03Dh, 04Bh, 04Fh, 04Ch, 042h, 00Fh, 084h
+    db 094h, 000h, 000h, 000h, 03Dh, 052h, 043h, 053h, 044h, 00Fh, 084h, 089h, 000h, 000h, 000h, 03Dh
+    db 04Bh, 04Ch, 042h, 045h, 00Fh, 085h, 026h, 00Dh, 000h, 000h, 08Bh, 04Ch, 024h, 00Ch, 08Bh, 044h
+    db 024h, 010h, 03Bh, 0C8h, 00Fh, 084h, 058h, 00Ch, 000h, 000h, 02Bh, 0C1h, 08Bh, 0C8h, 0B8h, 0ABh
+    db 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 08Dh, 044h, 002h, 0FFh
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 04Ch, 024h, 010h, 08Bh, 051h, 0F4h, 052h, 068h
+    dd g_Va01144530
+    call ?d_009d9110@@YAXXZ
+    db 08Bh, 044h, 024h, 018h, 083h, 0E8h, 00Ch, 089h, 044h, 024h, 018h, 08Bh, 008h, 08Bh, 040h, 008h
+    db 083h, 0C4h, 008h, 02Bh, 0C1h, 085h, 0C9h, 00Fh, 084h, 091h, 00Bh, 000h, 000h, 03Dh, 080h, 000h
+    db 000h, 000h, 076h, 00Eh, 051h
+    call ??3@YAXPAX@Z
+    db 083h, 0C4h, 004h, 0E9h, 07Ch, 00Bh, 000h, 000h, 050h, 051h
+    call ?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z
+    db 083h, 0C4h, 008h, 0E9h, 06Dh, 00Bh, 000h, 000h, 08Bh, 007h, 06Ah, 001h, 08Dh, 04Ch, 024h, 02Bh
+    db 051h, 08Bh, 0CFh, 0FFh, 050h, 00Ch, 083h, 0F8h, 001h, 00Fh, 085h, 0F9h, 00Bh, 000h, 000h, 08Ah
+    db 044h, 024h, 027h, 084h, 0C0h, 075h, 00Ch, 088h, 084h, 024h, 090h, 001h, 000h, 000h, 0E9h, 0E1h
+    db 000h, 000h, 000h, 03Ch, 0FFh, 08Bh, 017h, 075h, 064h, 06Ah, 004h, 08Dh, 084h, 024h, 00Ch, 001h
+    db 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 083h, 0F8h, 004h, 00Fh, 085h, 0EDh, 00Bh, 000h
+    db 000h, 08Bh, 094h, 024h, 0C8h, 000h, 000h, 000h, 08Bh, 08Ch, 024h, 0C4h, 000h, 000h, 000h, 02Bh
+    db 0D1h, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0EAh, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h
+    db 0C2h, 08Bh, 0D0h, 08Bh, 084h, 024h, 008h, 001h, 000h, 000h, 03Bh, 0C2h, 00Fh, 083h, 0E2h, 00Bh
+    db 000h, 000h, 08Dh, 014h, 040h, 08Bh, 00Ch, 091h, 08Dh, 094h, 024h, 090h, 001h, 000h, 000h, 08Bh
+    db 0FFh, 08Ah, 001h, 041h, 088h, 002h, 042h, 084h, 0C0h, 075h, 0F6h, 0EBh, 077h, 00Fh, 0B6h, 0C8h
+    db 00Fh, 0B6h, 0C0h, 089h, 04Ch, 024h, 018h, 050h, 08Dh, 08Ch, 024h, 094h, 001h, 000h, 000h, 051h
+    db 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 04Ch, 024h, 018h, 03Bh, 0C1h, 00Fh, 085h, 0C9h, 00Bh, 000h
+    db 000h, 08Bh, 0D1h, 08Dh, 044h, 024h, 01Fh, 050h, 08Dh, 08Ch, 024h, 094h, 001h, 000h, 000h, 051h
+    db 08Dh, 08Ch, 024h, 084h, 001h, 000h, 000h, 0C6h, 084h, 014h, 098h, 001h, 000h, 000h, 000h
+    call ?j_0003b318@@YAXXZ
+    db 08Dh, 094h, 024h, 07Ch, 001h, 000h, 000h, 052h, 08Dh, 08Ch, 024h, 0C8h, 000h, 000h, 000h, 0C6h
+    db 084h, 024h, 0A0h, 002h, 000h, 000h, 002h
+    call ?j_00008f17@@YAXXZ
+    db 08Dh, 08Ch, 024h, 07Ch, 001h, 000h, 000h, 0C6h, 084h, 024h, 09Ch, 002h, 000h, 000h, 001h
+    call ??1?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@XZ
+    db 081h, 07Ch, 024h, 030h, 04Bh, 04Fh, 04Ch, 042h, 075h, 015h, 08Bh, 007h, 06Ah, 001h, 06Ah, 004h
+    db 08Bh, 0CFh, 0FFh, 050h, 014h, 081h, 07Ch, 024h, 030h, 04Bh, 04Fh, 04Ch, 042h, 074h, 004h, 084h
+    db 0DBh, 075h, 01Fh, 08Bh, 054h, 024h, 00Ch, 08Bh, 04Ch, 024h, 010h, 02Bh, 0CAh, 0B8h, 0ABh, 0AAh
+    db 0AAh, 02Ah, 0F7h, 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 081h, 07Ch, 024h, 030h, 04Bh, 04Fh, 04Ch, 042h, 075h, 060h, 08Dh, 08Ch, 024h, 090h, 001h, 000h
+    db 000h, 051h, 068h
+    dd g_Va011445D0
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 008h, 08Dh, 054h, 024h, 01Fh, 052h, 08Dh, 084h, 024h, 094h, 001h, 000h, 000h, 050h
+    db 08Dh, 08Ch, 024h, 050h, 001h, 000h, 000h
+    call ?j_0003b318@@YAXXZ
+    db 08Dh, 08Ch, 024h, 048h, 001h, 000h, 000h, 051h, 08Dh, 04Ch, 024h, 010h, 0C6h, 084h, 024h, 0A0h
+    db 002h, 000h, 000h, 003h
+    call ?j_00008f17@@YAXXZ
+    db 08Dh, 08Ch, 024h, 048h, 001h, 000h, 000h, 0C6h, 084h, 024h, 09Ch, 002h, 000h, 000h, 001h
+    call ??1?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@XZ
+    db 0E9h, 0B5h, 009h, 000h, 000h, 08Dh, 094h, 024h, 090h, 001h, 000h, 000h, 052h, 068h
+    dd g_Va011446AC
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 008h, 0B3h, 001h, 0E9h, 099h, 009h, 000h, 000h, 084h, 0DBh, 075h, 01Fh, 08Bh, 054h
+    db 024h, 00Ch, 08Bh, 04Ch, 024h, 010h, 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h
+    db 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 007h, 06Ah, 001h, 08Dh, 04Ch, 024h, 02Ch, 051h, 033h, 0DBh, 08Bh, 0CFh, 089h, 05Ch, 024h
+    db 030h, 0FFh, 050h, 00Ch, 08Bh, 044h, 024h, 028h, 03Dh, 0FFh, 000h, 000h, 000h, 075h, 012h, 08Bh
+    db 017h, 06Ah, 004h, 08Dh, 044h, 024h, 02Ch, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 044h, 024h
+    db 028h, 089h, 05Ch, 024h, 034h, 03Bh, 0C3h, 0C6h, 084h, 024h, 09Ch, 002h, 000h, 000h, 004h, 074h
+    db 036h, 08Bh, 01Fh, 050h, 050h, 08Dh, 04Ch, 024h, 03Ch
+    call ?getBufferForRead@?$StringBase@D@@QAEPADH@Z
+    db 050h, 08Bh, 0CFh, 0FFh, 053h, 00Ch, 08Bh, 04Ch, 024h, 028h, 051h, 08Dh, 04Ch, 024h, 038h
+    call ?getBufferForRead@?$StringBase@D@@QAEPADH@Z
+    db 08Bh, 054h, 024h, 028h, 0C6h, 004h, 010h, 000h, 08Bh, 044h, 024h, 034h, 085h, 0C0h, 074h, 005h
+    db 083h, 0C0h, 008h, 0EBh, 005h, 0B8h
+    dd ?Rva006A16B0Empty@@3PADA
+    db 050h, 068h
+    dd ?g_bfmeAsciiStringFormat@@3QBDB
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 008h, 08Dh, 04Ch, 024h, 034h, 032h, 0DBh, 0C6h, 084h, 024h, 09Ch, 002h, 000h, 000h
+    db 001h
+    call ?releaseBuffer@?$StringBase@D@@AAEXXZ
+    db 0E9h, 0D4h, 008h, 000h, 000h, 03Dh, 06Ch, 06Fh, 06Fh, 062h, 00Fh, 084h, 0A4h, 000h, 000h, 000h
+    db 03Dh, 065h, 074h, 079h, 062h, 074h, 05Bh, 03Dh, 031h, 075h, 06Eh, 065h, 00Fh, 085h, 0F2h, 009h
+    db 000h, 000h, 08Bh, 007h, 06Ah, 001h, 08Dh, 04Ch, 024h, 01Ch, 051h, 08Bh, 0CFh, 0C7h, 044h, 024h
+    db 020h, 000h, 000h, 000h, 000h, 0FFh, 050h, 00Ch, 084h, 0DBh, 075h, 01Fh, 08Bh, 054h, 024h, 00Ch
+    db 08Bh, 04Ch, 024h, 010h, 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h, 0FAh, 08Bh
+    db 0C2h, 0C1h, 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 054h, 024h, 018h, 052h, 068h
+    dd g_Va011446A0
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 008h, 0E9h, 065h, 008h, 000h, 000h, 08Bh, 007h, 06Ah, 001h, 08Dh, 04Ch, 024h, 02Ah
+    db 051h, 08Bh, 0CFh, 0FFh, 050h, 00Ch, 084h, 0DBh, 075h, 01Fh, 08Bh, 054h, 024h, 00Ch, 08Bh, 04Ch
+    db 024h, 010h, 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h
+    db 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 00Fh, 0BEh, 044h, 024h, 026h, 050h, 050h, 068h
+    dd ?g_bfmeSignedByteFormat@@3QBDB
+    db 0E9h, 01Bh, 008h, 000h, 000h, 08Bh, 017h, 06Ah, 001h, 08Dh, 044h, 024h, 028h, 050h, 08Bh, 0CFh
+    db 0FFh, 052h, 00Ch, 084h, 0DBh, 075h, 01Fh, 08Bh, 054h, 024h, 00Ch, 08Bh, 04Ch, 024h, 010h, 02Bh
+    db 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h
+    db 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 00Fh, 0B6h, 04Ch, 024h, 024h, 051h, 068h
+    dd ?g_bfmeScalarByteFormat@@3QBDB
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 008h, 0E9h, 0DAh, 007h, 000h, 000h, 08Bh, 017h, 06Ah, 002h, 08Dh, 044h, 024h, 01Ch
+    db 050h, 08Bh, 0CFh, 0C7h, 044h, 024h, 020h, 000h, 000h, 000h, 000h, 0FFh, 052h, 00Ch, 084h, 0DBh
+    db 075h, 01Fh, 08Bh, 054h, 024h, 00Ch, 08Bh, 04Ch, 024h, 010h, 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh
+    db 02Ah, 0F7h, 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 04Ch, 024h, 018h, 051h, 068h
+    dd g_Va011446A0
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 008h, 0E9h, 08Ah, 007h, 000h, 000h, 03Dh, 069h, 062h, 067h, 072h, 00Fh, 087h, 01Fh
+    db 004h, 000h, 000h, 00Fh, 084h, 080h, 003h, 000h, 000h, 03Dh, 064h, 033h, 063h, 069h, 00Fh, 087h
+    db 0A2h, 001h, 000h, 000h, 00Fh, 084h, 01Ch, 001h, 000h, 000h, 08Bh, 0C8h, 081h, 0E9h, 033h, 075h
+    db 06Eh, 065h, 00Fh, 084h, 0BEh, 000h, 000h, 000h, 049h, 074h, 06Bh, 081h, 0E9h, 030h, 0BDh, 0F4h
+    db 003h, 00Fh, 085h, 088h, 008h, 000h, 000h, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h, 024h, 0F0h, 000h
+    db 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h, 024h, 0F4h
+    db 000h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 084h, 0DBh, 075h, 01Fh, 08Bh, 054h, 024h
+    db 00Ch, 08Bh, 04Ch, 024h, 010h, 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h, 0FAh
+    db 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 08Ch, 024h, 0F0h, 000h, 000h, 000h, 08Bh, 094h, 024h, 0ECh, 000h, 000h, 000h, 051h, 052h
+    db 068h
+    dd ?g_bfmeICoord2DFormat@@3QBDB
+    db 0E9h, 0E4h, 006h, 000h, 000h, 08Bh, 007h, 06Ah, 004h, 08Dh, 04Ch, 024h, 06Ch, 051h, 08Bh, 0CFh
+    db 0C7h, 044h, 024h, 070h, 000h, 000h, 000h, 000h, 0FFh, 050h, 00Ch, 084h, 0DBh, 075h, 01Fh, 08Bh
+    db 054h, 024h, 00Ch, 08Bh, 04Ch, 024h, 010h, 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h
+    db 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 054h, 024h, 068h, 052h, 068h
+    dd g_Va011446A0
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 008h, 0E9h, 09Ch, 006h, 000h, 000h, 08Bh, 007h, 06Ah, 003h, 08Dh, 04Ch, 024h, 01Ch
+    db 051h, 08Bh, 0CFh, 0C7h, 044h, 024h, 020h, 000h, 000h, 000h, 000h, 0FFh, 050h, 00Ch, 084h, 0DBh
+    db 075h, 01Fh, 08Bh, 054h, 024h, 00Ch, 08Bh, 04Ch, 024h, 010h, 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh
+    db 02Ah, 0F7h, 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 054h, 024h, 018h, 052h, 068h
+    dd g_Va011446A0
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 008h, 0E9h, 04Ch, 006h, 000h, 000h, 08Bh, 007h, 06Ah, 004h, 08Dh, 08Ch, 024h, 0D8h
+    db 000h, 000h, 000h, 051h, 08Bh, 0CFh, 0FFh, 050h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h, 024h
+    db 0DCh, 000h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h
+    db 024h, 0E0h, 000h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 084h, 0DBh, 075h, 01Fh, 08Bh
+    db 054h, 024h, 00Ch, 08Bh, 04Ch, 024h, 010h, 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h
+    db 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 08Ch, 024h, 0DCh, 000h, 000h, 000h, 08Bh, 094h, 024h, 0D8h, 000h, 000h, 000h, 08Bh, 084h
+    db 024h, 0D4h, 000h, 000h, 000h, 051h, 052h, 050h, 068h
+    dd ?g_bfmeICoord3DFormat@@3QBDB
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 010h, 0E9h, 0CCh, 005h, 000h, 000h, 03Dh, 064h, 032h, 072h, 069h, 00Fh, 084h, 02Fh
+    db 001h, 000h, 000h, 03Dh, 064h, 033h, 072h, 069h, 074h, 05Dh, 03Dh, 06Ch, 061h, 065h, 072h, 00Fh
+    db 085h, 0ECh, 006h, 000h, 000h, 08Bh, 017h, 06Ah, 004h, 08Dh, 044h, 024h, 05Ch, 050h, 08Bh, 0CFh
+    db 0FFh, 052h, 00Ch, 084h, 0DBh, 075h, 01Fh, 08Bh, 054h, 024h, 00Ch, 08Bh, 04Ch, 024h, 010h, 02Bh
+    db 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h
+    db 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 04Ch, 024h, 058h, 0D9h, 044h, 024h, 058h, 051h, 083h, 0ECh, 008h, 0DDh, 01Ch, 024h, 068h
+    dd g_Va01144688
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 010h, 0E9h, 05Dh, 005h, 000h, 000h, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h, 024h, 020h
+    db 001h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h, 024h
+    db 024h, 001h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h
+    db 024h, 028h, 001h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh
+    db 084h, 024h, 02Ch, 001h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h
+    db 08Dh, 084h, 024h, 030h, 001h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah
+    db 004h, 08Dh, 084h, 024h, 034h, 001h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 084h, 0DBh
+    db 075h, 01Fh, 08Bh, 054h, 024h, 00Ch, 08Bh, 04Ch, 024h, 010h, 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh
+    db 02Ah, 0F7h, 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 08Ch, 024h, 030h, 001h, 000h, 000h, 08Bh, 094h, 024h, 02Ch, 001h, 000h, 000h, 08Bh, 084h
+    db 024h, 028h, 001h, 000h, 000h, 051h, 08Bh, 08Ch, 024h, 028h, 001h, 000h, 000h, 052h, 08Bh, 094h
+    db 024h, 028h, 001h, 000h, 000h, 050h, 08Bh, 084h, 024h, 028h, 001h, 000h, 000h, 051h, 052h, 050h
+    db 068h
+    dd ?g_bfmeIRegion3DFormat@@3QBDB
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 01Ch, 0E9h, 092h, 004h, 000h, 000h, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h, 024h, 0FCh
+    db 000h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h, 024h
+    db 000h, 001h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h
+    db 024h, 004h, 001h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh
+    db 084h, 024h, 008h, 001h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 084h, 0DBh, 075h, 01Fh
+    db 08Bh, 054h, 024h, 00Ch, 08Bh, 04Ch, 024h, 010h, 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h
+    db 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 08Ch, 024h, 004h, 001h, 000h, 000h, 08Bh, 094h, 024h, 000h, 001h, 000h, 000h, 08Bh, 084h
+    db 024h, 0FCh, 000h, 000h, 000h, 051h, 08Bh, 08Ch, 024h, 0FCh, 000h, 000h, 000h, 052h, 050h, 051h
+    db 068h
+    dd ?g_bfmeIRegion2DFormat@@3QBDB
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 014h, 0E9h, 0F9h, 003h, 000h, 000h, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h, 024h, 010h
+    db 001h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h, 024h
+    db 014h, 001h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h
+    db 024h, 018h, 001h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh
+    db 084h, 024h, 01Ch, 001h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 084h, 0DBh, 075h, 01Fh
+    db 08Bh, 054h, 024h, 00Ch, 08Bh, 04Ch, 024h, 010h, 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h
+    db 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 08Ch, 024h, 018h, 001h, 000h, 000h, 08Bh, 094h, 024h, 014h, 001h, 000h, 000h, 08Bh, 084h
+    db 024h, 010h, 001h, 000h, 000h, 051h, 08Bh, 08Ch, 024h, 010h, 001h, 000h, 000h, 052h, 050h, 051h
+    db 068h
+    dd ?g_bfmeRGBAColorIntFormat@@3QBDB
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 014h, 0E9h, 060h, 003h, 000h, 000h, 03Dh, 074h, 079h, 062h, 075h, 00Fh, 087h, 0E1h
+    db 001h, 000h, 000h, 00Fh, 084h, 099h, 001h, 000h, 000h, 03Dh, 072h, 062h, 067h, 072h, 00Fh, 084h
+    db 0C7h, 000h, 000h, 000h, 03Dh, 065h, 067h, 06Eh, 072h, 074h, 04Dh, 03Dh, 074h, 072h, 068h, 073h
+    db 00Fh, 085h, 06Fh, 004h, 000h, 000h, 08Bh, 017h, 06Ah, 002h, 08Dh, 044h, 024h, 04Ch, 050h, 08Bh
+    db 0CFh, 0FFh, 052h, 00Ch, 084h, 0DBh, 075h, 01Fh, 08Bh, 054h, 024h, 00Ch, 08Bh, 04Ch, 024h, 010h
+    db 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh
+    db 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 00Fh, 0BFh, 044h, 024h, 048h, 050h, 050h, 068h
+    dd ?g_bfmeShortFormat@@3QBDB
+    db 0E9h, 0E8h, 002h, 000h, 000h, 08Bh, 017h, 06Ah, 004h, 08Dh, 044h, 024h, 07Ch, 050h, 08Bh, 0CFh
+    db 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h, 024h, 080h, 000h, 000h, 000h, 050h, 08Bh
+    db 0CFh, 0FFh, 052h, 00Ch, 084h, 0DBh, 075h, 01Fh, 08Bh, 054h, 024h, 00Ch, 08Bh, 04Ch, 024h, 010h
+    db 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh
+    db 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 04Ch, 024h, 07Ch, 0D9h, 044h, 024h, 07Ch, 08Bh, 054h, 024h, 078h, 051h, 052h, 083h, 0ECh
+    db 010h, 0DDh, 05Ch, 024h, 008h, 0D9h, 084h, 024h, 090h, 000h, 000h, 000h, 0DDh, 01Ch, 024h, 068h
+    dd g_Va01144658
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 01Ch, 0E9h, 07Dh, 002h, 000h, 000h, 08Bh, 007h, 06Ah, 004h, 08Dh, 08Ch, 024h, 09Ch
+    db 000h, 000h, 000h, 051h, 08Bh, 0CFh, 0FFh, 050h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h, 024h
+    db 0A0h, 000h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h
+    db 024h, 0A4h, 000h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 017h, 06Ah, 004h, 08Dh
+    db 084h, 024h, 0A8h, 000h, 000h, 000h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 084h, 0DBh, 075h, 01Fh
+    db 08Bh, 054h, 024h, 00Ch, 08Bh, 04Ch, 024h, 010h, 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h
+    db 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 08Ch, 024h, 0A4h, 000h, 000h, 000h, 0D9h, 084h, 024h, 0A4h, 000h, 000h, 000h, 08Bh, 094h
+    db 024h, 0A0h, 000h, 000h, 000h, 08Bh, 084h, 024h, 09Ch, 000h, 000h, 000h, 051h, 08Bh, 08Ch, 024h
+    db 09Ch, 000h, 000h, 000h, 052h, 050h, 051h, 083h, 0ECh, 020h, 0DDh, 05Ch, 024h, 018h, 0D9h, 084h
+    db 024h, 0D0h, 000h, 000h, 000h, 0DDh, 05Ch, 024h, 010h, 0D9h, 084h, 024h, 0CCh, 000h, 000h, 000h
+    db 0DDh, 05Ch, 024h, 008h, 0D9h, 084h, 024h, 0C8h, 000h, 000h, 000h, 0DDh, 01Ch, 024h, 068h
+    dd g_Va01144608
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 034h, 0E9h, 0B6h, 001h, 000h, 000h, 08Bh, 017h, 06Ah, 001h, 08Dh, 044h, 024h, 023h
+    db 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 084h, 0DBh, 075h, 01Fh, 08Bh, 054h, 024h, 00Ch, 08Bh, 04Ch
+    db 024h, 010h, 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h
+    db 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 00Fh, 0B6h, 044h, 024h, 01Fh, 050h, 050h, 068h
+    dd ?g_bfmeUnsignedByteFormat@@3QBDB
+    db 0E9h, 06Ch, 001h, 000h, 000h, 03Dh, 074h, 06Eh, 069h, 075h, 00Fh, 084h, 01Fh, 001h, 000h, 000h
+    db 03Dh, 074h, 068h, 073h, 075h, 00Fh, 084h, 0D5h, 000h, 000h, 000h, 03Dh, 072h, 074h, 073h, 075h
+    db 00Fh, 085h, 090h, 002h, 000h, 000h, 084h, 0DBh, 075h, 01Fh, 08Bh, 054h, 024h, 00Ch, 08Bh, 04Ch
+    db 024h, 010h, 02Bh, 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h
+    db 0E8h, 01Fh, 003h, 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 017h, 06Ah, 001h, 08Dh, 044h, 024h, 030h, 033h, 0DBh, 050h, 08Bh, 0CFh, 089h, 05Ch, 024h
+    db 034h, 0FFh, 052h, 00Ch, 08Bh, 044h, 024h, 02Ch, 03Dh, 0FFh, 000h, 000h, 000h, 075h, 012h, 08Bh
+    db 017h, 06Ah, 004h, 08Dh, 044h, 024h, 030h, 050h, 08Bh, 0CFh, 0FFh, 052h, 00Ch, 08Bh, 044h, 024h
+    db 02Ch, 089h, 05Ch, 024h, 038h, 03Bh, 0C3h, 0C6h, 084h, 024h, 09Ch, 002h, 000h, 000h, 005h, 074h
+    db 03Bh, 08Bh, 01Fh, 08Dh, 00Ch, 000h, 051h, 050h, 08Dh, 04Ch, 024h, 040h
+    call ?getBufferForRead@?$StringBase@G@@QAEPAGH@Z
+    db 050h, 08Bh, 0CFh, 0FFh, 053h, 00Ch, 08Bh, 054h, 024h, 02Ch, 052h, 08Dh, 04Ch, 024h, 03Ch
+    call ?getBufferForRead@?$StringBase@G@@QAEPAGH@Z
+    db 08Bh, 04Ch, 024h, 02Ch, 066h, 0C7h, 004h, 048h, 000h, 000h, 08Bh, 044h, 024h, 038h, 085h, 0C0h
+    db 074h, 005h, 083h, 0C0h, 008h, 0EBh, 005h, 0B8h
+    dd ?BFMEEmptyUnicodeString@@3GB
+    db 050h, 068h
+    dd g_Va011445F4
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 008h, 08Dh, 04Ch, 024h, 038h, 032h, 0DBh, 0C6h, 084h, 024h, 09Ch, 002h, 000h, 000h
+    db 001h
+    call ?releaseBuffer@?$StringBase@G@@AAEXXZ
+    db 0E9h, 08Bh, 000h, 000h, 000h, 08Bh, 017h, 06Ah, 002h, 08Dh, 044h, 024h, 050h, 050h, 08Bh, 0CFh
+    db 0FFh, 052h, 00Ch, 084h, 0DBh, 075h, 01Fh, 08Bh, 054h, 024h, 00Ch, 08Bh, 04Ch, 024h, 010h, 02Bh
+    db 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h
+    db 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 00Fh, 0B7h, 044h, 024h, 04Ch, 050h, 050h, 068h
+    dd ?g_bfmeUnsignedShortFormat@@3QBDB
+    db 0EBh, 042h, 08Bh, 017h, 06Ah, 004h, 08Dh, 084h, 024h, 0D4h, 000h, 000h, 000h, 050h, 08Bh, 0CFh
+    db 0FFh, 052h, 00Ch, 084h, 0DBh, 075h, 01Fh, 08Bh, 054h, 024h, 00Ch, 08Bh, 04Ch, 024h, 010h, 02Bh
+    db 0CAh, 0B8h, 0ABh, 0AAh, 0AAh, 02Ah, 0F7h, 0E9h, 0D1h, 0FAh, 08Bh, 0C2h, 0C1h, 0E8h, 01Fh, 003h
+    db 0C2h
+    call ?d_009d9160@@YAXXZ
+    db 08Bh, 084h, 024h, 0D0h, 000h, 000h, 000h, 050h, 050h, 068h
+    dd ?g_bfmeUnsignedIntFormat@@3QBDB
+    call ?d_009d9110@@YAXXZ
+    db 083h, 0C4h, 00Ch, 032h, 0DBh, 08Bh, 017h, 06Ah, 004h, 08Dh, 044h, 024h, 034h, 050h, 08Bh, 0CFh
+    db 0FFh, 052h, 00Ch, 083h, 0F8h, 004h, 00Fh, 084h, 025h, 0EDh, 0FFh, 0FFh, 033h, 0F6h, 056h, 08Dh
+    db 08Ch, 024h, 0BCh, 000h, 000h, 000h, 06Ah, 001h, 051h
+    call _bfmeFormatText
+    db 083h, 0C4h, 00Ch, 068h
+    dd ?g_guardTargetTypeThrowInfo@@3HA
+    db 08Dh, 094h, 024h, 0BCh, 000h, 000h, 000h, 052h
+    call ?ji_009f6d00@@YAXXZ
+    db 08Dh, 08Ch, 024h, 0C4h, 000h, 000h, 000h, 0C6h, 084h, 024h, 09Ch, 002h, 000h, 000h, 000h
+    call ?j_0000b109@@YAXXZ
+    db 08Dh, 04Ch, 024h, 00Ch, 0C7h, 084h, 024h, 09Ch, 002h, 000h, 000h, 0FFh, 0FFh, 0FFh, 0FFh
+    call ?j_0000b109@@YAXXZ
+    db 0B0h, 001h, 08Bh, 08Ch, 024h, 094h, 002h, 000h, 000h, 064h, 089h, 00Dh, 000h, 000h, 000h, 000h
+    db 05Fh, 05Eh, 05Bh, 08Bh, 0E5h, 05Dh, 0C3h, 06Ah, 000h, 08Dh, 084h, 024h, 03Ch, 001h, 000h, 000h
+    db 06Ah, 000h, 050h
+    call _bfmeFormatText
+    db 083h, 0C4h, 00Ch, 068h
+    dd ?g_guardTargetTypeThrowInfo@@3HA
+    db 08Dh, 08Ch, 024h, 03Ch, 001h, 000h, 000h, 051h
+    call ?ji_009f6d00@@YAXXZ
+    db 06Ah, 000h, 08Dh, 094h, 024h, 070h, 001h, 000h, 000h, 06Ah, 001h, 052h
+    call _bfmeFormatText
+    db 083h, 0C4h, 00Ch, 068h
+    dd ?g_guardTargetTypeThrowInfo@@3HA
+    db 08Dh, 084h, 024h, 070h, 001h, 000h, 000h, 050h
+    call ?ji_009f6d00@@YAXXZ
+    db 06Ah, 000h, 08Dh, 08Ch, 024h, 078h, 001h, 000h, 000h, 06Ah, 001h, 051h
+    call _bfmeFormatText
+    db 083h, 0C4h, 00Ch, 068h
+    dd ?g_guardTargetTypeThrowInfo@@3HA
+    db 08Dh, 094h, 024h, 078h, 001h, 000h, 000h, 052h
+    call ?ji_009f6d00@@YAXXZ
+    db 06Ah, 000h, 08Dh, 084h, 024h, 068h, 001h, 000h, 000h, 06Ah, 000h, 050h
+    call _bfmeFormatText
+    db 083h, 0C4h, 00Ch, 068h
+    dd ?g_guardTargetTypeThrowInfo@@3HA
+    db 08Dh, 08Ch, 024h, 068h, 001h, 000h, 000h, 051h
+    call ?ji_009f6d00@@YAXXZ
+    db 06Ah, 000h, 08Dh, 094h, 024h, 08Ch, 001h, 000h, 000h, 06Ah, 001h, 052h
+    call _bfmeFormatText
+    db 083h, 0C4h, 00Ch, 068h
+    dd ?g_guardTargetTypeThrowInfo@@3HA
+    db 08Dh, 084h, 024h, 08Ch, 001h, 000h, 000h, 050h
+    call ?ji_009f6d00@@YAXXZ
+    db 050h, 068h
+    dd g_Va011445D8
+    db 08Dh, 08Ch, 024h, 048h, 001h, 000h, 000h, 06Ah, 000h, 051h
+    call _bfmeFormatText
+    db 083h, 0C4h, 010h, 068h
+    dd ?g_guardTargetTypeThrowInfo@@3HA
+    db 08Dh, 094h, 024h, 044h, 001h, 000h, 000h, 052h
+    call ?ji_009f6d00@@YAXXZ
+    db 08Bh, 08Ch, 024h, 094h, 002h, 000h, 000h, 05Fh, 05Eh, 032h, 0C0h, 064h, 089h, 00Dh, 000h, 000h
+    db 000h, 000h, 05Bh, 08Bh, 0E5h, 05Dh, 0C3h
 ?d_009d9d90@@YAXXZ ENDP
+_TEXT$d00dd9d90 ENDS
+_TEXT SEGMENT
 
 ; ghidra: FUN_00ddb2f0  retail @ 0x009DB2F0 size 48
 public ?d_009db2f0@@YAXXZ

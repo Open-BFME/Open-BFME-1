@@ -1,5 +1,20 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ??1?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@XZ:NEAR
+EXTERN ??1BFMERetailAsciiString@@QAE@XZ:NEAR
+EXTERN ??1BfmeElemBU@@QAE@XZ:NEAR
+EXTERN ??1BfmeElemVVC@@QAE@XZ:NEAR
+EXTERN ??1CursorInfo@@QAE@XZ:NEAR
+EXTERN ??3@YAXPAX@Z:NEAR
+EXTERN ??_M@YGXPAXIHP6EX0@Z@Z:NEAR
+EXTERN ?j_00001c80@@YAXXZ:NEAR
+EXTERN ?j_00006bfe@@YAXXZ:NEAR
+EXTERN ?j_00016de7@@YAXXZ:NEAR
+EXTERN ?j_0002aaa9@@YAXXZ:NEAR
+EXTERN ?j_0002e40b@@YAXXZ:NEAR
+EXTERN ?j_0003b304@@YAXXZ:NEAR
+EXTERN ?j_00043ec3@@YAXXZ:NEAR
 _TEXT SEGMENT
 
 ; ghidra: Unwind@01033460  retail @ 0x00C33460 size 11
@@ -1071,10 +1086,16 @@ public ?d_00c34320@@YAXXZ
 ?d_00c34320@@YAXXZ ENDP
 
 ; ghidra: Unwind@01034350  retail @ 0x00C34350 size 8
+_TEXT ENDS
+_TEXT$d01034350 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01034350 size 8
 public ?d_00c34350@@YAXXZ
 ?d_00c34350@@YAXXZ PROC
-    db 8Bh, 4Dh, 0Ch, 0E9h, 0A6h, 28h, 3Dh, 0FFh
+    db 08Bh, 04Dh, 00Ch
+    jmp ?j_00006bfe@@YAXXZ
 ?d_00c34350@@YAXXZ ENDP
+_TEXT$d01034350 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01034388  retail @ 0x00C34388 size 14
 public ?d_00c34388@@YAXXZ
@@ -1532,11 +1553,17 @@ public ?d_00c355de@@YAXXZ
 ?d_00c355de@@YAXXZ ENDP
 
 ; ghidra: Unwind@010355e9  retail @ 0x00C355E9 size 23
+_TEXT ENDS
+_TEXT$d010355e9 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x010355E9 size 23
 public ?d_00c355e9@@YAXXZ
 ?d_00c355e9@@YAXXZ PROC
-    db 8Bh, 85h, 0Ch, 0FAh, 0FFh, 0FFh, 50h, 8Bh, 8Dh, 0CCh, 0F9h, 0FFh, 0FFh, 51h, 0E8h, 0ADh
-    db 54h, 3Fh, 0FFh, 83h, 0C4h, 08h, 0C3h
+    db 08Bh, 085h, 00Ch, 0FAh, 0FFh, 0FFh, 050h, 08Bh, 08Dh, 0CCh, 0F9h, 0FFh, 0FFh, 051h
+    call ?j_0002aaa9@@YAXXZ
+    db 083h, 0C4h, 008h, 0C3h
 ?d_00c355e9@@YAXXZ ENDP
+_TEXT$d010355e9 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01035600  retail @ 0x00C35600 size 11
 public ?d_00c35600@@YAXXZ
@@ -1593,12 +1620,18 @@ public ?d_00c35658@@YAXXZ
 ?d_00c35658@@YAXXZ ENDP
 
 ; ghidra: Unwind@01035663  retail @ 0x00C35663 size 34
+_TEXT ENDS
+_TEXT$d01035663 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01035663 size 34
 public ?d_00c35663@@YAXXZ
 ?d_00c35663@@YAXXZ PROC
-    db 8Bh, 85h, 0D4h, 0F9h, 0FFh, 0FFh, 83h, 0E0h, 01h, 0Fh, 84h, 12h, 00h, 00h, 00h, 83h
-    db 0A5h, 0D4h, 0F9h, 0FFh, 0FFh, 0FEh, 8Dh, 8Dh, 00h, 0FAh, 0FFh, 0FFh, 0E9h, 80h, 5Ch, 40h
-    db 0FFh, 0C3h
+    db 08Bh, 085h, 0D4h, 0F9h, 0FFh, 0FFh, 083h, 0E0h, 001h, 00Fh, 084h, 012h, 000h, 000h, 000h, 083h
+    db 0A5h, 0D4h, 0F9h, 0FFh, 0FFh, 0FEh, 08Dh, 08Dh, 000h, 0FAh, 0FFh, 0FFh
+    jmp ?j_0003b304@@YAXXZ
+    db 0C3h
 ?d_00c35663@@YAXXZ ENDP
+_TEXT$d01035663 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@010356e8  retail @ 0x00C356E8 size 8
 public ?d_00c356e8@@YAXXZ
@@ -1614,11 +1647,18 @@ public ?d_00c35790@@YAXXZ
 ?d_00c35790@@YAXXZ ENDP
 
 ; ghidra: Unwind@010357d8  retail @ 0x00C357D8 size 25
+_TEXT ENDS
+_TEXT$d010357d8 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x010357D8 size 25
 public ?d_00c357d8@@YAXXZ
 ?d_00c357d8@@YAXXZ PROC
-    db 8Bh, 45h, 0F0h, 83h, 0E0h, 01h, 0Fh, 84h, 0Ch, 00h, 00h, 00h, 83h, 65h, 0F0h, 0FEh
-    db 8Bh, 4Dh, 04h, 0E9h, 38h, 80h, 3Dh, 0FFh, 0C3h
+    db 08Bh, 045h, 0F0h, 083h, 0E0h, 001h, 00Fh, 084h, 00Ch, 000h, 000h, 000h, 083h, 065h, 0F0h, 0FEh
+    db 08Bh, 04Dh, 004h
+    jmp ??1BFMERetailAsciiString@@QAE@XZ
+    db 0C3h
 ?d_00c357d8@@YAXXZ ENDP
+_TEXT$d010357d8 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01035810  retail @ 0x00C35810 size 11
 public ?d_00c35810@@YAXXZ
@@ -1627,11 +1667,18 @@ public ?d_00c35810@@YAXXZ
 ?d_00c35810@@YAXXZ ENDP
 
 ; ghidra: Unwind@01035868  retail @ 0x00C35868 size 25
+_TEXT ENDS
+_TEXT$d01035868 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01035868 size 25
 public ?d_00c35868@@YAXXZ
 ?d_00c35868@@YAXXZ PROC
-    db 8Bh, 45h, 0F0h, 83h, 0E0h, 01h, 0Fh, 84h, 0Ch, 00h, 00h, 00h, 83h, 65h, 0F0h, 0FEh
-    db 8Bh, 4Dh, 04h, 0E9h, 0A8h, 7Fh, 3Dh, 0FFh, 0C3h
+    db 08Bh, 045h, 0F0h, 083h, 0E0h, 001h, 00Fh, 084h, 00Ch, 000h, 000h, 000h, 083h, 065h, 0F0h, 0FEh
+    db 08Bh, 04Dh, 004h
+    jmp ??1BFMERetailAsciiString@@QAE@XZ
+    db 0C3h
 ?d_00c35868@@YAXXZ ENDP
+_TEXT$d01035868 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01035940  retail @ 0x00C35940 size 8
 public ?d_00c35940@@YAXXZ
@@ -1676,10 +1723,16 @@ public ?d_00c35d87@@YAXXZ
 ?d_00c35d87@@YAXXZ ENDP
 
 ; ghidra: Unwind@01035de0  retail @ 0x00C35DE0 size 8
+_TEXT ENDS
+_TEXT$d01035de0 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01035DE0 size 8
 public ?d_00c35de0@@YAXXZ
 ?d_00c35de0@@YAXXZ PROC
-    db 8Bh, 4Dh, 08h, 0E9h, 1Ch, 55h, 40h, 0FFh
+    db 08Bh, 04Dh, 008h
+    jmp ?j_0003b304@@YAXXZ
 ?d_00c35de0@@YAXXZ ENDP
+_TEXT$d01035de0 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01035e40  retail @ 0x00C35E40 size 11
 public ?d_00c35e40@@YAXXZ
@@ -2457,11 +2510,18 @@ public ?d_00c37290@@YAXXZ
 ?d_00c37290@@YAXXZ ENDP
 
 ; ghidra: Unwind@0103731b  retail @ 0x00C3731B size 25
+_TEXT ENDS
+_TEXT$d0103731b SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103731B size 25
 public ?d_00c3731b@@YAXXZ
 ?d_00c3731b@@YAXXZ PROC
-    db 8Bh, 45h, 0E8h, 83h, 0E0h, 01h, 0Fh, 84h, 0Ch, 00h, 00h, 00h, 83h, 65h, 0E8h, 0FEh
-    db 8Dh, 4Dh, 0ECh, 0E9h, 0F5h, 64h, 3Dh, 0FFh, 0C3h
+    db 08Bh, 045h, 0E8h, 083h, 0E0h, 001h, 00Fh, 084h, 00Ch, 000h, 000h, 000h, 083h, 065h, 0E8h, 0FEh
+    db 08Dh, 04Dh, 0ECh
+    jmp ??1BFMERetailAsciiString@@QAE@XZ
+    db 0C3h
 ?d_00c3731b@@YAXXZ ENDP
+_TEXT$d0103731b ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01037334  retail @ 0x00C37334 size 25
 public ?d_00c37334@@YAXXZ
@@ -2544,11 +2604,18 @@ public ?d_00c375de@@YAXXZ
 ?d_00c375de@@YAXXZ ENDP
 
 ; ghidra: Unwind@01037620  retail @ 0x00C37620 size 25
+_TEXT ENDS
+_TEXT$d01037620 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01037620 size 25
 public ?d_00c37620@@YAXXZ
 ?d_00c37620@@YAXXZ PROC
-    db 8Bh, 45h, 0D8h, 83h, 0E0h, 01h, 0Fh, 84h, 0Ch, 00h, 00h, 00h, 83h, 65h, 0D8h, 0FEh
-    db 8Dh, 4Dh, 0D0h, 0E9h, 0CCh, 3Ch, 40h, 0FFh, 0C3h
+    db 08Bh, 045h, 0D8h, 083h, 0E0h, 001h, 00Fh, 084h, 00Ch, 000h, 000h, 000h, 083h, 065h, 0D8h, 0FEh
+    db 08Dh, 04Dh, 0D0h
+    jmp ?j_0003b304@@YAXXZ
+    db 0C3h
 ?d_00c37620@@YAXXZ ENDP
+_TEXT$d01037620 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01037660  retail @ 0x00C37660 size 8
 public ?d_00c37660@@YAXXZ
@@ -2732,11 +2799,19 @@ public ?d_00c37e28@@YAXXZ
 ?d_00c37e28@@YAXXZ ENDP
 
 ; ghidra: Unwind@01037efb  retail @ 0x00C37EFB size 24
+_TEXT ENDS
+_TEXT$d01037efb SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01037EFB size 24
 public ?d_00c37efb@@YAXXZ
 ?d_00c37efb@@YAXXZ PROC
-    db 68h, 0B8h, 0EAh, 43h, 00h, 6Ah, 04h, 6Ah, 08h, 8Bh, 45h, 0DCh, 05h, 0DCh, 04h, 00h
-    db 00h, 50h, 0E8h, 64h, 0EEh, 0DBh, 0FFh, 0C3h
+    db 068h
+    dd ??1BfmeElemVVC@@QAE@XZ
+    db 06Ah, 004h, 06Ah, 008h, 08Bh, 045h, 0DCh, 005h, 0DCh, 004h, 000h, 000h, 050h
+    call ??_M@YGXPAXIHP6EX0@Z@Z
+    db 0C3h
 ?d_00c37efb@@YAXXZ ENDP
+_TEXT$d01037efb ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01037f13  retail @ 0x00C37F13 size 14
 public ?d_00c37f13@@YAXXZ
@@ -2818,11 +2893,19 @@ public ?d_00c38670@@YAXXZ
 ?d_00c38670@@YAXXZ ENDP
 
 ; ghidra: Unwind@010386d8  retail @ 0x00C386D8 size 22
+_TEXT ENDS
+_TEXT$d010386d8 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x010386D8 size 22
 public ?d_00c386d8@@YAXXZ
 ?d_00c386d8@@YAXXZ PROC
-    db 68h, 7Ch, 1Ch, 44h, 00h, 6Ah, 32h, 6Ah, 54h, 8Bh, 45h, 0F0h, 83h, 0C0h, 08h, 50h
-    db 0E8h, 89h, 0E6h, 0DBh, 0FFh, 0C3h
+    db 068h
+    dd ??1CursorInfo@@QAE@XZ
+    db 06Ah, 032h, 06Ah, 054h, 08Bh, 045h, 0F0h, 083h, 0C0h, 008h, 050h
+    call ??_M@YGXPAXIHP6EX0@Z@Z
+    db 0C3h
 ?d_00c386d8@@YAXXZ ENDP
+_TEXT$d010386d8 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01038718  retail @ 0x00C38718 size 14
 public ?d_00c38718@@YAXXZ
@@ -3542,11 +3625,19 @@ public ?d_00c39470@@YAXXZ
 ?d_00c39470@@YAXXZ ENDP
 
 ; ghidra: Unwind@010394bc  retail @ 0x00C394BC size 22
+_TEXT ENDS
+_TEXT$d010394bc SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x010394BC size 22
 public ?d_00c394bc@@YAXXZ
 ?d_00c394bc@@YAXXZ PROC
-    db 68h, 28h, 0D8h, 40h, 00h, 6Ah, 05h, 6Ah, 04h, 8Bh, 45h, 0F0h, 83h, 0C0h, 14h, 50h
-    db 0E8h, 0A5h, 0D8h, 0DBh, 0FFh, 0C3h
+    db 068h
+    dd ??1BFMERetailAsciiString@@QAE@XZ
+    db 06Ah, 005h, 06Ah, 004h, 08Bh, 045h, 0F0h, 083h, 0C0h, 014h, 050h
+    call ??_M@YGXPAXIHP6EX0@Z@Z
+    db 0C3h
 ?d_00c394bc@@YAXXZ ENDP
+_TEXT$d010394bc ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@010394dd  retail @ 0x00C394DD size 14
 public ?d_00c394dd@@YAXXZ
@@ -3555,11 +3646,19 @@ public ?d_00c394dd@@YAXXZ
 ?d_00c394dd@@YAXXZ ENDP
 
 ; ghidra: Unwind@0103953c  retail @ 0x00C3953C size 22
+_TEXT ENDS
+_TEXT$d0103953c SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103953C size 22
 public ?d_00c3953c@@YAXXZ
 ?d_00c3953c@@YAXXZ PROC
-    db 68h, 28h, 0D8h, 40h, 00h, 6Ah, 05h, 6Ah, 04h, 8Bh, 45h, 0F0h, 83h, 0C0h, 14h, 50h
-    db 0E8h, 25h, 0D8h, 0DBh, 0FFh, 0C3h
+    db 068h
+    dd ??1BFMERetailAsciiString@@QAE@XZ
+    db 06Ah, 005h, 06Ah, 004h, 08Bh, 045h, 0F0h, 083h, 0C0h, 014h, 050h
+    call ??_M@YGXPAXIHP6EX0@Z@Z
+    db 0C3h
 ?d_00c3953c@@YAXXZ ENDP
+_TEXT$d0103953c ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@0103955d  retail @ 0x00C3955D size 14
 public ?d_00c3955d@@YAXXZ
@@ -3731,11 +3830,18 @@ public ?d_00c39e30@@YAXXZ
 ?d_00c39e30@@YAXXZ ENDP
 
 ; ghidra: Unwind@01039e58  retail @ 0x00C39E58 size 25
+_TEXT ENDS
+_TEXT$d01039e58 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01039E58 size 25
 public ?d_00c39e58@@YAXXZ
 ?d_00c39e58@@YAXXZ PROC
-    db 8Bh, 45h, 0E4h, 83h, 0E0h, 01h, 0Fh, 84h, 0Ch, 00h, 00h, 00h, 83h, 65h, 0E4h, 0FEh
-    db 8Bh, 4Dh, 04h, 0E9h, 0BDh, 0C5h, 3Dh, 0FFh, 0C3h
+    db 08Bh, 045h, 0E4h, 083h, 0E0h, 001h, 00Fh, 084h, 00Ch, 000h, 000h, 000h, 083h, 065h, 0E4h, 0FEh
+    db 08Bh, 04Dh, 004h
+    jmp ??1?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@XZ
+    db 0C3h
 ?d_00c39e58@@YAXXZ ENDP
+_TEXT$d01039e58 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01039e98  retail @ 0x00C39E98 size 25
 public ?d_00c39e98@@YAXXZ
@@ -4005,10 +4111,17 @@ public ?d_00c3a590@@YAXXZ
 ?d_00c3a590@@YAXXZ ENDP
 
 ; ghidra: Unwind@0103a5b0  retail @ 0x00C3A5B0 size 11
+_TEXT ENDS
+_TEXT$d0103a5b0 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103A5B0 size 11
 public ?d_00c3a5b0@@YAXXZ
 ?d_00c3a5b0@@YAXXZ PROC
-    db 8Bh, 45h, 04h, 50h, 0E8h, 0F7h, 78h, 0C4h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 004h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c3a5b0@@YAXXZ ENDP
+_TEXT$d0103a5b0 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@0103a5e0  retail @ 0x00C3A5E0 size 8
 public ?d_00c3a5e0@@YAXXZ
@@ -4041,10 +4154,17 @@ public ?d_00c3a706@@YAXXZ
 ?d_00c3a706@@YAXXZ ENDP
 
 ; ghidra: Unwind@0103a730  retail @ 0x00C3A730 size 11
+_TEXT ENDS
+_TEXT$d0103a730 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103A730 size 11
 public ?d_00c3a730@@YAXXZ
 ?d_00c3a730@@YAXXZ PROC
-    db 8Bh, 45h, 0Ch, 50h, 0E8h, 77h, 77h, 0C4h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 00Ch, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c3a730@@YAXXZ ENDP
+_TEXT$d0103a730 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@0103a73b  retail @ 0x00C3A73B size 25
 public ?d_00c3a73b@@YAXXZ
@@ -4060,11 +4180,17 @@ public ?d_00c3a778@@YAXXZ
 ?d_00c3a778@@YAXXZ ENDP
 
 ; ghidra: Unwind@0103a7a0  retail @ 0x00C3A7A0 size 17
+_TEXT ENDS
+_TEXT$d0103a7a0 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103A7A0 size 17
 public ?d_00c3a7a0@@YAXXZ
 ?d_00c3a7a0@@YAXXZ PROC
-    db 8Bh, 45h, 08h, 50h, 8Bh, 4Dh, 04h, 51h, 0E8h, 0FCh, 02h, 3Fh, 0FFh, 83h, 0C4h, 08h
-    db 0C3h
+    db 08Bh, 045h, 008h, 050h, 08Bh, 04Dh, 004h, 051h
+    call ?j_0002aaa9@@YAXXZ
+    db 083h, 0C4h, 008h, 0C3h
 ?d_00c3a7a0@@YAXXZ ENDP
+_TEXT$d0103a7a0 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@0103a808  retail @ 0x00C3A808 size 17
 public ?d_00c3a808@@YAXXZ
@@ -4488,10 +4614,16 @@ public ?d_00c3c13b@@YAXXZ
 ?d_00c3c13b@@YAXXZ ENDP
 
 ; ghidra: Unwind@0103c146  retail @ 0x00C3C146 size 14
+_TEXT ENDS
+_TEXT$d0103c146 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103C146 size 14
 public ?d_00c3c146@@YAXXZ
 ?d_00c3c146@@YAXXZ PROC
-    db 8Bh, 8Dh, 14h, 0FFh, 0FFh, 0FFh, 83h, 0E9h, 6Ch, 0E9h, 0B7h, 22h, 3Fh, 0FFh
+    db 08Bh, 08Dh, 014h, 0FFh, 0FFh, 0FFh, 083h, 0E9h, 06Ch
+    jmp ?j_0002e40b@@YAXXZ
 ?d_00c3c146@@YAXXZ ENDP
+_TEXT$d0103c146 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@0103c178  retail @ 0x00C3C178 size 11
 public ?d_00c3c178@@YAXXZ
@@ -4536,10 +4668,16 @@ public ?d_00c3c22b@@YAXXZ
 ?d_00c3c22b@@YAXXZ ENDP
 
 ; ghidra: Unwind@0103c236  retail @ 0x00C3C236 size 14
+_TEXT ENDS
+_TEXT$d0103c236 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103C236 size 14
 public ?d_00c3c236@@YAXXZ
 ?d_00c3c236@@YAXXZ PROC
-    db 8Bh, 8Dh, 14h, 0FFh, 0FFh, 0FFh, 83h, 0E9h, 6Ch, 0E9h, 0C7h, 21h, 3Fh, 0FFh
+    db 08Bh, 08Dh, 014h, 0FFh, 0FFh, 0FFh, 083h, 0E9h, 06Ch
+    jmp ?j_0002e40b@@YAXXZ
 ?d_00c3c236@@YAXXZ ENDP
+_TEXT$d0103c236 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@0103c260  retail @ 0x00C3C260 size 11
 public ?d_00c3c260@@YAXXZ
@@ -5266,11 +5404,17 @@ public ?d_00c3d830@@YAXXZ
 ?d_00c3d830@@YAXXZ ENDP
 
 ; ghidra: Unwind@0103d83b  retail @ 0x00C3D83B size 23
+_TEXT ENDS
+_TEXT$d0103d83b SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103D83B size 23
 public ?d_00c3d83b@@YAXXZ
 ?d_00c3d83b@@YAXXZ PROC
-    db 8Bh, 85h, 7Ch, 0FDh, 0FFh, 0FFh, 50h, 8Bh, 8Dh, 78h, 0FDh, 0FFh, 0FFh, 51h, 0E8h, 5Bh
-    db 0D2h, 3Eh, 0FFh, 83h, 0C4h, 08h, 0C3h
+    db 08Bh, 085h, 07Ch, 0FDh, 0FFh, 0FFh, 050h, 08Bh, 08Dh, 078h, 0FDh, 0FFh, 0FFh, 051h
+    call ?j_0002aaa9@@YAXXZ
+    db 083h, 0C4h, 008h, 0C3h
 ?d_00c3d83b@@YAXXZ ENDP
+_TEXT$d0103d83b ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@0103d870  retail @ 0x00C3D870 size 8
 public ?d_00c3d870@@YAXXZ
@@ -5303,11 +5447,17 @@ public ?d_00c3d930@@YAXXZ
 ?d_00c3d930@@YAXXZ ENDP
 
 ; ghidra: Unwind@0103d93b  retail @ 0x00C3D93B size 23
+_TEXT ENDS
+_TEXT$d0103d93b SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103D93B size 23
 public ?d_00c3d93b@@YAXXZ
 ?d_00c3d93b@@YAXXZ PROC
-    db 8Bh, 85h, 3Ch, 0FFh, 0FFh, 0FFh, 50h, 8Bh, 8Dh, 38h, 0FFh, 0FFh, 0FFh, 51h, 0E8h, 5Bh
-    db 0D1h, 3Eh, 0FFh, 83h, 0C4h, 08h, 0C3h
+    db 08Bh, 085h, 03Ch, 0FFh, 0FFh, 0FFh, 050h, 08Bh, 08Dh, 038h, 0FFh, 0FFh, 0FFh, 051h
+    call ?j_0002aaa9@@YAXXZ
+    db 083h, 0C4h, 008h, 0C3h
 ?d_00c3d93b@@YAXXZ ENDP
+_TEXT$d0103d93b ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@0103d986  retail @ 0x00C3D986 size 11
 public ?d_00c3d986@@YAXXZ
@@ -5341,11 +5491,17 @@ public ?d_00c3da20@@YAXXZ
 ?d_00c3da20@@YAXXZ ENDP
 
 ; ghidra: Unwind@0103da2b  retail @ 0x00C3DA2B size 23
+_TEXT ENDS
+_TEXT$d0103da2b SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103DA2B size 23
 public ?d_00c3da2b@@YAXXZ
 ?d_00c3da2b@@YAXXZ PROC
-    db 8Bh, 85h, 0DCh, 0FDh, 0FFh, 0FFh, 50h, 8Bh, 8Dh, 0E0h, 0FDh, 0FFh, 0FFh, 51h, 0E8h, 6Bh
-    db 0D0h, 3Eh, 0FFh, 83h, 0C4h, 08h, 0C3h
+    db 08Bh, 085h, 0DCh, 0FDh, 0FFh, 0FFh, 050h, 08Bh, 08Dh, 0E0h, 0FDh, 0FFh, 0FFh, 051h
+    call ?j_0002aaa9@@YAXXZ
+    db 083h, 0C4h, 008h, 0C3h
 ?d_00c3da2b@@YAXXZ ENDP
+_TEXT$d0103da2b ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@0103da80  retail @ 0x00C3DA80 size 11
 public ?d_00c3da80@@YAXXZ
@@ -5384,10 +5540,17 @@ public ?d_00c3dbc8@@YAXXZ
 ?d_00c3dbc8@@YAXXZ ENDP
 
 ; ghidra: Unwind@0103dc08  retail @ 0x00C3DC08 size 11
+_TEXT ENDS
+_TEXT$d0103dc08 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103DC08 size 11
 public ?d_00c3dc08@@YAXXZ
 ?d_00c3dc08@@YAXXZ PROC
-    db 8Bh, 45h, 04h, 50h, 0E8h, 9Fh, 42h, 0C4h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 004h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c3dc08@@YAXXZ ENDP
+_TEXT$d0103dc08 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@0103dc6e  retail @ 0x00C3DC6E size 11
 public ?d_00c3dc6e@@YAXXZ
@@ -5465,10 +5628,17 @@ public ?d_00c3e1d7@@YAXXZ
 ?d_00c3e1d7@@YAXXZ ENDP
 
 ; ghidra: Unwind@0103e290  retail @ 0x00C3E290 size 11
+_TEXT ENDS
+_TEXT$d0103e290 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103E290 size 11
 public ?d_00c3e290@@YAXXZ
 ?d_00c3e290@@YAXXZ PROC
-    db 8Bh, 45h, 04h, 50h, 0E8h, 17h, 3Ch, 0C4h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 004h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c3e290@@YAXXZ ENDP
+_TEXT$d0103e290 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@0103e2d0  retail @ 0x00C3E2D0 size 17
 public ?d_00c3e2d0@@YAXXZ
@@ -5553,10 +5723,17 @@ public ?d_00c3e5f0@@YAXXZ
 ?d_00c3e5f0@@YAXXZ ENDP
 
 ; ghidra: Unwind@0103e610  retail @ 0x00C3E610 size 11
+_TEXT ENDS
+_TEXT$d0103e610 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103E610 size 11
 public ?d_00c3e610@@YAXXZ
 ?d_00c3e610@@YAXXZ PROC
-    db 8Bh, 45h, 04h, 50h, 0E8h, 97h, 38h, 0C4h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 004h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c3e610@@YAXXZ ENDP
+_TEXT$d0103e610 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@0103e6a0  retail @ 0x00C3E6A0 size 14
 public ?d_00c3e6a0@@YAXXZ
@@ -5595,11 +5772,19 @@ public ?d_00c3e780@@YAXXZ
 ?d_00c3e780@@YAXXZ ENDP
 
 ; ghidra: Unwind@0103e7d7  retail @ 0x00C3E7D7 size 24
+_TEXT ENDS
+_TEXT$d0103e7d7 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103E7D7 size 24
 public ?d_00c3e7d7@@YAXXZ
 ?d_00c3e7d7@@YAXXZ PROC
-    db 68h, 0C3h, 3Eh, 44h, 00h, 6Ah, 05h, 6Ah, 14h, 8Bh, 45h, 0ECh, 05h, 0ACh, 01h, 00h
-    db 00h, 50h, 0E8h, 88h, 85h, 0DBh, 0FFh, 0C3h
+    db 068h
+    dd ?j_00043ec3@@YAXXZ
+    db 06Ah, 005h, 06Ah, 014h, 08Bh, 045h, 0ECh, 005h, 0ACh, 001h, 000h, 000h, 050h
+    call ??_M@YGXPAXIHP6EX0@Z@Z
+    db 0C3h
 ?d_00c3e7d7@@YAXXZ ENDP
+_TEXT$d0103e7d7 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@0103e883  retail @ 0x00C3E883 size 14
 public ?d_00c3e883@@YAXXZ
@@ -5620,11 +5805,19 @@ public ?d_00c3e8f9@@YAXXZ
 ?d_00c3e8f9@@YAXXZ ENDP
 
 ; ghidra: Unwind@0103e9d8  retail @ 0x00C3E9D8 size 24
+_TEXT ENDS
+_TEXT$d0103e9d8 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103E9D8 size 24
 public ?d_00c3e9d8@@YAXXZ
 ?d_00c3e9d8@@YAXXZ PROC
-    db 68h, 0C3h, 3Eh, 44h, 00h, 6Ah, 05h, 6Ah, 14h, 8Bh, 45h, 0F0h, 05h, 0ACh, 01h, 00h
-    db 00h, 50h, 0E8h, 87h, 83h, 0DBh, 0FFh, 0C3h
+    db 068h
+    dd ?j_00043ec3@@YAXXZ
+    db 06Ah, 005h, 06Ah, 014h, 08Bh, 045h, 0F0h, 005h, 0ACh, 001h, 000h, 000h, 050h
+    call ??_M@YGXPAXIHP6EX0@Z@Z
+    db 0C3h
 ?d_00c3e9d8@@YAXXZ ENDP
+_TEXT$d0103e9d8 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@0103ea52  retail @ 0x00C3EA52 size 14
 public ?d_00c3ea52@@YAXXZ
@@ -5639,19 +5832,33 @@ public ?d_00c3ea6e@@YAXXZ
 ?d_00c3ea6e@@YAXXZ ENDP
 
 ; ghidra: Unwind@0103eb03  retail @ 0x00C3EB03 size 22
+_TEXT ENDS
+_TEXT$d0103eb03 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103EB03 size 22
 public ?d_00c3eb03@@YAXXZ
 ?d_00c3eb03@@YAXXZ PROC
-    db 68h, 88h, 0B9h, 40h, 00h, 6Ah, 08h, 6Ah, 44h, 8Bh, 45h, 0F0h, 83h, 0C0h, 5Ch, 50h
-    db 0E8h, 5Eh, 82h, 0DBh, 0FFh, 0C3h
+    db 068h
+    dd ??1BfmeElemBU@@QAE@XZ
+    db 06Ah, 008h, 06Ah, 044h, 08Bh, 045h, 0F0h, 083h, 0C0h, 05Ch, 050h
+    call ??_M@YGXPAXIHP6EX0@Z@Z
+    db 0C3h
 ?d_00c3eb03@@YAXXZ ENDP
+_TEXT$d0103eb03 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@0103eb58  retail @ 0x00C3EB58 size 39
+_TEXT ENDS
+_TEXT$d0103eb58 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103EB58 size 39
 public ?d_00c3eb58@@YAXXZ
 ?d_00c3eb58@@YAXXZ PROC
-    db 83h, 7Dh, 0F0h, 00h, 0Fh, 84h, 0Eh, 00h, 00h, 00h, 8Bh, 45h, 0F0h, 83h, 0C0h, 58h
-    db 89h, 45h, 0ECh, 0E9h, 07h, 00h, 00h, 00h, 0C7h, 45h, 0ECh, 00h, 00h, 00h, 00h, 8Bh
-    db 4Dh, 0ECh, 0E9h, 01h, 31h, 3Ch, 0FFh
+    db 083h, 07Dh, 0F0h, 000h, 00Fh, 084h, 00Eh, 000h, 000h, 000h, 08Bh, 045h, 0F0h, 083h, 0C0h, 058h
+    db 089h, 045h, 0ECh, 0E9h, 007h, 000h, 000h, 000h, 0C7h, 045h, 0ECh, 000h, 000h, 000h, 000h, 08Bh
+    db 04Dh, 0ECh
+    jmp ?j_00001c80@@YAXXZ
 ?d_00c3eb58@@YAXXZ ENDP
+_TEXT$d0103eb58 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@0103ebd0  retail @ 0x00C3EBD0 size 8
 public ?d_00c3ebd0@@YAXXZ
@@ -5722,11 +5929,17 @@ public ?d_00c3ef3f@@YAXXZ
 ?d_00c3ef3f@@YAXXZ ENDP
 
 ; ghidra: Unwind@0103ef88  retail @ 0x00C3EF88 size 17
+_TEXT ENDS
+_TEXT$d0103ef88 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103EF88 size 17
 public ?d_00c3ef88@@YAXXZ
 ?d_00c3ef88@@YAXXZ PROC
-    db 8Bh, 45h, 0F0h, 50h, 8Bh, 4Dh, 0E4h, 51h, 0E8h, 14h, 0BBh, 3Eh, 0FFh, 83h, 0C4h, 08h
-    db 0C3h
+    db 08Bh, 045h, 0F0h, 050h, 08Bh, 04Dh, 0E4h, 051h
+    call ?j_0002aaa9@@YAXXZ
+    db 083h, 0C4h, 008h, 0C3h
 ?d_00c3ef88@@YAXXZ ENDP
+_TEXT$d0103ef88 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@0103f023  retail @ 0x00C3F023 size 11
 public ?d_00c3f023@@YAXXZ
@@ -5827,18 +6040,33 @@ public ?d_00c3f520@@YAXXZ
 ?d_00c3f520@@YAXXZ ENDP
 
 ; ghidra: Unwind@0103f560  retail @ 0x00C3F560 size 25
+_TEXT ENDS
+_TEXT$d0103f560 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103F560 size 25
 public ?d_00c3f560@@YAXXZ
 ?d_00c3f560@@YAXXZ PROC
-    db 8Bh, 45h, 0E0h, 83h, 0E0h, 01h, 0Fh, 84h, 0Ch, 00h, 00h, 00h, 83h, 65h, 0E0h, 0FEh
-    db 8Bh, 4Dh, 04h, 0E9h, 0B0h, 0E2h, 3Ch, 0FFh, 0C3h
+    db 08Bh, 045h, 0E0h, 083h, 0E0h, 001h, 00Fh, 084h, 00Ch, 000h, 000h, 000h, 083h, 065h, 0E0h, 0FEh
+    db 08Bh, 04Dh, 004h
+    jmp ??1BFMERetailAsciiString@@QAE@XZ
+    db 0C3h
 ?d_00c3f560@@YAXXZ ENDP
+_TEXT$d0103f560 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@0103f628  retail @ 0x00C3F628 size 22
+_TEXT ENDS
+_TEXT$d0103f628 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103F628 size 22
 public ?d_00c3f628@@YAXXZ
 ?d_00c3f628@@YAXXZ PROC
-    db 68h, 88h, 0B9h, 40h, 00h, 6Ah, 08h, 6Ah, 44h, 8Dh, 85h, 0D4h, 0FDh, 0FFh, 0FFh, 50h
-    db 0E8h, 39h, 77h, 0DBh, 0FFh, 0C3h
+    db 068h
+    dd ??1BfmeElemBU@@QAE@XZ
+    db 06Ah, 008h, 06Ah, 044h, 08Dh, 085h, 0D4h, 0FDh, 0FFh, 0FFh, 050h
+    call ??_M@YGXPAXIHP6EX0@Z@Z
+    db 0C3h
 ?d_00c3f628@@YAXXZ ENDP
+_TEXT$d0103f628 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@0103f649  retail @ 0x00C3F649 size 22
 public ?d_00c3f649@@YAXXZ
@@ -6012,10 +6240,16 @@ public ?d_00c3f95c@@YAXXZ
 ?d_00c3f95c@@YAXXZ ENDP
 
 ; ghidra: Unwind@0103f9b0  retail @ 0x00C3F9B0 size 8
+_TEXT ENDS
+_TEXT$d0103f9b0 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103F9B0 size 8
 public ?d_00c3f9b0@@YAXXZ
 ?d_00c3f9b0@@YAXXZ PROC
-    db 8Bh, 4Dh, 18h, 0E9h, 4Ch, 0B9h, 3Fh, 0FFh
+    db 08Bh, 04Dh, 018h
+    jmp ?j_0003b304@@YAXXZ
 ?d_00c3f9b0@@YAXXZ ENDP
+_TEXT$d0103f9b0 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@0103f9e0  retail @ 0x00C3F9E0 size 11
 public ?d_00c3f9e0@@YAXXZ
@@ -6218,11 +6452,17 @@ public ?d_00c40123@@YAXXZ
 ?d_00c40123@@YAXXZ ENDP
 
 ; ghidra: Unwind@01040223  retail @ 0x00C40223 size 17
+_TEXT ENDS
+_TEXT$d01040223 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01040223 size 17
 public ?d_00c40223@@YAXXZ
 ?d_00c40223@@YAXXZ PROC
-    db 8Bh, 45h, 0BCh, 50h, 8Bh, 4Dh, 0B8h, 51h, 0E8h, 79h, 0A8h, 3Eh, 0FFh, 83h, 0C4h, 08h
-    db 0C3h
+    db 08Bh, 045h, 0BCh, 050h, 08Bh, 04Dh, 0B8h, 051h
+    call ?j_0002aaa9@@YAXXZ
+    db 083h, 0C4h, 008h, 0C3h
 ?d_00c40223@@YAXXZ ENDP
+_TEXT$d01040223 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01040303  retail @ 0x00C40303 size 11
 public ?d_00c40303@@YAXXZ
@@ -6273,11 +6513,17 @@ public ?d_00c40608@@YAXXZ
 ?d_00c40608@@YAXXZ ENDP
 
 ; ghidra: Unwind@01040678  retail @ 0x00C40678 size 17
+_TEXT ENDS
+_TEXT$d01040678 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01040678 size 17
 public ?d_00c40678@@YAXXZ
 ?d_00c40678@@YAXXZ PROC
-    db 8Bh, 45h, 0D0h, 50h, 8Bh, 4Dh, 0D4h, 51h, 0E8h, 24h, 0A4h, 3Eh, 0FFh, 83h, 0C4h, 08h
-    db 0C3h
+    db 08Bh, 045h, 0D0h, 050h, 08Bh, 04Dh, 0D4h, 051h
+    call ?j_0002aaa9@@YAXXZ
+    db 083h, 0C4h, 008h, 0C3h
 ?d_00c40678@@YAXXZ ENDP
+_TEXT$d01040678 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@010406f0  retail @ 0x00C406F0 size 11
 public ?d_00c406f0@@YAXXZ
@@ -6292,10 +6538,16 @@ public ?d_00c40738@@YAXXZ
 ?d_00c40738@@YAXXZ ENDP
 
 ; ghidra: Unwind@01040760  retail @ 0x00C40760 size 8
+_TEXT ENDS
+_TEXT$d01040760 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01040760 size 8
 public ?d_00c40760@@YAXXZ
 ?d_00c40760@@YAXXZ PROC
-    db 8Bh, 4Dh, 04h, 0E9h, 9Ch, 0ABh, 3Fh, 0FFh
+    db 08Bh, 04Dh, 004h
+    jmp ?j_0003b304@@YAXXZ
 ?d_00c40760@@YAXXZ ENDP
+_TEXT$d01040760 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01040800  retail @ 0x00C40800 size 11
 public ?d_00c40800@@YAXXZ
@@ -6316,10 +6568,16 @@ public ?d_00c40830@@YAXXZ
 ?d_00c40830@@YAXXZ ENDP
 
 ; ghidra: Unwind@01040850  retail @ 0x00C40850 size 8
+_TEXT ENDS
+_TEXT$d01040850 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01040850 size 8
 public ?d_00c40850@@YAXXZ
 ?d_00c40850@@YAXXZ PROC
-    db 8Bh, 4Dh, 04h, 0E9h, 0D0h, 0CFh, 3Ch, 0FFh
+    db 08Bh, 04Dh, 004h
+    jmp ??1BFMERetailAsciiString@@QAE@XZ
 ?d_00c40850@@YAXXZ ENDP
+_TEXT$d01040850 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01040870  retail @ 0x00C40870 size 8
 public ?d_00c40870@@YAXXZ
@@ -6378,11 +6636,17 @@ public ?d_00c409c6@@YAXXZ
 ?d_00c409c6@@YAXXZ ENDP
 
 ; ghidra: Unwind@010409f8  retail @ 0x00C409F8 size 17
+_TEXT ENDS
+_TEXT$d010409f8 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x010409F8 size 17
 public ?d_00c409f8@@YAXXZ
 ?d_00c409f8@@YAXXZ PROC
-    db 8Bh, 45h, 0Ch, 50h, 8Bh, 4Dh, 10h, 51h, 0E8h, 0A4h, 0A0h, 3Eh, 0FFh, 83h, 0C4h, 08h
-    db 0C3h
+    db 08Bh, 045h, 00Ch, 050h, 08Bh, 04Dh, 010h, 051h
+    call ?j_0002aaa9@@YAXXZ
+    db 083h, 0C4h, 008h, 0C3h
 ?d_00c409f8@@YAXXZ ENDP
+_TEXT$d010409f8 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01040a09  retail @ 0x00C40A09 size 17
 public ?d_00c40a09@@YAXXZ
@@ -6416,16 +6680,28 @@ public ?d_00c40aa0@@YAXXZ
 ?d_00c40aa0@@YAXXZ ENDP
 
 ; ghidra: Unwind@01040ac8  retail @ 0x00C40AC8 size 8
+_TEXT ENDS
+_TEXT$d01040ac8 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01040AC8 size 8
 public ?d_00c40ac8@@YAXXZ
 ?d_00c40ac8@@YAXXZ PROC
-    db 8Bh, 4Dh, 0Ch, 0E9h, 58h, 0CDh, 3Ch, 0FFh
+    db 08Bh, 04Dh, 00Ch
+    jmp ??1BFMERetailAsciiString@@QAE@XZ
 ?d_00c40ac8@@YAXXZ ENDP
+_TEXT$d01040ac8 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01040ad8  retail @ 0x00C40AD8 size 8
+_TEXT ENDS
+_TEXT$d01040ad8 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01040AD8 size 8
 public ?d_00c40ad8@@YAXXZ
 ?d_00c40ad8@@YAXXZ PROC
-    db 8Bh, 4Dh, 08h, 0E9h, 48h, 0CDh, 3Ch, 0FFh
+    db 08Bh, 04Dh, 008h
+    jmp ??1BFMERetailAsciiString@@QAE@XZ
 ?d_00c40ad8@@YAXXZ ENDP
+_TEXT$d01040ad8 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01040ae8  retail @ 0x00C40AE8 size 8
 public ?d_00c40ae8@@YAXXZ
@@ -6590,18 +6866,30 @@ public ?d_00c40dcf@@YAXXZ
 ?d_00c40dcf@@YAXXZ ENDP
 
 ; ghidra: Unwind@01040e38  retail @ 0x00C40E38 size 17
+_TEXT ENDS
+_TEXT$d01040e38 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01040E38 size 17
 public ?d_00c40e38@@YAXXZ
 ?d_00c40e38@@YAXXZ PROC
-    db 8Bh, 45h, 0B4h, 50h, 8Bh, 4Dh, 0C0h, 51h, 0E8h, 64h, 9Ch, 3Eh, 0FFh, 83h, 0C4h, 08h
-    db 0C3h
+    db 08Bh, 045h, 0B4h, 050h, 08Bh, 04Dh, 0C0h, 051h
+    call ?j_0002aaa9@@YAXXZ
+    db 083h, 0C4h, 008h, 0C3h
 ?d_00c40e38@@YAXXZ ENDP
+_TEXT$d01040e38 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01040e51  retail @ 0x00C40E51 size 17
+_TEXT ENDS
+_TEXT$d01040e51 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01040E51 size 17
 public ?d_00c40e51@@YAXXZ
 ?d_00c40e51@@YAXXZ PROC
-    db 8Bh, 45h, 0C0h, 50h, 8Bh, 4Dh, 0C4h, 51h, 0E8h, 4Bh, 9Ch, 3Eh, 0FFh, 83h, 0C4h, 08h
-    db 0C3h
+    db 08Bh, 045h, 0C0h, 050h, 08Bh, 04Dh, 0C4h, 051h
+    call ?j_0002aaa9@@YAXXZ
+    db 083h, 0C4h, 008h, 0C3h
 ?d_00c40e51@@YAXXZ ENDP
+_TEXT$d01040e51 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01040ee0  retail @ 0x00C40EE0 size 8
 public ?d_00c40ee0@@YAXXZ
@@ -6789,10 +7077,17 @@ public ?d_00c4166c@@YAXXZ
 ?d_00c4166c@@YAXXZ ENDP
 
 ; ghidra: Unwind@01041771  retail @ 0x00C41771 size 11
+_TEXT ENDS
+_TEXT$d01041771 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01041771 size 11
 public ?d_00c41771@@YAXXZ
 ?d_00c41771@@YAXXZ PROC
-    db 8Bh, 45h, 04h, 50h, 0E8h, 36h, 07h, 0C4h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 004h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c41771@@YAXXZ ENDP
+_TEXT$d01041771 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01041820  retail @ 0x00C41820 size 11
 public ?d_00c41820@@YAXXZ
@@ -6912,11 +7207,17 @@ public ?d_00c41d1f@@YAXXZ
 ?d_00c41d1f@@YAXXZ ENDP
 
 ; ghidra: Unwind@01041db8  retail @ 0x00C41DB8 size 17
+_TEXT ENDS
+_TEXT$d01041db8 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01041DB8 size 17
 public ?d_00c41db8@@YAXXZ
 ?d_00c41db8@@YAXXZ PROC
-    db 8Bh, 45h, 0E4h, 50h, 8Bh, 4Dh, 0E8h, 51h, 0E8h, 0E4h, 8Ch, 3Eh, 0FFh, 83h, 0C4h, 08h
-    db 0C3h
+    db 08Bh, 045h, 0E4h, 050h, 08Bh, 04Dh, 0E8h, 051h
+    call ?j_0002aaa9@@YAXXZ
+    db 083h, 0C4h, 008h, 0C3h
 ?d_00c41db8@@YAXXZ ENDP
+_TEXT$d01041db8 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01041e00  retail @ 0x00C41E00 size 8
 public ?d_00c41e00@@YAXXZ
@@ -7020,11 +7321,17 @@ public ?d_00c420e0@@YAXXZ
 ?d_00c420e0@@YAXXZ ENDP
 
 ; ghidra: Unwind@010420eb  retail @ 0x00C420EB size 23
+_TEXT ENDS
+_TEXT$d010420eb SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x010420EB size 23
 public ?d_00c420eb@@YAXXZ
 ?d_00c420eb@@YAXXZ PROC
-    db 8Bh, 85h, 5Ch, 0FEh, 0FFh, 0FFh, 50h, 8Bh, 8Dh, 58h, 0FEh, 0FFh, 0FFh, 51h, 0E8h, 0ABh
-    db 89h, 3Eh, 0FFh, 83h, 0C4h, 08h, 0C3h
+    db 08Bh, 085h, 05Ch, 0FEh, 0FFh, 0FFh, 050h, 08Bh, 08Dh, 058h, 0FEh, 0FFh, 0FFh, 051h
+    call ?j_0002aaa9@@YAXXZ
+    db 083h, 0C4h, 008h, 0C3h
 ?d_00c420eb@@YAXXZ ENDP
+_TEXT$d010420eb ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01042120  retail @ 0x00C42120 size 11
 public ?d_00c42120@@YAXXZ
@@ -7354,11 +7661,17 @@ public ?d_00c428a9@@YAXXZ
 ?d_00c428a9@@YAXXZ ENDP
 
 ; ghidra: Unwind@01042908  retail @ 0x00C42908 size 17
+_TEXT ENDS
+_TEXT$d01042908 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01042908 size 17
 public ?d_00c42908@@YAXXZ
 ?d_00c42908@@YAXXZ PROC
-    db 8Bh, 45h, 0E4h, 50h, 8Bh, 4Dh, 0E8h, 51h, 0E8h, 94h, 81h, 3Eh, 0FFh, 83h, 0C4h, 08h
-    db 0C3h
+    db 08Bh, 045h, 0E4h, 050h, 08Bh, 04Dh, 0E8h, 051h
+    call ?j_0002aaa9@@YAXXZ
+    db 083h, 0C4h, 008h, 0C3h
 ?d_00c42908@@YAXXZ ENDP
+_TEXT$d01042908 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01042950  retail @ 0x00C42950 size 11
 public ?d_00c42950@@YAXXZ
@@ -7547,10 +7860,16 @@ public ?d_00c42d30@@YAXXZ
 ?d_00c42d30@@YAXXZ ENDP
 
 ; ghidra: Unwind@01042d50  retail @ 0x00C42D50 size 8
+_TEXT ENDS
+_TEXT$d01042d50 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01042D50 size 8
 public ?d_00c42d50@@YAXXZ
 ?d_00c42d50@@YAXXZ PROC
-    db 8Bh, 4Dh, 04h, 0E9h, 8Fh, 40h, 3Dh, 0FFh
+    db 08Bh, 04Dh, 004h
+    jmp ?j_00016de7@@YAXXZ
 ?d_00c42d50@@YAXXZ ENDP
+_TEXT$d01042d50 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01042d78  retail @ 0x00C42D78 size 11
 public ?d_00c42d78@@YAXXZ
@@ -7805,11 +8124,17 @@ public ?d_00c437e0@@YAXXZ
 ?d_00c437e0@@YAXXZ ENDP
 
 ; ghidra: Unwind@010437eb  retail @ 0x00C437EB size 23
+_TEXT ENDS
+_TEXT$d010437eb SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x010437EB size 23
 public ?d_00c437eb@@YAXXZ
 ?d_00c437eb@@YAXXZ PROC
-    db 8Bh, 85h, 0E0h, 0FDh, 0FFh, 0FFh, 50h, 8Bh, 8Dh, 0DCh, 0FDh, 0FFh, 0FFh, 51h, 0E8h, 0ABh
-    db 72h, 3Eh, 0FFh, 83h, 0C4h, 08h, 0C3h
+    db 08Bh, 085h, 0E0h, 0FDh, 0FFh, 0FFh, 050h, 08Bh, 08Dh, 0DCh, 0FDh, 0FFh, 0FFh, 051h
+    call ?j_0002aaa9@@YAXXZ
+    db 083h, 0C4h, 008h, 0C3h
 ?d_00c437eb@@YAXXZ ENDP
+_TEXT$d010437eb ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01043820  retail @ 0x00C43820 size 11
 public ?d_00c43820@@YAXXZ
@@ -7818,11 +8143,17 @@ public ?d_00c43820@@YAXXZ
 ?d_00c43820@@YAXXZ ENDP
 
 ; ghidra: Unwind@0104382b  retail @ 0x00C4382B size 23
+_TEXT ENDS
+_TEXT$d0104382b SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0104382B size 23
 public ?d_00c4382b@@YAXXZ
 ?d_00c4382b@@YAXXZ PROC
-    db 8Bh, 85h, 00h, 0FEh, 0FFh, 0FFh, 50h, 8Bh, 8Dh, 0FCh, 0FDh, 0FFh, 0FFh, 51h, 0E8h, 6Bh
-    db 72h, 3Eh, 0FFh, 83h, 0C4h, 08h, 0C3h
+    db 08Bh, 085h, 000h, 0FEh, 0FFh, 0FFh, 050h, 08Bh, 08Dh, 0FCh, 0FDh, 0FFh, 0FFh, 051h
+    call ?j_0002aaa9@@YAXXZ
+    db 083h, 0C4h, 008h, 0C3h
 ?d_00c4382b@@YAXXZ ENDP
+_TEXT$d0104382b ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01043880  retail @ 0x00C43880 size 11
 public ?d_00c43880@@YAXXZ
@@ -7934,11 +8265,17 @@ public ?d_00c43a28@@YAXXZ
 ?d_00c43a28@@YAXXZ ENDP
 
 ; ghidra: Unwind@01043a58  retail @ 0x00C43A58 size 17
+_TEXT ENDS
+_TEXT$d01043a58 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01043A58 size 17
 public ?d_00c43a58@@YAXXZ
 ?d_00c43a58@@YAXXZ PROC
-    db 8Bh, 45h, 0E4h, 50h, 8Bh, 4Dh, 0E8h, 51h, 0E8h, 44h, 70h, 3Eh, 0FFh, 83h, 0C4h, 08h
-    db 0C3h
+    db 08Bh, 045h, 0E4h, 050h, 08Bh, 04Dh, 0E8h, 051h
+    call ?j_0002aaa9@@YAXXZ
+    db 083h, 0C4h, 008h, 0C3h
 ?d_00c43a58@@YAXXZ ENDP
+_TEXT$d01043a58 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01043a80  retail @ 0x00C43A80 size 11
 public ?d_00c43a80@@YAXXZ
@@ -7965,11 +8302,18 @@ public ?d_00c43ac3@@YAXXZ
 ?d_00c43ac3@@YAXXZ ENDP
 
 ; ghidra: Unwind@01043b38  retail @ 0x00C43B38 size 25
+_TEXT ENDS
+_TEXT$d01043b38 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01043B38 size 25
 public ?d_00c43b38@@YAXXZ
 ?d_00c43b38@@YAXXZ PROC
-    db 8Bh, 45h, 0E8h, 83h, 0E0h, 01h, 0Fh, 84h, 0Ch, 00h, 00h, 00h, 83h, 65h, 0E8h, 0FEh
-    db 8Bh, 4Dh, 04h, 0E9h, 0D8h, 9Ch, 3Ch, 0FFh, 0C3h
+    db 08Bh, 045h, 0E8h, 083h, 0E0h, 001h, 00Fh, 084h, 00Ch, 000h, 000h, 000h, 083h, 065h, 0E8h, 0FEh
+    db 08Bh, 04Dh, 004h
+    jmp ??1BFMERetailAsciiString@@QAE@XZ
+    db 0C3h
 ?d_00c43b38@@YAXXZ ENDP
+_TEXT$d01043b38 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01043b90  retail @ 0x00C43B90 size 17
 public ?d_00c43b90@@YAXXZ
@@ -8030,40 +8374,82 @@ public ?d_00c43ed8@@YAXXZ
 ?d_00c43ed8@@YAXXZ ENDP
 
 ; ghidra: Unwind@01043f10  retail @ 0x00C43F10 size 11
+_TEXT ENDS
+_TEXT$d01043f10 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01043F10 size 11
 public ?d_00c43f10@@YAXXZ
 ?d_00c43f10@@YAXXZ PROC
-    db 8Bh, 45h, 0Ch, 50h, 0E8h, 97h, 0DFh, 0C3h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 00Ch, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c43f10@@YAXXZ ENDP
+_TEXT$d01043f10 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01043f66  retail @ 0x00C43F66 size 11
+_TEXT ENDS
+_TEXT$d01043f66 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01043F66 size 11
 public ?d_00c43f66@@YAXXZ
 ?d_00c43f66@@YAXXZ PROC
-    db 8Bh, 45h, 04h, 50h, 0E8h, 41h, 0DFh, 0C3h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 004h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c43f66@@YAXXZ ENDP
+_TEXT$d01043f66 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01043f90  retail @ 0x00C43F90 size 11
+_TEXT ENDS
+_TEXT$d01043f90 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01043F90 size 11
 public ?d_00c43f90@@YAXXZ
 ?d_00c43f90@@YAXXZ PROC
-    db 8Bh, 45h, 04h, 50h, 0E8h, 17h, 0DFh, 0C3h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 004h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c43f90@@YAXXZ ENDP
+_TEXT$d01043f90 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01043f9b  retail @ 0x00C43F9B size 11
+_TEXT ENDS
+_TEXT$d01043f9b SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01043F9B size 11
 public ?d_00c43f9b@@YAXXZ
 ?d_00c43f9b@@YAXXZ PROC
-    db 8Bh, 45h, 04h, 50h, 0E8h, 0Ch, 0DFh, 0C3h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 004h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c43f9b@@YAXXZ ENDP
+_TEXT$d01043f9b ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@0104407b  retail @ 0x00C4407B size 11
+_TEXT ENDS
+_TEXT$d0104407b SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0104407B size 11
 public ?d_00c4407b@@YAXXZ
 ?d_00c4407b@@YAXXZ PROC
-    db 8Bh, 45h, 04h, 50h, 0E8h, 2Ch, 0DEh, 0C3h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 004h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c4407b@@YAXXZ ENDP
+_TEXT$d0104407b ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@010440a0  retail @ 0x00C440A0 size 11
+_TEXT ENDS
+_TEXT$d010440a0 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x010440A0 size 11
 public ?d_00c440a0@@YAXXZ
 ?d_00c440a0@@YAXXZ PROC
-    db 8Bh, 45h, 04h, 50h, 0E8h, 07h, 0DEh, 0C3h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 004h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c440a0@@YAXXZ ENDP
+_TEXT$d010440a0 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@010440c8  retail @ 0x00C440C8 size 25
 public ?d_00c440c8@@YAXXZ
@@ -8073,10 +8459,17 @@ public ?d_00c440c8@@YAXXZ
 ?d_00c440c8@@YAXXZ ENDP
 
 ; ghidra: Unwind@01044140  retail @ 0x00C44140 size 11
+_TEXT ENDS
+_TEXT$d01044140 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01044140 size 11
 public ?d_00c44140@@YAXXZ
 ?d_00c44140@@YAXXZ PROC
-    db 8Bh, 45h, 0Ch, 50h, 0E8h, 67h, 0DDh, 0C3h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 00Ch, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c44140@@YAXXZ ENDP
+_TEXT$d01044140 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01044160  retail @ 0x00C44160 size 11
 public ?d_00c44160@@YAXXZ
@@ -8091,10 +8484,17 @@ public ?d_00c44180@@YAXXZ
 ?d_00c44180@@YAXXZ ENDP
 
 ; ghidra: Unwind@01044200  retail @ 0x00C44200 size 11
+_TEXT ENDS
+_TEXT$d01044200 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01044200 size 11
 public ?d_00c44200@@YAXXZ
 ?d_00c44200@@YAXXZ PROC
-    db 8Bh, 45h, 04h, 50h, 0E8h, 0A7h, 0DCh, 0C3h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 004h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c44200@@YAXXZ ENDP
+_TEXT$d01044200 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01044220  retail @ 0x00C44220 size 14
 public ?d_00c44220@@YAXXZ
@@ -8103,10 +8503,16 @@ public ?d_00c44220@@YAXXZ
 ?d_00c44220@@YAXXZ ENDP
 
 ; ghidra: Unwind@010443ab  retail @ 0x00C443AB size 8
+_TEXT ENDS
+_TEXT$d010443ab SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x010443AB size 8
 public ?d_00c443ab@@YAXXZ
 ?d_00c443ab@@YAXXZ PROC
-    db 8Bh, 4Dh, 08h, 0E9h, 51h, 6Fh, 3Fh, 0FFh
+    db 08Bh, 04Dh, 008h
+    jmp ?j_0003b304@@YAXXZ
 ?d_00c443ab@@YAXXZ ENDP
+_TEXT$d010443ab ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@010443d0  retail @ 0x00C443D0 size 17
 public ?d_00c443d0@@YAXXZ
@@ -8153,16 +8559,29 @@ public ?d_00c445cc@@YAXXZ
 ?d_00c445cc@@YAXXZ ENDP
 
 ; ghidra: Unwind@01044670  retail @ 0x00C44670 size 11
+_TEXT ENDS
+_TEXT$d01044670 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01044670 size 11
 public ?d_00c44670@@YAXXZ
 ?d_00c44670@@YAXXZ PROC
-    db 8Bh, 45h, 04h, 50h, 0E8h, 37h, 0D8h, 0C3h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 004h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c44670@@YAXXZ ENDP
+_TEXT$d01044670 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@010446cb  retail @ 0x00C446CB size 8
+_TEXT ENDS
+_TEXT$d010446cb SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x010446CB size 8
 public ?d_00c446cb@@YAXXZ
 ?d_00c446cb@@YAXXZ PROC
-    db 8Bh, 4Dh, 08h, 0E9h, 31h, 6Ch, 3Fh, 0FFh
+    db 08Bh, 04Dh, 008h
+    jmp ?j_0003b304@@YAXXZ
 ?d_00c446cb@@YAXXZ ENDP
+_TEXT$d010446cb ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@010446f0  retail @ 0x00C446F0 size 14
 public ?d_00c446f0@@YAXXZ
@@ -8183,22 +8602,43 @@ public ?d_00c4470c@@YAXXZ
 ?d_00c4470c@@YAXXZ ENDP
 
 ; ghidra: Unwind@01044730  retail @ 0x00C44730 size 11
+_TEXT ENDS
+_TEXT$d01044730 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01044730 size 11
 public ?d_00c44730@@YAXXZ
 ?d_00c44730@@YAXXZ PROC
-    db 8Bh, 45h, 04h, 50h, 0E8h, 77h, 0D7h, 0C3h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 004h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c44730@@YAXXZ ENDP
+_TEXT$d01044730 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01044750  retail @ 0x00C44750 size 11
+_TEXT ENDS
+_TEXT$d01044750 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01044750 size 11
 public ?d_00c44750@@YAXXZ
 ?d_00c44750@@YAXXZ PROC
-    db 8Bh, 45h, 04h, 50h, 0E8h, 57h, 0D7h, 0C3h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 004h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c44750@@YAXXZ ENDP
+_TEXT$d01044750 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@010447d0  retail @ 0x00C447D0 size 11
+_TEXT ENDS
+_TEXT$d010447d0 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x010447D0 size 11
 public ?d_00c447d0@@YAXXZ
 ?d_00c447d0@@YAXXZ PROC
-    db 8Bh, 45h, 04h, 50h, 0E8h, 0D7h, 0D6h, 0C3h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 004h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c447d0@@YAXXZ ENDP
+_TEXT$d010447d0 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01044890  retail @ 0x00C44890 size 25
 public ?d_00c44890@@YAXXZ
@@ -8215,11 +8655,18 @@ public ?d_00c448c8@@YAXXZ
 ?d_00c448c8@@YAXXZ ENDP
 
 ; ghidra: Unwind@01044908  retail @ 0x00C44908 size 25
+_TEXT ENDS
+_TEXT$d01044908 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01044908 size 25
 public ?d_00c44908@@YAXXZ
 ?d_00c44908@@YAXXZ PROC
-    db 8Bh, 45h, 0F0h, 83h, 0E0h, 01h, 0Fh, 84h, 0Ch, 00h, 00h, 00h, 83h, 65h, 0F0h, 0FEh
-    db 8Bh, 4Dh, 04h, 0E9h, 08h, 8Fh, 3Ch, 0FFh, 0C3h
+    db 08Bh, 045h, 0F0h, 083h, 0E0h, 001h, 00Fh, 084h, 00Ch, 000h, 000h, 000h, 083h, 065h, 0F0h, 0FEh
+    db 08Bh, 04Dh, 004h
+    jmp ??1BFMERetailAsciiString@@QAE@XZ
+    db 0C3h
 ?d_00c44908@@YAXXZ ENDP
+_TEXT$d01044908 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01044950  retail @ 0x00C44950 size 25
 public ?d_00c44950@@YAXXZ
@@ -8250,11 +8697,18 @@ public ?d_00c44a60@@YAXXZ
 ?d_00c44a60@@YAXXZ ENDP
 
 ; ghidra: Unwind@01044ab8  retail @ 0x00C44AB8 size 25
+_TEXT ENDS
+_TEXT$d01044ab8 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01044AB8 size 25
 public ?d_00c44ab8@@YAXXZ
 ?d_00c44ab8@@YAXXZ PROC
-    db 8Bh, 45h, 0ECh, 83h, 0E0h, 01h, 0Fh, 84h, 0Ch, 00h, 00h, 00h, 83h, 65h, 0ECh, 0FEh
-    db 8Bh, 4Dh, 04h, 0E9h, 58h, 8Dh, 3Ch, 0FFh, 0C3h
+    db 08Bh, 045h, 0ECh, 083h, 0E0h, 001h, 00Fh, 084h, 00Ch, 000h, 000h, 000h, 083h, 065h, 0ECh, 0FEh
+    db 08Bh, 04Dh, 004h
+    jmp ??1BFMERetailAsciiString@@QAE@XZ
+    db 0C3h
 ?d_00c44ab8@@YAXXZ ENDP
+_TEXT$d01044ab8 ENDS
+_TEXT SEGMENT
 
 ; ghidra: Unwind@01044b08  retail @ 0x00C44B08 size 25
 public ?d_00c44b08@@YAXXZ

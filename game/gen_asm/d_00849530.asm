@@ -1,5 +1,10 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ??0INIException@@QAA@HPBDZZ:NEAR
+EXTERN ?g_INIExceptionThrowInfo@@3HA:BYTE
+EXTERN ?ji_009f6d00@@YAXXZ:NEAR
+EXTERN ?unPrepFile@INI@@IAEXXZ:NEAR
 _TEXT SEGMENT
 
 ; ghidra: FUN_00c49530  retail @ 0x00849530 size 561
@@ -1320,25 +1325,46 @@ public ?d_00853c2a@@YAXXZ
 ?d_00853c2a@@YAXXZ ENDP
 
 ; ghidra: Catch@00c53e3a  retail @ 0x00853E3A size 36
+_TEXT ENDS
+_TEXT$d00c53e3a SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00C53E3A size 36
 public ?d_00853e3a@@YAXXZ
 ?d_00853e3a@@YAXXZ PROC
-    db 8Bh, 45h, 0E8h, 8Bh, 10h, 8Bh, 40h, 04h, 52h, 50h, 8Dh, 4Dh, 0C8h, 51h, 0E8h, 0B3h
-    db 0C7h, 0FFh, 0FFh, 83h, 0C4h, 0Ch, 68h, 30h, 0FCh, 1Dh, 01h, 8Dh, 55h, 0C8h, 52h, 0E8h
-    db 0A2h, 2Eh, 1Ah, 00h
+    db 08Bh, 045h, 0E8h, 08Bh, 010h, 08Bh, 040h, 004h, 052h, 050h, 08Dh, 04Dh, 0C8h, 051h
+    call ??0INIException@@QAA@HPBDZZ
+    db 083h, 0C4h, 00Ch, 068h
+    dd ?g_INIExceptionThrowInfo@@3HA
+    db 08Dh, 055h, 0C8h, 052h
+    call ?ji_009f6d00@@YAXXZ
 ?d_00853e3a@@YAXXZ ENDP
+_TEXT$d00c53e3a ENDS
+_TEXT SEGMENT
 
 ; ghidra: Catch@00c53e5e  retail @ 0x00853E5E size 17
+_TEXT ENDS
+_TEXT$d00c53e5e SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00C53E5E size 17
 public ?d_00853e5e@@YAXXZ
 ?d_00853e5e@@YAXXZ PROC
-    db 8Bh, 4Dh, 0ECh, 0E8h, 0CAh, 0CFh, 0FFh, 0FFh, 33h, 0DBh, 53h, 53h, 0E8h, 91h, 2Eh, 1Ah
-    db 00h
+    db 08Bh, 04Dh, 0ECh
+    call ?unPrepFile@INI@@IAEXXZ
+    db 033h, 0DBh, 053h, 053h
+    call ?ji_009f6d00@@YAXXZ
 ?d_00853e5e@@YAXXZ ENDP
+_TEXT$d00c53e5e ENDS
+_TEXT SEGMENT
 
 ; ghidra: Catch@00c541cc  retail @ 0x008541CC size 9
+_TEXT ENDS
+_TEXT$d00c541cc SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00C541CC size 9
 public ?d_008541cc@@YAXXZ
 ?d_008541cc@@YAXXZ PROC
-    db 33h, 0DBh, 53h, 53h, 0E8h, 2Bh, 2Bh, 1Ah, 00h
+    db 033h, 0DBh, 053h, 053h
+    call ?ji_009f6d00@@YAXXZ
 ?d_008541cc@@YAXXZ ENDP
+_TEXT$d00c541cc ENDS
+_TEXT SEGMENT
 
 ; ghidra: FUN_00c54530  retail @ 0x00854530 size 330
 public ?d_00854530@@YAXXZ

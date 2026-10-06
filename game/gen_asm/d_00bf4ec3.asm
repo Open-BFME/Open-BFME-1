@@ -1,223 +1,439 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ??1BFMERetailAsciiString@@QAE@XZ:NEAR
+EXTERN ??1GdElemSlot@@QAE@XZ:NEAR
+EXTERN ??1SubsystemInterface@@UAE@XZ:NEAR
+EXTERN ??3@YAXPAX@Z:NEAR
+EXTERN ??_M@YGXPAXIHP6EX0@Z@Z:NEAR
+EXTERN ??_V@YAXPAX@Z:NEAR
+EXTERN ?j_00001c80@@YAXXZ:NEAR
+EXTERN ?j_00001f05@@YAXXZ:NEAR
+EXTERN ?j_00005d2b@@YAXXZ:NEAR
+EXTERN ?j_00008346@@YAXXZ:NEAR
+EXTERN ?j_0001570d@@YAXXZ:NEAR
+EXTERN ?j_00030652@@YAXXZ:NEAR
+EXTERN ?j_0003b304@@YAXXZ:NEAR
 _TEXT SEGMENT
 
 ; retail @ 0x00BF4EC3 size 17
+_TEXT ENDS
+_TEXT$d00ff4ec3 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00FF4EC3 size 17
 public ?d_00bf4ec3@@YAXXZ
 ?d_00bf4ec3@@YAXXZ PROC
-    db 8Bh, 8Dh, 0CCh, 0FEh, 0FEh, 0FFh, 81h, 0C1h, 94h, 00h, 00h, 00h, 0E9h, 54h, 89h, 41h
-    db 0FFh
+    db 08Bh, 08Dh, 0CCh, 0FEh, 0FEh, 0FFh, 081h, 0C1h, 094h, 000h, 000h, 000h
+    jmp ??1BFMERetailAsciiString@@QAE@XZ
 ?d_00bf4ec3@@YAXXZ ENDP
+_TEXT$d00ff4ec3 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00BF4F00 size 17
+_TEXT ENDS
+_TEXT$d00ff4f00 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00FF4F00 size 17
 public ?d_00bf4f00@@YAXXZ
 ?d_00bf4f00@@YAXXZ PROC
-    db 8Bh, 8Dh, 0CCh, 0FEh, 0FEh, 0FFh, 81h, 0C1h, 0Ch, 02h, 00h, 00h, 0E9h, 17h, 89h, 41h
-    db 0FFh
+    db 08Bh, 08Dh, 0CCh, 0FEh, 0FEh, 0FFh, 081h, 0C1h, 00Ch, 002h, 000h, 000h
+    jmp ??1BFMERetailAsciiString@@QAE@XZ
 ?d_00bf4f00@@YAXXZ ENDP
+_TEXT$d00ff4f00 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00BF4F11 size 27
+_TEXT ENDS
+_TEXT$d00ff4f11 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00FF4F11 size 27
 public ?d_00bf4f11@@YAXXZ
 ?d_00bf4f11@@YAXXZ PROC
-    db 68h, 0FAh, 28h, 41h, 00h, 6Ah, 12h, 6Ah, 24h, 8Bh, 85h, 0CCh, 0FEh, 0FEh, 0FFh, 05h
-    db 24h, 02h, 00h, 00h, 50h, 0E8h, 4Bh, 1Eh, 0E0h, 0FFh, 0C3h
+    db 068h
+    dd ??1GdElemSlot@@QAE@XZ
+    db 06Ah, 012h, 06Ah, 024h, 08Bh, 085h, 0CCh, 0FEh, 0FEh, 0FFh, 005h, 024h, 002h, 000h, 000h, 050h
+    call ??_M@YGXPAXIHP6EX0@Z@Z
+    db 0C3h
 ?d_00bf4f11@@YAXXZ ENDP
+_TEXT$d00ff4f11 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00BF4F2C size 27
+_TEXT ENDS
+_TEXT$d00ff4f2c SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00FF4F2C size 27
 public ?d_00bf4f2c@@YAXXZ
 ?d_00bf4f2c@@YAXXZ PROC
-    db 68h, 0FAh, 28h, 41h, 00h, 6Ah, 12h, 6Ah, 24h, 8Bh, 85h, 0CCh, 0FEh, 0FEh, 0FFh, 05h
-    db 0ACh, 04h, 00h, 00h, 50h, 0E8h, 30h, 1Eh, 0E0h, 0FFh, 0C3h
+    db 068h
+    dd ??1GdElemSlot@@QAE@XZ
+    db 06Ah, 012h, 06Ah, 024h, 08Bh, 085h, 0CCh, 0FEh, 0FEh, 0FFh, 005h, 0ACh, 004h, 000h, 000h, 050h
+    call ??_M@YGXPAXIHP6EX0@Z@Z
+    db 0C3h
 ?d_00bf4f2c@@YAXXZ ENDP
+_TEXT$d00ff4f2c ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00BFBF43 size 11
+_TEXT ENDS
+_TEXT$d00ffbf43 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00FFBF43 size 11
 public ?d_00bfbf43@@YAXXZ
 ?d_00bfbf43@@YAXXZ PROC
-    db 8Bh, 4Dh, 04h, 83h, 0C1h, 04h, 0E9h, 0BFh, 97h, 41h, 0FFh
+    db 08Bh, 04Dh, 004h, 083h, 0C1h, 004h
+    jmp ?j_0001570d@@YAXXZ
 ?d_00bfbf43@@YAXXZ ENDP
+_TEXT$d00ffbf43 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C07A18 size 39
+_TEXT ENDS
+_TEXT$d01007a18 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01007A18 size 39
 public ?d_00c07a18@@YAXXZ
 ?d_00c07a18@@YAXXZ PROC
-    db 83h, 7Dh, 0ECh, 00h, 0Fh, 84h, 0Eh, 00h, 00h, 00h, 8Bh, 45h, 0ECh, 83h, 0C0h, 08h
-    db 89h, 45h, 0E8h, 0E9h, 07h, 00h, 00h, 00h, 0C7h, 45h, 0E8h, 00h, 00h, 00h, 00h, 8Bh
-    db 4Dh, 0E8h, 0E9h, 41h, 0A2h, 3Fh, 0FFh
+    db 083h, 07Dh, 0ECh, 000h, 00Fh, 084h, 00Eh, 000h, 000h, 000h, 08Bh, 045h, 0ECh, 083h, 0C0h, 008h
+    db 089h, 045h, 0E8h, 0E9h, 007h, 000h, 000h, 000h, 0C7h, 045h, 0E8h, 000h, 000h, 000h, 000h, 08Bh
+    db 04Dh, 0E8h
+    jmp ?j_00001c80@@YAXXZ
 ?d_00c07a18@@YAXXZ ENDP
+_TEXT$d01007a18 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C1CA48 size 39
+_TEXT ENDS
+_TEXT$d0101ca48 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0101CA48 size 39
 public ?d_00c1ca48@@YAXXZ
 ?d_00c1ca48@@YAXXZ PROC
-    db 83h, 7Dh, 0F0h, 00h, 0Fh, 84h, 0Eh, 00h, 00h, 00h, 8Bh, 45h, 0F0h, 83h, 0C0h, 08h
-    db 89h, 45h, 0ECh, 0E9h, 07h, 00h, 00h, 00h, 0C7h, 45h, 0ECh, 00h, 00h, 00h, 00h, 8Bh
-    db 4Dh, 0ECh, 0E9h, 11h, 52h, 3Eh, 0FFh
+    db 083h, 07Dh, 0F0h, 000h, 00Fh, 084h, 00Eh, 000h, 000h, 000h, 08Bh, 045h, 0F0h, 083h, 0C0h, 008h
+    db 089h, 045h, 0ECh, 0E9h, 007h, 000h, 000h, 000h, 0C7h, 045h, 0ECh, 000h, 000h, 000h, 000h, 08Bh
+    db 04Dh, 0ECh
+    jmp ?j_00001c80@@YAXXZ
 ?d_00c1ca48@@YAXXZ ENDP
+_TEXT$d0101ca48 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C1ED78 size 39
+_TEXT ENDS
+_TEXT$d0101ed78 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0101ED78 size 39
 public ?d_00c1ed78@@YAXXZ
 ?d_00c1ed78@@YAXXZ PROC
-    db 83h, 7Dh, 0F0h, 00h, 0Fh, 84h, 0Eh, 00h, 00h, 00h, 8Bh, 45h, 0F0h, 83h, 0C0h, 08h
-    db 89h, 45h, 0ECh, 0E9h, 07h, 00h, 00h, 00h, 0C7h, 45h, 0ECh, 00h, 00h, 00h, 00h, 8Bh
-    db 4Dh, 0ECh, 0E9h, 0E1h, 2Eh, 3Eh, 0FFh
+    db 083h, 07Dh, 0F0h, 000h, 00Fh, 084h, 00Eh, 000h, 000h, 000h, 08Bh, 045h, 0F0h, 083h, 0C0h, 008h
+    db 089h, 045h, 0ECh, 0E9h, 007h, 000h, 000h, 000h, 0C7h, 045h, 0ECh, 000h, 000h, 000h, 000h, 08Bh
+    db 04Dh, 0ECh
+    jmp ?j_00001c80@@YAXXZ
 ?d_00c1ed78@@YAXXZ ENDP
+_TEXT$d0101ed78 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C1F7B8 size 39
+_TEXT ENDS
+_TEXT$d0101f7b8 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0101F7B8 size 39
 public ?d_00c1f7b8@@YAXXZ
 ?d_00c1f7b8@@YAXXZ PROC
-    db 83h, 7Dh, 0F0h, 00h, 0Fh, 84h, 0Eh, 00h, 00h, 00h, 8Bh, 45h, 0F0h, 83h, 0C0h, 08h
-    db 89h, 45h, 0ECh, 0E9h, 07h, 00h, 00h, 00h, 0C7h, 45h, 0ECh, 00h, 00h, 00h, 00h, 8Bh
-    db 4Dh, 0ECh, 0E9h, 0A1h, 24h, 3Eh, 0FFh
+    db 083h, 07Dh, 0F0h, 000h, 00Fh, 084h, 00Eh, 000h, 000h, 000h, 08Bh, 045h, 0F0h, 083h, 0C0h, 008h
+    db 089h, 045h, 0ECh, 0E9h, 007h, 000h, 000h, 000h, 0C7h, 045h, 0ECh, 000h, 000h, 000h, 000h, 08Bh
+    db 04Dh, 0ECh
+    jmp ?j_00001c80@@YAXXZ
 ?d_00c1f7b8@@YAXXZ ENDP
+_TEXT$d0101f7b8 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C23208 size 39
+_TEXT ENDS
+_TEXT$d01023208 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01023208 size 39
 public ?d_00c23208@@YAXXZ
 ?d_00c23208@@YAXXZ PROC
-    db 83h, 7Dh, 0F0h, 00h, 0Fh, 84h, 0Eh, 00h, 00h, 00h, 8Bh, 45h, 0F0h, 83h, 0C0h, 08h
-    db 89h, 45h, 0ECh, 0E9h, 07h, 00h, 00h, 00h, 0C7h, 45h, 0ECh, 00h, 00h, 00h, 00h, 8Bh
-    db 4Dh, 0ECh, 0E9h, 51h, 0EAh, 3Dh, 0FFh
+    db 083h, 07Dh, 0F0h, 000h, 00Fh, 084h, 00Eh, 000h, 000h, 000h, 08Bh, 045h, 0F0h, 083h, 0C0h, 008h
+    db 089h, 045h, 0ECh, 0E9h, 007h, 000h, 000h, 000h, 0C7h, 045h, 0ECh, 000h, 000h, 000h, 000h, 08Bh
+    db 04Dh, 0ECh
+    jmp ?j_00001c80@@YAXXZ
 ?d_00c23208@@YAXXZ ENDP
+_TEXT$d01023208 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C31308 size 39
+_TEXT ENDS
+_TEXT$d01031308 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01031308 size 39
 public ?d_00c31308@@YAXXZ
 ?d_00c31308@@YAXXZ PROC
-    db 83h, 7Dh, 0ECh, 00h, 0Fh, 84h, 0Eh, 00h, 00h, 00h, 8Bh, 45h, 0ECh, 83h, 0C0h, 3Ch
-    db 89h, 45h, 0E8h, 0E9h, 07h, 00h, 00h, 00h, 0C7h, 45h, 0E8h, 00h, 00h, 00h, 00h, 8Bh
-    db 4Dh, 0E8h, 0E9h, 0FCh, 49h, 3Dh, 0FFh
+    db 083h, 07Dh, 0ECh, 000h, 00Fh, 084h, 00Eh, 000h, 000h, 000h, 08Bh, 045h, 0ECh, 083h, 0C0h, 03Ch
+    db 089h, 045h, 0E8h, 0E9h, 007h, 000h, 000h, 000h, 0C7h, 045h, 0E8h, 000h, 000h, 000h, 000h, 08Bh
+    db 04Dh, 0E8h
+    jmp ?j_00005d2b@@YAXXZ
 ?d_00c31308@@YAXXZ ENDP
+_TEXT$d01031308 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C3E998 size 39
+_TEXT ENDS
+_TEXT$d0103e998 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0103E998 size 39
 public ?d_00c3e998@@YAXXZ
 ?d_00c3e998@@YAXXZ PROC
-    db 83h, 7Dh, 0F0h, 00h, 0Fh, 84h, 0Eh, 00h, 00h, 00h, 8Bh, 45h, 0F0h, 83h, 0C0h, 08h
-    db 89h, 45h, 0E8h, 0E9h, 07h, 00h, 00h, 00h, 0C7h, 45h, 0E8h, 00h, 00h, 00h, 00h, 8Bh
-    db 4Dh, 0E8h, 0E9h, 0C1h, 32h, 3Ch, 0FFh
+    db 083h, 07Dh, 0F0h, 000h, 00Fh, 084h, 00Eh, 000h, 000h, 000h, 08Bh, 045h, 0F0h, 083h, 0C0h, 008h
+    db 089h, 045h, 0E8h, 0E9h, 007h, 000h, 000h, 000h, 0C7h, 045h, 0E8h, 000h, 000h, 000h, 000h, 08Bh
+    db 04Dh, 0E8h
+    jmp ?j_00001c80@@YAXXZ
 ?d_00c3e998@@YAXXZ ENDP
+_TEXT$d0103e998 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C46628 size 11
+_TEXT ENDS
+_TEXT$d01046628 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x01046628 size 11
 public ?d_00c46628@@YAXXZ
 ?d_00c46628@@YAXXZ PROC
-    db 8Bh, 8Dh, 14h, 0FEh, 0FFh, 0FFh, 0E9h, 0D1h, 4Ch, 3Fh, 0FFh
+    db 08Bh, 08Dh, 014h, 0FEh, 0FFh, 0FFh
+    jmp ?j_0003b304@@YAXXZ
 ?d_00c46628@@YAXXZ ENDP
+_TEXT$d01046628 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C4A268 size 41
+_TEXT ENDS
+_TEXT$d0104a268 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0104A268 size 41
 public ?d_00c4a268@@YAXXZ
 ?d_00c4a268@@YAXXZ PROC
-    db 83h, 7Dh, 0F0h, 00h, 0Fh, 84h, 10h, 00h, 00h, 00h, 8Bh, 45h, 0F0h, 05h, 0CCh, 00h
-    db 00h, 00h, 89h, 45h, 0ECh, 0E9h, 07h, 00h, 00h, 00h, 0C7h, 45h, 0ECh, 00h, 00h, 00h
-    db 00h, 8Bh, 4Dh, 0ECh, 0E9h, 0EFh, 79h, 3Bh, 0FFh
+    db 083h, 07Dh, 0F0h, 000h, 00Fh, 084h, 010h, 000h, 000h, 000h, 08Bh, 045h, 0F0h, 005h, 0CCh, 000h
+    db 000h, 000h, 089h, 045h, 0ECh, 0E9h, 007h, 000h, 000h, 000h, 0C7h, 045h, 0ECh, 000h, 000h, 000h
+    db 000h, 08Bh, 04Dh, 0ECh
+    jmp ?j_00001c80@@YAXXZ
 ?d_00c4a268@@YAXXZ ENDP
+_TEXT$d0104a268 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C4C878 size 41
+_TEXT ENDS
+_TEXT$d0104c878 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0104C878 size 41
 public ?d_00c4c878@@YAXXZ
 ?d_00c4c878@@YAXXZ PROC
-    db 83h, 7Dh, 0F0h, 00h, 0Fh, 84h, 10h, 00h, 00h, 00h, 8Bh, 45h, 0F0h, 05h, 08h, 01h
-    db 00h, 00h, 89h, 45h, 0ECh, 0E9h, 07h, 00h, 00h, 00h, 0C7h, 45h, 0ECh, 00h, 00h, 00h
-    db 00h, 8Bh, 4Dh, 0ECh, 0E9h, 9Fh, 51h, 0D5h, 0FFh
+    db 083h, 07Dh, 0F0h, 000h, 00Fh, 084h, 010h, 000h, 000h, 000h, 08Bh, 045h, 0F0h, 005h, 008h, 001h
+    db 000h, 000h, 089h, 045h, 0ECh, 0E9h, 007h, 000h, 000h, 000h, 0C7h, 045h, 0ECh, 000h, 000h, 000h
+    db 000h, 08Bh, 04Dh, 0ECh
+    jmp ??1SubsystemInterface@@UAE@XZ
 ?d_00c4c878@@YAXXZ ENDP
+_TEXT$d0104c878 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C4DC38 size 41
+_TEXT ENDS
+_TEXT$d0104dc38 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0104DC38 size 41
 public ?d_00c4dc38@@YAXXZ
 ?d_00c4dc38@@YAXXZ PROC
-    db 83h, 7Dh, 0ECh, 00h, 0Fh, 84h, 10h, 00h, 00h, 00h, 8Bh, 45h, 0ECh, 05h, 0B4h, 00h
-    db 00h, 00h, 89h, 45h, 0E8h, 0E9h, 07h, 00h, 00h, 00h, 0C7h, 45h, 0E8h, 00h, 00h, 00h
-    db 00h, 8Bh, 4Dh, 0E8h, 0E9h, 0E5h, 0A6h, 3Bh, 0FFh
+    db 083h, 07Dh, 0ECh, 000h, 00Fh, 084h, 010h, 000h, 000h, 000h, 08Bh, 045h, 0ECh, 005h, 0B4h, 000h
+    db 000h, 000h, 089h, 045h, 0E8h, 0E9h, 007h, 000h, 000h, 000h, 0C7h, 045h, 0E8h, 000h, 000h, 000h
+    db 000h, 08Bh, 04Dh, 0E8h
+    jmp ?j_00008346@@YAXXZ
 ?d_00c4dc38@@YAXXZ ENDP
+_TEXT$d0104dc38 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C4DC61 size 41
+_TEXT ENDS
+_TEXT$d0104dc61 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0104DC61 size 41
 public ?d_00c4dc61@@YAXXZ
 ?d_00c4dc61@@YAXXZ PROC
-    db 83h, 7Dh, 0ECh, 00h, 0Fh, 84h, 10h, 00h, 00h, 00h, 8Bh, 45h, 0ECh, 05h, 0FCh, 00h
-    db 00h, 00h, 89h, 45h, 0E4h, 0E9h, 07h, 00h, 00h, 00h, 0C7h, 45h, 0E4h, 00h, 00h, 00h
-    db 00h, 8Bh, 4Dh, 0E4h, 0E9h, 0B6h, 3Dh, 0D5h, 0FFh
+    db 083h, 07Dh, 0ECh, 000h, 00Fh, 084h, 010h, 000h, 000h, 000h, 08Bh, 045h, 0ECh, 005h, 0FCh, 000h
+    db 000h, 000h, 089h, 045h, 0E4h, 0E9h, 007h, 000h, 000h, 000h, 0C7h, 045h, 0E4h, 000h, 000h, 000h
+    db 000h, 08Bh, 04Dh, 0E4h
+    jmp ??1SubsystemInterface@@UAE@XZ
 ?d_00c4dc61@@YAXXZ ENDP
+_TEXT$d0104dc61 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C5FD7E size 11
+_TEXT ENDS
+_TEXT$d0105fd7e SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0105FD7E size 11
 public ?d_00c5fd7e@@YAXXZ
 ?d_00c5fd7e@@YAXXZ PROC
-    db 8Bh, 45h, 04h, 50h, 0E8h, 69h, 21h, 0C2h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 004h, 050h
+    call ??_V@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c5fd7e@@YAXXZ ENDP
+_TEXT$d0105fd7e ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C5FDB2 size 8
+_TEXT ENDS
+_TEXT$d0105fdb2 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0105FDB2 size 8
 public ?d_00c5fdb2@@YAXXZ
 ?d_00c5fdb2@@YAXXZ PROC
-    db 8Bh, 4Dh, 04h, 0E9h, 4Bh, 21h, 3Ah, 0FFh
+    db 08Bh, 04Dh, 004h
+    jmp ?j_00001f05@@YAXXZ
 ?d_00c5fdb2@@YAXXZ ENDP
+_TEXT$d0105fdb2 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C5FDC5 size 8
+_TEXT ENDS
+_TEXT$d0105fdc5 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0105FDC5 size 8
 public ?d_00c5fdc5@@YAXXZ
 ?d_00c5fdc5@@YAXXZ PROC
-    db 8Bh, 4Dh, 04h, 0E9h, 38h, 21h, 3Ah, 0FFh
+    db 08Bh, 04Dh, 004h
+    jmp ?j_00001f05@@YAXXZ
 ?d_00c5fdc5@@YAXXZ ENDP
+_TEXT$d0105fdc5 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C5FDEB size 8
+_TEXT ENDS
+_TEXT$d0105fdeb SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0105FDEB size 8
 public ?d_00c5fdeb@@YAXXZ
 ?d_00c5fdeb@@YAXXZ PROC
-    db 8Bh, 4Dh, 04h, 0E9h, 12h, 21h, 3Ah, 0FFh
+    db 08Bh, 04Dh, 004h
+    jmp ?j_00001f05@@YAXXZ
 ?d_00c5fdeb@@YAXXZ ENDP
+_TEXT$d0105fdeb ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C5FDF3 size 11
+_TEXT ENDS
+_TEXT$d0105fdf3 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0105FDF3 size 11
 public ?d_00c5fdf3@@YAXXZ
 ?d_00c5fdf3@@YAXXZ PROC
-    db 8Bh, 45h, 0E8h, 50h, 0E8h, 0B4h, 20h, 0C2h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 0E8h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c5fdf3@@YAXXZ ENDP
+_TEXT$d0105fdf3 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C5FE06 size 11
+_TEXT ENDS
+_TEXT$d0105fe06 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0105FE06 size 11
 public ?d_00c5fe06@@YAXXZ
 ?d_00c5fe06@@YAXXZ PROC
-    db 8Bh, 45h, 0E8h, 50h, 0E8h, 0A1h, 20h, 0C2h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 0E8h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c5fe06@@YAXXZ ENDP
+_TEXT$d0105fe06 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C5FE24 size 11
+_TEXT ENDS
+_TEXT$d0105fe24 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0105FE24 size 11
 public ?d_00c5fe24@@YAXXZ
 ?d_00c5fe24@@YAXXZ PROC
-    db 8Bh, 45h, 0E8h, 50h, 0E8h, 83h, 20h, 0C2h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 0E8h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c5fe24@@YAXXZ ENDP
+_TEXT$d0105fe24 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C5FE2F size 8
+_TEXT ENDS
+_TEXT$d0105fe2f SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0105FE2F size 8
 public ?d_00c5fe2f@@YAXXZ
 ?d_00c5fe2f@@YAXXZ PROC
-    db 8Dh, 4Dh, 0DCh, 0E9h, 1Bh, 08h, 3Dh, 0FFh
+    db 08Dh, 04Dh, 0DCh
+    jmp ?j_00030652@@YAXXZ
 ?d_00c5fe2f@@YAXXZ ENDP
+_TEXT$d0105fe2f ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C5FE37 size 11
+_TEXT ENDS
+_TEXT$d0105fe37 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0105FE37 size 11
 public ?d_00c5fe37@@YAXXZ
 ?d_00c5fe37@@YAXXZ PROC
-    db 8Bh, 45h, 0E8h, 50h, 0E8h, 70h, 20h, 0C2h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 0E8h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c5fe37@@YAXXZ ENDP
+_TEXT$d0105fe37 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C5FE55 size 8
+_TEXT ENDS
+_TEXT$d0105fe55 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0105FE55 size 8
 public ?d_00c5fe55@@YAXXZ
 ?d_00c5fe55@@YAXXZ PROC
-    db 8Dh, 4Dh, 0E0h, 0E9h, 0F5h, 07h, 3Dh, 0FFh
+    db 08Dh, 04Dh, 0E0h
+    jmp ?j_00030652@@YAXXZ
 ?d_00c5fe55@@YAXXZ ENDP
+_TEXT$d0105fe55 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C5FE83 size 11
+_TEXT ENDS
+_TEXT$d0105fe83 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0105FE83 size 11
 public ?d_00c5fe83@@YAXXZ
 ?d_00c5fe83@@YAXXZ PROC
-    db 8Bh, 45h, 04h, 50h, 0E8h, 24h, 20h, 0C2h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 004h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c5fe83@@YAXXZ ENDP
+_TEXT$d0105fe83 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C5FE8E size 8
+_TEXT ENDS
+_TEXT$d0105fe8e SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0105FE8E size 8
 public ?d_00c5fe8e@@YAXXZ
 ?d_00c5fe8e@@YAXXZ PROC
-    db 8Bh, 4Dh, 04h, 0E9h, 6Fh, 20h, 3Ah, 0FFh
+    db 08Bh, 04Dh, 004h
+    jmp ?j_00001f05@@YAXXZ
 ?d_00c5fe8e@@YAXXZ ENDP
+_TEXT$d0105fe8e ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C5FE96 size 11
+_TEXT ENDS
+_TEXT$d0105fe96 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0105FE96 size 11
 public ?d_00c5fe96@@YAXXZ
 ?d_00c5fe96@@YAXXZ PROC
-    db 8Bh, 45h, 04h, 50h, 0E8h, 11h, 20h, 0C2h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 004h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c5fe96@@YAXXZ ENDP
+_TEXT$d0105fe96 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C5FEA1 size 8
+_TEXT ENDS
+_TEXT$d0105fea1 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0105FEA1 size 8
 public ?d_00c5fea1@@YAXXZ
 ?d_00c5fea1@@YAXXZ PROC
-    db 8Bh, 4Dh, 04h, 0E9h, 5Ch, 20h, 3Ah, 0FFh
+    db 08Bh, 04Dh, 004h
+    jmp ?j_00001f05@@YAXXZ
 ?d_00c5fea1@@YAXXZ ENDP
+_TEXT$d0105fea1 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x00C5FEA9 size 11
+_TEXT ENDS
+_TEXT$d0105fea9 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x0105FEA9 size 11
 public ?d_00c5fea9@@YAXXZ
 ?d_00c5fea9@@YAXXZ PROC
-    db 8Bh, 45h, 04h, 50h, 0E8h, 0FEh, 1Fh, 0C2h, 0FFh, 59h, 0C3h
+    db 08Bh, 045h, 004h, 050h
+    call ??3@YAXPAX@Z
+    db 059h, 0C3h
 ?d_00c5fea9@@YAXXZ ENDP
+_TEXT$d0105fea9 ENDS
+_TEXT SEGMENT
 _TEXT ENDS
 END

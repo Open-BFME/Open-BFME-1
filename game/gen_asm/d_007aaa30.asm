@@ -1,26 +1,66 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ?Add_To_Static_Sort_List@WW3D@@SAXPAVRenderObjClass@@I@Z:NEAR
+EXTERN ?Apply_Render_State_Changes@DX8Wrapper@@CAXXZ:NEAR
+EXTERN ?AreStaticSortListsEnabled@WW3D@@0_NA:BYTE
+EXTERN ?BfmeBoundaryZero3D@@3MB:BYTE
+EXTERN ?GenFallback0012ED5C8@@3PAVGenFallback@@A:BYTE
+EXTERN ?HighlightRendering@@3_NA:BYTE
+EXTERN ?Invalidate_Cached_Render_States@DX8Wrapper@@SAXXZ:NEAR
+EXTERN ?Is_Backface_Culling_Inverted@ShaderClass@@SA_NXZ:NEAR
+EXTERN ?TheBfmeGlobal_012f7fe0@@3PAVBfmeGlobal_012f7fe0@@A:BYTE
+EXTERN ?forward@Rva00014C45WaterTracksFlushThunk@@QAEXAAVRenderInfoClass@@@Z:NEAR
+EXTERN ?j_0001b897@@YAXXZ:NEAR
+EXTERN ?j_000243b6@@YAXXZ:NEAR
+EXTERN ?j_000364bc@@YAXXZ:NEAR
 _TEXT SEGMENT
 
 ; retail @ 0x007AAA30 size 244
+_TEXT ENDS
+_TEXT$d00baaa30 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00BAAA30 size 244
 public ?d_007aaa30@@YAXXZ
 ?d_007aaa30@@YAXXZ PROC
-    db 0A0h, 2Ch, 0F4h, 33h, 01h, 84h, 0C0h, 56h, 8Bh, 0F1h, 0Fh, 85h, 0CEh, 00h, 00h, 00h
-    db 0A1h, 0E0h, 7Fh, 2Fh, 01h, 85h, 0C0h, 74h, 0Eh, 8Bh, 88h, 0F4h, 2Fh, 00h, 00h, 85h
-    db 0C9h, 0Fh, 84h, 0B7h, 00h, 00h, 00h, 0E8h, 74h, 64h, 16h, 00h, 84h, 0C0h, 0Fh, 85h
-    db 0AAh, 00h, 00h, 00h, 8Bh, 06h, 8Bh, 0CEh, 0FFh, 90h, 74h, 01h, 00h, 00h, 8Ah, 0Dh
-    db 2Dh, 0F4h, 33h, 01h, 84h, 0C9h, 74h, 1Bh, 85h, 0C0h, 74h, 17h, 8Dh, 4Eh, 0FCh, 0F7h
-    db 0D9h, 1Bh, 0C9h, 23h, 0CEh, 50h, 51h, 0E8h, 34h, 2Ah, 15h, 00h, 83h, 0C4h, 08h, 5Eh
-    db 0C2h, 04h, 00h, 8Bh, 86h, 18h, 01h, 00h, 00h, 83h, 0F8h, 03h, 57h, 8Bh, 7Ch, 24h
-    db 0Ch, 77h, 26h, 0FFh, 24h, 85h, 14h, 0ABh, 0BAh, 00h, 57h, 8Dh, 4Eh, 0FCh, 0E8h, 03h
-    db 99h, 87h, 0FFh, 0EBh, 14h, 57h, 8Dh, 4Eh, 0FCh, 0E8h, 0FEh, 0B9h, 88h, 0FFh, 0EBh, 09h
-    db 57h, 8Dh, 4Eh, 0FCh, 0E8h, 0CEh, 0Dh, 87h, 0FFh, 0A1h, 0C8h, 0D5h, 2Eh, 01h, 85h, 0C0h
-    db 74h, 21h, 0D9h, 05h, 50h, 53h, 07h, 01h, 0D9h, 80h, 80h, 01h, 00h, 00h, 0DAh, 0E9h
-    db 0DFh, 0E0h, 0F6h, 0C4h, 44h, 7Bh, 0Ch, 8Bh, 8Eh, 4Ch, 02h, 00h, 00h, 8Bh, 11h, 57h
-    db 0FFh, 52h, 30h, 0E8h, 98h, 9Dh, 15h, 00h, 0E8h, 53h, 91h, 15h, 00h, 8Bh, 8Eh, 50h
-    db 02h, 00h, 00h, 85h, 0C9h, 74h, 06h, 57h, 0E8h, 38h, 0A1h, 86h, 0FFh, 5Fh, 5Eh, 0C2h
-    db 04h, 00h, 8Bh, 0FFh, 0AAh, 0AAh, 0BAh, 00h, 0C0h, 0AAh, 0BAh, 00h, 0B5h, 0AAh, 0BAh, 00h
-    db 0AAh, 0AAh, 0BAh, 00h
+    db 0A0h
+    dd ?HighlightRendering@@3_NA
+    db 084h, 0C0h, 056h, 08Bh, 0F1h, 00Fh, 085h, 0CEh, 000h, 000h, 000h, 0A1h
+    dd ?TheBfmeGlobal_012f7fe0@@3PAVBfmeGlobal_012f7fe0@@A
+    db 085h, 0C0h, 074h, 00Eh, 08Bh, 088h, 0F4h, 02Fh, 000h, 000h, 085h, 0C9h, 00Fh, 084h, 0B7h, 000h
+    db 000h, 000h
+    call ?Is_Backface_Culling_Inverted@ShaderClass@@SA_NXZ
+    db 084h, 0C0h, 00Fh, 085h, 0AAh, 000h, 000h, 000h, 08Bh, 006h, 08Bh, 0CEh, 0FFh, 090h, 074h, 001h
+    db 000h, 000h, 08Ah, 00Dh
+    dd ?AreStaticSortListsEnabled@WW3D@@0_NA
+    db 084h, 0C9h, 074h, 01Bh, 085h, 0C0h, 074h, 017h, 08Dh, 04Eh, 0FCh, 0F7h, 0D9h, 01Bh, 0C9h, 023h
+    db 0CEh, 050h, 051h
+    call ?Add_To_Static_Sort_List@WW3D@@SAXPAVRenderObjClass@@I@Z
+    db 083h, 0C4h, 008h, 05Eh, 0C2h, 004h, 000h, 08Bh, 086h, 018h, 001h, 000h, 000h, 083h, 0F8h, 003h
+    db 057h, 08Bh, 07Ch, 024h, 00Ch, 077h, 026h, 0FFh, 024h, 085h
+    dd ?d_007aaa30@@YAXXZ + 0E4h
+    db 057h, 08Dh, 04Eh, 0FCh
+    call ?j_000243b6@@YAXXZ
+    db 0EBh, 014h, 057h, 08Dh, 04Eh, 0FCh
+    call ?j_000364bc@@YAXXZ
+    db 0EBh, 009h, 057h, 08Dh, 04Eh, 0FCh
+    call ?j_0001b897@@YAXXZ
+    db 0A1h
+    dd ?GenFallback0012ED5C8@@3PAVGenFallback@@A
+    db 085h, 0C0h, 074h, 021h, 0D9h, 005h
+    dd ?BfmeBoundaryZero3D@@3MB
+    db 0D9h, 080h, 080h, 001h, 000h, 000h, 0DAh, 0E9h, 0DFh, 0E0h, 0F6h, 0C4h, 044h, 07Bh, 00Ch, 08Bh
+    db 08Eh, 04Ch, 002h, 000h, 000h, 08Bh, 011h, 057h, 0FFh, 052h, 030h
+    call ?Apply_Render_State_Changes@DX8Wrapper@@CAXXZ
+    call ?Invalidate_Cached_Render_States@DX8Wrapper@@SAXXZ
+    db 08Bh, 08Eh, 050h, 002h, 000h, 000h, 085h, 0C9h, 074h, 006h, 057h
+    call ?forward@Rva00014C45WaterTracksFlushThunk@@QAEXAAVRenderInfoClass@@@Z
+    db 05Fh, 05Eh, 0C2h, 004h, 000h, 08Bh, 0FFh
+    dd ?d_007aaa30@@YAXXZ + 07Ah
+    dd ?d_007aaa30@@YAXXZ + 090h
+    dd ?d_007aaa30@@YAXXZ + 085h
+    dd ?d_007aaa30@@YAXXZ + 07Ah
 ?d_007aaa30@@YAXXZ ENDP
+_TEXT$d00baaa30 ENDS
+_TEXT SEGMENT
 _TEXT ENDS
 END

@@ -1,5 +1,14 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ??$grow_array@UCallback@_STL@@@_STL@@YAPAU?$GrowPair@UCallback@_STL@@@0@PAU10@PAUCallback@0@II@Z:NEAR
+EXTERN ??0locale@_STL@@QAE@XZ:NEAR
+EXTERN ??1locale@_STL@@QAE@XZ:NEAR
+EXTERN ?g_global@@3PAXA:BYTE
+EXTERN ?imbue@?$basic_ios@GV?$char_traits@G@_STL@@@_STL@@QAE?AVlocale@2@ABV32@@Z:NEAR
+EXTERN __imp__fputs:BYTE
+EXTERN g_Va010557A8:NEAR
+EXTERN g_Va0112EBAC:BYTE
 _TEXT SEGMENT
 
 ; ghidra: FUN_00c38560  retail @ 0x00838560 size 270
@@ -1132,18 +1141,28 @@ public ?d_0083f140@@YAXXZ
 ?d_0083f140@@YAXXZ ENDP
 
 ; ghidra: FUN_00c3f1c0  retail @ 0x0083F1C0 size 132
+_TEXT ENDS
+_TEXT$d00c3f1c0 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00C3F1C0 size 132
 public ?d_0083f1c0@@YAXXZ
 ?d_0083f1c0@@YAXXZ PROC
-    db 83h, 0ECh, 08h, 56h, 8Bh, 0F1h, 8Bh, 46h, 2Ch, 8Bh, 4Eh, 28h, 8Bh, 56h, 24h, 50h
-    db 51h, 52h, 8Dh, 44h, 24h, 10h, 50h, 0E8h, 44h, 0FDh, 0FFh, 0FFh, 8Bh, 44h, 24h, 14h
-    db 83h, 0C4h, 10h, 85h, 0C0h, 74h, 2Ch, 8Bh, 4Ch, 24h, 08h, 8Bh, 54h, 24h, 14h, 57h
-    db 8Bh, 7Eh, 2Ch, 89h, 4Eh, 28h, 8Bh, 4Ch, 24h, 14h, 89h, 46h, 24h, 89h, 0Ch, 0F8h
-    db 89h, 54h, 0F8h, 04h, 8Bh, 46h, 2Ch, 40h, 5Fh, 89h, 46h, 2Ch, 5Eh, 83h, 0C4h, 08h
-    db 0C2h, 08h, 00h, 8Bh, 56h, 08h, 8Bh, 4Eh, 14h, 83h, 0CAh, 01h, 8Bh, 0C2h, 85h, 0C8h
-    db 89h, 56h, 08h, 74h, 18h, 8Bh, 15h, 0F0h, 92h, 35h, 01h, 83h, 0C2h, 40h, 52h, 68h
-    db 0ACh, 0EBh, 12h, 01h, 0FFh, 15h, 0C8h, 93h, 35h, 01h, 83h, 0C4h, 08h, 5Eh, 83h, 0C4h
-    db 08h, 0C2h, 08h, 00h
+    db 083h, 0ECh, 008h, 056h, 08Bh, 0F1h, 08Bh, 046h, 02Ch, 08Bh, 04Eh, 028h, 08Bh, 056h, 024h, 050h
+    db 051h, 052h, 08Dh, 044h, 024h, 010h, 050h
+    call ??$grow_array@UCallback@_STL@@@_STL@@YAPAU?$GrowPair@UCallback@_STL@@@0@PAU10@PAUCallback@0@II@Z
+    db 08Bh, 044h, 024h, 014h, 083h, 0C4h, 010h, 085h, 0C0h, 074h, 02Ch, 08Bh, 04Ch, 024h, 008h, 08Bh
+    db 054h, 024h, 014h, 057h, 08Bh, 07Eh, 02Ch, 089h, 04Eh, 028h, 08Bh, 04Ch, 024h, 014h, 089h, 046h
+    db 024h, 089h, 00Ch, 0F8h, 089h, 054h, 0F8h, 004h, 08Bh, 046h, 02Ch, 040h, 05Fh, 089h, 046h, 02Ch
+    db 05Eh, 083h, 0C4h, 008h, 0C2h, 008h, 000h, 08Bh, 056h, 008h, 08Bh, 04Eh, 014h, 083h, 0CAh, 001h
+    db 08Bh, 0C2h, 085h, 0C8h, 089h, 056h, 008h, 074h, 018h, 08Bh, 015h
+    dd ?g_global@@3PAXA
+    db 083h, 0C2h, 040h, 052h, 068h
+    dd g_Va0112EBAC
+    db 0FFh, 015h
+    dd __imp__fputs
+    db 083h, 0C4h, 008h, 05Eh, 083h, 0C4h, 008h, 0C2h, 008h, 000h
 ?d_0083f1c0@@YAXXZ ENDP
+_TEXT$d00c3f1c0 ENDS
+_TEXT SEGMENT
 
 ; ghidra: FUN_00c3f3b0  retail @ 0x0083F3B0 size 59
 public ?d_0083f3b0@@YAXXZ
@@ -1275,22 +1294,37 @@ public ?d_0083f880@@YAXXZ
 ?d_0083f880@@YAXXZ ENDP
 
 ; ghidra: FUN_00c3f9b0  retail @ 0x0083F9B0 size 195
+_TEXT ENDS
+_TEXT$d00c3f9b0 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00C3F9B0 size 195
 public ?d_0083f9b0@@YAXXZ
 ?d_0083f9b0@@YAXXZ PROC
-    db 6Ah, 0FFh, 68h, 0A8h, 57h, 05h, 01h, 64h, 0A1h, 00h, 00h, 00h, 00h, 50h, 64h, 89h
-    db 25h, 00h, 00h, 00h, 00h, 51h, 53h, 56h, 33h, 0C0h, 57h, 8Bh, 7Ch, 24h, 20h, 33h
-    db 0DBh, 3Bh, 0FBh, 0Fh, 94h, 0C0h, 8Bh, 0F1h, 8Bh, 4Eh, 14h, 89h, 7Eh, 58h, 85h, 0C8h
-    db 89h, 46h, 08h, 74h, 17h, 0A1h, 0F0h, 92h, 35h, 01h, 83h, 0C0h, 40h, 50h, 68h, 0ACh
-    db 0EBh, 12h, 01h, 0FFh, 15h, 0C8h, 93h, 35h, 01h, 83h, 0C4h, 08h, 8Dh, 4Ch, 24h, 0Ch
-    db 0E8h, 1Bh, 27h, 0FFh, 0FFh, 50h, 8Dh, 4Ch, 24h, 24h, 51h, 8Bh, 0CEh, 89h, 5Ch, 24h
-    db 20h, 0E8h, 6Ah, 0FEh, 0FFh, 0FFh, 8Dh, 4Ch, 24h, 20h, 0E8h, 51h, 27h, 0FFh, 0FFh, 8Dh
-    db 4Ch, 24h, 0Ch, 0C7h, 44h, 24h, 18h, 0FFh, 0FFh, 0FFh, 0FFh, 0E8h, 40h, 27h, 0FFh, 0FFh
-    db 8Bh, 4Eh, 40h, 33h, 0D2h, 3Bh, 0FBh, 0Fh, 94h, 0C2h, 89h, 5Eh, 5Ch, 89h, 5Eh, 14h
-    db 0C7h, 46h, 04h, 08h, 10h, 00h, 00h, 89h, 5Eh, 1Ch, 0C7h, 46h, 18h, 06h, 00h, 00h
-    db 00h, 6Ah, 20h, 89h, 56h, 08h, 8Bh, 01h, 0FFh, 50h, 28h, 8Bh, 4Ch, 24h, 10h, 5Fh
-    db 66h, 89h, 46h, 54h, 5Eh, 5Bh, 64h, 89h, 0Dh, 00h, 00h, 00h, 00h, 83h, 0C4h, 10h
-    db 0C2h, 04h, 00h
+    db 06Ah, 0FFh, 068h
+    dd g_Va010557A8
+    db 064h, 0A1h, 000h, 000h, 000h, 000h, 050h, 064h, 089h, 025h, 000h, 000h, 000h, 000h, 051h, 053h
+    db 056h, 033h, 0C0h, 057h, 08Bh, 07Ch, 024h, 020h, 033h, 0DBh, 03Bh, 0FBh, 00Fh, 094h, 0C0h, 08Bh
+    db 0F1h, 08Bh, 04Eh, 014h, 089h, 07Eh, 058h, 085h, 0C8h, 089h, 046h, 008h, 074h, 017h, 0A1h
+    dd ?g_global@@3PAXA
+    db 083h, 0C0h, 040h, 050h, 068h
+    dd g_Va0112EBAC
+    db 0FFh, 015h
+    dd __imp__fputs
+    db 083h, 0C4h, 008h, 08Dh, 04Ch, 024h, 00Ch
+    call ??0locale@_STL@@QAE@XZ
+    db 050h, 08Dh, 04Ch, 024h, 024h, 051h, 08Bh, 0CEh, 089h, 05Ch, 024h, 020h
+    call ?imbue@?$basic_ios@GV?$char_traits@G@_STL@@@_STL@@QAE?AVlocale@2@ABV32@@Z
+    db 08Dh, 04Ch, 024h, 020h
+    call ??1locale@_STL@@QAE@XZ
+    db 08Dh, 04Ch, 024h, 00Ch, 0C7h, 044h, 024h, 018h, 0FFh, 0FFh, 0FFh, 0FFh
+    call ??1locale@_STL@@QAE@XZ
+    db 08Bh, 04Eh, 040h, 033h, 0D2h, 03Bh, 0FBh, 00Fh, 094h, 0C2h, 089h, 05Eh, 05Ch, 089h, 05Eh, 014h
+    db 0C7h, 046h, 004h, 008h, 010h, 000h, 000h, 089h, 05Eh, 01Ch, 0C7h, 046h, 018h, 006h, 000h, 000h
+    db 000h, 06Ah, 020h, 089h, 056h, 008h, 08Bh, 001h, 0FFh, 050h, 028h, 08Bh, 04Ch, 024h, 010h, 05Fh
+    db 066h, 089h, 046h, 054h, 05Eh, 05Bh, 064h, 089h, 00Dh, 000h, 000h, 000h, 000h, 083h, 0C4h, 010h
+    db 0C2h, 004h, 000h
 ?d_0083f9b0@@YAXXZ ENDP
+_TEXT$d00c3f9b0 ENDS
+_TEXT SEGMENT
 
 ; ghidra: FUN_00c3fa80  retail @ 0x0083FA80 size 87
 public ?d_0083fa80@@YAXXZ

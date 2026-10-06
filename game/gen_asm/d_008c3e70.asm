@@ -1,5 +1,7 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ?bfmeTheCBC@@3HA:BYTE
 _TEXT SEGMENT
 
 ; ghidra: bounds-high  retail @ 0x008C3E70 size 26
@@ -83,17 +85,23 @@ public ?d_008c5ee0@@YAXXZ
 ?d_008c5ee0@@YAXXZ ENDP
 
 ; ghidra: bounds-high  retail @ 0x008C5F30 size 114
+_TEXT ENDS
+_TEXT$d00cc5f30 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00CC5F30 size 114
 public ?d_008c5f30@@YAXXZ
 ?d_008c5f30@@YAXXZ PROC
-    db 56h, 8Bh, 0C1h, 8Bh, 4Ch, 24h, 08h, 57h, 8Bh, 79h, 04h, 8Bh, 0F7h, 83h, 0E6h, 3Fh
-    db 83h, 0FEh, 08h, 75h, 32h, 8Bh, 0D7h, 0C1h, 0EAh, 0Fh, 0F6h, 0D2h, 0F6h, 0C2h, 01h, 75h
-    db 26h, 8Bh, 49h, 08h, 8Bh, 50h, 60h, 8Bh, 0Ch, 8Ah, 8Bh, 70h, 08h, 8Bh, 10h, 89h
-    db 0Ch, 96h, 0FFh, 00h, 8Bh, 41h, 04h, 0C1h, 0E8h, 1Eh, 0A8h, 01h, 75h, 04h, 8Bh, 11h
-    db 0FFh, 12h, 5Fh, 5Eh, 0C2h, 04h, 00h, 83h, 0FEh, 04h, 75h, 0DEh, 8Bh, 0D7h, 0C1h, 0EAh
-    db 0Fh, 0F6h, 0D2h, 0F6h, 0C2h, 01h, 75h, 0D2h, 8Bh, 50h, 58h, 8Bh, 49h, 08h, 8Bh, 0Ch
-    db 8Ah, 85h, 0C9h, 8Bh, 70h, 08h, 8Bh, 10h, 75h, 0C5h, 8Bh, 0Dh, 0BCh, 79h, 33h, 01h
+    db 056h, 08Bh, 0C1h, 08Bh, 04Ch, 024h, 008h, 057h, 08Bh, 079h, 004h, 08Bh, 0F7h, 083h, 0E6h, 03Fh
+    db 083h, 0FEh, 008h, 075h, 032h, 08Bh, 0D7h, 0C1h, 0EAh, 00Fh, 0F6h, 0D2h, 0F6h, 0C2h, 001h, 075h
+    db 026h, 08Bh, 049h, 008h, 08Bh, 050h, 060h, 08Bh, 00Ch, 08Ah, 08Bh, 070h, 008h, 08Bh, 010h, 089h
+    db 00Ch, 096h, 0FFh, 000h, 08Bh, 041h, 004h, 0C1h, 0E8h, 01Eh, 0A8h, 001h, 075h, 004h, 08Bh, 011h
+    db 0FFh, 012h, 05Fh, 05Eh, 0C2h, 004h, 000h, 083h, 0FEh, 004h, 075h, 0DEh, 08Bh, 0D7h, 0C1h, 0EAh
+    db 00Fh, 0F6h, 0D2h, 0F6h, 0C2h, 001h, 075h, 0D2h, 08Bh, 050h, 058h, 08Bh, 049h, 008h, 08Bh, 00Ch
+    db 08Ah, 085h, 0C9h, 08Bh, 070h, 008h, 08Bh, 010h, 075h, 0C5h, 08Bh, 00Dh
+    dd ?bfmeTheCBC@@3HA
     db 0EBh, 0BDh
 ?d_008c5f30@@YAXXZ ENDP
+_TEXT$d00cc5f30 ENDS
+_TEXT SEGMENT
 
 ; ghidra: bounds-high  retail @ 0x008C7BA0 size 69
 public ?d_008c7ba0@@YAXXZ

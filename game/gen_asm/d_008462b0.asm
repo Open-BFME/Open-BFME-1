@@ -1,5 +1,8 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN ?_M_open@_Filebuf_base@_STL@@QAE_NPBDHJ@Z:NEAR
+EXTERN ?_M_throw_failure@ios_base@_STL@@IAEXXZ:NEAR
 _TEXT SEGMENT
 
 ; retail @ 0x008462B0 size 109
@@ -494,15 +497,22 @@ public ?d_0084aee0@@YAXXZ
 ?d_0084aee0@@YAXXZ ENDP
 
 ; retail @ 0x0084AF80 size 81
+_TEXT ENDS
+_TEXT$d00c4af80 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00C4AF80 size 81
 public ?d_0084af80@@YAXXZ
 ?d_0084af80@@YAXXZ PROC
-    db 8Bh, 44h, 24h, 08h, 56h, 57h, 8Bh, 0F1h, 8Bh, 4Ch, 24h, 0Ch, 68h, 80h, 00h, 00h
-    db 00h, 50h, 8Dh, 7Eh, 0Ch, 51h, 8Dh, 4Fh, 24h, 0E8h, 32h, 0F0h, 0FFh, 0FFh, 0F6h, 0D8h
-    db 1Bh, 0C0h, 85h, 0C7h, 75h, 26h, 8Bh, 16h, 8Bh, 4Ah, 04h, 8Bh, 44h, 31h, 08h, 8Bh
-    db 54h, 31h, 58h, 03h, 0CEh, 83h, 0C8h, 04h, 85h, 0D2h, 75h, 03h, 83h, 0C8h, 01h, 85h
-    db 41h, 14h, 89h, 41h, 08h, 74h, 05h, 0E8h, 24h, 39h, 0FFh, 0FFh, 5Fh, 5Eh, 0C2h, 08h
-    db 00h
+    db 08Bh, 044h, 024h, 008h, 056h, 057h, 08Bh, 0F1h, 08Bh, 04Ch, 024h, 00Ch, 068h, 080h, 000h, 000h
+    db 000h, 050h, 08Dh, 07Eh, 00Ch, 051h, 08Dh, 04Fh, 024h
+    call ?_M_open@_Filebuf_base@_STL@@QAE_NPBDHJ@Z
+    db 0F6h, 0D8h, 01Bh, 0C0h, 085h, 0C7h, 075h, 026h, 08Bh, 016h, 08Bh, 04Ah, 004h, 08Bh, 044h, 031h
+    db 008h, 08Bh, 054h, 031h, 058h, 003h, 0CEh, 083h, 0C8h, 004h, 085h, 0D2h, 075h, 003h, 083h, 0C8h
+    db 001h, 085h, 041h, 014h, 089h, 041h, 008h, 074h, 005h
+    call ?_M_throw_failure@ios_base@_STL@@IAEXXZ
+    db 05Fh, 05Eh, 0C2h, 008h, 000h
 ?d_0084af80@@YAXXZ ENDP
+_TEXT$d00c4af80 ENDS
+_TEXT SEGMENT
 
 ; retail @ 0x0084D200 size 29
 public ?d_0084d200@@YAXXZ

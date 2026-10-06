@@ -1,5 +1,10 @@
 .386
 .model flat
+; db bodies made symbolic by tools/dump_apply.py (tools/dump_relocs.py + retail .reloc)
+EXTERN __imp__EnterCriticalSection@4:BYTE
+EXTERN __imp__GetProcessHeap@0:BYTE
+EXTERN __imp__HeapAlloc@12:BYTE
+EXTERN __imp__LeaveCriticalSection@4:BYTE
 _TEXT SEGMENT
 
 ; ghidra: FUN_00c81530  retail @ 0x00881530 size 99
@@ -414,24 +419,34 @@ public ?d_00883ad0@@YAXXZ
 ?d_00883ad0@@YAXXZ ENDP
 
 ; ghidra: FUN_00c83b70  retail @ 0x00883B70 size 236
+_TEXT ENDS
+_TEXT$d00c83b70 SEGMENT BYTE PUBLIC FLAT 'CODE'
+; retail VA 0x00C83B70 size 236
 public ?d_00883b70@@YAXXZ
 ?d_00883b70@@YAXXZ PROC
-    db 83h, 0ECh, 08h, 56h, 8Bh, 0F1h, 8Ah, 86h, 0C0h, 82h, 02h, 00h, 84h, 0C0h, 89h, 74h
-    db 24h, 08h, 74h, 07h, 33h, 0C0h, 5Eh, 83h, 0C4h, 08h, 0C3h, 8Bh, 86h, 0C8h, 82h, 02h
-    db 00h, 85h, 0C0h, 74h, 07h, 50h, 0FFh, 15h, 18h, 8Dh, 35h, 01h, 53h, 55h, 57h, 8Bh
-    db 3Dh, 0DCh, 8Dh, 35h, 01h, 6Ah, 08h, 6Ah, 04h, 0FFh, 0D7h, 8Bh, 1Dh, 3Ch, 8Eh, 35h
-    db 01h, 50h, 0FFh, 0D3h, 33h, 0C9h, 83h, 0C6h, 0Ch, 89h, 44h, 24h, 10h, 8Bh, 0D6h, 0BDh
-    db 7Bh, 2Bh, 00h, 00h, 8Bh, 02h, 85h, 0C0h, 74h, 16h, 8Dh, 9Bh, 00h, 00h, 00h, 00h
-    db 83h, 0B8h, 9Ch, 00h, 00h, 00h, 00h, 7Dh, 01h, 41h, 8Bh, 00h, 85h, 0C0h, 75h, 0F0h
-    db 83h, 0C2h, 04h, 4Dh, 75h, 0DEh, 85h, 0C9h, 8Bh, 6Ch, 24h, 10h, 89h, 4Dh, 00h, 76h
-    db 45h, 8Dh, 04h, 8Dh, 00h, 00h, 00h, 00h, 50h, 6Ah, 04h, 0FFh, 0D7h, 50h, 0FFh, 0D3h
-    db 89h, 45h, 04h, 8Bh, 0C8h, 0BAh, 7Bh, 2Bh, 00h, 00h, 8Dh, 9Bh, 00h, 00h, 00h, 00h
-    db 8Bh, 06h, 85h, 0C0h, 74h, 18h, 8Bh, 0B8h, 9Ch, 00h, 00h, 00h, 85h, 0FFh, 7Dh, 08h
-    db 8Bh, 78h, 10h, 89h, 39h, 83h, 0C1h, 04h, 8Bh, 00h, 85h, 0C0h, 75h, 0E8h, 83h, 0C6h
-    db 04h, 4Ah, 75h, 0DCh, 0EBh, 07h, 0C7h, 45h, 04h, 00h, 00h, 00h, 00h, 8Bh, 4Ch, 24h
-    db 14h, 8Bh, 81h, 0C8h, 82h, 02h, 00h, 85h, 0C0h, 74h, 07h, 50h, 0FFh, 15h, 74h, 8Eh
-    db 35h, 01h, 5Fh, 8Bh, 0C5h, 5Dh, 5Bh, 5Eh, 83h, 0C4h, 08h, 0C3h
+    db 083h, 0ECh, 008h, 056h, 08Bh, 0F1h, 08Ah, 086h, 0C0h, 082h, 002h, 000h, 084h, 0C0h, 089h, 074h
+    db 024h, 008h, 074h, 007h, 033h, 0C0h, 05Eh, 083h, 0C4h, 008h, 0C3h, 08Bh, 086h, 0C8h, 082h, 002h
+    db 000h, 085h, 0C0h, 074h, 007h, 050h, 0FFh, 015h
+    dd __imp__EnterCriticalSection@4
+    db 053h, 055h, 057h, 08Bh, 03Dh
+    dd __imp__GetProcessHeap@0
+    db 06Ah, 008h, 06Ah, 004h, 0FFh, 0D7h, 08Bh, 01Dh
+    dd __imp__HeapAlloc@12
+    db 050h, 0FFh, 0D3h, 033h, 0C9h, 083h, 0C6h, 00Ch, 089h, 044h, 024h, 010h, 08Bh, 0D6h, 0BDh, 07Bh
+    db 02Bh, 000h, 000h, 08Bh, 002h, 085h, 0C0h, 074h, 016h, 08Dh, 09Bh, 000h, 000h, 000h, 000h, 083h
+    db 0B8h, 09Ch, 000h, 000h, 000h, 000h, 07Dh, 001h, 041h, 08Bh, 000h, 085h, 0C0h, 075h, 0F0h, 083h
+    db 0C2h, 004h, 04Dh, 075h, 0DEh, 085h, 0C9h, 08Bh, 06Ch, 024h, 010h, 089h, 04Dh, 000h, 076h, 045h
+    db 08Dh, 004h, 08Dh, 000h, 000h, 000h, 000h, 050h, 06Ah, 004h, 0FFh, 0D7h, 050h, 0FFh, 0D3h, 089h
+    db 045h, 004h, 08Bh, 0C8h, 0BAh, 07Bh, 02Bh, 000h, 000h, 08Dh, 09Bh, 000h, 000h, 000h, 000h, 08Bh
+    db 006h, 085h, 0C0h, 074h, 018h, 08Bh, 0B8h, 09Ch, 000h, 000h, 000h, 085h, 0FFh, 07Dh, 008h, 08Bh
+    db 078h, 010h, 089h, 039h, 083h, 0C1h, 004h, 08Bh, 000h, 085h, 0C0h, 075h, 0E8h, 083h, 0C6h, 004h
+    db 04Ah, 075h, 0DCh, 0EBh, 007h, 0C7h, 045h, 004h, 000h, 000h, 000h, 000h, 08Bh, 04Ch, 024h, 014h
+    db 08Bh, 081h, 0C8h, 082h, 002h, 000h, 085h, 0C0h, 074h, 007h, 050h, 0FFh, 015h
+    dd __imp__LeaveCriticalSection@4
+    db 05Fh, 08Bh, 0C5h, 05Dh, 05Bh, 05Eh, 083h, 0C4h, 008h, 0C3h
 ?d_00883b70@@YAXXZ ENDP
+_TEXT$d00c83b70 ENDS
+_TEXT SEGMENT
 
 ; ghidra: FUN_00c83d00  retail @ 0x00883D00 size 394
 public ?d_00883d00@@YAXXZ
