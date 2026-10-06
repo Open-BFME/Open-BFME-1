@@ -1,4 +1,4 @@
-// cl: /O2 /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// cl: /O2 /MD /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 
 // STLport vector assignment at retail 0x00136C10.  The body proves only a
