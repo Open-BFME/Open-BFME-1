@@ -29,9 +29,14 @@
 struct Coord3D { float x, y, z; };
 class AIUpdateInterface;
 
-class Object {
+// Object's mobility test (0x001C9270, via ILT 0x00017607), under its ledger name.
+class ObjectIsMobileBody {
 public:
     bool isMobile() const;
+};
+
+class Object {
+public:
     bool isDisabledByType(int type) const { return (m_disabledMask & (1 << type)) != 0; }
     AIUpdateInterface *getAIUpdateInterface() { return m_ai; }
     const Coord3D *getPosition() const { return &m_position; }
@@ -66,7 +71,7 @@ bool AIGroup::getCenter( Coord3D *center )
 		{
 			continue; // don't bother counting riders in the center calculation.
 		}
-		if (!(*i)->isMobile()) continue;
+		if (!((const ObjectIsMobileBody *)*i)->isMobile()) continue;
  AIUpdateInterface *ai = (*i)->getAIUpdateInterface();
 		if (ai)
 		{
