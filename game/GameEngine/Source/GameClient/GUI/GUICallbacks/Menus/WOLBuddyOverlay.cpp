@@ -925,18 +925,7 @@ WindowMsgHandledType WOLBuddyOverlayRCMenuSystem( GameWindow *window, UnsignedIn
 }
 
 
-void setUnignoreText( WindowLayout *layout, AsciiString nick, GPProfile id)
-{
-	AsciiString controlName;
-	controlName.format("%s:ButtonIgnore",layout->getFilename().str()+6);
-	NameKeyType ID =  TheNameKeyGenerator->nameToKey( controlName );
-	GameWindow *win = TheWindowManager->winGetWindowFromId(layout->getFirstWindow(), ID);
-	if(win)
-	{
-		if(TheGameSpyInfo->isSavedIgnored(id) || TheGameSpyInfo->isIgnored(nick))
-			GadgetButtonSetText(win, TheGameText->fetch("GUI:Unignore"));
-	}
-}
+// Retail setUnignoreText (0x004EB100) is provided by setUnignoreText_Thunk.cpp.
 
 void refreshIgnoreList( void )
 {
