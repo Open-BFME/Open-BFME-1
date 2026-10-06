@@ -21,35 +21,8 @@ int Gen_000D3690::bfmeLookup(unsigned int index) const
 	return 0;
 }
 
-class BfmeVec3EJ
-{
-public:
-	float m_bfmeX;						// +0x00
-	float m_bfmeY;						// +0x04
-	float m_bfmeZ;						// +0x08
-};
-
-class Gen_000E5A50
-{
-public:
-	float bfmeDistanceSquared(const BfmeVec3EJ *point) const;
-
-private:
-	int m_bfmeHead[14];					// +0x00
-	float m_bfmeX;						// +0x38
-	float m_bfmeY;						// +0x3C
-	float m_bfmeZ;						// +0x40
-};
-
-// ?bfmeDistanceSquared@Gen_000E5A50@@QBEMPBVBfmeVec3EJ@@@Z
-float Gen_000E5A50::bfmeDistanceSquared(const BfmeVec3EJ *point) const
-{
-	float dx = m_bfmeX - point->m_bfmeX;
-	float dy = m_bfmeY - point->m_bfmeY;
-	float dz = m_bfmeZ - point->m_bfmeZ;
-
-	return dx * dx + dy * dy + dz * dz;
-}
+// Gen_000E5A50::bfmeDistanceSquared (0x000E5A50) is defined by
+// LocomotorDistance002774C0.cpp, the TU whose caller needs its body visible.
 
 class Gen_000E5A90
 {
