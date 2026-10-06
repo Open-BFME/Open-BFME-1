@@ -2903,34 +2903,8 @@ TeamsInfoRec& TeamsInfoRec::operator=(const TeamsInfoRec& thatref)
 }
 
 // byte-exact reconstruction: game/GameEngine/Source/Common/promoted__clear_TeamsInfoRec_QAEXXZ_001991F0.cpp
-// ?clear@TeamsInfoRec@@QAEXXZ present-unmatched
-void TeamsInfoRec::clear() 
-{ 
-	Int i;
-
-	for (i = 0; i < m_numTeamsAllocated; i++) 
-		m_teams[i].clear(); 
-
-	m_numTeams = 0; 
-	m_numTeamsAllocated = 0;
-	delete [] m_teams;
-	m_teams = NULL;
-}
-
-// ?findTeamInfo@TeamsInfoRec@@QAEPAVTeamsInfo@@VAsciiString@@PAH@Z present-unmatched
-TeamsInfo *TeamsInfoRec::findTeamInfo(AsciiString name, Int* index /*= NULL*/)
-{
-	for (int i = 0; i < m_numTeams; i++) 
-	{
-		if (m_teams[i].getDict()->getAsciiString(TheKey_teamName) == name)
-		{
-			if (index)
-				*index = i;
-			return &m_teams[i];
-		}
-	}
-	return NULL;
-}
+// TeamsInfoRec::clear: retail's body (0x001991F0) is TeamsInfoRec_clear.cpp;
+// Zero Hour's version is not defined here.
 
 // ?addTeam@TeamsInfoRec@@QAEXPBVDict@@@Z present-unmatched
 // That donor does NOT hold this body, so the pointer to it is gone. It owns
