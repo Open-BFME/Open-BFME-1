@@ -10,7 +10,7 @@ Gate checks land shortly (jump tables, extent tails, local statics,
 `gen-alias` tokens, data RVAs, thunk-table names). Until then, edit
 `tools/build.py`, `.githooks/` or baselines only to fix a verifier bug; add no
 `gen-alias` notes, data pins, alias rows or `__emit` lifts; pause bulk renames.
-Flagged rows will be queued.
+Plan: `targets/game/reverse/analysis/verifier_upgrade_plan.md`.
 
 ## Setup
 
