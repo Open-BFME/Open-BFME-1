@@ -916,45 +916,8 @@ AIGuardAttackAggressorState::AIGuardAttackAggressorState( StateMachine *machine 
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?onEnter@AIGuardAttackAggressorState@@ present-unmatched
-StateReturnType AIGuardAttackAggressorState::onEnter( void )
-{
-	Object *obj = getMachineOwner();
-	ObjectID nemID = INVALID_ID;
-
-	if (obj->getBodyModule() && obj->getBodyModule()->getLastDamageInfo()->in.m_sourceID) {
-		nemID = obj->getBodyModule()->getLastDamageInfo()->in.m_sourceID;
-		getGuardMachine()->setNemesisID(nemID);
-	}
-
-	Object *nemesis = TheGameLogic->findObjectByID(getGuardMachine()->getNemesisID());
-	if (nemesis == NULL) 
-	{
-		DEBUG_LOG(("Unexpected NULL nemesis in AIGuardAttackAggressorState.\n"));
-		return STATE_SUCCESS;
-	}
-
-	Object* targetToGuard = getGuardMachine()->findTargetToGuardByID();
-	Coord3D pos = targetToGuard ? *targetToGuard->getPosition() : *getGuardMachine()->getPositionToGuard();
-	//Don't allow guarding units to leave their guard radius!
-	m_exitConditions.m_center = pos;
-	m_exitConditions.m_radiusSqr = sqr(AIGuardMachine::getStdGuardRange(getMachineOwner()));
-	m_exitConditions.m_attackGiveUpFrame = TheGameLogic->getFrame() + TheAI->getAiData()->m_guardChaseUnitFrames;
-	m_exitConditions.m_conditionsToConsider = (ExitConditions::ATTACK_ExitIfExpiredDuration | 
-																						 ExitConditions::ATTACK_ExitIfNoUnitFound |
-																						 ExitConditions::ATTACK_ExitIfOutsideRadius );
-
-	m_attackState = newInstance(AIAttackState)(getMachine(), true, true, false, &m_exitConditions);
-	m_attackState->getMachine()->setGoalObject(nemesis);
-
-	StateReturnType returnVal = m_attackState->onEnter();
-	if (returnVal == STATE_CONTINUE) {
-		return STATE_CONTINUE;
-	}
-
-	// if we had no one to attack, we were successful, so go to the next state.
-	return STATE_SUCCESS;
-}
+// AIGuardAttackAggressorState::onEnter: retail's body (0x0015CB70) is
+// AIGuardAttackAggressorState_onEnter_Bfme.cpp; Zero Hour's version is not defined here.
 
 //-------------------------------------------------------------------------------------------------
 // ?update@AIGuardAttackAggressorState@@ present-unmatched
