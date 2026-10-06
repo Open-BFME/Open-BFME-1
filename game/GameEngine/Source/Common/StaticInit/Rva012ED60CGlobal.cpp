@@ -6,4 +6,6 @@
 // bytes as its compiler-local _$E1; the ledger row names that COFF symbol
 // via object-symbol=_$E1.
 #include "ascii_string.h"
-AsciiString g_rva012ED60C;
+// The ledger records this cell as TheOptionGroupName: matched parseOptionGroup
+// (0x000945A0) assigns it the group's INI token.
+AsciiString TheOptionGroupName;

@@ -22,13 +22,13 @@ void rva00C6FD10() { RvaObject012EF0E8.handle(); }
 // scalar-deleting wrapper. Use the existing address-derived direct route;
 // its ECX receiver and zero stack arguments are witnessed at 00887940.
 struct Gen0000D828 { void handle(); };
-extern AsciiString RvaObject012ED60C;
+extern AsciiString TheOptionGroupName; // 0x012ED60C
 extern AsciiString RvaObject012ED828;
 extern AsciiString RvaObject012ED82C;
 extern AsciiString RvaObject012EF180;
 extern AsciiString RvaObject012EF1E4;
 extern AsciiString RvaObject012EF1F0;
-void rva00C6FCE0() { reinterpret_cast<Gen0000D828 *>(&RvaObject012ED60C)->handle(); }
+void rva00C6FCE0() { reinterpret_cast<Gen0000D828 *>(&TheOptionGroupName)->handle(); }
 void rva00C6FCF0() { reinterpret_cast<Gen0000D828 *>(&RvaObject012ED828)->handle(); }
 void rva00C6FD00() { reinterpret_cast<Gen0000D828 *>(&RvaObject012ED82C)->handle(); }
 void rva00C6FD20() { reinterpret_cast<Gen0000D828 *>(&RvaObject012EF180)->handle(); }

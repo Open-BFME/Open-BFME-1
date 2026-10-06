@@ -1029,8 +1029,6 @@ dir32,0x012ED600,?g_bfmeKeyGenERK@@3PAVNameKeyGenerator@@A,"retail 0x012ED600 is
 dir32,0x012ED600,?g_bfmeMap996@@3PAVNameKeyGenerator@@A,"retail 0x012ED600 is already recorded as ?TheBfmeGenAE@@3PAVBfmeGenAE@@A (+19 more); reference that name, not a new one"
 dir32,0x012ED600,?g_bfmeQ1060@@3PAVNameKeyGenerator@@A,"retail 0x012ED600 is already recorded as ?TheBfmeGenAE@@3PAVBfmeGenAE@@A (+19 more); reference that name, not a new one"
 dir32,0x012ED600,?g_bfmeTwoAOA@@3PAVNameKeyGenerator@@A,"retail 0x012ED600 is already recorded as ?TheBfmeGenAE@@3PAVBfmeGenAE@@A (+19 more); reference that name, not a new one"
-dir32,0x012ED60C,?RvaObject012ED60C@@3VAsciiString@@A,"retail 0x012ED60C is already recorded as ?TheOptionGroupName@@3VAsciiString@@A; reference that name, not a new one"
-dir32,0x012ED60C,?g_rva012ED60C@@3VAsciiString@@A,"retail 0x012ED60C is already recorded as ?TheOptionGroupName@@3VAsciiString@@A; reference that name, not a new one"
 dir32,0x012ED648,?g_012ED648@@3PAVRva000AF530Table@@A,the name encodes 0x000AF530 but retail reads 0x012ED648
 dir32,0x012ED828,?RvaObject012ED828@@3VAsciiString@@A,"nothing in the ledger owns 0x012ED828. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012ED82C,?RvaObject012ED82C@@3VAsciiString@@A,"nothing in the ledger owns 0x012ED82C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
