@@ -102,7 +102,8 @@ public:
 	virtual BfmeAwakenLog *slot6C(int first, int second);
 };
 
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void *g_Rva00F36E5C; // VA 01336E5C debug manager cell (data_rows.csv owner)
+#define TheBfmeAwakenDebug (static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C))
 // The diagnostic text at VA 0x0112CD30 has no recorded name; address-derived.
 extern const char g_0112CD30[];
 extern void _bfme_debugRecordCallsite(int kind);

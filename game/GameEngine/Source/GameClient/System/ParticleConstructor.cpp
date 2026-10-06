@@ -247,7 +247,8 @@ public:
 	virtual void s64(); virtual void s68();
 	virtual BfmeDebugReport *startReport(Int a, Int b);
 };
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void *g_Rva00F36E5C; // VA 01336E5C debug manager cell (data_rows.csv owner)
+#define TheBfmeAwakenDebug (static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C))
 
 extern bool _bfme_debugReportingEnabled();
 extern void _bfme_debugRecordCallsite(int kind);

@@ -175,7 +175,8 @@ class BfmeAwakenDebug { public:
  virtual void slot68();
  virtual BfmeAwakenLog *slot6C(int,int);
 };
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void *g_Rva00F36E5C; // VA 01336E5C debug manager cell (data_rows.csv owner)
+#define TheBfmeAwakenDebug (static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C))
 void _bfme_debugRecordCallsite(int);
 class GameLogic
 {
