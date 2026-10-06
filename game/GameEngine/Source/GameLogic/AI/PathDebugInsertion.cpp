@@ -28,14 +28,21 @@ class PathNode
 public:
 	const PathNode *getNext() const { return m_next; }
 	const PathNode *getNextOptimized() const { return m_nextOptimized; }
-	const Coord3D *getPosition() const { return &m_position; }
 
-private:
 	PathNode *m_next;
 	PathNode *m_previous;
 	PathNode *m_nextOptimized;
 	Coord3D m_position;
 };
+
+// PathNode::getPosition has no retail address (always inlined). A member here
+// emitted a ?getPosition@PathNode@@ COMDAT unlike the first copy in link
+// order (this view puts m_position at +0x0C), so this TU reads it through a
+// file-local inline instead.
+static inline const Coord3D *pathNodePosition(const PathNode *node)
+{
+	return &node->m_position;
+}
 
 class Path : public Snapshot
 {
@@ -65,7 +72,7 @@ Debug &Rva003D6300(Debug &debug, const Path &path)
 			nextOptimized = nextOptimized->getNextOptimized();
 		}
 
-		const Coord3D *position = node->getPosition();
+		const Coord3D *position = pathNodePosition(node);
 		debug << "(" << position->x << ", " << position->y << ", " << position->z << ")";
 	}
 
