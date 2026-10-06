@@ -297,15 +297,14 @@ def replay(since, ref, rules):
         t0 = time.time()
         found = check(f"{rev}^", rev, tumap, reg, rules)
         timings.append(time.time() - t0)
-        if found:
+        if found:   # printed as found, so an interrupted replay keeps its evidence
             subject = git("log", "-1", "--format=%s", rev).strip()
-            flagged.append((rev[:10], subject, found))
+            flagged.append(rev)
+            print(f"{rev[:10]} {subject[:80]}", flush=True)
+            for rule, msg in found:
+                print(f"    {rule} {msg}", flush=True)
             for rule in {f[0] for f in found}:
                 per_rule[rule] += 1
-    for rev, subject, found in flagged:
-        print(f"{rev} {subject[:80]}")
-        for rule, msg in found:
-            print(f"    {rule} {msg}")
     n = len(revs)
     print(f"\ncommits {n}; flagged {len(flagged)}; per rule (commits): "
           + ", ".join(f"{k}={v} ({100 * v / max(n, 1):.1f}%)" for k, v in sorted(per_rule.items())))
