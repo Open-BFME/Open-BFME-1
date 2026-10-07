@@ -9,10 +9,14 @@ public:
 	void *m_bfmeItem;
 };
 
-class BfmeFinishDispatcherAGA
+// ILT 0x00014F51 -> 0x00226800, the matched
+// remove@Rva226800RemoveContain@@QAEXPAVObject@@_N@Z (OpenContain list removal).
+class Object;
+
+class Rva226800RemoveContain
 {
 public:
-	void step(void *item, void *what);
+	void remove(Object *obj, bool exposeStealthUnits);
 };
 
 class BfmeThingAGA
@@ -29,10 +33,10 @@ void BfmeThingAGA::bfmeFinishAGA(void *what)
 	BfmeFinishNodeAGA *node = m_bfmeList->m_bfmeNext;
 	while (node != m_bfmeList)
 	{
-		BfmeFinishDispatcherAGA *dispatcher =
-			reinterpret_cast<BfmeFinishDispatcherAGA *>(
+		Rva226800RemoveContain *dispatcher =
+			reinterpret_cast<Rva226800RemoveContain *>(
 				reinterpret_cast<unsigned char *>(this) - 0x20);
-		dispatcher->step(node->m_bfmeItem, what);
+		dispatcher->remove(static_cast<Object *>(node->m_bfmeItem), *reinterpret_cast<bool *>(&what));
 		node = m_bfmeList->m_bfmeNext;
 	}
 }
