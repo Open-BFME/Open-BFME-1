@@ -6,11 +6,11 @@
 class TeamPrototype;
 class ScriptEngine;
 
-class BFMEScriptEngineFlagLookup
+// ILT 0x00036336 -> matched BfmeScriptEngineSlashName::bfmeName (0x003398F0).
+class BfmeScriptEngineSlashName
 {
-	friend class ScriptEngine;
-	private:
-	AsciiString canonicalFlagName(const AsciiString &name);
+public:
+	AsciiString bfmeName(AsciiString &name);
 };
 
 class TeamFactory
@@ -32,6 +32,6 @@ public:
 TeamPrototype *ScriptEngine::getTeamPrototypeNamed(AsciiString name)
 {
 	AsciiString canonical =
-		((BFMEScriptEngineFlagLookup *)this)->canonicalFlagName(name);
+		((BfmeScriptEngineSlashName *)this)->bfmeName(name);
 	return TheTeamFactory->findTeamPrototype(canonical, name);
 }
