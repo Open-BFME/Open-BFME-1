@@ -1826,43 +1826,8 @@ unsigned int MeshModelClass::get_sort_flags(void) const
 	return flags;
 }
 
-// byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshmdlio.cpp
-// ?compute_static_sort_levels@MeshModelClass@@IAEXXZ present-unmatched
-void MeshModelClass::compute_static_sort_levels(void)
-{
-	enum StaticSortCategoryBitFieldType
-	{
-		SSCAT_OPAQUE_BF		= (1 << ShaderClass::SSCAT_OPAQUE),
-		SSCAT_ALPHA_TEST_BF	= (1 << ShaderClass::SSCAT_ALPHA_TEST),
-		SSCAT_ADDITIVE_BF		= (1 << ShaderClass::SSCAT_ADDITIVE),
-		SSCAT_SCREEN_BF		= (1 << ShaderClass::SSCAT_SCREEN),
-		SSCAT_OTHER_BF			= (1 << ShaderClass::SSCAT_OTHER)
-	};
-
-	if (get_sort_flags(0) == SSCAT_OPAQUE_BF) {
-		SortLevel = SORT_LEVEL_NONE;
-		return;
-	}
-
-	switch (get_sort_flags())
-	{
-	case (SSCAT_OPAQUE_BF | SSCAT_ALPHA_TEST_BF):
-		SortLevel = SORT_LEVEL_NONE;
-		break;
-
-	case SSCAT_ADDITIVE_BF:
-		SortLevel = SORT_LEVEL_BIN3;
-		break;
-
-	case SSCAT_SCREEN_BF:
-		SortLevel = SORT_LEVEL_BIN2;
-		break;
-		
-	default:
-		SortLevel = SORT_LEVEL_BIN1;
-		break;
-	};
-}
+// compute_static_sort_levels (0x0096DD80) lives in MeshModelComputeStaticSortLevels.cpp:
+// retail stores SortLevel at +0x1C, not this header view's +0x20.
 
 // ?modify_for_overbright@MeshModelClass@@IAEXXZ present-unmatched
 void MeshModelClass::modify_for_overbright(void)
