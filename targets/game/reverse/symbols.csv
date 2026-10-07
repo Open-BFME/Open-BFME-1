@@ -90335,3 +90335,21 @@ _Rva0015C280Predicate,0x0015C280,cdecl bool(State*;void*) condition callback; re
 ??_C@_0M@MIENIKLA@LC_MONETARY?$AA@,0x00D2FCC8,Retail STLport category-name table VA 0x012C8398 slot +0xC; compiler string literal LC_MONETARY equals retail at VA 0x0112FCC8
 ??_C@_0L@DLHIECNL@LC_NUMERIC?$AA@,0x00D2FCBC,Retail STLport category-name table VA 0x012C8398 slot +0x10; compiler string literal LC_NUMERIC equals retail at VA 0x0112FCBC
 ??_C@_07LCBHPJJN@LC_TIME?$AA@,0x00D2FCB4,Retail STLport category-name table VA 0x012C8398 slot +0x14; compiler string literal LC_TIME equals retail at VA 0x0112FCB4
+??_C@_05FCNPGOPF@ARMOR?$AA@,0x00C75164,Retail attribute-name table VA 0x012B4040 entry; compiler string literal ARMOR equals retail at VA 0x01075164
+??_C@_05LCLKIGOL@SPEED?$AA@,0x00C75114,Retail attribute-name table VA 0x012B4040 entry; compiler string literal SPEED equals retail at VA 0x01075114
+??_C@_05OJPIIJFC@RANGE?$AA@,0x00C7511C,Retail attribute-name table VA 0x012B4040 entry; compiler string literal RANGE equals retail at VA 0x0107511C
+??_C@_06IGFCKNHC@VISION?$AA@,0x00C750AC,Retail attribute-name table VA 0x012B4040 entry; compiler string literal VISION equals retail at VA 0x010750AC
+??_C@_06KNKGFFFN@HEALTH?$AA@,0x00C750B4,Retail attribute-name table VA 0x012B4040 entry; compiler string literal HEALTH equals retail at VA 0x010750B4
+??_C@_09CCOCOBNJ@AUTO_HEAL?$AA@,0x00C7506C,Retail attribute-name table VA 0x012B4040 entry; compiler string literal AUTO_HEAL equals retail at VA 0x0107506C
+??_C@_0BB@BMGNCMNK@RESIST_KNOCKBACK?$AA@,0x00C750EC,Retail attribute-name table VA 0x012B4040 entry; compiler string literal RESIST_KNOCKBACK equals retail at VA 0x010750EC
+??_C@_0BB@PLLOKBLO@CRUSH_DECELERATE?$AA@,0x00C75100,Retail attribute-name table VA 0x012B4040 entry; compiler string literal CRUSH_DECELERATE equals retail at VA 0x01075100
+??_C@_0BC@BJLMENMC@BOUNTY_PERCENTAGE?$AA@,0x00C75094,Retail attribute-name table VA 0x012B4040 entry; compiler string literal BOUNTY_PERCENTAGE equals retail at VA 0x01075094
+??_C@_0BH@BMNEMOCF@MINIMUM_CRUSH_VELOCITY?$AA@,0x00C75078,Retail attribute-name table VA 0x012B4040 entry; compiler string literal MINIMUM_CRUSH_VELOCITY equals retail at VA 0x01075078
+??_C@_0L@CJMGDCJ@EXPERIENCE?$AA@,0x00C75124,Retail attribute-name table VA 0x012B4040 entry; compiler string literal EXPERIENCE equals retail at VA 0x01075124
+??_C@_0L@DLEJKNJL@PRODUCTION?$AA@,0x00C750BC,Retail attribute-name table VA 0x012B4040 entry; compiler string literal PRODUCTION equals retail at VA 0x010750BC
+??_C@_0L@ONCPHGLE@DAMAGE_ADD?$AA@,0x00C75154,Retail attribute-name table VA 0x012B4040 entry; compiler string literal DAMAGE_ADD equals retail at VA 0x01075154
+??_C@_0M@DBHAEMPA@DAMAGE_MULT?$AA@,0x00C75144,Retail attribute-name table VA 0x012B4040 entry; compiler string literal DAMAGE_MULT equals retail at VA 0x01075144
+??_C@_0M@KACAJONN@RESIST_FEAR?$AA@,0x00C75134,Retail attribute-name table VA 0x012B4040 entry; compiler string literal RESIST_FEAR equals retail at VA 0x01075134
+??_C@_0N@OANJPADC@SPELL_DAMAGE?$AA@,0x00C750DC,Retail attribute-name table VA 0x012B4040 entry; compiler string literal SPELL_DAMAGE equals retail at VA 0x010750DC
+??_C@_0O@FIFJMDBD@RECHARGE_TIME?$AA@,0x00C750CC,Retail attribute-name table VA 0x012B4040 entry; compiler string literal RECHARGE_TIME equals retail at VA 0x010750CC
+??_C@_0P@JKEONNLI@ATTRIBUTE_NONE?$AA@,0x00C7516C,Retail attribute-name table VA 0x012B4040 entry; compiler string literal ATTRIBUTE_NONE equals retail at VA 0x0107516C

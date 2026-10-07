@@ -8,7 +8,30 @@
 
 #include <string.h>
 
-extern const char *Rva003678E0AttributeNames[];
+// Retail .data 0x012B4040: 18 name pointers and a terminating null (76 bytes),
+// read from the retail image.
+const char *Rva003678E0AttributeNames[] =
+{
+	"ATTRIBUTE_NONE",
+	"ARMOR",
+	"DAMAGE_ADD",
+	"DAMAGE_MULT",
+	"RESIST_FEAR",
+	"EXPERIENCE",
+	"RANGE",
+	"SPEED",
+	"CRUSH_DECELERATE",
+	"RESIST_KNOCKBACK",
+	"SPELL_DAMAGE",
+	"RECHARGE_TIME",
+	"PRODUCTION",
+	"HEALTH",
+	"VISION",
+	"BOUNTY_PERCENTAGE",
+	"MINIMUM_CRUSH_VELOCITY",
+	"AUTO_HEAL",
+	NULL
+};
 
 class Rva003678E0AttributeLookup
 {
