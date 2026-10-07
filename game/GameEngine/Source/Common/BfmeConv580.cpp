@@ -6,13 +6,14 @@ struct BfmeThingCDB
 	void *m_bfmeCur;
 };
 
-void bfmeApplyCDB(void *value, void *what);
+// ILT 0x0001224C -> 0x0051B130, the matched bfmeGo1064C@@YAXHH@Z.
+void bfmeGo1064C(int value, int what);
 
 void __stdcall bfmeGoCDB(BfmeThingCDB *thing, void *what)
 {
 	if (what != thing->m_bfmeCur)
 	{
-		bfmeApplyCDB(thing->m_bfmeVal, what);
+		bfmeGo1064C((int)thing->m_bfmeVal, (int)what);
 		thing->m_bfmeCur = what;
 	}
 }
