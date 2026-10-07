@@ -6,16 +6,18 @@
 // separate global and chaining to the already-landed base destructor
 // S4Owner::~S4Owner (0x00464E20 via ILT 0x00021FC1).
 
-class GenActionSink
+// ILT 0x00015235 -> 0x004675F0, the matched BfmeLevelAN::bfmeBuildAN
+// (BfmeLevelPathAN.cpp); called with string pointers in int slots.
+class BfmeLevelAN
 {
 public:
-	void add(void *a, const char *b, int c, const char *d, int e, int f, int g, int h);
+	char *bfmeBuildAN(unsigned int a, int b, int c, int d, int e, int f, int g, int h);
 };
 
 // Retail 0x012F19E8 is the game-wide manager pointer EA defines as
 // `WindowManager *g_rva012F19E8WindowManager` in
 // game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU only needs
-// the sink add() through it, so the pointee stays the local GenActionSink view
+// the call through it, so the pointee stays the local BfmeLevelAN view
 // and the access is cast at the use.
 class WindowManager;
 
@@ -39,6 +41,6 @@ public:
 // ??1Rva0050FD90@@UAE@XZ
 Rva0050FD90::~Rva0050FD90()
 {
-	((GenActionSink *)g_rva012F19E8WindowManager)->add((void *)0xb, "FileTransferPopUpClose", 0, 0, 0, 0, 0, 0);
+	((BfmeLevelAN *)g_rva012F19E8WindowManager)->bfmeBuildAN(0xb, (int)"FileTransferPopUpClose", 0, 0, 0, 0, 0, 0);
 	g_rva012F496CBfmeAptScreenMapTransfer = 0;
 }
