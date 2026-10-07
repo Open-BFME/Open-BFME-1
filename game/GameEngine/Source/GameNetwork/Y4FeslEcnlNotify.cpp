@@ -5,10 +5,16 @@
 // message's status word and copy three dwords from the sink, then notify
 // through the already-pinned triple at 0x007F93E0.
 
+// Matched FESL field getter at retail 0x007E8900; both arguments and EAX are one word.
+class BfmeThingRF
+{
+public:
+	void *bfmeGoRF(void *key, void *defaultValue);
+};
+
 class Rva007E8810Message
 {
 public:
-	int getInt( const char *key, int defaultValue );
 
 	int m_gap00;
 	int m_f04;
@@ -68,7 +74,7 @@ void Rva00809BF0Owner::notify( Rva00809500Entry *entry )
 	sink = reinterpret_cast< Rva00809010Finder * >( this )->find( entry );
 	if ( sink == 0 )
 	{
-		m_sink->bfmeSendSKA( 'ECNL', msg->getInt( "TID", 0 ), 'ngam' );
+		m_sink->bfmeSendSKA( 'ECNL', (int)reinterpret_cast<BfmeThingRF *>(msg)->bfmeGoRF((void *)"TID", 0), 'ngam' );
 	}
 	msg->m_status = (int)0xC0000000;
 	msg->m_f04 = sink->m_f04;
