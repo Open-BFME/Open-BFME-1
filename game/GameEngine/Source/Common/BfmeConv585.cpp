@@ -1,3 +1,5 @@
+#include <string.h>
+
 class BfmeThingCEB
 {
 public:
@@ -7,10 +9,8 @@ public:
 	int m_bfmeVal;
 };
 
-void bfmeCopyCEB(char *dest, const char *text, unsigned int size);
-
 void BfmeThingCEB::bfmeGoCEB(const char *text, int value)
 {
-	bfmeCopyCEB(m_bfmeBuf, text, 0x40);
+	strncpy(m_bfmeBuf, text, 0x40);
 	m_bfmeVal = value;
 }
