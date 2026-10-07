@@ -11,8 +11,8 @@
 // ?releaseBuffer@?$StringBase@D@@AAEXXZ at 0x00887940. ascii_string.h is the
 // real header for that class, and its comments record both bodies.
 //
-// The by-value parameter keeps its own name because the function's identity is
-// ?bfmeCommitYH@@YAXVAsciiStringYH@@@Z; the layout is StringBase<char>'s, which
+// The by-value parameter is a real AsciiString; the function's identity is
+// ?bfmeCommitYH@@YAXVAsciiString@@@Z (MapSelectMenu.cpp spelling); the layout is StringBase<char>'s, which
 // the real AsciiString inherits unchanged.
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
@@ -84,8 +84,8 @@ extern Shell *TheShell;						// retail 0x012F4B58
 // Map selection commit flag at retail VA 0x012F3E6D.
 bool g_bfmeDirtyYH = false;					// retail 0x012F3E6D
 
-// ?bfmeCommitYH@@YAXVAsciiStringYH@@@Z
-void __cdecl bfmeCommitYH(AsciiStringYH label)
+// ?bfmeCommitYH@@YAXVAsciiString@@@Z (the spelling MapSelectMenu.cpp calls)
+void __cdecl bfmeCommitYH(AsciiString label)
 {
 	g_bfmeDirtyYH = true;
 
