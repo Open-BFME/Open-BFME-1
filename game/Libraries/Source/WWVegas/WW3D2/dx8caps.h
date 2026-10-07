@@ -210,6 +210,10 @@ public:
 
 	DX8Caps(IDirect3D8* direct3d, const D3DCAPS8& caps,WW3DFormat display_format, const D3DADAPTER_IDENTIFIER8& adapter_id);
 	DX8Caps(IDirect3D8* direct3d, IDirect3DDevice8* D3DDevice,WW3DFormat display_format, const D3DADAPTER_IDENTIFIER8& adapter_id);
+	// Retail's destructor is the implicit one (0x00903E00, DX8CapsDestructor.cpp,
+	// BFME member offsets); this header's layout is upstream's, so it declares the
+	// destructor instead of letting includers emit a copy for the wrong offsets.
+	~DX8Caps();
 	static void Shutdown(void);
 
 	void Compute_Caps(WW3DFormat display_format, const D3DADAPTER_IDENTIFIER8& adapter_id);
