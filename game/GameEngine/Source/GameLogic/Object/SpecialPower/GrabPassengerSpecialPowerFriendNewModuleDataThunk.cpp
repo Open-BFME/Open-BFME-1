@@ -30,7 +30,9 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl GrabPassengerSpecialPowerFieldParse(MultiIniFieldParse &parse);
+// The proc operand is ILT 0x0001B65D -> 0x0025F0B0, the matched
+// ?buildFieldParse@Rva0025F0B0@@SAXAAVWideMulti@@@Z.
+void j_0001b65d();
 
 class GrabPassengerSpecialPower
 {
@@ -43,6 +45,6 @@ ModuleData *GrabPassengerSpecialPower::friend_newModuleData(INI *ini)
 {
 	GrabPassengerSpecialPowerModuleData *data = new GrabPassengerSpecialPowerModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &GrabPassengerSpecialPowerFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))j_0001b65d);
 	return (ModuleData *)data;
 }
