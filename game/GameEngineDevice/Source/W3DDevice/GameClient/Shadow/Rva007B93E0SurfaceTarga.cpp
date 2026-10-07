@@ -24,7 +24,6 @@ struct DeviceVtable007B93E0 {
  long (__stdcall *CreateOffscreenPlainSurface)(Device007B93E0*,unsigned,unsigned,unsigned,unsigned,Rva007BB060Surface**,void*);
 };
 struct Device007B93E0 { DeviceVtable007B93E0 *vtable; };
-class Rva009E0360 { public: void m009E0360(); };
 class BfmeAwakenLog
 {
 public:
@@ -121,7 +120,7 @@ void Rva007B93E0(Rva007BB060Surface *surface)
  targa.Header.PixelDepth=32;
  targa.Header.ImageType=2;
  targa.SetImage(image);
- ((Rva009E0360*)&targa)->m009E0360();
+ targa.YFlip();
  targa.Save("SurfaceTest.tga",1,false);
  copy->vtable->Release(copy);
 }

@@ -875,24 +875,26 @@ static __forceinline void _swapBytes(char *p1, char *p2, unsigned count)
 
 void Targa::YFlip(void)
 {
-  /* old code left in for reference...
+	/* Retail (0x009E0360) ships the per-byte exchange that the Zero Hour
+	 * source keeps as "old code left in for reference", not the stride
+	 * _swapBytes rewrite.
+	 */
 	char *ptr,*ptr1;
 	long  x,y;
 	char  v,v1;
 	char  depth;
 
-	/ * Pixel depth in bytes. * /
+	/* Pixel depth in bytes. */
 	depth = TGA_BytesPerPixel(Header.PixelDepth);
 
 	for (y = 0; y < (Header.Height >> 1); y++)
 	{
-		/ * Compute address of lines to exchange. * /
+		/* Compute address of lines to exchange. */
 		ptr = (mImage + ((Header.Width * y) * depth));
 		ptr1 = (mImage + ((Header.Width * (Header.Height - 1)) * depth));
 		ptr1 -= ((Header.Width * y) * depth);
 
-		/ * Exchange all the pixels on this scan line. * /
-    
+		/* Exchange all the pixels on this scan line. */
 		for (x = 0; x < (Header.Width * depth); x++)
 		{
 			v = *ptr;
@@ -902,14 +904,7 @@ void Targa::YFlip(void)
 			ptr++;
 			ptr1++;
 		}
-	} 
-  */
-
-  unsigned stride=Header.Width*TGA_BytesPerPixel(Header.PixelDepth);
-  char *ptrTop=mImage,
-       *ptrBottom=mImage+stride*(Header.Height-1);
-  for (unsigned y=Header.Height/2;y;--y,ptrTop+=stride,ptrBottom-=stride)
-    _swapBytes(ptrTop,ptrBottom,stride);
+	}
 } 
 
 /****************************************************************************
