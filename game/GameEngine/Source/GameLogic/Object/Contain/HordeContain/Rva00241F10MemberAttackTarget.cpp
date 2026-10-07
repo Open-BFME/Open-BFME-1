@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Include/Precompiled /Igame/Libraries/Source/WWVegas/WWMath
-// Retail 0x00241F10 complete 686-byte thiscall ending ret 4; address-qualified identity.
+// Retail 0x00241F10 complete 686-byte thiscall ending ret 4; EA names it
+// HordeContain::attackTargetNow (ea_evidence.csv), virtual by the ILT oracle.
 // Receiver is the HordeContain secondary interface: owner at this-0xdc, member list at this-0xac.
 // stlport
 #define _STLP_USE_STATIC_LIB 1
@@ -158,23 +159,24 @@ struct TargetMap00241F10 {
     bool contains(int key) { const IntSetTree00241F10 &keys=*(const IntSetTree00241F10*)this; _STL::_Rb_tree_iterator<int, _STL::_Const_traits<int> > found=keys.find(key); return found._M_node!=keys._M_header; }
 };
 
-class Rva00241F10View {
+class HordeContain {
 public:
     virtual void slot00() = 0;
     virtual void slot04() = 0;
     virtual void slot08() = 0;
     virtual void slot0c() = 0;
     virtual void slot10(int value) = 0;
+    // Retail reaches 0x00241F10 only through the vtable slot at RVA 0x00CAED5C.
+    virtual void attackTargetNow(Object *target);
     char pad004[0x34 - 0x04];
     Rva00241F10RefreshHook *refreshHook;
     char pad038[4];
     std::map<int, int> memberIndices;
     unsigned char *memberSlots;
 
-    void update(Object *target);
     int slotKey(int id) { BfmeMemberIndexIterator index=((IndexMap00241F10*)&memberIndices)->find(id); return *(int*)(memberSlots+index.node->value*16); }
     // Retail passes this-0xe4 in ECX to the landed 0x00232210 body, which the ledger names stdcall.
-    bool isCurrentTarget(AIUpdateInterface *ai, Object *target) { union { void (*p)(); bool (Rva00241F10View::*m)(AIUpdateInterface *, Object *); } c; c.p = j_0003f544; return (this->*c.m)(ai, target); }
+    bool isCurrentTarget(AIUpdateInterface *ai, Object *target) { union { void (*p)(); bool (HordeContain::*m)(AIUpdateInterface *, Object *); } c; c.p = j_0003f544; return (this->*c.m)(ai, target); }
 };
 
 // Template of an object after its override chain, null when the object has none.
@@ -185,7 +187,7 @@ static __forceinline Overridable *objectTemplate00241F10(Object *obj) {
     return t;
 }
 
-void Rva00241F10View::update(Object *target) {
+void HordeContain::attackTargetNow(Object *target) {
  Object *owner=*(Object**)((char*)this-0xdc);
  if(objectTemplate00241F10(owner)->flagsD4 & 0x400000) {
   Weapon *w=owner->getCurrentWeapon();
@@ -212,7 +214,7 @@ void Rva00241F10View::update(Object *target) {
   }
   int key=slotKey(member->m_id);
   if(!((TargetMap00241F10*)targetLookup)->contains(key)) continue;
-  if(((Rva00241F10View*)((char*)this-0xe4))->isCurrentTarget(ai,target)) continue;
+  if(((HordeContain*)((char*)this-0xe4))->isCurrentTarget(ai,target)) continue;
   Object *candidate=target;
   weapon=member->getCurrentWeapon();
   if(source) {
