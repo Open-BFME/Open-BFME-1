@@ -20,7 +20,6 @@ class PathfindCell
 {
 public:
 	enum CellType { CELL_CLEAR, CELL_WATER, CELL_CLIFF, CELL_RUBBLE, CELL_OBSTACLE };
-	CellType getType( void ) const { return (CellType)m_type; }
 	Bool isObstaclePresent( ObjectID objID );
 
 private:
@@ -31,7 +30,7 @@ private:
 
 Bool PathfindCell::isObstaclePresent( ObjectID objID )
 {
-	if (objID != INVALID_ID && (getType() == PathfindCell::CELL_OBSTACLE))
+	if (objID != INVALID_ID && ((CellType)m_type == PathfindCell::CELL_OBSTACLE))
 	{
 		return (m_info && m_info->m_obstacleID == objID);
 	}
