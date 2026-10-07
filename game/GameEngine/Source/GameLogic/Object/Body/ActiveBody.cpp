@@ -910,59 +910,7 @@ void ActiveBody::setInitialHealth(Int initialPercent)
 /** Simple setting of the health value, it does *NOT* track any transition
 	* states for the event of "damage" or the event of "death".  */
 //-------------------------------------------------------------------------------------------------
-// ?setMaxHealth@ActiveBody@@ present-unmatched
-void ActiveBody::setMaxHealth( Real maxHealth, MaxHealthChangeType healthChangeType )
-{
-	Real prevMaxHealth = m_maxHealth;
-	m_maxHealth = maxHealth;
-	m_initialHealth = maxHealth;
-
-	switch( healthChangeType )
-	{
-		case PRESERVE_RATIO:
-		{
-			//400/500 (80%) + 100 becomes 480/600 (80%)
-			//200/500 (40%) - 100 becomes 160/400 (40%)
-			Real ratio = m_currentHealth / prevMaxHealth;
-			Real newHealth = maxHealth * ratio;
-			internalChangeHealth( newHealth - m_currentHealth );
-			break;
-		}
-		case ADD_CURRENT_HEALTH_TOO:
-		{
-			//Add the same amount that we are adding to the max health.
-			//This could kill you if max health is reduced (if we ever have that ability to add buffer health like in D&D)
-			//400/500 (80%) + 100 becomes 500/600 (83%)
-			//200/500 (40%) - 100 becomes 100/400 (25%)
-			internalChangeHealth( maxHealth - prevMaxHealth );
-			break;
-		}
-		case SAME_CURRENTHEALTH:
-			//do nothing
-			break;
-			
-		case FULLY_HEAL:
-		{
-			// Set current to the new Max.
-			//400/500 (80%) + 100 becomes 600/600 (100%)
-			//200/500 (40%) - 100 becomes 400/400 (100%)
-			internalChangeHealth(m_maxHealth - m_currentHealth);
-			break;
-		}
-	}
-
-	//
-	// when max health is getting clipped to a lower value, if our current health
-	// value is now outside of the max health range we will set it back down to the
-	// new cap.  Note that we are *NOT* going through any healing or damage methods here
-	// and are doing a direct set
-	//
-	if( m_currentHealth > maxHealth )
-	{
-		internalChangeHealth( maxHealth - m_currentHealth );
-	}
-
-} 
+// ActiveBody::setMaxHealth: retail body in ActiveBody_setMaxHealth.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** Given the current damage state of the object, evaluate the visual model conditions
