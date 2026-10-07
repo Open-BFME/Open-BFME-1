@@ -6,6 +6,9 @@
 #include	<stddef.h>
 
 
+// Retail's ??_GStraw (0x00921710, 30 B) calls ~Straw out of line; keep this
+// TU's COMDAT copy of the deleting destructor from inlining it.
+#pragma auto_inline(off)
 Straw::~Straw(void)
 {
 	if (ChainTo != NULL) {
@@ -18,6 +21,7 @@ Straw::~Straw(void)
 	ChainFrom = NULL;
 	ChainTo = NULL;
 }
+#pragma auto_inline(on)
 
 
 void Straw::Get_From(Straw * straw)
