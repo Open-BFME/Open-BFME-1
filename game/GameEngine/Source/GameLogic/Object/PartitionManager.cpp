@@ -5220,37 +5220,8 @@ Bool PartitionFilterPlayer::allow( Object *other )
 }
 
 //-----------------------------------------------------------------------------
-// ?allow@PartitionFilterPlayerAffiliation@@MAE_NPAVObject@@@Z present-unmatched here — matched copy lives in Common/PartitionFilterPlayerAffiliation_allow_Thunk.cpp
-Bool PartitionFilterPlayerAffiliation::allow( Object *other )
-{
-	Relationship rel = m_player->getRelationship(other->getTeam());
-	switch (rel)
-	{
-		case ENEMIES:	
-			if (m_affiliation & ALLOW_ENEMIES) {
-				return m_match;
-			}
-			break;
-
-		case NEUTRAL:
-			if (m_affiliation & ALLOW_NEUTRAL) {
-				return m_match;
-			}
-			break;
-
-		case ALLIES:
-			if (m_affiliation & ALLOW_ALLIES) {
-				return m_match;
-			}
-			break;
-	}
-
-	if (other->getControllingPlayer() == m_player) {
-		return m_match;		
-	}
-
-	return !m_match;
-}
+// PartitionFilterPlayerAffiliation::allow: the retail body lives in
+// PartitionFilterPlayerAffiliation_allow_Thunk.cpp.
 
 //-----------------------------------------------------------------------------
 struct BfmePartitionThingHead
