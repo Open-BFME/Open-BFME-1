@@ -30,7 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl RubbleRiseUpdateFieldParse(MultiIniFieldParse &parse);
+// Retail stores VA 0x004333D9: the matched ILT thunk ?j_000333d9@@YAXXZ.
+void j_000333d9();
 
 class RubbleRiseUpdate
 {
@@ -43,6 +44,6 @@ ModuleData *RubbleRiseUpdate::friend_newModuleData(INI *ini)
 {
 	RubbleRiseUpdateModuleData *data = new RubbleRiseUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &RubbleRiseUpdateFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))&j_000333d9);
 	return (ModuleData *)data;
 }

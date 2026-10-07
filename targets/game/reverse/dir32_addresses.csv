@@ -13448,7 +13448,6 @@ _RenderObjectDrawModuleInfo_vtbl,0x011112B8
 _RepairSpecialPowerFieldParse,0x0043A1DE
 _RespawnBodyFieldParse,0x0044B650
 _RousingSpeechUpdateFieldParse,0x0042009A
-_RubbleRiseUpdateFieldParse,0x004333D9
 _RunOffMapBehaviorFieldParse,0x00412F80
 _Rva0005B930_CharUpperW9x@4,0x004366BF
 _Rva0005DD20_lstrcmpiW9x@8,0x00439239
