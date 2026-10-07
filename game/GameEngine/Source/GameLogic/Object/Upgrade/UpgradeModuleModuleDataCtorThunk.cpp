@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame
 
 // A base constructed out of line, then this class's vptr, then a layout-string
 // member at +0x5C given a literal.
@@ -15,17 +15,9 @@
 // Two unwind states, 0 and 1, count the two destructible things built before the
 // call that can throw: the base and the member. The literal's length is pushed
 // as 0x2F, which is exactly its 47 characters.
-class RetailLayoutString
-{
-public:
-	RetailLayoutString() : m_data(0) {}
-	~RetailLayoutString();
-
-	void set(const char *text, int length);
-
-private:
-	void *m_data;
-};
+// The member is an AsciiString: the set call is retail's
+// StringBase<char>::set(const char *, int) at 0x00887D20 (callees.py).
+#include "Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ActiveBody.h
 class ActiveBodyModuleData
@@ -45,11 +37,11 @@ public:
 	virtual ~UpgradeModuleModuleData();
 
 private:
-	RetailLayoutString m_layout;
+	AsciiString m_layout;
 };
 
 // ??0UpgradeModuleModuleData@@QAE@XZ
 UpgradeModuleModuleData::UpgradeModuleModuleData()
 {
-	m_layout.set("Not likely to duplicate this name, is he, Fred?", 47);
+	m_layout.StringBase<char>::set("Not likely to duplicate this name, is he, Fred?", 47);
 }
