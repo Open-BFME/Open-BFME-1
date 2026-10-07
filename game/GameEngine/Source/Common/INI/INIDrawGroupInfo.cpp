@@ -82,12 +82,5 @@ const FieldParse DrawGroupInfo::s_fieldParseTable[] =
 	{ 0, 0, 0, 0 }
 };
 
-/*static */ void INI::parseDrawGroupNumberDefinition(INI* ini)
-{
-	if (!TheDrawGroupInfo) {
-		throw INI_UNKNOWN_ERROR;
-	}
-
-	ini->initFromINI(TheDrawGroupInfo, TheDrawGroupInfo->getFieldParse());
-}
+// INI::parseDrawGroupNumberDefinition: retail body matched in INIDrawGroupNumberDefinitionThunk.cpp.
 
