@@ -9,7 +9,8 @@ struct BfmeNode21B2C0
 	void *value;
 };
 
-void __cdecl bfmeDeallocate(void *p, unsigned int n);
+// Retail calls 0x0082E5F0, matched _STL::__node_alloc<1,0>::_M_deallocate.
+extern "C" void __cdecl __identifier("?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")(void *p, unsigned int n);
 extern void j_0003dee7(void);
 
 class BfmeRvaA760Object;
@@ -39,7 +40,7 @@ void Rva0024A760::bfmeRemove(BfmeRvaA760Object *obj)
 				BfmeNode21B2C0 *prev = n->prev;
 				prev->next = next;
 				next->prev = prev;
-				bfmeDeallocate(n, 12);
+				__identifier("?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")(n, 12);
 				return;
 			}
 			n = n->next;
