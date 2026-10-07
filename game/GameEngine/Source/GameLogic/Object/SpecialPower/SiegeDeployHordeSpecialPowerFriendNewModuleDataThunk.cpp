@@ -30,7 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl SiegeDeployHordeSpecialPowerFieldParse(MultiIniFieldParse &parse);
+// The proc retail passes is VA 0x0040DD8C, the ILT stub ?j_0000dd8c@@YAXXZ (jumps to 0x00265AF0).
+extern void j_0000dd8c();
 
 class SiegeDeployHordeSpecialPower
 {
@@ -43,6 +44,6 @@ ModuleData *SiegeDeployHordeSpecialPower::friend_newModuleData(INI *ini)
 {
 	SiegeDeployHordeSpecialPowerModuleData *data = new SiegeDeployHordeSpecialPowerModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &SiegeDeployHordeSpecialPowerFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))&j_0000dd8c);
 	return (ModuleData *)data;
 }
