@@ -3,16 +3,16 @@
 // Address-derived owner for retail 0x005927F0 (240 bytes).  The two one-word
 // fields at +0x08 and +0x0c are embedded Rva00590790 holders: the retail EH
 // map calls that holder destructor on this+8 and this+0xc, while the normal
-// path inlines its held-pointer delete.  Their held type is kept address-
-// derived because only its destructor call at ILT RVA 0x0003FA7B (VA 0x0043FA7B) is proven.
+// path inlines its held-pointer delete.  The held type is UpgradeMuxData,
+// named by its destructor: ILT RVA 0x0003FA7B jumps to the matched ??1UpgradeMuxData@@QAE@XZ (0x0098C4C0).
 
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 extern void j_000347d9();
-class Gen0003FA7B
+class UpgradeMuxData
 {
 public:
-	~Gen0003FA7B();
+	~UpgradeMuxData();
 };
 
 class Rva00590790
@@ -20,14 +20,14 @@ class Rva00590790
 public:
 	__forceinline ~Rva00590790()
 	{
-		Gen0003FA7B *held = m_held;
+		UpgradeMuxData *held = m_held;
 		if (held != 0)
 		{
 			delete held;
 		}
 	}
 
-	Gen0003FA7B *m_held;
+	UpgradeMuxData *m_held;
 };
 
 // The 0x012F12CC singleton is DisplayStringManager *TheDisplayStringManager,

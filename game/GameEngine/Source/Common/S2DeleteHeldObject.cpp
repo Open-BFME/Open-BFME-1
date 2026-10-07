@@ -71,7 +71,8 @@ Rva003500C0::~Rva003500C0()
 
 // @??1Rva00590790@@QAE@XZ 0x00590790
 // ILT 0x0003FA7B reaches the matched UpgradeMuxData destructor at 0x0058C4C0.
-BFME_DELETE_MEMBER( Rva00590790, UpgradeMuxData )
+// Rva00590790's destructor (0x00590790) is the inline holder destructor
+// Rva00592640OwnerDestructor.cpp emits for its unwind map.
 // @??1Rva0063B130@@QAE@XZ 0x0063B130
 BFME_DELETE_MEMBER_TYPED( Rva0063B130, CriticalSectionClass::LockClass )
 
