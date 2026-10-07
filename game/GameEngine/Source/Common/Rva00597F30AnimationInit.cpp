@@ -3,7 +3,7 @@
 
 extern "C" void *memset( void *destination, int value, unsigned int count );
 
-void *bfmeMakeASB( int first, int second );
+int Rva00593060( int first, int second );	// ILT 0x000283D5 -> 0x00593060, matched
 extern void j_00031426();
 
 struct Rva00597F30Item
@@ -45,7 +45,7 @@ void Rva00597F30::init()
 		memset( first, 1, (unsigned char *)begin - first );
 
 	item.first = zero;
-	item.made = bfmeMakeASB( zero, zero );
+	item.made = (void *)Rva00593060( zero, zero );
 	item.width = 1.0f;
 	item.x = zero;
 	item.y = zero;
