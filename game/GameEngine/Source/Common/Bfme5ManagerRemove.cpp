@@ -1,9 +1,16 @@
 class BfmeOwnedP;
 
+// Each list entry is handed to ILT 0x0000B325 -> 0x001BE920, matched as
+// Rva001BE920Owner::clearKeyedSlots (thiscall, one int key).
+class Rva001BE920Owner
+{
+public:
+	void clearKeyedSlots(int key);
+};
+
 class BfmeManagerEntryP
 {
 public:
-	void bfmeRemove(BfmeOwnedP *element);
 
 private:
 	char m_bfmeHead[0x88];
@@ -61,7 +68,7 @@ void BfmeManagerP::bfmeRemove(BfmeOwnedP *element)
 
 	while (entry)
 	{
-		entry->bfmeRemove(element);
+		reinterpret_cast<Rva001BE920Owner *>(entry)->clearKeyedSlots((int)element);
 		entry = entry->m_bfmeNext;
 	}
 
