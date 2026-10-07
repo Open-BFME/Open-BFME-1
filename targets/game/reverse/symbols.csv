@@ -90540,3 +90540,6 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_0O@LKGBDGDF@CollidePickup?$AA@,0x00CAC49C,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal CollidePickup equals retail at VA 0x010AC49C
 ??_C@_0BE@CFLKEKAF@DockedAnimationTime?$AA@,0x00CCA97C,Retail MonsterDockUpdateModuleDataFieldParse table VA 0x010CA9B0 entry; compiler string literal DockedAnimationTime equals retail at VA 0x010CA97C
 ??_C@_0BF@OJNGFJCA@DockableObjectFilter?$AA@,0x00CCA994,Retail MonsterDockUpdateModuleDataFieldParse table VA 0x010CA9B0 entry; compiler string literal DockableObjectFilter equals retail at VA 0x010CA994
+??_C@_0BA@BEPICMJ@ValueMultiplier?$AA@,0x00CCB04C,Retail SupplyCenterDockUpdateModuleDataFieldParse table VA 0x010CB060 entry; compiler string literal ValueMultiplier equals retail at VA 0x010CB04C
+??_C@_0BH@DIKAEBOE@BonusScienceMultiplier?$AA@,0x00CCB020,Retail SupplyCenterDockUpdateModuleDataFieldParse table VA 0x010CB060 entry; compiler string literal BonusScienceMultiplier equals retail at VA 0x010CB020
+??_C@_0N@DKEMAMEP@BonusScience?$AA@,0x00CCB03C,Retail SupplyCenterDockUpdateModuleDataFieldParse table VA 0x010CB060 entry; compiler string literal BonusScience equals retail at VA 0x010CB03C
