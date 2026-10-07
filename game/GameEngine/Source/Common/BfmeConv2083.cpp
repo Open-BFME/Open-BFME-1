@@ -4,7 +4,7 @@ class BfmeStrXD
 {
 };
 
-const BfmeStrXD &bfmeMedianXD(const BfmeStrXD &a, const BfmeStrXD &b, const BfmeStrXD &c)
+const BfmeStrXD &median(const BfmeStrXD &a, const BfmeStrXD &b, const BfmeStrXD &c)
 {
 	if (((const StringBase<char> &)a).compare((const StringBase<char> &)b) < 0)
 		if (((const StringBase<char> &)b).compare((const StringBase<char> &)c) < 0)
