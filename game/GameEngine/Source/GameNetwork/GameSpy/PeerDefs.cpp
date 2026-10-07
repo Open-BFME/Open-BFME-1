@@ -609,11 +609,7 @@ static Int grabHexInt(const char *s)
 	return b;
 }
 
-// ?isIgnored@PlayerInfo@@QAE_NXZ present-unmatched
-Bool PlayerInfo::isIgnored( void )
-{
-	return (m_profileID)?TheGameSpyInfo->isSavedIgnored(m_profileID):TheGameSpyInfo->isIgnored(m_name);
-}
+// PlayerInfo::isIgnored: retail body in PlayerInfoIsIgnored.cpp (0x006318A0).
 
 // ?loadSavedIgnoreList@GameSpyInfo@@UAEXXZ
 // Body in PeerDefs_loadSavedIgnoreList.asm (exact 162B retail; SEH + field offsets).
