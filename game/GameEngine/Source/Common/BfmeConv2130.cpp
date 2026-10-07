@@ -1,9 +1,14 @@
-class BfmeR1094;
+// Retail calls ILT 0x20824 -> 0x001BE3F0, matched Object::getControllingPlayer.
+class Player;
+class Object
+{
+public:
+	Player *getControllingPlayer() const;
+};
 
 class BfmeK1094
 {
 public:
-	BfmeR1094 *bfmeCur1094();
 	void bfmeApplyABG(void *a, void *b);
 };
 
@@ -29,7 +34,7 @@ void BfmeHostABG::bfmeVisitABG(void *a, void *b)
 	{
 		BfmeK1094 *it = n->m_bfme08ABG;
 
-		if (it->bfmeCur1094() != 0)
+		if (reinterpret_cast<Object *>(it)->getControllingPlayer() != 0)
 		{
 			it->bfmeApplyABG(a, b);
 			return;
