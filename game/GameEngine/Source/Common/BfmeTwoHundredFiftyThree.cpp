@@ -4,12 +4,15 @@
 // bytes with the byte at the top, so a second word sits below it; what that
 // word was is not knowable from these bytes.
 
-void bfmeDoOR(void *one, void *two, unsigned char three, unsigned char *four);
+// Retail calls 0x0082D2D0 directly: the matched bfmeFindChV28 (BfmeConv1468.cpp),
+// whose three-argument spelling ignores the fourth slot.
+char *bfmeFindChV28(char *first, char *last, char ch);
+typedef void (*BfmeDoORFn)(void *one, void *two, unsigned char three, unsigned char *four);
 
 void bfmeGoOR(void *one, void *two, unsigned char three)
 {
 	int spare;
 	unsigned char got;
 
-	bfmeDoOR(one, two, three, &got);
+	((BfmeDoORFn)bfmeFindChV28)(one, two, three, &got);
 }
