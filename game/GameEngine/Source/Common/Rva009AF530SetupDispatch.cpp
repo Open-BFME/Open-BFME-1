@@ -14,7 +14,9 @@ struct Rva009AF530Context
 
 extern int *g_bfmeFilterLimit;
 typedef int *(__cdecl *Rva009AF530Builder)(Rva009AF530Context *, int);
-extern Rva009AF530Builder g_rva01356e68SetupBounding;
+// Zero-filled retail .data at VA 0x01356E68 (dir32_addresses.csv); the
+// builder is installed at run time.
+Rva009AF530Builder g_rva01356e68SetupBounding;
 
 void __cdecl Rva009AF530Setup(Rva009AF530Context *context)
 {
