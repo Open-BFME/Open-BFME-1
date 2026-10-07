@@ -6,7 +6,10 @@
 #include "PreRTS.h"
 #include "System/subsystem_interface.h"
 
-extern "C" unsigned char bfmeVftCCF[];
+// The vtable at 0x010F9AAC is ??_7Gen_00490100@@6B@ (dir32_addresses.csv),
+// emitted by Bfme5BodyVectorDtors.cpp alongside the matched ??1Gen_00490100;
+// __identifier spells that symbol so the store references the defining name.
+extern "C" void *__identifier("??_7Gen_00490100@@6B@")[];
 
 struct BfmeThingCCF : public SubsystemInterface
 {
@@ -27,7 +30,7 @@ BfmeThingCCF *BfmeThingCCF::bfmeInitCCF()
 	// compiler emits no derived vptr store of its own, so retail's own store --
 	// bfmeVftCCF is ??_7Gen_00490100@@6B@ at 0x010F9AAC, a nine-slot
 	// SubsystemInterface vtable -- is written here explicitly.
-	*(void *volatile *)this = bfmeVftCCF;
+	*(void *volatile *)this = __identifier("??_7Gen_00490100@@6B@");
 	m_bfmeB = 0;
 	m_bfmeC = 0;
 	m_bfmeD = 0;
