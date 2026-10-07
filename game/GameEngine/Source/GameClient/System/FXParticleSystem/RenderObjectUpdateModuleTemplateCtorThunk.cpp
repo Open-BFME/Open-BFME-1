@@ -37,7 +37,8 @@ class CategoryModuleTemplate : public CategoryModuleTemplateBase<Category>
 {
 public:
     CategoryModuleTemplate() {}
-    virtual ~CategoryModuleTemplate() {}
+    // Defined out of line (CategoryModuleTemplate00DestructorThunk.cpp for <1>).
+    virtual ~CategoryModuleTemplate();
 };
 
 class RenderObjectUpdateModuleInfo

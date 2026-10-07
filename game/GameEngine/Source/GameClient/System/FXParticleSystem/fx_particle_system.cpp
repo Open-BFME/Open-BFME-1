@@ -175,6 +175,9 @@ template CategoryModuleClassBase<8, 0> &CategoryModuleClassBase<8, 0>::operator=
 // below from emitting the header's empty body under the same names.
 template<> CategoryModuleTemplate<7> &CategoryModuleTemplate<7>::operator=(const CategoryModuleTemplate<7> &that);
 template<> CategoryModuleTemplate<8> &CategoryModuleTemplate<8>::operator=(const CategoryModuleTemplate<8> &that);
+// CategoryModuleTemplate<1>'s destructor (0x005BF220) is defined in
+// CategoryModuleTemplate00DestructorThunk.cpp.
+template<> CategoryModuleTemplate<1>::~CategoryModuleTemplate();
 
 template class CategoryModuleInfo<0>;
 template class CategoryModuleInfo<1>;

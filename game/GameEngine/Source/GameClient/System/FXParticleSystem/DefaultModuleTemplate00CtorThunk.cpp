@@ -28,6 +28,9 @@ class CategoryModuleTemplateBase : public ModuleTemplate, public CategoryModuleI
 template <int Category>
 class CategoryModuleTemplate : public CategoryModuleTemplateBase<Category>
 {
+public:
+	// Defined out of line (CategoryModuleTemplate00DestructorThunk.cpp for <1>).
+	virtual ~CategoryModuleTemplate();
 };
 
 class DefaultAlphaModuleInfo
