@@ -1,9 +1,16 @@
 // Open-BFME5 conversions.
 
+// Node cleanup is the matched ?bfmeCleanup@Gen_00893990@@QAEXXZ (0x00893990,
+// S3ChildTeardown.cpp), per callees.py on this body.
+class Gen_00893990
+{
+public:
+	void bfmeCleanup(void);
+};
+
 class BfmeNodeVMU
 {
 public:
-	void bfmeCleanupVMU();
 	int m_bfme00;
 	BfmeNodeVMU *m_bfme04;
 };
@@ -29,7 +36,7 @@ void BfmeListVMU::bfmeEraseVMU(BfmeNodeVMU **it)
 		if (p != 0)
 		{
 			n = p->m_bfme04;
-			p->bfmeCleanupVMU();
+			reinterpret_cast<Gen_00893990 *>(p)->bfmeCleanup();
 			g_bfmeFreeDWF(p);
 			m_bfme00 = n;
 		}
@@ -46,7 +53,7 @@ void BfmeListVMU::bfmeEraseVMU(BfmeNodeVMU **it)
 	if (n != 0)
 	{
 		q->m_bfme04 = n->m_bfme04;
-		n->bfmeCleanupVMU();
+		reinterpret_cast<Gen_00893990 *>(n)->bfmeCleanup();
 		g_bfmeFreeDWF(n);
 	}
 }
