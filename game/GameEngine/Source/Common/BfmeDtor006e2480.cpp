@@ -20,13 +20,13 @@ private:
 extern int g_get_00710fb0;
 #define g_bfmeObj006e1be0 (*reinterpret_cast<BfmeRef006e2480 **>(&g_get_00710fb0))
 
-class Gen_dtor_0040ba10
+class BfmeA1134
 {
 public:
-	virtual ~Gen_dtor_0040ba10(void);
+	virtual ~BfmeA1134(void);
 };
 
-class Gen006E2310 : public Gen_dtor_0040ba10
+class Gen006E2310 : public BfmeA1134
 {
 public:
 	virtual ~Gen006E2310(void);
