@@ -161,9 +161,10 @@ static char *CPUNames[] =
 };
 
 //Keep this in sync with enum in GameLOD.h
+// BFME retail table 0x012A742C (its entries differ from ZH).
 static char *VideoNames[] = 
 {
-	"XX","V2","V3","V4","V5","TNT","TNT2","GF2","R100","PS11","GF3","GF4","PS14","R200","PS20","R300", NULL
+	"XX","GF2","R100","PS11","GFXB","GF3","R200","GF4","PS14","PS20","R300","R400", NULL
 };
 
 void parseReallyLowMHz(INI* ini)
@@ -235,9 +236,6 @@ void INI::parseBenchProfile( INI* ini)
 	}
 }
 
-// Retail video-name table 0x012A742C; its entries differ from the ZH VideoNames above.
-extern char *g_012A742C[];
-
 /**Parse a description of all the LOD settings for a given detail level*/
 // ?parseLODPreset@INI@@SAXPAV1@@Z
 
@@ -288,7 +286,7 @@ void INI::parseLODPreset(INI *ini)
 			{
 				INI::parseIndexList(ini, NULL, preset, CPUNames);
 				INI::parseInt(ini, NULL, (char *)preset + 4, NULL);
-				INI::parseIndexList(ini, NULL, (char *)preset + 0x0c, g_012A742C);
+				INI::parseIndexList(ini, NULL, (char *)preset + 0x0c, VideoNames);
 				INI::parseInt(ini, NULL, (char *)preset + 0x14, NULL);
 				INI::parseInt(ini, NULL, (char *)preset + 0x10, NULL);
 				INI::parseInt(ini, NULL, (char *)preset + 0x18, NULL);
