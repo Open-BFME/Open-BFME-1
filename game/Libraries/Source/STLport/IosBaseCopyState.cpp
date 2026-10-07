@@ -6,26 +6,26 @@
 #include <cstdlib>
 #include <stdio.h>
 
-struct Rva00832180Unk
+namespace _STL
 {
-	virtual void slot0();
-	virtual void addRef();
-	virtual void release();
-};
+class _Locale_impl;
 
-class Rva00832180
+// Retail 0x00832180 is locale::operator= (game/Libraries/Source/STLport/
+// LocaleAssignment.cpp); only the implementation pointer is modeled here.
+class locale
 {
-	Rva00832180Unk *m_ptr;
+	_Locale_impl *_M_impl;
 
 public:
-	Rva00832180 &set(Rva00832180Unk *const *src);
+	const locale &operator=(const locale &L);
 };
+}
 
 // retail 0x008366C0 is bfmeGoDSD (game/GameEngine/Source/Common/BfmeConv770.cpp,
 // ?bfmeGoDSD@@YG_NPAX@Z) but the call site passes the locale in ECX and the body
 // forwards ECX, so it is reached through the thiscall shape its caller used.
 extern bool __stdcall bfmeGoDSD(void *what);
-typedef bool (Rva00832180::*GoDSDFn)(void *what);
+typedef bool (_STL::locale::*GoDSDFn)(void *what);
 
 struct U2Elem8
 {
@@ -70,7 +70,7 @@ public:
 	int _M_exception_mask;					// +0x14
 	int _M_precision;					// +0x18
 	int _M_width;						// +0x1C
-	Rva00832180 _M_locale;					// +0x20
+	locale _M_locale;					// +0x20
 	U2Elem8 *_M_callbacks;					// +0x24
 	unsigned int _M_num_callbacks;				// +0x28
 	unsigned int _M_callback_index;			// +0x2C
@@ -94,7 +94,7 @@ void ios_base::_M_copy_state(const ios_base &x)
 	union { bool (__stdcall *direct)(void *what); GoDSDFn call; } u = { bfmeGoDSD };
 	if ((_M_locale.*u.call)((void *)&x._M_locale))
 	{
-		_M_locale.set((Rva00832180Unk *const *)&x._M_locale);
+		_M_locale = x._M_locale;
 		_M_reserved0 = x._M_reserved0;
 		_M_reserved1 = x._M_reserved1;
 	}
