@@ -9,11 +9,18 @@ public:
 	virtual void bfmeSet996( int value, int enabled );
 };
 
+// ILT 0x00038163 -> 0x007E2EB0, the matched BfmeB996Range::checkRange
+// (BfmeConv996RangeCheck.cpp), called on this object.
+class BfmeB996Range
+{
+public:
+	char checkRange( int first, unsigned int *second, char *stop );
+};
+
 class BfmeB996
 {
 public:
 	void bfmeAdvance996();
-	char bfmeTry996( int third, int second, char *stop );
 
 private:
 	char m_bfmePad[ 4 ];
@@ -28,7 +35,7 @@ void BfmeB996::bfmeAdvance996()
 		int second;
 		int third;
 		char stop = 0;
-		if ( bfmeTry996( (int)&third, (int)&second, &stop ) && !stop ) {
+		if ( ( (BfmeB996Range *)this )->checkRange( (int)&third, (unsigned int *)&second, &stop ) && !stop ) {
 			m_bfmeDev->bfmeSet996( -8, 1 );
 			m_bfmeDev->bfmeSet996( second, 1 );
 		}
