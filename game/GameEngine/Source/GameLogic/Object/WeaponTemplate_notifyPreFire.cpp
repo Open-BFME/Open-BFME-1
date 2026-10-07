@@ -13,7 +13,7 @@ public:
 class Overridable
 {
 public:
-	Overridable *getFinalOverride();
+	const Overridable *getFinalOverride() const;
 };
 
 struct ObjectTemplateHandle
@@ -72,8 +72,8 @@ void WeaponTemplate::notifyPreFire(Weapon *weapon, int weaponSlot,
 				Overridable *overridable = object->m_templateHandle->m_template;
 				if (overridable)
 				{
-					objectTemplate = reinterpret_cast<ThingTemplate *>(
-						overridable->getFinalOverride());
+					objectTemplate = reinterpret_cast<ThingTemplate *>(const_cast<Overridable *>(
+						overridable->getFinalOverride()));
 				}
 			}
 			if ((objectTemplate->m_kindOf & 0x00100000) != 0
