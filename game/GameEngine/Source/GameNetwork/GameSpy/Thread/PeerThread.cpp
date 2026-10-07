@@ -991,20 +991,8 @@ static int QRCountCallback
 	return 0;
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThread_stopHostingAlready.cpp
-// ?stopHostingAlready@PeerThreadClass@@ present-unmatched
-void PeerThreadClass::stopHostingAlready(PEER peer)
-{
-	isThreadHosting = 0; // debugging
-	s_lastStateChangedHeartbeat = 0;
-	s_wantStateChangedHeartbeat = FALSE;
-	peerStopGame(peer);
-	if (qr2Sock != INVALID_SOCKET)
-	{
-		closesocket(qr2Sock);
-		qr2Sock = INVALID_SOCKET;
-	}
-}
+// PeerThreadClass::stopHostingAlready: the retail body (0x0064C9E0) lives in
+// PeerThread_stopHostingAlready.cpp.
 
 static void QRAddErrorCallback
 (
