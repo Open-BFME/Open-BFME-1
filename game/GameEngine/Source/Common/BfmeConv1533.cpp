@@ -1,9 +1,15 @@
 // Open-BFME5 conversions.
 
+// Retail calls 0x00893990 directly: the matched S3ChildTeardown.cpp cleanup.
+class Gen_00893990
+{
+public:
+	void bfmeCleanup();
+};
+
 class BfmeNodeVOH
 {
 public:
-	void bfmeCleanupVOH();
 	int m_bfme00;
 	BfmeNodeVOH *m_bfme04;
 };
@@ -27,7 +33,7 @@ void BfmeListVOH::bfmeClearVOH()
 		{
 			BfmeNodeVOH *nx = p->m_bfme04;
 
-			p->bfmeCleanupVOH();
+			((Gen_00893990 *)p)->bfmeCleanup();
 			g_bfmeFreeDWF(p);
 			m_bfme00 = nx;
 		}
