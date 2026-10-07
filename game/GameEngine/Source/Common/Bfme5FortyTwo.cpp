@@ -1,7 +1,12 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
+// stlport
 // Three more: a third masked table read, a three-float difference and a
 // linear search.
 
-extern int g_bfmeTableDJc[];					// retail 0x012AD6B0
+#include "Common/BitFlags.h"
+
+// The masked table at retail 0x012AD6B0 is BitFlags<29>::s_bitNameList
+// (dir32 address row; its retail COMDAT is the census definition).
 
 class Gen_001C3FF0
 {
@@ -16,7 +21,7 @@ private:
 int Gen_001C3FF0::bfmeLookup(int index) const
 {
 	if (m_bfmeMask & (1 << (index & 31)))
-		return g_bfmeTableDJc[index];
+		return (int)BitFlags<29>::getBitNames()[index];
 
 	return 0;
 }
