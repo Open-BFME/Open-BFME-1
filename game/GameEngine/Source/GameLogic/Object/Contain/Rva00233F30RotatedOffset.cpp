@@ -1,4 +1,4 @@
-// cl: /Igame/GameEngine/Include /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// cl: /Igame/GameEngine/Include /Igame/Libraries/Source/WWVegas/WWMath /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // Retail 0x00233F30 (154 bytes, ret 8).  Three callers (one is 0x002350C0)
 // pass ECX, a hidden result address and a direction, and use the returned
 // EAX.  The body takes the direction's length (scaled by the settings float
@@ -8,7 +8,13 @@
 // with an inline field-wise copy constructor: retail keeps x in memory and y
 // on the FPU and copies both into the return slot.  Owner and result type
 // are unproven, so both names keep the address.
-#include "Lib/BaseType.h"
+// BFME's Coord2D (WWMath coord2d.h) declares toAngle out of line: retail
+// calls it through ILT 0x00046E52 (coord2d.cpp, 0x001A5CB0), so this TU must
+// not instantiate Zero Hour BaseType.h's inline copy.
+#include <math.h>
+#include "coord2d.h"
+typedef float Real;
+class Coord3D;
 class TerrainLogic;
 extern TerrainLogic* TheTerrainLogic;
 #include "Lib/trig.h"
@@ -81,12 +87,12 @@ public:
 
 Rva00233F30Offset Rva00233F30::rotatedOffset(const Coord2D* direction)
 {
-    float distance = direction->length();
+    float distance = (float)sqrt(direction->x * direction->x + direction->y * direction->y);
     const Coord3D* position = reinterpret_cast<const Coord3D*>(reinterpret_cast<const char*>(object) + 0x38);
     if (reinterpret_cast<Rva00233F30TerrainSlots*>(TheTerrainLogic)->slot47(position))
         distance *= *reinterpret_cast<const float*>(reinterpret_cast<const char*>(settings) + 0x2dc);
     float angle = direction->toAngle() + *reinterpret_cast<const float*>(reinterpret_cast<const char*>(object) + 0x44);
-    Coord2D unit;
+    Coord2DBase unit;
     unit.x = Cos(angle);
     unit.y = Sin(angle);
     Rva00233F30Offset result;

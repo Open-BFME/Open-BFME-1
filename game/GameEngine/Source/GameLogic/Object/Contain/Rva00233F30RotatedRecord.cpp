@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/GameEngine/Include /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/GameEngine/Include /Igame/Libraries/Source/WWVegas/WWMath /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // stlport
 // Retail 0x002350C0 (99 bytes, ret 8).  The receiver's ECX passes unchanged
 // to Rva00233F30::rotatedOffset (0x00233F30), so both share the owner.  It
@@ -16,7 +16,10 @@
 #define _STLP_USE_STATIC_LIB 1
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
-#include "Lib/BaseType.h"
+// BFME's Coord2D, as Rva00233F30RotatedOffset.cpp sees it.
+#include "coord2d.h"
+typedef int Int;
+typedef float Real;
 
 // landed: game/GameEngine/Source/GameLogic/Object/Contain/Rva00233F30RotatedOffset.cpp
 struct Rva00233F30Offset
