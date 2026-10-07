@@ -30,7 +30,9 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl ClearanceTestingSlowDeathBehaviorFieldParse(MultiIniFieldParse &parse);
+// The proc retail passes is VA 0x004464A2, the ILT stub ?j_000464a2@@YAXXZ
+// that jumps to 0x001F6EA0 (matched ?buildFieldParse@Rva001F6EA0@@SAXAAVWideMulti@@@Z).
+extern void j_000464a2();
 
 class ClearanceTestingSlowDeathBehavior
 {
@@ -43,6 +45,6 @@ ModuleData *ClearanceTestingSlowDeathBehavior::friend_newModuleData(INI *ini)
 {
 	ClearanceTestingSlowDeathBehaviorModuleData *data = new ClearanceTestingSlowDeathBehaviorModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &ClearanceTestingSlowDeathBehaviorFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))&j_000464a2);
 	return (ModuleData *)data;
 }
