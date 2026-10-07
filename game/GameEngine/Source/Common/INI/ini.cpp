@@ -124,7 +124,6 @@ public:
 #pragma pop_macro("MEMORY_POOL_GLUE_WITHOUT_GCMP")
 
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
-#define DEFINE_DEATH_NAMES
 
 #include "Common/INI.h"
 #include "Common/INIException.h"
@@ -153,6 +152,36 @@ public:
 #include "GameLogic/ObjectCreationList.h"
 #include "GameLogic/ScriptEngine.h"
 #include "GameLogic/Weapon.h"
+
+// BFME death names; retail table 0x012A8648 (ZH ends at POISONED_GAMMA).
+static const char *TheDeathNames[] = 
+{
+	"NORMAL",
+	"NONE",
+	"CRUSHED",
+	"BURNED",
+	"EXPLODED",
+	"POISONED",
+	"TOPPLED",
+	"FLOODED",
+	"SUICIDED",
+	"LASERED",
+	"DETONATED",
+	"SPLATTED",
+	"POISONED_BETA",
+	"EXTRA_2",
+	"EXTRA_3",
+	"EXTRA_4",
+	"EXTRA_5",
+	"EXTRA_6",
+	"EXTRA_7",
+	"EXTRA_8",
+	"KNOCKBACK",
+	"SUPERNATURAL",
+	"FADED",
+
+	NULL
+};
 
 class BfmeThingFactory
 {
