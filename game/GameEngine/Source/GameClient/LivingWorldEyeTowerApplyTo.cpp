@@ -27,6 +27,15 @@ struct Gen0060CBB0Coord3D
 	}
 };
 
+// getPosition: ILT 0xF0FB -> 0x0061D3A0, matched
+// ?bfmeGoTMA@BfmeThingTMA@@QAEXPAUBfmeVecTMA@@@Z (BfmeConv1318.cpp).
+struct BfmeVecTMA;
+class BfmeThingTMA
+{
+public:
+	void bfmeGoTMA(BfmeVecTMA *v);
+};
+
 class Gen0060C510Target
 {
 public:
@@ -39,7 +48,10 @@ public:
 	virtual void slot18();
 	virtual void setPosition(Gen0060CBB0Coord3D position);
 
-	void getPosition(Gen0060CBB0Coord3D *position);
+	void getPosition(Gen0060CBB0Coord3D *position)
+	{
+		((BfmeThingTMA *)this)->bfmeGoTMA((BfmeVecTMA *)position);
+	}
 };
 
 class LivingWorldEyeTower
