@@ -12,7 +12,11 @@ class UnicodeString : public StringBase<unsigned short>
 public:
 	UnicodeString();
 	UnicodeString( const UnicodeString &other );
-	~UnicodeString();
+	// Retail releases the by-value string through the inline ~StringBase, which
+	// calls StringBase<unsigned short>::releaseBuffer (0x008881D0) directly; only
+	// the unwind funclet jumps to the out-of-line ~UnicodeString forwarder
+	// (ILT -> 0x0005EEA0).
+	~UnicodeString() {}
 
 };
 
