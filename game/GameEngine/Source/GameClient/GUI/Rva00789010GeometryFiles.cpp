@@ -6,12 +6,22 @@
 #include "Common/FileSystem.h"
 
 // 0x00789010: global filesystem enumerates the owner's geometry files.
-// Owner identity is not established; retain its address-qualified name.
+// Its callee 0x00788A30, called on the same `this`, is EA's private
+// AptAnimData::createRenderData (ea_evidence.csv). This member's own EA name
+// is unknown, and the ILT oracle contradicts the placeholder spelled on
+// AptAnimData, so it keeps its address-qualified owner and reaches the
+// callee through a cast.
+class Rva00789010Owner;
+class AptAnimData
+{
+ friend class Rva00789010Owner;
+ void createRenderData(const AsciiString &filename);
+};
+
 class Rva00789010Owner
 {
 public:
  void enumerateGeometry();
- void rva00788A30(const AsciiString &filename);
  AsciiString m_name;
 };
 extern FileSystem *TheFileSystem;
@@ -23,5 +33,5 @@ void Rva00789010Owner::enumerateGeometry()
  ((StringBase<char> *)&directory)->concat("_geometry/", 10);
  TheFileSystem->getFileListInDirectory(directory, AsciiString("*.ru"), files, false);
  for (FilenameList::iterator it = files.begin(); it != files.end(); ++it)
-  rva00788A30(*it);
+  reinterpret_cast<AptAnimData *>(this)->createRenderData(*it);
 }

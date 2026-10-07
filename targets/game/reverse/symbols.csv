@@ -86867,7 +86867,7 @@ name,address,notes
 ?rva00779F10@Rva0077B3F0@@QAEXXZ,0x00041D80,Rva0077B3F0 call-site ABI; +0x355 REL32 reaches ILT 0x00041D80 to generated body 0x00779F10
 ?rva0077d6b0@@YAXXZ,0x00046CAE,Open-BFME5 ILT thunk b_0077d6b0
 ?rva00782e80@@YAXH@Z,0x0002B823,Open-BFME5 ILT cdecl of stdcall pop-ecx wrapper
-?rva00788A30@Rva00789010Owner@@QAEXABVAsciiString@@@Z,0x00788A30,Address-qualified body1004B RET4; caller789010 passes filename-set element; callee forwards same AsciiString reference to matched parsePathNumber7861E0; owner retainedECX
+?createRenderData@AptAnimData@@AAEXABVAsciiString@@@Z,0x00788A30,Address-qualified body1004B RET4; caller789010 passes filename-set element; callee forwards same AsciiString reference to matched parsePathNumber7861E0; owner retainedECX
 ?rva0078C300Dispatch@@YIXPAXH@Z,0x00031A52,retail tail target from the exact 0x0078C430 body
 ?rva00791F70DefaultDispatch@@YAXPAVRva00791F70CallbackHost@@HHH@Z,0x0003C281,retail direct fallback call target from the exact 0x00791F70 body
 ?rva00793de0_inner@@YAXPAX@Z,0x0003D942,Open-BFME5 fresh cdecl at ILT of return-1 wrapper

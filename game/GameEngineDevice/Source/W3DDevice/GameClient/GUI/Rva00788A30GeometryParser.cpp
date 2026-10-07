@@ -134,14 +134,16 @@ public:
  virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0C();
  virtual unsigned slot10();
 };
-class Rva00789010Owner {
+// EA's AptAnimData; 0x00788A30 is AptAnimData::createRenderData
+// (ea_evidence.csv), private per the ILT oracle.
+class AptAnimData {
+ void createRenderData(const AsciiString& filename);
 public:
- void rva00788A30(const AsciiString& filename);
  AsciiString m_name;
  unsigned m_at04;
  _STL::hash_map<int,Relationship> m_at08;
 };
-void Rva00789010Owner::rva00788A30(const AsciiString& filename)
+void AptAnimData::createRenderData(const AsciiString& filename)
 {
  int number=0;
  const char *path=parsePathNumber007861E0(filename,&number,true);
