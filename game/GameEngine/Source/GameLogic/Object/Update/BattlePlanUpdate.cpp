@@ -204,35 +204,7 @@ BattlePlanUpdate::~BattlePlanUpdate( void )
 // ------------------------------------------------------------------------------------------------
 /** On delete */
 // ------------------------------------------------------------------------------------------------
-// ?onDelete@BattlePlanUpdate@@UAEXXZ present-unmatched
-void BattlePlanUpdate::onDelete()
-{
-
-	// extend base class
-	UpdateModule::onDelete();
-
-	// delete our vision object, if it exists
-	Object *obj;
-	if( m_visionObjectID != INVALID_ID )
-	{
-		obj = TheGameLogic->findObjectByID( m_visionObjectID );
-		if( obj )
-			TheGameLogic->destroyObject( obj );
-	}  // end if
-
-	// If we get destroyed, then make sure we remove our bonus!
-	// srj sez: we can't do this in the dtor because our team
-	// (and thus controlling player) has already been nulled by then...
-	Player* player = getObject()->getControllingPlayer();
-	// however, player CAN legitimately be null during game reset cycles
-	// (and which point it doesn't really matter if we can remove the bonus or not)
-	//DEBUG_ASSERTCRASH(player != NULL, ("Hmm, controller is null"));
-	if( player && m_planAffectingArmy != PLANSTATUS_NONE )
-	{
-		player->changeBattlePlan( m_planAffectingArmy, -1, m_bonuses );
-	}
-
-}
+// BattlePlanUpdate::onDelete is defined in BattlePlanUpdateOnDelete.cpp (retail 0x00286140).
 
 //-------------------------------------------------------------------------------------------------
 // Validate that we have the necessary data from the ini file.
