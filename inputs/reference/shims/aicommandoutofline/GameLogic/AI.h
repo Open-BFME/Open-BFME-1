@@ -30,7 +30,8 @@
 // of line. Their retail bodies are matched in
 // AICommandInterfaceMovementOrders.cpp: aiIdle 0x000D87E0, aiHunt 0x000D88D0,
 // aiEnter 0x000D89C0, aiEvacuate 0x000D8AC0 and aiAttackMoveToPosition
-// 0x00153AF0 (and aiMoveToPosition 0x000D86C0, kept inline below). ZH defines
+// 0x00153AF0 (and aiMoveToPosition 0x000D86C0, kept inline below), and in
+// AICommandInterfaceGuardCommands.cpp: aiGuardPosition 0x00154550. ZH defines
 // them inline in the class, so a TU that calls one without inlining it emits
 // its own ZH-shaped COMDAT copy, which collides with the owner's. Declaring
 // them here makes those TUs call the owner. Otherwise identical to ZH
@@ -731,13 +732,7 @@ public:
 		aiDoCommand(&parms);
 	}
 
-	inline void aiGuardPosition( const Coord3D *pos, GuardMode guardMode, CommandSourceType cmdSource )
-	{
-		AICommandParms parms(AICMD_GUARD_POSITION, cmdSource);
-		parms.m_pos = *pos;
-		parms.m_intValue = guardMode;
-		aiDoCommand(&parms);
-	}
+	void aiGuardPosition( const Coord3D *pos, GuardMode guardMode, CommandSourceType cmdSource );	// BFME: out of line, retail 0x00154550
 
 	inline void aiGuardObject( Object *objToGuard, GuardMode guardMode, CommandSourceType cmdSource )
 	{
