@@ -30,7 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl KeepObjectDieFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the ILT stub 0x000153DE (?j_000153de@@YAXXZ).
+extern void j_000153de(void);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/KeepObjectDie.h
 class KeepObjectDie
@@ -44,6 +45,6 @@ ModuleData *KeepObjectDie::friend_newModuleData(INI *ini)
 {
 	KeepObjectDieModuleData *data = new KeepObjectDieModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &KeepObjectDieFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))j_000153de);
 	return (ModuleData *)data;
 }
