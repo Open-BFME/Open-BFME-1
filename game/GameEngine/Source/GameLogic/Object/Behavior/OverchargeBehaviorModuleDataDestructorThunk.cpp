@@ -11,15 +11,17 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
-class S4Base009A1A40
+// Base dtor call lands on 0x009A1A40, matched ??1SubsystemInterface@@UAE@XZ
+// (SubsystemInterface.cpp), per callees.py on this body.
+class SubsystemInterface
 {
 public:
-	virtual ~S4Base009A1A40();
-	unsigned int m_04;
+	virtual ~SubsystemInterface();
+	unsigned int m_name; // AsciiString handle
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/OverchargeBehavior.h
-class OverchargeBehaviorModuleData : public S4Base009A1A40
+class OverchargeBehaviorModuleData : public SubsystemInterface
 {
 public:
 	virtual ~OverchargeBehaviorModuleData();
