@@ -10,16 +10,20 @@ extern "C" void _ReadWriteBarrier(void);
 extern "C" void _WriteBarrier(void);
 #pragma intrinsic(_WriteBarrier)
 
-void __cdecl bfmeRunBL(void *first, int flags, void *last);
+// The callee is ILT 0x0002126F -> 0x00456A90, matched as the map listbox
+// population routine (its int result is unused here).
+class GameWindow;
+class AsciiString;
+int __cdecl populateMapListboxRva00456A90(GameWindow *listbox, unsigned int flags, const AsciiString &selected);
 
 void __cdecl bfmePopulateMapListFlags(void *target, char first, char second, void *extra)
 {
 	int flags = (first == 0) ? 2 : 1;
 	if (second != 0) {
 		_WriteBarrier();
-		bfmeRunBL(target, flags | 8, extra);
+		populateMapListboxRva00456A90((GameWindow *)target, flags | 8, *(const AsciiString *)extra);
 	} else {
 		_ReadWriteBarrier();
-		bfmeRunBL(target, flags | 4, extra);
+		populateMapListboxRva00456A90((GameWindow *)target, flags | 4, *(const AsciiString *)extra);
 	}
 }
