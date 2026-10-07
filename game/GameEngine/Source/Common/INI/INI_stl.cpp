@@ -1267,20 +1267,8 @@ void INI::parseSpecialPowerTemplate( INI* ini, void * /*instance*/, void *store,
 
 	
 //-------------------------------------------------------------------------------------------------
-void MultiIniFieldParse::add(const FieldParse* f, UnsignedInt e)
-{
-	if (m_count < MAX_MULTI_FIELDS)
-	{
-		m_fieldParse[m_count] = f;
-		m_extraOffset[m_count] = e;
-		++m_count;
-	}
-	else
-	{
-		DEBUG_CRASH(("too many multi-fields in INI::initFromINIMultiProc"));
-		throw ERROR_BUG;
-	}
-}
+// MultiIniFieldParse::add (retail 0x00850920) is the inline Common/INI.h body;
+// ini_parsers.cpp forces retail's out-of-line copy.
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
