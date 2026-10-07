@@ -12,7 +12,10 @@ public:
 	int m_0C;
 };
 
-extern int g_s4Head0059CB30;
+// 0x0110C744 is Rva0059C940MultiTailDtor's vftable (dir32_addresses.csv),
+// emitted by MultiVptrTailJumpDestructors.cpp; __identifier spells that
+// symbol so this TU does not invent a second name for it.
+extern "C" int __identifier("??_7Rva0059C940MultiTailDtor@@6BRva0001AA9BMultiBase@@@")[];
 
 class Rva0059CAC0 : public Rva00489210
 {
@@ -23,7 +26,7 @@ public:
 
 Rva0059CAC0::Rva0059CAC0()
 {
-	m_00 = &g_s4Head0059CB30;
+	m_00 = __identifier("??_7Rva0059C940MultiTailDtor@@6BRva0001AA9BMultiBase@@@");
 	m_04 = 8;
 	m_0C = 0;
 	m_20 = -1;
