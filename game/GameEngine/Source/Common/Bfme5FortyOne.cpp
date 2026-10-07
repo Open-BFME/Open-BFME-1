@@ -2,8 +2,40 @@
 // stlport
 // Two masked table reads, an assignment returning the receiver, and a four-state test.
 
-extern int g_bfmeTableDJa[];					// retail 0x012A9200
 #include "Common/BitFlags.h"
+
+// Retail VA 0x012A9200: eleven string addresses followed by a null cell.
+// Preserve the existing PE32/MSVC int[] address-storage interface used by
+// both callers; this is not a claim about the original C++ element type.
+// Each cast below emits a static DIR32 relocation, not initializer code.
+// See identity_evidence/0x00ea9200-disabled-name-cells.md.
+extern const char g_Va01081720[] = "DEFAULT";
+extern const char g_Va01086434[] = "DISABLED_UNUSED";
+extern const char g_Va01086424[] = "DISABLED_EMP";
+extern const char g_Va01086414[] = "DISABLED_HELD";
+extern const char g_Va010863FC[] = "DISABLED_PARALYZED";
+extern const char g_Va010863E4[] = "DISABLED_UNMANNED";
+extern const char g_Va010863C8[] = "DISABLED_UNDERPOWERED";
+extern const char g_Va010863B0[] = "DISABLED_FREEFALL";
+extern const char g_Va01086390[] = "DISABLED_TEMPORARILY_BUSY";
+extern const char g_Va01086370[] = "DISABLED_SCRIPT_DISABLED";
+extern const char g_Va0108634C[] = "DISABLED_SCRIPT_UNDERPOWERED";
+
+int g_bfmeTableDJa[12] =
+{
+	reinterpret_cast<int>(g_Va01081720),
+	reinterpret_cast<int>(g_Va01086434),
+	reinterpret_cast<int>(g_Va01086424),
+	reinterpret_cast<int>(g_Va01086414),
+	reinterpret_cast<int>(g_Va010863FC),
+	reinterpret_cast<int>(g_Va010863E4),
+	reinterpret_cast<int>(g_Va010863C8),
+	reinterpret_cast<int>(g_Va010863B0),
+	reinterpret_cast<int>(g_Va01086390),
+	reinterpret_cast<int>(g_Va01086370),
+	reinterpret_cast<int>(g_Va0108634C),
+	0
+};
 
 class Gen_001C3F80
 {
