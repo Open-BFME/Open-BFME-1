@@ -440,7 +440,6 @@ dir32,0x010EDBDC,??_7LivingWorldLogic@@6BSubsystemInterface@@@,"nothing in the l
 dir32,0x010EE088,?g_010EE088@@3QBUFieldParse@@B,"nothing in the ledger owns 0x010EE088. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x010EE13C,??_7LargeGroupAudio@@6BSubsystemInterface@@@,"retail 0x010EE13C is already recorded as ??_7LargeGroupAudio@@6BRva004948B0Base@@@ (+1 more); reference that name, not a new one"
 dir32,0x010F0AE0,??_9@$BBI@AE,"retail 0x010F0AE0 is already recorded as ??_7BfmeA1134@@6B@ (+1 more); reference that name, not a new one"
-dir32,0x010F1410,??_7TintEnvelope@@6B@,"??_7TintEnvelope@@6B@ is a function the ledger places elsewhere, not at 0x010F1410"
 dir32,0x010F154C,??_7Drawable@@6BSnapshot@@@,"nothing in the ledger owns 0x010F154C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x010F1560,??_7Drawable@@6BGen_dtor_00132940@@@,"nothing in the ledger owns 0x010F1560. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x010F1560,??_7Drawable@@6BThing@@@,"nothing in the ledger owns 0x010F1560. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
