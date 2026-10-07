@@ -17,11 +17,21 @@ struct Region2D
 	ICoord2D hi;
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
-class Bridge
+struct BfmeVec4CMB;
+
+// Retail call target 0x0018F830 (via ILT 0xFEE8) is the matched row
+// BfmeThingCMB::bfmeGoCMB (game/GameEngine/Source/GameLogic/Map/BfmeConv621.cpp).
+class BfmeThingCMB
 {
 public:
-	void getBounds(Region2D *bounds) const;
+	void bfmeGoCMB(BfmeVec4CMB *out);
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
+class Bridge : public BfmeThingCMB
+{
+public:
+	void getBounds(Region2D *bounds) { bfmeGoCMB((BfmeVec4CMB *)bounds); }
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
