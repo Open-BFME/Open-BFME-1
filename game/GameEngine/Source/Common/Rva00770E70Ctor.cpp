@@ -2,7 +2,9 @@
 
 #include "ascii_string.h"
 
-extern const char g_Rva0107301CEmptyString[];
+// The empty literal at VA 0x0107301C (retail .rdata: a zero byte, padded, ahead of
+// the "Lang\\%s\\Lotr.csf" string at 0x01073020); this constructor pushes it.
+extern const char g_Rva0107301CEmptyString[] = "";
 
 class Rva00770E70
 {
