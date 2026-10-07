@@ -231,7 +231,17 @@ BFME_VPTR_TAIL_JUMP_DTOR( Rva00124BF0TailDtor, Rva0002B8C8TailBase )
 // ILT 0x00035D46 from the matched ??_GAIGuardMachine (0x0015C030).
 BFME_VPTR_TAIL_JUMP_DTOR( AIGuardMachine, StateMachine )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva0015E730TailDtor, StateMachine )
-BFME_VPTR_TAIL_JUMP_DTOR( Rva0015F730TailDtor, StateMachine )
+// 0x0015F730 is AIHarvestMachine's protected destructor: it installs vftable
+// 0x01096650, the one the matched AIHarvestMachine ctor (0x0015FE90) installs,
+// and is reached via ILT 0x000289FC from the matched ??_GAIHarvestMachine (0x0015FA60).
+class AIHarvestMachine : public StateMachine
+{
+protected:
+	virtual ~AIHarvestMachine();
+};
+AIHarvestMachine::~AIHarvestMachine()
+{
+}
 BFME_VPTR_TAIL_JUMP_DTOR( Rva0016AB00TailDtor, StateMachine )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva0016AB50TailDtor, StateMachine )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva0016ABA0TailDtor, StateMachine )
