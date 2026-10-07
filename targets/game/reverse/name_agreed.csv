@@ -566,3 +566,4 @@ game/GameEngine/Source/Common/BfmeConv2022.cpp|type||BfmeUStrTL,UnicodeString,gp
 game/GameEngine/Source/Common/BfmeConv2022.cpp|type||BfmeHostTL,LANAPI,gpt-6-astra+grok,agreed,2026-10-07
 game/GameEngine/Source/Common/BfmeConv2022.cpp|member||m_bfmeThingTL,m_currentGame,gpt-6-astra+grok,agreed,2026-10-07
 game/GameEngine/Source/Common/BfmeConv2022.cpp|function|BfmeHostTL@|bfmeApplyTL,OnPlayerJoin,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/Common/BfmeThingCEF_Rva00088AB0.cpp|member||m_bfmeOwner,m_thingTemplate,gpt-6-astra+grok,agreed,2026-10-07
