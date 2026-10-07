@@ -327,10 +327,9 @@ public:
 
 protected:
 	static Bool ParseWorldDictDataChunk(DataChunkInput &file, DataChunkInfo *info, void *userData);
+	void parse(DataChunkInput &input, Bool parseSizeOnly);
 
 private:
-	void Rva0074ACB0Load(DataChunkInput &input, Bool parseSizeOnly);
-
 	void *m_vftable;
 	Int m_numRefs;
 	Int m_width;				// +0x08
@@ -349,7 +348,7 @@ private:
 	Int m_drawHeightY;			// +0x120EC
 };
 
-void WorldHeightMap::Rva0074ACB0Load(DataChunkInput &file, Bool parseSizeOnly)
+void WorldHeightMap::parse(DataChunkInput &file, Bool parseSizeOnly)
 {
 	if (TheWritableGlobalData && TheWritableGlobalData->m_stretchTerrain)
 	{

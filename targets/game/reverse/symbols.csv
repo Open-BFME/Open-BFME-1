@@ -12688,7 +12688,7 @@ name,address,notes
 ?Rva007397E0@@YA_NPAXMMM@Z,0x007397E0,Address-derived BODY pin; full225B ends RET at7398C0; cdecl object pointer plus3float scalars; independent Set_Emissive9210D0 call at+58 consumes those floats and recursive ILT2C9DA call at+B0 preserves all4arguments; returns AL; reviewed for618A90
 ?Rva00739900Forward@@YAXPAXM@Z,0x000246A4,Open-BFME5 ILT thunk used by the 0x006FCBD0 clamped float forwarder
 ?Rva00739900ForwardSub@@YAEPAXM@Z,0x000246A4,ILT thunk the recursive opacity walk at 0x00739900 calls for its own tail recursion
-?Rva0074ACB0Load@WorldHeightMap@@AAEXAAVDataChunkInput@@_N@Z,0x0074ACB0,stream-ctor load helper; body is the matched ?d_0074acb0 gen-dump; ABI from call site ecx=this then DataChunkInput& and bool result unused
+?parse@WorldHeightMap@@IAEXAAVDataChunkInput@@_N@Z,0x0074ACB0,stream-ctor load helper; body is the matched ?d_0074acb0 gen-dump; ABI from call site ecx=this then DataChunkInput& and bool result unused
 ?Rva007705D0Copy@@YAPAURva007705D0Element@@PAU1@00ABURva007705D0RandomAccessTag@@PAH@Z,0x0000DB89,STL copy helper called by the resize wrapper at 0x007705D0
 ?Rva007B93E0@@YAXPAURva007BB060Surface@@@Z,0x007B93E0,Opaque cdecl surface-pointer helper: independently decoded callee 0x007B93FF loads sole argument [esp+0x278] after 0x258 frame; COM GetDesc at 0x007B9416 and SurfaceTest.tga reference 0x007B95C4; caller 0x007BB3DC passes one surface and cleans four bytes; ILT 0x0002E4B5 independently decodes to this body; model=gpt-6-astra-xhigh
 ?Rva007E8640Copy@@YAXPADIPBD@Z,0x007E8640,U2 lane: bounded string copy called by the setters at 0x00801470 and 0x008014A0
