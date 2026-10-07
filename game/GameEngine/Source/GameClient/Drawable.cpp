@@ -803,35 +803,8 @@ Real Drawable::getAnimationScrubScalar( void ) const // lorenzen
 #endif
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/Drawable_getPristineBonePositions.cpp
-// ?getPristineBonePositions@Drawable@@QBEHPBDHPAUCoord3D@@PAVMatrix3D@@H@Z present-unmatched
-Int Drawable::getPristineBonePositions(const char* boneNamePrefix, Int startIndex, Coord3D* positions, Matrix3D* transforms, Int maxBones) const
-{
-	Int count = 0;
-	for (const DrawModule** dm = getDrawModules(); *dm; ++dm)
-	{
-		if (maxBones <= 0)
-			break;
-
-		const ObjectDrawInterface* di = (*dm)->getObjectDrawInterface();
-		if (di)
-		{
-			Int subcount = 
-				di->getPristineBonePositionsForConditionState(m_conditionState, boneNamePrefix, startIndex, positions, transforms, maxBones);
-
-			if (subcount > 0)
-			{
-				count += subcount;
-				if (positions)
-					positions += subcount;
-				if (transforms)
-					transforms += subcount;
-				maxBones -= subcount;
-			}
-		}
-	}
-	return count;
-}
+// Drawable::getPristineBonePositions (retail 0x00413930) is defined in
+// Drawable_getPristineBonePositions.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?getCurrentClientBonePositions@Drawable@@QBEHPBDHPAUCoord3D@@PAVMatrix3D@@H@Z present-unmatched

@@ -11,9 +11,9 @@
 // seven-argument form takes the drawable's condition state at +0x250 as its first
 // argument. Declared once, the pair is visible and so is the slot each occupies.
 //
-// The two Drawable shims stay separate classes on purpose. The ledger's identity
-// for the five-argument row is ?getPristineBonePositions@Drawable@@... with an
-// explicit object-symbol= mapping onto BfmeDrawableForPristine, but the
+// The two Drawable shims stay separate classes on purpose. The five-argument
+// row is defined under its real Drawable name here (Drawable.cpp no longer
+// carries a second, non-retail copy), but the
 // seven-argument row IS ?getPristineBonePositions@BFMEDrawableBoneQuery@@... with
 // no such mapping -- its class name is the symbol. Folding the two shims into one
 // class renames that row's function and the symbol stops existing in the object.
@@ -68,7 +68,7 @@ public:
 	virtual BfmeObjectDrawForPristine *getObjectDrawInterface() = 0;
 };
 
-class BfmeDrawableForPristine
+class Drawable
 {
 public:
 	Int getPristineBonePositions(const char *boneNamePrefix, Int startIndex,
@@ -85,7 +85,7 @@ public:
 // Drawable::getPristineBonePositions, retail 0x00413930, 132 bytes.
 
 // ?getPristineBonePositions@Drawable@@QBEHPBDHPAUCoord3D@@PAVMatrix3D@@H@Z
-Int BfmeDrawableForPristine::getPristineBonePositions(const char *boneNamePrefix,
+Int Drawable::getPristineBonePositions(const char *boneNamePrefix,
 	Int startIndex, Coord3D *positions, Matrix3D *transforms, Int maxBones) const
 {
 	Int count = 0;
