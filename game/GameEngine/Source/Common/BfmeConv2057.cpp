@@ -5,11 +5,20 @@ public:
 	unsigned char m_bfmeRestGD[12];
 };
 
+// ILT 0x82A6 -> 0x006BBD80, matched protected
+// ?translateEvent@Win32Mouse@@IAEXIPAUMouseIO@@@Z (Win32Mouse_translateEvent.cpp).
+struct MouseIO;
+class Win32Mouse
+{
+	friend class BfmeRingGD;
+protected:
+	void translateEvent(unsigned int eventIndex, MouseIO *result);
+};
+
 class BfmeRingGD
 {
 public:
 	char bfmePushGD(void *p, int unused);
-	void bfmeProcessGD(int i, void *p);
 
 	unsigned char m_bfmeHeadGD2[0x4e14];
 	BfmeSlotGD m_bfmeSlotsGD[256];
@@ -24,7 +33,7 @@ char BfmeRingGD::bfmePushGD(void *p, int unused)
 	if (m_bfmeSlotsGD[i].m_bfmePtrGD == 0)
 		return 0;
 
-	bfmeProcessGD(i, p);
+	reinterpret_cast<Win32Mouse *>(this)->translateEvent(i, (MouseIO *)p);
 
 	m_bfmeSlotsGD[m_bfmeHeadGD].m_bfmePtrGD = 0;
 
