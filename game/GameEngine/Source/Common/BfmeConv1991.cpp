@@ -20,8 +20,9 @@ typedef void (BfmeThingTGE::*ApplyLevelTGE)(unsigned char);
 // The allocated object's type as this body's own ledger row spells it.
 class BfmeThingEUH;
 
-// 0x012ED249, the byte the body loads into cl.
-extern unsigned char g_bfmeLevelEUH;
+// 0x012ED249, the byte the body loads into cl (retail .data holds 0; defined
+// here under its pinned name, identity unproven).
+unsigned char g_bfmeLevelEUH;
 
 BfmeThingEUH *bfmeMakeEUH()
 {
