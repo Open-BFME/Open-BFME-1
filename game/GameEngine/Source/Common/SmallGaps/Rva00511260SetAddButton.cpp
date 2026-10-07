@@ -1,5 +1,18 @@
 // ?setAddButtonEnabled@Rva00511260Owner@@QAEX_N@Z
-struct Rva00579160Manager { void fire(void* target, const char* name, int a, int b, int c, int d, int e, int f); };
+// The call goes through ILT 0x15235 to 0x004675F0, the matched
+// ?bfmeBuildAN@BfmeLevelAN@@QAEPADIHHHHHHH@Z (BfmeLevelPathAN.cpp).
+class BfmeLevelAN
+{
+public:
+	char *bfmeBuildAN(unsigned int level, int p2, int p3, int p4, int p5,
+		int p6, int p7, int p8);
+};
+struct Rva00579160Manager {
+	void fire(void* target, const char* name, int a, int b, int c, int d, int e, int f)
+	{
+		((BfmeLevelAN*)this)->bfmeBuildAN((unsigned int)target, (int)name, a, b, c, d, e, f);
+	}
+};
 // Retail global 0x012F19E8. EA's own name for this pointer; see
 // game/GameEngine/Source/GameClient/GUI/WindowManager.cpp for the definition.
 // This TU keeps its local view type Rva00579160Manager and casts at the use.
