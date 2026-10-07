@@ -16,12 +16,15 @@ public:
 	int m_mode;
 };
 
-extern Glo012F7048CampaignGateMode *Glo012F7048;
-
 // Retail 0x012F1028 is EA's `LivingWorldLogic *TheLivingWorldLogic`, defined
 // once in game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp.
 class LivingWorldLogic;
 extern LivingWorldLogic *TheLivingWorldLogic;
+
+// Retail global 0x012F7048 is Rva006092D0State *g_rva012F7048LivingWorld,
+// defined once in GameClient/LivingWorld.cpp (data row); this TU reads its mode.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
 
 class BfmeCampaignManagerFlag78Slice
 {
@@ -42,7 +45,7 @@ private:
 
 Bool Rva0060D480CampaignGate::isOpen( void ) const
 {
-	if ( Glo012F7048->m_mode == 1
+	if ( reinterpret_cast<Glo012F7048CampaignGateMode *>( g_rva012F7048LivingWorld )->m_mode == 1
 		&& !m_blocked
 		&& !((BfmeCampaignManagerFlag78Slice *)TheLivingWorldLogic)->m_flag78 )
 		return true;
