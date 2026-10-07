@@ -179,6 +179,11 @@ template<> CategoryModuleTemplate<8> &CategoryModuleTemplate<8>::operator=(const
 // CategoryModuleTemplate00DestructorThunk.cpp.
 template<> CategoryModuleTemplate<1>::~CategoryModuleTemplate();
 
+// The retail destructors of these categories are matched in their own
+// CategoryModuleTemplateNNDestructorThunk.cpp TUs; declare them here so the
+// explicit instantiations below do not emit the header's empty body.
+template<> CategoryModuleTemplate<2>::~CategoryModuleTemplate();
+
 template class CategoryModuleInfo<0>;
 template class CategoryModuleInfo<1>;
 template class CategoryModuleInfo<2>;
