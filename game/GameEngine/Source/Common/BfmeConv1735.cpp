@@ -1,7 +1,14 @@
+// ILT 0x000290D2 -> 0x00465B80, the matched byte-field setter ?apply@Rva00465B80@@QAEXXZ.
+class Rva00465B80
+{
+public:
+	void apply(void);
+};
+
 class BfmeMgr19E
 {
 public:
-	void bfmeRunAG(void);
+	void bfmeRunAG(void) { reinterpret_cast<Rva00465B80 *>(this)->apply(); }
 };
 
 // Retail global 0x012F19E8; canonical definition in GameClient/GUI/WindowManager.cpp.
