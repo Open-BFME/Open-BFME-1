@@ -864,17 +864,8 @@ Int Drawable::getCurrentClientBonePositions(const char* boneNamePrefix, Int star
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getCurrentWorldspaceClientBonePositions@Drawable@@QBE_NPBDAAVMatrix3D@@@Z present-unmatched
-Bool Drawable::getCurrentWorldspaceClientBonePositions(const char* boneName, Matrix3D& transform) const
-{
-	for (const DrawModule** dm = getDrawModules(); *dm; ++dm)
-	{
-		const ObjectDrawInterface* di = (*dm)->getObjectDrawInterface();
-		if (di && di->getCurrentWorldspaceClientBonePositions(boneName, transform))
-			return true;
-	}
-	return false;
-}
+// Drawable::getCurrentWorldspaceClientBonePositions: retail body lives in
+// DrawableGetCurrentWorldspaceClientBonePositions.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?setTerrainDecal@Drawable@@QAEXW4TerrainDecalType@@@Z present-unmatched
