@@ -90424,3 +90424,22 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_0BL@FOCAKHOO@LivingWorldZoomMaxDistance?$AA@,0x00C821D8,Retail AudioSettings field-parse table VA 0x01081D60 entry; compiler string literal LivingWorldZoomMaxDistance equals retail at VA 0x010821D8
 ??_C@_0DK@HAGAFPOC@LivingWorldMicrophonePullTowards@,0x00C82190,Retail AudioSettings field-parse table VA 0x01081D60 entry; compiler string literal LivingWorldMicrophonePullTowardsTerrainLookAtPointPercent equals retail at VA 0x01082190
 ??_C@_0CL@PGLPJICE@LivingWorldZoomSoundVolumePercen@,0x00C8215C,Retail AudioSettings field-parse table VA 0x01081D60 entry; compiler string literal LivingWorldZoomSoundVolumePercentageAmount equals retail at VA 0x0108215C
+??_C@_0BA@LFNCMGEF@RadarWaterColor?$AA@,0x00CF6DB8,Retail Water field-parse table entry; compiler string literal RadarWaterColor equals retail at VA 0x010F6DB8
+??_C@_0BB@EHAHHMHN@WaterRepeatCount?$AA@,0x00CF6E50,Retail Water field-parse table entry; compiler string literal WaterRepeatCount equals retail at VA 0x010F6E50
+??_C@_0BB@NLJPMHEA@AdditiveBlending?$AA@,0x00CF6DCC,Retail Water field-parse table entry; compiler string literal AdditiveBlending equals retail at VA 0x010F6DCC
+??_C@_0BB@PNHPIJHL@SkyTexelsPerUnit?$AA@,0x00CF6E64,Retail Water field-parse table entry; compiler string literal SkyTexelsPerUnit equals retail at VA 0x010F6E64
+??_C@_0BD@CJHCNNNF@StandingWaterColor?$AA@,0x00CF6DFC,Retail Water field-parse table entry; compiler string literal StandingWaterColor equals retail at VA 0x010F6DFC
+??_C@_0BF@ILHMCMEG@StandingWaterTexture?$AA@,0x00CF6DE0,Retail Water field-parse table entry; compiler string literal StandingWaterTexture equals retail at VA 0x010F6DE0
+??_C@_0BG@MFDAJOJG@TransparentWaterDepth?$AA@,0x00CF6E34,Retail Water field-parse table entry; compiler string literal TransparentWaterDepth equals retail at VA 0x010F6E34
+??_C@_0BI@INJHMIAP@TransparentDiffuseColor?$AA@,0x00CF6E98,Retail Water field-parse table entry; compiler string literal TransparentDiffuseColor equals retail at VA 0x010F6E98
+??_C@_0BL@OOMLDDAO@TransparentWaterMinOpacity?$AA@,0x00CF6E14,Retail Water field-parse table entry; compiler string literal TransparentWaterMinOpacity equals retail at VA 0x010F6E14
+??_C@_0BM@HKFDHOO@RiverTransparencyMultiplier?$AA@,0x00CF6D94,Retail Water field-parse table entry; compiler string literal RiverTransparencyMultiplier equals retail at VA 0x010F6D94
+??_C@_0L@PAPMFLJA@SkyTexture?$AA@,0x00CF6F14,Retail Water field-parse table entry; compiler string literal SkyTexture equals retail at VA 0x010F6F14
+??_C@_0N@BELNCJHI@VScrollPerMS?$AA@,0x00CF6E78,Retail Water field-parse table entry; compiler string literal VScrollPerMS equals retail at VA 0x010F6E78
+??_C@_0N@GADKIJIK@WaterTexture?$AA@,0x00CF6F04,Retail Water field-parse table entry; compiler string literal WaterTexture equals retail at VA 0x010F6F04
+??_C@_0N@KAGFAILC@DiffuseColor?$AA@,0x00CF6EB4,Retail Water field-parse table entry; compiler string literal DiffuseColor equals retail at VA 0x010F6EB4
+??_C@_0N@KJHHEFLG@UScrollPerMS?$AA@,0x00CF6E88,Retail Water field-parse table entry; compiler string literal UScrollPerMS equals retail at VA 0x010F6E88
+??_C@_0O@COGLEFKK@Vertex01Color?$AA@,0x00CF6ED4,Retail Water field-parse table entry; compiler string literal Vertex01Color equals retail at VA 0x010F6ED4
+??_C@_0O@EELGEOIA@Vertex10Color?$AA@,0x00CF6EE4,Retail Water field-parse table entry; compiler string literal Vertex10Color equals retail at VA 0x010F6EE4
+??_C@_0O@IIBMEOBO@Vertex00Color?$AA@,0x00CF6EF4,Retail Water field-parse table entry; compiler string literal Vertex00Color equals retail at VA 0x010F6EF4
+??_C@_0O@OCMBEFDE@Vertex11Color?$AA@,0x00CF6EC4,Retail Water field-parse table entry; compiler string literal Vertex11Color equals retail at VA 0x010F6EC4
