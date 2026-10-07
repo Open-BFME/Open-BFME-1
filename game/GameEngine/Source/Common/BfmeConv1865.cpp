@@ -90,12 +90,24 @@ public:
 	BfmeHubYV *m_bfmeHubYV;
 };
 
+class PathfindServicesInterface;
+
+// ILT 0x00024A9B -> 0x0027B3A0, matched as AIUpdateInterface::doPathfind.
+class AIUpdateInterface
+{
+public:
+	void doPathfind(PathfindServicesInterface *pathfinder);
+};
+
 class BfmeOwnerYV
 {
 public:
 	void bfmeRunYV(void *arg);
 
-	void bfmeApplyYV(void *arg);
+	void bfmeApplyYV(void *arg)
+	{
+		reinterpret_cast<AIUpdateInterface *>(this)->doPathfind(static_cast<PathfindServicesInterface *>(arg));
+	}
 
 	unsigned char m_bfmeStartYV[8];
 	BfmeThingYV *m_bfmeThingYV;
