@@ -6,14 +6,19 @@ class BfmeH1065
 
 int bfmeAptLevel00465CE0(BfmeH1065 *window);
 
-class WindowManager
-{
-public:
-	void unidentified_00015235(int movie, const char *function, int argumentCount,
-		const void *p1, const void *p2, const void *p3, const void *p4, const void *p5);
-};
+class WindowManager;
 
 extern WindowManager *g_rva012F19E8WindowManager;
+
+// ILT 0x00015235 -> 0x004675F0, the matched 206-byte
+// ?bfmeBuildAN@BfmeLevelAN@@QAEPADIHHHHHHH@Z (BfmeLevelPathAN.cpp): the
+// eight-dword scripted-UI dispatcher, called on the window manager.
+class BfmeLevelAN
+{
+public:
+	char *bfmeBuildAN(unsigned int movie, int function, int argumentCount,
+		int p1, int p2, int p3, int p4, int p5);
+};
 
 class AptSaveLoad;
 class BfmeAptScreenSaveLoad;
@@ -48,10 +53,10 @@ void Rva56A8StateOwner::dispatchState(int state)
 		int currentState = m_state;
 		if (currentState == 8)
 		{
-			g_rva012F19E8WindowManager->unidentified_00015235(
+			reinterpret_cast<BfmeLevelAN *>(g_rva012F19E8WindowManager)->bfmeBuildAN(
 				bfmeAptLevel00465CE0((BfmeH1065 *)this),
-				"closeDelayed", 1,
-				"OnClosed", 0, 0, 0, 0);
+				(int)"closeDelayed", 1,
+				(int)"OnClosed", 0, 0, 0, 0);
 			m_state = 9;
 			if (reinterpret_cast<AptSaveLoad * &>(TheAptSaveLoad) != 0)
 				reinterpret_cast<Rva00465B80 *>(g_rva012F19E8WindowManager)->apply();
