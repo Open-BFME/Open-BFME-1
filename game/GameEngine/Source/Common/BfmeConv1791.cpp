@@ -1,10 +1,14 @@
 class BfmeThingVQ;
 
-class BfmeInnerVQ
+// The +4 link is an Overridable chain: retail calls ILT 0x000022BB ->
+// 0x00087A80, matched as Overridable::getFinalOverride (INIWater.cpp).
+class Overridable
 {
 public:
-	BfmeThingVQ *bfmeResolveVQ(void);
+	const Overridable *getFinalOverride(void) const;
 };
+
+typedef Overridable BfmeInnerVQ;
 
 class BfmeThingVQ
 {
@@ -53,7 +57,7 @@ char BfmeOwnerVQ::bfmeHasVQ(unsigned int bit)
 			BfmeThingVQ *thing = holder->m_bfmeThingVQ;
 
 			if (thing && thing->m_bfmeInnerVQ)
-				thing = thing->m_bfmeInnerVQ->bfmeResolveVQ();
+				thing = (BfmeThingVQ *)thing->m_bfmeInnerVQ->getFinalOverride();
 
 			if (thing->m_bfmeBitsVQ[bit >> 5] & (1 << (bit & 0x1f)))
 				return 1;
