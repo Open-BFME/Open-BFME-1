@@ -29,16 +29,5 @@ namespace D3DXShader
     }
 }
 
-// QueryInterface at A56226 names AddRef and calls slot 1 of VA0114D7C8.
-// See identity_evidence/00a5627e-addref-caller.md for the independent route.
-
-// Table slot 1 increments receiver dword +4 and returns its new value.
-// Volatile readback preserves the separate retail load after the increment.
-// It does not claim an original volatile member type.
-unsigned long __stdcall D3DXShader::CConstantTable::AddRef()
-{
-    unsigned long *value = reinterpret_cast<unsigned long *>(
-        reinterpret_cast<char *>(this) + 4);
-    ++*value;
-    return *static_cast<volatile unsigned long *>(value);
-}
+// AddRef (A5627E, slot 1) is supplied by the vendored d3dx9.lib member
+// obj\i386\cconstanttable.obj; this TU no longer defines it.
