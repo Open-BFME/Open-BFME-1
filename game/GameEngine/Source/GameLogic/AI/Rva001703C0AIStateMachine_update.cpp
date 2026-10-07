@@ -62,7 +62,7 @@ public:
 class StateMachine
 {
 public:
-    void bfmeSetGoalPosition(const Coord3D *position);
+    void setGoalPosition(const Coord3D *position);
 };
 
 class Rva001703C0AIStateMachine
@@ -100,7 +100,7 @@ StateReturnType Rva001703C0AIStateMachine::updateStateMachine()
         m_temporaryState->onExit(EXIT_NORMAL);
         Object *goalObject = TheGameLogic->findObjectByID(m_goalObjectID);
         ((Rva00170460GoalHelper *)this)->setGoalObject(goalObject);
-        ((StateMachine *)this)->bfmeSetGoalPosition(&m_goalPosition);
+        ((StateMachine *)this)->setGoalPosition(&m_goalPosition);
         m_goalObjectID = 0;
         m_temporaryState = 0;
     }
