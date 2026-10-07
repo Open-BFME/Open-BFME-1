@@ -5,38 +5,16 @@
 // set and again for the trailing release -- and the store is skipped when the
 // target is absent.
 
-#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+// The by-value label is retail's AsciiString: its unwind funclet jumps to
+// ??1AsciiString (ILT 0x0000D828 -> 0x0005EE90) and the scope exit calls
+// StringBase<char>::releaseBuffer (0x00887940) inline, which is what the
+// header's inline destructor gives.
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class BFMEPlayerTemplateAsciiString
+class BfmeStrXG : private AsciiString
 {
 public:
-	BFMEPlayerTemplateAsciiString(const char *text);
-	~BFMEPlayerTemplateAsciiString(void);
-
-private:
-	void *m_data;
-};
-
-class AsciiStringXG
-{
-public:
-	AsciiStringXG(const AsciiStringXG &other);
-	__forceinline ~AsciiStringXG(void)
-	{
-		((BFMEPlayerTemplateAsciiString *)this)->~BFMEPlayerTemplateAsciiString();
-	}
-
-private:
-	char *m_bfmeData;
-};
-
-class BfmeStrXG : private AsciiStringXG
-{
-public:
-	BfmeStrXG(const AsciiStringXG &other) : AsciiStringXG(other) {}
-	~BfmeStrXG(void) {}
-
-	void bfmeSetXG(const AsciiStringXG &other)
+	void bfmeSetXG(const AsciiString &other)
 	{
 		((StringBase<char> *)this)->set(*(const StringBase<char> *)&other);
 	}
@@ -52,14 +30,14 @@ public:
 class Gen_000ED960
 {
 public:
-	void bfmeApplyXG(AsciiStringXG value);
+	void bfmeApplyXG(AsciiString value);
 
 	int m_bfme00;						// +0x00
 	BfmeTargetXG *m_bfmeTarget;				// +0x04
 };
 
-// ?bfmeApplyXG@Gen_000ED960@@QAEXVAsciiStringXG@@@Z
-void Gen_000ED960::bfmeApplyXG(AsciiStringXG value)
+// ?bfmeApplyXG@Gen_000ED960@@QAEXVAsciiString@@@Z
+void Gen_000ED960::bfmeApplyXG(AsciiString value)
 {
 	if (m_bfmeTarget != 0)
 		m_bfmeTarget->m_bfmeLabel.bfmeSetXG(value);
