@@ -1183,3 +1183,7 @@ game/GameEngine/Source/GameClient/GUI/Rva56E070StateDispatch.cpp|member||m_arg26
 game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfmeCount,1ca1bda91dfe972369b4cbe2,gpt-6-astra,20261007221056-d94c6e,2026-10-07
 game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfme04,e25535e06fa878c96490aa40,gpt-6-astra,20261007221056-d94c6e,2026-10-07
 game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfme10,263cadf80a2cce937bd9b4ec,gpt-6-astra,20261007221056-d94c6e,2026-10-07
+game/GameEngine/Source/GameLogic/AI/Rva0016D9C0State_xfer.cpp|type||Rva0016D9C0Machine,d84eef07c9ea030e2591ad78,gpt-6-astra,20261007223307-06228e,2026-10-07
+game/GameEngine/Source/GameLogic/AI/Rva0016D9C0State_xfer.cpp|type||Rva0016D9C0State,75309bc5dbb781534ec16c18,gpt-6-astra,20261007223307-06228e,2026-10-07
+game/GameEngine/Source/GameLogic/AI/Rva0016D9C0State_xfer.cpp|member||m_stateMachine0016D9C0,182f3faedf6ae598242671c1,gpt-6-astra,20261007223307-06228e,2026-10-07
+game/GameEngine/Source/GameLogic/AI/Rva0016D9C0State_xfer.cpp|local|Rva0016D9C0State::xfer|m_stateMachine0016D9C0,27c9c5387d9d087021db095d,gpt-6-astra,20261007223307-06228e,2026-10-07
