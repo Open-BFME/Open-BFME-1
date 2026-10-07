@@ -31,10 +31,13 @@ public:
 
 class Gen00296F90;
 
-class Rva004A66AOwner
+// ILT 0x4A66A -> 0x003D0FA0, the matched 45-byte Rva003D0FA0::run
+// (Y1MemberVectorForEach.cpp), called on TheLargeGroupAudio with this update.
+class Y1ForEachArg;
+class Rva003D0FA0
 {
 public:
-	void registerUpdate(Gen00296F90 *update);
+	void run(Y1ForEachArg *arg);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
@@ -80,7 +83,7 @@ void Gen00296F90::handle()
 		return;
 
 	m_initialized = 1;
-	reinterpret_cast<Rva004A66AOwner *>(TheLargeGroupAudio)->registerUpdate(this);
+	reinterpret_cast<Rva003D0FA0 *>(TheLargeGroupAudio)->run(reinterpret_cast<Y1ForEachArg *>(this));
 
 	Object *object = m_object;
 	LargeGroupAudioUpdateModuleData *moduleData = m_moduleData;

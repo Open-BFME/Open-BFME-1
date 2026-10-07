@@ -18828,5 +18828,15 @@
   "after_sha256": "27a7c9c898e565dc1bda8d77b3b3e804ecbfd80aa478c3a7975e5f52563cceb0",
   "evidence": "targets/game/reverse/identity_evidence/0014b6b0-gen-0014b790-ctor.md",
   "reason": "Not a rename: 0x0014B6B0 stores vftable 0x010957C4 (??_7Gen_0014B790) whose slot 0 is deleting dtor 0x0014B760 over the matched ??1Gen_0014B790 (0x0014B790); BfmeOwnVUP was a second placeholder for that class whose slot-0 virtual no body defines."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/Gen00296F90Handle.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/Gen00296F90Handle.cpp",
+  "old_name": "Rva004A66AOwner",
+  "new_name": "Rva003D0FA0",
+  "before_sha256": "8949083fa66e0a675106d990c559849062cb848d929487471190fa271861823f",
+  "after_sha256": "968675c3f2a06efaa20af63245d4af05dd89adbb5e8e4b3d4fbe4480894db66d",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "Not a rename of a proven class: Gen00296F90::handle (0x00296F90) calls ILT 0x0004A66A -> 0x003D0FA0, the matched row ?run@Rva003D0FA0@@QAEXPAVY1ForEachArg@@@Z; Rva004A66AOwner named only the ILT pin and no body defines it."
  }
 ]
