@@ -9,27 +9,26 @@ struct Rva00891B80Block
 // game/GameEngine/Source/Common/Data/Rva012D5298.cpp as
 // EAStringC::StringDataC g_rva012D5298Empty.  Only the refcount word at +0 is
 // touched here, so the TU keeps its own view of the block and casts at use.
+// The member is EAStringC: retail's unwind funclet uw_00c586f0 jumps straight
+// to the matched ??1EAStringC@@QAE@XZ (0x00891B80) for it.
 class EAStringC
 {
 public:
 	class StringDataC;
+
+	EAStringC();
+	~EAStringC();
+
+	Rva00891B80Block *m_block;
 };
 
 extern EAStringC::StringDataC g_rva012D5298Empty;
 
-class Rva008B0120String
+inline EAStringC::EAStringC()
 {
-public:
-	Rva008B0120String()
-	{
-		m_block = (Rva00891B80Block *)&g_rva012D5298Empty;
-		++((Rva00891B80Block *)&g_rva012D5298Empty)->m_ref;
-	}
-
-	~Rva008B0120String();
-
-	Rva00891B80Block *m_block;
-};
+	m_block = (Rva00891B80Block *)&g_rva012D5298Empty;
+	++((Rva00891B80Block *)&g_rva012D5298Empty)->m_ref;
+}
 
 class Rva008AD2C0
 {
@@ -38,7 +37,7 @@ public:
 	void assign(const Rva008AD2C0 &src);
 
 private:
-	Rva008B0120String m_str;
+	EAStringC m_str;
 	int m_f4;
 	int m_f8;
 	int m_fC;
