@@ -197,7 +197,7 @@ public:
 
 class GameClient;
 extern GameClient *TheGameClient;
-extern int g_bfmeX1058;
+extern unsigned int g_rva0075b2e0_value;
 class Rva0075B2F0
 {
 public:
@@ -223,7 +223,7 @@ public:
 void BfmeE1058::bfmeGo1058E(void)
 {
 	bfmeBase1058();
-	m_bfme9c = g_bfmeX1058;
+	m_bfme9c = g_rva0075b2e0_value;
 	Rva0075B2F0::s_value = reinterpret_cast<BfmeT1058 *>(TheGameClient)->bfmeNow1058();
 	m_bfmeSub.bfmeSet1058E(m_bfme1b8 != 0);
 }

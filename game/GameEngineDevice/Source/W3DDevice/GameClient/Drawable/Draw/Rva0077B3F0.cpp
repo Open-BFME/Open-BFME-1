@@ -176,7 +176,7 @@ struct Rva0077B3F0Data
 class TerrainLogic;
 extern TerrainLogic *TheTerrainLogic;
 extern Rva0077B3F0Manager *g_va012F64BC;
-extern U32 g_va012F8064;
+extern U32 g_rva0075b2e0_value;
 // Retail 0x012F1464 is EA's GameClient *TheGameClient, defined once in
 // game/GameEngine/Source/GameClient/GameClient.cpp.  Rva0077B3F0Client is a
 // TU-local view of that object reached through the canonical global.
@@ -294,7 +294,7 @@ void Rva0077B3F0::method(const Matrix3D *transform)
         h018.rva005C2240();
     }
 
-    if (g_va012F8064 != u09c) rva0076C080();
+    if (g_rva0075b2e0_value != u09c) rva0076C080();
     if (p034)
     {
         Matrix3D mtx(true);
