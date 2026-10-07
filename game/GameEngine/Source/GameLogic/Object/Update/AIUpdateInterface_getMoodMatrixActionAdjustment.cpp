@@ -85,6 +85,14 @@ enum MoodActionAdjustment
 	MAA_Affect_Range_Aggressive = 0x00000080
 };
 
+// Retail calls ILT 0x0001BB3F -> 0x00279780, matched as
+// BfmeObjectAI::bfmeStateFlags (AI_getAdjustedVisionRangeForObject.cpp).
+class BfmeObjectAI
+{
+public:
+	UnsignedInt bfmeStateFlags();
+};
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
@@ -106,7 +114,7 @@ UnsignedInt AIUpdateInterface::getMoodMatrixActionAdjustment(MoodMatrixAction ac
 		return MAA_Action_Ok;
 	}
 
-	UnsignedInt moodMatrix = getMoodMatrixValue();
+	UnsignedInt moodMatrix = ((BfmeObjectAI *)this)->bfmeStateFlags();
 	UnsignedInt returnVal = 0;
 
 	if (moodMatrix & MM_Controller_Player)
