@@ -32,7 +32,6 @@
 
 // INCLUDES ///////////////////////////////////////////////////////////////////////////////////////
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
-#define DEFINE_SLOWDEATHPHASE_NAMES
 #include "Common/GameLOD.h"
 #include "Common/INI.h"
 #include "Common/RandomValue.h"
@@ -52,6 +51,17 @@
 #include "GameLogic/ObjectCreationList.h"
 #include "GameLogic/Weapon.h"
 #include "GameClient/Drawable.h"
+
+// BFME adds a HIT_GROUND phase after FINAL; retail table 0x012AE110.
+static const char *TheSlowDeathPhaseNames[] = 
+{
+	"INITIAL",
+	"MIDPOINT",
+	"FINAL",
+	"HIT_GROUND",
+
+	NULL
+};
 
 #ifdef _INTERNAL
 // for occasional debugging...
