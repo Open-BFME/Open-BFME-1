@@ -262,6 +262,8 @@ public:
 
 	// retail: out of line (ctor body 0x000ED2D0, reached through the 0x0002C3A9 ILT); no TU may emit an implicit COMDAT copy
 	DamageInfoInput( void );
+	// retail: out of line (0x0014FDC0, DamageInfoInputAssign.cpp); an implicit operator= emits a non-retail COMDAT in every assigning TU
+	DamageInfoInput &operator=( const DamageInfoInput &other );
 
 	ObjectID		   m_sourceID;							///< source of the damage
 	const ThingTemplate *m_sourceTemplate;  ///< source of the damage (the template).
