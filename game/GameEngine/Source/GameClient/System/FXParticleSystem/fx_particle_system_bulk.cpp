@@ -7878,16 +7878,8 @@ OrthoEmissionVelocityModuleTemplate::~OrthoEmissionVelocityModuleTemplate()
     *(volatile unsigned int *)this = (unsigned int)g_vtbl_01073758;
 }
 
-// ??1OutwardEmissionVelocityModuleTemplate@FXParticleSystem@@UAE@XZ
-OutwardEmissionVelocityModuleTemplate::~OutwardEmissionVelocityModuleTemplate()
-{
-    unsigned char *info = this ? (unsigned char *)this + 8 : 0;
-    *(volatile unsigned int *)info = (unsigned int)g_vtbl_01073744;
-
-    unsigned char *base = this ? (unsigned char *)this + 4 : 0;
-    *(volatile unsigned int *)base = (unsigned int)g_vtbl_0110F9CC;
-    *(volatile unsigned int *)this = (unsigned int)g_vtbl_01073758;
-}
+// ??1OutwardEmissionVelocityModuleTemplate@FXParticleSystem@@UAE@XZ: retail
+// 0x005D7D00, defined in OutwardEmissionVelocityModuleTemplateDestructorThunk.cpp.
 
 // ??1ParticleSystemInfo@FXParticleSystem@@UAE@XZ
 __declspec(naked) ParticleSystemInfo::~ParticleSystemInfo()
