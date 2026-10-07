@@ -13,7 +13,7 @@
 class W3DLightDrawModuleDataBase
 {
 public:
-	virtual void moduleDataAnchor();
+	virtual ~W3DLightDrawModuleDataBase() {}
 
 private:
 	unsigned char m_unmodelled_04[4];
@@ -23,6 +23,7 @@ class W3DLightDrawModuleData : public W3DLightDrawModuleDataBase
 {
 public:
 	W3DLightDrawModuleData();
+	virtual ~W3DLightDrawModuleData();
 
 private:
 	float m_unmodelled_08;					// +0x08
