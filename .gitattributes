@@ -26,7 +26,6 @@ targets/game/reverse/data_rows.csv merge=union
 targets/game/reverse/deleted_rows.csv merge=union
 targets/game/reverse/name_votes.csv merge=union
 targets/game/reverse/name_agreed.csv merge=union
-targets/game/reverse/name_vote_receipts.jsonl merge=union
 targets/game/reverse/re_attempts.log merge=union
 # A JSON list cannot union-merge; tools/merge_json_list.py merges it as a set of
 # entries (registered by tools/setup_hooks.sh; unregistered clones fall back to

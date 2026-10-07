@@ -58,8 +58,8 @@ own ledger and verification.
 7. **EA renames.** `python3 tools/ea_queue.py next` serves one rename to EA's
    own name and every file it touches.
 8. **Names.** `python3 tools/name_lane.py next --model <your model>` serves one
-   file's placeholder names. Answers are proposals; only allowlisted judges'
-   runner votes land names. Never rename placeholders by hand.
+   file's placeholder names. A name lands only when another vendor's model
+   proposes it; never rename placeholders by hand.
 
 `tools/eligibility.py` alone decides whether a body is open work; never
 re-derive it.
