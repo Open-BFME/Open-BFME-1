@@ -6,7 +6,15 @@
 
 typedef float Real;
 typedef int Int;
-struct FieldParse;
+class INI;
+typedef void (*INIFieldParseProc)(INI *ini, void *instance, void *store, const void *userData);
+struct FieldParse
+{
+	const char *token;
+	INIFieldParseProc parse;
+	const void *userData;
+	Int offset;
+};
 
 // Field names follow the AudioSettings parse table at VA 0x01081D60; three 0x30-byte rows start at +0xA8.
 struct MicrophoneSettingsRva000B4B70
@@ -89,6 +97,13 @@ class INI
 {
 public:
 	static void parseAudioSettingsDefinition(INI *ini);
+	static void parseAsciiString(INI *ini, void *instance, void *store, const void *userData);
+	static void parseBool(INI *ini, void *instance, void *store, const void *userData);
+	static void parseColorInt(INI *ini, void *instance, void *store, const void *userData);
+	static void parseInt(INI *ini, void *instance, void *store, const void *userData);
+	static void parsePercentToReal(INI *ini, void *instance, void *store, const void *userData);
+	static void parseReal(INI *ini, void *instance, void *store, const void *userData);
+	static void parseUnsignedInt(INI *ini, void *instance, void *store, const void *userData);
 	void initFromINI(void *what, const FieldParse *parseTable);
 	Int getLoadType() const { return m_loadType; }
 private:
@@ -97,7 +112,63 @@ private:
 	Int m_loadType;
 };
 
-extern const FieldParse g_01081D60[];
+// Retail .rdata VA 0x01081D60 (848 B): 52 AudioSettings entries plus a zero terminator.
+extern const FieldParse g_01081D60[] =
+{
+	{ "AudioRoot", INI::parseAsciiString, 0, 0x0 },
+	{ "SoundsFolder", INI::parseAsciiString, 0, 0x4 },
+	{ "MusicFolder", INI::parseAsciiString, 0, 0x8 },
+	{ "StreamingFolder", INI::parseAsciiString, 0, 0xc },
+	{ "AmbientStreamFolder", INI::parseAsciiString, 0, 0x10 },
+	{ "SoundsExtension", INI::parseAsciiString, 0, 0x14 },
+	{ "UseDigital", INI::parseBool, 0, 0x18 },
+	{ "UseMidi", INI::parseBool, 0, 0x19 },
+	{ "OutputRate", INI::parseInt, 0, 0x1c },
+	{ "OutputBits", INI::parseInt, 0, 0x20 },
+	{ "OutputChannels", INI::parseInt, 0, 0x24 },
+	{ "SampleCount2D", INI::parseInt, 0, 0x28 },
+	{ "SampleCount3D", INI::parseInt, 0, 0x2c },
+	{ "StreamCount", INI::parseInt, 0, 0x30 },
+	{ "MixaheadLatency", INI::parseUnsignedInt, 0, 0x48 },
+	{ "MixaheadLatencyDuringMovies", INI::parseUnsignedInt, 0, 0x4c },
+	{ "3DBufferLengthMS", INI::parseUnsignedInt, 0, 0x50 },
+	{ "3DBufferCallbackCallsPerBufferLength", INI::parseUnsignedInt, 0, 0x54 },
+	{ "AutomaticSubtitleDurationMS", INI::parseInt, 0, 0x58 },
+	{ "AutomaticSubtitleWindowWidth", INI::parseInt, 0, 0x5c },
+	{ "AutomaticSubtitleLines", INI::parseInt, 0, 0x60 },
+	{ "AutomaticSubtitleWindowColor", INI::parseColorInt, 0, 0x64 },
+	{ "AutomaticSubtitleTextColor", INI::parseColorInt, 0, 0x68 },
+	{ "ForceResetTimeSeconds", INI::parseInt, 0, 0x6c },
+	{ "EmergencyResetTimeSeconds", INI::parseInt, 0, 0x70 },
+	{ "MusicScriptLibraryName", INI::parseAsciiString, 0, 0x74 },
+	{ "MinSampleVolume", INI::parsePercentToReal, 0, 0x7c },
+	{ "PositionDeltaForReverbRecheck", INI::parseReal, 0, 0x78 },
+	{ "GlobalMinRange", INI::parseInt, 0, 0x34 },
+	{ "GlobalMaxRange", INI::parseInt, 0, 0x38 },
+	{ "TimeToFadeAudio", INI::parseInt, 0, 0x3c },
+	{ "AmbientStreamHysteresisVolume", INI::parseInt, 0, 0x40 },
+	{ "AudioFootprintInBytes", INI::parseUnsignedInt, 0, 0x44 },
+	{ "DefaultSoundVolume", INI::parsePercentToReal, 0, 0x80 },
+	{ "DefaultVoiceVolume", INI::parsePercentToReal, 0, 0x84 },
+	{ "DefaultMusicVolume", INI::parsePercentToReal, 0, 0x88 },
+	{ "DefaultMovieVolume", INI::parsePercentToReal, 0, 0x90 },
+	{ "DefaultAmbientVolume", INI::parsePercentToReal, 0, 0x8c },
+	{ "MicrophonePreferredFractionCameraToGround", INI::parsePercentToReal, 0, 0xa8 },
+	{ "MicrophonePullTowardsTerrainLookAtPointPercent", INI::parsePercentToReal, 0, 0xc0 },
+	{ "MicrophoneMinDistanceToCamera", INI::parseReal, 0, 0xb0 },
+	{ "MicrophoneMaxDistanceToCamera", INI::parseReal, 0, 0xb8 },
+	{ "ZoomMinDistance", INI::parseReal, 0, 0xc4 },
+	{ "ZoomMaxDistance", INI::parseReal, 0, 0xcc },
+	{ "ZoomSoundVolumePercentageAmount", INI::parsePercentToReal, 0, 0xd4 },
+	{ "LivingWorldMicrophonePreferredFractionCameraToGround", INI::parsePercentToReal, 0, 0xd8 },
+	{ "LivingWorldMicrophoneMinDistanceToCamera", INI::parseReal, 0, 0xe0 },
+	{ "LivingWorldMicrophoneMaxDistanceToCamera", INI::parseReal, 0, 0xe8 },
+	{ "LivingWorldZoomMinDistance", INI::parseReal, 0, 0xf4 },
+	{ "LivingWorldZoomMaxDistance", INI::parseReal, 0, 0xfc },
+	{ "LivingWorldMicrophonePullTowardsTerrainLookAtPointPercent", INI::parsePercentToReal, 0, 0xf0 },
+	{ "LivingWorldZoomSoundVolumePercentageAmount", INI::parsePercentToReal, 0, 0x104 },
+	{ 0, 0, 0, 0 }
+};
 
 typedef Real MicrophoneSettingsRva000B4B70::*MicrophoneField;
 

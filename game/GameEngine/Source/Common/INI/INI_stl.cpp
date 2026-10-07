@@ -883,50 +883,6 @@ void INI::parseBitString32( INI* ini, void * /*instance*/, void *store, const vo
 	* RGB_COLOR = R:100 G:114 B:245 [A:233]
 	* and store in "Color" structure pointed to by 'store' */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ?parseColorInt@INI@@ present-unmatched
-void INI::parseColorInt( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	const char* names[4] = { "R", "G", "B", "A" };
-	Int colors[4];
-	for( Int i = 0; i < 4; i++ )
-	{
-		const char* token = ini->getNextTokenOrNull(ini->getSepsColon());
-		if (token == NULL)
-		{
-			if (i < 3)
-			{
-				throw INI_INVALID_DATA;
-			}
-			else
-			{
-				// it's ok for A to be omitted.
-				colors[i] = 255;
-			}
-		}
-		else
-		{
-			// if present, the token must match.
-			if (stricmp(token, names[i]) != 0)
-			{
-				throw INI_INVALID_DATA;				
-			}
-			colors[i] = scanInt(ini->getNextToken(ini->getSepsColon()));
-		}
-		if( colors[ i ] < 0 )
-			throw INI_INVALID_DATA;
-		if( colors[ i ] > 255 )
-			throw INI_INVALID_DATA;
-	}
-
-	//
-	// assign the color components to the "Color" pointer at 'store', keep
-	// the numbers as between 0 and 255
-	//
-	Color *theColor = (Color *)store;
-	*theColor = GameMakeColor(colors[0], colors[1], colors[2], colors[3]);
-
-}  // end parseColorInt
 
 //-------------------------------------------------------------------------------------------------
 /** Parse a 3D coordinate of reals in the form of:
