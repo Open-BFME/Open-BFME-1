@@ -188,3 +188,9 @@ int operator == (const Matrix4x4 & a, const Matrix4x4 & b)
 	}
 	return !res;
 }
+
+// ??9@YAHABVMatrix4@@0@Z
+int operator != (const Matrix4x4 & a, const Matrix4x4 & b)
+{
+	return (!(a == b));
+}

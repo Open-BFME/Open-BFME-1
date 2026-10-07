@@ -90353,3 +90353,4 @@ _Rva0015C280Predicate,0x0015C280,cdecl bool(State*;void*) condition callback; re
 ??_C@_0N@OANJPADC@SPELL_DAMAGE?$AA@,0x00C750DC,Retail attribute-name table VA 0x012B4040 entry; compiler string literal SPELL_DAMAGE equals retail at VA 0x010750DC
 ??_C@_0O@FIFJMDBD@RECHARGE_TIME?$AA@,0x00C750CC,Retail attribute-name table VA 0x012B4040 entry; compiler string literal RECHARGE_TIME equals retail at VA 0x010750CC
 ??_C@_0P@JKEONNLI@ATTRIBUTE_NONE?$AA@,0x00C7516C,Retail attribute-name table VA 0x012B4040 entry; compiler string literal ATTRIBUTE_NONE equals retail at VA 0x0107516C
+??8@YAHABVMatrix4@@0@Z,0x00B01950,retail operator!= 0x00B01A50 calls 0x00B01950 (REL32); that body is matched as game matrix4.cpp object-symbol ??8@YAHABVMatrix4@@0@Z (BFME Matrix4 spelling)
