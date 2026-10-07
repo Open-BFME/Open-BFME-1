@@ -10,18 +10,19 @@ inline void *__cdecl operator new(unsigned int, void *p) { return p; }
 class WeaponBonusSet
 {
 public:
-	WeaponBonusSet();
+	// Retail inlines the WeaponBonusSet constructor here and has no
+	// out-of-line copy; this TU spells it as a local fill so it emits no
+	// ??0WeaponBonusSet COMDAT to compete with the other TUs' copies.
+	void fillDefaults()
+	{
+		for (int i = 0; i < 0x84; ++i)
+			m_bfmeBonuses[i] = 1.0f;
+	}
 	void parseWeaponBonusSet(INI *ini);
 
 private:
 	float m_bfmeBonuses[0x84];
 };
-
-WeaponBonusSet::WeaponBonusSet()
-{
-	for (int i = 0; i < 0x84; ++i)
-		m_bfmeBonuses[i] = 1.0f;
-}
 
 class WeaponTemplate
 {
@@ -41,7 +42,12 @@ public:
 	if (!self->m_extraBonus)
 	{
 		void *mem = operator new(sizeof(WeaponBonusSet));
-		self->m_extraBonus = mem ? new(mem) WeaponBonusSet() : 0;
+		WeaponBonusSet *set = (WeaponBonusSet *)mem;
+		if (set)
+			set->fillDefaults();
+		else
+			set = 0;
+		self->m_extraBonus = set;
 	}
 
 	self->m_extraBonus->parseWeaponBonusSet(ini);
