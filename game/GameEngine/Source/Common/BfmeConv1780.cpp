@@ -97,10 +97,22 @@ public:
 	BfmeItemGK *m_bfmeItemGK;
 };
 
+// ILT 0x15D02 -> 0x003E3D20, matched
+// ?removeGoal003E3D20@Pathfinder@@QAEXPAVObject@@@Z (PathfinderRemoveGoal003E3D20.cpp).
+class Object;
+class Pathfinder
+{
+public:
+	void removeGoal003E3D20(Object *obj);
+};
+
 class BfmeAgentGK
 {
 public:
-	void bfmeNoteGK(BfmeItemGK *item);
+	void bfmeNoteGK(BfmeItemGK *item)
+	{
+		((Pathfinder *)this)->removeGoal003E3D20((Object *)item);
+	}
 };
 
 class AI
