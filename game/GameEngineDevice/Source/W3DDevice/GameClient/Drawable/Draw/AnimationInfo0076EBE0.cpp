@@ -9,7 +9,8 @@ class Animation0076EBE0 { public:
 };
 struct Track0076EBE0 { Animation0076EBE0* anim; float frame; float at08; float blend; int mode; int at14; bool at18,at19; };
 extern unsigned int g_rva0075b2e0_value;
-class Rva0076CAF0ConditionalDispatch { public: void target(); char pad00[0x9c]; int stamp; void synchronize() { if(g_rva0075b2e0_value!=(unsigned int)stamp) target(); } };
+class Rva0076C080 { public: void advanceAnimation(); };
+class Rva0076CAF0ConditionalDispatch { public: char pad00[0x9c]; int stamp; void synchronize() { if(g_rva0075b2e0_value!=(unsigned int)stamp) ((Rva0076C080 *)this)->advanceAnimation(); } };
 
 extern const char* AnimModeNames012BB5BC[];
 class AnimationInfo0076EBE0 { public:

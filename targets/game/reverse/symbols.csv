@@ -87531,7 +87531,6 @@ name,address,notes
 ?take0046DEF0@S4Holder0046DBB0@@QAEXABVAsciiString@@@Z,0x0046DEF0,S4 holder method of the string-vector drain family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ?take@Gen0001581B@@QAEXPAVGenForwardedArg@@@Z,0x0001581B,S2 one-argument member forwarded to by 0x003B70F0 and 0x003B7140; ILT thunk to body 0x00065090
 ?takeBuffer@BfmeByteStream@@QAEPAXPAH@Z,0x009CB1F0,processLogicCRC 0x0038B50C passes out-length pointer then frees returned buffer; exact BfmeThingEC::bfmeTakeEC body returns +0x14 buffer and outputs +0x18 count while clearing ownership fields then vslot8
-?target@Rva0076CAF0ConditionalDispatch@@QAEXXZ,0x00024F5F,pin 0x0076CAF0 stale-stamp dispatcher tail target
 ?teamAboutToBeDeleted@TeamFactory@@QAEXPAVTeam@@@Z,0x000228EF,Open-BFME5 ILT thunk to body 0x000F6D80; ?updateState@TeamPrototype@@QAEXXZ at 0x000F71C0 calls it on the global at 0x012ED810 just before deleting an empty team
 ?test@BFMESelectionStatusBits@@QBE_NI@Z,0x0003AB20,TU-scoped BFME Object status-bit view; CanSelectDrawable retail ILT
 ?test@BfmeCellTesterRva003F5340@@QAE_NHH@Z,0x003F2B60, predicate called five times by 0x003F5340; target independently reads receiver ECX and two int stack args then returns AL with ret8; address-derived existing bank ABI

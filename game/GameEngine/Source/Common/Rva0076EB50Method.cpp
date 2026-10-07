@@ -32,11 +32,17 @@ public:
 	unsigned char m_padding[0x18];
 };
 
+// Tail target: ILT 0x00024F5F -> 0x0076C080, matched as
+// ?advanceAnimation@Rva0076C080@@QAEXXZ on the same object.
+class Rva0076C080
+{
+public:
+	void advanceAnimation();
+};
+
 class Rva0076CAF0ConditionalDispatch
 {
 public:
-	void target();
-
 	unsigned char padding[0x9c];
 	int stamp;
 };
@@ -61,7 +67,7 @@ BFMERetailAsciiString Rva0076EB50::method(int i)
 
 	unsigned int currentStamp = owner->stamp;
 	if (g_rva0075b2e0_value != currentStamp)
-		owner->target();
+		((Rva0076C080 *)owner)->advanceAnimation();
 
 	if (i < 0)
 		return BFMERetailAsciiString();
