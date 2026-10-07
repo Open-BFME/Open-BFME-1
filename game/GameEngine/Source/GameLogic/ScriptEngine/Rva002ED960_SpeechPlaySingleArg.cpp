@@ -25,9 +25,9 @@ enum ObjectID
 class AudioEventRTS
 {
 public:
-	AudioEventRTS(const AsciiString &name, ObjectID owner);
+	AudioEventRTS(const AsciiString &name, int owner);
 	~AudioEventRTS();
-	void setIsLogicalAudio(Bool logical);
+	void setUninterruptable(Bool uninterruptable);
 	void setPlayerIndex(int index);
 
 	unsigned char m_pad[0x70];
@@ -86,8 +86,8 @@ public:
 // ?playSpeech@Rva002ED960Owner@@QAEXABVAsciiString@@@Z -- address-derived TAG, identity unresolved
 void Rva002ED960Owner::playSpeech(const AsciiString &speechName)
 {
-	AudioEventRTS speech(speechName, INVALID_OBJECT_ID);
-	speech.setIsLogicalAudio(true);
+	AudioEventRTS speech(speechName, 0);
+	speech.setUninterruptable(true);
 	speech.setPlayerIndex(ThePlayerList->getLocalPlayer()->getPlayerIndex());
 	TheAudio->addAudioEvent(&speech);
 }
