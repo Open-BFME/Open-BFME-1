@@ -13,23 +13,23 @@ public:
 		int extra) const;
 };
 
-class BfmeFourSlotEntry
-{
-};
+enum WeaponSlotType {};
 
-class BfmeFourSlotTable
+// Retail calls 0x3C8E9 -> 0x001EAF90, the matched
+// WeaponSet::getWeaponInWeaponSlot (WeaponSet.cpp).
+class WeaponSet
 {
 public:
-	BfmeFourSlotEntry *bfmeGet(int index);
+	Weapon *getWeaponInWeaponSlot(WeaponSlotType wslot) const;
 };
 
 class BfmeFourSlotSource
 {
 public:
-	BfmeFourSlotTable *bfmeTable(void) { return &m_table; }
+	WeaponSet *bfmeTable(void) { return &m_table; }
 
 	char m_prefix[0x264];
-	BfmeFourSlotTable m_table;
+	WeaponSet m_table;
 };
 
 class BfmeFourSlotFlags
@@ -57,10 +57,10 @@ bool BfmeFourSlotOwner::bfmeAnyAccepts(int value)
 	for (int index = 0; index < 4; ++index)
 	{
 		BfmeFourSlotSource *source = m_source;
-		BfmeFourSlotEntry *entry = source->bfmeTable()->bfmeGet(index);
+		Weapon *entry = source->bfmeTable()->getWeaponInWeaponSlot((WeaponSlotType)index);
 		if (entry != 0 &&
 			(m_flags->m_enabled & (1 << index)) != 0 &&
-			reinterpret_cast<Weapon *>(entry)->isWithinAttackRange(
+			entry->isWithinAttackRange(
 				reinterpret_cast<const Object *>(m_source),
 				reinterpret_cast<const Object *>(value), 0))
 		{
