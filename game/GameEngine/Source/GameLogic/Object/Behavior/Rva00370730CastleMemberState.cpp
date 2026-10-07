@@ -31,6 +31,9 @@ class Object
 {
 public:
 	Player *getControllingPlayer() const;
+protected:
+	// retail 0x001BEE60 is protected: ?findModule@Object@@IBEPAVModule@@W4NameKeyType@@@Z
+	friend class Rva00370730CastleMemberInterface;
 	Module *findModule( NameKeyType key ) const;
 };
 
