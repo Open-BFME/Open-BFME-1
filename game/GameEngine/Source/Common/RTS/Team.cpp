@@ -2248,21 +2248,7 @@ void Team::countObjectsByThingTemplate(Int numTmplates, const ThingTemplate* con
 }
 
 // ------------------------------------------------------------------------
-// ?countBuildings@Team@@QAEHXZ present-unmatched
-Int Team::countBuildings(void)
-{
-	int retVal = 0;
-	for (DLINK_ITERATOR<Object> iter = iterate_TeamMemberList(); !iter.done(); iter.advance()) {
-		const ThingTemplate* objtmpl = iter.cur()->getTemplate();
-		if (!objtmpl) {
-			continue;
-		}
-		if (objtmpl->isKindOf(KINDOF_STRUCTURE)) {
-			++retVal;
-		}
-	}
-	return retVal;
-}
+// Team::countBuildings: retail body (0x000F4900) in Team_countBuildings.cpp.
 
 // ------------------------------------------------------------------------
 // ?countObjects@Team@@QAEHV?$BitFlags@$0HE@@@0@Z present-unmatched
