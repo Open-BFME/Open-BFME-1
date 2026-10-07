@@ -110,17 +110,7 @@ static ShaderClass detailShader(SC_ALPHA_MIRROR);
 //=============================================================================
 /** Initializes pointers & values.  */
 //=============================================================================
-// ??0W3DBridge@@QAE@XZ present-unmatched
-W3DBridge::W3DBridge() :
-m_bridgeTexture(NULL),
-m_leftMesh(NULL),
-m_sectionMesh(NULL),
-m_rightMesh(NULL),
-m_visible(false),
-m_curDamageState(BODY_PRISTINE),
-m_scale(1.0)
-{
-}
+// W3DBridge::W3DBridge: retail body (0x006D8800) in W3DBridgeConstructor.cpp.
 
 //=============================================================================
 // W3DBridge destructor.
