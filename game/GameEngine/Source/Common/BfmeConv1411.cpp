@@ -5,11 +5,16 @@ struct BfmeBlockVKV
 	int m_bfmeArr[10];
 };
 
-class BfmeStrVKV
+// The leading member is copy-constructed in place: retail calls the private
+// StringBase<char> copy constructor (0x00887B60, callees.py) on it. Only that
+// member is declared on this minimal view.
+class BfmeThingVKV;
+
+template <class T> class StringBase
 {
-public:
-	void bfmeCopyVKV(const BfmeStrVKV &o);
-	void *m_bfme00;
+	friend class BfmeThingVKV;
+	StringBase(const StringBase<T> &src);
+	void *m_data;
 };
 
 struct BfmeRefVKV
@@ -24,7 +29,7 @@ class BfmeThingVKV
 {
 public:
 	BfmeThingVKV *bfmeInitVKV(const BfmeThingVKV &o);
-	BfmeStrVKV m_bfme00;
+	StringBase<char> m_bfme00;
 	BfmeRefVKV *m_bfme04;
 	int m_bfme08;
 	BfmeBlockVKV m_bfme0c;
@@ -34,7 +39,7 @@ public:
 
 BfmeThingVKV *BfmeThingVKV::bfmeInitVKV(const BfmeThingVKV &o)
 {
-	m_bfme00.bfmeCopyVKV(o.m_bfme00);
+	m_bfme00.StringBase<char>::StringBase(o.m_bfme00);
 	m_bfme04 = o.m_bfme04;
 	if (m_bfme04)
 		InterlockedIncrement(&m_bfme04->m_bfme04);
