@@ -43,6 +43,12 @@ struct Rva00899560Pool
 BfmeStringPool3AF0 *g_rva01337A30AllocPair = 0;
 Rva00899560Pool *g_rva01337810GcRoots = 0;
 
+// Raw configuration byte at VA 0x0133781D, initially loader-zeroed.
+// Bootstrap RVA 0x00894800+0x53/+0x56 copies config+0x4D here. Readers
+// separately test nonzero, compare with 1, or copy bit 0 into a bitfield.
+// Keep the existing address-qualified name and the full byte representation.
+unsigned char flag0133781D = 0;
+
 // The 34-byte store body below writes four independent dwords at retail
 // VA 0x013377DC/0x013377E0/0x013377E4/0x013377EC. Each is initially zero;
 // data_rows.csv verifies the scalar widths and initial bytes.

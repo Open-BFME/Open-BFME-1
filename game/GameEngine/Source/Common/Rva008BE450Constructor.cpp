@@ -12,7 +12,7 @@ struct BfmeStringData3AF0
 };
 
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
-extern unsigned char g_bfmeFlag1281;
+extern unsigned char flag0133781D;
 
 class BfmeString1286
 {
@@ -95,7 +95,7 @@ Rva008BE450SizedDeleting::Rva008BE450SizedDeleting()
 	m_bfme68 = 0;
 	m_bfme6c = 0;
 	m_bfme70 = 0;
-	m_globalBit = g_bfmeFlag1281;
+	m_globalBit = flag0133781D;
 	m_bfme50 = 0;
 	m_bfme54 = 0;
 	m_bfme58 = 0;

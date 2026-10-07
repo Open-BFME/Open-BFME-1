@@ -82,7 +82,7 @@ struct BfmePickWorld1284
 extern BfmePickWorld1284 *g_bfmeHolderBU;
 extern void *g_bfmeExtra1282;
 extern unsigned char g_bfmeDispatchEnabled1281;
-extern unsigned char g_bfmeSecondaryEnabled1282;
+extern unsigned char flag0133781D;
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
@@ -130,7 +130,7 @@ void BfmeSubmitter1283::bfmeRouteNode1282(BfmeNodeDX *node, int emit)
 		}
 		return;
 	}
-	if (type == 2 && g_bfmeDispatchEnabled1281 == 1 && g_bfmeSecondaryEnabled1282 == 1) {
+	if (type == 2 && g_bfmeDispatchEnabled1281 == 1 && flag0133781D == 1) {
 		g_bfmeHolderBU->m_primary.add((BfmeRef008A4B20 *)node);
 		((Rva008ACFC0PointerRegistry *)&g_bfmeHolderBU->m_secondary)->add(
 			(Rva008ACFC0RegisteredObject *)node);
