@@ -2,10 +2,21 @@ extern "C" __declspec(dllimport) int __cdecl strncmp(
 	const char *left, const char *right, unsigned int count );
 extern "C" __declspec(dllimport) int __cdecl atoi( const char *text );
 
+// Retail calls ILT 0x1EDDA -> 0x00589700, matched as BfmeThingAAB::bfmeGoAAB
+// (BfmeThreeHundredEightyOne.cpp).
+class BfmeThingAAB
+{
+public:
+	void bfmeGoAAB( int index );
+};
+
 class AptPalantir
 {
 public:
-	void selectSpell( int index );
+	__forceinline void selectSpell( int index )
+	{
+		reinterpret_cast<BfmeThingAAB *>( this )->bfmeGoAAB( index );
+	}
 };
 
 extern AptPalantir *TheAptPalantir;
