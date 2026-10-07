@@ -1,8 +1,8 @@
 // Open-BFME5 conversions.
 
-extern float g_bfmeK1SMA;
+float g_bfmeK1SMA = 0.96f;	// retail 0x010F692C: 8F C2 75 3F
 extern float g_bfmeK2SMA;
-extern float g_bfmeK3SMA;
+extern float g_bfmeDefaultBU;	// retail 0x01075334, 1.0f (BfmeConv1813.cpp)
 
 class BfmeThingSMA
 {
@@ -89,10 +89,10 @@ public:
 
 void BfmeThingSMA::bfmeOneSMA()
 {
-	bfmeSetSMA(bfmeGetSMA() * g_bfmeK1SMA - g_bfmeK3SMA);
+	bfmeSetSMA(bfmeGetSMA() * g_bfmeK1SMA - g_bfmeDefaultBU);
 }
 
 void BfmeThingSMA::bfmeTwoSMA()
 {
-	bfmeSetSMA(bfmeGetSMA() * g_bfmeK2SMA + g_bfmeK3SMA);
+	bfmeSetSMA(bfmeGetSMA() * g_bfmeK2SMA + g_bfmeDefaultBU);
 }
