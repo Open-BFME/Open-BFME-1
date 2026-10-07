@@ -1912,20 +1912,7 @@ void Locomotor::moveTowardsPositionThrust(Object* obj, PhysicsBehavior *physics,
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getSurfaceHtAtPt@Locomotor@@IAEMMM@Z present-unmatched
-Real Locomotor::getSurfaceHtAtPt(Real x, Real y)
-{
-	Real ht = 0;
-
-	Real z,waterZ;
-	if (TheTerrainLogic->isUnderwater(x, y, &waterZ, &z)) {
-		ht += waterZ;
-	} else {
-		ht += z;
-	}
-	
-	return ht;
-}
+// ?getSurfaceHtAtPt@Locomotor@@IAEMMM@Z: retail body matched in LocomotorGetSurfaceHtAtPt.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?calcLiftToUseAtPt@Locomotor@@IAEMPAVObject@@PAVPhysicsBehavior@@MMM@Z present-unmatched
