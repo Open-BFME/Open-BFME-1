@@ -18,9 +18,9 @@ class DamageInfo;
 class Rva002DB880DamageInfoView { public:
  char m_pad00[8]; int m_08; unsigned short m_0c, m_0e; int m_10, m_14, m_18; float m_1c; char m_20, m_21, m_22[2]; float m_24; int m_28;
 };
-class BfmeRvaA760Object;
-class BfmeRvaA760ProbeInterface { public: bool accepts(BfmeRvaA760Object*,int); };
-struct Rva002DB880Scale { BfmeRvaA760ProbeInterface filter; float factor; };
+// Retail calls ILT 0x0001DA34 -> 0x003A04A0, matched as Rva2225E0Filter::accepts(Object*, Player*).
+class Rva2225E0Filter { public: bool accepts(Object*,Player*); };
+struct Rva002DB880Scale { Rva2225E0Filter filter; float factor; };
 class Rva002DB880Contain { public:
  virtual void slot0()=0;
  virtual void slot1()=0;
@@ -109,7 +109,7 @@ bool DamageNugget::generateDamageInfo(void* weapon,BfmeThingXJ* thing,DamageInfo
  }
  int count=m_7c.size();
  for(int i=0;i<count;++i) {
-  if(m_7c[i].filter.accepts((BfmeRvaA760Object*)thing,(int)source->getControllingPlayer())) {
+  if(m_7c[i].filter.accepts((Object*)thing,source->getControllingPlayer())) {
    out->m_1c*=m_7c[i].factor; break;
   }
  }
