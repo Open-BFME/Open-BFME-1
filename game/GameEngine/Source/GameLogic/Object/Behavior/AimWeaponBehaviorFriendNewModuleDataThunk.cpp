@@ -30,7 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl AimWeaponBehaviorFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the ILT stub 0x00030323 (?j_00030323@@YAXXZ).
+extern void j_00030323(void);
 
 class AimWeaponBehavior
 {
@@ -43,6 +44,6 @@ ModuleData *AimWeaponBehavior::friend_newModuleData(INI *ini)
 {
 	AimWeaponBehaviorModuleData *data = new AimWeaponBehaviorModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &AimWeaponBehaviorFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))j_00030323);
 	return (ModuleData *)data;
 }

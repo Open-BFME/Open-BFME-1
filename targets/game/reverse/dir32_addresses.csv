@@ -13238,7 +13238,6 @@ _AMDX3D_D3DXFloat16To32Array@12,0x00EA8500
 _AMDX3D_D3DXFloat32To16Array@12,0x00EA8640
 _AODCrushCollideFieldParse,0x0041A122
 _AODHordeContainFieldParse,0x004334F6
-_AimWeaponBehaviorFieldParse,0x00430323
 _AnimalAIUpdateFieldParse,0x00436E30
 _AnimationSoundClientBehaviorFieldParse,0x0041DF0C
 _ArmorUpgradeFieldParse,0x004484F5
