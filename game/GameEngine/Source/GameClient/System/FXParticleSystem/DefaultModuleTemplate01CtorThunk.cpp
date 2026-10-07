@@ -23,12 +23,16 @@ public:
 template <int Category>
 class CategoryModuleTemplateBase : public ModuleTemplate, public CategoryModuleInfo<Category>
 {
+public:
+	// Defined out of line (CategoryModuleTemplateBase01DestructorThunk.cpp for <2>).
+	virtual ~CategoryModuleTemplateBase();
 };
 
 template <int Category>
 class CategoryModuleTemplate : public CategoryModuleTemplateBase<Category>
 {
 public:
+	// Defined out of line (CategoryModuleTemplate01DestructorThunk.cpp for <2>).
 	virtual ~CategoryModuleTemplate();
 };
 

@@ -181,6 +181,9 @@ template<> CategoryModuleTemplate<1>::~CategoryModuleTemplate();
 // Category 5's destructor (retail 0x005BFB80) is owned by
 // CategoryModuleTemplate04DestructorThunk.cpp.
 template<> CategoryModuleTemplate<5>::~CategoryModuleTemplate();
+// CategoryModuleTemplateBase<2>::~CategoryModuleTemplateBase (0x005BF350) is defined in
+// CategoryModuleTemplateBase01DestructorThunk.cpp.
+template<> CategoryModuleTemplateBase<2>::~CategoryModuleTemplateBase();
 
 // The retail destructors of these categories are matched in their own
 // CategoryModuleTemplateNNDestructorThunk.cpp TUs; declare them here so the
