@@ -41,10 +41,13 @@ private:
 	const T *m_overridable;
 };
 
+class Object;
+static inline const ThingTemplate *getTemplate(const Object *object);
+
 class Object
 {
 public:
-	const ThingTemplate *getTemplate() const { return m_template; }
+	friend const ThingTemplate *getTemplate(const Object *object);
 	const ObjectID getID() const { return m_id; }
 
 	char m_prefix[4];
@@ -52,6 +55,9 @@ public:
 	char m_pad08[0x74 - 8];
 	ObjectID m_id;
 };
+
+static inline const ThingTemplate *getTemplate(const Object *object)
+{ return object->m_template; }
 
 typedef void (__cdecl *CritterLog)(void *, const char *, ...);
 extern unsigned char g_012F0239;
@@ -84,8 +90,8 @@ void AIUpdateInterface::ignoreObstacle(const Object *obj)
 			if (g_012ED4FC)
 				((CritterLog)j_0003a17a)(g_012ED4FC,
 					"  CritterDesync - Critter %s(%d) set to ignore %s(%d)",
-					m_object->getTemplate()->m_name.str(), m_object->getID(),
-					obj->getTemplate()->m_name.str(), obj->getID());
+					getTemplate(m_object)->m_name.str(), m_object->getID(),
+					getTemplate(obj)->m_name.str(), obj->getID());
 		}
 		else
 		{
@@ -95,9 +101,9 @@ void AIUpdateInterface::ignoreObstacle(const Object *obj)
 				if (g_012ED4FC)
 					((CritterLog)j_0003a17a)(g_012ED4FC,
 						"  CritterDesync - Critter %s(%d) set to ignore NOTHING. Was previously ignoring %s(%d)",
-						m_object->getTemplate()->m_name.str(), m_object->getID(),
-						obj->getTemplate()->m_name.str(), obj->getID(),
-						old->getTemplate()->m_name.str(), old->getID());
+						getTemplate(m_object)->m_name.str(), m_object->getID(),
+						getTemplate(obj)->m_name.str(), obj->getID(),
+						getTemplate(old)->m_name.str(), old->getID());
 			}
 			else
 			{
@@ -105,8 +111,8 @@ void AIUpdateInterface::ignoreObstacle(const Object *obj)
 				if (sink)
 					((CritterLog)j_0003a17a)(sink,
 						"  CritterDesync - Critter %s(%d) set to ignore NOTHING. Was previously ignoring NOTHING",
-						m_object->getTemplate()->m_name.str(), m_object->getID(),
-						obj->getTemplate()->m_name.str(), obj->getID());
+						getTemplate(m_object)->m_name.str(), m_object->getID(),
+						getTemplate(obj)->m_name.str(), obj->getID());
 			}
 		}
 	}

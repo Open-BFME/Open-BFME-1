@@ -53,15 +53,13 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
+class Object;
+static inline const ThingTemplate *getTemplate(const Object *object);
+
 class Object
 {
 public:
-	const ThingTemplate *getTemplate() const
-	{
-		const volatile unsigned char *address = reinterpret_cast<const volatile unsigned char *>(this);
-		address += 4;
-		return *(const ThingTemplate *volatile *)address;
-	}
+	friend const ThingTemplate *getTemplate(const Object *object);
 
 	ContainModuleInterface *getContain() const
 	{
@@ -69,6 +67,13 @@ public:
 			reinterpret_cast<const unsigned char *>(this) + 0x1fc);
 	}
 };
+
+static inline const ThingTemplate *getTemplate(const Object *object)
+{
+	const volatile unsigned char *address = reinterpret_cast<const volatile unsigned char *>(object);
+	address += 4;
+	return *(const ThingTemplate *volatile *)address;
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
@@ -105,7 +110,7 @@ static __declspec(noinline) Int getRappellerCount(Object *obj)
 		for (ContainedItemNode *it = sentinel->m_next; it != sentinel; it = it->m_next)
 		{
 			Object *member = it->m_item;
-			const ThingTemplate *thingTemplate = member->getTemplate();
+			const ThingTemplate *thingTemplate = getTemplate(member);
 			if (thingTemplate != NULL && thingTemplate->m_nextOverride != NULL)
 			{
 				thingTemplate = (const ThingTemplate *)thingTemplate->m_nextOverride->getFinalOverride();

@@ -52,15 +52,13 @@ public:
 	Real getCurLocomotorSpeed();
 };
 
+class Object;
+static inline const ThingTemplate *getTemplate(const Object *object);
+
 class Object
 {
 public:
-	const ThingTemplate *getTemplate() const
-	{
-		if (!m_template)
-			return 0;
-		return (const ThingTemplate *)m_template->getFinalOverride();
-	}
+	friend const ThingTemplate *getTemplate(const Object *object);
 	AIUpdateInterface *getAI() const { return m_ai; }
 
 	Real bfmeGetNonnegativePreferredLocomotorHeight() const;
@@ -75,6 +73,13 @@ private:
 	Object *m_objectAt0x214;                 // 0x214
 };
 
+static inline const ThingTemplate *getTemplate(const Object *object)
+{
+	if (!object->m_template)
+		return 0;
+	return (const ThingTemplate *)object->m_template->getFinalOverride();
+}
+
 // ?rva001c7530@Object@@QAE_NXZ
 Bool Object::rva001c7530()
 {
@@ -82,7 +87,7 @@ Bool Object::rva001c7530()
 	do
 	{
 		Object *next = obj->m_objectAt0x214;
-		if (!next || !(next->getTemplate()->m_kindof[3] & 0x1000))
+		if (!next || !(getTemplate(next)->m_kindof[3] & 0x1000))
 			break;
 		obj = next;
 	} while (obj);
@@ -91,7 +96,7 @@ Bool Object::rva001c7530()
 	if (!ai)
 		return false;
 
-	Real factor = obj->getTemplate()->m_heightFactorAt0x3ec;
+	Real factor = getTemplate(obj)->m_heightFactorAt0x3ec;
 	if (factor <= g_rva01075350)
 		return true;
 

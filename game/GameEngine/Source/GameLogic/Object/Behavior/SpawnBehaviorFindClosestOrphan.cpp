@@ -34,16 +34,13 @@ struct Coord3D
 	float z;
 };
 
+class Object;
+static inline const ThingTemplate *getTemplate(const Object *object);
+
 class Object
 {
 public:
-	const ThingTemplate *getTemplate() const
-	{
-		if (m_template == 0)
-			return 0;
-		return static_cast<const ThingTemplate *>(
-			m_template->getFinalOverride());
-	}
+	friend const ThingTemplate *getTemplate(const Object *object);
 
 	const Coord3D *getPosition() const
 	{
@@ -64,6 +61,14 @@ private:
 	ObjectID m_producerID;
 };
 
+static inline const ThingTemplate *getTemplate(const Object *object)
+{
+	if (object->m_template == 0)
+		return 0;
+	return static_cast<const ThingTemplate *>(
+		object->m_template->getFinalOverride());
+}
+
 class OrphanData
 {
 public:
@@ -77,7 +82,7 @@ int findClosestOrphan(Object *obj, void *userData)
 {
 	OrphanData *orphanData = static_cast<OrphanData *>(userData);
 
-	if (!obj->getTemplate()->isEquivalentTo(orphanData->m_matchTemplate))
+	if (!getTemplate(obj)->isEquivalentTo(orphanData->m_matchTemplate))
 		return 1;
 	if (obj->getProducerID() != 0)
 		return 1;

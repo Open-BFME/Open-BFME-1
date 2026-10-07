@@ -52,15 +52,13 @@ struct Coord3D
 class Module;
 class UpdateModule;
 
+class Object;
+static inline const ThingTemplate *getTemplate(const Object *object);
+
 class Object
 {
 public:
-	const ThingTemplate *getTemplate() const
-	{
-		if (m_template == 0)
-			return 0;
-		return static_cast<const ThingTemplate *>(m_template->getFinalOverride());
-	}
+	friend const ThingTemplate *getTemplate(const Object *object);
 	const Coord3D *getPosition() const
 	{
 		return &m_position;
@@ -77,6 +75,13 @@ private:
 	unsigned char m_unreconstructed08[0x30];
 	Coord3D m_position;
 };
+
+static inline const ThingTemplate *getTemplate(const Object *object)
+{
+	if (object->m_template == 0)
+		return 0;
+	return static_cast<const ThingTemplate *>(object->m_template->getFinalOverride());
+}
 
 class AssistedTargetingUpdate
 {
@@ -108,7 +113,7 @@ int makeAssistanceRequest( Object *requestOf, void *userData )
 		return 1;
 
 	// Only request of our kind of people
-	if( !requestOf->getTemplate()->isEquivalentTo( requestData->m_requestingObject->getTemplate() ) )
+	if( !getTemplate(requestOf)->isEquivalentTo( getTemplate(requestData->m_requestingObject) ) )
 		return 1;
 
 	// Who are close enough
