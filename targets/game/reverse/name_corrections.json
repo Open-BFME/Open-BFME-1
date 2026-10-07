@@ -18858,5 +18858,15 @@
   "after_sha256": "4fbe7307b419eb239aa8f8b1aad9513096f2738a68ec5477debc4e4097ed9436",
   "evidence": "targets/game/reverse/functions.csv",
   "reason": "Not a rename: the TintEnvelope type name is kept; only its constructor call is spelled by the matched row. Drawable::colorFlash (0x00416440) constructs through ILT 0x00037475 to 0x00412140, matched as ??0Rva00412140@@QAE@XZ; no body defines ??0TintEnvelope@@QAE@XZ at retail's address, and the symbols.csv pin already identifies 0x00412140 as the TintEnvelope ctor (a one-identity rename of that row is left to the names lane)."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0046c7d0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/Rva0046C7D0ImageLookup.cpp",
+  "old_name": "AsciiString",
+  "new_name": "Rva00469FC0Mapped",
+  "before_sha256": "46c75f339966ee6ee60af53f4f6964eb827994b09ca66baabbbeaf5e22d9d9d3",
+  "after_sha256": "401642076ccb8ede268db1741f57e7a1ef6797fed079270e4acef416f9e3b715",
+  "evidence": "targets/game/reverse/symbols.csv",
+  "reason": "Not a rename: AsciiString stays the hash key. The banked attempt's private hashtable is replaced by the hash_map<AsciiString, Rva00469FC0Mapped> instantiation that symbols.csv pins at ILT 0x0002F612, the _M_find this body calls; the mapped-type placeholder is that pin's existing spelling."
  }
 ]

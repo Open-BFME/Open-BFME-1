@@ -77878,7 +77878,7 @@ name,address,notes
 ?bfmeLookRH@@YGHPAX0@Z,0x007F76F0,pin
 ?bfmeLookup1025@BfmeD1025@@QAEGHHH@Z,0x00044C60,pin
 ?bfmeLookup1279@BfmeLookup1279@@QAEPAVBfmeNode1279@@AAUBfmeKey1279@@@Z,0x0089CEF0,address decoded from the 0x008BD400 lookup call
-?bfmeLookup46C7D0@Rva00579160Manager@@QAEPAXH@Z,0x00008FEE,pin
+?bfmeLookup46C7D0@Rva00579160Manager@@QBEPAXPBD@Z,0x00008FEE,route=0x0046C7D0; path-keyed image hash lookup reached from the 0x0046F060 image draw helper
 ?bfmeLookupA@@YAHPAX@Z,0x0000B1AE,Open-BFME5 ILT the bit setter at 0x001C3FB0 looks up through
 ?bfmeLookupAA@BfmeSubAA@@QAEXPAMPBD@Z,0x00941930
 ?bfmeLookupAI@BfmeTableAI@@QAE?AVAsciiStringAI@@V2@@Z,0x00047992,Open-BFME5 the table lookup the numbered key at 0x00573580 forwards to

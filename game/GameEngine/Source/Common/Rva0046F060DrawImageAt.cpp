@@ -92,7 +92,7 @@ inline void drawImage(Display *display, const Image *image, Real x0,
 // rather than a claimed member.
 struct Rva00579160Manager
 {
-	void *bfmeLookup46C7D0(Int key);
+	void *bfmeLookup46C7D0(const char *path) const;
 };
 
 class WindowManager;
@@ -102,7 +102,7 @@ extern WindowManager *g_rva012F19E8WindowManager;
 
 void Rva0046F060DrawImageAt(const Coord2D *pos, const Coord2D *size, Int imageKey)
 {
-	const Image *image = (const Image *)((Rva00579160Manager *)g_rva012F19E8WindowManager)->bfmeLookup46C7D0(imageKey);
+	const Image *image = (const Image *)((Rva00579160Manager *)g_rva012F19E8WindowManager)->bfmeLookup46C7D0((const char *)imageKey);
 	if (!image)
 		return;
 
