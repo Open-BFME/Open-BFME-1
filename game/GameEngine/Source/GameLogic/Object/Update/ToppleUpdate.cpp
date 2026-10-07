@@ -357,38 +357,7 @@ UpdateSleepTime ToppleUpdate::update()
 //-------------------------------------------------------------------------------------------------
 /** Do the collision */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/ToppleUpdate_onCollide_Thunk.cpp
-// ?onCollide@ToppleUpdate@@UAEXPAVObject@@PBUCoord3D@@1@Z present-unmatched
-void ToppleUpdate::onCollide( Object *other, const Coord3D *loc, const Coord3D *normal )
-{
-	// Note that other == null means "collide with ground"
-	//
-	if (other == NULL)
-		return;
-
-	//@todo JohnA -- Should you get around to adding trees to avoidance pathfinding, then you'll
-	//want to change this code:
-	//if( other->getCrusherLevel() > getObject()->getCrushableLevel() ) //<----proper tree method
-	if( other->getCrusherLevel() > 1 )
-	{
-
-		// Give a vector with direction to thing and my speed.
-		Coord3D toppleVector = *getObject()->getPosition();
-		toppleVector.x -= other->getPosition()->x;
-		toppleVector.y -= other->getPosition()->y;
-		toppleVector.z = 0;
-		
-		Coord3D vel;
-		PhysicsBehavior* phys = other->getPhysics();
-		if (phys)
-			vel = *phys->getVelocity();
-		else
-			vel.zero();
-		getObject()->topple( &toppleVector, vel.length(), TOPPLE_OPTIONS_NONE );
-
-	}
-
-}
+// Retail ToppleUpdate::onCollide (0x002B12C0) is provided by ToppleUpdate_onCollide.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */
