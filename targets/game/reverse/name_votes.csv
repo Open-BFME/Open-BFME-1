@@ -1034,3 +1034,16 @@ game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|type||BfmeMakerKV,c1b615c0
 game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|type||BfmeThingKV0016D780,34a4d4a6792db1f649a09aa5,grok,20261007193124-d5b13c,2026-10-07
 game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|member||m_bfmeMaker,10aa985028c5347d0fe41fd4,grok,20261007193124-d5b13c,2026-10-07
 game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|member||m_bfmeHeld,a2681f6b14967c4117627178,grok,20261007193124-d5b13c,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE70,d29ace0659d0854126b7b61a,gpt-6-astra,20261007192737-d33930,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE74,f135f79a23778fa2c9a35c40,gpt-6-astra,20261007192737-d33930,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE80,82c68e956833f73963afa4ee,gpt-6-astra,20261007192737-d33930,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE84,d32025531c2ba999be78a9eb,gpt-6-astra,20261007192737-d33930,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE88,e243eaa759d56044de32e77b,gpt-6-astra,20261007192737-d33930,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE8C,2bb328e000c54204f8acf17f,gpt-6-astra,20261007192737-d33930,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE90,9fa31f17cf813e2b47e8e897,gpt-6-astra,20261007192737-d33930,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE94,34bef99f7bebaaa710bae18b,gpt-6-astra,20261007192737-d33930,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE98,cc5134c4e70cb83360340c93,gpt-6-astra,20261007192737-d33930,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE9C,6b6844de271caaba952a580a,gpt-6-astra,20261007192737-d33930,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|function|BfmePlayerMapState@|bfmeNewMap,5f85affbfffe5647a50b1dc2,gpt-6-astra,20261007192737-d33930,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|local|BfmePlayerMapState::bfmeNewMap|x,eb5a5547cefc93565ee509bf,gpt-6-astra,20261007192737-d33930,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|local|BfmePlayerMapState::bfmeNewMap|y,c2658cedfb48bbd9244ea204,gpt-6-astra,20261007192737-d33930,2026-10-07
