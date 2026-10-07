@@ -9,10 +9,14 @@
 class WaterRenderObjClass
 {
 public:
+	WaterRenderObjClass();	// matched at 0x007A46E0 in WaterRenderObjConstructor.cpp
 	virtual ~WaterRenderObjClass();
 };
 
-void forceWaterRenderObjClassDeletingDestructor()
+// The implicit copy constructor (no retail twin) is what makes MSVC emit the
+// vftable and with it ??_G; the default constructor stays declared so this TU
+// does not emit a second copy of the retail one.
+void forceWaterRenderObjClassDeletingDestructor(const WaterRenderObjClass &that)
 {
-	WaterRenderObjClass value;
+	WaterRenderObjClass value(that);
 }
