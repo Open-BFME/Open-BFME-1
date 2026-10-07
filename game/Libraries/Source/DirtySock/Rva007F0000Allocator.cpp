@@ -11,12 +11,13 @@ public:
 
 struct Rva007F00B0Allocator;
 extern Rva007F00B0Allocator *g_Rva0130A5B0;
-void bfmeInit1019(char *n);
+// Retail calls 0x009F7244, the jmp stub of the CRT printf import.
+extern "C" int __cdecl printf(const char *format, ...);
 
 void *Rva007F0000Alloc(int a)
 {
 	if (g_Rva0130A5B0 == 0)
-		bfmeInit1019("no FESL allocator defined\n");
+		printf("no FESL allocator defined\n");
 
 	return ((BfmeS1019 *)g_Rva0130A5B0)->bfmeDoB1019(a, 0);
 }

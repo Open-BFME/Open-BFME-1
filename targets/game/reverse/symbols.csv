@@ -90363,3 +90363,4 @@ _Rva0015C280Predicate,0x0015C280,cdecl bool(State*;void*) condition callback; re
 ??_C@_0P@LMGONLLG@LOOP_BACKWARDS?$AA@,0x00D0F1F8,Retail anim-mode name table VA 0x012BB5BC entry; compiler string literal LOOP_BACKWARDS equals retail at VA 0x0110F1F8
 ??_C@_0P@DOBNHDKO@ONCE_BACKWARDS?$AA@,0x00D0F20C,Retail anim-mode name table VA 0x012BB5BC entry; compiler string literal ONCE_BACKWARDS equals retail at VA 0x0110F20C
 ?OpenBFME5_ReturnSecondPointer@@YAPAXPAX0@Z,0x00030940,ILT to object-symbol of row 0x000607E0; retail BfmeThingQB::bfmeMakeQB (0x0082C230) and the other bfmeAlloc* callers reach the matched return-second body through this ILT
+_printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import jmp stub (gen-import ?ji_009f7244@@YAXXZ target=printf) called directly by Rva007F0000Alloc 0x007F000F
