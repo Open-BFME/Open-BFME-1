@@ -170,11 +170,7 @@ void SegLineRendererClass::Init(const W3dEmitterLinePropertiesStruct & props)
 }
 
 
-// ?SegLineRendererClass::Set_Texture present-unmatched
-void SegLineRendererClass::Set_Texture(TextureClass *texture)
-{ 
-	REF_PTR_SET(Texture,texture); 
-}
+// SegLineRendererClass::Set_Texture: retail body lives in SegLineRendererSetTexture.cpp.
 
 // ?SegLineRendererClass::Get_Texture present-unmatched
 TextureClass * SegLineRendererClass::Get_Texture(void) const
