@@ -1022,28 +1022,7 @@ Bool WeaponSet::setWeaponLock( WeaponSlotType weaponSlot, WeaponLockType lockTyp
 //-------------------------------------------------------------------------------------------------
 // Either we have successfully fired a full clip of our special attack, or we have switched
 // weaponsets entirely, or any Player issued command besides special attack has been given.
-// ?releaseWeaponLock@WeaponSet@@QAEXW4WeaponLockType@@@Z present-unmatched
-void WeaponSet::releaseWeaponLock(WeaponLockType lockType)
-{
-	if( m_curWeaponLockedStatus == NOT_LOCKED )
-		return;// Nothing to do
-
-	if (lockType == LOCKED_PERMANENTLY)
-	{
-		// all locks released.
-		m_curWeaponLockedStatus = NOT_LOCKED;
-	}
-	else if (lockType == LOCKED_TEMPORARILY)
-	{
-		// only unlocked if the current lock is temporary.
-		if (m_curWeaponLockedStatus == LOCKED_TEMPORARILY)
-			m_curWeaponLockedStatus = NOT_LOCKED;
-	}
-	else
-	{
-		DEBUG_CRASH(("calling releaseWeaponLock with NOT_LOCKED makes no sense. why did you do this?\n"));
-	}
-}
+// WeaponSet::releaseWeaponLock: retail body in WeaponSet_releaseWeaponLock.cpp.
 
 //-------------------------------------------------------------------------------------------------
 Weapon* WeaponSet::getWeaponInWeaponSlot(WeaponSlotType wslot) const
