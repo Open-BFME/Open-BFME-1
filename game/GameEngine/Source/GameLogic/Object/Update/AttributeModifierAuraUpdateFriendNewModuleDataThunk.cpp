@@ -30,7 +30,9 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl AttributeModifierAuraUpdateFieldParse(MultiIniFieldParse &parse);
+// Retail pushes 0x247F8, the ILT thunk to the matched builder at 0x002800A0
+// (?buildFieldParse@Rva002800A0@@SAXAAVWideMulti@@@Z).
+extern void j_000247f8(void);
 
 class AttributeModifierAuraUpdate
 {
@@ -43,6 +45,7 @@ ModuleData *AttributeModifierAuraUpdate::friend_newModuleData(INI *ini)
 {
 	AttributeModifierAuraUpdateModuleData *data = new AttributeModifierAuraUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &AttributeModifierAuraUpdateFieldParse);
+		ini->initFromINIMultiProc(data, 
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_000247f8));
 	return (ModuleData *)data;
 }
