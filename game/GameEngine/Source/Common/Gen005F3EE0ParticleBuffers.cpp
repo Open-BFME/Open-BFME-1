@@ -62,3 +62,15 @@ Gen005F3EE0::Gen005F3EE0()
 
 	g_byteBuffer = new ShareBufferClass<unsigned char>(count, 0);
 }
+
+// ??1Gen005F3EE0@@QAE@XZ, retail 0x005F3910 (141 bytes). s4Second hands the
+// atexit stub 0x00C70840 to the CRT, and that stub loads the one-byte static
+// (VA 0x012F6DDB) into ecx and jumps through ILT 0x000305C6 to this body: the
+// static's destructor. It drops the four scratch buffers the constructor made.
+Gen005F3EE0::~Gen005F3EE0()
+{
+	REF_PTR_RELEASE(g_vector3Buffer);
+	REF_PTR_RELEASE(g_vector4Buffer);
+	REF_PTR_RELEASE(g_floatBuffer);
+	REF_PTR_RELEASE(g_byteBuffer);
+}
