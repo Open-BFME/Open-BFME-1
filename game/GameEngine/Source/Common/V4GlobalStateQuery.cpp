@@ -31,13 +31,18 @@
 //
 // TU-local view of the canonical GameLogic (GameLogic.cpp); the real class is
 // only forward declared here, so every use casts through this view.
-class GameLogic;
+// The predicate (call target 0x00382B50 via ILT 0x0001D1C9) is the matched
+// GameLogic::_bfme_isInLivingWorldCampaign.
+class GameLogic
+{
+public:
+	bool _bfme_isInLivingWorldCampaign();
+};
 
 class Rva00383860
 {
 public:
 	void invoke();
-	bool test();
 	char m_pad00[ 0x110 ];
 	int  m_at110;
 };
@@ -75,7 +80,7 @@ int Rva003BCC10::current()
 {
 	if( m_at2C && m_at2D )
 		goto other;
-	if( !((Rva00383860 *)TheGameLogic)->test() )
+	if( !TheGameLogic->_bfme_isInLivingWorldCampaign() )
 		return ((Rva00383860 *)TheGameLogic)->m_at110;
 other:
 	return ((Glo012ED5C8Type *)TheWritableGlobalData)->m_atEB0;
