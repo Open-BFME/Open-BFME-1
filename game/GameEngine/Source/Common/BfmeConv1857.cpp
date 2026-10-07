@@ -5,10 +5,7 @@
 // the other matched callers of these thunks use (e.g. FeslMessage_getInt64_rva007E8930.cpp).
 extern void ji_009f6fa6();
 typedef int (__cdecl *Sscanf)(const char *buf, const char *fmt, void *out);
-// The format operand is the "AptPalantir integer format literal" at 0x0107C7B4,
-// ?g_aptPalantirNumberFormat@@3PADA, spelled here as the same global array the
-// other matched AptPalantir callers declare.
-extern char g_aptPalantirNumberFormat[];
+// The format operand is the compiler string literal "%d" at VA 0x0107C7B4.
 
 class BfmeOwnerYA
 {
@@ -36,7 +33,7 @@ void BfmeOwnerYA::bfmeParseYA(const char *text)
 		m_bfmeValueYA = -203;
 		break;
 	default:
-		((Sscanf)ji_009f6fa6)(text, g_aptPalantirNumberFormat, &m_bfmeValueYA);
+		((Sscanf)ji_009f6fa6)(text, "%d", &m_bfmeValueYA);
 		break;
 	}
 }
