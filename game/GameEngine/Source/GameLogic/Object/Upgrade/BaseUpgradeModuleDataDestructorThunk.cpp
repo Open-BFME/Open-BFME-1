@@ -23,14 +23,16 @@ private:
 	unsigned int m_04;
 };
 
-class __declspec(novtable) BaseUpgradeModuleDataIntermediateBase
+// TU-local name: this view keeps the primary base vtable the destructor
+// needs, so its implicit base destructor COMDAT differs from the ctor TU's.
+class __declspec(novtable) BaseUpgradeModuleDataDtorIntermediateBase
 	: public BaseUpgradeModuleDataPrimaryBase
 {
 	UpgradeModuleDataSub m_sub;
 };
 
 class __declspec(novtable) BaseUpgradeModuleData
-	: public BaseUpgradeModuleDataIntermediateBase
+	: public BaseUpgradeModuleDataDtorIntermediateBase
 {
 public:
 	virtual ~BaseUpgradeModuleData();
