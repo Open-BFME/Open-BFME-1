@@ -6,9 +6,8 @@ typedef int Int;
 class GameLogic
 {
 public:
-	Int getFrame() const { return m_frame; }
-
-private:
+	// Retail inlines getFrame here (no call); reading the field directly keeps
+	// this TU from emitting its own non-retail getFrame COMDAT.
 	char m_pad00[0x3c];
 	Int m_frame;
 };
@@ -34,5 +33,5 @@ private:
 void GameLogicShim::unidentified_0000f5fb(Int playerIndex)
 {
 	if (playerIndex >= 0 && playerIndex < 8)
-		m_playerRecords[playerIndex].m_frame = TheGameLogic->getFrame();
+		m_playerRecords[playerIndex].m_frame = TheGameLogic->m_frame;
 }
