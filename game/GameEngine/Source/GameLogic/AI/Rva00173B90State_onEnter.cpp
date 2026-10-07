@@ -21,16 +21,18 @@ class Object;
 class ModelConditionFlags
 {
 public:
-	// No test() member here: this one-word view's inline test would be
-	// emitted as ?test@ModelConditionFlags@@QBE_NH@Z ahead of the bitset
-	// copy every other TU emits. The caller reads the word directly.
-	void set(int condition)
-	{
-		m_bits |= 1u << condition;
-	}
+	// No test()/set() members here: this one-word view's inline copies
+	// would be emitted as ?test/?set@ModelConditionFlags COMDATs ahead of
+	// the bitset copy every other TU emits; set goes through a file-static
+	// helper instead.
 
 	UnsignedInt m_bits;
 };
+
+static inline void setModelConditionBit(ModelConditionFlags &flags, int condition)
+{
+	flags.m_bits |= 1u << condition;
+}
 
 #define BFME_VTABLE_SLOT(offset) virtual void slot##offset();
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
@@ -89,7 +91,7 @@ public:
 	{
 		if (!((m_modelConditionFlags.m_bits & (1u << condition)) != 0))
 		{
-			m_modelConditionFlags.set(condition);
+			setModelConditionBit(m_modelConditionFlags, condition);
 			notifyModelConditionChanged();
 		}
 	}
