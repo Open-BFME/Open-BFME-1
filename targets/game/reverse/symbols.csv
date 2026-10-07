@@ -90544,3 +90544,11 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_0BH@DIKAEBOE@BonusScienceMultiplier?$AA@,0x00CCB020,Retail SupplyCenterDockUpdateModuleDataFieldParse table VA 0x010CB060 entry; compiler string literal BonusScienceMultiplier equals retail at VA 0x010CB020
 ??_C@_0N@DKEMAMEP@BonusScience?$AA@,0x00CCB03C,Retail SupplyCenterDockUpdateModuleDataFieldParse table VA 0x010CB060 entry; compiler string literal BonusScience equals retail at VA 0x010CB03C
 ?rva0081D5E0@Rva0081D5E0@@QAEPAU1@PBXI@Z,0x0081D5E0,Address-specific ABI view of existing dup_0081d5e0; thiscall two words with ignored first pointer and second word store; EAX receiver; RET8; isolated native probe exact11B; evidence=identity_evidence/0x0081d8f0.md
+??_C@_06BDLNMNOP@Alpha5?$AA@,0x00D13334,Retail DefaultModuleTemplate00FieldParse table VA 0x01113360 entry; compiler string literal Alpha5 equals retail at VA 0x01113334
+??_C@_06CBILKPGN@Alpha7?$AA@,0x00D13324,Retail DefaultModuleTemplate00FieldParse table VA 0x01113360 entry; compiler string literal Alpha7 equals retail at VA 0x01113324
+??_C@_06DIJAJOCM@Alpha6?$AA@,0x00D1332C,Retail DefaultModuleTemplate00FieldParse table VA 0x01113360 entry; compiler string literal Alpha6 equals retail at VA 0x0111332C
+??_C@_06EFOHGKGJ@Alpha3?$AA@,0x00D13344,Retail DefaultModuleTemplate00FieldParse table VA 0x01113360 entry; compiler string literal Alpha3 equals retail at VA 0x01113344
+??_C@_06FMPMFLCI@Alpha2?$AA@,0x00D1334C,Retail DefaultModuleTemplate00FieldParse table VA 0x01113360 entry; compiler string literal Alpha2 equals retail at VA 0x0111334C
+??_C@_06HHNBAIOL@Alpha1?$AA@,0x00D13354,Retail DefaultModuleTemplate00FieldParse table VA 0x01113360 entry; compiler string literal Alpha1 equals retail at VA 0x01113354
+??_C@_06KGBDLDKC@Alpha8?$AA@,0x00D1331C,Retail DefaultModuleTemplate00FieldParse table VA 0x01113360 entry; compiler string literal Alpha8 equals retail at VA 0x0111331C
+??_C@_06KKGPMKO@Alpha4?$AA@,0x00D1333C,Retail DefaultModuleTemplate00FieldParse table VA 0x01113360 entry; compiler string literal Alpha4 equals retail at VA 0x0111333C
