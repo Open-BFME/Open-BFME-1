@@ -26,10 +26,22 @@ public:
 	virtual void bfmeSlot1102G_13(void);
 };
 
+// ILT 0x10F8C -> 0x0006C3A0, matched private
+// ?_bfme_terminateChildProcesses@GameEngine@@AAEXXZ (GameEngineTerminateChildProcesses.cpp).
+class GameEngine
+{
+	friend class BfmeTl1102;
+private:
+	void _bfme_terminateChildProcesses();
+};
+
 class BfmeTl1102
 {
 public:
-	void bfmeTail1102(void);
+	void bfmeTail1102(void)
+	{
+		((GameEngine *)this)->_bfme_terminateChildProcesses();
+	}
 };
 
 class LANAPI;
