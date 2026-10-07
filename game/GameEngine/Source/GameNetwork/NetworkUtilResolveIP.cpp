@@ -34,10 +34,20 @@ extern "C" __declspec(dllimport) struct hostent * __stdcall gethostbyname(const 
 typedef unsigned int UnsignedInt;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
+// Only the private release member the inlined destructor calls.
+template <class T> class StringBase
+{
+	friend class AsciiString;
+	void releaseBuffer();					// StringBase<char>: retail 0x00887940
+};
+
 class AsciiString
 {
 public:
-	~AsciiString();
+	// Retail releases the by-value host string by calling StringBase<char>::
+	// releaseBuffer (0x00887940) inline; only the unwind funclet jumps to the
+	// out-of-line ~AsciiString forwarder (ILT -> 0x0005EE90).
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 	int getLength() const { return m_data ? m_data->length : 0; }
 	const char *str() const { return m_data ? &m_data->data[0] : (const char *)""; }
