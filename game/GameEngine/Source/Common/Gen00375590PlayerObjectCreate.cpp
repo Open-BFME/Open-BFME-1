@@ -1,8 +1,8 @@
 // ?createPlayerObject@Gen_00375590@@QAEXXZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
-// EntryStorage ctor is retail's ILT at 0x0000504C (body 0x00190340); declare
-// only and pin — a same-TU definition blocks add_match.
+// The entry is a BfmeOwnVVB: the call goes through ILT 0x0000504C to the
+// matched BfmeOwnVVB::BfmeOwnVVB(void *) at 0x00190340.
 
 extern void j_0003f0bc();
 extern void j_0000bf2d();
@@ -13,10 +13,10 @@ struct Gen00375590GetReceiver
 	void *get();
 };
 
-class Gen00375590EntryStorage
+class BfmeOwnVVB
 {
 public:
-	Gen00375590EntryStorage(int value);
+	BfmeOwnVVB(void *arg);
 	unsigned char m_unmodelled_00[0x88];
 };
 
@@ -35,12 +35,12 @@ extern SidesList *TheSidesList;
 
 struct Gen00375590AcceptReceiver
 {
-	bool accept(void *, int, Gen00375590EntryStorage *);
+	bool accept(void *, int, BfmeOwnVVB *);
 };
 
 struct Gen00375590RemoveReceiver
 {
-	void remove(Gen00375590EntryStorage *);
+	void remove(BfmeOwnVVB *);
 };
 
 void *__cdecl operator new(unsigned int);
@@ -62,9 +62,9 @@ public:
 		return (reinterpret_cast<Gen00375590GetReceiver *>(this)->*
 			getFunction.asMember)();
 	}
-	void remove(Gen00375590EntryStorage *entry)
+	void remove(BfmeOwnVVB *entry)
 	{
-		typedef void (Gen00375590RemoveReceiver::*Remove)(Gen00375590EntryStorage *);
+		typedef void (Gen00375590RemoveReceiver::*Remove)(BfmeOwnVVB *);
 		union
 		{
 			void *asVoid;
@@ -78,15 +78,15 @@ public:
 
 void Gen_00375590::createPlayerObject()
 {
-	typedef bool (Gen00375590AcceptReceiver::*Accept)(void *, int, Gen00375590EntryStorage *);
+	typedef bool (Gen00375590AcceptReceiver::*Accept)(void *, int, BfmeOwnVVB *);
 	Gen_00375590 *owner = this;
 	void *templateObject = owner->getTemplate();
 	register int index = 0;
-	Gen00375590EntryStorage *entry = 0;
+	BfmeOwnVVB *entry = 0;
 
 	while (true)
 	{
-		entry = new Gen00375590EntryStorage(1);
+		entry = new BfmeOwnVVB((void *)1);
 		union
 		{
 			void *asVoid;
