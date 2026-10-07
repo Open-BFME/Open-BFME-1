@@ -30,7 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl WoundArrowUpdateFieldParse(MultiIniFieldParse &parse);
+// Retail pushes 0x004022C5, the matched ILT thunk to 0x0026DF80.
+extern void j_000022c5(void);
 
 class WoundArrowUpdate
 {
@@ -43,6 +44,7 @@ ModuleData *WoundArrowUpdate::friend_newModuleData(INI *ini)
 {
 	WoundArrowUpdateModuleData *data = new WoundArrowUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &WoundArrowUpdateFieldParse);
+		ini->initFromINIMultiProc(data, 
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_000022c5));
 	return (ModuleData *)data;
 }
