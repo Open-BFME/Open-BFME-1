@@ -119,13 +119,7 @@ StatusBitsUpgrade::~StatusBitsUpgrade( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?upgradeImplementation@StatusBitsUpgrade@@MAEXXZ present-unmatched
-void StatusBitsUpgrade::upgradeImplementation( )
-{
-	Object *obj = getObject();	
-	obj->setStatus( getStatusBitsUpgradeModuleData()->m_statusToSet );
-	obj->clearStatus( getStatusBitsUpgradeModuleData()->m_statusToClear );
-}
+// ?upgradeImplementation@StatusBitsUpgrade@@MAEXXZ: retail body matched in StatusBitsUpgradeUpgradeImplementation.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */
