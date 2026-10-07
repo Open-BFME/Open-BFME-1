@@ -5154,7 +5154,7 @@ name,address,notes
 ??1DockUpdate@@UAE@XZ,0x0004418E,RailedTransportDockUpdate destructor tail-call ILT to DockUpdate destructor 0x002CCD10
 ??1DominateEnemySpecialPower@@MAE@XZ,0x00031548,destructor ILT to 0x0025AD50
 ??1DozerActionMoveToActionPosState@@MAE@XZ,0x000188DB,vtable 0x00CC6DA0 slots name DozerActionMoveToActionPosState; protected complete destructor called by wrapper 0x002B80C0
-??1DozerActionPickActionPosState@@MAE@XZ,0x00010AB4,vtable 0x00CC6D28 slots name DozerActionPickActionPosState; protected complete destructor called by wrapper 0x002B8080
+??1DozerActionPickActionPosState@@UAE@XZ,0x00010AB4,vtable 0x00CC6D28 slots name DozerActionPickActionPosState; protected complete destructor called by wrapper 0x002B8080
 ??1DozerActionState@@UAE@XZ,0x00030B52,vtable 0x00CC6F70 slots name DozerActionState; protected complete destructor called by wrapper 0x002B8590;ilt-verified=T1-access(efp=4.89e-03)
 ??1DozerAudioEventRTS@@UAE@XZ,0x00026F35,DozerAIUpdate building-sound member destructor
 ??1DozerDockPointInfo@DozerAIUpdate@@QAE@XZ,0x0002EA0F,DozerAIUpdate dock-point array destructor thunk
@@ -11365,7 +11365,7 @@ name,address,notes
 ??_GDistLODPrototypeClass@@UAEPAXI@Z,0x000169F5,constructor-installed vtable 0x010956B0 slot zero routes through this ILT to 0x0014AAE0
 ??_GDominateEnemySpecialPower@@MAEPAXI@Z,0x0001CD9B,primary class vtable slot zero ILT to 0x0025AE70
 ??_GDozerActionMoveToActionPosState@@MAEPAXI@Z,0x00030BB6,vtable 0x00CC6DA0 slot zero routes through this ILT to scalar wrapper 0x002B80C0
-??_GDozerActionPickActionPosState@@MAEPAXI@Z,0x000359B8,vtable 0x00CC6D28 slot zero routes through this ILT to scalar wrapper 0x002B8080
+??_GDozerActionPickActionPosState@@UAEPAXI@Z,0x000359B8,vtable 0x00CC6D28 slot zero routes through this ILT to scalar wrapper 0x002B8080
 ??_GDozerActionState@@UAEPAXI@Z,0x00035AA3,vtable 0x00CC6F70 slot zero routes through this ILT to scalar wrapper 0x002B8590;ilt-verified=T1-access(efp=4.89e-03)
 ??_GDozerPrimaryIdleState@@UAEPAXI@Z,0x0001C562,vtable 0x00CC6F00 slot zero routes through this ILT to scalar wrapper 0x002B8550;ilt-verified=T1-access(efp=2.94e-03)
 ??_GDualWeaponBehavior@@MAEPAXI@Z,0x0000AFFB,vtable 0x00CA3694 slot zero routes through this ILT to scalar wrapper 0x001F7FB0
