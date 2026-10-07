@@ -972,68 +972,8 @@ void ProductionUpdate::addToProductionQueue( ProductionEntry *production )
 //-------------------------------------------------------------------------------------------------
 /** Remove the production entry from the production queue list */
 //-------------------------------------------------------------------------------------------------
-// ?removeFromProductionQueue@ProductionUpdate@@ present-unmatched
-void ProductionUpdate::removeFromProductionQueue( ProductionEntry *production )
-{
-	if (production->m_type == PRODUCTION_UNIT &&
-			production->m_exitDoor != DOOR_NONE_AVAILABLE)
-	{
-		ExitInterface* exitInterface = getObject()->getObjectExitInterface();
-		if (exitInterface)
-		{
-			exitInterface->unreserveDoorForExit(production->m_exitDoor);
-		}
-	}
-
-	// detach prev pointer, keep head pointer to the whole queue in tact
-	if( production->m_prev )
-		production->m_prev->m_next = production->m_next;
-	else
-		m_productionQueue = production->m_next;
-
-	// detach next pointer, keep tail poitner to the whole queue in tact
-	if( production->m_next )
-		production->m_next->m_prev = production->m_prev;
-	else
-		m_productionQueueTail = production->m_prev;
-
-	// we now have one less production item
-	--m_productionCount;
-
-	// when we go back to zero things in our queue, we clear the constructing state
-	Drawable *draw = getObject()->getDrawable();
-	if( draw )
-	{
-		ModelConditionFlags condition = draw->getModelConditionFlags();
-
-		if( m_productionCount == 0 && condition.test( MODELCONDITION_ACTIVELY_CONSTRUCTING ) == TRUE )
-		{
-
-			m_clearFlags.set( MODELCONDITION_ACTIVELY_CONSTRUCTING, true );
-			m_setFlags.set( MODELCONDITION_ACTIVELY_CONSTRUCTING, false );
-			m_flagsDirty = TRUE;
-		
-		}  // end if
-
-	}  // end if
-
-/*
-	// Debugging 
-	UnicodeString msg;
-	if( production->getProductionType() == ProductionEntry::PRODUCTION_UNIT )
-	{
-		msg.format( L"Removed unit '%S'(%d)", production->getProductionObject()->getName().str(),
-																					production->getProductionID() );
-		TheInGameUI->message( msg );
-	}
-	else
-	{
-		msg.format( L"Remove upgrade '%S'", production->getProductionUpgrade()->getName().str() );
-		TheInGameUI->message( msg );
-	}
-*/
-
-}  // end removeFromProductionQueue
+// ProductionUpdate::removeFromProductionQueue: retail 0x0029D210 lives in
+// ProductionUpdate_removeFromProductionQueue.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Is the upgrade already in the production queue.  Note that you can only have one 
