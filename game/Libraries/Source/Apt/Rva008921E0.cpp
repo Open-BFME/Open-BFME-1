@@ -7,7 +7,7 @@
 // view and writes the physical four-byte field at +0x1238; it makes no claim
 // about construction, ownership, lifetime, or the field's native meaning.
 class Rva008B38F0Global;
-extern Rva008B38F0Global *g_01337820;
+Rva008B38F0Global *g_01337820;    // retail VA 0x01337820 (zero-initialised .data)
 extern int g_bfme1017I;
 // retail 0x013377D8; defining spelling (BfmePicker1284.cpp), declared
 // incomplete here because only the pointer value is used.
