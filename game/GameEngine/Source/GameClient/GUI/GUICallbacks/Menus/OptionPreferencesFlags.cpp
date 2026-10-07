@@ -25,10 +25,18 @@ struct PreferenceNode
 	AsciiString m_value;								///< retail this+0x14
 };
 
+// Retail lookup ILT 0x0000AEAC reaches the ledger tree body at 0x00080600.
+extern void j_0000aeac();
+
 class PreferenceMap
 {
 public:
-	PreferenceNode *find(const AsciiString &) const;
+	__forceinline PreferenceNode *find(const AsciiString &key) const
+	{
+		typedef PreferenceNode *(PreferenceMap::*Find)(const AsciiString &) const;
+		union { void (*fn)(); Find call; } lookup = { j_0000aeac };
+		return (this->*lookup.call)(key);
+	}
 	PreferenceNode *end(void) const { return m_end; }
 
 private:
