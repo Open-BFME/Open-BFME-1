@@ -4,11 +4,9 @@
 
 #include "ascii_string.h"
 
-class AsciiStringCompareShim
-{
-public:
-	int compare( const AsciiString &other ) const;
-};
+// Both bodies call ILT 0x220C5 -> 0x0005FEB0, the matched out-of-line
+// StringBase<char>::compare(const StringBase<char> &) (StringBase.cpp), not the inline
+// AsciiString::compare.
 
 struct Rva00359330Record
 {
@@ -45,7 +43,7 @@ int Rva00359330StringRecordTable::findRecordIndex( AsciiString *name )
 	if ( nameIndex < m_nameIndexesEnd - m_nameIndexesBegin )
 	{
 		int recordIndex = m_nameIndexesBegin[nameIndex];
-		if ( ((AsciiStringCompareShim &)m_records[recordIndex].m_name).compare( *name ) == 0 )
+		if ( m_records[recordIndex].m_name.StringBase<char>::compare( *name ) == 0 )
 			return recordIndex;
 	}
 
@@ -87,7 +85,7 @@ int Rva00359530StringRecordTable::findRecordIndex( AsciiString *name )
 	if ( nameIndex < m_nameIndexesEnd - m_nameIndexesBegin )
 	{
 		int recordIndex = m_nameIndexesBegin[nameIndex];
-		if ( ((AsciiStringCompareShim &)m_records[recordIndex].m_name).compare( *name ) == 0 )
+		if ( m_records[recordIndex].m_name.StringBase<char>::compare( *name ) == 0 )
 			return recordIndex;
 	}
 
