@@ -44,11 +44,23 @@ public:
 class Xfer; class MidVirtualSlot90Receiver;
 Xfer & __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *dst);
 
+// ILT 0x33B77 -> 0x0026A980, matched
+// ?bfmeSeed@Gen_0026A980@@QAEXPAVBfmeSeedTarget@@@Z (S3SeedPairsSweep.cpp).
+class BfmeSeedTarget;
+class Gen_0026A980
+{
+public:
+	void bfmeSeed(BfmeSeedTarget *target);
+};
+
 class BfmeHostAU
 {
 public:
 	void bfmeSaveAU(BfmeAgentAU *ag);
-	void bfmeBeginAU(BfmeAgentAU *ag);
+	void bfmeBeginAU(BfmeAgentAU *ag)
+	{
+		((Gen_0026A980 *)this)->bfmeSeed((BfmeSeedTarget *)ag);
+	}
 
 	unsigned char m_bfmeHeadAU[0x38];
 	unsigned char m_bfmeSlotAAU[4];
