@@ -15,8 +15,6 @@ NameKeyType NAMEKEY(const AsciiString &s);
 
 typedef StringBase<char> Rva0036EF70String;
 
-extern "C" char g_NAMEKEY_empty_string;
-
 struct CastleUnpackCost
 {
 	Int m_unmodelled_00;
@@ -59,7 +57,7 @@ NameKeyType Rva0036EF70Owner::d_0036ef70Method(void)
 				reinterpret_cast<const char *>(player) + 0x28));
 			char *nameData = *reinterpret_cast<char **>(&name);
 			const char *p = nameData ?
-				nameData + 8 : &g_NAMEKEY_empty_string;
+				nameData + 8 : "";	// retail "" at 0x0107388B
 			NameKeyType lookupKey = TheNameKeyGenerator->nameToKey(p);
 
 			_STL::map<NameKeyType, CastleUnpackCost>::iterator it =
