@@ -857,18 +857,7 @@ Bool OptionPreferences::get2DShadowsEnabled(void)
 // Body in game/masm_dumps/_getParticleCap_OptionPreferences__QAEHXZ_914B0.asm (exact 136B retail).
 
 // byte-exact reconstruction: game/GameEngine/Source/Common/OptionPreferences_getTextureReduction_Thunk.cpp
-// ?getTextureReduction@OptionPreferences@@QAEHXZ present-unmatched
-Int OptionPreferences::getTextureReduction(void)
-{
-	OptionPreferences::const_iterator it = find("TextureReduction");
-	if (it == end())
-		return -1;	//unknown texture reduction
-
-	Int factor = (Int) atoi(it->second.str());
-	if (factor > 2)	//clamp it.
-		factor=2;
-	return factor;
-}
+// (retail 0x000915E0 is defined only there.)
 
 // ?getGammaValue@OptionPreferences@@QAEMXZ present-unmatched
 Real OptionPreferences::getGammaValue(void)
