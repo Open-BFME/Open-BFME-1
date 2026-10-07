@@ -26,10 +26,10 @@ typedef enum
 class PeerThreadClass
 {
 public:
-	Bool isHosting( void ) { return m_isHosting; }
+	// Retail inlines isHosting(); reading the byte directly keeps this TU
+	// from emitting a second isHosting COMDAT for the +0xB0 class view.
 	void stopHostingAlready( PEER peer );
 
-private:
 	unsigned char m_unreconstructed_00[0xAC];
 	Bool m_isHosting;                                      ///< +0xAC
 };
@@ -40,7 +40,7 @@ static int QRCountCallback( PEER peer, qr2_key_type type, void *param )
 	PeerThreadClass *t = (PeerThreadClass *)param;
 	if (t)
 	{
-		if (!t->isHosting())
+		if (!t->m_isHosting)
 			t->stopHostingAlready(peer);
 		// BFME retail returns a fixed eight for player keys.
 		if (type == key_player)
