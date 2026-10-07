@@ -1242,51 +1242,7 @@ void WOLLobbyMenuUpdate( WindowLayout * layout, void *userData)
 //-------------------------------------------------------------------------------------------------
 /** WOL Lobby Menu input callback */
 //-------------------------------------------------------------------------------------------------
-WindowMsgHandledType WOLLobbyMenuInput( GameWindow *window, UnsignedInt msg,
-																			 WindowMsgData mData1, WindowMsgData mData2 )
-{
-	switch( msg ) 
-	{
-
-		// --------------------------------------------------------------------------------------------
-		case GWM_CHAR:
-		{
-			UnsignedByte key = mData1;
-			UnsignedByte state = mData2;
-			if (buttonPushed)
-				break;
-
-			switch( key )
-			{
-
-				// ----------------------------------------------------------------------------------------
-				case KEY_ESC:
-				{
-					
-					//
-					// send a simulated selected event to the parent window of the
-					// back/exit button
-					//
-					if( BitTest( state, KEY_STATE_UP ) )
-					{
-						TheWindowManager->winSendSystemMsg( window, GBM_SELECTED, 
-																							(WindowMsgData)buttonBack, buttonBackID );
-
-					}  // end if
-
-					// don't let key fall through anywhere else
-					return MSG_HANDLED;
-
-				}  // end escape
-
-			}  // end switch( key )
-
-		}  // end char
-
-	}  // end switch( msg )
-
-	return MSG_IGNORED;
-}// WOLLobbyMenuInput
+// WOLLobbyMenuInput is retail 0x004F9680, defined only in WOLLobbyMenuInput_Thunk.cpp.
 
 //static void doSliderTrack(GameWindow *control, Int val)
 //{
