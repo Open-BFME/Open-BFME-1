@@ -42,3 +42,12 @@ W3DAnimationInfo bfmeCopyW3DAnimationInfo( const W3DAnimationInfo &that )
 {
 	return that;
 }
+
+inline void *operator new( unsigned int, void *where ) { return where; }
+
+// _STL::_Construct<W3DAnimationInfo, W3DAnimationInfo>, retail 0x00784DD0:
+// placement copy through the compiler copy constructor above.
+__declspec(noinline) void reconstructW3DAnimationInfo( void *dest, const void *src )
+{
+	new ( dest ) W3DAnimationInfo( *reinterpret_cast<const W3DAnimationInfo *>( src ) );
+}

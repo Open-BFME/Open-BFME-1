@@ -328,28 +328,6 @@ W3DAnimationInfo::W3DAnimationInfo(const AsciiString& name, Bool isIdle, Real di
 { 
 }
 
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DAnimationInfoCopyCtor.cpp
-// ??0W3DAnimationInfo@@ present-unmatched
-__declspec(noinline) W3DAnimationInfo::W3DAnimationInfo( const W3DAnimationInfo &r ) :
-	m_name(r.m_name),
-#ifdef RETAIN_ANIM_HANDLES
-	m_handle(r.m_handle),
-#endif
-	m_distanceCovered(r.m_distanceCovered),
-	m_isIdleAnim(r.m_isIdleAnim),
-	m_naturalDurationInMsec(r.m_naturalDurationInMsec)
-{
-#ifdef RETAIN_ANIM_HANDLES
-	if (m_handle)
-		m_handle->Add_Ref();
-#endif
-}
-
-__declspec(noinline) void reconstructW3DAnimationInfo(void *dest, const void *src)
-{
-	new (dest) W3DAnimationInfo(*reinterpret_cast<const W3DAnimationInfo *>(src));
-}
 
 //-------------------------------------------------------------------------------------------------
 // ??4W3DAnimationInfo@@QAEAAV0@ABV0@@Z present-unmatched
