@@ -31,7 +31,9 @@ private:
 };
 
 // ??1NamedReveal@@QAE@XZ
-NamedReveal::~NamedReveal()
+// Inline (COMDAT), as retail's implicit destructor: the vector instantiation
+// in NamedRevealVectorDestructor.cpp emits the same body.
+inline NamedReveal::~NamedReveal()
 {
 }
 
