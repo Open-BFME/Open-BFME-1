@@ -43,6 +43,8 @@
 #include "GameClient/DisplayStringManager.h"
 
 
+Int	IMECandidateWindowLineSpacing = 2;
+
 static DisplayString *Dstring = NULL;
 
 //-------------------------------------------------------------------------------------------------
