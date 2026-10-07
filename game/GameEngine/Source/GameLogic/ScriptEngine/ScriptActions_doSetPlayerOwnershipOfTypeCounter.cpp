@@ -61,7 +61,9 @@ public:
 	}
 };
 
-__declspec(noinline) ObjectTypesTemp::ObjectTypesTemp() : m_types(0)
+// Inline (COMDAT) so this copy folds with ObjectTypesTemp_ctor_Thunk.cpp's
+// retail body (0x002ED6C0) instead of defining it strongly again.
+inline __declspec(noinline) ObjectTypesTemp::ObjectTypesTemp() : m_types(0)
 {
 	m_types = new ObjectTypes;
 }
