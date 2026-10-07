@@ -68,17 +68,15 @@ class GlobalData;
 extern GlobalData *TheWritableGlobalData;
 
 // The callee is the MATCHED 0x005FAC90 body (Rva005FAC90Scale.cpp), reached
-// here through the ILT thunk 0x00008814. It is declared struct-returning, under
-// an address-derived name, for the same reason and with the same precedent as
-// the MATCHED sibling 0x005C36C0's call to 0x005FAE40: the struct return is
-// what makes MSVC 7.1 forward this function's own hidden sret pointer as the
-// callee's result pointer instead of copying it. That is a property of the
-// CALL SITE's ABI view, not a claim about the callee's own identity, so the
-// name stays address-keyed and the pin routes to the matched body.
+// here through the ILT thunk 0x00008814. It is struct-returning: the body
+// leaves its result pointer in eax at the ret, and the struct return is what
+// makes MSVC 7.1 forward this function's own hidden sret pointer as the
+// callee's result pointer instead of copying it (same precedent as the
+// MATCHED sibling 0x005C36C0's call to 0x005FAE40).
 class Rva005FAC90Owner
 {
 public:
-	Coord3D rva005FAC90(void *context, const Coord3D *factors, Real amount,
+	Coord3D scale(void *context, const Coord3D *factors, Real amount,
 		void *extra);
 };
 
@@ -121,7 +119,7 @@ Coord3D ParticleSystem::computeParticleVelocity(const Coord3D *pos)
 		{
 			// retail passes the argument through unchanged; the callee's
 			// `context` is modelled unconstrained, hence the cast.
-			return m_receiver->rva005FAC90(const_cast<Coord3D *>(pos), &m_value134,
+			return m_receiver->scale(const_cast<Coord3D *>(pos), &m_value134,
 				(*(volatile Real *)&((BfmeG1269 *)TheWritableGlobalData)->m_valueAB4 + g_bfmeDefaultBU) * g_rva0107533C,
 				bfmeSlot018(m_value1c4));
 		}

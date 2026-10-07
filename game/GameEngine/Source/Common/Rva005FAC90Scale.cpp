@@ -1,10 +1,14 @@
 // cl: /DNDEBUG /MD /EHsc
 // Retail RVA 0x005FAC90. Fills a local Coord3D through virtual slot four, then
-// scales it component by component and writes the result through the first
-// argument. Nothing names the owning class, so it is address-derived.
+// scales it component by component and returns the result through the hidden
+// struct-return pointer (eax holds it at the ret, as ParticleSystem::
+// computeParticleVelocity relies on). Nothing names the owning class, so it is address-derived.
 
 struct Coord3D
 {
+	Coord3D() {}
+	Coord3D(float xValue, float yValue, float zValue) : x(xValue), y(yValue), z(zValue) {}
+
 	float x;
 	float y;
 	float z;
@@ -19,11 +23,10 @@ public:
 	virtual void slot03(void);
 	virtual void sample(Coord3D *out, void *context, void *extra);
 
-	void scale(Coord3D *out, void *context, const Coord3D *factors, float amount,
-		void *extra);
+	Coord3D scale(void *context, const Coord3D *factors, float amount, void *extra);
 };
 
-void Rva005FAC90Owner::scale(Coord3D *out, void *context, const Coord3D *factors,
+Coord3D Rva005FAC90Owner::scale(void *context, const Coord3D *factors,
 	float amount, void *extra)
 {
 	volatile Coord3D local;
@@ -34,7 +37,5 @@ void Rva005FAC90Owner::scale(Coord3D *out, void *context, const Coord3D *factors
 	float y = local.y * factors->y * amount;
 	float z = local.z * factors->z * amount;
 
-	out->x = x;
-	out->y = y;
-	out->z = z;
+	return Coord3D(x, y, z);
 }
