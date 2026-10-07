@@ -9,10 +9,15 @@ public:
 	int m_bfmeErr;
 };
 
-int bfmeCallCIC(void *a, void *b, void *one, void *two);
+// Retail calls the matched Rva007ECE60 (Y2Rva007EBAE0Module.cpp), which stores
+// key/value as an escaped field into the (buffer, size) pair.
+int Rva007ECE60(char *buffer, int size, const char *key, const char *value);
+
+#define bfmeCallCIC( a, b, one, two ) \
+	Rva007ECE60( static_cast< char * >( a ), reinterpret_cast< int >( b ), one, two )
 
 void BfmeC994::addString( const char *key, const char *value )
 {
-	if (bfmeCallCIC(m_bfmeA, m_bfmeB, const_cast< char * >( key ), const_cast< char * >( value )) < 0)
+	if (bfmeCallCIC(m_bfmeA, m_bfmeB, key, value) < 0)
 		m_bfmeErr = -100;
 }
