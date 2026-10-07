@@ -13252,7 +13252,6 @@ _AutoPickUpUpdateFieldParse,0x0041B464
 _BFMENetworkBackendThreadStart@4,0x00DDB630
 _BannerCarrierUpdateFieldParse,0x004411C8
 _BaseUpgradeFieldParse,0x0042ED57
-_BezierProjectileBehaviorFieldParse,0x0042275F
 _BfmeBaseVUQVft,0x01073744
 _BfmeItoaImport,0x0135935C
 _BloodthirstyUpdateFieldParse,0x0042C822

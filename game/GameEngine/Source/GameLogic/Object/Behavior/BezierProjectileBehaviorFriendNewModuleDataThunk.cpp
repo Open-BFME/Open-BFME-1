@@ -30,7 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl BezierProjectileBehaviorFieldParse(MultiIniFieldParse &parse);
+// Retail stores VA 0x0042275F: the matched ILT thunk ?j_0002275f@@YAXXZ.
+void j_0002275f();
 
 class BezierProjectileBehavior
 {
@@ -43,6 +44,6 @@ ModuleData *BezierProjectileBehavior::friend_newModuleData(INI *ini)
 {
 	BezierProjectileBehaviorModuleData *data = new BezierProjectileBehaviorModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &BezierProjectileBehaviorFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))&j_0002275f);
 	return (ModuleData *)data;
 }
