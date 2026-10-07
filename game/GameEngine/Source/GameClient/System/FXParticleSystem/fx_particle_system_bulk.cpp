@@ -8113,16 +8113,8 @@ __declspec(naked) ParticleSystemTemplate::~ParticleSystemTemplate()
     }
 }
 
-// ??1PointEmissionVolumeModuleTemplate@FXParticleSystem@@UAE@XZ
-PointEmissionVolumeModuleTemplate::~PointEmissionVolumeModuleTemplate()
-{
-    unsigned char *info = this ? (unsigned char *)this + 8 : 0;
-    *(volatile unsigned int *)info = (unsigned int)g_vtbl_01073744;
-
-    unsigned char *base = this ? (unsigned char *)this + 4 : 0;
-    *(volatile unsigned int *)base = (unsigned int)g_vtbl_0110F9AC;
-    *(volatile unsigned int *)this = (unsigned int)g_vtbl_01073758;
-}
+// ??1PointEmissionVolumeModuleTemplate@FXParticleSystem@@UAE@XZ: retail body
+// (0x005D58F0) in PointEmissionVolumeModuleTemplateDestructorThunk.cpp.
 
 // ??1QuadDrawModuleTemplate@FXParticleSystem@@UAE@XZ
 struct QuadDrawDtorBody
