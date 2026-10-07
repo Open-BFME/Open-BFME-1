@@ -75695,7 +75695,6 @@ name,address,notes
 ?bfmeApplyBonuses@WeaponBonusSet@@QBEXIAAVWeaponBonus@@@Z,0x0002272D,Open-BFME5 ILT thunk to body 0x001E1CA0; ?computeBonus@Weapon@@IBEXPBVObject@@IAAVWeaponBonus@@@Z at 0x001E2840 calls it twice on the set from TheWritableGlobalData +0xB94 and on the one at +0x4A8 of the template at this+4; address-derived name
 ?bfmeApplyCDB@@YAXPAX0@Z,0x0001224C,pin
 ?bfmeApplyCVA@BfmeThingCVA@@QAEXXZ,0x00022999,pin
-?bfmeApplyCVB@BfmeThingCVB@@QAEXXZ,0x00022999,pin
 ?bfmeApplyCVC@BfmeThingCVC@@QAEXXZ,0x00022999,pin
 ?bfmeApplyCVD@BfmeThingCVD@@QAEXXZ,0x00022999,pin
 ?bfmeApplyCZ@BfmeOwnCZ@@QAEXPAXHH@Z,0x00032010,pin

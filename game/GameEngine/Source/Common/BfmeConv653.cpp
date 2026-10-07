@@ -1,7 +1,14 @@
+// Both calls go through ILT 0x00022999 to the matched
+// BfmeAptScreenOnlineCustomMatch::applyStagingRoomRefresh (0x0053FC00).
+class BfmeAptScreenOnlineCustomMatch
+{
+public:
+	void applyStagingRoomRefresh();
+};
+
 class BfmeThingCVB
 {
 public:
-	void bfmeApplyCVB();
 	void bfmeGoCVB(void *what);
 	unsigned char m_bfmeHead[0x1e8];
 	int m_bfmeState;
@@ -14,10 +21,10 @@ void BfmeThingCVB::bfmeGoCVB(void *what)
 	if ((v | 0x10000) == 0x10002)
 	{
 		m_bfmeState = v ^ 0x10000;
-		bfmeApplyCVB();
+		reinterpret_cast<BfmeAptScreenOnlineCustomMatch *>(this)->applyStagingRoomRefresh();
 		return;
 	}
 	m_bfmePrev = v;
 	m_bfmeState = 2;
-	bfmeApplyCVB();
+	reinterpret_cast<BfmeAptScreenOnlineCustomMatch *>(this)->applyStagingRoomRefresh();
 }
