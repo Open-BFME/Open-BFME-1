@@ -39,7 +39,7 @@ struct Manager008C3F10 {
 extern Manager008C3F10 *g_manager013377D8;
 class AptValue;
 extern AptValue *g_bfmeFallbackDB;
-extern unsigned char g_byte0133781C;
+extern unsigned char g_bfmeDispatchEnabled1281;
 extern Registry008C3F10 *g_registry01337814;
 // Retail's object at 0x01338748 is the Apt stack, defined by Rva00C6DCC0StaticInit.cpp
 // as `struct Rva008AE770Stack` and exported as ?Rva008AE770TheStack@@3U....  MSVC 7.1
@@ -71,7 +71,7 @@ void Rva008C3F10Value::cleanup(char mode) {
     if (g_manager013377D8->field125C==this) g_manager013377D8->field125C=(Rva008C3F10Value *)g_bfmeFallbackDB;
     if (g_manager013377D8->field1260==this) g_manager013377D8->field1260=(Rva008C3F10Value *)g_bfmeFallbackDB;
     ((BfmePtrTable64_008A4B20 *)((char *)g_manager013377D8+0x820))->remove((BfmeRef008A4B20 *)this);
-    if (g_byte0133781C)
+    if (g_bfmeDispatchEnabled1281)
         ((BfmePtrTable64_008A4B20 *)((char *)g_manager013377D8+0x924))->remove((BfmeRef008A4B20 *)this);
     ((AptAnimationPoolData *)g_manager013377D8)->removeFromBIL((BfmeItemHH *)this);
     for (int i=0;i<g_manager013377D8->field10;++i) {

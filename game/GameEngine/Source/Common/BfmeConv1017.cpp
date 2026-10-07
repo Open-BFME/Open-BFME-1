@@ -7,7 +7,7 @@ public:
 	void bfmeSendY1017(int a, int b, int c);
 };
 
-extern char g_bfme1017G;
+extern unsigned char g_bfmeDispatchEnabled1281;
 extern int g_bfme1017H;
 extern int g_bfme1017I;
 
@@ -18,7 +18,7 @@ extern BfmePickWorld1284 *g_bfmeHolderBU;
 
 void bfmeGo1017X(int a, int b)
 {
-	if (g_bfme1017G != 0 && g_bfme1017H != 0 && g_bfme1017I == 0 && g_bfmeHolderBU != 0)
+	if (g_bfmeDispatchEnabled1281 != 0 && g_bfme1017H != 0 && g_bfme1017I == 0 && g_bfmeHolderBU != 0)
 		((BfmeJ1017 *)g_bfmeHolderBU)->bfmeSendX1017(a, b);
 }
 
