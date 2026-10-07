@@ -1405,22 +1405,8 @@ void StatDebugDisplay( DebugDisplayInterface *, void *, FILE *fp )
 // W3DDisplay::drawCurrentDebugDisplay =================================================
 /** Draw current debug display */
 //=============================================================================
-// ?drawCurrentDebugDisplay@W3DDisplay@@IAEXXZ present-unmatched
-void W3DDisplay::drawCurrentDebugDisplay( void )
-{
-	if (m_debugDisplayCallback == StatDebugDisplay)
-	{
-		drawDebugStats();
-	}
-	else
-	{
-		if ( m_debugDisplay && m_debugDisplayCallback )
-		{
-			m_debugDisplay->reset();
-			m_debugDisplayCallback( m_debugDisplay, m_debugDisplayUserData, NULL );
-		}
-	}
-}  // end drawCurrentDebugDisplay
+// ?drawCurrentDebugDisplay@W3DDisplay@@IAEXXZ: retail 0x006E8DF0 lives in
+// W3DDisplayDrawCurrentDebugDisplay.cpp.
 
 // W3DDisplay::calculateTerrainLOD =================================================
 /** Calculates an adequately speedy terrain Level Of Detail. */
