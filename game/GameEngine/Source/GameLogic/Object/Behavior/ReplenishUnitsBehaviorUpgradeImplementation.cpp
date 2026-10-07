@@ -12,12 +12,18 @@
 // base cast would add a null test. 0x000157DA is pinned as the ILT thunk to
 // UpdateModule::setWakeFrame; this TU keeps the address-derived view of it.
 
-class Gen000157DA
+// ILT 0x000157DA jumps to the matched UpdateModule::setWakeFrame (0x002B2040).
+class Object;
+enum UpdateSleepTime { UPDATE_SLEEP_NONE = 1 };
+
+class UpdateModule
 {
-public:
-	void handle( int a, int b );
-	char m_lead[ 8 ];
-	int m_field;
+	friend class ReplenishUnitsBehavior;
+protected:
+	void setWakeFrame( Object *obj, UpdateSleepTime wakeDelay );
+	void *m_vtable;
+	void *m_moduleData;
+	Object *m_object;
 };
 
 class ReplenishUnitsBehavior
@@ -28,6 +34,6 @@ protected:
 
 void ReplenishUnitsBehavior::upgradeImplementation()
 {
-	( (Gen000157DA *)( (char *)this - 0x20 ) )->handle(
-		( (Gen000157DA *)( (char *)this - 0x20 ) )->m_field, 1 );
+	( (UpdateModule *)( (char *)this - 0x20 ) )->setWakeFrame(
+		( (UpdateModule *)( (char *)this - 0x20 ) )->m_object, UPDATE_SLEEP_NONE );
 }
