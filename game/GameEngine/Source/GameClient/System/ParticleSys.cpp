@@ -1270,15 +1270,7 @@ void ParticleSystem::setLocalTransform( const Matrix3D *matrix )
 	m_isLocalIdentity = false;
 }
 
-// ------------------------------------------------------------------------------------------------
-/** Rotate local transform matrix */
-// ------------------------------------------------------------------------------------------------
-// ?rotateLocalTransformX@ParticleSystem@@QAEXM@Z present-unmatched
-void ParticleSystem::rotateLocalTransformX( Real x )
-{
-	m_localTransform.Rotate_X( x );
-	m_isLocalIdentity = false;
-}
+// ParticleSystem::rotateLocalTransformX: retail body in ParticleSystemRotateLocalTransformX.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** Rotate local transform matrix */
