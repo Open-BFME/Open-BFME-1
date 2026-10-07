@@ -30,7 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl HeroDieFieldParse(MultiIniFieldParse &parse);
+// Retail stores VA 0x0040D2E2: the matched ILT thunk ?j_0000d2e2@@YAXXZ.
+void j_0000d2e2();
 
 class HeroDie
 {
@@ -43,6 +44,6 @@ ModuleData *HeroDie::friend_newModuleData(INI *ini)
 {
 	HeroDieModuleData *data = new HeroDieModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &HeroDieFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))&j_0000d2e2);
 	return (ModuleData *)data;
 }
