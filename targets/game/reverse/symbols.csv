@@ -7430,6 +7430,7 @@ name,address,notes
 ??1Gen_uw_00024352@@QAE@XZ,0x00024352,gen-uw-pin dtor target read from the retail funclet bytes
 ??1Gen_uw_000243c0@@QAE@XZ,0x000243C0,gen-uw-pin dtor target read from the retail funclet bytes
 ??1Gen_uw_000244dd@@QAE@XZ,0x000244DD,gen-uw-pin dtor target read from the retail funclet bytes
+??1Gen_uw_000246ae@@QAE@XZ,0x000246AE,gen-uw-pin dtor target read from the retail funclet bytes (0x00C3A9F0 tail-jumps here; 0x005D4140 is a 5-byte jmp to ILT 0x0001EE2A -> 0x005D3E70)
 ??1Gen_uw_000248e3@@QAE@XZ,0x000248E3,gen-uw-pin dtor target read from the retail funclet bytes
 ??1Gen_uw_00024929@@QAE@XZ,0x00024929,gen-uw-pin dtor target read from the retail funclet bytes
 ??1Gen_uw_00024947@@QAE@XZ,0x00024947,gen-uw-pin dtor target read from the retail funclet bytes
