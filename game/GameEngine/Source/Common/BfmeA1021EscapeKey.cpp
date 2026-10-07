@@ -18,11 +18,24 @@
 // the manager after the last push. The && chain keeps the owner in ecx and the
 // sink in edx and loads the manager before the pushes, 15 bytes out.
 
+// The call goes through ILT 0x15235 to 0x004675F0, the matched
+// ?bfmeBuildAN@BfmeLevelAN@@QAEPADIHHHHHHH@Z (BfmeLevelPathAN.cpp).
+class BfmeLevelAN
+{
+public:
+	char *bfmeBuildAN(unsigned int level, int p2, int p3, int p4, int p5,
+		int p6, int p7, int p8);
+};
+
 class BfmeMgr19E
 {
 public:
 	void bfmeAddAI(void *owner, char *fmt, int argc, char *first, char *second,
-		char *third, char *fourth, char *fifth);
+		char *third, char *fourth, char *fifth)
+	{
+		((BfmeLevelAN *)this)->bfmeBuildAN((unsigned int)owner, (int)fmt, argc,
+			(int)first, (int)second, (int)third, (int)fourth, (int)fifth);
+	}
 };
 
 // Retail global 0x012F19E8. EA's own name for this pointer; see
