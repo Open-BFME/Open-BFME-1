@@ -66,6 +66,7 @@ public:
 	NetCommandList * getFrameCommandList(UnsignedInt frame);
 	UnsignedInt getCommandCount(UnsignedInt frame);
 	UnsignedInt getAckCommandCount(UnsignedInt frame);
+	Int rva00670890(UnsignedInt frame, Int mark);
 	void setFrameCommandCount(UnsignedInt frame, UnsignedInt commandCount);
 	UnsignedInt getFrameCommandCount(UnsignedInt frame);
 	void zeroFrames(UnsignedInt startingFrame, UnsignedInt numFrames);
@@ -217,6 +218,24 @@ UnsignedInt FrameDataManager::getCommandCount(UnsignedInt frame) {
 	UnsignedInt frameindex = frame % FRAME_DATA_LENGTH;
 
 	return m_frameData[frameindex].getCommandCount();
+}
+
+// 0x00670890, a BFME-only ring wrapper with the same shape as its neighbours:
+// it indexes the frame's FrameData and calls the 40-byte FrameData-range body at
+// 0x00670390 (ILT 0x00026C79) with its second argument. That body walks the
+// command list at FrameData+0x08 and counts the entries whose +0x14 field equals
+// the argument; it is matched as BfmeThingYN::bfmeCountYN, the name used here,
+// because FrameData's shim header does not declare it. Identity not recovered.
+class BfmeThingYN
+{
+public:
+	int bfmeCountYN(int mark) const;
+};
+
+Int FrameDataManager::rva00670890(UnsignedInt frame, Int mark) {
+	UnsignedInt frameindex = frame % FRAME_DATA_LENGTH;
+
+	return ((const BfmeThingYN *)&m_frameData[frameindex])->bfmeCountYN(mark);
 }
 
 // ?getAckCommandCount@FrameDataManager@@QAEII@Z
