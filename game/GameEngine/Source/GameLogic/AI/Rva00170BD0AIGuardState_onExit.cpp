@@ -174,10 +174,12 @@ public:
 	void onExit(StateExitType status);
 };
 
-class Rva00170BD0OwnerAction
+// ILT 0x00015541 -> 0x001BF4B0, the matched Gen_001BF4B0::bfmeForward
+// (one pointer argument, thiscall on the owner).
+class Gen_001BF4B0
 {
 public:
-	void setGuardTarget(Object *target);
+	void bfmeForward(void *target);
 };
 
 void Rva00170BD0AIGuardState::onExit(StateExitType status)
@@ -187,7 +189,7 @@ void Rva00170BD0AIGuardState::onExit(StateExitType status)
 	ai->m_isAiDead = 0;
 	Object *target = TheGameLogic->findObjectByID(ai->getGuardObject());
 	if (target && ai->getGuardTargetType() == 1)
-		((Rva00170BD0OwnerAction *)owner)->setGuardTarget(target);
+		((Gen_001BF4B0 *)owner)->bfmeForward(target);
 	if (m_guardMachine)
 		m_guardMachine->deleteInstance(true);
 	m_guardMachine = 0;
