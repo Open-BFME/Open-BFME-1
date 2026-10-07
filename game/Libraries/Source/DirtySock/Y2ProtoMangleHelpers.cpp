@@ -356,7 +356,7 @@ const char *Rva00804920Update( Rva008042B0Http *http )
 						(Rva00804920Connection *)http->m_conn );
 				http->m_conn = 0;
 				http->m_state = 8;
-				Rva007FE780Printf( "ProtoMangle: Addr countdown failed!\n" );
+				Rva007FE780Printf( "ProtoMangle: Sockresolve failed!\n" );
 			}
 			else if( ( (Rva00804920Connection *)http->m_conn )->m_update(
 					(Rva00804920Connection *)http->m_conn ) > 0 )
