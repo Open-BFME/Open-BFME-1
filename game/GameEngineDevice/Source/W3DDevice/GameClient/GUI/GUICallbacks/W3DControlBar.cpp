@@ -49,19 +49,7 @@
 #endif
 
 //-------------------------------------------------------------------------------------------------
-void W3DCameoMovieDraw( GameWindow *window, WinInstanceData *instData )
-{
-	// draw video buffer
-	VideoBuffer *video = TheInGameUI->cameoVideoBuffer();
-	if ( video )
-	{
-		ICoord2D pos, size;
-		window->winGetScreenPosition( &pos.x, &pos.y );
-		window->winGetSize( &size.x, &size.y );
-
-		TheDisplay->drawVideoBuffer( video, pos.x, pos.y, pos.x + size.x, pos.y + size.y );
-	}
-}  // end W3DLeftHUDDraw
+// W3DCameoMovieDraw: retail body (0x00799D00) in W3DCameoMovieDraw_Thunk.cpp.
 
 
 //-------------------------------------------------------------------------------------------------
