@@ -1104,3 +1104,7 @@ game/GameEngine/Source/Common/Rva004262F0Copy.cpp|member||m_field4,0d033045f39ee
 game/GameEngine/Source/Common/Rva004262F0Copy.cpp|member||m_field8,d0d367b2982e07d4bb38e352,gpt-6-astra,20261007205102-9aec48,2026-10-07
 game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorRva00371B00.cpp|member||m_unmodelled11F8,8d9e473f995634037c246f70,gpt-6-astra,20261007205056-40e702,2026-10-07
 game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorRva00371B00.cpp|member||m_unmodelled11F8,8d9e473f995634037c246f70,grok,20261007205048-385f99,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/FireWeaponUpdate.cpp|member||m_08,dcea52ea0ec5bf0aac057f01,gpt-6-astra,20261007205047-779eaf,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/FireWeaponUpdate.cpp|member||m_0c,a2a0409a5bb6741b185793ea,gpt-6-astra,20261007205047-779eaf,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/FireWeaponUpdate.cpp|member||m_0d,6e590d7e91f3ef36cefc605e,gpt-6-astra,20261007205047-779eaf,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/FireWeaponUpdate.cpp|member||m_0e,4d0add9dcc36293773af1ded,gpt-6-astra,20261007205047-779eaf,2026-10-07
