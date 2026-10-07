@@ -20,6 +20,11 @@ typedef ostreambuf_iterator<char, char_traits<char> > BfmeClassicNarrowOutput;
 template <>
 BfmeClassicNarrowOutput num_put<char, BfmeClassicNarrowOutput>::do_put(
 	BfmeClassicNarrowOutput, ios_base &, char, const void *) const;
+// The wide overload is owned by NumPutPointerWide.cpp.
+typedef ostreambuf_iterator<wchar_t, char_traits<wchar_t> > BfmeClassicWideOutput;
+template <>
+BfmeClassicWideOutput num_put<wchar_t, BfmeClassicWideOutput>::do_put(
+	BfmeClassicWideOutput, ios_base &, wchar_t, const void *) const;
 }
 
 namespace _STL

@@ -17,6 +17,13 @@ template <>
 BfmeNarrowPointerIterator
 num_put<char, BfmeNarrowPointerIterator>::do_put(
 	BfmeNarrowPointerIterator, ios_base &, char, const void *) const;
+
+// The wide overload is owned by NumPutPointerWide.cpp.
+typedef ostreambuf_iterator<wchar_t, char_traits<wchar_t> > BfmeWidePointerIterator;
+template <>
+BfmeWidePointerIterator
+num_put<wchar_t, BfmeWidePointerIterator>::do_put(
+	BfmeWidePointerIterator, ios_base &, wchar_t, const void *) const;
 }
 
 template class _STL::num_put<char, _STL::ostreambuf_iterator<char, _STL::char_traits<char> > >;
