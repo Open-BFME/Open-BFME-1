@@ -1138,3 +1138,4 @@ game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|member||m_rva0015d1d0
 game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|param|AIGuardReturnState|m,88f5e110e5470d92bcdf4026,grok,20261007213549-53a736,2026-10-07
 game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|param|AIGuardIdleState|m,c63cbe42bdc6a4ba22b52aba,grok,20261007213549-53a736,2026-10-07
 game/GameEngine/Source/GameLogic/Object/WeaponTemplate_bfmeRangeBase.cpp|member||m_bfmeMaxHeightDifference052C,9824f8ca34057349c253c919,gpt-6-astra,20261007213215-f59427,2026-10-07
+game/GameEngine/Source/GameLogic/Object/WeaponTemplate_bfmeRangeBase.cpp|member||m_bfmeMaxHeightDifference052C,9824f8ca34057349c253c919,grok,20261007213554-9efdf0,2026-10-07
