@@ -38,15 +38,17 @@ public:
 	Bool isKindOf(KindOfType kind) const;					///< ILT thunk at 0x0003251F
 };
 
+enum ObjectID { INVALID_ID = 0 };
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
 {
 public:
 	Relationship getRelationship(const Object *that) const;	///< ILT thunk at 0x0004A719
 
-	/// address-derived name -- do not treat as an identity. Returns the value
+	/// ILT 0x000029D7 jumps to the matched 0x001BE770 accessor; its result is
 	/// compared against the actor's field at +0x74.
-	Int unidentified_000029D7(void) const;					///< ILT thunk at 0x000029D7
+	ObjectID getSoleHealingBenefactor(void) const;
 
 	unsigned char m_unreconstructed_00[0x74];
 	Int m_id74;												///< retail this+0x74
@@ -78,7 +80,7 @@ Bool ActionManager::canResumeConstructionOf(const Object *obj, const Object *obj
 		&& (objectToResume->m_status90 & 4) != 0
 		&& (obj->m_flags344 & 1) == 0)
 	{
-		Int builder = objectToResume->unidentified_000029D7();
+		Int builder = objectToResume->getSoleHealingBenefactor();
 		if (builder == 0 || builder == obj->m_id74)
 			return true;
 	}
