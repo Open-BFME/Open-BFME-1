@@ -3052,18 +3052,7 @@ void PartitionManager::unRegisterGhostObject( GhostObject* object )
 /** 
 	Reveals the map for the given player, but does not override Shroud generation.  (Script)
 */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/PartitionManagerRevealMapForPlayer.cpp
-// ?revealMapForPlayer@PartitionManager@@QAEXH@Z present-unmatched
-void PartitionManager::revealMapForPlayer( Int playerIndex )
-{
-	// By looking and then stopping on every cell, I clear all Passive Shroud
-	// By adding a looker directly I don't hit the Ally logic of the normal look/doShroudReveal
-	for (int i = 0; i < m_totalCellCount; ++i) 
-	{
-		m_cells[i].addLooker( playerIndex );
-		m_cells[i].removeLooker( playerIndex );
-	}
-}
+// PartitionManager::revealMapForPlayer: retail 0x008F73D0, PartitionManagerRevealMapForPlayer.cpp.
 
 /** 
 	Reveals the map for the given player, AND permanently disables all Shroud generation (Observer Mode).
