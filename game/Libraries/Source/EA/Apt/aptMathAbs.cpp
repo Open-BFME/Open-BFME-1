@@ -4,7 +4,7 @@
 // fallback value else the top stack value converted and wrapped.
 #include <math.h>
 #pragma intrinsic(atan, log, sqrt, tan, abs)
-class AptValue { public: float toNumber(); int toInteger(); };
+class AptValue { public: float toNumber(); int toInteger() const; };
 extern AptValue* g_bfmeFallbackDB;
 struct Rva008AE770Stack
 {
