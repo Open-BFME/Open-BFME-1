@@ -183,25 +183,8 @@ Bool GeometryInfo::isIntersectedByLineSegment(const Coord3D& loc, const Coord3D&
 //=============================================================================
 // given an object with this geom, located at 'pos', and another obj with the given
 // pos & geom, calc the min and max pitches from this to that.
-// ?GeometryInfo::calcPitches present-unmatched
-void GeometryInfo::calcPitches(const Coord3D& thisPos, const GeometryInfo& that, const Coord3D& thatPos,
-	Real& minPitch, Real& maxPitch) const
-{
-	Coord3D thisCenter;
-	getCenterPosition(thisPos, thisCenter);
-
-	Real dxy = sqrt(sqr(thatPos.x - thisCenter.x) + sqr(thatPos.y - thisCenter.y));
-
-	Real dz;
-	
-	/** @todo srj -- this could be better, by calcing it for all the corners, not just top-center
-		and bottom-center... oh well */
-	dz = (thatPos.z + that.getMaxHeightAbovePosition()) - thisCenter.z;
-	maxPitch = atan2(dz, dxy);
-
-	dz = (thatPos.z - that.getMaxHeightBelowPosition()) - thisCenter.z;
-	minPitch = atan2(dz, dxy);
-}
+// ?calcPitches@GeometryInfo@@QBEXABUCoord3D@@ABV1@0AAM2@Z is defined once, by the
+// retail-matched body at 0x0087EC20 (GeometryInfoCalcPitches.cpp).
 
 //=============================================================================
 // given an object with this geom, SET how far above the object's canonical position its max z should extend.
