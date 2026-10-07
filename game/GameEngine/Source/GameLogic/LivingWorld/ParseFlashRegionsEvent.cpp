@@ -9,7 +9,15 @@
 // VC7.1 reserves separate 8-byte exception and 16-byte record slots.
 typedef int Int;
 
-struct FieldParse;
+class INI;
+typedef void (*INIFieldParseProc)( INI *, void *, void *, const void * );
+struct FieldParse
+{
+	const char *token;
+	INIFieldParseProc parse;
+	const void *userData;
+	Int offset;
+};
 
 class INIException
 {
@@ -27,6 +35,8 @@ class INI
 {
 public:
 	void initFromINI( void *what, const FieldParse *parseTable );
+	static void parseBool( INI *ini, void *instance, void *store, const void *userData );
+	static void parseSecondsToMillis( INI *ini, void *instance, void *store, const void *userData );
 };
 
 class Rva003B7190Record
@@ -41,7 +51,19 @@ private:
 	Int m_0C;
 };
 
-extern const FieldParse Rva003B7190RecordFieldParseTable[];
+// Retail keeps the field names as separate .rdata strings ahead of the table.
+extern const char g_Va010ECBE0[] = "DelayFromActStart";
+extern const char g_Va010ECBD4[] = "FlashTime";
+extern const char g_Va010ECBC4[] = "SummaryEvent";
+
+// Retail .rdata VA 0x010ECC38, 64 bytes: three entries plus the null row.
+extern const FieldParse Rva003B7190RecordFieldParseTable[] =
+{
+	{ g_Va010ECBE0, INI::parseSecondsToMillis, 0, 0x04 },
+	{ g_Va010ECBD4, INI::parseSecondsToMillis, 0, 0x0C },
+	{ g_Va010ECBC4, INI::parseBool, 0, 0x08 },
+	{ 0, 0, 0, 0 }
+};
 
 class BfmeItemXN;
 
