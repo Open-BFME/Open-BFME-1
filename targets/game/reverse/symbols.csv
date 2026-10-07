@@ -4657,7 +4657,7 @@ name,address,notes
 ??1AIMoveToStateSA@@UAE@XZ,0x0004B475,constructor 0x00173620 and dedicated vtable 0x01098FA8 establish the protected complete destructor called by wrapper 0x00182150; destructor chains to exact AIInternalMoveToState
 ??1AIPanicState@@UAE@XZ,0x0001CA08,exact constructor 0x0017FBE0 and dedicated vtable 0x0109A988 establish the protected complete destructor called by wrapper 0x001855C0 ilt-verified=T1-access(efp=1.30e-03)
 ??1AIPickUpCrateState@@MAE@XZ,0x0004B213,vtable 0x00C960D0 slots name AIPickUpCrateState; protected complete destructor called by wrapper 0x0015CDD0
-??1AIQuarrelState@@MAE@XZ,0x000317A0,constructor 0x001719A0 and dedicated vtable 0x01098470 establish the protected complete destructor called by wrapper 0x00180410
+??1AIQuarrelState@@UAE@XZ,0x000317A0,constructor 0x001719A0 and dedicated vtable 0x01098470 establish the protected complete destructor called by wrapper 0x00180410
 ??1AIRampageState@@MAE@XZ,0x00040967,constructor 0x001719F0 and dedicated vtable 0x010984D8 establish the protected complete destructor called by wrapper 0x00180510
 ??1AIStateMachine@@MAE@XZ,0x00020D9C,protected complete destructor ILT called by scalar wrapper 0x00187240; route reaches matched body 0x00187270 and exact constructor 0x00185A20 installs dedicated vtable 0x0109AEF8
 ??1AITNGuardAttackAggressorState@@UAE@XZ,0x00046D30,vtable 0x00C9B7A0 slots name AITNGuardAttackAggressorState; protected complete destructor called by wrapper 0x0018B360 ilt-verified=T1-access(efp=4.57e-03)
@@ -11275,7 +11275,7 @@ name,address,notes
 ??_GAIPanicState@@UAEPAXI@Z,0x00002A45,dedicated vtable 0x0109A988 slot zero routes to scalar wrapper 0x001855C0 ilt-verified=T1-access(efp=1.30e-03)
 ??_GAIPickUpCrateState@@MAEPAXI@Z,0x00044599,vtable 0x00C960D0 slot zero routes through this ILT to scalar wrapper 0x0015CDD0
 ??_GAIPlayer@@MAEPAXI@Z,0x00046CDB,vtable 0x00C968B0 slot zero routes through this ILT to scalar wrapper 0x00161DF0
-??_GAIQuarrelState@@MAEPAXI@Z,0x0001B243,dedicated vtable 0x01098470 slot zero routes to scalar wrapper 0x00180410
+??_GAIQuarrelState@@UAEPAXI@Z,0x0001B243,dedicated vtable 0x01098470 slot zero routes to scalar wrapper 0x00180410
 ??_GAIRampageState@@MAEPAXI@Z,0x0003F07B,dedicated vtable 0x010984D8 slot zero routes to scalar wrapper 0x00180510
 ??_GAITNGuardAttackAggressorState@@UAEPAXI@Z,0x0001C9F9,vtable 0x00C9B7A0 slot zero routes through this ILT to scalar wrapper 0x0018B360 ilt-verified=T1-access(efp=4.57e-03)
 ??_GAITNGuardIdleState@@MAEPAXI@Z,0x00041D62,vtable 0x00C9B5E0 slot zero routes through this ILT to scalar wrapper 0x0018AF30

@@ -8,7 +8,7 @@
 
 class AIQuarrelState
 {
-protected:
+public:
 	virtual ~AIQuarrelState();
 
 private:

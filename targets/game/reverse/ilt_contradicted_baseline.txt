@@ -1854,7 +1854,6 @@ functions	0x00180290	??_GAITunnelNetworkGuardState@@MAEPAXI@Z
 functions	0x001802C0	??_GAIHuntState@@MAEPAXI@Z
 functions	0x001802F0	??_GAIAttackAreaState@@MAEPAXI@Z
 functions	0x001803A0	??_GAIIdleState@@MAEPAXI@Z
-functions	0x00180410	??_GAIQuarrelState@@MAEPAXI@Z
 functions	0x00180450	??0MoveAwayAndCowerState@@QAE@PAVStateMachine@@@Z
 functions	0x001804B0	??0AIBackAwayState@@QAE@PAX@Z
 functions	0x00180510	??_GAIRampageState@@MAEPAXI@Z
@@ -7265,7 +7264,6 @@ pins	0x0001B103	?init@Transport@@QAE_NPBUTransportAddress@@@Z
 pins	0x0001B18A	??1?$SubsystemSlot@VScienceStore@@@@UAE@XZ
 pins	0x0001B1F3	?doOCLAtBone@BoneFXUpdate@@IAEXPBVObjectCreationList@@PBUCoord3D@@@Z
 pins	0x0001B207	??1GeometryRecord@@QAE@XZ
-pins	0x0001B243	??_GAIQuarrelState@@MAEPAXI@Z
 pins	0x0001B275	??$_Construct@UEvaSideSounds@@U1@@_STL@@YAXPAUEvaSideSounds@@ABU1@@Z
 pins	0x0001B2C0	??1?$SubsystemSlot@VEmotionSystem@@@@UAE@XZ
 pins	0x0001B33D	?construct@BoxEmissionVolumeModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z
@@ -8083,7 +8081,6 @@ pins	0x000316FB	?testForAny@ObjectStatusMaskType@@QBE_NABV1@@Z
 pins	0x00031728	?setTimeOfDay@W3DGameClientWaterShim@@QAEXW4TimeOfDay@@@Z
 pins	0x00031750	?construct@LineEmissionVolumeModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z
 pins	0x0003179B	??_GExperienceLevelCreateModuleData@@MAEPAXI@Z
-pins	0x000317A0	??1AIQuarrelState@@MAE@XZ
 pins	0x000317D7	??RGameSortStruct@@QBE_NPAVGameSpyStagingRoom@@0@Z
 pins	0x00031881	?winSetLayout@GameWindow@@QAEHPAVWindowLayout@@@Z
 pins	0x000318FE	?removeTreesForConstruction@W3DShrubBuffer@@QAEXPBUCoord3D@@ABVGeometryInfo@@M@Z
