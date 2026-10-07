@@ -9,10 +9,17 @@ public:
 	int m_bfme00;
 };
 
+// The +0x20 member is the matched block at 0x007F7F50
+// (game/GameEngine/Source/GameNetwork/V2FeslArrayBlocks.cpp).
+class Rva007F78E0Block
+{
+public:
+	void allocate(int count);
+};
+
 class BfmeSub2_1251
 {
 public:
-	void bfmeUse1251(void *a);
 	int m_bfme00;
 };
 
@@ -62,6 +69,6 @@ void BfmeA1251::bfmeInit1251(BfmeB1251 *b, BfmeS1251 *a)
 	m_bfme1c = b->m_bfme0c;
 	m_bfme28.append((const char *)&b->m_bfme14);
 	m_bfme30.append((const char *)&b->m_bfmeb4);
-	m_bfme20.bfmeUse1251(m_bfme04->m_bfme2bc);
+	((Rva007F78E0Block *)&m_bfme20)->allocate((int)m_bfme04->m_bfme2bc);
 	m_bfme0c = 1;
 }
