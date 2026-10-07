@@ -3,8 +3,8 @@
 // (GeneralsMD/.../WWVegas/WWLib/wwstring.cpp). BFME uses the Zero Hour variant of the
 // file classes (see rawfile.cpp). The heavyweight WWLib includes are folded into
 // wwstring.h as minimal stand-ins; WWMEMLOG expanded to nothing in the shipped build
-// (USE_MEMLOG undefined), and Copy_Wide is omitted (it would drag in the wide Win32
-// codepage imports the decomp toolchain has no headers for).
+// (USE_MEMLOG undefined); Copy_Wide declares its one wide Win32 codepage import
+// locally (the decomp toolchain has no Win32 headers).
 #include "wwstring.h"
 #include <stdio.h>
 
@@ -280,4 +280,35 @@ void
 StringClass::Release_Resources (void)
 {
 	Free_String();
+}
+
+// The wide Win32 codepage import Copy_Wide needs, declared locally (kernel32,
+// CP_ACP = 0); wwstring.h already maps WCHAR to unsigned short.
+extern "C" __declspec(dllimport) int __stdcall WideCharToMultiByte(unsigned int code_page,
+	unsigned long flags, const WCHAR *wide, int wide_length, char *multi, int multi_length,
+	const char *default_char, int *used_default);
+
+bool StringClass::Copy_Wide (const WCHAR *source)
+{
+	if (source != NULL) {
+
+		int  length;
+		int  unmapped;
+
+		length = WideCharToMultiByte (0, 0 , source, -1, NULL, 0, NULL, &unmapped);
+		if (length > 0) {
+
+			// Convert.
+			WideCharToMultiByte (0, 0, source, -1, Get_Buffer (length), length, NULL, NULL);
+
+			// Update length.
+			Store_Length (length - 1);
+		}
+
+		// Were all characters successfully mapped?
+		return (!unmapped);
+	}
+
+	// Failure.
+	return (false);
 }
