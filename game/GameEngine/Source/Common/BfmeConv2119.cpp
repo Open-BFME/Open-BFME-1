@@ -3,10 +3,14 @@ struct BfmeRecord6BE90
 	unsigned char m_bfmeBodyAAJ[0xbc];
 };
 
-class BfmeRecordHook6BE90
+// ILT 0x000418E9 -> 0x0076B800, the matched
+// select@Select0076B800@@QAE_NPAUState0076B800@@_NH@Z.
+struct State0076B800;
+
+class Select0076B800
 {
 public:
-	void bfmeSelect6BE90(BfmeRecord6BE90 *rec, int a, int b);
+	bool select(State0076B800 *state, bool flag, int value);
 };
 
 struct BfmeOwnerAAJ
@@ -46,7 +50,7 @@ void BfmeViewAAJ::bfmePrevAAJ()
 			if (prev != 0)
 			{
 				m_bfme224AAJ = 1;
-				((BfmeRecordHook6BE90 *)((char *)this - 0xc))->bfmeSelect6BE90(prev, 1, 0);
+				((Select0076B800 *)((char *)this - 0xc))->select((State0076B800 *)prev, true, 0);
 			}
 
 			return;
