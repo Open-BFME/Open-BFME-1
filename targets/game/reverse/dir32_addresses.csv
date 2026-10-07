@@ -13344,7 +13344,6 @@ _DualWeaponBehaviorFieldParse,0x00425B4E
 _ElvenWoodSpecialPowerFieldParse,0x00439176
 _ElvenWoodSpecialPowerModuleData_vtbl,0x010B4C38
 _EmotionTrackerUpdateFieldParse,0x00417FD5
-_EnragedBehaviorFieldParse,0x0042A74D
 _EntEnragedInitialValueData,0x010BE788
 _EnumLocalesProcA@4,0x00C4E210
 _EvacuateDamageFieldParse,0x0042DD8A

@@ -30,7 +30,9 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl EnragedBehaviorFieldParse(MultiIniFieldParse &parse);
+// The proc operand is ILT 0x0002A74D -> 0x00203C00, the matched
+// ?Rva00203C00@@YAXPAVGen00850920@@@Z.
+void j_0002a74d();
 
 class EnragedBehavior
 {
@@ -43,6 +45,6 @@ ModuleData *EnragedBehavior::friend_newModuleData(INI *ini)
 {
 	EnragedBehaviorModuleData *data = new EnragedBehaviorModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &EnragedBehaviorFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))j_0002a74d);
 	return (ModuleData *)data;
 }
