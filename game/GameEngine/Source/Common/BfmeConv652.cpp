@@ -1,7 +1,13 @@
+// Retail calls ILT 0x00022999 -> 0x0053FC00, the matched staging-room refresh.
+class BfmeAptScreenOnlineCustomMatch
+{
+public:
+	void applyStagingRoomRefresh();
+};
+
 class BfmeThingCVA
 {
 public:
-	void bfmeApplyCVA();
 	void bfmeGoCVA(void *what);
 	unsigned char m_bfmeHead[0x1e8];
 	int m_bfmeState;
@@ -14,10 +20,10 @@ void BfmeThingCVA::bfmeGoCVA(void *what)
 	if ((v | 0x10000) == 0x10001)
 	{
 		m_bfmeState = v ^ 0x10000;
-		bfmeApplyCVA();
+		((BfmeAptScreenOnlineCustomMatch *)this)->applyStagingRoomRefresh();
 		return;
 	}
 	m_bfmePrev = v;
 	m_bfmeState = 1;
-	bfmeApplyCVA();
+	((BfmeAptScreenOnlineCustomMatch *)this)->applyStagingRoomRefresh();
 }
