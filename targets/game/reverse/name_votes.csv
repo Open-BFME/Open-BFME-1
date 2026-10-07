@@ -1167,3 +1167,4 @@ game/GameEngine/Source/Common/BfmeConv2022.cpp|type||BfmeUStrTL,b6bef267ab221bc3
 game/GameEngine/Source/Common/BfmeConv2022.cpp|type||BfmeHostTL,4426e2f51d512ed77ff359ee,grok,20261007221457-c243d5,2026-10-07
 game/GameEngine/Source/Common/BfmeConv2022.cpp|member||m_bfmeThingTL,d4b441561ed926efb1a11bad,grok,20261007221457-c243d5,2026-10-07
 game/GameEngine/Source/Common/BfmeConv2022.cpp|function|BfmeHostTL@|bfmeApplyTL,d03b90ea25506087ce799997,grok,20261007221457-c243d5,2026-10-07
+game/GameEngine/Source/Common/BfmeThingCEF_Rva00088AB0.cpp|member||m_bfmeOwner,4deaa47846e552ae4b938376,gpt-6-astra,20261007221102-b4ebb8,2026-10-07
