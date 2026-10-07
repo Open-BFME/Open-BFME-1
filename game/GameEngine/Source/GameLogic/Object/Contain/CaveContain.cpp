@@ -1,7 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
-// Address-derived owner: retail 0x00219960. Snapshot xfer with TheTeamFactory
-// at VA 0x012ED810. Base thunk 0x000489DC reaches 0x002298B0.
-// The owner is address-derived; older Gen_0022CD40 pin label was misleading.
+// CaveContain::DoXfer at retail 0x00219960 (EA's name, ea_evidence.csv).
+// Snapshot xfer with TheTeamFactory at VA 0x012ED810. Base thunk 0x000489DC
+// reaches 0x002298B0. Retail's thunk table fits only the protected virtual
+// Xfer& decoration ?DoXfer@CaveContain@@MAEXAAVXfer@@@Z.
 
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
@@ -88,25 +89,29 @@ public:
 
 class BfmeBase002298B0
 {
-	friend class Rva00219960;
+	friend class CaveContain;
 	void xferBase2298B0(Xfer *target);
+
+protected:
+	virtual void DoXfer(Xfer &xfer);
 };
 
-class Rva00219960 : public BfmeBase002298B0
+class CaveContain : public BfmeBase002298B0
 {
-public:
-	void xfer(Xfer *xfer);
+protected:
+	virtual void DoXfer(Xfer &xfer);
 
 private:
-	unsigned char m_pad[0xD8];
+	unsigned char m_pad[0xD4];
 	Bool m_flag;
 	int m_value;
 	Team *m_team;
 };
 
-// ?xfer@Rva00219960@@QAEXPAVXfer@@@Z
-void Rva00219960::xfer(Xfer *xfer)
+// ?DoXfer@CaveContain@@MAEXAAVXfer@@@Z
+void CaveContain::DoXfer(Xfer &xferRef)
 {
+	Xfer *xfer = &xferRef;
 	xferBase2298B0(xfer);
 	if (xfer->isLightCRC())
 		return;
