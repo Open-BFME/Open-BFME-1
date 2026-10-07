@@ -19,22 +19,22 @@
 // the base is one word past it, so the derived record starts at +0x08. The
 // vtable is written by the derived constructor because the base contributes no
 // constructor call of its own.
-class SpawnUnitBehaviorModuleDataBase
+// The base is retail's ??_7BfmeBaseVUQ@@6B@ (0x01073744) class, the vptr the
+// complete destructor 0x00126F00 restores.
+class BfmeBaseVUQ
 {
 public:
-	virtual ~SpawnUnitBehaviorModuleDataBase();
-
-private:
-	unsigned char m_bfme04[4];
+	virtual ~BfmeBaseVUQ() {}
 };
 
-class SpawnUnitBehaviorModuleData : public SpawnUnitBehaviorModuleDataBase
+class SpawnUnitBehaviorModuleData : public BfmeBaseVUQ
 {
 public:
 	SpawnUnitBehaviorModuleData();
 	~SpawnUnitBehaviorModuleData();
 
 private:
+	unsigned char m_bfme04[4];
 	// Named factory 0x00125D70 passes callback ILT 0x0000A727 ->
 	// 0x0020D260. Its FieldParse table at RVA 0x00CA6FE8 binds
 	// UnitName/+8 and UnitCommand/+0x0c to INI::parseAsciiString

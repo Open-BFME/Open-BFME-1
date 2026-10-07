@@ -6,22 +6,21 @@
 // releaseBuffer 0x00887940. Use the canonical four-byte string definition.
 #include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class SpawnUnitBehaviorModuleDataBase
+// The restored base vptr is retail 0x01073744, ??_7BfmeBaseVUQ@@6B@ (symbols.csv).
+class BfmeBaseVUQ
 {
 public:
-	virtual ~SpawnUnitBehaviorModuleDataBase() {}
-
-private:
-	unsigned char m_pad[0x4];
+	virtual ~BfmeBaseVUQ() {}
 };
 
 class __declspec(novtable) SpawnUnitBehaviorModuleData
-	: public SpawnUnitBehaviorModuleDataBase
+	: public BfmeBaseVUQ
 {
 public:
 	virtual ~SpawnUnitBehaviorModuleData();
 
 private:
+	unsigned char m_pad[0x4];
 	// Named factory 0x00125D70 passes callback ILT 0x0000A727 ->
 	// 0x0020D260. Its FieldParse table at RVA 0x00CA6FE8 binds
 	// UnitName/+8 and UnitCommand/+0x0c to INI::parseAsciiString
