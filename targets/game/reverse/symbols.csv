@@ -90357,3 +90357,10 @@ _Rva0015C280Predicate,0x0015C280,cdecl bool(State*;void*) condition callback; re
 ??_C@_06BMKPCKGL@MORDOR?$AA@,0x00C87B64,Retail side-name table VA 0x012AA008 entry; compiler string literal MORDOR equals retail at VA 0x01087B64
 ??_C@_08KBFJFADE@ISENGARD?$AA@,0x00C87B58,Retail side-name table VA 0x012AA008 entry; compiler string literal ISENGARD equals retail at VA 0x01087B58
 ??_C@_07GNLJHKAP@NEUTRAL?$AA@,0x00C87AEC,Retail side-name table VA 0x012AA008 entry; compiler string literal NEUTRAL equals retail at VA 0x01087AEC
+??_C@_06LFMPBDLH@MANUAL?$AA@,0x00D23840,Retail anim-mode name table VA 0x012BB5BC entry; compiler string literal MANUAL equals retail at VA 0x01123840
+??_C@_04KGNEGCGI@LOOP?$AA@,0x00C81718,Retail anim-mode name table VA 0x012BB5BC entry; compiler string literal LOOP equals retail at VA 0x01081718
+??_C@_04GHGHGAKN@ONCE?$AA@,0x00D0F220,Retail anim-mode name table VA 0x012BB5BC entry; compiler string literal ONCE equals retail at VA 0x0110F220
+??_C@_0O@NBBCNOPC@LOOP_PINGPONG?$AA@,0x00D23830,Retail anim-mode name table VA 0x012BB5BC entry; compiler string literal LOOP_PINGPONG equals retail at VA 0x01123830
+??_C@_0O@IJPKBGDK@PLAY_TO_FRAME?$AA@,0x00D23820,Retail anim-mode name table VA 0x012BB5BC entry; compiler string literal PLAY_TO_FRAME equals retail at VA 0x01123820
+??_C@_0P@LMGONLLG@LOOP_BACKWARDS?$AA@,0x00D0F1F8,Retail anim-mode name table VA 0x012BB5BC entry; compiler string literal LOOP_BACKWARDS equals retail at VA 0x0110F1F8
+??_C@_0P@DOBNHDKO@ONCE_BACKWARDS?$AA@,0x00D0F20C,Retail anim-mode name table VA 0x012BB5BC entry; compiler string literal ONCE_BACKWARDS equals retail at VA 0x0110F20C

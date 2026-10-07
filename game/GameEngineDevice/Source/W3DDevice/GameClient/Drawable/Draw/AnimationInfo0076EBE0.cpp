@@ -12,7 +12,18 @@ extern unsigned int g_rva0075b2e0_value;
 class Rva0076C080 { public: void advanceAnimation(); };
 class Rva0076CAF0ConditionalDispatch { public: char pad00[0x9c]; int stamp; void synchronize() { if(g_rva0075b2e0_value!=(unsigned int)stamp) ((Rva0076C080 *)this)->advanceAnimation(); } };
 
-extern const char* AnimModeNames012BB5BC[];
+// Retail .data 0x012BB5BC, 32 bytes: seven animation-mode names and a NULL.
+const char* AnimModeNames012BB5BC[] =
+{
+	"MANUAL",
+	"LOOP",
+	"ONCE",
+	"LOOP_PINGPONG",
+	"PLAY_TO_FRAME",
+	"LOOP_BACKWARDS",
+	"ONCE_BACKWARDS",
+	0
+};
 class AnimationInfo0076EBE0 { public:
  char pad00[0x90]; int stamp; char pad94[0x3c]; Track0076EBE0 tracks[3];
  void describe(int,AsciiString*,AsciiString*);
