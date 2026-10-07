@@ -3576,14 +3576,8 @@ void AIUpdateInterface::destroyPath( void )
 /**
  * This is used by the internal move to state to indicate that a move started.
  */
-// ?friend_startingMove@AIUpdateInterface@@ present-unmatched
-void AIUpdateInterface::friend_startingMove(void) 
-{
-	m_movementComplete = FALSE; // we aren't finished moving.
-	m_isMoving = TRUE;
-	m_blockedFrames = 0;
-	m_isBlockedAndStuck = FALSE;
-}
+// AIUpdateInterface::friend_startingMove: retail 0x0026F0E0, defined in
+// Common/R2FieldResetters.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /**

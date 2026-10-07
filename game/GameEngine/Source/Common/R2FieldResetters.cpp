@@ -48,24 +48,29 @@ void Rva000C7A10::reset()
 	m_at14 = 0;
 }
 
-class Rva0026F0E0
+// AIUpdateInterface::friend_startingMove: the ILT 0x0001246D pinned to this
+// name (callers AIInternalMoveToState computePath 0x001725B0, 0x00178BC0...)
+// jumps here; the four stores are ZH's movementComplete=FALSE, isMoving=TRUE,
+// blockedFrames=0, isBlockedAndStuck=FALSE in order.
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
+class AIUpdateInterface
 {
 public:
 	char m_pad00[ 0x16C ];
-	int m_at16C;
+	int m_blockedFrames;
 	char m_pad170[ 0x1B3 ];
-	char m_at323;
-	char m_at324;
+	char m_movementComplete;
+	char m_isMoving;
 	char m_pad325[ 0x1 ];
-	char m_at326;
-	void reset();
+	char m_isBlockedAndStuck;
+	void friend_startingMove();
 };
-void Rva0026F0E0::reset()
+void AIUpdateInterface::friend_startingMove()
 {
-	m_at323 = 0;
-	m_at324 = 1;
-	m_at16C = 0;
-	m_at326 = 0;
+	m_movementComplete = 0;
+	m_isMoving = 1;
+	m_blockedFrames = 0;
+	m_isBlockedAndStuck = 0;
 }
 
 class Rva0026F390
