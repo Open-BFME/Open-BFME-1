@@ -23,7 +23,7 @@ class GameEngine
 public:
 	virtual void slot00(void);
 
-	void Rva0006C180(void *value);
+	void startHeadlessClients(int numClients);
 
 private:
 	AsciiStringLayout m_name;       // 0x04, inherited SubsystemInterface::m_name
@@ -35,16 +35,16 @@ private:
 	HANDLE m_childProcesses[7];     // 0x14
 };
 
-void GameEngine::Rva0006C180(void *value)
+void GameEngine::startHeadlessClients(int numClients)
 {
 	__declspec(align(8)) char modulePath[0x200];
 
 	if (m_childProcessCount > 0)
 		return;
-	if ((int)value < 1)
+	if (numClients < 1)
 		return;
-	if ((int)value > 7)
-		value = (void *)7;
+	if (numClients > 7)
+		numClients = 7;
 
 	GetModuleFileNameA(0, modulePath, 0x200);
 	char *environment = GetEnvironmentStrings();
@@ -64,12 +64,12 @@ void GameEngine::Rva0006C180(void *value)
 	char *environmentCopy;
 	environmentCopy = (char *)malloc(environmentLength);
 	int count = 0;
-	if ((int)value > 0)
+	if (numClients > 0)
 	{
 		PROCESS_INFORMATION processInformation;
 		int number = 1;
 		HANDLE *processSlot = m_childProcesses;
-		for (int remaining = (int)value; remaining > 0; --remaining)
+		for (int remaining = numClients; remaining > 0; --remaining)
 		{
 			char *cursor = environmentCopy;
 			cursor += sprintf(cursor, "_EA_RTS_HEADLESS=%i", number) + 1;

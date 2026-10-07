@@ -12577,7 +12577,7 @@ name,address,notes
 ?Rva00064680FieldParseTable@@3QBUFieldParse@@B,0x010753D0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00064680 calls; autopin
 ?Rva00064680NegativeScale@@3MB,0x01075354,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00064680 calls; autopin
 ?Rva00066A40Construct@@YAXPAXPBX@Z,0x00066A40,plain two-pointer spelling of the STLport _Construct<pair<const NameKeyType DamageFX>> the ledger already names at this address (U3_node_allocators.cpp)
-?Rva0006C180@GameEngine@@QAEXPAX@Z,0x0002E8FC
+?startHeadlessClients@GameEngine@@QAEXH@Z,0x0002E8FC
 ?Rva00094010Register@@YAXPAVINI@@ABVAsciiString@@PAVRva000940F0Definition@@@Z,0x00023344,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000940F0 calls; autopin
 ?Rva00094010Register@@YAXPAVINI@@ABVAsciiString@@PAVRva00094470Definition@@@Z,0x00023344,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00094470 calls; autopin
 ?Rva0009B6C0RecorderStart@RecorderClass@@IAEXHHHH@Z,0x0009B6C0,address-derived RecorderClass helper; target updateRecord call proves thiscall with four 32-bit arguments
