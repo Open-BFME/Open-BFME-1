@@ -8,10 +8,25 @@ struct Rva0035D880Node
 	int m_extra;
 };
 
+// ILT 0x47492 -> 0x0035D1E0, matched
+// ?addNode@Rva0035D2B0StringRecordTable@@QAEHPAVAsciiString@@PBVScript@@@Z
+// (ScriptRecordTableAddScriptNode.cpp).
+class AsciiString;
+class Script;
+class Rva0035D2B0StringRecordTable
+{
+public:
+	int addNode(AsciiString *name, const Script *script);
+};
+
 class Rva0035D880Table
 {
 public:
-	int lookup(int key, int extra);
+	int lookup(int key, int extra)
+	{
+		return ((Rva0035D2B0StringRecordTable *)this)->addNode(
+			(AsciiString *)key, (const Script *)extra);
+	}
 
 private:
 	unsigned char m_pad[0xC];
