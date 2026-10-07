@@ -103,7 +103,8 @@ const float MAX_OMEGA			= DEG_TO_RADF(15.0f*360.0f);
 const float END_OMEGA			= DEG_TO_RADF(360.0f);
 const float MIN_PHI				= DEG_TO_RADF(0.0f);
 const float MAX_PHI				= DEG_TO_RADF(360.0f);
-const Vector3 AXIS_ROTATION	= Vector3(DEG_TO_RADF(7.5f),DEG_TO_RADF(15.0f),DEG_TO_RADF(5.0f));
+// BFME retail 0x012BA730 shakes all three axes up to 80 degrees (ZH: 7.5, 15, 5).
+const Vector3 AXIS_ROTATION	= Vector3(DEG_TO_RADF(80.0f),DEG_TO_RADF(80.0f),DEG_TO_RADF(80.0f));
 
 
 /************************************************************************************************
