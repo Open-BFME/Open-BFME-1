@@ -435,64 +435,8 @@ StateReturnType StateMachine::resetToDefaultState()
 /**
  * Run one step of the machine
  */
-// ?updateStateMachine@StateMachine@@ present-unmatched
-StateReturnType StateMachine::updateStateMachine()
-{
-	UnsignedInt now = TheGameLogic->getFrame();
-	if (m_sleepTill != 0 && now < m_sleepTill)
-	{
-		if( m_currentState == NULL )
-		{
-			return STATE_FAILURE;
-		}
-		return m_currentState->friend_checkForSleepTransitions( STATE_SLEEP(m_sleepTill - now) );
-	}
-
-	// not sleeping anymore
-	m_sleepTill = 0;
-
-	if (m_currentState)
-	{
-		// update() can change m_currentState, so save it for a moment...
-		State* stateBeforeUpdate = m_currentState;
-
-		// execute this state
-		StateReturnType status = m_currentState->update();
-
-		// it is possible that the state's update() method may cause the state to be destroyed
-		if (m_currentState == NULL)
-		{
-			return STATE_FAILURE;
-		}
-		
-		// here's the scenario: 
-		// -- State A calls foo() and then says "sleep for 2000 frames".
-		// -- however, foo() called setState() to State B. thus our current state is not the same.
-		// -- thus, if the state changed, we must ignore any sleep result and pretend we got STATE_CONTINUE,
-		// so that the new state will be called immediately.
-		if (stateBeforeUpdate != m_currentState)
-		{
-			status = STATE_CONTINUE;
-		}
-
-		if (IS_STATE_SLEEP(status))
-		{
-			// hey, we're sleepy!
-			m_sleepTill = now + GET_STATE_SLEEP_FRAMES(status);
-			return m_currentState->friend_checkForSleepTransitions( STATE_SLEEP(m_sleepTill - now) );
-		}
-		else
-		{
-			// check for state transitions, possibly exiting this machine
-			return m_currentState->friend_checkForTransitions( status );
-		}
-	}
-	else
-	{
-		DEBUG_CRASH(("State machine has no current state -- did you remember to call initDefaultState?"));
-		return STATE_FAILURE;
-	}
-}
+// StateMachine::updateStateMachine: retail body (0x000A0760) in
+// StateMachine_updateStateMachineTwin.cpp.
 
 //-----------------------------------------------------------------------------
 /**
