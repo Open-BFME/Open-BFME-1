@@ -8,10 +8,14 @@ struct Gen0035D740Node
 	int m_extra;
 };
 
-class Gen0035D740Table
+class AsciiString;
+
+// The +0xC table is the matched Rva00359330StringRecordTable: retail calls
+// ILT 0x00034856 -> 0x0035CD20 ?addNode@Rva00359330StringRecordTable.
+class Rva00359330StringRecordTable
 {
 public:
-	int lookup(int key);
+	int addNode(AsciiString *name);
 
 private:
 	unsigned char m_pad[0xC];
@@ -29,13 +33,13 @@ public:
 
 private:
 	unsigned char m_pad[0xC];
-	Gen0035D740Table m_table;
+	Rva00359330StringRecordTable m_table;
 	Gen0035D740Elem *m_elems;
 };
 
 Gen0035D740Node *Gen0035D740::makeNode(int key)
 {
-	int index = m_table.lookup(key);
+	int index = m_table.addNode((AsciiString *)key);
 	if (index != -1)
 	{
 		Gen0035D740Node *node = new Gen0035D740Node;
