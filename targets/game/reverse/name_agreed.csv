@@ -539,3 +539,6 @@ game/GameEngine/Source/GameLogic/Object/Update/FireWeaponUpdate.cpp|member||m_0e
 game/GameEngine/Source/Common/S4AdjustHeapElem12Pod.cpp|function||bfmeAdjustHeap005300E0,__adjust_heap,gpt-6-astra+grok,agreed,2026-10-07
 game/GameEngine/Source/Common/S4AdjustHeapElem12Pod.cpp|function||bfmeAdjustHeap005300E0,__adjust_heap,gpt-6-astra+grok,applied,2026-10-07
 game/GameEngine/Source/Common/BfmeConv2083.cpp|function||bfmeMedianXD,median,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/Common/BfmeConv766.cpp|type||BfmeThingDSA,StateMachine,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/Common/BfmeConv766.cpp|member||m_bfmeFlag,m_locked,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/Common/BfmeConv766.cpp|function|BfmeThingDSA@|bfmeGoDSA,setState,gpt-6-astra+grok,agreed,2026-10-07
