@@ -31,7 +31,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl DefectorSpecialPowerFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the ILT stub 0x00027F7F (?j_00027f7f@@YAXXZ).
+extern void j_00027f7f(void);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DefectorSpecialPower.h
 class DefectorSpecialPower
@@ -45,6 +46,6 @@ ModuleData *DefectorSpecialPower::friend_newModuleData(INI *ini)
 {
 	DefectorSpecialPowerModuleData *data = new DefectorSpecialPowerModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &DefectorSpecialPowerFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))j_00027f7f);
 	return (ModuleData *)data;
 }

@@ -31,7 +31,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl StructureBodyFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the ILT stub 0x0003EB35 (?j_0003eb35@@YAXXZ).
+extern void j_0003eb35(void);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/StructureBody.h
 class StructureBody
@@ -45,6 +46,6 @@ ModuleData *StructureBody::friend_newModuleData(INI *ini)
 {
 	StructureBodyModuleData *data = new StructureBodyModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &StructureBodyFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))j_0003eb35);
 	return (ModuleData *)data;
 }

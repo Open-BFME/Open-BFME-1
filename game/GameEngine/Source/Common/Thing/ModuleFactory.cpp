@@ -421,6 +421,15 @@ public: \
 		return (ModuleData*)data; \
 	}
 
+// Modules whose friend_newModuleData is a retail-proven strong body in its own
+// thunk TU (<Class>FriendNewModuleDataThunk.cpp): include them with
+// MAKE_STANDARD_MODULE_DATA_MACRO_ABC swapped for this declare-only variant.
+#define BFME_DECLARED_MODULE_DATA_MACRO( cls, clsmd ) \
+private: \
+	const clsmd* get##clsmd() const { return (clsmd*)getModuleData(); } \
+public: \
+	static ModuleData* friend_newModuleData(INI* ini);
+
 // behavior includes
 #include "GameLogic/Module/AutoHealBehavior.h"
 #include "GameLogic/Module/GrantStealthBehavior.h"
@@ -601,7 +610,11 @@ public: \
 #define MAKE_STANDARD_MODULE_MACRO( cls ) BFME_DECLARED_MODULE_MACRO( cls )
 #include "GameLogic/Module/SupplyCenterCreate.h"
 #include "GameLogic/Module/SupplyWarehouseCreate.h"
+#pragma push_macro("MAKE_STANDARD_MODULE_DATA_MACRO_ABC")
+#undef MAKE_STANDARD_MODULE_DATA_MACRO_ABC
+#define MAKE_STANDARD_MODULE_DATA_MACRO_ABC( cls, clsmd ) BFME_DECLARED_MODULE_DATA_MACRO( cls, clsmd )
 #include "GameLogic/Module/GrantUpgradeCreate.h"
+#pragma pop_macro("MAKE_STANDARD_MODULE_DATA_MACRO_ABC")
 #include "GameLogic/Module/PreorderCreate.h"
 #include "GameLogic/Module/SpecialPowerCreate.h"
 #pragma pop_macro("MAKE_STANDARD_MODULE_MACRO")
@@ -662,7 +675,11 @@ public: \
 #define MAKE_STANDARD_MODULE_MACRO( cls ) BFME_DECLARED_MODULE_MACRO( cls )
 #include "GameLogic/Module/HighlanderBody.h"
 #include "GameLogic/Module/ImmortalBody.h"
+#pragma push_macro("MAKE_STANDARD_MODULE_DATA_MACRO_ABC")
+#undef MAKE_STANDARD_MODULE_DATA_MACRO_ABC
+#define MAKE_STANDARD_MODULE_DATA_MACRO_ABC( cls, clsmd ) BFME_DECLARED_MODULE_DATA_MACRO( cls, clsmd )
 #include "GameLogic/Module/StructureBody.h"
+#pragma pop_macro("MAKE_STANDARD_MODULE_DATA_MACRO_ABC")
 #pragma pop_macro("MAKE_STANDARD_MODULE_MACRO")
 #include "GameLogic/Module/HiveStructureBody.h"
 #include "GameLogic/Module/UndeadBody.h"
@@ -675,7 +692,11 @@ public: \
 #pragma push_macro("MAKE_STANDARD_MODULE_MACRO")
 #undef MAKE_STANDARD_MODULE_MACRO
 #define MAKE_STANDARD_MODULE_MACRO( cls ) BFME_DECLARED_MODULE_MACRO( cls )
+#pragma push_macro("MAKE_STANDARD_MODULE_DATA_MACRO_ABC")
+#undef MAKE_STANDARD_MODULE_DATA_MACRO_ABC
+#define MAKE_STANDARD_MODULE_DATA_MACRO_ABC( cls, clsmd ) BFME_DECLARED_MODULE_DATA_MACRO( cls, clsmd )
 #include "GameLogic/Module/DefectorSpecialPower.h"
+#pragma pop_macro("MAKE_STANDARD_MODULE_DATA_MACRO_ABC")
 #pragma pop_macro("MAKE_STANDARD_MODULE_MACRO")
 #ifdef ALLOW_DEMORALIZE
 #include "GameLogic/Module/DemoralizeSpecialPower.h"

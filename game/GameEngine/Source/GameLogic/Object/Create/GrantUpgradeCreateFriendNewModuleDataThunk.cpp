@@ -40,7 +40,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl GrantUpgradeCreateFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the ILT stub 0x00041C27 (?j_00041c27@@YAXXZ).
+extern void j_00041c27(void);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/GrantUpgradeCreate.h
 class GrantUpgradeCreate
@@ -54,6 +55,6 @@ ModuleData *GrantUpgradeCreate::friend_newModuleData(INI *ini)
 {
 	GrantUpgradeCreateModuleData *data = new GrantUpgradeCreateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &GrantUpgradeCreateFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))j_00041c27);
 	return (ModuleData *)data;
 }
