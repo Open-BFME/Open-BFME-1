@@ -1087,29 +1087,7 @@ void DozerPrimaryStateMachine::loadPostProcess( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?isBuildMostImportant@DozerPrimaryStateMachine@@SA_NPAVState@@PAX@Z present-unmatched
-Bool DozerPrimaryStateMachine::isBuildMostImportant( State *thisState, void* userData )
-{
-	Object *dozer = thisState->getMachineOwner();
-	AIUpdateInterface *ai = dozer->getAIUpdateInterface();
-	if( !ai )
-	{
-		return FALSE;
-	}
-	DozerAIInterface *dozerAI = ai->getDozerAIInterface();
-	if( !dozerAI )
-	{
-		return FALSE;
-	}
-
-	if( !ai->isIdle() )
-		return FALSE;  // busy doing something else
-
-	// if the most important task is us then return true
-	DozerTask task = dozerAI->getMostRecentCommand();
-	return task == DOZER_TASK_BUILD;
-
-}  // end isBuildMostImportant
+// ?isBuildMostImportant@DozerPrimaryStateMachine@@SA_NPAVState@@PAX@Z: retail body matched in DozerPrimaryStateMachine_isBuildMostImportantTwin.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
