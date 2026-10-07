@@ -184,7 +184,9 @@ class Object : public Thing {public:
  SpecialPowerModuleInterface *getSpecialPowerModule(const SpecialPowerTemplate*)const;
  Player *getControllingPlayer()const;
  ObjectShroudStatus getShroudedStatus(int)const;
- Module *findModule(NameKeyType)const;
+ friend class ActionManager;
+protected:
+ Module *findModule(NameKeyType)const; // retail: protected (IBE), 0x001BEE60
 };
 class BFMEActionObject {public:bool testStatus(int)const;};
 
