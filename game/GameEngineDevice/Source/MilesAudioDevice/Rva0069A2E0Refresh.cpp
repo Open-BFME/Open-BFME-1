@@ -45,18 +45,20 @@ struct Coord3D
 		y = ay;
 		z = az;
 	}
-
-	void normalize()
-	{
-		Real lx = x;
-		Real ly = y;
-		Real lz = z;
-		Real inv = 1.0f / (Real)sqrt(lx * lx + ly * ly + lz * lz);
-		x *= inv;
-		y *= inv;
-		z *= inv;
-	}
 };
+
+// Retail's Coord3D::normalize (0x000FB930) has a zero check; this inlined
+// shape does not, so it stays a file-static helper, not a Coord3D COMDAT.
+static void normalizeCoord3D(Coord3D &c)
+{
+	Real lx = c.x;
+	Real ly = c.y;
+	Real lz = c.z;
+	Real inv = 1.0f / (Real)sqrt(lx * lx + ly * ly + lz * lz);
+	c.x *= inv;
+	c.y *= inv;
+	c.z *= inv;
+}
 
 // The 0x30-byte distance profile; +0x1C.. are the fields the landed
 // attenuate body names, the first seven are read only here.
@@ -190,7 +192,7 @@ void Rva0069A2E0Owner::refresh0069A2E0()
 	if (delta.x != 0.0f || delta.y != 0.0f)
 	{
 		m_listenerFacing.set(-delta.x, -delta.y, 0.0f);
-		m_listenerFacing.normalize();
+		normalizeCoord3D(m_listenerFacing);
 	}
 
 	if (m_listener)
