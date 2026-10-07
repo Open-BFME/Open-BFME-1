@@ -362,6 +362,18 @@ protected: \
 	virtual void crc( Xfer *xfer ); \
 	virtual void xfer( Xfer *xfer ); \
 	virtual void loadPostProcess( void );
+// Modules whose friend_newModuleInstance is a retail-proven strong body in its
+// own thunk TU (<Class>FriendNewModuleInstanceThunk.cpp and kin): include them
+// with MAKE_STANDARD_MODULE_MACRO swapped for this declare-only variant so this
+// TU does not emit a second, non-retail inline copy.
+#define BFME_DECLARED_MODULE_MACRO( cls ) \
+public: \
+	static Module* friend_newModuleInstance( Thing *thing, const ModuleData* moduleData ); \
+	virtual NameKeyType getModuleNameKey() const { static NameKeyType nk = NAMEKEY(#cls); return nk; } \
+protected: \
+	virtual void crc( Xfer *xfer ); \
+	virtual void xfer( Xfer *xfer ); \
+	virtual void loadPostProcess( void );
 #include "Common/ModuleFactory.h"
 #include "Common/NameKeyGenerator.h"
 #include "../../../Include/GameLogic/Module/DamageModule.h"
@@ -584,20 +596,32 @@ public: \
 
 // create includes
 #include "GameLogic/Module/LockWeaponCreate.h"
+#pragma push_macro("MAKE_STANDARD_MODULE_MACRO")
+#undef MAKE_STANDARD_MODULE_MACRO
+#define MAKE_STANDARD_MODULE_MACRO( cls ) BFME_DECLARED_MODULE_MACRO( cls )
 #include "GameLogic/Module/SupplyCenterCreate.h"
 #include "GameLogic/Module/SupplyWarehouseCreate.h"
 #include "GameLogic/Module/GrantUpgradeCreate.h"
 #include "GameLogic/Module/PreorderCreate.h"
 #include "GameLogic/Module/SpecialPowerCreate.h"
+#pragma pop_macro("MAKE_STANDARD_MODULE_MACRO")
 #include "GameLogic/Module/VeterancyGainCreate.h"
 
 // damage includes
+#pragma push_macro("MAKE_STANDARD_MODULE_MACRO")
+#undef MAKE_STANDARD_MODULE_MACRO
+#define MAKE_STANDARD_MODULE_MACRO( cls ) BFME_DECLARED_MODULE_MACRO( cls )
 #include "GameLogic/Module/BoneFXDamage.h"
+#pragma pop_macro("MAKE_STANDARD_MODULE_MACRO")
 #include "GameLogic/Module/TransitionDamageFX.h"
 
 // collide includes
 #include "GameLogic/Module/FireWeaponCollide.h"
+#pragma push_macro("MAKE_STANDARD_MODULE_MACRO")
+#undef MAKE_STANDARD_MODULE_MACRO
+#define MAKE_STANDARD_MODULE_MACRO( cls ) BFME_DECLARED_MODULE_MACRO( cls )
 #include "GameLogic/Module/SquishCollide.h"
+#pragma pop_macro("MAKE_STANDARD_MODULE_MACRO")
 
 #include "GameLogic/Module/ConvertToCarBombCrateCollide.h"
 #include "GameLogic/Module/ConvertToHijackedVehicleCrateCollide.h"
@@ -633,24 +657,13 @@ public: \
 // body includes
 #include "GameLogic/Module/InactiveBody.h"
 #include "GameLogic/Module/ActiveBody.h"
-// HighlanderBody's (0x0011F4B0, HighlanderBodyFriendNewModuleInstanceThunk.cpp)
-// and ImmortalBody's (0x0011F530, ImmortalBodyFriendNewModuleInstanceThunk.cpp)
-// factory hooks are retail-proven strong bodies; only declare it here so this
-// TU does not emit a second, non-retail copy.
 #pragma push_macro("MAKE_STANDARD_MODULE_MACRO")
 #undef MAKE_STANDARD_MODULE_MACRO
-#define MAKE_STANDARD_MODULE_MACRO( cls ) \
-public: \
-	static Module* friend_newModuleInstance( Thing *thing, const ModuleData* moduleData ); \
-	virtual NameKeyType getModuleNameKey() const { static NameKeyType nk = NAMEKEY(#cls); return nk; } \
-protected: \
-	virtual void crc( Xfer *xfer ); \
-	virtual void xfer( Xfer *xfer ); \
-	virtual void loadPostProcess( void );
+#define MAKE_STANDARD_MODULE_MACRO( cls ) BFME_DECLARED_MODULE_MACRO( cls )
 #include "GameLogic/Module/HighlanderBody.h"
 #include "GameLogic/Module/ImmortalBody.h"
-#pragma pop_macro("MAKE_STANDARD_MODULE_MACRO")
 #include "GameLogic/Module/StructureBody.h"
+#pragma pop_macro("MAKE_STANDARD_MODULE_MACRO")
 #include "GameLogic/Module/HiveStructureBody.h"
 #include "GameLogic/Module/UndeadBody.h"
 
@@ -659,11 +672,19 @@ protected: \
 
 // special power modules
 #include "GameLogic/Module/CashHackSpecialPower.h"
+#pragma push_macro("MAKE_STANDARD_MODULE_MACRO")
+#undef MAKE_STANDARD_MODULE_MACRO
+#define MAKE_STANDARD_MODULE_MACRO( cls ) BFME_DECLARED_MODULE_MACRO( cls )
 #include "GameLogic/Module/DefectorSpecialPower.h"
+#pragma pop_macro("MAKE_STANDARD_MODULE_MACRO")
 #ifdef ALLOW_DEMORALIZE
 #include "GameLogic/Module/DemoralizeSpecialPower.h"
 #endif
+#pragma push_macro("MAKE_STANDARD_MODULE_MACRO")
+#undef MAKE_STANDARD_MODULE_MACRO
+#define MAKE_STANDARD_MODULE_MACRO( cls ) BFME_DECLARED_MODULE_MACRO( cls )
 #include "GameLogic/Module/OCLSpecialPower.h"
+#pragma pop_macro("MAKE_STANDARD_MODULE_MACRO")
 #include "GameLogic/Module/SpecialAbility.h"
 #include "GameLogic/Module/SpyVisionSpecialPower.h"
 #include "GameLogic/Module/CashBountyPower.h"
@@ -674,9 +695,17 @@ protected: \
 // (none)
 
 // client update includes
+#pragma push_macro("MAKE_STANDARD_MODULE_MACRO")
+#undef MAKE_STANDARD_MODULE_MACRO
+#define MAKE_STANDARD_MODULE_MACRO( cls ) BFME_DECLARED_MODULE_MACRO( cls )
 #include "GameClient/Module/AnimatedParticleSysBoneClientUpdate.h"
+#pragma pop_macro("MAKE_STANDARD_MODULE_MACRO")
 #include "GameClient/Module/SwayClientUpdate.h"
+#pragma push_macro("MAKE_STANDARD_MODULE_MACRO")
+#undef MAKE_STANDARD_MODULE_MACRO
+#define MAKE_STANDARD_MODULE_MACRO( cls ) BFME_DECLARED_MODULE_MACRO( cls )
 #include "GameClient/Module/BeaconClientUpdate.h"
+#pragma pop_macro("MAKE_STANDARD_MODULE_MACRO")
 
 ModuleData* bfmeFactoryAnchorAutoDepositUpdateModuleData() { return ::new AutoDepositUpdateModuleData; }
 ModuleData* bfmeFactoryAnchorCreateCrateDieModuleData() { return ::new CreateCrateDieModuleData; }
