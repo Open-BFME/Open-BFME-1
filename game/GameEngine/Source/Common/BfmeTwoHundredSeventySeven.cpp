@@ -3,7 +3,10 @@
 // without optimisation. Both callees are pinned by address; nothing here names
 // them.
 
-void *bfmeBigAllocPR(unsigned int bytes);
+// The large path calls ILT 0x00037C54 -> 0x00060800, the 5-byte jump thunk
+// ?j_00060800@@YAXXZ to 0x00881F30 (global operator new, mem_ops.cpp).
+void j_00060800();
+typedef void *(*BfmeBigAllocPRFn)(unsigned int bytes);
 
 void *bfmeSmallAllocPR(unsigned int bytes);
 
@@ -12,7 +15,7 @@ void *bfmeAllocPR(unsigned int bytes)
 	void *got;
 
 	if (bytes > 0x80)
-		got = bfmeBigAllocPR(bytes);
+		got = reinterpret_cast<BfmeBigAllocPRFn>(j_00060800)(bytes);
 	else
 		got = bfmeSmallAllocPR(bytes);
 
