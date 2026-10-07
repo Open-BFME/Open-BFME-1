@@ -5,6 +5,12 @@
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 #include "Common/INI/INI.h"
 
+// Retail .rdata VA 0x01113594 (16 B): no fields, only the zero terminator.
+extern "C" const FieldParse DefaultModuleTemplate05FieldParse[] =
+{
+	{ 0, 0, 0, 0 }
+};
+
 namespace FXParticleSystem
 {
 template <int Category>
@@ -14,12 +20,11 @@ public:
 	void parse(INI *ini);
 };
 
-extern "C" char DefaultModuleTemplate05FieldParse;
 
 template <int Category>
 void DefaultModuleTemplate<Category>::parse(INI *ini)
 {
-	ini->initFromINI(this, (const FieldParse *)&DefaultModuleTemplate05FieldParse);
+	ini->initFromINI(this, DefaultModuleTemplate05FieldParse);
 }
 
 template void DefaultModuleTemplate<6>::parse(INI *);
