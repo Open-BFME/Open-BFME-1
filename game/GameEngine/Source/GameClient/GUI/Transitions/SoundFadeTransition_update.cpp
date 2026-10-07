@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 //
-// SoundFadeTransition::update at retail RVA 0x0059D2D0.
+// FreezePostLoadSoundsTransition::update at retail RVA 0x0059D2D0 (EA's name,
+// ea_evidence.csv; the ILT oracle confirms the exact spelling).
 // The vtable at 0x00D0C780 and the field table at 0x00D0C7C8 identify this
 // object as the SOUNDFADE transition.  The field table names StartFrame at
 // +0x10, EndFrame at +0x14, and FadeInUnfrozenSounds at +0x18.
@@ -34,7 +35,7 @@ public:
 class AudioManager;
 extern AudioManager *TheAudio;
 
-class SoundFadeTransition
+class FreezePostLoadSoundsTransition
 {
 public:
 	virtual void slot00();
@@ -58,7 +59,7 @@ public:
 	Bool m_soundsUnfrozen;
 };
 
-void SoundFadeTransition::update(Int frame)
+void FreezePostLoadSoundsTransition::update(Int frame)
 {
 	if (frame < m_startFrame || frame > m_endFrame)
 		return;
