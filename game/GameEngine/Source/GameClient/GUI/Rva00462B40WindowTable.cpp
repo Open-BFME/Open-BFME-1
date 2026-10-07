@@ -19,7 +19,7 @@ class GameWindow {
 public:
     bool winIsHidden();
     int winHide(bool hide);
-    unsigned int winSetStatus(unsigned int status);
+    unsigned int _bfme_winSetStatus(unsigned int status);  // row 0x00478420 (ILT 0x33523)
 };
 
 struct WindowRecord {
@@ -58,7 +58,7 @@ void bfmeFinish991() {
             GameWindow *window = it->second.m_window;
             if (window && !window->winIsHidden()) {
                 window->winHide(true);
-                window->winSetStatus(0x10000000);
+                window->_bfme_winSetStatus(0x10000000);
             }
         }
     }
