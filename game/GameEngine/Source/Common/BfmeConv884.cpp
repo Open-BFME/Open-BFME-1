@@ -32,7 +32,7 @@ bool BfmeThingESB::bfmeGoESB(BfmeObjESA *o)
 	return m_bfmeP == ((Object *)o)->getControllingPlayer();
 }
 
-class BfmePlayerListHuntView
+class PlayerList
 {
 public:
 	unsigned short getPlayersWithRelationship(int playerIndex,
@@ -58,7 +58,7 @@ int BfmeThingESCa::bfmeGoESCa()
 	BfmeSubESA *s = (BfmeSubESA *)((Object *)m_bfmeP)->getControllingPlayer();
 	if (!s)
 		return -1;
-	return ((BfmePlayerListHuntView *)ThePlayerList)->getPlayersWithRelationship(
+	return ((PlayerList *)ThePlayerList)->getPlayersWithRelationship(
 		s->m_bfmeK, 4, false);
 }
 
@@ -74,6 +74,6 @@ int BfmeThingESCb::bfmeGoESCb()
 	BfmeSubESA *s = (BfmeSubESA *)((Object *)m_bfmeP)->getControllingPlayer();
 	if (!s)
 		return -1;
-	return ((BfmePlayerListHuntView *)ThePlayerList)->getPlayersWithRelationship(
+	return ((PlayerList *)ThePlayerList)->getPlayersWithRelationship(
 		s->m_bfmeK, 4, false);
 }
