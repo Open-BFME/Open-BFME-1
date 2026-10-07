@@ -78,3 +78,18 @@ void TunnelContain::onDie(const DamageInfo *damageInfo)
     tracker->onTunnelDestroyed(layout->getObject());
     *reinterpret_cast<Bool *>(reinterpret_cast<char *>(this) + 0xd5) = FALSE;
 }
+
+
+// TunnelContain.h inline ContainModuleInterface overrides, which retail emits
+// as select-any COMDATs at 0x0022EF20 (asOpenContain, `lea eax,[ecx-0x20]`),
+// 0x0022EF30 (isGarrisonable) and 0x0022EF40 (isHealContain). Emit them with
+// that linkage; the anchor is compiler scaffolding, not a retail function.
+#pragma inline_depth(0)
+// ?Rva0022EF20EmitTunnelContainInlines@@YAXPAVTunnelContain@@@Z present-unmatched
+void Rva0022EF20EmitTunnelContainInlines(TunnelContain *contain)
+{
+	contain->TunnelContain::asOpenContain();
+	contain->TunnelContain::isGarrisonable();
+	contain->TunnelContain::isHealContain();
+}
+#pragma inline_depth()
