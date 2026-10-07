@@ -759,26 +759,7 @@ void WOLLoginMenuInit( WindowLayout *layout, void *userData )
 /** WOL Login Menu shutdown method */
 //-------------------------------------------------------------------------------------------------
 static Bool loggedInOK = false;
-void WOLLoginMenuShutdown( WindowLayout *layout, void *userData )
-{
-	isShuttingDown = true;
-	loggedInOK = false;
-	TheWindowManager->clearTabList();
-
-	// if we are shutting down for an immediate pop, skip the animations
-	Bool popImmediate = *(Bool *)userData;
-	if( popImmediate )
-	{
-
-		shutdownComplete( layout );
-		return;
-
-	}  //end if
-
-	TheShell->reverseAnimatewindow();
-	TheTransitionHandler->reverse("GameSpyLoginProfileFade");
-
-}  // WOLLoginMenuShutdown
+// WOLLoginMenuShutdown: retail body in WOLLoginMenuShutdownThunk.cpp.
 
 
 // this is used to check if we've got all the pings
