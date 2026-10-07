@@ -1120,3 +1120,6 @@ game/GameEngine/Source/Common/S4AdjustHeapElem12Pod.cpp|function||bfmeAdjustHeap
 game/GameEngine/Source/Common/BfmeConv2083.cpp|type||BfmeStrXD,f7489b8c3135606ddd8b8ecb,gpt-6-astra,20261007213209-f139f0,2026-10-07
 game/GameEngine/Source/Common/BfmeConv2083.cpp|function||bfmeMedianXD,2c4aa67809a5e91ad221ceb5,gpt-6-astra,20261007213209-f139f0,2026-10-07
 game/GameEngine/Source/Common/BfmeConv2083.cpp|function||bfmeMedianXD,2c4aa67809a5e91ad221ceb5,grok,20261007213208-02127e,2026-10-07
+game/GameEngine/Source/Common/BfmeConv766.cpp|type||BfmeThingDSA,7f1f676da0727016b0ec506f,gpt-6-astra,20261007213204-6f2eae,2026-10-07
+game/GameEngine/Source/Common/BfmeConv766.cpp|member||m_bfmeFlag,a828d547fd46e64363bd8b63,gpt-6-astra,20261007213204-6f2eae,2026-10-07
+game/GameEngine/Source/Common/BfmeConv766.cpp|function|BfmeThingDSA@|bfmeGoDSA,b721a133082738741cd6cd6d,gpt-6-astra,20261007213204-6f2eae,2026-10-07
