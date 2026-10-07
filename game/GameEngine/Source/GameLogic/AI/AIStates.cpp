@@ -1899,17 +1899,8 @@ void AIInternalMoveToState::loadPostProcess( void )
  * or we are the leader of a group.
  */
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateComputePath.cpp
-// ?computePath@AIInternalMoveToState@@MAE_NXZ present-unmatched
-Bool AIInternalMoveToState::computePath()
-{
-	Object *obj = getMachineOwner();
-	AIUpdateInterface *ai = obj->getAI();
-
-	m_waitingForPath = true;
-	ai->requestPath(&m_goalPosition, getAdjustsDestination());
-	ai->friend_startingMove(); 
-	return true;
-}
+// ?computePath@AIInternalMoveToState@@MAE_NXZ
+// Defined by the matched body in AIInternalMoveToStateComputePath.cpp.
 
 /**
  * We are initiating a moveTo action.
