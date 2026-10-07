@@ -6,13 +6,15 @@ public:
 	bool isMobile() const;
 };
 
-class BfmeSubESR;
-
-class BfmeOwnerESR
+// ILT 0x00040737 -> 0x001B5CC0, matched as Rva001B5CC0::set (copies the
+// object's 12 bytes at +0x38 into +0x14 when non-null).
+class Rva001B5CC0
 {
 public:
-	void bfmeDetachESR(BfmeSubESR *sub);
+	void set(const char *other);
 };
+
+typedef Rva001B5CC0 BfmeOwnerESR;
 
 class BfmeTargetESR
 {
@@ -65,7 +67,7 @@ void BfmeHostESR::bfmeStartESR(BfmeAESR *a, int value)
 		return;
 
 	if (m_bfme1ccESR != 0)
-		m_bfme1ccESR->bfmeDetachESR(reinterpret_cast<BfmeSubESR *>(m_bfme08ESR));
+		m_bfme1ccESR->set(reinterpret_cast<const char *>(m_bfme08ESR));
 
 	m_bfme30ESR->bfmeSlot05ESR();
 	m_bfme30ESR->bfmeSlot14ESR(a);
