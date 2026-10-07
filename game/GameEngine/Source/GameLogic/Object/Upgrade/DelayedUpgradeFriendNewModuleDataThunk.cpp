@@ -17,16 +17,13 @@ private:
 	char opaque[0x68];
 };
 
-class DelayedUpgradeModuleData
+// The outer vftable store and +0x70 clear retail inlines here; the real
+// ??0DelayedUpgradeModuleData@@QAE@XZ lives in DelayedUpgradeModuleDataCtorThunk.cpp, so this TU writes the
+// fields through a plain view instead of emitting a second constructor.
+extern "C" const char __identifier("??_7DelayedUpgradeModuleData@@6B@")[];
+struct DelayedUpgradeModuleDataView
 {
-public:
-	DelayedUpgradeModuleData()
-	{
-		m_extra = 0;
-	}
-	virtual void dummy();
-
-private:
+	const void *m_vtbl;
 	int m_pad;
 	char m_sub_space[0x68];
 	unsigned int m_extra;
@@ -56,14 +53,15 @@ public:
 // ?friend_newModuleData@DelayedUpgrade@@SAPAVModuleData@@PAVINI@@@Z
 ModuleData *DelayedUpgrade::friend_newModuleData(INI *ini)
 {
-	DelayedUpgradeModuleData *data =
-		(DelayedUpgradeModuleData *)operator new(0x74);
+	DelayedUpgradeModuleDataView *data =
+		(DelayedUpgradeModuleDataView *)operator new(0x74);
 	if (data)
 	{
 		UpgradeModuleDataSub *sub =
 			(UpgradeModuleDataSub *)((char *)data + 8);
 		sub->UpgradeModuleDataSub::UpgradeModuleDataSub();
-		data->DelayedUpgradeModuleData::DelayedUpgradeModuleData();
+		data->m_vtbl = __identifier("??_7DelayedUpgradeModuleData@@6B@");
+		data->m_extra = 0;
 	}
 	else
 		data = 0;
