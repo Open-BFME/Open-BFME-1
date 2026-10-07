@@ -1083,3 +1083,11 @@ game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorT
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_402,0a23bfc74465a253e1949e77,grok,20261007192741-0734c1,2026-10-07
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_403,0de8d441be8172b834ad6dbf,grok,20261007192741-0734c1,2026-10-07
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_404,293a18baeb28307ac33d7c99,grok,20261007192741-0734c1,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThunk.cpp|member||m_08,4d94be008321967d188548b6,gpt-6-astra,20261007192749-55f73f,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThunk.cpp|member||m_0c,145dd99ca189396afa87af9b,gpt-6-astra,20261007192749-55f73f,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThunk.cpp|member||m_10,f40f24edaadacac5390bd1f2,gpt-6-astra,20261007192749-55f73f,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThunk.cpp|member||m_14,0573c1f468995e261f92a5e9,gpt-6-astra,20261007192749-55f73f,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThunk.cpp|member||m_18,9f60e0f5aef39f688ffefc24,gpt-6-astra,20261007192749-55f73f,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThunk.cpp|member||m_1c,9928b9553266714c25c19748,gpt-6-astra,20261007192749-55f73f,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThunk.cpp|member||m_20,20daba89e671df17bb0ccf5c,gpt-6-astra,20261007192749-55f73f,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThunk.cpp|member||m_24,4bcad3d365d28e69e86cd219,gpt-6-astra,20261007192749-55f73f,2026-10-07
