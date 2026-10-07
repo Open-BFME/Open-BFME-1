@@ -153,7 +153,8 @@ enum RecorderModeType {
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Recorder.h
 class RecorderClass {
 public:
-    char m_pad0[0xc];
+    virtual void update();                                 ///< retail vptr at this+0x00
+    char m_pad0[0xc - 4];
     FILE *m_file;                                          ///< retail this+0x0C
     char m_pad1[0x18 - 0xc - 4];
     RecorderModeType m_mode;
@@ -162,7 +163,10 @@ public:
     AsciiString getLastReplayFileName();
     RecorderModeType getMode();
 
+    void updateRecord();
+
 protected:
+    void updatePlayback();
     void writeToFile(GameMessage *msg);
     void writeArgument(GameMessageArgumentDataType type, GameMessageArgumentType arg);
 };
@@ -188,6 +192,16 @@ AsciiString RecorderClass::getLastReplayFileName()
 RecorderModeType RecorderClass::getMode()
 {
     return m_mode;
+}
+
+// ?update@RecorderClass@@UAEXXZ (0x0009C190): record (or idle) and playback
+// each tail-call their own step.
+void RecorderClass::update()
+{
+    if (m_mode == RECORDERMODETYPE_RECORD || m_mode == RECORDERMODETYPE_NONE)
+        updateRecord();
+    else if (m_mode == RECORDERMODETYPE_PLAYBACK)
+        updatePlayback();
 }
 
 // ?writeToFile@RecorderClass@@IAEXPAVGameMessage@@@Z
