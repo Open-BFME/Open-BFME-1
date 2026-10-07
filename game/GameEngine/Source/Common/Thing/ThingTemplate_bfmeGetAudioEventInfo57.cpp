@@ -18,17 +18,15 @@ public:
 class AudioEventInfoRef
 {
 public:
-	AudioEventInfoRef( const AudioEventInfo *info );
+	AudioEventInfoRef( const AudioEventInfo *info )
+		: m_info( info )
+	{
+		if ( m_info )
+			InterlockedIncrement( &const_cast<AudioEventInfo *>( m_info )->m_refCount );
+	}
 
 	const AudioEventInfo *m_info;
 };
-
-inline AudioEventInfoRef::AudioEventInfoRef( const AudioEventInfo *info )
-	: m_info( info )
-{
-	if ( m_info )
-		InterlockedIncrement( &const_cast<AudioEventInfo *>( m_info )->m_refCount );
-}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
@@ -47,15 +45,15 @@ class ThingTemplate
 public:
 	AudioEventInfoRef bfmeGetAudioEventInfo57() const;
 
-private:
-	const AudioEventRTS *bfmeLookupSound( Int index ) const;
+	// Retail calls ILT 0x0000286A -> the matched getPerUnitFx at 0x00416F20.
+	void *getPerUnitFx( Int index ) const;
 };
 
 AudioEventInfoRef ThingTemplate::bfmeGetAudioEventInfo57() const
 {
 	volatile Int constructionState = 0;
 
-	const AudioEventRTS *sound = bfmeLookupSound( 0x57 );
+	const AudioEventRTS *sound = (const AudioEventRTS *)getPerUnitFx( 0x57 );
 	if ( !sound )
 		sound = &BfmeTheEmptyAudioEvent;
 
