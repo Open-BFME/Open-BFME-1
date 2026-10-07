@@ -1,3 +1,10 @@
+// BFME shim: the reference GameNetwork/GameSpy/PersistentStorageThread.h with
+// PSRequest's destructor declared. Retail has one out-of-line body,
+// ??1PSRequest 0x000A5490 (319-byte SEH destructor, matched in
+// PSRequestDestructorThunk.cpp), where this header's implicit destructor
+// emitted a COMDAT copy in every TU that destroys a PSRequest without
+// inlining it; those collided with the strong owner at link time. Otherwise
+// identical to the reference header.
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -69,32 +76,17 @@ public:
 	PerGeneralMap gamesOf8p;
 	PerGeneralMap customGames;
 	PerGeneralMap QMGames;
-	PerGeneralMap _bfme_hole_mapA;
-	PerGeneralMap _bfme_hole_mapB;
-	PerGeneralMap _bfme_hole_mapC;
 	Int locale;
-	std::string _bfme_hole_string;
 	Int gamesAsRandom;
 	std::string options;
 	std::string systemSpec;
-	// BFME declares this tail in the order the copy constructor assigns it,
-	// and without the two quick-match streak counters. The retail body
-	// @0x6577D0 stores a gapless ascending run of seventeen dwords from
-	// +0x174 to +0x1B4 and then builds lastLadderHost at +0x1B8; our order
-	// makes the same seventeen stores jump around and leaves a hole at
-	// +0x188/+0x18C, which is exactly where QMwinsInARow and maxQMwinsInARow
-	// sit - the copy constructor never touches them. They stay as statics so
-	// the two references elsewhere in the TU still compile.
 	Real lastFPS;
 	Int lastGeneral;
 	Int gamesInRowWithLastGeneral;
-	Int builtParticleCannon;
-	Int builtNuke;
-	Int builtSCUD;
 	Int challengeMedals;
 	Int battleHonors;
-	static Int QMwinsInARow;
-	static Int maxQMwinsInARow;
+	Int QMwinsInARow;
+	Int maxQMwinsInARow;
 
 	Int winsInARow;
 	Int maxWinsInARow;
@@ -104,6 +96,10 @@ public:
 	Int maxDisconsInARow;
 	Int desyncsInARow;
 	Int maxDesyncsInARow;
+
+	Int builtParticleCannon;
+	Int builtNuke;
+	Int builtSCUD;
 
 	Int lastLadderPort;
 	std::string lastLadderHost;

@@ -1,5 +1,5 @@
 // stlport
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/sweep /Iinputs/reference/shims/psplayerstats
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/psplayerstats /Iinputs/reference/shims/sweep
 #define _STLP_USE_STATIC_LIB 1
 #define _STLP_NO_EXCEPTIONS 1
 #include <map>

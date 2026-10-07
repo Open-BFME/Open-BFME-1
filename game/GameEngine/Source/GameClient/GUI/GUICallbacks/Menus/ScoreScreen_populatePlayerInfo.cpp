@@ -150,6 +150,7 @@ class PSRequest
 {
 public:
     PSRequest();
+    ~PSRequest();  // out of line: PSRequestDestructorThunk.cpp, retail 0x000A5490
     enum {PSREQUEST_READPLAYERSTATS,PSREQUEST_UPDATEPLAYERSTATS,PSREQUEST_UPDATEPLAYERLOCALE,PSREQUEST_READCDKEYSTATS,PSREQUEST_SENDGAMERESTOGAMESPY} requestType;
     PSPlayerStats player;
     std::string cdkey,nick,password,email;
