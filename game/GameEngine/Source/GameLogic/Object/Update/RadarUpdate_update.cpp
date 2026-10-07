@@ -120,12 +120,17 @@ public:
 	virtual UpdateSleepTime update();
 
 private:
-	Object *getObject() const { return *(Object **)((char *)this - 8); }
-
 	unsigned char m_interface004[0x10 - 4];
 	UnsignedInt m_extendDoneFrame;
 	Bool m_extendComplete;
 };
+
+// The owning Object sits 8 bytes before this interface. A file-static helper
+// keeps the TU from emitting a non-retail ?getObject@RadarUpdate COMDAT.
+static inline Object *radarUpdateObject(const RadarUpdate *self)
+{
+	return *(Object **)((char *)self - 8);
+}
 
 // ?update@RadarUpdate@@UAE?AW4UpdateSleepTime@@XZ
 UpdateSleepTime RadarUpdate::update()
@@ -145,7 +150,7 @@ UpdateSleepTime RadarUpdate::update()
 		m_extendDoneFrame = 0;
 
 		// remove the extending condition and set the extended condition
-		radarClearAndSetModelConditionState(getObject(), MODELCONDITION_RADAR_EXTENDING,
+		radarClearAndSetModelConditionState(radarUpdateObject(this), MODELCONDITION_RADAR_EXTENDING,
 			MODELCONDITION_RADAR_UPGRADED);
 	}
 
