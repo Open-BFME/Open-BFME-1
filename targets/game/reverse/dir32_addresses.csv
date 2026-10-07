@@ -13359,7 +13359,6 @@ _EvacuateDamageFieldParse,0x0042DD8A
 _ExperienceLevelCreateFieldParse,0x00413719
 _FXListDieFieldParse,0x00446182
 _FadeAndDieOrnamentUpdateFieldParse,0x004318BD
-_FellBeastSwoopPowerFieldParse,0x0043C4A7
 _FoundationAIUpdateFieldParse,0x004231E6
 _FreezingRainSpecialPowerFieldParse,0x0044157E
 _GOAGetUniqueID,0x012C83C0

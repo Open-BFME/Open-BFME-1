@@ -1,0 +1,9 @@
+# FellBeastSwoopPowerModuleData::buildFieldParse at RVA 0x001210A0
+
+The 30-byte matched body at RVA 0x001210A0 in `game/GameEngine/Source/Common/WideBuildFieldParse.cpp` is `static void FellBeastSwoopPowerModuleData::buildFieldParse(MultiIniFieldParse &)`. The prior claim `?buildFieldParse@Rva001210A0@@SAXAAVWideMulti@@@Z` used an address-derived owner and an empty parameter stand-in. The factory's unresolved free-function spelling `_FellBeastSwoopPowerFieldParse` denotes the same callback through its incremental-link thunk.
+
+Retail's matched `FellBeastSwoopPower::friend_newModuleData(INI *)` at RVA 0x00121150 allocates 0x25C bytes, constructs them through ILT 0x0000E395 (the module-data constructor), and at +0x51 pushes VA 0x0043C4A7 followed by the new data pointer before calling `INI::initFromINIMultiProc` (RVA 0x00852130). The five-byte thunk at RVA 0x0003C4A7 is `jmp 0x005210A0`, i.e. this body (`python3 tools/dis_retail.py 0x121150`, `python3 tools/dis_retail.py 0x3C4A7`). The reference factory macro in `inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h` allocates `clsmd` and passes `clsmd::buildFieldParse` to this same INI method, which names the callback's owner as the module-data class the factory allocates.
+
+The body is the standard builder shape, the same as the already corrected `RousingSpeechUpdateModuleData::buildFieldParse` (0x00264AC0) in the same file: it keeps the accumulator in ESI, passes it to the base builder through ILT 0x0000629E (the same base as RousingSpeech), and calls `MultiIniFieldParse::add` (0x00850920) with table VA 0x0108AC7C and offset zero, then returns with caller cleanup (static cdecl, no receiver).
+
+The correction preserves the start, extent, instructions and relocation targets. A factory thunk reaching a different body, a callback contract with a receiver or callee cleanup, or any changed instruction or relocation target would refute it.

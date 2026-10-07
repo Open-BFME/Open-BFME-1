@@ -98,7 +98,21 @@ WIDE_FIELD_PARSE( 0011F0B0, 00012742 )
 WIDE_FIELD_PARSE( 0011F160, 00012742 )
 WIDE_FIELD_PARSE( 0011F5B0, 00012355 )
 WIDE_FIELD_PARSE( 0011F660, 00012355 )
-WIDE_FIELD_PARSE( 001210A0, 0000629E )
+extern const WideFieldParse WideTbl001210A0[];
+class FellBeastSwoopPowerModuleData
+{
+public:
+	static void buildFieldParse(MultiIniFieldParse &p);
+};
+
+// The FellBeastSwoopPower factory (friend_newModuleData 0x00121150, see
+// FellBeastSwoopPowerFriendNewModuleDataThunk.cpp) passes this module-data
+// builder: retail ILT 0x0003C4A7 reaches this 30-byte body at RVA 0x001210A0.
+void FellBeastSwoopPowerModuleData::buildFieldParse(MultiIniFieldParse &p)
+{
+	Gen0000629E::buildFieldParse(reinterpret_cast<WideMulti &>(p));
+	p.add(reinterpret_cast<const FieldParse *>(WideTbl001210A0), 0);
+}
 WIDE_FIELD_PARSE( 001F6EA0, 0003BD86 )
 WIDE_FIELD_PARSE( 001FFB10, 0003BD86 )
 WIDE_FIELD_PARSE( 002127E0, 0004B650 )

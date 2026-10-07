@@ -3,6 +3,7 @@
 
 class INI;
 class ModuleData;
+class MultiIniFieldParse;
 
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
@@ -12,6 +13,7 @@ class FellBeastSwoopPowerModuleData
 public:
 	FellBeastSwoopPowerModuleData();
 	virtual ~FellBeastSwoopPowerModuleData();
+	static void buildFieldParse(MultiIniFieldParse &p);	// 0x001210A0 via ILT 0x0003C4A7
 
 private:
 	unsigned char m_pad[0x258];
@@ -30,8 +32,6 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl FellBeastSwoopPowerFieldParse(MultiIniFieldParse &parse);
-
 class FellBeastSwoopPower
 {
 public:
@@ -43,6 +43,6 @@ ModuleData *FellBeastSwoopPower::friend_newModuleData(INI *ini)
 {
 	FellBeastSwoopPowerModuleData *data = new FellBeastSwoopPowerModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &FellBeastSwoopPowerFieldParse);
+		ini->initFromINIMultiProc(data, &FellBeastSwoopPowerModuleData::buildFieldParse);
 	return (ModuleData *)data;
 }
