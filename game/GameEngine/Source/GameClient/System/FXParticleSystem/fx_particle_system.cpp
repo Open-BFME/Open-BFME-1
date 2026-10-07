@@ -169,6 +169,13 @@ template CategoryModuleClassBase<6, 1> &CategoryModuleClassBase<6, 1>::operator=
 template CategoryModuleClassBase<7, 1> &CategoryModuleClassBase<7, 1>::operator=(const CategoryModuleClassBase<7, 1> &);
 template CategoryModuleClassBase<8, 0> &CategoryModuleClassBase<8, 0>::operator=(const CategoryModuleClassBase<8, 0> &);
 
+// Categories 7 and 8 own real assignments (WindModuleInfo / the category-8
+// info copy) in CategoryModuleTemplate06AssignThunk.cpp and
+// CategoryModuleTemplate07AssignThunk.cpp; keep the explicit instantiations
+// below from emitting the header's empty body under the same names.
+template<> CategoryModuleTemplate<7> &CategoryModuleTemplate<7>::operator=(const CategoryModuleTemplate<7> &that);
+template<> CategoryModuleTemplate<8> &CategoryModuleTemplate<8>::operator=(const CategoryModuleTemplate<8> &that);
+
 template class CategoryModuleInfo<0>;
 template class CategoryModuleInfo<1>;
 template class CategoryModuleInfo<2>;
