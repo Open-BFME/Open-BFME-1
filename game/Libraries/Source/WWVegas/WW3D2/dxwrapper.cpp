@@ -2603,16 +2603,10 @@ void DX8Wrapper::Draw_Triangles(
 //
 // ----------------------------------------------------------------------------
 
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WW3D2/DX8Wrapper_DrawPrimitives.cpp
-// ?Draw_Strip@DX8Wrapper@@ present-unmatched
-void DX8Wrapper::Draw_Strip(
-	unsigned short start_index,
-	unsigned short polygon_count,
-	unsigned short min_vertex_index,
-	unsigned short vertex_count)
-{
-	Draw(D3DPT_TRIANGLESTRIP,start_index,polygon_count,min_vertex_index,vertex_count);
-}
+// DX8Wrapper::Draw_Strip(start_index, polygon_count, min_vertex_index,
+// vertex_count) is defined only by its byte-exact reconstruction in
+// game/Libraries/Source/WWVegas/WW3D2/DX8Wrapper_DrawPrimitives.cpp (0x00906E40):
+// this upstream copy called the Generals Draw signature and won the link.
 
 // ----------------------------------------------------------------------------
 //
