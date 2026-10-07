@@ -8,10 +8,14 @@
 class LargeGroupAudio
 {
 public:
+	LargeGroupAudio();	// matched at 0x003CEF00 in INILargeGroupAudioUnusedKnownKeys.cpp
 	virtual ~LargeGroupAudio();
 };
 
-void forceLargeGroupAudioDeletingDestructor()
+// The implicit copy constructor (no retail twin) is what makes MSVC emit the
+// vftable and with it ??_G; the default constructor stays declared so this TU
+// does not emit a second copy of the retail one.
+void forceLargeGroupAudioDeletingDestructor(const LargeGroupAudio &that)
 {
-	LargeGroupAudio value;
+	LargeGroupAudio value(that);
 }
