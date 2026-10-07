@@ -49,7 +49,9 @@ public:
 	void bfmePop1210();
 };
 
-__declspec(dllimport) void __cdecl bfmeCallVJU(void *a, int b);
+// Callback cell at VA 0x013378A8, defined once as g_bfmeSlot28VB in
+// BfmeOneHundredTwentyThree.cpp (data_rows.csv); cast to this call's shape.
+extern void (__cdecl *g_bfmeSlot28VB)();
 
 class BfmeThingVJU
 {
@@ -70,7 +72,7 @@ void BfmeThingVJU::bfmeGoVJU(BfmeStackVJU *s, int v, void *p)
 	switch (m_bfme00)
 	{
 	case 1:
-		bfmeCallVJU(m_bfme18, v);
+		((void (__cdecl *)(void *, int))g_bfmeSlot28VB)(m_bfme18, v);
 		break;
 	}
 	if (p)
