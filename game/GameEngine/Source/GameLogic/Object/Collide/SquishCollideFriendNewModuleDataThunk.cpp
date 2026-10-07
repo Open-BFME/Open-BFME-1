@@ -30,7 +30,9 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl SquishCollideFieldParse(MultiIniFieldParse &parse);
+// The proc retail passes is VA 0x004173DC, the ILT stub ?j_000173dc@@YAXXZ (jumps to the
+// one-byte no-op builder at 0x00122E80, shared with HordeMemberCollide).
+extern void j_000173dc();
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SquishCollide.h
 class SquishCollide
@@ -44,6 +46,6 @@ ModuleData *SquishCollide::friend_newModuleData(INI *ini)
 {
 	SquishCollideModuleData *data = new SquishCollideModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &SquishCollideFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))&j_000173dc);
 	return (ModuleData *)data;
 }
