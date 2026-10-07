@@ -50,7 +50,7 @@ public:
 	void *m_unused;
 	Overridable *m_next;
 
-	const Overridable *friend_getFinalOverride() const;
+	Overridable *friend_getFinalOverride();
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
@@ -127,7 +127,7 @@ const CommandButton *Rva005A7E20SpecialPowerButtonFinder::find(
 				{
 					const Overridable *final = next->m_next;
 					if (final)
-						next = final->friend_getFinalOverride();
+						next = const_cast<Overridable *>(final)->friend_getFinalOverride();
 					power = next;
 				}
 				if (reinterpret_cast<const SpecialPowerTemplate *>(power)->m_type == specialPowerID)
