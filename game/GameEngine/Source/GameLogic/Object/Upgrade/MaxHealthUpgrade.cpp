@@ -103,20 +103,8 @@ MaxHealthUpgrade::~MaxHealthUpgrade( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?upgradeImplementation@MaxHealthUpgrade@@MAEXXZ present-unmatched
-void MaxHealthUpgrade::upgradeImplementation( )
-{
-	const MaxHealthUpgradeModuleData *data = getMaxHealthUpgradeModuleData();
-
-	//Simply add the xp scalar to the xp tracker!
-	Object *obj = getObject();
-
-	BodyModuleInterface *body = obj->getBodyModule();
-	if( body )
-	{
-		body->setMaxHealth( body->getMaxHealth() + data->m_addMaxHealth, data->m_maxHealthChangeType );
-	}
-}
+// MaxHealthUpgrade::upgradeImplementation: retail body in
+// MaxHealthUpgradeUpgradeImplementation.cpp (0x002D64D0).
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */
