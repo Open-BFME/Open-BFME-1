@@ -1,10 +1,8 @@
-// cl: /O2 /Ob0 /G6
+// cl: /O2 /Ob0 /G6 /Igame/Libraries/Source/WWVegas/WWLib
 
-struct BfmeTailAA
-{
-	char *m_p;
-	void copyFrom(const BfmeTailAA *src);
-};
+// The +0x1C tail is a StringBase<char>: retail calls
+// ?set@?$StringBase@D@@QAEXABV1@@Z (0x00887C90) on it.
+#include "string_base.h"
 
 struct BfmeCoordAA
 {
@@ -20,7 +18,7 @@ struct BfmeElemAA
 	int m_08;
 	int m_0C;
 	BfmeCoordAA m_10;
-	BfmeTailAA m_1C;
+	StringBase<char> m_1C;
 	char m_20;
 	char m_pad[3];
 };
@@ -40,7 +38,7 @@ BfmeElemAA *bfmeCopyAA(BfmeElemAA *first, BfmeElemAA *last, BfmeElemAA *dest)
 			dest->m_08 = last->m_08;
 			dest->m_0C = last->m_0C;
 			dest->m_10 = last->m_10;
-			dest->m_1C.copyFrom(&last->m_1C);
+			dest->m_1C.set(last->m_1C);
 			dest->m_20 = last->m_20;
 		} while (--m);
 	}

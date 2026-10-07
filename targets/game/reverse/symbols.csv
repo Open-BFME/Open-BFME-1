@@ -80254,7 +80254,6 @@ name,address,notes
 ?copyFrom@BfmeShellSchemeString@@AAEXABV1@@Z,0x00887B60,ShellMenuScheme parser by-value string copy uses the BFME StringBase copy constructor
 ?copyFrom@BfmeTail50@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087FF50
 ?copyFrom@BfmeTailA2@@QAEXPBU1@@Z,0x00887C90,Open-BFME5 tail copy callee of 0x0087EA20
-?copyFrom@BfmeTailAA@@QAEXPBU1@@Z,0x00887C90,Open-BFME5 tail copy callee of 0x0087EAA0
 ?copyFrom@BfmeTailCD@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy of 0x0087FCD0
 ?copyFrom@BfmeTailE9@@QAEXPBU1@@Z,0x00887C90,Open-BFME5 tail copy callee of 0x0087E9B0
 ?copyFrom@BfmeTailF0@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087F0F0
