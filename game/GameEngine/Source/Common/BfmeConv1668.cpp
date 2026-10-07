@@ -4,7 +4,8 @@ struct BfmeNodeEQB
 	BfmeNodeEQB *m_bfmeNextEQB;
 };
 
-extern "C" BfmeNodeEQB *g_bfmeHeadEQB;
+// List head at VA 0x0130B198 (zero-filled in retail); address-proven by dir32.
+extern "C" BfmeNodeEQB *g_bfmeHeadEQB = 0;
 
 BfmeNodeEQB * __stdcall bfmeLinkEQB(BfmeNodeEQB *node)
 {
