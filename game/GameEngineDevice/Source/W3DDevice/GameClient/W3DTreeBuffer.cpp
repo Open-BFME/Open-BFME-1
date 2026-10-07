@@ -1266,24 +1266,7 @@ W3DTreeBuffer::W3DTreeBuffer(void)
 //=============================================================================
 /** Frees the index and vertex buffers. */
 //=============================================================================
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/Gen_0071C2D0_W3DTreeBuffer_FreeTreeBuffers.cpp
-// ?freeTreeBuffers@W3DTreeBuffer@@QAEXXZ present-unmatched
-void W3DTreeBuffer::freeTreeBuffers(void)
-{
-	Int i;
-	for	(i=0; i<MAX_BUFFERS; i++) {
-		REF_PTR_RELEASE(m_vertexTree[i]);
-		REF_PTR_RELEASE(m_indexTree[i]);
-	}
-	
-	if (m_dwTreePixelShader)
-		DX8Wrapper::_Get_D3D_Device8()->DeletePixelShader(m_dwTreePixelShader);
-	m_dwTreePixelShader = 0;
-
-	if (m_dwTreeVertexShader)
-		DX8Wrapper::_Get_D3D_Device8()->DeleteVertexShader(m_dwTreeVertexShader);
-	m_dwTreeVertexShader = 0;
-}
+// W3DTreeBuffer::freeTreeBuffers: retail body (0x00732960) in W3DTreeBuffer_freeTreeBuffers.cpp.
 
 //=============================================================================
 // W3DTreeBuffer::unitMoved
