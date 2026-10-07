@@ -1,4 +1,5 @@
-void bfmeApplyFloatPair(int handle, float first, float second);
+// ILT 0x000152DF -> 0x00564BB0, the matched ?bfmeGo1077A@@YAXHMM@Z (BfmeConv1077.cpp).
+void bfmeGo1077A(int handle, float first, float second);
 
 class Gen_005891E0
 {
@@ -17,7 +18,7 @@ void Gen_005891E0::bfmeSet(float first, float second)
 {
 	if (first != m_bfmeFirst || second != second)
 	{
-		bfmeApplyFloatPair(m_bfmeHandle, first, second);
+		bfmeGo1077A(m_bfmeHandle, first, second);
 		m_bfmeFirst = first;
 		m_bfmeSecond = second;
 	}
