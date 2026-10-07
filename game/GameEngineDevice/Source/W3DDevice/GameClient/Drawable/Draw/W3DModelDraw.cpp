@@ -3951,37 +3951,8 @@ void W3DModelDraw::setAnimationFrame( int frame )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setPauseAnimation@W3DModelDraw@@UAEX_N@Z present-unmatched
-void W3DModelDraw::setPauseAnimation(Bool pauseAnim)
-{
-	if (m_pauseAnimation == pauseAnim) 
-	{
-		return;
-	}
-
-	m_pauseAnimation = pauseAnim;
-
-	if (m_renderObject && m_renderObject->Class_ID() == RenderObjClass::CLASSID_HLOD)
-	{
-		float framenum, dummy;
-		int mode, numFrames;
-
-		HLodClass* hlod = (HLodClass*)m_renderObject;
-		HAnimClass* anim = hlod->Peek_Animation_And_Info(framenum, numFrames, mode, dummy);
-		if (anim)
-		{
-			if (m_pauseAnimation) 
-			{
-				m_animationMode = mode;
-				hlod->Set_Animation(anim, framenum, RenderObjClass::ANIM_MODE_MANUAL);
-			} 
-			else 
-			{
-				hlod->Set_Animation(anim, framenum, m_animationMode);
-			}
-		}
-	}
-}
+// W3DModelDraw::setPauseAnimation: retail body (0x0075C7C0) in
+// W3DModelDrawSetPauseAnimation.cpp.
 
 //-------------------------------------------------------------------------------------------------
 #ifdef ALLOW_ANIM_INQUIRIES
