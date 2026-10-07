@@ -1678,6 +1678,11 @@ void Drawable::calcPhysicsXformThrust( const Locomotor *locomotor, PhysicsXformI
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// Retail keeps Locomotor::getRudderCorrectionDegree out of line (0x00413210,
+// LocomotorRudderAccessor.cpp); read the field through the layout view below
+// so this TU does not emit a non-retail COMDAT copy of the header inline.
+static Real rudderCorrectionDegreeOf( const Locomotor *locomotor );
+
 // ?calcPhysicsXformHoverOrWings@Drawable@@IAEXPBVLocomotor@@AAUPhysicsXformInfo@1@@Z present-unmatched
 void Drawable::calcPhysicsXformHoverOrWings( const Locomotor *locomotor, PhysicsXformInfo& info )
 {
@@ -1777,7 +1782,7 @@ void Drawable::calcPhysicsXformHoverOrWings( const Locomotor *locomotor, Physics
 
 
 
-	const Real RUDDER_CORRECTION_DEGREE   = locomotor->getRudderCorrectionDegree();	
+	const Real RUDDER_CORRECTION_DEGREE   = rudderCorrectionDegreeOf(locomotor);	
 	const Real RUDDER_CORRECTION_RATE     = locomotor->getRudderCorrectionRate();	
 	const Real ELEVATOR_CORRECTION_DEGREE = locomotor->getElevatorCorrectionDegree();	
 	const Real ELEVATOR_CORRECTION_RATE   = locomotor->getElevatorCorrectionRate();	
@@ -1854,6 +1859,11 @@ struct Rva004143F0LocomotorView
 	Real field110() const { return m_template->m_field110; }
 	Real field114() const { return m_template->m_field114; }
 };
+
+static Real rudderCorrectionDegreeOf( const Locomotor *locomotor )
+{
+	return reinterpret_cast<const Rva004143F0LocomotorView *>(locomotor)->getRudderCorrectionDegree();
+}
 
 // BFME layout witnesses place Drawable::m_object at +0xFC and
 // Drawable::m_locoInfo at +0x138.  The retail body accesses only those fields.
