@@ -48,13 +48,25 @@ public:
 	BfmeItemAN **m_bfmeEnd;					// +0x08
 };
 
+template <class T> class StringBase;
+
+// The lookup is the matched 0x003C0110 body (ILT 0x00032A56), already named
+// findByName in Rva003C0110NameLookup.cpp; this TU reaches it through that
+// spelling. Its argument is the same one word the remove receives.
+class Rva003C0110Owner
+{
+public:
+	struct Rva003C0110ElementResult;
+
+	Rva003C0110ElementResult *findByName(StringBase<char> *name);
+};
+
 class Gen_003C02B0
 {
 public:
 	void bfmeRemove(int key);
 
 private:
-	BfmeItemAN *bfmeFind(int key);				// retail thunk 0x00032A56 -> 0x00432A56
 
 	int m_bfmeHead[3];					// +0x00
 	BfmeVecAN m_bfmeVector;					// +0x0C
@@ -63,7 +75,7 @@ private:
 // ?bfmeRemove@Gen_003C02B0@@QAEXH@Z
 void Gen_003C02B0::bfmeRemove(int key)
 {
-	BfmeItemAN *item = bfmeFind(key);
+	BfmeItemAN *item = (BfmeItemAN *)((Rva003C0110Owner *)this)->findByName((StringBase<char> *)key);
 
 	if (!item)
 		return;
