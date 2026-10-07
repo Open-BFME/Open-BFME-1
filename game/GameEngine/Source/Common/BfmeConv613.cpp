@@ -143,10 +143,23 @@ struct BfmeOwnerCLB
 	BfmeMidCLB *m_bfmeMid;
 };
 
+// Retail 0x001746E0 first calls ILT 0x29311 -> matched 0x00172D80,
+// AIInternalMoveToState::onExit, non-virtually on this (callees.py).
+enum StateExitType { EXIT_NORMAL };
+
+class AIInternalMoveToState
+{
+public:
+	virtual void onExit(StateExitType status);
+};
+
 class BfmeThingCLB
 {
 public:
-	void bfmeBaseCLB(void *what);
+	__forceinline void bfmeBaseCLB(void *what)
+	{
+		((AIInternalMoveToState *)this)->AIInternalMoveToState::onExit((StateExitType)(int)what);
+	}
 	void bfmeGoCLB(void *what);
 	unsigned char m_bfmeHead[0x1c];
 	BfmeOwnerCLB *m_bfmeOwner;
