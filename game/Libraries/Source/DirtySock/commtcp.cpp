@@ -33,6 +33,6 @@ int CommTCPUnlisten(CommTCPRef *ref)
 // Always fails: "Resolve functionality not supported by CommTCP".
 int CommTCPResolve()
 {
-	Rva007FE780("Resolve functionality not supported by CommTCP\n");
+	Rva007FE780("CommTCPResolve: Resolve functionality not supported by CommTCP\n");
 	return -1;
 }

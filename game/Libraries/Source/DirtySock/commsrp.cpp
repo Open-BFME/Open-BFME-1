@@ -121,7 +121,7 @@ struct CommSRPRef *Rva00815300( int maxPacket, int recvCount,
 // Always fails: "Resolve functionality not supported by CommSRP".
 int CommSRPResolve()
 {
-	Rva007FE780("Resolve functionality not supported by CommSRP\n");
+	Rva007FE780("CommSRPResolve: Resolve functionality not supported by CommSRP\n");
 	return -1;
 }
 
@@ -204,7 +204,7 @@ int CommSRPListen(void *ref, const char *text)
 	}
 	result = Rva007FD510(*(void **)((char *)ref + 0x7C), bindAddress, 0x10);
 	if (result < 0) {
-		Rva007FE780("CommSRPListen: Error %d binding socket\\n", result);
+		Rva007FE780("CommSRPListen: Error %d binding socket\n", result);
 		Rva007FD3F0(*(void **)((char *)ref + 0x7C));
 		Rva008154F0(ref, 0);
 		return -5;
