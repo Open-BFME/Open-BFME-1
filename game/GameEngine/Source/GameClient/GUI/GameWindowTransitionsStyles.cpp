@@ -1745,26 +1745,6 @@ FullFadeTransition::~FullFadeTransition( void )
 	
 }
 
-// matched via game/masm_dumps/_sa__init_FullFadeTransition_UAEXPAVGameWindow_Z_59D420.asm
-void FullFadeTransition::init( GameWindow *win )
-{
-
-	if(win)
-	{
-		m_win = win;
-		m_win->winGetSize(&m_size.x, &m_size.y);
-		m_win->winGetScreenPosition(&m_pos.x, &m_pos.y );
-	}
-
-	m_isForward = FALSE;
-	update(FULLFADETRANSITION_START);
-	m_isFinished = FALSE;
-	m_isForward = TRUE;
-
-	m_percent = 1.0f / (FULLFADETRANSITION_END/2);
-
-}
-
 void FullFadeTransition::update( Int frame )
 {
 	m_drawState = -1;
