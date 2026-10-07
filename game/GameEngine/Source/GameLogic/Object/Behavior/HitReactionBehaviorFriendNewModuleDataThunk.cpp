@@ -30,7 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl HitReactionBehaviorFieldParse(MultiIniFieldParse &parse);
+// Retail pushes 0x0040E926, the matched ILT thunk to 0x002919E0.
+extern void j_0000e926(void);
 
 class HitReactionBehavior
 {
@@ -43,6 +44,7 @@ ModuleData *HitReactionBehavior::friend_newModuleData(INI *ini)
 {
 	HitReactionBehaviorModuleData *data = new HitReactionBehaviorModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &HitReactionBehaviorFieldParse);
+		ini->initFromINIMultiProc(data, 
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_0000e926));
 	return (ModuleData *)data;
 }
