@@ -129,7 +129,7 @@ struct BfmeStructureToppleAngleFXView
 	AngleFXInfoVector angleFX;
 };
 
-static void parseAngleFX(INI* ini, void *instance, void * /* store */, const void * /*userData*/)
+void parseAngleFX(INI* ini, void *instance, void * /* store */, const void * /*userData*/)
 {
 	BfmeStructureToppleAngleFXView* self = (BfmeStructureToppleAngleFXView*)instance;
 	AngleFXInfo info;
@@ -138,6 +138,32 @@ static void parseAngleFX(INI* ini, void *instance, void * /* store */, const voi
 	INI::parseFXList(ini, instance, &(info.fxList), NULL);
 	self->angleFX.push_back(info);
 }
+
+// Retail .rdata VA 0x010C4B60: the StructureTopple field table that the
+// matched builder at 0x002B0A40 adds; entries and offsets read from the image.
+void parseStructureToppleObjectCreationLists(INI* ini, void *instance, void *store, const void *userData);
+extern const FieldParse g_structureToppleFieldParse[];
+const FieldParse g_structureToppleFieldParse[] =
+{
+	{ "MinToppleDelay", INI::parseDurationUnsignedInt, NULL, 0x34 },
+	{ "MaxToppleDelay", INI::parseDurationUnsignedInt, NULL, 0x38 },
+	{ "MinToppleBurstDelay", INI::parseDurationUnsignedInt, NULL, 0x64 },
+	{ "MaxToppleBurstDelay", INI::parseDurationUnsignedInt, NULL, 0x68 },
+	{ "ToppleAccelerationFactor", INI::parseReal, NULL, 0x44 },
+	{ "StructuralIntegrity", INI::parseReal, NULL, 0x3C },
+	{ "StructuralDecay", INI::parseReal, NULL, 0x40 },
+	{ "DamageFXTypes", INI::parseDamageTypeFlags, NULL, 0x48 },
+	{ "TopplingFX", INI::parseFXList, NULL, 0x54 },
+	{ "ToppleDelayFX", INI::parseFXList, NULL, 0x50 },
+	{ "ToppleStartFX", INI::parseFXList, NULL, 0x4C },
+	{ "ToppleDoneFX", INI::parseFXList, NULL, 0x58 },
+	{ "CrushingFX", INI::parseFXList, NULL, 0x5C },
+	{ "CrushingWeaponName", INI::parseAsciiString, NULL, 0x60 },
+	{ "ForceToppleAngle", INI::parseReal, NULL, 0xB4 },
+	{ "OCL", parseStructureToppleObjectCreationLists, NULL, 0x0 },
+	{ "AngleFX", parseAngleFX, NULL, 0x0 },
+	{ 0, 0, 0, 0 }
+};
 
 //-------------------------------------------------------------------------------------------------
 // Retail 0x002A4190 held this symbol until 2026-09-16, when the table it adds

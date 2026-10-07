@@ -90448,3 +90448,20 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_03CLCAEGCJ@new?$AA@,0x01132C8C,retail rdata literal "new"; dword 1 of the allocator source-name table at VA 0x012D4D14
 ??_C@_09NPFGBDFO@array?9new?$AA@,0x01132C80,retail rdata literal "array-new"; dword 2 of the allocator source-name table at VA 0x012D4D14
 ??_C@_09PCFAIACE@allocator?$AA@,0x01132C74,retail rdata literal "allocator"; dword 3 of the allocator source-name table at VA 0x012D4D14
+??_C@_0P@GPDFFLMM@MinToppleDelay?$AA@,0x00CC4B48,Retail StructureTopple field table VA 0x010C4B60 entry; compiler string literal MinToppleDelay equals retail at VA 0x010C4B48
+??_C@_0P@EIIODMPN@MaxToppleDelay?$AA@,0x00CC4B34,Retail StructureTopple field table VA 0x010C4B60 entry; compiler string literal MaxToppleDelay equals retail at VA 0x010C4B34
+??_C@_0BE@HHPMDOA@MinToppleBurstDelay?$AA@,0x00CC4B1C,Retail StructureTopple field table VA 0x010C4B60 entry; compiler string literal MinToppleBurstDelay equals retail at VA 0x010C4B1C
+??_C@_0BE@COABDOPI@MaxToppleBurstDelay?$AA@,0x00CC4B04,Retail StructureTopple field table VA 0x010C4B60 entry; compiler string literal MaxToppleBurstDelay equals retail at VA 0x010C4B04
+??_C@_0BJ@LPNJCHFL@ToppleAccelerationFactor?$AA@,0x00CC4AE4,Retail StructureTopple field table VA 0x010C4B60 entry; compiler string literal ToppleAccelerationFactor equals retail at VA 0x010C4AE4
+??_C@_0BE@PMBLFJCN@StructuralIntegrity?$AA@,0x00CC4ACC,Retail StructureTopple field table VA 0x010C4B60 entry; compiler string literal StructuralIntegrity equals retail at VA 0x010C4ACC
+??_C@_0BA@GBKPIDM@StructuralDecay?$AA@,0x00CC4AB8,Retail StructureTopple field table VA 0x010C4B60 entry; compiler string literal StructuralDecay equals retail at VA 0x010C4AB8
+??_C@_0O@BKHICFHC@DamageFXTypes?$AA@,0x00C8C200,Retail StructureTopple field table VA 0x010C4B60 entry; compiler string literal DamageFXTypes equals retail at VA 0x0108C200
+??_C@_0L@MFGLLFLG@TopplingFX?$AA@,0x00CC4AA8,Retail StructureTopple field table VA 0x010C4B60 entry; compiler string literal TopplingFX equals retail at VA 0x010C4AA8
+??_C@_0O@IBFIMJHG@ToppleDelayFX?$AA@,0x00CC4A98,Retail StructureTopple field table VA 0x010C4B60 entry; compiler string literal ToppleDelayFX equals retail at VA 0x010C4A98
+??_C@_0O@FPDLEAGP@ToppleStartFX?$AA@,0x00CC4A88,Retail StructureTopple field table VA 0x010C4B60 entry; compiler string literal ToppleStartFX equals retail at VA 0x010C4A88
+??_C@_0N@CMCABIDB@ToppleDoneFX?$AA@,0x00CC4A78,Retail StructureTopple field table VA 0x010C4B60 entry; compiler string literal ToppleDoneFX equals retail at VA 0x010C4A78
+??_C@_0L@KAKBAIBJ@CrushingFX?$AA@,0x00CC4A68,Retail StructureTopple field table VA 0x010C4B60 entry; compiler string literal CrushingFX equals retail at VA 0x010C4A68
+??_C@_0BD@JEJNMMLH@CrushingWeaponName?$AA@,0x00CC4A50,Retail StructureTopple field table VA 0x010C4B60 entry; compiler string literal CrushingWeaponName equals retail at VA 0x010C4A50
+??_C@_0BB@IPLCHPAO@ForceToppleAngle?$AA@,0x00CC4A3C,Retail StructureTopple field table VA 0x010C4B60 entry; compiler string literal ForceToppleAngle equals retail at VA 0x010C4A3C
+??_C@_03DDNMFLBI@OCL?$AA@,0x00CA2850,Retail StructureTopple field table VA 0x010C4B60 entry; compiler string literal OCL equals retail at VA 0x010A2850
+??_C@_07OHNNFBOM@AngleFX?$AA@,0x00CC4A30,Retail StructureTopple field table VA 0x010C4B60 entry; compiler string literal AngleFX equals retail at VA 0x010C4A30
