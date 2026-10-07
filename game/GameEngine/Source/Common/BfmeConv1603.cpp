@@ -9,11 +9,13 @@ inline void operator delete(void *block, void *where)
 {
 }
 
-class BfmeBigVSZ
+// callees.py 0x0069C3A0: the member copy is ILT 0x00047B27 -> 0x000B2FB0,
+// the matched AudioEventRTS copy constructor.
+class AudioEventRTS
 {
 public:
-	BfmeBigVSZ(const BfmeBigVSZ &other);
-	~BfmeBigVSZ();
+	AudioEventRTS(const AudioEventRTS &other);
+	~AudioEventRTS();
 	char m_bfmePad00[0x70];
 };
 
@@ -24,7 +26,7 @@ struct BfmeEntVSZ
 	{
 	}
 
-	BfmeBigVSZ m_bfme00;
+	AudioEventRTS m_bfme00;
 	int m_bfme70;
 	char m_bfme74;
 };
