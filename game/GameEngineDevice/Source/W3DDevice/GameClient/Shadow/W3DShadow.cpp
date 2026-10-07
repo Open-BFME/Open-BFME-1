@@ -207,31 +207,7 @@ void W3DShadowManager::ReleaseResources(void)
 		TheW3DProjectedShadowManager->ReleaseResources();
 }
 
-// ?addShadow@W3DShadowManager@@QAEPAVShadow@@PAVRenderObjClass@@PAUShadowTypeInfo@2@PAVDrawable@@@Z present-unmatched
-Shadow *W3DShadowManager::addShadow( RenderObjClass *robj, Shadow::ShadowTypeInfo *shadowInfo, Drawable *draw)
-{
-	ShadowType type = SHADOW_VOLUME;
-
-	if (shadowInfo)
-		type = shadowInfo->m_type;
-
-	switch(type)
-	{
-		case	SHADOW_VOLUME:
-			if (TheW3DVolumetricShadowManager)
-				return (Shadow *)TheW3DVolumetricShadowManager->addShadow(robj, shadowInfo, draw);
-			break;
-		case	SHADOW_PROJECTION:
-		case	SHADOW_DECAL:
-			if (TheW3DProjectedShadowManager)
-				return (Shadow *)TheW3DProjectedShadowManager->addShadow(robj, shadowInfo, draw);
-			break;
-		default:
-			return NULL;
-	}
-		
-	return NULL;
-}
+// W3DShadowManager::addShadow: retail body in W3DShadowManagerAddShadow.cpp.
 
 // ?removeShadow@W3DShadowManager@@QAEXPAVShadow@@@Z present-unmatched
 void W3DShadowManager::removeShadow(Shadow *shadow)
