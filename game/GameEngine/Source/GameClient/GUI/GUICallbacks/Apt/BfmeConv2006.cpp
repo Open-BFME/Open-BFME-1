@@ -4,7 +4,10 @@ class WindowManager;
 extern WindowManager* g_rva012F19E8WindowManager;
 extern int g_aptPalantirWindow;
 
-extern "C" const char *bfmeTabEAC[];
+// Retail .rdata VA 0x011098B0: button-state suffix names (7 pointers).
+extern "C" const char *const bfmeTabEAC[7] = {
+	"_unused", "_disabled", "_cantAfford", "_static", "_notReady", "_up", "_visuallyEnabled"
+};
 
 void bfmeButtonStateEAF(char index, int state)
 {

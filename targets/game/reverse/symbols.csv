@@ -90364,3 +90364,10 @@ _Rva0015C280Predicate,0x0015C280,cdecl bool(State*;void*) condition callback; re
 ??_C@_0P@DOBNHDKO@ONCE_BACKWARDS?$AA@,0x00D0F20C,Retail anim-mode name table VA 0x012BB5BC entry; compiler string literal ONCE_BACKWARDS equals retail at VA 0x0110F20C
 ?OpenBFME5_ReturnSecondPointer@@YAPAXPAX0@Z,0x00030940,ILT to object-symbol of row 0x000607E0; retail BfmeThingQB::bfmeMakeQB (0x0082C230) and the other bfmeAlloc* callers reach the matched return-second body through this ILT
 _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import jmp stub (gen-import ?ji_009f7244@@YAXXZ target=printf) called directly by Rva007F0000Alloc 0x007F000F
+??_C@_07JNEAJHPP@_unused?$AA@,0x00D05E70,Retail button-state suffix table VA 0x011098B0 entry; compiler string literal _unused equals retail at VA 0x01105E70
+??_C@_09FJOGPMMD@_disabled?$AA@,0x00D04B88,Retail button-state suffix table VA 0x011098B0 entry; compiler string literal _disabled equals retail at VA 0x01104B88
+??_C@_0M@JOGPEDGJ@_cantAfford?$AA@,0x00D098A0,Retail button-state suffix table VA 0x011098B0 entry; compiler string literal _cantAfford equals retail at VA 0x011098A0
+??_C@_07BCDBOFGA@_static?$AA@,0x00D09894,Retail button-state suffix table VA 0x011098B0 entry; compiler string literal _static equals retail at VA 0x01109894
+??_C@_09PDAKDGLB@_notReady?$AA@,0x00D09888,Retail button-state suffix table VA 0x011098B0 entry; compiler string literal _notReady equals retail at VA 0x01109888
+??_C@_03DANAOMFK@_up?$AA@,0x00D05E6C,Retail button-state suffix table VA 0x011098B0 entry; compiler string literal _up equals retail at VA 0x01105E6C
+??_C@_0BB@OJNKEJLO@_visuallyEnabled?$AA@,0x00D09874,Retail button-state suffix table VA 0x011098B0 entry; compiler string literal _visuallyEnabled equals retail at VA 0x01109874
