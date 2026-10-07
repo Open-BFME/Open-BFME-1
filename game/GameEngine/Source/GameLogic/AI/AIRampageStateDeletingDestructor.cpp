@@ -7,7 +7,7 @@
 
 class AIRampageState
 {
-protected:
+public:
 	virtual ~AIRampageState();
 
 private:
