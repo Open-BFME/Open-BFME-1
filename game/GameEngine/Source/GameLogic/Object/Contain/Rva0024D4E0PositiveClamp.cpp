@@ -7,10 +7,12 @@ struct Rva0024D4E0State
     float m_value;
 };
 
-class Rva0024D4E0Owner
+// Retail calls ILT 0x00021017 -> 0x001BE010, the matched guarded getter
+// ?get@Rva001BE010@@QAEHXZ (R2GuardedFieldGetters.cpp).
+class Rva001BE010
 {
 public:
-    Rva0024D4E0State *getState(void);
+    int get(void);
 };
 
 class Rva0024D4E0View
@@ -21,9 +23,9 @@ public:
 
 void Rva0024D4E0View::clampPositiveValue(void)
 {
-    Rva0024D4E0Owner *owner =
-        *reinterpret_cast<Rva0024D4E0Owner **>(reinterpret_cast<unsigned char *>(this) - 0xdc);
-    Rva0024D4E0State *state = owner->getState();
+    Rva001BE010 *owner =
+        *reinterpret_cast<Rva001BE010 **>(reinterpret_cast<unsigned char *>(this) - 0xdc);
+    Rva0024D4E0State *state = reinterpret_cast<Rva0024D4E0State *>(owner->get());
 
     if (state && state->m_value > 0.0f)
         state->m_value = 0.0f;
