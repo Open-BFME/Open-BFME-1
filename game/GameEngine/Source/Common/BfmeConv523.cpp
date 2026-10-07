@@ -1,7 +1,23 @@
+class Object;
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
+enum UpdateSleepTime;
+
+class BfmeThingBSC;
+
+// Declaration only: retail calls ILT 0x000157DA -> 0x002B2040, UpdateModule.cpp's
+// matched protected setWakeFrame; friendship satisfies the access check.
+class UpdateModule
+{
+	friend class BfmeThingBSC;
+
+protected:
+	void setWakeFrame(Object *obj, UpdateSleepTime wakeDelay);
+};
+
 class BfmeThingBSC
 {
 public:
-	void bfmeDoBSC(void *what, int flag);
 	void bfmeGoBSC();
 	unsigned char m_bfmeHead[8];
 	void *m_bfmeWhat;
@@ -22,5 +38,6 @@ void BfmeThingBSC::bfmeGoBSC()
 	m_bfmeB = 0;
 	m_bfmeE = 0;
 	m_bfmeF = 0;
-	bfmeDoBSC(m_bfmeWhat, 1);
+	reinterpret_cast<UpdateModule *>(this)->setWakeFrame(
+		static_cast<Object *>(m_bfmeWhat), static_cast<UpdateSleepTime>(1));
 }
