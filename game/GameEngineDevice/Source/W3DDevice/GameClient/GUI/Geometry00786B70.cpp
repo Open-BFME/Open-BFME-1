@@ -12,7 +12,9 @@
 extern "C" void _ReadWriteBarrier();
 #pragma intrinsic(_ReadWriteBarrier)
 
-extern int R2Data01126AE4;
+// The table at 0x01126AE4 is the vftable recorded as ??_7Gen_007875E0@@6B@
+// (emitted by Bfme5SelfRangeDtors.cpp); spelled by __identifier.
+extern "C" int __identifier("??_7Gen_007875E0@@6B@")[];
 
 class Geometry00786B70
 {
@@ -27,7 +29,7 @@ public:
 
 Geometry00786B70::Geometry00786B70() throw()
 {
-    m_at00 = &R2Data01126AE4;
+    m_at00 = __identifier("??_7Gen_007875E0@@6B@");
     // Keep the table store ahead of the zeroing, as in the retail constructor.
     // The intrinsic constrains compiler ordering without emitting instructions.
     _ReadWriteBarrier();
