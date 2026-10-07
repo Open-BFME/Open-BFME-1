@@ -1063,3 +1063,13 @@ game/GameEngine/Source/Common/System/PathProximity000FE640.cpp|type||Path000FE64
 game/GameEngine/Source/Common/System/PathProximity000FE640.cpp|param|Coord3D::Coord3D#2|v,2c83f33e95f87252cbfae059,gpt-6-astra,20261007192738-7025a1,2026-10-07
 game/GameEngine/Source/Common/System/PathProximity000FE640.cpp|type||PathNode000FE640,3e83ceb9c90b88e5937b2035,grok,20261007193119-5e4554,2026-10-07
 game/GameEngine/Source/Common/System/PathProximity000FE640.cpp|type||Path000FE640,e03466f7b2ee36608f694a95,grok,20261007193119-5e4554,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_3e0,aa535fc38f847badf65e3959,gpt-6-astra,20261007192743-164aa4,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_3e4,c6996314d3d75d1a7afd8ed9,gpt-6-astra,20261007192743-164aa4,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_3e8,4c90042d6ed93b84f2c332c7,gpt-6-astra,20261007192743-164aa4,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_3ec,110dc00a088d99312d96069f,gpt-6-astra,20261007192743-164aa4,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_3f0,c19ac8149d9d97b6fc2d9d35,gpt-6-astra,20261007192743-164aa4,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_400,74a57a15adbf31f77b1916cb,gpt-6-astra,20261007192743-164aa4,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_401,c3c20e36eb6229525625aa30,gpt-6-astra,20261007192743-164aa4,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_402,0a23bfc74465a253e1949e77,gpt-6-astra,20261007192743-164aa4,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_403,0de8d441be8172b834ad6dbf,gpt-6-astra,20261007192743-164aa4,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_404,293a18baeb28307ac33d7c99,gpt-6-astra,20261007192743-164aa4,2026-10-07
