@@ -28,16 +28,18 @@ class AICommandInterface { public: void aiIdle(CommandSourceType); };
 struct Rva001BB0D0AI { char pad000[0x20]; AICommandInterface command; };
 struct ModelConditionFlags {
  unsigned test(int i) const { return bits[i>>5] & (1u<<(i&31)); }
- void set(int i) { bits[i>>5] |= (1u<<(i&31)); }
  void clear(int i) { bits[i>>5] &= ~(1u<<(i&31)); }
  unsigned bits[10];
 };
+// File-static so this TU does not emit a non-retail
+// ?set@ModelConditionFlags@@QAEXH@Z COMDAT ahead of the bitset copy.
+static inline void setModelConditionBit(ModelConditionFlags &f, int i) { f.bits[i>>5] |= (1u<<(i&31)); }
 #define BFME_HAVE_COORD3D
 #define BFME_HAVE_MODELCONDITIONFLAGS
 #define OBJECT_TU_MEMBERS \
  void notifyModelConditionChanged(); \
  void setModelConditionState(int bit) { \
-  if (!m_modelConditionFlags.test(bit)) { m_modelConditionFlags.set(bit); notifyModelConditionChanged(); } \
+  if (!m_modelConditionFlags.test(bit)) { setModelConditionBit(m_modelConditionFlags, bit); notifyModelConditionChanged(); } \
  } \
  void clearModelConditionState(int bit) { \
   if (m_modelConditionFlags.test(bit)) { m_modelConditionFlags.clear(bit); notifyModelConditionChanged(); } \
