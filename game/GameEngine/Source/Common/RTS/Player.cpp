@@ -3231,21 +3231,7 @@ Bool Player::addSkillPoints(Int delta)
 
 //=============================================================================
 /// returns TRUE if the player gained/lost levels as a result.
-// ?addSkillPointsForKill@Player@@QAE_NPBVObject@@0@Z present-unmatched
-Bool Player::addSkillPointsForKill(const Object* killer, const Object* victim)
-{
-	if (!killer || !victim)
-		return false;
-
-	// srj sez: per dustin, no experience (et al) for killing things under construction.
-	if (victim->testStatus(OBJECT_STATUS_UNDER_CONSTRUCTION))
-		return false;
-	
-	Int victimLevel = victim->getVeterancyLevel();
-	Int skillValue = victim->getTemplate()->getSkillPointValue(victimLevel);
-	
-	return addSkillPoints(skillValue);
-}
+// Player::addSkillPointsForKill: defined in Player_addSkillPointsForKill.cpp.
 
 //=============================================================================
 // ?resetSciences@Player@@QAEXXZ present-unmatched
