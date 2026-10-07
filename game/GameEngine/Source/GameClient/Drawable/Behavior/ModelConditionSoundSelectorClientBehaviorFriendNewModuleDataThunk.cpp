@@ -30,7 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl ModelConditionSoundSelectorClientBehaviorFieldParse(MultiIniFieldParse &parse);
+// Retail pushes 0x0042E703, the matched ILT thunk to 0x00607930.
+extern void j_0002e703(void);
 
 class ModelConditionSoundSelectorClientBehavior
 {
@@ -43,6 +44,7 @@ ModuleData *ModelConditionSoundSelectorClientBehavior::friend_newModuleData(INI 
 {
 	ModelConditionSoundSelectorClientBehaviorModuleData *data = new ModelConditionSoundSelectorClientBehaviorModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &ModelConditionSoundSelectorClientBehaviorFieldParse);
+		ini->initFromINIMultiProc(data, 
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_0002e703));
 	return (ModuleData *)data;
 }
