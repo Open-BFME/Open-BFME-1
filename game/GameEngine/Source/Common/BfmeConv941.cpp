@@ -19,18 +19,32 @@ int BfmeThing941B::bfmeGo941B(void *a, void *b)
 	return (int)(float)m_bfmeSrc->m_bfmeVal;
 }
 
+// Retail 0x001CE6D0 calls ILT 0x2037E -> matched 0x001CE640 and ILT 0x23D49
+// -> matched 0x001C16A0 (callees.py), both on the same this.
+class Matrix3DTN;
+
+class BfmeHostBU
+{
+public:
+	void bfmeDieBU();
+};
+
+class BfmeThingTN
+{
+public:
+	void bfmeSetTransformTN(const Matrix3DTN *m);
+};
+
 class BfmeThing941F
 {
 public:
 	void bfmeGo941F(void *a);
-	void bfmeOne941F();
-	void bfmeTwo941F(void *a);
 };
 
 void BfmeThing941F::bfmeGo941F(void *a)
 {
-	bfmeOne941F();
-	bfmeTwo941F(a);
+	((BfmeHostBU *)this)->bfmeDieBU();
+	((BfmeThingTN *)this)->bfmeSetTransformTN((const Matrix3DTN *)a);
 }
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
