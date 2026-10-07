@@ -741,3 +741,9 @@ WindowMsgHandledType WOLLobbyMenuSystem(GameWindow *window, UnsignedInt msg,
   }
   return MSG_HANDLED;
 }
+
+// 0x004FC490 and 0x004FD8D0 are two 25-byte copies of this destructor: clear()
+// through ILT 0x00017F76 -> 0x004FB290 above, then operator delete on the
+// sentinel. TheLobbyQueuedUTMs' exit destructor (0x00C701A0) tail-jumps through
+// ILT 0x0003C4CA to 0x004FD8D0. Emitted here, where clear() already matches.
+template _STL::_List_base<PeerResponse, _STL::allocator<PeerResponse> >::~_List_base();
