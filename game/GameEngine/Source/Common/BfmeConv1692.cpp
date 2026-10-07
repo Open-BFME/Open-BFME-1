@@ -1,4 +1,10 @@
-unsigned int __cdecl bfmeHashFI(void *first, void *second);
+// Retail calls ILT 0x00007518 -> 0x00592FE0, the matched __cdecl wrapper Rva00592FE0.
+int __cdecl Rva00592FE0(int first, int second);
+
+inline unsigned int bfmeHashFI(void *first, void *second)
+{
+	return (unsigned int)Rva00592FE0((int)first, (int)second);
+}
 
 class BfmeKeyFI
 {
