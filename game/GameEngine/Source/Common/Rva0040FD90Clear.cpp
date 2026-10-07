@@ -149,6 +149,14 @@ public:
 	virtual BfmeNodeFD *next();
 };
 
+// ILT 0x1992F -> 0x0040EFF0, matched ?bfmeStopMovie@Display@@QAEXXZ
+// (Shell_hide.cpp).
+class Display
+{
+public:
+	void bfmeStopMovie();
+};
+
 class BfmeObjFD
 {
 public:
@@ -213,7 +221,6 @@ public:
 	virtual int v58();
 	virtual void v59();
 	void bfmeClearFD();
-	void bfmeHelpFD();
 	char m_04[0x14];
 	BfmeNodeFD *m_18;
 	char m_1C[0xA8];
@@ -235,7 +242,7 @@ void BfmeObjFD::bfmeClearFD()
 		m_D0 = 0;
 		m_D4 = 0;
 		v59();
-		bfmeHelpFD();
+		reinterpret_cast<Display *>(this)->bfmeStopMovie();
 	}
 	BfmeNodeFD *p = m_18;
 	m_110 = 0;
