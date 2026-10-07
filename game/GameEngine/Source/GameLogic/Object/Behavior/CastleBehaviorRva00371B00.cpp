@@ -100,7 +100,7 @@ class GlobalData
 {
 public:
 	unsigned char m_unmodelled0000[0x11F8];
-	Real m_unmodelled11F8;
+	Real m_secondsBeforeBaseCheckActive;
 };
 
 extern GlobalData *TheWritableGlobalData;
@@ -153,7 +153,7 @@ Bool CastleBehavior::rva00371b00()
 	GlobalData *data = TheWritableGlobalData;
 	GameLogic *logic = TheGameLogic;
 	UnsignedInt frame = logic->m_frame;
-	UnsignedInt threshold = (UnsignedInt)(Int)(data ? data->m_unmodelled11F8 * 5.0f : 25.0f);
+	UnsignedInt threshold = (UnsignedInt)(Int)(data ? data->m_secondsBeforeBaseCheckActive * 5.0f : 25.0f);
 	if (frame < threshold)
 		return false;
 
