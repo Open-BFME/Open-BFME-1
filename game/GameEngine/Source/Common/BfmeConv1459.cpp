@@ -1,7 +1,10 @@
 // Open-BFME5 conversions.
 
 char *Rva007EBCA0(const char *record, const char *tag);
-int bfmeApplyVMQ(char *p, int n);
+// Decimal parse with default: matched C function _Rva007EE720 (0x007EE720,
+// DirtySock/Y4TextToValue.c), which the pin for this call names.
+extern "C" int Rva007EE720(const char *text, int defaultValue);
+static inline int bfmeApplyVMQ(char *p, int n) { return Rva007EE720(p, n); }
 
 class BfmeThingVMQ
 {
