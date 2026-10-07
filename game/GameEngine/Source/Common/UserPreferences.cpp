@@ -581,23 +581,8 @@ UnsignedShort CustomMatchPreferences::getLastLadderPort( void )
 	return atoi(text);
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/promoted__getPreferredColor_CustomMatchPreferences_QAEHXZ_000AC2A0.cpp
-// ?getPreferredColor@CustomMatchPreferences@@QAEHXZ present-unmatched
-Int CustomMatchPreferences::getPreferredColor(void)
-{
-	Int ret;
-	CustomMatchPreferences::const_iterator it = find("Color");
-	if (it == end())
-	{
-		return -1;
-	}
-
-	ret = atoi(it->second.str());
-	if (ret < -1 || ret >= TheMultiplayerSettings->getNumColors())
-		ret = -1;
-
-	return ret;
-}
+// CustomMatchPreferences::getPreferredColor: retail body in
+// promoted__getPreferredColor_CustomMatchPreferences_QAEHXZ_000AC2A0.cpp.
 
 // ?setPreferredColor@CustomMatchPreferences@@QAEXH@Z
 // ?setPreferredColor@CustomMatchPreferences@@QAEXH@Z present-unmatched
