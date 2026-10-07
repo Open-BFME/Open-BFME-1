@@ -2,7 +2,6 @@
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-extern float g_bfmeScaleBC;
 
 class Player;
 class Object
@@ -72,7 +71,7 @@ void Rva0029DA90ProductionFacet::process(UnsignedInt productionID)
 {
 	for (ProductionEntry *entry = head(); entry != 0; entry = entry->m_next)
 	{
-		Bool suppressRefund = entry->m_progress >= g_bfmeScaleBC && fieldD8() != 0;
+		Bool suppressRefund = entry->m_progress >= 100.0f && fieldD8() != 0;
 		if (entry->m_id != productionID || (!flagD5() && suppressRefund))
 			continue;
 
