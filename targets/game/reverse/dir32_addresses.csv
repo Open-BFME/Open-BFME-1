@@ -13596,7 +13596,6 @@ _SquishCollideFieldParse,0x004173DC
 _StatsServerHostname,0x012D9090
 _StealthUpdateFieldParse,0x0041D8F9
 _StealthUpgradeFieldParse,0x00420798
-_StopSpecialPowerFieldParse,0x0041F67C
 _StructureBodyFieldParse,0x0043EB35
 _SubObjectsUpgradeFieldParse,0x00447E65
 _SupplyCenterProductionExitUpdateFieldParse,0x004353E6

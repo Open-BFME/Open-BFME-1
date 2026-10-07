@@ -30,7 +30,9 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl StopSpecialPowerFieldParse(MultiIniFieldParse &parse);
+// The proc operand is ILT 0x0001F67C -> 0x0026B310, the matched
+// ?buildFieldParse@Rva0026B310@@SAXAAVWideMulti@@@Z.
+void j_0001f67c();
 
 class StopSpecialPower
 {
@@ -43,6 +45,6 @@ ModuleData *StopSpecialPower::friend_newModuleData(INI *ini)
 {
 	StopSpecialPowerModuleData *data = new StopSpecialPowerModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &StopSpecialPowerFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))j_0001f67c);
 	return (ModuleData *)data;
 }
