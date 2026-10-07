@@ -5,10 +5,8 @@ template <int Bits>
 class BitFlags
 {
 public:
-    BitFlags()
-    {
-    }
-
+    // No user constructor: retail's BitFlags<45> ctor (0x005818F0) zeroes the
+    // words, and this TU's sret temp is never constructed through it.
     unsigned int m_bits[ ( Bits + 31 ) / 32 ];
 };
 
