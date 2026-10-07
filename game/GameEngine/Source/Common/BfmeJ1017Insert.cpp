@@ -2,7 +2,9 @@
 
 extern int g_rva00891FA0Ready;
 extern int g_rva00891FA0Value;
-extern void (__cdecl *g_bfmeJ1017Fn)(void *, int);
+// 0x01337840: callback cell defined in BfmeOneHundredTwentyThree.cpp
+extern void (__cdecl *g_bfmeSlot05VB)(void);
+typedef void (__cdecl *BfmeJ1017Fn)(void *, int);
 
 class BfmeJ1017
 {
@@ -39,6 +41,6 @@ void BfmeJ1017::bfmeInsert(unsigned int packed)
 	{
 		tmp.a = g_rva00891FA0Value;
 		tmp.b = packed;
-		g_bfmeJ1017Fn(&tmp, 8);
+		((BfmeJ1017Fn)g_bfmeSlot05VB)(&tmp, 8);
 	}
 }
