@@ -28,6 +28,7 @@ import random
 import re
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -534,10 +535,19 @@ def cmd_submit(args):
     return 0
 
 
+def captured(command):
+    # Wine services can inherit output descriptors beyond the command's lifetime; pipes would never reach EOF.
+    with tempfile.TemporaryFile(mode="w+", encoding="utf-8") as out, tempfile.TemporaryFile(mode="w+", encoding="utf-8") as err:
+        done = subprocess.run(command, cwd=ROOT, stdout=out, stderr=err)
+        out.seek(0)
+        err.seek(0)
+        return subprocess.CompletedProcess(command, done.returncode, out.read(), err.read())
+
+
 def commit(paths, message):
     names = [str(Path(p).relative_to(ROOT)) if Path(p).is_absolute() else str(p) for p in paths]
     git("add", *names)
-    return subprocess.run(["git", "commit", "-q", "--only", *names, "-m", message], cwd=ROOT, capture_output=True, text=True)
+    return captured(["git", "commit", "-q", "--only", *names, "-m", message])
 
 
 def rewrite_stored(renames, why="two models agreed"):
@@ -576,7 +586,7 @@ def rewrite_stored(renames, why="two models agreed"):
 
 
 def gate(rel):
-    done = subprocess.run(["bash", "build.sh", rel], cwd=ROOT, capture_output=True, text=True)
+    done = captured(["bash", "build.sh", rel])
     out = done.stdout + done.stderr
     if done.returncode == 0 and re.search(r"Functions: OK (\d+)/\1\b", out):
         return None
