@@ -10359,72 +10359,72 @@ name,address,notes
 ??RUnicodeStringLessThan@@QBE_NVUnicodeString@@0@Z,0x000482B1,LanguageFilter map operator[] callee (ILT thunk -> body 0x0044D2A0)
 ??RWOLLoginAsciiStringLess@@QBE_NABVAsciiString@@0@Z,0x00043D42,WOLLogin retail AsciiString comparator thunk
 ??S?$bitset@$0BDA@@_STL@@QBE?AV01@XZ,0x00030B07,Open-BFME5 BitFlags<304> complement operator ILT thunk to body 0x001C4B30; ModelConditionFlags::clearAndSet calls it
-??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@,0x0107375C,CategoryModuleInfo<8> base vtable
-??_7?$DynamicVectorClass@UAddInfoStruct@MixFileFactoryClass@@@@6B@,0x0113CE5C,WWLib DynamicVectorClass<MixFileFactoryClass::AddInfoStruct> vtable installed by matched constructor 0x0093E660
+??_7?$CategoryModuleInfo@$07@FXParticleSystem@@6B@,0x00C7375C,CategoryModuleInfo<8> base vtable
+??_7?$DynamicVectorClass@UAddInfoStruct@MixFileFactoryClass@@@@6B@,0x00D3CE5C,WWLib DynamicVectorClass<MixFileFactoryClass::AddInfoStruct> vtable installed by matched constructor 0x0093E660
 ??_7?$DynamicVectorClass@UResolutionDescClass@@@@6B@,0x00D3A0E4,RenderDeviceDescClass::ResArray destructor direct vtable DIR32
 ??_7?$LatchRestore@PAVTeam@@@@6B@,0x00CE75AC,003433F0 native Team-pointer latch vptr; slot0 VA0041976D routes to independently matched39B deleting destructor003377A0
-??_7?$LatchRestore@VAsciiString@@@@6B@,0x010E7688,ctor00339DA0 and dtor00339E20 install this vtable; first entry ILT0001D499 targets independently exact native deleting destructor00339FA0
-??_7?$ShareBufferClass@PAVVertexMaterialClass@@@@6B@,0x0113C300,ShareBufferClass<VertexMaterialClass*> vftable stored by the inlined base destructor in 0x0092A220
-??_7?$ShareBufferClass@VVector3@@@@6B@,0x011135D0,Open-BFME5 ShareBuffer Vector3 retail vtable
+??_7?$LatchRestore@VAsciiString@@@@6B@,0x00CE7688,ctor00339DA0 and dtor00339E20 install this vtable; first entry ILT0001D499 targets independently exact native deleting destructor00339FA0
+??_7?$ShareBufferClass@PAVVertexMaterialClass@@@@6B@,0x00D3C300,ShareBufferClass<VertexMaterialClass*> vftable stored by the inlined base destructor in 0x0092A220
+??_7?$ShareBufferClass@VVector3@@@@6B@,0x00D135D0,Open-BFME5 ShareBuffer Vector3 retail vtable
 ??_7?$SimpleDynVecClass@PAV?$MultiListClass@VDX8FVFCategoryContainer@@@@@@6B@,0x00D3D010,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00949D00 calls; autopin
-??_7?$SimpleDynVecClass@VVector3@@@@6B@,0x0113AD08,WW3D SimpleDynVecClass<Vector3> vtable installed by exact destructor 0x009183B0 and referenced by StreakLineClass construction/destruction family
+??_7?$SimpleDynVecClass@VVector3@@@@6B@,0x00D3AD08,WW3D SimpleDynVecClass<Vector3> vtable installed by exact destructor 0x009183B0 and referenced by StreakLineClass construction/destruction family
 ??_7?$SimpleVecClass@PAV?$MultiListClass@VDX8FVFCategoryContainer@@@@@@6B@,0x00D3D004,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00949D00 calls; autopin
-??_7?$SubsystemSlot@VAI@@@@6B@,0x01075E20,vtable installed by exact SubsystemSlot<AI> constructor at 0x000711D0; slot zero routes through ILT 0x00022B83 to scalar-deleting destructor 0x000711F0
-??_7?$SubsystemSlot@VAerialPathfinder@@@@6B@,0x01075E24,vtable installed by exact SubsystemSlot<AerialPathfinder> constructor at 0x00071290; slot zero routes through ILT 0x0002CAF2 to scalar-deleting destructor 0x000712B0
-??_7?$SubsystemSlot@VAptPlayer@@@@6B@,0x01075E14,vtable installed by exact SubsystemSlot<AptPlayer> constructor at 0x00070F90; slot zero routes through ILT 0x0001A582 to scalar-deleting destructor 0x00070FB0
-??_7?$SubsystemSlot@VArmorStore@@@@6B@,0x01075DFC,vtable installed by exact SubsystemSlot<ArmorStore> constructor at 0x00070B10; slot zero routes through ILT 0x0004156F to scalar-deleting destructor 0x00070B30
-??_7?$SubsystemSlot@VAttributeModifierStore@@@@6B@,0x01075E30,vtable installed by exact SubsystemSlot<AttributeModifierStore> constructor at 0x000714D0; slot zero routes through ILT 0x00043AC7 to scalar-deleting destructor 0x000714F0
-??_7?$SubsystemSlot@VAudioManager@@@@6B@,0x01075D9C,vtable installed by exact SubsystemSlot<AudioManager> constructor at 0x0006F910; slot zero routes through ILT 0x00001BA4 to scalar-deleting destructor 0x0006F930
-??_7?$SubsystemSlot@VBuildAssistant@@@@6B@,0x01075E00,vtable installed by exact SubsystemSlot<BuildAssistant> constructor at 0x00070BD0; slot zero routes through ILT 0x00043C61 to scalar-deleting destructor 0x00070BF0
-??_7?$SubsystemSlot@VCDManagerInterface@@@@6B@,0x01075DB8,vtable installed by exact SubsystemSlot<CDManagerInterface> constructor at 0x0006FE50; slot zero routes through ILT 0x0002501D to scalar-deleting destructor 0x0006FE70
-??_7?$SubsystemSlot@VCaveSystem@@@@6B@,0x01075DD0,vtable installed by exact SubsystemSlot<CaveSystem> constructor at 0x000702D0; slot zero routes through ILT 0x00012B3E to scalar-deleting destructor 0x000702F0
-??_7?$SubsystemSlot@VDamageFXStore@@@@6B@,0x01075DF8,vtable installed by exact SubsystemSlot<DamageFXStore> constructor at 0x00070A50; slot zero routes through ILT 0x000226BF to scalar-deleting destructor 0x00070A70
-??_7?$SubsystemSlot@VEmotionSystem@@@@6B@,0x01075E04,vtable installed by exact SubsystemSlot<EmotionSystem> constructor at 0x00070C90; slot zero routes through ILT 0x00003D23 to scalar-deleting destructor 0x00070CB0
-??_7?$SubsystemSlot@VEva@@@@6B@,0x01075DA0,vtable installed by exact SubsystemSlot<Eva> constructor at 0x0006F9D0; slot zero routes through ILT 0x0000C13F to scalar-deleting destructor 0x0006F9F0
-??_7?$SubsystemSlot@VExperienceLevelSystem@@@@6B@,0x01075E10,vtable installed by exact SubsystemSlot<ExperienceLevelSystem> constructor at 0x00070ED0; slot zero routes through ILT 0x0001333B to scalar-deleting destructor 0x00070EF0
-??_7?$SubsystemSlot@VFXListStore@@@@6B@,0x01075DE4,vtable installed by exact SubsystemSlot<FXListStore> constructor at 0x00070690; slot zero routes through ILT 0x00027CFA to scalar-deleting destructor 0x000706B0
-??_7?$SubsystemSlot@VFunctionLexicon@@@@6B@,0x01075DC0,vtable installed by exact SubsystemSlot<FunctionLexicon> constructor at 0x0006FFD0; slot zero routes through ILT 0x0002A644 to scalar-deleting destructor 0x0006FFF0
-??_7?$SubsystemSlot@VGameClient@@@@6B@,0x01075E1C,vtable installed by exact SubsystemSlot<GameClient> constructor at 0x00071110; slot zero routes through ILT 0x000173B4 to scalar-deleting destructor 0x00071130
-??_7?$SubsystemSlot@VGameTextInterface@@@@6B@,0x01075D98,vtable installed by exact SubsystemSlot<GameTextInterface> constructor at 0x0006F850; slot zero routes through ILT 0x00034400 to scalar-deleting destructor 0x0006F870
-??_7?$SubsystemSlot@VGlobalData@@@@6B@,0x01075D90,vtable installed by exact SubsystemSlot<GlobalData> constructor at 0x0006F6D0; slot zero routes through ILT 0x0000C72F to scalar-deleting destructor 0x0006F6F0
-??_7?$SubsystemSlot@VGlobalLanguage@@@@6B@,0x01075D94,vtable installed by exact SubsystemSlot<GlobalLanguage> constructor at 0x0006F790; slot zero routes through ILT 0x00015726 to scalar-deleting destructor 0x0006F7B0
-??_7?$SubsystemSlot@VGlobalWeatherSystem@@@@6B@,0x01075DBC,vtable installed by exact SubsystemSlot<GlobalWeatherSystem> constructor at 0x0006FF10; slot zero routes through ILT 0x0003E5E0 to scalar-deleting destructor 0x0006FF30
-??_7?$SubsystemSlot@VLightPointSystem@@@@6B@,0x01075E0C,vtable installed by exact SubsystemSlot<LightPointSystem> constructor at 0x00070E10; slot zero routes through ILT 0x0001E3DA to scalar-deleting destructor 0x00070E30
-??_7?$SubsystemSlot@VLivingWorldLogic@@@@6B@,0x01075E28,vtable installed by exact SubsystemSlot<LivingWorldLogic> constructor at 0x00071350; slot zero routes through ILT 0x0002F838 to scalar-deleting destructor 0x00071370
-??_7?$SubsystemSlot@VLivingWorldManager@@@@6B@,0x01075E18,vtable installed by exact SubsystemSlot<LivingWorldManager> constructor at 0x00071050; slot zero routes through ILT 0x000227EB to scalar-deleting destructor 0x00071070
-??_7?$SubsystemSlot@VLocomotorStore@@@@6B@,0x01075DF0,vtable installed by exact SubsystemSlot<LocomotorStore> constructor at 0x000708D0; slot zero routes through ILT 0x0000141F to scalar-deleting destructor 0x000708F0
-??_7?$SubsystemSlot@VMessageStream@@@@6B@,0x01075DC8,vtable installed by exact SubsystemSlot<MessageStream> constructor at 0x00070150; slot zero routes through ILT 0x000143FD to scalar-deleting destructor 0x00070170
-??_7?$SubsystemSlot@VModuleFactory@@@@6B@,0x01075DC4,vtable installed by exact SubsystemSlot<ModuleFactory> constructor at 0x00070090; slot zero routes through ILT 0x00031066 to scalar-deleting destructor 0x000700B0
-??_7?$SubsystemSlot@VMultiplayerSettings@@@@6B@,0x01075DAC,vtable installed by exact SubsystemSlot<MultiplayerSettings> constructor at 0x0006FC10; slot zero routes through ILT 0x00018F48 to scalar-deleting destructor 0x0006FC30
-??_7?$SubsystemSlot@VObjectCreationListStore@@@@6B@,0x01075DEC,vtable installed by exact SubsystemSlot<ObjectCreationListStore> constructor at 0x00070810; slot zero routes through ILT 0x00033BB8 to scalar-deleting destructor 0x00070830
-??_7?$SubsystemSlot@VParticleSystemManager@@@@6B@,0x01075DE0,vtable installed by exact SubsystemSlot<ParticleSystemManager> constructor at 0x000705D0; slot zero routes through ILT 0x00035611 to scalar-deleting destructor 0x000705F0
-??_7?$SubsystemSlot@VPlayerAITypeSet@@@@6B@,0x01075DD8,vtable installed by exact SubsystemSlot<PlayerAITypeSet> constructor at 0x00070450; slot zero routes through ILT 0x0003C38F to scalar-deleting destructor 0x00070470
-??_7?$SubsystemSlot@VPlayerTemplateStore@@@@6B@,0x01075DDC,vtable installed by exact SubsystemSlot<PlayerTemplateStore> constructor at 0x00070510; slot zero routes through ILT 0x000322E0 to scalar-deleting destructor 0x00070530
-??_7?$SubsystemSlot@VRadar@@@@6B@,0x01075E54,vtable installed by matched initSubsystem<Radar> at 0x00075350; slot zero routes through ILT 0x0002088D to scalar-deleting destructor 0x00071BB0
-??_7?$SubsystemSlot@VRankInfoStore@@@@6B@,0x01075DD4,vtable installed by exact SubsystemSlot<RankInfoStore> constructor at 0x00070390; slot zero routes through ILT 0x00008855 to scalar-deleting destructor 0x000703B0
-??_7?$SubsystemSlot@VScienceStore@@@@6B@,0x01075DA4,vtable installed by exact SubsystemSlot<ScienceStore> constructor at 0x0006FA90; slot zero routes through ILT 0x0000B52D to scalar-deleting destructor 0x0006FAB0
-??_7?$SubsystemSlot@VSidesList@@@@6B@,0x01075DCC,vtable installed by exact SubsystemSlot<SidesList> constructor at 0x00070210; slot zero routes through ILT 0x0000494E to scalar-deleting destructor 0x00070230
-??_7?$SubsystemSlot@VSpecialPowerStore@@@@6B@,0x01075DF4,vtable installed by exact SubsystemSlot<SpecialPowerStore> constructor at 0x00070990; slot zero routes through ILT 0x00030DD7 to scalar-deleting destructor 0x000709B0
-??_7?$SubsystemSlot@VSplineService@@@@6B@,0x01075E2C,vtable installed by exact SubsystemSlot<SplineService> constructor at 0x00071410; slot zero routes through ILT 0x000274DA to scalar-deleting destructor 0x00071430
-??_7?$SubsystemSlot@VSubsystemLegend@@@@6B@,0x01075D8C,vtable installed by exact SubsystemSlot<SubsystemLegend> constructor at 0x0006F610; slot zero routes through ILT 0x00032376 to scalar-deleting destructor 0x0006F630
-??_7?$SubsystemSlot@VTerrainRoadCollection@@@@6B@,0x01075DB4,vtable installed by exact SubsystemSlot<TerrainRoadCollection> constructor at 0x0006FD90; slot zero routes through ILT 0x0001F280 to scalar-deleting destructor 0x0006FDB0
-??_7?$SubsystemSlot@VTerrainTypeCollection@@@@6B@,0x01075DB0,vtable installed by exact SubsystemSlot<TerrainTypeCollection> constructor at 0x0006FCD0; slot zero routes through ILT 0x0000F26D to scalar-deleting destructor 0x0006FCF0
-??_7?$SubsystemSlot@VThingFactory@@@@6B@,0x01075E08,vtable installed by exact SubsystemSlot<ThingFactory> constructor at 0x00070D50; slot zero routes through ILT 0x00027A89 to scalar-deleting destructor 0x00070D70
-??_7?$SubsystemSlot@VUpgradeCenter@@@@6B@,0x01075DA8,vtable installed by exact SubsystemSlot<UpgradeCenter> constructor at 0x0006FB50; slot zero routes through ILT 0x00048DA1 to scalar-deleting destructor 0x0006FB70
-??_7?$SubsystemSlot@VWeaponStore@@@@6B@,0x01075DE8,vtable installed by exact SubsystemSlot<WeaponStore> constructor at 0x00070750; slot zero routes through ILT 0x000314EE to scalar-deleting destructor 0x00070770
+??_7?$SubsystemSlot@VAI@@@@6B@,0x00C75E20,vtable installed by exact SubsystemSlot<AI> constructor at 0x000711D0; slot zero routes through ILT 0x00022B83 to scalar-deleting destructor 0x000711F0
+??_7?$SubsystemSlot@VAerialPathfinder@@@@6B@,0x00C75E24,vtable installed by exact SubsystemSlot<AerialPathfinder> constructor at 0x00071290; slot zero routes through ILT 0x0002CAF2 to scalar-deleting destructor 0x000712B0
+??_7?$SubsystemSlot@VAptPlayer@@@@6B@,0x00C75E14,vtable installed by exact SubsystemSlot<AptPlayer> constructor at 0x00070F90; slot zero routes through ILT 0x0001A582 to scalar-deleting destructor 0x00070FB0
+??_7?$SubsystemSlot@VArmorStore@@@@6B@,0x00C75DFC,vtable installed by exact SubsystemSlot<ArmorStore> constructor at 0x00070B10; slot zero routes through ILT 0x0004156F to scalar-deleting destructor 0x00070B30
+??_7?$SubsystemSlot@VAttributeModifierStore@@@@6B@,0x00C75E30,vtable installed by exact SubsystemSlot<AttributeModifierStore> constructor at 0x000714D0; slot zero routes through ILT 0x00043AC7 to scalar-deleting destructor 0x000714F0
+??_7?$SubsystemSlot@VAudioManager@@@@6B@,0x00C75D9C,vtable installed by exact SubsystemSlot<AudioManager> constructor at 0x0006F910; slot zero routes through ILT 0x00001BA4 to scalar-deleting destructor 0x0006F930
+??_7?$SubsystemSlot@VBuildAssistant@@@@6B@,0x00C75E00,vtable installed by exact SubsystemSlot<BuildAssistant> constructor at 0x00070BD0; slot zero routes through ILT 0x00043C61 to scalar-deleting destructor 0x00070BF0
+??_7?$SubsystemSlot@VCDManagerInterface@@@@6B@,0x00C75DB8,vtable installed by exact SubsystemSlot<CDManagerInterface> constructor at 0x0006FE50; slot zero routes through ILT 0x0002501D to scalar-deleting destructor 0x0006FE70
+??_7?$SubsystemSlot@VCaveSystem@@@@6B@,0x00C75DD0,vtable installed by exact SubsystemSlot<CaveSystem> constructor at 0x000702D0; slot zero routes through ILT 0x00012B3E to scalar-deleting destructor 0x000702F0
+??_7?$SubsystemSlot@VDamageFXStore@@@@6B@,0x00C75DF8,vtable installed by exact SubsystemSlot<DamageFXStore> constructor at 0x00070A50; slot zero routes through ILT 0x000226BF to scalar-deleting destructor 0x00070A70
+??_7?$SubsystemSlot@VEmotionSystem@@@@6B@,0x00C75E04,vtable installed by exact SubsystemSlot<EmotionSystem> constructor at 0x00070C90; slot zero routes through ILT 0x00003D23 to scalar-deleting destructor 0x00070CB0
+??_7?$SubsystemSlot@VEva@@@@6B@,0x00C75DA0,vtable installed by exact SubsystemSlot<Eva> constructor at 0x0006F9D0; slot zero routes through ILT 0x0000C13F to scalar-deleting destructor 0x0006F9F0
+??_7?$SubsystemSlot@VExperienceLevelSystem@@@@6B@,0x00C75E10,vtable installed by exact SubsystemSlot<ExperienceLevelSystem> constructor at 0x00070ED0; slot zero routes through ILT 0x0001333B to scalar-deleting destructor 0x00070EF0
+??_7?$SubsystemSlot@VFXListStore@@@@6B@,0x00C75DE4,vtable installed by exact SubsystemSlot<FXListStore> constructor at 0x00070690; slot zero routes through ILT 0x00027CFA to scalar-deleting destructor 0x000706B0
+??_7?$SubsystemSlot@VFunctionLexicon@@@@6B@,0x00C75DC0,vtable installed by exact SubsystemSlot<FunctionLexicon> constructor at 0x0006FFD0; slot zero routes through ILT 0x0002A644 to scalar-deleting destructor 0x0006FFF0
+??_7?$SubsystemSlot@VGameClient@@@@6B@,0x00C75E1C,vtable installed by exact SubsystemSlot<GameClient> constructor at 0x00071110; slot zero routes through ILT 0x000173B4 to scalar-deleting destructor 0x00071130
+??_7?$SubsystemSlot@VGameTextInterface@@@@6B@,0x00C75D98,vtable installed by exact SubsystemSlot<GameTextInterface> constructor at 0x0006F850; slot zero routes through ILT 0x00034400 to scalar-deleting destructor 0x0006F870
+??_7?$SubsystemSlot@VGlobalData@@@@6B@,0x00C75D90,vtable installed by exact SubsystemSlot<GlobalData> constructor at 0x0006F6D0; slot zero routes through ILT 0x0000C72F to scalar-deleting destructor 0x0006F6F0
+??_7?$SubsystemSlot@VGlobalLanguage@@@@6B@,0x00C75D94,vtable installed by exact SubsystemSlot<GlobalLanguage> constructor at 0x0006F790; slot zero routes through ILT 0x00015726 to scalar-deleting destructor 0x0006F7B0
+??_7?$SubsystemSlot@VGlobalWeatherSystem@@@@6B@,0x00C75DBC,vtable installed by exact SubsystemSlot<GlobalWeatherSystem> constructor at 0x0006FF10; slot zero routes through ILT 0x0003E5E0 to scalar-deleting destructor 0x0006FF30
+??_7?$SubsystemSlot@VLightPointSystem@@@@6B@,0x00C75E0C,vtable installed by exact SubsystemSlot<LightPointSystem> constructor at 0x00070E10; slot zero routes through ILT 0x0001E3DA to scalar-deleting destructor 0x00070E30
+??_7?$SubsystemSlot@VLivingWorldLogic@@@@6B@,0x00C75E28,vtable installed by exact SubsystemSlot<LivingWorldLogic> constructor at 0x00071350; slot zero routes through ILT 0x0002F838 to scalar-deleting destructor 0x00071370
+??_7?$SubsystemSlot@VLivingWorldManager@@@@6B@,0x00C75E18,vtable installed by exact SubsystemSlot<LivingWorldManager> constructor at 0x00071050; slot zero routes through ILT 0x000227EB to scalar-deleting destructor 0x00071070
+??_7?$SubsystemSlot@VLocomotorStore@@@@6B@,0x00C75DF0,vtable installed by exact SubsystemSlot<LocomotorStore> constructor at 0x000708D0; slot zero routes through ILT 0x0000141F to scalar-deleting destructor 0x000708F0
+??_7?$SubsystemSlot@VMessageStream@@@@6B@,0x00C75DC8,vtable installed by exact SubsystemSlot<MessageStream> constructor at 0x00070150; slot zero routes through ILT 0x000143FD to scalar-deleting destructor 0x00070170
+??_7?$SubsystemSlot@VModuleFactory@@@@6B@,0x00C75DC4,vtable installed by exact SubsystemSlot<ModuleFactory> constructor at 0x00070090; slot zero routes through ILT 0x00031066 to scalar-deleting destructor 0x000700B0
+??_7?$SubsystemSlot@VMultiplayerSettings@@@@6B@,0x00C75DAC,vtable installed by exact SubsystemSlot<MultiplayerSettings> constructor at 0x0006FC10; slot zero routes through ILT 0x00018F48 to scalar-deleting destructor 0x0006FC30
+??_7?$SubsystemSlot@VObjectCreationListStore@@@@6B@,0x00C75DEC,vtable installed by exact SubsystemSlot<ObjectCreationListStore> constructor at 0x00070810; slot zero routes through ILT 0x00033BB8 to scalar-deleting destructor 0x00070830
+??_7?$SubsystemSlot@VParticleSystemManager@@@@6B@,0x00C75DE0,vtable installed by exact SubsystemSlot<ParticleSystemManager> constructor at 0x000705D0; slot zero routes through ILT 0x00035611 to scalar-deleting destructor 0x000705F0
+??_7?$SubsystemSlot@VPlayerAITypeSet@@@@6B@,0x00C75DD8,vtable installed by exact SubsystemSlot<PlayerAITypeSet> constructor at 0x00070450; slot zero routes through ILT 0x0003C38F to scalar-deleting destructor 0x00070470
+??_7?$SubsystemSlot@VPlayerTemplateStore@@@@6B@,0x00C75DDC,vtable installed by exact SubsystemSlot<PlayerTemplateStore> constructor at 0x00070510; slot zero routes through ILT 0x000322E0 to scalar-deleting destructor 0x00070530
+??_7?$SubsystemSlot@VRadar@@@@6B@,0x00C75E54,vtable installed by matched initSubsystem<Radar> at 0x00075350; slot zero routes through ILT 0x0002088D to scalar-deleting destructor 0x00071BB0
+??_7?$SubsystemSlot@VRankInfoStore@@@@6B@,0x00C75DD4,vtable installed by exact SubsystemSlot<RankInfoStore> constructor at 0x00070390; slot zero routes through ILT 0x00008855 to scalar-deleting destructor 0x000703B0
+??_7?$SubsystemSlot@VScienceStore@@@@6B@,0x00C75DA4,vtable installed by exact SubsystemSlot<ScienceStore> constructor at 0x0006FA90; slot zero routes through ILT 0x0000B52D to scalar-deleting destructor 0x0006FAB0
+??_7?$SubsystemSlot@VSidesList@@@@6B@,0x00C75DCC,vtable installed by exact SubsystemSlot<SidesList> constructor at 0x00070210; slot zero routes through ILT 0x0000494E to scalar-deleting destructor 0x00070230
+??_7?$SubsystemSlot@VSpecialPowerStore@@@@6B@,0x00C75DF4,vtable installed by exact SubsystemSlot<SpecialPowerStore> constructor at 0x00070990; slot zero routes through ILT 0x00030DD7 to scalar-deleting destructor 0x000709B0
+??_7?$SubsystemSlot@VSplineService@@@@6B@,0x00C75E2C,vtable installed by exact SubsystemSlot<SplineService> constructor at 0x00071410; slot zero routes through ILT 0x000274DA to scalar-deleting destructor 0x00071430
+??_7?$SubsystemSlot@VSubsystemLegend@@@@6B@,0x00C75D8C,vtable installed by exact SubsystemSlot<SubsystemLegend> constructor at 0x0006F610; slot zero routes through ILT 0x00032376 to scalar-deleting destructor 0x0006F630
+??_7?$SubsystemSlot@VTerrainRoadCollection@@@@6B@,0x00C75DB4,vtable installed by exact SubsystemSlot<TerrainRoadCollection> constructor at 0x0006FD90; slot zero routes through ILT 0x0001F280 to scalar-deleting destructor 0x0006FDB0
+??_7?$SubsystemSlot@VTerrainTypeCollection@@@@6B@,0x00C75DB0,vtable installed by exact SubsystemSlot<TerrainTypeCollection> constructor at 0x0006FCD0; slot zero routes through ILT 0x0000F26D to scalar-deleting destructor 0x0006FCF0
+??_7?$SubsystemSlot@VThingFactory@@@@6B@,0x00C75E08,vtable installed by exact SubsystemSlot<ThingFactory> constructor at 0x00070D50; slot zero routes through ILT 0x00027A89 to scalar-deleting destructor 0x00070D70
+??_7?$SubsystemSlot@VUpgradeCenter@@@@6B@,0x00C75DA8,vtable installed by exact SubsystemSlot<UpgradeCenter> constructor at 0x0006FB50; slot zero routes through ILT 0x00048DA1 to scalar-deleting destructor 0x0006FB70
+??_7?$SubsystemSlot@VWeaponStore@@@@6B@,0x00C75DE8,vtable installed by exact SubsystemSlot<WeaponStore> constructor at 0x00070750; slot zero routes through ILT 0x000314EE to scalar-deleting destructor 0x00070770
 ??_7?$VectorClass@VModelNodeClass@Rva0097BB40HLod@@@@6B@,0x00D3EB94,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097BB40 calls; autopin
-??_7?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC28,STLport static library basic_ifstream<char> vftable
-??_7?$basic_ifstream@GV?$char_traits@G@_STL@@@_STL@@6B@,0x0112FC40,STLport static library basic_ifstream<unsigned short> vftable
-??_7?$basic_ifstream_lib0084C300@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC28,alias of the STLport library basic_ifstream<char> vftable for the aliased (name mode) ctor 0x0084C300
+??_7?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2FC28,STLport static library basic_ifstream<char> vftable
+??_7?$basic_ifstream@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2FC40,STLport static library basic_ifstream<unsigned short> vftable
+??_7?$basic_ifstream_lib0084C300@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2FC28,alias of the STLport library basic_ifstream<char> vftable for the aliased (name mode) ctor 0x0084C300
 ??_7?$basic_ios@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2EBC4,retail narrow basic_ios vtable installed by the typed streambuf constructor
 ??_7?$basic_ios@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2EBCC,retail wide basic_ios vtable installed by the typed streambuf constructor
-??_7?$basic_istream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112F2F4,basic_istream<char> vftable stored by the LobbyUtils.cpp basic_ifstream ctor 0x0053FB00
-??_7?$basic_istream@GV?$char_traits@G@_STL@@@_STL@@6B@,0x0112F2FC,basic_istream<unsigned short> vftable (the g_bfme918VftC stand-in)
-??_7?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC30,STLport static library basic_ofstream<char> vftable
-??_7?$basic_ofstream@GV?$char_traits@G@_STL@@@_STL@@6B@,0x0112FC48,STLport static library basic_ofstream<unsigned short> vftable
-??_7?$basic_ofstream_lib0084B980@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC30,alias of the STLport library basic_ofstream<char> vftable for the aliased (name mode) ctor 0x0084B980
-??_7?$basic_ostream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112F304,basic_ostream<char> vftable (same table the g_bfme918VftA stand-in names) stored by 0x005CC230 and 0x005CC3F0
-??_7?$basic_ostream@GV?$char_traits@G@_STL@@@_STL@@6B@,0x0112F30C,basic_ostream<unsigned short> vftable (the g_bfme918VftB stand-in)
+??_7?$basic_istream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2F2F4,basic_istream<char> vftable stored by the LobbyUtils.cpp basic_ifstream ctor 0x0053FB00
+??_7?$basic_istream@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2F2FC,basic_istream<unsigned short> vftable (the g_bfme918VftC stand-in)
+??_7?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2FC30,STLport static library basic_ofstream<char> vftable
+??_7?$basic_ofstream@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2FC48,STLport static library basic_ofstream<unsigned short> vftable
+??_7?$basic_ofstream_lib0084B980@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2FC30,alias of the STLport library basic_ofstream<char> vftable for the aliased (name mode) ctor 0x0084B980
+??_7?$basic_ostream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2F304,basic_ostream<char> vftable (same table the g_bfme918VftA stand-in names) stored by 0x005CC230 and 0x005CC3F0
+??_7?$basic_ostream@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2F30C,basic_ostream<unsigned short> vftable (the g_bfme918VftB stand-in)
 ??_7?$basic_streambuf@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2EBD4,retail narrow basic_streambuf vtable installed by its constructor and destructor
 ??_7?$basic_streambuf@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2EC10,retail wide basic_streambuf vtable installed by its constructor and destructor
 ??_7?$codecvt@DDH@_STL@@6B@,0x00D2EA8C,retail STLport 4.5.3 narrow codecvt vtable identified by its virtual method signatures
@@ -10432,137 +10432,137 @@ name,address,notes
 ??_7?$collate@D@_STL@@6B@,0x00D2EAD4,retail STLport 4.5.3 narrow collate vtable identified by its virtual method signatures
 ??_7?$collate@G@_STL@@6B@,0x00D2EAE8,retail STLport 4.5.3 wide collate vtable identified by its virtual method signatures
 ??_7?$ctype@G@_STL@@6B@,0x00D2EA54,retail STLport 4.5.3 wide ctype vtable identified by its virtual method signatures
-??_7?$money_get@DV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@6B@,0x0112E95C,STLport money_get<char> vtable identified by retail RTTI; slot zero is scalar-deleting destructor 0x00832300
-??_7?$money_get@GV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@6B@,0x0112E9D8,STLport 4.5.3 money_get<wchar_t> vtable identified by retail RTTI type descriptor 0x012C7610; slot zero is scalar-deleting destructor 0x008323C0 and slot 2 is matched wide money_get long-double overload
-??_7?$money_put@GV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@6B@,0x0112E9E8,STLport money_put<unsigned short> vtable identified by retail RTTI; slot zero is scalar-deleting destructor 0x008323F0
+??_7?$money_get@DV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@6B@,0x00D2E95C,STLport money_get<char> vtable identified by retail RTTI; slot zero is scalar-deleting destructor 0x00832300
+??_7?$money_get@GV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@6B@,0x00D2E9D8,STLport 4.5.3 money_get<wchar_t> vtable identified by retail RTTI type descriptor 0x012C7610; slot zero is scalar-deleting destructor 0x008323C0 and slot 2 is matched wide money_get long-double overload
+??_7?$money_put@GV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@6B@,0x00D2E9E8,STLport money_put<unsigned short> vtable identified by retail RTTI; slot zero is scalar-deleting destructor 0x008323F0
 ??_7?$moneypunct@D$00@_STL@@6B@,0x00D2FADC,retail STLport 4.5.3 moneypunct char true vtable with matching RTTI descriptor
 ??_7?$moneypunct@D$0A@@_STL@@6B@,0x00D2FB08,retail STLport 4.5.3 moneypunct char false vtable with matching RTTI descriptor
 ??_7?$moneypunct@G$00@_STL@@6B@,0x00D2FB34,retail STLport 4.5.3 moneypunct wide true vtable with matching RTTI descriptor
 ??_7?$moneypunct@G$0A@@_STL@@6B@,0x00D2FB60,retail STLport 4.5.3 moneypunct wide false vtable with matching RTTI descriptor
-??_7?$num_get@DV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@6B@,0x0112E97C,STLport 4.5.3 num_get<char> vtable identified by the retail RTTI type descriptor at 0x012C7560; slot zero is the scalar-deleting destructor at 0x00832360 and slots 3/5/6 are matched long-double/double/float overloads
-??_7?$num_get@GV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@6B@,0x0112E9F8,STLport 4.5.3 num_get<wchar_t> vtable identified by retail RTTI type descriptor 0x012C76C0; slot zero is scalar-deleting destructor 0x00832420 and slots 3/5/6 are matched wide numeric overloads
-??_7?$num_put@DV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@6B@,0x0112E9B0,STLport 4.5.3 num_put<char> vtable identified by retail RTTI type descriptor 0x012C75B8; slot zero is scalar-deleting destructor 0x00832390 and slots 1/2/8 are matched narrow overloads
-??_7?$num_put@GV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@6B@,0x0112EA2C,STLport 4.5.3 num_put<wchar_t> vtable identified by retail RTTI type descriptor 0x012C7718; slot zero is scalar-deleting destructor 0x00832450 and slots 1/8 are matched wide overloads
+??_7?$num_get@DV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@6B@,0x00D2E97C,STLport 4.5.3 num_get<char> vtable identified by the retail RTTI type descriptor at 0x012C7560; slot zero is the scalar-deleting destructor at 0x00832360 and slots 3/5/6 are matched long-double/double/float overloads
+??_7?$num_get@GV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@6B@,0x00D2E9F8,STLport 4.5.3 num_get<wchar_t> vtable identified by retail RTTI type descriptor 0x012C76C0; slot zero is scalar-deleting destructor 0x00832420 and slots 3/5/6 are matched wide numeric overloads
+??_7?$num_put@DV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@6B@,0x00D2E9B0,STLport 4.5.3 num_put<char> vtable identified by retail RTTI type descriptor 0x012C75B8; slot zero is scalar-deleting destructor 0x00832390 and slots 1/2/8 are matched narrow overloads
+??_7?$num_put@GV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@6B@,0x00D2EA2C,STLport 4.5.3 num_put<wchar_t> vtable identified by retail RTTI type descriptor 0x012C7718; slot zero is scalar-deleting destructor 0x00832450 and slots 1/8 are matched wide overloads
 ??_7?$numpunct@D@_STL@@6B@,0x00D2EAFC,retail STLport 4.5.3 narrow numpunct vtable identified by its virtual method signatures
 ??_7?$numpunct@G@_STL@@6B@,0x00D2EB18,retail STLport 4.5.3 wide numpunct vtable identified by its virtual method signatures
-??_7AABTreeClass@@6B@,0x0113E678,WW3D AABTreeClass vtable installed by three matched constructors and destructor 0x0096A920
-??_7AIAttackAimAtTargetState@@6B@,0x01097C60,exact constructor 0x00171180 installs this dedicated vtable
-??_7AIAttackAreaState@@6B@,0x01098398,exact constructor 0x001718A0 installs this dedicated vtable
-??_7AIAttackFireDuringApproachState@@6B@,0x0109A640,exact constructor for ??_GAIAttackFireDuringApproachState@@MAEPAXI@Z installs this dedicated vtable
-??_7AIAttackFireWeaponState@@6B@,0x01097DC0,exact constructor 0x001712C0 installs this dedicated vtable
-??_7AIAttackFollowWaypointPathState@@6B@,0x0109B220,exact constructor 0x00183C90 installs this dedicated vtable
-??_7AIAttackMeleeEngageState@@6B@,0x01099848,exact constructor 0x0017F8D0 installs this dedicated vtable
+??_7AABTreeClass@@6B@,0x00D3E678,WW3D AABTreeClass vtable installed by three matched constructors and destructor 0x0096A920
+??_7AIAttackAimAtTargetState@@6B@,0x00C97C60,exact constructor 0x00171180 installs this dedicated vtable
+??_7AIAttackAreaState@@6B@,0x00C98398,exact constructor 0x001718A0 installs this dedicated vtable
+??_7AIAttackFireDuringApproachState@@6B@,0x00C9A640,exact constructor for ??_GAIAttackFireDuringApproachState@@MAEPAXI@Z installs this dedicated vtable
+??_7AIAttackFireWeaponState@@6B@,0x00C97DC0,exact constructor 0x001712C0 installs this dedicated vtable
+??_7AIAttackFollowWaypointPathState@@6B@,0x00C9B220,exact constructor 0x00183C90 installs this dedicated vtable
+??_7AIAttackMeleeEngageState@@6B@,0x00C99848,exact constructor 0x0017F8D0 installs this dedicated vtable
 ??_7AIAttackMeleeHordeApproachTargetState@@6B@,0x00C9A540,exact constructor for ??_GAIAttackMeleeHordeApproachTargetState@@MAEPAXI@Z installs this dedicated vtable
 ??_7AIAttackMeleeHordeWaitPathState@@6B@,0x00C97BE0,vtable whose slots name AIAttackMeleeHordeWaitPathState
 ??_7AIAttackMeleeHordeWaitState@@6B@,0x00C97B68,vtable whose slots name AIAttackMeleeHordeWaitState
-??_7AIAttackMeleeSquishState@@6B@,0x0109A738,exact constructor for ??_GAIAttackMeleeSquishState@@MAEPAXI@Z installs this dedicated vtable
-??_7AIAttackMoveStateMachine@@6B@,0x01097468,canonical AIStates.cpp class and exact constructor 0x00181F60 independently establish the dedicated vtable stored at this+0
-??_7AIAttackPursueTargetState@@6B@,0x0109A5C8,exact constructor 0x0017F700 installs this dedicated vtable
-??_7AIAttackSquadState@@6B@,0x01097E30,exact constructor 0x00171330 installs this dedicated vtable
-??_7AIAttackSwoopThenIdleStateMachine@@6B@,0x010C7460,outer this preserved in ESI at 006BF49A and vptr installed at 006BF4D3; matched factories 002BFA80 and 002C0370 name class and ctor ILT25095
-??_7AIAttackThenIdleStateMachine@@6B@,0x010976F8,exact constructor 0x00184A40 installs this dedicated vtable; slot zero ILT 0x0003CEE3 reaches scalar wrapper 0x0016F310
+??_7AIAttackMeleeSquishState@@6B@,0x00C9A738,exact constructor for ??_GAIAttackMeleeSquishState@@MAEPAXI@Z installs this dedicated vtable
+??_7AIAttackMoveStateMachine@@6B@,0x00C97468,canonical AIStates.cpp class and exact constructor 0x00181F60 independently establish the dedicated vtable stored at this+0
+??_7AIAttackPursueTargetState@@6B@,0x00C9A5C8,exact constructor 0x0017F700 installs this dedicated vtable
+??_7AIAttackSquadState@@6B@,0x00C97E30,exact constructor 0x00171330 installs this dedicated vtable
+??_7AIAttackSwoopThenIdleStateMachine@@6B@,0x00CC7460,outer this preserved in ESI at 006BF49A and vptr installed at 006BF4D3; matched factories 002BFA80 and 002C0370 name class and ctor ILT25095
+??_7AIAttackThenIdleStateMachine@@6B@,0x00C976F8,exact constructor 0x00184A40 installs this dedicated vtable; slot zero ILT 0x0003CEE3 reaches scalar wrapper 0x0016F310
 ??_7AIBackAwayAndCowerState@@6B@,0x00C97AF8,vtable whose slots name AIBackAwayAndCowerState
-??_7AIBusyState@@6B@,0x01097AA0,exact constructor 0x00170FC0 installs this dedicated vtable
-??_7AICowerState@@6B@,0x01098408,constructor 0x00171930 installs this vtable and its class-name slot 2 (0x00171970) returns the literal AICowerState; 0x010991D0 is AIUncontrollableCower's table (slot 2 0x00174500 returns that name)
-??_7AIDeadState@@6B@,0x01097EA0,exact constructor 0x001713C0 installs this dedicated vtable
+??_7AIBusyState@@6B@,0x00C97AA0,exact constructor 0x00170FC0 installs this dedicated vtable
+??_7AICowerState@@6B@,0x00C98408,constructor 0x00171930 installs this vtable and its class-name slot 2 (0x00171970) returns the literal AICowerState; 0x010991D0 is AIUncontrollableCower's table (slot 2 0x00174500 returns that name)
+??_7AIDeadState@@6B@,0x00C97EA0,exact constructor 0x001713C0 installs this dedicated vtable
 ??_7AIDockAdvancePositionState@@6B@,0x00C95C68,vtable whose slots name AIDockAdvancePositionState
-??_7AIDockMachine@@6B@,0x01095A38,exact constructor 0x0014F7C0 installs this dedicated vtable; slot zero ILT 0x00041BA5 reaches scalar wrapper 0x0014F120
+??_7AIDockMachine@@6B@,0x00C95A38,exact constructor 0x0014F7C0 installs this dedicated vtable; slot zero ILT 0x00041BA5 reaches scalar wrapper 0x0014F120
 ??_7AIDockMoveToEntryState@@6B@,0x00C95CC0,vtable whose slots name AIDockMoveToEntryState
 ??_7AIDockMoveToRallyState@@6B@,0x00C95DB0,vtable whose slots name AIDockMoveToRallyState
 ??_7AIDockProcessDockState@@6B@,0x00C95EA0,vtable whose slots name AIDockProcessDockState
-??_7AIDockState@@6B@,0x01097F08,exact constructor 0x00171420 installs this dedicated vtable
+??_7AIDockState@@6B@,0x00C97F08,exact constructor 0x00171420 installs this dedicated vtable
 ??_7AIDockWaitForClearanceState@@6B@,0x00C95BF0,vtable whose slots name AIDockWaitForClearanceState
-??_7AIEnterState@@6B@,0x0109ABD0,exact constructor 0x0017FFF0 installs this dedicated vtable
+??_7AIEnterState@@6B@,0x00C9ABD0,exact constructor 0x0017FFF0 installs this dedicated vtable
 ??_7AIExitState@@6B@,0x00C98120,vtable whose slots name AIExitState
-??_7AIFollowPathAsTeamState@@6B@,0x01099C08,AIFollowPathAsTeamState dedicated vtable installed by exact constructor 0x00183990; slot zero ILT 0x00001D43 reaches scalar wrapper 0x00183AC0
-??_7AIFollowWaypointPathExactState@@6B@,0x0109A828,exact constructor 0x0017FA90 installs this dedicated vtable
-??_7AIFollowWaypointPathState@@6B@,0x0109A7B0,exact constructor 0x0017F980 installs this dedicated vtable
-??_7AIGuardAttackAggressorState@@6B@,0x010963A0,exact constructor 0x0015D090 installs this dedicated vtable
-??_7AIGuardInnerState@@6B@,0x01096160,exact constructor 0x0015CE00 installs this dedicated vtable; slot zero routes to wrapper 0x0015D110
-??_7AIGuardOuterState@@6B@,0x01096248,exact constructor 0x0015CED0 installs this dedicated vtable
-??_7AIGuardRetaliateMachine@@6B@,0x01096420,exact constructor 0x0015F240 installs this dedicated vtable; slot zero ILT 0x000380C8 reaches scalar wrapper 0x0015EBB0
+??_7AIFollowPathAsTeamState@@6B@,0x00C99C08,AIFollowPathAsTeamState dedicated vtable installed by exact constructor 0x00183990; slot zero ILT 0x00001D43 reaches scalar wrapper 0x00183AC0
+??_7AIFollowWaypointPathExactState@@6B@,0x00C9A828,exact constructor 0x0017FA90 installs this dedicated vtable
+??_7AIFollowWaypointPathState@@6B@,0x00C9A7B0,exact constructor 0x0017F980 installs this dedicated vtable
+??_7AIGuardAttackAggressorState@@6B@,0x00C963A0,exact constructor 0x0015D090 installs this dedicated vtable
+??_7AIGuardInnerState@@6B@,0x00C96160,exact constructor 0x0015CE00 installs this dedicated vtable; slot zero routes to wrapper 0x0015D110
+??_7AIGuardOuterState@@6B@,0x00C96248,exact constructor 0x0015CED0 installs this dedicated vtable
+??_7AIGuardRetaliateMachine@@6B@,0x00C96420,exact constructor 0x0015F240 installs this dedicated vtable; slot zero ILT 0x000380C8 reaches scalar wrapper 0x0015EBB0
 ??_7AIGuardRetaliateReturnState@@6B@,0x00C96520,vtable whose slots name AIGuardRetaliateReturnState
-??_7AIGuardRetaliateState@@6B@,0x01098248,exact constructor 0x00171750 installs this dedicated vtable
+??_7AIGuardRetaliateState@@6B@,0x00C98248,exact constructor 0x00171750 installs this dedicated vtable
 ??_7AIGuardReturnState@@6B@,0x00C962C8,vtable whose slots name AIGuardReturnState
-??_7AIHarvestApproachSiteState@@6B@,0x010966F8,AIHarvestMachine constructor 0x0015FD00 installs this vtable for the exact AIHarvestApproachSiteState literal
+??_7AIHarvestApproachSiteState@@6B@,0x00C966F8,AIHarvestMachine constructor 0x0015FD00 installs this vtable for the exact AIHarvestApproachSiteState literal
 ??_7AIHarvestMachine@@6B@,0x00C96650,exact constructor 0x0015FE90 installs this dedicated vtable; slot zero ILT 0x00014EC5 reaches scalar wrapper 0x0015FA60
 ??_7AIHarvestPrepareSiteState@@6B@,0x00C96770,vtable whose slots name AIHarvestPrepareSiteState
 ??_7AIHuntState@@6B@,0x00C98330,vtable whose slots name AIHuntState
-??_7AIIdleState@@6B@,0x010985B0,constructor 0x001720D0 installs this vtable - its name slot returns AIIdleState and slot 6 is AIIdleState::update (0x0109AD20 is AIFaceState)
-??_7AIMoveAndDeleteState@@6B@,0x0109AAD8,exact constructor 0x0017FD70 installs this dedicated vtable
-??_7AIMoveAndEvacuateState@@6B@,0x0109AA60,exact constructor 0x0017FD10 installs this dedicated vtable
-??_7AIMoveAndTightenState@@6B@,0x0109A2F0,exact constructors 0x0017F390 and 0x0017F3F0 install this dedicated vtable; the second is the shipped const-char-name overload
-??_7AIMoveAwayFromRepulsorsState@@6B@,0x0109A368,exact constructor 0x0017F450 installs this dedicated vtable
+??_7AIIdleState@@6B@,0x00C985B0,constructor 0x001720D0 installs this vtable - its name slot returns AIIdleState and slot 6 is AIIdleState::update (0x0109AD20 is AIFaceState)
+??_7AIMoveAndDeleteState@@6B@,0x00C9AAD8,exact constructor 0x0017FD70 installs this dedicated vtable
+??_7AIMoveAndEvacuateState@@6B@,0x00C9AA60,exact constructor 0x0017FD10 installs this dedicated vtable
+??_7AIMoveAndTightenState@@6B@,0x00C9A2F0,exact constructors 0x0017F390 and 0x0017F3F0 install this dedicated vtable; the second is the shipped const-char-name overload
+??_7AIMoveAwayFromRepulsorsState@@6B@,0x00C9A368,exact constructor 0x0017F450 installs this dedicated vtable
 ??_7AIMoveOntoWallState@@6B@,0x00C98540,vtable whose slots name AIMoveOntoWallState
-??_7AIMoveOutOfTheWayState@@6B@,0x0109A278,exact constructor 0x0017F350 installs this dedicated vtable
-??_7AIMoveToState@@6B@,0x01098F08,exact constructor 0x00173430 installs this dedicated vtable
-??_7AIMoveToStateSA@@6B@,0x01098FA8,constructor 0x00173620 installs this dedicated vtable; exact computePath onEnter and update corroborate identity
-??_7AIPanicState@@6B@,0x0109A988,exact constructor 0x0017FBE0 installs this dedicated vtable
+??_7AIMoveOutOfTheWayState@@6B@,0x00C9A278,exact constructor 0x0017F350 installs this dedicated vtable
+??_7AIMoveToState@@6B@,0x00C98F08,exact constructor 0x00173430 installs this dedicated vtable
+??_7AIMoveToStateSA@@6B@,0x00C98FA8,constructor 0x00173620 installs this dedicated vtable; exact computePath onEnter and update corroborate identity
+??_7AIPanicState@@6B@,0x00C9A988,exact constructor 0x0017FBE0 installs this dedicated vtable
 ??_7AIPickUpCrateState@@6B@,0x00C960D0,vtable whose slots name AIPickUpCrateState
 ??_7AIPlayer@@6B@,0x00C968B0,vtable whose slots name AIPlayer
-??_7AIQuarrelState@@6B@,0x01098470,constructor 0x001719A0 installs this dedicated vtable; name slot and exact update method corroborate identity
-??_7AIRampageState@@6B@,0x010984D8,constructor 0x001719F0 installs this dedicated vtable; name slot returns AIRampageState
-??_7AISkirmishPlayer@@6B@,0x01096FB0,matched Player setPlayerType skirmish branch and constructor168660 install; destructor168710 corroborates; no RTTI claim
-??_7AIStateMachine@@6B@,0x0109AEF8,exact constructor 0x00185A20 installs this dedicated vtable; slot zero ILT 0x0001DA11 reaches scalar wrapper 0x00187240
+??_7AIQuarrelState@@6B@,0x00C98470,constructor 0x001719A0 installs this dedicated vtable; name slot and exact update method corroborate identity
+??_7AIRampageState@@6B@,0x00C984D8,constructor 0x001719F0 installs this dedicated vtable; name slot returns AIRampageState
+??_7AISkirmishPlayer@@6B@,0x00C96FB0,matched Player setPlayerType skirmish branch and constructor168660 install; destructor168710 corroborates; no RTTI claim
+??_7AIStateMachine@@6B@,0x00C9AEF8,exact constructor 0x00185A20 installs this dedicated vtable; slot zero ILT 0x0001DA11 reaches scalar wrapper 0x00187240
 ??_7AITNGuardAttackAggressorState@@6B@,0x00C9B7A0,vtable whose slots name AITNGuardAttackAggressorState
 ??_7AITNGuardIdleState@@6B@,0x00C9B5E0,vtable whose slots name AITNGuardIdleState
 ??_7AITNGuardInnerState@@6B@,0x00C9B560,vtable whose slots name AITNGuardInnerState
-??_7AITNGuardMachine@@6B@,0x0109B4B0,exact constructor 0x0018AFB0 installs this dedicated vtable; slot zero ILT 0x0000889B reaches scalar wrapper 0x00189E10
+??_7AITNGuardMachine@@6B@,0x00C9B4B0,exact constructor 0x0018AFB0 installs this dedicated vtable; slot zero ILT 0x0000889B reaches scalar wrapper 0x00189E10
 ??_7AITNGuardOuterState@@6B@,0x00C9B650,vtable whose slots name AITNGuardOuterState
 ??_7AITunnelNetworkGuardState@@6B@,0x00C982B8,vptr stored by ??0AITunnelNetworkGuardState 0x001717B0 right after the State base ctor
-??_7AIWaitState@@6B@,0x01097CD8,exact constructor 0x001711F0 installs this dedicated vtable
-??_7AIWanderInPlaceState@@6B@,0x0109A910,exact constructor 0x0017FB80 installs this dedicated vtable
-??_7AIWanderState@@6B@,0x0109A8A8,exact constructor 0x0017FB00 installs this dedicated vtable
+??_7AIWaitState@@6B@,0x00C97CD8,exact constructor 0x001711F0 installs this dedicated vtable
+??_7AIWanderInPlaceState@@6B@,0x00C9A910,exact constructor 0x0017FB80 installs this dedicated vtable
+??_7AIWanderState@@6B@,0x00C9A8A8,exact constructor 0x0017FB00 installs this dedicated vtable
 ??_7AODCrushCollide@@6BBehaviorModule@@@,0x00CA9AC4,vtable whose slots name AODCrushCollide
-??_7AODCrushCollideModuleData@@6B@,0x010A9740,exact constructor 0x00215B90 installs this dedicated vtable; slot zero ILT 0x0003F8F0 reaches scalar wrapper 0x00215DC0
-??_7AODHordeContainModuleDataVtbl@@6B@,0x01089960,AODHordeContain ModuleData vtbl
+??_7AODCrushCollideModuleData@@6B@,0x00CA9740,exact constructor 0x00215B90 installs this dedicated vtable; slot zero ILT 0x0003F8F0 reaches scalar wrapper 0x00215DC0
+??_7AODHordeContainModuleDataVtbl@@6B@,0x00C89960,AODHordeContain ModuleData vtbl
 ??_7AimWeaponBehavior@@6B@,0x00CA1A24,vtable whose slots name AimWeaponBehavior
 ??_7AimWeaponBehaviorModuleData@@6B@,0x00CA1848,exact constructor 0x001ECEF0 installs this dedicated vtable
-??_7AnimalAIUpdateModuleDataVtbl@@6B@,0x010899F0,AnimalAIUpdate vtbl
+??_7AnimalAIUpdateModuleDataVtbl@@6B@,0x00C899F0,AnimalAIUpdate vtbl
 ??_7ApplyRandomForceNugget@@6B@,0x00CEC764,exact constructor 0x003B7610 installs this dedicated vtable
 ??_7ArmorUpgrade@@6B@,0x00CCBB54,vtable whose slots name ArmorUpgrade
-??_7AssaultTransportAIUpdateModuleDataVtbl@@6B@,0x01089CC0,AssaultTransportAIUpdate vtbl
+??_7AssaultTransportAIUpdateModuleDataVtbl@@6B@,0x00C89CC0,AssaultTransportAIUpdate vtbl
 ??_7AssistedTargetingUpdate@@6B@,0x00CBACD4,vtable whose slots name AssistedTargetingUpdate
 ??_7AttachedModelFXNugget@@6B@,0x00CF3480,vtable whose slots name AttachedModelFXNugget
-??_7AttackFireWhileChargingMachine@@6B@,0x01097380,exact constructor 0x001818D0 installs this dedicated vtable; slot zero ILT 0x0000DB5C reaches scalar wrapper 0x0016E660
-??_7AttackFireWhileMovingMachine@@6B@,0x010972A0,exact constructor 0x00181670 installs this dedicated vtable; slot zero ILT 0x0002135A reaches scalar wrapper 0x0016E600
-??_7AttackHordeStateMachine@@6B@,0x01097310,exact constructor 0x00171B40 installs this dedicated vtable; slot zero ILT 0x0000131B reaches scalar wrapper 0x0016E630
-??_7AttackMeleeStateMachine@@6B@,0x010971D0,exact constructor 0x00180EE0 installs this dedicated vtable; slot zero ILT 0x0003F67A reaches scalar wrapper 0x0016E5A0
-??_7AttackStateMachine@@6B@,0x01097168,constructor 0x00180810 installs this table and slot 2 reaches matched name getter 0x0016AB10 returning AttackStateMachine
+??_7AttackFireWhileChargingMachine@@6B@,0x00C97380,exact constructor 0x001818D0 installs this dedicated vtable; slot zero ILT 0x0000DB5C reaches scalar wrapper 0x0016E660
+??_7AttackFireWhileMovingMachine@@6B@,0x00C972A0,exact constructor 0x00181670 installs this dedicated vtable; slot zero ILT 0x0002135A reaches scalar wrapper 0x0016E600
+??_7AttackHordeStateMachine@@6B@,0x00C97310,exact constructor 0x00171B40 installs this dedicated vtable; slot zero ILT 0x0000131B reaches scalar wrapper 0x0016E630
+??_7AttackMeleeStateMachine@@6B@,0x00C971D0,exact constructor 0x00180EE0 installs this dedicated vtable; slot zero ILT 0x0003F67A reaches scalar wrapper 0x0016E5A0
+??_7AttackStateMachine@@6B@,0x00C97168,constructor 0x00180810 installs this table and slot 2 reaches matched name getter 0x0016AB10 returning AttackStateMachine
 ??_7AttributeModifierUpgrade@@6B@,0x00CCBCD4,vtable whose slots name AttributeModifierUpgrade
-??_7AudioEventInfo@@6B@,0x010818CC,AudioEventInfo family proven by DefaultSoundEffect parser factory assignment and14 INI witnesses; constructor and destructor install this vtable
+??_7AudioEventInfo@@6B@,0x00C818CC,AudioEventInfo family proven by DefaultSoundEffect parser factory assignment and14 INI witnesses; constructor and destructor install this vtable
 ??_7AudioLoopUpgrade@@6B@,0x00CCBE24,vtable whose slots name AudioLoopUpgrade
-??_7AutoAbilityBehaviorModuleData@@6B@,0x010A1A70,exact constructor 0x001ED6A0 installs this dedicated vtable; slot zero ILT 0x0002775F reaches scalar wrapper 0x001ED860
+??_7AutoAbilityBehaviorModuleData@@6B@,0x00CA1A70,exact constructor 0x001ED6A0 installs this dedicated vtable; slot zero ILT 0x0002775F reaches scalar wrapper 0x001ED860
 ??_7AutoDepositUpdate@@6B@,0x00CBB1D4,vtable whose slots name AutoDepositUpdate
 ??_7AutoFindHealingUpdate@@6B@,0x00CBB3C4,vtable whose slots name AutoFindHealingUpdate
 ??_7AutoFindHealingUpdateModuleData@@6B@,0x00CBB210,exact constructor 0x00281430 installs this dedicated vtable
-??_7BackAwayAndCowerStateMachine@@6B@,0x01097588,exact constructor 0x00182190 installs this dedicated vtable; slot zero ILT 0x000316A6 reaches scalar wrapper 0x0016ED10
+??_7BackAwayAndCowerStateMachine@@6B@,0x00C97588,exact constructor 0x00182190 installs this dedicated vtable; slot zero ILT 0x000316A6 reaches scalar wrapper 0x0016ED10
 ??_7BannerCarrierUpdate@@6B@,0x00CBBB84,vtable whose slots name BannerCarrierUpdate
 ??_7BannerUI@@6B@,0x00D0B828,BannerUI vtable independently identified by SubsystemInterface slots and adjacent BannerUI strings
 ??_7BaseUpgrade@@6B@,0x00CCC0EC,vtable whose slots name BaseUpgrade
-??_7BehaviorModuleInterface@@6B@,0x0109C9D0,Open-BFME5 vtable address emitted by ObjectHelper constructor 0x001C0DB0
+??_7BehaviorModuleInterface@@6B@,0x00C9C9D0,Open-BFME5 vtable address emitted by ObjectHelper constructor 0x001C0DB0
 ??_7BezierProjectileBehaviorModuleData@@6B@,0x00CA23E0,exact constructor 0x001EFD50 installs this dedicated vtable
-??_7BfmeAptGameWindow@@6B@,0x01106F08,APT game window base virtual table restored by OnlineLogin destructor
+??_7BfmeAptGameWindow@@6B@,0x00D06F08,APT game window base virtual table restored by OnlineLogin destructor
 ??_7BfmeAptScreenMainMenu@@6BRva00465200GameWindow@@@,0x011061C0,secondary vftable installed at +0x218 by ??0BfmeAptScreenMainMenu
 ??_7BfmeAptScreenMainMenu@@6B_bfme_AptGameWindow@@@,0x011061C4,primary vftable installed at +0 by ??0BfmeAptScreenMainMenu
 ??_7BfmeAptScreenMapTransfer@@6B@,0x00D05048,exact constructor 0x005104C0 installs this dedicated vtable
-??_7BfmeAptScreenOnlineChat@@6B@,0x01106F58,OnlineChat retail virtual table installed by ctor 0x00536DC0 and reset by destructor 0x0052D7C0
-??_7BfmeAptScreenOnlineCustomMatch@@6B@,0x01107484,OnlineCustomMatch primary vtable installed by ctor 0x00545310 and destructor 0x00538CE0
+??_7BfmeAptScreenOnlineChat@@6B@,0x00D06F58,OnlineChat retail virtual table installed by ctor 0x00536DC0 and reset by destructor 0x0052D7C0
+??_7BfmeAptScreenOnlineCustomMatch@@6B@,0x00D07484,OnlineCustomMatch primary vtable installed by ctor 0x00545310 and destructor 0x00538CE0
 ??_7BfmeAptScreenOnlineCustomMatch@@6BBfmeAptScreenSecondary@@@,0x01107438,OnlineCustomMatch secondary MI vtable at +0x3C
-??_7BfmeAptScreenOnlineHome@@6B@,0x01107B70,OnlineHome retail virtual table installed by ctor 0x005484E0 and reset by destructor 0x00545FF0
-??_7BfmeAptScreenOnlineLogin@@6B@,0x01107F58,OnlineLogin retail virtual table installed by destructor
-??_7BfmeAptScreenSecondary@@6B@,0x01105690,second-base vtable restored at +0x3C after CustomMatch member dtors
-??_7BfmeBaseASCa@@6B@,0x010817AC,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000B0DF0 calls; autopin
+??_7BfmeAptScreenOnlineHome@@6B@,0x00D07B70,OnlineHome retail virtual table installed by ctor 0x005484E0 and reset by destructor 0x00545FF0
+??_7BfmeAptScreenOnlineLogin@@6B@,0x00D07F58,OnlineLogin retail virtual table installed by destructor
+??_7BfmeAptScreenSecondary@@6B@,0x00D05690,second-base vtable restored at +0x3C after CustomMatch member dtors
+??_7BfmeBaseASCa@@6B@,0x00C817AC,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000B0DF0 calls; autopin
 ??_7BfmeBaseCC@@6B@,0x00D2162C,Open-BFME5 the base vftable the base destructor at 0x0073A4E0 restores
-??_7BfmeBaseVUH@@6B@,0x0107FCB0,Open-BFME5 retail base vftable stored by the 0x001B5550 destructor
-??_7BfmeBaseVUJ@@6B@,0x0107FCB0,Open-BFME5 retail base vftable stored by the 0x0049C740 destructor
-??_7BfmeBaseVUQ@@6B@,0x01073744,Open-BFME5 retail base vftable stored by the 0x00352C20 destructor
-??_7BfmeBaseVVD@@6B@,0x010F35D4,Open-BFME5 retail base vftable stored by the 0x005B5330 destructor
-??_7BfmeBaseVVE@@6B@,0x011135AC,Open-BFME5 retail base vftable stored by the 0x0092B6A0 destructor
-??_7BfmeDerived1283@@6B@,0x01136E0C,address-derived derived-class vtable written by the 0x008BE700 retail constructor
+??_7BfmeBaseVUH@@6B@,0x00C7FCB0,Open-BFME5 retail base vftable stored by the 0x001B5550 destructor
+??_7BfmeBaseVUJ@@6B@,0x00C7FCB0,Open-BFME5 retail base vftable stored by the 0x0049C740 destructor
+??_7BfmeBaseVUQ@@6B@,0x00C73744,Open-BFME5 retail base vftable stored by the 0x00352C20 destructor
+??_7BfmeBaseVVD@@6B@,0x00CF35D4,Open-BFME5 retail base vftable stored by the 0x005B5330 destructor
+??_7BfmeBaseVVE@@6B@,0x00D135AC,Open-BFME5 retail base vftable stored by the 0x0092B6A0 destructor
+??_7BfmeDerived1283@@6B@,0x00D36E0C,address-derived derived-class vtable written by the 0x008BE700 retail constructor
 ??_7BfmeE1124@@6B@,0x00D2FB8C,pin
-??_7BfmeEntVTA@@6B@,0x010EC77C,Open-BFME5 retail vftable stored by the 0x003A92A0 copy helper
-??_7BfmeEntVTB@@6B@,0x010EC784,Open-BFME5 retail vftable stored by the 0x003A9370 copy helper
+??_7BfmeEntVTA@@6B@,0x00CEC77C,Open-BFME5 retail vftable stored by the 0x003A92A0 copy helper
+??_7BfmeEntVTB@@6B@,0x00CEC784,Open-BFME5 retail vftable stored by the 0x003A9370 copy helper
 ??_7BfmeF1124@@6B@,0x00D2FBB8,pin
 ??_7BfmeHolderCU@@6B@,0x00D1126C,exact constructor 0x005DD290 installs this dedicated vtable
 ??_7BfmeHostZB@@6B@,0x00CF6898,Open-BFME5 vftable the 0x0045B060 destructor installs
@@ -10571,77 +10571,77 @@ name,address,notes
 ??_7BfmeOwnCD@@6B@,0x00CE7688,pin
 ??_7BfmeOwnCE@@6BBfmeBaseVUQ@@,0x00C89630,pin
 ??_7BfmeOwnCE@@6BSubsystemInterface@@,0x00C89644,pin
-??_7BfmeOwnVSV@@6B@,0x010EC778,Open-BFME5 retail vftable stored by the 0x003B8090 constructor
-??_7BfmeOwnVSW@@6B@,0x01075D50,Open-BFME5 retail vftable stored by the 0x0061F0C0 constructor
-??_7BfmeOwnVTU@@6B@,0x01143B3C,Open-BFME5 retail vftable stored by the 0x009CC220 constructor
-??_7BfmeOwnVTY@@6B@,0x010E7688,Open-BFME5 retail vftable stored by the 0x00339DA0 constructor
-??_7BfmeOwnVUH003D2D00@@6B@,0x010EE124,Open-BFME5 retail derived vftable stored by the 0x003D2D00 destructor (additive)
-??_7BfmeOwnVUH@@6B@,0x0109DE9C,Open-BFME5 retail derived vftable stored by the 0x001B5550 destructor
-??_7BfmeOwnVUJ@@6B@,0x010FB7C0,Open-BFME5 retail derived vftable stored by the 0x0049C740 destructor
-??_7BfmeOwnVUM@@6B@,0x010E8F34,Open-BFME5 retail vftable stored by the 0x00360F90 destructor
-??_7BfmeOwnVUO@@6B@,0x010EC774,Open-BFME5 retail vftable stored by the 0x003B7ED0 destructor
-??_7BfmeOwnVUP@@6B@,0x010957C4,Open-BFME5 retail vftable stored by the 0x0014B6B0 constructor
-??_7BfmeOwnVUQ@@6B@,0x010E858C,Open-BFME5 retail derived vftable stored by the 0x00352C20 destructor
-??_7BfmeOwnVVB@@6B@,0x0109BFAC,BfmeOwnVVB vftable stored by the 0x00190490 destructor
-??_7BfmeOwnVVD@@6B@,0x0110DE48,Open-BFME5 retail derived vftable stored by the 0x005B5330 destructor
-??_7BfmeOwnVVE@@6B@,0x0113C308,Open-BFME5 retail derived vftable stored by the 0x0092B6A0 destructor
+??_7BfmeOwnVSV@@6B@,0x00CEC778,Open-BFME5 retail vftable stored by the 0x003B8090 constructor
+??_7BfmeOwnVSW@@6B@,0x00C75D50,Open-BFME5 retail vftable stored by the 0x0061F0C0 constructor
+??_7BfmeOwnVTU@@6B@,0x00D43B3C,Open-BFME5 retail vftable stored by the 0x009CC220 constructor
+??_7BfmeOwnVTY@@6B@,0x00CE7688,Open-BFME5 retail vftable stored by the 0x00339DA0 constructor
+??_7BfmeOwnVUH003D2D00@@6B@,0x00CEE124,Open-BFME5 retail derived vftable stored by the 0x003D2D00 destructor (additive)
+??_7BfmeOwnVUH@@6B@,0x00C9DE9C,Open-BFME5 retail derived vftable stored by the 0x001B5550 destructor
+??_7BfmeOwnVUJ@@6B@,0x00CFB7C0,Open-BFME5 retail derived vftable stored by the 0x0049C740 destructor
+??_7BfmeOwnVUM@@6B@,0x00CE8F34,Open-BFME5 retail vftable stored by the 0x00360F90 destructor
+??_7BfmeOwnVUO@@6B@,0x00CEC774,Open-BFME5 retail vftable stored by the 0x003B7ED0 destructor
+??_7BfmeOwnVUP@@6B@,0x00C957C4,Open-BFME5 retail vftable stored by the 0x0014B6B0 constructor
+??_7BfmeOwnVUQ@@6B@,0x00CE858C,Open-BFME5 retail derived vftable stored by the 0x00352C20 destructor
+??_7BfmeOwnVVB@@6B@,0x00C9BFAC,BfmeOwnVVB vftable stored by the 0x00190490 destructor
+??_7BfmeOwnVVD@@6B@,0x00D0DE48,Open-BFME5 retail derived vftable stored by the 0x005B5330 destructor
+??_7BfmeOwnVVE@@6B@,0x00D3C308,Open-BFME5 retail derived vftable stored by the 0x0092B6A0 destructor
 ??_7BfmeOwnerCC@@6B@,0x00D2165C,Open-BFME5 the derived vftable the destructor at 0x0073A4E0 installs
 ??_7BfmeThingBHG@@6BGameWindow@@@,0x011061C4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0051D4A0 calls; autopin
 ??_7BfmeThingBHG@@6BGen_dtor_004654c0Base@@@,0x011061C0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0051D4A0 calls; autopin
-??_7BloodthirstyUpdateModuleData@@6B@,0x010BC6B8,exact constructor 0x00286EC0 installs this dedicated vtable; slot zero routes to wrapper 0x00287350
+??_7BloodthirstyUpdateModuleData@@6B@,0x00CBC6B8,exact constructor 0x00286EC0 installs this dedicated vtable; slot zero routes to wrapper 0x00287350
 ??_7BoneFXDamage@@6BObjectModule@@@,0x00CB1FB4,vtable whose slots name BoneFXDamage
 ??_7BoneFXUpdate@@6BBFU_DeepBase@@@,0x00CBCA64,vtable whose slots name BoneFXUpdate
 ??_7BridgeTowerBehavior@@6B@,0x00CA2B54,vtable whose slots name BridgeTowerBehavior
 ??_7BuildingBehavior@@6B@,0x00CA2C54,vtable whose slots name BuildingBehavior
-??_7BuildingBehaviorModuleData@@6B@,0x010A2C88,exact constructor 0x001F6C70 installs this dedicated vtable; slot zero ILT 0x00019F0B reaches scalar wrapper 0x001F6D10
+??_7BuildingBehaviorModuleData@@6B@,0x00CA2C88,exact constructor 0x001F6C70 installs this dedicated vtable; slot zero ILT 0x00019F0B reaches scalar wrapper 0x001F6D10
 ??_7ButtonFlashTransition@@6B@,0x00D0C604,vtable whose slots name ButtonFlashTransition
-??_7CRCParameterCheck@@6B@,0x01075520,vtable installed by the exact CRCParameterCheck constructor at 0x000659C0; slot zero reaches deleting destructor through ILT 0x0001038E
+??_7CRCParameterCheck@@6B@,0x00C75520,vtable installed by the exact CRCParameterCheck constructor at 0x000659C0; slot zero reaches deleting destructor through ILT 0x0001038E
 ??_7CameraShakerVolumeFXNugget@@6B@,0x00CF3450,vtable whose slots name CameraShakerVolumeFXNugget
 ??_7CastleUpgrade@@6B@,0x00CCC2C4,vtable whose slots name CastleUpgrade
-??_7CategoryModuleTemplate8Sub@FXParticleSystem@@6B@,0x0107375C,CategoryModuleTemplate8 interim sub vtbl
+??_7CategoryModuleTemplate8Sub@FXParticleSystem@@6B@,0x00C7375C,CategoryModuleTemplate8 interim sub vtbl
 ??_7CaveContain@@6B@,0x00CAB000,vtable whose slots name CaveContain
 ??_7CivilianSpawnCollide@@6B@,0x00CAA21C,vtable whose slots name CivilianSpawnCollide
 ??_7ClickReactionBehavior@@6BPB_DeepBase@@@,0x00CA33CC,vtable whose slots name ClickReactionBehavior
 ??_7ClickReactionBehaviorModuleData@@6B@,0x00CA4A10,exact constructor 0x002001A0 installs this dedicated vtable
-??_7ClientUpdateModule@@6B@,0x011151DC,abstract ClientUpdateModule table: clientUpdate (slot 10) is pure; ~LaserUpdate 0x00603820 restores it last; 0x01115210 is AnimatedParticleSysBoneClientUpdate's (its factory 0x00121A70 calls ctor 0x00602ED0 which installs it)
-??_7CloudBreakSpecialPowerModuleData@@6B@,0x010B3CD8,exact constructor 0x002592A0 installs this dedicated vtable; slot zero ILT 0x0003D861 reaches scalar wrapper 0x002592F0
-??_7CombineHordeSpecialPowerModuleData@@6B@,0x010B3EC8,exact constructor 0x002598A0 installs this dedicated vtable; slot zero ILT 0x0002A072 reaches scalar wrapper 0x002598D0
-??_7CommandButton@@6B@,0x010FB5DC,dedicated CommandButton vtable installed by exact constructor 0x0049BBF0 and restored by destructor 0x0049C020
-??_7CommandSet@@6B@,0x010FB7C0,CommandSet derived vtable stored by constructor 0x0049C680 and complete destructor 0x0049C740
+??_7ClientUpdateModule@@6B@,0x00D151DC,abstract ClientUpdateModule table: clientUpdate (slot 10) is pure; ~LaserUpdate 0x00603820 restores it last; 0x01115210 is AnimatedParticleSysBoneClientUpdate's (its factory 0x00121A70 calls ctor 0x00602ED0 which installs it)
+??_7CloudBreakSpecialPowerModuleData@@6B@,0x00CB3CD8,exact constructor 0x002592A0 installs this dedicated vtable; slot zero ILT 0x0003D861 reaches scalar wrapper 0x002592F0
+??_7CombineHordeSpecialPowerModuleData@@6B@,0x00CB3EC8,exact constructor 0x002598A0 installs this dedicated vtable; slot zero ILT 0x0002A072 reaches scalar wrapper 0x002598D0
+??_7CommandButton@@6B@,0x00CFB5DC,dedicated CommandButton vtable installed by exact constructor 0x0049BBF0 and restored by destructor 0x0049C020
+??_7CommandSet@@6B@,0x00CFB7C0,CommandSet derived vtable stored by constructor 0x0049C680 and complete destructor 0x0049C740
 ??_7CommandSetUpgrade@@6B@,0x00CCC444,vtable whose slots name CommandSetUpgrade
-??_7CommandSetUpgradeModuleData@@6B@,0x0108F338,CommandSetUpgrade ModuleData constructor installs this retail vftable
-??_7ContinueState@@6B@,0x010979B8,exact constructor 0x00170EA0 installs this dedicated vtable
-??_7ConvertToCarBombCrateCollideModuleDataVtbl@@6B@,0x0108E940,ConvertToCarBombCrateCollide vtbl
-??_7CrateCollideModuleData@@6B@,0x010AA378,exact constructor 0x00217870 installs this vtable; the eleven members its CrateCollideModuleData FieldParse table at 0x00CAA4B0 records decide the class
+??_7CommandSetUpgradeModuleData@@6B@,0x00C8F338,CommandSetUpgrade ModuleData constructor installs this retail vftable
+??_7ContinueState@@6B@,0x00C979B8,exact constructor 0x00170EA0 installs this dedicated vtable
+??_7ConvertToCarBombCrateCollideModuleDataVtbl@@6B@,0x00C8E940,ConvertToCarBombCrateCollide vtbl
+??_7CrateCollideModuleData@@6B@,0x00CAA378,exact constructor 0x00217870 installs this vtable; the eleven members its CrateCollideModuleData FieldParse table at 0x00CAA4B0 records decide the class
 ??_7CreateObjectDie@@6BObjectModule@@@,0x00CB2B2C,vtable whose slots name CreateObjectDie
 ??_7CrossFadeImage@@6B@,0x00D0C878,vtable whose slots name CrossFadeImage
 ??_7CrushDie@@6B@,0x00CB2C84,vtable whose slots name CrushDie
-??_7DX8TextureCategoryClass@@6B@,0x0113D020,DX8TextureCategoryClass vftable stored by its destructor 0x00946540
-??_7DebugDisplay@@6B@,0x0110F8D4,DebugDisplay vtable installed by exact ctor 0x005BD1C0; slot zero ILT 0x00005155 reaches scalar-deleting wrapper 0x005BD250
-??_7DebugDisplayInterface@@6B@,0x0110F898,DebugDisplayInterface base vtable restored by complete DebugDisplay destructor body 0x005BD280 and used by scalar wrapper 0x005BD010
-??_7DebugIOFlat@@6B@,0x0113517C,vptr stored at entry of ??1DebugIOFlat 0x00890780
-??_7DebugIOInterface@@6B@,0x01135044,base vptr restored at exit of ??1DebugIOFlat 0x00890780
-??_7DebugIONet@@6B@,0x0113507C,address-derived network vptr in 0x0088FE00
-??_7DebugIOOds@@6B@,0x01135060,address-derived ODS vptr in 0x0088FA10
-??_7DefaultUpdateModuleInfo@FXParticleSystem@@6B@,0x01110C38,DefaultUpdateModuleInfo retail vtable
+??_7DX8TextureCategoryClass@@6B@,0x00D3D020,DX8TextureCategoryClass vftable stored by its destructor 0x00946540
+??_7DebugDisplay@@6B@,0x00D0F8D4,DebugDisplay vtable installed by exact ctor 0x005BD1C0; slot zero ILT 0x00005155 reaches scalar-deleting wrapper 0x005BD250
+??_7DebugDisplayInterface@@6B@,0x00D0F898,DebugDisplayInterface base vtable restored by complete DebugDisplay destructor body 0x005BD280 and used by scalar wrapper 0x005BD010
+??_7DebugIOFlat@@6B@,0x00D3517C,vptr stored at entry of ??1DebugIOFlat 0x00890780
+??_7DebugIOInterface@@6B@,0x00D35044,base vptr restored at exit of ??1DebugIOFlat 0x00890780
+??_7DebugIONet@@6B@,0x00D3507C,address-derived network vptr in 0x0088FE00
+??_7DebugIOOds@@6B@,0x00D35060,address-derived ODS vptr in 0x0088FA10
+??_7DefaultUpdateModuleInfo@FXParticleSystem@@6B@,0x00D10C38,DefaultUpdateModuleInfo retail vtable
 ??_7DeflectSpecialPower@@6BBehaviorModule@@@,0x00CB44EC,vtable whose slots name DeflectSpecialPower
-??_7DeflectSpecialPowerModuleData@@6B@,0x010B4520,exact constructor 0x0025A600 installs this dedicated vtable; slot zero ILT 0x0003A70B reaches scalar wrapper 0x0025A620
+??_7DeflectSpecialPowerModuleData@@6B@,0x00CB4520,exact constructor 0x0025A600 installs this dedicated vtable; slot zero ILT 0x0003A70B reaches scalar wrapper 0x0025A620
 ??_7DelayedDeathBody@@6BBehaviorModule@@@,0x010A7E90,primary vtable shared by the named constructor and destructor
 ??_7DelayedDeathBody@@6BBodyModuleInterface@@@,0x010A7DC8,secondary vtable at this+0x0C
 ??_7DelayedDeathBody@@6BModuleInterface@@@,0x010A7CF8,secondary vtable at this+0x10
-??_7DelayedLuaEventList@@6B@,0x01085E10,Open-BFME5 vtable the DelayedLuaEventList constructor at 0x000EDBB0 stores at +0
+??_7DelayedLuaEventList@@6B@,0x00C85E10,Open-BFME5 vtable the DelayedLuaEventList constructor at 0x000EDBB0 stores at +0
 ??_7DelayedLuaEventUpdateModuleData@@6B@,0x00CBD278,exact constructor 0x0028BBF0 installs this dedicated vtable
 ??_7DelayedUpgrade@@6B@,0x00CCC814,vtable whose slots name DelayedUpgrade
 ??_7DelayedWorldTextEventModule@@6B@,0x00CED9C0,vtable whose slots name DelayedWorldTextEventModule
 ??_7DeletionUpdate@@6B@,0x00CBD69C,vtable whose slots name DeletionUpdate
 ??_7DemoTrapUpdate@@6B@,0x00CBD7A4,vtable whose slots name DemoTrapUpdate
 ??_7DemoTrapUpdateModuleData@@6B@,0x00CBD7D8,exact constructor 0x0028C9E0 installs this dedicated vtable
-??_7DeployStyleAIUpdateModuleDataVtbl@@6B@,0x01089B68,DeployStyleAIUpdate vtbl
+??_7DeployStyleAIUpdateModuleDataVtbl@@6B@,0x00C89B68,DeployStyleAIUpdate vtbl
 ??_7DestroyDie@@6B@,0x00CB2DD4,vtable whose slots name DestroyDie
 ??_7DestroyEnvironmentUpdateModuleData@@6B@,0x00CBDA00,exact constructor 0x0028CD30 installs this dedicated vtable
 ??_7DetachableRiderBody@@6BDRB_Primary@@@,0x00CA81A8,vtable whose slots name DetachableRiderBody
 ??_7DetachableRiderUpdate@@6B@,0x00CBDC8C,vtable whose slots name DetachableRiderUpdate
-??_7DevastateSpecialPowerModuleData@@6B@,0x010B47C8,exact constructor 0x0025AC10 installs this dedicated vtable; slot zero ILT 0x00034897 reaches scalar wrapper 0x0025AC50
+??_7DevastateSpecialPowerModuleData@@6B@,0x00CB47C8,exact constructor 0x0025AC10 installs this dedicated vtable; slot zero ILT 0x00034897 reaches scalar wrapper 0x0025AC50
 ??_7DockUpdateModuleData@@6B@,0x00CCA700,base vftable restored by RailedTransportDockUpdateModuleData destructor
 ??_7DozerActionMoveToActionPosState@@6B@,0x00CC6DA0,vtable whose slots name DozerActionMoveToActionPosState
 ??_7DozerActionPickActionPosState@@6B@,0x00CC6D28,vtable whose slots name DozerActionPickActionPosState
@@ -10654,35 +10654,35 @@ name,address,notes
 ??_7EntEnragedUpdate@@6B@,0x00CBE8AC,vtable whose slots name EntEnragedUpdate
 ??_7EstablishConnectionsMenu@@6B@,0x00D1A394,vtable whose slots name EstablishConnectionsMenu
 ??_7EvaEventFXNugget@@6B@,0x00CF33C0,vtable whose slots name EvaEventFXNugget
-??_7EvacuateDamageModuleData@@6B@,0x010B2018,exact constructor 0x00250C20 installs this dedicated vtable; slot zero ILT 0x000076A8 reaches scalar wrapper 0x00250DC0
+??_7EvacuateDamageModuleData@@6B@,0x00CB2018,exact constructor 0x00250C20 installs this dedicated vtable; slot zero ILT 0x000076A8 reaches scalar wrapper 0x00250DC0
 ??_7ExperienceLevelCreate@@6B@,0x00CB151C,vtable whose slots name ExperienceLevelCreate
 ??_7ExperienceLevelCreateModuleData@@6B@,0x00CB15F8,exact constructor 0x0024F7A0 installs this dedicated vtable
 ??_7ExperienceScalarUpgrade@@6B@,0x00CCC9A4,vtable whose slots name ExperienceScalarUpgrade
 ??_7FXListAtBonePosFXNugget@@6B@,0x00CF3508,vtable whose slots name FXListAtBonePosFXNugget
 ??_7FXListDie@@6B@,0x00CB2FDC,vtable whose slots name FXListDie
-??_7FXListDieModuleData@@6B@,0x0108B758,dedicated FXListDieModuleData vtable installed by exact ctor 0x001234F0; slot zero ILT 0x000124A4 reaches scalar wrapper 0x00125620
+??_7FXListDieModuleData@@6B@,0x00C8B758,dedicated FXListDieModuleData vtable installed by exact ctor 0x001234F0; slot zero ILT 0x000124A4 reaches scalar wrapper 0x00125620
 ??_7FadeAndDieOrnamentUpdate@@6B@,0x00CBE9B4,exact constructor 0x00292230 installs this dedicated vtable
-??_7FailureState@@6B@,0x01097950,exact constructor 0x00170E10 installs this dedicated vtable
+??_7FailureState@@6B@,0x00C97950,exact constructor 0x00170E10 installs this dedicated vtable
 ??_7FireSpreadUpdate@@6BObjectModule@@@,0x00CBEBD4,vtable whose slots name FireSpreadUpdate
 ??_7FireSpreadUpdateModuleData@@6B@,0x00CBEA00,exact constructor 0x00292680 installs this dedicated vtable
 ??_7FireWeaponCollideModuleData@@6B@,0x00C8EB50,vptr stored by ?friend_newModuleData@FireWeaponCollide 0x00127D00 into the object it allocates
 ??_7FireWeaponUpdateModuleData@@6B@,0x00CBED68,exact constructor 0x00292CB0 installs this dedicated vtable
-??_7FireWeaponWhenDamagedBehaviorModuleData@@6B@,0x0108F078,FireWeaponWhenDamagedBehaviorModuleData vtable installed by exact constructor 0x0012A100; slot zero ILT 0x0001C3EB reaches scalar wrapper 0x0012ACA0
+??_7FireWeaponWhenDamagedBehaviorModuleData@@6B@,0x00C8F078,FireWeaponWhenDamagedBehaviorModuleData vtable installed by exact constructor 0x0012A100; slot zero ILT 0x0001C3EB reaches scalar wrapper 0x0012ACA0
 ??_7FireWeaponWhenDeadBehavior@@6B@,0x00CA405C,vtable whose slots name FireWeaponWhenDeadBehavior
-??_7FlightDeckBehaviorModuleData@@6B@,0x010A8268,Open-BFME5 vftable the constructor at 0x002131B0 installs over the base one
+??_7FlightDeckBehaviorModuleData@@6B@,0x00CA8268,Open-BFME5 vftable the constructor at 0x002131B0 installs over the base one
 ??_7FloatUpdate@@6B@,0x00CBF454,vtable whose slots name FloatUpdate
 ??_7FloatUpdateModuleData@@6B@,0x00CBF308,exact constructor 0x00294F60 installs this dedicated vtable
-??_7FontCharsClass@@6B@,0x0113CE8C,WW3D FontCharsClass vtable installed by constructor 0x00940610 and destructor 0x00940010; slots are RefCountClass::Delete_This and scalar deleting destructor 0x00940770
+??_7FontCharsClass@@6B@,0x00D3CE8C,WW3D FontCharsClass vtable installed by constructor 0x00940610 and destructor 0x00940010; slots are RefCountClass::Delete_This and scalar deleting destructor 0x00940770
 ??_7FontLibrary@@6B@,0x00CF7650,pin
 ??_7FreeLifeBody@@6BBehaviorModule@@@,0x010A8538,primary vtable shared by the named constructor and destructor
 ??_7FreeLifeBody@@6BBodyModuleInterface@@@,0x010A8470,secondary vtable at this+0x0C
 ??_7FreeLifeBody@@6BModuleInterface@@@,0x010A83A0,secondary vtable at this+0x10
 ??_7FullFadeTransition@@6B@,0x00D0C814,vtable whose slots name FullFadeTransition
-??_7GameFont@@6B@,0x010F7628,vtable installed by FontLibrary font builder
-??_7GameResultsInterface@@6B@,0x01119318,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00641C60 calls; autopin
+??_7GameFont@@6B@,0x00CF7628,vtable installed by FontLibrary font builder
+??_7GameResultsInterface@@6B@,0x00D19318,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00641C60 calls; autopin
 ??_7GameSpyLoadScreen@@6B@,0x00CF9B44,vtable whose slots name GameSpyLoadScreen
-??_7GameWindowTransitionsHandler@@6B@,0x010F9610,GameWindowTransitionsHandler vtable installed by the matched retail constructor at 0x0048BF40 and used by destructor 0x0048B410; campaign=luna36h-20260907;lane=files
-??_7GateProxyBehaviorModuleDataVtbl@@6B@,0x0108A2A0,GateProxyBehavior ModuleData vtbl
+??_7GameWindowTransitionsHandler@@6B@,0x00CF9610,GameWindowTransitionsHandler vtable installed by the matched retail constructor at 0x0048BF40 and used by destructor 0x0048B410; campaign=luna36h-20260907;lane=files
+??_7GateProxyBehaviorModuleDataVtbl@@6B@,0x00C8A2A0,GateProxyBehavior ModuleData vtbl
 ??_7Gen00522E00@@6B@,0x00D06938,matched complete destructor005225F0 installs same primary vtable
 ??_7Gen007E9B10@@6B@,0x00D29758,Open-BFME5 vtable stored by the inline destructor folded into the scalar deleting destructor at 0x007E9B10
 ??_7Gen007F1BF0@@6B@,0x00D2A5F8,Open-BFME5 vtable stored by the inline destructor folded into the scalar deleting destructor at 0x007F1BF0
@@ -10693,99 +10693,99 @@ name,address,notes
 ??_7Gen007F47E0@@6B@,0x00D2B248,Open-BFME5 vtable stored by the inline destructor folded into the scalar deleting destructor at 0x007F47E0
 ??_7Gen007FBAF0@@6B@,0x00D2BCD0,Open-BFME5 vtable stored by the inline destructor folded into the scalar deleting destructor at 0x007FBAF0
 ??_7Gen007FCF50@@6B@,0x00D2BEE8,Open-BFME5 vtable stored by the inline destructor folded into the scalar deleting destructor at 0x007FCF50
-??_7Gen009D8CA0@@6B@,0x01144180,address-derived vftable operand written by the constructor at retail 0x009D8CB7
+??_7Gen009D8CA0@@6B@,0x00D44180,address-derived vftable operand written by the constructor at retail 0x009D8CB7
 ??_7Gen_001260D0ModuleDataVtbl@@6B@,0x00C8E998,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001260D0 calls; autopin
-??_7Gen_00471390@@6B@,0x010F756C,Gen_00471390 vtable installed by constructor 0x00471390; slot zero reaches complete destructor ILT 0x00023457 and scalar wrapper 0x00471850
+??_7Gen_00471390@@6B@,0x00CF756C,Gen_00471390 vtable installed by constructor 0x00471390; slot zero reaches complete destructor ILT 0x00023457 and scalar wrapper 0x00471850
 ??_7Gen_0057ECF0@@6B@,0x00C806B0,Open-BFME5 vftable installed by the copy constructor at 0x0057ECF0
 ??_7Gen_00587D40@@6B@,0x00D0BA30,Gen_00587D40 vtable
 ??_7GettingBuiltBehavior@@6BGBB_DeepBase@@@,0x00CA46F4,vtable whose slots name GettingBuiltBehavior
 ??_7GiantBirdFollowPathState@@6B@,0x00CC7778,vtable whose slots name GiantBirdFollowPathState
-??_7GrantUpgradeCreateModuleData@@6B@,0x010B17B8,exact constructor 0x0024FA80 installs this dedicated vtable; slot zero ILT 0x00040291 reaches scalar wrapper 0x0024FB00
+??_7GrantUpgradeCreateModuleData@@6B@,0x00CB17B8,exact constructor 0x0024FA80 installs this dedicated vtable; slot zero ILT 0x00040291 reaches scalar wrapper 0x0024FB00
 ??_7HealContain@@6B@,0x00CABC78,vtable whose slots name HealContain
-??_7HealCrateCollide@@6B@,0x010AA598,secondary vtable at this+0x10
+??_7HealCrateCollide@@6B@,0x00CAA598,secondary vtable at this+0x10
 ??_7HealCrateCollide@@6BBehaviorModuleInterface@@@,0x010AA5B8,secondary vtable at this+0x0C
 ??_7HealCrateCollide@@6BObjectModule@@@,0x010AA67C,primary vtable installed by the named constructor and destructor
 ??_7HeightDieUpdate@@6B@,0x00CBF6DC,vtable whose slots name HeightDieUpdate
 ??_7HeightDieUpdateModuleData@@6B@,0x00CBF498,exact constructor 0x00295500 installs this dedicated vtable
 ??_7HeroDie@@6B@,0x00CB312C,vtable whose slots name HeroDie
-??_7HeroDieModuleData@@6B@,0x010B3010,exact constructor 0x00255600 installs this dedicated vtable; slot zero ILT 0x000253EC reaches scalar wrapper 0x00255800
+??_7HeroDieModuleData@@6B@,0x00CB3010,exact constructor 0x00255600 installs this dedicated vtable; slot zero ILT 0x000253EC reaches scalar wrapper 0x00255800
 ??_7HighlanderBody@@6BBehaviorModule@@@,0x010A8788,primary vtable installed by the named constructor and destructor
 ??_7HighlanderBody@@6BBehaviorModuleInterface@@@,0x010A86C0,secondary vtable at this+0x0C
 ??_7HighlanderBody@@6BBodyModuleInterface@@@,0x010A85F0,secondary vtable at this+0x10
 ??_7HijackerUpdate@@6B@,0x00CBF7E4,vtable whose slots name HijackerUpdate
 ??_7HitReactionBehavior@@6B@,0x00CA4CB4,vtable whose slots name HitReactionBehavior
 ??_7HordeAIUpdate@@6B@,0x00CC8398,vtable whose slots name HordeAIUpdate
-??_7HordeContainModuleData@@6B@,0x010ABCF8,exact constructor 0x00220530 installs this dedicated vtable; slot zero ILT 0x0002131E reaches scalar wrapper 0x00220560
-??_7HordeContainModuleDataBase@@6B@,0x01073744,Open-BFME5 HordeContain base vtable
-??_7HordeGarrisonContain@@6B@,0x010AFDC0,exact constructor 0x00248F90 installs this dedicated vtable; slot zero ILT 0x00006528 reaches scalar wrapper 0x00249110
+??_7HordeContainModuleData@@6B@,0x00CABCF8,exact constructor 0x00220530 installs this dedicated vtable; slot zero ILT 0x0002131E reaches scalar wrapper 0x00220560
+??_7HordeContainModuleDataBase@@6B@,0x00C73744,Open-BFME5 HordeContain base vtable
+??_7HordeGarrisonContain@@6B@,0x00CAFDC0,exact constructor 0x00248F90 installs this dedicated vtable; slot zero ILT 0x00006528 reaches scalar wrapper 0x00249110
 ??_7HordeMemberCollide@@6B@,0x00CA9F04,vtable whose slots name HordeMemberCollide
 ??_7HordeMemberCollideModuleData@@6B@,0x00CA9DD0,exact constructor 0x00216790 installs this dedicated vtable
-??_7HordeTransportContain@@6B@,0x010B0688,exact constructor 0x0024B6F0 installs this dedicated vtable; slot zero ILT 0x00001ADC reaches scalar wrapper 0x0024B980
+??_7HordeTransportContain@@6B@,0x00CB0688,exact constructor 0x0024B6F0 installs this dedicated vtable; slot zero ILT 0x00001ADC reaches scalar wrapper 0x0024B980
 ??_7HordeWorkerAIUpdate@@6B@,0x00CC8790,vtable whose slots name HordeWorkerAIUpdate
 ??_7HorseHordeContainModuleData@@6B@,0x00CAF9B0,Horse factory 0x00115DE0 allocates 0x2F4 and shared ctor 0x002472D0 installs this vtable
-??_7IMEManager@@6B@,0x010F9978,derived vtable installed by ctor48D200 and restored by destructor48D8B0; campaign=luna36h-20260907;lane=mid
-??_7IMEManagerInterface@@6B@,0x010F98F0,interface vtable restored immediately before SubsystemInterface destructor in48D8B0; campaign=luna36h-20260907;lane=mid
-??_7Image@@6B@,0x0110FFEC,matched Image constructor5D2260 and complete destructor5D2840 install; slot0 routes to proven scalar destructor5D2BD0
+??_7IMEManager@@6B@,0x00CF9978,derived vtable installed by ctor48D200 and restored by destructor48D8B0; campaign=luna36h-20260907;lane=mid
+??_7IMEManagerInterface@@6B@,0x00CF98F0,interface vtable restored immediately before SubsystemInterface destructor in48D8B0; campaign=luna36h-20260907;lane=mid
+??_7Image@@6B@,0x00D0FFEC,matched Image constructor5D2260 and complete destructor5D2840 install; slot0 routes to proven scalar destructor5D2BD0
 ??_7ImmortalBody@@6BBehaviorModule@@@,0x010A8980,primary vtable installed by the named constructor and destructor
 ??_7ImmortalBody@@6BBehaviorModuleInterface@@@,0x010A88B8,secondary vtable at this+0x0C
 ??_7ImmortalBody@@6BBodyModuleInterface@@@,0x010A87E8,secondary vtable at this+0x10
-??_7InactiveBody@@6B@,0x010A8B74,exact constructor 0x00213BF0 installs this dedicated vtable; slot zero ILT 0x0003648A reaches scalar wrapper 0x00213E10
+??_7InactiveBody@@6B@,0x00CA8B74,exact constructor 0x00213BF0 installs this dedicated vtable; slot zero ILT 0x0003648A reaches scalar wrapper 0x00213E10
 ??_7IndexBufferClass@@6B@,0x00D3BD10,IndexBufferClass base vftable stored by the inlined base destructor in 0x0091D300 (same table as BfmeBaseVVE)
 ??_7Inner010EAD58@@6B@,0x00CEAD58,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00476440 calls; autopin
 ??_7InstantDeathBehavior@@6B@,0x00CA4EBC,vtable whose slots name InstantDeathBehavior
 ??_7KeepObjectDie@@6B@,0x00CB3224,vtable whose slots name KeepObjectDie
-??_7LargeGroupAudioUnusedKnownKeys@@6B@,0x010EE0FC,Open-BFME5 vftable the copy constructor at 0x003CD590 installs over the base one
-??_7LargeGroupBonusIface1@@6B@,0x0109C9D0,LargeGroupBonus first update interface vtable
-??_7LargeGroupBonusIface2@@6B@,0x0109CBA0,LargeGroupBonus second update interface vtable
-??_7LargeGroupBonusInterface@@6B@,0x010BFAC8,LargeGroupBonus interface construction vtable
-??_7LargeGroupBonusUpdate@@6B@,0x010BFAD8,LargeGroupBonus extra interface retail vtable
+??_7LargeGroupAudioUnusedKnownKeys@@6B@,0x00CEE0FC,Open-BFME5 vftable the copy constructor at 0x003CD590 installs over the base one
+??_7LargeGroupBonusIface1@@6B@,0x00C9C9D0,LargeGroupBonus first update interface vtable
+??_7LargeGroupBonusIface2@@6B@,0x00C9CBA0,LargeGroupBonus second update interface vtable
+??_7LargeGroupBonusInterface@@6B@,0x00CBFAC8,LargeGroupBonus interface construction vtable
+??_7LargeGroupBonusUpdate@@6B@,0x00CBFAD8,LargeGroupBonus extra interface retail vtable
 ??_7LargeGroupBonusUpdate@@6BLargeGroupBonusDeepBase@@@,0x010BFD2C,LargeGroupBonus primary retail vtable
 ??_7LargeGroupBonusUpdate@@6BLargeGroupBonusIface1@@@,0x010BFC68,LargeGroupBonus first interface retail vtable
 ??_7LargeGroupBonusUpdate@@6BLargeGroupBonusIface2@@@,0x010BFC5C,LargeGroupBonus second interface retail vtable
 ??_7LaserFXNugget@@6B@,0x00CF3438,vtable whose slots name LaserFXNugget
 ??_7LevelUpUpgrade@@6B@,0x00CCCF64,vtable whose slots name LevelUpUpgrade
-??_7LifeEventModuleInfo@FXParticleSystem@@6B@,0x01111278,LifeEventModuleInfo vtable
-??_7LifeEventModuleInfoBase@FXParticleSystem@@6B@,0x01073744,LifeEvent module-info base vtable
+??_7LifeEventModuleInfo@FXParticleSystem@@6B@,0x00D11278,LifeEventModuleInfo vtable
+??_7LifeEventModuleInfoBase@FXParticleSystem@@6B@,0x00C73744,LifeEvent module-info base vtable
 ??_7LightPulseFXNugget@@6B@,0x00CF3408,vtable whose slots name LightPulseFXNugget
-??_7LivingWorldCampaignManager@@6B@,0x010EC770,LivingWorldCampaignManager primary vtable installed by exact ctor 0x003B7C70; its sole slot zero is ILT 0x00022250 reaching scalar-deleting wrapper 0x003A87A0
-??_7LivingWorldLogic@@6B@,0x010EDBDC,LivingWorldLogic own vtable installed by its constructor at 0x003C2FC0; second vtable at +0x08 (0x010EDBC8) stored as a plain field, no pin needed
-??_7LivingWorldRegion@@6B@,0x01117258,constructor 0x0061AF80 installs this vtable; slot zero routes to scalar destructor and slot two returns LivingWorldRegion
+??_7LivingWorldCampaignManager@@6B@,0x00CEC770,LivingWorldCampaignManager primary vtable installed by exact ctor 0x003B7C70; its sole slot zero is ILT 0x00022250 reaching scalar-deleting wrapper 0x003A87A0
+??_7LivingWorldLogic@@6B@,0x00CEDBDC,LivingWorldLogic own vtable installed by its constructor at 0x003C2FC0; second vtable at +0x08 (0x010EDBC8) stored as a plain field, no pin needed
+??_7LivingWorldRegion@@6B@,0x00D17258,constructor 0x0061AF80 installs this vtable; slot zero routes to scalar destructor and slot two returns LivingWorldRegion
 ??_7LoadScreen@@6B@,0x00CF9AF0,vtable whose slots name LoadScreen
-??_7LockWeaponCreate@@6B@,0x010B180C,secondary vtable at this+0x10
+??_7LockWeaponCreate@@6B@,0x00CB180C,secondary vtable at this+0x10
 ??_7LockWeaponCreate@@6BBehaviorModuleInterface@@@,0x010B1820,secondary vtable at this+0x0C
 ??_7LockWeaponCreate@@6BObjectModule@@@,0x010B18E4,primary vtable shared with the neighboring constructor
 ??_7LockWeaponCreateModuleData@@6B@,0x00CB1950,exact constructor 0x0024FE00 installs this dedicated vtable
 ??_7LocomotorSetUpgrade@@6B@,0x00CCD0BC,vtable whose slots name LocomotorSetUpgrade
 ??_7LocomotorTemplate@@6B@,0x00C9DE9C,exact constructor 0x001B52C0 installs this dedicated vtable
-??_7Made001E5A20@@6B@,0x010CE8FC,Open-BFME5 vftable the constructor at 0x002DAC10 installs over the base one
-??_7Made001E5AF0@@6B@,0x010CF270,Open-BFME5 vftable the constructor at 0x002DED90 installs over the base one
-??_7Made001E5BC0@@6B@,0x010CF058,Open-BFME5 vftable the constructor at 0x002DE130 installs over the base one
-??_7Made001E6170@@6B@,0x010CF1C4,Open-BFME5 vftable the constructor at 0x002DE930 installs over the base one
+??_7Made001E5A20@@6B@,0x00CCE8FC,Open-BFME5 vftable the constructor at 0x002DAC10 installs over the base one
+??_7Made001E5AF0@@6B@,0x00CCF270,Open-BFME5 vftable the constructor at 0x002DED90 installs over the base one
+??_7Made001E5BC0@@6B@,0x00CCF058,Open-BFME5 vftable the constructor at 0x002DE130 installs over the base one
+??_7Made001E6170@@6B@,0x00CCF1C4,Open-BFME5 vftable the constructor at 0x002DE930 installs over the base one
 ??_7MainMenuMediumScaleUpTransition@@6B@,0x00D0C994,vtable whose slots name MainMenuMediumScaleUpTransition
 ??_7MainMenuScaleUpTransition@@6B@,0x00D0C9F8,vtable whose slots name MainMenuScaleUpTransition
-??_7ManTheWallsSpecialPowerModuleData@@6B@,0x010B5EA0,exact constructor 0x00261260 installs this dedicated vtable; slot zero ILT 0x00032AFB reaches scalar wrapper 0x00261280
+??_7ManTheWallsSpecialPowerModuleData@@6B@,0x00CB5EA0,exact constructor 0x00261260 installs this dedicated vtable; slot zero ILT 0x00032AFB reaches scalar wrapper 0x00261280
 ??_7MapTransferLoadScreen@@6B@,0x00CF9B60,vtable whose slots name MapTransferLoadScreen
-??_7Mapping@@6B@,0x01086344,vtable shared by the named constructor and destructor
-??_7MatBufferClass@@6B@,0x0113C310,MatBufferClass vftable stored by its destructor 0x0092A220
+??_7Mapping@@6B@,0x00C86344,vtable shared by the named constructor and destructor
+??_7MatBufferClass@@6B@,0x00D3C310,MatBufferClass vftable stored by its destructor 0x0092A220
 ??_7MaxHealthUpgrade@@6B@,0x00CCD26C,vtable whose slots name MaxHealthUpgrade
-??_7MetaMap@@6B@,0x0110F024,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x005B7260 calls; autopin
+??_7MetaMap@@6B@,0x00D0F024,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x005B7260 calls; autopin
 ??_7ModelConditionUpgrade@@6B@,0x00CCD48C,vtable whose slots name ModelConditionUpgrade
-??_7ModuleTemplate@FXParticleSystem@@6B@,0x01073758,ModuleTemplate base vtable
+??_7ModuleTemplate@FXParticleSystem@@6B@,0x00C73758,ModuleTemplate base vtable
 ??_7Money@@6B@,0x00C83D18,exact constructor 0x000E1540 installs this dedicated vtable
-??_7MoneyCrateCollide@@6B@,0x010AA6B8,secondary vtable at this+0x10
+??_7MoneyCrateCollide@@6B@,0x00CAA6B8,secondary vtable at this+0x10
 ??_7MoneyCrateCollide@@6BBehaviorModuleInterface@@@,0x010AA6D8,secondary vtable at this+0x0C
 ??_7MoneyCrateCollide@@6BObjectModule@@@,0x010AA79C,primary vtable installed by the named constructor and destructor
-??_7MoneyCrateCollideModuleDataVtbl@@6B@,0x0108EAA0,MoneyCrateCollide vtbl
-??_7MoveAwayAndCowerState@@6B@,0x0109AD88,exact constructor 0x00180450 installs this dedicated vtable; slot zero ILT 0x0001B162 reaches scalar wrapper 0x00185850
-??_7MoveAwayPanicState@@6B@,0x0109A3E0,exact named constructor 0x0017F4A0 installs this dedicated vtable and passes AIMoveAwayPanicState
-??_7MoveOntoWallStateMachine@@6B@,0x010973F8,constructor 0x001819F0 installs this table after the StateMachine base; matched AIMoveOntoWallState onEnter and xfer callers prove the constructor identity
-??_7OCLSpecialPowerModuleData@@6B@,0x010B6180,Parent raw ctor2631BB store and moduledatafactory120230 allocation230; vtable slot0 ILT339E2 to2637D0 deletingdtor then matched263800
+??_7MoneyCrateCollideModuleDataVtbl@@6B@,0x00C8EAA0,MoneyCrateCollide vtbl
+??_7MoveAwayAndCowerState@@6B@,0x00C9AD88,exact constructor 0x00180450 installs this dedicated vtable; slot zero ILT 0x0001B162 reaches scalar wrapper 0x00185850
+??_7MoveAwayPanicState@@6B@,0x00C9A3E0,exact named constructor 0x0017F4A0 installs this dedicated vtable and passes AIMoveAwayPanicState
+??_7MoveOntoWallStateMachine@@6B@,0x00C973F8,constructor 0x001819F0 installs this table after the StateMachine base; matched AIMoveOntoWallState onEnter and xfer callers prove the constructor identity
+??_7OCLSpecialPowerModuleData@@6B@,0x00CB6180,Parent raw ctor2631BB store and moduledatafactory120230 allocation230; vtable slot0 ILT339E2 to2637D0 deletingdtor then matched263800
 ??_7OathbreakerBody@@6BBehaviorModule@@@,0x010A8D40,primary vtable installed by the named constructor and destructor
 ??_7OathbreakerBody@@6BBehaviorModuleInterface@@@,0x010A8C78,secondary vtable at this+0x0C
 ??_7OathbreakerBody@@6BBodyModuleInterface@@@,0x010A8BA8,secondary vtable at this+0x10
-??_7OathbreakersFadeAwayBehavior@@6B@,0x010A5124,matched constructor 0x00201BB0 installs this dedicated vtable; slot zero ILT 0x00006622 reaches scalar wrapper 0x00201CC0
+??_7OathbreakersFadeAwayBehavior@@6B@,0x00CA5124,matched constructor 0x00201BB0 installs this dedicated vtable; slot zero ILT 0x00006622 reaches scalar wrapper 0x00201CC0
 ??_7Object@@6B@,0x00C9EE58,primary vftable: ??0Object at 0x001D29A0 stores 0x0109EE58 at [this] after the Thing base ctor (0x001328C0 installs 0x01090DE0); 0x00C9EE74 is slot 7 of it (??_GObject)
-??_7ObjectDefectionHelper@@6B@,0x0109E4A0,secondary vtable at this+0x10
+??_7ObjectDefectionHelper@@6B@,0x00C9E4A0,secondary vtable at this+0x10
 ??_7ObjectDefectionHelper@@6BBehaviorModuleInterface@@@,0x0109E4B0,secondary vtable at this+0x0C
 ??_7ObjectDefectionHelper@@6BObjectModule@@@,0x0109E574,primary vtable installed by the named constructor and destructor
 ??_7ObjectGuardingHelper@@6B@,0x00CB3614,vtable whose slots name ObjectGuardingHelper
@@ -10802,8 +10802,8 @@ name,address,notes
 ??_7ObjectWeaponStatusHelper@@6BBehaviorModuleInterface@@@,0x0109E810,secondary vtable at this+0x0C
 ??_7ObjectWeaponStatusHelper@@6BObjectHelper@@@,0x0109E8D4,primary vtable installed by the named constructor and destructor
 ??_7ObjectWeaponStatusHelper@@6BUpdateModuleInterface@@@,0x0109E804,secondary vtable at this+0x10
-??_7OnlineLoginFunctorWrapper@@6B@,0x011080B0,16-byte OnlineLogin fscommand functor wrapper vtable (refcount then vptr then this/method)
-??_7OnlineLoginInitGadgetsFunctorWrapper@@6B@,0x011080BC,16-byte OnlineLogin InitGadgets functor wrapper vtable used by _bfme_setAptScreenRef
+??_7OnlineLoginFunctorWrapper@@6B@,0x00D080B0,16-byte OnlineLogin fscommand functor wrapper vtable (refcount then vptr then this/method)
+??_7OnlineLoginInitGadgetsFunctorWrapper@@6B@,0x00D080BC,16-byte OnlineLogin InitGadgets functor wrapper vtable used by _bfme_setAptScreenRef
 ??_7OrConditionAllocation@@6B@,0x00CE84D8,exact constructor 0x0034F890 installs this dedicated vtable
 ??_7ParkingPlaceBehavior@@6BPPB_DeepBase@@@,0x010A2A1C,exact constructor 0x001F59F0 installs this dedicated vtable; slot zero ILT 0x0002F80B reaches scalar wrapper 0x001F5F30
 ??_7PartitionFilter@@6B@,0x00C83B5C,355B25ED50 temporary-filter destruction restores this base table; slots deleting wrapperC3BB0 through43CB6 and purecall88C500 and default player maskC3BA0 through3B9E4 independently decoded
@@ -10822,7 +10822,7 @@ name,address,notes
 ??_7PartitionFilterRelationship@Rva00327D30@@6B@,0x00C85DC0,retail 00327D30 +177 installs relationship filter table; existing canonical vtable pin identifies slots
 ??_7PhysicsBehaviorModuleData@@6B@,0x00CC0910,exact constructor 0x0029A090 installs this dedicated vtable
 ??_7Player@@6B@,0x00C840CC,vtable whose slots name Player
-??_7PlayingAudio@@6B@,0x0111C8C4,PlayingAudio vtable installed by the exact 0x006B9F70 constructor and 0x006BA030 destructor; sole slot 0x004219C2 routes to deleting destructor 0x006BA0E0;campaign=luna36h-20260907;lane=expand23;model=gpt-5.6-sol-ultra
+??_7PlayingAudio@@6B@,0x00D1C8C4,PlayingAudio vtable installed by the exact 0x006B9F70 constructor and 0x006BA030 destructor; sole slot 0x004219C2 routes to deleting destructor 0x006BA0E0;campaign=luna36h-20260907;lane=expand23;model=gpt-5.6-sol-ultra
 ??_7PoisonedBehavior@@6B@,0x00CC4DCC,vtable installed by constructor 0x002B0AD0 whose slots name PoisonedBehavior
 ??_7PoisonedBehaviorModuleData@@6B@,0x00CA53B8,exact constructor 0x002029B0 installs this dedicated vtable
 ??_7PopupMessageData@@6B@,0x00CF58C4,vtable installed by matched InGameUI::popupMessage for its m_popupMessageData allocation
@@ -10841,34 +10841,34 @@ name,address,notes
 ??_7ProneUpdate@@6B@,0x00CC13F4,vtable whose slots name ProneUpdate
 ??_7ProneUpdateModuleData@@6B@,0x00CC1290,exact constructor 0x0029FE30 installs this dedicated vtable
 ??_7QueueProductionExitUpdateModuleData@@6B@,0x00C8CFC0,exact constructor 0x00124150 installs this dedicated vtable
-??_7RAMFile@@6B@,0x01143C58,installed by RAMFile ctor at 0x009D1980 and by the matched ??1RAMFile@@MAE@XZ
+??_7RAMFile@@6B@,0x00D43C58,installed by RAMFile ctor at 0x009D1980 and by the matched ??1RAMFile@@MAE@XZ
 ??_7RadarUpdate@@6B@,0x00CC154C,vtable whose slots name RadarUpdate
 ??_7RadarUpdateModuleData@@6B@,0x00CC1428,exact constructor 0x002A01C0 installs this dedicated vtable
 ??_7RadarUpgrade@@6B@,0x00CCDB64,vtable whose slots name RadarUpgrade
-??_7RailedTransportDockUpdateModuleData@@6B@,0x010CADD0,vftable stored by constructor 0x002CE760
+??_7RailedTransportDockUpdateModuleData@@6B@,0x00CCADD0,vftable stored by constructor 0x002CE760
 ??_7RainOfFireUpdateModuleData@@6B@,0x00CC1698,exact constructor 0x002A08B0 installs this dedicated vtable
 ??_7RampageBehavior@@6B@,0x00CA5A24,vtable whose slots name RampageBehavior
-??_7RawFileClass@@6B@,0x01145548,14 of 17 slots are matched @RawFileClass@@ methods
-??_7RecorderClass@@6B@,0x0107FEF4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00099070 calls; autopin
-??_7RefCountClass@@6B@,0x011135AC,RefCountClass vftable (the BfmeBaseVVE table) stored by inlined base destructors
+??_7RawFileClass@@6B@,0x00D45548,14 of 17 slots are matched @RawFileClass@@ methods
+??_7RecorderClass@@6B@,0x00C7FEF4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00099070 calls; autopin
+??_7RefCountClass@@6B@,0x00D135AC,RefCountClass vftable (the BfmeBaseVVE table) stored by inlined base destructors
 ??_7ReflectDamage@@6B@,0x00CB240C,vtable whose slots name ReflectDamage
 ??_7ReflectDamageModuleData@@6B@,0x00CB22E0,exact constructor 0x002516D0 installs this dedicated vtable
 ??_7RefundDie@@6B@,0x00CB331C,vtable whose slots name RefundDie
-??_7RepairSpecialPowerModuleData@@6B@,0x010B6B10,exact constructor 0x00264990 installs this dedicated vtable; slot zero ILT 0x0000BAAF reaches scalar wrapper 0x002649B0
-??_7ReplenishUnitsBehavior@@6B@,0x010A5C44,exact constructor 0x002044E0 installs this dedicated vtable; slot zero ILT 0x0000CE4B reaches scalar wrapper 0x002046E0
+??_7RepairSpecialPowerModuleData@@6B@,0x00CB6B10,exact constructor 0x00264990 installs this dedicated vtable; slot zero ILT 0x0000BAAF reaches scalar wrapper 0x002649B0
+??_7ReplenishUnitsBehavior@@6B@,0x00CA5C44,exact constructor 0x002044E0 installs this dedicated vtable; slot zero ILT 0x0000CE4B reaches scalar wrapper 0x002046E0
 ??_7RespawnBody@@6BBehaviorModule@@@,0x010A9268,primary vtable installed by the named constructor and destructor
 ??_7RespawnBody@@6BBehaviorModuleInterface@@@,0x010A91A0,secondary vtable at this+0x0C
 ??_7RespawnBody@@6BBodyModuleInterface@@@,0x010A90D0,secondary vtable at this+0x10
-??_7RespawnBodyModuleData@@6B@,0x010A92C8,exact constructor 0x002149D0 installs this dedicated vtable; slot zero ILT 0x0001A46A reaches scalar wrapper 0x00214AC0
+??_7RespawnBodyModuleData@@6B@,0x00CA92C8,exact constructor 0x002149D0 installs this dedicated vtable; slot zero ILT 0x0001A46A reaches scalar wrapper 0x00214AC0
 ??_7RespawnUpdate@@6B@,0x00CC1A84,vtable whose slots name RespawnUpdate
-??_7RetailCollideModuleData@@6B@,0x0108A350,CollideModule factory vtable target
-??_7RetailDamageModuleData@@6B@,0x0108A350,DamageModule factory vtable target
-??_7RetailUpdateModuleData@@6B@,0x0108A350,UpdateModule factory vtable target
+??_7RetailCollideModuleData@@6B@,0x00C8A350,CollideModule factory vtable target
+??_7RetailDamageModuleData@@6B@,0x00C8A350,DamageModule factory vtable target
+??_7RetailUpdateModuleData@@6B@,0x00C8A350,UpdateModule factory vtable target
 ??_7ReverseSoundTransition@@6B@,0x00D0CAB8,vtable whose slots name ReverseSoundTransition
-??_7RiderChangeContain@@6B@,0x010ACAF0,exact constructor 0x00229FB0 installs this dedicated vtable; slot zero ILT 0x000310AC reaches scalar wrapper 0x0022A510
-??_7Rva000C8480Owner@@6B@,0x01083CA4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000C8480 calls; autopin
-??_7Rva000E9A40@@6B@,0x01084DF0,Open-BFME5 own vtable stored by the 0x000E9A40 destructor
-??_7Rva0014C850Store@@6B@,0x010959D4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0014C850 calls; autopin
+??_7RiderChangeContain@@6B@,0x00CACAF0,exact constructor 0x00229FB0 installs this dedicated vtable; slot zero ILT 0x000310AC reaches scalar wrapper 0x0022A510
+??_7Rva000C8480Owner@@6B@,0x00C83CA4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000C8480 calls; autopin
+??_7Rva000E9A40@@6B@,0x00C84DF0,Open-BFME5 own vtable stored by the 0x000E9A40 destructor
+??_7Rva0014C850Store@@6B@,0x00C959D4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0014C850 calls; autopin
 ??_7Rva001FC330MultiTailDtor@@6BRva00047C53MultiBase@@@,0x00CA40C4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001FC330 calls; autopin
 ??_7Rva001FC330MultiTailDtor@@6BRva1FC330IfaceA@@@,0x00CA4108,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001FC330 calls; autopin
 ??_7Rva001FC330MultiTailDtor@@6BRva1FC330Middle@@@,0x00CA40F8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001FC330 calls; autopin
@@ -10882,84 +10882,84 @@ name,address,notes
 ??_7Rva00260180SelfFilter@@6B@,0x00C95724,address-labelled full three-slot table: deleting wrapper ILT1FBC7 to14AC30; allow ILT45F02 to exact13B1DD250 rejects the Object pointer stored at +8; default player mask ILT3B9E4 toC3BA0
 ??_7Rva00265150DistanceFilter@@6B@,0x00CB6B64,468B265150 constructs next4 radius8 positionC; table slots343E7->264B40 deleting wrapper and5AFB->264B80 full78B XY distance greater than radius and3B9E4->C3BA0 default player mask; destructor264AA0 restores C83B5C; original filter name unresolved
 ??_7Rva00265150RJFilter@@6B@,0x00CA5158,468B265150 constructs next4 moduledata280 pointer8 controllingPlayerC matchBool10; slots11838->201F80 deleting wrapper and1289B->1DD260 full45B matched BfmeThingRJ predicate and3B9E4->C3BA0 default player mask; destructor201F10 restores C83B5C; original filter name unresolved
-??_7Rva0034E2E0@@6B@,0x010E7D00,address-derived vtable written by RVA 0x0034E2E0 (BfmeBaseVUQ destructor family)
-??_7Rva003B7650Record@@6B@,0x010EC764,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7650 calls; autopin
-??_7Rva003B7740@@6B@,0x010EC768,address-derived vtable for Rva003B7740 Release dtor 0x003B7740
-??_7Rva003B7BA0Record@@6B@,0x010EC76C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7BA0 calls; autopin
-??_7Rva003B7F90Record@@6B@,0x010EC774,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7F90 calls; autopin
-??_7Rva003B82D0Record@@6B@,0x010EC77C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B82D0 calls; autopin
-??_7Rva003B8610Record@@6B@,0x010EC784,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B8610 calls; autopin
-??_7Rva003BA660Record@@6B@,0x010EC84C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BA660 calls; autopin
-??_7Rva00410F10Allocation@@6B@,0x010F11C4,address-derived vtable written by RVA 00410F10
-??_7Rva00470360@@6B@,0x010F74E8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00470360 calls; autopin
-??_7Rva00490350Base@@6B@,0x010F9AD8,address-derived base vtable at retail 0x00490350
-??_7Rva00490350Derived@@6B@,0x010F9AE4,address-derived derived vtable at retail 0x00490350
-??_7Rva00490470@@6B@,0x010F9AF0,vftable of the window-owning sibling in the Rva00490350 linked-object family (destructor 0x00490470)
-??_7Rva00490A30@@6B@,0x010F9B44,vftable of the table-owning sibling in the Rva00490350 linked-object family (constructor 0x00490A30)
-??_7Rva00491DB0DisplayOwner@@6B@,0x010F9C08,Rva00491DB0 owner vtable
-??_7Rva004948B0OwnedSubsystem@@6B@,0x010FA1CC,Rva004948B0 derived vtable
-??_7Rva005225F0@@6B@,0x01106938,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x005225F0 calls; autopin
+??_7Rva0034E2E0@@6B@,0x00CE7D00,address-derived vtable written by RVA 0x0034E2E0 (BfmeBaseVUQ destructor family)
+??_7Rva003B7650Record@@6B@,0x00CEC764,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7650 calls; autopin
+??_7Rva003B7740@@6B@,0x00CEC768,address-derived vtable for Rva003B7740 Release dtor 0x003B7740
+??_7Rva003B7BA0Record@@6B@,0x00CEC76C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7BA0 calls; autopin
+??_7Rva003B7F90Record@@6B@,0x00CEC774,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7F90 calls; autopin
+??_7Rva003B82D0Record@@6B@,0x00CEC77C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B82D0 calls; autopin
+??_7Rva003B8610Record@@6B@,0x00CEC784,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B8610 calls; autopin
+??_7Rva003BA660Record@@6B@,0x00CEC84C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BA660 calls; autopin
+??_7Rva00410F10Allocation@@6B@,0x00CF11C4,address-derived vtable written by RVA 00410F10
+??_7Rva00470360@@6B@,0x00CF74E8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00470360 calls; autopin
+??_7Rva00490350Base@@6B@,0x00CF9AD8,address-derived base vtable at retail 0x00490350
+??_7Rva00490350Derived@@6B@,0x00CF9AE4,address-derived derived vtable at retail 0x00490350
+??_7Rva00490470@@6B@,0x00CF9AF0,vftable of the window-owning sibling in the Rva00490350 linked-object family (destructor 0x00490470)
+??_7Rva00490A30@@6B@,0x00CF9B44,vftable of the table-owning sibling in the Rva00490350 linked-object family (constructor 0x00490A30)
+??_7Rva00491DB0DisplayOwner@@6B@,0x00CF9C08,Rva00491DB0 owner vtable
+??_7Rva004948B0OwnedSubsystem@@6B@,0x00CFA1CC,Rva004948B0 derived vtable
+??_7Rva005225F0@@6B@,0x00D06938,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x005225F0 calls; autopin
 ??_7Rva00522E00FunctorWrapper@@6B@,0x00D0692C,wrapper ctor00522570; slots deleting destructor005225B0 and callback invoker005225A0
-??_7Rva0052B730FunctorWrapper@@6B@,0x01106DAC,Objectives value-provider wrapper vftable read directly from all four constructor stores
-??_7Rva0052B780FunctorWrapper@@6B@,0x01106DB8,Objectives InitGadgets wrapper vftable read directly from the constructor store
-??_7Rva0061A780@@6B@,0x01117258,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0061A780 calls; autopin
-??_7Rva00641C60Queue@@6B@,0x01119380,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00641C60 calls; autopin
-??_7Rva006609D0@@6B@,0x0111A1D0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
-??_7Rva006609D0Base@@6B@,0x0111A138,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
-??_7Rva006BDB50@@6B@,0x0111CFE0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006BDB50 calls; autopin
-??_7Rva00740AE0@@6B@,0x0112171C,derived vftable stored by the 0x00740AE0 constructor
-??_7Rva00740AE0Base@@6B@,0x010C7450,base vftable stored by the 0x00740AE0 constructor
-??_7Rva00745B10Owner@@6B@,0x011217A0,primary vftable of the 0x2450-byte owner (ctor 0x00745B10 dtor 0x007461B0)
+??_7Rva0052B730FunctorWrapper@@6B@,0x00D06DAC,Objectives value-provider wrapper vftable read directly from all four constructor stores
+??_7Rva0052B780FunctorWrapper@@6B@,0x00D06DB8,Objectives InitGadgets wrapper vftable read directly from the constructor store
+??_7Rva0061A780@@6B@,0x00D17258,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0061A780 calls; autopin
+??_7Rva00641C60Queue@@6B@,0x00D19380,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00641C60 calls; autopin
+??_7Rva006609D0@@6B@,0x00D1A1D0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
+??_7Rva006609D0Base@@6B@,0x00D1A138,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
+??_7Rva006BDB50@@6B@,0x00D1CFE0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006BDB50 calls; autopin
+??_7Rva00740AE0@@6B@,0x00D2171C,derived vftable stored by the 0x00740AE0 constructor
+??_7Rva00740AE0Base@@6B@,0x00CC7450,base vftable stored by the 0x00740AE0 constructor
+??_7Rva00745B10Owner@@6B@,0x00D217A0,primary vftable of the 0x2450-byte owner (ctor 0x00745B10 dtor 0x007461B0)
 ??_7Rva00745B10Owner@@6BRva007461B0BaseS@@@,0x01121790,second-base vftable of the owner (subobject at +0xb4)
 ??_7Rva00745B10Owner@@6BSubsystemInterface@@@,0x01121764,SubsystemInterface vftable of the owner (subobject at +0xfc)
-??_7Rva007461B0BaseS@@6B@,0x011216B0,vftable of the second base restored by its inline destructor in 0x007461B0
-??_7Rva007461B0Path@@6B@,0x010C7E28,vftable of the Rva00740AE0Base-derived path objects embedded at +0x22f4/+0x2358 of the owner
-??_7Rva007A1230ArrayOwner@@6B@,0x01127EB4,address-derived one-slot vtable installed by the destructor at 0x007A1230
-??_7Rva007E3C20Vp6Stream@@6B@,0x01128DA8,vtable stored by the derived destructor 0x007E3C20
+??_7Rva007461B0BaseS@@6B@,0x00D216B0,vftable of the second base restored by its inline destructor in 0x007461B0
+??_7Rva007461B0Path@@6B@,0x00CC7E28,vftable of the Rva00740AE0Base-derived path objects embedded at +0x22f4/+0x2358 of the owner
+??_7Rva007A1230ArrayOwner@@6B@,0x00D27EB4,address-derived one-slot vtable installed by the destructor at 0x007A1230
+??_7Rva007E3C20Vp6Stream@@6B@,0x00D28DA8,vtable stored by the derived destructor 0x007E3C20
 ??_7Rva00808CB0LanGameEntry@@6B@,0x00D296B0,neutral vtable installed by the natural derived entry constructor in 0x00808CB0 after direct base constructor 0x007E86B0; retail table VA 0x011296B0 has the deleting-destructor slot; campaign=luna36h-20260907;lane=netpacket_next;model=gpt-5.6-sol-ultra
 ??_7Rva00885AF0Class@@6B@,0x00D32ECC,pin
 ??_7Rva00886F60Class@@6B@,0x00D32FFC,pin
-??_7Rva00899560Value@@6B@,0x01135D68,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00899560 calls; autopin
-??_7Rva008995E0Value@@6B@,0x011360A8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x008995E0 calls; autopin
-??_7Rva008A1110Value@@6B@,0x01136400,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x008A1110 calls; autopin
-??_7Rva008A4C00Value@@6B@,0x01136698,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x008A4C00 calls; autopin
-??_7Rva00900FF0@@6B@,0x01139068,render object vtable installed by the Rva00900FF0 constructor
-??_7Rva0090E470Thing@@6B@,0x0113A668,address-derived vftable written by the 0x0090E470 constructor; class identity not recovered
-??_7Rva0090E570Thing@@6B@,0x0113A6B0,address-derived vftable written by the 0x0090E570 constructor (byte-twin of 0x0090E470); class identity not recovered
-??_7Rva00947170SkinContainer@@6B@,0x0113D05C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00947170 calls; autopin
+??_7Rva00899560Value@@6B@,0x00D35D68,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00899560 calls; autopin
+??_7Rva008995E0Value@@6B@,0x00D360A8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x008995E0 calls; autopin
+??_7Rva008A1110Value@@6B@,0x00D36400,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x008A1110 calls; autopin
+??_7Rva008A4C00Value@@6B@,0x00D36698,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x008A4C00 calls; autopin
+??_7Rva00900FF0@@6B@,0x00D39068,render object vtable installed by the Rva00900FF0 constructor
+??_7Rva0090E470Thing@@6B@,0x00D3A668,address-derived vftable written by the 0x0090E470 constructor; class identity not recovered
+??_7Rva0090E570Thing@@6B@,0x00D3A6B0,address-derived vftable written by the 0x0090E570 constructor (byte-twin of 0x0090E470); class identity not recovered
+??_7Rva00947170SkinContainer@@6B@,0x00D3D05C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00947170 calls; autopin
 ??_7Rva0097BB40HLod@@6BMultiListObjectClass@@@,0x00D3EBE4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097BB40 calls; autopin
 ??_7Rva0097BB40HLod@@6BRefCountClass@@@,0x00D3EBE8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097BB40 calls; autopin
 ??_7Rva1FC330DeepBase@@6BRva00047C53MultiBase@@@,0x00C9CB5C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001FC330 calls; autopin
 ??_7Rva1FC330DeepBase@@6BRva1FC330IfaceA@@@,0x00C9CA98,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001FC330 calls; autopin
 ??_7Rva1FC330Middle@@6B@,0x00C9CBAC,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001FC330 calls; autopin
-??_7S4Owner@@6B@,0x010F7114,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00464E20 calls; autopin
-??_7SalvageCrateCollide@@6B@,0x010AA7E8,secondary vtable at this+0x10
+??_7S4Owner@@6B@,0x00CF7114,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00464E20 calls; autopin
+??_7SalvageCrateCollide@@6B@,0x00CAA7E8,secondary vtable at this+0x10
 ??_7SalvageCrateCollide@@6BBehaviorModuleInterface@@@,0x010AA808,secondary vtable at this+0x0C
 ??_7SalvageCrateCollide@@6BObjectModule@@@,0x010AA8CC,primary vtable installed by the named constructor and destructor
 ??_7ScaleUpTransition@@6B@,0x00D0CAF4,vtable whose slots name ScaleUpTransition
-??_7ScavengerSpecialPowerModuleData@@6B@,0x010B6FF8,exact constructor 0x00265A80 installs this dedicated vtable; slot zero ILT 0x000314B7 reaches scalar wrapper 0x00265AB0
+??_7ScavengerSpecialPowerModuleData@@6B@,0x00CB6FF8,exact constructor 0x00265A80 installs this dedicated vtable; slot zero ILT 0x000314B7 reaches scalar wrapper 0x00265AB0
 ??_7ScoreScaleUpTransition@@6B@,0x00D0CB30,vtable whose slots name ScoreScaleUpTransition
 ??_7Script@@6B@,0x00CE858C,exact constructor 0x00352BA0 installs this dedicated vtable
 ??_7SequentialScript@@6B@,0x00CE7660,vtable whose slots name SequentialScript
 ??_7ShellGameLoadScreen@@6B@,0x00CE7530,exact constructor 0x003367B0 installs this dedicated vtable
-??_7ShroudCrateCollide@@6B@,0x010AA988,secondary vtable at this+0x10
+??_7ShroudCrateCollide@@6B@,0x00CAA988,secondary vtable at this+0x10
 ??_7ShroudCrateCollide@@6BBehaviorModuleInterface@@@,0x010AA9A8,secondary vtable at this+0x0C
 ??_7ShroudCrateCollide@@6BObjectModule@@@,0x010AAA6C,primary vtable installed by the named constructor and destructor
-??_7SiegeDeployHordeSpecialPowerModuleData@@6B@,0x010B7240,exact constructor 0x00265D90 installs this dedicated vtable; slot zero ILT 0x00025AE5 reaches scalar wrapper 0x00265DB0
+??_7SiegeDeployHordeSpecialPowerModuleData@@6B@,0x00CB7240,exact constructor 0x00265D90 installs this dedicated vtable; slot zero ILT 0x00025AE5 reaches scalar wrapper 0x00265DB0
 ??_7SiegeDockingBehaviorModuleData@@6B@,0x00CA61F0,exact constructor 0x00205F60 installs this dedicated vtable
 ??_7SimpleSceneIterator@@6B@,0x00D3CF34,retail table begins with deleting destructor 0x00943CC0 followed by exact First Next Is_Done and Current_Item slots; 0x00943CA0 constructor stores this table
 ??_7SlowDeathBehavior@@6B@,0x00CA66B4,vtable whose slots name SlowDeathBehavior
-??_7SlowDeathBehaviorModuleData@@6B@,0x010A6750,SlowDeathBehaviorModuleData vtable stored by retail constructor
+??_7SlowDeathBehaviorModuleData@@6B@,0x00CA6750,SlowDeathBehaviorModuleData vtable stored by retail constructor
 ??_7Snapshot@@6B@,0x00C73744,Snapshot vtable (deleting dtor + crc/xfer/loadPostProcess): installed by ??0Snapshot 0x0006B180 and 0x0005C530; 63 byte-verified references give ??_7Snapshot@@6B@ this address (dir32_addresses.csv)
-??_7SortingIndexBufferClass@@6B@,0x0113BD20,SortingIndexBufferClass vftable stored by its destructor 0x0091D300
+??_7SortingIndexBufferClass@@6B@,0x00D3BD20,SortingIndexBufferClass vftable stored by its destructor 0x0091D300
 ??_7SoundFXNugget@@6B@,0x00CF33D8,vtable whose slots name SoundFXNugget
-??_7SpawnPointProductionExitUpdateModuleData@@6B@,0x010E8D28,exact constructor 0x0035F0F0 installs this dedicated vtable; slot zero ILT 0x0002AEF0 reaches scalar wrapper 0x0035F120
+??_7SpawnPointProductionExitUpdateModuleData@@6B@,0x00CE8D28,exact constructor 0x0035F0F0 installs this dedicated vtable; slot zero ILT 0x0002AEF0 reaches scalar wrapper 0x0035F120
 ??_7SpawnTownsmenBehavior@@6B@,0x00CA6DD4,vtable whose slots name SpawnTownsmenBehavior
 ??_7SpawnUnitBehavior@@6BSpawnUnitBehaviorGrandBase@@@,0x00CA6F94,vtable whose slots name SpawnUnitBehavior
-??_7SpecialAbilityUpdateModuleData@@6B@,0x010C2D58,SpecialAbilityUpdateModuleData retail vtable stored by ctor at 0x002A5AA0
+??_7SpecialAbilityUpdateModuleData@@6B@,0x00CC2D58,SpecialAbilityUpdateModuleData retail vtable stored by ctor at 0x002A5AA0
 ??_7SpecialDisguiseUpdate@@6B@,0x00CB7708,vtable whose slots name SpecialDisguiseUpdate
 ??_7SpecialPowerModule@@6BModule@@@,0x00CB7C3C,vtable whose slots name SpecialPowerModule
-??_7SplitHordeSpecialPowerModuleData@@6B@,0x010B80E8,exact constructor 0x0026B1D0 installs this dedicated vtable; slot zero ILT 0x0000C8AB reaches scalar wrapper 0x0026B1F0
+??_7SplitHordeSpecialPowerModuleData@@6B@,0x00CB80E8,exact constructor 0x0026B1D0 installs this dedicated vtable; slot zero ILT 0x0000C8AB reaches scalar wrapper 0x0026B1F0
 ??_7SquishCollide@@6B@,0x00CAA074,vtable whose slots name SquishCollide
 ??_7SquishCollideModuleData@@6B@,0x00CA9F40,exact constructor 0x00216B90 installs this dedicated vtable
 ??_7StatusBitsUpgrade@@6B@,0x00CCDD14,vtable whose slots name StatusBitsUpgrade
@@ -10970,73 +10970,73 @@ name,address,notes
 ??_7StructureBody@@6BBehaviorModule@@@,0x010A94B8,primary vtable installed by the named constructor and destructor
 ??_7StructureBody@@6BBehaviorModuleInterface@@@,0x010A93F0,secondary vtable at this+0x0C
 ??_7StructureBody@@6BBodyModuleInterface@@@,0x010A9320,secondary vtable at this+0x10
-??_7StructureBodyModuleData@@6B@,0x0108ED20,exact constructor 0x001293C0 installs this dedicated vtable; slot zero ILT 0x00046C90 reaches scalar wrapper 0x00129460
+??_7StructureBodyModuleData@@6B@,0x00C8ED20,exact constructor 0x001293C0 installs this dedicated vtable; slot zero ILT 0x00046C90 reaches scalar wrapper 0x00129460
 ??_7SubObjectsUpgrade@@6B@,0x00CCDFC4,vtable whose slots name SubObjectsUpgrade
-??_7SubtitleEntry@@6B@,0x0112CF0C,vtable installed by the SubtitleEntry constructor
+??_7SubtitleEntry@@6B@,0x00D2CF0C,vtable installed by the SubtitleEntry constructor
 ??_7SupplyCenterProductionExitUpdate@@6BPB_DeepBase@@@,0x00CCB9F4,vtable whose slots name SupplyCenterProductionExitUpdate
 ??_7SupplyWarehouseCripplingBehaviorModuleData@@6B@,0x00CA7048,exact constructor 0x0020D580 installs this dedicated vtable
 ??_7SymbioticStructuresBody@@6BBehaviorModule@@@,0x010A96B0,primary vtable installed by the named constructor and destructor
 ??_7SymbioticStructuresBody@@6BBehaviorModuleInterface@@@,0x010A95E8,secondary vtable at this+0x0C
 ??_7SymbioticStructuresBody@@6BBodyModuleInterface@@@,0x010A9518,secondary vtable at this+0x10
-??_7SymbioticStructuresBodyModuleData@@6B@,0x0108EC78,dedicated vtable associated with matched constructor 0x00128D20 and ModuleFactory registration; slot zero ILT 0x00046236 reaches scalar wrapper 0x00129530
+??_7SymbioticStructuresBodyModuleData@@6B@,0x00C8EC78,dedicated vtable associated with matched constructor 0x00128D20 and ModuleFactory registration; slot zero ILT 0x00046236 reaches scalar wrapper 0x00129530
 ??_7TBuff@@6B@,0x00D1E134,vtable whose slots name TBuff
-??_7TaintSpecialPowerModuleData@@6B@,0x010B8550,exact constructor 0x0026B870 installs this dedicated vtable; slot zero ILT 0x0002C025 reaches scalar wrapper 0x0026B8B0
+??_7TaintSpecialPowerModuleData@@6B@,0x00CB8550,exact constructor 0x0026B870 installs this dedicated vtable; slot zero ILT 0x0002C025 reaches scalar wrapper 0x0026B8B0
 ??_7TeamInQueue@@6B@,0x00C96940,vtable whose slots name TeamInQueue
 ??_7TemporarilyDefectUpdate@@6B@,0x00CC4DCC,vtable whose slots name TemporarilyDefectUpdate
 ??_7TextOnFrameTransition@@6B@,0x00D0CC98,vtable whose slots name TextOnFrameTransition
 ??_7TintDrawableFXNugget@@6B@,0x00CF34F0,vtable whose slots name TintDrawableFXNugget
-??_7TintEnvelope@@6B@,0x010F1410,TintEnvelope vtable: installed by the TintEnvelope ctor 0x00412140 and at the two inline constructions in Drawable::updateDrawable 0x0041BE60 (+0x4B0 +0x535)
+??_7TintEnvelope@@6B@,0x00CF1410,TintEnvelope vtable: installed by the TintEnvelope ctor 0x00412140 and at the two inline constructions in Drawable::updateDrawable 0x0041BE60 (+0x4B0 +0x535)
 ??_7ToggleMountedSpecialAbilityUpdate@@6BBehaviorModule@@@,0x00CB88E8,vtable whose slots name ToggleMountedSpecialAbilityUpdate
 ??_7TransportContain@@6B@,0x00CAD4E8,vtable whose slots name TransportContain
 ??_7TunnelContain@@6B@,0x00CADDB8,vtable whose slots name TunnelContain
-??_7TurretAI@@6B@,0x0109BBF4,TurretAI primary vtable installed by exact constructor 0x0018DED0; slot zero ILT 0x0003700B reaches scalar deleting wrapper 0x0018D860 while secondary vtable 0x0109BBDC is installed at +4
-??_7TurretAIIdleScanState@@6B@,0x0109BCE0,exact constructor 0x0018D9A0 installs this dedicated vtable
-??_7TurretAIIdleState@@6B@,0x0109BC70,exact constructor 0x0018D930 installs this dedicated vtable
+??_7TurretAI@@6B@,0x00C9BBF4,TurretAI primary vtable installed by exact constructor 0x0018DED0; slot zero ILT 0x0003700B reaches scalar deleting wrapper 0x0018D860 while secondary vtable 0x0109BBDC is installed at +4
+??_7TurretAIIdleScanState@@6B@,0x00C9BCE0,exact constructor 0x0018D9A0 installs this dedicated vtable
+??_7TurretAIIdleState@@6B@,0x00C9BC70,exact constructor 0x0018D930 installs this dedicated vtable
 ??_7TurretAIRecenterTurretState@@6B@,0x00C9BDC0,vtable whose slots name TurretAIRecenterTurretState
-??_7TurretState@@6B@,0x0109BC18,exact protected constructor 0x0018D890 installs this dedicated vtable
-??_7TurretStateMachine@@6B@,0x0109B828,exact constructor 0x0018DB60 installs this dedicated vtable
-??_7UnitCrateCollide@@6B@,0x010AAAAC,secondary vtable at this+0x10
+??_7TurretState@@6B@,0x00C9BC18,exact protected constructor 0x0018D890 installs this dedicated vtable
+??_7TurretStateMachine@@6B@,0x00C9B828,exact constructor 0x0018DB60 installs this dedicated vtable
+??_7UnitCrateCollide@@6B@,0x00CAAAAC,secondary vtable at this+0x10
 ??_7UnitCrateCollide@@6BBehaviorModuleInterface@@@,0x010AAAC8,secondary vtable at this+0x0C
 ??_7UnitCrateCollide@@6BObjectModule@@@,0x010AAB8C,primary vtable installed by the named constructor and destructor
 ??_7UnpauseSpecialPowerUpgrade@@6B@,0x00CCE464,vtable whose slots name UnpauseSpecialPowerUpgrade
-??_7UpdateModuleInterface@@6B@,0x0109CBA0,Open-BFME5 vtable address emitted by ObjectHelper constructor 0x001C0DB0
+??_7UpdateModuleInterface@@6B@,0x00C9CBA0,Open-BFME5 vtable address emitted by ObjectHelper constructor 0x001C0DB0
 ??_7UpgradeDie@@6B@,0x00CB350C,vtable whose slots name UpgradeDie
-??_7VeterancyCrateCollide@@6B@,0x010AABCC,secondary vtable at this+0x10
+??_7VeterancyCrateCollide@@6B@,0x00CAABCC,secondary vtable at this+0x10
 ??_7VeterancyCrateCollide@@6BBehaviorModuleInterface@@@,0x010AABE8,secondary vtable at this+0x0C
 ??_7VeterancyCrateCollide@@6BObjectModule@@@,0x010AACAC,primary vtable installed by the named constructor and destructor
-??_7View@@6B@,0x010F6940,View complete 64-slot vftable installed by exact ctor 0x0045B8C0; slot zero is ILT 0x0000EF43 to scalar-deleting wrapper 0x0045C440
-??_7VirtualMinusOneConstructorThunk@@6B@,0x010F6F58,Open-BFME5 virtual minus one constructor vftable
-??_7VirtualZeroDerivedAlternateThunk@@6B@,0x010F6F68,Open-BFME5 alternate virtual zero derived vftable
-??_7VirtualZeroDerivedThirdThunk@@6B@,0x010F6F74,Open-BFME5 third virtual zero derived vftable
-??_7VirtualZeroDerivedThunk@@6B@,0x010F6F5C,Open-BFME5 virtual zero derived vftable
+??_7View@@6B@,0x00CF6940,View complete 64-slot vftable installed by exact ctor 0x0045B8C0; slot zero is ILT 0x0000EF43 to scalar-deleting wrapper 0x0045C440
+??_7VirtualMinusOneConstructorThunk@@6B@,0x00CF6F58,Open-BFME5 virtual minus one constructor vftable
+??_7VirtualZeroDerivedAlternateThunk@@6B@,0x00CF6F68,Open-BFME5 alternate virtual zero derived vftable
+??_7VirtualZeroDerivedThirdThunk@@6B@,0x00CF6F74,Open-BFME5 third virtual zero derived vftable
+??_7VirtualZeroDerivedThunk@@6B@,0x00CF6F5C,Open-BFME5 virtual zero derived vftable
 ??_7VisPolyClass@@6B@,0x00D27AC8,exact constructor 0x007A1750 installs this dedicated vtable
-??_7W3DFloorBuffer@@6B@,0x01120360,W3DFloorBuffer vtable; slot 2 returns the W3DFloorBuffer literal at 0x01120374
-??_7W3DMouse@@6B@,0x01120928,W3DMouse constructor vftable store
-??_7W3DProjectedShadowManager@@6B@,0x01128404,W3DProjectedShadowManager constructor vftable store at 0x007AF5C7
-??_7W3DRenderObjectSnapshot@@6B@,0x0111D024,W3DRenderObjectSnapshot vtable; slot 2 returns the class-name literal at 0x0111D038
+??_7W3DFloorBuffer@@6B@,0x00D20360,W3DFloorBuffer vtable; slot 2 returns the W3DFloorBuffer literal at 0x01120374
+??_7W3DMouse@@6B@,0x00D20928,W3DMouse constructor vftable store
+??_7W3DProjectedShadowManager@@6B@,0x00D28404,W3DProjectedShadowManager constructor vftable store at 0x007AF5C7
+??_7W3DRenderObjectSnapshot@@6B@,0x00D1D024,W3DRenderObjectSnapshot vtable; slot 2 returns the class-name literal at 0x0111D038
 ??_7W3DShadowGeometryManagerIterator@@6B@,0x00D284A8,exact constructor 0x007B96B0 installs this dedicated vtable
 ??_7W3DShroudMaterialPassClass@@6B@,0x00D209C4,vtable whose slots name W3DShroudMaterialPassClass
-??_7W3DSmudgeManager@@6B@,0x01120FBC,W3DSmudgeManager vftable stored by its constructor
-??_7W3DVideoBuffer@@6B@,0x0112165C,W3DVideoBuffer vftable installed by ctor 0x0073A230 and dtor 0x0073A4E0 with named createVideoBuffer caller; campaign=luna36h-20260907;lane=particle;model=gpt-5.6-sol-ultra
+??_7W3DSmudgeManager@@6B@,0x00D20FBC,W3DSmudgeManager vftable stored by its constructor
+??_7W3DVideoBuffer@@6B@,0x00D2165C,W3DVideoBuffer vftable installed by ctor 0x0073A230 and dtor 0x0073A4E0 with named createVideoBuffer caller; campaign=luna36h-20260907;lane=particle;model=gpt-5.6-sol-ultra
 ??_7W3DView@@6B@,0x00D217A0,vtable whose slots name W3DView
 ??_7WallUpgradeUpdate@@6B@,0x00CC529C,vtable whose slots name WallUpgradeUpdate
-??_7WanderAIUpdateModuleDataVtbl@@6B@,0x0108A5A8,WanderAIUpdate vtbl
+??_7WanderAIUpdateModuleDataVtbl@@6B@,0x00C8A5A8,WanderAIUpdate vtbl
 ??_7WargBehavior@@6B@,0x00CA7314,vtable whose slots name WargBehavior
 ??_7Watchdog@@6B@,0x00C88E34,Watchdog constructor vptr; slots reach destructor start thread function and stop bodies in the Watchdog cluster
-??_7WaterRenderObjClass@@6B@,0x01128148,WaterRenderObjClass primary vtable installed by exact ctor 0x007A46E0; slot zero ILT 0x0004614B reaches scalar-deleting wrapper 0x007A60F0 and adjacent retail string identifies the class
+??_7WaterRenderObjClass@@6B@,0x00D28148,WaterRenderObjClass primary vtable installed by exact ctor 0x007A46E0; slot zero ILT 0x0004614B reaches scalar-deleting wrapper 0x007A60F0 and adjacent retail string identifies the class
 ??_7Weapon@@6B@,0x00CA13F4,Weapon constructor writes the table whose slot 0 ILT 0x000112D4 reaches the known scalar deleting destructor at 0x001E6900
 ??_7WeaponBonusUpgrade@@6B@,0x00CCE6CC,vtable whose slots name WeaponBonusUpgrade
-??_7WeaponModeSpecialPowerUpdateModuleDataBase@@6B@,0x010B7D40,WeaponModeSpecialPowerUpdateModuleDataBase vtable installed by its clean constructor
+??_7WeaponModeSpecialPowerUpdateModuleDataBase@@6B@,0x00CB7D40,WeaponModeSpecialPowerUpdateModuleDataBase vtable installed by its clean constructor
 ??_7WeaponSetUpgrade@@6B@,0x00CCE824,vtable whose slots name WeaponSetUpgrade
-??_7WeaponStore@@6B@,0x010A13C8,exact constructor 0x001E5290 installs this dedicated vtable; slot zero ILT 0x000327DB reaches scalar wrapper 0x001E7F20
-??_7_Locale_impl@_STL@@6B@,0x0112EB34,STLport _Locale_impl vtable identified by retail RTTI; slot zero is scalar-deleting destructor 0x0083B310
+??_7WeaponStore@@6B@,0x00CA13C8,exact constructor 0x001E5290 installs this dedicated vtable; slot zero ILT 0x000327DB reaches scalar wrapper 0x001E7F20
+??_7_Locale_impl@_STL@@6B@,0x00D2EB34,STLport _Locale_impl vtable identified by retail RTTI; slot zero is scalar-deleting destructor 0x0083B310
 ??_7_bfme_AptGameWindow@@6BGameWindow@@@,0x010F711C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00465430 calls; autopin
 ??_7_bfme_AptGameWindow@@6BGen_dtor_004654c0Base@@@,0x010F7118,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00465430 calls; autopin
-??_7facet@locale@_STL@@6B@,0x0112E940,STLport locale::facet vtable identified by retail RTTI and restored by the money_get destructor at 0x00832320
+??_7facet@locale@_STL@@6B@,0x00D2E940,STLport locale::facet vtable identified by retail RTTI and restored by the money_get destructor at 0x00832320
 ??_7failure@ios_base@_STL@@6B@,0x00D2EBA4,retail STLport ios_base::failure vtable with matching RTTI complete-object locator
-??_7stdio_istreambuf@_SgI@@6B@,0x0112F27C,STLport 4.5.3 stdio_istreambuf vtable; RTTI type descriptor 0x012C7BB0 and constructor store at 0x0084106F prove identity
-??_7stdio_ostreambuf@_SgI@@6B@,0x0112F2B8,STLport 4.5.3 stdio_ostreambuf vtable; RTTI type descriptor 0x012C7BD4 and constructor store at 0x008410AF prove identity
-??_7stdio_streambuf_base@_SgI@@6B@,0x0112FBDC,STLport 4.5.3 stdio_streambuf_base vtable installed by stdio_istreambuf destructor 0x00849A10
+??_7stdio_istreambuf@_SgI@@6B@,0x00D2F27C,STLport 4.5.3 stdio_istreambuf vtable; RTTI type descriptor 0x012C7BB0 and constructor store at 0x0084106F prove identity
+??_7stdio_ostreambuf@_SgI@@6B@,0x00D2F2B8,STLport 4.5.3 stdio_ostreambuf vtable; RTTI type descriptor 0x012C7BD4 and constructor store at 0x008410AF prove identity
+??_7stdio_streambuf_base@_SgI@@6B@,0x00D2FBDC,STLport 4.5.3 stdio_streambuf_base vtable installed by stdio_istreambuf destructor 0x00849A10
 ??_8?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC84,STLport static library basic_ifstream<char> vbtable (name/fd constructors 0x0084C300 0x0084C410 0x0084C520)
 ??_8?$basic_ifstream@GV?$char_traits@G@_STL@@@_STL@@7B@,0x0112FC9C,STLport static library basic_ifstream<unsigned short> vbtable (ctors 0x0084CAB0 0x0084CBC0)
 ??_8?$basic_ifstream_lib0084C300@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC84,alias of the STLport library basic_ifstream<char> vbtable for the aliased (name mode) ctor 0x0084C300
