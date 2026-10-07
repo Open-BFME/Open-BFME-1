@@ -5,7 +5,8 @@ class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 extern int g_aptPalantirWindow;
 
-extern "C" const char bfmeOffEAA[];
+// The state argument at VA 0x01109918: retail .rdata holds "_hide" there.
+extern "C" const char bfmeOffEAA[] = "_hide";
 
 void bfmeAutoAbilityOffEAE(char index)
 {
