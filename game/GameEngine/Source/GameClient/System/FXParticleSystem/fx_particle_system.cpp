@@ -178,6 +178,9 @@ template<> CategoryModuleTemplate<8> &CategoryModuleTemplate<8>::operator=(const
 // CategoryModuleTemplate<1>'s destructor (0x005BF220) is defined in
 // CategoryModuleTemplate00DestructorThunk.cpp.
 template<> CategoryModuleTemplate<1>::~CategoryModuleTemplate();
+// Category 5's destructor (retail 0x005BFB80) is owned by
+// CategoryModuleTemplate04DestructorThunk.cpp.
+template<> CategoryModuleTemplate<5>::~CategoryModuleTemplate();
 
 // The retail destructors of these categories are matched in their own
 // CategoryModuleTemplateNNDestructorThunk.cpp TUs; declare them here so the

@@ -40,6 +40,9 @@ public:
     virtual ~CategoryModuleTemplate() {}
 };
 
+// Owned by CategoryModuleTemplate04DestructorThunk.cpp (retail 0x005BFB80).
+template<> CategoryModuleTemplate<5>::~CategoryModuleTemplate();
+
 class LightningEmissionInfo
 {
 public:

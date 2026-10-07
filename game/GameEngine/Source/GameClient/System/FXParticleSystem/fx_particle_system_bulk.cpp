@@ -22,6 +22,10 @@ extern template FXParticleSystem::CategoryModuleClass<7> *
 #include <memory.h>
 #include <memory>
 
+// Category 5's destructor (retail 0x005BFB80) is owned by
+// CategoryModuleTemplate04DestructorThunk.cpp.
+template<> FXParticleSystem::CategoryModuleTemplate<5>::~CategoryModuleTemplate();
+
 // The category accessor TU owns these nine four-byte registry heads.
 extern template FXParticleSystem::CategoryModuleClass<0> *
     FXParticleSystem::CategoryModuleClass<0>::s_firstList;
