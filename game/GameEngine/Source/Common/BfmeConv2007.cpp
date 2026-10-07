@@ -15,9 +15,16 @@ public:
 	char m_bfmeFlagEAH;
 };
 
+// Retail 0x00569150 tail-jumps to ILT 0x290D2 -> matched 0x00465B80.
+class Rva00465B80
+{
+public:
+	void apply();
+};
+
 struct Rva00579160Manager
 {
-	void bfmeRunEAH();
+	__forceinline void bfmeRunEAH() { ((Rva00465B80 *)this)->apply(); }
 };
 
 class BfmeAptScreenQuitMenu;
