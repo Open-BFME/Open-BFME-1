@@ -13248,7 +13248,6 @@ _AttributeModifierUpgradeFieldParse,0x004225B6
 _AutoHealBehaviorFieldParse,0x0043AF21
 _AutoPickUpUpdateFieldParse,0x0041B464
 _BFMENetworkBackendThreadStart@4,0x00DDB630
-_BannerCarrierUpdateFieldParse,0x004411C8
 _BaseUpgradeFieldParse,0x0042ED57
 _BfmeBaseVUQVft,0x01073744
 _BfmeItoaImport,0x0135935C

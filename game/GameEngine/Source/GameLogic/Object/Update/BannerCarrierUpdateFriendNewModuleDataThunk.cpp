@@ -30,7 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl BannerCarrierUpdateFieldParse(MultiIniFieldParse &parse);
+// Retail stores VA 0x004411C8: the matched ILT thunk ?j_000411c8@@YAXXZ.
+void j_000411c8();
 
 class BannerCarrierUpdate
 {
@@ -43,6 +44,6 @@ ModuleData *BannerCarrierUpdate::friend_newModuleData(INI *ini)
 {
 	BannerCarrierUpdateModuleData *data = new BannerCarrierUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &BannerCarrierUpdateFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))&j_000411c8);
 	return (ModuleData *)data;
 }
