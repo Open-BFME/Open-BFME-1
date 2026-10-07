@@ -26,7 +26,8 @@ public:
 	virtual BfmeVecCC0 *bfmeGetCC0(BfmeVecCC0 *);
 };
 
-extern BfmeGlobCC0 *g_bfmeGlobCC0;
+// Retail VA 0x012F1104 owns one initially null opaque pointer.
+BfmeGlobCC0 *g_bfmeGlobCC0 = 0;
 
 class BfmeThingCC0
 {
