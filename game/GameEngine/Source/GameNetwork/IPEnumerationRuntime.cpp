@@ -40,6 +40,7 @@ public:
 class EnumeratedIP
 {
 public:
+	~EnumeratedIP();
 	EnumeratedIP *getNext() const { return m_next; }
 
 private:
