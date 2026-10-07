@@ -977,3 +977,4 @@ game/GameEngine/Source/Common/Rva00412140Ctor.cpp|member||m_30,4fde773b79461be26
 game/GameEngine/Source/Common/Rva00412140Ctor.cpp|member||m_34,7e63aeb97e1735bcfe9ea008,gpt-6-astra,20261007135221-365d72,2026-10-07
 game/GameEngine/Source/Common/Rva00412140Ctor.cpp|member||m_38,93c6b5e63ce9343fc9dc21fb,gpt-6-astra,20261007135221-365d72,2026-10-07
 game/GameEngine/Source/Common/Rva00412140Ctor.cpp|member||m_39,20013f2b63951be7bf254aa3,gpt-6-astra,20261007135221-365d72,2026-10-07
+game/Libraries/Source/debug/DebugConstructor_00889370.cpp|type||Rva0088CDC0Forwarder,022b9cba1d7b495322306cd1,gpt-6-astra,20261007135216-ddbbb1,2026-10-07
