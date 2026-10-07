@@ -178,7 +178,7 @@ public:
 	void deleteInstance( void ) { delete this; }
 };
 
-static void closeDownloadWindow( void )
+void closeDownloadWindow( void )
 {
 	DEBUG_ASSERTCRASH(parent, ("No Parent"));
 	if (!parent)
