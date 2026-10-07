@@ -30,7 +30,7 @@ public:
 class __declspec(novtable) LuaScriptEngine
 {
 public:
-	void rva002EC770ParseTokenEvents(BfmeLexEAN *parser);
+	void ProcessEventsElement(BfmeLexEAN *parser);
 	void rva002E9AA0ParseObjectStatusEvent(BfmeLexEAN *parser);
 	void rva002E9590ParseScriptedEvent(BfmeLexEAN *parser);
 	void rva002E9680ParseModelConditionEvent(BfmeLexEAN *parser);
@@ -38,7 +38,7 @@ public:
 };
 
 
-void LuaScriptEngine::rva002EC770ParseTokenEvents(BfmeLexEAN *parser)
+void LuaScriptEngine::ProcessEventsElement(BfmeLexEAN *parser)
 {
 	char *tail = parser->getTailEAN();
 	int cmpEvents = strcmp(tail, "Events");

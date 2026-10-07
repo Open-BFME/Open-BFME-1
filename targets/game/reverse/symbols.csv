@@ -86696,7 +86696,7 @@ name,address,notes
 ?rva002EBF60@LuaScriptEngine@@QAEHABVAsciiString@@@Z,0x002EBF60,Team::updateState 0x000F4F30 +0xB6 calls it on TheLuaScriptEngine (VA 0x012F060C) with the TeamTemplateInfo+0x70 string through ILT 0x00035107 and hands the result to each member AI; address-derived name
 ?rva002EC770ParseToken@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z,0x0000ED95,0x002EC840 passes its BfmeLexEAN parser to this helper through ILT 0x0000ED95; address-derived owner and ABI follow the direct ecx and stack argument at the aligned call site
 ?rva002EC770ParseTokenEventList@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z,0x0003ED33,REL32 pin from rva002EC770ParseToken 0x002EC770 (ILT to the unnamed 0x002EC0A0 body)
-?rva002EC770ParseTokenEvents@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z,0x0000668B,REL32 pin from rva002EC770ParseToken 0x002EC770 (ILT to the unnamed 0x002EA5D0 dump)
+?ProcessEventsElement@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z,0x0000668B,REL32 pin from rva002EC770ParseToken 0x002EC770 (ILT to the unnamed 0x002EA5D0 dump)
 ?rva002EC840ParseTokenFile@LuaScriptEngine@@QAEXPBD_N@Z,0x002EC840,thiscall ret 8 body reached only from the 0x002EC990 registration site with Data\Scripts\ScriptEvents.xml; opens the file through TheFileSystem lexes it with BfmeLexEAN 0x0035ED90 and stores the second argument in the byte at this+0xb4
 ?rva002ED2E0@Display@@QAEXMMMM@Z,0x000327F4,address-anchored Display movie-viewport setup called immediately before fullscreen playback
 ?rva00362360UnguardedLinearInsert@@YAXPAURva00364980HeapElement@@U1@URva00364980HeapCompare@@@Z,0x000146FA,REL32 unguarded-linear-insert target from 0x00363BAA

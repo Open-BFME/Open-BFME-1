@@ -46,7 +46,7 @@ class __declspec(novtable) LuaScriptEngine
 {
 public:
 	void rva002EC770ParseToken(BfmeLexEAN *parser);
-	void rva002EC770ParseTokenEvents(BfmeLexEAN *parser);
+	void ProcessEventsElement(BfmeLexEAN *parser);
 
 private:
 	char m_pad00B4[0xB4];
@@ -104,7 +104,7 @@ void LuaScriptEngine::rva002EC770ParseToken(BfmeLexEAN *parser)
 		int cmpEvents = strcmp(tag, "Events");
 		if (cmpEvents == 0)
 		{
-			rva002EC770ParseTokenEvents(parser);
+			ProcessEventsElement(parser);
 		}
 		else
 		{
