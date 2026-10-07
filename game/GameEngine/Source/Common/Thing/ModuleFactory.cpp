@@ -485,7 +485,11 @@ public: \
 #include "GameLogic/Module/DamDie.h"
 #include "GameLogic/Module/DestroyDie.h"
 #include "GameLogic/Module/EjectPilotDie.h"
+#pragma push_macro("MAKE_STANDARD_MODULE_DATA_MACRO_ABC")
+#undef MAKE_STANDARD_MODULE_DATA_MACRO_ABC
+#define MAKE_STANDARD_MODULE_DATA_MACRO_ABC( cls, clsmd ) BFME_DECLARED_MODULE_DATA_MACRO( cls, clsmd )
 #include "GameLogic/Module/FXListDie.h"
+#pragma pop_macro("MAKE_STANDARD_MODULE_DATA_MACRO_ABC")
 #include "GameLogic/Module/RebuildHoleExposeDie.h"
 #include "GameLogic/Module/SpecialPowerCompletionDie.h"
 #include "GameLogic/Module/UpgradeDie.h"
@@ -530,7 +534,11 @@ public: \
 #include "GameLogic/Module/SpectreGunshipDeploymentUpdate.h"
 #include "GameLogic/Module/BaikonurLaunchPower.h"
 #include "GameLogic/Module/BattlePlanUpdate.h"
+#pragma push_macro("MAKE_STANDARD_MODULE_DATA_MACRO_ABC")
+#undef MAKE_STANDARD_MODULE_DATA_MACRO_ABC
+#define MAKE_STANDARD_MODULE_DATA_MACRO_ABC( cls, clsmd ) BFME_DECLARED_MODULE_DATA_MACRO( cls, clsmd )
 #include "GameLogic/Module/LifetimeUpdate.h"
+#pragma pop_macro("MAKE_STANDARD_MODULE_DATA_MACRO_ABC")
 #include "GameLogic/Module/RadiusDecalUpdate.h"
 #include "GameLogic/Module/AutoDepositUpdate.h"
 #include "GameLogic/Module/MissileAIUpdate.h"

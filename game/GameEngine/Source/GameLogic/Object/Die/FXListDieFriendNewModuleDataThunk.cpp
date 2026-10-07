@@ -31,7 +31,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl FXListDieFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the ILT stub 0x00046182 (?j_00046182@@YAXXZ).
+extern void j_00046182(void);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FXListDie.h
 class FXListDie
@@ -45,6 +46,6 @@ ModuleData *FXListDie::friend_newModuleData(INI *ini)
 {
 	FXListDieModuleData *data = new FXListDieModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &FXListDieFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))j_00046182);
 	return (ModuleData *)data;
 }

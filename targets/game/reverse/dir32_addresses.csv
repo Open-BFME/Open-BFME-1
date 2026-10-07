@@ -13336,7 +13336,6 @@ _EntEnragedInitialValueData,0x010BE788
 _EnumLocalesProcA@4,0x00C4E210
 _EvacuateDamageFieldParse,0x0042DD8A
 _ExperienceLevelCreateFieldParse,0x00413719
-_FXListDieFieldParse,0x00446182
 _FadeAndDieOrnamentUpdateFieldParse,0x004318BD
 _FoundationAIUpdateFieldParse,0x004231E6
 _FreezingRainSpecialPowerFieldParse,0x0044157E
@@ -13382,7 +13381,6 @@ _LevelUpUpgradeFieldParse,0x0041CFF8
 _LifeEventConcrete_vtbl0,0x01111424
 _LifeEventConcrete_vtbl12,0x0111140C
 _LifeEventConcrete_vtbl4,0x01111420
-_LifetimeUpdateFieldParse,0x0040490D
 _LineEmissionVolumeConcrete_vtbl0,0x011111A8
 _LineEmissionVolumeConcrete_vtbl4,0x011111A4
 _LineEmissionVolumeConcrete_vtbl8,0x01111190
