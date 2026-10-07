@@ -30,7 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl SlaughterHordeContainFieldParse(MultiIniFieldParse &parse);
+// Retail pushes 0x0040FABA, the matched ILT thunk to 0x0022A450.
+extern void j_0000faba(void);
 
 class SlaughterHordeContain
 {
@@ -43,6 +44,7 @@ ModuleData *SlaughterHordeContain::friend_newModuleData(INI *ini)
 {
 	SlaughterHordeContainModuleData *data = new SlaughterHordeContainModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &SlaughterHordeContainFieldParse);
+		ini->initFromINIMultiProc(data, 
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_0000faba));
 	return (ModuleData *)data;
 }
