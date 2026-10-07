@@ -1017,3 +1017,5 @@ game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||fiel
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||field1c,04e1b3591fa77d2d8e9052db,grok,20261007191251-677437,2026-10-07
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||field22,87d99ea1f533e1f6c8423d52,grok,20261007191251-677437,2026-10-07
 game/GameEngine/Source/GameNetwork/Rva008030C0FeslPoolInit.cpp|member||m_10,b965fc96d14707d2026a93ab,grok,20261007191246-389300,2026-10-07
+game/GameEngine/Source/Common/BfmeConv1947.cpp|type||BfmeKeyGenEQW,58104b2bafd392d23845a680,gpt-6-astra,20261007192750-cb18cd,2026-10-07
+game/GameEngine/Source/Common/BfmeConv1947.cpp|member||m_bfmeOwnerEQW,6aaa5eb76d1e04874a633469,gpt-6-astra,20261007192750-cb18cd,2026-10-07
