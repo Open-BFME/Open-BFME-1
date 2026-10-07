@@ -17,15 +17,17 @@ public:
 	SurfaceOps *ops;
 };
 
-class BfmeRendererVectorBase
+// The Renderers base's assignment is the trivial 4-byte VectorClass<T>::operator=
+// at 0x0093CEA0 (dup_0093cea0). PendingSurfaceStructResizeThunk.cpp reaches the
+// same body from the vtable-proven VectorClass<PendingSurfaceStruct>::Resize
+// (0x00940450) as VectorClassDummy::operator=, the name pinned at 0x0093CEA0, so
+// the vector state and its assignment live in that base here too.
+class VectorClassDummy
 {
 public:
-	virtual ~BfmeRendererVectorBase(void);
-	virtual bool Equal(const BfmeRendererVectorBase &that) const;
-	virtual bool Resize(int count, void *array = 0);
-	virtual void Clear(void);
+	virtual ~VectorClassDummy(void);
 
-	BfmeRendererVectorBase &operator=(const BfmeRendererVectorBase &that);
+	VectorClassDummy &operator=(const VectorClassDummy &that);
 
 protected:
 	void **vector;
@@ -33,6 +35,15 @@ protected:
 	bool is_valid;
 	bool is_allocated;
 	bool pad[2];
+};
+
+class BfmeRendererVectorBase : public VectorClassDummy
+{
+public:
+	virtual ~BfmeRendererVectorBase(void);
+	virtual bool Equal(const BfmeRendererVectorBase &that) const;
+	virtual bool Resize(int count, void *array = 0);
+	virtual void Clear(void);
 };
 
 class BfmeRendererVector : public BfmeRendererVectorBase
