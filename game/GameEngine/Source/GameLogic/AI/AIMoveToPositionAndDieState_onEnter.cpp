@@ -45,7 +45,6 @@ class StateMachine
 {
 public:
 	Object *getGoalObject();
-	const Coord3D *getGoalPosition() const { return &m_goalPosition; }
 	Object *getOwner() { return m_owner; }
 	void lock() { m_locked = true; }
 
@@ -95,7 +94,7 @@ StateReturnType AIMoveToPositionAndDieState::onEnter()
 	if (getMachine()->getGoalObject())
 		m_goalPosition = *getMachine()->getGoalObject()->getPosition();
 	else
-		m_goalPosition = *getMachine()->getGoalPosition();
+		m_goalPosition = getMachine()->m_goalPosition;
 	m_appendGoalPosition = true; // We may be moving off the map.
 
 	return AIInternalMoveToState::onEnter();
