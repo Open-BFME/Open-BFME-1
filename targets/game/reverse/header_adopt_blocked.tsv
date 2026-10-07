@@ -559,3 +559,4 @@ game/GameEngine/Source/Common/BfmeConv2016.cpp	StringBase	game\GameEngine\Source
 game/GameEngine/Source/Common/Rva0087F020FillBE.cpp	StringBase	game\GameEngine\Source\Common\Rva0087F020FillBE.cpp(57) : error C2514: 'BfmeElemBE' : class has no constructors
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptLivingWorldUIRegisterCallbacks.cpp	AsciiString	game\Libraries\Source\WWVegas\WWLib\ascii_string.h(114) : error C2678: binary '<' : no operator found which takes a left-hand operand of type 'const StringBase' (or there is no acceptable conversion)
 game/GameEngine/Source/Common/Rva0087F4D0Copy.cpp	StringBase	game\GameEngine\Source\Common\Rva0087F4D0Copy.cpp(23) : error C2514: 'BfmeElemF4' : class has no constructors
+game/GameEngine/Source/Common/BfmeConv542.cpp	StringBase	game\GameEngine\Source\Common\BfmeConv542.cpp(22) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
