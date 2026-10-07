@@ -226,7 +226,10 @@ BFME_VPTR_TAIL_JUMP_DTOR( Rva00105350TailDtor, SubsystemInterface )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva00121D10TailDtor, Rva0002B8C8TailBase )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva00124B20TailDtor, Rva0002B8C8TailBase )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva00124BF0TailDtor, Rva0002B8C8TailBase )
-BFME_VPTR_TAIL_JUMP_DTOR( Rva0015B9D0TailDtor, StateMachine )
+// 0x0015B9D0 is AIGuardMachine's destructor: it installs vftable 0x01095FE0, the
+// one the matched AIGuardMachine ctor (0x0015D1D0) installs, and is reached via
+// ILT 0x00035D46 from the matched ??_GAIGuardMachine (0x0015C030).
+BFME_VPTR_TAIL_JUMP_DTOR( AIGuardMachine, StateMachine )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva0015E730TailDtor, StateMachine )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva0015F730TailDtor, StateMachine )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva0016AB00TailDtor, StateMachine )
