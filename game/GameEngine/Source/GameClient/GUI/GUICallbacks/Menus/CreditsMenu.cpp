@@ -67,7 +67,17 @@
 #include "GameClient/Credits.h"
 #include "GameClient/WindowLayout.h"
 #include "GameClient/Gadget.h"
-#include "GameClient/Shell.h"
+// BFME's Shell::showShellMap returns Bool (?showShellMap@Shell@@QAE_N_N@Z,
+// retail 0x0057FB40); the ZH Shell.h spells it void, binding this TU to the
+// non-retail ZH body. Declare the three members this TU calls instead.
+class Shell
+{
+public:
+	Bool showShellMap( Bool useShellMap );
+	void shutdownComplete( WindowLayout *layout, Bool impendingPush = FALSE );
+	void pop( void );
+};
+extern Shell *TheShell;
 #include "GameClient/KeyDefs.h"
 #include "GameClient/GameWindowManager.h"
 
