@@ -527,3 +527,7 @@ game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThu
 game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThunk.cpp|member||m_20,m_dpsMax,gpt-6-astra+grok,applied,2026-10-07
 game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThunk.cpp|member||m_24,m_dpsRampupTime,gpt-6-astra+grok,applied,2026-10-07
 game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorRva00371B00.cpp|member||m_unmodelled11F8,m_secondsBeforeBaseCheckActive,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/FireWeaponUpdate.cpp|member||m_08,m_weaponTemplate,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/FireWeaponUpdate.cpp|member||m_0c,m_heroModeTrigger,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/FireWeaponUpdate.cpp|member||m_0d,m_chargingModeTrigger,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/FireWeaponUpdate.cpp|member||m_0e,m_aliveOnly,gpt-6-astra+grok,agreed,2026-10-07
