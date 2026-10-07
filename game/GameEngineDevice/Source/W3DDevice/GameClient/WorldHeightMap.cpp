@@ -1838,39 +1838,8 @@ Bool WorldHeightMap::isCliffMappedTexture(Int x, Int y) {
 		fullTile is true if we are doing 1/2 resolution height map, and require a full
 		tile to texture  a cell.  Otherwise, we use quarter tiles per cell.
 */
-// ?getUVData@WorldHeightMap@@QAE_NHHQAM0_N@Z present-unmatched
-Bool WorldHeightMap::getUVData(Int xIndex, Int yIndex, float U[4], float V[4], Bool fullTile)
-{
-#define dont_SHOW_THE_TEXTURE_FOR_DEBUG 1
-#if SHOW_THE_TEXTURE_FOR_DEBUG
-		// This is debug code that just shows the generated texture laid on the terrain.
-		// For debugging ;) jba.
-		xIndex += m_drawOriginX;
-		yIndex += m_drawOriginY;
-		float nU= xIndex;
-		float xU = xIndex+1;
-		float nV = 48-yIndex-1;
-		float xV = 48-yIndex;
-		float k = 48;
-		nU /= k;
-		xU /= k;
-		k = k*m_terrainTexHeight/TEXTURE_WIDTH;
-		nV /= k;
-		xV /= k;
-		U[0] = nU; U[1] = xU; U[2] = xU; U[3] = nU;
-		V[0] = xV; V[1] = xV; V[2] = nV; V[3] = nV;
-		return(true);
-#else
-	xIndex += m_drawOriginX;
-	yIndex += m_drawOriginY;
-	Int ndx = (yIndex*m_width)+xIndex;
-	if ((ndx<m_dataSize) && m_tileNdxes) {
-		Short tileNdx = m_tileNdxes[ndx];
-		return getUVForTileIndex(ndx, tileNdx, U, V, fullTile);
-	}
-	return false;
-#endif
-}
+// Retail WorldHeightMap::getUVData (0x0074CF30) is provided by
+// game/GameEngine/Source/Common/BfmeGrokMapSamp.cpp.
 
 /** getUVForTileIndex - Gets the texture coordinates to use.  See getTerrainTexture.
 		ndx is the index into the linear height array.
