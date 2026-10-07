@@ -124,13 +124,23 @@ public:
 		unsigned int Height;
 	};
 
-	~SurfaceClass();
+	SurfaceClass(BfmeItemDC *item) : m_surfaceOwner(item) {}
 	void Get_Description(SurfaceDescription &surface_desc);
 	void *Lock(int *pitch, bool discard);
 	void Unlock(void);
 
 	// Same one-pointer storage as the SurfaceClass D3D9 field.
 	BfmeThingDC m_surfaceOwner;
+};
+
+// Retail destroys the surface (inline and in its unwind funclet) through
+// 0x008FC5B0, the matched ??1W3DRadarResetSurface@@QAE@XZ row, the same
+// wrapper W3DSmudgeManager_ReAcquireResources.cpp declares.
+class W3DRadarResetSurface : public SurfaceClass
+{
+public:
+	W3DRadarResetSurface(BfmeItemDC *item) : SurfaceClass(item) {}
+	~W3DRadarResetSurface();
 };
 
 // Rva0090C2F0InnerLoad.cpp
@@ -184,7 +194,7 @@ void Rva0090E570Thing::derivedSlot3(void)
 			TheBfmeAwakenDebug->slot6c(0, 0)->slot38("DX8 error ")->slot00(result)->slot4c(1);
 		}
 
-		SurfaceClass surf = { (BfmeItemDC *)surface };
+		W3DRadarResetSurface surf((BfmeItemDC *)surface);
 		if (surface)
 			surface->Release();
 
