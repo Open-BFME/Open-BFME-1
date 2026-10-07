@@ -34,6 +34,9 @@
 // Retail initializes this mutable frame-ring length to 258 at VA 0x012BA088.
 Int FRAME_DATA_LENGTH = 258;
 
+// Retail .data at VA 0x012BA08C holds 65, upstream's (MAX_FRAMES_AHEAD/2) + 1.
+Int FRAMES_TO_KEEP = 65;
+
 // Only the one function BFME's own bytes pin is carried here. The rest of the
 // reference's NetworkUtil.cpp cannot be included as-is: its bodies test
 // NETCOMMANDTYPE_RUNAHEADMETRICS, NETCOMMANDTYPE_RUNAHEAD and
