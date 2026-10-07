@@ -74,7 +74,8 @@ public:
 };
 
 extern GlobalData *TheWritableGlobalData;
-extern const Real g_rva001B5860TwoPi;
+// 2*pi: retail reads the compiler literal __real@40c90fdb (VA 0x01087B10).
+static const Real g_rva001B5860TwoPi = 6.2831855f;
 
 class Locomotor
 {
