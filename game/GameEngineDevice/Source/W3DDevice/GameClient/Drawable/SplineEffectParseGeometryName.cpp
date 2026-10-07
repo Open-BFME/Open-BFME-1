@@ -7,7 +7,7 @@
 // or instance it throws INIException(3
 // "SplineEffect::ParseGeometryName::Invalid data passed in."); otherwise it
 // reads one token via INI::getNextAsciiString() and hands it straight to the
-// instance's setter (thunk 0x00403EBD) by address, then releases the token's
+// instance's setter (thunk 0x00403EBD -> matched Rva003BB590::add) by address, then releases the token's
 // buffer.  No persistent record struct is built here at all -- the "record"
 // in this family is just the temporary AsciiString.  Address-derived names.
 
@@ -51,10 +51,10 @@ public:
 	AsciiString getNextAsciiString();
 };
 
-class Rva003BB680Owner
+class Rva003BB590
 {
 public:
-	void setGeometryName( AsciiString &name );
+	void add( const AsciiString &name );
 };
 
 // ?SplineEffectParseGeometryName@@YAXPAVINI@@PAX1PBX@Z
@@ -62,7 +62,7 @@ void SplineEffectParseGeometryName( INI *ini, void *instance, void *, const void
 {
 	if( ini && instance )
 	{
-		( (Rva003BB680Owner *)instance )->setGeometryName( ini->getNextAsciiString() );
+		( (Rva003BB590 *)instance )->add( ini->getNextAsciiString() );
 	}
 	else
 		throw INIException( 3, "SplineEffect::ParseGeometryName::Invalid data passed in." );
