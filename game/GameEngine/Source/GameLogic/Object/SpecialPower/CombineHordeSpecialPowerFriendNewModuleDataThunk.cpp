@@ -30,7 +30,10 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl CombineHordeSpecialPowerFieldParse(MultiIniFieldParse &parse);
+// Retail stores VA 0x0042A888: the matched ILT thunk ?j_0002a888, whose
+// target 0x002596C0 is Rva002596C0::buildFieldParse
+// (game/GameEngine/Source/Common/WideBuildFieldParse.cpp).
+void j_0002a888();
 
 class CombineHordeSpecialPower
 {
@@ -43,6 +46,6 @@ ModuleData *CombineHordeSpecialPower::friend_newModuleData(INI *ini)
 {
 	CombineHordeSpecialPowerModuleData *data = new CombineHordeSpecialPowerModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &CombineHordeSpecialPowerFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))&j_0002a888);
 	return (ModuleData *)data;
 }

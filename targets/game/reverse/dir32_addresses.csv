@@ -13275,7 +13275,6 @@ _CivilianSpawnCollideFieldParse,0x0041E3F8
 _CivilianSpawnUpdateFieldParse,0x0040B825
 _ClickReactionBehaviorFieldParse,0x0040E5AC
 _CloudBreakSpecialPowerFieldParse,0x0043EC8E
-_CombineHordeSpecialPowerFieldParse,0x0042A888
 _CommSRPConnect,0x00C16970
 _CommSRPListen,0x00C16660
 _CommSRPResolve,0x00C15760
