@@ -1,7 +1,9 @@
-class Rva005862C0Member
+// ILT 0x3CA29 -> 0x005862C0, matched ??0Gen_005862c0@@QAE@ABV0@@Z
+// (S3VectorCopyConstructors.cpp).
+class Gen_005862c0
 {
 public:
-	Rva005862C0Member(const Rva005862C0Member &other);
+	Gen_005862c0(const Gen_005862c0 &other);
 
 private:
 	int m_bfmeFields[3];
@@ -17,7 +19,7 @@ private:
 	int m_bfme04;
 	int m_bfme08;
 	int m_bfme0C;
-	Rva005862C0Member m_bfmeMember;
+	Gen_005862c0 m_bfmeMember;
 	int m_bfme1C;
 	int m_bfme20;
 	bool m_bfme24;
