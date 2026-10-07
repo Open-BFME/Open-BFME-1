@@ -239,18 +239,9 @@ bool HTreeClass::read_pivots(ChunkLoadClass & cload,bool pre30)
  * HISTORY:                                                                                    * 
  *   08/11/1997 GH  : Created.                                                                 * 
  *=============================================================================================*/
-// ?HTreeClass::Free present-unmatched
-void HTreeClass::Free(void)
-{
-	if (Pivot != NULL) {
-		delete[] Pivot;
-		Pivot = NULL;
-	}
-	NumPivots = 0;
-
-	// Also clean up other members:
-	ScaleFactor = 1.0f;
-}
+// HTreeClass::Free: retail 0x00952230 frees Pivot with scalar operator delete
+// (BFME's PivotClass has a trivial destructor); this ZH body's delete[] emitted
+// a non-retail ??_EPivotClass, so it is not compiled here.
 
 
 /*********************************************************************************************** 
