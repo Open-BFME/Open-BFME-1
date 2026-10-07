@@ -13,12 +13,12 @@ public:
 // it, so this TU forward-declares it and the call below passes the same
 // objects the retail body does.  The range request uses the proven
 // PartitionManager::getCellRange name at 0x008F7D10.
-class ShroudManagerImpl008FBA40;
+class ShroudManagerImpl;
 
 class ShroudManagerImpl008FBA40Element
 {
 public:
-	void updatePlayerCells008FC3B0(ShroudManagerImpl008FBA40 *manager, int index);
+	void updatePlayerCells008FC3B0(ShroudManagerImpl *manager, int index);
 };
 
 class BfmeCellVRB
@@ -58,7 +58,7 @@ char BfmeShroudVRB::bfmeUpdateVRB(int x, int y, int radius)
 
 				for (p = first; p != end; ++p)
 					reinterpret_cast<ShroudManagerImpl008FBA40Element *>(p)->updatePlayerCells008FC3B0(
-						reinterpret_cast<ShroudManagerImpl008FBA40 *>(m_bfme00), index);
+						reinterpret_cast<ShroudManagerImpl *>(m_bfme00), index);
 			}
 
 			mask >>= 1;

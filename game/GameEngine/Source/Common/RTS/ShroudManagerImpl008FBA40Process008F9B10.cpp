@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
 // Retail 0x008F9B10 (155 bytes).  The matched
-// ShroudManagerImpl008FBA40::undoShroudReveal wrapper at 0x008FA040 is the
+// ShroudManagerImpl::undoShroudReveal wrapper at 0x008FA040 is the
 // only caller.  This is the paired circle walker beside the already matched
 // 0x008F9A70 walker; its two update calls resolve to the independently
 // matched BfmeShroudVRB::bfmeUpdateVRB at 0x008F9720.
@@ -16,10 +16,10 @@ public:
 	int m_bfme04;
 };
 
-class ShroudManagerImpl008FBA40;
+class ShroudManagerImpl;
 
 bool processShroudRevealCircle008F9B10(int cellX, int cellY, int cellRadius,
-	ShroudManagerImpl008FBA40 *manager, int playerMask)
+	ShroudManagerImpl *manager, int playerMask)
 {
 	int touched = 0;
 	int currentRadius = cellRadius;

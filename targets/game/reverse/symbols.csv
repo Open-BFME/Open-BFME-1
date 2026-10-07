@@ -80091,7 +80091,7 @@ name,address,notes
 ?concat@BfmeConcatShim@@QAEXPBDH@Z,0x00887D60,ScriptActions createUnitOnTeamAt shim spelling of the two-argument StringBase<char>::concat; retail calls at 0x002F9380 and 0x002F9390; same body as the existing ?bfmeConcatERC@BfmeStrERC pin; lane=createUnitOnTeamAt
 ?concat@BfmeSmallScaleDownString@@QAEXPBDH@Z,0x00887D60,Open-BFME5 view-class spelling of the two-argument concat already pinned as ?concat@AsciiString@@QAEXPBDH@Z; BFME passes an explicit length where the vendored declaration takes only the pointer
 ?concat@UnicodeString@@QAEXPBGH@Z,0x00888600,Apt disconnect-screen quit message uses the StringBase<unsigned short> concat body
-?configure@ShroudManagerImpl008FBA40@@QAEXURegion3D@@M@Z,0x008FB5F0,RVA 0x008FBAD0 validated Region3D configure call target
+?configure@ShroudManagerImpl@@QAEXURegion3D@@M@Z,0x008FB5F0,RVA 0x008FBAD0 validated Region3D configure call target
 ?configureWindowParameters@@YAXPAVGen_004659D0@@@Z,0x00894800,typed parameter adapter for the generated Apt parameter configurator called by WindowManager::init at 0x0046C5F0
 ?connectCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPConnectResponseArg@@@Z,0x000314AD
 ?construct@AODHordeContainModuleDataBaseShim@@QAEXXZ,0x0000ED77,AODHordeContain ModuleData base
@@ -83441,7 +83441,7 @@ name,address,notes
 ?getShowProps@OptionPreferences@@QAEEXZ,0x0000BF78,route=0x00090FB0; AptOptions::Cancel at 0x0055DCB0 reaches the getter through this thunk
 ?getShroudClearingRange@Object@@QBEMXZ,0x000326CD
 ?getShroudStatusForPlayer@PartitionManager@@QBE?AW4CellShroudStatus@@HPBUCoord3D@@@Z,0x008F7430
-?getShroudStatusForPlayer@ShroudManagerImpl008FBA40@@QBE?AW4CellShroudStatus@@HHH@Z,0x008F94E0,cell status helper called by the four-corner prop shroud query at 0x008F95A0
+?getShroudStatusForPlayer@ShroudManagerImpl@@QBE?AW4CellShroudStatus@@HHH@Z,0x008F94E0,cell status helper called by the four-corner prop shroud query at 0x008F95A0
 ?getShroudTexture@W3DShroud@@QAE?AVTextureHandle@@XZ,0x00013BBF,ILT thunk called by setShroudTex 0x00717E90 (+0x39); W3DShroud::getShroudTexture
 ?getShroudedStatus@BfmeObjectShroudCall@@QBE?AW4ObjectShroudStatus@@H@Z,0x0002B81E,local BFME ABI call view routes the retail shroud query through its ILT
 ?getShroudedStatus@Object@@QBE?AW4ObjectShroudStatus@@H@Z,0x0002B81E,Object shroud-status ILT decoded from isObjectShroudedForAction retail callsite
@@ -85949,12 +85949,12 @@ name,address,notes
 ?processInactiveLanMessages@@YAXXZ,0x00039202,inactive LAN message pump thunk
 ?processMouseEvent@Mouse@@AAEXH@Z,0x005A46B0,Parent full647B through ret4 at5A4934 before CCpadding; thiscall index input and60B event records at1110; updates current MouseIO4D10 and prior4D4C with left/right/middle event codes then delta; canonical Mouse processMouseEvent; createStreamMessages5A4CB3 viaILT673A
 ?processPathfindQueue@Pathfinder@@QAEXXZ,0x000313A9,GameLogic phase call at 0x0038DC0E supplies TheAI+0x0C (Pathfinder); ILT targets 716-byte RVA 0x003DC190 whose zone refresh terrain bounds 512-slot request queue object lookup and doPathfind loop match AIPathfind.cpp
-?processPending@ShroudManagerImpl008FBA40@@AAEX_N@Z,0x008FADD0,RVA 0x008FAFD0 post-drain processing call target
+?processPending@ShroudManagerImpl@@AAEX_N@Z,0x008FADD0,RVA 0x008FAFD0 post-drain processing call target
 ?processProgress@GameLogic@@QAEXHH@Z,0x0002E66D
 ?processProgressComplete@GameLogic@@QAEXH@Z,0x00385570,ZH GameLogic::processProgressComplete with lastHeardFrom inlined: slot < 8 and m_progressComplete[slot] at +0x120 != TRUE then TRUE and m_progressCompleteTimeout[slot] at +0x128 = timeGetTime wrapper ILT 0x000481E4 (_bfme_timeGetTime@0); called from processIncomingCommand case 16 (NETCOMMANDTYPE_LOADCOMPLETE) at 0x0066A5B6 and sendLoadCompleteCommand at 0x00664AD4 via ILT 0x00020405; GameLogic.cpp:7450 already holds the C++ body (present-unmatched)
 ?processRequestPlayerLeaveCommand@BFMEConnectionManager@@QAEXPAX@Z,0x00662D90,CORRECT NAME for the body the ledger calls markPlayerInGame: dispatcher 0x0066A3F0 jump table 0x0066A634 case 7 (NETCOMMANDTYPE_REQUESTPLAYERLEAVE per mapper 0x00683020) -> arm 0x0066A53B -> ILT 0x00038627 -> here; reads the leaving slot through 0x00674250 (the type-7 payload getter at +0x1C) and sets state +0x12080[slot]=1 when 0; the only writer of 1
-?processShroudRevealCircle008F9A70@@YA_NHHHPAVShroudManagerImpl008FBA40@@H@Z,0x008F9A70,paired circle walker called by ShroudManagerImpl008FBA40::doShroudReveal at 0x008FA010; target layout matches the do/undo sibling at 0x008F9B10
-?processShroudRevealCircle008F9B10@@YA_NHHHPAVShroudManagerImpl008FBA40@@H@Z,0x008F9B10,paired circle walker called by ShroudManagerImpl008FBA40::undoShroudReveal at 0x008FA040; target layout matches the do/undo sibling at 0x008F9A70
+?processShroudRevealCircle008F9A70@@YA_NHHHPAVShroudManagerImpl@@H@Z,0x008F9A70,paired circle walker called by ShroudManagerImpl008FBA40::doShroudReveal at 0x008FA010; target layout matches the do/undo sibling at 0x008F9B10
+?processShroudRevealCircle008F9B10@@YA_NHHHPAVShroudManagerImpl@@H@Z,0x008F9B10,paired circle walker called by ShroudManagerImpl008FBA40::undoShroudReveal at 0x008FA040; target layout matches the do/undo sibling at 0x008F9A70
 ?processTimeout@BfmeAptScreenMapTransfer@@QAEXH@Z,0x00510130,FileTransfer 0x0066CE60 calls through ILT 0x000362B9 on singleton 0x012F496C; same this as exact BfmeAptScreenMapTransfer::processProgress and ZH timeout semantic twin
 ?produceStoredValue@@YGHH@Z,0x0000C7FC,Open-BFME5 produced value implementation thunk
 ?productClamp@Rva00699430Owner@@QAEXH@Z,0x00018359,route=0x00699430; retail 0x006994C0 call at +0x07 targets ILT E9 to matched 0x00699430 body
@@ -87777,8 +87777,8 @@ name,address,notes
 ?updatePlayback@RecorderClass@@QAEXXZ,0x00099110,zh-sweep callee pin derived from retail REL32 displacement
 ?updatePlayerCells008FC300@PartitionManagerImpl008F8D60Element@@QAEXPAVPartitionManagerImpl008F8D60@@H@Z,0x008FC300,PartitionManager reveal-map per-cell call target; exact sibling implementation
 ?updatePlayerCells008FC3B0@PartitionManagerImpl008F8D60Element@@QAEXPAVPartitionManagerImpl008F8D60@@H@Z,0x008FC3B0,PartitionManager reveal-map per-cell call target; exact sibling implementation
-?updatePlayerCells008FC3B0@ShroudManagerImpl008FBA40Element@@QAEXPAVShroudManagerImpl008FBA40@@H@Z,0x008FC3B0,RVA 0x008FB010 per-element player update call target
-?updatePlayerCells008FC450@ShroudManagerImpl008FBA40Element@@QAEXPAVShroudManagerImpl008FBA40@@H@Z,0x008FC450,RVA 0x008FB060 per-element alternate player update call target
+?updatePlayerCells008FC3B0@ShroudManagerImpl008FBA40Element@@QAEXPAVShroudManagerImpl@@H@Z,0x008FC3B0,RVA 0x008FB010 per-element player update call target
+?updatePlayerCells008FC450@ShroudManagerImpl008FBA40Element@@QAEXPAVShroudManagerImpl@@H@Z,0x008FC450,RVA 0x008FB060 per-element alternate player update call target
 ?updatePos@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@@Z,0x00013647,Open-BFME5 ILT; called by ?setLayer@Object@@QAEXW4PathfindLayerEnum@@@Z at 0x001BEBB0 on TheAI+0x0C with the object position after the layer store
 ?updateRecord@RecorderClass@@QAEXXZ,0x0009BFE0,zh-sweep callee pin derived from retail REL32 displacement
 ?updateScorches@BaseHeightMapScorchUpdater@@QAEXXZ,0x00032966,BaseHeightMap scorch update ILT thunk

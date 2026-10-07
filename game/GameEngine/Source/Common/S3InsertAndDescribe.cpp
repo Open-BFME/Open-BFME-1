@@ -321,7 +321,7 @@ public:
 	friend class BfmeSinkB;
 };
 
-class ShroudManagerImpl008FBA40
+class ShroudManagerImpl
 {
 public:
 	void drainPending();
@@ -360,7 +360,7 @@ void BfmeSinkB::bfmeAccept(BfmeFlagTarget *target)
 {
 	if (!target->bfmeSlot4())
 	{
-		reinterpret_cast<ShroudManagerImpl008FBA40 *>(this)->drainPending();
+		reinterpret_cast<ShroudManagerImpl *>(this)->drainPending();
 
 		BfmeThingCDE *node = m_bfmeNodes;
 		while (node != 0)
@@ -371,7 +371,7 @@ void BfmeSinkB::bfmeAccept(BfmeFlagTarget *target)
 			node = node->m_bfmeNext;
 		}
 
-		reinterpret_cast<ShroudManagerImpl008FBA40 *>(this)->processPending(false);
+		reinterpret_cast<ShroudManagerImpl *>(this)->processPending(false);
 
 		{
 			unsigned char flags[4];
@@ -411,7 +411,7 @@ void BfmeSinkB::bfmeAccept(BfmeFlagTarget *target)
 
 		if (target->bfmeSlot1())
 		{
-			reinterpret_cast<ShroudManagerImpl008FBA40 *>(this)->notify();
+			reinterpret_cast<ShroudManagerImpl *>(this)->notify();
 		}
 		else
 		{
@@ -422,7 +422,7 @@ void BfmeSinkB::bfmeAccept(BfmeFlagTarget *target)
 				partitionData->unlink();
 				partitionData->updateCellsTouched();
 			}
-			reinterpret_cast<ShroudManagerImpl008FBA40 *>(this)->processPending(true);
+			reinterpret_cast<ShroudManagerImpl *>(this)->processPending(true);
 		}
 	}
 	else

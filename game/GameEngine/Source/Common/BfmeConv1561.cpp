@@ -8,12 +8,12 @@ public:
 
 // Retail's per-cell shroud update body lives on the shroud manager element:
 // game/GameEngine/Source/Common/RTS/ShroudManagerImpl008FBA40.cpp
-class ShroudManagerImpl008FBA40;
+class ShroudManagerImpl;
 
 class ShroudManagerImpl008FBA40Element
 {
 public:
-	void updatePlayerCells008FC300(ShroudManagerImpl008FBA40 *manager, int index);
+	void updatePlayerCells008FC300(ShroudManagerImpl *manager, int index);
 };
 
 class PartitionManager
@@ -54,7 +54,7 @@ char BfmeShroudVRA::bfmeUpdateVRA(int x, int y, int radius)
 				for (p = first; p != end; ++p)
 					reinterpret_cast<ShroudManagerImpl008FBA40Element *>(p)
 					->updatePlayerCells008FC300(
-						reinterpret_cast<ShroudManagerImpl008FBA40 *>(m_bfme00),
+						reinterpret_cast<ShroudManagerImpl *>(m_bfme00),
 						index);
 			}
 

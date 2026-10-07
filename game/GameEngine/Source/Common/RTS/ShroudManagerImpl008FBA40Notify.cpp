@@ -1,5 +1,5 @@
 // cl: /O2 /Ob0 /EHs-c-
-// ShroudManagerImpl008FBA40::notify, retail 0x008F9440 (150 bytes).
+// ShroudManagerImpl::notify, retail 0x008F9440 (150 bytes).
 //
 // The public PartitionManager::notify delegate at 0x008F7420 loads its
 // implementation at +0x0c and tail-jumps here.  The implementation owns the
@@ -33,7 +33,7 @@ struct BfmeThingCDE
 	char m_tail[0x40];
 };
 
-class ShroudManagerImpl008FBA40
+class ShroudManagerImpl
 {
 public:
 	__declspec(noinline) void notify();
@@ -50,7 +50,7 @@ private:
 	ShroudRefreshCallback m_refreshCallback;
 };
 
-void ShroudManagerImpl008FBA40::notify()
+void ShroudManagerImpl::notify()
 {
 	if (m_activePlayer < 0 || m_activePlayer >= 16)
 		return;

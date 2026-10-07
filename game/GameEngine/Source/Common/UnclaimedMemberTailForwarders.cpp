@@ -18,7 +18,7 @@
 
 class Rva007EAD30Owner { public: void send(); };
 class Rva007EADC0Owner { public: void send(); };
-class ShroudManagerImpl008FBA40 { public: void reset(); };
+class ShroudManagerImpl { public: void reset(); };
 class Rva009A2960 { public: void markState3(); };
 class Gen009F1510 { public: void handle(); };
 class Rva008811C0DwordField { public: int get() const; };
@@ -38,7 +38,7 @@ void Rva007EAD90Forward::forward() { m_target->send(); }
 class Rva007EAE20Forward { public: void forward(); char m_lead[ 4 ]; Rva007EADC0Owner *m_target; };
 void Rva007EAE20Forward::forward() { m_target->send(); }
 
-class Rva008F7340Forward { public: void forward(); char m_lead[ 0xC ]; ShroudManagerImpl008FBA40 *m_target; };
+class Rva008F7340Forward { public: void forward(); char m_lead[ 0xC ]; ShroudManagerImpl *m_target; };
 void Rva008F7340Forward::forward() { m_target->reset(); }
 
 class Rva009A2580Forward { public: void forward(); char m_lead[ 0xC ]; Rva009A2960 *m_target; };

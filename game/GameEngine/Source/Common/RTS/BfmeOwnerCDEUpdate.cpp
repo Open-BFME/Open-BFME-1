@@ -40,14 +40,14 @@ public:
 	CDEProvider *m_provider8;
 };
 
-class ShroudManagerImpl008FBA40
+class ShroudManagerImpl
 {
 public:
 	void rva008F8C70(CDEProvider *first, CDEProvider *second);
 };
 
-// ?rva008F8C70@ShroudManagerImpl008FBA40@@QAEXPAVCDEProvider@@0@Z
-void ShroudManagerImpl008FBA40::rva008F8C70(CDEProvider *first, CDEProvider *second)
+// ?rva008F8C70@ShroudManagerImpl@@QAEXPAVCDEProvider@@0@Z
+void ShroudManagerImpl::rva008F8C70(CDEProvider *first, CDEProvider *second)
 {
 	if (first == 0)
 		return;

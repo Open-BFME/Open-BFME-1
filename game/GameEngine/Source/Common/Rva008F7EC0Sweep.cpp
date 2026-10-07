@@ -2,7 +2,7 @@
 
 // ?method@Rva008F7EC0@@QAEXXZ
 //
-// Callers span BfmeThingCDE::bfmeDtorCDE, ShroudManagerImpl008FBA40::configure
+// Callers span BfmeThingCDE::bfmeDtorCDE, ShroudManagerImpl::configure
 // and BfmeSinkB::bfmeAccept, so the receiver layout is shared rather than
 // owned by any one of them; the address token stands in for an unproven
 // class. Walks the m_1c/m_20 array the BfmeThingCDE-shaped initializeArray

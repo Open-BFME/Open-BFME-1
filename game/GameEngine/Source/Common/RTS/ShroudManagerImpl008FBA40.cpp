@@ -101,11 +101,11 @@ struct Gen_t_008fb350_p12pod
 	unsigned int playerMask;
 };
 
-class ShroudManagerImpl008FBA40;
+class ShroudManagerImpl;
 class PartitionManager;
 struct ShroudManagerImpl008FBA40ElementLayout;
 __forceinline ShroudManagerImpl008FBA40ElementLayout *shroudElementAt(
-	const ShroudManagerImpl008FBA40 *manager, Int x, Int y);
+	const ShroudManagerImpl *manager, Int x, Int y);
 
 class BfmePartVRA;
 
@@ -118,9 +118,9 @@ public:
 };
 
 bool processShroudRevealCircle008F9A70(Int cellX, Int cellY, Int cellRadius,
-	ShroudManagerImpl008FBA40 *manager, Int playerMask);
+	ShroudManagerImpl *manager, Int playerMask);
 bool processShroudRevealCircle008F9B10(Int cellX, Int cellY, Int cellRadius,
-	ShroudManagerImpl008FBA40 *manager, Int playerMask);
+	ShroudManagerImpl *manager, Int playerMask);
 
 class ShroudManagerImpl008FBA40Element;
 
@@ -159,7 +159,7 @@ private:
 	friend class ShroudManagerImpl008FBA40Element;
 };
 
-class ShroudManagerImpl008FBA40;
+class ShroudManagerImpl;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionData
@@ -170,7 +170,7 @@ public:
 
 private:
 	void updateCellsTouched();
-	friend class ShroudManagerImpl008FBA40;
+	friend class ShroudManagerImpl;
 };
 
 struct ShroudManagerImpl008FBA40PlayerState
@@ -201,11 +201,11 @@ public:
 	~ShroudManagerImpl008FBA40Element();
 	void adjustPlayerCounter008FC1F0(int playerIndex, int counterIndex,
 		int amount);
-	void updatePlayerCells008FC300(ShroudManagerImpl008FBA40 *manager,
+	void updatePlayerCells008FC300(ShroudManagerImpl *manager,
 		int playerIndex);
-	void updatePlayerCells008FC3B0(ShroudManagerImpl008FBA40 *manager,
+	void updatePlayerCells008FC3B0(ShroudManagerImpl *manager,
 		int playerIndex);
-	void updatePlayerCells008FC450(ShroudManagerImpl008FBA40 *manager,
+	void updatePlayerCells008FC450(ShroudManagerImpl *manager,
 		int playerIndex);
 
 private:
@@ -219,17 +219,17 @@ private:
 	ShroudManagerImpl008FBA40Node *cellNodes;
 	ShroudManagerImpl008FBA40PlayerState playerStates[16];
 	int unknown64;
-	friend class ShroudManagerImpl008FBA40;
+	friend class ShroudManagerImpl;
 };
 
-class ShroudManagerImpl008FBA40
+class ShroudManagerImpl
 {
 public:
-	ShroudManagerImpl008FBA40();
-	~ShroudManagerImpl008FBA40();
+	ShroudManagerImpl();
+	~ShroudManagerImpl();
 	__declspec(noinline) CellShroudStatus getShroudStatusForPlayer(
 		Int playerIndex, Int x, Int y) const;
-	ObjectShroudStatus getPropShroudStatusForPlayer(Int playerIndex,
+	ObjectShroudStatus GetPropShroudStatusForPlayer(Int playerIndex,
 		const Coord3D *loc) const;
 	void drainPending();
 	void updatePlayerCells008FB010(int playerIndex);
@@ -265,11 +265,11 @@ private:
 	friend class ShroudManagerImpl008FBA40Element;
 	friend class PartitionManager;
 	friend ShroudManagerImpl008FBA40ElementLayout *shroudElementAt(
-		const ShroudManagerImpl008FBA40 *manager, Int x, Int y);
+		const ShroudManagerImpl *manager, Int x, Int y);
 };
 
 bool processShroudRevealCircle008F9A70(Int cellX, Int cellY, Int cellRadius,
-	ShroudManagerImpl008FBA40 *manager, Int playerMask)
+	ShroudManagerImpl *manager, Int playerMask)
 {
 	Int touched = 0;
 	Int currentRadius = cellRadius;
@@ -316,7 +316,7 @@ bool processShroudRevealCircle008F9A70(Int cellX, Int cellY, Int cellRadius,
 	return true;
 }
 
-ShroudManagerImpl008FBA40::ShroudManagerImpl008FBA40()
+ShroudManagerImpl::ShroudManagerImpl()
 	: mode(2),
 	  defaultCellSize(1.0f),
 	  width(0),
@@ -335,7 +335,7 @@ ShroudManagerImpl008FBA40::ShroudManagerImpl008FBA40()
 	configure(region, 1.0f);
 }
 
-ShroudManagerImpl008FBA40::~ShroudManagerImpl008FBA40()
+ShroudManagerImpl::~ShroudManagerImpl()
 {
 	while (nodes)
 		delete nodes;
@@ -343,7 +343,7 @@ ShroudManagerImpl008FBA40::~ShroudManagerImpl008FBA40()
 	delete[] elements;
 }
 
-void ShroudManagerImpl008FBA40::drainPending()
+void ShroudManagerImpl::drainPending()
 {
 	++unknown38;
 	while (pendingPartitionData)
@@ -356,7 +356,7 @@ void ShroudManagerImpl008FBA40::drainPending()
 	processPending(true);
 }
 
-void ShroudManagerImpl008FBA40::processPending(bool considerTimestamp)
+void ShroudManagerImpl::processPending(bool considerTimestamp)
 {
 	unsigned int compareTime = considerTimestamp
 		? (unsigned int)unknown38 : 0xffffffffu;
@@ -373,7 +373,7 @@ void ShroudManagerImpl008FBA40::processPending(bool considerTimestamp)
 	}
 }
 
-void ShroudManagerImpl008FBA40::updatePlayerCells008FB010(int playerIndex)
+void ShroudManagerImpl::updatePlayerCells008FB010(int playerIndex)
 {
 	if (playerIndex >= 0 && playerIndex < 16)
 	{
@@ -389,7 +389,7 @@ void ShroudManagerImpl008FBA40::updatePlayerCells008FB010(int playerIndex)
 	}
 }
 
-void ShroudManagerImpl008FBA40::updatePlayerCells008FB060(int playerIndex)
+void ShroudManagerImpl::updatePlayerCells008FB060(int playerIndex)
 {
 	if (playerIndex >= 0 && playerIndex < 16)
 	{
@@ -405,7 +405,7 @@ void ShroudManagerImpl008FBA40::updatePlayerCells008FB060(int playerIndex)
 	}
 }
 
-void ShroudManagerImpl008FBA40::reset()
+void ShroudManagerImpl::reset()
 {
 	Region3D emptyRegion;
 	emptyRegion.lo.zero();
@@ -416,7 +416,7 @@ void ShroudManagerImpl008FBA40::reset()
 	elements = new ShroudManagerImpl008FBA40Element[1];
 }
 
-void ShroudManagerImpl008FBA40::setRegion(const Region3D *newRegion, Real cellSize)
+void ShroudManagerImpl::setRegion(const Region3D *newRegion, Real cellSize)
 {
 	if (cellSize <= 0.0f)
 		cellSize = defaultCellSize;
@@ -428,7 +428,7 @@ void ShroudManagerImpl008FBA40::setRegion(const Region3D *newRegion, Real cellSi
 	}
 }
 
-void ShroudManagerImpl008FBA40::configure(Region3D newRegion, Real cellSize)
+void ShroudManagerImpl::configure(Region3D newRegion, Real cellSize)
 {
 	drainPending();
 
@@ -519,7 +519,7 @@ void ShroudManagerImpl008FBA40Element::adjustPlayerCounter008FC1F0(
 }
 
 void ShroudManagerImpl008FBA40Element::updatePlayerCells008FC450(
-	ShroudManagerImpl008FBA40 *manager, int playerIndex)
+	ShroudManagerImpl *manager, int playerIndex)
 {
 	ShroudManagerImpl008FBA40PlayerState &playerState =
 		playerStates[playerIndex];
@@ -542,7 +542,7 @@ void ShroudManagerImpl008FBA40Element::updatePlayerCells008FC450(
 }
 
 void ShroudManagerImpl008FBA40Element::updatePlayerCells008FC3B0(
-	ShroudManagerImpl008FBA40 *manager, int playerIndex)
+	ShroudManagerImpl *manager, int playerIndex)
 {
 	ShroudManagerImpl008FBA40PlayerState &playerState =
 		playerStates[playerIndex];
@@ -569,7 +569,7 @@ void ShroudManagerImpl008FBA40Element::updatePlayerCells008FC3B0(
 }
 
 void ShroudManagerImpl008FBA40Element::updatePlayerCells008FC300(
-	ShroudManagerImpl008FBA40 *manager, int playerIndex)
+	ShroudManagerImpl *manager, int playerIndex)
 {
 	ShroudManagerImpl008FBA40PlayerState &playerState =
 		playerStates[playerIndex];
@@ -595,7 +595,7 @@ void ShroudManagerImpl008FBA40Element::updatePlayerCells008FC300(
 	}
 }
 
-void ShroudManagerImpl008FBA40::doShroudReveal(Int cellX, Int cellY,
+void ShroudManagerImpl::doShroudReveal(Int cellX, Int cellY,
 	Int cellRadius, UnsignedInt playerMask)
 {
 	if (playerMask != 0 && cellRadius >= 0)
@@ -603,7 +603,7 @@ void ShroudManagerImpl008FBA40::doShroudReveal(Int cellX, Int cellY,
 			playerMask & 0xffff);
 }
 
-void ShroudManagerImpl008FBA40::undoShroudReveal(Int cellX, Int cellY,
+void ShroudManagerImpl::undoShroudReveal(Int cellX, Int cellY,
 	Int cellRadius, UnsignedInt playerMask)
 {
 	if (playerMask != 0 && cellRadius >= 0)
@@ -619,7 +619,7 @@ struct ShroudManagerImpl008FBA40ElementLayout
 };
 
 __forceinline ShroudManagerImpl008FBA40ElementLayout *shroudElementAt(
-	const ShroudManagerImpl008FBA40 *manager, Int x, Int y)
+	const ShroudManagerImpl *manager, Int x, Int y)
 {
 	if (x < 0 || x >= (Int)manager->width || y < 0 ||
 		y >= (Int)manager->height)
@@ -630,7 +630,7 @@ __forceinline ShroudManagerImpl008FBA40ElementLayout *shroudElementAt(
 }
 
 __declspec(noinline) CellShroudStatus
-ShroudManagerImpl008FBA40::getShroudStatusForPlayer(
+ShroudManagerImpl::getShroudStatusForPlayer(
 	Int playerIndex, Int x, Int y) const
 {
 	ShroudManagerImpl008FBA40ElementLayout *element =
@@ -645,7 +645,7 @@ ShroudManagerImpl008FBA40::getShroudStatusForPlayer(
 	return (CellShroudStatus)result;
 }
 
-ObjectShroudStatus ShroudManagerImpl008FBA40::getPropShroudStatusForPlayer(
+ObjectShroudStatus ShroudManagerImpl::GetPropShroudStatusForPlayer(
 	Int playerIndex, const Coord3D *loc) const
 {
 	if (playerIndex < 0 || playerIndex >= 16)
@@ -690,7 +690,7 @@ public:
 
 private:
 	char m_unmodelled_00[0x0C];
-	ShroudManagerImpl008FBA40 *m_impl;
+	ShroudManagerImpl *m_impl;
 };
 
 void PartitionManager::doShroudReveal(const Coord3D *position, Real radius,

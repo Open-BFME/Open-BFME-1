@@ -1,7 +1,7 @@
 // Fuzzy twin (tools/fuzzy_twin_scan.py) of CollisionManagerConstructor.cpp: retail
 // 0x008F7510 is the same SubsystemInterface+Snapshot constructor shape whose only
 // work is `m_data = new Impl` -- here the 0x70-byte object whose constructor is
-// the matched ??0ShroudManagerImpl008FBA40@@QAE@XZ, so this is the shroud
+// the matched ??0ShroudManagerImpl@@QAE@XZ, so this is the shroud
 // manager subsystem; its class name is not otherwise recovered.
 // cl: /DNDEBUG /MD /EHsc
 
@@ -29,10 +29,10 @@ public:
 	virtual void loadPostProcess() = 0;
 };
 
-class ShroudManagerImpl008FBA40
+class ShroudManagerImpl
 {
 public:
-	ShroudManagerImpl008FBA40();
+	ShroudManagerImpl();
 
 private:
 	unsigned char m_data[0x70];
@@ -51,10 +51,10 @@ public:
 	virtual void loadPostProcess();
 
 private:
-	ShroudManagerImpl008FBA40 *m_data;
+	ShroudManagerImpl *m_data;
 };
 
 Rva008F7510ShroudManager::Rva008F7510ShroudManager()
 {
-	m_data = new ShroudManagerImpl008FBA40;
+	m_data = new ShroudManagerImpl;
 }

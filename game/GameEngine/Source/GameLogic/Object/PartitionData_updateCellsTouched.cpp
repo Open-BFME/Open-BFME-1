@@ -129,7 +129,7 @@ public:
 	Int bfmeStepsEU(const BfmeShapeEU *shape);
 };
 
-class ShroudManagerImpl008FBA40
+class ShroudManagerImpl
 {
 public:
 	void doShroudReveal(Int x, Int y, Int radius, UnsignedInt value);
@@ -298,7 +298,7 @@ void PartitionData::updateCellsTouched()
 			Real range = m_object->slot0C(&m_revealValue);
 			m_revealRadius = (range < 0.0f) ? -1 : m_grid->worldToCellDist(range);
 			if (m_revealRadius >= 0)
-				reinterpret_cast<ShroudManagerImpl008FBA40 *>(m_grid)->doShroudReveal(
+				reinterpret_cast<ShroudManagerImpl *>(m_grid)->doShroudReveal(
 					cellX, cellY, m_revealRadius, m_revealValue);
 
 			for (i = 0; i < 2; ++i)

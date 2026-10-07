@@ -10,7 +10,7 @@
 // IDENTITY OF THIS PARTITION MANAGER METHOD IS NOT RECOVERED: its local
 // manager and implementation views remain address-derived. Their field
 // layout (mode@0, region@4, defaultCellSize@0x1C, inverseCellSize@0x20,
-// m_impl@0xC) matches ShroudManagerImpl008FBA40/PartitionManager exactly;
+// m_impl@0xC) matches ShroudManagerImpl/PartitionManager exactly;
 // the retail call target is ledger-matched as BfmeOwnerXO::bfmeSendXO.
 
 typedef float Real;
