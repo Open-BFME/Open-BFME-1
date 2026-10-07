@@ -2,7 +2,9 @@ typedef unsigned int UnsignedInt;
 typedef unsigned char Bool;
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
-void bfmeRefreshXE();
+// ILT 0x106B3 -> 0x0062E4F0, matched ?RefreshGameListBoxes@@YAXXZ (LobbyUtils.cpp).
+void RefreshGameListBoxes();
+static inline void bfmeRefreshXE() { RefreshGameListBoxes(); }
 
 class BfmeSpyXE
 {
