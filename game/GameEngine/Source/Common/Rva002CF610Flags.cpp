@@ -30,16 +30,28 @@ public:
 	int m_value;
 };
 
+enum UpdateSleepTime
+{
+	UPDATE_SLEEP_PLACEHOLDER = 0
+};
+
+// Retail calls 0x2AC7F -> 0x002CCEC0, the matched DockUpdate::update; this
+// body extends it (base-qualified, non-virtual call).
+class DockUpdate
+{
+public:
+	virtual UpdateSleepTime update();
+};
+
 class Rva002CF610
 {
 public:
 	int apply();
-	int inner();
 };
 
 int Rva002CF610::apply()
 {
-	int result = inner();
+	int result = reinterpret_cast<DockUpdate *>(this)->DockUpdate::update();
 	Object *obj = *(Object **)((char *)this - 8);
 	if (!(obj->m_flags & 0x800))
 	{

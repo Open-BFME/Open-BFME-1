@@ -400,38 +400,7 @@ void DockUpdate::setDockCrippled( Bool setting )
 	m_dockCrippled = setting;
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/DockUpdate_update_Thunk.cpp
-// ?update@DockUpdate@@UAE?AW4UpdateSleepTime@@XZ present-unmatched
-UpdateSleepTime DockUpdate::update()
-{
-	if( m_activeDocker == INVALID_ID  &&  !m_dockCrippled )
-	{
-		// if setDockCrippled has been called, I will never give enterance permission.
-		for( Int positionIndex = 0; positionIndex < m_approachPositionReached.size(); ++positionIndex )
-		{
-			if( m_approachPositionReached[positionIndex] )
-			{
-				m_activeDocker = m_approachPositionOwners[positionIndex];
-				return UPDATE_SLEEP_NONE;
-			}
-		}
-	}
-	else if ( getObject()->isKindOf( KINDOF_SUPPLY_SOURCE ) )
-	{
-		Object *docker = TheGameLogic->findObjectByID( m_activeDocker );
-		if ( docker && docker->isKindOf( KINDOF_DOZER ) && docker->isKindOf( KINDOF_HARVESTER ))// a worker 
-		{
-			ModelConditionFlags test;
-			test.set( MODELCONDITION_DOCKING_BEGINNING );
-			Drawable *dockerDraw = docker->getDrawable();
-			if ( dockerDraw && dockerDraw->getModelConditionFlags().anyIntersectionWith( test ) )
-				dockerDraw->clearModelConditionFlags( MAKE_MODELCONDITION_MASK(MODELCONDITION_MOVING) );
-		}
-	}
-
-
-	return UPDATE_SLEEP_NONE;
-}
+// DockUpdate::update: retail body matched in DockUpdateUpdateBfme.cpp.
 
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/DockUpdateComputeApproachPositionThunk.cpp
 // ?computeApproachPosition@DockUpdate@@IAE?AUCoord3D@@HPAVObject@@@Z present-unmatched
