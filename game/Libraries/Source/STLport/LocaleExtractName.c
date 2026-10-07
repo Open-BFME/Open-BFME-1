@@ -15,7 +15,9 @@ __declspec(dllimport) char *__cdecl strncpy(char *, const char *, size_t);
 #define LC_MAX 5
 #define _Locale_MAX_SIMPLE_NAME 256
 
-extern const char *__category_name[];
+/* Retail 0x012C8398, six pointers: c_locale_win32.c's category-name table,
+   indexed by the LC_* category this file range-checks. */
+const char *__category_name[] = {"LC_ALL", "LC_COLLATE", "LC_CTYPE", "LC_MONETARY", "LC_NUMERIC", "LC_TIME"};
 
 static const char *__Extract_locale_name(const char *loc, int category, char *buf)
 {

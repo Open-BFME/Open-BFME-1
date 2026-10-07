@@ -90328,3 +90328,9 @@ _Rva0015C280Predicate,0x0015C280,cdecl bool(State*;void*) condition callback; re
 ??_C@_04KJFGKBNM@quot?$AA@,0x00CE8CF4,Retail XML entity table VA 0x012B3ED0 slot 3 name pointer is VA 0x010E8CF4; full compiler literal quot including NUL equals retail and occurs once in the image
 ??_C@_04LBCJFAKL@apos?$AA@,0x00CE8CEC,Retail XML entity table VA 0x012B3ED0 slot 4 name pointer is VA 0x010E8CEC; full compiler literal apos including NUL equals retail and occurs once in the image
 ?method@Rva007710F0Owner@@QAEXPAX0@Z,0x0003A8D7,ILT to the 0x007710F0 body (gen-dump d_007710f0); the 0x00774060 forwarder calls ILT 0x0003A8D7 with this in ECX and two stack words; the target 0x007710F0 keeps this in EBP and returns with ret 8
+??_C@_06NEFDFEKB@LC_ALL?$AA@,0x00D2FCEC,Retail STLport category-name table VA 0x012C8398 slot +0x0; compiler string literal LC_ALL equals retail at VA 0x0112FCEC
+??_C@_0L@KFJHEKIK@LC_COLLATE?$AA@,0x00D2FCE0,Retail STLport category-name table VA 0x012C8398 slot +0x4; compiler string literal LC_COLLATE equals retail at VA 0x0112FCE0
+??_C@_08EADHIDAD@LC_CTYPE?$AA@,0x00D2FCD4,Retail STLport category-name table VA 0x012C8398 slot +0x8; compiler string literal LC_CTYPE equals retail at VA 0x0112FCD4
+??_C@_0M@MIENIKLA@LC_MONETARY?$AA@,0x00D2FCC8,Retail STLport category-name table VA 0x012C8398 slot +0xC; compiler string literal LC_MONETARY equals retail at VA 0x0112FCC8
+??_C@_0L@DLHIECNL@LC_NUMERIC?$AA@,0x00D2FCBC,Retail STLport category-name table VA 0x012C8398 slot +0x10; compiler string literal LC_NUMERIC equals retail at VA 0x0112FCBC
+??_C@_07LCBHPJJN@LC_TIME?$AA@,0x00D2FCB4,Retail STLport category-name table VA 0x012C8398 slot +0x14; compiler string literal LC_TIME equals retail at VA 0x0112FCB4
