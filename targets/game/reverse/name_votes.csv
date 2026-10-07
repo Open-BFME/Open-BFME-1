@@ -1023,3 +1023,10 @@ game/GameEngine/Source/Common/BfmeConv1947.cpp|type||BfmeKeyGenEQW,58104b2bafd39
 game/GameEngine/Source/Common/BfmeConv1947.cpp|member||m_bfmeSubEQW,006c7c9531f3c7c032f17f0f,grok,20261007193130-5744c6,2026-10-07
 game/GameEngine/Source/Common/BfmeConv1947.cpp|member||m_bfmeOwnerEQW,6aaa5eb76d1e04874a633469,grok,20261007193130-5744c6,2026-10-07
 game/GameEngine/Source/Common/BfmeConv1947.cpp|local|BfmeHostEQW::bfmeGoEQW|s_bfmeKeyEQW,3a098d9d9d9d41c813a767f0,grok,20261007193130-5744c6,2026-10-07
+game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|type||BfmeItemKV,5fcff39914c94bd7af049461,gpt-6-astra,20261007192744-0b7ceb,2026-10-07
+game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|type||BfmeMakerKV,c1b615c0359046be94551a70,gpt-6-astra,20261007192744-0b7ceb,2026-10-07
+game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|type||BfmeThingKV0016D780,34a4d4a6792db1f649a09aa5,gpt-6-astra,20261007192744-0b7ceb,2026-10-07
+game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|member||m_bfmeFirst,999b5292b4bdde7a6aab3bad,gpt-6-astra,20261007192744-0b7ceb,2026-10-07
+game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|member||m_bfmeSecond,c6a1b81b97412bc7495bfcf7,gpt-6-astra,20261007192744-0b7ceb,2026-10-07
+game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|member||m_bfmeMaker,10aa985028c5347d0fe41fd4,gpt-6-astra,20261007192744-0b7ceb,2026-10-07
+game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|member||m_bfmeHeld,a2681f6b14967c4117627178,gpt-6-astra,20261007192744-0b7ceb,2026-10-07
