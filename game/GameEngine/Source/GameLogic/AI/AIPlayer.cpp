@@ -112,11 +112,7 @@ m_curWarehouseID(INVALID_ID)
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/AIPlayerDestructorThunk.cpp
-// ??1AIPlayer@@MAE@XZ present-unmatched
-AIPlayer::~AIPlayer()
-{
-	clearTeamsInQueue();
-}
+// (retail 0x001613C0 is defined in AIPlayerQueueTeardown.cpp.)
 
 // ------------------------------------------------------------------------------------------------
 /** Invoked when a structure I am building is finished building. */
