@@ -6,6 +6,9 @@ typedef unsigned int WindowMsgData;
 typedef bool Bool;
 typedef int NameKeyType;
 
+// Retail keeps the window ids in .bss (0x012F3948): NAMEKEY_INVALID is 0.
+enum { NAMEKEY_INVALID = 0 };
+
 #define TRUE 1
 
 enum WindowMsgHandledType
@@ -97,11 +100,11 @@ public:
 typedef void (ScriptEngine::*SetDifficultyBonus)(int);
 
 static GameDifficulty s_AIDiff = DIFFICULTY_NORMAL;
-static NameKeyType buttonOkID = -1;
-static NameKeyType buttonCancelID = -1;
-static NameKeyType radioButtonEasyAIID = -1;
-static NameKeyType radioButtonMediumAIID = -1;
-static NameKeyType radioButtonHardAIID = -1;
+static NameKeyType buttonOkID = NAMEKEY_INVALID;
+static NameKeyType buttonCancelID = NAMEKEY_INVALID;
+static NameKeyType radioButtonEasyAIID = NAMEKEY_INVALID;
+static NameKeyType radioButtonMediumAIID = NAMEKEY_INVALID;
+static NameKeyType radioButtonHardAIID = NAMEKEY_INVALID;
 
 extern GameWindowManager *TheWindowManager;
 extern CampaignManager *TheCampaignManager;
