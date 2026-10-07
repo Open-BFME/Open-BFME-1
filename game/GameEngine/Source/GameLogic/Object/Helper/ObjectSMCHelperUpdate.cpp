@@ -49,9 +49,11 @@ public:
 class ModelConditionFlags
 {
 public:
-	bool test(int condition) const
+	// No inline test() member: other TUs' views emit their own
+	// ?test@ModelConditionFlags@@QBE_NH@Z COMDATs, none with a retail address.
+	friend bool smcHelperTestCondition(const ModelConditionFlags &flags, int condition)
 	{
-		return m_bits._Unchecked_test(condition);
+		return flags.m_bits._Unchecked_test(condition);
 	}
 
 	void reset(int condition)
@@ -164,7 +166,7 @@ UpdateSleepTime ObjectSMCHelper::update()
 		}
 		{
 			Object *object = m_object;
-			if (object->m_modelConditionFlags.test(condition))
+			if (smcHelperTestCondition(object->m_modelConditionFlags, condition))
 			{
 				object->m_modelConditionFlags.reset(condition);
 				(object->*u_notifyModelConditionChanged.call)();
