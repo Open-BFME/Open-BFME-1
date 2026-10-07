@@ -8,7 +8,7 @@
 
 class AIMoveToStateSA
 {
-protected:
+public:
 	virtual ~AIMoveToStateSA();
 
 private:
