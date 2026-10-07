@@ -397,70 +397,7 @@ void Shell::popImmediate( void )
 	* pushed on the stack, but it's already there (ie going from in game back to the
 	* pre-game shell menus */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/Shell_showShell_Thunk.cpp
-// ?showShell@Shell@@QAEX_N@Z present-unmatched
-void Shell::showShell( Bool runInit )
-{
-	DEBUG_LOG(("Shell:showShell() - %s (%s)\n", TheGlobalData->m_initialFile.str(), (top())?top()->getFilename().str():"no top screen"));
-
-	if(!TheGlobalData->m_initialFile.isEmpty())
-	{
-		return;
-	}
-	
-	// runInit is used if we want show shell to run 
-	if(runInit)
-	{
-		WindowLayout *layout = top();
-
-		if( layout )
-		{
-			layout->runInit( NULL );
-		//	layout->bringForward();
-		}
-	}
-	// @todo remove this hack
-//	TheGlobalData->m_inGame = FALSE;
-	// add in the background stuff
-
-//	if(TheGlobalData->m_shellMapOn)
-	//	{
-	//		if( top() )
-	//			top()->hide(TRUE);
-	//		m_background = TheWindowManager->winCreateLayout("Menus/BlankWindow.wnd");
-	//		DEBUG_ASSERTCRASH(m_background,("We Couldn't Load Menus/BlankWindow.wnd"));
-	//		m_background->hide(FALSE);
-	//		m_background->bringForward();
-	//		if (TheGameLogic->isInGame())
-	//				TheMessageStream->appendMessage( GameMessage::MSG_CLEAR_GAME_DATA );
-	//
-	//		TheGlobalData->m_pendingFile = TheGlobalData->m_shellMapName;
-	//		GameMessage *msg = TheMessageStream->appendMessage( GameMessage::MSG_NEW_GAME );
-	//		msg->appendIntegerArgument(GAME_SHELL);
-	//	}
-	//	else
-	//	{
-	//		
-	//		m_background = TheWindowManager->winCreateLayout("Menus/BlankWindow.wnd");
-	//		
-	//		DEBUG_ASSERTCRASH(m_background,("We Couldn't Load Menus/BlankWindow.wnd"));
-	//		m_background->hide(FALSE);
-	//		if (top())
-	//			top()->bringForward();
-	//		
-	//	}
-	
-
-	if (!TheGlobalData->m_shellMapOn && m_screenCount == 0)
-  {
-#ifdef _PROFILE
-    Profile::StopRange("init");
-#endif
-	//else
-		TheShell->push( AsciiString("Menus/MainMenu.wnd") );
-  }
-	m_isShellActive = TRUE;
-}  // end showShell
+// Shell::showShell: retail body (0x00580150) in Shell_showShell_Thunk.cpp.
 
 // byte-exact reconstruction: game/GameEngine/Source/Common/Shell_showShellMapMethodThunk.cpp
 // ?showShellMap@Shell@@QAEX_N@Z present-unmatched
