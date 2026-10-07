@@ -5,7 +5,12 @@ typedef int (__cdecl *Rva002ED7E0Lookup)(void *entry, void *key);
 
 // The slot is MSVCR71's _strcmpi import (VA 0x0135933C).
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *, const char *);
-extern void *g_012AA008[];
+// Retail VA 0x012AA008, 24 bytes: null-terminated side-name table
+// (ROHAN, GONDOR, MORDOR, ISENGARD, NEUTRAL, 0) read by the lookup below.
+void *g_012AA008[] = {
+	(void *)"ROHAN", (void *)"GONDOR", (void *)"MORDOR",
+	(void *)"ISENGARD", (void *)"NEUTRAL", 0
+};
 
 #define Rva002ED7E0LookupSlot ((Rva002ED7E0Lookup)_strcmpi)
 
