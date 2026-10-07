@@ -4,9 +4,9 @@
 // 0x0109C3DC / ctor 0x001AB600 / dtor 0x001ABA80 with the banked
 // Waypoint::~Waypoint() (targets/game/reverse/attempts/0x001aba80.cpp, score 0.97),
 // whose recovered layout (m_pathLabel1/2/3 at +0x50/+0x54/+0x58, class ends
-// at +0x68) this body continues past. The method name itself is unproven
-// (no caller, string, or declaration names it), so it stays address-derived
-// on the proven class.
+// at +0x68) this body continues past. EA's name is Waypoint::isValidUnitType
+// (targets/game/reverse/identity_evidence/ea-worldbuilder-labels.md); the ILT
+// oracle fits only the const decoration taking a const Object*.
 //
 // Behavior: takes an Object* argument (the stack arg), gates on two
 // KindOfType include/exclude masks (m_68/m_6c include, m_84/m_88 exclude,
@@ -63,7 +63,7 @@ extern GameLogic *TheGameLogic;	// 0x012F0898
 class Waypoint
 {
 public:
-	Bool method001ABBB0(Object *obj);
+	Bool isValidUnitType(const Object *obj) const;
 
 private:
 	unsigned char m_pad00[0x68];
@@ -79,7 +79,7 @@ private:
 	int m_frameThreshold;		// +0xac
 };
 
-Bool Waypoint::method001ABBB0(Object *obj)
+Bool Waypoint::isValidUnitType(const Object *obj) const
 {
 	if (m_hasInclude && !obj->isAnyKindOf(*(const BitFlags<116> *)m_includeMask))
 		return false;
