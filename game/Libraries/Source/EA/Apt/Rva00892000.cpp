@@ -7,7 +7,7 @@
 // Retail loads at +0x00 and +0x19 both read VA 0x013377D8, the
 // verified g_bfmeHolderBU pointer owned by BfmePicker1284.cpp.
 
-class BfmeThingHH
+class AptAnimationPoolData
 {
 public:
     void bfmeClearHH();
@@ -30,7 +30,7 @@ void Rva00892000()
     if (g_bfmeHolderBU == 0)
         return;
 
-    reinterpret_cast<BfmeThingHH *>(g_bfmeHolderBU)->bfmeClearHH();
+    reinterpret_cast<AptAnimationPoolData *>(g_bfmeHolderBU)->bfmeClearHH();
     Rva00897110ArenaReadyThunk();
     reinterpret_cast<BfmeSubF1038 *>(reinterpret_cast<char *>(g_bfmeHolderBU) + 0x122C)->bfmeAdd1038(g_bfmeB1038, 0);
     g_bfmeArenaCursor -= 0x60;

@@ -5,7 +5,7 @@ class Rva008A0E00Owner { public: int remove(void *); };
 class BfmeRef008A4B20;
 class BfmePtrTable64_008A4B20 { public: int remove(BfmeRef008A4B20 *); };
 class BfmeItemHH;
-class BfmeThingHH { public: void bfmeRemoveHH(BfmeItemHH *); };
+class AptAnimationPoolData { public: void removeFromBIL(BfmeItemHH *); };
 class BfmeNode1220 { public: int bfmeTest1220(int *,int); };
 class BfmeNodeDX { public: void bfmeEmit1281(int,void *,int); };
 class BfmeD1046 { public: void bfmeReset1046(int); };
@@ -73,7 +73,7 @@ void Rva008C3F10Value::cleanup(char mode) {
     ((BfmePtrTable64_008A4B20 *)((char *)g_manager013377D8+0x820))->remove((BfmeRef008A4B20 *)this);
     if (g_byte0133781C)
         ((BfmePtrTable64_008A4B20 *)((char *)g_manager013377D8+0x924))->remove((BfmeRef008A4B20 *)this);
-    ((BfmeThingHH *)g_manager013377D8)->bfmeRemoveHH((BfmeItemHH *)this);
+    ((AptAnimationPoolData *)g_manager013377D8)->removeFromBIL((BfmeItemHH *)this);
     for (int i=0;i<g_manager013377D8->field10;++i) {
         if (g_manager013377D8->field0C[i]==this) {
             g_manager013377D8->field0C[i]->slot04();

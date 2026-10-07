@@ -53,11 +53,11 @@ struct BfmeSlotHH
 	unsigned char m_bfmeBody[0x18];		// 0x04
 };
 
-class BfmeThingHH
+class AptAnimationPoolData
 {
 public:
 	void bfmeClearHH(void);
-	void bfmeRemoveHH(BfmeItemHH *item);
+	void removeFromBIL(BfmeItemHH *item);
 
 private:
 	unsigned char m_bfmeHead[0x818];	// 0x000
@@ -65,7 +65,7 @@ private:
 	BfmeSlotHH *m_bfmeSlots;		// 0x81c
 };
 
-void BfmeThingHH::bfmeClearHH(void)
+void AptAnimationPoolData::bfmeClearHH(void)
 {
 	for (int i = 0; i < m_bfmeCount; ++i)
 		m_bfmeSlots[i].m_bfmeItem->bfmeDoHH();
@@ -73,7 +73,7 @@ void BfmeThingHH::bfmeClearHH(void)
 	m_bfmeCount = 0;
 }
 
-void BfmeThingHH::bfmeRemoveHH(BfmeItemHH *item)
+void AptAnimationPoolData::removeFromBIL(BfmeItemHH *item)
 {
 	int i = 0;
 	if (m_bfmeCount - 1 < 0)
