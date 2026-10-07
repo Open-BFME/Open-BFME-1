@@ -186,6 +186,7 @@ template<> CategoryModuleTemplate<5>::~CategoryModuleTemplate();
 // CategoryModuleTemplateNNDestructorThunk.cpp TUs; declare them here so the
 // explicit instantiations below do not emit the header's empty body.
 template<> CategoryModuleTemplate<2>::~CategoryModuleTemplate();
+template<> CategoryModuleTemplate<6>::~CategoryModuleTemplate();
 
 template class CategoryModuleInfo<0>;
 template class CategoryModuleInfo<1>;

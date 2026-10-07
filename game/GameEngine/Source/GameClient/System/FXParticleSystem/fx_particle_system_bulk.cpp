@@ -519,6 +519,10 @@ extern FXListStore *TheFXListStore;
 
 namespace FXParticleSystem {
 
+// CategoryModuleTemplate<6>'s destructor (0x005BFDD0) is defined in
+// CategoryModuleTemplate06DestructorThunk.cpp.
+template<> CategoryModuleTemplate<6>::~CategoryModuleTemplate();
+
 void writeDrawTemplateBase(const void *self, File &file, const unsigned int *flags);
 void writeDrawInfo(File &file, const unsigned int *flags);
 

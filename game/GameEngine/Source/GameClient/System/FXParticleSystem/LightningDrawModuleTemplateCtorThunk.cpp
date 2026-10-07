@@ -37,7 +37,8 @@ class CategoryModuleTemplate : public CategoryModuleTemplateBase<Category>
 {
 public:
     CategoryModuleTemplate() {}
-    virtual ~CategoryModuleTemplate() {}
+    // Defined out of line (CategoryModuleTemplate06DestructorThunk.cpp for <6>).
+    virtual ~CategoryModuleTemplate();
 };
 
 class LightningDrawModuleInfo
