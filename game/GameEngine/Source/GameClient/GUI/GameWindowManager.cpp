@@ -284,55 +284,8 @@ static Bool sendMousePosMessages = TRUE;
 //-------------------------------------------------------------------------------------------------
 /** Process windows waiting to be destroyed */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/GameWindowManager_processDestroyList.cpp
-// ?processDestroyList@GameWindowManager@@IAEXXZ present-unmatched
-void GameWindowManager::processDestroyList( void )
-{
-	GameWindow *next;
-	GameWindow *doDestroy;
-
-	//
-	// we need to pass the ownership of the destroy list so
-	// if, while destroying a window, we need to add other windows
-	// to the destroy list it won't cause problems.
-	//
-	doDestroy = m_destroyList;
-
-	// set the list to empty
-	m_destroyList = NULL;
-
-	// do the destroys
-	for( ; doDestroy; doDestroy = next )
-	{
-
-		next = doDestroy->m_next;
-
-		// Check to see if this window is "special"
-		if( m_mouseCaptor == doDestroy )
-			winRelease( doDestroy );
-
-		if( m_keyboardFocus == doDestroy )
-			winSetFocus( NULL );
-
-		if( (m_modalHead != NULL) && (doDestroy == m_modalHead->window) )
-			winUnsetModal( m_modalHead->window );
-
-		if( m_currMouseRgn == doDestroy )
-			m_currMouseRgn = NULL;
-
-		if( m_grabWindow == doDestroy )
-			m_grabWindow = NULL;
-
-		// send the destroy message to the window we're about to kill
-		winSendSystemMsg( doDestroy, GWM_DESTROY, 0, 0 );
-
-		// free the memory
-		if (doDestroy)
-			doDestroy->deleteInstance();
-
-	}  // end for
-
-}  // end processDestroyList
+// GameWindowManager::processDestroyList: retail body (0x0047C0E0) in
+// GameWindowManager_processDestroyList.cpp.
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////////////////////////
