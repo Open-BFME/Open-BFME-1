@@ -349,22 +349,8 @@ Render2DSentenceClass::Reset_Sentence_Data (void)
 //	Release_Pending_Surfaces
 //
 ////////////////////////////////////////////////////////////////////////////////////
-void
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WW3D2/Render2DSentenceClass_Release_Pending_Surfaces.cpp
-// ?Release_Pending_Surfaces@Render2DSentenceClass@@AAEXXZ present-unmatched
-Render2DSentenceClass::Release_Pending_Surfaces (void)
-{
-	//
-	//	Release our hold on each pending surface
-	//
-	for (int index = 0; index < PendingSurfaces.Count (); index ++) {		
-		SurfaceClass *curr_surface = PendingSurfaces[index].Surface;
-		REF_PTR_RELEASE (curr_surface);
-	}
-
-	if (PendingSurfaces.Count()>0) PendingSurfaces.Delete_All ();
-	return; 
-}
+// Render2DSentenceClass::Release_Pending_Surfaces: retail body lives in
+// Render2DSentenceClass_Release_Pending_Surfaces.cpp.
 
 
 ////////////////////////////////////////////////////////////////////////////////////
