@@ -1179,30 +1179,7 @@ void MeshClass::Update_Cached_Bounding_Volumes(void) const
 }
 
 
-// This utility function recurses throughout the subobjects of a renderobject, and for each
-// MeshClass it finds it sets the given MeshModel flag on its model. This is useful for stuff
-// like making a RenderObjects' polys sort.
-void Set_MeshModel_Flag(RenderObjClass *robj, int flag, int onoff)
-{
-	if (robj->Class_ID() == RenderObjClass::CLASSID_MESH) {
-		// Set flag on model (the assumption is that meshes don't have subobjects)
-		MeshClass *mesh = (MeshClass *)robj;
-		MeshModelClass *model = mesh->Get_Model();
-		model->Set_Flag((MeshModelClass::FlagsType)flag, onoff != 0);
-		model->Release_Ref();
-	} else {
-		// Recurse to subobjects (if any)
-		int num_obj = robj->Get_Num_Sub_Objects();
-		RenderObjClass *sub_obj;
-		for (int i = 0; i < num_obj; i++) {
-			sub_obj = robj->Get_Sub_Object(i);
-			if (sub_obj) {
-				Set_MeshModel_Flag(sub_obj, flag, onoff);
-				sub_obj->Release_Ref();
-			}
-		}
-	}
-}
+// Set_MeshModel_Flag: retail 0x0092D390, SetMeshModelFlag.cpp.
 
 // ?MeshClass::Get_Sort_Level present-unmatched
 int MeshClass::Get_Sort_Level(void) const
