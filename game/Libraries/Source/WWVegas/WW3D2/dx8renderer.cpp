@@ -2054,22 +2054,11 @@ __declspec(noinline) void Add_Rigid_Mesh_To_Container(FVFCategoryList *container
 
 // ----------------------------------------------------------------------------
 
-// ?Unregister_Mesh_Type@DX8MeshRendererClass@@QAEXPAVMeshModelClass@@@Z present-unmatched
-void DX8MeshRendererClass::Unregister_Mesh_Type(MeshModelClass* mmc)
-{
-	while (DX8PolygonRendererClass* n=mmc->PolygonRendererList.Remove_Head()) {
-		delete n;
-	}
-	_RegisteredMeshList.Remove(mmc);
-
-	// Also remove the gap filler!
-	if (mmc->GapFiller) {
-		GapFillerClass* gf=mmc->GapFiller;
-		mmc->GapFiller=NULL;
-		delete gf;
-	}
-
-}
+// DX8MeshRendererClass::Unregister_Mesh_Type: the retail body (0x00945F20)
+// lives in DX8MeshRendererUnregisterMeshTypeBFME.cpp.
+// Its ZH copy here was the only user of MultiListClass<MeshModelClass>::Remove
+// (matched at 0x00942E30), so instantiate that member explicitly.
+template bool MultiListClass<MeshModelClass>::Remove(MeshModelClass *);
 
 
 // NOTE ?Register_Mesh_Type@DX8MeshRendererClass@@QAEXPAVMeshModelClass@@@Z
