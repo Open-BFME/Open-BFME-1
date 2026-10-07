@@ -633,9 +633,9 @@ public: \
 // body includes
 #include "GameLogic/Module/InactiveBody.h"
 #include "GameLogic/Module/ActiveBody.h"
-#include "GameLogic/Module/HighlanderBody.h"
-// ImmortalBody's factory hook is the retail-proven strong body at 0x0011F530
-// (ImmortalBodyFriendNewModuleInstanceThunk.cpp); only declare it here so this
+// HighlanderBody's (0x0011F4B0, HighlanderBodyFriendNewModuleInstanceThunk.cpp)
+// and ImmortalBody's (0x0011F530, ImmortalBodyFriendNewModuleInstanceThunk.cpp)
+// factory hooks are retail-proven strong bodies; only declare it here so this
 // TU does not emit a second, non-retail copy.
 #pragma push_macro("MAKE_STANDARD_MODULE_MACRO")
 #undef MAKE_STANDARD_MODULE_MACRO
@@ -647,6 +647,7 @@ protected: \
 	virtual void crc( Xfer *xfer ); \
 	virtual void xfer( Xfer *xfer ); \
 	virtual void loadPostProcess( void );
+#include "GameLogic/Module/HighlanderBody.h"
 #include "GameLogic/Module/ImmortalBody.h"
 #pragma pop_macro("MAKE_STANDARD_MODULE_MACRO")
 #include "GameLogic/Module/StructureBody.h"
