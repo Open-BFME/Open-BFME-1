@@ -1,25 +1,24 @@
-class BfmeOtherDPG
-{
-	unsigned char m_bfmeHead[4];
-};
+// cl: /Igame/Libraries/Source/WWVegas/WWLib
+// The member at +0x30 is a WinInstanceData: retail 0x00479B80 calls
+// WinInstanceData::getText (0x00479B00, via ILT 0x000424D3) and returns its
+// UnicodeString through the hidden return pointer.
+#include "unicode_string.h"
 
-class BfmeSubDPG
+class WinInstanceData
 {
 public:
-	void bfmeCallDPG(BfmeOtherDPG *other);
+	UnicodeString getText();
 };
 
 class BfmeThingDPG
 {
 public:
-	BfmeOtherDPG *bfmeGoDPG(BfmeOtherDPG *other);
+	UnicodeString bfmeGoDPG();
 	unsigned char m_bfmeHead[0x30];
-	BfmeSubDPG m_bfmeSub;
+	WinInstanceData m_bfmeSub;
 };
 
-BfmeOtherDPG *BfmeThingDPG::bfmeGoDPG(BfmeOtherDPG *other)
+UnicodeString BfmeThingDPG::bfmeGoDPG()
 {
-	volatile int tmp = 0;
-	m_bfmeSub.bfmeCallDPG(other);
-	return other;
+	return m_bfmeSub.getText();
 }
