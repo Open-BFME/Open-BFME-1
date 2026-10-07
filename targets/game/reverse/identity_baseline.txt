@@ -36,7 +36,7 @@ multi_name.different = 0
 size_outlier.indicted = 1
 ctor_vtable.contradicted = 20
 ctor_vtable.unreadable = 0
-one_identity.surplus = 2228
+one_identity.surplus = 2226
 # Retail registration proves DynamicPortalBehaviour owns ctor 001F8B80 and factory 001156B0; four false aliases retired.
 # fcf825b4f7 retired the false FXNugget zero-store claim; the body still has aliases.
 # 4c8346b3c9 retired the GDIFileStream ctor over-claim at 0x00087A50 (a zero-store body).
@@ -458,7 +458,6 @@ null_reloc.max_unreadable = 1000
 @ one_identity.surplus 0x0010BDB0 ?Get_Buffer@Buffer@@QBEPAXXZ
 @ one_identity.surplus 0x0010BDB0 ?Get_CRC@TagBlockIndex@@QAEIXZ
 @ one_identity.surplus 0x0010BDB0 ?Get_Current_Allocated_Memory@MemoryCounterClass@@QAEHXZ
-@ one_identity.surplus 0x0010BDB0 ?Get_Device_Name@RenderDeviceDescClass@@QBEPBDXZ
 @ one_identity.surplus 0x0010BDB0 ?Get_FVF@FVFInfoClass@@QBEIXZ
 @ one_identity.surplus 0x0010BDB0 ?Get_Hash@?$HashTemplateClass@IPAVMeshClass@@@@QAEPAHXZ
 @ one_identity.surplus 0x0010BDB0 ?Get_Hash@?$HashTemplateClass@VStringClass@@PAV?$DynamicVectorClass@PAVDefinitionClass@@@@@@QAEPAHXZ
@@ -2516,7 +2515,6 @@ null_reloc.max_unreadable = 1000
 @ one_identity.surplus 0x00907320 ??4?$DynamicVectorClass@VKeyClass@Curve1DClass@@@@QAEAAV0@ABV0@@Z
 @ one_identity.surplus 0x00907320 ??4?$DynamicVectorClass@VKeyClass@Curve3DClass@@@@QAEAAV0@ABV0@@Z
 @ one_identity.surplus 0x00907320 ??4?$DynamicVectorClass@VProxyClass@@@@QAEAAV0@ABV0@@Z
-@ one_identity.surplus 0x00907320 ??4?$DynamicVectorClass@VResolutionDescClass@@@@QAEAAV0@ABV0@@Z
 @ one_identity.surplus 0x00907320 ??4?$DynamicVectorClass@VStringClass@@@@QAEAAV0@ABV0@@Z
 @ one_identity.surplus 0x00907320 ??4?$DynamicVectorClass@VTangentsClass@HermiteSpline3DClass@@@@QAEAAV0@ABV0@@Z
 @ one_identity.surplus 0x00907440 ??0?$DynamicVectorClass@H@@QAE@IPBH@Z

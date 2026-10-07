@@ -77,22 +77,10 @@ public:
 	{
 	}
 
-	RenderDeviceDescClass & operator = (const RenderDeviceDescClass & src) 
-	{
-		set_device_name(src.Get_Device_Name());
-		set_device_vendor(src.Get_Device_Vendor());
-		set_device_platform(src.Get_Device_Platform());
-		set_driver_name(src.Get_Driver_Name());
-		set_driver_vendor(src.Get_Driver_Vendor());
-		set_driver_version(src.Get_Driver_Version());
-		set_hardware_name(src.Get_Hardware_Name());
-		set_hardware_vendor(src.Get_Hardware_Vendor());
-		set_hardware_chipset(src.Get_Hardware_Chipset());
-		Caps=src.Caps;
-		AdapterIdentifier=src.AdapterIdentifier;
-		ResArray = src.ResArray;
-		return *this;
-	}	
+	// Out of line in BFME: retail keeps one body at 0x009078A0
+	// (RenderDeviceDescClass_assign_Thunk.cpp); an inline body here made
+	// dxwrapper.obj emit a second, non-retail copy.
+	RenderDeviceDescClass & operator = (const RenderDeviceDescClass & src);
 
 	bool operator == (const RenderDeviceDescClass & /*src*/) { return false; }
 	bool operator != (const RenderDeviceDescClass & /*src*/) { return true; }
