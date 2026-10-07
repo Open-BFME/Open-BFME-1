@@ -3143,59 +3143,6 @@ Bool AIUpdateInterface::canComputeQuickPath( void )
 	return unitIsFlyingThroughTheAir;
 }
 
-//-------------------------------------------------------------------------------------------------
-/**
- * Create a quick path.  (Just places the start & end point as the path). jba.
- */
-// ?computeQuickPath@AIUpdateInterface@@ present-unmatched
-Bool AIUpdateInterface::computeQuickPath( const Coord3D *destination )
-{
-	// for now, quick path objects don't pathfind, generally airborne units
-	// build a trivial one-node path containing destination
-
-	
-	// First, see if our path already goes to the destination.
-	if (m_path) {
-		PathNode *closeNode = NULL;
-		closeNode = m_path->getLastNode();
-		if (closeNode && closeNode->getNextOptimized()==NULL) {
-			Real dxSqr = destination->x - closeNode->getPosition()->x;
-			dxSqr *= dxSqr;
-			Real dySqr = destination->y - closeNode->getPosition()->y;
-			dySqr *= dySqr;
-			Real dzSqr = destination->z - closeNode->getPosition()->z;
-			dzSqr *= dzSqr;
-			if (dxSqr+dySqr+dzSqr<0.25f) {
-				return TRUE;
-			}
-		}
-	}
-	// destroy previous path
-	destroyPath();
-	if (getObject()->isKindOf(KINDOF_AIRCRAFT) && !getObject()->isKindOf(KINDOF_PROJECTILE)) {	
-		m_path = TheAI->pathfinder()->getAircraftPath(getObject(), destination);
-	} else {
-		m_path = newInstance(Path);
-		m_path->prependNode( destination, LAYER_GROUND );
-		Coord3D pos = *getObject()->getPosition();
-		pos.z = destination->z;
-		m_path->prependNode( &pos, getObject()->getLayer() );
-		m_path->getFirstNode()->setNextOptimized(m_path->getFirstNode()->getNext());
-
-		if (TheGlobalData->m_debugAI==AI_DEBUG_PATHS) 
-		{
-			TheAI->pathfinder()->setDebugPath(m_path);
-		}
-	}
-
-
-	// timestamp when the path was created
-	m_pathTimestamp = TheGameLogic->getFrame();
-
-	m_blockedFrames = 0;
-	m_isBlockedAndStuck = FALSE;
-	return TRUE;
-}
 
 //-------------------------------------------------------------------------------------------------
 /**
