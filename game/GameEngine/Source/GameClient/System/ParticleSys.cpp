@@ -2477,38 +2477,7 @@ void ParticleSystemManager::init( void )
 // ------------------------------------------------------------------------------------------------
 /** Reset the manager and all particle systems */
 // ------------------------------------------------------------------------------------------------
-// ?reset@ParticleSystemManager@@UAEXXZ present-unmatched
-void ParticleSystemManager::reset( void )
-{
-	while (getParticleSystemCount()) {
-		if (m_allParticleSystemList.front()) {
-			m_allParticleSystemList.front()->deleteInstance();
-		}
-	}
-
-	// sanity, our lists must be empty!!
-	for( Int i = 0; i < NUM_PARTICLE_PRIORITIES; ++i )
-	{
-
-		// sanity		
-		DEBUG_ASSERTCRASH( m_allParticlesHead[ i ] == NULL, ("RESET: ParticleSystem all particles head[%d] is not NULL!\n", i) );
-		DEBUG_ASSERTCRASH( m_allParticlesTail[ i ] == NULL, ("RESET: ParticleSystem all particles tail[%d] is not NULL!\n", i) );
-
-		// just to be clean set them to NULL
-		m_allParticlesHead[ i ] = NULL;
-		m_allParticlesTail[ i ] = NULL;
-
-	}  // end for, i
-
-	m_particleCount = 0;
-	m_fieldParticleCount = 0;
-	m_particleSystemCount = 0;
-
-	m_uniqueSystemID = INVALID_PARTICLE_SYSTEM_ID;
-	
-	m_lastLogicFrameUpdate = -1;
-	// leave templates as-is
-}
+// ParticleSystemManager::reset: retail body in ParticleSystemManagerReset.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** Update all particle systems */
