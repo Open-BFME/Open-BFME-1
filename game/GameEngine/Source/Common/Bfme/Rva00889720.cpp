@@ -4,8 +4,13 @@ extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection( void* );
 extern "C" __declspec(dllimport) void __stdcall InterlockedDecrement( void* );
 extern "C" __declspec(dllimport) void __stdcall ReleaseMutex( void* );
 
-struct BfmeCsDWA;
-extern BfmeCsDWA g_bfmeCsDWC;
+// The CRITICAL_SECTION this body leaves: zero-filled .bss at VA 0x01336E60
+// (dir32_addresses.csv). Defined once here.
+struct BfmeCsDWA
+{
+	char m_criticalSection[24];
+};
+BfmeCsDWA g_bfmeCsDWC;
 
 class Rva00889720Class
 {
