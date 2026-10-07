@@ -3,11 +3,13 @@ extern "C" char* __cdecl strcpy(char*, const char*);
 extern "C" unsigned int __cdecl strlen(const char*);
 extern "C" char* __cdecl strcat(char*, const char*);
 #pragma intrinsic(strcpy, strlen, strcat)
-extern char Rva009C8600Path[];
+// The 256-byte path prefix at retail VA 0x0134CB50 (.bss, up to
+// TheArchiveFileSystem at 0x0134CC50); FileSystem_openFile.cpp reads it.
+char byte_134CB50[256];
 void setPathWithSlash(const char* path)
 {
-	strcpy(Rva009C8600Path, path);
-	int n = strlen(Rva009C8600Path);
-	if (n > 0 && Rva009C8600Path[n - 1] != '\\' && Rva009C8600Path[n - 1] != '/')
-		strcat(Rva009C8600Path, "\\");
+	strcpy(byte_134CB50, path);
+	int n = strlen(byte_134CB50);
+	if (n > 0 && byte_134CB50[n - 1] != '\\' && byte_134CB50[n - 1] != '/')
+		strcat(byte_134CB50, "\\");
 }
