@@ -130,6 +130,8 @@ class AIAttackSwoopThenIdleStateMachine : public StateMachine
 {
 public:
 	AIAttackSwoopThenIdleStateMachine( void *owner, AsciiString name );
+	// out of line: retail's complete dtor is the 11-byte body at 0x002BBAC0
+	virtual ~AIAttackSwoopThenIdleStateMachine();
 };
 
 // Native C++ virtual construction emits the outer vptr; no literal vptr write.
