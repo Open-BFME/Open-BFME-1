@@ -8,19 +8,20 @@ class Object;
 class WeaponBonus
 {
 public:
-	WeaponBonus()
-	{
-		m_fields[0] = 1.0f;
-		m_fields[1] = 1.0f;
-		m_fields[2] = 1.0f;
-		m_fields[3] = 1.0f;
-		m_fields[4] = 1.0f;
-		m_fields[5] = 1.0f;
-	}
-
-private:
 	Real m_fields[6];
 };
+
+// WeaponBonus's constructor, inlined here; a file-static helper so this TU
+// does not emit its own ??0WeaponBonus COMDAT beside Weapon.cpp's.
+static inline void initWeaponBonus(WeaponBonus &bonus)
+{
+	bonus.m_fields[0] = 1.0f;
+	bonus.m_fields[1] = 1.0f;
+	bonus.m_fields[2] = 1.0f;
+	bonus.m_fields[3] = 1.0f;
+	bonus.m_fields[4] = 1.0f;
+	bonus.m_fields[5] = 1.0f;
+}
 
 class WeaponTemplate
 {
@@ -46,6 +47,7 @@ private:
 Real Weapon::getAttackRange(const Object *source, Real heightDifference) const
 {
 	WeaponBonus bonus;
+	initWeaponBonus(bonus);
 	computeBonus(source, 0, bonus);
 	return m_template->bfmeRangeBase(source, bonus, heightDifference);
 }
