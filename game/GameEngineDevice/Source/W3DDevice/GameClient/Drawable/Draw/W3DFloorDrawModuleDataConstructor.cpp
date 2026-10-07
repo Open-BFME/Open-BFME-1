@@ -16,8 +16,6 @@ public:
 	W3DFloorDrawModuleDataBase();
 	virtual ~W3DFloorDrawModuleDataBase();
 
-	virtual void moduleDataAnchor();
-
 private:
 	unsigned char m_unmodelled_04[8];
 };
