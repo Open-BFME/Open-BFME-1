@@ -18,8 +18,8 @@
 // names x twice. It is a typo in the original, and BFME kept it: m_size.y at
 // +0x10 is never written, which is exactly what retail does.
 //
-// The string member is cleared through StringBase<char>::clear, which the
-// ledger already places at 0x00887940 folded with releaseBuffer, and the
+// The string member is cleared through 0x00887940, which the ledger names
+// StringBase<char>::releaseBuffer (callees.py), and the
 // unwind state around it is there to destroy that member if it throws.
 
 typedef int Int;
@@ -40,9 +40,9 @@ public:
 	StringBase(void) : m_data(0) {}
 	~StringBase(void) { releaseBuffer(); }
 
-	void clear(void);					// retail 0x00887940
-
 private:
+	friend class ShellMenuSchemeImage;
+
 	void releaseBuffer(void);				// retail 0x00887940
 
 	T *m_data;
@@ -63,7 +63,7 @@ public:
 // ??0ShellMenuSchemeImage@@QAE@XZ
 ShellMenuSchemeImage::ShellMenuSchemeImage(void)
 {
-	m_name.clear();
+	m_name.releaseBuffer();
 	m_position.x = m_position.y = 0;
 	m_size.x = m_size.x = 0;
 	m_image = 0;
