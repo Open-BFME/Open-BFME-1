@@ -3,7 +3,9 @@
 #define Matrix4x4 Matrix4
 #define __PLACEMENT_VEC_NEW_INLINE
 
-#include "W3DDevice/GameClient/TerrainTex.h"
+#include "WW3D2/Texture.h"
+#include "WWMATH/Matrix3d.h"
+#include "common/AsciiString.h"
 #include "W3DDevice/GameClient/WorldHeightMap.h"
 #include "W3DDevice/GameClient/TileData.h"
 #include "WW3D2/dx8wrapper.h"
@@ -137,7 +139,10 @@ static __forceinline void BFME_DX8_ErrorCode(int result)
 	}
 }
 
-// Retail 0x006D5B10. The landed caller WorldHeightMap::rva0074C690 names it:
+// Retail 0x006D5B10 is EA's TerrainTextureClass::updateCliff (ea_evidence.csv,
+// chain/strong; the ILT oracle confirms the int-returning spelling). Zero
+// Hour's TerrainTex.h has no updateCliff, so this TU declares the class itself.
+// The landed caller WorldHeightMap::rva0074C690 reaches it:
 // it builds an Rva006D5280 texture and calls this through ILT 0x0002279B with
 // the source tile array, the slot's first tile, its tile count and its cell
 // width. The body is the 64-pixel-per-cell sibling of the flat update at
@@ -149,10 +154,10 @@ static __forceinline void BFME_DX8_ErrorCode(int result)
 // The return type is Int, not the void the caller's own declaration uses:
 // retail loads surface_desc.Height into EAX on the way out.
 
-class Rva006D5280 : public TextureClass
+class TerrainTextureClass : public TextureClass
 {
 public:
-	Int update(TileData **tiles, Int firstTile, Int tileCount, Int cellWidth);
+	Int updateCliff(TileData **tiles, Int firstTile, Int tileCount, Int cellWidth);
 };
 
 struct Rva006D5B10SurfaceStorage
@@ -160,14 +165,14 @@ struct Rva006D5B10SurfaceStorage
 	Rva006D53A0SurfaceDesc desc;
 };
 
-// ?update@Rva006D5280@@QAEHPAPAVTileData@@HHH@Z
-Int Rva006D5280::update(TileData **tiles, Int firstTile, Int tileCount, Int cellWidth)
+// ?updateCliff@TerrainTextureClass@@QAEHPAPAVTileData@@HHH@Z
+Int TerrainTextureClass::updateCliff(TileData **tiles, Int firstTile, Int tileCount, Int cellWidth)
 {
 	SurfaceResource *surface_level;
 	Rva006D5B10SurfaceStorage surface_storage;
 	Rva006D53A0SurfaceDesc &surface_desc = surface_storage.desc;
 	D3DLOCKED_RECT locked_rect;
-	Rva006D5280 *self = this;
+	TerrainTextureClass *self = this;
 	BFME_DX8_ErrorCode(reinterpret_cast<BfmeD3DTexture *>(self->Peek_D3D_Base_Texture())->GetSurfaceLevel(0, &surface_level));
 	BFME_DX8_ErrorCode(surface_level->GetDesc(&surface_desc));
 	if (surface_desc.Width != cellWidth * TILE_PIXEL_EXTENT) {

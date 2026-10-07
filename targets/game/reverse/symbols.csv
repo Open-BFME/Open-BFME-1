@@ -87708,7 +87708,7 @@ name,address,notes
 ?update@Rva005CCA10Particle@@QAE_NXZ,0x00018F43,outlined particle update call through the incremental-link thunk to retail body 0x005CC6C0
 ?update@Rva0060A240Element@@QAEXXZ,0x00011D10,element update ILT called by the exact counted loop at 0x0060FFF0
 ?update@Rva0060A470Element@@QAEXXZ,0x0001D2BE,element update ILT called by the exact counted loop at 0x0060FF60
-?update@Rva006D5280@@QAEXPAPAVTileData@@HHH@Z,0x0002279B,retail 0x0074C690 calls ILT 0x0002279B with TileData pointer array and three ints; body 0x006D5B10 matches the helper
+?updateCliff@TerrainTextureClass@@QAEHPAPAVTileData@@HHH@Z,0x0002279B,retail 0x0074C690 calls ILT 0x0002279B with TileData pointer array and three ints; body 0x006D5B10 matches the helper
 ?update@Rva006D5390@@QAEHPAVWorldHeightMap@@@Z,0x006D5390,address-derived zero-return method; callee xor eax eax and ret4; aligned call passes WorldHeightMap pointer and receiver at terrain handle; caller +9F via ILT B26C
 ?update@Rva007E4AD0Vp6Stream@@QAEXXZ,0x007E4AD0,assigned helper body call for Rva007E4B80Vp6Stream
 ?update@Rva00802CD0Element@@QAEXPBVRva007F4F90LobbyCounts@@H@Z,0x00802CD0,V2 lane: browser lobby element update from a four-int lobby-count record
