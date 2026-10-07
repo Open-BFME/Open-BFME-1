@@ -1001,39 +1001,8 @@ bool MeshGeometryClass::cast_aabox_z270(AABoxCollisionTestClass & boxtest, const
  * HISTORY:                                                                                    *
  *   3/1/2001  NH : Created.                                                                   *
  *=============================================================================================*/
-// ?MeshGeometryClass::intersect_obbox_brute_force present-unmatched
-bool MeshGeometryClass::intersect_obbox_brute_force(OBBoxIntersectionTestClass & localtest)
-{
-	TriClass tri;
-	const Vector3 * loc = Get_Vertex_Array();
-	const TriIndex * polyverts = Get_Polygon_Array();
-#ifndef COMPUTE_NORMALS
-	const Vector4 * norms = Get_Plane_Array();
-#endif
-
-	/*
-	** Loop over each polygon
-	*/
-	for (int srtri=0; srtri < Get_Polygon_Count(); srtri++) {
-	
-		tri.V[0] = &(loc[ polyverts[srtri][0] ]);
-		tri.V[1] = &(loc[ polyverts[srtri][1] ]);
-		tri.V[2] = &(loc[ polyverts[srtri][2] ]);
-
-#ifdef COMPUTE_NORMALS					
-		static Vector3 _normal;
-		tri.N = &_normal;
-		tri.Compute_Normal();
-#else
-		tri.N = (Vector3 *)&(norms[srtri]);
-#endif
-		
-		if (CollisionMath::Intersection_Test(localtest.Box, tri)) {
-			return true;
-		}
-	}
-	return false;
-}
+// MeshGeometryClass::intersect_obbox_brute_force: retail body lives in
+// MeshGeometryClass_Intersect_OBBox_BruteForce.cpp (0x00926BE0).
 
 
 /***********************************************************************************************
