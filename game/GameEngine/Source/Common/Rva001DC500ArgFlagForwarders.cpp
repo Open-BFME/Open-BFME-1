@@ -64,54 +64,86 @@ void __stdcall rva005329A0(int value)
 	bfmeNote1049(value, 1);
 }
 
-// 0x001DC500 -> ILT 0x0004AEFD -> 0x001DC360 (vector<int>::resize(n, value))
-class Rva001DC500Owner
+// The last four forward to matched STLport vector<T>::resize(count, fill)
+// bodies, passing `this` straight through: the vector sits at this+0 of an
+// owner nobody has identified, and the pushed constant is T(0). BFME's resize
+// takes the fill BY VALUE (IntVectorResizeThunk.cpp has the evidence), so the
+// class is spelled here with just that declaration, like the *ResizeThunk.cpp
+// family that defines each callee.
+enum ObjectID {};
+
+namespace _STL
+{
+
+template <class Type>
+class allocator {};
+
+template <class Type, class Allocator>
+class vector
 {
 public:
-	void fill(unsigned int count, int value);
+	void resize(unsigned int count, Type value);
+
+private:
+	Type *m_start;
+	Type *m_finish;
+	Type *m_endOfStorage;
+};
+
+}
+
+// 0x001DC500 -> ILT 0x0004AEFD -> 0x001DC360 vector<int>::resize (matched)
+class Rva001DC500Owner
+{
+	_STL::vector<int, _STL::allocator<int> > m_values;	// this+0x00
+
+public:
 	void rva001DC500(unsigned int count);
 };
 
 void Rva001DC500Owner::rva001DC500(unsigned int count)
 {
-	fill(count, 0);
+	m_values.resize(count, 0);
 }
 
-// 0x00754DF0 -> ILT 0x0002237C -> 0x00754A60 (vector<Object *>::resize(n, value))
+// 0x00754DF0 -> ILT 0x0002237C -> 0x00754A60 vector<Object *>::resize (matched)
 class Rva00754DF0Owner
 {
+	_STL::vector<Object *, _STL::allocator<Object *> > m_objects;	// this+0x00
+
 public:
-	void fill(unsigned int count, void *value);
 	void rva00754DF0(unsigned int count);
 };
 
 void Rva00754DF0Owner::rva00754DF0(unsigned int count)
 {
-	fill(count, 0);
+	m_objects.resize(count, 0);
 }
 
-// 0x002CD490 -> ILT 0x0004ADE0 -> 0x006CD1B0 (unnamed)
+// 0x002CD490 -> ILT 0x0004ADE0 -> 0x002CD1B0 vector<ObjectID>::resize (matched)
 class Rva002CD490Owner
 {
+	_STL::vector<ObjectID, _STL::allocator<ObjectID> > m_ids;	// this+0x00
+
 public:
-	void call(void *arg, int flag);
-	void rva002CD490(void *arg);
+	void rva002CD490(unsigned int count);
 };
 
-void Rva002CD490Owner::rva002CD490(void *arg)
+void Rva002CD490Owner::rva002CD490(unsigned int count)
 {
-	call(arg, 0);
+	m_ids.resize(count, (ObjectID)0);
 }
 
-// 0x00459FE0 -> ILT 0x0003CAA1 -> 0x00859F70 (unnamed)
+// 0x00459FE0 -> ILT 0x0003CAA1 -> 0x00459F70 vector<float>::resize (matched)
 class Rva00459FE0Owner
 {
+	_STL::vector<float, _STL::allocator<float> > m_values;	// this+0x00
+
 public:
-	void call(void *arg, int flag);
-	void rva00459FE0(void *arg);
+	void rva00459FE0(unsigned int count);
 };
 
-void Rva00459FE0Owner::rva00459FE0(void *arg)
+void Rva00459FE0Owner::rva00459FE0(unsigned int count)
 {
-	call(arg, 0);
+	m_values.resize(count, 0.0f);
 }
