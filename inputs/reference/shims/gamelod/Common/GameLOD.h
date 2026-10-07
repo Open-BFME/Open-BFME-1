@@ -198,7 +198,7 @@ public:
 	BenchProfile *newBenchProfile(void);
 	Bool didMemPass( void );
 	void setReallyLowMHz(Int mhz) { m_reallyLowMHz = mhz; }
-	Bool isReallyLowMHz() const { return m_cpuFreq < m_reallyLowMHz; }
+	Bool isReallyLowMHz() const;	// BFME: out of line, retail 0x0007BC80 (GameLODManagerIsReallyLowMHz.cpp)
 
 	StaticGameLODInfo m_staticGameLODInfo[STATIC_GAME_LOD_COUNT];
 	DynamicGameLODInfo m_dynamicGameLODInfo[DYNAMIC_GAME_LOD_COUNT];

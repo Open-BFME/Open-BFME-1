@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/shims/partitiondataoutofline /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 // The base this TU calls out-of-line is NOT retail's Snapshot: the export table
@@ -2082,92 +2082,7 @@ Bool PartitionManager::geomCollidesWithGeom(const Coord3D* pos1,
 }
 
 //-----------------------------------------------------------------------------
-// ?updateCellsTouched@PartitionData@@AAEXXZ present-unmatched
-void PartitionData::updateCellsTouched()
-{
-	GeometryType geom;
-	Bool isSmall;
-	Coord3D pos;
-	Real angle,majorRadius,minorRadius;
-
-
-	Object *obj = getObject();
-	DEBUG_ASSERTCRASH(obj != NULL || m_ghostObject != NULL, ("must be attached to an Object here 1"));
-
-	if (obj)
-	{	
-		//we have no object using this PartitionData but we still have a GhostObject so copy its data.
-		geom = obj->getGeometryInfo().getGeomType();
-		isSmall = obj->getGeometryInfo().getIsSmall();
-		pos = *(obj->getPosition());
-		angle = obj->getOrientation();
-		majorRadius = obj->getGeometryInfo().getMajorRadius();
-		minorRadius = obj->getGeometryInfo().getMinorRadius();
-	}
-	else if (m_ghostObject)
-	{
-		geom = m_ghostObject->getGeometryType();
-		isSmall = m_ghostObject->getGeometrySmall();
-		pos = *m_ghostObject->getParentPosition();
-		angle = m_ghostObject->getParentAngle();
-		majorRadius = m_ghostObject->getGeometryMajorRadius();
-		minorRadius = m_ghostObject->getGeometryMinorRadius();
-	}
-
-	removeAllTouchedCells();
-	if (isSmall)
-	{
-		doSmallFill(pos.x, pos.y, majorRadius);
-	}
-	else
-	{
-		switch(geom)
-		{
-			case GEOMETRY_SPHERE:
-			case GEOMETRY_CYLINDER:
-			{
-				doCircleFill(pos.x, pos.y, majorRadius);
-				break;
-			}
-
-			case GEOMETRY_BOX:
-			{
-				doRectFill(pos.x, pos.y, majorRadius, minorRadius, angle);
-				break;
-			}
-		};
-	}
-
-	Int currentCellIndexX, currentCellIndexY;
-	ThePartitionManager->worldToCell( pos.x, pos.y, &currentCellIndexX, &currentCellIndexY );
-	const PartitionCell *currentCell = ThePartitionManager->getCellAt( currentCellIndexX, currentCellIndexY );
-	if(obj && currentCell != m_lastCell )
-	{
-		// To not expose PartitionCells, he will think in terms of points.  He will 
-		// unlook at a point and look at the new point.  We do the rounding and the 
-		// changing into PartitionCells
-		obj->onPartitionCellChange(); 
-		m_lastCell = currentCell;
-	}
-
-	// if we have moved, our shroudedness status might be different for all players,
-	// so it must all be invalidated.
-	invalidateShroudedStatusForAllPlayers();
-
-#ifdef INTENSE_DEBUG
-	for (Int i = 0; i < m_coiInUseCount; i++)
-	{
-		for (Int j = 0; j < i; j++)
-		{
-			if (m_coiArray[i].getCell() == m_coiArray[j].getCell())
-			{
-				DEBUG_CRASH(("dup cells in COI array, this is bad"));
-			}
-		}
-	}
-#endif
-
-}
+// PartitionData::updateCellsTouched: the retail body (0x008F8800) is matched in PartitionData_updateCellsTouched.cpp.
 
 //-----------------------------------------------------------------------------
 // ?invalidateShroudedStatusForPlayer@PartitionData@@QAEXH@Z present-unmatched
