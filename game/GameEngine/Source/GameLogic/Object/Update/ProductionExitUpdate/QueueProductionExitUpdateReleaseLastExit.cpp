@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /GX- /O2 /Ob2
-// ?releaseLastExit@QueueProductionExitUpdate@@QAEXXZ
+// ?notifyProductionBurstFinished@QueueProductionExitUpdate@@UAEXXZ (EA name; retail thunk table confirms the virtual decoration)
 
 struct Coord3D
 {
@@ -106,7 +106,7 @@ public:
 	virtual void s6();
 	virtual void s7();
 	virtual const Coord3D *queryRally();
-	void releaseLastExit();
+	virtual void notifyProductionBurstFinished();
 
 	unsigned m_currentDelay;
 	Coord3D m_rallyPoint;
@@ -116,7 +116,7 @@ public:
 	int m_lastExitId;
 };
 
-void QueueProductionExitUpdate::releaseLastExit()
+void QueueProductionExitUpdate::notifyProductionBurstFinished()
 {
 	Object *host = TheGameLogic->findObjectByID(m_lastExitId);
 	if (!host)

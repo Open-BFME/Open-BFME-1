@@ -11,7 +11,7 @@
 // INVALID_STATE_ID, returned by StateMachine::getCurrentStateID() when
 // m_currentState (+0x1C) is null, otherwise State::m_ID (+0x04). The call
 // goes through the AICommandInterface base at AIUpdateInterface+0x20 to the
-// ILT 0x0001C26A that the matched QueueProductionExitUpdate::releaseLastExit
+// ILT 0x0001C26A that the matched QueueProductionExitUpdate::notifyProductionBurstFinished
 // already names aiMoveToObject(Object *, CommandSourceType). State ids 0x38
 // and 0x0F are left numeric: BFME's AIStateType numbering is not witnessed.
 

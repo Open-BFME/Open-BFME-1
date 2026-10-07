@@ -15448,7 +15448,7 @@ name,address,notes
 ?aiIdle@AICommandInterface@@QAEXW4CommandSourceType@@@Z,0x00024D70,ILT thunk to the AI idle command reached through the base at ai+0x20
 ?aiMoveAwayFromUnit@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x0000B627,BFME inline command body called by the move-allies cell callback at 0x003EC070
 ?aiMoveToAndEvacuate@AICommandInterface@@QAEXPBUCoord3D@@W4CommandSourceType@@@Z,0x00027903,aiMoveToAndEvacuate ILT from groupEvacuate aircraft arm
-?aiMoveToObject@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x0001C26A,typed AI movement thunk used by QueueProductionExitUpdate::releaseLastExit
+?aiMoveToObject@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x0001C26A,typed AI movement thunk used by QueueProductionExitUpdate::notifyProductionBurstFinished
 ?aiMoveToPosition@AICommandInterface@@QAEXPBUCoord3D@@W4CommandSourceType@@@Z,0x0003436A,Open-BFME5 AI movement thunk alias
 ?aiPreTeamDestroy@AIPlayer@@QAEXPBVTeam@@@Z,0x00161430,Player preTeamDestroy tail target; canonical AIPlayer queue-removal body matches retail structure
 ?allInside@Team@@QBE_NPAVPolygonTrigger@@I@Z,0x000F5A30,the call ScriptConditions::evaluateTeamInsideAreaEntirely (0x00324AC0) makes on the team it looked up with the trigger area and the type parameter; the reference declares exactly that const member with that pair and nothing else in Team takes it
@@ -78309,7 +78309,7 @@ name,address,notes
 ?bfmeQueryJC@BfmeUnitJC@@QAEHPAUBfmePairJC@@PAM@Z,0x0000E359,pin
 ?bfmeQueryKE@@YGIPAXH@Z,0x009F8890,pin
 ?bfmeQueryNS@BfmeHolderNS@@QAEHXZ,0x0003A391,pin
-?bfmeQueryRallyOverride@@YAPAVObject@@PAV1@PBUCoord3D@@@Z,0x000159A6,typed cdecl helper called by QueueProductionExitUpdate::releaseLastExit
+?bfmeQueryRallyOverride@@YAPAVObject@@PAV1@PBUCoord3D@@@Z,0x000159A6,typed cdecl helper called by QueueProductionExitUpdate::notifyProductionBurstFinished
 ?bfmeQuerySG@BfmeSrcSG@@QAEHXZ,0x00039324,pin
 ?bfmeQueryWD@@YGXHHPA_N000@Z,0x0001CDB9,pin
 ?GetPurchaseScienceStatus@ControlBar@@QAEXPAVPlayer@@HPAPBVCommandButton@@PA_N22@Z,0x0001CDB9,pin: ILT jmp to body 0x004A09D0 (matched ControlBar::GetPurchaseScienceStatus row object-symbol; EA WorldBuilder label); called from populatePurchaseScience 0x004A0B90+0x7f with ecx=this and 6 dword args; callee ret 0x18
@@ -87240,7 +87240,7 @@ name,address,notes
 ?setMasks@Rva0039FF30Filter@@QAEXURva0021FC80Mask@@0@Z,0x0039FF30,TransportContain ctor21FC80 calls ILT4699D to full549B filter handle setter; two six-word masks by value; ret48 at3A0139; interned pool lifetime verified
 ?setMode@BfmeRva9140Member@@QAEXHH@Z,0x00032DEE,assigned body helper for Rva00249140
 ?setMode@BfmeRvaBA90Member@@QAEXHH@Z,0x00032DEE,assigned body helper for Rva0024BA90
-?setMode@Object@@QAEXHH@Z,0x00032DEE,typed Object setter called by QueueProductionExitUpdate::releaseLastExit
+?setMode@Object@@QAEXHH@Z,0x00032DEE,typed Object setter called by QueueProductionExitUpdate::notifyProductionBurstFinished
 ?setMode@Rva00785FD0Renderer@@QAIXH@Z,0x0003DDED,ILT __fastcall mode setter used by 0x00785FD0
 ?setMouseLimits@Mouse@@UAEXXZ,0x00002A63
 ?setMouseText@Mouse@@QAEXVUnicodeString@@PBURGBAColorInt@@1@Z,0x0002FBD0,ILT thunk to body 0x005A5950
