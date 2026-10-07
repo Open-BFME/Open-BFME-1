@@ -49,7 +49,7 @@ class U4Scan
 public:
 	bool firstFlagged( int *out, const U4Filter *filter ) const;
 	const U4MapVal *firstMapped( const U4MapKey &key, const U4Filter *filter ) const;
-	bool firstNamed( void *out, const U4Filter *filter ) const;
+	const char *firstNamed( void *out, const U4Filter *filter ) const;
 };
 
 struct U4ProxyHost
@@ -69,7 +69,10 @@ public:
 bool U4Proxy00606E20::run( void *out ) const
 {
 	const U4Filter *filter = (const U4Filter *)( U4_HOST( this )->m_base + 0x250 );
-	return U4_HOST( this )->m_scan->firstNamed( out, filter );
+	// Retail returns firstNamed's pointer in EAX unchanged as this bool.
+	typedef bool ( U4Scan::*BoolScan )( void *, const U4Filter * ) const;
+	BoolScan scan = reinterpret_cast<BoolScan>( &U4Scan::firstNamed );
+	return ( U4_HOST( this )->m_scan->*scan )( out, filter );
 }
 
 class U4Proxy00606E40
