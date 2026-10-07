@@ -1,9 +1,14 @@
 class BfmeThingWQ;
 
-class BfmeInnerWQ
+// ILT 0x000022BB -> matched 0x00087A80 Overridable::getFinalOverride.
+class Overridable
 {
 public:
-	BfmeThingWQ *bfmeResolveWQ(void);
+	const Overridable *getFinalOverride(void) const;
+};
+
+class BfmeInnerWQ : public Overridable
+{
 };
 
 class BfmeThingWQ
@@ -53,7 +58,7 @@ char BfmeOwnerWQ::bfmeHasWQ(unsigned int bit)
 			BfmeThingWQ *thing = holder->m_bfmeThingWQ;
 
 			if (thing && thing->m_bfmeInnerWQ)
-				thing = thing->m_bfmeInnerWQ->bfmeResolveWQ();
+				thing = (BfmeThingWQ *)thing->m_bfmeInnerWQ->getFinalOverride();
 
 			if ((thing->m_bfmeBitsWQ[bit >> 5] & (1 << (bit & 0x1f))) == 0)
 				return 0;
