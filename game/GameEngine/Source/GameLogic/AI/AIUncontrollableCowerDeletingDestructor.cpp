@@ -9,7 +9,7 @@
 
 class AIUncontrollableCower
 {
-protected:
+public:
 	virtual ~AIUncontrollableCower();
 
 private:
