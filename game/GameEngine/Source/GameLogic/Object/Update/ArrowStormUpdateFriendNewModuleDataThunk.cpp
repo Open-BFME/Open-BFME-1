@@ -30,7 +30,9 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl ArrowStormUpdateFieldParse(MultiIniFieldParse &parse);
+// The proc operand is ILT 0x0004119B -> 0x00118E80, the matched
+// Rva00118E80::buildFieldParse (game/GameEngine/Source/Common/WideBuildFieldParse.cpp).
+void j_0004119b();
 
 class ArrowStormUpdate
 {
@@ -43,6 +45,7 @@ ModuleData *ArrowStormUpdate::friend_newModuleData(INI *ini)
 {
 	ArrowStormUpdateModuleData *data = new ArrowStormUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &ArrowStormUpdateFieldParse);
+		ini->initFromINIMultiProc(data, 
+			(void (__cdecl *)(MultiIniFieldParse &))j_0004119b);
 	return (ModuleData *)data;
 }
