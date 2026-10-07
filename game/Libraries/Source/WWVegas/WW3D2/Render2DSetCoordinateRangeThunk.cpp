@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHs-c-
+// cl: /Iinputs/reference/shims/dx8wrapper /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // readable body of ?Set_Coordinate_Range@Render2DClass@@QAEXABVRectClass@@@Z: game/Libraries/Source/WWVegas/WW3D2/render2d.cpp
 // Open-BFME5: Render2DClass::Set_Coordinate_Range, retail 0x00933A50,
 // converted out of a machine byte dump.
@@ -13,9 +13,9 @@
 // The class falls out of the same bytes: CoordinateScale at +0x04,
 // CoordinateOffset at +0x0C, both Vector2.
 //
-// The screen resolution is two UNSIGNED ints. Retail reads each with fild and
-// then adds 2^32 when the value tests negative, which is the unsigned-to-float
-// conversion and not something a signed Int would need.
+// Retail treats the canonical signed DX8Wrapper resolution words as unsigned.
+// It reads each with fild and adds 2^32 when the value tests negative. Explicit
+// unsigned casts below preserve that conversion without inventing a second owner.
 //
 // Two things about the shape rather than the semantics. The bias goes through a
 // Vector2 local, not two scalars: the scalar spelling computes the same values
@@ -24,52 +24,24 @@
 // toolchain leaves it as a call at /O2 and emits the symbol, where retail has
 // no call at all.
 
-typedef float Real;
+// stlport
+#define Matrix4x4 Matrix4
+#define __PLACEMENT_VEC_NEW_INLINE
+#include "dx8wrapper.h"
+#include "ww3d.h"
+#include "rect.h"
 
-class Vector2
+namespace {
+// Static-only implementation access view, following the wrapper's existing
+// access adapters. This is not a recovered retail class or inheritance claim;
+// no instances, casts, layout, or additional storage are involved.
+class Rva00933A50ResolutionAccess : public DX8Wrapper
 {
 public:
-	Vector2( void ) { }
-	Vector2( Real x, Real y ) : X(x), Y(y) { }
-
-	Real X;
-	Real Y;
+    using DX8Wrapper::ResolutionWidth;
+    using DX8Wrapper::ResolutionHeight;
 };
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/rect.h
-class RectClass
-{
-public:
-	Real Width( void ) const { return Right - Left; }
-	Real Height( void ) const { return Bottom - Top; }
-
-	Real Left;												///< +0x00
-	Real Top;												///< +0x04
-	Real Right;												///< +0x08
-	Real Bottom;											///< +0x0C
-};
-
-class ScreenResolution
-{
-public:
-	unsigned int Width( void ) const { return m_width; }
-	unsigned int Height( void ) const { return m_height; }
-
-	unsigned int m_width;
-	unsigned int m_height;
-};
-
-extern ScreenResolution TheScreenResolution;
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ww3d.h
-class WW3D
-{
-public:
-	static bool Is_Screen_UV_Biased( void ) { return IsScreenUVBiased; }
-
-private:
-	static bool IsScreenUVBiased;
-};
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2d.h
 class Render2DClass
@@ -84,15 +56,13 @@ protected:
 			Vector2 bais_add( -0.5f, -0.5f );	// offset by -0.5,-0.5 in pixels
 
 			// Convert from pixels to (-1,1)-(1,-1) units
-			bais_add.X = bais_add.X / (Get_Screen_Resolution().Width() * 0.5f);
-			bais_add.Y = bais_add.Y / (Get_Screen_Resolution().Height() * -0.5f);
+			bais_add.X = bais_add.X / (static_cast<unsigned int>(Rva00933A50ResolutionAccess::ResolutionWidth) * 0.5f);
+			bais_add.Y = bais_add.Y / (static_cast<unsigned int>(Rva00933A50ResolutionAccess::ResolutionHeight) * -0.5f);
 
 			CoordinateOffset.X = CoordinateOffset.X + bais_add.X;
 			CoordinateOffset.Y = CoordinateOffset.Y + bais_add.Y;
 		}
 	}
-
-	static const ScreenResolution &Get_Screen_Resolution( void ) { return TheScreenResolution; }
 
 private:
 	void *m_vtable;
