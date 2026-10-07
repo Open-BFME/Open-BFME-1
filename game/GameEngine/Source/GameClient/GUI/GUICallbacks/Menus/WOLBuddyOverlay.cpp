@@ -728,20 +728,7 @@ static NameKeyType buttonStatsID = NAMEKEY_INVALID;
 //-------------------------------------------------------------------------------------------------
 /** WOL Buddy Overlay Right Click menu callbacks */
 //-------------------------------------------------------------------------------------------------
-void WOLBuddyOverlayRCMenuInit( WindowLayout *layout, void *userData )
-{
-	AsciiString controlName;
-	controlName.format("%s:ButtonAdd",layout->getFilename().str()+6);
-	buttonAddID =  TheNameKeyGenerator->nameToKey( controlName );
-	controlName.format("%s:ButtonDelete",layout->getFilename().str()+6);
-	buttonDeleteID =  TheNameKeyGenerator->nameToKey( controlName );
-	controlName.format("%s:ButtonPlay",layout->getFilename().str()+6);
-	buttonPlayID =  TheNameKeyGenerator->nameToKey( controlName );
-	controlName.format("%s:ButtonIgnore",layout->getFilename().str()+6);
-	buttonIgnoreID =  TheNameKeyGenerator->nameToKey( controlName );
-	controlName.format("%s:ButtonStats",layout->getFilename().str()+6);
-	buttonStatsID =  TheNameKeyGenerator->nameToKey( controlName );
-}
+// WOLBuddyOverlayRCMenuInit: retail body (0x004EADD0) in WOLBuddyOverlayRCMenuInit.cpp.
 static void closeRightClickMenu(GameWindow *win)
 {
 
