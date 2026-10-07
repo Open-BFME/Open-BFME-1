@@ -35,12 +35,20 @@ public:
 // declared here and this TU's head-list view is applied at the use.
 class GameClient;
 extern GameClient *TheGameClient;		// 0x012F1464
-extern int g_bfmeCounter4120;				///< 0x012F12F0
+// 0x012F12F0 is Drawable::s_modelLockCount (dir32_addresses.csv), defined once
+// in GameClient/Drawable.cpp; this body is the BFME friend_lockDirtyStuffForIteration
+// shape (matched unlock sibling at 0x00412120 decrements the same cell).
+void bfmeBumpClientGuard();
+class Drawable
+{
+	friend void bfmeBumpClientGuard();
+	static int s_modelLockCount;
+};
 
 // ?bfmeBumpClientGuard@@YAXXZ
 void bfmeBumpClientGuard()
 {
-	if (!g_bfmeCounter4120)
+	if (!Drawable::s_modelLockCount)
 	{
 		ClientRoot4120 *client = (ClientRoot4120 *)TheGameClient;
 		if (client)
@@ -55,5 +63,5 @@ void bfmeBumpClientGuard()
 			}
 		}
 	}
-	++g_bfmeCounter4120;
+	++Drawable::s_modelLockCount;
 }
