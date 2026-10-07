@@ -65,9 +65,13 @@ class BfmeStrVKI;
 class Rva00899770;
 class Rva008AE770Stack
 {
-public:
-	Rva00899770 *createString(void *, int, BfmeStrVKI *, int, int, int);
 };
+
+// Retail calls 0x008CC940 as a thiscall with six arguments; the body is linked
+// as the cdecl void() row ?d_008cc940@@YAXXZ (see aptExportString.cpp).
+extern void d_008cc940();
+typedef Rva00899770 *(Rva008AE770Stack::*Rva8CD520CreateString)(void *, int,
+	BfmeStrVKI *, int, int, int);
 
 class BfmeA1232
 {
@@ -119,7 +123,8 @@ void rva8CD520ConfigureState(Rva8CD520State *state, Rva8CD520Context *context)
 		Rva8CD520String name;
 		((Rva8CD520ResolveName)d_008c6320)(context->m_owner, context->m_scope,
 			&value->string(), &output, &name);
-		value = (Rva8CD520Value *)((Rva008AE770Stack *)state)->createString(output,
+		union { void (*fn)(); Rva8CD520CreateString call; } u = { d_008cc940 };
+		value = (Rva8CD520Value *)(((Rva008AE770Stack *)state)->*u.call)(output,
 			(int)context->m_scope, (BfmeStrVKI *)&name, 1, 1, 0);
 	}
 

@@ -24,9 +24,13 @@ public:
 
 class Rva008AE770Stack
 {
-public:
-	Rva00899770 *createString(void *, int, BfmeStrVKI *, int, int, int);
 };
+
+// Retail calls 0x008CC940 as a thiscall with six arguments; the body is linked
+// as the cdecl void() row ?d_008cc940@@YAXXZ (see aptExportString.cpp).
+extern void d_008cc940();
+typedef Rva00899770 *(Rva008AE770Stack::*Rva008CEDA0CreateString)(void *, int,
+	BfmeStrVKI *, int, int, int);
 
 struct Rva008CEDA0State
 {
@@ -50,7 +54,8 @@ void rva8CEDA0PushConstantVariable(Rva008CEDA0State *state, Rva008CEDA0Context *
 	Rva008CEDA0Value *constant = state->m_constants[index];
 	if ((constant->m_valueBits & 0x3f) != 1)
 		constant = constant->m_stringObject;
-	Rva008CEDA0Value *value = (Rva008CEDA0Value *)((Rva008AE770Stack *)state)->createString(
+	union { void (*fn)(); Rva008CEDA0CreateString call; } u = { d_008cc940 };
+	Rva008CEDA0Value *value = (Rva008CEDA0Value *)(((Rva008AE770Stack *)state)->*u.call)(
 		context->m_owner, context->m_scope, (BfmeStrVKI *)((char *)constant + 8), 1, 1, 0);
 	state->m_stack[state->m_count++] = value;
 	if (!((unsigned char)(value->m_valueBits >> 30) & 1))
