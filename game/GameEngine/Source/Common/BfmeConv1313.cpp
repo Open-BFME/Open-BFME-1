@@ -15,7 +15,79 @@ extern "C" __declspec(dllimport) void *__stdcall SetErrorMode(int a);
 
 // 0x0111C9A8 is the W3D/Win32 GameEngine vftable; symbols.csv pins it as
 // ?g_bfme928Vft@@3PADA, the spelling BfmeConv928.cpp already uses.
-extern "C" char __identifier("?g_bfme928Vft@@3PADA")[];
+extern "C" void __cdecl __identifier("?j_00021571@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0002badf@@YAXXZ")();
+extern "C" void __cdecl __identifier("?loadIniFilesFromLegend@SubsystemInterface@@UAE_NXZ")();
+extern "C" void __cdecl __identifier("?j_000436b2@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00018d81@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00045ac0@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00033497@@YAXXZ")();
+extern "C" void __cdecl __identifier("?method@Rva009A16C0@@UAEXXZ")();
+extern "C" void __cdecl __identifier("?method@Rva009A16D0@@UAEXI@Z")();
+extern "C" void __cdecl __identifier("?j_0003f512@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_000173e6@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_000190f6@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00040435@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0002a0ea@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0002700c@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00034ee6@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0001c6cf@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0003e789@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00023b7d@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0000eb7e@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0003da96@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0001c4ae@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_000418f3@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00025644@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_000260f8@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00041605@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0000c9c3@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00038eb0@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00041ab0@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00023df3@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0001dc7d@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0002cd45@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00008ce7@@YAXXZ")();
+// C++ view of the same symbol: 33 four-byte slots (sizes the datum).
+extern char g_bfme928Vft[132];
+// Retail 0x0111C9A8 slots, read from the image (vtable_lookup.py); each is the
+// ILT thunk or direct body retail stores there.
+extern "C" void *__identifier("?g_bfme928Vft@@3PADA")[] =
+{
+	(void *)&__identifier("?j_00021571@@YAXXZ"),
+	(void *)&__identifier("?j_0002badf@@YAXXZ"),
+	(void *)&__identifier("?loadIniFilesFromLegend@SubsystemInterface@@UAE_NXZ"),
+	(void *)&__identifier("?j_000436b2@@YAXXZ"),
+	(void *)&__identifier("?j_00018d81@@YAXXZ"),
+	(void *)&__identifier("?j_00045ac0@@YAXXZ"),
+	(void *)&__identifier("?j_00033497@@YAXXZ"),
+	(void *)&__identifier("?method@Rva009A16C0@@UAEXXZ"),
+	(void *)&__identifier("?method@Rva009A16D0@@UAEXI@Z"),
+	(void *)&__identifier("?j_0003f512@@YAXXZ"),
+	(void *)&__identifier("?j_000173e6@@YAXXZ"),
+	(void *)&__identifier("?j_000190f6@@YAXXZ"),
+	(void *)&__identifier("?j_00040435@@YAXXZ"),
+	(void *)&__identifier("?j_0002a0ea@@YAXXZ"),
+	(void *)&__identifier("?j_0002700c@@YAXXZ"),
+	(void *)&__identifier("?j_00034ee6@@YAXXZ"),
+	(void *)&__identifier("?j_0001c6cf@@YAXXZ"),
+	(void *)&__identifier("?j_0003e789@@YAXXZ"),
+	(void *)&__identifier("?j_00023b7d@@YAXXZ"),
+	(void *)&__identifier("?j_0000eb7e@@YAXXZ"),
+	(void *)&__identifier("?j_0003da96@@YAXXZ"),
+	(void *)&__identifier("?j_0001c4ae@@YAXXZ"),
+	(void *)&__identifier("?j_000418f3@@YAXXZ"),
+	(void *)&__identifier("?j_00025644@@YAXXZ"),
+	(void *)&__identifier("?j_000260f8@@YAXXZ"),
+	(void *)&__identifier("?j_00041605@@YAXXZ"),
+	(void *)&__identifier("?j_0000c9c3@@YAXXZ"),
+	(void *)&__identifier("?j_00038eb0@@YAXXZ"),
+	(void *)&__identifier("?j_00041ab0@@YAXXZ"),
+	(void *)&__identifier("?j_00023df3@@YAXXZ"),
+	(void *)&__identifier("?j_0001dc7d@@YAXXZ"),
+	(void *)&__identifier("?j_0002cd45@@YAXXZ"),
+	(void *)&__identifier("?j_00008ce7@@YAXXZ")
+};
 
 class BfmeThingTGE
 {
