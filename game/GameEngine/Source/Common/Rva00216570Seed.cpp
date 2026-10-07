@@ -49,13 +49,18 @@ public:
 
 class Rva00216570;
 
+// ILT 0x00036714 -> 0x00216170, matched as
+// ?invoke@Rva00216170Caller@@QAEXPAVFlagPairTarget@@@Z (FlagPairThenDirectCallers.cpp)
+class FlagPairTarget;
+class Rva00216170Caller
+{
+public:
+	void invoke(FlagPairTarget *target);
+};
+
 class Gen_00217810
 {
 public:
-	friend class Rva00216570;
-
-private:
-	void bfmeAccept(BfmeSeedTarget *target);
 	char m_pad[0x14];
 };
 
@@ -71,7 +76,7 @@ private:
 
 void Rva00216570::seed(BfmeSeedTarget *target)
 {
-	bfmeAccept(target);
+	((Rva00216170Caller *)this)->invoke((FlagPairTarget *)target);
 
 	if (target->askAt10())
 		return;
