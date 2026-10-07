@@ -1190,3 +1190,5 @@ game/GameEngine/Source/GameLogic/AI/Rva0016D9C0State_xfer.cpp|local|Rva0016D9C0S
 game/GameEngine/Source/GameLogic/ScriptEngine/Rva00354220ConditionSetType.cpp|type||Rva00354220Parameter,16d9679a811f5ff58f7e67b7,gpt-6-astra,20261007223304-172b02,2026-10-07
 game/GameEngine/Source/GameLogic/ScriptEngine/Rva00354220ConditionSetType.cpp|type||Rva00354220ConditionTemplate,601c34ae24796c9a80678ae9,gpt-6-astra,20261007223304-172b02,2026-10-07
 game/GameEngine/Source/GameLogic/ScriptEngine/Rva00354220ConditionSetType.cpp|type||Rva00354220Condition,ed3d291de6f404916022d8b3,gpt-6-astra,20261007223304-172b02,2026-10-07
+game/GameEngine/Source/GameNetwork/Y2FeslDemanglerDispatch.cpp|type||Rva00800E50Owner,656dd531814bce18ffc42d7e,gpt-6-astra,20261007223301-28885d,2026-10-07
+game/GameEngine/Source/GameNetwork/Y2FeslDemanglerDispatch.cpp|local|Rva00800E50Owner::onDispatch|t04,ad8296fa425263ed9a323c63,gpt-6-astra,20261007223301-28885d,2026-10-07
