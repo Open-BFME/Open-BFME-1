@@ -143,7 +143,7 @@ extern void *g_vtbl_0111098C[];
 extern void *g_vtbl_011109CC[];
 extern void *g_vtbl_01110A0C[];
 extern void *g_vtbl_01110A4C[];
-extern void *g_vtbl_01110DF4[];
+extern "C" char DefaultModuleTemplate6Concrete_vtbl8;
 extern "C" char DefaultModuleTemplate6Concrete_vtbl4;
 extern "C" char DefaultModuleTemplate6Concrete_vtbl0;
 extern void *g_vtbl_01110E20[];
@@ -198,19 +198,19 @@ extern "C" char LineEmissionVolumeConcrete_vtbl8;
 extern "C" char LineEmissionVolumeConcrete_vtbl4;
 extern "C" char LineEmissionVolumeConcrete_vtbl0;
 extern "C" char BoxEmissionVolumeConcrete_vtbl8;
-extern void *g_vtbl_011111D0[];
-extern void *g_vtbl_011111D4[];
+extern "C" char BoxEmissionVolumeConcrete_vtbl4;
+extern "C" char BoxEmissionVolumeConcrete_vtbl0;
 extern void *g_vtbl_011111E8[];
 extern void *g_vtbl_011111FC[];
 extern void *g_vtbl_01111200[];
-extern void *g_vtbl_01111214[];
-extern void *g_vtbl_01111228[];
-extern void *g_vtbl_0111122C[];
+extern "C" char CylinderEmissionVolumeConcrete_vtbl8;
+extern "C" char CylinderEmissionVolumeConcrete_vtbl4;
+extern "C" char CylinderEmissionVolumeConcrete_vtbl0;
 extern void *g_vtbl_01111240[];
 extern void *g_vtbl_01111254[];
 extern void *g_vtbl_01111258[];
-extern void *g_vtbl_01111380[];
-extern void *g_vtbl_01111394[];
+extern "C" char RenderObjectDrawConcrete_vtbl8;
+extern "C" char RenderObjectDrawConcrete_vtbl4;
 extern void *g_vtbl_01111398[];
 extern void *g_vtbl_0111140C[];
 extern void *g_vtbl_01111420[];
@@ -669,8 +669,8 @@ public:
         vtableSlots[4] = 0;
         vtableSlots[5] = 0;
         vtableSlots[6] = 0;
-        vtableSlots[0] = (unsigned int)g_vtbl_011111D4;
-        vtableSlots[1] = (unsigned int)g_vtbl_011111D0;
+        vtableSlots[0] = (unsigned int)&BoxEmissionVolumeConcrete_vtbl0;
+        vtableSlots[1] = (unsigned int)&BoxEmissionVolumeConcrete_vtbl4;
         vtableSlots[2] = (unsigned int)&BoxEmissionVolumeConcrete_vtbl8;
     }
 
@@ -940,9 +940,9 @@ public:
         vtableSlots[6] = 0;
         vtableSlots[7] = 0;
         vtableSlots[8] = 0;
-        vtableSlots[0] = (unsigned int)g_vtbl_0111122C;
-        vtableSlots[1] = (unsigned int)g_vtbl_01111228;
-        vtableSlots[2] = (unsigned int)g_vtbl_01111214;
+        vtableSlots[0] = (unsigned int)&CylinderEmissionVolumeConcrete_vtbl0;
+        vtableSlots[1] = (unsigned int)&CylinderEmissionVolumeConcrete_vtbl4;
+        vtableSlots[2] = (unsigned int)&CylinderEmissionVolumeConcrete_vtbl8;
     }
 
 private:
@@ -1464,8 +1464,8 @@ public:
     {
         ((RenderObjectDrawTemplateCtorShim *)this)->construct();
         *(volatile unsigned int *)this = (unsigned int)g_vtbl_01111398;
-        *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)g_vtbl_01111394;
-        *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)g_vtbl_01111380;
+        *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)&RenderObjectDrawConcrete_vtbl4;
+        *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)&RenderObjectDrawConcrete_vtbl8;
     }
 
 private:
@@ -2333,8 +2333,8 @@ BoxEmissionVolumeModuleTemplate *ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_V
         *(volatile unsigned int *)((unsigned char *)result + 0x10) = 0;
         *(volatile unsigned int *)((unsigned char *)result + 0x14) = 0;
         *(volatile unsigned int *)((unsigned char *)result + 0x18) = 0;
-        *(volatile unsigned int *)result = (unsigned int)g_vtbl_011111D4;
-        *(volatile unsigned int *)((unsigned char *)result + 4) = (unsigned int)g_vtbl_011111D0;
+        *(volatile unsigned int *)result = (unsigned int)&BoxEmissionVolumeConcrete_vtbl0;
+        *(volatile unsigned int *)((unsigned char *)result + 4) = (unsigned int)&BoxEmissionVolumeConcrete_vtbl4;
         *(volatile unsigned int *)((unsigned char *)result + 8) = (unsigned int)&BoxEmissionVolumeConcrete_vtbl8;
         return result;
     }
@@ -2394,9 +2394,9 @@ CylinderEmissionVolumeModuleTemplate *ConcreteModuleClass<ModuleTag<5, CYLINDER_
         *(volatile unsigned int *)((unsigned char *)result + 0x18) = 0;
         *(volatile unsigned int *)((unsigned char *)result + 0x1c) = 0;
         *(volatile unsigned int *)((unsigned char *)result + 0x20) = 0;
-        *(volatile unsigned int *)result = (unsigned int)g_vtbl_0111122C;
-        *(volatile unsigned int *)((unsigned char *)result + 4) = (unsigned int)g_vtbl_01111228;
-        *(volatile unsigned int *)((unsigned char *)result + 8) = (unsigned int)g_vtbl_01111214;
+        *(volatile unsigned int *)result = (unsigned int)&CylinderEmissionVolumeConcrete_vtbl0;
+        *(volatile unsigned int *)((unsigned char *)result + 4) = (unsigned int)&CylinderEmissionVolumeConcrete_vtbl4;
+        *(volatile unsigned int *)((unsigned char *)result + 8) = (unsigned int)&CylinderEmissionVolumeConcrete_vtbl8;
         return result;
     }
     return 0;
@@ -3187,7 +3187,7 @@ ConcreteModuleTemplate<DefaultModuleTag<6> >::ConcreteModuleTemplate(const Concr
     ((DefaultModuleTemplate6CopyCtorShim *)this)->construct(&that);
     *(volatile unsigned int *)this = (unsigned int)&DefaultModuleTemplate6Concrete_vtbl0;
     *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)&DefaultModuleTemplate6Concrete_vtbl4;
-    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)g_vtbl_01110DF4;
+    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)&DefaultModuleTemplate6Concrete_vtbl8;
 }
 
 // ??0?$ConcreteModuleTemplate@V?$DefaultModuleTag@$05@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
@@ -3196,7 +3196,7 @@ ConcreteModuleTemplate<DefaultModuleTag<6> >::ConcreteModuleTemplate()
     ((DefaultModuleTemplate6CtorShim *)this)->construct();
     *(volatile unsigned int *)this = (unsigned int)&DefaultModuleTemplate6Concrete_vtbl0;
     *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)&DefaultModuleTemplate6Concrete_vtbl4;
-    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)g_vtbl_01110DF4;
+    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)&DefaultModuleTemplate6Concrete_vtbl8;
 }
 
 // ??1?$ConcreteModuleTemplate@V?$DefaultModuleTag@$05@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
@@ -3542,8 +3542,8 @@ SphericalEmissionVelocityModule *ConcreteModuleTemplate<ModuleTag<4, SPHERICAL_E
 ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that)
 {
     ((BoxEmissionVolumeTemplateCopyCtorShim *)this)->construct(&that);
-    *(volatile unsigned int *)this = (unsigned int)g_vtbl_011111D4;
-    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)g_vtbl_011111D0;
+    *(volatile unsigned int *)this = (unsigned int)&BoxEmissionVolumeConcrete_vtbl0;
+    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)&BoxEmissionVolumeConcrete_vtbl4;
     *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)&BoxEmissionVolumeConcrete_vtbl8;
 }
 
@@ -3558,8 +3558,8 @@ ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION
     slots[4] = 0;
     slots[5] = 0;
     slots[6] = 0;
-    slots[0] = (unsigned int)g_vtbl_011111D4;
-    slots[1] = (unsigned int)g_vtbl_011111D0;
+    slots[0] = (unsigned int)&BoxEmissionVolumeConcrete_vtbl0;
+    slots[1] = (unsigned int)&BoxEmissionVolumeConcrete_vtbl4;
     slots[2] = (unsigned int)&BoxEmissionVolumeConcrete_vtbl8;
 }
 
@@ -3598,9 +3598,9 @@ BoxEmissionVolumeModule *ConcreteModuleTemplate<ModuleTag<5, BOX_EMISSION_VOLUME
 ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > >::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > &that)
 {
     ((CylinderEmissionVolumeTemplateCopyCtorShim *)this)->construct(&that);
-    *(volatile unsigned int *)this = (unsigned int)g_vtbl_0111122C;
-    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)g_vtbl_01111228;
-    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)g_vtbl_01111214;
+    *(volatile unsigned int *)this = (unsigned int)&CylinderEmissionVolumeConcrete_vtbl0;
+    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)&CylinderEmissionVolumeConcrete_vtbl4;
+    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)&CylinderEmissionVolumeConcrete_vtbl8;
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?CYLINDER_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDER_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVCylinderEmissionVolumeModule@2@VCylinderEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
@@ -3616,9 +3616,9 @@ ConcreteModuleTemplate<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDE
     slots[6] = 0;
     slots[7] = 0;
     slots[8] = 0;
-    slots[0] = (unsigned int)g_vtbl_0111122C;
-    slots[1] = (unsigned int)g_vtbl_01111228;
-    slots[2] = (unsigned int)g_vtbl_01111214;
+    slots[0] = (unsigned int)&CylinderEmissionVolumeConcrete_vtbl0;
+    slots[1] = (unsigned int)&CylinderEmissionVolumeConcrete_vtbl4;
+    slots[2] = (unsigned int)&CylinderEmissionVolumeConcrete_vtbl8;
 }
 
 // ??1?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?CYLINDER_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDER_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVCylinderEmissionVolumeModule@2@VCylinderEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
@@ -3993,8 +3993,8 @@ ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_D
 {
     ((RenderObjectDrawTemplateCopyCtorShim *)this)->construct(&that);
     *(volatile unsigned int *)this = (unsigned int)g_vtbl_01111398;
-    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)g_vtbl_01111394;
-    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)g_vtbl_01111380;
+    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)&RenderObjectDrawConcrete_vtbl4;
+    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)&RenderObjectDrawConcrete_vtbl8;
 }
 
 // ??0?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?RENDEROBJECT_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_DRAW_MODULE_NAME@2@3QBDBVRenderObjectDrawModule@2@VRenderObjectDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
@@ -4002,8 +4002,8 @@ ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_D
 {
     ((RenderObjectDrawTemplateCtorShim *)this)->construct();
     *(volatile unsigned int *)this = (unsigned int)g_vtbl_01111398;
-    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)g_vtbl_01111394;
-    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)g_vtbl_01111380;
+    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)&RenderObjectDrawConcrete_vtbl4;
+    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)&RenderObjectDrawConcrete_vtbl8;
 }
 
 // ??1?$ConcreteModuleTemplate@V?$ModuleTag@$05$E?RENDEROBJECT_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_DRAW_MODULE_NAME@2@3QBDBVRenderObjectDrawModule@2@VRenderObjectDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
