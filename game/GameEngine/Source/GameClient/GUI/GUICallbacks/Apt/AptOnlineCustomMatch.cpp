@@ -49,7 +49,7 @@ class BfmeAptScreenOnlineCustomMatch
 {
 public:
 	void leaveStagingRoom( int unused );
-	void clearLocalStagingState();
+	void applyLocalSlotToPreferences();
 
 private:
 	unsigned char m_head[ 0x40 ];
@@ -68,7 +68,7 @@ void BfmeAptScreenOnlineCustomMatch::leaveStagingRoom( int unused )
 		m_flag57 = 0;
 		return;
 	}
-	clearLocalStagingState();
+	applyLocalSlotToPreferences();
 	if( TheGameSpyInfo )
 	{
 		GameSpyStagingRoom *room = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getCurrentStagingRoom();
