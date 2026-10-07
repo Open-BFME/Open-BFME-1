@@ -52,3 +52,15 @@ template struct _STL::_Hashtable_iterator<
 	Rva00461360Value, AsciiString, rts::hash<AsciiString>,
 	Rva00461360ExtractKey, _STL::equal_to<AsciiString>,
 	_STL::allocator<Rva00461360Value> >;
+
+// 0x00461F10 (?dup_00461f10, gen-alias of the symbol below): the const
+// iterator's operator++ over the same Rva00461360 value. It takes the next
+// node in the bucket, or calls _M_skip_to_next through ILT 0x00043B8F ->
+// 0x00461480, the Rva00461360 specialization above. Only operator++ is
+// instantiated.
+typedef _STL::_Ht_iterator<
+	Rva00461360Value, _STL::_Const_traits<Rva00461360Value>, AsciiString,
+	rts::hash<AsciiString>, Rva00461360ExtractKey, _STL::equal_to<AsciiString>,
+	_STL::allocator<Rva00461360Value> > Rva00461360ConstIterator;
+
+template Rva00461360ConstIterator &Rva00461360ConstIterator::operator++();
