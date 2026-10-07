@@ -6,7 +6,8 @@ typedef bool Bool;
 
 class WindowManager;
 
-extern WindowManager *g_theWindowManager;
+// VA 0x012F19E8, defined once in GUI/WindowManager.cpp (data_rows.csv).
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class BfmeLevelAN
 {
@@ -81,10 +82,10 @@ private:
 
 void VictoryConditions::hideEndGame(void)
 {
-	if (!g_theWindowManager || !m_endGameShowing)
+	if (!g_rva012F19E8WindowManager || !m_endGameShowing)
 		return;
 
-	reinterpret_cast<BfmeLevelAN *>(g_theWindowManager)->bfmeBuildAN(
+	reinterpret_cast<BfmeLevelAN *>(g_rva012F19E8WindowManager)->bfmeBuildAN(
 		0xb, (int)"HideEndGame", 0, 0, 0, 0, 0, 0);
 	m_endGameShowing = false;
 	TheDisplay->setUnidentified13c(true);
