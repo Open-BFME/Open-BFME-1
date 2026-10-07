@@ -847,7 +847,9 @@ inline Rva0050F840FunctorHolder::Rva0050F840FunctorHolder(
 
 extern const void *BfmeAptScreenObjectivesVftable[];
 extern const void *BfmeAptScreenObjectivesSecondaryVftable[];
-extern void *g_obj12F49E4;
+// The objectives screen singleton (retail VA 0x012F49E4); its factory below
+// installs the first instance.
+void *g_obj12F49E4 = 0;
 extern const char *g_bfmeObjectivesProviderNames[];
 
 class AptPlayerStatus : public _bfme_AptGameWindow,
