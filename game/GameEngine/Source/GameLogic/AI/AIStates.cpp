@@ -4531,31 +4531,7 @@ StateReturnType AIAttackPursueTargetState::updateInternal()
 }
 
 //----------------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AIAttackPursueTargetState_update.cpp
-// ?update@AIAttackPursueTargetState@@UAE?AW4StateReturnType@@XZ present-unmatched
-StateReturnType AIAttackPursueTargetState::update()
-{
-	// contained by AIAttackState, so no separate timer
-
-	StateReturnType code = updateInternal();
-	Object* source = getMachineOwner();
-	AIUpdateInterface *ai = source->getAI();
-
-	if (m_isInitialApproach) 
-	{
-		WhichTurretType tur = ai->getWhichTurretForCurWeapon();
-		if (tur != TURRET_INVALID) 
-		{
-			Object *temporaryTarget = ai->getNextMoodTarget( true, false );
-			if (temporaryTarget) 
-			{
-				ai->setTurretTargetObject(tur, temporaryTarget, m_isForceAttacking);
-			}
-		}
-	}
-
-	return code;
-}
+// AIAttackPursueTargetState::update: retail body matched in AIAttackPursueTargetState_update.cpp.
 
 //----------------------------------------------------------------------------------------------------------
 void AIAttackPursueTargetState::onExit( StateExitType status )
