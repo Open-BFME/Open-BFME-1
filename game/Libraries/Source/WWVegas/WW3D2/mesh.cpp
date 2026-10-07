@@ -644,11 +644,7 @@ void MeshClass::Render(RenderInfoClass & rinfo)
  * HISTORY:                                                                                    *
  *   3/4/2001   gth : Created.                                                                 *
  *=============================================================================================*/
-// ?MeshClass::Render_Material_Pass present-unmatched
-void MeshClass::Render_Material_Pass(MaterialPassClass * pass,IndexBufferClass * ib)
-{
-	// BFME: DX8 render path stubbed.
-}
+// The retail body (0x0092E890) lives in MeshClass_Render_Material_Pass_BFME.cpp.
 
 
 /***********************************************************************************************
