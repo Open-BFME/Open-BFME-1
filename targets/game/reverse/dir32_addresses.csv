@@ -13246,7 +13246,6 @@ _AssaultTransportAIUpdateFieldParse,0x0040A35D
 _AssistedTargetingUpdateFieldParse,0x00414CC2
 _AttributeModifierUpgradeFieldParse,0x004225B6
 _AutoHealBehaviorFieldParse,0x0043AF21
-_AutoPickUpUpdateFieldParse,0x0041B464
 _BFMENetworkBackendThreadStart@4,0x00DDB630
 _BaseUpgradeFieldParse,0x0042ED57
 _BfmeBaseVUQVft,0x01073744

@@ -30,7 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl AutoPickUpUpdateFieldParse(MultiIniFieldParse &parse);
+// Retail pushes 0x0041B464, the matched ILT thunk to 0x00282E20.
+extern void j_0001b464(void);
 
 class AutoPickUpUpdate
 {
@@ -43,6 +44,7 @@ ModuleData *AutoPickUpUpdate::friend_newModuleData(INI *ini)
 {
 	AutoPickUpUpdateModuleData *data = new AutoPickUpUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &AutoPickUpUpdateFieldParse);
+		ini->initFromINIMultiProc(data, 
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_0001b464));
 	return (ModuleData *)data;
 }
