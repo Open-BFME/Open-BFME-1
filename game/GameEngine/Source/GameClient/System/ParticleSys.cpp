@@ -1263,12 +1263,7 @@ void ParticleSystem::setPosition( const Coord3D *pos )
 // ------------------------------------------------------------------------------------------------
 /** Set the system's local transform */
 // ------------------------------------------------------------------------------------------------
-// ?setLocalTransform@ParticleSystem@@QAEXPBVMatrix3D@@@Z present-unmatched
-void ParticleSystem::setLocalTransform( const Matrix3D *matrix )
-{
-	m_localTransform = *matrix;
-	m_isLocalIdentity = false;
-}
+// ParticleSystem::setLocalTransform: retail body in ParticleSystemSetLocalTransform.cpp.
 
 // ParticleSystem::rotateLocalTransformX: retail body in ParticleSystemRotateLocalTransformX.cpp.
 
