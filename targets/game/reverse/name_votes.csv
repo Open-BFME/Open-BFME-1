@@ -1112,3 +1112,5 @@ game/GameEngine/Source/GameLogic/Object/Update/FireWeaponUpdate.cpp|member||m_08
 game/GameEngine/Source/GameLogic/Object/Update/FireWeaponUpdate.cpp|member||m_0c,a2a0409a5bb6741b185793ea,grok,20261007205414-d4978a,2026-10-07
 game/GameEngine/Source/GameLogic/Object/Update/FireWeaponUpdate.cpp|member||m_0d,6e590d7e91f3ef36cefc605e,grok,20261007205414-d4978a,2026-10-07
 game/GameEngine/Source/GameLogic/Object/Update/FireWeaponUpdate.cpp|member||m_0e,4d0add9dcc36293773af1ded,grok,20261007205414-d4978a,2026-10-07
+game/GameEngine/Source/GameLogic/ScriptEngine/DelayedLuaEventUpdateConstructor.cpp|member||m_f20,6d64418bf59b68b956b793ce,gpt-6-astra,20261007205051-583235,2026-10-07
+game/GameEngine/Source/GameLogic/ScriptEngine/DelayedLuaEventUpdateConstructor.cpp|member||m_f70,4cd2c90a56581bdd14441869,gpt-6-astra,20261007205051-583235,2026-10-07
