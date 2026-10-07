@@ -8,7 +8,8 @@
 // the object's virtual disposal slot when the count reaches zero, and clears
 // the global even when another owner keeps the object alive.
 
-extern RefCountClass *g_rva005F4340Resource;
+// VA 0x012F6DE0: owned here with its shutdown release.
+RefCountClass *g_rva005F4340Resource = 0;
 class StreakLineClass;
 extern StreakLineClass *g_rva005F7FA0Resource;
 
