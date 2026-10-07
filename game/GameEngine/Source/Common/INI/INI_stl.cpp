@@ -1376,14 +1376,7 @@ void INI::initFromINIMulti( void *what, const MultiIniFieldParse& parseTableList
 }
 
 //-------------------------------------------------------------------------------------------------
-/*static*/ const char* INI::getNextToken(const char* seps)
-{
-	if (!seps) seps = getSeps();
-	const char *token = ::strtok(NULL, seps);
-	if (!token) 
-		throw INI_INVALID_DATA;
-	return token;
-}
+// INI::getNextToken: retail body matched in ini.cpp (0x00850970).
 
 //-------------------------------------------------------------------------------------------------
 /*static*/ const char* INI::getNextTokenOrNull(const char* seps)
