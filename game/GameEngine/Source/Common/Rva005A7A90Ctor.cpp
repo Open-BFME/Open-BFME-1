@@ -1,6 +1,14 @@
 // cl: /O2 /Ob0
 
-extern void *g_0110D63C[];
+// Retail .rdata 0x0110D63C, 8 bytes: CommandTranslator's vftable per the
+// translateGameMessage row (slot 0), two ILT slots (vtable_lookup.py).
+void j_00022183();
+void j_0001e501();
+void *g_0110D63C[] =
+{
+	(void *)&j_00022183,
+	(void *)&j_0001e501,
+};
 
 class Rva005A7A90
 {
