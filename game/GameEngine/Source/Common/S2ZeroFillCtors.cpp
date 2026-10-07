@@ -24,11 +24,16 @@
 // distinguish int from pointer from float, so every zeroed dword is `int`
 // except where a 3F800000h store in the same object makes `float` the reading.
 
+// Retail vtable VA 0x0109DF3C is ??_7Gen_001BA9E0@@6B@ (the LocomotorSet
+// vtable, see Rva001B74A0Ctor.cpp); referenced verbatim rather than emitting a
+// TU-local vftable with an invented slot.
+extern "C" void *__identifier("??_7Gen_001BA9E0@@6B@")[];
+
 class Rva001B7450
 {
 public:
 	Rva001B7450();
-	virtual void keep();
+	void **m_vptr;
 	int m_a;
 	int m_b;
 	int m_c;
@@ -42,6 +47,7 @@ public:
 // @??0Rva001B7450@@QAE@XZ 0x001B7450
 Rva001B7450::Rva001B7450()
 {
+	m_vptr = __identifier("??_7Gen_001BA9E0@@6B@");
 	m_a = 0;
 	m_b = 0;
 	m_c = 0;
