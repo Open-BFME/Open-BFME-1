@@ -8,7 +8,7 @@
 
 class AIGuardInnerState
 {
-protected:
+public:
 	virtual ~AIGuardInnerState();
 
 private:

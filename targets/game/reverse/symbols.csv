@@ -4633,7 +4633,7 @@ name,address,notes
 ??1AIGiantBirdFollowThruState@@UAE@XZ,0x0003EFC2,constructor 0x002BEC00 installs vtable 0x010C7968 whose slot zero reaches deleting destructor 0x002C1B10; wrapper calls this ILT
 ??1AIGiantBirdSwoopState@@UAE@XZ,0x00031ACF,constructor 0x002BE230 installs vtable 0x010C7868 whose slot zero reaches deleting destructor 0x002C1A90; wrapper calls this ILT
 ??1AIGuardAttackAggressorState@@UAE@XZ,0x00016900,exact constructor 0x0015D090 and dedicated vtable 0x010963A0 establish the protected complete destructor called by wrapper 0x0015E680 ilt-verified=T1-access(efp=1.30e-03)
-??1AIGuardInnerState@@MAE@XZ,0x000434CD,exact constructor 0x0015CE00 and dedicated vtable 0x01096160 establish the protected complete destructor called by wrapper 0x0015D110
+??1AIGuardInnerState@@UAE@XZ,0x000434CD,exact constructor 0x0015CE00 and dedicated vtable 0x01096160 establish the protected complete destructor called by wrapper 0x0015D110
 ??1AIGuardMachine@@UAE@XZ,0x0015B9D0,GiantBirdGuardMachine ctor unwind handlerC13A00 calls ILT35D46 to this11B destructor; installs AIGuardMachine vtable1095FE0 then destroys StateMachine
 ??1AIGuardOuterState@@MAE@XZ,0x0003751F,exact constructor 0x0015CED0 and dedicated vtable 0x01096248 establish the protected complete destructor called by wrapper 0x0015D190
 ??1AIGuardRetaliateMachine@@MAE@XZ,0x0001F4F1,protected complete destructor ILT called by scalar wrapper 0x0015EBB0; exact constructor 0x0015F240 installs dedicated vtable 0x01096420
@@ -11254,7 +11254,7 @@ name,address,notes
 ??_GAIFollowWaypointPathExactState@@MAEPAXI@Z,0x0001428B,dedicated vtable 0x0109A828 slot zero routes to scalar wrapper 0x00185500
 ??_GAIFollowWaypointPathState@@UAEPAXI@Z,0x0000A556,dedicated vtable 0x0109A7B0 slot zero routes to scalar wrapper 0x001854D0 ilt-verified=T1-access(efp=4.89e-03)
 ??_GAIGuardAttackAggressorState@@UAEPAXI@Z,0x0001A0D2,dedicated vtable 0x010963A0 slot zero routes through this ILT to scalar wrapper 0x0015E680 ilt-verified=T1-access(efp=1.30e-03)
-??_GAIGuardInnerState@@MAEPAXI@Z,0x00012030,dedicated vtable 0x01096160 slot zero routes through this ILT to scalar wrapper 0x0015D110
+??_GAIGuardInnerState@@UAEPAXI@Z,0x00012030,dedicated vtable 0x01096160 slot zero routes through this ILT to scalar wrapper 0x0015D110
 ??_GAIGuardOuterState@@MAEPAXI@Z,0x00030D64,dedicated vtable 0x01096248 slot zero routes through this ILT to scalar wrapper 0x0015D190
 ??_GAIGuardRetaliateReturnState@@UAEPAXI@Z,0x00029820,vtable 0x00C96520 slot zero routes through this ILT to scalar wrapper 0x0015ECA0 ilt-verified=T1-access(efp=1.96e-03)
 ??_GAIGuardRetaliateState@@MAEPAXI@Z,0x0003395B,dedicated vtable 0x01098248 slot zero routes to scalar wrapper 0x00180260
