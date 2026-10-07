@@ -6,10 +6,14 @@
 class BaseHeightMapFloorElement
 {
 public:
+	BaseHeightMapFloorElement();	// not emitted here: retail's ctor lives at its own address
 	virtual ~BaseHeightMapFloorElement();
 };
 
-void forceBaseHeightMapFloorElementDeletingDestructor()
+// The implicit copy constructor (no retail twin) is what makes MSVC emit the
+// vftable and with it ??_G; the default constructor stays declared so this TU
+// does not emit a non-retail copy of it.
+void forceBaseHeightMapFloorElementDeletingDestructor(const BaseHeightMapFloorElement &that)
 {
-	BaseHeightMapFloorElement value;
+	BaseHeightMapFloorElement value(that);
 }
