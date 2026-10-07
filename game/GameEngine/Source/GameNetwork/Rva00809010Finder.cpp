@@ -4,10 +4,10 @@ public:
 	void *bfmeGoRF( void *key, void *defaultValue );
 };
 
-// The lookup key passed to bfmeGoRF lives at 0x0112B568. No name is recorded
-// for it yet, so the address-derived g_0112B568 stands in; declaring it keeps
-// the argument relocatable in a linked build.
-extern char g_0112B568[];
+// The lookup key passed to bfmeGoRF lives at 0x0112B568: retail holds "GID"
+// there (between "SECRET" at 0x0112B560 and "MAX-PLAYERS" at 0x0112B56C). No
+// name is recorded for it yet, so the address-derived g_0112B568 stands in.
+char g_0112B568[] = "GID";
 
 struct Rva00809500Sink
 {
