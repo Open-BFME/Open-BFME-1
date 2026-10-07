@@ -1151,3 +1151,4 @@ game/GameEngine/Source/Common/BfmeConv884.cpp|function|BfmeThingESCa@|bfmeGoESCa
 game/GameEngine/Source/Common/BfmeConv884.cpp|param|BfmeThingESB::bfmeGoESB|o,25b46152e6bb1a97e8d2ff53,gpt-6-astra,20261007215323-8fbe5b,2026-10-07
 game/GameEngine/Source/Common/BfmeConv884.cpp|local|BfmeThingESCa::bfmeGoESCa|s,36e763dee1a69ae159940148,gpt-6-astra,20261007215323-8fbe5b,2026-10-07
 game/GameEngine/Source/Common/BfmeConv884.cpp|local|BfmeThingESCb::bfmeGoESCb|s,a837210f1d1cafe9f0dc7b07,gpt-6-astra,20261007215323-8fbe5b,2026-10-07
+game/GameEngine/Source/Common/BfmeConv884.cpp|member||m_bfmeK,22c6151ae24299382d8236fe,grok,20261007215803-8409ec,2026-10-07

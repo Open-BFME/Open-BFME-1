@@ -558,3 +558,4 @@ game/GameEngine/Source/GameLogic/Object/WeaponTemplate_bfmeRangeBase.cpp|member|
 game/GameEngine/Source/Common/BfmeConv766.cpp|type||BfmeThingDSA,StateMachine,gpt-6-astra+grok,blocked: game/GameEngine/Source/Common/BfmeConv766.cpp: FAIL ?bfmeGoDSA@StateMachine@@QAEPAXPAX@Z (game/GameEngine/Source/Common/BfmeConv766.cpp),2026-10-07
 game/GameEngine/Source/Common/BfmeConv766.cpp|member||m_bfmeFlag,m_locked,gpt-6-astra+grok,blocked: game/GameEngine/Source/Common/BfmeConv766.cpp: FAIL ?bfmeGoDSA@StateMachine@@QAEPAXPAX@Z (game/GameEngine/Source/Common/BfmeConv766.cpp),2026-10-07
 game/GameEngine/Source/Common/BfmeConv766.cpp|function|BfmeThingDSA@|bfmeGoDSA,setState,gpt-6-astra+grok,blocked: game/GameEngine/Source/Common/BfmeConv766.cpp: FAIL ?bfmeGoDSA@StateMachine@@QAEPAXPAX@Z (game/GameEngine/Source/Common/BfmeConv766.cpp),2026-10-07
+game/GameEngine/Source/Common/BfmeConv884.cpp|member||m_bfmeK,m_playerIndex,gpt-6-astra+grok,agreed,2026-10-07
