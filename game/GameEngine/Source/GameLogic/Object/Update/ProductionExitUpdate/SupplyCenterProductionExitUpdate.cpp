@@ -164,28 +164,8 @@ void SupplyCenterProductionExitUpdate::exitObjectViaDoor( Object *newObj, ExitDo
 
 
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/SupplyCenterProductionExitUpdateGetExitPosition.cpp
-// ?getExitPosition@SupplyCenterProductionExitUpdate@@ present-unmatched
-Bool SupplyCenterProductionExitUpdate::getExitPosition( Coord3D& exitPosition ) const
-{
-	const Object *obj = getObject();
-	if (!obj)
-		return FALSE;
-
-	const Matrix3D *transform = obj->getTransformMatrix();
-
-	const SupplyCenterProductionExitUpdateModuleData *md = getSupplyCenterProductionExitUpdateModuleData();
-
-	Vector3 loc;
-	loc.Set( md->m_unitCreatePoint.x, md->m_unitCreatePoint.y, md->m_unitCreatePoint.z );
-	transform->Transform_Vector( *transform, loc, &loc );
-
-	exitPosition.x = loc.X;
-	exitPosition.y = loc.Y;
-	exitPosition.z = loc.Z;
-	
-	return TRUE;
-
-}
+// SupplyCenterProductionExitUpdate::getExitPosition: retail 0x002D24C0 lives in
+// SupplyCenterProductionExitUpdateGetExitPosition.cpp.
 
 
 // ------------------------------------------------------------------------------------------------
