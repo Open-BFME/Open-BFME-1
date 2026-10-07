@@ -16,10 +16,12 @@ class State
 public:
 	virtual void slot00() = 0;
 
-	StateID getID() const { return m_id; }
-
 	StateID m_id;
 };
+
+// File-static, not State::getID: retail ?getID@State@@QBEIXZ (0x00106670)
+// reads +8, while this view's id at +4 is read inline by 0x002BC870.
+static inline StateID stateGetID(const State *state) { return state->m_id; }
 
 class Rva002BC870Target
 {
@@ -80,7 +82,7 @@ public:
 #undef SM_SLOT
 	virtual Bool rva002BC870() const;
 
-	StateID getCurrentStateID() const { return m_currentState ? m_currentState->getID() : INVALID_STATE_ID; }
+	StateID getCurrentStateID() const { return m_currentState ? stateGetID(m_currentState) : INVALID_STATE_ID; }
 
 private:
 	unsigned char m_pad04[0x0c];
