@@ -13,16 +13,19 @@
 
 #include "ascii_string.h"
 
-class __declspec(novtable) Gen_dtor_002dabe0
+// The base dtor (ILT 0x4A430) is the matched ??1Mem002DAB10@@QAE@XZ
+// (Mem002DAB10Destructor.cpp): polymorphic through anchor(), non-virtual dtor.
+class __declspec(novtable) Mem002DAB10
 {
 public:
-	virtual ~Gen_dtor_002dabe0();
+	virtual void anchor();
+	~Mem002DAB10();
 
 private:
 	char m_opaque[0x5C];
 };
 
-class __declspec(novtable) Gen_002de780 : public Gen_dtor_002dabe0
+class __declspec(novtable) Gen_002de780 : public Mem002DAB10
 {
 public:
 	virtual ~Gen_002de780();
