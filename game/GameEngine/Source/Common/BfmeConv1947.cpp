@@ -1,10 +1,10 @@
-class BfmeKeyGenEQW
+class NameKeyGenerator
 {
 public:
 	int bfmeNameToKeyEQW(const char *name);
 };
 
-extern BfmeKeyGenEQW *g_bfmeKeyGenEQW;
+extern NameKeyGenerator *g_bfmeKeyGenEQW;
 
 class BfmeModuleEQW
 {
@@ -48,12 +48,12 @@ public:
 	void bfmeGoEQW(BfmeThingEQW *thing);
 
 	unsigned char m_bfmeHeadEQW[4];
-	BfmeOwnerEQW *m_bfmeOwnerEQW;
+	BfmeOwnerEQW *m_moduleData;
 };
 
 void BfmeHostEQW::bfmeGoEQW(BfmeThingEQW *thing)
 {
-	BfmeOwnerEQW *owner = m_bfmeOwnerEQW;
+	BfmeOwnerEQW *owner = m_moduleData;
 	BfmeSubEQW *sub = owner->m_bfmeSubEQW;
 
 	if (sub != 0 && !((FXList *)sub)->bfmeIsBlocked())

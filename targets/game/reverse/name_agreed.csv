@@ -489,3 +489,5 @@ game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThu
 game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThunk.cpp|member||m_1c,m_dpsMin,gpt-6-astra+grok,agreed,2026-10-07
 game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThunk.cpp|member||m_20,m_dpsMax,gpt-6-astra+grok,agreed,2026-10-07
 game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThunk.cpp|member||m_24,m_dpsRampupTime,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/Common/BfmeConv1947.cpp|type||BfmeKeyGenEQW,NameKeyGenerator,gpt-6-astra+grok,applied,2026-10-07
+game/GameEngine/Source/Common/BfmeConv1947.cpp|member||m_bfmeOwnerEQW,m_moduleData,gpt-6-astra+grok,applied,2026-10-07

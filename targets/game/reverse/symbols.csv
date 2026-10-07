@@ -77993,7 +77993,7 @@ name,address,notes
 ?bfmeName1233@BfmeE1233@@QAEXPAUBfmeStr1233@@@Z,0x008985C0,pin
 ?bfmeNameBI@BfmeThingBI@@QAE?AVAsciiStringBI@@XZ,0x00012A7B,Open-BFME5 the name the key lookup at 0x007696B0 returns
 ?bfmeNameEHR@BfmeObjEHR@@QAE?AVBfmeStrEHR@@XZ,0x000488A1,pin
-?bfmeNameToKeyEQW@BfmeKeyGenEQW@@QAEHPBD@Z,0x0003ADD7,pin
+?bfmeNameToKeyEQW@NameKeyGenerator@@QAEHPBD@Z,0x0003ADD7,pin
 ?bfmeNameToKeyERA@BfmeKeyGenERA@@QAEHPBD@Z,0x0003ADD7,pin
 ?bfmeNameToKeyERB@BfmeKeyGenERB@@QAEHPBD@Z,0x0003ADD7,pin
 ?bfmeNameToKeyERH@BfmeKeyGenERH@@QAEHPBD@Z,0x0003ADD7,pin
@@ -81925,7 +81925,7 @@ name,address,notes
 ?g_bfmeKeyBVHC@@3HA,0x00D2B578,pin
 ?g_bfmeKeyCVHD@@3HA,0x00D2B490,pin
 ?g_bfmeKeyDVHD@@3HA,0x00D2B588,pin
-?g_bfmeKeyGenEQW@@3PAVBfmeKeyGenEQW@@A,0x00EED600,pin
+?g_bfmeKeyGenEQW@@3PAVNameKeyGenerator@@A,0x00EED600,pin
 ?g_bfmeKeyGenERA@@3PAVBfmeKeyGenERA@@A,0x00EED600,pin
 ?g_bfmeKeyGenERB@@3PAVBfmeKeyGenERB@@A,0x00EED600,pin
 ?g_bfmeKeyGenERH@@3PAVBfmeKeyGenERH@@A,0x00EED600,pin

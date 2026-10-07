@@ -10567,7 +10567,7 @@ name,va
 ?g_bfmeKeyBVHC@@3HA,0x0112B578
 ?g_bfmeKeyCVHD@@3HA,0x0112B490
 ?g_bfmeKeyDVHD@@3HA,0x0112B588
-?g_bfmeKeyGenEQW@@3PAVBfmeKeyGenEQW@@A,0x012ED600
+?g_bfmeKeyGenEQW@@3PAVNameKeyGenerator@@A,0x012ED600
 ?g_bfmeKeyGenERA@@3PAVBfmeKeyGenERA@@A,0x012ED600
 ?g_bfmeKeyGenERH@@3PAVBfmeKeyGenERH@@A,0x012ED600
 ?g_bfmeKeyGenERI@@3PAVBfmeKeyGenERI@@A,0x012ED600
