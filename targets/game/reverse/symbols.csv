@@ -5071,7 +5071,6 @@ name,address,notes
 ??1ClientUpdateModule@@UAE@XZ,0x0002EDCA,complete destructor ILT called by scalar wrapper 0x00602FF0; exact constructor 0x00602ED0 installs vtable 0x01115210
 ??1CloudBreakSpecialPower@@MAE@XZ,0x00007379,destructor ILT to 0x00259060
 ??1CloudBreakSpecialPowerModuleData@@UAE@XZ,0x0001F76C,public complete destructor ILT called by scalar wrapper 0x002592F0; exact constructor 0x002592A0 installs dedicated vtable 0x010B3CD8
-??1CollideModule@@UAE@XZ,0x0004B68C,destructor ILT to the shared body at 0x00217620
 ??1CombineHordeSpecialPower@@MAE@XZ,0x0000BD52,destructor ILT to 0x00259740
 ??1CombineHordeSpecialPowerModuleData@@UAE@XZ,0x0000B37F,public complete destructor ILT called by scalar wrapper 0x002598D0; exact constructor 0x002598A0 installs dedicated vtable 0x010B3EC8
 ??1CommandButton@@MAE@XZ,0x0001AE1A,exact constructor 0x0049BBF0 and dedicated vtable 0x010FB5DC establish the protected complete destructor called by wrapper 0x0049C560
