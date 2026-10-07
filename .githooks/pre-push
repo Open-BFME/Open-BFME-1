@@ -16,6 +16,9 @@ unset MSYS_NO_PATHCONV MSYS2_ARG_CONV_EXCL
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 
+. .githooks/python3.sh
+require_python3 pre-push
+
 fail() {
     echo "PRE-PUSH FAILED: $*" >&2
     exit 1

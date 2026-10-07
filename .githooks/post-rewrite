@@ -11,5 +11,8 @@ set -uo pipefail
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 
+. .githooks/python3.sh
+require_python3 post-rewrite warn
+
 python3 tools/ledger_after_rewrite.py "post-rewrite ($1)" || true
 exit 0

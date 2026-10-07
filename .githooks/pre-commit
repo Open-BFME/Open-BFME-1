@@ -20,6 +20,9 @@ cd "$ROOT"
 receipt="$(git rev-parse --git-path bfme-ledger-verified-tree 2>/dev/null || true)"
 [ -z "$receipt" ] || rm -f "$receipt" 2>/dev/null || true
 
+. .githooks/python3.sh
+require_python3 pre-commit
+
 fail() {
     echo "PRE-COMMIT FAILED: $*" >&2
     exit 1

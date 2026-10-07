@@ -7,6 +7,9 @@ set -uo pipefail
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 
+. .githooks/python3.sh
+require_python3 post-merge
+
 if ! python3 tools/check_csv.py; then
     cat >&2 <<'MSG'
 =============== MERGE LEFT THE LEDGER CORRUPT ===============

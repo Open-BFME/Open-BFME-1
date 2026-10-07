@@ -7,6 +7,9 @@ set -euo pipefail
 
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
+
+. .githooks/python3.sh
+require_python3 commit-msg
 checker=tools/protected_paths.py
 if git cat-file -e "HEAD:$checker" 2>/dev/null; then
     git show "HEAD:$checker" | python3 - --commit-msg "$1" \
