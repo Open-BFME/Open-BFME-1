@@ -33,8 +33,6 @@
 // USER INCLUDES //////////////////////////////////////////////////////////////////////////////////
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
-#define DEFINE_LOCOMOTORSET_NAMES //Gain access to TheLocomotorSetNames[]
-
 #include "Common/Player.h"
 #include "Common/PlayerList.h"
 #include "Common/ThingTemplate.h"
@@ -56,6 +54,27 @@
 #include "GameLogic/Module/PhysicsUpdate.h"
 #include "GameLogic/Module/StealthUpdate.h"
 #include "GameLogic/Module/RiderChangeContain.h"
+
+// BFME locomotor set names; retail table 0x012B1220 (ZH ends at SET_SLUGGISH).
+static const char *TheLocomotorSetNames[] = 
+{
+	"SET_NORMAL",
+	"SET_NORMAL_UPGRADED",
+	"SET_FREEFALL",
+	"SET_WANDER",
+	"SET_PANIC",
+	"SET_TAXIING",
+	"SET_SUPERSONIC",
+	"SET_MOUNTED",
+	"SET_ENRAGED",
+	"SET_SCARED",
+	"SET_CONTAINED",
+	"SET_COMBO",
+	"SET_COMBO2",
+	"SET_COMBO3",
+
+	NULL
+};
 
 #ifdef _INTERNAL
 // for occasional debugging...
