@@ -31,7 +31,9 @@
 // AICommandInterfaceMovementOrders.cpp: aiIdle 0x000D87E0, aiHunt 0x000D88D0,
 // aiEnter 0x000D89C0, aiEvacuate 0x000D8AC0 and aiAttackMoveToPosition
 // 0x00153AF0 (and aiMoveToPosition 0x000D86C0, kept inline below), and in
-// AICommandInterfaceGuardCommands.cpp: aiGuardPosition 0x00154550. ZH defines
+// AICommandInterfaceGuardCommands.cpp: aiGuardPosition 0x00154550. The
+// other helpers declared out of line below carry their retail address and
+// owner TU on their line. ZH defines
 // them inline in the class, so a TU that calls one without inlining it emits
 // its own ZH-shaped COMDAT copy, which collides with the owner's. Declaring
 // them here makes those TUs call the owner. Otherwise identical to ZH
@@ -483,12 +485,7 @@ public:
 		aiDoCommand(&parms);
 	}
 
-	inline void aiMoveToObject( Object *obj, CommandSourceType cmdSource )
-	{
-		AICommandParms parms(AICMD_MOVE_TO_OBJECT, cmdSource);
-		parms.m_obj = obj;
-		aiDoCommand(&parms);
-	}
+	void aiMoveToObject( Object *obj, CommandSourceType cmdSource );	// BFME: out of line, retail 0x002A8060 (AICommandInterfaceFaceCommands.cpp)
 
 	inline void aiTightenToPosition( const Coord3D *pos, CommandSourceType cmdSource )
 	{
@@ -497,19 +494,9 @@ public:
 		aiDoCommand(&parms);
 	}
 
-	inline void aiMoveToAndEvacuate( const Coord3D *pos, CommandSourceType cmdSource )
-	{
-		AICommandParms parms(AICMD_MOVE_TO_POSITION_AND_EVACUATE, cmdSource);
-		parms.m_pos = *pos;
-		aiDoCommand(&parms);
-	}
+	void aiMoveToAndEvacuate( const Coord3D *pos, CommandSourceType cmdSource );	// BFME: out of line, retail 0x001528E0 (AICommandInterfacePositionCommands.cpp)
 
-	inline void aiMoveToAndEvacuateAndExit( const Coord3D *pos, CommandSourceType cmdSource )
-	{
-		AICommandParms parms(AICMD_MOVE_TO_POSITION_AND_EVACUATE_AND_EXIT, cmdSource);
-		parms.m_pos = *pos;
-		aiDoCommand(&parms);
-	}
+	void aiMoveToAndEvacuateAndExit( const Coord3D *pos, CommandSourceType cmdSource );	// BFME: out of line, retail 0x00152A00 (AICommandInterfacePositionCommands.cpp)
 
 	void aiIdle(CommandSourceType cmdSource);	// BFME: out of line, retail 0x000D87E0
 
@@ -519,19 +506,9 @@ public:
 		aiDoCommand(&parms);
 	}
 
-	inline void aiFollowWaypointPath( const Waypoint *way, CommandSourceType cmdSource )
-	{
-		AICommandParms parms(AICMD_FOLLOW_WAYPOINT_PATH, cmdSource);
-		parms.m_waypoint = way;
-		aiDoCommand(&parms);
-	}
+	void aiFollowWaypointPath( const Waypoint *way, CommandSourceType cmdSource );	// BFME: out of line, retail 0x00152D20 (AICommandInterfaceFollowPathCommands.cpp)
 
-	inline void aiFollowWaypointPathExact( const Waypoint *way, CommandSourceType cmdSource )
-	{
-		AICommandParms parms(AICMD_FOLLOW_WAYPOINT_PATH_EXACT, cmdSource);
-		parms.m_waypoint = way;
-		aiDoCommand(&parms);
-	}
+	void aiFollowWaypointPathExact( const Waypoint *way, CommandSourceType cmdSource );	// BFME: out of line, retail 0x00152E20 (AICommandInterfaceFollowPathCommands.cpp)
 
 	inline void aiFollowWaypointPathAsTeam( const Waypoint *way, CommandSourceType cmdSource )
 	{
@@ -570,21 +547,9 @@ public:
 		aiDoCommand(&parms);
 	}
 
-	inline void aiAttackObject( Object *victim, Int maxShotsToFire, CommandSourceType cmdSource )
-	{
-		AICommandParms parms(AICMD_ATTACK_OBJECT, cmdSource);
-		parms.m_obj = victim;
-		parms.m_intValue = maxShotsToFire;
-		aiDoCommand(&parms);
-	}
+	void aiAttackObject( Object *victim, Int maxShotsToFire, CommandSourceType cmdSource );	// BFME: out of line, retail 0x001535A0 (AICommandInterfaceAttackCommands.cpp)
 
-	inline void aiForceAttackObject( Object *victim, Int maxShotsToFire, CommandSourceType cmdSource )
-	{
-		AICommandParms parms(AICMD_FORCE_ATTACK_OBJECT, cmdSource);
-		parms.m_obj = victim;
-		parms.m_intValue = maxShotsToFire;
-		aiDoCommand(&parms);
-	}
+	void aiForceAttackObject( Object *victim, Int maxShotsToFire, CommandSourceType cmdSource );	// BFME: out of line, retail 0x001537B0 (AICommandInterfaceAttackCommands.cpp)
 
 	inline void aiGuardRetaliate( Object *victim, const Coord3D *pos, Int maxShotsToFire, CommandSourceType cmdSource )
 	{
@@ -595,21 +560,9 @@ public:
 		aiDoCommand(&parms);
 	}
 
-	inline void aiAttackTeam( const Team *team, Int maxShotsToFire, CommandSourceType cmdSource )
-	{
-		AICommandParms parms(AICMD_ATTACK_TEAM, cmdSource);
-		parms.m_team = team;
-		parms.m_intValue = maxShotsToFire;
-		aiDoCommand(&parms);
-	}
+	void aiAttackTeam( const Team *team, Int maxShotsToFire, CommandSourceType cmdSource );	// BFME: out of line, retail 0x001538C0 (AICommandInterfaceAttackCommands.cpp)
 
-	inline void aiAttackPosition( const Coord3D *pos, Int maxShotsToFire, CommandSourceType cmdSource )
-	{
-		AICommandParms parms(AICMD_ATTACK_POSITION, cmdSource);
-		parms.m_pos = *pos;
-		parms.m_intValue = maxShotsToFire;
-		aiDoCommand(&parms);
-	}
+	void aiAttackPosition( const Coord3D *pos, Int maxShotsToFire, CommandSourceType cmdSource );	// BFME: out of line, retail 0x001539D0 (AICommandInterfaceAttackCommands.cpp)
 
 	void aiAttackMoveToPosition( const Coord3D *pos, Int maxShotsToFire, CommandSourceType cmdSource );	// BFME: out of line, retail 0x00153AF0
 
@@ -631,19 +584,9 @@ public:
 
 	void aiHunt( CommandSourceType cmdSource );	// BFME: out of line, retail 0x000D88D0
 
-	inline void aiAttackArea( const PolygonTrigger *areaToGuard, CommandSourceType cmdSource )
-	{
-		AICommandParms parms(AICMD_ATTACK_AREA, cmdSource);
-		parms.m_polygon = areaToGuard;
-		aiDoCommand(&parms);
-	}
+	void aiAttackArea( const PolygonTrigger *areaToGuard, CommandSourceType cmdSource );	// BFME: out of line, retail 0x00153C10 (AICommandInterfaceAttackCommands.cpp)
 
-	inline void aiRepair( Object *obj, CommandSourceType cmdSource )
-	{
-		AICommandParms parms(AICMD_REPAIR, cmdSource);
-		parms.m_obj = obj;
-		aiDoCommand(&parms);
-	}
+	void aiRepair( Object *obj, CommandSourceType cmdSource );	// BFME: out of line, retail 0x00153D10 (AICommandInterfaceObjectCommands.cpp)
 
 #ifdef ALLOW_SURRENDER
 	inline void aiPickUpPrisoner( Object *obj, CommandSourceType cmdSource )
@@ -663,12 +606,7 @@ public:
 	}
 #endif
 
-	inline void aiResumeConstruction( Object *obj, CommandSourceType cmdSource )
-	{
-		AICommandParms parms(AICMD_RESUME_CONSTRUCTION, cmdSource);
-		parms.m_obj = obj;
-		aiDoCommand(&parms);
-	}
+	void aiResumeConstruction( Object *obj, CommandSourceType cmdSource );	// BFME: out of line, retail 0x00153E10 (AICommandInterfaceObjectCommands.cpp)
 
 	inline void aiGetHealed( Object *healDepot, CommandSourceType cmdSource )
 	{
@@ -686,19 +624,9 @@ public:
 
 	void aiEnter( Object *obj, CommandSourceType cmdSource );	// BFME: out of line, retail 0x000D89C0
 
-	inline void aiDock( Object *obj, CommandSourceType cmdSource )
-	{
-		AICommandParms parms(AICMD_DOCK, cmdSource);
-		parms.m_obj = obj;
-		aiDoCommand(&parms);
-	}
+	void aiDock( Object *obj, CommandSourceType cmdSource );	// BFME: out of line, retail 0x00154110 (AICommandInterfaceObjectCommands.cpp)
 
-	inline void aiExit( Object *objectToExit, CommandSourceType cmdSource )
-	{
-		AICommandParms parms(AICMD_EXIT, cmdSource);
-		parms.m_obj = objectToExit;
-		aiDoCommand(&parms);
-	}
+	void aiExit( Object *objectToExit, CommandSourceType cmdSource );	// BFME: out of line, retail 0x00154330 (AICommandInterfaceObjectCommands.cpp)
 
 	inline void aiExitInstantly( Object *objectToExit, CommandSourceType cmdSource )
 	{
@@ -725,12 +653,7 @@ public:
 		aiDoCommand( &parms );
 	}
 
-	inline void aiGoProne( const DamageInfo *damageInfo, CommandSourceType cmdSource )
-	{
-		AICommandParms parms(AICMD_GO_PRONE, cmdSource);
-		parms.m_damage = *damageInfo;
-		aiDoCommand(&parms);
-	}
+	void aiGoProne( const DamageInfo *damageInfo, CommandSourceType cmdSource );	// BFME: out of line, retail 0x00154430 (AICommandInterfaceAttackCommands.cpp)
 
 	void aiGuardPosition( const Coord3D *pos, GuardMode guardMode, CommandSourceType cmdSource );	// BFME: out of line, retail 0x00154550
 
@@ -763,19 +686,9 @@ public:
 		aiDoCommand(&parms);
 	}
 
-	inline void aiFaceObject( Object *target, CommandSourceType cmdSource )
-	{
-		AICommandParms parms(AICMD_FACE_OBJECT, cmdSource);
-		parms.m_obj = target;
-		aiDoCommand(&parms);
-	}
+	void aiFaceObject( Object *target, CommandSourceType cmdSource );	// BFME: out of line, retail 0x002A8160 (AICommandInterfaceFaceCommands.cpp)
 
-	inline void aiFacePosition( const Coord3D *pos, CommandSourceType cmdSource )
-	{
-		AICommandParms parms(AICMD_FACE_POSITION, cmdSource);
-		parms.m_pos = *pos;
-		aiDoCommand(&parms);
-	}
+	void aiFacePosition( const Coord3D *pos, CommandSourceType cmdSource );	// BFME: out of line, retail 0x002A7F40 (AICommandInterfaceFaceCommands.cpp)
 
 	inline void aiRappelInto( Object *target, const Coord3D& pos, CommandSourceType cmdSource )
 	{
@@ -823,25 +736,11 @@ public:
 		aiDoCommand(&parms);
 	}
 
-	inline void aiWander( const Waypoint *way, CommandSourceType cmdSource )
-	{
-		AICommandParms parms(AICMD_WANDER, cmdSource);
-		parms.m_waypoint = way;
-		aiDoCommand(&parms);
-	}
+	void aiWander( const Waypoint *way, CommandSourceType cmdSource );	// BFME: out of line, retail 0x00300320 (AICommandInterfaceStandingOrders.cpp)
 
-	inline void aiWanderInPlace(CommandSourceType cmdSource)
-	{
-		AICommandParms parms(AICMD_WANDER_IN_PLACE, cmdSource);
-		aiDoCommand(&parms);
-	}
+	void aiWanderInPlace(CommandSourceType cmdSource);	// BFME: out of line, retail 0x00300420 (AICommandInterfaceStandingOrders.cpp)
 
-	inline void aiPanic( const Waypoint *way, CommandSourceType cmdSource )
-	{
-		AICommandParms parms(AICMD_PANIC, cmdSource);
-		parms.m_waypoint = way;
-		aiDoCommand(&parms);
-	}
+	void aiPanic( const Waypoint *way, CommandSourceType cmdSource );	// BFME: out of line, retail 0x00300510 (AICommandInterfaceStandingOrders.cpp)
 
 };
 
