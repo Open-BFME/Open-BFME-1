@@ -41,9 +41,12 @@ class ThingTemplate
 {
 public:
 	virtual ~ThingTemplate();
-	ThingTemplate *friend_getNextTemplate() const { return m_nextThingTemplate; }
 
 private:
+	// Retail inlines friend_getNextTemplate (load +0x38C); reading the link
+	// directly keeps this TU from emitting a non-retail out-of-line COMDAT.
+	friend class ThingFactory;
+
 	char m_unmodelled04[0x388];
 	ThingTemplate *m_nextThingTemplate;
 };
@@ -67,7 +70,7 @@ void ThingFactory::freeDatabase()
 	while (m_firstTemplate)
 	{
 		ThingTemplate *tmpl = m_firstTemplate;
-		m_firstTemplate = m_firstTemplate->friend_getNextTemplate();
+		m_firstTemplate = m_firstTemplate->m_nextThingTemplate;
 		delete tmpl;
 	}
 	m_templateHashMap.clear();
