@@ -2,11 +2,7 @@ class BfmeThingBS;
 class BfmeAgentBS;
 class BfmeInfoBS;
 
-class BfmeSubBS
-{
-public:
-	void bfmeSetBS(float level);
-};
+class BfmeSubBS;
 
 class BfmeAgentBS
 {
@@ -58,9 +54,11 @@ public:
 	void bfmeSendCF(void *at);
 };
 
+// ILT 0x34D29 -> matched 0x001B2060 ExperienceTracker::bfmeSetCurrentExperience.
 class ExperienceTracker
 {
 public:
+	void bfmeSetCurrentExperience(float level);
 	void bfmeSetScalarIndex(int index);
 };
 
@@ -78,7 +76,8 @@ int __cdecl bfmeApplyBS(BfmeAgentBS *a, BfmeInfoBS *b)
 		if (t != 0)
 			((BfmeThingCF *)t)->bfmeSendCF(b->m_bfmeAtBS);
 
-		a->m_bfmeSubBS->bfmeSetBS((float)b->m_bfmeLevelBS);
+		((ExperienceTracker *)a->m_bfmeSubBS)->bfmeSetCurrentExperience(
+			(float)b->m_bfmeLevelBS);
 		((ExperienceTracker *)a->m_bfmeSubBS)->bfmeSetScalarIndex(
 			(int)b->m_bfmeExtraBS);
 	}
