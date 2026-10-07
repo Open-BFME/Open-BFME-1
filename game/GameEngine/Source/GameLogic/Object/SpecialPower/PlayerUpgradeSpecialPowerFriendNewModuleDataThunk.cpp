@@ -30,7 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl PlayerUpgradeSpecialPowerFieldParse(MultiIniFieldParse &parse);
+// The proc retail passes is VA 0x0044106A, the ILT stub ?j_0004106a@@YAXXZ (jumps to 0x002643F0).
+extern void j_0004106a();
 
 class PlayerUpgradeSpecialPower
 {
@@ -43,6 +44,6 @@ ModuleData *PlayerUpgradeSpecialPower::friend_newModuleData(INI *ini)
 {
 	PlayerUpgradeSpecialPowerModuleData *data = new PlayerUpgradeSpecialPowerModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &PlayerUpgradeSpecialPowerFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))&j_0004106a);
 	return (ModuleData *)data;
 }
