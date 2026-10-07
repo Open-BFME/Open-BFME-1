@@ -41,7 +41,8 @@ class Gen_009D83D0 : public BfmeBaseR_009D83D0
 {
 public:
 	Gen_009D83D0(void);
-	virtual ~Gen_009D83D0(void) {}
+	// Out of line: the retail body (0x009D83D0) is Bfme5VectorMemberDtors.cpp's.
+	virtual ~Gen_009D83D0(void);
 
 private:
 	int m_bfmePad;
