@@ -38,8 +38,8 @@ public:
 struct BfmeArg1002;
 struct BfmeX1002;
 
-// pinned targets/game/reverse/symbols.csv: ?bfmeFind1002@BfmeA1002@@QAEPAUBfmeX1002@@PAUBfmeArg1002@@@Z @ 0x0003F5DA
-class BfmeA1002
+// pinned targets/game/reverse/symbols.csv: ?bfmeFind1002@HordeContain@@QAEPAUBfmeX1002@@PAUBfmeArg1002@@@Z @ 0x0003F5DA
+class HordeContain
 {
 public:
 	BfmeX1002 *bfmeFind1002( BfmeArg1002 *arg );
@@ -97,7 +97,7 @@ void BfmeHordeContainOwner::rva00245b20( Object *member, Int p2, Bool p3, Int p4
 
 	( (Rva002459D0Owner *)this )->rva002459d0( member, &m_pendingSlot, index );
 
-	BfmeX1002 *carrier = ( (BfmeA1002 *)this )->bfmeFind1002( (BfmeArg1002 *)member );
+	BfmeX1002 *carrier = ( (HordeContain *)this )->bfmeFind1002( (BfmeArg1002 *)member );
 	if ( carrier )
 	{
 		( (BfmeG1037 *)carrier )->bfmeDo1037( outFlag, p4 );

@@ -1,5 +1,6 @@
 // Open-BFME5 conversions.
 
+class Object;
 struct BfmeArg1002;
 
 struct BfmeSub1002
@@ -14,11 +15,12 @@ struct BfmeX1002
 	BfmeSub1002 *m_bfmeSub;
 };
 
-class BfmeA1002
+class HordeContain
 {
-public:
-	void bfmeGo1002A(BfmeArg1002 *a);
+protected:
+	void checkSpecialUnitDeath(const Object &obj);
 
+public:
 	char m_bfmePad[0x1b4];
 	int m_bfmeA;
 	char m_bfmePad2[4];
@@ -33,7 +35,7 @@ struct BfmeArg1002
 	int m_bfmeId;
 };
 
-// Retail's call at +0x35 of ?bfmeGo1002A@BfmeA1002@@QAEXPAUBfmeArg1002@@@Z
+// Retail's call at +0x35 of ?checkSpecialUnitDeath@HordeContain@@IAEXABVObject@@@Z
 // lands on the ILT thunk ?j_0003f5da@@YAXXZ (0x0003F5DA), whose matched
 // five-byte body lives in game/gen_small/thunks_030.cpp.  That decorated
 // symbol is what the call must relocate against, so the reference is spelled
@@ -47,8 +49,11 @@ extern void j_0003f5da();
 struct BfmeFindThunk1002 { BfmeX1002 *Call(BfmeArg1002 *arg); };
 typedef BfmeX1002 *(BfmeFindThunk1002::*BfmeFindCall1002)(BfmeArg1002 *arg);
 
-void BfmeA1002::bfmeGo1002A(BfmeArg1002 *a)
+// EA's name (ea_evidence.csv); retail's thunk table confirms the protected
+// const Object& decoration, and Object+0x74 is m_id.
+void HordeContain::checkSpecialUnitDeath(const Object &obj)
 {
+	BfmeArg1002 *a = (BfmeArg1002 *)&obj;
 	int id = a->m_bfmeId;
 
 	if (m_bfmeA == id) {
