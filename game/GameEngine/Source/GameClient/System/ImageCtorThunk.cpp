@@ -8,17 +8,11 @@
 #include "Common/AsciiString.h"
 #include "Lib/BaseType.h"
 
-// Only the virtual slot matters to this isolated constructor TU.  Keeping a
-// tiny local base avoids pulling the pool-glue allocator machinery into the
-// parser's translation unit while preserving the retail +0x04 field offsets.
-class ImageBase
-{
-public:
-	virtual void anchor();
-};
-
+// Retail vftable 0x0110FFEC has one slot, ??_GImage@@UAEPAXI@Z (0x005D2BD0),
+// so the class's only virtual is its destructor; the vptr sits at +0x00 and
+// the fields start at +0x04.
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Image.h
-class Image : public ImageBase
+class Image
 {
 public:
 	Image( void );

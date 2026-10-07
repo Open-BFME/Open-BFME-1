@@ -145,11 +145,7 @@ ImageCollection *TheMappedImageCollection = NULL;  ///< mapped images
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ??1Image@@MAE@XZ present-unmatched
-Image::~Image( void )
-{
-
-}  // end ~Image
+// Image::~Image( void ) is defined once, in ImageDestructors.cpp (retail 0x005D2840).
 
 //-------------------------------------------------------------------------------------------------
 /** Set a status bit into the existing status, return the previous status
