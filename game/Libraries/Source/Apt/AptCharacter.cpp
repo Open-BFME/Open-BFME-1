@@ -35,7 +35,13 @@ struct BfmePickWorld1284
 };
 
 extern BfmePickWorld1284 *g_bfmeHolderBU;
-extern unsigned int g_bfmeHashMasks008AD350[];
+// Member-flag masks for word values 0xC8..0xD9 (.rdata 0x01136808, 18
+// entries; 0x01136850 starts a float constant). The body indexes from the
+// first word value, so retail's operand is the biased base 0x011364E8.
+extern const unsigned int g_bfmeHashMasks008AD350[18] = {
+	0x100, 0xFFFFFFFF, 0xFFFFFFFF, 0x2, 0x40, 0x80, 0xFFFFFFFF, 0x1, 0x10,
+	0x8, 0x20, 0x400, 0x800, 0x1000, 0x4000, 0x2000, 0xFFFFFFFF, 0x4,
+};
 
 struct BfmeHeader008AD350
 {
@@ -68,7 +74,7 @@ void BfmeObject008AD350::setMember(BfmeString008AD350 *key, void *value, int ena
 
 	if (word != 0 && word->m_value >= 0xC8)
 	{
-		unsigned mask = g_bfmeHashMasks008AD350[word->m_value];
+		unsigned mask = g_bfmeHashMasks008AD350[word->m_value - 0xC8];
 		if (enabled != 0)
 			m_bits &= ~mask;
 		else
