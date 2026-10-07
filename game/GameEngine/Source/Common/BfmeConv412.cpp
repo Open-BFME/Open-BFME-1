@@ -17,14 +17,13 @@ public:
 	unsigned char m_bfmeHead[4];
 };
 
-class BfmeThingANB;
-
 class BfmeSinkANB;
+class ThingTemplate;
 
-class BfmeThingANB
+class LocomotorSet
 {
 public:
-	void bfmeFinishANB(BfmeSinkANB *sink, void *what);
+	void setLocomotorAndBaseSpeed(INI *ini, ThingTemplate *thing);
 	void bfmeInitANB(BfmeSinkANB *sink, void *what);
 	unsigned char m_bfmeHead[0x18];
 	BfmeSlotANB m_bfmeA;
@@ -32,11 +31,11 @@ public:
 	int m_bfmeFlag;
 };
 
-void BfmeThingANB::bfmeInitANB(BfmeSinkANB *sink, void *what)
+void LocomotorSet::bfmeInitANB(BfmeSinkANB *sink, void *what)
 {
 	m_bfmeA.bfmeSetANB((void *)g_Rva0107301CEmptyString, 0);
 	m_bfmeB.bfmeSetANB((void *)g_Rva0107301CEmptyString, 0);
 	m_bfmeFlag = 0;
 	reinterpret_cast<INI *>(sink)->initFromINI(this, (const FieldParse *)bfmeTagANB);
-	bfmeFinishANB(sink, what);
+	setLocomotorAndBaseSpeed(reinterpret_cast<INI *>(sink), (ThingTemplate *)what);
 }

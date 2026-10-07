@@ -75554,7 +75554,6 @@ name,address,notes
 ?bfmeAddAEB@BfmeOwnerAEB@@QAEXPAVBfmeThingAEB@@@Z,0x007F9590,pin
 ?bfmeAddAI@BfmeMgr19E@@QAEXPAXPADH11111@Z,0x00015235,pin
 ?bfmeAddAJ@BfmeMgr19E@@QAEXPAXPADH11111@Z,0x00015235,pin
-?bfmeAddANB@BfmeSinkANB@@QAEXPAVBfmeThingANB@@PAX@Z,0x008520A0,pin
 ?bfmeAddAV@BfmeSinkAV@@QAEXPAX@Z,0x0002B7E2,pin
 ?bfmeAddAY@BfmeSinkAY@@QAEXPAHH@Z,0x00037A56,pin
 ?bfmeAddBFC@BfmeSinkBFC@@QAEXPAUBfmeSubBFC@@@Z,0x0001D606,pin
@@ -76984,7 +76983,7 @@ name,address,notes
 ?bfmeFinish@Object@@QAEXH@Z,0x0003A521,Open-BFME5 owner finalization called by 0x002875C0
 ?bfmeFinishAGA@BfmeThingAGA@@QAEXPAX@Z,0x00028493,pin
 ?bfmeFinishAH@BfmeOwnerAH@@QAEXXZ,0x00048A6D
-?bfmeFinishANB@BfmeThingANB@@QAEXPAVBfmeSinkANB@@PAX@Z,0x00014439,pin
+?setLocomotorAndBaseSpeed@LocomotorSet@@QAEXPAVINI@@PAVThingTemplate@@@Z,0x00014439,pin
 ?bfmeFinishAP1008@BfmeP1008@@QAEXXZ,0x000488AB,pin
 ?bfmeFinishAQ1008@BfmeQ1008@@QAEXXZ,0x000488AB,pin
 ?bfmeFinishAQA@BfmeTwoAQA@@QAEXXZ,0x00003300,pin

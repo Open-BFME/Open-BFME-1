@@ -1,5 +1,7 @@
-// Retail001BD0D0/240B. The existing matched initializer in BfmeConv412.cpp
-// proves this legacy member symbol; its original class spelling is unknown.
+// Retail001BD0D0/240B. EA's LocomotorSet::setLocomotorAndBaseSpeed
+// (ea_evidence.csv, chain/strong); the ILT oracle fits only the
+// (INI *, ThingTemplate *) spelling. The matched initializer in BfmeConv412.cpp
+// calls it.
 // FieldParse table VA0109E038 names Locomotor(+18), Condition(+1C), Speed(+20).
 // The first two use parseAsciiString00851EE0; Speed uses parseReal00852B20.
 // The initializer passes INI* first and ThingTemplate* second. In retail+99,
@@ -73,11 +75,10 @@ public:
 // through the view.
 class LocomotorStore;
 extern LocomotorStore *TheLocomotorStore;
-class BfmeSinkANB;
-class BfmeThingANB
+class LocomotorSet
 {
 public:
-    void bfmeFinishANB(BfmeSinkANB *sink, void *what);
+    void setLocomotorAndBaseSpeed(INI *ini, ThingTemplate *thing);
     unsigned char m_prefix18[0x18];
     AsciiString m_locomotor;
     AsciiString m_condition;
@@ -85,10 +86,8 @@ public:
 };
 extern const char *TheLocomotorSetNames[];
 
-void BfmeThingANB::bfmeFinishANB(BfmeSinkANB *sink, void *what)
+void LocomotorSet::setLocomotorAndBaseSpeed(INI *ini, ThingTemplate *thing)
 {
-    INI *ini = reinterpret_cast<INI *>(sink);
-    ThingTemplate *thing = static_cast<ThingTemplate *>(what);
     AIUpdateModuleData *data = thing->friend_getAIModuleInfo();
     if (!data)
         throw INIException(3, "Attempted to specify a locomotor for object %s without an AIUpdate\tblock.", thing->m_name.str());
