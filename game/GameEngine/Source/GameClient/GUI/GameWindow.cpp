@@ -480,22 +480,7 @@ Int GameWindow::winSetCursorPosition( Int x, Int y )
 // WinGetCursorPosition =============================================================
 /** Get the window's cursor postion */
 //=============================================================================
-// ?winGetCursorPosition@GameWindow@@QAEHPAH0@Z present-unmatched
-Int GameWindow::winGetCursorPosition( Int *x, Int *y )
-{
-	if ( x )
-	{
-		*x = m_cursorX;
-	}
-	
-	if ( y )
-	{
-		*y = m_cursorY;
-	}
-	
-	return WIN_ERR_OK;
-
-}  // end WinGetPosition
+// defined in Common/Rva004781A0Get.cpp (retail 0x004781A0)
 
 // GameWindow::winGetScreenPosition ===========================================
 /** Get the window's postion in screen coordinates */
