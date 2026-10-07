@@ -1139,3 +1139,9 @@ game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|param|AIGuardReturnSt
 game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|param|AIGuardIdleState|m,c63cbe42bdc6a4ba22b52aba,grok,20261007213549-53a736,2026-10-07
 game/GameEngine/Source/GameLogic/Object/WeaponTemplate_bfmeRangeBase.cpp|member||m_bfmeMaxHeightDifference052C,9824f8ca34057349c253c919,gpt-6-astra,20261007213215-f59427,2026-10-07
 game/GameEngine/Source/GameLogic/Object/WeaponTemplate_bfmeRangeBase.cpp|member||m_bfmeMaxHeightDifference052C,9824f8ca34057349c253c919,grok,20261007213554-9efdf0,2026-10-07
+game/GameEngine/Source/Common/Bfme5EntryAppend.cpp|member||m_bfmeA,9a8904a49c637f69521162f1,gpt-6-astra,20261007215322-b4c33c,2026-10-07
+game/GameEngine/Source/Common/Bfme5EntryAppend.cpp|member||m_bfmeB,89bf1fb78544c585969eeca9,gpt-6-astra,20261007215322-b4c33c,2026-10-07
+game/GameEngine/Source/Common/Bfme5EntryAppend.cpp|member||m_bfmeC,bcbd3483afb51bf6ab947009,gpt-6-astra,20261007215322-b4c33c,2026-10-07
+game/GameEngine/Source/Common/Bfme5EntryAppend.cpp|member||m_bfmeNext,02874d17f23b127c09ccb736,gpt-6-astra,20261007215322-b4c33c,2026-10-07
+game/GameEngine/Source/Common/Bfme5EntryAppend.cpp|member||m_bfmePrev,ca4f6ea01d203ddd466f5b3d,gpt-6-astra,20261007215322-b4c33c,2026-10-07
+game/GameEngine/Source/Common/Bfme5EntryAppend.cpp|member||m_bfmeValue,c0f997af57b634c4485a7000,gpt-6-astra,20261007215322-b4c33c,2026-10-07
