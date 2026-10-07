@@ -28,6 +28,10 @@ public:
 	~UnicodeStringField() {}
 };
 
+// TU-local view in an anonymous namespace: retail inlines ~MetaMapRec here, so
+// its implicit COMDAT must not collide with the strong retail ??1MetaMapRec
+// (0x005B6FC0) in MetaMapRecDestructorThunks.cpp.
+namespace {
 struct MetaMapRec
 {
 	MetaMapRec *m_next;					// +0x00
@@ -35,6 +39,7 @@ struct MetaMapRec
 	UnicodeStringField m_description;			// +0x1c
 	UnicodeStringField m_displayName;			// +0x20
 };
+}
 
 class SubsystemInterface
 {
