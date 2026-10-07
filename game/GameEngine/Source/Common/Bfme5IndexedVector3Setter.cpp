@@ -29,7 +29,9 @@ private:
 };
 
 // ?bfmeAppendVector3@Gen_0018F210@@QAEXPBUBfmeVector3BG@@@Z
-void Gen_0018F210::bfmeAppendVector3(const BfmeVector3BG *value)
+// An inline (COMDAT) definition, like the identical copy PolygonTriggerRva00190F10.cpp
+// emits for its own visible-body caller; noinline keeps the call below.
+inline __declspec(noinline) void Gen_0018F210::bfmeAppendVector3(const BfmeVector3BG *value)
 {
 	if (m_count == m_capacity)
 		bfmeGrowVector3();
