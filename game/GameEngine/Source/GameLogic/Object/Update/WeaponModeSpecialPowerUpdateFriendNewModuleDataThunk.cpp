@@ -30,7 +30,9 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl WeaponModeSpecialPowerUpdateFieldParse(MultiIniFieldParse &parse);
+// The proc operand is ILT 0x00038F87 -> 0x002B2A80, the matched
+// ?buildFieldParse@Rva002B2A80@@SAXAAVWideMulti@@@Z.
+void j_00038f87();
 
 class WeaponModeSpecialPowerUpdate
 {
@@ -43,6 +45,6 @@ ModuleData *WeaponModeSpecialPowerUpdate::friend_newModuleData(INI *ini)
 {
 	WeaponModeSpecialPowerUpdateModuleData *data = new WeaponModeSpecialPowerUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &WeaponModeSpecialPowerUpdateFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))j_00038f87);
 	return (ModuleData *)data;
 }
