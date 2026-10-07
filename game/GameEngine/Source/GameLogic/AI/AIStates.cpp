@@ -727,14 +727,7 @@ AIStateMachine::AIStateMachine( Object *obj, AsciiString name ) : StateMachine( 
 }
 
 //----------------------------------------------------------------------------------------------------------
-// ??1AIStateMachine@@MAE@XZ present-unmatched
-AIStateMachine::~AIStateMachine()
-{
-	if (m_goalSquad) 
-	{
-		m_goalSquad->deleteInstance();
-	}
-}
+// ??1AIStateMachine@@MAE@XZ: retail 0x00187270, AIStateMachineDestructor.cpp.
 
 
 // ------------------------------------------------------------------------------------------------
