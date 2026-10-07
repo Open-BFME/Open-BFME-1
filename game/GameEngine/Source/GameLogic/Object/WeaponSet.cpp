@@ -915,21 +915,8 @@ CanAttackResult WeaponSet::getAbleToUseWeaponAgainstTarget( AbleToAttackType att
 // WeaponSet_chooseBestWeaponForTarget.cpp.
 
 //-------------------------------------------------------------------------------------------------
-// ?reloadAllAmmo@WeaponSet@@QAEXPBVObject@@_N@Z present-unmatched here - matched copy lives in WeaponSet_pitchAndReload_Thunk.cpp where WEAPONSLOT_COUNT is BFME's 4
-void WeaponSet::reloadAllAmmo(const Object *obj, Bool now)
-{
-	for( Int i = 0; i < WEAPONSLOT_COUNT;	i++ )
-	{
-		Weapon* weapon = m_weapons[i];
-		if (weapon != NULL)
-		{
-			if (now)
-				weapon->loadAmmoNow(obj);
-			else
-				weapon->reloadAmmo(obj);
-		}
-	}
-}
+// WeaponSet::reloadAllAmmo is defined once, by its retail body (0x001EAE20) in
+// WeaponSet_pitchAndReload_Thunk.cpp, where WEAPONSLOT_COUNT is BFME's 4.
 
 //-------------------------------------------------------------------------------------------------
 // ?isOutOfAmmo@WeaponSet@@QBE_NXZ present-unmatched here - matched copy lives in WeaponSet_isOutOfAmmo_Thunk.cpp where WEAPONSLOT_COUNT is BFME's 4
