@@ -73,7 +73,7 @@ public:
 	CanAttackResult getAbleToAttackSpecificObject(AbleToAttackType t, const Object *target, CommandSourceType cmd) const;
 	Bool testStatus(int status) const;
 	Object *bfmeResolveMeleeTarget(int index);
-	Bool isEffectivelyDead() const { return (m_deadFlags & 1) != 0; }
+
 	ObjectID getID() const { return m_id; }
 	BodyModuleInterface *getBodyModule() const { return m_body; }
 
@@ -158,7 +158,7 @@ StateReturnType AIGuardRetaliateReturnState::update()
 	if (obj && bmi)
 	{
 		Object *target = TheGameLogic->findObjectByID(bmi->getClearableLastAttacker());
-		if (target && !target->isEffectivelyDead() &&
+		if (target && !((target->m_deadFlags & 1) != 0) &&
 			obj->getRelationship(target) == ENEMIES &&
 			obj->isAbleToAttack())
 		{

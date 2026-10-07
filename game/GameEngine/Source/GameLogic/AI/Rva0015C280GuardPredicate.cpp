@@ -13,8 +13,7 @@ enum CanAttackResult { ATTACKRESULT_NOT_POSSIBLE = 0, ATTACKRESULT_INVALID_SHOT 
     Relationship getRelationship(const Object *) const; \
     bool isAbleToAttack() const; \
     CanAttackResult getAbleToAttackSpecificObject(AbleToAttackType, const Object *, CommandSourceType) const; \
-    BodyModuleInterface *getBodyModule() const { return m_body; } \
-    bool isEffectivelyDead() const { return (m_privateStatus & 1) != 0; }
+    BodyModuleInterface *getBodyModule() const { return m_body; }
 #include "../Object/object.h"
 #undef OBJECT_TU_MEMBERS
 #include "../../Common/Thing/GameLogicObjectLookup.h"
@@ -55,7 +54,7 @@ extern "C" bool __cdecl Rva0015C280Predicate(State *state, void *)
     Object *target = TheGameLogic->findObjectByID(attacker);
     if (!target) return false;
     if (obj->getRelationship(target) != ENEMIES) return false;
-    if (target->isEffectivelyDead()) return false;
+    if (((target->m_privateStatus & 1) != 0)) return false;
     if (!obj->isAbleToAttack()) return false;
     CanAttackResult result = obj->getAbleToAttackSpecificObject(ATTACK_NEW_TARGET, target, CMD_FROM_AI);
     if (result == ATTACKRESULT_POSSIBLE || result == ATTACKRESULT_POSSIBLE_AFTER_MOVING) return true;

@@ -138,7 +138,7 @@ public:
 
 	Player *getControllingPlayer() const;
 
-	Bool isEffectivelyDead() const { return (m_statusBits & 1) != 0; }
+
 	ContainModuleInterface *getContain() const { return m_contain; }
 	Team *getTeam() const { return m_team; }
 
@@ -149,6 +149,7 @@ private:
 	char m_bfmeMiddle[0x23c - 0x200];
 	Team *m_team;								// @0x23c
 	char m_bfmeTail[0x344 - 0x240];
+	public:
 	unsigned int m_statusBits;					// @0x344
 
 };
@@ -166,7 +167,7 @@ Bool ActionManager::canPlayerGarrison( const Player *player, const Object *targe
 	if (!(player && target))
 		return false;
 
-	if (target->isEffectivelyDead()) {
+	if (((target->m_statusBits & 1) != 0)) {
 		return false;
 	}
 

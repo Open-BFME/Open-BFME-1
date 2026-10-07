@@ -60,10 +60,7 @@ public:
 		return m_ai;
 	}
 
-	bool isEffectivelyDead() const
-	{
-		return (m_privateStatus & 1) != 0;
-	}
+
 
 	unsigned char m_beforeAI[0x200];
 	AIUpdateInterface002B9970 *m_ai;
@@ -254,7 +251,7 @@ StateReturnType Rva002B9970DozerPrimaryIdleState::update()
 	if (!dozerAI)
 		return STATE_FAILURE;
 
-	if (ai->isIdle() && !m_isMarkedAsIdle && !dozer->isEffectivelyDead())
+	if (ai->isIdle() && !m_isMarkedAsIdle && !((dozer->m_privateStatus & 1) != 0))
 	{
 		typedef Player *(Object::*OwningPlayerFn)() const;
 		union { void (*fn)(); OwningPlayerFn call; } ownerFn = { j_00020824 };
@@ -264,7 +261,7 @@ StateReturnType Rva002B9970DozerPrimaryIdleState::update()
 		m_isMarkedAsIdle = true;
 	}
 
-	if (m_isMarkedAsIdle && (!ai->isIdle() || dozer->isEffectivelyDead()))
+	if (m_isMarkedAsIdle && (!ai->isIdle() || ((dozer->m_privateStatus & 1) != 0)))
 	{
 		TheInGameUI->removeIdleWorker(getMachineOwner(), m_idlePlayerNumber);
 		m_idlePlayerNumber = -1;

@@ -68,10 +68,7 @@ public:
 		return m_ai;
 	}
 
-	Bool isEffectivelyDead() const
-	{
-		return m_privateStatusBits.m_effectivelyDead != 0;
-	}
+
 
 	unsigned char getIsUndetectedDefector() const
 	{
@@ -202,7 +199,7 @@ Bool CrateCollide::isValidToExecute(const Object *other) const
 			return false;
 	}
 
-	if (other->isEffectivelyDead())
+	if ((other->m_privateStatusBits.m_effectivelyDead != 0))
 		return false;
 
 	{

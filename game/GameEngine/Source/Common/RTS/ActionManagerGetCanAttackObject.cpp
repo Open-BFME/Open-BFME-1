@@ -84,10 +84,7 @@ public:
 class Object : public Thing
 {
 public:
-	Bool isEffectivelyDead() const
-	{
-		return (*(const unsigned char *)((const char *)this + 0x344) & 1) != 0;
-	}
+
 
 	Bool isAbleToAttack() const;
 	CanAttackResult getAbleToAttackSpecificObject( AbleToAttackType attackType,
@@ -165,8 +162,8 @@ CanAttackResult ActionManager::getCanAttackObject( const Object *obj,
 	const Object *objectToAttack, CommandSourceType commandSource,
 	AbleToAttackType attackType )
 {
-	if (!obj || !objectToAttack || obj->isEffectivelyDead()
-		|| objectToAttack->isEffectivelyDead() || objectToAttack == obj)
+	if (!obj || !objectToAttack || ((*(const unsigned char *)((const char *)obj + 0x344) & 1) != 0)
+		|| ((*(const unsigned char *)((const char *)objectToAttack + 0x344) & 1) != 0) || objectToAttack == obj)
 		return ATTACKRESULT_NOT_POSSIBLE;
 
 	if (!obj->isAbleToAttack())
