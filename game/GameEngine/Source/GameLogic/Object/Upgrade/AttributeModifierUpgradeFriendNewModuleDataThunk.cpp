@@ -17,16 +17,14 @@ private:
 	char opaque[0x68];
 };
 
-class AttributeModifierUpgradeModuleData
+// The outer vftable store and +0x70 clear retail inlines here; the real
+// ??0AttributeModifierUpgradeModuleData@@QAE@XZ lives in
+// AttributeModifierUpgradeModuleDataCtorThunk.cpp, so this TU writes the
+// fields through a plain view instead of emitting a second constructor.
+extern "C" const char __identifier("??_7AttributeModifierUpgradeModuleData@@6B@")[];
+struct AttributeModifierUpgradeModuleDataView
 {
-public:
-	AttributeModifierUpgradeModuleData()
-	{
-		m_extra = 0;
-	}
-	virtual void dummy();
-
-private:
+	const void *m_vtbl;
 	int m_pad;
 	char m_sub_space[0x68];
 	unsigned int m_extra;
@@ -56,14 +54,15 @@ public:
 // ?friend_newModuleData@AttributeModifierUpgrade@@SAPAVModuleData@@PAVINI@@@Z
 ModuleData *AttributeModifierUpgrade::friend_newModuleData(INI *ini)
 {
-	AttributeModifierUpgradeModuleData *data =
-		(AttributeModifierUpgradeModuleData *)operator new(0x74);
+	AttributeModifierUpgradeModuleDataView *data =
+		(AttributeModifierUpgradeModuleDataView *)operator new(0x74);
 	if (data)
 	{
 		UpgradeModuleDataSub *sub =
 			(UpgradeModuleDataSub *)((char *)data + 8);
 		sub->UpgradeModuleDataSub::UpgradeModuleDataSub();
-		data->AttributeModifierUpgradeModuleData::AttributeModifierUpgradeModuleData();
+		data->m_vtbl = __identifier("??_7AttributeModifierUpgradeModuleData@@6B@");
+		data->m_extra = 0;
 	}
 	else
 		data = 0;
