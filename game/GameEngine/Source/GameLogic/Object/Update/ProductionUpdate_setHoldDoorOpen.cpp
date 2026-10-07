@@ -9,12 +9,14 @@
 #include "GameLogic/GameLogic.h"
 #include "GameLogic/Module/ProductionUpdate.h"
 
+// BFME numbers the door conditions 3 higher than ZH (DOOR_1_OPENING = 21);
+// retail table 0x010C0D54 holds 0x15 0x19 0x1D 0x21.
 static const ModelConditionFlagType theOpeningFlags[DOOR_COUNT_MAX] =
 {
-	MODELCONDITION_DOOR_1_OPENING,
-	MODELCONDITION_DOOR_2_OPENING,
-	MODELCONDITION_DOOR_3_OPENING,
-	MODELCONDITION_DOOR_4_OPENING
+	(ModelConditionFlagType)21,
+	(ModelConditionFlagType)25,
+	(ModelConditionFlagType)29,
+	(ModelConditionFlagType)33
 };
 
 void ProductionUpdate::setHoldDoorOpen(ExitDoorType exitDoor, Bool holdIt)
