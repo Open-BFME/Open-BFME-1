@@ -57,16 +57,20 @@ public:
 		return m_modelConditionByte8;
 	}
 
-	unsigned int status() const
-	{
-		return m_status;
-	}
+	friend unsigned int castleObjectStatus(const Object *object);
 
 	unsigned char destroyedFlags() const
 	{
 		return m_destroyedFlags;
 	}
 };
+
+// A file-static reader keeps the TU from emitting a non-retail
+// ?status@Object@@QBEIXZ COMDAT.
+static inline unsigned int castleObjectStatus(const Object *object)
+{
+	return object->m_status;
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
@@ -95,7 +99,7 @@ Bool CastleBehavior::isPendingObjectUnavailable() const
 		if (!(object->destroyedFlags() & 1))
 		{
 			CastleObjectStatus status;
-			status.value = object->status();
+			status.value = castleObjectStatus(object);
 			if (!(status.value & 0x00010000))
 			{
 				if (status.byte1 & 0x80)
