@@ -100,13 +100,14 @@ class ParticleSystemHandle
 public:
 	ParticleSystemHandle() : m_system( 0 ), m_previous( 0 ), m_next( 0 ) {}
 	ParticleSystemHandle( const ParticleSystemHandle &other )
-		: m_system( other.m_system )
 	{
-		if (m_system)
+		ParticleSystem *system = other.m_system;
+		m_system = system;
+		if (system)
 		{
-			m_previous = m_system->m_lastHandle;
+			m_previous = system->m_lastHandle;
 			m_next = 0;
-			m_system->m_lastHandle = this;
+			system->m_lastHandle = this;
 			if (m_previous)
 				m_previous->m_next = this;
 			else

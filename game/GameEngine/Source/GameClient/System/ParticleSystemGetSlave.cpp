@@ -32,7 +32,7 @@ private:
 };
 
 // ??0ParticleSystemHandle@@QAE@ABV0@@Z absent-from-retail
-ParticleSystemHandle::ParticleSystemHandle(const ParticleSystemHandle &other)
+inline ParticleSystemHandle::ParticleSystemHandle(const ParticleSystemHandle &other)
 {
 	ParticleSystem *system = other.m_system;
 	m_system = system;
