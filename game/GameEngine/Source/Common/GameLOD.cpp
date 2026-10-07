@@ -649,18 +649,8 @@ const char *GameLODManager::getDynamicGameLODLevelName(DynamicGameLODLevel level
 }
 
 /**Given an average fps, return the optimal dynamic LOD level that matches this fps.*/
-// ?findDynamicLODLevel@GameLODManager@@QAE?AW4DynamicGameLODLevel@@M@Z present-unmatched here — matched copy lives in Common/GameLODManager_findDynamicLODLevel_Thunk.cpp with BFME's enum base and entry size
-DynamicGameLODLevel GameLODManager::findDynamicLODLevel(Real averageFPS)
-{
-	Int ifps=(Int)(averageFPS);	//convert to integer.
-
-	for (Int i=DYNAMIC_GAME_LOD_VERY_HIGH; i>=DYNAMIC_GAME_LOD_LOW; i--)
-	{	//check which of the LOD levels matches our fps
-		if (m_dynamicGameLODInfo[i].m_minFPS < ifps)
-			return (DynamicGameLODLevel)i;
-	}
-	return DYNAMIC_GAME_LOD_LOW;	//none of the low levels were slow enough so pick the lowest.
-}
+// GameLODManager::findDynamicLODLevel (retail) is defined in
+// Common/GameLODManager_findDynamicLODLevel_Thunk.cpp with BFME's enum base and entry size.
 
 /**Set all game systems to match the desired LOD level.*/
 // ?setDynamicLODLevel@GameLODManager@@QAE_NW4DynamicGameLODLevel@@@Z present-unmatched
