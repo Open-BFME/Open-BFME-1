@@ -5792,14 +5792,8 @@ const Coord3D *AIUpdateInterface::getCurrentVictimPos( void ) const
 }
 
 
-/**
- * Set the behavior modifier for this agent
- */
-// ?setAttitude@AIUpdateInterface@@ present-unmatched
-void AIUpdateInterface::setAttitude( AttitudeType tude )
-{
-	m_attitude = tude;
-}
+// AIUpdateInterface::setAttitude: retail's BFME body (0x0027DEF0) lives in
+// AIUpdateInterface_setAttitude.cpp.
 
 /**
  * Get the current behavior modifier state	

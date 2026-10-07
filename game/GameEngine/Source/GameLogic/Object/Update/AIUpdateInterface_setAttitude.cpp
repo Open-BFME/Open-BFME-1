@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
-// AIUpdateSetAttitudeShim::setAttitude — retail 0x0027DEF0 / 128B.
+// AIUpdateInterface::setAttitude — retail 0x0027DEF0 / 128B.
 // Dump sibling of BoneFXUpdate::initTimes in game/gen_asm/d_0027db50.asm.
 // Identity: ILT 0x00030553 -> this body; AIGroup::setAttitude (0x00150FE0)
 // calls it on each member AI at Object+0x204.
@@ -20,7 +20,7 @@ class Slot38Target;
 class AICommandInterface;
 class GameLogic;
 
-class AIUpdateSetAttitudeShim
+class AIUpdateInterface
 {
 public:
 	void setAttitude(AttitudeType tude);
@@ -210,7 +210,7 @@ public:
 	virtual void notify(int objectId, int);
 };
 
-void AIUpdateSetAttitudeShim::setAttitude(AttitudeType tude)
+void AIUpdateInterface::setAttitude(AttitudeType tude)
 {
 	m_attitude = tude;
 	if (tude != ATTITUDE_BFME_CLEAR)
