@@ -5153,7 +5153,7 @@ name,address,notes
 ??1DistLODPrototypeClass@@UAE@XZ,0x00012B16,exact constructor 0x00149E30 and dedicated vtable 0x010956B0 establish the complete destructor thunk called by wrapper 0x0014AAE0
 ??1DockUpdate@@UAE@XZ,0x0004418E,RailedTransportDockUpdate destructor tail-call ILT to DockUpdate destructor 0x002CCD10
 ??1DominateEnemySpecialPower@@MAE@XZ,0x00031548,destructor ILT to 0x0025AD50
-??1DozerActionMoveToActionPosState@@MAE@XZ,0x000188DB,vtable 0x00CC6DA0 slots name DozerActionMoveToActionPosState; protected complete destructor called by wrapper 0x002B80C0
+??1DozerActionMoveToActionPosState@@UAE@XZ,0x000188DB,vtable 0x00CC6DA0 slots name DozerActionMoveToActionPosState; protected complete destructor called by wrapper 0x002B80C0
 ??1DozerActionPickActionPosState@@UAE@XZ,0x00010AB4,vtable 0x00CC6D28 slots name DozerActionPickActionPosState; protected complete destructor called by wrapper 0x002B8080
 ??1DozerActionState@@UAE@XZ,0x00030B52,vtable 0x00CC6F70 slots name DozerActionState; protected complete destructor called by wrapper 0x002B8590;ilt-verified=T1-access(efp=4.89e-03)
 ??1DozerAudioEventRTS@@UAE@XZ,0x00026F35,DozerAIUpdate building-sound member destructor
@@ -11364,7 +11364,7 @@ name,address,notes
 ??_GDisconnectManager@@UAEPAXI@Z,0x0066B820,scalar deleting destructor: re-installs vtable 0x0111A2CC (the one-slot vtable whose slot 0 is this body through 0x00411B08) then operator delete when flag&1; the ctor ??0DisconnectManager@@QAE@XZ 0x0066AF50 installs the same vtable
 ??_GDistLODPrototypeClass@@UAEPAXI@Z,0x000169F5,constructor-installed vtable 0x010956B0 slot zero routes through this ILT to 0x0014AAE0
 ??_GDominateEnemySpecialPower@@MAEPAXI@Z,0x0001CD9B,primary class vtable slot zero ILT to 0x0025AE70
-??_GDozerActionMoveToActionPosState@@MAEPAXI@Z,0x00030BB6,vtable 0x00CC6DA0 slot zero routes through this ILT to scalar wrapper 0x002B80C0
+??_GDozerActionMoveToActionPosState@@UAEPAXI@Z,0x00030BB6,vtable 0x00CC6DA0 slot zero routes through this ILT to scalar wrapper 0x002B80C0
 ??_GDozerActionPickActionPosState@@UAEPAXI@Z,0x000359B8,vtable 0x00CC6D28 slot zero routes through this ILT to scalar wrapper 0x002B8080
 ??_GDozerActionState@@UAEPAXI@Z,0x00035AA3,vtable 0x00CC6F70 slot zero routes through this ILT to scalar wrapper 0x002B8590;ilt-verified=T1-access(efp=4.89e-03)
 ??_GDozerPrimaryIdleState@@UAEPAXI@Z,0x0001C562,vtable 0x00CC6F00 slot zero routes through this ILT to scalar wrapper 0x002B8550;ilt-verified=T1-access(efp=2.94e-03)
