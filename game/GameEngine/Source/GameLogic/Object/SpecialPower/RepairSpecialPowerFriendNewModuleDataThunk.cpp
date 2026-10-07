@@ -19,10 +19,12 @@ class MultiIniFieldParse;
 // FieldParse-table overload this TU used to name lives at 0x008520A0.
 class INI { public: void initFromINIMultiProc(void *what,
 	void (__cdecl *buildFieldParse)(MultiIniFieldParse &)); };
-extern "C" void __cdecl RepairSpecialPowerFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the ILT stub 0x0003A1DE (?j_0003a1de@@YAXXZ), which jumps to
+// the class buildFieldParse at 0x002647C0.
+extern void j_0003a1de(void);
 class RepairSpecialPower { public: static ModuleData *friend_newModuleData(INI *ini); };
 ModuleData *RepairSpecialPower::friend_newModuleData(INI *ini) {
 	RepairSpecialPowerModuleData *data = new RepairSpecialPowerModuleData;
-	if (ini) ini->initFromINIMultiProc(data, &RepairSpecialPowerFieldParse);
+	if (ini) ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))j_0003a1de);
 	return (ModuleData *)data;
 }
