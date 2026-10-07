@@ -1192,3 +1192,5 @@ game/GameEngine/Source/GameLogic/ScriptEngine/Rva00354220ConditionSetType.cpp|ty
 game/GameEngine/Source/GameLogic/ScriptEngine/Rva00354220ConditionSetType.cpp|type||Rva00354220Condition,ed3d291de6f404916022d8b3,gpt-6-astra,20261007223304-172b02,2026-10-07
 game/GameEngine/Source/GameNetwork/Y2FeslDemanglerDispatch.cpp|type||Rva00800E50Owner,656dd531814bce18ffc42d7e,gpt-6-astra,20261007223301-28885d,2026-10-07
 game/GameEngine/Source/GameNetwork/Y2FeslDemanglerDispatch.cpp|local|Rva00800E50Owner::onDispatch|t04,ad8296fa425263ed9a323c63,gpt-6-astra,20261007223301-28885d,2026-10-07
+game/Libraries/Source/WWVegas/WW3D2/Rva00903470DeviceSlot77.cpp|type||Rva00903470Vtable,a3a4747499d18b75d3e83ba4,gpt-6-astra,20261007223258-78b43e,2026-10-07
+game/Libraries/Source/WWVegas/WW3D2/Rva00903470DeviceSlot77.cpp|function||rva00903470DeviceSlot77,eb78ed1ac361e4069fb20b0f,gpt-6-astra,20261007223258-78b43e,2026-10-07
