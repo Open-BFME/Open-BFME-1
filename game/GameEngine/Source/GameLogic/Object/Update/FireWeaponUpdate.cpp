@@ -11,19 +11,19 @@ public:
 
 private:
 	unsigned int m_gap4;
-	unsigned int m_08;
-	unsigned char m_0c;
-	unsigned char m_0d;
-	unsigned char m_0e;
+	unsigned int m_weaponTemplate;
+	unsigned char m_heroModeTrigger;
+	unsigned char m_chargingModeTrigger;
+	unsigned char m_aliveOnly;
 };
 
 // ??0FireWeaponUpdateModuleData@@QAE@XZ
 FireWeaponUpdateModuleData::FireWeaponUpdateModuleData()
 {
-	m_08 = 0;
-	m_0c = 0;
-	m_0d = 0;
-	m_0e = 0;
+	m_weaponTemplate = 0;
+	m_heroModeTrigger = 0;
+	m_chargingModeTrigger = 0;
+	m_aliveOnly = 0;
 }
 
 // FireWeaponUpdate::update, retail 0x00292F00.
