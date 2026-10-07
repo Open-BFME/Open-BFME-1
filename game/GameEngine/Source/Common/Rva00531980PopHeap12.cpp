@@ -16,13 +16,13 @@ struct S4SortElem12
 	int m_c;
 };
 
-void bfmeAdjustHeap005300E0(S4SortElem12 *first, int hole, int len,
+void __adjust_heap(S4SortElem12 *first, int hole, int len,
 	S4SortElem12 value, void *comp);
 
 void Rva00531980PopHeap(S4SortElem12Pod *first, S4SortElem12Pod *last,
 	S4SortElem12Pod *result, S4SortElem12Pod value, void *comp, int *)
 {
 	*result = *first;
-	bfmeAdjustHeap005300E0(reinterpret_cast<S4SortElem12 *>(first), 0, last - first,
+	__adjust_heap(reinterpret_cast<S4SortElem12 *>(first), 0, last - first,
 		*reinterpret_cast<S4SortElem12 *>(&value), comp);
 }

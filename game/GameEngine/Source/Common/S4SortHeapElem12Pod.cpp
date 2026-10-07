@@ -12,7 +12,7 @@ struct S4SortElem12
 	int m_bfmeThird;
 };
 
-void bfmeAdjustHeap005300E0(S4SortElem12 *first, int holeIndex, int len,
+void __adjust_heap(S4SortElem12 *first, int holeIndex, int len,
 	S4SortElem12 value, void *comp);
 
 void gen005327C0(void *firstVoid, void *lastVoid, void *comp)
@@ -24,7 +24,7 @@ void gen005327C0(void *firstVoid, void *lastVoid, void *comp)
 	{
 		S4SortElem12 val = *(S4SortElem12 *)(last - 12);
 		*(S4SortElem12 *)(last - 12) = *(S4SortElem12 *)first;
-		bfmeAdjustHeap005300E0((S4SortElem12 *)first, 0,
+		__adjust_heap((S4SortElem12 *)first, 0,
 			(int)((last - 12 - first) / 12), val, comp);
 		last -= 12;
 	}

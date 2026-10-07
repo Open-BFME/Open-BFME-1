@@ -43,7 +43,7 @@ retFalse:
 void bfmePushHeap005300E0(S4SortElem12 *first, int holeIndex, int topIndex,
 	S4SortElem12 val, void *comp);
 
-void bfmeAdjustHeap005300E0(S4SortElem12 *first, int holeIndex, int len,
+void __adjust_heap(S4SortElem12 *first, int holeIndex, int len,
 	S4SortElem12 val, void *comp)
 {
 	int topIndex = holeIndex;

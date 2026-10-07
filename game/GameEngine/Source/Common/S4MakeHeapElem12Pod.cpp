@@ -12,7 +12,7 @@ struct S4SortElem12
 	int m_bfmeThird;
 };
 
-void bfmeAdjustHeap005300E0(S4SortElem12 *first, int holeIndex, int len,
+void __adjust_heap(S4SortElem12 *first, int holeIndex, int len,
 	S4SortElem12 value, void *comp);
 
 void gen00531B20(void *a, void *b, void *c, int, int)
@@ -25,7 +25,7 @@ void gen00531B20(void *a, void *b, void *c, int, int)
 	int parent = (len - 2) / 2;
 	for (;;)
 	{
-		bfmeAdjustHeap005300E0(first, parent, len, *(first + parent), c);
+		__adjust_heap(first, parent, len, *(first + parent), c);
 		if (parent == 0)
 			return;
 		--parent;

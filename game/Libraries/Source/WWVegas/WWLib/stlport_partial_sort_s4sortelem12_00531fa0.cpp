@@ -48,7 +48,7 @@ retFalse:
 };
 
 void gen00531B20(void *first, void *last, void *comp, int, int);
-void bfmeAdjustHeap005300E0(S4SortElem12 *first, int holeIndex, int len,
+void __adjust_heap(S4SortElem12 *first, int holeIndex, int len,
 	S4SortElem12 value, void *comp);
 void gen005327C0(void *first, void *last, void *comp);
 
@@ -66,7 +66,7 @@ void __partial_sort(RandomAccessIterator first, RandomAccessIterator middle,
 		{
 			Tp item = *i;
 			*i = *first;
-			bfmeAdjustHeap005300E0(first, 0,
+			__adjust_heap(first, 0,
 				(int)(middle - first), item, comp.m_bfmeState);
 		}
 	}
