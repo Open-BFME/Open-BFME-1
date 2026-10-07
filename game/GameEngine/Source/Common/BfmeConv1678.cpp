@@ -13,6 +13,17 @@ public:
 	int m_bfmeCERG;
 };
 
+// Retail's constructor call goes through ILT 0x26CBA to the
+// matched 34-byte ctor ??0Rva00618630@@QAE@XZ (0x00618630,
+// R3ScalarFieldConstructors.cpp): same 24-byte object, so the fresh crate is
+// built by that constructor.
+class Rva00618630
+{
+public:
+	Rva00618630();
+	unsigned char m_bfmeBytes[24];
+};
+
 class BfmeCrateSystemERG
 {
 public:
@@ -32,7 +43,7 @@ BfmeCrateERG *BfmeCrateSystemERG::bfmeNewOverrideERG(BfmeCrateERG *crate)
 	if (crate == 0)
 		return 0;
 
-	BfmeCrateERG *fresh = new BfmeCrateERG;
+	BfmeCrateERG *fresh = (BfmeCrateERG *)new Rva00618630;
 	union AssignCall {
 		void (*bfmeThunk)();
 		void (BfmeCrateERG::*bfmeAssign)(const BfmeCrateERG &);

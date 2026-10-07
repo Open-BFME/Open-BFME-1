@@ -18778,5 +18778,15 @@
   "after_sha256": "6b69b3f423a74de75a4fbbd7a161998c3461a64c6342c7078b4d2a6f14add0fd",
   "evidence": "targets/game/reverse/identity_evidence/001cb270-bitflags-member-callers.md",
   "reason": "Not a rename of a proven class: the member is transferred through ILT 0x00026DD7 to 0x001CB270, the matched row Rva001CB270BitFlags::xfer; BfmeSubOneBH named only the ILT pin and no body defines it."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1678.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1678.cpp",
+  "old_name": "BfmeCrateERG",
+  "new_name": "Rva00618630",
+  "before_sha256": "251336ddbb455bc8a3da3b0596a82c4cf3e3a062fefe46ecfa9037b493c40fc5",
+  "after_sha256": "4a05720f2ad11e32df240e6283e95bd655f9615d650f006caa55ad06232e1a26",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "Not a rename: bfmeNewOverrideERG (0x0060F620) constructs through ILT 0x00026CBA to 0x00618630, the matched row ??0Rva00618630@@QAE@XZ; the BfmeCrateERG ctor named only the ILT pin and no body defines it. The BfmeCrateERG type name is kept."
  }
 ]
