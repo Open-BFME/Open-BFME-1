@@ -88685,7 +88685,6 @@ _bfmeCheck1252,0x008DB1F0,pin
 _bfmeCiThinkFromEsi,0x008601F0,GameSpy Chat static think helper with chat carried in ESI
 _bfmeCopy1152,0x00005934,pin
 _bfmeCopy1153,0x00005934,pin
-_bfmeCopy1154,0x00005934,pin
 _bfmeCopyBB,0x00014D7B
 _bfmeCopyDB,0x000365CA
 _bfmeCtor1030,0x0000E534,pin

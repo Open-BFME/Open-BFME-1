@@ -1,7 +1,15 @@
-// cl: /Od
+// cl: /Od /D_STLP_USE_STATIC_LIB
+// stlport
 // Open-BFME5 conversions.
 
-extern "C" void __cdecl bfmeCopy1154(char *d0, char *d1, const char *s0, const char *s1);
+#define _STLP_NO_EXCEPTIONS 1
+#include <string>
+
+// The tail call goes through ILT 0x00005934 to 0x00644150, the matched static
+// basic_string<char>::_M_compare(first1, last1, first2, last2); declared as an
+// explicit specialization so this TU calls it instead of emitting a copy.
+typedef _STL::basic_string<char, _STL::char_traits<char>, _STL::allocator<char> > Bfme1154String;
+template <> int Bfme1154String::_M_compare(const char *f1, const char *l1, const char *f2, const char *l2);
 
 // retail callee at 0x006434C0, reached through the ILT thunk at 0x000132CD;
 // declaration only, the body is game/gen_small/fun_004.cpp
@@ -29,5 +37,5 @@ void BfmeS1154::bfmeReplace1154(unsigned int pos, unsigned int n, const char *s,
 
 	n5 = (unsigned int)(m_bfme04 - m_bfme00) - pos;
 	n1 = (n5 < n) ? &n5 : &n;
-	bfmeCopy1154(m_bfme00 + pos, m_bfme00 + pos + *n1, s, s + len);
+	Bfme1154String::_M_compare(m_bfme00 + pos, m_bfme00 + pos + *n1, s, s + len);
 }
