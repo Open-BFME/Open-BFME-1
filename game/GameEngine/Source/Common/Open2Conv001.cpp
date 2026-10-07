@@ -130,21 +130,36 @@ Open2C800Target *Rva0053C800( Open2C800Target *target, void *value )
 // offset 0. Arguments go out right to left, so the constant 8 is the FIRST
 // parameter.
 
-class Open2381C0Impl
+// The callee 0x00840F00 is STLport ctype<char>::scan_not (identity evidence
+// 00840F00-ctype-char-scan-not.md); 8 is ctype_base::space. Only its
+// declaration is modeled here.
+namespace _STL
+{
+class ctype_base
 {
 public:
-	void invoke( int kind, void *first, void *second );
+	enum mask { space = 8 };
 };
+
+template <class _CharT> class ctype;
+
+template <>
+class ctype<char> : public ctype_base
+{
+public:
+	const char *scan_not( mask m, const char *low, const char *high ) const;
+};
+}
 
 class Open2381C0
 {
 public:
 	void forward( void *first, void *second );
-	Open2381C0Impl *m_impl;
+	const _STL::ctype<char> *m_impl;
 };
 
 // @?forward@Open2381C0@@QAEXPAX0@Z 0x005381C0
 void Open2381C0::forward( void *first, void *second )
 {
-	m_impl->invoke( 8, first, second );
+	m_impl->scan_not( _STL::ctype_base::space, (const char *)first, (const char *)second );
 }
