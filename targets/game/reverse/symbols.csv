@@ -90538,3 +90538,5 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_0L@KEDAKJLK@ContainMax?$AA@,0x00CAC5EC,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal ContainMax equals retail at VA 0x010AC5EC
 ??_C@_0N@HDNKMAFP@DoorOpenTime?$AA@,0x00CAC524,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal DoorOpenTime equals retail at VA 0x010AC524
 ??_C@_0O@LKGBDGDF@CollidePickup?$AA@,0x00CAC49C,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal CollidePickup equals retail at VA 0x010AC49C
+??_C@_0BE@CFLKEKAF@DockedAnimationTime?$AA@,0x00CCA97C,Retail MonsterDockUpdateModuleDataFieldParse table VA 0x010CA9B0 entry; compiler string literal DockedAnimationTime equals retail at VA 0x010CA97C
+??_C@_0BF@OJNGFJCA@DockableObjectFilter?$AA@,0x00CCA994,Retail MonsterDockUpdateModuleDataFieldParse table VA 0x010CA9B0 entry; compiler string literal DockableObjectFilter equals retail at VA 0x010CA994
