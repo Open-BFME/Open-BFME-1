@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
 // BaseHeightMap's floor-buffer element destructor, retail 0x006F8290.
 // The element is referenced by BaseHeightMap::clear30A4; its anonymous class
@@ -37,23 +37,9 @@ public:
 	int m_refs;
 };
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase();
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-	int *m_data;
-};
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString : private StringBase<char>
-{
-public:
-	~AsciiString() {}
-};
+// Retail destroys m_name through StringBase<char>::releaseBuffer 0x00887940;
+// ascii_string.h's inline ~AsciiString reaches exactly that body.
+#include "ascii_string.h"
 
 class __declspec(novtable) BaseHeightMapFloorElement
 {
