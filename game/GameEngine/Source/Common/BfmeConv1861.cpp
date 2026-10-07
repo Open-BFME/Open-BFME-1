@@ -148,12 +148,20 @@ public:
 	Object *m_bfmeItemYH;
 };
 
+// callees.py 0x001749A0: the first call is ILT 0x00029311 -> 0x00172D80,
+// the matched AIInternalMoveToState::onExit, called non-virtually (the
+// base-class step of a derived state's onExit).
+enum StateExitType { };
+class AIInternalMoveToState
+{
+public:
+	virtual void onExit(StateExitType status);
+};
+
 class BfmeOwnerYH
 {
 public:
 	void bfmeCloseYH(void *arg);
-
-	void bfmeBaseYH(void *arg);
 
 	unsigned char m_bfmeHeadYH[0x1c];
 	BfmeHolderYH *m_bfmeHolderYH;
@@ -161,7 +169,7 @@ public:
 
 void BfmeOwnerYH::bfmeCloseYH(void *arg)
 {
-	bfmeBaseYH(arg);
+	((AIInternalMoveToState *)this)->AIInternalMoveToState::onExit((StateExitType)(int)arg);
 
 	Object *item = m_bfmeHolderYH->m_bfmeItemYH;
 
