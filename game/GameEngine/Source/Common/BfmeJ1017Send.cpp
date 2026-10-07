@@ -1,6 +1,8 @@
 // cl: /O2 /DNDEBUG /MD
 
-extern unsigned char g_bfmeJ1017Flag;
+// Retail byte 0x0133781C, the encoded-command gate (symbols.csv pin
+// g_bfmeDispatchEnabled1281, also read by 0x008BCCC0); defined here once.
+unsigned char g_bfmeDispatchEnabled1281 = 0;
 
 class BfmeJ1017
 {
@@ -12,7 +14,7 @@ public:
 
 void BfmeJ1017::bfmeSendX1017(int a, int b)
 {
-	if (g_bfmeJ1017Flag)
+	if (g_bfmeDispatchEnabled1281)
 		bfmeInsert(((a << 15) | (b & 0x7FFF)) << 2);
 }
 
