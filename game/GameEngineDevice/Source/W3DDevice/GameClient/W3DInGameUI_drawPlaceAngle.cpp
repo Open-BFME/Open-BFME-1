@@ -89,7 +89,6 @@ class W3DDisplay
 public:
 	static RTS3DScene *m_3DScene;
 };
-extern const Real g_bfmeK1266C;
 extern RenderObjClass *Create_Render_Obj(const char *name);
 
 class W3DInGameUISlots
@@ -201,7 +200,7 @@ void W3DInGameUI::drawPlaceAngle(View * /*view*/)
 	vector.y = end.y - start.y;
 	vector.z = 0.0f;
 	Real length = vector.length();
-	Bool showArrow = length >= g_bfmeK1266C;
+	Bool showArrow = length >= 5.0f;	// __real@40a00000 (0x01075344)
 
 	if (showArrow)
 	{
