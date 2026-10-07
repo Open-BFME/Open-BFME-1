@@ -1,6 +1,9 @@
 // Open-BFME5 conversions.
 
-void bfmeStepVOY(void *a, void *b, int n, void *c);
+// ILT 0x3CEED -> 0x00531D80, matched ?gen00531D80@@YAXPAX0H0@Z
+// (S4PopHeapAuxElem12.cpp), same signature.
+void gen00531D80(void *a, void *b, int n, void *c);
+static inline void bfmeStepVOY(void *a, void *b, int n, void *c) { gen00531D80(a, b, n, c); }
 
 void bfmeSortVOY(void *a, void *b, void *c)
 {
