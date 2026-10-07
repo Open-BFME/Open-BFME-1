@@ -2,17 +2,17 @@
 // Clean C++ conversion of the raw-byte formatter at retail RVA 0x009D9220.
 extern "C" void __cdecl bfmeAppend(void *stream, const char *format, ...);
 
-class Gen009D9220
+class XferSaveAsText
 {
 public:
-	Gen009D9220 *bfmeEmit(const void *data, unsigned int length);
+	XferSaveAsText *XferRawBytes(const void *data, unsigned int length);
 
 private:
 	unsigned char m_pad[4];
 	bool m_pending;
 };
 
-Gen009D9220 *Gen009D9220::bfmeEmit(const void *data, unsigned int length)
+XferSaveAsText *XferSaveAsText::XferRawBytes(const void *data, unsigned int length)
 {
 	if (length != 0 && data == 0)
 		return this;
