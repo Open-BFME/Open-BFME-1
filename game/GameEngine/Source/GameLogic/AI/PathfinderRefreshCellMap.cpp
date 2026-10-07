@@ -10,11 +10,17 @@ struct BfmePathfindLayer44
 	char value[0x44];
 };
 
-class BfmePathfindZoneManager
+class PathfindCell;
+class PathfindLayer;
+struct IRegion2D;
+
+// Retail calls ILT 0x00020A13 -> 0x00408F80, the matched calculateZones.
+class PathfindZoneManager
 {
 public:
-	void bfmeRebuildZones(void *map, BfmePathfindLayer44 *layers,
-		BfmePathfindExtent *extent);
+	void calculateZones(PathfindCell **map, PathfindLayer layers[],
+		const IRegion2D &extent);
+	char m_bfmeOpaque;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
@@ -30,7 +36,7 @@ private:
 	BfmePathfindExtent m_bfmeExtent;         // +0x14
 	char m_bfmeToLayers[0x85c - 0x24];
 	BfmePathfindLayer44 m_bfmeLayers[16];    // +0x85c
-	BfmePathfindZoneManager m_bfmeZones;     // +0xc9c
+	PathfindZoneManager m_bfmeZones;     // +0xc9c
 	char m_bfmeToFlags[0x243f4 - 0xc9d];
 	unsigned char m_bfmeDirtyA;              // +0x243f4
 	unsigned char m_bfmeDirtyB;              // +0x243f5
@@ -43,6 +49,6 @@ void Pathfinder::bfmeRefreshCellMap(void)
 	{
 		if (m_bfmeDirtyA || m_bfmeDirtyB)
 			bfmePrepareRefresh();
-		m_bfmeZones.bfmeRebuildZones(m_bfmeMap, m_bfmeLayers, &m_bfmeExtent);
+		m_bfmeZones.calculateZones((PathfindCell **)m_bfmeMap, (PathfindLayer *)m_bfmeLayers, *(const IRegion2D *)&m_bfmeExtent);
 	}
 }
