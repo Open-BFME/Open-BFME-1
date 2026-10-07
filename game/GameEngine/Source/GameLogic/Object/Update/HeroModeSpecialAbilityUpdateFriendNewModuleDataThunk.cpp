@@ -30,7 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl HeroModeSpecialAbilityUpdateFieldParse(MultiIniFieldParse &parse);
+// Retail pushes 0x42A0E5, the matched ILT thunk to 0x00119100.
+extern void j_0002a0e5(void);
 
 class HeroModeSpecialAbilityUpdate
 {
@@ -43,6 +44,7 @@ ModuleData *HeroModeSpecialAbilityUpdate::friend_newModuleData(INI *ini)
 {
 	HeroModeSpecialAbilityUpdateModuleData *data = new HeroModeSpecialAbilityUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &HeroModeSpecialAbilityUpdateFieldParse);
+		ini->initFromINIMultiProc(data, 
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_0002a0e5));
 	return (ModuleData *)data;
 }
