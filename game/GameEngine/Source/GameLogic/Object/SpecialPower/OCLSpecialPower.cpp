@@ -231,17 +231,8 @@ void OCLSpecialPower::doSpecialPowerAtLocation( const Coord3D *loc, Real angle, 
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?doSpecialPowerAtObject@OCLSpecialPower@@UAEXPAVObject@@I@Z present-unmatched
-void OCLSpecialPower::doSpecialPowerAtObject( Object *obj, UnsignedInt commandOptions )
-{
-	if (getObject()->isDisabled())
-		return;
-
-	// convert to a location
-	if( !obj )
-		return;
-	doSpecialPowerAtLocation( obj->getPosition(), INVALID_ANGLE, commandOptions );
-}  
+// OCLSpecialPower::doSpecialPowerAtObject: retail's body (0x00262D60) lives in
+// OCLSpecialPowerDoSpecialPowerAtObject.cpp.
 
 // ------------------------------------------------------------------------------------------------
 // ?doSpecialPower@OCLSpecialPower@@UAEXI@Z present-unmatched
