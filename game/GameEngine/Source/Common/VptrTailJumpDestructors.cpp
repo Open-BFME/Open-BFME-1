@@ -227,7 +227,16 @@ BFME_VPTR_TAIL_JUMP_DTOR( Rva0016AC60TailDtor, StateMachine )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva0016ACE0TailDtor, StateMachine )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva0016B230TailDtor, StateMachine )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva0016B5A0TailDtor, StateMachine )
-BFME_VPTR_TAIL_JUMP_DTOR( Rva0016CB60TailDtor, StateMachine )
+// 0x0016CB60: ILT 0x00006BDB, called by the matched scalar-deleting
+// destructor ??_GAIAttackThenIdleStateMachine (0x0016F310).
+class AIAttackThenIdleStateMachine : public StateMachine
+{
+protected:
+	virtual ~AIAttackThenIdleStateMachine();
+};
+AIAttackThenIdleStateMachine::~AIAttackThenIdleStateMachine()
+{
+}
 BFME_VPTR_TAIL_JUMP_DTOR( Rva00189B00TailDtor, StateMachine )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva0018C2D0TailDtor, StateMachine )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva0024F3F0TailDtor, Rva0004B227TailBase )

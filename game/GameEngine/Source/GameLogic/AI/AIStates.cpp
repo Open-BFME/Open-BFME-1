@@ -7180,10 +7180,7 @@ void AIAttackThenIdleStateMachine::loadPostProcess( void )
 // Body in game/masm_dumps/AIAttackThenIdleStateMachine_ctor.asm (exact 347B retail @ 0x184A40).
 
 //----------------------------------------------------------------------------------------------------------
-// ??1AIAttackThenIdleStateMachine@@MAE@XZ present-unmatched
-AIAttackThenIdleStateMachine::~AIAttackThenIdleStateMachine()
-{
-}
+// ??1AIAttackThenIdleStateMachine@@MAE@XZ: Common/VptrTailJumpDestructors.cpp (retail 0x0016CB60)
 
 //----------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------
