@@ -1157,3 +1157,9 @@ game/GameEngine/Source/Common/S2ZeroFillCtors.cpp|type||Rva001B7450,b9cac6418299
 game/GameEngine/Source/Common/S2ZeroFillCtors.cpp|type||Rva001B7450,b9cac6418299286e5ea74196,grok,20261007215326-310513,2026-10-07
 game/Libraries/Source/WWVegas/WWLib/Small03hHashBucket.cpp|local|Rva00927730Box::bucket|h,e045ccf345b811c20b6866e8,gpt-6-astra,20261007215316-878e94,2026-10-07
 game/Libraries/Source/WWVegas/WWLib/Small03hHashBucket.cpp|local|Rva00927730Box::bucket|d,2be91eb17fb8faefdefb5dbf,gpt-6-astra,20261007215316-878e94,2026-10-07
+game/GameEngine/Source/Common/BfmeConv2022.cpp|type||BfmeUStrTL,b6bef267ab221bc344340fb4,gpt-6-astra,20261007221050-daa8e1,2026-10-07
+game/GameEngine/Source/Common/BfmeConv2022.cpp|type||BfmeHostTL,4426e2f51d512ed77ff359ee,gpt-6-astra,20261007221050-daa8e1,2026-10-07
+game/GameEngine/Source/Common/BfmeConv2022.cpp|member||m_bfmeIdTL,8aa6f640a58dfacdb4893558,gpt-6-astra,20261007221050-daa8e1,2026-10-07
+game/GameEngine/Source/Common/BfmeConv2022.cpp|member||m_bfmeTagTL,6defd9630f1682de86f9fd5d,gpt-6-astra,20261007221050-daa8e1,2026-10-07
+game/GameEngine/Source/Common/BfmeConv2022.cpp|member||m_bfmeThingTL,d4b441561ed926efb1a11bad,gpt-6-astra,20261007221050-daa8e1,2026-10-07
+game/GameEngine/Source/Common/BfmeConv2022.cpp|function|BfmeHostTL@|bfmeApplyTL,d03b90ea25506087ce799997,gpt-6-astra,20261007221050-daa8e1,2026-10-07
