@@ -200,12 +200,7 @@ Bool INI::isValidINIFilename( const char *filename )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/INIDestructorThunk.cpp
-// ??1INI@@ present-unmatched
-INI::~INI( void )
-{
-
-}  // end ~INI
+// Retail INI::~INI (0x008512E0) is provided by INIDestructorThunk.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Load all INI files in the specified directory (and subdirectories if indicated).

@@ -562,12 +562,7 @@ void bfme_force_multi_ini_field_parse_add_emission(MultiIniFieldParse &p, const 
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/INIDestructorThunk.cpp
-// ??1INI@@QAE@XZ present-unmatched
-INI::~INI( void )
-{
-
-}
+// Retail INI::~INI (0x008512E0) is provided by INIDestructorThunk.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // Was a naked byte dump in ini.cpp. Retail inlines getNextToken here
