@@ -69,6 +69,9 @@ __forceinline Type *uninitialized_fill_n( Type *result, unsigned int count, cons
 template <class Type, class Allocator>
 class vector
 {
+public:
+	void push_back( const Type &value );
+
 protected:
 	void _M_insert_overflow( Type *position, const Type &value,
 		const __false_type &, unsigned int fillLength, bool atEnd );
@@ -78,6 +81,26 @@ protected:
 	Type *_M_finish;
 	Type *_M_end_of_storage;
 };
+
+// STLport 4.5.3 push_back. Retail 0x003D2880 (?dup_003d2880, gen-alias of this
+// symbol) is the push_back of the same vector as 0x003D1710: it constructs in
+// place through ILT 0x0003E4BE while there is room, else grows through
+// _M_insert_overflow (ILT 0x000382BC -> 0x003D1710). The ILT name order
+// contradicts ParkingPlaceInfo for both bodies, so the element type stays
+// unproven and the row keeps its ?dup_ name.
+template <class Type, class Allocator>
+void vector<Type, Allocator>::push_back( const Type &value )
+{
+	if ( _M_finish != _M_end_of_storage )
+	{
+		_Construct( _M_finish, value );
+		++_M_finish;
+	}
+	else
+	{
+		_M_insert_overflow( _M_finish, value, __false_type(), 1, true );
+	}
+}
 
 template <class Type, class Allocator>
 void vector<Type, Allocator>::_M_insert_overflow(
