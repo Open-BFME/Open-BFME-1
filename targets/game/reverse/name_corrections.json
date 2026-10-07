@@ -18838,5 +18838,15 @@
   "after_sha256": "968675c3f2a06efaa20af63245d4af05dd89adbb5e8e4b3d4fbe4480894db66d",
   "evidence": "targets/game/reverse/functions.csv",
   "reason": "Not a rename of a proven class: Gen00296F90::handle (0x00296F90) calls ILT 0x0004A66A -> 0x003D0FA0, the matched row ?run@Rva003D0FA0@@QAEXPAVY1ForEachArg@@@Z; Rva004A66AOwner named only the ILT pin and no body defines it."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeVp6PredictValue.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeVp6PredictValue.cpp",
+  "old_name": "g_bfmeVp6SelectorMap",
+  "new_name": "Rva01142BA0Table",
+  "before_sha256": "cf13c702b07f20fcb0c4c8b3e9812af04ff098230dd0f49fb20a9e7f3c78d2a0",
+  "after_sha256": "a45c4b836cb4e34eb993335e34a8b6392183a42b00d7bf153a600cdceeddb936",
+  "evidence": "targets/game/reverse/identity_evidence/01142ba0-vp6-reference-table.md",
+  "reason": "Not a rename of a proven identity: VA 0x01142BA0 carried two undefined spellings; the one datum keeps the address-derived name its other two readers (0x009AB950/0x009AB990) use."
  }
 ]
