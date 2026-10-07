@@ -30,7 +30,9 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl SiegeDeploySpecialPowerFieldParse(MultiIniFieldParse &parse);
+// The proc operand is ILT 0x00027B3D -> 0x00266210, the matched
+// ?buildFieldParse@Rva00266210@@SAXAAVWideMulti@@@Z.
+void j_00027b3d();
 
 class SiegeDeploySpecialPower
 {
@@ -43,6 +45,6 @@ ModuleData *SiegeDeploySpecialPower::friend_newModuleData(INI *ini)
 {
 	SiegeDeploySpecialPowerModuleData *data = new SiegeDeploySpecialPowerModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &SiegeDeploySpecialPowerFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))j_00027b3d);
 	return (ModuleData *)data;
 }
