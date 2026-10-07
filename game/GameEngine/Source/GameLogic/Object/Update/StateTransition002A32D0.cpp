@@ -2,7 +2,8 @@
 // stlport
 // Retail 0x002A32D0 (463 bytes), an update-interface receiver at module+0x10.
 // Negative offsets address the complete module's data (+4) and Object (+8).
-// The complete owner/method identity is deliberately not guessed.
+// EA's name is RespawnUpdate::update (ea_evidence.csv); retail's thunk table
+// confirms ?update@RespawnUpdate@@UAE?AW4UpdateSleepTime@@XZ exactly.
 // Virtual slots are offsets witnessed in this body, not semantic names.
 // Typed member-pointer unions bind existing ILT symbols without inventing
 // callee identities: 1dd7c->2A1780 returns Object*; 2bdfa->1D27F0 takes a
@@ -244,16 +245,20 @@ extern void j_0001dd7c();
 extern void j_0002bdfa();
 extern void j_0003a279();
 extern void j_0001a9dd();
-class StateTransition002A32D0
+enum UpdateSleepTime
+{
+	UPDATE_SLEEP_FOREVER = 0x3fffffff
+};
+class RespawnUpdate
 {
   public:
-	unsigned update();
-	char m_pad00[16];
+	virtual UpdateSleepTime update();
+	char m_pad04[12];
 	float m_f20;
 	char m_pad14[8];
 	int m_f2c, m_f30, m_f34, m_f38;
 };
-unsigned StateTransition002A32D0::update()
+UpdateSleepTime RespawnUpdate::update()
 {
 
 	StateData002A32D0 *data = *(StateData002A32D0 **)((char *)this - 12);
@@ -262,7 +267,7 @@ unsigned StateTransition002A32D0::update()
 	switch (m_f2c)
 	{
 	case 2:
-		return 0x3fffffff;
+		return UPDATE_SLEEP_FOREVER;
 	case 3: {
 		Object *source = TheGameLogic->findObjectByID(m_f30);
 		if (!source)
@@ -314,7 +319,7 @@ unsigned StateTransition002A32D0::update()
 		if (local == object->getControllingPlayer())
 			TheControlBar->m_UIDirty = true;
 		object->getControllingPlayer();
-		return data->m_f94;
+		return (UpdateSleepTime)data->m_f94;
 	}
 	case 4: {
 		object->clearModelConditionFlags(data->flags34);
@@ -348,5 +353,5 @@ unsigned StateTransition002A32D0::update()
 		break;
 	}
 	}
-	return 0x3fffffff;
+	return UPDATE_SLEEP_FOREVER;
 }

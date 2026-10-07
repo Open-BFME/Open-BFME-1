@@ -5,7 +5,7 @@
 // Retail RVA 0x002A1780, 175 bytes.
 //
 // Identity: a niladic __thiscall on the update-module receiver that returns an
-// Object*.  Its only caller is retail 0x002A32D0 (?update@StateTransition002A32D0),
+// Object*.  Its only caller is retail 0x002A32D0 (RespawnUpdate::update),
 // which reaches it through ILT 0x0001DD7C bound as a member pointer on
 // (this-16) and uses the Object* it returns as a replacement source.  The
 // module's witnessed layout there is vtable+0, module data+4, Object+8 -- the
