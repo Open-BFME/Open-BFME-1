@@ -13,9 +13,10 @@ class Player
 {
 public:
 	Int getPlayerIndex(void) const { return m_playerIndex; }
-	PlayerType getPlayerType(void) const { return m_playerType; }
+	// Read inline below rather than through an in-class body: this view's
+	// offset would emit a getPlayerType COMDAT differing from Player.obj's.
+	PlayerType getPlayerType(void) const;
 
-private:
 	unsigned char m_unreconstructed_00[0x24];
 	Int m_playerIndex;
 	unsigned char m_unreconstructed_28[4];
@@ -55,7 +56,7 @@ Int AISkirmishPlayer::getMyEnemyPlayerIndex(void)
 
 	for (playerNdx = 0; playerNdx < ThePlayerList->getPlayerCount(); playerNdx++)
 	{
-		if (ThePlayerList->getNthPlayer(playerNdx)->getPlayerType() == PLAYER_HUMAN)
+		if (ThePlayerList->getNthPlayer(playerNdx)->m_playerType == PLAYER_HUMAN)
 			break;
 	}
 	return playerNdx;
