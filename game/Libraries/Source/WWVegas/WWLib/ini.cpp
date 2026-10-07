@@ -7,9 +7,7 @@
 // the retail binary strips the asserts; the "Duplicate CRC in INI file." MessageBox in
 // DuplicateCRCError only compiles under NDEBUG, which is why that string is present.
 //
-// Get_PKey/Put_PKey (need pk.h/int.h BigInt crypto) and Get_Wide_String/Put_Wide_String
-// (need widestring.h) are omitted here so this TU stays free of those heavy dependencies;
-// every other INIClass method is verbatim.
+// Get_Wide_String is omitted; every other INIClass method is verbatim.
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -116,8 +114,10 @@
 #include "inisup.h"
 #include	"trect.h"
 #include	"wwfile.h"
+#include	"pk.h"
 #include	"pipe.h"
 #include	"wwstring.h"
+#include "widestring.h"
 #include "nstrdup.h"
 
 #if defined(__WATCOMC__)
@@ -131,7 +131,7 @@ bool INIClass::KeepBlankEntries = false;
 const int INIClass::MAX_LINE_LENGTH = 4096;
 
 
-// ??1INIEntry@@UAE@XZ absent-from-retail
+
 INIEntry::~INIEntry(void)
 {
 	free(Entry);
@@ -985,10 +985,38 @@ int INIClass::Get_UUBlock(char const * section, void * block, int len) const
 
 
 
-// Get_Wide_String / Put_Wide_String omitted -- they need widestring.h (WideStringClass).
+// Get_Wide_String omitted; Put_Wide_String is retail 0x009E53B0.
+bool INIClass::Put_Wide_String(char const * section, char const * entry, wchar_t const * string)
+{
+	if (section == NULL || entry == NULL || string == NULL) {
+		return(false);
+	}
 
+	WideStringClass temp_string(string, true);
+	int len = temp_string.Get_Length();
 
+	if (len == 0) {
+		Put_String(section, entry, "");
+	} else {
 
+		char *buffer = (char*) _alloca((len * 8) + 32);
+
+		BufferStraw straw(string, (len*2) + 2);		// Convert from shorts to bytes, plus 2 for terminator.
+		Base64Straw bstraw(Base64Straw::ENCODE);
+		bstraw.Get_From(straw);
+
+		int new_length = 0;
+		int added = 0;
+		do {
+			added = bstraw.Get(buffer + new_length, 16);
+			new_length += added;
+		} while (added);
+		buffer[new_length] = 0;
+		WWASSERT(new_length != 0);
+		Put_String(section, entry, buffer);
+	}
+	return(true);
+}
 
 
 bool INIClass::Put_UUBlock(char const * section, char const *entry, void const * block, int len)
@@ -2089,7 +2117,44 @@ INIEntry * INISection::Find_Entry(char const * entry) const
 }
 
 
-// Put_PKey / Get_PKey omitted -- they need pk.h/int.h (PKey, BigInt crypto).
+// Put_PKey 0x009E5B10 / Get_PKey 0x009E5B70.
+bool INIClass::Put_PKey(PKey const & key)
+{
+	char buffer[512];
+
+	int len = key.Encode_Modulus(buffer);
+	Put_UUBlock("PublicKey", buffer, len);
+
+	len = key.Encode_Exponent(buffer);
+	Put_UUBlock("PrivateKey", buffer, len);
+	return(true);
+}
+
+
+PKey INIClass::Get_PKey(bool fast) const
+{
+	PKey key;
+	char buffer[512];
+
+	/*
+	**	When retrieving the fast key, the exponent is a known constant. Don't parse the
+	**	exponent from the database.
+	*/
+	if (fast) {
+		BigInt exp = PKey::Fast_Exponent();
+		exp.DEREncode((unsigned char *)buffer);
+		key.Decode_Exponent(buffer);
+	} else {
+		Get_UUBlock("PrivateKey", buffer, sizeof(buffer));
+		key.Decode_Exponent(buffer);
+	}
+
+	Get_UUBlock("PublicKey", buffer, sizeof(buffer));
+	key.Decode_Modulus(buffer);
+
+	return(key);
+}
+
 
 
 /***********************************************************************************************
