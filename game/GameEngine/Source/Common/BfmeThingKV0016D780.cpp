@@ -2,8 +2,8 @@
 // Fuzzy-twin (r0.940) of ?bfmeTakeKU@BfmeThingKU@@QAEXPAVBfmeItemKU@@@Z in
 // game/GameEngine/Source/Common/BfmeTwoHundredTwentyFour.cpp: same item
 // interface (bfmeIsKU@0x10, bfmeMarkKU@0x28, bfmeWantKU@0x8c,
-// bfmeHandKU@0x30) and same BfmeThingKU field layout (m_bfmeMaker@0x1c,
-// m_bfmeHeld@0x24), but two proven differences from the disassembly:
+// bfmeHandKU@0x30) and same BfmeThingKU field layout (m_machine@0x1c,
+// m_guardMachine@0x24), but two proven differences from the disassembly:
 //   1. the maker interface's make call is at vtable slot 0x28, one slot
 //      later than the twin's 0x24 -- one extra spare virtual before it.
 //   2. this variant does not call item->bfmeWhereKU(m_bfmeRest) at the end
@@ -59,7 +59,7 @@ public:
 };
 
 // one extra spare vs BfmeMakerKU: bfmeMakeKV lands at vtable slot 0x28.
-class BfmeMakerKV
+class StateMachine
 {
 public:
 	virtual void bfmeSpare000KV(void) = 0;
@@ -75,21 +75,21 @@ public:
 	virtual void *bfmeMakeKV(void) = 0;
 };
 
-class BfmeThingKV0016D780
+class AIGuardState
 {
 public:
 	void bfmeTakeKV0016D780(BfmeItemKV *item);
 
 private:
 	unsigned char m_bfmeHead[0x1c];		// 0x00
-	BfmeMakerKV *m_bfmeMaker;		// 0x1c
+	StateMachine *m_machine;		// 0x1c
 	unsigned char m_bfmeGap[4];		// 0x20
-	void *m_bfmeHeld;			// 0x24
+	void *m_guardMachine;			// 0x24
 	unsigned char m_bfmeRest[4];		// 0x28
 };
 
-// ?bfmeTakeKV0016D780@BfmeThingKV0016D780@@QAEXPAVBfmeItemKV@@@Z
-void BfmeThingKV0016D780::bfmeTakeKV0016D780(BfmeItemKV *item)
+// ?bfmeTakeKV0016D780@AIGuardState@@QAEXPAVBfmeItemKV@@@Z
+void AIGuardState::bfmeTakeKV0016D780(BfmeItemKV *item)
 {
 	if (item->bfmeIsKV() != 0)
 		return;
@@ -101,16 +101,16 @@ void BfmeThingKV0016D780::bfmeTakeKV0016D780(BfmeItemKV *item)
 
 	item->bfmeMarkKV(&both);
 
-	unsigned char yes = (unsigned char)(m_bfmeHeld != 0);
+	unsigned char yes = (unsigned char)(m_guardMachine != 0);
 
 	item->bfmeWantKV(&yes);
 
 	if (yes != 0)
 	{
-		if (m_bfmeHeld == 0)
-			m_bfmeHeld = m_bfmeMaker->bfmeMakeKV();
+		if (m_guardMachine == 0)
+			m_guardMachine = m_machine->bfmeMakeKV();
 
 		if (yes != 0)
-			item->bfmeHandKV(m_bfmeHeld);
+			item->bfmeHandKV(m_guardMachine);
 	}
 }
