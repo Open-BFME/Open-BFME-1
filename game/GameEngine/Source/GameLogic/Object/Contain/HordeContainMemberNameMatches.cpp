@@ -25,7 +25,7 @@ typedef int Int;
 class AsciiString
 {
 public:
-	Int bfmeCompare( const AsciiString &other ) const;		///< ILT thunk at 0x000220C5
+	Int compare( const AsciiString &other ) const;		///< ILT thunk at 0x000220C5 -> 0x0005FEB0
 
 private:
 	void *m_bfmeData;
@@ -97,7 +97,7 @@ Bool BfmeHordeContainRoster::bfmeMemberNameMatches( Object *member, const AsciiS
 
 		if ( slotKey == entry->m_bfmeKey )
 		{
-			if ( entry->m_bfmeName.bfmeCompare( name ) == 0 )
+			if ( entry->m_bfmeName.compare( name ) == 0 )
 				return true;
 
 			break;
