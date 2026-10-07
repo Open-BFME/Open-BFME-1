@@ -7,6 +7,8 @@ extern int g_aptPalantirWindow;
 
 // The state argument at VA 0x01109918: retail .rdata holds "_hide" there.
 extern "C" const char bfmeOffEAA[] = "_hide";
+// Its paired "_show" state at VA 0x01109920 (read by bfmeFlashEAA 0x005640D0).
+extern "C" const char bfmeOnEAA[] = "_show";
 
 void bfmeAutoAbilityOffEAE(char index)
 {
