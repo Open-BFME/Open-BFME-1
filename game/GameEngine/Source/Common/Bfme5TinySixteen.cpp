@@ -9,7 +9,7 @@ void __cdecl bfmeWriteMark(int unused, short *out, unsigned char skip)
 		*out = 0x31;
 }
 
-extern float g_bfmeStepCG;					// retail 0x010F1BC8
+// The step is the .rdata float __real@42055555 (33.333332f) at retail 0x010F1BC8.
 
 class Gen_004223D0
 {
@@ -24,8 +24,8 @@ private:
 // ?bfmeStepBack@Gen_004223D0@@QAEXXZ
 void Gen_004223D0::bfmeStepBack(void)
 {
-	m_bfmeX -= g_bfmeStepCG;
-	m_bfmeY -= g_bfmeStepCG;
+	m_bfmeX -= 33.333332f;
+	m_bfmeY -= 33.333332f;
 }
 
 class BfmeThingCG
