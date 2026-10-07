@@ -12,10 +12,14 @@ public:
 	unsigned char m_bfmeHeadFV[4];
 };
 
-class BfmeThingFV
+// ILT 0x0002F734 -> 0x00132780, the matched Thing::transformPoint
+// (Common/Thing/Thing.cpp).
+struct Coord3D;
+
+class Thing
 {
 public:
-	void bfmeComputeFV(BfmeArgFV *a, BfmeVec3FV *out);
+	void transformPoint(const Coord3D *in, Coord3D *out);
 };
 
 class BfmeOwnerFV
@@ -34,7 +38,7 @@ public:
 void BfmeHostFV::bfmeGetFV(BfmeVec3FV *out)
 {
 	BfmeOwnerFV *o = *(BfmeOwnerFV **)((char *)this - 0x4c);
-	BfmeThingFV *t = *(BfmeThingFV **)((char *)this - 0x48);
+	Thing *t = *(Thing **)((char *)this - 0x48);
 
 	if (t == 0)
 	{
@@ -47,7 +51,7 @@ void BfmeHostFV::bfmeGetFV(BfmeVec3FV *out)
 
 	BfmeVec3FV tmp;
 
-	t->bfmeComputeFV(&o->m_bfmeArgFV, &tmp);
+	t->transformPoint((const Coord3D *)&o->m_bfmeArgFV, (Coord3D *)&tmp);
 
 	out->x = *(const volatile float *)&tmp.x;
 	out->y = tmp.y;
