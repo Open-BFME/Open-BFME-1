@@ -4,7 +4,7 @@ typedef unsigned int UnsignedInt;
 typedef unsigned char UnsignedByte;
 typedef unsigned char Bool;
 
-#include "unicode_string.h"
+#include "string_base.h"
 
 struct Rva00360820Destination
 {
@@ -13,7 +13,7 @@ struct Rva00360820Destination
 	UnsignedInt m_second;
 	UnsignedInt m_third;
 	Bool m_active;
-	UnicodeString m_text;
+	StringBase<unsigned short> m_text;
 };
 
 struct Rva00360820Source
@@ -24,14 +24,16 @@ struct Rva00360820Source
 	UnsignedInt m_second;
 	UnsignedInt m_third;
 	UnsignedByte m_pad4c[0x2c];
-	UnicodeString m_text;
+	StringBase<unsigned short> m_text;
 };
 
 void rva00360820CopyInit(Rva00360820Destination *destination,
 	const Rva00360820Source *source)
 {
 	destination->m_first = source->m_first;
-	destination->m_text = source->m_text;
+	// Retail calls StringBase<unsigned short>::set (0x00888530), not
+	// UnicodeString::operator= (0x00888A90).
+	destination->m_text.set(source->m_text);
 	destination->m_second = source->m_second;
 	destination->m_third = source->m_third;
 	destination->m_count = 0;
