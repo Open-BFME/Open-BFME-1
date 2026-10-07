@@ -1,9 +1,16 @@
 // cl: /DNDEBUG /MD /EHsc
 
-class GiantBirdGuardReturnState
+class Object;
+class GiantBirdGuardReturnState;
+
+// callees.py: the constructor call goes through ILT 0x0001C292 to
+// 0x002C05C0, the matched GiantBirdGuardMachine(Object *) constructor
+// (GiantBirdGuardMachineCtor.cpp), not to a GiantBirdGuardReturnState
+// constructor. The row's name and return type are kept as ledgered.
+class GiantBirdGuardMachine
 {
 public:
-	GiantBirdGuardReturnState( void *owner );
+	GiantBirdGuardMachine( Object *owner );
 
 private:
 	unsigned char m_unreconstructed[ 0x78 ];
@@ -16,10 +23,10 @@ public:
 
 private:
 	unsigned char m_unreconstructed00[ 0x10 ];
-	void *m_owner;
+	Object *m_owner;
 };
 
 GiantBirdGuardReturnState *Rva002C1BC0Factory::createGuardReturnState()
 {
-	return new GiantBirdGuardReturnState( m_owner );
+	return (GiantBirdGuardReturnState *)new GiantBirdGuardMachine( m_owner );
 }
