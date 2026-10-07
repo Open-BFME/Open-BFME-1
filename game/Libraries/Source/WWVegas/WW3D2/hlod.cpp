@@ -3308,16 +3308,7 @@ int HLodClass::Calculate_Cost_Value_Arrays(float screen_area, float *values, flo
  * HISTORY:                                                                                    *
  *   1/26/00    gth : Created.                                                                 *
  *=============================================================================================*/
-// ?HLodClass::Get_Current_LOD present-unmatched
-RenderObjClass * HLodClass::Get_Current_LOD(void)
-{
-	int count = Get_Lod_Model_Count(CurLod);
-
-	if(!count)
-		return 0;
-
-	return Get_Lod_Model(CurLod, 0);
-}
+// Body: HLodClass_Get_Current_LOD.cpp (retail 0x00978F20).
 
 
 /***********************************************************************************************
