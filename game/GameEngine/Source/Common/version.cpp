@@ -59,23 +59,7 @@ UnsignedInt Version::getVersionNumber( void )
 	return m_major << 16 | m_minor;
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/VersionGetAsciiVersion.cpp
-// ?getAsciiVersion@Version@@ present-unmatched
-AsciiString Version::getAsciiVersion( void )
-{
-	AsciiString version;
-#if defined _DEBUG || defined _INTERNAL
-	if (m_localBuildNum)
-		version.format("%d.%d.%d.%d%c%c", m_major, m_minor, m_buildNum, m_localBuildNum,
-			m_buildUser.getCharAt(0), m_buildUser.getCharAt(1));
-	else
-		version.format("%d.%d.%d", m_major, m_minor, m_buildNum);
-#else // defined _DEBUG || defined _INTERNAL
-	version.format("%d.%d", m_major, m_minor);
-#endif // defined _DEBUG || defined _INTERNAL
-
-	return version;
-}
+// Version::getAsciiVersion: retail body (0x000AEC40) in VersionGetAsciiVersion.cpp.
 
 // byte-exact reconstruction: game/GameEngine/Source/Common/VersionGetUnicodeVersionThunk.cpp
 // ?getUnicodeVersion@Version@@ present-unmatched
