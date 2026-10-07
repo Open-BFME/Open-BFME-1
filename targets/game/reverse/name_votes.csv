@@ -1126,3 +1126,9 @@ game/GameEngine/Source/Common/BfmeConv766.cpp|function|BfmeThingDSA@|bfmeGoDSA,b
 game/GameEngine/Source/Common/BfmeConv766.cpp|type||BfmeThingDSA,7f1f676da0727016b0ec506f,grok,20261007213202-9089aa,2026-10-07
 game/GameEngine/Source/Common/BfmeConv766.cpp|member||m_bfmeFlag,a828d547fd46e64363bd8b63,grok,20261007213202-9089aa,2026-10-07
 game/GameEngine/Source/Common/BfmeConv766.cpp|function|BfmeThingDSA@|bfmeGoDSA,b721a133082738741cd6cd6d,grok,20261007213202-9089aa,2026-10-07
+game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|member||m_rva0015d1d0_44,9469c3b9ccbb25e41eca298e,gpt-6-astra,20261007213209-e8d5a8,2026-10-07
+game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|member||m_rva0015d1d0_48,0005a4be5edd044441d32f45,gpt-6-astra,20261007213209-e8d5a8,2026-10-07
+game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|member||m_rva0015d1d0_4c,a076682833e3ffc52b656cec,gpt-6-astra,20261007213209-e8d5a8,2026-10-07
+game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|member||m_rva0015d1d0_6c,14faad81b28949e926d88b48,gpt-6-astra,20261007213209-e8d5a8,2026-10-07
+game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|param|AIGuardReturnState|m,88f5e110e5470d92bcdf4026,gpt-6-astra,20261007213209-e8d5a8,2026-10-07
+game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|param|AIGuardIdleState|m,c63cbe42bdc6a4ba22b52aba,gpt-6-astra,20261007213209-e8d5a8,2026-10-07
