@@ -1,5 +1,5 @@
 // ?bfmeBuildString1284@BfmeStringWriter1284@@QAEXPAVBfmeString1284@@H@Z
-// partial score=0.9 date=2026-09-18
+// partial score=0.6517 date=2026-10-06
 struct BfmeStringData3AF0
 {
 	unsigned short m_refCount;
@@ -131,24 +131,19 @@ void BfmeString1284::append(const BfmeString1284 &text)
 
 void BfmeStringWriter1284::bfmeBuildString1284(BfmeString1284 *result, int value)
 {
-	BfmeStringWriter1284 *writer = this;
-	BfmeString1284 *output = result;
-	*output = BfmeStrVKI((const char *)0x0107301c);
-	int index = 0;
-
-	for (; index < writer->m_elements.size(); ++index)
+	*result = BfmeStrVKI((const char *)0x0107301c);
+	for (int index = 0; index < m_elements.size(); ++index)
 	{
-		BfmeString1284 element;
-		BfmeString1284 *entry = reinterpret_cast<BfmeString1284 *>(
-			reinterpret_cast<unsigned>(writer->m_elements.begin()[index]) & ~1U);
+		Rva8CD130Value *entry = reinterpret_cast<Rva8CD130Value *>(
+			reinterpret_cast<unsigned>(m_elements.begin()[index]) & ~1U);
 		if (entry != 0)
 		{
-			reinterpret_cast<Rva8CD130Value *>(entry)->getName(
-				reinterpret_cast<Rva8CD130String *>(&element));
-			output->append(element);
-			if (index < writer->m_elements.size() - 1)
-				output->append(value);
+			BfmeString1284 element;
+			entry->getName(reinterpret_cast<Rva8CD130String *>(&element));
+			result->append(element);
 		}
+		if (index < m_elements.size() - 1)
+			result->append(value);
 	}
 }
 
