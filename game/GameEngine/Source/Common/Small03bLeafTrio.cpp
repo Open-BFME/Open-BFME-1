@@ -17,11 +17,18 @@ int Rva0092D430Box::get() const
 {
 	return m_ptr ? m_ptr->m_value : 0;
 }
-// shl eax,5 / add / indexed load off the ScreenTextureStageStates table.
-extern unsigned int ScreenTextureStageStates[8][32];
+// shl eax,5 / add / indexed load off DX8Wrapper::TextureStageStates
+// (0x0133F9E0, dir32_addresses.csv; defined in dx8wrapper.cpp).
+int __cdecl Rva00945460Lookup(int a, int b);
+class DX8Wrapper
+{
+	friend int __cdecl Rva00945460Lookup(int a, int b);
+protected:
+	static unsigned TextureStageStates[8][32];
+};
 int __cdecl Rva00945460Lookup(int a, int b)
 {
-	return ScreenTextureStageStates[a][b];
+	return DX8Wrapper::TextureStageStates[a][b];
 }
 class Rva009339F0Box
 {
