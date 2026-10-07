@@ -41,7 +41,8 @@ public:
 extern AsciiString theDrawString;
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern FunctionLexicon *TheFunctionLexicon;
-extern GameWinDrawFunc drawFunc;
+// Retail .bss VA 0x012F2560 (ZH GameWindowManagerScript.cpp: static drawFunc).
+GameWinDrawFunc drawFunc = 0;
 
 // ?parseDrawCallback@@YA_NPADPAVWinInstanceData@@0PAX@Z
 Bool parseDrawCallback(char *token, WinInstanceData *instData, char *buffer, void *data)
