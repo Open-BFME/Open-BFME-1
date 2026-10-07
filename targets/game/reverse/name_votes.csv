@@ -1163,3 +1163,7 @@ game/GameEngine/Source/Common/BfmeConv2022.cpp|member||m_bfmeIdTL,8aa6f640a58dfa
 game/GameEngine/Source/Common/BfmeConv2022.cpp|member||m_bfmeTagTL,6defd9630f1682de86f9fd5d,gpt-6-astra,20261007221050-daa8e1,2026-10-07
 game/GameEngine/Source/Common/BfmeConv2022.cpp|member||m_bfmeThingTL,d4b441561ed926efb1a11bad,gpt-6-astra,20261007221050-daa8e1,2026-10-07
 game/GameEngine/Source/Common/BfmeConv2022.cpp|function|BfmeHostTL@|bfmeApplyTL,d03b90ea25506087ce799997,gpt-6-astra,20261007221050-daa8e1,2026-10-07
+game/GameEngine/Source/Common/BfmeConv2022.cpp|type||BfmeUStrTL,b6bef267ab221bc344340fb4,grok,20261007221457-c243d5,2026-10-07
+game/GameEngine/Source/Common/BfmeConv2022.cpp|type||BfmeHostTL,4426e2f51d512ed77ff359ee,grok,20261007221457-c243d5,2026-10-07
+game/GameEngine/Source/Common/BfmeConv2022.cpp|member||m_bfmeThingTL,d4b441561ed926efb1a11bad,grok,20261007221457-c243d5,2026-10-07
+game/GameEngine/Source/Common/BfmeConv2022.cpp|function|BfmeHostTL@|bfmeApplyTL,d03b90ea25506087ce799997,grok,20261007221457-c243d5,2026-10-07

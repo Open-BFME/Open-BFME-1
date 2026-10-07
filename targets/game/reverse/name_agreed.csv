@@ -562,3 +562,7 @@ game/GameEngine/Source/Common/BfmeConv884.cpp|member||m_bfmeK,m_playerIndex,gpt-
 game/GameEngine/Source/Common/S2ZeroFillCtors.cpp|type||Rva001B7450,LocomotorSet,gpt-6-astra+grok,agreed,2026-10-07
 game/GameEngine/Source/Common/BfmeConv884.cpp|member||m_bfmeK,m_playerIndex,gpt-6-astra+grok,applied,2026-10-07
 game/GameEngine/Source/Common/S2ZeroFillCtors.cpp|type||Rva001B7450,LocomotorSet,gpt-6-astra+grok,applied,2026-10-07
+game/GameEngine/Source/Common/BfmeConv2022.cpp|type||BfmeUStrTL,UnicodeString,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/Common/BfmeConv2022.cpp|type||BfmeHostTL,LANAPI,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/Common/BfmeConv2022.cpp|member||m_bfmeThingTL,m_currentGame,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/Common/BfmeConv2022.cpp|function|BfmeHostTL@|bfmeApplyTL,OnPlayerJoin,gpt-6-astra+grok,agreed,2026-10-07
