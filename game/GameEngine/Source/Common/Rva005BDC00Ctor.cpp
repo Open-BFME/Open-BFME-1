@@ -1,6 +1,18 @@
 // cl: /O2 /Ob0
 
-extern void *g_0110FA18[];
+// Retail .rdata 0x0110FA18, 16 bytes: the class vftable, four ILT slots
+// (vtable_lookup.py), no RTTI locator; next dword is 0.
+void j_0001faa0();
+void j_0000614f();
+void j_00021daa();
+void j_0002d27c();
+void *g_0110FA18[] =
+{
+	(void *)&j_0001faa0,
+	(void *)&j_0000614f,
+	(void *)&j_00021daa,
+	(void *)&j_0002d27c,
+};
 
 class Rva005BDC00
 {
