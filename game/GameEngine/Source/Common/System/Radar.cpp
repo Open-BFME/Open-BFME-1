@@ -1571,54 +1571,7 @@ void Radar::tryInfiltrationEvent( const Object *obj )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?tryEvent@Radar@@QAE_NW4RadarEventType@@PBUCoord3D@@@Z present-unmatched
-Bool Radar::tryEvent( RadarEventType event, const Coord3D *pos )
-{
-
-	// sanity
-	if( event <= RADAR_EVENT_INVALID || event >= RADAR_EVENT_NUM_EVENTS || pos == NULL )
-		return FALSE;
-
-	// see if there was an event of this type within the given range within the given time
-	UnsignedInt currentFrame = TheGameLogic->getFrame();
-	const Real closeEnoughDistanceSq = 250.0f * 250.0f;
-	const UnsignedInt framesBetweenEvents = LOGICFRAMES_PER_SECOND * 10;
-	//
-
-	// see if there was any matching radar event within range of this one
-	// that wasn't too long ago, if there was we won't create another and get outta here
-	//
-	for( Int i = 0; i < MAX_RADAR_EVENTS; ++i )
-	{
-	
-		// only pay attention to under attack events
-		if( m_event[ i ].type == event )
-		{
-
-			// get distance from our new event location to this event location in 2D
-			Real distSquared = m_event[ i ].worldLoc.x - pos->x * m_event[ i ].worldLoc.x - pos->x +
-												 m_event[ i ].worldLoc.y - pos->y * m_event[ i ].worldLoc.y - pos->y;
-
-			if( distSquared <= closeEnoughDistanceSq )
-			{
-
-				// finally only reject making a new event of this existing one is "recent enough"
-				if( currentFrame - m_event[ i ].createFrame < framesBetweenEvents )
-					return FALSE;  // reject it
-
-			}  // end if
-
-		}  // end if
-
-	}  // end for i
-
-	// if we got here then we want to create a new event
-	createEvent( pos, event );
-
-	// return TRUE for successfully created event
-	return TRUE;
-
-}  // end tryEvent
+// Radar::tryEvent: retail body in RadarTryEvent.cpp.
 
 
 // ------------------------------------------------------------------------------------------------
