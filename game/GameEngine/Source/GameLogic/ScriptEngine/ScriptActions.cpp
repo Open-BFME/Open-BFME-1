@@ -3548,22 +3548,8 @@ void ScriptActions::doRecruitTeam(const AsciiString& teamName, Real recruitRadiu
 //-------------------------------------------------------------------------------------------------
 /** doNamedDamage */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doNamedDamage_Thunk.cpp
-// ?doNamedDamage@ScriptActions@@IAEXABVAsciiString@@H@Z present-unmatched
-void ScriptActions::doNamedDamage(const AsciiString& unitName, Int damageAmt)
-{
-	Object *pUnit = TheScriptEngine->getUnitNamed(unitName);
-
-	if (!pUnit) {
-		return;
-	}
-	DamageInfo damageInfo;
-	damageInfo.in.m_damageType = DAMAGE_UNRESISTABLE;
-	damageInfo.in.m_deathType = DEATH_NORMAL;
-	damageInfo.in.m_sourceID = INVALID_ID;
-	damageInfo.in.m_amount = damageAmt;
-	pUnit->attemptDamage( &damageInfo );
-}
+// ?doNamedDamage@ScriptActions@@IAEXABVAsciiString@@H@Z: retail 0x002F38B0 lives in
+// ScriptActions_doNamedDamage_Thunk.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** doNamedDelete */
