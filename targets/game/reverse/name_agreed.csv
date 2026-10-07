@@ -506,3 +506,5 @@ game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE94,m_evilCom
 game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE98,m_goodCommandPointsMP4,gpt-6-astra+grok,applied,2026-10-07
 game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE9C,m_evilCommandPointsMP4,gpt-6-astra+grok,applied,2026-10-07
 game/GameEngine/Source/Common/RTS/Player_newMap.cpp|function|BfmePlayerMapState@|bfmeNewMap,init,gpt-6-astra+grok,applied,2026-10-07
+game/GameEngine/Source/Common/System/PathProximity000FE640.cpp|type||PathNode000FE640,PathNode,gpt-6-astra+grok,applied,2026-10-07
+game/GameEngine/Source/Common/System/PathProximity000FE640.cpp|type||Path000FE640,Path,gpt-6-astra+grok,applied,2026-10-07

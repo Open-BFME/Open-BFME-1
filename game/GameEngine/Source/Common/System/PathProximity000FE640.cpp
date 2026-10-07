@@ -144,12 +144,12 @@ class Rva001CF980Result { public:
     virtual void slot103();
     virtual bool slot104();
 };
-struct PathNode000FE640 { char field00[12]; Coord3D field0C; };
-struct Path000FE640 { char field00[8]; PathNode000FE640 *field08; };
+struct PathNode { char field00[12]; Coord3D field0C; };
+struct Path { char field00[8]; PathNode *field08; };
 class AIUpdateInterface { public:
     void destroyPath();
     char field00[0x140];
-    Path000FE640 *m_path;
+    Path *m_path;
 };
 class PathProximity000FE640 { public:
     bool apply(Object *obj);
