@@ -1,3 +1,13 @@
+// BFME shim: the reference GameNetwork/GameInfo.h with two GameInfo members
+// out of line, because retail has exactly one body of each and its callers
+// reach it through a call:
+//   GameInfo::operator=  0x004F07F0 (GameInfo_assign.cpp; GameSpyStagingRoom's
+//                        operator= calls it), where this header's implicit
+//                        operator= emits a COMDAT copy in every TU that assigns
+//   GameInfo::getMap     0x00098E70 (MpGameSetup.cpp), where this header's
+//                        inline definition emits a COMDAT copy per TU
+// Those COMDATs collide with the strong retail definitions at link time.
+// The class layout is unchanged.
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -73,11 +83,6 @@ class GameSlot
 public:
 	GameSlot();
 	GameSlot &operator=( const GameSlot &other );	///< out of line in BFME (0x004F08C0)
-	// BFME's GameSlot has an out-of-line destructor: setSlot @0x61F630 ends
-	// by calling one function on the by-value parameter's base (thunk
-	// @0xB988 -> 0x72490), where ZH's implicit dtor makes the compiler inline
-	// the member teardown and call UnicodeString::releaseBuffer at +0x28.
-	~GameSlot();
 	virtual void reset();
 
 	void setAccept( void ) { m_isAccepted = true; }		///< Accept the current options
@@ -162,12 +167,6 @@ protected:
 	GameSlotConnectInfo m_connectInfo;								///< NAT behavior and port for this slot's player.
 	UnsignedInt m_lastFrameInGame;	// only valid for human players
 	Bool m_disconnected;						// only valid for human players
-
-	// BFME's GameSlot is 0x44 bytes, not this header's 0x40:
-	// GameInfo::setSlot @0x61F630 takes one by value and pops 0x48 bytes of
-	// arguments (4 for the Int plus the slot) where we emit `ret 0x44`.
-	// Size-only pin, so the pad sits at the tail and moves no member.
-	char _bfme_pad_tail[4];
 };
 
 /**
@@ -179,16 +178,7 @@ class GameInfo
 public:
 	GameInfo();
 	GameInfo &operator=( const GameInfo &other );	///< out of line in BFME (0x004F07F0)
-
-	// BFME's GameInfo vtable (retail 0x01102F7C) has two leading virtuals at
-	// slots 0/1 that compile to `xor eax,eax; ret` (Int 0; bodies 0x00475CC0
-	// and 0x00475CD0). They shift every Generals virtual down two slots, so
-	// amIHost lands at slot 0x10 and getLocalSlotNum at slot 0x14 (Generals
-	// put them at 0x08/0x0C). Names are placeholders for these BFME-only
-	// virtuals; the retail bodies are tiny Int-0 stubs.
-	virtual Int _bfme_gi_slot0( void );
-	virtual Int _bfme_gi_slot1( void );
-
+	
 	void init( void );
 	virtual void reset( void );
 

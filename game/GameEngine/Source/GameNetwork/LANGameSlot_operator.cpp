@@ -31,6 +31,7 @@ class GameSlot
 {
 public:
 	virtual void reset();
+	GameSlot &operator=( const GameSlot &other );	// out of line: GameSlotAssignment.cpp, retail 0x004F08C0
 
 protected:
 	LANGameSlotState m_state;

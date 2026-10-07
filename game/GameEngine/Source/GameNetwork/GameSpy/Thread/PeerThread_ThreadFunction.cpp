@@ -38,6 +38,12 @@ extern "C" {
 #include "Common/UserPreferences.h"
 #include "GameNetwork/IPEnumeration.h"
 #include "GameNetwork/GameSpy/PeerDefs.h"
+// This TU stays on the reference header's inline GameInfo::getMap, which the
+// GameInfo.h shims now only declare (BFME's one body is MpGameSetup.cpp,
+// 0x00098E70). Nothing here calls it, so no COMDAT is emitted; without the
+// definition MSVC swaps edx/ecx in the heartbeat-interval add in
+// Thread_Function (`add edx,ecx; cmp eax,edx`, +0x1468).
+inline AsciiString GameInfo::getMap( void ) const { return m_mapName; }
 #include "mutex.h"
 #define __PEERTHREAD_H__
 enum SerialAuthResult

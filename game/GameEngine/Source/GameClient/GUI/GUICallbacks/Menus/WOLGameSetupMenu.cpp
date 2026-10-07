@@ -85,6 +85,7 @@ class GameSlot
 {
 public:
 	GameSlot();
+	GameSlot &operator=( const GameSlot &other );	///< out of line in BFME (0x004F08C0)
 	~GameSlot();
 	virtual void reset();
 
@@ -183,6 +184,7 @@ class GameInfo
 {
 public:
 	GameInfo();
+	GameInfo &operator=( const GameInfo &other );	///< out of line in BFME (0x004F07F0)
 	virtual void slot_000();
 	virtual void slot_004();
 	
@@ -217,7 +219,7 @@ public:
 	void setMapCRC( UnsignedInt mapCRC );							///< Set the map CRC
 	void setMapSize( UnsignedInt mapSize );						///< Set the map size
 	void setMapContentsMask( Int mask );							///< Set the map contents mask (1=map,2=preview,4=map.ini)
-	inline AsciiString getMap( void ) const;								///< Get the game map
+	AsciiString getMap( void ) const;								///< Get the game map (out of line, retail 0x00098E70)
 	UnsignedInt getMapCRC( void ) const { return m_mapCRC; }							///< Get the map CRC
 	UnsignedInt getMapSize( void ) const { return m_mapSize; }						///< Get the map size
 	Int getMapContentsMask( void ) const { return m_mapMask; }						///< Get the map contents mask
@@ -289,7 +291,6 @@ protected:
 extern GameInfo *TheGameInfo;
 
 // Inline functions
-AsciiString	GameInfo::getMap( void ) const									{ return m_mapName; }
 void				GameInfo::setGameInProgress( Bool inProgress )	{ m_inProgress = inProgress; }
 void				GameInfo::setUseStats( Int useStats )           { m_useStats = useStats; }
 AsciiString GameInfoToAsciiString( const GameInfo *game );

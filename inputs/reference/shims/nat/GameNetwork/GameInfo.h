@@ -89,6 +89,7 @@ class GameSlot
 {
 public:
 	GameSlot();
+	GameSlot &operator=( const GameSlot &other );	///< out of line in BFME (0x004F08C0)
 	virtual void reset();
 
 	void setAccept( void ) { m_isAccepted = true; }		///< Accept the current options
@@ -184,6 +185,7 @@ class GameInfo
 {
 public:
 	GameInfo();
+	GameInfo &operator=( const GameInfo &other );	///< out of line in BFME (0x004F07F0)
 	
 	void init( void );
 	virtual void reset( void );
@@ -216,7 +218,7 @@ public:
 	void setMapCRC( UnsignedInt mapCRC );							///< Set the map CRC
 	void setMapSize( UnsignedInt mapSize );						///< Set the map size
 	void setMapContentsMask( Int mask );							///< Set the map contents mask (1=map,2=preview,4=map.ini)
-	inline AsciiString getMap( void ) const;								///< Get the game map
+	AsciiString getMap( void ) const;       								///< Get the game map
 	inline UnsignedInt getMapCRC( void ) const;							///< Get the map CRC
 	inline UnsignedInt getMapSize( void ) const;						///< Get the map size
 	inline Int getMapContentsMask( void ) const;						///< Get the map contents mask
@@ -288,7 +290,6 @@ extern GameInfo *TheGameInfo;
 
 // Inline functions
 Int					GameInfo::getGameID( void ) const								{ return m_gameID; }
-AsciiString	GameInfo::getMap( void ) const									{ return m_mapName; }
 UnsignedInt	GameInfo::getMapCRC( void ) const								{ return m_mapCRC; }
 UnsignedInt	GameInfo::getMapSize( void ) const							{ return m_mapSize; }
 Int					GameInfo::getMapContentsMask( void ) const			{ return m_mapMask; }

@@ -106,7 +106,7 @@ public:
     virtual Int getLocalSlotNum() const;
 
     Bool isInGame() const { return m_inGame; }
-    AsciiString getMap() const { return m_mapName; }
+    AsciiString getMap() const;  // out of line: MpGameSetup.cpp, retail 0x00098E70
     UnsignedInt getMapCRC() const { return m_mapCRC; }
 
 private:
