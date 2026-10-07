@@ -24,8 +24,8 @@ public:
 class Drawable
 {
 public:
-	Object *getObject() { return m_object; }
-private:
+	// Read directly: an in-class getObject() here emitted a non-retail
+	// ?getObject@Drawable COMDAT at this view's offset.
 	char m_pad[0xfc];
 	Object *m_object;
 };
@@ -82,7 +82,7 @@ int AudioEventRTS::getPlayerIndex() const
 	{
 		Drawable *drawable = TheGameClient->findDrawableByID(m_ownerID);
 		if (drawable != 0)
-			object = drawable->getObject();
+			object = drawable->m_object;
 	}
 
 	if (object != 0)
