@@ -42,12 +42,23 @@ int Gen_00662720::bfmeIsClear(void) const
 	return 0;
 }
 
+class Gen_00749740Target
+{
+public:
+	virtual void bfmeSlot0(void);
+	virtual void bfmeSlot1(void);
+	virtual void bfmeSlot2(void);
+	virtual void bfmeForward(void);			// slot 3, vtable+0x0C
+};
+
+// Retail vtable 0x01121AE8 (installed by the constructor below) has one slot,
+// ILT 0x0002365A -> 0x00749760: the virtual delegate defined after the ctor.
 class Gen_00749740
 {
 public:
 	Gen_00749740(int value);
 
-	virtual ~Gen_00749740(void);				// slot +0x00
+	virtual void bfmeForward(void);				// slot +0x00
 
 private:
 	int m_bfmeValue;					// +0x04
@@ -57,4 +68,10 @@ private:
 Gen_00749740::Gen_00749740(int value)
 {
 	m_bfmeValue = value;
+}
+
+// ?bfmeForward@Gen_00749740@@UAEXXZ
+void Gen_00749740::bfmeForward(void)
+{
+	((Gen_00749740Target *)m_bfmeValue)->bfmeForward();
 }
