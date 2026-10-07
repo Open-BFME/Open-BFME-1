@@ -394,18 +394,7 @@ void ParticleEmitterClass::Notify_Removed(SceneClass * scene)
 
 // Scales the size of all particles and effects positions/velocities of
 // particles emitted after the Scale() call (but not before)
-// ?ParticleEmitterClass::Scale present-unmatched
-void ParticleEmitterClass::Scale(float scale)
-{
-	// Scale all velosity and position parameters
-	if (PosRand) PosRand->Scale(scale);
-	BaseVel *= scale;
-	if (VelRand) VelRand->Scale(scale);
-	OutwardVel *= scale;
-
-	// Scale sizes of all particles
-	Buffer->Scale(scale);
-}
+// ParticleEmitterClass::Scale: retail 0x0097EE50, ParticleEmitterClass_ScaleMethodThunk.cpp.
 
 // Put particle buffer in scene if this is the first time (clunky code
 // - hopefully can be rewritten more cleanly in future)...
