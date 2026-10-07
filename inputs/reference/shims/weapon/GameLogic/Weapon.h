@@ -845,10 +845,8 @@ public:
 	const WeaponTemplate *findWeaponTemplateByNameKey( NameKeyType key ) const { return findWeaponTemplatePrivate( key ); }
 
 	// this dynamically allocates a new Weapon, which is owned (and must be freed!) by the caller.
-	inline Weapon* allocateNewWeapon(const WeaponTemplate *tmpl, WeaponSlotType wslot) const
-	{
-		return newInstance(Weapon)(tmpl, wslot);	// my, that was easy
-	}
+	// BFME: out of line (retail 0x001BDD90, 100 bytes, WeaponStore_allocateNewWeapon_Thunk.cpp).
+	Weapon* allocateNewWeapon(const WeaponTemplate *tmpl, WeaponSlotType wslot) const;
 
 	void createAndFireTempWeapon(const WeaponTemplate* w, const Object *source, const Coord3D* pos);
 	void createAndFireTempWeapon(const WeaponTemplate* w, const Object *source, Object *target);
