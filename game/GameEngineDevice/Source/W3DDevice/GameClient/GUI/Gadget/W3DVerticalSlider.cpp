@@ -74,69 +74,8 @@
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-// W3DGadgetVerticalSliderDraw ================================================
-/** Draw colored vertical slider using standard graphics */
-//=============================================================================
-void W3DGadgetVerticalSliderDraw( GameWindow *window, 
-																	WinInstanceData *instData )
-{
-	Color backBorder, backColor;
-	ICoord2D origin, size, start, end;
-
-	// get screen position and size
-	window->winGetScreenPosition( &origin.x, &origin.y );
-	window->winGetSize( &size.x, &size.y );
-
-	// get the right colors
-	if( BitTest( window->winGetStatus(), WIN_STATUS_ENABLED ) == FALSE )
-	{
-
-		backBorder		= GadgetSliderGetDisabledBorderColor( window );
-		backColor			= GadgetSliderGetDisabledColor( window );
-
-	}  // end if, disabled
-	else if( BitTest( instData->getState(), WIN_STATE_HILITED ) )
-	{
-
-		backBorder		= GadgetSliderGetHiliteBorderColor( window );
-		backColor			= GadgetSliderGetHiliteColor( window );
-
-	}  // end else if, hilited
-	else
-	{
-
-		backBorder		= GadgetSliderGetEnabledBorderColor( window );
-		backColor			= GadgetSliderGetEnabledColor( window );
-
-	}  // end else, enabled
-
-	// draw background border and rect over whole control
-	if( backBorder != WIN_COLOR_UNDEFINED )
-	{
-
-		start.x = origin.x;
-		start.y = origin.y;
-		end.x = start.x + size.x;
-		end.y = start.y + size.y;
-		TheWindowManager->winOpenRect( backBorder, WIN_DRAW_LINE_WIDTH,
-																	 start.x, start.y, end.x, end.y );
-
-	}  // end if
-	if( backColor != WIN_COLOR_UNDEFINED )
-	{
-
-		start.x = origin.x + 1;
-		start.y = origin.y + 1;
-		end.x = start.x + size.x - 2;
-		end.y = start.y + size.y - 2;
-		TheWindowManager->winFillRect( backColor, WIN_DRAW_LINE_WIDTH,
-																	 start.x, start.y, end.x, end.y );
-
-	}  // end if
-
-	
-
-}  // end W3DGadgetVerticalSliderDraw
+// W3DGadgetVerticalSliderDraw (retail 0x007997E0) lives in W3DVerticalSliderDraw_Thunk.cpp;
+// the Zero Hour copy that sat here was not retail's body.
 
 // W3DGadgetVerticalSliderImageDraw ===========================================
 /** Draw vertical slider with user supplied images */
