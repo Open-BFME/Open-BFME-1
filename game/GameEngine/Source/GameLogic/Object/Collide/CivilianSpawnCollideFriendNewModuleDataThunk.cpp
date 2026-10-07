@@ -30,7 +30,9 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl CivilianSpawnCollideFieldParse(MultiIniFieldParse &parse);
+// The proc operand is ILT 0x0001E3F8 -> 0x002173C0, the matched
+// ?Rva002173C0@@YAXPAVGen00850920@@@Z.
+void j_0001e3f8();
 
 class CivilianSpawnCollide
 {
@@ -43,6 +45,6 @@ ModuleData *CivilianSpawnCollide::friend_newModuleData(INI *ini)
 {
 	CivilianSpawnCollideModuleData *data = new CivilianSpawnCollideModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &CivilianSpawnCollideFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))j_0001e3f8);
 	return (ModuleData *)data;
 }
