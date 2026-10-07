@@ -191,24 +191,7 @@ Bool RailedTransportDockUpdate::action( Object *docker, Object *drone )
 // ------------------------------------------------------------------------------------------------
 /** Is clear to enter the railed transport */
 // ------------------------------------------------------------------------------------------------
-// ?isClearToEnter@RailedTransportDockUpdate@@UBE_NPBVObject@@@Z present-unmatched
-Bool RailedTransportDockUpdate::isClearToEnter( Object const *docker ) const
-{
-	const Object *us = getObject();
-
-	// first do base class restrictions
-	Bool clear = DockUpdate::isClearToEnter( docker );
-	if( clear == FALSE )
-		return FALSE;
-
-	// we have additional requirements, we are a transporting dock so we can't be full
-	ContainModuleInterface *contain = us->getContain();
-	if( contain && contain->isValidContainerFor( docker, TRUE ) == FALSE )
-		return FALSE;
-
-	return TRUE;
-		
-}  // end isClearToEnter
+// ?isClearToEnter@RailedTransportDockUpdate@@UBE_NPBVObject@@@Z: retail body matched in RailedTransportDockUpdateIsClearToEnter.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** Is anything currently loading or unloading */
