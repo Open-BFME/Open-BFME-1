@@ -1104,7 +1104,9 @@ void INI::parseScience(INI *ini, void *, void *store, const void *)
 // ?getNextToken@INI@@QAEPBDPBD@Z
 // Not static: retail reads m_seps out of this at +0x414, which is what makes the
 // separator set per-INI rather than global.
-const char* INI::getNextToken(const char* seps)
+// Inline (COMDAT, never expanded) like the ini_inline header copies other TUs
+// emit with the same bytes, so it folds with them instead of colliding.
+inline __declspec(noinline) const char* INI::getNextToken(const char* seps)
 {
 	if (!seps) seps = m_seps;
 	const char *token = ::strtok(NULL, seps);
