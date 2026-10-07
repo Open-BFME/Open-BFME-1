@@ -4,7 +4,7 @@
 // global at 0x012F19E8, g_rva012F19E8WindowManager (same global as the
 // 0x00470360 neighbour), before zeroing a
 // separate global and chaining to the already-landed base destructor
-// Gen_dtor_004654c0.
+// S4Owner::~S4Owner (0x00464E20 via ILT 0x00021FC1).
 
 class GenActionSink
 {
@@ -24,13 +24,13 @@ class BfmeAptScreenMapTransfer;
 
 extern BfmeAptScreenMapTransfer *g_rva012F496CBfmeAptScreenMapTransfer;
 
-class Gen_dtor_004654c0
+class S4Owner
 {
 public:
-	virtual ~Gen_dtor_004654c0();
+	virtual ~S4Owner();
 };
 
-class Rva0050FD90 : public Gen_dtor_004654c0
+class Rva0050FD90 : public S4Owner
 {
 public:
 	virtual ~Rva0050FD90();

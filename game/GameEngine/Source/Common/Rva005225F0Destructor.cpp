@@ -5,7 +5,7 @@
 // pointee's +4 decremented, and the pointee's virtual deleting destructor
 // (vtable slot 0, push 1) called once the count reaches zero, the same shape
 // as Bfme5RefHoldersByVal.cpp's Bfme5RefCounted/Release_Ref -- before
-// chaining to the already-landed base destructor Gen_dtor_004654c0
+// chaining to the base destructor S4Owner::~S4Owner (0x00464E20 via ILT)
 // (0x00021FC1).
 
 extern void *g_rva012F49D0;					// retail 0x012F49D0
@@ -36,13 +36,13 @@ public:
 	Rva005225F0RefCounted *m_ptr;
 };
 
-class Gen_dtor_004654c0
+class S4Owner
 {
 public:
-	virtual ~Gen_dtor_004654c0();
+	virtual ~S4Owner();
 };
 
-class Rva005225F0 : public Gen_dtor_004654c0
+class Rva005225F0 : public S4Owner
 {
 public:
 	virtual ~Rva005225F0();
