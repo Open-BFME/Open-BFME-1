@@ -1,6 +1,6 @@
 // Retail 0x009F2B20 is the chain-record constructor BfmeChainRecord::BfmeChainRecord
 // (matched in game/GameEngine/Source/Common/Bfme/BfmeChainRecord.cpp) and
-// 0x009F4D80 is Gen009F5040::linkNode_009F4D80 (matched in
+// 0x009F4D80 is PartitionManagerImpl::_InsertObjectIntoTree (matched in
 // game/Libraries/Source/partitionmanager/Gen009F5040Handle.cpp), so both calls
 // below are spelled with those names to link.
 
@@ -26,10 +26,10 @@ public:
 	virtual void *bfmeSlot6EQR();
 };
 
-class Gen009F5040
+class PartitionManagerImpl
 {
 public:
-	void linkNode_009F4D80(Gen009F5040Node *node);
+	void _InsertObjectIntoTree(Gen009F5040Node *node);
 };
 
 class BfmeHostEQR
@@ -52,6 +52,6 @@ void BfmeHostEQR::bfmeAddEQR(BfmeThingEQR *thing)
 	BfmeChainRecord *rec = new BfmeChainRecord(this, thing, &m_bfmeListEQR);
 
 	thing->bfmeSlot5EQR(rec);
-	((Gen009F5040 *)this)->linkNode_009F4D80(
+	((PartitionManagerImpl *)this)->_InsertObjectIntoTree(
 		reinterpret_cast<Gen009F5040Node *>(rec));
 }

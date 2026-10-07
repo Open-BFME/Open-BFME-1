@@ -40,12 +40,12 @@ struct Gen009F5040Bucket
 	int m_pad08;
 };
 
-class Gen009F5040
+class PartitionManagerImpl
 {
 public:
-	void handle();
-	__declspec(noinline) void remove(Gen009F5040Node *node);
-	void linkNode_009F4D80(Gen009F5040Node *node);
+	void Update();
+	__declspec(noinline) void _RemoveObjectFromTree(Gen009F5040Node *node);
+	void _InsertObjectIntoTree(Gen009F5040Node *node);
 
 	Gen009F5040Bucket m_buckets[2];
 	Gen009F5040Counter *m_rangeBegin;
@@ -60,15 +60,15 @@ public:
 // zero-argument export below does not describe that native ABI.
 extern void d_009f4900();
 
-static __forceinline void calculate(Gen009F5040 *self, Gen009F5040Node *node,
+static __forceinline void calculate(PartitionManagerImpl *self, Gen009F5040Node *node,
 	int *result28, int *result2c, int *result24)
 {
-	typedef void (Gen009F5040::*Fn)(Gen009F5040Node *, int *, int *, int *);
+	typedef void (PartitionManagerImpl::*Fn)(Gen009F5040Node *, int *, int *, int *);
 	union { void (*fn)(); Fn call; } u = { d_009f4900 };
 	(self->*u.call)(node, result28, result2c, result24);
 }
 
-void Gen009F5040::remove(Gen009F5040Node *node)
+void PartitionManagerImpl::_RemoveObjectFromTree(Gen009F5040Node *node)
 {
 	if (node->m_secondaryNext != 0)
 		node->m_secondaryNext->m_secondaryPreviousLink = node->m_secondaryPreviousLink;
@@ -93,7 +93,7 @@ void Gen009F5040::remove(Gen009F5040Node *node)
 	}
 }
 
-void Gen009F5040::handle()
+void PartitionManagerImpl::Update()
 {
 	Gen009F5040Node *node = m_node;
 	if (node == 0)
@@ -116,18 +116,18 @@ void Gen009F5040::handle()
 				shouldProcess = true;
 		}
 		if (shouldProcess) {
-			remove(node);
-			linkNode_009F4D80(node);
+			_RemoveObjectFromTree(node);
+			_InsertObjectIntoTree(node);
 		}
 
 		node = m_node;
 	}
 }
 
-// The retail call from handle() enters this body at 0x009F4D80.  Its two
-// intrusive links are distinct: handle() unlinks the +0x18/+0x1C pair while
+// The retail call from Update() enters this body at 0x009F4D80.  Its two
+// intrusive links are distinct: Update() unlinks the +0x18/+0x1C pair while
 // this insertion uses the +0x10/+0x14 pair.
-void Gen009F5040::linkNode_009F4D80(Gen009F5040Node *node)
+void PartitionManagerImpl::_InsertObjectIntoTree(Gen009F5040Node *node)
 {
 	calculate(this, node, &node->m_result28, &node->m_result2c, &node->m_result24);
 	int index = node->m_item->getIndex();

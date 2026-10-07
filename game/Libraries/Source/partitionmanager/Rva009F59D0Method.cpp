@@ -2,7 +2,7 @@
 // The caller does not prove the owning class, so this source keeps the retail address in its class name.
 // Retail calls the matched Vector_base<Gen_t_009f51f0_p8cd> constructor and vector<ICoord2D> assignment.
 // Both element layouts contain two Int values.
-// Retail reads each node link at +0x0C, then passes that node to the matched linkNode_009F4D80 method.
+// Retail reads each node link at +0x0C, then passes that node to the matched _InsertObjectIntoTree method.
 // cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/GameEngine/Include/Precompiled /Igame/Libraries/Source/WWVegas/WWMath
 // stlport
 
@@ -25,16 +25,11 @@ public:
 	void cleanup();
 };
 
-class Gen009F5040
-{
-public:
-	void linkNode_009F4D80(Gen009F5040Node *node);
-};
-
 class PartitionManagerImpl
 {
 public:
 	void SetTreeDepth(unsigned level);
+	void _InsertObjectIntoTree(Gen009F5040Node *node);
 
 	Int m_0000[6];
 	_STL::vector<ICoord2D> m_0018[17];
@@ -70,8 +65,7 @@ void PartitionManagerImpl::SetTreeDepth(unsigned level)
 
 	Rva009F59D0Node *node = m_00E4;
 	while (node != 0) {
-		((Gen009F5040 *)this)->linkNode_009F4D80(
-			reinterpret_cast<Gen009F5040Node *>(node));
+		_InsertObjectIntoTree(reinterpret_cast<Gen009F5040Node *>(node));
 		node = node->m_next;
 	}
 }

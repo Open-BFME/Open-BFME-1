@@ -79681,7 +79681,7 @@ name,address,notes
 ?calcTimeToBuild@ThingTemplate@@QBEHPBVPlayer@@H@Z,0x00144AB0,DozerActionDoActionState update passes controllingPlayer and -1 override to actual ThingTemplate from Thing::getTemplate; complete body tests second argument then returns ret8; calls encode its retail ILT
 ?calc_confidence@@YAHQANHPAN11@Z,0x00873A40,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00873CF0 calls; autopin
 ?calc_minimum_costs@@YAXQAY0GF@J@Z,0x00874870,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00877280 calls; autopin
-?calculate@Gen009F5040@@QAEXPAUGen009F5040Node@@PAH11@Z,0x009F4900,helper alias for Gen009F5040::handle; address-derived name resolves to the generated helper body
+?calculate@PartitionManagerImpl@@QAEXPAUGen009F5040Node@@PAH11@Z,0x009F4900,helper alias for Gen009F5040::handle; address-derived name resolves to the generated helper body
 ?calculateScore@ScoreKeeper@@QAEHXZ,0x000E8D90,ZH ScoreKeeper::calculateScore: TheGlobalData (0x012ED5C8) value multipliers at +0x1224..+0x1250 times moneyEarned +4 unitsBuilt +0x8c buildingsBuilt +0x114 and the per-player kill arrays at +0xc/+0x94 skipping m_myPlayerIdx +0x140; stores m_currentScore at +0x138; ILT 0x0000D67A; callers 0x000E8F70 0x000E92B0 and the score screen 0x004E81A0
 ?calculateZonesIncremental@PathfindZoneManager@@AAEXPAPAVPathfindCell@@QAVPathfindLayer@@ABUIRegion2D@@@Z,0x00033BEA,BFME incremental zone step ILT to 0x00408AD0
 ?call2@BfmeTargetF63@@QAEXPAX@Z,0x00002A59,pin
@@ -84239,7 +84239,7 @@ name,address,notes
 ?handle@Gen009DD640@@QAEXXZ,0x009DD640,niladic __thiscall tail-jump target of an absolute-operand forwarder; address-derived name
 ?handle@Gen009EB810@@QAEXXZ,0x009EB810,niladic __thiscall tail-jump target of an absolute-operand forwarder; address-derived name
 ?handle@Gen009F1510@@QAEXXZ,0x009F1510,address-derived callee of the load-ecx pointer tail-jump family; target read from the REL32 at its call sites
-?handle@Gen009F5040@@QAEXXZ,0x009F5040,address-derived callee of the load-ecx pointer tail-jump family; target read from the REL32 at its call sites
+?Update@PartitionManagerImpl@@QAEXXZ,0x009F5040,address-derived callee of the load-ecx pointer tail-jump family; target read from the REL32 at its call sites
 ?handle@Open2Handler1292C0@@QAE_NPAVGenItem@@PA_N1@Z,0x0003D3B1,Open2 0x001292C0 BitFlags token handler (ILT)
 ?handle@Open2Handler142D20@@QAE_NPAVGenItem@@PA_N1@Z,0x0004A7AF,Open2 0x00142D20 BitFlags token handler (ILT)
 ?handle@Open2Handler204A80@@QAE_NPAVGenItem@@PA_N1@Z,0x0003D68B,Open2 0x00204A80 BitFlags token handler (ILT)
@@ -86230,7 +86230,7 @@ name,address,notes
 ?remove@BuffManagerRegistry@@QAEXPAVBuffManager@@@Z,0x00042F64,BuffManager registry removal ILT
 ?remove@Dict@@QAE_NW4NameKeyType@@@Z,0x000072B6
 ?remove@GameWindowTransitionsHandler@@QAEXVAsciiString@@_N@Z,0x0002D3B2,PopupSaveLoad transition removal through retail ILT
-?remove@Gen009F5040@@QAEXPAUGen009F5040Node@@@Z,0x009F4E40,helper alias for Gen009F5040::handle; address-derived name resolves to the generated helper body
+?_RemoveObjectFromTree@PartitionManagerImpl@@QAEXPAUGen009F5040Node@@@Z,0x009F4E40,helper alias for Gen009F5040::handle; address-derived name resolves to the generated helper body
 ?remove@LGA_Global@@QAEXPAPAX@Z,0x00025C34,Open-BFME5 pin
 ?remove@Rva000F4250PrototypeCall@@QAEXPAVTeam@@@Z,0x0001E416,Team destructor retail call via proven ILT
 ?remove@Rva007EAServiceList@@QAEXPAVRva00803080@@@Z,0x007EA590,Y2 lane: FESL service-list remove callback called by the 0x00803260 pending-request removal body

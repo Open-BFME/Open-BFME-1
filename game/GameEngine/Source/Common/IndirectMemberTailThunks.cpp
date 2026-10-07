@@ -71,7 +71,6 @@ BFME_POINTER_TAIL_CALLEE( 008811D0 )
 BFME_POINTER_TAIL_CALLEE( 008FAFD0 )
 BFME_POINTER_TAIL_CALLEE( 009A4A30 )
 BFME_POINTER_TAIL_CALLEE( 009F1510 )
-BFME_POINTER_TAIL_CALLEE( 009F5040 )
 
 BFME_POINTER_TAIL_THUNK( Rva000C3DB0, Gen000A1490, 48 )
 BFME_POINTER_TAIL_THUNK( Rva00149E20, Gen001E1770, 4 )
@@ -150,7 +149,23 @@ BFME_POINTER_TAIL_THUNK( Rva00880E00, Gen008811D0, 12 )
 BFME_POINTER_TAIL_THUNK( Rva008F7360, Gen008FAFD0, 12 )
 BFME_POINTER_TAIL_THUNK( Rva009A2560, Gen009A4A30, 12 )
 BFME_POINTER_TAIL_THUNK( Rva009EBA30, Gen009F1510, 8 )
-BFME_POINTER_TAIL_THUNK( Rva009F2630, Gen009F5040, 12 )
+// 0x009F5040 is EA's PartitionManagerImpl::Update (ea_evidence.csv).
+class PartitionManagerImpl
+{
+public:
+	void Update();
+};
+class Rva009F2630
+{
+public:
+	void invoke();
+	char m_lead[ 12 ];
+	PartitionManagerImpl *m_receiver;
+};
+void Rva009F2630::invoke()
+{
+	m_receiver->Update();
+}
 
 // SEVEN MORE OF THE SAME SHAPE, found by re-running the proven body as a
 // PATTERN rather than a byte string.  Masked-body grouping cannot see these:

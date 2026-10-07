@@ -22,15 +22,15 @@ struct BfmeNode912C
 extern void d_009f4ed0();
 
 // The loop call at 0x009F4FB0+0x73 goes to 0x009F4D80, which the ledger
-// defines as Gen009F5040::linkNode_009F4D80 in
+// defines as PartitionManagerImpl::_InsertObjectIntoTree in
 // game/Libraries/Source/partitionmanager/Gen009F5040Handle.cpp; the node
 // argument is spelled with that function's own node type.
 struct Gen009F5040Node;
 
-class Gen009F5040
+class PartitionManagerImpl
 {
 public:
-	void linkNode_009F4D80(Gen009F5040Node *node);
+	void _InsertObjectIntoTree(Gen009F5040Node *node);
 };
 
 extern float g_bfmeDefaultBU;
@@ -63,7 +63,7 @@ void T_009f4fb0::m(Rva009F5970StateInit *value)
 
 	BfmeNode912C *node = self->m_head;
 	while (node != 0) {
-		((Gen009F5040 *)self)->linkNode_009F4D80(
+		((PartitionManagerImpl *)self)->_InsertObjectIntoTree(
 			reinterpret_cast<Gen009F5040Node *>(node));
 		node = node->m_next;
 	}
