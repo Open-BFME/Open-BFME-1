@@ -20,10 +20,18 @@ struct RGBColor
 	}
 };
 
+// The 0x50-byte envelope is built by ILT 0x37475 -> 0x00412140, the matched
+// 71-byte constructor Rva00412140::Rva00412140 (Rva00412140Ctor.cpp).
+class Rva00412140
+{
+public:
+	Rva00412140();
+	unsigned char m_bytes[0x50];
+};
+
 class TintEnvelope
 {
 public:
-	TintEnvelope();
 	void play(const RGBColor *, UnsignedInt = 0x1, UnsignedInt = 0x4,
 		UnsignedInt = 0x1);
 	unsigned char m_layout[0x50];
@@ -45,7 +53,7 @@ void Drawable::colorFlash(const RGBColor *color, UnsignedInt decayFrames,
 	UnsignedInt attackFrames, UnsignedInt sustainAtPeak)
 {
 	if (m_colorTintEnvelope == 0)
-		m_colorTintEnvelope = new TintEnvelope;
+		m_colorTintEnvelope = (TintEnvelope *)new Rva00412140;
 
 	if (color)
 		m_colorTintEnvelope->play(color, attackFrames, decayFrames, sustainAtPeak);

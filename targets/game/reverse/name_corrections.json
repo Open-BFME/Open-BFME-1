@@ -18848,5 +18848,15 @@
   "after_sha256": "a45c4b836cb4e34eb993335e34a8b6392183a42b00d7bf153a600cdceeddb936",
   "evidence": "targets/game/reverse/identity_evidence/01142ba0-vp6-reference-table.md",
   "reason": "Not a rename of a proven identity: VA 0x01142BA0 carried two undefined spellings; the one datum keeps the address-derived name its other two readers (0x009AB950/0x009AB990) use."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/DrawableColorFlash.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/DrawableColorFlash.cpp",
+  "old_name": "TintEnvelope",
+  "new_name": "Rva00412140",
+  "before_sha256": "fa90e6c8fa232d2e3f3f4d6e811ae33fa6e57749bbc990422547774798737cd5",
+  "after_sha256": "4fbe7307b419eb239aa8f8b1aad9513096f2738a68ec5477debc4e4097ed9436",
+  "evidence": "targets/game/reverse/functions.csv",
+  "reason": "Not a rename: the TintEnvelope type name is kept; only its constructor call is spelled by the matched row. Drawable::colorFlash (0x00416440) constructs through ILT 0x00037475 to 0x00412140, matched as ??0Rva00412140@@QAE@XZ; no body defines ??0TintEnvelope@@QAE@XZ at retail's address, and the symbols.csv pin already identifies 0x00412140 as the TintEnvelope ctor (a one-identity rename of that row is left to the names lane)."
  }
 ]
