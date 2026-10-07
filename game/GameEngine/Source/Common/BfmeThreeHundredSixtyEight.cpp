@@ -1,8 +1,12 @@
-class BfmeInnerWC
+// The tail call goes to ILT 0x00007513 -> 0x001C9B80, matched as
+// BfmeThing916D::bfmeGo916D (thiscall, one stack argument).
+class BfmeThing916D
 {
 public:
-	void bfmeTailWC(int what);
+	void bfmeGo916D(void *what);
 };
+
+class BfmeInnerWC;
 
 struct BfmeOwnerWC
 {
@@ -34,5 +38,5 @@ void BfmeThingWC::bfmeGoWC(int what)
 	m_bfmeSub = 0;
 	BfmeInnerWC *inner = m_bfmeOwner->m_bfmeInner;
 	if (inner != 0)
-		inner->bfmeTailWC(1);
+		reinterpret_cast<BfmeThing916D *>(inner)->bfmeGo916D((void *)1);
 }
