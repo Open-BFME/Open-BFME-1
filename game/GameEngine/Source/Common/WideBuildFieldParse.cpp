@@ -200,5 +200,19 @@ WIDE_FIELD_PARSE( 002BC1E0, 0003572E )
 WIDE_FIELD_PARSE( 002C5300, 0003572E )
 WIDE_FIELD_PARSE( 00751690, 0003B7F0 )
 WIDE_FIELD_PARSE( 00759700, 00022584 )
-WIDE_FIELD_PARSE( 0077DB40, 00022584 )
+extern const WideFieldParse WideTbl0077DB40[];
+class W3DSupplyDrawModuleData
+{
+public:
+	static void buildFieldParse(MultiIniFieldParse &p);
+};
+
+// The W3DSupplyDraw factory (friend_newModuleData 0x006BF3E0, see
+// W3DSupplyDrawFriendNewModuleDataThunk.cpp) passes this module-data
+// builder: retail ILT 0x000100CD reaches this 30-byte body at RVA 0x0077DB40.
+void W3DSupplyDrawModuleData::buildFieldParse(MultiIniFieldParse &p)
+{
+	Gen00022584::buildFieldParse(reinterpret_cast<WideMulti &>(p));
+	p.add(reinterpret_cast<const FieldParse *>(WideTbl0077DB40), 0);
+}
 WIDE_FIELD_PARSE( 0077E070, 00022584 )

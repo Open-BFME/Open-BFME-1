@@ -17,17 +17,18 @@ void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DSupplyDraw.h
+class MultiIniFieldParse;
+
 class W3DSupplyDrawModuleData
 {
 public:
+	static void buildFieldParse(MultiIniFieldParse &p);	// 0x0077DB40 via ILT 0x000100CD
 	W3DSupplyDrawModuleData();
 	virtual ~W3DSupplyDrawModuleData();
 
 private:
 	unsigned char m_pad[0x15C];
 };
-
-class MultiIniFieldParse;
 
 // Retail's module-data factories reach INI through initFromINIMultiProc
 // (0x00852130), which takes the class's buildFieldParse proc; the
@@ -39,8 +40,6 @@ public:
 	void initFromINIMultiProc(void *what,
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
-
-extern "C" void __cdecl W3DSupplyDrawFieldParse(MultiIniFieldParse &parse);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DSupplyDraw.h
 class W3DSupplyDraw
@@ -54,6 +53,6 @@ ModuleData *W3DSupplyDraw::friend_newModuleData(INI *ini)
 {
 	W3DSupplyDrawModuleData *data = new W3DSupplyDrawModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &W3DSupplyDrawFieldParse);
+		ini->initFromINIMultiProc(data, &W3DSupplyDrawModuleData::buildFieldParse);
 	return (ModuleData *)data;
 }

@@ -13641,7 +13641,6 @@ _W3DLightDrawFieldParse,0x0043B5D9
 _W3DQuadrupedDrawFieldParse,0x0041E2A9
 _W3DScriptedModelDrawFieldParse,0x00422584
 _W3DStreakDrawFieldParse,0x0041DAB6
-_W3DSupplyDrawFieldParse,0x004100CD
 _W3DTankDrawFieldParse,0x0041DAE3
 _W3DTruckDrawFieldParse,0x0042DF33
 _WanderAIUpdateFieldParse,0x004027DE
