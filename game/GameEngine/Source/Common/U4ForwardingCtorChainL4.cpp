@@ -48,11 +48,17 @@ class T4Ctor00604E90
 {
 public:
 	T4Ctor00604E90( const T4Ctor00604E90 &other );
-	virtual void s0();
+	const void *m_vptr;
 	void *m_field04;
 };
 
 // ---------------------------------------------------------------------- row
+
+// The vftable this row installs, 0x010897B4, is DrawableModule's (the
+// dir32 record and DrawableModule's matched ctor 0x00113DA0 store the same
+// VA); spelled by its defining name rather than a TU-local vftable whose
+// slots nothing defines.
+extern "C" const void *const __identifier("??_7DrawableModule@@6B@")[];
 
 class U4Ctor00605100 : public T4Ctor00604E90
 {
@@ -62,7 +68,8 @@ public:
 };
 
 U4Ctor00605100::U4Ctor00605100( const U4Ctor00605100 &other )
-	: T4Ctor00604E90( other ),
-	  m_field08( other.m_field08 )
+	: T4Ctor00604E90( other )
 {
+	m_vptr = __identifier("??_7DrawableModule@@6B@");
+	m_field08 = other.m_field08;
 }
