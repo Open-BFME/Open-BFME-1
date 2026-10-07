@@ -4580,11 +4580,8 @@ void AIAttackPursueTargetState::onExit( StateExitType status )
 //----------------------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------------
-// ?computePath@AIPickUpCrateState@@MAE_NXZ present-unmatched
-Bool AIPickUpCrateState::computePath()
-{
-	return AIInternalMoveToState::computePath();
-}
+// AIPickUpCrateState::computePath: retail body (0x0016B380) in
+// AIPickUpCrateState_computePath.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */
