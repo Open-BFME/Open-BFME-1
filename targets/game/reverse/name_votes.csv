@@ -1116,3 +1116,4 @@ game/GameEngine/Source/GameLogic/ScriptEngine/DelayedLuaEventUpdateConstructor.c
 game/GameEngine/Source/GameLogic/ScriptEngine/DelayedLuaEventUpdateConstructor.cpp|member||m_f70,4cd2c90a56581bdd14441869,gpt-6-astra,20261007205051-583235,2026-10-07
 game/GameEngine/Source/Common/Rva00533760Sort.cpp|function||Rva00533760,d6f9c3a383682794a5834e74,gpt-6-astra,20261007211331-c4db90,2026-10-07
 game/GameEngine/Source/Common/S4AdjustHeapElem12Pod.cpp|function||bfmeAdjustHeap005300E0,4bc357c8d0ae6314a1c27b9f,gpt-6-astra,20261007211316-866095,2026-10-07
+game/GameEngine/Source/Common/S4AdjustHeapElem12Pod.cpp|function||bfmeAdjustHeap005300E0,4bc357c8d0ae6314a1c27b9f,grok,20261007211403-bb509f,2026-10-07
