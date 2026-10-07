@@ -956,3 +956,7 @@ game/GameEngine/Source/GameLogic/Object/WeaponTemplate_CopyAssign.cpp|member||m_
 game/GameEngine/Source/GameLogic/Object/WeaponTemplate_CopyAssign.cpp|member||m_b509,ea3e6db890d35eb33ab81e81,grok,20261005200817-172dab,2026-10-05
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewPitchCameraOneFrame.cpp|param|Lerp|t,e98dfc52219afcebbe206cce,gpt-6-sol,20261005200142-f467b8,2026-10-05
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewPitchCameraOneFrame.cpp|param|Lerp|t,e98dfc52219afcebbe206cce,grok,20261005200130-bfecc0,2026-10-05
+game/GameEngine/Source/GameLogic/Object/Behavior/DualWeaponBehaviorModuleDataConstructorThunk.cpp|member||m_b0c,20759681e066dff97e60a88f,grok,20261007135001-05b51e,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Behavior/DualWeaponBehaviorModuleDataConstructorThunk.cpp|member||m_u10,68cf9e97eaf24644b4b39984,grok,20261007135001-05b51e,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Behavior/DualWeaponBehaviorModuleDataConstructorThunk.cpp|member||m_b14,8016dc7d461d5adb2d8172de,grok,20261007135001-05b51e,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Behavior/DualWeaponBehaviorModuleDataConstructorThunk.cpp|member||m_b15,b725acd313de0e69d93b73a3,grok,20261007135001-05b51e,2026-10-07
