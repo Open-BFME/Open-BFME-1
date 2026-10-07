@@ -10,14 +10,14 @@ enum DisabledType
 	DISABLED_UNMANNED = 5
 };
 
-class Object
+class Object;
+
+// Object::isDisabledByType's inline test, kept TU-local so this file emits
+// no non-retail COMDAT of the member.
+static inline Bool isDisabledByType(const Object *obj, DisabledType type)
 {
-public:
-	Bool isDisabledByType(DisabledType type) const
-	{
-		return (*((const unsigned char *)this + 0x1a4) & (1 << type)) != 0;
-	}
-};
+	return (*((const unsigned char *)obj + 0x1a4) & (1 << type)) != 0;
+}
 
 #define CONTAIN_SLOT(n) virtual void containSlot##n();
 
@@ -69,7 +69,7 @@ void TransportContain::onCapture(Player *oldOwner, Player *newOwner)
 {
 	if (oldOwner != newOwner)
 	{
-		if (getObject()->isDisabledByType(DISABLED_UNMANNED))
+		if (isDisabledByType(getObject(), DISABLED_UNMANNED))
 		{
 			getContain()->bfmeFinishAGA(0);
 		}
