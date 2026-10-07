@@ -295,17 +295,6 @@ const FieldParse EvaCheckInfo::s_evaEventInfo[] =
 };
 
 //-------------------------------------------------------------------------------------------------
-// ??0EvaCheck@@ present-unmatched
-EvaCheck::EvaCheck() : 
-	m_evaInfo(NULL), 
-	m_triggeredOnFrame(TRIGGEREDON_NOT),
-	m_timeForNextCheck(NEXT_CHECK_NOW), 
-	m_alreadyPlayed(FALSE)
-{
-
-}
-
-//-------------------------------------------------------------------------------------------------
 // ??0Eva@@ present-unmatched
 Eva::Eva() : 
 	m_localPlayer(NULL),
