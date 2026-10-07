@@ -46,13 +46,13 @@ public:
 	int m_bfmeWords[7];
 };
 
-extern BfmeRecJD *g_bfmeBeginJD;
 #include "../../Include/GameClient/Video.h"
+extern Video *g_bfmeVideoTableBegin;
 extern Video *g_bfmeVideoTableEnd;
 
 BfmeRecJD * __stdcall bfmeSlotAt(int index)
 {
-	if (index >= 0 && index < (int)((BfmeRecJD *)g_bfmeVideoTableEnd - g_bfmeBeginJD))
-		return g_bfmeBeginJD + index;
+	if (index >= 0 && index < (int)(g_bfmeVideoTableEnd - g_bfmeVideoTableBegin))
+		return (BfmeRecJD *)(g_bfmeVideoTableBegin + index);
 	return 0;
 }

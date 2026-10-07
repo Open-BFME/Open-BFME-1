@@ -7,6 +7,7 @@
 // INI::parseVideoDefinition at 0x000C3480 calls this slot with its 28-byte
 // Video record. The global table is also used by removeVideo and getVideo.
 extern _STL::vector<Video> Rva0130B19CVideoTable;
+Video *g_bfmeVideoTableBegin = 0;
 Video *g_bfmeVideoTableEnd = 0;
 
 class VideoPlayer

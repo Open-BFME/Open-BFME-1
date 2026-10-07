@@ -25,18 +25,13 @@
 //
 // Identity is not recovered; every name is derived from an address.
 
-struct Rva0081C5C0Element
-{
-	char m_body[28];
-};
-
-extern Rva0081C5C0Element *g_Rva0081C5C0Begin;
 #include "../../Include/GameClient/Video.h"
+extern Video *g_bfmeVideoTableBegin;
 extern Video *g_bfmeVideoTableEnd;
 
 int Rva0081C5C0Count()
 {
-	return g_bfmeVideoTableEnd - (Video *)g_Rva0081C5C0Begin;
+	return g_bfmeVideoTableEnd - g_bfmeVideoTableBegin;
 }
 
 // 0x00806370 -- the second member of the same class, and what says the first
