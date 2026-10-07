@@ -1,17 +1,19 @@
-struct BfmeHeadAVA
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+// The list at +0x20C is the PeerThreadClass staging-server map of
+// GameNetwork/GameSpy/Thread/PeerThreadRemoveServerFromMap.cpp
+// (std::map<Int, Gen_t_00644050_p4pod>); this body is its inlined clear(),
+// whose one call is the matched _Rb_tree::_M_erase at 0x00644050 (ILT 0x4A91C).
+#include <map>
+
+struct _SBServer;
+struct Gen_t_00644050_p4pod
 {
-	unsigned char m_bfmePad[4];
-	void *m_bfmeOne;
-	BfmeHeadAVA *m_bfmeTwo;
-	BfmeHeadAVA *m_bfmeThree;
+	_SBServer *value;
 };
 
-class BfmeListAVA
+class BfmeListAVA : public std::map<int, Gen_t_00644050_p4pod>
 {
-public:
-	void bfmeDropAVA(void *what);
-	BfmeHeadAVA *m_bfmeHead;
-	int m_bfmeCount;
 };
 
 class BfmeThingAVA
@@ -24,13 +26,5 @@ public:
 
 void BfmeThingAVA::bfmeGoAVA()
 {
-	BfmeListAVA *list = &m_bfmeList;
-	if (list->m_bfmeCount != 0)
-	{
-		list->bfmeDropAVA(list->m_bfmeHead->m_bfmeOne);
-		list->m_bfmeHead->m_bfmeTwo = list->m_bfmeHead;
-		list->m_bfmeHead->m_bfmeOne = 0;
-		list->m_bfmeHead->m_bfmeThree = list->m_bfmeHead;
-		list->m_bfmeCount = 0;
-	}
+	m_bfmeList.clear();
 }
