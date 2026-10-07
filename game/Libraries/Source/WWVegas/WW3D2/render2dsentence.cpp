@@ -325,23 +325,11 @@ Render2DSentenceClass::Get_Formatted_Text_Extents (const WCHAR *text)
 //	Reset_Sentence_Data
 //
 ////////////////////////////////////////////////////////////////////////////////////
-void
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WW3D2/Render2DSentenceClass_Reset_Sentence_Data.cpp
-// ?Reset_Sentence_Data@Render2DSentenceClass@@AAEXXZ present-unmatched
-Render2DSentenceClass::Reset_Sentence_Data (void)
-{
-	//
-	//	Release our hold on each texture used in the sentence
-	//
-	for (int index = 0; index < SentenceData.Count (); index ++) {
-		REF_PTR_RELEASE (SentenceData[index].Surface);
-	}
-
-	if (SentenceData.Count()>0) {
-		SentenceData.Delete_All ();
-	}
-	return ;
-}
+// Render2DSentenceClass::Reset_Sentence_Data: the retail body lives in
+// Render2DSentenceClass_Reset_Sentence_Data.cpp.
+// Its ZH copy here was the only user of the matched
+// DynamicVectorClass<SentenceDataStruct>::Delete_All, so instantiate it.
+template void DynamicVectorClass<Render2DSentenceClass::SentenceDataStruct>::Delete_All(void);
 
 
 ////////////////////////////////////////////////////////////////////////////////////
