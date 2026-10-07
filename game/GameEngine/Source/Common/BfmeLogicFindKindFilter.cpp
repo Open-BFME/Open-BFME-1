@@ -22,12 +22,17 @@ public:
 
 // TU-local view of the retail GameLogic; the global itself is the canonical
 // ?TheGameLogic@@3PAVGameLogic@@A from GameLogic/System/GameLogic.cpp.
-class GameLogic;
+// ILT 0x1F253 -> 0x0009A510, matched ?findObjectByID@GameLogic@@QAEPAVObject@@H@Z.
+class GameLogic
+{
+public:
+	Object *findObjectByID(int id);
+};
 
 class GameLogicFrameSlice
 {
 public:
-	Object *bfmeFind(int id);
+	Object *bfmeFind(int id) { return ((GameLogic *)this)->findObjectByID(id); }
 };
 
 extern GameLogic *TheGameLogic;
