@@ -1019,3 +1019,7 @@ game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||fiel
 game/GameEngine/Source/GameNetwork/Rva008030C0FeslPoolInit.cpp|member||m_10,b965fc96d14707d2026a93ab,grok,20261007191246-389300,2026-10-07
 game/GameEngine/Source/Common/BfmeConv1947.cpp|type||BfmeKeyGenEQW,58104b2bafd392d23845a680,gpt-6-astra,20261007192750-cb18cd,2026-10-07
 game/GameEngine/Source/Common/BfmeConv1947.cpp|member||m_bfmeOwnerEQW,6aaa5eb76d1e04874a633469,gpt-6-astra,20261007192750-cb18cd,2026-10-07
+game/GameEngine/Source/Common/BfmeConv1947.cpp|type||BfmeKeyGenEQW,58104b2bafd392d23845a680,grok,20261007193130-5744c6,2026-10-07
+game/GameEngine/Source/Common/BfmeConv1947.cpp|member||m_bfmeSubEQW,006c7c9531f3c7c032f17f0f,grok,20261007193130-5744c6,2026-10-07
+game/GameEngine/Source/Common/BfmeConv1947.cpp|member||m_bfmeOwnerEQW,6aaa5eb76d1e04874a633469,grok,20261007193130-5744c6,2026-10-07
+game/GameEngine/Source/Common/BfmeConv1947.cpp|local|BfmeHostEQW::bfmeGoEQW|s_bfmeKeyEQW,3a098d9d9d9d41c813a767f0,grok,20261007193130-5744c6,2026-10-07
