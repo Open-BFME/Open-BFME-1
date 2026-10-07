@@ -120,21 +120,10 @@ void MaterialInfoClass::Process_Texture_Reduction(void)
 	}
 }
 */
-// ?Free@MaterialInfoClass@@AAEXXZ present-unmatched
-void MaterialInfoClass::Free(void) 
-{
-	int i;
-	
-	for (i=0; i<VertexMaterials.Count(); i++) {
-		REF_PTR_RELEASE(VertexMaterials[i]);
-	}
-	VertexMaterials.Delete_All(); 
-
-	for (i=0; i<Textures.Count(); i++) {
-		REF_PTR_RELEASE(Textures[i]);
-	}
-	Textures.Delete_All();
-}
+// MaterialInfoClass::Free: retail body in MaterialInfoFree.cpp. Its two
+// out-of-line Delete_All instantiations (0x0093CB00, 0x0093CB40) stay here.
+template void DynamicVectorClass<VertexMaterialClass *>::Delete_All(void);
+template void DynamicVectorClass<TextureClass *>::Delete_All(void);
 
 
 // ??0MaterialRemapperClass@@QAE@PAVMaterialInfoClass@@0@Z
