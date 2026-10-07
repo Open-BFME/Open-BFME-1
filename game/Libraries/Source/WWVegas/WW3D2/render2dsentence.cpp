@@ -183,39 +183,8 @@ Render2DSentenceClass::Reset_Polys (void)
 //	Reset
 //
 ////////////////////////////////////////////////////////////////////////////////////
-void
-// ?Reset@Render2DSentenceClass@@UAEXXZ present-unmatched
-Render2DSentenceClass::Reset (void)
-{
-	//
-	//	Make sure we unlock the current surface (if necessary)
-	//
-	if (LockedPtr != NULL) {
-		CurSurface->Unlock ();
-		LockedPtr = NULL;
-	}
-
-	//
-	//	Release our hold on the current surface
-	//
-	REF_PTR_RELEASE (CurSurface);
-
-	//
-	//	Free each renderer
-	//
-	while (Renderers.Count () > 0) {
-		delete Renderers[0].Renderer;
-		Renderers.Delete(0);
-	}
-
-	Cursor.Set (0, 0);
-	MonoSpaced = false;
-	ParseHotKey = false;
-
-	Release_Pending_Surfaces ();
-	Reset_Sentence_Data ();
-	return ;
-}
+// Render2DSentenceClass::Reset: the retail body (0x0093EA60) lives in
+// Render2DSentenceClassReset.cpp.
 
 
 ////////////////////////////////////////////////////////////////////////////////////
