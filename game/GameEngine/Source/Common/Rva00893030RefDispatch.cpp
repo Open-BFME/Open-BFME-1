@@ -38,7 +38,9 @@ public:
 	void invoke(Rva00893030Ref value, void *first, void *second, void *third);
 };
 
-extern Rva00893030Manager *g_rva00893030Manager;
+// Retail .bss VA 0x013377D4 (past .data's raw size): the manager pointer this
+// dispatcher loads; defined once here.
+Rva00893030Manager *g_rva00893030Manager;
 
 void Rva00893030(Rva00893030Ref value, void *first, void *second, void *third)
 {
