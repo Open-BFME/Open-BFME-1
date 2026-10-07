@@ -7,9 +7,12 @@
 class BfmeThingEOA
 {
 public:
-    __declspec(noinline) virtual ~BfmeThingEOA();
+    virtual ~BfmeThingEOA();
 };
 
-BfmeThingEOA::~BfmeThingEOA()
+// ~BfmeThingEOA (0x0006B400) lives in BfmeThingEOADestructor.cpp; constructing
+// one here emits the vftable and this ??_G.
+void forceBfmeThingEOADeletingDestructor()
 {
+    BfmeThingEOA value;
 }
