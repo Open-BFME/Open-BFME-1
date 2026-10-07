@@ -1,4 +1,15 @@
-void __cdecl __stlp_deallocate_small(void *memory, unsigned int bytes);
+class Rva223440PointerList;
+
+namespace _STL
+{
+// The node allocator's private free routine, retail 0x0082E5F0.
+template <bool threads, int inst>
+class __node_alloc
+{
+	friend class ::Rva223440PointerList;
+	static void __cdecl _M_deallocate(void *memory, unsigned int bytes);
+};
+}
 
 struct Rva223440Node
 {
@@ -30,7 +41,7 @@ void Rva223440PointerList::remove(void *value)
 
 			previous->next = next;
 			next->previous = previous;
-			__stlp_deallocate_small(node, sizeof(Rva223440Node));
+			_STL::__node_alloc<true, 0>::_M_deallocate(node, sizeof(Rva223440Node));
 			node = next;
 			--count;
 		} else {
