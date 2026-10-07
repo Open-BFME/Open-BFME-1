@@ -29,10 +29,14 @@ typedef int Int;
 class Dict;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
-class Drawable
+class Drawable;
+
+// The drawable's level-start broadcast: ILT 0x15B81 -> 0x00412500, the matched
+// Rva00412500::broadcast (R3VirtualBroadcastLoops.cpp).
+class Rva00412500
 {
 public:
-	void onLevelStart();
+	void broadcast();
 };
 
 // Retail command dispatch index 47 is MSG_WAKE_AUTO_PICKUP. Callers pass button
@@ -146,7 +150,7 @@ void Object::onLevelStart(Dict *properties)
 
 	Drawable *drawable = getDrawable();
 	if (drawable)
-		drawable->onLevelStart();
+		reinterpret_cast<Rva00412500 *>(drawable)->broadcast();
 }
 
 // ?bfmeWakeAutoPickup@Object@@QAEXH@Z
