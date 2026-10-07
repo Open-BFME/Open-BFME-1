@@ -3,17 +3,19 @@
 // Open-BFME5: SiegeDeploySpecialPowerModuleData ctor.
 // Base size 0x1d0; zeros; bools; floats 500.0f / 200.0f.
 
-class SiegeDeploySpecialPowerModuleDataBase
+// Base ctor: ILT 0x00023FE7 -> 0x0026A820, the matched
+// ??0WeaponModeSpecialPowerUpdateModuleDataBase@@QAE@XZ (shared module-data base).
+class WeaponModeSpecialPowerUpdateModuleDataBase
 {
 public:
-	SiegeDeploySpecialPowerModuleDataBase();
-	virtual ~SiegeDeploySpecialPowerModuleDataBase();
+	WeaponModeSpecialPowerUpdateModuleDataBase();
+	virtual ~WeaponModeSpecialPowerUpdateModuleDataBase();
 
 private:
 	unsigned char m_pad[0x1cc];
 };
 
-class SiegeDeploySpecialPowerModuleData : public SiegeDeploySpecialPowerModuleDataBase
+class SiegeDeploySpecialPowerModuleData : public WeaponModeSpecialPowerUpdateModuleDataBase
 {
 public:
 	SiegeDeploySpecialPowerModuleData();
