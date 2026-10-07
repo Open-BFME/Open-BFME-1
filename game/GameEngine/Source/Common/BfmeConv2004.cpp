@@ -5,7 +5,6 @@ class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 extern int g_aptPalantirWindow;
 
-extern "C" const char bfmeOnEAA[];
 
 void bfmeAutoAbilityOnEAD(char index)
 {
@@ -16,5 +15,5 @@ void bfmeAutoAbilityOnEAD(char index)
 
 	((Rva00579160Manager *)g_rva012F19E8WindowManager)->fire((void *)g_aptPalantirWindow,
 		"SetCommandButtonAutoAbilityState", 2, (int)text,
-		(int)bfmeOnEAA, 0, 0, 0);
+		(int)"_show", 0, 0, 0);
 }
