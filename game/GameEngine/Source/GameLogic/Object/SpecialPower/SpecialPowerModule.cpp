@@ -647,26 +647,8 @@ void SpecialPowerModule::doSpecialPower( UnsignedInt commandOptions )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?doSpecialPowerAtObject@SpecialPowerModule@@UAEXPAVObject@@I@Z present-unmatched
-void SpecialPowerModule::doSpecialPowerAtObject( Object *obj, UnsignedInt commandOptions )
-{
-	if (m_pausedCount > 0 || getObject()->isDisabled()) {
-		return;
-	}
-
-	//This tells the update module that we want to do our special power. The update modules
-	//will then start processing each frame.
-	initiateIntentToDoSpecialPower( obj, NULL, NULL, commandOptions );
-
-	//Only trigger the special power immediately if the updatemodule doesn't start the attack.
-	//An example of a case that wouldn't trigger immediately is for a unit that needs to 
-	//close to range before firing the special attack. A case that would trigger immediately
-	//is the napalm strike. If we don't call this now, it's up to the update module to do so.
-	if( !getSpecialPowerModuleData()->m_updateModuleStartsAttack )
-	{
-		triggerSpecialPower( obj->getPosition() );
-	}
-}  
+// SpecialPowerModule::doSpecialPowerAtObject: retail's body (0x0026A5B0) lives in
+// SpecialPowerModuleDoSpecialPowerAtObject.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
