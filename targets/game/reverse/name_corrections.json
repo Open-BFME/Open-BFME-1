@@ -18878,5 +18878,15 @@
   "after_sha256": "287b4297b12e0226d1a6d7633dc18de3aaae2ee68fb6a411e4af446b4f9cfb82",
   "evidence": "targets/game/reverse/identity_evidence/20261003-audio-worker-reference-abi.md",
   "reason": "Correct the callee binding, not the owner destructor identity: the undefined BfmeMemberESG destructor pin at ILT000298E8 routes to00691130. The existing independent audio-worker evidence proves that exact cleanup is the Rva006910F0Handle destructor through the canonical handle constructors and hidden-return cleanup. The owning BfmeHostESG body and its member extent stay unchanged; use the ledger-defined callee name rather than an undefined alternate name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003e4330.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/PathfinderBfmeCheckAttackViewAltHelper.cpp",
+  "old_name": "getCell",
+  "new_name": "rva003FBB20",
+  "before_sha256": "511951cae8eaefe103be747c1dbb4e09b9948d83d23174d80d1ab60de0f47980",
+  "after_sha256": "ceb4c9b202972ed519a2fe882621ad90a6fbbe8b7ebecbff7b13d76b6cf1b2ee",
+  "evidence": "targets/game/reverse/identity_evidence/003e49f0-radius-lifetime.md",
+  "reason": "The bank's PathfindLayer::getCell call targets ILT 0x00009A89 -> 0x003FBB20, which the cited evidence decodes and pins as the opaque PathfindLayer::rva003FBB20 (85 bytes equal to 0x003FBAB0 but a separate body), explicitly transferring no getCell identity."
  }
 ]
