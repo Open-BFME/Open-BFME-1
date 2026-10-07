@@ -144,8 +144,8 @@ extern void *g_vtbl_011109CC[];
 extern void *g_vtbl_01110A0C[];
 extern void *g_vtbl_01110A4C[];
 extern void *g_vtbl_01110DF4[];
-extern void *g_vtbl_01110E08[];
-extern void *g_vtbl_01110E0C[];
+extern "C" char DefaultModuleTemplate6Concrete_vtbl4;
+extern "C" char DefaultModuleTemplate6Concrete_vtbl0;
 extern void *g_vtbl_01110E20[];
 extern void *g_vtbl_01110E34[];
 extern void *g_vtbl_01110E38[];
@@ -165,10 +165,10 @@ extern "C" char DefaultModuleTemplate0Concrete_vtbl8;
 extern "C" char DefaultModuleTemplate0Concrete_vtbl4;
 extern "C" char DefaultModuleTemplate0Concrete_vtbl0;
 extern "C" char DefaultModuleTemplate3Concrete_vtbl8;
-extern void *g_vtbl_01110FC0[];
-extern void *g_vtbl_01110FC4[];
-extern void *g_vtbl_01110FD8[];
-extern void *g_vtbl_01110FEC[];
+extern "C" char DefaultModuleTemplate3Concrete_vtbl4;
+extern "C" char DefaultModuleTemplate3Concrete_vtbl0;
+extern "C" char DefaultModuleTemplate2Concrete_vtbl8;
+extern "C" char DefaultModuleTemplate2Concrete_vtbl4;
 extern void *g_vtbl_01110FF0[];
 extern void *g_vtbl_01111030[];
 extern void *g_vtbl_01111044[];
@@ -3089,8 +3089,8 @@ ConcreteModuleTemplate<DefaultModuleTag<2> >::ConcreteModuleTemplate(const Concr
 {
     ((DefaultModuleTemplate2CopyCtorShim *)this)->construct(&that);
     *(volatile unsigned int *)this = (unsigned int)g_vtbl_01110FF0;
-    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)g_vtbl_01110FEC;
-    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)g_vtbl_01110FD8;
+    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)&DefaultModuleTemplate2Concrete_vtbl4;
+    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)&DefaultModuleTemplate2Concrete_vtbl8;
 }
 
 // ??0?$ConcreteModuleTemplate@V?$DefaultModuleTag@$01@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
@@ -3098,8 +3098,8 @@ ConcreteModuleTemplate<DefaultModuleTag<2> >::ConcreteModuleTemplate()
 {
     ((DefaultModuleTemplate2CtorShim *)this)->construct();
     *(volatile unsigned int *)this = (unsigned int)g_vtbl_01110FF0;
-    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)g_vtbl_01110FEC;
-    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)g_vtbl_01110FD8;
+    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)&DefaultModuleTemplate2Concrete_vtbl4;
+    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)&DefaultModuleTemplate2Concrete_vtbl8;
 }
 
 // ??1?$ConcreteModuleTemplate@V?$DefaultModuleTag@$01@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
@@ -3132,8 +3132,8 @@ DefaultModule<2> *ConcreteModuleTemplate<DefaultModuleTag<2> >::createModule(Tra
 ConcreteModuleTemplate<DefaultModuleTag<3> >::ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<3> > &that)
 {
     ((DefaultModuleTemplate3CopyCtorShim *)this)->construct(&that);
-    *(volatile unsigned int *)this = (unsigned int)g_vtbl_01110FC4;
-    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)g_vtbl_01110FC0;
+    *(volatile unsigned int *)this = (unsigned int)&DefaultModuleTemplate3Concrete_vtbl0;
+    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)&DefaultModuleTemplate3Concrete_vtbl4;
     *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)&DefaultModuleTemplate3Concrete_vtbl8;
 }
 
@@ -3141,8 +3141,8 @@ ConcreteModuleTemplate<DefaultModuleTag<3> >::ConcreteModuleTemplate(const Concr
 ConcreteModuleTemplate<DefaultModuleTag<3> >::ConcreteModuleTemplate()
 {
     ((DefaultModuleTemplate3CtorShim *)this)->construct();
-    *(volatile unsigned int *)this = (unsigned int)g_vtbl_01110FC4;
-    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)g_vtbl_01110FC0;
+    *(volatile unsigned int *)this = (unsigned int)&DefaultModuleTemplate3Concrete_vtbl0;
+    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)&DefaultModuleTemplate3Concrete_vtbl4;
     *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)&DefaultModuleTemplate3Concrete_vtbl8;
 }
 
@@ -3185,8 +3185,8 @@ DefaultModule<3> *ConcreteModuleTemplate<DefaultModuleTag<3> >::createModule(Tra
 ConcreteModuleTemplate<DefaultModuleTag<6> >::ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<6> > &that)
 {
     ((DefaultModuleTemplate6CopyCtorShim *)this)->construct(&that);
-    *(volatile unsigned int *)this = (unsigned int)g_vtbl_01110E0C;
-    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)g_vtbl_01110E08;
+    *(volatile unsigned int *)this = (unsigned int)&DefaultModuleTemplate6Concrete_vtbl0;
+    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)&DefaultModuleTemplate6Concrete_vtbl4;
     *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)g_vtbl_01110DF4;
 }
 
@@ -3194,8 +3194,8 @@ ConcreteModuleTemplate<DefaultModuleTag<6> >::ConcreteModuleTemplate(const Concr
 ConcreteModuleTemplate<DefaultModuleTag<6> >::ConcreteModuleTemplate()
 {
     ((DefaultModuleTemplate6CtorShim *)this)->construct();
-    *(volatile unsigned int *)this = (unsigned int)g_vtbl_01110E0C;
-    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)g_vtbl_01110E08;
+    *(volatile unsigned int *)this = (unsigned int)&DefaultModuleTemplate6Concrete_vtbl0;
+    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)&DefaultModuleTemplate6Concrete_vtbl4;
     *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)g_vtbl_01110DF4;
 }
 
