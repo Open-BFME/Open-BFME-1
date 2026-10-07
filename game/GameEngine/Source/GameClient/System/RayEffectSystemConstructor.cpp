@@ -37,7 +37,6 @@ class RayEffectSystem : public SubsystemInterface
 public:
 	RayEffectSystem( void );
 	virtual ~RayEffectSystem( void );
-	virtual void init( void );
 
 private:
 	RayEffectData m_effectData[ 128 ];
