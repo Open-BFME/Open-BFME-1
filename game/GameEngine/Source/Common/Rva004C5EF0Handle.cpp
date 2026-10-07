@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHs-c-
 
-class BfmeSub939G
+class BfmeA1042N
 {
 public:
-	void bfmeCall939G();
+	void bfmeGo1042D();
 	void *m_bfmeP;
 };
 
@@ -12,8 +12,8 @@ class Rva004C5EF0
 public:
 	void handle(int msg);
 
-	BfmeSub939G m_first;
-	BfmeSub939G m_second;
+	BfmeA1042N m_first;
+	BfmeA1042N m_second;
 };
 
 void Rva004C5EF0::handle(int msg)
@@ -21,11 +21,11 @@ void Rva004C5EF0::handle(int msg)
 	if (msg == 2)
 	{
 		if (m_first.m_bfmeP)
-			m_first.bfmeCall939G();
+			m_first.bfmeGo1042D();
 	}
 	else if (msg == 3)
 	{
 		if (m_second.m_bfmeP)
-			m_second.bfmeCall939G();
+			m_second.bfmeGo1042D();
 	}
 }

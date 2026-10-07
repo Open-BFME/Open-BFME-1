@@ -129,10 +129,10 @@ void bfmeGo939E(BfmeSub939E *a)
 	a->bfmeCall939E(&tmp, g_bfme939Str);
 }
 
-class BfmeSub939G
+class BfmeA1042N
 {
 public:
-	void bfmeCall939G();
+	void bfmeGo1042D();
 	void *m_bfmeP;
 };
 
@@ -141,12 +141,12 @@ class BfmeThing939G
 public:
 	void bfmeGo939G(void *a);
 	char m_bfmePad[8];
-	BfmeSub939G m_bfmeSub;
+	BfmeA1042N m_bfmeSub;
 };
 
 void BfmeThing939G::bfmeGo939G(void *a)
 {
-	BfmeSub939G *s = &m_bfmeSub;
+	BfmeA1042N *s = &m_bfmeSub;
 	if (!a && s->m_bfmeP)
-		s->bfmeCall939G();
+		s->bfmeGo1042D();
 }
