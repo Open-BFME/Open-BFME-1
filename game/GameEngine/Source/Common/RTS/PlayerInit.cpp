@@ -193,7 +193,7 @@ public:
 class BfmePlayerMapState
 {
 public:
-	void bfmeNewMap(Int index, Bool flag);
+	void init(Int index, Bool flag);
 };
 
 class ScoreKeeper
@@ -522,9 +522,9 @@ void Player::init(const PlayerTemplate *pt)
 
 	m_30.reset();
 	if (m_playerTemplate)
-		reinterpret_cast<BfmePlayerMapState *>(&m_30)->bfmeNewMap(m_playerIndex, m_playerTemplate->m_118);
+		reinterpret_cast<BfmePlayerMapState *>(&m_30)->init(m_playerIndex, m_playerTemplate->m_118);
 	else
-		reinterpret_cast<BfmePlayerMapState *>(&m_30)->bfmeNewMap(m_playerIndex, false);
+		reinterpret_cast<BfmePlayerMapState *>(&m_30)->init(m_playerIndex, false);
 	resetRank();
 	m_sciencesDisabled.clear();
 	m_sciencesHidden.clear();

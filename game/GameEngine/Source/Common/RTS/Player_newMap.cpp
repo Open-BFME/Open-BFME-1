@@ -1,4 +1,4 @@
-// ?bfmeNewMap@BfmePlayerMapState@@QAEXH_N@Z
+// ?init@BfmePlayerMapState@@QAEXH_N@Z
 
 typedef int Int;
 typedef bool Bool;
@@ -32,18 +32,18 @@ class BfmeGlobalState
 {
 public:
     char m_padding[0xe70];
-    int m_valueE70;
-    int m_valueE74;
+    int m_goodCommandPoints;
+    int m_evilCommandPoints;
     int m_valueE78;
     int m_valueE7C;
-    int m_valueE80;
-    int m_valueE84;
-    int m_valueE88;
-    int m_valueE8C;
-    int m_valueE90;
-    int m_valueE94;
-    int m_valueE98;
-    int m_valueE9C;
+    int m_goodCommandPointsAI;
+    int m_evilCommandPointsAI;
+    int m_goodCommandPointsMP2;
+    int m_evilCommandPointsMP2;
+    int m_goodCommandPointsMP3;
+    int m_evilCommandPointsMP3;
+    int m_goodCommandPointsMP4;
+    int m_evilCommandPointsMP4;
     int m_valueEA0;
     int m_valueEA4;
     int m_valueEA8;
@@ -81,10 +81,10 @@ public:
     int m_value10;
     int m_value14;
 
-    void bfmeNewMap(Int field, Bool flag);
+    void init(Int field, Bool flag);
 };
 
-void BfmePlayerMapState::bfmeNewMap(Int field, Bool flag)
+void BfmePlayerMapState::init(Int field, Bool flag)
 {
     if (field < 0 || field >= 0x20)
         return;
@@ -114,18 +114,18 @@ void BfmePlayerMapState::bfmeNewMap(Int field, Bool flag)
         {
             if (count == 4)
             {
-                x = ((BfmeGlobalState *)TheWritableGlobalData)->m_valueE9C;
-                y = ((BfmeGlobalState *)TheWritableGlobalData)->m_valueE98;
+                x = ((BfmeGlobalState *)TheWritableGlobalData)->m_evilCommandPointsMP4;
+                y = ((BfmeGlobalState *)TheWritableGlobalData)->m_goodCommandPointsMP4;
             }
             else if (count == 3)
             {
-                x = ((BfmeGlobalState *)TheWritableGlobalData)->m_valueE94;
-                y = ((BfmeGlobalState *)TheWritableGlobalData)->m_valueE90;
+                x = ((BfmeGlobalState *)TheWritableGlobalData)->m_evilCommandPointsMP3;
+                y = ((BfmeGlobalState *)TheWritableGlobalData)->m_goodCommandPointsMP3;
             }
             else
             {
-                x = ((BfmeGlobalState *)TheWritableGlobalData)->m_valueE8C;
-                y = ((BfmeGlobalState *)TheWritableGlobalData)->m_valueE88;
+                x = ((BfmeGlobalState *)TheWritableGlobalData)->m_evilCommandPointsMP2;
+                y = ((BfmeGlobalState *)TheWritableGlobalData)->m_goodCommandPointsMP2;
             }
         }
 
@@ -147,12 +147,12 @@ void BfmePlayerMapState::bfmeNewMap(Int field, Bool flag)
     {
         if (flag)
         {
-            int &globalValue = ((BfmeGlobalState *)TheWritableGlobalData)->m_valueE74;
+            int &globalValue = ((BfmeGlobalState *)TheWritableGlobalData)->m_evilCommandPoints;
             m_value04 = globalValue;
         }
         else
         {
-            int &globalValue = ((BfmeGlobalState *)TheWritableGlobalData)->m_valueE70;
+            int &globalValue = ((BfmeGlobalState *)TheWritableGlobalData)->m_goodCommandPoints;
             m_value04 = globalValue;
         }
         if (Glo012F1028)
@@ -163,12 +163,12 @@ void BfmePlayerMapState::bfmeNewMap(Int field, Bool flag)
     {
         if (flag)
         {
-            int &globalValue = ((BfmeGlobalState *)TheWritableGlobalData)->m_valueE84;
+            int &globalValue = ((BfmeGlobalState *)TheWritableGlobalData)->m_evilCommandPointsAI;
             m_value04 = globalValue;
         }
         else
         {
-            int &globalValue = ((BfmeGlobalState *)TheWritableGlobalData)->m_valueE80;
+            int &globalValue = ((BfmeGlobalState *)TheWritableGlobalData)->m_goodCommandPointsAI;
             m_value04 = globalValue;
         }
     }

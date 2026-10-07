@@ -917,7 +917,7 @@ struct BfmePlayerMapFlagSource
 class BfmePlayerMapState
 {
 public:
-	void bfmeNewMap( Int field, Bool flag );		///< retail ILT 0x00018679
+	void init( Int field, Bool flag );		///< retail ILT 0x00018679
 };
 
 struct BfmePlayerMapFields
@@ -994,9 +994,9 @@ void Player::newMap()
 	BfmePlayerMapFields *self = (BfmePlayerMapFields *)this;
 
 	if (self->m_bfmeFlagSource)
-		self->m_bfmeMapState.bfmeNewMap(self->m_bfmeField24, self->m_bfmeFlagSource->m_bfmeFlag);
+		self->m_bfmeMapState.init(self->m_bfmeField24, self->m_bfmeFlagSource->m_bfmeFlag);
 	else
-		self->m_bfmeMapState.bfmeNewMap(self->m_bfmeField24, false);
+		self->m_bfmeMapState.init(self->m_bfmeField24, false);
 }
 
 //=============================================================================
@@ -5513,11 +5513,11 @@ void Rva000D9D30Player::method( void )
 
 	BfmePlayerMapFields *mapFields = (BfmePlayerMapFields *)this;
 	if (self->m_playerTemplate != NULL)
-		mapFields->m_bfmeMapState.bfmeNewMap(
+		mapFields->m_bfmeMapState.init(
 			mapFields->m_bfmeField24,
 			((BfmePlayerMapFlagSource *)self->m_playerTemplate)->m_bfmeFlag);
 	else
-		mapFields->m_bfmeMapState.bfmeNewMap(mapFields->m_bfmeField24, false);
+		mapFields->m_bfmeMapState.init(mapFields->m_bfmeField24, false);
 
 	BFMEAIPlayerVirtuals *ai = (BFMEAIPlayerVirtuals *)self->m_ai;
 	if (ai != NULL)
