@@ -7,11 +7,18 @@
 // The complete destructor route is ILT 0x000240FA, which reaches the
 // canonical AIInternalMoveToState cleanup path.
 
-class AIHarvestApproachSiteState
+// That ILT reaches 0x0015FDA0, a five-byte jump to the matched
+// ??1AIInternalMoveToState (ILT 0x0004AAF7 -> 0x00172430). The derived
+// destructor is implicit: the compiler emits it as that jump.
+class AIInternalMoveToState
 {
 public:
-	virtual ~AIHarvestApproachSiteState();
+	virtual ~AIInternalMoveToState();
+};
 
+// ??1AIHarvestApproachSiteState@@UAE@XZ
+class AIHarvestApproachSiteState : public AIInternalMoveToState
+{
 private:
 	friend void forceAIHarvestApproachSiteStateDeletingDestructor();
 };
