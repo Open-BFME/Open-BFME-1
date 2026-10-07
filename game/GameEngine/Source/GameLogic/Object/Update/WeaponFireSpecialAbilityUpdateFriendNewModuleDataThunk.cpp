@@ -30,7 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl WeaponFireSpecialAbilityUpdateFieldParse(MultiIniFieldParse &parse);
+// Retail stores VA 0x00443B17: the matched ILT thunk ?j_00043b17@@YAXXZ.
+void j_00043b17();
 
 class WeaponFireSpecialAbilityUpdate
 {
@@ -43,6 +44,6 @@ ModuleData *WeaponFireSpecialAbilityUpdate::friend_newModuleData(INI *ini)
 {
 	WeaponFireSpecialAbilityUpdateModuleData *data = new WeaponFireSpecialAbilityUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &WeaponFireSpecialAbilityUpdateFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))&j_00043b17);
 	return (ModuleData *)data;
 }
