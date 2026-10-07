@@ -326,23 +326,7 @@ void ReplayMenuInit( WindowLayout *layout, void *userData )
 //-------------------------------------------------------------------------------------------------
 /** single player menu shutdown method */
 //-------------------------------------------------------------------------------------------------
-void ReplayMenuShutdown( WindowLayout *layout, void *userData )
-{
-
-	Bool popImmediate = *(Bool *)userData;
-	if( popImmediate )
-	{
-
-		layout->hide( TRUE );
-		TheShell->shutdownComplete( layout );
-		return;
-
-	}  //end if
-
-	// our shutdown is complete
-	TheTransitionHandler->reverse("ReplayMenuFade");
-	isShuttingDown = TRUE;
-}  // end ReplayMenuShutdown
+// ReplayMenuShutdown: the retail body (0x004E06E0) lives in ReplayMenuShutdown.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** single player menu update method */
