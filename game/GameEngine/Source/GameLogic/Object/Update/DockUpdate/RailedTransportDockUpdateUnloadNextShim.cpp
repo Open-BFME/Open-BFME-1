@@ -37,6 +37,12 @@ public:
 	void setOrientation(Real angle);
 };
 
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DisabledTypes.h
+enum DisabledType
+{
+	DISABLED_HELD = 3
+};
+
 class Object : public Thing
 {
 public:
@@ -64,7 +70,7 @@ public:
 			reinterpret_cast<const char *>(this) + 0x44);
 	}
 
-	void bfmeSetConditionState(int state);
+	void setDisabled(DisabledType type);				///< ILT 0x0001E402 -> 0x001CE790
 };
 
 class OpenContainSlots0To35
@@ -207,7 +213,7 @@ void RailedTransportDockUpdateUnloadNextShim::unloadNext()
 		openContain->removeFromContain(unloader, 0);
 		unloader->setPosition(us->getPosition());
 		unloader->setOrientation(us->getOrientation());
-		unloader->bfmeSetConditionState(3);
+		unloader->setDisabled(DISABLED_HELD);
 
 		Coord3D dockPosition;
 		m_dockInterface.getExitPosition(unloader, &dockPosition);
