@@ -10,10 +10,18 @@ public:
 class Rva00690FF0Handle
 {
 public:
+	Rva00690FF0Handle();
 	Rva00690FF0Handle(Gen0002857E *target);
 
 	Gen0002857E *m_target;
 };
+
+// Retail 0x00690FE0 (9 bytes): the null default constructor
+// Rva006911A0Handle::construct reaches through ILT 0x000035EE.
+Rva00690FF0Handle::Rva00690FF0Handle()
+{
+	m_target = 0;
+}
 
 Rva00690FF0Handle::Rva00690FF0Handle(Gen0002857E *target)
 {

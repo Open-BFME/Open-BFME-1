@@ -2,21 +2,12 @@
 
 typedef unsigned char UnsignedByte;
 
-class Gen_00690fe0
-{
-public:
-	void *m();
-};
-
 class Gen0002857E;
 
 class Rva00690FF0Handle
 {
 public:
-	Rva00690FF0Handle()
-	{
-		((Gen_00690fe0 *)this)->m();
-	}
+	Rva00690FF0Handle();	// retail 0x00690FE0 via ILT 0x000035EE
 	Rva00690FF0Handle(Gen0002857E *target);
 };
 
