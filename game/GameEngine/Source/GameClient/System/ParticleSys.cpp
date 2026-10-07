@@ -1274,15 +1274,7 @@ void ParticleSystem::setLocalTransform( const Matrix3D *matrix )
 
 // ParticleSystem::rotateLocalTransformY: retail body in ParticleSystemRotateLocalTransformY.cpp.
 
-// ------------------------------------------------------------------------------------------------
-/** Rotate local transform matrix */
-// ------------------------------------------------------------------------------------------------
-// ?rotateLocalTransformZ@ParticleSystem@@QAEXM@Z present-unmatched
-void ParticleSystem::rotateLocalTransformZ( Real z )
-{
-	m_localTransform.Rotate_Z( z );
-	m_isLocalIdentity = false;
-}
+// ParticleSystem::rotateLocalTransformZ: retail body in ParticleSystemRotateLocalTransformZ.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** Attach this particle system to a Drawable */
