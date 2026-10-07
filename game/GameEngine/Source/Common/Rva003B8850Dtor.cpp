@@ -1,22 +1,9 @@
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: destructor of a 12-byte record of three 4-byte strings. Retail
-// 0x003B8850, 121 bytes.
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// Open-BFME5: destructor of a 12-byte record of three AsciiStrings. Retail
+// 0x003B8850, 121 bytes; each AsciiString destructor is the inline
+// releaseBuffer call (0x00887940), six in all.
 
-template <typename T>
-class StringBase
-{
-	friend class Rva003B8850Str;
-
-private:
-	~StringBase();
-	int *m_data;
-};
-
-class Rva003B8850Str : private StringBase<char>
-{
-public:
-	~Rva003B8850Str() {}
-};
+#include "ascii_string.h"
 
 class Rva003B8850
 {
@@ -24,14 +11,14 @@ public:
 	~Rva003B8850();
 
 private:
-	Rva003B8850Str m_a;
-	Rva003B8850Str m_b;
-	Rva003B8850Str m_c;
+	AsciiString m_a;
+	AsciiString m_b;
+	AsciiString m_c;
 };
 
 Rva003B8850::~Rva003B8850()
 {
-	m_a.~Rva003B8850Str();
-	m_b.~Rva003B8850Str();
-	m_c.~Rva003B8850Str();
+	m_a.~AsciiString();
+	m_b.~AsciiString();
+	m_c.~AsciiString();
 }
