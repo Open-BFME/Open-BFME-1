@@ -6,7 +6,15 @@ public:
 	unsigned char m_bfmeTailJP[0xc];
 };
 
-void __cdecl bfmeSendJP(void *sink, int *values, int count);
+// The flush call goes through ILT 0x00048D38 to 0x0035B4B0, matched as the
+// static ScriptList::WriteScriptsDataChunk (Scripts.cpp).
+class DataChunkOutput;
+class ScriptList
+{
+public:
+	static void WriteScriptsDataChunk(DataChunkOutput &chunkWriter,
+		ScriptList *scriptLists[], int numLists);
+};
 
 class BfmeOwnerJP
 {
@@ -34,5 +42,6 @@ void BfmeOwnerJP::bfmeFlushJP(void *sink)
 	for (index = 0; index < m_bfmeCountJP; index++)
 		values[index] = bfmeAtJP(index)->m_bfmeValueJP;
 
-	bfmeSendJP(sink, values, m_bfmeCountJP);
+	ScriptList::WriteScriptsDataChunk(*(DataChunkOutput *)sink,
+		(ScriptList **)values, m_bfmeCountJP);
 }
