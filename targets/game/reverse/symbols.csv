@@ -87549,7 +87549,7 @@ name,address,notes
 ?testForAny@ObjectStatusMaskType@@QBE_NABV1@@Z,0x000316FB,ILT to 0x00216600 BitFlags testForAny used by StealthUpdate hintDetectableWhileUnstealthed
 ?testForNone@?$BitFlags@$0MA@@@QBE_NABV1@@Z,0x00039E91,UpgradeMux::wouldUpgrade conflict-mask helper thunk
 ?testOne@Rva002DF100@@QAEEPAX@Z,0x0000BAEB,Open-BFME5 ILT to the one-argument worker called by 0x002DF100
-?testOwner@Rva0016AE80Owner@@AAE_NXZ,0x00029C3F,Open-BFME5 owner fallback predicate tail-called by the 0x0016AE80 child predicate
+?bfmeGoDVA@BfmeThingDVA@@QAE_NXZ,0x00029C3F,route=0x000A0040; ILT 0x00029C3F jumps to the matched bfmeGoDVA body; tail-called by the 0x0016AE80 child predicate
 ?testSetAndClear@?$BitFlags@$0HE@@@QBE_NABV1@0@Z,0x00019BCD,pinharvest x1 (thunk)
 ?testStatus@BFMEActionObject@@QBE_NH@Z,0x000016A4,BFME Object status helper ILT decoded from ActionManager::canGetHealedAt
 ?testStatus@BFMESelectionObjectStatus@@QBE_NH@Z,0x000016A4,TU-scoped BFME selection status view; CanSelectDrawable retail ILT
