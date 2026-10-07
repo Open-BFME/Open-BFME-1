@@ -79,9 +79,10 @@ extern BfmeVertexMaterialCaps *g_bfmeCaps1340578;
 VertexMaterialClass* VertexMaterialClass::Presets[VertexMaterialClass::PRESET_COUNT];
 
 #ifdef DYN_MAT8
-class DynD3DMATERIAL8 : public W3DMPO
+// Retail 0x00921820 allocates this with plain operator new(0x44) (??2 at
+// 0x00881F30), not a W3D memory pool, so BFME's carrier has no W3DMPO glue.
+class DynD3DMATERIAL8
 {
-	W3DMPO_GLUE(DynD3DMATERIAL8)
 public:
 	D3DMATERIAL8 Mat;
 };
@@ -96,7 +97,6 @@ public:
 ** VertexMaterialClass Implementation
 */
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
-// ??0VertexMaterialClass@@ present-unmatched
 VertexMaterialClass::VertexMaterialClass(void):
 #ifdef DYN_MAT8
 	MaterialDyn(NULL),
@@ -132,7 +132,6 @@ VertexMaterialClass::VertexMaterialClass(void):
 }
 
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
-// ??0VertexMaterialClass@@ present-unmatched
 VertexMaterialClass::VertexMaterialClass(const VertexMaterialClass & src) :
 #ifdef DYN_MAT8
 	MaterialDyn(NULL),
@@ -178,7 +177,6 @@ void VertexMaterialClass::Make_Unique()
 }
 
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
-// ??1VertexMaterialClass@@UAE@XZ present-unmatched
 VertexMaterialClass::~VertexMaterialClass(void)
 {
 	int i;
@@ -200,7 +198,6 @@ VertexMaterialClass::~VertexMaterialClass(void)
 }
 
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
-// ??4VertexMaterialClass@@QAEAAV0@ABV0@@Z present-unmatched
 VertexMaterialClass & VertexMaterialClass::operator = (const VertexMaterialClass &src)
 {	
 
@@ -289,7 +286,6 @@ unsigned long VertexMaterialClass::Compute_CRC(void) const
 // inputs/reference/ copies, which resolve WW3D2 headers to this directory too). The pad
 // was the only difference, and only the two colour-source rows went red.
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
-// ?Get_Ambient@VertexMaterialClass@@QBEXPAVVector3@@@Z present-unmatched
 void VertexMaterialClass::Get_Ambient(Vector3 * set) const
 {
 	assert(set); 
@@ -297,7 +293,6 @@ void VertexMaterialClass::Get_Ambient(Vector3 * set) const
 }
 
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
-// ?Set_Ambient@VertexMaterialClass@@ present-unmatched
 void VertexMaterialClass::Set_Ambient(const Vector3 & color)
 {
 	CRCDirty=true;
@@ -307,7 +302,6 @@ void VertexMaterialClass::Set_Ambient(const Vector3 & color)
 }
 
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
-// ?Set_Ambient@VertexMaterialClass@@ present-unmatched
 void VertexMaterialClass::Set_Ambient(float r,float g,float b)
 {
 	CRCDirty=true;
@@ -335,7 +329,6 @@ void VertexMaterialClass::Get_Diffuse(Vector3 * set) const
 }
 
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
-// ?Set_Diffuse@VertexMaterialClass@@ present-unmatched
 void VertexMaterialClass::Set_Diffuse(const Vector3 & color)
 {
 	CRCDirty=true;
@@ -345,7 +338,6 @@ void VertexMaterialClass::Set_Diffuse(const Vector3 & color)
 }
 
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
-// ?Set_Diffuse@VertexMaterialClass@@ present-unmatched
 void VertexMaterialClass::Set_Diffuse(float r,float g,float b)
 {
 	CRCDirty=true;
@@ -357,7 +349,6 @@ void VertexMaterialClass::Set_Diffuse(float r,float g,float b)
 // Specular Get and Sets
 
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
-// ?Get_Specular@VertexMaterialClass@@QBEXPAVVector3@@@Z present-unmatched
 void VertexMaterialClass::Get_Specular(Vector3 * set) const
 {
 	assert(set); 
@@ -365,7 +356,6 @@ void VertexMaterialClass::Get_Specular(Vector3 * set) const
 }
 
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
-// ?Set_Specular@VertexMaterialClass@@ present-unmatched
 void VertexMaterialClass::Set_Specular(const Vector3 & color)
 {
 	CRCDirty=true;
@@ -375,7 +365,6 @@ void VertexMaterialClass::Set_Specular(const Vector3 & color)
 }
 
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
-// ?Set_Specular@VertexMaterialClass@@ present-unmatched
 void VertexMaterialClass::Set_Specular(float r,float g,float b)
 {
 	CRCDirty=true;
@@ -387,7 +376,6 @@ void VertexMaterialClass::Set_Specular(float r,float g,float b)
 // Emissive Get and Sets
 
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
-// ?Get_Emissive@VertexMaterialClass@@QBEXPAVVector3@@@Z present-unmatched
 void VertexMaterialClass::Get_Emissive(Vector3 * set) const
 {
 	assert(set); 
@@ -395,7 +383,6 @@ void VertexMaterialClass::Get_Emissive(Vector3 * set) const
 }
 
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
-// ?Set_Emissive@VertexMaterialClass@@ present-unmatched
 void VertexMaterialClass::Set_Emissive(const Vector3 & color)
 {
 	CRCDirty=true;
@@ -405,7 +392,6 @@ void VertexMaterialClass::Set_Emissive(const Vector3 & color)
 }
 
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
-// ?Set_Emissive@VertexMaterialClass@@ present-unmatched
 void VertexMaterialClass::Set_Emissive(float r,float g,float b)
 {
 	CRCDirty=true;
@@ -416,7 +402,6 @@ void VertexMaterialClass::Set_Emissive(float r,float g,float b)
 
 
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
-// ?Set_Shininess@VertexMaterialClass@@QAEXM@Z present-unmatched
 void	VertexMaterialClass::Set_Shininess(float shin)
 {
 	CRCDirty=true;
@@ -430,7 +415,6 @@ float	VertexMaterialClass::Get_Opacity(void) const
 }
 
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
-// ?Set_Opacity@VertexMaterialClass@@QAEXM@Z present-unmatched
 void	VertexMaterialClass::Set_Opacity(float o)
 {
 	CRCDirty=true;
@@ -438,7 +422,6 @@ void	VertexMaterialClass::Set_Opacity(float o)
 }
 
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
-// ?Set_Ambient_Color_Source@VertexMaterialClass@@QAEXW4ColorSourceType@1@@Z present-unmatched
 void	VertexMaterialClass::Set_Ambient_Color_Source(ColorSourceType src)
 {
 	CRCDirty=true;
@@ -451,7 +434,6 @@ void	VertexMaterialClass::Set_Ambient_Color_Source(ColorSourceType src)
 }
 
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
-// ?Set_Emissive_Color_Source@VertexMaterialClass@@QAEXW4ColorSourceType@1@@Z present-unmatched
 void	VertexMaterialClass::Set_Emissive_Color_Source(ColorSourceType src)
 {
 	CRCDirty=true;
@@ -464,7 +446,6 @@ void	VertexMaterialClass::Set_Emissive_Color_Source(ColorSourceType src)
 }
 
 // byte-exact reconstruction: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
-// ?Set_Diffuse_Color_Source@VertexMaterialClass@@QAEXW4ColorSourceType@1@@Z present-unmatched
 void	VertexMaterialClass::Set_Diffuse_Color_Source(ColorSourceType src)
 {
 	CRCDirty=true;
