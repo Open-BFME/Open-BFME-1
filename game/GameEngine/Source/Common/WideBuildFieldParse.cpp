@@ -98,7 +98,21 @@ void ModelConditionSpecialAbilityUpdateModuleData::buildFieldParse(MultiIniField
 	p.add(reinterpret_cast<const FieldParse *>(WideTbl00118FC0), 0);
 }
 WIDE_FIELD_PARSE( 00119100, 0000629E )
-WIDE_FIELD_PARSE( 00119240, 0000629E )
+extern const WideFieldParse WideTbl00119240[];
+class WeaponSetSpecialAbilityUpdateModuleData
+{
+public:
+	static void buildFieldParse(MultiIniFieldParse &p);
+};
+
+// The WeaponSetSpecialAbilityUpdate factory (friend_newModuleData 0x001192F0, see
+// WeaponSetSpecialAbilityUpdateFriendNewModuleDataThunk.cpp) passes this module-data
+// builder: retail ILT 0x00033DC0 reaches this 30-byte body at RVA 0x00119240.
+void WeaponSetSpecialAbilityUpdateModuleData::buildFieldParse(MultiIniFieldParse &p)
+{
+	Gen0000629E::buildFieldParse(reinterpret_cast<WideMulti &>(p));
+	p.add(reinterpret_cast<const FieldParse *>(WideTbl00119240), 0);
+}
 WIDE_FIELD_PARSE( 00119380, 0000629E )
 WIDE_FIELD_PARSE( 0011B900, 0003572E )
 WIDE_FIELD_PARSE( 0011BE30, 0003572E )
@@ -151,7 +165,21 @@ WIDE_FIELD_PARSE( 0025ACC0, 0000629E )
 WIDE_FIELD_PARSE( 0025CED0, 0002AF8B )
 WIDE_FIELD_PARSE( 0025D560, 0002AF8B )
 WIDE_FIELD_PARSE( 0025D970, 0000629E )
-WIDE_FIELD_PARSE( 0025E7F0, 0000629E )
+extern const WideFieldParse WideTbl0025E7F0[];
+class GloriousChargeUpdateModuleData
+{
+public:
+	static void buildFieldParse(MultiIniFieldParse &p);
+};
+
+// The GloriousChargeUpdate factory (friend_newModuleData 0x0011C7D0, see
+// GloriousChargeUpdateFriendNewModuleDataThunk.cpp) passes this module-data
+// builder: retail ILT 0x00018D5E reaches this 30-byte body at RVA 0x0025E7F0.
+void GloriousChargeUpdateModuleData::buildFieldParse(MultiIniFieldParse &p)
+{
+	Gen0000629E::buildFieldParse(reinterpret_cast<WideMulti &>(p));
+	p.add(reinterpret_cast<const FieldParse *>(WideTbl0025E7F0), 0);
+}
 WIDE_FIELD_PARSE( 0025F0B0, 0002AF8B )
 WIDE_FIELD_PARSE( 0025FCF0, 0000629E )
 WIDE_FIELD_PARSE( 00263970, 0002AF8B )

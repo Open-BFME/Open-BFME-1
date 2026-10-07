@@ -1,0 +1,9 @@
+# WeaponSetSpecialAbilityUpdateModuleData::buildFieldParse at RVA 0x00119240
+
+The 30-byte matched body at RVA 0x00119240 in `game/GameEngine/Source/Common/WideBuildFieldParse.cpp` is `static void WeaponSetSpecialAbilityUpdateModuleData::buildFieldParse(MultiIniFieldParse &)`. The prior claim `?buildFieldParse@Rva00119240@@SAXAAVWideMulti@@@Z` used an address-derived owner and an empty parameter stand-in. The factory's unresolved free-function spelling `_WeaponSetSpecialAbilityUpdateFieldParse` denotes the same callback through its incremental-link thunk.
+
+Retail's matched `WeaponSetSpecialAbilityUpdate::friend_newModuleData(INI *)` at RVA 0x001192F0 allocates and constructs the module data, then pushes VA 0x00433DC0 (ILT 0x00033DC0) followed by the new data pointer before calling `INI::initFromINIMultiProc` (RVA 0x00852130). The five-byte thunk at RVA 0x00033DC0 is a `jmp` to this body (`python3 tools/dis_retail.py 0x001192F0`, `python3 tools/dis_retail.py 0x33DC0`). The reference factory macro in `inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h` allocates `clsmd` and passes `clsmd::buildFieldParse` to this same INI method, which names the callback's owner as the module-data class the factory allocates.
+
+The body is the standard builder shape, as the already corrected `FellBeastSwoopPowerModuleData::buildFieldParse` (0x001210A0) in the same file: it keeps the accumulator in ESI, passes it to the base builder through ILT 0x0000629E, and calls `MultiIniFieldParse::add` (0x00850920) with table VA 0x108a02c and offset zero, then returns with caller cleanup (static cdecl, no receiver).
+
+The correction preserves the start, extent, instructions and relocation targets. A factory thunk reaching a different body, a callback contract with a receiver or callee cleanup, or any changed instruction or relocation target would refute it.

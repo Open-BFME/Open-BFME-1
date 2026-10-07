@@ -7,17 +7,18 @@ class ModuleData;
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
 
+class MultiIniFieldParse;
+
 class GloriousChargeUpdateModuleData
 {
 public:
+	static void buildFieldParse(MultiIniFieldParse &p);	// 0x0025E7F0 via ILT 0x00018D5E
 	GloriousChargeUpdateModuleData();
 	virtual ~GloriousChargeUpdateModuleData();
 
 private:
 	unsigned char m_pad[0x25c];
 };
-
-class MultiIniFieldParse;
 
 // Retail's module-data factories reach INI through initFromINIMultiProc
 // (0x00852130), which takes the class's buildFieldParse proc; the
@@ -30,8 +31,6 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl GloriousChargeUpdateFieldParse(MultiIniFieldParse &parse);
-
 class GloriousChargeUpdate
 {
 public:
@@ -43,6 +42,6 @@ ModuleData *GloriousChargeUpdate::friend_newModuleData(INI *ini)
 {
 	GloriousChargeUpdateModuleData *data = new GloriousChargeUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &GloriousChargeUpdateFieldParse);
+		ini->initFromINIMultiProc(data, &GloriousChargeUpdateModuleData::buildFieldParse);
 	return (ModuleData *)data;
 }

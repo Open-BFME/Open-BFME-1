@@ -7,17 +7,18 @@ class ModuleData;
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
 
+class MultiIniFieldParse;
+
 class WeaponSetSpecialAbilityUpdateModuleData
 {
 public:
+	static void buildFieldParse(MultiIniFieldParse &p);	// 0x00119240 via ILT 0x00033DC0
 	WeaponSetSpecialAbilityUpdateModuleData();
 	virtual ~WeaponSetSpecialAbilityUpdateModuleData();
 
 private:
 	unsigned char m_pad[0x258];
 };
-
-class MultiIniFieldParse;
 
 // Retail's module-data factories reach INI through initFromINIMultiProc
 // (0x00852130), which takes the class's buildFieldParse proc; the
@@ -30,8 +31,6 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl WeaponSetSpecialAbilityUpdateFieldParse(MultiIniFieldParse &parse);
-
 class WeaponSetSpecialAbilityUpdate
 {
 public:
@@ -43,6 +42,6 @@ ModuleData *WeaponSetSpecialAbilityUpdate::friend_newModuleData(INI *ini)
 {
 	WeaponSetSpecialAbilityUpdateModuleData *data = new WeaponSetSpecialAbilityUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &WeaponSetSpecialAbilityUpdateFieldParse);
+		ini->initFromINIMultiProc(data, &WeaponSetSpecialAbilityUpdateModuleData::buildFieldParse);
 	return (ModuleData *)data;
 }
