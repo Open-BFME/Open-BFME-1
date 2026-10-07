@@ -59,10 +59,8 @@ NetCommandList::~NetCommandList() {
 /**
  * Return the first message in this list.
  */
-// ?getFirstMessage@NetCommandList@@QAEPAVNetCommandRef@@XZ present-unmatched
-NetCommandRef *NetCommandList::getFirstMessage() {
-	return m_first;
-}
+// NetCommandList::getFirstMessage: no retail out-of-line copy is claimed in the
+// ledger; the matched TUs that use it carry the inline body.
 
 /**
  * Remove the given message from this list.
