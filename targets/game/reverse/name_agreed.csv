@@ -554,3 +554,4 @@ game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|member||m_rva0015d1d0
 game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|member||m_rva0015d1d0_6c,m_nemesisToAttack,gpt-6-astra+grok,applied,2026-10-07
 game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|param|AIGuardReturnState|m,machine,gpt-6-astra+grok,applied,2026-10-07
 game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|param|AIGuardIdleState|m,machine,gpt-6-astra+grok,applied,2026-10-07
+game/GameEngine/Source/GameLogic/Object/WeaponTemplate_bfmeRangeBase.cpp|member||m_bfmeMaxHeightDifference052C,m_restrictedHeightRange,gpt-6-astra+grok,applied,2026-10-07

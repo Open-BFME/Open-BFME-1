@@ -44,8 +44,8 @@ private:
 	Real unbonusedRange( const WeaponBonus &bonus, Real heightDifference ) const
 	{
 		Real range = m_attackRange * bonus.getField( WeaponBonus::RANGE ) - 2.5f;
-		if( m_bfmeMaxHeightDifference052C > g_rva01075350
-			&& fabs( heightDifference ) > m_bfmeMaxHeightDifference052C )
+		if( m_restrictedHeightRange > g_rva01075350
+			&& fabs( heightDifference ) > m_restrictedHeightRange )
 			range = 0.0f;
 		else if( range < g_rva01075350 )
 			range = 0.0f;
@@ -55,7 +55,7 @@ private:
 	char m_pad0[0x14];
 	Real m_attackRange;						// +0x14
 	char m_pad18[0x52C - 0x18];
-	Real m_bfmeMaxHeightDifference052C;		// +0x52C
+	Real m_restrictedHeightRange;		// +0x52C
 };
 
 Real WeaponTemplate::bfmeRangeBase( const Object *source,
