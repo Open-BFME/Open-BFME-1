@@ -542,3 +542,8 @@ game/GameEngine/Source/Common/BfmeConv2083.cpp|function||bfmeMedianXD,median,gpt
 game/GameEngine/Source/Common/BfmeConv766.cpp|type||BfmeThingDSA,StateMachine,gpt-6-astra+grok,agreed,2026-10-07
 game/GameEngine/Source/Common/BfmeConv766.cpp|member||m_bfmeFlag,m_locked,gpt-6-astra+grok,agreed,2026-10-07
 game/GameEngine/Source/Common/BfmeConv766.cpp|function|BfmeThingDSA@|bfmeGoDSA,setState,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|member||m_rva0015d1d0_44,m_targetToGuard,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|member||m_rva0015d1d0_4c,m_areaToGuard,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|member||m_rva0015d1d0_6c,m_nemesisToAttack,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|param|AIGuardReturnState|m,machine,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|param|AIGuardIdleState|m,machine,gpt-6-astra+grok,agreed,2026-10-07

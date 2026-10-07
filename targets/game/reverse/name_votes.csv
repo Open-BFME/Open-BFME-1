@@ -1132,3 +1132,8 @@ game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|member||m_rva0015d1d0
 game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|member||m_rva0015d1d0_6c,14faad81b28949e926d88b48,gpt-6-astra,20261007213209-e8d5a8,2026-10-07
 game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|param|AIGuardReturnState|m,88f5e110e5470d92bcdf4026,gpt-6-astra,20261007213209-e8d5a8,2026-10-07
 game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|param|AIGuardIdleState|m,c63cbe42bdc6a4ba22b52aba,gpt-6-astra,20261007213209-e8d5a8,2026-10-07
+game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|member||m_rva0015d1d0_44,9469c3b9ccbb25e41eca298e,grok,20261007213549-53a736,2026-10-07
+game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|member||m_rva0015d1d0_4c,a076682833e3ffc52b656cec,grok,20261007213549-53a736,2026-10-07
+game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|member||m_rva0015d1d0_6c,14faad81b28949e926d88b48,grok,20261007213549-53a736,2026-10-07
+game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|param|AIGuardReturnState|m,88f5e110e5470d92bcdf4026,grok,20261007213549-53a736,2026-10-07
+game/GameEngine/Source/GameLogic/AI/AIGuardMachineCtor.cpp|param|AIGuardIdleState|m,c63cbe42bdc6a4ba22b52aba,grok,20261007213549-53a736,2026-10-07
