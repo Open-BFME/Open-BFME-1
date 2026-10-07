@@ -18,13 +18,12 @@ class ShroudManagerImpl008FBA40Element
 {
 public:
 	void updatePlayerCells008FC3B0(ShroudManagerImpl008FBA40 *manager, Int playerIndex);
+	// 0x008FC300, matched under this class too (ShroudManagerImpl008FBA40.cpp).
+	void updatePlayerCells008FC300(ShroudManagerImpl008FBA40 *manager, Int playerIndex);
 };
 
 class PartitionManagerImpl008F8D60Element
 {
-public:
-	void updatePlayerCells008FC300(PartitionManagerImpl008F8D60 *manager, Int playerIndex);
-
 private:
 	char m_data[0x68];
 };
@@ -66,7 +65,8 @@ void PartitionManagerImpl008F8D60::revealMapForPlayer(Int playerIndex)
 	PartitionManagerImpl008F8D60Element *element = m_elements;
 	PartitionManagerImpl008F8D60Element *end = element + m_width * m_height;
 	while (element != end) {
-		element->updatePlayerCells008FC300(this, playerIndex);
+		reinterpret_cast<ShroudManagerImpl008FBA40Element *>(element)->updatePlayerCells008FC300(
+			reinterpret_cast<ShroudManagerImpl008FBA40 *>(this), playerIndex);
 		reinterpret_cast<ShroudManagerImpl008FBA40Element *>(element)->updatePlayerCells008FC3B0(
 			reinterpret_cast<ShroudManagerImpl008FBA40 *>(this), playerIndex);
 		++element;
