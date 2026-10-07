@@ -51,10 +51,20 @@ void Rva005701A0::raise()
 	}
 }
 
+// ILT 0x00020B5D jumps to 0x004943E0, the matched BfmeThingDYA::bfmeGoDYA.
+class BfmeThingDYA
+{
+public:
+	void bfmeGoDYA( void *what );
+};
+
 class Gen00020B5D
 {
 public:
-	void handle( int value );
+	__forceinline void handle( int value )
+	{
+		( (BfmeThingDYA *)this )->bfmeGoDYA( (void *)value );
+	}
 	char m_lead[ 0x20 ];
 	unsigned char m_flags;
 };
