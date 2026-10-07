@@ -51,10 +51,7 @@
 ** RenderInfoClass Implementation
 **
 ***********************************************************************************************/
-// ??1RenderInfoClass@@QAE@XZ present-unmatched
-RenderInfoClass::~RenderInfoClass(void)
-{
-}
+// RenderInfoClass::~RenderInfoClass: no standalone retail body; the TUs that destroy one emit it inline.
 
 void RenderInfoClass::Push_Material_Pass(MaterialPassClass * matpass)
 {
