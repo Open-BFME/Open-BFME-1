@@ -7,11 +7,19 @@
 
 #include "ascii_string.h"
 
+// finish(): ILT 0x1A64F -> 0x00413580, matched
+// ?bfmeSubFAll1158@BfmeOwner1158@@QAEXXZ (BfmeConv1158.cpp).
+class BfmeOwner1158
+{
+public:
+	void bfmeSubFAll1158();
+};
+
 class S4Sink004135C0
 {
 public:
 	void invoke(const AsciiString &name, int a, int b, int c, int d);
-	void finish();
+	void finish() { ((BfmeOwner1158 *)this)->bfmeSubFAll1158(); }
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
