@@ -1061,3 +1061,5 @@ game/GameEngine/Source/Common/RTS/Player_newMap.cpp|function|BfmePlayerMapState@
 game/GameEngine/Source/Common/System/PathProximity000FE640.cpp|type||PathNode000FE640,3e83ceb9c90b88e5937b2035,gpt-6-astra,20261007192738-7025a1,2026-10-07
 game/GameEngine/Source/Common/System/PathProximity000FE640.cpp|type||Path000FE640,e03466f7b2ee36608f694a95,gpt-6-astra,20261007192738-7025a1,2026-10-07
 game/GameEngine/Source/Common/System/PathProximity000FE640.cpp|param|Coord3D::Coord3D#2|v,2c83f33e95f87252cbfae059,gpt-6-astra,20261007192738-7025a1,2026-10-07
+game/GameEngine/Source/Common/System/PathProximity000FE640.cpp|type||PathNode000FE640,3e83ceb9c90b88e5937b2035,grok,20261007193119-5e4554,2026-10-07
+game/GameEngine/Source/Common/System/PathProximity000FE640.cpp|type||Path000FE640,e03466f7b2ee36608f694a95,grok,20261007193119-5e4554,2026-10-07
