@@ -5,17 +5,24 @@
 // The third argument is stored into its own home slot so its address can be
 // passed; the two trailing arguments are immediate zeros.
 
-class TerrainLogicP48;
+struct Coord3D;
+
+// The callee at 0x001A51F0 is matched as Rva001A51F0GridVisitInt::visit
+// (Rva001A51F0GridVisitInt.cpp; callees.py).
+class Rva001A51F0GridVisitInt
+{
+public:
+	void visit(const Coord3D *pos, float radius, const int *value, unsigned char flag, int extra);
+};
 
 class TerrainLogicP48
 {
 public:
-	void fiveArg(int a1, int a2, int *a3, int z1, int z2);
 	void adapter(int a1, int a2, int a3);
 };
 
 void TerrainLogicP48::adapter(int a1, int a2, volatile int a3)
 {
 	a3 = a3;
-	fiveArg(a1, a2, (int *)&a3, 0, 0);
+	((Rva001A51F0GridVisitInt *)this)->visit((const Coord3D *)a1, *(float *)&a2, (const int *)&a3, 0, 0);
 }
