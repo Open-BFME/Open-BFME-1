@@ -99,14 +99,9 @@ public:
 		return m_nextOpti; 
 	}
 
-	const PathNode *getNextOptimized(Coord2D* dir = NULL, Real* dist = NULL) const  	///< return next node in optimized path
-	{ 
-		if (dir)
-			*dir = m_nextOptiDirNorm2D;
-		if (dist)
-			*dist = m_nextOptiDist2D;
-		return m_nextOpti; 
-	}
+	// BFME: out of line (retail 0x003FD6E0, 139 bytes, PathNodeGetNextOptimized.cpp);
+	// it computes the normalized direction and distance instead of reading cached fields.
+	const PathNode *getNextOptimized(Coord2D* dir = NULL, Real* dist = NULL) const;  	///< return next node in optimized path
 
 	void setCanOptimize(Bool canOpt) { m_canOptimize = canOpt;}
 	Bool getCanOptimize( void ) const { return m_canOptimize;}
