@@ -33,3 +33,15 @@ int T4Host001409F0::checksum( const T4Host001409F0 *other ) const
 
 	return total;
 }
+
+// 0x00142140, 15 bytes: a __cdecl forwarder that calls checksum() on its first
+// argument with its second, through ILT 0x00041D49 -> 0x001409F0, and returns
+// the result. Its ?dup_ row used to borrow GameMemory.cpp's freeFromW3DMemPool,
+// whose call reaches MemoryPool::freeBlock instead. Identity not recovered.
+// Retail calls the body out of line, so it must not be inlined here.
+#pragma inline_depth(0)
+int Rva00142140ChecksumForward( const T4Host001409F0 *host, const T4Host001409F0 *other )
+{
+	return host->checksum( other );
+}
+#pragma inline_depth()
