@@ -6,21 +6,20 @@
 
 #include "ascii_string.h"
 
-class W3DBuffDrawModuleDataBase
+// The restored base vptr is retail 0x01073744, ??_7BfmeBaseVUQ@@6B@ (symbols.csv).
+class BfmeBaseVUQ
 {
 public:
-	virtual ~W3DBuffDrawModuleDataBase() {}
-
-private:
-	unsigned int m_word;
+	virtual ~BfmeBaseVUQ() {}
 };
 
-class W3DBuffDrawModuleData : public W3DBuffDrawModuleDataBase
+class W3DBuffDrawModuleData : public BfmeBaseVUQ
 {
 public:
 	virtual ~W3DBuffDrawModuleData();
 
 private:
+	unsigned int m_word;
 	AsciiString m_modelName;
 	bool m_flag;
 };

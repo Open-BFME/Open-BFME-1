@@ -4,19 +4,22 @@
 // call: this class's own vftable pointer at +0x00, the base's word at +0x04 left
 // alone, and two fields of its own zeroed off one cleared register.
 
-class W3DBuffDrawModuleDataBase
+// Retail base vftable 0x01073744 is ??_7BfmeBaseVUQ@@6B@ (dtor-only); the
+// derived vftable 0x01121DF8 holds just the scalar deleting destructor.
+class BfmeBaseVUQ
 {
 public:
-	virtual void moduleDataAnchor();
+	virtual ~BfmeBaseVUQ() {}
 
 private:
 	unsigned char m_unmodelled_04[4];
 };
 
-class W3DBuffDrawModuleData : public W3DBuffDrawModuleDataBase
+class W3DBuffDrawModuleData : public BfmeBaseVUQ
 {
 public:
 	W3DBuffDrawModuleData();
+	virtual ~W3DBuffDrawModuleData();
 
 private:
 	int m_unmodelled_08;					// +0x08
