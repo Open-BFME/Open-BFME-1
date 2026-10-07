@@ -3,10 +3,8 @@
 
 // Open-BFME5 conversions.
 
-// The singleton at 0x012F706C is retail's ?g_bfmeGameCW@@3PAVBfmeGameCW@@A
-// (dir32_addresses.csv). This TU only reaches it through the vtable slot
-// bfmeTick976C, which is spelled by no COFF symbol here, so the class
-// carries the defining name directly.
+// This TU reaches the singleton at 0x012F706C only through the vtable
+// slot bfmeTick976C; BfmeGameCW is its local vtable view.
 class BfmeGameCW
 {
 public:
@@ -42,7 +40,10 @@ public:
 	virtual void bfmeEnd976C();
 };
 
-extern BfmeGameCW *g_bfmeGameCW;
+// Retail's global at 0x012F706C is LivingWorldManager *TheLivingWorldManager
+// (data_rows.csv, LivingWorldManager.cpp); the pointee keeps this TU's view.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
 
 // Retail's global at 0x012F64BC is ParticleSystemManager *TheParticleSystemManager;
 // only the global's spelling matters to the link, so the pointee keeps this
@@ -53,7 +54,7 @@ extern ParticleSystemManager *TheParticleSystemManager;
 
 void bfmeGo976C(void)
 {
-	g_bfmeGameCW->bfmeTick976C();
+	reinterpret_cast<BfmeGameCW *>(TheLivingWorldManager)->bfmeTick976C();
 
 	BfmeProbe976 *p = reinterpret_cast<BfmeProbe976 *>(DX8Wrapper::_Get_D3D_Device8());
 
