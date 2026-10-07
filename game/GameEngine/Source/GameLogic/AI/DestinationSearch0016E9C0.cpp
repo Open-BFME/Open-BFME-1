@@ -1,33 +1,17 @@
-// ?d_0016e9c0@@YAXXZ
-// partial score=0.9910313901345291 date=2026-09-28
+// ?find@DestinationSearch0016E9C0@@QAE_NPAVCoord3D@@PAX@Z
 // cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWMath
-// Banked reconstruction of retail RVA 0x0016E9C0, extent 669, ret 8.
-// Emitter: ?find@DestinationSearch0016E9C0@@QAE_NPAVCoord3D@@PAX@Z
-// Intended home: game/GameEngine/Source/GameLogic/AI/.
-// Identity is deliberately address-derived. Matched Rva00173620State::computePath
-// (0x00173680) calls this through ILT 0x0003BC05 with destination
-// and owner on the stack. ECX is the state, but this body never reads it.
-// The 0x0016EE00 sibling is identical except for REL32 call displacements.
 //
-// Best probe: 669 bytes; six differing bytes, solely the adjacent instruction
-// order at +0x3D/+0x40. Retail: FLD [ESI+4]; LEA EDI,[EBX+38h]. Ours reverses
-// those two instructions. All later bytes and relocation locations agree.
-// The barrier is a compiler-ordering experiment, not an original-source claim.
-// It fixes the x87 initial load order but does not finish the adjacent swap.
-// GetLength's sequential accumulator preserves retail's two separate sums
-// around __ftol2. A local pathfinder copy fixes the ECX/EDX rotation in the loop.
+// Retail RVA 0x0016E9C0, 669 bytes. The body returns with ret 8 at +0x29A,
+// and INT3 padding follows.
 //
-// Calls use existing address-only ILT symbols with witnessed thiscall ABIs:
-// 0003A391 -> 001BEC20: no stack arguments, integer layer result.
-// 0004A327 -> 003EDF90: object, start coordinate, end coordinate, zero; AL result.
-// 00011252 -> 003EAC80: object, embedded AI+1A8 set, mutable coordinate.
-// 00027FFC -> 003F6090: adjustDestination with the same triple and null group.
-// No pins were added. AI+0C/+14 are independently used in the matched caller.
-// Object+BC and AI-data+D0 lack a witnessed semantic member name, so remain
-// explicit offsets. The 20.0 and -0.05 constants were read from retail.
+// This is a second, byte-identical copy of Rva0016EE00::method
+// (Rva0016EE00.cpp): only its rel32 call and branch displacements differ.
+// Retail was linked without identical-COMDAT folding, so the copy keeps its
+// own identity. Its byte-true caller Rva00173620State::computePath
+// (0x00173680) reaches it through ILT 0x0003BC05 with Coord3D* and Object*,
+// which establishes the ABI; the operation stays address-derived under the
+// banked name DestinationSearch0016E9C0::find.
 #include <math.h>
-extern "C" void _ReadWriteBarrier();
-#pragma intrinsic(_ReadWriteBarrier)
 #include "coord3d.h"
 inline Coord3D::Coord3D() {}
 inline Coord3D::~Coord3D() {}
@@ -62,8 +46,9 @@ bool DestinationSearch0016E9C0::find(Coord3D *destination, void *object)
  if(CALL(Query,object,j_0003a391)()>1) return true;
  void *ai=*(void**)((char*)object+0x204);
  if(!ai) return false;
+ Coord3D delta; delta.x=destination->x; delta.y=destination->y;
  const Coord3D *position=(Coord3D*)((char*)object+0x38);
- Coord3D delta; delta.x=destination->x; _ReadWriteBarrier(); delta.y=destination->y; delta.z=destination->z; delta.sub(position); float distance=delta.GetLength2D();
+ delta.z=destination->z; delta.sub(position); float distance=delta.GetLength2D();
  Coord3D direction;direction=*destination;
  Coord3D candidate=*destination;
  direction.sub(position);
