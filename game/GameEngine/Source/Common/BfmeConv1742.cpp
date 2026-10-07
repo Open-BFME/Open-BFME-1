@@ -9,9 +9,9 @@ extern const char g_bfmeEmptyAscii[];
 
 // The comparator reaches MSVCR71's case-insensitive compare through the import
 // slot at 0x0135933C; targets/game/reverse/symbols.csv pins that slot as
-// __imp___stricmp, so the reference must be spelled _stricmp (dllimport) to
+// __imp___stricmp, but retail imports msvcr71!_strcmpi (import_binding.py), so the reference must be spelled _strcmpi (dllimport) to
 // land on it -- the placeholder g_lookup named nothing that existed.
-extern "C" __declspec(dllimport) int __cdecl _stricmp(const char *, const char *);
+extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *, const char *);
 
 class BfmeStrAQ
 {
@@ -32,5 +32,5 @@ public:
 
 bool __stdcall bfmeLessAQ(BfmeHolderAQ *left, void *right)
 {
-	return _stricmp(left->m_bfmeStrAQ->bfmeStrAQ(), (const char *)right) < 0;
+	return _strcmpi(left->m_bfmeStrAQ->bfmeStrAQ(), (const char *)right) < 0;
 }
