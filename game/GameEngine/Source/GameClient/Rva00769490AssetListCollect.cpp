@@ -90,21 +90,25 @@ typedef Rva0013FA60Target *Rva00769490Key;
 typedef _STL::set<Rva00769490Key, _STL::less<Rva00769490Key>,
 	_STL::allocator<Rva00769490Key> > Rva00769490Set;
 
+// AssetList::operator<< is matched out of line at 0x00141D00
+// (AssetListOperatorInsert.cpp); this TU inlines it, so a file-static copy
+// keeps its body from emitting a second definition of the member.
 class AssetList
 {
-public:
-	AssetList &operator <<(const AsciiString &name)
-	{
-		if (m_prototypes.insert((Rva00769490Key)bfmeGoEMEb((void *)name.str())).second)
-			m_changed = true;
-		return *this;
-	}
+	friend AssetList &insertAsset(AssetList &list, const AsciiString &name);
 
 private:
 	Rva00769490Set m_prototypes;
 	unsigned int m_treeLayoutPad;
 	bool m_changed;
 };
+
+static inline AssetList &insertAsset(AssetList &list, const AsciiString &name)
+{
+	if (list.m_prototypes.insert((Rva00769490Key)bfmeGoEMEb((void *)name.str())).second)
+		list.m_changed = true;
+	return list;
+}
 
 // ILT 0x00022D86, body 0x00428250: hands (list, context) to every object in
 // the list at +4 through slot 3.
@@ -175,7 +179,7 @@ void Rva00769490Owner::invoke(AssetList *assets, void *context,
 			key.concat(prefix);
 			key.concat(".");
 		}
-		*assets << (key + record->m_name);
+		insertAsset(*assets, key + record->m_name);
 	}
 
 	if (m_broadcastTarget)
