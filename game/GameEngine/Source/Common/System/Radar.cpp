@@ -1273,19 +1273,23 @@ struct RadarColorLookup
 	RGBAColorInt color1;
 	RGBAColorInt color2;
 };
+// BFME retail table 0x012ABC38. Its event numbering differs from ZH: event 0
+// leads with the information colors and 4-6 carry the infiltration and
+// information/beacon colors, so those entries keep their numbers.
 static RadarColorLookup radarColorLookupTable[] = 
 {
 	/*      Radar Event													Color 1									 Color 2       */
+	{ (RadarEventType)0,								{ 255, 255,   0, 255 },  {  255, 255, 128, 255 } },
 	{ RADAR_EVENT_CONSTRUCTION,					{ 128, 128, 255, 255 },  {  128, 255, 255, 255 } },
 	{ RADAR_EVENT_UPGRADE,							{ 128,   0,  64, 255 },  {  255, 185, 220, 255 } },
 	{ RADAR_EVENT_UNDER_ATTACK,					{ 255,   0,   0, 255 },  {  255, 128, 128, 255 } },
-	{ RADAR_EVENT_INFORMATION,					{ 255, 255,   0, 255 },  {  255, 255, 128, 255 } },
-	{ RADAR_EVENT_BEACON_PULSE,					{ 255, 255,   0, 255 },  {  255, 255, 128, 255 } },
-	{ RADAR_EVENT_INFILTRATION,					{   0, 255, 255, 255 },  {  128, 255, 255, 255 } },
-	{ RADAR_EVENT_BATTLE_PLAN,					{ 255, 255, 255, 255 },	 {  255, 255, 255, 255 } },
-	{ RADAR_EVENT_STEALTH_DISCOVERED,		{   0, 255,   0, 255 },	 {    0, 128,   0, 255 } },
-	{ RADAR_EVENT_STEALTH_NEUTRALIZED,	{   0, 255,   0, 255 },	 {    0, 128,   0, 255 } },
-	{ RADAR_EVENT_FAKE,									{   0,	 0,   0,	 0 },	 {    0,	 0,   0,   0 } },
+	{ (RadarEventType)4,								{   0, 255, 255, 255 },  {  128, 255, 255, 255 } },
+	{ (RadarEventType)5,								{ 255, 255,   0, 255 },  {  255, 255, 128, 255 } },
+	{ (RadarEventType)6,								{ 255, 255,   0, 255 },  {  255, 255, 128, 255 } },
+	{ (RadarEventType)7,								{ 255, 255, 255, 255 },	 {  255, 255, 255, 255 } },
+	{ (RadarEventType)8,								{   0, 255,   0, 255 },	 {    0, 128,   0, 255 } },
+	{ (RadarEventType)9,								{   0, 255,   0, 255 },	 {    0, 128,   0, 255 } },
+	{ (RadarEventType)10,							{   0,	 0,   0,	 0 },	 {    0,	 0,   0,   0 } },
 	{ (RadarEventType)11,							{   0,   0,   0,   0 },  {    0,   0,   0,   0 } }
 };
 
