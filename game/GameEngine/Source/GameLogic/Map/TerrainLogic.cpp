@@ -893,14 +893,7 @@ void Bridge::updateDamageState( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/TerrainLogicDestructorThunk.cpp
-// ??1TerrainLogic@@UAE@XZ present-unmatched
-TerrainLogic::~TerrainLogic()
-{
-
-	reset(); // just in case
-
-}  // end ~TerrainLogic
+// Retail TerrainLogic::~TerrainLogic (0x001ADD90) is implemented in TerrainLogicDestructorThunk.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Init */
