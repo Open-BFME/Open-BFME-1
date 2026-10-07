@@ -4,7 +4,7 @@
 // Open-BFME: retail 0x009F5C00, 1995 bytes, ret 0x14 at +0x7C8.
 //
 // Identity: the matched wrappers in BfmeConv1050.cpp (0x009F26A0, 0x009F26D0,
-// bfmeGo1050C) call this body as BfmeP1050::bfmeFwd1050 with five stack
+// bfmeGo1050C) call this body as PartitionManagerImpl::GetClosestObject with five stack
 // arguments. Retail loads the chosen pointer into EAX before ret, so the
 // method returns a pointer; no caller reads it.
 //
@@ -145,10 +145,10 @@ __forceinline int bfmeFloatToInt1050(float value)
 	return result;
 }
 
-class BfmeP1050
+class PartitionManagerImpl
 {
 public:
-	void *bfmeFwd1050(int position, int maxDistance, int bounds,
+	void *GetClosestObject(int position, int maxDistance, int bounds,
 		int distanceType, int filters);
 
 	float m_originX;
@@ -160,7 +160,7 @@ public:
 	unsigned int m_cellCount;
 };
 
-__forceinline unsigned int bfmeInlineCellX1050(BfmeP1050 *manager, float value)
+__forceinline unsigned int bfmeInlineCellX1050(PartitionManagerImpl *manager, float value)
 {
 	float t = (float)floor((double)((value - manager->m_originX) *
 		(float)manager->m_cellCount * manager->m_cellScale));
@@ -170,7 +170,7 @@ __forceinline unsigned int bfmeInlineCellX1050(BfmeP1050 *manager, float value)
 	return (unsigned int)i >= manager->m_cellCount ? manager->m_cellCount - 1 : i;
 }
 
-void *BfmeP1050::bfmeFwd1050(int position, int maxDistance, int bounds,
+void *PartitionManagerImpl::GetClosestObject(int position, int maxDistance, int bounds,
 	int distanceType, int filters)
 {
 	unsigned int filterMask;

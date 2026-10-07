@@ -53,10 +53,10 @@ BfmeB1050 *BfmeB1050::bfmeGo1050B(void)
 	return this;
 }
 
-class BfmeP1050
+class PartitionManagerImpl
 {
 public:
-	void *bfmeFwd1050(int a, int b, int c, int d, int e);
+	void *GetClosestObject(int a, int b, int c, int d, int e);
 };
 
 class BfmeC1050
@@ -68,7 +68,7 @@ public:
 	void *bfmeGo009F2680(int a, int b, int c);
 
 	char m_bfmePad[0xc];
-	BfmeP1050 *m_bfmeP;
+	PartitionManagerImpl *m_bfmeP;
 };
 
 // retail 0x009F2700, 36 bytes, five stack args and ret 0x14.  Same shape as
@@ -82,7 +82,7 @@ public:
 // 0x0014DEF6 xor eax,eax on the null path.
 void *BfmeC1050::bfmeGo1050C(int a, int b, int c, int d, int e)
 {
-	return m_bfmeP->bfmeFwd1050(a, c, b, d, e);
+	return m_bfmeP->GetClosestObject(a, c, b, d, e);
 }
 
 // retail 0x009F26A0: same inner at +0xC, same callee 0x009F5C00, four args
@@ -95,12 +95,12 @@ void *BfmeC1050::bfmeGo1050C(int a, int b, int c, int d, int e)
 // no claim is made here about the ones not read individually.
 void *BfmeC1050::bfmeGo1050D(int a, int b, int c, int d)
 {
-	return m_bfmeP->bfmeFwd1050(a, b, 0, c, d);
+	return m_bfmeP->GetClosestObject(a, b, 0, c, d);
 }
 
 void BfmeC1050::bfmeGo009F26D0(int a, int b, int c, int d)
 {
-	m_bfmeP->bfmeFwd1050(a, c, b, d, 0);
+	m_bfmeP->GetClosestObject(a, c, b, d, 0);
 }
 
 // retail 0x009F2680 (30 bytes), directly before 0x009F26A0 and unclaimed until
@@ -109,7 +109,7 @@ void BfmeC1050::bfmeGo009F26D0(int a, int b, int c, int d)
 // the call.  16-aligned after int3 padding, int3 after the ret, no callers.
 void *BfmeC1050::bfmeGo009F2680(int a, int b, int c)
 {
-	return m_bfmeP->bfmeFwd1050(a, b, 0, c, 0);
+	return m_bfmeP->GetClosestObject(a, b, 0, c, 0);
 }
 
 extern "C" void *bfmeVft1050F[];
