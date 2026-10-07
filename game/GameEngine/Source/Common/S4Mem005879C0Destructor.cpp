@@ -57,13 +57,21 @@ public:
 	BfmeListHeader *m_bfmeHeader;				// +0x00
 };
 
+// ILT 0x00037353 -> 0x005876D0, matched as
+// ?bfmeDisposeChain@Gen_005876D0@@QAEXPAUBfmeChainNode@@@Z (Bfme5ChainDisposals.cpp)
+struct BfmeChainNode;
+class Gen_005876D0
+{
+public:
+	void bfmeDisposeChain(BfmeChainNode *first);
+};
+
 class S4Mem005879C0
 {
 public:
 	~S4Mem005879C0();
 
 private:
-	void bfmeErase(void *first);				// ILT 0x00037353
 
 	BfmeHeaderHandle m_bfmeHandle;				// +0x00
 	Int m_bfmeCount;					// +0x04
@@ -74,7 +82,7 @@ S4Mem005879C0::~S4Mem005879C0()
 {
 	if (m_bfmeCount)
 	{
-		bfmeErase(m_bfmeHandle.m_bfmeHeader->m_bfmeFirst);
+		((Gen_005876D0 *)this)->bfmeDisposeChain((BfmeChainNode *)m_bfmeHandle.m_bfmeHeader->m_bfmeFirst);
 
 		m_bfmeHandle.m_bfmeHeader->m_bfmeNext = m_bfmeHandle.m_bfmeHeader;
 		m_bfmeHandle.m_bfmeHeader->m_bfmeFirst = 0;
