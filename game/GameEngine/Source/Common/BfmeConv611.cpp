@@ -143,10 +143,19 @@ struct BfmeOwnerCLA
 	BfmeMidCLA *m_bfmeMid;
 };
 
+enum StateExitType;
+
+// Retail calls ILT 0x00029311 -> 0x00172D80 non-virtually: the matched base
+// AIInternalMoveToState::onExit (onExit@AIInternalMoveToState@@UAEXW4StateExitType@@@Z).
+class AIInternalMoveToState
+{
+public:
+	virtual void onExit(StateExitType status);
+};
+
 class BfmeThingCLA
 {
 public:
-	void bfmeBaseCLA(void *what);
 	void bfmeGoCLA(void *what);
 	unsigned char m_bfmeHead[0x1c];
 	BfmeOwnerCLA *m_bfmeOwner;
@@ -154,7 +163,7 @@ public:
 
 void BfmeThingCLA::bfmeGoCLA(void *what)
 {
-	bfmeBaseCLA(what);
+	((AIInternalMoveToState *)this)->AIInternalMoveToState::onExit((StateExitType)(int)what);
 	BfmeSubCLA *sub = m_bfmeOwner->m_bfmeMid->m_bfmeSub;
 	if (sub != 0)
 		sub->bfmeRunCLA(0);
