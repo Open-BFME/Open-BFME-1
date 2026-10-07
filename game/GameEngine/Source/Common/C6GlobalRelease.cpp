@@ -18,7 +18,8 @@ public:
 	long m_refCount;
 };
 
-extern C6GlobalReleaseTarget *g_c6GlobalReleaseTarget;
+// Retail VA 0x012F13DC (dir32_addresses.csv), zero in the image.
+C6GlobalReleaseTarget *g_c6GlobalReleaseTarget;
 
 // ?c6GlobalReleaseB@@YAXXZ
 void c6GlobalReleaseB(void)
