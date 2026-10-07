@@ -31,6 +31,11 @@ struct Gen_t_0014bd80_p8cd
 	Gen_t_0014bd80_p8cd &operator=( const Gen_t_0014bd80_p8cd & );
 };
 
+// Retail calls the out-of-line clear (tgrid_105.cpp, 0x0014BD80 via ILT
+// 0x0001947F); declaring the instantiation keeps this TU from emitting its own
+// copy, whose element-destructor reference nothing defines.
+template <> void _STL::_List_base<Gen_t_0014bd80_p8cd, _STL::allocator<Gen_t_0014bd80_p8cd> >::clear();
+
 // address-derived
 class Rva0014C850Store
 {
