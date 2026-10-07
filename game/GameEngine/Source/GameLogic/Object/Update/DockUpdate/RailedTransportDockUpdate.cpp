@@ -484,34 +484,8 @@ void RailedTransportDockUpdate::crc( Xfer *xfer )
 	* Version Info:
 	* 1: Initial version */
 // ------------------------------------------------------------------------------------------------
-// ?xfer@RailedTransportDockUpdate@@MAEXPAVXfer@@@Z present-unmatched
-void RailedTransportDockUpdate::xfer( Xfer *xfer )
-{
-
-	// version
-	XferVersion currentVersion = 1;
-	XferVersion version = currentVersion;
-	xfer->xferVersion( &version, currentVersion );
-
-	// extend base class
-	DockUpdate::xfer( xfer );
-	
-	// docking object id
-	xfer->xferObjectID( &m_dockingObjectID );
-
-	// pull inside distance per frame
-	xfer->xferReal( &m_pullInsideDistancePerFrame );
-
-	// unloading object id
-	xfer->xferObjectID( &m_unloadingObjectID );
-
-	// push outside distance per frame
-	xfer->xferReal( &m_pushOutsideDistancePerFrame );
-
-	// unload count
-	xfer->xferInt( &m_unloadCount );
-
-}  // end xfer
+// RailedTransportDockUpdate::xfer: retail body (0x002CE3A0) in
+// RailedTransportDockUpdateXfer.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
