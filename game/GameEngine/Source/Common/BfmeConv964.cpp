@@ -1,9 +1,14 @@
 // Open-BFME5 conversions.
 
-class BfmeItem964
+// ILT 0x000024A5 -> matched 0x0048A200 TransitionGroup::reset.
+class TransitionGroup
 {
 public:
-	void bfmeRelease964();				// ILT 0x000024A5
+	void reset();
+};
+
+class BfmeItem964
+{
 };
 
 class BfmeClear964
@@ -23,19 +28,19 @@ public:
 void BfmeClear964::bfmeClear964()
 {
 	if (m_bfmeA) {
-		m_bfmeA->bfmeRelease964();
+		((TransitionGroup *)m_bfmeA)->reset();
 		m_bfmeA = 0;
 	}
 	if (m_bfmeB) {
-		m_bfmeB->bfmeRelease964();
+		((TransitionGroup *)m_bfmeB)->reset();
 		m_bfmeB = 0;
 	}
 	if (m_bfmeC) {
-		m_bfmeC->bfmeRelease964();
+		((TransitionGroup *)m_bfmeC)->reset();
 		m_bfmeC = 0;
 	}
 	if (m_bfmeD) {
-		m_bfmeD->bfmeRelease964();
+		((TransitionGroup *)m_bfmeD)->reset();
 		m_bfmeD = 0;
 	}
 	m_bfmeDone = 0;
