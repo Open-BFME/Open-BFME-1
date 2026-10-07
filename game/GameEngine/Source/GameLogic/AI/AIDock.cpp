@@ -297,11 +297,6 @@ AIDockMachine::AIDockMachine( Object *obj ) : StateMachine( obj, "AIDockMachine"
 	m_approachPosition = -1;
 }
 
-// ??1AIDockMachine@@ present-unmatched
-AIDockMachine::~AIDockMachine()
-{
-}
-
 //-----------------------------------------------------------------------------
 void AIDockMachine::halt() 
 { 

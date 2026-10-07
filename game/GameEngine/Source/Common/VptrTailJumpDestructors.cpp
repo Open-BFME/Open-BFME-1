@@ -138,7 +138,7 @@ public:
 // Retail 0x00832090 re-seats the vptr to 0x0112E940, the facet vftable retail
 // RTTI names, and returns; the messages destructors at 0x00848A30/0x00848B20
 // and the facet destructors in stlport_locale_facet_destructors.cpp reach it as
-// ??1facet@locale@_STL@@MAE@XZ.
+// 1facet@locale@_STL@@MAE@XZ (decorated, leading ?? dropped).
 namespace _STL
 {
 class locale
@@ -226,7 +226,6 @@ BFME_VPTR_TAIL_JUMP_DTOR( Rva00105350TailDtor, SubsystemInterface )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva00121D10TailDtor, Rva0002B8C8TailBase )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva00124B20TailDtor, Rva0002B8C8TailBase )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva00124BF0TailDtor, Rva0002B8C8TailBase )
-BFME_VPTR_TAIL_JUMP_DTOR( Rva0014E640TailDtor, StateMachine )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva0015B9D0TailDtor, StateMachine )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva0015E730TailDtor, StateMachine )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva0015F730TailDtor, StateMachine )
@@ -292,3 +291,17 @@ BFME_VPTR_TAIL_JUMP_DTOR( Rva0092BAC0TailDtor, Rva0092B6A0TailBase )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva009471E0TailDtor, DX8FVFCategoryContainer )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva00972950TailDtor, Rva009EB810TailBase )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva009D1950TailDtor, LocalFile )
+
+// 0x0014E640 re-seats AIDockMachine's vftable (the vtable its matched
+// constructor 0x0014F7C0 installs) and is reached from the matched
+// scalar deleting destructor 0x0014F120 through ILT 0x0000B7C6
+// (identity_evidence/0014e640-aidockmachine-dtor.md).
+class AIDockMachine : public StateMachine
+{
+protected:
+	virtual ~AIDockMachine();
+};
+
+AIDockMachine::~AIDockMachine()
+{
+}
