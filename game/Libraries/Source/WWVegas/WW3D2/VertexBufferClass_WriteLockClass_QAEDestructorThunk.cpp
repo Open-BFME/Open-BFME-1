@@ -2,7 +2,8 @@
 // Open-BFME5: recover the retail vertex-buffer lock destructor as clean C++.
 
 extern void DX8_Assert();
-extern void BFME_DX8_Thread_Assert();
+// Retail tail-jumps to 0x00905B10, the matched ?bfmeUnlock1179@@YADXZ.
+char bfmeUnlock1179(void);
 extern void _bfme_debugRecordCallsite(int kind);
 
 class BFMEIndexBufferDebugStream
@@ -102,5 +103,5 @@ VertexBufferClass::WriteLockClass::~WriteLockClass()
         BFME_DX8_ErrorCode(result);
     }
     VertexBuffer->Release_Ref();
-    BFME_DX8_Thread_Assert();
+    bfmeUnlock1179();
 }
