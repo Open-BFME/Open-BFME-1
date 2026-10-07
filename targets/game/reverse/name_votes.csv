@@ -1030,3 +1030,7 @@ game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|member||m_bfmeFirst,999b52
 game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|member||m_bfmeSecond,c6a1b81b97412bc7495bfcf7,gpt-6-astra,20261007192744-0b7ceb,2026-10-07
 game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|member||m_bfmeMaker,10aa985028c5347d0fe41fd4,gpt-6-astra,20261007192744-0b7ceb,2026-10-07
 game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|member||m_bfmeHeld,a2681f6b14967c4117627178,gpt-6-astra,20261007192744-0b7ceb,2026-10-07
+game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|type||BfmeMakerKV,c1b615c0359046be94551a70,grok,20261007193124-d5b13c,2026-10-07
+game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|type||BfmeThingKV0016D780,34a4d4a6792db1f649a09aa5,grok,20261007193124-d5b13c,2026-10-07
+game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|member||m_bfmeMaker,10aa985028c5347d0fe41fd4,grok,20261007193124-d5b13c,2026-10-07
+game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|member||m_bfmeHeld,a2681f6b14967c4117627178,grok,20261007193124-d5b13c,2026-10-07
