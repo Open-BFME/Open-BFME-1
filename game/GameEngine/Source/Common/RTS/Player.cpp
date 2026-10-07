@@ -2069,18 +2069,7 @@ void Player::onStructureUndone(Object *structure)
 } // end onStructureUndone
 
 //=============================================================================
-// ?addTeamToList@Player@@QAEXPAVTeamPrototype@@@Z present-unmatched
-void Player::addTeamToList(TeamPrototype* team)
-{
-	for( PlayerTeamList::const_iterator it = m_playerTeamPrototypes.begin(); 
-			 it != m_playerTeamPrototypes.end(); ++it )
-	{
-		if (team == *it)
-			return;	// already present
-	}
-
-	m_playerTeamPrototypes.push_back(team);
-}
+// Player::addTeamToList (0x000D2240) is defined in Gen_guarded_list_push_back.cpp.
 
 //=============================================================================
 void Player::removeTeamFromList(TeamPrototype* team)

@@ -85,30 +85,36 @@ void Gen_00581390::m(void *x)
 	m_list.push_back(x);
 }
 
-// ?m@Gen_000d2240@@QAEXPAX@Z  -- 0x000D2240, 66 bytes, list at this+0x288.
-// Same family, one step up: an add-if-absent.  The linear scan is a written-out
-// loop with an early `return`, not _STL::find -- find leaves a redundant
-// re-test of the result against end() and compares `*it == x` (cmp mem,reg)
-// where retail has `x == *it` (cmp reg,mem).
-struct Gen_000d2240
+// ?addTeamToList@Player@@QAEXPAVTeamPrototype@@@Z  -- 0x000D2240, 66 bytes.
+// Player::addTeamToList: the matched TeamPrototype ctor (0x000F3E40) and
+// Team::setControllingPlayer (0x000F44C0) call it through ILT 0x0002C1CE, and
+// the matched Player::removeTeamFromList / healAllObjects walk the same team
+// list at this+0x288.  The linear scan is a written-out loop with an early
+// `return`, not _STL::find -- find leaves a redundant re-test of the result
+// against end() and compares `*it == x` (cmp mem,reg) where retail has
+// `x == *it` (cmp reg,mem).
+class TeamPrototype;
+class Player
 {
-	void m(void *x);
+public:
+	void addTeamToList(TeamPrototype *team);
+private:
 	char m_slice_pad[0x288];
-	_STL::list<void *> m_list;
+	_STL::list<void *> m_playerTeamPrototypes;
 };
 
-void Gen_000d2240::m(void *x)
+void Player::addTeamToList(TeamPrototype *team)
 {
 	_STL::list<void *>::iterator it;
-	for (it = m_list.begin(); it != m_list.end(); ++it)
-		if (x == *it)
+	for (it = m_playerTeamPrototypes.begin(); it != m_playerTeamPrototypes.end(); ++it)
+		if (team == *it)
 			return;
 
-	m_list.push_back(x);
+	m_playerTeamPrototypes.push_back(team);
 }
 
 // ?m@Gen_002e0dd0@@QAEXPAX@Z  -- 0x002E0DD0, 71 bytes, list at this+0x08.
-// The other add-if-absent, and the counterpart of Gen_000d2240 above: this one
+// The other add-if-absent, and the counterpart of Player::addTeamToList above: this one
 // really is _STL::find, which is what the redundant post-find re-test against
 // end() and the `cmp mem,reg` element test name.  The find result must be
 // held in a NAMED iterator and compared afterwards -- folding the call into
