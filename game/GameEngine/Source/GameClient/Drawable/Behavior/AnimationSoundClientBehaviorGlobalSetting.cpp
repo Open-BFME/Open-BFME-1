@@ -30,6 +30,14 @@ struct AnimationSoundClientBehaviorGlobalSetting
 // names it; the class name is the block keyword.
 AnimationSoundClientBehaviorGlobalSetting TheAnimationSoundClientBehaviorGlobalSetting = { 50.0f };
 
+// Retail .rdata 0x010F03E8: one INI::parseReal entry at offset 0 and the zero
+// terminator.
+const FieldParse AnimationSoundClientBehaviorGlobalSetting::m_fieldParseTable[] =
+{
+	{ "MinMicrophoneDistanceToDirty",	INI::parseReal,	0,	offsetof( AnimationSoundClientBehaviorGlobalSetting, m_minMicrophoneDistanceToDirty ) },
+	{ 0,								0,				0,	0 }
+};
+
 void parseAnimationSoundClientBehaviorGlobalSetting( INI *ini )
 {
 	if( retailLoadType( ini ) == INI_LOAD_CREATE_OVERRIDES )
