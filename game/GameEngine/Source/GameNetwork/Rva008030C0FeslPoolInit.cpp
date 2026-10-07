@@ -39,6 +39,14 @@ public:
 	int m_10;
 };
 
+// ??0Rva008030C0Elem@@QAE@XZ: retail 0x00802FC0 (11 bytes), the element
+// constructor initPool hands the vector constructor iterator; it clears
+// +0x08 and +0x0C only.
+Rva008030C0Elem::Rva008030C0Elem()
+	: m_08(0), m_0c(0)
+{
+}
+
 void Rva00803080::initPool()
 {
 	void *raw = Gen007F0150::operator new(0x800);
