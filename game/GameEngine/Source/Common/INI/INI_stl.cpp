@@ -605,18 +605,7 @@ void INI::parseAsciiStringVector( INI* ini, void * /*instance*/, void *store, co
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ?parseAsciiStringVectorAppend@INI@@ present-unmatched
-void INI::parseAsciiStringVectorAppend( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	std::vector<AsciiString>* asv = (std::vector<AsciiString>*)store;
-	// nope, don't clear. duh.
-	// asv->clear();
-	for (const char *token = ini->getNextTokenOrNull(); token != NULL; token = ini->getNextTokenOrNull())
-	{
-		asv->push_back(token);
-	}
-}
+// INI::parseAsciiStringVectorAppend lives in ini_parsers.cpp (retail 0x008541E0).
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------

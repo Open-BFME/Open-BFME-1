@@ -90514,3 +90514,27 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_03LPHLLJLB@Axe?$AA@,0x00D0CDB8,Retail cursor INI name table VA 0x012B85D0 entry; compiler string literal Axe equals retail at VA 0x0110CDB8
 ??_C@_0P@LPPKLABM@EvilAbilityObj?$AA@,0x00D0CDA4,Retail cursor INI name table VA 0x012B85D0 entry; compiler string literal EvilAbilityObj equals retail at VA 0x0110CDA4
 ??_C@_06BJEAHPJG@PickUp?$AA@,0x00D0CD9C,Retail cursor INI name table VA 0x012B85D0 entry; compiler string literal PickUp equals retail at VA 0x0110CD9C
+??_C@_07DOAOMMKG@Enabled?$AA@,0x00CAC420,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal Enabled equals retail at VA 0x010AC420
+??_C@_08BECABJLO@ShowPips?$AA@,0x00CAC4AC,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal ShowPips equals retail at VA 0x010AC4AC
+??_C@_09HGFPPHOK@ExitSound?$AA@,0x00CAC5D0,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal ExitSound equals retail at VA 0x010AC5D0
+??_C@_0BA@CLKLCONB@PassengerFilter?$AA@,0x00CAC5A0,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal PassengerFilter equals retail at VA 0x010AC5A0
+??_C@_0BC@GOIAJIKK@AllowAlliesInside?$AA@,0x00CAC4E8,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal AllowAlliesInside equals retail at VA 0x010AC4E8
+??_C@_0BC@LDJBCEJE@NumberOfExitPaths?$AA@,0x00CAC534,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal NumberOfExitPaths equals retail at VA 0x010AC534
+??_C@_0BD@IAFEAGOL@PassengersInTurret?$AA@,0x00CAC54C,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal PassengersInTurret equals retail at VA 0x010AC54C
+??_C@_0BD@JBENACPJ@AllowNeutralInside?$AA@,0x00CAC4B8,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal AllowNeutralInside equals retail at VA 0x010AC4B8
+??_C@_0BD@LGCBCPLI@ManualPickUpFilter?$AA@,0x00CAC588,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal ManualPickUpFilter equals retail at VA 0x010AC588
+??_C@_0BD@MHCGJJJB@AllowEnemiesInside?$AA@,0x00CAC4D0,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal AllowEnemiesInside equals retail at VA 0x010AC4D0
+??_C@_0BE@HLHAOKME@PassengerBonePrefix?$AA@,0x00CAC484,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal PassengerBonePrefix equals retail at VA 0x010AC484
+??_C@_0BF@BHKCBCJE@ModifierRequiredTime?$AA@,0x00CAC3CC,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal ModifierRequiredTime equals retail at VA 0x010AC3CC
+??_C@_0BF@IOJJDADD@ModifierToGiveOnExit?$AA@,0x00CAC3E8,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal ModifierToGiveOnExit equals retail at VA 0x010AC3E8
+??_C@_0BF@NBKHJKEK@DamagePercentToUnits?$AA@,0x00CAC5B4,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal DamagePercentToUnits equals retail at VA 0x010AC5B4
+??_C@_0BG@BLOOIAOG@KillPassengersOnDeath?$AA@,0x00CAC42C,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal KillPassengersOnDeath equals retail at VA 0x010AC42C
+??_C@_0BH@JBECOKFF@EjectPassengersOnDeath?$AA@,0x00CAC448,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal EjectPassengersOnDeath equals retail at VA 0x010AC448
+??_C@_0BI@FABLPKHC@ObjectStatusOfContained?$AA@,0x00CAC404,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal ObjectStatusOfContained equals retail at VA 0x010AC404
+??_C@_0BL@OPMIJFAO@BoneSpecificConditionState?$AA@,0x00CAC464,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal BoneSpecificConditionState equals retail at VA 0x010AC464
+??_C@_0BN@ICKNECDK@AllowOwnPlayerInsideOverride?$AA@,0x00CAC500,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal AllowOwnPlayerInsideOverride equals retail at VA 0x010AC500
+??_C@_0BO@LMIENFEH@PassengersTestCollisionHeight?$AA@,0x00CAC564,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal PassengersTestCollisionHeight equals retail at VA 0x010AC564
+??_C@_0L@DMLLLAJL@EnterSound?$AA@,0x00CAC5DC,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal EnterSound equals retail at VA 0x010AC5DC
+??_C@_0L@KEDAKJLK@ContainMax?$AA@,0x00CAC5EC,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal ContainMax equals retail at VA 0x010AC5EC
+??_C@_0N@HDNKMAFP@DoorOpenTime?$AA@,0x00CAC524,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal DoorOpenTime equals retail at VA 0x010AC524
+??_C@_0O@LKGBDGDF@CollidePickup?$AA@,0x00CAC49C,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal CollidePickup equals retail at VA 0x010AC49C
