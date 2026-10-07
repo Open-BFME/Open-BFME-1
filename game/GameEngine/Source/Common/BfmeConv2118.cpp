@@ -151,10 +151,19 @@ public:
 	virtual void bfmeActAAI();
 };
 
+// ILT 0x2BE77 -> 0x001CF980, matched
+// ?queryAt001CF980@Object@@QAEPAVRva001CF980Result@@XZ (ObjectQueryAt001CF980.cpp).
+class Rva001CF980Result;
+class Object
+{
+public:
+	Rva001CF980Result *queryAt001CF980();
+};
+
 class BfmeX920D
 {
 public:
-	BfmeRes920D *bfmeGet920D();
+	BfmeRes920D *bfmeGet920D() { return (BfmeRes920D *)((Object *)this)->queryAt001CF980(); }
 };
 
 struct BfmeOwnerAAI
