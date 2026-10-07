@@ -36,7 +36,7 @@ multi_name.different = 0
 size_outlier.indicted = 1
 ctor_vtable.contradicted = 20
 ctor_vtable.unreadable = 0
-one_identity.surplus = 2226
+one_identity.surplus = 2225
 # Retail registration proves DynamicPortalBehaviour owns ctor 001F8B80 and factory 001156B0; four false aliases retired.
 # fcf825b4f7 retired the false FXNugget zero-store claim; the body still has aliases.
 # 4c8346b3c9 retired the GDIFileStream ctor over-claim at 0x00087A50 (a zero-store body).
@@ -288,8 +288,6 @@ null_reloc.max_unreadable = 1000
 @ one_identity.surplus 0x000B98F0 ??$__copy@PAUDetonatorInfo@MinefieldBehavior@@PAU12@H@_STL@@YAPAUDetonatorInfo@MinefieldBehavior@@PAU12@00ABUrandom_access_iterator_tag@0@PAH@Z
 @ one_identity.surplus 0x000B98F0 ??$__copy@PAUEvaCheck@@PAU1@H@_STL@@YAPAUEvaCheck@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z
 @ one_identity.surplus 0x000B98F0 ??$__copy@PAUStationPointData@GarrisonContain@@PAU12@H@_STL@@YAPAUStationPointData@GarrisonContain@@PAU12@00ABUrandom_access_iterator_tag@0@PAH@Z
-@ one_identity.surplus 0x000B9D20 ?parseFrictionPerSec@@YAXPAVINI@@PAX1PBX@Z
-@ one_identity.surplus 0x000B9D20 ?parseVelocityReal@INI@@SAXPAV1@PAX1PBX@Z
 @ one_identity.surplus 0x000BA6F0 ??$__copy_ptrs@PAUDetonatorInfo@MinefieldBehavior@@PAU12@@_STL@@YAPAUDetonatorInfo@MinefieldBehavior@@PAU12@00ABU__false_type@0@@Z
 @ one_identity.surplus 0x000BA6F0 ??$__copy_ptrs@PAUEvaCheck@@PAU1@@_STL@@YAPAUEvaCheck@@PAU1@00ABU__false_type@0@@Z
 @ one_identity.surplus 0x000BA6F0 ??$__copy_ptrs@PAUStationPointData@GarrisonContain@@PAU12@@_STL@@YAPAUStationPointData@GarrisonContain@@PAU12@00ABU__false_type@0@@Z
