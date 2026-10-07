@@ -18,7 +18,6 @@ struct BfmeO1145
 	BfmeT1145 *m_bfmeTbl;
 };
 
-extern "C" void __cdecl bfmeTail1145(void);
 
 void bfmeGo1145(void)
 {
@@ -36,5 +35,5 @@ void bfmeGo1145(void)
 	o->m_bfmeTbl->m_bfme104(o, 4, 0);
 	o = reinterpret_cast<BfmeO1145 *>(DX8Wrapper::_Get_D3D_Device8());
 	o->m_bfmeTbl->m_bfme1ac(o, 0);
-	bfmeTail1145();
+	DX8Wrapper::Invalidate_Cached_Render_States();
 }
