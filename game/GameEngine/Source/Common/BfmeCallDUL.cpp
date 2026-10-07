@@ -1,7 +1,7 @@
 // ?bfmeCallDUL@@YG?AVRva0058C2B0RefPtr@@PBD@Z
 // 0x0058C2B0, 170 bytes, byte-exact (`tools/probe.py` reports EXACT modulo
 // relocation slots).
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
 // ---------------------------------------------------------------------------
 // PROVED SIGNATURE: the function returns a CLASS BY VALUE
@@ -65,24 +65,15 @@
 // else, so `&arg.m_s` is the object's own address and the dtor tail-call is the
 // `releaseBuffer` at [X-0x14] retail has.  170 bytes, exact.
 
-void *operator new(unsigned int n);
+#include "ascii_string.h"
 
-class BFMERetailAsciiString
-{
-public:
-	BFMERetailAsciiString(const char *text);
-private:
-	friend class ArgBox;
-	void releaseBuffer();
-	char *m_data;
-};
+void *operator new(unsigned int n);
 
 class ArgBox
 {
 public:
 	ArgBox(const char *text) : m_s(text) {}
-	~ArgBox() { m_s.releaseBuffer(); }
-	BFMERetailAsciiString m_s;
+	AsciiString m_s;
 };
 
 class Rva0058BF70Base
