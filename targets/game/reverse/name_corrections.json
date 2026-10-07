@@ -18868,5 +18868,15 @@
   "after_sha256": "401642076ccb8ede268db1741f57e7a1ef6797fed079270e4acef416f9e3b715",
   "evidence": "targets/game/reverse/symbols.csv",
   "reason": "Not a rename: AsciiString stays the hash key. The banked attempt's private hashtable is replaced by the hash_map<AsciiString, Rva00469FC0Mapped> instantiation that symbols.csv pins at ILT 0x0002F612, the _M_find this body calls; the mapped-type placeholder is that pin's existing spelling."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1970.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1970.cpp",
+  "old_name": "BfmeMemberESG",
+  "new_name": "Rva006910F0Handle",
+  "before_sha256": "da625c41f462b7d063a0a1d60eae497986db9a71a1f1c7c5eed49402566b1102",
+  "after_sha256": "287b4297b12e0226d1a6d7633dc18de3aaae2ee68fb6a411e4af446b4f9cfb82",
+  "evidence": "targets/game/reverse/identity_evidence/20261003-audio-worker-reference-abi.md",
+  "reason": "Correct the callee binding, not the owner destructor identity: the undefined BfmeMemberESG destructor pin at ILT000298E8 routes to00691130. The existing independent audio-worker evidence proves that exact cleanup is the Rva006910F0Handle destructor through the canonical handle constructors and hidden-return cleanup. The owning BfmeHostESG body and its member extent stay unchanged; use the ledger-defined callee name rather than an undefined alternate name."
  }
 ]

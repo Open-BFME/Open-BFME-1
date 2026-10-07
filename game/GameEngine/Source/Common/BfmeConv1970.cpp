@@ -38,10 +38,11 @@ public:
 	BfmeOwnerESG *m_bfmeOwnerESG;
 };
 
-class BfmeMemberESG
+// Retail ILT 0x000298E8 reaches this ledger-owned handle destructor at 0x00691130.
+class Rva006910F0Handle
 {
 public:
-	~BfmeMemberESG();
+	~Rva006910F0Handle();
 
 	unsigned char m_bfmeBodyESG[4];
 };
@@ -54,7 +55,7 @@ public:
 	unsigned char m_bfmeHeadESG[4];
 	BfmeRefESG m_bfme04ESG;
 	unsigned char m_bfmeMidESG[4];
-	BfmeMemberESG m_bfmeMemberESG;
+	Rva006910F0Handle m_bfmeMemberESG;
 };
 
 BfmeHostESG::~BfmeHostESG()
