@@ -83,7 +83,6 @@ public:
 };
 class BfmeMemberRV;
 class BfmeThingRV { public: BfmeMemberRV *bfmePickRV(); };
-class BfmeHostZA { public: void bfmeTickZA(); };
 class BfmeThingZC { public: void bfmeTailZC(); };
 class Gen_004a37d0 { public: void m(); };
 enum ControlBarContext { CB_CONTEXT_NONE = 0 };
@@ -123,6 +122,7 @@ protected:
 protected:
 	void updateContextPurchaseScience();
 	void updateContextStructureInventory();
+	void updateContextContestedStructureInventory();
 	void updateContextUnderConstruction();
 protected:
 	void updateContextOCLTimer();
@@ -203,7 +203,7 @@ void ControlBar::update()
 	switch (m_currContext) {
 		case 1: ((BfmeThingZC *)this)->bfmeTailZC(); break;
 		case 2: updateContextStructureInventory(); break;
-		case 3: ((BfmeHostZA *)this)->bfmeTickZA(); break;
+		case 3: updateContextContestedStructureInventory(); break;
 		case 4: ((Rva004A2F80ReceiverCall)j_00014b28)(this); break;
 		case 5: ((Gen_004a37d0 *)this)->m(); break;
 		case 6: updateContextUnderConstruction(); break;

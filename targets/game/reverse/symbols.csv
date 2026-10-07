@@ -75725,7 +75725,7 @@ name,address,notes
 ?bfmeApplyXW@BfmeHostXW@@QAEXPAVObject@@H@Z,0x000157DA,Open-BFME5 ILT apply the 0x00256CD0 setter calls
 ?bfmeApplyYP@BfmeThingYP@@QAEXPAX0@Z,0x00022BBA
 ?bfmeApplyYV@BfmeOwnerYV@@QAEXPAX@Z,0x00024A9B
-?bfmeApplyZA@BfmeHostZA@@QAEXPAVBfmeBZA@@H@Z,0x0001DF4D,apply
+?bfmeApplyZA@ControlBar@@QAEXPAVBfmeBZA@@H@Z,0x0001DF4D,apply
 ?bfmeApplyZH@@YAXPAVBfmeObjZH@@@Z,0x0087EBB0,apply
 ?bfmeAptLevel00465CE0@@YAHPAVBfmeH1065@@@Z,0x00010901,"Lead traced85B465CE0: returns -1,null;12,no ancestor;otherwise ancestor+250 APT level"
 ?bfmeAreaBody@ScriptConditions@@IAE_NPAVParameter@@00@Z,0x0000C586,Open-BFME5 ILT to 0x0032C090 body for bfmeAreaGate at 0x0032C400
@@ -76788,7 +76788,7 @@ name,address,notes
 ?bfmeFallback961@BfmeHost961@@QAEXHH@Z,0x0001C46D,pin
 ?bfmeFallback977C@@YADXZ,0x00892210,pin
 ?bfmeFallbackTL@@YGXXZ,0x00039202,pin fallback for BfmeConv2022
-?bfmeFallbackZA@BfmeHostZA@@QAEXPAVBfmeCZA@@PAVBfmeAZA@@@Z,0x000329D4,fallback
+?bfmeFallbackZA@ControlBar@@QAEXPAVBfmeCZA@@PAVBfmeAZA@@@Z,0x000329D4,fallback
 ?bfmeFatal2_1043@@YGXPAVBfmeErr2_1043@@PAD@Z,0x009F6D00,pin
 ?bfmeFb1148@BfmeS1148@@QAEDXZ,0x00020437,pin
 ?bfmeFc1148@BfmeS1148@@QAEDXZ,0x0003B69C,pin
@@ -78224,7 +78224,7 @@ name,address,notes
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
 ?bfmeOtherESB@BfmeHostESB@@QAEXPAVBfmeThingESB@@@Z,0x00034955,pin
-?bfmeOtherZA@BfmeHostZA@@QAEXXZ,0x0000238D,other
+?bfmeOtherZA@ControlBar@@QAEXXZ,0x0000238D,other
 ?bfmeOverflowDR@BfmeVecDR@@QAEXPAPAVDrawable@@ABQAV2@ABUBfmeTagDR@@I_N@Z,0x0001CBFC,pin
 ?bfmeOverflowV34@BfmeVecV34@@QAEXPAH0PADI_N@Z,0x0001F4FB,Open-BFME5 insert-overflow pin for 0x0082F580
 ?bfmeOverflowV45@BfmeVecV45@@QAEXPAH0PADI_N@Z,0x0001F4FB,Open-BFME5 insert-overflow pin for 0x0082F610

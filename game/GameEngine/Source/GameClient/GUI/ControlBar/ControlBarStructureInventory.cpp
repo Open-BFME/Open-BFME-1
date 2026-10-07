@@ -100,23 +100,27 @@ public:
 	BfmeBZA *m_bfmeFCZA;
 };
 
-class BfmeHostZA
+// EA's ControlBar (ea_evidence.csv names 0x004AF490); only the members and
+// offsets this body touches (member names per tools/name_oracle.py). The
+// three callees keep their placeholder names.
+class ControlBar
 {
+protected:
+	void updateContextContestedStructureInventory();
 public:
-	void bfmeTickZA();
 	void bfmeFallbackZA(BfmeCZA *c, BfmeAZA *a);
 	void bfmeApplyZA(BfmeBZA *b, int flag);
 	void bfmeOtherZA();
 
 	unsigned char m_bfmeHeadZA[0x5c];
-	BfmeAZA *m_bfme5CZA;
+	BfmeAZA *m_currentSelectedDrawable;
 	unsigned char m_bfmeMidZA[0x70 - 0x60];
-	int m_bfme70ZA;
+	int m_lastRecordedInventoryCount;
 };
 
-void BfmeHostZA::bfmeTickZA()
+void ControlBar::updateContextContestedStructureInventory()
 {
-	BfmeAZA *a = m_bfme5CZA;
+	BfmeAZA *a = m_currentSelectedDrawable;
 	BfmeBZA *b = a->m_bfmeFCZA;
 	BfmeCZA *c = b->m_bfme1FCZA;
 
@@ -130,7 +134,7 @@ void BfmeHostZA::bfmeTickZA()
 
 	if (c->bfmeCheckZA() && c->bfmeOwnerZA() == p)
 	{
-		if (m_bfme70ZA != c->bfmeIdZA())
+		if (m_lastRecordedInventoryCount != c->bfmeIdZA())
 			bfmeApplyZA(b, 1);
 
 		return;
