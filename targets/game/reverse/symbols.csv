@@ -5150,7 +5150,7 @@ name,address,notes
 ??1DisplayString@@UAE@XZ,0x0000D823,W3DDisplayString dtor call target; same thunk as the MAE spelling (access level differs between our header and retail)
 ??1DisplayStringManager@@UAE@XZ,0x000472E9,BFME DisplayStringManager destructor ILT called by exact W3DDisplayStringManager destructor
 ??1DistLODPrototypeClass@@UAE@XZ,0x00012B16,exact constructor 0x00149E30 and dedicated vtable 0x010956B0 establish the complete destructor thunk called by wrapper 0x0014AAE0
-??1DockUpdate@@UAE@XZ,0x0004418E,RailedTransportDockUpdate destructor tail-call ILT to DockUpdate destructor 0x002CCD10
+??1DockUpdate@@MAE@XZ,0x0004418E,RailedTransportDockUpdate destructor tail-call ILT to DockUpdate destructor 0x002CCD10; ilt_oracle CONFIRMS MAE at 0x002CCD10, CONTRADICTS UAE
 ??1DominateEnemySpecialPower@@MAE@XZ,0x00031548,destructor ILT to 0x0025AD50
 ??1DozerActionMoveToActionPosState@@UAE@XZ,0x000188DB,vtable 0x00CC6DA0 slots name DozerActionMoveToActionPosState; protected complete destructor called by wrapper 0x002B80C0
 ??1DozerActionPickActionPosState@@UAE@XZ,0x00010AB4,vtable 0x00CC6D28 slots name DozerActionPickActionPosState; protected complete destructor called by wrapper 0x002B8080

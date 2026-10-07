@@ -168,6 +168,11 @@ class DockUpdate : public UpdateModule, public DockUpdateInterface
 public:
 	DockUpdate(Thing *thing, const ModuleData *moduleData);
 
+protected:
+	virtual ~DockUpdate();
+
+public:
+
 	virtual void objectModuleAnchor();
 	virtual void behaviorAnchor();
 	virtual void updateAnchor();

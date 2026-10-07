@@ -9,8 +9,11 @@
 
 class DockUpdate
 {
-public:
+protected:
 	virtual ~DockUpdate();
+
+private:
+	friend void forceDockUpdateDeletingDestructor();
 };
 
 void forceDockUpdateDeletingDestructor()

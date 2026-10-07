@@ -2,7 +2,7 @@
 
 class DockUpdate
 {
-public:
+protected:
 	virtual ~DockUpdate();
 
 private:
