@@ -233,13 +233,8 @@ enum Detail
 };
 
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/OptionPreferences_ctor.cpp
-// ??0OptionPreferences@@QAE@XZ present-unmatched
-OptionPreferences::OptionPreferences( void )
-{
-	// note, the superclass will put this in the right dir automatically, this is just a leaf name
-	load("Options.ini");
-}
+// OptionPreferences::OptionPreferences( void ) is defined once, in
+// OptionPreferences_ctor.cpp (retail 0x000904E0).
 
 // Thunk-dump converted to clean C++ (0x90450, 11B): sets the OptionPreferences
 // vtable then tail-jumps into the already-matched UserPreferences dtor
