@@ -55,25 +55,6 @@ NetCommandList::~NetCommandList() {
  * Append the given list of commands to this list.
  */
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NetCommandListOperations.cpp
-// ?appendList@NetCommandList@@QAEXPAV1@@Z present-unmatched
-void NetCommandList::appendList(NetCommandList *list) {
-	if (list == NULL) {
-		return;
-	}
-
-	// Need to do it this way because of the reference counting that needs to happen in appendMessage.
-	NetCommandRef *msg = list->getFirstMessage();
-	NetCommandRef *next = NULL;
-	while (msg != NULL) {
-		next = msg->getNext();
-		NetCommandRef *temp = addMessage(msg->getCommand());
-		if (temp != NULL) {
-			temp->setRelay(msg->getRelay());
-		}
-
-		msg = next;
-	}
-}
 
 /**
  * Return the first message in this list.
