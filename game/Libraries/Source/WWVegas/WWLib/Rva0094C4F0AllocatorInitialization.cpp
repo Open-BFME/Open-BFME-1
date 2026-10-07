@@ -14,7 +14,7 @@ class Rva0094C200Proxy {
 protected:
     unsigned m_value;
 public:
-    Rva0094C200Proxy(const Rva0094C4F0Allocator &, unsigned);
+    __declspec(noinline) Rva0094C200Proxy(const Rva0094C4F0Allocator &, unsigned);
 };
 struct Rva0094C4F0Node { unsigned char bytes[0x18]; };
 class Rva0094C4F0Owner : public Rva0094C200Proxy {
@@ -25,4 +25,10 @@ Rva0094C4F0Owner::Rva0094C4F0Owner(const Rva0094C4F0Allocator &)
     : Rva0094C200Proxy(Rva0094C4F0Allocator(), 0)
 {
     m_value = (unsigned)_STL::allocator<Rva0094C4F0Node>().allocate(1);
+}
+
+// RVA 0x0094C200: the 11-byte callee; stores the dword and returns this.
+Rva0094C200Proxy::Rva0094C200Proxy(const Rva0094C4F0Allocator &, unsigned value)
+    : m_value(value)
+{
 }
