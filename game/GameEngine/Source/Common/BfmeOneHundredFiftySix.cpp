@@ -86,47 +86,51 @@ void BfmeThingYY::bfmeClearYY(unsigned int bit)
 	}
 }
 
-struct BfmeCellYZ
-{
-	unsigned char m_bfmeHead[8];		// 0x00
-	int m_bfmeKey;				// 0x08
-	unsigned char m_bfmeBody[0x14];		// 0x0c
-	int m_bfmeValue;			// 0x20
-};
-
-struct BfmeThingYZ
-{
-	unsigned char m_bfmeHead[0x74];		// 0x00
-	int m_bfmeKey;				// 0x74
-};
-
-class BfmeTableYZ
+// ScriptEngine::setSequentialTimer(Object *, Int) (retail 0x00339980, ILT
+// 0x00044A1C; ilt_oracle CONFIRMED exact): the first sequential script whose
+// object ID matches gets its frames-to-wait. TU-local layout view.
+class Object
 {
 public:
-	void bfmeMarkYZ(BfmeThingYZ *thing, int value);
+	unsigned char m_bfmeHead[0x74];		// 0x00
+	int m_bfmeID;				// 0x74
+};
+
+struct SequentialScript
+{
+	unsigned char m_bfmeHead[8];		// 0x00
+	int m_objectID;				// 0x08
+	unsigned char m_bfmeBody[0x14];		// 0x0c
+	int m_framesToWait;			// 0x20
+};
+
+class ScriptEngine
+{
+public:
+	void setSequentialTimer(Object *obj, int frameCount);
 
 private:
 	unsigned char m_bfmeHead[0xc];		// 0x00
-	BfmeCellYZ **m_bfmeBegin;		// 0x0c
-	BfmeCellYZ **m_bfmeEnd;			// 0x10
+	SequentialScript **m_bfmeBegin;		// 0x0c
+	SequentialScript **m_bfmeEnd;		// 0x10
 };
 
-void BfmeTableYZ::bfmeMarkYZ(BfmeThingYZ *thing, int value)
+void ScriptEngine::setSequentialTimer(Object *obj, int frameCount)
 {
-	if (thing == 0)
+	if (obj == 0)
 		return;
 
-	BfmeCellYZ **end = m_bfmeEnd;
-	int key = thing->m_bfmeKey;
-	BfmeCellYZ **at = m_bfmeBegin;
+	SequentialScript **end = m_bfmeEnd;
+	int key = obj->m_bfmeID;
+	SequentialScript **at = m_bfmeBegin;
 
 	while (at != end)
 	{
-		BfmeCellYZ *cell = *at;
+		SequentialScript *seq = *at;
 
-		if (cell != 0 && cell->m_bfmeKey == key)
+		if (seq != 0 && seq->m_objectID == key)
 		{
-			cell->m_bfmeValue = value;
+			seq->m_framesToWait = frameCount;
 			return;
 		}
 
