@@ -13,14 +13,19 @@ struct BfmeKeyRX
 	BfmeInnerRX m_bfmeInnerRX;
 };
 
-bool __cdecl bfmeSameRX(const BfmeInnerRX &first, const BfmeInnerRX &second);
+// callees.py 0x00453380: the inner compare is ILT 0x00015195 -> 0x00452FE0
+// (matched ?Rva00452FE0Same, Rva00452FE0Same.cpp). The only name defined at
+// 0x00015195 is that 5-byte thunk, so the reference carries its symbol, as
+// BfmeConv1814.cpp does.
+extern "C" bool __cdecl __identifier("?j_00015195@@YAXXZ")(
+	const BfmeInnerRX *first, const BfmeInnerRX *second);
 bool __cdecl bfmeDiffersRX(const BfmeKeyRX &first, const BfmeKeyRX &second)
 {
 	int equal = first.m_bfmeARX == second.m_bfmeARX
 		&& first.m_bfmeBRX == second.m_bfmeBRX
 		&& first.m_bfmeCRX == second.m_bfmeCRX
 		&& first.m_bfmeDRX == second.m_bfmeDRX
-		&& bfmeSameRX(first.m_bfmeInnerRX, second.m_bfmeInnerRX);
+		&& __identifier("?j_00015195@@YAXXZ")(&first.m_bfmeInnerRX, &second.m_bfmeInnerRX);
 
 	return !(char)equal;
 }
