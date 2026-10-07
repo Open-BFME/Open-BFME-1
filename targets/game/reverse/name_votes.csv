@@ -1178,3 +1178,5 @@ game/GameEngine/Source/Common/Rva00627AA0Call.cpp|local|rva00627AA0Call|arg,513b
 game/GameEngine/Source/GameClient/GUI/Rva56E070StateDispatch.cpp|member||m_arg264,1e04f019a3c6656f3a534b27,gpt-6-astra,20261007221102-e5fd64,2026-10-07
 game/GameEngine/Source/GameClient/GUI/Rva56E070StateDispatch.cpp|member||m_arg268,c4b1756a7016b794f5332086,gpt-6-astra,20261007221102-e5fd64,2026-10-07
 game/GameEngine/Source/GameClient/GUI/Rva56E070StateDispatch.cpp|member||m_mode270,558a9a80d9a70a1d056609ca,gpt-6-astra,20261007221102-e5fd64,2026-10-07
+game/GameEngine/Source/GameClient/GUI/Rva56E070StateDispatch.cpp|member||m_arg264,12c9bd02e9def440a7d5613b,grok,20261007221507-dd01e7,2026-10-07
+game/GameEngine/Source/GameClient/GUI/Rva56E070StateDispatch.cpp|member||m_arg268,c5506ef10bf9955b3c86a7ee,grok,20261007221507-dd01e7,2026-10-07
