@@ -98,7 +98,6 @@ public:
 protected:
 	__forceinline void setNextCreationFrame(char *);
 	__forceinline void setNextCreationFrameOrdered(char *);
-	__forceinline unsigned char shouldCreate();
 	__forceinline OCLUpdateModuleData *getOCLUpdateModuleData();
 	__forceinline Object *getObject();
 
@@ -143,15 +142,11 @@ __forceinline Object *OCLUpdate::getObject()
 	return *(Object **)((const char *)this - 8);
 }
 
-__forceinline unsigned char OCLUpdate::shouldCreate()
-{
-	return TheGameLogic->getFrame() >= m_nextCreationFrame;
-}
-
 UpdateSleepTime OCLUpdate::update()
 {
 	Coord3D creationCoord;
-	if (!shouldCreate())
+	// shouldCreate() (retail 0x00298B80, OCLUpdateShouldCreate.cpp) inlined: frame test only.
+	if (TheGameLogic->getFrame() < m_nextCreationFrame)
 		return UPDATE_SLEEP_NONE;
 	if ((getObject()->m_statusBits & 4) != 0)
 		return UPDATE_SLEEP_NONE;
