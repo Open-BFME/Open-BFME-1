@@ -13266,7 +13266,6 @@ _CategoryModuleTemplate07_vtbl4,0x01073844
 _CategoryModuleTemplate8_vtbl0,0x01073848
 _CategoryModuleTemplate8_vtbl4,0x01073844
 _CivilianSpawnUpdateFieldParse,0x0040B825
-_ClickReactionBehaviorFieldParse,0x0040E5AC
 _CloudBreakSpecialPowerFieldParse,0x0043EC8E
 _CommSRPConnect,0x00C16970
 _CommSRPListen,0x00C16660

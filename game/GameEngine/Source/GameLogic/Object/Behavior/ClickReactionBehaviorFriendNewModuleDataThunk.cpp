@@ -30,7 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl ClickReactionBehaviorFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the ILT stub 0x0000E5AC (?j_0000e5ac@@YAXXZ).
+extern void j_0000e5ac(void);
 
 class ClickReactionBehavior
 {
@@ -43,6 +44,6 @@ ModuleData *ClickReactionBehavior::friend_newModuleData(INI *ini)
 {
 	ClickReactionBehaviorModuleData *data = new ClickReactionBehaviorModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &ClickReactionBehaviorFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))j_0000e5ac);
 	return (ModuleData *)data;
 }
