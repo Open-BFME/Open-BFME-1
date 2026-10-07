@@ -1091,48 +1091,42 @@ struct Rva00170520Object
 	Rva00170520AIUpdate *m_ai;
 };
 
-class Rva00170520StateMachineBase
+// Same retail layout as Rva001704D0View: the header's AIStateMachine members
+// cannot spell the +0x1C current state or the +0x58 temporary state.
+struct Rva00170520View
 {
-protected:
+	void *m_vptr;
 	char m_unknown[0x0c];
 	Rva00170520Object *m_owner;
 	char m_gap14[8];
-
-public:
-	virtual StateReturnType setState(unsigned int newStateID);
-};
-
-class Rva00170520AIStateMachine : public Rva00170520StateMachineBase
-{
 	Rva00170520State *m_currentState;
 	char m_gap20[0x38];
 	void *m_temporaryState;
 	int m_temporaryStateFrameEnd;
-
-public:
-	virtual StateReturnType setState(unsigned int newStateID);
 };
 
-typedef void (__fastcall *Rva00170520Clear)(Rva00170520AIStateMachine *);
+typedef void (__fastcall *Rva00170520Clear)(AIStateMachine *);
 
-StateReturnType Rva00170520AIStateMachine::setState(unsigned int newStateID)
+// EA names this body AIStateMachine::setState (ea-worldbuilder-labels).
+StateReturnType AIStateMachine::setState(StateID newStateID)
 {
-	if (m_temporaryState)
+	Rva00170520View *self = (Rva00170520View *)this;
+	if (self->m_temporaryState)
 	{
-		if (m_temporaryStateFrameEnd == -1)
+		if (self->m_temporaryStateFrameEnd == -1)
 			return STATE_CONTINUE;
 
 		((Rva00170520Clear)j_00027566)(this);
 	}
 
 	int oldStateID;
-	if (m_currentState)
-		oldStateID = m_currentState->m_id;
+	if (self->m_currentState)
+		oldStateID = self->m_currentState->m_id;
 	else
 		oldStateID = 0xF423F;
 
-	StateReturnType result = ((StateMachine *)this)->StateMachine::setState(newStateID);
-	Rva00170520AIUpdate *ai = m_owner->m_ai;
+	StateReturnType result = StateMachine::setState(newStateID);
+	Rva00170520AIUpdate *ai = self->m_owner->m_ai;
 	if (ai && oldStateID != newStateID)
 		ai->notifyStateMachineChanged();
 	return result;
@@ -1150,20 +1144,6 @@ void AIStateMachine::clear()
 	AIUpdateInterface* ai = getOwner()->getAI();
 	if (ai)
 		ai->friend_notifyStateMachineChanged();
-}
-
-//----------------------------------------------------------------------------------------------------------
-// ?setState@AIStateMachine@@UAE?AW4StateReturnType@@I@Z present-unmatched
-StateReturnType AIStateMachine::setState(StateID newStateID)
-{
-	StateID oldID = getCurrentStateID();
-	StateReturnType tmp = StateMachine::setState(newStateID);
-
-	AIUpdateInterface* ai = getOwner()->getAI();
-	if (ai && oldID != newStateID)
-		ai->friend_notifyStateMachineChanged();
-
-	return tmp;
 }
 
 //----------------------------------------------------------------------------------------------------------
