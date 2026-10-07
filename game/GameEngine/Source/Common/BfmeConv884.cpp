@@ -1,7 +1,7 @@
 struct BfmeSubESA
 {
 	unsigned char m_bfmeHead[0x24];
-	int m_bfmeK;
+	int m_playerIndex;
 };
 
 class Player;
@@ -59,7 +59,7 @@ int BfmeThingESCa::bfmeGoESCa()
 	if (!s)
 		return -1;
 	return ((PlayerList *)ThePlayerList)->getPlayersWithRelationship(
-		s->m_bfmeK, 4, false);
+		s->m_playerIndex, 4, false);
 }
 
 struct BfmeThingESCb
@@ -75,5 +75,5 @@ int BfmeThingESCb::bfmeGoESCb()
 	if (!s)
 		return -1;
 	return ((PlayerList *)ThePlayerList)->getPlayersWithRelationship(
-		s->m_bfmeK, 4, false);
+		s->m_playerIndex, 4, false);
 }
