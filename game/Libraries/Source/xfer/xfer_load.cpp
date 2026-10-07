@@ -179,10 +179,10 @@ void Xfer::skipBlock(const char *name)
 
 typedef void (__cdecl *BfmeSkipCallback)(void *snapshot, void *ctx, int extra);
 
-class BlockStreamReader
+class XferLoad
 {
 public:
-	void skipBadBlock(void *snapshot, int size);
+	void SkipBadBlock(void *snapshot, int size);
 
 private:
 	unsigned char m_pad0[8];
@@ -194,7 +194,7 @@ private:
 	int m_extra;
 };
 
-void BlockStreamReader::skipBadBlock(void *snapshot, int size)
+void XferLoad::SkipBadBlock(void *snapshot, int size)
 {
 	if (m_stream->skip(size, 0) != size)
 	{
