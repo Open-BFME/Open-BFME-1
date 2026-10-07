@@ -5,7 +5,8 @@ class RvaList
 public:
     unsigned char m_storage[0xC];
 };
-extern RvaList g_rva01306978Object;
+// VA 0x01306978: the list object the initializer below constructs.
+RvaList g_rva01306978Object;
 extern void j_00003427();
 void bfmeForward_00C70AB0();
 struct Rva00C6C570Caller
