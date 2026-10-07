@@ -2,10 +2,12 @@
 
 class BfmeX1063;
 
-class BfmeR1063
+// Retail calls ILT 0x00015235 -> 0x004675F0, the matched level-path builder.
+class BfmeLevelAN
 {
 public:
-	void bfmeRun1063(BfmeX1063 *a, char *b, int c, char *d, char *e, char *f, char *g, char *h);
+	char *bfmeBuildAN(unsigned int level, int p2, int p3, int p4, int p5,
+		int p6, int p7, int p8);
 };
 
 // Retail global 0x012F19E8; canonical definition in GameClient/GUI/WindowManager.cpp.
@@ -28,7 +30,7 @@ void BfmeQ1063::bfmeGo1063Q(void)
 {
 	m_bfme3a8 = 1;
 	if (!(m_bfme3d4 & 2)) {
-		((BfmeR1063 *)g_rva012F19E8WindowManager)->bfmeRun1063(m_bfme250, "EnableJoinGame", 0, 0, 0, 0, 0, 0);
+		((BfmeLevelAN *)g_rva012F19E8WindowManager)->bfmeBuildAN((unsigned int)m_bfme250, (int)"EnableJoinGame", 0, 0, 0, 0, 0, 0);
 		m_bfme3d4 |= 2;
 	}
 }
