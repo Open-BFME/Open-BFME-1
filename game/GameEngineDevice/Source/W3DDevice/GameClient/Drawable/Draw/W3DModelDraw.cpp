@@ -3330,21 +3330,7 @@ void W3DModelDraw::replaceModelConditionState(const ModelConditionFlags& c)
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setSelectable@W3DModelDraw@@UAEX_N@Z present-unmatched
-void W3DModelDraw::setSelectable(Bool selectable)
-{
-	// set collision type for render object.  Used by WW3D2 collision code.
-	if( m_renderObject )
-	{
-		int current = m_renderObject->Get_Collision_Type();
-		if (selectable) {
-			current |= PICK_TYPE_SELECTABLE;
-		} else {
-			current &= ~PICK_TYPE_SELECTABLE;
-		}
-		m_renderObject->Set_Collision_Type(current);
-	}  // end if
-}
+// ?setSelectable@W3DModelDraw@@UAEX_N@Z: retail body matched in W3DModelDrawSetSelectable.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?replaceIndicatorColor@W3DModelDraw@@UAEXH@Z present-unmatched
