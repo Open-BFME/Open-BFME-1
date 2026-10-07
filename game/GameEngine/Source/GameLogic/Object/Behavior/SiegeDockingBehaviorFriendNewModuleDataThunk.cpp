@@ -30,7 +30,9 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl SiegeDockingBehaviorFieldParse(MultiIniFieldParse &parse);
+// The proc operand is ILT 0x00041B8C -> 0x00205F80, the matched
+// ?Rva00205F80@@YAXPAVGen00850920@@@Z.
+void j_00041b8c();
 
 class SiegeDockingBehavior
 {
@@ -43,6 +45,6 @@ ModuleData *SiegeDockingBehavior::friend_newModuleData(INI *ini)
 {
 	SiegeDockingBehaviorModuleData *data = new SiegeDockingBehaviorModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &SiegeDockingBehaviorFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))j_00041b8c);
 	return (ModuleData *)data;
 }
