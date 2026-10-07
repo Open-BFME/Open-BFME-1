@@ -31,12 +31,12 @@ protected: virtual ~AIInternalMoveToState();
 private: char m_rva0014f280_tail[0x2c];
 };
 class AIGuardReturnState: public AIInternalMoveToState {
-public: AIGuardReturnState(StateMachine *m):AIInternalMoveToState(m,"AIGuardReturn"){m_rva0015d1d0_50=0;}
+public: AIGuardReturnState(StateMachine *machine):AIInternalMoveToState(machine,"AIGuardReturn"){m_rva0015d1d0_50=0;}
 public:virtual ~AIGuardReturnState();
 private: unsigned int m_rva0015d1d0_50;
 };
 class AIGuardIdleState:public State {
-public: AIGuardIdleState(StateMachine *m):State(m,"AIGuardIdleState"){}
+public: AIGuardIdleState(StateMachine *machine):State(machine,"AIGuardIdleState"){}
 protected:virtual ~AIGuardIdleState();
 private:char m_rva0015d1d0_tail[0x10];
 };
@@ -57,14 +57,14 @@ class AIGuardMachine:public StateMachine {
 public:AIGuardMachine(Object *,AsciiString);
 protected:virtual ~AIGuardMachine();
 private:
- unsigned int m_rva0015d1d0_44,m_rva0015d1d0_48,m_rva0015d1d0_4c;
+ unsigned int m_targetToGuard,m_rva0015d1d0_48,m_areaToGuard;
  Coord3D m_rva0015d1d0_50,m_rva0015d1d0_5c;
  bool m_rva0015d1d0_68;
- unsigned int m_rva0015d1d0_6c,m_rva0015d1d0_70,m_rva0015d1d0_74;
+ unsigned int m_nemesisToAttack,m_rva0015d1d0_70,m_rva0015d1d0_74;
 };
 AIGuardMachine::AIGuardMachine(Object *owner,AsciiString name):StateMachine(owner,name,false),
- m_rva0015d1d0_44(0),m_rva0015d1d0_48(0),m_rva0015d1d0_4c(0),m_rva0015d1d0_68(false),
- m_rva0015d1d0_6c(0),m_rva0015d1d0_70(0),m_rva0015d1d0_74(0)
+ m_targetToGuard(0),m_rva0015d1d0_48(0),m_areaToGuard(0),m_rva0015d1d0_68(false),
+ m_nemesisToAttack(0),m_rva0015d1d0_70(0),m_rva0015d1d0_74(0)
 {
  m_rva0015d1d0_50.zero();m_rva0015d1d0_5c.zero();
  static const StateConditionInfo attackAggressors[]={StateConditionInfo(Rva0015C280Predicate,5005,0),StateConditionInfo(0,0,0)};
