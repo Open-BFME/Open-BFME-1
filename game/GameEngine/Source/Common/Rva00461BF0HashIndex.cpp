@@ -12,7 +12,7 @@ class Rva0045EF90Base
 public:
 	Rva0045EF90Base() : m_value( -1 ) {}
 	Rva0045EF90Base( const Rva0045EF90Base &source ) : m_value( source.m_value ) {}
-	virtual ~Rva0045EF90Base();
+	virtual ~Rva0045EF90Base() {}
 
 private:
 	unsigned m_value;
