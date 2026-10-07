@@ -52,7 +52,11 @@ public:
 	Locomotor *findLocomotor(LocomotorSurfaceTypeMask surfaces);
 };
 
-extern int g_Va012B49FC[];
+// Retail 0x012B49FC: the surfaces each cell type accepts, indexed by the 3-bit
+// type above (8 entries). It is the table form of Zero Hour's
+// Pathfinder::validLocomotorSurfacesForCellType: every live type adds AIR (8),
+// and the unused eighth type is NO_SURFACES.
+int g_Va012B49FC[8] = { 0x09, 0x0A, 0x0C, 0x18, 0x28, 0x48, 0x48, 0x00 };
 
 class Pathfinder
 {
