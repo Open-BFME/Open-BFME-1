@@ -117,11 +117,18 @@ public:
 
 extern InGameUI *TheInGameUI;
 
+// The readiness test is ILT 0x00029CDF -> 0x001BE9F0, matched as
+// Object::isSalvageCrate; the receiver is the same object.
+class Object
+{
+public:
+	bool isSalvageCrate() const;
+};
+
 class BfmeOwnerLW
 {
 public:
 	char bfmeAnyLW(void);
-	char bfmeReadyLW(void);
 };
 
 char BfmeOwnerLW::bfmeAnyLW(void)
@@ -129,7 +136,7 @@ char BfmeOwnerLW::bfmeAnyLW(void)
 	if (this == 0)
 		return 0;
 
-	if (!bfmeReadyLW())
+	if (!((const Object *)this)->isSalvageCrate())
 		return 0;
 
 	BfmeNodeLW *sentinel = TheInGameUI->bfmeGetListLW()->m_bfmeSentinelLW;
