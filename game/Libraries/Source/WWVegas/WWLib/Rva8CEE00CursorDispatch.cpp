@@ -24,7 +24,10 @@ struct Rva8CEE00Cursor
 	unsigned char *m_ptr;
 };
 
-void rva8CDE50Continue(Rva8CEE00State *state, Rva8CEE00Cursor *cursor);
+// The continuation is retail 0x008CDE50 (cdecl, two stack arguments), ledgered
+// as the generated dump d_008cde50 with no typed signature.
+void d_008cde50();
+typedef void (*Rva8CDE50ContinueFn)(Rva8CEE00State *state, Rva8CEE00Cursor *cursor);
 
 void rva8CEE00Dispatch(Rva8CEE00State *state, Rva8CEE00Cursor *cursor)
 {
@@ -36,5 +39,5 @@ void rva8CEE00Dispatch(Rva8CEE00State *state, Rva8CEE00Cursor *cursor)
 	unsigned char flags = (unsigned char)(handler->m_flags >> 30);
 	if (!(flags & 1))
 		handler->invoke();
-	rva8CDE50Continue(state, cursor);
+	reinterpret_cast<Rva8CDE50ContinueFn>(d_008cde50)(state, cursor);
 }
