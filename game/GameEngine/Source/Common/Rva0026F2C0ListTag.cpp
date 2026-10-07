@@ -9,10 +9,18 @@ public:
 	int m_deadline;
 };
 
+// ILT 0x10758 -> 0x0026E570, matched ?bfmeActive@Gen_0026E570@@QBE_NXZ
+// (Bfme5TinyTwentyFour.cpp).
+class Gen_0026E570
+{
+public:
+	bool bfmeActive() const;
+};
+
 class BfmeSubF2C
 {
 public:
-	bool bfmeActive();
+	bool bfmeActive() { return ((const Gen_0026E570 *)this)->bfmeActive(); }
 
 	bool fastActive() const
 	{
