@@ -2,16 +2,17 @@
 
 class BfmeX1069;
 
-class BfmeR1069
+// ILT 0x00015235 -> matched BfmeLevelAN::bfmeBuildAN (0x004675F0).
+class BfmeLevelAN
 {
 public:
-	void bfmeRun1069(BfmeX1069 *a, char *b, int c, char *d, char *e, char *f, char *g, char *h);
+	char *bfmeBuildAN(unsigned int level, int a, int b, int c, int d, int e, int f, int g);
 };
 
 // Retail 0x012F19E8 is the game-wide manager pointer EA defines as
 // `WindowManager *g_rva012F19E8WindowManager` in
 // game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU only needs
-// the run() through it, so the pointee stays the local BfmeR1069 view and the
+// the call through it, so the pointee stays the local BfmeLevelAN view and the
 // access is cast at the use.
 class WindowManager;
 
@@ -35,7 +36,7 @@ void BfmeH1069::bfmeSet1069B(char a, char b)
 		return;
 	m_bfme1d5 = a;
 	if (a)
-		((BfmeR1069 *)g_rva012F19E8WindowManager)->bfmeRun1069(m_bfme34->m_bfme250, "CallChild", 1, "EnableButtonPlayGame", 0, 0, 0, 0);
+		((BfmeLevelAN *)g_rva012F19E8WindowManager)->bfmeBuildAN((unsigned int)m_bfme34->m_bfme250, (int)"CallChild", 1, (int)"EnableButtonPlayGame", 0, 0, 0, 0);
 	else
-		((BfmeR1069 *)g_rva012F19E8WindowManager)->bfmeRun1069(m_bfme34->m_bfme250, "CallChild", 1, "DisableButtonPlayGame", 0, 0, 0, 0);
+		((BfmeLevelAN *)g_rva012F19E8WindowManager)->bfmeBuildAN((unsigned int)m_bfme34->m_bfme250, (int)"CallChild", 1, (int)"DisableButtonPlayGame", 0, 0, 0, 0);
 }
