@@ -13,11 +13,10 @@ struct BfmeE1056
 	BfmeVt1056 *m_bfmeVt;
 };
 
-extern char g_bfmeFlag1056;
-
 void bfmeGo1056E(void)
 {
-	g_bfmeFlag1056 = 1;
+	// 0x012D6DFC is ShaderClass::ShaderDirty (dir32_addresses.csv).
+	ShaderClass::Invalidate();
 
 	BfmeE1056 *p = reinterpret_cast<BfmeE1056 *>(DX8Wrapper::_Get_D3D_Device8());
 
