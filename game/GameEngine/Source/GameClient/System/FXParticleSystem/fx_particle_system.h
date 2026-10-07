@@ -21,6 +21,14 @@ class TrackingPtr {
     T *m_ptr;
 };
 
+// The base vptr every 7-byte ModuleInfo destructor restores is retail
+// 0x01073744, ??_7BfmeBaseVUQ@@6B@ (symbols.csv).
+class BfmeBaseVUQ
+{
+public:
+    virtual ~BfmeBaseVUQ() {}
+};
+
 namespace FXParticleSystem {
 
 class ParticleSystem;
@@ -248,7 +256,8 @@ public:
     GameClientRandomVariable m_var1;
 };
 
-class DefaultUpdateModuleInfo {
+// retail ~DefaultUpdateModuleInfo (0x005D81B0) stores the BfmeBaseVUQ vptr
+class DefaultUpdateModuleInfo : public BfmeBaseVUQ {
 public:
     DefaultUpdateModuleInfo();
     DefaultUpdateModuleInfo(const DefaultUpdateModuleInfo &that);
