@@ -12,23 +12,24 @@
 // prior sessions; this TU only needs size and the vtable slot this body
 // proves (a virtual init-like method at slot +4).
 
-class Glo012F4B98Type
+// The ctor call (ILT 0x2E7CB) lands on 0x0079D9F0, matched
+// ??0AptPalantir@@QAE@XZ (AptPalantirConstructor.cpp): the object is an AptPalantir.
+class AptPalantir
 {
 public:
-	Glo012F4B98Type();
-	virtual ~Glo012F4B98Type();
+	AptPalantir();
+	virtual ~AptPalantir();
 	virtual void init();
 
 private:
 	unsigned char m_unreconstructed[0x584 - 4];
 };
 
-class AptPalantir;
 extern AptPalantir *TheAptPalantir;
 
 // ?Rva006FC330@@YAXXZ -- address-derived TAG, identity unresolved
 void Rva006FC330(void)
 {
-	TheAptPalantir = reinterpret_cast<AptPalantir *>(new Glo012F4B98Type);
-	reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->init();
+	TheAptPalantir = new AptPalantir;
+	TheAptPalantir->init();
 }
