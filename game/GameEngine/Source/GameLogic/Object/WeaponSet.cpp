@@ -919,21 +919,8 @@ CanAttackResult WeaponSet::getAbleToUseWeaponAgainstTarget( AbleToAttackType att
 // WeaponSet_pitchAndReload_Thunk.cpp, where WEAPONSLOT_COUNT is BFME's 4.
 
 //-------------------------------------------------------------------------------------------------
-// ?isOutOfAmmo@WeaponSet@@QBE_NXZ present-unmatched here - matched copy lives in WeaponSet_isOutOfAmmo_Thunk.cpp where WEAPONSLOT_COUNT is BFME's 4
-Bool WeaponSet::isOutOfAmmo() const
-{
-	for( Int i = 0; i < WEAPONSLOT_COUNT;	i++ )
-	{
-		const Weapon* weapon = m_weapons[i];
-		if (weapon == NULL)
-			continue;
-		if (weapon->getStatus() != OUT_OF_AMMO)
-		{
-			return false;
-		}
-	}
-	return true;
-}
+// WeaponSet::isOutOfAmmo is defined once, by its retail body in
+// WeaponSet_isOutOfAmmo_Thunk.cpp, where WEAPONSLOT_COUNT is BFME's 4.
 
 //-------------------------------------------------------------------------------------------------
 // Retail four-slot ammo-pip selector lives in WeaponSet_findAmmoPipShowingWeapon.cpp.
