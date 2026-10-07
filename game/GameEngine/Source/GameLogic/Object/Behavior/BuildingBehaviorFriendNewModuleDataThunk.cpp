@@ -26,7 +26,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl BuildingBehaviorFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the ILT stub 0x0001059B (?j_0001059b@@YAXXZ).
+extern void j_0001059b(void);
 
 class BuildingBehavior
 {
@@ -39,6 +40,6 @@ ModuleData *BuildingBehavior::friend_newModuleData(INI *ini)
 {
 	BuildingBehaviorModuleData *data = new BuildingBehaviorModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &BuildingBehaviorFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))j_0001059b);
 	return (ModuleData *)data;
 }
