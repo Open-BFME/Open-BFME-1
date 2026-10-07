@@ -57,16 +57,16 @@ static inline Rva0048EC80Manager *theDisplayStringManagerView()
 	return (Rva0048EC80Manager *)TheDisplayStringManager;
 }
 
-// The held-string table at VA 0x012F19E8 is recorded as
-// ?g_s4Holder@@3PAUS4Holder0046DBB0@@A in
-// targets/game/reverse/dir32_addresses.csv, and S4DrainStringVector.cpp views
-// the same object as a struct.  Declared as a struct here so this TU's extern
-// mangles to that recorded name directly, with no linker alias.
+// The held-string table at VA 0x012F19E8 is the window manager global,
+// defined once as g_rva012F19E8WindowManager (data_rows.csv, WindowManager.cpp);
+// viewed here as the S4 holder, as Rva00463340Shutdown.cpp does.
 struct S4Holder0046DBB0
 {
 };
 
-extern S4Holder0046DBB0 *g_s4Holder;
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+#define g_s4Holder ((S4Holder0046DBB0 *)g_rva012F19E8WindowManager)
 
 typedef void (S4Holder0046DBB0::*S4HolderStringMember)(
 	const AsciiString *);
