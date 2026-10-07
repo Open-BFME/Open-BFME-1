@@ -50,10 +50,8 @@ extern "C" void _ReadWriteBarrier();
 #pragma intrinsic(_ReadWriteBarrier)
 extern "C" int __cdecl atexit(void (__cdecl *function)());
 
-// Retail vtable heads installed by the ctors below; named by address
-// (dir32_addresses.csv offers several aliases per vtable address, so an
-// address-derived name is the honest one). extern array per
-// docs/shape_levers.md: the store becomes a DIR32 site.
+// Retail vtable heads use recorded C names where available.
+// The remaining heads retain address-derived array declarations.
 // Address-derived names whose address dir32_addresses.csv already records: bind each
 // to the recorded symbol so the linked build resolves one object, not two.
 #pragma comment(linker, "/alternatename:?g_vtbl_01110DF4@@3PAPAXA=_DefaultModuleTemplate6Concrete_vtbl8")
@@ -62,13 +60,6 @@ extern "C" int __cdecl atexit(void (__cdecl *function)());
 #pragma comment(linker, "/alternatename:?g_vtbl_01110EA4@@3PAPAXA=??_7?$DefaultParticleModuleTemplate@$05@FXParticleSystem@@6B@")
 #pragma comment(linker, "/alternatename:?g_vtbl_01110EB8@@3PAPAXA=??_7?$DefaultParticleModuleTemplate@$05@FXParticleSystem@@6B?$CategoryModuleInfo@$05@1@@")
 #pragma comment(linker, "/alternatename:?g_vtbl_01110EBC@@3PAPAXA=??_7?$DefaultParticleModuleTemplate@$05@FXParticleSystem@@6BModuleTemplate@1@@")
-#pragma comment(linker, "/alternatename:?g_vtbl_01110F54@@3PAPAXA=_DefaultModuleTemplate1Concrete_vtbl8")
-#pragma comment(linker, "/alternatename:?g_vtbl_01110F68@@3PAPAXA=_DefaultModuleTemplate1Concrete_vtbl4")
-#pragma comment(linker, "/alternatename:?g_vtbl_01110F6C@@3PAPAXA=_DefaultModuleTemplate1Concrete_vtbl0")
-#pragma comment(linker, "/alternatename:?g_vtbl_01110F80@@3PAPAXA=_DefaultModuleTemplate0Concrete_vtbl8")
-#pragma comment(linker, "/alternatename:?g_vtbl_01110F94@@3PAPAXA=_DefaultModuleTemplate0Concrete_vtbl4")
-#pragma comment(linker, "/alternatename:?g_vtbl_01110F98@@3PAPAXA=_DefaultModuleTemplate0Concrete_vtbl0")
-#pragma comment(linker, "/alternatename:?g_vtbl_01110FAC@@3PAPAXA=_DefaultModuleTemplate3Concrete_vtbl8")
 #pragma comment(linker, "/alternatename:?g_vtbl_01110FC0@@3PAPAXA=_DefaultModuleTemplate3Concrete_vtbl4")
 #pragma comment(linker, "/alternatename:?g_vtbl_01110FC4@@3PAPAXA=_DefaultModuleTemplate3Concrete_vtbl0")
 #pragma comment(linker, "/alternatename:?g_vtbl_01110FD8@@3PAPAXA=_DefaultModuleTemplate2Concrete_vtbl8")
@@ -167,13 +158,13 @@ extern void *g_vtbl_01110E90[];
 extern void *g_vtbl_01110EA4[];
 extern void *g_vtbl_01110EB8[];
 extern void *g_vtbl_01110EBC[];
-extern void *g_vtbl_01110F54[];
-extern void *g_vtbl_01110F68[];
-extern void *g_vtbl_01110F6C[];
-extern void *g_vtbl_01110F80[];
-extern void *g_vtbl_01110F94[];
-extern void *g_vtbl_01110F98[];
-extern void *g_vtbl_01110FAC[];
+extern "C" char DefaultModuleTemplate1Concrete_vtbl8;
+extern "C" char DefaultModuleTemplate1Concrete_vtbl4;
+extern "C" char DefaultModuleTemplate1Concrete_vtbl0;
+extern "C" char DefaultModuleTemplate0Concrete_vtbl8;
+extern "C" char DefaultModuleTemplate0Concrete_vtbl4;
+extern "C" char DefaultModuleTemplate0Concrete_vtbl0;
+extern "C" char DefaultModuleTemplate3Concrete_vtbl8;
 extern void *g_vtbl_01110FC0[];
 extern void *g_vtbl_01110FC4[];
 extern void *g_vtbl_01110FD8[];
@@ -3009,18 +3000,18 @@ const ConcreteModuleClass<PointEmissionVolumeModuleTag> &ConcreteModuleTemplate<
 ConcreteModuleTemplate<DefaultModuleTag<0> >::ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<0> > &that)
 {
     ((DefaultModuleTemplate0CopyCtorShim *)this)->construct(&that);
-    *(volatile unsigned int *)this = (unsigned int)g_vtbl_01110F98;
-    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)g_vtbl_01110F94;
-    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)g_vtbl_01110F80;
+    *(volatile unsigned int *)this = (unsigned int)&DefaultModuleTemplate0Concrete_vtbl0;
+    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)&DefaultModuleTemplate0Concrete_vtbl4;
+    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)&DefaultModuleTemplate0Concrete_vtbl8;
 }
 
 // ??0?$ConcreteModuleTemplate@V?$DefaultModuleTag@$0A@@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
 ConcreteModuleTemplate<DefaultModuleTag<0> >::ConcreteModuleTemplate()
 {
     ((DefaultModuleTemplate0CtorShim *)this)->construct();
-    *(volatile unsigned int *)this = (unsigned int)g_vtbl_01110F98;
-    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)g_vtbl_01110F94;
-    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)g_vtbl_01110F80;
+    *(volatile unsigned int *)this = (unsigned int)&DefaultModuleTemplate0Concrete_vtbl0;
+    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)&DefaultModuleTemplate0Concrete_vtbl4;
+    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)&DefaultModuleTemplate0Concrete_vtbl8;
 }
 
 // ??1?$ConcreteModuleTemplate@V?$DefaultModuleTag@$0A@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
@@ -3053,18 +3044,18 @@ DefaultModule<0> *ConcreteModuleTemplate<DefaultModuleTag<0> >::createModule(Tra
 ConcreteModuleTemplate<DefaultModuleTag<1> >::ConcreteModuleTemplate(const ConcreteModuleTemplate<DefaultModuleTag<1> > &that)
 {
     ((DefaultModuleTemplate1CopyCtorShim *)this)->construct(&that);
-    *(volatile unsigned int *)this = (unsigned int)g_vtbl_01110F6C;
-    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)g_vtbl_01110F68;
-    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)g_vtbl_01110F54;
+    *(volatile unsigned int *)this = (unsigned int)&DefaultModuleTemplate1Concrete_vtbl0;
+    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)&DefaultModuleTemplate1Concrete_vtbl4;
+    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)&DefaultModuleTemplate1Concrete_vtbl8;
 }
 
 // ??0?$ConcreteModuleTemplate@V?$DefaultModuleTag@$00@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
 ConcreteModuleTemplate<DefaultModuleTag<1> >::ConcreteModuleTemplate()
 {
     ((DefaultModuleTemplate1CtorShim *)this)->construct();
-    *(volatile unsigned int *)this = (unsigned int)g_vtbl_01110F6C;
-    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)g_vtbl_01110F68;
-    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)g_vtbl_01110F54;
+    *(volatile unsigned int *)this = (unsigned int)&DefaultModuleTemplate1Concrete_vtbl0;
+    *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)&DefaultModuleTemplate1Concrete_vtbl4;
+    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)&DefaultModuleTemplate1Concrete_vtbl8;
 }
 
 // ??1?$ConcreteModuleTemplate@V?$DefaultModuleTag@$00@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
@@ -3143,7 +3134,7 @@ ConcreteModuleTemplate<DefaultModuleTag<3> >::ConcreteModuleTemplate(const Concr
     ((DefaultModuleTemplate3CopyCtorShim *)this)->construct(&that);
     *(volatile unsigned int *)this = (unsigned int)g_vtbl_01110FC4;
     *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)g_vtbl_01110FC0;
-    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)g_vtbl_01110FAC;
+    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)&DefaultModuleTemplate3Concrete_vtbl8;
 }
 
 // ??0?$ConcreteModuleTemplate@V?$DefaultModuleTag@$02@FXParticleSystem@@@FXParticleSystem@@QAE@XZ
@@ -3152,7 +3143,7 @@ ConcreteModuleTemplate<DefaultModuleTag<3> >::ConcreteModuleTemplate()
     ((DefaultModuleTemplate3CtorShim *)this)->construct();
     *(volatile unsigned int *)this = (unsigned int)g_vtbl_01110FC4;
     *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)g_vtbl_01110FC0;
-    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)g_vtbl_01110FAC;
+    *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)&DefaultModuleTemplate3Concrete_vtbl8;
 }
 
 // ??1?$ConcreteModuleTemplate@V?$DefaultModuleTag@$02@FXParticleSystem@@@FXParticleSystem@@UAE@XZ
