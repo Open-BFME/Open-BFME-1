@@ -30,7 +30,9 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl AutoAbilityBehaviorFieldParse(MultiIniFieldParse &parse);
+// The proc operand is ILT 0x00004912 -> 0x001ED6C0, the matched
+// ?Rva001ED6C0@@YAXPAVGen00850920@@@Z.
+void j_00004912();
 
 class AutoAbilityBehavior
 {
@@ -43,6 +45,6 @@ ModuleData *AutoAbilityBehavior::friend_newModuleData(INI *ini)
 {
 	AutoAbilityBehaviorModuleData *data = new AutoAbilityBehaviorModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &AutoAbilityBehaviorFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))j_00004912);
 	return (ModuleData *)data;
 }
