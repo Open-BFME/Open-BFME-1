@@ -5,7 +5,15 @@ extern "C" __declspec(dllimport) void * __cdecl memmove(void *destination, const
 
 class BfmeVecAW;
 
-void __cdecl bfmeDestroyRange(BfmeVecAW *vector);		// retail thunk 0x00034DC9 -> 0x00434DC9
+// Retail thunk 0x00034DC9 jumps to 0x003D4080, the matched
+// bfmeClearMembers(LGA_MemberObj *) (callees.py).
+class LGA_MemberObj;
+void __cdecl bfmeClearMembers(LGA_MemberObj *object);
+
+static __forceinline void bfmeDestroyRange(BfmeVecAW *vector)
+{
+	bfmeClearMembers((LGA_MemberObj *)vector);
+}
 
 static inline int *bfmeCopyRange(int *destination, const int *first, const int *last)
 {
