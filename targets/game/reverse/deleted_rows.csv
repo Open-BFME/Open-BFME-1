@@ -34382,3 +34382,4 @@ tg_0028d4e0,0x0028D4E0,"gen-tgrid scaffold placeholder superseded by the real id
 ??_GDockUpdate@@UAEPAXI@Z,0x002CD180,claim superseded by the gate-required claim for ??_GDockUpdate@@MAEPAXI@Z at 0x002CD180/30B from game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/DockUpdateDeletingDestructor.cpp. The prior claim at 0x002CD180/30B from game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/DockUpdateDeletingDestructor.cpp was retired.
 ?bfmeAdjustHeap005300E0@@YAXPAUS4SortElem12@@HHU1@PAX@Z,0x005300E0,renamed to ?__adjust_heap@@YAXPAUS4SortElem12@@HHU1@PAX@Z by tools/name_lane.py: two models agreed
 ?bfmeMedianXD@@YAABVBfmeStrXD@@ABV1@00@Z,0x002E7FF0,renamed to ?median@@YAABVBfmeStrXD@@ABV1@00@Z by tools/name_lane.py: two models agreed
+??0Rva001B7450@@QAE@XZ,0x001B7450,renamed to ??0LocomotorSet@@QAE@XZ by tools/name_lane.py: two models agreed

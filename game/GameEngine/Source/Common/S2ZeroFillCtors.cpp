@@ -29,10 +29,10 @@
 // TU-local vftable with an invented slot.
 extern "C" void *__identifier("??_7Gen_001BA9E0@@6B@")[];
 
-class Rva001B7450
+class LocomotorSet
 {
 public:
-	Rva001B7450();
+	LocomotorSet();
 	void **m_vptr;
 	int m_a;
 	int m_b;
@@ -45,7 +45,7 @@ public:
 };
 
 // @??0Rva001B7450@@QAE@XZ 0x001B7450
-Rva001B7450::Rva001B7450()
+LocomotorSet::LocomotorSet()
 {
 	m_vptr = __identifier("??_7Gen_001BA9E0@@6B@");
 	m_a = 0;
