@@ -11,18 +11,19 @@ struct BfmeEntry
 	unsigned char m_bfmeKind;
 };
 
-class BfmeEntrySink
+// Retail ILT 0x000391C6 reaches the matched five-argument sink at 0x004135C0.
+class AsciiString;
+class S4Sink004135C0
 {
 public:
-	void bfmeApply(BfmeEntry *entry, unsigned char kind, int active,
-		int mode, int enabled);
+	void invoke(const AsciiString &name, int kind, int active, int mode, int enabled);
 };
 
 class BfmeSinkProvider
 {
 public:
 	BFME_TEN_VIRTUALS(v00);
-	virtual BfmeEntrySink *bfmeSink(void);
+	virtual S4Sink004135C0 *bfmeSink(void);
 };
 
 struct BfmeEntryGroup
@@ -58,11 +59,16 @@ private:
 // ?bfmeDispatch@Gen_00283790@@QAEXPAX@Z
 void Gen_00283790::bfmeDispatch(void *key)
 {
+	// Retail zero-extends the byte argument with XOR/MOV rather than MOVZX.
+	typedef void (S4Sink004135C0::*SinkEntry)(const AsciiString &, int, int, int, int);
+	typedef void (S4Sink004135C0::*SinkCall)(const AsciiString &, unsigned char, int, int, int);
+	union { SinkEntry entry; SinkCall call; } invoke = { &S4Sink004135C0::invoke };
+
 	BfmeSinkProvider *provider = m_bfmeProvider;
 	if (provider == 0)
 		return;
 
-	BfmeEntrySink *sink = provider->bfmeSink();
+	S4Sink004135C0 *sink = provider->bfmeSink();
 	if (sink == 0)
 		return;
 
@@ -77,7 +83,8 @@ void Gen_00283790::bfmeDispatch(void *key)
 				inner < static_cast<unsigned int>(group->m_bfmeEnd - group->m_bfmeBegin);
 				++inner) {
 				BfmeEntry *entry = group->m_bfmeBegin[inner];
-				sink->bfmeApply(entry, entry->m_bfmeKind, 1, 0, 0);
+				(sink->*invoke.call)(
+					*reinterpret_cast<const AsciiString *>(entry), entry->m_bfmeKind, 1, 0, 0);
 			}
 		}
 	}
