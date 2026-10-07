@@ -10,11 +10,11 @@
 typedef int Int;
 typedef unsigned short PlayerMaskType;
 
-class ScriptEngine
-{
-public:
-	Int resolvePlayerMask(Int param, Int flag);
-};
+// Retail ILT 0x0004B290 -> 0x0034CB60; use the thunk ledger owner because
+// another emitter currently competes with the player-selector body name.
+class ScriptEngine {};
+extern void j_0004b290();
+
 extern ScriptEngine* TheScriptEngine;
 
 class PlayerList
@@ -36,8 +36,12 @@ extern PlayerList *ThePlayerList;
 
 void __stdcall scriptPlayers002EF110AllOrMask(Int param)
 {
-	PlayerMaskType playerMask =
-		TheScriptEngine->resolvePlayerMask(param, 0);
+	// The matched callee proves const AsciiString&, bool*, and a 16-bit mask.
+	typedef PlayerMaskType (ScriptEngine::*MaskCall)(const AsciiString &, bool *);
+	union { void (*entry)(); MaskCall call; } mask = { j_0004b290 };
+	PlayerMaskType playerMask = (TheScriptEngine->*mask.call)(
+		*reinterpret_cast<const AsciiString *>(param), 0);
+
 	if (!playerMask) {
 		for (Int i = 0; i < ThePlayerList->getPlayerCount(); ++i) {
 			Player *player = ThePlayerList->getNthPlayer(i);
