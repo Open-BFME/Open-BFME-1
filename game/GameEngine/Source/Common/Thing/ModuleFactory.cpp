@@ -634,7 +634,21 @@ public: \
 #include "GameLogic/Module/InactiveBody.h"
 #include "GameLogic/Module/ActiveBody.h"
 #include "GameLogic/Module/HighlanderBody.h"
+// ImmortalBody's factory hook is the retail-proven strong body at 0x0011F530
+// (ImmortalBodyFriendNewModuleInstanceThunk.cpp); only declare it here so this
+// TU does not emit a second, non-retail copy.
+#pragma push_macro("MAKE_STANDARD_MODULE_MACRO")
+#undef MAKE_STANDARD_MODULE_MACRO
+#define MAKE_STANDARD_MODULE_MACRO( cls ) \
+public: \
+	static Module* friend_newModuleInstance( Thing *thing, const ModuleData* moduleData ); \
+	virtual NameKeyType getModuleNameKey() const { static NameKeyType nk = NAMEKEY(#cls); return nk; } \
+protected: \
+	virtual void crc( Xfer *xfer ); \
+	virtual void xfer( Xfer *xfer ); \
+	virtual void loadPostProcess( void );
 #include "GameLogic/Module/ImmortalBody.h"
+#pragma pop_macro("MAKE_STANDARD_MODULE_MACRO")
 #include "GameLogic/Module/StructureBody.h"
 #include "GameLogic/Module/HiveStructureBody.h"
 #include "GameLogic/Module/UndeadBody.h"
