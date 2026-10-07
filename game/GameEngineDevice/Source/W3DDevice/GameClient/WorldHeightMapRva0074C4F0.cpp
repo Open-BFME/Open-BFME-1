@@ -39,12 +39,7 @@ class TerrainTextureClass : public Rva006D5280
 {
 public:
 	int updateFlat(WorldHeightMap *, int, int, int, int);
-};
-
-class Rva006D5750TextureClass : public Rva006D5280
-{
-public:
-	int Rva006D5750Update(WorldHeightMap *, int, int, int, int);
+	int updateFlatDXT1(WorldHeightMap *, int, int, int, int);
 };
 
 class ShroudTexture
@@ -158,7 +153,7 @@ ShroudTexture WorldHeightMap::rva0074C4F0(int xCell, int yCell,
 	}
 	else if (format == 0x31545844)
 	{
-		reinterpret_cast<Rva006D5750TextureClass *>(&texture)->Rva006D5750Update(
+		reinterpret_cast<TerrainTextureClass *>(&texture)->updateFlatDXT1(
 			this, xCell, yCell, cellWidth, pixelsPerCell);
 	}
 	else if (_bfme_debugReportingEnabled())

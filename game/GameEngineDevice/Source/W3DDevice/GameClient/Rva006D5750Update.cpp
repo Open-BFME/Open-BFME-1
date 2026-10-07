@@ -3,7 +3,9 @@
 #define Matrix4x4 Matrix4
 #define __PLACEMENT_VEC_NEW_INLINE
 
-#include "W3DDevice/GameClient/TerrainTex.h"
+#include "WW3D2/Texture.h"
+#include "WWMATH/Matrix3d.h"
+#include "common/AsciiString.h"
 #include "W3DDevice/GameClient/WorldHeightMap.h"
 #include "W3DDevice/GameClient/TileData.h"
 #include "WW3D2/dx8wrapper.h"
@@ -160,10 +162,12 @@ extern "C" HRESULT __stdcall D3DXLoadSurfaceFromMemory(void *pDestSurface,
 // which is the value in the image.
 #define RVA006D5750_FILTER_BOX 5
 
-class Rva006D5750TextureClass : public TextureClass
+// Zero Hour's TerrainTex.h has no updateFlatDXT1, so this TU declares
+// TerrainTextureClass itself instead of including that header.
+class TerrainTextureClass : public TextureClass
 {
 public:
-	Int Rva006D5750Update(WorldHeightMap *htMap, Int xCell, Int yCell,
+	Int updateFlatDXT1(WorldHeightMap *htMap, Int xCell, Int yCell,
 		Int cellWidth, Int pixelsPerCell);
 };
 
@@ -172,14 +176,15 @@ struct Rva006D5750SurfaceStorage
 	Rva006D53A0SurfaceDesc desc;
 };
 
-// ?Rva006D5750Update@Rva006D5750TextureClass@@QAEHPAVWorldHeightMap@@HHHH@Z
-Int Rva006D5750TextureClass::Rva006D5750Update(WorldHeightMap *htMap, Int xCell,
+// Retail 0x006D5750 is EA's TerrainTextureClass::updateFlatDXT1 (ea_evidence.csv).
+// ?updateFlatDXT1@TerrainTextureClass@@QAEHPAVWorldHeightMap@@HHHH@Z
+Int TerrainTextureClass::updateFlatDXT1(WorldHeightMap *htMap, Int xCell,
 	Int yCell, Int cellWidth, Int pixelsPerCell)
 {
 	SurfaceResource *surface_level;
 	Rva006D5750SurfaceStorage surface_storage;
 	Rva006D53A0SurfaceDesc &surface_desc = surface_storage.desc;
-	Rva006D5750TextureClass *self = this;
+	TerrainTextureClass *self = this;
 	Int width = cellWidth * pixelsPerCell;
 	UnsignedByte *buffer = (UnsignedByte *)(new UnsignedInt[width * width]);
 	Int cellStride = pixelsPerCell * 4;
