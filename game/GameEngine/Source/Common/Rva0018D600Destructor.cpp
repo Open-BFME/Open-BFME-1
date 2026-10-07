@@ -5,7 +5,7 @@
 // offset 4 is a second, unrelated polymorphic base (0x0109BBDC) that this
 // class does not override, so its vtable never changes and needs no tail
 // restore. Body: query the AudioEventRTS-typed member at +0x20 through the
-// already-pinned bfmeAsk1023 method: if true, hand the int at +0x2C to the
+// matched AudioEventRTS::isCurrentlyPlaying (0x000B2370): if true, hand the int at +0x2C to the
 // global AudioManager TheAudio (vtable slot 0x4C). Then release a pointer at
 // +0x14 (vtable slot 0, arg true) if present. Finally the AudioEventRTS
 // member at +0x20 is destroyed automatically (retail 0x00026F35) before the
@@ -23,16 +23,11 @@ public:
 	virtual void bfmeSlot0(void) { }
 };
 
-class BfmeSub1023
-{
-public:
-	char bfmeAsk1023(void);                                    ///< pinned 0x00035A5D
-};
-
 class AudioEventRTS
 {
 public:
 	~AudioEventRTS();                                          ///< pinned 0x00026F35
+	bool isCurrentlyPlaying() const;                           ///< ILT 0x00035A5D -> 0x000B2370
 
 private:
 	unsigned int m_words[3];
@@ -83,7 +78,7 @@ private:
 // @??1Rva0018D600@@UAE@XZ 0x0018D600
 Rva0018D600::~Rva0018D600()
 {
-	if (((BfmeSub1023 *)&m_audio)->bfmeAsk1023())
+	if (m_audio.isCurrentlyPlaying())
 	{
 		unsigned int arg = m_at2C;
 		((ClientSubsystem *)TheAudio)->bfmeHandOff0018D600(arg);
