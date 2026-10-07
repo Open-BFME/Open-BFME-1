@@ -10452,7 +10452,7 @@ name,address,notes
 ??_7AIAttackFireWeaponState@@6B@,0x01097DC0,exact constructor 0x001712C0 installs this dedicated vtable
 ??_7AIAttackFollowWaypointPathState@@6B@,0x0109B220,exact constructor 0x00183C90 installs this dedicated vtable
 ??_7AIAttackMeleeEngageState@@6B@,0x01099848,exact constructor 0x0017F8D0 installs this dedicated vtable
-??_7AIAttackMeleeHordeApproachTargetState@@6B@,0x0109A540,exact constructor for ??_GAIAttackMeleeHordeApproachTargetState@@MAEPAXI@Z installs this dedicated vtable
+??_7AIAttackMeleeHordeApproachTargetState@@6B@,0x00C9A540,exact constructor for ??_GAIAttackMeleeHordeApproachTargetState@@MAEPAXI@Z installs this dedicated vtable
 ??_7AIAttackMeleeHordeWaitPathState@@6B@,0x00C97BE0,vtable whose slots name AIAttackMeleeHordeWaitPathState
 ??_7AIAttackMeleeHordeWaitState@@6B@,0x00C97B68,vtable whose slots name AIAttackMeleeHordeWaitState
 ??_7AIAttackMeleeSquishState@@6B@,0x0109A738,exact constructor for ??_GAIAttackMeleeSquishState@@MAEPAXI@Z installs this dedicated vtable

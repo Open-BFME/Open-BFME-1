@@ -8983,7 +8983,6 @@ name,va
 ?g_AIAttackFollowWaypointPathStateVTable@@3HA,0x0109B220
 ?g_AIAttackMeleeApproachStateVTable@@3HA,0x0109A6C0
 ?g_AIAttackMeleeEngageStateVTable@@3HA,0x01099848
-?g_AIAttackMeleeHordeApproachTargetStateVTable@@3HA,0x0109A540
 ?g_AIAttackMeleeSquishStateVTable@@3HA,0x0109A738
 ?g_AIBackAwayStateVTable@@3HA,0x0109AE00
 ?g_AICowerStateVTable@@3HA,0x01098408

@@ -12,7 +12,9 @@ public:
 	AIInternalMoveToState( void *machine, AsciiString name );
 };
 
-extern int g_AIAttackMeleeHordeApproachTargetStateVTable;
+// Retail VA 0x0109A540 is ??_7AIAttackMeleeHordeApproachTargetState@@6B@
+// (symbols.csv), emitted with retail slots by AITargetMovementDeletingDestructors.cpp.
+extern "C" int __identifier("??_7AIAttackMeleeHordeApproachTargetState@@6B@");
 
 class AIAttackMeleeHordeApproachTargetState : public AIInternalMoveToState
 {
@@ -33,7 +35,7 @@ private:
 AIAttackMeleeHordeApproachTargetState::AIAttackMeleeHordeApproachTargetState( StateMachine *machine )
 	: AIInternalMoveToState( machine, AsciiString( "AIAttackMeleeHordeApproachTargetState" ) )
 {
-	m_vftable = &g_AIAttackMeleeHordeApproachTargetStateVTable;
+	m_vftable = &__identifier("??_7AIAttackMeleeHordeApproachTargetState@@6B@");
 	m_field50 = 0;
 	m_field54 = 0;
 	m_field58 = 0;
