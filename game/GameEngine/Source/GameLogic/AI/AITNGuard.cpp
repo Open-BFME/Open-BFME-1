@@ -515,38 +515,9 @@ void AITNGuardReturnState::loadPostProcess( void )
 }  // end loadPostProcess
 
 //--------------------------------------------------------------------------------------
-// ?onEnter@AITNGuardReturnState@@ present-unmatched
-StateReturnType AITNGuardReturnState::onEnter( void )
-{
-	UnsignedInt now = TheGameLogic->getFrame();
-	m_nextReturnScanTime = now + GameLogicRandomValue(0, TheAI->getAiData()->m_guardEnemyReturnScanRate);
-
-	if (getMachineOwner()->getContainedBy()) {
-		// we are already inside our tunnel.  Return success. jba [8/24/2003]
-		return STATE_SUCCESS;
-	}
-	if (getMachineOwner()->getTeam()) {
-		Object *teamVictim = getMachineOwner()->getTeam()->getTeamTargetObject();
-		if (teamVictim)	{	
-			// We have a team target.  Go attack it rather than returning to the tunel. jba [8/24/2003]
-			getGuardMachine()->setNemesisID(teamVictim->getID());
-			return STATE_FAILURE; // Fail to return goes to inner attack state.	
-		}
-	}
-// no, no, no, don't do this in onEnter, unless you like really slow maps. (srj)
-//	if (getGuardMachine()->lookForInnerTarget()) 
-//		return STATE_FAILURE; // early termination because we found a target.
-
-	// Find tunnel network to enter.
-	// Scan my tunnels.
-	Object *bestTunnel = findBestTunnel(getMachineOwner()->getControllingPlayer(), getMachineOwner()->getPosition());
-	if (bestTunnel==NULL) return STATE_FAILURE;
-
-	getMachine()->setGoalObject(bestTunnel);
-	getMachineOwner()->getAI()->friend_setGoalObject(bestTunnel);
-	
-	return AIEnterState::onEnter();
-}
+// AITNGuardReturnState::onEnter is defined only by its byte-exact
+// reconstruction in AITNGuardReturnState_onEnter_Bfme.cpp (0x0018A870): this
+// upstream copy won the link.
 
 //--------------------------------------------------------------------------------------
 // ?onExit@AITNGuardReturnState@@ present-unmatched
