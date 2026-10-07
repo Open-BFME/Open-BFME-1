@@ -512,28 +512,7 @@ void DozerActionDoActionState::loadPostProcess( void )
 //-------------------------------------------------------------------------------------------------
 /** Entering the do action state */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerActionDoActionStateOnEnterBfme.cpp
-// ?onEnter@DozerActionDoActionState@@UAE?AW4StateReturnType@@XZ present-unmatched
-StateReturnType DozerActionDoActionState::onEnter( void )
-{
-	Object *dozer = getMachineOwner();
-	DozerAIInterface *dozerAI = dozer->getAIUpdateInterface()->getDozerAIInterface();
-	if( !dozerAI )
-	{
-		return STATE_FAILURE;
-	}
-	// DozerAIUpdate *dozerAI = static_cast<DozerAIUpdate *>(dozer->getAIUpdateInterface());
-	
-	// record the frame we came in on
-	m_enterFrame = TheGameLogic->getFrame();
-
-	// when building, we have additional movement that we will for docking
-	if( m_task == DOZER_TASK_BUILD )
-		dozerAI->setBuildSubTask( DOZER_SELECT_BUILD_DOCK_LOCATION );
-
-	return STATE_CONTINUE;
-
-}  // end onEnter
+// ?onEnter@DozerActionDoActionState@@UAE?AW4StateReturnType@@XZ: retail body matched in DozerActionDoActionStateOnEnterBfme.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Do the action */
