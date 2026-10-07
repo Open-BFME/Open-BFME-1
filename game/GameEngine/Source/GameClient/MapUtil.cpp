@@ -956,16 +956,7 @@ Bool isOfficialMap( AsciiString mapName )
 }
 
 
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/MapCacheFindMap.cpp
-// ?findMap@MapCache@@QAEPBVMapMetaData@@VAsciiString@@@Z present-unmatched
-const MapMetaData *MapCache::findMap(AsciiString mapName)
-{
-	mapName.toLower();
-	MapCache::iterator it = find(mapName);
-	if (it == end())
-		return NULL;
-	return &(it->second);
-}
+// MapCache::findMap is defined in MapCacheLookup.cpp (retail 0x00454500).
 
 // ------------------------------------------------------------------------------------------------
 /** Copy a file from a .big archive path to a real directory path */
