@@ -21,7 +21,7 @@ struct Coord3D
 
 int GetGameLogicRandomValue(int lo, int hi, char *file, int line);
 Real Cos(Real value);
-Real bfmeSinVNB(Real value);
+Real Sin(Real value);  // Trig.cpp, retail 0x00873910
 
 enum WeaponSlotType
 {
@@ -126,7 +126,7 @@ void SlavedUpdate::doGuardLogic(Coord3D *pinnedPosition)
 
         m_guardPointOffset.zero();
         m_guardPointOffset.x += Cos(randomDirection) * data->m_guardWanderRange;
-        m_guardPointOffset.y += bfmeSinVNB(randomDirection) * data->m_guardWanderRange;
+        m_guardPointOffset.y += Sin(randomDirection) * data->m_guardWanderRange;
 
         pinnedPosition->x += m_guardPointOffset.x;
         pinnedPosition->y += m_guardPointOffset.y;
