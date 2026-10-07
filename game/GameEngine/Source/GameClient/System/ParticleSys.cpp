@@ -1289,18 +1289,6 @@ void ParticleSystem::attachToDrawable( const Drawable *draw )
 }
 
 // ------------------------------------------------------------------------------------------------
-/** Attach this particle system to a Drawable */
-// ------------------------------------------------------------------------------------------------
-// ?attachToObject@ParticleSystem@@QAEXPBVObject@@@Z present-unmatched
-void ParticleSystem::attachToObject( const Object *obj )
-{
-	if (obj)
-		m_attachedToObjectID = obj->getID();
-	else
-		m_attachedToObjectID = INVALID_ID;
-}
-
-// ------------------------------------------------------------------------------------------------
 /** Compute a random point on a unit sphere
  * @todo The density of random points generated is not uniform within the sphere */
 // ------------------------------------------------------------------------------------------------
