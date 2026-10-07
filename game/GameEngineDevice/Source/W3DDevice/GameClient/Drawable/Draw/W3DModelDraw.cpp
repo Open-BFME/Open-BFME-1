@@ -2374,27 +2374,8 @@ void W3DModelDraw::adjustAnimation(const ModelConditionInfo* prevState, Real pre
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setCurAnimDurationInMsec@W3DModelDraw@@IAE_NM@Z present-unmatched
-Bool W3DModelDraw::setCurAnimDurationInMsec(Real desiredDurationInMsec)
-{
-	if (m_renderObject && m_renderObject->Class_ID() == RenderObjClass::CLASSID_HLOD)
-	{
-		HLodClass* hlod = (HLodClass*)m_renderObject;
-		HAnimClass* anim = hlod->Peek_Animation();
-		if (anim)
-		{
-			Real naturalDurationInMsec = anim->Get_Num_Frames() * 1000.0f / anim->Get_Frame_Rate();
-			if (naturalDurationInMsec > 0.0f && desiredDurationInMsec > 0.0f)
-			{
-				Real multiplier = naturalDurationInMsec / desiredDurationInMsec;
-				hlod->Set_Animation_Frame_Rate_Multiplier(multiplier);
-				return true;
-			}
-		}
-	}
-
-	return false;
-}
+// W3DModelDraw::setCurAnimDurationInMsec: retail body (0x0075BAF0) in
+// W3DModelDrawSetCurAnimDurationInMsec.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?getCurAnimDistanceCovered@W3DModelDraw@@IBEMXZ present-unmatched
