@@ -60,13 +60,22 @@ struct BfmeRelationInput
 	BfmeRelationState *m_bfmeState;
 };
 
+class FXList;
+
 struct BfmeRefreshContext
 {
 	char m_bfmeFields[0x34];
-	void *m_bfmeLink;
+	FXList *m_bfmeLink;
 };
 
-void __cdecl bfmeLinkRelation(void *link, Object *object, int enabled);
+// ILT 0x1253F -> 0x00065DE0, the matched static FXList::doFXObj
+// (FXListDoFXObjStatic.cpp): the +0x34 field is an FX list played on the
+// object with no secondary object.
+class FXList
+{
+public:
+	static void doFXObj(const FXList *fx, const Object *primary, const Object *secondary);
+};
 
 class Gen_00283460
 {
@@ -97,7 +106,7 @@ bool Gen_00283460::bfmeRefresh(BfmeRelationInput *input)
 					BfmeRefreshContext *context = m_bfmeContext;
 					object->updateShroudNow();
 					if (context->m_bfmeLink != 0)
-						bfmeLinkRelation(context->m_bfmeLink, object, 0);
+						FXList::doFXObj(context->m_bfmeLink, object, 0);
 					return true;
 				}
 			}
