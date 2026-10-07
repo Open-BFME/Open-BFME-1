@@ -32,15 +32,17 @@ class Object
 public:
 	Player *getControllingPlayer() const;
 
-	const Team *getTeam() const
-	{
-		return m_team;
-	}
-
-private:
 	unsigned char m_pad[0x23C];
-	Team *m_team;
+	Team *m_team;							// +0x23C
 };
+
+// Object::getTeam's inline COMDAT belongs to the TUs built on the shared
+// Object.h layout; this view reads the team pointer through a file-static
+// helper instead, so it emits no conflicting copy (same inlined load).
+static const Team *bfmeObjectTeam(const Object *object)
+{
+	return object->m_team;
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
@@ -90,7 +92,7 @@ void EvaEventFXNugget::doFXObj(const Object *primary, const Object *) const
 		}
 
 		Player *localPlayer = ThePlayerList->getLocalPlayer();
-		if (localPlayer && localPlayer->getRelationship(primary->getTeam()) == ALLIES)
+		if (localPlayer && localPlayer->getRelationship(bfmeObjectTeam(primary)) == ALLIES)
 		{
 			TheEva->setShouldPlay(m_evaEventAlly, 0);
 			return;
