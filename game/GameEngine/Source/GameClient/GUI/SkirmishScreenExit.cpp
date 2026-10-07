@@ -28,10 +28,17 @@ public:
 	SkirmishGameInfoState m_state;
 };
 
-class WindowManager
+class WindowManager;
+
+// Retail calls ILT 000290D2, whose body is the existing eight-byte
+// Rva00465B80::apply in TinyByteFieldSetters.cpp. This address-qualified
+// provider writes 1 at receiver+1AC; it does not establish a semantic owner.
+class Rva00465B80
 {
 public:
-	void hideQuitMenu( void );
+	void apply();
+	char m_lead[0x1AC];
+	char m_flag;
 };
 
 class BfmeAptScreenSkirmish
@@ -59,5 +66,5 @@ void BfmeAptScreenSkirmish::_bfme_exit( void * )
 	void *screen = reinterpret_cast<void * &>(Rva012F4B54Skirmish);
 	TheSkirmishGameInfo = 0;
 	if( screen )
-		g_rva012F19E8WindowManager->hideQuitMenu();
+		reinterpret_cast<Rva00465B80 *>(g_rva012F19E8WindowManager)->apply();
 }
