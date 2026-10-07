@@ -12,7 +12,7 @@ class BfmeAptScreenSetComboFromIndex { public: void setComboFromIndex(int); };
 class Rva0007C510 { public: int ge() const; };
 void GadgetCheckBoxSetChecked(GameWindow *, bool);
 void GadgetComboBoxSetSelectedPos(GameWindow *, int, bool);
-struct Rva0055E470AudioSettings { char pad[0x80]; float f80,f84,f88,f8c,f90; };
+struct AudioSettings { char pad[0x80]; float m_defaultSoundVolume,m_defaultVoiceVolume,m_defaultMusicVolume,m_defaultAmbientVolume,m_defaultMovieVolume; };
 class Rva0055E470Windows { public:
 virtual void slot0() = 0;
 virtual void slot1() = 0;
@@ -142,7 +142,7 @@ virtual void slot68() = 0;
 virtual void slot69() = 0;
 virtual void slot70() = 0;
 virtual void slot71() = 0;
-virtual Rva0055E470AudioSettings *slot72() = 0;
+virtual AudioSettings *slot72() = 0;
 virtual void slot73() = 0;
 virtual void slot74() = 0;
 virtual void slot75() = 0;
@@ -195,10 +195,10 @@ class GameLODManager; extern GameLODManager *TheGameLODManager;
 class PalantirUIState; extern PalantirUIState *g_aptPalantirUIState;
 extern unsigned char g_optByte12F4AD0;
 struct Rva0055E470Logic { char pad[0x10c]; int field10c; };
-struct Rva0055E470Global { char pad[0xbc0]; float fieldbc0; };
+struct Rva0055E470Global { char pad[0xbc0]; float m_keyboardDefaultScrollFactor; };
 struct Rva0055E470State { char pad[8]; bool field08; };
-struct Rva0055E470Preset { int field00; bool field04,field05,field06; char pad07; bool field08,field09; char pad0a[14]; bool field18; char pad19[3]; int field1c; char pad20; bool field21,field22; char pad23[13]; };
-struct Rva0055E470LOD { Rva0055E470Preset presets[6]; char pad120[0x16c4-0x120]; int field16c4; };
+struct StaticGameLODInfo { int m_maxParticleCount; bool m_useShadowVolumes,m_useShadowDecals,m_useAnisotropic; char pad07; bool field08,m_showSoftWaterEdge; char pad0a[14]; bool m_useBuildupScaffolds; char pad19[3]; int m_textureReduction; char pad20; bool field21,m_showProps; char pad23[13]; };
+struct Rva0055E470LOD { StaticGameLODInfo presets[6]; char pad120[0x16c4-0x120]; int field16c4; };
 #define wm ((Rva0055E470Windows *)TheWindowManager)
 #define audio ((Rva0055E470Audio *)TheAudio)
 #define display ((Rva0055E470Display *)TheDisplay)
@@ -244,7 +244,7 @@ class BfmeAptScreenOptions { public:
 int field304;
 OptionPreferences *prefs() { return (OptionPreferences *)((char*)this+0x260); }
 };
-typedef char Rva0055E470PresetSize[(sizeof(Rva0055E470Preset)==0x30)?1:-1];
+typedef char Rva0055E470PresetSize[(sizeof(StaticGameLODInfo)==0x30)?1:-1];
 
 // Keep volume outside the guarded audio blocks: its lifetime allows the
 // compiler to share the first graphics-flag stack slot. Each preset field is
@@ -268,7 +268,7 @@ void BfmeAptScreenOptions::_bfme_reset(const char *) {
     }
    }
   }
-  if(w2f4) wm->slot53(w2f4,0x400d,(int)(global->fieldbc0*50.0f),0);
+  if(w2f4) wm->slot53(w2f4,0x400d,(int)(global->m_keyboardDefaultScrollFactor*50.0f),0);
   if(w290) {
    int level=prefs()->rva00090900IdealStaticGameDetail();
    if(level==0 || level==1) { GadgetCheckBoxSetChecked(w290,true); w290->winEnable(false); }
@@ -285,11 +285,11 @@ void BfmeAptScreenOptions::_bfme_reset(const char *) {
   if(w2a8) GadgetCheckBoxSetChecked(w2a8,false);
   if(w2b4) { audio->slot91(false); GadgetCheckBoxSetChecked(w2b4,false); }
   if(w2b8) { if(((Rva0007C510*)TheGameLODManager)->ge()==1) GadgetCheckBoxSetChecked(w2b8,true); else GadgetCheckBoxSetChecked(w2b8,false); }
-  if(w2e0) { volume=(int)(audio->slot72()->f88*100.0f); wm->slot53(w2e0,0x400d,volume,0); audio->slot50(volume*0.01f); }
-  if(w2e4) { volume=(int)(audio->slot72()->f80*100.0f); wm->slot53(w2e4,0x400d,volume,0); audio->slot48(volume*0.01f); }
-  if(w2e8) { volume=(int)(audio->slot72()->f84*100.0f); wm->slot53(w2e8,0x400d,volume,0); audio->slot49(volume*0.01f); }
-  if(w2ec) { volume=(int)(audio->slot72()->f8c*100.0f); wm->slot53(w2ec,0x400d,volume,0); audio->slot52(volume*0.01f); }
-  if(w2f0) { volume=(int)(audio->slot72()->f90*100.0f); wm->slot53(w2f0,0x400d,volume,0); audio->slot51(volume*0.01f); }
+  if(w2e0) { volume=(int)(audio->slot72()->m_defaultMusicVolume*100.0f); wm->slot53(w2e0,0x400d,volume,0); audio->slot50(volume*0.01f); }
+  if(w2e4) { volume=(int)(audio->slot72()->m_defaultSoundVolume*100.0f); wm->slot53(w2e4,0x400d,volume,0); audio->slot48(volume*0.01f); }
+  if(w2e8) { volume=(int)(audio->slot72()->m_defaultVoiceVolume*100.0f); wm->slot53(w2e8,0x400d,volume,0); audio->slot49(volume*0.01f); }
+  if(w2ec) { volume=(int)(audio->slot72()->m_defaultAmbientVolume*100.0f); wm->slot53(w2ec,0x400d,volume,0); audio->slot52(volume*0.01f); }
+  if(w2f0) { volume=(int)(audio->slot72()->m_defaultMovieVolume*100.0f); wm->slot53(w2f0,0x400d,volume,0); audio->slot51(volume*0.01f); }
  }
  if(m_page==4) {
   int level=4;
@@ -299,8 +299,8 @@ void BfmeAptScreenOptions::_bfme_reset(const char *) {
   if(lod) {
    level=lod->field16c4;
    if(level<0 || level>=6 || level==5) level=4;
-   particles=lod->presets[level].field00; reduction=lod->presets[level].field1c;
-   b06=lod->presets[level].field06; b08=lod->presets[level].field08; b04=lod->presets[level].field04; b05=lod->presets[level].field05; b09=lod->presets[level].field09; b22=lod->presets[level].field22; b18=lod->presets[level].field18; b21=!lod->presets[level].field21;
+   particles=lod->presets[level].m_maxParticleCount; reduction=lod->presets[level].m_textureReduction;
+   b06=lod->presets[level].m_useAnisotropic; b08=lod->presets[level].field08; b04=lod->presets[level].m_useShadowVolumes; b05=lod->presets[level].m_useShadowDecals; b09=lod->presets[level].m_showSoftWaterEdge; b22=lod->presets[level].m_showProps; b18=lod->presets[level].m_useBuildupScaffolds; b21=!lod->presets[level].field21;
   }
   if(w2bc) GadgetCheckBoxSetChecked(w2bc,b06);
   if(w2c0) GadgetCheckBoxSetChecked(w2c0,b08);
