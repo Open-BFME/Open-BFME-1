@@ -1,9 +1,18 @@
 // Open-BFME5 conversions.
 
+// The member copy is StringBase<char>'s copy constructor (call target
+// 0x00887B60, matched as ??0?$StringBase@D@@AAE@ABV0@@Z).
+class BfmeThingVKE;
+template <class T> class StringBase
+{
+	friend class BfmeThingVKE;
+	StringBase(const StringBase &o);
+	void *m_data;
+};
+
 class BfmeUniVKE
 {
 public:
-	void bfmeCopyUVKE(const BfmeUniVKE &o);
 	void *m_bfme00;
 };
 
@@ -28,7 +37,7 @@ public:
 
 BfmeThingVKE *BfmeThingVKE::bfmeInitVKE(const BfmeThingVKE &o)
 {
-	m_bfme00.bfmeCopyUVKE(o.m_bfme00);
+	((StringBase<char> *)&m_bfme00)->StringBase<char>::StringBase(*(const StringBase<char> *)&o.m_bfme00);
 	m_bfme04 = o.m_bfme04;
 	m_bfme08 = o.m_bfme08;
 	m_bfme0c = o.m_bfme0c;
