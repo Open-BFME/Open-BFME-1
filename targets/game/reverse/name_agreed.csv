@@ -570,3 +570,4 @@ game/GameEngine/Source/Common/BfmeThingCEF_Rva00088AB0.cpp|member||m_bfmeOwner,m
 game/GameEngine/Source/Common/Rva00627AA0Call.cpp|type||Rva00627AA0Arg,BuddyRequest,gpt-6-astra+grok,agreed,2026-10-07
 game/GameEngine/Source/Common/Rva00627AA0Call.cpp|function||rva00627AA0Call,buddyTryReconnect,gpt-6-astra+grok,agreed,2026-10-07
 game/GameEngine/Source/Common/Rva00627AA0Call.cpp|local|rva00627AA0Call|arg,req,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/Common/BfmeThingCEF_Rva00088AB0.cpp|member||m_bfmeOwner,m_thingTemplate,gpt-6-astra+grok,applied,2026-10-07

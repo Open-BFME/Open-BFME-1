@@ -23,12 +23,12 @@ public:
 
 	unsigned char m_bfmeHead[0x14];
 	BfmeSubCEF m_bfmeSub;
-	BfmeOwnerCEF *m_bfmeOwner;
+	BfmeOwnerCEF *m_thingTemplate;
 };
 
 const BfmeListCEF *BfmeThingCEF::rva00088AB0CEF(void) const
 {
-	BfmeOwnerCEF *owner = m_bfmeOwner;
+	BfmeOwnerCEF *owner = m_thingTemplate;
 	if (owner != 0)
 	{
 		void *candidate = *(void **)((char *)owner + 0x24);
