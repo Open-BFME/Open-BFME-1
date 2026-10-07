@@ -176,7 +176,6 @@ struct Mem0027E9C0Element
 // that vector also makes the already-matched 0x0027EED0 owner call it directly.
 typedef _STL::vector<Mem0027E9C0Element> Mem0027E9C0;
 
-BFME_TWO_MEMBER_DTOR( Rva000ED4A0, Inner01073744, Rva00887940Member, 12 )
 BFME_TWO_MEMBER_DTOR( Rva00126CF0, Inner01073744, Rva00887940Member, 4 )
 BFME_TWO_MEMBER_DTOR( Rva00126FC0, Inner01073744, Rva00887940Member, 64 )
 BFME_TWO_MEMBER_DTOR( Rva00127190, Inner01073744, Rva00887940Member, 64 )
