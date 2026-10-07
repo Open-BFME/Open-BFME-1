@@ -32,7 +32,8 @@ static __forceinline void *callEndRenderToTexture()
 	fnCast.asFunction = j_0003fac6;
 	return fnCast.asCall();
 }
-void __cdecl bfmeDrawFilterUV(int a, int b, Coord2D *uv);
+// Retail calls 0x00716AD0 through ILT 0x000196A0.
+void ShaderViewportRva00716AD0(int color, bool flag, const Coord2D *uv);
 
 class ScreenDefaultFilter
 {
@@ -60,7 +61,7 @@ bool ScreenDefaultFilter::postRender(int mode, Coord2D scroll, bool &extra)
 	Coord2D uv;
 	uv.x = 1.0f;
 	uv.y = 1.0f;
-	bfmeDrawFilterUV(-1, 0, &uv);
+	ShaderViewportRva00716AD0(-1, false, &uv);
 	reset();
 	return true;
 }
