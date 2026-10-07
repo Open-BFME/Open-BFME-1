@@ -494,6 +494,22 @@ void GridCullSystemClass::Add_Object_Internal(CullableClass * obj)
 }
 
 
+void GridCullSystemClass::Remove_Object_Internal(CullableClass * obj)
+{
+	WWASSERT(obj);
+	WWASSERT(obj->Get_Culling_System() == this);
+	GridLinkClass * link = (GridLinkClass *)obj->Get_Cull_Link();
+
+	unlink_object(obj);
+	link->Set_Culling_System(NULL);
+	delete link;
+	obj->Set_Cull_Link(NULL);
+
+	ObjCount--;
+	obj->Release_Ref();
+}
+
+
 void GridCullSystemClass::link_object(CullableClass * obj)
 {
 	WWASSERT(obj);
