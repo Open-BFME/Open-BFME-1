@@ -1,13 +1,17 @@
 // cl: /DNDEBUG /MD /EHsc
 // Retail RVA 0x008AE7C0: byte-verified callback; local layouts retain address-derived identities.
 struct BfmeStringData3AF0 { unsigned short m_refCount; unsigned short m_length; unsigned m_capacity; };
-struct BfmeStringPool3AF0 { void *unused; void (__cdecl *free)(void *); };
+struct BfmeStringPool3AF0
+{
+    void *m_alloc;
+    void (__cdecl *m_free)(void *storage);
+};
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 class Rva8CD130String {
 public:
  Rva8CD130String() { m_data=&g_bfmeDefaultString1284; ++m_data->m_refCount; }
- ~Rva8CD130String() { BfmeStringData3AF0 *old=m_data; if(--old->m_refCount==0) g_bfmeStringPool1284->free(old); }
+ ~Rva8CD130String() { BfmeStringData3AF0 *old=m_data; if(--old->m_refCount==0) g_rva01337A30AllocPair->m_free(old); }
  BfmeStringData3AF0 *m_data;
 };
 class AptValue { public: int toInteger() const; float toNumber(); };
