@@ -1,12 +1,13 @@
 // cl: /O2
-class AssetRegistry {
+class AssetManagerImpl {
 public:
- const char *Rva009EEDF0Lookup(unsigned int key);
+ const char *GetString(unsigned int key);
 };
+class AssetRegistry;
 extern AssetRegistry *g_theAssetRegistry;
 const char *Rva009EC0D0AssetRegistryName(unsigned int key)
 {
  if (!g_theAssetRegistry)
   return "<no asset manager>";
- return g_theAssetRegistry->Rva009EEDF0Lookup(key);
+ return ((AssetManagerImpl *)g_theAssetRegistry)->GetString(key);
 }

@@ -1,4 +1,4 @@
-// ?Collect_Keys_009EF7D0@AssetRegistry@@QAE?AURva009F2140AssetSetGroup@@XZ
+// ?Collect_Keys_009EF7D0@AssetManagerImpl@@QAE?AURva009F2140AssetSetGroup@@XZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 //
@@ -109,7 +109,7 @@ public:
 	CRITICAL_SECTION *m_lock;
 };
 
-class AssetRegistry
+class AssetManagerImpl
 {
 public:
 	Rva009F2140AssetSetGroup Collect_Keys_009EF7D0();
@@ -120,7 +120,7 @@ private:
 	GenHashMap14C0 m_map44;
 };
 
-Rva009F2140AssetSetGroup AssetRegistry::Collect_Keys_009EF7D0()
+Rva009F2140AssetSetGroup AssetManagerImpl::Collect_Keys_009EF7D0()
 {
 	CriticalSectionLock lock(&m_lock2c);
 	LocalKeySet009EF7D0 keys;

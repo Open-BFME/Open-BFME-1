@@ -85,6 +85,7 @@ public:
 	unsigned int m_last;
 };
 
+class AssetManagerImpl;
 class AssetRegistry;
 extern AssetRegistry *g_theAssetRegistry;
 extern void __cdecl Rva00DEFBE0ThreadProc(void *);

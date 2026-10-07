@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2
 // stlport
 
-// AssetRegistry raw name lookup at 0x009EED20. The matched wrapper
+// AssetManagerImpl raw name lookup at 0x009EED20. The matched wrapper
 // bfmeGoEMEb (0x009EC0B0) loads g_theAssetRegistry and thiscalls this
 // body; Render_Obj_Exists_Impl is the bool twin of the same walk.
 

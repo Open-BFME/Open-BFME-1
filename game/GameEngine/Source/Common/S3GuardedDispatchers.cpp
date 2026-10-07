@@ -172,6 +172,7 @@ public:
 	void bfmeInvoke(void *first, void *second);
 };
 
+class AssetManagerImpl;
 class AssetRegistry;
 extern AssetRegistry *g_theAssetRegistry;
 

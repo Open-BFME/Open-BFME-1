@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
-// Retail 0x009EBEC0: return a counted AssetRegistry lookup by value.
+// Retail 0x009EBEC0: return a counted AssetManagerImpl lookup by value.
 
 #include "../WWVegas/WW3D2/texture.h"
 
@@ -40,7 +40,7 @@ private:
 	TextureBaseClass *m_object;
 };
 
-class AssetRegistry
+class AssetManagerImpl
 {
 public:
 	AssetReference Find_Asset( const char *name );
@@ -61,11 +61,14 @@ private:
 // Retail VA 0x0134FAAC is a zero-filled four-byte pointer. The matched
 // Add_Prototype wrapper (RVA 0x009EBA40) and symbols.csv pin use this name
 // and type; the guarded load at RVA 0x009EB940 also reads a DWORD.
+// The recorded global (?g_theAssetRegistry@@3PAVAssetRegistry@@A) keeps its
+// opaque pointee tag; callers cast it to the AssetManagerImpl it holds.
+class AssetRegistry;
 AssetRegistry *g_theAssetRegistry = 0;
 
 AssetReference Rva009EBEC0( const AssetName &name )
 {
 	return g_theAssetRegistry
-		? g_theAssetRegistry->Find_Asset( name.Peek_Buffer() )
+		? ((AssetManagerImpl *)g_theAssetRegistry)->Find_Asset( name.Peek_Buffer() )
 		: AssetReference();
 }

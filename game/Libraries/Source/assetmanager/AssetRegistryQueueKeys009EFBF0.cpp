@@ -1,4 +1,4 @@
-// ?Queue_Keys_009EFBF0@AssetRegistry@@QAEX_NABV?$set@PAURva001408C0Target@@U?$less@PAURva001408C0Target@@@_STL@@V?$allocator@PAURva001408C0Target@@@3@@_STL@@@Z
+// ?AddRequiredAssets@AssetManagerImpl@@QAEX_NABV?$set@PAURva001408C0Target@@U?$less@PAURva001408C0Target@@@_STL@@V?$allocator@PAURva001408C0Target@@@3@@_STL@@@Z
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 //
@@ -74,10 +74,10 @@ public:
 typedef _STL::hash_map<int, Rva009EF0D0Element *> AssetHash;
 typedef _STL::deque<Rva009EF0D0Element *> AssetQueue;
 
-class AssetRegistry
+class AssetManagerImpl
 {
 public:
-	void Queue_Keys_009EFBF0(bool front, const Rva001408C0Set &keys);
+	void AddRequiredAssets(bool front, const Rva001408C0Set &keys);
 
 private:
 	unsigned char m_unmodelled_000[0x44];
@@ -91,9 +91,9 @@ private:
 };
 
 typedef char AssetRegistryQueueLayoutCheck[
-	sizeof(AssetRegistry) == 0x1e8 ? 1 : -1];
+	sizeof(AssetManagerImpl) == 0x1e8 ? 1 : -1];
 
-void AssetRegistry::Queue_Keys_009EFBF0(bool front, const Rva001408C0Set &keys)
+void AssetManagerImpl::AddRequiredAssets(bool front, const Rva001408C0Set &keys)
 {
 	for (Rva001408C0Set::const_iterator it = keys.begin(); it != keys.end(); ++it)
 	{

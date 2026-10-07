@@ -5,7 +5,7 @@
 #include <windows.h>
 
 // ABI views at retail 0x009EF6D0 (existing body) and 0x009EBF90 (wrapper).
-// AssetRegistry reuses the canonical global's existing C++ receiver spelling;
+// AssetManagerImpl reuses the canonical global's existing C++ receiver spelling;
 // the original native class and method declarations are not recovered.
 // Rva009EF6D0 retains its address because no native method name is witnessed.
 // The result is a 12-byte STLport tree, a word at +0x0C and a byte at +0x10.
@@ -68,7 +68,7 @@ typedef char Rva009EF6D0TreeSizeCheck[sizeof(Rva009EF6D0Tree) == 12 ? 1 : -1];
 typedef char Rva009EF6D0OutputSizeCheck[sizeof(Rva009EF6D0Output) == 20 ? 1 : -1];
 typedef char Rva009EF6D0LockSizeCheck[sizeof(CRITICAL_SECTION) == 24 ? 1 : -1];
 
-class AssetRegistry
+class AssetManagerImpl
 {
 public:
 	Rva009EF6D0Output Rva009EF6D0();
@@ -83,13 +83,14 @@ private:
 	Rva009EF6D0Tree m_tree;
 };
 
-// ?Rva009EF6D0@AssetRegistry@@QAE?AURva009EF6D0Output@@XZ
-Rva009EF6D0Output AssetRegistry::Rva009EF6D0()
+// ?Rva009EF6D0@AssetManagerImpl@@QAE?AURva009EF6D0Output@@XZ
+Rva009EF6D0Output AssetManagerImpl::Rva009EF6D0()
 {
 	CriticalSectionLock lock(&m_critical_section);
 	return Rva009EF6D0Output(m_tree);
 }
 
+class AssetRegistry;
 extern AssetRegistry *g_theAssetRegistry;
 
 // ?Rva009EBF90@@YA?AURva009EF6D0Output@@XZ
@@ -97,11 +98,11 @@ Rva009EF6D0Output Rva009EBF90()
 {
 	if (g_theAssetRegistry == NULL)
 		return Rva009EF6D0Output();
-	return g_theAssetRegistry->Rva009EF6D0();
+	return ((AssetManagerImpl *)g_theAssetRegistry)->Rva009EF6D0();
 }
 
-// ?Rva009EF750@AssetRegistry@@QAE?AURva009EF6D0Output@@XZ
-Rva009EF6D0Output AssetRegistry::Rva009EF750()
+// ?Rva009EF750@AssetManagerImpl@@QAE?AURva009EF6D0Output@@XZ
+Rva009EF6D0Output AssetManagerImpl::Rva009EF750()
 {
 	CriticalSectionLock lock(&m_critical_section);
 	return Rva009EF6D0Output(m_tree190);
@@ -112,5 +113,5 @@ Rva009EF6D0Output Rva009EBFF0()
 {
 	if (g_theAssetRegistry == NULL)
 		return Rva009EF6D0Output();
-	return g_theAssetRegistry->Rva009EF750();
+	return ((AssetManagerImpl *)g_theAssetRegistry)->Rva009EF750();
 }

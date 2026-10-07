@@ -30,17 +30,18 @@ private:
 	CountedAsset *m_object;
 };
 
-class AssetRegistry
+class AssetManagerImpl
 {
 public:
-	AssetReference Get_Current_Asset();
+	AssetReference EnumAssets();
 };
 
+class AssetRegistry;
 extern AssetRegistry *g_theAssetRegistry;
 
 AssetReference Rva009EBDC0()
 {
 	return g_theAssetRegistry
-		? g_theAssetRegistry->Get_Current_Asset()
+		? ((AssetManagerImpl *)g_theAssetRegistry)->EnumAssets()
 		: AssetReference();
 }

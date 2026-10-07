@@ -465,6 +465,7 @@ class Gen_009EBB40Target
 public:
 	int bfmeForward(void);		// retail 0x009EE620
 };
+class AssetManagerImpl;
 class AssetRegistry;
 extern AssetRegistry *g_theAssetRegistry;				// 0x134faac
 class Gen_009EBB60Target

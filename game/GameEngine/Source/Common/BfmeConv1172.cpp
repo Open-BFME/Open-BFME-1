@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 // Open-BFME5 conversions.
-// Same layout as AssetRegistry in
+// Same layout as AssetManagerImpl in
 // game/Libraries/Source/assetmanager/Get_Current_Asset.cpp: lock at +0x2C,
 // hash_map<int, Gen_t_009f14c0_p12cd> at +0x44, its iterator at +0x58. Retail
 // calls the map's begin() at 0x009EE0F0, pinned under that type in symbols.csv.

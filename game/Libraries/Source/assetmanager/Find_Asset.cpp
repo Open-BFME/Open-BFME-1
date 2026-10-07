@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2
 // stlport
 //
-// Open-BFME5: AssetRegistry::Find_Asset, the counted lookup targets/game/reverse/symbols.csv
+// Open-BFME5: AssetManagerImpl::Find_Asset, the counted lookup targets/game/reverse/symbols.csv
 // already pins at 0x009EEC60 because Rva009EBEC0 returns its result.
 //
 // The layout is the one Render_Obj_Exists.cpp already proved for this class --
@@ -88,7 +88,7 @@ private:
 	CountedAsset *m_object;
 };
 
-class AssetRegistry
+class AssetManagerImpl
 {
 public:
 	AssetReference Find_Asset(const char *name);
@@ -100,8 +100,8 @@ private:
 	NameKeyGenerator *m_hash_context;
 };
 
-// ?Find_Asset@AssetRegistry@@QAE?AVAssetReference@@PBD@Z
-AssetReference AssetRegistry::Find_Asset(const char *name)
+// ?Find_Asset@AssetManagerImpl@@QAE?AVAssetReference@@PBD@Z
+AssetReference AssetManagerImpl::Find_Asset(const char *name)
 {
 	CriticalSectionLock lock((int)&m_lock);
 	unsigned int key = (unsigned int)m_hash_context->nameToLowercaseKey(name);

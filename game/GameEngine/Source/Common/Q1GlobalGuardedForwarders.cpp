@@ -28,7 +28,7 @@
 // declared.
 //
 // The local receiver and callee identities remain address-derived. The shared
-// global keeps its existing AssetRegistry declaration from matched callers.
+// global keeps its existing AssetManagerImpl declaration from matched callers.
 
 class Q1Receiver0134FAAC
 {
@@ -47,6 +47,7 @@ public:
 	void m009EC960( void *value );
 };
 
+class AssetManagerImpl;
 class AssetRegistry;
 extern AssetRegistry *g_theAssetRegistry;
 

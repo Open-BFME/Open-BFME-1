@@ -1,4 +1,4 @@
-// ?Worker_Thread_009EFA30@AssetRegistry@@QAEXXZ
+// ?ThreadMain@AssetManagerImpl@@QAEXXZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 //
@@ -64,10 +64,10 @@ typedef _STL::deque<Rva009EF0D0Element *> AssetQueue;
 extern volatile bool g_q1Flag0134FAA8;
 void setFPMode();
 
-class AssetRegistry
+class AssetManagerImpl
 {
 public:
-	void Worker_Thread_009EFA30();
+	void ThreadMain();
 
 private:
 	unsigned int m_thread;
@@ -81,9 +81,9 @@ private:
 };
 
 typedef char AssetRegistryWorkerLayoutCheck[
-	sizeof(AssetRegistry) == 0x1f0 ? 1 : -1];
+	sizeof(AssetManagerImpl) == 0x1f0 ? 1 : -1];
 
-void AssetRegistry::Worker_Thread_009EFA30()
+void AssetManagerImpl::ThreadMain()
 {
 	m_threadId = GetCurrentThreadId();
 	while (!m_flag08)

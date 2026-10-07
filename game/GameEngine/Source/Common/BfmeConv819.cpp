@@ -54,6 +54,7 @@ public:
 	void *bfmeGetEME(void *a);
 };
 
+class AssetManagerImpl;
 class AssetRegistry;
 extern AssetRegistry *g_theAssetRegistry;
 

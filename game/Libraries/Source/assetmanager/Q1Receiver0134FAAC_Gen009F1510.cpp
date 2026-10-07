@@ -88,13 +88,13 @@ public:
 
 typedef _STL::deque<Rva009EF0D0Element *> Q1Queue009F1510;
 
-// 0x009EFBF0 is landed as AssetRegistry::Queue_Keys_009EFBF0
+// 0x009EFBF0 is landed as AssetManagerImpl::AddRequiredAssets
 // (AssetRegistryQueueKeys009EFBF0.cpp) on the same g_theAssetRegistry
 // object; this TU reaches it through that declaration.
-class AssetRegistry
+class AssetManagerImpl
 {
 public:
-	void Queue_Keys_009EFBF0(bool known, const Rva001408C0Set &keys);
+	void AddRequiredAssets(bool known, const Rva001408C0Set &keys);
 };
 
 class Q1Receiver0134FAAC
@@ -167,7 +167,7 @@ void Gen009F1510::handle()
 				entry->slot10(&set);
 				if (set.m_set.size() != 0)
 				{
-					((AssetRegistry *)this)->Queue_Keys_009EFBF0(
+					((AssetManagerImpl *)this)->AddRequiredAssets(
 						m_set1a4.m_set.find((Rva001408C0Target *)entry->m_key08) !=
 						m_set1a4.m_set.end(), set.m_set);
 				}

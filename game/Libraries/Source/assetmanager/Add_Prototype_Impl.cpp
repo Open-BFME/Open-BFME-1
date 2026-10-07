@@ -1,4 +1,4 @@
-// ?Add_Prototype_Impl@AssetRegistry@@QAEXPAX@Z
+// ?Add_Prototype_Impl@AssetManagerImpl@@QAEXPAX@Z
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /D_STLP_USE_STATIC_LIB
 // stlport
 //
@@ -8,8 +8,8 @@
 //
 // IDENTITY. The name is not inherited from the lift, it is proved: the matched
 // free wrapper ?Add_Prototype@@YAXPAX@Z at 0x009EBA40 (Add_Prototype.cpp) is
-// nothing but `if (g_theAssetRegistry) g_theAssetRegistry->Add_Prototype_Impl(proto)`,
-// a thiscall on AssetRegistry with one void* argument -- this body.
+// nothing but `if (g_theAssetRegistry) ((AssetManagerImpl *)g_theAssetRegistry)->Add_Prototype_Impl(proto)`,
+// a thiscall on AssetManagerImpl with one void* argument -- this body.
 //
 // EXTENT. 224 bytes, ending at the `ret 4` at +0xDD. Ghidra runs 0x009EF1A0
 // through 0x009EF6CF, but 0x009EF280 is a separate body: carved.csv gives it
@@ -118,7 +118,7 @@ struct Gen_t_009f14c0_p12cd
 
 typedef _STL::hash_map<int, Gen_t_009f14c0_p12cd> GenAssetHash;
 
-class AssetRegistry
+class AssetManagerImpl
 {
 public:
 	void Add_Prototype_Impl(void *proto);
@@ -132,8 +132,8 @@ private:
 	NameKeyGenerator *m_hash_context;
 };
 
-// ?Add_Prototype_Impl@AssetRegistry@@QAEXPAX@Z
-void AssetRegistry::Add_Prototype_Impl(void *proto)
+// ?Add_Prototype_Impl@AssetManagerImpl@@QAEXPAX@Z
+void AssetManagerImpl::Add_Prototype_Impl(void *proto)
 {
 	if (proto == 0)
 		return;

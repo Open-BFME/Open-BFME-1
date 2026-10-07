@@ -1,4 +1,4 @@
-// ?Get_Current_Asset@AssetRegistry@@QAE?AVAssetReference@@XZ
+// ?EnumAssets@AssetManagerImpl@@QAE?AVAssetReference@@XZ
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /D_STLP_USE_STATIC_LIB
 // stlport
 //
@@ -100,10 +100,10 @@ struct Gen_t_009f14c0_p12cd
 
 typedef _STL::hash_map<int, Gen_t_009f14c0_p12cd> GenAssetHash;
 
-class AssetRegistry
+class AssetManagerImpl
 {
 public:
-	AssetReference Get_Current_Asset();
+	AssetReference EnumAssets();
 
 private:
 	unsigned char m_unmodelled_000[0x2c];
@@ -114,7 +114,7 @@ private:
 	int m_filter1e8;
 };
 
-AssetReference AssetRegistry::Get_Current_Asset()
+AssetReference AssetManagerImpl::EnumAssets()
 {
 	CriticalSectionLock lock(&m_lock);
 	while (m_iterator58 != m_map44.end())

@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2
 // stlport
 
-// Open-BFME5: the wrapper and its AssetRegistry lookup implementation.
+// Open-BFME5: the wrapper and its AssetManagerImpl lookup implementation.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
@@ -43,7 +43,7 @@ public:
 	NameKeyType nameToLowercaseKey(const char *name);
 };
 
-class AssetRegistry
+class AssetManagerImpl
 {
 public:
 	bool Render_Obj_Exists_Impl(const char *name);
@@ -55,10 +55,11 @@ private:
 	NameKeyGenerator *m_hash_context;
 };
 
+class AssetRegistry;
 extern AssetRegistry *g_theAssetRegistry;
 
-// ?Render_Obj_Exists_Impl@AssetRegistry@@QAE_NPBD@Z
-bool AssetRegistry::Render_Obj_Exists_Impl(const char *name)
+// ?Render_Obj_Exists_Impl@AssetManagerImpl@@QAE_NPBD@Z
+bool AssetManagerImpl::Render_Obj_Exists_Impl(const char *name)
 {
 	CriticalSectionLock lock((int)&m_lock);
 	unsigned int key = m_hash_context->nameToLowercaseKey(name);
@@ -76,7 +77,7 @@ bool Render_Obj_Exists(const char *name)
 {
 	if (name)
 	{
-		AssetRegistry *reg = g_theAssetRegistry;
+		AssetManagerImpl *reg = (AssetManagerImpl *)g_theAssetRegistry;
 		if (reg)
 			return reg->Render_Obj_Exists_Impl(name);
 	}

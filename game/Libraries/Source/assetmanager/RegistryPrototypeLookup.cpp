@@ -39,6 +39,7 @@ public:
 	Rva009EBCE0AssetReference Rva009EEC60_FindAsset( const char *name );
 };
 
+class AssetManagerImpl;
 class AssetRegistry;
 extern AssetRegistry *g_theAssetRegistry;
 

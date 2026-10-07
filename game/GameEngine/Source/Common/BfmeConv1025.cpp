@@ -123,6 +123,7 @@ public:
 	char bfmeSay1025(char *t);
 };
 
+class AssetManagerImpl;
 class AssetRegistry;
 extern AssetRegistry *g_theAssetRegistry;
 extern char g_bfmeLit1025[];

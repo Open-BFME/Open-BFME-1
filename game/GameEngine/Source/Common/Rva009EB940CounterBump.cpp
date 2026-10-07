@@ -16,6 +16,7 @@ public:
 	int m_value;
 };
 
+class AssetManagerImpl;
 class AssetRegistry;
 extern AssetRegistry *g_theAssetRegistry;
 

@@ -24,13 +24,13 @@ public:
 
 // Slot 0 is called with only ECX and returns the registry entry name.
 class Rva009EEDF0Value { public: virtual const char* rvaSlot0(); };
-class AssetRegistry {
+class AssetManagerImpl {
 public:
- const char* Rva009EEDF0Lookup(unsigned int key);
+ const char* GetString(unsigned int key);
  char m_at00[0x2c]; CRITICAL_SECTION m_at2c;
  _STL::hash_map<unsigned int,Rva009EEDF0Value*> m_at44;
 };
-const char* AssetRegistry::Rva009EEDF0Lookup(unsigned int key) {
+const char* AssetManagerImpl::GetString(unsigned int key) {
  Rva009EEDF0LockGuard lock((int)&m_at2c);
  _STL::hash_map<unsigned int,Rva009EEDF0Value*>::iterator i=m_at44.find(key);
  if(i==m_at44.end())return "<unknown>";

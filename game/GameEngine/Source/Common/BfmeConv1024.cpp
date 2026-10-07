@@ -141,6 +141,7 @@ public:
 	_STL::deque<int> m_bfmeQueues[7];
 };
 
+class AssetManagerImpl;
 class AssetRegistry;
 extern AssetRegistry *g_theAssetRegistry;
 

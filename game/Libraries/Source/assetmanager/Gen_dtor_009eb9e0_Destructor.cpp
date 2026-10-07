@@ -99,6 +99,7 @@ public:
 	virtual ~Rva009EEA70CleanupDeleting();
 };
 
+class AssetManagerImpl;
 class AssetRegistry;
 extern AssetRegistry *g_theAssetRegistry;
 

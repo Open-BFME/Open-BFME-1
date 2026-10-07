@@ -11652,7 +11652,7 @@ name,address,notes
 ?Add_Line@Render2DClass@@QAEXABVVector2@@0MKK@Z,0x000409E4,BFME W3DDisplay two-color drawLine callee; ILT to the retail Add_Line body at 0x006E7750
 ?Add_Mesh@DX8TextureCategoryClass@@QAEIAAVVertex_Split_Table@@IIPAVIndexBufferClass@@I@Z,0x009471F0,retail Insert_To_Texture_Category calls the existing DX8TextureCategoryClass Add_Mesh body twice with its proven split table index buffer and pass arguments
 ?Add_Object@PredictiveLODOptimizerClass@@SAXPAVRenderObjClass@@@Z,0x0097A512,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097A360 calls; autopin
-?Add_Prototype_Impl@AssetRegistry@@QAEXPAX@Z,0x009EF1A0,Add_Prototype thiscall impl body
+?Add_Prototype_Impl@AssetManagerImpl@@QAEXPAX@Z,0x009EF1A0,Add_Prototype thiscall impl body
 ?Add_Quad@Render2DClass@@QAEXABVRectClass@@0KKKK@Z,0x0004183A,retail ILT thunk to the six-argument quad body at 0x006E7210
 ?Add_Record_Texture@@YAXABV?$RefCountPtr@VTextureClass@@@@@Z,0x00937CC0,statistics.cpp file-static Add_Record_Texture (argument in esi); called from Record_Texture 0x00937D60; body still 3 bytes off (EH state placement)
 ?Add_To_Collection@CullSystemClass@@IAEXPAVCullableClass@@@Z,0x008E21D0
@@ -11963,7 +11963,7 @@ name,address,notes
 ?FileRecoveryPosition@Rva00884Ftp@@QAEJPBD0@Z,0x00886A20,CDownload::PumpMessages Cftp::FileRecoveryPosition callee
 ?FillBufferWithDisconnectKeepAliveCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z,0x00677240,pin
 ?FindFile@Rva00884Ftp@@QAEJPBDPAH@Z,0x00886020,CDownload::PumpMessages Cftp::FindFile callee
-?Find_Asset@AssetRegistry@@QAE?AVAssetReference@@PBD@Z,0x009EEC60,address-derived AssetRegistry counted lookup callee at 0x009EBEC0
+?Find_Asset@AssetManagerImpl@@QAE?AVAssetReference@@PBD@Z,0x009EEC60,address-derived AssetRegistry counted lookup callee at 0x009EBEC0
 ?Find_Color_Mode@DX8Wrapper@@KA_NW4_D3DFORMAT@@HHPAI@Z,0x009021C0,pinharvest x1 (body)
 ?Find_POT@@YAHH@Z,0x00AFFAB0
 ?Find_Z_Mode@DX8Wrapper@@KA_NW4_D3DFORMAT@@0PAW42@@Z,0x00904120,pinharvest x1 (body)
@@ -12249,7 +12249,7 @@ name,address,notes
 ?Get_Char_Data@Rva00941400Font@@QAEPBURva00941400CharRecord@@G@Z,0x009412F0,address-derived callee pin from the 0x00941400 retail call
 ?Get_Char_Spacing@FontCharsClass@@QAEHG@Z,0x009414D0,body
 ?Get_Color_Array@MeshMatDescClass@@QAEPAIH_N@Z,0x0002F8E2,
-?Get_Current_Asset@AssetRegistry@@QAE?AVAssetReference@@XZ,0x009EEF10,address-derived no-argument counted asset lookup called by Rva009EBDC0
+?EnumAssets@AssetManagerImpl@@QAE?AVAssetReference@@XZ,0x009EEF10,address-derived no-argument counted asset lookup called by Rva009EBDC0
 ?Get_DX8_Render_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z,0x00907BE0
 ?Get_DX8_Texture_Stage_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z,0x00906FE0,DX8 texture-stage snapshot value-name retail callee
 ?Get_Deformed_Vertices@BfmeShadowMesh@@QAEXPAVVector3@@@Z,0x0092C390,shadow entry skinned vertex deformation call
@@ -12526,7 +12526,7 @@ name,address,notes
 ?Render_Line@ParticleBufferClass@@IAEXAAVRenderInfoClass@@@Z,0x0098AD00
 ?Render_Line_Group@ParticleBufferClass@@IAEXAAVRenderInfoClass@@@Z,0x0098B950
 ?Render_Material_Pass@MeshClass@@QAEXPAVMaterialPassClass@@PAVIndexBufferClass@@@Z,0x0092E890,pinned by DX8RigidFVFCategoryContainer::Render_Delayed_Procedural_Material_Passes packet 00946910
-?Render_Obj_Exists_Impl@AssetRegistry@@QAE_NPBD@Z,0x009EEBB0,Render_Obj_Exists thiscall impl body
+?Render_Obj_Exists_Impl@AssetManagerImpl@@QAE_NPBD@Z,0x009EEBB0,Render_Obj_Exists thiscall impl body
 ?Render_Particles@ParticleBufferClass@@IAEXAAVRenderInfoClass@@@Z,0x0098B800
 ?Render_Procedural_Material_Passes_Rva009467F0@Rva009467F0MaterialQueue@@QAE_NXZ,0x009467F0,Address-qualified bool queue declaration; full163 at9467F0 returnsAL taskWasDeleted; parent949EA0 ignores result; no adapter body
 ?Render_Seg_Line@SegmentedLineClass@@IAEXAAVRenderInfoClass@@@Z,0x00950960
@@ -12906,7 +12906,7 @@ name,address,notes
 ?Rva009C9CE0Target@@YAXXZ,0x009C9CE0,address-derived callable alias for matched tree private lower_bound; 0x009CA440 passes AsciiString reference on stack with tree this in ECX
 ?Rva009EBCE0_GetPrototype@@YA?AVRva009EBCE0AssetReference@@PBD@Z,0x009EBCE0,counted aggregate return through hidden storage plus const char name; raw body 211B
 ?Rva009EEC60_FindAsset@Rva009EEC60Registry@@QAE?AVRva009EBCE0AssetReference@@PBD@Z,0x009EEC60,counted aggregate lookup; full188B through ret8 at+B9; critical section and bucket ownership audited
-?Rva009EEDF0Lookup@AssetRegistry@@QAEPBDI@Z,0x009EEDF0,decoded retail 0x009EC0D0 calls receiver from g_theAssetRegistry with unsigned key and returned string; callee locks receiver+0x2c then searches keyed hash at +0x48 and returns unknown string on miss
+?GetString@AssetManagerImpl@@QAEPBDI@Z,0x009EEDF0,decoded retail 0x009EC0D0 calls receiver from g_theAssetRegistry with unsigned key and returned string; callee locks receiver+0x2c then searches keyed hash at +0x48 and returns unknown string on miss
 ?Rva009F8878Notify@@YGXPAX0@Z,0x009F8878,address-derived stdcall notification target called by 0x0048CDD0
 ?Rva00C715CARelease@@YAXXZ,0x00C715CA,Address-only CRT callback; initializer 00C6E31E operand 00C6E32A independently referenced from CRT slot 00EA5518; callback moves 0134FB38 into ECX then tail-jumps to 009F6855 four-slot DeleteDC loop; no stack arguments
 ?Rva00C715DERelease@@YAXXZ,0x00C715DE,Address-only CRT callback; initializer 00C6E34D operand 00C6E358 independently referenced from CRT slot 00EA551C; callback moves 0134FB48 into ECX and tail-jumps to 009F69D3 critical-section and array cleanup; no stack arguments
