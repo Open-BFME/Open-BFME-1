@@ -4461,43 +4461,9 @@ void AIUpdateInterface::aiDoCommand(const AICommandParms* parms)
 // AI Command Interface implementation for AIUpdateInterface
 //
 
-/**
- * Move to given position(s)
- */
-// ?privateMoveToPosition@AIUpdateInterface@@ present-unmatched
-void AIUpdateInterface::privateMoveToPosition( const Coord3D *pos, CommandSourceType cmdSource )
-{
-	if (getObject()->isMobile() == FALSE) 
-		return;
-
-	//Resetting the locomotor here was initially added for scripting purposes. It has been moved
-	//to the responsibility of the script to reset the locomotor before moving. This is needed because
-	//other systems (like the battle drone) change the locomotor based on what it's trying to do, and
-	//doesn't want to get reset when ordered to move.
-	//chooseLocomotorSet(LOCOMOTORSET_NORMAL);
-
-	if (!isIdle() && cmdSource == CMD_FROM_AI) {
-		// This is an internally generated move to, and we are in a non-idle state. [8/19/2003]
-		// Our state could be the source of this command, so 
-		// Move for 20 seconds [8/19/2003]
-		// Things like attack state don't take kindly to being booted out unceremoniously. jba. [8/19/2003]
-		setGoalPositionClipped(pos, cmdSource);
-		m_blockedFrames = 0;
-		m_isBlocked = FALSE;
-		m_isBlockedAndStuck = FALSE;
-		getStateMachine()->setTemporaryState(AI_MOVE_TO, LOGICFRAMES_PER_SECOND * 20);
-	} else {
-		// Normal user or script command, just do it. [8/19/2003]
-		getStateMachine()->clear();
-		setGoalPositionClipped(pos, cmdSource);
-		m_blockedFrames = 0;
-		m_isBlocked = FALSE;
-		m_isBlockedAndStuck = FALSE;
-		setLastCommandSource( cmdSource );
-		getStateMachine()->setState( AI_MOVE_TO );
-	}
-
-}
+// AIUpdateInterface::privateMoveToPosition is defined only by its byte-exact
+// reconstruction in AIUpdateInterfacePrivateCommands.cpp (0x00278280): this
+// upstream copy won the link.
 
 //-------------------------------------------------------------------------------------------------
 /**
