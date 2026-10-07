@@ -106,12 +106,12 @@ struct BfmeResultA
 	}
 };
 
-class BfmeResultSourceA;
+class PartitionManagerImpl;
 
 class BfmeResultForwardB
 {
 	unsigned char m_padding[0x0C];
-	BfmeResultSourceA *m_source;
+	PartitionManagerImpl *m_source;
 
 public:
 	BfmeResultA bfmeForwardResultB(int value);

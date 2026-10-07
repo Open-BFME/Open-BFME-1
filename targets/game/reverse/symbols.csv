@@ -77932,7 +77932,7 @@ name,address,notes
 ?bfmeMakeRE@@YAPAVBfmeMakerRE@@XZ,0x007F4D50,pin
 ?bfmeMakeRG@@YAPAVBfmeMakerRG@@XZ,0x007F4D50,pin
 ?bfmeMakeRecUNB@@YAPAXH@Z,0x008064A0,pin
-?bfmeMakeResultA@BfmeResultSourceA@@QAE?AUBfmeResultA@@H@Z,0x009F6600,retail callee decoded from the assigned 0x009F2A20 class value forwarder
+?GetAllObjects@PartitionManagerImpl@@QAE?AUBfmeResultA@@H@Z,0x009F6600,retail callee decoded from the assigned 0x009F2A20 class value forwarder
 ?bfmeMakeSubJX@@YAPAUBfmeSubJX@@XZ,0x009A6F20,pin make-sub for BfmeConv2080
 ?bfmeMakeTFD@BfmeHolderTFD@@QAEXPAX@Z,0x009DB4B0,pin
 ?bfmeMakeVSO@BfmeSrcVSO@@QAE?AVBfmeStrVSO@@XZ,0x00851FA0,pin

@@ -82,16 +82,16 @@ struct BfmeResultA : private Rva009F39F0Result
 	}
 };
 
-class BfmeResultSourceA
+class PartitionManagerImpl
 {
 	unsigned char m_bfmePadding[0xE4];
 	BfmeResultNode *m_bfmeHead;
 
 public:
-	BfmeResultA bfmeMakeResultA(int value);
+	BfmeResultA GetAllObjects(int value);
 };
 
-BfmeResultA BfmeResultSourceA::bfmeMakeResultA(int value)
+BfmeResultA PartitionManagerImpl::GetAllObjects(int value)
 {
 	BfmeResultA result;
 	BfmeResultNode *node = m_bfmeHead;
