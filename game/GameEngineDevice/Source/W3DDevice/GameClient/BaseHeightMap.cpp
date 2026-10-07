@@ -2094,19 +2094,6 @@ void BaseHeightMapRenderObjClass::staticLightingChanged( void )
 	m_roadBuffer->updateLighting();
 
 }
-
-//=============================================================================
-// BaseHeightMapRenderObjClass::setTimeOfDay
-//=============================================================================
-/** When the time of day changes, the lighting changes and we need to update. */
-//=============================================================================
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapSetTimeOfDay.cpp
-// ?setTimeOfDay@BaseHeightMapRenderObjClass@@QAEXW4TimeOfDay@@@Z present-unmatched
-void BaseHeightMapRenderObjClass::setTimeOfDay( TimeOfDay tod )
-{		 
-	staticLightingChanged();
-}
-
 //=============================================================================
 // BaseHeightMapRenderObjClass::Notify_Added
 //=============================================================================
