@@ -15,7 +15,7 @@ typedef _STL::vector<VectorPoint0019E880> Points;
 typedef _STL::vector<Points> Groups;
 typedef _STL::pair<const int,Groups> LookupPair;
 typedef _STL::_Rb_tree<int,LookupPair,_STL::_Select1st<LookupPair>,_STL::less<int>,_STL::allocator<LookupPair> > LookupTree;
-template<> template<> __declspec(noinline) LookupTree::iterator LookupTree::find<int>(const int &key)
+template<> template<> inline __declspec(noinline) LookupTree::iterator LookupTree::find<int>(const int &key)
 {
     return LookupTree::iterator(_M_find(key));
 }
