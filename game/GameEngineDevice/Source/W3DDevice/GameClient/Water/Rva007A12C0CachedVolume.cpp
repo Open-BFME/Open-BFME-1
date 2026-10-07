@@ -4,10 +4,28 @@
 // 0x007A12C0.  The owning class name remains address-derived because the
 // target has no named caller or identifying vtable reference.
 
+// The cached value is built by ILT 0x0002687D -> 0x007A0DF0, the matched
+// AABoxClass::AABoxClass(Vector3 *points, int count)
+// (WWMath/AABoxClassPointsConstructor.cpp).
+class Vector3;
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/aabox.h
+class AABoxClass
+{
+public:
+	AABoxClass(Vector3 *points, int count);
+
+	unsigned int first;
+	unsigned int second;
+	unsigned int third;
+	unsigned int fourth;
+	unsigned int fifth;
+	unsigned int sixth;
+};
+
 class Rva007A12C0CachedVolume
 {
 public:
-	Rva007A12C0CachedVolume(void *first, void *second);
 
 	unsigned int first;
 	unsigned int second;
@@ -36,7 +54,7 @@ Rva007A12C0CachedVolume &Rva007A12C0CacheOwner::getCachedVolume(void)
 {
 	if (!m_cacheValid)
 	{
-		Rva007A12C0CachedVolume value(m_firstSource, m_secondSource);
+		AABoxClass value((Vector3 *)m_firstSource, (int)m_secondSource);
 		m_cachedVolume.first = value.first;
 		m_cachedVolume.second = value.second;
 		m_cachedVolume.third = value.third;
