@@ -13223,7 +13223,6 @@ _AMDX3D_D3DXFloat32To16Array@12,0x00EA8640
 _AODCrushCollideFieldParse,0x0041A122
 _AODHordeContainFieldParse,0x004334F6
 _AnimalAIUpdateFieldParse,0x00436E30
-_AnimationSoundClientBehaviorFieldParse,0x0041DF0C
 _ArmorUpgradeFieldParse,0x004484F5
 _ArrowStormUpdateModuleData_vtbl,0x010B3668
 _AssaultTransportAIUpdateFieldParse,0x0040A35D
@@ -13385,7 +13384,6 @@ _Made001E5A20_vtbl,0x010CE8FC
 _ModelConditionUpgradeFieldParse,0x0043B41C
 _ModuleTemplate_vtbl0,0x01073758
 _MoneyCrateCollideFieldParse,0x0042BAEE
-_MonsterDockUpdateFieldParse,0x0041C008
 _OathbreakersFadeAwayBehaviorFieldParse,0x0042AEF5
 _ObjectCreationUpgradeFieldParse,0x00409D59
 _ObjectDefectionHelper_vtbl0,0x0109E574
@@ -13409,7 +13407,6 @@ _RenderObjectDrawConcrete_vtbl4,0x01111394
 _RenderObjectDrawConcrete_vtbl8,0x01111380
 _RenderObjectDrawModuleInfo_vtbl,0x011112B8
 _RespawnBodyFieldParse,0x0044B650
-_RousingSpeechUpdateFieldParse,0x0042009A
 _RunOffMapBehaviorFieldParse,0x00412F80
 _Rva0005B930_CharUpperW9x@4,0x004366BF
 _Rva0005DD20_lstrcmpiW9x@8,0x00439239
