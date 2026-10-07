@@ -3,13 +3,14 @@
 // kept of it is never read again. Built without optimisation; the callee is
 // pinned by address.
 
-void *bfmeAllocPV(int kind, unsigned int bytes);
+// Retail calls ILT 0x30940 -> 0x607E0, the matched OpenBFME5_ReturnSecondPointer.
+void *OpenBFME5_ReturnSecondPointer(void *, void *value);
 
 void bfmeMakePV(unsigned int bytes)
 {
 	void *out;
 
-	char *got = (char *)bfmeAllocPV(1, bytes);
+	char *got = (char *)OpenBFME5_ReturnSecondPointer((void *)1, (void *)bytes);
 
 	if (got != 0)
 	{

@@ -4,7 +4,8 @@
 // is what puts this in the middle slot. Built without optimisation; the callee is
 // pinned by address.
 
-void *bfmeAllocQB(int kind, unsigned int bytes);
+// Retail calls ILT 0x30940 -> 0x607E0, the matched OpenBFME5_ReturnSecondPointer.
+void *OpenBFME5_ReturnSecondPointer(void *, void *value);
 
 class BfmeThingQB
 {
@@ -14,7 +15,7 @@ public:
 
 void BfmeThingQB::bfmeMakeQB(unsigned int bytes, void *spare)
 {
-	char *got = (char *)bfmeAllocQB(1, bytes);
+	char *got = (char *)OpenBFME5_ReturnSecondPointer((void *)1, (void *)bytes);
 
 	(got != 0) ? (*got = 0, (void *)got) : (void *)0;
 }
