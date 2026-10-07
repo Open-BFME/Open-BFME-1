@@ -82,7 +82,21 @@ WIDE_FIELD_PARSE( 00116960, 0003572E )
 WIDE_FIELD_PARSE( 00118640, 0003572E )
 WIDE_FIELD_PARSE( 001187C0, 0003572E )
 WIDE_FIELD_PARSE( 00118E80, 0000629E )
-WIDE_FIELD_PARSE( 00118FC0, 0000629E )
+extern const WideFieldParse WideTbl00118FC0[];
+class ModelConditionSpecialAbilityUpdateModuleData
+{
+public:
+	static void buildFieldParse(MultiIniFieldParse &p);
+};
+
+// The ModelConditionSpecialAbilityUpdate factory (friend_newModuleData 0x00119070, see
+// ModelConditionSpecialAbilityUpdateFriendNewModuleDataThunk.cpp) passes this module-data
+// builder: retail ILT 0x000492B0 reaches this 30-byte body at RVA 0x00118FC0.
+void ModelConditionSpecialAbilityUpdateModuleData::buildFieldParse(MultiIniFieldParse &p)
+{
+	Gen0000629E::buildFieldParse(reinterpret_cast<WideMulti &>(p));
+	p.add(reinterpret_cast<const FieldParse *>(WideTbl00118FC0), 0);
+}
 WIDE_FIELD_PARSE( 00119100, 0000629E )
 WIDE_FIELD_PARSE( 00119240, 0000629E )
 WIDE_FIELD_PARSE( 00119380, 0000629E )
@@ -141,7 +155,21 @@ WIDE_FIELD_PARSE( 0025E7F0, 0000629E )
 WIDE_FIELD_PARSE( 0025F0B0, 0002AF8B )
 WIDE_FIELD_PARSE( 0025FCF0, 0000629E )
 WIDE_FIELD_PARSE( 00263970, 0002AF8B )
-WIDE_FIELD_PARSE( 002639A0, 0002AF8B )
+extern const WideFieldParse WideTbl002639A0[];
+class PlayerHealSpecialPowerModuleData
+{
+public:
+	static void buildFieldParse(MultiIniFieldParse &p);
+};
+
+// The PlayerHealSpecialPower factory (friend_newModuleData 0x00121480, see
+// PlayerHealSpecialPowerFriendNewModuleDataThunk.cpp) passes this module-data
+// builder: retail ILT 0x0003023D reaches this 30-byte body at RVA 0x002639A0.
+void PlayerHealSpecialPowerModuleData::buildFieldParse(MultiIniFieldParse &p)
+{
+	Gen0002AF8B::buildFieldParse(reinterpret_cast<WideMulti &>(p));
+	p.add(reinterpret_cast<const FieldParse *>(WideTbl002639A0), 0);
+}
 WIDE_FIELD_PARSE( 002643F0, 0002AF8B )
 WIDE_FIELD_PARSE( 00264420, 0002AF8B )
 WIDE_FIELD_PARSE( 002647C0, 0002AF8B )

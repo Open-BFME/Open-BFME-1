@@ -7,17 +7,18 @@ class ModuleData;
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
 
+class MultiIniFieldParse;
+
 class PlayerHealSpecialPowerModuleData
 {
 public:
+	static void buildFieldParse(MultiIniFieldParse &p);	// 0x002639A0 via ILT 0x0003023D
 	PlayerHealSpecialPowerModuleData();
 	virtual ~PlayerHealSpecialPowerModuleData();
 
 private:
 	unsigned char m_pad[0x234];
 };
-
-class MultiIniFieldParse;
 
 // Retail's module-data factories reach INI through initFromINIMultiProc
 // (0x00852130), which takes the class's buildFieldParse proc; the
@@ -30,8 +31,6 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl PlayerHealSpecialPowerFieldParse(MultiIniFieldParse &parse);
-
 class PlayerHealSpecialPower
 {
 public:
@@ -43,6 +42,6 @@ ModuleData *PlayerHealSpecialPower::friend_newModuleData(INI *ini)
 {
 	PlayerHealSpecialPowerModuleData *data = new PlayerHealSpecialPowerModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &PlayerHealSpecialPowerFieldParse);
+		ini->initFromINIMultiProc(data, &PlayerHealSpecialPowerModuleData::buildFieldParse);
 	return (ModuleData *)data;
 }

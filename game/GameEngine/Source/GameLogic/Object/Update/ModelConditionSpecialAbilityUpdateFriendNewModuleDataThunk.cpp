@@ -7,17 +7,18 @@ class ModuleData;
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
 
+class MultiIniFieldParse;
+
 class ModelConditionSpecialAbilityUpdateModuleData
 {
 public:
+	static void buildFieldParse(MultiIniFieldParse &p);	// 0x00118FC0 via ILT 0x000492B0
 	ModelConditionSpecialAbilityUpdateModuleData();
 	virtual ~ModelConditionSpecialAbilityUpdateModuleData();
 
 private:
 	unsigned char m_pad[0x25c];
 };
-
-class MultiIniFieldParse;
 
 // Retail's module-data factories reach INI through initFromINIMultiProc
 // (0x00852130), which takes the class's buildFieldParse proc; the
@@ -30,8 +31,6 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl ModelConditionSpecialAbilityUpdateFieldParse(MultiIniFieldParse &parse);
-
 class ModelConditionSpecialAbilityUpdate
 {
 public:
@@ -43,6 +42,6 @@ ModuleData *ModelConditionSpecialAbilityUpdate::friend_newModuleData(INI *ini)
 {
 	ModelConditionSpecialAbilityUpdateModuleData *data = new ModelConditionSpecialAbilityUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &ModelConditionSpecialAbilityUpdateFieldParse);
+		ini->initFromINIMultiProc(data, &ModelConditionSpecialAbilityUpdateModuleData::buildFieldParse);
 	return (ModuleData *)data;
 }
