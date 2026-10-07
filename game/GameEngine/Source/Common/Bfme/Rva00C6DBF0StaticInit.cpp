@@ -12,6 +12,8 @@ public:
     ~Rva008838F0Owner();
 };
 
-extern void *g_012D4D14[];
+// VA 0x012D4D14 (.data): the owner's null-terminated table of allocation
+// source names, read from the retail image.
+void *g_012D4D14[] = { (void *)"malloc", (void *)"new", (void *)"array-new", (void *)"allocator", 0 };
 
 Rva008838F0Owner g_bfmeRva0130EA10Owner((void *)"heap memory", g_012D4D14);

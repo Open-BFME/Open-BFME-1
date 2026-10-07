@@ -90444,3 +90444,7 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_0O@IIBMEOBO@Vertex00Color?$AA@,0x00CF6EF4,Retail Water field-parse table entry; compiler string literal Vertex00Color equals retail at VA 0x010F6EF4
 ??_C@_0O@OCMBEFDE@Vertex11Color?$AA@,0x00CF6EC4,Retail Water field-parse table entry; compiler string literal Vertex11Color equals retail at VA 0x010F6EC4
 ?Rva00592FE0@@YAHHH@Z,0x00007518,route=0x00592FE0; retail 0x00596C10 bfmeMatchFI and the S5HandleHashCompares pair reach the matched 100-byte cdecl wrapper through this ILT
+??_C@_06GLDDLHNF@malloc?$AA@,0x01132BE8,retail rdata literal "malloc"; dword 0 of the allocator source-name table at VA 0x012D4D14
+??_C@_03CLCAEGCJ@new?$AA@,0x01132C8C,retail rdata literal "new"; dword 1 of the allocator source-name table at VA 0x012D4D14
+??_C@_09NPFGBDFO@array?9new?$AA@,0x01132C80,retail rdata literal "array-new"; dword 2 of the allocator source-name table at VA 0x012D4D14
+??_C@_09PCFAIACE@allocator?$AA@,0x01132C74,retail rdata literal "allocator"; dword 3 of the allocator source-name table at VA 0x012D4D14
