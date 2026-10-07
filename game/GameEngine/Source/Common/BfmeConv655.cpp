@@ -1,7 +1,18 @@
+// Retail 0x00540680 calls ILT 0x22999 -> matched 0x0053FC00 on the same this
+// (callees.py).
+class BfmeAptScreenOnlineCustomMatch
+{
+public:
+	void applyStagingRoomRefresh();
+};
+
 class BfmeThingCVD
 {
 public:
-	void bfmeApplyCVD();
+	__forceinline void bfmeApplyCVD()
+	{
+		((BfmeAptScreenOnlineCustomMatch *)this)->applyStagingRoomRefresh();
+	}
 	void bfmeGoCVD(void *what);
 	unsigned char m_bfmeHead[0x1e8];
 	int m_bfmeState;
