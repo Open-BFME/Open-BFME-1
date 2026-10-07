@@ -26,7 +26,7 @@ class StateMachineBase
 {
 public:
 	StateMachineBase() {}
-	virtual ~StateMachineBase();
+	virtual ~StateMachineBase() {}	// same COMDAT shape as StateMachineDestructorThunk.cpp
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
