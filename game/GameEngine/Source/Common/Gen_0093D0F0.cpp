@@ -2,15 +2,17 @@
 // The owning and entry identities are not recovered; the eight-byte entry
 // stride and its leading object pointer are the layout facts visible here.
 
-class Gen_0093D0F0_Item
+// The entry's call goes straight to matched Render2DClass::Reset at
+// 0x00934820 (callees.py).
+class Render2DClass
 {
 public:
-	void step();
+	void Reset();
 };
 
 struct Gen_0093D0F0_Entry
 {
-	Gen_0093D0F0_Item *m_item;
+	Render2DClass *m_item;
 	int m_other;
 };
 
@@ -29,5 +31,5 @@ private:
 void Gen_0093D0F0::process()
 {
 	for (int i = 0; i < m_count; ++i)
-		m_entries[i].m_item->step();
+		m_entries[i].m_item->Reset();
 }
