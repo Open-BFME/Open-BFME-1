@@ -31,10 +31,10 @@ public:
 	void linkNode_009F4D80(Gen009F5040Node *node);
 };
 
-class Rva009F59D0
+class PartitionManagerImpl
 {
 public:
-	void method(unsigned level);
+	void SetTreeDepth(unsigned level);
 
 	Int m_0000[6];
 	_STL::vector<ICoord2D> m_0018[17];
@@ -44,7 +44,7 @@ public:
 	char m_00F0[4];
 };
 
-void Rva009F59D0::method(unsigned level)
+void PartitionManagerImpl::SetTreeDepth(unsigned level)
 {
 	if (level > 11)
 		return;
