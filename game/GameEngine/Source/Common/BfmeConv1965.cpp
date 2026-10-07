@@ -17,10 +17,21 @@ class BfmeThingERX
 public:
 };
 
+// ILT 0x2C836 -> 0x0021F4E0, matched ?ready@Rva0021F4E0@@QAEDPAX0@Z
+// (Rva0021F4E0Ready.cpp).
+class Rva0021F4E0
+{
+public:
+	char ready(void *first, void *second);
+};
+
 class BfmeBaseERX
 {
 public:
-	char bfmeAllowERX(BfmeThingERX *thing, int flag);
+	char bfmeAllowERX(BfmeThingERX *thing, int flag)
+	{
+		return ((Rva0021F4E0 *)this)->ready(thing, (void *)flag);
+	}
 };
 
 class BfmeHostERX
