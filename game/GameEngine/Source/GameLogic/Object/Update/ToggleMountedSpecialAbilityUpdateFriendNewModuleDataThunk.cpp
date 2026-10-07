@@ -30,7 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl ToggleMountedSpecialAbilityUpdateFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the ILT stub 0x00046EAC (?j_00046eac@@YAXXZ).
+extern void j_00046eac(void);
 
 class ToggleMountedSpecialAbilityUpdate
 {
@@ -43,6 +44,6 @@ ModuleData *ToggleMountedSpecialAbilityUpdate::friend_newModuleData(INI *ini)
 {
 	ToggleMountedSpecialAbilityUpdateModuleData *data = new ToggleMountedSpecialAbilityUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &ToggleMountedSpecialAbilityUpdateFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))j_00046eac);
 	return (ModuleData *)data;
 }
