@@ -11,6 +11,13 @@ public:
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 
+// ILT 0x00011E14 -> 0x00559360, the matched pushStats@BfmePushStatsHost@@QAEXH@Z.
+class BfmePushStatsHost
+{
+public:
+	void pushStats(int reason);
+};
+
 class BfmeHostAI
 {
 public:
@@ -22,7 +29,6 @@ class BfmeOwnAI
 {
 public:
 	int bfmeHandleAI(void *unused, int code, unsigned char kind, int flags);
-	void bfmeCloseAI(int reason);
 
 	unsigned char m_bfmeHeadAI[0x34];
 	BfmeHostAI *m_bfmeHostAI;
@@ -55,7 +61,7 @@ int BfmeOwnAI::bfmeHandleAI(void *unused, int code, unsigned char kind, int flag
 	{
 		((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAI(m_bfmeHostAI->m_bfmeSinkAI, "CallChild", state,
 			"EscapeKeyPressed", 0, 0, 0, 0);
-		bfmeCloseAI(0);
+		reinterpret_cast<BfmePushStatsHost *>(this)->pushStats(0);
 
 		return 1;
 	}
