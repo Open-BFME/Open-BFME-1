@@ -80,11 +80,6 @@ public:
 
 	char m_stateFields[ 0x18 ];
 	StateMachine *m_machine;
-
-	Object *getMachineOwner()
-	{
-		return m_machine->m_owner;
-	}
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
@@ -106,8 +101,10 @@ public:
 
 StateReturnType AIWaitUntilFinishedFiringState::onEnter()
 {
-	Weapon *weapon = getMachineOwner()->getCurrentWeapon( 0 );
-	Object *object = getMachineOwner();
+	// State::getMachineOwner, read directly: a TU-local copy of that inline
+	// would be emitted under the header's name with this view's layout.
+	Weapon *weapon = m_machine->m_owner->getCurrentWeapon( 0 );
+	Object *object = m_machine->m_owner;
 	if ( !weapon )
 		return STATE_FAILURE;
 
