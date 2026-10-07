@@ -3748,11 +3748,7 @@ void ScriptActions::doPlayerKill(const AsciiString& playerName)
 /** doDisplayText */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doDisplayText_Thunk.cpp
-// ?doDisplayText@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
-void ScriptActions::doDisplayText(const AsciiString& displayText)
-{
-	TheInGameUI->message(displayText);	
-}
+// (retail 0x002F3BA0 is defined only there.)
 
 //-------------------------------------------------------------------------------------------------
 /** doInGamePopupMessage */
