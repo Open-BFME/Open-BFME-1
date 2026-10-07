@@ -7,7 +7,7 @@
 #include <new>
 
 // 0x0112B9C0 is the secondary base's own four-slot table, which the table does not name.
-extern const void *g_0112B9C0[];
+extern const void *const g_0112B9C0[];
 extern void *g_Rva00803890Vt2[];
 extern "C" void *bfmeVftRva00803890Owner[];
 #pragma comment(linker, "/alternatename:_bfmeVftRva00803890Owner=??_7Rva00803890Owner@@6B@")

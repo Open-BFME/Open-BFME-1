@@ -16,7 +16,16 @@ public:
 class BfmeThingECMa;
 BfmeThingECMa *bfmeGoECMa(void);
 
-extern const void *g_0112B9C0[];
+// Four physical readonly cells at retail VA 0x0112B9C0, each pointing
+// directly to the existing CRT _purecall override. No original base-class
+// identity is claimed; see identity_evidence/0x00d2b9c0-purecall-cells.md.
+extern "C" int __cdecl _purecall(void);
+extern const void *const g_0112B9C0[4] = {
+	(const void *)_purecall,
+	(const void *)_purecall,
+	(const void *)_purecall,
+	(const void *)_purecall
+};
 // The four vftables this constructor stores, each spelled exactly as the object
 // that defines it spells it, so no linker alias is needed.
 extern "C" const void *__identifier("??_7Rva00803080@@6B@")[];
