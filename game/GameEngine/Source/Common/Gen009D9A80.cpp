@@ -1,7 +1,6 @@
 // cl: /DNDEBUG /MD /O2
 // Clean C++ conversion of the UnicodeString formatter at retail RVA 0x009D9A80.
 extern "C" void __cdecl bfmeAppend(void *stream, const char *format, ...);
-extern const char g_bfmeEmptyUnicode[];
 
 struct BfmeUnicodeString
 {
@@ -24,7 +23,7 @@ Gen009D9A80 *Gen009D9A80::bfmeEmit(BfmeUnicodeString *value)
 		bfmeAppend(this, 0);
 	const unsigned short *text = value->storage
 		? value->storage + 4
-		: reinterpret_cast<const unsigned short *>(g_bfmeEmptyUnicode);
+		: reinterpret_cast<const unsigned short *>(L"");
 	bfmeAppend(this, "%'%S' [unicode]\n", text);
 	m_pending = false;
 	return this;
