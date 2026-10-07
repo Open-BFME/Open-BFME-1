@@ -4,7 +4,8 @@ class BfmeOwnCD
 {
 public:
 	virtual ~BfmeOwnCD(void);
-	virtual void bfmePureCD(void) = 0;
+	// Retail vftable 0x010E7688 holds one slot, the deleting destructor
+	// 0x00339FA0 (via ILT 0x1D499); no second virtual.
 
 	AsciiString m_bfmeTextCD;
 	AsciiString *m_bfmeTargetCD;
