@@ -77,7 +77,7 @@ public:
 	UnsignedByte getArgumentCount() const { return m_argCount; }
 
 	const GameMessageArgumentType *getArgument(Int index) const;	///< ILT 0x00045AE3
-	int getArgumentDataType(Int index);				///< ILT 0x0001A3D4
+	GameMessageArgumentDataType getArgumentDataType(Int index);	///< ILT 0x0001A3D4 -> 0x0008A380
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameMessageParser.h
@@ -222,7 +222,7 @@ void NetPacket::FillBufferWithGameCommand(UnsignedByte *buffer, NetCommandRef *r
 
 	Int numArgs = gmsg->getArgumentCount();
 	for (Int i = 0; i < numArgs; ++i) {
-		GameMessageArgumentDataType type = (GameMessageArgumentDataType)gmsg->getArgumentDataType(i);
+		GameMessageArgumentDataType type = gmsg->getArgumentDataType(i);
 		GameMessageArgumentType arg = *(gmsg->getArgument(i));
 
 		if (type == ARGUMENTDATATYPE_INTEGER) {
