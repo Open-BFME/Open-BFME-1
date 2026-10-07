@@ -1676,20 +1676,7 @@ void DX8SkinFVFCategoryContainer::Add_Visible_Skin(MeshClass * mesh)
 
 // ----------------------------------------------------------------------------
 
-// ?Reset@DX8SkinFVFCategoryContainer@@AAEXXZ present-unmatched
-void DX8SkinFVFCategoryContainer::Reset()
-{
-	clearVisibleSkinList();
-	
-	for (unsigned pass=0;pass<passes;++pass) {
-		while (DX8TextureCategoryClass* texture_category=texture_category_list[pass].Peek_Head()) {
-			delete texture_category;
-		}
-	}
-
-	REF_PTR_RELEASE(index_buffer);
-	used_indices=0;
-}
+// DX8SkinFVFCategoryContainer::Reset: retail body in DX8SkinFVFCategoryContainerResetBFME.cpp.
 
 // ----------------------------------------------------------------------------
 
