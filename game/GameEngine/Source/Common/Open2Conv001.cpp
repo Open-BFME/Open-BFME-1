@@ -104,16 +104,30 @@ int Gen0053ACD0::get( void )
 // in ecx and pops its own argument, so it is __thiscall with one argument.
 // Returning the object in eax is what keeps esi live across the call.
 
-class Open2C800Target
+// The callee is retail ILT 0x1BA31 -> 0x0053C710, the matched STLport
+// basic_istream<char>::_M_formatted_get(char&), so this wrapper is one of
+// STLport's operator>>(istream&, char&/unsigned char&/signed char&)
+// extractors; which overload is unproven, so the name stays address-derived.
+namespace _STL
+{
+template <class _CharT> class char_traits;
+template <class _CharT, class _Traits> class basic_istream;
+
+template <>
+class basic_istream<char, char_traits<char> >
 {
 public:
-	void assign( void *value );
+	void _M_formatted_get( char &c );
 };
+}
+
+class Open2C800Target;
 
 // @?Rva0053C800@@YAPAVOpen2C800Target@@PAV1@PAX@Z 0x0053C800
 Open2C800Target *Rva0053C800( Open2C800Target *target, void *value )
 {
-	target->assign( value );
+	reinterpret_cast<_STL::basic_istream<char, _STL::char_traits<char> > *>( target )
+		->_M_formatted_get( *static_cast<char *>( value ) );
 	return target;
 }
 
