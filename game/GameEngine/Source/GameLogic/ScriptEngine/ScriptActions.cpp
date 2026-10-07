@@ -2508,16 +2508,7 @@ void ScriptActions::updateTeamSetAttitude(const AsciiString& teamName, Int attit
 //-------------------------------------------------------------------------------------------------
 /** doNamedSetRepulsor */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doNamedSetRepulsor.cpp
-// ?doNamedSetRepulsor@ScriptActions@@IAEXABVAsciiString@@_N@Z present-unmatched
-void ScriptActions::doNamedSetRepulsor(const AsciiString& unitName, Bool repulsor)
-{
-	Object *theSrcUnit = TheScriptEngine->getUnitNamed(unitName);
-	if (!theSrcUnit) {
-		return;
-	}
-	theSrcUnit->setStatus( MAKE_OBJECT_STATUS_MASK( OBJECT_STATUS_REPULSOR ), repulsor);
-}
+// ?doNamedSetRepulsor@ScriptActions@@IAEXABVAsciiString@@_N@Z: retail body matched in ScriptActions_doNamedSetRepulsor.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** doTeamSetRepulsor */
