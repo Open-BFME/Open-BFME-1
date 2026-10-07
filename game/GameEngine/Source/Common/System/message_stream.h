@@ -8,6 +8,7 @@ typedef unsigned int UnsignedInt;
 typedef unsigned short WideChar;
 
 class GameMessageList;
+struct GameMessageArgument;
 
 struct Coord3D;
 struct ICoord2D;
@@ -22,7 +23,7 @@ public:
 	static AsciiString getCommandTypeAsAsciiString(Type t);
 
 	// Argument-list mutators: each allocates a new GameMessageArgument (via the
-	// not-yet-converted allocArg(), REL32-pinned in targets/game/reverse/symbols.csv) and
+	// allocArg() below, matched at retail 0x0008AAE0) and
 	// stores the value at m_data@+0x8 / m_type@+0x18 of the returned argument.
 	void appendIntegerArgument(Int arg);
 	void appendRealArgument(Real arg);
@@ -36,9 +37,12 @@ public:
 	void appendTimestampArgument(UnsignedInt arg);
 	void appendWideCharArgument(const WideChar &arg);
 
+protected:
+	// Retail 0x0008AAE0, ?allocArg@GameMessage@@IAEPAUGameMessageArgument@@XZ
+	// (GameMessage_allocArg.cpp): protected, returning ZH's GameMessageArgument.
+	GameMessageArgument *allocArg();
+
 private:
-	struct Argument;
-	Argument *allocArg();
 	GameMessage *m_next;
 	GameMessage *m_prev;
 	GameMessageList *m_list;
@@ -46,6 +50,6 @@ private:
 	Int m_playerIndex;
 	unsigned char m_argCount;
 	unsigned char m_padding[3];
-	Argument *m_argList;
-	Argument *m_argTail;
+	GameMessageArgument *m_argList;
+	GameMessageArgument *m_argTail;
 };

@@ -33,9 +33,9 @@ struct GameMessageLocationRaw { Real x, y, z; };
 struct GameMessagePixelRegionRaw { Int x_min, y_min, x_max, y_max; };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
-struct GameMessage::Argument {
-	virtual ~Argument();
-	Argument *m_next;
+struct GameMessageArgument {
+	virtual ~GameMessageArgument();
+	GameMessageArgument *m_next;
 	union {
 		Int integer;
 		Real real;
@@ -54,7 +54,7 @@ struct GameMessage::Argument {
 
 __forceinline GameMessage::~GameMessage()
 {
-	Argument *argument, *next;
+	GameMessageArgument *argument, *next;
 	for (argument = m_argList; argument != 0; argument = next)
 	{
 		next = argument->m_next;
@@ -68,49 +68,49 @@ __forceinline GameMessage::~GameMessage()
 
 void GameMessage::appendIntegerArgument(Int arg)
 {
-	Argument *a = allocArg();
+	GameMessageArgument *a = allocArg();
 	a->m_data.integer = arg;
 	a->m_type = 0;
 }
 
 void GameMessage::appendRealArgument(Real arg)
 {
-	Argument *a = allocArg();
+	GameMessageArgument *a = allocArg();
 	a->m_data.real = arg;
 	a->m_type = 1;
 }
 
 void GameMessage::appendBooleanArgument(Bool arg)
 {
-	Argument *a = allocArg();
+	GameMessageArgument *a = allocArg();
 	a->m_data.boolean = arg;
 	a->m_type = 2;
 }
 
 void GameMessage::appendObjectIDArgument(UnsignedInt arg)
 {
-	Argument *a = allocArg();
+	GameMessageArgument *a = allocArg();
 	a->m_data.objectID = arg;
 	a->m_type = 3;
 }
 
 void GameMessage::appendDrawableIDArgument(UnsignedInt arg)
 {
-	Argument *a = allocArg();
+	GameMessageArgument *a = allocArg();
 	a->m_data.drawableID = arg;
 	a->m_type = 4;
 }
 
 void GameMessage::appendTeamIDArgument(UnsignedInt arg)
 {
-	Argument *a = allocArg();
+	GameMessageArgument *a = allocArg();
 	a->m_data.teamID = arg;
 	a->m_type = 5;
 }
 
 void GameMessage::appendLocationArgument(const Coord3D &arg)
 {
-	Argument *a = allocArg();
+	GameMessageArgument *a = allocArg();
 	a->m_data.location = *(const GameMessageLocationRaw *)&arg;
 	a->m_type = 7;
 }
@@ -118,7 +118,7 @@ void GameMessage::appendLocationArgument(const Coord3D &arg)
 void GameMessage::appendPixelArgument(const ICoord2D &arg)
 {
 	const Int *src = (const Int *)&arg;
-	Argument *a = allocArg();
+	GameMessageArgument *a = allocArg();
 	a->m_data.pixel.x = src[0];
 	a->m_data.pixel.y = src[1];
 	a->m_type = 8;
@@ -126,21 +126,21 @@ void GameMessage::appendPixelArgument(const ICoord2D &arg)
 
 void GameMessage::appendPixelRegionArgument(const IRegion2D &arg)
 {
-	Argument *a = allocArg();
+	GameMessageArgument *a = allocArg();
 	a->m_data.pixelRegion = *(const GameMessagePixelRegionRaw *)&arg;
 	a->m_type = 9;
 }
 
 void GameMessage::appendTimestampArgument(UnsignedInt arg)
 {
-	Argument *a = allocArg();
+	GameMessageArgument *a = allocArg();
 	a->m_data.timestamp = arg;
 	a->m_type = 10;
 }
 
 void GameMessage::appendWideCharArgument(const WideChar &arg)
 {
-	Argument *a = allocArg();
+	GameMessageArgument *a = allocArg();
 	a->m_data.wChar = arg;
 	a->m_type = 11;
 }

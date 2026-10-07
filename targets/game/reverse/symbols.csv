@@ -15453,7 +15453,6 @@ name,address,notes
 ?aiPreTeamDestroy@AIPlayer@@QAEXPBVTeam@@@Z,0x00161430,Player preTeamDestroy tail target; canonical AIPlayer queue-removal body matches retail structure
 ?allInside@Team@@QBE_NPAVPolygonTrigger@@I@Z,0x000F5A30,the call ScriptConditions::evaluateTeamInsideAreaEntirely (0x00324AC0) makes on the team it looked up with the trigger area and the type parameter; the reference declares exactly that const member with that pair and nothing else in Team takes it
 ?allOnSameFrame@DisconnectManager@@IAE_NPAVConnectionManager@@@Z,0x00020DB5,DisconnectManager status update frame-alignment gate through ILT to the existing 0x0066C160 body
-?allocArg@GameMessage@@AAEPAUArgument@1@XZ,0x0002CC8C,GameMessage::allocArg private helper not yet converted to C++; retail target of the append*Argument leaves' call
 ?allocate@?$__node_alloc@$00$0A@@_STL@@SAPAXI@Z,0x00048586,Open-BFME5 ILT the wide basic_string reserve at 0x00839590 allocates through
 ?allocate@Rva00802040Arr@@QAEXH@Z,0x00801BD0,FESL Arr allocate alias of Rva00801600::allocate; pin for 0x802040
 ?allocate@Rva00914860PoolA@@QAE_NHH@Z,0x0003FC7E,Open-BFME5 pool A allocation used by the 0x00914860 sizing update
