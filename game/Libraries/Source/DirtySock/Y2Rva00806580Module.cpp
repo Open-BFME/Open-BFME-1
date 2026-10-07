@@ -397,7 +397,7 @@ extern "C" void Rva0080B4B0( Rva0080B1B0Comm *comm )
 			data, certSize );
 		if( parseResult < 0 )
 		{
-			Rva007FE780( "x509 certificate is invalid (error=%d) ", parseResult );
+			Rva007FE780( "x509 certificate is invalid (error=%d)\n", parseResult );
 			comm->m_state = 0x1003;
 		}
 		else
