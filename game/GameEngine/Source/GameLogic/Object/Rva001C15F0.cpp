@@ -33,11 +33,14 @@ extern GlobalData *TheWritableGlobalData;
 // Drawable::setIndicatorColor establish owner/callees; method stays opaque.
 // The local unsigned color helper is reconstruction structure, not a second
 // public getNightIndicatorColor signature. See identity_evidence/001c15f0-native-getters.md.
-#define OBJECT_TU_MEMBERS void rva001C15F0(); unsigned int getIndicatorColor() const;
+#define OBJECT_TU_MEMBERS void rva001C15F0();
 #include "object.h"
-inline unsigned int Object::getIndicatorColor() const {
- if(m_indicatorColor) return m_indicatorColor;
- if(m_team) { Player *p=m_team->getControllingPlayer(); if(p) return p->m_bfmePlainCA; }
+// The day colour is Object::getIndicatorColor's expression, inlined here; a
+// file-static helper keeps this TU from emitting a second strong copy of the
+// matched 0x001BE4F0 body (ObjectTeamAndPlayer.cpp).
+static unsigned int getIndicatorColor(const Object *self) {
+ if(self->m_indicatorColor) return self->m_indicatorColor;
+ if(self->m_team) { Player *p=self->m_team->getControllingPlayer(); if(p) return p->m_bfmePlainCA; }
  return 0xff000000;
 }
 static unsigned int rva001C15F0NightColor(const Object *self) {
@@ -49,5 +52,5 @@ void Object::rva001C15F0() {
  Drawable *r=getDrawable();
  if(r==0) return;
  if(((const Rva006C9270GlobalData *)TheWritableGlobalData)->m_bfmeModeCA==4) r->setIndicatorColor(rva001C15F0NightColor(this));
- else r->setIndicatorColor(getIndicatorColor());
+ else r->setIndicatorColor(getIndicatorColor(this));
 }
