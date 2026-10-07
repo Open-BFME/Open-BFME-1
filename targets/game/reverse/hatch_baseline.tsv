@@ -1086,7 +1086,6 @@ alternatename	game/GameEngine/Source/Common/Thing/ThingTemplateResolveNames.cpp	
 alternatename	game/GameEngine/Source/Common/Thing/ThingTemplateResolveNames.cpp	?getAllPossibleBuildFacilityTemplates@ProductionPrerequisite@@QBEHPAPBVThingTemplate@@H@Z	1
 alternatename	game/GameEngine/Source/Common/Thing/ThingTemplateResolveNames.cpp	?releaseBuffer@AsciiString@@AAEXXZ	1
 alternatename	game/GameEngine/Source/Common/Thing/ThingTemplateResolveNames.cpp	?resolveNames@ProductionPrerequisite@@QAEXXZ	1
-alternatename	game/GameEngine/Source/Common/calc.cpp	?evaluate@Rva00064410Catmull@@SAMMMMMM@Z	1
 alternatename	game/GameEngine/Source/GameClient/Drawable/Behavior/UpgradeSoundSelectorClientBehaviorParseSoundUpgrade.cpp	??0Rva00608FE0Element@@QAE@ABU0@@Z	1
 alternatename	game/GameEngine/Source/GameClient/Drawable/Behavior/UpgradeSoundSelectorClientBehaviorParseSoundUpgrade.cpp	??0Rva00608FE0Element@@QAE@XZ	1
 alternatename	game/GameEngine/Source/GameClient/Drawable/Behavior/UpgradeSoundSelectorClientBehaviorParseSoundUpgrade.cpp	??1Rva00608FE0Element@@QAE@XZ	1
