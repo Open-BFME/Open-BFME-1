@@ -7629,16 +7629,8 @@ CylinderEmissionVolumeModuleTemplate::~CylinderEmissionVolumeModuleTemplate()
     *(volatile unsigned int *)this = (unsigned int)g_vtbl_01073758;
 }
 
-// ??1CylindricalEmissionVelocityModuleTemplate@FXParticleSystem@@UAE@XZ
-CylindricalEmissionVelocityModuleTemplate::~CylindricalEmissionVelocityModuleTemplate()
-{
-    unsigned char *info = this ? (unsigned char *)this + 8 : 0;
-    *(volatile unsigned int *)info = (unsigned int)g_vtbl_01073744;
-
-    unsigned char *base = this ? (unsigned char *)this + 4 : 0;
-    *(volatile unsigned int *)base = (unsigned int)g_vtbl_0110F9CC;
-    *(volatile unsigned int *)this = (unsigned int)g_vtbl_01073758;
-}
+// ??1CylindricalEmissionVelocityModuleTemplate@FXParticleSystem@@UAE@XZ: retail body
+// (0x005D78F0) in CylindricalEmissionVelocityModuleTemplateDestructorThunk.cpp.
 
 // ??1HemisphericalEmissionVelocityModuleTemplate@FXParticleSystem@@UAE@XZ
 HemisphericalEmissionVelocityModuleTemplate::~HemisphericalEmissionVelocityModuleTemplate()
