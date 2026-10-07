@@ -1,6 +1,22 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
-extern void *g_Rva00789900Table[];
+extern void j_0001c756(void);
+extern void j_0001a893(void);
+extern void j_00033cad(void);
+extern void j_0001647d(void);
+extern void j_0003ca10(void);
+extern void j_00017189(void);
+
+// Retail 0x01126CCC: the owner's six-slot dispatch table (vtable_lookup.py);
+// each slot is the ILT thunk retail stores there.
+void *g_Rva00789900Table[] = {
+	(void *)&j_0001c756,
+	(void *)&j_0001a893,
+	(void *)&j_00033cad,
+	(void *)&j_0001647d,
+	(void *)&j_0003ca10,
+	(void *)&j_00017189,
+};
 
 class Rva00789900Init
 {
