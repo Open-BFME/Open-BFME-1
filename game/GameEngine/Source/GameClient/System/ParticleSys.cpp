@@ -2751,30 +2751,8 @@ void ParticleSystemManager::removeParticle( Particle *particleToRemove)
 /** Remove the oldest N number of particles from the lowest priority lists first.  We will
  * not remove particles from any priorities higher or equal to the priorityCap parameter. */
 // ------------------------------------------------------------------------------------------------
-// ?removeOldestParticles@ParticleSystemManager@@QAEHIW4ParticlePriorityType@@@Z present-unmatched
-Int ParticleSystemManager::removeOldestParticles( UnsignedInt count, 
-																									ParticlePriorityType priorityCap )
-{
-	Int countToRemove = count;
-
-	while (count-- && getParticleCount()) 
-	{
-		for( Int i = PARTICLE_PRIORITY_LOWEST;
-				 i < priorityCap;
-				 ++i )
-		{
-			if( m_allParticlesHead[ i ] ) 
-			{
-				m_allParticlesHead[ i ]->deleteInstance();
-				break;  // exit for
-			}
-		}
-	}
-
-	// return the number of particles actually removed
-	return countToRemove - count;
-
-}
+// ?removeOldestParticles@ParticleSystemManager@@QAEHIW4ParticlePriorityType@@@Z is retail 0x005BE770,
+// matched in ParticleSystemManagerRemoveOldestParticles.cpp; this TU only declares it.
 
 // ------------------------------------------------------------------------------------------------
 /** Preload particle system textures */
