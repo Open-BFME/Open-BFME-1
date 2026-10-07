@@ -876,78 +876,7 @@ void TurretAI::friend_notifyStateMachineChanged()
 	So it behooves you to maximize "sleep" potential here! (srj)
 */
 DECLARE_PERF_TIMER(TurretAI)
-// ?updateTurretAI@TurretAI@@QAE?AW4UpdateSleepTime@@XZ present-unmatched
-UpdateSleepTime TurretAI::updateTurretAI()
-{
-	USE_PERF_TIMER(TurretAI)
-
-#if defined(_DEBUG) || defined(_INTERNAL)
-	DEBUG_ASSERTCRASH(!m_enabled ||
-							m_turretStateMachine->peekSleepTill() == 0 || 
-							m_turretStateMachine->peekSleepTill() >= m_sleepUntil, ("Turret Machine is less sleepy than turret"));
-#endif
-
-	UnsignedInt now = TheGameLogic->getFrame();
-	if (m_sleepUntil != 0 && now < m_sleepUntil)
-	{
-		return UPDATE_SLEEP(m_sleepUntil - now);
-	}
-
-	//DEBUG_LOG(("updateTurretAI frame %d: %08lx\n",TheGameLogic->getFrame(),getOwner()));
-	UpdateSleepTime subMachineSleep = UPDATE_SLEEP_FOREVER;	// assume the best!
-
-	// either we don't care about continuous fire stuff, or we care, but time has elapsed
-	if ((!m_firesWhileTurning) || (m_continuousFireExpirationFrame <= now))
-	{
-		m_playRotSound = false;
-		m_playPitchSound = false;
-	}
-
-	if (m_enabled || m_turretStateMachine->getCurrentStateID() == TURRETAI_RECENTER)
-	{
-		m_didFire = false;
-
-		// run the behavior state machine BEFORE doing sound check
-		StateReturnType stRet = m_turretStateMachine->updateStateMachine();
-
-		if (m_didFire)
-		{
-			// if we fired, enable sweeping for a few frames.
-			const ENABLE_SWEEP_FRAME_COUNT = 3;
-			m_enableSweepUntil = now + ENABLE_SWEEP_FRAME_COUNT;
-			m_continuousFireExpirationFrame = now + ENABLE_SWEEP_FRAME_COUNT;// so the recent firing will not interrupt the moving sound
-		}
-
-		if (m_playRotSound || m_playPitchSound)
-			startRotOrPitchSound();
-		else
-			stopRotOrPitchSound();
-
-		if (IS_STATE_SLEEP(stRet))
-		{
-			Int frames = GET_STATE_SLEEP_FRAMES(stRet);
-			if (frames < subMachineSleep)
-				subMachineSleep = UPDATE_SLEEP(frames);
-		}
-		else
-		{
-			// it's STATE_CONTINUE, STATE_SUCCESS, or STATE_FAILURE, 
-			// any of which will probably require next frame
-			subMachineSleep = UPDATE_SLEEP_NONE;
-		}
-
-	}	// if enabled or recentering
-
-	m_sleepUntil = now + subMachineSleep;
-
-#if defined(_DEBUG) || defined(_INTERNAL)
-	DEBUG_ASSERTCRASH(!m_enabled ||
-							m_turretStateMachine->peekSleepTill() == 0 || 
-							m_turretStateMachine->peekSleepTill() >= m_sleepUntil, ("Turret Machine is less sleepy than turret"));
-#endif
-
-	return subMachineSleep;
-}
+// TurretAI::updateTurretAI: retail body matched in TurretAI_updateTurretAI.cpp.
 
 //-------------------------------------------------------------------------------------------------
 void TurretAI::setTurretEnabled( Bool enabled )
