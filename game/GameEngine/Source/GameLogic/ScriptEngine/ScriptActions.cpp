@@ -2835,34 +2835,6 @@ void ScriptActions::doNamedFollowWaypoints(const AsciiString& unitName, const As
 }
 
 //-------------------------------------------------------------------------------------------------
-/** doNamedFollowWaypointsExact */
-//-------------------------------------------------------------------------------------------------
-// ?doNamedFollowWaypointsExact@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
-void ScriptActions::doNamedFollowWaypointsExact(const AsciiString& unitName, const AsciiString& waypointPathLabel)
-{
-	Object *theUnit = TheScriptEngine->getUnitNamed( unitName );
-	if (!theUnit) {
-		return;
-	}
-	Coord3D pos = *theUnit->getPosition();
-	AIUpdateInterface* aiUpdate = theUnit->getAIUpdateInterface();
-	if (!aiUpdate) {
-		return;
-	}
-
-	Waypoint *way = TheTerrainLogic->getClosestWaypointOnPath( &pos, waypointPathLabel );
-	if (!way) {
-		return;
-	}
-
-	DEBUG_ASSERTLOG(TheTerrainLogic->isPurposeOfPath(way, waypointPathLabel), ("***Wrong waypoint purpose. Make jba fix this.\n"));
-	
-	theUnit->leaveGroup();
-	aiUpdate->chooseLocomotorSet(LOCOMOTORSET_NORMAL);
-	aiUpdate->aiFollowWaypointPathExact(way, CMD_FROM_SCRIPT);
-}
-
-//-------------------------------------------------------------------------------------------------
 /** doTeamFollowSkirmishApproachPath */
 //-------------------------------------------------------------------------------------------------
 // ?doTeamFollowSkirmishApproachPath@ScriptActions@@IAEXABVAsciiString@@0_N@Z present-unmatched
