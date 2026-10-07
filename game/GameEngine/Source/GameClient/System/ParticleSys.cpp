@@ -2580,14 +2580,8 @@ ParticleSystem *ParticleSystemManager::findParticleSystem( ParticleSystemID id )
 // ------------------------------------------------------------------------------------------------
 /** destroy the particle system with the given id (if it still exists) */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/ParticleSystemManager_destroyByID.cpp
-// ?destroyParticleSystemByID@ParticleSystemManager@@QAEXW4ParticleSystemID@@@Z present-unmatched
-void ParticleSystemManager::destroyParticleSystemByID(ParticleSystemID id)
-{
-	ParticleSystem* pSystem = findParticleSystem(id);
-	if( pSystem )
-		pSystem->destroy();
-}
+// ParticleSystemManager::destroyParticleSystemByID: the retail body lives in
+// ParticleSystemManager_destroyByID.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** Locate an existing ParticleSystemTemplate */
