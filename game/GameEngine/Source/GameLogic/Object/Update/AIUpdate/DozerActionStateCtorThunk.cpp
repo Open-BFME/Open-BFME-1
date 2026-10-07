@@ -61,6 +61,7 @@ class DozerActionState : public State
 {
 public:
 	DozerActionState(StateMachine *, DozerTask);
+	virtual ~DozerActionState();
 
 private:
 	DozerTask m_task;

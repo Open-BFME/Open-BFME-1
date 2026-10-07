@@ -100,5 +100,5 @@ R4_OWNED_PTR_DTOR_GUARDED( Rva00179550, AIInternalMoveToState, 0x5C )
 // Rva00183C10 now lives with its constructor and full 18-slot class in
 // GameLogic/AI/Rva00183AF0StateCtor.cpp.
 R4_OWNED_PTR_DTOR_PLAIN( Rva00183DC0, AIInternalMoveToState, 0x68 )
-R4_OWNED_PTR_DTOR_PLAIN( Rva002B85C0, R4Base000A1B30, 0x24 )
+R4_OWNED_PTR_DTOR_PLAIN( DozerActionState, R4Base000A1B30, 0x24 )
 R4_OWNED_PTR_DTOR_PLAIN( Rva002BF7D0, R4Base000A1B30, 0x28 )
