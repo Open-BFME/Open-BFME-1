@@ -481,3 +481,11 @@ game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorT
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_402,m_isAttackPosition,gpt-6-astra+grok,agreed,2026-10-07
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_403,m_isGuardingPosition,gpt-6-astra+grok,agreed,2026-10-07
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_404,m_overriddenAttack,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThunk.cpp|member||m_08,m_startRainTime,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThunk.cpp|member||m_0c,m_darknessFadeTime,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThunk.cpp|member||m_10,m_rainEmitterHeight,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThunk.cpp|member||m_14,m_darknessLevel,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThunk.cpp|member||m_18,m_jitterRadius,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThunk.cpp|member||m_1c,m_dpsMin,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThunk.cpp|member||m_20,m_dpsMax,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdateModuleDataCtorThunk.cpp|member||m_24,m_dpsRampupTime,gpt-6-astra+grok,agreed,2026-10-07
