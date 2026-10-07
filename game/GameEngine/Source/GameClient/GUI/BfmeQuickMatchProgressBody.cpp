@@ -17,7 +17,8 @@ class GameWindow;
 void GadgetProgressBarSetProgress(GameWindow *g, int progress);
 
 extern int quickMatchMaxPingEntries;
-extern const double g_bfmeQuickMatchStepScale;
+// Retail .rdata VA 0x01103D10 holds 12.5 (no other recorded user).
+extern const double g_bfmeQuickMatchStepScale = 12.5;
 
 class BfmeQuickMatchProgressBody
 {
