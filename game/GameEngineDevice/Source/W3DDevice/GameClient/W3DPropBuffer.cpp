@@ -317,36 +317,8 @@ void W3DPropBuffer::removeProp(Int id)
 	}
 }
 
-//=============================================================================
-// W3DPropBuffer::removePropsForConstruction
-//=============================================================================
-/** Removes any props that would be under a building.  */
-//=============================================================================
-// ?removePropsForConstruction@W3DPropBuffer@@QAEXPBUCoord3D@@ABVGeometryInfo@@M@Z present-unmatched
-void W3DPropBuffer::removePropsForConstruction(const Coord3D* pos, const GeometryInfo& geom, Real angle )
-{
-	// Just iterate all trees, as even non-collidable ones get removed. jba. [7/11/2003]
-	Int i;
-	for (i=0; i<m_numProps; i++) {				
-		if (m_props[i].m_robj == NULL) {
-			continue; // already deleted.
-		}
-		Real radius = m_props[i].bounds.Radius;
-		GeometryInfo info(GEOMETRY_CYLINDER, false, 5*radius, 2*radius, 2*radius);
-		if (ThePartitionManager->geomCollidesWithGeom( pos, geom, angle, &m_props[i].location, info, 0.0f)) {
-			// remove it [7/11/2003]
-			m_props[i].location.set(0,0,0);
-			m_props[i].propType = -1;
-			REF_PTR_RELEASE(m_props[i].m_robj);
-			// Translate the bounding sphere of the model.
-			m_props[i].bounds.Center = Vector3(0,0,0);
-			m_props[i].bounds.Radius = 1;
-			m_anythingChanged = true;
-		} 
-	}
-}
-
-
+// W3DPropBuffer::removePropsForConstruction (retail 0x007039E0) is defined in
+// W3DPropBufferRemovePropsForConstruction.cpp.
 
 //=============================================================================
 // W3DPropBuffer::notifyShroudChanged
