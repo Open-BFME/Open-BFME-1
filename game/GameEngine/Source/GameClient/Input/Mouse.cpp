@@ -843,6 +843,76 @@ static __forceinline Int compareCursorName(const AsciiString &name, const char *
 	return nameLength - cursorLength;
 }
 
+// Retail 0x012B85D0: the 50-entry cursor INI name table, shared with the
+// 0x005A45D0 index-to-name getter, so it lives at file scope.
+char *g_012B85D0[50] =
+{
+	//"InvalidMouseCursor",  // this entry is not actually a mouse cursor, but just a
+													 // reminder that it does exist
+	"None",
+	"Normal",
+	"Arrow",
+	"Scroll",
+	"Target",
+	"Move",
+	"AttackMove",
+	"AttackObj",
+	"ForceAttackObj",
+	"ForceAttackGround",
+	"Build",
+	"InvalidBuild",
+	"GenericInvalid",
+	"Select",
+	"EnterFriendly",
+	"EnterAggressive",
+	"SetRallyPoint",
+	"GetRepaired",
+	"GetHealed",
+	"DoRepair",
+	"ResumeConstruction",
+	"CaptureBuilding",
+	"SnipeVehicle",
+	"LaserGuidedMissiles",
+	"TankHunterTNTAttack",
+	"StabAttack",
+	"PlaceRemoteCharge",
+	"PlaceTimedCharge",
+	"Defector",
+#ifdef ALLOW_DEMORALIZE
+	"Demoralize",
+#endif
+	"Dock",
+#ifdef ALLOW_SURRENDER
+	"PickUpPrisoner",
+	"ReturnToPrison",
+#endif
+	"FireFlame",
+#ifdef ALLOW_SURRENDER
+	"FireTranqDarts",
+	"FireStunBullets",
+#endif
+	"FireBomb",
+	"PlaceBeacon",
+	"DisguiseAsVehicle",
+	"Waypoint",
+	"OutRange",
+	"StabAttackInvalid",
+	"PlaceChargeInvalid",
+	"Hack",
+	"ParticleUplinkCannon",
+	"LivingWorldZoom",
+	"LightPointParticle",
+	"JoinHorde",
+	"WeaponUpgrade",
+	"ArmorUpgrade",
+	"Beam",
+	"Bombard",
+	"Axe",
+	"EvilAbilityObj",
+	"PickUp",
+
+};
+
 Int Mouse::getCursorIndex(const AsciiString& name)
 {
 	if (name.isEmpty())
@@ -850,77 +920,10 @@ Int Mouse::getCursorIndex(const AsciiString& name)
 
 	/** @todo This is silly to have to define these names from INI in the code ... 
 		* that should be changed (CBD) */
-	static char *CursorININames[50] =
-	{
-		//"InvalidMouseCursor",  // this entry is not actually a mouse cursor, but just a
-														 // reminder that it does exist
-		"None",
-		"Normal",
-		"Arrow",
-		"Scroll",
-		"Target",
-		"Move",
-		"AttackMove",
-		"AttackObj",
-		"ForceAttackObj",
-		"ForceAttackGround",
-		"Build",
-		"InvalidBuild",
-		"GenericInvalid",
-		"Select",
-		"EnterFriendly",
-		"EnterAggressive",
-		"SetRallyPoint",
-		"GetRepaired",
-		"GetHealed",
-		"DoRepair",
-		"ResumeConstruction",
-		"CaptureBuilding",
-		"SnipeVehicle",
-		"LaserGuidedMissiles",
-		"TankHunterTNTAttack",
-		"StabAttack",
-		"PlaceRemoteCharge",
-		"PlaceTimedCharge",
-		"Defector",
-#ifdef ALLOW_DEMORALIZE
-		"Demoralize",
-#endif
-		"Dock",
-#ifdef ALLOW_SURRENDER
-		"PickUpPrisoner",
-		"ReturnToPrison",
-#endif
-		"FireFlame",
-#ifdef ALLOW_SURRENDER
-		"FireTranqDarts",
-		"FireStunBullets",
-#endif
-		"FireBomb",
-		"PlaceBeacon",
-		"DisguiseAsVehicle",
-		"Waypoint",
-		"OutRange",
-		"StabAttackInvalid",
-		"PlaceChargeInvalid",
-		"Hack",
-		"ParticleUplinkCannon",
-		"LivingWorldZoom",
-		"LightPointParticle",
-		"JoinHorde",
-		"WeaponUpgrade",
-		"ArmorUpgrade",
-		"Beam",
-		"Bombard",
-		"Axe",
-		"EvilAbilityObj",
-		"PickUp",
-
-	};
 
 	for (Int i = 0; i < 50; ++i)
 	{
-		if (compareCursorName(name, CursorININames[i]) == 0)
+		if (compareCursorName(name, g_012B85D0[i]) == 0)
 			return i;
 	}
 
