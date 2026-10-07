@@ -21,7 +21,18 @@ public:
 
 #include "Common/INIException.h"
 
-LightPointLevel *__stdcall findLightPointLevel(void *vec, AsciiString *name);
+// ILT 0x28AF6 -> 0x0039C1A0, the matched 153-byte pointer-range name search
+// BfmeAttributeNamedEntryFinder::find
+// (BfmeAttributeNamedEntryFind.cpp); it ignores ECX, which retail leaves
+// holding the system across the call.
+struct BfmeAttributeNamedEntry;
+struct BfmeAttributeNamedEntryRange;
+class BfmeAttributeNamedEntryFinder
+{
+public:
+	BfmeAttributeNamedEntry *find(const BfmeAttributeNamedEntryRange *range,
+		const AsciiString *name) const;
+};
 
 class LightPointSystem
 {
@@ -35,7 +46,9 @@ private:
 
 void LightPointSystem::addLevel(LightPointLevel *level)
 {
-	if (LightPointLevel *found = findLightPointLevel(&m_levels, &level->m_name))
+	if (LightPointLevel *found = (LightPointLevel *)
+			reinterpret_cast<const BfmeAttributeNamedEntryFinder *>(this)->find(
+				(const BfmeAttributeNamedEntryRange *)&m_levels, &level->m_name))
 	{
 		const char *s = found->m_name.m_data ? found->m_name.m_data + 8 : "";
 		throw INIException(3, "A light point level %s already exists.", s);
