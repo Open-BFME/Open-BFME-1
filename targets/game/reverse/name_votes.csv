@@ -1180,3 +1180,6 @@ game/GameEngine/Source/GameClient/GUI/Rva56E070StateDispatch.cpp|member||m_arg26
 game/GameEngine/Source/GameClient/GUI/Rva56E070StateDispatch.cpp|member||m_mode270,558a9a80d9a70a1d056609ca,gpt-6-astra,20261007221102-e5fd64,2026-10-07
 game/GameEngine/Source/GameClient/GUI/Rva56E070StateDispatch.cpp|member||m_arg264,12c9bd02e9def440a7d5613b,grok,20261007221507-dd01e7,2026-10-07
 game/GameEngine/Source/GameClient/GUI/Rva56E070StateDispatch.cpp|member||m_arg268,c5506ef10bf9955b3c86a7ee,grok,20261007221507-dd01e7,2026-10-07
+game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfmeCount,1ca1bda91dfe972369b4cbe2,gpt-6-astra,20261007221056-d94c6e,2026-10-07
+game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfme04,e25535e06fa878c96490aa40,gpt-6-astra,20261007221056-d94c6e,2026-10-07
+game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfme10,263cadf80a2cce937bd9b4ec,gpt-6-astra,20261007221056-d94c6e,2026-10-07
