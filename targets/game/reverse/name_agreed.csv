@@ -458,3 +458,14 @@ game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|type||BfmeMakerKV,StateMac
 game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|type||BfmeThingKV0016D780,AIGuardState,gpt-6-astra+grok,agreed,2026-10-07
 game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|member||m_bfmeMaker,m_machine,gpt-6-astra+grok,agreed,2026-10-07
 game/GameEngine/Source/Common/BfmeThingKV0016D780.cpp|member||m_bfmeHeld,m_guardMachine,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE70,m_goodCommandPoints,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE74,m_evilCommandPoints,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE80,m_goodCommandPointsAI,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE84,m_evilCommandPointsAI,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE88,m_goodCommandPointsMP2,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE8C,m_evilCommandPointsMP2,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE90,m_goodCommandPointsMP3,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE94,m_evilCommandPointsMP3,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE98,m_goodCommandPointsMP4,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE9C,m_evilCommandPointsMP4,gpt-6-astra+grok,agreed,2026-10-07
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|function|BfmePlayerMapState@|bfmeNewMap,init,gpt-6-astra+grok,agreed,2026-10-07
