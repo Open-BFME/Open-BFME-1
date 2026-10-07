@@ -358,25 +358,8 @@ LadderList::LadderList()
 	DEBUG_LOG(("After looking for ladders, we have %d local, %d special && %d normal\n", m_localLadders.size(), m_specialLadders.size(), m_standardLadders.size()));
 }
 
-LadderList::~LadderList()
-{
-	LadderInfoList::iterator it;
-	for (it = m_specialLadders.begin(); it != m_specialLadders.end(); it = m_specialLadders.begin())
-	{
-		delete *it;
-		m_specialLadders.pop_front();
-	}
-	for (it = m_standardLadders.begin(); it != m_standardLadders.end(); it = m_standardLadders.begin())
-	{
-		delete *it;
-		m_standardLadders.pop_front();
-	}
-	for (it = m_localLadders.begin(); it != m_localLadders.end(); it = m_localLadders.begin())
-	{
-		delete *it;
-		m_localLadders.pop_front();
-	}
-}
+// LadderList::~LadderList (retail 0x0062AB10) is defined once, in
+// LadderListDestructorThunk.cpp.
 
 const LadderInfo* LadderList::findLadderByIndex( Int index )
 {
