@@ -5550,12 +5550,8 @@ UnsignedInt GameLogic::getCRC( Int mode, AsciiString deepCRCFileName )
 }
 
 // ------------------------------------------------------------------------------------------------
-// ?bindObjectAndDrawable@GameLogic@@QAEXPAVObject@@PAVDrawable@@@Z present-unmatched
-void GameLogic::bindObjectAndDrawable(Object* obj, Drawable* draw)
-{
-	draw->friend_bindToObject( obj );
-	obj->friend_bindToDrawable( draw );
-}
+// GameLogic::bindObjectAndDrawable: retail body 0x003833C0 lives in
+// GameLogicBindObjectAndDrawable.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** Send notification of object destruction. */
