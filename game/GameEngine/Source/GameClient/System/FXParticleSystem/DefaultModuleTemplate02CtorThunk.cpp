@@ -28,6 +28,8 @@ class CategoryModuleTemplateBase : public ModuleTemplate, public CategoryModuleI
 template <int Category>
 class CategoryModuleTemplate : public CategoryModuleTemplateBase<Category>
 {
+public:
+	virtual ~CategoryModuleTemplate();	// defined in CategoryModuleTemplate02DestructorThunk.cpp
 };
 
 class DefaultPhysicsModuleInfo

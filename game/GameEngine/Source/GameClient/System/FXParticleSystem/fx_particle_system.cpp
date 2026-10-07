@@ -202,6 +202,9 @@ template class CategoryModuleTemplateBase<5>;
 template class CategoryModuleTemplateBase<6>;
 template class CategoryModuleTemplateBase<7>;
 template class CategoryModuleTemplateBase<8>;
+// Category 3's destructor is defined in CategoryModuleTemplate02DestructorThunk.cpp
+// (retail 0x005BF6C0); keep the instantiation below from emitting the header's body.
+template<> CategoryModuleTemplate<3>::~CategoryModuleTemplate();
 template class CategoryModuleTemplate<0>;
 template class CategoryModuleTemplate<1>;
 template class CategoryModuleTemplate<2>;
