@@ -508,3 +508,13 @@ game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueE9C,m_evilCom
 game/GameEngine/Source/Common/RTS/Player_newMap.cpp|function|BfmePlayerMapState@|bfmeNewMap,init,gpt-6-astra+grok,applied,2026-10-07
 game/GameEngine/Source/Common/System/PathProximity000FE640.cpp|type||PathNode000FE640,PathNode,gpt-6-astra+grok,applied,2026-10-07
 game/GameEngine/Source/Common/System/PathProximity000FE640.cpp|type||Path000FE640,Path,gpt-6-astra+grok,applied,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_3e0,m_hasOutsideCommand,gpt-6-astra+grok,applied,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_3e4,m_state,gpt-6-astra+grok,applied,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_3e8,m_frameToWakeForDeploy,gpt-6-astra+grok,applied,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_3ec,m_designatedTargetID,gpt-6-astra+grok,applied,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_3f0,m_attackObjectID,gpt-6-astra+grok,applied,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_400,m_isAttackMultiple,gpt-6-astra+grok,applied,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_401,m_isAttackObject,gpt-6-astra+grok,applied,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_402,m_isAttackPosition,gpt-6-astra+grok,applied,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_403,m_isGuardingPosition,gpt-6-astra+grok,applied,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdateCtorThunk.cpp|member||m_404,m_overriddenAttack,gpt-6-astra+grok,applied,2026-10-07

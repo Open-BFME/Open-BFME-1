@@ -81,35 +81,35 @@ public:
 protected:
 	DeployStyleAIUpdateMember m_340;			///< retail this+0x340
 
-	bool m_3e0;
-	unsigned int m_3e4;
-	unsigned int m_3e8;
-	unsigned int m_3ec;
-	unsigned int m_3f0;
+	bool m_hasOutsideCommand;
+	unsigned int m_state;
+	unsigned int m_frameToWakeForDeploy;
+	unsigned int m_designatedTargetID;
+	unsigned int m_attackObjectID;
 	unsigned int m_3f4;
 	unsigned int m_3f8;
 	unsigned int m_3fc;
-	bool m_400;
-	bool m_401;
-	bool m_402;
-	bool m_403;
-	bool m_404;
+	bool m_isAttackMultiple;
+	bool m_isAttackObject;
+	bool m_isAttackPosition;
+	bool m_isGuardingPosition;
+	bool m_overriddenAttack;
 };
 
 // ??0DeployStyleAIUpdate@@QAE@PAVThing@@PBVModuleData@@@Z
 DeployStyleAIUpdate::DeployStyleAIUpdate(Thing *thing, const ModuleData *moduleData)
 	: DeployStyleAIUpdateBase(thing, moduleData)
 {
-	m_3e0 = false;
-	m_3e4 = 0;
-	m_3e8 = 0;
-	m_3ec = 0;
-	m_400 = false;
-	m_404 = false;
-	m_403 = false;
-	m_401 = false;
-	m_3f0 = 0;
-	m_402 = false;
+	m_hasOutsideCommand = false;
+	m_state = 0;
+	m_frameToWakeForDeploy = 0;
+	m_designatedTargetID = 0;
+	m_isAttackMultiple = false;
+	m_overriddenAttack = false;
+	m_isGuardingPosition = false;
+	m_isAttackObject = false;
+	m_attackObjectID = 0;
+	m_isAttackPosition = false;
 	m_3f4 = 0;
 	m_3f8 = 0;
 	m_3fc = 0;
