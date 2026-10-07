@@ -87484,7 +87484,6 @@ name,address,notes
 ?step@Gen003C7B10Item@@QAEXPAVGen003C7B10Context@@@Z,0x000484FA,ILT call target used by the pointer-vector walk at 0x003C7B10
 ?step@Gen_0093D0F0_Item@@QAEXXZ,0x00934820,address-derived helper call recovered from 0x0093D0F0
 ?step@Glo012F1024Type@@QAEXXZ,0x003B3900,niladic member called on the global at 0x012F1024; address-derived name
-?step@Rva00449790StepHelper@@QAEXXZ,0x0002E1C7,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00449790 calls; autopin
 ?step@U1CallReceiver_005C5BD0@@QAEXH@Z,0x0001B77A,address-derived U1 call-sequence receiver step ILT
 ?stepFlag@Glo012F1024Entry@@QAEXXZ,0x0001FB18,Reviewed3A737052B reset field8 branch on18 then notify matched3CAD20
 ?stop@BFMENetworkThreadBase@@QAEXXZ,0x009DB5A0,Watchdog stop tail target from retail body

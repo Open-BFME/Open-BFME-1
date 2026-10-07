@@ -2,28 +2,26 @@
 // stlport
 // Open-BFME7: default constructor zero-initializing twelve int members, one
 // embedded STLport list<8-byte record> (16-byte sentinel node, 8 overhead +
-// 8 value, __node_alloc::_M_allocate), a call through the list's own address
-// to a still-unidentified helper (retail 0x0002E1C7, pinned separately), and
-// two trailing int members set to -1.  Retail 0x00449790, 130 bytes.  The
-// element is only known to be an 8-byte trivially copyable record and the
-// helper's owning type is unidentified, so both carry address-derived tags.
+// 8 value, __node_alloc::_M_allocate), an out-of-line _List_base::clear on
+// it (retail 0x00443E40 via ILT 0x0002E1C7), and two trailing int members set
+// to -1.  Retail 0x00449790, 130 bytes.  The 8-byte element takes the tgrid
+// row's address-derived type name so the clear call resolves to that row.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
-struct Rva00449790Elem
+struct Gen_t_00443e40_p8cd
 {
 	int m_a;
 	int m_b;
 };
 
-typedef _STL::list<Rva00449790Elem, _STL::allocator<Rva00449790Elem> > Rva00449790List;
+typedef _STL::list<Gen_t_00443e40_p8cd, _STL::allocator<Gen_t_00443e40_p8cd> > Rva00449790List;
+typedef _STL::_List_base<Gen_t_00443e40_p8cd, _STL::allocator<Gen_t_00443e40_p8cd> > Rva00449790ListBase;
 
-class Rva00449790StepHelper
-{
-public:
-	void step();
-};
+// Retail calls the out-of-line _List_base::clear (0x00443E40 via ILT 0x0002E1C7)
+// rather than inlining it; declare that instantiation as defined elsewhere.
+template <> void Rva00449790ListBase::clear();
 
 class Rva00449790Owner
 {
@@ -61,7 +59,7 @@ Rva00449790Owner::Rva00449790Owner() :
 	m_f28( 0 ),
 	m_f2c( 0 )
 {
-	reinterpret_cast<Rva00449790StepHelper *>( &m_list )->step();
+	static_cast<Rva00449790ListBase &>( m_list ).clear();
 	m_f38 = -1;
 	m_f34 = -1;
 }
