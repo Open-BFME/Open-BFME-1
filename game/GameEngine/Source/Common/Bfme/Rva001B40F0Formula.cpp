@@ -8,7 +8,7 @@ typedef float Real;
 
 extern const Real g_rva01075350;	// retail 0x01075350, 0.0f
 extern float g_bfmeDefaultBU;		// retail 0x01075334, 1.0f
-extern float g_bfmeK2SMA;			// retail 0x0109D11C
+float g_bfmeK2SMA = 1.05f;		// retail 0x0109D11C: 66 66 86 3F
 
 Real rva001B40F0Formula(Real a, Real b, Real c)
 {
