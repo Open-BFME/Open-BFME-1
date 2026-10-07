@@ -26,18 +26,22 @@ struct BfmeDualDispatchOwner
 
 int StructureCollapseRandom(int low, int high, const char *source, int line);
 
-class Gen_0028B910
+class Coord3D;
+
+// EA's CritterEmitterUpdate (ea_evidence.csv names 0x0028B910
+// CritterEmitterUpdate::onCollide; the ILT oracle fits the virtual spelling).
+// `this` is the collide-interface subobject, so the owner fields sit below it.
+class CritterEmitterUpdate
 {
 public:
-	void bfmeDispatch(void *a, void *b, void *c);
+	virtual void onCollide(Object *other, const Coord3D *loc, const Coord3D *normal);
 
 private:
-	char m_bfmeFields[4];
 	unsigned char m_bfmeComplete;
 };
 
-// ?bfmeDispatch@Gen_0028B910@@QAEXPAX00@Z
-void Gen_0028B910::bfmeDispatch(void *, void *, void *)
+// ?onCollide@CritterEmitterUpdate@@UAEXPAVObject@@PBVCoord3D@@1@Z
+void CritterEmitterUpdate::onCollide(Object *, const Coord3D *, const Coord3D *)
 {
 	if (m_bfmeComplete)
 		return;
