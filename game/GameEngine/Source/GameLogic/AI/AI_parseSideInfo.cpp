@@ -2,7 +2,7 @@
 // Open-BFME: AI::parseSideInfo at retail 0x0014BF10, 299 bytes.
 // The SideInfo field table identifies this callback. The allocation size and
 // member offsets match AISideInfo, whose existing constructor body is named
-// BfmeOwnVUP at retail 0x0014B6B0.
+// ??0Gen_0014B790 at retail 0x0014B6B0 (destructor 0x0014B790).
 
 typedef int Int;
 
@@ -95,11 +95,11 @@ struct FieldParse
 
 class AI;
 
-class BfmeOwnVUP
+class Gen_0014B790
 {
 public:
-	BfmeOwnVUP();
-	virtual void bfmeSlot0VUP();
+	Gen_0014B790();
+	virtual ~Gen_0014B790();
 
 	BFMERetailAsciiString m_side;
 	Int m_easy;
@@ -107,10 +107,10 @@ public:
 	Int m_hard;
 	char m_skillSets[5 * 0x54];
 	BFMERetailAsciiString m_baseDefenseStructure1;
-	BfmeOwnVUP *m_next;
+	Gen_0014B790 *m_next;
 };
 
-typedef BfmeOwnVUP AISideInfo;
+typedef Gen_0014B790 AISideInfo;
 
 class TAiData
 {

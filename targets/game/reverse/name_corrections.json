@@ -18788,5 +18788,45 @@
   "after_sha256": "4a05720f2ad11e32df240e6283e95bd655f9615d650f006caa55ad06232e1a26",
   "evidence": "targets/game/reverse/functions.csv",
   "reason": "Not a rename: bfmeNewOverrideERG (0x0060F620) constructs through ILT 0x00026CBA to 0x00618630, the matched row ??0Rva00618630@@QAE@XZ; the BfmeCrateERG ctor named only the ILT pin and no body defines it. The BfmeCrateERG type name is kept."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1651.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1651.cpp",
+  "old_name": "BfmeOwnVUP",
+  "new_name": "Gen_0014B790",
+  "before_sha256": "dcde285bfc38db6478eb0003880ab33015407ddf00434554f01b7d3cc1e813b5",
+  "after_sha256": "70c344065fcbd3bcb6afee93a87b9832e055b4c225d829f9765dfc7254fbe3e8",
+  "evidence": "targets/game/reverse/identity_evidence/0014b6b0-gen-0014b790-ctor.md",
+  "reason": "Not a rename: 0x0014B6B0 stores vftable 0x010957C4 (??_7Gen_0014B790) whose slot 0 is deleting dtor 0x0014B760 over the matched ??1Gen_0014B790 (0x0014B790); BfmeOwnVUP was a second placeholder for that class whose slot-0 virtual no body defines."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "BfmeOwnVUP",
+  "new_name": "Gen_0014B790",
+  "before_sha256": "bfe38f344965c68f9b0464c5896c36538b97839ae3c1a0a8bbe99f169167158e",
+  "after_sha256": "1469eacee8997d88859ec60ce171237c9315938ea0dab4d3944624219a3508da",
+  "evidence": "targets/game/reverse/identity_evidence/0014b6b0-gen-0014b790-ctor.md",
+  "reason": "Not a rename: 0x0014B6B0 stores vftable 0x010957C4 (??_7Gen_0014B790) whose slot 0 is deleting dtor 0x0014B760 over the matched ??1Gen_0014B790 (0x0014B790); BfmeOwnVUP was a second placeholder for that class whose slot-0 virtual no body defines."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/AI_parseSideInfo.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AI_parseSideInfo.cpp",
+  "old_name": "BfmeOwnVUP",
+  "new_name": "Gen_0014B790",
+  "before_sha256": "9c3916ea90135e32294b17f315f76f12bcc8ed3a0cf745b219cd891e3b516333",
+  "after_sha256": "27a7c9c898e565dc1bda8d77b3b3e804ecbfd80aa478c3a7975e5f52563cceb0",
+  "evidence": "targets/game/reverse/identity_evidence/0014b6b0-gen-0014b790-ctor.md",
+  "reason": "Not a rename: 0x0014B6B0 stores vftable 0x010957C4 (??_7Gen_0014B790) whose slot 0 is deleting dtor 0x0014B760 over the matched ??1Gen_0014B790 (0x0014B790); BfmeOwnVUP was a second placeholder for that class whose slot-0 virtual no body defines."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/AI_parseSideInfo.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AI_parseSideInfo.cpp",
+  "old_name": "bfmeSlot0VUP",
+  "new_name": "Gen_0014B790",
+  "before_sha256": "9c3916ea90135e32294b17f315f76f12bcc8ed3a0cf745b219cd891e3b516333",
+  "after_sha256": "27a7c9c898e565dc1bda8d77b3b3e804ecbfd80aa478c3a7975e5f52563cceb0",
+  "evidence": "targets/game/reverse/identity_evidence/0014b6b0-gen-0014b790-ctor.md",
+  "reason": "Not a rename: 0x0014B6B0 stores vftable 0x010957C4 (??_7Gen_0014B790) whose slot 0 is deleting dtor 0x0014B760 over the matched ??1Gen_0014B790 (0x0014B790); BfmeOwnVUP was a second placeholder for that class whose slot-0 virtual no body defines."
  }
 ]

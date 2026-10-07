@@ -10,11 +10,14 @@
 // TU-local BfmeStrVUP/bfmeClearVUP pair named a body retail has no symbol for.
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class BfmeOwnVUP
+class Gen_0014B790
 {
 public:
-	BfmeOwnVUP();
-	virtual void bfmeSlot0VUP();
+	Gen_0014B790();
+	// vftable 0x010957C4 slot 0 is 0x0014B760 (ILT 0x319C6), the deleting
+	// destructor over ??1Gen_0014B790 (0x0014B790): same class, same +0x04/+0x1B8
+	// string members (Bfme5TwoMemberDestructors.cpp).
+	virtual ~Gen_0014B790(void);
 	AsciiString m_bfme04;
 	int m_bfme08;
 	int m_bfme0c;
@@ -33,7 +36,7 @@ public:
 	int m_bfme1bc;
 };
 
-BfmeOwnVUP::BfmeOwnVUP()
+Gen_0014B790::Gen_0014B790()
 	: m_bfme08(0), m_bfme0c(1), m_bfme10(2), m_bfme1bc(0)
 {
 	// Called through the base on purpose: AsciiString::clear is an inline
