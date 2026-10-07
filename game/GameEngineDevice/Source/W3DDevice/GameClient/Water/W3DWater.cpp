@@ -981,47 +981,7 @@ void WaterRenderObjClass::updateMapOverrides(void)
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjReset.cpp
-// ?reset@WaterRenderObjClass@@QAEXXZ present-unmatched
-void WaterRenderObjClass::reset( void )
-{
-
-	// for vertex animated water mesh reset the values
-	if( m_meshData)
-	{
-		Int i, j;
-		WaterMeshData *pData;
-		Int	mx = m_gridCellsX + 1;
-		Int my = m_gridCellsY + 1;
-
-		// go through each mesh point and adjust the height according to the velocity
-		for( j = 0, pData = m_meshData; j < (my + 2); j++ )
-		{	
-
-			for( i = 0; i < (mx + 2); i++ )
-			{
-
-				// areset grid values for this cell
-				pData->velocity = 0.0f;
-				pData->height = 0.0f;
-				pData->preferredHeight = 0.0f;
-				pData->status = WaterRenderObjClass::AT_REST;
-
-				// on to the next one
-				pData++;
-
-			}  // end for i
-
-		}  // end for j
-
-		// mesh data is no longer in motion
-		m_meshInMotion = FALSE;
-
-	}  // end if, water type 3
-
-	if (m_waterTrackSystem)
-		m_waterTrackSystem->reset();
-} 
+// WaterRenderObjClass::reset: retail body (0x007A1390) in WaterRenderObjGridAndSkybox.cpp.
 
 // enableWaterGrid is defined by UpdateInitializationThunks.cpp; its retail
 // implementation is in WaterRenderObjEnableWaterGrid.cpp.
