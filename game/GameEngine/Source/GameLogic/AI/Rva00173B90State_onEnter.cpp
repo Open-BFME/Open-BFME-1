@@ -21,17 +21,14 @@ class Object;
 class ModelConditionFlags
 {
 public:
-	Bool test(int condition) const
-	{
-		return (m_bits & (1u << condition)) != 0;
-	}
-
+	// No test() member here: this one-word view's inline test would be
+	// emitted as ?test@ModelConditionFlags@@QBE_NH@Z ahead of the bitset
+	// copy every other TU emits. The caller reads the word directly.
 	void set(int condition)
 	{
 		m_bits |= 1u << condition;
 	}
 
-private:
 	UnsignedInt m_bits;
 };
 
@@ -90,7 +87,7 @@ public:
 	ObjectID getID() const { return m_id; }
 	void setModelConditionState(int condition)
 	{
-		if (!m_modelConditionFlags.test(condition))
+		if (!((m_modelConditionFlags.m_bits & (1u << condition)) != 0))
 		{
 			m_modelConditionFlags.set(condition);
 			notifyModelConditionChanged();
