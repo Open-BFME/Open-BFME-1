@@ -30,7 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl DarknessSpecialPowerFieldParse(MultiIniFieldParse &parse);
+// The proc retail passes is VA 0x00419934, the ILT stub ?j_00019934@@YAXXZ (jumps to 0x00259B50).
+extern void j_00019934();
 
 class DarknessSpecialPower
 {
@@ -43,6 +44,6 @@ ModuleData *DarknessSpecialPower::friend_newModuleData(INI *ini)
 {
 	DarknessSpecialPowerModuleData *data = new DarknessSpecialPowerModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &DarknessSpecialPowerFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))&j_00019934);
 	return (ModuleData *)data;
 }
