@@ -2439,28 +2439,7 @@ ParticleSystemManager::~ParticleSystemManager()
 // ------------------------------------------------------------------------------------------------
 /** Initialize the manager */
 // ------------------------------------------------------------------------------------------------
-// ?init@ParticleSystemManager@@UAEXXZ present-unmatched
-void ParticleSystemManager::init( void )
-{
-	/// Read INI data and build templates
-	INI ini;
-	ini.load( AsciiString( "Data\\INI\\ParticleSystem.ini" ), INI_LOAD_OVERWRITE, NULL );
-
-	// sanity, our lists must be empty!!
-	for( Int i = 0; i < NUM_PARTICLE_PRIORITIES; ++i )
-	{
-
-		// sanity		
-		DEBUG_ASSERTCRASH( m_allParticlesHead[ i ] == NULL, ("INIT: ParticleSystem all particles head[%d] is not NULL!\n", i) );
-		DEBUG_ASSERTCRASH( m_allParticlesTail[ i ] == NULL, ("INIT: ParticleSystem all particles tail[%d] is not NULL!\n", i) );
-
-		// just to be clean set them to NULL
-		m_allParticlesHead[ i ] = NULL;
-		m_allParticlesTail[ i ] = NULL;
-
-	}  // end for, i
-
-}
+// ParticleSystemManager::init: retail body in ParticleSystemManagerInit.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** Reset the manager and all particle systems */
