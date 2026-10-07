@@ -17,14 +17,10 @@ template <class T, class A = allocator<T> >
 class vector
 {
 public:
-	void clear()
-	{
-		erase(m_start, m_finish);
-	}
-
+	// No inline clear(): Rva003B6680Ctor.cpp owns the explicit
+	// vector<T>::clear specializations, so this TU only calls erase.
 	T *erase(T *first, T *last);
 
-private:
 	T *m_start;
 	T *m_finish;
 	T *m_end;
@@ -68,7 +64,7 @@ private:
 // ?clear@Rva003B0000Vector@@QAEXXZ
 void Rva003B0000Vector::clear()
 {
-	m_vector.clear();
+	m_vector.erase(m_vector.m_start, m_vector.m_finish);
 }
 
 class Rva003B0010Vector
@@ -83,7 +79,7 @@ private:
 // ?clear@Rva003B0010Vector@@QAEXXZ
 void Rva003B0010Vector::clear()
 {
-	m_vector.clear();
+	m_vector.erase(m_vector.m_start, m_vector.m_finish);
 }
 
 class Rva003B0020Vector
@@ -98,7 +94,7 @@ private:
 // ?clear@Rva003B0020Vector@@QAEXXZ
 void Rva003B0020Vector::clear()
 {
-	m_vector.clear();
+	m_vector.erase(m_vector.m_start, m_vector.m_finish);
 }
 
 class Rva003B2D20Byte
