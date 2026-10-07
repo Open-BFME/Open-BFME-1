@@ -28,6 +28,14 @@ public:
 	void *m_bfmeRefXR;
 };
 
+// retail 0x00970860, 12 bytes: the result destructor the factory's unwind
+// state 0 tails to (identity_evidence/00970860-gen00970940-result-dtor.md).
+Gen00970940::~Gen00970940()
+{
+	if (m_bfmeRefXR != 0)
+		((TextureClass *)m_bfmeRefXR)->Release_Ref();
+}
+
 Gen00970940 bfmeMakeXR(const char *name)
 {
 	if (name == 0)
