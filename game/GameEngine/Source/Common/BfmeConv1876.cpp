@@ -1,8 +1,12 @@
-class BfmeSurfaceZI
+// Retail 0x006C1390 calls 0x008FC710 directly: the matched SurfaceClass::Lock
+// rectangle overload (surfaceclass_lock_rectangle.cpp).
+class SurfaceClass
 {
 public:
-	void *bfmeLockZI(int *rect, int a, int b, int c, int d);
+	void *Lock(int *rect, int a, int b, int c, int d);
 };
+
+class BfmeSurfaceZI;
 
 class BfmeLockZI
 {
@@ -18,7 +22,7 @@ BfmeLockZI *BfmeLockZI::bfmeInitZI(BfmeSurfaceZI *surface, void **out, int *rect
 {
 	m_bfmeSurfaceZI = surface;
 
-	*out = surface->bfmeLockZI(rect, a, b, c, d);
+	*out = reinterpret_cast<SurfaceClass *>(surface)->Lock(rect, a, b, c, d);
 
 	return this;
 }
