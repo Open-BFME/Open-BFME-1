@@ -7,17 +7,21 @@ class ModuleData;
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
 
+class WideMulti;
+class MultiIniFieldParse;
+
 class DevastateSpecialPowerModuleData
 {
 public:
 	DevastateSpecialPowerModuleData();
 	virtual ~DevastateSpecialPowerModuleData();
+	// ILT 0x00047E6A -> matched body 0x0025A790.
+	static void buildFieldParse(WideMulti &parse);
 
 private:
 	unsigned char m_pad[0x21c];
 };
 
-class MultiIniFieldParse;
 
 // Retail's module-data factories reach INI through initFromINIMultiProc
 // (0x00852130), which takes the class's buildFieldParse proc; the
@@ -30,8 +34,6 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl DevastateSpecialPowerFieldParse(MultiIniFieldParse &parse);
-
 class DevastateSpecialPower
 {
 public:
@@ -43,6 +45,6 @@ ModuleData *DevastateSpecialPower::friend_newModuleData(INI *ini)
 {
 	DevastateSpecialPowerModuleData *data = new DevastateSpecialPowerModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &DevastateSpecialPowerFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))&DevastateSpecialPowerModuleData::buildFieldParse);
 	return (ModuleData *)data;
 }
