@@ -99,7 +99,6 @@ public:
 		}                                                                 \
 	}
 
-Q4_OWNED_PTR_DTOR( Rva00171DB0 )
 Q4_OWNED_PTR_DTOR( Rva0017D1F0 )
 Q4_OWNED_PTR_DTOR( Rva0017D7A0 )
 Q4_OWNED_PTR_DTOR( Rva0017D830 )
