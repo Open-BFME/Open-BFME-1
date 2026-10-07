@@ -30,7 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl LargeGroupAudioUpdateFieldParse(MultiIniFieldParse &parse);
+// Retail pushes the ILT stub 0x0000589E (?j_0000589e@@YAXXZ).
+extern void j_0000589e(void);
 
 class LargeGroupAudioUpdate
 {
@@ -43,6 +44,6 @@ ModuleData *LargeGroupAudioUpdate::friend_newModuleData(INI *ini)
 {
 	LargeGroupAudioUpdateModuleData *data = new LargeGroupAudioUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &LargeGroupAudioUpdateFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))j_0000589e);
 	return (ModuleData *)data;
 }

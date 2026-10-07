@@ -13389,7 +13389,6 @@ _IID_IDirectInput8,0x011BB4F4
 _IID_IDirectXFileData,0x0114DB18
 _IID_IDirectXFileDataReference,0x0114DB08
 _IID_IUnknown,0x011BC3BC
-_LargeGroupAudioUpdateFieldParse,0x0040589E
 _LaserUpdate_vftable,0x01115370
 _LevelGrantSpecialPowerFieldParse,0x0044128B
 _LevelUpUpgradeFieldParse,0x0041CFF8
