@@ -3,7 +3,9 @@
 #define Matrix4x4 Matrix4
 #define __PLACEMENT_VEC_NEW_INLINE
 
-#include "W3DDevice/GameClient/TerrainTex.h"
+#include "WW3D2/Texture.h"
+#include "WWMATH/Matrix3d.h"
+#include "common/AsciiString.h"
 #include "W3DDevice/GameClient/WorldHeightMap.h"
 #include "W3DDevice/GameClient/TileData.h"
 #include "WW3D2/dx8wrapper.h"
@@ -137,10 +139,13 @@ static __forceinline void BFME_DX8_ErrorCode(int result)
 	}
 }
 
-class Rva006D53A0TextureClass : public TextureClass
+// BFME's TerrainTextureClass::updateFlat returns int (the ILT oracle confirms
+// the H spelling), where Zero Hour's TerrainTex.h declares Bool; so this TU
+// declares the class itself instead of including that header.
+class TerrainTextureClass : public TextureClass
 {
 public:
-	int Rva006D53A0Update(WorldHeightMap *htMap, Int xCell, Int yCell, Int cellWidth, Int pixelsPerCell);
+	int updateFlat(WorldHeightMap *htMap, Int xCell, Int yCell, Int cellWidth, Int pixelsPerCell);
 };
 
 struct Rva006D53A0SurfaceStorage
@@ -148,16 +153,15 @@ struct Rva006D53A0SurfaceStorage
 	Rva006D53A0SurfaceDesc desc;
 };
 
-// The retail body at 0x006D53A0 uses this address-derived name because the
-// caller and texture vtable prove its ABI, but they do not prove a semantic class name.
-// ?Rva006D53A0Update@Rva006D53A0TextureClass@@QAEHPAVWorldHeightMap@@HHHH@Z
-int Rva006D53A0TextureClass::Rva006D53A0Update(WorldHeightMap *htMap, Int xCell, Int yCell, Int cellWidth, Int pixelsPerCell)
+// Retail 0x006D53A0 is EA's TerrainTextureClass::updateFlat (ea_evidence.csv).
+// ?updateFlat@TerrainTextureClass@@QAEHPAVWorldHeightMap@@HHHH@Z
+int TerrainTextureClass::updateFlat(WorldHeightMap *htMap, Int xCell, Int yCell, Int cellWidth, Int pixelsPerCell)
 {
 	SurfaceResource *surface_level;
 	Rva006D53A0SurfaceStorage surface_storage;
 	Rva006D53A0SurfaceDesc &surface_desc = surface_storage.desc;
 	D3DLOCKED_RECT locked_rect;
-	Rva006D53A0TextureClass *self = this;
+	TerrainTextureClass *self = this;
 	BFME_DX8_ErrorCode(reinterpret_cast<BfmeD3DTexture *>(self->Peek_D3D_Base_Texture())->GetSurfaceLevel(0, &surface_level));
 	BFME_DX8_ErrorCode(surface_level->GetDesc(&surface_desc));
 	if (surface_desc.Width != cellWidth * pixelsPerCell) {

@@ -35,10 +35,10 @@ public:
 	TextureBaseClass *m_texture;
 };
 
-class Rva006D53A0TextureClass : public Rva006D5280
+class TerrainTextureClass : public Rva006D5280
 {
 public:
-	int Rva006D53A0Update(WorldHeightMap *, int, int, int, int);
+	int updateFlat(WorldHeightMap *, int, int, int, int);
 };
 
 class Rva006D5750TextureClass : public Rva006D5280
@@ -153,7 +153,7 @@ ShroudTexture WorldHeightMap::rva0074C4F0(int xCell, int yCell,
 	Rva006D5280 texture(powerOfTwo, powerOfTwo, format);
 	if (format == 0x19)
 	{
-		reinterpret_cast<Rva006D53A0TextureClass *>(&texture)->Rva006D53A0Update(
+		reinterpret_cast<TerrainTextureClass *>(&texture)->updateFlat(
 			this, xCell, yCell, cellWidth, pixelsPerCell);
 	}
 	else if (format == 0x31545844)
