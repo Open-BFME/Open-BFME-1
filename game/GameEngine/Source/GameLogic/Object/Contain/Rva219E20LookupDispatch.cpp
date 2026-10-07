@@ -12,13 +12,24 @@ public:
 	Rva219E20Node *sentinel;
 };
 
+// ILT 0x2F52C -> 0x00378340, matched
+// ?getTunnelTrackerForCaveIndex@CaveSystem@@QAEPAVTunnelTracker@@H@Z (CaveSystem.cpp).
+class TunnelTracker;
+class CaveSystem
+{
+public:
+	TunnelTracker *getTunnelTrackerForCaveIndex(int index);
+};
+
 class BfmeJ1101
 {
 public:
-	BfmeK1101 *bfmeFind1101(int key);
+	BfmeK1101 *bfmeFind1101(int key)
+	{
+		return (BfmeK1101 *)((CaveSystem *)this)->getTunnelTrackerForCaveIndex(key);
+	}
 };
 
-class CaveSystem;
 extern CaveSystem *TheCaveSystem;
 
 class Rva219E20LookupDispatch
