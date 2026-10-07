@@ -261,7 +261,17 @@ protected:
 AIAttackThenIdleStateMachine::~AIAttackThenIdleStateMachine()
 {
 }
-BFME_VPTR_TAIL_JUMP_DTOR( Rva00189B00TailDtor, StateMachine )
+// 0x00189B00 is AITNGuardMachine's public destructor (ilt_oracle: UAE exact): it installs vftable
+// 0x0109B4B0, the one the matched AITNGuardMachine ctor (0x0018AFB0) installs,
+// and is reached via ILT 0x0003D4C9 from the matched ??_GAITNGuardMachine (0x00189E10).
+class AITNGuardMachine : public StateMachine
+{
+public:
+	virtual ~AITNGuardMachine();
+};
+AITNGuardMachine::~AITNGuardMachine()
+{
+}
 BFME_VPTR_TAIL_JUMP_DTOR( Rva0018C2D0TailDtor, StateMachine )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva0024F3F0TailDtor, Rva0004B227TailBase )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva002B6420TailDtor, StateMachine )

@@ -226,10 +226,8 @@ void AITNGuardStatePoolGlue( AITNGuardMachine *machine )
 	newInstance(AITNGuardAttackAggressorState)( machine );
 }
 //--------------------------------------------------------------------------------------
-// ??1AITNGuardMachine@@ present-unmatched
-AITNGuardMachine::~AITNGuardMachine()
-{
-}
+// AITNGuardMachine::~AITNGuardMachine (retail 0x00189B00) is defined in
+// Common/VptrTailJumpDestructors.cpp, which reproduces retail's body.
 
 //--------------------------------------------------------------------------------------
 /*static*/ Real AITNGuardMachine::getStdGuardRange(const Object* obj)

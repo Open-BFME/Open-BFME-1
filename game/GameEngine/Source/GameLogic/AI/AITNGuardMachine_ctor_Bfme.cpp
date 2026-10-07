@@ -88,7 +88,9 @@ public:
 // constructors at RVA 0x000A19E0 and RVA 0x0014F280.  The derived BFME state
 // records below intentionally model their empty base contribution with
 // explicit vptr and field offsets; no synthetic inline base bodies are used.
-extern int g_AITNGuardMachineVTable;
+// Retail VA 0x0109B4B0 is ??_7AITNGuardMachine@@6B@ (symbols.csv RVA 0x00C9B4B0);
+// its destructor 0x00189B00 re-seats the same table.
+extern "C" void (__cdecl *const __identifier("??_7AITNGuardMachine@@6B@")[1])(void);
 extern int g_AITNGuardReturnStateVTable;
 extern int g_AITNGuardIdleStateVTable;
 extern int g_AITNGuardInnerStateVTable;
@@ -240,7 +242,7 @@ private:
 AITNGuardMachine::AITNGuardMachine(Object *owner)
 	: StateMachine(owner, AsciiString("AITNGuardMachine"), false)
 {
-	*reinterpret_cast<volatile int *volatile *>(this) = &g_AITNGuardMachineVTable;
+	*reinterpret_cast<volatile int *volatile *>(this) = (int *)__identifier("??_7AITNGuardMachine@@6B@");
 	m_nemesisToAttack = 0;
 	m_guardMode = 0;
 

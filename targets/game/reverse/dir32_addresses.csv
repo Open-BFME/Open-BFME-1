@@ -3481,7 +3481,6 @@ name,va
 ??_7Rva00181DF0Owner@@6B@,0x0109AEF8
 ??_7Rva00183C10@@6B@,0x0109B190
 ??_7Rva00183DC0@@6B@,0x0109B220
-??_7Rva00189B00TailDtor@@6B@,0x0109B4B0
 ??_7Rva0018AC40State@@6B@,0x0109B560
 ??_7Rva0018ACA0State@@6B@,0x0109B5E0
 ??_7Rva0018AD60State@@6B@,0x0109B6D0
@@ -8995,7 +8994,6 @@ name,va
 ?g_AITNGuardAttackAggressorStateVTable@@3HA,0x0109B7A0
 ?g_AITNGuardIdleStateVTable@@3HA,0x0109B5E0
 ?g_AITNGuardInnerStateVTable@@3HA,0x0109B560
-?g_AITNGuardMachineVTable@@3HA,0x0109B4B0
 ?g_AITNGuardOuterStateVTable@@3HA,0x0109B650
 ?g_AITNGuardPickUpCrateStateVTable@@3HA,0x0109B748
 ?g_AITNGuardReturnStateVTable@@3HA,0x0109B6D0
