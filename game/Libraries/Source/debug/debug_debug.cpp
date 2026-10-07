@@ -112,30 +112,8 @@ void Debug::PreStaticInit(void)
   SetUnhandledExceptionFilter(DebugExceptionhandler::ExceptionFilter);
 }
 
-// ?StaticExit@Debug@@CAXXZ present-unmatched
-// ?StaticExit@Debug@@CAXXZ present-unmatched
-void Debug::StaticExit(void)
-{
-  // yes, we do leave memory 'leaks' but Win32 will take care of these
-
-  // however, I/O classes must be actively shut down
-  if (Instance.curType!=DebugIOInterface::StringType::MAX)
-    Instance.FlushOutput();
-  for (IOFactoryListEntry *io=Instance.firstIOFactory;io;io=io->next)
-    if (io->io)
-    {
-      io->io->Delete();
-      io->io=NULL;
-    }
-
-  // and command group interfaces...
-  for (CmdInterfaceListEntry *cmd=Instance.firstCmdGroup;cmd;cmd=cmd->next)
-    if (cmd->cmdif)
-    {
-      cmd->cmdif->Delete();
-      cmd->cmdif=NULL;
-    }
-}
+// Debug::StaticExit: retail's BFME body (0x0088A720) lives in
+// Debug_StaticExit_0088A720.cpp.
 
 Debug& Debug::operator<<(RepeatChar &c)
 {
