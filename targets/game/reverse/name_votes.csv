@@ -960,3 +960,4 @@ game/GameEngine/Source/GameLogic/Object/Behavior/DualWeaponBehaviorModuleDataCon
 game/GameEngine/Source/GameLogic/Object/Behavior/DualWeaponBehaviorModuleDataConstructorThunk.cpp|member||m_u10,68cf9e97eaf24644b4b39984,grok,20261007135001-05b51e,2026-10-07
 game/GameEngine/Source/GameLogic/Object/Behavior/DualWeaponBehaviorModuleDataConstructorThunk.cpp|member||m_b14,8016dc7d461d5adb2d8172de,grok,20261007135001-05b51e,2026-10-07
 game/GameEngine/Source/GameLogic/Object/Behavior/DualWeaponBehaviorModuleDataConstructorThunk.cpp|member||m_b15,b725acd313de0e69d93b73a3,grok,20261007135001-05b51e,2026-10-07
+game/GameEngine/Source/GameLogic/Object/Behavior/Rva00370730CastleMemberState.cpp|type||Rva00370730CastleMemberInterface,0a1cfd51cb26a4c2a8150a45,grok,20261007135006-584dd3,2026-10-07
