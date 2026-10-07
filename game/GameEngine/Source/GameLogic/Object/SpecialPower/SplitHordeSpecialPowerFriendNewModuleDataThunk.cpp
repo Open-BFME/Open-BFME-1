@@ -19,10 +19,11 @@ class MultiIniFieldParse;
 // FieldParse-table overload this TU used to name lives at 0x008520A0.
 class INI { public: void initFromINIMultiProc(void *what,
 	void (__cdecl *buildFieldParse)(MultiIniFieldParse &)); };
-extern "C" void __cdecl SplitHordeSpecialPowerFieldParse(MultiIniFieldParse &parse);
+// Retail stores VA 0x0040D1F7: the matched ILT thunk ?j_0000d1f7@@YAXXZ.
+void j_0000d1f7();
 class SplitHordeSpecialPower { public: static ModuleData *friend_newModuleData(INI *ini); };
 ModuleData *SplitHordeSpecialPower::friend_newModuleData(INI *ini) {
 	SplitHordeSpecialPowerModuleData *data = new SplitHordeSpecialPowerModuleData;
-	if (ini) ini->initFromINIMultiProc(data, &SplitHordeSpecialPowerFieldParse);
+	if (ini) ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))&j_0000d1f7);
 	return (ModuleData *)data;
 }
