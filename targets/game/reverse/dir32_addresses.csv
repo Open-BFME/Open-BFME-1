@@ -13389,7 +13389,6 @@ _HordeAIUpdateFieldParse,0x0043572E
 _HordeContainFieldParse,0x0043DE29
 _HordeGarrisonContainFieldParse,0x00405245
 _HordeMemberCollideFieldParse,0x004173DC
-_HordeSiegeEngineContainFieldParse,0x004427C1
 _HorseHordeContainFieldParse,0x004334F6
 _IID_ID3DXBaseMesh,0x0114DAD8
 _IID_ID3DXBuffer,0x0114DBC8

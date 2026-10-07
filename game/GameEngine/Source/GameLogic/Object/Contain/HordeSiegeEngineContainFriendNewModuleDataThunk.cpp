@@ -30,7 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl HordeSiegeEngineContainFieldParse(MultiIniFieldParse &parse);
+// The proc retail passes is VA 0x004427C1, the ILT stub ?j_000427c1@@YAXXZ (jumps to FUN_0062b3b0).
+extern void j_000427c1();
 
 class HordeSiegeEngineContain
 {
@@ -43,6 +44,6 @@ ModuleData *HordeSiegeEngineContain::friend_newModuleData(INI *ini)
 {
 	HordeSiegeEngineContainModuleData *data = new HordeSiegeEngineContainModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &HordeSiegeEngineContainFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))&j_000427c1);
 	return (ModuleData *)data;
 }
