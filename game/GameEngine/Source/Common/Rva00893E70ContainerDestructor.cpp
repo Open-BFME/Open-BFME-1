@@ -40,11 +40,14 @@ private:
 	Rva00892640Item m_inline[2];
 };
 
-extern Rva00892640Item *Rva00893B30ResizeItems(
+// The resize body at 0x00893B30 (346 bytes) is still the gen-asm dump
+// ?d_00893b30@@YAXXZ; retail calls it directly with (data, 0, 0).
+extern void d_00893b30();
+typedef Rva00892640Item *(__cdecl *Rva00893B30ResizeItemsFn)(
 	Rva00892640Item *data, int logical_count, int new_capacity);
 
 Gen_uw_00893e70::~Gen_uw_00893e70()
 {
 	if (m_data != m_inline)
-		Rva00893B30ResizeItems(m_data, 0, 0);
+		((Rva00893B30ResizeItemsFn)&d_00893b30)(m_data, 0, 0);
 }
