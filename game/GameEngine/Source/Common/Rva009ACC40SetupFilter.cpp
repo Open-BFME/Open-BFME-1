@@ -10,15 +10,16 @@ struct Rva009ACC40State
 };
 
 extern int *g_rva01356A9C;
-extern int *Rva009ACBA0SetupBounding(Rva009ACC40State *, int);
 struct Rva009ACBA0Context;
+// Matched at 0x009ACBA0 (Rva009ACBA0SetupBounding.cpp) with a context param.
+extern int *Rva009ACBA0SetupBounding(Rva009ACBA0Context *, int);
 extern int *(__cdecl *g_rva01356E64)(Rva009ACBA0Context *, int);
 
 void Rva009ACC40SetupFilter(Rva009ACC40State *state)
 {
 	if (state->m_mode >= 2) {
 		int value = g_rva01356A9C[state->m_tableIndex];
-		state->m_result = (int)Rva009ACBA0SetupBounding(state, value);
+		state->m_result = (int)Rva009ACBA0SetupBounding((Rva009ACBA0Context *)state, value);
 	} else {
 		int value = g_rva01356A9C[state->m_tableIndex];
 		state->m_result = (int)g_rva01356E64((Rva009ACBA0Context *)state, value);
