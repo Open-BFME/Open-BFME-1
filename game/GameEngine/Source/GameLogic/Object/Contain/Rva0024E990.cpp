@@ -27,7 +27,7 @@ public:
 	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
 	~AsciiString() {}
 	StringBufferData<char> *bufferData() const { return (StringBufferData<char> *)m_data; }
-	void releaseBuffer() { StringBase<char>::releaseBuffer(); }
+	using StringBase<char>::releaseBuffer;
 };
 
 #define OBJECT_TU_MEMBERS \
