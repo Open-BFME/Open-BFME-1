@@ -211,7 +211,7 @@ extern void *g_vtbl_01111254[];
 extern void *g_vtbl_01111258[];
 extern "C" char RenderObjectDrawConcrete_vtbl8;
 extern "C" char RenderObjectDrawConcrete_vtbl4;
-extern void *g_vtbl_01111398[];
+extern "C" char RenderObjectDrawConcrete_vtbl0;
 extern void *g_vtbl_0111140C[];
 extern void *g_vtbl_01111420[];
 extern void *g_vtbl_01111424[];
@@ -1463,7 +1463,7 @@ public:
     __forceinline RenderObjectDrawTemplateAllocation()
     {
         ((RenderObjectDrawTemplateCtorShim *)this)->construct();
-        *(volatile unsigned int *)this = (unsigned int)g_vtbl_01111398;
+        *(volatile unsigned int *)this = (unsigned int)&RenderObjectDrawConcrete_vtbl0;
         *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)&RenderObjectDrawConcrete_vtbl4;
         *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)&RenderObjectDrawConcrete_vtbl8;
     }
@@ -3992,7 +3992,7 @@ QuadDrawModule *ConcreteModuleTemplate<ModuleTag<6, QUAD_DRAW_MODULE_KEY, QUAD_D
 ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::ConcreteModuleTemplate(const ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > > &that)
 {
     ((RenderObjectDrawTemplateCopyCtorShim *)this)->construct(&that);
-    *(volatile unsigned int *)this = (unsigned int)g_vtbl_01111398;
+    *(volatile unsigned int *)this = (unsigned int)&RenderObjectDrawConcrete_vtbl0;
     *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)&RenderObjectDrawConcrete_vtbl4;
     *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)&RenderObjectDrawConcrete_vtbl8;
 }
@@ -4001,7 +4001,7 @@ ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_D
 ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_DRAW_MODULE_NAME, RenderObjectDrawModule, RenderObjectDrawModuleTemplate, DefaultParticleModule<6>, DefaultParticleModuleTemplate<6> > >::ConcreteModuleTemplate()
 {
     ((RenderObjectDrawTemplateCtorShim *)this)->construct();
-    *(volatile unsigned int *)this = (unsigned int)g_vtbl_01111398;
+    *(volatile unsigned int *)this = (unsigned int)&RenderObjectDrawConcrete_vtbl0;
     *(volatile unsigned int *)((unsigned char *)this + 4) = (unsigned int)&RenderObjectDrawConcrete_vtbl4;
     *(volatile unsigned int *)((unsigned char *)this + 8) = (unsigned int)&RenderObjectDrawConcrete_vtbl8;
 }

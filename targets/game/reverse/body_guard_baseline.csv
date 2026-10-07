@@ -553,7 +553,6 @@ dir32,0x01111258,?g_vtbl_01111258@@3PAPAXA,retail 0x01111258 is already recorded
 dir32,0x0111126C,??_7BfmeHolderCU@@6B@,"retail 0x0111126C is already recorded as ??_7Rva005DD320MultiTailDtor@@6B@ (+13 more); reference that name, not a new one"
 dir32,0x01111348,??_7T1Derived_005DEC00@@6BBfmeHolderCU@@@,"retail 0x01111348 is already recorded as ??_7Rva005ED8B0@@6BV3NodeHead@@@ (+1 more); reference that name, not a new one"
 dir32,0x01111360,??_7T1Derived_005DEC40@@6BBfmeHolderCU@@@,"retail 0x01111360 is already recorded as ??_7Rva005ED310@@6BV3NodeHead@@@ (+1 more); reference that name, not a new one"
-dir32,0x01111398,?g_vtbl_01111398@@3PAPAXA,"retail 0x01111398 is already recorded as _RenderObjectDrawConcrete_vtbl0; reference that name, not a new one"
 dir32,0x0111140C,?g_vtbl_0111140C@@3PAPAXA,"retail 0x0111140C is already recorded as ??_7ParticleLifeEventModuleTemplate@FXParticleSystem@@6BPLEMT_IfaceB@1@@ (+1 more); reference that name, not a new one"
 dir32,0x01111420,?g_vtbl_01111420@@3PAPAXA,"retail 0x01111420 is already recorded as ??_7ParticleLifeEventModuleTemplate@FXParticleSystem@@6BPLEMT_IfaceA@1@@ (+1 more); reference that name, not a new one"
 dir32,0x01111424,?g_vtbl_01111424@@3PAPAXA,"retail 0x01111424 is already recorded as ??_7ParticleLifeEventModuleTemplate@FXParticleSystem@@6BPLEMT_Base@1@@ (+1 more); reference that name, not a new one"
