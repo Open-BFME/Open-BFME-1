@@ -30,7 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl DeflectSpecialPowerFieldParse(MultiIniFieldParse &parse);
+// The proc retail passes is VA 0x0044765E, the ILT stub ?j_0004765e@@YAXXZ (jumps to 0x0025A180).
+extern void j_0004765e();
 
 class DeflectSpecialPower
 {
@@ -43,6 +44,6 @@ ModuleData *DeflectSpecialPower::friend_newModuleData(INI *ini)
 {
 	DeflectSpecialPowerModuleData *data = new DeflectSpecialPowerModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &DeflectSpecialPowerFieldParse);
+		ini->initFromINIMultiProc(data, (void (__cdecl *)(MultiIniFieldParse &))&j_0004765e);
 	return (ModuleData *)data;
 }
