@@ -12,8 +12,14 @@ extern "C" __declspec(dllimport) BOOL __stdcall EnumThreadWindows(
 	LPARAM context);
 extern "C" __declspec(dllimport) BOOL __stdcall ShowWindow(HWND window, int command);
 
-// The callback at 0x00548D90 is pinned as bfmeEnumThreadWndProc.
-extern BOOL __stdcall bfmeEnumThreadWndProc(HWND window, LPARAM context);
+// Retail 0x00548D90, 15 bytes, right before its one user below: Zero Hour's
+// debug EnumThreadWndProc (stores the first window and stops enumerating).
+BOOL __stdcall bfmeEnumThreadWndProc(HWND window, LPARAM context)
+{
+	HWND *found = reinterpret_cast<HWND *>(context);
+	*found = window;
+	return 0;
+}
 
 void bfmeMinimizeCurrentThreadWindow(void)
 {
