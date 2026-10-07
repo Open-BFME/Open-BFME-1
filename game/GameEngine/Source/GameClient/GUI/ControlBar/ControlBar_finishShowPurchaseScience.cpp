@@ -244,7 +244,10 @@ extern GameLogic *TheGameLogic;
 extern ScriptEngine *TheScriptEngine;
 extern DisconnectMenu *TheDisconnectMenu;
 
-extern bool __cdecl rva00592D60Ask();
+// ILT 0x2C714 -> 0x00563940, matched ?bfmeQuiet@@YAHXZ (Bfme5FortyFour.cpp);
+// the caller tests only its low byte.
+extern int __cdecl bfmeQuiet();
+static inline bool rva00592D60Ask() { return (char)bfmeQuiet() != 0; }
 extern void __cdecl HideInGameChat();
 extern void __cdecl HideDiplomacy();
 
