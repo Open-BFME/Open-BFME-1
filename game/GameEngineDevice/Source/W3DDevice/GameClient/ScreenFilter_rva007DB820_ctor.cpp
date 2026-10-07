@@ -1,6 +1,24 @@
 // cl: /O2 /Ob0
 
-extern const void *g_01128C0C[];
+// Retail .rdata 0x01128C0C, 28 bytes: the class vftable, seven ILT slots
+// (vtable_lookup.py; slot 5 -> matched set 0x007DAE30), no RTTI locator.
+void j_00013d3b();
+void j_0000a1a5();
+void j_0001fdd9();
+void j_000184e9();
+void j_0003cd1c();
+void j_000148c6();
+void j_0003fc9c();
+extern const void *g_01128C0C[] =
+{
+	(const void *)&j_00013d3b,
+	(const void *)&j_0000a1a5,
+	(const void *)&j_0001fdd9,
+	(const void *)&j_000184e9,
+	(const void *)&j_0003cd1c,
+	(const void *)&j_000148c6,
+	(const void *)&j_0003fc9c,
+};
 
 class Rva007DB820
 {
