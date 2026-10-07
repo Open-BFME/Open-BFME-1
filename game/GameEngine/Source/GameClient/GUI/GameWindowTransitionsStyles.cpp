@@ -214,20 +214,7 @@ ButtonFlashTransition::~ButtonFlashTransition( void )
 	m_win = NULL;
 }
 
-void ButtonFlashTransition::init( GameWindow *win )
-{
-	if(win)
-	{
-		m_win = win;
-		m_win->winGetSize(&m_size.x, &m_size.y);
-		m_win->winGetScreenPosition(&m_pos.x, &m_pos.y );
-	}
-	m_isForward = FALSE;
-	update(BUTTONFLASHTRANSITION_START);
-	m_isFinished = FALSE;
-	m_isForward = TRUE;
-	m_gradient = (Image *)TheMappedImageCollection->findImageByName("Gradient");
-}
+// ButtonFlashTransition::init: retail body in ButtonFlashTransition_init_Thunk.cpp.
 
 // ?update@ButtonFlashTransition@@UAEXH@Z present-unmatched
 void ButtonFlashTransition::update( Int frame )
