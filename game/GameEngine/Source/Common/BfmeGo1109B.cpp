@@ -25,15 +25,17 @@ struct _Rb_global
 };
 }
 
-class BfmeD975
+// The per-node check goes through ILT 0x0003E80B to 0x0013FE10, matched as
+// ThingTemplate::isEquivalentTo (ThingTemplateIsEquivalentTo.cpp).
+class ThingTemplate
 {
 public:
-	char bfmeUse975D(void *p);
+	bool isEquivalentTo(const ThingTemplate *tt) const;
 };
 
-__forceinline char bfmeCheck1109B(BfmeD975 *checker, int value)
+__forceinline char bfmeCheck1109B(const ThingTemplate *checker, int value)
 {
-	return checker->bfmeUse975D((void *)value);
+	return checker->isEquivalentTo((const ThingTemplate *)value);
 }
 
 class BfmeW1109
@@ -53,7 +55,7 @@ int BfmeW1109::bfmeGo1109B(int a)
 	int count = 0;
 
 	while (node != head) {
-		if (bfmeCheck1109B((BfmeD975 *)node->m_bfme10, a))
+		if (bfmeCheck1109B((const ThingTemplate *)node->m_bfme10, a))
 			++count;
 		node = (BfmeNode1109B *)_STL::_Rb_global<bool>::_M_increment(
 			(_STL::_Rb_tree_node_base *)node);
