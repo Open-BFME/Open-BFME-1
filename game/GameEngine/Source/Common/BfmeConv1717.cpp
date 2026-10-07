@@ -22,17 +22,23 @@ static inline BfmeTerrainGJ *bfmeTerrainGJ()
 	return reinterpret_cast<BfmeTerrainGJ *>(TheTerrainLogic);
 }
 
+// Retail calls ILT 0x00036FCA -> 0x00148A10, the matched no-fly-zone height.
+class AerialPathfinder
+{
+public:
+	Real getNoFlyZoneHeight(Real x, Real y);
+};
+
 class BfmeOwnerGJ
 {
 public:
 	Real bfmeMaxGJ(Real x, Real y);
-	Real bfmeOwnGJ(Real x, Real y);
 };
 
 Real BfmeOwnerGJ::bfmeMaxGJ(Real x, Real y)
 {
 	Real ground = bfmeTerrainGJ()->bfmeHeightGJ(x, y, 0);
-	Real mine = bfmeOwnGJ(x, y);
+	Real mine = ((AerialPathfinder *)this)->getNoFlyZoneHeight(x, y);
 
 	return (mine > ground) ? mine : ground;
 }
