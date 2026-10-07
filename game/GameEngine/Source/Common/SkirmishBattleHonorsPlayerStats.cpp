@@ -20,6 +20,7 @@ private:
 	StringBase(const char *s);
 	StringBase(const StringBase &that);
 	~StringBase();
+	void releaseBuffer();
 	friend class AsciiString;
 };
 
@@ -44,9 +45,11 @@ public:
 		((StringBase<char> *)this)->StringBase<char>::StringBase(*(const StringBase<char> *)&that);
 	}
 
+	// Retail releases these strings by calling StringBase<char>::releaseBuffer
+	// (0x00887940) directly, not the out-of-line ~StringBase<char> at 0x0005E490.
 	~AsciiString()
 	{
-		((StringBase<char> *)this)->~StringBase();
+		((StringBase<char> *)this)->releaseBuffer();
 	}
 
 	const char *str() const

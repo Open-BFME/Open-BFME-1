@@ -12,6 +12,7 @@ private:
 	StringBase( const char *text );
 	StringBase( const StringBase &that );
 	~StringBase();
+	void releaseBuffer();
 	friend class AsciiString;
 };
 
@@ -27,9 +28,11 @@ public:
 	{
 		((StringBase<char> *)this)->StringBase<char>::StringBase( *(const StringBase<char> *)&that );
 	}
+	// Retail releases the string by calling StringBase<char>::releaseBuffer
+	// (0x00887940) directly, not the out-of-line ~StringBase<char> at 0x0005E490.
 	~AsciiString()
 	{
-		((StringBase<char> *)this)->~StringBase();
+		((StringBase<char> *)this)->releaseBuffer();
 	}
 	const char *str() const
 	{
@@ -70,18 +73,3 @@ int SkirmishBattleHonors::getRank( AsciiString name ) const
 	return rank + 1;
 }
 
-class SkirmishBattleHonorsRankGap : public UserPreferences
-{
-public:
-	int m_pad[4];
-	int m_rankPoints[10];
-	int getPoints( AsciiString name ) const;
-	int getPointsToNextRank( AsciiString name, int rank ) const;
-};
-
-int SkirmishBattleHonorsRankGap::getPointsToNextRank( AsciiString name, int rank ) const
-{
-	if ( rank == 10 )
-		return 0;
-	return m_rankPoints[rank] - getPoints( name );
-}
