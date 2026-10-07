@@ -242,9 +242,10 @@ private:
 	Condition *m_firstAnd;
 };
 
+// Retail 0x012B3E58: BFME numbers the last four conditions one above ZH.
 static int ParameterChangesVer2[] =
 {
-	7, 17, 18, 40, 39, 41, 42, -1
+	7, 17, 18, 41, 40, 42, 43, -1
 };
 
 Bool __cdecl Condition::ParseConditionDataChunk(DataChunkInput &file,
