@@ -92,7 +92,7 @@ public:
 
 extern InGameUI *TheInGameUI;
 extern MessageStream *TheMessageStream;
-void pickAndPlayUnitVoiceResponse(const DrawableList *list, GameMessage::Type type,
+bool pickAndPlayUnitVoiceResponse(const DrawableList *list, GameMessage::Type type,
 	PickAndPlayInfo *info);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/CommandXlat.h

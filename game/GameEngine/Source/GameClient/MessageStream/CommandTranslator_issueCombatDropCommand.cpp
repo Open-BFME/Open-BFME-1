@@ -102,7 +102,7 @@ public:
 
 extern InGameUI *TheInGameUI;
 extern MessageStream *TheMessageStream;
-void pickAndPlayUnitVoiceResponse(const DrawableList *list, GameMessage::Type type,
+bool pickAndPlayUnitVoiceResponse(const DrawableList *list, GameMessage::Type type,
 	PickAndPlayInfo *info);
 
 class CommandTranslator

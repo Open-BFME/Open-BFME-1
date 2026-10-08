@@ -134,7 +134,7 @@ public:
 
 extern InGameUI *TheInGameUI;
 extern MessageStream *TheMessageStream;
-void pickAndPlayUnitVoiceResponse(const DrawableList *, GameMessage::Type, PickAndPlayInfo *);
+bool pickAndPlayUnitVoiceResponse(const DrawableList *, GameMessage::Type, PickAndPlayInfo *);
 
 class Rva005ACF80Owner {
 public:

@@ -1,14 +1,17 @@
-// Three more: a constructor seeded from three globals, a two-level
+// Three more: the PickAndPlayInfo constructor (position seeded from three globals), a two-level
 // comparator, and an angle from an inline arctangent.
 
 extern int g_bfmeFirstEG;					// retail 0x012B87AC
 extern int g_bfmeSecondEG;					// retail 0x012B87B0
 extern int g_bfmeThirdEG;					// retail 0x012B87B4
 
-class Gen_005A7460
+// Retail ILT 0x0000F164 (pinned ??0PickAndPlayInfo) lands here; the layout is
+// ZH CommandXlat.h PickAndPlayInfo (m_air, m_drawTarget, m_weaponSlot,
+// m_specialPowerType, m_position) plus one BFME word at +0x1C.
+class PickAndPlayInfo
 {
 public:
-	Gen_005A7460(void);
+	PickAndPlayInfo(void);
 
 private:
 	bool m_bfmeFlag;					// +0x00
@@ -22,8 +25,8 @@ private:
 	int m_bfmeD;						// +0x1C
 };
 
-// ??0Gen_005A7460@@QAE@XZ
-Gen_005A7460::Gen_005A7460(void)
+// ??0PickAndPlayInfo@@QAE@XZ
+PickAndPlayInfo::PickAndPlayInfo(void)
 {
 	m_bfmeFirst = g_bfmeFirstEG;
 	m_bfmeSecond = g_bfmeSecondEG;

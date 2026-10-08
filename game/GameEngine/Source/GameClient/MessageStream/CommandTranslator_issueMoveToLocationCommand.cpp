@@ -135,7 +135,7 @@ public:
 extern InGameUI *TheInGameUI;
 extern MessageStream *TheMessageStream;
 extern StatsCollector *TheStatsCollector;
-extern void pickAndPlayUnitVoiceResponse(const DrawableList *list,
+extern bool pickAndPlayUnitVoiceResponse(const DrawableList *list,
 	GameMessage::Type messageType, PickAndPlayInfo *info);
 
 class CommandTranslator
