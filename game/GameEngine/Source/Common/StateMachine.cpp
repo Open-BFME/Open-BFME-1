@@ -742,18 +742,7 @@ Bool StateMachine::isGoalObjectDestroyed() const
 }
 
 //-----------------------------------------------------------------------------
-// ?halt@StateMachine@@ present-unmatched
-void StateMachine::halt() 
-{ 
-	m_locked = true;
-	m_currentState = NULL; // don't exit current state, just clear it.
-#ifdef STATE_MACHINE_DEBUG
-	if (getWantsDebugOutput())
-	{
-		DEBUG_LOG(("%d '%s' -- '%s' %x halt()\n", TheGameLogic->getFrame(), m_owner->getTemplate()->getName().str(), m_name.str(), this));
-	}	
-#endif
-}
+// StateMachine::halt is defined by the matched body in StateMachine_getGoalObject.cpp (retail 0x000A00A0).
 
 //-----------------------------------------------------------------------------
 // ?internalSetGoalObject@StateMachine@@ present-unmatched
