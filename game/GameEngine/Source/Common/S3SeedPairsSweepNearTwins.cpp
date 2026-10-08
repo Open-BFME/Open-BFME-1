@@ -147,11 +147,24 @@ public:
 class AudioManager;
 extern AudioManager *TheAudio;
 
-class BfmeSubAccept_00029DAC_NT
+// Matched callee rows (callees.py): ILT 0x00029DAC -> Gen_002D9B90::bfmeSeed
+// 0x002D9B90 and ILT 0x000044C1 -> Gen002B2080::handle 0x002B2080.
+class BfmeSeedTarget;
+class FlagPairTarget;
+
+class Gen_002D9B90
 {
 public:
-	void bfmeAccept(BfmeSeedTarget_NT *target);		// ILT 0x00029DAC
+	void bfmeSeed(BfmeSeedTarget *target);
 };
+
+class Gen002B2080
+{
+public:
+	void handle(FlagPairTarget *target);
+};
+
+typedef Gen_002D9B90 BfmeSubAccept_00029DAC_NT;
 
 // ---------------------------------------------------------------------------
 // 0x002D6ED0 -- near-twin of ?bfmeSeed@Gen_0016C8C0@@QAEXPAVBfmeSeedTarget@@@Z
@@ -166,8 +179,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget_NT *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget_NT *target);		// ILT 0x000044C1
-
 	char m_bfmePad0[0x20];
 	char m_bfmeItem1;				// +0x20 (bfmeTakeAt74)
 	char m_bfmePad1[0x3];
@@ -184,8 +195,8 @@ void Gen_002D6ED0::bfmeSeed(BfmeSeedTarget_NT *target)
 	target->bfmeSeed(&pair);
 	target->bfmeTakeAt8C(&m_bfmeItem0);
 	target->bfmeTakeAt74(&m_bfmeItem1);
-	bfmeAccept(target);
-	((BfmeSubAccept_00029DAC_NT *)((char *)this - 8))->bfmeAccept(target);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
+	((BfmeSubAccept_00029DAC_NT *)((char *)this - 8))->bfmeSeed((BfmeSeedTarget *)target);
 }
 
 // ---------------------------------------------------------------------------
@@ -201,10 +212,8 @@ public:
 	void bfmeSeed(BfmeSeedTarget_NT *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget_NT *target);		// ILT 0x000044C1
-
 	char m_bfmePad0[0x20];
-	class BfmeSubAccept_00029DAC_NT *m_bfmeSub20;		// +0x20 (used by address, not value)
+	BfmeSubAccept_00029DAC_NT *m_bfmeSub20;		// +0x20 (used by address, not value)
 	char m_bfmePad1[0x8];
 	char m_bfmeItem2c;				// +0x2C
 };
@@ -218,6 +227,6 @@ void Gen_002D35A0::bfmeSeed(BfmeSeedTarget_NT *target)
 
 	target->bfmeSeed(&pair);
 	((BfmeAudioClientUpdate_NT *)TheAudio)->bfmeTakeItem148(target, &m_bfmeItem2c);
-	bfmeAccept(target);
-	((BfmeSubAccept_00029DAC_NT *)((char *)this + 0x20))->bfmeAccept(target);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
+	((BfmeSubAccept_00029DAC_NT *)((char *)this + 0x20))->bfmeSeed((BfmeSeedTarget *)target);
 }
