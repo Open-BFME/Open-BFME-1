@@ -207,7 +207,7 @@ protected:
 */
 class ProxyArrayClass : public W3DMPO, public VectorClass<ProxyRecordClass>, public RefCountClass
 {
-	W3DMPO_GLUE(ProxyArrayClass)
+	// BFME: no W3DMPO_GLUE; retail ??_G 0x0097B5D0 frees with the global operator delete
 public:
 	ProxyArrayClass(int size) : VectorClass<ProxyRecordClass>(size)
 	{
