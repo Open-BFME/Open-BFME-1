@@ -570,12 +570,14 @@ def stlport_overlay_dirs(source):
 
 
 def nbench_include_dir():
-    """Directory of vendored nbench-byte 2.2.3 sources, or None.
+    """Directory of the vendored nbench-byte tarball (2.2.3 text), or None.
 
-    game/Libraries/Source/Benchmark/{nbench0,nbench1,emfloat}.cpp include the
-    upstream .c files by their original names; those live here, not next to
-    the wrappers. Scoped to Benchmark TUs the same way inputs/vendor/stlport is
-    scoped to // stlport files.
+    It supplies HEADERS only: game/Libraries/Source/Benchmark/{nbench0,nbench1,
+    emfloat}.cpp include "nbench1.c" etc. by quoted name, which resolves to the
+    EA-adapted sibling copies beside the wrappers first, and those are 2.1
+    (pre-Dierks) code -- see inputs/vendor/nbench/PROVENANCE.md. Scoped to
+    Benchmark TUs the same way inputs/vendor/stlport is scoped to // stlport
+    files.
     """
     path = ROOT / "inputs/vendor" / "nbench"
     if (path / "nbench1.c").exists():

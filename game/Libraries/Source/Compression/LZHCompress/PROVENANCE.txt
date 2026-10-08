@@ -8,12 +8,15 @@ Artifact
     dated   2025-03-02  (the repository's initial import; the code itself is
             the 1998 v1.0 release, which no longer has a live home page)
 
-The nine files vendored here are byte-for-byte that commit's, with COMMENTS
-added to the two .cpp files and not one line of code changed. Two kinds: the
-header block naming this release, and three `// <symbol> present-unmatched`
-markers, which are what the pre-commit gate requires of a definition this repo
-cannot pin to an address (`tools/find_declared_unmatched.py`). The headers and
-.tbl files are untouched:
+Seven of the nine files vendored here (the headers and .tbl tables) are
+byte-for-byte that commit's. The two .cpp files were that commit's text plus
+COMMENTS (the header block naming this release, and three
+`// <symbol> present-unmatched` markers, which are what the pre-commit gate
+requires of a definition this repo cannot pin to an address,
+`tools/find_declared_unmatched.py`) until September 2026; they now ALSO carry
+EA's revisions of the two bodies the stock text could not reproduce, see
+"What this evidence does NOT decide", item 1. Hashes of the upstream files
+(LF-normalized):
 
     ddd3305592a947316b4671bcf31680d48515b47ba8ebdf30ecd73d049024bb56  Huff.cpp        13,886
     db11c18a1fd3a25f09bff08daec8fb290e4f86b30a4e38b04420ced8c9f542a5  Lz.cpp          10,459
@@ -27,7 +30,12 @@ cannot pin to an address (`tools/find_declared_unmatched.py`). The headers and
 
 All nine were re-fetched and re-hashed on 2026-08-17: the seven headers and
 .tbl files are `cmp`-identical to that commit, and `diff` on the two .cpp files
-shows comment-only additions, no code line changed.
+showed comment-only additions then. Since 1535bf7e7d (compress, 2026-09-20) and
+98ab00bfc8 (decompress, 2026-09-28) the two .cpp files differ from upstream in
+those two function bodies as well; as of 2026-10-08 they hash (LF-normalized) to
+
+    f370d0591b64076a0b37690d6e3c57e3a296a10bda10141f94d701e082754573  Huff.cpp
+    49b86e6f8c0371ac50315fc8399dfecf7056cbf1b53fef6f6bc50fd4f1cf38b7  Lz.cpp
 
 One inconsistency is upstream's own and is left as found: Huff.cpp's banner says
 "LZH-Light algorithm implementation v 1.01" while Lz.cpp's says "v 1.0". The
@@ -84,7 +92,9 @@ whole function bodies from these two TUs reproduce retail exactly, 4,310 bytes
 at 31 distinct addresses inside one contiguous run. (This paragraph read "26 ...
 at 26 distinct addresses" until 2026-08-17: it was written mid-wave and never
 refreshed when the last five bodies landed in the same commit. The ledger is
-the count of record — `grep -c 'vendored=lzhl-1.0' targets/game/reverse/functions.csv`.)
+the count of record — `grep -c 'vendored=lzhl-1.0' targets/game/reverse/functions.csv`;
+on 2026-10-08 the two TUs own 50 matched rows: those 31, the two EA-revised
+bodies, and address-named helpers.)
 
 Two other public carriers were compiled and rejected:
 
@@ -135,21 +145,19 @@ passes that.
 
 What this evidence does NOT decide
 ----------------------------------
-1. Two bodies REFUSE to match, and this release is not BFME's for them.
-   LZHLCompressor::compress compiles to 1,741 bytes (1,747 from `main`);
-   retail's body at 0x00825680 is 1,724. LZHLDecompressor::decompress compiles
-   to 852; retail's callable body at 0x00826920 is 824 bytes (the 844-byte
-   unclaimed run begins in its preceding alignment pad). Both stay as
-   `game/gen_asm` dumps. The differences are small and one-directional — EA's
-   copy is SHORTER in both — which reads like a local EA edit to the two
-   biggest functions rather than a different vintage, but nothing here
-   establishes what the edit was, and no attempt was made to guess it. That
-   is 2,568 bytes this file explicitly does not claim.
-   Update 2026-09-28: decompress is now matched (824/824) from EA's revision
-   in Huff.cpp: one top-tested while(src < endSrc) in place of the empty guard
-   plus do/while, no -1 checks on _get, the end symbol jumping straight to the
-   size write-back, and the pos/disp _get results used in place. compress
-   (1,724 bytes) remains unclaimed.
+1. Two bodies do not match the STOCK text, and both are EA's revisions.
+   Stock LZHLCompressor::compress compiles to 1,741 bytes (1,747 from `main`);
+   retail's body at 0x00825680 is 1,724. Stock LZHLDecompressor::decompress
+   compiles to 852; retail's callable body at 0x00826920 is 824 bytes. Both
+   are now matched from EA's revisions reconstructed in source and marked at
+   the function and in each file's header block: decompress (98ab00bfc8,
+   2026-09-28, 824/824) has one top-tested while(src < endSrc) in place of the
+   empty guard plus do/while, no -1 checks on _get, the end symbol jumping
+   straight to the size write-back, and the pos/disp _get results used in
+   place; compress (1535bf7e7d, 2026-09-20, 1,724/1,724) assigns the four
+   lazy-match locals before the guarded reads. So the release is LZHL 1.0 with
+   two EA-edited functions, not a different vintage: BFME2's game.dat carries
+   the STOCK 1,741-byte compress (`_impl/reports/libaudit-compression.md`).
 
 2. `?_wrap@LZBuffer@@KAHI@Z` and `?_distance@LZBuffer@@KAHH@Z` compile to the
    same ten bytes, and exactly two unclaimed addresses in the run hold those
@@ -191,4 +199,6 @@ removed or altered, and altered source versions must be plainly marked as such.
 That is a zlib-class permissive licence with no further restrictions, so it is
 compatible with this repository's GPLv3 and combining it with GPLv3 code is
 allowed. Both conditions are met here: every notice is intact, and this file
-plus each source header record the modifications made — comments only, no code.
+plus each source header record the modifications made — comments in every
+file, and EA's revisions of compress (Lz.cpp) and decompress (Huff.cpp), each
+marked at the function and in the file's header block.

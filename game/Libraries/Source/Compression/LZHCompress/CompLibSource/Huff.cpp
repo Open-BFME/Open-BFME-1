@@ -9,7 +9,7 @@
    Statically linked into lotrbfme.exe; EA kept it at
    Compression/LZHCompress/CompLib{Header,Source} (Zero Hour Compression.dsp).
    See ../PROVENANCE.txt for the artifact identity, the five Huffman tables in
-   retail .data that pin this release, and the two bodies it does NOT match. */
+   retail .data that pin this release, and the two bodies EA revised. */
 /*
  *  LZH-Light algorithm implementation v 1.01
  *  Copyright (C) Sergey Ignatchenko 1998

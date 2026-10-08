@@ -99,9 +99,9 @@ its sizes are not exact body extents.
 
 Read each library's provenance before drawing conclusions from its files.
 
-- **nbench / BYTEmark 2.2.3** (`0x008739A0-0x0087A4A0`): vendored unmodified in
-  `inputs/vendor/nbench/` (LSM copying policy: "freely distributable");
-  `inputs/vendor/nbench/PROVENANCE.md` gives the source tarball and its hash.
+- **nbench / BYTEmark 2.1, pre-Dierks** (`0x008739A0-0x0087A4A0`):
+  `inputs/vendor/nbench/` holds the 2.2.3 tarball, used for headers only (LSM
+  copying policy: "freely distributable"); `inputs/vendor/nbench/PROVENANCE.md` explains.
 - **GameSpy Chat + Peer** (Chat `0x0085E000-0x00870000`, Peer
   `0x00870000-0x00878000`): permitted. The owner confirmed that the project's
   permission covers the 2007 GameSpy SDK, Chat and Peer included. The files

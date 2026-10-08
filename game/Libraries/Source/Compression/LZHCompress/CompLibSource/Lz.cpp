@@ -1,13 +1,15 @@
 // cl: /DNDEBUG /MD -Igame/Libraries/Source/Compression/LZHCompress/CompLibHeader
 /* LZH-Light 1.0 (Sergey Ignatchenko, 1998) -- upstream C++ source, verbatim
    from github.com/TheSuperHackers/lzhl-1.0 commit dfd96e2, EXCEPT for comments:
-   this block and the `present-unmatched` markers below it. Not one line of code
-   is changed, and the alterations are named here because the licence below
-   requires an altered source version to say so.
+   this block and the `present-unmatched` markers below it, AND for
+   LZHLCompressor::compress, whose body is EA's shipped revision (the lazy-match
+   locals are assigned before the guarded reads; see the comment above it)
+   because retail 0x00825680 is that revision. The alterations are named here
+   because the licence below requires an altered source version to say so.
    Statically linked into lotrbfme.exe; EA kept it at
    Compression/LZHCompress/CompLib{Header,Source} (Zero Hour Compression.dsp).
    See ../PROVENANCE.txt for the artifact identity, the five Huffman tables in
-   retail .data that pin this release, and the two bodies it does NOT match. */
+   retail .data that pin this release, and the two bodies EA revised. */
 /*
  *  LZH-Light algorithm implementation v 1.0
  *  Copyright (C) Sergey Ignatchenko 1998
@@ -134,8 +136,10 @@ inline LZHASH LZHLCompressor::_updateTable( LZHASH hash, const BYTE* src, LZPOS 
     return hash;
     }
 
-// upstream compiles 1,741 bytes here (1,747 at branch tip); retail's body at
-// 0x00825680 is 1,724, and no compiler flag reaches it. EA's divergence.
+// Stock upstream compiles 1,741 bytes here (1,747 at branch tip); retail's body
+// at 0x00825680 is 1,724 and no compiler flag reaches it. This is EA's revision
+// of the function (ledger row 0x00825680, matched 1,724/1,724): the four lazy
+// locals are assigned before the guarded reads. BFME2 shipped the stock 1,741.
 size_t LZHLCompressor::compress( BYTE* dst, const BYTE* src, size_t sz )
     {
     LZHLEncoder coder( &stat, dst );
