@@ -15,10 +15,16 @@ public:
 	Player *getControllingPlayer() const;
 };
 
-class Rva0036BA60Cost
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
+// Retail 0x0036BA88 calls ILT 0xDA8A -> ThingTemplate::calcCostToBuild (0x0013E390).
+class ThingTemplate
 {
 public:
-	unsigned int costFor( Player *player, int index ) const;
+	int calcCostToBuild( const Player *player, int baseCost ) const;
+};
+
+class Rva0036BA60Cost : public ThingTemplate
+{
 };
 
 class Rva0036BA60PurchaseContext
@@ -42,5 +48,5 @@ bool Rva0036BA60PurchaseContext::canAfford( Player *player, const Rva0036BA60Cos
 		return false;
 
 	unsigned int availableMoney = player->m_availableMoney;
-	return availableMoney >= cost->costFor( player, -1 );
+	return availableMoney >= cost->calcCostToBuild( player, -1 );
 }
