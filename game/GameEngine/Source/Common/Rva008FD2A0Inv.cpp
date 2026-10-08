@@ -7,9 +7,9 @@ public:
 	void Invalidate(bool);
 };
 
-DX8MeshRendererClass *g_rva008fd2a0;
+DX8MeshRendererClass *TheDX8MeshRenderer;
 
 void rva008fd2a0()
 {
-	g_rva008fd2a0->Invalidate(false);
+	TheDX8MeshRenderer->Invalidate(false);
 }
