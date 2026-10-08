@@ -15,7 +15,6 @@ dir32,0x0040768A,??0AttackPriorityInfo@@QAE@XZ,"nothing in the ledger owns 0x004
 dir32,0x00407BAD,??0TransitionDamageFXRecordA@?A0x2535ff93@@QAE@XZ,"retail 0x00407BAD is already recorded as ??0TransitionDamageFXRecordA@?A0xebea2875@@QAE@XZ; reference that name, not a new one"
 dir32,0x00408224,?j_00008224@@YAXXZ,"retail 0x00408224 is already recorded as ?TheBfmeOwner_001612B0@@3PADA (+1 more); reference that name, not a new one"
 dir32,0x00408B39,?j_00008b39@@YAXXZ,"retail 0x00408B39 is already recorded as _bfmeHookA1054; reference that name, not a new one"
-dir32,0x0040955C,?j_0000955c@@YAXXZ,"retail 0x0040955C is already recorded as _ToggleHiddenSpecialAbilityUpdateFieldParse; reference that name, not a new one"
 dir32,0x0040A00B,?j_0000a00b@@YAXXZ,"retail 0x0040A00B is already recorded as _ReflectDamageFieldParse; reference that name, not a new one"
 dir32,0x0040A27C,?j_0000a27c@@YAXXZ,"retail 0x0040A27C is already recorded as ?supplyTruckSubMachineWantsToEnter@WorkerStateMachine@@SA_NPAVState@@PAX@Z; reference that name, not a new one"
 dir32,0x0040A95C,?bfmeRva0037D150Apply@@YAHPAUBfmeObjectD150@@H@Z,"retail 0x0040A95C is already recorded as ?bfmeTeamSetExperiencePointsVisitor@@YAXPAVObject@@PAX@Z; reference that name, not a new one"

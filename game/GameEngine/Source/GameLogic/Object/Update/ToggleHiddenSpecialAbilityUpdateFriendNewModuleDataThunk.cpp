@@ -37,7 +37,7 @@ public:
 // a `jmp` to the module-data class's static field-parse builder.  The old
 // `extern "C" ToggleHiddenSpecialAbilityUpdateFieldParse` was invented in this
 // TU and nothing defines it; the thunk is retail's real spelling of this operand.
-void j_0000955c();
+extern "C" void __cdecl __identifier("ToggleHiddenSpecialAbilityUpdateFieldParse")();
 
 class ToggleHiddenSpecialAbilityUpdate
 {
@@ -51,6 +51,6 @@ ModuleData *ToggleHiddenSpecialAbilityUpdate::friend_newModuleData(INI *ini)
 	ToggleHiddenSpecialAbilityUpdateModuleData *data = new ToggleHiddenSpecialAbilityUpdateModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0000955c));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(__identifier("ToggleHiddenSpecialAbilityUpdateFieldParse")));
 	return (ModuleData *)data;
 }
