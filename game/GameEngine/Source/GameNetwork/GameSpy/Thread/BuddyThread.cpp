@@ -647,24 +647,6 @@ static void getInfoResponseForRequest( GPConnection *con, GPGetInfoResponseArg *
 	strcpy(resp->arg.request.countrycode, arg->countrycode);
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThreadCallbacks.cpp
-// ?requestCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyRequestArg@@@Z present-unmatched
-void BuddyThreadClass::requestCallback( GPConnection *con, GPRecvBuddyRequestArg *arg )
-{
-	BuddyResponse response;
-	response.buddyResponseType = BuddyResponse::BUDDYRESPONSE_REQUEST;
-	response.profile = arg->profile;
-
-	// get info about the person asking to be our buddy
-	gpGetInfo( con, arg->profile, GP_CHECK_CACHE, GP_BLOCKING, (GPCallback)getInfoResponseForRequest, &response);
-
-	std::wstring s = MultiByteToWideCharSingleLine( arg->reason );
-	wcsncpy(response.arg.request.text, s.c_str(), GP_REASON_LEN);
-	response.arg.request.text[GP_REASON_LEN-1] = 0;
-
-	TheGameSpyBuddyMessageQueue->addResponse( response );
-}
-
 // -----------------------
 
 static void getInfoResponseForStatus(GPConnection * connection, GPGetInfoResponseArg * arg, void * param)
