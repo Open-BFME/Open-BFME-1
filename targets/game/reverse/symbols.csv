@@ -2859,7 +2859,6 @@ name,address,notes
 ??0FXListDieModuleData@@QAE@XZ,0x00025EBE,derived-ICF
 ??0FXNugget@@QAE@XZ,0x00428590,BFME's 225-byte FXNugget constructor; the false 0x00061D90 zero-store claim was retired in fcf825b4f7
 ??0FastAllocatorGeneral@@QAE@XZ,0x00B027B0
-??0FeslEchoMessage@@QAE@PADH@Z,0x007E8850,FESL message buffer constructor
 ??0FileSystem@@QAE@XZ,0x00022CA5
 ??0FireOCLAfterWeaponCooldownUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048B9E,ModuleFactory ILT thunk to 0x001EE950; the byte-verified retail caller encodes it
 ??0FireOCLAfterWeaponCooldownUpdateModuleData@@QAE@XZ,0x0000B997,pinharvest x1 (thunk)
@@ -5207,7 +5206,6 @@ name,address,notes
 ??1FadeAndDieOrnamentUpdate@@MAE@XZ,0x00045F20,exact constructor 0x00292230 and dedicated vtable 0x00CBE9B4 establish the protected complete destructor called by wrapper 0x00292380
 ??1FailureState@@UAE@XZ,0x000047F0,FailureState complete destructor ILT called by scalar wrapper 0x0017F250; thunk reaches the exact State base destructor body through 0x0017F280;ilt-verified=T1-access(efp=2.61e-03)
 ??1FellBeastSwoopPower@@MAE@XZ,0x00039BCB,destructor ILT to 0x0025CFA0
-??1FeslEchoMessage@@QAE@XZ,0x007E86C0,FESL message buffer destructor
 ??1File@@UAE@XZ,0x009CB8C0,called by the File scalar deleting destructor
 ??1FilePipe@@UAE@XZ,0x009E7DC0
 ??1FileStraw@@UAE@XZ,0x009E1C50
@@ -15365,7 +15363,6 @@ name,address,notes
 ?addInt@BfmeMsg803B60@@QAEXPBDH@Z,0x007E88D0,FESL addInt for 0x00803B60
 ?addInt@BfmeMsg803BF0@@QAEXPBDH@Z,0x007E88D0,FESL addInt for 0x00803BF0
 ?addInt@BfmeMsg803C90@@QAEXPBDH@Z,0x007E88D0,FESL addInt for 0x00803C90
-?addInt@FeslEchoMessage@@QAEXPBDH@Z,0x007E88D0,FESL integer field writer
 ?addInt@Rva007E8810Message@@QAEXPBDH@Z,0x007E88D0,V2 lane: FESL message append key/value int field
 ?addKeepAliveCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00022BFB,the address addCommand's arm encodes; the body's own incremental-link thunk is a further hop
 ?addLoadCompleteMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0002ED4D,the address addCommand's arm encodes; the body's own incremental-link thunk is a further hop
@@ -15404,7 +15401,6 @@ name,address,notes
 ?addShadowCore@BFMEShadowManagerLayout@@QAEPAVW3DProjectedShadow@@PAVW3DShadowTexture@@PAVRenderObjClass@@W4ShadowType@@_NMMHMMPAPAV2@3PAVDrawable@@3@Z,0x000193BC,retail projected-shadow 13-argument core ILT thunk
 ?addSilhouetteEdge@W3DVolumetricShadow@@IAEXHPAUPolyNeighbor@@0@Z,0x007BAC10,retail helper ABI and BFME source signature at 0x007BAC10
 ?addString@BfmeC994@@QAEXPBD0@Z,0x007E8A10,FESL create-game request appends UGID and SECRET string fields through the recovered message writer
-?addString@FeslEchoMessage@@QAEXPBD0@Z,0x007E8A10,FESL string field writer
 ?addString@Rva007E8810Message@@QAEXPBD0@Z,0x007E8A10,V2 lane: FESL message append key/value string field
 ?addSupplyCenter@ResourceGatheringManager@@QAEXPAVObject@@@Z,0x0001E23B,Open-BFME5 ILT from zh_sweep packet 002503b0
 ?addSupplyWarehouse@ResourceGatheringManager@@QAEXPAVObject@@@Z,0x00028646,pinned by SupplyWarehouseCreate::onCreate packet 002505a0
