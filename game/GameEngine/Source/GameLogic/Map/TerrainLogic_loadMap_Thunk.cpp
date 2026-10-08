@@ -111,7 +111,7 @@ public:
 	virtual void _slot08(void) = 0;
 	virtual void _slot0c(void) = 0;
 	virtual void _slot10(void) = 0;
-	virtual Bool load(AsciiString filename) = 0;
+	virtual Bool load(AsciiString filename, ChunkInputStream *stream) = 0;
 };
 
 extern TerrainVisual *TheTerrainVisual;
@@ -136,7 +136,7 @@ public:
 	virtual void _slot38(void) = 0;
 	virtual void _slot3c(void) = 0;
 	virtual void _slot40(void) = 0;
-	virtual AsciiString getSourceFilename(ChunkInputStream *stream);
+	virtual AsciiString getSourceFilename(void);
 
 	Bool loadMapAbi(AsciiString filename, ChunkInputStream *stream,
 		Bool tailFlag, Bool query);
@@ -196,7 +196,7 @@ Bool TerrainLogic::loadMapAbi(AsciiString filename, ChunkInputStream *stream,
 	}
 
 	if (!tailFlag)
-		TheTerrainVisual->load(getSourceFilename(stream));
+		TheTerrainVisual->load(getSourceFilename(), stream);
 
 	return true;
 }

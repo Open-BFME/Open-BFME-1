@@ -170,16 +170,24 @@ const ArmorTemplate *ArmorStore::findArmorTemplate(AsciiString name) const
 // let the field parser overwrite the ones the block lists.
 /*static*/ void ArmorStore::parseArmorDefinition(INI *ini)
 {
-	static const FieldParse myFieldParse[] =
+	// Retail terminates after token and parse; the next eight bytes belong to a vtable.
+	static const struct
 	{
-		{ "DamageScalar", ArmorTemplate::parseDamageScalar, NULL, 0 },
-		{ "Armor", ArmorTemplate::parseArmorCoefficients, NULL, 0 },
-		{ NULL, NULL, NULL, 0 }
+		FieldParse m_fieldParse[2];
+		const char *token;
+		INIFieldParseProc parse;
+	} myFieldParse =
+	{
+		{
+			{ "DamageScalar", ArmorTemplate::parseDamageScalar, NULL, 0 },
+			{ "Armor", ArmorTemplate::parseArmorCoefficients, NULL, 0 }
+		},
+		NULL, NULL
 	};
 
 	const char *c = ini->getNextToken();
 	NameKeyType key = TheNameKeyGenerator->nameToKey(c);
 	ArmorTemplate& armorTmpl = TheArmorStore->m_armorTemplates[key];
 	armorTmpl.clear();
-	ini->initFromINI(&armorTmpl, myFieldParse);
+	ini->initFromINI(&armorTmpl, myFieldParse.m_fieldParse);
 }

@@ -1340,7 +1340,6 @@ static,0x00123290,?buildFieldParse@InstantDeathBehaviorModuleData@@SAXAAVMultiIn
 static,0x00123290,?buildFieldParse@RebuildHoleExposeDieModuleData@@SAXAAVMultiIniFieldParse@@@Z,"+23 ?dataFieldParse@?1??buildFieldParse@Rebu@0x0108B560: 3 byte(s) differ, first +12: source 000000000000000000000000200000000000000000000000 retail 48b508019aa"
 static,0x00124670,?buildFieldParse@ActiveShroudUpgradeModuleData@@SAXAAVMultiIniFieldParse@@@Z,"+22 ?dataFieldParse@?1??buildFieldParse@Acti@0x0108D6DC: 1 byte(s) differ, first +12: source 000000000000000000000000600000000000000000000000 retail 38b40801de2"
 static,0x0013A450,?getDX8Format@W3DBufferManager@@SAHW4VBM_FVF_TYPES@1@@Z,"+7 _FVFTypeIndexList@0x012AC510: 68 byte(s) differ, first +0: source 020000004200000002010000420100000202000042020000 retail 1429090104290901f0280901e0280901cc2"
-static,0x001B09B0,?parseArmorDefinition@ArmorStore@@SAXPAVINI@@@Z,"+126 ?myFieldParse@?1??parseArmorDefinition@A@0x0109C874: 6 byte(s) differ, first +40: source 000000000000000000000000000000000000000000000000 retail 64c80901c6"
 static,0x001CC820,?setFiringConditionForCurrentWeapon@Object@@QBEXXZ,"+50 _s_allWeaponFireFlags@0x012EF648: 189 byte(s) differ, first +0: source 000000000000000000000000000000000000000000000000 retail e0e71121c0e61121e0ea1121f0ed1"
 static,0x001DA620,?parseObject@GenericObjectCreationNugget@@SAXPAVINI@@PAX1PBX@Z,"+55 _s_commonFieldParse@0x0109F320: 8 byte(s) differ, first +0: source 00000000000000000000000000000000 retail 08f30901e01ec5000000000010000000"
 static,0x001DB050,?parseObjectCreationListDefinition@ObjectCreationListStore@@SAXPAVINI@@@Z,"+65 _TheObjectCreationListFieldParse@0x0109EEF8: 2 byte(s) differ, first +98: source 000000000000000000000000000000000000000000000000 retail a8ef090111ce4300000"
@@ -1353,7 +1352,6 @@ static,0x002D7DA0,?buildFieldParse@StatusBitsUpgradeModuleData@@SAXAAVMultiIniFi
 static,0x004582D0,?parseGeneralPersona@ChallengeGenerals@@CAXPAVINI@@PAX1PBX@Z,"+9 ?dataFieldParse@?1??parseGeneralPersona@@0x010F6440: 33 byte(s) differ, first +40: source 000000000000000000000000000000000000000000000000 retail b00c0801e01"
 static,0x004582D0,?parseRadiusDecalTemplate@RadiusDecalTemplate@@SAXPAVINI@@PAX1PBX@Z,"+9 ?dataFieldParse@?1??parseRadiusDecalTemp@0x010F6440: 13 byte(s) differ, first +40: source 000000000000000000000000000000000000000000000000 retail b00c0801e01"
 static,0x0058AE70,?getFieldParseTable@AudioManager@@QBEPBUFieldParse@@XZ,+1 _audioSettingsFieldParseTable outside the retail image
-static,0x005B6AD0,?findGameMessageMetaType@MetaMap@@IAE?AW4Type@GameMessage@@PBD@Z,"+1 _GameMessageMetaTypeNames@0x0110E1D8: 109 byte(s) differ, first +4: source 000000001e000000000000001f0000000000000020000000 retail a8ef10012100000098ef100122"
 static,0x006250A0,?parseOnlineChatColorDefinition@INI@@SAXPAV1@@Z,"+5 _GameSpyColorFieldParse@0x01117700: 8 byte(s) differ, first +432: source 000000000000000000000000000000000000000000000000 retail 14570701e031c500000000000000"
 static,0x0091DB70,?Get_Default_Vertex_Count@DynamicVBAccessClass@@SAGXZ,"+2 __DynamicDX8VertexBufferSize@0x013467BE: 2 byte(s) differ, first +0: source 8813 retail c53f"
 tail,0x00001DA7,??0?$_Vector_base@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAE@IABV?$allocator@PAVObject@@@1@@Z,"compiled=8 ledger=5 tail=3: 3 byte(s) differ from retail, first +5"
@@ -1368,7 +1366,6 @@ tail,0x0002BFF8,??0DozerAIUpdateModuleData@@QAE@XZ,"compiled=8 ledger=5 tail=3: 
 tail,0x00037619,??0SupplyWarehouseCripplingBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,"compiled=8 ledger=5 tail=3: 3 byte(s) differ from retail, first +5"
 tail,0x0003F418,??0?$_Vector_base@PAVObjectCreationNugget@@V?$allocator@PAVObjectCreationNugget@@@_STL@@@_STL@@QAE@IABV?$allocator@PAVObjectCreationNugget@@@1@@Z,"compiled=8 ledger=5 tail=3: 3 byte(s) differ from retail, first +5"
 tail,0x00048B9E,??0AutoHealBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,"compiled=8 ledger=5 tail=3: 3 byte(s) differ from retail, first +5"
-tail,0x001AC1E0,?loadMapAbi@TerrainLogic@@QAE_NVAsciiString@@PAVChunkInputStream@@_N2@Z,"compiled=381 ledger=293 tail=88: 7 byte(s) differ from retail, first +321"
 tail,0x001FBC70,??0FireWeaponWhenDeadBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,"compiled=398 ledger=395 tail=3: 3 byte(s) differ from retail, first +395"
 tail,0x002277A0,??0OpenContain@@QAE@PAVThing@@PBVModuleData@@@Z,"compiled=725 ledger=722 tail=3: 3 byte(s) differ from retail, first +722"
 tail,0x0027F4B0,??0AIUpdateInterface@@QAE@PAVThing@@PBVModuleData@@@Z,"compiled=1240 ledger=1237 tail=3: 3 byte(s) differ from retail, first +1237"
