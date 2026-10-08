@@ -1,6 +1,6 @@
 // cl: /O2
 
-// SubsystemSlot<LivingWorldLogic> scalar-deleting destructor, retail
+// SubsystemDeleter<LivingWorldLogic> scalar-deleting destructor, retail
 // 0x00071370 (30 bytes). The exact constructor at 0x00071350 installs the
 // one-slot vtable 0x01075E28, whose slot routes here through ILT 0x0002F838.
 // The wrapper calls the paired 89-byte owned-subsystem destructor at
@@ -9,14 +9,14 @@
 class LivingWorldLogic;
 
 template<class SUBSYSTEM>
-class SubsystemSlot
+class SubsystemDeleter
 {
 public:
-	virtual ~SubsystemSlot();
+	virtual ~SubsystemDeleter();
 	void *m_slot;
 };
 
 void forceLivingWorldLogicSlotDeletingDestructor()
 {
-	SubsystemSlot<LivingWorldLogic> value;
+	SubsystemDeleter<LivingWorldLogic> value;
 }

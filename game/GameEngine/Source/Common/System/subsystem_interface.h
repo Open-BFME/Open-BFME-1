@@ -55,22 +55,24 @@ public:
 extern SubsystemInterfaceList *TheSubsystemList;
 
 // The eight-byte polymorphic holder the initSubsystem template news for every
-// subsystem: a vptr (retail 0x01075D8C) plus the address of the global the
-// subsystem was stored into. Handed to SubsystemInterfaceList::initSubsystem as
-// its second argument and parked alongside the subsystem in m_subsystems, which
-// is why that vector holds pairs.
-// One instantiation per subsystem, not one shared class: each initSubsystem<T>
-// stores a DIFFERENT vtable pointer here (0x1075D8C, 0x1075DA8, 0x1075DB4,
-// 0x1075DCC, 0x1075DE8, 0x1075DEC for the six landed so far), which is only
-// possible if the slot is parameterised on the same T. Modelling it as a plain
-// class makes every instantiation claim one vtable symbol and trips the DIR32
-// consistency check.
+// subsystem: a vptr plus the address of the global the subsystem was stored
+// into. Handed to SubsystemInterfaceList::initSubsystem as its second argument
+// and parked alongside the subsystem in m_subsystems, which is why that vector
+// holds pairs; its destructor deletes the subsystem and nulls the global.
+// One instantiation per subsystem: each initSubsystem<T> stores a different
+// vtable pointer here. The name SubsystemDeleter<T> (destructor, scalar
+// deleting destructor and the T *& constructor) fits retail's incremental-link
+// thunk windows for 59 subsystems; see
+// targets/game/reverse/identity_evidence/subsystem-deleter-ilt.md.
+// ParticleSystemManager is the exception: its holder's names do not fit, so
+// game/Libraries/Source/subsystem/SubsystemInterface.cpp specializes
+// initSubsystem<ParticleSystemManager> with its own holder.
 template<class SUBSYSTEM>
-class SubsystemSlot
+class SubsystemDeleter
 {
 public:
-	SubsystemSlot(void *slot) : m_slot(slot) {}
-	virtual ~SubsystemSlot();
+	SubsystemDeleter(SUBSYSTEM *&slot) : m_slot(&slot) {}
+	virtual ~SubsystemDeleter();
 	void *m_slot;
 };
 
@@ -80,5 +82,5 @@ void initSubsystem(SUBSYSTEM *&sysref, AsciiString name, SUBSYSTEM *sys, Xfer *p
 				   const char *path1 = 0, const char *path2 = 0, const char *dirpath = 0)
 {
 	sysref = sys;
-	TheSubsystemList->initSubsystem(sys, new SubsystemSlot<SUBSYSTEM>(&sysref), path1, path2, dirpath, pXfer, name);
+	TheSubsystemList->initSubsystem(sys, new SubsystemDeleter<SUBSYSTEM>(sysref), path1, path2, dirpath, pXfer, name);
 }

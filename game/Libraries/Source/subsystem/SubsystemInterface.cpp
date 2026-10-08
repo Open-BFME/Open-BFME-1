@@ -129,7 +129,25 @@ template void initSubsystem<AudioManager>(AudioManager *&, AsciiString, AudioMan
 template void initSubsystem<MultiplayerSettings>(MultiplayerSettings *&, AsciiString, MultiplayerSettings *, Xfer *, const char *, const char *, const char *);
 template void initSubsystem<FunctionLexicon>(FunctionLexicon *&, AsciiString, FunctionLexicon *, Xfer *, const char *, const char *, const char *);
 template void initSubsystem<MessageStream>(MessageStream *&, AsciiString, MessageStream *, Xfer *, const char *, const char *, const char *);
-template void initSubsystem<ParticleSystemManager>(ParticleSystemManager *&, AsciiString, ParticleSystemManager *, Xfer *, const char *, const char *, const char *);
+// ParticleSystemManager's holder does not fit SubsystemDeleter<ParticleSystemManager>
+// in retail's thunk windows and its real class argument is unresolved, so it
+// keeps the address-pinned SubsystemSlot spelling (identity_evidence/subsystem-deleter-ilt.md).
+template<class SUBSYSTEM>
+class SubsystemSlot
+{
+public:
+	SubsystemSlot(void *slot) : m_slot(slot) {}
+	virtual ~SubsystemSlot();
+	void *m_slot;
+};
+
+template<>
+void initSubsystem<ParticleSystemManager>(ParticleSystemManager *&sysref, AsciiString name, ParticleSystemManager *sys,
+										  Xfer *pXfer, const char *path1, const char *path2, const char *dirpath)
+{
+	sysref = sys;
+	TheSubsystemList->initSubsystem(sys, new SubsystemSlot<ParticleSystemManager>(&sysref), path1, path2, dirpath, pXfer, name);
+}
 template void initSubsystem<FXListStore>(FXListStore *&, AsciiString, FXListStore *, Xfer *, const char *, const char *, const char *);
 template void initSubsystem<LocomotorStore>(LocomotorStore *&, AsciiString, LocomotorStore *, Xfer *, const char *, const char *, const char *);
 template void initSubsystem<SpecialPowerStore>(SpecialPowerStore *&, AsciiString, SpecialPowerStore *, Xfer *, const char *, const char *, const char *);

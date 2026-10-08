@@ -4227,66 +4227,66 @@ name,address,notes
 ??1?$StringBase@D@@IAE@XZ,0x00887940,protected StringBase<char> destructor used by TeamFactory::findTeamPrototype
 ??1?$StringBase@G@@AAE@XZ,0x008881D0,the wide destructor body, which folds with releaseBuffer; the ledger row at 0x0005E4E0 is its incremental-link thunk
 ??1?$StringBase@G@@IAE@XZ,0x008881D0,BFME display-name getter UnicodeString forwarding-base destructor
-??1?$SubsystemSlot@VAI@@@@UAE@XZ,0x00013A48,SubsystemSlot<AI> destructor ILT called by authentic scalar-deleting destructor at 0x000711F0
-??1?$SubsystemSlot@VActionManager@@@@UAE@XZ,0x00037542,SubsystemSlot<ActionManager> destructor ILT called by authentic scalar-deleting destructor at 0x00072030
-??1?$SubsystemSlot@VAerialPathfinder@@@@UAE@XZ,0x000054F7,SubsystemSlot<AerialPathfinder> destructor ILT called by authentic scalar-deleting destructor at 0x000712B0
-??1?$SubsystemSlot@VAptPlayer@@@@UAE@XZ,0x000444B8,SubsystemSlot<AptPlayer> destructor ILT called by authentic scalar-deleting destructor at 0x00070FB0
-??1?$SubsystemSlot@VArmorStore@@@@UAE@XZ,0x000172CE,SubsystemSlot<ArmorStore> destructor ILT called by authentic scalar-deleting destructor at 0x00070B30
-??1?$SubsystemSlot@VAttributeModifierStore@@@@UAE@XZ,0x00020941,SubsystemSlot<AttributeModifierStore> destructor ILT called by authentic scalar-deleting destructor at 0x000714F0
-??1?$SubsystemSlot@VAudioManager@@@@UAE@XZ,0x000223BD,SubsystemSlot<AudioManager> destructor ILT called by authentic scalar-deleting destructor at 0x0006F930
-??1?$SubsystemSlot@VBuildAssistant@@@@UAE@XZ,0x0001B7DE,SubsystemSlot<BuildAssistant> destructor ILT called by authentic scalar-deleting destructor at 0x00070BF0
-??1?$SubsystemSlot@VCDManagerInterface@@@@UAE@XZ,0x000220E3,SubsystemSlot<CDManagerInterface> destructor ILT called by authentic scalar-deleting destructor at 0x0006FE70
-??1?$SubsystemSlot@VCaveSystem@@@@UAE@XZ,0x000401A1,SubsystemSlot<CaveSystem> destructor ILT called by authentic scalar-deleting destructor at 0x000702F0
-??1?$SubsystemSlot@VCrateSystem@@@@UAE@XZ,0x0003C52E,gen-dtor class destructor
-??1?$SubsystemSlot@VDamageFXStore@@@@UAE@XZ,0x000294F1,SubsystemSlot<DamageFXStore> destructor ILT called by authentic scalar-deleting destructor at 0x00070A70
-??1?$SubsystemSlot@VEmotionSystem@@@@UAE@XZ,0x0001B2C0,SubsystemSlot<EmotionSystem> destructor ILT called by authentic scalar-deleting destructor at 0x00070CB0
-??1?$SubsystemSlot@VEva@@@@UAE@XZ,0x0003B51B,SubsystemSlot<Eva> destructor ILT called by authentic scalar-deleting destructor at 0x0006F9F0
-??1?$SubsystemSlot@VExperienceLevelSystem@@@@UAE@XZ,0x000083C3,SubsystemSlot<ExperienceLevelSystem> destructor ILT called by authentic scalar-deleting destructor at 0x00070EF0
-??1?$SubsystemSlot@VFXListStore@@@@UAE@XZ,0x00027728,SubsystemSlot<FXListStore> destructor ILT called by authentic scalar-deleting destructor at 0x000706B0
-??1?$SubsystemSlot@VFunctionLexicon@@@@UAE@XZ,0x000292AD,SubsystemSlot<FunctionLexicon> destructor ILT called by authentic scalar-deleting destructor at 0x0006FFF0
-??1?$SubsystemSlot@VGameClient@@@@UAE@XZ,0x0004473D,SubsystemSlot<GameClient> destructor ILT called by authentic scalar-deleting destructor at 0x00071130
-??1?$SubsystemSlot@VGameLogic@@@@UAE@XZ,0x0000410B,gen-dtor class destructor
-??1?$SubsystemSlot@VGameResultsInterface@@@@UAE@XZ,0x00044BD9,SubsystemSlot<GameResultsInterface> destructor ILT called by authentic scalar-deleting destructor at 0x00072270
-??1?$SubsystemSlot@VGameState@@@@UAE@XZ,0x00032F56,SubsystemSlot<GameState> destructor ILT called by authentic scalar-deleting destructor at 0x000721B0
-??1?$SubsystemSlot@VGameStateMap@@@@UAE@XZ,0x0002062B,SubsystemSlot<GameStateMap> destructor ILT called by authentic scalar-deleting destructor at 0x000720F0
-??1?$SubsystemSlot@VGameTextInterface@@@@UAE@XZ,0x0001C274,SubsystemSlot<GameTextInterface> destructor ILT called by authentic scalar-deleting destructor at 0x0006F870
-??1?$SubsystemSlot@VGlobalData@@@@UAE@XZ,0x0003B96C,SubsystemSlot<GlobalData> destructor ILT called by authentic scalar-deleting destructor at 0x0006F6F0
-??1?$SubsystemSlot@VGlobalLanguage@@@@UAE@XZ,0x000268AA,SubsystemSlot<GlobalLanguage> destructor ILT called by authentic scalar-deleting destructor at 0x0006F7B0
-??1?$SubsystemSlot@VGlobalWeatherSystem@@@@UAE@XZ,0x00031D72,SubsystemSlot<GlobalWeatherSystem> destructor ILT called by authentic scalar-deleting destructor at 0x0006FF30
-??1?$SubsystemSlot@VHouseColorSystem@@@@UAE@XZ,0x00046673,gen-dtor class destructor
-??1?$SubsystemSlot@VLightPointSystem@@@@UAE@XZ,0x0000B9EC,SubsystemSlot<LightPointSystem> destructor ILT called by authentic scalar-deleting destructor at 0x00070E30
-??1?$SubsystemSlot@VLivingWorldCampaignManager@@@@UAE@XZ,0x000436F8,gen-dtor class destructor
-??1?$SubsystemSlot@VLivingWorldLogic@@@@UAE@XZ,0x0000F240,SubsystemSlot<LivingWorldLogic> destructor ILT called by authentic scalar-deleting destructor at 0x00071370
-??1?$SubsystemSlot@VLivingWorldManager@@@@UAE@XZ,0x00034E96,SubsystemSlot<LivingWorldManager> destructor ILT called by authentic scalar-deleting destructor at 0x00071070
-??1?$SubsystemSlot@VLocomotorStore@@@@UAE@XZ,0x0002F077,SubsystemSlot<LocomotorStore> destructor ILT called by authentic scalar-deleting destructor at 0x000708F0
-??1?$SubsystemSlot@VLuaScriptEngine@@@@UAE@XZ,0x00040683,gen-dtor class destructor
-??1?$SubsystemSlot@VMessageStream@@@@UAE@XZ,0x00031C46,SubsystemSlot<MessageStream> destructor ILT called by authentic scalar-deleting destructor at 0x00070170
-??1?$SubsystemSlot@VMetaMap@@@@UAE@XZ,0x0001C4C7,gen-dtor class destructor
-??1?$SubsystemSlot@VModuleFactory@@@@UAE@XZ,0x0003A6D4,SubsystemSlot<ModuleFactory> destructor ILT called by authentic scalar-deleting destructor at 0x000700B0
-??1?$SubsystemSlot@VMultiplayerSettings@@@@UAE@XZ,0x0002C543,SubsystemSlot<MultiplayerSettings> destructor ILT called by authentic scalar-deleting destructor at 0x0006FC30
-??1?$SubsystemSlot@VObjectCreationListStore@@@@UAE@XZ,0x0003817C,SubsystemSlot<ObjectCreationListStore> destructor ILT called by authentic scalar-deleting destructor at 0x00070830
+??1?$SubsystemDeleter@VAI@@@@UAE@XZ,0x00013A48,route=0x00071220; SubsystemDeleter<AI> destructor ILT called by authentic scalar-deleting destructor at 0x000711F0
+??1?$SubsystemDeleter@VActionManager@@@@UAE@XZ,0x00037542,route=0x00072060; SubsystemDeleter<ActionManager> destructor ILT called by authentic scalar-deleting destructor at 0x00072030
+??1?$SubsystemDeleter@VAerialPathfinder@@@@UAE@XZ,0x000054F7,route=0x000712E0; SubsystemDeleter<AerialPathfinder> destructor ILT called by authentic scalar-deleting destructor at 0x000712B0
+??1?$SubsystemDeleter@VAptPlayer@@@@UAE@XZ,0x000444B8,route=0x00070FE0; SubsystemDeleter<AptPlayer> destructor ILT called by authentic scalar-deleting destructor at 0x00070FB0
+??1?$SubsystemDeleter@VArmorStore@@@@UAE@XZ,0x000172CE,route=0x00070B60; SubsystemDeleter<ArmorStore> destructor ILT called by authentic scalar-deleting destructor at 0x00070B30
+??1?$SubsystemDeleter@VAttributeModifierStore@@@@UAE@XZ,0x00020941,route=0x00071520; SubsystemDeleter<AttributeModifierStore> destructor ILT called by authentic scalar-deleting destructor at 0x000714F0
+??1?$SubsystemDeleter@VAudioManager@@@@UAE@XZ,0x000223BD,route=0x0006F960; SubsystemDeleter<AudioManager> destructor ILT called by authentic scalar-deleting destructor at 0x0006F930
+??1?$SubsystemDeleter@VBuildAssistant@@@@UAE@XZ,0x0001B7DE,route=0x00070C20; SubsystemDeleter<BuildAssistant> destructor ILT called by authentic scalar-deleting destructor at 0x00070BF0
+??1?$SubsystemDeleter@VCDManagerInterface@@@@UAE@XZ,0x000220E3,route=0x0006FEA0; SubsystemDeleter<CDManagerInterface> destructor ILT called by authentic scalar-deleting destructor at 0x0006FE70
+??1?$SubsystemDeleter@VCaveSystem@@@@UAE@XZ,0x000401A1,route=0x00070320; SubsystemDeleter<CaveSystem> destructor ILT called by authentic scalar-deleting destructor at 0x000702F0
+??1?$SubsystemDeleter@VCrateSystem@@@@UAE@XZ,0x0003C52E,route=0x000718E0; gen-dtor class destructor
+??1?$SubsystemDeleter@VDamageFXStore@@@@UAE@XZ,0x000294F1,route=0x00070AA0; SubsystemDeleter<DamageFXStore> destructor ILT called by authentic scalar-deleting destructor at 0x00070A70
+??1?$SubsystemDeleter@VEmotionSystem@@@@UAE@XZ,0x0001B2C0,route=0x00070CE0; SubsystemDeleter<EmotionSystem> destructor ILT called by authentic scalar-deleting destructor at 0x00070CB0
+??1?$SubsystemDeleter@VEva@@@@UAE@XZ,0x0003B51B,route=0x0006FA20; SubsystemDeleter<Eva> destructor ILT called by authentic scalar-deleting destructor at 0x0006F9F0
+??1?$SubsystemDeleter@VExperienceLevelSystem@@@@UAE@XZ,0x000083C3,route=0x00070F20; SubsystemDeleter<ExperienceLevelSystem> destructor ILT called by authentic scalar-deleting destructor at 0x00070EF0
+??1?$SubsystemDeleter@VFXListStore@@@@UAE@XZ,0x00027728,route=0x000706E0; SubsystemDeleter<FXListStore> destructor ILT called by authentic scalar-deleting destructor at 0x000706B0
+??1?$SubsystemDeleter@VFunctionLexicon@@@@UAE@XZ,0x000292AD,route=0x00070020; SubsystemDeleter<FunctionLexicon> destructor ILT called by authentic scalar-deleting destructor at 0x0006FFF0
+??1?$SubsystemDeleter@VGameClient@@@@UAE@XZ,0x0004473D,route=0x00071160; SubsystemDeleter<GameClient> destructor ILT called by authentic scalar-deleting destructor at 0x00071130
+??1?$SubsystemDeleter@VGameLogic@@@@UAE@XZ,0x0000410B,route=0x00071A60; gen-dtor class destructor
+??1?$SubsystemDeleter@VGameResultsInterface@@@@UAE@XZ,0x00044BD9,route=0x000722A0; SubsystemDeleter<GameResultsInterface> destructor ILT called by authentic scalar-deleting destructor at 0x00072270
+??1?$SubsystemDeleter@VGameState@@@@UAE@XZ,0x00032F56,route=0x000721E0; SubsystemDeleter<GameState> destructor ILT called by authentic scalar-deleting destructor at 0x000721B0
+??1?$SubsystemDeleter@VGameStateMap@@@@UAE@XZ,0x0002062B,route=0x00072120; SubsystemDeleter<GameStateMap> destructor ILT called by authentic scalar-deleting destructor at 0x000720F0
+??1?$SubsystemDeleter@VGameTextInterface@@@@UAE@XZ,0x0001C274,route=0x0006F8A0; SubsystemDeleter<GameTextInterface> destructor ILT called by authentic scalar-deleting destructor at 0x0006F870
+??1?$SubsystemDeleter@VGlobalData@@@@UAE@XZ,0x0003B96C,route=0x0006F720; SubsystemDeleter<GlobalData> destructor ILT called by authentic scalar-deleting destructor at 0x0006F6F0
+??1?$SubsystemDeleter@VGlobalLanguage@@@@UAE@XZ,0x000268AA,route=0x0006F7E0; SubsystemDeleter<GlobalLanguage> destructor ILT called by authentic scalar-deleting destructor at 0x0006F7B0
+??1?$SubsystemDeleter@VGlobalWeatherSystem@@@@UAE@XZ,0x00031D72,route=0x0006FF60; SubsystemDeleter<GlobalWeatherSystem> destructor ILT called by authentic scalar-deleting destructor at 0x0006FF30
+??1?$SubsystemDeleter@VHouseColorSystem@@@@UAE@XZ,0x00046673,route=0x00071E20; gen-dtor class destructor
+??1?$SubsystemDeleter@VLightPointSystem@@@@UAE@XZ,0x0000B9EC,route=0x00070E60; SubsystemDeleter<LightPointSystem> destructor ILT called by authentic scalar-deleting destructor at 0x00070E30
+??1?$SubsystemDeleter@VLivingWorldCampaignManager@@@@UAE@XZ,0x000436F8,route=0x00071EE0; gen-dtor class destructor
+??1?$SubsystemDeleter@VLivingWorldLogic@@@@UAE@XZ,0x0000F240,route=0x000713A0; SubsystemDeleter<LivingWorldLogic> destructor ILT called by authentic scalar-deleting destructor at 0x00071370
+??1?$SubsystemDeleter@VLivingWorldManager@@@@UAE@XZ,0x00034E96,route=0x000710A0; SubsystemDeleter<LivingWorldManager> destructor ILT called by authentic scalar-deleting destructor at 0x00071070
+??1?$SubsystemDeleter@VLocomotorStore@@@@UAE@XZ,0x0002F077,route=0x00070920; SubsystemDeleter<LocomotorStore> destructor ILT called by authentic scalar-deleting destructor at 0x000708F0
+??1?$SubsystemDeleter@VLuaScriptEngine@@@@UAE@XZ,0x00040683,route=0x00071760; gen-dtor class destructor
+??1?$SubsystemDeleter@VMessageStream@@@@UAE@XZ,0x00031C46,route=0x000701A0; SubsystemDeleter<MessageStream> destructor ILT called by authentic scalar-deleting destructor at 0x00070170
+??1?$SubsystemDeleter@VMetaMap@@@@UAE@XZ,0x0001C4C7,route=0x00071D60; gen-dtor class destructor
+??1?$SubsystemDeleter@VModuleFactory@@@@UAE@XZ,0x0003A6D4,route=0x000700E0; SubsystemDeleter<ModuleFactory> destructor ILT called by authentic scalar-deleting destructor at 0x000700B0
+??1?$SubsystemDeleter@VMultiplayerSettings@@@@UAE@XZ,0x0002C543,route=0x0006FC60; SubsystemDeleter<MultiplayerSettings> destructor ILT called by authentic scalar-deleting destructor at 0x0006FC30
+??1?$SubsystemDeleter@VObjectCreationListStore@@@@UAE@XZ,0x0003817C,route=0x00070860; SubsystemDeleter<ObjectCreationListStore> destructor ILT called by authentic scalar-deleting destructor at 0x00070830
 ??1?$SubsystemSlot@VParticleSystemManager@@@@UAE@XZ,0x0002D7BD,SubsystemSlot<ParticleSystemManager> destructor ILT called by authentic scalar-deleting destructor at 0x000705F0
-??1?$SubsystemSlot@VPlayerAITypeSet@@@@UAE@XZ,0x00042C21,SubsystemSlot<PlayerAITypeSet> destructor ILT called by authentic scalar-deleting destructor at 0x00070470
-??1?$SubsystemSlot@VPlayerList@@@@UAE@XZ,0x000309B3,gen-dtor class destructor
-??1?$SubsystemSlot@VPlayerTemplateStore@@@@UAE@XZ,0x00041E39,SubsystemSlot<PlayerTemplateStore> destructor ILT called by authentic scalar-deleting destructor at 0x00070530
-??1?$SubsystemSlot@VRadar@@@@UAE@XZ,0x00027C87,SubsystemSlot<Radar> destructor ILT called by authentic scalar-deleting destructor at 0x00071BB0
-??1?$SubsystemSlot@VRankInfoStore@@@@UAE@XZ,0x0002325E,SubsystemSlot<RankInfoStore> destructor ILT called by authentic scalar-deleting destructor at 0x000703B0
-??1?$SubsystemSlot@VRecorderClass@@@@UAE@XZ,0x00025045,gen-dtor class destructor
-??1?$SubsystemSlot@VScienceStore@@@@UAE@XZ,0x0001B18A,SubsystemSlot<ScienceStore> destructor ILT called by authentic scalar-deleting destructor at 0x0006FAB0
-??1?$SubsystemSlot@VScriptEngine@@@@UAE@XZ,0x00043BEE,gen-dtor class destructor
-??1?$SubsystemSlot@VSidesList@@@@UAE@XZ,0x000467FE,SubsystemSlot<SidesList> destructor ILT called by authentic scalar-deleting destructor at 0x00070230
-??1?$SubsystemSlot@VSpecialPowerStore@@@@UAE@XZ,0x000248C0,SubsystemSlot<SpecialPowerStore> destructor ILT called by authentic scalar-deleting destructor at 0x000709B0
-??1?$SubsystemSlot@VSplineService@@@@UAE@XZ,0x00039BDF,SubsystemSlot<SplineService> destructor ILT called by authentic scalar-deleting destructor at 0x00071430
-??1?$SubsystemSlot@VSubsystemLegend@@@@UAE@XZ,0x00002BDF,SubsystemSlot<SubsystemLegend> destructor ILT called by authentic scalar-deleting destructor at 0x0006F630
-??1?$SubsystemSlot@VTaintManager@@@@UAE@XZ,0x00009A5C,gen-dtor class destructor
-??1?$SubsystemSlot@VTeamFactory@@@@UAE@XZ,0x0002DDDF,gen-dtor class destructor
-??1?$SubsystemSlot@VTerrainRoadCollection@@@@UAE@XZ,0x00045C50,SubsystemSlot<TerrainRoadCollection> destructor ILT called by authentic scalar-deleting destructor at 0x0006FDB0
-??1?$SubsystemSlot@VTerrainTypeCollection@@@@UAE@XZ,0x0002C520,SubsystemSlot<TerrainTypeCollection> destructor ILT called by authentic scalar-deleting destructor at 0x0006FCF0
-??1?$SubsystemSlot@VThingFactory@@@@UAE@XZ,0x00025E5A,SubsystemSlot<ThingFactory> destructor ILT called by authentic scalar-deleting destructor at 0x00070D70
-??1?$SubsystemSlot@VUpgradeCenter@@@@UAE@XZ,0x0000111D,SubsystemSlot<UpgradeCenter> destructor ILT called by authentic scalar-deleting destructor at 0x0006FB70
-??1?$SubsystemSlot@VVictoryConditionsInterface@@@@UAE@XZ,0x000315D9,gen-dtor class destructor
-??1?$SubsystemSlot@VVictorySystem@@@@UAE@XZ,0x0000D1AC,SubsystemSlot<VictorySystem> destructor ILT called by authentic scalar-deleting destructor at 0x00071F70
-??1?$SubsystemSlot@VWeaponStore@@@@UAE@XZ,0x000307B5,SubsystemSlot<WeaponStore> destructor ILT called by authentic scalar-deleting destructor at 0x00070770
+??1?$SubsystemDeleter@VPlayerAITypeSet@@@@UAE@XZ,0x00042C21,route=0x000704A0; SubsystemDeleter<PlayerAITypeSet> destructor ILT called by authentic scalar-deleting destructor at 0x00070470
+??1?$SubsystemDeleter@VPlayerList@@@@UAE@XZ,0x000309B3,route=0x000719A0; gen-dtor class destructor
+??1?$SubsystemDeleter@VPlayerTemplateStore@@@@UAE@XZ,0x00041E39,route=0x00070560; SubsystemDeleter<PlayerTemplateStore> destructor ILT called by authentic scalar-deleting destructor at 0x00070530
+??1?$SubsystemDeleter@VRadar@@@@UAE@XZ,0x00027C87,route=0x00071BE0; SubsystemDeleter<Radar> destructor ILT called by authentic scalar-deleting destructor at 0x00071BB0
+??1?$SubsystemDeleter@VRankInfoStore@@@@UAE@XZ,0x0002325E,route=0x000703E0; SubsystemDeleter<RankInfoStore> destructor ILT called by authentic scalar-deleting destructor at 0x000703B0
+??1?$SubsystemDeleter@VRecorderClass@@@@UAE@XZ,0x00025045,route=0x00071B20; gen-dtor class destructor
+??1?$SubsystemDeleter@VScienceStore@@@@UAE@XZ,0x0001B18A,route=0x0006FAE0; SubsystemDeleter<ScienceStore> destructor ILT called by authentic scalar-deleting destructor at 0x0006FAB0
+??1?$SubsystemDeleter@VScriptEngine@@@@UAE@XZ,0x00043BEE,route=0x000716A0; gen-dtor class destructor
+??1?$SubsystemDeleter@VSidesList@@@@UAE@XZ,0x000467FE,route=0x00070260; SubsystemDeleter<SidesList> destructor ILT called by authentic scalar-deleting destructor at 0x00070230
+??1?$SubsystemDeleter@VSpecialPowerStore@@@@UAE@XZ,0x000248C0,route=0x000709E0; SubsystemDeleter<SpecialPowerStore> destructor ILT called by authentic scalar-deleting destructor at 0x000709B0
+??1?$SubsystemDeleter@VSplineService@@@@UAE@XZ,0x00039BDF,route=0x00071460; SubsystemDeleter<SplineService> destructor ILT called by authentic scalar-deleting destructor at 0x00071430
+??1?$SubsystemDeleter@VSubsystemLegend@@@@UAE@XZ,0x00002BDF,route=0x0006F660; SubsystemDeleter<SubsystemLegend> destructor ILT called by authentic scalar-deleting destructor at 0x0006F630
+??1?$SubsystemDeleter@VTaintManager@@@@UAE@XZ,0x00009A5C,route=0x000715E0; gen-dtor class destructor
+??1?$SubsystemDeleter@VTeamFactory@@@@UAE@XZ,0x0002DDDF,route=0x00071820; gen-dtor class destructor
+??1?$SubsystemDeleter@VTerrainRoadCollection@@@@UAE@XZ,0x00045C50,route=0x0006FDE0; SubsystemDeleter<TerrainRoadCollection> destructor ILT called by authentic scalar-deleting destructor at 0x0006FDB0
+??1?$SubsystemDeleter@VTerrainTypeCollection@@@@UAE@XZ,0x0002C520,route=0x0006FD20; SubsystemDeleter<TerrainTypeCollection> destructor ILT called by authentic scalar-deleting destructor at 0x0006FCF0
+??1?$SubsystemDeleter@VThingFactory@@@@UAE@XZ,0x00025E5A,route=0x00070DA0; SubsystemDeleter<ThingFactory> destructor ILT called by authentic scalar-deleting destructor at 0x00070D70
+??1?$SubsystemDeleter@VUpgradeCenter@@@@UAE@XZ,0x0000111D,route=0x0006FBA0; SubsystemDeleter<UpgradeCenter> destructor ILT called by authentic scalar-deleting destructor at 0x0006FB70
+??1?$SubsystemDeleter@VVictoryConditionsInterface@@@@UAE@XZ,0x000315D9,route=0x00071CA0; gen-dtor class destructor
+??1?$SubsystemDeleter@VVictorySystem@@@@UAE@XZ,0x0000D1AC,route=0x00071FA0; SubsystemDeleter<VictorySystem> destructor ILT called by authentic scalar-deleting destructor at 0x00071F70
+??1?$SubsystemDeleter@VWeaponStore@@@@UAE@XZ,0x000307B5,route=0x000707A0; SubsystemDeleter<WeaponStore> destructor ILT called by authentic scalar-deleting destructor at 0x00070770
 ??1?$VectorClass@VShaderClass@@@@UAE@XZ,0x0092FD10,0x009305B0 wrapper call and immediately adjacent matched 0x009305D0 VectorClass<ShaderClass> constructor; callee clears Vector/VectorMax/IsAllocated
 ??1?$_List_base@HV?$allocator@H@_STL@@@_STL@@QAE@XZ,0x0000E68D,HordeSiegeEngineContain list member destructor call target (second COMDAT copy)
 ??1?$_List_base@HV?$allocator@H@_STL@@@_STL@@QAE@XZ,0x00013449,ResourceGatheringManager list destructor ILT
@@ -10368,49 +10368,66 @@ name,address,notes
 ??_7?$SimpleDynVecClass@PAV?$MultiListClass@VDX8FVFCategoryContainer@@@@@@6B@,0x00D3D010,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00949D00 calls; autopin
 ??_7?$SimpleDynVecClass@VVector3@@@@6B@,0x00D3AD08,WW3D SimpleDynVecClass<Vector3> vtable installed by exact destructor 0x009183B0 and referenced by StreakLineClass construction/destruction family
 ??_7?$SimpleVecClass@PAV?$MultiListClass@VDX8FVFCategoryContainer@@@@@@6B@,0x00D3D004,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00949D00 calls; autopin
-??_7?$SubsystemSlot@VAI@@@@6B@,0x00C75E20,vtable installed by exact SubsystemSlot<AI> constructor at 0x000711D0; slot zero routes through ILT 0x00022B83 to scalar-deleting destructor 0x000711F0
-??_7?$SubsystemSlot@VAerialPathfinder@@@@6B@,0x00C75E24,vtable installed by exact SubsystemSlot<AerialPathfinder> constructor at 0x00071290; slot zero routes through ILT 0x0002CAF2 to scalar-deleting destructor 0x000712B0
-??_7?$SubsystemSlot@VAptPlayer@@@@6B@,0x00C75E14,vtable installed by exact SubsystemSlot<AptPlayer> constructor at 0x00070F90; slot zero routes through ILT 0x0001A582 to scalar-deleting destructor 0x00070FB0
-??_7?$SubsystemSlot@VArmorStore@@@@6B@,0x00C75DFC,vtable installed by exact SubsystemSlot<ArmorStore> constructor at 0x00070B10; slot zero routes through ILT 0x0004156F to scalar-deleting destructor 0x00070B30
-??_7?$SubsystemSlot@VAttributeModifierStore@@@@6B@,0x00C75E30,vtable installed by exact SubsystemSlot<AttributeModifierStore> constructor at 0x000714D0; slot zero routes through ILT 0x00043AC7 to scalar-deleting destructor 0x000714F0
-??_7?$SubsystemSlot@VAudioManager@@@@6B@,0x00C75D9C,vtable installed by exact SubsystemSlot<AudioManager> constructor at 0x0006F910; slot zero routes through ILT 0x00001BA4 to scalar-deleting destructor 0x0006F930
-??_7?$SubsystemSlot@VBuildAssistant@@@@6B@,0x00C75E00,vtable installed by exact SubsystemSlot<BuildAssistant> constructor at 0x00070BD0; slot zero routes through ILT 0x00043C61 to scalar-deleting destructor 0x00070BF0
-??_7?$SubsystemSlot@VCDManagerInterface@@@@6B@,0x00C75DB8,vtable installed by exact SubsystemSlot<CDManagerInterface> constructor at 0x0006FE50; slot zero routes through ILT 0x0002501D to scalar-deleting destructor 0x0006FE70
-??_7?$SubsystemSlot@VCaveSystem@@@@6B@,0x00C75DD0,vtable installed by exact SubsystemSlot<CaveSystem> constructor at 0x000702D0; slot zero routes through ILT 0x00012B3E to scalar-deleting destructor 0x000702F0
-??_7?$SubsystemSlot@VDamageFXStore@@@@6B@,0x00C75DF8,vtable installed by exact SubsystemSlot<DamageFXStore> constructor at 0x00070A50; slot zero routes through ILT 0x000226BF to scalar-deleting destructor 0x00070A70
-??_7?$SubsystemSlot@VEmotionSystem@@@@6B@,0x00C75E04,vtable installed by exact SubsystemSlot<EmotionSystem> constructor at 0x00070C90; slot zero routes through ILT 0x00003D23 to scalar-deleting destructor 0x00070CB0
-??_7?$SubsystemSlot@VEva@@@@6B@,0x00C75DA0,vtable installed by exact SubsystemSlot<Eva> constructor at 0x0006F9D0; slot zero routes through ILT 0x0000C13F to scalar-deleting destructor 0x0006F9F0
-??_7?$SubsystemSlot@VExperienceLevelSystem@@@@6B@,0x00C75E10,vtable installed by exact SubsystemSlot<ExperienceLevelSystem> constructor at 0x00070ED0; slot zero routes through ILT 0x0001333B to scalar-deleting destructor 0x00070EF0
-??_7?$SubsystemSlot@VFXListStore@@@@6B@,0x00C75DE4,vtable installed by exact SubsystemSlot<FXListStore> constructor at 0x00070690; slot zero routes through ILT 0x00027CFA to scalar-deleting destructor 0x000706B0
-??_7?$SubsystemSlot@VFunctionLexicon@@@@6B@,0x00C75DC0,vtable installed by exact SubsystemSlot<FunctionLexicon> constructor at 0x0006FFD0; slot zero routes through ILT 0x0002A644 to scalar-deleting destructor 0x0006FFF0
-??_7?$SubsystemSlot@VGameClient@@@@6B@,0x00C75E1C,vtable installed by exact SubsystemSlot<GameClient> constructor at 0x00071110; slot zero routes through ILT 0x000173B4 to scalar-deleting destructor 0x00071130
-??_7?$SubsystemSlot@VGameTextInterface@@@@6B@,0x00C75D98,vtable installed by exact SubsystemSlot<GameTextInterface> constructor at 0x0006F850; slot zero routes through ILT 0x00034400 to scalar-deleting destructor 0x0006F870
-??_7?$SubsystemSlot@VGlobalData@@@@6B@,0x00C75D90,vtable installed by exact SubsystemSlot<GlobalData> constructor at 0x0006F6D0; slot zero routes through ILT 0x0000C72F to scalar-deleting destructor 0x0006F6F0
-??_7?$SubsystemSlot@VGlobalLanguage@@@@6B@,0x00C75D94,vtable installed by exact SubsystemSlot<GlobalLanguage> constructor at 0x0006F790; slot zero routes through ILT 0x00015726 to scalar-deleting destructor 0x0006F7B0
-??_7?$SubsystemSlot@VGlobalWeatherSystem@@@@6B@,0x00C75DBC,vtable installed by exact SubsystemSlot<GlobalWeatherSystem> constructor at 0x0006FF10; slot zero routes through ILT 0x0003E5E0 to scalar-deleting destructor 0x0006FF30
-??_7?$SubsystemSlot@VLightPointSystem@@@@6B@,0x00C75E0C,vtable installed by exact SubsystemSlot<LightPointSystem> constructor at 0x00070E10; slot zero routes through ILT 0x0001E3DA to scalar-deleting destructor 0x00070E30
-??_7?$SubsystemSlot@VLivingWorldLogic@@@@6B@,0x00C75E28,vtable installed by exact SubsystemSlot<LivingWorldLogic> constructor at 0x00071350; slot zero routes through ILT 0x0002F838 to scalar-deleting destructor 0x00071370
-??_7?$SubsystemSlot@VLivingWorldManager@@@@6B@,0x00C75E18,vtable installed by exact SubsystemSlot<LivingWorldManager> constructor at 0x00071050; slot zero routes through ILT 0x000227EB to scalar-deleting destructor 0x00071070
-??_7?$SubsystemSlot@VLocomotorStore@@@@6B@,0x00C75DF0,vtable installed by exact SubsystemSlot<LocomotorStore> constructor at 0x000708D0; slot zero routes through ILT 0x0000141F to scalar-deleting destructor 0x000708F0
-??_7?$SubsystemSlot@VMessageStream@@@@6B@,0x00C75DC8,vtable installed by exact SubsystemSlot<MessageStream> constructor at 0x00070150; slot zero routes through ILT 0x000143FD to scalar-deleting destructor 0x00070170
-??_7?$SubsystemSlot@VModuleFactory@@@@6B@,0x00C75DC4,vtable installed by exact SubsystemSlot<ModuleFactory> constructor at 0x00070090; slot zero routes through ILT 0x00031066 to scalar-deleting destructor 0x000700B0
-??_7?$SubsystemSlot@VMultiplayerSettings@@@@6B@,0x00C75DAC,vtable installed by exact SubsystemSlot<MultiplayerSettings> constructor at 0x0006FC10; slot zero routes through ILT 0x00018F48 to scalar-deleting destructor 0x0006FC30
-??_7?$SubsystemSlot@VObjectCreationListStore@@@@6B@,0x00C75DEC,vtable installed by exact SubsystemSlot<ObjectCreationListStore> constructor at 0x00070810; slot zero routes through ILT 0x00033BB8 to scalar-deleting destructor 0x00070830
+??_7?$SubsystemDeleter@VAI@@@@6B@,0x00C75E20,vtable installed by exact SubsystemDeleter<AI> constructor at 0x000711D0; slot zero routes through ILT 0x00022B83 to scalar-deleting destructor 0x000711F0
+??_7?$SubsystemDeleter@VAerialPathfinder@@@@6B@,0x00C75E24,vtable installed by exact SubsystemDeleter<AerialPathfinder> constructor at 0x00071290; slot zero routes through ILT 0x0002CAF2 to scalar-deleting destructor 0x000712B0
+??_7?$SubsystemDeleter@VAptPlayer@@@@6B@,0x00C75E14,vtable installed by exact SubsystemDeleter<AptPlayer> constructor at 0x00070F90; slot zero routes through ILT 0x0001A582 to scalar-deleting destructor 0x00070FB0
+??_7?$SubsystemDeleter@VArmorStore@@@@6B@,0x00C75DFC,vtable installed by exact SubsystemDeleter<ArmorStore> constructor at 0x00070B10; slot zero routes through ILT 0x0004156F to scalar-deleting destructor 0x00070B30
+??_7?$SubsystemDeleter@VAttributeModifierStore@@@@6B@,0x00C75E30,vtable installed by exact SubsystemDeleter<AttributeModifierStore> constructor at 0x000714D0; slot zero routes through ILT 0x00043AC7 to scalar-deleting destructor 0x000714F0
+??_7?$SubsystemDeleter@VAudioManager@@@@6B@,0x00C75D9C,vtable installed by exact SubsystemDeleter<AudioManager> constructor at 0x0006F910; slot zero routes through ILT 0x00001BA4 to scalar-deleting destructor 0x0006F930
+??_7?$SubsystemDeleter@VBuildAssistant@@@@6B@,0x00C75E00,vtable installed by exact SubsystemDeleter<BuildAssistant> constructor at 0x00070BD0; slot zero routes through ILT 0x00043C61 to scalar-deleting destructor 0x00070BF0
+??_7?$SubsystemDeleter@VCDManagerInterface@@@@6B@,0x00C75DB8,vtable installed by exact SubsystemDeleter<CDManagerInterface> constructor at 0x0006FE50; slot zero routes through ILT 0x0002501D to scalar-deleting destructor 0x0006FE70
+??_7?$SubsystemDeleter@VCaveSystem@@@@6B@,0x00C75DD0,vtable installed by exact SubsystemDeleter<CaveSystem> constructor at 0x000702D0; slot zero routes through ILT 0x00012B3E to scalar-deleting destructor 0x000702F0
+??_7?$SubsystemDeleter@VDamageFXStore@@@@6B@,0x00C75DF8,vtable installed by exact SubsystemDeleter<DamageFXStore> constructor at 0x00070A50; slot zero routes through ILT 0x000226BF to scalar-deleting destructor 0x00070A70
+??_7?$SubsystemDeleter@VEmotionSystem@@@@6B@,0x00C75E04,vtable installed by exact SubsystemDeleter<EmotionSystem> constructor at 0x00070C90; slot zero routes through ILT 0x00003D23 to scalar-deleting destructor 0x00070CB0
+??_7?$SubsystemDeleter@VEva@@@@6B@,0x00C75DA0,vtable installed by exact SubsystemDeleter<Eva> constructor at 0x0006F9D0; slot zero routes through ILT 0x0000C13F to scalar-deleting destructor 0x0006F9F0
+??_7?$SubsystemDeleter@VExperienceLevelSystem@@@@6B@,0x00C75E10,vtable installed by exact SubsystemDeleter<ExperienceLevelSystem> constructor at 0x00070ED0; slot zero routes through ILT 0x0001333B to scalar-deleting destructor 0x00070EF0
+??_7?$SubsystemDeleter@VFXListStore@@@@6B@,0x00C75DE4,vtable installed by exact SubsystemDeleter<FXListStore> constructor at 0x00070690; slot zero routes through ILT 0x00027CFA to scalar-deleting destructor 0x000706B0
+??_7?$SubsystemDeleter@VFunctionLexicon@@@@6B@,0x00C75DC0,vtable installed by exact SubsystemDeleter<FunctionLexicon> constructor at 0x0006FFD0; slot zero routes through ILT 0x0002A644 to scalar-deleting destructor 0x0006FFF0
+??_7?$SubsystemDeleter@VGameClient@@@@6B@,0x00C75E1C,vtable installed by exact SubsystemDeleter<GameClient> constructor at 0x00071110; slot zero routes through ILT 0x000173B4 to scalar-deleting destructor 0x00071130
+??_7?$SubsystemDeleter@VGameTextInterface@@@@6B@,0x00C75D98,vtable installed by exact SubsystemDeleter<GameTextInterface> constructor at 0x0006F850; slot zero routes through ILT 0x00034400 to scalar-deleting destructor 0x0006F870
+??_7?$SubsystemDeleter@VGlobalData@@@@6B@,0x00C75D90,vtable installed by exact SubsystemDeleter<GlobalData> constructor at 0x0006F6D0; slot zero routes through ILT 0x0000C72F to scalar-deleting destructor 0x0006F6F0
+??_7?$SubsystemDeleter@VGlobalLanguage@@@@6B@,0x00C75D94,vtable installed by exact SubsystemDeleter<GlobalLanguage> constructor at 0x0006F790; slot zero routes through ILT 0x00015726 to scalar-deleting destructor 0x0006F7B0
+??_7?$SubsystemDeleter@VGlobalWeatherSystem@@@@6B@,0x00C75DBC,vtable installed by exact SubsystemDeleter<GlobalWeatherSystem> constructor at 0x0006FF10; slot zero routes through ILT 0x0003E5E0 to scalar-deleting destructor 0x0006FF30
+??_7?$SubsystemDeleter@VLightPointSystem@@@@6B@,0x00C75E0C,vtable installed by exact SubsystemDeleter<LightPointSystem> constructor at 0x00070E10; slot zero routes through ILT 0x0001E3DA to scalar-deleting destructor 0x00070E30
+??_7?$SubsystemDeleter@VLivingWorldLogic@@@@6B@,0x00C75E28,vtable installed by exact SubsystemDeleter<LivingWorldLogic> constructor at 0x00071350; slot zero routes through ILT 0x0002F838 to scalar-deleting destructor 0x00071370
+??_7?$SubsystemDeleter@VLivingWorldManager@@@@6B@,0x00C75E18,vtable installed by exact SubsystemDeleter<LivingWorldManager> constructor at 0x00071050; slot zero routes through ILT 0x000227EB to scalar-deleting destructor 0x00071070
+??_7?$SubsystemDeleter@VLocomotorStore@@@@6B@,0x00C75DF0,vtable installed by exact SubsystemDeleter<LocomotorStore> constructor at 0x000708D0; slot zero routes through ILT 0x0000141F to scalar-deleting destructor 0x000708F0
+??_7?$SubsystemDeleter@VMessageStream@@@@6B@,0x00C75DC8,vtable installed by exact SubsystemDeleter<MessageStream> constructor at 0x00070150; slot zero routes through ILT 0x000143FD to scalar-deleting destructor 0x00070170
+??_7?$SubsystemDeleter@VModuleFactory@@@@6B@,0x00C75DC4,vtable installed by exact SubsystemDeleter<ModuleFactory> constructor at 0x00070090; slot zero routes through ILT 0x00031066 to scalar-deleting destructor 0x000700B0
+??_7?$SubsystemDeleter@VMultiplayerSettings@@@@6B@,0x00C75DAC,vtable installed by exact SubsystemDeleter<MultiplayerSettings> constructor at 0x0006FC10; slot zero routes through ILT 0x00018F48 to scalar-deleting destructor 0x0006FC30
+??_7?$SubsystemDeleter@VObjectCreationListStore@@@@6B@,0x00C75DEC,vtable installed by exact SubsystemDeleter<ObjectCreationListStore> constructor at 0x00070810; slot zero routes through ILT 0x00033BB8 to scalar-deleting destructor 0x00070830
 ??_7?$SubsystemSlot@VParticleSystemManager@@@@6B@,0x00C75DE0,vtable installed by exact SubsystemSlot<ParticleSystemManager> constructor at 0x000705D0; slot zero routes through ILT 0x00035611 to scalar-deleting destructor 0x000705F0
-??_7?$SubsystemSlot@VPlayerAITypeSet@@@@6B@,0x00C75DD8,vtable installed by exact SubsystemSlot<PlayerAITypeSet> constructor at 0x00070450; slot zero routes through ILT 0x0003C38F to scalar-deleting destructor 0x00070470
-??_7?$SubsystemSlot@VPlayerTemplateStore@@@@6B@,0x00C75DDC,vtable installed by exact SubsystemSlot<PlayerTemplateStore> constructor at 0x00070510; slot zero routes through ILT 0x000322E0 to scalar-deleting destructor 0x00070530
-??_7?$SubsystemSlot@VRadar@@@@6B@,0x00C75E54,vtable installed by matched initSubsystem<Radar> at 0x00075350; slot zero routes through ILT 0x0002088D to scalar-deleting destructor 0x00071BB0
-??_7?$SubsystemSlot@VRankInfoStore@@@@6B@,0x00C75DD4,vtable installed by exact SubsystemSlot<RankInfoStore> constructor at 0x00070390; slot zero routes through ILT 0x00008855 to scalar-deleting destructor 0x000703B0
-??_7?$SubsystemSlot@VScienceStore@@@@6B@,0x00C75DA4,vtable installed by exact SubsystemSlot<ScienceStore> constructor at 0x0006FA90; slot zero routes through ILT 0x0000B52D to scalar-deleting destructor 0x0006FAB0
-??_7?$SubsystemSlot@VSidesList@@@@6B@,0x00C75DCC,vtable installed by exact SubsystemSlot<SidesList> constructor at 0x00070210; slot zero routes through ILT 0x0000494E to scalar-deleting destructor 0x00070230
-??_7?$SubsystemSlot@VSpecialPowerStore@@@@6B@,0x00C75DF4,vtable installed by exact SubsystemSlot<SpecialPowerStore> constructor at 0x00070990; slot zero routes through ILT 0x00030DD7 to scalar-deleting destructor 0x000709B0
-??_7?$SubsystemSlot@VSplineService@@@@6B@,0x00C75E2C,vtable installed by exact SubsystemSlot<SplineService> constructor at 0x00071410; slot zero routes through ILT 0x000274DA to scalar-deleting destructor 0x00071430
-??_7?$SubsystemSlot@VSubsystemLegend@@@@6B@,0x00C75D8C,vtable installed by exact SubsystemSlot<SubsystemLegend> constructor at 0x0006F610; slot zero routes through ILT 0x00032376 to scalar-deleting destructor 0x0006F630
-??_7?$SubsystemSlot@VTerrainRoadCollection@@@@6B@,0x00C75DB4,vtable installed by exact SubsystemSlot<TerrainRoadCollection> constructor at 0x0006FD90; slot zero routes through ILT 0x0001F280 to scalar-deleting destructor 0x0006FDB0
-??_7?$SubsystemSlot@VTerrainTypeCollection@@@@6B@,0x00C75DB0,vtable installed by exact SubsystemSlot<TerrainTypeCollection> constructor at 0x0006FCD0; slot zero routes through ILT 0x0000F26D to scalar-deleting destructor 0x0006FCF0
-??_7?$SubsystemSlot@VThingFactory@@@@6B@,0x00C75E08,vtable installed by exact SubsystemSlot<ThingFactory> constructor at 0x00070D50; slot zero routes through ILT 0x00027A89 to scalar-deleting destructor 0x00070D70
-??_7?$SubsystemSlot@VUpgradeCenter@@@@6B@,0x00C75DA8,vtable installed by exact SubsystemSlot<UpgradeCenter> constructor at 0x0006FB50; slot zero routes through ILT 0x00048DA1 to scalar-deleting destructor 0x0006FB70
-??_7?$SubsystemSlot@VWeaponStore@@@@6B@,0x00C75DE8,vtable installed by exact SubsystemSlot<WeaponStore> constructor at 0x00070750; slot zero routes through ILT 0x000314EE to scalar-deleting destructor 0x00070770
+??_7?$SubsystemDeleter@VPlayerAITypeSet@@@@6B@,0x00C75DD8,vtable installed by exact SubsystemDeleter<PlayerAITypeSet> constructor at 0x00070450; slot zero routes through ILT 0x0003C38F to scalar-deleting destructor 0x00070470
+??_7?$SubsystemDeleter@VPlayerTemplateStore@@@@6B@,0x00C75DDC,vtable installed by exact SubsystemDeleter<PlayerTemplateStore> constructor at 0x00070510; slot zero routes through ILT 0x000322E0 to scalar-deleting destructor 0x00070530
+??_7?$SubsystemDeleter@VRadar@@@@6B@,0x00C75E54,vtable installed by matched initSubsystem<Radar> at 0x00075350; slot zero routes through ILT 0x0002088D to scalar-deleting destructor 0x00071BB0
+??_7?$SubsystemDeleter@VRankInfoStore@@@@6B@,0x00C75DD4,vtable installed by exact SubsystemDeleter<RankInfoStore> constructor at 0x00070390; slot zero routes through ILT 0x00008855 to scalar-deleting destructor 0x000703B0
+??_7?$SubsystemDeleter@VScienceStore@@@@6B@,0x00C75DA4,vtable installed by exact SubsystemDeleter<ScienceStore> constructor at 0x0006FA90; slot zero routes through ILT 0x0000B52D to scalar-deleting destructor 0x0006FAB0
+??_7?$SubsystemDeleter@VSidesList@@@@6B@,0x00C75DCC,vtable installed by exact SubsystemDeleter<SidesList> constructor at 0x00070210; slot zero routes through ILT 0x0000494E to scalar-deleting destructor 0x00070230
+??_7?$SubsystemDeleter@VSpecialPowerStore@@@@6B@,0x00C75DF4,vtable installed by exact SubsystemDeleter<SpecialPowerStore> constructor at 0x00070990; slot zero routes through ILT 0x00030DD7 to scalar-deleting destructor 0x000709B0
+??_7?$SubsystemDeleter@VSplineService@@@@6B@,0x00C75E2C,vtable installed by exact SubsystemDeleter<SplineService> constructor at 0x00071410; slot zero routes through ILT 0x000274DA to scalar-deleting destructor 0x00071430
+??_7?$SubsystemDeleter@VSubsystemLegend@@@@6B@,0x00C75D8C,vtable installed by exact SubsystemDeleter<SubsystemLegend> constructor at 0x0006F610; slot zero routes through ILT 0x00032376 to scalar-deleting destructor 0x0006F630
+??_7?$SubsystemDeleter@VTerrainRoadCollection@@@@6B@,0x00C75DB4,vtable installed by exact SubsystemDeleter<TerrainRoadCollection> constructor at 0x0006FD90; slot zero routes through ILT 0x0001F280 to scalar-deleting destructor 0x0006FDB0
+??_7?$SubsystemDeleter@VTerrainTypeCollection@@@@6B@,0x00C75DB0,vtable installed by exact SubsystemDeleter<TerrainTypeCollection> constructor at 0x0006FCD0; slot zero routes through ILT 0x0000F26D to scalar-deleting destructor 0x0006FCF0
+??_7?$SubsystemDeleter@VThingFactory@@@@6B@,0x00C75E08,vtable installed by exact SubsystemDeleter<ThingFactory> constructor at 0x00070D50; slot zero routes through ILT 0x00027A89 to scalar-deleting destructor 0x00070D70
+??_7?$SubsystemDeleter@VUpgradeCenter@@@@6B@,0x00C75DA8,vtable installed by exact SubsystemDeleter<UpgradeCenter> constructor at 0x0006FB50; slot zero routes through ILT 0x00048DA1 to scalar-deleting destructor 0x0006FB70
+??_7?$SubsystemDeleter@VWeaponStore@@@@6B@,0x00C75DE8,vtable installed by exact SubsystemDeleter<WeaponStore> constructor at 0x00070750; slot zero routes through ILT 0x000314EE to scalar-deleting destructor 0x00070770
+??_7?$SubsystemDeleter@VActionManager@@@@6B@,0x00C75E6C,vtable VA 0x01075E6C stored by matched SubsystemDeleter<ActionManager> destructor 0x00072060 and its constructor; name per identity_evidence/subsystem-deleter-ilt.md
+??_7?$SubsystemDeleter@VCrateSystem@@@@6B@,0x00C75E44,vtable VA 0x01075E44 stored by matched SubsystemDeleter<CrateSystem> destructor 0x000718E0 and its constructor; name per identity_evidence/subsystem-deleter-ilt.md
+??_7?$SubsystemDeleter@VGameLogic@@@@6B@,0x00C75E4C,vtable VA 0x01075E4C stored by matched SubsystemDeleter<GameLogic> destructor 0x00071A60 and its constructor; name per identity_evidence/subsystem-deleter-ilt.md
+??_7?$SubsystemDeleter@VGameResultsInterface@@@@6B@,0x00C75E78,vtable VA 0x01075E78 stored by matched SubsystemDeleter<GameResultsInterface> destructor 0x000722A0 and its constructor; name per identity_evidence/subsystem-deleter-ilt.md
+??_7?$SubsystemDeleter@VGameState@@@@6B@,0x00C75E74,vtable VA 0x01075E74 stored by matched SubsystemDeleter<GameState> destructor 0x000721E0 and its constructor; name per identity_evidence/subsystem-deleter-ilt.md
+??_7?$SubsystemDeleter@VGameStateMap@@@@6B@,0x00C75E70,vtable VA 0x01075E70 stored by matched SubsystemDeleter<GameStateMap> destructor 0x00072120 and its constructor; name per identity_evidence/subsystem-deleter-ilt.md
+??_7?$SubsystemDeleter@VHouseColorSystem@@@@6B@,0x00C75E60,vtable VA 0x01075E60 stored by matched SubsystemDeleter<HouseColorSystem> destructor 0x00071E20 and its constructor; name per identity_evidence/subsystem-deleter-ilt.md
+??_7?$SubsystemDeleter@VLivingWorldCampaignManager@@@@6B@,0x00C75E64,vtable VA 0x01075E64 stored by matched SubsystemDeleter<LivingWorldCampaignManager> destructor 0x00071EE0 and its constructor; name per identity_evidence/subsystem-deleter-ilt.md
+??_7?$SubsystemDeleter@VLuaScriptEngine@@@@6B@,0x00C75E3C,vtable VA 0x01075E3C stored by matched SubsystemDeleter<LuaScriptEngine> destructor 0x00071760 and its constructor; name per identity_evidence/subsystem-deleter-ilt.md
+??_7?$SubsystemDeleter@VMetaMap@@@@6B@,0x00C75E5C,vtable VA 0x01075E5C stored by matched SubsystemDeleter<MetaMap> destructor 0x00071D60 and its constructor; name per identity_evidence/subsystem-deleter-ilt.md
+??_7?$SubsystemDeleter@VPlayerList@@@@6B@,0x00C75E48,vtable VA 0x01075E48 stored by matched SubsystemDeleter<PlayerList> destructor 0x000719A0 and its constructor; name per identity_evidence/subsystem-deleter-ilt.md
+??_7?$SubsystemDeleter@VRecorderClass@@@@6B@,0x00C75E50,vtable VA 0x01075E50 stored by matched SubsystemDeleter<RecorderClass> destructor 0x00071B20 and its constructor; name per identity_evidence/subsystem-deleter-ilt.md
+??_7?$SubsystemDeleter@VScriptEngine@@@@6B@,0x00C75E38,vtable VA 0x01075E38 stored by matched SubsystemDeleter<ScriptEngine> destructor 0x000716A0 and its constructor; name per identity_evidence/subsystem-deleter-ilt.md
+??_7?$SubsystemDeleter@VTaintManager@@@@6B@,0x00C75E34,vtable VA 0x01075E34 stored by matched SubsystemDeleter<TaintManager> destructor 0x000715E0 and its constructor; name per identity_evidence/subsystem-deleter-ilt.md
+??_7?$SubsystemDeleter@VTeamFactory@@@@6B@,0x00C75E40,vtable VA 0x01075E40 stored by matched SubsystemDeleter<TeamFactory> destructor 0x00071820 and its constructor; name per identity_evidence/subsystem-deleter-ilt.md
+??_7?$SubsystemDeleter@VVictoryConditionsInterface@@@@6B@,0x00C75E58,vtable VA 0x01075E58 stored by matched SubsystemDeleter<VictoryConditionsInterface> destructor 0x00071CA0 and its constructor; name per identity_evidence/subsystem-deleter-ilt.md
+??_7?$SubsystemDeleter@VVictorySystem@@@@6B@,0x00C75E68,vtable VA 0x01075E68 stored by matched SubsystemDeleter<VictorySystem> destructor 0x00071FA0 and its constructor; name per identity_evidence/subsystem-deleter-ilt.md
 ??_7?$VectorClass@VModelNodeClass@Rva0097BB40HLod@@@@6B@,0x00D3EB94,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097BB40 calls; autopin
 ??_7?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2FC28,STLport static library basic_ifstream<char> vftable
 ??_7?$basic_ifstream@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2FC40,STLport static library basic_ifstream<unsigned short> vftable

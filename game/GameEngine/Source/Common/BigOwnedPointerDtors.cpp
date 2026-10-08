@@ -51,63 +51,149 @@ public:
 
 #define BFME_OWNED_POINTER_DTOR( NAME )                                   	class NAME : public BigOwnedPtrBase                                   	{                                                                     	public:                                                               		virtual ~NAME();                                                  		BigOwnedVictim **m_pp;                                            	};                                                                    	NAME::~NAME()                                                         	{                                                                     		if ( *m_pp )                                                      			delete *m_pp;                                                 		*m_pp = 0;                                                        	}
 
-BFME_OWNED_POINTER_DTOR( Rva0006F660 )
-BFME_OWNED_POINTER_DTOR( Rva0006F720 )
-BFME_OWNED_POINTER_DTOR( Rva0006F7E0 )
-BFME_OWNED_POINTER_DTOR( Rva0006F8A0 )
-BFME_OWNED_POINTER_DTOR( Rva0006F960 )
-BFME_OWNED_POINTER_DTOR( Rva0006FA20 )
-BFME_OWNED_POINTER_DTOR( Rva0006FAE0 )
-BFME_OWNED_POINTER_DTOR( Rva0006FBA0 )
-BFME_OWNED_POINTER_DTOR( Rva0006FC60 )
-BFME_OWNED_POINTER_DTOR( Rva0006FD20 )
-BFME_OWNED_POINTER_DTOR( Rva0006FDE0 )
-BFME_OWNED_POINTER_DTOR( Rva0006FEA0 )
-BFME_OWNED_POINTER_DTOR( Rva0006FF60 )
-BFME_OWNED_POINTER_DTOR( Rva00070020 )
-BFME_OWNED_POINTER_DTOR( Rva000700E0 )
-BFME_OWNED_POINTER_DTOR( Rva000701A0 )
-BFME_OWNED_POINTER_DTOR( Rva00070260 )
-BFME_OWNED_POINTER_DTOR( Rva00070320 )
-BFME_OWNED_POINTER_DTOR( Rva000703E0 )
-BFME_OWNED_POINTER_DTOR( Rva000704A0 )
-BFME_OWNED_POINTER_DTOR( Rva00070560 )
 BFME_OWNED_POINTER_DTOR( Rva00070620 )
-BFME_OWNED_POINTER_DTOR( Rva000706E0 )
-BFME_OWNED_POINTER_DTOR( Rva000707A0 )
-BFME_OWNED_POINTER_DTOR( Rva00070860 )
-BFME_OWNED_POINTER_DTOR( Rva00070920 )
-BFME_OWNED_POINTER_DTOR( Rva000709E0 )
-BFME_OWNED_POINTER_DTOR( Rva00070AA0 )
-BFME_OWNED_POINTER_DTOR( Rva00070B60 )
-BFME_OWNED_POINTER_DTOR( Rva00070C20 )
-BFME_OWNED_POINTER_DTOR( Rva00070CE0 )
-BFME_OWNED_POINTER_DTOR( Rva00070DA0 )
-BFME_OWNED_POINTER_DTOR( Rva00070E60 )
-BFME_OWNED_POINTER_DTOR( Rva00070F20 )
-BFME_OWNED_POINTER_DTOR( Rva00070FE0 )
-BFME_OWNED_POINTER_DTOR( Rva000710A0 )
-BFME_OWNED_POINTER_DTOR( Rva00071160 )
-BFME_OWNED_POINTER_DTOR( Rva00071220 )
-BFME_OWNED_POINTER_DTOR( Rva000712E0 )
-BFME_OWNED_POINTER_DTOR( Rva000713A0 )
-BFME_OWNED_POINTER_DTOR( Rva00071460 )
-BFME_OWNED_POINTER_DTOR( Rva00071520 )
-BFME_OWNED_POINTER_DTOR( Rva000715E0 )
-BFME_OWNED_POINTER_DTOR( Rva000716A0 )
-BFME_OWNED_POINTER_DTOR( Rva00071760 )
-BFME_OWNED_POINTER_DTOR( Rva00071820 )
-BFME_OWNED_POINTER_DTOR( Rva000718E0 )
-BFME_OWNED_POINTER_DTOR( Rva000719A0 )
-BFME_OWNED_POINTER_DTOR( Rva00071A60 )
-BFME_OWNED_POINTER_DTOR( Rva00071B20 )
-BFME_OWNED_POINTER_DTOR( Rva00071BE0 )
-BFME_OWNED_POINTER_DTOR( Rva00071CA0 )
-BFME_OWNED_POINTER_DTOR( Rva00071D60 )
-BFME_OWNED_POINTER_DTOR( Rva00071E20 )
-BFME_OWNED_POINTER_DTOR( Rva00071EE0 )
-BFME_OWNED_POINTER_DTOR( Rva00071FA0 )
-BFME_OWNED_POINTER_DTOR( Rva00072060 )
-BFME_OWNED_POINTER_DTOR( Rva00072120 )
-BFME_OWNED_POINTER_DTOR( Rva000721E0 )
-BFME_OWNED_POINTER_DTOR( Rva000722A0 )
+
+// SubsystemDeleter<T>.  The same shape as the macro above, instantiated per
+// subsystem class.  The decorated names come from retail's incremental-link
+// thunk table: ??1?$SubsystemDeleter@V<T>@@@@UAE@XZ, the paired scalar
+// deleting destructor ??_G?$SubsystemDeleter@V<T>@@@@UAEPAXI@Z and the
+// constructor ??0?$SubsystemDeleter@V<T>@@@@QAE@AAPAV<T>@@@Z fit 176 of 179
+// ILT hash windows across 59 classes (expected false fits 0.23); see
+// targets/game/reverse/identity_evidence/subsystem-deleter-ilt.md.  The
+// constructor takes T *&, so m_pp holds the address of the subsystem's global
+// pointer; it stays typed as BigOwnedVictim ** because only the template
+// argument, not the member type, reaches the decorated name or the bytes.
+
+template<class T>
+class SubsystemDeleter : public BigOwnedPtrBase
+{
+public:
+	virtual ~SubsystemDeleter();
+	BigOwnedVictim **m_pp;
+};
+
+template<class T>
+SubsystemDeleter<T>::~SubsystemDeleter()
+{
+	if ( *m_pp )
+		delete *m_pp;
+	*m_pp = 0;
+}
+class AI;
+template SubsystemDeleter<AI>::~SubsystemDeleter();
+class ActionManager;
+template SubsystemDeleter<ActionManager>::~SubsystemDeleter();
+class AerialPathfinder;
+template SubsystemDeleter<AerialPathfinder>::~SubsystemDeleter();
+class AptPlayer;
+template SubsystemDeleter<AptPlayer>::~SubsystemDeleter();
+class ArmorStore;
+template SubsystemDeleter<ArmorStore>::~SubsystemDeleter();
+class AttributeModifierStore;
+template SubsystemDeleter<AttributeModifierStore>::~SubsystemDeleter();
+class AudioManager;
+template SubsystemDeleter<AudioManager>::~SubsystemDeleter();
+class BuildAssistant;
+template SubsystemDeleter<BuildAssistant>::~SubsystemDeleter();
+class CDManagerInterface;
+template SubsystemDeleter<CDManagerInterface>::~SubsystemDeleter();
+class CaveSystem;
+template SubsystemDeleter<CaveSystem>::~SubsystemDeleter();
+class CrateSystem;
+template SubsystemDeleter<CrateSystem>::~SubsystemDeleter();
+class DamageFXStore;
+template SubsystemDeleter<DamageFXStore>::~SubsystemDeleter();
+class EmotionSystem;
+template SubsystemDeleter<EmotionSystem>::~SubsystemDeleter();
+class Eva;
+template SubsystemDeleter<Eva>::~SubsystemDeleter();
+class ExperienceLevelSystem;
+template SubsystemDeleter<ExperienceLevelSystem>::~SubsystemDeleter();
+class FXListStore;
+template SubsystemDeleter<FXListStore>::~SubsystemDeleter();
+class FunctionLexicon;
+template SubsystemDeleter<FunctionLexicon>::~SubsystemDeleter();
+class GameClient;
+template SubsystemDeleter<GameClient>::~SubsystemDeleter();
+class GameLogic;
+template SubsystemDeleter<GameLogic>::~SubsystemDeleter();
+class GameResultsInterface;
+template SubsystemDeleter<GameResultsInterface>::~SubsystemDeleter();
+class GameState;
+template SubsystemDeleter<GameState>::~SubsystemDeleter();
+class GameStateMap;
+template SubsystemDeleter<GameStateMap>::~SubsystemDeleter();
+class GameTextInterface;
+template SubsystemDeleter<GameTextInterface>::~SubsystemDeleter();
+class GlobalData;
+template SubsystemDeleter<GlobalData>::~SubsystemDeleter();
+class GlobalLanguage;
+template SubsystemDeleter<GlobalLanguage>::~SubsystemDeleter();
+class GlobalWeatherSystem;
+template SubsystemDeleter<GlobalWeatherSystem>::~SubsystemDeleter();
+class HouseColorSystem;
+template SubsystemDeleter<HouseColorSystem>::~SubsystemDeleter();
+class LightPointSystem;
+template SubsystemDeleter<LightPointSystem>::~SubsystemDeleter();
+class LivingWorldCampaignManager;
+template SubsystemDeleter<LivingWorldCampaignManager>::~SubsystemDeleter();
+class LivingWorldLogic;
+template SubsystemDeleter<LivingWorldLogic>::~SubsystemDeleter();
+class LivingWorldManager;
+template SubsystemDeleter<LivingWorldManager>::~SubsystemDeleter();
+class LocomotorStore;
+template SubsystemDeleter<LocomotorStore>::~SubsystemDeleter();
+class LuaScriptEngine;
+template SubsystemDeleter<LuaScriptEngine>::~SubsystemDeleter();
+class MessageStream;
+template SubsystemDeleter<MessageStream>::~SubsystemDeleter();
+class MetaMap;
+template SubsystemDeleter<MetaMap>::~SubsystemDeleter();
+class ModuleFactory;
+template SubsystemDeleter<ModuleFactory>::~SubsystemDeleter();
+class MultiplayerSettings;
+template SubsystemDeleter<MultiplayerSettings>::~SubsystemDeleter();
+class ObjectCreationListStore;
+template SubsystemDeleter<ObjectCreationListStore>::~SubsystemDeleter();
+class PlayerAITypeSet;
+template SubsystemDeleter<PlayerAITypeSet>::~SubsystemDeleter();
+class PlayerList;
+template SubsystemDeleter<PlayerList>::~SubsystemDeleter();
+class PlayerTemplateStore;
+template SubsystemDeleter<PlayerTemplateStore>::~SubsystemDeleter();
+class Radar;
+template SubsystemDeleter<Radar>::~SubsystemDeleter();
+class RankInfoStore;
+template SubsystemDeleter<RankInfoStore>::~SubsystemDeleter();
+class RecorderClass;
+template SubsystemDeleter<RecorderClass>::~SubsystemDeleter();
+class ScienceStore;
+template SubsystemDeleter<ScienceStore>::~SubsystemDeleter();
+class ScriptEngine;
+template SubsystemDeleter<ScriptEngine>::~SubsystemDeleter();
+class SidesList;
+template SubsystemDeleter<SidesList>::~SubsystemDeleter();
+class SpecialPowerStore;
+template SubsystemDeleter<SpecialPowerStore>::~SubsystemDeleter();
+class SplineService;
+template SubsystemDeleter<SplineService>::~SubsystemDeleter();
+class SubsystemLegend;
+template SubsystemDeleter<SubsystemLegend>::~SubsystemDeleter();
+class TaintManager;
+template SubsystemDeleter<TaintManager>::~SubsystemDeleter();
+class TeamFactory;
+template SubsystemDeleter<TeamFactory>::~SubsystemDeleter();
+class TerrainRoadCollection;
+template SubsystemDeleter<TerrainRoadCollection>::~SubsystemDeleter();
+class TerrainTypeCollection;
+template SubsystemDeleter<TerrainTypeCollection>::~SubsystemDeleter();
+class ThingFactory;
+template SubsystemDeleter<ThingFactory>::~SubsystemDeleter();
+class UpgradeCenter;
+template SubsystemDeleter<UpgradeCenter>::~SubsystemDeleter();
+class VictoryConditionsInterface;
+template SubsystemDeleter<VictoryConditionsInterface>::~SubsystemDeleter();
+class VictorySystem;
+template SubsystemDeleter<VictorySystem>::~SubsystemDeleter();
+class WeaponStore;
+template SubsystemDeleter<WeaponStore>::~SubsystemDeleter();

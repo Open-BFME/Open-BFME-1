@@ -1,6 +1,6 @@
 // cl: /O2
 //
-// SubsystemSlot<UpgradeCenter> scalar-deleting destructor, retail 0x0006FB70
+// SubsystemDeleter<UpgradeCenter> scalar-deleting destructor, retail 0x0006FB70
 // (30 bytes).  The exact constructor at 0x0006FB50 installs the one-slot
 // vtable 0x01075DA8, whose slot routes here through ILT 0x00048DA1.
 // The wrapper calls the paired 89-byte owned-subsystem destructor at
@@ -9,14 +9,14 @@
 class UpgradeCenter;
 
 template<class SUBSYSTEM>
-class SubsystemSlot
+class SubsystemDeleter
 {
 public:
-	virtual ~SubsystemSlot();
+	virtual ~SubsystemDeleter();
 	void *m_slot;
 };
 
 void forceUpgradeCenterSlotDeletingDestructor()
 {
-	SubsystemSlot<UpgradeCenter> value;
+	SubsystemDeleter<UpgradeCenter> value;
 }

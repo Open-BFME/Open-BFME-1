@@ -1,20 +1,20 @@
 // cl: /O2
 //
-// SubsystemSlot<GameStateMap> scalar-deleting destructor, retail (30 bytes).
+// SubsystemDeleter<GameStateMap> scalar-deleting destructor, retail (30 bytes).
 // The exact constructor installs the one-slot vtable,
 // whose slot routes here.
 
 class GameStateMap;
 
 template<class SUBSYSTEM>
-class SubsystemSlot
+class SubsystemDeleter
 {
 public:
-	virtual ~SubsystemSlot();
+	virtual ~SubsystemDeleter();
 	void *m_slot;
 };
 
 void forceGameStateMapSlotDeletingDestructor()
 {
-	SubsystemSlot<GameStateMap> value;
+	SubsystemDeleter<GameStateMap> value;
 }

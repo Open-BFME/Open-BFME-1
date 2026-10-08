@@ -1,20 +1,20 @@
 // cl: /O2
 //
-// SubsystemSlot<ActionManager> scalar-deleting destructor, retail (30 bytes).
+// SubsystemDeleter<ActionManager> scalar-deleting destructor, retail (30 bytes).
 // The exact constructor installs the one-slot vtable,
 // whose slot routes here.
 
 class ActionManager;
 
 template<class SUBSYSTEM>
-class SubsystemSlot
+class SubsystemDeleter
 {
 public:
-	virtual ~SubsystemSlot();
+	virtual ~SubsystemDeleter();
 	void *m_slot;
 };
 
 void forceActionManagerSlotDeletingDestructor()
 {
-	SubsystemSlot<ActionManager> value;
+	SubsystemDeleter<ActionManager> value;
 }
