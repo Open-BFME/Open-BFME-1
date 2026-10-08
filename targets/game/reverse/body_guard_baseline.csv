@@ -896,7 +896,6 @@ dir32,0x012B5348,?g_012B5348@@3IA,"nothing in the ledger owns 0x012B5348. Give t
 dir32,0x012B534C,?g_012B534C@@3_NA,"nothing in the ledger owns 0x012B534C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012B53A8,?g_012B53A8@@3PBDB,"nothing in the ledger owns 0x012B53A8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012B5AB0,?gameWindowFieldList@@3PAUGameWindowParse@@A,"nothing in the ledger owns 0x012B5AB0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x012B7638,?g_012B7638@@3HA,"nothing in the ledger owns 0x012B7638. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012B7828,?g_rva012B7828EvilRanks@@3PAPBDA,"nothing in the ledger owns 0x012B7828. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012B78C8,_g_012B78C8,"nothing in the ledger owns 0x012B78C8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012B78F0,_g_012B78F0,"nothing in the ledger owns 0x012B78F0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
