@@ -173,3 +173,10 @@ void BfmeAptScreenSkirmish::tooltipPlayerLevelIcon( void * )
 		TheMouse->setCursorTooltip(
 			TheGameText->fetch( "Tooltip:NoCurrentLevel" ), -1, 0, 1.0f );
 }
+
+extern const char *g_012B8018[11];
+extern "C" const char *__identifier("?g_012B8018@@3PAPBDA")[11] =
+{
+	"Wizard", "Scum", "Vermin", "Beast", "Goblin", "Orc",
+	"MountainTroll", "Berserker", "DarkWizard", "RingWraith", "DarkLord"
+};

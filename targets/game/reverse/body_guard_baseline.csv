@@ -891,7 +891,6 @@ dir32,0x012B7AE0,?RankLabels00554510Good@@3PAPBDA,"nothing in the ledger owns 0x
 dir32,0x012B7B08,?RankLabels00554510Evil@@3PAPBDA,"nothing in the ledger owns 0x012B7B08. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012B7C58,?g_012B7C58@@3PAUGen_t_012b7c58_entry@@A,"nothing in the ledger owns 0x012B7C58. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012B7FF0,?g_012B7FF0@@3PAPBDA,"nothing in the ledger owns 0x012B7FF0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x012B8018,?g_012B8018@@3PAPBDA,"nothing in the ledger owns 0x012B8018. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012B85D0,?g_012B85D0@@3PAPAXA,"nothing in the ledger owns 0x012B85D0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012B8EF0,?g_012B8EF0@@3MB,"nothing in the ledger owns 0x012B8EF0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012B9469,?isHttpOk@@3_NA,"retail 0x012B9469 is already recorded as ?bfmeHttpOk@@3EA; reference that name, not a new one"
