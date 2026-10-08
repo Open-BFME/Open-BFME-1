@@ -2,7 +2,6 @@ check,target_rva,name,detail
 dir32,0x00400000,___ImageBase,"nothing in the ledger owns 0x00400000. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00401942,?g_00401942@@YAXXZ,"nothing in the ledger owns 0x00401942. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00401A6E,?rva0032a490@@YAHPAVObject@@PAURva0032A490Context@@@Z,the name encodes 0x0032A490 but retail reads 0x00401A6E
-dir32,0x00401C80,?j_00001c80@@YAXXZ,"retail 0x00401C80 is already recorded as _bfmeDtorCbDMB; reference that name, not a new one"
 dir32,0x00401E15,??0BoneFXListInfo@@QAE@XZ,"nothing in the ledger owns 0x00401E15. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x004029CD,?bfmeGoBHE@@YAHPAUBfmeOwnerBHE@@@Z,"retail 0x004029CD is already recorded as ?bfmeTeamRefreshExperienceVisitor@@YAXPAVObject@@PAX@Z; reference that name, not a new one"
 dir32,0x004030F8,??0ActionTemplate@@QAE@XZ,"nothing in the ledger owns 0x004030F8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
