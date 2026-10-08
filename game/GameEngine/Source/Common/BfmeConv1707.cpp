@@ -1,14 +1,19 @@
-class BfmeSlotFY
+// retail ILT 0x00013633 -> 0x00661F10 is the matched Connection::doSend row
+class Connection
 {
 public:
-	void bfmeCloseFY(int flag);
+	unsigned int doSend(bool flag);
 };
 
-class BfmeExtraFY
+// retail ILT 0x00015D3E -> 0x006834B0 is the matched Transport::doSend row
+class Transport
 {
 public:
-	void bfmeFinishFY(void);
+	bool doSend(void);
 };
+
+class BfmeSlotFY;
+class BfmeExtraFY;
 
 class BfmeOwnerFY
 {
@@ -26,9 +31,9 @@ void BfmeOwnerFY::bfmeShutdownFY(void)
 	for (int i = 0; i < 8; ++i)
 	{
 		if (m_bfmeSlotsFY[i] != 0)
-			m_bfmeSlotsFY[i]->bfmeCloseFY(0);
+			((Connection *)m_bfmeSlotsFY[i])->doSend(false);
 	}
 
 	if (m_bfmeExtraFY != 0)
-		m_bfmeExtraFY->bfmeFinishFY();
+		((Transport *)m_bfmeExtraFY)->doSend();
 }

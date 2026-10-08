@@ -1,8 +1,12 @@
-class BfmeEndBBA
+// retail ILT 0x00046538 -> 0x00478C70 (both calls) is the matched
+// GameWindow::winGetUserData row
+class GameWindow
 {
 public:
-	void bfmeRunBBA();
+	void *winGetUserData();
 };
+
+class BfmeEndBBA;
 
 struct BfmeGotBBA
 {
@@ -10,11 +14,7 @@ struct BfmeGotBBA
 	BfmeEndBBA *m_bfmeEnd;
 };
 
-class BfmeSubBBA
-{
-public:
-	BfmeGotBBA *bfmeFindBBA();
-};
+class BfmeSubBBA;
 
 class BfmeThingBBA
 {
@@ -25,5 +25,5 @@ public:
 
 void BfmeThingBBA::bfmeGoBBA()
 {
-	m_bfmeSub->bfmeFindBBA()->m_bfmeEnd->bfmeRunBBA();
+	((GameWindow *)((BfmeGotBBA *)((GameWindow *)m_bfmeSub)->winGetUserData())->m_bfmeEnd)->winGetUserData();
 }

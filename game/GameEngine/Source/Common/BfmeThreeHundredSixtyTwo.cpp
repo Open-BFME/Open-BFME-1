@@ -4,13 +4,15 @@
 // exactly, so the store below references the defining name.
 extern "C" unsigned char __identifier("??_7BfmeParserBindingBaseVE@@6B@")[];
 
-void bfmeFreeVE(void *what);
-
-class BfmeSubVE
+// retail ILT 0x0000871A -> 0x00102610 is the matched
+// Q1Forwardee0000871A::handle row; 0x00881EB0 is operator delete
+class Q1Forwardee0000871A
 {
 public:
-	void bfmeDropVE(void *what);
+	void handle(int value);
 };
+
+class BfmeSubVE;
 
 class BfmeThingVE
 {
@@ -26,8 +28,8 @@ void *BfmeThingVE::bfmeKillVE(int flags)
 	void *what = m_bfmeWhat;
 	BfmeSubVE *sub = m_bfmeSub;
 	m_bfmeVft = __identifier("??_7BfmeParserBindingBaseVE@@6B@");
-	sub->bfmeDropVE(what);
+	((Q1Forwardee0000871A *)sub)->handle((int)what);
 	if ((flags & 1) != 0)
-		bfmeFreeVE(this);
+		operator delete(this);
 	return this;
 }

@@ -8,10 +8,19 @@
 // Evidence: targets/game/reverse/identity_evidence/diemodule-slot0-ondie.md
 // Moved from BfmeConv1025.cpp.
 
-class BfmeT1025
+class Object;
+class DamageInfo;
+
+// retail ILT 0x000357D8 -> 0x002551F0 is the matched
+// DieMuxData::isDieApplicable row
+class DieMuxData
 {
 public:
-	char bfmeTest1025(void *h, int a);
+	bool isDieApplicable(const Object *obj, const DamageInfo *damageInfo) const;
+};
+
+class BfmeT1025
+{
 };
 
 struct BfmeOwner1025
@@ -20,19 +29,16 @@ struct BfmeOwner1025
 	BfmeT1025 m_bfmeTab;
 };
 
-class BfmeStore1025
-{
-public:
-	void bfmeDo1025(void *h);
-};
 
 // The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined
 // once in game/GameEngine/Source/GameLogic/System/GameLogic.cpp. The call below
-// goes through this TU's BfmeStore1025 view.
-class GameLogic;
+// is the matched GameLogic::destroyObject row (ILT 0x0001D0DE -> 0x0038B0C0).
+class GameLogic
+{
+public:
+	void destroyObject(Object *obj);
+};
 extern GameLogic *TheGameLogic;
-
-class DamageInfo;
 
 class DestroyDie
 {
@@ -45,6 +51,6 @@ void DestroyDie::onDie(const DamageInfo *damageInfo)
 	void *h = *(void **)((char *)this - 8);
 	BfmeOwner1025 *o = *(BfmeOwner1025 **)((char *)this - 0xc);
 
-	if (o->m_bfmeTab.bfmeTest1025(h, (int)damageInfo) != 0)
-		((BfmeStore1025 *)TheGameLogic)->bfmeDo1025(*(void **)((char *)this - 8));
+	if (((const DieMuxData *)&o->m_bfmeTab)->isDieApplicable((const Object *)h, damageInfo))
+		TheGameLogic->destroyObject(*(Object **)((char *)this - 8));
 }

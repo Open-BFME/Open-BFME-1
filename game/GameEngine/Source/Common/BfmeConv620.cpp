@@ -1,15 +1,21 @@
 class BfmeSubCLE;
 
-class BfmeXCLE
+class Object;
+
+// retail ILT 0x0002E85C -> 0x001E8930 is the matched
+// Weapon::isWithinAttackRange(const Object *, const Object *, int) row
+class Weapon
 {
 public:
-	bool bfmeRunCLE(BfmeSubCLE *sub, void *what, int value);
+	bool isWithinAttackRange(const Object *source, const Object *target, int extra) const;
 };
 
-class BfmeSubCLE
+// retail ILT 0x00009C41 -> 0x001BE270 is the matched
+// AssistedTargetingObjectShim::find row
+class AssistedTargetingObjectShim
 {
 public:
-	BfmeXCLE *bfmeAskCLE(int value);
+	void *find(int value);
 };
 
 class BfmeThingCLE
@@ -22,7 +28,7 @@ public:
 
 bool BfmeThingCLE::bfmeGoCLE(void *what)
 {
-	if (m_bfmeSub->bfmeAskCLE(0) == 0)
+	if (((AssistedTargetingObjectShim *)m_bfmeSub)->find(0) == 0)
 		return true;
-	return m_bfmeSub->bfmeAskCLE(0)->bfmeRunCLE(m_bfmeSub, what, 0);
+	return ((Weapon *)((AssistedTargetingObjectShim *)m_bfmeSub)->find(0))->isWithinAttackRange((const Object *)m_bfmeSub, (const Object *)what, 0);
 }

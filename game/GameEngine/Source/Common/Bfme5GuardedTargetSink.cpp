@@ -5,10 +5,24 @@
 	virtual void PREFIX##6(void); virtual void PREFIX##7(void); \
 	virtual void PREFIX##8(void); virtual void PREFIX##9(void)
 
-class BfmeTargetSub
+enum CommandSourceType {};
+
+// retail ILT 0x0001C882 -> 0x000D88D0 is the matched AICommandInterface::aiHunt row
+class AICommandInterface
 {
 public:
-	void bfmeSet(int value);
+	void aiHunt(CommandSourceType cmdSource);
+};
+
+// retail ILT 0x0003EEBE -> 0x001CEA50 is the matched Object::setWeaponLock row
+class Object
+{
+public:
+	void setWeaponLock(int a, int b);
+};
+
+class BfmeTargetSub
+{
 };
 
 class BfmeTarget
@@ -35,11 +49,7 @@ public:
 	BfmeTargetSub m_bfmeSub;
 };
 
-class BfmeTargetSink
-{
-public:
-	void bfmeSet(int value, int enabled);
-};
+class BfmeTargetSink;
 
 struct BfmeTargetContext
 {
@@ -65,9 +75,9 @@ int Gen_0028B440::bfmeApply(BfmeTarget *target)
 	BfmeTargetSink *sink = m_bfmeSink;
 
 	if (target->bfmeTest())
-		target->m_bfmeSub.bfmeSet(2);
+		((AICommandInterface *)&target->m_bfmeSub)->aiHunt((CommandSourceType)2);
 
-	sink->bfmeSet(m_bfmeContext->m_bfmeValue, 1);
+	((Object *)sink)->setWeaponLock(m_bfmeContext->m_bfmeValue, 1);
 	return 1;
 }
 

@@ -34,13 +34,22 @@ static inline BfmeAudioFU *localBfmeAudioFU()
 	return (BfmeAudioFU *)TheAudio;
 }
 
+enum ObjectID {};
+
+// retail ILTs 0x0001F753 -> 0x000B2690, 0x00019A6A -> 0x000B2250 and
+// 0x00040A52 -> 0x000B2200 are the matched AudioEventRTS::operator=,
+// setObjectID and setPlayingHandle rows
+class AudioEventRTS
+{
+public:
+	AudioEventRTS &operator=(const AudioEventRTS &other);
+	void setObjectID(ObjectID objID);
+	void setPlayingHandle(unsigned int handle);
+};
+
 class BfmeSubFU
 {
 public:
-	void bfmeFirstFU(void *value);
-	void bfmeSecondFU(void *value);
-	void bfmeThirdFU(void *value);
-
 	unsigned char m_bfmeDataFU[4];
 };
 
@@ -56,8 +65,9 @@ public:
 void BfmeOwnerFU::bfmeGoFU(void *first, void *second)
 {
 	BfmeSubFU *sub = &m_bfmeSubFU;
+	AudioEventRTS *event = (AudioEventRTS *)sub;
 
-	sub->bfmeFirstFU(first);
-	sub->bfmeSecondFU(second);
-	sub->bfmeThirdFU(localBfmeAudioFU()->bfmeMakeFU(sub));
+	*event = *(const AudioEventRTS *)first;
+	event->setObjectID((ObjectID)(int)second);
+	event->setPlayingHandle((unsigned int)localBfmeAudioFU()->bfmeMakeFU(sub));
 }

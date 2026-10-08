@@ -12,17 +12,24 @@ public:
 	virtual void bfmeFinishZB(int how);
 };
 
-class BfmeTargetZB
+// retail ILT 0x0000321A -> 0x000CC0B0 is the matched Player::removeRadar row
+class Player
 {
 public:
-	void bfmeSetZB(unsigned char kind);
+	void removeRadar(bool disableProof);
+};
+
+// retail ILT 0x00020824 -> 0x001BE3F0 is the matched
+// Object::getControllingPlayer row
+class Object
+{
+public:
+	Player *getControllingPlayer() const;
 };
 
 class BfmeHolderZB
 {
 public:
-	BfmeTargetZB *bfmeGetZB();
-
 	unsigned char m_bfmeHeadZB[0x1a4];
 	int m_bfmeBusyZB;
 };
@@ -56,10 +63,10 @@ void BfmeOwnerZB::bfmeStepZB()
 	if (m_bfmeHolderZB->m_bfmeBusyZB != 0)
 		return;
 
-	BfmeTargetZB *target = m_bfmeHolderZB->bfmeGetZB();
+	Player *target = ((Object *)m_bfmeHolderZB)->getControllingPlayer();
 
 	if (target != 0)
-		target->bfmeSetZB(info->m_bfmeKindZB);
+		target->removeRadar(*(bool *)&info->m_bfmeKindZB);
 
 	m_bfmeSubZB.bfmeFinishZB(0);
 }
