@@ -1,9 +1,32 @@
 class Matrix3DTN;
 
+// Matched callee rows (callees.py, via ILT): Thing::rva00132200 0x00132200,
+// Drawable::bfmeRecordTransform 0x001C0BE0 and
+// BFMERopeDrawableGetPositionShim::bfmeRebuild 0x0041B200.
+class Matrix3D;
+
+class Thing
+{
+public:
+	void rva00132200(const Matrix3D *m);
+};
+
+class Drawable
+{
+public:
+	void bfmeRecordTransform(unsigned int frame);
+};
+
+class BFMERopeDrawableGetPositionShim
+{
+	friend class BfmeThingTN;
+private:
+	void bfmeRebuild(int mode);
+};
+
 class BfmeXTN
 {
 public:
-	void bfmeFlagTN(int mode);
 };
 
 class PartitionData
@@ -191,8 +214,6 @@ public:
 	virtual BfmeXTN *bfmeGetXTN();
 
 	void bfmeSetTransformTN(const Matrix3DTN *m);
-	void bfmeSetMatrixTN(const Matrix3DTN *m);
-	void bfmeMarkTN(unsigned int frame);
 
 	unsigned char m_bfmeHeadTN[0x64];
 	int *m_bfmeVbTN;
@@ -202,17 +223,17 @@ public:
 
 void BfmeThingTN::bfmeSetTransformTN(const Matrix3DTN *m)
 {
-	bfmeSetMatrixTN(m);
+	((Thing *)this)->rva00132200((const Matrix3D *)m);
 
-	bfmeMarkTN(theBfmeGameLogic()->m_bfmeFrameTN);
-	bfmeMarkTN(theBfmeGameLogic()->m_bfmeFrameTN);
+	((Drawable *)this)->bfmeRecordTransform(theBfmeGameLogic()->m_bfmeFrameTN);
+	((Drawable *)this)->bfmeRecordTransform(theBfmeGameLogic()->m_bfmeFrameTN);
 
 	BfmeXTN *x = bfmeGetXTN();
 
 	if (x != 0)
-		x->bfmeFlagTN(1);
+		((BFMERopeDrawableGetPositionShim *)x)->bfmeRebuild(1);
 
-	bfmeSetMatrixTN(m);
+	((Thing *)this)->rva00132200((const Matrix3D *)m);
 
 	BfmeIfcTN *ifc = (BfmeIfcTN *)((char *)&m_bfmeVbTN + m_bfmeVbTN[1]);
 
