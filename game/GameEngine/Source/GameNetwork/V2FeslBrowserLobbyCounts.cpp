@@ -29,10 +29,26 @@ public:
 	bool method();                                       // 0x007E88A0
 };
 
+// callees.py 0x7F66B0: the error getter at 0x007E88B0 is the ledger row
+// m@Gen_007e88b0@@QAEHXZ and the element update at 0x00802CD0 is
+// bfmeGoBZC@BfmeThingBZC@@QAEXPAUBfmeSrcBZC@@H@Z.
+class Gen_007e88b0
+{
+public:
+	int m();                                                          // 0x007E88B0
+};
+
+struct BfmeSrcBZC;
+
+class BfmeThingBZC
+{
+public:
+	void bfmeGoBZC( BfmeSrcBZC *counts, int txn );                    // 0x00802CD0
+};
+
 class Rva007E8810Message
 {
 public:
-	int getError( void );                                             // 0x007E88B0
 
 	char m_head[ 0x28 ];
 	int m_txn;
@@ -51,7 +67,6 @@ public:
 class Rva00802CD0Element
 {
 public:
-	void update( const Rva007F4F90LobbyCounts *counts, int txn );     // 0x00802CD0
 	char m_pad[ 0x40 ];
 };
 
@@ -105,13 +120,13 @@ void Rva007F66B0Browser::onLobbyCounts( Rva007E8810Message *msg )
 	int lid = counts.m_lid;
 	if( ((Rva007E88A0 *)msg)->Rva007E88A0::method() )
 	{
-		m_listener->onLobbyCounts( lid, msg->getError() );
+		m_listener->onLobbyCounts( lid, ((Gen_007e88b0 *)msg)->m() );
 		return;
 	}
 
 	Rva00802CD0Element *lobby = findLobby( lid );
 	if( lobby )
-		lobby->update( &counts, msg->m_txn );
+		((BfmeThingBZC *)lobby)->bfmeGoBZC( (BfmeSrcBZC *)&counts, msg->m_txn );
 	if( counts.m_numGames == 0 )
 		m_listener->onLobbyCounts( lid, 0 );
 }
