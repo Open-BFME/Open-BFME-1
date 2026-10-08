@@ -1,11 +1,14 @@
 // cl: /O2 /Ob0
 
-class Rva008A06F0Inner
+// Retail calls 0x008BDD70 directly: the matched
+// bfmeReset1046@BfmeD1046@@QAEXH@Z row in Rva008BDD70ResetList.cpp.
+class BfmeD1046
 {
-	void callee(int);
-
-	friend class Rva008A06F0;
+public:
+	void bfmeReset1046(int n);
 };
+
+typedef BfmeD1046 Rva008A06F0Inner;
 
 class Rva008A06F0
 {
@@ -18,5 +21,5 @@ public:
 
 void Rva008A06F0::run()
 {
-	m_inner.callee(0);
+	m_inner.bfmeReset1046(0);
 }

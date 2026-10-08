@@ -79741,8 +79741,6 @@ name,address,notes
 ?call_002234A0@Rva0021B200ListOwner@@QAEXP6AXPAX0@Z0I@Z,0x002234A0,neutral body pin for 0x0021B200 continuation; retail ILT=0x0003D0D7 resolves to this body; campaign=luna36h-20260907;lane=shaders;model=gpt-5.6-luna
 ?callee@Rva0060A900@@AAEXPAX@Z,0x00019010,Open-BFME5 ILT FUN_00a0a880
 ?callee@Rva0060A910@@AAEXPAX@Z,0x00019010,Open-BFME5 ILT FUN_00a0a880
-?callee@Rva008A06F0@@AAEXH@Z,0x008BDD70,Open-BFME5 thiscall callee of add-ecx-0x24 wrapper
-?callee@Rva008A06F0Inner@@AAEXH@Z,0x008BDD70,Open-BFME5 thiscall callee of add-ecx-0x24 wrapper
 ?campaignReviewSetAptScreenRef@@YAXABVAsciiString@@VCampaignReviewRefHolder@@@Z,0x0003DF14,CampaignReview InitGadgets registration
 ?canAcceptNewRepair@WorkerAIUpdate@@UAE_NPAVObject@@@Z,0x002c99c0,vtable-slot ??_7WorkerAIUpdate@@6BDozerAIInterface@@@ slot 20 anchors=9
 ?canAffordUpgrade@UpgradeCenter@@QBE_NPAVPlayer@@PBVUpgradeTemplate@@PBVThingTemplate@@_N@Z,0x0001CEA9,ProductionUpdate queueUpgrade affordability thunk
