@@ -1,4 +1,5 @@
-extern "C" unsigned char bfmeInfoDFJ[];
+// The info key is the FESL "PID" field name, the string literal retail
+// holds at VA 0x0112B554.
 
 class BfmeOtherDFJ
 {
@@ -21,6 +22,6 @@ public:
 
 BfmeThingDFJ *BfmeThingDFJ::bfmeGoDFJ(BfmeOtherDFJ *other)
 {
-	m_bfmeVal = reinterpret_cast<BfmeThingRF *>(other)->bfmeGoRF(bfmeInfoDFJ, 0);
+	m_bfmeVal = reinterpret_cast<BfmeThingRF *>(other)->bfmeGoRF((void *)"PID", 0);
 	return this;
 }
