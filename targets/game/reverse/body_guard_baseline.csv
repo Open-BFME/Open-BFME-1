@@ -121,7 +121,6 @@ dir32,0x0043469E,??0TransitionDamageFXFlags@?A0x2535ff93@@QAE@XZ,"retail 0x00434
 dir32,0x0043475C,??0Rva00127AC0Element@@QAE@XZ,"retail 0x0043475C is already recorded as ??0StructureCollapseOCLVector@@QAE@XZ; reference that name, not a new one"
 dir32,0x00434F72,??1ActionTemplate@@QAE@XZ,"nothing in the ledger owns 0x00434F72. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0043572E,?j_0003572e@@YAXXZ,"retail 0x0043572E is already recorded as ?buildFieldParse@RetailCollideModuleDataBase@@SAXAAVMultiIniFieldParse@@@Z (+4 more); reference that name, not a new on"
-dir32,0x0043612E,?j_0003612e@@YAXXZ,"retail 0x0043612E is already recorded as _bfmeDtorCbDLE; reference that name, not a new one"
 dir32,0x00436AB1,?j_00036ab1@@YAXXZ,"retail 0x00436AB1 is already recorded as ??1BfmePathfindCell@@QAE@XZ (+2 more); reference that name, not a new one"
 dir32,0x00436E7B,??0BfmeGdElem36@@QAE@XZ,"nothing in the ledger owns 0x00436E7B. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x004376AA,??1Message0043DBA0@@QAE@XZ,"nothing in the ledger owns 0x004376AA. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
