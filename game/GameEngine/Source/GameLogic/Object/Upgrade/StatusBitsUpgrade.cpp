@@ -112,10 +112,7 @@ void StatusBitsUpgradeModuleData::buildFieldParse(MultiIniFieldParse& p)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ??1StatusBitsUpgrade@@MAE@XZ present-unmatched
-StatusBitsUpgrade::~StatusBitsUpgrade( void )
-{
-}
+// The destructor (retail 0x002D7D50) is defined in StatusBitsUpgradeDestructor.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
