@@ -39,7 +39,7 @@ public:
 // PI/180 as a float: the 0x3C8EFA35 retail multiplies by.
 static const Real RADS_PER_DEGREE = 0.0174532925199432955f;
 
-extern Real TheSlopeLimits[ 2 ];			// 0x012F1064
+Real TheSlopeLimits[ 2 ];			// 0x012F1064
 
 // ?parseSlopeLimits@@YAXPAVINI@@@Z
 void parseSlopeLimits( INI *ini )
