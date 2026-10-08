@@ -632,31 +632,6 @@ Bool ScriptConditions::evaluateTeamInsideAreaPartially(Parameter *pTeamParm, Par
 }  
 
 //-------------------------------------------------------------------------------------------------
-/** evaluateNamedInsideArea */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions_insideArea.cpp
-// ?evaluateNamedInsideArea@ScriptConditions@@IAE_NPAVParameter@@0@Z present-unmatched
-Bool ScriptConditions::evaluateNamedInsideArea(Parameter *pUnitParm, Parameter *pTriggerAreaParm )
-{
-	Object *theObj = TheScriptEngine->getUnitNamed( pUnitParm->getString() );
-
-	if (!theObj) {
-		return false;
-	}
-
-	AsciiString triggerName = pTriggerAreaParm->getString();
-	PolygonTrigger *pTrig = TheScriptEngine->getQualifiedTriggerAreaByName(pTriggerAreaParm->getString());
-	if (pTrig == NULL) return false;
-	if (theObj) {
-		Coord3D pCoord = *theObj->getPosition();
-		ICoord3D iCoord;
-		iCoord.x = pCoord.x; iCoord.y = pCoord.y; iCoord.z = pCoord.z;
-		return pTrig->pointInTrigger(iCoord);
-	}
-	return false; // Non existent team isn't in trigger area. :)
-}  
-
-//-------------------------------------------------------------------------------------------------
 /** evaluatePlayerHasUnitTypeInArea */
 //-------------------------------------------------------------------------------------------------
 // ?evaluatePlayerHasUnitTypeInArea@ScriptConditions@@IAE_NPAVCondition@@PAVParameter@@1111@Z present-unmatched
