@@ -7,16 +7,22 @@
 
 class BfmeX1065;
 class BfmeH1065;
-class BfmeUnit1013
+// retail ILT 0x0004A1FB -> 0x004782E0 is the matched GameWindow::winEnable row
+class GameWindow
 {
 public:
-	void bfmeStop1013(int n);
+	int winEnable(bool enable);
 };
+
+class BfmeUnit1013 : public GameWindow
+{
+};
+
+#define bfmeStop1013(n) winEnable((n) != 0)
 
 class BfmeObjENK;
 void bfmeGoENK(BfmeObjENK *o, char v);
 
-class GameWindow;
 void Rva004B7A10SetScrollButtonsHidden(GameWindow *window, bool hide);
 
 // TU-local view of retail 0x012F19E8 (EA's WindowManager *).  The global is
@@ -24,22 +30,37 @@ void Rva004B7A10SetScrollButtonsHidden(GameWindow *window, bool hide);
 // this body calls and is cast at the use sites.
 class WindowManager;
 
-class GenActionSink
+// retail ILT 0x00015235 -> 0x004675F0 is the matched ?bfmeBuildAN@BfmeLevelAN row
+class BfmeLevelAN
 {
 public:
-	unsigned char *invokeAtLevel(int level, const char *name, int kind, const char *value,
-		int a, int b, int c, int d);
+	char *bfmeBuildAN(unsigned int a, int b, int c, int d, int e, int f, int g, int h);
 };
+
+class GenActionSink : public BfmeLevelAN
+{
+};
+
+#define invokeAtLevel(level, name, kind, value, a, b, c, d) bfmeBuildAN((unsigned int)(level), (int)(name), (kind), (int)(value), (a), (b), (c), (d))
+
+// retail ILT 0x00003EA4 -> 0x0056AB50 is the matched
+// Rva0056AB50Owner::getSelectedItemData row
+class Rva0056AB50Owner
+{
+public:
+	void *getSelectedItemData(void);
+};
+
+#define bfmeTestME() getSelectedItemData()
 
 extern WindowManager *g_rva012F19E8WindowManager;	// retail 0x012F19E8
 
 int bfmeAptLevel00465CE0(BfmeH1065 *self);
 
-class BfmeThingME
+class BfmeThingME : public Rva0056AB50Owner
 {
 public:
 	void apply(void);
-	int bfmeTestME(void);
 
 	char m_head[0x264];
 	BfmeUnit1013 *m_first;

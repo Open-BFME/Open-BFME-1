@@ -1,16 +1,28 @@
 // cl: /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME5 conversions.
 
-class BfmeB977;
+class AsciiString;
+class CommandButton;
+class GameWindow;
 
-class BfmeMgr977
+// retail ILT 0x0003B59D -> 0x004A0310 is the matched ControlBar::findCommandButton
+// row and ILT 0x0003BCCD -> 0x004C1B60 the matched ControlBar::rva004C1B60 row
+class ControlBar
 {
 public:
-	void *bfmeFind977B(BfmeB977 *b);
-	void bfmeDo977B(int a, void *x);
+	const CommandButton *findCommandButton(const AsciiString &name);
+	void rva004C1B60(GameWindow *window, void *data);
 };
 
-class ControlBar;
+class BfmeB977;
+
+class BfmeMgr977 : public ControlBar
+{
+};
+
+#define bfmeFind977B(b) findCommandButton(*(const AsciiString *)(b))
+#define bfmeDo977B(a, x) rva004C1B60((GameWindow *)(a), (void *)(x))
+
 extern ControlBar *TheControlBar;
 
 class BfmeCampaignSwitch977
@@ -54,7 +66,7 @@ void BfmeB977::bfmeGo977B(int unused)
 	BfmeRec977 *r = m_bfmeRec;
 
 	if (r && r->m_bfmeKind != 0) {
-		void *x = reinterpret_cast<BfmeMgr977 *>(TheControlBar)->bfmeFind977B(this);
+		void *x = (void *)reinterpret_cast<BfmeMgr977 *>(TheControlBar)->bfmeFind977B(this);
 
 		if (x)
 			reinterpret_cast<BfmeMgr977 *>(TheControlBar)->bfmeDo977B(0, x);
@@ -70,7 +82,7 @@ void __stdcall bfmeUpdateMaxPowerCommand(void *)
 		const char *name = ringCampaign
 			? "NonCommand_MaxRingPower" : "NonCommand_MaxEvenstarPower";
 		AsciiString label(name);
-		command = reinterpret_cast<BfmeMgr977 *>(TheControlBar)->bfmeFind977B((BfmeB977 *)&label);
+		command = (void *)reinterpret_cast<BfmeMgr977 *>(TheControlBar)->bfmeFind977B((BfmeB977 *)&label);
 	}
 
 	if (command)
@@ -135,7 +147,9 @@ public:
 class GameWindowManager;
 extern GameWindowManager *TheWindowManager;
 
-char bfmeFallback977C();
+// retail 0x00892210 is the matched bfmeIsSet row
+int bfmeIsSet();
+#define bfmeFallback977C() (char)bfmeIsSet()
 
 class BfmeC977
 {

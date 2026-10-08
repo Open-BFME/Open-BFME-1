@@ -3,11 +3,11 @@ extern "C" __declspec(dllimport) int __cdecl atoi(char *text);
 extern "C" void __cdecl peerSetQuietMode(void *peer, int quiet);
 extern "C" void __cdecl peerStopListingGames(void *peer);
 
-class BfmeMsgEAV
+class PeerResponse
 {
 public:
-	BfmeMsgEAV();
-	~BfmeMsgEAV();
+	PeerResponse();
+	~PeerResponse();
 
 	int m_bfmeKindEAV;
 	unsigned char m_bfmeHeadEAV[0xf0];
@@ -26,7 +26,7 @@ public:
 	virtual void bfmeSlot05EAV();
 	virtual void bfmeSlot06EAV();
 	virtual void bfmeSlot07EAV();
-	virtual void bfmePostEAV(BfmeMsgEAV *msg);
+	virtual void bfmePostEAV(PeerResponse *msg);
 };
 
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
@@ -35,7 +35,7 @@ void __cdecl bfmeQuitEAV(void *peer, int unused, char *text)
 {
 	int value = atoi(text);
 
-	BfmeMsgEAV msg;
+	PeerResponse msg;
 
 	msg.m_bfmeKindEAV = 0x12;
 	msg.m_bfmeValueEAV = value;

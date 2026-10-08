@@ -2,20 +2,27 @@
 
 class BfmeX1085;
 
-class BfmeR1085
+// retail ILT 0x0002144A -> 0x00467460 and ILT 0x00012733 -> 0x00465C50 are
+// the matched WindowManager::hideAptWindow and showAptWindow rows
+class WindowManager
 {
 public:
-	void bfmeOpen1085(BfmeX1085 *a);
-	void bfmeShut1085(BfmeX1085 *a);
+	bool hideAptWindow(int window);
+	bool showAptWindow(int window);
 };
+
+class BfmeR1085 : public WindowManager
+{
+};
+
+#define bfmeOpen1085(a) hideAptWindow((int)(a))
+#define bfmeShut1085(a) showAptWindow((int)(a))
 
 // Retail 0x012F19E8 is the game-wide manager pointer EA defines as
 // `WindowManager *g_rva012F19E8WindowManager` in
 // game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU only needs
 // the open/shut calls through it, so the pointee stays the local BfmeR1085 view
 // and the access is cast at the use.
-class WindowManager;
-
 extern WindowManager *g_rva012F19E8WindowManager;
 // The global at 0x012B7D80 is EA's `int g_aptPalantirWindow` (defined once in
 // game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptPalantir.cpp). This
@@ -41,11 +48,20 @@ void bfmeGo1085A(void)
 	}
 }
 
-class BfmeSub1085
+enum CommandSourceType {};
+
+// retail ILT 0x00024D70 -> 0x000D87E0 is the matched AICommandInterface::aiIdle
+class AICommandInterface
 {
 public:
-	void bfmeSet1085(int a);
+	void aiIdle(CommandSourceType cmdSource);
 };
+
+class BfmeSub1085 : public AICommandInterface
+{
+};
+
+#define bfmeSet1085(a) aiIdle((CommandSourceType)(a))
 
 struct BfmeF1085
 {
@@ -90,13 +106,22 @@ public:
 	virtual void bfmeSlot1085_24(void);
 	virtual void bfmeSlot1085_25(void);
 	virtual BfmeE1085 * bfmeSlot1085_26(int a);
-	void bfmeUse1085(BfmeE1085 *a, int b);
 };
 
 // retail 0x012F076C: EA's ScriptEngine *TheScriptEngine, defined once in
 // game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp. BfmeP1085 is
 // this TU's local view of the pointee; cast at the use.
-class ScriptEngine;
+class Object;
+
+// retail ILT 0x00044A1C -> 0x00339980 is the matched ScriptEngine::setSequentialTimer
+class ScriptEngine
+{
+public:
+	void setSequentialTimer(Object *obj, int frameCount);
+};
+
+#define bfmeUse1085(a, b) setSequentialTimer((Object *)(a), (b))
+
 extern ScriptEngine *TheScriptEngine;
 
 void __stdcall bfmeGo1085B(int a, int b, char c)
@@ -109,7 +134,7 @@ void __stdcall bfmeGo1085B(int a, int b, char c)
 		return;
 	e->m_bfme204->m_bfme20.bfmeSet1085(1);
 	if (c)
-		((BfmeP1085 *)TheScriptEngine)->bfmeUse1085(e, b * 5);
+		TheScriptEngine->bfmeUse1085(e, b * 5);
 	else
-		((BfmeP1085 *)TheScriptEngine)->bfmeUse1085(e, b);
+		TheScriptEngine->bfmeUse1085(e, b);
 }

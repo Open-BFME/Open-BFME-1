@@ -2,11 +2,18 @@
 
 class BfmeX1079;
 
-class BfmeR1079
+// retail ILT 0x00015235 -> 0x004675F0 is the matched ?bfmeBuildAN@BfmeLevelAN row
+class BfmeLevelAN
 {
 public:
-	void bfmeRun1079(BfmeX1079 *a, char *b, int c, char *d, char *e, char *f, char *g, char *h);
+	char *bfmeBuildAN(unsigned int a, int b, int c, int d, int e, int f, int g, int h);
 };
+
+class BfmeR1079 : public BfmeLevelAN
+{
+};
+
+#define bfmeRun1079(a, b, c, d, e, f, g, h) bfmeBuildAN((unsigned int)(a), (int)(b), (c), (int)(d), (int)(e), (int)(f), (int)(g), (int)(h))
 
 // Retail's WindowManager global at 0x012F19E8, under the one linked-build
 // spelling.  BfmeR1079 above is this TU's view of the same object, so every
@@ -20,17 +27,30 @@ static inline BfmeR1079 *bfmeR1079View(void)
 }
 
 
-class BfmeM1079
+// retail ILT 0x000279CB -> 0x0061E580 GameSlot::isHuman and ILT 0x0001EC18 ->
+// 0x0061E8B0 GameInfo::getSlot are matched rows
+class GameSlot
 {
 public:
-	char bfmeChk1079(void);
+	bool isHuman(void) const;
 };
 
-class BfmeL1079
+class GameInfo
 {
 public:
-	BfmeM1079 *bfmeAt1079(int i);
+	GameSlot *getSlot(int index);
 };
+
+class BfmeM1079 : public GameSlot
+{
+};
+
+class BfmeL1079 : public GameInfo
+{
+};
+
+#define bfmeChk1079() isHuman()
+#define bfmeAt1079(i) getSlot(i)
 
 class BfmeP1079
 {
