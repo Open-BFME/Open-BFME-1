@@ -1,4 +1,6 @@
-extern "C" unsigned char bfmeInfoDFI[];
+// Retail .rdata VA 0x0112B554 holds "PID" NUL (between UID at 0x0112B550 and
+// UGID at 0x0112B558): the lookup key bfmeGoRF receives.
+extern "C" unsigned char bfmeInfoDFI[] = "PID";
 
 class BfmeOtherDFI
 {
