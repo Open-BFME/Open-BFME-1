@@ -230,7 +230,6 @@ class WeaponCreateCarrier { };
 class GettingBuiltCarrier { };
 
 extern WeaponStore *TheWeaponStore;
-extern Real g_bfmeScaleBC;
 extern const Real g_rva01075350;
 extern Real g_012ADC90;
 extern "C" Real __identifier("?g_012ADC90@@3MA") = 75.0f;
@@ -309,7 +308,7 @@ UpdateSleepTime GettingBuiltBehavior::update()
 		{
 			Real health = body->getHealth() / (Real)m_field2c;
 			object->applyHealth(health, object, 2);
-			object->m_field220 = body->getInitialHealth() * g_bfmeScaleBC;
+			object->m_field220 = body->getInitialHealth() * 100.0f;
 			if (!m_field35)
 				body->clearRecentObjectState();
 		}
