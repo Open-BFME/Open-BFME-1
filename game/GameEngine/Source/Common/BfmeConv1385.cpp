@@ -9,12 +9,25 @@ public:
 	void m();
 };
 
-class BfmeMsgVJH
+// Matched callee rows (callees.py, direct calls): BfmeC994 ctor 0x007E8850 and addString 0x007E8A10,
+// BfmeThingCIB::bfmeGoCIB 0x007E88D0, Rva008038F0Sender::send 0x008038F0.
+class BfmeThingCIB
 {
 public:
-	BfmeMsgVJH(char *buf, int n) throw();
-	void bfmeSetVJH(const char *k, const char *v) throw();
-	void bfmeSet3VJH(const char *k, int v) throw();
+	void bfmeGoCIB(void *k, void *v) throw();
+};
+
+class Rva008038F0Sender
+{
+public:
+	void send(class BfmeC994 *m) throw();
+};
+
+class BfmeC994
+{
+public:
+	BfmeC994(char *buf, int n) throw();
+	void addString(const char *k, const char *v) throw();
 	char m_bfmePad[0x1c];
 	int m_bfme1c;
 	char m_bfmePad2[0x14];
@@ -24,17 +37,16 @@ class BfmeThingVJH
 {
 public:
 	void bfmeGoVJH(int a);
-	void bfmeSendVJH(BfmeMsgVJH *m) throw();
 };
 
 void BfmeThingVJH::bfmeGoVJH(int a)
 {
 	char buf[0x40];
-	BfmeMsgVJH msg(buf, 0x40);
+	BfmeC994 msg(buf, 0x40);
 	msg.m_bfme1c = 0x4c444154;
-	msg.bfmeSet3VJH("TID", a);
-	msg.bfmeSet3VJH("LID", -2);
-	msg.bfmeSetVJH("NAME", "LAN");
-	bfmeSendVJH(&msg);
+	((BfmeThingCIB *)&msg)->bfmeGoCIB("TID", (void *)a);
+	((BfmeThingCIB *)&msg)->bfmeGoCIB("LID", (void *)-2);
+	msg.addString("NAME", "LAN");
+	((Rva008038F0Sender *)this)->send(&msg);
 	((Gen_007e86c0 *)&msg)->m();
 }
