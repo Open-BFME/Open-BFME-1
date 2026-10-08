@@ -6572,10 +6572,8 @@ void AIUpdateInterface::privateCommandButtonObject( const CommandButton *command
 }
 
 // ------------------------------------------------------------------------------------------------
-AIGroup *AIUpdateInterface::getGroup(void)
-{
-	return getObject()->getGroup();
-}
+// AIUpdateInterface::getGroup is defined at its retail address (0x0026FB30) in
+// AIUpdateInterfaceGetGroup.cpp.
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
