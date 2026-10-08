@@ -23,8 +23,12 @@ struct S4Cmp00532740
 {
 	int m_bfmeSlot;
 
-	bool operator()(const S4SortElem12_00532740 &left,
-		const S4SortElem12_00532740 &right) const
+	// Retail 0x0052FB30 inlines this comparator but calls compareNoCase
+	// through ILT 0x27471, while the other S4Cmp00532740 layers inline
+	// compareNoCase too. A member template keeps this TU's inline copy out of
+	// the shared ??RS4Cmp00532740 COMDAT those layers emit.
+	template <class Elem>
+	bool operator()(const Elem &left, const Elem &right) const
 	{
 		if (((!left.m_bfmeA) ^ (!right.m_bfmeA)) != 0)
 			return left.m_bfmeA;
