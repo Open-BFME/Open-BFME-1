@@ -240,10 +240,14 @@ fi
 # targets/game/reverse/attempts/ is named for the same reason: a banked near-miss body is
 # evidence for the next agent, never a compiled source, so it must sit outside
 # game/ where verify_source_claims would demand matched rows for it.
+#
+# inputs/vendor/ holds third-party release trees (STLport, d3dx9, nbench, ...),
+# each named by its PROVENANCE.md. Moving to a newer upstream release adds that
+# release's new headers there, and they have no other home.
 capture added_out "listing added files" git diff --cached --name-only --diff-filter=A
 while IFS= read -r path; do
     case "$path" in
-        worldbuilder/*|targets/worldbuilder/reverse/attempts/*|game/GameEngine/*|game/GameEngineDevice/*|game/Libraries/*|game/gen_small/*|game/gen_asm/*|game/masm_dumps/*|inputs/reference/shims/*|inputs/reference/CnC_Generals_Zero_Hour/*|tools/tests/*|inputs/toolchains/*|mods/*|targets/game/reverse/attempts/*) ;;
+        worldbuilder/*|targets/worldbuilder/reverse/attempts/*|game/GameEngine/*|game/GameEngineDevice/*|game/Libraries/*|game/gen_small/*|game/gen_asm/*|game/masm_dumps/*|inputs/reference/shims/*|inputs/reference/CnC_Generals_Zero_Hour/*|tools/tests/*|inputs/toolchains/*|inputs/vendor/*|mods/*|targets/game/reverse/attempts/*) ;;
         *) fail "source added outside official tree: $path — see AGENTS.md 'File placement'" ;;
     esac
 done < <(grep -E '\.(cpp|c|h|hpp|asm)$' "$added_out" || true)
