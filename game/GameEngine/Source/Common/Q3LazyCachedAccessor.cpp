@@ -26,14 +26,15 @@
 // dword at offset 0 of the receiver -- never read here -- is a vftable, a
 // pointer, or anything else.
 
-#define BFME_LAZY_CACHED_ACCESSOR( NAME, HELPER, OFFSET )                     \
+#define BFME_LAZY_CACHED_ACCESSOR( NAME, HELPER, OBJECT, OFFSET )             \
 	struct NAME##Cached { int m_opaque; };                                    \
 	struct NAME##Owner                                                        \
 	{                                                                         \
 		char m_lead[ OFFSET ];                                                \
 		NAME##Cached *m_slot;                                                 \
 	};                                                                        \
-	NAME##Cached *HELPER( NAME##Owner *owner );                               \
+	class OBJECT;                                                             \
+	OBJECT *HELPER( void *owner );                                            \
 	struct NAME                                                               \
 	{                                                                         \
 		void *m_head;                                                         \
@@ -43,15 +44,15 @@
 	NAME##Cached *NAME::get()                                                 \
 	{                                                                         \
 		if ( m_owner->m_slot == 0 )                                           \
-			m_owner->m_slot = HELPER( m_owner );                              \
+			m_owner->m_slot = (NAME##Cached *)HELPER( m_owner );               \
 		return m_owner->m_slot;                                               \
 	}
 
-BFME_LAZY_CACHED_ACCESSOR( Rva007E9CE0, Gen007F1C20, 0x24C )
-BFME_LAZY_CACHED_ACCESSOR( Rva007E9D70, Gen007E9B40, 0x234 )
-BFME_LAZY_CACHED_ACCESSOR( Rva007E9DB0, Gen007F2150, 0x248 )
-BFME_LAZY_CACHED_ACCESSOR( Rva007E9DF0, Gen007F2E60, 0x238 )
-BFME_LAZY_CACHED_ACCESSOR( Rva007E9E30, Gen007F3410, 0x23C )
-BFME_LAZY_CACHED_ACCESSOR( Rva007E9E70, Gen007F40F0, 0x240 )
-BFME_LAZY_CACHED_ACCESSOR( Rva007E9EF0, Gen007F86A0, 0x2A4 )
-BFME_LAZY_CACHED_ACCESSOR( Rva007E9F30, Gen007F89D0, 0x2A8 )
+BFME_LAZY_CACHED_ACCESSOR( Rva007E9CE0, Rva007F1C20, Rva007F1C20Object, 0x24C )
+BFME_LAZY_CACHED_ACCESSOR( Rva007E9D70, Rva007E9B40, Rva007E9B40Object, 0x234 )
+BFME_LAZY_CACHED_ACCESSOR( Rva007E9DB0, Rva007F2150, Rva007F2150Object, 0x248 )
+BFME_LAZY_CACHED_ACCESSOR( Rva007E9DF0, Rva007F2E60, Rva007F2E60Object, 0x238 )
+BFME_LAZY_CACHED_ACCESSOR( Rva007E9E30, Rva007F3410, Rva007F3410Object, 0x23C )
+BFME_LAZY_CACHED_ACCESSOR( Rva007E9E70, Rva007F40F0, Rva007F40F0Object, 0x240 )
+BFME_LAZY_CACHED_ACCESSOR( Rva007E9EF0, bfmeGoDGD, BfmeThingDGD, 0x2A4 )
+BFME_LAZY_CACHED_ACCESSOR( Rva007E9F30, bfmeGoDGF, BfmeThingDGF, 0x2A8 )

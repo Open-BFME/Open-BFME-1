@@ -12179,16 +12179,8 @@ name,address,notes
 ?Gen00754430@@YAXPAUQ3SortElem4@@0UQ3SortCompare@@@Z,0x00754430,address-derived introsort-layer callee; target read from the REL32 at its call site and followed through its ILT thunk
 ?Gen00754740@@YAXPAUQ3SortElem4@@0UQ3SortCompare@@@Z,0x00754740,address-derived introsort-layer callee; target read from the REL32 at its call site and followed through its ILT thunk
 ?Gen00755050@@YAXPAUQ3SortElem4@@00HUQ3SortCompare@@@Z,0x00755050,address-derived introsort-layer callee; target read from the REL32 at its call site and followed through its ILT thunk
-?Gen007E9B40@@YAPAURva007E9D70Cached@@PAURva007E9D70Owner@@@Z,0x007E9B40,address-derived fill helper of the lazy cached-accessor family; target read from the REL32 at its call site
 ?Gen007EFFC0@@YAPAVGenAlloc@@XZ,0x007EFFC0,S3 polymorphic-array-clear family allocator getter (address-derived name)
 ?Gen007F0130@@YAPAXI@Z,0x007F0130,address-derived class-specific operator new shared by the eight allocate-and-construct helpers; read from the REL32 at their call sites
-?Gen007F1C20@@YAPAURva007E9CE0Cached@@PAURva007E9CE0Owner@@@Z,0x007F1C20,address-derived fill helper of the lazy cached-accessor family; target read from the REL32 at its call site
-?Gen007F2150@@YAPAURva007E9DB0Cached@@PAURva007E9DB0Owner@@@Z,0x007F2150,address-derived fill helper of the lazy cached-accessor family; target read from the REL32 at its call site
-?Gen007F2E60@@YAPAURva007E9DF0Cached@@PAURva007E9DF0Owner@@@Z,0x007F2E60,address-derived fill helper of the lazy cached-accessor family; target read from the REL32 at its call site
-?Gen007F3410@@YAPAURva007E9E30Cached@@PAURva007E9E30Owner@@@Z,0x007F3410,address-derived fill helper of the lazy cached-accessor family; target read from the REL32 at its call site
-?Gen007F40F0@@YAPAURva007E9E70Cached@@PAURva007E9E70Owner@@@Z,0x007F40F0,address-derived fill helper of the lazy cached-accessor family; target read from the REL32 at its call site
-?Gen007F86A0@@YAPAURva007E9EF0Cached@@PAURva007E9EF0Owner@@@Z,0x007F86A0,address-derived fill helper of the lazy cached-accessor family; target read from the REL32 at its call site
-?Gen007F89D0@@YAPAURva007E9F30Cached@@PAURva007E9F30Owner@@@Z,0x007F89D0,address-derived fill helper of the lazy cached-accessor family; target read from the REL32 at its call site
 ?Gen0082E5F0@@YAXPAXI@Z,0x0082E5F0,address-derived small-block deallocator of the vector-teardown family; already held in the ledger as the STLport node allocator _M_deallocate
 ?Gen00897300@@YAXPAX@Z,0x00897300,__cdecl list-link helper writing the returned block's [-8]/[-4] words and updating a global head; address-derived name
 ?Gen00897330@@YAXPAD@Z,0x00897330,single-argument __cdecl helper called first by every row of the 34-byte indirect pair-dispatch family (Q2IndirectPairDispatch.cpp); target read from the call site REL32; address-derived name; identity not recovered
