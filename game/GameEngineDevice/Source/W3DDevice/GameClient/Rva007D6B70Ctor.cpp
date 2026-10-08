@@ -1,6 +1,24 @@
 // cl: /O2 /Ob0
 
-extern void *g_01128B24[];
+// Retail dispatch array; the following zero separator is outside its extent.
+extern void *g_01128B24[7];
+void j_000415a6();
+void j_000054de();
+void j_0001b388();
+void j_0003f4ae();
+void j_00030d7d();
+void j_0000e971();
+void j_0001ea74();
+extern "C" void *__identifier("?g_01128B24@@3PAPAXA")[7] =
+{
+    (void *)j_000415a6,
+    (void *)j_000054de,
+    (void *)j_0001b388,
+    (void *)j_0003f4ae,
+    (void *)j_00030d7d,
+    (void *)j_0000e971,
+    (void *)j_0001ea74
+};
 
 class Rva007D6B70
 {

@@ -48,9 +48,14 @@ protected:
     UserParser *m_parser;
 };
 
-// Derived vtable 0x01121B08: no symbol in dir32_addresses.csv names it, so it
-// stays address-derived.
-extern void *g_01121B08[];
+// Retail dispatch array; the following zero separator is outside its extent.
+extern void *g_01121B08[2];
+void j_00004ce1();
+void j_0003ce70();
+extern "C" void *__identifier("?g_01121B08@@3PAPAXA")[2] =
+{
+    (void *)j_00004ce1, (void *)j_0003ce70
+};
 
 class Rva0074A4A0ParserRegistration : public BfmeParserRegistrationVE
 {
