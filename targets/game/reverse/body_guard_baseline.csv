@@ -1024,7 +1024,6 @@ dir32,0x012F1290,?Threshold0040E9E0@@3_JA,"nothing in the ledger owns 0x012F1290
 dir32,0x012F1290,?g_012F1290@@3_JC,"nothing in the ledger owns 0x012F1290. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F1298,?Elapsed0040E9E0@@3_JA,"nothing in the ledger owns 0x012F1298. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F12A0,?Sum0040E9E0@@3NA,"nothing in the ledger owns 0x012F12A0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x012F12B0,?Count0040E9E0@@3HA,"nothing in the ledger owns 0x012F12B0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F13AC,?g_012F13AC@@3IA,"nothing in the ledger owns 0x012F13AC. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F13B0,?g_012F13B0@@3IA,"nothing in the ledger owns 0x012F13B0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F13B4,?g_012F13B4@@3IA,"nothing in the ledger owns 0x012F13B4. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"

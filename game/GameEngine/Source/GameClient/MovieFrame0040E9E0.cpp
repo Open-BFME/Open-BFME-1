@@ -55,6 +55,7 @@ extern bool Trace0040E9E0;
 extern double Sum0040E9E0;
 extern double Interval0040F780;
 extern int Count0040E9E0;
+extern "C" int __identifier("?Count0040E9E0@@3HA") = 0;
 struct MovieOpen0040E3B0 {
  virtual void v00();
  virtual void v04();
