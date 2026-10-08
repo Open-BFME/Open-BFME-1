@@ -121,7 +121,7 @@ class Rva00367E30Logic : public GameLogic
 
 extern GameLogic *TheGameLogic;
 
-extern int g_012F8054;
+int g_012F8054;
 extern unsigned char g_012F81A9;
 
 class W3DDisplay
