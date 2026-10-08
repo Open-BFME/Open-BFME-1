@@ -26,7 +26,8 @@ class AICommandInterface
 public:
 	void aiIdle(CommandSourceType cmdSource);
 	void aiFaceObject(Object *target, CommandSourceType cmdSource);
-	void aiFacePosition(const Coord3D *pos, int cmdSource);
+	// Retail calls ILT 0x00040732 -> 0x00266A30, the matched aiBfmeCommand39.
+	void aiBfmeCommand39(const Coord3D *pos, CommandSourceType cmdSource);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
@@ -97,6 +98,6 @@ void SpecialAbilityUpdate::startFacing()
 	}
 	else if (m_targetPos.x || m_targetPos.y || m_targetPos.z)
 	{
-		commands->aiFacePosition(&m_targetPos, CMD_FROM_AI);
+		commands->aiBfmeCommand39(&m_targetPos, CMD_FROM_AI);
 	}
 }
