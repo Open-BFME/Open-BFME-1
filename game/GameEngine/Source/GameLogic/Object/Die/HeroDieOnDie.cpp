@@ -26,13 +26,19 @@ public:
 	BfmeObj926C *bfmeFind926C();
 };
 
-extern char g_bfme926Obj[];
 
 struct BfmeA926E
 {
 	char m_bfmePad[0x34];
 	void *m_bfmeVal;
 };
+
+// The controlling-player lookup is ILT 0x00020824 -> 0x001BE3F0
+// (Object::getControllingPlayer), and the pushed callback 0x002555A0 is the
+// ?rva002555a0FrameDispatch@@YAHPBVObject@@PBVSpecialPowerTemplate@@@Z row.
+class SpecialPowerTemplate;
+int rva002555a0FrameDispatch(const Object *object, const SpecialPowerTemplate *power);
+#define g_bfme926Obj rva002555a0FrameDispatch
 
 class HeroDie
 {
@@ -44,7 +50,7 @@ void HeroDie::onDie(const DamageInfo *)
 {
 	BfmeA926E *s = *(BfmeA926E **)((char *)this - 0xc);
 	BfmeKey926C *k = *(BfmeKey926C **)((char *)this - 8);
-	BfmeObj926C *o = k->bfmeFind926C();
+	BfmeObj926C *o = (BfmeObj926C *)((const Object *)k)->getControllingPlayer();
 	// retail calls 0x0002F1CB, Player::iterateObjects (const, five-byte void
 	// thunk over the matched int body at 0x000CDCF0).
 	((const Player *)o)->iterateObjects((ObjectIterateFunc)(void *)g_bfme926Obj,
