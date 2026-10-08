@@ -24,10 +24,22 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
-class BFMERetailAsciiString
+template <typename T>
+class StringBase
+{
+	friend class BFMERetailAsciiString;
+
+private:
+	void releaseBuffer();
+
+	void *m_data;
+};
+
+// Retail calls StringBase<char>::releaseBuffer 0x00887940 directly.
+class BFMERetailAsciiString : private StringBase<char>
 {
 public:
-	void releaseBuffer();
+	using StringBase<char>::releaseBuffer;
 };
 
 void ProductionPrerequisite::resolveNames()

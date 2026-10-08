@@ -18,13 +18,22 @@ extern "C" void _ReadWriteBarrier(void);
 class Gen_003C0EF0 { public: void bfmeClear(); };
 class Gen_003C0F70 { public: void bfmeClear(); };
 
-class BFMERetailAsciiString
+template <typename T>
+class StringBase
 {
-public:
-	void releaseBuffer();
+	friend class BFMERetailAsciiString;
 
 private:
+	void releaseBuffer();
+
 	void *m_data;
+};
+
+// Retail calls StringBase<char>::releaseBuffer 0x00887940 directly.
+class BFMERetailAsciiString : private StringBase<char>
+{
+public:
+	using StringBase<char>::releaseBuffer;
 };
 
 template <typename T>

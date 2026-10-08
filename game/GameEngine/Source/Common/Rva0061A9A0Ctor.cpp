@@ -60,10 +60,7 @@ public:
 		releaseBuffer();
 	}
 
-	void releaseBuffer( void )
-	{
-		StringBase<char>::releaseBuffer();
-	}
+	using StringBase<char>::releaseBuffer;
 
 };
 
