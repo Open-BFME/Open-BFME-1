@@ -1,6 +1,6 @@
-extern "C" __declspec(dllimport) void bfmeCIpowImport();
+extern "C" __declspec(dllimport) void _CIpow();
 
 extern "C" void __CIpow()
 {
-	bfmeCIpowImport();
+	_CIpow();
 }
