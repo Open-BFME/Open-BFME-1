@@ -37,7 +37,7 @@ public:
 // class's static field-parse builder.  The old
 // `extern "C" ElvenWoodSpecialPowerFieldParse` was invented in this TU and nothing
 // defines it; the thunk is retail's real spelling of this operand.
-void j_00039176();
+extern "C" void __cdecl __identifier("ElvenWoodSpecialPowerFieldParse")();
 
 class ElvenWoodSpecialPower
 {
@@ -51,6 +51,6 @@ ModuleData *ElvenWoodSpecialPower::friend_newModuleData(INI *ini)
 	ElvenWoodSpecialPowerModuleData *data = new ElvenWoodSpecialPowerModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_00039176));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(__identifier("ElvenWoodSpecialPowerFieldParse")));
 	return (ModuleData *)data;
 }

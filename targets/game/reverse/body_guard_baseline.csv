@@ -106,7 +106,6 @@ dir32,0x004376AA,??1Message0043DBA0@@QAE@XZ,"nothing in the ledger owns 0x004376
 dir32,0x004376D7,??0RadarEvent@@QAE@XZ,"nothing in the ledger owns 0x004376D7. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00438BBD,??1Map0044B780@@QAE@XZ,"nothing in the ledger owns 0x00438BBD. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00438DE3,?ableToAdvance@AIDockMachine@@SA_NPAVState@@PAX@Z,"nothing in the ledger owns 0x00438DE3. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x00439176,?j_00039176@@YAXXZ,"retail 0x00439176 is already recorded as _ElvenWoodSpecialPowerFieldParse; reference that name, not a new one"
 dir32,0x004392AC,??1?$vector@PAVUpdateModule@@V?$allocator@PAVUpdateModule@@@_STL@@@_STL@@QAE@XZ,"retail 0x004392AC is already recorded as ??1Rva00387FB0IntVector@@QAE@XZ; reference that name, not a new one"
 dir32,0x00439C2A,??0Rva001976F0@@QAE@XZ,the name encodes 0x001976F0 but retail reads 0x00439C2A
 dir32,0x0043A44A,?j_0003a44a@@YAXXZ,"retail 0x0043A44A is already recorded as ?rva0043a44a@BfmeAptScreenOnlineChat@@QAEXXZ; reference that name, not a new one"
