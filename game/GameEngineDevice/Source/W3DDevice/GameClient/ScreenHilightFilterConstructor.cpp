@@ -1,9 +1,27 @@
 // cl: /O2 /Ob0
 
-// Retail 0x01128B88: the highlight filter's vtable, installed by every retail
-// constructor of this class. Not recorded in dir32_addresses.csv, so it keeps
-// an address-derived name.
-extern void *g_01128B88[];
+// Retail 0x01128B88: the highlight filter's seven-cell dispatch table.
+// The retail constructor installs this physical table as its vptr.
+extern void *g_01128B88[7];
+
+void j_0004831a();
+void j_0002960e();
+void j_0000e24b();
+void j_00028498();
+void j_000171bb();
+void j_00018f20();
+void j_0001aeba();
+
+extern "C" void *__identifier("?g_01128B88@@3PAPAXA")[7] =
+{
+	(void *)&j_0004831a,
+	(void *)&j_0002960e,
+	(void *)&j_0000e24b,
+	(void *)&j_00028498,
+	(void *)&j_000171bb,
+	(void *)&j_00018f20,
+	(void *)&j_0001aeba,
+};
 
 class ScreenHilightFilter
 {

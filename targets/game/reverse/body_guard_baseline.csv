@@ -747,7 +747,6 @@ dir32,0x01126DA0,??_7Rva0078CFB0SentenceHolder@@6B@,"retail 0x01126DA0 is alread
 dir32,0x01127A34,??_7AptPalantir@@6BSnapshot@@@,"retail 0x01127A34 is already recorded as ??_7Rva0079D1D0AptPalantir@@6BSnapshot@@@; reference that name, not a new one"
 dir32,0x01127A48,??_7AptPalantir@@6BSubsystemInterface@@@,"retail 0x01127A48 is already recorded as ??_7Rva0079D1D0AptPalantir@@6BSubsystemInterface@@@; reference that name, not a new one"
 dir32,0x011283AC,??_7ProjectedShadowManager@@6B@,"retail 0x011283AC is already recorded as ??_7Rva007AE380Deleting@@6B@ (+1 more); reference that name, not a new one"
-dir32,0x01128B88,?g_01128B88@@3PAPAXA,"nothing in the ledger owns 0x01128B88. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01128C0C,?g_01128C0C@@3PAPBXA,"nothing in the ledger owns 0x01128C0C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01128C5C,?g_01128C5C@@3PAPBXA,"nothing in the ledger owns 0x01128C5C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x011296B0,??_7Rva008038F0Tail@@6B@,"retail 0x011296B0 is already recorded as ??_7Energy@@6B@ (+8 more); reference that name, not a new one"
