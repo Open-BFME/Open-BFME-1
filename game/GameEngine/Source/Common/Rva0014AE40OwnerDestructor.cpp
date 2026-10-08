@@ -23,6 +23,8 @@ private:
 	};
 
 	Header *m_data;
+	friend class AsciiString;
+	void releaseBuffer();
 };
 
 class AsciiString
@@ -35,7 +37,7 @@ public:
 		((StringBase<char> *)this)->StringBase<char>::StringBase(
 			*(const StringBase<char> *)&other);
 	}
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 };
 
 class Bfme0014AE40String : private AsciiString

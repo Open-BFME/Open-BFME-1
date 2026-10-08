@@ -53,6 +53,7 @@ private:
 	StringBase(const char *s);
 	StringBase(const StringBase &that);
 	friend class AsciiString;
+	void releaseBuffer();
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
@@ -74,7 +75,7 @@ public:
 		((StringBase<char> *)this)->StringBase<char>::StringBase(*(const StringBase<char> *)&that);
 	}
 
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 	static AsciiString TheEmptyString;
 
