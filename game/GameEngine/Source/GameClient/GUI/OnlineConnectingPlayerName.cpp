@@ -12,7 +12,9 @@ private:
 	StringBase() : m_data( 0 ) {}
 	StringBase( const T *text );
 	StringBase( const StringBase<T> &other );
-	~StringBase();
+	// Retail inlines the dtor: temporaries call releaseBuffer (0x00887940) directly.
+	~StringBase() { releaseBuffer(); }
+	void releaseBuffer();
 
 	void *m_data;
 };
