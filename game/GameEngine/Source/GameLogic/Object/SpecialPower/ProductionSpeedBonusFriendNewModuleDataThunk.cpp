@@ -37,7 +37,7 @@ public:
 // class's static field-parse builder.  The old
 // `extern "C" ProductionSpeedBonusFieldParse` was invented in this TU and nothing
 // defines it; the thunk is retail's real spelling of this operand.
-void j_0002d713();
+extern "C" void __cdecl __identifier("ProductionSpeedBonusFieldParse")();
 
 class ProductionSpeedBonus
 {
@@ -51,6 +51,6 @@ ModuleData *ProductionSpeedBonus::friend_newModuleData(INI *ini)
 	ProductionSpeedBonusModuleData *data = new ProductionSpeedBonusModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0002d713));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(__identifier("ProductionSpeedBonusFieldParse")));
 	return (ModuleData *)data;
 }
