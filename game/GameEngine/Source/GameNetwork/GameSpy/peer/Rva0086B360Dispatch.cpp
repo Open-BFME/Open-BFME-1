@@ -148,8 +148,6 @@ extern "C" static __declspec(noinline) void piProcessUTM(PEER peer, piPlayer *pl
 }
 
 
-extern char *(__cdecl *g_bfmeStrStrVMZ)(const char *text, const char *find);
-
 static void Rva0086B2F0(char *text, piPlayer *player)
 {
 	int length = (int)strlen(text);
@@ -157,7 +155,7 @@ static void Rva0086B2F0(char *text, piPlayer *player)
 		return;
 	if (!player->inRoom[2])
 		return;
-	char *flags = g_bfmeStrStrVMZ(text, "\\$flags$\\");
+	char *flags = strstr(text, "\\$flags$\\");
 	if (!flags)
 		return;
 	flags += 9;
