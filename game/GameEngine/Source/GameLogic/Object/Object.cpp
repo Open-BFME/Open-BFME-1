@@ -1284,12 +1284,8 @@ const Weapon* Object::getCurrentWeapon(WeaponSlotType* wslot) const
 	return self->m_weapons[self->m_curWeapon];
 }
 
-//=============================================================================
-// ?findWaypointFollowingCapableWeapon@Object@@QAEPAVWeapon@@XZ present-unmatched
-Weapon* Object::findWaypointFollowingCapableWeapon()
-{
-	return m_weaponSet.findWaypointFollowingCapableWeapon();
-}
+// Object::findWaypointFollowingCapableWeapon (retail 0x001BE2B0) lives in
+// ObjectFindWaypointFollowingCapableWeapon.cpp.
 
 // BFME reads the clip size from the weapon template at +0x4ac and asks for the
 // remaining ammo out of line, with an argument the reference class does not
