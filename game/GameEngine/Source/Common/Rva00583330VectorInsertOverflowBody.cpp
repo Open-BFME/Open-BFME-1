@@ -50,11 +50,18 @@ struct __false_type
 {
 };
 
-// The tail move is the one phase retail leaves out of line; it reaches the
-// __uninitialized_copy body at 0x00581C50 through the ILT at 0x00015019.
-Rva00583330Element *__cdecl BfmeRva00583330TailCopy(
-	Rva00583330Element *first, Rva00583330Element *last, Rva00583330Element *result,
-	const __false_type &);
+// The tail move is the one phase retail leaves out of line: STLport's
+// __uninitialized_copy over this element, body 0x00581C50 (48 bytes),
+// reached through the ILT at 0x00015019.
+template <class InputIter, class ForwardIter>
+ForwardIter __uninitialized_copy(InputIter first, InputIter last,
+	ForwardIter result, const __false_type &)
+{
+	ForwardIter cur = result;
+	for (; first != last; ++first, ++cur)
+		new (cur) Rva00583330Element(*first);
+	return cur;
+}
 
 template <class Type>
 class allocator {};
@@ -134,7 +141,7 @@ void vector<Type, Allocator>::_M_insert_overflow(
 	}
 
 	if (!atEnd)
-		newFinish = BfmeRva00583330TailCopy(position, _M_finish, newFinish,
+		newFinish = __uninitialized_copy(position, _M_finish, newFinish,
 			reinterpret_cast<const __false_type &>(atEnd));
 
 	if (_M_start)
@@ -152,4 +159,6 @@ void vector<Type, Allocator>::_M_insert_overflow(
 }
 
 template class vector<Rva00583330Element, allocator<Rva00583330Element> >;
+template Rva00583330Element *__uninitialized_copy(Rva00583330Element *, Rva00583330Element *,
+	Rva00583330Element *, const __false_type &);
 }
