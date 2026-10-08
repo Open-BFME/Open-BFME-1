@@ -17,7 +17,6 @@ dir32,0x00408224,?j_00008224@@YAXXZ,"retail 0x00408224 is already recorded as ?T
 dir32,0x00408B39,?j_00008b39@@YAXXZ,"retail 0x00408B39 is already recorded as _bfmeHookA1054; reference that name, not a new one"
 dir32,0x0040A27C,?j_0000a27c@@YAXXZ,"retail 0x0040A27C is already recorded as ?supplyTruckSubMachineWantsToEnter@WorkerStateMachine@@SA_NPAVState@@PAX@Z; reference that name, not a new one"
 dir32,0x0040A95C,?bfmeRva0037D150Apply@@YAHPAUBfmeObjectD150@@H@Z,"retail 0x0040A95C is already recorded as ?bfmeTeamSetExperiencePointsVisitor@@YAXPAVObject@@PAX@Z; reference that name, not a new one"
-dir32,0x0040B825,?j_0000b825@@YAXXZ,"retail 0x0040B825 is already recorded as _CivilianSpawnUpdateFieldParse; reference that name, not a new one"
 dir32,0x0040C5E0,?ownerNotDockingOrIdle@SupplyTruckStateMachine@@SA_NPAVState@@PAX@Z,"nothing in the ledger owns 0x0040C5E0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0040EB65,??0Rva0069CEE0@@QAE@XZ,the name encodes 0x0069CEE0 but retail reads 0x0040EB65
 dir32,0x0040F4BB,?j_0000f4bb@@YAXXZ,"retail 0x0040F4BB is already recorded as _RefundDieFieldParse; reference that name, not a new one"

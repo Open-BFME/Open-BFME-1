@@ -30,7 +30,7 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-void j_0000b825();
+extern "C" void __cdecl __identifier("CivilianSpawnUpdateFieldParse")();
 
 class CivilianSpawnUpdate
 {
@@ -44,7 +44,7 @@ ModuleData *CivilianSpawnUpdate::friend_newModuleData(INI *ini)
 	CivilianSpawnUpdateModuleData *data = new CivilianSpawnUpdateModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0000b825));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(__identifier("CivilianSpawnUpdateFieldParse")));
 	return (ModuleData *)data;
 }
 
