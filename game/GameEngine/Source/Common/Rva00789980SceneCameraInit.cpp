@@ -19,19 +19,26 @@ extern "C" double cos(double value);
 // allocates 0x108, so m_tail below restores that proven extent.
 #include "scene.h"
 
-namespace
-{
-class Rva00789650 : public SimpleSceneClass
+// Retail's 0x00789650 class (SimpleSceneClass-derived, vftable 0x01126C28) is
+// owned by MidVptrOnlyDerivedCtors.cpp, whose out-of-line ??0Rva00789650 is the
+// retail 0x00789650 body.  0x00789980 inlines that constructor, so this TU uses
+// a novtable view of the same object that stores the recorded vftable by name
+// and emits neither a constructor nor a vftable COMDAT of its own.
+extern "C" const void *__identifier("??_7Rva00789650@@6B@")[];
+
+class __declspec(novtable) Rva00789650SceneView : public SimpleSceneClass
 {
 public:
-	Rva00789650() {}
+	Rva00789650SceneView()
+	{
+		*(const void ***)this = __identifier("??_7Rva00789650@@6B@");
+	}
 
 private:
 	// retail allocates 0x108 for this object; scene.h's SimpleSceneClass is
 	// 0x98. The remaining 0x70 is the BFME tail the upstream header lacks.
 	unsigned char m_tail[0x70];
 };
-}
 
 
 #include "camera.h"
@@ -45,13 +52,13 @@ public:
 private:
 	unsigned int m_04;
 	unsigned int m_08;
-	Rva00789650 *m_scene;
+	Rva00789650SceneView *m_scene;
 	CameraClass *m_camera;
 };
 
 void Rva00789900Init::rva00789980()
 {
-	m_scene = new Rva00789650();
+	m_scene = new Rva00789650SceneView();
 	m_scene->Set_Ambient_Light(Vector3(0.5f, 0.5f, 0.5f));
 
 	m_camera = new CameraClass();
