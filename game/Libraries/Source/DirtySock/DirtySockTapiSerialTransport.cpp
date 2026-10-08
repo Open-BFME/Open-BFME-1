@@ -104,7 +104,7 @@ extern "C" int Rva0081AE20( void *comm, const char *name, char *output,
 {
 	int i;
 	void *handle;
-	const char *ports[ 5 ] = { "COM1", "COM2", "COM3", "COM4", 0 };
+	const char *list[ 5 ] = { "COM1", "COM2", "COM3", "COM4", 0 };
 	char *originalOutput;
 
 	originalOutput = output;
@@ -125,9 +125,9 @@ extern "C" int Rva0081AE20( void *comm, const char *name, char *output,
 		return 1;
 	}
 
-	for ( i = 0; ports[ i ] != 0; i++ )
+	for ( i = 0; list[ i ] != 0; i++ )
 	{
-		handle = CreateFileA( ports[ i ], 0xc0000000, 0, 0, 3,
+		handle = CreateFileA( list[ i ], 0xc0000000, 0, 0, 3,
 			0x40000080, 0 );
 
 		if ( handle == (void *)-1 )
@@ -138,7 +138,7 @@ extern "C" int Rva0081AE20( void *comm, const char *name, char *output,
 		if ( output != originalOutput )
 			*output++ = (char)separator;
 
-		output += wsprintfA( output, "%s", ports[ i ] );
+		output += wsprintfA( output, "%s", list[ i ] );
 	}
 
 	*output++ = 0;

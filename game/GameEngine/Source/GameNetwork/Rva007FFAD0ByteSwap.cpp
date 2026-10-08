@@ -3,15 +3,15 @@
 
 unsigned int Rva007FFAD0( unsigned int value )
 {
-	unsigned char result[ 4 ];
+	unsigned char x[ 4 ];
 
-	result[ 3 ] = static_cast<unsigned char>( value );
+	x[ 3 ] = static_cast<unsigned char>( value );
 	value >>= 8;
-	result[ 2 ] = static_cast<unsigned char>( value );
+	x[ 2 ] = static_cast<unsigned char>( value );
 	value >>= 8;
-	result[ 1 ] = static_cast<unsigned char>( value );
+	x[ 1 ] = static_cast<unsigned char>( value );
 	value >>= 8;
-	result[ 0 ] = static_cast<unsigned char>( value );
+	x[ 0 ] = static_cast<unsigned char>( value );
 
-	return *reinterpret_cast<unsigned int *>( result );
+	return *reinterpret_cast<unsigned int *>( x );
 }
