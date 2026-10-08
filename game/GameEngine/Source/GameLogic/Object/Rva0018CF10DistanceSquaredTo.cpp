@@ -9,12 +9,18 @@ struct Rva0018CF10Point
 	unsigned char m_storage;
 };
 
+// The callee at 0x0018CE80 (Object_bfmeBoundaryDistanceSquared3D.cpp).
+struct BfmeBoundaryPoint3D;
+class BfmeBoundaryObject3D
+{
+public:
+	float bfmeBoundaryDistanceSquared3D(const BfmeBoundaryPoint3D *first, const BfmeBoundaryPoint3D *second) const;
+};
+
 class Rva0018CF10Owner
 {
 public:
 	float distanceSquaredTo(const Rva0018CF10Point *other) const;
-	float compute(const Rva0018CF10Point *first,
-		const Rva0018CF10Point *second) const;
 
 private:
 	unsigned char m_prefix[0x38];
@@ -23,5 +29,5 @@ private:
 
 float Rva0018CF10Owner::distanceSquaredTo(const Rva0018CF10Point *other) const
 {
-	return compute(&m_point, other);
+	return ((const BfmeBoundaryObject3D *)this)->bfmeBoundaryDistanceSquared3D((const BfmeBoundaryPoint3D *)&m_point, (const BfmeBoundaryPoint3D *)other);
 }
