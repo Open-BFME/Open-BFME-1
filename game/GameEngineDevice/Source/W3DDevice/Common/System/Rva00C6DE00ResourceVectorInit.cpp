@@ -5,8 +5,15 @@
 // vector witnessed by Rva0090F050. Its existing address-derived initializer
 // Gen_0090ea50::m consumes one allocator-tag address and zeros all pointers.
 struct Gen_0090ea50 { void *m(int allocatorTag); };
-class Gen_00C71060Target;
-extern Gen_00C71060Target TheBfmeObject_00C71060;
+class Gen_00C71060Target
+{
+public:
+    void *m_begin;
+    void *m_end;
+    void *m_capacity;
+};
+// Retail VA 0x013411F0 (zero-initialized): the 12-byte vector this initializer fills.
+Gen_00C71060Target TheBfmeObject_00C71060;
 void bfmeForward_00C71060();
 extern "C" int __cdecl atexit(void (__cdecl *callback)());
 void Rva00C6DE00Initialize()
