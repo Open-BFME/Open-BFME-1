@@ -83050,7 +83050,6 @@ name,address,notes
 ?getBestContactPoint@GeometryInfo@@QBE_NPAUCoord3D@@PBU2@PBDHH_N@Z,0x0087F590,Object contact-point query calls this retail GeometryInfo method through the exact body
 ?getBestWinStreak@SkirmishBattleHonors@@QBEHVAsciiString@@@Z,0x0009CC90,by-value side prefix + "BestWinStreak" at VA 0x01080504 then getInt ILT 0x000443B9 (pinned) -> 0x000A9490 with default 0; ret 4; ZH SkirmishBattleHonors::getBestWinStreak
 ?getBool@Rva007E8810Message@@QAE_NPBD_N@Z,0x007E89C0,Y4 lane: FESL message lookup bool field by key with default; ret 8; returns _N in al
-?getBool@Rva00803730Getter@@QAE_NPBDD@Z,0x007E89C0,FESL attr getBool alias of bfmeGoVMQ; pin for 0x803730
 ?getBool@UserPreferences@@QBE_NVAsciiString@@_N@Z,0x0002C7CD,incremental-link thunk
 ?getBounds@Bridge@@QBEXPAURegion2D@@@Z,0x0000FEE8,ILT target for BFME bridge region bounds copy
 ?getBounds@Rva8BB1A0BoundsSource@@QAEXPAURva8BB1A0Bounds@@@Z,0x008AE2E0,Open-BFME5 bounds getter pin
@@ -83409,7 +83408,6 @@ name,address,notes
 ?getProjectileLaunchOffset@W3DModelDraw@@UBE_NABV?$BitFlags@$0HF@@@W4WeaponSlotType@@HPAVMatrix3D@@W4WhichTurretType@@PAUCoord3D@@4@Z,0x00775470,vtable-slot ??_7W3DSupplyDraw@@6B@ slot 6 anchors=9
 ?getPropShroudStatusForPlayer@PartitionManager@@QBE?AW4ObjectShroudStatus@@HPBUCoord3D@@@Z,0x008F7440,Native PartitionManager.h const API; independently exact full 8-byte forwarding body loads impl at +0xC then tail-jumps to matched ShroudManagerImpl008FBA40::getPropShroudStatusForPlayer 0x008F95A0; typed caller 0x00733580
 ?getPtr@Rva00803620Getter@@QAEPAXPAX0@Z,0x007E8900,FESL attr getPtr alias of bfmeGoRF; pin for 0x803620
-?getPtr@Rva00803730Getter@@QAEPAXPAX0@Z,0x007E8900,FESL attr getPtr alias of bfmeGoRF; pin for 0x803730
 ?getRadius@PolygonTrigger@@QBEMXZ,0x0018F880,PolygonTrigger radius: full20B body calls the bounds update when byte +0x30 is set then returns float +0x2C (ZH getRadius updateBounds/m_radius); GiantBirdGuardMachine::lookForInnerTarget 0x002C07E0 +0x190 calls it via ILT 0x00045A02 on the guard area right before the pinned getCenterPoint as ZH lookForInnerTarget does
 ?getRadiusAndCenter@Pathfinder@@IAEXPBVObject@@AAHAA_N@Z,0x000461FF,goalPosition caller proves the ILT target
 ?getRadiusAndCenter@Pathfinder@RadiusContract003DEE30@@IAEXPBVObject@2@AAHAA_N@Z,0x003DEE30,Address-scoped contract spelling of matched Pathfinder radius helper; retail ILT 0x000461FF resolves to this 297-byte body

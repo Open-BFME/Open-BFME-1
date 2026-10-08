@@ -6,10 +6,23 @@
 
 class Rva00803730Getter
 {
-public:
-	void *getPtr( void *key, void *fallback );
-	bool getBool( const char *key, char flag );
 };
+
+// Retail 0x007E8900 / 0x007E89C0 are the FESL attr readers (callees.py),
+// matched as BfmeThingRF::bfmeGoRF and BfmeThingVMQ::bfmeGoVMQ.
+class BfmeThingRF
+{
+public:
+	void *bfmeGoRF( void *key, void *fallback );
+};
+
+class BfmeThingVMQ
+{
+public:
+	bool bfmeGoVMQ( const char *key, char flag );
+};
+#define getPtr( r, key, fallback ) ( (BfmeThingRF *)( r ) )->bfmeGoRF( key, fallback )
+#define getBool( r, key, flag ) ( (BfmeThingVMQ *)( r ) )->bfmeGoVMQ( key, flag )
 
 class Rva00803730Sink
 {
@@ -35,10 +48,10 @@ public:
 
 void Rva00803730Host::go( Rva00803730Getter *r )
 {
-	void *tid = r->getPtr( (void *)"TID", 0 );
-	bool allowed = r->getBool( "ALLOWED", 0 );
-	void *pid = r->getPtr( (void *)"PID", 0 );
-	void *reason = r->getPtr( (void *)"REASON", 0 );
+	void *tid = getPtr( r, (void *)"TID", 0 );
+	bool allowed = getBool( r, "ALLOWED", 0 );
+	void *pid = getPtr( r, (void *)"PID", 0 );
+	void *reason = getPtr( r, (void *)"REASON", 0 );
 	m_sink->apply( tid, allowed, pid, reason );
 }
 
@@ -61,7 +74,6 @@ class BfmeC994 : public Rva007E86B0Base
 {
 public:
 	BfmeC994( char *buffer, int capacity );
-	void addInt( const char *key, int value );
 	void addString( const char *key, const char *value );
 
 	int m_field08;
@@ -152,7 +164,18 @@ struct Rva007EB810Diag
 };
 
 Rva007EB810Diag *Rva007EB810Get();
-void sendFeslMessage( void *message, const char *route, void *connection ) throw();
+// Retail 0x007F93E0 is the FESL sender, matched as Rva007F93E0.
+void *Rva007F93E0( void *message, void *route, void *owner ) throw();
+#define sendFeslMessage( message, route, connection ) Rva007F93E0( ( message ), ( void * )( route ), ( connection ) )
+
+// Retail 0x007E88D0 is the integer field writer, matched as
+// BfmeThingCIB::bfmeGoCIB.
+class BfmeThingCIB
+{
+public:
+	void bfmeGoCIB( void *key, void *value );
+};
+#define addInt( message, key, value ) ( (BfmeThingCIB *)&( message ) )->bfmeGoCIB( (void *)( key ), (void *)( value ) )
 
 static __forceinline Rva00809C60Player *Rva00809C60FindPlayer(
 	const Rva00809C60Game *game, int pid )
@@ -184,22 +207,22 @@ void Rva00803730Sink::apply( void *tid, bool allowed, void *pid, void *reason )
 	message.m_field04 = player->m_field04;
 	message.m_field08 = player->m_field08;
 	message.m_field0c = player->m_field0c;
-	message.addInt( "LID", -2 );
-	message.addInt( "GID", player->m_gid );
+	addInt( message, "LID", -2 );
+	addInt( message, "GID", player->m_gid );
 	if( allowed )
 	{
-		message.addInt( "PID", player->m_pid );
+		addInt( message, "PID", player->m_pid );
 		message.addString( "TICKET", "ticket" );
 		message.addString( "I", player->m_i );
 		int p = m_identity->m_p2c != 0 ? m_identity->m_p2c : m_identity->m_p28;
-		message.addInt( "P", p );
+		addInt( message, "P", p );
 		message.addString( "PL", "IP-LAN" );
 		message.addString( "UGID", m_identity->getValue()->getValue() );
 	}
 	else
 	{
 		message.m_field20 = 'jden';
-		message.addInt( "REASON", (int)(long)reason );
+		addInt( message, "REASON", (int)(long)reason );
 	}
 	sendFeslMessage( &message, "->L", m_connection );
 }
