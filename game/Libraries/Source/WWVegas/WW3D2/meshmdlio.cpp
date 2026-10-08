@@ -116,7 +116,7 @@
 */
 class MeshLoadContextClass : public W3DMPO
 {
-	W3DMPO_GLUE(MeshLoadContextClass)
+	// BFME: no W3DMPO_GLUE; retail ??_G 0x0096FF50 frees with the global operator delete
 
 private:
 	MeshLoadContextClass(void);
