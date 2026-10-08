@@ -108,7 +108,7 @@ void Player::rva000D1E30(const AsciiString &pname) {
     }
     AsciiString originalPlayerName=((SidesListD1E30 *)TheSidesList)->getSkirmishSide(skirmishNdx)->dict.getAsciiString(KEY(TheKey_playerName));
     for (int i=((SidesListD1E30 *)TheSidesList)->skirmishTeams.nodes[0].next; i; i=((SidesListD1E30 *)TheSidesList)->skirmishTeams.nodes[i].next) {
-        if (((SidesListD1E30 *)TheSidesList)->skirmishTeams.nodes[i].dict.getAsciiString(KEY(TheKey_teamOwner)).compare(originalPlayerName)==0) {
+        if (((const StringBase<char> &)((SidesListD1E30 *)TheSidesList)->skirmishTeams.nodes[i].dict.getAsciiString(KEY(TheKey_teamOwner))).compare(originalPlayerName)==0) {
             Dict teamDict(((SidesListD1E30 *)TheSidesList)->skirmishTeams.nodes[i].dict);
             AsciiString teamName=teamDict.getAsciiString(KEY(TheKey_teamName));
             if (((const StringBase<char> &)teamName).compare(AsciiString("team")+originalPlayerName)==0)
