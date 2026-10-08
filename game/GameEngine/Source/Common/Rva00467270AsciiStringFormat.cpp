@@ -19,7 +19,7 @@ public:
 	{
 		m_text = that.m_text;
 	}
-	~AsciiString() {}
+	~AsciiString();
 	void __cdecl format(AsciiString format, ...);
 
 private:
