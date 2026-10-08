@@ -1,9 +1,47 @@
 class BfmePosTP;
 
+// Matched callee rows (callees.py, via ILT): Thing::setPosition 0x00132CE0,
+// Drawable::bfmeRecordTransform 0x001C0BE0,
+// BFMERopeDrawableGetPositionShim::bfmeRebuild 0x0041B200,
+// AICommandInterface::aiIdle 0x000D87E0, AIUpdateInterface::destroyPath 0x0026F080.
+struct Coord3D;
+
+class Thing
+{
+public:
+	void setPosition(const Coord3D *pos);
+};
+
+class Drawable
+{
+public:
+	void bfmeRecordTransform(unsigned int frame);
+};
+
+class BFMERopeDrawableGetPositionShim
+{
+	friend class BfmeHostTP;
+private:
+	void bfmeRebuild(int mode);
+};
+
+enum CommandSourceType { CMD_TP_2 = 2 };
+
+class AICommandInterface
+{
+public:
+	void aiIdle(CommandSourceType cmdSource);
+};
+
+class AIUpdateInterface
+{
+public:
+	void destroyPath(void);
+};
+
 class BfmeXTP
 {
 public:
-	void bfmeFlagTP(int mode);
 };
 
 class PartitionData
@@ -163,14 +201,11 @@ public:
 class BfmeInnerTP
 {
 public:
-	void bfmeApplyTP(int mode);
 };
 
 class BfmeSubTP
 {
 public:
-	void bfmeFinishTP();
-
 	unsigned char m_bfmeHeadTP[0x20];
 	BfmeInnerTP m_bfmeInnerTP;
 };
@@ -204,8 +239,6 @@ public:
 	virtual BfmeXTP *bfmeGetXTP();
 
 	void bfmeSetPositionTP(const BfmePosTP *pos, bool flag);
-	void bfmeSetPosTP(const BfmePosTP *pos);
-	void bfmeMarkTP(unsigned int frame);
 
 	unsigned char m_bfmeHeadTP[0x64];
 	int *m_bfmeVbTP;
@@ -217,17 +250,17 @@ public:
 
 void BfmeHostTP::bfmeSetPositionTP(const BfmePosTP *pos, bool flag)
 {
-	bfmeSetPosTP(pos);
+	((Thing *)this)->setPosition((const Coord3D *)pos);
 
-	bfmeMarkTP(((Rva00367E30Logic *)TheGameLogic)->m_bfmeFrameTP);
-	bfmeMarkTP(((Rva00367E30Logic *)TheGameLogic)->m_bfmeFrameTP);
+	((Drawable *)this)->bfmeRecordTransform(((Rva00367E30Logic *)TheGameLogic)->m_bfmeFrameTP);
+	((Drawable *)this)->bfmeRecordTransform(((Rva00367E30Logic *)TheGameLogic)->m_bfmeFrameTP);
 
 	BfmeXTP *x = bfmeGetXTP();
 
 	if (x != 0)
-		x->bfmeFlagTP(1);
+		((BFMERopeDrawableGetPositionShim *)x)->bfmeRebuild(1);
 
-	bfmeSetPosTP(pos);
+	((Thing *)this)->setPosition((const Coord3D *)pos);
 
 	BfmeIfcTP *ifc = (BfmeIfcTP *)((char *)&m_bfmeVbTP + m_bfmeVbTP[1]);
 
@@ -254,9 +287,9 @@ void BfmeHostTP::bfmeSetPositionTP(const BfmePosTP *pos, bool flag)
 
 		if (s != 0)
 		{
-			s->m_bfmeInnerTP.bfmeApplyTP(2);
+			((AICommandInterface *)&s->m_bfmeInnerTP)->aiIdle((CommandSourceType)2);
 
-			s->bfmeFinishTP();
+			((AIUpdateInterface *)s)->destroyPath();
 		}
 	}
 }
