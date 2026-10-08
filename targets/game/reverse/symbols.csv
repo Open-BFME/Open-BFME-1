@@ -76778,7 +76778,6 @@ name,address,notes
 ?bfmeEraseVSD@BfmeVecVSD@@QAEXPAX0@Z,0x00024C17,pin
 ?bfmeEraseYQ@BfmeMapYQ@@QAEXPAUBfmeKeyYQ@@@Z,0x0001460A
 ?bfmeEstimate@Weapon@@QBEMPBVObject@@0@Z,0x0001538E,ILT used by WeaponSet::chooseBestWeaponForTarget
-?bfmeEstimateXQ@BfmeTeamXQ@@QAEXPAUCoord3D@@@Z,0x000241FE,Open-BFME5 ILT team position estimate the 0x0015CCE0 step calls
 ?bfmeExistsVNV@@YADPBD@Z,0x009EBB80,pin
 ?bfmeExpandEAN@BfmeLexEAN@@QAEDPAD@Z,0x0003CB14,pin expand for BfmeConv2008
 ?bfmeExperienceForNextLevel@ExperienceLevelSystem@@QAEHPAVObject@@PAH@Z,0x0000C284,ExperienceTracker multi-level gain calls the retail next-level experience query with a null output-level pointer
@@ -76967,8 +76966,6 @@ name,address,notes
 ?bfmeFindVNC@BfmeKeyVNC@@QAEPAXPBDH@Z,0x007E8900,pin
 ?bfmeFindXI@BfmeOwnerXI@@QAEPAVBfmeTargetXI@@XZ,0x000202ED
 ?bfmeFindXQ@BfmeOwnerXQ@@QAEHPAX@Z,0x000333C5
-?bfmeFindXQ@Rva00367E30Logic@@QAEPAVBfmeObjXQ@@PAX@Z,0x0001F253,Open-BFME5 ILT logic find the 0x0015CCE0 step calls
-?bfmeFindXQ@TeamFactory@@QAEPAVBfmeTeamXQ@@PAX@Z,0x00044C2E,Open-BFME5 ILT team factory find the 0x0015CCE0 step calls
 ?bfmeFindXR@Rva00367E30Logic@@QAEPAVBfmeUnitXR@@PAX@Z,0x0001F253,pin
 ?bfmeFindYI@BfmeRegistryYI@@QAEPAXABVAsciiStringYI@@@Z,0x0003B59D,Open-BFME5 the lookup the command select at 0x0058D990 calls on the registry 0x012F33F8
 ?bfmeFindYQ@BfmeThingYQ@@QAEPAVBfmeEntryYQ@@HH@Z,0x0004AF84,Open-BFME5 the entry lookup the anchor selector at 0x00423300 calls

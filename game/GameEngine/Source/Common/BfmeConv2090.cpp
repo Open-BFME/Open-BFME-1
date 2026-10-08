@@ -12,26 +12,29 @@ public:
 	Coord3D m_bfme38XQ;
 };
 
-class BfmeTeamXQ
+class Object;
+
+// Retail ILT 0x000241FE lands on the matched body 0x000EDCD0.
+class Team
 {
 public:
-	void bfmeEstimateXQ(Coord3D *out);
+	void getEstimateTeamPosition_000EDCD0(Coord3D *out) const;
 };
 
-struct Rva00367E30Logic
+// Retail ILT 0x0001F253 lands on GameLogic::findObjectByID (0x0009A510).
+class GameLogic
 {
-	BfmeObjXQ *bfmeFindXQ(void *id);
+public:
+	Object *findObjectByID(int id);
 };
 
+// Retail ILT 0x00044C2E lands on TeamFactory::findTeamByID (0x000EF060).
 class TeamFactory
 {
 public:
-	BfmeTeamXQ *bfmeFindXQ(void *id);
+	Team *findTeamByID(unsigned int id);
 };
 
-// Retail's global at 0x012F0898 is GameLogic.cpp's `GameLogic *TheGameLogic`;
-// the TU keeps its own offset view and casts at each use.
-class GameLogic;
 extern GameLogic *TheGameLogic;
 extern TeamFactory *TheTeamFactory;
 
@@ -74,13 +77,13 @@ int BfmeHostXQ::bfmeStepXQ()
 		return -1;
 
 	BfmeCfgXQ *cfg = m_bfme1CXQ;
-	BfmeObjXQ *obj = ((Rva00367E30Logic *)TheGameLogic)->bfmeFindXQ(cfg->m_bfme44XQ);
-	BfmeTeamXQ *team = TheTeamFactory->bfmeFindXQ(cfg->m_bfme48XQ);
+	BfmeObjXQ *obj = (BfmeObjXQ *)TheGameLogic->findObjectByID((int)cfg->m_bfme44XQ);
+	Team *team = TheTeamFactory->findTeamByID((unsigned int)cfg->m_bfme48XQ);
 
 	if (obj)
 		m_bfme2CXQ = obj->m_bfme38XQ;
 	else if (team)
-		team->bfmeEstimateXQ(&m_bfme2CXQ);
+		team->getEstimateTeamPosition_000EDCD0(&m_bfme2CXQ);
 
 	return m_bfme40XQ->bfmeRunXQ();
 }
@@ -104,13 +107,13 @@ int BfmeHost2XQ::bfmeStep2XQ()
 		return -1;
 
 	BfmeCfgXQ *cfg = m_bfme1CXQ;
-	BfmeObjXQ *obj = ((Rva00367E30Logic *)TheGameLogic)->bfmeFindXQ(cfg->m_bfme44XQ);
-	BfmeTeamXQ *team = TheTeamFactory->bfmeFindXQ(cfg->m_bfme48XQ);
+	BfmeObjXQ *obj = (BfmeObjXQ *)TheGameLogic->findObjectByID((int)cfg->m_bfme44XQ);
+	Team *team = TheTeamFactory->findTeamByID((unsigned int)cfg->m_bfme48XQ);
 
 	if (obj)
 		m_bfme2CXQ = obj->m_bfme38XQ;
 	else if (team)
-		team->bfmeEstimateXQ(&m_bfme2CXQ);
+		team->getEstimateTeamPosition_000EDCD0(&m_bfme2CXQ);
 
 	return m_bfme40XQ->bfmeRunXQ();
 }
