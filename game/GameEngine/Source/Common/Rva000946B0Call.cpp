@@ -1,9 +1,10 @@
 // cl: /O2 /Ob0
 
-class Rva000946B0G
+// The callee at 0x00093050 (BfmeOneHundredEightyEight.cpp), via ILT 0x0001A7DF.
+class BfmeThingDN
 {
 public:
-	void bar(void *);
+	void bfmeTellDN(void *);
 };
 
 extern void *TheOptionGroupTarget;
@@ -16,5 +17,5 @@ public:
 
 void Rva000946B0::run()
 {
-	reinterpret_cast<Rva000946B0G *>(TheOptionGroupTarget)->bar(this);
+	reinterpret_cast<BfmeThingDN *>(TheOptionGroupTarget)->bfmeTellDN(this);
 }
