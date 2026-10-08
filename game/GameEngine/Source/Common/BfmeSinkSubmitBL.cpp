@@ -22,11 +22,11 @@ struct Rva004488B0Block
 class AsciiStringBL : public AsciiString
 {
 public:
-	AsciiStringBL(const AsciiStringBL &other) : AsciiString(other)
+	AsciiStringBL(const AsciiStringBL &other) throw() : AsciiString(other)
 	{
 	}
 
-	~AsciiStringBL(void)
+	~AsciiStringBL(void) throw()
 	{
 	}
 };
