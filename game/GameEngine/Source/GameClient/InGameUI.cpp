@@ -428,15 +428,6 @@ void SuperweaponInfo::setFont(const AsciiString& superweaponNormalFont, Int supe
 }
 
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/SuperweaponInfoSetText.cpp
-// ?setText@SuperweaponInfo@@QAEXABVUnicodeString@@0@Z present-unmatched
-void SuperweaponInfo::setText(const UnicodeString& name, const UnicodeString& time)
-{
-	m_nameDisplayString->setText(name);
-	m_timeDisplayString->setText(time);
-}
-
-// ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameClient/SuperweaponInfoDrawName.cpp
 // ?drawName@SuperweaponInfo@@QAEXHHHH@Z present-unmatched
 void SuperweaponInfo::drawName(Int x, Int y, Color color, Color dropColor)
