@@ -25,7 +25,7 @@ AsciiString bfme_force_ascii_string_default_ctor_emission()
 // unwind funclet at 0x00C56930 destroys it through ??1?$StringBase@D@@AAE@XZ.
 AsciiString::AsciiString(const UnicodeString &that)
 {
-    format(AsciiString("%ls"), that.str());
+    format(AsciiString("%ls"), ((const StringBase<unsigned short> &)that).str());
 }
 
 // 0x00889140: the same shape as the converting constructor above, on an
@@ -35,7 +35,7 @@ AsciiString::AsciiString(const UnicodeString &that)
 // than a second converting constructor.
 AsciiString &AsciiString::operator+=(const UnicodeString &that)
 {
-    format(AsciiString("%s%ls"), str(), that.str());
+    format(AsciiString("%s%ls"), str(), ((const StringBase<unsigned short> &)that).str());
     return *this;
 }
 
