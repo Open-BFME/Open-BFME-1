@@ -29,8 +29,8 @@ public:
 	AsciiString getFilename(void) const;
 };
 
-static NameKeyType buttonAddID = NAMEKEY_INVALID;
-static NameKeyType buttonDeleteID = NAMEKEY_INVALID;
+extern int buttonAddID;
+extern int buttonDeleteID;
 static NameKeyType buttonPlayID = NAMEKEY_INVALID;
 static NameKeyType buttonIgnoreID = NAMEKEY_INVALID;
 static NameKeyType buttonStatsID = NAMEKEY_INVALID;

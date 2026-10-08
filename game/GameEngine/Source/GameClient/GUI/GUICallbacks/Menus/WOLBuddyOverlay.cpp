@@ -716,8 +716,10 @@ WindowMsgHandledType PopupBuddyNotificationSystem( GameWindow *window, UnsignedI
 static NameKeyType buttonAcceptBuddyID = NAMEKEY_INVALID;
 static NameKeyType buttonDenyBuddyID = NAMEKEY_INVALID;
 */
-static NameKeyType buttonAddID = NAMEKEY_INVALID;
-static NameKeyType buttonDeleteID = NAMEKEY_INVALID;
+extern int buttonAddID;
+extern "C" int __identifier("?buttonAddID@@3HA") = NAMEKEY_INVALID;
+extern int buttonDeleteID;
+extern "C" int __identifier("?buttonDeleteID@@3HA") = NAMEKEY_INVALID;
 static NameKeyType buttonPlayID = NAMEKEY_INVALID;
 static NameKeyType buttonIgnoreID = NAMEKEY_INVALID;
 static NameKeyType buttonStatsID = NAMEKEY_INVALID;

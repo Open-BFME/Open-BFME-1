@@ -17452,3 +17452,5 @@ _g_012F7014,0x012F7014
 ?Count0040E9E0@@3HA,0x012F12B0
 ?buttonCreateGame@@3PAVGameWindow@@A,0x012F3F18
 ?textEntryGameDescription@@3PAVGameWindow@@A,0x012F3F20
+?buttonAddID@@3HA,0x012F424C
+?buttonDeleteID@@3HA,0x012F4250
