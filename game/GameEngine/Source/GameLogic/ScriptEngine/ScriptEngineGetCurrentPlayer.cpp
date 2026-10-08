@@ -22,6 +22,7 @@ class StringBase
 private:
 	// Private so the symbol is AAE, which is how the ledger names this body.
 	StringBase(const char *s);
+	void releaseBuffer();
 	friend class AsciiString;
 };
 
@@ -38,7 +39,11 @@ public:
 	}
 
 	AsciiString(const AsciiString &that);
-	~AsciiString();
+	// Retail inlines the release: the call binds 0x00887940 directly.
+	~AsciiString()
+	{
+		((StringBase<char> *)this)->releaseBuffer();
+	}
 
 private:
 
