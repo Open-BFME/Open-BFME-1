@@ -38,6 +38,27 @@ public:
 	void run( void );                                                // 0x007E8AC0
 };
 
+// The three writers are matched rows under other ledger spellings:
+// 0x007E8A10 ?addString@BfmeC994, 0x007E88D0 ?bfmeGoCIB@BfmeThingCIB and
+// 0x007E8980 ?go@Rva007E8980; the calls below go through those names.
+class BfmeC994
+{
+public:
+	void addString( const char *key, const char *value );
+};
+
+class BfmeThingCIB
+{
+public:
+	void bfmeGoCIB( void *one, void *two );
+};
+
+class Rva007E8980
+{
+public:
+	void go( int x, unsigned char f );
+};
+
 class Rva007E8810Message
 {
 public:
@@ -68,14 +89,14 @@ void __stdcall Rva007FAE40( FeslTxnMessage *msg, const char *lkey,
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'AUTH';
 	msg->m_depth = 3;
-	msg->addString( "LKEY", lkey );
-	msg->addString( "PROD", prod );
-	msg->addString( "VERS", vers );
-	msg->addString( "PRES", pres );
+	( (BfmeC994 *)msg )->addString( "LKEY", lkey );
+	( (BfmeC994 *)msg )->addString( "PROD", prod );
+	( (BfmeC994 *)msg )->addString( "VERS", vers );
+	( (BfmeC994 *)msg )->addString( "PRES", pres );
 	if( rsrc && *rsrc )
-		msg->addString( "RSRC", rsrc );
+		( (BfmeC994 *)msg )->addString( "RSRC", rsrc );
 	else
-		msg->addString( "RSRC", "CSO" );
+		( (BfmeC994 *)msg )->addString( "RSRC", "CSO" );
 }
 
 void __stdcall Rva007FAEE0( FeslTxnMessage *msg, const char *user,
@@ -85,15 +106,15 @@ void __stdcall Rva007FAEE0( FeslTxnMessage *msg, const char *user,
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'AUTH';
 	msg->m_depth = 3;
-	msg->addString( "USER", user );
-	msg->addString( "PASS", pass );
-	msg->addString( "PROD", prod );
-	msg->addString( "VERS", vers );
-	msg->addString( "PRES", pres );
+	( (BfmeC994 *)msg )->addString( "USER", user );
+	( (BfmeC994 *)msg )->addString( "PASS", pass );
+	( (BfmeC994 *)msg )->addString( "PROD", prod );
+	( (BfmeC994 *)msg )->addString( "VERS", vers );
+	( (BfmeC994 *)msg )->addString( "PRES", pres );
 	if( rsrc && *rsrc )
-		msg->addString( "RSRC", rsrc );
+		( (BfmeC994 *)msg )->addString( "RSRC", rsrc );
 	else
-		msg->addString( "RSRC", "CSO" );
+		( (BfmeC994 *)msg )->addString( "RSRC", "CSO" );
 }
 
 // ---- 'USCH' ---------------------------------------------------------------
@@ -104,16 +125,16 @@ void __stdcall Rva007FAFB0( FeslTxnMessage *msg, const char *user,
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'USCH';
 	msg->m_depth = 3;
-	msg->addString( "USER", user );
+	( (BfmeC994 *)msg )->addString( "USER", user );
 	if( domain && strlen( domain ) != 0 )
-		msg->addString( "DOMN", domain );
+		( (BfmeC994 *)msg )->addString( "DOMN", domain );
 	if( rsrc && strlen( rsrc ) != 0 )
-		msg->addString( "RSRC", rsrc );
+		( (BfmeC994 *)msg )->addString( "RSRC", rsrc );
 	if( dist )
-		msg->addString( "DIST", "T" );
+		( (BfmeC994 *)msg )->addString( "DIST", "T" );
 	else
-		msg->addString( "DIST", "F" );
-	msg->addInt( "MAXR", maxResults );
+		( (BfmeC994 *)msg )->addString( "DIST", "F" );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"MAXR", (void *)( maxResults ) );
 }
 
 // ---- 'PADD' / 'PDEL' / 'TCKL' ---------------------------------------------
@@ -123,7 +144,7 @@ void __stdcall Rva007FB080( FeslTxnMessage *msg, const char *user )
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'PADD';
 	msg->m_depth = 3;
-	msg->addString( "USER", user );
+	( (BfmeC994 *)msg )->addString( "USER", user );
 }
 
 void __stdcall Rva007FB0B0( FeslTxnMessage *msg, const char *user )
@@ -131,7 +152,7 @@ void __stdcall Rva007FB0B0( FeslTxnMessage *msg, const char *user )
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'PDEL';
 	msg->m_depth = 3;
-	msg->addString( "USER", user );
+	( (BfmeC994 *)msg )->addString( "USER", user );
 }
 
 void __stdcall Rva007FB510( FeslTxnMessage *msg, const char *user )
@@ -140,7 +161,7 @@ void __stdcall Rva007FB510( FeslTxnMessage *msg, const char *user )
 	msg->m_category = 'TCKL';
 	msg->m_depth = 3;
 	if( user )
-		msg->addString( "USER", user );
+		( (BfmeC994 *)msg )->addString( "USER", user );
 }
 
 void __stdcall Rva007FB550( FeslTxnMessage *msg, int list, const char *user,
@@ -152,18 +173,18 @@ void __stdcall Rva007FB550( FeslTxnMessage *msg, int list, const char *user,
 	switch( list )
 	{
 		case 1:
-			msg->addString( "LIST", "B" );
+			( (BfmeC994 *)msg )->addString( "LIST", "B" );
 			break;
 		case 2:
-			msg->addString( "LIST", "I" );
+			( (BfmeC994 *)msg )->addString( "LIST", "I" );
 			break;
 	}
-	msg->addString( "USER", user );
+	( (BfmeC994 *)msg )->addString( "USER", user );
 	if( group && strlen( group ) != 0 )
-		msg->addString( "GROUP", group );
+		( (BfmeC994 *)msg )->addString( "GROUP", group );
 	if( lsrc && strlen( lsrc ) != 0 )
-		msg->addString( "LSRC", lsrc );
-	msg->addString( "PRES", pres ? "Y" : "N" );
+		( (BfmeC994 *)msg )->addString( "LSRC", lsrc );
+	( (BfmeC994 *)msg )->addString( "PRES", pres ? "Y" : "N" );
 }
 
 // ---- 'RADM' / 'MLST' / 'RDEM' ---------------------------------------------
@@ -174,12 +195,12 @@ void __stdcall Rva007FB390( FeslTxnMessage *msg, const char *user,
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'RADM';
 	msg->m_depth = 3;
-	msg->addString( "USER", user );
+	( (BfmeC994 *)msg )->addString( "USER", user );
 	if( group )
-		msg->addString( "GROUP", group );
+		( (BfmeC994 *)msg )->addString( "GROUP", group );
 	if( lsrc )
-		msg->addString( "LSRC", lsrc );
-	msg->addString( "PRES", pres ? "Y" : "N" );
+		( (BfmeC994 *)msg )->addString( "LSRC", lsrc );
+	( (BfmeC994 *)msg )->addString( "PRES", pres ? "Y" : "N" );
 }
 
 void __stdcall Rva007FB4B0( FeslTxnMessage *msg, const char *user,
@@ -188,11 +209,11 @@ void __stdcall Rva007FB4B0( FeslTxnMessage *msg, const char *user,
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'MLST';
 	msg->m_depth = 3;
-	msg->addString( "USER", user );
+	( (BfmeC994 *)msg )->addString( "USER", user );
 	if( group )
-		msg->addString( "GROUP", group );
+		( (BfmeC994 *)msg )->addString( "GROUP", group );
 	if( lsrc )
-		msg->addString( "LSRC", lsrc );
+		( (BfmeC994 *)msg )->addString( "LSRC", lsrc );
 }
 
 void __stdcall Rva007FB620( FeslTxnMessage *msg, const char *user,
@@ -201,12 +222,12 @@ void __stdcall Rva007FB620( FeslTxnMessage *msg, const char *user,
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'RDEM';
 	msg->m_depth = 3;
-	msg->addString( "USER", user );
+	( (BfmeC994 *)msg )->addString( "USER", user );
 	if( group && strlen( group ) != 0 )
-		msg->addString( "GROUP", group );
+		( (BfmeC994 *)msg )->addString( "GROUP", group );
 	if( lsrc && strlen( lsrc ) != 0 )
-		msg->addString( "LSRC", lsrc );
-	msg->addString( "PRES", pres ? "Y" : "N" );
+		( (BfmeC994 *)msg )->addString( "LSRC", lsrc );
+	( (BfmeC994 *)msg )->addString( "PRES", pres ? "Y" : "N" );
 }
 
 // ---- 'GINV' / 'GRVK' / 'EPST' ---------------------------------------------
@@ -217,9 +238,9 @@ void __stdcall Rva007FB7B0( FeslTxnMessage *msg, const char *user,
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'GINV';
 	msg->m_depth = 3;
-	msg->addString( "USER", user );
-	msg->addString( "SESS", sess );
-	msg->addString( "TITL", titl );
+	( (BfmeC994 *)msg )->addString( "USER", user );
+	( (BfmeC994 *)msg )->addString( "SESS", sess );
+	( (BfmeC994 *)msg )->addString( "TITL", titl );
 }
 
 void __stdcall Rva007FB890( FeslTxnMessage *msg, const char *user,
@@ -228,8 +249,8 @@ void __stdcall Rva007FB890( FeslTxnMessage *msg, const char *user,
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'GRVK';
 	msg->m_depth = 3;
-	msg->addString( "USER", user );
-	msg->addString( "SESS", sess );
+	( (BfmeC994 *)msg )->addString( "USER", user );
+	( (BfmeC994 *)msg )->addString( "SESS", sess );
 }
 
 void __stdcall Rva007FB9F0( FeslTxnMessage *msg, const char *addr, bool enab )
@@ -237,11 +258,11 @@ void __stdcall Rva007FB9F0( FeslTxnMessage *msg, const char *addr, bool enab )
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'EPST';
 	msg->m_depth = 3;
-	msg->addString( "ADDR", addr );
+	( (BfmeC994 *)msg )->addString( "ADDR", addr );
 	if( enab )
-		msg->addString( "ENAB", "T" );
+		( (BfmeC994 *)msg )->addString( "ENAB", "T" );
 	else
-		msg->addString( "ENAB", "F" );
+		( (BfmeC994 *)msg )->addString( "ENAB", "F" );
 }
 
 // ---- 'CONN' / 'USER' ------------------------------------------------------
@@ -257,12 +278,12 @@ void __stdcall Rva007FC170( FeslTxnMessage *msg, const char *prod,
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'CONN';
 	msg->m_depth = 3;
-	msg->addString( "PROT", g_Rva012C3BC4 );
-	msg->addString( "PROD", prod );
-	msg->addString( "VERS", vers );
+	( (BfmeC994 *)msg )->addString( "PROT", g_Rva012C3BC4 );
+	( (BfmeC994 *)msg )->addString( "PROD", prod );
+	( (BfmeC994 *)msg )->addString( "VERS", vers );
 	if( plat && strlen( plat ) != 0 )
-		msg->addString( "PLAT", plat );
-	msg->addString( "LOCALE", locale );
+		( (BfmeC994 *)msg )->addString( "PLAT", plat );
+	( (BfmeC994 *)msg )->addString( "LOCALE", locale );
 }
 
 void __stdcall Rva007FC210( FeslTxnMessage *msg, const char *hid,
@@ -271,9 +292,9 @@ void __stdcall Rva007FC210( FeslTxnMessage *msg, const char *hid,
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'USER';
 	msg->m_depth = 3;
-	msg->addString( "HID", hid );
-	msg->addString( "LKEY", lkey );
-	msg->addString( "NAME", name );
+	( (BfmeC994 *)msg )->addString( "HID", hid );
+	( (BfmeC994 *)msg )->addString( "LKEY", lkey );
+	( (BfmeC994 *)msg )->addString( "NAME", name );
 }
 
 // ---- game-session ids -----------------------------------------------------
@@ -283,8 +304,8 @@ void __stdcall Rva007FC510( FeslTxnMessage *msg, int lid, int gid )
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'GDAT';
 	msg->m_depth = 3;
-	msg->addInt( "LID", lid );
-	msg->addInt( "GID", gid );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"LID", (void *)( lid ) );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"GID", (void *)( gid ) );
 }
 
 void __stdcall Rva007FCA40( FeslTxnMessage *msg, bool start )
@@ -292,7 +313,7 @@ void __stdcall Rva007FCA40( FeslTxnMessage *msg, bool start )
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'UBRA';
 	msg->m_depth = 3;
-	msg->addBool( "START", start );
+	( (Rva007E8980 *)msg )->go( (int)"START", start );
 }
 
 void __stdcall Rva007FCA70( FeslTxnMessage *msg, int lid, int gid, int port )
@@ -300,9 +321,9 @@ void __stdcall Rva007FCA70( FeslTxnMessage *msg, int lid, int gid, int port )
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'EGAM';
 	msg->m_depth = 3;
-	msg->addInt( "LID", lid );
-	msg->addInt( "GID", gid );
-	msg->addInt( "PORT", port );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"LID", (void *)( lid ) );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"GID", (void *)( gid ) );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"PORT", (void *)( port ) );
 }
 
 void __stdcall Rva007FCAD0( FeslTxnMessage *msg, int lid, int gid )
@@ -310,8 +331,8 @@ void __stdcall Rva007FCAD0( FeslTxnMessage *msg, int lid, int gid )
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'ECNL';
 	msg->m_depth = 3;
-	msg->addInt( "LID", lid );
-	msg->addInt( "GID", gid );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"LID", (void *)( lid ) );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"GID", (void *)( gid ) );
 }
 
 void __stdcall Rva007FCC50( FeslTxnMessage *msg, int pid )
@@ -319,7 +340,7 @@ void __stdcall Rva007FCC50( FeslTxnMessage *msg, int pid )
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'PLVT';
 	msg->m_depth = 3;
-	msg->addInt( "PID", pid );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"PID", (void *)( pid ) );
 }
 
 void __stdcall Rva007FCE70( FeslTxnMessage *msg, int timeout )
@@ -327,7 +348,7 @@ void __stdcall Rva007FCE70( FeslTxnMessage *msg, int timeout )
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'KEEP';
 	msg->m_depth = 3;
-	msg->addInt( "TIMO", timeout );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"TIMO", (void *)( timeout ) );
 }
 
 void __stdcall Rva007FCEA0( FeslTxnMessage *msg, const char *ugid,
@@ -336,7 +357,7 @@ void __stdcall Rva007FCEA0( FeslTxnMessage *msg, const char *ugid,
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'HGAM';
 	msg->m_depth = 3;
-	msg->addString( "SECRET", secret );
-	msg->addString( "UGID", ugid );
-	msg->addInt( "PORT", port );
+	( (BfmeC994 *)msg )->addString( "SECRET", secret );
+	( (BfmeC994 *)msg )->addString( "UGID", ugid );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"PORT", (void *)( port ) );
 }

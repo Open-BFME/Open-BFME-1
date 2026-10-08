@@ -29,6 +29,27 @@ public:
 	void run( void );                                                // 0x007E8AC0
 };
 
+// The three writers are matched rows under other ledger spellings:
+// 0x007E8A10 ?addString@BfmeC994, 0x007E88D0 ?bfmeGoCIB@BfmeThingCIB and
+// 0x007E8980 ?go@Rva007E8980; the calls below go through those names.
+class BfmeC994
+{
+public:
+	void addString( const char *key, const char *value );
+};
+
+class BfmeThingCIB
+{
+public:
+	void bfmeGoCIB( void *one, void *two );
+};
+
+class Rva007E8980
+{
+public:
+	void go( int x, unsigned char f );
+};
+
 class Rva007E8810Message
 {
 public:
@@ -56,24 +77,24 @@ void __stdcall Rva007FC810( Rva007E8810Message *msg, const char *name,
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'UGAM';
 	msg->m_depth = 3;
-	msg->addString( "NAME", name );
+	( (BfmeC994 *)msg )->addString( "NAME", name );
 	for( index = 0; index < numAttributes; index++ )
 	{
 		char key[ 0x40 ] = "";
 
 		sprintf( key, "B-%s", attributes[ index ].m_key );
-		msg->addString( key, attributes[ index ].m_value );
+		( (BfmeC994 *)msg )->addString( key, attributes[ index ].m_value );
 	}
 	switch( join )
 	{
 		case 0:
-			msg->addString( "JOIN", "O" );
+			( (BfmeC994 *)msg )->addString( "JOIN", "O" );
 			break;
 		case 1:
-			msg->addString( "JOIN", "W" );
+			( (BfmeC994 *)msg )->addString( "JOIN", "W" );
 			break;
 		case 2:
-			msg->addString( "JOIN", "C" );
+			( (BfmeC994 *)msg )->addString( "JOIN", "C" );
 			break;
 	}
 }
@@ -91,7 +112,7 @@ void __stdcall Rva007FC8F0( Rva007E8810Message *msg,
 		char key[ 0x40 ] = "";
 
 		sprintf( key, "D-%s", attributes[ index ].m_key );
-		msg->addString( key, attributes[ index ].m_value );
+		( (BfmeC994 *)msg )->addString( key, attributes[ index ].m_value );
 	}
 }
 
@@ -103,13 +124,13 @@ void __stdcall Rva007FC990( Rva007E8810Message *msg, int pid,
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'UPLA';
 	msg->m_depth = 3;
-	msg->addInt( "PID", pid );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"PID", (void *)( pid ) );
 	for( index = 0; index < numAttributes; index++ )
 	{
 		char key[ 0x40 ] = "";
 
 		sprintf( key, "P-%s", attributes[ index ].m_key );
-		msg->addString( key, attributes[ index ].m_value );
+		( (BfmeC994 *)msg )->addString( key, attributes[ index ].m_value );
 	}
 }
 
@@ -121,13 +142,13 @@ void __stdcall Rva007FCBA0( Rva007E8810Message *msg, int pid,
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'PENT';
 	msg->m_depth = 3;
-	msg->addInt( "PID", pid );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"PID", (void *)( pid ) );
 	for( index = 0; index < numAttributes; index++ )
 	{
 		char key[ 0x40 ] = "";
 
 		sprintf( key, "P-%s", attributes[ index ].m_key );
-		msg->addString( key, attributes[ index ].m_value );
+		( (BfmeC994 *)msg )->addString( key, attributes[ index ].m_value );
 	}
 }
 
@@ -139,11 +160,11 @@ void __stdcall Rva007FCB10( Rva007E8810Message *msg, bool allowed, int pid,
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'EGRS';
 	msg->m_depth = 3;
-	msg->addBool( "ALLOWED", allowed );
-	msg->addInt( "PID", pid );
+	( (Rva007E8980 *)msg )->go( (int)"ALLOWED", allowed );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"PID", (void *)( pid ) );
 	sprintf( text, "%d", reason );
 	if( !allowed )
-		msg->addString( "REASON", text );
+		( (BfmeC994 *)msg )->addString( "REASON", text );
 }
 
 void __stdcall Rva007FCCC0( Rva007E8810Message *msg, int lid, int gid, int pid,
@@ -154,10 +175,10 @@ void __stdcall Rva007FCCC0( Rva007E8810Message *msg, int lid, int gid, int pid,
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'ABUS';
 	msg->m_depth = 3;
-	msg->addInt( "LID", lid );
-	msg->addInt( "GID", gid );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"LID", (void *)( lid ) );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"GID", (void *)( gid ) );
 	if( pid )
-		msg->addInt( "PID", pid );
+		( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"PID", (void *)( pid ) );
 	switch( type )
 	{
 		case 1:
@@ -180,7 +201,7 @@ void __stdcall Rva007FCCC0( Rva007E8810Message *msg, int lid, int gid, int pid,
 			break;
 	}
 	if( typeName )
-		msg->addString( "TYPE", typeName );
+		( (BfmeC994 *)msg )->addString( "TYPE", typeName );
 	if( reason && strlen( reason ) != 0 )
-		msg->addString( "REASON", reason );
+		( (BfmeC994 *)msg )->addString( "REASON", reason );
 }

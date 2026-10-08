@@ -12,6 +12,27 @@ public:
 	void run( void );                                                // 0x007E8AC0
 };
 
+// The three writers are matched rows under other ledger spellings:
+// 0x007E8A10 ?addString@BfmeC994, 0x007E88D0 ?bfmeGoCIB@BfmeThingCIB and
+// 0x007E8980 ?go@Rva007E8980; the calls below go through those names.
+class BfmeC994
+{
+public:
+	void addString( const char *key, const char *value );
+};
+
+class BfmeThingCIB
+{
+public:
+	void bfmeGoCIB( void *one, void *two );
+};
+
+class Rva007E8980
+{
+public:
+	void go( int x, unsigned char f );
+};
+
 class Rva007E8810Message
 {
 public:
@@ -60,25 +81,25 @@ void __stdcall Rva007FC550( Rva007E8810Message *msg, int rid, int lid,
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'CGAM';
 	msg->m_depth = 3;
-	msg->addInt( "RID", rid );
-	msg->addInt( "LID", lid );
-	msg->addBool( "RESERVE-HOST", reserveHost );
-	msg->addString( "NAME", name );
-	msg->addInt( "PORT", port );
-	msg->addInt( "MAX-PLAYERS", maxPlayers );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"RID", (void *)( rid ) );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"LID", (void *)( lid ) );
+	( (Rva007E8980 *)msg )->go( (int)"RESERVE-HOST", reserveHost );
+	( (BfmeC994 *)msg )->addString( "NAME", name );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"PORT", (void *)( port ) );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"MAX-PLAYERS", (void *)( maxPlayers ) );
 	if( password && strlen( password ) != 0 )
-		msg->addString( "PASSWORD", password );
+		( (BfmeC994 *)msg )->addString( "PASSWORD", password );
 	if( userId )
 	{
-		msg->addString( "UGID", userId );
-		msg->addString( "SECRET", secret );
+		( (BfmeC994 *)msg )->addString( "UGID", userId );
+		( (BfmeC994 *)msg )->addString( "SECRET", secret );
 	}
 	for( index = 0; index < numAttributes; index++ )
 	{
 		char key[ 0x40 ] = "";
 
 		sprintf( key, "B-%s", attributes[ index ].m_key );
-		msg->addString( key, attributes[ index ].m_value );
+		( (BfmeC994 *)msg )->addString( key, attributes[ index ].m_value );
 	}
 	if( reservations && numReservations )
 	{
@@ -104,8 +125,8 @@ void __stdcall Rva007FC550( Rva007E8810Message *msg, int rid, int lid,
 				reservation++;
 			} while( reservationIndex < numReservations );
 		}
-		msg->addString( "RESERVE-IDS", ids );
-		msg->addInt( "RESERVE-TIMEOUT", reserveTimeout );
+		( (BfmeC994 *)msg )->addString( "RESERVE-IDS", ids );
+		( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"RESERVE-TIMEOUT", (void *)( reserveTimeout ) );
 		((Rva007EFFC0Allocator *)bfmeGo929C())->release( ids, 0 );
 	}
 }

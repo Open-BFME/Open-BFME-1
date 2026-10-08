@@ -30,6 +30,27 @@ public:
 	void run( void );                                                // 0x007E8AC0
 };
 
+// The three writers are matched rows under other ledger spellings:
+// 0x007E8A10 ?addString@BfmeC994, 0x007E88D0 ?bfmeGoCIB@BfmeThingCIB and
+// 0x007E8980 ?go@Rva007E8980; the calls below go through those names.
+class BfmeC994
+{
+public:
+	void addString( const char *key, const char *value );
+};
+
+class BfmeThingCIB
+{
+public:
+	void bfmeGoCIB( void *one, void *two );
+};
+
+class Rva007E8980
+{
+public:
+	void go( int x, unsigned char f );
+};
+
 class Rva007E8810Message
 {
 public:
@@ -60,25 +81,25 @@ void __stdcall Rva007FC3B0( Rva007E8810Message *msg, int lid, bool favOnly,
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'GLST';
 	msg->m_depth = 3;
-	msg->addInt( "LID", lid );
-	msg->addBool( "FILTER-FAV-ONLY", favOnly );
-	msg->addBool( "FILTER-NOT-FULL", notFull );
-	msg->addBool( "FILTER-NOT-PRIVATE", notPrivate );
-	msg->addInt( "FILTER-MIN-SIZE", minSize );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"LID", (void *)( lid ) );
+	( (Rva007E8980 *)msg )->go( (int)"FILTER-FAV-ONLY", favOnly );
+	( (Rva007E8980 *)msg )->go( (int)"FILTER-NOT-FULL", notFull );
+	( (Rva007E8980 *)msg )->go( (int)"FILTER-NOT-PRIVATE", notPrivate );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"FILTER-MIN-SIZE", (void *)( minSize ) );
 	for( index = 0; index < numAttributes; index++ )
 	{
 		char key[ 0x40 ] = "";
 
 		sprintf( key, "FILTER-ATTR-%s", attributes[ index ].m_key );
-		msg->addString( key, attributes[ index ].m_value );
+		( (BfmeC994 *)msg )->addString( key, attributes[ index ].m_value );
 	}
-	msg->addString( "FAV-PLAYER", favPlayer );
-	msg->addString( "FAV-GAME", favGame );
+	( (BfmeC994 *)msg )->addString( "FAV-PLAYER", favPlayer );
+	( (BfmeC994 *)msg )->addString( "FAV-GAME", favGame );
 	if( gid )
-		msg->addInt( "GID", gid );
-	msg->addInt( "COUNT", count );
-	msg->addString( "FAV-PLAYER-UID", favPlayerUid );
-	msg->addString( "FAV-GAME-UID", favGameUid );
+		( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"GID", (void *)( gid ) );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"COUNT", (void *)( count ) );
+	( (BfmeC994 *)msg )->addString( "FAV-PLAYER-UID", favPlayerUid );
+	( (BfmeC994 *)msg )->addString( "FAV-GAME-UID", favGameUid );
 }
 
 void __stdcall Rva007FC290( Rva007E8810Message *msg, bool favOnly,
@@ -92,19 +113,19 @@ void __stdcall Rva007FC290( Rva007E8810Message *msg, bool favOnly,
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'LLST';
 	msg->m_depth = 3;
-	msg->addBool( "FILTER-FAV-ONLY", favOnly );
-	msg->addBool( "FILTER-NOT-FULL", notFull );
-	msg->addBool( "FILTER-NOT-PRIVATE", notPrivate );
-	msg->addInt( "FILTER-MIN-SIZE", minSize );
+	( (Rva007E8980 *)msg )->go( (int)"FILTER-FAV-ONLY", favOnly );
+	( (Rva007E8980 *)msg )->go( (int)"FILTER-NOT-FULL", notFull );
+	( (Rva007E8980 *)msg )->go( (int)"FILTER-NOT-PRIVATE", notPrivate );
+	( (BfmeThingCIB *)msg )->bfmeGoCIB( (void *)"FILTER-MIN-SIZE", (void *)( minSize ) );
 	for( index = 0; index < numAttributes; index++ )
 	{
 		char key[ 0x40 ] = "";
 
 		sprintf( key, "FILTER-ATTR-%s", attributes[ index ].m_key );
-		msg->addString( key, attributes[ index ].m_value );
+		( (BfmeC994 *)msg )->addString( key, attributes[ index ].m_value );
 	}
-	msg->addString( "FAV-PLAYER", favPlayer );
-	msg->addString( "FAV-GAME", favGame );
-	msg->addString( "FAV-PLAYER-UID", favPlayerUid );
-	msg->addString( "FAV-GAME-UID", favGameUid );
+	( (BfmeC994 *)msg )->addString( "FAV-PLAYER", favPlayer );
+	( (BfmeC994 *)msg )->addString( "FAV-GAME", favGame );
+	( (BfmeC994 *)msg )->addString( "FAV-PLAYER-UID", favPlayerUid );
+	( (BfmeC994 *)msg )->addString( "FAV-GAME-UID", favGameUid );
 }
