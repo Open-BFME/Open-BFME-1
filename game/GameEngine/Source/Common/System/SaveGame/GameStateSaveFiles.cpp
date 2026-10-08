@@ -1,9 +1,4 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?getSaveDirectory@GameState@@QBE?AVAsciiString@@XZ: game/GameEngine/Source/Common/System/SaveGame/GameState.cpp
-// readable body of ?getFilePathInSaveDirectory@GameState@@QBE?AVAsciiString@@ABV2@@Z: game/GameEngine/Source/Common/System/SaveGame/GameState.cpp
-// readable body of ?getMapLeafName@GameState@@QBE?AVAsciiString@@ABV2@@Z: game/GameEngine/Source/Common/System/SaveGame/GameState.cpp
-// readable body of ?doesSaveGameExist@GameState@@QAE_NVAsciiString@@@Z: game/GameEngine/Source/Common/System/SaveGame/GameState.cpp
-// readable body of ?clearAvailableGames@GameState@@AAEXXZ: game/GameEngine/Source/Common/System/SaveGame/GameState.cpp
 
 // The save-game directory: the paths into it, the existence check they feed,
 // and the teardown of the list of what was found there.
@@ -48,7 +43,14 @@ class StringBase
 	friend class AsciiString;
 
 private:
+	StringBase(const T *text);				// retail 0x00888BC0
 	StringBase(const StringBase<T> &src);
+	void releaseBuffer(void);				// retail 0x00887940
+
+public:
+	void concat(const T *text, Int length);			// retail 0x00887D60
+
+private:
 
 	struct Header
 	{
@@ -65,7 +67,11 @@ class AsciiString
 {
 public:
 	AsciiString() { m_data = 0; }
-	AsciiString(const char *text);
+	// Retail encodes StringBase<char>'s constructor (0x00888BC0) directly.
+	AsciiString(const char *text)
+	{
+		((StringBase<char> *)this)->StringBase<char>::StringBase(text);
+	}
 	// Retail inlines this forwarder, so the call site encodes
 	// StringBase<char>'s copy ctor at 0x00887B60 directly.
 	AsciiString(const AsciiString &other)			// retail 0x00887B60
@@ -73,17 +79,11 @@ public:
 		((StringBase<char> *)this)->StringBase<char>::StringBase(
 			*(const StringBase<char> *)&other);
 	}
-	~AsciiString();						// retail 0x00887940
-
-	void concat(const char *text, Int length);		// retail 0x00887D60
-
-	// The inline forwarder: length and text pulled out of the argument with the
-	// null guards, then the counted concat.
-	void concat(const AsciiString &other)
+	// Retail releases the string by calling StringBase<char>::releaseBuffer
+	// (0x00887940) directly, not the out-of-line ~AsciiString at 0x0005EE90.
+	~AsciiString()
 	{
-		const Int len = other.m_data ? other.m_data->m_len : 0;
-		const char *data = other.m_data ? (const char *)(other.m_data + 1) : "";
-		concat(data, len);
+		((StringBase<char> *)this)->releaseBuffer();
 	}
 
 	const char *str() const
@@ -137,6 +137,24 @@ private:
 	AvailableGameInfo *m_availableGames;			// this+0x50
 };
 
+// Retail calls StringBase<char>::concat (0x00887D60) directly. File-static
+// so no AsciiString member COMDAT leaves this TU.
+static inline void concatText(AsciiString &dst, const char *text, Int length)
+{
+	((StringBase<char> *)&dst)->concat(text, length);
+}
+
+// The inline AsciiString::concat(const AsciiString &) forwarder: length and
+// text pulled out of the argument with the null guards, then the counted
+// concat. File-static so no AsciiString member COMDAT leaves this TU.
+static inline void concatString(AsciiString &dst, const AsciiString &other)
+{
+	const AsciiStringData *const &otherData = *(AsciiStringData *const *)&other;
+	const Int len = otherData ? otherData->m_len : 0;
+	const char *data = otherData ? (const char *)(otherData + 1) : "";
+	concatText(dst, data, len);
+}
+
 // ?getSaveDirectory@GameState@@QBE?AVAsciiString@@XZ
 // The user-data path comes back from TheWritableGlobalData by value, five more
 // characters are concatenated onto it, and the result is copied into the
@@ -145,7 +163,7 @@ AsciiString GameState::getSaveDirectory(void) const
 {
 	AsciiString directory = TheWritableGlobalData->getPath_UserData();
 
-	directory.concat("Save\\", 5);
+	concatText(directory, "Save\\", 5);
 
 	return directory;
 }
@@ -154,7 +172,7 @@ AsciiString GameState::getSaveDirectory(void) const
 AsciiString GameState::getFilePathInSaveDirectory(const AsciiString& leaf) const
 {
 	AsciiString tmp = getSaveDirectory();
-	tmp.concat(leaf);
+	concatString(tmp, leaf);
 	return tmp;
 }
 

@@ -335,22 +335,6 @@ void GameState::reset( void )
 // ------------------------------------------------------------------------------------------------
 /** Clear any available games entries */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/System/SaveGame/GameState_clearAvailableGames.cpp
-// ?clearAvailableGames@GameState@@AAEXXZ present-unmatched
-void GameState::clearAvailableGames( void )
-{
-	AvailableGameInfo *gameInfo;
-
-	while( m_availableGames )
-	{
-
-		gameInfo = m_availableGames->next;
-		delete m_availableGames;
-		m_availableGames = gameInfo;
-
-	}  // end while
-
-}  // end clearAvailableGames
 
 // ------------------------------------------------------------------------------------------------
 /** Add a snapshot and block name pair to the systems used to load and save */
@@ -753,24 +737,8 @@ SaveCode GameState::loadGame( AvailableGameInfo gameInfo )
 }  // end loadGame
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/GameState_getSaveDirectory.cpp
-// ?getSaveDirectory@GameState@@QBE?AVAsciiString@@XZ present-unmatched
-AsciiString GameState::getSaveDirectory() const
-{
-	AsciiString tmp = TheGlobalData->getPath_UserData();
-	tmp.concat("Save\\");
-	return tmp;
-}
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/System/SaveGame/GameState_getFilePathInSaveDirectory.cpp
-// ?getFilePathInSaveDirectory@GameState@@QBE?AVAsciiString@@ABV2@@Z present-unmatched
-AsciiString GameState::getFilePathInSaveDirectory(const AsciiString& leaf) const
-{
-	AsciiString tmp = getSaveDirectory();
-	tmp.concat(leaf);
-	return tmp;
-}
 
 //-------------------------------------------------------------------------------------------------
 // ?isInSaveDirectory@GameState@@QBE_NABVAsciiString@@@Z present-unmatched
@@ -780,28 +748,6 @@ Bool GameState::isInSaveDirectory(const AsciiString& path) const
 }
 
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/System/SaveGame/GameState_getMapLeafName.cpp
-// ?getMapLeafName@GameState@@QBE?AVAsciiString@@ABV2@@Z present-unmatched
-AsciiString GameState::getMapLeafName(const AsciiString& in) const
-{
-	char* p = strrchr(in.str(), '\\');
-	if (p)
-	{
-		//
-		// p points to the last '\' (if found), however, if a '\' was found there better
-		// be another character beyond it, otherwise the map filename would actually
-		// be a *directory*  Just move to the first character beyond it so we are looking
-		// at the name only
-		//
-		++p;
-		DEBUG_ASSERTCRASH( p != NULL && *p != 0, ("GameState::xfer - Illegal map name encountered\n") );
-		return p;
-	}
-	else
-	{
-		return in;
-	}
-}
 
 // ------------------------------------------------------------------------------------------------
 static const char* findLastBackslashInRangeInclusive(const char* start, const char* end)
@@ -935,37 +881,6 @@ AsciiString GameState::portableMapPathToRealMapPath(const AsciiString& in) const
 // ------------------------------------------------------------------------------------------------
 /** Does the save game file exist */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/GameState_doesSaveGameExist_Thunk.cpp
-// ?doesSaveGameExist@GameState@@QAE_NVAsciiString@@@Z present-unmatched
-Bool GameState::doesSaveGameExist( AsciiString filename ) 
-{
-
-	// construct full path to file
-	AsciiString filepath = getFilePathInSaveDirectory(filename);
-
-	// open file
-	XferLoad xfer;
-	try
-	{
-
-		// try to open it
-		xfer.open( filepath );
-
-	}  // end try
-	catch( ... )
-	{
-
-		// unable to open file, it must not be here
-		return FALSE;
-
-	}  // end catch
-	
-	// close the file, we don't want to to anything with it right now
-	xfer.close();
-
-	return TRUE;
-
-}  // doesSaveGameExist
 
 // ------------------------------------------------------------------------------------------------
 /** Get save game info from the filename specified */

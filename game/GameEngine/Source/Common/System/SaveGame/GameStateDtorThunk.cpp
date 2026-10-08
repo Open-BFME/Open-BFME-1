@@ -104,8 +104,6 @@ private:
 		void *second;
 	};
 
-	void clearAvailableGames();
-
 	std::list<SnapshotBlock> m_snapshotBlockList[3];
 	SaveGameInfo m_gameInfo;
 	std::list<Snapshot *> m_snapshotPostProcessList;
@@ -114,15 +112,18 @@ private:
 	unsigned char m_isInLoadGame;
 };
 
-void GameState::clearAvailableGames()
+// GameState::clearAvailableGames (retail 0x0010E430) is matched in
+// GameStateSaveFiles.cpp; retail inlines it here. A file-static copy keeps
+// this TU from emitting a second ?clearAvailableGames@GameState.
+static __forceinline void clearAvailableGameList(AvailableGameInfo *&availableGames)
 {
 	AvailableGameInfo *gameInfo;
 
-	while (m_availableGames)
+	while (availableGames)
 	{
-		gameInfo = m_availableGames->next;
-		delete m_availableGames;
-		m_availableGames = gameInfo;
+		gameInfo = availableGames->next;
+		delete availableGames;
+		availableGames = gameInfo;
 	}
 }
 
@@ -135,5 +136,5 @@ GameState::~GameState()
 
 	m_snapshotPostProcessList.clear();
 	m_bfmeSnapshotBlockList.clear();
-	clearAvailableGames();
+	clearAvailableGameList(m_availableGames);
 }
