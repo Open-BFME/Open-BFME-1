@@ -43,7 +43,7 @@ public:
 // proc, which here rides the matched ILT thunk ?j_0002dd8a@@YAXXZ at RVA
 // 0x0002DD8A (route 0x00250CA0). The pushed immediate is the thunk's own
 // address, not its target's.
-void __cdecl j_0002dd8a();
+extern "C" void __cdecl __identifier("EvacuateDamageFieldParse")();
 
 class EvacuateDamage
 {
@@ -57,6 +57,6 @@ ModuleData *EvacuateDamage::friend_newModuleData(INI *ini)
 	EvacuateDamageModuleData *data = new EvacuateDamageModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_0002dd8a));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&__identifier("EvacuateDamageFieldParse")));
 	return (ModuleData *)data;
 }

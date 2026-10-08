@@ -83,7 +83,6 @@ dir32,0x0042D09C,?g_0042D09C@@YAXXZ,"nothing in the ledger owns 0x0042D09C. Give
 dir32,0x0042D902,??1Rva006AD440Entry@@QAE@XZ,"retail 0x0042D902 is already recorded as ??1Rva00699D60AudioOwner@@QAE@XZ; reference that name, not a new one"
 dir32,0x0042D998,?j_0002d998@@YAXXZ,"retail 0x0042D998 is already recorded as ?supplyTruckSubMachineReadyToLeave@WorkerStateMachine@@SA_NPAVState@@PAX@Z; reference that name, not a new one"
 dir32,0x0042DC95,?bfmeCheckDJ@@YAHPAVBfmeThingDJ@@@Z,"retail 0x0042DC95 is already recorded as _bfmeRva0036CFD0Callback; reference that name, not a new one"
-dir32,0x0042DD8A,?j_0002dd8a@@YAXXZ,"retail 0x0042DD8A is already recorded as _EvacuateDamageFieldParse; reference that name, not a new one"
 dir32,0x0042E02D,??0Rva00386070@@QAE@XZ,the name encodes 0x00386070 but retail reads 0x0042E02D
 dir32,0x0042E451,??1TransitionDamageFXRecordC@?A0x2535ff93@@QAE@XZ,"retail 0x0042E451 is already recorded as ??1TransitionDamageFXRecordC@?A0xebea2875@@QAE@XZ (+1 more); reference that name, not a new one"
 dir32,0x0042F01D,?g_0042F01D@@YAXXZ,"nothing in the ledger owns 0x0042F01D. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
