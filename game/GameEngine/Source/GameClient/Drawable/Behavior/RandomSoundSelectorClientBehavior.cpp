@@ -81,6 +81,7 @@ class RandomSoundSelectorClientBehavior : public ClientUpdateModule, public Soun
 {
 public:
 	RandomSoundSelectorClientBehavior(Thing *thing, const ModuleData *moduleData);
+	virtual ~RandomSoundSelectorClientBehavior();
 	virtual void clientUpdate();
 	virtual void selectSound();
 
