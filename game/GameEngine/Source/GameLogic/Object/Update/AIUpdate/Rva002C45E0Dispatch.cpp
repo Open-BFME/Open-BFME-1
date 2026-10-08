@@ -249,6 +249,7 @@ void Rva002C45E0::dispatch(const AICommandParms *parms)
 	case 51:
 	case 52:
 	case 54:
+	case 56:
 	case 65:
 	case 66:
 		if (!garrisonable) {

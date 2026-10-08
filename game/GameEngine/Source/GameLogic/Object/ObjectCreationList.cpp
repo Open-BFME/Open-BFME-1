@@ -1561,12 +1561,14 @@ void (*bfme_force_vector_Coord3D_dtor_anchor)() = &bfme_force_vector_Coord3D_dto
 //-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
+void (*ObjectCreationList_forceDeliverPayloadParse)(INI *, void *, void *, const void *) =
+	DeliverPayloadNugget::parse;
+
 static const FieldParse TheObjectCreationListFieldParse[] =
 {
 	{ "CreateObject",			GenericObjectCreationNugget::parseObject, 0, 0},		
 	{ "CreateDebris",			GenericObjectCreationNugget::parseDebris, 0, 0},		
 	{ "ApplyRandomForce",	ApplyRandomForceNugget::parse, 0, 0},
-	{ "DeliverPayload",		DeliverPayloadNugget::parse, 0, 0},
 	{ "FireWeapon",				FireWeaponNugget::parse, 0, 0},
 	{ "Attack",						AttackNugget::parse, 0, 0},
 	{ NULL, NULL, 0, 0 }  // keep this last
