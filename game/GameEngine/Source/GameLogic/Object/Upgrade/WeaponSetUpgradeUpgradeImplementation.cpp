@@ -16,6 +16,20 @@ public:
 	void bfmeInitTFA();
 };
 
+// Retail calls reach ILT 0x0000835F -> 0x002D9F30 and ILT 0x000348EC ->
+// 0x001C9A10; called by those ledger row names.
+class Rva002D9F30Owner
+{
+public:
+	void setCondition();
+};
+
+class Gen001C9A10
+{
+public:
+	void handle(int a);
+};
+
 class WeaponSetUpgrade
 {
 protected:
@@ -24,6 +38,6 @@ protected:
 
 void WeaponSetUpgrade::upgradeImplementation()
 {
-	((BfmeBaseTFA *)((char *)this - 0x10))->bfmeInitTFA();
-	(*(BfmeSubTFA **)((char *)this - 8))->bfmeSetTFA(3);
+	((Rva002D9F30Owner *)(BfmeBaseTFA *)((char *)this - 0x10))->setCondition();
+	((Gen001C9A10 *)*(BfmeSubTFA **)((char *)this - 8))->handle(3);
 }

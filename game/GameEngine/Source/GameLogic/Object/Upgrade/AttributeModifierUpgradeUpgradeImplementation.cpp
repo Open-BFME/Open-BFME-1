@@ -16,6 +16,22 @@ public:
 	void bfmeSetTCB(void *p, int v);
 };
 
+// Retail calls reach ILT 0x0000835F -> 0x002D9F30 and ILT 0x00037A56 ->
+// 0x001C1DA0; called by those ledger row names.
+class Rva002D9F30Owner
+{
+public:
+	void setCondition();
+};
+
+class AsciiString;
+
+class Object
+{
+public:
+	bool applyAttributeModifier(const AsciiString &name, int frames);
+};
+
 class AttributeModifierUpgrade
 {
 protected:
@@ -24,7 +40,7 @@ protected:
 
 void AttributeModifierUpgrade::upgradeImplementation()
 {
-	((BfmeBaseTCB *)((char *)this - 0x10))->bfmeInitTCB();
+	((Rva002D9F30Owner *)(BfmeBaseTCB *)((char *)this - 0x10))->setCondition();
 	BfmeSetterTCB *s = *(BfmeSetterTCB **)((char *)this - 8);
-	s->bfmeSetTCB(*(char **)((char *)this - 0xc) + 0x70, -1);
+	((Object *)s)->applyAttributeModifier(*(const AsciiString *)(*(char **)((char *)this - 0xc) + 0x70), -1);
 }
