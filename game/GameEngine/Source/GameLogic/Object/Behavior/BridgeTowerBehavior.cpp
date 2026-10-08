@@ -59,11 +59,7 @@ BridgeTowerBehavior::BridgeTowerBehavior( Thing *thing, const ModuleData *module
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ??1BridgeTowerBehavior@@ present-unmatched
-BridgeTowerBehavior::~BridgeTowerBehavior( void )
-{
-
-}  // end ~BridgeTowerBehavior
+// The destructor (retail 0x001F5F70) is defined in BridgeTowerBehaviorDestructor.cpp.
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------

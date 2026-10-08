@@ -56,26 +56,6 @@ Rva001EE790DeepDtor::~Rva001EE790DeepDtor()
 {
 }
 
-class Rva001F5F70DeepDtorL0M0 { public: virtual void anchor(); };
-class Rva001F5F70DeepDtorL0 : public NestedInlineBase, public Rva001F5F70DeepDtorL0M0
-{
-public:
-	virtual ~Rva001F5F70DeepDtorL0() {}
-};
-
-class Rva001F5F70DeepDtorL1M0 { public: virtual void anchor(); };
-class Rva001F5F70DeepDtorL1M1 { public: virtual void anchor(); };
-class Rva001F5F70DeepDtorL1M2 { public: virtual void anchor(); };
-class Rva001F5F70DeepDtor : public Rva001F5F70DeepDtorL0, public Rva001F5F70DeepDtorL1M0, public Rva001F5F70DeepDtorL1M1, public Rva001F5F70DeepDtorL1M2
-{
-public:
-	virtual ~Rva001F5F70DeepDtor();
-};
-
-Rva001F5F70DeepDtor::~Rva001F5F70DeepDtor()
-{
-}
-
 class Rva001FBFC0DeepDtorL0M0 { public: virtual void anchor(); };
 class Rva001FBFC0DeepDtorL0 : public NestedInlineBase, public Rva001FBFC0DeepDtorL0M0
 {
