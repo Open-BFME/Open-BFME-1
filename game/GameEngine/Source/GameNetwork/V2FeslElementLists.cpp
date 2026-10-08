@@ -41,11 +41,20 @@ public:
 	virtual void release( void *block, int flags );
 };
 
-extern GenAlloc *Gen007EFFC0();
+// callees.py 0x7F8200: the getter at 0x007EFFC0 is the ledger row
+// bfmeGo929C@@YAPAXXZ and the per-element call at 0x008002C0 is
+// append@Rva00800290Buffer@@QAEXPBD@Z.
+extern void *bfmeGo929C();
+#define Gen007EFFC0() ( (GenAlloc *)bfmeGo929C() )
+
+class Rva00800290Buffer
+{
+public:
+	void append( const char *text );                                  // 0x008002C0
+};
 
 struct Gen_dtor_007f6d20
 {
-	void attach( void *item );                                        // 0x008002C0
 	int m_a;
 	int m_b;
 };
@@ -111,7 +120,7 @@ void Rva007F8200Owner::setList0( void **items, int count )
 		Gen_dtor_007f6d20 *element = ( i >= elements->m_count )
 			? 0
 			: &elements->m_data[ i ];
-		element->attach( items[ i ] );
+		( (Rva00800290Buffer *)element )->append( (const char *)items[ i ] );
 	}
 }
 
@@ -126,7 +135,7 @@ void Rva007F8200Owner::setList1( void **items, int count )
 		Gen_dtor_007f6d20 *element = ( i >= elements->m_count )
 			? 0
 			: &elements->m_data[ i ];
-		element->attach( items[ i ] );
+		( (Rva00800290Buffer *)element )->append( (const char *)items[ i ] );
 	}
 }
 
@@ -141,7 +150,7 @@ void Rva007F8200Owner::setList2( void **items, int count )
 		Gen_dtor_007f6d20 *element = ( i >= elements->m_count )
 			? 0
 			: &elements->m_data[ i ];
-		element->attach( items[ i ] );
+		( (Rva00800290Buffer *)element )->append( (const char *)items[ i ] );
 	}
 }
 
