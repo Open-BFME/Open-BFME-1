@@ -2,6 +2,23 @@
 // (helpers 0x0075CAA0, 0x0075CBE0, 0x0075CB60); one direct caller at 0x00765FB0.
 // cl: /DNDEBUG /MD /EHsc
 
+// callees.py 0x760660: ILT 0x0003472F -> 0x0075CAA0 is the ledger row
+// update@Rva0075CAA0Owner@@QAEXHPAURva0075CAA0Ref@@EHHMHEH@Z and ILT
+// 0x0003DA46 -> 0x0075CB60 is bfmeResetYB@BfmeHostYB@@QAEXH@Z.
+struct Rva0075CAA0Ref;
+
+class Rva0075CAA0Owner
+{
+public:
+	void update(int, Rva0075CAA0Ref *, unsigned char, int, int, float, int, unsigned char, int);
+};
+
+class BfmeHostYB
+{
+public:
+	void bfmeResetYB(int);
+};
+
 class Rva00760660Ref
 {
 public:
@@ -43,9 +60,7 @@ public:
 class BfmeHostESC
 {
 public:
-	void bfmeCallESC(void *, int, unsigned char, int, int, int, int, unsigned char, int);
 	void bfmeSendESC(void *, int);
-	void bfmeDoneESC(int);
 };
 
 extern float minf(float, float);
@@ -72,7 +87,7 @@ private:
 	unsigned char m_flag111;
 };
 
-// The pinned 0x0075CAA0 view takes the two float arguments as raw dwords.
+// The 0x0075CAA0 row takes the first float argument as a raw dword.
 void Rva00760660Owner::update(Rva00760660Ref *replacement, int flag,
 	int firstPart, float secondPart, float value, int valuePart, int slotByte,
 	float storedValue)
@@ -93,8 +108,8 @@ void Rva00760660Owner::update(Rva00760660Ref *replacement, int flag,
 	{
 		if (m_refDC == 0 && m_refF8 == 0)
 		{
-			host->bfmeCallESC((void *)0, (int)replacement, (unsigned char)flag,
-				firstPart, *(int *)&secondPart, *(int *)&value, valuePart,
+			((Rva0075CAA0Owner *)host)->update(0, (Rva0075CAA0Ref *)replacement, (unsigned char)flag,
+				firstPart, *(int *)&secondPart, value, valuePart,
 				(unsigned char)slotByte, 1);
 			m_float78 = 1.0f;
 			m_float74 = 0.0f;
@@ -105,8 +120,8 @@ void Rva00760660Owner::update(Rva00760660Ref *replacement, int flag,
 			{
 				if (m_flag111)
 				{
-					host->bfmeCallESC((void *)2, (int)replacement, (unsigned char)flag,
-						firstPart, *(int *)&secondPart, *(int *)&value, valuePart,
+					((Rva0075CAA0Owner *)host)->update(2, (Rva0075CAA0Ref *)replacement, (unsigned char)flag,
+						firstPart, *(int *)&secondPart, value, valuePart,
 						(unsigned char)slotByte, 1);
 					return;
 				}
@@ -117,8 +132,8 @@ void Rva00760660Owner::update(Rva00760660Ref *replacement, int flag,
 			{
 				host->bfmeSendESC(0, 1);
 			}
-			host->bfmeCallESC((void *)1, (int)replacement, (unsigned char)flag,
-				firstPart, *(int *)&secondPart, *(int *)&value, valuePart,
+			((Rva0075CAA0Owner *)host)->update(1, (Rva0075CAA0Ref *)replacement, (unsigned char)flag,
+				firstPart, *(int *)&secondPart, value, valuePart,
 				(unsigned char)slotByte, 1);
 			m_float74 = m_float78 = secondPart > 0.0f
 				? maxf(1.0f, minf(secondPart, (float)replacement->slot10() - 1.0f))
@@ -127,10 +142,10 @@ void Rva00760660Owner::update(Rva00760660Ref *replacement, int flag,
 	}
 	else
 	{
-		host->bfmeCallESC((void *)0, (int)replacement, (unsigned char)flag,
-			firstPart, *(int *)&secondPart, *(int *)&value, valuePart,
+		((Rva0075CAA0Owner *)host)->update(0, (Rva0075CAA0Ref *)replacement, (unsigned char)flag,
+			firstPart, *(int *)&secondPart, value, valuePart,
 			(unsigned char)slotByte, 1);
-		host->bfmeDoneESC(1);
+		((BfmeHostYB *)host)->bfmeResetYB(1);
 		m_float78 = 1.0f;
 		m_float74 = 0.0f;
 	}
