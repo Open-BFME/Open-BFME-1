@@ -90658,3 +90658,4 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_0BM@EJKIPFFI@FOUNDATION_CONSTRUCT_CANCEL?$AA@,0x00CFB290,Retail command-name table VA 0x012B5F80 entry; compiler string literal FOUNDATION_CONSTRUCT_CANCEL equals retail at VA 0x010FB290
 ??_C@_0BF@EADOOLE@FOUNDATION_CONSTRUCT?$AA@,0x00CFB2B4,Retail command-name table VA 0x012B5F80 entry; compiler string literal FOUNDATION_CONSTRUCT equals retail at VA 0x010FB2B4
 ??_C@_04OKGDLNCL@NONE?$AA@,0x00C736D8,Retail command-name table VA 0x012B5F80 entry; compiler string literal NONE equals retail at VA 0x010736D8
+??_C@_0BB@HFJAMKDN@ExcludedUpgrades?$AA@,0x00D159D0,retail FieldParse table VA 0x011159E8 entry 1 token points to VA 0x011159D0; compiled ExcludedUpgrades literal and NUL equal retail; targets/game/reverse/identity_evidence/00d159e8-fieldparse-table.md

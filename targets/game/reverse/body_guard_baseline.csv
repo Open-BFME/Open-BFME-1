@@ -723,7 +723,6 @@ dir32,0x01114A90,?g_01114A90@FXParticleSystem@@3QBDB,"nothing in the ledger owns
 dir32,0x01114BB0,?m_terrainRoadFieldParseTable@TerrainRoadType@@1QBUFieldParse@@B,"retail 0x01114BB0 is already recorded as ?m_terrainRoadFieldParseTable@TerrainRoadType@@2QBUFieldParse@@B; reference that name, not a new one"
 dir32,0x01115588,??_7ASCB_Iface@@6B@,"retail 0x01115588 is already recorded as ??_7Rva00604B30@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x011155A0,??_7AnimationSoundClientBehavior@@6BDrawableModule@@@,"retail 0x011155A0 is already recorded as ??_7AnimationSoundClientBehavior@@6BASCB_MiddleBase@@@ (+1 more); reference that name, not a new one"
-dir32,0x011159E8,?g_011159E8@@3QBUFieldParse@@B,"nothing in the ledger owns 0x011159E8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01116F40,?g_01116F40@@3PAULookupListRec@@A,"nothing in the ledger owns 0x01116F40. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0111A2B0,??_7ConnectionManager@@6B@,"nothing in the ledger owns 0x0111A2B0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0111BAC8,?g_rva0111BAC8@@3PAURva006A16B0Entry@@A,"retail 0x0111BAC8 is already recorded as ?Rva006A16B0Table@@3PAURva006A16B0Entry@@A; reference that name, not a new one"

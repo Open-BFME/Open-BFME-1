@@ -39,7 +39,7 @@ public:
 };
 
 extern const FieldParse *getVoiceFieldParse();
-extern const FieldParse g_011159E8[];
+extern const FieldParse g_011159E8[4];
 
 class UpgradeCenter;
 extern UpgradeCenter *TheUpgradeCenter;
@@ -96,3 +96,23 @@ void Rva00608FE0Element::parse(INI *ini)
 		(reinterpret_cast<Rva006083A0SoundUpgrade *>(this)->*u.call)(localA, localB);
 	}
 }
+
+struct FieldParse
+{
+	const char *token;
+	void (*parse)(INI *, void *, void *, const void *);
+	const void *userData;
+	int offset;
+};
+
+extern "C" void __identifier("?parsePerUnitSounds@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?parseAsciiStringVectorAppend@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern "C" void __identifier("?u4IniFlag00607DE0@@YAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
+
+extern "C" const FieldParse __identifier("?g_011159E8@@3QBUFieldParse@@B")[4] =
+{
+	{ "UnitSpecificSounds", __identifier("?parsePerUnitSounds@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z"), 0, 0x1fc },
+	{ "ExcludedUpgrades", __identifier("?parseAsciiStringVectorAppend@INI@@SAXPAV1@PAX1PBX@Z"), 0, 0x3c },
+	{ "VoicePriority", __identifier("?u4IniFlag00607DE0@@YAXPAVINI@@PAX1PBX@Z"), 0, 0x208 },
+	{ 0, 0, 0, 0 }
+};
