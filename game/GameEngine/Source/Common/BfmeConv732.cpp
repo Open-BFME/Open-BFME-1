@@ -24,7 +24,7 @@ typedef void (__stdcall *VectorDestructorIterator)(
 
 // VA 0x00438D2A: the 5-byte ILT thunk in front of Xfer's destructor, which is
 // what retail pushes.
-extern "C" void __cdecl __identifier("?j_00038d2a@@YAXXZ")();
+extern "C" void __cdecl __identifier("bfmeDtorCbDME")();
 
 // VA 0x01129258: Xfer's vftable.
 extern "C" const unsigned char __identifier("??_7Xfer@@6B@")[];
@@ -48,7 +48,7 @@ void *BfmeThingDME::bfmeGoDME(unsigned char flags)
 		char *base = (char *)this - 4;
 		((VectorDestructorIterator)__identifier("??_M@YGXPAXIHP6EX0@Z@Z"))(
 			this, 4, *(int *)base,
-			(void (__stdcall *)(void *))__identifier("?j_00038d2a@@YAXXZ"));
+			(void (__stdcall *)(void *))__identifier("bfmeDtorCbDME"));
 		if (flags & 1)
 			::operator delete[](base);
 		return base;

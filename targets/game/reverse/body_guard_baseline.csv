@@ -127,7 +127,6 @@ dir32,0x004376AA,??1Message0043DBA0@@QAE@XZ,"nothing in the ledger owns 0x004376
 dir32,0x004376D7,??0RadarEvent@@QAE@XZ,"nothing in the ledger owns 0x004376D7. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0043777C,?j_0003777c@@YAXXZ,"retail 0x0043777C is already recorded as _OneRingPenaltyUpdateFieldParse; reference that name, not a new one"
 dir32,0x00438BBD,??1Map0044B780@@QAE@XZ,"nothing in the ledger owns 0x00438BBD. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x00438D2A,?j_00038d2a@@YAXXZ,"retail 0x00438D2A is already recorded as _bfmeDtorCbDME; reference that name, not a new one"
 dir32,0x00438DE3,?ableToAdvance@AIDockMachine@@SA_NPAVState@@PAX@Z,"nothing in the ledger owns 0x00438DE3. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00439176,?j_00039176@@YAXXZ,"retail 0x00439176 is already recorded as _ElvenWoodSpecialPowerFieldParse; reference that name, not a new one"
 dir32,0x004392AC,??1?$vector@PAVUpdateModule@@V?$allocator@PAVUpdateModule@@@_STL@@@_STL@@QAE@XZ,"retail 0x004392AC is already recorded as ??1Rva00387FB0IntVector@@QAE@XZ; reference that name, not a new one"
