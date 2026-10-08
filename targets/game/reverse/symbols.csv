@@ -90871,3 +90871,7 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_0BB@JMEGGBFI@VictoryThreshold?$AA@,0x00C9FD20,FactionVictoryData field-parse table VA 0x0109FBC8 entry; compiler string literal VictoryThreshold equals retail at VA 0x0109FD20
 ??_C@_0BG@IMKHEHAO@MapToCellVictoryRatio?$AA@,0x00C9FD04,FactionVictoryData field-parse table VA 0x0109FBC8 entry; compiler string literal MapToCellVictoryRatio equals retail at VA 0x0109FD04
 ??_C@_0P@JOPFKPGC@MajorUnitValue?$AA@,0x00C9FCF0,FactionVictoryData field-parse table VA 0x0109FBC8 entry; compiler string literal MajorUnitValue equals retail at VA 0x0109FCF0
+??_C@_08CNLDOMAK@CellSize?$AA@,0x00C9FCE4,Retail VictorySystem field-parse table VA 0x0109FC28 entry; compiler string literal CellSize equals retail at VA 0x0109FCE4
+??_C@_0BD@CNDCOIB@ScalePerLogicFrame?$AA@,0x00C9FCCC,Retail VictorySystem field-parse table VA 0x0109FC28 entry; compiler string literal ScalePerLogicFrame equals retail at VA 0x0109FCCC
+??_C@_0BG@LECPNNIC@SubtractPerLogicFrame?$AA@,0x00C9FCB0,Retail VictorySystem field-parse table VA 0x0109FC28 entry; compiler string literal SubtractPerLogicFrame equals retail at VA 0x0109FCB0
+??_C@_0BA@BEMNNCDL@CellBonusRadius?$AA@,0x00C9FC9C,Retail VictorySystem field-parse table VA 0x0109FC28 entry; compiler string literal CellBonusRadius equals retail at VA 0x0109FC9C
