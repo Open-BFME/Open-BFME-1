@@ -14,12 +14,14 @@ extern const char g_bfmeEmptyAscii[];
 struct GameTextAsciiString
 {
 	void *m_data;
-
-	const char *str() const
-	{
-		return m_data ? (const char *)m_data + 8 : g_bfmeEmptyAscii;
-	}
 };
+
+// File-static so this TU emits no GameTextAsciiString::str COMDAT (the
+// GameTextStringLookUp* TUs own it, built with different flags).
+static inline const char *gameTextStr(const GameTextAsciiString *s)
+{
+	return s->m_data ? (const char *)s->m_data + 8 : g_bfmeEmptyAscii;
+}
 
 struct GameTextStringLookUp
 {
@@ -62,7 +64,7 @@ _STL::pair<GameTextStringLookUp *, GameTextStringLookUp *> Rva00437B30EqualRange
 			const char *key = value;
 			int half = length >> 1;
 			GameTextStringLookUp *middle = first + half;
-			if (_strcmpi(middle->label->str(), key) < 0)
+			if (_strcmpi(gameTextStr(middle->label), key) < 0)
 			{
 				first = middle + 1;
 				length = length - half - 1;
@@ -70,7 +72,7 @@ _STL::pair<GameTextStringLookUp *, GameTextStringLookUp *> Rva00437B30EqualRange
 			else
 			{
 				const char *secondKey = value;
-				if (_strcmpi(secondKey, middle->label->str()) < 0)
+				if (_strcmpi(secondKey, gameTextStr(middle->label)) < 0)
 				{
 					length = half;
 				}
