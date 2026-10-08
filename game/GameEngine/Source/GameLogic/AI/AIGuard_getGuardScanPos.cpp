@@ -40,16 +40,27 @@ public:
 	char m_pad00[0x38];
 };
 
+// Retail ILT 0x000241FE lands on 0x000EDCD0, matched as
+// Team::getEstimateTeamPosition_000EDCD0.
 class Team
 {
 public:
-	void getPosition(Coord3D *position);
+	void getEstimateTeamPosition_000EDCD0(Coord3D *position) const;
 };
+#define getPosition(position) getEstimateTeamPosition_000EDCD0(position)
+
+// Retail ILT 0x00007AD6 lands on 0x0018F790, matched as
+// BfmeA1263::bfmeGet1263.
+struct BfmeVec1263;
+class BfmeA1263
+{
+public:
+	void bfmeGet1263(BfmeVec1263 *out);
+};
+#define getCenter(center) bfmeGet1263((BfmeVec1263 *)(center))
 
 class PolygonTrigger
 {
-public:
-	void getCenter(Coord3D *center);
 };
 
 class AIGuardMachine
@@ -99,7 +110,7 @@ void AIGuardMachine::getGuardScanPos(Coord3D *scanPosition)
 		}
 		else
 		{
-			m_areaToGuard->getCenter(&scanAnchor);
+			((BfmeA1263 *)m_areaToGuard)->getCenter(&scanAnchor);
 		}
 	}
 

@@ -83066,7 +83066,6 @@ name,address,notes
 ?getCanAttackObject@ActionManager@@QAE?AW4CanAttackResult@@PBVObject@@0W4CommandSourceType@@W4AbleToAttackType@@@Z,0x00045D90,retail AIEnterState::update call target
 ?getCell@Pathfinder@@QAEPAVPathfindCell@@W4PathfindLayerEnum@@HH@Z,0x00020671
 ?getCenter@AIGroup@@QAE_NPAUCoord3D@@@Z,0x00009C2D,AIGroup::getCenter ILT from recompute 0x00154B80; body dump 0x00151E50
-?getCenter@PolygonTrigger@@QAEXPAUCoord3D@@@Z,0x00007AD6,Polygon trigger center copy called by AIGuardMachine::getGuardScanPos
 ?getCenterPoint@PolygonTrigger@@QBEXPAUCoord3D@@@Z,0x00007AD6,PolygonTrigger center point ILT used by the four-argument guard-area helper
 ?getChipset@BfmeChipsetQuery@@SA?AW4ChipsetType@@XZ,0x000162A7,alias of ?getChipset@W3DShaderManager@@SA?AW4ChipsetType@@XZ pinned at the same ILT; declared-only view so the call keeps the ordinary convention where the same-TU definition would use MSVC's private one
 ?getChipset@W3DShaderManager@@SA?AW4ChipsetType@@XZ,0x000162A7
