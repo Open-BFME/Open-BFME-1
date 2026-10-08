@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="880" height="296" viewBox="0 0 880 296" role="img">
-  <title>BFME 1 rules=v2: 61.73% recovered source</title>
+  <title>BFME 1 rules=v2: 61.67% recovered source</title>
   <style>
     .card { fill: #0d1117; stroke: #30363d; } .track { fill: #21262d; }
     .strong { fill: #f0f6fc; } .muted { fill: #8b949e; }
@@ -11,9 +11,9 @@
   <rect class="card" x="0.5" y="0.5" width="879" height="295" rx="12"/>
   <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif">
     <text x="28" y="30" class="muted" font-size="13" font-weight="600" letter-spacing="1.3">BFME 1 · RULES V2 · WHAT THE BARS ARE MADE OF</text>
-    <text x="28" y="64" class="strong" font-size="15" font-weight="600">Rebuilt from source, by kind</text><text x="852" y="64" class="strong" font-size="18" font-weight="700" text-anchor="end">84.67%</text><rect class="track" x="28" y="74" width="824" height="14"/><rect x="28.00" y="74" width="508.66" height="14" fill="#2ea043"/><rect x="536.66" y="74" width="99.58" height="14" fill="#7ee2a8"/><rect x="636.24" y="74" width="89.47" height="14" fill="#3d5a45"/><text x="28" y="108" class="muted" font-size="12.5">recovered source 61.73% + generator C++ 12.08% + prebuilt .lib 10.86%; dumps 13.89% not counted</text>
-    <text x="28" y="138" class="strong" font-size="15" font-weight="600">Authored C++, by name</text><text x="852" y="138" class="strong" font-size="18" font-weight="700" text-anchor="end">58.52%</text><rect class="track" x="28" y="148" width="824" height="14"/><rect x="28.00" y="148" width="22.30" height="14" fill="#1f6feb"/><rect x="50.30" y="148" width="338.42" height="14" fill="#388bfd"/><rect x="388.71" y="148" width="121.51" height="14" fill="#a5c8ff"/><text x="28" y="182" class="muted" font-size="12.5">EA name evidence 2.71%, readable name 41.07%, address-derived name 14.75% (of all code)</text>
+    <text x="28" y="64" class="strong" font-size="15" font-weight="600">Rebuilt from source, by kind</text><text x="852" y="64" class="strong" font-size="18" font-weight="700" text-anchor="end">84.68%</text><rect class="track" x="28" y="74" width="824" height="14"/><rect x="28.00" y="74" width="508.14" height="14" fill="#2ea043"/><rect x="536.14" y="74" width="99.43" height="14" fill="#7ee2a8"/><rect x="635.57" y="74" width="90.21" height="14" fill="#3d5a45"/><text x="28" y="108" class="muted" font-size="12.5">recovered source 61.67% + generator C++ 12.07% + prebuilt .lib 10.95%; dumps 13.88% not counted</text>
+    <text x="28" y="138" class="strong" font-size="15" font-weight="600">Authored C++, by name</text><text x="852" y="138" class="strong" font-size="18" font-weight="700" text-anchor="end">58.55%</text><rect class="track" x="28" y="148" width="824" height="14"/><rect x="28.00" y="148" width="22.32" height="14" fill="#1f6feb"/><rect x="50.32" y="148" width="339.14" height="14" fill="#388bfd"/><rect x="389.46" y="148" width="120.97" height="14" fill="#a5c8ff"/><text x="28" y="182" class="muted" font-size="12.5">EA name evidence 2.71%, readable name 41.16%, address-derived name 14.68% (of all code)</text>
     <text x="28" y="212" class="strong" font-size="15" font-weight="600">Real link, closed-strict</text><text x="852" y="212" class="strong" font-size="18" font-weight="700" text-anchor="end">pending</text><rect class="track" x="28" y="222" width="824" height="14"/><text x="28" y="256" class="muted" font-size="12.5">pending: no committed link-cycle receipt</text>
-    <text x="28" y="276" class="muted" font-size="12.5">counters: pins 90,325 (0.52/row), alias rows 47,311, /alternatename 517, __emit 317,266, asm db bytes 5,088,604, gate debt 1,574</text>
+    <text x="28" y="276" class="muted" font-size="12.5">counters: pins 90,325 (0.52/row), alias rows 47,192, /alternatename 517, __emit 317,266, asm db bytes 5,088,604, gate debt 1,365</text>
   </g>
 </svg>
