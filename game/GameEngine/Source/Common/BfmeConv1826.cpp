@@ -15,10 +15,6 @@ public:
 	BfmeElemTG m_bfmeElemsTG[1];
 };
 
-struct Rva00367E30Logic
-{
-	BfmePlayerTG *bfmeFindTG(void *key);
-};
 
 // Retail's GameLogic singleton (0x012F0898) is EA's `GameLogic *TheGameLogic`
 // (mangled ?TheGameLogic@@3PAVGameLogic@@A, defined in GameLogic.cpp).  This TU
@@ -27,23 +23,41 @@ class GameLogic;
 
 extern GameLogic *TheGameLogic;
 
-struct Rva002EE330PlayerList
-{
-	char bfmeHasTG(BfmePlayerTG *player);
-};
 
 // ?ThePlayerList@@3PAVPlayerList@@A -- retail 0x012ED748, defined once in
 // Common/RTS/PlayerList.cpp. The view above is this TU's own layout of it.
 class PlayerList;
 extern PlayerList *ThePlayerList;
 
+class ControlBar;
+
+extern ControlBar *TheControlBar;
+
+// Callees (tools/callees.py): ILT 0x1F253 -> 0x0009A510 GameLogic::findObjectByID,
+// ILT 0x3A85 -> 0x000DF810 PlayerList::isLocalAlliedWith, ILT 0x3BCCD ->
+// 0x004C1B60 ControlBar::rva004C1B60.
+class Object;
+class GameWindow;
+
+class GameLogic
+{
+public:
+	Object *findObjectByID(int id);
+};
+
+class PlayerList
+{
+public:
+	unsigned char isLocalAlliedWith(Object *obj);
+};
+
 class ControlBar
 {
 public:
-	void bfmeSelectTG(void *item, int flag);
+	void rva004C1B60(GameWindow *window, void *data);
 };
 
-extern ControlBar *TheControlBar;
+#define bfmeSelectTG(item, flag) rva004C1B60((GameWindow *)(item), (void *)(flag))
 
 class BfmeOwnerTG
 {
@@ -63,14 +77,14 @@ void BfmeOwnerTG::bfmeShowTG(int unused)
 	if (item == 0)
 		return;
 
-	BfmePlayerTG *player = ((Rva00367E30Logic *)TheGameLogic)->bfmeFindTG(base->m_bfmeKeyTG);
+	BfmePlayerTG *player = (BfmePlayerTG *)TheGameLogic->findObjectByID((int)base->m_bfmeKeyTG);
 
 	if (player != 0)
 	{
 		if (ThePlayerList == 0)
 			return;
 
-		if (!((Rva002EE330PlayerList *)ThePlayerList)->bfmeHasTG(player))
+		if (!ThePlayerList->isLocalAlliedWith((Object *)player))
 			return;
 	}
 
