@@ -119,7 +119,7 @@ public:
 	~VertexMaterialClass(void);
 
 	VertexMaterialClass &	operator = (const VertexMaterialClass &src);
-	VertexMaterialClass *	Clone(void) { VertexMaterialClass * mat = NEW_REF (VertexMaterialClass,()); *mat = *this; return mat;}
+	VertexMaterialClass *	Clone(void);	///< out of line: retail 0x0092EF30 (VertexMaterialClone0092EF30.cpp)
 
 	/*
 	** Name Access
