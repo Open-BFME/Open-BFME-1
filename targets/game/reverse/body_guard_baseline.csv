@@ -1080,8 +1080,6 @@ dir32,0x012F3F2C,?textEntryLadderPassword@@3PAVGameWindow@@A,"nothing in the led
 dir32,0x012F3F44,?parentPopupID@PopupJoinGameState@@3W4NameKeyType@@A,"retail 0x012F3F44 is already recorded as ?parentPopupID@PopupJoinGameState@@3HA; reference that name, not a new one"
 dir32,0x012F410C,?g_012F410C@@3PAVGameWindow@@A,"nothing in the ledger owns 0x012F410C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F4118,?g_012F4118@@3PAVGameWindow@@A,"nothing in the ledger owns 0x012F4118. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x012F4254,?buttonPlayID@@3HA,"nothing in the ledger owns 0x012F4254. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x012F4258,?buttonIgnoreID@@3HA,"nothing in the ledger owns 0x012F4258. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F425C,?buttonStatsID@@3HA,"nothing in the ledger owns 0x012F425C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F45C0,?g_012F45C0@@3_NA,"nothing in the ledger owns 0x012F45C0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F4628,?g_012F4628@@3PAVGameWindow@@A,"nothing in the ledger owns 0x012F4628. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"

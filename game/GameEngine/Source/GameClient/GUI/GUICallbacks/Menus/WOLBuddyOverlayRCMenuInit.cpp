@@ -31,8 +31,8 @@ public:
 
 extern int buttonAddID;
 extern int buttonDeleteID;
-static NameKeyType buttonPlayID = NAMEKEY_INVALID;
-static NameKeyType buttonIgnoreID = NAMEKEY_INVALID;
+extern int buttonPlayID;
+extern int buttonIgnoreID;
 static NameKeyType buttonStatsID = NAMEKEY_INVALID;
 
 // ?WOLBuddyOverlayRCMenuInit@@YAXPAVWindowLayout@@PAX@Z
