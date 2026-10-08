@@ -15,30 +15,40 @@ struct BfmeAsciiStringData
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
+class AsciiString;
+static inline Int asciiLength(const AsciiString &s);
+static inline Int asciiCompare(const AsciiString &self, const AsciiString &other);
+
 class AsciiString
 {
 public:
-	Int getLength() const { return m_data ? m_data->m_len : 0; }
+	friend Int asciiLength(const AsciiString &s);
 	const char *str() const { return m_data ? (const char *)(m_data + 1) : ""; }
 
-	Int compare(const AsciiString &other) const
-	{
-		Int otherLength = other.getLength();
-		const char *otherData = other.str();
-		Int thisLength = getLength();
-		const char *thisData = str();
-		Int shorter = thisLength < otherLength ? thisLength : otherLength;
-		Int result = memcmp(thisData, otherData, shorter);
-		if (result != 0)
-			return result;
-		return thisLength - otherLength;
-	}
-
-	Bool operator==(const AsciiString &other) const { return compare(other) == 0; }
+	friend Int asciiCompare(const AsciiString &self, const AsciiString &other);
 
 private:
 	BfmeAsciiStringData *m_data;
 };
+
+// File-static so this TU emits no AsciiString getLength/compare/== COMDATs;
+// retail inlines them here.
+static inline Int asciiLength(const AsciiString &s) { return s.m_data ? s.m_data->m_len : 0; }
+
+static inline Int asciiCompare(const AsciiString &self, const AsciiString &other)
+{
+	Int otherLength = asciiLength(other);
+	const char *otherData = other.str();
+	Int thisLength = asciiLength(self);
+	const char *thisData = self.str();
+	Int shorter = thisLength < otherLength ? thisLength : otherLength;
+	Int result = memcmp(thisData, otherData, shorter);
+	if (result != 0)
+		return result;
+	return thisLength - otherLength;
+}
+
+static inline Bool operator==(const AsciiString &left, const AsciiString &right) { return asciiCompare(left, right) == 0; }
 
 Bool bfmeAttributeStringRangeEqual(const AsciiString *first,
 		const AsciiString *last, const AsciiString *other)

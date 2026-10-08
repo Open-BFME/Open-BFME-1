@@ -16,26 +16,17 @@ typedef unsigned int UnsignedInt;
 extern "C" int __cdecl memcmp(const void *, const void *, unsigned int);
 #pragma intrinsic(memcmp)
 
+class AsciiString;
+static inline Int asciiLength(const AsciiString &s);
+static inline Int asciiCompare(const AsciiString &self, const AsciiString &other);
+
 class AsciiString
 {
 public:
-	Int getLength(void) const { return m_data ? m_data->length : 0; }
+	friend Int asciiLength(const AsciiString &s);
 	const char *str(void) const { return m_data ? m_data->text : ""; }
 
-	Int compare(const AsciiString &other) const
-	{
-		Int lenOther = other.getLength();
-		const char *pOther = other.str();
-		Int lenThis = getLength();
-		const char *pThis = str();
-		Int shorter = lenThis < lenOther ? lenThis : lenOther;
-		Int diff = memcmp(pThis, pOther, shorter);
-		if (diff != 0)
-			return diff;
-		return lenThis - lenOther;
-	}
-
-	bool operator==(const AsciiString &rhs) const { return compare(rhs) == 0; }
+	friend Int asciiCompare(const AsciiString &self, const AsciiString &other);
 
 private:
 	struct Data
@@ -47,6 +38,25 @@ private:
 	};
 	Data *m_data;
 };
+
+// File-static so this TU emits no AsciiString getLength/compare/== COMDATs;
+// retail inlines them here.
+static inline Int asciiLength(const AsciiString &s) { return s.m_data ? s.m_data->length : 0; }
+
+static inline Int asciiCompare(const AsciiString &self, const AsciiString &other)
+{
+	Int lenOther = asciiLength(other);
+	const char *pOther = other.str();
+	Int lenThis = asciiLength(self);
+	const char *pThis = self.str();
+	Int shorter = lenThis < lenOther ? lenThis : lenOther;
+	Int diff = memcmp(pThis, pOther, shorter);
+	if (diff != 0)
+		return diff;
+	return lenThis - lenOther;
+}
+
+static inline bool operator==(const AsciiString &left, const AsciiString &right) { return asciiCompare(left, right) == 0; }
 
 struct Rva006122A0Item
 {
