@@ -158,7 +158,7 @@ void RecorderClass::bfmeInit(void)
 	m_bfmeGameMode = 8;
 	m_bfmeMode = 2;
 	m_bfmeFile = 0;
-	m_bfmeFileName.clear();
+	static_cast<StringBase<char> &>(m_bfmeFileName).clear();
 
 	GameInfo *gameInfo = reinterpret_cast<GameInfo *>(&m_bfmeGameInfo);
 	m_bfmeCurrentFilePosition = 0;
