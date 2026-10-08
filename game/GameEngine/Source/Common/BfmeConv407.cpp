@@ -1,6 +1,6 @@
 // retail pushes 0x00432155, the 5-byte ILT thunk ?j_00032155@@YAXXZ (matched,
 // game/gen_small/gthunks_055.cpp) that routes to RVA 0x002EFCD0; take its address.
-extern void j_00032155();
+extern "C" void __cdecl __identifier("bfmeCbAKC")();
 
 class BfmeSubAKC
 {
@@ -127,5 +127,5 @@ void __stdcall bfmeGoAKC(void *key, void *spare)
 		return;
 	BfmeSubAKC *sub = node->m_bfmeSub;
 	if (sub != 0 && sub->bfmeAskAKC(0) != 0)
-		sub->bfmeSendAKC((void *)&j_00032155, 0, 3);
+		sub->bfmeSendAKC((void *)&__identifier("bfmeCbAKC"), 0, 3);
 }

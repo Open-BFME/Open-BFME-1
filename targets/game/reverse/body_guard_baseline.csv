@@ -94,7 +94,6 @@ dir32,0x004316B0,??0BoneParticleSystemInfo@@QAE@XZ,"nothing in the ledger owns 0
 dir32,0x004318BD,?j_000318bd@@YAXXZ,"retail 0x004318BD is already recorded as _FadeAndDieOrnamentUpdateFieldParse; reference that name, not a new one"
 dir32,0x00431C87,?isForcedIntoWantingState@SupplyTruckStateMachine@@SA_NPAVState@@PAX@Z,"nothing in the ledger owns 0x00431C87. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00431EDF,??0Rva006967A0@@QAE@XZ,the name encodes 0x006967A0 but retail reads 0x00431EDF
-dir32,0x00432155,?j_00032155@@YAXXZ,"retail 0x00432155 is already recorded as _bfmeCbAKC; reference that name, not a new one"
 dir32,0x004334F6,?j_000334f6@@YAXXZ,"retail 0x004334F6 is already recorded as _AODHordeContainFieldParse (+1 more); reference that name, not a new one"
 dir32,0x00434022,?g_00434022@@YAXXZ,"nothing in the ledger owns 0x00434022. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00434252,?j_00034252@@YAXXZ,"retail 0x00434252 is already recorded as _SpecialEnemySenseUpdateFieldParse; reference that name, not a new one"
