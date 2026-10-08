@@ -90968,3 +90968,8 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_08MLLBAIBJ@ROTATE_Y?$AA@,0x00D102BC,RotationTypeNames entry; compiler string literal ROTATE_Y equals retail at VA 0x011102BC
 ??_C@_08OAJMFLNK@ROTATE_Z?$AA@,0x00D102B0,RotationTypeNames entry; compiler string literal ROTATE_Z equals retail at VA 0x011102B0
 ??_C@_08EMCJBENG@ROTATE_V?$AA@,0x00D102A4,RotationTypeNames entry; compiler string literal ROTATE_V equals retail at VA 0x011102A4
+??_C@_06IDJCEMPA@Volume?$AA@,0x00C81698,Video field-parse table g_0112CBD8 entry; compiler string literal Volume equals retail at VA 0x01081698
+??_C@_07JABLCLAF@Comment?$AA@,0x00D2CC54,Video field-parse table g_0112CBD8 entry; compiler string literal Comment equals retail at VA 0x0112CC54
+??_C@_08JCOIAMOP@Filename?$AA@,0x00C816A0,Video field-parse table g_0112CBD8 entry; compiler string literal Filename equals retail at VA 0x010816A0
+??_C@_09OPCNIHAE@IsDefault?$AA@,0x00D2CC38,Video field-parse table g_0112CBD8 entry; compiler string literal IsDefault equals retail at VA 0x0112CC38
+??_C@_0N@LJJLHENJ@HasSubtitles?$AA@,0x00D2CC44,Video field-parse table g_0112CBD8 entry; compiler string literal HasSubtitles equals retail at VA 0x0112CC44
