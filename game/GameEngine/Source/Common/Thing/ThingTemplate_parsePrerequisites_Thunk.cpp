@@ -50,11 +50,13 @@ struct FieldParse
 
 void __cdecl parsePrerequisiteUnit(INI *, void *, void *, const void *);
 void __cdecl parsePrerequisiteScience(INI *, void *, void *, const void *);
+void __cdecl parsePrerequisiteUpgrade(INI *, void *, void *, const void *);
 
 static const FieldParse s_prereqFieldParse[] =
 {
 	{ "Object", parsePrerequisiteUnit, 0, 0 },
 	{ "Science", parsePrerequisiteScience, 0, 0 },
+	{ "PlayerUpgrade", parsePrerequisiteUpgrade, 0, 0 },
 	{ 0, 0, 0, 0 }
 };
 

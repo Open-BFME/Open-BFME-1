@@ -348,8 +348,8 @@ SaveCode GameState::saveGame(AsciiString filename, UnicodeString desc,
 	}
 	catch (...)
 	{
-		TheInGameUIAscii->message(AsciiString("GUI:Error"));
 		file->close();
+		TheInGameUIAscii->message(AsciiString("GUI:Error"));
 		return SC_ERROR;
 	}
 
