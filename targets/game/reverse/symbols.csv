@@ -8878,7 +8878,7 @@ name,address,notes
 ??1GettingBuiltBehaviorModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
 ??1GhostObjectManager@@UAE@XZ,0x000231A5,exact constructor 0x001B3AA0 and dedicated vtable 0x0109CE28 establish the complete destructor thunk called by wrapper 0x001B3B40
 ??1GiantBirdAIBase@@UAE@XZ,0x0001C774,Open-BFME5 GiantBird update base destructor ILT pin
-??1GiantBirdAIUpdate@@MAE@XZ,0x00030792,constructor 0x002C2430 installs primary vtable 0x010C7F40 whose slot zero reaches deleting destructor 0x002C2800; wrapper calls this protected-destructor ILT
+??1GiantBirdAIUpdate@@UAE@XZ,0x00030792,constructor 0x002C2430 installs primary vtable 0x010C7F40 whose slot zero reaches deleting destructor 0x002C2800; wrapper calls this public-destructor ILT (ilt_oracle CONFIRMS UAE at 0x002C2720)
 ??1GiantBirdAttackMoveToState@@UAE@XZ,0x00030FD0,constructor 0x002BF6D0 installs vtable 0x010C7A60 whose slot zero reaches deleting destructor 0x002C1B90; wrapper calls this ILT
 ??1GiantBirdFollowPathState@@UAE@XZ,0x0002824A,vtable 0x00CC7778 slots name GiantBirdFollowPathState; protected complete destructor called by wrapper 0x002BDD80;ilt-verified=T1-access(efp=2.28e-03)
 ??1GiantBirdFollowWaypointPathState@@UAE@XZ,0x00015C8A,constructor 0x002BEFA0 installs vtable 0x010C79E0 whose slot zero reaches deleting destructor 0x002C1B50; wrapper calls this ILT
