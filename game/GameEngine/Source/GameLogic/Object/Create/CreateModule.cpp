@@ -49,11 +49,7 @@ CreateModule::CreateModule( Thing *thing, const ModuleData* moduleData )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ??1CreateModule@@ present-unmatched
-CreateModule::~CreateModule()
-{
-
-}  // end ~CreateModule
+// CreateModule::~CreateModule: retail body (0x0024F400) is in CreateModuleConstructorDestructor.cpp
 
 //-------------------------------------------------------------------------------------------------
 /** CRC */
