@@ -3606,8 +3606,6 @@ name,va
 ??_7Rva0020D4E0NestedDtorInlineMid@@6BNestedInlineBase@@@,0x0109CB5C
 ??_7Rva0020D4E0NestedDtorInlineMid@@6BRva0020D4E0NestedDtorFirstMixin@@@,0x0109CA98
 ??_7Rva0020D4E0NestedDtorPaddedInlineMid@@6B@,0x0109CBAC
-??_7Rva0020D930MultiTailDtor@@6BRva00047C53MultiBase@@@,0x0109CB5C
-??_7Rva0020D930MultiTailDtor@@6BTailMixinA@@@,0x0109CA98
 ??_7Rva0020DB10@@6B@,0x010A7348
 ??_7Rva0020DB20NestedDtor@@6B@,0x010A7418
 ??_7Rva0020DB20NestedDtorInlineMid@@6BNestedInlineBase@@@,0x0109CB5C
