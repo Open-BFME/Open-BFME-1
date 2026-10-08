@@ -15,7 +15,7 @@ class Rva00605710Root
 {
 public:
 	Rva00605710Root() {}
-	virtual ~Rva00605710Root();
+	virtual ~Rva00605710Root() {}
 	int field4;
 };
 
