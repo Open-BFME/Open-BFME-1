@@ -127,7 +127,6 @@ dir32,0x004402EB,??0BoneOCLInfo@@QAE@XZ,"nothing in the ledger owns 0x004402EB. 
 dir32,0x0044128B,?j_0004128b@@YAXXZ,"retail 0x0044128B is already recorded as _LevelGrantSpecialPowerFieldParse; reference that name, not a new one"
 dir32,0x00441597,?g_00441597@@YAXXZ,"nothing in the ledger owns 0x00441597. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00441B32,??1Rva0074EB10TextureSlot@@QAE@XZ,"retail 0x00441B32 is already recorded as ??1Rva0074DE60TextureSlot@@QAE@XZ (+1 more); reference that name, not a new one"
-dir32,0x0044331A,?j_0004331a@@YAXXZ,"retail 0x0044331A is already recorded as _SpecialDisguiseUpdateFieldParse; reference that name, not a new one"
 dir32,0x00443649,??0?$map@GHU?$FileIDLess@$0GGFBHA@@@V?$allocator@U?$pair@$$CBGH@_STL@@@_STL@@@_STL@@QAE@XZ,"nothing in the ledger owns 0x00443649. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x004442AB,?Rva0051B5F0@LoadScreen0051BF30@@QAEXPAX0_N@Z,the name encodes 0x0051B5F0 but retail reads 0x004442AB
 dir32,0x00444544,?g_00444544@@YAXXZ,"nothing in the ledger owns 0x00444544. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"

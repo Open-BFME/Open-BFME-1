@@ -37,7 +37,7 @@ public:
 // class's static field-parse builder.  The old
 // `extern "C" SpecialDisguiseUpdateFieldParse` was invented in this TU and nothing
 // defines it; the thunk is retail's real spelling of this operand.
-void j_0004331a();
+extern "C" void __cdecl __identifier("SpecialDisguiseUpdateFieldParse")();
 
 class SpecialDisguiseUpdate
 {
@@ -51,6 +51,6 @@ ModuleData *SpecialDisguiseUpdate::friend_newModuleData(INI *ini)
 	SpecialDisguiseUpdateModuleData *data = new SpecialDisguiseUpdateModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0004331a));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(__identifier("SpecialDisguiseUpdateFieldParse")));
 	return (ModuleData *)data;
 }
