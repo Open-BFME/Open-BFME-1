@@ -6,9 +6,10 @@
 class S4Base0077C1F0
 {
 public:
-	__declspec(noinline) virtual ~S4Base0077C1F0();
+	virtual ~S4Base0077C1F0();
 };
 
-S4Base0077C1F0::~S4Base0077C1F0()
+void Force_S4Base0077C1F0_Deleting_Destructor()
 {
+	S4Base0077C1F0 value;
 }
