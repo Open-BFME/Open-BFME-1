@@ -115,7 +115,6 @@ dir32,0x0043BE9E,?j_0003be9e@@YAXXZ,"retail 0x0043BE9E is already recorded as ?r
 dir32,0x0043C961,??1?$map@GHU?$FileIDLess@$0GGFBHA@@@V?$allocator@U?$pair@$$CBGH@_STL@@@_STL@@@_STL@@QAE@XZ,"nothing in the ledger owns 0x0043C961. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0043D42E,?ownerAvailableForSupplying@SupplyTruckStateMachine@@SA_NPAVState@@PAX@Z,"nothing in the ledger owns 0x0043D42E. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0043D4B0,??1WaterSetting@@UAE@XZ,"retail 0x0043D4B0 is already recorded as _bfmeDtorDAB; reference that name, not a new one"
-dir32,0x0043D9FB,?j_0003d9fb@@YAXXZ,"retail 0x0043D9FB is already recorded as _SiegeAIUpdateFieldParse; reference that name, not a new one"
 dir32,0x0043DFB4,?j_0003dfb4@@YAXXZ,"retail 0x0043DFB4 is already recorded as ?rva006fb780_fn_c@@YAXXZ; reference that name, not a new one"
 dir32,0x0043E4E6,?g_0043E4E6@@YAXXZ,"nothing in the ledger owns 0x0043E4E6. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0043EC8E,?j_0003ec8e@@YAXXZ,"retail 0x0043EC8E is already recorded as _CloudBreakSpecialPowerFieldParse; reference that name, not a new one"
