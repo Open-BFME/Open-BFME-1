@@ -1,4 +1,5 @@
-extern void *g_012C3B30;
+// Retail .data VA 0x012C3B30 (4 B) points at the "decodedSize" key at VA 0x0112B928.
+void *g_012C3B30 = (void *)"decodedSize";
 
 class BfmeThingRF
 {

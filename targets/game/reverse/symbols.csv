@@ -90865,3 +90865,4 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_07EJPAJPHF@FXEvent?$AA@,0x00D244FC,retail complete NUL-terminated initializer payload; evidence=identity_evidence/00ebb650-fieldparse-storage.md
 ??_C@_0BA@MECMIOIM@ParticleSysBone?$AA@,0x00CF2320,retail complete NUL-terminated initializer payload; evidence=identity_evidence/00ebb650-fieldparse-storage.md
 ??_C@_0P@DAMFAFC@SimilarRestart?$AA@,0x00D24AD0,retail complete NUL-terminated initializer payload; evidence=identity_evidence/00ebb650-fieldparse-storage.md
+??_C@_0M@FBMMFKCC@decodedSize?$AA@,0x00D2B928,Retail .data pointer VA 0x012C3B30 targets it; compiler string literal decodedSize equals retail at VA 0x0112B928
