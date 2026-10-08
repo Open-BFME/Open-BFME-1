@@ -30,11 +30,23 @@ public:
 	bool method();                                       // 0x007E88A0
 };
 
+// Ledger rows of the message accessors: 0x007E88B0 ?m@Gen_007e88b0@@QAEHXZ
+// and 0x007E8900 ?bfmeGoRF@BfmeThingRF@@QAEPAXPAX0@Z (callees.py 0x7F7980).
+class Gen_007e88b0
+{
+public:
+	int m();                                                          // 0x007E88B0
+};
+
+class BfmeThingRF
+{
+public:
+	void *bfmeGoRF( void *key, void *fallback );                      // 0x007E8900
+};
+
 class Rva007E8810Message
 {
 public:
-	int getError( void );                                             // 0x007E88B0
-	int getInt( const char *key, int defaultValue );                  // 0x007E8900
 
 	char m_head[ 0x28 ];
 	int m_txn;
@@ -115,12 +127,12 @@ void Rva007F7980Browser::onRegionCount( Rva007E8810Message *msg )
 {
 	if( ((Rva007E88A0 *)msg)->Rva007E88A0::method() )
 	{
-		int status = msg->getError();
+		int status = ((Gen_007e88b0 *)msg)->m();
 		m_listener->onRegionCountDone( status );
 		return;
 	}
 
-	int count = msg->getInt( "NUM-REGIONS", 0 );
+	int count = (int)(long)((BfmeThingRF *)msg)->bfmeGoRF( (void *)"NUM-REGIONS", 0 );
 	if( count != 0 )
 	{
 		m_regions.allocate( count );
@@ -135,12 +147,12 @@ void Rva007F7980Browser::onLobbyCount( Rva007E8810Message *msg )
 {
 	if( ((Rva007E88A0 *)msg)->Rva007E88A0::method() )
 	{
-		int status = msg->getError();
+		int status = ((Gen_007e88b0 *)msg)->m();
 		m_listener->onLobbyCountDone( status );
 		return;
 	}
 
-	int count = msg->getInt( "NUM-LOBBIES", 0 );
+	int count = (int)(long)((BfmeThingRF *)msg)->bfmeGoRF( (void *)"NUM-LOBBIES", 0 );
 	if( count != 0 )
 	{
 		m_lobbies.allocate( count );
@@ -155,7 +167,7 @@ void Rva007F5AC0( Rva007E8810Message *msg, Rva007F7980Browser *browser )
 {
 	if( ((Rva007E88A0 *)msg)->Rva007E88A0::method() )
 	{
-		int status = msg->getError();
+		int status = ((Gen_007e88b0 *)msg)->m();
 		browser->m_listener->onSlot19( status );
 	}
 	else
@@ -168,7 +180,7 @@ void Rva007F5B40( Rva007E8810Message *msg, Rva007F7980Browser *browser )
 {
 	if( ((Rva007E88A0 *)msg)->Rva007E88A0::method() )
 	{
-		int status = msg->getError();
+		int status = ((Gen_007e88b0 *)msg)->m();
 		browser->m_listener->onSlot18( status );
 	}
 	else

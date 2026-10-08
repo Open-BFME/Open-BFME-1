@@ -48,10 +48,11 @@ public:
  virtual void slot08(BfmeC994 *, void (__cdecl *)(Rva007E8810Message *, Rva007F5D10GameBrowser *), Rva007F5D10GameBrowser *, int);
 };
 
-class Rva00803620Getter
+// Ledger row of the 0x007E8900 key lookup (callees.py 0x7F5D10).
+class BfmeThingRF
 {
 public:
-	void *getPtr( void *key, void *fallback );
+	void *bfmeGoRF( void *key, void *fallback );
 };
 
 // Direct retail predicate at 0x007E88A0; receiver identity is opaque.
@@ -62,10 +63,11 @@ public:
 	bool method();                                       // 0x007E88A0
 };
 
-class Rva007E8810Message
+// Ledger row of the 0x007E88B0 error getter (callees.py 0x7F5D10).
+class Gen_007e88b0
 {
 public:
-	int getError();
+	int m();
 };
 
 class Rva008022A0Owner
@@ -162,7 +164,7 @@ void Rva007F5D10GameBrowser::handlePendingActiveReply( Rva007E8810Message *messa
 	if ( m_hosts == 0 )
 		return;
 
-	int id = (int)((Rva00803620Getter *)message)->getPtr(
+	int id = (int)((BfmeThingRF *)message)->bfmeGoRF(
 		(void *)bfmeInfoDFI, 0 );
 	Rva008022A0Owner *player = m_hosts->find( id );
 	if ( player == 0 )
@@ -182,7 +184,7 @@ void Rva007F5D10GameBrowser::handlePendingActiveReply( Rva007E8810Message *messa
 	if ( !((Rva007E88A0 *)message)->Rva007E88A0::method() )
 		player->setHpState( 4 );
 
-	m_listener->notifyPendingActive( id, message->getError() );
+	m_listener->notifyPendingActive( id, ((Gen_007e88b0 *)message)->m() );
 	if ( ((Rva007E88A0 *)message)->Rva007E88A0::method() )
 	{
 		m_listener->notifyActive( id );
