@@ -282,3 +282,5 @@ void W3DDisplay::drawThirdDebugDisplay()
 	if (flip)
 		g_012F81A9 = g_012F81A9 ? 0 : 1;
 }
+
+extern "C" unsigned char __identifier("?g_012F81A9@@3EA") = 0;

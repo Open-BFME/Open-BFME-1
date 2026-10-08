@@ -38,7 +38,7 @@ extern WindowManager *g_rva012F19E8WindowManager;
 class BfmeAptScreenOnlineLogin;
 extern BfmeAptScreenOnlineLogin *TheBfmeOnlineLogin;
 
-// Address-derived: retail 0x012F4AB0 is not recorded in dir32_addresses.csv.
+// Address-derived: retail 0x012F4AB0 is separately owned one-byte storage.
 // A one-byte flag the no-selection path raises before the close action runs.
 extern unsigned char g_012F4AB0;
 
@@ -89,3 +89,5 @@ void BfmeAptScreenOnlineLogin::_bfme_acceptLocale( const char * )
 
 	TheBfmeOnlineLogin->rva00552C40( m_closeLocaleArgument );
 }
+
+extern "C" unsigned char __identifier("?g_012F4AB0@@3EA") = 0;
