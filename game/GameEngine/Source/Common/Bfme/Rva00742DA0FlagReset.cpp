@@ -1,11 +1,26 @@
 // cl: /O2 /Ob1
 
+enum GameDifficulty {};
+
+// retail ILT 0x0001AB54 -> 0x0045B5C0 is the matched AIPlayer::setAIDifficulty
+// row and ILT 0x000312A0 -> 0x007423B0 the matched private
+// W3DView::setCameraTransform row
+class AIPlayer
+{
+public:
+	void setAIDifficulty(GameDifficulty difficulty);
+};
+
+class W3DView
+{
+	friend class Gen_00742DA0;
+	void setCameraTransform();
+};
+
 class Gen_00742DA0
 {
 public:
 	void bfmeReset(int value);
-	void bfmePrep(int value);
-	void bfmeFinish(void);
 
 private:
 	unsigned char m_bfmeGap[0x1DC];
@@ -23,7 +38,7 @@ void Gen_00742DA0::bfmeReset(int value)
 {
 	unsigned char zero;
 
-	bfmePrep(value);
+	((AIPlayer *)this)->setAIDifficulty((GameDifficulty)value);
 
 	zero = 0;
 	m_bfmeD = zero;
@@ -32,5 +47,5 @@ void Gen_00742DA0::bfmeReset(int value)
 	m_bfmeF = zero;
 	m_bfmeH = zero;
 
-	bfmeFinish();
+	((W3DView *)this)->setCameraTransform();
 }
