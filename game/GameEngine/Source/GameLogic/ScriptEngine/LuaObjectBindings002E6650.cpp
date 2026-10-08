@@ -21,21 +21,19 @@ unsigned Rva00990210Lookup( lua_State *range, int index );
 
 #include "ascii_string.h"
 
-class Rva002E6650Name : public AsciiString
-{
-public:
-	Rva002E6650Name( const char *text ) : AsciiString( text ) {}
-};
-
 struct Coord3D
 {
 	float x, y, z;
 };
 
+enum CommandSourceType { CMD_FROM_SCRIPT_2E6650 = 1 };
+
 class AICommandInterface
 {
 public:
-	void aiBfmeCommand2F( class Object *target, int commandSource );
+	// Retail ILT 0x0003D73F lands on 0x002E9030, matched as
+	// AICommandInterface::aiBfmeCommand2F(Object *, CommandSourceType).
+	void aiBfmeCommand2F( class Object *target, CommandSourceType commandSource );
 };
 
 class Rva002E9EA0AIUpdate
@@ -67,7 +65,9 @@ class WeaponTemplate;
 class WeaponStore
 {
 public:
-	const WeaponTemplate *findWeaponTemplate( Rva002E6650Name name ) const;
+	// Retail ILT 0x0000D3FA lands on 0x001E4F50, matched as
+	// WeaponStore::findWeaponTemplate(AsciiString) const.
+	const WeaponTemplate *findWeaponTemplate( AsciiString name ) const;
 	void createAndFireTempWeapon( const WeaponTemplate *weaponTemplate, const Object *source, const Coord3D *position );
 };
 
@@ -122,7 +122,7 @@ int Rva002E9EA0CommandObjectAtObject( lua_State *state )
 	Rva002E9EA0AIUpdate *ai = object->m_ai;
 	if( ai )
 	{
-		ai->m_commands.aiBfmeCommand2F( target, 1 );
+		ai->m_commands.aiBfmeCommand2F( target, CMD_FROM_SCRIPT_2E6650 );
 		ai->m_flag332 = flag;
 	}
 	return 0;
