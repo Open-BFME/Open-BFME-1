@@ -1,8 +1,6 @@
-// ?d_001c2380@@YAXXZ
-// partial score=0.37 date=2026-09-22
-// Candidate for the multi-piece Object boundary distance body at 0x001C2380.
-// The owner and ABI are established from the caller and the adjacent Object helper.
-// cl: /O2 /Ob2 /G6 /FAsc /Fabuild/target-001c2380/Rva001C2380Distance.cod /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWDebug
+// ?rva001c2380Distance@Object@@QBEMPBUCoord3D@@PBV1@0@Z
+// partial score=0.4347 date=2026-10-08
+// cl: /O2 /Ob2 /G6 /FAsc /Fabuild/worker-001c2380/16-retail-minimum-order.cod /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWDebug
 
 #include "../../../../game/Libraries/Source/WWVegas/WWMath/matrix3d.h"
 
@@ -16,19 +14,7 @@ extern "C" double __cdecl fabs(double value);
 
 extern const Real BfmeZeroRange;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-
-	__forceinline void set(const Coord3D *other)
-	{
-		x = other->x;
-		y = other->y;
-		z = other->z;
-	}
-};
+#include "../../../../game/Libraries/Include/Lib/Coord3D.h"
 
 struct Direction2
 {
@@ -80,6 +66,7 @@ private:
 	BfmeGeometryInfo m_geometry;
 };
 
+// ?rva001c2380Distance@Object@@QBEMPBUCoord3D@@PBV1@0@Z present-unmatched
 Real Object::rva001c2380Distance(const Coord3D *position,
 	const Object *other, const Coord3D *otherPosition) const
 {
@@ -96,7 +83,9 @@ Real Object::rva001c2380Distance(const Coord3D *position,
 		Real distanceSquared;
 		Real radius;
 		Coord3D center;
-		center.set(position);
+		center.x = position->x;
+		center.y = position->y;
+		center.z = position->z;
 		piece->transformCenter(&center, m_orientation);
 
 		Real deltaX = otherPosition->x - center.x;
@@ -152,7 +141,12 @@ Real Object::rva001c2380Distance(const Coord3D *position,
 
 		Real distance = (Real)sqrt(distanceSquared);
 		distance -= radius + other->m_geometry.m_boundingCircleRadius;
-		if (!found || distance < closestDistance)
+		if (found)
+		{
+			if (distance < closestDistance)
+				closestDistance = distance;
+		}
+		else
 		{
 			closestDistance = distance;
 			found = true;
