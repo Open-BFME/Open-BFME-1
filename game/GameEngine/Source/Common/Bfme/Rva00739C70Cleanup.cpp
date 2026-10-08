@@ -27,18 +27,17 @@ public:
 	virtual unsigned long __stdcall Release();
 };
 
-// The three calls made through the pointer at +0x0C are pinned under this
-// spelling (clear 0x008FC7D0, methodA 0x008FC710, methodB 0x008FC660); it is a
-// second view of the very same bytes W3DRadarResetSurface owns, used only so the
-// emitted call names keep their existing pins.
-class Member0C00739C70
+// The three calls made on the member at +0x0C reach the matched SurfaceClass
+// rows: Unlock 0x008FC7D0, rectangle Lock 0x008FC710 and discard Lock
+// 0x008FC660; this is a second view of the bytes W3DRadarResetSurface owns.
+class SurfaceClass
 {
 public:
 	VirtualReleaser00739E00 *m_obj;
 
-	void clear();
-	TextureBaseClass *methodA( int arg, int a, int b, int c, int d );
-	TextureBaseClass *methodB( int arg, int a );
+	void Unlock();
+	void *Lock( int *pitch, int left, int top, int right, int bottom );
+	void *Lock( int *pitch, bool discard );
 };
 
 // Retail's destructor for this sub-object lives at 0x008FC5B0 and is defined as
@@ -79,9 +78,9 @@ public:
 	W3DRadarResetSurface m_member0c;
 	int                  m_flags;
 
-	Member0C00739C70 &calls()
+	SurfaceClass &calls()
 	{
-		return *reinterpret_cast<Member0C00739C70 *>( &m_member0c );
+		return *reinterpret_cast<SurfaceClass *>( &m_member0c );
 	}
 };
 
@@ -89,7 +88,7 @@ void Rva00739C70::cleanup()
 {
 	if ( m_flags & 1 )
 	{
-		calls().clear();
+		calls().Unlock();
 		m_flags &= ~1;
 	}
 }
@@ -110,18 +109,18 @@ TextureBaseClass *Rva00739C70::update( int arg )
 	TextureBaseClass *result = 0;
 	if ( m_flags & 1 )
 	{
-		calls().clear();
+		calls().Unlock();
 		m_flags &= ~1;
 	}
 	if ( m_member0c.m_obj )
 	{
 		if ( !( m_flags & 0xC ) )
 		{
-			result = calls().methodA( arg, 0, 0, m_int0, m_int4 );
+			result = (TextureBaseClass *)calls().Lock( (int *)arg, 0, 0, m_int0, m_int4 );
 		}
 		else
 		{
-			result = calls().methodB( arg, 1 );
+			result = (TextureBaseClass *)calls().Lock( (int *)arg, true );
 		}
 		m_flags |= 1;
 	}
