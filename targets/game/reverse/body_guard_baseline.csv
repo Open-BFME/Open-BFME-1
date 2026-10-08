@@ -48,7 +48,6 @@ dir32,0x0041AF00,??1?$map@VAsciiString@@HU?$less@VAsciiString@@@_STL@@V?$allocat
 dir32,0x0041B3DD,?j_0001b3dd@@YAXXZ,"retail 0x0041B3DD is already recorded as ?rva0041b3dd@BfmeAptScreenOnlineChat@@QAEXXZ; reference that name, not a new one"
 dir32,0x0041C445,?isForcedIntoBusyState@SupplyTruckStateMachine@@SA_NPAVState@@PAX@Z,"nothing in the ledger owns 0x0041C445. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0041CFF3,?g_0041CFF3@@YAXXZ,"nothing in the ledger owns 0x0041CFF3. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x0041DAB6,?j_0001dab6@@YAXXZ,"retail 0x0041DAB6 is already recorded as _W3DStreakDrawFieldParse; reference that name, not a new one"
 dir32,0x0041E2A9,?j_0001e2a9@@YAXXZ,"retail 0x0041E2A9 is already recorded as _W3DQuadrupedDrawFieldParse; reference that name, not a new one"
 dir32,0x0041E6F0,??1Rva0069CEE0@@QAE@XZ,the name encodes 0x0069CEE0 but retail reads 0x0041E6F0
 dir32,0x0041F0FA,?j_0001f0fa@@YAXXZ,"retail 0x0041F0FA is already recorded as _dp007 (+7 more); reference that name, not a new one"
