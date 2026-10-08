@@ -3437,21 +3437,7 @@ void ScriptActions::doPlayerEnableFactories(const AsciiString& playerName, const
 //-------------------------------------------------------------------------------------------------
 /** doPlayerRepairStructure */
 //-------------------------------------------------------------------------------------------------
-// ?doPlayerRepairStructure@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
-void ScriptActions::doPlayerRepairStructure(const AsciiString& playerName, const AsciiString& structureName)
-{
-	Player* pPlayer = TheScriptEngine->getPlayerFromAsciiString(playerName);
-
-	if (!pPlayer) {
-		return;
-	}
-	Object *pStructure = TheScriptEngine->getUnitNamed(structureName);
-
-	if (!pStructure) {
-		return;
-	}
-	pPlayer->repairStructure(pStructure->getID());
-}
+// Retail ScriptActions::doPlayerRepairStructure (0x002F3710) is implemented in ScriptActions_doPlayerRepairStructure.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** doPlayerEnableUnitConstruction */
