@@ -26,6 +26,6 @@ struct Q4Sort004566F0
 
 bool Q4Sort004566F0::operator()(int a, int b) const
 {
-	return ((const MapMetaData *)a)->getFileName().compareNoCase(
-		((const MapMetaData *)b)->getFileName()) < 0;
+	return ((const StringBase<unsigned short> &)((const MapMetaData *)a)->getFileName()).compareNoCase(
+		(const StringBase<unsigned short> &)((const MapMetaData *)b)->getFileName()) < 0;
 }
