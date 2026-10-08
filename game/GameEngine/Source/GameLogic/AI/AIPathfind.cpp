@@ -266,19 +266,7 @@ m_cpopValid(FALSE)
 	m_cpopOut.posOnPath.zero();
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/PathDestructor.cpp
-// ??1Path@@MAE@XZ present-unmatched
-Path::~Path( void )
-{
-	PathNode *node, *nextNode;
-
-	// delete all of the path nodes	
-	for( node = m_path; node; node = nextNode )
-	{
-		nextNode = node->getNext();
-		node->deleteInstance();
-	}
-}
+// Path::~Path (retail 0x003FEB80) is matched in PathDestructor.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */

@@ -9,15 +9,14 @@
 class Path
 {
 protected:
-	__declspec(noinline) virtual ~Path();
-	friend void Force_Path_Deleting_Destructor(Path *value);
+	// Forced inline so the forcer installs the vftable without emitting a
+	// second ??0Path COMDAT; the real constructor is matched elsewhere.
+	__forceinline Path() {}
+	virtual ~Path();
+	friend void Force_Path_Deleting_Destructor();
 };
 
-Path::~Path()
+void Force_Path_Deleting_Destructor()
 {
-}
-
-void Force_Path_Deleting_Destructor(Path *value)
-{
-	delete value;
+	Path value;
 }
