@@ -76,7 +76,7 @@ public:
 		UnicodeString *result = rva0019be80Copy(last, m_last, first);
 		UnicodeString *finish = m_last;
 		for (UnicodeString *item = result; item != finish; ++item)
-			reinterpret_cast<BFMERetailAsciiString *>(item)->~BFMERetailAsciiString();
+			reinterpret_cast<BFMERetailAsciiString *>(item)->BFMERetailAsciiString::~BFMERetailAsciiString();
 		m_last = result;
 		return first;
 	}
