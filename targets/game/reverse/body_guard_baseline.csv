@@ -45,7 +45,6 @@ dir32,0x00419501,?g_00419501@@YAXXZ,"nothing in the ledger owns 0x00419501. Give
 dir32,0x0041A0F0,?g_0041A0F0@@YAXXZ,"nothing in the ledger owns 0x0041A0F0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0041ACB7,?bfmeRva0037D120AddExperience@@YAHPAUBfmeObjectD120@@H@Z,"retail 0x0041ACB7 is already recorded as ?bfmeTeamGiveExperiencePointsVisitor@@YAXPAVObject@@PAX@Z; reference that name, not a new one"
 dir32,0x0041AF00,??1?$map@VAsciiString@@HU?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@H@_STL@@@3@@_STL@@QAE@XZ,"nothing in the ledger owns 0x0041AF00. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x0041B199,?j_0001b199@@YAXXZ,"retail 0x0041B199 is already recorded as _DelayedLuaEventUpdateFieldParse; reference that name, not a new one"
 dir32,0x0041B3DD,?j_0001b3dd@@YAXXZ,"retail 0x0041B3DD is already recorded as ?rva0041b3dd@BfmeAptScreenOnlineChat@@QAEXXZ; reference that name, not a new one"
 dir32,0x0041C445,?isForcedIntoBusyState@SupplyTruckStateMachine@@SA_NPAVState@@PAX@Z,"nothing in the ledger owns 0x0041C445. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0041CFF3,?g_0041CFF3@@YAXXZ,"nothing in the ledger owns 0x0041CFF3. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"

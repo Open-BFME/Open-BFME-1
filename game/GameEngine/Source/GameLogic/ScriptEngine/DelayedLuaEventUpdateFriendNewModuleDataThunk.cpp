@@ -30,7 +30,7 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-void j_0001b199();
+extern "C" void __cdecl __identifier("DelayedLuaEventUpdateFieldParse")();
 
 class DelayedLuaEventUpdate
 {
@@ -44,7 +44,7 @@ ModuleData *DelayedLuaEventUpdate::friend_newModuleData(INI *ini)
 	DelayedLuaEventUpdateModuleData *data = new DelayedLuaEventUpdateModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0001b199));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(__identifier("DelayedLuaEventUpdateFieldParse")));
 	return (ModuleData *)data;
 }
 
