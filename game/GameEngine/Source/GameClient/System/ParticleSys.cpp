@@ -1156,15 +1156,6 @@ void ParticleSystem::setSlave( ParticleSystem *slave )
 }  // end setSlave
 
 // ------------------------------------------------------------------------------------------------
-/** (Re)start a stopped particle system */
-// ------------------------------------------------------------------------------------------------
-// ?start@ParticleSystem@@QAEXXZ present-unmatched
-void ParticleSystem::start( void )
-{
-	m_isStopped = false;
-}
-
-// ------------------------------------------------------------------------------------------------
 /** Stop a particle system from emitting */
 // ------------------------------------------------------------------------------------------------
 // ?stop@ParticleSystem@@QAEXXZ present-unmatched
