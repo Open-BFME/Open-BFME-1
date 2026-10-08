@@ -7,9 +7,8 @@ public:
 	virtual ~LargeGroupAudioMap();
 };
 
-__declspec(noinline) LargeGroupAudioMap::~LargeGroupAudioMap() {}
-
 void Force_LargeGroupAudioMap_Deleting_Destructor(LargeGroupAudioMap *map)
 {
-	delete map;
+	LargeGroupAudioMap value;
+	(void)map;
 }
