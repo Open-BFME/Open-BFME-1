@@ -28,7 +28,6 @@ dir32,0x00411897,?j_00011897@@YAXXZ,"retail 0x00411897 is already recorded as _b
 dir32,0x00412742,?buildFieldParse@CrateCollideModuleData@@SAXAAVMultiIniFieldParse@@@Z,"retail 0x00412742 is already recorded as _HealCrateCollideFieldParse (+1 more); reference that name, not a new one"
 dir32,0x004127BA,?g_004127BA@@YAXXZ,"nothing in the ledger owns 0x004127BA. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x004128FA,??1BfmeGdElem36@@QAE@XZ,"retail 0x004128FA is already recorded as ??1GdElemSlot@@QAE@XZ; reference that name, not a new one"
-dir32,0x00413719,?j_00013719@@YAXXZ,"retail 0x00413719 is already recorded as _ExperienceLevelCreateFieldParse; reference that name, not a new one"
 dir32,0x00413C23,?j_00013c23@@YAXXZ,"retail 0x00413C23 is already recorded as _DominateEnemySpecialPowerFieldParse; reference that name, not a new one"
 dir32,0x00413D31,?j_00013d31@@YAXXZ,"retail 0x00413D31 is already recorded as ?rva00413d31@BfmeAptScreenOnlineChat@@QAEXXZ; reference that name, not a new one"
 dir32,0x0041421D,??_F?$vector@PAVUpdateModule@@V?$allocator@PAVUpdateModule@@@_STL@@@_STL@@QAEXXZ,"nothing in the ledger owns 0x0041421D. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"

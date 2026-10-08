@@ -30,7 +30,7 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-void j_00013719();
+extern "C" void __cdecl __identifier("ExperienceLevelCreateFieldParse")();
 
 class ExperienceLevelCreate
 {
@@ -44,7 +44,7 @@ ModuleData *ExperienceLevelCreate::friend_newModuleData(INI *ini)
 	ExperienceLevelCreateModuleData *data = new ExperienceLevelCreateModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_00013719));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(__identifier("ExperienceLevelCreateFieldParse")));
 	return (ModuleData *)data;
 }
 
