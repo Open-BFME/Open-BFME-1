@@ -44,7 +44,6 @@ class Object;
 // rather than against an immediate.
 extern const float g_rva01075350;
 // BFME's 0.1 significance threshold.
-extern Real g_bfmeScaleBK;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
@@ -155,7 +154,7 @@ Int Object::bfmeHasSignificantPreferredLocomotorHeight() const
 		if (locomotor)
 		{
 			Real height = locomotor->getPreferredHeight();
-			if (height > g_rva01075350 && height > g_bfmeScaleBK)
+			if (height > g_rva01075350 && height > 0.1f)
 				return true;
 		}
 	}
