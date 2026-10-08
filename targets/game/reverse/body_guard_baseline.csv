@@ -43,7 +43,6 @@ dir32,0x004151A9,?j_000151a9@@YAXXZ,"retail 0x004151A9 is already recorded as _U
 dir32,0x00415253,?g_00415253@@YAXXZ,"nothing in the ledger owns 0x00415253. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00415703,??1TransitionDamageFXRecordB@?A0x2535ff93@@QAE@XZ,"retail 0x00415703 is already recorded as ??1TransitionDamageFXRecordB@?A0xebea2875@@QAE@XZ (+1 more); reference that name, not a new one"
 dir32,0x0041579E,?j_0001579e@@YAXXZ,"retail 0x0041579E is already recorded as ?bfmeChunkParserVE@@YAXXZ; reference that name, not a new one"
-dir32,0x00415A14,?j_00015a14@@YAXXZ,"retail 0x00415A14 is already recorded as _bfmeDtorCbDMD; reference that name, not a new one"
 dir32,0x00416158,??0TransitionDamageFXRecordC@?A0x2535ff93@@QAE@XZ,"retail 0x00416158 is already recorded as ??0TransitionDamageFXRecordC@?A0xebea2875@@QAE@XZ; reference that name, not a new one"
 dir32,0x004173DC,?j_000173dc@@YAXXZ,"retail 0x004173DC is already recorded as _HordeMemberCollideFieldParse (+1 more); reference that name, not a new one"
 dir32,0x00417477,??1Rva00127AC0Element@@QAE@XZ,"retail 0x00417477 is already recorded as ??1Gen_uwm_00017477@@QAE@XZ (+1 more); reference that name, not a new one"
