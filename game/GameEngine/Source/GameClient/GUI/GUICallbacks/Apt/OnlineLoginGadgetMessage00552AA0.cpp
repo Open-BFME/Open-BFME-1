@@ -22,7 +22,9 @@ class BfmeAptScreenOnlineLogin
 public:
 	int rva00552aa0( void *arg0, unsigned int msg, void *control, void *arg3 );
 
-	void _bfme_applyLoginGadgets();
+	// ILT 0x0004557A routes to the matched 0x0054FB10 body; its AL result is unused here.
+	bool applyLoginGadgets0054FB10();
+#define _bfme_applyLoginGadgets() applyLoginGadgets0054FB10()
 	UnicodeString bfmeGetTextAt74() const;
 
 private:
