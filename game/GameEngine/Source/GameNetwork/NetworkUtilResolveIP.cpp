@@ -49,9 +49,12 @@ public:
 	// out-of-line ~AsciiString forwarder (ILT -> 0x0005EE90).
 	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
-	int getLength() const { return m_data ? m_data->length : 0; }
 	const char *str() const { return m_data ? &m_data->data[0] : (const char *)""; }
-	char getCharAt(int index) const { return m_data ? m_data->data[index] : 0; }
+
+	// getLength/getCharAt are file-static so this TU emits no
+	// AsciiString COMDATs for them (retail inlines both here).
+	friend int hostLength(const AsciiString &s);
+	friend char hostCharAt(const AsciiString &s, int index);
 
 private:
 	struct Header
@@ -65,6 +68,9 @@ private:
 	Header *m_data;
 };
 
+static inline int hostLength(const AsciiString &s) { return s.m_data ? s.m_data->length : 0; }
+static inline char hostCharAt(const AsciiString &s, int index) { return s.m_data ? s.m_data->data[index] : 0; }
+
 /**
  * ResolveIP turns a string ("games2.westwood.com", or "192.168.0.1") into
  * a 32-bit unsigned integer.
@@ -74,13 +80,13 @@ UnsignedInt ResolveIP(AsciiString host)
   struct hostent *hostStruct;
   struct in_addr *hostNode;
 
-  if (host.getLength() == 0)
+  if (hostLength(host) == 0)
   {
 	  return 0;
   }
 
   // String such as "127.0.0.1"
-  if (isdigit(host.getCharAt(0)))
+  if (isdigit(hostCharAt(host, 0)))
   {
     return ( htonl(inet_addr(host.str())) );
   }
