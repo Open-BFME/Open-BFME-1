@@ -13,7 +13,7 @@ class CAtlWinModule
 {
 public:
     CAtlWinModule();
-    ~CAtlWinModule() {}
+    ~CAtlWinModule();			// retail 0x007E8600 (Rva007E8600Clear.cpp)
     unsigned char m_storage[44];
 };
 }
