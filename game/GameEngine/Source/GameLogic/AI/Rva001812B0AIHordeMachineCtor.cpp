@@ -53,26 +53,30 @@ private:
 	unsigned char m_storage[ 0x6c ];
 };
 
-namespace {
+// Retail vftable 0x01097DC0 is ??_7AIAttackFireWeaponState@@6B@, so the class
+// keeps that name outside an anonymous namespace (whose decorated name changes
+// with the source path).  Retail 0x001812B0 inlines the ctor; the out-of-line
+// ctor and the destructor belong to AIAttackActionStates.cpp.
 class AIAttackFireWeaponState : public State
 {
 public:
 	AIAttackFireWeaponState( StateMachine *machine,
 		NotifyWeaponFiredInterface *notify );
+	virtual ~AIAttackFireWeaponState();
 
 private:
 	NotifyWeaponFiredInterface *m_notify;
 	bool m_finished;
 };
 
-AIAttackFireWeaponState::AIAttackFireWeaponState(
+inline AIAttackFireWeaponState::AIAttackFireWeaponState(
 	StateMachine *machine, NotifyWeaponFiredInterface *notify )
 	: State( machine, AsciiString( "AIAttackFireWeaponState" ) ),
 	  m_notify( notify ),
 	  m_finished( false )
 {
 }
-}
+
 
 class AIWaitUntilFinishedFiringState : public State
 {

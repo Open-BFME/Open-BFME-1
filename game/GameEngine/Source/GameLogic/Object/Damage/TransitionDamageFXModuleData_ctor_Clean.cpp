@@ -13,12 +13,17 @@ struct TransitionDamageFXCoord
 	float z;
 };
 
-class TransitionDamageFXRecordA
-{
-public:
-	TransitionDamageFXRecordA();
-	~TransitionDamageFXRecordA();
+}
 
+// TransitionDamageFX.h's three element structs, named outside an anonymous
+// namespace (whose decorated name changes with the source path).  Retail's
+// incremental-link thunk table confirms each decorated name exactly
+// (tools/ilt_oracle.py): ctors 0x00252360 / 0x00252380 / 0x002523A0 and dtors
+// 0x00252370 / 0x00252390 / 0x002523B0, reached through ILTs 0x00007BAD /
+// 0x000302D8 / 0x00016158 and 0x0001074E / 0x00015703 / 0x0002E451.  As in
+// the header, the ctor and dtor are the implicit ones.
+struct FXDamageFXListInfo
+{
 	void *m_value;
 	unsigned char m_locationType;
 	unsigned char m_padding_05[3];
@@ -28,12 +33,8 @@ public:
 	TransitionDamageFXCoord m_location;
 };
 
-class TransitionDamageFXRecordB
+struct FXDamageOCLInfo
 {
-public:
-	TransitionDamageFXRecordB();
-	~TransitionDamageFXRecordB();
-
 	void *m_value;
 	unsigned char m_locationType;
 	unsigned char m_padding_05[3];
@@ -43,12 +44,8 @@ public:
 	TransitionDamageFXCoord m_location;
 };
 
-class TransitionDamageFXRecordC
+struct FXDamageParticleSystemInfo
 {
-public:
-	TransitionDamageFXRecordC();
-	~TransitionDamageFXRecordC();
-
 	void *m_value;
 	unsigned char m_locationType;
 	unsigned char m_padding_05[3];
@@ -58,17 +55,36 @@ public:
 	TransitionDamageFXCoord m_location;
 };
 
-class TransitionDamageFXFlags
+// The four-element damage-flag arrays are _STL::vector<AsciiString>: retail
+// builds them through ILT 0x0003469E and destroys them through ILT 0x00026AB2,
+// which the ledger records as that vector's default-constructor closure and
+// destructor.  The closure exists because the constructor takes a defaulted
+// allocator.  Including <vector> would pull STLport's inline __copy_backward
+// into the m_tail.erase() call below, so only the layout and the two
+// out-of-line members this TU names are spelled here (STLport 4.5 layout:
+// start, finish, end of storage).
+namespace _STL
+{
+template <class T> class allocator
 {
 public:
-	TransitionDamageFXFlags();
-	~TransitionDamageFXFlags();
-
-	void *m_begin;
-	void *m_end;
-	void *m_capacity;
+	allocator() {}
 };
 
+template <class T, class Alloc> class vector;
+
+template <>
+class vector<AsciiString, allocator<AsciiString> >
+{
+public:
+	explicit vector(const allocator<AsciiString> &a = allocator<AsciiString>());
+	~vector();
+
+private:
+	AsciiString *_M_start;
+	AsciiString *_M_finish;
+	AsciiString *_M_end_of_storage;
+};
 }
 
 struct Gen_t_00252ce0_p128pod
@@ -153,59 +169,15 @@ public:
 	virtual ~TransitionDamageFXModuleData();
 
 private:
-	TransitionDamageFXRecordA m_fxList[0x30];
+	FXDamageFXListInfo m_fxList[0x30];
 	int volatile m_fxListFlags;
-	TransitionDamageFXRecordB m_ocl[0x30];
+	FXDamageOCLInfo m_ocl[0x30];
 	int volatile m_oclFlags;
-	TransitionDamageFXRecordC m_particleSystem[0x30];
-	TransitionDamageFXFlags m_damageFlags[4];
-	TransitionDamageFXFlags m_damageParticleFlags[4];
+	FXDamageParticleSystemInfo m_particleSystem[0x30];
+	_STL::vector<AsciiString, _STL::allocator<AsciiString> > m_damageFlags[4];
+	_STL::vector<AsciiString, _STL::allocator<AsciiString> > m_damageParticleFlags[4];
 	TensileFormationUpdateMember m_tail;
 };
-
-// ?TransitionDamageFXRecordA::TransitionDamageFXRecordA present-unmatched
-TransitionDamageFXRecordA::TransitionDamageFXRecordA()
-	: m_boneName()
-{
-}
-
-// ?TransitionDamageFXRecordA::~TransitionDamageFXRecordA present-unmatched
-TransitionDamageFXRecordA::~TransitionDamageFXRecordA()
-{
-}
-
-// ?TransitionDamageFXRecordB::TransitionDamageFXRecordB present-unmatched
-TransitionDamageFXRecordB::TransitionDamageFXRecordB()
-	: m_boneName()
-{
-}
-
-// ?TransitionDamageFXRecordB::~TransitionDamageFXRecordB present-unmatched
-TransitionDamageFXRecordB::~TransitionDamageFXRecordB()
-{
-}
-
-// ?TransitionDamageFXRecordC::TransitionDamageFXRecordC present-unmatched
-TransitionDamageFXRecordC::TransitionDamageFXRecordC()
-	: m_boneName()
-{
-}
-
-// ?TransitionDamageFXRecordC::~TransitionDamageFXRecordC present-unmatched
-TransitionDamageFXRecordC::~TransitionDamageFXRecordC()
-{
-}
-
-// ?TransitionDamageFXFlags::TransitionDamageFXFlags present-unmatched
-TransitionDamageFXFlags::TransitionDamageFXFlags()
-	: m_begin(0), m_end(0), m_capacity(0)
-{
-}
-
-// ?TransitionDamageFXFlags::~TransitionDamageFXFlags present-unmatched
-TransitionDamageFXFlags::~TransitionDamageFXFlags()
-{
-}
 
 TransitionDamageFXModuleData::TransitionDamageFXModuleData()
 {

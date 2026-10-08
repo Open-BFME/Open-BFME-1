@@ -239,10 +239,6 @@ name,va
 ??0TextureRemapStruct@@QAE@XZ,0x00D2F180
 ??0TextureStatisticsStruct@@QAE@XZ,0x00D37380
 ??0TextureStatisticsStructWide@@QAE@XZ,0x00D3D1F0
-??0TransitionDamageFXFlags@?A0xebea2875@@QAE@XZ,0x0043469E
-??0TransitionDamageFXRecordA@?A0xebea2875@@QAE@XZ,0x00407BAD
-??0TransitionDamageFXRecordB@?A0xebea2875@@QAE@XZ,0x004302D8
-??0TransitionDamageFXRecordC@?A0xebea2875@@QAE@XZ,0x00416158
 ??0UnicodeString@@QAE@XZ,0x00441C95
 ??0Vector2@@QAE@XZ,0x004427EE
 ??0Vector3@@QAE@XZ,0x0044677C
@@ -520,13 +516,6 @@ name,va
 ??1TextureStatisticsStruct@@QAE@XZ,0x00D37390
 ??1TextureStatisticsStructWide@@QAE@XZ,0x00418FCF
 ??1TimeCodedMorphKeysClass@@QAE@XZ,0x0042BFF3
-??1TransitionDamageFXFlags@?A0xebea2875@@QAE@XZ,0x00426AB2
-??1TransitionDamageFXRecordA@?A0xebea2875@@QAE@XZ,0x0041074E
-??1TransitionDamageFXRecordB@?A0xebea2875@@QAE@XZ,0x00415703
-??1TransitionDamageFXRecordC@?A0xebea2875@@QAE@XZ,0x0042E451
-??1TransitionDamageFXSlotA@@QAE@XZ,0x0041074E
-??1TransitionDamageFXSlotB@@QAE@XZ,0x00415703
-??1TransitionDamageFXSlotC@@QAE@XZ,0x0042E451
 ??1TransitionDamageFXSlotD@@QAE@XZ,0x00426AB2
 ??1UnicodeString@@QAE@XZ,0x0043B304
 ??1W3DBridge@@QAE@XZ,0x00418174

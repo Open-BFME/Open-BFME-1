@@ -305,8 +305,9 @@ private:
 	UnsignedInt m_base;
 };
 
-namespace
-{
+// Retail vftable 0x010860A0 is recorded as ??_7PartitionFilterWouldCollide@@6B@;
+// the class keeps that name outside an anonymous namespace, whose decorated
+// name changes with the source path.
 class PartitionFilterWouldCollide : public PartitionFilter
 {
 public:
@@ -337,7 +338,6 @@ private:
 	Real m_angle;
 	Bool m_desired;
 };
-}
 
 enum DistanceCalculationType
 {

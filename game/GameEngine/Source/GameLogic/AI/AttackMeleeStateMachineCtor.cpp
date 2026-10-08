@@ -133,12 +133,17 @@ AIMeleeReAcquireState::AIMeleeReAcquireState( StateMachine *machine )
 	m_field24 = 0;
 }
 
-namespace {
+// The vftable this ctor installs is retail 0x01097C60, which the ledger names
+// ??_7AIAttackAimAtTargetState@@6B@; the class keeps that name (no anonymous
+// namespace, whose decorated name changes with the source path).  The ctor is
+// inline: retail 0x00180EE0 inlines it, and the out-of-line copy belongs to
+// AIAttackActionStates.cpp, as does the destructor.
 class AIAttackAimAtTargetState : public State
 {
 public:
 	AIAttackAimAtTargetState( StateMachine *machine, bool canTurnInPlace,
 		bool setLocomotor );
+	virtual ~AIAttackAimAtTargetState();
 
 private:
 	bool m_canTurnInPlace;
@@ -147,7 +152,7 @@ private:
 	bool m_setLocomotor;
 };
 
-AIAttackAimAtTargetState::AIAttackAimAtTargetState(
+inline AIAttackAimAtTargetState::AIAttackAimAtTargetState(
 	StateMachine *machine, bool canTurnInPlace, bool setLocomotor )
 	: State( machine, AsciiString( "AIAttackAimAtTargetState" ) )
 {
@@ -156,28 +161,29 @@ AIAttackAimAtTargetState::AIAttackAimAtTargetState(
 	m_reserved26 = false;
 	m_setLocomotor = setLocomotor;
 }
-}
 
-namespace {
+// Retail vftable 0x01097DC0 (??_7AIAttackFireWeaponState@@6B@); inline ctor and
+// declared destructor for the same reason as above.
 class AIAttackFireWeaponState : public State
 {
 public:
 	AIAttackFireWeaponState( StateMachine *machine,
 		NotifyWeaponFiredInterface *notify );
+	virtual ~AIAttackFireWeaponState();
 
 private:
 	NotifyWeaponFiredInterface *m_notify;
 	bool m_finished;
 };
 
-AIAttackFireWeaponState::AIAttackFireWeaponState(
+inline AIAttackFireWeaponState::AIAttackFireWeaponState(
 	StateMachine *machine, NotifyWeaponFiredInterface *notify )
 	: State( machine, AsciiString( "AIAttackFireWeaponState" ) ),
 	  m_notify( notify ),
 	  m_finished( false )
 {
 }
-}
+
 
 class AIWaitUntilFinishedFiringState : public State
 {

@@ -30,17 +30,17 @@
 // releases the canonical AsciiString at element+8. Other callback owners
 // remain distinct (252390 and2523B0); no identical-body identity merging.
 #include "ascii_string.h"
-class TransitionDamageFXSlotA
+class FXDamageFXListInfo
 {
 public:
-    ~TransitionDamageFXSlotA() {}
+    ~FXDamageFXListInfo() {}
 private:
     unsigned char m_unreconstructed_00[8];
     AsciiString m_unreconstructed_08;
     unsigned char m_unreconstructed_0c[0x10];
 };
-class TransitionDamageFXSlotB { public: ~TransitionDamageFXSlotB(); private: unsigned char m_unreconstructed_00[0x1c]; };
-class TransitionDamageFXSlotC { public: ~TransitionDamageFXSlotC(); private: unsigned char m_unreconstructed_00[0x1c]; };
+class FXDamageOCLInfo { public: ~FXDamageOCLInfo(); private: unsigned char m_unreconstructed_00[0x1c]; };
+class FXDamageParticleSystemInfo { public: ~FXDamageParticleSystemInfo(); private: unsigned char m_unreconstructed_00[0x1c]; };
 class TransitionDamageFXSlotD { public: ~TransitionDamageFXSlotD(); private: unsigned char m_unreconstructed_00[0x0c]; };
 
 // The 0x1034 member's destructor body at 0x00252DA0 is already in the ledger as
@@ -73,11 +73,11 @@ public:
 	virtual ~TransitionDamageFXModuleData();
 
 private:
-	TransitionDamageFXSlotA m_slotsA[0x30];				///< retail this+0x000C
+	FXDamageFXListInfo m_slotsA[0x30];				///< retail this+0x000C
 	unsigned char m_unreconstructed_54c[4];
-	TransitionDamageFXSlotB m_slotsB[0x30];				///< retail this+0x0550
+	FXDamageOCLInfo m_slotsB[0x30];				///< retail this+0x0550
 	unsigned char m_unreconstructed_a90[4];
-	TransitionDamageFXSlotC m_slotsC[0x30];				///< retail this+0x0A94
+	FXDamageParticleSystemInfo m_slotsC[0x30];				///< retail this+0x0A94
 	TransitionDamageFXSlotD m_slotsD[4];				///< retail this+0x0FD4
 	TransitionDamageFXSlotD m_slotsE[4];				///< retail this+0x1004
 	TensileFormationUpdateMember m_tail;				///< retail this+0x1034

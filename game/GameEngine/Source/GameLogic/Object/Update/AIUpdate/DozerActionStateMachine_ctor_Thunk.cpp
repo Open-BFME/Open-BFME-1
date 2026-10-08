@@ -38,8 +38,10 @@ private:
 	unsigned char m_fields[ 0x20 ];
 };
 
-namespace {
-
+// Retail vftable 0x010C6D28 is ??_7DozerActionPickActionPosState@@6B@, so the
+// class keeps that name outside an anonymous namespace (whose decorated name
+// changes with the source path).  The ctor stays inline (retail inlines it);
+// the destructor is declared, not defined: its body lives elsewhere.
 class DozerActionPickActionPosState : public State
 {
 public:
@@ -49,13 +51,12 @@ public:
 		  m_failedAttempts( 0 )
 	{
 	}
+	virtual ~DozerActionPickActionPosState();
 
 private:
 	DozerTask m_task;
 	int m_failedAttempts;
 };
-
-}
 
 class DozerActionMoveToActionPosState : public State
 {
