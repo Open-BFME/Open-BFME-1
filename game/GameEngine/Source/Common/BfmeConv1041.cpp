@@ -1,6 +1,7 @@
 // Open-BFME5 conversions.
 
-void bfmeFree1041(char *p);
+// retail calls 0x00881EB0, the matched operator delete row
+#define bfmeFree1041(p) operator delete(p)
 
 class BfmeC1041
 {
@@ -42,7 +43,9 @@ struct BfmeQ1041
 	void *m_bfmeR;
 };
 
-int bfmeCount1041(int a, void *p, char *f, int n);
+// retail ILT 0x00001BAE -> 0x00096CF0, the matched GetGameLogicRandomValue row
+int GetGameLogicRandomValue(int lo, int hi, char *file, int line);
+#define bfmeCount1041(a, p, f, n) GetGameLogicRandomValue((a), (int)(p), (f), (n))
 
 class BfmeE1041
 {

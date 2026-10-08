@@ -76430,7 +76430,6 @@ name,address,notes
 ?bfmeCosVNB@@YAMM@Z,0x00873920,pin
 ?bfmeCostAF@BfmeSlotAF@@QAEHXZ,0x00002342
 ?bfmeCount1029@@YAHHHPADH@Z,0x00001BAE,pin
-?bfmeCount1041@@YAHHPAXPADH@Z,0x00001BAE,pin
 ?bfmeCount1051@@YAHHHPADH@Z,0x00001BAE,pin
 ?bfmeCount932D@BfmeGlob932D@@QAEHPAXH@Z,0x0000C284,pin
 ?bfmeCounter@ScriptEngine@@IAEPAUScriptCounter@@VAsciiString@@@Z,0x00019ADD,counter lookup call target shared by pauseTimer and restartTimer
@@ -77223,7 +77222,6 @@ name,address,notes
 ?bfmeFourLF@@YAXXZ,0x00039900,pin
 ?bfmeFree1026@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFree1040E@@YGXPAX@Z,0x009F6C10,pin
-?bfmeFree1041@@YAXPAD@Z,0x00881EB0,pin
 ?bfmeFree1049@@YAXPAX@Z,0x00012E90,pin
 ?bfmeFree1111@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFree1183@BfmeStr1183@@QAEXXZ,0x00887940,pin
@@ -77336,7 +77334,6 @@ name,address,notes
 ?bfmeFreeVC@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeVCC@@YAXPAXH@Z,0x007F0170,pin
 ?bfmeFreeVD@@YAXPAX@Z,0x00881EB0,pin
-?bfmeFreeVDB@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeVE@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeVG@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeVH@@YAXPAX@Z,0x00881EB0,pin
@@ -78055,7 +78052,6 @@ name,address,notes
 ?bfmeNodeAllocV46@@YAPAXI@Z,0x0082E540,Open-BFME5 small-alloc pin for 0x0082FE50
 ?bfmeNodeAllocate0048BD60@@YAPAXI@Z,0x0082E540,Rva0048BD60 STLport node allocator
 ?bfmeNodeAllocateAt00061CE0@@YAPAXI@Z,0x00061CE0,RVA-scoped typed cdecl view of full29B node allocator; above128 tailcalls operator new otherwise tailcalls node pool _M_allocate
-?bfmeNormAngleETH@@YIXAAM@Z,0x0073A900,pin normAngle for BfmeConv1985
 ?bfmeNormUSC@@YAHPAX@Z,0x009B4680,pin
 ?bfmeNote1023@BfmeJ1023@@QAEXPAVBfmeH1023@@@Z,0x00010F46,pin
 ?bfmeNote1029@@YAXHD@Z,0x0001136A,pin
@@ -78864,7 +78860,6 @@ name,address,notes
 ?bfmeSetBZC@BfmeSubBZC@@QAEXH@Z,0x00802C30,pin
 ?bfmeSetCBE@@YAXPAXH@Z,0x008FE0E0,pin
 ?bfmeSetCD@BfmeTgtCD@@QAEXABVBfmeStrCD@@@Z,0x00887C90,pin
-?bfmeSetCamETH@BfmeViewETH@@QAEXXZ,0x000312A0,pin thunk for BfmeConv1985
 ?bfmeSetCheckBoxChecked@@YAXPAVGameWindow@@E@Z,0x0002E875,one-byte parameter spelling of the checkbox setter body at 0x004B31D0; AptOptions::Cancel at 0x0055DCB0 hands it the preference byte with no bool conversion
 ?bfmeSetColorsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A420,pin
 ?bfmeSetConditionState@Object@@QAEXH@Z,0x0001E402,Open-BFME5 condition-state setter called by 0x0028D8F0
@@ -78910,7 +78905,6 @@ name,address,notes
 ?bfmeSetTMC@BfmeBoxTMC@@QAEXHHHH@Z,0x000297C6,pin
 ?bfmeSetTQ@BfmeStrTQ@@QAEXABV1@@Z,0x00887C90,pin set for AudioEventTQ_bfmeSetNameTQ
 ?bfmeSetTexVHA@@YAXIAAPAVBfmeTexVHA@@@Z,0x00905AC0,pin
-?bfmeSetTextureVDA@@YAXIPAX@Z,0x00905AC0,pin
 ?bfmeSetTopVIF@@YAXPAUBfmeLuaVHR@@H@Z,0x0098FDE0,pin
 ?bfmeSetTwoCAC@BfmePairCAC@@QAEXHH@Z,0x00046B00,pin
 ?bfmeSetUND@BfmeStrUND@@QAEXPBD@Z,0x00887C90,pin
@@ -79136,7 +79130,6 @@ name,address,notes
 ?bfmeStopXV@BfmeThingXV@@QAEXXZ,0x00025806
 ?bfmeStopZJ@BfmeBaseZJ@@QAEXXZ,0x0003C740
 ?bfmeStore1173@BfmeSlot1173@@QAEXPAXH@Z,0x00802550,pin
-?bfmeStoreAngleETH@BfmeViewETH@@QAEXM@Z,0x00037E16,pin thunk for BfmeConv1985
 ?bfmeStoreYW@BfmePalantirYW@@QAEXABVAsciiStringYW@@0@Z,0x00030CFB,Open-BFME5 the palantir property store used by 0x00565620
 ?bfmeStoreYX@BfmePalantirYX@@QAEXABVAsciiStringYX@@ABVUnicodeStringYX@@@Z,0x0000BDCA,Open-BFME5 the palantir property store used by 0x00565860
 ?bfmeStoreZB@BfmePalantirZB@@QAEXABVAsciiStringZB@@ABVUnicodeStringZB@@@Z,0x0000BDCA,Open-BFME5 the palantir property store used by 0x00565BB0

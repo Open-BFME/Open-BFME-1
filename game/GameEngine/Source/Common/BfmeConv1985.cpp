@@ -18,14 +18,31 @@ public:
 	int m_bfmeValETH;
 };
 
-void __fastcall bfmeNormAngleETH(float &angle);
+// retail calls 0x0073A900 directly, the matched normAngle row
+void __fastcall normAngle(float &angle);
+#define bfmeNormAngleETH(a) normAngle(a)
+
+// retail ILT 0x00037E16 -> 0x0045B560 is the matched
+// SegLineRendererClass::Set_Merge_Abort_Factor row
+class SegLineRendererClass
+{
+public:
+	void Set_Merge_Abort_Factor(float factor);
+};
+
+// retail ILT 0x000312A0 -> 0x007423B0 is the matched private
+// W3DView::setCameraTransform row
+class W3DView
+{
+	friend class BfmeViewETH;
+	void setCameraTransform();
+};
+
 
 class BfmeViewETH
 {
 public:
 	void bfmeSetAngleETH(float angle);
-	void bfmeStoreAngleETH(float angle);
-	void bfmeSetCamETH();
 	void bfmeApplyETH(BfmeSubETH *sub);
 
 	unsigned char m_bfmeHeadETH[0x0c];
@@ -52,7 +69,7 @@ void BfmeViewETH::bfmeSetAngleETH(float angle)
 		return;
 
 	bfmeNormAngleETH(angle);
-	bfmeStoreAngleETH(angle);
+	((SegLineRendererClass *)this)->Set_Merge_Abort_Factor(angle);
 
 	m_bfmeAETH = 0;
 	m_bfmeBETH = 0;
@@ -60,6 +77,6 @@ void BfmeViewETH::bfmeSetAngleETH(float angle)
 	m_bfmeCETH = 0;
 	m_bfmeEETH = 0;
 
-	bfmeSetCamETH();
+	((W3DView *)this)->setCameraTransform();
 	bfmeApplyETH(&m_bfmeSubETH);
 }

@@ -1,6 +1,9 @@
 // Open-BFME5 conversions.
 
-void bfmeSetTextureVDA(unsigned n, void *tex);
+class TextureBaseClass;
+// retail ILT 0x00905AC0 is the matched BoxSetTexture row
+void BoxSetTexture(unsigned stage, TextureBaseClass *&texture);
+#define bfmeSetTextureVDA(n, tex) BoxSetTexture((n), *(TextureBaseClass **)(tex))
 
 // upstream layout: game/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
@@ -36,7 +39,8 @@ void BfmeThingVDA::bfmeDrawVDA(char skip)
 	DX8Wrapper::Draw_Triangles(m_bfmef4, m_bfme100, m_bfmefc, m_bfmef8);
 }
 
-void bfmeFreeVDB(void *p);
+// retail calls 0x00881EB0, the matched operator delete row
+#define bfmeFreeVDB(p) operator delete(p)
 
 struct BfmeNodeVDB
 {
