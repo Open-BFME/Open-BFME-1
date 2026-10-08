@@ -511,13 +511,84 @@ public:
 
 extern "C" AIParseDefinitionAIShim *TheAIParseDefinitionAI;
 
-// The second initFromINI argument is the address of the AI FieldParse table
-// at 0x01094B00 (the row the parseTarget work at retail 0x0014C8E0 identified
-// by content), not a computed value. dir32_addresses.csv records no name for
-// it, so keep the address-derived one. The body only passes the base, so an
-// opaque array of one record is enough. INI::initFromINI itself is declared by
-// Common/INI/INI.h, so this call no longer needs a stand-in class.
-extern const FieldParse g_01094B00[];
+// Retail AI FieldParse contains 68 fields and a complete zero terminator.
+// Each record uses the four-argument cdecl INI parser contract.
+extern const FieldParse g_01094B00[69];
+void j_00012f4e();
+void j_000270d4();
+void j_00040269();
+extern "C" const FieldParse __identifier("?g_01094B00@@3QBUFieldParse@@B")[69] =
+{
+    { "StructureSeconds", INI::parseReal, 0, 4 },
+    { "TeamSeconds", INI::parseReal, 0, 8 },
+    { "Wealthy", INI::parseInt, 0, 12 },
+    { "Poor", INI::parseInt, 0, 16 },
+    { "ForceIdleMSEC", INI::parseDurationUnsignedInt, 0, 20 },
+    { "StructuresWealthyRate", INI::parseReal, 0, 24 },
+    { "TeamsWealthyRate", INI::parseReal, 0, 28 },
+    { "StructuresPoorRate", INI::parseReal, 0, 32 },
+    { "TeamsPoorRate", INI::parseReal, 0, 36 },
+    { "TeamResourcesToStart", INI::parseReal, 0, 40 },
+    { "GuardInnerModifierAI", INI::parseReal, 0, 44 },
+    { "GuardOuterModifierAI", INI::parseReal, 0, 48 },
+    { "GuardInnerModifierHuman", INI::parseReal, 0, 52 },
+    { "GuardOuterModifierHuman", INI::parseReal, 0, 56 },
+    { "GuardChaseUnitsDuration", INI::parseDurationUnsignedInt, 0, 60 },
+    { "GuardEnemyScanRate", INI::parseDurationUnsignedInt, 0, 64 },
+    { "GuardEnemyReturnScanRate", INI::parseDurationUnsignedInt, 0, 68 },
+    { "SkirmishGroupFudgeDistance", INI::parseReal, 0, 88 },
+    { "RepulsedDistance", INI::parseReal, 0, 96 },
+    { "EnableRepulsors", INI::parseBool, 0, 100 },
+    { "AlertRangeModifier", INI::parseReal, 0, 76 },
+    { "AggressiveRangeModifier", INI::parseReal, 0, 80 },
+    { "ForceSkirmishAI", INI::parseBool, 0, 101 },
+    { "RotateSkirmishBases", INI::parseBool, 0, 102 },
+    { "AttackUsesLineOfSight", INI::parseBool, 0, 103 },
+    { "AttackIgnoreInsignificantBuildings", INI::parseBool, 0, 104 },
+    { "AttackPriorityDistanceModifier", INI::parseReal, 0, 84 },
+    { "MaxRecruitRadius", INI::parseReal, 0, 92 },
+    { "WallHeight", INI::parseReal, 0, 72 },
+    { "SideInfo", (void (*)(INI *, void *, void *, const void *))j_00012f4e, 0, 0 },
+    { "AttackPriority", (void (*)(INI *, void *, void *, const void *))j_000270d4, 0, 0 },
+    { "SkirmishBuildList", (void (*)(INI *, void *, void *, const void *))j_00040269, 0, 0 },
+    { "MinDistanceForGroup", INI::parseReal, 0, 108 },
+    { "FormationEnemyDistance", INI::parseReal, 0, 112 },
+    { "MinClumpDensity", INI::parseReal, 0, 116 },
+    { "InfantryPathfindDiameter", INI::parseInt, 0, 120 },
+    { "VehiclePathfindDiameter", INI::parseInt, 0, 124 },
+    { "RebuildDelayTimeSeconds", INI::parseInt, 0, 128 },
+    { "SupplyCenterSafeRadius", INI::parseReal, 0, 132 },
+    { "AIDozerBoredRadiusModifier", INI::parseReal, 0, 136 },
+    { "AICrushesInfantry", INI::parseBool, 0, 140 },
+    { "MeleeApproachTolerance", INI::parseReal, 0, 144 },
+    { "MeleeApproachDist", INI::parseReal, 0, 148 },
+    { "MeleeAcquireLimitDist", INI::parseReal, 0, 152 },
+    { "WadeWaterDepth", INI::parseReal, 0, 156 },
+    { "FormationColumnWidth", INI::parseReal, 0, 160 },
+    { "FormationRowDepth", INI::parseReal, 0, 164 },
+    { "FormationSquadSpacing", INI::parseReal, 0, 168 },
+    { "FormationColumns", INI::parseInt, 0, 176 },
+    { "NarrowPassageScale", INI::parseReal, 0, 172 },
+    { "HordesWaitForHordes", INI::parseBool, 0, 181 },
+    { "AttackMoveUsesFormations", INI::parseBool, 0, 182 },
+    { "ForceHordesToLowLOD", INI::parseBool, 0, 183 },
+    { "AllowForestFires", INI::parseBool, 0, 184 },
+    { "UseFormations", INI::parseBool, 0, 185 },
+    { "WaitForOthers", INI::parseBool, 0, 180 },
+    { "AltCameraZoomOverride", INI::parseReal, 0, 188 },
+    { "AltCameraPitchOverride", INI::parseReal, 0, 192 },
+    { "MaxRetaliateDistance", INI::parseReal, 0, 196 },
+    { "RetaliateFriendsRadius", INI::parseReal, 0, 200 },
+    { "ChaseFromBehindLimit", INI::parseReal, 0, 204 },
+    { "CastleSiegeStandBackDistance", INI::parseReal, 0, 208 },
+    { "UseLowLODTrees", INI::parseBool, 0, 212 },
+    { "DisableTrees", INI::parseBool, 0, 232 },
+    { "LowLodTreeName", INI::parseAsciiString, 0, 216 },
+    { "LowLodTreeNameNoGrab", INI::parseAsciiString, 0, 220 },
+    { "LowLodTreeNameNoHarvest", INI::parseAsciiString, 0, 224 },
+    { "LowLodTreeScale", INI::parseReal, 0, 228 },
+    { 0, 0, 0, 0 }
+};
 
 void AI::parseAiDataDefinition(INI *ini)
 {

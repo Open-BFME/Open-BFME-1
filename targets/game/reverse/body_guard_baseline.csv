@@ -286,7 +286,6 @@ dir32,0x0108E9F0,??_7RunOffMapBehaviorModuleData@@6B@,"nothing in the ledger own
 dir32,0x0108EAF8,??_7RubbleRiseUpdateModuleData@@6B@,"nothing in the ledger owns 0x0108EAF8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0108EE10,?g_0108EE10@FXParticleSystem@@3QBDB,"retail 0x0108EE10 is already recorded as ??_C@_06GJMFONGK@Radius?$AA@; reference that name, not a new one"
 dir32,0x010941A0,?g_armorTemplateSetFieldParse@@3QBUFieldParse@@B,"retail 0x010941A0 is already recorded as ?g_armorTemplateSetFieldParse@@3QBEB; reference that name, not a new one"
-dir32,0x01094B00,?g_01094B00@@3QBUFieldParse@@B,"nothing in the ledger owns 0x01094B00. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x010956C4,??_7PartitionFilter010956C4@@6B@,"retail 0x010956C4 is already recorded as ?g_010956C4@@3PAPBXA; reference that name, not a new one"
 dir32,0x01095704,??_7PartitionFilterRepulsor@@6B@,"retail 0x01095704 is already recorded as ??_7ParticleEmitterPrototypeClass@@6B@; reference that name, not a new one"
 dir32,0x01095734,??_7PartitionFilter01095734@@6B@,"retail 0x01095734 is already recorded as ??_7Rva0014A580FunctorValueWrapper@@6B@; reference that name, not a new one"
