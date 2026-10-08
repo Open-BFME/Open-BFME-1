@@ -67,17 +67,24 @@ private:
     int *m_end;
 };
 
-namespace {
-class Gen_000D1730 : public BfmeBaseVUQ
+// Retail's Gen_000D1730 (vftable 0x01083E50, dtor 0x000D1730) is owned by
+// Bfme5FoldedBaseVectorDtor.cpp.  The Player dtor inlines that member dtor, so
+// this TU uses a novtable view that stores the recorded vftable by name and
+// emits neither a dtor nor a vftable COMDAT of its own.
+extern "C" const void *__identifier("??_7Gen_000D1730@@6B@")[];
+
+class __declspec(novtable) Gen_000D1730PlayerView : public BfmeBaseVUQ
 {
 public:
-    virtual ~Gen_000D1730() {}
+    virtual ~Gen_000D1730PlayerView()
+    {
+        *(const void ***)this = __identifier("??_7Gen_000D1730@@6B@");
+    }
     virtual void bfmePure000D1730() {}
 private:
     int m_field;
     BfmeVecMemberY m_vector;
 };
-}
 
 class Gen_uwm_0002cd7c
 {
@@ -138,7 +145,7 @@ private:
     std::vector<int> m_sciencesHidden;       // +0x24c
     char pad258[0x18];                       // +0x258
     StringBase<unsigned short> m_generalName;// +0x270
-    Gen_000D1730 m_member274;               // +0x274
+    Gen_000D1730PlayerView m_member274;               // +0x274
     std::list<TeamPrototype000DD440 *> m_playerTeamPrototypes; // +0x288
     Deletable000DD440 *m_playerRelations;   // +0x28c
     Deletable000DD440 *m_teamRelations;     // +0x290
