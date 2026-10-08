@@ -60,3 +60,25 @@ Rva007DCA80::Rva007DCA80()
 	m_58 = 0;
 	m_5C = 0;
 }
+
+extern const void *g_01128C5C[7];
+
+void j_00042442(void);
+void j_0001c03f(void);
+void j_0002ddda(void);
+void j_00003f5d(void);
+void j_0004a507(void);
+void j_0003c731(void);
+void j_00004bba(void);
+
+#pragma section(".rdata", read)
+extern "C" __declspec(allocate(".rdata")) const void *__identifier("?g_01128C5C@@3PAPBXA")[7] =
+{
+	(const void *)&j_00042442,
+	(const void *)&j_0001c03f,
+	(const void *)&j_0002ddda,
+	(const void *)&j_00003f5d,
+	(const void *)&j_0004a507,
+	(const void *)&j_0003c731,
+	(const void *)&j_00004bba
+};
