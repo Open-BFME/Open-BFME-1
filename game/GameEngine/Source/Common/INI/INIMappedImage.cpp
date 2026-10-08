@@ -22,7 +22,9 @@ public:
 	Image( void );
 	void setName( AsciiString name );
 
-	static const FieldParse m_imageFieldParseTable[];
+protected:
+	friend class INI;
+	static const FieldParse m_imageFieldParseTable[];	// protected, as in ZH Image.h
 
 private:
 	void *m_unknown00;

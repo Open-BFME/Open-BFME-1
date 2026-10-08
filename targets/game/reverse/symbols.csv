@@ -90555,3 +90555,8 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_0P@GAAADPOD@SkyboxTextureE?$AA@,0x00CF1ABC,Retail SkyboxTextureSet::m_fieldParseTable table VA 0x010F1638 entry; compiler string literal SkyboxTextureE equals retail at VA 0x010F1ABC
 ??_C@_0P@HMJIIKDE@SkyboxTextureS?$AA@,0x00CF1AA8,Retail SkyboxTextureSet::m_fieldParseTable table VA 0x010F1638 entry; compiler string literal SkyboxTextureS equals retail at VA 0x010F1AA8
 ??_C@_0P@IDPEOGCI@SkyboxTextureN?$AA@,0x00CF1AD0,Retail SkyboxTextureSet::m_fieldParseTable table VA 0x010F1638 entry; compiler string literal SkyboxTextureN equals retail at VA 0x010F1AD0
+??_C@_06HPEKDDKI@Coords?$AA@,0x00D0FF7C,Retail Image::m_imageFieldParseTable table VA 0x0110FF08 entry; compiler string literal Coords equals retail at VA 0x0110FF7C
+??_C@_06PGDKHFME@Status?$AA@,0x00D06E50,Retail Image::m_imageFieldParseTable table VA 0x0110FF08 entry; compiler string literal Status equals retail at VA 0x01106E50
+??_C@_07GKACAEDJ@Texture?$AA@,0x00C80CB0,Retail Image::m_imageFieldParseTable table VA 0x0110FF08 entry; compiler string literal Texture equals retail at VA 0x01080CB0
+??_C@_0N@HAPEHGOH@TextureWidth?$AA@,0x00D0FF94,Retail Image::m_imageFieldParseTable table VA 0x0110FF08 entry; compiler string literal TextureWidth equals retail at VA 0x0110FF94
+??_C@_0O@CJCFCPMD@TextureHeight?$AA@,0x00D0FF84,Retail Image::m_imageFieldParseTable table VA 0x0110FF08 entry; compiler string literal TextureHeight equals retail at VA 0x0110FF84

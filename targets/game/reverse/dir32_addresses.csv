@@ -12585,7 +12585,6 @@ name,va
 ?m_gridWaterHandle@TerrainLogic@@1VWaterHandle@@A,0x012EF4D4
 ?m_idCounter@TerrainRoadCollection@@1IA,0x012F700C
 ?m_idNext@View@@0IA,0x012B5778
-?m_imageFieldParseTable@Image@@2QBUFieldParse@@B,0x0110FF08
 ?m_keepaliveInterval@NAT@@1JA,0x012B9E94
 ?m_manglerRetryTimeInterval@NAT@@1JA,0x012B9E8C
 ?m_mapFieldParseTable@MapMetaDataReader@@2QBUFieldParse@@B,0x01082F58
