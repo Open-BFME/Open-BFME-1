@@ -45,3 +45,7 @@ typedef BitFlags<13> DisabledMaskType;
 
 // ?DISABLEDMASK_NONE@@3V?$BitFlags@$0N@@@A -- retail VA 0x012ED858, 4 zero bytes
 DisabledMaskType DISABLEDMASK_NONE;
+// ?DISABLEDMASK_ALL@@3V?$BitFlags@$0N@@@A -- retail VA 0x012ED85C, 4 zero bytes in
+// .data; read by the matched PoisonedBehavior::getDisabledTypesToProcess
+// (0x001B2D50) and set to all bits at startup by the 0x00104750 store.
+DisabledMaskType DISABLEDMASK_ALL;
