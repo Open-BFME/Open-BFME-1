@@ -207,9 +207,121 @@ typedef struct ciServerMessageType
 	void (*handler)(CHAT chat, const ciServerMessage *message);
 } ciServerMessageType;
 
+// Retail .data at VA 012C8930: the 54-entry command/handler dispatch table
+// (GameSpy chatHandlers.c order; every handler is an independently matched row).
+void ciPrivmsgHandler(CHAT chat, const ciServerMessage *message);
+void ciNoticeHandler(CHAT chat, const ciServerMessage *message);
+void ciUTMHandler(CHAT chat, const ciServerMessage *message);
+void ciATMHandler(CHAT chat, const ciServerMessage *message);
+void ciPingHandler(CHAT chat, const ciServerMessage *message);
+void ciNickHandler(CHAT chat, const ciServerMessage *message);
+void ciJoinHandler(CHAT chat, const ciServerMessage *message);
+void ciPartHandler(CHAT chat, const ciServerMessage *message);
+void ciKickHandler(CHAT chat, const ciServerMessage *message);
+void ciQuitHandler(CHAT chat, const ciServerMessage *message);
+void ciKillHandler(CHAT chat, const ciServerMessage *message);
+void ciTopicHandler(CHAT chat, const ciServerMessage *message);
+void ciModeHandler(CHAT chat, const ciServerMessage *message);
+void ciErrorHandler(CHAT chat, const ciServerMessage *message);
+void ciInviteHandler(CHAT chat, const ciServerMessage *message);
+void ciNameReplyHandler(CHAT chat, const ciServerMessage *message);
+void ciEndOfNamesHandler(CHAT chat, const ciServerMessage *message);
+void ciRplTopicHandler(CHAT chat, const ciServerMessage *message);
+void ciRplNoTopicHandler(CHAT chat, const ciServerMessage *message);
+void ciRplWhoReplyHandler(CHAT chat, const ciServerMessage *message);
+void ciRplUserIPHandler(CHAT chat, const ciServerMessage *message);
+void ciRplListStartHandler(CHAT chat, const ciServerMessage *message);
+void ciRplListHandler(CHAT chat, const ciServerMessage *message);
+void ciRplListEndHandler(CHAT chat, const ciServerMessage *message);
+void ciRplChannelModeIsHandler(CHAT chat, const ciServerMessage *message);
+void ciRplWhoisUserHandler(CHAT chat, const ciServerMessage *message);
+void ciRplWhoisChannelsHandler(CHAT chat, const ciServerMessage *message);
+void ciRplEndOfWhoisHandler(CHAT chat, const ciServerMessage *message);
+void ciRplBanListHandler(CHAT chat, const ciServerMessage *message);
+void ciRplEndOfBanListHandler(CHAT chat, const ciServerMessage *message);
+void ciRplWelcomeHandler(CHAT chat, const ciServerMessage *message);
+void ciRplEndOfWhoHandler(CHAT chat, const ciServerMessage *message);
+void ciRplGetKeyHandler(CHAT chat, const ciServerMessage *message);
+void ciRplEndGetKeyHandler(CHAT chat, const ciServerMessage *message);
+void ciRplGetCKeyHandler(CHAT chat, const ciServerMessage *message);
+void ciRplEndGetCKeyHandler(CHAT chat, const ciServerMessage *message);
+void ciRplGetChanKeyHandler(CHAT chat, const ciServerMessage *message);
+void ciRplSecureKeyHandler(CHAT chat, const ciServerMessage *message);
+void ciRplCDKeyHandler(CHAT chat, const ciServerMessage *message);
+void ciRplLoginHandler(CHAT chat, const ciServerMessage *message);
+void ciErrNickInUseHandler(CHAT chat, const ciServerMessage *message);
+void ciErrNoSuchChannelHandler(CHAT chat, const ciServerMessage *message);
+void ciErrTooManyChannelsHandler(CHAT chat, const ciServerMessage *message);
+void ciErrChannelIsFullHandler(CHAT chat, const ciServerMessage *message);
+void ciErrInviteOnlyChanHandler(CHAT chat, const ciServerMessage *message);
+void ciErrBannedFromChanHandler(CHAT chat, const ciServerMessage *message);
+void ciErrBadChannelKeyHandler(CHAT chat, const ciServerMessage *message);
+void ciErrBadChanMaskHandler(CHAT chat, const ciServerMessage *message);
+void ciErrNoSuchNickHandler(CHAT chat, const ciServerMessage *message);
+void ciErrErroneusNicknameHandler(CHAT chat, const ciServerMessage *message);
+void ciErrLoginFailedHandler(CHAT chat, const ciServerMessage *message);
+void ciErrNoUniqueNickHandler(CHAT chat, const ciServerMessage *message);
+void ciErrUniqueNickExpiredHandler(CHAT chat, const ciServerMessage *message);
+void ciErrRegisterNickFailedHandler(CHAT chat, const ciServerMessage *message);
+ciServerMessageType serverMessageTypes[] =
+{
+	{"PRIVMSG", ciPrivmsgHandler},
+	{"NOTICE", ciNoticeHandler},
+	{"UTM", ciUTMHandler},
+	{"ATM", ciATMHandler},
+	{"PING", ciPingHandler},
+	{"NICK", ciNickHandler},
+	{"JOIN", ciJoinHandler},
+	{"PART", ciPartHandler},
+	{"KICK", ciKickHandler},
+	{"QUIT", ciQuitHandler},
+	{"KILL", ciKillHandler},
+	{"TOPIC", ciTopicHandler},
+	{"MODE", ciModeHandler},
+	{"ERROR", ciErrorHandler},
+	{"INVITE", ciInviteHandler},
+	{"353", ciNameReplyHandler},
+	{"366", ciEndOfNamesHandler},
+	{"332", ciRplTopicHandler},
+	{"331", ciRplNoTopicHandler},
+	{"352", ciRplWhoReplyHandler},
+	{"302", ciRplUserIPHandler},
+	{"321", ciRplListStartHandler},
+	{"322", ciRplListHandler},
+	{"323", ciRplListEndHandler},
+	{"324", ciRplChannelModeIsHandler},
+	{"311", ciRplWhoisUserHandler},
+	{"319", ciRplWhoisChannelsHandler},
+	{"318", ciRplEndOfWhoisHandler},
+	{"367", ciRplBanListHandler},
+	{"368", ciRplEndOfBanListHandler},
+	{"001", ciRplWelcomeHandler},
+	{"315", ciRplEndOfWhoHandler},
+	{"700", ciRplGetKeyHandler},
+	{"701", ciRplEndGetKeyHandler},
+	{"702", ciRplGetCKeyHandler},
+	{"703", ciRplEndGetCKeyHandler},
+	{"704", ciRplGetChanKeyHandler},
+	{"705", ciRplSecureKeyHandler},
+	{"706", ciRplCDKeyHandler},
+	{"707", ciRplLoginHandler},
+	{"433", ciErrNickInUseHandler},
+	{"403", ciErrNoSuchChannelHandler},
+	{"405", ciErrTooManyChannelsHandler},
+	{"471", ciErrChannelIsFullHandler},
+	{"473", ciErrInviteOnlyChanHandler},
+	{"474", ciErrBannedFromChanHandler},
+	{"475", ciErrBadChannelKeyHandler},
+	{"476", ciErrBadChanMaskHandler},
+	{"401", ciErrNoSuchNickHandler},
+	{"432", ciErrErroneusNicknameHandler},
+	{"708", ciErrLoginFailedHandler},
+	{"709", ciErrNoUniqueNickHandler},
+	{"710", ciErrUniqueNickExpiredHandler},
+	{"711", ciErrRegisterNickFailedHandler},
+};
 // Retail .data at VA 012C8AE0 contains the 54-entry dispatch count.
 int numServerMessageTypes = 54;
-extern ciServerMessageType serverMessageTypes[];
 
 void ciSocketThink(void *chatSocket);
 ciServerMessage *ciSocketRecv(void *chatSocket);
