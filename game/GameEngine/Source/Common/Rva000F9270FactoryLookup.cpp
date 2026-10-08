@@ -1,15 +1,20 @@
 // cl: /DNDEBUG /MD /EHsc
 
-class Rva000F9270Product
+class AsciiString;
+class Player;
+
+// Retail ILT 0x0000DA8A lands on ThingTemplate::calcCostToBuild (0x0013E390).
+class ThingTemplate
 {
 public:
-	void *evaluate(void *argument, void *context);
+	int calcCostToBuild(const Player *player, int index) const;
 };
 
-class Rva000F9270Factory
+// Retail ILT 0x00028560 lands on BfmeThingFactory::findTemplate (0x00137E80).
+class BfmeThingFactory
 {
 public:
-	Rva000F9270Product *find(void *key);
+	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
 // Retail global 0x012EF1D8 is EA's ThingFactory singleton, defined once in
@@ -30,8 +35,8 @@ private:
 
 void *Rva000F9270FactoryLookup::evaluate(void *argument)
 {
-	Rva000F9270Product *product = ((Rva000F9270Factory *)TheThingFactory)->find(this);
+	const ThingTemplate *product = ((BfmeThingFactory *)TheThingFactory)->findTemplate(*(const AsciiString *)this);
 	if (product)
-		return product->evaluate(argument, m_context);
+		return (void *)product->calcCostToBuild((const Player *)argument, (int)m_context);
 	return 0;
 }

@@ -22,22 +22,16 @@ public:
 	Player *getControllingPlayer() const;
 };
 
-class Rva0036BA60Cost
+// Retail calls ILT 0x0000DA8A, which lands on ThingTemplate::calcCostToBuild
+// (0x0013E390).
+class ThingTemplate
 {
 public:
-	unsigned int costFor( Player *player, int index ) const;
+	int calcCostToBuild( const Player *player, int index ) const;
 };
 
-// Retail calls the cost body through the ILT thunk at 0x0000DA8A, owned by
-// game/gen_small/thunks_006.cpp as ?j_0000da8a@@YAXXZ.  The thunk is declared
-// by that symbol and reached through a member-function pointer so the call keeps
-// its thiscall shape (ECX = cost); costFor is never referenced by name.
-extern "C" void __cdecl __identifier( "?j_0000da8a@@YAXXZ" )();
-typedef unsigned int ( Rva0036BA60Cost::*Rva0036BA60CostForThunk )( Player *player, int index ) const;
-union Rva0036BA60CostForThunkRef
+class Rva0036BA60Cost : public ThingTemplate
 {
-	void *m_thunk;
-	Rva0036BA60CostForThunk m_call;
 };
 
 class Rva0036BA60PurchaseContext
@@ -59,9 +53,7 @@ unsigned int Rva0036BA60PurchaseContext::withdrawPurchaseCost( const Rva0036BA60
 	if( !player )
 		return 0;
 
-	Rva0036BA60CostForThunkRef thunk;
-	thunk.m_thunk = (void *)&__identifier( "?j_0000da8a@@YAXXZ" );
-	unsigned int amount = ( cost->*thunk.m_call )( player, -1 );
+	unsigned int amount = cost->calcCostToBuild( player, -1 );
 	player->m_money.withdraw( amount, true );
 	return amount;
 }

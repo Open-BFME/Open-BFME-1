@@ -80284,7 +80284,6 @@ name,address,notes
 ?copySurfaceRects006e@@YAXVW3DRadarResetSurface@@PBUBfmeRect@@01H@Z,0x00904D20,W3DDisplay drawImage direct-surface copy target read from retail REL32
 ?copyTeamReference@ScriptEngine@@QAEXABVAsciiString@@V2@@Z,0x00011DDD,SET_TEAM_REFERENCE_TO_REFERNECE dispatch calls the canonical reference-copy body
 ?copyUnitReference@ScriptEngine@@QAEXABVAsciiString@@V2@@Z,0x0003CB50,SET_UNIT_REFERENCE_TO_REFERENCE dispatch calls the canonical reference-copy body
-?costFor@Rva0036BA60Cost@@QBEIPAVPlayer@@H@Z,0x0000DA8A,Rva0036BA60 affordability check retail call at 0x0036BA88 uses the ILT thunk to the 0x0013E390 cost calculation body
 ?count@DisconnectManagerCountVotesShim@@QAEHH@Z,0x0066B720,DisconnectManager countVotesForPlayer incremental-link thunk target through a TU-local forwarding shim
 ?count@XmlNameSlotList@@QAEHXZ,0x0035EF50,pin for Rva002E2970 applyNameFlags
 ?countBuildings@Team@@QAEHXZ,0x00015294,Open-BFME5 the thunk TeamPrototype countBuildings calls once per team; Zero Hour names the same call
@@ -80877,7 +80876,6 @@ name,address,notes
 ?evaluate@Gen006A8050@@QAEPAXPAX@Z,0x006A8050,address-derived callee of the 28-byte self-pair-returning family; target read from the REL32 at its call sites
 ?evaluate@Gen009D76F0@@QAEPAXPAX@Z,0x009D76F0,address-derived callee of the 28-byte self-pair-returning family; target read from the REL32 at its call sites
 ?evaluate@Rva00064410Catmull@@SAMMMMMM@Z,0x0003757E,codegen-visible Catmull coordinate helper resolves through the existing incremental-link thunk
-?evaluate@Rva000F9270Product@@QAEPAXPAX0@Z,0x0000DA8A,retail REL32 at 0x000F928F targets the product evaluation ILT at 0x0000DA8A
 ?evaluate@Rva000F92B0Product@@QAEPAXPAX0@Z,0x0004B01F,retail REL32 at 0x000F92CF targets the alternate product evaluation ILT at 0x0004B01F
 ?evaluate@ScriptConditionsEvaluateNamedInsideAreaShim@@QAE_NPAVParameter@@0@Z,0x003247A0,ScriptConditions evaluateNamedInsideArea incremental-link thunk target through a TU-local forwarding shim
 ?evaluate@ScriptConditionsEvaluateTeamInsideAreaEntirelyShim@@QAE_NPAVParameter@@00@Z,0x00324AC0,ScriptConditions evaluateTeamInsideAreaEntirely incremental-link thunk target through a TU-local forwarding shim
@@ -80996,7 +80994,6 @@ name,address,notes
 ?find@PreferenceMap@@QBEPAUPreferenceNode@@ABVAsciiString@@@Z,0x0000AEAC,ILT thunk to the AsciiString-keyed preferences map find at 0x00080600
 ?find@Rva000F72B0AsciiHash@@QAEHABVAsciiString@@@Z,0x000043FE,retail REL32 at 0x000F72B9 targets the ILT for the AsciiString hashtable lookup at 0x000F2010
 ?find@Rva000F75B0HashMember@@QAEPAXABVAsciiString@@@Z,0x000F2010,implementation=0x000F2010; retail ILT=0x000043FE; F75B0+0F; actual AsciiString constref node-pointer return; ctorF7790 proves embedded20-byte map+1C; campaign=luna36h-20260907;lane=expand07
-?find@Rva000F9270Factory@@QAEPAVRva000F9270Product@@PAX@Z,0x00028560,retail REL32 at 0x000F927B targets the factory lookup ILT at 0x00028560
 ?find@Rva000F92B0Factory@@QAEPAVRva000F92B0Product@@PAX@Z,0x00028560,retail REL32 at 0x000F92BB targets the factory lookup ILT at 0x00028560
 ?find@Rva00137E80Map@@QAEPAURva001366A0Node@@ABVAsciiString@@@Z,0x1460a,Retail ThingFactory lookup helper at proven call site
 ?find@Rva0019B780Tree@@QBEPAURva0019B780Node@@ABURva0019B780Key@@@Z,0x00198280,support pin for the pair-tree find callee used by 0x0019B780
