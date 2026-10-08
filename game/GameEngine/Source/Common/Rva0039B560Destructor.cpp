@@ -11,11 +11,9 @@
 
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class BfmeBaseVUQ
-{
-public:
-	virtual ~BfmeBaseVUQ() { }
-};
+// Second base: cleanup funclet 0x00C1CA48 destroys this+8 through ILT
+// 0x00001C80, the PE-exported Snapshot destructor.
+#include "System/snapshot.h"
 
 class SubsystemInterface
 {
@@ -44,7 +42,7 @@ private:
 	unsigned int m_words[2];
 };
 
-class Rva0039B560 : public SubsystemInterface, public BfmeBaseVUQ
+class Rva0039B560 : public SubsystemInterface, public Snapshot
 {
 public:
 	~Rva0039B560();
