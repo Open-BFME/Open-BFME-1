@@ -551,39 +551,6 @@ void LANAPI::OnGameCreate( ReturnType ret )
 
 }//void OnGameCreate( ReturnType ret )
 
-// ?OnPlayerList@LANAPI@@ present-unmatched
-void LANAPI::OnPlayerList( LANPlayer *playerList )
-{
-	if (m_inLobby)
-	{
-		
-		UnsignedInt selectedIP = 0;
-		Int selectedIndex = -1;
-		Int indexToSelect = -1;
-		GadgetListBoxGetSelected(listboxPlayers, &selectedIndex);
-		
-		if (selectedIndex != -1 )
-			selectedIP = (UnsignedInt) GadgetListBoxGetItemData(listboxPlayers, selectedIndex, 0);
-
-		GadgetListBoxReset(listboxPlayers);
-
-		LANPlayer *player = m_lobbyPlayers;
-		while (player)
-		{
-			Int addedIndex = GadgetListBoxAddEntryText(listboxPlayers, player->getName(), playerColor, -1, -1);
-			GadgetListBoxSetItemData(listboxPlayers, (void *)player->getIP(),addedIndex, 0 );
-
-			if (selectedIP == player->getIP())
-				indexToSelect = addedIndex;
-
-			player = player->getNext();
-		}
-
-		if (indexToSelect >= 0)
-			GadgetListBoxSetSelected(listboxPlayers, indexToSelect);
-	}
-}
-
 // Retail LANAPI table111AF50 slot28 enters matched OnPlayerList689A40.
 class Rva00689B70CallbackView
 {
