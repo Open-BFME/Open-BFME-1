@@ -3249,58 +3249,8 @@ void Player::resetSciences()
 
 //=============================================================================
 /// returns TRUE if sciences were gained/lost.
-// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/PlayerAddScienceThunk.cpp
-// ?addScience@Player@@AAE_NW4ScienceType@@@Z present-unmatched
-Bool Player::addScience(ScienceType science)
-{
-	if (hasScience(science))
-		return false;
-
-	//DEBUG_LOG(("Adding Science %s\n",TheScienceStore->getInternalNameForScience(science).str()));
-
-	m_sciences.push_back(science);
-
-	// 'wake up' any special powers controlled by, well, stuff
-	for (PlayerTeamList::iterator it = m_playerTeamPrototypes.begin(); 
-			 it != m_playerTeamPrototypes.end(); ++it) 
-	{
-		for (DLINK_ITERATOR<Team> iter = (*it)->iterate_TeamInstanceList(); !iter.done(); iter.advance()) 
-		{
-			Team *team = iter.cur();
-			if (!team)
-				continue;
-			
-			for (DLINK_ITERATOR<Object> iterObj = team->iterate_TeamMemberList(); !iterObj.done(); iterObj.advance()) 
-			{
-				Object *obj = iterObj.cur();
-				if (!obj)
-					continue;
-
-				for (BehaviorModule** m = obj->getBehaviorModules(); *m; ++m)
-				{
-					SpecialPowerModuleInterface* sp = (*m)->getSpecialPower();
-					if (!sp)
-						continue;
-
-					if (sp->getRequiredScience() == science)
-					{
-						// Turn on the power, and set it to be instantly ready, because that is cool.
-						sp->onSpecialPowerCreation();
-						sp->setReadyFrame( TheGameLogic->getFrame() );
-					}
-				}
-			}
-		}
-
-		TheControlBar->markUIDirty();// Refresh the UI to show new cameos, etc
-
-	}
-
-	// notify the script engine
-	TheScriptEngine->notifyOfAcquiredScience(getPlayerIndex(), science);
-	
-	return true;
-}
+// Player::addScience is defined at its retail address (0x000D5380) in
+// Player_addScience_bfme.cpp.
 
 // BFME inserts 0x14 bytes ahead of the radar counters and 0xd0 ahead of the
 // science vectors, so both families are read through a view rather than through
