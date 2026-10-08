@@ -269,7 +269,7 @@ public:
 	AsciiString realMapPathToPortableMapPath(const AsciiString &path) const;
 };
 
-GameState *TheGameState;
+extern GameState *TheGameState;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetFileCommandMsg : public NetCommandMsg
