@@ -1590,27 +1590,7 @@ void Radar::refreshTerrain( TerrainLogic *terrain )
 
 }  // end refreshTerrain
 
-// ------------------------------------------------------------------------------------------------
-/** Queue a refresh of the radar terrain, we have this so that if there is code that
-	* rapidly needs to refresh the radar, it should use this so we aren't continually
-	* rebuilding the radar graphic because that process is slow.  If you need to update
-	* the terrain on the radar immediately use refreshTerrain() */
-// ------------------------------------------------------------------------------------------------
-// ?queueTerrainRefresh@Radar@@UAEXXZ present-unmatched
-void Radar::queueTerrainRefresh( void )
-{
-
-	//
-	// we just simply overwrite the frame we have recorded for a radar refresh.  If there was
-	// already one there, it's simply just forgotten and whatever changes we wanted to see
-	// with that refresh will have to wait until enough time has passed to show these
-	// changes as well.  why you ask ... well, because if we're calling this in close enough
-	// proximity for us to overwrite something, we're changing the terrain features 
-	// quite often and can't afford the expense of rebuilding the radar visual
-	//
-	m_queueTerrainRefreshFrame = TheGameLogic->getFrame();
-
-}  // end queueTerrainRefresh
+// Radar::queueTerrainRefresh: retail body in Radar_queueTerrainRefresh.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */
