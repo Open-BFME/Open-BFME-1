@@ -393,47 +393,8 @@ void GameSpyOpenOverlay( GSOverlayType overlay )
 	}
 }
 
-void GameSpyCloseOverlay( GSOverlayType overlay )
-{
-	switch(overlay)
-	{
-		case GSOVERLAY_PLAYERINFO:
-			DEBUG_LOG(("Closing overlay GSOVERLAY_PLAYERINFO\n"));
-			break;
-		case GSOVERLAY_MAPSELECT:
-			DEBUG_LOG(("Closing overlay GSOVERLAY_MAPSELECT\n"));
-			break;
-		case GSOVERLAY_BUDDY:
-			DEBUG_LOG(("Closing overlay GSOVERLAY_BUDDY\n"));
-			break;
-		case GSOVERLAY_PAGE:
-			DEBUG_LOG(("Closing overlay GSOVERLAY_PAGE\n"));
-			break;
-		case GSOVERLAY_GAMEOPTIONS:
-			DEBUG_LOG(("Closing overlay GSOVERLAY_GAMEOPTIONS\n"));
-			break;
-		case GSOVERLAY_GAMEPASSWORD:
-			DEBUG_LOG(("Closing overlay GSOVERLAY_GAMEPASSWORD\n"));
-			break;
-		case GSOVERLAY_LADDERSELECT:
-			DEBUG_LOG(("Closing overlay GSOVERLAY_LADDERSELECT\n"));
-			break;
-		case GSOVERLAY_OPTIONS:
-			DEBUG_LOG(("Closing overlay GSOVERLAY_OPTIONS\n"));
-			if( overlayLayouts[overlay] )
-			{
-				SignalUIInteraction(SHELL_SCRIPT_HOOK_OPTIONS_CLOSED);
-			}
-			break;
-	}
-	if( overlayLayouts[overlay] )
-	{
-		overlayLayouts[overlay]->runShutdown();
-		overlayLayouts[overlay]->destroyWindows();
-		overlayLayouts[overlay]->deleteInstance();
-		overlayLayouts[overlay] = NULL;
-	}
-}
+// GameSpyCloseOverlay: retail 0x00627AD0 (GameSpyOverlay_close.cpp) behind ILT
+// 0x00040E94 (GameSpyCloseOverlayThunk.cpp).
 
 Bool GameSpyIsOverlayOpen( GSOverlayType overlay )
 {
