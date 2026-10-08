@@ -6396,6 +6396,8 @@ void AIUpdateInterface::setDemoralized( UnsignedInt durationInFrames )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// The retail body (0x0027DF90) is AIUpdateInterfacePrivateCommandButton.cpp.
+#if 0
 // ?privateCommandButton@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::privateCommandButton( const CommandButton *commandButton, CommandSourceType cmdSource )
 {
@@ -6449,6 +6451,7 @@ void AIUpdateInterface::privateCommandButton( const CommandButton *commandButton
 		}
 	}
 }
+#endif
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
