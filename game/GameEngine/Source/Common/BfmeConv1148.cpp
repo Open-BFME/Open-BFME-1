@@ -33,23 +33,28 @@ struct BfmeG1148
 	int m_bfmeb8c;
 };
 
-class BfmeS1148
+class BfmeS1148;
+
+// The fourteen getters are the matched OptionPreferences rows (retail 0x00090D90..
+// 0x000915E0, each reached through its ILT thunk); the parameter keeps its
+// established BfmeS1148 spelling and is viewed as OptionPreferences.
+class OptionPreferences
 {
 public:
-	int bfmeF01148(void);
-	int bfmeF11148(void);
-	char bfmeF21148(void);
-	char bfmeF31148(void);
-	char bfmeF41148(void);
-	char bfmeF51148(void);
-	char bfmeF61148(void);
-	char bfmeF71148(void);
-	char bfmeF81148(void);
-	char bfmeF91148(void);
-	char bfmeFa1148(void);
-	char bfmeFb1148(void);
-	char bfmeFc1148(void);
-	char bfmeFd1148(void);
+	int getTextureReduction(void);
+	int getParticleCap(void);
+	unsigned char get3DShadows(void);
+	unsigned char get2DShadows(void);
+	bool getUsePixelShader(void);
+	bool getBuildingOcclusionEnabled(void);
+	bool getDynamicLODEnabled(void);
+	unsigned char getTerrainLighting(void);
+	unsigned char getAnisotropicTextureFiltering(void);
+	unsigned char getSmoothWaterBorder(void);
+	bool getExtraAnimationsDisabled(void);
+	unsigned char getGrassDrawSkip(void);
+	unsigned char getUseHighQualityVideo(void);
+	unsigned char getShowProps(void);
 };
 
 class GlobalData;
@@ -60,7 +65,7 @@ extern GlobalData *TheWritableGlobalData;
 
 void bfmeGo1148(BfmeS1148 *s)
 {
-	int n = 2 - (int)(s->bfmeF01148() * 3 * 0.01f);
+	int n = 2 - (int)(((OptionPreferences *)s)->getTextureReduction() * 3 * 0.01f);
 
 	if (n < 0)
 		n = 0;
@@ -68,21 +73,21 @@ void bfmeGo1148(BfmeS1148 *s)
 		n = 2;
 
 	((BfmeG1148 *)TheWritableGlobalData)->m_bfme68 = n;
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfmeb8c = s->bfmeF11148() * 0x1d + 0x64;
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfme64 = s->bfmeF21148();
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfme65 = s->bfmeF31148();
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfme28 = (char)(s->bfmeF41148() == 0);
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfme70 = s->bfmeF51148();
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfme58 = s->bfmeF61148();
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfme44 = s->bfmeF71148();
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfme38 = s->bfmeF71148();
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfme47 = s->bfmeF81148();
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfme8c = s->bfmeF91148();
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfme1c = s->bfmeFa1148();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfmeb8c = ((OptionPreferences *)s)->getParticleCap() * 0x1d + 0x64;
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme64 = ((OptionPreferences *)s)->get3DShadows();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme65 = ((OptionPreferences *)s)->get2DShadows();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme28 = (char)(((OptionPreferences *)s)->getUsePixelShader() == 0);
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme70 = ((OptionPreferences *)s)->getBuildingOcclusionEnabled();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme58 = ((OptionPreferences *)s)->getDynamicLODEnabled();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme44 = ((OptionPreferences *)s)->getTerrainLighting();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme38 = ((OptionPreferences *)s)->getTerrainLighting();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme47 = ((OptionPreferences *)s)->getAnisotropicTextureFiltering();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme8c = ((OptionPreferences *)s)->getSmoothWaterBorder();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme1c = ((OptionPreferences *)s)->getExtraAnimationsDisabled();
 	BfmeG1148 *g = (BfmeG1148 *)TheWritableGlobalData;
 
 	g->m_bfme1a = (char)(g->m_bfme1c == 0);
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfme1b = s->bfmeFb1148();
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfme1f = s->bfmeFc1148();
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfme18 = s->bfmeFd1148();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme1b = ((OptionPreferences *)s)->getGrassDrawSkip();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme1f = ((OptionPreferences *)s)->getUseHighQualityVideo();
+	((BfmeG1148 *)TheWritableGlobalData)->m_bfme18 = ((OptionPreferences *)s)->getShowProps();
 }
