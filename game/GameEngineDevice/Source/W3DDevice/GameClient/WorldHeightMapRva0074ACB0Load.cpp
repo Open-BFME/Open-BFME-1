@@ -265,7 +265,7 @@ public:
 
 extern Dict g_Va012ED5E0;
 extern char g_Va012A7A48[];
-
+extern unsigned int *RvaGlobal012A7A48;
 class View
 {
 public:
@@ -361,7 +361,7 @@ void WorldHeightMap::parse(DataChunkInput &file, Bool parseSizeOnly)
 		Rva0074A3B0ParserRegistration heightMapData(this, &file, 0);
 		file.registerParser(AsciiString("WorldInfo"), AsciiString::TheEmptyString,
 			ParseWorldDictDataChunk, 0);
-		Rva00088F50ParserRegistration objectsList(g_Va012A7A48, &file, 0);
+		Rva00088F50ParserRegistration objectsList(&RvaGlobal012A7A48, &file, 0);
 
 		freeListOfMapObjects();
 

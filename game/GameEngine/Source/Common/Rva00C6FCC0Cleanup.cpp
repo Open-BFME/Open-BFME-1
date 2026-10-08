@@ -34,3 +34,7 @@ void rva00C6FD00() { reinterpret_cast<Gen0000D828 *>(&RvaObject012ED82C)->handle
 void rva00C6FD20() { reinterpret_cast<Gen0000D828 *>(&RvaObject012EF180)->handle(); }
 void rva00C6FD30() { reinterpret_cast<Gen0000D828 *>(&RvaObject012EF1E4)->handle(); }
 void rva00C6FD40() { reinterpret_cast<Gen0000D828 *>(&RvaObject012EF1F0)->handle(); }
+
+extern "C" unsigned int __identifier("??_7Rva00087320@@6B@")[ ];
+extern "C" unsigned int *__identifier("?RvaGlobal012A7A48@@3PAIA") =
+    __identifier("??_7Rva00087320@@6B@");

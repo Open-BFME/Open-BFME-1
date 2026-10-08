@@ -861,7 +861,6 @@ dir32,0x012A7978,?TheKey_multiplayerIsLocal@@3VStaticNameKey@@B,"retail 0x012A79
 dir32,0x012A79A0,?g_012A79A0@@3VStaticNameKey@@A,"nothing in the ledger owns 0x012A79A0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012A79A8,?g_012A79A8@@3VStaticNameKey@@A,"nothing in the ledger owns 0x012A79A8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012A79E8,?g_012A79E8@@3VStaticNameKey@@A,"nothing in the ledger owns 0x012A79E8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x012A7A48,?RvaGlobal012A7A48@@3PAIA,"nothing in the ledger owns 0x012A7A48. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012A8280,?g_012A8280@@3QBQBDB,"nothing in the ledger owns 0x012A8280. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012A86A8,?g_012A86A8@@3MB,"nothing in the ledger owns 0x012A86A8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012A9308,?g_012A9308@@3PAUTableEntry@FunctionLexicon@@A,"nothing in the ledger owns 0x012A9308. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
