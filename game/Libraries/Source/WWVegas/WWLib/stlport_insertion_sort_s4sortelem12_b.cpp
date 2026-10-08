@@ -70,7 +70,11 @@ struct S4Cmp00532740
 {
 	int m_bfmeSlot;
 
-	bool operator()(const S4SortElem12_00532740 &left, const S4SortElem12_00532740 &right) const
+	// Like the median 0x0052FB30, __linear_insert 0x00531860 calls
+	// compareNoCase through ILT 0x27471 rather than inlining it; a member
+	// template keeps this shape out of the shared ??RS4Cmp00532740 COMDAT.
+	template <class Elem>
+	bool operator()(const Elem &left, const Elem &right) const
 	{
 		if (((!left.m_bfmeA) ^ (!right.m_bfmeA)) != 0)
 			return left.m_bfmeA;
