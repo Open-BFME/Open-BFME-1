@@ -151,7 +151,7 @@ class TransitionGroup
 {
 public:
 	void init(void);
-	int getTotalFrames(void);
+	int getTotalFrames_0048A130(void);	// ILT 0x00032470 -> 0x0048A130
 
 private:
 	bool m_fireOnce;
@@ -170,6 +170,6 @@ int GameWindowTransitionsHandler::bfmeGetGroupTotalFrames( AsciiString groupName
 	int totalFrames = 0;
 	TransitionGroup *group = findGroup( groupName );
 	if (group)
-		totalFrames = group->getTotalFrames();
+		totalFrames = group->getTotalFrames_0048A130();
 	return totalFrames;
 }

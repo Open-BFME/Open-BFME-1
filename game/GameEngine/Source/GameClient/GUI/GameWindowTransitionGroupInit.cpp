@@ -3,7 +3,9 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
-typedef int NameKeyType;
+// Retail ILT 0x0003ADD7 lands on 0x0008FFC0, matched as
+// NameKeyGenerator::nameToKey returning the NameKeyType enum.
+enum NameKeyType { NAMEKEY_INVALID = 0 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 struct AsciiStringData
@@ -149,12 +151,14 @@ inline bool TransitionWindow::init(void)
 	return true;
 }
 
+// ?draw@TransitionWindow@@QAEXXZ absent-from-retail (inlined into every caller)
 inline void TransitionWindow::draw(void)
 {
 	if (m_transition)
 		m_transition->draw();
 }
 
+// ?update@TransitionWindow@@QAEXH@Z absent-from-retail (inlined into every caller)
 inline void TransitionWindow::update(int frame)
 {
 	if (frame < m_currentFrameDelay ||
@@ -165,24 +169,28 @@ inline void TransitionWindow::update(int frame)
 		m_transition->update(frame - m_currentFrameDelay);
 }
 
+// ?reverse@TransitionWindow@@QAEXH@Z absent-from-retail (inlined into every caller)
 inline void TransitionWindow::reverse(int)
 {
 	if (m_transition)
 		m_transition->reverse();
 }
 
+// ?reset@TransitionWindow@@QAEXXZ absent-from-retail (inlined into every caller)
 inline void TransitionWindow::reset(void)
 {
 	if (m_transition)
 		m_transition->reset();
 }
 
+// ?skip@TransitionWindow@@QAEXXZ absent-from-retail (inlined into every caller)
 inline void TransitionWindow::skip(void)
 {
 	if (m_transition)
 		m_transition->skip();
 }
 
+// ?getTotalFrames@TransitionWindow@@QAEHXZ absent-from-retail (inlined into every caller)
 inline int TransitionWindow::getTotalFrames(void)
 {
 	if (m_transition)
@@ -211,7 +219,7 @@ public:
 	void reverse(void);
 	void reset(void);
 	void skip(void);
-	int getTotalFrames(void);
+	int getTotalFrames_0048A130(void);
 
 private:
 	bool m_fireOnce;
@@ -237,7 +245,7 @@ void TransitionGroup::init(void)
 		++it;
 	}
 
-	TheTransitionHandler->m_transitionEndFrame = getTotalFrames() + 3;
+	TheTransitionHandler->m_transitionEndFrame = getTotalFrames_0048A130() + 3;
 }
 
 // ?draw@TransitionGroup@@QAEXXZ
@@ -263,6 +271,25 @@ void TransitionGroup::update(void)
 		window->update(m_currentFrame);
 		++it;
 	}
+}
+
+// Reached through ILT 0x00032470: the same window-duration maximum reverse()
+// computes inline (ZH TransitionGroup::getTotalFrames). Retail's ILT hash order
+// rejects the ZH spelling, so the method keeps an address-derived name.
+// ?getTotalFrames_0048A130@TransitionGroup@@QAEHXZ
+int TransitionGroup::getTotalFrames_0048A130(void)
+{
+	int totalFrames = 0;
+	_STL::list<TransitionWindow *>::iterator it = m_transitionWindowList.begin();
+	while (it != m_transitionWindowList.end())
+	{
+		TransitionWindow *window = *it;
+		int windowFrames = window->getTotalFrames();
+		if (windowFrames > totalFrames)
+			totalFrames = windowFrames;
+		++it;
+	}
+	return totalFrames;
 }
 
 // ?reverse@TransitionGroup@@QAEXXZ
