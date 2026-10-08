@@ -2,12 +2,14 @@
 // is intended to be included multiple times with different _STLP_ASSOCIATIVE_CONTAINER
 // setting
 
+#ifndef _STLP_EQUAL_OPERATOR_SPECIALIZED
 _STLP_TEMPLATE_HEADER
 inline bool  _STLP_CALL operator==(const _STLP_TEMPLATE_CONTAINER& __x, 
                                    const _STLP_TEMPLATE_CONTAINER& __y) {
   return __x.size() == __y.size() &&
     equal(__x.begin(), __x.end(), __y.begin());
 }
+#endif /* _STLP_EQUAL_OPERATOR_SPECIALIZED */
 
 _STLP_TEMPLATE_HEADER
 inline bool  _STLP_CALL operator<(const _STLP_TEMPLATE_CONTAINER& __x, 

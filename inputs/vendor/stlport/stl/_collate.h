@@ -169,7 +169,7 @@ __locale_do_operator_call (const locale* __that,
   if (!__f)
     __that->_M_throw_runtime_error();
   return __f->compare(__x.data(), __x.data() + __x.size(),
-                      __y.data(), __y.data() + __y.size());
+                      __y.data(), __y.data() + __y.size()) < 0;
   
 }
 

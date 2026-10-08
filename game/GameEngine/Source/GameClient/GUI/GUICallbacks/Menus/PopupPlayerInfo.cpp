@@ -68,12 +68,6 @@
 
 #include "WWDownload/Registry.h"
 
-namespace _STL
-{
-template unsigned int __default_constructed<unsigned int>(unsigned int *);
-template unsigned int __default_constructed_aux<unsigned int>(unsigned int *, const __true_type &);
-}
-
 //-------------------------------------------------------------------------------------------------
 // WindowLayout::hide is virtual in BFME (vtable slot 0x10) and non-virtual in
 // the vendored ZH header. Editing the header would touch every TU that includes

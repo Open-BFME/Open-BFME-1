@@ -80,6 +80,12 @@ struct _List_node : public _List_node_base {
   char _M_bfme_node_tail[0x20];
 #endif
   __TRIVIAL_STUFF(_List_node)
+
+#ifdef __DMC__
+  // for some reason, Digital Mars C++ needs a constructor...
+ private:
+  _List_node();
+#endif
 };
 
 struct _List_iterator_base {
@@ -254,7 +260,7 @@ protected:
   }
 
 public:
-# if !(defined(__MRC__)||defined(__SC__))
+# if !(defined(__MRC__)||(defined(__SC__) && !defined(__DMC__)))
   explicit
 # endif
   list(const allocator_type& __a = allocator_type()) :
@@ -353,7 +359,7 @@ public:
     _Node* __n = (_Node*) __position._M_node;
     __prev_node->_M_next = __next_node;
     __next_node->_M_prev = __prev_node;
-    _Destroy(&__n->_M_data);
+    _STLP_STD::_Destroy(&__n->_M_data);
     this->_M_node.deallocate(__n, 1);
     return iterator((_Node*)__next_node);
     }
@@ -364,7 +370,7 @@ public:
     return __last;
   }
 
-  void resize(size_type __new_size, const _Tp& __x);
+  void resize(size_type __new_size, _Tp __x);
   void resize(size_type __new_size) { this->resize(__new_size, _Tp()); }
 
   void pop_front() { erase(begin()); }
@@ -539,30 +545,13 @@ operator==(const list<_Tp,_Alloc>& __x, const list<_Tp,_Alloc>& __y)
   return __i1 == __end1 && __i2 == __end2;
 }
 
-template <class _Tp, class _Alloc>
-inline bool  _STLP_CALL operator<(const list<_Tp,_Alloc>& __x,
-                                  const list<_Tp,_Alloc>& __y)
-{
-  return lexicographical_compare(__x.begin(), __x.end(),
-                                 __y.begin(), __y.end());
-}
-
-# define _STLP_TEMPLATE_CONTAINER list<_Tp, _Alloc>
+# define _STLP_EQUAL_OPERATOR_SPECIALIZED
 # define _STLP_TEMPLATE_HEADER    template <class _Tp, class _Alloc>
-_STLP_RELOPS_OPERATORS(_STLP_TEMPLATE_HEADER, _STLP_TEMPLATE_CONTAINER)
+# define _STLP_TEMPLATE_CONTAINER list<_Tp, _Alloc>
+# include <stl/_relops_cont.h>
 # undef _STLP_TEMPLATE_CONTAINER
 # undef _STLP_TEMPLATE_HEADER
-
-#ifdef _STLP_USE_SEPARATE_RELOPS_NAMESPACE
-
-template <class _Tp, class _Alloc>
-inline void _STLP_CALL 
-swap(list<_Tp, _Alloc>& __x, list<_Tp, _Alloc>& __y)
-{
-  __x.swap(__y);
-}
-
-#endif /* _STLP_USE_SEPARATE_RELOPS_NAMESPACE */
+# undef _STLP_EQUAL_OPERATOR_SPECIALIZED
 
 _STLP_END_NAMESPACE 
 

@@ -239,6 +239,16 @@ char *_Pthread_alloc<_Max_size>::_S_end_free = 0;
 
 template <size_t _Max_size>
 size_t _Pthread_alloc<_Max_size>::_S_heap_size = 0;
+
+ # else
+ 
+ __DECLARE_INSTANCE(template <size_t _Max_size> _Pthread_alloc_per_thread_state<_Max_size> *, _Pthread_alloc<_Max_size>::_S_free_per_thread_states, = 0);
+ __DECLARE_INSTANCE(template <size_t _Max_size> pthread_key_t, _Pthread_alloc<_Max_size>::_S_key, = 0);
+ __DECLARE_INSTANCE(template <size_t _Max_size> bool, _Pthread_alloc<_Max_size>::_S_key_initialized, = false);
+ __DECLARE_INSTANCE(template <size_t _Max_size> char *, _Pthread_alloc<_Max_size>::_S_start_free, = 0);
+ __DECLARE_INSTANCE(template <size_t _Max_size> char *, _Pthread_alloc<_Max_size>::_S_end_free, = 0);
+ __DECLARE_INSTANCE(template <size_t _Max_size> size_t, _Pthread_alloc<_Max_size>::_S_heap_size, = 0);
+
 # endif
 
 _STLP_END_NAMESPACE

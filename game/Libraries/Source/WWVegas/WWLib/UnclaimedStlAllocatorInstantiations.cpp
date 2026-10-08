@@ -38,26 +38,26 @@ struct Rva009ECFC0Element { char m_bytes[ 4 ]; };
 struct Rva009ED060Element { char m_bytes[ 12 ]; };
 struct Rva009F2FE0Element { char m_bytes[ 8 ]; };
 
-template Rva0081D580Element *_STL::allocator<Rva0081D580Element>::allocate( size_t, const void * ) const;
-template void _STL::allocator<Rva0081D5B0Element>::deallocate( Rva0081D5B0Element *, size_t ) const;
-template Rva008F9D10Element *_STL::allocator<Rva008F9D10Element>::allocate( size_t, const void * ) const;
-template Rva008F9D70Element *_STL::allocator<Rva008F9D70Element>::allocate( size_t, const void * ) const;
-template Rva008F9DD0Element *_STL::allocator<Rva008F9DD0Element>::allocate( size_t, const void * ) const;
-template void _STL::allocator<Rva008F9E00Element>::deallocate( Rva008F9E00Element *, size_t ) const;
-template void _STL::allocator<Rva008FEE40Element>::deallocate( Rva008FEE40Element *, size_t ) const;
-template Rva008FEE80Element *_STL::allocator<Rva008FEE80Element>::allocate( size_t, const void * ) const;
-template void _STL::allocator<Rva0090E360Element>::deallocate( Rva0090E360Element *, size_t ) const;
-template void _STL::allocator<Rva00926470Element>::deallocate( Rva00926470Element *, size_t ) const;
-template Rva009264E0Element *_STL::allocator<Rva009264E0Element>::allocate( size_t, const void * ) const;
-template Rva00943980Element *_STL::allocator<Rva00943980Element>::allocate( size_t, const void * ) const;
-template Rva009A1930Element *_STL::allocator<Rva009A1930Element>::allocate( size_t, const void * ) const;
-template void _STL::allocator<Rva009A1960Element>::deallocate( Rva009A1960Element *, size_t ) const;
-template Rva009CBBD0Element *_STL::allocator<Rva009CBBD0Element>::allocate( size_t, const void * ) const;
-template Rva009ECF30Element *_STL::allocator<Rva009ECF30Element>::allocate( size_t, const void * ) const;
-template Rva009ECF90Element *_STL::allocator<Rva009ECF90Element>::allocate( size_t, const void * ) const;
-template void _STL::allocator<Rva009ECFC0Element>::deallocate( Rva009ECFC0Element *, size_t ) const;
-template Rva009ED060Element *_STL::allocator<Rva009ED060Element>::allocate( size_t, const void * ) const;
-template Rva009F2FE0Element *_STL::allocator<Rva009F2FE0Element>::allocate( size_t, const void * ) const;
+template Rva0081D580Element *_STL::allocator<Rva0081D580Element>::allocate( size_t, const void * );
+template void _STL::allocator<Rva0081D5B0Element>::deallocate( Rva0081D5B0Element *, size_t );
+template Rva008F9D10Element *_STL::allocator<Rva008F9D10Element>::allocate( size_t, const void * );
+template Rva008F9D70Element *_STL::allocator<Rva008F9D70Element>::allocate( size_t, const void * );
+template Rva008F9DD0Element *_STL::allocator<Rva008F9DD0Element>::allocate( size_t, const void * );
+template void _STL::allocator<Rva008F9E00Element>::deallocate( Rva008F9E00Element *, size_t );
+template void _STL::allocator<Rva008FEE40Element>::deallocate( Rva008FEE40Element *, size_t );
+template Rva008FEE80Element *_STL::allocator<Rva008FEE80Element>::allocate( size_t, const void * );
+template void _STL::allocator<Rva0090E360Element>::deallocate( Rva0090E360Element *, size_t );
+template void _STL::allocator<Rva00926470Element>::deallocate( Rva00926470Element *, size_t );
+template Rva009264E0Element *_STL::allocator<Rva009264E0Element>::allocate( size_t, const void * );
+template Rva00943980Element *_STL::allocator<Rva00943980Element>::allocate( size_t, const void * );
+template Rva009A1930Element *_STL::allocator<Rva009A1930Element>::allocate( size_t, const void * );
+template void _STL::allocator<Rva009A1960Element>::deallocate( Rva009A1960Element *, size_t );
+template Rva009CBBD0Element *_STL::allocator<Rva009CBBD0Element>::allocate( size_t, const void * );
+template Rva009ECF30Element *_STL::allocator<Rva009ECF30Element>::allocate( size_t, const void * );
+template Rva009ECF90Element *_STL::allocator<Rva009ECF90Element>::allocate( size_t, const void * );
+template void _STL::allocator<Rva009ECFC0Element>::deallocate( Rva009ECFC0Element *, size_t );
+template Rva009ED060Element *_STL::allocator<Rva009ED060Element>::allocate( size_t, const void * );
+template Rva009F2FE0Element *_STL::allocator<Rva009F2FE0Element>::allocate( size_t, const void * );
 
 // 0x009F35B0 (45 bytes): frees a {start, finish, end_of_storage} block of
 // eight-byte elements (sar 3 / shl 3 of end_of_storage - start) through the

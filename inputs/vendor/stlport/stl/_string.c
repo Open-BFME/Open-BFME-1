@@ -55,25 +55,29 @@ _STLP_BEGIN_NAMESPACE
 //  if __res_arg < capacity(), this member function may actually decrease
 //  the string's capacity.
 template <class _CharT, class _Traits, class _Alloc> void basic_string<_CharT,_Traits,_Alloc>::reserve(size_type __res_arg) {
-  if (__res_arg > max_size())
-    this->_M_throw_length_error();
 
-  size_type __n = (max)(__res_arg, size()) + 1;
-  pointer __new_start = this->_M_end_of_storage.allocate(__n);
-  pointer __new_finish = __new_start;
+  if (__res_arg >= capacity())
+    {      
+      if (__res_arg > max_size())
+	this->_M_throw_length_error();
 
-  _STLP_TRY {
-    __new_finish = uninitialized_copy(this->_M_start, this->_M_finish, __new_start);
-    _M_construct_null(__new_finish);
-  }
-  _STLP_UNWIND((_Destroy(__new_start, __new_finish), 
-                this->_M_end_of_storage.deallocate(__new_start, __n)));
-
-  _Destroy(this->_M_start, this->_M_finish + 1);
-  this->_M_deallocate_block();
-  this->_M_start = __new_start;
-  this->_M_finish = __new_finish;
-  this->_M_end_of_storage._M_data = __new_start + __n;
+      size_type __n = __res_arg + 1;
+      pointer __new_start = this->_M_end_of_storage.allocate(__n);
+      pointer __new_finish = __new_start;
+      
+      _STLP_TRY {
+	__new_finish = uninitialized_copy(this->_M_start, this->_M_finish, __new_start);
+	_M_construct_null(__new_finish);
+      }
+      _STLP_UNWIND((_STLP_STD::_Destroy(__new_start, __new_finish), 
+		    this->_M_end_of_storage.deallocate(__new_start, __n)));
+      
+      _STLP_STD::_Destroy(this->_M_start, this->_M_finish + 1);
+      this->_M_deallocate_block();
+      this->_M_start = __new_start;
+      this->_M_finish = __new_finish;
+      this->_M_end_of_storage._M_data = __new_start + __n;
+    }
 }
 
 template <class _CharT, class _Traits, class _Alloc> basic_string<_CharT,_Traits,_Alloc>& basic_string<_CharT,_Traits,_Alloc>::append(size_type __n, _CharT __c) {
@@ -86,7 +90,7 @@ template <class _CharT, class _Traits, class _Alloc> basic_string<_CharT,_Traits
     _STLP_TRY {
       _M_construct_null(this->_M_finish + __n);
     }
-    _STLP_UNWIND(_Destroy(this->_M_finish + 1, this->_M_finish + __n));
+    _STLP_UNWIND(_STLP_STD::_Destroy(this->_M_finish + 1, this->_M_finish + __n));
     _Traits::assign(*end(), __c);
     this->_M_finish += __n;
   }
@@ -112,9 +116,9 @@ template <class _CharT, class _Traits, class _Alloc> basic_string<_CharT, _Trait
         __new_finish = uninitialized_copy(__first, __last, __new_finish);
         _M_construct_null(__new_finish);
       }
-      _STLP_UNWIND((_Destroy(__new_start,__new_finish),
+      _STLP_UNWIND((_STLP_STD::_Destroy(__new_start,__new_finish),
                     this->_M_end_of_storage.deallocate(__new_start,__len)));
-      _Destroy(this->_M_start, this->_M_finish + 1);
+      _STLP_STD::_Destroy(this->_M_start, this->_M_finish + 1);
       this->_M_deallocate_block();
       this->_M_start = __new_start;
       this->_M_finish = __new_finish;
@@ -127,7 +131,7 @@ template <class _CharT, class _Traits, class _Alloc> basic_string<_CharT, _Trait
       _STLP_TRY {
         _M_construct_null(this->_M_finish + __n);
       }
-      _STLP_UNWIND(_Destroy(this->_M_finish + 1, this->_M_finish + __n));
+      _STLP_UNWIND(_STLP_STD::_Destroy(this->_M_finish + 1, this->_M_finish + __n));
       _Traits::assign(*end(), *__first);
       this->_M_finish += __n;
     }
@@ -175,9 +179,9 @@ basic_string<_CharT,_Traits,_Alloc> ::_M_insert_aux(_CharT* __p,
       __new_finish = uninitialized_copy(__p, this->_M_finish, __new_finish);
       _M_construct_null(__new_finish);
     }
-    _STLP_UNWIND((_Destroy(__new_start,__new_finish), 
+    _STLP_UNWIND((_STLP_STD::_Destroy(__new_start,__new_finish), 
                   this->_M_end_of_storage.deallocate(__new_start,__len)));
-    _Destroy(this->_M_start, this->_M_finish + 1);
+    _STLP_STD::_Destroy(this->_M_start, this->_M_finish + 1);
     this->_M_deallocate_block();
     this->_M_start = __new_start;
     this->_M_finish = __new_finish;
@@ -208,7 +212,7 @@ template <class _CharT, class _Traits, class _Alloc> void basic_string<_CharT,_T
           uninitialized_copy(__position, __old_finish + 1, this->_M_finish);
           this->_M_finish += __elems_after;
         }
-        _STLP_UNWIND((_Destroy(__old_finish + 1, this->_M_finish), 
+        _STLP_UNWIND((_STLP_STD::_Destroy(__old_finish + 1, this->_M_finish), 
                       this->_M_finish = __old_finish));
         _Traits::assign(__position, __elems_after + 1, __c);
       }
@@ -225,9 +229,9 @@ template <class _CharT, class _Traits, class _Alloc> void basic_string<_CharT,_T
                                           __new_finish);
         _M_construct_null(__new_finish);
       }
-      _STLP_UNWIND((_Destroy(__new_start,__new_finish),
+      _STLP_UNWIND((_STLP_STD::_Destroy(__new_start,__new_finish),
                     this->_M_end_of_storage.deallocate(__new_start,__len)));
-      _Destroy(this->_M_start, this->_M_finish + 1);
+      _STLP_STD::_Destroy(this->_M_start, this->_M_finish + 1);
       this->_M_deallocate_block();
       this->_M_start = __new_start;
       this->_M_finish = __new_finish;
@@ -265,7 +269,7 @@ basic_string<_CharT,_Traits,_Alloc>::insert(iterator __position,
           uninitialized_copy(__position, __old_finish + 1, this->_M_finish);
           this->_M_finish += __elems_after;
         }
-        _STLP_UNWIND((_Destroy(__old_finish + 1, this->_M_finish), 
+        _STLP_UNWIND((_STLP_STD::_Destroy(__old_finish + 1, this->_M_finish), 
                       this->_M_finish = __old_finish));
         _M_copy(__first, __mid, __position);
       }
@@ -283,9 +287,9 @@ basic_string<_CharT,_Traits,_Alloc>::insert(iterator __position,
           = uninitialized_copy(__position, this->_M_finish, __new_finish);
         _M_construct_null(__new_finish);
       }
-      _STLP_UNWIND((_Destroy(__new_start,__new_finish),
+      _STLP_UNWIND((_STLP_STD::_Destroy(__new_start,__new_finish),
                     this->_M_end_of_storage.deallocate(__new_start,__len)));
-      _Destroy(this->_M_start, this->_M_finish + 1);
+      _STLP_STD::_Destroy(this->_M_start, this->_M_finish + 1);
       this->_M_deallocate_block();
       this->_M_start = __new_start;
       this->_M_finish = __new_finish;

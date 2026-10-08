@@ -56,7 +56,7 @@ template <class T> inline void copy(T* source,T* destination,int n) {
 */
 
 #ifdef __WATCOMC__
-# include <cwchar>
+# include <stl/_cwchar.h>
 #endif
 
 _STLP_BEGIN_NAMESPACE
@@ -142,8 +142,9 @@ char* _STLP_CALL _IsSameFun(bool, ...);          // no implementation is require
 
 template <class _Tp1, class _Tp2>
 struct _IsSame {
-  static _Tp1& __null_rep1();
-  static _Tp2& __null_rep2();
+  // boris : check!
+  static _Tp1* __null_rep1();
+  static _Tp2* __null_rep2();
   enum { _Ret = (sizeof(_IsSameFun(false,__null_rep1(),__null_rep2())) == sizeof(char)) };
 };
 
@@ -375,7 +376,7 @@ template <class _Tp>
 inline _IsPOD<_Tp>  _Is_POD (_Tp*) { return _IsPOD<_Tp>(); } 
 
 #  ifdef _STLP_CLASS_PARTIAL_SPECIALIZATION
-#   if defined (__BORLANDC__) || defined (__SUNPRO_CC) || ( defined (__MWERKS__) && (__MWERKS__ <= 0x2303)) || ( defined (__sgi) && defined (_COMPILER_VERSION))
+#   if defined (__BORLANDC__) || defined (__SUNPRO_CC) || ( defined (__MWERKS__) && (__MWERKS__ <= 0x2303)) || ( defined (__sgi) && defined (_COMPILER_VERSION)) || defined (__DMC__)
 #   define _IS_POD_ITER(_It, _Tp) __type_traits< typename iterator_traits< _Tp >::value_type >::is_POD_type()
 #   else
 #   define _IS_POD_ITER(_It, _Tp) typename __type_traits< typename iterator_traits< _Tp >::value_type >::is_POD_type()

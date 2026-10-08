@@ -63,7 +63,8 @@ int
 _M_get_base_or_zero(_InputIter& __in, _InputIter& __end, ios_base& __str, _CharT*)
 {
   _CharT __atoms[5];
-  const ctype<_CharT>& __c_type = *(const ctype<_CharT>*)__str._M_ctype_facet();
+  const ctype<_CharT>& __c_type = use_facet< ctype<_CharT> >(__str.getloc());
+  // const ctype<_CharT>& __c_type = *(const ctype<_CharT>*)__str._M_ctype_facet();
 
   __c_type.widen(__narrow_atoms, __narrow_atoms + 5, __atoms);
 
@@ -387,7 +388,8 @@ _M_read_float(string& __buf, _InputIter& __in, _InputIter& __end, ios_base& __s,
 
   bool   __grouping_ok = true;
 
-  const ctype<_CharT>& __ct = *(const ctype<_CharT>*)__s._M_ctype_facet();
+  const ctype<_CharT>& __ct = use_facet< ctype<_CharT> >(__s.getloc());
+  // const ctype<_CharT>& __ct = *(const ctype<_CharT>*)__s._M_ctype_facet();
   const numpunct<_CharT>& __numpunct = *(const numpunct<_CharT>*)__s._M_numpunct_facet();
   const string& __grouping = __s._M_grouping(); // cached copy
 
@@ -619,7 +621,7 @@ num_get<_CharT, _InputIter>::do_get(_InputIter __in, _InputIter __end, ios_base&
     __err |= ios_base::eofbit;
   return __in;
 }
-#endif /* _STLP_LONG_DOUBLE */
+#endif /* _STLP_NO_LONG_DOUBLE */
 
 template <class _CharT, class _InputIter>  
 _InputIter 

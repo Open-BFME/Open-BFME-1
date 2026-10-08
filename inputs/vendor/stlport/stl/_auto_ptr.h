@@ -39,8 +39,8 @@ public:
 
 };
 
-template<class _Tp> struct auto_ptr :  public __ptr_base {
-	
+template<class _Tp> class auto_ptr :  public __ptr_base {
+public:	
   typedef _Tp element_type;
   typedef auto_ptr<_Tp>           _Self;
   

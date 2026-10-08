@@ -461,7 +461,7 @@ public:
   reference find_or_insert(const value_type& __obj);
 
 private:
-# if defined(_STLP_MEMBER_TEMPLATES) && ! defined ( _STLP_NO_EXTENSIONS )  && !(defined(__MRC__)||defined(__SC__))
+# if defined(_STLP_MEMBER_TEMPLATES) && ! defined ( _STLP_NO_EXTENSIONS )  && !(defined(__MRC__)||(defined(__SC__)&&!defined(__DMC_)))
   template <class _KT> 
    _Node* _M_find(const _KT& __key) const
 # else
@@ -478,7 +478,7 @@ private:
   } 
 
 public:
-# if defined(_STLP_MEMBER_TEMPLATES) && ! defined ( _STLP_NO_EXTENSIONS )  && !(defined(__MRC__)||defined(__SC__))
+# if defined(_STLP_MEMBER_TEMPLATES) && ! defined ( _STLP_NO_EXTENSIONS )  && !(defined(__MRC__)||(defined(__SC__)&&!defined(__DMC__)))
   template <class _KT> 
   iterator find(const _KT& __key) 
 # else
@@ -488,7 +488,7 @@ public:
     return iterator(_M_find(__key), this);
   } 
 
-# if defined(_STLP_MEMBER_TEMPLATES) && ! defined ( _STLP_NO_EXTENSIONS )  && !(defined(__MRC__)||defined(__SC__))
+# if defined(_STLP_MEMBER_TEMPLATES) && ! defined ( _STLP_NO_EXTENSIONS )  && !(defined(__MRC__)||(defined(__SC__)&&!defined(__DMC__)))
   template <class _KT> 
   const_iterator find(const _KT& __key) const
 # else
@@ -576,7 +576,7 @@ private:
   
   void _M_delete_node(_Node* __n)
   {
-    _Destroy(&__n->_M_val);
+    _STLP_STD::_Destroy(&__n->_M_val);
     _M_num_elements.deallocate(__n, 1);
   }
 
@@ -586,29 +586,11 @@ private:
   void _M_copy_from(const _Self& __ht);
 };
 
-template <class _Val, class _Key, class _HF, class _ExK, class _EqK, class _All>
-inline bool _STLP_CALL operator==(const hashtable<_Val,_Key,_HF,_ExK,_EqK,_All>& __ht1,
-                       const hashtable<_Val,_Key,_HF,_ExK,_EqK,_All>& __ht2)
-{
-  return hashtable<_Val,_Key,_HF,_ExK,_EqK,_All>::_M_equal( __ht1, __ht2 );
-}
-
-#ifdef _STLP_USE_SEPARATE_RELOPS_NAMESPACE
-
-template <class _Val, class _Key, class _HF, class _Ex, class _Eq, class _All>
-inline bool _STLP_CALL operator!=(const hashtable<_Val,_Key,_HF,_Ex,_Eq,_All>& __ht1,
-                       const hashtable<_Val,_Key,_HF,_Ex,_Eq,_All>& __ht2) {
-  return !(__ht1 == __ht2);
-}
-
-template <class _Val, class _Key, class _HF, class _ExK, class _EqK, 
-          class _All>
-inline void _STLP_CALL swap(hashtable<_Val, _Key, _HF, _ExK, _EqK, _All>& __ht1,
-                 hashtable<_Val, _Key, _HF, _ExK, _EqK, _All>& __ht2) {
-  __ht1.swap(__ht2);
-}
-
-#endif /* _STLP_USE_SEPARATE_RELOPS_NAMESPACE */
+#define _STLP_TEMPLATE_HEADER template <class _Val, class _Key, class _HF, class _ExK, class _EqK, class _All>
+#define _STLP_TEMPLATE_CONTAINER hashtable<_Val,_Key,_HF,_ExK,_EqK,_All>
+#include <stl/_relops_hash_cont.h>
+#undef _STLP_TEMPLATE_CONTAINER
+#undef _STLP_TEMPLATE_HEADER
 
 _STLP_END_NAMESPACE
 

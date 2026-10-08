@@ -23,6 +23,10 @@
 #  include <stl/_prolog.h>
 # endif
 
+# ifdef _STLP_PRAGMA_ONCE
+#  pragma once
+# endif
+
 # if defined ( _STLP_OWN_IOSTREAMS )
 #  include <stl/_streambuf.h>
 # elif !defined (_STLP_USE_NO_IOSTREAMS)

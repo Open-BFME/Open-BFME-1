@@ -65,6 +65,7 @@ template <class _Val, class _Key, class _HF,
 class _DBG_hashtable : public _STLP_DBG_HT_SUPER {
   typedef _DBG_hashtable<_Val, _Key, _HF, _ExK, _EqK, _All> _Self;
   typedef _STLP_DBG_HT_SUPER _Base;
+
 public:
   typedef _Key key_type;
   typedef _HF hasher;
@@ -78,6 +79,20 @@ public:
   typedef typename _Base::iterator _Base_iterator;
   typedef typename _Base::const_iterator _Base_const_iterator;
 
+protected:
+  void _Invalidate_all() {_M_iter_list._Invalidate_all();}
+
+  void _Invalidate_iterator(const const_iterator& __it) { 
+    __invalidate_iterator(&_M_iter_list,__it); 
+  }
+  void _Invalidate_iterators(const const_iterator& __first, const const_iterator& __last) {
+    const_iterator __cur = __first;
+    while (__cur != __last) __invalidate_iterator(&_M_iter_list, __cur++); 
+  }
+
+  const _Base* _Get_base() const { return (const _Base*)this; }
+  _Base* _Get_base() { return (_Base*)this; }
+
 public:
   _DBG_hashtable(size_type __n,
 		 const _HF&  __hf,
@@ -85,7 +100,7 @@ public:
 		 const _ExK& __ext,
 		 const allocator_type& __a = allocator_type()):
     _STLP_DBG_HT_SUPER(__n, __hf, __eql, __ext, __a),
-    _M_iter_list((_Base*)this) {}
+    _M_iter_list(_Get_base()) {}
   
   _DBG_hashtable(size_type __n,
 		 const _HF&    __hf,
@@ -93,14 +108,14 @@ public:
 		 const allocator_type& __a = allocator_type()):
     
     _STLP_DBG_HT_SUPER(__n, __hf, __eql, __a),
-    _M_iter_list((_Base*)this) {}
+    _M_iter_list(_Get_base()) {}
   
   _DBG_hashtable(const _Self& __ht):
     _STLP_DBG_HT_SUPER(__ht),
-    _M_iter_list((_Base*)this) {}
+    _M_iter_list(_Get_base()) {}
   
   _Self& operator= (const _Self& __ht) {
-    _M_iter_list._Invalidate_all();
+    _Invalidate_all();
     _Base::operator=(__ht);
     return *this;
   }
@@ -193,16 +208,23 @@ public:
   }
 
   size_type erase(const key_type& __key) {
-    return _Base::erase(__key);
+    pair<const_iterator, const_iterator> __p = equal_range(__key);
+    size_type __n = distance(__p.first, __p.second);
+    _Invalidate_iterators(__p.first, __p.second);
+    _Base::erase(__p.first._M_iterator, __p.second._M_iterator);
+    return __n;
   }
 
   void erase(const const_iterator& __it) {
-    _STLP_VERBOSE_ASSERT(__it._Owner()==&_M_iter_list, _StlMsg_NOT_OWNER)
+    _STLP_DEBUG_CHECK(__check_if_owner(&_M_iter_list, __it))
+    _STLP_DEBUG_CHECK(_Dereferenceable(__it))
+    _Invalidate_iterator(__it);
     _Base::erase(__it._M_iterator);
   }
   void erase(const_iterator __first, const_iterator __last) {
     _STLP_DEBUG_CHECK(__check_if_owner(&_M_iter_list, __first)&&
                       __check_if_owner(&_M_iter_list, __last))
+    _Invalidate_iterators(__first, __last);
     _Base::erase(__first._M_iterator, __last._M_iterator);
   }
   void resize(size_type __num_elements_hint) {
@@ -210,7 +232,7 @@ public:
   }
   
   void clear() {
-    _M_iter_list._Invalidate_all();
+    _Invalidate_all();
     _Base::clear();
   }
 
@@ -219,31 +241,14 @@ private:
 
 };
 
-#ifdef _STLP_EXTRA_OPERATORS_FOR_DEBUG
-template <class _Val, class _Key, class _HF, class _ExK, class _EqK, class _All>
-inline bool operator==(const  _DBG_hashtable<_Val,_Key,_HF,_ExK,_EqK,_All>& __ht1,
-                       const  _DBG_hashtable<_Val,_Key,_HF,_ExK,_EqK,_All>& __ht2)
-{
-  return hashtable<_Val,_Key,_HF,_ExK,_EqK,_All>::_M_equal( __ht1, __ht2 );
-}
-#ifdef _STLP_USE_SEPARATE_RELOPS_NAMESPACE
-template <class _Val, class _Key, class _HF, class _Ex, class _Eq, class _All>
-inline bool operator!=(const  _DBG_hashtable<_Val,_Key,_HF,_Ex,_Eq,_All>& __ht1,
-                       const  _DBG_hashtable<_Val,_Key,_HF,_Ex,_Eq,_All>& __ht2) {
-  return !(__ht1 == __ht2);
-}
-#endif /* _STLP_USE_SEPARATE_RELOPS_NAMESPACE */
+#define _STLP_TEMPLATE_HEADER template <class _Val, class _Key, class _HF, class _ExK, class _EqK, class _All>
+#define _STLP_TEMPLATE_CONTAINER _DBG_hashtable<_Val,_Key,_HF,_ExK,_EqK,_All>
+#define _STLP_TEMPLATE_CONTAINER_BASE hashtable<_Val,_Key,_HF,_ExK,_EqK,_All>
+#include <stl/debug/_relops_hash_cont.h>
+#undef _STLP_TEMPLATE_CONTAINER_BASE
+#undef _STLP_TEMPLATE_CONTAINER
+#undef _STLP_TEMPLATE_HEADER
 
-#endif /* _STLP_EXTRA_OPERATORS_FOR_DEBUG */
-
-#ifdef _STLP_FUNCTION_TMPL_PARTIAL_ORDER
-template <class _Val, class _Key, class _HF, class _ExK, class _EqK, 
-          class _All>
-inline void swap( _DBG_hashtable<_Val, _Key, _HF, _ExK, _EqK, _All>& __ht1,
-                  _DBG_hashtable<_Val, _Key, _HF, _ExK, _EqK, _All>& __ht2) {
-  __ht1.swap(__ht2);
-}
-#endif
 _STLP_END_NAMESPACE
 #  undef  hashtable
 

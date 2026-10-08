@@ -173,7 +173,7 @@ protected:
 #ifndef _STLP_NO_LONG_DOUBLE
   virtual _InputIter do_get(_InputIter __in, _InputIter __end, ios_base& __str,
                            ios_base::iostate& __err, long double& __val) const;
-#endif /* _STLP_LONG_DOUBLE */
+#endif /* _STLP_NO_LONG_DOUBLE */
 
 #ifdef _STLP_LONG_LONG
 

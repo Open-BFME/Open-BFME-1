@@ -228,10 +228,10 @@ money_get<_CharT, _InputIter>::do_get(iter_type __s,
         ++__s;
       break;
     case money_base::symbol: {
-      string_type __cs = __intl ? __punct_intl.curr_symbol()
+      string_type __curs = __intl ? __punct_intl.curr_symbol()
                                 : __punct.curr_symbol();
       pair<iter_type, bool>
-      __result  = __get_string(__s, __end, __cs.begin(), __cs.end());
+      __result  = __get_string(__s, __end, __curs.begin(), __curs.end());
       if (!__result.second && __symbol_required)
         __err = ios_base::failbit;
       __s = __result.first;

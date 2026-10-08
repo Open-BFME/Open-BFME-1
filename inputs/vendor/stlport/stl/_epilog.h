@@ -17,8 +17,8 @@
 /* provide a mechanism to redefine std:: namespace in a way that is transparent to the 
  * user. _STLP_REDEFINE_STD is being used for wrapper files that include native headers
  * to temporary undef the std macro. */
-#  if ! defined ( _STLP_USE_NAMESPACES ) || (defined ( _STLP_USE_OWN_NAMESPACE ) \
-   && ! defined ( _STLP_DONT_REDEFINE_STD ))
+#  if defined ( _STLP_USE_NAMESPACES ) && (defined ( _STLP_USE_OWN_NAMESPACE ) && !defined ( _STLP_REDEFINE_STD ) )
+#   undef _STLP_REDEFINE_STD
 #   define _STLP_REDEFINE_STD 1
 #  endif
 
@@ -31,11 +31,14 @@
 #  ifndef _STLP_CONFIG_H
 #   include <stl/_config.h>
 #  endif
-#  if defined (_STLP_USE_OWN_NAMESPACE) && defined (_STLP_OWN_IOSTREAMS)
-namespace _STLP_STD {}
-namespace std {
-  using namespace _STLP_STD;
-}
-#  endif
+
 # endif /* __cplusplus */
 # endif
+
+
+
+
+
+
+
+

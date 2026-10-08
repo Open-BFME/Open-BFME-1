@@ -3,5 +3,5 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <memory>
 struct Rva008F9C90Elem20 { unsigned char bytes[20]; };
-template Rva008F9C90Elem20* _STL::allocator<Rva008F9C90Elem20>::allocate(size_t, const void*) const;
-template void _STL::allocator<Rva008F9C90Elem20>::deallocate(Rva008F9C90Elem20*, size_t) const;
+template Rva008F9C90Elem20* _STL::allocator<Rva008F9C90Elem20>::allocate(size_t, const void*);
+template void _STL::allocator<Rva008F9C90Elem20>::deallocate(Rva008F9C90Elem20*, size_t);

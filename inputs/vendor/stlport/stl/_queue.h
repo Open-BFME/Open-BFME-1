@@ -46,7 +46,7 @@
 # include <stl/_function.h>
 #endif
 
-#if defined(__SC__)		//*ty 12/07/2001 - since "comp" is a built-in type and reserved under SCpp
+#if defined(__SC__) && !defined(__DMC__)		//*ty 12/07/2001 - since "comp" is a built-in type and reserved under SCpp
 #define comp _Comp
 #endif
 

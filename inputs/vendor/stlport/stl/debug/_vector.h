@@ -203,11 +203,13 @@ public:
 
   iterator insert(iterator __position, const _Tp& __x) {
     _STLP_DEBUG_CHECK(__check_if_owner(&_M_iter_list, __position))
+    if (this->size()+1 > this->capacity()) _M_iter_list._Invalidate_all();  
     return iterator(&_M_iter_list, _Base::insert(__position._M_iterator, __x));
   }
 
   iterator insert(iterator __position) {
     _STLP_DEBUG_CHECK(__check_if_owner(&_M_iter_list, __position))
+    if (this->size()+1 > this->capacity()) _M_iter_list._Invalidate_all();  
     return iterator(&_M_iter_list, _Base::insert(__position._M_iterator));    
   }
 
@@ -217,6 +219,8 @@ public:
   void insert(iterator __position, _InputIterator __first, _InputIterator __last) {
     _STLP_DEBUG_CHECK(__check_range(__first,__last))
     _STLP_DEBUG_CHECK(__check_if_owner(&_M_iter_list, __position))
+    size_type __n = distance(__first, __last);
+    if (this->size()+__n > this->capacity()) _M_iter_list._Invalidate_all();  
     _Base::insert(__position._M_iterator, __first, __last);    
   }
 #else /* _STLP_MEMBER_TEMPLATES */
@@ -224,6 +228,8 @@ public:
               const_iterator __first, const_iterator __last) {
     _STLP_DEBUG_CHECK(__check_range(__first,__last))
     _STLP_DEBUG_CHECK(__check_if_owner(&_M_iter_list, __position))
+    size_type __n = distance(__first, __last);
+    if (this->size()+__n > this->capacity()) _M_iter_list._Invalidate_all();  
     _Base::insert(__position._M_iterator,
 		  __first._M_iterator, __last._M_iterator);        
   }
@@ -231,13 +237,16 @@ public:
   void insert (iterator __position, const_pointer __first, const_pointer __last) {
     _STLP_DEBUG_CHECK(__check_if_owner(&_M_iter_list, __position))
     _STLP_DEBUG_CHECK(__check_range(__first,__last))
+    size_type __n = distance(__first, __last);
+    if (this->size()+__n > this->capacity()) _M_iter_list._Invalidate_all();  
     _Base::insert(__position._M_iterator, __first, __last);  
 }
 #endif /* _STLP_MEMBER_TEMPLATES */
 
   void insert (iterator __position, size_type __n, const _Tp& __x){
     _STLP_DEBUG_CHECK(__check_if_owner(&_M_iter_list, __position))
-    _Base::insert(__position._M_iterator, __n, __x);      
+    if (this->size()+__n > this->capacity()) _M_iter_list._Invalidate_all();  
+    _Base::insert(__position._M_iterator, __n, __x);
   }
   
   void pop_back() {
@@ -262,68 +271,18 @@ public:
     _Base::clear();
   }
   void push_back(const _Tp& __x) {
-    if (size()+1 > capacity()) _M_iter_list._Invalidate_all();
+    if (this->size()+1 > this->capacity()) _M_iter_list._Invalidate_all();
     _Base::push_back(__x);
   }
 };
 
-#ifdef _STLP_FUNCTION_TMPL_PARTIAL_ORDER
-
-template <class _Tp, class _Alloc>
-inline void swap(_DBG_vector<_Tp, _Alloc>& __x, _DBG_vector<_Tp, _Alloc>& __y)
-{
-  __x.swap(__y);
-}
-
-#endif /* _STLP_FUNCTION_TMPL_PARTIAL_ORDER */
-
-#ifdef _STLP_EXTRA_OPERATORS_FOR_DEBUG
-
-template <class _Tp, class _Alloc>
-inline bool 
-operator==(const _DBG_vector<_Tp, _Alloc>& __x, const _DBG_vector<_Tp, _Alloc>& __y)
-{
-  return (const _STLP_DBG_VECTOR_BASE&)__x == 
-    (const _STLP_DBG_VECTOR_BASE&)__y; 
-}
-
-template <class _Tp, class _Alloc>
-inline bool 
-operator<(const _DBG_vector<_Tp, _Alloc>& __x, const _DBG_vector<_Tp, _Alloc>& __y)
-{
-  return (const _STLP_DBG_VECTOR_BASE&)__x < 
-    (const _STLP_DBG_VECTOR_BASE&)__y; 
-}
-
-#ifdef _STLP_USE_SEPARATE_RELOPS_NAMESPACE
-
-template <class _Tp, class _Alloc>
-inline bool
-operator!=(const _DBG_vector<_Tp, _Alloc>& __x, const _DBG_vector<_Tp, _Alloc>& __y) {
-  return !(__x == __y);
-}
-
-template <class _Tp, class _Alloc>
-inline bool
-operator>(const _DBG_vector<_Tp, _Alloc>& __x, const _DBG_vector<_Tp, _Alloc>& __y) {
-  return __y < __x;
-}
-
-template <class _Tp, class _Alloc>
-inline bool
-operator<=(const _DBG_vector<_Tp, _Alloc>& __x, const _DBG_vector<_Tp, _Alloc>& __y) {
-  return !(__y < __x);
-}
-
-template <class _Tp, class _Alloc>
-inline bool
-operator>=(const _DBG_vector<_Tp, _Alloc>& __x, const _DBG_vector<_Tp, _Alloc>& __y) {
-  return !(__x < __y);
-}
-
-#endif /* _STLP_USE_SEPARATE_RELOPS_NAMESPACE */
-
-# endif /* BASE_MATCH_BUG */
+#define _STLP_TEMPLATE_HEADER template <class _Tp, class _Alloc>
+#define _STLP_TEMPLATE_CONTAINER _DBG_vector<_Tp, _Alloc>
+#define _STLP_TEMPLATE_CONTAINER_BASE _STLP_DBG_VECTOR_BASE
+#include <stl/debug/_relops_cont.h>
+#undef _STLP_TEMPLATE_CONTAINER_BASE
+#undef _STLP_TEMPLATE_CONTAINER
+#undef _STLP_TEMPLATE_HEADER
 
 # if defined (_STLP_USE_TEMPLATE_EXPORT) 
  _STLP_EXPORT_TEMPLATE_CLASS _DBG_vector <void*,allocator<void*> >;

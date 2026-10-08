@@ -2,4 +2,4 @@
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
 #include <memory>
-template void _STL::allocator<double>::deallocate(double*, size_t) const;
+template void _STL::allocator<double>::deallocate(double*, size_t);

@@ -45,7 +45,7 @@
 #if !defined (_STLP_USE_UNIX_IO) && !defined(_STLP_USE_WIN32_IO) \
     && ! defined (_STLP_USE_UNIX_EMULATION_IO) && !defined (_STLP_USE_STDIO_IO)
 
-# if defined (_STLP_UNIX)  || defined (__CYGWIN__) || defined (__amigaos__)
+# if defined (_STLP_UNIX)  || defined (__CYGWIN__) || defined (__amigaos__) || defined (__EMX__)
 // open/close/read/write
 #  define _STLP_USE_UNIX_IO
 # elif defined (_STLP_WIN32)  && ! defined (__CYGWIN__)
@@ -117,9 +117,9 @@ public:
   // Returns true if we're in binary mode or if we're using an OS or file 
   // system where there is no distinction between text and binary mode.
   bool _M_in_binary_mode() const {
-# if defined (_STLP_UNIX) || defined (_STLP_MAC)  || defined(__BEOS__) || defined (__amigaos__)
+# if defined (_STLP_UNIX) || defined (_STLP_MAC)  || defined(__BEOS__) || defined (__amigaos__) 
     return true;
-# elif defined (_STLP_WIN32) || defined (_STLP_WIN16) || defined (_STLP_DOS) || defined (_STLP_VM)
+# elif defined (_STLP_WIN32) || defined (_STLP_WIN16) || defined (_STLP_DOS) || defined (_STLP_VM) || defined (__EMX__)
     return (_M_openmode & ios_base::binary) != 0;
 # else 
 #   error "Port!"

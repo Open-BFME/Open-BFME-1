@@ -79,20 +79,6 @@ _STLP_DIFFERENCE_TYPE(_InputIter) __n = 0;
 }
 
 // adjacent_find.
-template <class _ForwardIter>
-_STLP_INLINE_LOOP _ForwardIter 
-adjacent_find(_ForwardIter __first, _ForwardIter __last) {
-  _STLP_DEBUG_CHECK(__check_range(__first, __last))
-    if (__first == __last)
-      return __last;
-  _ForwardIter __next = __first;
-  while(++__next != __last) {
-    if (*__first == *__next)
-      return __first;
-    __first = __next;
-  }
-  return __last;
-}
 
 template <class _ForwardIter, class _BinaryPredicate>
 _STLP_INLINE_LOOP _ForwardIter 
@@ -108,6 +94,13 @@ adjacent_find(_ForwardIter __first, _ForwardIter __last,
     __first = __next;
   }
   return __last;
+}
+
+template <class _ForwardIter>
+_STLP_INLINE_LOOP _ForwardIter 
+adjacent_find(_ForwardIter __first, _ForwardIter __last) {
+  return adjacent_find(__first, __last,
+		       __equal_to(_STLP_VALUE_TYPE(__first, _ForwardIter)));
 }
 
 # ifndef _STLP_NO_ANACHRONISMS
@@ -321,11 +314,8 @@ inline _ForwardIter unique(_ForwardIter __first, _ForwardIter __last,
 template <class _BidirectionalIter>
 _STLP_INLINE_LOOP void 
 __reverse(_BidirectionalIter __first, _BidirectionalIter __last, const bidirectional_iterator_tag &) {
-  while (true)
-    if (__first == __last || __first == --__last)
-      return;
-    else
-      iter_swap(__first++, __last);
+  for(; __first != __last && __first != --__last; ++__first)
+    iter_swap(__first,__last);
 }
 
 
@@ -482,13 +472,29 @@ template <class _RandomAccessIter, class _Compare>
 void nth_element(_RandomAccessIter __first, _RandomAccessIter __nth,
                  _RandomAccessIter __last, _Compare __comp);
 
+// auxiliary class for lower_bound, etc.
+template <class _T1, class _T2>
+struct __less_2 {
+  bool operator() (const _T1& __x, const _T2 __y) const { return __x < __y ; } 
+};
+
+template <class _T1, class _T2>
+__less_2<_T1,_T2> __less2(_T1*, _T2* ) { return __less_2<_T1, _T2>(); }
+
+#ifdef _STLP_FUNCTION_PARTIAL_ORDER
+template <class _Tp>
+less<_Tp> __less2(_Tp*, _Tp* ) { return less<_Tp>(); }
+#endif
+
 // Binary search (lower_bound, upper_bound, equal_range, binary_search).
 
 template <class _ForwardIter, class _Tp>
 inline _ForwardIter lower_bound(_ForwardIter __first, _ForwardIter __last,
                                    const _Tp& __val) {
   _STLP_DEBUG_CHECK(__check_range(__first, __last))
-  return __lower_bound(__first, __last, __val, less<_Tp>(), _STLP_DISTANCE_TYPE(__first, _ForwardIter));
+    return __lower_bound(__first, __last, __val, 
+			 __less2(_STLP_VALUE_TYPE(__first, _ForwardIter), (_Tp*)0),
+			 _STLP_DISTANCE_TYPE(__first, _ForwardIter));
 }
 
 template <class _ForwardIter, class _Tp, class _Compare>
@@ -506,7 +512,8 @@ template <class _ForwardIter, class _Tp>
 inline _ForwardIter upper_bound(_ForwardIter __first, _ForwardIter __last,
                                 const _Tp& __val) {
   _STLP_DEBUG_CHECK(__check_range(__first, __last))
-  return __upper_bound(__first, __last, __val, less<_Tp>(), 
+  return __upper_bound(__first, __last, __val, 
+		       __less2(_STLP_VALUE_TYPE(__first, _ForwardIter), (_Tp*)0),
                        _STLP_DISTANCE_TYPE(__first, _ForwardIter));
 }
 
@@ -527,7 +534,8 @@ template <class _ForwardIter, class _Tp>
 inline pair<_ForwardIter, _ForwardIter>
 equal_range(_ForwardIter __first, _ForwardIter __last, const _Tp& __val) {
   _STLP_DEBUG_CHECK(__check_range(__first, __last))
-  return __equal_range(__first, __last, __val,  less<_Tp>(),
+  return __equal_range(__first, __last, __val,  
+		       __less2(_STLP_VALUE_TYPE(__first, _ForwardIter), (_Tp*)0),
                        _STLP_DISTANCE_TYPE(__first, _ForwardIter));
 }
 
@@ -544,7 +552,9 @@ template <class _ForwardIter, class _Tp>
 inline bool binary_search(_ForwardIter __first, _ForwardIter __last,
                    const _Tp& __val) {
   _STLP_DEBUG_CHECK(__check_range(__first, __last))
-  _ForwardIter __i = __lower_bound(__first, __last, __val, less<_Tp>(), _STLP_DISTANCE_TYPE(__first, _ForwardIter));
+  _ForwardIter __i = __lower_bound(__first, __last, __val, 
+                                   __less2(_STLP_VALUE_TYPE(__first, _ForwardIter), (_Tp*)0),
+                                   _STLP_DISTANCE_TYPE(__first, _ForwardIter));
   return __i != __last && !(__val < *__i);
 }
 

@@ -169,5 +169,7 @@
         typedef __mbstate_t     mbstate_t;
     }
     using std::mbstate_t;
+#else
+typedef __mbstate_t mbstate_t;
 # endif
 #endif  /* __MBSTATET_H */

@@ -38,7 +38,7 @@
 _STLP_BEGIN_NAMESPACE
 
 using /*_STLP_VENDOR_EXCEPT_STD */ :: type_info;
-# if !(defined(__MRC__) || defined(__SC__))
+# if !(defined(__MRC__) || (defined(__SC__) && !defined(__DMC__)))
 using /* _STLP_VENDOR_EXCEPT_STD */ :: bad_typeid;
 # endif
 using /* _STLP_VENDOR_EXCEPT_STD */ :: bad_cast;

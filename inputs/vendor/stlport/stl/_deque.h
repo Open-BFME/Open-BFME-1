@@ -426,7 +426,7 @@ public:                         // Basic accessors
   size_type size() const { return this->_M_finish - this->_M_start; }
   size_type max_size() const { return size_type(-1); }
   bool empty() const { return this->_M_finish == this->_M_start; }
-  allocator_type get_allocator() const { return _M_map_size; }
+  allocator_type get_allocator() const { return this->_M_map_size; }
 
 public:                         // Constructor, destructor.
   explicit deque(const allocator_type& __a = allocator_type()) 
@@ -493,7 +493,7 @@ public:                         // Constructor, destructor.
 #endif /* _STLP_MEMBER_TEMPLATES */
 
   ~deque() { 
-    _Destroy(this->_M_start, this->_M_finish); 
+    _STLP_STD::_Destroy(this->_M_start, this->_M_finish); 
   }
 
   _Self& operator= (const _Self& __x);
@@ -614,7 +614,7 @@ public:                         // push_* and pop_*
   void pop_back() {
     if (this->_M_finish._M_cur != this->_M_finish._M_first) {
       --this->_M_finish._M_cur;
-      _Destroy(this->_M_finish._M_cur);
+      _STLP_STD::_Destroy(this->_M_finish._M_cur);
     }
     else
       _M_pop_back_aux();
@@ -622,7 +622,7 @@ public:                         // push_* and pop_*
 
   void pop_front() {
     if (this->_M_start._M_cur != this->_M_start._M_last - 1) {
-      _Destroy(this->_M_start._M_cur);
+      _STLP_STD::_Destroy(this->_M_start._M_cur);
       ++this->_M_start._M_cur;
     }
     else 
@@ -687,7 +687,7 @@ public:                         // Insert
 
 #endif /* _STLP_MEMBER_TEMPLATES */
 
-  void resize(size_type __new_size, const value_type& __x) {
+  void resize(size_type __new_size, value_type __x) {
     const size_type __len = size();
     if (__new_size < __len) 
       erase(this->_M_start + __new_size, this->_M_finish);
@@ -751,7 +751,7 @@ protected:                        // Internal construction/destruction
     }
     uninitialized_copy(__first, __last, this->_M_finish._M_first);
    }
-  _STLP_UNWIND(_Destroy(this->_M_start, iterator(*__cur_node, __cur_node)));
+  _STLP_UNWIND(_STLP_STD::_Destroy(this->_M_start, iterator(*__cur_node, __cur_node)));
  }
 #endif /* _STLP_MEMBER_TEMPLATES */
 
@@ -920,67 +920,11 @@ protected:                      // Allocation of _M_map and nodes
  
 };
 
-// Nonmember functions.
-
-template <class _Tp, class _Alloc >
-inline bool  _STLP_CALL operator==(const deque<_Tp, _Alloc>& __x,
-                                   const deque<_Tp, _Alloc>& __y)
-{
-  return __x.size() == __y.size() &&
-  equal(__x.begin(), __x.end(), __y.begin());
-}
-
-template <class _Tp, class _Alloc >
-inline bool  _STLP_CALL operator<(const deque<_Tp, _Alloc>& __x,
-                                  const deque<_Tp, _Alloc>& __y)
-{
-  return lexicographical_compare(__x.begin(), __x.end(), 
-                                 __y.begin(), __y.end());
-}
-
-#if defined(_STLP_USE_SEPARATE_RELOPS_NAMESPACE)
-
-template <class _Tp, class _Alloc >
-inline bool  _STLP_CALL operator!=(const deque<_Tp, _Alloc>& __x,
-                                  const deque<_Tp, _Alloc>& __y)
-{
-  return  !(__x == __y); 
-}
-
-template <class _Tp, class _Alloc >
-inline bool  _STLP_CALL operator>(const deque<_Tp, _Alloc>& __x,
-                                  const deque<_Tp, _Alloc>& __y)
-{
-  return __y < __x; 
-}
-
-template <class _Tp, class _Alloc >
-inline bool _STLP_CALL operator>=(const deque<_Tp, _Alloc>& __x,
-                                  const deque<_Tp, _Alloc>& __y)
-{
-  return !(__x < __y); 
-}
-
-template <class _Tp, class _Alloc >
-inline bool _STLP_CALL operator<=(const deque<_Tp, _Alloc>& __x,
-                                  const deque<_Tp, _Alloc>& __y)
-{
- return !(__y < __x); 
-}
-
-
-# endif /* _STLP_SEPARATE_RELOPS_NAMESPACE */
-
-# if defined(_STLP_FUNCTION_TMPL_PARTIAL_ORDER)
-
-template <class _Tp, class _Alloc>
-inline void _STLP_CALL 
-swap(deque<_Tp,_Alloc>& __x, deque<_Tp,_Alloc>& __y)
-{
-  __x.swap(__y);
-}
-
-# endif
+# define _STLP_TEMPLATE_CONTAINER deque<_Tp, _Alloc>
+# define _STLP_TEMPLATE_HEADER    template <class _Tp, class _Alloc>
+# include <stl/_relops_cont.h>
+# undef _STLP_TEMPLATE_CONTAINER
+# undef _STLP_TEMPLATE_HEADER
 
 _STLP_END_NAMESPACE 
 

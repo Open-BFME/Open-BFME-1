@@ -477,7 +477,7 @@ public:
     return __first;
   }
 
-  void resize(size_type __new_size, const _Tp& __x) {
+  void resize(size_type __new_size, _Tp __x) {
     if (__new_size < size()) 
       erase(begin() + __new_size, end());
     else

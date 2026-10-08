@@ -20,9 +20,7 @@
 #  define _STLP_DONT_POP_0x272
 # endif
 
-#if !defined(_STLP_WINCE)
 # include _STLP_NATIVE_C_HEADER(time.h)
-#endif
 
 # if (_STLP_OUTERMOST_HEADER_ID == 0x272)
 #  if ! defined (_STLP_DONT_POP_0x272)

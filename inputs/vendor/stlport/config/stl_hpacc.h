@@ -79,6 +79,7 @@ static void _STLP_dummy_literal_3() { const char *p = "123456700000000000000089"
 # if !defined( _INCLUDE__STDC_A1_SOURCE ) // HP-UX 11i only
 #  define _STLP_HAS_NO_UNIX98_WCHAR_EXTENSIONS
 # endif
+
 #    if defined(_HP_NAMESPACE_STD) // option -AA
 // from now, we have a full standard lib in namespace std
 //

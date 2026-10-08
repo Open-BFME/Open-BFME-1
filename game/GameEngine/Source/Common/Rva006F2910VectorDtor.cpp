@@ -33,6 +33,8 @@ class Rva006F2910Allocator
 {
 public:
 	typedef T value_type;
+	// STLport 4.6's _Alloc_traits rebinds every allocator through this.
+	template <class U> struct rebind { typedef Rva006F2910Allocator<U> other; };
 
 	Rva006F2910Allocator(void)
 	{

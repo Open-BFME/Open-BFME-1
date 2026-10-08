@@ -16,7 +16,8 @@ unsigned int __stdcall Rva00927BB0NextSize(unsigned int n)
 {
 	const unsigned int *first = _STL::_Stl_prime<bool>::_M_list;
 	const unsigned int *last = _STL::_Stl_prime<bool>::_M_list + 28;
-	const unsigned int *pos = _STL::lower_bound(first, last, n);
+	// STLport 4.6's hashtable::_M_next_size spelling (no __less_2 temporary).
+	const unsigned int *pos = _STL::__lower_bound(first, last, n, _STL::__less((unsigned int *)0), (ptrdiff_t *)0);
 	if (pos == last)
 		return -5;
 	return *pos;

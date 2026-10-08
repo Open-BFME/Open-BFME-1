@@ -53,7 +53,7 @@
 #   define __SGI_STL                                      0x330
 
 /* STLport version */
-#   define _STLPORT_VERSION                               0x452
+#   define _STLPORT_VERSION                               0x460
 
 /* Placeholder for user to override settings.
  * It could be also used to mask settings from 
@@ -101,6 +101,10 @@
 
 # if !defined (_STLP_NO_MEMBER_TEMPLATE_CLASSES) && !defined (_STLP_MEMBER_TEMPLATE_CLASSES)
 #  define _STLP_MEMBER_TEMPLATE_CLASSES 1
+# endif
+
+# if !defined (_STLP_NO_MEMBER_TEMPLATE_CLASSES) && !defined (_STLP_DONT_USE_NESTED_TCLASS_THROUGHT_TPARAM) && !defined (_STLP_USE_NESTED_TCLASS_THROUGHT_TPARAM)
+#  define _STLP_USE_NESTED_TCLASS_THROUGHT_TPARAM 1
 # endif
 
 #if !defined (_STLP_NO_CLASS_PARTIAL_SPECIALIZATION) && !defined (_STLP_CLASS_PARTIAL_SPECIALIZATION)
@@ -271,7 +275,19 @@
 #   define _STLP_THREADS
 #  endif /* _REENTRANT */
 
-# define _STLP_STATIC_MUTEX _STLP_mutex_base
+# if defined(__linux__) && defined(_STLP_PTHREADS)
+#  include <features.h>
+
+#  ifdef __USE_XOPEN2K
+#   define _STLP_USE_PTHREAD_SPINLOCK
+#   define _STLP_STATIC_MUTEX _STLP_mutex
+#  endif /* __USE_XOPEN2K */
+# endif /* __linux__ && _STLP_PTHREADS */
+
+# ifndef _STLP_STATIC_MUTEX
+#  define _STLP_STATIC_MUTEX _STLP_mutex_base
+# endif
+
 
 # if defined (_MFC_VER) && !defined (_STLP_USE_MFC)
 #  define _STLP_USE_MFC 1
@@ -489,10 +505,12 @@ namespace __std_alias = std;
 #   define _STLP_USING_VENDOR_CSTD _STLP_USING_NAMESPACE(_STLP_VENDOR_CSTD)
 #  endif /* _STLP_VENDOR_CSTD */
 /* exception, typeinfo, new - always come from the vendor */
-#  ifdef _STLP_VENDOR_GLOBAL_EXCEPT_STD
-#   define _STLP_VENDOR_EXCEPT_STD
-#  else
-#   define _STLP_VENDOR_EXCEPT_STD _STLP_VENDOR_STD
+#  ifndef _STLP_VENDOR_EXCEPT_STD
+#   ifdef _STLP_VENDOR_GLOBAL_EXCEPT_STD
+#    define _STLP_VENDOR_EXCEPT_STD
+#   else
+#    define _STLP_VENDOR_EXCEPT_STD _STLP_VENDOR_STD
+#   endif
 #  endif
 # define _STLP_OLD_IO_NAMESPACE
 # ifndef _STLP_VENDOR_MB_NAMESPACE
@@ -674,6 +692,12 @@ namespace stlport = _STLP_STD;
 #  endif
 # endif
 
+//When the compiler do not correctly initialized the basic types value in default parameters we prefer
+//to avoid them to be able to correct this bug.
+# if defined (_STLP_DEF_CONST_DEF_PARAM_BUG)
+#  define _STLP_DONT_SUP_DFLT_PARAM 1
+# endif
+
 # if defined (__SGI_STL_NO_ARROW_OPERATOR) && ! defined (_STLP_NO_ARROW_OPERATOR)
 # define _STLP_NO_ARROW_OPERATOR
 # endif
@@ -787,6 +811,12 @@ __IMPORT_WITH_ITERATORS(_Super) __IMPORT_REVERSE_ITERATORS(_Super)
 #   define _STLP_RETHROW throw
 #   define _STLP_UNWIND(action) catch(...) { action; throw; }
 
+#   ifdef _STLP_THROW_RETURN_BUG
+#     define _STLP_RET_AFTER_THROW(data) return data
+#   else
+#     define _STLP_RET_AFTER_THROW(data)
+#   endif
+
 #   if !defined ( _STLP_NO_EXCEPTION_SPEC )
 #    define _STLP_THROWS_INHERENTLY(x) throw x
 #    define _STLP_NOTHROW_INHERENTLY throw()
@@ -806,7 +836,8 @@ __IMPORT_WITH_ITERATORS(_Super) __IMPORT_REVERSE_ITERATORS(_Super)
 #   define _STLP_RETHROW {}
 #   define _STLP_UNWIND(action) 
 #   define _STLP_THROWS(x)
-#   define _STLP_NOTHROW 
+#   define _STLP_NOTHROW
+#   define _STLP_RET_AFTER_THROW(data)
 #   define _STLP_THROWS_INHERENTLY(x)
 #   define _STLP_NOTHROW_INHERENTLY 
 # endif
@@ -971,6 +1002,12 @@ __IMPORT_WITH_ITERATORS(_Super) __IMPORT_REVERSE_ITERATORS(_Super)
 #  define _STLP_OPSPEC2(t1,t2)	/* nothing */
 # endif
 
+//Activation of the partial template workaround:
+# if !defined(_STLP_DONT_USE_PARTIAL_SPEC_WRKD) \
+    && (!defined(_STLP_CLASS_PARTIAL_SPECIALIZATION) || !defined(_STLP_FUNCTION_TMPL_PARTIAL_ORDER))
+#  define _STLP_USE_PARTIAL_SPEC_WORKAROUND
+# endif
+
 # if defined (_STLP_OWN_IOSTREAMS)
 #  define _STLP_NEW_IO_NAMESPACE _STLP_STD
 #  define _STLP_NO_WIDE_STREAMS  _STLP_NO_WCHAR_T
@@ -996,6 +1033,12 @@ _TMPL inline bool _STLP_CALL operator>=(const _TP& __x, const _TP& __y) { return
 #  define _STLP_RELOPS_OPERATORS(_TMPL, _TP)
 # endif
 
+# if defined (_STLP_FULL_ADL_IMPLEMENTED) && defined (_STLP_NO_OWN_IOSTREAMS)
+#  error "Invalid configuration, STLport wrapper iostream mode can't be used with compiler"\
+         "implementing full Argument Dependent Lookup. Please remove _STLP_NO_OWN_IOSTREAMS switch"\
+         "and build STLport library."
+# endif /* _STLP_FULL_ADL_IMPLEMENTED && _STLP_NO_OWN_IOSTREAMS */
+
 # if defined ( _STLP_USE_ABBREVS )
 #  include <stl/_abbrevs.h>
 # endif
@@ -1011,7 +1054,8 @@ _TMPL inline bool _STLP_CALL operator>=(const _TP& __x, const _TP& __y) { return
 
 #endif /* _STLP_CONFIG_H */
 
-/* Local Variables:
- * mode:C++
- * End:
- */
+/*
+ Local Variables:
+ mode:C++
+ End:
+*/

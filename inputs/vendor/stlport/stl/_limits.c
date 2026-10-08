@@ -126,14 +126,14 @@ __declare_float_limits_member(float_round_style, round_style, __RoundStyle);
 #  define _STLP_LDOUBLE_SNAN_REP { 0xfff0, 0, 0, 0, 0, 0, 0, 0 }
 # else
 #  define _STLP_FLOAT_INF_REP   { 0x7f80, 0 }
-#  define _STLP_FLOAT_QNAN_REP  { 0x7f81, 0 }
-#  define _STLP_FLOAT_SNAN_REP  { 0x7fc1, 0 }
+#  define _STLP_FLOAT_SNAN_REP  { 0x7f81, 0 }
+#  define _STLP_FLOAT_QNAN_REP  { 0x7fc1, 0 }
 #  define _STLP_DOUBLE_INF_REP  { 0x7ff0, 0, 0, 0 }
 #  define _STLP_DOUBLE_QNAN_REP { 0x7ff1, 0, 0, 0 }
 #  define _STLP_DOUBLE_SNAN_REP { 0x7ff9, 0, 0, 0 }
 #  define _STLP_LDOUBLE_INF_REP { 0x7ff0, 0, 0, 0, 0, 0, 0, 0 }
-#  define _STLP_LDOUBLE_QNAN_REP { 0x7ff1, 0, 0, 0, 0, 0, 0, 0 }
-#  define _STLP_LDOUBLE_SNAN_REP { 0x7ff9, 0, 0, 0, 0, 0, 0, 0 }
+#  define _STLP_LDOUBLE_SNAN_REP { 0x7ff1, 0, 0, 0, 0, 0, 0, 0 }
+#  define _STLP_LDOUBLE_QNAN_REP { 0x7ff9, 0, 0, 0, 0, 0, 0, 0 }
 # endif
 
 # elif defined (_STLP_LITTLE_ENDIAN)

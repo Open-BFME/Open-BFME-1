@@ -31,6 +31,10 @@
 #  include <stl/_prolog.h>
 # endif
 
+# ifdef _STLP_PRAGMA_ONCE
+#  pragma once
+# endif
+
 #if defined (_STLP_IMPORT_VENDOR_STD)
 # include _STLP_NATIVE_HEADER(iterator)
 #endif /* IMPORT */

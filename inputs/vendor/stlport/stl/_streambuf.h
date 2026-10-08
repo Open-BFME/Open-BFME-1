@@ -347,8 +347,8 @@ protected:                      // Constructors.
 
   // The default constructor; defined here inline as some compilers require it
   basic_streambuf _STLP_PSPEC2(char, char_traits<char>) ()
-    : _M_get(&_M_default_get),
-      _M_put(&_M_default_put), _M_locale()
+    : _M_get(__REINTERPRET_CAST(FILE*,&_M_default_get)),
+      _M_put(__REINTERPRET_CAST(FILE*,&_M_default_put)), _M_locale()
   {
     // _M_lock._M_initialize();
     _FILE_I_set(_M_get, 0, 0, 0);

@@ -9,6 +9,11 @@ enum ScienceType
 
 template <class Type> class BfmeIntAllocator : public std::allocator<Type>
 {
+public:
+	// STLport 4.6's _Alloc_traits rebinds every allocator through this.
+	template <class U> struct rebind { typedef BfmeIntAllocator<U> other; };
+	BfmeIntAllocator() {}
+	template <class U> BfmeIntAllocator(const BfmeIntAllocator<U> &) {}
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ProductionPrerequisite.h

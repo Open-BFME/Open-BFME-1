@@ -21,8 +21,6 @@
 #  include <stl/_prolog.h>
 # endif
 
-#if !defined(_STLP_WINCE)
-
 # if defined (_STLP_USE_NEW_C_HEADERS)
 #  include _STLP_NATIVE_CPP_C_HEADER(cerrno)
 # else
@@ -38,8 +36,6 @@ _STLP_END_NAMESPACE
 # endif /* _STLP_IMPORT_VENDOR_CSTD */
 
 #endif
-
-#endif /* _STLP_WINCE */
 
 # if (_STLP_OUTERMOST_HEADER_ID == 0x105 )
 #  include <stl/_epilog.h>

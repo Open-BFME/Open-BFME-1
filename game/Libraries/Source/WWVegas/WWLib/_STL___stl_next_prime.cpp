@@ -17,7 +17,9 @@ size_t __stdcall __stl_next_prime( size_t n )
 {
 	const size_t *first = (const size_t *)_Stl_prime<bool>::_M_list;
 	const size_t *last = first + 28;
-	const size_t *pos = lower_bound( first, last, n );
+	// STLport 4.6's hashtable::_M_next_size spelling: lower_bound() would build
+	// a __less_2 temporary on the stack that retail does not have.
+	const size_t *pos = __lower_bound( first, last, n, __less( (size_t *)0 ), (ptrdiff_t *)0 );
 	return pos == last ? *( last - 1 ) : *pos;
 }
 

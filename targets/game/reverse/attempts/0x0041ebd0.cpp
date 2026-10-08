@@ -1,3 +1,5 @@
+// ?react0041EBD0@Drawable@@QAEXPBUReactionInfo0041EBD0@@@Z
+// partial score=0.9951 date=2026-10-08
 // Retail RVA 0x0041EBD0, 812 bytes, thiscall with one event-info pointer.
 // Original method identity is unproved; field names retain observed offsets.
 // The info +0x0C mask is 16 bits, +0x10 is a discriminator, +0x50 a float.

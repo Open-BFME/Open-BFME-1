@@ -23,7 +23,7 @@
 
 # if defined (_STLP_USE_NEW_C_HEADERS)
 #  include _STLP_NATIVE_CPP_C_HEADER(ctime)
-# elif !defined(_STLP_WINCE)
+# else
 #  include _STLP_NATIVE_C_HEADER(time.h)
 # endif
 

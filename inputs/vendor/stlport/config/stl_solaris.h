@@ -26,11 +26,10 @@
 # endif /* KCC */
 
 // For SPARC we use lightweight synchronization
-# if defined (__sparc) /* &&  (defined (_REENTRANT) || defined (_PTHREADS)) */ \
-     && ((defined (__GNUC__) && defined (__sparc_v9__)) || \
-     ((defined (__sparcv9) || defined (__sparcv8plus)) && ! defined (_STLP_NO_OWN_IOSTREAMS)) ) \
-     && !defined(_NOTHREADS) && ! defined (_STLP_NO_SPARC_SOLARIS_THREADS)
-#  define _STLP_SPARC_SOLARIS_THREADS
-#  define _STLP_THREADS_DEFINED
+# if defined (__sparc) /* && (defined (_REENTRANT) || defined (_PTHREADS)) */ \ && ((defined (__GNUC__) && defined (__sparc_v9__)) || \
+(defined (__sparcv9) && ! defined (_STLP_NO_OWN_IOSTREAMS)) ) \
+&& !defined(_NOTHREADS) && ! defined (_STLP_NO_SPARC_SOLARIS_THREADS)
+# define _STLP_SPARC_SOLARIS_THREADS
+# define _STLP_THREADS_DEFINED
 # endif
 

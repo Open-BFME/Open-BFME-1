@@ -23,6 +23,12 @@ public:
 
 struct Rva003B46A0Record : Snapshot
 {
+    // Declared so the element is concrete: STLport 4.6's vector::resize takes
+    // its element by value. Only DoXfer is reached, through the vtable.
+    const char *GetSnapshotName();
+    void LoadPostProcess();
+    void DoXfer(Xfer &xfer);
+
     AsciiString m_at04;
     char m_at08[0x18];
 };

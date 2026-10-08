@@ -84,7 +84,7 @@ _STLP_END_NAMESPACE
 
 _STLP_BEGIN_NAMESPACE
 
-# ifdef _STLP_HAS_NO_NEW_C_HEADERS
+# if defined(_STLP_HAS_NO_NEW_C_HEADERS) && defined(__cplusplus)
 # if !defined ( _STLP_LABS )
 inline long   abs(long __x) { return _STLP_VENDOR_CSTD::labs(__x); }
 # endif

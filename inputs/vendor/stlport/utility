@@ -28,6 +28,10 @@
 #  include <stl/_prolog.h>
 # endif
 
+# ifdef _STLP_PRAGMA_ONCE
+#  pragma once
+# endif
+
 # ifndef __TYPE_TRAITS_H
 #  include <stl/type_traits.h>
 # endif

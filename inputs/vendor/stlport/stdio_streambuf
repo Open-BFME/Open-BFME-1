@@ -48,11 +48,17 @@ namespace _SgI {
 
 # ifdef _STLP_USE_NAMESPACES
 using namespace _STLP_STD;
+  // MSVC needs this
+using _STLP_STD::streamsize;
+using _STLP_STD::streambuf;
+using _STLP_STD::basic_streambuf;
+using _STLP_STD::ios_base;
+  // using _STLP_STD::ios_base::openmode;
 # endif
 # endif
 
 // Base class for features common to stdio_istreambuf and stdio_ostreambuf
-class stdio_streambuf_base : public _STLP_STD::basic_streambuf<char, char_traits<char> >
+class stdio_streambuf_base : public basic_streambuf<char, _STLP_STD::char_traits<char> >
 {
 public:                         // Constructor, destructor.
   // The argument may not be null.  It must be an open file pointer.

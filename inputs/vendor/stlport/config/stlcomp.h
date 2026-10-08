@@ -47,6 +47,9 @@
 # if defined (__xlC__)  || defined (__IBMC__) || defined ( __IBMCPP__ ) 
 /* AIX xlC, Visual Age C++ , OS-390 C++ */
 #  include <config/stl_ibm.h>
+# elif defined (__INTEL_COMPILER) && defined(__unix__)
+/* Check intel before gcc, since newer versions define GNUC */
+#  include <config/stl_icc.h>
 # elif defined (__GNUC__ )
 #  include <config/stl_gcc.h>
 # elif defined (__KCC)
@@ -70,6 +73,9 @@
 #  include <config/stl_watcom.h>
 # elif defined(__COMO__) || defined (__COMO_VERSION_)
 #  include <config/stl_como.h>
+# elif defined (__DMC__)
+/* Digital Mars C++ */
+#  include <config/stl_dm.h>
 # elif defined (__SC__) && (__SC__ < 0x800)
 /* Symantec 7.5 */
 #  include <config/stl_symantec.h>
@@ -103,6 +109,9 @@
 # elif defined (__FCC_VERSION)
 /* Fujutsu Compiler, v4.0 assumed */
 #  include <config/stl_fujitsu.h>
+# elif defined(_CRAY)
+/* Cray C++ 3.4 or 3.5 */
+#  include <config/stl_cray.h>
 # else
 /* Unable to identify the compiler, issue error diagnostic.
  * Edit <config/stl_mycomp.h> to set STLport up for your compiler. */

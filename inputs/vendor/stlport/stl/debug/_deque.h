@@ -244,12 +244,6 @@ public:                         // Insert
   }
 #endif /* _STLP_MEMBER_TEMPLATES */
 
-  //  void resize(size_type __new_size, const value_type& __x) {
-  //    _Base::resize(__new_size, __x);
-  //  }
-
-  //  void resize(size_type new_size) { resize(new_size, value_type()); }
-
 public:                         // Erase
   iterator erase(iterator __pos) {
     _STLP_DEBUG_CHECK(__check_if_owner(&_M_iter_list, __pos) && (__pos != end()))
@@ -267,53 +261,13 @@ public:                         // Erase
   }
 };
 
-# ifdef _STLP_EXTRA_OPERATORS_FOR_DEBUG
-// Nonmember functions.
-
-template<class _Tp, class _Alloc>
-inline bool operator==(const _DBG_deque<_Tp,_Alloc >& __x, const _DBG_deque<_Tp,_Alloc >& __y)
-{
-    return (const _STLP_DEQUE_SUPER&)__x == (const _STLP_DEQUE_SUPER&)__y;
-}
-
-template<class _Tp, class _Alloc>
-inline bool operator<(const _DBG_deque<_Tp,_Alloc >& __x, const _DBG_deque<_Tp,_Alloc >& __y)
-{
-  return (const _STLP_DEQUE_SUPER&)__x < (const _STLP_DEQUE_SUPER&)__y;
-}
-
-#if defined(_STLP_USE_SEPARATE_RELOPS_NAMESPACE)
-
-template<class _Tp, class _Alloc>
-inline bool operator>(const _DBG_deque<_Tp,_Alloc >& __x, const _DBG_deque<_Tp,_Alloc >& __y)
-{
-  return __y < __x; 
-}
-
-template<class _Tp, class _Alloc>
-inline bool operator>=(const _DBG_deque<_Tp,_Alloc >& __x, const _DBG_deque<_Tp,_Alloc >& __y)
-{
-  return !(__x < __y); 
-}
-
-template<class _Tp, class _Alloc>
-inline bool operator<=(const _DBG_deque<_Tp,_Alloc >& __x,
-		       const _DBG_deque<_Tp,_Alloc >& __y)
-{
- return !(__y < __x); 
-}
-# endif /* _STLP_FUNCTION_TMPL_PARTIAL_ORDER */
-#endif /* _STLP_EXTRA_OPERATORS_FOR_DEBUG */
-
-
-#if defined(_STLP_FUNCTION_TMPL_PARTIAL_ORDER)
-template<class _Tp, class _Alloc>
-inline void 
-swap(_DBG_deque<_Tp,_Alloc>& __x, _DBG_deque<_Tp,_Alloc>& __y)
-{
-  __x.swap(__y);
-}
-#endif
+#define _STLP_TEMPLATE_HEADER template <class _Tp, class _Alloc>
+#define _STLP_TEMPLATE_CONTAINER _DBG_deque<_Tp, _Alloc>
+#define _STLP_TEMPLATE_CONTAINER_BASE _STLP_DEQUE_SUPER
+#include <stl/debug/_relops_cont.h>
+#undef _STLP_TEMPLATE_CONTAINER_BASE
+#undef _STLP_TEMPLATE_CONTAINER
+#undef _STLP_TEMPLATE_HEADER
 
 _STLP_END_NAMESPACE 
 

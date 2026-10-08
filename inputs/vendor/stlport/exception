@@ -69,9 +69,6 @@
 #      include <config/_msvc_warnings_off.h>
 #    endif
 
-# if !defined(_STLP_EXCEPTION_BASE) && !defined(_STLP_BROKEN_EXCEPTION_CLASS)
-#  define _STLP_EXCEPTION_BASE _STLP_VENDOR_EXCEPT_STD::exception
-# endif
 
 #  ifdef _STLP_USE_OWN_NAMESPACE
 
@@ -134,7 +131,7 @@ bool uncaught_exception(); // not implemented under mpw as of Jan/1999
 _STLP_BEGIN_NAMESPACE
 
 // section 18.6.1
-	class exception 
+	class _STLP_CLASS_DECLSPEC exception 
 	{
 	public:
 # ifdef _STLP_OWN_IOSTREAMS
@@ -151,7 +148,7 @@ _STLP_BEGIN_NAMESPACE
 	
 
 // section 18.6.2.1
-	class bad_exception : public exception 
+	class _STLP_CLASS_DECLSPEC bad_exception : public exception 
 	{
 	public:
 # ifdef _STLP_OWN_IOSTREAMS
@@ -164,8 +161,6 @@ _STLP_BEGIN_NAMESPACE
 	  const char* what() const _STLP_NOTHROW {return "class bad_exception";}
 # endif
 	};
-
-# define _STLP_EXCEPTION_BASE exception
 
 _STLP_END_NAMESPACE
 

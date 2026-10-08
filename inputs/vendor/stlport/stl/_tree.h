@@ -419,7 +419,7 @@ public:
 							 this->_M_header._M_data->_M_parent,
 							 this->_M_header._M_data->_M_left,
 							 this->_M_header._M_data->_M_right);
-    _Destroy(&__y->_M_value_field);
+    _STLP_STD::_Destroy(&__y->_M_value_field);
     this->_M_header.deallocate(__y,1);
     --_M_node_count;
   }
@@ -454,7 +454,7 @@ public:
 
 public:
                                 // set operations:
-# if defined(_STLP_MEMBER_TEMPLATES) && ! defined ( _STLP_NO_EXTENSIONS ) && !defined(__MRC__) && !defined(__SC__)
+# if defined(_STLP_MEMBER_TEMPLATES) && ! defined ( _STLP_NO_EXTENSIONS ) && !defined(__MRC__) && !(defined(__SC__) && !defined(__DMC__))
   template <class _KT> iterator find(const _KT& __x) { return iterator(_M_find(__x)); }
   template <class _KT> const_iterator find(const _KT& __x) const { return const_iterator(_M_find(__x)); }
 private:

@@ -26,7 +26,7 @@
 // Note that the template class complex is declared within namespace
 // std, as called for by the draft C++ standard.  
 
-#include <cmath>
+#include <stl/_cmath.h>
 #include <iosfwd>
 
 _STLP_BEGIN_NAMESPACE
@@ -764,20 +764,6 @@ inline _Tp _STLP_CALL imag(const complex<_Tp>& __z) {
   return __z._M_im;
 }
 
-_STLP_DECLSPEC float  _STLP_CALL abs(const complex<float>&);
-_STLP_DECLSPEC double  _STLP_CALL abs(const complex<double>&);
-_STLP_DECLSPEC float  _STLP_CALL arg(const complex<float>&);
-_STLP_DECLSPEC double  _STLP_CALL arg(const complex<double>&);
-_STLP_DECLSPEC complex<float> _STLP_CALL polar(const float& __rho, const float& __phi);
-_STLP_DECLSPEC complex<double> _STLP_CALL polar(const double& __rho, const double& __phi);
-
-
-# ifndef _STLP_NO_LONG_DOUBLE
-_STLP_DECLSPEC long double  _STLP_CALL arg(const complex<long double>&);
-_STLP_DECLSPEC long double  _STLP_CALL abs(const complex<long double>&);
-_STLP_DECLSPEC complex<long double>  _STLP_CALL polar(const long double&, const long double&);
-# endif
-
 template <class _Tp>
 _Tp _STLP_CALL abs(const complex<_Tp>& __z) {
   return _Tp(abs(complex<double>(double(__z.real()), double(__z.imag()))));
@@ -808,6 +794,31 @@ complex<_Tp> _STLP_CALL polar(const _Tp& __rho, const _Tp& __phi) {
   complex<double> __tmp = polar(double(__rho), double(__phi));
   return complex<_Tp>(_Tp(__tmp.real()), _Tp(__tmp.imag()));
 }
+
+
+_STLP_TEMPLATE_NULL
+_STLP_DECLSPEC float  _STLP_CALL abs(const complex<float>&);
+_STLP_TEMPLATE_NULL
+_STLP_DECLSPEC double  _STLP_CALL abs(const complex<double>&);
+_STLP_TEMPLATE_NULL
+_STLP_DECLSPEC float  _STLP_CALL arg(const complex<float>&);
+_STLP_TEMPLATE_NULL
+_STLP_DECLSPEC double  _STLP_CALL arg(const complex<double>&);
+_STLP_TEMPLATE_NULL
+_STLP_DECLSPEC complex<float> _STLP_CALL polar(const float& __rho, const float& __phi);
+_STLP_TEMPLATE_NULL
+_STLP_DECLSPEC complex<double> _STLP_CALL polar(const double& __rho, const double& __phi);
+
+
+# ifndef _STLP_NO_LONG_DOUBLE
+_STLP_TEMPLATE_NULL
+_STLP_DECLSPEC long double  _STLP_CALL arg(const complex<long double>&);
+_STLP_TEMPLATE_NULL
+_STLP_DECLSPEC long double  _STLP_CALL abs(const complex<long double>&);
+_STLP_TEMPLATE_NULL
+_STLP_DECLSPEC complex<long double> _STLP_CALL polar(const long double&, const long double&);
+# endif
+
 
 #ifdef _STLP_USE_NEW_IOSTREAMS
 

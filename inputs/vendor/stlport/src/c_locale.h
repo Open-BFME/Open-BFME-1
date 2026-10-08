@@ -56,7 +56,7 @@ extern "C" {
  * Typedefs:
  */
 
-#if defined (__GNUC__) || defined (_KCC)
+#if defined (__GNUC__) || defined (_KCC) || defined(__ICC)
 typedef unsigned short int _Locale_mask_t;
 #else
 typedef unsigned int _Locale_mask_t;
@@ -127,12 +127,15 @@ char * _Locale_extract_messages_name(const char *cname, char *__buf);
 char * _Locale_compose_name(char *__buf,
                             const char *__Ctype, const char *__Numeric,
                             const char *__Time, const char *__Collate,
-                            const char *__Monetary, const char *__Messages);
+                            const char *__Monetary, const char *__Messages,
+                            const char *__DefaultName);
 
 /*
  * The inputs to this function are six null-terminated strings: the
- * names of a locale's six categories.  __buf is a pointer to an array
- * large enough to store at least _Locale_MAX_COMPOSITE_NAME characters.
+ * names of a locale's six categories.  Locale names for non-standard
+ * categories are taken from __DefaultName.
+ * __buf is a pointer to an array large enough to store at least 
+ * _Locale_MAX_COMPOSITE_NAME characters.
  * This function constructs a (possibly composite) name describing the
  * locale as a whole, stores that name in buf as a null-terminated
  * string, and returns buf.
@@ -146,7 +149,7 @@ char * _Locale_compose_name(char *__buf,
  * Narrow character functions:
  */
 
-_Locale_mask_t * _Locale_ctype_table(struct _Locale_ctype *);
+const _Locale_mask_t * _Locale_ctype_table(struct _Locale_ctype *);
 
 /*
  * Returns a pointer to the beginning of the ctype table.  The table is
@@ -166,7 +169,8 @@ int _Locale_tolower(struct _Locale_ctype *, int);
 /*
  * Wide character functions:
  */
-_Locale_mask_t _Locale_wchar_ctype(struct _Locale_ctype *, wint_t);
+_Locale_mask_t _Locale_wchar_ctype(struct _Locale_ctype *, wint_t, 
+	_Locale_mask_t);
 wint_t _Locale_wchar_tolower(struct _Locale_ctype *, wint_t);
 wint_t _Locale_wchar_toupper(struct _Locale_ctype *, wint_t);
 # endif
@@ -343,15 +347,15 @@ int          _Locale_n_sign_posn(struct _Locale_monetary *);
  * FUNCTIONS THAT USE TIME
  */
 
-const char ** _Locale_full_monthname(struct _Locale_time *);
-const char ** _Locale_abbrev_monthname(struct _Locale_time *);
+const char * _Locale_full_monthname(struct _Locale_time *, int);
+const char * _Locale_abbrev_monthname(struct _Locale_time *, int);
 
 /*
  * month is in the range [0, 12).
  */
 
-const char ** _Locale_full_dayofweek(struct _Locale_time *);
-const char ** _Locale_abbrev_dayofweek(struct _Locale_time *);
+const char * _Locale_full_dayofweek(struct _Locale_time *, int);
+const char * _Locale_abbrev_dayofweek(struct _Locale_time *, int);
 
 /*
  * day is in the range [0, 7).  Sunday is 0.

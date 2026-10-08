@@ -38,10 +38,14 @@ public:
 };
 
 template <class _InternT, class _ExternT, class _StateT>
-class codecvt {};
+class codecvt : public locale::facet, public codecvt_base {
+  typedef _InternT intern_type;
+  typedef _ExternT extern_type;
+  typedef _StateT state_type;
+};
  
 template <class _InternT, class _ExternT, class _StateT>
-class codecvt_byname {};
+class codecvt_byname : public codecvt<_InternT, _ExternT, _StateT> {};
 
 _STLP_TEMPLATE_NULL
 class _STLP_CLASS_DECLSPEC codecvt<char, char, mbstate_t>
@@ -55,7 +59,7 @@ public:
 
   explicit codecvt(size_t __refs = 0) : _BaseFacet(__refs) {}
 
-  result out(mbstate_t    __state,
+  result out(state_type&  __state,
              const char*  __from,
              const char*  __from_end,
              const char*& __from_next,
@@ -71,7 +75,7 @@ public:
                  char* __to, char* __to_limit, char*& __to_next) const
     { return do_unshift(__state, __to, __to_limit, __to_next); }
     
-  result in(mbstate_t&   __state,
+  result in(state_type&   __state,
             const char*  __from,
             const char*  __from_end,  
             const char*& __from_next,
@@ -87,7 +91,7 @@ public:
 
   bool always_noconv() const _STLP_NOTHROW { return do_always_noconv(); }
 
-  int length(const mbstate_t& __state,
+  int length(const state_type& __state,
              const char* __from, const char* __end,
              size_t __max) const
     { return do_length(__state, __from, __end, __max); }

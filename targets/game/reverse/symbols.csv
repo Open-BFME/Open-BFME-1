@@ -90915,3 +90915,5 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_03JJKIIINB@709?$AA@,0x00D314BC,serverMessageTypes command literal '709' referenced by table VA012C8930; retail bytes equal object literal
 ??_C@_03EJKIFJKP@710?$AA@,0x00D314B8,serverMessageTypes command literal '710' referenced by table VA012C8930; retail bytes equal object literal
 ??_C@_03FALDGIOO@711?$AA@,0x00D314B4,serverMessageTypes command literal '711' referenced by table VA012C8930; retail bytes equal object literal
+?react0041EBD0@Drawable@@QAEXPBUReactionInfo0041EBD0@@@Z,0x0041EBD0,identity of the body banked as a partial when its row was retracted for the STLport 4.6 switch (one swapped register reload at +0x163); matched ?apply@ObjectAttemptDamageHook calls it through ILT 0x0001403D (?j_0001403d target FUN_0081ebd0)
+?Thread_Function@PeerThreadClass@@UAEXXZ,0x0064FB90,identity of the body banked as a partial when its row was retracted for the STLport 4.6 switch (one swapped add operand pair at +0x1467); PeerThreadClass's vtable slot DIR32 names it at retail 0x00A4FB90

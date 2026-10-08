@@ -159,7 +159,7 @@ inline bool  _STLP_CALL operator!=(
 
 template <class _RandomAccessIterator, 
 # if defined (__MSL__) && (__MSL__ >= 0x2405) \
-	|| defined(__MRC__) || defined(__SC__)		//*ty 03/22/2001 - give the default to the secont param under MPW. 
+	|| defined(__MRC__) || (defined(__SC__) && !defined(__DMC__))		//*ty 03/22/2001 - give the default to the secont param under MPW. 
 												// I believe giving the default will cause any harm even though the 2nd type parameter 
 												// still have to be provided for T* type iterators.
 	__DFL_TMPL_PARAM(_Tp,iterator_traits<_RandomAccessIterator>::value_type),

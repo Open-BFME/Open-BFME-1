@@ -56,8 +56,8 @@
 #  endif /* !defined(_STLP_USE_EXCEPTIONS) */
 # endif   /* __THROW_BAD_ALLOC */
 
-# ifndef _STLP_NEW_HEADER
-#  include <new>
+# ifndef _STLP_INTERNAL_NEW_HEADER
+#  include <stl/_new.h>
 # endif
 
 #if /* defined (_STLP_THREADS) && */ ! defined (_STLP_INTERNAL_THREADS_H)
@@ -348,25 +348,25 @@ public:
  # endif    
   allocator(const allocator<_Tp>&) _STLP_NOTHROW {}
   ~allocator() _STLP_NOTHROW {}
-  pointer address(reference __x) { return &__x; }
+  pointer address(reference __x) const { return &__x; }
   const_pointer address(const_reference __x) const { return &__x; }
   // __n is permitted to be 0.  The C++ standard says nothing about what the return value is when __n == 0.
-  _Tp* allocate(size_type __n, const void* = 0) const { 
+  _Tp* allocate(size_type __n, const void* = 0) { 
     return __n != 0 ? __REINTERPRET_CAST(value_type*,__sgi_alloc::allocate(__n * sizeof(value_type))) : 0;
   }
   // __p is permitted to be a null pointer, only if n==0.
-  void deallocate(pointer __p, size_type __n) const {
+  void deallocate(pointer __p, size_type __n) {
     _STLP_ASSERT( (__p == 0) == (__n == 0) )
       if (__p != 0) __sgi_alloc::deallocate((void*)__p, __n * sizeof(value_type));
   }
   // backwards compatibility
   void deallocate(pointer __p) const {  if (__p != 0) __sgi_alloc::deallocate((void*)__p, sizeof(value_type)); }
   size_type max_size() const _STLP_NOTHROW  { return size_t(-1) / sizeof(value_type); }
-  void construct(pointer __p, const _Tp& __val) const { _STLP_STD::_Construct(__p, __val); }
-  void destroy(pointer __p) const { _STLP_STD::_Destroy(__p); }
-# if defined(__MRC__)||defined(__SC__)
-  template <class _T2> bool operator==(const allocator<_T2>&) const  { return true; }
-  template <class _T2> bool operator!=(const allocator<_T2>&) const { return false; }
+  void construct(pointer __p, const _Tp& __val) { _STLP_STD::_Construct(__p, __val); }
+  void destroy(pointer __p) { _STLP_STD::_Destroy(__p); }
+# if defined(__MRC__)||(defined(__SC__) && !defined(__DMC__))
+  template <class _T2> bool operator==(const allocator<_T2>&) const  _STLP_NOTHROW { return true; }
+  template <class _T2> bool operator!=(const allocator<_T2>&) const _STLP_NOTHROW { return false; }
 # endif
 };
 
@@ -385,15 +385,15 @@ public:
     typedef allocator<_Tp1> other;
   };
 # endif
-# if defined(__MRC__)||defined(__SC__)		//*ty 03/24/2001 - MPW compilers get confused on these operator definitions
-  template <class _T2> bool operator==(const allocator<_T2>&) const  { return true; }
-  template <class _T2> bool operator!=(const allocator<_T2>&) const { return false; }
+# if defined(__MRC__)||(defined(__SC__)&&!defined(__DMC__))		//*ty 03/24/2001 - MPW compilers get confused on these operator definitions
+  template <class _T2> bool operator==(const allocator<_T2>&) const _STLP_NOTHROW { return true; }
+  template <class _T2> bool operator!=(const allocator<_T2>&) const _STLP_NOTHROW { return false; }
 # endif
 };
 
-#if !(defined(__MRC__)||defined(__SC__))		//*ty 03/24/2001 - MPW compilers get confused on these operator definitions
-template <class _T1, class _T2> inline bool  _STLP_CALL operator==(const allocator<_T1>&, const allocator<_T2>&)  { return true; }
-template <class _T1, class _T2> inline bool  _STLP_CALL operator!=(const allocator<_T1>&, const allocator<_T2>&) { return false; }
+#if !(defined(__MRC__)||(defined(__SC__)&&!defined(__DMC__)))		//*ty 03/24/2001 - MPW compilers get confused on these operator definitions
+template <class _T1, class _T2> inline bool  _STLP_CALL operator==(const allocator<_T1>&, const allocator<_T2>&) _STLP_NOTHROW { return true; }
+template <class _T1, class _T2> inline bool  _STLP_CALL operator!=(const allocator<_T1>&, const allocator<_T2>&) _STLP_NOTHROW { return false; }
 #endif
 
 # if defined (_STLP_USE_TEMPLATE_EXPORT)
@@ -412,7 +412,7 @@ template <class _Tp, class _Allocator>
 struct _Alloc_traits
 {
   typedef _Allocator _Orig;
-# if defined (_STLP_MEMBER_TEMPLATE_CLASSES) 
+# if defined (_STLP_USE_NESTED_TCLASS_THROUGHT_TPARAM) 
   typedef typename _Allocator::_STLP_TEMPLATE rebind<_Tp> _Rebind_type;
   typedef typename _Rebind_type::other  allocator_type;
   static allocator_type create_allocator(const _Orig& __a) { return allocator_type(__a); }
@@ -420,7 +420,7 @@ struct _Alloc_traits
   // this is not actually true, used only to pass this type through
   // to dynamic overload selection in _STLP_alloc_proxy methods
   typedef _Allocator allocator_type;
-# endif
+# endif /* _STLP_USE_NESTED_TCLASS_THROUGHT_TPARAM */
 };
 
 #ifndef _STLP_FORCE_ALLOCATORS
@@ -453,7 +453,7 @@ struct _Alloc_traits<_Tp, allocator<_Tp1> > {
 #  define _STLP_CONVERT_ALLOCATOR(__a, _Tp) __stl_alloc_create(__a,(_Tp*)0)
 #endif
 
-# if defined (_STLP_MEMBER_TEMPLATE_CLASSES) 
+# if defined (_STLP_USE_NESTED_TCLASS_THROUGHT_TPARAM) 
 template <class _Tp, class _Alloc>
 inline _STLP_TYPENAME_ON_RETURN_TYPE _Alloc_traits<_Tp, _Alloc>::allocator_type  _STLP_CALL
 __stl_alloc_create(const _Alloc& __a, const _Tp*) {
@@ -469,7 +469,7 @@ __stl_alloc_rebind(allocator<_Tp1>& __a, const _Tp2*) {  return (allocator<_Tp2>
 template <class _Tp1, class _Tp2>
 inline allocator<_Tp2> _STLP_CALL
 __stl_alloc_create(const allocator<_Tp1>&, const _Tp2*) { return allocator<_Tp2>(); }
-#endif /* _STLP_MEMBER_TEMPLATE_CLASSES */
+#endif /* _STLP_USE_NESTED_TCLASS_THROUGHT_TPARAM */
 
 # ifdef _STLP_USE_RAW_SGI_ALLOCATORS
 // move obsolete stuff out of the way
@@ -497,7 +497,7 @@ public:
 # endif
   // Unified interface to perform allocate()/deallocate() with limited
   // language support
-#if ! defined (_STLP_MEMBER_TEMPLATE_CLASSES)
+#if ! defined (_STLP_USE_NESTED_TCLASS_THROUGHT_TPARAM)
   // else it is rebound already, and allocate() member is accessible
   inline _Tp* allocate(size_t __n) { 
     return __stl_alloc_rebind(__STATIC_CAST(_Base&,*this),(_Tp*)0).allocate(__n,0); 
@@ -505,7 +505,7 @@ public:
   inline void deallocate(_Tp* __p, size_t __n) { 
     __stl_alloc_rebind(__STATIC_CAST(_Base&, *this),(_Tp*)0).deallocate(__p, __n); 
   }
-#endif
+#endif /* !_STLP_USE_NESTED_TCLASS_THROUGHT_TPARAM */
 };
 
 # if defined (_STLP_USE_TEMPLATE_EXPORT)

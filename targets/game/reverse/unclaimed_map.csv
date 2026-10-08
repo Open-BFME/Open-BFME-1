@@ -147,10 +147,10 @@ gap_start,gap_end,code_bytes,kind,prev_row,prev_ends_terminal,starts,ghidra_star
 0x0032A64C,0x0032A710,96,tail,?d_0032a550@@YAXXZ,0,,,?d_0032a550@@YAXXZ ends at the gap on a non-terminal instruction,
 0x0081D572,0x0081D5E0,95,functions,?broadcast@Rva0081D520Owner@@QAEXHMMMM@Z,1,0x0081D580:0 0x0081D5B0:0,,2 start(s) after int3 padding,
 0x008D9EBD,0x008D9F20,95,functions,?Overlap_Test@CollisionMath@@SA?AW4OverlapType@1@ABVAABoxClass@@ABVLineSegClass@@@Z,1,0x008D9EC0:0,,1 start(s) after int3 padding,0x008D9EC0:95:partial
-0x008F9DCF,0x008F9E30,95,functions,?deallocate@?$allocator@N@_STL@@QBEXPANI@Z,1,0x008F9E00:0,,1 start(s) after int3 padding,
+0x008F9DCF,0x008F9E30,95,functions,?deallocate@?$allocator@N@_STL@@QAEXPANI@Z,1,0x008F9E00:0,,1 start(s) after int3 padding,
 0x0090FE7D,0x0090FEE0,95,functions,?rva0090FE40ExtractReset@@YAXPAURva0090FE40Pair@@0@Z,1,0x0090FE80:0,,1 start(s) after int3 padding,
 0x009A192B,0x009A1990,95,functions,?dup_009a1920@@YAXXZ,1,0x009A1930:0 0x009A1960:0,,2 start(s) after int3 padding,
-0x009ECF8F,0x009ECFF0,95,functions,?deallocate@?$allocator@M@_STL@@QBEXPAMI@Z,1,0x009ECFC0:0,,1 start(s) after int3 padding,
+0x009ECF8F,0x009ECFF0,95,functions,?deallocate@?$allocator@M@_STL@@QAEXPAMI@Z,1,0x009ECFC0:0,,1 start(s) after int3 padding,
 0x0087F08D,0x0087F0F0,94,functions,?d_0087f020@@YAXXZ,1,0x0087F090:0,,1 start(s) after int3 padding,0x0087F090:94:blocked
 0x00816B93,0x00816BF0,93,unknown,_CommSRPConnect,1,,,,
 0x008CED95,0x008CEE00,93,functions,?d_008cec60@@YAXXZ,1,0x008CEDA0:0,,1 start(s) after int3 padding,0x008CEDA0:93:blocked

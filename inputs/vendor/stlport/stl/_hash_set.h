@@ -211,35 +211,6 @@ public:
 
 };
 
-
-template <class _Value, class _HashFcn, class _EqualKey, class _Alloc>
-inline bool _STLP_CALL 
-operator==(const hash_set<_Value,_HashFcn,_EqualKey,_Alloc>& __hs1,
-           const hash_set<_Value,_HashFcn,_EqualKey,_Alloc>& __hs2)
-{
-  return hash_set<_Value,_HashFcn,_EqualKey,_Alloc>::_M_equal(__hs1, __hs2);
-}
-
-#ifdef _STLP_USE_SEPARATE_RELOPS_NAMESPACE
-
-template <class _Value, class _HashFcn, class _EqualKey, class _Alloc>
-inline bool _STLP_CALL 
-operator!=(const hash_set<_Value,_HashFcn,_EqualKey,_Alloc>& __hs1,
-           const hash_set<_Value,_HashFcn,_EqualKey,_Alloc>& __hs2) {
-  return !(__hs1 == __hs2);
-}
-
-template <class _Val, class _HashFcn, class _EqualKey, class _Alloc>
-inline void _STLP_CALL
-swap(hash_set<_Val,_HashFcn,_EqualKey,_Alloc>& __hs1,
-     hash_set<_Val,_HashFcn,_EqualKey,_Alloc>& __hs2)
-{
-  __hs1.swap(__hs2);
-}
-
-#endif /* _STLP_USE_SEPARATE_RELOPS_NAMESPACE */
-
-
 template <class _Value, __DFL_TMPL_PARAM(_HashFcn,hash<_Value>),
           __DFL_TMPL_PARAM(_EqualKey,equal_to<_Value>),
           _STLP_DEFAULT_ALLOCATOR_SELECT(_Value) >
@@ -406,31 +377,17 @@ public:
   }
 };
 
-template <class _Value, class _HashFcn, class _EqualKey, class _Alloc>
-inline bool 
-operator==(const hash_multiset<_Value,_HashFcn,_EqualKey,_Alloc>& __hs1,
-           const hash_multiset<_Value,_HashFcn,_EqualKey,_Alloc>& __hs2)
-{
-  return hash_multiset<_Value,_HashFcn,_EqualKey,_Alloc>::_M_equal(__hs1, __hs2);
-}
+#define _STLP_TEMPLATE_HEADER template <class _Value, class _HashFcn, class _EqualKey, class _Alloc>
+#define _STLP_TEMPLATE_CONTAINER hash_set<_Value,_HashFcn,_EqualKey,_Alloc>
 
-#ifdef _STLP_USE_SEPARATE_RELOPS_NAMESPACE
+#include <stl/_relops_hash_cont.h>
 
-template <class _Value, class _HashFcn, class _EqualKey, class _Alloc>
-inline bool _STLP_CALL 
-operator!=(const hash_multiset<_Value,_HashFcn,_EqualKey,_Alloc>& __hs1,
-           const hash_multiset<_Value,_HashFcn,_EqualKey,_Alloc>& __hs2) {
-  return !(__hs1 == __hs2);
-}
+#undef _STLP_TEMPLATE_CONTAINER
+#define _STLP_TEMPLATE_CONTAINER hash_multiset<_Value,_HashFcn,_EqualKey,_Alloc>
+#include <stl/_relops_hash_cont.h>
 
-template <class _Val, class _HashFcn, class _EqualKey, class _Alloc>
-inline void _STLP_CALL 
-swap(hash_multiset<_Val,_HashFcn,_EqualKey,_Alloc>& __hs1,
-     hash_multiset<_Val,_HashFcn,_EqualKey,_Alloc>& __hs2) {
-  __hs1.swap(__hs2);
-}
-
-#endif /* _STLP_USE_SEPARATE_RELOPS_NAMESPACE */
+#undef _STLP_TEMPLATE_CONTAINER
+#undef _STLP_TEMPLATE_HEADER
 
 // Specialization of insert_iterator so that it will work for hash_set
 // and hash_multiset.

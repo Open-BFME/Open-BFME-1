@@ -34,6 +34,12 @@
 # include <cstddef>
 #endif
 
+# if defined  (_STLP_IMPORT_VENDOR_CSTD) && ! defined (_STLP_VENDOR_GLOBAL_CSTD)
+_STLP_BEGIN_NAMESPACE  
+using namespace _STLP_VENDOR_CSTD;
+_STLP_END_NAMESPACE
+#endif /* _STLP_IMPORT_VENDOR_CSTD */
+
 #ifndef __TYPE_TRAITS_H
 # include <stl/type_traits.h>
 #endif
@@ -75,7 +81,7 @@ struct iterator<output_iterator_tag, void, void, void, void> {
 #  ifdef _STLP_CLASS_PARTIAL_SPECIALIZATION
 #   define _STLP_VALUE_TYPE(_It, _Tp)        (typename iterator_traits< _Tp >::value_type*)0
 #   define _STLP_DISTANCE_TYPE(_It, _Tp)     (typename iterator_traits< _Tp >::difference_type*)0
-#   if defined (__BORLANDC__) || defined (__SUNPRO_CC) || ( defined (__MWERKS__) && (__MWERKS__ <= 0x2303)) || ( defined (__sgi) && defined (_COMPILER_VERSION)) 
+#   if defined (__BORLANDC__) || defined (__SUNPRO_CC) || ( defined (__MWERKS__) && (__MWERKS__ <= 0x2303)) || ( defined (__sgi) && defined (_COMPILER_VERSION)) || defined (__DMC__)
 #    define _STLP_ITERATOR_CATEGORY(_It, _Tp) iterator_traits< _Tp >::iterator_category()
 #   else
 #    define _STLP_ITERATOR_CATEGORY(_It, _Tp) typename iterator_traits< _Tp >::iterator_category()

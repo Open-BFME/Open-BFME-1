@@ -44,31 +44,39 @@ using _STLP_VENDOR_CSTD::time_t;
 
 _STLP_BEGIN_NAMESPACE
 
-# if ( _STLP_STATIC_TEMPLATE_DATA > 0 )
- 
-#  if !defined ( _STLP_ATOMIC_EXCHANGE ) && (defined (_STLP_PTHREADS) || defined (_STLP_UITHREADS) || defined (_STLP_OS2THREADS))
+# if (_STLP_STATIC_TEMPLATE_DATA > 0)
+
+#  ifdef _STLP_THREADS
+#  if !defined(_STLP_ATOMIC_EXCHANGE) && (defined(_STLP_PTHREADS) || defined(_STLP_UITHREADS) || defined(_STLP_OS2THREADS) || defined(_STLP_USE_PTHREAD_SPINLOCK))
 template<int __dummy>
 _STLP_STATIC_MUTEX
 _Swap_lock_struct<__dummy>::_S_swap_lock _STLP_MUTEX_INITIALIZER;
 #  endif
+#  endif //_STLP_THREADS
 
+#  ifndef _STLP_USE_PTHREAD_SPINLOCK
 template <int __inst>
 unsigned _STLP_mutex_spin<__inst>::__max = _STLP_mutex_spin<__inst>::__low_max;
 
 template <int __inst>
 unsigned _STLP_mutex_spin<__inst>::__last = 0;
+#  endif // _STLP_USE_PTHREAD_SPINLOCK
 
 # else /* ( _STLP_STATIC_TEMPLATE_DATA > 0 ) */
 
-#  if defined (_STLP_PTHREADS) || defined (_STLP_UITHREADS)  || defined (_STLP_OS2THREADS)
+#  if defined(_STLP_PTHREADS) || defined(_STLP_UITHREADS) || defined(_STLP_OS2THREADS)
 __DECLARE_INSTANCE(_STLP_STATIC_MUTEX, _Swap_lock_struct<0>::_S_swap_lock, 
                    _STLP_MUTEX_INITIALIZER  );
 #  endif /* _STLP_PTHREADS */
 
+#  ifndef _STLP_USE_PTHREAD_SPINLOCK
 __DECLARE_INSTANCE(unsigned, _STLP_mutex_spin<0>::__max,  =30);
 __DECLARE_INSTANCE(unsigned, _STLP_mutex_spin<0>::__last, =0);
+#  endif // _STLP_USE_PTHREAD_SPINLOCK
 
 # endif /* ( _STLP_STATIC_TEMPLATE_DATA > 0 ) */
+
+#ifndef _STLP_USE_PTHREAD_SPINLOCK
 
 #ifdef _STLP_SPARC_SOLARIS_THREADS
 // underground function in libc.so; we do not want dependance on librt
@@ -83,10 +91,21 @@ void _STLP_CALL
 _STLP_mutex_spin<__inst>::_S_nsec_sleep(int __log_nsec) {
 #     if defined(_STLP_WIN32THREADS)
 	  if (__log_nsec <= 20) {
-	      Sleep(0);
+        // Note from boost (www.boost.org): 
+        // Changed to Sleep(1) from Sleep(0).
+        // According to MSDN, Sleep(0) will never yield
+        // to a lower-priority thread, whereas Sleep(1)
+        // will. Performance seems not to be affected.
+	      Sleep(1);
 	  } else {
 	      Sleep(1 << (__log_nsec - 20));
 	  }
+#    elif defined(_STLP_OS2THREADS)
+      if (__log_nsec <= 20) {
+         DosSleep(0);
+      } else {
+         DosSleep(1 << (__log_nsec - 20));
+      }
 #     elif defined (_STLP_UNIX)
           timespec __ts;
           /* Max sleep is 2**27nsec ~ 60msec      */
@@ -141,6 +160,7 @@ _STLP_mutex_spin<__inst>::_M_do_lock(volatile __stl_atomic_t* __lock)
   } /* first _Atomic_swap */
 # endif
 }
+#endif // _STLP_USE_PTHREAD_SPINLOCK
 
 _STLP_END_NAMESPACE
 

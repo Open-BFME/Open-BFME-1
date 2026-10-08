@@ -24,6 +24,10 @@
 #  include <stl/_prolog.h>
 # endif
 
+# ifdef _STLP_PRAGMA_ONCE
+#  pragma once
+# endif
+
 # if defined ( _STLP_OWN_IOSTREAMS )
 
 #  include <stl/_istream.h>              // Includes <ostream> and <ios>

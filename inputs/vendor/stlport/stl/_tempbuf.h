@@ -123,7 +123,7 @@ public:
   }
  
   ~_Temporary_buffer() {  
-    _Destroy(_M_buffer, _M_buffer + _M_len);
+    _STLP_STD::_Destroy(_M_buffer, _M_buffer + _M_len);
     free(_M_buffer);
   }
 

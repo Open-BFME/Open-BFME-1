@@ -67,7 +67,7 @@ public:
 	void invoke(FlagPairTarget *xfer);
 };
 
-struct __declspec(align(8)) Rva002571A0Elem
+struct Rva002571A0Elem
 {
 	UnsignedInt m_condition;
 	UnsignedInt m_frame;
@@ -76,8 +76,10 @@ typedef _STL::list<Rva002571A0Elem> Rva002571A0List;
 
 // Retail reuses this aligned slot for the two-byte version, load index, and
 // storing-path timer. The loading timer remains live with the index and uses
-// its own eight-byte local.
-union XferLocalStorage
+// its own eight-byte local. The alignment sits on the union, not the element:
+// STLport 4.6's list::resize takes the element by value, which an
+// align(8) type cannot be.
+union __declspec(align(8)) XferLocalStorage
 {
 	XferVersion m_version;
 	Int m_index;

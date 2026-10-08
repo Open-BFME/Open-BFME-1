@@ -1,6 +1,6 @@
 // STLport configuration file
 // It is internal STLport header - DO NOT include it directly
-// Microsoft Visual C++ 4.0, 4.1, 4.2, 5.0, ICL
+// Microsoft Visual C++ 4.0, 4.1, 4.2, 5.0, 6.0, 7.0, 7.1, ICL
 
 
 // Common features for VC++ 4.0 and higher
@@ -25,6 +25,8 @@
 #  define _STLP_LONG_LONG  __int64
 # endif
 
+# define _STLP_PRAGMA_ONCE
+
 // these switches depend on compiler flags
 # ifndef _CPPUNWIND
 #  define _STLP_HAS_NO_EXCEPTIONS 1
@@ -36,7 +38,10 @@
 #   define _REENTRANT 1
 # endif
 
-# define _STLP_WCHAR_T_IS_USHORT      1
+# if !defined (_NATIVE_WCHAR_T_DEFINED)
+# define _STLP_WCHAR_T_IS_USHORT 1
+# endif
+
 # define _STLP_MINIMUM_IMPORT_STD
 
 # ifdef _STLP_MSVC
@@ -45,79 +50,72 @@
 #  define _STLP_MSVC50_COMPATIBILITY   1
 # endif
 
-// # define _STLP_STATIC_CONST_INIT_BUG   1
-# define _STLP_DEFAULT_CONSTRUCTOR_BUG 1
-
 #  define _STLP_DLLEXPORT_NEEDS_PREDECLARATION 1
 
 // # ifndef __BUILDING_STLPORT
 // #  define _STLP_USE_TEMPLATE_EXPORT 1
 // # endif
 
-#  define _STLP_HAS_SPECIFIC_PROLOG_EPILOG
-#  define _STLP_NO_TYPENAME_IN_TEMPLATE_HEADER
-// fails to properly resolve call to sin() from within sin()
-#  define _STLP_SAME_FUNCTION_NAME_RESOLUTION_BUG
+# if (_STLP_MSVC >= 1310)
+# define _STLP_NO_METHOD_SPECIALIZATION 1
+# endif	//	(_STLP_MSVC >= 1310)
 
 #  if (_STLP_MSVC > 1100)
      typedef char __stl_char;
 #   define _STLP_DEFAULTCHAR __stl_char
 #  endif /* (_STLP_MSVC < 1100 ) */
 
-#  define _STLP_NO_TYPENAME_ON_RETURN_TYPE 1
-//  using ::func_name results in ambiguity
-
-// VC7.1 (VS2003, _MSC_VER 1310) postdates STLport 4.5.3 and is stricter than VC7.0:
-// it requires `typename` on dependent return types (e.g. _string.c / _tree.c out-of-line
-// method defs) and typename-in-template-headers. These keywords are parse-only, so
-// undoing STLport's VC-wide suppressions changes NO emitted bytes — the game (built with
-// VC7.1 + a similarly-patched STLport) produces identical code. Without this, <map>/<set>/
-// <string>/<hash_map>/<deque> fail to compile though <list>/<vector> happen to squeak by.
-# if (_MSC_VER >= 1310)
-#  undef _STLP_NO_TYPENAME_ON_RETURN_TYPE
-// VC7.1's CRT keeps C functions (and the MSVC-only _vsnprintf/_snprintf) in the
-// GLOBAL namespace, same as VC7.0; STLport only auto-detects that for _MSC_VER<=1300,
-// so without this it looks for std::_vsnprintf and fails. Namespace-only → 0 byte change.
-#  define _STLP_VENDOR_GLOBAL_CSTD
-# endif
+// BFME: retail's STLport 4.6 was built with in-class `static const` members for
+// VC7.1 (stock 4.6 sets this bug macro up to 1310). basic_string<char>::find(char,
+// size_type) at 0x006542C0 shares one `return npos` exit, which only the
+// static-const npos produces; the enum spelling duplicates it (8 bytes longer).
+# if (_STLP_MSVC <= 1300)
+# define _STLP_STATIC_CONST_INIT_BUG   1
+# endif	//	(_STLP_MSVC <= 1310)
 
 # if (_STLP_MSVC <= 1300) 
+#  define _STLP_DEFAULT_CONSTRUCTOR_BUG 1
+#  define _STLP_HAS_SPECIFIC_PROLOG_EPILOG
+#  define _STLP_NO_TYPENAME_IN_TEMPLATE_HEADER
+// fails to properly resolve call to sin() from within sin()
+#  define _STLP_SAME_FUNCTION_NAME_RESOLUTION_BUG
+#  define _STLP_NO_TYPENAME_ON_RETURN_TYPE 1
 // boris : not defining this macro for SP5 causes other problems
 // #  if !defined (_MSC_FULL_VER) || (_MSC_FULL_VER < 12008804 )
-#   define _STLP_NO_USING_FOR_GLOBAL_FUNCTIONS 1
+#  define _STLP_NO_USING_FOR_GLOBAL_FUNCTIONS 1
 //#  endif
 #  define _STLP_NO_FUNCTION_TMPL_PARTIAL_ORDER 1
 #  define _STLP_NO_CLASS_PARTIAL_SPECIALIZATION 1
 #  define _STLP_NO_FRIEND_TEMPLATES
-#  define _STLP_STATIC_CONST_INIT_BUG   1
-//  these work, as long they are inline
-#   define _STLP_INLINE_MEMBER_TEMPLATES 1
 // VC++ cannot handle default allocator argument in template constructors
-#   define _STLP_NEEDS_EXTRA_TEMPLATE_CONSTRUCTORS
+#  define _STLP_NEEDS_EXTRA_TEMPLATE_CONSTRUCTORS
 // there is no partial spec, and MSVC breaks on simulating it for iterator_traits queries
-#   define _STLP_USE_OLD_HP_ITERATOR_QUERIES
-# endif
-
+#  define _STLP_USE_OLD_HP_ITERATOR_QUERIES
 // #  define _STLP_NO_EXPLICIT_FUNCTION_TMPL_ARGS 1
-#  define _STLP_NO_MEMBER_TEMPLATE_KEYWORD 1
-#  define _STLP_NO_MEMBER_TEMPLATE_CLASSES 1
-
 #  define _STLP_NO_QUALIFIED_FRIENDS    1
 #  define _STLP_DONT_USE_BOOL_TYPEDEF 1
+# endif /* _STLP_MSVC <= 1300 */
 
 # endif /* _STLP_MSVC */
 
-
-# if (_MSC_VER <= 1300) 
+# if (_MSC_VER <= 1310) 
 #  define _STLP_VENDOR_GLOBAL_CSTD
 // They included the necessary coding,
 // but the beta still has an issue with template classes
 // ok:    class a { static const int v = 2; };
 // error: template &lt;class _Tp> class a { static const int v = 2; };
-# endif /* (_MSC_VER <= 1300) */
+#  if !defined (_STLP_WHOLE_NATIVE_STD) && ! defined (_STLP_REDEFINE_STD)
+#    define _STLP_REDEFINE_STD
+#  endif
+# endif /* (_MSC_VER <= 1310) */
 
 # if (_MSC_VER <= 1200)  // including MSVC 6.0
+//  these work, as long they are inline
+#  define _STLP_INLINE_MEMBER_TEMPLATES 1
+#  define _STLP_NO_MEMBER_TEMPLATE_KEYWORD 1
 #  define _STLP_GLOBAL_NEW_HANDLER
+#  define _STLP_DONT_RETURN_VOID 1
+#  define _STLP_DONT_USE_NESTED_TCLASS_THROUGHT_TPARAM 1
 # endif /* (_MSC_VER <= 1200) */
 
 # if ( _MSC_VER<=1010 )
@@ -137,6 +135,7 @@
 // #  define _STLP_NO_EXPLICIT_FUNCTION_TMPL_ARGS 1
 #  define _STLP_NON_TYPE_TMPL_PARAM_BUG 1 
 #  define _STLP_THROW_RETURN_BUG 1
+#  define _STLP_NO_MEMBER_TEMPLATE_CLASSES 1
 # endif
 
 # if defined (_STLP_MSVC) && ( _STLP_MSVC < 1100 )
@@ -211,7 +210,3 @@
 #    endif
 
 #   include <config/vc_select_lib.h>
-
-
-
-

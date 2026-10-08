@@ -16,6 +16,8 @@
 #ifndef _STLP_CSTDIO
 # define _STLP_CSTDIO
 
+# if ! defined (_STLP_WINCE)
+
 # ifndef _STLP_OUTERMOST_HEADER_ID
 #  define _STLP_OUTERMOST_HEADER_ID 15
 #  include <stl/_prolog.h>
@@ -41,10 +43,12 @@
 # endif
 
 #  if defined (_STLP_MSVC) || defined (__ICL)
+namespace _STLP_VENDOR_CSTD {
 inline
 int vsnprintf(char *s1, size_t n, const char *s2, va_list v)
 {
-	return _STLP_VENDOR_CSTD::_vsnprintf(s1, n, s2, v);
+return ::_vsnprintf(s1, n, s2, v);
+}
 }
 #  endif
 
@@ -54,7 +58,6 @@ using _STLP_VENDOR_CSTD::FILE;
 using _STLP_VENDOR_CSTD::fpos_t;
 using _STLP_VENDOR_CSTD::size_t;
 
-# if !defined(__amigaos__)
 // undef obsolete macros
 # undef putc
 # undef getc
@@ -62,7 +65,6 @@ using _STLP_VENDOR_CSTD::size_t;
 # undef putchar
 # undef feof
 # undef ferror
-# endif
 
 #  ifndef _STLP_NO_CSTD_FUNCTION_IMPORTS
 using _STLP_VENDOR_CSTD::clearerr;
@@ -122,6 +124,8 @@ _STLP_END_NAMESPACE
 #  include <stl/_epilog.h>
 #  undef _STLP_OUTERMOST_HEADER_ID
 # endif
+
+# endif /* ! defined (_STLP_WINCE) */
 
 #endif
 

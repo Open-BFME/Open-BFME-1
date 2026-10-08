@@ -16,6 +16,8 @@
 #ifndef _STLP_CSTDDEF
 # define _STLP_CSTDDEF
 
+# if ! defined (_STLP_WINCE)
+
 # ifndef _STLP_OUTERMOST_HEADER_ID
 #  define _STLP_OUTERMOST_HEADER_ID 0x114
 #  include <stl/_prolog.h>
@@ -46,6 +48,8 @@ _STLP_END_NAMESPACE
 #  include <stl/_epilog.h>
 #  undef _STLP_OUTERMOST_HEADER_ID
 # endif
+
+#endif /* _STLP_WINCE */
 
 #endif /* _STLP_CSTDDEF */
 

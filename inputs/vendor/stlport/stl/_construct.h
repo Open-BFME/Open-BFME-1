@@ -34,8 +34,8 @@
 # include <cstring>
 # endif
 
-# ifndef _STLP_NEW_HEADER
-#  include <new>
+# ifndef _STLP_INTERNAL_NEW_HEADER
+#  include <stl/_new.h>
 # endif
 
 
@@ -77,6 +77,18 @@ inline void _Destroy(_Tp* __pointer) {
 #   undef new
 # endif 
 
+# ifdef _STLP_DEFAULT_CONSTRUCTOR_BUG
+template <class _T1>
+inline void _Construct_aux (_T1* __p, const __false_type&) {
+_STLP_PLACEMENT_NEW (__p) _T1();
+}
+
+template <class _T1>
+inline void _Construct_aux (_T1* __p, const __true_type&) {
+_STLP_PLACEMENT_NEW (__p) _T1(0);
+}
+# endif
+
 template <class _T1, class _T2>
 inline void _Construct(_T1* __p, const _T2& __val) {
 # ifdef _STLP_DEBUG_UNINITIALIZED
@@ -90,7 +102,12 @@ inline void _Construct(_T1* __p) {
 # ifdef _STLP_DEBUG_UNINITIALIZED
   memset((char*)__p, _STLP_SHRED_BYTE, sizeof(_T1));
 # endif
+# ifdef _STLP_DEFAULT_CONSTRUCTOR_BUG
+typedef typename _Is_integer<_T1>::_Integral _Is_Integral;
+_Construct_aux (__p, _Is_Integral() );
+# else
   _STLP_PLACEMENT_NEW (__p) _T1();
+# endif
 }
 
 # if defined(_STLP_NEW_REDEFINE)
@@ -104,7 +121,7 @@ template <class _ForwardIterator>
 _STLP_INLINE_LOOP void
 __destroy_aux(_ForwardIterator __first, _ForwardIterator __last, const __false_type&) {
   for ( ; __first != __last; ++__first)
-    _Destroy(&*__first);
+    _STLP_STD::_Destroy(&*__first);
 }
 
 template <class _ForwardIterator> 
@@ -137,9 +154,9 @@ inline void construct(_T1* __p, const _T2& __val) {_Construct(__p, __val); }
 template <class _T1>
 inline void construct(_T1* __p) { _Construct(__p); }
 template <class _Tp>
-inline void destroy(_Tp* __pointer) {  _Destroy(__pointer); }
+inline void destroy(_Tp* __pointer) {  _STLP_STD::_Destroy(__pointer); }
 template <class _ForwardIterator>
-inline void destroy(_ForwardIterator __first, _ForwardIterator __last) { _Destroy(__first, __last); }
+inline void destroy(_ForwardIterator __first, _ForwardIterator __last) { _STLP_STD::_Destroy(__first, __last); }
 # endif
 _STLP_END_NAMESPACE
 

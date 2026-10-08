@@ -71,7 +71,7 @@
  * Please do not forget to link proper STLport library flavor
  * (e.g libstlport_gcc_stldebug.a) when you set this flag in STLport iostreams mode.
  */
-// #define   _STLP_DEBUG 1
+//#define   _STLP_DEBUG 1
 
 
 /* 
@@ -87,7 +87,7 @@
  *  on per-project basis.
  *
  */
-// #define _STLP_NO_CUSTOM_IO
+//#define _STLP_NO_CUSTOM_IO
 
 
 /* 
@@ -102,12 +102,11 @@
 
 
 /*
- * If _STLP_USE_OWN_NAMESPACE is in effect, STLport will try to rename std:: for the user
- * to _STL::. If you don't want this feature, or if it does not quite work for your
- * setup (like you are using third-party library that has to use vendor's STL), 
- * please define the following switch :
+ * If _STLP_USE_OWN_NAMESPACE is in effect, STLport by default will not try
+ * to rename std:: for the user
+ * to _STL::. If you do want this feature, please define the following switch :
  */
-// # define _STLP_DONT_REDEFINE_STD 1
+// # define _STLP_REDEFINE_STD 1
 
 
 /*
@@ -181,7 +180,7 @@
 
 // boris : this setting is here as we cannot detect precense of new Platform SDK automatically 
 // If you are using new PSDK with VC++ 6.0 or lower, please define this to get correct prototypes for InterlockedXXX functions
-// # define _STLP_NEW_PLATFORM_SDK 1
+//# define _STLP_NEW_PLATFORM_SDK 1
 
 /*
  * Use minimum set of default arguments on template classes that have more

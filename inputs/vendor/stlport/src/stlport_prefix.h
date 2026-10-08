@@ -30,41 +30,6 @@
 using _STLP_VENDOR_CSTD::time_t;
 # endif
 
-// This section is only for compilers that support precompiled headers !
-// Currently there are : Visual C++
-// Please remember to make sure to turn on precompiled header option in
-// the platform makefile when addinf compilers to this list, otherwise 
-// this will result in worse build performance.
-
-# if defined (_STLP_MSVC) || defined (__ICL)
-# ifndef _STLP_USE_DECLSPEC
-# include <climits>
-# include <cmath>
-# include <cstdlib>
-# include <cstring>
-# include <ctime>
-# include <new>
-# include <exception>
-# include <functional>
-# include <memory>
-# include <utility>
-# include <limits>
-# include <algorithm>
-# include <iosfwd>
-# include <ios>
-
-# include <stdexcept>
-# include <string>
-// # include <locale>
-
-# ifdef _STLP_MSVC
-#  pragma hdrstop
-# endif
-
-# endif
-
-# endif /* precompiler headers */
-
 # if defined (_STLP_FUNCTION_TMPL_PARTIAL_ORDER) || defined (__BORLANDC__)
 #  define _STLP_OPERATOR_SPEC _STLP_DECLSPEC 
 # else

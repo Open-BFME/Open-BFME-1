@@ -75,7 +75,7 @@
 #    include <mutex.h>
 # endif
 
-#ifdef _STLP_MEMBER_TEMPLATE_CLASSES 
+#ifdef _STLP_USE_NESTED_TCLASS_THROUGHT_TPARAM 
 #  define _STLP_CREATE_ALLOCATOR(__atype,__a, _Tp) (_Alloc_traits<_Tp,__atype>::create_allocator(__a)) 
 #elif defined(__MRC__)||defined(__SC__) 
 #  define _STLP_CREATE_ALLOCATOR(__atype,__a, _Tp) __stl_alloc_create<_Tp,__atype>(__a,(_Tp*)0) 
@@ -439,10 +439,10 @@ public:
                              allocator_type __a) {
 
     if (!_S_is_basic_char_type((_CharT*)0)) {
-      _Destroy(__s, __s + __len);
+      _STLP_STD::_Destroy(__s, __s + __len);
     }
     //  This has to be a static member, so this gets a bit messy
-#   ifdef _STLP_MEMBER_TEMPLATE_CLASSES
+#   ifdef _STLP_USE_NESTED_TCLASS_THROUGHT_TPARAM
     __a.deallocate(__s, _S_rounded_up_size(__len));		//*ty 03/24/2001 - restored not to use __stl_alloc_rebind() since it is not defined under _STLP_MEMBER_TEMPLATE_CLASSES
 #   else
     __stl_alloc_rebind (__a, (_CharT*)0).deallocate(__s, _S_rounded_up_size(__len));
@@ -1613,7 +1613,7 @@ public:
   }
 
   void copy(_CharT* __buffer) const {
-    _Destroy(__buffer, __buffer + size());
+    _STLP_STD::_Destroy(__buffer, __buffer + size());
     _S_flatten(_M_tree_ptr._M_data, __buffer);
   }
 
@@ -1627,7 +1627,7 @@ public:
     size_t _p_size = size();
     size_t __len = (__pos + __n > _p_size? _p_size - __pos : __n);
 
-    _Destroy(__buffer, __buffer + __len);
+    _STLP_STD::_Destroy(__buffer, __buffer + __len);
     _S_flatten(_M_tree_ptr._M_data, __pos, __len, __buffer);
     return __len;
   }

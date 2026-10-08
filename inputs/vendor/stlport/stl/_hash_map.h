@@ -211,33 +211,6 @@ public:
   }
 };
 
-
-template <class _Key, class _Tp, class _HashFcn, class _EqlKey, class _Alloc>
-inline bool _STLP_CALL 
-operator==(const hash_map<_Key,_Tp,_HashFcn,_EqlKey,_Alloc>& __hm1,
-           const hash_map<_Key,_Tp,_HashFcn,_EqlKey,_Alloc>& __hm2)
-{
-  return hash_map<_Key,_Tp,_HashFcn,_EqlKey,_Alloc>::_M_equal(__hm1, __hm2);
-}
-#ifdef _STLP_USE_SEPARATE_RELOPS_NAMESPACE
-
-template <class _Key, class _Tp, class _HashFcn, class _EqlKey, class _Alloc>
-inline bool _STLP_CALL 
-operator!=(const hash_map<_Key,_Tp,_HashFcn,_EqlKey,_Alloc>& __hm1,
-           const hash_map<_Key,_Tp,_HashFcn,_EqlKey,_Alloc>& __hm2) {
-  return !(__hm1 == __hm2);
-}
-
-template <class _Key, class _Tp, class _HashFcn, class _EqlKey, class _Alloc>
-inline void _STLP_CALL 
-swap(hash_map<_Key,_Tp,_HashFcn,_EqlKey,_Alloc>& __hm1,
-     hash_map<_Key,_Tp,_HashFcn,_EqlKey,_Alloc>& __hm2)
-{
-  __hm1.swap(__hm2);
-}
-
-#endif /* _STLP_FUNCTION_TMPL_PARTIAL_ORDER */
-
 template <class _Key, class _Tp, __DFL_TMPL_PARAM(_HashFcn,hash<_Key>),
           __DFL_TMPL_PARAM(_EqualKey,equal_to<_Key>),
           _STLP_DEFAULT_PAIR_ALLOCATOR_SELECT(const _Key, _Tp) >
@@ -401,34 +374,17 @@ public:
   }
 };
 
+#define _STLP_TEMPLATE_HEADER template <class _Key, class _Tp, class _HashFcn, class _EqlKey, class _Alloc>
+#define _STLP_TEMPLATE_CONTAINER hash_map<_Key,_Tp,_HashFcn,_EqlKey,_Alloc>
 
-template <class _Key, class _Tp, class _HashFcn, class _EqlKey, class _Alloc>
-inline bool _STLP_CALL 
-operator==(const hash_multimap<_Key,_Tp,_HashFcn,_EqlKey,_Alloc>& __hm1,
-           const hash_multimap<_Key,_Tp,_HashFcn,_EqlKey,_Alloc>& __hm2)
-{
-  return hash_multimap<_Key,_Tp,_HashFcn,_EqlKey,_Alloc>::_M_equal(__hm1, __hm2);
-}
+#include <stl/_relops_hash_cont.h>
 
-#ifdef _STLP_USE_SEPARATE_RELOPS_NAMESPACE
+#undef _STLP_TEMPLATE_CONTAINER
+#define _STLP_TEMPLATE_CONTAINER hash_multimap<_Key,_Tp,_HashFcn,_EqlKey,_Alloc>
+#include <stl/_relops_hash_cont.h>
 
-template <class _Key, class _Tp, class _HashFcn, class _EqlKey, class _Alloc>
-inline bool _STLP_CALL 
-operator!=(const hash_multimap<_Key,_Tp,_HashFcn,_EqlKey,_Alloc>& __hm1,
-           const hash_multimap<_Key,_Tp,_HashFcn,_EqlKey,_Alloc>& __hm2) {
-  return !(__hm1 == __hm2);
-}
-
-template <class _Key, class _Tp, class _HashFcn, class _EqlKey, class _Alloc>
-inline void _STLP_CALL 
-swap(hash_multimap<_Key,_Tp,_HashFcn,_EqlKey,_Alloc>& __hm1,
-     hash_multimap<_Key,_Tp,_HashFcn,_EqlKey,_Alloc>& __hm2)
-{
-  __hm1.swap(__hm2);
-}
-
-#endif /* _STLP_USE_SEPARATE_RELOPS_NAMESPACE */
-
+#undef _STLP_TEMPLATE_CONTAINER
+#undef _STLP_TEMPLATE_HEADER
 
 // Specialization of insert_iterator so that it will work for hash_map
 // and hash_multimap.

@@ -192,7 +192,7 @@ struct _Alloc_traits<_Tp, __allocator<_Tp1, _Alloc > > {
 
 #endif
 
-#if !defined (_STLP_MEMBER_TEMPLATE_CLASSES) 
+#if !defined (_STLP_USE_NESTED_TCLASS_THROUGHT_TPARAM) 
 
 // Versions for the predefined SGI-style allocators.
 

@@ -86,8 +86,8 @@ typedef __int32_t wchar_t;
 # ifndef _STLP_CSTDDEF
 #  include <cstddef>
 # endif
-# ifndef _STLP_CWCHAR
-#  include <cwchar>
+# ifndef _STLP_CWCHAR_H
+#  include <stl/_cwchar.h>
 # endif
 # ifndef _STLP_CCTYPE
 #  include <cctype>
@@ -206,15 +206,25 @@ struct _Locale_messages;
 
 # elif defined (__NetBSD__) || defined (__amigaos__)
  
-# define _Locale_CNTRL _C
-# define _Locale_UPPER _U
-# define _Locale_LOWER _L
-# define _Locale_DIGIT _N
-# define _Locale_XDIGIT (_N|_X)
-# define _Locale_PUNCT _P
-# define _Locale_SPACE _S
-# define _Locale_PRINT (_P|_U|_L|_N|_B)
-# define _Locale_ALPHA (_U|_L)
+#  define _Locale_CNTRL _C
+#  define _Locale_UPPER _U
+#  define _Locale_LOWER _L
+#  define _Locale_DIGIT _N
+#  define _Locale_XDIGIT (_N|_X)
+#  define _Locale_PUNCT _P
+#  define _Locale_SPACE _S
+#  define _Locale_PRINT (_P|_U|_L|_N|_B)
+#  define _Locale_ALPHA (_U|_L)
+# elif defined(__EMX__) /* OS/2 with emx runtime */
+#  define _Locale_CNTRL _CNTRL
+#  define _Locale_UPPER _UPPER
+#  define _Locale_LOWER _LOWER
+#  define _Locale_DIGIT _DIGIT
+#  define _Locale_XDIGIT _XDIGIT
+#  define _Locale_PUNCT _PUNCT
+#  define _Locale_SPACE _SPACE
+#  define _Locale_PRINT _PRINT
+#  define _Locale_ALPHA (_UPPER|_LOWER)
 
 # elif defined(_STLP_USE_GLIBC) /* linux, using the gnu compiler */
 
@@ -293,6 +303,16 @@ struct _Locale_messages;
 #  define _Locale_PRINT  (_ALPHA | _DIGIT | _BLANK | _PUNCT)
 // is this one has to be so complex ?  
 #  define _Locale_ALPHA  ( _ALPHA & ~ (_UPPER | _LOWER )) 
+#elif defined (__DMC__)
+#  define _Locale_CNTRL  _CONTROL
+#  define _Locale_UPPER  _UPPER
+#  define _Locale_LOWER  _LOWER
+#  define _Locale_DIGIT  _DIGIT
+#  define _Locale_XDIGIT _HEX
+#  define _Locale_PUNCT  _PUNCT
+#  define _Locale_SPACE  _SPACE
+#  define _Locale_PRINT  (_UPPER | _LOWER | _DIGIT | _PUNCT | _SPACE)
+#  define _Locale_ALPHA  _ALPHA
 #elif defined(__MRC__) || defined(__SC__)		//*TY 02/24/2000 - added support for MPW
 #  define _Locale_CNTRL  _CTL
 #  define _Locale_UPPER  _UPP
@@ -401,6 +421,16 @@ struct _Locale_messages;
 #  define _Locale_SPACE _S
 #  define _Locale_PRINT (_P | _U | _L | _N | _B)
 #  define _Locale_ALPHA (_U | _L)
+#elif defined (_CRAY)
+#  define _Locale_CNTRL  _CNTRL
+#  define _Locale_UPPER  _UPPER
+#  define _Locale_LOWER  _LOWER
+#  define _Locale_DIGIT  _DIGIT
+#  define _Locale_XDIGIT _XDIGIT
+#  define _Locale_PUNCT  _PUNCT
+#  define _Locale_SPACE  _SPACE
+#  define _Locale_PRINT  _PRINT
+#  define _Locale_ALPHA  _ALPHA
 #endif
 
 # endif /* _STLP_C_LOCALE_H */

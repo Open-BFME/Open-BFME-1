@@ -46,24 +46,40 @@ struct _Bit_reference {
 
 public:
   _Bit_reference() : _M_p(0), _M_mask(0) {}
-  operator bool() const { return !(!(*_M_p & _M_mask)); }
-  _Bit_reference& operator=(bool __x)
-  {
+
+  operator bool() const { 
+	  return !(!(*_M_p & _M_mask)); 
+  }
+  _Bit_reference& operator=(bool __x) {
     if (__x)  *_M_p |= _M_mask;
     else      *_M_p &= ~_M_mask;
     return *this;
   }
-  _Bit_reference& operator=(const _Bit_reference& __x)
-    { return *this = bool(__x); }
-  bool operator==(const _Bit_reference& __x) const
-    { return bool(*this) == bool(__x); }
+  _Bit_reference& operator=(const _Bit_reference& __x) {
+	  return *this = bool(__x); 
+  }
+  bool operator==(const _Bit_reference& __x) const {
+	  return bool(*this) == bool(__x); 
+  }
   bool operator<(const _Bit_reference& __x) const {
     return !bool(*this) && bool(__x);
+  }
+
+  _Bit_reference& operator |= (bool __x) {
+	  if (__x)
+		  *_M_p |= _M_mask;
+	  return *this;
+  }
+  _Bit_reference& operator &= (bool __x) {
+	  if (!__x)
+		  *_M_p &= ~_M_mask;
+	  return *this;
   }
   void flip() { *_M_p ^= _M_mask; }
 };
 
-inline void swap(_Bit_reference __x, _Bit_reference& __y)
+
+inline void swap(_Bit_reference& __x, _Bit_reference& __y)
 {
   bool __tmp = (bool)__x;
   __x = __y;
@@ -270,7 +286,7 @@ protected:
 # else
 #  define __BVEC_TMPL_HEADER _STLP_TEMPLATE_NULL
 # endif
-# if !(defined(__MRC__)||defined(__SC__))			//*TY 12/17/2000 - 
+# if !(defined(__MRC__)||(defined(__SC__)&&!defined(__DMC__)))			//*TY 12/17/2000 - 
 #  define _Alloc _STLP_DEFAULT_ALLOCATOR(bool)
 # else
 #  define _Alloc allocator<bool>
@@ -760,29 +776,11 @@ public:
 
 # if defined  ( _STLP_NO_BOOL ) || defined (__HP_aCC) // fixed soon (03/17/2000)
  
-__BVEC_TMPL_HEADER
-inline void swap(__BVECTOR_QUALIFIED& __x, __BVECTOR_QUALIFIED& __y) {
-  __x.swap(__y);
-}
-
-__BVEC_TMPL_HEADER
-inline bool _STLP_CALL 
-operator==(const __BVECTOR_QUALIFIED& __x, const __BVECTOR_QUALIFIED& __y)
-{
-  return (__x.size() == __y.size() && 
-          equal(__x.begin(), __x.end(), __y.begin()));
-}
-
-
-__BVEC_TMPL_HEADER
-inline bool _STLP_CALL 
-operator<(const __BVECTOR_QUALIFIED& __x, const __BVECTOR_QUALIFIED& __y)
-{
-  return lexicographical_compare(__x.begin(), __x.end(), 
-                                 __y.begin(), __y.end());
-}
-
-_STLP_RELOPS_OPERATORS( __BVEC_TMPL_HEADER, __BVECTOR_QUALIFIED )
+#define _STLP_TEMPLATE_HEADER __BVEC_TMPL_HEADER
+#define _STLP_TEMPLATE_CONTAINER __BVECTOR_QUALIFIED
+#include <stl/_relops_cont.h>
+#undef _STLP_TEMPLATE_CONTAINER
+#undef _STLP_TEMPLATE_HEADER
   
 # endif /* NO_BOOL */
   

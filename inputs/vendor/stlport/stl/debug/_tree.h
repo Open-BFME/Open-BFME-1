@@ -62,8 +62,6 @@ class _DBG_Rb_tree : public _STLP_DBG_TREE_SUPER {
 protected:
   friend class __owned_link;
   mutable __owned_list _M_iter_list;
-public:
-  void _Invalidate_all() {_M_iter_list._Invalidate_all();}
 
 public:
   __IMPORT_CONTAINER_TYPEDEFS(_Base)
@@ -74,10 +72,25 @@ public:
 
   _STLP_DECLARE_BIDIRECTIONAL_REVERSE_ITERATORS;
 
-public:
+protected:
+
+  //typedef typename _Base::key_param_type key_param_type;
+  //typedef typename _Base::val_param_type val_param_type;
+
+  void _Invalidate_all() {_M_iter_list._Invalidate_all();}
+
+  void _Invalidate_iterator(const iterator& __it) { 
+    __invalidate_iterator(&_M_iter_list,__it); 
+  }
+  void _Invalidate_iterators(const iterator& __first, const iterator& __last) {
+    iterator __cur = __first;
+    while (__cur != __last) __invalidate_iterator(&_M_iter_list, __cur++); 
+  }
+
   const _Base* _Get_base() const { return (const _Base*)this; }
   _Base* _Get_base() { return (_Base*)this; }
 
+public:
   _DBG_Rb_tree() : _STLP_DBG_TREE_SUPER(), 
     _M_iter_list(_Get_base()) {}
   _DBG_Rb_tree(const _Compare& __comp) : 
@@ -98,9 +111,8 @@ public:
   const_iterator begin() const { return const_iterator(&_M_iter_list, _Base::begin()); }
   iterator end() { return iterator(&_M_iter_list, _Base::end()); }
   const_iterator end() const { return const_iterator(&_M_iter_list,_Base::end()); }
-  void _Invalidate_iterator(const iterator& __it) { 
-    __invalidate_iterator(&_M_iter_list,__it); 
-  }
+
+public:
   reverse_iterator rbegin() { return reverse_iterator(end()); }
   const_reverse_iterator rbegin() const { 
     return const_reverse_iterator(end()); 
@@ -147,13 +159,7 @@ public:
   }
 
   pair<iterator,bool> insert_unique(const value_type& __x) {
-# ifndef _STLP_MSVC
-      _STLP_STD::pair<typename _Base::iterator, bool>
-# else
-          // MSVC fails on typename here
-    _STLP_STD::pair<_Base::iterator, bool>
-# endif          
-        __res = _Base::insert_unique(__x);
+    _STLP_STD::pair<_STLP_HEADER_TYPENAME _Base::iterator, bool> __res = _Base::insert_unique(__x);
     return pair<iterator,bool>( iterator(&_M_iter_list, __res.first), __res.second ) ;
   }
   iterator insert_equal(const value_type& __x) {
@@ -200,16 +206,21 @@ public:
     _Base::erase(__position._M_iterator);
   }
   size_type erase(const key_type& __x) {
-    return _Base::erase(__x);
+    pair<iterator,iterator> __p = equal_range(__x);
+    size_type __n = distance(__p.first, __p.second);
+    _Invalidate_iterators(__p.first, __p.second);
+    _Base::erase(__p.first._M_iterator, __p.second._M_iterator);
+	return __n;
   }
 
   void erase(iterator __first, iterator __last) {
     _STLP_DEBUG_CHECK(__check_if_owner(&_M_iter_list, __first)&&
 		      __check_if_owner(&_M_iter_list, __last))
+    _Invalidate_iterators(__first, __last);
     _Base::erase(__first._M_iterator, __last._M_iterator);    
   }
   void erase(const key_type* __first, const key_type* __last) {
-    _Base::erase(__first, __last);
+    while (__first != __last) erase(*__first++);
   }
 
   void clear() {
@@ -218,76 +229,13 @@ public:
   }      
 };
 
-#ifdef _STLP_EXTRA_OPERATORS_FOR_DEBUG
-
-template <class _Key, class _Value, class _KeyOfValue, 
-          class _Compare, class _Alloc>
-inline bool 
-operator==(const  _DBG_Rb_tree<_Key,_Value,_KeyOfValue,_Compare,_Alloc>& __x, 
-           const  _DBG_Rb_tree<_Key,_Value,_KeyOfValue,_Compare,_Alloc>& __y)
-{
-  return __x.size() == __y.size() &&
-         equal(__x.begin(), __x.end(), __y.begin());
-}
-
-template <class _Key, class _Value, class _KeyOfValue, 
-          class _Compare, class _Alloc>
-inline bool 
-operator<(const  _DBG_Rb_tree<_Key,_Value,_KeyOfValue,_Compare,_Alloc>& __x, 
-          const  _DBG_Rb_tree<_Key,_Value,_KeyOfValue,_Compare,_Alloc>& __y)
-{
-  return lexicographical_compare(__x.begin(), __x.end(), 
-                                 __y.begin(), __y.end());
-}
-
-#ifdef _STLP_USE_SEPARATE_RELOPS_NAMESPACE
-
-template <class _Key, class _Value, class _KeyOfValue, 
-          class _Compare, class _Alloc>
-inline bool 
-operator!=(const  _DBG_Rb_tree<_Key,_Value,_KeyOfValue,_Compare,_Alloc>& __x, 
-           const  _DBG_Rb_tree<_Key,_Value,_KeyOfValue,_Compare,_Alloc>& __y) {
-  return !(__x == __y);
-}
-
-template <class _Key, class _Value, class _KeyOfValue, 
-          class _Compare, class _Alloc>
-inline bool 
-operator>(const  _DBG_Rb_tree<_Key,_Value,_KeyOfValue,_Compare,_Alloc>& __x, 
-          const  _DBG_Rb_tree<_Key,_Value,_KeyOfValue,_Compare,_Alloc>& __y) {
-  return __y < __x;
-}
-
-template <class _Key, class _Value, class _KeyOfValue, 
-          class _Compare, class _Alloc>
-inline bool 
-operator<=(const  _DBG_Rb_tree<_Key,_Value,_KeyOfValue,_Compare,_Alloc>& __x, 
-           const  _DBG_Rb_tree<_Key,_Value,_KeyOfValue,_Compare,_Alloc>& __y) {
-  return !(__y < __x);
-}
-
-template <class _Key, class _Value, class _KeyOfValue, 
-          class _Compare, class _Alloc>
-inline bool 
-operator>=(const  _DBG_Rb_tree<_Key,_Value,_KeyOfValue,_Compare,_Alloc>& __x, 
-           const  _DBG_Rb_tree<_Key,_Value,_KeyOfValue,_Compare,_Alloc>& __y) {
-  return !(__x < __y);
-}
-
-#endif /* _STLP_USE_SEPARATE_RELOPS_NAMESPACE */
-#endif /* _STLP_EXTRA_OPERATORS_FOR_DEBUG */
-
-
-#ifdef _STLP_FUNCTION_TMPL_PARTIAL_ORDER
-template <class _Key, class _Value, class _KeyOfValue, 
-          class _Compare, class _Alloc>
-inline void 
-swap( _DBG_Rb_tree<_Key,_Value,_KeyOfValue,_Compare,_Alloc>& __x, 
-      _DBG_Rb_tree<_Key,_Value,_KeyOfValue,_Compare,_Alloc>& __y)
-{
-  __x.swap(__y);
-}
-#endif /* _STLP_FUNCTION_TMPL_PARTIAL_ORDER */
+#define _STLP_TEMPLATE_HEADER template <class _Key, class _Value, class _KeyOfValue, class _Compare, class _Alloc>
+#define _STLP_TEMPLATE_CONTAINER _DBG_Rb_tree<_Key,_Value,_KeyOfValue,_Compare,_Alloc>
+#define _STLP_TEMPLATE_CONTAINER_BASE _STLP_DBG_TREE_SUPER
+#include <stl/debug/_relops_cont.h>
+#undef _STLP_TEMPLATE_CONTAINER_BASE
+#undef _STLP_TEMPLATE_CONTAINER
+#undef _STLP_TEMPLATE_HEADER
          
 _STLP_END_NAMESPACE
 

@@ -382,62 +382,13 @@ public:
 
 };
 
-#ifdef _STLP_EXTRA_OPERATORS_FOR_DEBUG
-
-template <class _Tp, class _Alloc>
-inline bool 
-operator==(const  _DBG_slist<_Tp,_Alloc>& _SL1, 
-	   const  _DBG_slist<_Tp,_Alloc>& _SL2)
-{
-  return (const _STLP_DBG_SLIST_BASE&)_SL1 == (const _STLP_DBG_SLIST_BASE&)_SL2;
-}
-
-template <class _Tp, class _Alloc>
-inline bool operator<(const  _DBG_slist<_Tp,_Alloc>& _SL1,
-                      const  _DBG_slist<_Tp,_Alloc>& _SL2)
-{
-  return (const _STLP_DBG_SLIST_BASE&)_SL1 < (const _STLP_DBG_SLIST_BASE&)_SL2;
-}
-
-#ifdef _STLP_USE_SEPARATE_RELOPS_NAMESPACE
-
-template <class _Tp, class _Alloc>
-inline bool 
-operator!=(const  _DBG_slist<_Tp,_Alloc>& _SL1, 
-	   const  _DBG_slist<_Tp,_Alloc>& _SL2) {
-  return !(_SL1 == _SL2);
-}
-
-template <class _Tp, class _Alloc>
-inline bool 
-operator>(const  _DBG_slist<_Tp,_Alloc>& _SL1, 
-	  const  _DBG_slist<_Tp,_Alloc>& _SL2) {
-  return _SL2 < _SL1;
-}
-
-template <class _Tp, class _Alloc>
-inline bool 
-operator<=(const  _DBG_slist<_Tp,_Alloc>& _SL1, 
-	   const  _DBG_slist<_Tp,_Alloc>& _SL2) {
-  return !(_SL2 < _SL1);
-}
-
-template <class _Tp, class _Alloc>
-inline bool 
-operator>=(const  _DBG_slist<_Tp,_Alloc>& _SL1, 
-	   const  _DBG_slist<_Tp,_Alloc>& _SL2) {
-  return !(_SL1 < _SL2);
-}
-#endif /* _STLP_USE_SEPARATE_RELOPS_NAMESPACE */
-#endif /* _STLP_EXTRA_OPERATORS_FOR_DEBUG */
-
-#ifdef _STLP_FUNCTION_TMPL_PARTIAL_ORDER
-template <class _Tp, class _Alloc>
-inline void swap( _DBG_slist<_Tp,_Alloc>& __x, 
-		  _DBG_slist<_Tp,_Alloc>& __y) {
-  __x.swap(__y);
-}
-#endif /* _STLP_FUNCTION_TMPL_PARTIAL_ORDER */
+#define _STLP_TEMPLATE_HEADER template <class _Tp, class _Alloc>
+#define _STLP_TEMPLATE_CONTAINER _DBG_slist<_Tp,_Alloc>
+#define _STLP_TEMPLATE_CONTAINER_BASE _STLP_DBG_SLIST_BASE
+#include <stl/debug/_relops_cont.h>
+#undef _STLP_TEMPLATE_CONTAINER_BASE
+#undef _STLP_TEMPLATE_CONTAINER
+#undef _STLP_TEMPLATE_HEADER
 
 _STLP_END_NAMESPACE
 

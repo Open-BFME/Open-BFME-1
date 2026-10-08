@@ -15,7 +15,5 @@
 
 template std::_Vector_base<PlayerTemplate, std::allocator<PlayerTemplate> >::~_Vector_base();
 template PlayerTemplate *std::allocator<PlayerTemplate>::allocate(
-	unsigned int, const void *) const;
-template void std::_STLP_alloc_proxy<PlayerTemplate *, PlayerTemplate,
-	std::allocator<PlayerTemplate> >::deallocate(PlayerTemplate *, size_t);
+	unsigned int, const void *);
 template void std::vector<PlayerTemplate>::_M_clear();

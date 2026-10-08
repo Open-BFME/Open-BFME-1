@@ -36,7 +36,7 @@ multi_name.different = 0
 size_outlier.indicted = 1
 ctor_vtable.contradicted = 20
 ctor_vtable.unreadable = 0
-one_identity.surplus = 2188
+one_identity.surplus = 2157
 # Retail registration proves DynamicPortalBehaviour owns ctor 001F8B80 and factory 001156B0; four false aliases retired.
 # fcf825b4f7 retired the false FXNugget zero-store claim; the body still has aliases.
 # 4c8346b3c9 retired the GDIFileStream ctor over-claim at 0x00087A50 (a zero-store body).
@@ -862,8 +862,6 @@ null_reloc.max_unreadable = 1000
 @ one_identity.surplus 0x001A93A0 ??0?$list@VPeerResponse@@V?$allocator@VPeerResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VPeerResponse@@@1@@Z
 @ one_identity.surplus 0x001A93A0 ??0?$list@VQueuedDownload@@V?$allocator@VQueuedDownload@@@_STL@@@_STL@@QAE@ABV?$allocator@VQueuedDownload@@@1@@Z
 @ one_identity.surplus 0x001A93A0 ??0?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@ABV?$allocator@UICoord2D@@@1@@Z
-@ one_identity.surplus 0x001AFFB0 ?deallocate@?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@_STL@@@2@@_STL@@QAEXPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@2@I@Z
-@ one_identity.surplus 0x001AFFB0 ?deallocate@?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@_STL@@@_STL@@QBEXPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@2@I@Z
 @ one_identity.surplus 0x001B0CB0 ??_FAcceleratorTracker@@QAEXXZ
 @ one_identity.surplus 0x001B0CB0 ??_FRandom3Class@@QAEXXZ
 @ one_identity.surplus 0x001B0DB0 ??1ExperienceTracker@@MAE@XZ
@@ -1342,36 +1340,6 @@ null_reloc.max_unreadable = 1000
 @ one_identity.surplus 0x006CF660 ?setDefaultView@View@@UAEXMMM@Z
 @ one_identity.surplus 0x006CF660 ?vis_render_ring@RingRenderObjClass@@IAEXAAVSpecialRenderInfoClass@@ABVVector3@@1@Z
 @ one_identity.surplus 0x006CF660 ?vis_render_sphere@SphereRenderObjClass@@IAEXAAVSpecialRenderInfoClass@@ABVVector3@@1@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed@H@_STL@@YAHPAH@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed@I@_STL@@YAIPAI@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed@PAU_SBServer@@@_STL@@YAPAU_SBServer@@PAPAU1@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed@PAVArchiveFile@@@_STL@@YAPAVArchiveFile@@PAPAV1@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed@PAVGameSpyStagingRoom@@@_STL@@YAPAVGameSpyStagingRoom@@PAPAV1@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed@PAVImage@@@_STL@@YAPAVImage@@PAPAV1@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed@PAVLocomotorTemplate@@@_STL@@YAPAVLocomotorTemplate@@PAPAV1@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed@PAVNamedTimerInfo@@@_STL@@YAPAVNamedTimerInfo@@PAPAV1@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed@PAVPlayer@@@_STL@@YAPAVPlayer@@PAPAV1@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed@PAVTeamPrototype@@@_STL@@YAPAVTeamPrototype@@PAPAV1@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed@PBUModelConditionInfo@@@_STL@@YAPBUModelConditionInfo@@PAPBU1@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed@PBVArmorTemplateSet@@@_STL@@YAPBVArmorTemplateSet@@PAPBV1@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed@PBVWeaponTemplateSet@@@_STL@@YAPBVWeaponTemplateSet@@PAPBV1@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed@W4ObjectEnterExitType@@@_STL@@YA?AW4ObjectEnterExitType@@PAW41@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed@W4VeterancyLevel@@@_STL@@YA?AW4VeterancyLevel@@PAW41@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed_aux@H@_STL@@YAHPAHABU__true_type@0@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed_aux@I@_STL@@YAIPAIABU__true_type@0@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed_aux@PAU_SBServer@@@_STL@@YAPAU_SBServer@@PAPAU1@ABU__false_type@0@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed_aux@PAVArchiveFile@@@_STL@@YAPAVArchiveFile@@PAPAV1@ABU__false_type@0@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed_aux@PAVGameSpyStagingRoom@@@_STL@@YAPAVGameSpyStagingRoom@@PAPAV1@ABU__false_type@0@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed_aux@PAVImage@@@_STL@@YAPAVImage@@PAPAV1@ABU__false_type@0@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed_aux@PAVLocomotorTemplate@@@_STL@@YAPAVLocomotorTemplate@@PAPAV1@ABU__false_type@0@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed_aux@PAVNamedTimerInfo@@@_STL@@YAPAVNamedTimerInfo@@PAPAV1@ABU__false_type@0@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed_aux@PAVPlayer@@@_STL@@YAPAVPlayer@@PAPAV1@ABU__false_type@0@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed_aux@PAVTeamPrototype@@@_STL@@YAPAVTeamPrototype@@PAPAV1@ABU__false_type@0@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed_aux@PBUModelConditionInfo@@@_STL@@YAPBUModelConditionInfo@@PAPBU1@ABU__false_type@0@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed_aux@PBVArmorTemplateSet@@@_STL@@YAPBVArmorTemplateSet@@PAPBV1@ABU__false_type@0@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed_aux@PBVWeaponTemplateSet@@@_STL@@YAPBVWeaponTemplateSet@@PAPBV1@ABU__false_type@0@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed_aux@W4ObjectEnterExitType@@@_STL@@YA?AW4ObjectEnterExitType@@PAW41@ABU__false_type@0@@Z
-@ one_identity.surplus 0x006CF680 ??$__default_constructed_aux@W4VeterancyLevel@@@_STL@@YA?AW4VeterancyLevel@@PAW41@ABU__false_type@0@@Z
 @ one_identity.surplus 0x006CF680 ?As_CubeTextureClass@TextureBaseClass@@UAEPAVCubeTextureClass@@XZ
 @ one_identity.surplus 0x006CF680 ?As_DefParameterClass@ParameterClass@@UAEPAVDefParameterClass@@XZ
 @ one_identity.surplus 0x006CF680 ?As_Named_Pivot_Map@PivotMapClass@@UAEPAVNamedPivotMapClass@@XZ

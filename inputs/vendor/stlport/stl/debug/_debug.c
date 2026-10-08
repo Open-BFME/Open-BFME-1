@@ -257,7 +257,7 @@ __stl_debug_engine<_Dummy>::_Message(const char * __format_str, ...)
 	_STLP_WINCE_TRACE(__buffer);
 # elif defined (_STLP_WIN32) && ( defined(_STLP_MSVC) || defined (__ICL) || defined (__BORLANDC__))
     char __buffer [4096];
-    vsnprintf(__buffer, sizeof(__buffer) / sizeof(char),
+    _vsnprintf(__buffer, sizeof(__buffer) / sizeof(char),
                __format_str, __args);
     OutputDebugStringA(__buffer);
 # elif defined (__amigaos__)

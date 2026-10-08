@@ -1,9 +1,9 @@
 **********************************************************************
-* 	README file for STLport 4.5                                  *
+* 	README file for STLport 4.6                                  *
 *                                                                    *
 **********************************************************************
 
-This directory contains STLport-4.5 release.
+This directory contains STLport-4.6 release.
 
 What's inside :
 
@@ -37,7 +37,7 @@ This software is being distributed under the following terms :
  * Copyright (c) 1997
  * Moscow Center for SPARC Technology
  *
- * Copyright (c) 1999, 2000, 2001
+ * Copyright (c) 1999, 2000, 2001, 2002
  * Boris Fomitchev
  *
  * This material is provided "as is", with absolutely no warranty expressed
@@ -51,4 +51,3 @@ This software is being distributed under the following terms :
  *
 
 **********************************************************************
-

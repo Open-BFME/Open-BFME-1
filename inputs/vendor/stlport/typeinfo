@@ -29,17 +29,17 @@
 #  include _STLP_NATIVE_CPP_RUNTIME_HEADER(typeinfo)
 # endif
 
+# if defined(_STLP_MSVC) && (_STLP_MSVC >= 1300)
+// In .NET, <typeinfo> actually includes <typeinfo.h> 
+#  undef _STLP_OLDSTD_typeinfo
+# endif
+
 // if <typeinfo.h> already included, do not import anything
 # if defined  (_STLP_USE_NAMESPACES) && ! defined (_STLP_OLDSTD_typeinfo) \
-&& ( defined (_STLP_VENDOR_GLOBAL_EXCEPT_STD) || defined (_STLP_USE_OWN_NAMESPACE))
-
+&& ( defined (_STLP_VENDOR_GLOBAL_EXCEPT_STD) || defined (_STLP_USE_OWN_NAMESPACE) || defined (_STLP_DEBUG))
 # if defined(_STLP_MSVC) && (_STLP_MSVC < 1300)
-class _STLP_CLASS_DECLSPEC bad_cast : public exception {
-public :
-bad_cast() : exception("bad_cast") { }
-};
-#endif
-
+class bad_cast : public exception {};
+# endif
 _STLP_BEGIN_NAMESPACE
 
 // VC++ 6 has only this guy in ::
@@ -47,7 +47,7 @@ _STLP_BEGIN_NAMESPACE
 using _STLP_VENDOR_EXCEPT_STD::type_info;
 // # endif
 
-#  if !(defined(__MRC__) || defined(__SC__))
+#  if !(defined(__MRC__) || defined(__SC__) || defined(__DMC__))
 using _STLP_VENDOR_EXCEPT_STD::bad_typeid;
 #  endif
 
@@ -68,7 +68,9 @@ _STLP_END_NAMESPACE
 
 # include <exception>
 _STLP_BEGIN_NAMESPACE
+# ifndef __DMC__
 struct bad_cast : exception {};
+# endif
 _STLP_END_NAMESPACE
 #endif  /* NO_TYPEINFO */
 

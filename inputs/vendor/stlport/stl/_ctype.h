@@ -194,11 +194,11 @@ public:
     { return do_scan_not(__m, __low, __high); }
 
   wchar_t (toupper)(wchar_t __c) const { return do_toupper(__c); }
-  const wchar_t* (toupper)(wchar_t* __low, wchar_t* __high) const
+  const wchar_t* (toupper)(wchar_t* __low, const wchar_t* __high) const
     { return do_toupper(__low, __high); }
 
   wchar_t (tolower)(wchar_t __c) const { return do_tolower(__c); }
-  const wchar_t* (tolower)(wchar_t* __low, wchar_t* __high) const
+  const wchar_t* (tolower)(wchar_t* __low, const wchar_t* __high) const
     { return do_tolower(__low, __high); }
 
   wchar_t widen(char __c) const { return do_widen(__c); }

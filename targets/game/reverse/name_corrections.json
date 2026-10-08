@@ -18878,5 +18878,55 @@
   "after_sha256": "287b4297b12e0226d1a6d7633dc18de3aaae2ee68fb6a411e4af446b4f9cfb82",
   "evidence": "targets/game/reverse/identity_evidence/20261003-audio-worker-reference-abi.md",
   "reason": "Correct the callee binding, not the owner destructor identity: the undefined BfmeMemberESG destructor pin at ILT000298E8 routes to00691130. The existing independent audio-worker evidence proves that exact cleanup is the Rva006910F0Handle destructor through the canonical handle constructors and hidden-return cleanup. The owning BfmeHostESG body and its member extent stay unchanged; use the ledger-defined callee name rather than an undefined alternate name."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "deallocate",
+  "new_name": "dup_001342f0",
+  "before_sha256": "35963c7efce548c454ba150efaed29bd0ccb649ca4849acf4fc5ab49b0f4ba01",
+  "after_sha256": "f8adf0f713232a2435cb1d87b4e61b24e2e1312d56a38f1d1b1060e166299ed6",
+  "evidence": "targets/game/reverse/identity_evidence/stl46-ilt-allocator-rows.md",
+  "reason": "STLport 4.6 switch: deallocate no longer exists as compiled for this address (4.6 allocate/deallocate are non-const; _STLP_alloc_proxy::deallocate is inlined) and retail's ILT contradicts the 4.6 spelling the TU compiles here, so ilt_guard refuses it; the byte-verified body keeps an address-derived name aliased to the compiled symbol (object-symbol=), with the ILT-confirmed candidate spelling in the evidence"
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "allocate",
+  "new_name": "dup_0006CD40",
+  "before_sha256": "4610de12b6fbdf5b4a89f8f5d383d337c5f3b0c2336758be85a3ac7a6f2ed3cb",
+  "after_sha256": "efa2e4043b52d5201221ce60779be52d5e85365eacc44ef20c3db9b54cdbe0b9",
+  "evidence": "targets/game/reverse/identity_evidence/stl46-ilt-allocator-rows.md",
+  "reason": "STLport 4.6 switch: allocate no longer exists as compiled for this address (4.6 allocate/deallocate are non-const; _STLP_alloc_proxy::deallocate is inlined) and retail's ILT contradicts the 4.6 spelling the TU compiles here, so ilt_guard refuses it; the byte-verified body keeps an address-derived name aliased to the compiled symbol (object-symbol=), with the ILT-confirmed candidate spelling in the evidence"
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "allocate",
+  "new_name": "dup_001AFF70",
+  "before_sha256": "554ad075e1ca05f6d84f39bc665f6ba443cf2bd83e520e288d412116b7ebb19a",
+  "after_sha256": "a593b88447c465c9859a5b3eba713766a057c06cdad68d42e15801160912c634",
+  "evidence": "targets/game/reverse/identity_evidence/stl46-ilt-allocator-rows.md",
+  "reason": "STLport 4.6 switch: allocate no longer exists as compiled for this address (4.6 allocate/deallocate are non-const; _STLP_alloc_proxy::deallocate is inlined) and retail's ILT contradicts the 4.6 spelling the TU compiles here, so ilt_guard refuses it; the byte-verified body keeps an address-derived name aliased to the compiled symbol (object-symbol=), with the ILT-confirmed candidate spelling in the evidence"
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "deallocate",
+  "new_name": "dup_0006CB10",
+  "before_sha256": "a7f2dc751cd532df037c1b49d8bfbe1ea72078b6b31d921283d3d7bc8bff2d2a",
+  "after_sha256": "53c051a04d1c0376f8de47e9907b770a5f724e58946c10c5dc051041bfec04b8",
+  "evidence": "targets/game/reverse/identity_evidence/stl46-ilt-allocator-rows.md",
+  "reason": "STLport 4.6 switch: deallocate no longer exists as compiled for this address (4.6 allocate/deallocate are non-const; _STLP_alloc_proxy::deallocate is inlined) and retail's ILT contradicts the 4.6 spelling the TU compiles here, so ilt_guard refuses it; the byte-verified body keeps an address-derived name aliased to the compiled symbol (object-symbol=), with the ILT-confirmed candidate spelling in the evidence"
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "allocate",
+  "new_name": "dup_000BEDC0",
+  "before_sha256": "bb4369258f037240cda080e9a7fd04a55fcf707de50068318ac3b3fefa7490be",
+  "after_sha256": "51dfa24ed5422e45b891a3473d2af76be574fa1c8fced30c1450e2c29391d793",
+  "evidence": "targets/game/reverse/identity_evidence/stl46-ilt-allocator-rows.md",
+  "reason": "STLport 4.6 switch: allocate no longer exists as compiled for this address (4.6 allocate/deallocate are non-const; _STLP_alloc_proxy::deallocate is inlined) and retail's ILT contradicts the 4.6 spelling the TU compiles here, so ilt_guard refuses it; the byte-verified body keeps an address-derived name aliased to the compiled symbol (object-symbol=), with the ILT-confirmed candidate spelling in the evidence"
  }
 ]

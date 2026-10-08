@@ -5,6 +5,10 @@
 # include <stl/_string_io.h>
 #endif
 
+#ifndef _STLP_INTERNAL_CTYPE_H
+# include <stl/_ctype.h>
+#endif
+
 # ifdef _STLP_DEBUG
 #  define basic_string _Nondebug_string
 # endif

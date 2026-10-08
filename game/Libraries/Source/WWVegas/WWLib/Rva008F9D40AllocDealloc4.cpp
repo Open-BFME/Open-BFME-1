@@ -2,4 +2,4 @@
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
 #include <memory>
-template void _STL::allocator<int>::deallocate(int*, size_t) const;
+template void _STL::allocator<int>::deallocate(int*, size_t);

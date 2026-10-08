@@ -28,6 +28,10 @@
 #  include <stl/_prolog.h>
 # endif
 
+# ifdef _STLP_PRAGMA_ONCE
+#  pragma once
+# endif
+
 # ifndef _STLP_INTERNAL_ALGOBASE_H
 #  include <stl/_algobase.h>
 # endif

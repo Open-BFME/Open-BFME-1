@@ -99,7 +99,7 @@ __vector__<_Tp,_Alloc>::operator=(const __vector__<_Tp, _Alloc>& __x)
     }
     else if (size() >= __xlen) {
       pointer __i = __copy_ptrs((const_pointer)__x._M_start+0, (const_pointer)__x._M_finish+0, (pointer)this->_M_start, _TrivialAss());
-      _Destroy(__i, this->_M_finish);
+      _STLP_STD::_Destroy(__i, this->_M_finish);
     }
     else {
       __copy_ptrs((const_pointer)__x._M_start, (const_pointer)__x._M_start + size(), (pointer)this->_M_start, _TrivialAss());

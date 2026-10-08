@@ -24,6 +24,10 @@
 #  include <stl/_prolog.h>
 # endif
 
+# ifdef _STLP_PRAGMA_ONCE
+#  pragma once
+# endif
+
 #include <stl/_valarray.h>
 
 #if defined (_STLP_WHOLE_VENDOR_STD)

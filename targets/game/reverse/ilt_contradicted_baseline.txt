@@ -245,9 +245,7 @@ functions	0x0006B6C0	?setGameInProgress@GameInfo@@QAEX_N@Z
 functions	0x0006B6D0	?Enable_Per_Texture_Time_Stamp@ThumbnailManagerClass@@QAEX_N@Z
 functions	0x0006B6D0	?setFirstUpdate@AcademyStats@@QAEX_N@Z
 functions	0x0006C6F0	?_S_value@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@@_STL@@KAAAU?$pair@$$CBVAsciiString@@VMapMetaData@@@2@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@2@@Z
-functions	0x0006CB10	?deallocate@?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@@_STL@@QBEXPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@2@I@Z
 functions	0x0006CBC0	?deallocate@?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UMapMetaData@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UMapMetaData@@@_STL@@@_STL@@@2@@_STL@@QAEXPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UMapMetaData@@@_STL@@@2@I@Z
-functions	0x0006CD40	?allocate@?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UMapMetaData@@@_STL@@@_STL@@@_STL@@QBEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UMapMetaData@@@_STL@@@2@IPBX@Z
 functions	0x0006E2B0	??0HijackerUpdateModuleData@@QAE@XZ
 functions	0x0006E2F0	??_GHijackerUpdateModuleData@@UAEPAXI@Z
 functions	0x0006E320	??1HijackerUpdateModuleData@@UAE@XZ
@@ -645,7 +643,6 @@ functions	0x000BCD80	?parseScienceVector@INI@@SAXPAV1@PAX1PBX@Z
 functions	0x000BD5B0	??$__copy_backward_ptrs@PAV?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@PAV12@@_STL@@YAPAV?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@0@PAV10@00ABU__false_type@0@@Z
 functions	0x000BE6F0	?Set_Size@MicroChunkHeader@@QAEXE@Z
 functions	0x000BE700	?Set_Value@HSVClass@@QAEXE@Z
-functions	0x000BEDC0	?allocate@?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@@_STL@@QBEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@2@IPBX@Z
 functions	0x000BEEF0	??$swap@V?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBGE@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBGE@_STL@@@_STL@@@2@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBGE@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBGE@_STL@@@_STL@@@2@@0@0@Z
 functions	0x000BF020	?swap@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAEXAAV12@@Z
 functions	0x000BF020	?swap@?$map@GEU?$less@G@_STL@@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAEXAAV12@@Z
@@ -803,7 +800,6 @@ functions	0x000DF740	?xfer@PlayerList@@UAEXPAVXfer@@@Z
 functions	0x000DF810	?isLocalAlliedWith@PlayerList@@QAEEPAVObject@@@Z
 functions	0x000DF8A0	?destroyNotify@@YGXPAX@Z
 functions	0x000E0640	?addSide@SidesList@@QAEXPBVDict@@@Z
-functions	0x000E14B0	?allocate@?$allocator@VPlayerTemplate@@@_STL@@QBEPAVPlayerTemplate@@IPBX@Z
 functions	0x000E14F0	?deallocate@?$_STLP_alloc_proxy@PAVPlayerTemplate@@V1@V?$allocator@VPlayerTemplate@@@_STL@@@_STL@@QAEXPAVPlayerTemplate@@I@Z
 functions	0x000E32D0	?assign@PlayerTemplateAssignShim@@QAEAAVPlayerTemplate@@ABV2@@Z
 functions	0x000E45D0	??0?$pair@$$CB_KUModelConditionInfo@@@_STL@@QAE@ABU01@@Z
@@ -1870,9 +1866,7 @@ functions	0x001AD370	?xferTerrainState@TerrainLogic@@IAEXPAVXfer@@@Z
 functions	0x001ADB80	??0TerrainLogicBase@@QAE@XZ
 functions	0x001AF610	?findPositionAround@@YA_NPBUCoord3D@@PBUFindPositionOptions@@PAU1@@Z
 functions	0x001AFC20	?getDamageCoefficient@ArmorTemplate@@QBEMABUDamageInfoInput@@@Z
-functions	0x001AFF70	?allocate@?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@_STL@@@_STL@@QBEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@2@IPBX@Z
 functions	0x001AFFB0	?deallocate@?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@_STL@@@2@@_STL@@QAEXPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@2@I@Z
-functions	0x001AFFB0	?deallocate@?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@_STL@@@_STL@@QBEXPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@2@I@Z
 functions	0x001B0CB0	??_FAcceleratorTracker@@QAEXXZ
 functions	0x001B0CB0	??_FRandom3Class@@QAEXXZ
 functions	0x001B0D20	??0GODupBase@@QAE@XZ
@@ -4744,7 +4738,6 @@ functions	0x0064E5F0	?insert@?$map@VAsciiString@@VMapMetaData@@U?$less@VAsciiStr
 functions	0x0064EA90	?getRoomKeysCallback@@YAXPAXHW4RoomType@@PBDHPAPAD30@Z
 functions	0x00652030	??$?9U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@1@U?$equal_to@VAsciiString@@@4@V?$allocator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@1@@_STL@@YA_NABU?$_Hashtable_iterator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@@0@0@Z
 functions	0x00652290	?deallocate@?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBHVPSPlayerStats@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBHVPSPlayerStats@@@_STL@@@_STL@@@2@@_STL@@QAEXPAU?$_Rb_tree_node@U?$pair@$$CBHVPSPlayerStats@@@_STL@@@2@I@Z
-functions	0x006523E0	?allocate@?$allocator@U?$_Rb_tree_node@U?$pair@$$CBHVPSPlayerStats@@@_STL@@@_STL@@@_STL@@QBEPAU?$_Rb_tree_node@U?$pair@$$CBHVPSPlayerStats@@@_STL@@@2@IPBX@Z
 functions	0x006528B0	??$__find_if@PADU?$_Eq_char_bound@V?$char_traits@D@_STL@@@_STL@@@_STL@@YAPADPAD0U?$_Eq_char_bound@V?$char_traits@D@_STL@@@0@ABUrandom_access_iterator_tag@0@@Z
 functions	0x00652B90	?_M_clear@?$vector@PAVLocomotor@@V?$allocator@PAVLocomotor@@@_STL@@@_STL@@IAEXXZ
 functions	0x006542C0	?find@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QBEIDI@Z

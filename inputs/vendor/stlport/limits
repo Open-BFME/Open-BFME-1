@@ -24,6 +24,10 @@
 #  include <stl/_prolog.h>
 # endif
 
+# ifdef _STLP_PRAGMA_ONCE
+#  pragma once
+# endif
+
 # ifndef _STLP_LIMITS_H
 #  include <stl/_limits.h>
 # endif

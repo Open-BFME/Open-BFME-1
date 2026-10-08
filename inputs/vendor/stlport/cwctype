@@ -34,8 +34,6 @@ namespace std {
 	wctrans_t 	wctrans(const char *name);
 }
 #  endif
-# elif defined(_STLP_WINCE)
-#  include _STLP_NATIVE_C_HEADER(stdlib.h)
 # else
 #  include _STLP_NATIVE_C_HEADER(wctype.h)
 # endif
@@ -46,11 +44,9 @@ using _STLP_VENDOR_CSTD::wctype_t;
 using _STLP_VENDOR_CSTD::wint_t;
 # ifndef _STLP_NO_CSTD_FUNCTION_IMPORTS
 #  if ! defined (__BORLANDC__)
-#   if ! defined ( _STLP_HAS_NO_UNIX98_WCHAR_EXTENSIONS )
 using _STLP_VENDOR_CSTD::wctrans_t;
 using _STLP_VENDOR_CSTD::towctrans;
 using _STLP_VENDOR_CSTD::wctrans;
-#   endif
 using _STLP_VENDOR_CSTD::wctype;
 using _STLP_VENDOR_CSTD::iswctype;
 #  endif

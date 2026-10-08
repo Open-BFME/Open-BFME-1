@@ -23,7 +23,7 @@ namespace _STL
 {
 	template <>
 	inline Rva002622D0Subject **allocator<Rva002622D0Subject *>::allocate(
-		size_type count, const void *) const
+		size_type count, const void *)
 	{
 		if (count != 0)
 			return static_cast<Rva002622D0Subject **>(

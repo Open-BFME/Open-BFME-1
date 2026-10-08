@@ -1,6 +1,5 @@
 # define _STLP_HAS_SPECIFIC_PROLOG_EPILOG
 
-
 # define _STLP_NATIVE_HEADER(header) <../cxx/##header>
 # define _STLP_NATIVE_C_HEADER(x) <../include/##x>
 
@@ -105,7 +104,7 @@
 
 #  define _STLP_NO_EXPLICIT_FUNCTION_TMPL_ARGS 1
 
-# if (__DECCXX_VER <= 60300000)
+# if (__DECCXX_VER <= 60400000)
 #  define _STLP_HAS_NO_NEW_C_HEADERS 1 
 # endif
 

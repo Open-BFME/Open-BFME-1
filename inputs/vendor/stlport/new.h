@@ -24,6 +24,8 @@
 # ifndef _STLP_WINCE
 # if defined (__BORLANDC__)
 #  include <new.>
+# elif (__INTEL_COMPILER >= 800)
+#   include _STLP_NATIVE_OLD_STREAMS_HEADER(new.h)
 # else
 #  if defined (__GNUC__) && (__GNUC__ >=3)
 #   include _STLP_NATIVE_OLD_STREAMS_HEADER(new.h)

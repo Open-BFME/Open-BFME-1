@@ -151,7 +151,7 @@ protected:
     _Node* __next = (_Node*) (__pos->_M_next);
     _Slist_node_base* __next_next = __next->_M_next;
     __pos->_M_next = __next_next;
-    _Destroy(&__next->_M_data);
+    _STLP_STD::_Destroy(&__next->_M_data);
     _M_head.deallocate(__next,1);
     return __next_next;
   }
@@ -344,7 +344,7 @@ public:
   void pop_front() {
     _Node* __node = (_Node*) this->_M_head._M_data._M_next;
     this->_M_head._M_data._M_next = __node->_M_next;
-    _Destroy(&__node->_M_data);
+    _STLP_STD::_Destroy(&__node->_M_data);
     this->_M_head.deallocate(__node, 1);
   }
 
@@ -665,49 +665,13 @@ operator==(const slist<_Tp,_Alloc>& _SL1, const slist<_Tp,_Alloc>& _SL2)
   return __i1 == __end1 && __i2 == __end2;
 }
 
-template <class _Tp, class _Alloc>
-inline bool _STLP_CALL operator<(const slist<_Tp,_Alloc>& _SL1,
-                                 const slist<_Tp,_Alloc>& _SL2)
-{
-  return lexicographical_compare(_SL1.begin(), _SL1.end(), 
-                                 _SL2.begin(), _SL2.end());
-}
-
-#ifdef _STLP_USE_SEPARATE_RELOPS_NAMESPACE
-
-template <class _Tp, class _Alloc>
-inline bool _STLP_CALL 
-operator!=(const slist<_Tp,_Alloc>& _SL1, const slist<_Tp,_Alloc>& _SL2) {
-  return !(_SL1 == _SL2);
-}
-
-template <class _Tp, class _Alloc>
-inline bool _STLP_CALL 
-operator>(const slist<_Tp,_Alloc>& _SL1, const slist<_Tp,_Alloc>& _SL2) {
-  return _SL2 < _SL1;
-}
-
-template <class _Tp, class _Alloc>
-inline bool _STLP_CALL 
-operator<=(const slist<_Tp,_Alloc>& _SL1, const slist<_Tp,_Alloc>& _SL2) {
-  return !(_SL2 < _SL1);
-}
-
-template <class _Tp, class _Alloc>
-inline bool _STLP_CALL 
-operator>=(const slist<_Tp,_Alloc>& _SL1, const slist<_Tp,_Alloc>& _SL2) {
-  return !(_SL1 < _SL2);
-}
-#endif /* _STLP_USE_SEPARATE_RELOPS_NAMESPACE */
-
-#ifdef _STLP_FUNCTION_TMPL_PARTIAL_ORDER
-
-template <class _Tp, class _Alloc>
-inline void _STLP_CALL swap(slist<_Tp,_Alloc>& __x, slist<_Tp,_Alloc>& __y) {
-  __x.swap(__y);
-}
-
-#endif /* _STLP_FUNCTION_TMPL_PARTIAL_ORDER */
+# define _STLP_EQUAL_OPERATOR_SPECIALIZED
+# define _STLP_TEMPLATE_HEADER    template <class _Tp, class _Alloc>
+# define _STLP_TEMPLATE_CONTAINER slist<_Tp, _Alloc>
+# include <stl/_relops_cont.h>
+# undef _STLP_TEMPLATE_CONTAINER
+# undef _STLP_TEMPLATE_HEADER
+# undef _STLP_EQUAL_OPERATOR_SPECIALIZED
 
 _STLP_END_NAMESPACE
 

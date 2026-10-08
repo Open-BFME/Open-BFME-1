@@ -343,7 +343,7 @@ struct _Alloc_traits<_Tp, pthread_allocator<_Atype> >
 
 #endif
 
-#if !defined (_STLP_MEMBER_TEMPLATE_CLASSES)
+#if !defined (_STLP_USE_NESTED_TCLASS_THROUGHT_TPARAM)
 
 template <class _Tp1, class _Tp2>
 inline pthread_allocator<_Tp2>&
@@ -357,7 +357,7 @@ __stl_alloc_create(pthread_allocator<_Tp1>&, const _Tp2*) {
   return pthread_allocator<_Tp2>();
 }
 
-#endif /* _STLP_MEMBER_TEMPLATE_CLASSES */
+#endif /* _STLP_USE_NESTED_TCLASS_THROUGHT_TPARAM */
 
 //
 // per_thread_allocator<> : this allocator always return memory to the same thread 
@@ -460,7 +460,7 @@ struct _Alloc_traits<_Tp, per_thread_allocator<_Atype> >
 
 #endif
 
-#if !defined (_STLP_MEMBER_TEMPLATE_CLASSES)
+#if !defined (_STLP_USE_NESTED_TCLASS_THROUGHT_TPARAM)
 
 template <class _Tp1, class _Tp2>
 inline per_thread_allocator<_Tp2>&
@@ -474,7 +474,7 @@ __stl_alloc_create(per_thread_allocator<_Tp1>&, const _Tp2*) {
   return per_thread_allocator<_Tp2>();
 }
 
-#endif /* _STLP_MEMBER_TEMPLATE_CLASSES */
+#endif /* _STLP_USE_NESTED_TCLASS_THROUGHT_TPARAM */
 
 _STLP_END_NAMESPACE
 
