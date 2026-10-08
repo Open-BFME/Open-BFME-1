@@ -26,11 +26,8 @@ public:
 			++object->m_refs;
 	}
 
-	~TextureHandle(void)
-	{
-		if (m_object)
-			--m_object->m_refs;
-	}
+	// The release is defined elsewhere; this TU only copies the handle.
+	~TextureHandle(void);
 
 	TextureObject *m_object;			// +0x00
 };
