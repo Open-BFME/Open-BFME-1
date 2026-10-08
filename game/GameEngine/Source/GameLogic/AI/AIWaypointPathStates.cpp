@@ -95,7 +95,10 @@ public:
 	void bfmeGo939B(int, Object *, DelayedLuaEventList *);
 };
 
-extern BfmeOwnerBR *g_bfmeOwnerBR;
+// VA 0x012F060C is TheLuaScriptEngine (data_rows.csv, defined in
+// Team_updateState.cpp); BfmeOwnerBR is the address-derived view.
+class LuaScriptEngine;
+extern LuaScriptEngine *TheLuaScriptEngine;
 
 class AIUpdateInterface
 {
@@ -175,7 +178,7 @@ void AIUpdateInterface::bfmeSetCompletedWaypoint(const Waypoint *waypoint)
 	m_completedWaypoint = waypoint;
 	DelayedLuaEventList events;
 	Object *object = m_object;
-	g_bfmeOwnerBR->bfmeGo939B(2, object, &events);
+	((BfmeOwnerBR *)TheLuaScriptEngine)->bfmeGo939B(2, object, &events);
 }
 
 // ?getNextWaypoint@AIFollowWaypointPathState@@IAEPBVWaypoint@@XZ

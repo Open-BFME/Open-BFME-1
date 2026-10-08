@@ -81,5 +81,8 @@ public:
 	BfmeTargetBR *m_bfmeTarget;				// +0x78
 };
 
-extern BfmeOwnerBR *g_bfmeOwnerBR;				// retail 0x012F060C
+// VA 0x012F060C is TheLuaScriptEngine (data_rows.csv, defined in
+// Team_updateState.cpp); BfmeOwnerBR is the address-derived view.
+class LuaScriptEngine;
+extern LuaScriptEngine *TheLuaScriptEngine;
 

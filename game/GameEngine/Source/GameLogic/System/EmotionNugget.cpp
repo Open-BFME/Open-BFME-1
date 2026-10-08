@@ -30,7 +30,10 @@ class FXList { public: bool bfmeIsBlocked(); void doFXObj(const Object *,const O
 class Rva0026FBE0Owner { public: void selectState(int,int); };
 class DelayedLuaEventList { public: DelayedLuaEventList(); virtual ~DelayedLuaEventList(); char events04[0x48]; };
 class BfmeOwnerBR { public: void bfmeTail939B(struct BfmeElem939B *,Object *,DelayedLuaEventList *); };
-extern BfmeOwnerBR *g_bfmeOwnerBR;
+// VA 0x012F060C is TheLuaScriptEngine (data_rows.csv, defined in
+// Team_updateState.cpp); BfmeOwnerBR is the address-derived view.
+class LuaScriptEngine;
+extern LuaScriptEngine *TheLuaScriptEngine;
 class Rva002E4CA0 { public: void *rva002E4CA0(int) const; };
 enum NameKeyType { InvalidKey=-1 };
 class NameKeyGenerator { public: NameKeyType nameToKey(const char *); };
@@ -76,8 +79,8 @@ void Rva0037C310Owner::apply0037C030(Object *target)
             if(!(object->m_modelConditionFlags.bits[5]&0x40000000)) { object->m_modelConditionFlags.bits[5]|=0x40000000; object->notifyModelConditionChanged(); }
         }
         if(!empty0037C030(data04->copyString0037B100())) {
-            BfmeElem939B *event=(BfmeElem939B *)((Rva002E4CA0 *)g_bfmeOwnerBR)->rva002E4CA0(TheNameKeyGenerator->nameToKey(text0037C030(data04->copyString0037B100())));
-            if(event) { DelayedLuaEventList list; g_bfmeOwnerBR->bfmeTail939B(event,object00,&list); }
+            BfmeElem939B *event=(BfmeElem939B *)((Rva002E4CA0 *)TheLuaScriptEngine)->rva002E4CA0(TheNameKeyGenerator->nameToKey(text0037C030(data04->copyString0037B100())));
+            if(event) { DelayedLuaEventList list; ((BfmeOwnerBR *)TheLuaScriptEngine)->bfmeTail939B(event,object00,&list); }
         }
     }
 }

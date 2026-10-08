@@ -106,7 +106,10 @@ class Rva0012F060COwner
     void rva002E4180(Object *);
     void rva002E4030(Object *);
 };
-extern Rva0012F060COwner *g_bfmeOwnerBR; // VA 0x012F060C
+// VA 0x012F060C is TheLuaScriptEngine (data_rows.csv, defined in
+// Team_updateState.cpp); Rva0012F060COwner is the address-derived view.
+class LuaScriptEngine;
+extern LuaScriptEngine *TheLuaScriptEngine;
 
 // Address-qualified view returned by containment slot26.
 class Rva0140Interface
@@ -309,10 +312,10 @@ void Object::setTeam(Team *team)
     if (m_field3b8)
         m_field3b8->init();
 
-    if (g_bfmeOwnerBR)
+    if (((Rva0012F060COwner *)TheLuaScriptEngine))
     {
-        g_bfmeOwnerBR->rva002E4180(this);
-        g_bfmeOwnerBR->rva002E4030(this);
+        ((Rva0012F060COwner *)TheLuaScriptEngine)->rva002E4180(this);
+        ((Rva0012F060COwner *)TheLuaScriptEngine)->rva002E4030(this);
     }
 
     if (team)
