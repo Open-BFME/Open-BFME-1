@@ -13,16 +13,25 @@ class StringBase
 {
 private:
 	StringBase(const StringBase<T> &other);
-	~StringBase(void);
+	void releaseBuffer(void);
 	T *m_bfmeData;
 
+	friend struct S4Name;
 	friend struct S4SortElem12;
+};
+
+struct S4Name
+{
+	S4Name(const S4Name &other) : m_base(other.m_base) {}
+	~S4Name(void) { m_base.releaseBuffer(); }
+
+	StringBase<char> m_base;
 };
 
 struct S4SortElem12
 {
 	int m_bfmeA;
-	StringBase<char> m_bfmeName;
+	S4Name m_bfmeName;
 	char m_bfmeC;
 };
 
