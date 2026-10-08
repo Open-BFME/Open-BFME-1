@@ -176,33 +176,33 @@ int CommSRPSend(void *ref, const void *buffer, int length, int flags)
 int CommSRPListen(void *ref, const char *text)
 {
 	int result;
-	int bindPort;
-	int peerPort;
-	unsigned int address;
-	char bindAddress[0x10];
+	int iListenPort;
+	int iConnPort;
+	unsigned int uPokeAddr;
+	char bindaddr[0x10];
 	void *socket;
 	unsigned int temp;
 
 	if (*(int *)((char *)ref + 0x90) != 0 || *(int *)((char *)ref + 0x7C) != 0) {
 		return -2;
 	}
-	*(unsigned short *)&bindAddress[0] = 2;
-	*(unsigned short *)&bindAddress[2] = 0;
-	*(unsigned int *)&bindAddress[4] = 0;
-	*(unsigned int *)&bindAddress[8] = 0;
-	*(unsigned int *)&bindAddress[12] = 0;
-	if ((Rva007FFDD0(&address, &bindPort, &peerPort, text) & 2) == 0) {
+	*(unsigned short *)&bindaddr[0] = 2;
+	*(unsigned short *)&bindaddr[2] = 0;
+	*(unsigned int *)&bindaddr[4] = 0;
+	*(unsigned int *)&bindaddr[8] = 0;
+	*(unsigned int *)&bindaddr[12] = 0;
+	if ((Rva007FFDD0(&uPokeAddr, &iListenPort, &iConnPort, text) & 2) == 0) {
 		return -3;
 	}
-	bindAddress[2] = (unsigned char)(bindPort >> 8);
-	bindAddress[3] = (unsigned char)bindPort;
+	bindaddr[2] = (unsigned char)(iListenPort >> 8);
+	bindaddr[3] = (unsigned char)iListenPort;
 	Rva00816910(ref);
 	socket = Rva007FD2D0(2, 2, 0);
 	Rva008154F0(ref, socket);
 	if (*(void **)((char *)ref + 0x7C) == 0) {
 		return -4;
 	}
-	result = Rva007FD510(*(void **)((char *)ref + 0x7C), bindAddress, 0x10);
+	result = Rva007FD510(*(void **)((char *)ref + 0x7C), bindaddr, 0x10);
 	if (result < 0) {
 		Rva007FE780("CommSRPListen: Error %d binding socket\n", result);
 		Rva007FD3F0(*(void **)((char *)ref + 0x7C));
@@ -210,22 +210,22 @@ int CommSRPListen(void *ref, const char *text)
 		return -5;
 	}
 	Rva007FDE80(*(void **)((char *)ref + 0x7C), 2, 0x64, ref, (void *)Rva00815B50);
-	if (address != 0) {
-		if (peerPort == 0) {
-			peerPort = bindPort + 1;
+	if (uPokeAddr != 0) {
+		if (iConnPort == 0) {
+			iConnPort = iListenPort + 1;
 		}
 		*(unsigned short *)((char *)ref + 0x80) = 2;
 		*(unsigned short *)((char *)ref + 0x82) = 0;
 		*(unsigned int *)((char *)ref + 0x84) = 0;
 		*(unsigned int *)((char *)ref + 0x88) = 0;
 		*(unsigned int *)((char *)ref + 0x8C) = 0;
-		temp = address;
+		temp = uPokeAddr;
 		*((unsigned char *)ref + 0x87) = (unsigned char)temp; temp >>= 8;
 		*((unsigned char *)ref + 0x86) = (unsigned char)temp; temp >>= 8;
 		*((unsigned char *)ref + 0x85) = (unsigned char)temp; temp >>= 8;
 		*((unsigned char *)ref + 0x84) = (unsigned char)temp;
-		*((unsigned char *)ref + 0x82) = (unsigned char)(peerPort >> 8);
-		*((unsigned char *)ref + 0x83) = (unsigned char)peerPort;
+		*((unsigned char *)ref + 0x82) = (unsigned char)(iConnPort >> 8);
+		*((unsigned char *)ref + 0x83) = (unsigned char)iConnPort;
 	}
 	*(int *)((char *)ref + 0x90) = 2;
 	return 0;
@@ -235,23 +235,23 @@ int CommSRPListen(void *ref, const char *text)
 
 int CommSRPConnect(void *ref, const char *text)
 {
-	char socketAddress[0x10];
+	char bindaddr[0x10];
 	int result;
-	int peerPort;
-	int bindPort;
-	unsigned int address;
+	int iConnPort;
+	int iListenPort;
+	unsigned int uAddr;
 	void *socket;
 	unsigned int temp;
 
 	if (*(int *)((char *)ref + 0x90) != 0 || *(int *)((char *)ref + 0x7C) != 0) {
 		return -2;
 	}
-	if ((Rva007FFDD0(&address, &bindPort, &peerPort, text) & 3) != 3) {
+	if ((Rva007FFDD0(&uAddr, &iListenPort, &iConnPort, text) & 3) != 3) {
 		return -3;
 	}
-	if (peerPort == 0) {
-		peerPort = bindPort;
-		++bindPort;
+	if (iConnPort == 0) {
+		iConnPort = iListenPort;
+		++iListenPort;
 	}
 	Rva00816910(ref);
 	socket = Rva007FD2D0(2, 2, 0);
@@ -259,14 +259,14 @@ int CommSRPConnect(void *ref, const char *text)
 	if (*(void **)((char *)ref + 0x7C) == 0) {
 		return -4;
 	}
-	*(unsigned short *)&socketAddress[0] = 2;
-	*(unsigned short *)&socketAddress[2] = 0;
-	*(unsigned int *)&socketAddress[4] = 0;
-	*(unsigned int *)&socketAddress[8] = 0;
-	*(unsigned int *)&socketAddress[12] = 0;
-	socketAddress[2] = (unsigned char)(bindPort >> 8);
-	socketAddress[3] = (unsigned char)bindPort;
-	result = Rva007FD510(*(void **)((char *)ref + 0x7C), socketAddress, 0x10);
+	*(unsigned short *)&bindaddr[0] = 2;
+	*(unsigned short *)&bindaddr[2] = 0;
+	*(unsigned int *)&bindaddr[4] = 0;
+	*(unsigned int *)&bindaddr[8] = 0;
+	*(unsigned int *)&bindaddr[12] = 0;
+	bindaddr[2] = (unsigned char)(iListenPort >> 8);
+	bindaddr[3] = (unsigned char)iListenPort;
+	result = Rva007FD510(*(void **)((char *)ref + 0x7C), bindaddr, 0x10);
 	if (result < 0) {
 		Rva007FE780("CommSRPConnect: Error %d binding socket\n", result);
 		return -5;
@@ -276,13 +276,13 @@ int CommSRPConnect(void *ref, const char *text)
 	*(unsigned int *)((char *)ref + 0x84) = 0;
 	*(unsigned int *)((char *)ref + 0x88) = 0;
 	*(unsigned int *)((char *)ref + 0x8C) = 0;
-	temp = address;
+	temp = uAddr;
 	*((unsigned char *)ref + 0x87) = (unsigned char)temp; temp >>= 8;
 	*((unsigned char *)ref + 0x86) = (unsigned char)temp; temp >>= 8;
 	*((unsigned char *)ref + 0x85) = (unsigned char)temp; temp >>= 8;
 	*((unsigned char *)ref + 0x84) = (unsigned char)temp;
-	*((unsigned char *)ref + 0x82) = (unsigned char)(peerPort >> 8);
-	*((unsigned char *)ref + 0x83) = (unsigned char)peerPort;
+	*((unsigned char *)ref + 0x82) = (unsigned char)(iConnPort >> 8);
+	*((unsigned char *)ref + 0x83) = (unsigned char)iConnPort;
 	Rva007FDE80(*(void **)((char *)ref + 0x7C), 2, 0x64, ref, (void *)Rva00815B50);
 	*(int *)((char *)ref + 0x90) = 1;
 	return 0;
