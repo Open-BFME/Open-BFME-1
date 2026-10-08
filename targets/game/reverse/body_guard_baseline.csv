@@ -1336,7 +1336,6 @@ dir32,0x0134B0E8,?g_bfmeMeshRendererSingleton@@3PAVDX8MeshRendererClass@@A,"reta
 dir32,0x0134B27C,?hWnd@DX8WebBrowser@@2PAUHWND__@@A,"nothing in the ledger owns 0x0134B27C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0134B280,?Rva0134B280Browser@@3V?$_com_ptr_t@V?$_com_IIID@UIFEBrowserEngine2@@$1?_GUID_ee883b17_0778_4b18_a12b_e44c0d298412@@3U__s_GUID@@B@@@@A,"retail 0x0134B280 is already recorded as ?Rva00959410Dispatch@@3URva00959410Ptr@@A (+3 more); reference that name, not a new one"
 dir32,0x0134C6D8,?g_0134C6D8@@3PAHA,"nothing in the ledger owns 0x0134C6D8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x0134C7D8,?g_0134C7D8@@3HA,"nothing in the ledger owns 0x0134C7D8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0134C948,?g_0134C948@@3PADA,"nothing in the ledger owns 0x0134C948. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0134ECD4,?g_pool009DBEB0@@3V?$ObjectPoolClass@VMultiListNodeClass@@$0BAA@@@A,retail 0x0134ECD4 is already recorded as ?Allocator@?$AutoPoolClass@VMultiListNodeClass@@$0BAA@@@0V?$ObjectPoolClass@VMultiListNodeClass@@$0BAA@@@A; reference t
 dir32,0x0134ECF0,?_DefaultFileFactory@@3VSimpleFileFactoryClass@@A,"retail 0x0134ECF0 is already recorded as ?TheBfmeObject_00C71550@@3VGen_00C71550Target@@A; reference that name, not a new one"

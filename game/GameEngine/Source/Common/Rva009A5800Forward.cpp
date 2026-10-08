@@ -14,6 +14,7 @@ void Rva009ABFC0DecodeFrame(unsigned char *s);
 void __cdecl Rva009A8C50(Rva009A6130Context *, unsigned char *);
 extern void (__cdecl *g_bfmeToneReady)();
 extern int g_0134C7D8;
+extern "C" int __identifier("?g_0134C7D8@@3HA") = 0;
 extern "C" void *__cdecl memcpy(void *, const void *, unsigned int);
 #pragma intrinsic(memcpy)
 
