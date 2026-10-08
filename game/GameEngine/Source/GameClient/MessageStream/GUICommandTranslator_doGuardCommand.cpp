@@ -179,6 +179,25 @@ extern Bool pickAndPlayUnitVoiceResponse(const GuardDrawableList *,
 #define GuardTheInGameUI (reinterpret_cast<GuardInGameUI *>(TheInGameUI))
 #define GuardTheMessageStream (reinterpret_cast<GuardMessageStream *>(TheMessageStream))
 
+// Retail's ObjectID append calls the GameMessage::appendObjectIDArgument ILT
+// at 0x0002BCEC (-> body 0x0008ABB0), which no ledger row defines under the
+// ObjectID-typed name; reach it the way retail does, through the ILT (same
+// pattern as GUICommandTranslator.cpp, a0b45b352d).
+extern void j_0002bcec();
+
+class GameMessageObjectIDIlt
+{
+public:
+	void append(ObjectID id);
+};
+
+static void appendObjectIDArgumentViaILT(GameMessage *msg, ObjectID id)
+{
+	typedef void (GameMessageObjectIDIlt::*AppendCall)(ObjectID);
+	union { void (*fn)(); AppendCall call; } append = { j_0002bcec };
+	(reinterpret_cast<GameMessageObjectIDIlt *>(msg)->*append.call)(id);
+}
+
 static CommandStatus doGuardCommand(const CommandButton *command,
 	GuardMode guardMode, const ICoord2D *mouse)
 {
@@ -199,7 +218,7 @@ static CommandStatus doGuardCommand(const CommandButton *command,
 		{
 			msg = GuardTheMessageStream->appendMessage(
 				(GameMessage::Type)0x433);
-			msg->appendObjectIDArgument((ObjectID)target->getID());
+			appendObjectIDArgumentViaILT(msg, (ObjectID)target->getID());
 			msg->appendIntegerArgument((Int)guardMode);
 			PickAndPlayInfo info;
 			info.m_drawTarget = target->getDrawable();
