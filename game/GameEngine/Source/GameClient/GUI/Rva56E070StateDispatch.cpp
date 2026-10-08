@@ -140,3 +140,5 @@ void Rva56E070StateOwner::finishState16()
 		m_state = 2;
 	}
 }
+
+extern "C" unsigned long __identifier("?g_012F4B48@@3KA") = 0;

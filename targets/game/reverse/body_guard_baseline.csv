@@ -1083,7 +1083,6 @@ dir32,0x012F4A30,?g_012F4A30@@3PAIA,"nothing in the ledger owns 0x012F4A30. Give
 dir32,0x012F4A50,?g_012F4A50@@3PAIA,"nothing in the ledger owns 0x012F4A50. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F4A70,?g_012F4A70@@3PAIA,"nothing in the ledger owns 0x012F4A70. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F4ABC,?g_rva012F4ABC@@3PAURva0055A240Global@@A,"retail 0x012F4ABC is already recorded as ?g_Va012F4ABC@@3HA (+3 more); reference that name, not a new one"
-dir32,0x012F4B48,?g_012F4B48@@3KA,"nothing in the ledger owns 0x012F4B48. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F4B58,?shell004B1C80@@3PAUShell004B1C80@@A,"retail 0x012F4B58 is already recorded as ?TheShell@@3PAVBfmeShell@@A (+13 more); reference that name, not a new one"
 dir32,0x012F4B78,?Glo012F4B78@@3PAVGlo012F4B78Type@@A,"retail 0x012F4B78 is already recorded as ?TheGen00587600@@3PAVGen00587600@@A (+2 more); reference that name, not a new one"
 dir32,0x012F4B80,?key012F4B80@@3VAsciiString@@A,"?key012F4B80@@3VAsciiString@@A is a function the ledger places elsewhere, not at 0x012F4B80"
