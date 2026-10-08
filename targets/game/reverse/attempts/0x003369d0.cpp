@@ -1,5 +1,5 @@
 // ?setFade@ScriptEngine@@IAEXPAVScriptAction@@@Z
-// partial score=0.88 date=2026-09-10
+// partial score=0.0245 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc
 //
 // ScriptEngine::setFade, retail RVA 0x003369D0.  The reference implementation
