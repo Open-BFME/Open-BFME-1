@@ -16,11 +16,14 @@
 #define SLERP_EPSILON		0.001
 
 bool Fast_Slerp_Use_Inline = false;
-extern void ji_009fcfc0();
+// D3DX's public D3DXQuaternionSlerp (stdcall, four dword arguments): the
+// six-byte dispatch thunk at 0x009FCFC0 is the Summer 2003 d3dx9.lib's own
+// symbol _D3DXQuaternionSlerp@16 (ledger row, archive-import-evidence
+// d3dx9-d3dxmath-dispatch-thunks.md). Declared on the game's Quaternion so this
+// TU needs no D3DX header; the decoration depends only on the argument bytes.
+extern "C" void __stdcall D3DXQuaternionSlerp(Quaternion&, const Quaternion&, const Quaternion&, float);
 extern "C" void _ReadWriteBarrier();
 #pragma intrinsic(_ReadWriteBarrier)
-
-typedef void (__stdcall *Fast_Slerp_Dispatch)(Quaternion&, const Quaternion&, const Quaternion&, float);
 
 static int _nxt[3] = { 1 , 2 , 0 };
 
@@ -89,7 +92,7 @@ void __cdecl Fast_Slerp(Quaternion& res, const Quaternion & p,const Quaternion &
 	int qflip;			// use flip of q?
 
 	if (!Fast_Slerp_Use_Inline) {
-		((Fast_Slerp_Dispatch)ji_009fcfc0)(res, p, q, alpha);
+		D3DXQuaternionSlerp(res, p, q, alpha);
 		_ReadWriteBarrier();
 	} else {
 

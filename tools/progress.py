@@ -61,7 +61,6 @@ VENDORED_ROOTS = (
     "game/Libraries/Source/Benchmark/",
     "game/Libraries/Source/Compression/LZHCompress/",
     "game/Libraries/Source/Compression/ZLib/",
-    "game/Libraries/Source/JPEG/",
     "game/Libraries/Source/LibPNG/",
     "game/Libraries/Source/Lua/",
     "inputs/vendor/",

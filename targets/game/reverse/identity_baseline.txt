@@ -36,7 +36,7 @@ multi_name.different = 0
 size_outlier.indicted = 1
 ctor_vtable.contradicted = 20
 ctor_vtable.unreadable = 0
-one_identity.surplus = 2224
+one_identity.surplus = 2188
 # Retail registration proves DynamicPortalBehaviour owns ctor 001F8B80 and factory 001156B0; four false aliases retired.
 # fcf825b4f7 retired the false FXNugget zero-store claim; the body still has aliases.
 # 4c8346b3c9 retired the GDIFileStream ctor over-claim at 0x00087A50 (a zero-store body).
@@ -2707,78 +2707,6 @@ null_reloc.max_unreadable = 1000
 @ one_identity.surplus 0x00A09336 ?PwGetNeighbors@?$CMeshStatus@I$0A@$0?0@@QAEPAII@Z
 @ one_identity.surplus 0x00A5EAED ?Get_Processor_Manufacturer_Name@CPUDetectClass@@
 @ one_identity.surplus 0x00A5EAED ?get_feature_flags@@YGIXZ
-@ one_identity.surplus 0x00A61790 ?emit_message@D3DX@@YGXPAUjpeg_common_struct@1@H@Z
-@ one_identity.surplus 0x00A61790 _emit_message@8
-@ one_identity.surplus 0x00A618A0 ?jpeg_std_error@D3DX@@YGPAUjpeg_error_mgr@1@PAU21@@Z
-@ one_identity.surplus 0x00A618A0 _jpeg_std_error@4
-@ one_identity.surplus 0x00AAA8C0 ?self_destruct@D3DX@@YGXPAUjpeg_common_struct@1@@Z
-@ one_identity.surplus 0x00AAA8C0 _self_destruct@4
-@ one_identity.surplus 0x00AAAA00 ?jpeg_destroy@D3DX@@YGXPAUjpeg_common_struct@1@@Z
-@ one_identity.surplus 0x00AAAA00 _jpeg_destroy@4
-@ one_identity.surplus 0x00AAAA60 ?jdiv_round_up@D3DX@@YGJJJ@Z
-@ one_identity.surplus 0x00AAAA60 _jdiv_round_up@8
-@ one_identity.surplus 0x00AAAA80 ?jround_up@D3DX@@YGJJJ@Z
-@ one_identity.surplus 0x00AAAA80 _jround_up@8
-@ one_identity.surplus 0x00AAAAA0 ?jcopy_sample_rows@D3DX@@YGXPAPAEH0HHI@Z
-@ one_identity.surplus 0x00AAAAA0 _jcopy_sample_rows@24
-@ one_identity.surplus 0x00AAAAF0 ?jcopy_block_row@D3DX@@YGXPAY0EA@F0I@Z
-@ one_identity.surplus 0x00AAAAF0 _jcopy_block_row@12
-@ one_identity.surplus 0x00AAAB20 ?jzero_far@D3DX@@YGXPAXI@Z
-@ one_identity.surplus 0x00AAAB20 _jzero_far@8
-@ one_identity.surplus 0x00AABF2A ?png_memcpy_check@D3DX@@YGPAXPAUpng_struct_def@1@PAX1K@Z
-@ one_identity.surplus 0x00AABF2A _png_memcpy_check@16
-@ one_identity.surplus 0x00AABF4F ?png_memset_check@D3DX@@YGPAXPAUpng_struct_def@1@PAXHK@Z
-@ one_identity.surplus 0x00AABF4F _png_memset_check@16
-@ one_identity.surplus 0x00AAC07D ?png_save_uint_32@D3DX@@YGXPAEK@Z
-@ one_identity.surplus 0x00AAC07D _png_save_uint_32@8
-@ one_identity.surplus 0x00AAC0A2 ?png_save_uint_16@D3DX@@YGXPAEI@Z
-@ one_identity.surplus 0x00AAC0A2 _png_save_uint_16@8
-@ one_identity.surplus 0x00AAC0B7 ?png_write_chunk_start@D3DX@@YGXPAUpng_struct_def@1@PAEK@Z
-@ one_identity.surplus 0x00AAC0B7 _png_write_chunk_start@12
-@ one_identity.surplus 0x00AAC0F7 ?png_write_chunk_data@D3DX@@YGXPAUpng_struct_def@1@PAEI@Z
-@ one_identity.surplus 0x00AAC0F7 _png_write_chunk_data@12
-@ one_identity.surplus 0x00AAC11E ?png_write_chunk_end@D3DX@@YGXPAUpng_struct_def@1@@Z
-@ one_identity.surplus 0x00AAC11E _png_write_chunk_end@4
-@ one_identity.surplus 0x00AAC145 ?png_write_sig@D3DX@@YGXPAUpng_struct_def@1@@Z
-@ one_identity.surplus 0x00AAC145 _png_write_sig@4
-@ one_identity.surplus 0x00AAC569 ?png_write_chunk@D3DX@@YGXPAUpng_struct_def@1@PAE1I@Z
-@ one_identity.surplus 0x00AAC569 _png_write_chunk@16
-@ one_identity.surplus 0x00AAC834 ?png_write_IDAT@D3DX@@YGXPAUpng_struct_def@1@PAEI@Z
-@ one_identity.surplus 0x00AAC834 _png_write_IDAT@12
-@ one_identity.surplus 0x00AAC870 ?png_write_finish_row@D3DX@@YGXPAUpng_struct_def@1@@Z
-@ one_identity.surplus 0x00AAC870 _png_write_finish_row@4
-@ one_identity.surplus 0x00AAC9EF ?png_write_filtered_row@D3DX@@YGXPAUpng_struct_def@1@PAE@Z
-@ one_identity.surplus 0x00AAC9EF _png_write_filtered_row@8
-@ one_identity.surplus 0x00AAEEC6 ?png_get_uint_32@D3DX@@YGKPAE@Z
-@ one_identity.surplus 0x00AAEEC6 _png_get_int_32@4
-@ one_identity.surplus 0x00AAEEEB ?png_get_uint_16@D3DX@@YGGPAE@Z
-@ one_identity.surplus 0x00AAEEEB _png_get_uint_16@4
-@ one_identity.surplus 0x00AAEF00 ?png_crc_read@D3DX@@YGXPAUpng_struct_def@1@PAEI@Z
-@ one_identity.surplus 0x00AAEF00 _png_crc_read@12
-@ one_identity.surplus 0x00AAEF17 ?png_crc_error@D3DX@@YGHPAUpng_struct_def@1@@Z
-@ one_identity.surplus 0x00AAEF17 _png_crc_error@4
-@ one_identity.surplus 0x00AAEF73 ?png_check_chunk_name@D3DX@@YGXPAUpng_struct_def@1@PAE@Z
-@ one_identity.surplus 0x00AAEF73 _png_check_chunk_name@8
-@ one_identity.surplus 0x00AAF7C9 ?png_crc_finish@D3DX@@YGHPAUpng_struct_def@1@K@Z
-@ one_identity.surplus 0x00AAF7C9 _png_crc_finish@8
-@ one_identity.surplus 0x00AAF84E ?png_handle_IHDR@D3DX@@YGXPAUpng_struct_def@1@PAUpng_info_struct@1@K@Z
-@ one_identity.surplus 0x00AAF84E _png_handle_IHDR@12
-@ one_identity.surplus 0x00AAFB47 ?png_handle_IEND@D3DX@@YGXPAUpng_struct_def@1@PAUpng_info_struct@1@K@Z
-@ one_identity.surplus 0x00AAFB47 _png_handle_IEND@12
-@ one_identity.surplus 0x00AAFB8D ?png_handle_gAMA@D3DX@@YGXPAUpng_struct_def@1@PAUpng_info_struct@1@K@Z
-@ one_identity.surplus 0x00AAFB8D _png_handle_gAMA@12
-@ one_identity.surplus 0x00AAFC8E ?png_handle_sRGB@D3DX@@YGXPAUpng_struct_def@1@PAUpng_info_struct@1@K@Z
-@ one_identity.surplus 0x00AAFC8E _png_handle_sRGB@12
-@ one_identity.surplus 0x00AAFD70 ?png_handle_tRNS@D3DX@@YGXPAUpng_struct_def@1@PAUpng_info_struct@1@K@Z
-@ one_identity.surplus 0x00AAFD70 _png_handle_tRNS@12
-@ one_identity.surplus 0x00AAFF11 ?png_handle_unknown@D3DX@@YGXPAUpng_struct_def@1@PAUpng_info_struct@1@K@Z
-@ one_identity.surplus 0x00AAFF11 _png_handle_unknown@12
-@ one_identity.surplus 0x00AAFF57 ?png_read_finish_row@D3DX@@YGXPAUpng_struct_def@1@@Z
-@ one_identity.surplus 0x00AAFF57 _png_read_finish_row@4
-@ one_identity.surplus 0x00ACB810 ?expand_bottom_edge@D3DX@@YGXPAPAEIHH@Z
-@ one_identity.surplus 0x00ACB810 _expand_bottom_edge@16
-@ one_identity.surplus 0x00ACBE60 ?expand_right_edge@D3DX@@YGXPAPAEHII@Z
-@ one_identity.surplus 0x00ACBE60 _expand_right_edge@16
 @ one_identity.surplus 0x00AFE980 ??A?$SimpleDynVecClass@VAABoxClass@@@@QAEAAVAABoxClass@@H@Z
 @ one_identity.surplus 0x00AFE980 ??A?$SimpleDynVecClass@VKeyClass@?$PrimitiveAnimationChannelClass@UAlphaVectorStruct@@@@@@QAEAAVKeyClass@?$PrimitiveAnimationChannelClass@UAlphaVectorStruct@@@@H@Z
 @ one_identity.surplus 0x00AFE980 ??A?$SimpleDynVecClass@VKeyClass@?$PrimitiveAnimationChannelClass@UAlphaVectorStruct@@@@@@QBEABVKeyClass@?$PrimitiveAnimationChannelClass@UAlphaVectorStruct@@@@H@Z
