@@ -8120,8 +8120,7 @@ public:
 	~BFMERetailAsciiString() { releaseBuffer(); }
 	const char *str() const
 	{
-		static const char nullCharacter = 0;
-		return m_data ? m_data + 8 : &nullCharacter;
+		return m_data ? m_data + 8 : "";
 	}
 private:
 	void releaseBuffer();
