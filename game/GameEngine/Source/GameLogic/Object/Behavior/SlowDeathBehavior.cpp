@@ -40,6 +40,7 @@
 #include "Common/Xfer.h"
 #include "GameClient/Drawable.h"
 #include "GameClient/FXList.h"
+#include "GameClient/RadiusDecal.h"
 #include "GameClient/InGameUI.h"
 #include "GameLogic/GameLogic.h"
 #include "GameLogic/Module/BodyModule.h"
@@ -148,32 +149,53 @@ static void parseWeapon( INI* ini, void *instance, void * /*store*/, const void*
 }
 
 //-------------------------------------------------------------------------------------------------
-/*static*/ void SlowDeathBehaviorModuleData::buildFieldParse(MultiIniFieldParse& p) 
-{
-  UpdateModuleData::buildFieldParse(p);
+extern void parseSound(INI *, void *, void *, const void *);
+extern void parseDeathFlags(INI *, void *, void *, void *);
 
-	static const FieldParse dataFieldParse[] = 
+class Rva002098B0
+{
+public:
+	static void parsePhaseWeaponList(INI *, void *, void *, const void *);
+};
+
+/*static*/ void SlowDeathBehaviorModuleData::buildFieldParse(MultiIniFieldParse& p)
+{
+	UpdateModuleData::buildFieldParse(p);
+
+	// Field offsets come from retail table 0x010A6948.
+	static const FieldParse dataFieldParse[] =
 	{
-		{ "SinkRate",													INI::parseVelocityReal,						NULL, offsetof( SlowDeathBehaviorModuleData, m_sinkRate ) },
-		{ "ProbabilityModifier",							INI::parseInt,										NULL, offsetof( SlowDeathBehaviorModuleData, m_probabilityModifier ) },
-		{ "ModifierBonusPerOverkillPercent",	INI::parsePercentToReal,					NULL, offsetof( SlowDeathBehaviorModuleData, m_modifierBonusPerOverkillPercent ) },
-		{ "SinkDelay",												INI::parseDurationUnsignedInt,		NULL, offsetof( SlowDeathBehaviorModuleData, m_sinkDelay ) },
-		{ "SinkDelayVariance",								INI::parseDurationUnsignedInt,		NULL, offsetof( SlowDeathBehaviorModuleData, m_sinkDelayVariance ) },
-		{ "DestructionDelay",									INI::parseDurationUnsignedInt,		NULL, offsetof( SlowDeathBehaviorModuleData, m_destructionDelay ) },
-		{ "DestructionDelayVariance",					INI::parseDurationUnsignedInt,		NULL, offsetof( SlowDeathBehaviorModuleData, m_destructionDelayVariance ) },
-		{ "DestructionAltitude",							INI::parseReal,										NULL, offsetof( SlowDeathBehaviorModuleData, m_destructionAltitude ) },
-		{ "FX",																parseFX,													NULL, 0 },
-		{ "OCL",															parseOCL,													NULL, 0 },
-		{ "Weapon",														parseWeapon,											NULL, 0 },
-		{ "FlingForce",												INI::parseReal,										NULL, offsetof( SlowDeathBehaviorModuleData, m_flingForce) },
-		{ "FlingForceVariance",								INI::parseReal,										NULL, offsetof( SlowDeathBehaviorModuleData, m_flingForceVariance) },
-		{ "FlingPitch",												INI::parseAngleReal,							NULL, offsetof( SlowDeathBehaviorModuleData, m_flingPitch) },
-		{ "FlingPitchVariance",								INI::parseAngleReal,							NULL, offsetof( SlowDeathBehaviorModuleData, m_flingPitchVariance) },
+		{ "SinkRate", INI::parseVelocityReal, NULL, 0x34 },
+		{ "ProbabilityModifier", INI::parseInt, NULL, 0x38 },
+		{ "ModifierBonusPerOverkillPercent", INI::parsePercentToReal, NULL, 0x3C },
+		{ "SinkDelay", INI::parseDurationUnsignedInt, NULL, 0x40 },
+		{ "SinkDelayVariance", INI::parseDurationUnsignedInt, NULL, 0x44 },
+		{ "DestructionAltitude", INI::parseReal, NULL, 0x48 },
+		{ "DestructionDelay", INI::parseDurationUnsignedInt, NULL, 0x4C },
+		{ "DestructionDelayVariance", INI::parseDurationUnsignedInt, NULL, 0x50 },
+		{ "DecayBeginTime", INI::parseDurationUnsignedInt, NULL, 0x54 },
+		{ "FX", parseFX, NULL, 0 },
+		{ "OCL", parseOCL, NULL, 0 },
+		{ "Weapon", Rva002098B0::parsePhaseWeaponList, NULL, 0 },
+		{ "Sound", parseSound, NULL, 0 },
+		{ "FlingForce", INI::parseReal, NULL, 0x118 },
+		{ "FlingForceVariance", INI::parseReal, NULL, 0x11C },
+		{ "FlingPitch", INI::parseAngleReal, NULL, 0x120 },
+		{ "FlingPitchVariance", INI::parseAngleReal, NULL, 0x124 },
+		{ "DeathFlags", (INIFieldParseProc)parseDeathFlags, NULL, 0 },
+		{ "ShadowWhenDead", INI::parseBool, NULL, 0x1A5 },
+		{ "EjectRiderIfApplicable", INI::parseBool, NULL, 0x15C },
+		{ "RiderSubObjects", INI::parseAsciiStringVector, NULL, 0x160 },
+		{ "DecalWhenDead", INI::parseBool, NULL, 0x1A6 },
+		{ "DeathDecal", RadiusDecalTemplate::parseRadiusDecalTemplate, NULL, 0x16C },
+		{ "FadeDelay", INI::parseDurationUnsignedInt, NULL, 0x1A0 },
+		{ "FadeTime", INI::parseDurationUnsignedInt, NULL, 0x19C },
 		{ 0, 0, 0, 0 }
 	};
-  p.add(dataFieldParse);
-	p.add(DieMuxData::getFieldParse(), offsetof( SlowDeathBehaviorModuleData, m_dieMuxData ));
+	p.add(dataFieldParse);
+	p.add(DieMuxData::getFieldParse(), offsetof(SlowDeathBehaviorModuleData, m_dieMuxData));
 }
+
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
