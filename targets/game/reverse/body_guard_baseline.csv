@@ -449,8 +449,6 @@ dir32,0x010FA90C,?g_010FA90C@FXParticleSystem@@3QBDB,"nothing in the ledger owns
 dir32,0x010FB888,??_7ControlBar@@6B@,"retail 0x010FB888 is already recorded as ??_7Rva0049DA40Object@@6B@; reference that name, not a new one"
 dir32,0x010FD030,?g_controlBarSchemeImageFieldParse@@3QBUFieldParse@@B,"retail 0x010FD030 is already recorded as ?g_controlBarSchemeImageFieldParse@@3QBEB; reference that name, not a new one"
 dir32,0x010FD0A8,?g_controlBarSchemeAnimationFieldParse@@3QBUFieldParse@@B,"retail 0x010FD0A8 is already recorded as ?g_controlBarSchemeAnimationFieldParse@@3QBEB; reference that name, not a new one"
-dir32,0x010FE7E0,?g_010FE7E0@@3QBUBfmeKeyboardSystemLookupListRec@@B,"nothing in the ledger owns 0x010FE7E0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x010FE828,?g_010FE828@@3QBUBfmeKeyboardSystemLookupListRec@@B,"nothing in the ledger owns 0x010FE828. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01102DE0,?g_01102DE0@@3QBDB,"nothing in the ledger owns 0x01102DE0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x011052B8,?g_011052B8@@3URva00511430OutElse@@B,the name encodes 0x00511430 but retail reads 0x011052B8
 dir32,0x011052C4,?g_011052C4@@3URva00511430Out3@@B,the name encodes 0x00511430 but retail reads 0x011052C4
