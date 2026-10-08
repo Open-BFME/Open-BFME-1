@@ -1,8 +1,10 @@
 // cl: /Igame/GameEngine/Source/GameNetwork/GameSpy/qr2 /MD -Iinputs/reference/shims/gamespy
-/* GameSpy SDK, 2004 vintage -- upstream C source PLUS a reconstruction of
-   EA's own edits to THIS file, inferred from retail's bytes.  Not pristine:
-   see PROVENANCE.txt, "What differs from upstream", which lists every such
-   file and what changed.  Each changed site is also marked in place.
+/* GameSpy SDK, 2004 vintage -- upstream C source PLUS a reconstruction of the
+   upstream revisions between the Area 51 snapshot (Aug 2004) and the newer SDK
+   snapshot (~Oct-Nov 2004) retail compiled, inferred from retail's bytes. They
+   are GameSpy's changes, not EA's (confirmed in the 2007 SDK text). Not
+   pristine: see PROVENANCE.txt, "What differs from upstream", which lists every
+   such file and what changed.  Each changed site is also marked in place.
    Sourced from the Area 51 (Inevitable Entertainment / Midway) source release,
    github.com/bisc67/Area51, Support/NetworkMgr/GameSpy -- the only public
    carrier found with the pre-2005 SDK layout (top-level nonport.c, no common/).

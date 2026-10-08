@@ -45,7 +45,8 @@ Artifact
 
 Chosen as the only public carrier found with the pre-2005 SDK layout (top-level
 nonport.c, no common/), and dated by nonport.h's own marker "Added by Saad Nader
-on 08-02-2004". The vintage is measured, not assumed: against lotrbfme.exe this
+on 08-02-2004". It is the nearest public carrier, not retail's exact snapshot
+(see "What differs from upstream"). The vintage is measured, not assumed: against lotrbfme.exe this
 tree scores 440 byte-exact whole functions where the 2007 SDK (nitrocaster/
 GameSpy, GS_Aluigi) scores 51 and 48 on the same TUs. That measurement is good
 evidence about WHICH SDK this is. It is no evidence at all about rights in it,
@@ -106,10 +107,29 @@ What differs from upstream — this tree is NOT wholly pristine
 -------------------------------------------------------------
 Each file carries a header block. On files that are byte-for-byte upstream
 apart from that block and `present-unmatched` / `absent-from-retail` markers,
-that block says so. ELEVEN files are NOT upstream: they carry a reconstruction
-of EA's own edits, inferred from retail's bytes, and their header blocks say
-that instead. Counted with comments and blank lines excluded, against
-bisc67/Area51 at master on 2026-08-17:
+that block says so. ELEVEN files are NOT Area 51's text: they carry a
+reconstruction, inferred from retail's bytes, of UPSTREAM revisions made
+between Area 51's snapshot and the newer snapshot EA compiled. They are
+GameSpy's own changes, not EA edits; this file said "EA's own edits" until the
+2026-10-08 library audit (_impl/reports/libaudit-network.md) corrected it:
+
+    Retail is a ~Oct-Nov 2004 SDK snapshot, newer than Area 51's (Aug 2004).
+    It holds the Chat/Peer nick-check table (Chat 1.11.19 / Peer 2.02.22,
+    2004-10-15), `CRYPT des %d %s` (Chat 1.11.17, 2004-09-15) and
+    `\cdkeyenc\` (GP 1.09.17, 2004-06-24), and lacks `\partnerid\`
+    (GP 1.09.45, 2006-04-12). Area 51's ghttp predates even the per-request
+    proxy override (ghttp 1.06.21, 2004-01-26): it is one licensee's mixed
+    snapshot and the nearest public carrier, not "the" 2004 SDK.
+    Every delta below is upstream text in the 2007 SDK (nitrocaster/GameSpy)
+    except three sites: proxy override fields and selection, WSAETIMEDOUT in
+    the retry predicates, the dropped qr2 `cr->hbsock` initialiser and the
+    removed gpiPeer/gpiConnect dead branches are all there. Unattributed, in
+    no public text (EA or an intermediate release): qr2.c's
+    `if (ret) inet_ntoa(...)`, qr2.c's `pa_callback` condition order, and
+    ghttpCallbacks.c's callback restructuring.
+
+Counted with comments and blank lines excluded, against bisc67/Area51 at
+master on 2026-08-17:
 
     ghttp/ghttpCallbacks.c    +25 -38   callback structure reworked
     ghttp/ghttpCommon.c       +13 -12   GOAGetLastError -> WSAGetLastError;
