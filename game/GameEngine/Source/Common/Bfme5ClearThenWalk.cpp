@@ -89,15 +89,28 @@ public:
 class GameClient;
 extern GameClient *TheGameClient;			// retail 0x012F1464
 
+class Object;
+
+// retail thunks 0x0001D0DE -> 0x0038B0C0 and 0x00015028 -> 0x0038AE90 are the
+// matched GameLogic::destroyObject and private GameLogic::processDestroyList
+class GameLogic
+{
+	friend class Gen_0038D000;
+public:
+	void destroyObject(Object *obj);
+private:
+	void processDestroyList(void);
+};
+
+#define bfmeVisit(node) reinterpret_cast<GameLogic *>(this)->destroyObject(reinterpret_cast<Object *>(node))
+#define bfmeFinish() reinterpret_cast<GameLogic *>(this)->processDestroyList()
+
 class Gen_0038D000
 {
 public:
 	void bfmeClear(void);
 
 private:
-	void bfmeVisit(BfmeNodeR *node);			// retail thunk 0x0001D0DE -> 0x0038B0C0
-	void bfmeFinish(void);					// retail thunk 0x00015028 -> 0x0038AE90
-
 	int m_bfmeHead[42];					// +0x000
 	BfmeNodeR *m_bfmeList;					// +0x0A8
 	int m_bfmeGap[44];					// +0x0AC
@@ -126,10 +139,18 @@ void Gen_0038D000::bfmeClear(void)
 		reinterpret_cast<BfmeSingletonR *>(TheGameClient)->bfmeRefresh();
 }
 
+// retail thunk 0x00036A9D -> 0x003CC890 is the matched Rva003CC890::release
+class Rva003CC890
+{
+public:
+	void release(void);
+};
+
+#define bfmeReset() release()
+
 class BfmeItemS
 {
 public:
-	void bfmeReset(void);					// retail thunk 0x00036A9D -> 0x00436A9D
 
 	int m_bfmeHead[12];					// +0x00
 	int m_bfmeMark;						// +0x30
@@ -174,7 +195,7 @@ void Gen_003CFBA0::bfmeClear(void)
 
 			while (item != group->m_bfmeFinish)
 			{
-				item->bfmeReset();
+				reinterpret_cast<Rva003CC890 *>(item)->bfmeReset();
 
 				item->m_bfmeMark = 0;
 

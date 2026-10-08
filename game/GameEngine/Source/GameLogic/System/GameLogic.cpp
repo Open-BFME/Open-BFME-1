@@ -3953,74 +3953,8 @@ void GameLogic::loadMapINI( AsciiString mapName )
  * same at the start of the update as it is at the end of the update. */
 // ------------------------------------------------------------------------------------------------
 //DECLARE_PERF_TIMER(processDestroyList)
-// ?processDestroyList@GameLogic@@AAEXXZ present-unmatched
-void GameLogic::processDestroyList( void )
-{
-	//USE_PERF_TIMER(processDestroyList)
-
-	for( ObjectPointerListIterator iterator = m_objectsToDestroy.begin(); iterator != m_objectsToDestroy.end(); iterator++ )
-	{
-		Object* currentObject = (*iterator);
-
-#ifdef ALLOW_NONSLEEPY_UPDATES
-		for (std::list<UpdateModulePtr>::iterator it = m_normalUpdates.begin(); it != m_normalUpdates.end(); /* nothing */)
-		{
-			if ((*it)->friend_getObject() == currentObject)
-			{
-				it = m_normalUpdates.erase(it);
-			}
-			else
-			{
-				++it;
-			}
-		}
-#endif
-
-		/*
-			this looks odd, but is necessary; since erasing a single entry can shuffle others in the list
-			(in order to maintain its heap-ness), we must do two passes: one to find the updates for this
-			object, another to actually erase 'em. 
-			
-			(in case you're wondering: yes, this is still more efficient than just deleting them
-			and rebalancing the entire heap afterwards, at least for real-world maps, since an individual
-			rebalance is O(log N) and a full rebalance is O(N)... so unless you are deleting the majority
-			of the objects in the world every frame, we come out well ahead this way.)
-		*/
-
-		const Int MAX_SUO = 256;
-		UpdateModulePtr sleepyUpdatesForThisObject[MAX_SUO];
-		Int numSUO = 0;
-
-		for (std::vector<UpdateModulePtr>::iterator it2 = m_sleepyUpdates.begin(); it2 != m_sleepyUpdates.end(); ++it2)
-		{
-			UpdateModulePtr u = *it2;
-			if (u->friend_getObject() == currentObject && numSUO < MAX_SUO)
-			{
-				sleepyUpdatesForThisObject[numSUO++] = u;
-			}
-		}
-
-		for (--numSUO; numSUO >= 0; --numSUO)
-		{
-			// have to re-get idx each time since each call to erase might change others.
-			Int idx = sleepyUpdatesForThisObject[numSUO]->friend_getIndexInLogic();
-			DEBUG_ASSERTCRASH(m_sleepyUpdates[idx] == sleepyUpdatesForThisObject[numSUO], ("Hmm, expected update mismatch here"));
-			eraseSleepyUpdate(idx);
-			DEBUG_ASSERTCRASH(sleepyUpdatesForThisObject[numSUO]->friend_getIndexInLogic() == -1, ("Hmm, expected index to be -1 here"));
-		}
-
-
-		currentObject->removeFromList(&m_objList);//remove from object list
-
-		// remove object from lookup table
-		removeObjectFromLookupTable( currentObject );
-
-		currentObject->friend_deleteInstance();//actual delete
-	}
-
-	m_objectsToDestroy.clear();//list full of bad pointers now, clear it.  If anyone's deletion resulted
-	//in the request for a new deletion (sub-object), the new object was added to the end of this list.
-}
+// GameLogic::processDestroyList is defined in GameLogicProcessDestroyList.cpp,
+// the retail-matched body at 0x0038AE90.
 
 //-------------------------------------------------------------------------------------------------
 /** Process the command list passed to the logic from the network */
