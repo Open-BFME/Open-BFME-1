@@ -4,7 +4,9 @@
 // 0x00573A30.  The 0x2AAAAAAB multiply is (last-first)/12.  pop_heap is
 // inlined; the out-of-line callee is the 12-byte __adjust_heap at
 // 0x00571B70 (ILT 0x0003DF00).  Element/comparator identity beyond width
-// is not recovered -- S4SortElem12 is the same stand-in the neighbouring
+// is not recovered (S4Cmp00574DF0 is the comparator's placeholder spelling
+// across the family, see identity_evidence/
+// 00573a30-s4cmp00574df0-one-comparator.md) -- S4SortElem12 is the same stand-in the neighbouring
 // linear_insert at 0x00573900 uses.
 
 struct S4SortElem12
@@ -14,20 +16,12 @@ struct S4SortElem12
 	int m_bfmeSecond;
 };
 
-struct S4Cmp00573A30
+struct S4Cmp00574DF0
 {
 	void *m_bfmeState;
 
 	bool operator()(const S4SortElem12 &left,
 		const S4SortElem12 &right) const { return left.m_bfmeKey < right.m_bfmeKey; }
-};
-
-// The matched adjust_heap provider at 0x00571B70 uses this ABI-equivalent
-// comparator spelling. Its state pointer and key comparison match the view
-// above, while keeping sort_heap's ledger-owned specialization unchanged.
-struct S4Cmp00574DF0
-{
-	void *m_bfmeState;
 };
 
 namespace _STL
@@ -46,12 +40,12 @@ void sort_heap(RandomAccessIterator first, RandomAccessIterator last,
 		S4SortElem12 val = *(last - 1);
 		*(last - 1) = *first;
 		__adjust_heap(first, 0, (last - 1) - first, val,
-			*reinterpret_cast<S4Cmp00574DF0 *>(&comp));
+			comp);
 		--last;
 	}
 }
 
-template void sort_heap<S4SortElem12 *, S4Cmp00573A30>(
-	S4SortElem12 *, S4SortElem12 *, S4Cmp00573A30);
+template void sort_heap<S4SortElem12 *, S4Cmp00574DF0>(
+	S4SortElem12 *, S4SortElem12 *, S4Cmp00574DF0);
 
 }

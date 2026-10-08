@@ -5,10 +5,10 @@
 // 0x00573A30), retail 0x005726F0, 148 bytes.  Same countdown shape as
 // game/GameEngine/Source/Common/S4MakeHeapElem12Pod.cpp (retail 0x00531B20)
 // but the out-of-line callee is the templated
-// _STL::__adjust_heap<S4SortElem12 *, int, S4SortElem12, S4Cmp00573A30>
+// _STL::__adjust_heap<S4SortElem12 *, int, S4SortElem12, S4Cmp00574DF0>
 // (ILT 0x0003DF00), not the address-derived bfmeAdjustHeap00531B20 the Pod
 // sibling calls, so the element/comparator types are S4SortHeapElem12.cpp's
-// S4SortElem12 / S4Cmp00573A30 rather than the Pod stand-ins.
+// S4SortElem12 / S4Cmp00574DF0 rather than the Pod stand-ins.
 //
 // Kept in its own TU rather than joining
 // game/GameEngine/Source/Common/S4MakeHeapElem12.cpp: that tracked file's
@@ -24,7 +24,7 @@ struct S4SortElem12
 	int m_bfmeSecond;
 };
 
-struct S4Cmp00573A30
+struct S4Cmp00574DF0
 {
 	void *m_bfmeState;
 
@@ -58,7 +58,7 @@ void gen005726F0(void *firstVoid, void *lastVoid, void *compState, int, int)
 	if (len < 2)
 		return;
 
-	S4Cmp00573A30 comp;
+	S4Cmp00574DF0 comp;
 	comp.m_bfmeState = compState;
 
 	int parent = (len - 2) / 2;
@@ -72,6 +72,6 @@ void gen005726F0(void *firstVoid, void *lastVoid, void *compState, int, int)
 	}
 }
 
-template void _STL::__pop_heap<S4SortElem12 *, int, S4SortElem12, S4Cmp00573A30>(
+template void _STL::__pop_heap<S4SortElem12 *, int, S4SortElem12, S4Cmp00574DF0>(
 	S4SortElem12 *, S4SortElem12 *, S4SortElem12 *, S4SortElem12,
-	S4Cmp00573A30, int *);
+	S4Cmp00574DF0, int *);
