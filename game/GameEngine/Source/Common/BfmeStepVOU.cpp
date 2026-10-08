@@ -135,8 +135,19 @@ void bfmeStepVOU(void *a, void *b, int n, void *c)
 		(int *)0);
 }
 
-void bfmeMakeHeapVOU(BfmeElemVOU *first, BfmeElemVOU *last, void *comp)
+// STLport __make_heap (0x009CD5E0): Gen009CD980 and the 0x009CD740 forwarder
+// call it with first/last/compare plus the null type and distance tags.
+struct Q3SortElem4;
+struct Q3SortCompare
 {
+};
+
+void q3MakeHeap(Q3SortElem4 *firstElem, Q3SortElem4 *lastElem,
+	Q3SortCompare compare, Q3SortElem4 *, int *)
+{
+	BfmeElemVOU *first = (BfmeElemVOU *)firstElem;
+	BfmeElemVOU *last = (BfmeElemVOU *)lastElem;
+	void *comp = *(void **)&compare;
 	int len = last - first;
 	if (len < 2)
 		return;
