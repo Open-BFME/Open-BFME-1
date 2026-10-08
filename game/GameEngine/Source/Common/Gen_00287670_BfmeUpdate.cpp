@@ -55,7 +55,8 @@ public:
 	// fronts 0x00162CD0, which builds an 86-bit ObjectStatusMaskType, so the member
 	// is Object::clearStatus(ObjectStatusTypes) -- not clearModelConditionState.
 	void clearStatus(ObjectStatusTypes condition);
-	void bfmeFinish(int value);
+	// ILT 0x0003A521 fronts matched Object::setSingleModelCondition 0x000F2150.
+	void setSingleModelCondition(int value);
 
 	char m_bfmeFields[0x98];
 	unsigned char m_bfmeConditionB;
@@ -94,7 +95,7 @@ int Gen_00287670::bfmeUpdate(void)
 			reinterpret_cast<char *>(this) - 8);
 		owner->bfmePrepare(0x3F);
 		owner->clearStatus(OBJECT_STATUS_RESET);
-		owner->bfmeFinish(0x49);
+		owner->setSingleModelCondition(0x49);
 		owner->m_bfmeAI->m_bfmeCommands.aiIdle(CMD_FROM_AI);
 	}
 
