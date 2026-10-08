@@ -35,7 +35,7 @@ public:
 // as ?j_000215da@@YAXXZ (game/gen_small/gthunks_036.cpp). The body the thunk
 // jumps to (RVA 0x001FAB70) is still unclaimed, so name the thunk, not a
 // body: nothing defines a CritterEmitterUpdateFieldParse symbol at link time.
-extern "C" void __cdecl __identifier("?j_000215da@@YAXXZ")(MultiIniFieldParse &parse);
+extern "C" void __cdecl __identifier("CritterEmitterUpdateFieldParse")(MultiIniFieldParse &parse);
 
 class CritterEmitterUpdate
 {
@@ -48,6 +48,6 @@ ModuleData *CritterEmitterUpdate::friend_newModuleData(INI *ini)
 {
 	CritterEmitterUpdateModuleData *data = new CritterEmitterUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &__identifier("?j_000215da@@YAXXZ"));
+		ini->initFromINIMultiProc(data, &__identifier("CritterEmitterUpdateFieldParse"));
 	return (ModuleData *)data;
 }
