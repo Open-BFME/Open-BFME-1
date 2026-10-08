@@ -22,11 +22,8 @@ private:
 	void *m_handle;
 };
 
-// ?Get_File_Handle@RawFileClass@@UAEPAXXZ
-void *RawFileClass::Get_File_Handle(void)
-{
-	return m_handle;
-}
+// Get_File_Handle@RawFileClass@@UAEPAXXZ (slot 17) is the header's inline
+// `{ return Handle; }`; rawfile.cpp emits it (a retail-equal COMDAT).
 
 // ?Error@RawFileClass@@UAEXHHPBD@Z
 void RawFileClass::Error(int, int, const char *)
