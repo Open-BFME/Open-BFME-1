@@ -1,19 +1,16 @@
+// cl: /Igame/Libraries/Source/WWVegas/WWLib
 // The surrounding constructor establishes the two event-name fields at +0x14
 // and +0x18; this body is the paired operation that starts both events and
 // remembers their handles.  The local facades preserve BFME's retail layouts
 // without importing the later Zero Hour audio-vtable order.
 
-class BfmeAsciiString491110
-{
-public:
-	void *m_data;
-};
+#include "ascii_string.h"
 
-class BfmeAudioEvent491110
+class AudioEventRTS
 {
 public:
-	BfmeAudioEvent491110(const BfmeAsciiString491110 &name, int owner);
-	~BfmeAudioEvent491110();
+	AudioEventRTS(const AsciiString &name, int owner);
+	~AudioEventRTS();
 
 	char m_head[8];
 	void *m_eventInfo;
@@ -45,7 +42,7 @@ public:
 	virtual void v4c();
 	virtual void v50();
 	virtual void v54();
-	virtual unsigned int addAudioEvent(BfmeAudioEvent491110 *event);
+	virtual unsigned int addAudioEvent(AudioEventRTS *event);
 	virtual void v5c();
 	virtual void v60();
 	virtual void v64();
@@ -66,7 +63,7 @@ public:
 	virtual void va0();
 	virtual void va4();
 	virtual void va8();
-	virtual void prepareAudioEvent(BfmeAudioEvent491110 *event);
+	virtual void prepareAudioEvent(AudioEventRTS *event);
 };
 
 extern AudioManager *TheAudio; // retail 0x012ED668
@@ -78,8 +75,8 @@ public:
 
 private:
 	char m_head[0x14];
-	BfmeAsciiString491110 m_firstEventName;
-	BfmeAsciiString491110 m_secondEventName;
+	AsciiString m_firstEventName;
+	AsciiString m_secondEventName;
 	unsigned int m_firstHandle;
 	unsigned int m_secondHandle;
 };
@@ -92,12 +89,12 @@ void Rva00491110::startAudio()
 	if (TheAudio == 0)
 		return;
 
-	BfmeAudioEvent491110 first(m_firstEventName, 2);
+	AudioEventRTS first(m_firstEventName, 2);
 	TheAudio->prepareAudioEvent(&first);
 	if (first.m_eventInfo != 0)
 		m_firstHandle = TheAudio->addAudioEvent(&first);
 
-	BfmeAudioEvent491110 second(m_secondEventName, 2);
+	AudioEventRTS second(m_secondEventName, 2);
 	TheAudio->prepareAudioEvent(&second);
 	if (second.m_eventInfo != 0)
 		m_secondHandle = TheAudio->addAudioEvent(&second);
