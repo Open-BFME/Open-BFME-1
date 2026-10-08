@@ -8,8 +8,11 @@ never recovered.
   (0x00200C90, InstantDeathBehaviorDeletingDestructor.cpp) calls its complete destructor
   through ILT 0x0003401D, and 0x0003401D is `jmp 0x00200870`.
 - `python3 tools/ilt_oracle.py check '??1InstantDeathBehavior@@MAE@XZ' 0x00200870`
-  reports CONFIRMED (exact). The ILT order cannot separate the public `UAE`
-  spelling, but the matched `??_G` is protected (MAE) and calls the MAE name.
+  reports CONFIRMED (exact), and the public spelling
+  `python3 tools/ilt_oracle.py check '??1InstantDeathBehavior@@UAE@XZ' 0x00200870`
+  reports CONTRADICTED (outside every window of the target's slots), so the
+  ILT order itself fixes the protected `MAE` spelling. The matched `??_G` is
+  protected (MAE) too and calls the MAE name.
 - The body stores the DieModule vtables (0x010A4CEC at +0x10, then 0x0109CB5C
   at +0 and 0x0109CA98 at +0xC) and tail-jumps to ILT 0x00047C53, the
   ObjectModule destructor: an empty derived destructor of a DieModule.
