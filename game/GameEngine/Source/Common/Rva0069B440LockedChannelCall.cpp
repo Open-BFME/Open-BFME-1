@@ -5,10 +5,12 @@ extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
 	void *hHandle, unsigned long dwMilliseconds);
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *hMutex);
 
-class Rva0069B440Block
+// Retail ILT 0x00047A64 lands on 0x006999C0, matched as
+// Rva00699180Owner::setVolumes(float, unsigned char).
+class Rva00699180Owner
 {
 public:
-	void apply(void *a, void *b);
+	void setVolumes(float a, unsigned char b);
 };
 
 class Rva0069B440Owner
@@ -28,9 +30,7 @@ void Rva0069B440Owner::call(void *a, void *b, int index)
 		held = 1;
 
 	int idx = index;
-	void *arg_b = b;
-	void *arg_a = a;
-	((Rva0069B440Block *)((char *)this + 0xB8 + idx * 0x1C4))->apply(arg_a, arg_b);
+	((Rva00699180Owner *)((char *)this + 0xB8 + idx * 0x1C4))->setVolumes(*(float *)&a, *(unsigned char *)&b);
 
 	if (held)
 		ReleaseMutex(mutex);

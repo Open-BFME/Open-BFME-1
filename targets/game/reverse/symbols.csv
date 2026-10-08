@@ -15578,7 +15578,6 @@ name,address,notes
 ?apply@Rva003BF540@@QAEX_N@Z,0x003BD960,boolean applier called by the mirrored-flag update at 0x003BF540; address-derived name
 ?apply@Rva004B19E0@@QAEXPAX@Z,0x00034B58,incremental-link thunk the ControlBar overlay sink at this+0x2f0 is reached through
 ?apply@Rva0069AFC0Block@@QAEXPAX0000@Z,0x000017BC,ILT to 5-arg channel apply used by Rva0069AFC0Owner::call
-?apply@Rva0069B440Block@@QAEXPAX0@Z,0x00047A64,ILT to channel apply used by Rva0069B440Owner::call
 ?apply@Rva006E6C10@@QAEXXZ,0x00028B1E,W3DDisplay init calls ILT 0x00028B1E to the matched apply body at 0x006E6CC0 on the object constructed at 0x006E6C10
 ?apply@Rva00747400@@QAEHPAH@Z,0x00747400,address-derived helper; complete independent 113B body verified in caller TU; two receiver-owned arrays written; pointer argument ignored; ret4; caller +42 via ILT C88D
 ?apply@Rva00766A70W3DScriptedModelDraw@@AAEXPAXHHHH@Z,0x00001CA8,Rva00766A70 W3DScriptedModelDraw transition helper forwards through the retail incremental-link thunk
