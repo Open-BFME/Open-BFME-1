@@ -10549,7 +10549,9 @@ name,address,notes
 ??_7AudioEventInfo@@6B@,0x00C818CC,AudioEventInfo family proven by DefaultSoundEffect parser factory assignment and14 INI witnesses; constructor and destructor install this vtable
 ??_7AudioLoopUpgrade@@6B@,0x00CCBE24,vtable whose slots name AudioLoopUpgrade
 ??_7AutoAbilityBehaviorModuleData@@6B@,0x00CA1A70,exact constructor 0x001ED6A0 installs this dedicated vtable; slot zero ILT 0x0002775F reaches scalar wrapper 0x001ED860
-??_7AutoDepositUpdate@@6B@,0x00CBB1D4,vtable whose slots name AutoDepositUpdate
+??_7AutoDepositUpdate@@6BPB_DeepBase@@@,0x00CBB1D4,vtable whose slots name AutoDepositUpdate; primary vptr stored at +0 by the matched ctor 0x00280D90
+??_7AutoDepositUpdate@@6BPB_Iface1@@@,0x00CBB110,AutoDepositUpdate secondary vtable stored at +0xC by the matched ctor 0x00280D90
+??_7AutoDepositUpdate@@6BPB_Iface2@@@,0x00CBB100,AutoDepositUpdate UpdateModuleInterface vtable stored at +0x10 by the matched ctor 0x00280D90; slot0 is AutoDepositUpdate::update
 ??_7AutoFindHealingUpdate@@6B@,0x00CBB3C4,vtable whose slots name AutoFindHealingUpdate
 ??_7AutoFindHealingUpdateModuleData@@6B@,0x00CBB210,exact constructor 0x00281430 installs this dedicated vtable
 ??_7BackAwayAndCowerStateMachine@@6B@,0x00C97588,exact constructor 0x00182190 installs this dedicated vtable; slot zero ILT 0x000316A6 reaches scalar wrapper 0x0016ED10

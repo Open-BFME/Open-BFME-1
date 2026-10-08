@@ -1428,7 +1428,6 @@ tail,0x001AC1E0,?loadMapAbi@TerrainLogic@@QAE_NVAsciiString@@PAVChunkInputStream
 tail,0x001FBC70,??0FireWeaponWhenDeadBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,"compiled=398 ledger=395 tail=3: 3 byte(s) differ from retail, first +395"
 tail,0x002277A0,??0OpenContain@@QAE@PAVThing@@PBVModuleData@@@Z,"compiled=725 ledger=722 tail=3: 3 byte(s) differ from retail, first +722"
 tail,0x0027F4B0,??0AIUpdateInterface@@QAE@PAVThing@@PBVModuleData@@@Z,"compiled=1240 ledger=1237 tail=3: 3 byte(s) differ from retail, first +1237"
-tail,0x00280D90,??0AutoDepositUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,"compiled=101 ledger=98 tail=3: 3 byte(s) differ from retail, first +98"
 tail,0x00281480,??0AutoFindHealingUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,"compiled=80 ledger=77 tail=3: 3 byte(s) differ from retail, first +77"
 tail,0x00285F10,??0BannerCarrierUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,"compiled=167 ledger=164 tail=3: 3 byte(s) differ from retail, first +164"
 tail,0x00292FA0,?bfmeCalcSleepTimeGate@FlammableUpdate@@QAE?AW4UpdateSleepTime@@XZ,"compiled=18 ledger=13 tail=5: 1 byte(s) differ from retail, first +13"

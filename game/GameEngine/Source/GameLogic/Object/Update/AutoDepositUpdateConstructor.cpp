@@ -1,115 +1,62 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep
 
-class Thing {};
-class ModuleData {};
+class Thing;
+class ModuleData;
+class Object;
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AutoDepositUpdate.h
-class AutoDepositUpdate
+class GameLogic
 {
 public:
-	AutoDepositUpdate( Thing *thing, const ModuleData *data );
+	unsigned int getFrame() const { return m_frame; }
+private:
+	unsigned char m_f00[0x3c];
+	unsigned int m_frame;
+};
+extern GameLogic *TheGameLogic;
+
+class PB_DeepBase
+{
+public:
+	PB_DeepBase(Thing *, const ModuleData *);
+	virtual ~PB_DeepBase();
+protected:
+	const ModuleData *m_moduleData;
+	Object *m_object;
+};
+class PB_Iface1 { public: virtual void slot(); };
+class PB_Iface2 { public: virtual void slot(); };
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
+class UpdateModule : public PB_DeepBase, public PB_Iface1, public PB_Iface2
+{
+public:
+	UpdateModule(Thing *thing, const ModuleData *moduleData)
+		: PB_DeepBase(thing, moduleData), m_f14(0), m_f18(-1), m_f1c(-1) {}
+private:
+	unsigned int m_f14;
+	int m_f18;
+	int m_f1c;
 };
 
-__declspec(naked) AutoDepositUpdate::AutoDepositUpdate( Thing *, const ModuleData * )
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AutoDepositUpdate.h
+class AutoDepositUpdateModuleData
 {
-	__asm {
-		_emit 08Bh
-		_emit 044h
-		_emit 024h
-		_emit 008h
-		_emit 056h
-		_emit 08Bh
-		_emit 0F1h
-		_emit 08Bh
-		_emit 04Ch
-		_emit 024h
-		_emit 008h
-		_emit 050h
-		_emit 051h
-		_emit 08Bh
-		_emit 0CEh
-		_emit 0E8h
-		_emit 040h
-		_emit 063h
-		_emit 0D9h
-		_emit 0FFh
-		_emit 0C7h
-		_emit 046h
-		_emit 00Ch
-		_emit 0D0h
-		_emit 0C9h
-		_emit 009h
-		_emit 001h
-		_emit 0C7h
-		_emit 046h
-		_emit 010h
-		_emit 0A0h
-		_emit 0CBh
-		_emit 009h
-		_emit 001h
-		_emit 08Bh
-		_emit 056h
-		_emit 004h
-		_emit 033h
-		_emit 0C0h
-		_emit 089h
-		_emit 046h
-		_emit 014h
-		_emit 088h
-		_emit 046h
-		_emit 024h
-		_emit 088h
-		_emit 046h
-		_emit 025h
-		_emit 083h
-		_emit 0C9h
-		_emit 0FFh
-		_emit 089h
-		_emit 04Eh
-		_emit 018h
-		_emit 089h
-		_emit 04Eh
-		_emit 01Ch
-		_emit 0C7h
-		_emit 006h
-		_emit 0D4h
-		_emit 0B1h
-		_emit 00Bh
-		_emit 001h
-		_emit 0C7h
-		_emit 046h
-		_emit 00Ch
-		_emit 010h
-		_emit 0B1h
-		_emit 00Bh
-		_emit 001h
-		_emit 0C7h
-		_emit 046h
-		_emit 010h
-		_emit 000h
-		_emit 0B1h
-		_emit 00Bh
-		_emit 001h
-		_emit 08Bh
-		_emit 042h
-		_emit 008h
-		_emit 08Bh
-		_emit 00Dh
-		_emit 098h
-		_emit 008h
-		_emit 02Fh
-		_emit 001h
-		_emit 003h
-		_emit 041h
-		_emit 03Ch
-		_emit 089h
-		_emit 046h
-		_emit 020h
-		_emit 08Bh
-		_emit 0C6h
-		_emit 05Eh
-		_emit 0C2h
-		_emit 008h
-		_emit 000h
-	}
+public:
+	unsigned char m_f00[8];
+	unsigned int m_depositFrame;
+};
+
+class AutoDepositUpdate : public UpdateModule
+{
+public:
+	AutoDepositUpdate(Thing *thing, const ModuleData *moduleData);
+	const AutoDepositUpdateModuleData *getAutoDepositUpdateModuleData() const { return (const AutoDepositUpdateModuleData *)m_moduleData; }
+private:
+	unsigned int m_depositOnFrame;
+	bool m_awardInitialCaptureBonus;
+	bool m_initialized;
+};
+
+AutoDepositUpdate::AutoDepositUpdate(Thing *thing, const ModuleData *moduleData) : UpdateModule(thing, moduleData), m_awardInitialCaptureBonus(false), m_initialized(false)
+{
+	m_depositOnFrame = TheGameLogic->getFrame() + getAutoDepositUpdateModuleData()->m_depositFrame;
 }
