@@ -300,3 +300,5 @@ void bfmeRegionRenderC( void *rawRegion, Int rawOffset, const Int rawValue )
 }
 
 extern "C" UnsignedInt __identifier("?g_012F13AC@@3IA") = 0;
+extern "C" UnsignedInt __identifier("?g_012F13B0@@3IA") = 0;
+extern "C" UnsignedInt __identifier("?g_012F13B4@@3IA") = 0;
