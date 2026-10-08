@@ -338,8 +338,8 @@ struct Rva00804920Connection
 const char *Rva00804920Update( Rva008042B0Http *http )
 {
 	int result;
-	char peeraddr[ 0x100 ];
-	char data[ 0x10 ];
+	char data[ 0x100 ];
+	char peeraddr[ 0x10 ];
 	char *cursor;
 	char *end;
 	unsigned int work;
@@ -386,21 +386,21 @@ const char *Rva00804920Update( Rva008042B0Http *http )
 			http->m_socket = Rva007FD2D0SocketOpen( 2, 1, 0 );
 			if( http->m_socket != 0 )
 			{
-				*(unsigned short *)( data + 0 ) = 2;
-				*(unsigned short *)( data + 2 ) = 0;
-				*(int *)( data + 4 ) = 0;
-				*(int *)( data + 8 ) = 0;
-				*(int *)( data + 12 ) = 0;
+				*(unsigned short *)( peeraddr + 0 ) = 2;
+				*(unsigned short *)( peeraddr + 2 ) = 0;
+				*(int *)( peeraddr + 4 ) = 0;
+				*(int *)( peeraddr + 8 ) = 0;
+				*(int *)( peeraddr + 12 ) = 0;
 
 				work = http->m_field10C;
-				data[ 7 ] = (char)work; work >>= 8;
-				data[ 6 ] = (char)work; work >>= 8;
-				data[ 5 ] = (char)work; work >>= 8;
-				data[ 4 ] = (char)work;
-				data[ 2 ] = (char)( http->m_port >> 8 );
-				data[ 3 ] = (char)http->m_port;
+				peeraddr[ 7 ] = (char)work; work >>= 8;
+				peeraddr[ 6 ] = (char)work; work >>= 8;
+				peeraddr[ 5 ] = (char)work; work >>= 8;
+				peeraddr[ 4 ] = (char)work;
+				peeraddr[ 2 ] = (char)( http->m_port >> 8 );
+				peeraddr[ 3 ] = (char)http->m_port;
 
-				Rva007FD5C0( http->m_socket, data, 0x10 );
+				Rva007FD5C0( http->m_socket, peeraddr, 0x10 );
 				http->m_field13C = 0;
 				http->m_state = 2;
 				( (Rva00804920HttpView *)http )->m_field148 =
@@ -427,10 +427,10 @@ const char *Rva00804920Update( Rva008042B0Http *http )
 
 	if( http->m_state == 4 )
 	{
-		result = Rva007FDA50( http->m_socket, peeraddr, 1, 0, 0, 0 );
+		result = Rva007FDA50( http->m_socket, data, 1, 0, 0, 0 );
 		if( result > 0 )
 		{
-			http->m_buffer[ 0 ] = peeraddr[ 0 ];
+			http->m_buffer[ 0 ] = data[ 0 ];
 			http->m_field13C = 1;
 			http->m_state = 5;
 		}
