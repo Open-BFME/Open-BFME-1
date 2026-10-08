@@ -1,0 +1,19 @@
+# Physical polygon-parser dispatch cells at VA 0x0109BFBC
+
+The definition owns exactly two physical 32-bit code pointers under the existing compiler symbol ?g_0109BFBC@@3PAPAXA. It does not claim an original EA class identity or change a class declaration. Only game/GameEngine/Source/GameLogic/Map/Rva00190E10PolygonParserCtor.cpp declares and references the ordinary identifier. No initial data_rows.csv owner, symbols.csv spelling or DIR32 spelling lies in the eight-byte extent.
+
+Retail SHA-256 is 1fbdc0ced8f283732c094c4f0804ce8dc1e3e3675b720bcab066c94fed964e75. The .rdata bytes at VA 0x0109BFBC through 0x0109BFC3 are 37 78 41 00 02 2f 42 00. Cell zero points at VA 0x00417837, whose five bytes E9 84 96 17 00 jump to VA 0x00590EC0. Cell one points at VA 0x00422F02, whose E9 09 E0 16 00 jumps to VA 0x00590F10. Both complete final bodies were read directly from retail.
+
+The deleting destructor uses ECX as receiver, calls VA 0x00414A65 (E9 86 C4 17 00) to the complete 19-byte destructor at VA 0x00590EF0, tests bit zero of its flags argument, optionally frees the receiver, returns it in EAX and uses RET 4. The complete destructor restores base VA 0x0107C7D0 and unregisters receiver+8 using the DataChunkInput receiver at +4.
+
+The second body preserves ECX in ESI, forwards its two stack arguments through VA 0x00413B10 to VA 0x00590700, tests AL, and uses fields +0x0C, +0x10 and +0x14 while extending the polygon list. Both paths use RET 8; the success path returns AL=1. The registration dispatcher follows VA 0x0041579E (E9 2D D1 0E 00) to VA 0x005028D0, takes its third cdecl argument as receiver, forwards its first two arguments and calls vptr+4. Zero Hour DataChunk.h supplies the independent DataChunkParserPtr(DataChunkInput&, DataChunkInfo*, void*) contract, without proving this BFME class name.
+
+The constructor at VA 0x00590E10 preserves its ECX receiver in ESI, passes context VA 0x012EF41C plus its table and label arguments to VA 0x004419D4 (E9 37 EC 14 00) and final VA 0x00590610 with that same receiver, then installs this array at [ESI] at VA 0x00590E45. It stores context at +0x10, zeroes +0x14 and uses RET 8. Its actual caller in WorldHeightMap::parse at VA 0x00B4ADA5 calls VA 0x0044322A (E9 E1 DB 14 00) with a scoped stack receiver, DataChunkInput and null label. No constructor receiver or argument contract changes.
+
+The extent is the two populated dispatch cells; the zero dword at VA 0x0109BFC4 is excluded. The preceding lead at VA 0x0109BFB0 is independently installed by the base registration constructor. The next lead at VA 0x0109BFC8 is independently installed at VA 0x0059274E and has its own recorded DIR32 names. The callback and deleting dispatch contracts independently witness slots +4 and +0. This defines the physical pointer array without claiming ownership over padding or recovering an EA vtable type. Normal add_data_match.py admits eight bytes and two exact pointer relocations.
+
+Raw evidence is build/rlink/identity-retry-1791419437/retail-initial.log, retail-extra-routes.log, retail-complete-callers.log, consumer-search.log, pointer-provider-rows.log and add-data-0109bfbc.log.
+
+A different cell target, a third live slot on this receiver, an interior recorded owner, unmatched pointer initializer, altered verified function byte, or an actual additional source consumer outside scope refutes the repair.
+
+Verification: add-data-0109bfbc.log admits eight bytes and two relocations; build-0109bfbc.log and pass-test-0109bfbc.log exit zero with Functions OK 1/1 and no body-guard findings. The official CLI deletes this key. parser-code-compare.log proves every emitted text section identical to the original object. Ordinary link results are recorded separately and retain unrelated blockers. All logs are under build/rlink/identity-retry-1791419437.

@@ -47,8 +47,14 @@ protected:
     UserParser *m_parser;
 };
 
-// Derived vtable 0x0109BFB0: no symbol in dir32_addresses.csv names it.
-extern void *g_0109BFB0[];
+// Retail dispatch cells contain the deleting destructor and parse callback.
+extern void *g_0109BFB0[2];
+void j_00018e26();
+void j_00013b10();
+extern "C" void *__identifier("?g_0109BFB0@@3PAPAXA")[2] =
+{
+    (void *)j_00018e26, (void *)j_00013b10
+};
 
 class Rva00190610ParserRegistration : public BfmeParserRegistrationVE
 {

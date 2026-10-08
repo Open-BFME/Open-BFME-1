@@ -29,7 +29,14 @@ extern int g_bfmeBFAE;
 extern unsigned int g_Rva00EEF418;
 class BfmeLinkNode;
 extern BfmeLinkNode *TheBfmeLinkHead;
-extern void *g_0109BFBC[];
+// Retail dispatch cells contain the deleting destructor and parse callback.
+extern void *g_0109BFBC[2];
+void j_00017837();
+void j_00022f02();
+extern "C" void *__identifier("?g_0109BFBC@@3PAPAXA")[2] =
+{
+    (void *)j_00017837, (void *)j_00022f02
+};
 
 class Rva00190E10PolygonParser : public Rva00190610ParserRegistration
 {

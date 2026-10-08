@@ -327,8 +327,6 @@ dir32,0x0109A2F0,??_7BfmeStateBC@@6B@,"retail 0x0109A2F0 is already recorded as 
 dir32,0x0109A640,??_7AIAttackFireDuringApproachState@@6B@,"retail 0x0109A640 is already recorded as ?g_AIAttackFireDuringApproachStateVTable@@3HA; reference that name, not a new one"
 dir32,0x0109A738,??_7AIAttackMeleeSquishState@@6B@,"retail 0x0109A738 is already recorded as ?g_AIAttackMeleeSquishStateVTable@@3HA; reference that name, not a new one"
 dir32,0x0109B828,??_7TurretStateMachine@@6B@,"retail 0x0109B828 is already recorded as ??_7Rva0018C2D0TailDtor@@6B@; reference that name, not a new one"
-dir32,0x0109BFB0,?g_0109BFB0@@3PAPAXA,"nothing in the ledger owns 0x0109BFB0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x0109BFBC,?g_0109BFBC@@3PAPAXA,"nothing in the ledger owns 0x0109BFBC. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0109BFD4,?g_0109BFD4@@3PAHA,"retail 0x0109BFD4 is already recorded as ??_7BfmeParserBindingVE@@6B@; reference that name, not a new one"
 dir32,0x0109C030,_g_0109C030,"nothing in the ledger owns 0x0109C030. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0109C33C,?g_0109C33C@FXParticleSystem@@3QBDB,"nothing in the ledger owns 0x0109C33C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
