@@ -20,7 +20,7 @@ public:
 	}
 };
 
-struct S4SortElem12
+struct S4SortElem12_00532740
 {
 	char m_bfmeC;
 	AsciiString m_bfmeName;
@@ -39,11 +39,11 @@ void __adjust_heap(RandomAccessIterator first, Distance holeIndex,
 	Distance len, Tp value, Compare comp);
 }
 
-void bfmePopHeap00531A40(S4SortElem12 *first, S4SortElem12 *last,
-	S4SortElem12 *result, S4SortElem12 value, void *comp, int *)
+void bfmePopHeap00531A40(S4SortElem12_00532740 *first, S4SortElem12_00532740 *last,
+	S4SortElem12_00532740 *result, S4SortElem12_00532740 value, void *comp, int *)
 {
 	*result = *first;
-	_STL::__adjust_heap<S4SortElem12 *, int, S4SortElem12, S4Cmp00532740>(
+	_STL::__adjust_heap<S4SortElem12_00532740 *, int, S4SortElem12_00532740, S4Cmp00532740>(
 		first, 0, last - first, value,
 		*reinterpret_cast<S4Cmp00532740 *>(&comp));
 }

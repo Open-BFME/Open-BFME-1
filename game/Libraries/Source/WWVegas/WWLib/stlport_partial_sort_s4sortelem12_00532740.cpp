@@ -18,7 +18,7 @@ extern "C" __declspec(dllimport) int __cdecl _memicmp(const void *left,
 	const void *right, unsigned int count);
 
 struct S4Name;
-struct S4SortElem12;
+struct S4SortElem12_00532740;
 
 template <class T>
 class StringBase
@@ -57,7 +57,7 @@ private:
 	Header *m_data;
 
 	friend struct S4Name;
-	friend struct S4SortElem12;
+	friend struct S4SortElem12_00532740;
 };
 
 struct S4Name
@@ -68,7 +68,7 @@ struct S4Name
 	StringBase<char> m_base;
 };
 
-struct S4SortElem12
+struct S4SortElem12_00532740
 {
 	bool m_bfmeA;
 	S4Name m_bfmeName;
@@ -79,8 +79,8 @@ struct S4Cmp00532740
 {
 	void *m_bfmeState;
 
-	bool operator()(const S4SortElem12 &left,
-		const S4SortElem12 &right) const
+	bool operator()(const S4SortElem12_00532740 &left,
+		const S4SortElem12_00532740 &right) const
 	{
 		if (((!left.m_bfmeA) ^ (!right.m_bfmeA)) != 0)
 			return left.m_bfmeA;
@@ -89,8 +89,8 @@ struct S4Cmp00532740
 };
 
 void gen00531C50(void *first, void *last, void *comp, int, int);
-void bfmePopHeap00531A40(S4SortElem12 *first, S4SortElem12 *last,
-	S4SortElem12 *result, S4SortElem12 value, void *comp, int *distance);
+void bfmePopHeap00531A40(S4SortElem12_00532740 *first, S4SortElem12_00532740 *last,
+	S4SortElem12_00532740 *result, S4SortElem12_00532740 value, void *comp, int *distance);
 void bfmeSortVOY(void *first, void *last, void *comp);
 
 namespace _STL
@@ -109,8 +109,8 @@ void __partial_sort(RandomAccessIterator first, RandomAccessIterator middle,
 	bfmeSortVOY(first, middle, comp.m_bfmeState);
 }
 
-template void __partial_sort<S4SortElem12 *, S4SortElem12,
-	S4Cmp00532740>(S4SortElem12 *, S4SortElem12 *, S4SortElem12 *,
-	S4SortElem12 *, S4Cmp00532740);
+template void __partial_sort<S4SortElem12_00532740 *, S4SortElem12_00532740,
+	S4Cmp00532740>(S4SortElem12_00532740 *, S4SortElem12_00532740 *, S4SortElem12_00532740 *,
+	S4SortElem12_00532740 *, S4Cmp00532740);
 
 }

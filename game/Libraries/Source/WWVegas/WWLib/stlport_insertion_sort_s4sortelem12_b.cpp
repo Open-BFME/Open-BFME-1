@@ -43,7 +43,7 @@ public:
 	T *m_bfmeData;
 
 	friend struct S4Name;
-	friend struct S4SortElem12;
+	friend struct S4SortElem12_00532740;
 };
 
 // The wrapper keeps the retail string subobject at +0x04 while making its
@@ -59,7 +59,7 @@ struct S4Name
 // Not the same twelve bytes as the sort at 0x002E1170, despite the shared
 // placeholder name: there the copy reads a dword at +0 and a byte at +8, here
 // it reads a byte at +0 and a dword at +8. Only the string at +4 is common.
-struct S4SortElem12
+struct S4SortElem12_00532740
 {
 	bool m_bfmeA;						// +0x00
 	S4Name m_bfmeName;					// +0x04
@@ -70,7 +70,7 @@ struct S4Cmp00532740
 {
 	int m_bfmeSlot;
 
-	bool operator()(const S4SortElem12 &left, const S4SortElem12 &right) const
+	bool operator()(const S4SortElem12_00532740 &left, const S4SortElem12_00532740 &right) const
 	{
 		if (((!left.m_bfmeA) ^ (!right.m_bfmeA)) != 0)
 			return left.m_bfmeA;
@@ -120,7 +120,7 @@ void __insertion_sort(RandomAccessIter first, RandomAccessIter last, Compare com
 		__linear_insert(first, i, *i, comp);
 }
 
-template void __insertion_sort<S4SortElem12 *, S4Cmp00532740>(
-	S4SortElem12 *, S4SortElem12 *, S4Cmp00532740);
+template void __insertion_sort<S4SortElem12_00532740 *, S4Cmp00532740>(
+	S4SortElem12_00532740 *, S4SortElem12_00532740 *, S4Cmp00532740);
 
 }

@@ -50,7 +50,7 @@ private:
 	Header *m_data;
 
 	friend struct S4Name;
-	friend struct S4SortElem12;
+	friend struct S4SortElem12_00532740;
 };
 
 struct S4Name
@@ -61,7 +61,7 @@ struct S4Name
 	StringBase<char> m_base;
 };
 
-struct S4SortElem12
+struct S4SortElem12_00532740
 {
 	bool m_bfmeA;
 	S4Name m_bfmeName;
@@ -72,8 +72,8 @@ struct S4Cmp00532740
 {
 	int m_bfmeSlot;
 
-	bool operator()(const S4SortElem12 &left,
-		const S4SortElem12 &right) const
+	bool operator()(const S4SortElem12_00532740 &left,
+		const S4SortElem12_00532740 &right) const
 	{
 		if (((!left.m_bfmeA) ^ (!right.m_bfmeA)) != 0)
 			return left.m_bfmeA;
@@ -84,8 +84,8 @@ struct S4Cmp00532740
 namespace _STL
 {
 
-template void __introsort_loop<S4SortElem12 *, S4SortElem12, int,
-	S4Cmp00532740>(S4SortElem12 *, S4SortElem12 *, S4SortElem12 *, int,
+template void __introsort_loop<S4SortElem12_00532740 *, S4SortElem12_00532740, int,
+	S4Cmp00532740>(S4SortElem12_00532740 *, S4SortElem12_00532740 *, S4SortElem12_00532740 *, int,
 	S4Cmp00532740);
 
 }

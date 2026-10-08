@@ -19,16 +19,16 @@ public:
 	}
 };
 
-struct S4SortElem12
+struct S4SortElem12_00532740
 {
 	char m_bfmeC;
 	AsciiString m_bfmeName;
 	int m_bfmeA;
 };
 
-void bfmeSwapElem12(S4SortElem12 &left, S4SortElem12 &right)
+void bfmeSwapElem12(S4SortElem12_00532740 &left, S4SortElem12_00532740 &right)
 {
-	S4SortElem12 temporary(left);
+	S4SortElem12_00532740 temporary(left);
 	left = right;
 	right = temporary;
 }

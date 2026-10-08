@@ -12,7 +12,7 @@ struct S4Name
 	StringBase<char> m_base;
 };
 
-struct S4SortElem12
+struct S4SortElem12_00532740
 {
 	bool m_bfmeA;
 	S4Name m_bfmeName;
@@ -23,8 +23,8 @@ struct S4Cmp00532740
 {
 	int m_bfmeSlot;
 
-	bool operator()(const S4SortElem12 &left,
-		const S4SortElem12 &right) const
+	bool operator()(const S4SortElem12_00532740 &left,
+		const S4SortElem12_00532740 &right) const
 	{
 		if (((!left.m_bfmeA) ^ (!right.m_bfmeA)) != 0)
 			return left.m_bfmeA;
@@ -54,8 +54,8 @@ const Tp &__median(const Tp &a, const Tp &b, const Tp &c, Compare comp)
 		return b;
 }
 
-template const S4SortElem12 &__median<S4SortElem12, S4Cmp00532740>(
-	const S4SortElem12 &, const S4SortElem12 &, const S4SortElem12 &,
+template const S4SortElem12_00532740 &__median<S4SortElem12_00532740, S4Cmp00532740>(
+	const S4SortElem12_00532740 &, const S4SortElem12_00532740 &, const S4SortElem12_00532740 &,
 	S4Cmp00532740);
 
 }

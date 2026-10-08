@@ -1,4 +1,4 @@
-// ??$__push_heap@PAUS4SortElem12@@HU1@US4Cmp00532740@@@_STL@@YAXPAUS4SortElem12@@HHU1@US4Cmp00532740@@@Z
+// ??$__push_heap@PAUS4SortElem12_00532740@@HU1@US4Cmp00532740@@@_STL@@YAXPAUS4SortElem12_00532740@@HHU1@US4Cmp00532740@@@Z
 // Retail 0x0052F600. The adjust_heap caller at 0x00530350 proves this
 // STLport specialization and the neighboring sort bodies prove the element layout.
 // cl: /DNDEBUG /MD /EHsc
@@ -43,7 +43,7 @@ private:
 	Header *m_data;
 
 	friend struct S4Name;
-	friend struct S4SortElem12;
+	friend struct S4SortElem12_00532740;
 };
 
 struct S4Name
@@ -54,7 +54,7 @@ struct S4Name
 	StringBase<char> m_base;
 };
 
-struct S4SortElem12
+struct S4SortElem12_00532740
 {
 	bool m_bfmeA;
 	S4Name m_bfmeName;
@@ -65,8 +65,8 @@ struct S4Cmp00532740
 {
 	int m_bfmeSlot;
 
-	bool operator()(const S4SortElem12 &left,
-		const S4SortElem12 &right) const
+	bool operator()(const S4SortElem12_00532740 &left,
+		const S4SortElem12_00532740 &right) const
 	{
 		if (((!left.m_bfmeA) ^ (!right.m_bfmeA)) != 0)
 			return left.m_bfmeA;
@@ -92,7 +92,7 @@ void __push_heap(RandomAccessIterator first, Distance holeIndex,
 	*(first + holeIndex) = val;
 }
 
-template void __push_heap<S4SortElem12 *, int, S4SortElem12,
-	S4Cmp00532740>(S4SortElem12 *, int, int, S4SortElem12, S4Cmp00532740);
+template void __push_heap<S4SortElem12_00532740 *, int, S4SortElem12_00532740,
+	S4Cmp00532740>(S4SortElem12_00532740 *, int, int, S4SortElem12_00532740, S4Cmp00532740);
 
 }

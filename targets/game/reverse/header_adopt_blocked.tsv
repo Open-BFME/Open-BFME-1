@@ -563,3 +563,4 @@ game/GameEngine/Source/Common/BfmeConv542.cpp	StringBase	game\GameEngine\Source\
 game/GameEngine/Source/Common/BfmeConv535.cpp	StringBase	game\GameEngine\Source\Common\BfmeConv535.cpp(24) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
 game/GameEngine/Source/Common/RTS/ProductionPrerequisiteResolveNames.cpp	StringBase	game\GameEngine\Source\Common\RTS\ProductionPrerequisiteResolveNames.cpp(33) : error C2876: 'StringBase<T>' : not all overloads are accessible
 game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogicReset.cpp	StringBase	game\GameEngine\Source\GameLogic\LivingWorld\LivingWorldLogicReset.cpp(27) : error C2876: 'StringBase<T>' : not all overloads are accessible
+game/GameEngine/Source/Common/S4MakeHeapElem12.cpp	StringBase	game\GameEngine\Source\Common\S4MakeHeapElem12.cpp(18) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'

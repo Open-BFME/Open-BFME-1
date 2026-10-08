@@ -73,6 +73,9 @@
 #include <algorithm>
 
 struct S4SortElem12 { int m_a, m_b, m_c; };
+// The 0x00532740 sort family's (byte, string, dword) record; named apart
+// from the 0x002E1690 family's (dword, string, byte) S4SortElem12.
+struct S4SortElem12_00532740 { int m_a, m_b, m_c; };
 struct S4SortElem20 { int m_a, m_b, m_c, m_d, m_e; };
 struct S4SortElem8  { int m_a, m_b; };
 
@@ -123,7 +126,7 @@ S4_EXTERNAL_ADJUST_HEAP( S4Cmp009F34B0 )
 
 S4_EXTERNAL_INSERTION_SORT( S4SortElem12, S4Cmp002E1690 )
 S4_EXTERNAL_INSERTION_SORT( S4SortElem20, S4Cmp002EB8E0 )
-S4_EXTERNAL_INSERTION_SORT( S4SortElem12, S4Cmp00532740 )
+S4_EXTERNAL_INSERTION_SORT( S4SortElem12_00532740, S4Cmp00532740 )
 
 S4_EXTERNAL_LINEAR_INSERT( S4SortElem12, S4Cmp00531FA0 )
 S4_EXTERNAL_LINEAR_INSERT( S4SortElem12, S4Cmp00574DF0 )
@@ -143,7 +146,7 @@ S4_EXTERNAL_LINEAR_INSERT( S4SortElem12, S4Cmp00574DF0 )
 S4_FINAL_INSERTION( 002E1690, S4SortElem12 )
 S4_FINAL_INSERTION( 002EB8E0, S4SortElem20 )
 S4_FINAL_INSERTION( 00531FA0, S4SortElem12 )
-S4_FINAL_INSERTION( 00532740, S4SortElem12 )
+S4_FINAL_INSERTION( 00532740, S4SortElem12_00532740 )
 S4_FINAL_INSERTION( 00574DF0, S4SortElem12 )
 
 #define S4_MAKE_HEAP( NAME )                                                   \

@@ -15,7 +15,7 @@ private:
 	T *m_bfmeData;
 
 	friend struct S4Name;
-	friend struct S4SortElem12;
+	friend struct S4SortElem12_00532740;
 };
 
 struct S4Name
@@ -26,7 +26,7 @@ struct S4Name
 	StringBase<char> m_base;
 };
 
-struct S4SortElem12
+struct S4SortElem12_00532740
 {
 	bool m_bfmeFirst;
 	S4Name m_bfmeName;
@@ -52,8 +52,8 @@ void __unguarded_insertion_sort_aux(RandomAccessIter first,
 		__unguarded_linear_insert(i, *i, comp);
 }
 
-template void __unguarded_insertion_sort_aux<S4SortElem12 *, S4SortElem12,
-	S4Cmp00532740>(S4SortElem12 *, S4SortElem12 *, S4SortElem12 *,
+template void __unguarded_insertion_sort_aux<S4SortElem12_00532740 *, S4SortElem12_00532740,
+	S4Cmp00532740>(S4SortElem12_00532740 *, S4SortElem12_00532740 *, S4SortElem12_00532740 *,
 	S4Cmp00532740);
 
 }
