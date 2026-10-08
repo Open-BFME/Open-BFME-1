@@ -35,7 +35,7 @@ public:
 // ?j_0003de29@@YAXXZ (game/gen_small/gthunks_069.cpp). The body it jumps to
 // (RVA 0x00220160) is still unclaimed, so name the thunk: nothing defines a
 // HordeContainFieldParse symbol at link time.
-extern "C" void __cdecl __identifier("?j_0003de29@@YAXXZ")(MultiIniFieldParse &parse);
+extern "C" void __cdecl __identifier("HordeContainFieldParse")(MultiIniFieldParse &parse);
 
 class HordeContain
 {
@@ -48,6 +48,6 @@ ModuleData *HordeContain::friend_newModuleData(INI *ini)
 {
 	HordeContainModuleData *data = new HordeContainModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &__identifier("?j_0003de29@@YAXXZ"));
+		ini->initFromINIMultiProc(data, &__identifier("HordeContainFieldParse"));
 	return (ModuleData *)data;
 }
