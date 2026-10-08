@@ -27,7 +27,9 @@ private:
 	StringBase(void) : m_data(0) {}
 	StringBase(const T *text);
 	StringBase(const StringBase<T> &that);
-	~StringBase(void);
+	// Retail's destructors call releaseBuffer (0x00887940) directly.
+	~StringBase(void) { releaseBuffer(); }
+	void releaseBuffer(void);
 
 public:
 	Int compare(const T *text) const;
@@ -43,10 +45,8 @@ public:
 	AsciiString(const AsciiString &that) : StringBase<char>(that) {}
 	~AsciiString(void) {}
 
-	Int compare(const char *text) const
-	{
-		return ((const StringBase<char> *)this)->compare(text);
-	}
+	// Retail calls StringBase<char>::compare (ILT 0x0004B01A) directly.
+	using StringBase<char>::compare;
 
 	const char *str(void) const
 	{

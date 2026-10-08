@@ -24,6 +24,7 @@ public:
 
 private:
 	StringBase(const char *);
+	void releaseBuffer();
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
@@ -35,14 +36,11 @@ public:
 	{
 		((StringBase<char> *)this)->StringBase<char>::StringBase(text);
 	}
-	~AsciiString();
+	// Retail releases the buffer through StringBase<char>::releaseBuffer
+	// (0x00887940) directly, not through ~AsciiString.
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 	void __cdecl format(AsciiString format, ...);
-	void concat(const AsciiString &suffix)
-	{
-		((StringBase<char> *)this)->StringBase<char>::concat(
-			*(const StringBase<char> *)&suffix);
-	}
 	const char *str() const
 	{
 		static const char TheNullChr = 0;
@@ -57,12 +55,12 @@ private:
 class GameLogic
 {
 public:
-	Int getFrame() const { return m_frame; }
-
-private:
 	unsigned char m_unreconstructed[0x3c];
 	Int m_frame;
 };
+
+// File-static so this TU emits no GameLogic::getFrame COMDAT.
+static inline Int gameLogicFrame(const GameLogic *logic) { return logic->m_frame; }
 
 extern Bool ScriptDebugMessagesDisabled;
 extern HMODULE TheScriptDebugWindowDLL;
@@ -85,7 +83,8 @@ void ScriptEngine::AppendDebugMessage(const AsciiString &strToAdd, Bool forcePau
 		return;
 
 	AsciiString msg;
-	msg.format("%d ", TheGameLogic->getFrame());
-	msg.concat(strToAdd);
+	msg.format("%d ", gameLogicFrame(TheGameLogic));
+	// Retail calls StringBase<char>::concat (ILT 0x0002B855) directly.
+	((StringBase<char> *)&msg)->concat(*(const StringBase<char> *)&strToAdd);
 	((void (__cdecl *)(const char *))proc)(msg.str());
 }
