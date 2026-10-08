@@ -73,7 +73,6 @@ dir32,0x00427C55,??0Rva0074EB10TextureSlot@@QAE@XZ,"retail 0x00427C55 is already
 dir32,0x004286BE,?j_000286be@@YAXXZ,"retail 0x004286BE is already recorded as ?rva004286be@BfmeAptScreenOnlineChat@@QAEXXZ; reference that name, not a new one"
 dir32,0x00428ACE,?rva005A9B00@@YAHPAVObject@@PAX@Z,the name encodes 0x005A9B00 but retail reads 0x00428ACE
 dir32,0x00429249,?j_00029249@@YAXXZ,"retail 0x00429249 is already recorded as ?rva00429249@BfmeAptScreenOnlineChat@@QAEXXZ; reference that name, not a new one"
-dir32,0x004297E9,?j_000297e9@@YAXXZ,"retail 0x004297E9 is already recorded as _TooltipUpgradeFieldParse; reference that name, not a new one"
 dir32,0x00429D61,?j_00029d61@@YAXXZ,"retail 0x00429D61 is already recorded as ?rva00429d61@BfmeAptScreenOnlineChat@@QAEXXZ; reference that name, not a new one"
 dir32,0x0042A392,??_F?$vector@UGen00026F35@@V?$allocator@UGen00026F35@@@_STL@@@_STL@@QAEXXZ,"nothing in the ledger owns 0x0042A392. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0042A8E2,??1Rva00386070@@QAE@XZ,"retail 0x0042A8E2 is already recorded as ??1Rva00386080AsciiStringElement@@QAE@XZ; reference that name, not a new one"
