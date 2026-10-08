@@ -1077,15 +1077,15 @@ int Rva007FD920( struct Rva007FD4E0Socket *socket, const char *buffer,
 	int length, int flags, void *to, int toLength )
 {
 	int iResult;
-	char scratch[ 0x10 ];
+	char temp[ 0x10 ];
 	const struct Rva007FD920IpHeader *pHeader;
-	int iTimeToLive;
+	int parm;
 
 	if ( socket->m_type == 3 )
 	{
 		pHeader = (const struct Rva007FD920IpHeader *)buffer;
-		iTimeToLive = pHeader->m_timeToLive;
-		setsockopt( socket->m_socket, 0, 4, &iTimeToLive, 4 );
+		parm = pHeader->m_timeToLive;
+		setsockopt( socket->m_socket, 0, 4, &parm, 4 );
 
 		length -= ( pHeader->m_versionAndLength & 0x0F ) * 4;
 		buffer = buffer + ( pHeader->m_versionAndLength & 0x0F ) * 4;
@@ -1097,7 +1097,7 @@ int Rva007FD920( struct Rva007FD4E0Socket *socket, const char *buffer,
 		iResult = send( socket->m_socket, buffer, length, 0 );
 	else
 		iResult = sendto( socket->m_socket, buffer, length, 0,
-			Rva007FD660( scratch, to ), toLength );
+			Rva007FD660( temp, to ), toLength );
 
 	return Rva007FD540( iResult );
 }

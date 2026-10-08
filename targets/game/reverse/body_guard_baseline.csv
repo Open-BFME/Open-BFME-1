@@ -1329,7 +1329,6 @@ dir32,0x013571F8,__adjust_fdiv,"nothing in the ledger owns 0x013571F8. Give the 
 dir32,0x01357214,_Rva01357214Onexitbegin,"retail 0x01357214 is already recorded as ___onexitbegin; reference that name, not a new one"
 ltable,0x00420AC0,?drawIconUI@Drawable@@QAEXH@Z,+124 $L304 wants 0x00820B1E retail 0x00820B25
 ltable,0x0069A6F0,?setReverb@Rva0069A6F0Owner@@QAEXPAPAURva0069A6F0Playing@@@Z,+228 $L347 wants 0x00A9A70A retail 0x00A9A748
-ltable,0x007FD920,_Rva007FD920,+275 $L2546 wants 0x00BFDA4F retail 0x00BFDA48
 ltable,0x0080DD80,_Rva0080DD80,+443 $L1447 wants 0x00C0DF60 retail 0x00C0DF65
 ltable,0x0085F4A0,_piEnterResultToJoinResult,+52 $L1715 wants 0x00C5F4AF retail 0x00C5F4C7
 static,0x000E4210,?parsePlayerTemplateDefinition@PlayerTemplateStore@@SAXPAVINI@@@Z,"+79 ?TheFieldParseTable@?1??getFieldParse@Pl@0x010847E0: 46 byte(s) differ, first +28: source 000000000000000000000000080000000000000000000000 retail 280f0801e0"
@@ -1391,7 +1390,6 @@ tail,0x0043FA90,?hideIdleWorkerLayout@InGameUI@@EAEXXZ,"compiled=73 ledger=72 ta
 tail,0x004889A0,?winCreateLayout@GameWindowManager@@UAEPAVWindowLayout@@VAsciiString@@@Z,"compiled=265 ledger=257 tail=8: 4 byte(s) differ from retail, first +257"
 tail,0x005FAFE0,??0LightningEmissionInfo@FXParticleSystem@@QAE@XZ,"compiled=294 ledger=291 tail=3: 3 byte(s) differ from retail, first +291"
 tail,0x005FD9E0,??0DefaultPhysicsModuleInfo@FXParticleSystem@@QAE@XZ,"compiled=94 ledger=91 tail=3: 3 byte(s) differ from retail, first +91"
-tail,0x007FD920,_Rva007FD920,"compiled=311 ledger=259 tail=52: 19 byte(s) differ from retail, first +291"
 tail,0x007FDFF0,?Rva007FDFF0Connect@@YAPAXPBDH@Z,"compiled=523 ledger=494 tail=29: 9 byte(s) differ from retail, first +514"
 tail,0x007FFAD0,?Rva007FFAD0@@YAII@Z,"compiled=129 ledger=102 tail=27: 7 byte(s) differ from retail, first +122"
 tail,0x0080DD80,_Rva0080DD80,"compiled=488 ledger=427 tail=61: 16 byte(s) differ from retail, first +471"
