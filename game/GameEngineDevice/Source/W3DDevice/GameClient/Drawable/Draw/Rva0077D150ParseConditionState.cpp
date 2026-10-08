@@ -35,9 +35,47 @@ class INI
 public:
 	const char *getNextTokenOrNull(const char *previous);
 	void initFromINI(void *instance, const FieldParse *fieldParse);
+	static void parseAsciiString(INI *, void *, void *, const void *);
+	static void parseBitString32(INI *, void *, void *, const void *);
+	static void parseBool(INI *, void *, void *, const void *);
+	static void parseFXList(INI *, void *, void *, const void *);
+	static void parseInt(INI *, void *, void *, const void *);
 };
 
-extern FieldParse g_012BB650[];
+void parseAnimation(INI *, void *, void *, const void *);
+void parseFXEvent(INI *, void *, void *, const void *);
+void parseParticleSysBone(INI *, void *, void *, const void *);
+void d_008522a0();
+
+const char *g_00EBB5DC[10] =
+{
+	"RANDOMSTART",
+	"START_FRAME_FIRST",
+	"START_FRAME_LAST",
+	"ADJUST_HEIGHT_BY_CONSTRUCTION_PERCENT",
+	"MAINTAIN_FRAME_ACROSS_STATES",
+	"RESTART_ANIM_WHEN_COMPLETE",
+	"MAINTAIN_FRAME_ACROSS_STATES2",
+	"MAINTAIN_FRAME_ACROSS_STATES3",
+	"MAINTAIN_FRAME_ACROSS_STATES4",
+	0
+};
+
+extern FieldParse g_012BB650[11];
+extern "C" FieldParse __identifier("?g_012BB650@@3PAUFieldParse@@A")[11] =
+{
+	{ "Animation", parseAnimation, 0, 0x2C },
+	{ "StateName", INI::parseAsciiString, 0, 0 },
+	{ "Flags", INI::parseBitString32, g_00EBB5DC, 0x38 },
+	{ "ShareAnimation", INI::parseBool, 0, 0x40 },
+	{ "EnteringStateFX", INI::parseFXList, 0, 0x44 },
+	{ "BeginScript", reinterpret_cast<void (*)(INI *, void *, void *, const void *)>(d_008522a0), 0, 0x48 },
+	{ "FrameForPristineBonePositions", INI::parseInt, 0, 0x3C },
+	{ "FXEvent", parseFXEvent, 0, 0 },
+	{ "ParticleSysBone", parseParticleSysBone, 0, 0 },
+	{ "SimilarRestart", INI::parseBool, 0, 0x6C },
+	{ 0, 0, 0, 0 }
+};
 
 #include "ascii_string.h"
 
