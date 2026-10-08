@@ -4511,27 +4511,8 @@ void ScriptActions::doIdleAllPlayerUnits(const AsciiString& playerName)
 //-------------------------------------------------------------------------------------------------
 /** doResumeSupplyTruckingForIdleUnits */
 //-------------------------------------------------------------------------------------------------
-// ?doResumeSupplyTruckingForIdleUnits@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
-void ScriptActions::doResumeSupplyTruckingForIdleUnits(const AsciiString& playerName)
-{
-	Player* player = TheScriptEngine->getPlayerFromAsciiString(playerName);
-	if (player && playerName.isNotEmpty())
-	{
-		player->setUnitsShouldIdleOrResume(false);
-	}
-	else
-	{
-		for (Int i=0; i<ThePlayerList->getPlayerCount(); ++i)
-		{
-			Player *player = ThePlayerList->getNthPlayer(i);
-			if (player->getPlayerType() == PLAYER_HUMAN)
-			{
-				DEBUG_LOG(("ScriptActions::doResumeSupplyTruckingForIdleUnits() for player %d\n", i));
-				player->setUnitsShouldIdleOrResume(false);
-			}
-		}
-	}
-}
+// doResumeSupplyTruckingForIdleUnits@ScriptActions@@IAEXABVAsciiString@@@Z
+// Body in ScriptActions_doResumeSupplyTruckingForIdleUnits.cpp (exact 137B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** doAmbientSoundsPause */
