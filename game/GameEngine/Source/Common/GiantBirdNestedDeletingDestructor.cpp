@@ -7,9 +7,7 @@ public:
 	virtual ~GiantBirdNested();
 };
 
-__declspec(noinline) GiantBirdNested::~GiantBirdNested() {}
-
-void Force_GiantBirdNested_Deleting_Destructor(GiantBirdNested *nested)
+void Force_GiantBirdNested_Deleting_Destructor()
 {
-	delete nested;
+	GiantBirdNested value;
 }
