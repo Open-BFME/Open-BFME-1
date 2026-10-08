@@ -56,6 +56,18 @@ struct Rva003E81E0Struct;
 struct Rva003E8440Struct;
 struct MADStruct;
 struct Rva003F1CA0Struct;
+struct GroundPathPassableInfo;
+class BfmeCheckMovementInfo;
+class Rva003DB640Info;
+class Rva003E5A50Info;
+
+// matched cell-space walk at 0x003D7440 (PathfinderIterateCellsAlongLineRva003D7440.cpp)
+class Rva003D7440Pathfinder
+{
+public:
+	Int iterateCellsAlongLine003D7440(const ICoord2D &start, const ICoord2D &end,
+			PathfindLayerEnum layer, Rva003D7440Struct *userData);	///< ILT thunk at 0x0004ACBE
+};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
@@ -65,8 +77,6 @@ public:
 
 	Int iterateCellsAlongLine(const Coord3D &startWorld, const Coord3D &endWorld,
 			PathfindLayerEnum layer, Rva003D7440Struct *userData);
-	Int iterateCellsAlongLine(const ICoord2D &start, const ICoord2D &end,
-			PathfindLayerEnum layer, Rva003D7440Struct *userData);	///< ILT thunk at 0x0004ACBE
 
 	Int iterateCellsAlongLine(const Coord3D &startWorld, const Coord3D &endWorld,
 			PathfindLayerEnum layer, Rva003D7680Struct *userData);
@@ -90,8 +100,6 @@ public:
 
 	Int iterateCellsAlongLine(const Coord3D &startWorld, const Coord3D &endWorld,
 			PathfindLayerEnum layer, Rva003E33F0Struct *userData);
-	Int iterateCellsAlongLine(const ICoord2D &start, const ICoord2D &end,
-			PathfindLayerEnum layer, Rva003E33F0Struct *userData);	///< ILT thunk at 0x00013DC2
 
 	Int iterateCellsAlongLine(const Coord3D &startWorld, const Coord3D &endWorld,
 			PathfindLayerEnum layer, Rva003E3650Struct *userData);
@@ -101,17 +109,17 @@ public:
 	Int iterateCellsAlongLine(const Coord3D &startWorld, const Coord3D &endWorld,
 			PathfindLayerEnum layer, Rva003E7F80Struct *userData);
 	Int iterateCellsAlongLine(const ICoord2D &start, const ICoord2D &end,
-			PathfindLayerEnum layer, Rva003E7F80Struct *userData);	///< ILT thunk at 0x00029DF7
+			PathfindLayerEnum layer, BfmeCheckMovementInfo *userData);	///< ILT thunk at 0x00029DF7
 
 	Int iterateCellsAlongLine(const Coord3D &startWorld, const Coord3D &endWorld,
 			PathfindLayerEnum layer, Rva003E81E0Struct *userData);
 	Int iterateCellsAlongLine(const ICoord2D &start, const ICoord2D &end,
-			PathfindLayerEnum layer, Rva003E81E0Struct *userData);	///< ILT thunk at 0x00023DDF
+			PathfindLayerEnum layer, Rva003DB640Info *userData);	///< ILT thunk at 0x00023DDF
 
 	Int iterateCellsAlongLine(const Coord3D &startWorld, const Coord3D &endWorld,
 			PathfindLayerEnum layer, Rva003E8440Struct *userData);
 	Int iterateCellsAlongLine(const ICoord2D &start, const ICoord2D &end,
-			PathfindLayerEnum layer, Rva003E8440Struct *userData);	///< ILT thunk at 0x0001DAA2
+			PathfindLayerEnum layer, Rva003E5A50Info *userData);	///< ILT thunk at 0x0001DAA2
 
 	void iterateCellsAlongLine(const Coord3D &startWorld, const Coord3D &endWorld,
 			PathfindLayerEnum layer, MADStruct *userData);
@@ -129,8 +137,10 @@ protected:
 			PathfindLayerEnum layer, void *userData);		///< ILT thunk at 0x000190B0
 
 private:
-	void iterateCellsAlongLine(const ICoord2D *start, const ICoord2D *end,
-			PathfindLayerEnum layer, MADStruct *userData);	///< ILT thunk at 0x00014092
+	Int iterateCellsAlongLine(const ICoord2D *start, const ICoord2D *end,
+			PathfindLayerEnum layer, MADStruct *userData);
+	Int iterateCellsAlongLine(const ICoord2D &start, const ICoord2D &end,
+			PathfindLayerEnum layer, GroundPathPassableInfo *userData);	///< ILT thunk at 0x00013DC2	///< ILT thunk at 0x00014092
 };
 
 // retail 0x003D9EA0 -- forwards to the cell-space walk at 0x003D7440
@@ -140,7 +150,7 @@ Int Pathfinder::iterateCellsAlongLine(const Coord3D &startWorld, const Coord3D &
 	ICoord2D start, end;
 	worldToCell( &startWorld, &start );
 	worldToCell( &endWorld, &end );
-	return iterateCellsAlongLine(start, end, layer, userData);
+	return reinterpret_cast<Rva003D7440Pathfinder *>(this)->iterateCellsAlongLine003D7440(start, end, layer, userData);
 }
 
 // retail 0x003DA9A0 -- forwards to the cell-space walk at 0x003D7680
@@ -190,7 +200,7 @@ Int Pathfinder::iterateCellsAlongLine(const Coord3D &startWorld, const Coord3D &
 	ICoord2D start, end;
 	worldToCell( &startWorld, &start );
 	worldToCell( &endWorld, &end );
-	return iterateCellsAlongLine(start, end, layer, userData);
+	return iterateCellsAlongLine(start, end, layer, reinterpret_cast<GroundPathPassableInfo *>(userData));
 }
 
 // retail 0x003E7F20 -- forwards to the cell-space walk at 0x003E3650
@@ -210,7 +220,7 @@ Int Pathfinder::iterateCellsAlongLine(const Coord3D &startWorld, const Coord3D &
 	ICoord2D start, end;
 	worldToCell( &startWorld, &start );
 	worldToCell( &endWorld, &end );
-	return iterateCellsAlongLine(start, end, layer, userData);
+	return iterateCellsAlongLine(start, end, layer, reinterpret_cast<BfmeCheckMovementInfo *>(userData));
 }
 
 // retail 0x003ED930 -- forwards to the cell-space walk at 0x003E81E0
@@ -220,7 +230,7 @@ Int Pathfinder::iterateCellsAlongLine(const Coord3D &startWorld, const Coord3D &
 	ICoord2D start, end;
 	worldToCell( &startWorld, &start );
 	worldToCell( &endWorld, &end );
-	return iterateCellsAlongLine(start, end, layer, userData);
+	return iterateCellsAlongLine(start, end, layer, reinterpret_cast<Rva003DB640Info *>(userData));
 }
 
 // retail 0x003ED990 -- forwards to the cell-space walk at 0x003E8440
@@ -230,7 +240,7 @@ Int Pathfinder::iterateCellsAlongLine(const Coord3D &startWorld, const Coord3D &
 	ICoord2D start, end;
 	worldToCell( &startWorld, &start );
 	worldToCell( &endWorld, &end );
-	return iterateCellsAlongLine(start, end, layer, userData);
+	return iterateCellsAlongLine(start, end, layer, reinterpret_cast<Rva003E5A50Info *>(userData));
 }
 
 // retail 0x003F1C40 -- forwards to the cell-space walk at 0x003ED9F0
