@@ -20,13 +20,13 @@ public:
 	BfmeLinkNode *m_bfmeNext;					// +0x04
 };
 
-extern int TheBfmeDrawableDirtyFlags;					// 0x012EF418
+extern unsigned int g_Rva00EEF418;					// 0x012EF418
 extern BfmeLinkNode *TheBfmeLinkHead;					// 0x012EF41C
 
 // ?Gen_0018edf0@@YAXPAVBfmeLinkNode@@@Z
 void Gen_0018edf0(BfmeLinkNode *node)
 {
-	TheBfmeDrawableDirtyFlags |= 1;
+	g_Rva00EEF418 |= 1;
 
 	BfmeLinkNode **link = &TheBfmeLinkHead;
 

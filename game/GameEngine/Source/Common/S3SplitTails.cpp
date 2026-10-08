@@ -42,7 +42,7 @@ private:
 	int m_bfme0014;							// +0x14
 };
 
-extern int TheBfmeDrawableDirtyFlags;					// 0x012EF418
+extern unsigned int g_Rva00EEF418;					// 0x012EF418
 
 class Gen_0018f2c0
 {
@@ -71,7 +71,7 @@ void Gen_005a03c0::bfmeSkip(void)
 // ?bfmeSetValue@Gen_0018f2c0@@QAEXH@Z
 void Gen_0018f2c0::bfmeSetValue(int value)
 {
-	TheBfmeDrawableDirtyFlags |= 1;
+	g_Rva00EEF418 |= 1;
 
 	m_bfme0070 = value;
 }
