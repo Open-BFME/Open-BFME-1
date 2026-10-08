@@ -86,7 +86,7 @@ public:
 	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
 	~AsciiString()
 	{
-		((BFMERetailAsciiString *)this)->releaseBuffer();
+		StringBase<char>::releaseBuffer();
 	}
 
 	void __cdecl format(AsciiString format, ...);		// 0x00888FF0
