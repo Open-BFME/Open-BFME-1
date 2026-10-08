@@ -10,8 +10,13 @@ public:
     ~BfmeHandleCX();
     TextureClass *rva00000000;
 };
-class Gen_00C712F0Target;
-extern Gen_00C712F0Target TheBfmeObject_00C712F0;
+class Gen_00C712F0Target {
+public:
+    void *m_handle;
+};
+// Retail VA 0x01346E70 (zero-initialized): the 4-byte handle constructed here;
+// the next recorded datum starts at 0x01346E74.
+Gen_00C712F0Target TheBfmeObject_00C712F0;
 void bfmeForward_00C712F0();
 extern "C" int __cdecl atexit(void (__cdecl *callback)());
 void Rva00C6DFB0Initialize()
