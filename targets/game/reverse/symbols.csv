@@ -75697,7 +75697,6 @@ name,address,notes
 ?bfmeApply@Gen_0052F050Owner@@QAEXPAX@Z,0x0002B210,Open-BFME5 ILT the __stdcall wrapper at 0x0052F050 calls through
 ?bfmeApply@Gen_00574F40Owner@@QAEXPAX@Z,0x00013471,Open-BFME5 ILT the __stdcall wrapper at 0x00574F40 calls through
 ?bfmeApply@Gen_006C89F0Target@@QAE_NPAX0_N@Z,0x000486EE,Open-BFME5 ILT the guarded delegate at 0x006C89F0 appends a false and calls through
-?bfmeApply@TunnelTracker@@QAEXPAVObject@@PAX@Z,0x00037CD1,call-site callee of Gen_00219C70::bfmeRemove; ILT 0x00037CD1 -> 0x000F8870
 ?bfmeApplyAAX@Glo012F1028Type@@QAEXH@Z,0x0003F7F1,Open-BFME5 ILT apply the 0x006140C0 dispatch calls after the cursor change
 ?bfmeApplyABG@BfmeK1094@@QAEXPAX0@Z,0x00006DE8,Open-BFME5 ILT apply the 0x00151560 walk calls on the first matching item
 ?bfmeApplyAHB@BfmeThingAHB@@QAEXH@Z,0x000306F2,pin

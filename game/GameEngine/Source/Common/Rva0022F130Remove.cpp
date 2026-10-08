@@ -49,7 +49,8 @@ class TunnelTracker
 {
 public:
 	bool isInContainer(Object *obj);
-	void bfmeApply(Object *obj, void *extra);
+	// Retail ILT 0x00037CD1 lands on removeFromContain (0x000F8870).
+	void removeFromContain(Object *obj, bool exposeStealthUnits);
 };
 
 class Player
@@ -79,5 +80,5 @@ void Gen_0022F130::bfmeRemove(Object *obj, void *extra)
 		return;
 	if (!player->m_tunnels->isInContainer(obj))
 		return;
-	player->m_tunnels->bfmeApply(obj, extra);
+	player->m_tunnels->removeFromContain(obj, *(bool *)&extra);
 }
