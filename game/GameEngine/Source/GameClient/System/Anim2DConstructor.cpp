@@ -78,7 +78,19 @@ public:
 class GameClient;
 extern GameClient *TheGameClient;
 static inline ClientFrameSubsystem *theGameClientView() { return (ClientFrameSubsystem *)TheGameClient; }
-extern const void *g_0110F29C[];
+extern const void *g_0110F29C[4];
+extern void j_0001247c();
+extern void j_00020bf3();
+extern void j_000404b2();
+extern void j_0001fb04();
+
+extern "C" const void *__identifier("?g_0110F29C@@3PAPBXA")[4] =
+{
+	(const void *)j_0001247c,
+	(const void *)j_00020bf3,
+	(const void *)j_000404b2,
+	(const void *)j_0001fb04
+};
 extern Int __cdecl GetGameClientRandomValue(Int lo, Int hi, char *file, Int line);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h

@@ -88,14 +88,32 @@ static void initParticleSystemFields(BfmeCategoryHead1054 *categories)
 	fn.typed(categories);
 }
 
+namespace FXParticleSystem
+{
+	class ParticleSystemTemplate
+	{
+	public:
+		static void parse(INI *ini, void *instance, void *store,
+			const void *userData);
+	};
+}
+
 struct ParticleSystemFieldTable
 {
-	unsigned int words[8];
+	FieldParse fields[2];
 };
 
 extern unsigned char g_012F6850[];
 extern volatile unsigned char g_012F6923;
 extern const ParticleSystemFieldTable g_0110F92C;
+extern "C" const ParticleSystemFieldTable
+	__identifier("?g_0110F92C@@3UParticleSystemFieldTable@@B") =
+{
+	{
+		{ "System", FXParticleSystem::ParticleSystemTemplate::parse, 0, 0 },
+		{ 0, 0, 0, 0 }
+	}
+};
 
 void INI::parseParticleSystemDefinition(INI *ini)
 {

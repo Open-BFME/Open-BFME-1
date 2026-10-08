@@ -17471,3 +17471,6 @@ _g_012F7014,0x012F7014
 ?g_010EE088@@3QBUFieldParse@@B,0x010EE088
 ?g_010FE7E0@@3QBUBfmeKeyboardSystemLookupListRec@@B,0x010FE7E0
 ?g_010FE828@@3QBUBfmeKeyboardSystemLookupListRec@@B,0x010FE828
+?WindMotionNames@FXParticleSystem@@3QBQBDB,0x01110244
+?g_0110F29C@@3PAPBXA,0x0110F29C
+?g_0110F92C@@3UParticleSystemFieldTable@@B,0x0110F92C

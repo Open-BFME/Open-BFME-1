@@ -90842,3 +90842,7 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_07FHDACFJO@KEY_DEL?$AA@,0x00CFEB98,Keyboard lookup literal; complete NUL bytes and table pointer verified; evidence=targets/game/reverse/identity_evidence/010fe7e0-keyboard-lookup-arrays.md
 ??_C@_0M@LPOHCOEH@KEY_KPSLASH?$AA@,0x00CFEB88,Keyboard lookup literal; complete NUL bytes and table pointer verified; evidence=targets/game/reverse/identity_evidence/010fe7e0-keyboard-lookup-arrays.md
 ??_C@_08LMGHBJIN@KEY_NONE?$AA@,0x00CFEB7C,Keyboard lookup literal; complete NUL bytes and table pointer verified; evidence=targets/game/reverse/identity_evidence/010fe7e0-keyboard-lookup-arrays.md
+??_C@_06CGLFEPBO@Unused?$AA@,0x00D102FC,Complete NUL-terminated Unused payload at wind-name table VA 01110244; raw proof build/rlink/identity-four-dir32-1791427721/wind-literal-payloads.log
+??_C@_08FJNLCKDJ@PingPong?$AA@,0x00D102F0,Complete NUL-terminated PingPong payload at wind-name table VA 01110244; raw proof build/rlink/identity-four-dir32-1791427721/wind-literal-payloads.log
+??_C@_08NAAEEOJC@Circular?$AA@,0x00D102E4,Complete NUL-terminated Circular payload at wind-name table VA 01110244; raw proof build/rlink/identity-four-dir32-1791427721/wind-literal-payloads.log
+??_C@_06JIODDOFH@System?$AA@,0x00D0F954,Complete NUL-terminated System payload referenced by FieldParse table VA 0110F92C; raw proof build/rlink/identity-four-dir32-1791427721/system-literal-payload.log

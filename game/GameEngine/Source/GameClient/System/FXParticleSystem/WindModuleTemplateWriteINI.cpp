@@ -167,10 +167,15 @@ void Rva005EE1D0Finish(File *file, unsigned int *indent);
 
 extern const float g_rva01075350;
 
+extern "C" const char *const __identifier("?WindMotionNames@FXParticleSystem@@3QBQBDB")[5] =
+{
+	"NONE", "Unused", "PingPong", "Circular", 0
+};
+
 namespace FXParticleSystem
 {
 // Exported retail table of wind-motion keywords, indexed by m_windMotion.
-extern const char *const WindMotionNames[];
+extern const char *const WindMotionNames[5];
 
 // The generic float writer, reached through ILT 0x0001FC8A.
 void writePhysicsScalar(INI *stream, void *flags, const void *name,
