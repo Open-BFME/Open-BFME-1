@@ -48,7 +48,8 @@ git() {
         # FAIL_GIT names one invocation that fails, as a broken index or repository would.
         [ "$*" != "${FAIL_GIT:-}" ] || { echo "fatal: $FAIL_GIT failed" >&2; return 128; }
         case "$*" in
-        'config --get merge.union.driver') printf '%s\n' 'python3 tools/merge_rows.py %O %A %B %P' ;;
+        'config --get merge.union.driver') printf '%s\n' 'sh .githooks/run-python3 tools/merge_rows.py %O %A %B %P' ;;
+        'config --get merge.jsonlist.driver') printf '%s\n' 'sh .githooks/run-python3 tools/merge_json_list.py %O %A %B' ;;
         'rev-parse --show-toplevel') printf '%s\n' "$PWD" ;;
         'rev-parse --git-path bfme-ledger-verified-tree') printf '%s\n' ledger-verified-tree ;;
         'rev-parse -q --verify MERGE_HEAD') return 1 ;;

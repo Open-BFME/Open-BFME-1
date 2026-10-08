@@ -7,6 +7,7 @@ and told a new contributor their clean ledger was corrupt. .githooks/python3.sh
 falls back to `py -3` and otherwise names the real problem.
 """
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -58,3 +59,41 @@ def test_py_launcher_stands_in_for_python3(tmp_path):
     run = post_merge(repo, env)
     assert run.returncode == 0, run.stderr
     assert "check_csv: OK" in run.stdout, run.stdout + run.stderr
+
+
+def union_merge(tmp_path, py):
+    """Merge two branches that both append to a merge=union ledger, through the
+    driver tools/setup_hooks.sh registers, with python3 the Store shortcut."""
+    repo, env = clone_with_hooks(tmp_path, py)
+    shutil.copy(ROOT / "tools/merge_rows.py", repo / "tools/merge_rows.py")
+    (repo / ".gitattributes").write_text("ledger.csv merge=union\n")
+    driver = re.search(r'merge\.union\.driver "([^"]+)"', (ROOT / "tools/setup_hooks.sh").read_text()).group(1)
+    env.update(GIT_AUTHOR_NAME="t", GIT_COMMITTER_NAME="t", GIT_AUTHOR_EMAIL="", GIT_COMMITTER_EMAIL="")
+
+    def git(*args):
+        return subprocess.run(["git", "-c", f"merge.union.driver={driver}", *args], cwd=repo, env=env,
+                              capture_output=True, text=True)
+    ledger = repo / "ledger.csv"
+    ledger.write_text("a\nb\n")
+    git("add", ".")
+    git("commit", "-qm", "base")
+    git("checkout", "-qb", "side")
+    ledger.write_text("a\nb\nside\n")
+    git("commit", "-qam", "side")
+    git("checkout", "-q", "-")
+    ledger.write_text("a\nb\nmain\n")
+    git("commit", "-qam", "main")
+    return git("merge", "-q", "--no-edit", "side"), ledger
+
+
+def test_union_driver_runs_through_py_launcher(tmp_path):
+    launcher = f'#!/bin/sh\n[ "$1" = -3 ] || exit 1\nshift\nexec "{sys.executable}" "$@"\n'
+    run, ledger = union_merge(tmp_path, launcher)
+    assert run.returncode == 0, run.stdout + run.stderr
+    assert ledger.read_text().splitlines() == ["a", "b", "main", "side"]
+
+
+def test_union_driver_without_python_names_it(tmp_path):
+    run, _ = union_merge(tmp_path, "#!/bin/sh\nexit 1\n")
+    assert run.returncode != 0
+    assert "no working Python 3" in run.stdout + run.stderr, run.stdout + run.stderr

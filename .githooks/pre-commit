@@ -20,7 +20,9 @@ cd "$ROOT"
 receipt="$(git rev-parse --git-path bfme-ledger-verified-tree 2>/dev/null || true)"
 [ -z "$receipt" ] || rm -f "$receipt" 2>/dev/null || true
 
-. .githooks/python3.sh
+# Beside the hook, not the tree: tests and seats run copies of a hook elsewhere;
+# a copy without its helper uses python3 as before.
+. "$(dirname "${BASH_SOURCE[0]}")/python3.sh" 2>/dev/null || require_python3() { :; }
 require_python3 pre-commit
 
 fail() {
@@ -39,12 +41,16 @@ capture() {
 }
 
 # Clones set up before tools/merge_rows.py existed never rerun setup_hooks.sh;
-# this is how they pick up the union driver (.gitattributes says why).
-union_driver="python3 tools/merge_rows.py %O %A %B %P"
-if [ "$(git config --get merge.union.driver || true)" != "$union_driver" ]; then
-    git config merge.union.driver "$union_driver"
-    echo "pre-commit: registered tools/merge_rows.py as this clone's union merge driver" >&2
-fi
+# this is how they pick up the union driver (.gitattributes says why), and how
+# clones registered with a bare `python3` (the Windows Store shortcut) get
+# .githooks/run-python3's py -3 fallback.
+for driver in "union:tools/merge_rows.py %O %A %B %P" "jsonlist:tools/merge_json_list.py %O %A %B"; do
+    want="sh .githooks/run-python3 ${driver#*:}"
+    if [ "$(git config --get "merge.${driver%%:*}.driver" || true)" != "$want" ]; then
+        git config "merge.${driver%%:*}.driver" "$want"
+        echo "pre-commit: registered ${driver#*:} as this clone's ${driver%%:*} merge driver" >&2
+    fi
+done
 
 # No two tracked paths may differ only in case — such a pair cannot check out on
 # Windows/macOS (case-insensitive FS), silently dropping a file and breaking those

@@ -55,4 +55,4 @@ def test_setup_is_idempotent_and_isolates_writers(tmp_path):
         assert run("git", "-C", str(repo), "remote", "get-url", "origin") == origin
         assert run("git", "-C", str(repo), "config", "pull.rebase") == "true"
         assert run("git", "-C", str(repo), "config", "merge.union.driver") == \
-            "python3 tools/merge_rows.py %O %A %B %P"
+            "sh .githooks/run-python3 tools/merge_rows.py %O %A %B %P"

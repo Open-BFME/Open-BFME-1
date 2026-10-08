@@ -18,7 +18,9 @@ rm -f "$record"
 
 if git diff-tree --no-commit-id --name-only -r HEAD 2>/dev/null \
         | grep -qE '^targets/game/reverse/(functions|symbols|deleted_rows)\.csv$|^game/.*\.cpp$'; then
-    . .githooks/python3.sh
+    # Beside the hook, not the tree: tests and seats run copies of a hook elsewhere;
+    # a copy without its helper uses python3 as before.
+    . "$(dirname "${BASH_SOURCE[0]}")/python3.sh" 2>/dev/null || require_python3() { :; }
     require_python3 post-commit warn
     python3 tools/ledger_after_rewrite.py "post-commit" || true
 fi

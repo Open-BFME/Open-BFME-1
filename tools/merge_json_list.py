@@ -12,7 +12,7 @@ removed from BASE, plus entries THEIRS added, in THEIRS' order. Anything that is
 not a JSON list on all three sides exits 1, and git leaves an ordinary conflict.
 
 Registered per clone by tools/setup_hooks.sh and tools/setup_local_fleet.py:
-  git config merge.jsonlist.driver "python3 tools/merge_json_list.py %O %A %B"
+  git config merge.jsonlist.driver "sh .githooks/run-python3 tools/merge_json_list.py %O %A %B"
 """
 import json
 import re

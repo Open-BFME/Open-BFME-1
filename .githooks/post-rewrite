@@ -11,7 +11,9 @@ set -uo pipefail
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 
-. .githooks/python3.sh
+# Beside the hook, not the tree: tests and seats run copies of a hook elsewhere;
+# a copy without its helper uses python3 as before.
+. "$(dirname "${BASH_SOURCE[0]}")/python3.sh" 2>/dev/null || require_python3() { :; }
 require_python3 post-rewrite warn
 
 python3 tools/ledger_after_rewrite.py "post-rewrite ($1)" || true

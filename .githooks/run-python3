@@ -1,0 +1,13 @@
+#!/bin/sh
+# Run a tool under Python 3: `sh .githooks/run-python3 tools/x.py ARGS`.
+# The merge drivers (tools/setup_hooks.sh) run with no hook around them, so
+# python3.sh's py -3 fallback never reaches them. Where `python3` is the
+# Microsoft Store shortcut (exit 9009), `python3 tools/merge_rows.py` failed and
+# git left every union ledger of a pull conflicted.
+probe="import sys; sys.exit(sys.version_info[0] != 3)"
+python3 -c "$probe" >/dev/null 2>&1 && exec python3 "$@"
+py -3 -c "$probe" >/dev/null 2>&1 && exec py -3 "$@"
+echo "run-python3: no working Python 3 (neither python3 nor py -3) to run $1;" \
+     "the merge is left conflicted. Install Python 3 from python.org, then" \
+     "bash tools/setup_hooks.sh (see .githooks/python3.sh)." >&2
+exit 1

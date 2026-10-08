@@ -7,7 +7,9 @@ set -uo pipefail
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 
-. .githooks/python3.sh
+# Beside the hook, not the tree: tests and seats run copies of a hook elsewhere;
+# a copy without its helper uses python3 as before.
+. "$(dirname "${BASH_SOURCE[0]}")/python3.sh" 2>/dev/null || require_python3() { :; }
 require_python3 post-merge
 
 if ! python3 tools/check_csv.py; then

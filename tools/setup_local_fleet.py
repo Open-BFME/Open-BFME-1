@@ -36,9 +36,9 @@ def configure_repo(repo, origin):
     git(repo, "config", "--local", "rebase.autoStash", "true")
     git(repo, "config", "--local", "core.hooksPath", ".githooks")
     git(repo, "config", "--local", "merge.jsonlist.driver",
-        "python3 tools/merge_json_list.py %O %A %B")
+        "sh .githooks/run-python3 tools/merge_json_list.py %O %A %B")
     git(repo, "config", "--local", "merge.union.driver",
-        "python3 tools/merge_rows.py %O %A %B %P")
+        "sh .githooks/run-python3 tools/merge_rows.py %O %A %B %P")
     git(repo, "config", "--local",
         f"lfs.{origin}/info/lfs.locksverify", "false")
     if GH_EXE.exists():

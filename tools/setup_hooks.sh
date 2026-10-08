@@ -19,11 +19,11 @@ git config core.editor true
 # name_corrections.json is a JSON list every rename landing appends to; this
 # driver merges it as a set of entries instead of stopping the rebase.
 git config merge.jsonlist.name "JSON list ledger (tools/merge_json_list.py)"
-git config merge.jsonlist.driver "python3 tools/merge_json_list.py %O %A %B"
+git config merge.jsonlist.driver "sh .githooks/run-python3 tools/merge_json_list.py %O %A %B"
 # The merge=union ledgers: plain union brings back rows one side deleted or
 # edited. Registered under git's own name so unregistered clones still merge.
 git config merge.union.name "union without resurrected rows (tools/merge_rows.py)"
-git config merge.union.driver "python3 tools/merge_rows.py %O %A %B %P"
+git config merge.union.driver "sh .githooks/run-python3 tools/merge_rows.py %O %A %B %P"
 
 echo "core.hooksPath=$(git config --get core.hooksPath)"
 echo "upstream=$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null || echo unset)"

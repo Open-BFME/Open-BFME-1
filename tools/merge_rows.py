@@ -14,7 +14,7 @@ union does: that is a real conflict, and check_csv names it.
 
 It is registered under the name `union` itself, so a clone that has not
 registered it keeps git's plain union instead of stopping on conflicts:
-  git config merge.union.driver "python3 tools/merge_rows.py %O %A %B %P"
+  git config merge.union.driver "sh .githooks/run-python3 tools/merge_rows.py %O %A %B %P"
 (tools/setup_hooks.sh, tools/setup_local_fleet.py, and .githooks/pre-commit for
 clones set up before this existed.)
 """
