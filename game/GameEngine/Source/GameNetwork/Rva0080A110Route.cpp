@@ -62,7 +62,9 @@ public:
 	void send( BfmeC994 *message );
 };
 
-void sendFeslMessage( void *message, const char *route, void *owner );
+// The FESL sender's ledger row is Rva007F93E0 (0x007F93E0, triple pointer cdecl, pointer return).
+void *Rva007F93E0( void *message, void *route, void *owner );
+#define sendFeslMessage( message, route, owner ) Rva007F93E0( ( message ), ( void * )( route ), ( owner ) )
 extern const char g_feslTransactionIdKey[4];
 extern "C" char bfmeInfoDFI[];
 
