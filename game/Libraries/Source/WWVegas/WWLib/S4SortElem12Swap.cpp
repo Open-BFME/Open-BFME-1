@@ -16,7 +16,7 @@ public:
 
 private:
 	StringBase(const StringBase<T> &other);
-	~StringBase(void);
+	void releaseBuffer(void);
 	T *m_bfmeData;
 
 	friend struct S4Name;
@@ -26,7 +26,7 @@ private:
 struct S4Name
 {
 	S4Name(const S4Name &other) : m_base(other.m_base) {}
-	~S4Name(void) {}
+	~S4Name(void) { m_base.releaseBuffer(); }
 	S4Name &operator=(const S4Name &other)
 	{
 		m_base = other.m_base;
