@@ -109,6 +109,11 @@ class Object : public Thing
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Locomotor.h
+// The inline below reads +0x44, while the matched out-of-line
+// Locomotor::getPreferredHeight (retail 0x001B46A0) reads +0x3C, so this
+// TU-local view must not export that name: internal linkage keeps the
+// inlined read and stops a non-retail COMDAT for the real symbol.
+namespace {
 class Locomotor
 {
 public:
@@ -118,6 +123,7 @@ private:
 	unsigned char m_unmodelled_00[ 0x44 ];
 	Real m_preferredHeight;						// Locomotor+0x44
 };
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
