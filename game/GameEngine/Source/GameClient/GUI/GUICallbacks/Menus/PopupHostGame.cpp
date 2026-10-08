@@ -158,9 +158,9 @@ static NameKeyType checkBoxUseStatsID = NAMEKEY_INVALID;
 
 static GameWindow *parentPopup = NULL;
 static GameWindow *textEntryGameName = NULL;
-static GameWindow *buttonCreateGame = NULL;
+extern GameWindow *buttonCreateGame;
 static GameWindow *checkBoxAllowObservers = NULL;
-static GameWindow *textEntryGameDescription = NULL;
+extern GameWindow *textEntryGameDescription;
 static GameWindow *buttonCancel = NULL;
 static GameWindow *comboBoxLadderName = NULL;
 static GameWindow *textEntryLadderPassword = NULL;
