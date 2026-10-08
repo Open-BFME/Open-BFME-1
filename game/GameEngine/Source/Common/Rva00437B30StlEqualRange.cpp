@@ -9,13 +9,15 @@
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(
 	const char *left, const char *right);
 
+extern const char g_bfmeEmptyAscii[];
+
 struct GameTextAsciiString
 {
 	void *m_data;
 
 	const char *str() const
 	{
-		return m_data ? (const char *)m_data + 8 : "";
+		return m_data ? (const char *)m_data + 8 : g_bfmeEmptyAscii;
 	}
 };
 
