@@ -84,34 +84,6 @@ Rva001FBFC0DeepDtor::~Rva001FBFC0DeepDtor()
 {
 }
 
-class Rva002077A0DeepDtorL0M0 { public: virtual void anchor(); };
-class Rva002077A0DeepDtorL0 : public NestedInlineBase, public Rva002077A0DeepDtorL0M0
-{
-public:
-	virtual ~Rva002077A0DeepDtorL0() {}
-};
-
-class Rva002077A0DeepDtorL1M0 { public: virtual void anchor(); };
-class Rva002077A0DeepDtorL1 : public Rva002077A0DeepDtorL0, public Rva002077A0DeepDtorL1M0
-{
-public:
-	virtual ~Rva002077A0DeepDtorL1() {}
-
-	unsigned int m_pad[ 3 ];
-};
-
-class Rva002077A0DeepDtorL2M0 { public: virtual void anchor(); };
-class Rva002077A0DeepDtorL2M1 { public: virtual void anchor(); };
-class Rva002077A0DeepDtor : public Rva002077A0DeepDtorL1, public Rva002077A0DeepDtorL2M0, public Rva002077A0DeepDtorL2M1
-{
-public:
-	virtual ~Rva002077A0DeepDtor();
-};
-
-Rva002077A0DeepDtor::~Rva002077A0DeepDtor()
-{
-}
-
 class Rva0026A710DeepDtorL0M0 { public: virtual void anchor(); };
 class Rva0026A710DeepDtorL0 : public NestedInlineBase, public Rva0026A710DeepDtorL0M0
 {

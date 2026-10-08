@@ -198,10 +198,7 @@ SlowDeathBehavior::SlowDeathBehavior( Thing *thing, const ModuleData* moduleData
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ??1SlowDeathBehavior@@MAE@XZ present-unmatched
-SlowDeathBehavior::~SlowDeathBehavior( void )
-{
-}
+// The destructor (retail 0x002077A0) is defined in SlowDeathBehaviorDestructor.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
