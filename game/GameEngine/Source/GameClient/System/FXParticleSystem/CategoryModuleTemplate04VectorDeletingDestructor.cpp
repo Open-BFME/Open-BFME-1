@@ -12,6 +12,8 @@ template <int Category> class CategoryModuleTemplate;
 template <> class CategoryModuleTemplate<5>
 {
 public:
+	// matched out of line at 0x005BFB60 (fx_particle_system.cpp)
+	CategoryModuleTemplate();
 	virtual ~CategoryModuleTemplate();
 
 private:
