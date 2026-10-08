@@ -451,12 +451,7 @@ static void deleteQueue(TeamInQueue* o)
 // ------------------------------------------------------------------------------------------------
 /** Clear the current work order */
 // ------------------------------------------------------------------------------------------------
-// ?clearTeamsInQueue@AIPlayer@@IAEXXZ present-unmatched
-void AIPlayer::clearTeamsInQueue( void )
-{
-	removeAll_TeamBuildQueue(deleteQueue);
-	removeAll_TeamReadyQueue(deleteQueue);
-}
+// AIPlayer::clearTeamsInQueue (retail 0x00160E70) lives in AIPlayerQueueTeardown.cpp.
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
