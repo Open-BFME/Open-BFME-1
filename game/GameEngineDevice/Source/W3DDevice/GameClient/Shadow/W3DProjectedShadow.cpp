@@ -270,59 +270,6 @@ Bool W3DProjectedShadowManager::init( void )
 }
 
 
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowReAcquireResources.cpp
-// ?ReAcquireResources@W3DProjectedShadowManager@@QAE_NXZ present-unmatched
-Bool W3DProjectedShadowManager::ReAcquireResources(void)
-{
-	//grab assets which don't survive a device reset and need
-	//to be present for duration of game.
-
-	///@todo: We should allocate our render target pool here.
-
-	DEBUG_ASSERTCRASH(m_dynamicRenderTarget == NULL, ("Acquire of existing shadow render target"));
-
-	m_renderTargetHasAlpha=TRUE;
-	if ((m_dynamicRenderTarget=DX8Wrapper::Create_Render_Target (DEFAULT_RENDER_TARGET_WIDTH, DEFAULT_RENDER_TARGET_HEIGHT, WW3D_FORMAT_A8R8G8B8)) == NULL)
-	{
-			m_renderTargetHasAlpha=FALSE;
-
-			//failed to get a render target with alpha.
-			//try again without.
-			m_dynamicRenderTarget=DX8Wrapper::Create_Render_Target (DEFAULT_RENDER_TARGET_WIDTH, DEFAULT_RENDER_TARGET_HEIGHT);
-	}
-
-	LPDIRECT3DDEVICE8 m_pDev=DX8Wrapper::_Get_D3D_Device8();
-
-	DEBUG_ASSERTCRASH(m_pDev, ("Trying to ReAquireResources on W3DProjectedShadowManager without device"));
-	DEBUG_ASSERTCRASH(shadowDecalIndexBufferD3D == NULL && shadowDecalIndexBufferD3D == NULL, ("ReAquireResources not released in W3DProjectedShadowManager"));
-
-	if (FAILED(m_pDev->CreateIndexBuffer
-	(
-		SHADOW_DECAL_INDEX_SIZE*sizeof(WORD), 
-		D3DUSAGE_WRITEONLY|D3DUSAGE_DYNAMIC, 
-		D3DFMT_INDEX16, 
-		D3DPOOL_DEFAULT, 
-		&shadowDecalIndexBufferD3D
-	)))
-		return FALSE;
-
-	if (shadowDecalVertexBufferD3D == NULL)
-	{	// Create vertex buffer
-
-		if (FAILED(m_pDev->CreateVertexBuffer
-		(
-			SHADOW_DECAL_VERTEX_SIZE*sizeof(SHADOW_DECAL_VERTEX),
-			D3DUSAGE_WRITEONLY|D3DUSAGE_DYNAMIC, 
-			0,
-			D3DPOOL_DEFAULT, 
-			&shadowDecalVertexBufferD3D
-		)))
-			return FALSE;
-	}
-
-	return TRUE;
-}
-
 // byte-exact reconstruction: game/GameEngine/Source/Common/promoted_ReleaseResources_W3DProjectedShadowManager_QAEXXZ_007B1450.cpp
 // ?ReleaseResources@W3DProjectedShadowManager@@QAEXXZ present-unmatched
 void W3DProjectedShadowManager::ReleaseResources(void)

@@ -11,36 +11,46 @@ typedef bool Bool;
 // The first two BFME shadow submanager identities are intentionally kept
 // address-derived.  Their constructor and reacquire-body names disagree, but
 // the three physical globals and all six direct targets are established.
-class Gen_01306F18
+// callees.py 0x7B7500: each call reaches the ledger row named below (ILT ->
+// body).  The class views follow those rows' spellings; which global owns
+// which body is the evidence recorded above, not these names.
+class Gen_007b9920
 {
 public:
-	Bool rva007B9920(void);
-	Bool ReAcquireResources(void);
+	Bool m(void);					// ILT 0x000269FE -> 0x007B9920
+};
+
+class W3DShadowHelperManager
+{
+public:
+	Bool ReAcquireResources(void);			// ILT 0x000443A0 -> 0x007B9810
+};
+
+class W3DVolumetricShadowManager
+{
+public:
+	Bool init(void);				// ILT 0x0001EAA6 -> 0x007C19E0
 };
 
 class Gen_01307178
 {
 public:
-	Bool rva007C19E0(void);
-	Bool ReAcquireResources(void);
+	Bool ReAcquireResources(void);			// ILT 0x0000F9B6 -> 0x007C1180
 };
 
-class Gen_01306DF0
+class W3DProjectedShadowManager
 {
 public:
-	Bool rva007AF630(void);
-	Bool ReAcquireResources(void);
+	Bool init(void);				// ILT 0x0003F93B -> 0x007AF630
+	Bool ReAcquireResources(void);			// ILT 0x00026D1E -> 0x007AE890
 };
 
-
-class W3DProjectedShadowManager;
 extern W3DProjectedShadowManager *TheW3DProjectedShadowManager;
 
 // 0x01307178 is W3DShadow.cpp's TheW3DShadowHelperManager, so the global is
 // spelled by its defining name here.  No header declares the class, so only a
 // forward declaration is needed: the two bodies this TU calls are still
 // ledger-named Gen_01307178, and that view is kept for the member calls.
-class W3DShadowHelperManager;
 extern W3DShadowHelperManager *TheW3DShadowHelperManager;
 
 class W3DShadowManager
@@ -51,14 +61,14 @@ public:
 
 Bool W3DShadowManager::init(void)
 {
-	if (((Gen_01306F18 *&)TheW3DVolumetricShadowManager) && ((Gen_01306F18 *&)TheW3DVolumetricShadowManager)->rva007B9920())
-		((Gen_01306F18 *&)TheW3DVolumetricShadowManager)->ReAcquireResources();
+	if (TheW3DVolumetricShadowManager && ((Gen_007b9920 *)TheW3DVolumetricShadowManager)->m())
+		((W3DShadowHelperManager *)TheW3DVolumetricShadowManager)->ReAcquireResources();
 
-	if ((Gen_01307178 *)TheW3DShadowHelperManager && ((Gen_01307178 *)TheW3DShadowHelperManager)->rva007C19E0())
+	if (TheW3DShadowHelperManager && ((W3DVolumetricShadowManager *)TheW3DShadowHelperManager)->init())
 		((Gen_01307178 *)TheW3DShadowHelperManager)->ReAcquireResources();
 
-	if (TheW3DProjectedShadowManager && reinterpret_cast<Gen_01306DF0 *>(TheW3DProjectedShadowManager)->rva007AF630())
-		reinterpret_cast<Gen_01306DF0 *>(TheW3DProjectedShadowManager)->ReAcquireResources();
+	if (TheW3DProjectedShadowManager && TheW3DProjectedShadowManager->init())
+		TheW3DProjectedShadowManager->ReAcquireResources();
 
 	return true;
 }
