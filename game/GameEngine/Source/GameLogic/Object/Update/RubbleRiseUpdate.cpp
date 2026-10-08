@@ -80,17 +80,20 @@ struct RubbleRiseUpdateModuleDataLayout
 	Int m_fxCounts[4];
 };
 
-class StructureCollapseFXShim
+// Retail calls go through ILT 0x00011F77 (FXList::bfmeIsBlocked, 0x0042DAA0),
+// ILT 0x0001BB21 (FXList::doFXPos, 0x004280D0) and ILT 0x00002A59
+// (BfmeThingFB::bfmeTellFB, 0x001D67C0); declared as those rows name them.
+class FXList
 {
 public:
-	Bool isEmpty() const;
+	Bool bfmeIsBlocked();
 	void doFXPos( const Coord3D *, const Matrix3D *, Real, const Coord3D * ) const;
 };
 
-class StructureCollapseOCLShim
+class BfmeThingFB
 {
 public:
-	Object *create( const Object *, const Coord3D *, const Coord3D *, UnsignedInt ) const;
+	void bfmeTellFB( void *, void *, void *, void * );
 };
 
 enum RubbleRisePhaseType {};
@@ -119,9 +122,8 @@ void RubbleRiseUpdate::doPhaseStuff( RubbleRisePhaseType phase, const Coord3D *t
 		{
 			idx = idxList[i];
 			const RubbleRiseVector<FXList> &fxs = data->m_fxs[static_cast<Int>(phase)];
-			const StructureCollapseFXShim *fx =
-				reinterpret_cast<const StructureCollapseFXShim *>(fxs[idx]);
-			if (fx != 0 && !fx->isEmpty())
+			const FXList *fx = fxs[idx];
+			if (fx != 0 && !const_cast<FXList *>(fx)->bfmeIsBlocked())
 				fx->doFXPos( target, 0, 0.0f, 0 );
 		}
 	}
@@ -136,13 +138,12 @@ void RubbleRiseUpdate::doPhaseStuff( RubbleRisePhaseType phase, const Coord3D *t
 			idx = idxList[i];
 			const RubbleRiseVector<ObjectCreationList> &ocls =
 				data->m_ocls[static_cast<Int>(phase)];
-			const StructureCollapseOCLShim *ocl =
-				reinterpret_cast<const StructureCollapseOCLShim *>(ocls[idx]);
+			const ObjectCreationList *ocl = ocls[idx];
 			if (ocl != 0)
 			{
-				ocl->create(
+				reinterpret_cast<BfmeThingFB *>(const_cast<ObjectCreationList *>(ocl))->bfmeTellFB(
 					*reinterpret_cast<Object *const *>(reinterpret_cast<const char *>(this) + 8),
-					target, 0, 0 );
+					const_cast<Coord3D *>(target), 0, 0 );
 			}
 		}
 	}
