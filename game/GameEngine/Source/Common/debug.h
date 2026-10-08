@@ -1,9 +1,15 @@
 #pragma once
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
+int rva0088C4E0PostStaticInitLookup();
+
 class Debug {
-public:
+    // retail PostStaticInit@Debug@@CAXXZ (0x0088AF60) is private; the 0x0088C4E0
+    // resolver takes its address as a fallback.
+    friend int rva0088C4E0PostStaticInitLookup();
     static void PostStaticInit();
+
+public:
     virtual void v0();
     virtual void v1();
     virtual void v2();

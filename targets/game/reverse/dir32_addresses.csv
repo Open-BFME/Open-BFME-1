@@ -6255,7 +6255,6 @@ name,va
 ?Players00598950@@3PAVBfmeThingRV@@A,0x012ED748
 ?PointMaterial@PointGroupClass@@0PAVVertexMaterialClass@@A,0x01341260
 ?PointMaterial@PointGroupClass@@2PAVVertexMaterialClass@@A,0x01341260
-?PostStaticInit@Debug@@SAXXZ,0x00C8AF60
 ?Prefix012D5A08@@3PBDB,0x012D5A08
 ?PrelitMode@WW3D@@0W4PrelitModeEnum@1@A,0x012D6D80
 ?Presets@VertexMaterialClass@@0PAPAV1@A,0x01346D90
