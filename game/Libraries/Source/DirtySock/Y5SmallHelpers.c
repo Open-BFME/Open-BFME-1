@@ -94,12 +94,12 @@ void Rva0080F5A0(unsigned char *state, unsigned char *owner,
 	int i;
 	int count;
 	unsigned int exponent;
-	unsigned short modulus[ 0x100 ];
-	unsigned short base[ 0x100 ];
-	unsigned short result[ 0x100 ];
+	unsigned short Modulus[ 0x100 ];
+	unsigned short Powerof[ 0x100 ];
+	unsigned short Accumul[ 0x100 ];
 
-	count = Rva0080FED0(modulus, -1, first, firstLength);
-	Rva0080FED0(base, -1, owner, firstLength);
+	count = Rva0080FED0(Modulus, -1, first, firstLength);
+	Rva0080FED0(Powerof, -1, owner, firstLength);
 
 	exponent = 0;
 	for ( i = 0; i < secondLength; i++ )
@@ -107,50 +107,50 @@ void Rva0080F5A0(unsigned char *state, unsigned char *owner,
 
 	if ( exponent == 3 )
 	{
-		Rva0080FB40(result, count, base, base, modulus);
-		Rva0080FB40(result, count, result, base, modulus);
+		Rva0080FB40(Accumul, count, Powerof, Powerof, Modulus);
+		Rva0080FB40(Accumul, count, Accumul, Powerof, Modulus);
 	}
 	else if ( exponent == 0x11 )
 	{
-		Rva0080FB40(result, count, base, base, modulus);
-		Rva0080FB40(result, count, result, result, modulus);
-		Rva0080FB40(result, count, result, result, modulus);
-		Rva0080FB40(result, count, result, result, modulus);
-		Rva0080FB40(result, count, result, base, modulus);
+		Rva0080FB40(Accumul, count, Powerof, Powerof, Modulus);
+		Rva0080FB40(Accumul, count, Accumul, Accumul, Modulus);
+		Rva0080FB40(Accumul, count, Accumul, Accumul, Modulus);
+		Rva0080FB40(Accumul, count, Accumul, Accumul, Modulus);
+		Rva0080FB40(Accumul, count, Accumul, Powerof, Modulus);
 	}
 	else if ( exponent == 0x10001 )
 	{
-		Rva0080FB40(result, count, base, base, modulus);
-		Rva0080FB40(result, count, result, result, modulus);
-		Rva0080FB40(result, count, result, result, modulus);
-		Rva0080FB40(result, count, result, result, modulus);
-		Rva0080FB40(result, count, result, result, modulus);
-		Rva0080FB40(result, count, result, result, modulus);
-		Rva0080FB40(result, count, result, result, modulus);
-		Rva0080FB40(result, count, result, result, modulus);
-		Rva0080FB40(result, count, result, result, modulus);
-		Rva0080FB40(result, count, result, result, modulus);
-		Rva0080FB40(result, count, result, result, modulus);
-		Rva0080FB40(result, count, result, result, modulus);
-		Rva0080FB40(result, count, result, result, modulus);
-		Rva0080FB40(result, count, result, result, modulus);
-		Rva0080FB40(result, count, result, result, modulus);
-		Rva0080FB40(result, count, result, result, modulus);
-		Rva0080FB40(result, count, result, base, modulus);
+		Rva0080FB40(Accumul, count, Powerof, Powerof, Modulus);
+		Rva0080FB40(Accumul, count, Accumul, Accumul, Modulus);
+		Rva0080FB40(Accumul, count, Accumul, Accumul, Modulus);
+		Rva0080FB40(Accumul, count, Accumul, Accumul, Modulus);
+		Rva0080FB40(Accumul, count, Accumul, Accumul, Modulus);
+		Rva0080FB40(Accumul, count, Accumul, Accumul, Modulus);
+		Rva0080FB40(Accumul, count, Accumul, Accumul, Modulus);
+		Rva0080FB40(Accumul, count, Accumul, Accumul, Modulus);
+		Rva0080FB40(Accumul, count, Accumul, Accumul, Modulus);
+		Rva0080FB40(Accumul, count, Accumul, Accumul, Modulus);
+		Rva0080FB40(Accumul, count, Accumul, Accumul, Modulus);
+		Rva0080FB40(Accumul, count, Accumul, Accumul, Modulus);
+		Rva0080FB40(Accumul, count, Accumul, Accumul, Modulus);
+		Rva0080FB40(Accumul, count, Accumul, Accumul, Modulus);
+		Rva0080FB40(Accumul, count, Accumul, Accumul, Modulus);
+		Rva0080FB40(Accumul, count, Accumul, Accumul, Modulus);
+		Rva0080FB40(Accumul, count, Accumul, Powerof, Modulus);
 	}
 	else
 	{
-		memset( result, 0, 0x200 );
-		result[ count - 1 ] = 1;
+		memset( Accumul, 0, 0x200 );
+		Accumul[ count - 1 ] = 1;
 		for ( ; exponent != 0; exponent >>= 1 )
 		{
 			if ( ( exponent & 1 ) != 0 )
-				Rva0080FB40(result, count, result, base, modulus);
-			Rva0080FB40(base, count, base, base, modulus);
+				Rva0080FB40(Accumul, count, Accumul, Powerof, Modulus);
+			Rva0080FB40(Powerof, count, Powerof, Powerof, Modulus);
 		}
 	}
 
-	Rva0080FFB0(result, count, state, firstLength);
+	Rva0080FFB0(Accumul, count, state, firstLength);
 }
 
 void Rva0080F550(unsigned char *state)
@@ -457,9 +457,9 @@ void *Rva0080EA30(unsigned char *object)
 	int i;
 	int selected;
 	unsigned int candidate;
-	char address[ 0x100 ];
+	char text[ 0x100 ];
 	unsigned int value;
-	unsigned int extra;
+	unsigned int host;
 	void *selectedTransport;
 
 	selected = -1;
@@ -474,29 +474,29 @@ void *Rva0080EA30(unsigned char *object)
 		if (i == 4)
 		{
 			value = Rva00812220(*(void **)(object + 0x68),
-				Rva012C48F0, (char *)object + 0x24, &extra, 0);
+				Rva012C48F0, (char *)object + 0x24, &host, 0);
 			if (value != 0)
 			{
-				Rva007FE780(Rva012C48F8, value, extra);
-				if ((unsigned int)value > (unsigned int)extra)
+				Rva007FE780(Rva012C48F8, value, host);
+				if ((unsigned int)value > (unsigned int)host)
 				{
 					*(int *)(object + 0x70) = value;
-					*(int *)(object + 0x74) = extra;
-					sprintf(address, Rva012C4924,
+					*(int *)(object + 0x74) = host;
+					sprintf(text, Rva012C4924,
 						(unsigned char)(value >> 24),
 						(unsigned char)(value >> 16),
 						(unsigned char)(value >> 8), (unsigned char)value,
 						(char *)object + 0x24);
 					Rva0080E6C0(object, *(int *)(object + 0x7C) | 2,
-						address);
+						text);
 				}
 				else
 				{
-					*(int *)(object + 0x70) = extra;
+					*(int *)(object + 0x70) = host;
 					*(int *)(object + 0x74) = value;
-					sprintf(address, Rva012C4934, (char *)object + 0x24);
+					sprintf(text, Rva012C4934, (char *)object + 0x24);
 					Rva0080E6C0(object, *(int *)(object + 0x7C) | 1,
-						address);
+						text);
 				}
 			}
 		}
@@ -564,7 +564,7 @@ void Rva00810FF0(void *context, char *out, int outSize);
 
 int Rva0080E350(const int *crypto, unsigned char *data, int length)
 {
-	unsigned char context[0x54];
+	unsigned char SendHash[0x54];
 	int payloadLength;
 
 	payloadLength = length - 8;
@@ -572,25 +572,25 @@ int Rva0080E350(const int *crypto, unsigned char *data, int length)
 		return 0;
 	if (payloadLength < 0)
 		return -1;
-	Rva00810020(context);
-	Rva00810060(context, data, payloadLength);
-	Rva00810FF0(context, (char *)data + payloadLength, 8);
+	Rva00810020(SendHash);
+	Rva00810060(SendHash, data, payloadLength);
+	Rva00810FF0(SendHash, (char *)data + payloadLength, 8);
 	return 0;
 }
 
 int Rva0080E200(const int *crypto, const unsigned char *data, int length)
 {
-	unsigned char context[0x54];
-	char digest[0x10];
+	unsigned char RecvHash[0x54];
+	char strHash[0x10];
 
 	if (crypto[0] == 0 || crypto[1] == 0)
 		return 0;
 	if (length < 8)
 		return -1;
-	Rva00810020(context);
-	Rva00810060(context, data, length - 8);
-	Rva00810FF0(context, digest, 0x10);
-	if (memcmp(data + length - 8, digest, 8) != 0)
+	Rva00810020(RecvHash);
+	Rva00810060(RecvHash, data, length - 8);
+	Rva00810FF0(RecvHash, strHash, 0x10);
+	if (memcmp(data + length - 8, strHash, 8) != 0)
 		return -2;
 	return 0;
 }
@@ -598,32 +598,32 @@ int Rva0080E200(const int *crypto, const unsigned char *data, int length)
 void Rva0080DD80(unsigned char *output, const unsigned char *key,
 	int value, const char *name)
 {
-	unsigned char context[0x54];
+	unsigned char MD5[0x54];
 	unsigned char rc4[0x102];
-	char text[0x100];
+	char strCrypt[0x100];
 	int combinedLength;
 
-	sprintf(text, "send-%s-send", name);
-	Rva00810020(context);
-	Rva00810060(context, (const unsigned char *)text, -1);
-	Rva00810FF0(context, (char *)output, 0x10);
+	sprintf(strCrypt, "send-%s-send", name);
+	Rva00810020(MD5);
+	Rva00810060(MD5, (const unsigned char *)strCrypt, -1);
+	Rva00810FF0(MD5, (char *)output, 0x10);
 
-	sprintf(text, "recv-%s-recv", name);
-	Rva00810020(context);
-	Rva00810060(context, (const unsigned char *)text, -1);
-	Rva00810FF0(context, (char *)output + 0x10, 0x10);
+	sprintf(strCrypt, "recv-%s-recv", name);
+	Rva00810020(MD5);
+	Rva00810060(MD5, (const unsigned char *)strCrypt, -1);
+	Rva00810FF0(MD5, (char *)output + 0x10, 0x10);
 
 	memcpy(output + 0x30, output, 0x20);
 	*(int *)(output + 0x50) = value;
 
-	sprintf(text, "iv-%s-iv", name);
-	Rva00810020(context);
-	Rva00810060(context, (const unsigned char *)text, -1);
-	Rva00810FF0(context, (char *)output + 0x20, 0x10);
+	sprintf(strCrypt, "iv-%s-iv", name);
+	Rva00810020(MD5);
+	Rva00810060(MD5, (const unsigned char *)strCrypt, -1);
+	Rva00810FF0(MD5, (char *)output + 0x20, 0x10);
 
 	combinedLength = Rva0080DC90(key, output + 0x20,
-		(unsigned char *)text);
-	Rva0080F200(rc4, (const unsigned char *)text, combinedLength, -1);
+		(unsigned char *)strCrypt);
+	Rva0080F200(rc4, (const unsigned char *)strCrypt, combinedLength, -1);
 	Rva0080F300(rc4, output + 0x30, 0x24);
 }
 
@@ -631,24 +631,24 @@ int Rva0080E030(int *crypto, const unsigned char *input,
 	const unsigned char *key, unsigned int totalLength)
 {
 	unsigned char rc4[0x102];
-	unsigned char header[0x34];
+	unsigned char Ticket[0x34];
 	int combinedLength;
-	unsigned char combined[0x100];
+	unsigned char strCrypt[0x100];
 
 	if (input == 0)
 	{
 		crypto[0] = 0;
 		return 0;
 	}
-	memcpy(header, input, 0x34);
-	combinedLength = Rva0080DC90(key, header, combined);
-	Rva0080F200(rc4, combined, combinedLength, -1);
-	Rva0080F300(rc4, header + 0x10, 0x24);
-	if (*(unsigned int *)(header + 0x30) > totalLength
-		|| totalLength - *(unsigned int *)(header + 0x30) > 0xE10)
+	memcpy(Ticket, input, 0x34);
+	combinedLength = Rva0080DC90(key, Ticket, strCrypt);
+	Rva0080F200(rc4, strCrypt, combinedLength, -1);
+	Rva0080F300(rc4, Ticket + 0x10, 0x24);
+	if (*(unsigned int *)(Ticket + 0x30) > totalLength
+		|| totalLength - *(unsigned int *)(Ticket + 0x30) > 0xE10)
 		return -1;
-	Rva0080F200((unsigned char *)crypto + 8, header + 0x10, 0x10, -1);
-	Rva0080F200((unsigned char *)crypto + 0x10A, header + 0x20, 0x10, -1);
+	Rva0080F200((unsigned char *)crypto + 8, Ticket + 0x10, 0x10, -1);
+	Rva0080F200((unsigned char *)crypto + 0x10A, Ticket + 0x20, 0x10, -1);
 	crypto[0] = 1;
 	crypto[1] = 0;
 	return 1;
@@ -711,9 +711,9 @@ int Rva0080DA50(unsigned char *object, char *output, int length)
 unsigned char *Rva0080C6F0(unsigned char *object)
 {
 	int length;
-	unsigned char context[ 0x54 ];
-	unsigned char header[ 4 ];
-	unsigned char digest[ 0x10 ];
+	unsigned char MD5Context[ 0x54 ];
+	unsigned char uSeqn[ 4 ];
+	unsigned char MD5Data[ 0x10 ];
 	unsigned char *state;
 	unsigned char *packet;
 
@@ -726,19 +726,19 @@ unsigned char *Rva0080C6F0(unsigned char *object)
 	{
 		Rva0080F300( state + 0x86BC, packet, length );
 
-		header[ 0 ] = (unsigned char)( *(unsigned int *)(state + 0x8018) >> 24 );
-		header[ 1 ] = (unsigned char)( *(unsigned int *)(state + 0x8018) >> 16 );
-		header[ 2 ] = (unsigned char)( *(unsigned int *)(state + 0x8018) >> 8 );
-		header[ 3 ] = (unsigned char)*(unsigned int *)(state + 0x8018);
+		uSeqn[ 0 ] = (unsigned char)( *(unsigned int *)(state + 0x8018) >> 24 );
+		uSeqn[ 1 ] = (unsigned char)( *(unsigned int *)(state + 0x8018) >> 16 );
+		uSeqn[ 2 ] = (unsigned char)( *(unsigned int *)(state + 0x8018) >> 8 );
+		uSeqn[ 3 ] = (unsigned char)*(unsigned int *)(state + 0x8018);
 
-		Rva00810020( context );
-		Rva00810060( context, state + 0x80AC,
+		Rva00810020( MD5Context );
+		Rva00810060( MD5Context, state + 0x80AC,
 			*(int *)(state + 0x80A8) );
-		Rva00810060( context, packet + 0x10, length - 0x10 );
-		Rva00810060( context, header, 4 );
-		Rva00810FF0( context, (char *)digest, 0x10 );
+		Rva00810060( MD5Context, packet + 0x10, length - 0x10 );
+		Rva00810060( MD5Context, uSeqn, 4 );
+		Rva00810FF0( MD5Context, (char *)MD5Data, 0x10 );
 
-		if( memcmp( digest, packet, 0x10 ) != 0 )
+		if( memcmp( MD5Data, packet, 0x10 ) != 0 )
 			packet = 0;
 		else
 		{
@@ -881,27 +881,27 @@ void Rva0080EF50(unsigned char *object, const char *name, char *alias,
 {
 	char *found;
 	char *dest;
-	char defaultName[0x100];
+	char temp[0x100];
 	const char *source;
 
 	if (*(void **)(object + 0x64) == 0)
 		*(void **)(object + 0x64) = Rva00812320(0x10);
 	if (alias == 0 || *alias == 0)
 	{
-		sprintf(defaultName, "Default Name");
+		sprintf(temp, "Default Name");
 		if (*(char **)object != 0)
 			source = *(char **)object;
 		else
 			source = g_Rva012C47A4;
-		found = strstr(source, defaultName);
+		found = strstr(source, temp);
 		if (found != 0)
 		{
 			found = strchr(found, ':') + 1;
-			for (dest = defaultName; *found >= ' '; found++, dest++)
+			for (dest = temp; *found >= ' '; found++, dest++)
 				*dest = *found;
 			*dest = 0;
 		}
-		alias = defaultName;
+		alias = temp;
 	}
 	strcpy((char *)object + 4, name);
 	Rva008119A0(*(struct Rva008119A0Table **)(object + 0x64), name, alias, detail,
