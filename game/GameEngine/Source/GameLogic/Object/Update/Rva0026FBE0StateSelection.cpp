@@ -5,16 +5,17 @@ class Rva001CF980Result;
 #define OBJECT_TU_MEMBERS Rva001CF980Result *queryAt001CF980();
 #include "../Object.h"
 #undef OBJECT_TU_MEMBERS
-class Rva0016AD50
+// Retail calls reach 0x0016AD50 (ILT 0x0002D308) and 0x0016AD90
+// (ILT 0x00044319); declared as those ledger rows name them.
+class Gen_0016AD50
 {
 public:
 	void bfmeSnapshot();
 };
-enum StateID { };
-class Rva0016AD90
+class BfmeHostXZ
 {
 public:
-	void setTemporaryState(StateID state, int frames);
+	int bfmeStartXZ(unsigned int state, int frames);
 };
 class Rva0026FBE0Owner
 {
@@ -59,10 +60,10 @@ void Rva0026FBE0Owner::selectState(int selector, int argument)
 		RawVoidSlotFn pmf = *(RawVoidSlotFn *)&slotFunction;
 		(((RawCallShim *)result)->*pmf)();
 	}
-	((Rva0016AD50 *)m_host)->bfmeSnapshot();
+	((Gen_0016AD50 *)m_host)->bfmeSnapshot();
 	void **hostVtable = *(void ***)m_host;
 	void *hostFunction = hostVtable[14];
 	RawIntSlotFn hostPmf = *(RawIntSlotFn *)&hostFunction;
 	(((RawCallShim *)m_host)->*hostPmf)(argument);
-	((Rva0016AD90 *)m_host)->setTemporaryState((StateID)key, frames);
+	((BfmeHostXZ *)m_host)->bfmeStartXZ((unsigned int)key, frames);
 }
