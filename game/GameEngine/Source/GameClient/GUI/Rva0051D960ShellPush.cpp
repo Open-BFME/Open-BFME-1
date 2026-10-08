@@ -12,7 +12,10 @@ template <typename T> class StringBase
 private:
 	StringBase( const T *text );
 	StringBase( const StringBase<T> &other );
-	~StringBase();
+	// Retail's ~AsciiString (0x0005EE90) is a bare jmp to releaseBuffer.
+	~StringBase() { releaseBuffer(); }
+
+	void releaseBuffer();
 
 	void *m_data;
 };
