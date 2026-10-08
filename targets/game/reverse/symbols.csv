@@ -12718,7 +12718,6 @@ name,address,notes
 ?Rva007EBAA0@@YAXXZ,0x007EBAA0,init helper when diagnostic getter returns null
 ?Rva007EBC40@@YAPADPBD0@Z,0x007EBC40,Y2 FESL message bool-field lookup; cdecl record plus key returns value text or null
 ?Rva007EBCA0@@YAPADPBD0@Z,0x007EBCA0,Y2 lane: address-derived; the tag lookup 0x007EBF20 and 0x007EBFC0 both hand a record and a tag name to
-?Rva007EFFC0Get@@YAPAVRva007EFFC0Allocator@@XZ,0x007EFFC0,typed allocator singleton getter; complete body returns global allocator and the 0x00808ED0 caller uses proven allocate slot +8 and release slot +0xC; direct body; campaign=luna36h-20260907;lane=netpacket_next;model=gpt-5.6-sol-ultra
 ?Rva007F0000Alloc@@YAPAXH@Z,0x007F0000,Y2 DirtySock lane: address-derived; one-argument allocator ProtoMangleCreate calls for the 0x214-byte module record
 ?Rva007F0030Free@@YAXPAX@Z,0x007F0030,Y2 DirtySock lane: address-derived; the matching one-argument release, called by ProtoMangleDestroy
 ?Rva007F0120@@YAXPAX0@Z,0x007F0120,two-arg cdecl init when bfmeGo929C returns null
@@ -87017,7 +87016,6 @@ name,address,notes
 ?sendDisconnectCommand@DisconnectManager@@IAEXHPAVConnectionManager@@@Z,0x000407EB,DisconnectManager status update command dispatch through ILT to the existing 0x0066B9F0 body
 ?sendDisconnectFrameCommand@BFMEConnectionManager@@QAEXXZ,0x000402D7,DisconnectManager status update notification call through ILT to the existing 0x00663910 body
 ?sendDisconnectScreenOff@BFMEDisconnectManager@@QAEXHPAX@Z,0x0066B190,(slot;conMgr): range-checks slot 0..7 then builds NetDisconnectScreenOffCommandMsg 0x00674310 setNewFrame(TheGameLogic frame) 0x00674370 playerID=getLocalPlayerID 0x00663740 optional GenerateNextCommandID and sendLocalCommand(msg;0xFF) then detach; the DisconnectManager-side twin of 0x00663A60 without turnOffScreen; no .text caller (ILT 0x00028259 only)
-?sendFeslMessage@@YAXPAXPBD0@Z,0x007F93E0,FESL routed message sender
 ?sendFile@Network@@UAEXVAsciiString@@EG@Z,0x00682540,vtable 0x0111A968 slot 22 (+0x58) via ILT 0x0002193B; copies the AsciiString and calls sendFileChunk@BFMEConnectionManager 0x00666A10 with (path mask commandID) ret 0xC = ZH sendFile; caller _doFileTransfer 0x0066CF94 (ZH FileTransfer.cpp:76)
 ?sendFileAnnounce@ConnectionManager@@QAEGVAsciiString@@E@Z,0x0066A170,retail call destination from Network sendFileAnnounce at 0x006825C0
 ?sendFileAnnounce@Network@@UAEGVAsciiString@@E@Z,0x006825C0,vtable 0x0111A968 slot 23 (+0x5C) via ILT 0x0001B487; copies the AsciiString and calls ConnectionManager::sendFileAnnounce 0x0066A170 with (path mask) returning ax ret 8 = ZH UnsignedShort sendFileAnnounce; caller _doFileTransfer 0x0066CF12 (ZH FileTransfer.cpp:63)

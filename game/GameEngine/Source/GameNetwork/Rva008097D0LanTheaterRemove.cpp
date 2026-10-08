@@ -30,7 +30,6 @@ class BfmeC994
 {
 public:
 	BfmeC994( char *buffer, int capacity );
-	void addInt( const char *key, int value );
 
 	char *m_vft;
 	int m_field04;
@@ -69,7 +68,18 @@ class Rva007F93E0MessageSender
 
 extern "C" void Rva0080F0D0( unsigned char *object );
 
-void sendFeslMessage( void *message, const char *kind, void *owner );
+// Retail 0x007F93E0 is the FESL sender, matched as Rva007F93E0.
+void *Rva007F93E0( void *message, void *route, void *owner );
+#define sendFeslMessage( message, kind, owner ) Rva007F93E0( ( message ), ( void * )( kind ), ( owner ) )
+
+// Retail 0x007E88D0 is the integer field writer, matched as
+// BfmeThingCIB::bfmeGoCIB.
+class BfmeThingCIB
+{
+public:
+	void bfmeGoCIB( void *key, void *value );
+};
+#define addInt( message, key, value ) ( (BfmeThingCIB *)&( message ) )->bfmeGoCIB( (void *)( key ), (void *)( value ) )
 
 class Rva007EFFC0Allocator
 {
@@ -80,13 +90,20 @@ public:
 	virtual void release( void *block, int flags );
 };
 
-Rva007EFFC0Allocator *Rva007EFFC0Get();
+// Retail 0x007EFFC0 is the allocator getter, matched as bfmeGo929C.
+void *bfmeGo929C();
+#define Rva007EFFC0Get() ( (Rva007EFFC0Allocator *)bfmeGo929C() )
 
-class Gen00809750
+// Retail 0x007F0170 is the class operator delete matched as
+// Gen007F0170::operator delete; these callers also push the block size, which
+// its cdecl body ignores.
+class Gen007F0170
 {
 public:
-	static void operator delete( void *block, unsigned int size );
+	static void operator delete( void *block );
 };
+typedef void ( __cdecl *Gen00809750SizedDelete )( void *block, unsigned int size );
+#define Gen00809750_delete( block, size ) ( (Gen00809750SizedDelete)&Gen007F0170::operator delete )( block, size )
 
 struct Rva008097D0Player
 {
@@ -121,7 +138,7 @@ Rva00808920LanGame::~Rva00808920LanGame()
 		if ( player != 0 )
 		{
 			player->Rva007E86B0Base::~Rva007E86B0Base();
-			Gen00809750::operator delete( player, 0x38 );
+			Gen00809750_delete( player, 0x38 );
 		}
 		m_players[ index ] = 0;
 	}
@@ -229,8 +246,8 @@ void BfmeSinkTCA::bfmeUseTCA( void *value )
 			{
 				BfmeC994 message( buffer, sizeof( buffer ) );
 				message.m_category = 'GREM';
-				message.addInt( "LID", -2 );
-				message.addInt( "GID", player->m_gameId );
+				addInt( message, "LID", -2 );
+				addInt( message, "GID", player->m_gameId );
 				*reinterpret_cast< volatile int * >( &message.m_field04 ) = player->m_field04;
 				_WriteBarrier();
 				*reinterpret_cast< volatile int * >( &message.m_field08 ) = *reinterpret_cast< volatile int * >( &player->m_field08 );
@@ -250,7 +267,7 @@ void BfmeSinkTCA::bfmeUseTCA( void *value )
 		current->m_field14 = 0;
 		current->m_field10 = 0;
 		current->Rva007E86B0Base::~Rva007E86B0Base();
-		Gen00809750::operator delete( current, 0x20 );
+		Gen00809750_delete( current, 0x20 );
 	}
 	m_current = 0;
 
@@ -258,7 +275,7 @@ void BfmeSinkTCA::bfmeUseTCA( void *value )
 	{
 		Rva00808920LanGame *game = m_game;
 		game->Rva00808920LanGame::~Rva00808920LanGame();
-		Gen00809750::operator delete( game, 0xB4 );
+		Gen00809750_delete( game, 0xB4 );
 	}
 	m_game = 0;
 	Rva0080F0D0( (unsigned char *)m_field0c );
