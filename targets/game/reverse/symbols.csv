@@ -90868,3 +90868,4 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_0M@FBMMFKCC@decodedSize?$AA@,0x00D2B928,Retail .data pointer VA 0x012C3B30 targets it; compiler string literal decodedSize equals retail at VA 0x0112B928
 ??_C@_09LMNIMBH@errorCode?$AA@,0x00D2B948,Retail pointer global VA 0x012C3B28 target; compiler string literal errorCode equals retail at VA 0x0112B948
 ?CancelPatchCheckCallback@@YAXXZ,0x00006D52,route=0x0062F760; ILT jmp to the matched CancelPatchCheckCallback body; bfmeGoBHG 0x006300B0 tail-jumps here
+??_C@_0O@HAGFBBAP@LoadSubsystem?$AA@,0x00D41630,Static INI block-parse node VA 0x012D7764 token; compiler string literal LoadSubsystem equals retail at VA 0x01141630
