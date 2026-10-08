@@ -120,118 +120,13 @@ ToppleUpdate::~ToppleUpdate( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-static Real angleClosestTo(Real a1, Real a2, Real desired)
+Real angleClosestTo(Real a1, Real a2, Real desired)
 {
 	a1 = normalizeAngle(a1);
 	a2 = normalizeAngle(a2);
 	return (fabs(stdAngleDiff(desired, a1)) < fabs(stdAngleDiff(desired, a2))) ? a1 : a2;
 }
 
-//-------------------------------------------------------------------------------------------------
-///< Start the toppling process by giving a force vector
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/ToppleUpdateApplyTopplingForceThunk.cpp
-// ?applyTopplingForce@ToppleUpdate@@ present-unmatched
-void ToppleUpdate::applyTopplingForce( const Coord3D* toppleDirection, Real toppleSpeed,
-																			 UnsignedInt options )
-{
-	if (getObject()->isEffectivelyDead())
-		return;
-
-	//DEBUG_LOG(("awaking ToppleUpdate %08lx\n",this));
-	setWakeFrame(getObject(), UPDATE_SLEEP_NONE);
-
-	const ToppleUpdateModuleData* d = getToppleUpdateModuleData();
-
-	if (d->m_killWhenStartToppled)
-	{
-		setWakeFrame(getObject(), UPDATE_SLEEP_FOREVER);
-		getObject()->kill();
-		return;
-	}
-
-	m_toppleDirection = *toppleDirection;
-	m_toppleDirection.normalize();
-	TheScriptEngine->adjustToppleDirection(getObject(), &m_toppleDirection);
-
-	m_angularVelocity = toppleSpeed * d->m_initialVelocityPercent;
-	m_angularAcceleration = toppleSpeed * d->m_initialAccelPercent;
-	m_toppleState = TOPPLE_FALLING;
-	m_options = options;
-
-	// tell the drawable to stop swaying
-	Drawable * draw = getObject()->getDrawable();
-	static NameKeyType nameKeySwayUpdate = NAMEKEY("SwayClientUpdate");
-
-	ClientUpdateModule ** clientModules = draw->getClientUpdateModules();
-	if (clientModules)
-	{
-		while (*clientModules)
-		{
-			if ((*clientModules)->getModuleNameKey() == nameKeySwayUpdate)
-				(*(SwayClientUpdate **)clientModules)->stopSway();
-
-			++clientModules;
-		}
-	}
-
-	// rotate around the z-axis so that our x-axis is perpendicular to the topple direction.
-	// this is really a trick to ensure that relatively planar things (eg, streetlights)
-	// fall parallel to the ground, so that they don't up sticking thru the ground.
-	// yeah, it assumes the models are constructed appropriately, but is a cheap way
-	// of minimizing the problem. (srj)
-	Real curAngleX = normalizeAngle(getObject()->getOrientation());
-	Real toppleAngle = normalizeAngle(atan2(m_toppleDirection.y, m_toppleDirection.x));
-	if (d->m_toppleLeftOrRightOnly)
-	{
-		// it's a fence or such, and can only topple left or right, so pick the closest
-		toppleAngle = angleClosestTo(curAngleX + PI/2, curAngleX - PI/2, toppleAngle);
-		m_toppleDirection.x = Cos(toppleAngle);
-		m_toppleDirection.y = Sin(toppleAngle);
-
-		// go ahead and remove it from the pathfinder now, rather than waiting for the topple to
-		// finish.... since we might be in a slightly different position when toppled, which can
-		// confuse the pathfinder and not de-obstacle everything correctly
-		TheAI->pathfinder()->removeObjectFromPathfindMap(getObject());
-
-	}
-	// desired angle is toppleAngle +/- pi/2, whichever is closer to curangle
-	Real desiredAngleX = angleClosestTo(toppleAngle + PI/2, toppleAngle - PI/2, curAngleX);
-	m_numAngleDeltaX = REAL_TO_INT_FLOOR(ANGULAR_LIMIT / (m_angularVelocity * 2));
-	if (m_numAngleDeltaX < 1)
-		m_numAngleDeltaX = 1;
-	m_angleDeltaX = (desiredAngleX - curAngleX) / m_numAngleDeltaX;
-
-	getObject()->getDrawable()->setModelConditionState(MODELCONDITION_TOPPLED);
-	FXList::doFXObj(d->m_toppleFX, getObject());
-
-	// if this is a tree, create a stump
-	if (!d->m_stumpName.isEmpty())
-	{
-		const ThingTemplate* ttn = TheThingFactory->findTemplate(d->m_stumpName);
-		Object *stump = TheThingFactory->newObject( ttn, NULL );
-		if (stump)
-		{
-			stump->setPosition( getObject()->getPosition() );
-			stump->setOrientation( getObject()->getOrientation() );
-			m_stumpID = stump->getID();
-
-			// if we are "burned", then we will burn our stump
-			const Drawable* draw = getObject()->getDrawable();
-			if( draw )
-			{
-				if( draw->getModelConditionFlags().test( MODELCONDITION_BURNED ) == TRUE )
-				{
-					Drawable* stumpDraw = stump->getDrawable();
-
-					if( stumpDraw )
-						stumpDraw->setModelConditionState( MODELCONDITION_BURNED );
-
-				}
-			}
-		}
-	}
-}
 
 //-------------------------------------------------------------------------------------------------
 ///< Ask if this module is able to be toppled
