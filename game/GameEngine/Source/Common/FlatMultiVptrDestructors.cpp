@@ -213,21 +213,6 @@ Rva002B43C0FlatDtor::~Rva002B43C0FlatDtor()
 {
 }
 
-class Rva002C4980FlatDtorM0 { public: virtual void anchor(); };
-class Rva002C4980FlatDtorM1 { public: virtual void anchor(); unsigned int m_pad[ 3 ]; };
-class Rva002C4980FlatDtorM2 { public: virtual void anchor(); };
-class Rva002C4980FlatDtorM3 { public: virtual void anchor(); unsigned int m_pad[ 198 ]; };
-class Rva002C4980FlatDtorM4 { public: virtual void anchor(); };
-class Rva002C4980FlatDtor : public Rva00033A37FlatBase, public Rva002C4980FlatDtorM0, public Rva002C4980FlatDtorM1, public Rva002C4980FlatDtorM2, public Rva002C4980FlatDtorM3, public Rva002C4980FlatDtorM4
-{
-public:
-	virtual ~Rva002C4980FlatDtor();
-};
-
-Rva002C4980FlatDtor::~Rva002C4980FlatDtor()
-{
-}
-
 class Rva002C5390FlatDtorM0 { public: virtual void anchor(); };
 class Rva002C5390FlatDtorM1 { public: virtual void anchor(); unsigned int m_pad[ 3 ]; };
 class Rva002C5390FlatDtorM2 { public: virtual void anchor(); };
