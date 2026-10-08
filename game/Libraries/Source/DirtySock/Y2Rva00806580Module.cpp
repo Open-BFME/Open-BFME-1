@@ -223,7 +223,7 @@ static const unsigned char g_Rva0080B4B0ClientPrefix[ 3 ] = { 1, 0, 0x80 };
 extern "C" void Rva0080B4B0( Rva0080B1B0Comm *comm )
 {
 	int result;
-	unsigned char head[ 0x400 ];
+	unsigned char strBuffer[ 0x400 ];
 	Rva0080B4B0Secure *secure;
 	unsigned int hostAddress;
 	unsigned char *handshake;
@@ -235,13 +235,10 @@ extern "C" void Rva0080B4B0( Rva0080B1B0Comm *comm )
 	int certSize;
 	int cipherSize;
 	int challengeSize;
-	unsigned char contextA[ 0x54 ];
-	unsigned char certificate[ 0x518 ];
+	unsigned char MD5Context[ 0x54 ];
+	unsigned char RSAContext[ 0x518 ];
 	unsigned char *state12Data;
 	unsigned char *state13Reply;
-	unsigned char contextB[ 0x54 ];
-	unsigned char *state14Data;
-	unsigned char *state15Reply;
 
 	secure = ( Rva0080B4B0Secure * )comm->m_backend;
 
@@ -348,7 +345,7 @@ extern "C" void Rva0080B4B0( Rva0080B1B0Comm *comm )
 
 	if( comm->m_state == 10 )
 	{
-		handshake = head;
+		handshake = strBuffer;
 		headEnd = handshake + 9;
 		memset( handshake, 0, 10 );
 		handshake[ 0 ] = 1;
@@ -416,30 +413,30 @@ extern "C" void Rva0080B4B0( Rva0080B1B0Comm *comm )
 
 	if( comm->m_state == 12 )
 	{
-		state12Data = head;
+		state12Data = strBuffer;
 		secure->m_certWordCount = secure->m_certFlags[ 2 ] >> 3;
 		Rva0080AD00( secure->m_certData, secure->m_certWordCount,
 			secure->m_cryptoState );
-		Rva00810020( contextA );
-		Rva00810060( contextA, secure->m_certData,
+		Rva00810020( MD5Context );
+		Rva00810060( MD5Context, secure->m_certData,
 				secure->m_certWordCount );
-		Rva00810060( contextA, ( const unsigned char * )"0", -1 );
-		Rva00810060( contextA, secure->m_sessionData,
+		Rva00810060( MD5Context, ( const unsigned char * )"0", -1 );
+		Rva00810060( MD5Context, secure->m_sessionData,
 				secure->m_sessionSize );
-		Rva00810060( contextA, secure->m_challengeData,
+		Rva00810060( MD5Context, secure->m_challengeData,
 				secure->m_challengeSize );
 		secure->m_field80A8 = 0x10;
-		Rva00810FF0( contextA,
+		Rva00810FF0( MD5Context,
 				( char * )secure->m_field80AC,
 				0x10 );
 				Rva0080F200( secure->m_cryptoState,
 				secure->m_field80AC, secure->m_field80A8, 1 );
-		Rva0080F3D0( certificate, secure->m_cipherData,
+		Rva0080F3D0( RSAContext, secure->m_cipherData,
 			secure->m_cipherDataSize, secure->m_verifyData,
 			secure->m_verifyDataSize );
-		Rva0080F430( certificate, secure->m_certData,
+		Rva0080F430( RSAContext, secure->m_certData,
 			secure->m_certWordCount );
-		Rva0080F550( certificate );
+		Rva0080F550( RSAContext );
 		memset( state12Data, 0, 0xB );
 		state12Data[ 0 ] = 2;
 		state12Data[ 1 ] = secure->m_certFlags[ 0 ];
@@ -447,7 +444,7 @@ extern "C" void Rva0080B4B0( Rva0080B1B0Comm *comm )
 		state12Data[ 3 ] = secure->m_certFlags[ 2 ];
 		state12Data[ 6 ] = ( unsigned char )( secure->m_cipherDataSize >> 8 );
 		state12Data[ 7 ] = ( unsigned char )secure->m_cipherDataSize;
-		memcpy( state12Data + 0xA, certificate, secure->m_cipherDataSize );
+		memcpy( state12Data + 0xA, RSAContext, secure->m_cipherDataSize );
 		Rva0080C390( comm, state12Data, secure->m_cipherDataSize + 0xA );
 		comm->m_state = 13;
 	}
@@ -469,39 +466,45 @@ extern "C" void Rva0080B4B0( Rva0080B1B0Comm *comm )
 		secure->m_recvBegin = 0;
 	}
 
-	if( comm->m_state == 14 )
 	{
-		state14Data = head;
-		Rva00810020( contextB );
-		Rva00810060( contextB, secure->m_certData,
-				secure->m_certWordCount );
-		Rva00810060( contextB, ( const unsigned char * )"1", -1 );
-		Rva00810060( contextB, secure->m_sessionData,
-				secure->m_sessionSize );
-		Rva00810060( contextB, secure->m_challengeData,
+		unsigned char MD5Context[ 0x54 ];
+		unsigned char *state14Data;
+		unsigned char *state15Reply;
+
+		if( comm->m_state == 14 )
+		{
+			state14Data = strBuffer;
+			Rva00810020( MD5Context );
+			Rva00810060( MD5Context, secure->m_certData,
+					secure->m_certWordCount );
+			Rva00810060( MD5Context, ( const unsigned char * )"1", -1 );
+			Rva00810060( MD5Context, secure->m_sessionData,
+					secure->m_sessionSize );
+			Rva00810060( MD5Context, secure->m_challengeData,
+					secure->m_challengeSize );
+					secure->m_field812C = 0x10;
+			Rva00810FF0( MD5Context, ( char * )secure->m_field8130, 0x10 );
+			Rva0080F200( secure->m_rc4State, secure->m_field8130,
+					secure->m_field812C, 1 );
+			state14Data[ 0 ] = 3;
+			memcpy( state14Data + 1, secure->m_challengeData,
 				secure->m_challengeSize );
-				secure->m_field812C = 0x10;
-		Rva00810FF0( contextB, ( char * )secure->m_field8130, 0x10 );
-		Rva0080F200( secure->m_rc4State, secure->m_field8130,
-				secure->m_field812C, 1 );
-		state14Data[ 0 ] = 3;
-		memcpy( state14Data + 1, secure->m_challengeData,
-			secure->m_challengeSize );
-		Rva0080C390( comm, state14Data, secure->m_challengeSize + 1 );
-		comm->m_state = 15;
-	}
+			Rva0080C390( comm, state14Data, secure->m_challengeSize + 1 );
+			comm->m_state = 15;
+		}
 
-	if( comm->m_state == 15 && secure->m_recvBegin == secure->m_recvSize
-		&& secure->m_recvSize > 4 )
-	{
-		state15Reply = Rva0080C6F0( comm );
-		if( state15Reply[ 0 ] != 6 )
-			Rva007FE780( "did not get finish message\n" );
-		secure->m_recvSize = 0;
-		secure->m_recvBegin = 0;
-		comm->m_state = 16;
-	}
+		if( comm->m_state == 15 && secure->m_recvBegin == secure->m_recvSize
+			&& secure->m_recvSize > 4 )
+		{
+			state15Reply = Rva0080C6F0( comm );
+			if( state15Reply[ 0 ] != 6 )
+				Rva007FE780( "did not get finish message\n" );
+			secure->m_recvSize = 0;
+			secure->m_recvBegin = 0;
+			comm->m_state = 16;
+		}
 
+	}
 }
 
 extern "C" int Rva0080B1B0( Rva0080B1B0Comm *comm, int secu, char *name,

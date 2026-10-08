@@ -147,8 +147,8 @@ int Rva0080C390( struct Rva0080B000Comm *comm, const void *data, int length )
 	int writeOffset;
 	int baseOffset;
 	int padding;
-	unsigned char context[ 0x54 ];
-	unsigned char header[ 4 ];
+	unsigned char MD5Context[ 0x54 ];
+	unsigned char uSeqn[ 4 ];
 	unsigned char *state;
 	int remainder;
 
@@ -180,18 +180,18 @@ int Rva0080C390( struct Rva0080B000Comm *comm, const void *data, int length )
 
 	if ( *(int *)( state + 0x812C ) > 0 )
 	{
-		header[ 0 ] = (unsigned char)( ( *(unsigned int *)( state + 0x4008 ) >> 24 ) & 0xff );
-		header[ 1 ] = (unsigned char)( ( *(unsigned int *)( state + 0x4008 ) >> 16 ) & 0xff );
-		header[ 2 ] = (unsigned char)( ( *(unsigned int *)( state + 0x4008 ) >> 8 ) & 0xff );
-		header[ 3 ] = (unsigned char)( *(unsigned int *)( state + 0x4008 ) & 0xff );
+		uSeqn[ 0 ] = (unsigned char)( ( *(unsigned int *)( state + 0x4008 ) >> 24 ) & 0xff );
+		uSeqn[ 1 ] = (unsigned char)( ( *(unsigned int *)( state + 0x4008 ) >> 16 ) & 0xff );
+		uSeqn[ 2 ] = (unsigned char)( ( *(unsigned int *)( state + 0x4008 ) >> 8 ) & 0xff );
+		uSeqn[ 3 ] = (unsigned char)( *(unsigned int *)( state + 0x4008 ) & 0xff );
 
-		Rva00810020( context );
-		Rva00810060( context, state + 0x8130,
+		Rva00810020( MD5Context );
+		Rva00810060( MD5Context, state + 0x8130,
 			*(int *)( state + 0x812C ) );
-		Rva00810060( context, state + baseOffset + 8,
+		Rva00810060( MD5Context, state + baseOffset + 8,
 			writeOffset - baseOffset );
-		Rva00810060( context, header, 4 );
-		Rva00810FF0( context, (char *)( state + headerOffset + 8 ), 0x10 );
+		Rva00810060( MD5Context, uSeqn, 4 );
+		Rva00810FF0( MD5Context, (char *)( state + headerOffset + 8 ), 0x10 );
 	}
 
 	payloadLength = writeOffset - headerOffset;

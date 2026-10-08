@@ -1330,11 +1330,7 @@ dir32,0x01357214,_Rva01357214Onexitbegin,"retail 0x01357214 is already recorded 
 ltable,0x00420AC0,?drawIconUI@Drawable@@QAEXH@Z,+124 $L304 wants 0x00820B1E retail 0x00820B25
 ltable,0x0069A6F0,?setReverb@Rva0069A6F0Owner@@QAEXPAPAURva0069A6F0Playing@@@Z,+228 $L347 wants 0x00A9A70A retail 0x00A9A748
 ltable,0x007FD920,_Rva007FD920,+275 $L2546 wants 0x00BFDA4F retail 0x00BFDA48
-ltable,0x0080B4B0,_Rva0080B4B0,+3720 $L981 wants 0x00C0C37E retail 0x00C0C381
-ltable,0x0080C390,_Rva0080C390,+827 $L770 wants 0x00C0C6E2 retail 0x00C0C6E1
 ltable,0x0080DD80,_Rva0080DD80,+443 $L1447 wants 0x00C0DF60 retail 0x00C0DF65
-ltable,0x0080FB40,_Rva0080FB40,+453 $L672 wants 0x00C0FD1C retail 0x00C0FD1B
-ltable,0x00816020,_Rva00816020,+309 $L642 wants 0x00C16109 retail 0x00C16124
 ltable,0x0085F4A0,_piEnterResultToJoinResult,+52 $L1715 wants 0x00C5F4AF retail 0x00C5F4C7
 static,0x000E4210,?parsePlayerTemplateDefinition@PlayerTemplateStore@@SAXPAVINI@@@Z,"+79 ?TheFieldParseTable@?1??getFieldParse@Pl@0x010847E0: 46 byte(s) differ, first +28: source 000000000000000000000000080000000000000000000000 retail 280f0801e0"
 static,0x00123180,?buildFieldParse@FireOCLAfterWeaponCooldownUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,"+8 ?dataFieldParse@?1??buildFieldParse@Fire@0x0108B330: 13 byte(s) differ, first +12: source 000000000000000000000000640000000000000000000000 retail 20b30801002"
@@ -1398,12 +1394,8 @@ tail,0x005FD9E0,??0DefaultPhysicsModuleInfo@FXParticleSystem@@QAE@XZ,"compiled=9
 tail,0x007FD920,_Rva007FD920,"compiled=311 ledger=259 tail=52: 19 byte(s) differ from retail, first +291"
 tail,0x007FDFF0,?Rva007FDFF0Connect@@YAPAXPBDH@Z,"compiled=523 ledger=494 tail=29: 9 byte(s) differ from retail, first +514"
 tail,0x007FFAD0,?Rva007FFAD0@@YAII@Z,"compiled=129 ledger=102 tail=27: 7 byte(s) differ from retail, first +122"
-tail,0x0080B4B0,_Rva0080B4B0,"compiled=3795 ledger=3704 tail=91: 34 byte(s) differ from retail, first +3760"
-tail,0x0080C390,_Rva0080C390,"compiled=858 ledger=811 tail=47: 15 byte(s) differ from retail, first +843"
 tail,0x0080DD80,_Rva0080DD80,"compiled=488 ledger=427 tail=61: 16 byte(s) differ from retail, first +471"
 tail,0x0080E030,_Rva0080E030,"compiled=384 ledger=320 tail=64: 17 byte(s) differ from retail, first +364"
-tail,0x0080FB40,_Rva0080FB40,"compiled=482 ledger=437 tail=45: 12 byte(s) differ from retail, first +469"
-tail,0x00816160,_Rva00816160,"compiled=280 ledger=254 tail=26: 4 byte(s) differ from retail, first +274"
 tail,0x0081AE20,_Rva0081AE20,"compiled=476 ledger=450 tail=26: 5 byte(s) differ from retail, first +470"
 tail,0x00853B30,?load@INI@@QAE_NVBFMERetailAsciiString@@00HH@Z,"compiled=377 ledger=250 tail=127: 18 byte(s) differ from retail, first +287"
 tail,0x00906FE0,?Get_DX8_Texture_Stage_State_Value_Name@DX8Wrapper@@,"compiled=316 ledger=264 tail=52: 1 byte(s) differ from retail, first +306"

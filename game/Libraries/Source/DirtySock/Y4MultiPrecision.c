@@ -265,13 +265,13 @@ void Rva0080FB40( unsigned short *result, int count,
 {
 	int i;
 	int carry;
-	unsigned short first[ 0x100 ];
-	unsigned short second[ 0x100 ];
+	unsigned short Temp1[ 0x100 ];
+	unsigned short Temp2[ 0x100 ];
 	unsigned short *current;
 	unsigned short *other;
 
-	current = first;
-	other = second;
+	current = Temp1;
+	other = Temp2;
 	memset( current, 0, count * 2 );
 	for ( i = count * 2 * 8 - 1; i >= 0; i-- )
 	{
