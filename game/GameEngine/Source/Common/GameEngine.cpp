@@ -181,6 +181,48 @@ void initSubsystem(SUBSYSTEM*& sysref, AsciiString name, SUBSYSTEM* sys, Xfer *p
 // Common/System/RadarInitSubsystem.cpp; this TU only calls it.
 template<> void initSubsystem<Radar>(Radar*& sysref, AsciiString name, Radar* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
 
+// Retail keeps these instantiations in Libraries/Source/subsystem/
+// SubsystemInterface.cpp (matched rows); this TU only calls them.
+template<> void initSubsystem<AI>(AI*& sysref, AsciiString name, AI* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<ActionManager>(ActionManager*& sysref, AsciiString name, ActionManager* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<ArmorStore>(ArmorStore*& sysref, AsciiString name, ArmorStore* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<AudioManager>(AudioManager*& sysref, AsciiString name, AudioManager* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<BuildAssistant>(BuildAssistant*& sysref, AsciiString name, BuildAssistant* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<CDManagerInterface>(CDManagerInterface*& sysref, AsciiString name, CDManagerInterface* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<CaveSystem>(CaveSystem*& sysref, AsciiString name, CaveSystem* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<CrateSystem>(CrateSystem*& sysref, AsciiString name, CrateSystem* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<DamageFXStore>(DamageFXStore*& sysref, AsciiString name, DamageFXStore* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<FXListStore>(FXListStore*& sysref, AsciiString name, FXListStore* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<FunctionLexicon>(FunctionLexicon*& sysref, AsciiString name, FunctionLexicon* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<GameClient>(GameClient*& sysref, AsciiString name, GameClient* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<GameLogic>(GameLogic*& sysref, AsciiString name, GameLogic* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<GameResultsInterface>(GameResultsInterface*& sysref, AsciiString name, GameResultsInterface* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<GameState>(GameState*& sysref, AsciiString name, GameState* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<GameStateMap>(GameStateMap*& sysref, AsciiString name, GameStateMap* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<GameTextInterface>(GameTextInterface*& sysref, AsciiString name, GameTextInterface* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<GlobalData>(GlobalData*& sysref, AsciiString name, GlobalData* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<GlobalLanguage>(GlobalLanguage*& sysref, AsciiString name, GlobalLanguage* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<LocomotorStore>(LocomotorStore*& sysref, AsciiString name, LocomotorStore* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<MessageStream>(MessageStream*& sysref, AsciiString name, MessageStream* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<MetaMap>(MetaMap*& sysref, AsciiString name, MetaMap* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<ModuleFactory>(ModuleFactory*& sysref, AsciiString name, ModuleFactory* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<MultiplayerSettings>(MultiplayerSettings*& sysref, AsciiString name, MultiplayerSettings* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<ObjectCreationListStore>(ObjectCreationListStore*& sysref, AsciiString name, ObjectCreationListStore* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<PlayerList>(PlayerList*& sysref, AsciiString name, PlayerList* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<PlayerTemplateStore>(PlayerTemplateStore*& sysref, AsciiString name, PlayerTemplateStore* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<RankInfoStore>(RankInfoStore*& sysref, AsciiString name, RankInfoStore* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<RecorderClass>(RecorderClass*& sysref, AsciiString name, RecorderClass* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<ScienceStore>(ScienceStore*& sysref, AsciiString name, ScienceStore* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<SidesList>(SidesList*& sysref, AsciiString name, SidesList* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<SpecialPowerStore>(SpecialPowerStore*& sysref, AsciiString name, SpecialPowerStore* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<TeamFactory>(TeamFactory*& sysref, AsciiString name, TeamFactory* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<TerrainRoadCollection>(TerrainRoadCollection*& sysref, AsciiString name, TerrainRoadCollection* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<TerrainTypeCollection>(TerrainTypeCollection*& sysref, AsciiString name, TerrainTypeCollection* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<ThingFactory>(ThingFactory*& sysref, AsciiString name, ThingFactory* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<UpgradeCenter>(UpgradeCenter*& sysref, AsciiString name, UpgradeCenter* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<VictoryConditionsInterface>(VictoryConditionsInterface*& sysref, AsciiString name, VictoryConditionsInterface* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+template<> void initSubsystem<WeaponStore>(WeaponStore*& sysref, AsciiString name, WeaponStore* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+
 //-------------------------------------------------------------------------------------------------
 extern HINSTANCE ApplicationHInstance;  ///< our application instance
 extern CComModule _Module;
