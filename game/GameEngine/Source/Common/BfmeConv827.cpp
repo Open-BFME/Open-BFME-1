@@ -162,7 +162,7 @@ public:
 class GameLogic;
 extern GameLogic *TheGameLogic;
 
-void __stdcall bfmeLookupAndSendDB0(void *key, void *param2)
+void __stdcall doModifyBuildableStatus(void *key, void *param2)
 {
 	void *obj = localTheThingFactory()->registerObj(key);
 	if (obj) {
