@@ -7,15 +7,11 @@ extern "C" void *memset(void *d, int c, unsigned n);
 #pragma intrinsic(memset)
 
 // Address-derived stand-in for retail's ChunkLoadClass, kept because the
-// matched body's own mangled name embeds this spelling. The read goes through
-// the real ChunkLoadClass declaration from chunkio.h.
-class BfmeChunkVHT
-{
-public:
-	bool bfmeOpenVHT();
-	unsigned bfmeCurIdVHT();
-	void bfmeCloseVHT();
-};
+// matched body's own mangled name embeds this spelling. Every call goes
+// through the real ChunkLoadClass declaration from chunkio.h: retail ILT
+// targets 0x009E1380/0x009E1440/0x009E13E0 are the matched Open_Chunk,
+// Cur_Chunk_ID and Close_Chunk.
+class BfmeChunkVHT;
 
 class BfmeThingVHT
 {
@@ -28,14 +24,15 @@ public:
 char BfmeThingVHT::bfmeLoadVHT(BfmeChunkVHT *c)
 {
 	char ok = 0;
-	if (c->bfmeOpenVHT())
+	ChunkLoadClass *chunk = reinterpret_cast<ChunkLoadClass *>(c);
+	if (chunk->Open_Chunk())
 	{
-		if (c->bfmeCurIdVHT() == 0x503)
+		if (chunk->Cur_Chunk_ID() == 0x503)
 		{
 			memset(m_bfmeData, 0, 0x14c);
-			if (reinterpret_cast<ChunkLoadClass *>(c)->Read(m_bfmeData, 0x14c) == 0x14c)
+			if (chunk->Read(m_bfmeData, 0x14c) == 0x14c)
 				ok = 1;
-			c->bfmeCloseVHT();
+			chunk->Close_Chunk();
 		}
 	}
 	return ok;

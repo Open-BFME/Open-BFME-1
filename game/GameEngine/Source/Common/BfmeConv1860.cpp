@@ -12,12 +12,18 @@ public:
 	virtual int bfmeKindYG();
 };
 
+// Retail calls ILT 0x00019B23 -> 0x001C74E0 and ILT 0x0000A001 -> 0x001C1770,
+// matched as these Object members.
+class Object
+{
+public:
+	unsigned char getCrushableLevel() const;
+	bool isUsingAirborneLocomotor() const;
+};
+
 class BfmeThingYG
 {
 public:
-	char bfmeLevelYG();
-	char bfmeBusyYG();
-
 	unsigned char m_bfmeHeadYG[0x200];
 	BfmeSubYG *m_bfmeSubYG;
 };
@@ -34,13 +40,15 @@ public:
 
 char BfmeOwnerYG::bfmeCheckYG(BfmeThingYG *thing)
 {
-	if (m_bfmeLevelYG != 0 && m_bfmeLevelYG > thing->bfmeLevelYG())
+	const Object *object = (const Object *)thing;
+
+	if (m_bfmeLevelYG != 0 && m_bfmeLevelYG > (char)object->getCrushableLevel())
 		return 0;
 
 	if (thing == m_bfmeCurrentYG)
 		return 0;
 
-	if (thing->bfmeBusyYG())
+	if (object->isUsingAirborneLocomotor())
 		return 0;
 
 	BfmeSubYG *sub = thing->m_bfmeSubYG;

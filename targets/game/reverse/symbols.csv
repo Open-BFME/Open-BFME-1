@@ -75574,7 +75574,6 @@ name,address,notes
 ?bfmeAddCQE@BfmeSubCQE@@QAEXPAVBfmeArgCQE@@@Z,0x00005C22,pin
 ?bfmeAddEHR@BfmeMgrEHR@@QAEXPAXPBDH1HHHH@Z,0x00015235,pin
 ?bfmeAddERQ@@YAXPAXPAVBfmeItemERQ@@@Z,0x0000F8B7,pin
-?bfmeAddHF@BfmeListHF@@QAEXPAVBfmeValueHF@@@Z,0x00029C08,pin
 ?bfmeAddKey@LargeGroupAudioKeyMap@@QAEXABVAsciiString@@@Z,0x000133D1,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003D4920 calls; autopin
 ?bfmeAddPlayerVK@BfmeListVK@@QAEXPAVBfmePlayerVK@@H@Z,0x00044A44,pin
 ?bfmeAddSetVK@BfmeListVK@@QAEXPAUBfmeSetVK@@H@Z,0x000339FB,pin
@@ -75973,7 +75972,6 @@ name,address,notes
 ?bfmeBusyESH@BfmeSubESH@@QAEDXZ,0x00035A5D,pin
 ?bfmeBusyETB@BfmeItemETB@@QAEHXZ,0x0000978C,pin
 ?bfmeBusyNW@BfmeCheckerNW@@QAEDXZ,0x00006EEC,pin
-?bfmeBusyYG@BfmeThingYG@@QAEDXZ,0x0000A001
 ?bfmeCEQT@BfmeThingEQT@@QAEDH@Z,0x0003251F,pin
 ?bfmeCETC@BfmeBaseETC@@QAEXPAX000@Z,0x00043545,pin
 ?bfmeCalc919G@BfmeCalc919G@@QAEHXZ,0x00017512,pin
@@ -76210,7 +76208,6 @@ name,address,notes
 ?bfmeCheckERX@BfmeThingERX@@QAEDH@Z,0x0003251F,pin
 ?bfmeCheckERY@BfmeSubERY@@QAEHPAX@Z,0x000220C5,pin
 ?bfmeCheckESE@BfmeActionsESE@@QAEDPAXPAVBfmeThingESE@@0@Z,0x000338D4,pin
-?bfmeCheckESF@BfmeHostESF@@QAEDPAVBfmeAESF@@PAUBfmePairESF@@@Z,0x000171E8,pin
 ?bfmeCheckESK@BfmeHostESK@@QAEDPAVBfmeMsgESK@@PAVBfmeThingESK@@@Z,0x0001D813,pin
 ?bfmeCheckFH@BfmeCheckFH@@QAEDPAX@Z,0x0003E80B,pin
 ?bfmeCheckGK@BfmeMgrGK@@QAEDPAVBfmeObjGK@@HH@Z,0x000481FD,pin check for BfmeConv2065
@@ -76307,7 +76304,6 @@ name,address,notes
 ?bfmeCloseFY@BfmeSlotFY@@QAEXH@Z,0x00013633,pin
 ?bfmeCloseHV@ClientRoot4120@@QAEXXZ,0x0003C16E,pin
 ?bfmeCloseUDC@BfmeSrcUDC@@QAEXXZ,0x009EB7A0,pin
-?bfmeCloseVHT@BfmeChunkVHT@@QAEXXZ,0x009E13E0,pin
 ?bfmeCloseVHX@BfmeHandleVHX@@QAEXXZ,0x009DB5A0,pin
 ?bfmeCloseXP@Rva00579160Manager@@QAEXH@Z,0x0002144A,Open-BFME5 ILT window close the 0x00470570 close-all calls
 ?bfmeCloseZO@BfmeChunkZO@@QAEXXZ,0x00004B42
@@ -76443,7 +76439,6 @@ name,address,notes
 ?bfmeCreateInactiveTeam@TeamFactory@@AAEPAVTeam@@ABVAsciiString@@0@Z,0x0000D15C,retail REL32 at 0x000F7CAB targets the two-name createInactiveTeam ILT at 0x0000D15C
 ?bfmeCtorECMa@BfmeThingECMa@@QAEPAV1@XZ,0x00806300,pin
 ?bfmeCur1094@BfmeK1094@@QAEPAVBfmeR1094@@XZ,0x00020824,pin
-?bfmeCurIdVHT@BfmeChunkVHT@@QAEIXZ,0x009E1440,pin
 ?bfmeCurrentCU@@YAIXZ,0x0000E3D1,ILT thunk to CurrentCU getter 0x00421E10
 ?bfmeCurveFind@@YAPAXPAX00IH@Z,0x00049896,typed return alias for the proven bfmeSendEventA19 lower-bound thunk
 ?bfmeDeallocEU@@YAXPAXI@Z,0x0082E5F0,pin
@@ -76920,7 +76915,6 @@ name,address,notes
 ?bfmeFindERP@BfmeThingERP@@QAEPAVBfmeModERP@@H@Z,0x0002AE23,pin
 ?bfmeFindERS@BfmeHashERS@@QAEPAUBfmeEntryERS@@PAX@Z,0x000356F7,pin
 ?bfmeFindESA@BfmeOwnerESA@@QAEPAVBfmeRecESA@@PAVBfmeKeyESA@@@Z,0x0002BF0D,pin
-?bfmeFindESF@BfmeHostESF@@QAEPAVBfmeCESF@@PAVBfmeBESF@@HH@Z,0x00020671,pin
 ?bfmeFindEVB@BfmeGlobEVB@@QAEPAUBfmeObjEVB@@PAX@Z,0x0001F253,pin
 ?bfmeFindEY@BfmeMapEY@@QBE?AVBfmeIterEY@@PAX@Z,0x0094C5E0,pin map find for BfmeConv2045
 ?bfmeFindEZC@BfmeSubEZC@@QAEPAUBfmeResEZC@@PAX@Z,0x00037D6C,pin
@@ -77827,7 +77821,6 @@ name,address,notes
 ?bfmeLenErrV38@BfmeStrV38@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00830B10
 ?bfmeLenErrV43@BfmeStrV43@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00831080
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
-?bfmeLevelYG@BfmeThingYG@@QAEDXZ,0x00019B23
 ?bfmeLine1226@BfmeR1226@@QAEXPAD@Z,0x008A0F40,pin
 ?bfmeLinearInsert_00452910@@YAXPAHHUBfmeInsertCompareB@@@Z,0x00452910,ABI-compatible integer spelling used to preserve the retail inlined caller shape; target body is the proven pointer-valued bfmeLinearInsert_00452910
 ?bfmeLinkEAT@BfmeNodeEAT@Rva0035E510@@QAEXPAV12@PAH1@Z,0x0035C9C0,RVA0035E510 bank label under address namespace; ILT00028650; saves live ECX at0035C9DE; three pointer stack args ret0C0035CBC3; receiver preserved by visible003527B0
@@ -77889,7 +77882,6 @@ name,address,notes
 ?bfmeLookupEBA@@YAPAVBfmeRecEBA@@PAVBfmeUStrEBA@@@Z,0x00035B43,pin lookup for BfmeConv2017
 ?bfmeLookupERY@BfmeMapERY@@QAEIPAX@Z,0x000329FC,pin
 ?bfmeLookupGH@BfmeMapGH@@QAEXPAPAVBfmeNodeGH@@PAPAX@Z,0x00018C5A,pin lookup for BfmeConv2059
-?bfmeLookupHF@Rva00367E30Logic@@QAEPAVBfmeValueHF@@PAXH@Z,0x0001F253,pin
 ?bfmeLookupMR@BfmeTableMR@@QAEXPAPAVBfmeNodeMR@@PAPAVBfmeKeyMR@@@Z,0x0001FF05,pin
 ?bfmeLookupPV@BfmeTablePV@@QAEXPAPAVBfmeNodePV@@PAPAX@Z,0x0002DF6F,pin
 ?bfmeLookupPerUnitSound@BfmeOverridable@@QAEPBVAudioEventRTS@@ABVAsciiString@@@Z,0x0003B548,Open-BFME5 ILT the override-side lookup in ThingTemplate::getPerUnitSound at 0x00416FE0 goes through; it jumps to 0x001462D0
@@ -78224,7 +78216,6 @@ name,address,notes
 ?bfmeOpen1085@BfmeR1085@@QAEXPAVBfmeX1085@@@Z,0x0002144A,pin
 ?bfmeOpenEAH@@YAXPAX@Z,0x00047780,route=0x00569150; BfmeAptScreenSaveLoad destructor 0x0056E230 calls the matched cdecl body through this ILT (push arg then add esp 4)
 ?bfmeOpenHV@ClientRoot4120@@QAEXXZ,0x0000D350,pin
-?bfmeOpenVHT@BfmeChunkVHT@@QAE_NXZ,0x009E1380,pin
 ?bfmeOpenZO@BfmeChunkZO@@QAEXPADG@Z,0x0003A256
 ?bfmeOptimizeDir@Path@@QAEXPBVObject@@PBUCoord3D@@H_N@Z,0x00049DEB,ILT to the BFME-only second optimize pass over the unit direction vector; called by Pathfinder::buildActualPath at 0x003E10F0; no ZH twin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
@@ -78330,7 +78321,6 @@ name,address,notes
 ?bfmeReadReal@DataChunkInput@@QAEMXZ,0x0002E5E1,BEnvironmentData parser readReal thunk
 ?bfmeReadSJA@@YAXPAX0PAD@Z,0x0000FB73,pin
 ?bfmeReadVFC@BfmeChunkVFC@@QAEIPAXI@Z,0x009E15C0,pin
-?bfmeReadVHT@BfmeChunkVHT@@QAEIPAXI@Z,0x009E15C0,pin
 ?bfmeReady1001@BfmeUnit1001@@QAEDXZ,0x000331C7,pin
 ?bfmeReady986C@BfmeC986@@QAEDXZ,0x000104B0,pin
 ?bfmeReady@BfmeReadyGate@@QAE_NXZ,0x0002E8ED,Open-BFME5 readiness predicate ILT used by 0x003D55C0
@@ -78472,7 +78462,6 @@ name,address,notes
 ?bfmeResolveEVI@@YIPAVBfmeThingEVI@@PAVBfmeSubEVI@@@Z,0x000022BB,pin resolve thunk for BfmeConv1999
 ?bfmeResolveGA@BfmeItemGA@@QAEPAVBfmeThingGA@@XZ,0x00003B52,pin
 ?bfmeResolveGN@BfmeInnerGN@@QAEPAVBfmeThingGN@@XZ,0x000022BB,pin
-?bfmeResolveHF@BfmeInnerHF@@QAEPAVBfmeThingHF@@XZ,0x000022BB,pin
 ?bfmeResolveKZ@BfmeInnerKZ@@QAEPAVBfmeThingKZ@@XZ,0x000022BB,pin
 ?bfmeResolveKZ@Rva0015A5B0Inner@@QAEPAVRva0015A5B0Thing@@XZ,0x000022BB,pin resolve thunk for Rva0015A5B0Sum override walk
 ?bfmeResolveLP@BfmeInnerLP@@QAEPAVBfmeThingLP@@XZ,0x000022BB,pin

@@ -25,11 +25,15 @@ enum KindOfType
 
 class BfmeThingHF;
 
-class BfmeInnerHF
+// Retail ILT 0x000022BB lands on 0x00087A80, matched as
+// Overridable::getFinalOverride() const.
+class Overridable
 {
 public:
-	BfmeThingHF *bfmeResolveHF(void);
+	const Overridable *getFinalOverride() const;
 };
+
+typedef Overridable BfmeInnerHF;
 
 class BfmeThingHF
 {
@@ -47,13 +51,17 @@ public:
 	void *m_bfmeKeyHF;
 };
 
-class BfmeValueHF;
+// Retail ILT 0x00029C08 lands on 0x00153D10, matched as
+// AICommandInterface::aiRepair(Object *, CommandSourceType).
+enum CommandSourceType { CMD_FROM_PLAYER = 0 };
 
-class BfmeListHF
+class AICommandInterface
 {
 public:
-	void bfmeAddHF(BfmeValueHF *value);
+	void aiRepair(Object *obj, CommandSourceType cmdSource);
 };
+
+typedef AICommandInterface BfmeListHF;
 
 class BfmeSlotHF
 {
@@ -71,14 +79,14 @@ public:
 	BfmeSlotHF *m_bfmeSlotHF;
 };
 
-// TU-local view of the GameLogic singleton's lookup used here.
-struct Rva00367E30Logic
-{
-	BfmeValueHF *bfmeLookupHF(void *key, int flag);
-};
-
 // Retail's GameLogic singleton at 0x012F0898; the one canonical spelling.
-class GameLogic;
+// Retail ILT 0x0001F253 lands on 0x0009A510, matched as
+// GameLogic::findObjectByID(int).
+class GameLogic
+{
+public:
+	Object *findObjectByID(int id);
+};
 extern GameLogic *TheGameLogic;
 
 class RepairSpecialPower
@@ -99,7 +107,7 @@ void RepairSpecialPower::doSpecialPowerAtObject(Object *obj, UnsignedInt)
 	BfmeThingHF *thing = unit->m_bfmeThingHF;
 
 	if (thing && thing->m_bfmeInnerHF)
-		thing = thing->m_bfmeInnerHF->bfmeResolveHF();
+		thing = (BfmeThingHF *)thing->m_bfmeInnerHF->getFinalOverride();
 
 	if (thing->m_bfmeFlagsHF & 0x4000)
 	{
@@ -108,8 +116,8 @@ void RepairSpecialPower::doSpecialPowerAtObject(Object *obj, UnsignedInt)
 			BfmeSlotHF *slot = unit->m_bfmeSlotHF;
 
 			if (slot)
-				slot->m_bfmeListHF.bfmeAddHF(
-					((Rva00367E30Logic *)TheGameLogic)->bfmeLookupHF(actor->m_bfmeKeyHF, 0));
+				slot->m_bfmeListHF.aiRepair(
+					TheGameLogic->findObjectByID((int)actor->m_bfmeKeyHF), CMD_FROM_PLAYER);
 		}
 	}
 }
