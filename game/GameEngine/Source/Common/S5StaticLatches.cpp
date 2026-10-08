@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHs-c-
+// cl: /DNDEBUG /MD /EHs-c- /Igame/GameEngine/Source/Common/System /Igame/GameEngine/Include/Common /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: nineteen run-once latches, 0x005E83F0 through 0x005E8750, one
 // every 0x30 bytes.
@@ -31,25 +31,52 @@
 // IDENTITY IS NOT RECOVERED.  Each latch is named for its own address and
 // each initialiser for the ILT slot it is reached through.
 
-void bfmeInit00015FB9( void );		// ILT 0x00015FB9
-void bfmeInit0002969F( void );		// ILT 0x0002969F
-void bfmeInit00014088( void );		// ILT 0x00014088
-void bfmeInit00011F1D( void );		// ILT 0x00011F1D
-void bfmeInit00032867( void );		// ILT 0x00032867
-void bfmeInit00044BFC( void );		// ILT 0x00044BFC
-void bfmeInit00016595( void );		// ILT 0x00016595
-void bfmeInit000124AE( void );		// ILT 0x000124AE
-void bfmeInit0000B686( void );		// ILT 0x0000B686
-void bfmeInit000078A1( void );		// ILT 0x000078A1
-void bfmeInit0004B0F1( void );		// ILT 0x0004B0F1
-void bfmeInit0003D875( void );		// ILT 0x0003D875
-void bfmeInit00036458( void );		// ILT 0x00036458
-void bfmeInit000101A9( void );		// ILT 0x000101A9
-void bfmeInit00011B76( void );		// ILT 0x00011B76
-void bfmeInit0001361F( void );		// ILT 0x0001361F
-void bfmeInit00026058( void );		// ILT 0x00026058
-void bfmeInit00033479( void );		// ILT 0x00033479
-void bfmeInit000340FE( void );		// ILT 0x000340FE
+// Each ILT slot jumps to the matched FXParticleSystem::ConcreteModuleClass<Tag>::getInstance
+// body (ilt_oracle CONFIRMED); the old per-ILT names stay as forwarders.
+#include "../GameClient/System/FXParticleSystem/fx_particle_system.h"
+
+namespace FXParticleSystem
+{
+typedef ConcreteModuleClass<DefaultModuleTag<1> > S5LatchClass00015FB9;
+typedef ConcreteModuleClass<DefaultModuleTag<0> > S5LatchClass0002969F;
+typedef ConcreteModuleClass<DefaultModuleTag<3> > S5LatchClass00014088;
+typedef ConcreteModuleClass<DefaultModuleTag<2> > S5LatchClass00011F1D;
+typedef ConcreteModuleClass<DefaultModuleTag<7> > S5LatchClass00032867;
+typedef ConcreteModuleClass<ModuleTag<8, LIFE_EVENT_MODULE_KEY, LIFE_EVENT_MODULE_NAME, LifeEventModule, LifeEventModuleTemplate, ParticleLifeEventModule, ParticleLifeEventModuleTemplate> > S5LatchClass00044BFC;
+typedef ConcreteModuleClass<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT_UPDATE_MODULE_NAME, RenderObjectUpdateModule, RenderObjectUpdateModuleTemplate, RenderObjectParticleUpdateModule, RenderObjectParticleUpdateModuleTemplate> > S5LatchClass00016595;
+typedef ConcreteModuleClass<ModuleTag<8, TERRAIN_COLLISION_MODULE_KEY, TERRAIN_COLLISION_MODULE_NAME, TerrainCollisionModule, TerrainCollisionModuleTemplate, ParticleTerrainCollisionModule, ParticleTerrainCollisionModuleTemplate> > S5LatchClass000124AE;
+typedef ConcreteModuleClass<OrthoEmissionVelocityModuleTag > S5LatchClass0000B686;
+typedef ConcreteModuleClass<ModuleTag<4, SPHERICAL_EMISSION_VELOCITY_MODULE_KEY, SPHERICAL_EMISSION_VELOCITY_MODULE_NAME, SphericalEmissionVelocityModule, SphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > S5LatchClass000078A1;
+typedef ConcreteModuleClass<ModuleTag<4, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_KEY, HEMISPHERICAL_EMISSION_VELOCITY_MODULE_NAME, HemisphericalEmissionVelocityModule, HemisphericalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > S5LatchClass0004B0F1;
+typedef ConcreteModuleClass<ModuleTag<4, CYLINDRICAL_EMISSION_VELOCITY_MODULE_KEY, CYLINDRICAL_EMISSION_VELOCITY_MODULE_NAME, CylindricalEmissionVelocityModule, CylindricalEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > S5LatchClass0003D875;
+typedef ConcreteModuleClass<ModuleTag<4, OUTWARD_EMISSION_VELOCITY_MODULE_KEY, OUTWARD_EMISSION_VELOCITY_MODULE_NAME, OutwardEmissionVelocityModule, OutwardEmissionVelocityModuleTemplate, DefaultParticleModule<4>, DefaultParticleModuleTemplate<4> > > S5LatchClass00036458;
+typedef ConcreteModuleClass<PointEmissionVolumeModuleTag > S5LatchClass000101A9;
+typedef ConcreteModuleClass<ModuleTag<5, LINE_EMISSION_VOLUME_MODULE_KEY, LINE_EMISSION_VOLUME_MODULE_NAME, LineEmissionVolumeModule, LineEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > S5LatchClass00011B76;
+typedef ConcreteModuleClass<ModuleTag<5, BOX_EMISSION_VOLUME_MODULE_KEY, BOX_EMISSION_VOLUME_MODULE_NAME, BoxEmissionVolumeModule, BoxEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > S5LatchClass0001361F;
+typedef ConcreteModuleClass<ModuleTag<5, SPHERE_EMISSION_VOLUME_MODULE_KEY, SPHERE_EMISSION_VOLUME_MODULE_NAME, SphereEmissionVolumeModule, SphereEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > S5LatchClass00026058;
+typedef ConcreteModuleClass<ModuleTag<5, CYLINDER_EMISSION_VOLUME_MODULE_KEY, CYLINDER_EMISSION_VOLUME_MODULE_NAME, CylinderEmissionVolumeModule, CylinderEmissionVolumeModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > S5LatchClass00033479;
+typedef ConcreteModuleClass<ModuleTag<5, LIGHTNING_EMISSION_MODULE_KEY, LIGHTNING_EMISSION_MODULE_NAME, LightningEmissionModule, LightningEmissionModuleTemplate, DefaultParticleModule<5>, DefaultParticleModuleTemplate<5> > > S5LatchClass000340FE;
+}
+
+#define bfmeInit00015FB9() FXParticleSystem::S5LatchClass00015FB9::getInstance()	// ILT 0x00015FB9
+#define bfmeInit0002969F() FXParticleSystem::S5LatchClass0002969F::getInstance()	// ILT 0x0002969F
+#define bfmeInit00014088() FXParticleSystem::S5LatchClass00014088::getInstance()	// ILT 0x00014088
+#define bfmeInit00011F1D() FXParticleSystem::S5LatchClass00011F1D::getInstance()	// ILT 0x00011F1D
+#define bfmeInit00032867() FXParticleSystem::S5LatchClass00032867::getInstance()	// ILT 0x00032867
+#define bfmeInit00044BFC() FXParticleSystem::S5LatchClass00044BFC::getInstance()	// ILT 0x00044BFC
+#define bfmeInit00016595() FXParticleSystem::S5LatchClass00016595::getInstance()	// ILT 0x00016595
+#define bfmeInit000124AE() FXParticleSystem::S5LatchClass000124AE::getInstance()	// ILT 0x000124AE
+#define bfmeInit0000B686() FXParticleSystem::S5LatchClass0000B686::getInstance()	// ILT 0x0000B686
+#define bfmeInit000078A1() FXParticleSystem::S5LatchClass000078A1::getInstance()	// ILT 0x000078A1
+#define bfmeInit0004B0F1() FXParticleSystem::S5LatchClass0004B0F1::getInstance()	// ILT 0x0004B0F1
+#define bfmeInit0003D875() FXParticleSystem::S5LatchClass0003D875::getInstance()	// ILT 0x0003D875
+#define bfmeInit00036458() FXParticleSystem::S5LatchClass00036458::getInstance()	// ILT 0x00036458
+#define bfmeInit000101A9() FXParticleSystem::S5LatchClass000101A9::getInstance()	// ILT 0x000101A9
+#define bfmeInit00011B76() FXParticleSystem::S5LatchClass00011B76::getInstance()	// ILT 0x00011B76
+#define bfmeInit0001361F() FXParticleSystem::S5LatchClass0001361F::getInstance()	// ILT 0x0001361F
+#define bfmeInit00026058() FXParticleSystem::S5LatchClass00026058::getInstance()	// ILT 0x00026058
+#define bfmeInit00033479() FXParticleSystem::S5LatchClass00033479::getInstance()	// ILT 0x00033479
+#define bfmeInit000340FE() FXParticleSystem::S5LatchClass000340FE::getInstance()	// ILT 0x000340FE
 
 struct BfmeLatch005E83F0
 {
