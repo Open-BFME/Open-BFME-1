@@ -90866,3 +90866,8 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_09LMNIMBH@errorCode?$AA@,0x00D2B948,Retail pointer global VA 0x012C3B28 target; compiler string literal errorCode equals retail at VA 0x0112B948
 ?CancelPatchCheckCallback@@YAXXZ,0x00006D52,route=0x0062F760; ILT jmp to the matched CancelPatchCheckCallback body; bfmeGoBHG 0x006300B0 tail-jumps here
 ??_C@_0O@HAGFBBAP@LoadSubsystem?$AA@,0x00D41630,Static INI block-parse node VA 0x012D7764 token; compiler string literal LoadSubsystem equals retail at VA 0x01141630
+??_C@_0BF@LMOIHMLI@AllyDeathScaleFactor?$AA@,0x00C9FD50,FactionVictoryData field-parse table VA 0x0109FBC8 entry; compiler string literal AllyDeathScaleFactor equals retail at VA 0x0109FD50
+??_C@_0BF@NJLNBJEE@EnemyKillScaleFactor?$AA@,0x00C9FD34,FactionVictoryData field-parse table VA 0x0109FBC8 entry; compiler string literal EnemyKillScaleFactor equals retail at VA 0x0109FD34
+??_C@_0BB@JMEGGBFI@VictoryThreshold?$AA@,0x00C9FD20,FactionVictoryData field-parse table VA 0x0109FBC8 entry; compiler string literal VictoryThreshold equals retail at VA 0x0109FD20
+??_C@_0BG@IMKHEHAO@MapToCellVictoryRatio?$AA@,0x00C9FD04,FactionVictoryData field-parse table VA 0x0109FBC8 entry; compiler string literal MapToCellVictoryRatio equals retail at VA 0x0109FD04
+??_C@_0P@JOPFKPGC@MajorUnitValue?$AA@,0x00C9FCF0,FactionVictoryData field-parse table VA 0x0109FBC8 entry; compiler string literal MajorUnitValue equals retail at VA 0x0109FCF0
