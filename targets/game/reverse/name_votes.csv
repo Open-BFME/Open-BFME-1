@@ -1194,3 +1194,8 @@ game/GameEngine/Source/GameNetwork/Y2FeslDemanglerDispatch.cpp|type||Rva00800E50
 game/GameEngine/Source/GameNetwork/Y2FeslDemanglerDispatch.cpp|local|Rva00800E50Owner::onDispatch|t04,ad8296fa425263ed9a323c63,gpt-6-astra,20261007223301-28885d,2026-10-07
 game/Libraries/Source/WWVegas/WW3D2/Rva00903470DeviceSlot77.cpp|type||Rva00903470Vtable,a3a4747499d18b75d3e83ba4,gpt-6-astra,20261007223258-78b43e,2026-10-07
 game/Libraries/Source/WWVegas/WW3D2/Rva00903470DeviceSlot77.cpp|function||rva00903470DeviceSlot77,eb78ed1ac361e4069fb20b0f,gpt-6-astra,20261007223258-78b43e,2026-10-07
+game/Libraries/Source/Apt/Rva008AE2E0BoundsGetter.cpp|member||m_bfme10,f2d6615e1f2dfd10a0da22a7,gpt-6-astra,20261008170526-f3c3e6,2026-10-08
+game/Libraries/Source/Apt/Rva008AE2E0BoundsGetter.cpp|member||m_bfme14,e8d4bfaf27e58bcadf930013,gpt-6-astra,20261008170526-f3c3e6,2026-10-08
+game/Libraries/Source/Apt/Rva008AE2E0BoundsGetter.cpp|local|Rva8BB1A0BoundsSource::getBounds|v10,f10060bdc038759b7e914ab6,gpt-6-astra,20261008170526-f3c3e6,2026-10-08
+game/Libraries/Source/Apt/Rva008AE2E0BoundsGetter.cpp|local|Rva8BB1A0BoundsSource::getBounds|v14,670fe49ae635885855e1a2da,gpt-6-astra,20261008170526-f3c3e6,2026-10-08
+game/Libraries/Source/Apt/Rva008AE2E0BoundsGetter.cpp|local|Rva8BB1A0BoundsSource::getBounds|u,b0d1e1a539a7a70abbee3ec1,gpt-6-astra,20261008170526-f3c3e6,2026-10-08
