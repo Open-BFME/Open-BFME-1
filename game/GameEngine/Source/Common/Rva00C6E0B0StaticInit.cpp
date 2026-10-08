@@ -16,8 +16,14 @@ public:
     int m_bfmeZero;
     int m_bfmeCount;
 };
-class Gen_00C71480Target;
-extern Gen_00C71480Target TheBfmeObject_00C71480;
+class Gen_00C71480Target
+{
+public:
+    unsigned char m_bfmeStorage[0x18];
+};
+// Retail VA 0x0134B188 (zero-initialized): the 24-byte singleton; the next
+// recorded datum starts at 0x0134B1A0.
+Gen_00C71480Target TheBfmeObject_00C71480;
 void bfmeForward_00C71480();
 extern "C" int __cdecl atexit(void (__cdecl *callback)());
 
