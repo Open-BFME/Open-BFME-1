@@ -44,6 +44,21 @@ public:
 	Bool bfmeIsSet(void);					// ILT 0x0000CFC7
 };
 
+// The two ILTs reach 0x000DF7F0 (?inactive@Rva000DF7F0@@QBEHXZ) and
+// 0x00337180 (?get@Rva00337180ByteField@@QBEEXZ); called by those row names.
+// Only the low byte of the first result is tested.
+class Rva000DF7F0
+{
+public:
+	int inactive(void) const;
+};
+
+class Rva00337180ByteField
+{
+public:
+	unsigned char get(void) const;
+};
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
@@ -66,8 +81,10 @@ extern GameLogic *TheGameLogic;					// 0x012F0898
 // ?BfmeShouldShowGameOverEvent@@YA_NXZ
 BfmeByteBool BfmeShouldShowGameOverEvent(void)
 {
-	if (reinterpret_cast<BfmeGameOverGateA *>(ThePlayerList)->bfmeIsSet() ||
-		reinterpret_cast<BfmeGameOverGateB *>(TheScriptEngine)->bfmeIsSet())
+	if ((unsigned char)reinterpret_cast<Rva000DF7F0 *>(
+			reinterpret_cast<BfmeGameOverGateA *>(ThePlayerList))->inactive() ||
+		reinterpret_cast<Rva00337180ByteField *>(
+			reinterpret_cast<BfmeGameOverGateB *>(TheScriptEngine))->get())
 		return 1;
 
 	GameLogic *logic = TheGameLogic;
