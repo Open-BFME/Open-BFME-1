@@ -298,3 +298,5 @@ void bfmeRegionRenderC( void *rawRegion, Int rawOffset, const Int rawValue )
 			regionWidth, 1.0f, colors[i] );
 	}
 }
+
+extern "C" UnsignedInt __identifier("?g_012F13AC@@3IA") = 0;

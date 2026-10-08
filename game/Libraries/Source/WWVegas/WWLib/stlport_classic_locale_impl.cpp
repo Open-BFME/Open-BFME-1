@@ -189,3 +189,5 @@ void *bfmeTwoTB()
 
 	return classic;
 }
+
+extern "C" unsigned int __identifier("?g_classicFacetCount012C7428@@3IA") = 39;
