@@ -13,7 +13,7 @@ public:
     AsciiString() : StringBase<char>() {}
     AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
     AsciiString( const char *text ) : StringBase<char>( text ) {}
-    ~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+    ~AsciiString() {}
 };
 
 class FileSystem
