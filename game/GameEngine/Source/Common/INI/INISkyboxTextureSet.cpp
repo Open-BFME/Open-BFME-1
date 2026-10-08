@@ -45,6 +45,19 @@ private:
 	AsciiString m_morningT;
 };
 
+// Retail .rdata VA 0x010F1638 (96 B): SkyboxTextureN/E/S/W/T through
+// INI::parseAsciiString (0x00851EE0) into the five AsciiStrings at +4..+0x14,
+// then a zero terminator.
+const FieldParse SkyboxTextureSet::m_fieldParseTable[] =
+{
+	{ "SkyboxTextureN", INI::parseAsciiString, NULL, 0x4 },
+	{ "SkyboxTextureE", INI::parseAsciiString, NULL, 0x8 },
+	{ "SkyboxTextureS", INI::parseAsciiString, NULL, 0xC },
+	{ "SkyboxTextureW", INI::parseAsciiString, NULL, 0x10 },
+	{ "SkyboxTextureT", INI::parseAsciiString, NULL, 0x14 },
+	{ NULL, NULL, NULL, 0 }
+};
+
 SkyboxTextureSet::SkyboxTextureSet()
 {
 	((StringBase<char> *)&m_morningN)->set( "TSMorningN.tga", 14 );

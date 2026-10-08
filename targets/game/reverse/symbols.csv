@@ -90550,3 +90550,8 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_06HHNBAIOL@Alpha1?$AA@,0x00D13354,Retail DefaultModuleTemplate00FieldParse table VA 0x01113360 entry; compiler string literal Alpha1 equals retail at VA 0x01113354
 ??_C@_06KGBDLDKC@Alpha8?$AA@,0x00D1331C,Retail DefaultModuleTemplate00FieldParse table VA 0x01113360 entry; compiler string literal Alpha8 equals retail at VA 0x0111331C
 ??_C@_06KKGPMKO@Alpha4?$AA@,0x00D1333C,Retail DefaultModuleTemplate00FieldParse table VA 0x01113360 entry; compiler string literal Alpha4 equals retail at VA 0x0111333C
+??_C@_0P@BIPEEPDA@SkyboxTextureW?$AA@,0x00CF1A94,Retail SkyboxTextureSet::m_fieldParseTable table VA 0x010F1638 entry; compiler string literal SkyboxTextureW equals retail at VA 0x010F1A94
+??_C@_0P@DDNJBMPD@SkyboxTextureT?$AA@,0x00CF1A80,Retail SkyboxTextureSet::m_fieldParseTable table VA 0x010F1638 entry; compiler string literal SkyboxTextureT equals retail at VA 0x010F1A80
+??_C@_0P@GAAADPOD@SkyboxTextureE?$AA@,0x00CF1ABC,Retail SkyboxTextureSet::m_fieldParseTable table VA 0x010F1638 entry; compiler string literal SkyboxTextureE equals retail at VA 0x010F1ABC
+??_C@_0P@HMJIIKDE@SkyboxTextureS?$AA@,0x00CF1AA8,Retail SkyboxTextureSet::m_fieldParseTable table VA 0x010F1638 entry; compiler string literal SkyboxTextureS equals retail at VA 0x010F1AA8
+??_C@_0P@IDPEOGCI@SkyboxTextureN?$AA@,0x00CF1AD0,Retail SkyboxTextureSet::m_fieldParseTable table VA 0x010F1638 entry; compiler string literal SkyboxTextureN equals retail at VA 0x010F1AD0
