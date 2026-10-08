@@ -553,3 +553,5 @@ void Player::init(const PlayerTemplate *pt)
 	m_64c.clear();
 	m_698.clear();
 }
+
+extern "C" UnsignedInt __identifier("?g_neutralColor000DA610@@3IA") = 0xff404040u;
