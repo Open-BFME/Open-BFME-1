@@ -4,7 +4,7 @@
 // reserved front-end name or a free __thiscall callback type in C++, so both
 // addresses are passed unchanged; the calling-convention casts keep the
 // retail register setup. Convention follows BfmeConv728.cpp.
-extern "C" void __cdecl __identifier("?j_00039c7a@@YAXXZ")();
+extern "C" void __cdecl __identifier("bfmeDtorCbDLG")();
 extern "C" void __cdecl __identifier("??_M@YGXPAXIHP6EX0@Z@Z")();
 typedef void (__stdcall *VectorDestructorIterator)(
 	void *base, unsigned int size, int count, void (*dtor)());
@@ -33,13 +33,13 @@ void *BfmeThingDLG::bfmeGoDLG(unsigned char flags)
 	{
 		char *base = (char *)this - 4;
 		((VectorDestructorIterator)__identifier("??_M@YGXPAXIHP6EX0@Z@Z"))(
-			this, 0xa0, *(int *)base, __identifier("?j_00039c7a@@YAXXZ"));
+			this, 0xa0, *(int *)base, __identifier("bfmeDtorCbDLG"));
 		if (flags & 1)
 			operator delete[](base);
 		return base;
 	}
 	DtorThunkDLG dtor;
-	dtor.raw = __identifier("?j_00039c7a@@YAXXZ");
+	dtor.raw = __identifier("bfmeDtorCbDLG");
 	(this->*dtor.member)();
 	if (flags & 1)
 		operator delete(this);
