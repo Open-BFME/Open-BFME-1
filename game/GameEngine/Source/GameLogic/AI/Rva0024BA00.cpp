@@ -3,11 +3,36 @@
 
 typedef bool Bool;
 
+// Opaque AI and view types; retail calls reach 0x00227B60 (ILT 0x0002CE44),
+// 0x0022E340 (ILT 0x00041E34), 0x001C9AC0 (ILT 0x000122AB), 0x00410BA0
+// (ILT 0x00012E3B) and 0x00411DD0 (ILT 0x00008337), declared below as those
+// ledger rows name them.
 class BfmeRvaBA00AI
 {
+};
+
+class BfmeRvaBA00View
+{
+};
+
+class Object;
+
+class Rva00227B60ContainDispatch
+{
 public:
-	Bool isReady(void);
-	void stop(int value);
+	void dispatch(Object *object, bool value);
+};
+
+class Gen_00410BA0
+{
+public:
+	int bfmeBusy(void) const;
+};
+
+class Gen_00411DD0
+{
+public:
+	void bfmeSet(bool value);
 };
 
 class BfmeRvaBA00Object
@@ -27,8 +52,6 @@ public:
 
 	char m_head[0x12c - 4];
 	unsigned int m_status;
-
-	void action(int value);
 };
 
 // The object this cleanup runs on is a retail Object: the status-notify
@@ -40,11 +63,16 @@ public:
 	void notifyModelConditionChanged();
 };
 
-class BfmeRvaBA00View
+class TransportContain
 {
 public:
-	void dispatch(BfmeRvaBA00Object *object, int value);
-	void remove(BfmeRvaBA00Object *object);
+	virtual void onRemoving(Object *object);
+};
+
+class Gen001C9AC0
+{
+public:
+	void handle(int value);
 };
 
 class Rva0024BA00
@@ -56,9 +84,9 @@ public:
 void Rva0024BA00::cleanup(BfmeRvaBA00Object *object)
 {
 	BfmeRvaBA00View *view = (BfmeRvaBA00View *)((char *)this + 0x20);
-	view->dispatch(object, 0);
-	view->remove(object);
-	object->action(0x14);
+	((Rva00227B60ContainDispatch *)view)->dispatch((Object *)object, false);
+	((TransportContain *)view)->TransportContain::onRemoving((Object *)object);
+	((Gen001C9AC0 *)object)->handle(0x14);
 
 	if (((unsigned char)object->m_status & 0x80) != 0)
 	{
@@ -67,6 +95,6 @@ void Rva0024BA00::cleanup(BfmeRvaBA00Object *object)
 	}
 
 	BfmeRvaBA00AI *ai = object->getAI();
-	if (ai && ai->isReady() == true)
-		ai->stop(0);
+	if (ai && (unsigned char)((Gen_00410BA0 *)ai)->bfmeBusy() == 1)
+		((Gen_00411DD0 *)ai)->bfmeSet(false);
 }

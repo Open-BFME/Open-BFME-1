@@ -111,11 +111,27 @@ public:
 	BfmeRvaBBD0Contain *m_contain;
 };
 
-class BfmeRvaBBD0Owner
+// Retail calls reach 0x0024BB60 (ILT 0x000088FF) and 0x0024BA00
+// (ILT 0x0003F396); declared as those ledger rows name them.
+class BfmeRvaBB60Object;
+class BfmeRvaBA00Object;
+
+class Rva0024BB60
 {
 public:
-	void onContaining(BfmeRvaBBD0Object *object);
-	void onRemoving(BfmeRvaBBD0Object *object);
+	void notifyMember(BfmeRvaBB60Object *object);
+};
+
+class Rva0024BA00
+{
+public:
+	void cleanup(BfmeRvaBA00Object *object);
+};
+
+// The owner 0x20 bytes below this transition helper; both calls above
+// receive it.
+struct BfmeRvaBBD0Owner
+{
 };
 
 class Rva0024BBD0
@@ -134,12 +150,12 @@ void Rva0024BBD0::transition(BfmeRvaBBD0Object *object, int unused)
 			BfmeRvaBBD0AI *ai = contain->getAI();
 			if (ai)
 			{
-				((BfmeRvaBBD0Owner *)((char *)this - 0x20))->onContaining(object);
+				((Rva0024BB60 *)(BfmeRvaBBD0Owner *)((char *)this - 0x20))->notifyMember((BfmeRvaBB60Object *)object);
 				ai->notify();
 				ai->setState(1);
 				return;
 			}
 		}
 	}
-	((BfmeRvaBBD0Owner *)((char *)this - 0x20))->onRemoving(object);
+	((Rva0024BA00 *)(BfmeRvaBBD0Owner *)((char *)this - 0x20))->cleanup((BfmeRvaBA00Object *)object);
 }

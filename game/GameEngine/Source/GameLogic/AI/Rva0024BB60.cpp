@@ -32,18 +32,32 @@ typedef BitFlags<86> ObjectStatusMaskType;
 class BfmeRvaBB60Object
 {
 public:
-	void action(int value);
-	void setStatus(const ObjectStatusMaskType &, Bool);
-
 	char m_head[0x6c];
 	char m_slot;
 };
 
-class BfmeRvaBB60View
+// Retail calls reach 0x00227B60 (ILT 0x0002CE44), 0x001C9AC0 (ILT
+// 0x000122AB) and 0x001C7370 (ILT 0x000307E7); declared as those ledger
+// rows name them.
+class Object
 {
 public:
-	void dispatch(BfmeRvaBB60Object *object, int value);
+	void setStatus(const ObjectStatusMaskType &, Bool);
 };
+
+class Gen001C9AC0
+{
+public:
+	void handle(int value);
+};
+
+class Rva00227B60ContainDispatch
+{
+public:
+	void dispatch(Object *object, bool value);
+};
+
+typedef Rva00227B60ContainDispatch BfmeRvaBB60View;
 
 // retail 0x0024BB60 pushes the value before calling 0x009F2660, which
 // tail-jumps to ?bfmeAddEQR@BfmeHostEQR@@QAEXPAXBfmeThingEQR@@@Z (a void* one).
@@ -68,7 +82,7 @@ public:
 
 void Rva0024BB60::notifyMember(BfmeRvaBB60Object *object)
 {
-	((BfmeRvaBB60View *)((char *)this + 0x20))->dispatch(object, 0);
+	((BfmeRvaBB60View *)((char *)this + 0x20))->dispatch((Object *)object, false);
 
 	void *value;
 	if (object)
@@ -78,6 +92,6 @@ void Rva0024BB60::notifyMember(BfmeRvaBB60Object *object)
 
 	(((Gen_009f2660 *)ThePartitionManager)
 		->*(Gen009f2660WithSlot)&Gen_009f2660::m)(value);
-	object->action(0x14);
-	object->setStatus(ObjectStatusMaskType(ObjectStatusMaskType::kInit, 3), false);
+	((Gen001C9AC0 *)object)->handle(0x14);
+	((Object *)object)->setStatus(ObjectStatusMaskType(ObjectStatusMaskType::kInit, 3), false);
 }
