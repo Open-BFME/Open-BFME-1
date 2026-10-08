@@ -35,7 +35,7 @@ public:
 // ?j_00015654@@YAXXZ (game/gen_small/thunks_009.cpp). The body it jumps to
 // (RVA 0x00248F00) is still unclaimed, so name the thunk: nothing defines a
 // ContestableContainFieldParse symbol at link time.
-extern "C" void __cdecl __identifier("?j_00015654@@YAXXZ")(MultiIniFieldParse &parse);
+extern "C" void __cdecl __identifier("ContestableContainFieldParse")(MultiIniFieldParse &parse);
 
 class ContestableContain
 {
@@ -48,6 +48,6 @@ ModuleData *ContestableContain::friend_newModuleData(INI *ini)
 {
 	ContestableContainModuleData *data = new ContestableContainModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &__identifier("?j_00015654@@YAXXZ"));
+		ini->initFromINIMultiProc(data, &__identifier("ContestableContainFieldParse"));
 	return (ModuleData *)data;
 }

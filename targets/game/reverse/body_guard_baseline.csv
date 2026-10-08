@@ -41,7 +41,6 @@ dir32,0x00414B87,?j_00014b87@@YAXXZ,"retail 0x00414B87 is already recorded as _D
 dir32,0x00414BAA,?j_00014baa@@YAXXZ,"retail 0x00414BAA is already recorded as _W3DFloorDrawFieldParse; reference that name, not a new one"
 dir32,0x004151A9,?j_000151a9@@YAXXZ,"retail 0x004151A9 is already recorded as _UpgradeSoundSelectorClientBehaviorFieldParse; reference that name, not a new one"
 dir32,0x00415253,?g_00415253@@YAXXZ,"nothing in the ledger owns 0x00415253. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x00415654,?j_00015654@@YAXXZ,"retail 0x00415654 is already recorded as _ContestableContainFieldParse; reference that name, not a new one"
 dir32,0x00415703,??1TransitionDamageFXRecordB@?A0x2535ff93@@QAE@XZ,"retail 0x00415703 is already recorded as ??1TransitionDamageFXRecordB@?A0xebea2875@@QAE@XZ (+1 more); reference that name, not a new one"
 dir32,0x0041579E,?j_0001579e@@YAXXZ,"retail 0x0041579E is already recorded as ?bfmeChunkParserVE@@YAXXZ; reference that name, not a new one"
 dir32,0x00415A14,?j_00015a14@@YAXXZ,"retail 0x00415A14 is already recorded as _bfmeDtorCbDMD; reference that name, not a new one"
