@@ -96,10 +96,7 @@ MaxHealthUpgrade::MaxHealthUpgrade( Thing *thing, const ModuleData* moduleData )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ??1MaxHealthUpgrade@@MAE@XZ present-unmatched
-MaxHealthUpgrade::~MaxHealthUpgrade( void )
-{
-}
+// The destructor (retail 0x002D6320) is defined in MaxHealthUpgradeDestructor.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
