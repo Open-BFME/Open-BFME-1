@@ -14,7 +14,10 @@ class StringBase
 
 	StringBase(const StringBase<T> &other);
 	StringBase(const T *str);
-	~StringBase();
+	// Retail releases through StringBase<char>::releaseBuffer (0x00887940)
+	// directly, not the out-of-line ~StringBase<char> at 0x0005E490.
+	~StringBase() { releaseBuffer(); }
+	void releaseBuffer();
 
 	struct Header
 	{

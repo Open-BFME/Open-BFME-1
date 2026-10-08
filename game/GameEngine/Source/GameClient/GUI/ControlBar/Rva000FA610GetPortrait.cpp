@@ -21,7 +21,10 @@ private:
 	StringBase() : m_data( 0 ) {}
 	StringBase( const T *text );
 	StringBase( const StringBase<T> &other );
-	~StringBase();
+	// Retail releases through StringBase<char>::releaseBuffer (0x00887940)
+	// directly, not the out-of-line ~StringBase<char> at 0x0005E490.
+	~StringBase() { releaseBuffer(); }
+	void releaseBuffer();
 	StringInlineData<T> *m_data;
 };
 

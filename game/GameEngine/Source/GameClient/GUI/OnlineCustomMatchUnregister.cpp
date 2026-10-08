@@ -10,7 +10,10 @@ template <typename T> class StringBase
 
 private:
 	StringBase( const T *text );
-	~StringBase();
+	// Retail releases through StringBase<char>::releaseBuffer (0x00887940)
+	// directly, not the out-of-line ~StringBase<char> at 0x0005E490.
+	~StringBase() { releaseBuffer(); }
+	void releaseBuffer();
 
 	void *m_data;
 };

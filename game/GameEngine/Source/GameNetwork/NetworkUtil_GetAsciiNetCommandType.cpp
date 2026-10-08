@@ -16,7 +16,10 @@ public:
 private:
     StringBase() : m_data(0) {}
     StringBase(const StringBase &other);
-    ~StringBase();
+    // Retail releases through StringBase<char>::releaseBuffer (0x00887940)
+    // directly, not the out-of-line ~StringBase<char> at 0x0005E490.
+    ~StringBase() { releaseBuffer(); }
+    void releaseBuffer();
     void *m_data;
 };
 class AsciiString : private StringBase<char> {

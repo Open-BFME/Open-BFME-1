@@ -10,7 +10,10 @@ template<class T> class StringBase {
     friend class AsciiString;
 private:
     StringBase(const StringBase<T>&);
-    ~StringBase();
+    // Retail releases through StringBase<char>::releaseBuffer (0x00887940)
+    // directly, not the out-of-line ~StringBase<char> at 0x0005E490.
+    ~StringBase() { releaseBuffer(); }
+    void releaseBuffer();
     void *data;
 };
 class AsciiString : private StringBase<char> {
