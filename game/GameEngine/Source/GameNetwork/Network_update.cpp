@@ -262,3 +262,5 @@ int Network::PeekFrameReady(void)
 
 	return 2;
 }
+
+extern "C" unsigned int __identifier("?g_012F771C@@3IA") = 0;

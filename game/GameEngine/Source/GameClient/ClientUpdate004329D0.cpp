@@ -409,3 +409,5 @@ void ClientUpdate004329D0::update() {
 
 
 extern "C" unsigned int __identifier("?g_012B5348@@3IA") = 0xffffffffu;
+
+extern "C" unsigned int __identifier("?g_012F1468@@3IA") = 0;
