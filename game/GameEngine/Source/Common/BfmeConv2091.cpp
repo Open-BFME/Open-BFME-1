@@ -14,11 +14,18 @@ public:
 	int m_bfme4B4XR;
 };
 
+// Retail ILT 0x0003251F lands on Thing::isKindOf (0x000A2CF0).
+enum KindOfType { };
+
+class Thing
+{
+public:
+	bool isKindOf(KindOfType kind) const;
+};
+
 class Drawable
 {
 public:
-	bool isKindOf(int kind) const;
-
 	unsigned char m_bfmeHeadXR[4];
 	Overridable *m_nextOverride;
 };
@@ -42,10 +49,10 @@ int __stdcall bfmeGetXR(Drawable *d)
 	if ((bfmeFinalXR(d->m_nextOverride)->m_bfmeC8XR & 2) == 0)
 		return 0;
 
-	if (d->isKindOf(7))
+	if (reinterpret_cast<const Thing *>(d)->isKindOf((KindOfType)7))
 		return 0;
 
-	if (d->isKindOf(0x6c))
+	if (reinterpret_cast<const Thing *>(d)->isKindOf((KindOfType)0x6c))
 		return 0;
 
 	return bfmeFinalXR(d->m_nextOverride)->m_bfme4B4XR;
