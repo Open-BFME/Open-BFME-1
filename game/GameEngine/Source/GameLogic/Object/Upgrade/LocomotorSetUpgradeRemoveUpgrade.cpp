@@ -8,16 +8,18 @@
 // Evidence: targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md
 // Moved from BfmeConv821.cpp.
 
-class BfmeSub204_2C0
+// The +0x204 interface call goes through ILT 0x00016DF1 to 0x0026EC60, the
+// matched AIUpdateInterface::setLocomotorUpgrade (AIUpdate.cpp).
+class AIUpdateInterface
 {
 public:
-	void doCall(int dummy);
+	void setLocomotorUpgrade(bool set);
 };
 
 struct BfmeOwner2C0
 {
 	unsigned char pad[0x204];
-	BfmeSub204_2C0 *m_sub204;
+	AIUpdateInterface *m_sub204;
 };
 
 // The Object pointer sits 8 bytes ahead of the UpgradeMux sub-object.
@@ -36,5 +38,5 @@ void LocomotorSetUpgrade::removeUpgrade()
 {
 	BfmeParent2C0 *p = (BfmeParent2C0 *)((char *)this - 8);
 	if (p->m_owner->m_sub204)
-		p->m_owner->m_sub204->doCall(0);
+		p->m_owner->m_sub204->setLocomotorUpgrade(false);
 }
