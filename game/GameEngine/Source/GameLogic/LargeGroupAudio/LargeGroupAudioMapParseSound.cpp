@@ -48,7 +48,7 @@ private:
 	std::vector<SoundKeyPair *> m_sounds;
 };
 
-extern const FieldParse g_010EE088[];
+extern const FieldParse g_010EE088[3];
 
 // ?parseSound@LargeGroupAudioMap@@SAXPAVINI@@PAX1PBX@Z
 void __cdecl LargeGroupAudioMap::parseSound(
@@ -73,3 +73,16 @@ void __cdecl LargeGroupAudioMap::parseSound(
 		}
 	}
 }
+
+class Rva003D4920
+{
+public:
+	static void parseAudioKeyTokens( INI *, void *, void *, const void * );
+};
+
+extern "C" const FieldParse __identifier("?g_010EE088@@3QBUFieldParse@@B")[3] =
+{
+	{ "Sound", INI::parseAsciiString, 0, 0xC },
+	{ "Key", Rva003D4920::parseAudioKeyTokens, 0, 0 },
+	{ 0, 0, 0, 0 }
+};

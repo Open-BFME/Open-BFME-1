@@ -43,7 +43,7 @@
 #include "Common/INIException.h"
 
 struct FieldParse;
-extern const FieldParse g_010EBE44[];
+extern const FieldParse g_010EBE44[3];
 
 template <typename T>
 class StringBase
@@ -167,6 +167,7 @@ public:
 	int getLoadType( void ) const { return m_bfmeLoadType; }
 
 	static void parseLightPointLevel( INI *ini );
+	static void parseAndTranslateLabel( INI *, void *, void *, const void * );
 
 private:
 	int m_bfmePad000;
@@ -213,3 +214,25 @@ void INI::parseLightPointLevel( INI *ini )
 		TheLightPointSystem->addLevel( level );
 	}
 }
+
+typedef void (*INIFieldParseProc)( INI *, void *, void *, const void * );
+struct FieldParse
+{
+	const char *token;
+	INIFieldParseProc parse;
+	const void *userData;
+	int offset;
+};
+
+class Rva000BCE80
+{
+public:
+	static void parseSpecialPowerIDVector( INI *, void *, void *, const void * );
+};
+
+extern "C" const FieldParse __identifier("?g_010EBE44@@3QBUFieldParse@@B")[3] =
+{
+	{ "Name", INI::parseAndTranslateLabel, 0, 0x10 },
+	{ "SpecialAbilities", Rva000BCE80::parseSpecialPowerIDVector, 0, 0x14 },
+	{ 0, 0, 0, 0 }
+};
