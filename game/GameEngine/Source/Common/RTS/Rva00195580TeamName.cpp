@@ -30,7 +30,7 @@ AsciiString composeTeamNameAt00195580(const Dict *dict, bool *exists)
     AsciiString name = dict->getAsciiString(TheKey_teamOwner.key(), exists);
     if (exists && !*exists)
         return AsciiString::TheEmptyString;
-    name.concat('/');
+    ((StringBase<char> &)name).concat('/');
     name.concat(dict->getAsciiString(TheKey_teamName.key(), 0));
     if (exists && !*exists)
         return AsciiString::TheEmptyString;
