@@ -12,11 +12,14 @@ private:
 	unsigned char m_data[0x14];
 };
 
+class LivingWorldSound { public: void Rva0061C060(void); };	// 0x0061C060 via ILT 0x00002C2A
+class BfmeThingJZ { public: void bfmeGoJZ(void); };		// 0x0061BB50 via ILT 0x0003AFE4
+#define bfmeOneNA() ((LivingWorldSound *)this)->Rva0061C060()
+#define bfmeTwoNA() ((BfmeThingJZ *)this)->bfmeGoJZ()
+
 class BfmeThingNA
 {
 public:
-	void bfmeOneNA(void);
-	void bfmeTwoNA(void);
 	void bfmeApplyNA(void);
 	void bfmeUpdateBNA(void);
 	void bfmeUpdateDNA(void);

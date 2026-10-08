@@ -22,12 +22,19 @@
 // IDENTITY IS NOT RECOVERED.  Twelve classes at twelve addresses, each with
 // one four-byte head and the compared dword at +0x04.
 
-unsigned int bfmeHash00007518(unsigned int left, unsigned int right);	// ILT 0x00007518
-unsigned int bfmeHash0000DD28(unsigned int left, unsigned int right);	// ILT 0x0000DD28
-unsigned int bfmeHash00010AFA(unsigned int left, unsigned int right);	// ILT 0x00010AFA
-unsigned int bfmeHash00013412(unsigned int left, unsigned int right);	// ILT 0x00013412
-unsigned int bfmeHash0002A473(unsigned int left, unsigned int right);	// ILT 0x0002A473
-unsigned int bfmeHash0002BB70(unsigned int left, unsigned int right);	// ILT 0x0002BB70
+int __cdecl Rva00592FE0(int, int);	// ILT 0x00007518 -> 0x00592FE0
+int __cdecl Rva0061A350(int, int);	// ILT 0x0000DD28 -> 0x0061A350
+int __cdecl Rva0056DE40(int, int);	// ILT 0x00010AFA -> 0x0056DE40
+int __cdecl Rva0054E5E0(int, int);	// ILT 0x00013412 -> 0x0054E5E0
+int __cdecl Rva00527730(int, int);	// ILT 0x0002A473 -> 0x00527730
+int __cdecl Rva0054E560(int, int);	// ILT 0x0002BB70 -> 0x0054E560
+
+#define bfmeHash00007518(a, b) Rva00592FE0((int)(a), (int)(b))
+#define bfmeHash0000DD28(a, b) Rva0061A350((int)(a), (int)(b))
+#define bfmeHash00010AFA(a, b) Rva0056DE40((int)(a), (int)(b))
+#define bfmeHash00013412(a, b) Rva0054E5E0((int)(a), (int)(b))
+#define bfmeHash0002A473(a, b) Rva00527730((int)(a), (int)(b))
+#define bfmeHash0002BB70(a, b) Rva0054E560((int)(a), (int)(b))
 
 enum { BFME_HASH_EQUAL_00007518 = 0x944ADA98 };
 enum { BFME_HASH_EQUAL_0000DD28 = 0x462E416F };
