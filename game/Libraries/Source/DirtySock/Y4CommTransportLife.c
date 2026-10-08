@@ -424,16 +424,16 @@ int Rva00817030( struct Rva00816BF0Comm *comm,
 
 int Rva00816F60( struct Rva00816BF0Comm *comm )
 {
-	struct Rva00816F60Message message;
+	struct Rva00816F60Message packet;
 
 	if ( comm->m_state != 4 )
 		return 0;
 
-	message.m_length = 0;
-	message.m_code = 3;
-	message.m_value = comm->m_sessionHash;
+	packet.m_length = 0;
+	packet.m_code = 3;
+	packet.m_value = comm->m_sessionHash;
 
-	Rva00817030( comm, &message );
+	Rva00817030( comm, &packet );
 
 	comm->m_sessionHash = 0;
 	comm->m_state = 5;
@@ -737,13 +737,13 @@ void Rva00818FF0( struct Rva00816BF0Comm *comm, const char *text )
  */
 int Rva00818620( struct Rva00816BF0Comm *comm )
 {
-	struct Rva00816F60Message message;
+	struct Rva00816F60Message packet;
 
-	message.m_length = 0;
-	message.m_code = 1;
-	message.m_value = comm->m_sessionHash;
+	packet.m_length = 0;
+	packet.m_code = 1;
+	packet.m_value = comm->m_sessionHash;
 
-	return Rva00817030( comm, &message );
+	return Rva00817030( comm, &packet );
 }
 
 /* 0x00819260 RESETS THE CONNECTION without touching the buffers themselves --
@@ -837,18 +837,18 @@ extern char g_Rva012C4D48Message[];
  */
 void Rva00818500( struct Rva00816BF0Comm *comm, const unsigned char *from )
 {
-	char local[ 0x10 ];
+	char SockAddr[ 0x10 ];
 
 	comm->m_peerAddress = ( ( ( ( from[ 4 ] << 8 ) | from[ 5 ] ) << 8 )
 		| from[ 6 ] ) << 8 | from[ 7 ];
 	comm->m_peerPort = (unsigned short)( ( from[ 2 ] << 8 ) | from[ 3 ] );
 
-	Rva007FDB60( comm->m_socket, 'bind', local, 0x10 );
+	Rva007FDB60( comm->m_socket, 'bind', SockAddr, 0x10 );
 
 	comm->m_localAddress = Rva007FDEE0();
 	comm->m_localPort = (unsigned short)
-		( ( ( (unsigned char *)local )[ 2 ] << 8 )
-		| ( (unsigned char *)local )[ 3 ] );
+		( ( ( (unsigned char *)SockAddr )[ 2 ] << 8 )
+		| ( (unsigned char *)SockAddr )[ 3 ] );
 
 	Rva007FE780( g_Rva012C4D48Message, comm->m_peerAddress, comm->m_peerPort,
 		comm->m_localAddress, comm->m_localPort );
@@ -873,7 +873,7 @@ void Rva00817640( struct Rva00816BF0Comm *comm )
 	int iCount;
 	int iBudget;
 	int iChunk;
-	struct Rva00816F60Message packet;
+	struct Rva00816F60Message multi;
 	struct Rva00816F60Message *record;
 	unsigned int uNextCode;
 
@@ -931,7 +931,7 @@ void Rva00817640( struct Rva00816BF0Comm *comm )
 			- comm->m_sendRecordSize ) % comm->m_sendBufferSize;
 		record = (struct Rva00816F60Message *)( comm->m_sendBuffer
 			+ iOffset );
-		memcpy( &packet, record, record->m_length + 0x10 );
+		memcpy( &multi, record, record->m_length + 0x10 );
 		--iCount;
 
 		for ( ; iCount > 0; --iCount )
@@ -945,37 +945,37 @@ void Rva00817640( struct Rva00816BF0Comm *comm )
 				comm->m_sendProc( comm, record->m_body,
 					record->m_length, 0 );
 
-			packet.m_code += 0x10000000;
-			memcpy( packet.m_body + packet.m_length, record->m_body,
+			multi.m_code += 0x10000000;
+			memcpy( multi.m_body + multi.m_length, record->m_body,
 				record->m_length );
-			packet.m_length += record->m_length;
-			packet.m_body[ packet.m_length ] =
+			multi.m_length += record->m_length;
+			multi.m_body[ multi.m_length ] =
 				(unsigned char)record->m_length;
-			++packet.m_length;
+			++multi.m_length;
 		}
 
 		while ( iOffset != comm->m_sendReadOffset
-			&& (unsigned int)packet.m_code <= g_Rva012C4DF4 )
+			&& (unsigned int)multi.m_code <= g_Rva012C4DF4 )
 		{
 			iOffset = ( iOffset + comm->m_sendBufferSize
 				- comm->m_sendRecordSize ) % comm->m_sendBufferSize;
 			record = (struct Rva00816F60Message *)( comm->m_sendBuffer
 				+ iOffset );
 
-			if ( packet.m_length + record->m_length > 0x40 )
+			if ( multi.m_length + record->m_length > 0x40 )
 				break;
 
 			if ( comm->m_sendProc != 0 )
 				comm->m_sendProc( comm, record->m_body,
 					record->m_length, 0 );
 
-			packet.m_code += 0x10000000;
-			memcpy( packet.m_body + packet.m_length, record->m_body,
+			multi.m_code += 0x10000000;
+			memcpy( multi.m_body + multi.m_length, record->m_body,
 				record->m_length );
-			packet.m_length += record->m_length;
-			packet.m_body[ packet.m_length ] =
+			multi.m_length += record->m_length;
+			multi.m_body[ multi.m_length ] =
 				(unsigned char)record->m_length;
-			++packet.m_length;
+			++multi.m_length;
 		}
 
 		if ( iOffset == comm->m_sendReadOffset )
@@ -992,11 +992,11 @@ void Rva00817640( struct Rva00816BF0Comm *comm )
 		}
 
 		comm->m_reportedSequence = comm->m_recvSequence;
-		packet.m_value = comm->m_reportedSequence - 1;
-		if ( Rva00817030( comm, &packet ) < 0 )
+		multi.m_value = comm->m_reportedSequence - 1;
+		if ( Rva00817030( comm, &multi ) < 0 )
 			break;
 
-		iBudget = iBudget - packet.m_length;
+		iBudget = iBudget - multi.m_length;
 	}
 }
 
@@ -1084,7 +1084,7 @@ void Rva008186C0( struct Rva00816BF0Comm *comm,
  */
 void Rva00818AD0( struct Rva00816BF0Comm *comm )
 {
-	struct Rva00816F60Message message;
+	struct Rva00816F60Message packet;
 
 	if ( comm->m_sendReadOffset != comm->m_sendWriteOffset
 		&& comm->m_sendAckOffset == comm->m_sendWriteOffset )
@@ -1097,12 +1097,12 @@ void Rva00818AD0( struct Rva00816BF0Comm *comm )
 	}
 	else
 	{
-		message.m_code = comm->m_sendSequence;
+		packet.m_code = comm->m_sendSequence;
 		comm->m_reportedSequence = comm->m_recvSequence;
-		message.m_value = comm->m_reportedSequence - 1;
-		message.m_length = 0;
+		packet.m_value = comm->m_reportedSequence - 1;
+		packet.m_length = 0;
 
-		Rva00817030( comm, &message );
+		Rva00817030( comm, &packet );
 	}
 }
 
@@ -1148,7 +1148,7 @@ int Rva00819090( struct Rva00816BF0Comm *comm,
 	 * the walk pointer, then the buffer. */
 	int iResult;
 	struct Rva00816BF0Comm *p;
-	char local[ 0x10 ];
+	char glueaddr[ 0x10 ];
 
 	if ( comm->m_state != 1 )
 	{
@@ -1159,7 +1159,7 @@ int Rva00819090( struct Rva00816BF0Comm *comm,
 	Rva00816DF0( comm, 0 );
 	Rva00819260( comm );
 
-	memset( local, 0, 0x10 );
+	memset( glueaddr, 0, 0x10 );
 	memset( comm->m_peer, 0, 0x10 );
 
 	for ( p = g_Rva0130B188List; p != 0; p = p->m_next )
@@ -1173,10 +1173,10 @@ int Rva00819090( struct Rva00816BF0Comm *comm,
 		if ( p == comm || p->m_socket == 0 )
 			continue;
 
-		if ( Rva007FDB60( p->m_socket, 'bind', local, 0x10 ) < 0 )
+		if ( Rva007FDB60( p->m_socket, 'bind', glueaddr, 0x10 ) < 0 )
 			continue;
 
-		if ( Rva007FF720( address, local ) == 0 )
+		if ( Rva007FF720( address, glueaddr ) == 0 )
 		{
 			Rva00816DF0( comm, p->m_socket );
 			Rva007FD3F0( socket );
