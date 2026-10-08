@@ -90957,3 +90957,4 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_08DHKPGHGE@DarkLord?$AA@,0x00C7FDC8,Verified complete compiler literal for Skirmish rank tables; identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md
 ??1UnicodeStringAM@@QAE@XZ,0x0003B304,TU-local UnicodeString view in BfmeTimePlayedAM.cpp; its return-value cleanup funclet 0x00BF6498 jumps to ILT 0x0003B304 route=0x0005EEA0 ??1UnicodeString@@QAE@XZ
 ??1UnicodeStringAL@@QAE@XZ,0x0003B304,TU-local UnicodeString view in BfmeVersionTextAL.cpp; its return-value cleanup funclet 0x00BF7D80 jumps to ILT 0x0003B304 route=0x0005EEA0 ??1UnicodeString@@QAE@XZ
+??1Dict@@QAE@XZ,0x0000CD1A,readDict return-value cleanup funclet 0x00BFCAC0 jumps here; ILT route=0x000872B0 a 5-byte tail jump to Dict::releaseData 0x000681C0 as ZH inline ~Dict() { releaseData(); }
