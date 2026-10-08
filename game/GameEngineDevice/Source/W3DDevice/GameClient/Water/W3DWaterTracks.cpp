@@ -283,11 +283,7 @@ waveInfo waveTypeInfo[WaveTypeMax]=
 //=============================================================================
 /** Destructor. Releases w3d assets. */
 //=============================================================================
-// ??1WaterTracksObj@@QAE@XZ present-unmatched
-__declspec(noinline) WaterTracksObj::~WaterTracksObj(void)
-{
-	freeWaterTracksResources();
-}
+// The retail destructor (0x007AB150) lives in WaterTracksObjDeletingDestructor.cpp.
 
 // Exact BFME WaterTracksObj constructor is provided by WaterTracksObjConstructor.cpp.
 
