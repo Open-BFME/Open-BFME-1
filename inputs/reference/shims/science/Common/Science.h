@@ -48,6 +48,41 @@ enum ScienceType
 //-------------------------------------------------------------------------------------------------
 typedef std::vector<ScienceType> ScienceVec;
 
+// BFME keeps ScienceInfo's placement operator delete out of line: retail
+// 0x007EFFF0 (ScienceInfoPooledDelete.cpp, 12 B, calls CRT free). Declaring it
+// here stops Science.cpp from emitting its own COMDAT copy of that name.
+#pragma push_macro("MEMORY_POOL_GLUE_WITHOUT_GCMP")
+#undef MEMORY_POOL_GLUE_WITHOUT_GCMP
+#define MEMORY_POOL_GLUE_WITHOUT_GCMP(ARGCLASS) \
+protected: \
+	virtual ~ARGCLASS(); \
+public: \
+	enum ARGCLASS##MagicEnum { ARGCLASS##_GLUE_NOT_IMPLEMENTED = 0 }; \
+public: \
+	inline void *operator new(size_t s, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2) \
+	{ \
+		DEBUG_ASSERTCRASH(s == sizeof(ARGCLASS), ("The wrong operator new is being called; ensure all objects in the hierarchy have MemoryPoolGlue set up correctly")); \
+		return MP_GLUE_ALLOCATE(ARGCLASS); \
+	} \
+public: \
+	void operator delete(void *p, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2); \
+protected: \
+	inline void *operator new(size_t s) \
+	{ \
+		DEBUG_ASSERTCRASH(s == sizeof(ARGCLASS), ("The wrong operator new is being called; ensure all objects in the hierarchy have MemoryPoolGlue set up correctly")); \
+		return ::operator new(s); \
+	} \
+	inline void operator delete(void *p) \
+	{ \
+		::operator delete(p); \
+	} \
+private: \
+	virtual MemoryPool *getObjectMemoryPool() \
+	{ \
+		return ARGCLASS::getClassMemoryPool(); \
+	} \
+public:
+
 //-------------------------------------------------------------------------------------------------
 class ScienceInfo : public Overridable
 {
@@ -96,6 +131,7 @@ private:
 	// with the result is what is unresolved, not whether the function is there.
 	void addRootSciences(ScienceVec& v) const;
 };
+#pragma pop_macro("MEMORY_POOL_GLUE_WITHOUT_GCMP")
 EMPTY_DTOR(ScienceInfo);
 
 //-------------------------------------------------------------------------------------------------
