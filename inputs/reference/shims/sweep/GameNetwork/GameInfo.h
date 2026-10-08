@@ -146,7 +146,7 @@ public:
 	void setLastFrameInGame( UnsignedInt frame ) { m_lastFrameInGame = frame; }
 	void markAsDisconnected( void ) { m_disconnected = TRUE; }
 	UnsignedInt lastFrameInGame( void ) const { return m_lastFrameInGame; }
-	Bool disconnected( void ) const { return isHuman() && m_disconnected; }
+	Bool disconnected( void ) const;						///< out of line: retail 0x000A3080 (GameSlot_disconnected_Thunk.cpp)
 
 	void mute( Bool isMuted ) { m_isMuted = isMuted; }
 	Bool isMuted( void ) const { return m_isMuted; }
