@@ -50,3 +50,5 @@ void WOLBuddyOverlayRCMenuInit( WindowLayout *layout, void *userData )
 	controlName.format("%s:ButtonStats",layout->getFilename().str()+6);
 	buttonStatsID =  TheNameKeyGenerator->nameToKey( controlName );
 }
+
+extern "C" int __identifier("?buttonStatsID@@3HA") = 0;
