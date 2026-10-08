@@ -41,7 +41,11 @@ public:
 	void bfmeGo939B(int, Object *, DelayedLuaEventList *);
 };
 
-extern BfmeOwnerBR *g_bfmeOwnerBR;       // VA 0x012F060C
+// VA 0x012F060C is TheLuaScriptEngine (data_rows.csv, defined in
+// Team_updateState.cpp); BfmeOwnerBR is the address-derived view whose
+// matched bfmeGo939B this body calls.
+class LuaScriptEngine;
+extern LuaScriptEngine *TheLuaScriptEngine;
 
 class Rva002BCEE0
 {
@@ -60,5 +64,5 @@ void Rva002BCEE0::dispatch(void)
 	Object *object = m_object;
 	events.m_events[0].m_value = object->m_id;
 	events.m_events[0].m_count = 3;
-	g_bfmeOwnerBR->bfmeGo939B(8, object, &events);
+	((BfmeOwnerBR *)TheLuaScriptEngine)->bfmeGo939B(8, object, &events);
 }
