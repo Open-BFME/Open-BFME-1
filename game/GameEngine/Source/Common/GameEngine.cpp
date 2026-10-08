@@ -177,6 +177,10 @@ void initSubsystem(SUBSYSTEM*& sysref, AsciiString name, SUBSYSTEM* sys, Xfer *p
 	TheSubsystemList->initSubsystem(sys, path1, path2, dirpath, pXfer, name);
 }
 
+// Retail keeps the Radar instantiation at 0x00075350, built in
+// Common/System/RadarInitSubsystem.cpp; this TU only calls it.
+template<> void initSubsystem<Radar>(Radar*& sysref, AsciiString name, Radar* sys, Xfer *pXfer, const char* path1, const char* path2, const char* dirpath);
+
 //-------------------------------------------------------------------------------------------------
 extern HINSTANCE ApplicationHInstance;  ///< our application instance
 extern CComModule _Module;
