@@ -468,9 +468,9 @@ int Rva00813A50( struct Rva00813E50Comm *comm, const char *text,
 	char *name;
 	int iDevice;
 	int iResult;
-	int apiVersion;
-	struct Rva008136C0ExtensionId extensionId;
-	char capabilities[ 0x400 ];
+	int version;
+	struct Rva008136C0ExtensionId extend;
+	char caps[ 0x400 ];
 	char *initialOutput;
 
 	initialOutput = output;
@@ -489,18 +489,18 @@ int Rva00813A50( struct Rva00813E50Comm *comm, const char *text,
 		iDevice++ )
 	{
 		iResult = Rva0081BDBA( *(int *)( (char *)comm + 0x84 ), iDevice,
-			0x10004, 0x20002, &apiVersion, &extensionId );
+			0x10004, 0x20002, &version, &extend );
 		if ( iResult != 0 )
 			continue;
 
-		memset( capabilities, 0, 0x400 );
-		*(int *)capabilities = 0x400;
+		memset( caps, 0, 0x400 );
+		*(int *)caps = 0x400;
 		iResult = Rva0081BDD2( *(int *)( (char *)comm + 0x84 ), iDevice,
-			apiVersion, 0, capabilities );
-		if ( *(int *)( capabilities + 0x7C ) == 0 )
+			version, 0, caps );
+		if ( *(int *)( caps + 0x7C ) == 0 )
 			continue;
 
-		name = capabilities + *(int *)( capabilities + 0x24 );
+		name = caps + *(int *)( caps + 0x24 );
 		if ( strcmp( text, "localhost" ) == 0 )
 		{
 			if ( (unsigned int)( strlen( name ) + 2 )
@@ -532,15 +532,15 @@ int Rva00813A50( struct Rva00813E50Comm *comm, const char *text,
 
 int Rva00813D00( struct Rva00813E50Comm *comm, char *text )
 {
-	char address[ 64 ];
+	char resolve[ 64 ];
 
 	if ( comm->m_state != 2 )
 		return -2;
 
 	if ( *text < '0' || *text > '9' )
 	{
-		Rva00813A50( comm, text, address, 64, 0 );
-		text = address;
+		Rva00813A50( comm, text, resolve, 64, 0 );
+		text = resolve;
 	}
 
 	comm->m_port = 0;
@@ -599,8 +599,8 @@ int Rva00814770( struct Rva00814700Comm *comm, unsigned int tick )
 	int iTotal;
 	struct Rva00814770Record *record;
 	char *payload;
-	unsigned char address[ 16 ];
-	int addressLength;
+	unsigned char addr[ 16 ];
+	int addrlen;
 	void *newSocket;
 
 	iTotal = 0;
@@ -615,9 +615,9 @@ int Rva00814770( struct Rva00814700Comm *comm, unsigned int tick )
 
 	if ( comm->m_state == 3 )
 	{
-		addressLength = 0x10;
+		addrlen = 0x10;
 		newSocket = 0;
-		newSocket = Rva007FD7D0( comm->m_socket, address, &addressLength );
+		newSocket = Rva007FD7D0( comm->m_socket, addr, &addrlen );
 		if ( newSocket != 0 )
 		{
 			Rva007FD3F0( comm->m_socket );
@@ -770,18 +770,18 @@ int Rva007FD7A0( void *socket, int backlog );
 int Rva00814FE0( struct Rva008151E0Comm *comm, const char *text )
 {
 	int result;
-	unsigned char address[ 16 ];
+	unsigned char bindaddr[ 16 ];
 	void *socket;
 
 	if ( comm->m_state != 1 || comm->m_socket != 0 )
 		return -2;
 
-	*(unsigned short *)&address[ 0 ] = 2;
-	*(unsigned short *)&address[ 2 ] = 0;
-	*(unsigned int *)&address[ 4 ] = 0;
-	*(unsigned int *)&address[ 8 ] = 0;
-	*(unsigned int *)&address[ 12 ] = 0;
-	if ( ( Rva007FFCB0( (struct Rva008151E0Address *)address, text ) & 2 ) == 0 )
+	*(unsigned short *)&bindaddr[ 0 ] = 2;
+	*(unsigned short *)&bindaddr[ 2 ] = 0;
+	*(unsigned int *)&bindaddr[ 4 ] = 0;
+	*(unsigned int *)&bindaddr[ 8 ] = 0;
+	*(unsigned int *)&bindaddr[ 12 ] = 0;
+	if ( ( Rva007FFCB0( (struct Rva008151E0Address *)bindaddr, text ) & 2 ) == 0 )
 		return -3;
 
 	Rva00815170( (struct Rva00814700Comm *)comm );
@@ -791,7 +791,7 @@ int Rva00814FE0( struct Rva008151E0Comm *comm, const char *text )
 		return -4;
 
 	result = Rva007FD510( comm->m_socket,
-		(struct Rva008151E0Address *)address, 16 );
+		(struct Rva008151E0Address *)bindaddr, 16 );
 	if ( result < 0 )
 	{
 		Rva007FD3F0( comm->m_socket );
@@ -822,17 +822,17 @@ extern char Rva012C4A80[];
 
 void Rva00814D60( struct Rva00814D60Comm *comm )
 {
-	unsigned char address[ 16 ];
+	unsigned char SockAddr[ 16 ];
 
-	Rva007FDB60( comm->m_socket, 0x70656572, address, 16 );
-	comm->m_peerAddress = ( ( ( ( address[ 4 ] << 8 ) | address[ 5 ] )
-		<< 8 | address[ 6 ] ) << 8 ) | address[ 7 ];
-	comm->m_portA = ( address[ 2 ] << 8 ) | address[ 3 ];
+	Rva007FDB60( comm->m_socket, 0x70656572, SockAddr, 16 );
+	comm->m_peerAddress = ( ( ( ( SockAddr[ 4 ] << 8 ) | SockAddr[ 5 ] )
+		<< 8 | SockAddr[ 6 ] ) << 8 ) | SockAddr[ 7 ];
+	comm->m_portA = ( SockAddr[ 2 ] << 8 ) | SockAddr[ 3 ];
 
-	Rva007FDB60( comm->m_socket, 0x62696E64, address, 16 );
-	comm->m_bindAddress = ( ( ( ( address[ 4 ] << 8 ) | address[ 5 ] )
-		<< 8 | address[ 6 ] ) << 8 ) | address[ 7 ];
-	comm->m_portA = ( address[ 2 ] << 8 ) | address[ 3 ];
+	Rva007FDB60( comm->m_socket, 0x62696E64, SockAddr, 16 );
+	comm->m_bindAddress = ( ( ( ( SockAddr[ 4 ] << 8 ) | SockAddr[ 5 ] )
+		<< 8 | SockAddr[ 6 ] ) << 8 ) | SockAddr[ 7 ];
+	comm->m_portA = ( SockAddr[ 2 ] << 8 ) | SockAddr[ 3 ];
 
 	Rva007FE780( Rva012C4A80, comm->m_peerAddress, comm->m_portB,
 		comm->m_bindAddress, comm->m_portA );
@@ -952,10 +952,10 @@ extern char Rva012C4C24[];
 void Rva00815DA0( struct Rva00815DA0Comm *comm )
 {
 	int result;
-	int addressLength;
+	int sinlen;
 	int status;
 	char *payload;
-	unsigned char address[ 16 ];
+	unsigned char sin[ 16 ];
 	struct Rva00815DA0Record *record;
 
 	status = 0;
@@ -964,16 +964,16 @@ void Rva00815DA0( struct Rva00815DA0Comm *comm )
 		record = (struct Rva00815DA0Record *)( (char *)comm->m_buffer
 			+ comm->m_readOffset );
 		payload = (char *)record + 8;
-		addressLength = 16;
+		sinlen = 16;
 		result = Rva007FDA50( comm->m_socket, payload,
-			comm->m_receiveSize, 0, (char *)address, &addressLength );
+			comm->m_receiveSize, 0, (char *)sin, &sinlen );
 		if ( result > 0 )
 		{
 			record->m_length = result;
-			record->m_address = ( ( ( ( address[ 8 ] << 8 ) | address[ 9 ] )
-				<< 8 | address[ 10 ] ) << 8 ) | address[ 11 ];
+			record->m_address = ( ( ( ( sin[ 8 ] << 8 ) | sin[ 9 ] )
+				<< 8 | sin[ 10 ] ) << 8 ) | sin[ 11 ];
 			if ( record->m_type >= 0x10 && record->m_type <= 0x3F )
-				Rva00816020( comm, record, address );
+				Rva00816020( comm, record, sin );
 			else if ( record->m_type >= 0xC0 )
 				Rva00815FA0( comm, record );
 			else
@@ -1241,21 +1241,21 @@ int __stdcall Rva0081BDC6( int line, int address, char *destination,
 int Rva00813890( int line, int address, const char *destination,
 	int countryCode )
 {
-	unsigned char callParameters[ 0x470 ];
+	unsigned char dial[ 0x470 ];
 
-	memset( callParameters, 0, sizeof( callParameters ) );
-	*(int *)( callParameters + 0x00 ) = sizeof( callParameters );
-	*(int *)( callParameters + 0x04 ) = 1;
-	*(int *)( callParameters + 0x10 ) = 0x10;
-	*(int *)( callParameters + 0x14 ) = 2;
-	*(int *)( callParameters + 0x18 ) = 1;
-	*(int *)( callParameters + 0x1C ) = 0;
-	*(int *)( callParameters + 0x3C ) = 0x70;
-	strcpy( (char *)callParameters + 0x70, destination );
-	*(int *)( callParameters + 0x38 ) = strlen( (char *)callParameters + 0x70 );
+	memset( dial, 0, sizeof( dial ) );
+	*(int *)( dial + 0x00 ) = sizeof( dial );
+	*(int *)( dial + 0x04 ) = 1;
+	*(int *)( dial + 0x10 ) = 0x10;
+	*(int *)( dial + 0x14 ) = 2;
+	*(int *)( dial + 0x18 ) = 1;
+	*(int *)( dial + 0x1C ) = 0;
+	*(int *)( dial + 0x3C ) = 0x70;
+	strcpy( (char *)dial + 0x70, destination );
+	*(int *)( dial + 0x38 ) = strlen( (char *)dial + 0x70 );
 
-	return Rva0081BDC6( line, address, (char *)callParameters + 0x70,
-		countryCode, callParameters );
+	return Rva0081BDC6( line, address, (char *)dial + 0x70,
+		countryCode, dial );
 }
 
 extern char Rva012C4A40[];
@@ -1265,17 +1265,17 @@ int __stdcall Rva0081BDC0( int line, int requestMode, int extension,
 int Rva008137C0( int line )
 {
 	int iResult;
-	unsigned char capabilities[ 0x11C ];
+	unsigned char info[ 0x11C ];
 	int iReturn;
 
-	memset( capabilities, 0, sizeof( capabilities ) );
-	*(int *)capabilities = sizeof( capabilities );
-	iResult = Rva0081BDC0( line, 0, 0, 1, capabilities, Rva012C4A40 );
+	memset( info, 0, sizeof( info ) );
+	*(int *)info = sizeof( info );
+	iResult = Rva0081BDC0( line, 0, 0, 1, info, Rva012C4A40 );
 
 	if ( iResult != 0 )
 		iReturn = -1;
 	else
-		iReturn = *(int *)( capabilities + 0x18 );
+		iReturn = *(int *)( info + 0x18 );
 
 	return iReturn;
 }
@@ -1288,16 +1288,16 @@ int Rva008136C0( int lineApplication, int deviceId, void *line,
 	int callbackInstance, int privileges, int mediaModes )
 {
 	int iResult;
-	int apiVersion;
-	struct Rva008136C0ExtensionId extensionId;
+	int version;
+	struct Rva008136C0ExtensionId extend;
 
-	apiVersion = 0;
+	version = 0;
 	iResult = Rva0081BDBA( lineApplication, deviceId, 0x10004, 0x20002,
-		&apiVersion, &extensionId );
+		&version, &extend );
 	if ( iResult != 0 )
 		return iResult;
 
-	return Rva0081BDB4( lineApplication, deviceId, line, apiVersion, 0,
+	return Rva0081BDB4( lineApplication, deviceId, line, version, 0,
 		callbackInstance, privileges, mediaModes, 0 );
 }
 
@@ -1343,12 +1343,12 @@ int __stdcall Rva0081BDA2( void *lineApplication, void *module,
 
 int Rva00812FD0( struct Rva00814700Comm *argument )
 {
-	struct Rva00812FD0Message message;
+	struct Rva00812FD0Message msg;
 	int iResult;
 	struct Rva00814700Comm *comm;
 
 	comm = argument;
-	Rva01359044DiscardMessage( &message, 0, 0, 0, 0 );
+	Rva01359044DiscardMessage( &msg, 0, 0, 0, 0 );
 	iResult = Rva0081BDA2( comm->m_endpoint + 4,
 		Rva01358DC8ModuleHandle( 0 ), (void *)Rva00813100, 0,
 		comm->m_endpoint );
@@ -1360,10 +1360,10 @@ int Rva00812FD0( struct Rva00814700Comm *argument )
 	}
 
 	comm->m_state = 2;
-	while ( Rva0135900CReadMessage( &message, 0, 0, 0 ) != 0 )
+	while ( Rva0135900CReadMessage( &msg, 0, 0, 0 ) != 0 )
 	{
-		Rva01359098TranslateMessage( &message );
-		Rva01358FC8DispatchMessage( &message );
+		Rva01359098TranslateMessage( &msg );
+		Rva01358FC8DispatchMessage( &msg );
 	}
 
 	comm->m_state = 1;

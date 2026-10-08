@@ -1340,10 +1340,6 @@ ltable,0x0080E200,_Rva0080E200,+209 $L1440 wants 0x00C0E2E8 retail 0x00C0E2E9
 ltable,0x0080EA30,_Rva0080EA30,+1071 $L1427 wants 0x00C0EE75 retail 0x00C0EE74
 ltable,0x0080F5A0,_Rva0080F5A0,+1375 $L1405 wants 0x00C0FB27 retail 0x00C0FB2B
 ltable,0x0080FB40,_Rva0080FB40,+453 $L672 wants 0x00C0FD1C retail 0x00C0FD1B
-ltable,0x008136C0,_Rva008136C0,+159 $L1752 wants 0x00C1377B retail 0x00C13776
-ltable,0x00813A50,_Rva00813A50,+611 $L1685 wants 0x00C13CE8 retail 0x00C13CDB
-ltable,0x00814770,_Rva00814770,+1482 $L1705 wants 0x00C14D58 retail 0x00C14D52
-ltable,0x00815DA0,_Rva00815DA0,+473 $L1728 wants 0x00C15F91 retail 0x00C15F8D
 ltable,0x00816020,_Rva00816020,+309 $L642 wants 0x00C16109 retail 0x00C16124
 ltable,0x00816660,_CommSRPListen,+605 $L881 wants 0x00C168ED retail 0x00C168EC
 ltable,0x00816970,_CommSRPConnect,+563 $L892 wants 0x00C16BE5 retail 0x00C16BE7
@@ -1432,16 +1428,6 @@ tail,0x0080EA30,_Rva0080EA30,"compiled=1101 ledger=1055 tail=46: 14 byte(s) diff
 tail,0x0080EF50,_Rva0080EF50,"compiled=388 ledger=356 tail=32: 11 byte(s) differ from retail, first +376"
 tail,0x0080F5A0,_Rva0080F5A0,"compiled=1423 ledger=1359 tail=64: 18 byte(s) differ from retail, first +1403"
 tail,0x0080FB40,_Rva0080FB40,"compiled=482 ledger=437 tail=45: 12 byte(s) differ from retail, first +469"
-tail,0x00812FD0,_Rva00812FD0,"compiled=295 ledger=267 tail=28: 7 byte(s) differ from retail, first +288"
-tail,0x008136C0,_Rva008136C0,"compiled=198 ledger=143 tail=55: 18 byte(s) differ from retail, first +180"
-tail,0x008137C0,_Rva008137C0,"compiled=210 ledger=177 tail=33: 13 byte(s) differ from retail, first +197"
-tail,0x00813890,_Rva00813890,"compiled=277 ledger=242 tail=35: 14 byte(s) differ from retail, first +262"
-tail,0x00813A50,_Rva00813A50,"compiled=675 ledger=595 tail=80: 32 byte(s) differ from retail, first +642"
-tail,0x00813D00,_Rva00813D00,"compiled=295 ledger=267 tail=28: 7 byte(s) differ from retail, first +287"
-tail,0x00814770,_Rva00814770,"compiled=1520 ledger=1466 tail=54: 18 byte(s) differ from retail, first +1502"
-tail,0x00814D60,_Rva00814D60,"compiled=316 ledger=288 tail=28: 8 byte(s) differ from retail, first +308"
-tail,0x00814FE0,_Rva00814FE0,"compiled=395 ledger=367 tail=28: 8 byte(s) differ from retail, first +387"
-tail,0x00815DA0,_Rva00815DA0,"compiled=511 ledger=457 tail=54: 22 byte(s) differ from retail, first +489"
 tail,0x00816160,_Rva00816160,"compiled=280 ledger=254 tail=26: 4 byte(s) differ from retail, first +274"
 tail,0x00816660,_CommSRPListen,"compiled=671 ledger=577 tail=94: 26 byte(s) differ from retail, first +637"
 tail,0x00816970,_CommSRPConnect,"compiled=643 ledger=547 tail=96: 36 byte(s) differ from retail, first +603"
