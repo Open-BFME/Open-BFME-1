@@ -239,57 +239,7 @@ struct Rva000F4250PlayerListCall
 //-------------------------------------------------------------------------------------------------
 /** Delete list resources used by the radar and return them to the memory pools */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/Radar_deleteListResources.cpp
-// ?deleteListResources@Radar@@IAEXXZ present-unmatched
-void Radar::deleteListResources( void )
-{
-	RadarObject *nextObject;
-
-	// delete entries from the local object list
-	while( m_localObjectList )
-	{
-
-		// get next object
-		nextObject = m_localObjectList->friend_getNext();
-
-		// remove radar data from object
-		m_localObjectList->friend_getObject()->friend_setRadarData( NULL );
-
-		// delete the head of the list
-		m_localObjectList->deleteInstance();
-
-		// set head of the list to the next object
-		m_localObjectList = nextObject;
-
-	}  // end while
-
-	// delete entries from the regular object list
-	while( m_objectList )
-	{
-
-		// get next object
-		nextObject = m_objectList->friend_getNext();
-
-		// remove radar data from object
-		m_objectList->friend_getObject()->friend_setRadarData( NULL );
-
-		// delete the head of the list
-		m_objectList->deleteInstance();
-
-		// set head of the list to the next object
-		m_objectList = nextObject;
-
-	}  // end while
-
-	Object *obj;
-	for( obj = TheGameLogic->getFirstObject(); obj; obj = obj->getNextObject() )
-	{
-
-		DEBUG_ASSERTCRASH( obj->friend_getRadarData() == NULL, ("oops") );
-
-	}
-
-}  // end deleteListResources
+// Radar::deleteListResources (retail 0x00106A90) lives in RadarObjectList.cpp.
 
 // PUBLIC METHODS /////////////////////////////////////////////////////////////////////////////////
 //-------------------------------------------------------------------------------------------------
