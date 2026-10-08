@@ -30,7 +30,7 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-void j_00025b4e();
+extern "C" void __cdecl __identifier("DualWeaponBehaviorFieldParse")();
 
 class DualWeaponBehavior
 {
@@ -44,7 +44,7 @@ ModuleData *DualWeaponBehavior::friend_newModuleData(INI *ini)
 	DualWeaponBehaviorModuleData *data = new DualWeaponBehaviorModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_00025b4e));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(__identifier("DualWeaponBehaviorFieldParse")));
 	return (ModuleData *)data;
 }
 
