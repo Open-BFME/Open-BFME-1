@@ -129,6 +129,7 @@ class TeamTemplateInfo : public Snapshot
 public:
 
 	TeamTemplateInfo(Dict *d);
+	~TeamTemplateInfo();	///< out of line: retail 0x000ED580 (TeamTemplateInfoDestructorThunk.cpp)
 
 	enum {MAX_UNIT_TYPES = 7};
 	typedef enum {NORMAL=0, IGNORE_DISTRACTIONS=1, DEAL_AGGRESSIVELY=2} TBehavior;
