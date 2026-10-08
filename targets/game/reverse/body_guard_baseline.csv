@@ -148,7 +148,6 @@ dir32,0x0043ECF7,??0ConditionTemplate@@QAE@XZ,"nothing in the ledger owns 0x0043
 dir32,0x0043EE50,??_F?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAEXXZ,"nothing in the ledger owns 0x0043EE50. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0043EF04,??1Rva006ABC60@@QAE@XZ,the name encodes 0x006ABC60 but retail reads 0x0043EF04
 dir32,0x0043F6E8,?g_0043F6E8@@YAXXZ,"nothing in the ledger owns 0x0043F6E8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x0043F783,??1?$DefaultModuleTemplate@$00@FXParticleSystem@@UAE@XZ,"retail 0x0043F783 is already recorded as _bfmeDtorCbDLC; reference that name, not a new one"
 dir32,0x0043F904,?j_0003f904@@YAXXZ,"retail 0x0043F904 is already recorded as _RainOfFireUpdateFieldParse; reference that name, not a new one"
 dir32,0x0043FD3C,?j_0003fd3c@@YAXXZ,"retail 0x0043FD3C is already recorded as _WeaponChangeSpecialPowerModuleFieldParse; reference that name, not a new one"
 dir32,0x0043FF76,?j_0003ff76@@YAXXZ,"retail 0x0043FF76 is already recorded as ?rva0043ff76@BfmeAptScreenOnlineChat@@QAEXXZ; reference that name, not a new one"
