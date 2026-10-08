@@ -1,6 +1,16 @@
 // cl: /DNDEBUG /MD /EHsc
 
-struct FieldParse;
+class INI;
+
+typedef void (*INIFieldParseProc)(INI *ini, void *instance, void *store, const void *userData);
+
+struct FieldParse
+{
+	const char *token;
+	INIFieldParseProc parse;
+	const void *userData;
+	int offset;
+};
 
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
@@ -26,7 +36,11 @@ public:
 	void m(int value);
 };
 
-extern const FieldParse TheRva0059EB90FieldParse[];
+// Retail .rdata VA 0x0110CAA4: an empty table, the terminator alone (16 B).
+extern const FieldParse TheRva0059EB90FieldParse[] =
+{
+	{ 0, 0, 0, 0 }
+};
 
 // ?rva0059EB90@@YAXPAVINI@@PAVGen_00489270@@@Z
 void rva0059EB90(INI *ini, Gen_00489270 *store)
