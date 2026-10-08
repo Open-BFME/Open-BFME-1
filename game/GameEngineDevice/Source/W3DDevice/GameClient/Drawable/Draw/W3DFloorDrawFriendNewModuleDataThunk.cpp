@@ -46,7 +46,7 @@ public:
 // address-identified thunk ?j_00014baa@@YAXXZ (matched row in
 // game/gen_small/gthunks_022.cpp). No retail body carries a free-function
 // W3DFloorDrawFieldParse, so nothing may be declared under that name here.
-extern void j_00014baa();
+extern "C" void __cdecl __identifier("W3DFloorDrawFieldParse")();
 
 class W3DFloorDraw
 {
@@ -60,6 +60,6 @@ ModuleData *W3DFloorDraw::friend_newModuleData(INI *ini)
 	W3DFloorDrawModuleData *data = new W3DFloorDrawModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_00014baa));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&__identifier("W3DFloorDrawFieldParse")));
 	return (ModuleData *)data;
 }
