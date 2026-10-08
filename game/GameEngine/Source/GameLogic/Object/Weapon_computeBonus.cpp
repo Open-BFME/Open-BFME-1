@@ -47,7 +47,7 @@ class GlobalData
 {
 public:
 	char m_bfmeHead[0xB94];
-	WeaponBonusSet *m_bfmeBonuses;				// +0xB94
+	WeaponBonusSet *m_weaponBonusSet;				// +0xB94
 };
 
 extern GlobalData *TheWritableGlobalData;			// 0x012ED5C8
@@ -85,7 +85,7 @@ void Weapon::computeBonus(const Object *source, UnsignedInt extra,
 
 	UnsignedInt mask = source->m_bfmeBonusMask | extra;
 
-	WeaponBonusSet *global = TheWritableGlobalData->m_bfmeBonuses;
+	WeaponBonusSet *global = TheWritableGlobalData->m_weaponBonusSet;
 
 	if (global)
 		global->bfmeApplyBonuses(mask, bonus);
