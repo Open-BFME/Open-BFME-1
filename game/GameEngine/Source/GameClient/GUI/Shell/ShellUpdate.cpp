@@ -8,6 +8,8 @@ typedef bool Bool;
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 extern Int g_012F4B5C;
+#pragma section(".data", read, write)
+extern "C" __declspec(allocate(".data")) Int __identifier("?g_012F4B5C@@3HA") = 0;
 
 class WindowLayout
 {
