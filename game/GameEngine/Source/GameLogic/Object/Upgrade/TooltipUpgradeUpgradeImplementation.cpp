@@ -14,6 +14,23 @@ public:
 	void applySecond(Rva002D9510Value *value);
 };
 
+// Retail calls reach ILT 0x00031F75 -> 0x00418B50 and ILT 0x00025162 ->
+// 0x00415AA0; called by those ledger row names.
+class AsciiString;
+template <class T> class StringBase;
+
+class Rva00418B50Owner
+{
+public:
+	void setName(const AsciiString &name);
+};
+
+class Rva00415AA0
+{
+public:
+	void assign(const StringBase<char> &value);
+};
+
 class Rva002D9510Source
 {
 public:
@@ -58,8 +75,8 @@ void TooltipUpgrade::upgradeImplementation()
 {
 	Rva002D9510Target *target = (*reinterpret_cast<Rva002D9510Source **>(reinterpret_cast<char *>(this) - 8))->getTarget();
 	if (target) {
-		target->applyFirst(reinterpret_cast<Rva002D9510Value *>(reinterpret_cast<char *>(*reinterpret_cast<Rva002D9510Data **>(reinterpret_cast<char *>(this) - 12)) + 0x70));
-		target->applySecond(reinterpret_cast<Rva002D9510Value *>(reinterpret_cast<char *>(*reinterpret_cast<Rva002D9510Data **>(reinterpret_cast<char *>(this) - 12)) + 0x74));
+		reinterpret_cast<Rva00418B50Owner *>(target)->setName(*reinterpret_cast<const AsciiString *>(reinterpret_cast<Rva002D9510Value *>(reinterpret_cast<char *>(*reinterpret_cast<Rva002D9510Data **>(reinterpret_cast<char *>(this) - 12)) + 0x70)));
+		reinterpret_cast<Rva00415AA0 *>(target)->assign(*reinterpret_cast<const StringBase<char> *>(reinterpret_cast<Rva002D9510Value *>(reinterpret_cast<char *>(*reinterpret_cast<Rva002D9510Data **>(reinterpret_cast<char *>(this) - 12)) + 0x74)));
 	}
 	TheControlBar->m_UIDirty = true;
 }
