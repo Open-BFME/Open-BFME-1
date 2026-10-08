@@ -233,6 +233,7 @@ extern WeaponStore *TheWeaponStore;
 extern Real g_bfmeScaleBC;
 extern const Real g_rva01075350;
 extern Real g_012ADC90;
+extern "C" Real __identifier("?g_012ADC90@@3MA") = 75.0f;
 #define BfmeObjectCreationRange g_012ADC90
 
 // ?update@GettingBuiltBehavior@@UAE?AW4UpdateSleepTime@@XZ

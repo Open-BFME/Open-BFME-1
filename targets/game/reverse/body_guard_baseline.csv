@@ -874,7 +874,6 @@ dir32,0x012AA008,?g_012AA008@@3PAPAXA,"nothing in the ledger owns 0x012AA008. Gi
 dir32,0x012AA068,?g_bfmeRva012AA068@@3PAPBDA,"retail 0x012AA068 is already recorded as ?TheKindOfBitNames@@3PAPBDA (+4 more); reference that name, not a new one"
 dir32,0x012ABFC8,?g_012ABFC8@@3PBDB,"nothing in the ledger owns 0x012ABFC8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012ACC34,?g_rva001AF610RingSpacing@@3MA,the name encodes 0x001AF610 but retail reads 0x012ACC34
-dir32,0x012ADC90,?g_012ADC90@@3MA,"nothing in the ledger owns 0x012ADC90. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012B2C98,?g_012B2C98@@3PAIA,"nothing in the ledger owns 0x012B2C98. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012B3DC0,?TheShellHookNames@@3PAPADA,"retail 0x012B3DC0 is already recorded as ?TheShellHookNames@@3PAPBDA; reference that name, not a new one"
 dir32,0x012B4180,?Names00377AF0@@3QBQBDB,"nothing in the ledger owns 0x012B4180. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
@@ -912,7 +911,6 @@ dir32,0x012BAD20,?g_roadShader012BAD20@@3VShaderClass@@A,"nothing in the ledger 
 dir32,0x012BAE40,?MasterShaderList@@3PAPAPAVW3DShaderInterface@@A,"nothing in the ledger owns 0x012BAE40. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012BAE60,?MasterFilterList@@3PAPAPAVW3DFilterInterface@@A,"nothing in the ledger owns 0x012BAE60. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012BAF40,?g_012BAF40@@3VShaderClass@@B,"nothing in the ledger owns 0x012BAF40. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x012BB23C,?FollowFactor007446A0@@3MA,"nothing in the ledger owns 0x012BB23C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012BB5BC,?AnimModeNames012BB5BC@@3PAPBDA,"nothing in the ledger owns 0x012BB5BC. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012BBBE4,?WaterBumpScale012BBBE4@@3MA,"nothing in the ledger owns 0x012BBBE4. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012C7388,?g_classicFacets012C7388@@3PAPAVfacet@locale@_STL@@A,"nothing in the ledger owns 0x012C7388. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
