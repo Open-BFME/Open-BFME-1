@@ -146,10 +146,39 @@ extern void *g_vtbl_01110A4C[];
 extern "C" char DefaultModuleTemplate6Concrete_vtbl8;
 extern "C" char DefaultModuleTemplate6Concrete_vtbl4;
 extern "C" char DefaultModuleTemplate6Concrete_vtbl0;
-extern void *g_vtbl_01110E20[];
-extern void *g_vtbl_01110E34[];
-extern void *g_vtbl_01110E38[];
-extern void *g_vtbl_01110E4C[];
+extern void *g_vtbl_01110E20[4];
+void j_00022a6b();
+void j_0003d88e();
+void j_0004009d();
+void j_0001b1a3();
+extern "C" void *__identifier("?g_vtbl_01110E20@@3PAPAXA")[4] =
+{
+    (void *)j_00022a6b, (void *)j_0003d88e, (void *)j_0004009d, (void *)j_0001b1a3
+};
+extern void *g_vtbl_01110E34[1];
+void j_00002dc9();
+extern "C" void *__identifier("?g_vtbl_01110E34@@3PAPAXA")[1] =
+{
+    (void *)j_00002dc9
+};
+extern void *g_vtbl_01110E38[4];
+void j_0000173f();
+void j_0004183f();
+void j_0001da7a();
+void j_00042465();
+extern "C" void *__identifier("?g_vtbl_01110E38@@3PAPAXA")[4] =
+{
+    (void *)j_0000173f, (void *)j_0004183f, (void *)j_0001da7a, (void *)j_00042465
+};
+extern void *g_vtbl_01110E4C[4];
+void j_0002507c();
+void j_000205e5();
+void j_00024839();
+void j_0001b3ab();
+extern "C" void *__identifier("?g_vtbl_01110E4C@@3PAPAXA")[4] =
+{
+    (void *)j_0002507c, (void *)j_000205e5, (void *)j_00024839, (void *)j_0001b3ab
+};
 extern void *g_vtbl_01110E60[];
 extern void *g_vtbl_01110E64[];
 extern void *g_vtbl_01110E78[];
