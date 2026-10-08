@@ -37,7 +37,7 @@ public:
 // class's static field-parse builder.  The old
 // `extern "C" WeaponChangeSpecialPowerModuleFieldParse` was invented in this TU and nothing
 // defines it; the thunk is retail's real spelling of this operand.
-void j_0003fd3c();
+extern "C" void __cdecl __identifier("WeaponChangeSpecialPowerModuleFieldParse")();
 
 class WeaponChangeSpecialPowerModule
 {
@@ -51,6 +51,6 @@ ModuleData *WeaponChangeSpecialPowerModule::friend_newModuleData(INI *ini)
 	WeaponChangeSpecialPowerModuleModuleData *data = new WeaponChangeSpecialPowerModuleModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0003fd3c));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(__identifier("WeaponChangeSpecialPowerModuleFieldParse")));
 	return (ModuleData *)data;
 }
