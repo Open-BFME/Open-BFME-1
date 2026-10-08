@@ -90940,3 +90940,6 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_06JBLPIPDG@Color8?$AA@,0x00D1341C,DefaultModuleTemplate0AFieldParse entry; compiler string literal Color8 equals retail at VA 0x0111341C
 ??_C@_06PDMKCLI@Color6?$AA@,0x00D1342C,DefaultModuleTemplate0AFieldParse entry; compiler string literal Color6 equals retail at VA 0x0111342C
 ??_C@_0L@LNAACFKB@ColorScale?$AA@,0x00D1340C,DefaultModuleTemplate0AFieldParse entry; compiler string literal ColorScale equals retail at VA 0x0111340C
+??_C@_07JMGDFJEK@Gravity?$AA@,0x00C7B92C,DefaultModuleTemplate02FieldParse entry; compiler string literal Gravity equals retail at VA 0x0107B92C
+??_C@_0BA@ECBMGNMK@VelocityDamping?$AA@,0x00D1459C,DefaultModuleTemplate02FieldParse entry; compiler string literal VelocityDamping equals retail at VA 0x0111459C
+??_C@_0O@EHIPKCAH@DriftVelocity?$AA@,0x00D1458C,DefaultModuleTemplate02FieldParse entry; compiler string literal DriftVelocity equals retail at VA 0x0111458C
