@@ -5,6 +5,20 @@
 
 #include "unicode_string.h"
 
+// Retail releases the UnicodeString member by calling
+// StringBase<unsigned short>::releaseBuffer (0x008881D0) directly; the
+// header's UnicodeString declares an out-of-line ~UnicodeString (0x0005EEA0).
+// This member view keeps the layout and inlines the release.
+struct StringInfoUnicodeText
+{
+	~StringInfoUnicodeText()
+	{
+		((StringBase<unsigned short> *)this)->clear();
+	}
+
+	void *m_data;
+};
+
 class StringInfo
 {
 public:
@@ -12,7 +26,7 @@ public:
 
 private:
 	AsciiString m_ascii;
-	UnicodeString m_unicode;
+	StringInfoUnicodeText m_unicode;
 };
 
 // ??1StringInfo@@QAE@XZ
