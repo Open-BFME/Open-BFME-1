@@ -2485,10 +2485,8 @@ void ParticleSystemManager::update( void )
 // ------------------------------------------------------------------------------------------------
 /** sets the count of the particles on screen after each frame */
 // ------------------------------------------------------------------------------------------------
-void ParticleSystemManager::setOnScreenParticleCount(int count)
-{
-	m_onScreenParticleCount = count;
-}
+// ParticleSystemManager::setOnScreenParticleCount (retail 0x005BE6F0) lives in
+// ParticleSystemManagerSetOnScreenParticleCount.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** Given a file containing particle system properties, create a new instance of it */
