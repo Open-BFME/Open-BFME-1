@@ -18878,5 +18878,15 @@
   "after_sha256": "287b4297b12e0226d1a6d7633dc18de3aaae2ee68fb6a411e4af446b4f9cfb82",
   "evidence": "targets/game/reverse/identity_evidence/20261003-audio-worker-reference-abi.md",
   "reason": "Correct the callee binding, not the owner destructor identity: the undefined BfmeMemberESG destructor pin at ILT000298E8 routes to00691130. The existing independent audio-worker evidence proves that exact cleanup is the Rva006910F0Handle destructor through the canonical handle constructors and hidden-return cleanup. The owning BfmeHostESG body and its member extent stay unchanged; use the ledger-defined callee name rather than an undefined alternate name."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/System/random_value.cpp",
+  "new_path": "game/GameEngine/Source/Common/System/random_value.cpp",
+  "old_name": "BFMEComputeCRC",
+  "new_name": "j_0000a984",
+  "before_sha256": "69a99e8dffa1a6b589f8f6e56d32fa49460419f19e42abc466b706a583d6c8f7",
+  "after_sha256": "cbd3aae60b1516f30cea838e6dc4935eb44cd78869a08d7143d9c1d1f47ee7ef",
+  "evidence": "targets/game/reverse/identity_evidence/0000a984-thunk-call.md",
+  "reason": "Retail's call relocation at 0x00096A60 lands on the packed ILT thunk at 0x0000A984 (jmp 0x00065250), not on the packet CRC body BFMEComputeCRC at 0x00065250; the call site must name the thunk so the object's relocation matches retail."
  }
 ]
