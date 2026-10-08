@@ -8,7 +8,9 @@ public:
 };
 
 class Rva00899FC0;
-extern Rva00899FC0 *g_rva01337abc;
+// Lazily created Apt default object (retail VA 0x01337ABC, zero-initialised):
+// Rva008A78D0GetOrCreateDefault creates it, this function releases it.
+Rva00899FC0 *g_rva01337abc;
 
 void Rva008A4AA0Invoke()
 {
