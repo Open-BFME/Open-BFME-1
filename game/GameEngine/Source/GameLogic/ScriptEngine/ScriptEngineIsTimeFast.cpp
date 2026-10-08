@@ -61,3 +61,5 @@ bool ScriptEngine::isTimeFast(void)
 	}
 	return false;
 }
+
+extern "C" bool __identifier("?g_012F0768@@3_NA") = false;

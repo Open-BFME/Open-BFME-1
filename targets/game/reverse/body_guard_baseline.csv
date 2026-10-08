@@ -990,7 +990,6 @@ dir32,0x012F075C,?ClientCanAppContinue@@3_NA,"retail 0x012F075C is already recor
 dir32,0x012F075D,?LogicCanAppContinue@@3_NA,"retail 0x012F075D is already recorded as ?g_012F075D@@3_NA; reference that name, not a new one"
 dir32,0x012F0760,?g_scriptFrame012F0764@@3HA,"nothing in the ledger owns 0x012F0760. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F0764,?g_scriptFrame012F0760@@3HA,"nothing in the ledger owns 0x012F0764. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x012F0768,?g_012F0768@@3_NA,"nothing in the ledger owns 0x012F0768. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F076C,?TheScriptEngine@@3PAVRva00336C20FieldAddress@@A,"retail 0x012F076C is already recorded as ?TheBfmeGlobal_012f076c@@3PAVBfmeGlobal_012f076c@@A (+44 more); reference that name, not a new one"
 dir32,0x012F0770,?g_rva012F0770@@3VShellGameLoadScreen@@A,"retail 0x012F0770 is already recorded as ?TheBfmeObject_00C6FE50@@3VGen_00C6FE50Target@@A; reference that name, not a new one"
 dir32,0x012F0898,?TheBfmeGameLogic@@3PAVBfmeGameLogicLike@@A,"retail 0x012F0898 is already recorded as ?Clock00200420@@3PAUFrame00200420@@A (+147 more); reference that name, not a new one"
