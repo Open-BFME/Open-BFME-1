@@ -11921,3 +11921,10 @@ extern "C" void *__identifier("?g_vtbl_01110E64@@3PAPAXA")[4] =
 {
     (void *)j_00024ce4, (void *)j_00048d5b, (void *)j_000347bb, (void *)j_0004748d
 };
+
+extern void *g_vtbl_01110E8C[1];
+void j_000245c8();
+extern "C" void *const __identifier("?g_vtbl_01110E8C@@3PAPAXA")[1] =
+{
+    (void *)j_000245c8
+};

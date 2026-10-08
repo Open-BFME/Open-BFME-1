@@ -494,7 +494,6 @@ dir32,0x011109CC,?g_vtbl_011109CC@@3PAPAXA,"retail 0x011109CC is already recorde
 dir32,0x01110A0C,?g_vtbl_01110A0C@@3PAPAXA,"retail 0x01110A0C is already recorded as ??_7SphereEmissionVolumeInfo@FXParticleSystem@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x01110A4C,?g_vtbl_01110A4C@@3PAPAXA,"retail 0x01110A4C is already recorded as ??_7CylinderEmissionVolumeInfo@FXParticleSystem@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x01110E78,?g_vtbl_01110E78@@3PAPAXA,"nothing in the ledger owns 0x01110E78. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x01110E8C,?g_vtbl_01110E8C@@3PAPAXA,"nothing in the ledger owns 0x01110E8C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01110E90,?g_vtbl_01110E90@@3PAPAXA,"nothing in the ledger owns 0x01110E90. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01110EA4,?g_vtbl_01110EA4@@3PAPAXA,"retail 0x01110EA4 is already recorded as ??_7?$DefaultParticleModuleTemplate@$05@FXParticleSystem@@6B@; reference that name, not a new one"
 dir32,0x01110EB8,?g_vtbl_01110EB8@@3PAPAXA,"retail 0x01110EB8 is already recorded as ??_7?$DefaultParticleModuleTemplate@$05@FXParticleSystem@@6B?$CategoryModuleInfo@$05@1@@; reference that name, not a ne"
