@@ -44,7 +44,16 @@
 // and INI carry their recovered names because the ledger already pins those two
 // members at these addresses.
 
-struct FieldParse;
+class INI;
+typedef void (*INIFieldParseProc)( INI *ini, void *instance, void *store, const void *userData );
+
+struct FieldParse
+{
+	const char *token;
+	INIFieldParseProc parse;
+	const void *userData;
+	int offset;
+};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class MultiIniFieldParse
@@ -72,6 +81,12 @@ class INI
 {
 public:
 	void initFromINIMulti( void *, const MultiIniFieldParse & );
+
+	static void parseReal( INI *ini, void *instance, void *store, const void *userData );
+	static void parseAngleReal( INI *ini, void *instance, void *store, const void *userData );
+	static void parseBool( INI *ini, void *instance, void *store, const void *userData );
+	static void parseVelocityReal( INI *ini, void *instance, void *store, const void *userData );
+	static void parseDurationUnsignedInt( INI *ini, void *instance, void *store, const void *userData );
 };
 
 const FieldParse *q4BaseFields002DEEB0();
@@ -89,3 +104,22 @@ Q4_INI_MULTI_PARSE( 002DE280 )
 Q4_INI_MULTI_PARSE( 002DE890 )
 Q4_INI_MULTI_PARSE( 002DEC40 )
 Q4_INI_MULTI_PARSE( 002DF520 )
+
+// Retail .rdata VA 0x010CEE68 (176 B), the table Rva002DD2B0 adds: ten
+// entries plus a zero terminator. ShockWaveAmount/ShockWaveSpeed go through the
+// parseVelocityReal ILT 0x00038708 (body 0x000B9D20) and DelayTime through the
+// parseDurationUnsignedInt ILT 0x000324DE (body 0x000B9C60).
+const FieldParse q4Fields002DD2B0[] =
+{
+	{ "ShockWaveAmount", INI::parseVelocityReal, 0, 0x58 },
+	{ "ShockWaveRadius", INI::parseReal, 0, 0x5C },
+	{ "ShockWaveArc", INI::parseAngleReal, 0, 0x60 },
+	{ "ShockWaveTaperOff", INI::parseReal, 0, 0x64 },
+	{ "ShockWaveSpeed", INI::parseVelocityReal, 0, 0x68 },
+	{ "ShockWaveZMult", INI::parseReal, 0, 0x6C },
+	{ "DelayTime", INI::parseDurationUnsignedInt, 0, 0x70 },
+	{ "InvertShockWave", INI::parseBool, 0, 0x74 },
+	{ "FlipDirection", INI::parseBool, 0, 0x75 },
+	{ "HeroResist", INI::parseReal, 0, 0x78 },
+	{ 0, 0, 0, 0 }
+};

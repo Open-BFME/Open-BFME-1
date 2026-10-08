@@ -90598,3 +90598,13 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_0BI@GCMGIFEO@CannotBuildDueToCPLimit?$AA@,0x00CF1C7C,Retail pointer-array initializer literal; terminated compiler bytes equal retail; build/rlink/identity-arrays-1791422372/compiled-literal-relocations.log
 ??_C@_0BE@JOEPHAKG@BuildingBeingStolen?$AA@,0x00CF1C64,Retail pointer-array initializer literal; terminated compiler bytes equal retail; build/rlink/identity-arrays-1791422372/compiled-literal-relocations.log
 ??_C@_0P@FOKNHIEP@BuildingStolen?$AA@,0x00CF1C50,Retail pointer-array initializer literal; terminated compiler bytes equal retail; build/rlink/identity-arrays-1791422372/compiled-literal-relocations.log
+??_C@_09MIEAEMAH@DelayTime?$AA@,0x00C8B438,Retail q4Fields002DD2B0 table VA 0x010CEE68 entry; compiler string literal DelayTime equals retail at VA 0x0108B438
+??_C@_0BA@CDEPDPNL@ShockWaveAmount?$AA@,0x00CCEBB8,Retail q4Fields002DD2B0 table VA 0x010CEE68 entry; compiler string literal ShockWaveAmount equals retail at VA 0x010CEBB8
+??_C@_0BA@DAJGHKJD@ShockWaveRadius?$AA@,0x00CCEBA4,Retail q4Fields002DD2B0 table VA 0x010CEE68 entry; compiler string literal ShockWaveRadius equals retail at VA 0x010CEBA4
+??_C@_0BA@ONJGLDAA@InvertShockWave?$AA@,0x00CCEE40,Retail q4Fields002DD2B0 table VA 0x010CEE68 entry; compiler string literal InvertShockWave equals retail at VA 0x010CEE40
+??_C@_0BC@KNFJAPL@ShockWaveTaperOff?$AA@,0x00CCEB8C,Retail q4Fields002DD2B0 table VA 0x010CEE68 entry; compiler string literal ShockWaveTaperOff equals retail at VA 0x010CEB8C
+??_C@_0L@BBGIAOND@HeroResist?$AA@,0x00CCEE20,Retail q4Fields002DD2B0 table VA 0x010CEE68 entry; compiler string literal HeroResist equals retail at VA 0x010CEE20
+??_C@_0N@IJNJCKKN@ShockWaveArc?$AA@,0x00CCEE54,Retail q4Fields002DD2B0 table VA 0x010CEE68 entry; compiler string literal ShockWaveArc equals retail at VA 0x010CEE54
+??_C@_0O@GECMHBHM@FlipDirection?$AA@,0x00CCEE30,Retail q4Fields002DD2B0 table VA 0x010CEE68 entry; compiler string literal FlipDirection equals retail at VA 0x010CEE30
+??_C@_0P@JOCKIKOP@ShockWaveSpeed?$AA@,0x00CCEB78,Retail q4Fields002DD2B0 table VA 0x010CEE68 entry; compiler string literal ShockWaveSpeed equals retail at VA 0x010CEB78
+??_C@_0P@PFJONJFB@ShockWaveZMult?$AA@,0x00CCEB64,Retail q4Fields002DD2B0 table VA 0x010CEE68 entry; compiler string literal ShockWaveZMult equals retail at VA 0x010CEB64
