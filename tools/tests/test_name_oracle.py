@@ -225,6 +225,31 @@ def test_todo_refuses_a_name_already_declared_at_another_offset(monkeypatch):
     assert tally["witness name already declared in this class"] == 1
 
 
+@pytest.mark.parametrize("statement", ["return", "throw", "delete"])
+def test_apply_does_not_count_expression_statements_as_declarations(monkeypatch, tmp_path, statement):
+    path = tmp_path / "source.cpp"
+    result_type = "int *" if statement == "return" else "void"
+    path.write_text(f"struct Known {{\n int *m_unk00;\n"
+                    f" {result_type} read() {{\n {statement} m_unk00;\n }}\n}};\n")
+    monkeypatch.setattr(N, "ROOT", tmp_path)
+    monkeypatch.setattr(N, "load_witness", lambda: {("Known", 0): ("m_items", 1.0, "test")})
+    monkeypatch.setattr(sys, "argv", ["name_oracle.py", "--todo", "--apply", str(path)])
+    assert N.main() == 0
+    assert "m_unk00" not in path.read_text()
+    assert f"{statement} m_items;" in path.read_text()
+
+
+def test_apply_still_refuses_same_placeholder_in_two_types(monkeypatch, tmp_path):
+    path = tmp_path / "source.cpp"
+    before = "struct Known {\n int m_unk00;\n};\nstruct Other {\n int m_unk00;\n};\n"
+    path.write_text(before)
+    monkeypatch.setattr(N, "ROOT", tmp_path)
+    monkeypatch.setattr(N, "load_witness", lambda: {("Known", 0): ("m_count", 1.0, "test")})
+    monkeypatch.setattr(sys, "argv", ["name_oracle.py", "--todo", "--apply", str(path)])
+    assert N.main() == 0
+    assert path.read_text() == before
+
+
 def _ask(monkeypatch, capsys, argv, witness, zh):
     monkeypatch.setattr(N, "load_witness", lambda: witness)
     monkeypatch.setattr(N, "zh_members", lambda cls: zh.get(cls, {}))

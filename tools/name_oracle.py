@@ -636,7 +636,7 @@ def main():
                 # declaration refused ten renames in SegLineRendererClassAssignThunk
                 # where the member is declared exactly once.
                 if len(re.findall(
-                        rf"^\s*[A-Za-z_][\w:<>*&\s]*?\b{re.escape(old)}\b"
+                        rf"^\s*(?!(?:return|throw|delete)\b)[A-Za-z_][\w:<>*&\s]*?\b{re.escape(old)}\b"
                         rf"\s*(?:\[[^\]]*\])?\s*;", text, re.M)) > 1:
                     # The same placeholder spelling declared in two structs of one file
                     # sits at two different offsets; a file-wide substitution would put
