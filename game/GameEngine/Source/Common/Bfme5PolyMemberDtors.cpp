@@ -49,10 +49,10 @@ private:
 	int m_bfmeField;
 };
 
-class Gen_0037EFB0
+class ExperienceScalarTable
 {
 public:
-	~Gen_0037EFB0(void);
+	~ExperienceScalarTable(void);
 
 private:
 	BfmeVecMemberU m_bfmeVector;				// +0x00
@@ -87,8 +87,8 @@ private:
 	BfmeTailT m_bfmeTail;					// +0x44
 };
 
-// ??1Gen_0037EFB0@@QAE@XZ
-Gen_0037EFB0::~Gen_0037EFB0(void)
+// ??1ExperienceScalarTable@@QAE@XZ
+ExperienceScalarTable::~ExperienceScalarTable(void)
 {
 }
 
