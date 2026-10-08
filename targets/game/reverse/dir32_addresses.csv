@@ -1121,8 +1121,8 @@ name,va
 ??_7BfmeA1137Term@@6B@,0x01120FD4
 ??_7BfmeAptGameWindow@@6B@,0x01106F08
 ??_7BfmeAptScreenBase@@6B@,0x010F7778
-??_7BfmeAptScreenCampaignReview@@6BBfmeAptFunctorMarker@@@,0x01104C70
-??_7BfmeAptScreenCampaignReview@@6B_bfme_AptGameWindow@@@,0x01104C74
+??_7AptCampaignReview@@6BBfmeAptFunctorMarker@@@,0x01104C70
+??_7AptCampaignReview@@6B_bfme_AptGameWindow@@@,0x01104C74
 ??_7BfmeAptScreenDisconnectScreen@@6B@,0x01104DE8
 ??_7BfmeAptScreenInGameChat@@6BBfmeAptScreenBase@@@,0x01105384
 ??_7BfmeAptScreenInGameChat@@6BS4Owner@@@,0x01105380
@@ -8104,7 +8104,7 @@ name,va
 ?_bfme_acceptLocale@BfmeAptScreenOnlineLogin@@QAEXPBD@Z,0x0041EC77
 ?_bfme_battleSchool@BfmeAptScreenMainMenu@@QAEXXZ,0x0043EECD
 ?_bfme_cancelFireWallButton@BfmeAptScreenMainMenu@@QAEXXZ,0x00443554
-?_bfme_continue@BfmeAptScreenCampaignReview@@QAEXXZ,0x0044785C
+?_bfme_continue@AptCampaignReview@@QAEXXZ,0x0044785C
 ?_bfme_continueCampaign@BfmeAptScreenMainMenu@@QAEXXZ,0x00443C9D
 ?_bfme_credits@BfmeAptScreenMainMenu@@QAEXXZ,0x00426FFD
 ?_bfme_creditsExit@BfmeAptScreenMainMenu@@QAEXXZ,0x0043E707
@@ -8115,7 +8115,7 @@ name,va
 ?_bfme_getPlayerColor@BfmeAptScreenScoreScreen@@QAEXHPAD_N@Z,0x00405FBA
 ?_bfme_getPlayerFaction@BfmeAptScreenScoreScreen@@QAEXHPAD_N@Z,0x0042F806
 ?_bfme_goodCampaign@BfmeAptScreenMainMenu@@QAEXXZ,0x00422B33
-?_bfme_initGadgets@BfmeAptScreenCampaignReview@@QAEXXZ,0x00435C47
+?DisplayVictoryLevel@AptCampaignReview@@QAEXXZ,0x00435C47
 ?_bfme_lan@BfmeAptScreenMainMenu@@QAEXXZ,0x0043F0CB
 ?_bfme_levelBarProvider@BfmeOnlineProfileScreen@@AAEXIPAD_N@Z,0x004100EB
 ?_bfme_levelSelect@BfmeAptScreenMainMenu@@QAEXXZ,0x00436516
@@ -8143,7 +8143,7 @@ name,va
 ?_bfme_onlineButtonPressed@BfmeAptScreenMainMenu@@QAEXXZ,0x0042BC83
 ?_bfme_options@BfmeAptScreenMainMenu@@QAEXXZ,0x00414F7E
 ?_bfme_optionsScreen@BfmeAptScreenQuitMenu@@QAEXXZ,0x00407BE9
-?_bfme_playerSideType@BfmeAptScreenCampaignReview@@QAEXXZ,0x00442663
+?_bfme_playerSideType@AptCampaignReview@@QAEXXZ,0x00442663
 ?_bfme_renameAccept@BfmeAptScreenScoreScreen@@QAEXPBD@Z,0x00403C01
 ?_bfme_renderCredits@BfmeAptScreenMainMenu@@QAEXXZ,0x0043CE1B
 ?_bfme_restartMission@BfmeAptScreenQuitMenu@@QAEXXZ,0x0040A010
@@ -8152,7 +8152,7 @@ name,va
 ?_bfme_skirmish@BfmeAptScreenMainMenu@@QAEXXZ,0x00422F2F
 ?_bfme_stopGameMovie@BfmeAptScreenMainMenu@@QAEXXZ,0x0043FF3F
 ?_bfme_tooltipCallback@BfmeOnlineProfileScreen@@AAEXPBD@Z,0x00415B36
-?_bfme_totalCampaignScore@BfmeAptScreenCampaignReview@@QAEXXZ,0x0041CD37
+?_bfme_totalCampaignScore@AptCampaignReview@@QAEXXZ,0x0041CD37
 ?_bfme_tutorial@BfmeAptScreenMainMenu@@QAEXXZ,0x0043D98D
 ?_bfme_tutorialExit@BfmeAptScreenMainMenu@@QAEXXZ,0x00404985
 ?_disconnectMenuLayout@@3PAVWindowLayout@@A,0x012F4960

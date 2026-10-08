@@ -11,7 +11,7 @@
 
 class GameWindow;
 
-class BfmeAptScreenCampaignReview
+class AptCampaignReview
 {
 public:
 	void _bfme_initGadgets( const char *name, void *argument, GameWindow *window );
@@ -29,7 +29,7 @@ public:
 	void _bfme_onInitialized( const char *name );
 };
 
-void BfmeAptScreenCampaignReview::_bfme_initGadgets( const char *name,
+void AptCampaignReview::_bfme_initGadgets( const char *name,
 	void *argument, GameWindow *window )
 {
 	(void)name;

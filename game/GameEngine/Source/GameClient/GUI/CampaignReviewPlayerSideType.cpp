@@ -23,14 +23,14 @@ class LivingWorldCampaignManager;
 extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;
 
 // CampaignReview.apt, object 0x258 bytes.
-class BfmeAptScreenCampaignReview
+class AptCampaignReview
 {
 public:
 	void _bfme_playerSideType( const char *selector, void *value, bool setting );
 };
 
-// ?_bfme_playerSideType@BfmeAptScreenCampaignReview@@QAEXPBDPAX_N@Z
-void BfmeAptScreenCampaignReview::_bfme_playerSideType(
+// ?_bfme_playerSideType@AptCampaignReview@@QAEXPBDPAX_N@Z
+void AptCampaignReview::_bfme_playerSideType(
 	const char *, void *value, bool setting )
 {
 	if( setting )

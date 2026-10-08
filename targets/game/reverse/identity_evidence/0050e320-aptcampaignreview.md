@@ -1,0 +1,7 @@
+# AptCampaignReview class identity
+
+The matched constructor at RVA 0x0050E320 registers the literal selectors `AptCampaignReview::Continue` and `AptCampaignReview::InitGadgets` on the screen it constructs. Its matched complete destructor at 0x0050DBD0 unregisters the same InitGadgets selector. The constructor's primary/secondary vtables and scalar-deleting destructor at 0x0050E1A0 identify the same object lifetime. This directly corroborates the class identity without relying only on WorldBuilder pairing.
+
+Rename `BfmeAptScreenCampaignReview` to `AptCampaignReview` across all four source files, six matched rows, pins and vtable data names. Keep every ABI unchanged. WorldBuilder's strong agreeing routes label the 0x0050DCF0 zero-argument body DisplayVictoryLevel. Its implementation independently confirms that behavior: classify the campaign result and set `APT:CmpgnRevResult` to TotalVictoryCaps, VictoryCaps, SurvivedCaps or empty text. The constructor binds this method to the script selector InitGadgets, which need not equal the C++ method name. Rename only this zero-argument body to DisplayVictoryLevel; leave the separate three-argument empty InitGadgets callback at 0x0050DA10 unchanged. Existing literal evidence is also recorded in `session8-campaign-review-callback.md`.
+
+Verify all functions in the four touched TUs, then run the full gate and ordinary commit/push hooks. Do not infer identities for other APT screens or their members from this correction.

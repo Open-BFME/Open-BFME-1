@@ -53,14 +53,14 @@ extern const void *BfmeAptScreenCampaignReviewSecondaryVftable[];
 extern Shell *TheShell;
 extern void *g_obj12F495C;
 
-class __multiple_inheritance BfmeAptScreenCampaignReview
+class __multiple_inheritance AptCampaignReview
 	: public _bfme_AptGameWindow, public BfmeAptFunctorMarker
 {
 public:
-	virtual ~BfmeAptScreenCampaignReview();
+	virtual ~AptCampaignReview();
 };
 
-BfmeAptScreenCampaignReview::~BfmeAptScreenCampaignReview()
+AptCampaignReview::~AptCampaignReview()
 {
 	_bfme_closeAptScreen(AsciiString("AptCampaignReview::InitGadgets"));
 

@@ -1166,13 +1166,13 @@ void campaignReviewSetAptScreenRef( const AsciiString &name,
 	CampaignReviewRefHolder callback );
 
 // CampaignReview.apt, retail 0x00105040, object 0x258 bytes.
-class __declspec(novtable) __multiple_inheritance BfmeAptScreenCampaignReview
+class __declspec(novtable) __multiple_inheritance AptCampaignReview
 	: public _bfme_AptGameWindow, public BfmeAptFunctorMarker
 {
 public:
-	BfmeAptScreenCampaignReview( void *context );
+	AptCampaignReview( void *context );
 	void _bfme_continue();
-	void _bfme_initGadgets();
+	void DisplayVictoryLevel();
 	void _bfme_totalCampaignScore();
 	void _bfme_playerSideType();
 	void unidentified_0003A085();
@@ -1199,7 +1199,7 @@ class CampaignObject : public Rva003BEDD0
 class LivingWorldLogic;
 extern LivingWorldLogic *TheLivingWorldLogic;
 
-BfmeAptScreenCampaignReview::BfmeAptScreenCampaignReview( void *context )
+AptCampaignReview::AptCampaignReview( void *context )
 	: _bfme_AptGameWindow( context )
 {
 	*(const void ***)( (char *)this ) = BfmeAptScreenCampaignReviewVftable;
@@ -1216,7 +1216,7 @@ BfmeAptScreenCampaignReview::BfmeAptScreenCampaignReview( void *context )
 
 		{
 			FunctorMethod callback =
-				(FunctorMethod)&BfmeAptScreenCampaignReview::_bfme_continue;
+				(FunctorMethod)&AptCampaignReview::_bfme_continue;
 			AsciiString name( "AptCampaignReview::Continue" );
 			campaignRegistry->showAptScreen( name,
 				FunctorBinding( callback, (FunctorTarget *)this ) );
@@ -1224,7 +1224,7 @@ BfmeAptScreenCampaignReview::BfmeAptScreenCampaignReview( void *context )
 
 		{
 			FunctorMethod callback =
-				(FunctorMethod)&BfmeAptScreenCampaignReview::_bfme_initGadgets;
+				(FunctorMethod)&AptCampaignReview::DisplayVictoryLevel;
 			AsciiString name( "AptCampaignReview::InitGadgets" );
 			campaignReviewSetAptScreenRef( name,
 				FunctorBinding( callback, (FunctorTarget *)this ) );
@@ -1232,7 +1232,7 @@ BfmeAptScreenCampaignReview::BfmeAptScreenCampaignReview( void *context )
 
 		{
 			FunctorMethod callback =
-				(FunctorMethod)&BfmeAptScreenCampaignReview::_bfme_totalCampaignScore;
+				(FunctorMethod)&AptCampaignReview::_bfme_totalCampaignScore;
 			AsciiString name( "TotalCampaignScore" );
 			campaignRegistry->showAptScreenWithArg( name, (void *)0,
 				FunctorBinding( callback, (FunctorTarget *)this ) );
@@ -1240,7 +1240,7 @@ BfmeAptScreenCampaignReview::BfmeAptScreenCampaignReview( void *context )
 
 		{
 			FunctorMethod callback =
-				(FunctorMethod)&BfmeAptScreenCampaignReview::_bfme_playerSideType;
+				(FunctorMethod)&AptCampaignReview::_bfme_playerSideType;
 			AsciiString name( "playerSideType" );
 			campaignRegistry->showAptScreenWithArg( name, (void *)1,
 				FunctorBinding( callback, (FunctorTarget *)this ) );
@@ -1251,8 +1251,8 @@ BfmeAptScreenCampaignReview::BfmeAptScreenCampaignReview( void *context )
 	}
 }
 
-// ?_bfme_initGadgets@BfmeAptScreenCampaignReview@@QAEXXZ
-void BfmeAptScreenCampaignReview::_bfme_initGadgets()
+// ?DisplayVictoryLevel@AptCampaignReview@@QAEXXZ
+void AptCampaignReview::DisplayVictoryLevel()
 {
 	if( TheLivingWorldLogic == 0 )
 	{
@@ -1293,7 +1293,7 @@ void BfmeAptScreenCampaignReview::_bfme_initGadgets()
 // ?createAptScreenCampaignReview@@YGPAXPAX@Z
 void * __stdcall createAptScreenCampaignReview( void *context )
 {
-	return new BfmeAptScreenCampaignReview( context );
+	return new AptCampaignReview( context );
 }
 
 // InGameChat.apt, retail 0x001050C0, object 0x2A4 bytes.
