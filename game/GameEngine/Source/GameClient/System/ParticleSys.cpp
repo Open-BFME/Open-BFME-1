@@ -1089,7 +1089,8 @@ void ParticleSystemInfo::loadPostProcess( void )
 // ------------------------------------------------------------------------------------------------
 /** Destroy particle system and all of its particles */
 // ------------------------------------------------------------------------------------------------
-// ??1ParticleSystem@@MAE@XZ present-unmatched
+// The retail destructor (0x005CE090) is ParticleSystemDestructor.cpp.
+#if 0
 ParticleSystem::~ParticleSystem()
 {
 
@@ -1130,6 +1131,7 @@ ParticleSystem::~ParticleSystem()
 	TheParticleSystemManager->friend_removeParticleSystem(this);
 	//DEBUG_ASSERTLOG(!(m_totalParticleSystemCount % 10 == 0), ( "TotalParticleSystemCount = %d\n", m_totalParticleSystemCount ));
 }
+#endif
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
