@@ -90,3 +90,28 @@ void INI::parseBitString32( INI* ini, void * /*instance*/, void *store, const vo
 		}
 	}
 }
+// ?parseBitString8@INI@@SAXPAV1@PAX1PBX@Z
+void INI::parseBitString8( INI* ini, void * /*instance*/, void *store, const void* userData )
+{
+	UnsignedInt tmp;
+	INI::parseBitString32(ini, NULL, &tmp, userData);
+	if (tmp & 0xffffff00)
+	{
+		DEBUG_CRASH(("Bad bitstring list INI::parseBitString8"));
+		throw 1;
+	}
+	*(Byte*)store = (Byte)tmp;
+}
+
+// ?parseBitString16@INI@@SAXPAV1@PAX1PBX@Z
+void INI::parseBitString16( INI* ini, void * /*instance*/, void *store, const void* userData )
+{
+	UnsignedInt tmp;
+	INI::parseBitString32(ini, NULL, &tmp, userData);
+	if (tmp & 0xffff0000)
+	{
+		DEBUG_CRASH(("Bad bitstring list INI::parseBitString16"));
+		throw 1;
+	}
+	*(UnsignedShort*)store = (UnsignedShort)tmp;
+}

@@ -761,92 +761,14 @@ void INI::parseMappedImage( INI *ini, void * /*instance*/, void *store, const vo
 	* in the buffer, if the token is in the userData table of strings, we will set the
 	* according bit flag for it */
 //-------------------------------------------------------------------------------------------------
-void INI::parseBitString8( INI* ini, void * /*instance*/, void *store, const void* userData )
-{
-	UnsignedInt tmp;
-	INI::parseBitString32(ini, NULL, &tmp, userData);
-	if (tmp & 0xffffff00)
-	{
-		DEBUG_CRASH(("Bad bitstring list INI::parseBitString8"));
-		throw ERROR_BUG;
-	}
-	*(Byte*)store = (Byte)tmp;
-}
+// INI::parseBitString8: the retail body lives in INI_parseBitString32_Thunk.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** 'store' points to an 32 bit unsigned integer.  We will zero that integer, parse each token
 	* in the buffer, if the token is in the userData table of strings, we will set the
 	* according bit flag for it */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/INI_parseBitString32_Thunk.cpp
-// ?parseBitString32@INI@@ present-unmatched
-void INI::parseBitString32( INI* ini, void * /*instance*/, void *store, const void* userData )
-{
-	ConstCharPtrArray flagList = (ConstCharPtrArray)userData;
-	UnsignedInt *bits = (UnsignedInt *)store;
-
-	if( flagList == NULL || flagList[ 0 ] == NULL)
-	{
-		DEBUG_ASSERTCRASH( flagList, ("INTERNAL ERROR! parseBitString32: No flag list provided!\n") );
-		throw INI_INVALID_NAME_LIST;
-	}
-
-	Bool foundNormal = false;
-	Bool foundAddOrSub = false;
-
-	// loop through all tokens
-	for (const char *token = ini->getNextTokenOrNull(); token != NULL; token = ini->getNextTokenOrNull())
-	{
-		if (stricmp(token, "NONE") == 0)
-		{
-			if (foundNormal || foundAddOrSub)
-			{
-				DEBUG_CRASH(("you may not mix normal and +- ops in bitstring lists"));
-				throw INI_INVALID_NAME_LIST;
-			}
-			*bits = 0;
-			break;
-		}
-
-		if (token[0] == '+')
-		{
-			if (foundNormal)
-			{
-				DEBUG_CRASH(("you may not mix normal and +- ops in bitstring lists"));
-				throw INI_INVALID_NAME_LIST;
-			}
-			Int bitIndex = INI::scanIndexList(token+1, flagList);	// this throws if the token is not found
-			*bits |= (1 << bitIndex);
-			foundAddOrSub = true;
-		}
-		else if (token[0] == '-')
-		{
-			if (foundNormal)
-			{
-				DEBUG_CRASH(("you may not mix normal and +- ops in bitstring lists"));
-				throw INI_INVALID_NAME_LIST;
-			}
-			Int bitIndex = INI::scanIndexList(token+1, flagList);	// this throws if the token is not found
-			*bits &= ~(1 << bitIndex);
-			foundAddOrSub = true;
-		}
-		else
-		{
-			if (foundAddOrSub)
-			{
-				DEBUG_CRASH(("you may not mix normal and +- ops in bitstring lists"));
-				throw INI_INVALID_NAME_LIST;
-			}
-
-			if (!foundNormal)
-				*bits = 0;
-
-			Int bitIndex = INI::scanIndexList(token, flagList);	// this throws if the token is not found
-			*bits |= (1 << bitIndex);
-			foundNormal = true;
-		}
-	}
-}
+// INI::parseBitString32: the retail body lives in INI_parseBitString32_Thunk.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Parse a color in the form of

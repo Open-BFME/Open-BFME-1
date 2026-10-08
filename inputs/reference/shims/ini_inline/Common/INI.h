@@ -318,6 +318,7 @@ public:
 	static void parseScienceVector( INI *ini, void *instance, void *store, const void *userData );
 	static void parseGameClientRandomVariable( INI* ini, void *instance, void *store, const void* userData );
 	static void parseBitString8( INI *ini, void *instance, void *store, const void* userData );
+	static void parseBitString16( INI *ini, void *instance, void *store, const void* userData );
 	static void parseBitString32( INI *ini, void *instance, void *store, const void* userData );
 	static void parseByteSizedIndexList( INI *ini, void *instance, void *store, const void* userData );
 	static void parseIndexList( INI *ini, void *instance, void *store, const void* userData );

@@ -214,75 +214,7 @@ const char* INI::getNextSubToken(const char* expected)
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/INI_parseBitString32_Thunk.cpp
-// ?parseBitString32@INI@@SAXPAV1@PAX1PBX@Z present-unmatched
-void INI::parseBitString32( INI* ini, void * /*instance*/, void *store, const void* userData )
-{
-	ConstCharPtrArray flagList = (ConstCharPtrArray)userData;
-	UnsignedInt *bits = (UnsignedInt *)store;
-
-	if( flagList == NULL || flagList[ 0 ] == NULL)
-	{
-		DEBUG_ASSERTCRASH( flagList, ("INTERNAL ERROR! parseBitString32: No flag list provided!\n") );
-		throw INI_INVALID_NAME_LIST;
-	}
-
-	Bool foundNormal = false;
-	Bool foundAddOrSub = false;
-
-	// loop through all tokens
-	for (const char *token = ini->getNextTokenOrNull(); token != NULL; token = ini->getNextTokenOrNull())
-	{
-		if (stricmp(token, "NONE") == 0)
-		{
-			if (foundNormal || foundAddOrSub)
-			{
-				DEBUG_CRASH(("you may not mix normal and +- ops in bitstring lists"));
-				throw INI_INVALID_NAME_LIST;
-			}
-			*bits = 0;
-			break;
-		}
-
-		if (token[0] == '+')
-		{
-			if (foundNormal)
-			{
-				DEBUG_CRASH(("you may not mix normal and +- ops in bitstring lists"));
-				throw INI_INVALID_NAME_LIST;
-			}
-			Int bitIndex = INI::scanIndexList(token+1, flagList);	// this throws if the token is not found
-			*bits |= (1 << bitIndex);
-			foundAddOrSub = true;
-		}
-		else if (token[0] == '-')
-		{
-			if (foundNormal)
-			{
-				DEBUG_CRASH(("you may not mix normal and +- ops in bitstring lists"));
-				throw INI_INVALID_NAME_LIST;
-			}
-			Int bitIndex = INI::scanIndexList(token+1, flagList);	// this throws if the token is not found
-			*bits &= ~(1 << bitIndex);
-			foundAddOrSub = true;
-		}
-		else
-		{
-			if (foundAddOrSub)
-			{
-				DEBUG_CRASH(("you may not mix normal and +- ops in bitstring lists"));
-				throw INI_INVALID_NAME_LIST;
-			}
-
-			if (!foundNormal)
-				*bits = 0;
-
-			Int bitIndex = INI::scanIndexList(token, flagList);	// this throws if the token is not found
-			*bits |= (1 << bitIndex);
-			foundNormal = true;
-		}
-	}
-}
+// INI::parseBitString32: the retail body lives in INI_parseBitString32_Thunk.cpp.
 
 //-------------------------------------------------------------------------------------------------
 void INI::parseRGBColor( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
@@ -476,24 +408,7 @@ void INI::initFromINIMultiProc( void *what, BuildMultiIniFieldProc proc )
 }
 
 //-------------------------------------------------------------------------------------------------
-void INI::parseBitString8( INI* ini, void * /*instance*/, void *store, const void* userData )
-{
-	UnsignedInt tmp;
-	INI::parseBitString32(ini, NULL, &tmp, userData);
-	if (tmp & 0xffffff00)
-	{
-		DEBUG_CRASH(("Bad bitstring list INI::parseBitString8"));
-	// Retail throws a plain int 1 here, not ZH's ERROR_BUG. Both are proven, not
-	// assumed: the ThrowInfo this site pushes (0x012454C0) has one catchable type
-	// whose TypeDescriptor spells ".H" (int), and every one of the 19 sites that
-	// use it image-wide throws the value 1; meanwhile ERROR_BUG really is
-	// 0xdead0001 in BFME -- INI::parseScience and INI::parseThingTemplate are
-	// matched from this file carrying that immediate. So this is a distinct BFME
-	// code; its name in BFME's source is not recoverable from the binary.
-	throw 1;
-	}
-	*(Byte*)store = (Byte)tmp;
-}
+// INI::parseBitString8: the retail body lives in INI_parseBitString32_Thunk.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /*static*/ Int INI::scanIndexList(const char* token, ConstCharPtrArray nameList)
