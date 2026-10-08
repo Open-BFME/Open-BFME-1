@@ -257,8 +257,6 @@ dir32,0x0107C7D0,??_7ParserBase0019B030@@6B@,"retail 0x0107C7D0 is already recor
 dir32,0x0107C7DC,??_7MapObjectBase@@6B@,"retail 0x0107C7DC is already recorded as ??_7Rva00087320@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x0107C7DC,?RvaData0107C7DC@@3PAIA,"retail 0x0107C7DC is already recorded as ??_7Rva00087320@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x0107C7E0,??_7MapObject@@6B@,"nothing in the ledger owns 0x0107C7E0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x0107C804,?g_0107C804@@3PAPAXA,"nothing in the ledger owns 0x0107C804. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x0107C810,?g_0107C810@@3PAPAXA,"nothing in the ledger owns 0x0107C810. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0107F984,??_7NameKeyGenerator@@6B@,"retail 0x0107F984 is already recorded as ??_7Rva0008FE00Owner@@6B@; reference that name, not a new one"
 dir32,0x01080294,_g_01080294,"nothing in the ledger owns 0x01080294. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0108066C,?g_0108066C@@3QBDB,"nothing in the ledger owns 0x0108066C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"

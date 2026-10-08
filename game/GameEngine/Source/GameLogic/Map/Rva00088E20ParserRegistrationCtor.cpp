@@ -45,8 +45,14 @@ protected:
     UserParser *m_parser;
 };
 
-// Derived vtable 0x0107C804: no dir32_addresses.csv symbol names it.
-extern void *g_0107C804[];
+// Two retail dispatch cells; the next zero dword is outside this array.
+extern void *g_0107C804[2];
+void j_0001e82b();
+void j_000039cc();
+extern "C" void *__identifier("?g_0107C804@@3PAPAXA")[2] =
+{
+    (void *)j_0001e82b, (void *)j_000039cc
+};
 
 class Rva00088E20ParserRegistration : public BfmeParserRegistrationVE
 {
