@@ -13,6 +13,9 @@ namespace FXParticleSystem
 // CategoryModuleTemplateBase01DestructorThunk.cpp.
 template<> CategoryModuleTemplate<2>::~CategoryModuleTemplate();
 template<> CategoryModuleTemplateBase<2>::~CategoryModuleTemplateBase();
+// Matched out of line at 0x005BF450 (fx_particle_system.cpp); declared so
+// new[] calls it instead of inlining it and emitting Base<2>'s vftable.
+template<> CategoryModuleTemplate<2>::CategoryModuleTemplate();
 
 CategoryModuleTemplate<2> *MakeCategoryModuleTemplate01Array()
 {
