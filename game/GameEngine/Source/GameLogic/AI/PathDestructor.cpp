@@ -7,7 +7,7 @@
 class PathNode
 {
 public:
-	PathNode *getNext(void) { return m_next; }
+	friend class Path;
 	void deleteInstance(void) { delete this; }
 
 private:
@@ -30,7 +30,7 @@ Path::~Path(void)
 
 	for (node = m_path; node; node = nextNode)
 	{
-		nextNode = node->getNext();
+		nextNode = node->m_next;
 		node->deleteInstance();
 	}
 }
