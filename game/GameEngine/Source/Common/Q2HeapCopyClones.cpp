@@ -39,31 +39,39 @@
 //
 // IDENTITY IS NOT RECOVERED.  Every name is derived from an address.
 
-#define Q2_HEAP_COPY_CLONE( NAME, SIZE )                                  \
+// The copy constructor each clone calls is the ledger row at clone + 0x30,
+// declared here under that row's own name and parameter type.
+#define Q2_HEAP_COPY_CLONE( NAME, SIZE, CTOR, PARAM, ARG )                \
+	class CTOR                                                            \
+	{                                                                     \
+	public:                                                               \
+		CTOR( PARAM other );                                              \
+	private:                                                              \
+		char m_unreconstructed_00[ SIZE ];                                \
+	};                                                                    \
 	class NAME                                                            \
 	{                                                                     \
 	public:                                                               \
-		NAME( const NAME &other );                                        \
 		NAME *clone() const;                                              \
 	private:                                                              \
 		char m_unreconstructed_00[ SIZE ];                                \
 	};                                                                    \
 	NAME *NAME::clone() const                                             \
 	{                                                                     \
-		return new NAME( *this );                                         \
+		return (NAME *)new CTOR( ARG );                                   \
 	}
 
-Q2_HEAP_COPY_CLONE( Rva005E92E0, 0x4C )
-Q2_HEAP_COPY_CLONE( Rva005E9750, 0x10 )
-Q2_HEAP_COPY_CLONE( Rva005E9970, 0x28 )
-Q2_HEAP_COPY_CLONE( Rva005E9BC0, 0x10 )
-Q2_HEAP_COPY_CLONE( Rva005E9DE0, 0x18 )
-Q2_HEAP_COPY_CLONE( Rva005EA020, 0x40 )
-Q2_HEAP_COPY_CLONE( Rva005EA190, 0x1C )
-Q2_HEAP_COPY_CLONE( Rva005EA2B0, 0x5C )
-Q2_HEAP_COPY_CLONE( Rva005EA7F0, 0x14 )
-Q2_HEAP_COPY_CLONE( Rva005EAA50, 0x2C )
-Q2_HEAP_COPY_CLONE( Rva005EACB0, 0x14 )
-Q2_HEAP_COPY_CLONE( Rva005EAF10, 0x20 )
-Q2_HEAP_COPY_CLONE( Rva005EB190, 0x44 )
-Q2_HEAP_COPY_CLONE( Rva005EB2C0, 0x24 )
+Q2_HEAP_COPY_CLONE( Rva005E92E0, 0x4C, T1Derived_005E9310, void *, (void *)this )
+Q2_HEAP_COPY_CLONE( Rva005E9750, 0x10, T1Derived_005E9780, void *, (void *)this )
+Q2_HEAP_COPY_CLONE( Rva005E9970, 0x28, Rva005E99A0, unsigned int, (unsigned int)this )
+Q2_HEAP_COPY_CLONE( Rva005E9BC0, 0x10, Rva005E9BF0, unsigned int, (unsigned int)this )
+Q2_HEAP_COPY_CLONE( Rva005E9DE0, 0x18, Rva005E9E10, unsigned int, (unsigned int)this )
+Q2_HEAP_COPY_CLONE( Rva005EA020, 0x40, Rva005EA050, unsigned int, (unsigned int)this )
+Q2_HEAP_COPY_CLONE( Rva005EA190, 0x1C, Rva005EA1C0, unsigned int, (unsigned int)this )
+Q2_HEAP_COPY_CLONE( Rva005EA2B0, 0x5C, Rva005EA2E0, const Rva005EA2E0 &, *(const Rva005EA2E0 *)this )
+Q2_HEAP_COPY_CLONE( Rva005EA7F0, 0x14, Rva005EA820, const Rva005EA820 &, *(const Rva005EA820 *)this )
+Q2_HEAP_COPY_CLONE( Rva005EAA50, 0x2C, Rva005EAA80, const Rva005EAA80 &, *(const Rva005EAA80 *)this )
+Q2_HEAP_COPY_CLONE( Rva005EACB0, 0x14, Rva005EACE0, const Rva005EACE0 &, *(const Rva005EACE0 *)this )
+Q2_HEAP_COPY_CLONE( Rva005EAF10, 0x20, Rva005EAF40, const Rva005EAF40 &, *(const Rva005EAF40 *)this )
+Q2_HEAP_COPY_CLONE( Rva005EB190, 0x44, Rva005EB1C0, const Rva005EB1C0 &, *(const Rva005EB1C0 *)this )
+Q2_HEAP_COPY_CLONE( Rva005EB2C0, 0x24, Rva005EB2F0, const Rva005EB2F0 &, *(const Rva005EB2F0 *)this )
