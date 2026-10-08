@@ -1340,9 +1340,6 @@ ltable,0x00816020,_Rva00816020,+309 $L642 wants 0x00C16109 retail 0x00C16124
 ltable,0x00819920,_Rva00819920,+1552 $L410 wants 0x00C19F47 retail 0x00C19F46
 ltable,0x0081B010,_Rva0081B010,+1708 $L459 wants 0x00C1B6D3 retail 0x00C1B6F8
 ltable,0x0085F4A0,_piEnterResultToJoinResult,+52 $L1715 wants 0x00C5F4AF retail 0x00C5F4C7
-static,0x000B9BA0,?parseAngularVelocityReal@INI@@SAXPAV1@PAX1PBX@Z,"+19 _SECONDS_PER_LOGICFRAME_REAL@0x012A86A8: 4 byte(s) differ, first +0: source 8988083d retail cdcc4c3e"
-static,0x000B9D20,?parseVelocityReal@INI@@SAXPAV1@PAX1PBX@Z,"+19 _SECONDS_PER_LOGICFRAME_REAL@0x012A86A8: 4 byte(s) differ, first +0: source 8988083d retail cdcc4c3e"
-static,0x000B9D50,?parseAccelerationReal@INI@@SAXPAV1@PAX1PBX@Z,"+19 _SECONDS_PER_LOGICFRAME_REAL@0x012A86A8: 4 byte(s) differ, first +0: source 8988083d retail cdcc4c3e"
 static,0x000E4210,?parsePlayerTemplateDefinition@PlayerTemplateStore@@SAXPAVINI@@@Z,"+79 ?TheFieldParseTable@?1??getFieldParse@Pl@0x010847E0: 46 byte(s) differ, first +28: source 000000000000000000000000080000000000000000000000 retail 280f0801e0"
 static,0x00123180,?buildFieldParse@FireOCLAfterWeaponCooldownUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,"+8 ?dataFieldParse@?1??buildFieldParse@Fire@0x0108B330: 13 byte(s) differ, first +12: source 000000000000000000000000640000000000000000000000 retail 20b30801002"
 static,0x00123180,?buildFieldParse@GenerateMinefieldBehaviorModuleData@@SAXAAVMultiIniFieldParse@@@Z,"+8 ?dataFieldParse@?1??buildFieldParse@Gene@0x0108B330: 22 byte(s) differ, first +12: source 000000000000000000000000600000000000000000000000 retail 20b30801002"

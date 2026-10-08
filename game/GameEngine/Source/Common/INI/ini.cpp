@@ -153,6 +153,9 @@ public:
 #include "GameLogic/ScriptEngine.h"
 #include "GameLogic/Weapon.h"
 
+// Retail INI conversions use a fifth of a second per logic frame.
+static Real iniSecondsPerLogicFrame = 0.2f;
+
 // BFME death names; retail table 0x012A8648 (ZH ends at POISONED_GAMMA).
 static const char *TheDeathNames[] = 
 {
@@ -621,7 +624,8 @@ void INI::parseAngularVelocityReal( INI *ini, void * /*instance*/,
 	const char *token = ini->getNextToken();
 
 	// scan the int and convert to radian and store as a real
-	*(Real *)store = ConvertAngularVelocityInDegreesPerSecToRadsPerFrame(scanReal( token ));
+	Real val = scanReal( token );
+	*(Real *)store = (val * (iniSecondsPerLogicFrame * (PI / 180.0f)));
 
 }
 
@@ -1244,7 +1248,7 @@ void INI::parseVelocityReal( INI *ini, void * /*instance*/, void *store, const v
 {
 	const char *token = ini->getNextToken();
 	Real val = scanReal(token);
-	*(Real *)store = ConvertVelocityInSecsToFrames(val);
+	*(Real *)store = (val * iniSecondsPerLogicFrame);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -1253,7 +1257,7 @@ void INI::parseAccelerationReal( INI *ini, void * /*instance*/, void *store, con
 {
 	const char *token = ini->getNextToken();
 	Real val = scanReal(token);
-	*(Real *)store = ConvertAccelerationInSecsToFrames(val);
+	*(Real *)store = (val * (iniSecondsPerLogicFrame * iniSecondsPerLogicFrame));
 }
 
 //-------------------------------------------------------------------------------------------------
