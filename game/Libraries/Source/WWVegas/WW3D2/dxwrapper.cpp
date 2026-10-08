@@ -912,7 +912,7 @@ public:
 // body names the retail address itself and defines it here, where
 // number_of_DX8_calls (0x01340594) is defined above. The test is SIGNED --
 // retail emits `cmp dword ptr [0x013411E8], 0x32 / jl` -- so the counter is int.
-int Rva013411E8Dx8Errors = 0;
+extern int Rva013411E8Dx8Errors; extern "C" int __identifier("?Rva013411E8Dx8Errors@@3HA") = 0;
 
 // The DX9 error string, from the vendored dxerr9 the game links: the archive
 // member obj\i386\dxerr9.obj exports the stdcall name _DXGetErrorString9A@4

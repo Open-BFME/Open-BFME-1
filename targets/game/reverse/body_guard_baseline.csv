@@ -1322,7 +1322,6 @@ dir32,0x01340C50,?g_bfmeRva01340C50Static@@3VRva00906340@@A,"retail 0x01340C50 i
 dir32,0x01340EC0,?g_bfmeRva01340EC0Static@@3VRva00906340@@A,"retail 0x01340EC0 is already recorded as ?Rva01340EC0Shader@@3IA (+4 more); reference that name, not a new one"
 dir32,0x01340EC0,?render_state@DX8Wrapper@@2URenderStateStruct@@A,"retail 0x01340EC0 is already recorded as ?Rva01340EC0Shader@@3IA (+4 more); reference that name, not a new one"
 dir32,0x01341150,?Pixel_Shader_Constants@DX8Wrapper@@2PAVVector4@@A,"retail 0x01341150 is already recorded as ?HighlightPixelConstants@@3PAUColor@@A (+2 more); reference that name, not a new one"
-dir32,0x013411E8,?Rva013411E8Dx8Errors@@3HA,"nothing in the ledger owns 0x013411E8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01341220,?g_rva01341220Flag@@3_NA,"retail 0x01341220 is already recorded as ?g_00710e10@@3EA; reference that name, not a new one"
 dir32,0x01341288,?_TriVertexLocationOrientationTable@PointGroupClass@@0PAY02VVector3@@A,"retail 0x01341288 is already recorded as ?_TriVertexLocationOrientationTable@PointGroupClass@@2PAY02VVector3@@A; reference that name, not a new one"
 dir32,0x013436B8,?_QuadVertexLocationOrientationTable@PointGroupClass@@0PAY03VVector3@@A,"retail 0x013436B8 is already recorded as ?_QuadVertexLocationOrientationTable@PointGroupClass@@2PAY03VVector3@@A; reference that name, not a new one"
