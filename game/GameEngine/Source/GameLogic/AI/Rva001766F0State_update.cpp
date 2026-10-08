@@ -110,12 +110,6 @@ public:
 	const Coord3D *getUnitDirectionVector2D() const;
 };
 
-class BfmeObjectCall
-{
-public:
-	Player *getControllingPlayer() const;
-};
-
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface : public BFMEVirtualSlots<129>
 {
@@ -124,18 +118,12 @@ public:
 
 	void destroyPath();
 	void friend_setGoalObject(Object *object);
+	void setCurrentVictim(const Object *victim);	// ILT 0x0004AB4C -> 0x00273960
 
 	UnsignedByte m_unreconstructed_004[0x140 - 0x04];
 	void *m_path;                                      // retail this+0x140
 };
 
-// The victim setter sits at its own recovered thunk, so it is reached through
-// the view the ledger already pins for it.
-class BfmeAIUpdateVictimThunk
-{
-public:
-	void clearCurrentVictim(const Object *victim);
-};
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public BFMEVirtualSlots<11>
@@ -144,12 +132,11 @@ public:
 	virtual void bfmePreFireAt(Object *goal, ObjectID victimID) = 0;   // vtable +0x2C
 
 	Weapon *getCurrentWeapon(WeaponSlotType *slot);
-	Real getDistanceSquared(const Object *other) const;
+	Player *getControllingPlayer() const;
 	void setFiringConditionForCurrentWeapon() const;
 	void setStatusBit(Int bit, Bool set);
 	void preFireCurrentWeapon(const Object *victim, const Coord3D *position);
 	void setStatus(const ObjectStatusMaskType &mask, Bool set);
-	Bool queryRva001CAEE0(const Player *player) const;
 
 	ObjectID getID() const
 	{
@@ -165,6 +152,27 @@ public:
 	Real m_radius;                                     // retail Object+0xBC
 	UnsignedByte m_unreconstructed_0c0[0x204 - 0xc0];
 	AIUpdateInterface *m_ai;                           // retail Object+0x204
+};
+
+// Matched rows this body reaches through ILTs under their ledger spellings:
+// 0x00043CED -> 0x000ED3B0 ?bfmeGapSq@Gen_000ED3B0 (squared object distance)
+// and 0x00003B1B -> 0x001CAEE0 BFMEObjectStealthQuery::isStealthedAndUndetected.
+class Gen_000ED3B0
+{
+public:
+	float bfmeGapSq(const Gen_000ED3B0 *other) const;
+};
+
+class BFMEObjectStealthQuery
+{
+public:
+	bool isStealthedAndUndetected(const Object *viewer) const;
+};
+
+// The caller's player view; getControllingPlayer resolves to the matched
+// Object row (ILT 0x00020824 -> 0x001BE3F0).
+class BfmeObjectCall : public Object
+{
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameLogic.h
@@ -235,7 +243,7 @@ StateReturnType Rva001766F0State::update()
 		if (!victim)
 		{
 			ai->notifyVictimIsDead();
-			((BfmeAIUpdateVictimThunk *)ai)->clearCurrentVictim(victim);
+			ai->setCurrentVictim(victim);
 			return STATE_FAILURE;
 		}
 		m_victimID = victim->getID();
@@ -265,7 +273,7 @@ StateReturnType Rva001766F0State::update()
 	}
 
 	if ((source->m_flags & BFME_OBJECT_FLAG_PRE_FIRING) && previous
-		&& source->getDistanceSquared(previous) < source->m_radius + source->m_radius)
+		&& ((const Gen_000ED3B0 *)source)->bfmeGapSq((const Gen_000ED3B0 *)previous) < source->m_radius + source->m_radius)
 	{
 		ai->destroyPath();
 	}
@@ -286,7 +294,7 @@ StateReturnType Rva001766F0State::update()
 					else
 					{
 						radius = source->m_radius;
-						if (source->getDistanceSquared(goal) < radius * radius)
+						if (((const Gen_000ED3B0 *)source)->bfmeGapSq((const Gen_000ED3B0 *)goal) < radius * radius)
 						{
 							ai->friend_setGoalObject(victim);
 							source->setFiringConditionForCurrentWeapon();
@@ -318,10 +326,10 @@ StateReturnType Rva001766F0State::update()
 	if (victim->m_status & BFME_OBJECT_STATUS_UNTARGETABLE)
 		return STATE_FAILURE;
 
-	if (victim->queryRva001CAEE0(((BfmeObjectCall *)source)->getControllingPlayer()))
+	if (((const BFMEObjectStealthQuery *)victim)->isStealthedAndUndetected((const Object *)((BfmeObjectCall *)source)->getControllingPlayer()))
 		return STATE_FAILURE;
 
-	((BfmeAIUpdateVictimThunk *)ai)->clearCurrentVictim(victim);
+	ai->setCurrentVictim(victim);
 
 	if (!ai->m_path
 		&& ((BfmeOutOfWeaponRangeWeapon *)weapon)->isWithinAttackRange(

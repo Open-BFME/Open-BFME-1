@@ -18,11 +18,15 @@ public:
 };
 
 class BfmeSeedTarget;
-void bfmeHandOver_0000240A( BfmeSeedTarget *target, void *item );
-void BfmeParticleSystemXferHandle( Xfer &xfer, void *value );
 void BfmeParticleSystemXferMatrix( Xfer &xfer, void *value );
 class Xfer; class MidVirtualSlot90Receiver;		// 0x0010C3C0, defined in MidVirtualSlot90Forwarders.cpp
 Xfer & Rva0010C3C0( MidVirtualSlot90Receiver *target, void *item );
+// ILT 0x0000240A -> 0x0010C2E0 and ILT 0x00008CA1 -> 0x0010C3E0 are the matched
+// sibling forwarders in MidVirtualSlot90Forwarders.cpp
+void Rva0010C2E0( MidVirtualSlot90Receiver *target, void *item );
+void Rva0010C3E0( MidVirtualSlot90Receiver *target, void *item );
+#define bfmeHandOver_0000240A( target, item ) Rva0010C2E0( (MidVirtualSlot90Receiver *)( target ), ( item ) )
+#define BfmeParticleSystemXferHandle( xfer, value ) Rva0010C3E0( (MidVirtualSlot90Receiver *)&( xfer ), ( value ) )
 void bfmeHandOver_00001A50( BfmeSeedTarget *target, void *item );
 
 class Particle
@@ -31,11 +35,7 @@ public:
 	virtual void release( int flags );
 };
 
-class BfmeParticleEmissionHelper
-{
-public:
-	Particle *createParticle( int particleNumber, int particleCount );
-};
+class ParticleInfo;
 
 class ParticleSystem : public FXParticleSystem::ParticleSystemInfo
 {
@@ -43,6 +43,10 @@ public:
 	virtual void DoXfer( Xfer &xfer );
 	virtual void slot04();
 	virtual Particle *addParticle( Particle *source, int priority, bool forceCreate );
+
+protected:
+	// 0x005D0530, the matched ZH generateParticleInfo row
+	ParticleInfo *generateParticleInfo( int particleNum, int particleCount );
 };
 
 // ?DoXfer@ParticleSystem@@UAEXAAVXfer@@@Z
@@ -114,7 +118,7 @@ void ParticleSystem::DoXfer( Xfer &xfer )
 		}
 	} else {
 		priority = *(int *)( (unsigned char *)this + 0x7c );
-		particle = ((BfmeParticleEmissionHelper *)this)->createParticle( 0, 1 );
+		particle = (Particle *)generateParticleInfo( 0, 1 );
 		for ( unsigned int i = 0; i < particleCount; ++i ) {
 			Particle *copy = addParticle( particle, priority, true );
 			xfer == *(Snapshot *)copy;
