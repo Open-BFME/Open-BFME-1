@@ -85541,7 +85541,6 @@ name,address,notes
 ?method00404B10@PathfindZoneManager@@QAEXPAPAVPathfindCell@@PAVPathfindLayer@@ABUIRegion2D@@HH@Z,0x00404B10,Address-derived zone pass; aligned scheduler call via 0x24983; ECX manager plus map layers bounds and two percentages; retail ret20
 ?method@Rva00409850SubObject@@QAEXE@Z,0x0003207E,incremental link thunk
 ?method@Rva00925860@@QAEXPAX0@Z,0x00925860,opaque target called by 0x0092C390 with thiscall ret 8
-?method@SubObject00739E70@@QAEXPAX@Z,0x00739E70,address-derived callee of 0x00739F70 forwarder
 ?methodA@Member0C00739C70@@QAEPAVTextureBaseClass@@HHHHH@Z,0x008FC710,pinharvest
 ?methodB@Member0C00739C70@@QAEPAVTextureBaseClass@@HH@Z,0x008FC660,pinharvest
 ?move@Rva001B9D00Mover@@QAEXPAVObject@@PBUCoord3D@@MM@Z,0x001B9D00,RVA-qualified typed call view; dispatcher 0x001BC820 and parent raw callee ABI verified; direct body 0x001B9D00

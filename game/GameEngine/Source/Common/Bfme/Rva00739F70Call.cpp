@@ -1,10 +1,16 @@
 // 13-byte forwarder passing address of member at 0x1C to sub-object at 0x44
 
-class SubObject00739E70
+// Retail calls the ILT at 0x0003A7E7, which jumps to 0x00739E70: the matched
+// Rva00739C70::update(int) row in Rva00739C70Cleanup.cpp. Its result is unused.
+class TextureBaseClass;
+
+class Rva00739C70
 {
 public:
-	void method( void *member1c );
+	TextureBaseClass *update( int arg );
 };
+
+typedef Rva00739C70 SubObject00739E70;
 
 class Rva00739F70
 {
@@ -19,5 +25,5 @@ public:
 
 void Rva00739F70::call()
 {
-	m_subObject->method( &m_member1C );
+	m_subObject->update( (int)&m_member1C );
 }
