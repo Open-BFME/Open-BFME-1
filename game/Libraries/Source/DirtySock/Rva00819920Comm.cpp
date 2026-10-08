@@ -64,11 +64,11 @@ extern "C"
 
 extern "C" int Rva00819920( struct Rva00819920Comm *parameter )
 {
-	Rva00819920Message message;
+	Rva00819920Message packet;
 	unsigned int tick;
 	Rva00819920Comm *comm;
 	int eventCount;
-	void *events[ 2 ];
+	void *hlist[ 2 ];
 
 	comm = parameter;
 
@@ -97,18 +97,18 @@ extern "C" int Rva00819920( struct Rva00819920Comm *parameter )
 			if ( WaitForSingleObject( comm->m_event1, 0 ) == 0x102 )
 			{
 				eventCount = 0;
-				events[ eventCount++ ] = comm->m_event1;
+				hlist[ eventCount++ ] = comm->m_event1;
 
 				if ( comm->m_streamLength > 0
 					&& WaitForSingleObject( comm->m_event2, 0 ) == 0x102 )
-					events[ eventCount++ ] = comm->m_event2;
+					hlist[ eventCount++ ] = comm->m_event2;
 
-				WaitForMultipleObjects( eventCount, events, 0, 0x64 );
+				WaitForMultipleObjects( eventCount, hlist, 0, 0x64 );
 			}
 		}
 
-		message.m_length = -1;
-		Rva00819F50( comm, &message );
+		packet.m_length = -1;
+		Rva00819F50( comm, &packet );
 		tick = GetTickCount();
 
 		EnterCriticalSection( comm->m_lock );
@@ -142,37 +142,37 @@ extern "C" int Rva00819920( struct Rva00819920Comm *parameter )
 			tick = GetTickCount();
 		}
 
-		if ( message.m_length >= 0
+		if ( packet.m_length >= 0
 			&& ( comm->m_state == 4 || comm->m_state == 2 ) )
 		{
-			if ( message.m_sequence == 4 )
+			if ( packet.m_sequence == 4 )
 			{
-				Rva0081AA20( comm, &message );
+				Rva0081AA20( comm, &packet );
 				goto resetMessage;
 			}
 
-			if ( message.m_sequence == 1 || message.m_sequence == 2
-				|| message.m_sequence == 3 )
+			if ( packet.m_sequence == 1 || packet.m_sequence == 2
+				|| packet.m_sequence == 3 )
 			{
-				Rva0081A6A0( comm, &message, comm->m_threadId );
+				Rva0081A6A0( comm, &packet, comm->m_threadId );
 				goto resetMessage;
 			}
 
-			Rva0081AA20( comm, &message );
-			Rva0081AB40( comm, &message, comm->m_threadId );
+			Rva0081AA20( comm, &packet );
+			Rva0081AB40( comm, &packet, comm->m_threadId );
 
 resetMessage:
-			message.m_length = -1;
+			packet.m_length = -1;
 			comm->m_lastTick = GetTickCount();
 		}
 
-		if ( comm->m_state == 3 && message.m_length == 0
-			&& message.m_value != 0 && message.m_sequence == 1 )
+		if ( comm->m_state == 3 && packet.m_length == 0
+			&& packet.m_value != 0 && packet.m_sequence == 1 )
 		{
-			comm->m_pendingValue = message.m_value;
+			comm->m_pendingValue = packet.m_value;
 			comm->m_state = 4;
-			Rva0081A6A0( comm, &message, comm->m_threadId );
-			message.m_length = -1;
+			Rva0081A6A0( comm, &packet, comm->m_threadId );
+			packet.m_length = -1;
 			comm->m_lastTick = GetTickCount();
 		}
 
