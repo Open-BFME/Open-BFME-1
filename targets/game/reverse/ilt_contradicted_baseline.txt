@@ -2376,7 +2376,6 @@ functions	0x00228230	?orderAllPassengersToIdle@OpenContain@@UAEXW4CommandSourceT
 functions	0x002282B0	?privateIdle@ChinookAIUpdate@@MAEXW4CommandSourceType@@@Z
 functions	0x0022A230	?getClassMemoryPool@RiderChangeContain@@CAPAVMemoryPool@@XZ
 functions	0x0022A2F0	??1DecalPolyClass@@QAE@XZ
-functions	0x0022A510	??_GRiderChangeContain@@MAEPAXI@Z
 functions	0x0022B030	??1HordeSiegeEngineContainModuleDataBase@@UAE@XZ
 functions	0x0022B0E0	??1HordeSiegeEngineContainModuleData@@UAE@XZ
 functions	0x0022B160	??0SlaughterHordeContainModuleData@@QAE@XZ
@@ -7197,7 +7196,6 @@ pins	0x0001C95E	??_GHeightDieUpdateModuleData@@MAEPAXI@Z
 pins	0x0001C9B8	?_M_clear@?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@IAEXXZ
 pins	0x0001C9D6	?resetLanGameState@@YAXXZ
 pins	0x0001CA26	?getText@StreamTextAccessor@@QAE?AV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@XZ
-pins	0x0001CA80	??1RiderChangeContain@@MAE@XZ
 pins	0x0001CAA8	??$find@PAX@?$_Rb_tree@PAXU?$pair@QAXPAX@_STL@@U?$_Select1st@U?$pair@QAXPAX@_STL@@@2@U?$less@PAX@2@V?$allocator@U?$pair@QAXPAX@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@QAXPAX@_STL@@U?$_Nonconst_traits@U?$pair@QAXPAX@_STL@@@2@@1@ABQAX@Z
 pins	0x0001CB57	??1FireWeaponUpdateModuleData@@MAE@XZ
 pins	0x0001CB9D	?_M_insert_overflow@?$vector@UCoord2D@@V?$allocator@UCoord2D@@@_STL@@@_STL@@QAEXPAUCoord2D@@ABU3@ABU__false_type@2@I_N@Z

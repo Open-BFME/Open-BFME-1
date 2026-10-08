@@ -9283,7 +9283,7 @@ name,address,notes
 ??1RespawnUpdate@@UAE@XZ,0x000347DE,vtable 0x00CC1A84 slots name RespawnUpdate; protected complete destructor called by wrapper 0x002A16C0;ilt-verified=T1-access(efp=2.28e-03)
 ??1RetailLayoutString@@QAE@XZ,0x0000D828,BFME layout-string destructor ILT read out of the eh vector constructor argument
 ??1ReverseSoundTransition@@MAE@XZ,0x0003D028,vtable 0x00D0CAB8 slots name ReverseSoundTransition; protected complete destructor called by wrapper 0x0059EF60
-??1RiderChangeContain@@MAE@XZ,0x0001CA80,protected complete destructor ILT called by scalar wrapper 0x0022A510; exact constructor 0x00229FB0 installs dedicated vtable 0x010ACAF0
+??1RiderChangeContain@@UAE@XZ,0x0001CA80,public complete destructor (ilt_oracle CONFIRMED UAE) ILT called by scalar wrapper 0x0022A510; exact constructor 0x00229FB0 installs dedicated vtable 0x010ACAF0
 ??1RiderChangeContainModuleDataMemberA@@QAE@XZ,0x00026F35,Open-BFME5 pin
 ??1RiderChangeContainModuleDataMemberB@@QAE@XZ,0x00026F35,Open-BFME5 pin
 ??1RiderChangeContainModuleDataMemberC@@QAE@XZ,0x00026F35,Open-BFME5 pin

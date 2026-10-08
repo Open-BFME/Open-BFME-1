@@ -1,13 +1,13 @@
 // cl: /DNDEBUG /MD /EHsc
 //
-// Open-BFME: protected scalar-deleting destructor for RiderChangeContain.
+// Open-BFME: public scalar-deleting destructor for RiderChangeContain.
 // The exact constructor at 0x00229FB0 installs dedicated vtable 0x010ACAF0;
 // slot zero routes through ILT 0x000310AC to this 30-byte wrapper, whose
-// protected complete destructor is reached through ILT 0x0001CA80.
+// public complete destructor is reached through ILT 0x0001CA80.
 
 class RiderChangeContain
 {
-protected:
+public:
 	virtual ~RiderChangeContain();
 private:
 	friend void forceRiderChangeContainDeletingDestructor();

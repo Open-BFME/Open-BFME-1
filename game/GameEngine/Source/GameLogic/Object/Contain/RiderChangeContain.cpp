@@ -177,11 +177,8 @@ Int RiderChangeContain::getContainMax( void ) const
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ??1RiderChangeContain@@MAE@XZ present-unmatched
-RiderChangeContain::~RiderChangeContain( void )
-{
-
-}
+// The destructor is public in retail (ILT oracle: 1RiderChangeContain@@UAE@XZ at
+// 0x0022A540) and lives in RiderChangeContainDestructor.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
