@@ -2,9 +2,12 @@
 
 struct FieldParse;
 
+// TerrainRoads.cpp emits the table as a protected static (@1).
 class TerrainRoadType
 {
-public:
+	friend void *Rva000C2D30Get();
+
+protected:
 	static const FieldParse m_terrainBridgeFieldParseTable[];
 };
 

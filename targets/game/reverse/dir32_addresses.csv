@@ -12610,7 +12610,6 @@ name,va
 ?m_skipRender@ScreenCrossFadeFilter@@1_NA,0x01307210
 ?m_sourcePortPool@FirewallHelperClass@@0HA,0x012B9814
 ?m_specialPowerFieldParse@SpecialPowerTemplate@@0QBUFieldParse@@B,0x012A8FA0
-?m_terrainBridgeFieldParseTable@TerrainRoadType@@2QBUFieldParse@@B,0x01114BF0
 ?m_terrainRoadFieldParseTable@TerrainRoadType@@2QBUFieldParse@@B,0x01114BB0
 ?m_terrainTypeFieldParseTable@TerrainType@@2QBUFieldParse@@B,0x01080BF8
 ?m_theOriginal@GlobalData@@0PAV1@A,0x012ED5CC

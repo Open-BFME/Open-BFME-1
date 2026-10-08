@@ -36,7 +36,10 @@ public:
 	Bool isBridge( void ) const { return m_isBridge; }
 
 	static const FieldParse m_terrainRoadFieldParseTable[];
-	static const FieldParse m_terrainBridgeFieldParseTable[];
+
+protected:
+	friend class INI;
+	static const FieldParse m_terrainBridgeFieldParseTable[];	// protected, as TerrainRoads.cpp emits it
 
 private:
 	char m_unknown00[ 0x08 ];
