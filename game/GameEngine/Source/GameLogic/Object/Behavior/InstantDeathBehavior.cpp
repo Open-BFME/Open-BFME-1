@@ -119,10 +119,7 @@ InstantDeathBehavior::InstantDeathBehavior( Thing *thing, const ModuleData* modu
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ??1InstantDeathBehavior@@ present-unmatched
-InstantDeathBehavior::~InstantDeathBehavior( void )
-{
-}
+// The destructor (retail 0x00200870) is defined in InstantDeathBehaviorDestructor.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?onDie@InstantDeathBehavior@@ present-unmatched
