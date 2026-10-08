@@ -35,7 +35,7 @@ public:
 // to the matched forwarder ?Rva00205040@@YAXPAVGen00850920@@@Z at 0x00205040.
 // The proc is taken by address only, so the thunk's no-argument cdecl
 // declaration is the honest view; the cast restores the MultiIniFieldParse ABI.
-void j_00012f80();
+extern "C" void __cdecl __identifier("RunOffMapBehaviorFieldParse")();
 
 class RunOffMapBehavior
 {
@@ -49,6 +49,6 @@ ModuleData *RunOffMapBehavior::friend_newModuleData(INI *ini)
 	RunOffMapBehaviorModuleData *data = new RunOffMapBehaviorModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_00012f80));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&__identifier("RunOffMapBehaviorFieldParse")));
 	return (ModuleData *)data;
 }
