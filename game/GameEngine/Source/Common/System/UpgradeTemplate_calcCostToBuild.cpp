@@ -1,10 +1,14 @@
 // cl: /DNDEBUG /MD /EHsc
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
-class Player
+class Player;
+
+// Player's upgrade cost change (ZH Player::getUpgradeCostChange) is read
+// through ILT 0x000225BB -> 0x000C9C20, matched under the address-derived
+// name below (disp32 float accessor at this+0x644).
+class Rva000C9C20FloatField
 {
 public:
-	float getUpgradeCostChange() const;
+	float get() const;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
@@ -41,7 +45,7 @@ int UpgradeTemplate::calcCostToBuild(
 
 	float multiplier = 1.0f;
 	if (m_type == 1 && !m_ignorePlayerCostChange)
-		multiplier = 1.0f + player->getUpgradeCostChange();
+		multiplier = 1.0f + ((const Rva000C9C20FloatField *)player)->get();
 	cost = (int)(cost * multiplier);
 
 	if (thingTemplate)
