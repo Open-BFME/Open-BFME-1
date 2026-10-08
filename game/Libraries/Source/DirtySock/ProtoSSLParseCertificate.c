@@ -89,7 +89,7 @@ int strcmp(const char *, const char *);
 int Rva0080C960(void *state, struct X509Certificate *cert,
 	const uint8_t *data, int size)
 {
-	int type;
+	int iType;
 	int objectType;
 	const uint8_t *infoSkip;
 	const uint8_t *sigSkip;
@@ -100,18 +100,18 @@ int Rva0080C960(void *state, struct X509Certificate *cert,
 	const uint8_t *last = data + size;
 	int infoSize;
 	int hashSize;
-	uint8_t hash[20];
-	uint8_t decodedHash[20];
+	uint8_t strHash[20];
+	uint8_t strSigHash[20];
 	struct ProtoSSLCACert *ca;
 
 	memset(cert, 0, sizeof(*cert));
-	data = Rva0080D7A0(data, last, &type, &size);
-	if (data == 0 || type != ASN_TYPE_SEQN + ASN_CONSTRUCT)
+	data = Rva0080D7A0(data, last, &iType, &size);
+	if (data == 0 || iType != ASN_TYPE_SEQN + ASN_CONSTRUCT)
 		return -1;
 
 	infoData = data;
-	data = Rva0080D7A0(data, last, &type, &size);
-	if (data == 0 || type != ASN_TYPE_SEQN + ASN_CONSTRUCT)
+	data = Rva0080D7A0(data, last, &iType, &size);
+	if (data == 0 || iType != ASN_TYPE_SEQN + ASN_CONSTRUCT)
 		return -2;
 	infoSize = size + 4;
 	infoSkip = data + size;
@@ -124,19 +124,19 @@ int Rva0080C960(void *state, struct X509Certificate *cert,
 		data += size;
 	}
 
-	data = Rva0080D7A0(data, infoSkip, &type, &size);
+	data = Rva0080D7A0(data, infoSkip, &iType, &size);
 	if (data == 0 || size < 0 || (unsigned int)size > sizeof(cert->serialData))
 		return -4;
 	cert->serialSize = size;
 	memcpy(cert->serialData, data, size);
 	data += size;
 
-	data = Rva0080D7A0(data, infoSkip, &type, &size);
-	if (data == 0 || type != ASN_TYPE_SEQN + ASN_CONSTRUCT)
+	data = Rva0080D7A0(data, infoSkip, &iType, &size);
+	if (data == 0 || iType != ASN_TYPE_SEQN + ASN_CONSTRUCT)
 		return -5;
 	sigSkip = data + size;
-	data = Rva0080D7A0(data, infoSkip, &type, &size);
-	if (data == 0 || type != ASN_TYPE_OBJECT)
+	data = Rva0080D7A0(data, infoSkip, &iType, &size);
+	if (data == 0 || iType != ASN_TYPE_OBJECT)
 		return -6;
 	cert->sigType = Rva0080D890(data, size);
 	if (cert->sigType == ASN_OBJ_NONE)
@@ -146,18 +146,18 @@ int Rva0080C960(void *state, struct X509Certificate *cert,
 	}
 	data += size;
 
-	data = Rva0080D7A0(sigSkip, infoSkip, &type, &size);
-	if (data == 0 || type != ASN_TYPE_SEQN + ASN_CONSTRUCT)
+	data = Rva0080D7A0(sigSkip, infoSkip, &iType, &size);
+	if (data == 0 || iType != ASN_TYPE_SEQN + ASN_CONSTRUCT)
 		return -8;
 	issuerSkip = data + size;
 	objectType = 0;
-	while ((data = Rva0080D7A0(data, issuerSkip, &type, &size)) != 0)
+	while ((data = Rva0080D7A0(data, issuerSkip, &iType, &size)) != 0)
 	{
-		if (type != ASN_TYPE_SEQN + ASN_CONSTRUCT && type != ASN_TYPE_SET + ASN_CONSTRUCT)
+		if (iType != ASN_TYPE_SEQN + ASN_CONSTRUCT && iType != ASN_TYPE_SET + ASN_CONSTRUCT)
 		{
-			if (type == ASN_TYPE_OBJECT)
+			if (iType == ASN_TYPE_OBJECT)
 				objectType = Rva0080D890(data, size);
-			if (type == ASN_TYPE_PRINTSTR || type == ASN_TYPE_T61)
+			if (iType == ASN_TYPE_PRINTSTR || iType == ASN_TYPE_T61)
 			{
 				if (objectType == ASN_OBJ_COUNTRY) Rva0080D930((const char *)data, size, cert->issuer.country, 32);
 				if (objectType == ASN_OBJ_STATE) Rva0080D930((const char *)data, size, cert->issuer.state, 32);
@@ -171,32 +171,32 @@ int Rva0080C960(void *state, struct X509Certificate *cert,
 		}
 	}
 
-	data = Rva0080D7A0(issuerSkip, last, &type, &size);
-	if (data == 0 || type != ASN_TYPE_SEQN + ASN_CONSTRUCT)
+	data = Rva0080D7A0(issuerSkip, last, &iType, &size);
+	if (data == 0 || iType != ASN_TYPE_SEQN + ASN_CONSTRUCT)
 		return -9;
-	data = Rva0080D7A0(data, last, &type, &size);
-	if (data == 0 || type != ASN_TYPE_UTCTIME)
+	data = Rva0080D7A0(data, last, &iType, &size);
+	if (data == 0 || iType != ASN_TYPE_UTCTIME)
 		return -10;
 	Rva0080D930((const char *)data, size, cert->goodFrom, 32);
 	data += size;
-	data = Rva0080D7A0(data, last, &type, &size);
-	if (data == 0 || type != ASN_TYPE_UTCTIME)
+	data = Rva0080D7A0(data, last, &iType, &size);
+	if (data == 0 || iType != ASN_TYPE_UTCTIME)
 		return -11;
 	Rva0080D930((const char *)data, size, cert->goodTill, 32);
 	data += size;
 
-	data = Rva0080D7A0(data, last, &type, &size);
-	if (data == 0 || type != ASN_TYPE_SEQN + ASN_CONSTRUCT)
+	data = Rva0080D7A0(data, last, &iType, &size);
+	if (data == 0 || iType != ASN_TYPE_SEQN + ASN_CONSTRUCT)
 		return -12;
 	subjectSkip = data + size;
 	objectType = 0;
-	while ((data = Rva0080D7A0(data, subjectSkip, &type, &size)) != 0)
+	while ((data = Rva0080D7A0(data, subjectSkip, &iType, &size)) != 0)
 	{
-		if (type != ASN_TYPE_SEQN + ASN_CONSTRUCT && type != ASN_TYPE_SET + ASN_CONSTRUCT)
+		if (iType != ASN_TYPE_SEQN + ASN_CONSTRUCT && iType != ASN_TYPE_SET + ASN_CONSTRUCT)
 		{
-			if (type == ASN_TYPE_OBJECT)
+			if (iType == ASN_TYPE_OBJECT)
 				objectType = Rva0080D890(data, size);
-			if (type == ASN_TYPE_PRINTSTR || type == ASN_TYPE_T61)
+			if (iType == ASN_TYPE_PRINTSTR || iType == ASN_TYPE_T61)
 			{
 				if (objectType == ASN_OBJ_COUNTRY) Rva0080D930((const char *)data, size, cert->subject.country, 32);
 				if (objectType == ASN_OBJ_STATE) Rva0080D930((const char *)data, size, cert->subject.state, 32);
@@ -210,34 +210,34 @@ int Rva0080C960(void *state, struct X509Certificate *cert,
 		}
 	}
 
-	data = Rva0080D7A0(subjectSkip, last, &type, &size);
-	if (data == 0 || type != ASN_TYPE_SEQN + ASN_CONSTRUCT)
+	data = Rva0080D7A0(subjectSkip, last, &iType, &size);
+	if (data == 0 || iType != ASN_TYPE_SEQN + ASN_CONSTRUCT)
 		return -13;
-	data = Rva0080D7A0(data, last, &type, &size);
-	if (data == 0 || type != ASN_TYPE_SEQN + ASN_CONSTRUCT)
+	data = Rva0080D7A0(data, last, &iType, &size);
+	if (data == 0 || iType != ASN_TYPE_SEQN + ASN_CONSTRUCT)
 		return -14;
 	keySkip = data + size;
-	data = Rva0080D7A0(data, keySkip, &type, &size);
-	if (data == 0 || type != ASN_TYPE_OBJECT)
+	data = Rva0080D7A0(data, keySkip, &iType, &size);
+	if (data == 0 || iType != ASN_TYPE_OBJECT)
 		return -15;
 	cert->keyType = Rva0080D890(data, size);
-	data = Rva0080D7A0(keySkip, last, &type, &size);
-	if (data == 0 || type != ASN_TYPE_BITSTRING || size < 1 || (unsigned int)size > 256)
+	data = Rva0080D7A0(keySkip, last, &iType, &size);
+	if (data == 0 || iType != ASN_TYPE_BITSTRING || size < 1 || (unsigned int)size > 256)
 		return -16;
 	cert->keyDataSize = size - 1;
 	memcpy(cert->keyData, data + 1, size - 1);
 	data += size;
 
-	data = Rva0080D7A0(infoSkip, sigSkip, &type, &size);
-	if (data == 0 || type != ASN_TYPE_SEQN + ASN_CONSTRUCT)
+	data = Rva0080D7A0(infoSkip, sigSkip, &iType, &size);
+	if (data == 0 || iType != ASN_TYPE_SEQN + ASN_CONSTRUCT)
 		return -18;
 	sigSkip = data + size;
-	data = Rva0080D7A0(data, sigSkip, &type, &size);
-	if (data == 0 || type != ASN_TYPE_OBJECT)
+	data = Rva0080D7A0(data, sigSkip, &iType, &size);
+	if (data == 0 || iType != ASN_TYPE_OBJECT)
 		return -19;
 	cert->sigType = Rva0080D890(data, size);
-	data = Rva0080D7A0(sigSkip, last, &type, &size);
-	if (data == 0 || type != ASN_TYPE_BITSTRING || size - 1 < 0 || (unsigned int)(size - 1) > 128)
+	data = Rva0080D7A0(sigSkip, last, &iType, &size);
+	if (data == 0 || iType != ASN_TYPE_BITSTRING || size - 1 < 0 || (unsigned int)(size - 1) > 128)
 		return -20;
 	cert->sigSize = size - 1;
 	memcpy(cert->sigData, data + 1, size - 1);
@@ -245,11 +245,11 @@ int Rva0080C960(void *state, struct X509Certificate *cert,
 
 	if (cert->keyType == ASN_OBJ_RSA_PKCS_KEY)
 	{
-		data = Rva0080D7A0(cert->keyData, cert->keyData + cert->keyDataSize, &type, &size);
-		if (data == 0 || type != ASN_TYPE_SEQN + ASN_CONSTRUCT)
+		data = Rva0080D7A0(cert->keyData, cert->keyData + cert->keyDataSize, &iType, &size);
+		if (data == 0 || iType != ASN_TYPE_SEQN + ASN_CONSTRUCT)
 			return -21;
-		data = Rva0080D7A0(data, cert->keyData + cert->keyDataSize, &type, &size);
-		if (data == 0 || type != ASN_TYPE_INTEGER || size < 4 || (unsigned int)size > 129)
+		data = Rva0080D7A0(data, cert->keyData + cert->keyDataSize, &iType, &size);
+		if (data == 0 || iType != ASN_TYPE_INTEGER || size < 4 || (unsigned int)size > 129)
 			return -22;
 		if (*data == 0)
 		{
@@ -262,8 +262,8 @@ int Rva0080C960(void *state, struct X509Certificate *cert,
 			memcpy(cert->keyModData, data, size);
 		}
 		data += size;
-		data = Rva0080D7A0(data, cert->keyData + cert->keyDataSize, &type, &size);
-		if (data == 0 || type != ASN_TYPE_INTEGER || size < 1 || (unsigned int)size > 129)
+		data = Rva0080D7A0(data, cert->keyData + cert->keyDataSize, &iType, &size);
+		if (data == 0 || iType != ASN_TYPE_INTEGER || size < 1 || (unsigned int)size > 129)
 			return -23;
 		if (*data == 0)
 		{
@@ -305,11 +305,11 @@ int Rva0080C960(void *state, struct X509Certificate *cert,
 	switch (cert->sigType)
 	{
 	case ASN_OBJ_RSA_PKCS_MD5:
-		Rva0080D590(infoData, infoSize, (char *)hash);
+		Rva0080D590(infoData, infoSize, (char *)strHash);
 		hashSize = 16;
 		break;
 	case ASN_OBJ_RSA_PKCS_SHA1:
-		Rva0080D620(infoData, infoSize, hash);
+		Rva0080D620(infoData, infoSize, strHash);
 		hashSize = 20;
 		break;
 	default:
@@ -317,8 +317,8 @@ int Rva0080C960(void *state, struct X509Certificate *cert,
 		hashSize = 0;
 	}
 
-	Rva0080D6C0(ca, cert->sigData, cert->sigSize, decodedHash, hashSize);
-	if (memcmp(hash, decodedHash, hashSize) != 0)
+	Rva0080D6C0(ca, cert->sigData, cert->sigSize, strSigHash, hashSize);
+	if (memcmp(strHash, strSigHash, hashSize) != 0)
 	{
 		Rva007FE780("ProtoSSL: signature hash mismatch\n");
 		return -27;
