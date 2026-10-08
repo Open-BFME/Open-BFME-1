@@ -75,11 +75,27 @@ static inline Rva00367E30Logic *theBfmeGameLogic()
 	return (Rva00367E30Logic *)TheGameLogic;
 }
 
+// Matched callee rows (callees.py, via ILT): Thing::isKindOf, Thing::getTemplate
+// and the address-named test at 0x002DF120.
+enum KindOfType { KINDOF_ZE_7 = 7 };
+class ThingTemplate;
+
+class Thing
+{
+public:
+	bool isKindOf(KindOfType t) const;
+	const ThingTemplate *getTemplate(void) const;
+};
+
+class Rva002DF120
+{
+public:
+	unsigned char test(void *a, void *b);
+};
+
 class BfmeObjZE
 {
 public:
-	char bfmeTestZE(int code);
-	BfmeOwnZE *bfmeOwnerZE();
 
 	unsigned char m_bfmeHeadZE[0x1fc];
 	BfmeStateZE *m_bfme1FCZE;
@@ -94,7 +110,6 @@ class BfmeHostZE
 {
 public:
 	char bfmeCanZE(void *a1, BfmeObjZE *obj);
-	char bfmeCheckZE(void *a1, BfmeObjZE *obj);
 };
 
 
@@ -117,22 +132,22 @@ char BfmeHostZE::bfmeCanZE(void *a1, BfmeObjZE *obj)
 			return 0;
 	}
 
-	if (!bfmeCheckZE(a1, obj))
+	if (!((Rva002DF120 *)this)->test(a1, obj))
 		return 0;
 
 	BfmeStateZE *state = obj->m_bfme1FCZE;
 	if (state != 0 && state->bfmeStateZE() != 0)
 		return 0;
 
-	if (obj->m_bfme214ZE != 0 && !obj->m_bfme214ZE->bfmeTestZE(0x6c))
+	if (obj->m_bfme214ZE != 0 && !((Thing *)obj->m_bfme214ZE)->isKindOf((KindOfType)0x6c))
 		return 0;
 
-	if (obj->bfmeTestZE(0x5d))
+	if (((Thing *)obj)->isKindOf((KindOfType)0x5d))
 		return 0;
 
-	if (obj->bfmeTestZE(7))
+	if (((Thing *)obj)->isKindOf((KindOfType)7))
 		return 0;
 
-	return obj->bfmeOwnerZE()->m_bfme4B0ZE == 0;
+	return ((const BfmeOwnZE *)((Thing *)obj)->getTemplate())->m_bfme4B0ZE == 0;
 	}
 }
