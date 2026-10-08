@@ -3,7 +3,7 @@
 // operator delete (0x00881EB0) bodies. VC7.1 cannot spell the CRT helper's
 // reserved front-end name or a free __thiscall callback type in C++, so both
 // addresses are passed unchanged. Convention follows BfmeConv728.cpp.
-extern "C" void __cdecl __identifier("?j_0002f2a2@@YAXXZ")();
+extern "C" void __cdecl __identifier("bfmeDtorCbDLH")();
 extern "C" void __cdecl __identifier("??_M@YGXPAXIHP6EX0@Z@Z")();
 typedef void (__stdcall *VectorDestructorIterator)(
 	void *base, unsigned int size, int count, void (*dtor)());
@@ -32,13 +32,13 @@ void *BfmeThingDLH::bfmeGoDLH(unsigned char flags)
 	{
 		char *base = (char *)this - 4;
 		((VectorDestructorIterator)__identifier("??_M@YGXPAXIHP6EX0@Z@Z"))(
-			this, 0x8c, *(int *)base, __identifier("?j_0002f2a2@@YAXXZ"));
+			this, 0x8c, *(int *)base, __identifier("bfmeDtorCbDLH"));
 		if (flags & 1)
 			operator delete[](base);
 		return base;
 	}
 	DtorThunkDLH dtor;
-	dtor.raw = __identifier("?j_0002f2a2@@YAXXZ");
+	dtor.raw = __identifier("bfmeDtorCbDLH");
 	(this->*dtor.member)();
 	if (flags & 1)
 		operator delete(this);

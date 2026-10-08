@@ -105,7 +105,6 @@ dir32,0x0042DD8A,?j_0002dd8a@@YAXXZ,"retail 0x0042DD8A is already recorded as _E
 dir32,0x0042E02D,??0Rva00386070@@QAE@XZ,the name encodes 0x00386070 but retail reads 0x0042E02D
 dir32,0x0042E451,??1TransitionDamageFXRecordC@?A0x2535ff93@@QAE@XZ,"retail 0x0042E451 is already recorded as ??1TransitionDamageFXRecordC@?A0xebea2875@@QAE@XZ (+1 more); reference that name, not a new one"
 dir32,0x0042F01D,?g_0042F01D@@YAXXZ,"nothing in the ledger owns 0x0042F01D. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x0042F2A2,?j_0002f2a2@@YAXXZ,"retail 0x0042F2A2 is already recorded as _bfmeDtorCbDLH; reference that name, not a new one"
 dir32,0x0042FB3F,?j_0002fb3f@@YAXXZ,"retail 0x0042FB3F is already recorded as ?rva006fb780_fn_a@@YAXXZ; reference that name, not a new one"
 dir32,0x0042FB80,??0Rva00146BA0ArrayItem@@QAE@XZ,"retail 0x0042FB80 is already recorded as ??0Rva0077CDE0ArrElem@@QAE@XZ; reference that name, not a new one"
 dir32,0x0042FEE6,?j_0002fee6@@YAXXZ,"retail 0x0042FEE6 is already recorded as ?TheBfmeOwner_00161290@@3PADA (+1 more); reference that name, not a new one"
