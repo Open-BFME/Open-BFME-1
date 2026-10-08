@@ -96,7 +96,6 @@ dir32,0x00431C87,?isForcedIntoWantingState@SupplyTruckStateMachine@@SA_NPAVState
 dir32,0x00431EDF,??0Rva006967A0@@QAE@XZ,the name encodes 0x006967A0 but retail reads 0x00431EDF
 dir32,0x004334F6,?j_000334f6@@YAXXZ,"retail 0x004334F6 is already recorded as _AODHordeContainFieldParse (+1 more); reference that name, not a new one"
 dir32,0x00434022,?g_00434022@@YAXXZ,"nothing in the ledger owns 0x00434022. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x00434252,?j_00034252@@YAXXZ,"retail 0x00434252 is already recorded as _SpecialEnemySenseUpdateFieldParse; reference that name, not a new one"
 dir32,0x0043469E,??0TransitionDamageFXFlags@?A0x2535ff93@@QAE@XZ,"retail 0x0043469E is already recorded as ??0TransitionDamageFXFlags@?A0xebea2875@@QAE@XZ (+1 more); reference that name, not a new one"
 dir32,0x0043475C,??0Rva00127AC0Element@@QAE@XZ,"retail 0x0043475C is already recorded as ??0StructureCollapseOCLVector@@QAE@XZ; reference that name, not a new one"
 dir32,0x00434F72,??1ActionTemplate@@QAE@XZ,"nothing in the ledger owns 0x00434F72. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"

@@ -35,7 +35,7 @@ public:
 // to the matched forwarder at 0x00123D70. The proc is taken by address only, so
 // the thunk's no-argument cdecl declaration is the honest view; the
 // cast restores the MultiIniFieldParse ABI.
-void j_00034252();
+extern "C" void __cdecl __identifier("SpecialEnemySenseUpdateFieldParse")();
 
 class SpecialEnemySenseUpdate
 {
@@ -49,6 +49,6 @@ ModuleData *SpecialEnemySenseUpdate::friend_newModuleData(INI *ini)
 	SpecialEnemySenseUpdateModuleData *data = new SpecialEnemySenseUpdateModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_00034252));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&__identifier("SpecialEnemySenseUpdateFieldParse")));
 	return (ModuleData *)data;
 }
