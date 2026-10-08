@@ -1050,8 +1050,6 @@ dir32,0x012F3AD8,?g_012F3AD8@@3PAVGameWindow@@A,"nothing in the ledger owns 0x01
 dir32,0x012F3ADC,?g_012F3ADC@@3W4NameKeyType@@A,"nothing in the ledger owns 0x012F3ADC. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F3AE8,?g_012F3AE8@@3PAVGameWindow@@A,"nothing in the ledger owns 0x012F3AE8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F3AEC,?g_012F3AEC@@3W4NameKeyType@@A,"nothing in the ledger owns 0x012F3AEC. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x012F3EEC,?parentPopupID@@3W4NameKeyType@@A,"nothing in the ledger owns 0x012F3EEC. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x012F3EF8,?checkBoxAllowObserversID@@3W4NameKeyType@@A,"nothing in the ledger owns 0x012F3EF8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F3EFC,?textEntryGameDescriptionID@@3W4NameKeyType@@A,"nothing in the ledger owns 0x012F3EFC. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F3F04,?textEntryLadderPasswordID@@3W4NameKeyType@@A,"nothing in the ledger owns 0x012F3F04. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F3F0C,?textEntryGamePasswordID@@3W4NameKeyType@@A,"nothing in the ledger owns 0x012F3F0C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"

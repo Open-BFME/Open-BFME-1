@@ -187,3 +187,6 @@ void PopupHostGameInit( WindowLayout *layout, void *userData )
  TheWindowManager->winSetFocus(parentPopup);
  TheWindowManager->winSetModal(parentPopup);
 }
+
+extern "C" NameKeyType __identifier("?parentPopupID@@3W4NameKeyType@@A") = NAMEKEY_INVALID;
+extern "C" NameKeyType __identifier("?checkBoxAllowObserversID@@3W4NameKeyType@@A") = NAMEKEY_INVALID;
