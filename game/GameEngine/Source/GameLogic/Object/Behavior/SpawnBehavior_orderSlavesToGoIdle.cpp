@@ -50,15 +50,15 @@ public:
 	AICommandInterface m_commands;
 };
 
-class Object
+class Object;
+
+// The observed Object+0x204 pointer load in this body. Retail's out-of-line
+// Object::getAI (0x00477B30) reads +0x19C, so this stays a file-local helper
+// instead of emitting a second, different Object::getAI COMDAT.
+static inline AIUpdateInterface *getObjectAIAt204(Object *object)
 {
-public:
-	// Object::getAI() is the observed Object+0x204 pointer load in this body.
-	AIUpdateInterface *getAI()
-	{
-		return *reinterpret_cast<AIUpdateInterface **>(reinterpret_cast<char *>(this) + 0x204);
-	}
-};
+	return *reinterpret_cast<AIUpdateInterface **>(reinterpret_cast<char *>(object) + 0x204);
+}
 
 // The receiver is the SpawnBehaviorInterface secondary subobject at object+0x20.
 // Its m_spawnIDs sentinel is therefore secondary-this+0x28 (complete object+0x48).
@@ -91,7 +91,7 @@ void SpawnBehavior::orderSlavesToGoIdle(CommandSourceType commandSource)
 		Object *obj = TheGameLogic->findObjectByID(*it);
 		if (obj)
 		{
-			AIUpdateInterface *ai = obj->getAI();
+			AIUpdateInterface *ai = getObjectAIAt204(obj);
 			if (ai)
 				ai->m_commands.aiIdle(commandSource);
 		}
