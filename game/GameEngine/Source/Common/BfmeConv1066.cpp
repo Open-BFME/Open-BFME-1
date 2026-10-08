@@ -2,18 +2,27 @@
 
 class BfmeX1066;
 
-class BfmeR1066
+// Matched callee rows (callees.py, via ILT): BfmeLevelAN::bfmeBuildAN 0x004675F0,
+// WindowManager::bfme_hideBackground 0x00468090, bfmeAptLevel00465CE0 0x00465CE0.
+class BfmeLevelAN
 {
 public:
-	void bfmeRun1066(BfmeX1066 *a, char *b, int c, char *d, char *e, char *f, char *g, char *h);
-	void bfmeStop1066(int a);
+	char *bfmeBuildAN(unsigned int a, int b, int c, int d, int e, int f, int g, int h);
 };
+
+class WindowManager
+{
+public:
+	void bfme_hideBackground(bool hide);
+};
+
+class BfmeH1065;
+int __cdecl bfmeAptLevel00465CE0(BfmeH1065 *h);
 
 // The global at 0x012F19E8 is EA's
 // `WindowManager *g_rva012F19E8WindowManager` (defined in
 // game/GameEngine/Source/GameClient/GUI/WindowManager.cpp); BfmeR1066 is this
 // TU's view of the same object, so the uses cast.
-class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 
 extern const char g_rva01080FC0[2];
@@ -32,7 +41,6 @@ extern GlobalData *TheWritableGlobalData;
 
 class BfmeH1066;
 
-BfmeX1066 *__cdecl bfmeConv1066(BfmeH1066 *h);
 
 class BfmeH1066
 {
@@ -53,10 +61,11 @@ void BfmeH1066::bfmeGo1066A(int a)
 {
 	if (m_bfme25a)
 		return;
-	((BfmeR1066 *)g_rva012F19E8WindowManager)->bfmeRun1066(bfmeConv1066(this), "Close", 0, 0, 0, 0, 0, 0);
+	((BfmeLevelAN *)g_rva012F19E8WindowManager)->bfmeBuildAN(
+		(unsigned int)bfmeAptLevel00465CE0((BfmeH1065 *)this), (int)"Close", 0, 0, 0, 0, 0, 0);
 	m_bfme25a = 1;
 	if (!m_bfme25b) {
-		((BfmeR1066 *)g_rva012F19E8WindowManager)->bfmeStop1066(0);
+		g_rva012F19E8WindowManager->bfme_hideBackground(false);
 		m_bfme25b = 1;
 	}
 }
@@ -66,7 +75,8 @@ void BfmeH1066::bfmeGo1066B(int a)
 	char *s = ((BfmeM1066 *)TheWritableGlobalData)->m_bfmea9f
 		? const_cast<char *>(g_rva01080FC0) : "0";
 
-	((BfmeR1066 *)g_rva012F19E8WindowManager)->bfmeRun1066(m_bfme250, "ShowDebugButtons", 1, s, 0, 0, 0, 0);
+	((BfmeLevelAN *)g_rva012F19E8WindowManager)->bfmeBuildAN(
+		(unsigned int)m_bfme250, (int)"ShowDebugButtons", 1, (int)s, 0, 0, 0, 0);
 	m_bfme258 = 1;
 	if (m_bfme259) {
 		m_bfme25a = 1;
