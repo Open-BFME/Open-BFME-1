@@ -2,14 +2,22 @@
 // readable body of ?preloadAssets@ControlBar@@QAEXW4TimeOfDay@@@Z: game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp
 #include "PreRTS.h"
 
+// Retail tail-jumps through ILT 0x00027566 to 0x00170460, the matched
+// Rva00170460AIStateMachine::clear (Rva00170460AIStateMachine_clear.cpp).
+class Rva00170460AIStateMachine
+{
+public:
+	virtual void clear();
+};
+
 enum TimeOfDay { TIME_OF_DAY_INVALID = 0 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBarScheme.h
-class ControlBarSchemeManager
+class ControlBarSchemeManager : public Rva00170460AIStateMachine
 {
-public:
-	void bfme_preloadAssets_impl();
 };
+
+#define bfme_preloadAssets_impl() Rva00170460AIStateMachine::clear()
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
@@ -22,7 +30,6 @@ private:
 	ControlBarSchemeManager *m_controlBarSchemeManager;
 };
 
-// ?bfme_preloadAssets_wrapper@ControlBar@@ absent-from-retail
 void ControlBar::bfme_preloadAssets_wrapper()
 {
 	if (m_controlBarSchemeManager)
