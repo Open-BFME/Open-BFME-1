@@ -59,10 +59,11 @@ void MaxHealthUpgradeModuleData::buildFieldParse(MultiIniFieldParse& p)
 
   UpgradeModuleData::buildFieldParse( p );
 
+	// Retail FieldParse offsets address the BFME module-data layout.
 	static const FieldParse dataFieldParse[] = 
 	{
-		{ "AddMaxHealth",					INI::parseReal,					NULL,										offsetof( MaxHealthUpgradeModuleData, m_addMaxHealth ) },
-		{ "ChangeType",						INI::parseIndexList,		TheMaxHealthChangeTypeNames, offsetof( MaxHealthUpgradeModuleData, m_maxHealthChangeType ) },
+		{ "AddMaxHealth",					INI::parseReal,					NULL,										0x70 },
+		{ "ChangeType",						INI::parseIndexList,		TheMaxHealthChangeTypeNames, 0x74 },
 		{ 0, 0, 0, 0 }
 	};
 

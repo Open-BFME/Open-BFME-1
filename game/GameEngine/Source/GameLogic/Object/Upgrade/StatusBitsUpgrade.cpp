@@ -81,10 +81,11 @@ void StatusBitsUpgradeModuleData::buildFieldParse(MultiIniFieldParse& p)
 {
   UpgradeModuleData::buildFieldParse(p);
 
+	// Retail FieldParse offsets address the BFME module-data layout.
 	static const FieldParse dataFieldParse[] = 
 	{
-		{ "StatusToSet",		ObjectStatusMaskType::parseFromINI,	NULL, offsetof( StatusBitsUpgradeModuleData, m_statusToSet ) },
-		{ "StatusToClear",	ObjectStatusMaskType::parseFromINI,	NULL, offsetof( StatusBitsUpgradeModuleData, m_statusToClear ) },
+		{ "StatusToSet",		ObjectStatusMaskType::parseFromINI,	NULL, 0x70 },
+		{ "StatusToClear",	ObjectStatusMaskType::parseFromINI,	NULL, 0x7c },
 		{ 0, 0, 0, 0 }
 	};
   p.add(dataFieldParse);
