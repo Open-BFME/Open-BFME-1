@@ -14,7 +14,8 @@ class StringBase
 	StringBase() : m_data(0) {}
 	StringBase(const StringBase<T> &other);
 	StringBase(const T *str);
-	~StringBase();
+	~StringBase() { releaseBuffer(); }
+	void releaseBuffer();
 
 public:
 	T *getBufferForRead(int length);
