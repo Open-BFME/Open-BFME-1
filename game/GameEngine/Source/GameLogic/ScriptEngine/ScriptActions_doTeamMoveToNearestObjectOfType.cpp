@@ -85,7 +85,7 @@ public:
 class Team
 {
 public:
-	Coord3D *getEstimateTeamPosition_000EDCD0(Coord3D *) const;
+	void getEstimateTeamPosition_000EDCD0(Coord3D *) const;
 	void getTeamAsAIGroup(AIGroup *group);
 };
 

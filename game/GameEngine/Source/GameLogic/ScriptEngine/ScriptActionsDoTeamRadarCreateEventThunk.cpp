@@ -38,7 +38,7 @@ public:
     Bool hasAnyUnits() const;
     // The retail BFME body at 0x000EDCD0 is distinct from the already named
     // getEstimateTeamPosition body at 0x000F2420.
-    Coord3D *getEstimateTeamPosition_000EDCD0(Coord3D *) const;
+    void getEstimateTeamPosition_000EDCD0(Coord3D *) const;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h

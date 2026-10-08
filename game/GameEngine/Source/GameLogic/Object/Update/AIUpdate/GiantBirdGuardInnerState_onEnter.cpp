@@ -38,7 +38,7 @@ extern GameLogic *TheGameLogic;
 class Team
 {
 public:
-	Coord3D *getEstimateTeamPosition_000EDCD0(Coord3D *position) const;
+	void getEstimateTeamPosition_000EDCD0(Coord3D *position) const;
 };
 
 class TeamFactory

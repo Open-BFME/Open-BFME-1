@@ -83163,7 +83163,7 @@ name,address,notes
 ?getError@Rva007E8810Message@@QAEHXZ,0x007E88B0,V2 lane: FESL message error-code getter; same body as ?m@Gen_007e88b0@@QAEHXZ
 ?getErrorString@DownloadManager@@QAE?AVUnicodeString@@XZ,0x0000ECCD,ILT thunk used by call site
 ?getEstimateTeamPosition@Team@@QBEPAUCoord3D@@PAU2@@Z,0x000F2420,RECRUIT_TEAM_AT_TEAM calls this BFME out-parameter average-position body
-?getEstimateTeamPosition_000EDCD0@Team@@QBEPAUCoord3D@@PAU2@@Z,0x000241FE,doTeamRadarCreateEvent calls the retail ILT for the distinct BFME out-parameter average-position body at 0x000EDCD0
+?getEstimateTeamPosition_000EDCD0@Team@@QBEXPAUCoord3D@@@Z,0x000241FE,doTeamRadarCreateEvent calls the retail ILT for the distinct BFME out-parameter average-position body at 0x000EDCD0
 ?getFieldParse@BfmeLivingWorldMapObject@@QAEPBUFieldParse@@XZ,0x006185F0,LivingWorldObject614F50 field-table getter via193AD;6B mov eax01116D18 ret; table names ObjectType DefaultFlashValue FlashVariation
 ?getFieldParse@DieMuxData@@SAPBUFieldParse@@XZ,0x00019326,ILT thunk; real body 0x655140
 ?getFieldParse@Rva00369860State@@SAPBUFieldParse@@XZ,0x00024302,Rva0036B7C0 parser retail call at 0x0036B80E uses the ILT thunk to the 0x00369FC0 table getter

@@ -57,7 +57,7 @@ class Rva0036DB90Item;
 class Rva0036DB90Collection { public: Rva0036DB90Item *itemAt(unsigned int) const; };
 class Team {
 public:
- Coord3D *getEstimateTeamPosition_000EDCD0(Coord3D *) const;
+ void getEstimateTeamPosition_000EDCD0(Coord3D *) const;
  bool didPartialEnter(PolygonTrigger*,unsigned int) const;
  bool didAllEnter(PolygonTrigger*,unsigned int) const;
  bool didPartialExit(PolygonTrigger*,unsigned int) const;

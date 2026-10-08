@@ -52,7 +52,7 @@ class Team
 {
 public:
 	Object *getFirstItemIn_TeamMemberList() const;
-	Coord3D *getEstimateTeamPosition_000EDCD0(Coord3D *position) const;
+	void getEstimateTeamPosition_000EDCD0(Coord3D *position) const;
 };
 
 class ScriptEngine
