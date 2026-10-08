@@ -18,7 +18,6 @@ class BfmeC994
 {
 public:
 	BfmeC994(char *buffer, int capacity);
-	void addInt(const char *key, int value);
 	void addString(const char *key, const char *value);
 
 	char m_beforeCategory[0x1C];
@@ -27,15 +26,30 @@ public:
 	char m_tail[0x10];
 };
 
+// Retail 0x007E88D0 is the integer field writer (callees.py), matched as
+// BfmeThingCIB::bfmeGoCIB.
+class BfmeThingCIB
+{
+public:
+	void bfmeGoCIB(void *key, void *value);
+};
+#define addInt(message, key, value) ((BfmeThingCIB *)&(message))->bfmeGoCIB((void *)(key), (void *)(value))
+
+// Retail 0x008038F0 is the sink submit (callees.py), matched as
+// Rva008038F0Sender::send.
+class Rva008038F0Sender
+{
+public:
+	void send(BfmeC994 *message);
+};
+#define submit(message) ((Rva008038F0Sender *)this)->send(message)
+
 class BfmeSinkSKA
 {
 public:
 	void bfmeSendSKA(int category, int transactionId, int depth);
 	void sendCreateGameRequest(int transactionId, int gameId,
 		int maxPlayers, const char *userGameId);
-
-private:
-	void submit(BfmeC994 *message);
 };
 
 void BfmeSinkSKA::bfmeSendSKA(int category, int transactionId, int depth)
@@ -44,7 +58,7 @@ void BfmeSinkSKA::bfmeSendSKA(int category, int transactionId, int depth)
 	BfmeC994 message(buffer, sizeof(buffer));
 	message.m_category = category;
 	message.m_depth = depth;
-	message.addInt("TID", transactionId);
+	addInt(message, "TID", transactionId);
 	submit(&message);
 	reinterpret_cast< Gen_007e86c0 * >( &message )->m();
 }
@@ -57,10 +71,10 @@ void BfmeSinkSKA::sendCreateGameRequest(int transactionId, int gameId,
 	char buffer[64];
 	BfmeC994 message(buffer, sizeof(buffer));
 	message.m_category = 'CGAM';
-	message.addInt("TID", transactionId);
-	message.addInt("GID", gameId);
-	message.addInt("LID", -2);
-	message.addInt("MAX-PLAYERS", maxPlayers);
+	addInt(message, "TID", transactionId);
+	addInt(message, "GID", gameId);
+	addInt(message, "LID", -2);
+	addInt(message, "MAX-PLAYERS", maxPlayers);
 	message.addString("UGID", userGameId);
 	message.addString("SECRET", "0");
 	submit(&message);

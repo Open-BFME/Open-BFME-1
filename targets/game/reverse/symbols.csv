@@ -87508,7 +87508,6 @@ name,address,notes
 ?strtrim@@YAPADPAD@Z,0x009E7EB0
 ?structureCollapseBuildNonDupRandomIndexList@@YAXHHQAH@Z,0x002AE160,StructureCollapse doPhaseStuff retail file-local index builder
 ?structureCollapseUpdateTarget@@YAXXZ,0x002AE200,address-derived alias for the matched StructureCollapseUpdate constructor used by the 0x0004A345 thunk
-?submit@BfmeSinkSKA@@AAEXPAVBfmeC994@@@Z,0x008038F0,FESL transaction sender submits the completed local message through its owning sink
 ?submit@Open27110F0Sink@@QAEXHHHH@Z,0x00031840,Open2 0x007110F0 sink submit (ILT)
 ?substr@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QBE?AV12@II@Z,0x006550F0,STLport basic_string<char>::substr(pos; n): constructs the hidden return string from [begin+pos; begin+pos+min(n; size-pos)) through the range ctor ILT 0x0002648B; four callers in parsePlayerKVPairs@GameSpyPSMessageQueueInterface 0x00659888..0x00659A25; ILT 0x0003D60E
 ?substring0089FBC0@Rva8CD130String@@QAE?AV1@HH@Z,0x0089FBC0,Opaque UTF8 substring handle result; 008AAB20+13E receiver local handle and hidden-result then start and count; callee +41 reads handle +29 constructs output and +3D/+100/+1BD ret12 with EAX output
