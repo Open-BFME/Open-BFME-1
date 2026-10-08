@@ -15,7 +15,15 @@
 // The throw-away halves clean their own argument while never touching ecx, so
 // they are __stdcall; the storing halves keep ecx and are members.
 
-void *bfmeMake_00528ef0(int first, int second);			// ILT 0x000364C6
+int __cdecl Rva005277B0(int, int);			// ILT 0x000364C6 -> 0x005277B0
+int __cdecl Rva0054E760(int, int);			// ILT 0x0000B500 -> 0x0054E760
+int __cdecl Rva0054E960(int, int);			// ILT 0x00029771 -> 0x0054E960
+int __cdecl Rva0056DEC0(int, int);			// ILT 0x0003C65A -> 0x0056DEC0
+
+#define bfmeMake_00528ef0(a, b) ((void *)Rva005277B0((int)(a), (int)(b)))
+#define bfmeMake_0054ed70(a, b) ((void *)Rva0054E760((int)(a), (int)(b)))
+#define bfmeMake_0054ee00(a, b) ((void *)Rva0054E960((int)(a), (int)(b)))
+#define bfmeMake_0056e1c0(a, b) ((void *)Rva0056DEC0((int)(a), (int)(b)))
 
 class Gen_005292a0
 {
@@ -26,7 +34,6 @@ public:
 	void *m_bfmeMade;						// +0x04
 };
 
-void *bfmeMake_0054ed70(int first, int second);			// ILT 0x0000B500
 
 class Gen_0054f300
 {
@@ -37,7 +44,6 @@ public:
 	void *m_bfmeMade;						// +0x04
 };
 
-void *bfmeMake_0054ee00(int first, int second);			// ILT 0x00029771
 
 class Gen_0054f390
 {
@@ -48,7 +54,6 @@ public:
 	void *m_bfmeMade;						// +0x04
 };
 
-void *bfmeMake_0056e1c0(int first, int second);			// ILT 0x0003C65A
 
 class Gen_0056e7c0
 {

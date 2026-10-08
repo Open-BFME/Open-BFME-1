@@ -19,11 +19,17 @@ struct BfmeShortSource
 	short m_bfmeValue;
 };
 
-int bfmeMake_00529B60(int a, int b);				// ILT 0x000364C6
-int bfmeMake_0054F920(int a, int b);				// ILT 0x0000B500
-int bfmeMake_0054FA00(int a, int b);				// ILT 0x00029771
-int bfmeMake_0056E900(int a, int b);				// ILT 0x0003C65A
-unsigned int bfmeHashCombineA(unsigned int left, unsigned int right);	// ILT 0x00042FA0
+int __cdecl Rva005277B0(int, int);				// ILT 0x000364C6 -> 0x005277B0
+int __cdecl Rva0054E760(int, int);				// ILT 0x0000B500 -> 0x0054E760
+int __cdecl Rva0054E960(int, int);				// ILT 0x00029771 -> 0x0054E960
+int __cdecl Rva0056DEC0(int, int);				// ILT 0x0003C65A -> 0x0056DEC0
+int __cdecl Rva00527830(int, int);	// ILT 0x00042FA0 -> 0x00527830
+
+#define bfmeMake_00529B60(a, b) ((int)Rva005277B0((int)(a), (int)(b)))
+#define bfmeMake_0054F920(a, b) ((int)Rva0054E760((int)(a), (int)(b)))
+#define bfmeMake_0054FA00(a, b) ((int)Rva0054E960((int)(a), (int)(b)))
+#define bfmeMake_0056E900(a, b) ((int)Rva0056DEC0((int)(a), (int)(b)))
+#define bfmeHashCombineA(a, b) ((unsigned int)Rva00527830((int)(a), (int)(b)))
 
 struct BfmeSharedBlock
 {

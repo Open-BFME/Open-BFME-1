@@ -77910,14 +77910,8 @@ name,address,notes
 ?bfmeMake_00025225@@YAPAXPAX0@Z,0x00025225,Open-BFME5 ILT the pointer-pair maker reached from the bodies around 0x0054F350
 ?bfmeMake_000283d5@@YAPAXPAX0@Z,0x000283D5,Open-BFME5 ILT the pointer-pair maker reached from the bodies around 0x005958F0
 ?bfmeMake_0004b28b@@YAPAXPAX0@Z,0x0004B28B,Open-BFME5 ILT the pointer-pair maker reached from the bodies around 0x0038EB90
-?bfmeMake_00528ef0@@YAPAXHH@Z,0x000364C6,Open-BFME5 ILT the pair at 0x00528EF0 and 0x005292A0 calls
-?bfmeMake_00529B60@@YAHHH@Z,0x000364C6,Open-BFME5 ILT the short-widening ctor at 0x00529B60 calls
 ?bfmeMake_0054F920@@YAHHH@Z,0x0000B500,Open-BFME5 ILT the short-widening ctor at 0x0054F920 calls
 ?bfmeMake_0054FA00@@YAHHH@Z,0x00029771,Open-BFME5 ILT the short-widening ctor at 0x0054FA00 calls
-?bfmeMake_0054ed70@@YAPAXHH@Z,0x0000B500,Open-BFME5 ILT the pair at 0x0054ED70 and 0x0054F300 calls
-?bfmeMake_0054ee00@@YAPAXHH@Z,0x00029771,Open-BFME5 ILT the pair at 0x0054EE00 and 0x0054F390 calls
-?bfmeMake_0056E900@@YAHHH@Z,0x0003C65A,Open-BFME5 ILT the short-widening ctor at 0x0056E900 calls
-?bfmeMake_0056e1c0@@YAPAXHH@Z,0x0003C65A,Open-BFME5 ILT the pair at 0x0056E1C0 and 0x0056E7C0 calls
 ?bfmeMark1027@BfmeQ1027@@QAEXH@Z,0x00024D70,pin
 ?bfmeMark1236@BfmeA1236@@QAEXXZ,0x008D2C80,pin
 ?bfmeMarkESM@BfmeHostESM@@QAEXPAVBfmeThingESM@@H@Z,0x00030963,pin
@@ -82522,12 +82516,10 @@ name,address,notes
 ?gen000620B0@@YAXPAUElem4@@PBU1@@Z,0x000620B0,address-derived callee of the element-stride walk family; target read from the REL32 at its call sites
 ?gen000620B0@@YAXPAX0@Z,0x000620B0,address-derived callee of the 33-byte allocate-then-initialise family; target read from the REL32 at its call sites
 ?gen00062900@@YAXPAX0@Z,0x00062900,address-derived subobject constructor of the allocating-factory family; target read from the REL32 at its call sites
-?gen00062EF0@@YAXPAX0@Z,0x00062EF0,address-derived callee of the 17-byte argument-twice forwarder family; target read from the REL32 at its call site
 ?gen000647B0@@YAXPAX0@Z,0x000647B0,address-derived callee of the 33-byte allocate-then-initialise family; target read from the REL32 at its call sites
 ?gen000699F0@@YAXPAUElem16@@PBU1@@Z,0x000699F0,address-derived callee of the element-stride walk family; target read from the REL32 at its call sites
 ?gen00072390@@YAXPAX0@Z,0x00072390,address-derived subobject constructor of the allocating-factory family; target read from the REL32 at its call sites
 ?gen000723B0@@YAXPAX0@Z,0x000723B0,address-derived subobject constructor of the allocating-factory family; target read from the REL32 at its call sites
-?gen000771C0@@YAXPAX0@Z,0x000771C0,address-derived callee of the 17-byte argument-twice forwarder family; target read from the REL32 at its call site
 ?gen000772C0@@YAXPAX0@Z,0x000772C0,address-derived callee of the 14-byte one-field-twice forwarder family; target read from the REL32 at its call sites
 ?gen0007CD50@@YAXPAX0@Z,0x0007CD50,address-derived subobject constructor of the allocating-factory family; target read from the REL32 at its call sites
 ?gen00080E00@@YAXPAX0@Z,0x00080E00,address-derived subobject constructor of the allocating-factory family; target read from the REL32 at its call sites
@@ -82679,7 +82671,6 @@ name,address,notes
 ?gen003884B0@@YAXPAX0@Z,0x003884B0,address-derived callee of the 33-byte allocate-then-initialise family; target read from the REL32 at its call sites
 ?gen003885B0@@YAXPAX0@Z,0x003885B0,address-derived subobject constructor of the allocating-factory family; target read from the REL32 at its call sites
 ?gen00388630@@YAXPAX0@Z,0x00388630,address-derived subobject constructor of the allocating-factory family; target read from the REL32 at its call sites
-?gen003897C0@@YAXPAX0@Z,0x003897C0,address-derived callee of the 17-byte argument-twice forwarder family; target read from the REL32 at its call site
 ?gen00389840@@YAXPAX0@Z,0x00389840,address-derived callee of the 14-byte one-field-twice forwarder family; target read from the REL32 at its call sites
 ?gen0038EEA0@@YAPAXXZ,0x0038EEA0,address-derived callee of the 22-byte cached-pointer fill family; target read from the REL32 at its call sites
 ?gen0038EF00@@YAPAXXZ,0x0038EF00,address-derived callee of the 22-byte cached-pointer fill family; target read from the REL32 at its call sites
@@ -82702,7 +82693,6 @@ name,address,notes
 ?gen003B9090@@YAXPAX0@Z,0x003B9090,address-derived subobject constructor of the allocating-factory family; target read from the REL32 at its call sites
 ?gen003BA380@@YAXPAUElem20@@PBU1@@Z,0x003BA380,address-derived callee of the element-stride walk family; target read from the REL32 at its call sites
 ?gen003BE7C0@@YAXPAX0@Z,0x003BE7C0,address-derived callee of the 33-byte allocate-then-initialise family; target read from the REL32 at its call sites
-?gen003C9220@@YAXPAX0@Z,0x003C9220,address-derived callee of the 17-byte argument-twice forwarder family; target read from the REL32 at its call site
 ?gen003C92A0@@YAXPAX0@Z,0x003C92A0,address-derived callee of the 14-byte one-field-twice forwarder family; target read from the REL32 at its call sites
 ?gen003CD920@@YAXPAUElem60@@PBU1@@Z,0x003CD920,address-derived callee of the element-stride walk family; target read from the REL32 at its call sites
 ?gen003CDC60@@YAXPAX0H0@Z,0x003CDC60,address-derived callee of the 26-byte zero-third forwarder family; target read from the REL32 at its call sites
@@ -82808,8 +82798,6 @@ name,address,notes
 ?gen00532DF0@@YAXPAX00H0@Z,0x00532DF0,address-derived callee of the 31-byte zero-fourth forwarder family; target read from the REL32 at its call sites
 ?gen00532F40@@YAXPAX00H0@Z,0x00532F40,address-derived callee of the 31-byte zero-fourth forwarder family; target read from the REL32 at its call sites
 ?gen0054D970@@YAXPAX0@Z,0x0054D970,address-derived subobject constructor of the allocating-factory family; target read from the REL32 at its call sites
-?gen0054E860@@YAXPAX0@Z,0x0054E860,address-derived callee of the 17-byte argument-twice forwarder family; target read from the REL32 at its call site
-?gen0054E8E0@@YAXPAX0@Z,0x0054E8E0,address-derived callee of the 17-byte argument-twice forwarder family; target read from the REL32 at its call site
 ?gen0054E9E0@@YAXPAX0@Z,0x0054E9E0,address-derived callee of the 14-byte one-field-twice forwarder family; target read from the REL32 at its call sites
 ?gen0056CE40@@YAXPAX0@Z,0x0056CE40,address-derived callee of the 33-byte allocate-then-initialise family; target read from the REL32 at its call sites
 ?gen0056DFC0@@YAXPAX0@Z,0x0056DFC0,address-derived callee of the 14-byte one-field-twice forwarder family; target read from the REL32 at its call sites
@@ -82827,7 +82815,6 @@ name,address,notes
 ?gen00585BD0@@YAXPAX0@Z,0x00585BD0,address-derived subobject constructor of the allocating-factory family; target read from the REL32 at its call sites
 ?gen005875A0@@YAXPAX0@Z,0x005875A0,address-derived callee of the 33-byte allocate-then-initialise family; target read from the REL32 at its call sites
 ?gen0058D640@@YAXPAX0@Z,0x0058D640,address-derived subobject constructor of the allocating-factory family; target read from the REL32 at its call sites
-?gen00593060@@YAXPAX0@Z,0x00593060,address-derived callee of the 17-byte argument-twice forwarder family; target read from the REL32 at its call site
 ?gen005930E0@@YAXPAX0@Z,0x005930E0,address-derived callee of the 14-byte one-field-twice forwarder family; target read from the REL32 at its call sites
 ?gen005A3160@Gen005A3160_006BB540@@QAEXXZ,0x005A3160,address-derived callee of the 16-byte call-then-tail-call pair family; target read from the REL32 at its call sites
 ?gen005A3FD0@Gen005A40E0_005A3FD0@@QAEXXZ,0x005A3FD0,address-derived callee of the 16-byte call-then-tail-call pair family; target read from the REL32 at its call sites
