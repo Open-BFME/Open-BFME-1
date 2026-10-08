@@ -66,7 +66,6 @@ dir32,0x0041E6F0,??1Rva0069CEE0@@QAE@XZ,the name encodes 0x0069CEE0 but retail r
 dir32,0x0041F0FA,?j_0001f0fa@@YAXXZ,"retail 0x0041F0FA is already recorded as _dp007 (+7 more); reference that name, not a new one"
 dir32,0x0041F62C,?g_0041F62C@@YAXXZ,"nothing in the ledger owns 0x0041F62C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00420428,?g_00420428@@YAXXZ,"nothing in the ledger owns 0x00420428. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x0042083D,?j_0002083d@@YAXXZ,"retail 0x0042083D is already recorded as _bfmeDtorCbDLB; reference that name, not a new one"
 dir32,0x004215DA,?j_000215da@@YAXXZ,"retail 0x004215DA is already recorded as _CritterEmitterUpdateFieldParse; reference that name, not a new one"
 dir32,0x00421BBB,?j_00021bbb@@YAXXZ,"retail 0x00421BBB is already recorded as ?Rva0078EF00New@@YGPAXPAX@Z; reference that name, not a new one"
 dir32,0x0042254D,??0Map0044B780@@QAE@XZ,"nothing in the ledger owns 0x0042254D. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
