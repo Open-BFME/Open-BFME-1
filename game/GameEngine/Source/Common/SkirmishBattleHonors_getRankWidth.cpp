@@ -6,7 +6,10 @@ class StringBase
 private:
 	StringBase( const char *text );
 	StringBase( const StringBase &that );
-	~StringBase();
+	// Retail releases through StringBase::releaseBuffer (<char> 0x00887940,
+	// <unsigned short> 0x008881D0) directly, not an out-of-line ~StringBase.
+	~StringBase() { releaseBuffer(); }
+	void releaseBuffer();
 	friend class AsciiString;
 };
 

@@ -45,7 +45,10 @@ private:
 	};
 
 	StringBase(const StringBase<T> &other);
-	~StringBase(void);
+	// Retail releases through StringBase::releaseBuffer (<char> 0x00887940,
+	// <unsigned short> 0x008881D0) directly, not an out-of-line ~StringBase.
+	~StringBase() { releaseBuffer(); }
+	void releaseBuffer();
 	Header *m_data;
 
 	friend struct BfmeElemVOU;

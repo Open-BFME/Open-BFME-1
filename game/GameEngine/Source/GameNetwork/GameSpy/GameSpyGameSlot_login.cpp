@@ -28,7 +28,10 @@ public:
 
 private:
 	StringBase(const StringBase<T> &src);
-	~StringBase();
+	// Retail releases through StringBase::releaseBuffer (<char> 0x00887940,
+	// <unsigned short> 0x008881D0) directly, not an out-of-line ~StringBase.
+	~StringBase() { releaseBuffer(); }
+	void releaseBuffer();
 
 	struct Header
 	{
