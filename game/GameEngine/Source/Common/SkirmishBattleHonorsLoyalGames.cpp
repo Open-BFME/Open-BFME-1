@@ -1,6 +1,4 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?setBool@UserPreferences@@QAEXVAsciiString@@_N@Z: game/GameEngine/Source/Common/UserPreferences.cpp
-// readable body of ?setInt@UserPreferences@@QAEXVAsciiString@@H@Z: game/GameEngine/Source/Common/UserPreferences.cpp
 
 // FILE: SkirmishBattleHonorsLoyalGames.cpp ///////////////////////////////////
 //
@@ -40,7 +38,13 @@ private:
 	// symbol QAE and need a pin of its own for no reason.
 	StringBase(const char *s);
 	StringBase(const StringBase &that);
+	void releaseBuffer();
 	friend class AsciiString;
+
+public:
+	// retail 0x00887DA0 and 0x000A2BB0, reached by getBool below.
+	void toLower();
+	int compare(const char *text) const;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
@@ -62,7 +66,12 @@ public:
 		((StringBase<char> *)this)->StringBase<char>::StringBase(*(const StringBase<char> *)&that);
 	}
 
-	~AsciiString();
+	// Retail releases these strings by calling StringBase<char>::releaseBuffer
+	// (0x00887940) directly, not the out-of-line ~AsciiString at 0x0005EE90.
+	~AsciiString()
+	{
+		((StringBase<char> *)this)->releaseBuffer();
+	}
 
 	static AsciiString TheEmptyString;
 
@@ -128,6 +137,50 @@ public:
 	void setNumGamesLoyal(Int val);
 	Int getNumGamesLoyal(void) const;
 };
+
+extern "C" __declspec(dllimport) int __cdecl atoi(const char *);
+
+// File-static so no AsciiString member COMDAT leaves this TU.  Retail
+// getInt/getBool test the buffer's 16-bit length at +4.
+static bool loyalIsEmpty(const AsciiString &s)
+{
+	const char *data = *(const char *const *)&s;
+	return !data || *(const unsigned short *)(data + 4) == 0;
+}
+
+static StringBase<char> &loyalBase(AsciiString &s)
+{
+	return *(StringBase<char> *)&s;
+}
+
+// UserPreferences::getInt and getBool, retail 0x000A9490 and 0x000AA4E0.
+// They live here rather than in UserPreferences.cpp because that TU's shim
+// AsciiString has an out-of-line ~AsciiString, while retail releases the
+// fetched value through StringBase<char>::releaseBuffer (0x00887940).
+Int UserPreferences::getInt(AsciiString key, Int defaultValue) const
+{
+	AsciiString val = getAsciiString(key, AsciiString::TheEmptyString);
+	if (loyalIsEmpty(val))
+	{
+		return defaultValue;
+	}
+
+	return atoi(val.str());
+}
+
+Bool UserPreferences::getBool(AsciiString key, Bool defaultValue) const
+{
+	AsciiString val = getAsciiString(key, AsciiString::TheEmptyString);
+	if (loyalIsEmpty(val))
+	{
+		return defaultValue;
+	}
+
+	StringBase<char> &base = loyalBase(val);
+	base.toLower();
+	return (base.compare("1") == 0 || base.compare("t") == 0 || base.compare("true") == 0 ||
+		base.compare("y") == 0 || base.compare("yes") == 0 || base.compare("ok") == 0);
+}
 
 static AsciiString intAsStr(Int value)
 {

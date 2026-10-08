@@ -207,21 +207,6 @@ Bool UserPreferences::load(AsciiString fname)
 // ?write@UserPreferences@@UAE_NXZ
 // Body in UserPreferences_write.asm (exact 162B retail).
 
-Bool UserPreferences::getBool(AsciiString key, Bool defaultValue) const
-{
-	// BFME made the preference accessors virtual; the ZH header retained here did not.
-	AsciiString val = reinterpret_cast<const BfmeUserPreferencesVirtualView *>( this )->getAsciiString( key, AsciiString::TheEmptyString );
-	BfmeAsciiStringDataView *data = reinterpret_cast<BfmeAsciiStringView *>( &val )->m_data;
-	if (!data || data->m_length == 0)
-	{
-		return defaultValue;
-	}
-
-	val.toLower();
-	return (val.compare( "1" ) == 0 || val.compare( "t" ) == 0 || val.compare( "true" ) == 0 ||
-		val.compare( "y" ) == 0 || val.compare( "yes" ) == 0 || val.compare( "ok" ) == 0);
-}
-
 Real UserPreferences::getReal(AsciiString key, Real defaultValue) const
 {
 	AsciiString val = reinterpret_cast<const BfmeUserPreferencesVirtualView *>( this )->getAsciiString( key, AsciiString::TheEmptyString );
@@ -232,18 +217,6 @@ Real UserPreferences::getReal(AsciiString key, Real defaultValue) const
 	}
 
 	return (Real)atof( reinterpret_cast<const char *>( data ) + 8 );
-}
-
-Int UserPreferences::getInt(AsciiString key, Int defaultValue) const
-{
-	AsciiString val = reinterpret_cast<const BfmeUserPreferencesVirtualView *>( this )->getAsciiString( key, AsciiString::TheEmptyString );
-	BfmeAsciiStringView *view = reinterpret_cast<BfmeAsciiStringView *>( &val );
-	if (view->isEmpty())
-	{
-		return defaultValue;
-	}
-
-	return atoi( reinterpret_cast<const char *>( view->m_data ) + 8 );
 }
 
 AsciiString UserPreferences::getAsciiString(AsciiString key, AsciiString defaultValue) const
@@ -257,23 +230,9 @@ AsciiString UserPreferences::getAsciiString(AsciiString key, AsciiString default
 	return it->second;
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/SkirmishBattleHonorsLoyalGames.cpp
-// ?setBool@UserPreferences@@QAEXVAsciiString@@_N@Z present-unmatched
-void UserPreferences::setBool(AsciiString key, Bool val)
-{
-	(*this)[key] = boolAsStr(val);
-}
-
 void UserPreferences::setReal(AsciiString key, Real val)
 {
 	reinterpret_cast<BfmeUserPreferencesVirtualView *>( this )->setAsciiString( key, realAsStr( val ) );
-}
-
-// byte-exact reconstruction: game/GameEngine/Source/Common/SkirmishBattleHonorsLoyalGames.cpp
-// ?setInt@UserPreferences@@QAEXVAsciiString@@H@Z present-unmatched
-void UserPreferences::setInt(AsciiString key, Int val)
-{
-	(*this)[key] = intAsStr(val);
 }
 
 void UserPreferences::setAsciiString(AsciiString key, AsciiString val)
