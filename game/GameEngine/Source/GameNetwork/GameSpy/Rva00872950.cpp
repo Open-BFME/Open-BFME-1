@@ -12,7 +12,7 @@ union Rva0130E8B4Storage
     unsigned int m_dword;
     unsigned short m_word;
 };
-extern Rva0130E8B4Storage g_Rva0130E8B4;
+Rva0130E8B4Storage g_Rva0130E8B4;		// retail VA 0x0130E8B4, zero-initialized
 
 unsigned int Rva00872950()
 {
