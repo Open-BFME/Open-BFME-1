@@ -4429,77 +4429,7 @@ void GameLogic::popSleepyUpdate()
 	}
 }
 
-// ------------------------------------------------------------------------------------------------
-// this should be called only by UpdateModule, thanks.
-// ------------------------------------------------------------------------------------------------
-//DECLARE_PERF_TIMER(friend_awakenUpdateModule)
-// byte-exact reconstruction: game/GameEngine/Source/Common/RTS/GameLogicAwakenUpdateModuleThunk.cpp
-// ?friend_awakenUpdateModule@GameLogic@@QAEXPAVObject@@PAVUpdateModule@@I@Z present-unmatched
-void GameLogic::friend_awakenUpdateModule(Object* obj, UpdateModulePtr u, UnsignedInt whenToWakeUp)
-{
-	//USE_PERF_TIMER(friend_awakenUpdateModule)
-	UnsignedInt now = TheGameLogic->getFrame();
-	DEBUG_ASSERTCRASH(whenToWakeUp >= now, ("setWakeFrame frame is in the past... are you sure this is what you want?"));
-
-	if (u == m_curUpdateModule)
-	{
-		DEBUG_CRASH(("You should not call setWakeFrame() from inside your update(), because it will be ignored, in favor of the return code from update.\n"));
-		return;
-	}
-
-	if (whenToWakeUp == u->friend_getNextCallFrame())
-		return;	// my, that was easy
-
-	if ((now > 0) && (u->friend_getNextCallFrame() == now) && (whenToWakeUp == now + 1))
-	{
-		// subtle but important case: if we already awake, and someone calls 
-		// setWakeFrame(self, UPDATE_SLEEP_NONE), we don't want to reset our wake frame,
-		// since that would prevent us from getting called THIS frame. since UPDATE_SLEEP_NONE
-		// really means "wake up as soon as possible", we don't want to change our status
-		// if we are already awake. (srj)
-		return;
-	}
-
-	Int idx = u->friend_getIndexInLogic();
-	if (obj->isInList(&m_objList))
-	{
-		if (idx < 0 || idx >= m_sleepyUpdates.size())
-		{
-			RELEASE_CRASH("fatal error! sleepy update module illegal index.\n");
-			return;
-		}
-
-		if (m_sleepyUpdates[idx] != u)
-		{
-			RELEASE_CRASH("fatal error! sleepy update module index mismatch.\n");
-			return;
-		}
-
-		// update the value.
-		u->friend_setNextCallFrame(whenToWakeUp);
-
-		// rebalance.
-		rebalanceSleepyUpdate(idx);
-		
-		// validate. (harmless except in debug mode)
-		validateSleepyUpdate();
-
-		return;
-	}
-	else
-	{
-		if (idx != -1)
-		{
-			RELEASE_CRASH("fatal error! sleepy update module index mismatch.\n");
-			return;
-		}
-
-		// this can happen if stuff happens during object initialization. fortunately, 
-		// it's easy to deal with:
-		u->friend_setNextCallFrame(whenToWakeUp);
-		return;
-	}
-}
+// GameLogic::friend_awakenUpdateModule: retail body in GameLogicAwakenUpdate.cpp.
 
 
 
