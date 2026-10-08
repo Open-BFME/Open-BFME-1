@@ -52,7 +52,7 @@ private:
 	unsigned char m_bfmeHead[0x08 - 0x00];
 	BfmeListNodeBase *m_bfmeContainList;		// +0x08, the list's sentinel
 	unsigned char m_bfmeGap[0x10 - 0x0C];
-	UnsignedInt m_bfmeContainCount;			// +0x10
+	UnsignedInt m_containListSize;			// +0x10
 };
 
 // ?getContainCount@TunnelTracker@@QAEIH@Z
@@ -61,7 +61,7 @@ UnsignedInt TunnelTracker::getContainCount(Int filterArg)
 	Rva2225E0Filter *filter = (Rva2225E0Filter *)filterArg;
 
 	if (!filter)
-		return m_bfmeContainCount;
+		return m_containListSize;
 
 	UnsignedInt count = 0;
 

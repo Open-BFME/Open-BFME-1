@@ -74,7 +74,7 @@ public:
 	char m_unmodelled[0x8];
 	AsciiString m_side;
 	char m_unmodelled0c[0xbd - 0xc];
-	Bool m_bfmeBD;
+	Bool m_playableSide;
 	char m_unmodelledbe[0x124 - 0xbe];
 };
 
@@ -179,7 +179,7 @@ void BfmeAptScreenQuickMatchMenu::rva005082D0(Int favSide, Rva005082D0ListArg li
 		if (!fac)
 			continue;
 
-		if (!fac->m_bfmeBD)
+		if (!fac->m_playableSide)
 			continue;
 
 		AsciiString side;

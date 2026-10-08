@@ -46,34 +46,32 @@ public:
 	bool queryRva001C9980(void);
 
 private:
-	__forceinline int queryRva001C9980Tail(void);
+	__forceinline int queryRva001C9980Tail(void)
+	{
+		if (((BfmeOwnerZK *)this)->bfmeCheckZK())
+		{
+			BfmeThingZK *thing = m_bfmeThingZK;
+
+			if (thing && thing->m_bfmeInnerZK)
+				thing = thing->m_bfmeInnerZK->bfmeResolveZK();
+
+			if (!(thing->m_bfmeStateZK & 0x80))
+				return 1;
+		}
+
+		return 0;
+	}
 
 	int m_bfmeSpareZK;
 	BfmeThingZK *m_bfmeThingZK;
 	unsigned char m_bfmeGapZK[0x70];
-	void *m_bfmeKeyZK;
+	void *m_producerID;
 };
-
-__forceinline int Object::queryRva001C9980Tail(void)
-{
-	if (((BfmeOwnerZK *)this)->bfmeCheckZK())
-	{
-		BfmeThingZK *thing = m_bfmeThingZK;
-
-		if (thing && thing->m_bfmeInnerZK)
-			thing = thing->m_bfmeInnerZK->bfmeResolveZK();
-
-		if (!(thing->m_bfmeStateZK & 0x80))
-			return 1;
-	}
-
-	return 0;
-}
 
 // ?queryRva001C9980@Object@@QAE_NXZ
 bool Object::queryRva001C9980(void)
 {
-	void *key = m_bfmeKeyZK;
+	void *key = m_producerID;
 
 	if (key)
 	{
