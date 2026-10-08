@@ -1,4 +1,5 @@
-extern "C" unsigned char bfmeInfoDFC[];
+// VA 0x0112B4E8: the "NUM-LOBBIES" key defined in BfmeConv803BF0.cpp.
+extern char g_bfmeNumLobbies803BF0[];
 
 class BfmeOtherDFC
 {
@@ -21,6 +22,6 @@ public:
 
 BfmeThingDFC *BfmeThingDFC::bfmeGoDFC(BfmeOtherDFC *other)
 {
-	m_bfmeVal = reinterpret_cast<BfmeThingRF *>(other)->bfmeGoRF(bfmeInfoDFC, 0);
+	m_bfmeVal = reinterpret_cast<BfmeThingRF *>(other)->bfmeGoRF((void *)g_bfmeNumLobbies803BF0, 0);
 	return this;
 }

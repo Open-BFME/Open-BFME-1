@@ -34,7 +34,8 @@ public:
 };
 
 extern const char g_feslTransactionIdKey[4];
-extern char g_bfmeNumLobbies803BF0[];
+// Retail .rdata VA 0x0112B4E8 holds this NUL-terminated key.
+char g_bfmeNumLobbies803BF0[12] = "NUM-LOBBIES";
 
 void BfmeOwner803BF0::go(BfmeSrc803BF0 *src)
 {
