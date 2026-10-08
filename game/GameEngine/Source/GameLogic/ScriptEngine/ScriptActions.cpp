@@ -4207,28 +4207,8 @@ static PlayerMaskType getHumanPlayerMask( void )
 //-------------------------------------------------------------------------------------------------
 /** doRevealMapAtWaypoint */
 //-------------------------------------------------------------------------------------------------
-// ?doRevealMapAtWaypoint@ScriptActions@@IAEXABVAsciiString@@M0@Z present-unmatched
-void ScriptActions::doRevealMapAtWaypoint(const AsciiString& waypointName, Real radiusToReveal, const AsciiString& playerName)
-{
-	Waypoint *way = TheTerrainLogic->getWaypointByName(waypointName);
-	if (!way) {
-		return;
-	}
-
-	Player* player = TheScriptEngine->getPlayerFromAsciiString(playerName);
-	PlayerMaskType playerMask;
-	if (player && playerName.isNotEmpty())
-		playerMask = player->getPlayerMask();
-	else
-		playerMask = getHumanPlayerMask();
-
-	Real positionX = way->getLocation()->x;
-	Real positionY = way->getLocation()->y;
-
-	// A reveal script is a quick look.  That way a Radar Jammer will still function correctly.
-	ThePartitionManager->doShroudReveal(positionX, positionY, radiusToReveal, playerMask);
-	ThePartitionManager->undoShroudReveal(positionX, positionY, radiusToReveal, playerMask);
-}
+// doRevealMapAtWaypoint@ScriptActions@@IAEXABVAsciiString@@M0@Z
+// Body in ScriptActions_doRevealMapAtWaypoint.cpp (exact 99B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** doRevealMapAtWaypoint */
