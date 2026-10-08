@@ -8,7 +8,8 @@ public:
 };
 
 extern unsigned char g_bfmeDispatchEnabled1281;
-extern int g_bfme1017H;
+// retail VA 0x01337800 (dir32 of the matched bfmeGo1017X/Y reads).
+int g_bfme1017H;
 extern int g_bfme1017I;
 
 // retail 0x013377D8; defining spelling (BfmePicker1284.cpp), declared
