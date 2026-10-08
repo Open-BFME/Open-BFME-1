@@ -90731,3 +90731,4 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_0BB@LOHHGELF@SpecialAbilities?$AA@,0x00CEBE30,Retail FieldParse table VA 0x010EBE44 entry; full 17-byte compiler string literal SpecialAbilities equals retail VA 0x010EBE30
 ??_C@_05MAHMNMLO@Sound?$AA@,0x00CA4FAC,Retail FieldParse table VA 0x010EE088 entry; full 6-byte compiler string literal Sound equals retail VA 0x010A4FAC
 ??_C@_03CCEPDEKL@Key?$AA@,0x00C75AA4,Retail FieldParse table VA 0x010EE088 entry; full 4-byte compiler string literal Key equals retail VA 0x01075AA4
+??_C@_0P@EDLGGFDC@exscorch01?4tga?$AA@,0x00D1DC1C,BfmeThingBNH::bfmeGoBNH 0x006D65B0 texture name; compiler string literal exscorch01.tga equals retail at VA 0x0111DC1C

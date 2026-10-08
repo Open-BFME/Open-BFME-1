@@ -1,5 +1,3 @@
-extern "C" unsigned char bfmeTagBNH[];
-
 class BfmeThingBNH;
 class BFMEWaterTrackTextureHandle;
 
@@ -14,6 +12,6 @@ public:
 
 BfmeThingBNH *BfmeThingBNH::bfmeGoBNH(void *what)
 {
-	((BfmeGetWaterTrackTextureOutput)BFMEGetWaterTrackTexture)(this, (char *)bfmeTagBNH, 0, 0);
+	((BfmeGetWaterTrackTextureOutput)BFMEGetWaterTrackTexture)(this, (char *)"exscorch01.tga", 0, 0);
 	return this;
 }
