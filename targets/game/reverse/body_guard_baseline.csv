@@ -39,7 +39,6 @@ dir32,0x00416158,??0TransitionDamageFXRecordC@?A0x2535ff93@@QAE@XZ,"retail 0x004
 dir32,0x004173DC,?j_000173dc@@YAXXZ,"retail 0x004173DC is already recorded as _HordeMemberCollideFieldParse (+1 more); reference that name, not a new one"
 dir32,0x00417477,??1Rva00127AC0Element@@QAE@XZ,"retail 0x00417477 is already recorded as ??1Gen_uwm_00017477@@QAE@XZ (+1 more); reference that name, not a new one"
 dir32,0x00417BD9,??0BFMERetailAsciiString@@QAE@XZ,"retail 0x00417BD9 is already recorded as ??0AsciiString@@QAE@XZ (+3 more); reference that name, not a new one"
-dir32,0x00417FD5,?j_00017fd5@@YAXXZ,"retail 0x00417FD5 is already recorded as _EmotionTrackerUpdateFieldParse; reference that name, not a new one"
 dir32,0x00418886,?j_00018886@@YAXXZ,"retail 0x00418886 is already recorded as ?rva00418886@BfmeAptScreenOnlineChat@@QAEXXZ; reference that name, not a new one"
 dir32,0x00418949,??1List00442C90@@QAE@XZ,"nothing in the ledger owns 0x00418949. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00419501,?g_00419501@@YAXXZ,"nothing in the ledger owns 0x00419501. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"

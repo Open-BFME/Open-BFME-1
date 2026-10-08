@@ -30,7 +30,7 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-void j_00017fd5();
+extern "C" void __cdecl __identifier("EmotionTrackerUpdateFieldParse")();
 
 class EmotionTrackerUpdate
 {
@@ -44,7 +44,7 @@ ModuleData *EmotionTrackerUpdate::friend_newModuleData(INI *ini)
 	EmotionTrackerUpdateModuleData *data = new EmotionTrackerUpdateModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_00017fd5));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(__identifier("EmotionTrackerUpdateFieldParse")));
 	return (ModuleData *)data;
 }
 
