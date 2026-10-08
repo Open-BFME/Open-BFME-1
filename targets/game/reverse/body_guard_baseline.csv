@@ -31,7 +31,6 @@ dir32,0x004128FA,??1BfmeGdElem36@@QAE@XZ,"retail 0x004128FA is already recorded 
 dir32,0x00413C23,?j_00013c23@@YAXXZ,"retail 0x00413C23 is already recorded as _DominateEnemySpecialPowerFieldParse; reference that name, not a new one"
 dir32,0x00413D31,?j_00013d31@@YAXXZ,"retail 0x00413D31 is already recorded as ?rva00413d31@BfmeAptScreenOnlineChat@@QAEXXZ; reference that name, not a new one"
 dir32,0x0041421D,??_F?$vector@PAVUpdateModule@@V?$allocator@PAVUpdateModule@@@_STL@@@_STL@@QAEXXZ,"nothing in the ledger owns 0x0041421D. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x00414B87,?j_00014b87@@YAXXZ,"retail 0x00414B87 is already recorded as _DestroyEnvironmentUpdateFieldParse; reference that name, not a new one"
 dir32,0x00414BAA,?j_00014baa@@YAXXZ,"retail 0x00414BAA is already recorded as _W3DFloorDrawFieldParse; reference that name, not a new one"
 dir32,0x004151A9,?j_000151a9@@YAXXZ,"retail 0x004151A9 is already recorded as _UpgradeSoundSelectorClientBehaviorFieldParse; reference that name, not a new one"
 dir32,0x00415253,?g_00415253@@YAXXZ,"nothing in the ledger owns 0x00415253. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"

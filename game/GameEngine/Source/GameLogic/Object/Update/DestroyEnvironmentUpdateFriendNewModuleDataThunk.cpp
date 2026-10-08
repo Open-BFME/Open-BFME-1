@@ -30,7 +30,7 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-void j_00014b87();
+extern "C" void __cdecl __identifier("DestroyEnvironmentUpdateFieldParse")();
 
 class DestroyEnvironmentUpdate
 {
@@ -44,7 +44,7 @@ ModuleData *DestroyEnvironmentUpdate::friend_newModuleData(INI *ini)
 	DestroyEnvironmentUpdateModuleData *data = new DestroyEnvironmentUpdateModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_00014b87));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(__identifier("DestroyEnvironmentUpdateFieldParse")));
 	return (ModuleData *)data;
 }
 
