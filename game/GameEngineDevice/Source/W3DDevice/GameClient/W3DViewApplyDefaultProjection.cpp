@@ -6,6 +6,14 @@
 
 #define BFME_VSLOT(n) virtual void slot##n();
 
+// Retail ILT 0x00042F23 lands on 0x0045B5D0, matched as Rva0045B5D0::run.
+class Rva0045B5D0
+{
+public:
+	void run();
+};
+#define helper() ( (Rva0045B5D0 *)this )->run()
+
 class Rva00742DF0Sub
 {
 public:
@@ -24,7 +32,6 @@ public:
 	void applyDefaultProjection();
 
 private:
-	void helper();
 	void setCameraTransform();
 
 private:

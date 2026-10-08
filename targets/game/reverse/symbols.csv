@@ -84634,7 +84634,6 @@ name,address,notes
 ?helper@Rva007A2330@@QAEXPAPAVRva007A2330Target@@@Z,0x000243B6,ILT to claimed gen-dump 0x007AA820
 ?helper@Rva007FA2C0@@QAEXPAXH@Z,0x007FA170,FESL transactor slot helper called from 0x007FA310
 ?helper@Rva00894120Vector@@QAEXPAX00@Z,0x00893F10,address-derived helper target proven by 0x00894120
-?helper@W3DView@@AAEXXZ,0x00042F23,thunk the 0x00742DF0 W3DView body calls before rebuilding the camera
 ?helper_006f4660@@YGXHHHH@Z,0x0093EB50,Open-BFME5 pin for 0x006F4660 four-arg wrapper
 ?hide@AptPalantir@@QAEX_N@Z,0x0001420E,ILT to body 0x00592CD0; the AptPalantir callback table at 0x00565F30 names its RenderRadar RenderRadarViewBox ClipRadar and OnInitialized methods; HideControlBar passes TRUE and ShowControlBar passes FALSE
 ?hide@BannerUI@@QAEX_N@Z,0x0003A062,ILT to body 0x005839D0; BannerUI is independently identified by its existing parser and constructor sources; HideControlBar passes TRUE and ShowControlBar passes FALSE
