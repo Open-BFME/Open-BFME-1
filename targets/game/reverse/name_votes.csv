@@ -1199,3 +1199,4 @@ game/Libraries/Source/Apt/Rva008AE2E0BoundsGetter.cpp|member||m_bfme14,e8d4bfaf2
 game/Libraries/Source/Apt/Rva008AE2E0BoundsGetter.cpp|local|Rva8BB1A0BoundsSource::getBounds|v10,f10060bdc038759b7e914ab6,gpt-6-astra,20261008170526-f3c3e6,2026-10-08
 game/Libraries/Source/Apt/Rva008AE2E0BoundsGetter.cpp|local|Rva8BB1A0BoundsSource::getBounds|v14,670fe49ae635885855e1a2da,gpt-6-astra,20261008170526-f3c3e6,2026-10-08
 game/Libraries/Source/Apt/Rva008AE2E0BoundsGetter.cpp|local|Rva8BB1A0BoundsSource::getBounds|u,b0d1e1a539a7a70abbee3ec1,gpt-6-astra,20261008170526-f3c3e6,2026-10-08
+game/GameEngine/Source/Common/BfmeConv827.cpp|function||bfmeLookupAndSendDB0,6ec85a67ffa182ba85d18c75,gpt-6-astra,20261008171357-93da5a,2026-10-08
