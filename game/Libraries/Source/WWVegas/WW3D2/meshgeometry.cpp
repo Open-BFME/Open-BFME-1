@@ -343,27 +343,6 @@ void MeshGeometryClass::Set_User_Text(char * usertext)
 
 
 /***********************************************************************************************
- * MeshGeometryClass::Get_Bounding_Box -- get the bounding box                                 *
- *                                                                                             *
- * INPUT:                                                                                      *
- *                                                                                             *
- * OUTPUT:                                                                                     *
- *                                                                                             *
- * WARNINGS:                                                                                   *
- *                                                                                             *
- * HISTORY:                                                                                    *
- *   11/9/2000  gth : Created.                                                                 *
- *=============================================================================================*/
-// ?MeshGeometryClass::Get_Bounding_Box present-unmatched
-void MeshGeometryClass::Get_Bounding_Box(AABoxClass * set_box)
-{
-	WWASSERT(set_box != NULL);
-	set_box->Center = (BoundBoxMax + BoundBoxMin) * 0.5f;
-	set_box->Extent = (BoundBoxMax - BoundBoxMin) * 0.5f;
-}	
-
-
-/***********************************************************************************************
  * MeshGeometryClass::Get_Bounding_Sphere -- get the bounding sphere                           *
  *                                                                                             *
  * INPUT:                                                                                      *
