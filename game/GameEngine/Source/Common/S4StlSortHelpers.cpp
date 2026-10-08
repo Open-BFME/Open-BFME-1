@@ -129,6 +129,11 @@ S4_EXTERNAL_INSERTION_SORT( S4SortElem20, S4Cmp002EB8E0 )
 S4_EXTERNAL_INSERTION_SORT( S4SortElem12_00532740, S4Cmp00532740 )
 
 S4_EXTERNAL_LINEAR_INSERT( S4SortElem12, S4Cmp00531FA0 )
+// Retail 0x0052F110 (S4UnguardedLinearInsertElem12.cpp), called from the
+// __unguarded_insertion_sort_aux this TU instantiates.
+template <>
+void __unguarded_linear_insert<S4SortElem12 *, S4SortElem12, S4Cmp00531FA0>(
+	S4SortElem12 *, S4SortElem12, S4Cmp00531FA0 );
 S4_EXTERNAL_LINEAR_INSERT( S4SortElem12, S4Cmp00574DF0 )
 }
 

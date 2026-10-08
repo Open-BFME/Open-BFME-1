@@ -1,7 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
-// Open-BFME5: _STL::__unguarded_linear_insert over S4SortElem12, retail
-// 0x0052F110, 109 bytes.  The comparison is the same BfmeLess0052E880 the
+// Open-BFME5: _STL::__unguarded_linear_insert<S4SortElem12 *, S4SortElem12,
+// S4Cmp00531FA0>, retail 0x0052F110, 109 bytes: the matched __linear_insert
+// 0x0052FE90 and __unguarded_insertion_sort_aux 0x0052FF20 of the
+// S4Cmp00531FA0 sort reach it through ILT 0x0001649B, where symbols.csv pins
+// that spelling.  The comparison is the same BfmeLess0052E880 the
 // matched linear_insert at 0x0052FE90 already names: key descending, then
 // the pointed-to StringBase at +4.
 
@@ -41,15 +44,37 @@ retFalse:
 	return left.m_bfmeKey > right.m_bfmeKey;
 }
 
-void bfmeUnguardedLinearInsertElem12(S4SortElem12 *last, S4SortElem12 val)
+struct S4Cmp00531FA0
 {
-	S4SortElem12 *next = last;
+	void *m_bfmeState;
+
+	// A member template keeps this TU's inline comparator out of any shared
+	// ??RS4Cmp00531FA0 COMDAT.
+	template <class Elem>
+	bool operator()(const Elem &left, const Elem &right) const
+	{
+		return bfmeLessVal(left, right);
+	}
+};
+
+namespace _STL
+{
+
+template <class RandomAccessIter, class Tp, class Compare>
+void __unguarded_linear_insert(RandomAccessIter last, Tp val, Compare comp)
+{
+	RandomAccessIter next = last;
 	--next;
-	while (bfmeLessVal(val, *next))
+	while (comp(val, *next))
 	{
 		*last = *next;
 		last = next;
 		--next;
 	}
 	*last = val;
+}
+
+template void __unguarded_linear_insert<S4SortElem12 *, S4SortElem12,
+	S4Cmp00531FA0>(S4SortElem12 *, S4SortElem12, S4Cmp00531FA0);
+
 }
