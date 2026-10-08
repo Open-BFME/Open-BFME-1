@@ -6,7 +6,8 @@ class BfmeThingRF
 public:
     void *bfmeGoRF(void *key, void *defaultValue);
 };
-extern const char *g_va012C3B28;
+// Retail .data VA 0x012C3B28 holds the pointer to "errorCode" (VA 0x0112B948).
+const char *g_va012C3B28 = "errorCode";
 class Rva007F8DD0
 {
 public:
