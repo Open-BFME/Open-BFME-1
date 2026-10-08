@@ -1,11 +1,11 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/sweep
 // stlport
 
-class BfmeCellGrid
+class CellGrid
 {
 public:
 	void _bfme_reset( void );
-	~BfmeCellGrid();
+	~CellGrid();
 };
 
 class VictorySystem
@@ -22,7 +22,7 @@ private:
 	unsigned int m_fieldE4;
 	unsigned int m_fieldE8;
 	char m_opaqueEC[0x0c];
-	BfmeCellGrid *m_cellGrids[2];
+	CellGrid *m_cellGrids[2];
 	bool m_initialized;
 	char m_alignment[3];
 	unsigned int m_activeGrid;
@@ -32,7 +32,7 @@ private:
 void VictorySystem::reset( void )
 {
 	VictorySystem *self = this;
-	BfmeCellGrid **grid = self->m_cellGrids;
+	CellGrid **grid = self->m_cellGrids;
 	for( unsigned int index = 0; index < 2; ++index )
 	{
 		if( *grid )

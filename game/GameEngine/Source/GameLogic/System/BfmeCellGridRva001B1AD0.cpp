@@ -43,7 +43,7 @@ private:
 	unsigned char m_data[0x88];
 };
 
-class BfmeCellGrid
+class CellGrid
 {
 public:
 	void rva001B1AD0(Int index, void *parameters);
@@ -58,7 +58,7 @@ private:
 	UnsignedInt *m_cellValues;
 };
 
-void BfmeCellGrid::rva001B1AD0(Int index, void *parameters)
+void CellGrid::rva001B1AD0(Int index, void *parameters)
 {
 	Real base = *(volatile Real *)&m_cellSize * 0.5f + m_offset;
 

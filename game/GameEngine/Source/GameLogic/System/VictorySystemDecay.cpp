@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
-class BfmeCellGrid
+class CellGrid
 {
 public:
 	void bfmeDecayCells( float firstScale, float secondScale );
@@ -24,12 +24,12 @@ private:
 	unsigned char m_unreconstructed_1c[0x64 - 0x1c];
 	BfmeCell m_rootCell;
 	unsigned char m_unreconstructed_65[0xf8 - 0x65];
-	BfmeCellGrid *m_grids[2];
+	CellGrid *m_grids[2];
 };
 
 void VictorySystem::bfmeDecayAllCells( void )
 {
-	BfmeCellGrid **grid = m_grids;
+	CellGrid **grid = m_grids;
 	int count = 2;
 	do
 	{

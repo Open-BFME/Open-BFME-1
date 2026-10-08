@@ -1,7 +1,7 @@
 // cl: /O2 /Ob2 /G6
 
 // Retail 0x001DE2A0, reached only through ILT 0x00004D27 from the landed
-// BfmeCellGrid sweep 0x001B1AD0, which passes the cell centre, the grid cell
+// CellGrid sweep 0x001B1AD0, which passes the cell centre, the grid cell
 // size, a sample index and an opaque parameter block.  The body forms the same
 // m_first[index]*p[+8] - m_second[index]*p[+4] difference as the landed
 // S3FloatPredicates siblings, clamps it to [0, p[+0x10]], normalises it, and

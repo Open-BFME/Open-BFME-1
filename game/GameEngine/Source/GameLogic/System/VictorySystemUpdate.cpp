@@ -26,7 +26,7 @@ private:
 	FactionVictoryParameters *m_storageEnd;
 };
 
-class BfmeCellGrid
+class CellGrid
 {
 public:
 	void rva001B1AD0( int playerIndex, void *parameters );
@@ -47,7 +47,7 @@ private:
 	unsigned char m_unreconstructed_04[0x24 - 4];
 	int m_playerParameterIndex[(0xec - 0x24) / 4];
 	FactionVictoryParametersVector m_parameters;
-	BfmeCellGrid *m_cellGrids[2];
+	CellGrid *m_cellGrids[2];
 	bool m_initialized;
 	unsigned char m_pad101[3];
 	unsigned int m_activeGrid;

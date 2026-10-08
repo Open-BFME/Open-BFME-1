@@ -1,9 +1,9 @@
 // cl: /O2 /Ob2 /G6
-// BfmeCellGrid::xfer, retail 0x001B1C90 (carved boundary, 530 bytes, ret+int3).
-// ILT 0x000499A9 carries the ?xfer@BfmeCellGrid@@QAE_NPAVXfer@@@Z pin and the
+// CellGrid::xfer, retail 0x001B1C90 (carved boundary, 530 bytes, ret+int3).
+// ILT 0x000499A9 carries the ?xfer@CellGrid@@QAE_NPAVXfer@@@Z pin and the
 // matched VictorySystem::xfer (0x001E05F0) calls it there and ORs the Bool result.
 // Slot names follow that caller's Xfer shim; the grid and 0x88-byte cell layout
-// follow the landed BfmeCellGrid family. Loading a grid whose dimensions differ
+// follow the landed CellGrid family. Loading a grid whose dimensions differ
 // reads the saved cells into cell 0 and reports the mismatch to the caller.
 
 typedef bool Bool;
@@ -68,7 +68,7 @@ public:
 	UnsignedInt m_secondMask;
 };
 
-class BfmeCellGrid
+class CellGrid
 {
 public:
 	Bool xfer(Xfer *xfer);
@@ -84,7 +84,7 @@ private:
 	UnsignedInt *m_cellValues;
 };
 
-Bool BfmeCellGrid::xfer(Xfer *xfer)
+Bool CellGrid::xfer(Xfer *xfer)
 {
 	XferVersion version;
 	version.m_fields.m_version = 1;

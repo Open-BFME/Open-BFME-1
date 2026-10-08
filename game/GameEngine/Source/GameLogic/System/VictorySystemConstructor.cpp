@@ -59,7 +59,7 @@ private:
 	unsigned int m_secondMask;
 };
 
-class BfmeCellGrid;
+class CellGrid;
 
 class VictorySystem : public SubsystemInterface, public Snapshot
 {
@@ -83,7 +83,7 @@ private:
 	int m_playerParameterIndex[16];
 	BfmeCell m_rootCell;
 	_STL::vector<FactionVictoryParameters> m_factionVictoryParameters;
-	BfmeCellGrid *m_cellGrids[2];
+	CellGrid *m_cellGrids[2];
 	bool m_initialized;
 	unsigned int m_activeGrid;
 	unsigned int m_currentPlayer;

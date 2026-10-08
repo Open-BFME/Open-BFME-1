@@ -72,7 +72,7 @@ private:
 	char m_data[0x88];
 };
 
-class BfmeCellGrid
+class CellGrid
 {
 public:
 	void bfmeApplyAtObject(const Object *object, Real amount, Int firstIndex,
@@ -106,7 +106,7 @@ private:
 	Int m_playerParameterIndex[16];
 	Gen_001B1240 m_rootCell;
 	FactionVictoryParametersVector m_factionVictoryParameters;
-	BfmeCellGrid *m_cellGrids[2];
+	CellGrid *m_cellGrids[2];
 };
 
 void VictorySystem::rva001DFC10(Object *object, DamageInfo *damageInfo)

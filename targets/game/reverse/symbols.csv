@@ -2526,7 +2526,7 @@ name,address,notes
 ??0BfmeBufERR@@QAE@PAX0@Z,0x00008E86,pin
 ??0BfmeBuffFxState@@QAE@PAVDrawable@@@Z,0x00045782,BFME Drawable buff-fx state ctor for rva00412530
 ??0BfmeCell@@QAE@XZ,0x00009D4F,BfmeCellGrid vector-new calls this ILT to the exact 0x001B1800 cell initializer
-??0BfmeCellGrid@@QAE@HHMM@Z,0x001B1830,thiscall ret 0x10 (width height cellSize offset) into a 0x1C-byte object: +0 w +4 h +8 w*h +0xC cellSize +0x10 offset +0x14 vector-new of w*h 0x88-byte cells +0x18 w*h dwords; assert text Could not create Cell Grid for VictorySystem! 0x0109C958; both callers are VictorySystem::newMap 0x001DF5DF/0x001DF628
+??0CellGrid@@QAE@HHMM@Z,0x001B1830,thiscall ret 0x10 (width height cellSize offset) into a 0x1C-byte object: +0 w +4 h +8 w*h +0xC cellSize +0x10 offset +0x14 vector-new of w*h 0x88-byte cells +0x18 w*h dwords; assert text Could not create Cell Grid for VictorySystem! 0x0109C958; both callers are VictorySystem::newMap 0x001DF5DF/0x001DF628
 ??0BfmeCheckMovementInfo@@QAE@PAVPathfinder@@PAVObject@@HHHHH@Z,0x000393D3,isLinePassable 0x003EE8D0 payload ctor ILT to 0x003E5640
 ??0BfmeConditionFlags@@QAE@HHHHHHHHHHHH@Z,0x000214F4,address-derived BannerCarrierUpdate local static condition-mask constructor ILT target 0x00283EB0
 ??0BfmeCopyElementA@@QAE@XZ,0x000226D8,default ctor of 0x5C copy-on-write payload cloned at Object+0x108
@@ -4808,7 +4808,7 @@ name,address,notes
 ??1BfmeBoxYP@@QAE@XZ,0x00887940,Open-BFME5 stand-in destructor for the bounds object; referenced only by the atexit helper
 ??1BfmeBufERR@@QAE@XZ,0x00026F35,pin
 ??1BfmeCell@@QAE@XZ,0x0003DC2B,BfmeCellGrid vector cleanup calls this ILT to the 0x001B1200 cell destructor
-??1BfmeCellGrid@@QAE@XZ,0x000046E2,VictorySystem::reset 0x001DE5B0 calls this ILT before operator delete for each non-null BfmeCellGrid; ILT target 0x001B1AC0 clears the grid allocations
+??1CellGrid@@QAE@XZ,0x000046E2,VictorySystem::reset 0x001DE5B0 calls this ILT before operator delete for each non-null BfmeCellGrid; ILT target 0x001B1AC0 clears the grid allocations
 ??1BfmeChainValue@@QAE@XZ,0x000402BE,Open-BFME5 the carried value destructor the chain disposal at 0x005876D0 runs
 ??1BfmeChildA@@QAE@XZ,0x008976E0,Open-BFME5 the child destructor the teardown at 0x008AB8E0 calls
 ??1BfmeChildB@@QAE@XZ,0x0089CC70,Open-BFME5 the child destructor the teardowns at 0x008BD820 0x008BD880 and 0x008BD8E0 call
@@ -15207,7 +15207,7 @@ name,address,notes
 ?_bfme_removeNamedAptGadget@WindowManager@@QAEXABVAsciiString@@@Z,0x00047B31,ILT of WindowManager +0x6C vector unbind; Home dtor 0x00545FF0 removes OnlineHome/Gadgets/Image and ImageLevelIconMain
 ?_bfme_requestLadderPlayerCount@BFMENetworkBackend@@QAEXH@Z,0x0065BD40,behaviour-derived name: which==1 -> "http://lotrbfme.arenasdk.gamespy.com/ladderstats.sdk?ladderid=25909&action=COUNT" else ladderid=25911; _ghttpGetA(url; 0; completion 0x0065BC80; this) and on success maps the request id to a 12-byte {this;which} record through the map operator[] ILT 0x0000C3B0; ecx = the object dispatchEvents@BFMENetworkBackend 0x0065CA50 works on at 0x0065CD43/0x0065CD4C (pushes 1 then 2 after the persistent-storage read); ILT 0x00039EFF
 ?_bfme_requestLadderRank@BFMENetworkBackend@@QAEXH@Z,0x0065BE50,behaviour-derived name: formats "http://lotrbfme.arenasdk.gamespy.com/ladderrank.sdk?ladderid=25909;25911&profileid=%d" with the profile id; _ghttpGetA(url; 0; completion 0x0065BCC0; this); 12-byte {this;0;profileID} record keyed by request id; called at 0x0065CD26 in dispatchEvents@BFMENetworkBackend right after _GetPersistDataValuesA; ILT 0x0000EF34
-?_bfme_reset@BfmeCellGrid@@QAEXXZ,0x0001C99A,VictorySystem::reset 0x001DE5B0 calls this ILT on each non-null BfmeCellGrid before destruction; ILT target 0x001B14F0 releases cell storage and zeros the grid fields
+?_bfme_reset@CellGrid@@QAEXXZ,0x0001C99A,VictorySystem::reset 0x001DE5B0 calls this ILT on each non-null BfmeCellGrid before destruction; ILT target 0x001B14F0 releases cell storage and zeros the grid fields
 ?_bfme_sendFrameInfo@Network@@UAEXXZ,0x00682310,vtable 0x0111A968 slot 19 (+0x4C) via ILT 0x0003ED9C; tail-jumps m_conMgr->sendFrameInfo@BFMEConnectionManager 0x00665D10 (stamps NetCommandType 3 FRAMEINFO at 0x00665D5F) without a null check; no vtable call site found in .text; ZH sends FRAMEINFO from ConnectionManager::processFrameTick so there is no Network twin
 ?_bfme_sendStartQuickMatchRequest@BfmeAptScreenOnlineQuickMatch@@QAEXXZ,0x00006D8E,incremental-link thunk called by the OnlineQuickMatch APT update slot
 ?_bfme_sendStartQuickMatchRequest@BfmeAptScreenQuickMatchMenu@@QAEXPAVGameWindow@@@Z,0x00509B30,the ZH WOLQuickMatchMenuSystem GBM_SELECTED buttonStart arm (WOLQuickMatchMenu.cpp:1655-1810) extracted into a method of the same QuickMatchMenu APT object: PeerRequest type 0x10 (STARTQUICKMATCH shifted by one in BFME) maxPoints/minPoints/maxDiscons/maxPing from the gadgets findPlayerStatsByID points ladder via TheLadderList->findLadderByIndex 0x0062A430 (randomFactions +0x19 validFactions +0x20 playersPerTeam +0xc) side from ThePlayerTemplateStore discons = sum(discons)+sum(desyncs) strncpy(req.QM.pings TheGameSpyInfo->getPingString(+0x114) 17) exeCRC/iniCRC from TheWritableGlobalData+0xbc8/+0xbd4 then TheGameSpyPeerMessageQueue->addRequest 0x0050A0CB and LadderPreferences addRecentLadder/write; sole caller WOLQuickMatchMenuSystem 0x0050A588 (this=esi control pushed)
@@ -87872,7 +87872,7 @@ name,address,notes
 ?xfer@?$BitFlags@$0L@@@QAEXPAVXfer@@@Z,0x00042AC3,Open-BFME5 BitFlags<11>::xfer ILT thunk to body 0x001C4150; exact 11-bit pack loop transfers a two-byte payload through Xfer::xferUser
 ?xfer@?$BitFlags@$0MA@@@QAEXPAVXfer@@@Z,0x0000335F,Open-BFME5 BitFlags<192>::xfer ILT thunk to body 0x001C4F00; Object::xfer passes its proven six-dword upgrade-completion mask at Object+0x224
 ?xfer@AIInternalMoveToState@@MAEXPAVXfer@@@Z,0x00002379,ILT to body 0x0016B140; slot 3 of vtable 0x01095B08 installed by exact AIInternalMoveToState ctor 0x0014F280; thiscall ret 4 Xfer*; body order version(1) Coord3D +0x24 layer +0x30 bool +0x4D Coord3D +0x34 uint +0x44 uint +0x48 bool +0x4C matches ZH AIInternalMoveToState::xfer; called at 0x00177F79 by AIAttackMeleeEngageState::xfer
-?xfer@BfmeCellGrid@@QAE_NPAVXfer@@@Z,0x000499A9,ILT target 0x001B1C90 is the Bool-returning BfmeCellGrid transfer called by VictorySystem::xfer at 0x001E05F0
+?xfer@CellGrid@@QAE_NPAVXfer@@@Z,0x000499A9,ILT target 0x001B1C90 is the Bool-returning BfmeCellGrid transfer called by VictorySystem::xfer at 0x001E05F0
 ?xfer@BfmeWeaponSetFlags@@QAEXPAVBfmeWeaponSetXferView@@@Z,0x00044CE7,WeaponSet::xfer calls the flags transfer ILT with the aligned BfmeWeaponSetFlags and Xfer view ABI
 ?xfer@DockUpdate@@MAEXPAVXfer@@@Z,0x0001D043,RailedTransportDockUpdate xfer base-call ILT to 0x002CD700
 ?xfer@DrawableModule@@MAEXPAVXfer@@@Z,0x00113E70,LaserUpdate::xfer base call resolves through the shared two-version transfer helper

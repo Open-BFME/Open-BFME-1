@@ -5,7 +5,8 @@
 // two sixteen-player sample arrays followed by their two masks.
 // The constructor and lookup prove the unsigned count at +0x08 and the
 // cell spacing/origin at +0x0C/+0x10; reset clears the same 0x1C-byte object.
-// Keep the existing ABI names: these BFME-specific types have no ZH twin.
+// EA's constructor label and retail allocation message identify CellGrid;
+// see identity_evidence/001b1830-cellgrid.md. Other method names stay unchanged.
 void *__cdecl operator new[](unsigned int size);
 void __cdecl operator delete[](void *block);
 
@@ -139,10 +140,10 @@ struct BfmePoint1560
 	Real Y;
 };
 
-class BfmeCellGrid
+class CellGrid
 {
 public:
-	BfmeCellGrid(Int width, Int height, Real cellSize, Real offset);
+	CellGrid(Int width, Int height, Real cellSize, Real offset);
 	void _bfme_reset();
 	Int bfmeEvaluateCells() const;
 	void bfmeApplyAtObject(const Object *object,
@@ -159,7 +160,7 @@ private:
 	UnsignedInt *m_cellValues;
 };
 
-BfmeCellGrid::BfmeCellGrid(Int width, Int height, Real cellSize, Real offset)
+CellGrid::CellGrid(Int width, Int height, Real cellSize, Real offset)
 {
 	m_width = width;
 	m_height = height;
@@ -195,7 +196,7 @@ BfmeCellGrid::BfmeCellGrid(Int width, Int height, Real cellSize, Real offset)
 	}
 }
 
-void BfmeCellGrid::_bfme_reset()
+void CellGrid::_bfme_reset()
 {
 	if (m_cells)
 	{
@@ -218,7 +219,7 @@ void BfmeCellGrid::_bfme_reset()
 	}
 }
 
-UnsignedInt BfmeCellGrid::bfmePointIndex(const BfmePoint1560 &point)
+UnsignedInt CellGrid::bfmePointIndex(const BfmePoint1560 &point)
 {
 	if (m_cellSize > 0.0f)
 	{
@@ -231,7 +232,7 @@ UnsignedInt BfmeCellGrid::bfmePointIndex(const BfmePoint1560 &point)
 	return 0x7fffffff;
 }
 
-void BfmeCellGrid::bfmeApplyAtObject(const Object *object,
+void CellGrid::bfmeApplyAtObject(const Object *object,
 	Real amount, Int firstIndex, Int secondIndex) const
 {
 	const Coord3D *position = object->getPosition();
@@ -246,7 +247,7 @@ void BfmeCellGrid::bfmeApplyAtObject(const Object *object,
 	}
 }
 
-Int BfmeCellGrid::bfmeEvaluateCells() const
+Int CellGrid::bfmeEvaluateCells() const
 {
 	Int affected = 0;
 	for (UnsignedInt cellIndex = 0; cellIndex < m_cellCount; ++cellIndex)

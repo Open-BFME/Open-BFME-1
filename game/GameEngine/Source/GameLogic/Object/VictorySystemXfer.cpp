@@ -75,7 +75,7 @@ private:
 	unsigned char m_data[0x88];
 };
 
-class BfmeCellGrid
+class CellGrid
 {
 public:
 	Bool xfer(Xfer *xfer);
@@ -222,7 +222,7 @@ private:
 	Int m_playerParameterIndex[16];
 	VictoryScoreData m_rootCell;
 	_STL::vector<FactionVictoryParameters> m_factionVictoryParameters;
-	BfmeCellGrid *m_cellGrids[2];
+	CellGrid *m_cellGrids[2];
 	Bool m_initialized;
 	unsigned char m_padding[3];
 	UnsignedInt m_activeGrid;

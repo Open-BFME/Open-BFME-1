@@ -16,7 +16,7 @@ public:
 	Int bfmeEvaluate(bool useCellRatio);
 };
 
-class BfmeCellGrid
+class CellGrid
 {
 public:
 	Int bfmeEvaluateCells() const;
@@ -60,7 +60,7 @@ void VictorySystem::bfmeApplyWinningCells(void)
 	UnsignedInt index;
 	for (index = 0; index < 2; ++index)
 	{
-		u.counts[index] = (UnsignedInt)((BfmeCellGrid *)m_grids[index])->bfmeEvaluateCells();
+		u.counts[index] = (UnsignedInt)((CellGrid *)m_grids[index])->bfmeEvaluateCells();
 		if (u.counts[index] != 0)
 		{
 			if (best == 0x7fffffff || u.counts[index] > u.counts[best])
