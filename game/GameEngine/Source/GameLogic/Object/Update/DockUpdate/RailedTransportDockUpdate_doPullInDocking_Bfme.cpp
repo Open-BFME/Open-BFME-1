@@ -56,19 +56,6 @@ public:
 
 	void notifyModelConditionChanged();
 
-	void setModelConditionState()
-	{
-		const unsigned int condition = 0x10000000;
-		unsigned int flags = *reinterpret_cast<const unsigned int *>(
-			reinterpret_cast<const char *>(this) + 0x114);
-		if ((flags & condition) == 0)
-		{
-			*reinterpret_cast<unsigned int *>(
-				reinterpret_cast<char *>(this) + 0x114) = flags | condition;
-			notifyModelConditionChanged();
-		}
-	}
-
 	void clearModelConditionState()
 	{
 		const unsigned int condition = 0x10000000;
@@ -88,6 +75,22 @@ public:
 			reinterpret_cast<const char *>(this) + 0x1fc);
 	}
 };
+
+// Inlined Object model-condition set (bit 0x10000000 of the flags at +0x114).
+// File-local so this TU does not emit an external Object member COMDAT that
+// differs from other TUs' local stand-ins.
+static inline void setDockerModelConditionState(Object *object)
+{
+	const unsigned int condition = 0x10000000;
+	unsigned int flags = *reinterpret_cast<const unsigned int *>(
+		reinterpret_cast<const char *>(object) + 0x114);
+	if ((flags & condition) == 0)
+	{
+		*reinterpret_cast<unsigned int *>(
+			reinterpret_cast<char *>(object) + 0x114) = flags | condition;
+		object->notifyModelConditionChanged();
+	}
+}
 
 class GameLogic
 {
@@ -199,7 +202,7 @@ void Rva002CE900RailedTransportDockUpdate::doPullInDocking()
 			v.z = dockerPos->z;
 
 			docker->setPosition(&v);
-			docker->setModelConditionState();
+			setDockerModelConditionState(docker);
 
 			Real dx = dockerPos->x - dockPos->x;
 			Real dy = dockerPos->y - dockPos->y;
