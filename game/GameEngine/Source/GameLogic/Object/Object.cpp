@@ -909,64 +909,7 @@ Bool Object::checkAndDetonateBoobyTrap(const Object *victim)
 
 // Retail Object::setStatus (0x0001366F) is implemented in ObjectSetStatusThunk.cpp.
 
-//=============================================================================
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
-// ?setScriptStatus@Object@@QAEXW4ObjectScriptStatusBit@@_N@Z present-unmatched
-void Object::setScriptStatus( ObjectScriptStatusBit bit, Bool set )
-{
-	UnsignedInt oldScriptStatus = m_scriptStatus;
-
-	if( set )
-	{
-		m_scriptStatus |= bit;
-	}
-	else
-	{
-		m_scriptStatus &= ~bit;
-	}
-
-	if( m_scriptStatus != oldScriptStatus )
-	{
-		if( (m_scriptStatus & OBJECT_STATUS_SCRIPT_DISABLED) != (oldScriptStatus & OBJECT_STATUS_SCRIPT_DISABLED) )
-		{
-			if( m_partitionData )
-			{
-				// if an object becomes disabled or unpowered, then you have to update its partition data because it will
-				// change how far it can see. 
-				m_partitionData->makeDirty(true);
-			}
-			if( m_scriptStatus & OBJECT_STATUS_SCRIPT_DISABLED )
-			{
-				//I am now disabled, so tell the main game engine!
-				setDisabled( DISABLED_SCRIPT_DISABLED );
-			}
-			else
-			{
-				//I am no longer disabled, so tell the main game engine!
-				clearDisabled( DISABLED_SCRIPT_DISABLED );
-			}
-		}
-		if( (m_scriptStatus & OBJECT_STATUS_SCRIPT_UNPOWERED) != (oldScriptStatus & OBJECT_STATUS_SCRIPT_UNPOWERED) )
-		{
-			if( m_partitionData )
-			{
-				// if an object becomes disabled or unpowered, then you have to update its partition data because it will
-				// change how far it can see. 
-				m_partitionData->makeDirty(true);
-			}
-			if( m_scriptStatus & OBJECT_STATUS_SCRIPT_UNPOWERED )
-			{
-				//I am now underpowered, so tell the main game engine!
-				setDisabled( DISABLED_SCRIPT_UNDERPOWERED );
-			}
-			else
-			{
-				//I am no longer undperpowered, so tell the main game engine!
-				clearDisabled( DISABLED_SCRIPT_UNDERPOWERED );
-			}
-		}
-	}
-}
+// Retail Object::setScriptStatus (0x001D01D0) is implemented in ObjectFields.cpp.
 
 // Retail Object::canCrushOrSquish (0x001C7600) is implemented in ObjectCanCrushOrSquish.cpp.
 
