@@ -493,8 +493,6 @@ dir32,0x0111098C,?g_vtbl_0111098C@@3PAPAXA,"retail 0x0111098C is already recorde
 dir32,0x011109CC,?g_vtbl_011109CC@@3PAPAXA,"retail 0x011109CC is already recorded as ??_7BoxEmissionVolumeInfo@FXParticleSystem@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x01110A0C,?g_vtbl_01110A0C@@3PAPAXA,"retail 0x01110A0C is already recorded as ??_7SphereEmissionVolumeInfo@FXParticleSystem@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x01110A4C,?g_vtbl_01110A4C@@3PAPAXA,"retail 0x01110A4C is already recorded as ??_7CylinderEmissionVolumeInfo@FXParticleSystem@@6B@ (+1 more); reference that name, not a new one"
-dir32,0x01110E60,?g_vtbl_01110E60@@3PAPAXA,"nothing in the ledger owns 0x01110E60. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x01110E64,?g_vtbl_01110E64@@3PAPAXA,"nothing in the ledger owns 0x01110E64. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01110E78,?g_vtbl_01110E78@@3PAPAXA,"nothing in the ledger owns 0x01110E78. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01110E8C,?g_vtbl_01110E8C@@3PAPAXA,"nothing in the ledger owns 0x01110E8C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01110E90,?g_vtbl_01110E90@@3PAPAXA,"nothing in the ledger owns 0x01110E90. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"

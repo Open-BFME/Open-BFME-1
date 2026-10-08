@@ -11904,3 +11904,20 @@ void TerrainCollisionModuleTemplate::writeINI(File &file, unsigned int flags) co
 
 
 } // namespace FXParticleSystem
+
+extern void *g_vtbl_01110E60[1];
+void j_00005b5f();
+extern "C" void *__identifier("?g_vtbl_01110E60@@3PAPAXA")[1] =
+{
+    (void *)j_00005b5f
+};
+
+extern void *g_vtbl_01110E64[4];
+void j_00024ce4();
+void j_00048d5b();
+void j_000347bb();
+void j_0004748d();
+extern "C" void *__identifier("?g_vtbl_01110E64@@3PAPAXA")[4] =
+{
+    (void *)j_00024ce4, (void *)j_00048d5b, (void *)j_000347bb, (void *)j_0004748d
+};
