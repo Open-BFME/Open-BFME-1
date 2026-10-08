@@ -13,7 +13,8 @@ public:
 
 private:
 	StringBase( const StringBase<T> &source );
-	~StringBase();
+	~StringBase() { releaseBuffer(); }
+	void releaseBuffer();
 
 	struct Header
 	{
