@@ -1,10 +1,38 @@
 // Open-BFME5 conversions.
 
+// Matched callee rows, reached through their ILT thunks (callees.py):
+// aiEvacuate 0x000D8AC0, aiIdle 0x000D87E0, leaveGroup 0x001BFBF0,
+// bfmeGo916D 0x001C9B80, GameClientRandomVariable::getValue 0x00096F60.
+enum CommandSourceType { CMD_FROM_SCRIPT_1027 = 1 };
+
+class AICommandInterface
+{
+public:
+	void aiEvacuate(bool exposeStealthUnits, CommandSourceType cmdSource);
+	void aiIdle(CommandSourceType cmdSource);
+};
+
+class Object
+{
+public:
+	void leaveGroup(void);
+};
+
+class BfmeThing916D
+{
+public:
+	void bfmeGo916D(void *p);
+};
+
+class GameClientRandomVariable
+{
+public:
+	float getValue(void) const;
+};
+
 class BfmeQ1027
 {
 public:
-	void bfmeSet1027(int a, int b);
-	void bfmeMark1027(int a);
 };
 
 class BfmeY1027
@@ -17,8 +45,6 @@ public:
 class BfmeX1027
 {
 public:
-	void bfmeStop1027(void);
-	void bfmePause1027(int n);
 
 	char m_bfmePad[0x204];
 	BfmeY1027 *m_bfmeOwner;
@@ -79,8 +105,8 @@ void __stdcall bfmeGo1027A(int a)
 	if (y == 0)
 		return;
 
-	x->bfmeStop1027();
-	y->m_bfmeQ.bfmeSet1027(0, 1);
+	((Object *)x)->leaveGroup();
+	((AICommandInterface *)&y->m_bfmeQ)->aiEvacuate(false, (CommandSourceType)1);
 }
 
 void __stdcall bfmeGo1027B(int a)
@@ -95,14 +121,13 @@ void __stdcall bfmeGo1027B(int a)
 	if (y == 0)
 		return;
 
-	x->bfmePause1027(1);
-	y->m_bfmeQ.bfmeMark1027(1);
+	((BfmeThing916D *)x)->bfmeGo916D((void *)1);
+	((AICommandInterface *)&y->m_bfmeQ)->aiIdle((CommandSourceType)1);
 }
 
 class BfmeVal1027
 {
 public:
-	float bfmeVal1027(void);
 };
 
 struct BfmeZ1027
@@ -138,5 +163,5 @@ void __stdcall bfmeGo1027D(BfmeZ1027 *p, int *out)
 
 	int base = g_bfmeS1027()->m_bfmeBase;
 
-	*out = base + (int)p->m_bfmeSub.bfmeVal1027();
+	*out = base + (int)((GameClientRandomVariable *)&p->m_bfmeSub)->getValue();
 }
