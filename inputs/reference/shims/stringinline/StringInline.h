@@ -63,6 +63,15 @@ public:
 	int compareNoCase( const AsciiString &other ) const;
 };
 
+// Same for the wide pair: export 433 StringBase<unsigned short> at 0x0005E4E0
+// and the matched UnicodeString destructor at 0x0005EEA0 are both five-byte
+// JMPs to the wide releaseBuffer at 0x008881D0 (retail image bytes).
+template <>
+inline StringBase<unsigned short>::~StringBase()
+{
+	releaseBuffer();
+}
+
 class UnicodeString : private StringBase<unsigned short>
 {
 public:
