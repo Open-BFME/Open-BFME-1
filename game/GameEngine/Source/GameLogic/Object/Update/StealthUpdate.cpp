@@ -182,12 +182,7 @@ StealthUpdate::StealthUpdate( Thing *thing, const ModuleData* moduleData ) : Upd
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/StealthUpdateDestructorThunk.cpp
-// ??1StealthUpdate@@ present-unmatched
-StealthUpdate::~StealthUpdate( void )
-{
-
-}
+// StealthUpdate::~StealthUpdate (0x002AC070) is defined in StealthUpdateDestructor.cpp.
 
 //-------------------------------------------------------------------------------------------------
 void isBlackMarket( Object *obj, void *userData )
