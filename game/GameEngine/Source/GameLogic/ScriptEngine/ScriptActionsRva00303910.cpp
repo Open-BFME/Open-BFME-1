@@ -93,7 +93,8 @@ public:
 
 	void advance()
 	{
-		m_cur = (m_cur->*m_getNext)();
+		if (m_cur)
+			m_cur = (m_cur->*m_getNext)();
 	}
 
 private:
