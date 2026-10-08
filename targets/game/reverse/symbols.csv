@@ -90875,3 +90875,31 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_0BD@CNDCOIB@ScalePerLogicFrame?$AA@,0x00C9FCCC,Retail VictorySystem field-parse table VA 0x0109FC28 entry; compiler string literal ScalePerLogicFrame equals retail at VA 0x0109FCCC
 ??_C@_0BG@LECPNNIC@SubtractPerLogicFrame?$AA@,0x00C9FCB0,Retail VictorySystem field-parse table VA 0x0109FC28 entry; compiler string literal SubtractPerLogicFrame equals retail at VA 0x0109FCB0
 ??_C@_0BA@BEMNNCDL@CellBonusRadius?$AA@,0x00C9FC9C,Retail VictorySystem field-parse table VA 0x0109FC28 entry; compiler string literal CellBonusRadius equals retail at VA 0x0109FC9C
+??_C@_04KOACHJEN@Type?$AA@,0x00C80DDC,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal Type equals retail at VA 0x01080DDC
+??_C@_07OANJCBBB@AIState?$AA@,0x00CEA4F8,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal AIState equals retail at VA 0x010EA4F8
+??_C@_08DEOOAPOB@Duration?$AA@,0x00CC52F8,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal Duration equals retail at VA 0x010C52F8
+??_C@_08LCDKLGKP@CopyFrom?$AA@,0x00CEA698,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal CopyFrom equals retail at VA 0x010EA698
+??_C@_08MEMEBALO@LuaEvent?$AA@,0x00CCED60,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal LuaEvent equals retail at VA 0x010CED60
+??_C@_09KFCJACPJ@EndFXList?$AA@,0x00CEA560,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal EndFXList equals retail at VA 0x010EA560
+??_C@_0BA@BJNEGCHC@ModelConditions?$AA@,0x00CEA4D0,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal ModelConditions equals retail at VA 0x010EA4D0
+??_C@_0BB@FFIMCDK@IgnoreIfUnitBusy?$AA@,0x00CEA670,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal IgnoreIfUnitBusy equals retail at VA 0x010EA670
+??_C@_0BB@GLCAHKMB@IgnoreIfUnitIdle?$AA@,0x00CEA684,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal IgnoreIfUnitIdle equals retail at VA 0x010EA684
+??_C@_0BB@NLKNFDAB@InactiveDuration?$AA@,0x00CEA65C,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal InactiveDuration equals retail at VA 0x010EA65C
+??_C@_0BC@IDKPMEAJ@AttributeModifier?$AA@,0x00CB7AE0,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal AttributeModifier equals retail at VA 0x010B7AE0
+??_C@_0BC@NLOKGIEB@AttributeDuration?$AA@,0x00CEA504,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal AttributeDuration equals retail at VA 0x010EA504
+??_C@_0BE@EJBOBLKE@AttributeStartDelay?$AA@,0x00CEA548,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal AttributeStartDelay equals retail at VA 0x010EA548
+??_C@_0BF@IOFHOHAP@ModelConditionsClear?$AA@,0x00CEA4B4,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal ModelConditionsClear equals retail at VA 0x010EA4B4
+??_C@_0BH@JAIDMAEB@OnlyIfEnemyThreatAbove?$AA@,0x00CEA600,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal OnlyIfEnemyThreatAbove equals retail at VA 0x010EA600
+??_C@_0BH@NNIBCJDN@OnlyIfEnemyThreatBelow?$AA@,0x00CEA5E4,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal OnlyIfEnemyThreatBelow equals retail at VA 0x010EA5E4
+??_C@_0BI@BBJMODCC@OnlyIfFriendThreatBelow?$AA@,0x00CEA5AC,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal OnlyIfFriendThreatBelow equals retail at VA 0x010EA5AC
+??_C@_0BI@FMJOAKFO@OnlyIfFriendThreatAbove?$AA@,0x00CEA5C8,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal OnlyIfFriendThreatAbove equals retail at VA 0x010EA5C8
+??_C@_0BJ@OJHDCGPH@ModelConditionsSetOnExit?$AA@,0x00CEA494,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal ModelConditionsSetOnExit equals retail at VA 0x010EA494
+??_C@_0BJ@PHCJKADJ@InactiveDurationSameType?$AA@,0x00CEA61C,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal InactiveDurationSameType equals retail at VA 0x010EA61C
+??_C@_0BL@GEKDNACG@ModelConditionsClearOnExit?$AA@,0x00CEA474,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal ModelConditionsClearOnExit equals retail at VA 0x010EA474
+??_C@_0BL@PPAIKFLP@InactiveDurationSameObject?$AA@,0x00CEA63C,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal InactiveDurationSameObject equals retail at VA 0x010EA63C
+??_C@_0CE@HCFDOCMD@AttributeModifierWhileEmotionAct@,0x00CEA51C,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal AttributeModifierWhileEmotionActive equals retail at VA 0x010EA51C
+??_C@_0L@KPKPEAOG@IgnoreIfAI?$AA@,0x00CEA59C,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal IgnoreIfAI equals retail at VA 0x010EA59C
+??_C@_0M@EIJBCGIJ@StartFXList?$AA@,0x00CEA57C,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal StartFXList equals retail at VA 0x010EA57C
+??_C@_0N@CKMHKHPK@UpdateFXList?$AA@,0x00CEA56C,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal UpdateFXList equals retail at VA 0x010EA56C
+??_C@_0O@CDIGJBGO@IgnoreIfHuman?$AA@,0x00CEA58C,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal IgnoreIfHuman equals retail at VA 0x010EA58C
+??_C@_0P@EBLGEBL@AILockDuration?$AA@,0x00CEA4E4,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal AILockDuration equals retail at VA 0x010EA4E4
