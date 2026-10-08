@@ -4,6 +4,8 @@
 // whose initialization order is fixed by the retail constructor.
 
 class Thing;
+class GameLogic;
+extern GameLogic *TheGameLogic;
 class ModuleData;
 class Object;
 enum UpdateSleepTime { UPDATE_SLEEP_FOREVER = 0x3fffffff };
@@ -64,18 +66,8 @@ public:
     FlammableUpdate(Thing *, const ModuleData *);
     virtual ~FlammableUpdate();
 
-    // 0x00292FA0, 13 bytes: row-less unclaimed-boundary candidate. Tail-jmps
-    // into the already-landed ?calcSleepTime@FlammableUpdate@@IAE?AW4UpdateSleepTime@@XZ
-    // (0x00292FAD) when m_flag40 is clear; returns UPDATE_SLEEP(1) when set.
-    // m_flag40 is BFME-only state (see the header comment above), so the
-    // semantic name below is descriptive, not recovered.
+    // The flag gate falls through into the calcSleepTime body.
     UpdateSleepTime bfmeCalcSleepTimeGate();
-
-protected:
-    // Declared only -- defined and byte-verified elsewhere in the build
-    // (FlammableUpdate.cpp, 0x00292FAD); calling it here resolves to that
-    // existing body.
-    UpdateSleepTime calcSleepTime();
 
 private:
     int m_status;
@@ -116,5 +108,15 @@ UpdateSleepTime FlammableUpdate::bfmeCalcSleepTimeGate()
 {
     if ( m_flag40 )
         return (UpdateSleepTime)1;
-    return calcSleepTime();
+    unsigned int now = *(const unsigned int *)((const char *)TheGameLogic + 0x3c);
+    if (m_status == 1 && m_aflameEndFrame != 0 && m_aflameEndFrame > now)
+    {
+        unsigned int soonest = m_aflameEndFrame;
+        if (m_burnedEndFrame != 0 && m_burnedEndFrame < soonest && m_burnedEndFrame > now)
+            soonest = m_burnedEndFrame;
+        if (m_damageEndFrame != 0 && m_damageEndFrame < soonest && m_damageEndFrame > now)
+            soonest = m_damageEndFrame;
+        return (UpdateSleepTime)(soonest - now);
+    }
+    return UPDATE_SLEEP_FOREVER;
 }

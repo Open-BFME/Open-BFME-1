@@ -54,6 +54,12 @@
 
 #include "GameLogic/Weapon.h"
 
+class Gen008509C0;
+class Gen00049A2B;
+void Rva001EB560(Gen008509C0 *source, int unused, Gen00049A2B *sink);
+void parsePreferredAgainst(INI *ini, void *instance, void *store, const void *userData);
+void parseOnlyAgainst(INI *ini, void *instance, void *store, const void *userData);
+
 // BFME defines BitFlags<116>::parseFromINI once, out of line (retail
 // 0x00129810, BitFlagsParseFromINI.cpp); reference that body instead of
 // instantiating BitFlagsIO.h's Zero Hour template here.
@@ -154,12 +160,14 @@ void WeaponTemplateSet::parseWeaponTemplateSet( INI* ini, const ThingTemplate* t
 {
 	static const FieldParse myFieldParse[] = 
 	{
-		{ "Conditions", WeaponSetFlags::parseFromINI, NULL, offsetof( WeaponTemplateSet, m_types ) },
+		// The cdecl Conditions callback ignores the fourth parser argument.
+		{ "Conditions", reinterpret_cast<INIFieldParseProc>(Rva001EB560), NULL, offsetof( WeaponTemplateSet, m_types ) },
 		{ "Weapon",	WeaponTemplateSet::parseWeapon,	NULL, 0 },
 		{ "AutoChooseSources",	WeaponTemplateSet::parseAutoChoose, NULL, 0 },
-		{ "PreferredAgainst", WeaponTemplateSet::parsePreferredAgainst, NULL, 0 },
-		{ "ShareWeaponReloadTime", INI::parseBool, NULL, offsetof( WeaponTemplateSet, m_isReloadTimeShared ) },
-		{ "WeaponLockSharedAcrossSets", INI::parseBool, NULL, offsetof( WeaponTemplateSet, m_isWeaponLockSharedAcrossSets ) },
+		{ "PreferredAgainst", ::parsePreferredAgainst, NULL, 0 },
+		{ "OnlyAgainst", ::parseOnlyAgainst, NULL, 0 },
+		{ "ShareWeaponReloadTime", INI::parseBool, NULL, 0xE8 },
+		{ "WeaponLockSharedAcrossSets", INI::parseBool, NULL, 0xE9 },
 		{ 0, 0, 0, 0 }
 	};
 

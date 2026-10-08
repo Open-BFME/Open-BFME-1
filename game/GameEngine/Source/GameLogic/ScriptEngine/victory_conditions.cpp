@@ -569,4 +569,5 @@ void VictoryConditions::reset( void )
 	m_victoryConditions = (TheGameLogic->getGameMode() == 6)
 		? (VICTORY_NOBUILDINGS | VICTORY_NOUNITS)
 		: VICTORY_NOBUILDINGS;
+	hideEndGame();
 }

@@ -65,7 +65,7 @@ ActiveShroudUpgradeModuleData::ActiveShroudUpgradeModuleData( void )
 
 	static const FieldParse dataFieldParse[] = 
 	{
-		{ "NewShroudRange", INI::parseReal, NULL, offsetof( ActiveShroudUpgradeModuleData, m_newShroudRange ) },
+		{ "DelayTime", INI::parseDurationUnsignedInt, NULL, 0x70 },
 		{ 0, 0, 0, 0 }
 	};
 	p.add(dataFieldParse);
