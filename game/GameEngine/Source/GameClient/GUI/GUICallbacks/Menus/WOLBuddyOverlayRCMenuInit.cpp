@@ -9,7 +9,9 @@
 
 enum NameKeyType
 {
-	NAMEKEY_INVALID = 0
+	NAMEKEY_INVALID = 0,
+	NAMEKEY_MAX = 1<<23,
+	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
@@ -33,7 +35,7 @@ extern int buttonAddID;
 extern int buttonDeleteID;
 extern int buttonPlayID;
 extern int buttonIgnoreID;
-static NameKeyType buttonStatsID = NAMEKEY_INVALID;
+extern int buttonStatsID;
 
 // ?WOLBuddyOverlayRCMenuInit@@YAXPAVWindowLayout@@PAX@Z
 void WOLBuddyOverlayRCMenuInit( WindowLayout *layout, void *userData )
