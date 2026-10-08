@@ -50,10 +50,20 @@ private:
 	unsigned char m_bytes[0x5C];
 };
 
+// Retail 0x000FFCA0 body (reached through ILT 0x000309F4).
+class Rva000FFCA0
+{
+public:
+	~Rva000FFCA0();
+};
+
 class ClearanceTestingSlowDeathBehaviorModuleDataMember
 {
 public:
-	~ClearanceTestingSlowDeathBehaviorModuleDataMember();
+	__forceinline ~ClearanceTestingSlowDeathBehaviorModuleDataMember()
+	{
+		reinterpret_cast<Rva000FFCA0 *>(this)->~Rva000FFCA0();
+	}
 };
 
 class Rva001B3E60State
