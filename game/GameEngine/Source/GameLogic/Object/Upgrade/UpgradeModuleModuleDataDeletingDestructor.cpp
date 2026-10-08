@@ -9,15 +9,17 @@
 class UpgradeModuleModuleData
 {
 public:
-	__declspec(noinline) virtual ~UpgradeModuleModuleData();
+	virtual ~UpgradeModuleModuleData();
+
+protected:
+	// Protected stand-in constructor so the forcer can install the vftable;
+	// its unreferenced IAE COMDAT never clashes with the real public
+	// constructor (0x00128D20).
+	UpgradeModuleModuleData() {}
+	friend void Force_UpgradeModuleModuleData_Deleting_Destructor();
 };
 
-UpgradeModuleModuleData::~UpgradeModuleModuleData()
+void Force_UpgradeModuleModuleData_Deleting_Destructor()
 {
-}
-
-void Force_UpgradeModuleModuleData_Deleting_Destructor(
-	UpgradeModuleModuleData *value)
-{
-	delete value;
+	UpgradeModuleModuleData value;
 }
