@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "cb77eec9806e7f293a624e3c6eb82ac7b8037300f0ca250eccb244d941a5436a",
+  "symbol": "?Rva00849E20@@YAHI@Z",
+  "score_kind": "measured",
+  "score": 0.4754,
+  "source": "// ?Rva00849E20@@YAHI@Z\n// partial score=0.4754 date=2026-10-08\nint __cdecl Rva00849E20(unsigned int flags)\n{\n\tint r;\n\n\tswitch (flags & 3)\n\t{\n\tcase 0:\n\t\tr = 8;\n\t\tbreak;\n\tcase 1:\n\t\tr = 0x10;\n\t\tbreak;\n\tcase 2:\n\t\tr = 0x18;\n\t\tbreak;\n\tdefault:\n\t\tr = 1;\n\t\tbreak;\n\t}\n\tif (flags & 8)\n\t{\n\t\tr |= 1;\n\t}\n\tif (flags & 0x8000)\n\t{\n\t\tr |= 4;\n\t}\n\treturn r;\n}\n"
+}
