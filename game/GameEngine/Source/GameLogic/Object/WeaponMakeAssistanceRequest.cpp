@@ -87,13 +87,7 @@ class AssistedTargetingUpdate
 {
 public:
 	bool isFreeToAssist() const;
-};
-
-// Ledger placeholder for AssistedTargetingUpdate::assistAttack (0x0027FED0).
-class Gen_0027FED0
-{
-public:
-	void bfmeRun(void *requestingObject, Object *victimObject);
+	void assistAttack(const Object *requestingObject, Object *victimObject);	// 0x0027FED0
 };
 
 struct AssistanceRequestData
@@ -134,6 +128,6 @@ int makeAssistanceRequest( Object *requestOf, void *userData )
 	if( !assistModule->isFreeToAssist() )
 		return 1;
 
-	((Gen_0027FED0 *)assistModule)->bfmeRun( requestData->m_requestingObject, requestData->m_victimObject );
+	assistModule->assistAttack( requestData->m_requestingObject, requestData->m_victimObject );
 	return 1;
 }

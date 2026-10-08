@@ -1,14 +1,20 @@
-class BfmeShownXU
+// Retail calls ILT 0x00034991 -> 0x00478C60 and ILT 0x0002E073 -> 0x00499840,
+// matched as GameWindow::winGetInstanceData and WinInstanceData::setVideoBuffer.
+class VideoBuffer;
+
+class WinInstanceData
 {
 public:
-	void bfmeShowXU();
+	void setVideoBuffer(VideoBuffer *videoBuffer);
 };
 
-class BfmeMakerXU
+class GameWindow
 {
 public:
-	BfmeShownXU *bfmeMakeXU(int what);
+	WinInstanceData *winGetInstanceData();
 };
+
+typedef GameWindow BfmeMakerXU;
 
 class BfmeSrcXU
 {
@@ -50,12 +56,12 @@ void BfmeOwnerXU::bfmeSetXU(int mode)
 	if (mode == 1)
 	{
 		if (m_bfmeAXU != 0)
-			m_bfmeAXU->bfmeMakeXU(0)->bfmeShowXU();
+			m_bfmeAXU->winGetInstanceData()->setVideoBuffer(0);
 	}
 
 	if (m_bfmeModeXU == 3 || m_bfmeModeXU == 2)
 	{
 		if (m_bfmeAXU != 0)
-			m_bfmeAXU->bfmeMakeXU(m_bfmeBXU->bfmeGetXU())->bfmeShowXU();
+			m_bfmeAXU->winGetInstanceData()->setVideoBuffer((VideoBuffer *)m_bfmeBXU->bfmeGetXU());
 	}
 }
