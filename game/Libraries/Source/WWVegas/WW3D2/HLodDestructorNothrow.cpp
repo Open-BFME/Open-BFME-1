@@ -7,7 +7,14 @@
 void __cdecl operator delete[](void *) throw();
 void __cdecl operator delete(void *) throw();
 #include "winbase_shim.h"
+// Retail scalar-deleting wrapper 0x0097CDF0 frees through global operator
+// delete, so this TU drops the pool glue for the length of hlod.h.
+#include "always.h"
+#pragma push_macro("W3DMPO_GLUE")
+#undef W3DMPO_GLUE
+#define W3DMPO_GLUE(ARGCLASS)
 #include "hlod.h"
+#pragma pop_macro("W3DMPO_GLUE")
 #include "assetmgr.h"
 #include "hmdldef.h"
 #include "w3derr.h"
