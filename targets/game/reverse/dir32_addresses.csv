@@ -1229,7 +1229,7 @@ name,va
 ??_7BfmeOnlineProfileScreen@@6B@,0x011085E8
 ??_7BfmeOwnCC@@6B@,0x01086090
 ??_7BfmeOwnCD@@6B@,0x010E7688
-??_7BfmeOwnCE@@6BBfmeBaseVUQ@@@,0x01089630
+??_7BfmeOwnCE@@6BSnapshot@@@,0x01089630
 ??_7BfmeOwnCE@@6BSubsystemInterface@@@,0x01089644
 ??_7BfmeOwnVSV@@6B@,0x010EC778
 ??_7BfmeOwnVSW@@6B@,0x01075D50

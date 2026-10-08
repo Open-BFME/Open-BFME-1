@@ -6,16 +6,11 @@ public:
 	unsigned char m_bfmeHeadCE[4];
 };
 
-class BfmeBaseVUQ
-{
-public:
-	virtual ~BfmeBaseVUQ(void) {}
-	virtual void bfmePureVUQ(void) = 0;
+// Second base: the cleanup funclet 0x00BFDF78 destroys this+8 through
+// ??1Snapshot@@UAE@XZ (ILT 0x00001C80, named by the PE export table).
+#include "System/snapshot.h"
 
-	int m_bfmeCVUQ;
-};
-
-class BfmeOwnCE : public SubsystemInterface, public BfmeBaseVUQ
+class BfmeOwnCE : public SubsystemInterface, public Snapshot
 {
 public:
 	virtual ~BfmeOwnCE(void);
