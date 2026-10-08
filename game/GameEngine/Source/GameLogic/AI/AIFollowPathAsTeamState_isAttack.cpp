@@ -29,9 +29,14 @@ class StateMachine
 public:
 	char m_slice[0x1C];
 	State *m_currentState;
-
-	bool isInIdleState() const { return m_currentState ? m_currentState->isIdle() : true; }
 };
+
+// StateMachine::isInIdleState, kept file-local so this TU emits no second
+// public COMDAT copy of it.
+static inline bool machineIsInIdleState(const StateMachine *machine)
+{
+	return machine->m_currentState ? machine->m_currentState->isIdle() : true;
+}
 
 class AIFollowPathAsTeamState
 {
@@ -44,7 +49,7 @@ public:
 
 bool AIFollowPathAsTeamState::isAttack() const
 {
-	if (m_attackMoveMachine && !m_attackMoveMachine->isInIdleState())
+	if (m_attackMoveMachine && !machineIsInIdleState(m_attackMoveMachine))
 		return true;
 	return false;
 }
