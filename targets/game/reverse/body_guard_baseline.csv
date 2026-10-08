@@ -8,7 +8,6 @@ dir32,0x004030F8,??0ActionTemplate@@QAE@XZ,"nothing in the ledger owns 0x004030F
 dir32,0x004032DD,?condition002C5BE0@SupplyTruckStateMachine@@SA_NPAVState@@PAX@Z,"nothing in the ledger owns 0x004032DD. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00404660,??0TProp@@QAE@XZ,"nothing in the ledger owns 0x00404660. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x004046F6,??1Rva006967A0@@QAE@XZ,the name encodes 0x006967A0 but retail reads 0x004046F6
-dir32,0x00405245,?j_00005245@@YAXXZ,"retail 0x00405245 is already recorded as _HordeGarrisonContainFieldParse; reference that name, not a new one"
 dir32,0x00405277,??1?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAE@XZ,"nothing in the ledger owns 0x00405277. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0040602D,??0MoveHint0043AAD0@@QAE@XZ,"nothing in the ledger owns 0x0040602D. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00407617,??1BoneOCLInfo@@QAE@XZ,"nothing in the ledger owns 0x00407617. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
