@@ -29,7 +29,11 @@ static Vector3 BFMEBoxNormal[3][2] =
 	{ Vector3(0.0f, 0.0f, -1.0f), Vector3(0.0f, 0.0f, 1.0f) }
 };
 
-bool BFME_Test_Aligned_Box(BFMEBoxTestStruct *test);
+// Retail 0x008DA840 is ZH's Test_Aligned_Box (matched in
+// CollisionMathCollideLineSegObb.cpp); this TU keeps its own view of the struct.
+struct BoxTestStruct;
+bool Test_Aligned_Box(BoxTestStruct *test);
+#define BFME_Test_Aligned_Box(test) Test_Aligned_Box((BoxTestStruct *)(test))
 
 bool CollisionMath::Collide(const LineSegClass &line, const AABoxClass &box, CastResultStruct *result)
 {

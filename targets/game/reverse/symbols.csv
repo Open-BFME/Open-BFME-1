@@ -11711,7 +11711,6 @@ name,address,notes
 ?BFMENetworkAllocate@@YAPAXI@Z,0x00881F30,native BFME wrapper-list allocation call target
 ?BFME_DX8_Thread_Assert@@YAXXZ,0x00905B10,both retail IndexBufferClass lock destructors tail-dispatch to the shared DX8 thread assertion path
 ?BFME_Get_Font_Chars@@YAPAVFontCharsClass@@PBDM_NH@Z,0x0078CC10,exact same-TU private font-cache helper called twice by W3DFontLibrary::loadFontData; neutral ledger row at this body records the unrecovered original spelling
-?BFME_Test_Aligned_Box@@YA_NPAUBFMEBoxTestStruct@@@Z,0x008DA840,AABox collision helper pin
 ?BTREE_decompress@@YAHPAE0@Z,0x00822FF0,additive; direct body / per-TU copy
 ?BTREE_treepack@@YAXPAUBTreeEncodeContext@@PAUBTREEMemStruct@@IIIH@Z,0x00821200
 ?BaseHeightMapScorchSetShader@@YAXABVShaderClass@@@Z,0x000173C3,BaseHeightMap drawScorches shader ILT thunk
