@@ -244,9 +244,17 @@ extern void j_0001af23();
 extern void j_00004e3f();
 extern void j_00020dc9();
 
-// The 288-entry ModelConditionFlags name table is reached through the retail
-// ILT shared by the already-converted BitFlags setter at 0x001C62B0.
-extern Int bfmeLookup_001c62b0(void *name);
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
+template <int NUMBITS>
+class BitFlags
+{
+public:
+	static int getSingleBitFromName(const char *token);
+};
+
+// ModelConditionFlags is BitFlags<304> in BFME. Its name lookup is the matched
+// body at 0x001C0930, reached through ILT 0x000190F1 (see b7e1a78775).
+typedef BitFlags<304> ModelConditionFlags;
 
 class BfmeGetCounterCall
 {
@@ -535,7 +543,7 @@ void ScriptActions::doSetCounterToNumberObjectsPlayerOwnesWithModelCondition(
 			->getPlayerMaskFromAsciiString(playerName, 0);
 	Int value = 0;
 	Int modelConditionBit =
-		bfmeLookup_001c62b0((void *)modelConditionName.str());
+		ModelConditionFlags::getSingleBitFromName(modelConditionName.str());
 	if (mask)
 	{
 		do
