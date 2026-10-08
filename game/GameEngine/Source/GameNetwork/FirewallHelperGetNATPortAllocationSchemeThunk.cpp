@@ -4,9 +4,10 @@ typedef bool Bool;
 typedef int Int;
 typedef unsigned short UnsignedShort;
 
-class FirewallHelperClassGetNATPortAllocationSchemeShim
+class FirewallHelperClass
 {
-public:
+	friend class Rva00012F3FFirewallHelperThunk;
+private:
 	Int getNATPortAllocationScheme(Int numPorts, UnsignedShort *originalPorts,
 		UnsignedShort *mangledPorts, Bool &relativeDelta, Bool &looksGood);
 };
@@ -22,6 +23,6 @@ Int Rva00012F3FFirewallHelperThunk::getNATPortAllocationScheme(
 	Int numPorts, UnsignedShort *originalPorts, UnsignedShort *mangledPorts,
 	Bool &relativeDelta, Bool &looksGood)
 {
-	return ((FirewallHelperClassGetNATPortAllocationSchemeShim *)this)->getNATPortAllocationScheme(
+	return ((FirewallHelperClass *)this)->getNATPortAllocationScheme(
 		numPorts, originalPorts, mangledPorts, relativeDelta, looksGood);
 }
