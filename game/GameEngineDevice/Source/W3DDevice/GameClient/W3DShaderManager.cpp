@@ -1181,14 +1181,8 @@ ScreenMotionBlurFilter screenMotionBlurFilter;
 Coord3D ScreenMotionBlurFilter::m_zoomToPos;
 Bool ScreenMotionBlurFilter::m_zoomToValid = false;
 
-// ??0ScreenMotionBlurFilter@@QAE@XZ present-unmatched
-ScreenMotionBlurFilter::ScreenMotionBlurFilter():
-m_decrement(false),
-m_maxCount(0),
-m_lastFrame(0), 
-m_skipRender(false)
-{
-}
+// ScreenMotionBlurFilter::ScreenMotionBlurFilter (retail 0x007D8880) lives in
+// ScreenMotionBlurFilterConstructor.cpp.
 ///List of different motion blur implementations in order of preference
 W3DFilterInterface *ScreenMotionBlurFilterList[]=
 {
