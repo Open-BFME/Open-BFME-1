@@ -555,7 +555,7 @@ def rewrite_stored(renames, why="two models agreed"):
     subs = []
     for kind, scope, old, new in renames:
         if kind == "type":
-            subs.append((re.compile(rf"(?<=[@?VU01GE]){re.escape(old)}@"), f"{new}@"))
+            subs.append((re.compile(rf"(?<=[@?VU017GE]){re.escape(old)}@"), f"{new}@"))
         else:
             subs.append((re.compile(re.escape(f"?{old}@{scope}@")), f"?{new}@{scope}@"))
 
