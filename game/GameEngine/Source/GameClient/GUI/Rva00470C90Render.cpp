@@ -33,8 +33,15 @@ public:
  virtual void size(int*,int*);
 };
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->releaseBuffer(); }
-template<> inline unsigned short StringBase<unsigned short>::getCharAt(int index) const {
- if (m_data) return m_data->data[index];
+// File-static view of StringBase<wchar_t>'s header (string_base.h), so this
+// TU emits no UnicodeString/StringBase getCharAt COMDAT; retail inlines it.
+struct WideStringView00470C90 {
+ struct Header { int ref_count; unsigned short length; unsigned short capacity; unsigned short data[1]; };
+ Header *m_data;
+};
+static inline unsigned short wideCharAt(const UnicodeString &s, int index) {
+ const WideStringView00470C90 &v=(const WideStringView00470C90 &)s;
+ if (v.m_data) return v.m_data->data[index];
  return 0;
 }
 class Rva005BA9E0Anim2D {public: void draw(int,int,int,int);};
@@ -60,7 +67,7 @@ void Rva00470C90::draw(Text00470C90* text,const ICoord2D* pos,unsigned frame) {
  int w,h;
  text->size(&w,&h);
  UnicodeString s=text->getText();
- unsigned imageIndex=(unsigned short)s.getCharAt(0) % field1c.size();
+ unsigned imageIndex=wideCharAt(s,0) % field1c.size();
  int y=pos->y-(field78-h)/2;
  int x=pos->x-field74/2;
  int width=field74*2;
