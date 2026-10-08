@@ -7,9 +7,8 @@ public:
 	virtual ~Rva0006B140TailDtor();
 };
 
-__declspec(noinline) Rva0006B140TailDtor::~Rva0006B140TailDtor() {}
-
 void Force_Rva0006B140TailDtor_Deleting_Destructor(Rva0006B140TailDtor *value)
 {
-	delete value;
+	Rva0006B140TailDtor local;
+	(void)value;
 }
