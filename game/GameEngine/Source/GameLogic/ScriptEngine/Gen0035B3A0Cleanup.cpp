@@ -12,6 +12,20 @@ public:
 	void cleanup(void);
 };
 
+// The nested cleanups reach 0x0035AB70 (ILT 0x00011FEF) and 0x0035AD00;
+// called as those ledger rows name them.
+class Rva00359330StringRecordTable
+{
+public:
+	void cleanup(void);
+};
+
+class Rva0035AD00Table
+{
+public:
+	void cleanup(void);
+};
+
 class Gen0035B3A0
 {
 public:
@@ -31,6 +45,6 @@ private:
 void Gen0035B3A0::cleanup(void)
 {
 	unlink(this ? &m_slot4 : 0);
-	m_at0C.cleanup();
-	m_at2C.cleanup();
+	((Rva00359330StringRecordTable *)&m_at0C)->cleanup();
+	((Rva0035AD00Table *)&m_at2C)->cleanup();
 }
