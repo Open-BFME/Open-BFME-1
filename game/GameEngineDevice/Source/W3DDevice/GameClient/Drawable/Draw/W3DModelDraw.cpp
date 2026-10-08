@@ -2763,55 +2763,8 @@ void W3DModelDraw::recalcBonesForClientParticleSystems()
 	DANGER WARNING READ ME
 	DANGER WARNING READ ME
 */
-Bool W3DModelDraw::updateBonesForClientParticleSystems()
-{
-	const Drawable* drawable = getDrawable();
-	if (drawable != NULL && m_curState != NULL && m_renderObject != NULL ) 
-	{
-
-//		Matrix3D originalTransform = m_renderObject->Get_Transform();
-//		Matrix3D tmp = originalTransform;
- //   Vector3 zeroTranslation(0,0,0);
-  //  tmp.Set_Translation( zeroTranslation );
-	//	tmp.Scale(drawable->getScale());
-//		m_renderObject->Set_Transform(tmp);					
-				
-    
-
-		for (std::vector<ParticleSysTrackerType>::const_iterator it = m_particleSystemIDs.begin(); it != m_particleSystemIDs.end(); ++it)
-		{
-			ParticleSystem *sys = TheParticleSystemManager->findParticleSystem((*it).id);
-			Int boneIndex = (*it).boneIndex;
-			if ( (sys != NULL) && (boneIndex != 0)  ) 
-			{
-    		const Matrix3D boneTransform = m_renderObject->Get_Bone_Transform(boneIndex);// just a little worried about state changes
-        
-        Vector3 vpos = boneTransform.Get_Translation();
-
-        Coord3D pos;
-				pos.x = vpos.X;
-				pos.y = vpos.Y;
-				pos.z = vpos.Z;
-
-				sys->setPosition(&pos);
-
-        Real orientation = boneTransform.Get_Z_Rotation();
-				sys->rotateLocalTransformZ(orientation);
-        
-        sys->setLocalTransform(&boneTransform);
-        sys->setSkipParentXfrm(true);
-
-			}
-		}// next praticle system
-
-
-//  	m_renderObject->Set_Transform(originalTransform);	
-
-	}// end if Drawable
-
-	return TRUE;
-
-}
+// W3DModelDraw::updateBonesForClientParticleSystems: retail body in
+// W3DModelDraw_updateBonesForClientParticleSystemsMethodThunk.cpp.
 
 
 
