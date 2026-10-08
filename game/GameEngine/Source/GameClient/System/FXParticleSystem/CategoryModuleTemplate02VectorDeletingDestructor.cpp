@@ -12,6 +12,9 @@ template <int Category> class CategoryModuleTemplate;
 template <> class CategoryModuleTemplate<3>
 {
 public:
+	// Matched out of line at 0x005BF6A0 (fx_particle_system.cpp); declared so
+	// new[] references it instead of emitting an implicit COMDAT copy.
+	CategoryModuleTemplate();
 	virtual ~CategoryModuleTemplate();
 
 private:
