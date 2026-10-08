@@ -96,30 +96,31 @@ static const FieldParse TheMouseCursorFieldParseTable[] =
 	{ "Directions",							INI::parseInt,	NULL,	offsetof( CursorInfo, numDirections ) },
 };
 
-static const FieldParse TheMouseFieldParseTable[] = 
+// Retail field offsets differ from the vendored Mouse layout.
+static const FieldParse TheMouseFieldParseTable[] =
 {
-	{ "TooltipFontName",						INI::parseAsciiString,NULL,			offsetof( Mouse, m_tooltipFontName ) },
-	{ "TooltipFontSize",						INI::parseInt,				NULL,			offsetof( Mouse, m_tooltipFontSize ) },
-	{ "TooltipFontIsBold",					INI::parseBool,				NULL,			offsetof( Mouse, m_tooltipFontIsBold ) },
-	{ "TooltipAnimateBackground",		INI::parseBool,				NULL,			offsetof( Mouse, m_tooltipAnimateBackground ) },
-	{ "TooltipFillTime",						INI::parseInt,				NULL,			offsetof( Mouse, m_tooltipFillTime ) },
-	{ "TooltipDelayTime",						INI::parseInt,				NULL,			offsetof( Mouse, m_tooltipDelayTime ) },
-	{ "TooltipTextColor",						INI::parseRGBAColorInt,	NULL,		offsetof( Mouse, m_tooltipColorText ) },
-	{ "TooltipHighlightColor",			INI::parseRGBAColorInt,	NULL,		offsetof( Mouse, m_tooltipColorHighlight ) },
-	{ "TooltipShadowColor",					INI::parseRGBAColorInt,	NULL,		offsetof( Mouse, m_tooltipColorShadow ) },
-	{ "TooltipBackgroundColor",			INI::parseRGBAColorInt,	NULL,		offsetof( Mouse, m_tooltipColorBackground ) },
-	{ "TooltipBorderColor",					INI::parseRGBAColorInt,	NULL,		offsetof( Mouse, m_tooltipColorBorder ) },
-	{ "TooltipWidth",								INI::parsePercentToReal,NULL,		offsetof( Mouse, m_tooltipWidth ) },
-	{ "CursorMode",									INI::parseInt,					NULL,		offsetof( Mouse, m_currentRedrawMode ) },
-	{ "UseTooltipAltTextColor",			INI::parseBool,					NULL,		offsetof( Mouse, m_useTooltipAltTextColor ) },
-	{ "UseTooltipAltBackColor",			INI::parseBool,					NULL,		offsetof( Mouse, m_useTooltipAltBackColor ) },
-	{ "AdjustTooltipAltColor",			INI::parseBool,					NULL,		offsetof( Mouse, m_adjustTooltipAltColor ) },
-	{ "OrthoCamera",								INI::parseBool,					NULL,		offsetof( Mouse, m_orthoCamera ) },
-	{ "OrthoZoom",									INI::parseReal,					NULL,		offsetof( Mouse, m_orthoZoom ) },
-	{ "DragTolerance",							INI::parseUnsignedInt,	NULL,		offsetof( Mouse, m_dragTolerance) },
-	{ "DragTolerance3D",						INI::parseUnsignedInt,	NULL,		offsetof( Mouse, m_dragTolerance3D) },
-	{ "DragToleranceMS",						INI::parseUnsignedInt,	NULL,		offsetof( Mouse, m_dragToleranceMS) },
-
+	{ "TooltipFontName", INI::parseAsciiString, NULL, 0x1070 },
+	{ "TooltipFontSize", INI::parseInt, NULL, 0x1074 },
+	{ "TooltipFontIsBold", INI::parseBool, NULL, 0x1078 },
+	{ "TooltipAnimateBackground", INI::parseBool, NULL, 0x1079 },
+	{ "TooltipFillTime", INI::parseInt, NULL, 0x107C },
+	{ "TooltipDelayTime", INI::parseInt, NULL, 0x1080 },
+	{ "TooltipTextColor", INI::parseRGBAColorInt, NULL, 0x1090 },
+	{ "TooltipHighlightColor", INI::parseRGBAColorInt, NULL, 0x10A0 },
+	{ "TooltipShadowColor", INI::parseRGBAColorInt, NULL, 0x10B0 },
+	{ "TooltipBackgroundColor", INI::parseRGBAColorInt, NULL, 0x10C0 },
+	{ "TooltipBorderColor", INI::parseRGBAColorInt, NULL, 0x10D0 },
+	{ "TooltipWidth", INI::parsePercentToReal, NULL, 0x1084 },
+	{ "CursorMode", INI::parseInt, NULL, 0x10E0 },
+	{ "UseTooltipAltTextColor", INI::parseBool, NULL, 0x10E4 },
+	{ "UseTooltipAltBackColor", INI::parseBool, NULL, 0x10E5 },
+	{ "AdjustTooltipAltColor", INI::parseBool, NULL, 0x10E6 },
+	{ "OrthoCamera", INI::parseBool, NULL, 0x10E7 },
+	{ "OrthoZoom", INI::parseReal, NULL, 0x10E8 },
+	{ "DragTolerance", INI::parseUnsignedInt, NULL, 0x10EC },
+	{ "DragTolerance3D", INI::parseUnsignedInt, NULL, 0x10F0 },
+	{ "DragToleranceMS", INI::parseUnsignedInt, NULL, 0x10F4 },
+	{ NULL, NULL, NULL, 0 }
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

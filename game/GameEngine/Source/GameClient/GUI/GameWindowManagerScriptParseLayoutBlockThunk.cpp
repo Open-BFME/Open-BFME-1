@@ -83,6 +83,7 @@ public:
 };
 
 class WindowLayoutInfo;
+class WinInstanceData;
 
 typedef Bool (*LayoutParse)(char *, char *, UnsignedInt, WindowLayoutInfo *);
 
@@ -92,11 +93,11 @@ struct LayoutScriptParse
 	LayoutParse parse;
 };
 
-// The three entries are the named registrations in GameWindowManagerScript's
-// layoutScriptTable; each callback is already matched at its own retail RVA.
+// Retail registers four layout callbacks, including LAYOUTCLASS.
 extern Bool parseInit(char *, char *, UnsignedInt, WindowLayoutInfo *);
 extern Bool parseUpdate(char *, char *, UnsignedInt, WindowLayoutInfo *);
 extern Bool parseShutdown(char *, char *, UnsignedInt, WindowLayoutInfo *);
+extern Bool parseSystemCallback(char *, WinInstanceData *, char *, void *);
 extern void __cdecl readUntilSemicolon(File *, char *, int);
 extern __declspec(dllimport) char *__cdecl strtok(char *, const char *);
 
@@ -105,6 +106,7 @@ static LayoutScriptParse layoutScriptTable[] =
 	{ (char *)"LAYOUTINIT", parseInit },
 	{ (char *)"LAYOUTUPDATE", parseUpdate },
 	{ (char *)"LAYOUTSHUTDOWN", parseShutdown },
+	{ (char *)"LAYOUTCLASS", reinterpret_cast<LayoutParse>(parseSystemCallback) },
 	{ 0, 0 }
 };
 

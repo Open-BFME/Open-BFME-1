@@ -68,35 +68,41 @@
 //-----------------------------------------------------------------------------
 GlobalLanguage *TheGlobalLanguageData = NULL;				///< The global language singalton
 
-static const FieldParse TheGlobalLanguageDataFieldParseTable[] = 
+// Retail field offsets differ from the vendored GlobalLanguage layout.
+static const FieldParse TheGlobalLanguageDataFieldParseTable[] =
 {
-	{ "UnicodeFontName",									INI::parseAsciiString,NULL,									offsetof( GlobalLanguage, m_unicodeFontName ) },
-	//{	"UnicodeFontFileName",							INI::parseAsciiString,NULL,									offsetof( GlobalLanguage, m_unicodeFontFileName ) },
-	{ "LocalFontFile",										GlobalLanguage::parseFontFileName,					NULL,			0},
-	{ "MilitaryCaptionSpeed",						INI::parseInt,					NULL,		offsetof( GlobalLanguage, m_militaryCaptionSpeed ) },
-	{ "UseHardWordWrap",						INI::parseBool,					NULL,		offsetof( GlobalLanguage, m_useHardWrap) },
-	{ "ResolutionFontAdjustment",						INI::parseReal,					NULL,		offsetof( GlobalLanguage, m_resolutionFontSizeAdjustment) },
-	
-	{ "CopyrightFont",					GlobalLanguage::parseFontDesc,	NULL,	offsetof( GlobalLanguage, m_copyrightFont ) },
-	{ "MessageFont",					GlobalLanguage::parseFontDesc,	NULL,	offsetof( GlobalLanguage, m_messageFont) },					
-	{ "MilitaryCaptionTitleFont",		GlobalLanguage::parseFontDesc,	NULL,	offsetof( GlobalLanguage, m_militaryCaptionTitleFont) },
-	{ "MilitaryCaptionDelayMS",					INI::parseInt,					NULL,		offsetof( GlobalLanguage, m_militaryCaptionDelayMS ) },
-	{ "MilitaryCaptionFont",			GlobalLanguage::parseFontDesc,	NULL,	offsetof( GlobalLanguage, m_militaryCaptionFont) },
-	{ "SuperweaponCountdownNormalFont",	GlobalLanguage::parseFontDesc,	NULL,	offsetof( GlobalLanguage, m_superweaponCountdownNormalFont) },
-	{ "SuperweaponCountdownReadyFont",	GlobalLanguage::parseFontDesc,	NULL,	offsetof( GlobalLanguage, m_superweaponCountdownReadyFont) },
-	{ "NamedTimerCountdownNormalFont",	GlobalLanguage::parseFontDesc,	NULL,	offsetof( GlobalLanguage, m_namedTimerCountdownNormalFont) },
-	{ "NamedTimerCountdownReadyFont",	GlobalLanguage::parseFontDesc,	NULL,	offsetof( GlobalLanguage, m_namedTimerCountdownReadyFont) },
-	{ "DrawableCaptionFont",			GlobalLanguage::parseFontDesc,	NULL,	offsetof( GlobalLanguage, m_drawableCaptionFont) },
-	{ "DefaultWindowFont",				GlobalLanguage::parseFontDesc,	NULL,	offsetof( GlobalLanguage, m_defaultWindowFont) },
-	{ "DefaultDisplayStringFont",		GlobalLanguage::parseFontDesc,	NULL,	offsetof( GlobalLanguage, m_defaultDisplayStringFont) },
-	{ "TooltipFontName",				GlobalLanguage::parseFontDesc,	NULL,	offsetof( GlobalLanguage, m_tooltipFontName) },
-	{ "NativeDebugDisplay",				GlobalLanguage::parseFontDesc,	NULL,	offsetof( GlobalLanguage, m_nativeDebugDisplay) },
-	{ "DrawGroupInfoFont",				GlobalLanguage::parseFontDesc,	NULL,	offsetof( GlobalLanguage, m_drawGroupInfoFont) },
-	{ "CreditsTitleFont",				GlobalLanguage::parseFontDesc,	NULL,	offsetof( GlobalLanguage, m_creditsTitleFont) },
-	{ "CreditsMinorTitleFont",				GlobalLanguage::parseFontDesc,	NULL,	offsetof( GlobalLanguage, m_creditsPositionFont) },
-	{ "CreditsNormalFont",				GlobalLanguage::parseFontDesc,	NULL,	offsetof( GlobalLanguage, m_creditsNormalFont) },
-
-	{ NULL,					NULL,						NULL,						0 }  // keep this last
+	{ "DecimalSeparator", INI::parseAsciiString, NULL, 0x8 },
+	{ "ThousandSeparator", INI::parseAsciiString, NULL, 0xC },
+	{ "TimeMinuteToSecondSeparator", INI::parseAsciiString, NULL, 0x10 },
+	{ "UnicodeFontName", INI::parseAsciiString, NULL, 0x14 },
+	{ "LocalFontFile", GlobalLanguage::parseFontFileName, NULL, 0x0 },
+	{ "MilitaryCaptionSpeed", INI::parseInt, NULL, 0x24 },
+	{ "UseHardWordWrap", INI::parseBool, NULL, 0x20 },
+	{ "ResolutionFontAdjustment", INI::parseReal, NULL, 0x130 },
+	{ "AudioLanguage", INI::parseAsciiString, NULL, 0x1C },
+	{ "CopyrightFont", GlobalLanguage::parseFontDesc, NULL, 0x28 },
+	{ "MessageFont", GlobalLanguage::parseFontDesc, NULL, 0x34 },
+	{ "MilitaryCaptionTitleFont", GlobalLanguage::parseFontDesc, NULL, 0x40 },
+	{ "MilitaryCaptionFont", GlobalLanguage::parseFontDesc, NULL, 0x4C },
+	{ "AudioSubtitleFont", GlobalLanguage::parseFontDesc, NULL, 0x58 },
+	{ "SuperweaponCountdownNormalFont", GlobalLanguage::parseFontDesc, NULL, 0x64 },
+	{ "SuperweaponCountdownReadyFont", GlobalLanguage::parseFontDesc, NULL, 0x70 },
+	{ "NamedTimerCountdownNormalFont", GlobalLanguage::parseFontDesc, NULL, 0x7C },
+	{ "NamedTimerCountdownReadyFont", GlobalLanguage::parseFontDesc, NULL, 0x88 },
+	{ "DrawableCaptionFont", GlobalLanguage::parseFontDesc, NULL, 0x94 },
+	{ "DefaultWindowFont", GlobalLanguage::parseFontDesc, NULL, 0xA0 },
+	{ "DefaultDisplayStringFont", GlobalLanguage::parseFontDesc, NULL, 0xAC },
+	{ "TooltipFontName", GlobalLanguage::parseFontDesc, NULL, 0xB8 },
+	{ "NativeDebugDisplay", GlobalLanguage::parseFontDesc, NULL, 0xC4 },
+	{ "DrawGroupInfoFont", GlobalLanguage::parseFontDesc, NULL, 0xD0 },
+	{ "CreditsTitleFont", GlobalLanguage::parseFontDesc, NULL, 0xDC },
+	{ "CreditsMinorTitleFont", GlobalLanguage::parseFontDesc, NULL, 0xE8 },
+	{ "CreditsNormalFont", GlobalLanguage::parseFontDesc, NULL, 0xF4 },
+	{ "HelpBoxNameFont", GlobalLanguage::parseFontDesc, NULL, 0x100 },
+	{ "HelpBoxCostFont", GlobalLanguage::parseFontDesc, NULL, 0x10C },
+	{ "HelpBoxShortcutFont", GlobalLanguage::parseFontDesc, NULL, 0x118 },
+	{ "HelpBoxDescriptionFont", GlobalLanguage::parseFontDesc, NULL, 0x124 },
+	{ NULL, NULL, NULL, 0 }
 };
 
 //-----------------------------------------------------------------------------
