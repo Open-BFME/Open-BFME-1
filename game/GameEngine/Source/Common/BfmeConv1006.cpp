@@ -1,17 +1,5 @@
 // Open-BFME5 conversions.
 
-class BfmeRun1006
-{
-public:
-	void bfmeRun1006();
-};
-
-class BfmeStop1006
-{
-public:
-	void bfmeStop1006();
-};
-
 class BfmeAptScreenLanLobby;
 extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
 // retail 0x012F4B58: the shell singleton, whose one identity is
@@ -20,6 +8,32 @@ extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
 class Shell;
 extern Shell *TheShell;
 extern bool LANbuttonPushed;
+
+// Callees (tools/callees.py): ILT 0x6AAA -> 0x0057F470 Shell::pop; tail jump
+// to 0x00517450 Rva00517450LanLobby::rva00517450; ILT 0x290D2 -> 0x00465B80
+// Rva00465B80::apply.
+class Rva00517450LanLobby
+{
+public:
+	void rva00517450();
+};
+
+class Shell
+{
+public:
+	void pop();
+};
+
+class Rva00465B80
+{
+public:
+	void apply();
+};
+
+typedef Rva00517450LanLobby BfmeRun1006;
+typedef Rva00465B80 BfmeHub1006;
+#define bfmeRun1006() rva00517450()
+#define bfmeDo1006() apply()
 
 class BfmeA1006
 {
@@ -40,7 +54,7 @@ void BfmeA1006::bfmeGo1006A()
 		return;
 
 	if (!reinterpret_cast<BfmeRun1006 * &>(g_rva012F4998LanLobby)) {
-		((BfmeStop1006 *)TheShell)->bfmeStop1006();
+		TheShell->pop();
 		LANbuttonPushed = 1;
 		return;
 	}
@@ -60,11 +74,6 @@ struct BfmeAux1006
 	char m_bfmeFlag;
 };
 
-class BfmeHub1006
-{
-public:
-	void bfmeDo1006();
-};
 
 // Retail 0x012F19E8 is the game-wide manager pointer EA defines as
 // `WindowManager *g_rva012F19E8WindowManager` in
