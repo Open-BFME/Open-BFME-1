@@ -224,7 +224,6 @@ dir32,0x00DF7F4E,__RTC_Terminate,"nothing in the ledger owns 0x00DF7F4E. Give th
 dir32,0x00DF7FB0,__matherr,"nothing in the ledger owns 0x00DF7FB0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01070EC0,?obj@?1??getRva008877A0Singleton@@YAPAXXZ@$AVRva008877A0Type@@A,the name encodes 0x008877A0 but retail reads 0x01070EC0
 dir32,0x01070EE0,?obj@?1??getRva008876E0Singleton@@YAPAXXZ@$AVRva008876E0Type@@A,the name encodes 0x008876E0 but retail reads 0x01070EE0
-dir32,0x01073734,??_7Bitmap@Gdiplus@@6B@,"retail 0x01073734 is already recorded as _bfmeVftAPA; reference that name, not a new one"
 dir32,0x01073744,?g_vtbl_01073744@@3PAPAXA,"retail 0x01073744 is already recorded as ??_7?$BasicTimerClass@VSystemTimerClass@@@@6B@ (+112 more); reference that name, not a new one"
 dir32,0x01073758,?g_vtbl_01073758@@3PAPAXA,"retail 0x01073758 is already recorded as ??_7?$DLListClass@VSortingNodeStruct@@@@6B@ (+4 more); reference that name, not a new one"
 dir32,0x01073760,?g_vtbl_01073760@@3PAPAXA,"retail 0x01073760 is already recorded as ??_7?$CategoryModuleInfo@$0A@@FXParticleSystem@@6B@ (+14 more); reference that name, not a new one"

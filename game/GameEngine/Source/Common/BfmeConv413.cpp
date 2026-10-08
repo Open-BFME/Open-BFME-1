@@ -1,6 +1,6 @@
 // Retail VA 0x01073734 is Gdiplus::Bitmap's vtable, emitted by the existing
 // ATL image TUs; its deleting-destructor slot routes to 0x0005E110.
-extern "C" unsigned char __identifier("??_7Bitmap@Gdiplus@@6B@")[];
+extern "C" unsigned char __identifier("bfmeVftAPA")[];
 
 namespace Gdiplus { class GpBitmap; }
 // Existing import-stub owners: GdipCreateBitmapFromFileICM and
@@ -22,7 +22,7 @@ public:
 
 BfmeThingAPA *BfmeThingAPA::bfmeInitAPA(void *one, void *two)
 {
-	m_bfmeVft = __identifier("??_7Bitmap@Gdiplus@@6B@");
+	m_bfmeVft = __identifier("bfmeVftAPA");
 	Gdiplus::GpBitmap *got = 0;
 	if (two != 0)
 	{
@@ -40,7 +40,7 @@ BfmeThingAPA *BfmeThingAPA::bfmeInitAPA(void *one, void *two)
 // ?bfmeInitScan0APA@BfmeThingAPA@@QAEPAV1@PAX0000@Z
 BfmeThingAPA *BfmeThingAPA::bfmeInitScan0APA(void *width, void *height, void *stride, void *format, void *scan0)
 {
-	m_bfmeVft = __identifier("??_7Bitmap@Gdiplus@@6B@");
+	m_bfmeVft = __identifier("bfmeVftAPA");
 	int got = 0;
 	m_bfmeWhat = GdipCreateBitmapFromScan0(width, height, stride, format, scan0, &got);
 	m_bfmeGot = got;
