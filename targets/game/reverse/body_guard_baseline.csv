@@ -143,7 +143,6 @@ dir32,0x00448DD3,??1?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@
 dir32,0x0044A4E4,??0Rva004029F0@@QAE@XZ,"retail 0x0044A4E4 is already recorded as ??0PathfindZoneBlock@@QAE@XZ; reference that name, not a new one"
 dir32,0x0044A5CA,?j_0004a5ca@@YAXXZ,"retail 0x0044A5CA is already recorded as ?rva0044a5ca@BfmeAptScreenOnlineChat@@QAEXXZ; reference that name, not a new one"
 dir32,0x0044A606,?g_0044A606@@YAXXZ,"nothing in the ledger owns 0x0044A606. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x0044B650,?j_0004b650@@YAXXZ,"retail 0x0044B650 is already recorded as _RespawnBodyFieldParse; reference that name, not a new one"
 dir32,0x006207F0,?bfmeGoFCD@@YAXPAVBfmeObjFCD@@PAUBfmePairFCD@@@Z,"retail 0x006207F0 is already recorded as ?rva220840Callback@@YAXXZ; reference that name, not a new one"
 dir32,0x00810C90,?mark00410C90@@YAHPAX0@Z,"nothing in the ledger owns 0x00810C90. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x008CE850,?playerTooltip@Rva004CE850LanLobbyMenu@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z,"retail 0x008CE850 is already recorded as ?d_004ce850@@YAXXZ; reference that name, not a new one"
