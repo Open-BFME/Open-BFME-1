@@ -12,6 +12,7 @@ template <int Category> class CategoryModuleTemplate;
 template <> class CategoryModuleTemplate<1>
 {
 public:
+	CategoryModuleTemplate();
 	virtual ~CategoryModuleTemplate();
 
 private:
