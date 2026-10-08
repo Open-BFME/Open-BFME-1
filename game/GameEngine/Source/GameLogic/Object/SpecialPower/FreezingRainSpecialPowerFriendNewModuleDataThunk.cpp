@@ -37,7 +37,7 @@ public:
 // class's static field-parse builder.  The old
 // `extern "C" FreezingRainSpecialPowerFieldParse` was invented in this TU and nothing
 // defines it; the thunk is retail's real spelling of this operand.
-void j_0004157e();
+extern "C" void __cdecl __identifier("FreezingRainSpecialPowerFieldParse")();
 
 class FreezingRainSpecialPower
 {
@@ -51,6 +51,6 @@ ModuleData *FreezingRainSpecialPower::friend_newModuleData(INI *ini)
 	FreezingRainSpecialPowerModuleData *data = new FreezingRainSpecialPowerModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0004157e));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(__identifier("FreezingRainSpecialPowerFieldParse")));
 	return (ModuleData *)data;
 }
