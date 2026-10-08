@@ -37,7 +37,19 @@
 //
 // IDENTITY IS NOT RECOVERED.  Every name is derived from an address.
 
-extern void *g_Rva00789720Table[];					///< retail 0x01126CB0
+extern void j_00003652(void);
+extern "C" int __cdecl _purecall(void);
+
+// Retail 0x01126CB0: six-slot table (vtable_lookup.py): the ILT thunk at
+// 0x00403652, then five CRT _purecall cells.
+void *g_Rva00789720Table[] = {
+	(void *)&j_00003652,
+	(void *)_purecall,
+	(void *)_purecall,
+	(void *)_purecall,
+	(void *)_purecall,
+	(void *)_purecall,
+};
 
 class Rva00789720
 {
