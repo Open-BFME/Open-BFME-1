@@ -77929,11 +77929,8 @@ name,address,notes
 ?bfmeMakeSubJX@@YAPAUBfmeSubJX@@XZ,0x009A6F20,pin make-sub for BfmeConv2080
 ?bfmeMakeTFD@BfmeHolderTFD@@QAEXPAX@Z,0x009DB4B0,pin
 ?bfmeMakeVSO@BfmeSrcVSO@@QAE?AVBfmeStrVSO@@XZ,0x00851FA0,pin
-?bfmeMakeW0@@YAIII@Z,0x0004B28B,Open-BFME5 ILT the variant ctor at 0x00390830 calls
-?bfmeMakeW1@@YAIII@Z,0x00002B8F,Open-BFME5 ILT the variant ctor at 0x003CA5F0 calls
 ?bfmeMakeW2@@YAIII@Z,0x00025225,Open-BFME5 ILT the variant ctor at 0x0054F770 calls
 ?bfmeMakeW3@@YAIII@Z,0x0000403E,Open-BFME5 ILT the variant ctor at 0x0054F7C0 calls
-?bfmeMakeW4@@YAIII@Z,0x000283D5,Open-BFME5 ILT the variant ctor at 0x00596C40 calls
 ?bfmeMake_00002b8f@@YAPAXPAX0@Z,0x00002B8F,Open-BFME5 ILT the pointer-pair maker reached from the bodies around 0x003CA460
 ?bfmeMake_0000403e@@YAPAXPAX0@Z,0x0000403E,Open-BFME5 ILT the pointer-pair maker reached from the bodies around 0x0054F370
 ?bfmeMake_00025225@@YAPAXPAX0@Z,0x00025225,Open-BFME5 ILT the pointer-pair maker reached from the bodies around 0x0054F350
@@ -86732,7 +86729,6 @@ name,address,notes
 ?rva0046ef50@@YAXXZ,0x00018E8F,Open-BFME5 ILT thunk b_0046ef50
 ?rva00476C50@FontLibraryBFMERetail@@AAEPAVGameFont@@PAVAsciiString@@MEH@Z,0x0000EBA6,Open-BFME5 ILT thunk to body 0x00476C50; FontLibraryBFMERetail::getFont at 0x004772D0 tail-returns its result; address-derived name
 ?rva00478ED0@GameWindow@@QAEXP6AXPAV1@@Z@Z,0x00004D04,body 0x00478ED0 (mov eax [esp+4]; mov [ecx+0x1F0] eax; ret 4 = thiscall 1 arg void); called from ControlBar::setControlCommand 0x0049EDE0+0x242 with ecx=esi GameWindow* button after push 0x0043D942; ILT 0x00004D04 jmp 0x00478ED0; address-derived name
-?rva00479B80@Rva00479B80Window@@QAE?AVUnicodeString@@XZ,0x00007E82,REL32 pin from drawBorder 0x0078E570 (ILT to the 30-byte sret getter at 0x00479B80, receiver+0x30)
 ?rva0048B390@TransitionGroup@@QAEXPAX@Z,0x0048B390,address-derived TransitionGroup list-copy helper body; the verified existing ILT 0x0000BE97 is the compiler resolver candidate for the 0x0048B690 calls; campaign=luna36h-20260907;lane=files
 ?rva0049ca90@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z,0x0049CA90,Address-derived19B tooltip callback; ControlBar init stores VA0089CA90 through typed GameWindow::winSetTooltipFunc; body forwards first stack arg with zero to TheControlBar via ILT0003BCCD then bare ret; reference callback name conflicts so omitted
 ?rva004BD400@@YAXPAVGameWindow@@VUnicodeString@@@Z,0x0003A52B,ILT jmp to body 0x004BD400 (98B ends bare ret); called by GameWindowManager::gogoGadgetRadioButton 0x0047DEC0+0xD9 after pushing a by-value UnicodeString copy (StringBase<G> copy ctor 0x00888400) and the window then add esp 8 so cdecl void(GameWindow* UnicodeString); callee reads window at arg1 and releases the arg2 buffer; semantic name (Gadget*SetText) unproven so address token kept

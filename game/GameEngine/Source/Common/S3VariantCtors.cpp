@@ -11,17 +11,28 @@
 // they reach for the same four helpers the short-widening constructors already
 // use. In both shapes the widened value is handed to the helper twice.
 
-unsigned int bfmeMakeW0(unsigned int a, unsigned int b);		// ILT 0x0004B28B
-unsigned int bfmeMakeW1(unsigned int a, unsigned int b);		// ILT 0x00002B8F
-unsigned int bfmeMakeW2(unsigned int a, unsigned int b);		// ILT 0x00025225
-unsigned int bfmeMakeW3(unsigned int a, unsigned int b);		// ILT 0x0000403E
-unsigned int bfmeMakeW4(unsigned int a, unsigned int b);		// ILT 0x000283D5
+int __cdecl Rva003897C0(int, int);		// ILT 0x0004B28B -> 0x003897C0
+int __cdecl Rva003C9220(int, int);		// ILT 0x00002B8F -> 0x003C9220
+int __cdecl Rva0054E860(int, int);		// ILT 0x00025225 -> 0x0054E860
+int __cdecl Rva0054E8E0(int, int);		// ILT 0x0000403E -> 0x0054E8E0
+int __cdecl Rva00593060(int, int);		// ILT 0x000283D5 -> 0x00593060
+int __cdecl Rva005277B0(int, int);					// ILT 0x000364C6 -> 0x005277B0
+int __cdecl Rva0054E760(int, int);					// ILT 0x0000B500 -> 0x0054E760
+int __cdecl Rva0054E960(int, int);					// ILT 0x00029771 -> 0x0054E960
+int __cdecl Rva0056DEC0(int, int);					// ILT 0x0003C65A -> 0x0056DEC0
+int __cdecl Rva00527830(int, int);	// ILT 0x00042FA0 -> 0x00527830
 
-int bfmeMake_00529B60(int a, int b);					// ILT 0x000364C6
-int bfmeMake_0054F920(int a, int b);					// ILT 0x0000B500
-int bfmeMake_0054FA00(int a, int b);					// ILT 0x00029771
-int bfmeMake_0056E900(int a, int b);					// ILT 0x0003C65A
-unsigned int bfmeHashCombineA(unsigned int left, unsigned int right);	// ILT 0x00042FA0
+#define bfmeMakeW0(a, b) Rva003897C0((int)(a), (int)(b))
+#define bfmeMakeW1(a, b) Rva003C9220((int)(a), (int)(b))
+#define bfmeMakeW2(a, b) Rva0054E860((int)(a), (int)(b))
+#define bfmeMakeW3(a, b) Rva0054E8E0((int)(a), (int)(b))
+#define bfmeMakeW4(a, b) Rva00593060((int)(a), (int)(b))
+
+#define bfmeMake_00529B60(a, b) Rva005277B0((int)(a), (int)(b))
+#define bfmeMake_0054F920(a, b) Rva0054E760((int)(a), (int)(b))
+#define bfmeMake_0054FA00(a, b) Rva0054E960((int)(a), (int)(b))
+#define bfmeMake_0056E900(a, b) Rva0056DEC0((int)(a), (int)(b))
+#define bfmeHashCombineA(a, b) Rva00527830((int)(a), (int)(b))
 
 enum { BFME_KIND_MADE = 1, BFME_KIND_GIVEN = 2 };
 

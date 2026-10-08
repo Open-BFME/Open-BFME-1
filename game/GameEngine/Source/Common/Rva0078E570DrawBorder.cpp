@@ -136,7 +136,7 @@ class Rva00478520 { public: int call(); };
 // ILT 0x00007E82 -> 0x00479B80, a 30-byte sret getter that reads the string
 // at receiver+0x30; GameWindow::winGetText (0x005CB9F0) reads +4 instead, so
 // this call is modelled by its own address-derived member on the window.
-class Rva00479B80Window { public: UnicodeString rva00479B80(); };
+class BfmeThingDPG { public: UnicodeString bfmeGoDPG(); };
 class GameWindowManager;
 extern GameWindowManager *TheWindowManager;
 class Rva0078E570ManagerSlots {
@@ -245,7 +245,7 @@ void Rva0078E570::drawBorder(GameWindow *window)
                 if (((Rva00478520 *)window)->call()) {
                     Int textWidth = 0;
                     ((Rva0078E570ManagerSlots *)TheWindowManager)->getTextSize(
-                        window->winGetFont(), ((Rva00479B80Window *)window)->rva00479B80(), &textWidth, 0, 0);
+                        window->winGetFont(), ((BfmeThingDPG *)window)->bfmeGoDPG(), &textWidth, 0, 0);
                     width -= textWidth + 6;
                     x += textWidth + 6;
                 }
