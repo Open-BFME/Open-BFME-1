@@ -90931,3 +90931,12 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_0P@FADEIGHN@RegionPortrait?$AA@,0x00D170E0,Field-parse table VA 0x01116D70 (_bfmeInfoDCG) entry; compiler string literal RegionPortrait equals retail at VA 0x011170E0
 ??_C@_0P@LODNMMFI@LegendaryBonus?$AA@,0x00D17050,Field-parse table VA 0x01116D70 (_bfmeInfoDCG) entry; compiler string literal LegendaryBonus equals retail at VA 0x01117050
 ??_C@_0P@OLLADJLF@DifficultyText?$AA@,0x00D16FE4,Field-parse table VA 0x01116D70 (_bfmeInfoDCG) entry; compiler string literal DifficultyText equals retail at VA 0x01116FE4
+??_C@_06BGCHJDPJ@Color7?$AA@,0x00D13424,DefaultModuleTemplate0AFieldParse entry; compiler string literal Color7 equals retail at VA 0x01113424
+??_C@_06CEBBPBHL@Color5?$AA@,0x00D13434,DefaultModuleTemplate0AFieldParse entry; compiler string literal Color5 equals retail at VA 0x01113434
+??_C@_06DNAKMADK@Color4?$AA@,0x00D1343C,DefaultModuleTemplate0AFieldParse entry; compiler string literal Color4 equals retail at VA 0x0111343C
+??_C@_06EAHNDEHP@Color1?$AA@,0x00D13454,DefaultModuleTemplate0AFieldParse entry; compiler string literal Color1 equals retail at VA 0x01113454
+??_C@_06GLFAGHLM@Color2?$AA@,0x00D1344C,DefaultModuleTemplate0AFieldParse entry; compiler string literal Color2 equals retail at VA 0x0111344C
+??_C@_06HCELFGPN@Color3?$AA@,0x00D13444,DefaultModuleTemplate0AFieldParse entry; compiler string literal Color3 equals retail at VA 0x01113444
+??_C@_06JBLPIPDG@Color8?$AA@,0x00D1341C,DefaultModuleTemplate0AFieldParse entry; compiler string literal Color8 equals retail at VA 0x0111341C
+??_C@_06PDMKCLI@Color6?$AA@,0x00D1342C,DefaultModuleTemplate0AFieldParse entry; compiler string literal Color6 equals retail at VA 0x0111342C
+??_C@_0L@LNAACFKB@ColorScale?$AA@,0x00D1340C,DefaultModuleTemplate0AFieldParse entry; compiler string literal ColorScale equals retail at VA 0x0111340C
