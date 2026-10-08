@@ -20,7 +20,10 @@ template <typename T> class StringBase
 {
 private:
 	friend class AsciiString;
-	~StringBase();
+	// Retail releases through StringBase::releaseBuffer (<char> 0x00887940,
+	// <unsigned short> 0x008881D0) directly, not an out-of-line ~StringBase.
+	~StringBase() { releaseBuffer(); }
+	void releaseBuffer();
 
 	AsciiStringData *m_data;
 };
