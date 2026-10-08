@@ -1,5 +1,5 @@
 // ?bfmeSetupJG@BfmeThingJG@@QAEXHHHHH_N@Z
-// partial score=0.97 date=2026-09-08
+// partial score=0.958 date=2026-10-08
 class BfmeSubJG
 {
 public:
@@ -30,11 +30,11 @@ public:
 	volatile int m_bfme40JG;
 	char m_bfme44JG;
 	volatile char m_bfme45JG;
-	char m_bfme46JG;
+	volatile char m_bfme46JG;
 	unsigned char m_bfmePad1JG[1];
-	int m_bfme48JG;
-	int m_bfme4cJG;
-	int m_bfme50JG;
+	volatile int m_bfme48JG;
+	volatile int m_bfme4cJG;
+	volatile int m_bfme50JG;
 };
 
 void BfmeThingJG::bfmeSetupJG(int p1, int p2, int p3, int p4, int p5, bool p6)
