@@ -16,8 +16,6 @@ class FXList;
 class BFMERetailAsciiString
 {
 public:
-	const char *str(void) const { return m_data ? m_data + 8 : ""; }
-
 	bool isNotEmpty(void) const
 	{
 		return m_data != 0 && *(const unsigned short *)(m_data + 4) != 0;
@@ -25,6 +23,9 @@ public:
 
 	char *m_data;
 };
+
+// File-static so this TU emits no BFMERetailAsciiString::str COMDAT.
+static inline const char *retailStr(const BFMERetailAsciiString &s) { return s.m_data ? s.m_data + 8 : ""; }
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
 class FXListStore
@@ -77,6 +78,6 @@ private:
 StructureBodyModuleData::StructureBodyModuleData()
 {
 	if (TheWritableGlobalData->m_structureDamageFX.isNotEmpty()) {
-		m_fxList = TheFXListStore->findFXList(TheWritableGlobalData->m_structureDamageFX.str());
+		m_fxList = TheFXListStore->findFXList(retailStr(TheWritableGlobalData->m_structureDamageFX));
 	}
 }
