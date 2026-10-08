@@ -1915,20 +1915,8 @@ void Object::healCompletely()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?setEffectivelyDead@Object@@QAEX_N@Z present-unmatched
-void Object::setEffectivelyDead(Bool dead)
-{
-	if (dead)
-		BitSet(m_privateStatus, EFFECTIVELY_DEAD);
-	else
-		BitClear(m_privateStatus, EFFECTIVELY_DEAD);
-
-	if (dead)
-	{
-		if( m_radarData )
-			TheRadar->removeObject( this );
-	}
-}
+// Object::setEffectivelyDead is defined in Object_setEffectivelyDead.cpp,
+// the retail-matched body at 0x001C7E60.
 
 //-------------------------------------------------------------------------------------------------
 // ?setCaptured@Object@@QAEX_N@Z present-unmatched

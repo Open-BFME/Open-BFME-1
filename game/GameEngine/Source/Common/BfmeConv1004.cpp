@@ -2,6 +2,17 @@
 
 class BfmeObj1004;
 
+// retail ILT 0x00032DEE -> 0x000D3EB0 (Object::setStatusBit), ILT 0x00030887
+// -> 0x001C7E60 (Object::setEffectivelyDead) and ILT 0x0000D3B9 -> 0x001BFE20
+// (Object::unidentified_001BFE20) are matched rows
+class Object
+{
+public:
+	void setStatusBit(int bit, bool set);
+	void setEffectivelyDead(bool dead);
+	void *unidentified_001BFE20() const;
+};
+
 class BfmeMgr1004
 {
 public:
@@ -47,9 +58,6 @@ public:
 class BfmeObj1004
 {
 public:
-	void bfmeSetA1004(int a, int b);
-	void bfmeSetB1004(int a);
-
 	char m_bfmePad[0x94];
 	char m_bfmeFlags;
 	char m_bfmePad2[0x167];
@@ -68,8 +76,8 @@ char bfmeGo1004A(BfmeObj1004 *o)
 		if (q)
 			p = q;
 
-		o->bfmeSetA1004(6, 1);
-		o->bfmeSetB1004(0);
+		((Object *)o)->setStatusBit(6, true);
+		((Object *)o)->setEffectivelyDead(false);
 		p->m_bfmeMgr->bfmeNotify1004(o, 0);
 		return 1;
 	}
@@ -122,11 +130,7 @@ public:
 	virtual char bfmeAsk1004();
 };
 
-class BfmeHold1004
-{
-public:
-	BfmeX1004 *bfmeFind1004();
-};
+class BfmeHold1004;
 
 class BfmeB1004
 {
@@ -146,7 +150,7 @@ public:
 void BfmeB1004::bfmeGo1004B()
 {
 	if (m_bfmeB) {
-		BfmeX1004 *x = m_bfmeHold->bfmeFind1004();
+		BfmeX1004 *x = (BfmeX1004 *)((Object *)m_bfmeHold)->unidentified_001BFE20();
 
 		if (x && x->bfmeAsk1004())
 			x->bfmeStop1004(1);
