@@ -50,7 +50,7 @@ Xfer &Xfer::operator==(UnicodeString &us)
     Rva009D6A70TransferView *receiver = reinterpret_cast<Rva009D6A70TransferView *>(this);
     if (receiver->isStoring())
     {
-        int length = us.getLength();
+        int length = ((StringBase<unsigned short> &)us).getLength();
         if (length >= 255)
         {
             unsigned char marker = 255;
@@ -59,7 +59,7 @@ Xfer &Xfer::operator==(UnicodeString &us)
         }
         else
             receiver->transfer(reinterpret_cast<void *>(0x75737472), &length, 1);
-        receiver->transfer(0, us.str(), length * 2);
+        receiver->transfer(0, ((StringBase<unsigned short> &)us).str(), length * 2);
     }
     else
     {
