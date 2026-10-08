@@ -44,9 +44,10 @@ void Drawable::drawIconUI(int group)
 		drawDisabled();
 		break;
 	case 3:
-	case 4:
 		drawAmmo();
 		break;
+	case 4:
+		return;
 	}
 }
 
@@ -79,6 +80,7 @@ static DrawableStageValue const s_stage07 = { j_00012e2c };
 static DrawableStageValue const s_stage08 = { j_00038aaa };
 static DrawableStageValue const s_stage09 = { j_00022782 };
 
+// ?drawIconUI2@Drawable@@QAEXH@Z present-unmatched
 void Drawable::drawIconUI2(int group)
 {
 	switch (group)
@@ -101,6 +103,7 @@ __forceinline void __fastcall invokeDrawableStage(Drawable *self, void (*functio
 		function();
 }
 
+// ?drawIconUI3@Drawable@@QAEXH@Z present-unmatched
 void Drawable::drawIconUI3(int group)
 {
 	switch (group)

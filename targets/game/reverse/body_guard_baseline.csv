@@ -1309,7 +1309,6 @@ dir32,0x01356EA8,?g_01356EA8@@3P6AXPAEII@ZA,"nothing in the ledger owns 0x01356E
 dir32,0x01356EB0,?g_01356EB0@@3P6AXPBEIPAEI@ZA,"nothing in the ledger owns 0x01356EB0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x013571F8,__adjust_fdiv,"nothing in the ledger owns 0x013571F8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01357214,_Rva01357214Onexitbegin,"retail 0x01357214 is already recorded as ___onexitbegin; reference that name, not a new one"
-ltable,0x00420AC0,?drawIconUI@Drawable@@QAEXH@Z,+124 $L304 wants 0x00820B1E retail 0x00820B25
 ltable,0x0069A6F0,?setReverb@Rva0069A6F0Owner@@QAEXPAPAURva0069A6F0Playing@@@Z,+228 $L347 wants 0x00A9A70A retail 0x00A9A748
 ltable,0x0080DD80,_Rva0080DD80,+443 $L1447 wants 0x00C0DF60 retail 0x00C0DF65
 static,0x000E4210,?parsePlayerTemplateDefinition@PlayerTemplateStore@@SAXPAVINI@@@Z,"+79 ?TheFieldParseTable@?1??getFieldParse@Pl@0x010847E0: 46 byte(s) differ, first +28: source 000000000000000000000000080000000000000000000000 retail 280f0801e0"
