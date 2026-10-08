@@ -2,6 +2,8 @@
 // Function identities remain address-derived.
 // The WW3D static flags follow the native ww3d.h declarations.
 
+#include <string.h>
+
 // mov eax,[ecx+<LEAD>] / add eax,<OFFSET> / ret -- a pointer member advanced
 // by a constant.
 #define BFME_PTR_MEMBER_OFFSET( NAME, LEAD, OFFSET )                          \
@@ -211,7 +213,10 @@ extern unsigned int g_Va012C3BBC;
 extern unsigned int g_Va012C3C5C;
 extern unsigned int g_Va012D71B0;
 extern unsigned int g_Va012D71BC;
-extern unsigned int g_Va012ED85C;
+// Existing POD BitFlags<13> storage at VA 0x012ED85C is owned by DisabledTypes.cpp.
+// Keep the type incomplete here; write its verified four-byte representation.
+template <int NUMBITS> class BitFlags;
+extern BitFlags<13> DISABLEDMASK_ALL;
 extern unsigned int g_Va012F4020;
 extern unsigned int g_Va0111015C;
 extern unsigned int g_Va0112B954;
@@ -222,7 +227,8 @@ extern unsigned int g_Va0113CBAC;
 
 void Rva00104750SetGlobal( void )
 {
-	g_Va012ED85C = 0x000007FFu;
+	const unsigned int bits = 0x000007FFu;
+	memcpy(&DISABLEDMASK_ALL, &bits, sizeof(bits));
 }
 
 void Rva004D8F40SetGlobal( void )
