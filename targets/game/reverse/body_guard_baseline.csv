@@ -890,8 +890,6 @@ dir32,0x012B78F0,_g_012B78F0,"nothing in the ledger owns 0x012B78F0. Give the da
 dir32,0x012B7AE0,?RankLabels00554510Good@@3PAPBDA,"nothing in the ledger owns 0x012B7AE0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012B7B08,?RankLabels00554510Evil@@3PAPBDA,"nothing in the ledger owns 0x012B7B08. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012B7C58,?g_012B7C58@@3PAUGen_t_012b7c58_entry@@A,"nothing in the ledger owns 0x012B7C58. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x012B7DAC,?g_012B7DAC@@3PAPBDA,"nothing in the ledger owns 0x012B7DAC. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x012B7DD4,?g_012B7DD4@@3PAPBDA,"nothing in the ledger owns 0x012B7DD4. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012B7FF0,?g_012B7FF0@@3PAPBDA,"nothing in the ledger owns 0x012B7FF0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012B8018,?g_012B8018@@3PAPBDA,"nothing in the ledger owns 0x012B8018. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012B85D0,?g_012B85D0@@3PAPAXA,"nothing in the ledger owns 0x012B85D0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"

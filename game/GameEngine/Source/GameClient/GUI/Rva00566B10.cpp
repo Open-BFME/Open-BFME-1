@@ -142,8 +142,8 @@ private:
 
 extern GameTextInterface *TheGameText;
 extern Mouse *TheMouse;
-extern const char *g_012B7DAC[];
-extern const char *g_012B7DD4[];
+extern const char *g_012B7DAC[10];
+extern const char *g_012B7DD4[10];
 
 #include <string.h>
 
@@ -198,3 +198,15 @@ void Rva00566B10::method( void *selector )
 		TheGameText->fetch( "APT:CurrentLevelStringFormat" ), currentLevel.str() );
 	TheMouse->setCursorTooltip( tooltip, -1, 0, 1.0f );
 }
+
+extern "C" const char *__identifier("?g_012B7DAC@@3PAPBDA")[10] =
+{
+	"Peasant", "Page", "Squire", "Knight", "RoyalGuard",
+	"CaptainOfTheGuard", "HighLord", "Prince", "King", "Wizard"
+};
+
+extern "C" const char *__identifier("?g_012B7DD4@@3PAPBDA")[10] =
+{
+	"Scum", "Vermin", "Beast", "Goblin", "Orc",
+	"MountainTroll", "Berserker", "DarkWizard", "RingWraith", "DarkLord"
+};

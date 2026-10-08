@@ -90973,3 +90973,23 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??_C@_08JCOIAMOP@Filename?$AA@,0x00C816A0,Video field-parse table g_0112CBD8 entry; compiler string literal Filename equals retail at VA 0x010816A0
 ??_C@_09OPCNIHAE@IsDefault?$AA@,0x00D2CC38,Video field-parse table g_0112CBD8 entry; compiler string literal IsDefault equals retail at VA 0x0112CC38
 ??_C@_0N@LJJLHENJ@HasSubtitles?$AA@,0x00D2CC44,Video field-parse table g_0112CBD8 entry; compiler string literal HasSubtitles equals retail at VA 0x0112CC44
+??_C@_07OBCPDMEM@Peasant?$AA@,0x00C7FE98,Verified complete compiler literal for Skirmish rank tables; identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md
+??_C@_04NHEGBFAI@Page?$AA@,0x00C7FE90,Verified complete compiler literal for Skirmish rank tables; identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md
+??_C@_06IIDDPJCF@Squire?$AA@,0x00C7FE88,Verified complete compiler literal for Skirmish rank tables; identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md
+??_C@_06CJCFJDME@Knight?$AA@,0x00C7FE80,Verified complete compiler literal for Skirmish rank tables; identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md
+??_C@_0L@GOAAFBKB@RoyalGuard?$AA@,0x00C7FE70,Verified complete compiler literal for Skirmish rank tables; identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md
+??_C@_0BC@KMFLIKGM@CaptainOfTheGuard?$AA@,0x00C7FE58,Verified complete compiler literal for Skirmish rank tables; identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md
+??_C@_08LBAMEOAC@HighLord?$AA@,0x00C7FE4C,Verified complete compiler literal for Skirmish rank tables; identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md
+??_C@_06BKGMBKGL@Prince?$AA@,0x00C7FE44,Verified complete compiler literal for Skirmish rank tables; identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md
+??_C@_04DICFMCHJ@King?$AA@,0x00C7FE3C,Verified complete compiler literal for Skirmish rank tables; identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md
+??_C@_06MNAGNDLP@Wizard?$AA@,0x00C7FE34,Verified complete compiler literal for Skirmish rank tables; identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md
+??_C@_04ONJEFKEF@Scum?$AA@,0x00C7FE2C,Verified complete compiler literal for Skirmish rank tables; identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md
+??_C@_06IMIJEIBC@Vermin?$AA@,0x00C7FE24,Verified complete compiler literal for Skirmish rank tables; identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md
+??_C@_05MDABPHJL@Beast?$AA@,0x00C7FE1C,Verified complete compiler literal for Skirmish rank tables; identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md
+??_C@_06DEOHAMOJ@Goblin?$AA@,0x00C7FE14,Verified complete compiler literal for Skirmish rank tables; identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md
+??_C@_03EGJOMNC@Orc?$AA@,0x00C7FE10,Verified complete compiler literal for Skirmish rank tables; identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md
+??_C@_0O@BAJFHBPK@MountainTroll?$AA@,0x00C7FE00,Verified complete compiler literal for Skirmish rank tables; identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md
+??_C@_09MHCCJHFP@Berserker?$AA@,0x00C7FDF4,Verified complete compiler literal for Skirmish rank tables; identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md
+??_C@_0L@DAINOPLA@DarkWizard?$AA@,0x00C7FDE4,Verified complete compiler literal for Skirmish rank tables; identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md
+??_C@_0L@GLOPEKHM@RingWraith?$AA@,0x00C7FDD4,Verified complete compiler literal for Skirmish rank tables; identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md
+??_C@_08DHKPGHGE@DarkLord?$AA@,0x00C7FDC8,Verified complete compiler literal for Skirmish rank tables; identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md
