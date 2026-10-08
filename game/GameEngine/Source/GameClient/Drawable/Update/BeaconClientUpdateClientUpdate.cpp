@@ -379,3 +379,5 @@ void BeaconClientUpdate::clientUpdate( void )
 		draw->setPositionZ( -100.0f );
 	}
 }
+
+extern "C" Real __identifier("?g_012B8EF0@@3MB") = 0.2f;
