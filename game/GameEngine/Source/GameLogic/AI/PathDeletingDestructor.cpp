@@ -9,9 +9,10 @@
 class Path
 {
 protected:
-	// Forced inline so the forcer installs the vftable without emitting a
-	// second ??0Path COMDAT; the real constructor is matched elsewhere.
-	__forceinline Path() {}
+	// Protected stand-in constructor so the forcer can install the vftable;
+	// it emits only an unreferenced ??0Path@@IAE@XZ COMDAT and never clashes
+	// with the real public constructor, which is matched elsewhere.
+	Path() {}
 	virtual ~Path();
 	friend void Force_Path_Deleting_Destructor();
 };

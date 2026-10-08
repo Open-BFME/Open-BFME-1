@@ -267,11 +267,7 @@ SidesList::SidesList(void) : m_numSides(0), m_numSkirmishSides(0)
 /**
  SidesList - Destructor - 
 */
-// byte-exact reconstruction: game/GameEngine/Source/Common/SidesListDestructorThunk.cpp
-// ??1SidesList@@UAE@XZ present-unmatched
-SidesList::~SidesList(void)
-{
-}
+// SidesList::~SidesList (retail 0x0019E640) is matched in SidesListDestructorThunk.cpp.
 
 /**
  SidesList - reset - 
