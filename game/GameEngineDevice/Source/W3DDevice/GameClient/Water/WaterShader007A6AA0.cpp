@@ -198,3 +198,5 @@ void WaterShader007A6AA0::setup(char *settings) {
     waterDevice()->SetTransform(17,&bias); ++number_of_DX8_calls;
 }
 
+extern "C" float __identifier("?WaterBumpScale012BBBE4@@3MA") = 1.0f;
+extern "C" float __identifier("?WaterPhase01306D84@@3MA") = 0.0f;
