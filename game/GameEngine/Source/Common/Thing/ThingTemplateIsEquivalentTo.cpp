@@ -36,17 +36,19 @@ public:
 class AsciiString : public StringBase<char>
 {
 public:
-	int getLength() const { return m_data ? m_data->length : 0; }
 	const char *str() const { return m_data ? &m_data->data[0] : ""; }
 };
 
 // The nested loop compares two strings in line; everywhere else the
 // out-of-line StringBase<char>::compareNoCase is called.
+// File-static so this TU emits no AsciiString::getLength COMDAT.
+static inline int asciiLength(const AsciiString &s) { return s.m_data ? s.m_data->length : 0; }
+
 static inline int compareNamesNoCase(const AsciiString &a, const AsciiString &b)
 {
-	int len = b.getLength();
+	int len = asciiLength(b);
 	const char *data = b.str();
-	int myLen = a.getLength();
+	int myLen = asciiLength(a);
 	const char *myData = a.str();
 	int result = _memicmp(myData, data, myLen < len ? myLen : len);
 	if (result != 0)
@@ -88,7 +90,6 @@ public:
 class ThingTemplate : public Overridable
 {
 public:
-	const AsciiString &getName() const { return m_nameString; }
 	Bool isEquivalentTo(const ThingTemplate *tt) const;
 
 	char m_pad08[0x20 - 0x08];
@@ -110,8 +111,8 @@ Bool ThingTemplate::isEquivalentTo(const ThingTemplate *tt) const
 	if (this->getFinalOverride() == tt->getFinalOverride())
 		return true;
 
-	const AsciiString &myName = getName();
-	const AsciiString &ttName = tt->getName();
+	const AsciiString &myName = m_nameString;
+	const AsciiString &ttName = tt->m_nameString;
 	_STL::vector<AsciiString>::const_iterator it;
 	_STL::vector<AsciiString>::const_iterator end = m_field2DC.end();
 	for (it = m_field2DC.begin(); it != end; ++it)
@@ -132,12 +133,12 @@ Bool ThingTemplate::isEquivalentTo(const ThingTemplate *tt) const
 	Int i;
 	Int numVariations = m_buildVariations.size();
 	for (i = 0; i < numVariations; ++i)
-		if (m_buildVariations[i].compareNoCase(tt->getName()) == 0)
+		if (m_buildVariations[i].compareNoCase(tt->m_nameString) == 0)
 			return true;
 
 	numVariations = tt->m_buildVariations.size();
 	for (i = 0; i < numVariations; ++i)
-		if (tt->m_buildVariations[i].compareNoCase(getName()) == 0)
+		if (tt->m_buildVariations[i].compareNoCase(m_nameString) == 0)
 			return true;
 
 	return false;
