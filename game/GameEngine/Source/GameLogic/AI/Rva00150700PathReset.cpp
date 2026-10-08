@@ -20,6 +20,9 @@ public:
 
 class Rva00150700Owner;
 
+// TU-local: AIGroupDestructors.cpp has its own inline PathDeleteArgument.
+namespace {
+
 class PathDeleteArgument
 {
 public:
@@ -32,6 +35,8 @@ private:
 	Path *m_path;
 	Rva00150700Owner *m_owner;
 };
+
+}
 
 class Rva00150700Owner
 {
