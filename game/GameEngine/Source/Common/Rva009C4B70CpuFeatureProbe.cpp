@@ -15,7 +15,7 @@ extern "C" __declspec(dllimport) int __cdecl strncmp(
 // ?Rva009C4B70CpuFeatureProbe@@YAHXZ
 int __cdecl Rva009C4B70CpuFeatureProbe(void)
 {
-	char vendor[13];
+	char vendor[12];
 	int result;
 
 	result = 0;
@@ -33,6 +33,8 @@ int __cdecl Rva009C4B70CpuFeatureProbe(void)
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
+		if (GetExceptionCode() == 0xc000001dU)
+			return 0;
 		return result;
 	}
 

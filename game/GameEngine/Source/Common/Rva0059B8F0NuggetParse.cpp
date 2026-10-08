@@ -94,8 +94,6 @@ void Rva0059B8F0Nugget::parse(INI *ini, void *instance, void *store, const void 
 {
 	static const FieldParse myFieldParse[] =
 	{
-		{ "NumberOfShots", INI::parseInt, 0, 0x38 },
-		{ "Radius", INI::parseReal, 0, 0x34 },
 		{ 0, 0, 0, 0 }
 	};
 
