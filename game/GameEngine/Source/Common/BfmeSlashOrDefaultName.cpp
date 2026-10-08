@@ -44,8 +44,8 @@ public:
 		: StringBase<char>(other, start, len) {}
 	~AsciiString() {}
 
-	int getLength() const { return StringBase<char>::getLength(); }
-	char getCharAt(int index) const { return StringBase<char>::getCharAt(index); }
+	using StringBase<char>::getLength;
+	using StringBase<char>::getCharAt;
 	void set(const AsciiString &src, int start, int len)
 	{
 		StringBase<char>::set(src, start, len);
