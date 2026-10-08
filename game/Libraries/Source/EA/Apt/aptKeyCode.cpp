@@ -6,7 +6,11 @@ class AptValue;
 class AptInteger { public: static AptInteger* Create(int value); };
 extern "C" int __cdecl toupper(int);
 extern unsigned int Rva008A5250LastKey;
-extern const int Rva008A5250KeyTable[0x14];
+// Retail .rdata VA 0x011364B0: special-key code table (20 ints).
+extern const int Rva008A5250KeyTable[0x14] = {
+	-1, 0x25, 0x27, 0x24, 0x23, 0x2D, 0x2E, -1, 0x08, -1,
+	-1, -1, -1, 0x0D, 0x26, 0x28, 0x21, 0x22, 0x09, 0x1B
+};
 AptValue* aptKeyCode()
 {
 	unsigned int key = Rva008A5250LastKey;
