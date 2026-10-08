@@ -35,7 +35,7 @@ public:
 // ledger owns that five-byte thunk as ?j_0000f4bb@@YAXXZ.  The thunk carries
 // no signature of its own, so it is declared bare and cast to the EA
 // Module.h buildFieldParse contract at the use.
-extern void j_0000f4bb();
+extern "C" void __cdecl __identifier("RefundDieFieldParse")();
 
 typedef void (__cdecl *BuildFieldParseProc)(MultiIniFieldParse &parse);
 
@@ -50,6 +50,6 @@ ModuleData *RefundDie::friend_newModuleData(INI *ini)
 {
 	RefundDieModuleData *data = new RefundDieModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, reinterpret_cast<BuildFieldParseProc>(&j_0000f4bb));
+		ini->initFromINIMultiProc(data, reinterpret_cast<BuildFieldParseProc>(&__identifier("RefundDieFieldParse")));
 	return (ModuleData *)data;
 }
