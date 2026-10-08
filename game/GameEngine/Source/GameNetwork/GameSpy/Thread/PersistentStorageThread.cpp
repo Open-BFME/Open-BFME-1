@@ -122,137 +122,6 @@ _STLP_END_NAMESPACE
 	} \
 }
 
-static void debugDumpPlayerStats( const PSPlayerStats& stats )
-{
-	DEBUG_LOG(("-----------------------------------------\n"));
-	DEBUG_LOG(("Tracking player stats for player %d:\n", stats.id));
-	PerGeneralMap::const_iterator it;
-	DEBUG_MAP(wins);
-	DEBUG_MAP(losses);
-	DEBUG_MAP(games);
-	DEBUG_MAP(duration);
-	DEBUG_MAP(unitsKilled);
-	DEBUG_MAP(unitsLost);
-	DEBUG_MAP(unitsBuilt);
-	DEBUG_MAP(buildingsKilled);
-	DEBUG_MAP(buildingsLost);
-	DEBUG_MAP(buildingsBuilt);
-	DEBUG_MAP(earnings);
-	DEBUG_MAP(techCaptured);
-	DEBUG_MAP(discons);
-	DEBUG_MAP(desyncs);
-	DEBUG_MAP(surrenders);
-	DEBUG_MAP(gamesOf2p);
-	DEBUG_MAP(gamesOf3p);
-	DEBUG_MAP(gamesOf4p);
-	DEBUG_MAP(gamesOf5p);
-	DEBUG_MAP(gamesOf6p);
-	DEBUG_MAP(gamesOf7p);
-	DEBUG_MAP(gamesOf8p);
-	DEBUG_MAP(customGames);
-	DEBUG_MAP(QMGames);
-	
-	if (stats.locale > 0)
-	{
-		DEBUG_LOG(("Locale: %d\n", stats.locale));
-	}
-	
-	if (stats.gamesAsRandom > 0)
-	{
-		DEBUG_LOG(("gamesAsRandom: %d\n", stats.gamesAsRandom));
-	}
-
-	if (stats.options.length())
-	{
-		DEBUG_LOG(("Options: %s\n", stats.options.c_str()));
-	}
-
-	if (stats.systemSpec.length())
-	{
-		DEBUG_LOG(("systemSpec: %s\n", stats.systemSpec.c_str()));
-	}
-
-	if (stats.lastFPS > 0.0f)
-	{
-		DEBUG_LOG(("lastFPS: %g\n", stats.lastFPS));
-	}
-
-	if (stats.battleHonors > 0)
-	{
-		DEBUG_LOG(("battleHonors: %x\n", stats.battleHonors));
-	}
-	if (stats.challengeMedals > 0)
-	{
-		DEBUG_LOG(("challengeMedals: %x\n", stats.challengeMedals));
-	}
-	if (stats.lastGeneral >= 0)
-	{
-		DEBUG_LOG(("lastGeneral: %d\n", stats.lastGeneral));
-	}
-	if (stats.gamesInRowWithLastGeneral >= 0)
-	{
-		DEBUG_LOG(("gamesInRowWithLastGeneral: %d\n", stats.gamesInRowWithLastGeneral));
-	}
-	if (stats.builtSCUD >= 0)
-	{
-		DEBUG_LOG(("builtSCUD: %d\n", stats.builtSCUD));
-	}
-	if (stats.builtNuke >= 0)
-	{
-		DEBUG_LOG(("builtNuke: %d\n", stats.builtNuke));
-	}
-	if (stats.builtParticleCannon >= 0)
-	{
-		DEBUG_LOG(("builtParticleCannon: %d\n", stats.builtParticleCannon));
-	}
-
-	if (stats.winsInARow >= 0)
-	{
-		DEBUG_LOG(("winsInARow: %d\n", stats.winsInARow));
-	}
-	if (stats.maxWinsInARow >= 0)
-	{
-		DEBUG_LOG(("maxWinsInARow: %d\n", stats.maxWinsInARow));
-	}
-	if (stats.disconsInARow >= 0)
-	{
-		DEBUG_LOG(("disconsInARow: %d\n", stats.disconsInARow));
-	}
-	if (stats.maxDisconsInARow >= 0)
-	{
-		DEBUG_LOG(("maxDisconsInARow: %d\n", stats.maxDisconsInARow));
-	}
-	if (stats.lossesInARow >= 0)
-	{
-		DEBUG_LOG(("lossesInARow: %d\n", stats.lossesInARow));
-	}
-	if (stats.maxLossesInARow >= 0)
-	{
-		DEBUG_LOG(("maxLossesInARow: %d\n", stats.maxLossesInARow));
-	}
-	if (stats.desyncsInARow >= 0)
-	{
-		DEBUG_LOG(("desyncsInARow: %d\n", stats.desyncsInARow));
-	}
-	if (stats.maxDesyncsInARow >= 0)
-	{
-		DEBUG_LOG(("maxDesyncsInARow: %d\n", stats.maxDesyncsInARow));
-	}
-
-	if (stats.lastLadderPort >= 0)
-	{
-		DEBUG_LOG(("lastLadderPort: %d\n", stats.lastLadderPort));
-	}
-
-	if (stats.lastLadderHost.length())
-	{
-		DEBUG_LOG(("lastLadderHost: %s\n", stats.lastLadderHost.c_str()));
-	}
-
-
-
-}
-
 //-------------------------------------------------------------------------
 
 // The psplayerstats shim header labels PSPlayerStats with Zero Hour's field
@@ -320,6 +189,150 @@ struct BfmePlayerStats
 
 // fails the build loudly if the shim's layout ever stops agreeing with the view
 typedef char BfmePlayerStatsMatchesShim[sizeof(BfmePlayerStats) == sizeof(PSPlayerStats) ? 1 : -1];
+
+// ?debugDumpPlayerStats@@YAXABVPSPlayerStats@@@Z
+// The BFME view supplies the map order used by the retail debug walk.
+static void debugDumpPlayerStats( const PSPlayerStats& player )
+{
+	const BfmePlayerStats& stats = (const BfmePlayerStats&)player;
+	DEBUG_LOG(("-----------------------------------------\n"));
+	DEBUG_LOG(("Tracking player stats for player %d:\n", player.id));
+	PerGeneralMap::const_iterator it;
+	DEBUG_MAP(wins);
+	DEBUG_MAP(losses);
+	DEBUG_MAP(games);
+	DEBUG_MAP(duration);
+	DEBUG_MAP(unitsKilled);
+	DEBUG_MAP(unitsLost);
+	DEBUG_MAP(unitsBuilt);
+	DEBUG_MAP(buildingsKilled);
+	DEBUG_MAP(buildingsLost);
+	DEBUG_MAP(buildingsBuilt);
+	DEBUG_MAP(earnings);
+	DEBUG_MAP(discons);
+	DEBUG_MAP(desyncs);
+	DEBUG_MAP(surrenders);
+	DEBUG_MAP(gamesOf2p);
+	DEBUG_MAP(gamesOf3p);
+	DEBUG_MAP(gamesOf4p);
+	DEBUG_MAP(gamesOf5p);
+	DEBUG_MAP(gamesOf6p);
+	DEBUG_MAP(gamesOf7p);
+	DEBUG_MAP(gamesOf8p);
+	DEBUG_MAP(customGames);
+	DEBUG_MAP(QMGames);
+	DEBUG_MAP(currentWinStreaks);
+	DEBUG_MAP(currentLossStreaks);
+	DEBUG_MAP(worstLossStreaks);
+	DEBUG_MAP(bestWinStreaks);
+	
+	if (player.locale > 0)
+	{
+		DEBUG_LOG(("Locale: %d\n", player.locale));
+	}
+	
+	if (player.gamesAsRandom > 0)
+	{
+		DEBUG_LOG(("gamesAsRandom: %d\n", player.gamesAsRandom));
+	}
+
+	if (player.options.length())
+	{
+		DEBUG_LOG(("Options: %s\n", player.options.c_str()));
+	}
+
+	if (player.systemSpec.length())
+	{
+		DEBUG_LOG(("systemSpec: %s\n", player.systemSpec.c_str()));
+	}
+
+	if (player.lastFPS > 0.0f)
+	{
+		DEBUG_LOG(("lastFPS: %g\n", player.lastFPS));
+	}
+
+	if (player.battleHonors > 0)
+	{
+		DEBUG_LOG(("battleHonors: %x\n", player.battleHonors));
+	}
+	if (player.challengeMedals > 0)
+	{
+		DEBUG_LOG(("challengeMedals: %x\n", player.challengeMedals));
+	}
+	if (player.lastGeneral >= 0)
+	{
+		DEBUG_LOG(("lastGeneral: %d\n", player.lastGeneral));
+	}
+	if (player.gamesInRowWithLastGeneral >= 0)
+	{
+		DEBUG_LOG(("gamesInRowWithLastGeneral: %d\n", player.gamesInRowWithLastGeneral));
+	}
+	if (player.builtSCUD >= 0)
+	{
+		DEBUG_LOG(("builtSCUD: %d\n", player.builtSCUD));
+	}
+	if (player.builtNuke >= 0)
+	{
+		DEBUG_LOG(("builtNuke: %d\n", player.builtNuke));
+	}
+	if (player.builtParticleCannon >= 0)
+	{
+		DEBUG_LOG(("builtParticleCannon: %d\n", player.builtParticleCannon));
+	}
+
+	if (player.winsInARow >= 0)
+	{
+		DEBUG_LOG(("winsInARow: %d\n", player.winsInARow));
+	}
+	if (player.maxWinsInARow >= 0)
+	{
+		DEBUG_LOG(("maxWinsInARow: %d\n", player.maxWinsInARow));
+	}
+	if (player.disconsInARow >= 0)
+	{
+		DEBUG_LOG(("disconsInARow: %d\n", player.disconsInARow));
+	}
+	if (player.maxDisconsInARow >= 0)
+	{
+		DEBUG_LOG(("maxDisconsInARow: %d\n", player.maxDisconsInARow));
+	}
+	if (player.lossesInARow >= 0)
+	{
+		DEBUG_LOG(("lossesInARow: %d\n", player.lossesInARow));
+	}
+	if (player.maxLossesInARow >= 0)
+	{
+		DEBUG_LOG(("maxLossesInARow: %d\n", player.maxLossesInARow));
+	}
+	if (player.desyncsInARow >= 0)
+	{
+		DEBUG_LOG(("desyncsInARow: %d\n", player.desyncsInARow));
+	}
+	if (player.maxDesyncsInARow >= 0)
+	{
+		DEBUG_LOG(("maxDesyncsInARow: %d\n", player.maxDesyncsInARow));
+	}
+
+	if (player.lastLadderPort >= 0)
+	{
+		DEBUG_LOG(("lastLadderPort: %d\n", player.lastLadderPort));
+	}
+
+	if (player.lastLadderHost.length())
+	{
+		DEBUG_LOG(("lastLadderHost: %s\n", player.lastLadderHost.c_str()));
+	}
+
+
+
+}
+
+// ?Rva00653200EmitStatsDebug@@YAXABVPSPlayerStats@@@Z absent-from-retail
+// Retain the static helper with its compiler-private ESI input ABI.
+void Rva00653200EmitStatsDebug(const PSPlayerStats& stats)
+{
+	debugDumpPlayerStats(stats);
+}
 
 #define BFME_OTHER them
 #define BFME_THIS  me
