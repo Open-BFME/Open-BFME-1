@@ -1460,13 +1460,14 @@ const Vector4 * MeshGeometryClass::Get_Plane_Array(bool create)
  * HISTORY:                                                                                    *
  *   6/14/2001  gth : Created.                                                                 *
  *=============================================================================================*/
-// ?MeshGeometryClass::Compute_Plane present-unmatched
+// BFME: Poly/Vertex sit at this+0x2c/0x30 (see Compute_Plane_Equations),
+// so read them through the retail offsets.
 void MeshGeometryClass::Compute_Plane(int pidx,PlaneClass * set_plane) const
 {
 	WWASSERT(pidx >= 0);
-	WWASSERT(pidx < PolyCount);
-	TriIndex & poly = Poly->Get_Array()[pidx];
-	Vector3 * verts = Vertex->Get_Array();
+	const char * const retail_this = reinterpret_cast<const char *>(this);
+	TriIndex & poly = (*reinterpret_cast<ShareBufferClass<TriIndex> * const *>(retail_this + 0x2c))->Get_Array()[pidx];
+	Vector3 * verts = (*reinterpret_cast<ShareBufferClass<Vector3> * const *>(retail_this + 0x30))->Get_Array();
 
 	set_plane->Set(verts[poly.I],verts[poly.J],verts[poly.K]);
 }
