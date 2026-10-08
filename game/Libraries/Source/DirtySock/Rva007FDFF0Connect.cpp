@@ -32,7 +32,7 @@ void *Rva007FDFF0Connect(const char *host, int timeout)
 	int value;
 	char *cursor;
 	Rva007FDFF0Request *request;
-	unsigned int threadId;
+	unsigned int pid;
 	void *thread;
 
 	if (timeout < 0)
@@ -78,7 +78,7 @@ void *Rva007FDFF0Connect(const char *host, int timeout)
 resolve:
 	memcpy((char *)request + 0x10, host, 0x40);
 	((char *)request)[0x4f] = 0;
-	thread = CreateThread(0, 0, (void *)Rva007FE250, request, 0, &threadId);
+	thread = CreateThread(0, 0, (void *)Rva007FE250, request, 0, &pid);
 	if (thread != 0)
 		CloseHandle(thread);
 	return request;

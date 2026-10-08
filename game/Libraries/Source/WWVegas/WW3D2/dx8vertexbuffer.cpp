@@ -134,7 +134,7 @@ static unsigned short _DynamicSortingVertexArrayOffset=0;
 
 static bool _DynamicDX8VertexBufferInUse=false;
 static DX8VertexBufferClass* _DynamicDX8VertexBuffer=NULL;
-static unsigned short _DynamicDX8VertexBufferSize=DEFAULT_VB_SIZE;
+static unsigned short _DynamicDX8VertexBufferSize=0x3fc5;
 static unsigned short _DynamicDX8VertexBufferOffset=0;
 
 // BFME resets fifteen recycled DX8 offsets rather than the upstream scalar.
