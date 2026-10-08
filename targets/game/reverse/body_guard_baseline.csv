@@ -1336,7 +1336,6 @@ ltable,0x0080C390,_Rva0080C390,+827 $L770 wants 0x00C0C6E2 retail 0x00C0C6E1
 ltable,0x0080DD80,_Rva0080DD80,+443 $L1447 wants 0x00C0DF60 retail 0x00C0DF65
 ltable,0x0080FB40,_Rva0080FB40,+453 $L672 wants 0x00C0FD1C retail 0x00C0FD1B
 ltable,0x00816020,_Rva00816020,+309 $L642 wants 0x00C16109 retail 0x00C16124
-ltable,0x0081B010,_Rva0081B010,+1708 $L459 wants 0x00C1B6D3 retail 0x00C1B6F8
 ltable,0x0085F4A0,_piEnterResultToJoinResult,+52 $L1715 wants 0x00C5F4AF retail 0x00C5F4C7
 static,0x000E4210,?parsePlayerTemplateDefinition@PlayerTemplateStore@@SAXPAVINI@@@Z,"+79 ?TheFieldParseTable@?1??getFieldParse@Pl@0x010847E0: 46 byte(s) differ, first +28: source 000000000000000000000000080000000000000000000000 retail 280f0801e0"
 static,0x00123180,?buildFieldParse@FireOCLAfterWeaponCooldownUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,"+8 ?dataFieldParse@?1??buildFieldParse@Fire@0x0108B330: 13 byte(s) differ, first +12: source 000000000000000000000000640000000000000000000000 retail 20b30801002"
@@ -1410,7 +1409,6 @@ tail,0x0080E030,_Rva0080E030,"compiled=384 ledger=320 tail=64: 17 byte(s) differ
 tail,0x0080FB40,_Rva0080FB40,"compiled=482 ledger=437 tail=45: 12 byte(s) differ from retail, first +469"
 tail,0x00816160,_Rva00816160,"compiled=280 ledger=254 tail=26: 4 byte(s) differ from retail, first +274"
 tail,0x0081AE20,_Rva0081AE20,"compiled=476 ledger=450 tail=26: 5 byte(s) differ from retail, first +470"
-tail,0x0081B010,_Rva0081B010,"compiled=1736 ledger=1692 tail=44: 15 byte(s) differ from retail, first +1692"
 tail,0x00853B30,?load@INI@@QAE_NVBFMERetailAsciiString@@00HH@Z,"compiled=377 ledger=250 tail=127: 18 byte(s) differ from retail, first +287"
 tail,0x00906FE0,?Get_DX8_Texture_Stage_State_Value_Name@DX8Wrapper@@,"compiled=316 ledger=264 tail=52: 1 byte(s) differ from retail, first +306"
 tail,0x009C4B70,?Rva009C4B70CpuFeatureProbe@@YAHXZ,"compiled=195 ledger=160 tail=35: 30 byte(s) differ from retail, first +160"

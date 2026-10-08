@@ -42,18 +42,6 @@ struct Rva0081B010Timeouts
 	unsigned int m_writeConstant;
 };
 
-struct Rva0081B010Locals
-{
-	unsigned int m_configSize;
-	char m_gap08[ 4 ];
-	char *m_parse;
-	struct Rva0081B010Dcb *m_dcb;
-	char m_gap14[ 4 ];
-	char m_config[ 0x1000 ];
-	char m_gap1018[ 8 ];
-	struct Rva0081B010Timeouts m_timeouts;
-};
-
 extern "C" {
 __declspec(dllimport) int __stdcall Rva01358CCC( void *handle );
 __declspec(dllimport) void *__stdcall Rva01358CE8( const char *name,
@@ -91,16 +79,20 @@ extern char g_0130B18C[];
 extern "C" int Rva0081B010( struct Rva0081B010Comm *comm, char *argument )
 {
 	int baud;
-	char temp[ 0x20 ];
-	struct Rva0081B010Locals locals;
+	char device[ 0x20 ];
+	struct Rva0081B010Timeouts timeouts;
+	char config[ 0x1000 ];
+	struct Rva0081B010Dcb *dcb;
+	char *parse;
+	unsigned int len;
 
 	baud = 0;
-	locals.m_timeouts.m_readInterval = 0xffffffff;
-	locals.m_timeouts.m_readMultiplier = 0;
-	locals.m_timeouts.m_readConstant = 0;
-	locals.m_timeouts.m_writeMultiplier = 0;
-	locals.m_timeouts.m_writeConstant = 0;
-	locals.m_dcb = (struct Rva0081B010Dcb *)( locals.m_config + 8 );
+	timeouts.m_readInterval = 0xffffffff;
+	timeouts.m_readMultiplier = 0;
+	timeouts.m_readConstant = 0;
+	timeouts.m_writeMultiplier = 0;
+	timeouts.m_writeConstant = 0;
+	dcb = (struct Rva0081B010Dcb *)( config + 8 );
 
 	if ( argument == 0 && comm->m_state == 4 )
 	{
@@ -118,10 +110,10 @@ extern "C" int Rva0081B010( struct Rva0081B010Comm *comm, char *argument )
 	if ( comm->m_state == 1 )
 		Rva0081B700( reinterpret_cast< struct Rva0081BD40Comm * >( comm ) );
 
-	strncpy( temp, argument, 0x20 );
-	if ( strchr( temp, ':' ) != 0 )
+	strncpy( device, argument, 0x20 );
+	if ( strchr( device, ':' ) != 0 )
 	{
-		*( strchr( temp, ':' ) ) = 0;
+		*( strchr( device, ':' ) ) = 0;
 		argument = strchr( argument, ':' ) + 1;
 	}
 	else
@@ -129,57 +121,57 @@ extern "C" int Rva0081B010( struct Rva0081B010Comm *comm, char *argument )
 		argument = g_0130B18C;
 	}
 
-	if ( strncmp( temp, "TAPI", 4 ) == 0 )
+	if ( strncmp( device, "TAPI", 4 ) == 0 )
 	{
-		locals.m_parse = temp + 4;
+		parse = device + 4;
 		baud = 0;
-		for ( ; *locals.m_parse >= '0' && *locals.m_parse <= '9';
-			locals.m_parse++ )
+		for ( ; *parse >= '0' && *parse <= '9';
+			parse++ )
 		{
-			baud = baud * 10 + ( *locals.m_parse & 0x0f );
+			baud = baud * 10 + ( *parse & 0x0f );
 		}
 		comm->m_handle = (void *)baud;
 	}
 	else
 	{
-		comm->m_handle = Rva01358CE8( temp, 0xc0000000, 0, 0,
+		comm->m_handle = Rva01358CE8( device, 0xc0000000, 0, 0,
 			3, 0x40000080, 0 );
 		if ( comm->m_handle == (void *)-1 )
 			return -4;
 	}
 
 	Rva01358F28( comm->m_handle, 0x2000, 0x1000 );
-	Rva01358EE4( comm->m_handle, &locals.m_timeouts );
+	Rva01358EE4( comm->m_handle, &timeouts );
 	Rva01358EDC( comm->m_handle, 2 );
 
 	if ( baud != 0 )
 	{
-		locals.m_configSize = 0x1000;
-		Rva01358D54( comm->m_handle, locals.m_config, &locals.m_configSize );
-		locals.m_dcb->m_evtChar = 0x0a;
-		locals.m_dcb->m_flags = locals.m_dcb->m_flags | 1;
-		locals.m_dcb->m_flags = locals.m_dcb->m_flags & 0xfffff7ff;
-		locals.m_dcb->m_flags = locals.m_dcb->m_flags & 0xfffffeff;
-		locals.m_dcb->m_flags = locals.m_dcb->m_flags & 0xfffffdff;
-		locals.m_dcb->m_flags = locals.m_dcb->m_flags & 0xffffbfff;
-		Rva01358ED8( comm->m_handle, locals.m_config, locals.m_configSize );
+		len = 0x1000;
+		Rva01358D54( comm->m_handle, config, &len );
+		dcb->m_evtChar = 0x0a;
+		dcb->m_flags = dcb->m_flags | 1;
+		dcb->m_flags = dcb->m_flags & 0xfffff7ff;
+		dcb->m_flags = dcb->m_flags & 0xfffffeff;
+		dcb->m_flags = dcb->m_flags & 0xfffffdff;
+		dcb->m_flags = dcb->m_flags & 0xffffbfff;
+		Rva01358ED8( comm->m_handle, config, len );
 		goto finish;
 	}
 
-	locals.m_dcb->m_length = 0x1c;
-	Rva01358D58( comm->m_handle, locals.m_dcb );
-	locals.m_dcb->m_evtChar = 0x0a;
-	locals.m_dcb->m_flags = locals.m_dcb->m_flags | 1;
-	locals.m_dcb->m_flags = locals.m_dcb->m_flags & 0xfffff7ff;
-	locals.m_dcb->m_flags = locals.m_dcb->m_flags & 0xfffffeff;
-	locals.m_dcb->m_flags = locals.m_dcb->m_flags & 0xfffffdff;
-	locals.m_dcb->m_flags = locals.m_dcb->m_flags & 0xffffbfff;
-	locals.m_dcb->m_byteSize = 8;
-	locals.m_dcb->m_flags = locals.m_dcb->m_flags | 2;
-	locals.m_dcb->m_stopBits = 0;
-	locals.m_dcb->m_flags = locals.m_dcb->m_flags & 0xffffffbf;
-	locals.m_dcb->m_flags = locals.m_dcb->m_flags & 0xfffffff7;
-	locals.m_dcb->m_flags = ( locals.m_dcb->m_flags & 0xffffffcf ) | 0x10;
+	dcb->m_length = 0x1c;
+	Rva01358D58( comm->m_handle, dcb );
+	dcb->m_evtChar = 0x0a;
+	dcb->m_flags = dcb->m_flags | 1;
+	dcb->m_flags = dcb->m_flags & 0xfffff7ff;
+	dcb->m_flags = dcb->m_flags & 0xfffffeff;
+	dcb->m_flags = dcb->m_flags & 0xfffffdff;
+	dcb->m_flags = dcb->m_flags & 0xffffbfff;
+	dcb->m_byteSize = 8;
+	dcb->m_flags = dcb->m_flags | 2;
+	dcb->m_stopBits = 0;
+	dcb->m_flags = dcb->m_flags & 0xffffffbf;
+	dcb->m_flags = dcb->m_flags & 0xfffffff7;
+	dcb->m_flags = ( dcb->m_flags & 0xffffffcf ) | 0x10;
 
 	while ( argument != 0 && *argument != 0 )
 	{
@@ -187,20 +179,20 @@ extern "C" int Rva0081B010( struct Rva0081B010Comm *comm, char *argument )
 			argument++;
 
 		if ( strncmp( argument, "+RTS", 4 ) == 0 )
-			locals.m_dcb->m_flags = ( locals.m_dcb->m_flags & 0xffffcfff ) | 0x2000;
+			dcb->m_flags = ( dcb->m_flags & 0xffffcfff ) | 0x2000;
 		if ( strncmp( argument, "-RTS", 4 ) == 0 )
-			locals.m_dcb->m_flags = ( locals.m_dcb->m_flags & 0xffffcfff ) | 0x1000;
+			dcb->m_flags = ( dcb->m_flags & 0xffffcfff ) | 0x1000;
 		if ( strncmp( argument, "+CTS", 4 ) == 0 )
-			locals.m_dcb->m_flags = locals.m_dcb->m_flags | 4;
+			dcb->m_flags = dcb->m_flags | 4;
 		if ( strncmp( argument, "-CTS", 4 ) == 0 )
-			locals.m_dcb->m_flags = locals.m_dcb->m_flags & 0xfffffffb;
+			dcb->m_flags = dcb->m_flags & 0xfffffffb;
 
 		if ( *argument >= '0' && *argument <= '9' )
 		{
-			locals.m_dcb->m_baudRate = 0;
+			dcb->m_baudRate = 0;
 			while ( *argument >= '0' && *argument <= '9' )
 			{
-				locals.m_dcb->m_baudRate = locals.m_dcb->m_baudRate * 10
+				dcb->m_baudRate = dcb->m_baudRate * 10
 					+ ( *argument & 0x0f );
 				argument++;
 			}
@@ -210,7 +202,7 @@ extern "C" int Rva0081B010( struct Rva0081B010Comm *comm, char *argument )
 			argument++;
 	}
 
-	Rva01358EE0( comm->m_handle, locals.m_dcb );
+	Rva01358EE0( comm->m_handle, dcb );
 
 finish:
 	Rva01358EB0( comm->m_handle, 0x0c );
