@@ -165,7 +165,6 @@ dir32,0x00446D44,??1?$queue@URva006AADB0Element@@V?$deque@URva006AADB0Element@@V
 dir32,0x004470F5,??1ENUM_VALUE@EnumParameterClass@@QAE@XZ,"retail 0x004470F5 is already recorded as ??1AddInfoStruct@MixFileFactoryClass@@QAE@XZ (+3 more); reference that name, not a new one"
 dir32,0x00447258,?j_00047258@@YAXXZ,"retail 0x00447258 is already recorded as ?rva00447258@BfmeAptScreenOnlineChat@@QAEXXZ; reference that name, not a new one"
 dir32,0x0044788E,??1BoneFXListInfo@@QAE@XZ,"nothing in the ledger owns 0x0044788E. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x0044791F,??1?$DefaultModuleTemplate@$0A@@FXParticleSystem@@UAE@XZ,"retail 0x0044791F is already recorded as _bfmeDtorCbDLD; reference that name, not a new one"
 dir32,0x00447DB1,??0Rva00127AB0Element@@QAE@XZ,"retail 0x00447DB1 is already recorded as ??0StructureCollapseFXVector@@QAE@XZ (+1 more); reference that name, not a new one"
 dir32,0x004488EC,??_F?$list@U?$pair@VAsciiString@@W4ObjectID@@@_STL@@V?$allocator@U?$pair@VAsciiString@@W4ObjectID@@@_STL@@@2@@_STL@@QAEXXZ,"nothing in the ledger owns 0x004488EC. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00448C07,?g_00448C07@@YAXXZ,"nothing in the ledger owns 0x00448C07. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
