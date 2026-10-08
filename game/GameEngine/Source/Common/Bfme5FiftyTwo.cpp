@@ -45,8 +45,9 @@ public:
 	unsigned int m_bfmeFlags[7];				// +0x5C
 };
 
-// ?bfmeHasFlag@@YAHPBVBfmeThingDV@@H@Z
-int __cdecl bfmeHasFlag(const BfmeThingDV *thing, int index)
+// GameSpy 2004 peer piIsPlayerVIP(player, roomType) (pin _piIsPlayerVIP,
+// vendored=gamespy-2004): inRoom[roomType] and flags & (OP|VOICE).
+extern "C" int __cdecl piIsPlayerVIP(const BfmeThingDV *thing, int index)
 {
 	if (thing == 0)
 		return 0;

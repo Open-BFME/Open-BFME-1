@@ -29,7 +29,10 @@ struct BfmeThingEMB
 
 void __cdecl bfmeCallEMB(void *p, void (*cb)(), void **out);
 
-void bfmeGoEMB(BfmeThingEMB *a, void *b)
+// GameSpy 2004 peer piFindPlayerByIP(peer, IP) (pin _piFindPlayerByIP,
+// vendored=gamespy-2004): maps the connection player table with the IP;
+// the table call leaves the found player in eax.
+extern "C" void piFindPlayerByIP(BfmeThingEMB *a, void *b)
 {
 	bfmeCallEMB(a->m_bfmeP, bfmeCbEMB, &b);
 }
