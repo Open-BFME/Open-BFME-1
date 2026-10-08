@@ -242,6 +242,7 @@ struct ModelConditionInfo
 	{ 
 		clear();
 	}
+	~ModelConditionInfo();	///< out of line: retail body at 0x0013C3F0
 
 	void clear();
 	void loadAnimations() const;
