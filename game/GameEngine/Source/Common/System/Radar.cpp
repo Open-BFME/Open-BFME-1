@@ -1580,15 +1580,7 @@ void Radar::tryInfiltrationEvent( const Object *obj )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WWLib/RadarRefreshTerrainThunk.cpp
-// ?refreshTerrain@Radar@@UAEXPAVTerrainLogic@@@Z present-unmatched
-void Radar::refreshTerrain( TerrainLogic *terrain )
-{
-
-	// no future queue is valid now
-	m_queueTerrainRefreshFrame = 0;
-
-}  // end refreshTerrain
+// Radar::refreshTerrain is defined by the matched body in Radar_refreshTerrain.cpp.
 
 // Radar::queueTerrainRefresh: retail body in Radar_queueTerrainRefresh.cpp.
 
