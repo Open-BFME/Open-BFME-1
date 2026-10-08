@@ -1337,8 +1337,6 @@ ltable,0x0080C960,_Rva0080C960,+3056 $L727 wants 0x00C0D57D retail 0x00C0D57F
 ltable,0x0080DD80,_Rva0080DD80,+443 $L1447 wants 0x00C0DF60 retail 0x00C0DF65
 ltable,0x0080FB40,_Rva0080FB40,+453 $L672 wants 0x00C0FD1C retail 0x00C0FD1B
 ltable,0x00816020,_Rva00816020,+309 $L642 wants 0x00C16109 retail 0x00C16124
-ltable,0x00818D90,_CommUdpListen,+519 $L961 wants 0x00C18FDB retail 0x00C18FD7
-ltable,0x00819300,_CommUDPConnect,+544 $L940 wants 0x00C1957D retail 0x00C19578
 ltable,0x00819920,_Rva00819920,+1552 $L410 wants 0x00C19F47 retail 0x00C19F46
 ltable,0x0081B010,_Rva0081B010,+1708 $L459 wants 0x00C1B6D3 retail 0x00C1B6F8
 ltable,0x0085F4A0,_piEnterResultToJoinResult,+52 $L1715 wants 0x00C5F4AF retail 0x00C5F4C7
@@ -1417,8 +1415,6 @@ tail,0x0080DD80,_Rva0080DD80,"compiled=488 ledger=427 tail=61: 16 byte(s) differ
 tail,0x0080E030,_Rva0080E030,"compiled=384 ledger=320 tail=64: 17 byte(s) differ from retail, first +364"
 tail,0x0080FB40,_Rva0080FB40,"compiled=482 ledger=437 tail=45: 12 byte(s) differ from retail, first +469"
 tail,0x00816160,_Rva00816160,"compiled=280 ledger=254 tail=26: 4 byte(s) differ from retail, first +274"
-tail,0x00818D90,_CommUdpListen,"compiled=592 ledger=503 tail=89: 32 byte(s) differ from retail, first +559"
-tail,0x00819300,_CommUDPConnect,"compiled=646 ledger=528 tail=118: 41 byte(s) differ from retail, first +600"
 tail,0x00819920,_Rva00819920,"compiled=1583 ledger=1536 tail=47: 14 byte(s) differ from retail, first +1568"
 tail,0x0081AE20,_Rva0081AE20,"compiled=476 ledger=450 tail=26: 5 byte(s) differ from retail, first +470"
 tail,0x0081B010,_Rva0081B010,"compiled=1736 ledger=1692 tail=44: 15 byte(s) differ from retail, first +1692"
