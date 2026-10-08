@@ -129,9 +129,9 @@ void RecorderClass::updateRecord()
 					fclose(m_file);
 					m_file = 0;
 				}
-				m_fileName.clear();
+				((StringBase<char> &)m_fileName).clear();
 			}
-			m_fileName.clear();
+			((StringBase<char> &)m_fileName).clear();
 		} else {
 			if (m_file != 0) {
 				if (message->getType() > GameMessage::MSG_BEGIN_NETWORK_MESSAGES

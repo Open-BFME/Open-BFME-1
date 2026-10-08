@@ -32,8 +32,8 @@ protected:
 Image::Image( void )
 {
 	m_rawTextureData = NULL;
-	m_name.clear();
-	m_filename.clear();
+	((StringBase<char> *)&m_name)->clear();
+	((StringBase<char> *)&m_filename)->clear();
 	m_textureSize.x = 0;
 	m_textureSize.y = 0;
 	m_UVCoords.lo.x = 0.0f;
