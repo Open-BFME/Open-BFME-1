@@ -110,10 +110,7 @@ StealthDetectorUpdate::StealthDetectorUpdate( Thing *thing, const ModuleData* mo
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ??1StealthDetectorUpdate@@ present-unmatched
-StealthDetectorUpdate::~StealthDetectorUpdate( void )
-{
-}
+// The destructor (retail 0x002AB3B0) is defined in StealthDetectorUpdateDestructor.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
