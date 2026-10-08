@@ -26,13 +26,15 @@ class ConnectionManager
 {
 public:
 	Bool isPlayerConnected(Int slot);			// ILT 0x0001514A
-	Bool _bfme_slotIsLocalOrLive(Int slot);			// ILT 0x0001F136
 };
 
+// callees.py 0x66BBC0: ILT 0x0001F136 -> 0x00662A50 and ILT 0x0004A87C ->
+// 0x00662BE0, the ledger rows below (native_connection_timing.cpp).
 class BFMEConnectionManager : public ConnectionManager
 {
 public:
-	Bool isPlayerInGame(Int slot);				// retail 0x00662BE0
+	Bool isPlayerConnectedDefaultTimeout(Int slot);		// retail 0x00662A50
+	Int isPlayerInGame(Int slot);				// retail 0x00662BE0
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/DisconnectManager.h
@@ -60,11 +62,11 @@ Int DisconnectManager::getVotesNeededToKick(Int slot, ConnectionManager *conn)
 			if (!conn->isPlayerConnected(i))
 				continue;
 
-			if (!conn->_bfme_slotIsLocalOrLive(i))
+			if (!((BFMEConnectionManager *)conn)->isPlayerConnectedDefaultTimeout(i))
 				continue;
 		}
 
-		if (!((BFMEConnectionManager *)conn)->isPlayerInGame(i))
+		if (!(unsigned char)((BFMEConnectionManager *)conn)->isPlayerInGame(i))
 			++votes;
 	}
 

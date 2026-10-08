@@ -8,8 +8,16 @@ class ConnectionManager
 {
 public:
 	Bool isPlayerConnected(int slot);
-	Bool _bfme_slotIsLocalOrLive(int slot);
-	Bool _bfme_slotStateInRange(int slot);
+};
+
+// callees.py 0x66B720: ILT 0x0001F136 -> 0x00662A50 and ILT 0x000486B2 ->
+// 0x00662C30, the ledger rows below (native_connection_timing.cpp).  The
+// caller tests only the low byte of the int predicate.
+class BFMEConnectionManager : public ConnectionManager
+{
+public:
+	Bool isPlayerConnectedDefaultTimeout(int slot);		// retail 0x00662A50
+	int isPlayerSlotActive(int slot);			// retail 0x00662C30
 };
 
 struct PlayerVote
@@ -40,10 +48,10 @@ int DisconnectManager::countVotesForPlayer(int slot, ConnectionManager *connecti
 			if (connectionManager != 0) {
 				if (!connectionManager->isPlayerConnected(voter))
 					continue;
-				if (!connectionManager->_bfme_slotIsLocalOrLive(voter))
+				if (!((BFMEConnectionManager *)connectionManager)->isPlayerConnectedDefaultTimeout(voter))
 					continue;
 			}
-			if (!connectionManager->_bfme_slotStateInRange(voter))
+			if (!(unsigned char)((BFMEConnectionManager *)connectionManager)->isPlayerSlotActive(voter))
 				++votes;
 		}
 	}
