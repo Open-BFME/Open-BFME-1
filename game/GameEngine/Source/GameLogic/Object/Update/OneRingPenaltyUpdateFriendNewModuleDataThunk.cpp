@@ -35,7 +35,7 @@ public:
 // ledger owns that five-byte thunk as ?j_0003777c@@YAXXZ.  The thunk carries no
 // signature of its own, so it is declared bare and cast to the EA Module.h
 // buildFieldParse contract at the use.
-extern void j_0003777c();
+extern "C" void __cdecl __identifier("OneRingPenaltyUpdateFieldParse")();
 
 typedef void (__cdecl *BuildFieldParseProc)(MultiIniFieldParse &parse);
 
@@ -50,6 +50,6 @@ ModuleData *OneRingPenaltyUpdate::friend_newModuleData(INI *ini)
 {
 	OneRingPenaltyUpdateModuleData *data = new OneRingPenaltyUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, reinterpret_cast<BuildFieldParseProc>(&j_0003777c));
+		ini->initFromINIMultiProc(data, reinterpret_cast<BuildFieldParseProc>(&__identifier("OneRingPenaltyUpdateFieldParse")));
 	return (ModuleData *)data;
 }
