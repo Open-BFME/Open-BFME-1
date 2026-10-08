@@ -9,15 +9,15 @@ private:
 	unsigned char m_pad[4];
 };
 
-class ClearanceTestingSlowDeathBehaviorModuleDataBase
+class SlowDeathBehaviorModuleData
 {
 public:
-	virtual ~ClearanceTestingSlowDeathBehaviorModuleDataBase();
+	virtual ~SlowDeathBehaviorModuleData();
 private:
 	unsigned char m_pad[0x1a4];
 };
 
-class __declspec(novtable) ClearanceTestingSlowDeathBehaviorModuleData : public ClearanceTestingSlowDeathBehaviorModuleDataBase
+class __declspec(novtable) ClearanceTestingSlowDeathBehaviorModuleData : public SlowDeathBehaviorModuleData
 {
 public:
 	virtual ~ClearanceTestingSlowDeathBehaviorModuleData();
