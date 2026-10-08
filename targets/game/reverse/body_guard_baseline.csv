@@ -137,7 +137,6 @@ dir32,0x0043B0C5,?g_0043B0C5@@YAXXZ,"nothing in the ledger owns 0x0043B0C5. Give
 dir32,0x0043B2B9,??1Rva00478100@@QAE@XZ,the name encodes 0x00478100 but retail reads 0x0043B2B9
 dir32,0x0043B5D9,?j_0003b5d9@@YAXXZ,"retail 0x0043B5D9 is already recorded as _W3DLightDrawFieldParse; reference that name, not a new one"
 dir32,0x0043BE9E,?j_0003be9e@@YAXXZ,"retail 0x0043BE9E is already recorded as ?rva006fb780_fn_b@@YAXXZ; reference that name, not a new one"
-dir32,0x0043C268,?j_0003c268@@YAXXZ,"retail 0x0043C268 is already recorded as _GiantBirdSlowDeathBehaviorFieldParse; reference that name, not a new one"
 dir32,0x0043C961,??1?$map@GHU?$FileIDLess@$0GGFBHA@@@V?$allocator@U?$pair@$$CBGH@_STL@@@_STL@@@_STL@@QAE@XZ,"nothing in the ledger owns 0x0043C961. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0043D42E,?ownerAvailableForSupplying@SupplyTruckStateMachine@@SA_NPAVState@@PAX@Z,"nothing in the ledger owns 0x0043D42E. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0043D4B0,??1WaterSetting@@UAE@XZ,"retail 0x0043D4B0 is already recorded as _bfmeDtorDAB; reference that name, not a new one"

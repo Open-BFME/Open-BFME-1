@@ -35,7 +35,7 @@ public:
 // ?j_0003c268@@YAXXZ (game/gen_small/gthunks_067.cpp). The body it jumps to
 // (RVA 0x001FFB10) is still unclaimed, so name the thunk: nothing defines a
 // GiantBirdSlowDeathBehaviorFieldParse symbol at link time.
-extern "C" void __cdecl __identifier("?j_0003c268@@YAXXZ")(MultiIniFieldParse &parse);
+extern "C" void __cdecl __identifier("GiantBirdSlowDeathBehaviorFieldParse")(MultiIniFieldParse &parse);
 
 class GiantBirdSlowDeathBehavior
 {
@@ -48,6 +48,6 @@ ModuleData *GiantBirdSlowDeathBehavior::friend_newModuleData(INI *ini)
 {
 	GiantBirdSlowDeathBehaviorModuleData *data = new GiantBirdSlowDeathBehaviorModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &__identifier("?j_0003c268@@YAXXZ"));
+		ini->initFromINIMultiProc(data, &__identifier("GiantBirdSlowDeathBehaviorFieldParse"));
 	return (ModuleData *)data;
 }
