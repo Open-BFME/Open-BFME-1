@@ -35,7 +35,7 @@ public:
 // ledger owns that five-byte thunk as ?j_00024d9d@@YAXXZ.  The thunk carries no
 // signature of its own, so it is declared bare and cast to the EA Module.h
 // buildFieldParse contract at the use.
-extern void j_00024d9d();
+extern "C" void __cdecl __identifier("PassiveAreaEffectBehaviorFieldParse")();
 
 typedef void (__cdecl *BuildFieldParseProc)(MultiIniFieldParse &parse);
 
@@ -50,6 +50,6 @@ ModuleData *PassiveAreaEffectBehavior::friend_newModuleData(INI *ini)
 {
 	PassiveAreaEffectBehaviorModuleData *data = new PassiveAreaEffectBehaviorModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, reinterpret_cast<BuildFieldParseProc>(&j_00024d9d));
+		ini->initFromINIMultiProc(data, reinterpret_cast<BuildFieldParseProc>(&__identifier("PassiveAreaEffectBehaviorFieldParse")));
 	return (ModuleData *)data;
 }

@@ -62,7 +62,6 @@ dir32,0x00422FA7,??0Rva00478100@@QAE@XZ,the name encodes 0x00478100 but retail r
 dir32,0x00423A1F,??0Rva006ABC60@@QAE@XZ,the name encodes 0x006ABC60 but retail reads 0x00423A1F
 dir32,0x00423B41,??1RadiusDecalTemplate@@QAE@XZ,"nothing in the ledger owns 0x00423B41. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0042450F,?Rva0051B560@LoadScreen0051BF30@@QAEXPAX0_N@Z,the name encodes 0x0051B560 but retail reads 0x0042450F
-dir32,0x00424D9D,?j_00024d9d@@YAXXZ,"retail 0x00424D9D is already recorded as _PassiveAreaEffectBehaviorFieldParse; reference that name, not a new one"
 dir32,0x00425301,?bfmeApplyBS@@YAHPAVBfmeAgentBS@@PAVBfmeInfoBS@@@Z,"retail 0x00425301 is already recorded as ?bfmeTeamGiveExperienceLevelVisitor@@YAXPAVObject@@PAX@Z; reference that name, not a new one"
 dir32,0x00425B4E,?j_00025b4e@@YAXXZ,"retail 0x00425B4E is already recorded as _DualWeaponBehaviorFieldParse; reference that name, not a new one"
 dir32,0x00425C7A,?ownerIdle@SupplyTruckStateMachine@@SA_NPAVState@@PAX@Z,"nothing in the ledger owns 0x00425C7A. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
