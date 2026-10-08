@@ -48,7 +48,7 @@ void INI::loadDirectory( AsciiString dirName, bool subdirs, INILoadType loadType
 	try
 	{
 		FilenameList filenameList;
-		if( !dirName.endsWith( "\\" ) )
+		if( !((const StringBase<char> &)dirName).endsWith( "\\" ) )
 			dirName.concat( '\\' );
 		TheFileSystem->getFileListInDirectory( dirName, AsciiString( "*.ini" ), filenameList, TRUE );
 
