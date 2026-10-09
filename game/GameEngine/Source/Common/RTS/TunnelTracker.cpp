@@ -64,14 +64,6 @@ void __cdecl bfmeDeallocate(void *block, unsigned int bytes);
 
 // ------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/RTS/TunnelTracker_ctor.cpp
-// ??0TunnelTracker@@ present-unmatched
-TunnelTracker::TunnelTracker()
-{
-	m_tunnelCount = 0;
-	m_containListSize = 0;
-	m_curNemesisID = INVALID_ID;
-	m_nemesisTimestamp = 0;
-}
 
 // ------------------------------------------------------------------------
 // ??1TunnelTracker@@ present-unmatched
@@ -144,34 +136,6 @@ void TunnelTracker::updateNemesis(const Object *target)
 
 // ------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/RTS/TunnelTrackerGetCurNemesis.cpp
-// ?getCurNemesis@TunnelTracker@@ present-unmatched
-Object *TunnelTracker::getCurNemesis(void)
-{
-	if (m_curNemesisID == INVALID_ID) {
-		return NULL;
-	}		
-	if (m_nemesisTimestamp + 4*LOGICFRAMES_PER_SECOND < TheGameLogic->getFrame()) {
-		m_curNemesisID = INVALID_ID;
-		return NULL;
-	}
-	Object *target = TheGameLogic->findObjectByID(m_curNemesisID);
-	if (target) {
-		//If the enemy unit is stealthed and not detected, then we can't attack it!
-	if( target->testStatus( OBJECT_STATUS_STEALTHED ) && 
-			!target->testStatus( OBJECT_STATUS_DETECTED ) &&
-			!target->testStatus( OBJECT_STATUS_DISGUISED ) )
-		{
-			target = NULL;
-		}
-	}
-	if (target && target->isEffectivelyDead()) {
-		target = NULL;
-	}
-	if (target == NULL) {
-		m_curNemesisID = INVALID_ID;
-	}
-	return target;
-}
 
 // ------------------------------------------------------------------------
 // ?isValidContainerFor@TunnelTracker@@ present-unmatched
@@ -297,57 +261,3 @@ void TunnelTracker::crc( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@TunnelTracker@@ present-unmatched
-void TunnelTracker::loadPostProcess( void )
-{
-
-	// sanity, the contain list should be empty until we post process the id list
-	if( m_containList.size() != 0 )
-	{
-
-		DEBUG_CRASH(( "TunnelTracker::loadPostProcess - m_containList should be empty but is not\n" ));
-		throw SC_INVALID_DATA;
-
-	}  // end if
-
-	// translate each object ids on the xferContainList into real object pointers in the contain list
-	Object *obj;
-	std::list< ObjectID >::const_iterator it;
-	for( it = m_xferContainList.begin(); it != m_xferContainList.end(); ++it )
-	{
-
-		obj = TheGameLogic->findObjectByID( *it );
-		if( obj == NULL )
-		{
-
-			DEBUG_CRASH(( "TunnelTracker::loadPostProcess - Unable to find object ID '%d'\n", *it ));
-			throw SC_INVALID_DATA;
-
-		}  // end if
-
-		// push on the back of the contain list
-		m_containList.push_back( obj );
-
-		// Crap.  This is in OpenContain as a fix, but not here.
-		{
-			// remove object from its group (if any)
-			obj->leaveGroup();
-			
-			// remove rider from partition manager
-			ThePartitionManager->unRegisterObject( obj );
-			
-			// hide the drawable associated with rider
-			if( obj->getDrawable() )
-				obj->getDrawable()->setDrawableHidden( true );
-			
-			// remove object from pathfind map
-			if( TheAI )
-				TheAI->pathfinder()->removeObjectFromPathfindMap( obj );
-			
-		}
-	}  // end for, it
-
-	// we're done with the xfer contain list now
-	m_xferContainList.clear();
-
-}  // end loadPostProcess
