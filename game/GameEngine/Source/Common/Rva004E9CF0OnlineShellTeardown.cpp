@@ -27,8 +27,9 @@ public:
 
 class BfmeAptScreenOnlineShell;
 extern BfmeAptScreenOnlineShell *g_obj12F4ACC;
-extern unsigned char g_g_012F4248;
-extern BfmeH1086 *g_h_012F4238;
+// Retail .bss VA 0x012F4248 (byte) and 0x012F4238 (handler pointer). Address-derived names.
+unsigned char g_Va012F4248;
+BfmeH1086 *g_Va012F4238;
 extern int numOnlineInNotification;
 extern bool lastNotificationWasStatus;
 
@@ -39,21 +40,21 @@ void bfmeGo1086B( void )
 
 	if( reinterpret_cast<BfmeB1021 * &>(g_obj12F4ACC) )
 	{
-		if( g_g_012F4248 )
+		if( g_Va012F4248 )
 		{
 			reinterpret_cast<BfmeB1021 * &>(g_obj12F4ACC)->bfmeGo1021B();
-			g_g_012F4248 = 0;
+			g_Va012F4248 = 0;
 		}
 	}
 	else
 	{
-		g_g_012F4248 = 0;
-		if( g_h_012F4238 )
+		g_Va012F4248 = 0;
+		if( g_Va012F4238 )
 		{
-			g_h_012F4238->slot8();
-			if( g_h_012F4238 )
-				g_h_012F4238->slot1( 1 );
-			g_h_012F4238 = 0;
+			g_Va012F4238->slot8();
+			if( g_Va012F4238 )
+				g_Va012F4238->slot1( 1 );
+			g_Va012F4238 = 0;
 		}
 	}
 }
