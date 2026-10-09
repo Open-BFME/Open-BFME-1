@@ -72,3 +72,32 @@ Placeholder-to-placeholder forwarders (`bfmeMake_*`, `bfmeMakeW*`, `bfmeHashComb
 verdict asks only that the calls spell the ledger name. The three S3 TUs carried the same `bfmeMake_*`
 block with different casts (`(int)`, `(void *)`, none); every copy is now a direct call to the ledger rows
 `Rva005277B0`, `Rva0054E760`, `Rva0054E960`, `Rva0056DEC0` and `Rva00527830`, with the cast at the use.
+
+## AISideInfo (renamed: Gen_0014B790 -> AISideInfo)
+
+`AI_parseSideInfo.cpp` carried `typedef Gen_0014B790 AISideInfo;`. Unlike the other forwarders, this name is
+proven, by three independent witnesses:
+
+1. Matched caller: `symbols.csv` pins `??0AISideInfo@@QAE@XZ` at ILT 0x00045165 ("AI::newOverride retail
+   ILT-derived constructor callee"), and `tools/pin_consistency.py --symbol '??0AISideInfo@@QAE@XZ'` reports
+   `0x00045165 -> 0x0014B6B0 extent=140 (matched) owned-by=['??0Gen_0014B790@@QAE@XZ'] verdict: consistent`.
+   AI::newOverride (game/GameEngine/Source/GameLogic/AI/AINewOverride.cpp) calls that constructor.
+2. ILT bucket fit: `tools/ilt_oracle.py check '??0AISideInfo@@QAE@XZ' 0x14B6B0` is CONFIRMED (exact,
+   p_false 2.6e-4) and `check '??1AISideInfo@@UAE@XZ' 0x14B790` is CONFIRMED (exact, p_false 3.9e-4).
+3. Zero Hour: `AI::parseSideInfo` (matched at 0x0014BF10, the TU that used the typedef) allocates an
+   `AISideInfo` in ZH's AI.cpp; this body's `new` + constructor call lands on 0x0014B6B0.
+
+The class at 0x0014B6B0 / 0x0014B790 (vftable 0x010957C4) is therefore AISideInfo, and the typedef's name is
+right. This pass KEEPS the typedef (decision: left) because the ledger rename is blocked: renaming
+`??0Gen_0014B790@@QAE@XZ` / `??1Gen_0014B790@@UAE@XZ` to `??0AISideInfo@@QAE@XZ` / `??1AISideInfo@@UAE@XZ`
+(tried with add_match --correct-identity; both bodies verified) makes `tools/link_check.py` drop
+BfmeConv1651.cpp from 140 to 0 linked bytes: `ai.cpp` (via `newInstance(AISideInfo)`) emits its own
+non-retail `??0AISideInfo@@QAE@XZ` COMDAT, which the link then keeps over retail's body. Repairing that
+needs the shared AISideInfo declaration ai.cpp includes (a header edit, full gate), so the rename is an
+operator/name-lane follow-up. (The same evidence pattern suggests `??4Rva0014A470` is
+`AISideInfo::operator=`, pinned `??4AISideInfo@@QAEAAV0@ABV0@@Z` at ILT 0x00019FB0 -> 0x0014A470.)
+
+## OnlineLoginGadgetMessage00552AA0
+
+`_bfme_applyLoginGadgets()` forwarded to the matched `applyLoginGadgets0054FB10` (0x0054FB10). The ledger name
+already carries the description; the extra spelling is deleted and the calls use the ledger name.

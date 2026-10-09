@@ -24,7 +24,6 @@ public:
 
 	// ILT 0x0004557A routes to the matched 0x0054FB10 body; its AL result is unused here.
 	bool applyLoginGadgets0054FB10();
-#define _bfme_applyLoginGadgets() applyLoginGadgets0054FB10()
 	UnicodeString bfmeGetTextAt74() const;
 
 private:
@@ -53,27 +52,27 @@ int BfmeAptScreenOnlineLogin::rva00552aa0( void *arg0, unsigned int msg, void *c
 
 			s_updatingLoginGadgets = true;
 			((Rva0054FF80 *)this)->call( nickname, empty );
-			_bfme_applyLoginGadgets();
+			applyLoginGadgets0054FB10();
 			s_updatingLoginGadgets = false;
 		}
 		if( control == m_control78 )
-			_bfme_applyLoginGadgets();
+			applyLoginGadgets0054FB10();
 		break;
 
 	case 0x402D:
 		if( m_control78 == 0 || m_control7C == 0 )
 			break;
 		if( control == m_control78 )
-			_bfme_applyLoginGadgets();
+			applyLoginGadgets0054FB10();
 		if( control == m_control74 )
-			_bfme_applyLoginGadgets();
+			applyLoginGadgets0054FB10();
 		break;
 
 	case 0x4031:
 		if( m_control78 == 0 || m_control7C == 0 )
 			break;
 		if( control == m_control7C )
-			_bfme_applyLoginGadgets();
+			applyLoginGadgets0054FB10();
 		break;
 	}
 
