@@ -1,15 +1,20 @@
 // cl: /Od
 
-unsigned bfmeStrlenV55(char *s);
+// Callees named as their matched rows (tools/callees.py 0x831CE0 277):
+// ILT 0x6B9A -> 0x000A30D0 stringLength, ILT 0x42DC0 -> 0x000A34E0
+// Gen_000a34e0::m (length error), and 0x008314E0
+// Rva008314E0String::replaceRange.
+int stringLength(const char *s);
 
-class BfmeStrV55
+struct Gen_000a34e0 { void m(); };
+
+struct BfmeRangeTag;
+
+class Rva008314E0String
 {
 public:
-	void bfmeThrow2V55();
-	void bfmeInsertV55(char *a, char *b, char *c, char *d, char *e);
-	char *b;
-	char *e;
-	char *c;
+	Rva008314E0String &replaceRange(char *first, char *last, char *srcFirst,
+		char *srcLast, const BfmeRangeTag &tag);
 };
 
 // The range-check helper retail reaches through the 0x000132CD thunk, whose
@@ -57,7 +62,7 @@ void __stdcall bfmeReplaceV55(unsigned pos, unsigned n, char *src)
 		mov dword ptr [ebp-0x4], edx
 		mov eax, dword ptr [ebp+0x10]
 		push eax
-		call bfmeStrlenV55
+		call stringLength
 		add esp, 4
 		mov dword ptr [ebp-0x8], eax
 		cmp dword ptr [ebp-0x8], -0x2
@@ -73,7 +78,7 @@ void __stdcall bfmeReplaceV55(unsigned pos, unsigned n, char *src)
 		jb L5
 	L4:
 		mov ecx, dword ptr [ebp-0xAC]
-		call BfmeStrV55::bfmeThrow2V55
+		call Gen_000a34e0::m
 	L5:
 		mov edx, dword ptr [ebp-0xAC]
 		mov eax, dword ptr [edx]
@@ -83,7 +88,7 @@ void __stdcall bfmeReplaceV55(unsigned pos, unsigned n, char *src)
 		mov dword ptr [ebp-0x18], edx
 		mov eax, dword ptr [ebp+0x10]
 		push eax
-		call bfmeStrlenV55
+		call stringLength
 		add esp, 4
 		add eax, dword ptr [ebp+0x10]
 		mov dword ptr [ebp-0xA8], eax
@@ -103,7 +108,7 @@ void __stdcall bfmeReplaceV55(unsigned pos, unsigned n, char *src)
 		add eax, dword ptr [ebp+0x8]
 		push eax
 		mov ecx, dword ptr [ebp-0xAC]
-		call BfmeStrV55::bfmeInsertV55
+		call Rva008314E0String::replaceRange
 	done:
 	}
 }
