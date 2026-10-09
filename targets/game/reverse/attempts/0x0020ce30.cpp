@@ -1,11 +1,10 @@
-// ?d_0020ce30@@YAXXZ
-// partial score=0.2675 date=2026-09-30
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/GameEngine/Source /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
-// SpawnTownsmenBehavior::update, retail RVA 0x0020CE30: slot 0 of the +0x10 interface vtable 0x010A6D04
-// installed by the SpawnTownsmenBehavior ctor 0x0020CC70 (primary vtable 0x00CA6DD4 names the class).
-// stlport
+// ?update@SpawnTownsmenBehavior@@UAE?AW4UpdateSleepTime@@XZ
+// partial score=0.6404 date=2026-10-09
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Include /Igame/GameEngine/Source /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+
 #define _STLP_NO_EXCEPTIONS 1
 #include "ascii_string.h"
+// stlport
 #include <bitset>
 #include <vector>
 
@@ -14,12 +13,7 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "Lib/Coord3D.h"
 
 #define BFME_HAVE_COORD3D
 #define THING_TU_MEMBERS \
@@ -59,11 +53,7 @@ public:
 
 extern ThingFactory *TheThingFactory;
 
-class GameLogic
-{
-public:
-	Object *findObjectByID(Int id);
-};
+#include "Common/Thing/GameLogicObjectLookup.h"
 
 extern GameLogic *TheGameLogic;
 
@@ -104,8 +94,7 @@ public:
 	void *m_bfmeRootAK;
 };
 
-// Retail constructs the list through ILT 0x00048135 (body 0x001DB0F0 zeroes both words).
-#pragma comment(linker, "/alternatename:??0BfmeListAK@@QAE@XZ=?j_00048135@@YAXXZ")
+// List construction needs a proven pin to body 0x001DB0F0 via ILT 0x00048135.
 
 class SpawnTownsmenBehaviorModuleData
 {
@@ -147,10 +136,35 @@ public:
 	virtual UpdateSleepTime update();
 };
 
-// Object+0x364 holds the spawned-object list keyed by 1; Object does not model that word.
+// ?townsmenList@@YAAAPAVBfmeListAK@@PAVObject@@@Z absent-from-retail
 static inline BfmeListAK *&townsmenList(Object *object)
 {
 	return *reinterpret_cast<BfmeListAK **>(reinterpret_cast<char *>(object) + 0x364);
+}
+
+// ?countLivingTownsmen@@YAXPAVBfmeListAK@@AAH@Z absent-from-retail
+static __forceinline void countLivingTownsmen(BfmeListAK *list, Int &living)
+{
+	Rva001DB130Node *node = reinterpret_cast<Rva001DB130 *>(list)->find(1);
+	if (node == 0)
+		living = 0;
+	else
+	{
+		_STL::vector<void *>::iterator it = node->m_bfmeValuesAK.begin();
+		while (it != node->m_bfmeValuesAK.end())
+		{
+			Object *townsman = TheGameLogic->findObjectByID((Int)*it);
+			if (townsman == 0)
+				++it;
+			else if (townsman->m_privateStatus & 1)
+				it = node->m_bfmeValuesAK.erase(it);
+			else
+			{
+				++it;
+				++living;
+			}
+		}
+	}
 }
 
 // ?update@SpawnTownsmenBehavior@@UAE?AW4UpdateSleepTime@@XZ
@@ -163,30 +177,12 @@ UpdateSleepTime SpawnTownsmenBehavior::update()
 
 	if (list == 0)
 	{
+		living = 0;
 		list = new BfmeListAK;
 		townsmenList(object) = list;
 	}
 	else
-	{
-		Rva001DB130Node *node = reinterpret_cast<Rva001DB130 *>(list)->find(1);
-		if (node != 0)
-		{
-			_STL::vector<void *>::iterator it = node->m_bfmeValuesAK.begin();
-			while (it != node->m_bfmeValuesAK.end())
-			{
-				Object *townsman = TheGameLogic->findObjectByID((Int)*it);
-				if (townsman == 0)
-					++it;
-				else if (townsman->m_privateStatus & 1)
-					it = node->m_bfmeValuesAK.erase(it);
-				else
-				{
-					++it;
-					++living;
-				}
-			}
-		}
-	}
+		countLivingTownsmen(list, living);
 
 	if (data->m_townsmanCount - living > 0)
 	{
