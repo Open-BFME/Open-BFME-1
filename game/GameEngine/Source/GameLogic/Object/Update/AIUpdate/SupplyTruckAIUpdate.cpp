@@ -284,28 +284,9 @@ public:
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdateMakeStateMachineThunk.cpp
-// ?makeStateMachine@SupplyTruckAIUpdate@@ present-unmatched
-AIStateMachine* SupplyTruckAIUpdate::makeStateMachine()
-{
-	return newInstance(AIStateMachine)( getObject(), "SupplyTruckAIUpdateMachine");
-}
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate_ctor.cpp
-// ??0SupplyTruckAIUpdate@@ present-unmatched
-SupplyTruckAIUpdate::SupplyTruckAIUpdate( Thing *thing, const ModuleData* moduleData ) : AIUpdateInterface( thing, moduleData )
-{
-	m_supplyTruckStateMachine = NULL;
-	m_preferredDock = INVALID_ID;
-	m_numberBoxes = 0;
-	m_forcePending = FALSE;
-	m_forcedBusyPending = FALSE;
-	m_supplyTruckStateMachine = newInstance(SupplyTruckStateMachine)( getObject() );
-	m_supplyTruckStateMachine->initDefaultState();
-	
-	m_suppliesDepletedVoice = getSupplyTruckAIUpdateModuleData()->m_suppliesDepletedVoice;
-
-} 
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/SupplyTruckAIUpdateDestructorThunk.cpp
@@ -318,39 +299,9 @@ SupplyTruckAIUpdate::~SupplyTruckAIUpdate( void )
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/SupplyTruckAIUpdate_updateAndPrivateDock_Thunk.cpp
-// ?update@SupplyTruckAIUpdate@@ present-unmatched
-UpdateSleepTime SupplyTruckAIUpdate::update( void )
-{
-
-	StateReturnType stRet = m_supplyTruckStateMachine->updateStateMachine();
-
-	UpdateSleepTime mine = IS_STATE_SLEEP(stRet) ? UPDATE_SLEEP(GET_STATE_SLEEP_FRAMES(stRet)) : UPDATE_SLEEP_NONE;
-
-	// extend
-	UpdateSleepTime ret = AIUpdateInterface::update();
-	return (mine < ret) ? mine : ret;
-}
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/SupplyTruckAIUpdate_updateAndPrivateDock_Thunk.cpp
-// ?isCurrentlyFerryingSupplies@SupplyTruckAIUpdate@@ present-unmatched
-Bool SupplyTruckAIUpdate::isCurrentlyFerryingSupplies() const
-{
-	if (m_supplyTruckStateMachine)
-	{
-		switch (m_supplyTruckStateMachine->getCurrentStateID())
-		{
-			case ST_IDLE:
-			case ST_BUSY:
-			case ST_REGROUPING:
-				return false;
-			case ST_WANTING:
-			case ST_DOCKING:
-				return true;
-		}
-	}
-	return false;
-}
 
 //-------------------------------------------------------------------------------------------------
 // ?isAvailableForSupplying@SupplyTruckAIUpdate@@ present-unmatched
@@ -434,21 +385,6 @@ void SupplyTruckAIUpdate::privateIdle(CommandSourceType cmdSource)
 
 //----------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/SupplyTruckAIUpdate_updateAndPrivateDock_Thunk.cpp
-// ?privateDock@SupplyTruckAIUpdate@@ present-unmatched
-void SupplyTruckAIUpdate::privateDock( Object *dock, CommandSourceType cmdSource )
-{
-	AIUpdateInterface::privateDock( dock, cmdSource );
-
-	// If this is a command from a player, I will remember this as my favorite dock to override
-	// ResourceManager searches.
-	if ((cmdSource == CMD_FROM_PLAYER) && dock)
-	{
-		// Please note, there is not a separate Warehouse and Center memory by Design.  Because
-		// we lack a UI way to click Warehouse and drag to center to set up a specific path, the
-		// practical realization has been made that you do not want separate memory.
-		m_preferredDock = dock->getID();
-	}
-}
 
 //----------------------------------------------------------------------------------------
 UnsignedInt SupplyTruckAIUpdate::getActionDelayForDock( Object *dock )
