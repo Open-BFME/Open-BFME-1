@@ -168,21 +168,7 @@ LoadScreen::~LoadScreen( void )
 	m_loadScreen = NULL;
 }
 
-// ?update@LoadScreen@@ present-unmatched
-void LoadScreen::update( Int percent )
-{
-	TheGameEngine->serviceWindowsOS();
-	if (TheGameEngine->getQuitting())
-		return;	//don't bother with any of this if the player is exiting game.
-
-	TheWindowManager->update();
-	TheDisplay->update();
-	// redraw all views, update the GUI
-	TheDisplay->draw();
-
-	setFPMode();
-}
-
+// Retail LoadScreen::update is defined in LoadScreenUpdates.cpp.
 
 // SinglePlayerLoadScreen Class ///////////////////////////////////////////////
 //-----------------------------------------------------------------------------
