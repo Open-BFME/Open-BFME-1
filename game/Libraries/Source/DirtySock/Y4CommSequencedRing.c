@@ -67,8 +67,7 @@ struct Rva0081BD40Comm
 	/* A CRITICAL SECTION, and its SIZE is the evidence: the two bodies that
 	 * take it pass +0x1920 to a pair of one-argument stdcall imports, and the
 	 * busy flag below starts exactly 0x18 bytes later -- which is sizeof
-	 * CRITICAL_SECTION on x86.  The import names never reach the bytes, so
-	 * the declarations below are address-derived. */
+	 * CRITICAL_SECTION on x86. */
 	char m_lock[ 0x18 ];            /* +0x1920 */
 	/* A RE-ENTRANCY DEPTH, and the two bodies that touch it say different
 	 * halves of the story.  0x0081AB40 raises it across the copy and the user
@@ -79,17 +78,17 @@ struct Rva0081BD40Comm
 	int m_flags;                    /* +0x193C */
 };
 
-/* The one-argument stdcall import the socket unit already reaches with a 50
- * for a poll interval; here it is called with zero, which is a yield rather
- * than a wait.  The name is address-derived: an IAT call site is a DIR32 and
- * the gate fills it from retail, so nothing here asserts which API it is. */
-__declspec(dllimport) void __stdcall Rva01358F30Wait( int interval );
-__declspec(dllimport) unsigned int __stdcall Rva01358E0CTick( void );
-__declspec(dllimport) int __stdcall Rva01358EDC( void *handle,
+/* Retail imports these APIs from KERNEL32.dll: EnterCriticalSection at
+ * 0x01358D18, GetTickCount at 0x01358E0C, LeaveCriticalSection at 0x01358E74,
+ * SetCommMask at 0x01358EDC, Sleep at 0x01358F30, WaitForSingleObject at
+ * 0x01358F64 and WriteFile at 0x01358F70. Sleep(0) yields the timeslice. */
+__declspec(dllimport) void __stdcall Sleep( unsigned int interval );
+__declspec(dllimport) unsigned int __stdcall GetTickCount( void );
+__declspec(dllimport) int __stdcall SetCommMask( void *handle,
 	unsigned int mask );
-__declspec(dllimport) unsigned int __stdcall Rva01358F64Wait( void *handle,
+__declspec(dllimport) unsigned int __stdcall WaitForSingleObject( void *handle,
 	unsigned int timeout );
-__declspec(dllimport) int __stdcall Rva01358F70Write( void *handle,
+__declspec(dllimport) int __stdcall WriteFile( void *handle,
 	const void *buffer, unsigned int length, unsigned int *written,
 	void *overlapped );
 
@@ -187,7 +186,7 @@ int Rva0081BC80( struct Rva0081BD40Comm *comm, void *buffer, int size,
 		return -7;
 
 	while ( comm->m_depth != 0 )
-		Rva01358F30Wait( 0 );
+		Sleep( 0 );
 
 	record = (struct Rva0081BC80Record *)( comm->m_recvBuffer
 		+ comm->m_recvReadOffset );
@@ -205,8 +204,8 @@ int Rva0081BC80( struct Rva0081BD40Comm *comm, void *buffer, int size,
 	return record->m_length;
 }
 
-__declspec(dllimport) void __stdcall Rva01358D18Enter( void *lock );
-__declspec(dllimport) void __stdcall Rva01358E74Leave( void *lock );
+__declspec(dllimport) void __stdcall EnterCriticalSection( void *lock );
+__declspec(dllimport) void __stdcall LeaveCriticalSection( void *lock );
 
 int Rva0081B010( struct Rva0081BD40Comm *comm, void *argument );
 
@@ -235,14 +234,14 @@ int Rva0081B790( struct Rva0081BD40Comm *comm, void *argument )
 	if ( argument == 0 || comm->m_state != 1 )
 		return -2;
 
-	Rva01358D18Enter( comm->m_lock );
+	EnterCriticalSection( comm->m_lock );
 
 	iResult = Rva0081B010( comm, argument );
 
 	if ( comm->m_state == 5 )
 		comm->m_state = 3;
 
-	Rva01358E74Leave( comm->m_lock );
+	LeaveCriticalSection( comm->m_lock );
 	return iResult;
 }
 
@@ -253,14 +252,14 @@ int Rva0081B910( struct Rva0081BD40Comm *comm, void *argument )
 	if ( argument == 0 || comm->m_state != 1 )
 		return -2;
 
-	Rva01358D18Enter( comm->m_lock );
+	EnterCriticalSection( comm->m_lock );
 
 	iResult = Rva0081B010( comm, argument );
 
 	if ( comm->m_state == 5 )
 		comm->m_state = 2;
 
-	Rva01358E74Leave( comm->m_lock );
+	LeaveCriticalSection( comm->m_lock );
 	return iResult;
 }
 
@@ -373,19 +372,19 @@ int Rva0081A3B0( struct Rva0081BD40Comm *comm,
 		packet[ iLength + 7 ] = 0x0A;
 
 		if ( comm->m_streamLength == 0 )
-			Rva01358EDC( comm->m_handle, 2 );
+			SetCommMask( comm->m_handle, 2 );
 
 		comm->m_streamLength = iLength + comm->m_streamLength + 8;
-		comm->m_streamTick = Rva01358E0CTick();
+		comm->m_streamTick = GetTickCount();
 	}
 
 	if ( comm->m_streamLength == 0 )
 		return 0;
 
-	if ( Rva01358F64Wait( comm->m_event, 0 ) == 0x102 )
+	if ( WaitForSingleObject( comm->m_event, 0 ) == 0x102 )
 		return 0;
 
-	Rva01358F70Write( comm->m_handle,
+	WriteFile( comm->m_handle,
 		comm->m_streamBuffers[ comm->m_streamSlot ],
 		comm->m_streamLength, &comm->m_streamWritten,
 		comm->m_streamOverlapped );
@@ -628,14 +627,14 @@ int Rva0081BA60( struct Rva0081BD40Comm *comm, const void *payload,
 	slot->m_sequence = comm->m_sendSequence;
 	comm->m_sendSequence = comm->m_sendSequence + 1;
 	slot->m_ack = comm->m_recvSequence - 1;
-	slot->m_tick = Rva01358E0CTick();
+	slot->m_tick = GetTickCount();
 
 	comm->m_sendWriteOffset = ( comm->m_sendWriteOffset
 		+ comm->m_sendRecordSize ) % comm->m_sendBufferSize;
 
-	Rva01358D18Enter( comm->m_lock );
+	EnterCriticalSection( comm->m_lock );
 	Rva0081A8C0( comm );
-	Rva01358E74Leave( comm->m_lock );
+	LeaveCriticalSection( comm->m_lock );
 
 	iCount = ( ( comm->m_sendWriteOffset + comm->m_sendBufferSize
 		- comm->m_sendReadOffset ) % comm->m_sendBufferSize )
