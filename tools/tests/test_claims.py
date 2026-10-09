@@ -327,6 +327,34 @@ def test_a_committed_but_unpushed_repair_is_not_released(hosts):
     assert 0x100 in claims.active()
 
 
+def test_peer_changes_on_a_newer_origin_master_are_not_landing_deps(hosts):
+    # re_attempts.log 0x008615F0: origin/master had moved on (peers changed
+    # other game/ files) when the landing was verified; the two-dot diff made
+    # those files deps whose old local blobs never matched, so the landed
+    # body's claim could not settle.
+    b = hosts("b")
+    _commit_ledger(b, [], "base", {"game/peer.cpp": "old\n"})
+    _git(b, "push", "-q", "origin", "HEAD:refs/heads/master")
+    a = hosts("a")
+    _git(a, "pull", "-q", "origin", "master")
+    hosts("b")
+    _commit_ledger(b, [], "peer change", {"game/peer.cpp": "new\n"})
+    _git(b, "push", "-q", "origin", "HEAD:refs/heads/master")
+    a = hosts("a")
+    _git(a, "fetch", "-q", "origin")
+    _git(a, "update-ref", "refs/remotes/origin/master", "FETCH_HEAD")
+    claims.claim([0x100])
+    row = "?f@@YAXXZ,,0x00000100,16,game/x.cpp,matched,model=m"
+    _commit_ledger(a, [row], "land", {"game/x.cpp": "void f() {}\n",
+                                       "game/x.h": "struct X;\n"})
+    claims.queue_landed(0x100, row)
+    # this checkout's own committed dependency is still required
+    assert set(claims.pending()[0]["deps"]) == {"game/x.cpp", "game/x.h"}
+    _git(a, "pull", "-q", "--rebase", "origin", "master")
+    _git(a, "push", "-q", "origin", "HEAD:refs/heads/master")
+    assert claims.release_landed() == ([0x100], [])
+
+
 def test_a_lease_survives_renewal_and_dies_with_a_takeover(hosts):
     a = hosts("a")
     got = claims.claim([0x100], ttl_hours=-1)                       # expired at once

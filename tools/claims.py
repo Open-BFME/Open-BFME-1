@@ -509,7 +509,10 @@ def landing_deps(source, root=None):
     changed = set()
     for args in (("diff", "--name-only", "HEAD"),
                  ("ls-files", "--others", "--exclude-standard"),
-                 ("diff", "--name-only", "refs/remotes/origin/master", "HEAD")):
+                 # this checkout's commits only (since the merge base): a
+                 # two-dot diff also listed every file peers changed on a
+                 # newer origin/master, whose old local blobs never match it
+                 ("diff", "--name-only", "refs/remotes/origin/master...HEAD")):
         got = _git(*args, "--", *DEP_PREFIXES, cwd=root)
         if got.returncode == 0:
             changed.update(line.strip() for line in got.stdout.splitlines() if line.strip())
