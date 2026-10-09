@@ -29,6 +29,10 @@ class ThingTemplate : public Overridable
 class CommandButton
 {
 public:
+	unsigned char m_pad00[0x10];
+	Int m_commandType;
+	unsigned char m_pad14[4];
+	Int m_options;
 	Int getOptions() const
 	{
 		return *(const Int *)((const char *)this + 0x18);
@@ -40,6 +44,7 @@ class GameWindow
 {
 public:
 	int winHide(bool hide);
+	void bfmeClose(Bool hide);
 	Bool winIsHidden(void);
 	UnsignedInt _bfme_winSetStatus(UnsignedInt status);
 	UnsignedInt winClearStatus(UnsignedInt status);
@@ -148,13 +153,145 @@ void *GadgetButtonGetData(GameWindow *window);
 void GadgetCheckLikeButtonSetVisualCheck(GameWindow *window, Bool checked);
 void GadgetButtonDrawInverseClock(GameWindow *window, Int percent, Int color);
 
+enum KindOfType { KINDOF_FIRST = 0 };
+
+class AsciiString;
+class CommandButton;
+
+class Thing
+{
+public:
+	Bool isKindOf( KindOfType kind ) const;
+};
+
+class Object : public Thing
+{
+public:
+	const AsciiString &getCommandSetString( void ) const;
+	Bool testStatus( Int status ) const;
+	Object *bfmeResolveMeleeTarget( Int mode );
+	void *unidentified_001BFE20( void ) const;
+};
+
+
+class BfmeUnit1013
+{
+public:
+	void bfmeStop1013( char value );
+};
+
+class CommandSet
+{
+public:
+	const CommandButton *getCommandButton( Int index ) const;
+};
+
+
+struct Rva004A9010Drawable
+{
+	unsigned char m_pad00[ 0xFC ];
+	Object *m_object;
+};
+
+struct Rva004A9010SelNode
+{
+	Rva004A9010SelNode *m_next;
+	Rva004A9010SelNode *m_prev;
+	void *m_drawable;
+};
+
+struct Rva004A9010SelList
+{
+	Rva004A9010SelNode *m_node;
+};
+
+class Rva004A9010Relation
+{
+public:
+	#define REL_SLOT(n) virtual void slot##n( void ) = 0;
+	REL_SLOT(00) REL_SLOT(04) REL_SLOT(08) REL_SLOT(0C) REL_SLOT(10) REL_SLOT(14)
+	REL_SLOT(18) REL_SLOT(1C) REL_SLOT(20) REL_SLOT(24) REL_SLOT(28) REL_SLOT(2C)
+	REL_SLOT(30) REL_SLOT(34) REL_SLOT(38) REL_SLOT(3C) REL_SLOT(40) REL_SLOT(44)
+	REL_SLOT(48) REL_SLOT(4C) REL_SLOT(50) REL_SLOT(54) REL_SLOT(58) REL_SLOT(5C)
+	REL_SLOT(60) REL_SLOT(64) REL_SLOT(68) REL_SLOT(6C) REL_SLOT(70) REL_SLOT(74)
+	REL_SLOT(78) REL_SLOT(7C) REL_SLOT(80) REL_SLOT(84) REL_SLOT(88) REL_SLOT(8C)
+	REL_SLOT(90) REL_SLOT(94) REL_SLOT(98) REL_SLOT(9C) REL_SLOT(A0) REL_SLOT(A4)
+	REL_SLOT(A8) REL_SLOT(AC) REL_SLOT(B0) REL_SLOT(B4) REL_SLOT(B8) REL_SLOT(BC)
+	REL_SLOT(C0) REL_SLOT(C4) REL_SLOT(C8) REL_SLOT(CC) REL_SLOT(D0) REL_SLOT(D4)
+	#undef REL_SLOT
+	virtual Bool slotD8( void ) = 0;
+};
+
+class InGameUI
+{
+public:
+	#define UI_SLOT(n) virtual void slot##n( void ) = 0;
+	UI_SLOT(00) UI_SLOT(04) UI_SLOT(08) UI_SLOT(0C) UI_SLOT(10) UI_SLOT(14)
+	UI_SLOT(18) UI_SLOT(1C) UI_SLOT(20) UI_SLOT(24) UI_SLOT(28) UI_SLOT(2C)
+	UI_SLOT(30) UI_SLOT(34) UI_SLOT(38) UI_SLOT(3C) UI_SLOT(40) UI_SLOT(44)
+	UI_SLOT(48) UI_SLOT(4C) UI_SLOT(50) UI_SLOT(54) UI_SLOT(58) UI_SLOT(5C)
+	UI_SLOT(60) UI_SLOT(64) UI_SLOT(68) UI_SLOT(6C) UI_SLOT(70) UI_SLOT(74)
+	UI_SLOT(78) UI_SLOT(7C) UI_SLOT(80) UI_SLOT(84) UI_SLOT(88) UI_SLOT(8C)
+	UI_SLOT(90) UI_SLOT(94) UI_SLOT(98) UI_SLOT(9C) UI_SLOT(A0) UI_SLOT(A4)
+	UI_SLOT(A8) UI_SLOT(AC) UI_SLOT(B0) UI_SLOT(B4) UI_SLOT(B8) UI_SLOT(BC)
+	UI_SLOT(C0) UI_SLOT(C4) UI_SLOT(C8) UI_SLOT(CC) UI_SLOT(D0) UI_SLOT(D4)
+	UI_SLOT(D8) UI_SLOT(DC) UI_SLOT(E0) UI_SLOT(E4) UI_SLOT(E8) UI_SLOT(EC)
+	UI_SLOT(F0) UI_SLOT(F4) UI_SLOT(F8)
+	#undef UI_SLOT
+	virtual Rva004A9010SelList *slotFC( void ) = 0;
+};
+
+extern InGameUI *TheInGameUI;
+
+extern void j_00011cd4( void );
+extern void j_00006938( void );
+
+struct Rva004A9010ButtonCalls
+{
+	void applyState( Int value );
+	void applyObject( Object *object, Int mode );
+};
+
+typedef void (Rva004A9010ButtonCalls::*Rva004A9010StateCall)( Int );
+typedef void (Rva004A9010ButtonCalls::*Rva004A9010ObjectCall)( Object *, Int );
+
+// ?callRva00011CD4@@YAXPBVCommandButton@@H@Z absent-from-retail
+static void callRva00011CD4( const CommandButton *button, Int value )
+{
+	union
+	{
+		void (*asFunction)();
+		Rva004A9010StateCall asMember;
+	} functionCast;
+	functionCast.asFunction = j_00011cd4;
+	(((Rva004A9010ButtonCalls *)button)->*functionCast.asMember)( value );
+}
+
+// ?callRva00006938@@YAXPBVCommandButton@@PAVObject@@H@Z absent-from-retail
+static void callRva00006938( const CommandButton *button, Object *object, Int mode )
+{
+	union
+	{
+		void (*asFunction)();
+		Rva004A9010ObjectCall asMember;
+	} functionCast;
+	functionCast.asFunction = j_00006938;
+	(((Rva004A9010ButtonCalls *)button)->*functionCast.asMember)( object, mode );
+}
+
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
+public:
+	void rva004A9010(void *draw, Bool populate);
+	const CommandSet *findCommandSet(const AsciiString &name);
+
 protected:
 	void updateContextMultiSelect(void);
 
 private:
+	void setControlCommand(GameWindow *window, const CommandButton *button);
 	char m_slice_pad[0x5C];					// retail this+0x00 .. +0x5B, untouched
 	Drawable *m_currentSelectedDrawable;			// this+0x5C
 	char m_slice_padC[0x100 - 0x60];			// this+0x60 .. +0xFF, untouched
@@ -296,4 +433,78 @@ void ControlBar::updateContextMultiSelect(void)
 		else
 			win->winEnable(false);
 	}
+}
+
+// ?rva004A9010@ControlBar@@QAEXPAX_N@Z
+// Open BFME 2: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarMultiSelect.cpp.
+void ControlBar::rva004A9010(void *draw, bool populate)
+{
+    Int i;
+    const CommandButton *button;
+    if (draw == 0) return;
+    Object *obj = ((Rva004A9010Drawable *)draw)->m_object;
+    if (!obj) return;
+    if (obj->isKindOf((KindOfType)0x2F))
+        return;
+    const CommandSet *commandSet = findCommandSet(obj->getCommandSetString());
+    if (commandSet == 0) {
+        for (i = 0; i < 20; i++) {
+            m_commonCommands[i] = 0;
+            if (m_commandWindows[i]) m_commandWindows[i]->winHide(true);
+        }
+        return;
+    }
+    if (populate == true) {
+        for (i = 0; i < 20; i++) {
+            button = commandSet->getCommandButton(i);
+            if (button && (button->m_options & 0x100) != 0) {
+                m_commonCommands[i] = button;
+                if (m_commandWindows[i]) {
+                    m_commandWindows[i]->winHide(false);
+                    m_commandWindows[i]->winEnable(true);
+                    if (button->m_commandType == 0x23) {
+                        int modeVote = 0;
+                        Rva004A9010SelList *list =
+                            TheInGameUI->slotFC();
+                        for (Rva004A9010SelNode *entry = list->m_node->m_next;
+                             entry != list->m_node; entry = entry->m_next) {
+                            void *selectedDraw = entry->m_drawable;
+                            if (!selectedDraw || !((Rva004A9010Drawable *)selectedDraw)->m_object) continue;
+                            Object *selectedObject = ((Rva004A9010Drawable *)selectedDraw)->m_object;
+                            if (selectedObject->isKindOf((KindOfType)0x2F))
+                                continue;
+                            if (selectedObject->testStatus(0x13)) continue;
+                            Object *resolved = selectedObject->bfmeResolveMeleeTarget(0);
+                            if (!resolved) continue;
+                            Rva004A9010Relation *mode = (Rva004A9010Relation *)resolved->unidentified_001BFE20();
+                            if (!mode) continue;
+                            if (mode->slotD8()) --modeVote;
+                            else ++modeVote;
+                        }
+                        callRva00011CD4(button, modeVote >= 0);
+                    } else {
+                        callRva00006938(button, obj, 0);
+                    }
+                    setControlCommand(m_commandWindows[i], button);
+                }
+            }
+        }
+    } else {
+        for (i = 0; i < 20; i++) {
+            button = commandSet->getCommandButton(i);
+            bool attackMove = (button && button->m_commandType == 9) ||
+                (m_commonCommands[i] && m_commonCommands[i]->m_commandType == 9);
+            if (attackMove && !m_commonCommands[i]) {
+                m_commonCommands[i] = button;
+                if (m_commandWindows[i]) {
+                    m_commandWindows[i]->winHide(false);
+                    m_commandWindows[i]->winEnable(true);
+                    setControlCommand(m_commandWindows[i], button);
+                }
+            } else if (button != m_commonCommands[i] && !attackMove) {
+                m_commonCommands[i] = 0;
+                if (m_commandWindows[i]) m_commandWindows[i]->winHide(true);
+            }
+        }
+    }
 }

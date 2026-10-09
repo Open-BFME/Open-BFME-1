@@ -90949,3 +90949,8 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ?d_007901f0@@YAXXZ,0x007901F0,legacy address-only compatibility pin for the retired checkbox image dump name
 ?method@Rva002C4910@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x002C4910,complete 86-byte wrapper and 124-byte forwarded command prove Object pointer plus CommandSourceType with ret 8; evidence=targets/game/reverse/identity_evidence/002c4cc0-abi-validation.md
 ?d_0016af70@@YAXXZ,0x0016AF70,legacy address-only alias of ?rva0016AF70@@YA_NPAVRva0016AF70State@@PAX@Z; game/GameEngine/Source/GameLogic/AI/AttackStateMachineCtor.cpp still names this symbol after the dump conversion
+?d_004a9010@@YAXXZ,0x004A9010,legacy address-only compatibility pin for retired dump; source identity is ControlBar::rva004A9010
+?Rva0062FA20@@YAXHVAsciiString@@@Z,0x0062FA20,compiler-private ABI helper visible beside 0062FE40; full 843-byte decoded body and source probe; identity_evidence/0062fe40-patch-donor.md
+?d_0062fe40@@YAXXZ,0x0062FE40,legacy address-only compatibility pin for retired dump; source identity is Rva0062FE40
+?d_004867a0@@YAXXZ,0x004867A0,legacy address-only compatibility pin for retired dump; source identity is Rva004867A0
+?d_00486850@@YAXXZ,0x00486850,legacy address-only compatibility pin for retired dump; source identity is Rva00486850

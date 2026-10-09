@@ -1,4 +1,5 @@
-// cl: /DNDEBUG /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
+// cl: /I. /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/functionlexicon /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // Lift the parseInputCallback window-file parser to clean C++.
 //
 // The third argument is a line from a window file. Scan to the opening quote,
@@ -22,16 +23,11 @@ typedef bool Bool;
 extern "C" __declspec(dllimport) char *__cdecl strtok(char *s, const char *delim);
 extern "C" unsigned int __cdecl strlen(const char *s);
 
-#include "ascii_string.h"
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
-enum NameKeyType { };
-
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);			///< ILT thunk at 0x0003ADD7
-};
+#define Matrix4x4 Matrix4
+#include "game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#define ASCIISTRING_H
+#include "PreRTS.h"
+#include "Common/FunctionLexicon.h"
 
 class WindowLookupShim
 {
@@ -65,4 +61,51 @@ Bool parseInputCallback(char *token, WinInstanceData *instData, char *line, void
 	TheParsedCallbackResult = ((WindowLookupShim *)TheFunctionLexicon)->unidentified_00025CD4(key, 1);
 
 	return true;
+}
+
+class Gen_00C700B0Target;
+extern Gen_00C700B0Target TheBfmeObject_00C700B0;
+extern void *g_Va012F2554;
+void j_00015a28();
+class Rva00105480 {
+public:
+ void *call(NameKeyType key, int index);
+};
+// ?callRva00105480@@YAPAXPAVFunctionLexicon@@W4NameKeyType@@H@Z absent-from-retail
+static __forceinline void *callRva00105480(FunctionLexicon *self, NameKeyType key, int index)
+{
+ union Entry {
+  void (__cdecl *raw)();
+  void *(Rva00105480::*member)(NameKeyType, int);
+ } entry;
+ entry.raw = j_00015a28;
+ return (((Rva00105480 *)self)->*entry.member)(key, index);
+}
+// Open BFME 2: Code/GameEngine/Source/GameClient/GUI/GameWindowManagerScript_parseWinClass.cpp.
+Bool Rva004867A0(char *token, WinInstanceData *instData, char *buffer, void *data)
+{
+ char *ptr = buffer;
+ while (*ptr != '"') ++ptr;
+ ++ptr;
+ char *value = strtok(ptr, "\"");
+ AsciiString &name = *(AsciiString *)&TheBfmeObject_00C700B0;
+ name.StringBase<char>::set(value, value ? (int)strlen(value) : 0);
+ NameKeyType key = TheNameKeyGenerator->nameToKey(name.str());
+ g_Va012F2554 = callRva00105480(TheFunctionLexicon, key, -1);
+ return true;
+}
+
+extern void *g_Va012F2558;
+// Open BFME 2: Code/GameEngine/Source/GameClient/GUI/GameWindowManagerScript_parseSystemCallback.cpp.
+Bool Rva00486850(char *token, WinInstanceData *instData, char *buffer, void *data)
+{
+ char *ptr = buffer;
+ while (*ptr != '"') ++ptr;
+ ++ptr;
+ char *value = strtok(ptr, "\"");
+ AsciiString &name = *(AsciiString *)&TheBfmeObject_00C700B0;
+ name.StringBase<char>::set(value, value ? (int)strlen(value) : 0);
+ NameKeyType key = TheNameKeyGenerator->nameToKey(name.str());
+ g_Va012F2558 = (void *)TheFunctionLexicon->gameWinSystemFunc(key);
+ return true;
 }

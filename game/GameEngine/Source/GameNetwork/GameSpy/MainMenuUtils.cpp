@@ -1,4 +1,4 @@
-// cl: /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /D_STLP_NO_EXCEPTIONS /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// cl: /I. /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /D_STLP_NO_EXCEPTIONS /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define BFME_ASCIISTRING_CSTR_CTOR_NOINLINE
@@ -33,6 +33,8 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 
 // INCLUDES ///////////////////////////////////////////////////////////////////////////
+#include "game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#define ASCIISTRING_H
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include <fcntl.h>
@@ -137,31 +139,23 @@ public:
 	virtual BfmeStartDownloadingLayout *winCreateLayout( BfmeStartAsciiString layoutName );
 };
 
-template <typename T> class StringBase
-{
-friend class BfmeStartAsciiString;
 
-private:
-	StringBase( const T *text );
-	StringBase( const StringBase &other );
-	~StringBase();
-
-	void *m_data;
-};
-
-class BfmeStartAsciiString : private StringBase<char>
+class BfmeStartAsciiString : public AsciiString
 {
 public:
+	BfmeStartAsciiString() {}
+	using AsciiString::operator=;
 	BfmeStartAsciiString( const char *text )
-		: StringBase<char>( text ) {}
+		: AsciiString( text ) {}
 	BfmeStartAsciiString( const BfmeStartAsciiString &other )
-		: StringBase<char>( other ) {}
+		: AsciiString( other ) {}
 	~BfmeStartAsciiString() {}
 };
 
 class BfmeErasedValue_00627200
 {
 public:
+	BfmeErasedValue_00627200() {}
 	BfmeErasedValue_00627200( const BfmeErasedValue_00627200 &other );
 	~BfmeErasedValue_00627200();
 
@@ -950,3 +944,75 @@ static void reallyStartPatchCheck( void )
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
+
+template<typename T> inline bool StringBase<T>::isEmpty() const { return !m_data || !m_data->length; }
+#include <string.h>
+#pragma intrinsic(strlen)
+// ?patchSet@@YAXAAVAsciiString@@PBD@Z absent-from-retail
+static __forceinline void patchSet(AsciiString &string, const char *value)
+{
+ static_cast<StringBase<char> &>(string).set(value, value ? strlen(value) : 0);
+}
+// ?patchReverseFind@@YAPBDABVAsciiString@@D@Z absent-from-retail
+static __forceinline const char *patchReverseFind(const AsciiString &string, char value)
+{
+ const char *start = string.str();
+ const char *end = start + string.getLength();
+ while (end != start) {
+  --end;
+  if (*end == value) return end;
+ }
+ return 0;
+}
+
+// ?Rva0062FA20@@YAXHVAsciiString@@@Z present-unmatched
+// Open BFME 2: Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cpp.
+static void Rva0062FA20(int mandatory,AsciiString downloadURL){
+ BfmeErasedValue_00627200 q;bool success=true;
+ AsciiString connectionType;success &= downloadURL.nextToken(&connectionType,":");
+ AsciiString server;success &= downloadURL.nextToken(&server,":/");
+ AsciiString user;success &= downloadURL.nextToken(&user,":@");
+ AsciiString pass;success &= downloadURL.nextToken(&pass,"@/");
+ AsciiString filePath;success &= downloadURL.nextToken(&filePath,"");
+ if(!success && !user.isEmpty()){filePath=user;patchSet(user,"anonymous");patchSet(pass,"ccgenerals");success=true;}
+ AsciiString fileStr=filePath;const char *slash=patchReverseFind(filePath, '/');if(slash)patchSet(fileStr,slash+1);
+ AsciiString fileName="patches\\";static_cast<StringBase<char> &>(fileName).concat(fileStr.str(), fileStr.getLength());
+ if(!success)return;
+ q.file=filePath;q.localFile=fileName;q.password=pass;patchSet(q.regKey,"");q.server=server;q.tryResume=true;q.userName=user;
+ BfmeStartDownloadList &queue = *(BfmeStartDownloadList *)&queuedDownloads;
+ BfmeStartDownloadList::iterator it=queue.begin();
+ while(it!=queue.end()){if(it->localFile.compare(q.localFile)==0)return;++it;}
+ queue.push_back(q);
+}
+
+
+void Rva0062EA60StartOnline();
+// Open BFME 2: Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cpp.
+int Rva0062FE40(int request, int status, char *buffer, int bytes, int stamp, int run)
+{
+ if(run!=timeThroughOnline) return 1;
+ --checksLeftBeforeOnline;
+ if(status!=0) {
+  if(checkingForPatchBeforeGameSpy) {
+   cantConnectBeforeOnline=1;
+   if(!checksLeftBeforeOnline) Rva0062EA60StartOnline();
+  }
+  return 1;
+ }
+ {
+  AsciiString message(buffer), line;
+  while(message.nextToken(&line,"\r\n")) {
+   AsciiString type, requirement, url;
+   bool ok=true;
+   ok &= line.nextToken(&type," ");
+   ok &= line.nextToken(&requirement," ");
+   ok &= line.nextToken(&url," ");
+   if(ok && type.compare("patch")==0) {
+    Rva0062FA20(atoi(requirement.str()),url);
+    if(atoi(requirement.str())) mustDownloadPatch=1;
+   }
+  }
+  if(!checksLeftBeforeOnline) Rva0062EA60StartOnline();
+ }
+ return 1;
+}
