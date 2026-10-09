@@ -1429,24 +1429,7 @@ void W3DTreeBuffer::allocateTreeBuffers(void)
 //=============================================================================
 /** Removes all trees. */
 //=============================================================================
-// ?clearAllTrees@W3DTreeBuffer@@QAEXXZ present-unmatched
-void W3DTreeBuffer::clearAllTrees(void)
-{
-	m_numTrees=0;
-	m_bounds.lo.x = m_bounds.lo.y = 0;
-	m_bounds.hi.x = m_bounds.hi.y = 1;
-	REF_PTR_RELEASE(m_treeTexture);
-	m_curNumTreeIndices[0]=0;
-	m_anythingChanged = true;
-	Int i;
-	for (i=0; i<MAX_TYPES; i++) {
-		REF_PTR_RELEASE(m_treeTypes[i].m_mesh);
-	}
-	for (i=0; i<PARTITION_WIDTH_HEIGHT*PARTITION_WIDTH_HEIGHT; i++) {
-		m_areaPartition[i] = END_OF_PARTITION;
-	}
-	m_numTreeTypes = 0;
-}
+// The matched W3DTreeBuffer::clearAllTrees (0x00732E70) lives in W3DTreeBuffer_clearAllTrees.cpp.
 
 //=============================================================================
 // W3DTreeBuffer::removeTree

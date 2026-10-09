@@ -27,8 +27,8 @@ private:
 	int m_numRefs;
 };
 
-// Pinned at 0x009EB7A0: the BFME texture release these buffers call.
-class BFMETextureRelease
+// The matched TextureBaseClass::Release_Ref at 0x009EB7A0: the texture release these buffers call.
+class TextureBaseClass
 {
 public:
 	void Release_Ref();
@@ -83,13 +83,13 @@ void W3DTreeBuffer::clearAllTrees()
 	Int zero = 0;
 
 	*reinterpret_cast<Int *>(base + 0x2a7cb0) = zero;
-	BFMETextureRelease **texture =
-		reinterpret_cast<BFMETextureRelease **>(base + 0xb8);
+	TextureBaseClass **texture =
+		reinterpret_cast<TextureBaseClass **>(base + 0xb8);
 	if (*texture) {
 		(*texture)->Release_Ref();
 		*texture = 0;
 	}
-	texture = reinterpret_cast<BFMETextureRelease **>(base + 0xbc);
+	texture = reinterpret_cast<TextureBaseClass **>(base + 0xbc);
 	if (*texture) {
 		(*texture)->Release_Ref();
 		*texture = 0;
