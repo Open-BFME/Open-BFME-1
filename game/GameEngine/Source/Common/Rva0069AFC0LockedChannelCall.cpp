@@ -20,6 +20,14 @@ public:
 	void *m_mutex;
 };
 
+// Matched ledger row ?setParams@Rva006998C0Owner@@QAEXMMHHH@Z at 0x006998C0
+// (defined in game/GameEngine/Source/Common/Rva006998C0SetParams.cpp).
+class Rva006998C0Owner
+{
+public:
+	void setParams(float a, float b, int c, int d, int e);
+};
+
 void Rva0069AFC0Owner::call(void *a, void *b, void *c, void *d, void *e, int index)
 {
 	void *mutex = m_mutex;
@@ -33,8 +41,8 @@ void Rva0069AFC0Owner::call(void *a, void *b, void *c, void *d, void *e, int ind
 	void *arg_b = b;
 	void *arg_a = a;
 	int idx = index;
-	((Rva0069AFC0Block *)((char *)this + 0xB8 + idx * 0x1C4))->apply(
-		arg_a, arg_b, arg_c, arg_d, arg_e);
+	((Rva006998C0Owner *)((char *)this + 0xB8 + idx * 0x1C4))->setParams(
+		*(float *)&a, *(float *)&b, (int)c, (int)d, (int)e);
 
 	if (held)
 		ReleaseMutex(mutex);
