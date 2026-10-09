@@ -158,10 +158,12 @@ public:
 	Bool isUsingAirborneLocomotor(void) const;			///< ILT thunk at 0x0000A001
 	void kill(DamageType damageType, DeathType deathType);	///< ILT thunk at 0x00014506
 
-	AIUpdateInterface *getAI(void) { return m_ai; }
 
 private:
 	unsigned char m_unreconstructed_00[0x204];
+public:
+	// This BFME layout view uses the field directly; its getter differs from
+	// the ledger-owned Object::getAI copy compiled with the shared ZH layout.
 	AIUpdateInterface *m_ai;							///< retail this+0x204
 };
 
@@ -213,10 +215,10 @@ void SupplyWarehouseDockUpdate::setDockCrippled( Bool setting )
 				{
 					// Else, he was between Approach and Enter.  Lucky guy.  Tell him to stop, but then
 					// remind him that he wants to try again later
-					SupplyTruckAIInterface* supplyTruckAI = victim->getAI()->getSupplyTruckAIInterface();
+					SupplyTruckAIInterface* supplyTruckAI = victim->m_ai->getSupplyTruckAIInterface();
 					if( supplyTruckAI )
 					{
-						victim->getAI()->aiIdle( CMD_FROM_AI );
+						victim->m_ai->aiIdle( CMD_FROM_AI );
 						supplyTruckAI->setForceWantingState( true );
 					}
 				}
