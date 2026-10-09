@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHs-c- /Oy-
 
-extern void* __cdecl Rva0088EB30( unsigned int );
+extern void* __cdecl DebugAllocMemory( unsigned int );
 
 struct Rva00889D20Node
 {
@@ -29,7 +29,6 @@ public:
 	Rva00889D70Node* head_10;
 
 	bool d_00889d20( void* arg1, void* arg2, void* arg3 );
-	bool d_00889d70( void* arg1, void* arg2 );
 };
 
 bool Rva00889D20Class::d_00889d20( void* arg1, void* arg2, void* arg3 )
@@ -39,7 +38,7 @@ bool Rva00889D20Class::d_00889d20( void* arg1, void* arg2, void* arg3 )
 		return true;
 	}
 
-	Rva00889D20Node* node = (Rva00889D20Node*)Rva0088EB30( 0x20 );
+	Rva00889D20Node* node = (Rva00889D20Node*)DebugAllocMemory( 0x20 );
 	node->next = head_0C;
 	node->arg1 = arg1;
 	node->arg2 = arg2;
@@ -53,32 +52,3 @@ bool Rva00889D20Class::d_00889d20( void* arg1, void* arg2, void* arg3 )
 	return true;
 }
 
-bool Rva00889D20Class::d_00889d70( void* arg1, void* arg2 )
-{
-	if ( !arg1 || !arg2 )
-	{
-		return true;
-	}
-
-	Rva00889D70Node* curr = (Rva00889D70Node*)&head_10;
-	if ( *(Rva00889D70Node**)curr )
-	{
-		do
-		{
-			curr = *(Rva00889D70Node**)curr;
-			if ( curr->arg2 == arg2 )
-			{
-				return true;
-			}
-		}
-		while ( *(Rva00889D70Node**)curr );
-	}
-
-	Rva00889D70Node* node = (Rva00889D70Node*)Rva0088EB30( 0xC );
-	node->next = 0;
-	node->arg1 = arg1;
-	node->arg2 = arg2;
-
-	*(Rva00889D70Node**)curr = node;
-	return true;
-}
