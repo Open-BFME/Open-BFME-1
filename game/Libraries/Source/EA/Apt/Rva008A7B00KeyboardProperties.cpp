@@ -19,7 +19,7 @@ struct Rva00899560Pool {
         ++count;
     }
 };
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+extern Rva00899560Pool *g_rva01337810GcRoots;
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned);
 struct Rva00899560Value {
     virtual ~Rva00899560Value();
@@ -29,7 +29,7 @@ struct Rva00899560Value {
         m_flags = flags;
         if (type != 0x1c && type != 0xa) {
             m_flags = flags | 0x40000000;
-            g_rva8CD130IdleHook->addPooled(this);
+            g_rva01337810GcRoots->addPooled(this);
         } else
             m_flags = flags & 0xBFFFFFFF;
     }
@@ -51,7 +51,7 @@ static __forceinline Rva008A1110Value *pooledInteger(int value) {
     Rva008A1110Value *v = (Rva008A1110Value *)g_rva008D2A10;
     if (v) {
         g_rva008D2A10 = (Rva008D2A10 *)v->m_next;
-        g_rva8CD130IdleHook->addPooled(v);
+        g_rva01337810GcRoots->addPooled(v);
         v->m_value = value;
         return v;
     }

@@ -85,7 +85,7 @@ struct Rva00899560Pool {
         else { m_items[index] = node; ++*count; }
     }
 };
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+extern Rva00899560Pool *g_rva01337810GcRoots;
 struct Rva008AE770Stack;
 extern Rva008AE770Stack Rva008AE770TheStack;
 class Rva008CF3C0State {
@@ -217,7 +217,7 @@ bool rva008AF650Implementation(Rva008AF650Object *object, BfmeStrVKI *key, AptVa
                         Rva008A9B00 *node = (Rva008A9B00 *)Rva008C3B60Head;
                         if (node) {
                             Rva008C3B60Head = (Rva008C3B60Node *)node->m_next;
-                            g_rva8CD130IdleHook->add(node);
+                            g_rva01337810GcRoots->add(node);
                             if (node->m_string.m_data != &g_bfmeDefaultString1284)
                                 ((BfmeStrVKK *)&node->m_string)->bfmeTruncVKK(0);
                         } else {
