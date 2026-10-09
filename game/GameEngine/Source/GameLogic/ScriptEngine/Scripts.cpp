@@ -777,49 +777,8 @@ void ScriptGroup::crc( Xfer *xfer )
 	* 2: m_isGroupActive, since it is twiddled by other scripts.  Only its initial state is determined by the map.
 */
 // ------------------------------------------------------------------------------------------------
-// Matched body: ScriptGroupXfer.cpp @ 0x350E90 (not this ZH list-walk; queue 0xAF9B24 was jmp-table).
-void ScriptGroup::xfer( Xfer *xfer )
-{
-
-	// version
-	XferVersion currentVersion = 2;
-	XferVersion version = currentVersion;
-	xfer->xferVersion( &version, currentVersion );
-
-	if( version >= 2 )
-		xfer->xferBool(&m_isGroupActive);
-
-	// count of scripts here
-	UnsignedShort scriptCount = 0;
-	Script *script;
-	for( script = getScript(); script; script = script->getNext() )
-		scriptCount++;
-	UnsignedShort countVerify = scriptCount;
-	xfer->xferUnsignedShort( &scriptCount );
-	if( countVerify != scriptCount )
-	{
-
-		DEBUG_CRASH(( "ScriptGroup::xfer - Script list count has changed, attempting to recover."));
-		// throw SC_INVALID_DATA; try to recover. jba.
-
-	}  // end if
-
-	// xfer script data
-	for( script = getScript(); script; script = script->getNext() )	{
-		xfer->xferSnapshot( script );
-		scriptCount--;
-		if (scriptCount==0) break;
-	}
-	if (scriptCount>0) {
-		DEBUG_CRASH(("Stripping out extra scripts - Bad..."));
-		if (s_mtScript==NULL) s_mtScript = newInstance(Script);	// Yes it leaks, but this is unusual recovery only. jba.
-		while (scriptCount) {
-			xfer->xferSnapshot(s_mtScript);
-			scriptCount--;
-		}
-	}
-
-}  // end xfer
+// ScriptGroup::xfer is defined in ScriptGroupXfer.cpp (retail 0x350E90, BFME
+// Version1+bool only); the ZH list-walk that stood here was not retail's.
 
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
