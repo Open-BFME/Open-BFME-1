@@ -8,7 +8,7 @@
 // ?d_00723ac0@@YAXXZ / BfmeA1137Term's own sibling destructor at 0x00723AC0
 void __cdecl j_000491c5();
 
-class BfmeTex1137Term
+class TextureBaseClass
 {
 public:
 	void Release_Ref();
@@ -17,24 +17,22 @@ public:
 class BfmeTexRefTerm1137
 {
 public:
-	~BfmeTexRefTerm1137();
-	BfmeTex1137Term *p;
+	~BfmeTexRefTerm1137()
+	{
+		if (p)
+			p->Release_Ref();
+	}
+	TextureBaseClass *p;
 };
 
-BfmeTexRefTerm1137::~BfmeTexRefTerm1137()
-{
-	if (p)
-		p->Release_Ref();
-}
-
-class BfmeBaseTerm1137A
+class BfmeHostZB
 {
 public:
-	virtual ~BfmeBaseTerm1137A();
+	virtual ~BfmeHostZB();
 	int m_base04;
 };
 
-class BfmeA1137Term : public BfmeBaseTerm1137A
+class BfmeA1137Term : public BfmeHostZB
 {
 public:
 	virtual ~BfmeA1137Term();
