@@ -11,6 +11,27 @@
 
 #include "ascii_string.h"
 
+class Team;
+class Rva000F6B50Mapped;
+struct Rva000F2010Value;
+struct Rva000F2010ExtractKey;
+namespace rts { template<class T> struct hash; template<class T> struct equal_to; }
+namespace _STL {
+ template<class T> class allocator;
+ template<class A,class B> struct pair;
+ template<class T> struct _Select1st;
+ template<class T> struct _Const_traits;
+ template<class T> struct equal_to;
+ template<class V,class Tr,class K,class H,class E,class C,class A> struct _Ht_iterator;
+ template<class T> struct _Hashtable_node;
+ template<class V,class K,class H,class E,class C,class A> class hashtable {
+  template<class Q> _Hashtable_node<V> *_M_find(const Q &) const;
+  friend class ::Team;
+ public: void erase(const _Ht_iterator<V, _Const_traits<V>, K, H, E, C, A> &);
+ };
+ template<class K,class V,class H,class C,class A> class hash_map { public: V &operator[](const K &); };
+}
+
 class BfmeTeamCall2440Iterator
 {
 public:
@@ -24,9 +45,6 @@ public:
 class Rva000F75B0HashMember
 {
 public:
-    void *find(const AsciiString &key);
-    void erase(const BfmeTeamCall2440Iterator &it);
-    unsigned char &operator[](const AsciiString &key);
 
 private:
     unsigned char m_opaque[0x14];
@@ -43,7 +61,7 @@ void Team::bfmeCall2440(const AsciiString &key, unsigned char mode)
 {
     Rva000F75B0HashMember *values =
         (Rva000F75B0HashMember *)((char *)this + 0x1c);
-    void *found = values->find(key);
+    void *found = reinterpret_cast<const _STL::hashtable<Rva000F2010Value, AsciiString, rts::hash<AsciiString>, Rva000F2010ExtractKey, _STL::equal_to<AsciiString>, _STL::allocator<Rva000F2010Value> > *>(values)->_M_find<AsciiString>(key);
     if (found != 0)
     {
         if (mode == 0)
@@ -51,11 +69,11 @@ void Team::bfmeCall2440(const AsciiString &key, unsigned char mode)
             BfmeTeamCall2440Iterator it;
             it.m_cur = found;
             it.m_ht = values;
-            values->erase(it);
+            reinterpret_cast<_STL::hashtable<_STL::pair<const AsciiString, Rva000F6B50Mapped *>, AsciiString, rts::hash<AsciiString>, _STL::_Select1st<_STL::pair<const AsciiString, Rva000F6B50Mapped *> >, _STL::equal_to<AsciiString>, _STL::allocator<_STL::pair<const AsciiString, Rva000F6B50Mapped *> > > *>(values)->erase(*reinterpret_cast<const _STL::_Ht_iterator<_STL::pair<const AsciiString, Rva000F6B50Mapped *>, _STL::_Const_traits<_STL::pair<const AsciiString, Rva000F6B50Mapped *> >, AsciiString, rts::hash<AsciiString>, _STL::_Select1st<_STL::pair<const AsciiString, Rva000F6B50Mapped *> >, _STL::equal_to<AsciiString>, _STL::allocator<_STL::pair<const AsciiString, Rva000F6B50Mapped *> > > *>(&it));
         }
     }
     else if (mode == 1)
     {
-        (*values)[key] = 1;
+        (*reinterpret_cast<_STL::hash_map<AsciiString, unsigned char, rts::hash<AsciiString>, rts::equal_to<AsciiString>, _STL::allocator<_STL::pair<const AsciiString, unsigned char> > > *>(values))[key] = 1;
     }
 }
