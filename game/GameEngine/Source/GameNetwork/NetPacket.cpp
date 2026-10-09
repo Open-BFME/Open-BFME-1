@@ -3533,22 +3533,6 @@ UnsignedShort NetPacket::getPort() {
 }
 
 /**
- * Returns the data of this packet.
- */
-// ?getData@NetPacket@@QAEPAEXZ present-unmatched
-UnsignedByte * NetPacket::getData() {
-	return m_packet;
-}
-
-/**
- * Returns the length of the packet.
- */
-// ?getLength@NetPacket@@QAEHXZ present-unmatched
-Int NetPacket::getLength() {
-	return m_packetLen;
-}
-
-/**
  * Dumps the packet to the debug log file
  */
 void NetPacket::dumpPacketToLog() {
