@@ -10,6 +10,10 @@ struct W3dEmitterLinePropertiesStruct {
 class StreakRendererClass {
 public:
  void Init(const W3dEmitterLinePropertiesStruct &props);
+ // Retail 0x0095C620 and EA streakRender.h both force subdivision to zero.
+ void Set_Current_Subdivision_Level(unsigned int level) {
+  SubdivisionLevel = level; SubdivisionLevel = 0;
+ }
 private:
  // Layout agrees with landed StreakRendererCtor.cpp and retail stores.
  unsigned int Texture, Shader;
@@ -31,7 +35,7 @@ void StreakRendererClass::Init(const W3dEmitterLinePropertiesStruct &props) {
  case 1: Bits &= ~0xff000000; Bits |= 0x01000000; break;
  case 2: Bits &= ~0xff000000; Bits |= 0x02000000; break;
  }
- SubdivisionLevel = 0;
+ Set_Current_Subdivision_Level(0);
  NoiseAmplitude = props.NoiseAmplitude;
  MergeAbortFactor = props.MergeAbortFactor;
  float factor = props.TextureTileFactor;

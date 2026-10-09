@@ -91,36 +91,7 @@ StreakRendererClass::~StreakRendererClass(void)
 	delete [] m_vertexBuffer;
 }
 
-// ?Init@StreakRendererClass@@QAEXABUW3dEmitterLinePropertiesStruct@@@Z present-unmatched
-void StreakRendererClass::Init(const W3dEmitterLinePropertiesStruct & props)
-{
-	// translate the flags
-	Set_Merge_Intersections(props.Flags & W3D_ELINE_MERGE_INTERSECTIONS);
-	Set_Freeze_Random(props.Flags & W3D_ELINE_FREEZE_RANDOM);
-	Set_Disable_Sorting(props.Flags & W3D_ELINE_DISABLE_SORTING);
-	Set_End_Caps(props.Flags & W3D_ELINE_END_CAPS);
 
-	int texture_mode = ((props.Flags & W3D_ELINE_TEXTURE_MAP_MODE_MASK) >> W3D_ELINE_TEXTURE_MAP_MODE_OFFSET);
-	switch (texture_mode) 
-	{
-	case W3D_ELINE_UNIFORM_WIDTH_TEXTURE_MAP:
-		Set_Texture_Mapping_Mode(UNIFORM_WIDTH_TEXTURE_MAP);
-		break;
-	case W3D_ELINE_UNIFORM_LENGTH_TEXTURE_MAP:
-		Set_Texture_Mapping_Mode(UNIFORM_LENGTH_TEXTURE_MAP);		
-		break;
-	case W3D_ELINE_TILED_TEXTURE_MAP:
-		Set_Texture_Mapping_Mode(TILED_TEXTURE_MAP);		
-		break;
-	};
-
-	// install all other settings
-	Set_Current_Subdivision_Level(props.SubdivisionLevel);
-	Set_Noise_Amplitude(props.NoiseAmplitude);
-	Set_Merge_Abort_Factor(props.MergeAbortFactor);
-	// Set_Texture_Tile_Factor(props.TextureTileFactor);
-	// Set_UV_Offset_Rate(Vector2(props.UPerSec,props.VPerSec));
-}
 
 
 void StreakRendererClass::Set_Texture(TextureClass *texture)
