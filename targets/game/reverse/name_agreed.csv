@@ -580,3 +580,5 @@ game/GameEngine/Source/Common/BfmeConv2022.cpp|member||m_bfmeThingTL,m_currentGa
 game/GameEngine/Source/Common/BfmeConv2022.cpp|function|BfmeHostTL@|bfmeApplyTL,OnPlayerJoin,gpt-6-astra+grok,blocked: game/GameEngine/Source/Common/BfmeConv2022.cpp: FAIL ?bfmeApplyTL@LANAPI@@QAEXHVUnicodeString@@@Z (game/GameEngine/Source/Common/BfmeConv2022.cpp),2026-10-07
 game/GameEngine/Source/Common/BfmeConv827.cpp|function||bfmeLookupAndSendDB0,doModifyBuildableStatus,gpt-6-astra+grok,agreed,2026-10-08
 game/GameEngine/Source/Common/BfmeConv827.cpp|function||bfmeLookupAndSendDB0,doModifyBuildableStatus,gpt-6-astra+grok,applied,2026-10-08
+game/GameEngine/Source/Common/Bfme5SixtyFive.cpp|type||Gen_000D5930,Player,claude-opus+gpt-6.1-sol,agreed,2026-10-09
+game/GameEngine/Source/Common/Bfme5SixtyFive.cpp|function|Gen_000D5930@|bfmeHasBit,hasUpgradeComplete,claude-opus+gpt-6.1-sol,agreed,2026-10-09
