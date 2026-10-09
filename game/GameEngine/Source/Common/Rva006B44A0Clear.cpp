@@ -15,6 +15,9 @@
 // is needed.
 extern void j_0004412a();
 
+// These receiver views belong only to this owner body.  Keeping them local
+// prevents a manually modeled clear() from competing with STLport's tree.
+namespace {
 namespace _STL
 {
 
@@ -92,6 +95,8 @@ typedef _STL::_Rb_tree<int,
 	_STL::_Select1st<Rva006B44A0ServerPair>,
 	_STL::less<int>,
 	_STL::allocator<Rva006B44A0ServerPair> > Rva006B44A0ServerTree;
+
+} // anonymous namespace
 
 extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
 	void *handle, unsigned long milliseconds);
