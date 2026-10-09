@@ -1,7 +1,9 @@
 // ?EnumAssets@AssetManagerImpl@@QAE?AVAssetReference@@XZ
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /D_STLP_USE_STATIC_LIB
+// cl: /D_OPERATOR_NEW_DEFINED_ /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /MD /EHsc /O2 /Ob2 /D_STLP_USE_STATIC_LIB
 // stlport
 //
+// The owning reference uses the matched WORD-refcount texture release leaf;
+// texture.h supplies its canonical out-of-line declaration.
 // Retail 0x009EEF10. targets/game/reverse/symbols.csv pins this name here because the
 // matched Rva009EBDC0 calls it; the name is kept as pinned.
 //
@@ -20,6 +22,7 @@
 
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1
+#include "../WWVegas/WW3D2/texture.h"
 #include <hash_map>
 
 struct CRITICAL_SECTION
@@ -65,7 +68,6 @@ public:
 	virtual void slot30();
 	virtual int slot34();
 
-	void Release_Ref();
 };
 
 class AssetReference
@@ -80,7 +82,7 @@ public:
 	{
 		if ( m_object )
 		{
-			m_object->Release_Ref();
+			reinterpret_cast<TextureBaseClass *>(m_object)->Release_Ref();
 		}
 	}
 
