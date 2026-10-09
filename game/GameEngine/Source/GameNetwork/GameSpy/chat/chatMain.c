@@ -1135,3 +1135,19 @@ CHAT chatConnectPreAuthA(const char *serverAddress,
 		param,
 		blocking);
 }
+
+CHATBool ciInChannel(CHAT chat, const char *channel);
+
+// _Rva008610D0
+// Open BFME 2: Code/GameEngine/Source/GameNetwork/GameSpy/chat/chatMain.c.
+CHATBool Rva008610D0(CHAT chat, const char *channel)
+{
+    ciConnection *connection = (ciConnection *)chat;
+    if (!connection->connected)
+        return CHATFalse;
+
+    if (!channel || !channel[0])
+        return CHATFalse;
+
+    return ciInChannel(chat, channel);
+}

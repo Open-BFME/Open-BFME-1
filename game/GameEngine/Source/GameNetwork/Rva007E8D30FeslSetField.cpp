@@ -26,8 +26,8 @@ typedef int ( __cdecl *Rva007E8B00Replace )( char *record, int size, char *field
 // Retail VA 0x011293A0 and 0x011294A8 are 256-character hex
 // lookup strings followed by NUL. Their complete literals are indexed below.
 
-// The record's "name=" prefix, as the DirtySock copy's Rva007EC730 writes it:
-// a null name empties the record instead.
+// ?Rva007E8D30Name@@YAPADPAD0PBD@Z
+// Open BFME 2: Code/GameEngine/Source/GameNetwork/Rva007E8D30FeslSetField.cpp.
 static char *Rva007E8D30Name( char *empty, char *dest, const char *src )
 {
 	if( src == 0 )

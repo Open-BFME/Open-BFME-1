@@ -211,14 +211,14 @@ int Rva007FD510( struct Rva007FD4E0Socket *socket, const void *address,
 	int addressLength );
 int Rva007FDE80( struct Rva007FD4E0Socket *socket, void *callback,
 	unsigned int rate, void *data,
-	void ( __cdecl *proc )( struct Rva007FD4E0Socket *, int, void * ) );
+	int ( __cdecl *proc )( struct Rva007FD4E0Socket *, int, void * ) );
 void Rva007FEA20( struct Rva0130AB68List *list );
 void Rva007FEBD0( void *list );
 void Rva007FECB0( void *list );
 void Rva007FEAA0( void *list );
 void Rva007FD3F0( void *socket );
 void bfmeGo1019C( int value );
-void __cdecl Rva00812690( struct Rva007FD4E0Socket *socket, int reason,
+int __cdecl Rva00812690( struct Rva007FD4E0Socket *socket, int reason,
 	void *data );
 
 extern struct Rva00812320Module *g_Rva0130AD00Module;
@@ -669,3 +669,192 @@ int Rva00811900( struct Rva00812320Module *module, int *pStamp, void *dest,
 
 	return iSize;
 }
+
+int Rva007FEB00( void *lock );
+int Rva007FDA50( struct Rva007FD4E0Socket *socket, char *buffer, int length, int flags, void *from, int *fromLength );
+int Rva007FE310( void *host, int hostLength, const void *inet, int inetLength );
+unsigned int Rva007FEA00( void );
+char *Rva007FF860( const unsigned char *address, char *destination, int size );
+int __cdecl memcmp( const void *left, const void *right, unsigned int count );
+
+// Retail /GZ names the receive-length slot fromlen.
+#define fromLength fromlen
+// _Rva00812690
+// Open BFME 2: Code/Libraries/Source/DirtySock/Y4CommTable.c.
+int __cdecl Rva00812690( struct Rva007FD4E0Socket *socket, int reason,
+void *data )
+{
+	int result;
+	int status;
+	int fromLength;
+	unsigned char base[ 0x10 ];
+	unsigned char from[ 0x10 ];
+	struct Rva00812220Entry *entry;
+	struct Rva00812220Entry *candidate;
+	struct Rva00812220Entry **cursor;
+	char packet[ 0x180 ];
+	struct Rva00812320Module *object;
+	unsigned int now;
+
+	object = ( struct Rva00812320Module * )data;
+	if ( Rva007FEB00( object ) == 0 )
+	{
+		return 0;
+	}
+
+	while ( object->m_socket != 0 )
+	{
+		if ( object->m_ready > 0 )
+		{
+			object->m_ready = 0;
+			Rva008125C0( object );
+		}
+
+		packet[ 8 ] = 0;
+		fromLength = 0x10;
+		result = Rva007FDA50( object->m_socket, packet, 0x180, 0,
+			from, &fromLength );
+		if ( result <= 0 || packet[ 8 ] == 0 )
+		{
+			break;
+		}
+		Rva007FE310( base, 0x10, from, 0x10 );
+		status = 0;
+		if ( *( unsigned short * )base == *( unsigned short * )from )
+		{
+			if ( *( unsigned short * )from == 2 )
+			{
+				status = memcmp( from + 2, base + 2, 6 ) == 0;
+			}
+		}
+
+		if ( (unsigned char)packet[ 0 ] != g_Rva012C499CTag[ 12 ]
+			|| (unsigned char)packet[ 1 ] != g_Rva012C499CTag[ 17 ]
+			|| (unsigned char)packet[ 2 ] != g_Rva012C499CTag[ 22 ] )
+		{
+			continue;
+		}
+
+		if ( packet[ 8 ] == 0x3F && packet[ 9 ] == 0 )
+		{
+			now = Rva007FEA00() + 0x3E8;
+			for ( entry = *( struct Rva00812220Entry ** )
+				( ( char * )object + 0x24 ); entry != 0;
+				entry = *( struct Rva00812220Entry ** )
+				( ( char * )entry + 0x1A0 ) )
+			{
+				if ( *(int *)( ( char * )entry + 0x180 ) > now )
+				{
+					*(int *)( ( char * )entry + 0x180 ) = now;
+				}
+			}
+			continue;
+		}
+
+		if ( packet[ 0x28 ] == 0 )
+		{
+			continue;
+		}
+
+		candidate = 0;
+		for ( entry = object->m_first; entry != object->m_end;
+			entry++ )
+		{
+			if ( candidate == 0 && entry->m_nameB[ 0 ] == 0 )
+			{
+				candidate = entry;
+			}
+			if ( Rva00811CE0( packet + 8, entry->m_nameA ) == 0
+				&& Rva00811CE0( packet + 0x28, entry->m_nameB ) == 0
+				&& Rva00811CE0( packet + 0x48, entry->m_detail ) == 0
+				&& memcmp( packet + 4, (char *)entry + 4, 4 ) == 0 )
+			{
+				break;
+			}
+		}
+
+		if ( entry == object->m_end && candidate != 0 )
+		{
+			entry = candidate;
+			memset( entry, 0, 0x1A4 );
+			memcpy( ( char * )entry + 4, packet + 4, 4 );
+			strcpy( entry->m_nameA, packet + 8 );
+			strcpy( entry->m_nameB, packet + 0x28 );
+			strcpy( entry->m_detail, packet + 0x48 );
+			object->m_active++;
+		}
+
+		if ( entry != object->m_end )
+		{
+			strcpy( entry->m_templates, packet + 0x108 );
+			*(int *)( ( char * )entry + 0x180 ) =
+				Rva007FEA00() + ( (unsigned char)packet[ 3 ] * 0x3E8 ) * 2 + 0x3E8;
+			entry->m_pending = status;
+			*(unsigned int *)( ( char * )entry + 0x194 ) =
+				( ( ( ( (unsigned char)from[ 4 ] << 8 )
+				| (unsigned char)from[ 5 ] ) << 8
+				| (unsigned char)from[ 6 ] ) << 8
+				| (unsigned char)from[ 7 ] );
+			*(unsigned int *)( ( char * )entry + 0x198 ) =
+				( ( ( ( (unsigned char)base[ 4 ] << 8 )
+				| (unsigned char)base[ 5 ] ) << 8
+				| (unsigned char)base[ 6 ] ) << 8
+				| (unsigned char)base[ 7 ] );
+			Rva007FF860( from, entry->m_substitution, 0x10 );
+			object->m_active++;
+		}
+	}
+
+	now = Rva007FEA00();
+	for ( entry = object->m_first; entry != object->m_end; entry++ )
+	{
+		if ( entry->m_nameB[ 0 ] != 0 && ( entry->m_templates[ 0 ] == 0
+			|| *(int *)( ( char * )entry + 0x180 ) == 0
+			|| now > *(unsigned int *)( ( char * )entry + 0x180 ) ) )
+		{
+			entry->m_nameB[ 0 ] = 0;
+			entry->m_nameA[ 0 ] = 0;
+			object->m_active++;
+		}
+	}
+
+	cursor = ( struct Rva00812220Entry ** )
+		( ( char * )object + 0x24 );
+	while ( *cursor != 0 )
+	{
+		if ( *(int *)( ( char * )*cursor + 0x180 ) == 0 )
+		{
+			candidate = *cursor;
+			*cursor = *( struct Rva00812220Entry ** )
+				( ( char * )*cursor + 0x1A0 );
+			candidate->m_templates[ 0 ] = 0;
+			Rva007FD920( object->m_socket, ( const char * )candidate,
+				0x180, 0, object->m_peer, 0x10 );
+			bfmeGo1019C( ( int )candidate );
+		}
+		else
+		{
+			cursor = ( struct Rva00812220Entry ** )
+				( ( char * )*cursor + 0x1A0 );
+		}
+	}
+
+	now = Rva007FEA00();
+	for ( entry = *( struct Rva00812220Entry ** )
+		( ( char * )object + 0x24 ); entry != 0;
+	entry = *( struct Rva00812220Entry ** )( ( char * )entry + 0x1A0 ) )
+	{
+		if ( now > *(unsigned int *)( ( char * )entry + 0x180 ) )
+		{
+			Rva007FD920( object->m_socket, ( const char * )entry,
+				0x180, 0, object->m_peer, 0x10 );
+			*(int *)( ( char * )entry + 0x180 ) =
+				now + (unsigned char)*( ( char * )entry + 3 ) * 0x3E8;
+		}
+	}
+
+	Rva007FECB0( object );
+	return 0;
+}
+
+#undef fromLength

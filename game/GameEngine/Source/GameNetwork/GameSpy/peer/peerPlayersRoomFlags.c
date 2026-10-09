@@ -474,3 +474,14 @@ int piCountRoomOps(PEER peer, RoomType roomType, const char *exclude)
 	TableMap(peer->players, piCountRoomOpsMap, &data);
 	return data.count;
 }
+
+// _Rva00863440
+// Open BFME 2: Code/GameEngine/Source/GameNetwork/GameSpy/peer/peerFindPlayerByIP.c.
+int Rva00863440(void *elem, void *clientData)
+{
+    piPlayer *player = (piPlayer *)elem;
+    unsigned int *targetIP = (unsigned int *)clientData;
+    if (!player->gotIPAndProfileID || player->IP != *targetIP)
+        return 1;
+    return 0;
+}

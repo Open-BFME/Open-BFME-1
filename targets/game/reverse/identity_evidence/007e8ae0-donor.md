@@ -1,0 +1,11 @@
+# Private field-name helper at 0x007E8AE0
+
+The Open BFME 2 donor is `Code/GameEngine/Source/GameNetwork/Rva007E8D30FeslSetField.cpp` at game.dat 0x00655B70. Its static `Rva007E8D30Name` body is already present in BFME 1's source for the landed escaped-field writer. The existing source identifier is retained. The function writes a name followed by an equals sign into the destination, or empties the record when the name is null; it returns the advanced destination cursor.
+
+The complete BFME 1 decode proves the three independent register inputs identified by prior attempts: EDX is the name string, ECX is the record pointer on the null arm, and EAX is the destination cursor. On the non-null arm CL becomes a character temporary. Both return paths preserve the appropriate destination result in EAX and use plain ret with no stack arguments. INT3 padding precedes the 0x007E8AE0 entry. The final ret is at offset 0x1F, immediately before the next body at 0x007E8B00. All branches remain inside the exact 32-byte extent.
+
+A standalone fastcall declaration cannot represent this contract. The native static helper is compiled with the complete landed `Rva007E8D30` writer and its actual 0x007E8EF0 caller. The writer receives the name in ECX, value in EAX and record and size on the stack; it supplies `(record, allocated item, name)` to the private prefix helper before escaping the value. Its complete retail decode contains that same prefix operation inline. The out-of-line helper has no physical entry reference, so no external standard ABI or public library name is asserted. The compiler reproduces the retained private copy as well as both landed callers.
+
+This new visibility evidence resolves the earlier independent-EAX blocker. The actual owning-source probe is exact at 32 bytes, with no relocation slots. The source-wide scoped gate verifies the helper, writer and message caller together. Complete target and caller decodes, checked callee inventories, source snapshot and unedited probe and gate outputs are retained under `build/donor-port-writer5/`.
+
+A compiler result that initializes EAX from ECX, uses a stack name argument, changes the null store, or alters either landed writer would refute this recovery. No assembly, new pin, inferred owner type or ownership change is introduced.

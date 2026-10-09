@@ -392,19 +392,23 @@ void chatSetChannelLimitA(CHAT chat, const char *channel, int limit)
    ciChannelFree frees the password before the user table, and only frees the
    table when there is one; the password goes to free unguarded. */
 
+// _Rva00871650
+// Open BFME 2: Code/GameEngine/Source/GameNetwork/GameSpy/chat/chatChannel.c.
+static int Rva00871650(const char *str, int numBuckets)
+{
+    unsigned int hash;
+    int c;
+
+    hash = 0;
+    while ((c = *str++) != '\0')
+        hash += (unsigned int)tolower(c);
+
+    return ((int)hash % numBuckets);
+}
+
 int ciChannelHash(const void *elem, int numBuckets)
 {
-	const char *name = (const char *)elem;
-	int hash = 0;
-	int c;
-
-	while((c = *name) != 0)
-	{
-		name++;
-		hash += tolower(c);
-	}
-
-	return (hash % numBuckets);
+	return Rva00871650((const char *)elem, numBuckets);
 }
 
 void ciChannelFree(void *elem)
@@ -419,17 +423,7 @@ void ciChannelFree(void *elem)
 
 int ciUserHash(const void *elem, int numBuckets)
 {
-	const char *nick = (const char *)elem;
-	int hash = 0;
-	int c;
-
-	while((c = *nick) != 0)
-	{
-		nick++;
-		hash += tolower(c);
-	}
-
-	return (hash % numBuckets);
+	return Rva00871650((const char *)elem, numBuckets);
 }
 
 typedef struct ciChatUser
