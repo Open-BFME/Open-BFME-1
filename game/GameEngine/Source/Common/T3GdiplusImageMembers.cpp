@@ -21,6 +21,10 @@
 // are pinned in targets/game/reverse/symbols.csv -- declaring them dllimport would emit the
 // indirect six-byte form instead.
 //
+// GetWidth/GetHeight/GetPixelFormat/GetPaletteSize are header inlines whose
+// retail-identical COMDATs come from T3AtlCImageCreateFromGdiplusBitmap.cpp;
+// a non-inline copy here collided with them at link, so their rows live there.
+//
 // GetPixelFormat is 32 bytes rather than 40 because its out parameter is not
 // zero-initialised in the header; GetWidth/GetHeight/GetPaletteSize all carry
 // the extra `mov [esp+0xc],0`.
@@ -96,38 +100,6 @@ public:
 	Status LockBits(const Rect *rect, UINT flags, PixelFormat format, BitmapData *lockedBitmapData);
 	Status UnlockBits(BitmapData *lockedBitmapData);
 };
-
-// ?GetWidth@Image@Gdiplus@@QAEIXZ
-UINT Image::GetWidth(void)
-{
-	UINT width = 0;
-	SetStatus(GdipGetImageWidth(nativeImage, &width));
-	return width;
-}
-
-// ?GetHeight@Image@Gdiplus@@QAEIXZ
-UINT Image::GetHeight(void)
-{
-	UINT height = 0;
-	SetStatus(GdipGetImageHeight(nativeImage, &height));
-	return height;
-}
-
-// ?GetPixelFormat@Image@Gdiplus@@QAEHXZ
-PixelFormat Image::GetPixelFormat(void)
-{
-	PixelFormat format;
-	SetStatus(GdipGetImagePixelFormat(nativeImage, &format));
-	return format;
-}
-
-// ?GetPaletteSize@Image@Gdiplus@@QAEHXZ
-INT Image::GetPaletteSize(void)
-{
-	INT size = 0;
-	SetStatus(GdipGetImagePaletteSize(nativeImage, &size));
-	return size;
-}
 
 // ?GetPalette@Image@Gdiplus@@QAEHPAUColorPalette@2@H@Z
 Status Image::GetPalette(ColorPalette *palette, INT size)
