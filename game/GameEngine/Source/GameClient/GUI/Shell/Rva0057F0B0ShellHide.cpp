@@ -30,7 +30,8 @@ public:
 	virtual void notifyHidden() = 0;
 };
 
-extern Rva0057F0B0ShellGlobal *Glo012F3344;
+// The recorded pointer at VA 0x012F3344 is zero-initialized in retail.
+Rva0057F0B0ShellGlobal *Glo012F3344 = 0;
 
 class Rva0057F0B0Shell
 {
