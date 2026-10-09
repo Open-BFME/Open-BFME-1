@@ -25,7 +25,6 @@ struct Coord3D
 	Real z;
 
 	Coord3D(void) {}
-	Coord3D(const Coord3D &that) : x(that.x), y(that.y) {}
 
 	Real length(void) const { return (Real)sqrt(x * x + y * y + z * z); }
 
@@ -40,6 +39,13 @@ struct Coord3D
 		}
 	}
 };
+
+// The side test copies only the planar coordinates used below.
+static __forceinline void copyPlanarCoord(Coord3D *result, const Coord3D *source)
+{
+	result->x = source->x;
+	result->y = source->y;
+}
 
 struct BridgeInfo
 {
@@ -86,19 +92,23 @@ Bool Bridge::isCellOnSide(const Region2D *cell)
 	endVector.x *= BRIDGE_SIDE_SCALE;
 	endVector.y *= BRIDGE_SIDE_SCALE;
 
-	Coord3D fromLeft = m_bridgeInfo.fromLeft;
+	Coord3D fromLeft;
+	copyPlanarCoord(&fromLeft, &m_bridgeInfo.fromLeft);
 	fromLeft.x -= endVector.x;
 	fromLeft.y -= endVector.y;
 
-	Coord3D fromRight = m_bridgeInfo.fromRight;
+	Coord3D fromRight;
+	copyPlanarCoord(&fromRight, &m_bridgeInfo.fromRight);
 	fromRight.x += endVector.x;
 	fromRight.y += endVector.y;
 
-	Coord3D toLeft = m_bridgeInfo.toLeft;
+	Coord3D toLeft;
+	copyPlanarCoord(&toLeft, &m_bridgeInfo.toLeft);
 	toLeft.x -= endVector.x;
 	toLeft.y -= endVector.y;
 
-	Coord3D toRight = m_bridgeInfo.toRight;
+	Coord3D toRight;
+	copyPlanarCoord(&toRight, &m_bridgeInfo.toRight);
 	toRight.x += endVector.x;
 	toRight.y += endVector.y;
 

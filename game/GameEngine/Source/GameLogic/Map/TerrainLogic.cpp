@@ -646,78 +646,7 @@ Bool Bridge::isCellOnEnd(const Region2D *cell)
 //-------------------------------------------------------------------------------------------------
 /** isCellOnSide - see if cell is on the end of the bridge. */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/Bridge_isCellOnSide_Thunk.cpp
-// ?isCellOnSide@Bridge@@QAE_NPBURegion2D@@@Z present-unmatched
-Bool Bridge::isCellOnSide(const Region2D *cell)
-{
-	Coord3D endVector;
-	endVector.x = m_bridgeInfo.fromRight.x - m_bridgeInfo.fromLeft.x;
-	endVector.y = m_bridgeInfo.fromRight.y - m_bridgeInfo.fromLeft.y;
-	endVector.z = m_bridgeInfo.fromRight.z - m_bridgeInfo.fromLeft.z;
-	endVector.normalize();
-	// Offset by 1 pathfind cell.
-	endVector.x *= PATHFIND_CELL_SIZE*0.51f;
-	endVector.y *= PATHFIND_CELL_SIZE*0.51f;
-
-	Coord3D fromLeft = m_bridgeInfo.fromLeft;
-	fromLeft.x -= endVector.x;
-	fromLeft.y -= endVector.y;
-
-	Coord3D fromRight = m_bridgeInfo.fromRight;
-	fromRight.x += endVector.x;
-	fromRight.y += endVector.y;
-
-	Coord3D toLeft = m_bridgeInfo.toLeft;
-	toLeft.x -= endVector.x;
-	toLeft.y -= endVector.y;
-
-	Coord3D toRight = m_bridgeInfo.toRight;
-	toRight.x += endVector.x;
-	toRight.y += endVector.y;
-
-	Coord2D line1, line2;
-	line1.x = fromLeft.x; 
-	line1.y = fromLeft.y; 
-	line2.x = toLeft.x; 
-	line2.y = toLeft.y; 
-	if (LineInRegion(&line1, &line2, cell)) {
-		return true;
-	}
-	line1.x = fromRight.x; 
-	line1.y = fromRight.y; 
-	line2.x = toRight.x; 
-	line2.y = toRight.y; 
-	if (LineInRegion(&line1, &line2, cell)) {
-		return true;
-	}
-	fromLeft.x -= endVector.x;
-	fromLeft.y -= endVector.y;
-
-	fromRight.x += endVector.x;
-	fromRight.y += endVector.y;
-
-	toLeft.x -= endVector.x;
-	toLeft.y -= endVector.y;
-
-	toRight.x += endVector.x;
-	toRight.y += endVector.y;
-
-	line1.x = fromLeft.x; 
-	line1.y = fromLeft.y; 
-	line2.x = toLeft.x; 
-	line2.y = toLeft.y; 
-	if (LineInRegion(&line1, &line2, cell)) {
-		return true;
-	}
-	line1.x = fromRight.x; 
-	line1.y = fromRight.y; 
-	line2.x = toRight.x; 
-	line2.y = toRight.y; 
-	if (LineInRegion(&line1, &line2, cell)) {
-		return true;
-	}
-	return(false);
-}
+// Retail isCellOnSide is owned by Bridge_isCellOnSide_Thunk.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** isCellEntryPoint - Is a pathfind cell a spot to move onto the bridge. */
