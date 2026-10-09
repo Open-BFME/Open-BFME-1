@@ -11,7 +11,7 @@ enum ObjectID {};
 class AudioEventRTS
 {
 public:
-	AudioEventRTS(const AsciiString &eventName = AsciiString::TheEmptyString, ObjectID ownerID = (ObjectID)2);
+	AudioEventRTS(const AsciiString &eventName = AsciiString::TheEmptyString, int timeOfDay = 2);
 	~AudioEventRTS();
 
 private:
