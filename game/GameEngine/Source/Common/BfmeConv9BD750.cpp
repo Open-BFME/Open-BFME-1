@@ -10,14 +10,17 @@
 // into the final pixels. Mechanically transcribed from the retail bytes;
 // see targets/game/reverse/re_attempts.log for the derivation notes.
 
+// Each table is read by MMX qword loads. Retail places their eight-byte
+// values at 0x012D8720..0x012D8780, sixteen bytes apart; the intervening
+// alignment padding is outside the owned extents.
 extern "C" int Vp6FilterEdgeTagTable[];
-extern "C" unsigned char Vp6FilterConst8720[];
-extern "C" unsigned char Vp6FilterConst8730[];
-extern "C" unsigned char Vp6FilterConst8740[];
-extern "C" unsigned char Vp6FilterConst8750[];
-extern "C" unsigned char Vp6FilterConst8760[];
-extern "C" unsigned char Vp6FilterConst8770[];
-extern "C" unsigned char Vp6FilterConst8780[];
+extern "C" __declspec(align(16)) unsigned char Vp6FilterConst8720[8] = { 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00 };
+extern "C" __declspec(align(16)) unsigned char Vp6FilterConst8730[8] = { 0x40, 0x00, 0x40, 0x00, 0x40, 0x00, 0x40, 0x00 };
+extern "C" __declspec(align(16)) unsigned char Vp6FilterConst8740[8] = { 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40 };
+extern "C" __declspec(align(16)) unsigned char Vp6FilterConst8750[8] = { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
+extern "C" __declspec(align(16)) unsigned char Vp6FilterConst8760[8] = { 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F };
+extern "C" __declspec(align(16)) unsigned char Vp6FilterConst8770[8] = { 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80 };
+extern "C" __declspec(align(16)) unsigned char Vp6FilterConst8780[8] = { 0xDF, 0xDF, 0xDF, 0xDF, 0xDF, 0xDF, 0xDF, 0xDF };
 
 extern "C" void __cdecl Rva009BD750Vp6FilterWide(
 	void *unused, void *sourceArgument, void *destinationArgument,
