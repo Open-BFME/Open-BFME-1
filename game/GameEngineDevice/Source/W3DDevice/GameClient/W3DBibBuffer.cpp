@@ -407,29 +407,5 @@ void W3DBibBuffer::removeBibDrawable(DrawableID id)
 /** Draws the bibs.  Uses camera to cull. */
 //=============================================================================
 // byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DBibBuffer_renderBibs_Thunk.cpp
-// ?renderBibs@W3DBibBuffer@@QAEXXZ present-unmatched
-void W3DBibBuffer::renderBibs()
-{
-
-	loadBibsInVertexAndIndexBuffers();
-
-	if (m_curNumBibIndices == 0) {
-		return;
-	}
-	// Setup the vertex buffer, shader & texture.
-	DX8Wrapper::Set_Index_Buffer(m_indexBib,0);
-	DX8Wrapper::Set_Vertex_Buffer(m_vertexBib);
-	DX8Wrapper::Set_Shader(detailAlphaShader);
-	if (m_curNumNormalBibIndices) {
-		DX8Wrapper::Set_Texture(0,m_bibTexture);
-		DX8Wrapper::Draw_Triangles(	0, m_curNumNormalBibIndices/3, 0,	m_curNumNormalBibVertex);
-	}
-	if (m_curNumBibIndices>m_curNumNormalBibIndices) {
-		DX8Wrapper::Set_Texture(0,m_highlightBibTexture);
-// ?Draw_Triangles@DX8Wrapper@@ present-unmatched
-		DX8Wrapper::Draw_Triangles(	m_curNumNormalBibIndices, (m_curNumBibIndices-m_curNumNormalBibIndices)/3, 
-						m_curNumNormalBibVertex,	m_curNumBibVertices-m_curNumNormalBibVertex);
-	}
-}
 
 
