@@ -1,12 +1,30 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
 // Retail RVA 0x009EBCE0: complete 211-byte counted registry lookup.
 // The caller supplies hidden aggregate storage and one explicit name.
 // The original registry/helper names are not independently established.
 
-class Rva009EB7A0RefOwner
+#include "../WWVegas/WW3D2/texture.h"
+
+class AssetReference
 {
 public:
-	void Release_Ref();
+	AssetReference() : m_object( 0 ) {}
+	AssetReference( const AssetReference &that ) : m_object( that.m_object )
+	{
+		if ( m_object )
+		{
+			++*(unsigned short *)((char *)m_object + 4);
+		}
+	}
+	~AssetReference()
+	{
+		if ( m_object )
+		{
+			((TextureBaseClass *)m_object)->Release_Ref();
+		}
+	}
+
+	void *m_object;
 };
 
 class Rva009EBCE0AssetReference
@@ -21,11 +39,19 @@ public:
 			++*(unsigned short *)((char *)m_object + 4);
 		}
 	}
+	Rva009EBCE0AssetReference( const AssetReference &that )
+		: m_object( that.m_object )
+	{
+		if ( m_object )
+		{
+			++*(unsigned short *)((char *)m_object + 4);
+		}
+	}
 	~Rva009EBCE0AssetReference()
 	{
 		if ( m_object )
 		{
-			((Rva009EB7A0RefOwner *)m_object)->Release_Ref();
+			((TextureBaseClass *)m_object)->Release_Ref();
 		}
 	}
 
@@ -33,13 +59,12 @@ private:
 	void *m_object;
 };
 
-class Rva009EEC60Registry
+class AssetManagerImpl
 {
 public:
-	Rva009EBCE0AssetReference Rva009EEC60_FindAsset( const char *name );
+	AssetReference Find_Asset( const char *name );
 };
 
-class AssetManagerImpl;
 class AssetRegistry;
 extern AssetRegistry *g_theAssetRegistry;
 
@@ -51,6 +76,6 @@ Rva009EBCE0AssetReference Rva009EBCE0_GetPrototype( const char *name )
 	}
 
 	return g_theAssetRegistry
-		? ((Rva009EEC60Registry *)g_theAssetRegistry)->Rva009EEC60_FindAsset( name )
-		: Rva009EBCE0AssetReference();
+		? ((AssetManagerImpl *)g_theAssetRegistry)->Find_Asset( name )
+		: AssetReference();
 }
