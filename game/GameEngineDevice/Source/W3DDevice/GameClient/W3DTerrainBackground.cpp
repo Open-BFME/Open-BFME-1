@@ -498,14 +498,6 @@ void W3DTerrainBackground::setFlipRecursive(Int xOffset, Int yOffset, Int width)
 /** Destructor. Releases w3d assets. */
 //=============================================================================
 // byte-exact reconstruction: game/GameEngine/Source/GameClient/W3DTerrainBackgroundDtor.cpp
-// ??1W3DTerrainBackground@@QAE@XZ present-unmatched
-W3DTerrainBackground::~W3DTerrainBackground(void)
-{
-	freeTerrainBuffers();
-	REF_PTR_RELEASE(m_terrainTexture);
-	REF_PTR_RELEASE(m_terrainTexture2X);
-	REF_PTR_RELEASE(m_terrainTexture4X);
-}
 
 // W3DTerrainBackground::W3DTerrainBackground is defined by its matched owner TU (W3DTerrainBackgroundConstructor.cpp).
 
