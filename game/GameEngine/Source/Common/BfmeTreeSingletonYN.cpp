@@ -10,11 +10,18 @@ void bfmeForward_00C6FC80(void);
 
 namespace _STL {
 
-class __new_alloc
+// Retail 0x0082E540 is the matched node pool refill/mutex body.
+static __forceinline void *vectorSmallAllocate(unsigned int bytes);
+template <bool Threads, int Instance>
+class __node_alloc
 {
-public:
-	static void *allocate(unsigned int n);
+	static void *__cdecl _M_allocate(unsigned int bytes);
+	friend void *vectorSmallAllocate(unsigned int bytes);
 };
+static __forceinline void *vectorSmallAllocate(unsigned int bytes)
+{
+	return __node_alloc<true, 0>::_M_allocate(bytes);
+}
 
 }
 
@@ -33,7 +40,7 @@ public:
 	{
 		m_bfmeNode = 0;
 
-		m_bfmeNode = (BfmeNodeYN *)_STL::__new_alloc::allocate(0x14);
+		m_bfmeNode = (BfmeNodeYN *)_STL::vectorSmallAllocate(0x14);
 
 		m_bfmeCount = 0;
 
