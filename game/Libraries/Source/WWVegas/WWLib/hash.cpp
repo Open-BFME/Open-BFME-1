@@ -1,7 +1,10 @@
 // cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/Wwutil /Igame/Libraries/Source/WWVegas/WWDownload /Igame/Libraries/Source/Compression /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
 // WWLib HashTableClass, verbatim from the Generals Zero Hour reference
 // (GeneralsMD/.../WWVegas/WWLib/hash.cpp). /DNDEBUG makes WWASSERT a no-op; /MD
-// matches the retail CRT (stricmp). Hash() calls the already-matched CRC_Stringi.
+// matches the retail CRT (_strcmpi, retail IAT 0x0135933C). Hash() calls the already-matched CRC_Stringi.
+// Retail hash.obj calls operator new/delete (??2/??3) for the table array: it
+// was built without always.h's operator new[]/delete[] declarations.
+#define _OPERATOR_NEW_DEFINED_
 #include "hash.h"
 #include "wwdebug.h"
 #include "realcrc.h"
@@ -83,7 +86,7 @@ HashableClass * HashTableClass::Find( const char * key )
 	// Find in the hash table.
 	int index = Hash( key );
 	for ( HashableClass * node = HashTable[ index ]; node != NULL; node = node->NextHash ) {
-		if ( ::stricmp( node->Get_Key(), key ) == 0 ) {
+		if ( ::_strcmpi( node->Get_Key(), key ) == 0 ) {
 			return node;
 		}
 	}
