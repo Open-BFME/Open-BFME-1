@@ -56,7 +56,6 @@ protected:
         else Flags &= ~flag;
     }
     int Get_Polygon_Count(void) const { return PolyCount; }
-    TriIndex *get_polys(void) { return Poly->Get_Array(); }
     Vector4 *get_planes(bool create = true);
     uint8 *Get_Poly_Surface_Type_Array(void) { return PolySurfaceType->Get_Array(); }
 
@@ -108,7 +107,7 @@ bool MeshGeometryClass::read_triangles(ChunkLoadClass &cload)
 {
     W3dTriStruct tri;
 
-    TriIndex *vi = get_polys();
+    TriIndex *vi = Poly->Get_Array();
     Set_Flag(DIRTY_PLANES, false);
     Vector4 *peq = get_planes();
     uint8 *surface_types = Get_Poly_Surface_Type_Array();
