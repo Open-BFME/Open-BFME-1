@@ -2,11 +2,18 @@
 
 namespace _STL {
 
-class __new_alloc
+// Retail 0x0082E540 is the matched node pool refill/mutex body.
+static __forceinline void *vectorSmallAllocate(unsigned int bytes);
+template <bool Threads, int Instance>
+class __node_alloc
 {
-public:
-	static void *allocate(unsigned int n);
+	static void *__cdecl _M_allocate(unsigned int bytes);
+	friend void *vectorSmallAllocate(unsigned int bytes);
 };
+static __forceinline void *vectorSmallAllocate(unsigned int bytes)
+{
+	return __node_alloc<true, 0>::_M_allocate(bytes);
+}
 
 }
 
@@ -43,7 +50,7 @@ void Bfme5Registry::bfmeRegister(Bfme5RegItem *it)
 	it->m_bfmeFlag = m_bfmeFlag;
 
 	Bfme5RegLink *pos = m_bfmeNode;
-	Bfme5RegLink *n = (Bfme5RegLink *)_STL::__new_alloc::allocate(0x0c);
+	Bfme5RegLink *n = (Bfme5RegLink *)_STL::vectorSmallAllocate(0x0c);
 	Bfme5RegItem **p = &n->m_bfmeValue;
 
 	if (p)
