@@ -10,6 +10,17 @@ struct BfmeCmpVJX
 void __cdecl bfmeSortAVJX(BfmeElemVJX *a, BfmeElemVJX *b, BfmeCmpVJX c);
 void __cdecl bfmeSortBVJX(BfmeElemVJX *a, BfmeElemVJX *b, BfmeCmpVJX c);
 
+// Both sorts are matched rows the body calls directly (callees.py): mode 2
+// runs ?Rva009F3FD0 and mode 1 ?Rva009F3F80, the eight-byte introsort drivers
+// in Q3IntrosortFamilies.cpp. The comparator word goes by value either way.
+struct Q3SortElem8;
+struct Q3SortCompare;
+void __cdecl Rva009F3FD0(Q3SortElem8 *a, Q3SortElem8 *b, Q3SortCompare c);
+void __cdecl Rva009F3F80(Q3SortElem8 *a, Q3SortElem8 *b, Q3SortCompare c);
+typedef void (__cdecl *BfmeSortVJX)(BfmeElemVJX *a, BfmeElemVJX *b, BfmeCmpVJX c);
+#define bfmeSortAVJX ((BfmeSortVJX)Rva009F3FD0)
+#define bfmeSortBVJX ((BfmeSortVJX)Rva009F3F80)
+
 struct BfmeRangeVJX
 {
 	BfmeElemVJX *m_bfme00;

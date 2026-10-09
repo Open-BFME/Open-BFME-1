@@ -78912,8 +78912,6 @@ name,address,notes
 ?bfmeSmallVLW@@YAPAXI@Z,0x0082E450,pin
 ?bfmeSnapshot@Rva0016AD50@@QAEXXZ,0x0002D308,privateMoveToPosition snapshots the active BFME move goal through its retail thunk
 ?bfmeSomethingHH@BfmeThingHH@@QAEXXZ,0x0002191D,pin helper for BfmeConv2063
-?bfmeSortAVJX@@YAXPAUBfmeElemVJX@@0UBfmeCmpVJX@@@Z,0x009F3FD0,pin
-?bfmeSortBVJX@@YAXPAUBfmeElemVJX@@0UBfmeCmpVJX@@@Z,0x009F3F80,pin
 ?bfmeSpecialOk@Weapon@@QBE_NPBVObject@@0@Z,0x00032123,ILT used by WeaponSet::chooseBestWeaponForTarget
 ?bfmeStart1021@BfmeF1021@@QAEXH@Z,0x0000EEA8,pin
 ?bfmeStart1098@BfmeD1098@@QAEHHHH@Z,0x00044C60,pin
