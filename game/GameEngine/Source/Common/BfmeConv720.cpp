@@ -9,7 +9,7 @@
 // __cdecl identifiers. The iterator is reached through a local __stdcall view
 // and the destructor through this repo's pointer-to-member cast, which is what
 // keeps retail's `mov ecx, esi` before the destructor call.
-extern "C" void __cdecl __identifier("bfmeDtorCbDLC")();
+extern "C" void __cdecl __identifier("?j_0003f783@@YAXXZ")();
 extern "C" void __cdecl __identifier("??_M@YGXPAXIHP6EX0@Z@Z")();
 
 typedef void (__stdcall *VectorDestructorIterator)(
@@ -38,7 +38,7 @@ void *BfmeThingDLC::bfmeGoDLC(unsigned char flags)
 		char *base = (char *)this - 4;
 		((VectorDestructorIterator)__identifier("??_M@YGXPAXIHP6EX0@Z@Z"))(
 			this, 0x8c, *(int *)base,
-			__identifier("bfmeDtorCbDLC"));
+			__identifier("?j_0003f783@@YAXXZ"));
 		if (flags & 1)
 			operator delete[](base);
 		return base;
@@ -50,7 +50,7 @@ void *BfmeThingDLC::bfmeGoDLC(unsigned char flags)
 			DtorFnDLC asMember;
 		} fnCast;
 		fnCast.asVoid = reinterpret_cast<void *>(
-			__identifier("bfmeDtorCbDLC"));
+			__identifier("?j_0003f783@@YAXXZ"));
 		(reinterpret_cast<DtorCallDLC *>(this)->*fnCast.asMember)();
 	}
 	if (flags & 1)
