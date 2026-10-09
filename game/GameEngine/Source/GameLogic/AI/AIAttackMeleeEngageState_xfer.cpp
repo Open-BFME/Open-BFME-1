@@ -9,7 +9,7 @@
 // the ZH AIInternalMoveToState::xfer order (version 1, Coord3D, layer helper,
 // bool, Coord3D, two UnsignedInts, bool).
 // The fire-weapon substate is built with the ZH State::getMachine() inline
-// accessor rather than a direct m_machine read; written as a plain member
+// accessor shape in a TU-local free helper rather than a direct m_machine read; written as a plain member
 // read, VC7.1 stores the int transfer temporary before pushing its address
 // and swaps EAX/EDX (retail +0xC2..+0xE4).
 
@@ -38,12 +38,22 @@ public:
 	virtual void LoadPostProcess();
 	virtual void DoXfer(Xfer &xfer);
 
-	inline StateMachine *getMachine() { return m_machine; }
-
-private:
 	unsigned char m_pad04[0x18];
 	StateMachine *m_machine;
 	unsigned char m_pad20[0x04];
+};
+
+static inline StateMachine *getMachine(State *state)
+{
+	return state->m_machine;
+}
+
+// ILT 0x00002379 reaches this matched pointer-argument thiscall body.
+class FlagPairTarget;
+class Gen0016B140
+{
+public:
+	void handle(FlagPairTarget *target);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
@@ -93,7 +103,7 @@ void AIAttackMeleeEngageState::xfer(Xfer *xfer)
 	version.data[0] = 1;
 	version.data[1] = 3;
 	*xfer == version;
-	AIInternalMoveToState::xfer(xfer);
+	reinterpret_cast<Gen0016B140 *>(this)->handle(reinterpret_cast<FlagPairTarget *>(xfer));
 
 	if (!xfer->IsLightCRC())
 	{
@@ -105,7 +115,7 @@ void AIAttackMeleeEngageState::xfer(Xfer *xfer)
 		if (version.data[1] > 1)
 		{
 			if (m_field50 == 0)
-				m_field50 = new AIAttackFireWeaponState(getMachine(), m_field78);
+				m_field50 = new AIAttackFireWeaponState(getMachine(this), m_field78);
 
 			int field54 = m_field54;
 			*xfer == field54;
