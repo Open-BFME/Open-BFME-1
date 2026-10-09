@@ -1,6 +1,5 @@
 // ?rva0089FDA0@EAStringC@@QAEAAV1@PBDH@Z
-// partial score=0.4 date=2026-09-26
-// ?rva0089FDA0@EAStringC@@QAEAAV1@PBDH@Z
+// partial score=0.382 date=2026-10-09
 // cl: /O2 /DNDEBUG /MD
 
 extern "C" void *__cdecl memcpy(void *, const void *, unsigned int);
@@ -31,6 +30,8 @@ public:
 	EAStringC &rva0089FDA0(const char *source, int limit);
 };
 
+// ?rva0089FDA0@EAStringC@@QAEAAV1@PBDH@Z present-unmatched
+// Evidence: targets/game/reverse/identity_evidence/0x0089fda0-utf8-append.md
 EAStringC &EAStringC::rva0089FDA0(const char *source, int limit)
 {
 	const char *scan = source;
@@ -81,11 +82,11 @@ EAStringC &EAStringC::rva0089FDA0(const char *source, int limit)
 		}
 	}
 
-	int count = 0;
-	int sourceSize = scan - source;
+	unsigned int count = 0;
+	const char *text = source;
+	unsigned int sourceSize = scan - text;
 	if (sourceSize != 0)
 	{
-		const char *text = source;
 		do
 		{
 			if (*text++ == 0)
@@ -93,33 +94,43 @@ EAStringC &EAStringC::rva0089FDA0(const char *source, int limit)
 			++count;
 		} while (count < sourceSize);
 	}
-	if (count == 0)
-		return *this;
-
-	EAStringData *oldData = m_data;
-	unsigned int oldSize = oldData->m_size;
-	unsigned int newSize = oldSize + count;
-	if (oldData->m_refCount == 1 && newSize <= oldData->m_maxSize)
+	if (count != 0)
 	{
-		oldData->m_size = (unsigned short)newSize;
-		oldData->m_hash = 0;
-		((char *)oldData)[newSize + 8] = 0;
-	}
-	else
-	{
-		unsigned int allocationSize = (newSize + (newSize >> 3) + 0xc) & ~3u;
-		EAStringData *newData = (EAStringData *)g_bfmeStringPool1284->allocate(allocationSize);
-		m_data = newData;
-		newData->m_refCount = 1;
-		newData->m_maxSize = (unsigned short)(allocationSize - 9);
-		newData->m_size = (unsigned short)newSize;
-		newData->m_hash = 0;
-		((char *)newData)[newSize + 8] = 0;
-		memcpy((char *)newData + 8, (char *)oldData, oldSize);
-		if (--oldData->m_refCount == 0)
-			g_bfmeStringPool1284->free(oldData);
-	}
+		EAStringData *oldData[1] = { m_data };
+		EAStringData *data = oldData[0];
+		unsigned int oldSize = data->m_size;
+		unsigned int newSize = oldSize + count;
+		if (data->m_refCount == 1 && newSize <= data->m_maxSize)
+		{
+			m_data->m_size = (unsigned short)newSize;
+			m_data->m_hash = 0;
+			((char *)m_data)[newSize + 8] = 0;
+		}
+		else
+		{
+			const char *volatile oldText = (char *)data + 8;
+			if (newSize != 0)
+			{
+				unsigned int allocationSize = (newSize + (newSize >> 3) + 0xc) & ~3u;
+				m_data = (EAStringData *)g_bfmeStringPool1284->allocate(allocationSize);
+				m_data->m_refCount = 1;
+				m_data->m_maxSize = (unsigned short)(allocationSize - 9);
+				m_data->m_size = (unsigned short)newSize;
+				m_data->m_hash = 0;
+				memcpy((char *)m_data + 8, oldText, oldSize);
+				((char *)m_data)[newSize + 8] = 0;
+			}
+			else
+			{
+				m_data = &g_bfmeDefaultString1284;
+				++g_bfmeDefaultString1284.m_refCount;
+			}
+			data = oldData[0];
+			if (--data->m_refCount == 0)
+				g_bfmeStringPool1284->free(data);
+		}
 
-	memcpy((char *)m_data + oldSize + 8, source, count);
+		memcpy((char *)m_data + oldSize + 8, source, count);
+	}
 	return *this;
 }
