@@ -311,11 +311,12 @@ void W3DGadgetCheckBoxDraw( GameWindow *window, WinInstanceData *instData )
 // W3DGadgetCheckBoxImageDraw =================================================
 /** Draw check box with user supplied images */
 //=============================================================================
+// Open BFME 2 donor: Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DCheckBox.cpp.
 void W3DGadgetCheckBoxImageDraw( GameWindow *window, WinInstanceData *instData )
 {
 	Int checkOffsetFromLeft;
 	const Image  *boxImage = NULL;//*backgroundImage = NULL,
-	ICoord2D origin, start, end, size;
+	CtorCoord origin, start, end, size;
 
 	// get window position and size
 	window->winGetScreenPosition( &origin.x, &origin.y );

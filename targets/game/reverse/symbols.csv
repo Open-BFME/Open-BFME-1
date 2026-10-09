@@ -90945,3 +90945,5 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ?d_00894660@@YAXXZ,0x00894660,address-only legacy compatibility for elapsed-tick callers; one unsigned cdecl argument
 ?d_008c55b0@@YAXXZ,0x008C55B0,address-only legacy compatibility for matched pair parser member-pointer casts; thiscall three pointers and pointer result independently decoded
 ?d_00892a70@@YAXXZ,0x00892A70,legacy address-only alias of ?Rva00892A70@@YAHI@Z; game/gen_asm/d_0084de40.asm still names this symbol after the dump conversion
+?d_009064f0@@YAXXZ,0x009064F0,legacy address-only alias retained for dxwrapper.cpp callback registration
+?d_007901f0@@YAXXZ,0x007901F0,legacy address-only compatibility pin for the retired checkbox image dump name

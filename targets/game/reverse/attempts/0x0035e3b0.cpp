@@ -1,5 +1,5 @@
 // ??0Gen0035E3B0@@QAE@PAVHost0035E450@@@Z
-// partial score=0.9024 date=2026-09-30
+// partial score=1.0 date=2026-10-09
 // cl: /DNDEBUG /MD /EHsc
 
 class Host0035E450;
@@ -8,7 +8,6 @@ extern "C" void _ReadWriteBarrier();
 static __forceinline void *rva0035E3B0Link(Host0035E450 *other)
 {
 	Host0035E450 *source = other;
-	_ReadWriteBarrier();
 	return source ? (char *)source + 4 : 0;
 }
 
@@ -28,18 +27,22 @@ class NestedAt0C
 public:
 	NestedAt0C(const NestedAt0C &other);
 	~NestedAt0C();
+private:
+	unsigned char m_data[0x20];
 };
 
 class NestedAt2C
 {
 public:
 	NestedAt2C(const NestedAt2C &other);
+private:
+	unsigned char m_data[0x20];
 };
 
 class Base0035E3B0
 {
 public:
-	__forceinline Base0035E3B0() {}
+	__forceinline Base0035E3B0() { _ReadWriteBarrier(); }
 	virtual ~Base0035E3B0();
 };
 
@@ -52,7 +55,6 @@ public:
 
 private:
 	NestedAt0C m_at0C;
-	char m_pad[0x2C - 0xC - sizeof(NestedAt0C)];
 	NestedAt2C m_at2C;
 };
 

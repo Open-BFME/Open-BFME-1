@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "98f93678df5f7a432a4bb42b1324afca8ad1e911d9349419566922db27fba7c3",
+  "symbol": "??0Gen0035E3B0@@QAE@PAVHost0035E450@@@Z",
+  "score_kind": "measured",
+  "score": 1.0,
+  "source": "// ??0Gen0035E3B0@@QAE@PAVHost0035E450@@@Z\n// partial score=1.0 date=2026-10-09\n// cl: /DNDEBUG /MD /EHsc\r\n\r\nclass Host0035E450;\r\nextern \"C\" void _ReadWriteBarrier();\r\n#pragma intrinsic(_ReadWriteBarrier)\r\nstatic __forceinline void *rva0035E3B0Link(Host0035E450 *other)\r\n{\r\n\tHost0035E450 *source = other;\r\n\treturn source ? (char *)source + 4 : 0;\r\n}\r\n\r\nclass DLinkAt4\r\n{\r\npublic:\r\n\tDLinkAt4(void *other);\r\n\t~DLinkAt4();\r\n\r\nprivate:\r\n\tvoid *m_a;\r\n\tvoid *m_b;\r\n};\r\n\r\nclass NestedAt0C\r\n{\r\npublic:\r\n\tNestedAt0C(const NestedAt0C &other);\r\n\t~NestedAt0C();\r\nprivate:\r\n\tunsigned char m_data[0x20];\r\n};\r\n\r\nclass NestedAt2C\r\n{\r\npublic:\r\n\tNestedAt2C(const NestedAt2C &other);\r\nprivate:\r\n\tunsigned char m_data[0x20];\r\n};\r\n\r\nclass Base0035E3B0\r\n{\r\npublic:\r\n\t__forceinline Base0035E3B0() { _ReadWriteBarrier(); }\r\n\tvirtual ~Base0035E3B0();\r\n};\r\n\r\n\r\nclass Gen0035E3B0 : public Base0035E3B0, public DLinkAt4\r\n{\r\npublic:\r\n\tGen0035E3B0(Host0035E450 *other);\r\n\tvirtual ~Gen0035E3B0();\r\n\r\nprivate:\r\n\tNestedAt0C m_at0C;\r\n\tNestedAt2C m_at2C;\r\n};\r\n\r\nstatic NestedAt0C &hostAt0C(Host0035E450 *other)\r\n{\r\n\treturn *(NestedAt0C *)((char *)other + 0xC);\r\n}\r\n\r\nstatic NestedAt2C &hostAt2C(Host0035E450 *other)\r\n{\r\n\treturn *(NestedAt2C *)((char *)other + 0x2C);\r\n}\r\n\r\nGen0035E3B0::Gen0035E3B0(Host0035E450 *other)\r\n\t: DLinkAt4(rva0035E3B0Link(other)),\r\n\t  m_at0C(hostAt0C(other)),\r\n\t  m_at2C(hostAt2C(other))\r\n{\r\n}\r\n"
+}
