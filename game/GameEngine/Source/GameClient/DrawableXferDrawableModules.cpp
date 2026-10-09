@@ -98,12 +98,19 @@ class Module
 {
 public:
 	const ModuleData *getModuleData() const { return m_moduleData; }
-	NameKeyType getModuleTagNameKey() const { return getModuleData()->getModuleTagNameKey(); }
+	NameKeyType getModuleTagNameKey() const;
 
 private:
 	void *m_vtable;
 	const ModuleData *m_moduleData;
 };
+
+// Keep both inline access layers to preserve retail register allocation,
+// without emitting a competing Module::getModuleTagNameKey layout copy.
+static __forceinline NameKeyType moduleTag(const Module *module)
+{
+	return module->getModuleData()->getModuleTagNameKey();
+}
 
 class NameKeyGenerator
 {
@@ -150,7 +157,7 @@ void Drawable::xferDrawableModules(Xfer *xfer)
 		{
 			for (m = m_modules[curModuleType]; m && *m; ++m)
 			{
-				moduleIdentifier = TheNameKeyGenerator->keyToName((*m)->getModuleTagNameKey());
+				moduleIdentifier = TheNameKeyGenerator->keyToName(moduleTag(*m));
 				xfer->xferAsciiString(&moduleIdentifier);
 				xfer->beginBlock("DrawableModule");
 				xfer->xferSnapshot(*m);
@@ -167,7 +174,7 @@ void Drawable::xferDrawableModules(Xfer *xfer)
 				Module *module = 0;
 				for (Module **m = m_modules[curModuleType]; m && *m; ++m)
 				{
-					if (moduleIdentifierKey == (*m)->getModuleTagNameKey())
+					if (moduleIdentifierKey == moduleTag(*m))
 					{
 						module = *m;
 						break;
