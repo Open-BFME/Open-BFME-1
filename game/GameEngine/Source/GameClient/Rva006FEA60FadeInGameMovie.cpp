@@ -14,6 +14,9 @@ public:
 
 class GameWindowTransitionsHandler
 {
+public:
+	// Retail 0x0048AD80, reached here through the ILT entry at 0x000045C28.
+	void setGroup(AsciiString groupName, bool immediate);
 };
 extern GameWindowTransitionsHandler *TheTransitionHandler;
 
@@ -33,6 +36,9 @@ public:
 
 class Mouse
 {
+public:
+	// Retail 0x005A4B50, reached here through the ILT entry at 0x00043D578.
+	void _bfme_setEngineVisibility(bool visible);
 };
 extern Mouse *TheMouse;
 
@@ -75,10 +81,10 @@ void Rva006FEA60Owner::rva006fea60(Int mode, Int value)
 	if (mode == 2)
 	{
 		m_fadeValue = 0.0f;
-		((BfmeRankTransitionHandler *)TheTransitionHandler)->setGroup(
-			AsciiString("FadeInGameMovie"), 0);
+		((GameWindowTransitionsHandler *)TheTransitionHandler)->setGroup(
+			AsciiString("FadeInGameMovie"), false);
 		((Rva004893C0ByteSetter *)TheTransitionHandler)->set();
-		((BfmeZ1100 *)TheMouse)->bfmeEnd1100(0);
+		((Mouse *)TheMouse)->_bfme_setEngineVisibility(false);
 		return;
 	}
 
