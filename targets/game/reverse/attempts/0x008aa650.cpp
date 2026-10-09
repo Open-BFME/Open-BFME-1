@@ -1,6 +1,7 @@
-// ?d_008aa650@@YAXXZ
-// partial score=0.15 date=2026-09-22
+// ?rva008AA650StringSplit@@YAPAVBfmeC1030@@PAVRva8CD130Value@@H@Z
+// partial score=0.4118 date=2026-10-09
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+
 // RVA 008AA650: opaque Apt string split callback.
 
 struct BfmeStringData3AF0
@@ -59,6 +60,13 @@ class Rva8CD130Value
 {
 public:
 	void getName(Rva8CD130String *output);
+	__forceinline const Rva8CD130String &string008AA650() const {
+		return *(const Rva8CD130String *)
+			(((m_flags & 0x3f) == 1)
+				? (const char *)this + 8
+				: (const char *)m_indirect + 8);
+	}
+
 
 	void *m_unknown00;
 	unsigned int m_flags;
@@ -73,8 +81,10 @@ public:
 	int toInteger() const;
 };
 
-extern Rva8CD130Value **g_bfmeArr1233;
-extern int g_count01338748;
+extern AptValue **g_bfmeArr1233;
+struct Rva008AE770Stack { int field00; };
+extern Rva008AE770Stack Rva008AE770TheStack;
+#define g_count01338748 Rva008AE770TheStack.field00
 
 class BfmeItemDX
 {
@@ -86,7 +96,26 @@ class BfmeC1030
 {
 public:
 	BfmeC1030 *bfmeGo1030C();
-	void set(int index, class Rva008A9B00 *value);
+	__forceinline void set(int index, class Rva008A9B00 *value);
+	void *m_bfmeVfptr;
+	char m_bfmePad[0x1c];
+	int m_bfme20, m_bfme24, m_bfme28;
+};
+
+
+class Rva008A9120HeaderedDelete {
+public:
+    static void operator delete(void *storage, unsigned int size);
+};
+class ArrayValue008B9C60 : public BfmeC1030, public Rva008A9120HeaderedDelete {
+public:
+    ArrayValue008B9C60();
+    static void *operator new(unsigned int bytes) {
+        unsigned int *raw = (unsigned int *)Rva008C5D70Alloc(bytes + 8);
+        void *storage = raw + 2;
+        bfmePush((BfmeItemDX *)storage);
+        return storage;
+    }
 };
 
 struct BfmeC1030Block
@@ -95,8 +124,17 @@ struct BfmeC1030Block
 	BfmeC1030 m_object;
 };
 
-extern void d_008b8e10();
-#pragma comment(linker, "/alternatename:?set@BfmeC1030@@QAEXHPAVRva008A9B00@@@Z=?d_008b8e10@@YAXXZ")
+class BfmeE1242;
+class BfmeN1242 {
+public:
+    void rva008B8E10(int index, BfmeE1242 *value);
+};
+
+// ?set@BfmeC1030@@QAEXHPAVRva008A9B00@@@Z absent-from-retail
+__forceinline void BfmeC1030::set(int index, Rva008A9B00 *value)
+{
+	((BfmeN1242 *)this)->rva008B8E10(index, (BfmeE1242 *)value);
+}
 
 class Rva008A9B00
 {
@@ -109,6 +147,10 @@ public:
 	BfmeStringData3AF0 *m_data;
 	Rva008A9B00 *m_next;
 };
+
+
+struct Rva008A9A70Str { BfmeStringData3AF0 *m_block; };
+class Rva008A9A70 { public: void set(const Rva008A9A70Str &src); };
 
 class Rva008B2EA0Node
 {
@@ -135,8 +177,13 @@ struct Rva008AA650Registry
 	}
 };
 
-extern Rva008AA650Registry *g_registry01337810;
-extern Rva008A9B00 *g_free01338478;
+struct Rva00899560Pool;
+extern Rva00899560Pool *g_rva01337810GcRoots;
+struct Rva008C3B60Node;
+extern Rva008C3B60Node *g_rva01338478NodeHead;
+__forceinline Rva008A9B00 *&freeHead008AA650() {
+    return *(Rva008A9B00 **)&g_rva01338478NodeHead;
+}
 
 class BfmeStrVKK
 {
@@ -164,15 +211,14 @@ public:
 	BfmeStringData3AF0 *m_data;
 };
 
-#pragma comment(linker, "/alternatename:?rva008A0320@Rva008A0320String@@QAEAAV1@H@Z=?d_008a0320@@YAXXZ")
 
 __forceinline Rva008A9B00 *acquire008AA650()
 {
-	Rva008A9B00 *object = g_free01338478;
+	Rva008A9B00 *object = freeHead008AA650();
 	if (object)
 	{
-		g_free01338478 = object->m_next;
-		g_registry01337810->add(object);
+		freeHead008AA650() = object->m_next;
+		((Rva008AA650Registry *)g_rva01337810GcRoots)->add(object);
 		if (object->m_data != &g_bfmeDefaultString1284)
 			((BfmeStrVKK *)&object->m_data)->bfmeTruncVKK(0);
 	}
@@ -183,115 +229,115 @@ __forceinline Rva008A9B00 *acquire008AA650()
 	return object;
 }
 
+static __forceinline int decodeUtf8Rva008AA650(const unsigned char *&scan)
+{
+	unsigned char first = *scan;
+	int codePoint;
+	if (first <= 0x7f)
+	{
+		codePoint = first;
+		++scan;
+	}
+	else if ((first & 0xe0) == 0xc0)
+	{
+		codePoint = (first & 0x1f) << 6;
+		codePoint |= scan[1] & 0x3f;
+		scan += 2;
+	}
+	else if ((first & 0xf0) == 0xe0)
+	{
+		codePoint = (first & 0x0f) << 6;
+		codePoint |= scan[1] & 0x3f;
+		codePoint = (codePoint << 6) | (scan[2] & 0x3f);
+		scan += 3;
+	}
+	else
+	{
+		codePoint = (first & 7) << 6;
+		codePoint |= scan[1] & 0x3f;
+		codePoint = (codePoint << 6) | (scan[2] & 0x3f);
+		codePoint = (codePoint << 6) | (scan[3] & 0x3f);
+		scan += 4;
+	}
+	return codePoint;
+}
+
 BfmeC1030 *rva008AA650StringSplit(Rva8CD130Value *value, int count)
 {
-	BfmeC1030 *result = &((BfmeC1030Block *)Rva008C5D70Alloc(0x34))->m_object;
-	bfmePush((BfmeItemDX *)result);
-	if (result)
-		result = result->bfmeGo1030C();
+	BfmeC1030 *result = (BfmeC1030 *)new ArrayValue008B9C60;
 
-	int index = 0;
 	if (count == 0)
 	{
 		result->set(0, (Rva008A9B00 *)value);
 		return result;
 	}
 
-	Rva8CD130String separator;
-	int limit = 0xF423F;
 	if (count >= 1)
 	{
-		Rva8CD130Value *top = g_bfmeArr1233[g_count01338748 - 1];
-		top->getName(&separator);
-	}
-	if (count >= 2)
-		limit = ((AptValue *)g_bfmeArr1233[g_count01338748 - 2])->toInteger();
-
-	Rva8CD130String input(*(Rva8CD130String *)
-		(((value->m_flags & 0x3f) == 1)
-			? (char *)value + 8
-			: (char *)value->m_indirect + 8));
-	int separatorLength = separator.m_data->m_length;
-
-	if (separatorLength == 0)
-	{
-		const unsigned char *scan = (const unsigned char *)input.m_data + 8;
-		while (index < limit)
+		Rva8CD130String separator;
+		int limit = 0xF423F;
 		{
-			unsigned int first = *scan;
-			int codePoint;
-			if (first <= 0x7f)
+			Rva8CD130Value *top = (Rva8CD130Value *)g_bfmeArr1233[g_count01338748 - 1];
+			top->getName(&separator);
+		}
+		if (count >= 2)
+			limit = g_bfmeArr1233[g_count01338748 - 2]->toInteger();
+
+		Rva8CD130String input(value->string008AA650());
+		int index = 0;
+
+		if (separator.m_data->m_length == 0)
+		{
+			const unsigned char *scan = (const unsigned char *)input.m_data + 8;
+			while (index < limit)
 			{
-				codePoint = first;
-				++scan;
+				int codePoint = decodeUtf8Rva008AA650(scan);
+				if (codePoint == 0)
+					break;
+				{
+					Rva008A0320String text;
+					text.rva008A0320(codePoint);
+					Rva008A9B00 *object = acquire008AA650();
+					((Rva008B2EA0Node *)object)->append((char *)text.m_data + 8);
+					result->set(index, object);
+				}
+				++index;
 			}
-			else if ((first & 0xe0) == 0xc0)
+		}
+		else
+		{
+			int separatorLength = separator.m_data->m_length;
+			const char *text = (const char *)input.m_data + 8;
+			int start = 0;
+			while (index < limit)
 			{
-				codePoint = (first & 0x1f) << 6;
-				codePoint |= scan[1] & 0x3f;
-				scan += 2;
-			}
-			else if ((first & 0xf0) == 0xe0)
-			{
-				codePoint = (first & 0x0f) << 6;
-				codePoint |= scan[1] & 0x3f;
-				codePoint = (codePoint << 6) | (scan[2] & 0x3f);
-				scan += 3;
-			}
-			else
-			{
-				codePoint = (first & 7) << 6;
-				codePoint |= scan[1] & 0x3f;
-				codePoint = (codePoint << 6) | (scan[2] & 0x3f);
-				codePoint = (codePoint << 6) | (scan[3] & 0x3f);
-				scan += 4;
-			}
-			if (codePoint == 0)
-				break;
-			{
-				Rva008A0320String text;
-				text.rva008A0320(codePoint);
+				int found = ((EAStringC *)&input)->Find(
+					(const char *)separator.m_data + 8, start);
+				if (found == -1)
+				{
+					Rva008A9B00 *object = acquire008AA650();
+					Rva8CD130String part;
+					if (start != -1)
+						((BfmeBufVKG *)&part)->bfmeAppendVKG((const char *)input.m_data + 8 + start, -1 - start);
+					((Rva008A9A70 *)object)->set(*(const Rva008A9A70Str *)&part);
+					result->set(index, object);
+					break;
+				}
 				Rva008A9B00 *object = acquire008AA650();
-				((Rva008B2EA0Node *)object)->append((char *)text.m_data + 8);
+				Rva8CD130String part;
+				((BfmeBufVKG *)&part)->bfmeAppendVKG(text + start,
+					found - start);
+				++part.m_data->m_refCount;
+				BfmeStringData3AF0 *old = object->m_data;
+				if (--old->m_refCount == 0)
+					g_bfmeStringPool1284->free(old);
+				object->m_data = part.m_data;
 				result->set(index, object);
+				start = found + separatorLength;
+				++index;
 			}
-			++index;
-		}
-	}
-	else
-	{
-		const char *text = (const char *)input.m_data + 8;
-		int start = 0;
-		while (index < limit)
-		{
-			int found = ((EAStringC *)&input)->Find(
-				(const char *)separator.m_data + 8, start);
-			if (found == -1)
-				break;
-			Rva008A9B00 *object = acquire008AA650();
-			Rva8CD130String part;
-			((BfmeBufVKG *)&part)->bfmeAppendVKG(text + start,
-				found - start);
-			++part.m_data->m_refCount;
-			BfmeStringData3AF0 *old = object->m_data;
-			if (--old->m_refCount == 0)
-				g_bfmeStringPool1284->free(old);
-			object->m_data = part.m_data;
-			result->set(index, object);
-			start = found + separatorLength;
-			++index;
-		}
 
-		Rva008A9B00 *object = acquire008AA650();
-		Rva8CD130String part;
-		if (start != -1)
-			((BfmeBufVKG *)&part)->bfmeAppendVKG(text + start, -1 - start);
-		++part.m_data->m_refCount;
-		BfmeStringData3AF0 *old = object->m_data;
-		if (--old->m_refCount == 0)
-			g_bfmeStringPool1284->free(old);
-		object->m_data = part.m_data;
-		result->set(index, object);
+		}
 	}
 	return result;
 }
