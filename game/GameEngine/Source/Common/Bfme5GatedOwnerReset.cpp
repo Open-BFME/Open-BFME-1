@@ -40,16 +40,23 @@ public:
 class Object
 {
 public:
-	BfmeRelationInterface *bfmeGetInterface(void);
 	void bfmePrepare(int value);
 	// The ILT at 0x00031F7A this call encodes was re-adjudicated in 49a76649f: it
 	// fronts 0x00162CD0, which builds an 86-bit ObjectStatusMaskType, so the member
 	// is Object::clearStatus(ObjectStatusTypes) -- not clearModelConditionState.
 	void clearStatus(ObjectStatusTypes condition);
-	void bfmeFinish(int value);
+	void setSingleModelCondition(int value);
 
 	char m_bfmeFields[0x204];
 	BfmeAIHolder *m_bfmeAI;
+};
+
+// ILT 0x0000B3E3 -> 0x001BFE40, matched as RvaC4390First::getInterface.
+struct RvaC4390Interface;
+class RvaC4390First
+{
+public:
+	RvaC4390Interface *getInterface(void);
 };
 
 class GameLogicFrameSlice
@@ -92,16 +99,16 @@ void Gen_002875C0::bfmeRun(void)
 		reinterpret_cast<char *>(this) - 0x18);
 	Object *object = theGameLogic()->bfmeFind(m_bfmeObjectID);
 	if (object != 0) {
-		BfmeRelationInterface *relation = object->bfmeGetInterface();
+		BfmeRelationInterface *relation = (BfmeRelationInterface *)((RvaC4390First *)object)->getInterface();
 		if (relation != 0 && bfmeAccept(object)) {
 			relation->bfmeReset(0);
 			m_bfmeObjectID = 0;
 			m_bfmeState = 0;
 
-			secondary->bfmeFinish(0x40);
+			secondary->setSingleModelCondition(0x40);
 			object->bfmePrepare(0x3F);
 			object->clearStatus(OBJECT_STATUS_RESET);
-			object->bfmeFinish(0x49);
+			object->setSingleModelCondition(0x49);
 			object->m_bfmeAI->m_bfmeCommands.aiIdle(CMD_FROM_AI);
 		}
 	}
