@@ -63,6 +63,7 @@ public:
 	void bfmeSet(Bool value);
 };
 
+extern void d_001e65c0();
 extern void j_0003f288();
 extern void j_00046a1f();
 extern void j_0002019e();
@@ -157,9 +158,6 @@ public:
 class WeaponTemplate
 {
 public:
-	Real getWeaponSpeed() const { return m_weaponSpeed; }
-	Real getMinWeaponSpeed() const { return m_minWeaponSpeed; }
-	Bool isScaleWeaponSpeed() const { return m_isScaleWeaponSpeed; }
 	Real getMinimumAttackRange() const;
 	Real getUnmodifiedAttackRange() const;
 	Coord3D *getAimPosition(Coord3D *out, const Object *proj,
@@ -297,9 +295,9 @@ void BezierProjectileBehavior::projectileFireAtObjectOrPosition(Object *victim,
 	Real weaponSpeed;
 	Real minWeaponSpeed;
 	weaponSpeed = (m_weapon != (WeaponTemplate *)zero) ?
-		m_weapon->getWeaponSpeed() : g_rva01075350;
+		(double)m_weapon->m_weaponSpeed : (double)g_rva01075350;
 	minWeaponSpeed = (m_weapon != (WeaponTemplate *)zero) ?
-		m_weapon->getMinWeaponSpeed() : g_rva01075350;
+		(double)m_weapon->m_minWeaponSpeed : (double)g_rva01075350;
 	Coord3D framePad;
 
 	setWakeFrame(obj, (UpdateSleepTime)1);
@@ -310,7 +308,13 @@ void BezierProjectileBehavior::projectileFireAtObjectOrPosition(Object *victim,
 	Coord3D victimPosToUse;
 	if (victim != (Object *)zero)
 	{
-		Coord3D *aimed = m_weapon->getAimPosition(&framePad, obj, victim, 1);
+		union
+		{
+			void (*raw)();
+			Coord3D *(WeaponTemplate::*member)(Coord3D *, const Object *, const Object *, Int);
+		} aimCall;
+		aimCall.raw = d_001e65c0;
+		Coord3D *aimed = (m_weapon->*aimCall.member)(&framePad, obj, victim, 1);
 		victimPosToUse = *aimed;
 	}
 	else
@@ -326,7 +330,7 @@ void BezierProjectileBehavior::projectileFireAtObjectOrPosition(Object *victim,
 				victimPosToUse.x, victimPosToUse.y, zero);
 	}
 
-	if (m_weapon != (WeaponTemplate *)zero && m_weapon->isScaleWeaponSpeed())
+	if (m_weapon != (WeaponTemplate *)zero && (Bool)m_weapon->m_isScaleWeaponSpeed)
 	{
 		weaponSpeed = Luna10Max(weaponSpeed, minWeaponSpeed);
 
