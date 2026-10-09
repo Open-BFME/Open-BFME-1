@@ -41,49 +41,6 @@ UnsignedInt View::m_idNext = 1;
 View *TheTacticalView = NULL;
 
 
-// ??0View@@QAE@XZ present-unmatched
-View::View( void )
-{
-	//Added By Sadullah Nader
-	//Initialization(s) inserted
-	m_currentHeightAboveGround = 0.0f;
-	m_defaultAngle = 0.0f;
-	m_defaultPitchAngle = 0.0f;
-	m_heightAboveGround = 0.0f;
-	m_lockDist = 0.0f;
-	m_maxHeightAboveGround = 0.0f;
-	m_maxZoom = 0.0f;
-	m_minHeightAboveGround = 0.0f;
-	m_minZoom = 0.0f;
-	m_next = NULL;
-	m_okToAdjustHeight = TRUE;
-	m_originX = 0;
-	m_originY = 0;
-	m_snapImmediate = FALSE;
-	m_terrainHeightUnderCamera = 0.0f;
-	m_zoom = 0.0f;
-	//
-	m_pos.x = 0;
-	m_pos.y = 0;
-	m_width = 0;
-	m_height = 0;
-	m_angle = 0.0f;
-	m_pitchAngle = 0.0f;
-	m_cameraLock = INVALID_ID;
-	m_cameraLockDrawable = NULL;
-	m_zoomLimited = TRUE;
-
-	// create unique view ID
-	m_id = m_idNext++;
-
-	// default field of view
-	m_FOV = 50.0f * PI/180.0f;
-	
-	m_mouseLocked = FALSE;
-	
-	m_guardBandBias.x = 0.0f;
-	m_guardBandBias.y = 0.0f;
-}
 
 // ??1View@@UAE@XZ present-unmatched
 View::~View()
