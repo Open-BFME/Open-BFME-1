@@ -28,16 +28,16 @@ class ModelConditionFlags
 public:
 	Bool test(ModelConditionFlagType condition) const
 	{
-		return (m_bits & (1u << condition)) != 0;
+		return (m_bits[ (unsigned int)condition >> 5 ] & (1u << ( (unsigned int)condition & 0x1f ))) != 0;
 	}
 
 	void set(ModelConditionFlagType condition)
 	{
-		m_bits |= 1u << condition;
+		m_bits[ (unsigned int)condition >> 5 ] |= 1u << ( (unsigned int)condition & 0x1f );
 	}
 
 private:
-	UnsignedInt m_bits;
+	unsigned int m_bits[ 3 ];
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
@@ -123,7 +123,7 @@ public:
 	ObjectID m_id;
 	unsigned char m_unreconstructed_078[0xA0];
 	ModelConditionFlags m_modelConditionFlags;
-	unsigned char m_unreconstructed_11C[0xE8];
+	unsigned char m_unreconstructed_124[0xE0];
 	AIUpdateInterface *m_ai;
 };
 
@@ -131,7 +131,7 @@ public:
 class Pathfinder
 {
 public:
-	void removeGoal(Object *object);
+	void removeGoal003E3D20(Object *object);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
@@ -244,7 +244,7 @@ StateReturnType AIMoveAwayFromRepulsorsState::onEnter()
 
 	m_okToRepathTimes = 1;
 	m_checkForPath = true;
-	TheAI->pathfinder()->removeGoal(object);
+	TheAI->pathfinder()->removeGoal003E3D20(object);
 	ai->requestSafePath(enemy->getID());
 	return AIInternalMoveToState::onEnter();
 }

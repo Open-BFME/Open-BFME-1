@@ -5,19 +5,23 @@ typedef bool Bool;
 typedef unsigned int UnsignedInt;
 typedef int Int;
 
+enum ObjectStatusTypes { OBJECT_STATUS_05 = 5 };
+
 class Object
 {
 public:
 	unsigned char m_padding[0x214];
 	UnsignedInt m_objectField;
 
-	void clearModelConditionState( Int flag );
+	// ILT 0x00031F7A -> 0x00162CD0, matched Object::clearStatus.
+	void clearStatus( ObjectStatusTypes status );
 };
 
-class BfmeFinishDispatcherAGA
+// ILT 0x00014F51 -> 0x00226800, matched Rva226800RemoveContain::remove.
+class Rva226800RemoveContain
 {
 public:
-	void step( Object *object, Bool flag );
+	void remove( Object *object, Bool flag );
 };
 
 struct Rva00227B60QueryResult
@@ -56,7 +60,7 @@ void Rva00227B60ContainDispatch::dispatch( Object *object, Bool flag )
 	{
 		result = query( &local, object );
 		if ( (*(UnsignedInt *)((char *)result + 4) & 0x10000000) == 0 )
-			object->clearModelConditionState( 5 );
+			object->clearStatus( OBJECT_STATUS_05 );
 	}
-	((BfmeFinishDispatcherAGA *)((char *)this - 0x20))->step( object, flag );
+	((Rva226800RemoveContain *)((char *)this - 0x20))->remove( object, flag );
 }
