@@ -41,7 +41,6 @@ static Int callWaterTracksRender(WaterTracksObj *object,
 	return (reinterpret_cast<WaterTracksObjRenderCall *>(object)->*target.member)(vertexBuffer, batchStart, rinfo);
 }
 
-void BaseHeightMapScorchSetShader(const ShaderClass &shader);
 void BaseHeightMapScorchSetZBias(Int bias);
 void BoxSetTexture(unsigned stage, TextureBaseClass *&texture);
 
@@ -69,7 +68,7 @@ void WaterTracksRenderSystem::flush(RenderInfoClass &rinfo)
 	Matrix3D tm(1);
 	DX8Wrapper::Set_Transform(D3DTS_WORLD, tm);
 	DX8Wrapper::Set_Material(m_vertexMaterialClass);
-	BaseHeightMapScorchSetShader(m_shaderClass);
+	DX8Wrapper::Set_Shader(m_shaderClass);
 	DX8Wrapper::Set_Vertex_Buffer(m_vertexBuffer);
 	BaseHeightMapScorchSetZBias(8);
 
