@@ -17,6 +17,12 @@ Only metric-placeholders with a unique declaration spelling are rewritten.
 Spans crossing another witnessed offset and already-declared target names are
 refused. The declaration denominator is unchanged.
 
+Independent parser ownership check: the factory at RVA `0x006BF4F0` passes
+its newly constructed object and an executable callback to
+`INI::initFromINIMultiProc`. Following the callback's actual retail ILT jump,
+its builder directly adds table RVA `0x00D26280`. Every renamed field's record
+belongs to that table. This check follows bytes, not the callback's pinned name.
+
 | Source view | Original field | BFME offset | Proven field | INI key |
 |---|---|---:|---|---|
 | `W3DTruckDrawModuleDataDestructor` | `m_string00` | `0x15c` | `m_dustEffectName` | `Dust` |

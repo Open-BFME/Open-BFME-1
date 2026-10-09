@@ -17,6 +17,11 @@ Only metric-placeholders with a unique declaration spelling are rewritten.
 Spans crossing another witnessed offset and already-declared target names are
 refused. The declaration denominator is unchanged.
 
+Independent parser ownership check: retail `INI::parseCommandButtonDefinition`
+at RVA `0x000B7F80` pushes table VA `0x010FA3B8` (RVA `0x00CFA3B8`).
+Every renamed field's table record belongs to that table, which initializes the
+CommandButton returned by the ControlBar create/override path.
+
 | Source view | Original field | BFME offset | Proven field | INI key |
 |---|---|---:|---|---|
 | `CommandButtonDestructors` | `m_str3c` | `0x3c` | `m_cursorName` | `CursorName` |

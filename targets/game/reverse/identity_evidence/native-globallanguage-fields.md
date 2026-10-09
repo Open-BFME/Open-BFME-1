@@ -17,6 +17,11 @@ Only metric-placeholders with a unique declaration spelling are rewritten.
 Spans crossing another witnessed offset and already-declared target names are
 refused. The declaration denominator is unchanged.
 
+Independent parser ownership check: retail `INI::parseLanguageDefinition` at
+RVA `0x00438F70` pushes table VA `0x010F3AD8` (RVA `0x00CF3AD8`) for the
+same `TheGlobalLanguageData` object. Every renamed field's table record belongs
+to this directly bound table, not merely a same-class-name witness.
+
 | Source view | Original field | BFME offset | Proven field | INI key |
 |---|---|---:|---|---|
 | `GlobalLanguageConstructor` | `m_font00` | `0x28` | `m_copyrightFont` | `CopyrightFont` |
