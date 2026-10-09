@@ -406,9 +406,9 @@ static void resetWindowDefaults( void )
 
 }  // end resetWindowDefaults
 
-// peekWindow =================================================================
-//=============================================================================
-static GameWindow *peekWindow( void )
+// ?peekWindow@@YAPAVGameWindow@@XZ
+// Open BFME 2: Code/GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp.
+GameWindow *peekWindow( void )
 {
   if (stackPtr == windowStack)
     return NULL;

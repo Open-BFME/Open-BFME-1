@@ -1,0 +1,9 @@
+# Entry-constructor candidate at RVA 0x0094EA70
+
+The tested base revision is 2e661a49fb01f4664b324ceff8df105f6da85c5c. Open BFME 2 `Code/Libraries/Source/WWVegas/WW3D2/meshmdl_sidehash.cpp` assigns a sixteen-byte Entry constructor donor game.dat RVA 0x00171E50. The BFME 1 body starts after INT3 at RVA 0x0094EA6E and 0x0094EA6F. It copies ECX to EAX, zeros a register, writes two sixteen-bit fields at +0x1C and +0x1E and a thirty-two-bit field at +0x20, then returns at instruction offset +0x0F. There are no calls, branches, stack arguments or exception-handling states.
+
+The following byte at RVA 0x0094EA80 is `push ebx`, the first instruction of the already matched forty-five-byte DynamicVectorClass destructor row. There is no INT3 padding between the constructor and that body. The target therefore has the donor's sixteen-byte size but fails this assignment's explicit requirement for a return followed by INT3 padding. No new source or ledger row is written.
+
+The existing BFME 1 meshmdl_sidehash.cpp independently emits the donor's Entry constructor symbol. A read-only probe of that existing source is exact at sixteen bytes with zero relocation operands. Its snapshot is retained as `build/donor-worker-12/0094ea70-existing.cpp`. This measures compiler shape only. The assignment does not authorize replacing the missing endpoint evidence with a donor name, allocation size or a successful template instantiation. No new semantic container identity is asserted.
+
+Reopening requires acceptance of the adjacent-function fence instead of the instructed INT3 fence, together with any independent type evidence required for the eventual name. A return later than +0x0F or padding at RVA 0x0094EA80 would refute the stated boundary finding. Raw decode, checked callee inventory and unedited probe output are retained under `build/donor-worker-12/`.
