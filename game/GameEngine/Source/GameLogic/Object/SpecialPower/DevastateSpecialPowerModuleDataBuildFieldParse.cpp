@@ -8,10 +8,9 @@
 // parse builder. The factory allocates 0x220 bytes and the table below reaches
 // +0x21C, which agrees.
 //
-// The body calls a base class builder through ILT 0x0002AF8B and then registers
-// the table at 0x010B45A8 at offset 0. targets/game/reverse/symbols.csv already carries the
-// address-derived name ?buildFieldParse@Gen0002AF8B@@SAXAAVWideMulti@@@Z for
-// that thunk, so the base is called by that name rather than a guessed one.
+// ILT 0x0002AF8B jumps to SpecialPowerModuleData::buildFieldParse at
+// 0x002683D0, whose retail reconstruction owns the existing ledger name.
+// The appender is MultiIniFieldParse::add at 0x00850920.
 //
 // The receiver is spelled WideMulti because this file's own matched row is
 // ?buildFieldParse@DevastateSpecialPowerModuleData@@SAXAAVWideMulti@@@Z;
@@ -34,12 +33,10 @@ class WideMulti
 {
 };
 
-// The base class this module data derives from. Its builder is reached through
-// ILT 0x0002AF8B and its own name is not recovered.
-class Gen0002AF8B
+class SpecialPowerModuleData
 {
 public:
-	static void buildFieldParse(WideMulti &p);
+	static void buildFieldParse(MultiIniFieldParse &p);
 };
 
 class DevastateSpecialPowerModuleData
@@ -60,7 +57,7 @@ static const WideFieldParse s_devastateFieldParse[] =
 // ?buildFieldParse@DevastateSpecialPowerModuleData@@SAXAAVWideMulti@@@Z
 void DevastateSpecialPowerModuleData::buildFieldParse(WideMulti &p)
 {
-	Gen0002AF8B::buildFieldParse(p);
+	SpecialPowerModuleData::buildFieldParse(reinterpret_cast<MultiIniFieldParse &>(p));
 	reinterpret_cast<MultiIniFieldParse &>(p).add(
 		reinterpret_cast<const FieldParse *>(s_devastateFieldParse), 0);
 }
