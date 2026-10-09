@@ -12,22 +12,22 @@
   <rect class="card" x="0.5" y="0.5" width="879" height="365" rx="12"/>
   <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif">
     <text x="28" y="30" class="muted" font-size="13" font-weight="600" letter-spacing="1.3">BFME 1 · REBUILD PROGRESS</text>
-    <text x="28" y="64" class="strong" font-size="15" font-weight="600">Rebuilt from source<tspan class="up" dx="10" font-size="13" font-weight="600">▲ 0.27</tspan></text>
+    <text x="28" y="64" class="strong" font-size="15" font-weight="600">Rebuilt from source</text>
     <text x="852" y="64" class="strong" font-size="20" font-weight="700" text-anchor="end">84.96%</text>
     <rect class="track" x="28" y="74" width="824" height="14" rx="7"/>
     <rect x="28" y="74" width="700.05" height="14" rx="7" fill="#2ea043"/>
     <text x="28" y="108" class="muted" font-size="12.5">8,242,673 / 9,702,173 bytes rebuilt without copying the original game exe (v1.03)</text>
-    <text x="28" y="138" class="strong" font-size="15" font-weight="600">Game code in C++<tspan class="up" dx="10" font-size="13" font-weight="600">▲ 0.33</tspan></text>
+    <text x="28" y="138" class="strong" font-size="15" font-weight="600">Game code in C++</text>
     <text x="852" y="138" class="strong" font-size="20" font-weight="700" text-anchor="end">68.46%</text>
     <rect class="track" x="28" y="148" width="824" height="14" rx="7"/>
     <rect x="28" y="148" width="564.09" height="14" rx="7" fill="#388bfd"/>
     <text x="28" y="182" class="muted" font-size="12.5">5,707,378 / 8,337,038 bytes of the game's own code, now C++ (libraries not counted)</text>
-    <text x="28" y="212" class="strong" font-size="15" font-weight="600">Linking<tspan class="up" dx="10" font-size="13" font-weight="600">▲ 1.08</tspan></text>
+    <text x="28" y="212" class="strong" font-size="15" font-weight="600">Linking</text>
     <text x="852" y="212" class="strong" font-size="20" font-weight="700" text-anchor="end">21.80%</text>
     <rect class="track" x="28" y="222" width="824" height="14" rx="7"/>
     <rect x="28" y="222" width="179.67" height="14" rx="7" fill="#d29922"/>
     <text x="28" y="256" class="muted" font-size="12.5">1,817,903 / 8,337,325 bytes of the game's own code linked (measured 2026-10-09)</text>
-    <text x="28" y="286" class="strong" font-size="15" font-weight="600">Readable names<tspan class="down" dx="10" font-size="13" font-weight="600">▼ 0.04</tspan></text>
+    <text x="28" y="286" class="strong" font-size="15" font-weight="600">Readable names</text>
     <text x="852" y="286" class="strong" font-size="20" font-weight="700" text-anchor="end">71.04%</text>
     <rect class="track" x="28" y="296" width="824" height="14" rx="7"/>
     <rect x="28" y="296" width="585.35" height="14" rx="7" fill="#a371f7"/>
