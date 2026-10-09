@@ -1,0 +1,62 @@
+# Partial reconstruction of RVA 0x002408E0
+
+## Result and reopening condition
+
+The complete body is banked as `targets/game/reverse/attempts/0x002408e0.cpp`. It is a partial, not a source recovery. The selected body is trial22, which preserves trial04's best byte result and corrects the independently decoded pointer and const argument contracts. The existing generator ledger row and every symbol pin remain unchanged. All trial sources and unedited probe output remain under `build/horde-002408e0/`.
+
+The measured revision is `5a43e6d8661889b3a6f1bb55907407d92d64516a`. The actual model is `gpt-6.1-sol`. There was no saved body for this RVA before the run. The proposed hypothesis was that the landed HordeContain constructor, Object layout, native map instantiation and nearby callers resolve the earlier owner and helper-contract blockers. A complete source using those contracts must move closer to retail. Repeatedly obtaining the same register allocation or a worse measured distance refutes further iteration of those particular shapes. Reopen with independently supported native index-accessor lifetime or complete receiver declarations that explain the early key materialization. Repeating local-definition order, the primary-owner accessor or the exhausted frame-array choice has no supporting evidence.
+
+## Identity and boundary
+
+The owner is HordeContain, with the incoming secondary receiver at complete object +0xE4. The complete constructor at RVA 0x0023EAF0 installs its final secondary table VA 0x010AED58 at instruction RVA 0x0023EB71. Slot 13 reaches ILT RVA 0x000398F6 and then this target. The matched `HordeContainCreatePayload.cpp` body at RVA 0x0023C000 independently invokes destroyMember(Object*) through that slot. The EA file evidence names HordeContain.cpp. The earlier evidence note `002408e0-hordecontain-destroymember.md` already established this identity; the AOD table VA 0x010AE230 is a derived table rather than the owner proof.
+
+`build/horde-002408e0/retail_decodes.log` contains the complete target. Both return paths end with RET 4, at RVA 0x00240A5B and RVA 0x00240A94. INT3 begins at RVA 0x00240A97. Every conditional destination lies in the body; there is no outgoing tail jump or target EH frame. `checked_target.log` independently inventories the nine direct call destinations. The candidate retains an address-derived secondary view name instead of asserting that a private complete HordeContain declaration has been recovered.
+
+## Independently decoded layouts and ABI
+
+The +0x3C index lookup follows ILT RVA 0x0001F91F to RVA 0x00226FA0. Its full body uses signed key comparisons at node +0x10 and returns the address of the mapped scalar at node +0x14. Missing-key construction passes two stack dwords through insertion RVA 0x00224AD0. That helper reaches insertion RVA 0x00223D20 and unique insertion RVA 0x00223E00. Both branches of 0x00223D20 call ILT 0x00030788, which reaches value-copy helper 0x00222520. Its complete 23-byte body copies exactly source +0 and source +4 into destination +0 and destination +4, with a destination-null guard and no further fields. This is independent evidence for a two-dword key/value object. The 24-byte allocation alone is not the evidence. The decoded primary slot-34 body at RVA 0x00240C50 uses the mapped scalar as a signed index into sixteen-byte slots. Raw complete decodes and checked call inventories are retained in `abi_decodes.log`, `lookup_chain.log`, `lookup_insert_decode.log`, `checked_lookup.log`, `checked_lookup_insert.log`, `checked_node_insert.log`, `checked_unique.log` and `checked_pair_copy.log`.
+
+The list at secondary +0x54 has next and previous links and one four-byte value. The target constructs only node +8 from the lookup reference and relinks four pointers at node +0 and +4. It inserts before the current first node, not before the sentinel. The bank models this explicit scalar construction and the actual node-pool allocator. Existing native map pins are reused; no STL ledger name or pin was added. The real payload contract of the different index at secondary +0x30 is kept opaque. Erase RVA 0x0023DC00 reaches equal-range RVA 0x0023B360 and range erase RVA 0x002358B0; its cleanup releases twenty-byte nodes without an element destructor. This contradicts the generated twelve-byte-payload name but does not independently establish the full source value type. The other erase at RVA 0x00224870 follows equal-range RVA 0x00223B10 and range erase RVA 0x00222DB0. Its node cleanup also has no element destructor. Complete decodes are retained in `erase_chain.log` and `verified_helper_extents.log`, with separate checked inventories.
+
+The primary table VA 0x010AF2C8 slot 34 reaches ILT RVA 0x0002D001 and body RVA 0x00240C50. Its complete 562-byte decode returns AL=1 on the successful path and AL=0 on the other path, with no stack argument. The secondary table slot 84 reaches ILT RVA 0x00023F1A and the matched 261-byte member-count body at RVA 0x00238BC0. It accepts one pointer, returns a full EAX count and ends both paths in RET 4. The non-null path uses that pointer as a receiver. `virtual34-full.log`, `virtual84-full.log` and their checked logs retain this evidence. The bank uses an opaque pointer filter instead of the earlier int mode argument.
+
+Object's canonical shared header supplies +0x74 ID, +0x200 body pointer and virtual Drawable getter. The matched seven-byte Drawable getter at RVA 0x001BE440 returns the pointer at +0x80. ActiveBody's constructor installs its body-interface table at complete +0x10; slot 15 reaches RVA 0x0020FA70, whose complete four-byte body returns receiver +0x30. The target reads the returned aggregate's +8 dword. That field remains address-derived in the bank. This checks one concrete body implementation and does not claim all overrides or the constructor's complete EH ownership model were verified.
+
+The finder at RVA 0x002323B0 consumes one const Object pointer, ignores incoming ECX, returns a Module pointer in EAX and ends in RET 4. Its static-key string is BannerCarrierUpdate. The bank retains the redundant receiver expression witnessed in retail through the repository's typed thunk-call pattern. Eva's complete body at RVA 0x004233A0 accepts the message and position pointer, returns AL and ends every path in RET 8. GameLogic's complete body at RVA 0x0038B0C0 ends in RET 4. The guarded forwarding body at RVA 0x00413FF0 has a null RET 4 path and a tail jump through holder slot +0x54. That indirect target's full identity and return declaration remain unresolved; no result is consumed by this target. Raw evidence is in `remaining-callees-full.log` and the matching checked logs.
+
+## Measured source experiments
+
+These results are copied programmatically from the retained raw logs. Differences are the probe's diagnostic relocation-masked byte distance, not an acceptance score. Trial04, trial20 and trial22 have three relocation operands that do not align with retail because the early block shifted. The strict byte gate rejects the body.
+
+| Source | Hypothesis | Measurement | Raw output |
+| --- | --- | --- | --- |
+| trial01 | Initial complete reconstruction with an incorrectly oriented list insertion | 409 bytes; 344 differences; first +2 | `build/horde-002408e0/probe01.log` |
+| trial02 | Front insertion and temporary erase keys | 420 bytes; 347 differences; first +0 | `build/horde-002408e0/trial02.log` |
+| trial03 | Node-pool allocator and comparison operand order | 420 bytes; 347 differences; first +0 | `build/horde-002408e0/trial03.log` |
+| trial04 | Explicit typed node construction and relinking | 439 bytes; 114 differences; first +6 | `build/horde-002408e0/trial04.log` |
+| trial05 | Repeated Object ID reads without a cached ID | 445 bytes; 365 differences; first +0 | `build/horde-002408e0/trial05.log` |
+| trial06 | Inline by-value index lookup and body accessor | 439 bytes; 132 differences; first +2 | `build/horde-002408e0/trial06.log` |
+| trial07 | Reordered owner and ID definitions | 439 bytes; 132 differences; first +2 | `build/horde-002408e0/trial07.log` |
+| trial08 | Complete multiple-inheritance receiver with an implicit secondary conversion | 469 bytes; 368 differences; first +2 | `build/horde-002408e0/trial08.log` |
+| trial09 | Complete receiver with an explicit secondary offset | 439 bytes; 132 differences; first +2 | `build/horde-002408e0/trial09.log` |
+| trial10 | Inline primary-owner accessor | 439 bytes; 132 differences; first +2 | `build/horde-002408e0/trial10.log` |
+| trial11 | Reference parameter for the inline index accessor | 439 bytes; 132 differences; first +2 | `build/horde-002408e0/trial11.log` |
+| trial12 | Native STLport list insertion without exceptions | 404 bytes; 329 differences; first +0 | `build/horde-002408e0/trial12.log` |
+| trial13 | Native STLport node representation with an inline insertion | 439 bytes; 132 differences; first +2 | `build/horde-002408e0/trial13.log` |
+| trial14 | Direct map subscript with the native node representation | 438 bytes; 332 differences; first +6 | `build/horde-002408e0/trial14.log` |
+| trial15 | Canonical ObjectID header include | Compile failure; see raw diagnostic | `build/horde-002408e0/trial15.log` |
+| trial16 | Additional include directory for the canonical ObjectID header | Compile failure; see raw diagnostic | `build/horde-002408e0/trial16.log` |
+| trial17 | Opaque lookup receiver with the independently decoded ABI | 439 bytes; 132 differences; first +2 | `build/horde-002408e0/trial17.log` |
+| trial18 | Upstream ObjectID declaration include chain | Compile failure; see raw diagnostic | `build/horde-002408e0/trial18.log` |
+| trial19 | Forward-declared canonical ObjectID enum | 439 bytes; 132 differences; first +2 | `build/horde-002408e0/trial19.log` |
+| trial20 | Canonical ObjectID and pointer argument for virtual slot 84 | 439 bytes; 114 differences; first +6 | `build/horde-002408e0/trial20.log` |
+| trial21 | By-value ObjectID index accessor without the body accessor | 441 bytes; 311 differences; first +2 | `build/horde-002408e0/trial21.log` |
+| trial22 | Const Object argument for the BannerCarrierUpdate finder | 439 bytes; 114 differences; first +6 | `build/horde-002408e0/trial22.log` |
+
+The generated family search tried the baseline and the two-element promoted-ID frame choice; both remained at the same measured result as trial06. Its two raw outputs and source copies are in `build/shape_search/a687e136a83a45f289f12efa76724ed6/`. The complete-class and native-node alternatives reproduce the EBX owner and EBP member allocation, while retail uses EBP owner and EBX member. The best body instead matches those member/owner registers but materializes the ID too early and uses EAX for the initial body-pointer null test. Its early list block is two bytes shorter and body-pointer block two bytes longer, so alignment resumes before the first erase. The early selected-member return also pops EDI before the stores instead of after them.
+
+The best body's diagnostic differing offsets are: +0x6..+0x2C, +0x31..+0x3D, +0x42..+0x4B, +0x50..+0x66, +0x68..+0x6B, +0x6D..+0x72, +0x74..+0x7A, +0x165..+0x169, +0x16F..+0x173, +0x175..+0x176. `build/horde-002408e0/best-offsets.json` retains every offset, relocation, source hash and object hash. The remaining mismatch is `blocker=regalloc/source-lifetime`; complete type recovery for the opaque +0x30 index and the guarded indirect forwarder is also unverified. Byte equality, if obtained later, must still be accompanied by those applicable type and ABI checks.
+
+## Handoff checks
+
+The bank tool measured the preferred score as 0.7403 and appended exactly one partial verdict. The bank's source body is byte-for-byte equal to trial22 after its two generated metadata lines. `build/horde-002408e0/bank_probe.log` retains the repeated full probe of the actual bank. `scoped_gate_bank.log` records the strict byte gate failing its single selected body. CSV validation passed in `check_csv_bank.log`, the bank's class gate passed in `class_gate_bank.log`, and the unchanged symbol ledger passed pin consistency in `pin_consistency.log`. The byte gate's failure prevents an exact recovery claim. A full gate was not required for this evidence-only bank; no header, source ledger row or pin changed. The elapsed time at banking is recorded from UTC timestamps in the single attempt row. The first probe log is the original UTF-16 PowerShell capture; later probes retain subprocess output bytes directly.
