@@ -90,10 +90,6 @@ void MaxHealthUpgradeModuleData::buildFieldParse(MultiIniFieldParse& p)
 // ModelConditionUpgrade and ActiveShroudUpgrade, so it is the class and not the
 // four bodies. Unblocking it is a header change.
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgradeModule.cpp
-// ??0MaxHealthUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
-MaxHealthUpgrade::MaxHealthUpgrade( Thing *thing, const ModuleData* moduleData ) : UpgradeModule( thing, moduleData )
-{
-}
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
