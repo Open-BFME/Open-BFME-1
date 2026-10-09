@@ -6,11 +6,10 @@
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 extern void __cdecl j_0003f3e1();
-extern void __cdecl d_00894a90();
+extern void __cdecl dup_00894A90(int);
 extern void __cdecl j_0002b314();
 
 typedef void (__stdcall *BfmeStdIntCall)( int );
-typedef void (__cdecl *BfmeIntCall)( int );
 
 class Gen00783F60_00466610
 {
@@ -28,7 +27,7 @@ void Gen00783F60_00466610::gen00466610()
 	{
 		if ( (m_flags & 2) != 0 )
 			(reinterpret_cast<BfmeStdIntCall>( j_0003f3e1 ))( 0 );
-		(reinterpret_cast<BfmeIntCall>( d_00894a90 ))( 1 );
+		dup_00894A90(1);
 		j_0002b314();
 		g_rva012F19E8WindowManager = 0;
 	}

@@ -154,7 +154,7 @@ public:
 
 extern void __cdecl j_00018246();
 extern void __cdecl j_0002b314();
-extern void __cdecl d_00894a90();
+extern void __cdecl dup_00894A90(int);
 
 struct AptElement
 {
@@ -187,15 +187,13 @@ private:
 	unsigned char m_tail[0x24];
 };
 
-typedef void (__cdecl *ReleaseAll)(int);
-
 WindowManager::~WindowManager()
 {
 	if (g_rva012F19E8WindowManager != 0)
 	{
 		if ((m_aptWindows[0].m_flags & 2) != 0)
 			hideAptWindowInternal(0);
-		(reinterpret_cast<ReleaseAll>(d_00894a90))(1);
+		dup_00894A90(1);
 		j_0002b314();
 		g_rva012F19E8WindowManager = 0;
 	}
