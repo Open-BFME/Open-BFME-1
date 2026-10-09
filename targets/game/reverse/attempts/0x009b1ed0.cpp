@@ -1,16 +1,14 @@
 // _rva009B1ED0
-// partial score=0.7161 date=2026-10-03
+// partial score=0.8374 date=2026-10-09
 // cl: /O2
-// Bank only: full 701-byte retail extent, 699-byte draft; not a byte match.
-// Seven stack arguments and info+8 are witnessed at DB1ED0.
 extern "C" int Vp6FilterEdgeTagTable[];
 struct Rva009B1ED0Info { int opaque[2]; int field08; };
 extern "C" void __cdecl rva009B1ED0(const Rva009B1ED0Info *info, const void *sourceArgument, void *destinationArgument, int stride, int selector, const int *thresholds, unsigned variance)
 {
  const unsigned char *source=(const unsigned char *)sourceArgument;
  unsigned char *dest=(unsigned char *)destinationArgument;
- int strength=thresholds[selector];
  int edgeTag=Vp6FilterEdgeTagTable[selector];
+ int strength=thresholds[selector];
  int slope=4;
  if(info->field08>100) strength=info->field08-100;
  if(variance>32768) slope=4;
@@ -33,7 +31,8 @@ extern "C" void __cdecl rva009B1ED0(const Rva009B1ED0Info *info, const void *sou
    for(unsigned i=0;i<8;++i) {
     unsigned sample=pixels[i];
     int difference=center-sample;
-    if(difference<=0)difference=sample-center;
+    if(difference>0) difference=center-sample;
+    else difference=sample-center;
     int weight=strength-((difference*slope)>>2)+32;
     if(weight < -64) weight=edgeTag;
     else if(weight<0)weight=0;
