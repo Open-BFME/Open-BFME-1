@@ -10,13 +10,7 @@
 DEFINE_AUTO_POOL(MultiListNodeClass, 256);
 
 
-MultiListObjectClass::~MultiListObjectClass(void)
-{
-	while (ListNode) {
-		ListNode->List->Internal_Remove(this);
-	}
-}
-
+// Retail complete/deleting destructors: MultiListObjectDeletingDestructor.cpp.
 
 GenericMultiListClass::~GenericMultiListClass(void)
 {
