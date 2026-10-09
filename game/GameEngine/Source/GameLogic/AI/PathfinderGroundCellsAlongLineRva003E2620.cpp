@@ -8,6 +8,9 @@
 // PathfinderIterateCellsAlongLineRva003D7440.cpp.
 // IDENTITY IS NOT RECOVERED: the method and struct names are address-derived.
 
+// Existing opaque ledger body; retail uses ECX and two stack arguments.
+void d_003db900();
+
 extern "C" int __cdecl abs( int n );
 #pragma intrinsic(abs)
 
@@ -51,8 +54,6 @@ class PathfindCell
 public:
 	void setParentCellHierarchical( PathfindCell *parent );
 
-	Bool getOpen() const { return m_info ? ((m_info->m_flags >> 3) & 1) : false; }
-	Bool getClosed() const { return m_info ? ((m_info->m_flags >> 4) & 1) : false; }
 	Int getLayer() const { return (m_packed >> 6) & 0x3f; }
 
 	PathfindCellInfo *m_info;
@@ -90,8 +91,8 @@ class Pathfinder
 public:
 	Int groundCellsAlongLine003E2620( const ICoord2D &startCell, const ICoord2D &destinationCell,
 		PathfindLayerEnum layer, Rva003E2620GroundCellsStruct *searchInfo );
-	Int clearCellForDiameter( Int crusher, Int cellX, Int cellY, Int layer,
-		Int pathDiameter, Int attackerOnWall );
+	Int clearCellForDiameter( unsigned int crusher, Int cellX, Int cellY, PathfindLayerEnum layer,
+		Int pathDiameter, Bool attackerOnWall );
 	Int rva003db900( PathfindCell *cell, PathfindCell *goalCell );
 
 	char m_beforeMap[0x10];
@@ -178,11 +179,12 @@ Int Pathfinder::groundCellsAlongLine003E2620( const ICoord2D &startCell,
 
 		if (previousCell)
 		{
-			if (currentCell->getOpen() || currentCell->getClosed())
+			if ((Bool)(currentCell->m_info ? ((currentCell->m_info->m_flags >> 3) & 1) : false) ||
+				(Bool)(currentCell->m_info ? ((currentCell->m_info->m_flags >> 4) & 1) : false))
 				return 1;
 
-			if (searchInfo->pathfinder->clearCellForDiameter( 0, x, y, currentCell->getLayer(),
-				searchInfo->pathDiameter, 1 ) != searchInfo->pathDiameter)
+			if (searchInfo->pathfinder->clearCellForDiameter( 0, x, y, (PathfindLayerEnum)currentCell->getLayer(),
+				searchInfo->pathDiameter, true ) != searchInfo->pathDiameter)
 				return 1;
 
 			ICoord2D newCellCoord;
@@ -200,7 +202,13 @@ Int Pathfinder::groundCellsAlongLine003E2620( const ICoord2D &startCell,
 			}
 			currentCell->m_info->m_flags &= ~1u;
 
-			Int costRemaining = searchInfo->pathfinder->rva003db900( currentCell, searchInfo->goalCell );
+			union
+			{
+				void (*raw)();
+				Int (Pathfinder::*member)(PathfindCell *, PathfindCell *);
+			} costCallback;
+			costCallback.raw = d_003db900;
+			Int costRemaining = (searchInfo->pathfinder->*costCallback.member)( currentCell, searchInfo->goalCell );
 			currentCell->m_info->m_costSoFar = previousCell->m_info->m_costSoFar + (((currentCell->m_packed >> 24) & 1) ? 2 : 5);
 			currentCell->setParentCellHierarchical( previousCell );
 			currentCell->m_info->m_totalCost = currentCell->m_info->m_costSoFar + costRemaining;
