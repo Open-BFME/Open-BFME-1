@@ -8,7 +8,21 @@
 
 // 0x0112B9C0 is the secondary base's own four-slot table, which the table does not name.
 extern const void *const g_0112B9C0[];
-extern void *g_Rva00803890Vt2[];
+// Four-entry secondary dispatch table at retail VA 0x0112C728. The next
+// primary table begins at 0x0112C738. Each slot names an existing matched
+// forwarding body; these declarations take addresses only.
+extern "C" void __identifier("?f0@T2FwdHolder@@QAEXXZ")();
+extern "C" void __identifier("?f1@T2FwdHolder@@QAEXXZ")();
+extern "C" void __identifier("?f2@T2FwdHolder@@QAEXXZ")();
+extern "C" void __identifier("?f3@T2FwdHolder@@QAEXXZ")();
+
+void *g_Rva00803890Vt2[4] =
+{
+	(void *)__identifier("?f0@T2FwdHolder@@QAEXXZ"),
+	(void *)__identifier("?f1@T2FwdHolder@@QAEXXZ"),
+	(void *)__identifier("?f2@T2FwdHolder@@QAEXXZ"),
+	(void *)__identifier("?f3@T2FwdHolder@@QAEXXZ")
+};
 extern "C" void *bfmeVftRva00803890Owner[];
 #pragma comment(linker, "/alternatename:_bfmeVftRva00803890Owner=??_7Rva00803890Owner@@6B@")
 
