@@ -149,50 +149,6 @@ static Bool hasAttackedMeAndICanReturnFire( State *thisState, void* /*userData*/
 /**
  * This returns true if the conditions specified have been met, false otherwise.
  */
-// ?shouldExit@ExitConditions@@ present-unmatched
-Bool ExitConditions::shouldExit(const StateMachine* machine) const
-{
-	if (!machine->getGoalObject()) 
-	{
-		if (m_conditionsToConsider & ATTACK_ExitIfNoUnitFound) 
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	if (m_conditionsToConsider & ATTACK_ExitIfExpiredDuration) 
-	{
-		if (TheGameLogic->getFrame() >= m_attackGiveUpFrame)
-		{
-			return true;
-		} 
-	}
-	
-	if (m_conditionsToConsider & ATTACK_ExitIfOutsideRadius) 
-	{
-		Coord3D deltaAggressor;
-		Coord3D objPos = *machine->getGoalObject()->getPosition();
-		deltaAggressor.x = objPos.x - m_center.x;
-		deltaAggressor.y = objPos.y - m_center.y;
-	//	deltaAggressor.z = objPos.z - m_center.z;
-		deltaAggressor.z = 0; // BGC - when we search for a target we don't account for Z, so why should we here?
-													// changing this fixed a crash where a GLARebelInfantry would be in GuardReturnState, find
-													// a target that is within range, then not be able to attack because its actually out of range.
-													// then it would look for a new target, get the same one, and proceed in an infinite recursive
-													// loop that eventually blew the stack.
-
-		if (deltaAggressor.lengthSqr() > m_radiusSqr) 
-		{
-			return true;
-		} 
-	}
-
-	return false;
-}
 
 
 //-- AIGuardMachine -------------------------------------------------------------------------------
@@ -476,35 +432,6 @@ void AIGuardOuterState::loadPostProcess( void )
 // AIGuardOuterState::onEnter is emitted by AIGuardOuterState_onEnter_Bfme.cpp (retail 0x0015C7A0).
 
 //--------------------------------------------------------------------------------------
-// ?update@AIGuardOuterState@@ present-unmatched
-StateReturnType AIGuardOuterState::update( void )
-{
-	if (m_attackState==NULL) return STATE_SUCCESS;
-
-	// if the position has moved (IE we're guarding an object), move with it.
-	Object* targetToGuard = getGuardMachine()->findTargetToGuardByID();
-	if (targetToGuard) 
-	{
-		m_exitConditions.m_center = *targetToGuard->getPosition();
-	}
-
-	Object* goalObj = m_attackState->getMachineGoalObject();
-	if (goalObj) 
-	{
-		Coord3D deltaAggr;
-		deltaAggr.x = m_exitConditions.m_center.x - goalObj->getPosition()->x;
-		deltaAggr.y = m_exitConditions.m_center.y - goalObj->getPosition()->y;
-		deltaAggr.z = m_exitConditions.m_center.z - goalObj->getPosition()->z;
-		Real visionSqr = sqr(AIGuardMachine::getStdGuardRange(getMachineOwner()));
-		if (deltaAggr.lengthSqr() <= visionSqr) 
-		{
-			// reset the counter
-			m_exitConditions.m_attackGiveUpFrame = TheGameLogic->getFrame() + TheAI->getAiData()->m_guardChaseUnitFrames;
-		}
-	}
-	
-	return m_attackState->update();
-}
 
 //--------------------------------------------------------------------------------------
 // ?onExit@AIGuardOuterState@@ present-unmatched
@@ -908,12 +835,6 @@ void AIGuardPickUpCrateState::onExit( StateExitType status )
 //-- AIGuardAttackAggressorState ------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AIGuardStateConstructors.cpp
-// ??0AIGuardAttackAggressorState@@ present-unmatched
-AIGuardAttackAggressorState::AIGuardAttackAggressorState( StateMachine *machine ) : 
-	State( machine, "AIGuardAttackAggressorState" )
-{
-	m_attackState = NULL;
-}
 
 //-------------------------------------------------------------------------------------------------
 // AIGuardAttackAggressorState::onEnter: retail's body (0x0015CB70) is
