@@ -94,50 +94,6 @@ GameSpyInfo::~GameSpyInfo()
 }
 
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/GameSpy/PeerDefsGameSpyInfoReset.cpp
-// ?reset@GameSpyInfo@@UAEXXZ present-unmatched
-void GameSpyInfo::reset( void )
-{
-	m_sawFullGameList = FALSE;
-	m_isDisconAfterGameStart = FALSE;
-	m_currentGroupRoomID = 0;
-	clearGroupRoomList();
-	clearStagingRoomList();
-	m_localStagingRoomID = 0;
-	m_buddyRequestMap.clear();
-	m_buddyMap.clear();
-	m_buddyMessages.clear();
-	m_joinedStagingRoom = 0;
-	m_isHosting = false;
-	m_localStagingRoomID = 0;
-	m_localStagingRoom.reset();
-	m_gotGroupRoomList = false;
-	m_localName = "";
-	m_localProfileID = 0;
-	m_maxMessagesPerUpdate = 100;
-	
-	// Added By Sadullah Nader
-	// Initialization missing and needed
-	m_disallowAsainText = FALSE;
-	m_disallowNonAsianText = FALSE;
-	m_disconReason = 0;
-	m_localBaseName.clear();
-	m_localEmail.clear();
-	m_localPasswd.clear();
-	m_pingString.clear();
-	m_rawConfig.clear();
-	m_rawMotd.clear();
-	//
-
-	m_internalIP = m_externalIP = 0;
-
-	m_savedIgnoreMap.clear();
-	m_preorderPlayers.clear();
-
-	m_cachedLocalPlayerStats.reset();
-	
-	m_additionalDisconnects = -1;
-}
-
 Bool GameSpyInfo::didPlayerPreorder( Int profileID ) const
 {
 	std::set<Int>::const_iterator it = m_preorderPlayers.find(profileID);
