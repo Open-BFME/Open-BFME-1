@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "cea54d22e9d19d0ed00ee74e14ea4eab0f4888be23d70fa0dafd3056908cc669",
+  "symbol": "??0Rva00494110@@QAE@PAX@Z",
+  "score_kind": "measured",
+  "score": 0.7727,
+  "source": "// ??0Rva00494110@@QAE@PAX@Z\n// partial score=0.7727 date=2026-10-09\n// ??0Rva00494110@@QAE@PAX@Z\r\n// cl: /O2 /DNDEBUG /MD /EHsc\r\n#include \"../../../../game/GameEngine/Include/GameClient/BfmeAptScreenBaseLayout.h\"\r\nextern \"C\" const void *__identifier(\"??_7S4Dtor00494090@@6B@\")[];\r\nclass BfmeAptScreenBase {\r\npublic:\r\n    BfmeAptScreenBase(void *context);\r\n    ~BfmeAptScreenBase();\r\n    const void **m_bfmeVft;\r\n    BfmeAptScreenBaseLayout<> m_layout;\r\n};\r\nclass Rva004948B0OwnedSubsystem {\r\npublic:\r\n    Rva004948B0OwnedSubsystem(void *factory);\r\n    ~Rva004948B0OwnedSubsystem();\r\n    char m_storage[0x38];\r\n};\r\n#include \"../../../../game/Libraries/Source/WWVegas/WWLib/ascii_string.h\"\r\nclass Rva00494110 : public BfmeAptScreenBase {\r\npublic:\r\n    Rva00494110(void *context);\r\n    Rva004948B0OwnedSubsystem m_owned;\r\n    unsigned int m_status;\r\n    AsciiString m_text;\r\n    int m_258;\r\n    int m_25c;\r\n    int m_260;\r\n    bool m_264;\r\n};\r\nRva00494110::Rva00494110(void *context)\r\n    : BfmeAptScreenBase(context), m_owned((m_bfmeVft = __identifier(\"??_7S4Dtor00494090@@6B@\"), (void *)0)), m_258(0), m_25c(0), m_260(0)\r\n{\r\n    m_layout.m_status |= 0x640;\r\n    m_status = m_layout.m_status;\r\n    m_264 = false;\r\n}\r\n"
+}

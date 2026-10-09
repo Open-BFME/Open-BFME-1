@@ -90948,3 +90948,4 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ?d_009064f0@@YAXXZ,0x009064F0,legacy address-only alias retained for dxwrapper.cpp callback registration
 ?d_007901f0@@YAXXZ,0x007901F0,legacy address-only compatibility pin for the retired checkbox image dump name
 ?method@Rva002C4910@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x002C4910,complete 86-byte wrapper and 124-byte forwarded command prove Object pointer plus CommandSourceType with ret 8; evidence=targets/game/reverse/identity_evidence/002c4cc0-abi-validation.md
+?d_0016af70@@YAXXZ,0x0016AF70,legacy address-only alias of ?rva0016AF70@@YA_NPAVRva0016AF70State@@PAX@Z; game/GameEngine/Source/GameLogic/AI/AttackStateMachineCtor.cpp still names this symbol after the dump conversion

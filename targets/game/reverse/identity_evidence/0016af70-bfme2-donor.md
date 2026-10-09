@@ -1,0 +1,13 @@
+# 0x0016AF70 goal predicate
+
+The Open BFME 2 donor Code/GameEngine/Source/GameLogic/AI/Rva00343F8ADispatch.cpp at game.dat 0x0033FDEB supplies the complete predicate structure. BFME 1's own complete body establishes a state-machine pointer at state+0x1C, owner at machine+0x10, goal flag at Object+0x344, weapon-template pointer at Weapon+4, byte flag at template+0x533, and an AI virtual call at Object+0x204/vtable+0x200. The state and weapon-template views retain address identities; the donor's public names are not asserted for them.
+
+The initial donor flags produce 122 bytes with 62 masked differences starting at +0x1F. Adding native accessor layers leaves that result unchanged. The neighbouring BFME 1 compilation flags produce exactly 125 bytes with four relocation slots. The final source includes canonical object.h and command_source_type.h; no upstream STL header or new STL pin is required. The production scoped gate verifies all four direct call relocations, and class and declared-function checks pass.
+
+The complete target has true and false returns at +0x77 and +0x7C, with no callee stack cleanup. Both arguments are read from the caller's stack: a state pointer and a pointer-sized value interpreted as the 32-bit AbleToAttackType enum. The result is Boolean in AL. All branches stay within the 125-byte extent.
+
+The complete getGoalObject helper reads the goal ID at +0x20 and returns Object*. The complete getCurrentWeapon helper returns a pointer and pops its optional WeaponSlotType pointer. isAbleToAttack has Boolean AL returns and no stack arguments; its complete 412-byte extent was decoded. The complete 331-byte getAbleToAttackSpecificObject body reads attack type, Object pointer, and command-source enum in that order and returns a 32-bit CanAttackResult while popping 12 bytes. Canonical declarations match these contracts.
+
+The indirect call was checked independently. AIUpdateInterface's recorded primary Module vtable at VA 0x010BA8A8 has slot 128 pointing through ILT RVA 0x0000F17D to the matched getLastCommandSource body at 0x0027F460. That complete four-byte body loads a 32-bit enum from receiver+0x48 and returns with no arguments or adjustment. The native shim header confirms this slot follows chooseLocomotorSet. The source uses an address-derived virtual view with the canonical const getter signature, avoiding a private copy of the full AI class. Other secondary tables were read as controls and resolve to different methods.
+
+Complete decodes, checked-callee outputs, source variants, raw probes, the raw vtable-slot calculation, and production gate outputs are preserved under build/donor-retry/0016af70/. No owner-class identity beyond the address-derived callback state is claimed.
