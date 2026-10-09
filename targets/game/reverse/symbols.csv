@@ -76985,7 +76985,7 @@ name,address,notes
 ?bfmeFixupESO@BfmeHostESO@@QAEXXZ,0x00047393,pin
 ?bfmeFixupThunk@@YADPAVMeshClass@@@Z,0x0002C43A,recursive BFME mesh shader fixer call through the generated thunk
 ?bfmeFlag@Gen_0039B020@@QBEEXZ,0x00049FDA,0x006E2540 witnessed caller ABI;route=0x0039B020
-?bfmeFlagCWB@@3IA,0x00EF1034,pin
+?$S1@?1??bfmeGoCWB@@YAHXZ@4IA,0x00EF1034,pin
 ?bfmeFlagCWC@@3IA,0x00EF14A4,pin
 ?bfmeFlagCWD@@3IA,0x00EF3698,pin
 ?bfmeFlagForRead@ScriptEngine@@IAEPA_NVAsciiString@@@Z,0x0004278F,read-only flag lookup target decoded from ScriptEngine setFlag
@@ -77556,7 +77556,7 @@ name,address,notes
 ?bfmeHitZP@BfmeSlotZP@@QAEXPAVBfmeKeyZP@@@Z,0x00801EC0
 ?bfmeIdAIA@BfmeThingAIA@@QAEPAXXZ,0x00020824,pin
 ?bfmeIdALA@BfmeKeyALA@@QAEPAUBfmeIdALA@@XZ,0x00020824,pin
-?bfmeIdCWB@@3HA,0x00EF102C,pin
+?s_bfmeIdCWB@?1??bfmeGoCWB@@YAHXZ@4HA,0x00EF102C,pin
 ?bfmeIdCWC@@3HA,0x00EF14A0,pin
 ?bfmeIdCWD@@3HA,0x00EF3694,pin
 ?bfmeIdESB@BfmeThingESB@@QAEHXZ,0x00020824,pin
