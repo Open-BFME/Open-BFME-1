@@ -85,6 +85,10 @@ StructureCollapseUpdate::StructureCollapseUpdate( Thing *thing, const ModuleData
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/StructureCollapseUpdateLifecycle.cpp
+// ??1StructureCollapseUpdate@@MAE@XZ present-unmatched
+StructureCollapseUpdate::~StructureCollapseUpdate( void )
+{
+}
 
 //-------------------------------------------------------------------------------------------------
 // ?parseFX@@YAXPAVINI@@PAX1PBX@Z present-unmatched
@@ -210,6 +214,110 @@ void StructureCollapseUpdate::beginStructureCollapse(const DamageInfo *damageInf
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/StructureCollapseUpdateUpdateThunk.cpp
+// ?update@StructureCollapseUpdate@@UAE?AW4UpdateSleepTime@@XZ present-unmatched
+UpdateSleepTime StructureCollapseUpdate::update( void )
+{
+	static const Real COLLAPSE_ACCELERATION_FACTOR = 0.02f;
+	const StructureCollapseUpdateModuleData *d = getStructureCollapseUpdateModuleData();
+
+	if (m_collapseState == COLLAPSESTATE_STANDING)
+	{
+		DEBUG_CRASH(("hmm, what?"));
+		return UPDATE_SLEEP_FOREVER;
+	}
+
+	// We are in the dramatic pause between when the building has lost all its hit points and
+	// when it starts toppling over.
+	if (m_collapseState == COLLAPSESTATE_WAITINGFORCOLLAPSESTART) 
+	{
+		UnsignedInt now = TheGameLogic->getFrame();
+		Object *building = getObject();
+
+		const Coord3D *currentPosition = building->getPosition();
+		Vector3 shudder;
+		shudder.Set(GameClientRandomValueReal(-(d->m_maxShudder), d->m_maxShudder), GameClientRandomValueReal(-(d->m_maxShudder), d->m_maxShudder), 0);
+
+		const Matrix3D *instMatrix = building->getDrawable()->getInstanceMatrix();
+		Matrix3D newInstMatrix;
+		newInstMatrix = *instMatrix;
+		newInstMatrix.Set_Translation(shudder);
+
+		building->getDrawable()->setInstanceMatrix(&newInstMatrix);
+
+		if (now >= m_collapseFrame) 
+		{
+			m_collapseState = COLLAPSESTATE_COLLAPSING;
+			doPhaseStuff(SCPHASE_BURST, currentPosition);
+			// This has to use a game logic random value since the bursts can spawn debris, and debris is sync'd.
+			m_burstFrame = now + GameLogicRandomValue(d->m_minBurstDelay, d->m_maxBurstDelay);
+		}
+	}
+
+	// The building is in the process of falling over.
+	if (m_collapseState == COLLAPSESTATE_COLLAPSING) 
+	{
+		Object *building = getObject();
+		UnsignedInt now = TheGameLogic->getFrame();
+		m_currentHeight -= m_collapseVelocity;
+		m_collapseVelocity -= TheGlobalData->m_gravity * (1.0 - d->m_collapseDamping);
+
+		const Coord3D *currentPosition = building->getPosition();
+		Vector3 shudder;
+		shudder.Set(GameClientRandomValueReal(-(d->m_maxShudder), d->m_maxShudder), GameClientRandomValueReal(-(d->m_maxShudder), d->m_maxShudder), m_currentHeight);
+		const Matrix3D *instMatrix = building->getDrawable()->getInstanceMatrix();
+		Matrix3D newInstMatrix;
+		newInstMatrix = *instMatrix;
+		newInstMatrix.Set_Translation(shudder);
+
+		building->getDrawable()->setInstanceMatrix(&newInstMatrix);
+
+		if (now >= m_burstFrame) 
+		{
+			if (GameLogicRandomValue(1, d->m_bigBurstFrequency) == 1) 
+			{
+				doPhaseStuff(SCPHASE_BURST, currentPosition);
+			} 
+			else 
+			{
+				doPhaseStuff(SCPHASE_DELAY, currentPosition);
+			}
+			// This has to use a game logic random value since the bursts can spawn debris, and debris is sync'd.
+			m_burstFrame += GameLogicRandomValue(d->m_minBurstDelay, d->m_maxBurstDelay);
+		}
+
+//		if ((m_currentHeight + building->getGeometryInfo().getMaxHeightAbovePosition()) <= 0) 
+		if ((m_currentHeight + building->getTemplate()->getTemplateGeometryInfo().getMaxHeightAbovePosition()) <= 0)
+		{
+			m_collapseState = COLLAPSESTATE_DONE;
+			doPhaseStuff(SCPHASE_FINAL, building->getPosition());
+			Drawable *drawable = building->getDrawable();
+
+			doCollapseDoneStuff();
+
+			drawable->clearModelConditionState(MODELCONDITION_RUBBLE);
+			drawable->setModelConditionState(MODELCONDITION_POST_COLLAPSE);
+			building->setOrientation(building->getOrientation());
+
+			
+			// Need to update body particle systems, now
+			BodyModuleInterface *body = building->getBodyModule();
+			body->updateBodyParticleSystems();
+
+
+			Vector3 shudder;
+			shudder.Set(0, 0, 0);
+			const Matrix3D *instMatrix = building->getDrawable()->getInstanceMatrix();
+			Matrix3D newInstMatrix;
+			newInstMatrix = *instMatrix;
+			newInstMatrix.Set_Translation(shudder);
+			building->getDrawable()->setInstanceMatrix(&newInstMatrix);
+
+			return UPDATE_SLEEP_FOREVER;
+		}
+	}
+
+	return UPDATE_SLEEP_NONE;
+}
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
