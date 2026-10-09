@@ -131114,8 +131114,6 @@ present_unmatched	game/Libraries/Source/WWVegas/WW3D2/linegrp.cpp	LineGroupClass
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/linegrp.cpp	LineGroupClass::Set_Texture	1
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/matinfo.cpp	0MaterialCollectorClass@@QAE@XZ	1
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/matinfo.cpp	0MaterialInfoClass@@	2
-present_unmatched	game/Libraries/Source/WWVegas/WW3D2/matinfo.cpp	1MaterialCollectorClass@@QAE@XZ	1
-present_unmatched	game/Libraries/Source/WWVegas/WW3D2/matinfo.cpp	1MaterialInfoClass@@UAE@XZ	1
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/matinfo.cpp	Add_Texture@MaterialCollectorClass@@QAEXPAVTextureClass@@@Z	1
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/matinfo.cpp	Add_Texture@MaterialInfoClass@@QAEHPAVTextureClass@@@Z	1
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/matinfo.cpp	Clone@MaterialInfoClass@@QBEPAV1@XZ	1

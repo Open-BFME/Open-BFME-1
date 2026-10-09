@@ -65,11 +65,6 @@ MaterialInfoClass::MaterialInfoClass(const MaterialInfoClass & src)
 }
 
 
-// ??1MaterialInfoClass@@UAE@XZ present-unmatched
-MaterialInfoClass::~MaterialInfoClass(void)
-{
-	Free();
-}
 
 
 // ?Clone@MaterialInfoClass@@QBEPAV1@XZ present-unmatched
@@ -225,12 +220,6 @@ MaterialCollectorClass::MaterialCollectorClass(void)
 	LastTexture = NULL;
 }
 
-// byte-exact reconstruction: game/Libraries/Source/WWVegas/WW3D2/MaterialCollectorClassDestructorThunk.cpp
-// ??1MaterialCollectorClass@@QAE@XZ present-unmatched
-MaterialCollectorClass::~MaterialCollectorClass(void)
-{
-	Reset();
-}
 
 // BFME collector: owning texture handles. Layout witnesses and exact probe:
 // build/unclaimed_map/astra_T/LAYOUTS.md. The two visible getter bodies are
