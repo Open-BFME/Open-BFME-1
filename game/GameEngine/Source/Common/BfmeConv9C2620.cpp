@@ -20,7 +20,9 @@ extern "C" unsigned char Vp6FilterConst8860[];
 extern "C" unsigned char Vp6FilterConst8870[];
 extern "C" unsigned char Vp6FilterConst8880[];
 extern "C" unsigned char Vp6FilterConst8890[];
-extern "C" unsigned char Vp6FilterConst88B0[];
+// Retail loads 8 bytes at 0x012D88B0; alignment padding is excluded.
+extern "C" { __declspec(align(16)) unsigned char Vp6FilterConst88B0[8] =
+	{0xe7, 0xe7, 0xe7, 0xe7, 0xe7, 0xe7, 0xe7, 0xe7}; }
 
 extern "C" void __cdecl Rva009C2620Vp6FilterDiag4(
 	void *unused, void *sourceArgument, void *destinationArgument,

@@ -29,13 +29,27 @@ int Vp6FilterEdgeTagTable[64] = {
 	0, 0, 0, 0, 0, 0, 0, 0
 };
 }
-extern "C" unsigned char Vp6FilterConst8840[];
-extern "C" unsigned char Vp6FilterConst8850[];
-extern "C" unsigned char Vp6FilterConst8860[];
-extern "C" unsigned char Vp6FilterConst8870[];
-extern "C" unsigned char Vp6FilterConst8880[];
-extern "C" unsigned char Vp6FilterConst8890[];
-extern "C" unsigned char Vp6FilterConst88A0[];
+// Retail loads 16 bytes at 0x012D8840; alignment padding is excluded.
+extern "C" { __declspec(align(16)) unsigned char Vp6FilterConst8840[16] =
+	{0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00}; }
+// Retail loads 16 bytes at 0x012D8850; alignment padding is excluded.
+extern "C" { __declspec(align(16)) unsigned char Vp6FilterConst8850[16] =
+	{0x40, 0x00, 0x40, 0x00, 0x40, 0x00, 0x40, 0x00, 0x40, 0x00, 0x40, 0x00, 0x40, 0x00, 0x40, 0x00}; }
+// Retail loads 8 bytes at 0x012D8860; alignment padding is excluded.
+extern "C" { __declspec(align(16)) unsigned char Vp6FilterConst8860[8] =
+	{0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40}; }
+// Retail loads 8 bytes at 0x012D8870; alignment padding is excluded.
+extern "C" { __declspec(align(16)) unsigned char Vp6FilterConst8870[8] =
+	{0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20}; }
+// Retail loads 8 bytes at 0x012D8880; alignment padding is excluded.
+extern "C" { __declspec(align(16)) unsigned char Vp6FilterConst8880[8] =
+	{0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f, 0x7f}; }
+// Retail loads 8 bytes at 0x012D8890; alignment padding is excluded.
+extern "C" { __declspec(align(16)) unsigned char Vp6FilterConst8890[8] =
+	{0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80}; }
+// Retail loads 8 bytes at 0x012D88A0; alignment padding is excluded.
+extern "C" { __declspec(align(16)) unsigned char Vp6FilterConst88A0[8] =
+	{0xdf, 0xdf, 0xdf, 0xdf, 0xdf, 0xdf, 0xdf, 0xdf}; }
 
 extern "C" void __cdecl Rva009C2320Vp6FilterDiag4(
 	void *unused, void *sourceArgument, void *destinationArgument,
