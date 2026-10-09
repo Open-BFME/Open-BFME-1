@@ -2,7 +2,7 @@
 //
 // Retail STL threshold allocators: a zero count returns null, otherwise the
 // count is scaled (lea + shl) and sizes above 0x80 go through operator new
-// at 0x00881F30 while smaller sizes go through __new_alloc::allocate at
+// at 0x00881F30 while smaller sizes go through __node_alloc<true, 0>::_M_allocate at
 // 0x0082E540. The nonzero-guard spelling is what emits retail's
 // `test eax,eax / je null / lea / shl / cmp / push / jbe / call new /
 // add esp,4 / ret 8 / call alloc / add esp,4 / ret 8 / xor eax,eax / ret 8`
@@ -15,11 +15,18 @@
 // distinct opaque names (one-identity rule).
 namespace _STL
 {
-	class __new_alloc
-	{
-	public:
-		static void *allocate(unsigned int bytes);
-	};
+	// Retail 0x0082E540 is the matched node pool refill/mutex body.
+static __forceinline void *vectorSmallAllocate(unsigned int bytes);
+template <bool Threads, int Instance>
+class __node_alloc
+{
+	static void *__cdecl _M_allocate(unsigned int bytes);
+	friend void *vectorSmallAllocate(unsigned int bytes);
+};
+static __forceinline void *vectorSmallAllocate(unsigned int bytes)
+{
+	return __node_alloc<true, 0>::_M_allocate(bytes);
+}
 }
 
 void *operator new(unsigned int bytes);
@@ -34,7 +41,7 @@ void *__stdcall Rva0094C210Alloc(unsigned int n, unsigned int tag)
 		bytes <<= 3;
 		if (bytes > 0x80)
 			return ::operator new(bytes);
-		return _STL::__new_alloc::allocate(bytes);
+		return _STL::vectorSmallAllocate(bytes);
 	}
 	return 0;
 }
@@ -49,7 +56,7 @@ void *__stdcall Rva009A3450Alloc(unsigned int n, unsigned int tag)
 		bytes <<= 3;
 		if (bytes > 0x80)
 			return ::operator new(bytes);
-		return _STL::__new_alloc::allocate(bytes);
+		return _STL::vectorSmallAllocate(bytes);
 	}
 	return 0;
 }
@@ -64,7 +71,7 @@ void *__stdcall Rva0094C1C0Alloc(unsigned int n, unsigned int tag)
 		bytes <<= 2;
 		if (bytes > 0x80)
 			return ::operator new(bytes);
-		return _STL::__new_alloc::allocate(bytes);
+		return _STL::vectorSmallAllocate(bytes);
 	}
 	return 0;
 }
@@ -79,7 +86,7 @@ void *__stdcall Rva009CECB0Alloc(unsigned int n, unsigned int tag)
 		bytes <<= 4;
 		if (bytes > 0x80)
 			return ::operator new(bytes);
-		return _STL::__new_alloc::allocate(bytes);
+		return _STL::vectorSmallAllocate(bytes);
 	}
 	return 0;
 }
