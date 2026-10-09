@@ -4039,58 +4039,6 @@ Bool GameLogic::isIntroMoviePlaying()
 }
 
 // ------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------
-// ?selectObject@GameLogic@@QAEXPAVObject@@_NG1@Z present-unmatched
-void GameLogic::selectObject(Object *obj, Bool createNewSelection, PlayerMaskType playerMask, Bool affectClient)
-{
-	if (!obj) 
-	{
-		return;
-	}
-
-	if (!obj->isMassSelectable() && !createNewSelection) 
-	{
-		DEBUG_LOG(("GameLogic::selectObject() - Object attempted to be added to selection, but isn't mass-selectable.\n"));
-		return;
-	}
-
-	while( playerMask ) 
-	{
-		Player *player = ThePlayerList->getEachPlayerFromMask(playerMask);
-		if( !player ) 
-		{
-			return;
-		}
-
-		AIGroup *group = NULL;
-		CRCGEN_LOG(( "Creating AIGroup in GameLogic::selectObject()\n" ));
-		group = TheAI->createGroup();
-		group->add(obj);
-
-		// add all selected agents to the AI group
-		if (createNewSelection)	
-		{
-			player->setCurrentlySelectedAIGroup(group);
-		} 
-		else 
-		{
-			player->addAIGroupToCurrentSelection(group);
-		}
-
-		TheAI->destroyGroup(group);
-
-		if( affectClient ) 
-		{
-			Drawable *draw = obj->getDrawable();
-			if( draw ) 
-			{
-				TheInGameUI->selectDrawable(draw);
-			}
-		}
-	}
-}
-
-// ------------------------------------------------------------------------------------------------
 // ?validateSleepyUpdate@GameLogic@@ABEXXZ present-unmatched
 inline void GameLogic::validateSleepyUpdate() const
 {
