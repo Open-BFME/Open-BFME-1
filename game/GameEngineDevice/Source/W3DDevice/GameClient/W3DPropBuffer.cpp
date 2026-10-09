@@ -431,17 +431,8 @@ void W3DPropBuffer::crc( Xfer *xfer )
 	* Version Info:
 	* 1: Initial version */
 // ------------------------------------------------------------------------------------------------
-// ?xfer@W3DPropBuffer@@MAEXPAVXfer@@@Z present-unmatched
-void W3DPropBuffer::xfer( Xfer *xfer )
-{
+// Retail xfer is owned by W3DPropBufferXfer.cpp.
 
-	// version
-	XferVersion currentVersion = 1;
-	XferVersion version = currentVersion;
-	xfer->xferVersion( &version, currentVersion );
-
-
-}  // end xfer
 
 // ------------------------------------------------------------------------------------------------
 /** Load post process */

@@ -14,23 +14,6 @@ struct Matrix3D
 	Real row1[4];
 	Real row2[4];
 
-	Matrix3D(bool identity)
-	{
-		if (identity) {
-			row0[0] = 1.0f;
-			row0[1] = 0.0f;
-			row0[2] = 0.0f;
-			row0[3] = 0.0f;
-			row1[0] = 0.0f;
-			row1[1] = 1.0f;
-			row1[2] = 0.0f;
-			row1[3] = 0.0f;
-			row2[0] = 0.0f;
-			row2[1] = 0.0f;
-			row2[2] = 1.0f;
-			row2[3] = 0.0f;
-		}
-	}
 
 	Matrix3D &operator=(const Matrix3D &other)
 	{
@@ -49,6 +32,23 @@ struct Matrix3D
 		return *this;
 	}
 };
+
+// Keep constant identity initialization local to this TU.
+static __forceinline void identityMatrix(Matrix3D *matrix)
+{
+	matrix->row0[0] = 1.0f;
+	matrix->row0[1] = 0.0f;
+	matrix->row0[2] = 0.0f;
+	matrix->row0[3] = 0.0f;
+	matrix->row1[0] = 0.0f;
+	matrix->row1[1] = 1.0f;
+	matrix->row1[2] = 0.0f;
+	matrix->row1[3] = 0.0f;
+	matrix->row2[0] = 0.0f;
+	matrix->row2[1] = 0.0f;
+	matrix->row2[2] = 1.0f;
+	matrix->row2[3] = 0.0f;
+}
 
 struct Vector3
 {
@@ -329,7 +329,8 @@ void W3DPropBuffer::xfer(Xfer *xfer)
 		xfer->xferInt(&m_props[i].id);
 		xfer->xferCoord3D(&m_props[i].location);
 		xfer->xferBool(&m_props[i].visible);
-		Matrix3D transform(true);
+		Matrix3D transform;
+		identityMatrix(&transform);
 		Real scale = 1.0f;
 
 		if (!xfer->isLoading()) {
