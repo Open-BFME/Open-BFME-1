@@ -19,6 +19,10 @@ struct Rva00771870Element
 	unsigned char m_data[8];
 };
 
+struct Gen_t_00768c40_k4;
+struct Gen_t_00768c40_p4pod;
+struct Gen_t_007706d0_p8cd;
+
 namespace _STL
 {
 template <class Type>
@@ -45,8 +49,10 @@ class __node_alloc
 static inline void *vectorLargeAllocate(unsigned int bytes) { return ::operator new(bytes); }
 static inline void *vectorSmallAllocate(unsigned int bytes) { return __node_alloc<true, 0>::_M_allocate(bytes); }
 
-void __cdecl BfmeElementConstruct(Rva00771870Element *destination,
-	const Rva00771870Element &value);
+// The ordinary retail ILTs route to these matched template specializations.
+template <class First, class Second> struct pair;
+template <class Destination, class Source>
+void __cdecl _Construct(Destination *destination, const Source &value);
 
 template <class Type>
 __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
@@ -55,7 +61,8 @@ __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
 	{
 		do
 		{
-			BfmeElementConstruct(result, *first);
+			_Construct(reinterpret_cast<pair<const Gen_t_00768c40_k4, Gen_t_00768c40_p4pod> *>(result),
+				reinterpret_cast<const pair<const Gen_t_00768c40_k4, Gen_t_00768c40_p4pod> &>(*first));
 			++first;
 			++result;
 		}
@@ -69,7 +76,8 @@ __forceinline Type *uninitialized_fill_n(Type *result, unsigned int count, const
 {
 	for (; count > 0; --count)
 	{
-		BfmeElementConstruct(result, value);
+		_Construct(reinterpret_cast<pair<const Gen_t_00768c40_k4, Gen_t_00768c40_p4pod> *>(result),
+				reinterpret_cast<const pair<const Gen_t_00768c40_k4, Gen_t_00768c40_p4pod> &>(value));
 		++result;
 	}
 	return result;
@@ -78,6 +86,7 @@ __forceinline Type *uninitialized_fill_n(Type *result, unsigned int count, const
 template <class Type, class Allocator>
 class vector
 {
+	template <class OtherType, class OtherAllocator> friend class vector;
 public:
 	void push_back(const Type &value);
 
@@ -118,7 +127,8 @@ void vector<Type, Allocator>::_M_insert_overflow(
 
 	if (fillLength == 1)
 	{
-		BfmeElementConstruct(newFinish, value);
+		_Construct(reinterpret_cast<pair<const Gen_t_00768c40_k4, Gen_t_00768c40_p4pod> *>(newFinish),
+				reinterpret_cast<const pair<const Gen_t_00768c40_k4, Gen_t_00768c40_p4pod> &>(value));
 		++newFinish;
 	}
 	else
@@ -134,7 +144,8 @@ void vector<Type, Allocator>::_M_insert_overflow(
 			Type *cur = position;
 			do
 			{
-				BfmeElementConstruct(newFinish, *cur);
+				_Construct(reinterpret_cast<pair<const Gen_t_00768c40_k4, Gen_t_00768c40_p4pod> *>(newFinish),
+				reinterpret_cast<const pair<const Gen_t_00768c40_k4, Gen_t_00768c40_p4pod> &>(*cur));
 				++cur;
 				++newFinish;
 			}
@@ -142,7 +153,7 @@ void vector<Type, Allocator>::_M_insert_overflow(
 		}
 	}
 
-	_M_clear();
+	reinterpret_cast<vector<Gen_t_007706d0_p8cd, allocator<Gen_t_007706d0_p8cd> > *>(this)->_M_clear();
 
 	_M_finish = newFinish;
 	_M_start = newStart;
@@ -158,7 +169,8 @@ void vector<Type, Allocator>::push_back(const Type &value)
 {
 	if (_M_finish != _M_end_of_storage)
 	{
-		BfmeElementConstruct(_M_finish, value);
+		_Construct(reinterpret_cast<pair<const Gen_t_00768c40_k4, Gen_t_00768c40_p4pod> *>(_M_finish),
+				reinterpret_cast<const pair<const Gen_t_00768c40_k4, Gen_t_00768c40_p4pod> &>(value));
 		++_M_finish;
 	}
 	else
