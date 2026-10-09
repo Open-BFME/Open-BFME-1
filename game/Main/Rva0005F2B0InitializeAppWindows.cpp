@@ -73,7 +73,7 @@ public:
 extern BfmeAwakenDebug *TheBfmeAwakenDebug;
 UnicodeString getBfmeDisplayName();
 
-extern HINSTANCE ApplicationHInstance;
+HINSTANCE ApplicationHInstance = 0;
 extern HWND ApplicationHWnd;
 Bool g_Va012ED248Initializing = false;
 Bool g_Va012A6514 = true;
