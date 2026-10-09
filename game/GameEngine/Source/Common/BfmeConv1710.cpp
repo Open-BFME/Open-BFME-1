@@ -1,20 +1,30 @@
-class BfmeItemGB;
+// Callees (tools/callees.py 0x1FCE70 55): ILT 0x44161 -> 0x0026F630
+// Gen_0026F630::bfmeMatches, ILT 0xB627 -> 0x001FCD40
+// AICommandInterface::bfmeCommand52 (source CMD_FROM_AI).
+#include "../GameLogic/command_source_type.h"
 
-class BfmeSubGB
+class Object;
+class BfmeThingEP;
+
+class Gen_0026F630
 {
 public:
-	void bfmeInsertGB(BfmeItemGB *item, int mode);
-
-	unsigned char m_bfmeSubDataGB[4];
+	bool bfmeMatches(const BfmeThingEP *thing) const;
 };
+
+class AICommandInterface
+{
+public:
+	void bfmeCommand52(Object *obj, CommandSourceType cmdSource);
+};
+
+class BfmeItemGB;
 
 class BfmeListGB
 {
 public:
-	char bfmeContainsGB(BfmeItemGB *item);
-
 	unsigned char m_bfmeHeadGB[0x20];
-	BfmeSubGB m_bfmeSubGB;
+	unsigned char m_bfmeSubGB[4];
 };
 
 class BfmeCtxGB
@@ -46,8 +56,8 @@ void BfmeOwnerGB::bfmeAddGB(BfmeCtxGB *ctx, int unused)
 	if (list == 0)
 		return;
 
-	if (list->bfmeContainsGB(item))
+	if (reinterpret_cast<Gen_0026F630 *>(list)->bfmeMatches((const BfmeThingEP *)item))
 		return;
 
-	list->m_bfmeSubGB.bfmeInsertGB(item, 2);
+	reinterpret_cast<AICommandInterface *>(list->m_bfmeSubGB)->bfmeCommand52((Object *)item, CMD_FROM_AI);
 }
