@@ -33,15 +33,6 @@ class Overridable { public: void *vtable; const Overridable *m_nextOverride; con
 class LocomotorTemplate: public Overridable { public: char pad8[0x84-8]; float m_accelPitchLimit,m_bounceKick,m_pitchStiffness,m_rollStiffness,m_pitchDamping,m_rollDamping; char pad9c[0xb4-0x9c]; float m_uniformAxialDamping; char padb8[0xd8-0xb8]; bool m_hasSuspension; char padd9[3]; float m_maximumWheelExtension; };
 class Locomotor { public: void *vtable; const LocomotorTemplate *m_template;
  const LocomotorTemplate *getTemplate() const { const LocomotorTemplate *p=m_template; if(p && p->m_nextOverride) p=(const LocomotorTemplate*)p->m_nextOverride->getFinalOverride(); return p; }
-float getAccelPitchLimit() const { return getTemplate()->m_accelPitchLimit; }
-float getBounceKick() const { return getTemplate()->m_bounceKick; }
-float getPitchStiffness() const { return getTemplate()->m_pitchStiffness; }
-float getRollStiffness() const { return getTemplate()->m_rollStiffness; }
-float getPitchDamping() const { return getTemplate()->m_pitchDamping; }
-float getRollDamping() const { return getTemplate()->m_rollDamping; }
-float getUniformAxialDamping() const { return getTemplate()->m_uniformAxialDamping; }
-float getMaxWheelExtension() const { return getTemplate()->m_maximumWheelExtension; }
-bool hasSuspension() const {return getTemplate()->m_hasSuspension;}
 };
 struct TWheelInfo
 {
@@ -75,9 +66,11 @@ class DrawableLocoInfo { public: void *vtable;
 };
 class BfmeGeometryInfo { public: float boxMajorRadius() const; float boxMinorRadius() const; };
 class AIUpdateInterface { public: float getCurLocomotorSpeed(); };
-class Object { public: char pad[0x204]; AIUpdateInterface *m_ai; void *dword_208; bool isSignificantlyAboveTerrain() const; int getLayer() const; float bfmeGetNonnegativePreferredLocomotorHeight() const;
+class Object { public: char pad[0x204]; AIUpdateInterface *m_ai; void *dword_208; int getLayer() const; float bfmeGetNonnegativePreferredLocomotorHeight() const;
  BfmeGeometryInfo &getGeometryInfo() { return *(BfmeGeometryInfo*)((char*)this+0xac); }
 };
+// ILT 00019FF1 reaches the matched int-returning predicate at 00131B20.
+class BfmeOwnerRW { public: int bfmeCheckRW(); };
 class TerrainLogic { public: virtual void s0();virtual void s4();virtual void s8();virtual void sc();virtual void s10();virtual void s14();virtual void s18(); virtual float getLayerHeight(float,float,int,Coord3D*,bool); };
 extern TerrainLogic *TheTerrainLogic;
 class BfmeUnitRC; class BfmeHolderRC;
@@ -96,19 +89,19 @@ void Drawable::calcPhysicsXformWheels(const Locomotor *locomotor, PhysicsXformIn
 	if (m_locoInfo == NULL)
 		m_locoInfo = new DrawableLocoInfo;
 
-	const Real ACCEL_PITCH_LIMIT = locomotor->getAccelPitchLimit();
+	const Real ACCEL_PITCH_LIMIT = locomotor->getTemplate()->m_accelPitchLimit;
 
-	const Real BOUNCE_ANGLE_KICK = locomotor->getBounceKick();
-	const Real PITCH_STIFFNESS = locomotor->getPitchStiffness();
-	const Real ROLL_STIFFNESS =  locomotor->getRollStiffness();
-	const Real PITCH_DAMPING = locomotor->getPitchDamping();
-	const Real ROLL_DAMPING = locomotor->getRollDamping();
+	const Real BOUNCE_ANGLE_KICK = locomotor->getTemplate()->m_bounceKick;
+	const Real PITCH_STIFFNESS = locomotor->getTemplate()->m_pitchStiffness;
+	const Real ROLL_STIFFNESS =  locomotor->getTemplate()->m_rollStiffness;
+	const Real PITCH_DAMPING = locomotor->getTemplate()->m_pitchDamping;
+	const Real ROLL_DAMPING = locomotor->getTemplate()->m_rollDamping;
 
-	const Real UNIFORM_AXIAL_DAMPING = locomotor->getUniformAxialDamping();
+	const Real UNIFORM_AXIAL_DAMPING = locomotor->getTemplate()->m_uniformAxialDamping;
 
-	const Real MAX_SUSPENSION_EXTENSION = locomotor->getMaxWheelExtension();
+	const Real MAX_SUSPENSION_EXTENSION = locomotor->getTemplate()->m_maximumWheelExtension;
 
-	const Bool DO_WHEELS = locomotor->hasSuspension();
+	const Bool DO_WHEELS = locomotor->getTemplate()->m_hasSuspension;
 
 	Object *obj = m_object;
 	if (obj == NULL)
@@ -128,7 +121,7 @@ float groundPitch=0,groundRoll=0;
  ((BfmeOwnerRC*)this)->bfmeSendRC((BfmeUnitRC*)obj,(BfmeHolderRC*)locomotor,(void*)pos,(void*)dir,&groundPitch,&groundRoll);
  float hheight=TheTerrainLogic->getLayerHeight(pos->x,pos->y,obj->getLayer(),0,true);
 
-	Bool airborne = obj->isSignificantlyAboveTerrain();
+	const unsigned char airborne = (unsigned char)((BfmeOwnerRW *)obj)->bfmeCheckRW();
 
 	if (airborne)
 	{
