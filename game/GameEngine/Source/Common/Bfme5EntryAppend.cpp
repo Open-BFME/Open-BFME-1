@@ -13,21 +13,6 @@
 // The append is the usual twelve-byte node splice with placement new at +0x08
 // and the predecessor cached before the four stores.
 
-// The twelve-byte node comes from STLport's __new_alloc::allocate, whose
-// 162-byte body retail keeps at 0x0082E540 (matched as
-// ?allocate@__new_alloc@_STL@@SAPAXI@Z in
-// game/Libraries/Source/WWVegas/WWLib/STL_new_alloc_allocateThunk.cpp and
-// ICF-folded with _Rb_tree's __node_alloc::_M_allocate). Spelled under its
-// real mangled name so the reference resolves to that definition.
-namespace _STL
-{
-	class __new_alloc
-	{
-	public:
-		static void *allocate(unsigned int bytes);
-	};
-}
-
 inline void * __cdecl operator new(unsigned int, void *where) { return where; }
 
 // The sub-object's initialiser is reached through retail's incremental-link
@@ -92,6 +77,19 @@ private:
 	BfmeEntryHead *m_bfmeList;				// +0x640
 };
 
+// Retail allocates the twelve-byte node through __node_alloc<true,0>::
+// _M_allocate at 0x0082E540. The pool refill and mutex calls prove this
+// identity; __new_alloc::allocate instead forwards to global operator new.
+namespace _STL
+{
+template <bool Threads, int Instance>
+class __node_alloc
+{
+	static void *__cdecl _M_allocate(unsigned int bytes);
+	friend void ::Gen_000D5E90::bfmeAdd(void *owner, void *extra);
+};
+}
+
 // ?bfmeAdd@Gen_000D5E90@@QAEXPAX0@Z
 void Gen_000D5E90::bfmeAdd(void *owner, void *extra)
 {
@@ -101,7 +99,7 @@ void Gen_000D5E90::bfmeAdd(void *owner, void *extra)
 	entry->m_bfmeExtra = extra;
 
 	BfmeEntryHead *head = m_bfmeList;
-	BfmeEntryNode *node = (BfmeEntryNode *)_STL::__new_alloc::allocate(sizeof(BfmeEntryNode));
+	BfmeEntryNode *node = (BfmeEntryNode *)_STL::__node_alloc<true, 0>::_M_allocate(sizeof(BfmeEntryNode));
 
 	new (&node->m_bfmeValue) BfmeEntry *(entry);
 
