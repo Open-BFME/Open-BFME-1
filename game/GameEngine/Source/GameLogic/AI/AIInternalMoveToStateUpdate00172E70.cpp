@@ -47,7 +47,6 @@ enum ModelConditionFlagType
 #pragma comment(linker, "/alternatename:?getPreferredHeight@Locomotor@@QBEMXZ=?j_0002ecad@@YAXXZ")
 #pragma comment(linker, "/alternatename:?notifyModelConditionChanged@Object@@QAEXXZ=?j_0002191d@@YAXXZ")
 #pragma comment(linker, "/alternatename:?updateGoal@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@W4PathfindLayerEnum@@PBDH@Z=?j_000294e2@@YAXXZ")
-#pragma comment(linker, "/alternatename:?removeGoal@Pathfinder@@QAEXPAVObject@@@Z=?j_00015d02@@YAXXZ")
 
 enum StateReturnType
 {
@@ -154,10 +153,6 @@ public:
 
 	Real getPreferredHeight() const;
 
-	Bool isMovingBackwards() const
-	{
-		return ((m_flags >> 7) & 1) != 0;
-	}
 };
 
 class PathNode
@@ -305,9 +300,7 @@ public:
 	virtual void setLocomotorGoalNone() = 0;
 	virtual Bool isDoingGroundMovement() const = 0;
 
-	Bool isWaitingForPath() const { return m_waitingForPath != 0; }
 	Bool getRetryPath() const { return m_retryPath != 0; }
-	Bool isBlockedAndStuck() const { return m_isBlockedAndStuck != 0; }
 	Bool canComputeQuickPath();
 	Real rva002774c0();
 	Path *getPath() const { return m_path; }
@@ -365,33 +358,33 @@ public:
 	int getLayer() const;
 
 	void notifyModelConditionChanged();
-
-	__forceinline void clearModelConditionState(ModelConditionFlagType condition)
-	{
-		if (m_modelConditionFlags.test(condition))
-		{
-			m_modelConditionFlags.reset(condition);
-			notifyModelConditionChanged();
-		}
-	}
-
-	__forceinline void setModelConditionState(ModelConditionFlagType condition)
-	{
-		if (!m_modelConditionFlags.testWord(condition))
-		{
-			m_modelConditionFlags.set(condition);
-			notifyModelConditionChanged();
-		}
-	}
-
 };
+
+// Retail inlines these operations; keep their emitted copies local to this TU.
+static __forceinline void clearModelConditionState(Object *obj, ModelConditionFlagType condition)
+{
+	if (obj->m_modelConditionFlags.test(condition))
+	{
+		obj->m_modelConditionFlags.reset(condition);
+		obj->notifyModelConditionChanged();
+	}
+}
+
+static __forceinline void setModelConditionState(Object *obj, ModelConditionFlagType condition)
+{
+	if (!obj->m_modelConditionFlags.testWord(condition))
+	{
+		obj->m_modelConditionFlags.set(condition);
+		obj->notifyModelConditionChanged();
+	}
+}
 
 class Pathfinder
 {
 public:
 	void updateGoal(Object *, const Coord3D *, PathfindLayerEnum,
 		const char *, int);
-	void removeGoal(Object *);
+	void removeGoal003E3D20(Object *);
 	int bfmeCellTypeTwo(const Coord3D *, PathfindLayerEnum);
 };
 
@@ -451,6 +444,22 @@ static Bool isSamePosition(const Coord3D *ourPos,
 	return true;
 }
 
+// Preserve the bool return boundary without exporting incompatible member copies.
+static __forceinline Bool isWaitingForPath(const AIUpdateInterface *self)
+{
+	return self->m_waitingForPath != 0;
+}
+
+static __forceinline Bool isBlockedAndStuck(const AIUpdateInterface *self)
+{
+	return self->m_isBlockedAndStuck != 0;
+}
+
+static __forceinline Bool isMovingBackwards(const Locomotor *self)
+{
+	return ((self->m_flags >> 7) & 1) != 0;
+}
+
 // ?update@AIInternalMoveToStateUpdateShim@@QAE?AW4StateReturnType@@XZ
 StateReturnType AIInternalMoveToStateUpdateShim::update()
 {
@@ -461,7 +470,7 @@ StateReturnType AIInternalMoveToStateUpdateShim::update()
 	if (m_waitingForPath)
 	{
 		m_pathTimestamp = TheGameLogic->m_frame;
-		if (ai->isWaitingForPath())
+		if (isWaitingForPath(ai))
 			return STATE_CONTINUE;
 
 		if (thePath == 0)
@@ -479,7 +488,7 @@ StateReturnType AIInternalMoveToStateUpdateShim::update()
 		}
 		else
 		{
-			TheAI->pathfinder()->removeGoal(obj);
+			TheAI->pathfinder()->removeGoal003E3D20(obj);
 		}
 		if (!ai->getRetryPath())
 			m_tryOneMoreRepath = false;
@@ -488,7 +497,7 @@ StateReturnType AIInternalMoveToStateUpdateShim::update()
 	Bool forceRecompute = false;
 	if (thePath == 0)
 		forceRecompute = true;
-	if (ai->isBlockedAndStuck() || ai->m_blockedFrames > 10)
+	if (isBlockedAndStuck(ai) || ai->m_blockedFrames > 10)
 	{
 		forceRecompute = true;
 		m_blockedRepathTimestamp = TheGameLogic->m_frame;
@@ -514,7 +523,7 @@ StateReturnType AIInternalMoveToStateUpdateShim::update()
 	if (curLoco != 0 &&
 		!(onPathDistToGoal >= ((Locomotor *)curLoco)->m_field038))
 	{
-		obj->clearModelConditionState(MODELCONDITION_MOVING);
+		clearModelConditionState(obj, MODELCONDITION_MOVING);
 	}
 	else
 	{
@@ -524,39 +533,39 @@ StateReturnType AIInternalMoveToStateUpdateShim::update()
 			obj->getPosition(), (PathfindLayerEnum)obj->getLayer()))
 		{
 			if (ai->m_curLocomotor != 0 &&
-				((Locomotor *)ai->m_curLocomotor)->isMovingBackwards())
+				isMovingBackwards((Locomotor *)ai->m_curLocomotor))
 			{
 				setConditionFlag = MODELCONDITION_RAPPELLING;
-				obj->clearModelConditionState(MODELCONDITION_CLIMBING);
+				clearModelConditionState(obj, MODELCONDITION_CLIMBING);
 			}
 			else
 			{
 				setConditionFlag = MODELCONDITION_CLIMBING;
 				if (obj->m_modelConditionFlags.test(MODELCONDITION_RAPPELLING))
-					obj->clearModelConditionState(MODELCONDITION_RAPPELLING);
+					clearModelConditionState(obj, MODELCONDITION_RAPPELLING);
 			}
 		}
 
 		if (ai->m_blockedFrames > 5)
 		{
-			obj->clearModelConditionState(MODELCONDITION_MOVING);
-			obj->clearModelConditionState(MODELCONDITION_BLOCKED);
+			clearModelConditionState(obj, MODELCONDITION_MOVING);
+			clearModelConditionState(obj, MODELCONDITION_BLOCKED);
 		}
 		else
 		{
 			if (setConditionFlag == MODELCONDITION_MOVING)
 			{
-				obj->clearModelConditionState(MODELCONDITION_CLIMBING);
+				clearModelConditionState(obj, MODELCONDITION_CLIMBING);
 				if (obj->m_modelConditionFlags.test(MODELCONDITION_RAPPELLING))
-					obj->clearModelConditionState(MODELCONDITION_RAPPELLING);
+					clearModelConditionState(obj, MODELCONDITION_RAPPELLING);
 			}
 
 			if (curLoco != 0 && curLoco->query(obj) == (Real)g_rva01075350)
-				obj->clearModelConditionState(MODELCONDITION_MOVING);
+				clearModelConditionState(obj, MODELCONDITION_MOVING);
 			else
-				obj->setModelConditionState(MODELCONDITION_MOVING);
+				setModelConditionState(obj, MODELCONDITION_MOVING);
 			if (setConditionFlag != MODELCONDITION_MOVING)
-				obj->setModelConditionState(setConditionFlag);
+				setModelConditionState(obj, setConditionFlag);
 		}
 	}
 
