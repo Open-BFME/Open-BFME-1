@@ -3,6 +3,13 @@
 // STLport 4.5 stream constructors instantiated by the retail binary.
 #include <fstream>
 
+// The retail wide read body at 008403C0 is owned by the verified
+// stlport_wide_streambuf_xsgetn.cpp; avoid emitting a different copy here.
+template <>
+_STL::streamsize
+_STL::basic_streambuf<wchar_t, _STL::char_traits<wchar_t> >::xsgetn(
+    wchar_t *, _STL::streamsize);
+
 // basic_filebuf::_M_allocate_buffers(_CharT *, streamsize) is retail 0x008416C0
 // (char) and 0x008420B0 (wchar_t), a body without an EH frame
 // (stlport_narrow_filebuf_allocate_buffers.cpp, stlport_filebuf_allocate_buffers.cpp).

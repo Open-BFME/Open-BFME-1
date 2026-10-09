@@ -23,6 +23,13 @@
 // #include <stl/_istream.h>
 
 #include <stl/_fstream.h>
+
+// The retail wide read body at 008403C0 is owned by the verified
+// stlport_wide_streambuf_xsgetn.cpp; avoid emitting a different copy here.
+template <>
+_STL::streamsize
+_STL::basic_streambuf<wchar_t, _STL::char_traits<wchar_t> >::xsgetn(
+    wchar_t *, _STL::streamsize);
 #include <stdio_streambuf>
 #include "aligned_buffer.h"
 
