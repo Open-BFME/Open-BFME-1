@@ -24,8 +24,7 @@ to a different shape. Expect 30-60 minutes per function.
       order or register renames after two attempts.
 4. If exact, `python3 tools/add_match.py '<sym>' <rva> <size> <src> --model <model>`
    validates, appends, strips the marker and re-verifies; commit it.
-5. If not, bank it and revert (record `blocked` if nothing is worth banking);
-   keep no nonmatching body in `game/`:
+5. If not, bank it and revert:
    `python3 tools/re_log.py record '<sym>' <rva> <size> partial '<diff> t=<min> model=<model> blocker=<family>' --stash <src> --score <0..1>`
 
 An interior-only body is probably inlined; compiler-only machinery (SEH

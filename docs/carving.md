@@ -42,8 +42,7 @@ python3 tools/callees.py 0x003B92D0 296
 Keep the address token in the name unless a caller, vtable, string, layout or
 other independent evidence proves the identity. Write clean C++ at its
 official `game/` path and land it with the ordinary `tools/add_match.py`
-command. Bank a partial reconstruction as for a dump body:
-`re_log.py record ... partial ... --stash <file> --score <0..1>`.
+command.
 
 `python3 tools/next_work.py --tier carved` serves only this lane; the default
 queue checks it right after the finish tier. `tools/fleet/pick_anon.py`

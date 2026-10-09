@@ -185,3 +185,10 @@ unchecked. After landing a batch, check your own rows: one body per address.
 comment names the exact release. Library sources live at their official BFME
 paths; pristine C TUs compile against `inputs/reference/shims/gamespy/`, never a
 real Platform SDK.
+
+## Gate-read files
+
+Sole writers: `dir32_addresses.csv` `dir32_record.py`; `$L` labels
+`eh_state_pins.py --fix`; names `name_lane.py`/`ilt_repair.py`; `__imp_` pins
+`import_binding.py`; data rows `add_data_match.py`. Record a refusal as
+`blocked "false-reject <check>"`; never redo it another way.
