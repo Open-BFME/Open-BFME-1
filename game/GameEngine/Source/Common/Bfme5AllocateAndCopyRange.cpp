@@ -17,9 +17,17 @@
 // four-byte bodies copy one word, the four eight-byte ones copy two.
 
 void * __cdecl operator new(unsigned int bytes);
+// Retail 0x0082E540 is the node pool allocator (refill and mutex calls),
+// reached by each small-allocation branch below.
+static inline void *bfmeAllocate(unsigned int bytes);
 namespace _STL
 {
-    class __new_alloc { public: static void * __cdecl allocate(unsigned int bytes); };
+template <bool Threads, int Instance>
+class __node_alloc
+{
+	static void *__cdecl _M_allocate(unsigned int bytes);
+	friend void *::bfmeAllocate(unsigned int bytes);
+};
 }
 
 static inline void *bfmeAllocate(unsigned int bytes)
@@ -27,7 +35,7 @@ static inline void *bfmeAllocate(unsigned int bytes)
 	if (bytes > 0x80)
 		return ::operator new(bytes);
 
-	return _STL::__new_alloc::allocate(bytes);
+	return _STL::__node_alloc<true, 0>::_M_allocate(bytes);
 }
 
 inline void * __cdecl operator new(unsigned int, void *where) { return where; }
