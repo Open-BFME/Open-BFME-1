@@ -187,25 +187,14 @@ void Coord2D::normalize()
 
 float Coord2D::Normalize()
 {
-    __asm {
-        fld dword ptr [ecx]
-        fld dword ptr [ecx + 4]
-        fld ST(0)
-        fmul ST(0), ST(1)
-        fld ST(2)
-        fmul ST(0), ST(3)
-        faddp ST(1), ST(0)
-        fsqrt
-        fstp ST(2)
-        fstp ST(0)
-        fld one
-        fdiv ST(0), ST(1)
-        fld ST(0)
-        fmul dword ptr [ecx]
-        fstp dword ptr [ecx]
-        fmul dword ptr [ecx + 4]
-        fstp dword ptr [ecx + 4]
-    }
+    // The locals preserve retail's x87 load order.
+    float x_value = x;
+    float y_value = y;
+    float len = (float)sqrt(x_value * x_value + y_value * y_value);
+    float scale = one / len;
+    x *= scale;
+    y *= scale;
+    return len;
 }
 
 float Coord2D::GetLengthEstimate() const
