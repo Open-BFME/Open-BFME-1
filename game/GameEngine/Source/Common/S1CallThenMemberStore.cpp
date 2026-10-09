@@ -31,13 +31,27 @@
 // IDENTITY IS NOT RECOVERED.  Names are address-derived; the leading char
 // arrays reproduce a proven offset and assert nothing else.
 
-void b_00036a9d();
-void b_0002d817();
-void b_0003144e();
-void b_00046a74();
-void b_00004381();
-void b_00025e1e();
-void b_00014f2e();
+// The seven targets are matched ledger rows (callees.py, ILT entry -> body):
+// 0x36A9D -> Rva003CC890::release, 0x2D817 -> Rva00563F80::go,
+// 0x3144E -> Rva00563DA0::go, 0x46A74 -> Keyboard::initKeyNames (0x005A0A80),
+// 0x4381 -> the gen-shim at 0x001139D0, 0x25E1E -> the gen-shim at 0x002DF780,
+// and 0x14F2E -> the Rva00761E10 constructor, which 0x00765B00 runs as its
+// base. The old address names stay as forwarders.
+class Rva003CC890 { public: void release(); };
+class Rva00563F80 { public: static void go(); };
+class Rva00563DA0 { public: static void go(); };
+class Keyboard { protected: void initKeyNames(); friend class Rva005A3160; };
+class Gen_001139d0 { public: void m(); };
+class Gen_002df780 { public: void *m(); };
+class Rva00761E10 { public: Rva00761E10(); };
+
+#define b_00036a9d() ((Rva003CC890 *)this)->release()
+#define b_0002d817() Rva00563F80::go()
+#define b_0003144e() Rva00563DA0::go()
+#define b_00046a74() ((Keyboard *)this)->initKeyNames()
+#define b_00004381() ((Gen_001139d0 *)this)->m()
+#define b_00025e1e() ((Gen_002df780 *)this)->m()
+#define b_00014f2e() (void)0
 
 // --- void: call, then store ------------------------------------------------
 
@@ -105,7 +119,7 @@ Rva002E2680::Rva002E2680()
 	m_value = false;
 }
 
-class Rva00765B00
+class Rva00765B00 : public Rva00761E10
 {
 public:
 	Rva00765B00();
