@@ -33,6 +33,7 @@ class CastleBehavior
 {
 public:
 	void rva00372bd0(bool killOwnedObjects);
+	void initiatePack();
 
 private:
 	void *m_vtable;
