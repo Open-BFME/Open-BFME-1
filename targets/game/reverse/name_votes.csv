@@ -1216,3 +1216,4 @@ game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp|member||m_bfmeSending,d2c
 game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp|member||m_bfmeReceiving,1dc27b340bdea2e2245b3348,gpt-6.1-sol,20261009204500-20ce89,2026-10-09
 game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp|function|Gen_00410BA0@|bfmeBusy,4419c9752a627b4f78c1260b,gpt-6.1-sol,20261009204500-20ce89,2026-10-09
 game/GameEngine/Source/Common/BfmeConv1789.cpp|member||m_bfmeSlotLU,d9581471c65eb238cd013612,gpt-6.1-sol,20261009205120-c65f1b,2026-10-09
+game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|local|ExamineCellsStruct::cellCallback|p,85c87394e273334ba6c41a93,gpt-6.1-sol,20261009205225-0c490e,2026-10-09
