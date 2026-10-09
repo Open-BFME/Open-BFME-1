@@ -135,14 +135,25 @@ public:
 
 extern AudioManager *TheAudio;
 
-extern "C" void __cdecl bfmeXferHeadAZ(BfmeAgentAZ *ag, void *dst);
-extern "C" void __cdecl bfmeXferTailAZ(BfmeAgentAZ *ag, void *dst);
+// Callees (tools/callees.py 0x293050 209): ILT 0x44C1 -> 0x002B2080 Gen002B2080::handle,
+// ILT 0x4A200 -> 0x0010C120 Rva0010C120, ILT 0xC9B4 -> 0x0010C3C0 Rva0010C3C0.
+class Xfer;
+class FlagPairTarget;
+class MidVirtualSlot90Receiver;
+
+class Gen002B2080
+{
+public:
+	void handle(FlagPairTarget *target);
+};
+
+void Rva0010C120(MidVirtualSlot90Receiver *receiver, void *context);
+Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 
 class BfmeHostAZ
 {
 public:
 	void bfmeSaveAZ(BfmeAgentAZ *ag);
-	void bfmeBeginAZ(BfmeAgentAZ *ag);
 
 	unsigned char m_bfmeHeadAZ[0x24];
 	unsigned char m_bfmeSlotAAZ[4];
@@ -161,7 +172,7 @@ public:
 
 void BfmeHostAZ::bfmeSaveAZ(BfmeAgentAZ *ag)
 {
-	bfmeBeginAZ(ag);
+	reinterpret_cast<Gen002B2080 *>(this)->handle((FlagPairTarget *)ag);
 
 	if (ag->bfmeSkipAZ() != 0)
 		return;
@@ -172,7 +183,7 @@ void BfmeHostAZ::bfmeSaveAZ(BfmeAgentAZ *ag)
 	info.m_bfmeLevelAZ = 3;
 	ag->bfmeFillAZ(&info);
 
-	bfmeXferHeadAZ(ag, m_bfmeSlotAAZ);
+	Rva0010C120((MidVirtualSlot90Receiver *)ag, m_bfmeSlotAAZ);
 	ag->bfmeWordAZ(m_bfmeSlotBAZ);
 	ag->bfmeWordAZ(m_bfmeSlotCAZ);
 	ag->bfmeWordAZ(m_bfmeSlotDAZ);
@@ -183,7 +194,7 @@ void BfmeHostAZ::bfmeSaveAZ(BfmeAgentAZ *ag)
 	ag->bfmeByteAZ(&m_bfmeSlotHAZ);
 
 	if (info.m_bfmeLevelAZ >= 2)
-		bfmeXferTailAZ(ag, m_bfmeSlotJAZ);
+		(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)ag, m_bfmeSlotJAZ);
 
 	if (info.m_bfmeLevelAZ >= 3)
 		ag->bfmeByteAZ(&m_bfmeSlotKAZ);
