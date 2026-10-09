@@ -59,7 +59,10 @@ FIELD_OPAQUE = re.compile(
     r"|(?:bfme)?(?:dword|word|byte|bool|int|float|short|ptr|hash|string|str|val|value)"
     r"(?:_?(?:0x)?[0-9][0-9a-fA-F]*)?"
     r"|(?:at|f|bfme|p)(?:0x)?[0-9][0-9a-fA-F]*"
-    r"|(?:0x)?[0-9][0-9a-fA-F]*)$"
+    r"|(?:0x)?[0-9][0-9a-fA-F]*"
+    # Owner ruling 2026-10-09: m_bfme* fields are converter-invented, like
+    # the bfme*/Bfme* names OPAQUE already covers.
+    r"|bfme\w*)$"
 )
 
 

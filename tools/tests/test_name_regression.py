@@ -177,11 +177,15 @@ void * __cdecl bfme5MakeParseNodeC(INI *ini)
 def test_type_kept_in_its_own_file_is_not_a_carrier_for_the_new_file():
     # Without the new snapshot of the old path the shared 12-byte layout pairs
     # the untouched reference-counted node with the moved record, which is the
-    # false association the correction file has to close today.
-    assert set(N.regressions(MAKERS_BEFORE, OATHBREAKERS_AFTER)) == {
-        ('m_bfmePad', 'm_bfme08'), ('m_bfmeRefCount', 'm_bfme04')}
-    assert N.regressions(MAKERS_BEFORE, OATHBREAKERS_AFTER,
-                         {'Bfme5RefNode'}) == []
+    # false association the correction file has to close today. The m_bfme*
+    # fields are invented (owner ruling 2026-10-09), so the carrier logic is
+    # exercised with descriptive spellings of the retained node's fields.
+    assert N.regressions(MAKERS_BEFORE, OATHBREAKERS_AFTER) == []
+    before = (MAKERS_BEFORE.replace('m_bfmeRefCount', 'm_refCount')
+              .replace('m_bfmePad', 'm_padTail'))
+    assert set(N.regressions(before, OATHBREAKERS_AFTER)) == {
+        ('m_padTail', 'm_bfme08'), ('m_refCount', 'm_bfme04')}
+    assert N.regressions(before, OATHBREAKERS_AFTER, {'Bfme5RefNode'}) == []
 
 
 def test_spawn_parse_record_move_is_silent_at_the_pairing_boundary(repo):
@@ -790,6 +794,18 @@ def test_bfme_placeholder_respelled_to_ledger_name_is_not_a_regression():
 def test_descriptive_name_respelled_to_bfme_placeholder_still_fails():
     assert ('UpdateWeapon', 'bfmeThing00256AE0') in N.regressions(
         'void UpdateWeapon();', 'void bfmeThing00256AE0();')
+
+
+def test_bfme_field_respelled_to_offset_field_is_not_a_regression():
+    before = 'struct A { int m_bfmeCount; }; int g(A *a) { return a->m_bfmeCount; }'
+    after = 'struct A { int m_field4; }; int g(A *a) { return a->m_field4; }'
+    assert N.regressions(before, after) == []
+
+
+def test_descriptive_field_respelled_to_bfme_field_still_fails():
+    before = 'struct A { int m_health; }; int g(A *a) { return a->m_health; }'
+    after = 'struct A { int m_bfmeHealth; }; int g(A *a) { return a->m_bfmeHealth; }'
+    assert ('m_health', 'm_bfmeHealth') in N.regressions(before, after)
 
 
 @pytest.mark.parametrize('spelling', ['__declspec', '_declspec'])
