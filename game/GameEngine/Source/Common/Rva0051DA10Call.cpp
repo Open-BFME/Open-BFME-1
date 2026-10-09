@@ -1,16 +1,21 @@
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
-class Rva0051DA10
+class Rva0051D590
 {
 public:
 	void first();
+};
+
+class Rva0051DA10
+{
+public:
 	void wrap(int a);
 };
 
-void Rva0051D990Second(int, int, int);
+void showAptSaveLoad(void *, int, char);
 
 void Rva0051DA10::wrap(int)
 {
-	first();
-	Rva0051D990Second(2, 1, 0);
+	reinterpret_cast<Rva0051D590 *>(this)->first();
+	showAptSaveLoad(reinterpret_cast<void *>(2), 1, 0);
 }

@@ -1,14 +1,13 @@
 // Retail RVA 0x0051D590 (198 bytes).
 //
-// The retail two-argument construction route is the ObjectID ILT 0x00025306,
-// not the int route at ILT 0x0001EC13.  The logical-audio setter in this call
-// site is the existing LwsAudioEventRTS route at ILT 0x0002C5CF.  Both views
-// describe the same 0x70-byte retail event storage; no vtable is emitted by
-// this dispatch-only TU.
+// Retail ILT 0x00025306 reaches AudioEventRTS(const AsciiString &, int)
+// at 0x000B2CC0. ILT 0x0002C5CF reaches setIsLogicalAudio at 0x000B2330.
+// The existing native AsciiString header emits the direct StringBase calls
+// used by retail. This TU declares the 0x70-byte event layout only.
 
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2 /Iinputs/reference/shims/campaignmanagerascii /Iinputs/reference/shims/asciistring_downloadmanager
 
-#include "Common/AsciiString.h"
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 typedef bool Bool;
 
@@ -32,35 +31,22 @@ public:
 	}
 };
 
-class TransitionHandler
+class GameWindowTransitionsHandler
 {
 public:
-	void setGroup( AsciiString name, int immediate );
-};
-
-enum ObjectID
-{
-	OBJECT_ID_UNUSED = 0
+	void setGroup( AsciiString name, bool immediate );
 };
 
 class AudioEventRTS
 {
 public:
-	AudioEventRTS( const AsciiString &name, ObjectID owner );
+	AudioEventRTS( const AsciiString &name, int owner );
+	void setIsLogicalAudio( Bool logical );
 	virtual void slot00();
 	~AudioEventRTS();
 
 private:
 	unsigned char m_unmodelled[0x6c];
-};
-
-// Retail ILT 0x0002C5CF is the existing LivingWorld setter route.  The
-// local view keeps the 0x70-byte event storage while selecting that route,
-// rather than the AudioEventRTS ILT 0x00008206.
-class LwsAudioEventRTS
-{
-public:
-	void setIsLogicalAudio( Bool logical );
 };
 
 class ClientSubsystem
@@ -79,8 +65,7 @@ public:
 };
 
 extern Shell *TheShell;
-struct Rva005A00B0Transition;
-extern Rva005A00B0Transition *TheTransitionHandler;
+extern GameWindowTransitionsHandler *TheTransitionHandler;
 // The retail global at 0x012ED668 is EA's AudioManager *TheAudio, defined once
 // in game/GameEngine/Source/Common/Audio/GameAudio.cpp.  This TU keeps its own
 // address-derived view of that object and casts at the use, so the reference
@@ -103,12 +88,12 @@ private:
 void Rva0051D590::first()
 {
 	m_shellMusicActive = 1;
-	reinterpret_cast<TransitionHandler *>( TheTransitionHandler )->setGroup( AsciiString( "MainMenuToSubMenu" ), 0 );
+	TheTransitionHandler->setGroup( AsciiString( "MainMenuToSubMenu" ), 0 );
 
 	if ( TheShell != 0 )
 		TheShell->giveBackViaThunk();
 
-	AudioEventRTS event( AsciiString( "Shell2Music" ), (ObjectID)2 );
-	((LwsAudioEventRTS *)&event)->setIsLogicalAudio( false );
+	AudioEventRTS event( AsciiString( "Shell2Music" ), 2 );
+	event.setIsLogicalAudio( false );
 	localAudio()->addAudioEvent( &event );
 }
