@@ -212,7 +212,7 @@ private:
 	BfmeCommandButtonVector<BFMERetailAsciiString> m_buttonImageNames;
 	int m_flashCount;
 	BFMERetailAsciiString m_audioPrefix;
-	BfmeCommandButtonVector<Gen0049B890> m_audio00;
+	BfmeCommandButtonVector<Gen0049B890> m_unitSpecificSound;
 	BfmeCommandButtonVector<Gen0049B890> m_audio01;
 	BfmeCommandButtonVector<Gen0049B890> m_audio02;
 	BfmeCommandButtonVector<Gen0049B890> m_audio03;
