@@ -15,6 +15,19 @@ public:
 class ControlBar;
 extern ControlBar *TheControlBar;
 
+class CommandButton;
+class GameWindow;
+
+// Retail ILT 0x0003B59D -> 0x004A0310 is the matched
+// ControlBar::findCommandButton row and ILT 0x0003BCCD -> 0x004C1B60 the
+// matched ControlBar::rva004C1B60 row.
+class ControlBar
+{
+public:
+	const CommandButton *findCommandButton( const AsciiString &name );
+	void rva004C1B60( GameWindow *window, void *data );
+};
+
 struct Rva0058BCD0State
 {
 	int m_index;
@@ -36,9 +49,9 @@ void Gen0058BCD0::handle( int )
 		void *command;
 		{
 			AsciiString name( "NonCommand_Resources" );
-			command = ((Rva0058C100CommandManager *)TheControlBar)->find( &name );
+			command = (void *)TheControlBar->findCommandButton( name );
 		}
 		if( command )
-			((Rva0058C100CommandManager *)TheControlBar)->execute( 0, command );
+			TheControlBar->rva004C1B60( (GameWindow *)0, command );
 	}
 }
