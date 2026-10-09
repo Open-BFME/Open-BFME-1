@@ -2488,25 +2488,8 @@ void AIUpdateInterface::doSurrenderUpdateStuff()
 #endif
 
 //-------------------------------------------------------------------------------------------------
-// ?setQueueForPathTime@AIUpdateInterface@@ present-unmatched here - matched copy lives in GameLogic/AI/AIUpdateInterface_setQueueForPathTime_Thunk.cpp; this one compiles to within two operands of retail and both are shim offsets (m_isInUpdate 0x216 vs 0x330, m_obj 0xc vs 0x8)
-void AIUpdateInterface::setQueueForPathTime(Int frames)
-{
-#ifdef SLEEPY_AI
-	if (frames >= UPDATE_SLEEP_NONE && getWakeFrame() > UPDATE_SLEEP(frames))
-	{
-		if (m_isInUpdate)
-		{
-			// we're changing this while in our own update (probably via a move state).
-			// just do nothing, since update will calculate the correct sleep behavior at the end.
-		}
-		else
-		{
-			setWakeFrame(getObject(), UPDATE_SLEEP(frames));
-		}
-	}
-#endif
-	m_queueForPathFrame = frames ? (TheGameLogic->getFrame() + frames) : 0;
-}
+// Retail definition: AIUpdateInterfaceHelpers.cpp.
+
 
 //-------------------------------------------------------------------------------------------------
 // ?wakeUpNow@AIUpdateInterface@@ present-unmatched
@@ -5009,18 +4992,8 @@ void AIUpdateInterface::privateResumeConstruction( Object *obj, CommandSourceTyp
 /**
  * Get healed at the heal depot
  */
-// ?privateGetHealed@AIUpdateInterface@@ present-unmatched here - matched copy lives in GameLogic/AI/AIUpdateInterface_privateGetHealed_Thunk.cpp where m_obj is at +0x08
-void AIUpdateInterface::privateGetHealed( Object *healDepot, CommandSourceType cmdSource )
-{
+// Retail definition: AIUpdateInterfaceHelpers.cpp.
 
-  // sanity, if we can't get healed from here get outta here
-	if( TheActionManager->canGetHealedAt( getObject(), healDepot, cmdSource ) == FALSE )
-		return;
-
-	// enter the heal dest for healing
-	aiEnter( healDepot, cmdSource );
-
-}
 
 //----------------------------------------------------------------------------------------
 /**

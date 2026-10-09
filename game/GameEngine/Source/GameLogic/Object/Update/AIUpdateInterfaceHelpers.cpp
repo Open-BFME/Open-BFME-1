@@ -1,10 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 // readable body of ?setGoalPositionClipped@AIUpdateInterface@@: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
-// readable body of ?getLastCommandSource@AIUpdateInterface@@: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 //
 // Open-BFME: the AIUpdateInterface members that compile with exceptions on --
-// the goal and path helpers the command handlers call into, the two small
-// queries, and the one private command handler that lives on this side of the
+// the goal and path helpers the command handlers call into, the small speed
+// query, and the one private command handler that lives on this side of the
 // flag line.
 //
 //   ?getCurLocomotorSpeed@   0x0026EC30,  29 bytes
@@ -12,8 +11,8 @@
 //   ?Rva002712D0@            0x002712D0, 154 bytes
 //   ?setGoalPositionClipped@ 0x00273DE0, 334 bytes
 //   ?privateGetHealed@       0x0027DE10,  50 bytes
-//   ?getLastCommandSource@   0x0027F460,   4 bytes
-//   ?notifyVictimIsDead@     0x0027F470,   1 byte
+// The two tiny virtual methods remain in AIUpdate.cpp as native inline
+// header emissions.
 //
 // Five files' worth of AIUpdateInterface, and each described a different class.
 // Two of them (privateGetHealed, setQueueForPathTime) had the real shape:
@@ -30,16 +29,10 @@
 // no virtual of its own; the rest of the virtuals here are past it and their
 // slots are not evidence of anything.
 //
-// The pointer at +0x1CC is the one real disagreement, and it is a union rather
-// than a mistake. setGoalPositionClipped reads it as a Locomotor and asks it for
-// the preferred height at +0x44; getCurLocomotorSpeed reads it as another
-// AIUpdateInterface and asks that for a formation movement speed, handing it the
-// same m_object. The second is the weaker account -- but the class a callee is
-// spelled on is part of its mangled name, so respelling it would repoint the
-// call. Both spellings stay, on one word, until a caller settles it. (The
-// exceptions-off command handlers in AIUpdateInterfacePrivateCommands.cpp read
-// the same word a third way, as an opaque object they call set() on with
-// m_object as the argument.)
+// The pointer at +0x1CC is the current locomotor. The clipped-goal body
+// inlines its preferred-height read at +0x44; the speed getter calls the
+// matched BfmeSub1CC_EC3::effectiveMaxSpeed at 0x001B7E90 through ILT
+// 0x000230AB. Both views share the same word and use their proven ABI.
 //
 // One more offset lands twice here: Rva002712D0's m_isBlockedAndStuck at
 // +0x326 is the same byte the command handlers clear on every order.
@@ -129,7 +122,7 @@ private:
 class StateMachine
 {
 public:
-	void bfmeSetGoalPosition( const Coord3D *position );
+	void setGoalPosition( const Coord3D *position );
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
@@ -236,6 +229,11 @@ protected:
 	char m_unreconstructed_0c[0x20 - 0x0c];		///< brings UpdateModule to 0x20
 };
 
+// Proven out-of-line callee declarations from Locomotor_query.cpp and
+// BfmeConv1807.cpp. The terrain result is tested through AL in retail.
+class BfmeSub1CC_EC3 { public: Real effectiveMaxSpeed(void *objectArgument); };
+class BfmeOwnerRW { public: int bfmeCheckRW(); };
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface : public UpdateModule, public AICommandInterface
 {
@@ -246,7 +244,6 @@ public:
 
 	virtual void Rva002712D0( const Coord3D *destination );
 	Real getCurLocomotorSpeed();
-	Real getFormationMovementSpeed( Object *object );
 	void setQueueForPathTime( int frames );
 	void setGoalPositionClipped( const Coord3D *position, CommandSourceType cmdSource );
 
@@ -264,11 +261,11 @@ protected:
 	int m_queueForPathFrame;					// +0x17C
 	char m_unmodelled_180[0x1CC - 0x180];
 
-	// One word, two accounts -- see the note at the top of this file.
+	// Two proven ABI views of the current locomotor.
 	union
 	{
 		Locomotor *m_curLocomotor;				// +0x1CC, setGoalPositionClipped
-		AIUpdateInterface *m_locomotorController;	// +0x1CC, getCurLocomotorSpeed
+		BfmeSub1CC_EC3 *m_locomotorController;	// +0x1CC, getCurLocomotorSpeed
 	};
 
 	char m_unmodelled_1D0[0x1D8 - 0x1D0];
@@ -287,7 +284,7 @@ protected:
 Real AIUpdateInterface::getCurLocomotorSpeed()
 {
 	if (m_locomotorController != 0)
-		return m_locomotorController->getFormationMovementSpeed(getObject());
+		return m_locomotorController->effectiveMaxSpeed(getObject());
 
 	return g_rva01075350;
 }
@@ -382,7 +379,7 @@ void AIUpdateInterface::setGoalPositionClipped( const Coord3D *position, Command
 			Real fudge = TheWritableGlobalData->m_partitionCellSize * 0.5f;
 			Object *object = getObject();
 			if( object->isKindOf( KINDOF_AIRCRAFT ) &&
-				object->isSignificantlyAboveTerrain() && m_curLocomotor )
+				(unsigned char)reinterpret_cast<BfmeOwnerRW *>(object)->bfmeCheckRW() && m_curLocomotor )
 			{
 				fudge = max( fudge, m_curLocomotor->getPreferredHeight() );
 			}
@@ -398,11 +395,11 @@ void AIUpdateInterface::setGoalPositionClipped( const Coord3D *position, Command
 			if( clipped.y > mapRegion.hi.y - fudge )
 				clipped.y = mapRegion.hi.y - fudge;
 		}
-		m_stateMachine->bfmeSetGoalPosition( &clipped );
+		m_stateMachine->setGoalPosition( &clipped );
 	}
 	else
 	{
-		m_stateMachine->bfmeSetGoalPosition( 0 );
+		m_stateMachine->setGoalPosition( 0 );
 	}
 }
 
@@ -432,15 +429,4 @@ void AIUpdateInterface::privateGetHealed( Object *healDepot, CommandSourceType c
 	// enter the heal dest for healing
 	aiEnter( healDepot, cmdSource );
 
-}
-
-// ?getLastCommandSource@AIUpdateInterface@@UBE?AW4CommandSourceType@@XZ
-CommandSourceType AIUpdateInterface::getLastCommandSource() const
-{
-	return m_lastCommandSource;
-}
-
-// ?notifyVictimIsDead@AIUpdateInterface@@UAEXXZ
-void AIUpdateInterface::notifyVictimIsDead()
-{
 }
