@@ -1212,3 +1212,6 @@ game/GameEngine/Source/Common/Bfme5SixtyFive.cpp|member||m_bfmeWords,365858557f6
 game/GameEngine/Source/Common/Bfme5SixtyFive.cpp|member||m_bfmeValue,064b831a2d5a549c66629853,gpt-6.1-sol,20261009204435-1bf872,2026-10-09
 game/GameEngine/Source/Common/Bfme5SixtyFive.cpp|function|Gen_000B2860@|bfmeClamp,aed9bf4979371e47cebb935b,gpt-6.1-sol,20261009204435-1bf872,2026-10-09
 game/GameEngine/Source/Common/Bfme5SixtyFive.cpp|function|Gen_000D5930@|bfmeHasBit,203d50b613e1c92975daf2dc,gpt-6.1-sol,20261009204435-1bf872,2026-10-09
+game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp|member||m_bfmeSending,d2cf836a0c24a6c8775008ee,gpt-6.1-sol,20261009204500-20ce89,2026-10-09
+game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp|member||m_bfmeReceiving,1dc27b340bdea2e2245b3348,gpt-6.1-sol,20261009204500-20ce89,2026-10-09
+game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp|function|Gen_00410BA0@|bfmeBusy,4419c9752a627b4f78c1260b,gpt-6.1-sol,20261009204500-20ce89,2026-10-09

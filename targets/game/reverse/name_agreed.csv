@@ -584,3 +584,6 @@ game/GameEngine/Source/Common/Bfme5SixtyFive.cpp|type||Gen_000D5930,Player,claud
 game/GameEngine/Source/Common/Bfme5SixtyFive.cpp|function|Gen_000D5930@|bfmeHasBit,hasUpgradeComplete,claude-opus+gpt-6.1-sol,agreed,2026-10-09
 game/GameEngine/Source/Common/Bfme5SixtyFive.cpp|type||Gen_000D5930,Player,claude-opus+gpt-6.1-sol,blocked: game/GameEngine/Source/Common/Bfme5SixtyFive.cpp: FAIL ?bfmeHasBit@Player@@QBE_NPBVBfmeThingEL@@@Z (game/GameEngine/Source/Common/Bfme5SixtyFive.cpp),2026-10-09
 game/GameEngine/Source/Common/Bfme5SixtyFive.cpp|function|Gen_000D5930@|bfmeHasBit,hasUpgradeComplete,claude-opus+gpt-6.1-sol,blocked: game/GameEngine/Source/Common/Bfme5SixtyFive.cpp: FAIL ?bfmeHasBit@Player@@QBE_NPBVBfmeThingEL@@@Z (game/GameEngine/Source/Common/Bfme5SixtyFive.cpp),2026-10-09
+game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp|member||m_bfmeSending,m_hidden,claude-opus+gpt-6.1-sol,agreed,2026-10-09
+game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp|member||m_bfmeReceiving,m_hiddenByStealth,claude-opus+gpt-6.1-sol,agreed,2026-10-09
+game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp|function|Gen_00410BA0@|bfmeBusy,isDrawableEffectivelyHidden,claude-opus+gpt-6.1-sol,agreed,2026-10-09
