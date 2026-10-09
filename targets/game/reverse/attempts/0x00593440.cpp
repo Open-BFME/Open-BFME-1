@@ -1,5 +1,5 @@
 // ?rva00593440@@YA?AURva00593440Record@@PAVObject@@@Z
-// partial score=0.3797 date=2026-10-03
+// partial score=0.527 date=2026-10-09
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /Igame/GameEngine/Source
 #include "GameLogic/Object/object.h"
 class NameKeyGenerator; class GameLogic; class ExperienceLevelSystem;
@@ -11,6 +11,16 @@ extern void j_000012a8(); extern void j_0000bc21(); extern void j_0000dfc1(); ex
 extern void j_0001e64b(); extern void j_00031471(); extern void j_00041295();
 class Rva00593440Calls {};
 struct Rva0058B610Pair { void *first; void *second; Rva0058B610Pair() {} Rva0058B610Pair(const Rva0058B610Pair &o):first(o.first),second(o.second) {} };
+class ExperienceLevelSystem {
+public:
+ void rva0037F190(Rva0058B610Pair*,Object*);
+ bool rva0037E810(Rva0058B610Pair);
+ int rva0037D810(Rva0058B610Pair);
+ int rva0037D840(Rva0058B610Pair);
+ Rva0058B610Pair rva0037F220(Rva0058B610Pair);
+ bool rva00381200(Object*);
+};
+class Rva0058B610TrackerCalls {public: bool rva001B2030(int*);};
 #define ROUTE0(tag,ret) typedef ret(Rva00593440Calls::*M##tag)(); __forceinline M##tag m##tag(){ union {void(*raw)();M##tag m;} c;c.raw=j_##tag;return c.m;}
 #define ROUTE1(tag,ret,a) typedef ret(Rva00593440Calls::*M##tag)(a); __forceinline M##tag m##tag(){ union {void(*raw)();M##tag m;} c;c.raw=j_##tag;return c.m;}
 #define ROUTE2(tag,ret,a,b) typedef ret(Rva00593440Calls::*M##tag)(a,b); __forceinline M##tag m##tag(){ union {void(*raw)();M##tag m;} c;c.raw=j_##tag;return c.m;}
@@ -29,16 +39,17 @@ ROUTE1(00041295,Rva0058B610Pair,Rva0058B610Pair)
 static bool rva0058b610(Object *object,int *rank,float *progress)
 {
  Rva0058B610Pair level;
- CALL(TheExperienceLevelSystem,0000edc7)(&level,object);
- if(!CALL(TheExperienceLevelSystem,0000dfc1)(level)) return false;
- *rank=CALL(TheExperienceLevelSystem,000012a8)(level);
- Rva0058B610Pair next=CALL(TheExperienceLevelSystem,00041295)(level);
- if(CALL(TheExperienceLevelSystem,0000dfc1)(next) && CALL(TheExperienceLevelSystem,0001e64b)(object)) {
+ TheExperienceLevelSystem->rva0037F190(&level,object);
+ bool valid=TheExperienceLevelSystem->rva0037E810(level);
+ if(!valid) return valid;
+ *rank=TheExperienceLevelSystem->rva0037D810(level);
+ Rva0058B610Pair next=TheExperienceLevelSystem->rva0037F220(level);
+ if(TheExperienceLevelSystem->rva0037E810(next) && TheExperienceLevelSystem->rva00381200(object)) {
   int maxRank;
-  if(!CALL(object->m_experienceTracker,00031471)(&maxRank) || *rank<maxRank) {
+  if(!((Rva0058B610TrackerCalls*)object->m_experienceTracker)->rva001B2030(&maxRank) || *rank<maxRank) {
    float experience=*(float*)((char*)object->m_experienceTracker+12);
-   float before=(float)CALL(TheExperienceLevelSystem,0000bc21)(level);
-   float after=(float)CALL(TheExperienceLevelSystem,0000bc21)(next);
+   float before=(float)TheExperienceLevelSystem->rva0037D840(level);
+   float after=(float)TheExperienceLevelSystem->rva0037D840(next);
    if(before<after) {
     *progress=(experience-before)/(after-before);
     if(*progress<0.0f) *progress=0.0f;
@@ -49,8 +60,7 @@ static bool rva0058b610(Object *object,int *rank,float *progress)
  }
  *progress=-1.0f;
 done:
- if(*rank<=1 && *progress<0) return false;
- return true;
+ return *rank>1 || *progress>=0.0f;
 }
 struct Rva00593440Record {
  int dword_0,dword_4; float float_8;
@@ -63,21 +73,24 @@ Rva00593440Record rva00593440(Object *object)
  void *life=CALL(object,0002ae23)(lifeKey);
  unsigned start,end;
  if(life && !*(bool*)(*(char**)((char*)life+4)+0x10)) {
-  start=*(unsigned*)((char*)life+0x24);end=*(unsigned*)((char*)life+0x20);
+  start=*(const volatile unsigned*)((char*)life+0x24);end=*(const volatile unsigned*)((char*)life+0x20);
   goto lifetime;
  }
  if(object->m_status[1]&0x20000000) {
   static int defectKey=CALL(TheNameKeyGenerator,0003add7)("TemporarilyDefectUpdate");
   void *defect=CALL(object,0002ae23)(defectKey);
-  if(defect && *(unsigned*)((char*)defect+0x20)>0) {
-   end=*(unsigned*)((char*)defect+0x20);start=*(unsigned*)((char*)defect+0x24);
-   goto lifetime;
+  if(defect) {
+   end=*(const volatile unsigned*)((char*)defect+0x20);
+   if(end>0) {
+    start=*(const volatile unsigned*)((char*)defect+0x24);
+    goto lifetime;
+   }
   }
  }
  goto rank;
 lifetime:
  result.dword_0=1;
- if(start<end) {
+ if(end>start) {
   result.float_8=float(end-*(unsigned*)((char*)TheGameLogic+0x3c))/float(end-start);
   if(result.float_8<0.0f) result.float_8=0.0f;
   else if(result.float_8>1.0f) result.float_8=1.0f;
