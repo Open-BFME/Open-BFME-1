@@ -1,17 +1,15 @@
 // ?listingGamesCallback@@YAXPAXHPBDPAU_SBServer@@HHH0@Z
-// partial score=0.9934640523 date=2026-09-23
+// partial score=1.0 date=2026-10-09
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Oy /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // PeerThread.cpp reconstruction bank. GPL-3.0-or-later, derived from EA Zero Hour.
-// Identity and boundaries: build/unclaimed_map/astra_J/IDENTITY.md.
+// Evidence: targets/game/reverse/identity_evidence/0064b6b0-donor-lifetime.md
 #include <string>
 #include <vector>
 #include <map>
 #include <string.h>
 #include <stdlib.h>
 #include "ascii_string.h"
-// TU inline definition from the observed buffer/null string access at 64BBB8.
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
 typedef int Int;
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
@@ -458,7 +456,9 @@ public:
 
  virtual unsigned rva0064BCFC()=0;
 };
-extern Rva012F1464View *Rva012F1464;
+class GameClient;
+extern GameClient *TheGameClient;
+#define Rva012F1464 reinterpret_cast<Rva012F1464View *>(TheGameClient)
 class PeerThreadClass {
 public:
  char Rva0064B80DOpaque[0x8c];
@@ -468,6 +468,20 @@ public:
  int Rva00648220(SBServer);
  int Rva00647F90(SBServer);
  void Rva00646240();
+};
+class Rva00648220PeerThreadMapView {
+public:
+ int lookupServer(SBServer);
+};
+namespace Rva00647F90 {
+class PeerThreadClass {
+public:
+ int removeServerFromMap(SBServer);
+};
+}
+class BfmeThingAVA {
+public:
+ void bfmeGoAVA();
 };
 #define EXECRC_STR		"exeCRC"
 #define INICRC_STR		"iniCRC"
@@ -486,6 +500,7 @@ public:
 #define WINS__STR			"wins"
 #define LOSSES__STR		"losses"
 
+// Open BFME 2 donor: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThread.cpp
 void listingGamesCallback(PEER peer, PEERBool success, const char * name, SBServer server, PEERBool staging, int msg, Int percentListed, void * param)
 {
 	PeerThreadClass *t = (PeerThreadClass *)param;
@@ -522,6 +537,27 @@ void listingGamesCallback(PEER peer, PEERBool success, const char * name, SBServ
 		DEBUG_LOG(("Bailing from listingGamesCallback() - success=%d, name=%X, server=%X, msg=%X\n", success, name, server, msg));
 		return;
 	}
+	if (false)
+	{
+		AsciiString cmdStr = "<Unknown>";
+		switch(msg)
+		{
+			case PEER_ADD:
+				cmdStr = "PEER_ADD";
+				break;
+			case PEER_UPDATE:
+				cmdStr = "PEER_UPDATE";
+				break;
+			case PEER_REMOVE:
+				cmdStr = "PEER_REMOVE";
+				break;
+			case PEER_CLEAR:
+				cmdStr = "PEER_CLEAR";
+				break;
+		}
+	}
+
+
 	if (!name)
 		name = "bogus";
 
@@ -533,7 +569,7 @@ void listingGamesCallback(PEER peer, PEERBool success, const char * name, SBServ
         else {
             std::string mode = std::string();
             mode=SBServerGetStringValue(server,"gamemode","");
-            if (Rva0063B2A0(mode,"closedplaying")) msg=PEER_REMOVE;
+            if (mode == "closedplaying") msg=PEER_REMOVE;
         }
 	}
 
@@ -656,7 +692,7 @@ void listingGamesCallback(PEER peer, PEERBool success, const char * name, SBServ
 				PeerRequest req;
 				unsigned frame=Rva012F1464->rva0064BCFC();
 				req.peerRequestType = PeerRequest::PEERREQUEST_GETEXTENDEDSTAGINGROOMINFO;
-				req.stagingRoom.id = t->Rva00648220( server );
+				req.stagingRoom.id = reinterpret_cast<Rva00648220PeerThreadMapView *>(t)->lookupServer( server );
 				DEBUG_LOG(("Add/update a 0/0 server %X (%d, %s) - requesting full update to see if that helps.\n",
 					server, resp.stagingRoom.id, gameName.str()));
 				if (Rva012B96D8 != req.stagingRoom.id || frame > Rva012F76EC + 15)
@@ -670,11 +706,11 @@ void listingGamesCallback(PEER peer, PEERBool success, const char * name, SBServ
 	switch (msg)
 	{
 		case PEER_CLEAR:
-			t->Rva00646240();
+			reinterpret_cast<BfmeThingAVA *>(t)->bfmeGoAVA();
 			break;
 		case PEER_ADD:
 		case PEER_UPDATE:
-			resp.stagingRoom.id = t->Rva00648220( server );
+			resp.stagingRoom.id = reinterpret_cast<Rva00648220PeerThreadMapView *>(t)->lookupServer( server );
 			DEBUG_LOG(("Add/update on server %X (%d, %s)\n", server, resp.stagingRoom.id, gameName.str()));
 			resp.stagingServerName = MultiByteToWideCharSingleLine( gameName.str() );
 			DEBUG_LOG(("Server had basic=%d, full=%d\n", SBServerHasBasicKeys(server), SBServerHasFullKeys(server)));
@@ -684,7 +720,7 @@ void listingGamesCallback(PEER peer, PEERBool success, const char * name, SBServ
 			break;
 		case PEER_REMOVE:
 			DEBUG_LOG(("Removing server %X (%d)\n", server, resp.stagingRoom.id));
-			resp.stagingRoom.id = t->Rva00647F90( server );
+			resp.stagingRoom.id = reinterpret_cast<Rva00647F90::PeerThreadClass *>(t)->removeServerFromMap( server );
 			break;
 	}
 
