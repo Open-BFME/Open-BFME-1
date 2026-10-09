@@ -4,14 +4,22 @@
 #define Matrix4x4 Matrix4
 #define __PLACEMENT_VEC_NEW_INLINE
 #include "dx8wrapper.h"
+#include "ww3d.h"
 #include "vector2.h"
 #include "Libraries/Source/WWVegas/WWMath/matrix4.h"
 
+// TU-local access to the native protected static getters; no instances.
+namespace {
+class Rva0078C070ResolutionAccess : public DX8Wrapper
+{
+public:
+	using DX8Wrapper::Get_Device_Resolution_Width;
+	using DX8Wrapper::Get_Device_Resolution_Height;
+};
+}
+
 extern void j_00008d4b(void);
 
-extern int g_Va012D6DB4;
-extern int g_Va012D6DB8;
-extern unsigned char g_Va0133F42B;
 
 class DX8VertexBufferClass;
 
@@ -51,12 +59,12 @@ void Rva00785FD0Renderer::rva0078C070(void)
 		Vector2 worldScale;
 		float &worldScaleX = worldScale.X;
 		float &worldScaleY = worldScale.Y;
-		float width = (float)(unsigned)g_Va012D6DB4;
+		float width = (float)(unsigned)Rva0078C070ResolutionAccess::Get_Device_Resolution_Width();
 		worldScaleX = 2.0f / width;
-		float height = (float)(unsigned)g_Va012D6DB8;
+		float height = (float)(unsigned)Rva0078C070ResolutionAccess::Get_Device_Resolution_Height();
 		worldScaleY = -2.0f / height;
 
-		unsigned char flagValue = g_Va0133F42B;
+		unsigned char flagValue = WW3D::Is_Screen_UV_Biased();
 		Vector2 worldTranslate;
 		float &worldTranslateX = worldTranslate.X;
 		float &worldTranslateY = worldTranslate.Y;
