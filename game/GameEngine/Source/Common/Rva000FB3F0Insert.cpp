@@ -140,10 +140,31 @@ public:
 
 namespace _STL
 {
+// Retail overflow 000FB080 is owned by RvaVectorInsertOverflowInlineCopy.cpp.
+// This append body calls it out of line; do not emit a competing helper.
+template <>
+void vector<Rva000FB210Element>::_M_insert_overflow(Rva000FB210Element *,
+	const Rva000FB210Element &, const __false_type &, size_t, bool);
+
 template<>
 inline void _Construct(Rva000FB210Element *p, const Rva000FB210Element &value)
 {
 	new (p) Rva000F9FF0(*(const Rva000F9FF0 *)&value);
+}
+
+// A named empty dispatch tag preserves the retail caller without value-
+// initializing storage when the overflow definition lives in another TU.
+template <>
+__forceinline void vector<Rva000FB210Element>::push_back(
+	const Rva000FB210Element &value)
+{
+	if (_M_finish != _M_end_of_storage._M_data) {
+		_Construct(_M_finish, value);
+		++_M_finish;
+	} else {
+		__false_type tag;
+		_M_insert_overflow(_M_finish, value, tag, 1, true);
+	}
 }
 }
 
