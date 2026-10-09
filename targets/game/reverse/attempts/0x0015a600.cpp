@@ -1,28 +1,20 @@
 // ?apply@Rva0015A600Bucket@@QAEHPBUCoord2D@@H@Z
-// partial score=0.19 date=2026-09-16
-// Open-BFME: address-derived bucket worker at retail 0x0015A600.
+// partial score=0.9545 date=2026-10-09
+// cl: /I.
 
 typedef float Real;
 typedef int Int;
 
-struct Coord2D
-{
-	Real x;
-	Real y;
-};
+#include "game/Libraries/Include/Lib/Coord2D.h"
 
 class Overridable
 {
 public:
-	const Overridable *getFinalOverride() const;
-
-	unsigned char m_pad00[4];
-	Overridable *m_nextOverride;
-	unsigned char m_pad08[0x74 - 0x08];
-	Int m_field74;
-	unsigned char m_pad78[0x43C - 0x78];
-	Int m_field43C;
-	Int m_field440;
+    const Overridable *getFinalOverride() const;
+    Overridable *&m_nextOverride() { return *(Overridable **)((char *)this + 4); }
+    Int &m_field74() { return *(Int *)((char *)this + 0x74); }
+    Int &m_field43C() { return *(Int *)((char *)this + 0x43C); }
+    Int &m_field440() { return *(Int *)((char *)this + 0x440); }
 };
 
 class Locomotor
@@ -32,6 +24,7 @@ public:
 	Overridable *m_template;
 };
 
+// Layout view of the AI interface reached through Object.
 class AIUpdate
 {
 public:
@@ -39,18 +32,14 @@ public:
 	Locomotor *m_currentLocomotor;
 };
 
-class Object
-{
-public:
-	unsigned char m_pad00[4];
-	Overridable *m_template;
-	unsigned char m_pad08[0x204 - 0x08];
-	AIUpdate *m_ai;
-	unsigned char m_pad208[0x31C - 0x208];
-	Int m_formationID;
-	Real m_formationOffsetX;
-	Real m_formationOffsetY;
-};
+#define OBJECT_TU_MEMBERS \
+    Int &m_formationID() { return *(Int *)((char *)this + 0x31C); } \
+    Real &m_formationOffsetX() { return *(Real *)((char *)this + 0x320); } \
+    Real &m_formationOffsetY() { return *(Real *)((char *)this + 0x324); } \
+    void setFormationID(Int formationID) { m_formationID() = formationID; } \
+    void setFormationOffset(const Coord2D &offset) { *(Coord2D *)&m_formationOffsetX() = offset; }
+#include "game/GameEngine/Source/GameLogic/Object/object.h"
+#undef OBJECT_TU_MEMBERS
 
 class TAiData
 {
@@ -76,58 +65,56 @@ public:
 	Int apply(const Coord2D *start, Int formationID);
 
 	Int m_count;
-	Object *m_items[1];
+	Object *m_items[6];
 };
 
 Int Rva0015A600Bucket::apply(const Coord2D *start, Int formationID)
 {
-	Int value[2];
-	Int total = 0;
-	Int index = 0;
+	Int total;
+	Int index;
+	total = index = 0;
 	if (m_count > 0)
 	{
-		Coord2D offset;
-		offset.x = start->x;
-		offset.y = start->y;
 		Object **item = m_items;
 		do
 		{
+			Coord2D offset = *start;
 			Object *object = *item;
-			Overridable *objectTemplate = object->m_template;
-			if (objectTemplate && objectTemplate->m_nextOverride)
-				objectTemplate = (Overridable *)objectTemplate->m_nextOverride->getFinalOverride();
-			value[0] = objectTemplate->m_field440;
+			Overridable *objectTemplate = (Overridable *)object->m_template;
+			if (objectTemplate && objectTemplate->m_nextOverride())
+				objectTemplate = (Overridable *)objectTemplate->m_nextOverride()->getFinalOverride();
+			Int value = objectTemplate->m_field440();
 			TAiData *data = TheAI->m_aiData;
 
-			objectTemplate = object->m_template;
-			if (objectTemplate && objectTemplate->m_nextOverride)
-				objectTemplate = (Overridable *)objectTemplate->m_nextOverride->getFinalOverride();
+			offset.y = (value * 0.5f + total) * data->m_formationWidth + offset.y;
 
-			offset.y = (value[0] * g_bfmeADL + total) * data->m_formationWidth + offset.y;
-			offset.x = offset.x - objectTemplate->m_field43C * data->m_formationHeight * g_bfmeADL;
+			objectTemplate = (Overridable *)object->m_template;
+			if (objectTemplate && objectTemplate->m_nextOverride())
+				objectTemplate = (Overridable *)objectTemplate->m_nextOverride()->getFinalOverride();
 
-			object->m_formationID = formationID;
+			offset.x = offset.x - objectTemplate->m_field43C() * data->m_formationHeight * 0.5f;
+
+			object->setFormationID(formationID);
 			Object *output = *item;
-			AIUpdate *ai = output->m_ai;
+			AIUpdate *ai = (AIUpdate *)output->m_ai;
 			if (ai)
 			{
 				Locomotor *locomotor = ai->m_currentLocomotor;
 				if (locomotor)
 				{
 					Overridable *locomotorTemplate = locomotor->m_template;
-					if (locomotorTemplate && locomotorTemplate->m_nextOverride)
-						locomotorTemplate = (Overridable *)locomotorTemplate->m_nextOverride->getFinalOverride();
-					if (locomotorTemplate->m_field74 == 0)
+					if (locomotorTemplate && locomotorTemplate->m_nextOverride())
+						locomotorTemplate = (Overridable *)locomotorTemplate->m_nextOverride()->getFinalOverride();
+					if (locomotorTemplate->m_field74() == 0)
 					{
-						offset.x *= g_bfmeADL;
-						offset.y *= g_bfmeADL;
+						offset.x *= 0.5f;
+						offset.y *= 0.5f;
 					}
 				}
 			}
 
-			output->m_formationOffsetX = offset.x;
-			output->m_formationOffsetY = offset.y;
-			total += value[0];
+			output->setFormationOffset(offset);
+			total += value;
 			++index;
 			++item;
 		}
