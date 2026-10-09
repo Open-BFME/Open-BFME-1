@@ -1873,6 +1873,8 @@ void Debug::SetPrefixAndRadix(const char *prefix, int radix)
   m_radix=radix;
 }
 
+// The byte-matched unsigned, long, unsigned long, bool and 64-bit
+// overloads live in WWVegas/WWDebug/debug_operator_long.cpp.
 Debug& Debug::operator<<(int val)
 {
   // usually having a fixed size buffer and a function
@@ -1881,41 +1883,6 @@ Debug& Debug::operator<<(int val)
   char help[1+32+1]; // sign, 32 digits (binary), NUL
   AddOutput(m_prefix,strlen(m_prefix));
   return (*this) << _itoa(val,help,m_radix);
-}
-
-Debug& Debug::operator<<(unsigned val)
-{
-  // usually having a fixed size buffer and a function
-  // that doesn't check for buffer overflow isn't a good idea
-  // but in this case we know how long it can be at max...
-  char help[32+1]; // 32 digits, NUL
-  AddOutput(m_prefix,strlen(m_prefix));
-  return (*this) << _ultoa(val,help,m_radix);
-}
-
-Debug& Debug::operator<<(long val)
-{
-  // usually having a fixed size buffer and a function
-  // that doesn't check for buffer overflow isn't a good idea
-  // but in this case we know how long it can be at max...
-  char help[1+32+1]; // sign, 32 digits, NUL
-  AddOutput(m_prefix,strlen(m_prefix));
-  return (*this) << _itoa(val,help,m_radix);
-}
-
-Debug& Debug::operator<<(unsigned long val)
-{
-  // usually having a fixed size buffer and a function
-  // that doesn't check for buffer overflow isn't a good idea
-  // but in this case we know how long it can be at max...
-  char help[32+1]; // 32 digits, NUL
-  AddOutput(m_prefix,strlen(m_prefix));
-  return (*this) << _ultoa(val,help,m_radix);
-}
-
-Debug& Debug::operator<<(bool val)
-{
-  return (*this) << (val?"true":"false");
 }
 
 Debug& Debug::operator<<(float val)
@@ -1952,26 +1919,6 @@ Debug& Debug::operator<<(unsigned short val)
   char help[16+1]; // 16 digits, NUL
   AddOutput(m_prefix,strlen(m_prefix));
   return (*this) << _itoa(val,help,m_radix);
-}
-
-Debug& Debug::operator<<(__int64 val)
-{
-  // usually having a fixed size buffer and a function
-  // that doesn't check for buffer overflow isn't a good idea
-  // but in this case we know how long it can be at max...
-  char help[1+64+1]; // sign, 64 digits, NUL
-  AddOutput(m_prefix,strlen(m_prefix));
-  return (*this) << _i64toa(val,help,m_radix);
-}
-
-Debug& Debug::operator<<(unsigned __int64 val)
-{
-  // usually having a fixed size buffer and a function
-  // that doesn't check for buffer overflow isn't a good idea
-  // but in this case we know how long it can be at max...
-  char help[64+1]; // sign, 64 digits, NUL
-  AddOutput(m_prefix,strlen(m_prefix));
-  return (*this) << _ui64toa(val,help,m_radix);
 }
 
 Debug& Debug::operator<<(const void *ptr)
