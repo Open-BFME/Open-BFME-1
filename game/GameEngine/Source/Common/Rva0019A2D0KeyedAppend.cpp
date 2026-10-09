@@ -27,6 +27,9 @@ struct Rva001999C0Element
 	char m_body[140];
 };
 
+struct Gen_t_00195060_k4;
+struct Gen_t_00195060_p12cd;
+
 namespace _STL
 {
 struct __false_type
@@ -38,8 +41,9 @@ class allocator
 {
 };
 
-template <class Type>
-void __cdecl BfmeElementConstruct(Type *destination, const Type &value);
+template <class First, class Second> struct pair;
+template <class First, class Second>
+void __cdecl _Construct(First *destination, const Second &value);
 
 template <class Type, class Allocator>
 class vector
@@ -49,7 +53,8 @@ public:
 	{
 		if (_M_finish != _M_end_of_storage)
 		{
-			BfmeElementConstruct(_M_finish, value);
+			_Construct(reinterpret_cast<pair<const Gen_t_00195060_k4, Gen_t_00195060_p12cd> *>(_M_finish),
+			reinterpret_cast<const pair<const Gen_t_00195060_k4, Gen_t_00195060_p12cd> &>(value));
 			++_M_finish;
 		}
 		else
