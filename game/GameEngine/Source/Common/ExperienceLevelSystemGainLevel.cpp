@@ -11,6 +11,8 @@
 typedef bool Bool;
 
 class ExperienceLevel;
+class BfmeInfoBW;
+class BfmeAgentBW;
 // Neutral borrowed circular-list-like collection owned by the system map.
 // Its original typedef and element wrapper are not yet established.
 class ExperienceLevelCollection;
@@ -50,19 +52,26 @@ public:
 
 	// Address-derived member names state ownership and ABI without inventing
 	// semantics.  The first body is already matched; the other two remain
-	// generated.
-	ExperienceLevelCollection *rva0037F050(Object *object);
+	// generated.  The query and award helpers are the matched ledger rows
+	// ?bfmeQuery0037F050@ExperienceLevelSystem@@QAEPAXPAX@Z (0x0037F050) and
+	// ?bfmeAwardBW@ExperienceLevelSystem@@QAEXPAVBfmeInfoBW@@PAVBfmeAgentBW@@PAXD@Z
+	// (0x00380110); both are non-owning thiscall members reached through the
+	// normal 5-byte ILT entries, so the respelled calls keep the same ECX
+	// receiver and push sequence (pointer-sized first args; the bool/char
+	// flag slots both push one dword).
+	void *bfmeQuery0037F050(void *record);
 	ExperienceLevel *rva003806D0(
 		ExperienceLevelCollection *currentLevels, const AsciiString &levelName);
-	void rva00380110(ExperienceLevel *level, Object *object,
-		Bool showExperienceFX, Bool unknownFlag);
+	void bfmeAwardBW(BfmeInfoBW *info, BfmeAgentBW *agent, void *extra,
+		char bonus);
 };
 
 // ?gainLevel@ExperienceLevelSystem@@QAEXPAVObject@@_N@Z
 void ExperienceLevelSystem::gainLevel(
 	Object *object, Bool showExperienceFX)
 {
-	ExperienceLevelCollection *currentLevels = rva0037F050(object);
+	ExperienceLevelCollection *currentLevels =
+		(ExperienceLevelCollection *)bfmeQuery0037F050((void *)object);
 	if (currentLevels == 0)
 		return;
 
@@ -71,7 +80,11 @@ void ExperienceLevelSystem::gainLevel(
 	ExperienceLevel *nextLevel = rva003806D0(currentLevels, levelName);
 	if (nextLevel != 0)
 	{
-		Bool feedback = showExperienceFX;
-		rva00380110(nextLevel, object, feedback, false);
+		// Retail pushes this flag's 4-byte incoming slot as-is (mov ecx,[..] /
+		// push ecx, no test/setne), the same raw-dword passthrough the matched
+		// bfmeAwardBW body documents with its RawBool union.  A Bool local
+		// would materialise a byte copy here, so read the slot as a dword.
+		bfmeAwardBW((BfmeInfoBW *)nextLevel, (BfmeAgentBW *)object,
+			*(void **)&showExperienceFX, (char)false);
 	}
 }
