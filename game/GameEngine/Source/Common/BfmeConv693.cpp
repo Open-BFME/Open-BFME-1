@@ -1,15 +1,19 @@
-class BfmeThingDGG
+class BfmeThingDGG;
+
+class Gen007F0130
 {
 public:
-	BfmeThingDGG *bfmeInitDGG(void *a);
+	static void *operator new(unsigned int size);
 };
 
-void *__cdecl bfmeAllocDGG(unsigned int size);
+class Rva007FA990 : public Gen007F0130
+{
+public:
+	Rva007FA990(void *a) throw();
+	unsigned char m_bfmeBody[0xd8];
+};
 
 BfmeThingDGG *bfmeGoDGG(void *a)
 {
-	void *p = bfmeAllocDGG(0xd8);
-	if (p != 0)
-		return ((BfmeThingDGG *)p)->bfmeInitDGG(a);
-	return 0;
+	return reinterpret_cast<BfmeThingDGG *>(new Rva007FA990(a));
 }
