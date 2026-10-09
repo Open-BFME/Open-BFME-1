@@ -5,18 +5,22 @@ struct BfmeLinkRW
 	void *m_bfmeWhat;
 };
 
-// Retail's callee at 0x0082E540 is the STLport node allocator's public
-// allocate entry, defined by
-// game/Libraries/Source/WWVegas/WWLib/STL_new_alloc_allocateThunk.cpp.
-// Spelled with the defining name so this TU links.
+// Retail 0x0082E540 is the private node pool allocation member.
 namespace _STL
 {
 
-class __new_alloc
+// Retail 0x0082E540 is the matched node pool refill/mutex body.
+static __forceinline void *vectorSmallAllocate(unsigned int bytes);
+template <bool Threads, int Instance>
+class __node_alloc
 {
-public:
-	static void *allocate(unsigned int n);
+	static void *__cdecl _M_allocate(unsigned int bytes);
+	friend void *vectorSmallAllocate(unsigned int bytes);
 };
+static __forceinline void *vectorSmallAllocate(unsigned int bytes)
+{
+	return __node_alloc<true, 0>::_M_allocate(bytes);
+}
 
 }
 
@@ -31,7 +35,7 @@ public:
 void BfmeListRW::bfmePushRW(void *what)
 {
 	BfmeLinkRW *end = *m_bfmeRoot;
-	BfmeLinkRW *link = (BfmeLinkRW *)_STL::__new_alloc::allocate(0xc);
+	BfmeLinkRW *link = (BfmeLinkRW *)_STL::vectorSmallAllocate(0xc);
 	void **slot = &link->m_bfmeWhat;
 	if (slot != 0)
 		*slot = what;
