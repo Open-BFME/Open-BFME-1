@@ -37,18 +37,19 @@ private:
 class SpecialPowerTemplate : public Overridable
 {
 public:
-	bool isSharedNSync(void) const
-	{
-		SpecialPowerTemplate *self = const_cast<SpecialPowerTemplate *>(this);
-		return ((const SpecialPowerTemplate *)self->finalOverrideUnrolled())->m_sharedNSync;
-	}
-
 	unsigned int getReloadTime(void) const;
 
-private:
 	unsigned char m_unreconstructed_08[0x10d];
 	bool m_sharedNSync;
 };
+
+// The inlined isSharedNSync() read, kept TU-local: a member accessor here
+// emitted a COMDAT that differs from the first linked copy.
+static inline bool Rva00268BA0IsSharedNSync(const SpecialPowerTemplate *temp)
+{
+	SpecialPowerTemplate *self = const_cast<SpecialPowerTemplate *>(temp);
+	return ((const SpecialPowerTemplate *)self->finalOverrideUnrolled())->m_sharedNSync;
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialPowerModule.h
 class SpecialPowerModuleData
@@ -129,7 +130,7 @@ void Rva00268BA0ScaledPowerRecharge::startPowerRecharge(void)
 	if (!player)
 		return;
 
-	if (modData->m_specialPowerTemplate->isSharedNSync())
+	if (Rva00268BA0IsSharedNSync(modData->m_specialPowerTemplate))
 	{
 		player->resetOrStartSpecialPowerReadyFrame(modData->m_specialPowerTemplate);
 	}

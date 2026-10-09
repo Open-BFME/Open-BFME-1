@@ -4014,29 +4014,6 @@ void Player::addNewSharedSpecialPowerTimer( const SpecialPowerTemplate *temp, Un
 
 }
 
-// ?resetOrStartSpecialPowerReadyFrame@Player@@QAEXPBVSpecialPowerTemplate@@@Z present-unmatched
-void Player::resetOrStartSpecialPowerReadyFrame( const SpecialPowerTemplate *temp )
-{
-
-	UnsignedInt lookupID = temp->getID();
-	UnsignedInt now = TheGameLogic->getFrame();
-
-	SpecialPowerReadyTimerType *timer;
-	SpecialPowerReadyTimerListIterator it;
-	for( it = m_specialPowerReadyTimerList.begin(); it != m_specialPowerReadyTimerList.end(); ++it )
-	{
-		timer = &(*it);
-		if ( timer->m_templateID == lookupID )
-		{
-			timer->m_readyFrame = now + temp->getReloadTime();
-			return;
-		}
-	}
-
-	addNewSharedSpecialPowerTimer( temp, now );
-}
-
-
 // ?expressSpecialPowerReadyFrame@Player@@QAEXPBVSpecialPowerTemplate@@I@Z present-unmatched
 void Player::expressSpecialPowerReadyFrame( const SpecialPowerTemplate *temp, UnsignedInt frame )
 {
