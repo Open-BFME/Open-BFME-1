@@ -368,7 +368,9 @@ private:
 	static IDirect3DDevice8 *_Get_D3D_Device8() { return D3DDevice; }
 
 	static bool _Is_Triangle_Draw_Enabled() { return _EnableTriangleDraw; }
+public:
 	static void Apply_Render_State_Changes();
+private:
 	static void Draw_Sorting_IB_VB(
 		unsigned primitive_type,
 		UnsignedShort start_index,
@@ -390,7 +392,7 @@ private:
 		int indexed_draw);
 };
 
-// ?Apply_Render_State_Changes@DX8Wrapper@@CAXXZ
+// ?Apply_Render_State_Changes@DX8Wrapper@@SAXXZ
 void DX8Wrapper::Apply_Render_State_Changes()
 {
 	if (!render_state_changed)
