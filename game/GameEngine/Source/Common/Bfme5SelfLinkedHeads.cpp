@@ -14,11 +14,18 @@
 
 namespace _STL
 {
-class __new_alloc
+// Retail 0x0082E540 is the matched node pool refill/mutex body.
+static __forceinline void *vectorSmallAllocate(unsigned int bytes);
+template <bool Threads, int Instance>
+class __node_alloc
 {
-public:
-	static void *allocate(unsigned int bytes);
+	static void *__cdecl _M_allocate(unsigned int bytes);
+	friend void *vectorSmallAllocate(unsigned int bytes);
 };
+static __forceinline void *vectorSmallAllocate(unsigned int bytes)
+{
+	return __node_alloc<true, 0>::_M_allocate(bytes);
+}
 }
 
 struct BfmeSelfHead
@@ -91,7 +98,7 @@ Gen_00443560::Gen_00443560(void)
 {
 	m_bfmeHead = 0;
 
-	BfmeSelfHead *head = (BfmeSelfHead *)_STL::__new_alloc::allocate(0xC);
+	BfmeSelfHead *head = (BfmeSelfHead *)_STL::vectorSmallAllocate(0xC);
 
 	head->m_bfmeNext = head;
 	head->m_bfmePrev = head;
@@ -117,7 +124,7 @@ Gen_0056E0F0::Gen_0056E0F0(void *owner)
 {
 	m_bfmeHead = 0;
 
-	BfmeSelfHead *head = (BfmeSelfHead *)_STL::__new_alloc::allocate(0x44);
+	BfmeSelfHead *head = (BfmeSelfHead *)_STL::vectorSmallAllocate(0x44);
 
 	head->m_bfmeNext = head;
 	head->m_bfmePrev = head;
@@ -130,7 +137,7 @@ Gen_0076F740::Gen_0076F740(void *owner)
 {
 	m_bfmeHead = 0;
 
-	BfmeSelfHead *head = (BfmeSelfHead *)_STL::__new_alloc::allocate(0x1C);
+	BfmeSelfHead *head = (BfmeSelfHead *)_STL::vectorSmallAllocate(0x1C);
 
 	head->m_bfmeNext = head;
 	head->m_bfmePrev = head;
