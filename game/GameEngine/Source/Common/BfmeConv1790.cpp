@@ -52,6 +52,21 @@ public:
 	BfmeHolderMD *m_bfmeHolderMD;
 };
 
+class Weapon;
+enum WeaponSlotType;
+
+class Object
+{
+public:
+	Weapon *getCurrentWeapon(WeaponSlotType *slot);
+};
+
+class Rva001E1770ByteField
+{
+public:
+	unsigned char get(void) const;
+};
+
 char BfmeOwnerMD::bfmeCheckMD(void)
 {
 	BfmeHolderMD *holder = m_bfmeHolderMD;
@@ -62,10 +77,10 @@ char BfmeOwnerMD::bfmeCheckMD(void)
 
 	if (thing->m_bfmeFlagsMD & 0x400000)
 	{
-		BfmeItemMD *item = holder->bfmeFindMD(0);
+		BfmeItemMD *item = (BfmeItemMD *)((Object *)(void *)holder)->getCurrentWeapon((WeaponSlotType *)0);
 
 		if (item)
-			return item->m_bfmeSubMD->bfmeTestMD();
+			return ((Rva001E1770ByteField *)(void *)item->m_bfmeSubMD)->get();
 
 		return 1;
 	}
