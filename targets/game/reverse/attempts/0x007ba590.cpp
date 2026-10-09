@@ -1,16 +1,6 @@
 // ?updateOptimalExtrusionPadding@W3DVolumetricShadow@@IAEXXZ
-// partial score=0.9947 date=2026-10-01
+// partial score=0.9974 date=2026-10-10
 // cl: /DNDEBUG /MD /EHsc /O2 /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Include
-// ?updateOptimalExtrusionPadding@W3DVolumetricShadow@@IAEXXZ
-// Retail 0x007BA590, 760 bytes. Identity: W3DVolumetricShadow::Update
-// (0x007BF7D0) does `if (m_extraExtrusionPadding == 0) call ILT 0x00042127
-// (-> 0x007BA590); updateVolumes(m_extraExtrusionPadding)`, Zero Hour's
-// Update line for line, and this body writes +0x7C. BFME replaced ZH's
-// Cast_Ray search with a fixed 20-unit terrain walk up to 5120 per top-box
-// corner (probe 200 units ahead when the sample dips under the terrain).
-// Remaining four bytes: corners[0].X loads Center before Extent (retail
-// loads Extent first; Y/Z match). Copying lightRay before scaling sampleStep
-// fixes the sample-point store schedule without changing the 760-byte extent.
 #include "rendobj.h"
 
 typedef float Real;
@@ -64,6 +54,7 @@ private:
 	Real m_extraExtrusionPadding;
 };
 
+// Open BFME 2: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadowUpdateOptimalExtrusionPadding.cpp.
 void W3DVolumetricShadow::updateOptimalExtrusionPadding(void)
 {
 	if (m_robj)
@@ -83,7 +74,7 @@ void W3DVolumetricShadow::updateOptimalExtrusionPadding(void)
 		const AABoxClass &box = m_robj->Get_Bounding_Box();
 		Vector3 corners[4];
 
-		corners[0] = box.Center + box.Extent;
+		corners[0] = Vector3(((const volatile Vector3 &)box.Extent).X + box.Center.X, box.Center.Y + box.Extent.Y, box.Center.Z + box.Extent.Z);
 		corners[1] = corners[0];
 		corners[1].X -= 2.0f * box.Extent.X;
 		corners[2] = corners[1];
