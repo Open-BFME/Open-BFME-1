@@ -90925,3 +90925,4 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ?method@Rva0049B2A0@@QBEPBVThingTemplate@@XZ,0x0049B2A0,evidence=targets/game/reverse/identity_evidence/000fdbf0-buildassistant-ispossibletomakeunit.md;opaque body identity;independently decoded target and ABI
 ?method@Rva000F9700Owner@@QAE_NH@Z,0x000F9700,evidence=targets/game/reverse/identity_evidence/000fdbf0-buildassistant-ispossibletomakeunit.md;opaque body identity;independently decoded target and ABI
 ?rva002AD670@StealthUpdate@@QAE?AW4UpdateSleepTime@@XZ,0x002AD670,complete helper and wrapper prove primary StealthUpdate receiver zero stack arguments and dword sleep return; evidence=targets/game/reverse/identity_evidence/002adfb0-stealth-wrapper.md
+?d_004b3e30@@YAXPAVGameWindow@@@Z,0x004B3E30,compiler-private static helper; window in EBX; complete 384-byte body and caller verified; evidence=identity_evidence/004b4010-input-and-private-helper.md
