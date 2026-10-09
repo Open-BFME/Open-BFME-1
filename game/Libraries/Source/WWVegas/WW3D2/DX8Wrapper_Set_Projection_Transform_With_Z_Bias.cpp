@@ -6,34 +6,9 @@
 #define Matrix4x4 Matrix4
 #include "matrix4.h"
 
-typedef unsigned int UnsignedInt;
-typedef long HRESULT;
+#include "dx8wrapper.h"
 
-struct BfmeProjectionDevice;
-struct BfmeProjectionDeviceVtable
-{
-	void *reserved[44];
-	HRESULT (__stdcall *SetTransform)(BfmeProjectionDevice *, UnsignedInt, void *);
-};
-struct BfmeProjectionDevice
-{
-	BfmeProjectionDeviceVtable *vtable;
-};
-
-class DX8Wrapper
-{
-public:
-	static void Set_Projection_Transform_With_Z_Bias(const Matrix4 &matrix, float znear, float zfar);
-	static BfmeProjectionDevice *D3DDevice;
-	static float ZBias;
-protected:
-	static float ZNear;
-public:
-	static float ZFar;
-	static Matrix4 ProjectionMatrix;
-};
-
-extern UnsignedInt number_of_DX8_calls;
+extern unsigned int number_of_DX8_calls;
 
 // ?Set_Projection_Transform_With_Z_Bias@DX8Wrapper@@SAXABVMatrix4@@MM@Z
 void DX8Wrapper::Set_Projection_Transform_With_Z_Bias(
@@ -46,15 +21,16 @@ void DX8Wrapper::Set_Projection_Transform_With_Z_Bias(
 
 	if (znear != zfar) {
 		tmp = ProjectionMatrix;
-		float tmp_zbias = ZBias;
+		// BFME stores float bits in the shared header's integer ZBias cell.
+		float tmp_zbias = *reinterpret_cast<float *>(&ZBias);
 		tmp[3][2] -= (znear * zfar / (zfar - znear)) *
 			(tmp_zbias * (1.0f / 1600.0f));
-		D3DDevice->vtable->SetTransform(
-			D3DDevice, 3, reinterpret_cast<void *>(&tmp));
+		D3DDevice->SetTransform(
+			D3DTS_PROJECTION, reinterpret_cast<D3DMATRIX *>(&tmp));
 	}
 	else {
-		D3DDevice->vtable->SetTransform(
-			D3DDevice, 3, reinterpret_cast<void *>(&ProjectionMatrix));
+		D3DDevice->SetTransform(
+			D3DTS_PROJECTION, reinterpret_cast<D3DMATRIX *>(&ProjectionMatrix));
 	}
 	++number_of_DX8_calls;
 }
