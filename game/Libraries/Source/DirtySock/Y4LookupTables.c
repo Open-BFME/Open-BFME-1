@@ -46,3 +46,25 @@ int Rva0080D890( const void *bytes, int length )
 
 	return result;
 }
+
+/* Retail 0x0112A110: 256-byte hex-digit value table read by Y4CivilTime.c's
+   text-to-value reader (index = character; '0'-'9' -> 0-9, 'A'-'F' and
+   'a'-'f' -> 10-15, everything else 0). Address-derived name. */
+const unsigned char g_Rva0112A110Hex[ 256 ] =
+{
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 0, 0, 0, 0, 0,
+	0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 10, 11, 12, 13, 14, 15
+};
+
+/* Retail 0x0112A530: days per month, leap-year row first then common year;
+   Y4CivilTime.c picks the row with ( yearDays & 1 ) * 12. Address-derived name. */
+const int g_Rva0112A530MonthDays[ 24 ] =
+{
+	31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31,
+	31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+};
