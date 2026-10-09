@@ -179,25 +179,6 @@ public:
 // The retail constructor is owned by AICommandInterfaceAttackCommands.cpp.
 
 //----------------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AICommandParmsStorage_store.cpp
-// ?store@AICommandParmsStorage@@QAEXABUAICommandParms@@@Z present-unmatched
-void AICommandParmsStorage::store(const AICommandParms& parms)
-{
-	m_cmd = parms.m_cmd;
-  m_cmdSource = parms.m_cmdSource;
-  m_pos = parms.m_pos;
-  m_obj = parms.m_obj ? parms.m_obj->getID() : INVALID_ID;
-  m_otherObj = parms.m_otherObj ? parms.m_otherObj->getID() : INVALID_ID;
-  m_teamName = parms.m_team ? parms.m_team->getName() : AsciiString::TheEmptyString;
-	m_coords = parms.m_coords;
-  m_waypoint = parms.m_waypoint; 
-  m_polygon = parms.m_polygon;     
-  m_intValue = parms.m_intValue;       /// misc usage
-  m_damage = parms.m_damage;
-	m_commandButton = parms.m_commandButton;
-	m_path = parms.m_path;	/// @todo srj -- probably need a better way to safely save/restore this
-}
-
 //----------------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AICommandParmsStorage_reconstitute.cpp
 // ?reconstitute@AICommandParmsStorage@@QBEXAAUAICommandParms@@@Z present-unmatched
