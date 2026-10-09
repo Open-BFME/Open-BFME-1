@@ -1,4 +1,14 @@
+// Callees (tools/callees.py 0x216520 60): ILT 0xFED4 -> 0x001E9D60 Weapon::loadAmmoNow,
+// ILT 0x1F1D1 -> 0x001EA5F0 Weapon::rva001EA5F0.
+class Object;
 class BfmeThingGK;
+
+class Weapon
+{
+public:
+	void loadAmmoNow(const Object *victim);
+	bool rva001EA5F0(const Object *source, int arg2, const Object *victim, int *arg4);
+};
 
 class BfmePrimaryGK
 {
@@ -23,20 +33,13 @@ public:
 	int m_bfmeKindGK;
 };
 
-class BfmeSubGK
-{
-public:
-	void bfmeFirstGK(BfmeThingGK *thing);
-	void bfmeSecondGK(BfmeThingGK *thing, int kind, BfmeArgGK *arg, int flag);
-};
-
 class BfmeSecondGK
 {
 public:
 	void bfmeGoGK(BfmeArgGK *arg, int unusedA, int unusedB);
 
 	unsigned char m_bfmeHeadGK[4];
-	BfmeSubGK *m_bfmeSubGK;
+	Weapon *m_bfmeSubGK;
 };
 
 void BfmeSecondGK::bfmeGoGK(BfmeArgGK *arg, int unusedA, int unusedB)
@@ -50,6 +53,6 @@ void BfmeSecondGK::bfmeGoGK(BfmeArgGK *arg, int unusedA, int unusedB)
 	if (((BfmePrimaryGK *)(base - 0x10))->bfmeCheckGK() == 0)
 		return;
 
-	m_bfmeSubGK->bfmeFirstGK(thing);
-	m_bfmeSubGK->bfmeSecondGK(thing, arg->m_bfmeKindGK, arg, 0);
+	m_bfmeSubGK->loadAmmoNow((const Object *)thing);
+	m_bfmeSubGK->rva001EA5F0((const Object *)thing, arg->m_bfmeKindGK, (const Object *)arg, 0);
 }

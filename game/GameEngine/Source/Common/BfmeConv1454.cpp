@@ -1,18 +1,20 @@
 // Open-BFME5 conversions.
 
-class BfmeSvcVMO;
+// Callees (tools/callees.py 0x803030 70): 0x007EA550 Rva007EAServiceList::add,
+// 0x007EA590 Rva007EAServiceList::remove.
+class Rva00803080;
 
-class BfmeListVMO
+class Rva007EAServiceList
 {
 public:
-	void bfmeAddVMO(BfmeSvcVMO *p);
-	void bfmeRemoveVMO(BfmeSvcVMO *p);
+	void add(Rva00803080 *p);
+	void remove(Rva00803080 *p);
 };
 
 struct BfmeOwnVMO
 {
 	char m_bfmePad00[0xc];
-	BfmeListVMO *m_bfme0c;
+	Rva007EAServiceList *m_bfme0c;
 };
 
 class BfmeSvcVMO
@@ -30,11 +32,11 @@ void BfmeSvcVMO::bfmeSetVMO(int n)
 {
 	if (n > 0 && m_bfme10 == 0)
 	{
-		m_bfme04->m_bfme0c->bfmeAddVMO(this);
+		m_bfme04->m_bfme0c->add((Rva00803080 *)this);
 		m_bfme10 = n;
 		return;
 	}
 	if (n == 0 && m_bfme10 > 0)
-		m_bfme04->m_bfme0c->bfmeRemoveVMO(this);
+		m_bfme04->m_bfme0c->remove((Rva00803080 *)this);
 	m_bfme10 = n;
 }
