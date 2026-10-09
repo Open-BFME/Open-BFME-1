@@ -102,10 +102,6 @@ public:
 		return m_state != 0 ? m_state->slot20() : false;
 	}
 
-	Bool isInIdleState() const
-	{
-		return m_state != 0 ? m_state->slot20() : true;
-	}
 
 	char m_unmodelled_004[0x1c - 4];
 	State *m_state;
@@ -113,18 +109,17 @@ public:
 	Bool m_locked;
 };
 
+static __forceinline Bool dispatchIsIdle(const StateMachine *machine)
+{
+	return machine->m_state != 0 ? machine->m_state->slot20() : true;
+}
+
 static State *loadCurrentState(const StateMachine *machine)
 {
 	return machine->m_state;
 }
 
 extern Bool bfmeMeleeHordeTargetInvalid(Object *attacker, Object *target);
-
-class BfmeUnit988
-{
-public:
-	void bfmeReset988D();
-};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 struct AICommandParms
@@ -548,6 +543,7 @@ protected:
 
 public:
 	void bfmeAttackTarget(Object *target);
+	void destroyPath();
 
 	virtual void aiDoCommand(const AICommandParms *parms);
 };
@@ -868,7 +864,7 @@ void AIUpdateInterface::bfmeAttackTarget(Object *target)
 	Bool preserveCurrentOrder = currentStateId == STATE_ATTACK_MOVE_TO_POSITION ||
 		currentStateId == BFME_AI_FOLLOW_PATH_STATE_0x3D;
 
-	if (!m_stateMachine->isInIdleState() && !preserveCurrentOrder)
+	if (!dispatchIsIdle(m_stateMachine) && !preserveCurrentOrder)
 	{
 		if (m_field34 == 0)
 		{
@@ -886,5 +882,5 @@ void AIUpdateInterface::bfmeAttackTarget(Object *target)
 		((StateMachine *)m_stateMachine)->m_locked = 1;
 	Object *source = m_object;
 	if (!bfmeMeleeHordeTargetInvalid(source, target))
-		((BfmeUnit988 *)this)->bfmeReset988D();
+		destroyPath();
 }
