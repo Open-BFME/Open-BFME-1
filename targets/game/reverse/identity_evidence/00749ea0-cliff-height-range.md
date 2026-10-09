@@ -1,0 +1,37 @@
+# Recovery at RVA 0x00749EA0
+
+The complete 354-byte body computes the range of four unsigned 16-bit terrain heights and sends a byte flag to the bounds-checked bit setter reached through ILT 0x00027DEF. The owner remains `Rva00749EA0HeightGrid`: the existing `BfmeGridWM::walk` name and its provisional `cell` pin establish a compatible call site, not an independently proven EA class identity. The method name describes the witnessed operation and retains the address in its owner.
+
+## Retry hypothesis and refutation
+
+The three earlier records report an x87 temporary and register-allocation mismatch, with no saved source. Current landed neighbours provide the `/O2` context and signed width at +0x08 (`BfmeGrokGrid.cpp` and `BfmeGrokMapLook.cpp`); the landed bitmap sibling `Rva00749A10MaskAX.cpp` provides independently checkable setter structure. The target itself provides the missing unsigned-short height return and streamed minimum/maximum lifetime. These are the proposed remedies to the earlier blocker; the prior records do not document their exact source shapes.
+
+The new hypothesis is that a nullable inline accessor returning `unsigned short`, followed immediately by `if (minZ > height) ... else if (maxZ < height) ...` for each additional corner, reproduces the live x87 maximum and the spilled minimum. It is refuted if this complete shape fails to reproduce the decoded accesses, the two-arm comparisons, or the full 354-byte body. The first compiler experiment reproduced every byte outside its two relocation operands. The final source also probed exact, and the ordinary byte gate validated the constant and call bindings.
+
+The Zero Hour donor was read directly at `inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp`, in `setCellCliffFlagFromHeights`, and its header's `getHeight`. It uses byte heights multiplied by `MAP_HEIGHT_SCALE`, gathers four heights, and then performs separate minimum and maximum passes. Retail instead reads words, has no scale multiplication, and branches past the maximum update after a successful minimum update. The donor supports the operation, but its types and statement order are not copied into this recovery.
+
+## Boundary and ABI evidence
+
+Full linear decoding covers [0x00749EA0, 0x0074A002). Every conditional branch and unconditional jump lands on an instruction inside that range; there are no tail jumps or indirect calls. The only return is `ret 8` at 0x00749FFF, followed by alignment `int3` bytes. The prologue caches the incoming first stack argument in EBX, the second in EDI, and reads the receiver from ECX. It allocates one dword and preserves EBX, ESI and EDI. The body has no exception frame or cleanup helper.
+
+The complete 63-byte caller at 0x0074C890 passes Y then X on the stack, sets ECX to the same receiver, and calls the instruction-aligned ILT at 0x00023B14. That five-byte thunk jumps directly to 0x00749EA0. Both loop counters and the width/height comparisons are signed 32-bit integers. The caller ignores the result; the target's observable output is the setter call. There is no hidden return storage or receiver adjustment.
+
+The complete 96-byte callee at 0x00749A90 is reached through the five-byte ILT at 0x00027DEF. It checks signed X/Y against width +0x08 and height +0x0C, computes pitch +0x34 times Y plus X shifted right by three, checks the unsigned byte span between pointers at +0x38 and +0x3C, and sets or clears one bit. It reads only the low byte of its third stack slot, tests it for nonzero, and ends both paths with `ret 12`. The target passes X, Y and a byte holding zero or one with the unchanged ECX receiver. The declaration-only `j_00027def` symbol is invoked through a typed member pointer, preserving that measured thiscall ABI without inventing a pin or a real callee identity.
+
+## Field and value evidence
+
+The target reads width as a signed dword at +0x08, the signed height-array extent at +0x20, and the array pointer at +0x24. Each inline lookup checks a nonnegative signed index below that extent and a nonnull pointer. Its load is a word at pointer plus index times two, followed by `movzx` and a signed-dword `fild` of the zero-extended value. This proves the `unsigned short` accessor result and the element width independently of allocation sizes or donor names. The fourth lookup addresses the adjacent column in the next row, completing the four corners. The declared height at +0x0C is supported by the complete caller and setter; unused object storage remains padding.
+
+The literal operand at VA 0x01121AEC contains bytes `48 e1 7a 43`, the IEEE single-precision representation of `250.88f`. Retail compares maximum minus minimum against that float and constructs a byte flag. This is readonly literal data, not a proposed global object. The byte gate verified the compiler constant's value at the retail relocation destination.
+
+No container value type, constructor ownership or unwind map is involved in this body. The shared Zero Hour `WorldHeightMap` header has a byte-valued height accessor and a different interface-base layout; it does not establish the fork's full declaration. The source therefore uses a distinct address-derived partial view rather than claiming that canonical class.
+
+## Reproduction evidence
+
+The first trial is preserved as `build/749ea0/trial01.cpp`, with unedited probe output at `build/749ea0/probe01.log`. Complete target, caller, setter and thunk disassemblies are retained at `build/749ea0/decoded.log`. The checked inventories are `build/749ea0/checked-target.log`, `build/749ea0/checked-caller.log` and `build/749ea0/checked-bitsetter.log`. `build/749ea0/facts.log` retains the literal read, eligibility result, compiler command and object relocation names. Further raw verification output stays in the same task directory.
+
+At base revision `9eb87483f6942fe8e40cae32a4e6d0d3343d5dc9` with this uncommitted recovery, both `add-match.log` and `scoped-gate.log` pass the 354-byte source check, float constant validation, DIR32 address check and body guard. `final-probe.log` reports exact equality modulo two relocations. `class-gate.log`, `declared-unmatched.log` and `pin-consistency.log` pass. The working-tree CSV check in `check-csv.log` reports only that the new source exists but is not tracked. The coordinator must stage it and rerun that check, because this worker cannot write to Git. No shared headers or pins changed, so a full gate is not required by the header rule. `build.cmd` could not find an installed interpreter through `py -3`; the scoped gate succeeded through explicit Git Bash and `build.sh`.
+
+`change-audit.log` verifies that only the assigned function row was replaced, one tombstone was appended, and `symbols.csv` remained byte-identical with its CRLF endings. An unrelated allowance rewrite made by `add_match.py` was preserved in `build/749ea0/hatch-baseline-tool-change.patch` and reverted to the starting bytes; no baseline change is part of this recovery. No rejected compiler shapes or partial bank exist for this run because the first complete experiment matched.
+
+The hypothesis would need reopening if a complete caller contradicted the two signed coordinate arguments or receiver, if the ILT chains resolved elsewhere, if the word loads were not unsigned height values, or if the ordinary gate rejected a relocation binding. A byte match alone does not resolve the unknown owner identity.
