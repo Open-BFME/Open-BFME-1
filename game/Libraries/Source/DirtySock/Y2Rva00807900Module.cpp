@@ -27,7 +27,7 @@ struct Rva00807BA0Ping;
 
 void *Rva007FDFF0Connect( const char *host, int timeout );  // 0x007FDFF0
 int   Rva00807960( const char *host, int timeout );         // 0x00807960
-unsigned int Rva007FF9F0Swap32( unsigned int value );       // 0x007FF9F0
+extern "C" int Rva007FF9F0( unsigned int value );       // 0x007FF9F0
 // NetConnStatus -- the body at 0x007EB410 names itself in its own warning.
 int Rva007EB410NetConnStatus( int selector, void *buffer, int bufferSize );
 unsigned int Rva007FFAD0( unsigned int value );             // 0x007FFAD0
@@ -36,25 +36,25 @@ unsigned int Rva007FFAD0( unsigned int value );             // 0x007FFAD0
 extern "C" unsigned int strtoul( const char *text, char **end, int base );
 extern "C" void *memcpy( void *dest, const void *src, unsigned int count );
 
-int  Rva007FE780Printf( const char *format, ... );          // 0x007FE780
+extern "C" int Rva007FE780( const char *format, ... );          // 0x007FE780
 int  Rva00808220( Rva00807BA0Ping *ping, unsigned int address,
 		const char *text, int length, int id );             // 0x00808220
-void Rva007FD3F0SocketClose( void *socket );                // 0x007FD3F0
+extern "C" int Rva007FD3F0( void *socket );                // 0x007FD3F0
 void bfmeGo1019C( int block );                               // 0x007F0030
-void Rva007FEAA0ListReset( void *list );                    // 0x007FEAA0
-void *Rva007FD2D0SocketOpen( int family, int type, int protocol ); // 0x007FD2D0
-int   Rva007FD510Bind( void *socket, const void *addr, int addrLen ); // 0x007FD510
-void  Rva007FEA20ListInit( void *list );                    // 0x007FEA20
-int   Rva007FDE80SetCallback( void *socket, int callback, unsigned int rate,
+extern "C" void Rva007FEAA0( void *list );                    // 0x007FEAA0
+extern "C" void *Rva007FD2D0( int family, int type, int protocol ); // 0x007FD2D0
+extern "C" int Rva007FD510( void *socket, const void *addr, int addrLen ); // 0x007FD510
+extern "C" void Rva007FEA20( void *list );                    // 0x007FEA20
+extern "C" int Rva007FDE80( void *socket, void *callback, unsigned int rate,
 		void *data, void *proc );                           // 0x007FDE80
 int   Rva00807CF0( void *socket, int reason, void *data ); // 0x00807CF0 callback
-int   Rva007FDA50Recv( void *socket, char *buffer, int length, int flags,
+extern "C" int Rva007FDA50( void *socket, char *buffer, int length, int flags,
 		char *from, int *fromLength );                      // 0x007FDA50
-void  Rva007FEBD0Lock( void *lock );                        // 0x007FEBD0
-void  Rva007FECB0Unlock( void *lock );                      // 0x007FECB0
-int   Rva007FD920Send( void *socket, const char *buffer, int length,
+extern "C" void Rva007FEBD0( void *lock );                        // 0x007FEBD0
+extern "C" void Rva007FECB0( void *lock );                      // 0x007FECB0
+extern "C" int Rva007FD920( void *socket, const char *buffer, int length,
 		int flags, const char *to, int toLength );          // 0x007FD920
-unsigned int Rva007FEA00Tick( void );                       // 0x007FEA00
+extern "C" unsigned int Rva007FEA00( void );                       // 0x007FEA00
 extern "C" unsigned int strlen( const char *text );
 void *Rva007F0000Alloc( int size );                         // 0x007F0000
 extern "C" void *memset( void *dest, int value, unsigned int count );
@@ -107,7 +107,7 @@ int Rva00807AB0( char *dest, const void *src )
 	if( src == 0 || ( (unsigned int)src & 3 ) != 0 )
 		return 0;
 
-	value = Rva007FF9F0Swap32( *(const unsigned int *)src );
+	value = Rva007FF9F0( *(const unsigned int *)src );
 	sprintf( dest, "$%08x", value );
 	return 1;
 }
@@ -148,7 +148,7 @@ int Rva00807A00( void *dest, int destSize, const char *text )
 
 	if( destSize < 4 )
 	{
-		Rva007FE780Printf( "dirtyaddr: output buffer too small\n" );
+		Rva007FE780( "dirtyaddr: output buffer too small\n" );
 		return 0;
 	}
 
@@ -223,7 +223,7 @@ void Rva00808140( Rva00808140Ref *ref )
 
 	if( ref != 0 )
 	{
-		Rva007FD3F0SocketClose( ref->m_socket );
+		Rva007FD3F0( ref->m_socket );
 
 		while( ref->m_list != 0 )
 		{
@@ -232,7 +232,7 @@ void Rva00808140( Rva00808140Ref *ref )
 			bfmeGo1019C( (int)node );
 		}
 
-		Rva007FEAA0ListReset( ref->m_sub0C );
+		Rva007FEAA0( ref->m_sub0C );
 		bfmeGo1019C( (int)ref );
 	}
 }
@@ -253,7 +253,7 @@ struct Rva00807960Conn
 	Rva00807960Proc m_close;        // +0x0C
 };
 
-__declspec(dllimport) void __stdcall Rva01358F30Sleep( unsigned int ms );
+extern "C" __declspec(dllimport) void __stdcall Sleep( unsigned int ms );
 
 // 0x00807960 IS THE BLOCKING FORM of the connect at 0x007FDFF0, which is
 // itself non-blocking: it starts the connection, then spins on the object's
@@ -281,7 +281,7 @@ int Rva00807960( const char *host, int timeout )
 	if( conn != 0 )
 	{
 		while( conn->m_poll( conn ) == 0 )
-			Rva01358F30Sleep( 10 );
+			Sleep( 10 );
 
 		result = conn->m_result;
 		conn->m_close( conn );
@@ -345,7 +345,7 @@ Rva00807BA0Ping *Rva00807BA0( void )
 	char bind[ 0x10 ];
 
 	ping = 0;
-	sock = Rva007FD2D0SocketOpen( 2, 3, 1 );
+	sock = Rva007FD2D0( 2, 3, 1 );
 
 	if( sock != 0 )
 	{
@@ -357,7 +357,7 @@ Rva00807BA0Ping *Rva00807BA0( void )
 		bind[ 2 ] = 0;
 		bind[ 3 ] = 1;
 
-		Rva007FD510Bind( sock, bind, 0x10 );
+		Rva007FD510( sock, bind, 0x10 );
 
 		ping = (Rva00807BA0Ping *)Rva007F0000Alloc( 0x3C );
 		if( ping != 0 )
@@ -368,8 +368,8 @@ Rva00807BA0Ping *Rva00807BA0( void )
 			ping->m_credits = 8;
 			ping->m_ttl = 0x40;
 
-			Rva007FEA20ListInit( ping->m_lock0C );
-			Rva007FDE80SetCallback( ping->m_socket, 2, 5000, ping,
+			Rva007FEA20( ping->m_lock0C );
+			Rva007FDE80( ping->m_socket, (void *)2, 5000, ping,
 					(void *)Rva00807CF0 );
 		}
 	}
@@ -429,7 +429,7 @@ Rva00807EE0Entry *Rva00807EE0( const unsigned char *packet, void *unused,
 		entry->m_server = packet[ 0x18 ];
 		entry->m_icmpType = 0x0B;
 
-		Rva007FE780Printf(
+		Rva007FE780(
 				"_ProtoPingCallback: ICMP_TIMEEXCEEDED from=%08x\n",
 				entry->m_from );
 	}
@@ -504,7 +504,7 @@ Rva00807EE0Entry *Rva00807FB0( const unsigned char *packet,
 		else
 			server = "false";
 
-		Rva007FE780Printf(
+		Rva007FE780(
 				"_ProtoPingCallback: ICMP_ECHOREPLY from=%08x, time=%dms, "
 				"data=%s, server=%s\n",
 				entry->m_from, entry->m_elapsed, (char *)entry + 0x16, server );
@@ -575,7 +575,7 @@ int Rva00807CF0( void *socket, int reason, void *ref )
 	packet = (Rva00807CF0Packet *)response;
 
 	while( len = 0x10,
-			( len = Rva007FDA50Recv( ping->m_socket, response, 0x424, 0,
+			( len = Rva007FDA50( ping->m_socket, response, 0x424, 0,
 				sin, &len ) ) > 0 )
 	{
 		if( ping->m_credits < 1 )
@@ -593,7 +593,7 @@ int Rva00807CF0( void *socket, int reason, void *ref )
 					sin, len );
 			break;
 		default:
-			Rva007FE780Printf(
+			Rva007FE780(
 					"_ProtoPingCallback: Unhandled ICMP type %d\n",
 					packet->m_type );
 			break;
@@ -601,7 +601,7 @@ int Rva00807CF0( void *socket, int reason, void *ref )
 
 		if( entry != 0 )
 		{
-			Rva007FEBD0Lock( ping->m_lock0C );
+			Rva007FEBD0( ping->m_lock0C );
 
 			for( link = &ping->m_list; *link != 0;
 					link = (Rva00807EE0Entry **)*link )
@@ -609,7 +609,7 @@ int Rva00807CF0( void *socket, int reason, void *ref )
 			*link = entry;
 
 			ping->m_credits = ping->m_credits - 1;
-			Rva007FECB0Unlock( ping->m_lock0C );
+			Rva007FECB0( ping->m_lock0C );
 		}
 	}
 
@@ -695,7 +695,7 @@ int Rva00808220( Rva00807BA0Ping *ping, unsigned int address, const char *text,
 	length += 0x24;
 
 	*(int *)( echo + 0x1C ) = 'gSPs';
-	*(unsigned int *)( echo + 0x20 ) = Rva007FEA00Tick();
+	*(unsigned int *)( echo + 0x20 ) = Rva007FEA00();
 
 	sum = 0;
 	p = echo + 0x14;
@@ -719,7 +719,7 @@ int Rva00808220( Rva00807BA0Ping *ping, unsigned int address, const char *text,
 	echo[ 0x16 ] = (unsigned char)( sum >> 8 );
 	echo[ 0x17 ] = (unsigned char)sum;
 
-	count = Rva007FD920Send( ping->m_socket, (const char *)echo, length, 0,
+	count = Rva007FD920( ping->m_socket, (const char *)echo, length, 0,
 			sin, 0x10 );
 	if( count < 0 )
 		return -1;
@@ -786,7 +786,7 @@ int Rva00808660( Rva00807BA0Ping *ping, void *data, int *dataLen,
 		entry = ping->m_list;
 		if( entry != 0 )
 		{
-			Rva007FEBD0Lock( ping->m_lock0C );
+			Rva007FEBD0( ping->m_lock0C );
 
 			elapsed = entry->m_elapsed;
 
@@ -819,7 +819,7 @@ int Rva00808660( Rva00807BA0Ping *ping, void *data, int *dataLen,
 			ping->m_list = entry->m_next;
 			bfmeGo1019C( (int)entry );
 			ping->m_credits = ping->m_credits + 1;
-			Rva007FECB0Unlock( ping->m_lock0C );
+			Rva007FECB0( ping->m_lock0C );
 		}
 	}
 
