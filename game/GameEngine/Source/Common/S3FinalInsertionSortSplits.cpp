@@ -36,78 +36,103 @@
 // address-derived names and the comparator is typed only by its WIDTH (one
 // dword, passed by value).
 
+// The retail calls below reach the existing matched instantiations. Keep
+// declarations only; each cast preserves the caller's address-derived ABI.
+struct Q3SortElem16;
+struct Q3SortCompare { void *m_state; };
+struct BfmeElemQR;
+void __insertion_sort(Q3SortElem16 *, Q3SortElem16 *, Q3SortCompare);
+void bfmeEachQR(BfmeElemQR *, BfmeElemQR *, int, void *);
+
+struct BfmeScoreEntry;
+struct BfmeScoreEntryLess {};
+void Rva005742C0(BfmeScoreEntry *, BfmeScoreEntry *, BfmeScoreEntryLess);
+void Rva00571AB0(BfmeScoreEntry *, BfmeScoreEntry *, BfmeScoreEntry *, BfmeScoreEntryLess);
+
+struct S4SortElem8;
+struct S4Cmp00575AA0 { void *m_bfmeState; };
+void S4InsertionSort005759E0(S4SortElem8 *, S4SortElem8 *, S4Cmp00575AA0);
+
+struct BfmeSortPair;
+struct BfmeSortCompare {};
+struct BfmeSortCompareDescending {};
+struct S3Elem009F3050;
+struct S3Less009F3050 {};
+struct S3Elem009F30B0;
+struct S3Greater009F30B0 {};
+void Gen009F3050(S3Elem009F3050 *, S3Elem009F3050 *, S3Elem009F3050 *, S3Less009F3050);
+void Gen009F30B0(S3Elem009F30B0 *, S3Elem009F30B0 *, S3Elem009F30B0 *, S3Greater009F30B0);
+
+namespace _STL
+{
+template <class Iter, class T, class Comp>
+void __unguarded_insertion_sort_aux(Iter, Iter, T *, Comp);
+template <class Iter, class Comp>
+void __insertion_sort(Iter, Iter, Comp);
+}
+
 class Rva00476880Elem { public: char m_pad[ 16 ]; };
-extern void Gen00020D65( Rva00476880Elem *first, Rva00476880Elem *last, void *comp );
-extern void Gen00041ABA( Rva00476880Elem *first, Rva00476880Elem *last, Rva00476880Elem *, void *comp );
 
 void Rva00476880( Rva00476880Elem *first, Rva00476880Elem *last, void *comp )
 {
 	if( last - first > 16 )
 	{
-		Gen00020D65( first, first + 16, comp );
-		Gen00041ABA( first + 16, last, 0, comp );
+		__insertion_sort( reinterpret_cast<Q3SortElem16 *>(first), reinterpret_cast<Q3SortElem16 *>(first + 16), *reinterpret_cast<Q3SortCompare *>(&comp) );
+		bfmeEachQR( reinterpret_cast<BfmeElemQR *>(first + 16), reinterpret_cast<BfmeElemQR *>(last), 0, comp );
 	}
 	else
-		Gen00020D65( first, last, comp );
+		__insertion_sort( reinterpret_cast<Q3SortElem16 *>(first), reinterpret_cast<Q3SortElem16 *>(last), *reinterpret_cast<Q3SortCompare *>(&comp) );
 }
 
 class Rva00574E70Elem { public: char m_pad[ 16 ]; };
-extern void Gen0002591E( Rva00574E70Elem *first, Rva00574E70Elem *last, void *comp );
-extern void Gen000235C4( Rva00574E70Elem *first, Rva00574E70Elem *last, Rva00574E70Elem *, void *comp );
 
 void Rva00574E70( Rva00574E70Elem *first, Rva00574E70Elem *last, void *comp )
 {
 	if( last - first > 16 )
 	{
-		Gen0002591E( first, first + 16, comp );
-		Gen000235C4( first + 16, last, 0, comp );
+		Rva005742C0( reinterpret_cast<BfmeScoreEntry *>(first), reinterpret_cast<BfmeScoreEntry *>(first + 16), *reinterpret_cast<BfmeScoreEntryLess *>(&comp) );
+		Rva00571AB0( reinterpret_cast<BfmeScoreEntry *>(first + 16), reinterpret_cast<BfmeScoreEntry *>(last), 0, *reinterpret_cast<BfmeScoreEntryLess *>(&comp) );
 	}
 	else
-		Gen0002591E( first, last, comp );
+		Rva005742C0( reinterpret_cast<BfmeScoreEntry *>(first), reinterpret_cast<BfmeScoreEntry *>(last), *reinterpret_cast<BfmeScoreEntryLess *>(&comp) );
 }
 
 class Rva00576FF0Elem { public: char m_pad[ 8 ]; };
-extern void Gen0001EE39( Rva00576FF0Elem *first, Rva00576FF0Elem *last, void *comp );
-extern void Gen000046FB( Rva00576FF0Elem *first, Rva00576FF0Elem *last, Rva00576FF0Elem *, void *comp );
 
 void Rva00576FF0( Rva00576FF0Elem *first, Rva00576FF0Elem *last, void *comp )
 {
 	if( last - first > 16 )
 	{
-		Gen0001EE39( first, first + 16, comp );
-		Gen000046FB( first + 16, last, 0, comp );
+		S4InsertionSort005759E0( reinterpret_cast<S4SortElem8 *>(first), reinterpret_cast<S4SortElem8 *>(first + 16), *reinterpret_cast<S4Cmp00575AA0 *>(&comp) );
+		_STL::__unguarded_insertion_sort_aux<S4SortElem8 *, S4SortElem8, S4Cmp00575AA0>( reinterpret_cast<S4SortElem8 *>(first + 16), reinterpret_cast<S4SortElem8 *>(last), 0, *reinterpret_cast<S4Cmp00575AA0 *>(&comp) );
 	}
 	else
-		Gen0001EE39( first, last, comp );
+		S4InsertionSort005759E0( reinterpret_cast<S4SortElem8 *>(first), reinterpret_cast<S4SortElem8 *>(last), *reinterpret_cast<S4Cmp00575AA0 *>(&comp) );
 }
 
 class Rva009F3CE0Elem { public: char m_pad[ 8 ]; };
-extern void Gen009F3A80( Rva009F3CE0Elem *first, Rva009F3CE0Elem *last, void *comp );
-extern void Gen009F3050( Rva009F3CE0Elem *first, Rva009F3CE0Elem *last, Rva009F3CE0Elem *, void *comp );
 
 void Rva009F3CE0( Rva009F3CE0Elem *first, Rva009F3CE0Elem *last, void *comp )
 {
 	if( last - first > 16 )
 	{
-		Gen009F3A80( first, first + 16, comp );
-		Gen009F3050( first + 16, last, 0, comp );
+		_STL::__insertion_sort<BfmeSortPair *, BfmeSortCompare>( reinterpret_cast<BfmeSortPair *>(first), reinterpret_cast<BfmeSortPair *>(first + 16), *reinterpret_cast<BfmeSortCompare *>(&comp) );
+		Gen009F3050( reinterpret_cast<S3Elem009F3050 *>(first + 16), reinterpret_cast<S3Elem009F3050 *>(last), 0, *reinterpret_cast<S3Less009F3050 *>(&comp) );
 	}
 	else
-		Gen009F3A80( first, last, comp );
+		_STL::__insertion_sort<BfmeSortPair *, BfmeSortCompare>( reinterpret_cast<BfmeSortPair *>(first), reinterpret_cast<BfmeSortPair *>(last), *reinterpret_cast<BfmeSortCompare *>(&comp) );
 }
 
 class Rva009F3D30Elem { public: char m_pad[ 8 ]; };
-extern void Gen009F3AC0( Rva009F3D30Elem *first, Rva009F3D30Elem *last, void *comp );
-extern void Gen009F30B0( Rva009F3D30Elem *first, Rva009F3D30Elem *last, Rva009F3D30Elem *, void *comp );
 
 void Rva009F3D30( Rva009F3D30Elem *first, Rva009F3D30Elem *last, void *comp )
 {
 	if( last - first > 16 )
 	{
-		Gen009F3AC0( first, first + 16, comp );
-		Gen009F30B0( first + 16, last, 0, comp );
+		_STL::__insertion_sort<BfmeSortPair *, BfmeSortCompareDescending>( reinterpret_cast<BfmeSortPair *>(first), reinterpret_cast<BfmeSortPair *>(first + 16), *reinterpret_cast<BfmeSortCompareDescending *>(&comp) );
+		Gen009F30B0( reinterpret_cast<S3Elem009F30B0 *>(first + 16), reinterpret_cast<S3Elem009F30B0 *>(last), 0, *reinterpret_cast<S3Greater009F30B0 *>(&comp) );
 	}
 	else
-		Gen009F3AC0( first, last, comp );
+		_STL::__insertion_sort<BfmeSortPair *, BfmeSortCompareDescending>( reinterpret_cast<BfmeSortPair *>(first), reinterpret_cast<BfmeSortPair *>(last), *reinterpret_cast<BfmeSortCompareDescending *>(&comp) );
 }
 
