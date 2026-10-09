@@ -906,23 +906,6 @@ void WW3D::_Invalidate_Mesh_Cache()
 	TheDX8MeshRenderer.Invalidate();
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/WW3D__Invalidate_TexturesMethodThunk.cpp
-// ?_Invalidate_Textures@WW3D@@ present-unmatched
-void WW3D::_Invalidate_Textures()
-{
-	if (!WW3DAssetManager::Get_Instance()) return;
-
-	TextureLoader::Flush_Pending_Load_Tasks();
-
-	HashTemplateIterator<StringClass,TextureClass*> ite(WW3DAssetManager::Get_Instance()->Texture_Hash());
-
-	// Loop through all the textures in the manager
-	for (ite.First();!ite.Is_Done();ite.Next()) {
-		// Get the current texture
-		TextureClass* tex=ite.Peek_Value();
-		tex->Invalidate();
-	}
-}
 
 void WW3D::Set_Texture_Filter(int texture_filter)
 {
