@@ -70,59 +70,12 @@ DefaultProductionExitUpdate::~DefaultProductionExitUpdate()
 }
 
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdateGetExitPosition.cpp
-// ?getExitPosition@DefaultProductionExitUpdate@@ present-unmatched
-Bool DefaultProductionExitUpdate::getExitPosition( Coord3D& exitPosition ) const
-{
-	const Object *obj = getObject();
-	if (!obj)
-		return FALSE;
+// The retail exit-position body is emitted by DefaultProductionExitUpdate_getNaturalRallyPoint.cpp.
 
-	const Matrix3D *transform = obj->getTransformMatrix();
-
-	const DefaultProductionExitUpdateModuleData *md = getDefaultProductionExitUpdateModuleData();
-
-	Vector3 loc;
-	loc.Set( md->m_unitCreatePoint.x, md->m_unitCreatePoint.y, md->m_unitCreatePoint.z );
-	transform->Transform_Vector( *transform, loc, &loc );
-
-	exitPosition.x = loc.X;
-	exitPosition.y = loc.Y;
-	exitPosition.z = loc.Z;
-	
-	return TRUE;
-
-}
 
 //-------------------------------------------------------------------------------------------------
-// ?getNaturalRallyPoint@DefaultProductionExitUpdate@@ present-unmatched
-Bool DefaultProductionExitUpdate::getNaturalRallyPoint( Coord3D& rallyPoint, Bool offset ) const
-{
-	const DefaultProductionExitUpdateModuleData *data = getDefaultProductionExitUpdateModuleData();
-	Vector3 p;
+// The retail rally-point body is emitted by DefaultProductionExitUpdate_getNaturalRallyPoint.cpp.
 
-	//
-	// get the natural rally point from the INI definition, this coord is in model space relative
-	// to the model (0,0,0)
-	//
-	p.X = data->m_naturalRallyPoint.x;
-	p.Y = data->m_naturalRallyPoint.y;
-	p.Z = data->m_naturalRallyPoint.z;
-
-	if ( offset )
-	{
-		Vector3 offset = p;
-		offset.Normalize();
-		offset *= (2*PATHFIND_CELL_SIZE_F);
-		p+=offset;
-	}
-
-	// transform the point into world space
-	const Matrix3D *transform = getObject()->getTransformMatrix();
-	transform->Transform_Vector( *transform, p, &p );
-
-	rallyPoint.x = p.X; rallyPoint.y = p.Y; rallyPoint.z = p.Z;
-	return TRUE;
-}
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */

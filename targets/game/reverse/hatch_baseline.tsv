@@ -128676,8 +128676,6 @@ present_unmatched	game/GameEngine/Source/GameLogic/Object/Update/PhysicsUpdate.c
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdate.cpp	0DefaultProductionExitUpdate@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdate.cpp	1DefaultProductionExitUpdate@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdate.cpp	crc@DefaultProductionExitUpdate@@	1
-present_unmatched	game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdate.cpp	getExitPosition@DefaultProductionExitUpdate@@	1
-present_unmatched	game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdate.cpp	getNaturalRallyPoint@DefaultProductionExitUpdate@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdate.cpp	loadPostProcess@DefaultProductionExitUpdate@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdate.cpp	xfer@DefaultProductionExitUpdate@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/QueueProductionExitUpdate.cpp	1QueueProductionExitUpdate@@MAE@XZ	1
