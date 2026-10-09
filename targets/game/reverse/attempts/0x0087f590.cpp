@@ -1,21 +1,14 @@
-// ?d_0087f590@@YAXXZ
-// partial score=0.84 date=2026-09-28
-// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringbaseascii/Common /Igame/Libraries/Source/WWVegas/WWLib
+// ?getBestContactPoint@GeometryInfo@@QBE_NPAUCoord3D@@PBU2@PBDHH_N@Z
+// partial score=0.2936 date=2026-10-09
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
-// GeometryInfo::getBestContactPoint, retail 0x0087F590 (1066 bytes).
-//
-// Identity: the retail trace literal names the method and the member
-// ("GeometryInfo::getBestContactPoint, callerPos=... m_innermostContactPoint=")
-// and the matched Object::getWorldspaceBestContactPoint calls it on its
-// GeometryInfo with this six-argument signature (ret 0x18).
-//
-// Layout (BFME's 0x5C-byte GeometryInfo): the 0x24-byte shape vector at +0x2C
-// (GeometryInfoRva0087E650.cpp), a vector of 0x10-byte labelled points at
-// +0x38, a point at +0x44 and m_innermostContactPoint at +0x50. Names that no
-// evidence proves keep their offset.
+// Evidence: targets/game/reverse/identity_evidence/0087f590-contact-point-retry.md
 
 #include <vector>
-#include "AsciiString.h"
+extern "C" void _WriteBarrier(void);
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_WriteBarrier, _ReadWriteBarrier)
+#include "ascii_string.h"
 
 typedef bool Bool;
 typedef float Real;
@@ -25,28 +18,25 @@ typedef int Int;
 #define NULL 0
 #endif
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
-struct Coord3D
+#include "../../../../game/Libraries/Include/Lib/Coord3D.h"
+
+// ?scale@@YAXPAUCoord3D@@M@Z absent-from-retail
+static __forceinline void scale(Coord3D *point, Real s)
 {
-	Real x, y, z;
+	point->x *= s; point->y *= s; point->z *= s;
+}
 
-	Coord3D() {}
-	Coord3D(const Coord3D &v) { x = v.x; y = v.y; z = v.z; }
+// ?add@@YAXPAUCoord3D@@PBU1@@Z absent-from-retail
+static __forceinline void add(Coord3D *point, const Coord3D *other)
+{
+	point->x += other->x; point->y += other->y; point->z += other->z;
+}
 
-	void add(const Coord3D *a)
-	{
-		x += a->x;
-		y += a->y;
-		z += a->z;
-	}
-
-	void scale(Real s)
-	{
-		x *= s;
-		y *= s;
-		z *= s;
-	}
-};
+// ?rva0087F590Set@@YAXPAUCoord3D@@PBU1@@Z absent-from-retail
+static __forceinline void rva0087F590Set(Coord3D *point, const Coord3D *other)
+{
+	point->x = other->x; point->y = other->y; point->z = other->z;
+}
 
 enum GeometryType
 {
@@ -97,9 +87,10 @@ private:
 extern const Coord3D g_rva0130E908Origin;
 extern const GeometryInfo g_bfmeStaticAAO;
 
-extern unsigned char g_contactPointDebug;
-extern void *g_contactPointDebugSink;
-extern "C" int __cdecl fprintf(void *sink, const char *format, ...);
+extern Bool g_contactPointDebug;
+class CRCParameterCheck;
+extern CRCParameterCheck *g_contactPointDebugSink;
+extern "C" void __cdecl fprintf(CRCParameterCheck *sink, const char *format, ...);
 
 // ?getBestContactPoint@GeometryInfo@@QBE_NPAUCoord3D@@PBU2@PBDHH_N@Z
 Bool GeometryInfo::getBestContactPoint(Coord3D *pointOut, const Coord3D *callerPos,
@@ -122,12 +113,14 @@ Bool GeometryInfo::getBestContactPoint(Coord3D *pointOut, const Coord3D *callerP
 			if (count >= 2)
 			{
 				Int index = seed % (count - 1);
-				Coord3D first = m_rva38Points[index].m_pos;
-				Coord3D second = m_rva38Points[index + 1].m_pos;
+				Coord3D first;
+				rva0087F590Set(&first, &m_rva38Points[index].m_pos);
+				Coord3D second;
+				rva0087F590Set(&second, &m_rva38Points[index + 1].m_pos);
 				Real t = ((seed >> 8) & 0xff) * (1.0f / 255.0f);
-				first.scale(t);
-				second.scale(1.0f - t);
-				first.add(&second);
+				scale(&first, t);
+				scale(&second, 1.0f - t);
+				add(&first, &second);
 				*pointOut = first;
 			}
 			if (pointOut->z > getMaxHeightAbovePosition())
@@ -150,10 +143,13 @@ Bool GeometryInfo::getBestContactPoint(Coord3D *pointOut, const Coord3D *callerP
 			if (pointOut->z > getMaxHeightAbovePosition())
 			{
 				pointOut->z = getMaxHeightAbovePosition();
+				_WriteBarrier();
+				_WriteBarrier();
 				return true;
 			}
 			if (pointOut->z < getMaxHeightAbovePosition() * 0.1f)
 				pointOut->z = getMaxHeightAbovePosition() * 0.1f;
+			_WriteBarrier();
 			return true;
 		}
 
@@ -204,10 +200,13 @@ Bool GeometryInfo::getBestContactPoint(Coord3D *pointOut, const Coord3D *callerP
 			if (pointOut->z > getMaxHeightAbovePosition())
 			{
 				pointOut->z = getMaxHeightAbovePosition();
+				_ReadWriteBarrier();
+				_ReadWriteBarrier();
 				return true;
 			}
 			if (pointOut->z < getMaxHeightAbovePosition() * 0.1f)
 				pointOut->z = getMaxHeightAbovePosition() * 0.1f;
+			_ReadWriteBarrier();
 			return true;
 		}
 	}
