@@ -9,11 +9,10 @@
 class Image;
 class GameWindow;
 
-// Retail's singleton is ?TheMappedImageCollection@@3PAVImageCollection@@A: the
-// class is ImageCollection, only forward declared here (this TU reaches the
-// lookup through the 0x0001D606 thunk owner below, which stays as it is).
-class ImageCollection;
-class Rva0001D606ImageCollection
+// Retail's singleton is ?TheMappedImageCollection@@3PAVImageCollection@@A;
+// the lookup below reaches retail 0x005D2CF0
+// (?findImageByName@ImageCollection@@QAEPBVImage@@ABVAsciiString@@@Z).
+class ImageCollection
 {
 public:
 	const Image *findImageByName( const AsciiString &name );
@@ -84,15 +83,19 @@ public:
 
 extern GameWindowManager *TheWindowManager;
 
-class WindowManager
-{
-public:
-	void unidentified_00015235( int movie, const char *function, int argumentCount,
-		const void *argument1, const void *argument2, int unused1, int unused2,
-		int unused3 );
-};
+class WindowManager;
 
 extern WindowManager *g_rva012F19E8WindowManager;	///< retail [0x012F19E8]
+
+// The scripted-UI dispatcher the calls below reach (retail 0x004675F0) is
+// ?bfmeBuildAN@BfmeLevelAN@@QAEPADIHHHHHHH@Z; BfmeLevelAN is this TU's view
+// of the pointee, cast at the use.
+class BfmeLevelAN
+{
+public:
+	char *bfmeBuildAN( unsigned int level, int p2, int p3, int p4, int p5,
+		int p6, int p7, int p8 );
+};
 
 class Rva005406E0Field34
 {
@@ -170,7 +173,7 @@ bool BfmeAptScreenOnlineCustomMatch::Rva005406E0()
 					((BfmeE976 *)( (char *)this + 0x40 ))->bfmeGo976E();
 					((AptOnlineCustomMatch *)this)->OpenConnectionScreen( false );
 					TheWindowManager->refreshLayout( field34 );
-					field1B0 = ((Rva0001D606ImageCollection *)TheMappedImageCollection)->findImageByName( AsciiString( "AptLock" ) );
+					field1B0 = TheMappedImageCollection->findImageByName( AsciiString( "AptLock" ) );
 					field1B4 = 0;
 
 					if( reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getCurrentGroupRoom() )
@@ -196,17 +199,17 @@ bool BfmeAptScreenOnlineCustomMatch::Rva005406E0()
 					int one = 1;
 					WindowManager *windowManager = g_rva012F19E8WindowManager;
 						int movieCopy1 = field34->field250;
-						windowManager->unidentified_00015235( movieCopy1, "CallChild", one, "ClosePassword", 0, 0, 0, 0 );
+						((BfmeLevelAN *)windowManager)->bfmeBuildAN( (unsigned int)movieCopy1, (int)"CallChild", one, (int)"ClosePassword", 0, 0, 0, 0 );
 					windowManager = g_rva012F19E8WindowManager;
 						int movieCopy2 = field34->field250;
-						windowManager->unidentified_00015235( movieCopy2, "CallChild", 2, "gotoAndPlay", "_lobby", 0, 0, 0 );
+						((BfmeLevelAN *)windowManager)->bfmeBuildAN( (unsigned int)movieCopy2, (int)"CallChild", 2, (int)"gotoAndPlay", (int)"_lobby", 0, 0, 0 );
 					windowManager = g_rva012F19E8WindowManager;
 						int movieCopy3 = field34->field250;
-						windowManager->unidentified_00015235( movieCopy3, "CallChild", one, "EnableButtonCreateGame", 0, 0, 0, 0 );
+						((BfmeLevelAN *)windowManager)->bfmeBuildAN( (unsigned int)movieCopy3, (int)"CallChild", one, (int)"EnableButtonCreateGame", 0, 0, 0, 0 );
 					windowManager = g_rva012F19E8WindowManager;
 						int movieCopy4;
 						movieCopy4 = field34->field250;
-						windowManager->unidentified_00015235( movieCopy4, "CallChild", one, "DisableButtonJoinGame", 0, 0, 0, 0 );
+						((BfmeLevelAN *)windowManager)->bfmeBuildAN( (unsigned int)movieCopy4, (int)"CallChild", one, (int)"DisableButtonJoinGame", 0, 0, 0, 0 );
 
 					field1D4 = 0;
 					field188 = one;
