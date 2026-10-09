@@ -102,7 +102,9 @@ static Bool &doPaint()
 	return g_Va012A6514;
 }
 
-extern const wchar_t *g_Va012A6504WindowClassName;
+extern const wchar_t g_Va01073048[] =
+	L"E99E8455-CC9B-488a-BA22-0E8A8F74F9FA";
+const wchar_t *g_Va012A6504WindowClassName = g_Va01073048;
 
 // ?Rva0005F2B0InitializeAppWindows@@YA_NPAXH_N@Z
 static Bool Rva0005F2B0InitializeAppWindows(
