@@ -120,11 +120,6 @@ VictoryConditionsInterface * createVictoryConditions( void )
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/victory_conditions_create.cpp
-// ??0VictoryConditions@@ present-unmatched
-VictoryConditions::VictoryConditions()
-{
-	reset();
-}
 	
 //-------------------------------------------------------------------------------------------------
 // ?init@VictoryConditions@@ present-unmatched
@@ -135,23 +130,6 @@ void VictoryConditions::init( void )
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/victory_conditions.cpp
-// ?reset@VictoryConditions@@ present-unmatched
-void VictoryConditions::reset( void )
-{
-	for (Int i=0; i<MAX_PLAYER_COUNT; ++i)
-	{
-		m_players[i] = NULL;
-		m_isDefeated[i] = false;
-	}
-	m_localSlotNum = -1;
-
-	m_localPlayerDefeated = false;
-	m_singleAllianceRemaining = false;
-	m_isObserver = false;
-	m_endFrame = 0;
-
-	m_victoryConditions = VICTORY_NOBUILDINGS | VICTORY_NOUNITS;
-}
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/VictoryConditionsUpdateThunk.cpp
@@ -253,144 +231,24 @@ void VictoryConditions::update( void )
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/victory_conditions.cpp
-// ?hasAchievedVictory@VictoryConditions@@ present-unmatched
-Bool VictoryConditions::hasAchievedVictory(Player *player)
-{
-	if (!player)
-		return false;
-
-	if (m_singleAllianceRemaining)
-	{
-		for (Int i=0; i<MAX_PLAYER_COUNT; ++i)
-		{
-			if ( m_players[i] && !hasSinglePlayerBeenDefeated(m_players[i]) &&
-				(player == m_players[i] || areAllies(m_players[i], player)) )
-				return true;
-		}
-	}
-
-	return false;
-}
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/victory_conditions.cpp
-// ?hasBeenDefeated@VictoryConditions@@ present-unmatched
-Bool VictoryConditions::hasBeenDefeated(Player *player)
-{
-	if (!player)
-		return false;
-
-	if (m_singleAllianceRemaining && !hasAchievedVictory(player))
-		return true;
-
-	return false;
-}
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/victory_conditions.cpp
-// ?hasSinglePlayerBeenDefeated@VictoryConditions@@ present-unmatched
-Bool VictoryConditions::hasSinglePlayerBeenDefeated(Player *player)
-{
-	if (!player)
-		return false;
-
-	KindOfMaskType mask;
-	mask.set(KINDOF_MP_COUNT_FOR_VICTORY);
-
-	if ( ISSET(NOUNITS) && ISSET(NOBUILDINGS) )
-	{
-		if ( !player->hasAnyObjects() )
-		{
-			return true;
-		}
-	}
-	else if ( ISSET(NOUNITS) )
-	{
-		if ( !player->hasAnyUnits() )
-		{
-			return true;
-		}
-	}
-	else if ( ISSET(NOBUILDINGS) )
-	{
-		if ( !player->hasAnyBuildings(mask) )
-		{
-			return true;
-		}
-	}
-
-	return false;
-}
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/victory_conditions.cpp
-// ?cachePlayerPtrs@VictoryConditions@@ present-unmatched
-void VictoryConditions::cachePlayerPtrs( void )
-{
-	if (!TheRecorder->isMultiplayer())
-		return;
-
-	Int playerCount = 0;
-	const PlayerTemplate *civTemplate = ThePlayerTemplateStore->findPlayerTemplate( NAMEKEY("FactionCivilian") );
-	for (Int i=0; i<MAX_PLAYER_COUNT; ++i)
-	{
-		Player *player = ThePlayerList->getNthPlayer(i);
-		DEBUG_LOG(("Checking whether to cache player %d - [%ls], house [%ls]\n", i, player?player->getPlayerDisplayName().str():L"<NOBODY>", (player&&player->getPlayerTemplate())?player->getPlayerTemplate()->getDisplayName().str():L"<NONE>"));
-		if (player && player != ThePlayerList->getNeutralPlayer() && player->getPlayerTemplate() && player->getPlayerTemplate() != civTemplate && !player->isPlayerObserver())
-		{
-			DEBUG_LOG(("Caching player\n"));
-			m_players[playerCount] = player;
-			if (m_players[playerCount]->isLocalPlayer())
-				m_localSlotNum = playerCount;
-			++playerCount;
-		}
-	}
-	while (playerCount < MAX_PLAYER_COUNT)
-	{
-		m_players[playerCount++] = NULL;
-	}
-
-	if (m_localSlotNum < 0)
-	{
-		m_localPlayerDefeated = true;	// if we have no local player, don't check for defeat
-		DEBUG_ASSERTCRASH(TheRadar, ("No Radar!"));
-		TheRadar->forceOn(TRUE);
-		m_isObserver = true;
-	}
-}
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/victory_conditions.cpp
-// ?isLocalAlliedVictory@VictoryConditions@@ present-unmatched
-Bool VictoryConditions::isLocalAlliedVictory( void )
-{
-	if (m_isObserver)
-		return false;
-
-	return (hasAchievedVictory(m_players[m_localSlotNum]));
-}
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/victory_conditions.cpp
-// ?isLocalAlliedDefeat@VictoryConditions@@ present-unmatched
-Bool VictoryConditions::isLocalAlliedDefeat( void )
-{
-	if (m_isObserver)
-		return m_singleAllianceRemaining;
-
-	return (hasBeenDefeated(m_players[m_localSlotNum]));
-}
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/victory_conditions.cpp
-// ?isLocalDefeat@VictoryConditions@@ present-unmatched
-Bool VictoryConditions::isLocalDefeat( void )
-{
-	if (m_isObserver)
-		return FALSE;
-
-	return (m_localPlayerDefeated);
-}
 
 
 
