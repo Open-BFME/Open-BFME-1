@@ -1124,8 +1124,8 @@ name,va
 ??_7AptCampaignReview@@6BBfmeAptFunctorMarker@@@,0x01104C70
 ??_7AptCampaignReview@@6B_bfme_AptGameWindow@@@,0x01104C74
 ??_7BfmeAptScreenDisconnectScreen@@6B@,0x01104DE8
-??_7BfmeAptScreenInGameChat@@6BBfmeAptScreenBase@@@,0x01105384
-??_7BfmeAptScreenInGameChat@@6BS4Owner@@@,0x01105380
+??_7AptInGameChat@@6BBfmeAptScreenBase@@@,0x01105384
+??_7AptInGameChat@@6BS4Owner@@@,0x01105380
 ??_7BfmeAptScreenLanLobby@@6B@,0x01105A28
 ??_7BfmeAptScreenLanLobby@@6BBfmeAptScreenBase@@@,0x01105A78
 ??_7BfmeAptScreenLanLobby@@6BS4Owner@@@,0x01105A74

@@ -189,12 +189,12 @@ public:
 };
 
 // InGameChat.apt, retail 0x001050C0, object 0x2A4 bytes.
-class __multiple_inheritance BfmeAptScreenInGameChat
+class __multiple_inheritance AptInGameChat
 	: public _bfme_AptGameWindow
 {
 public:
-	BfmeAptScreenInGameChat( void *context );
-	virtual ~BfmeAptScreenInGameChat();
+	AptInGameChat( void *context );
+	virtual ~AptInGameChat();
 	virtual int aptSlot1(unsigned int, unsigned int, unsigned int);
 	virtual int aptSlot2(unsigned int, unsigned int, unsigned int);
 	virtual int aptSlot3(unsigned int);
@@ -229,7 +229,7 @@ private:
 	int m_field2A0;
 };
 
-typedef char ChatObjectSize[(sizeof(BfmeAptScreenInGameChat)==0x2A4)?1:-1];
+typedef char ChatObjectSize[(sizeof(AptInGameChat)==0x2A4)?1:-1];
 typedef char ChatAptBaseSize[(sizeof(_bfme_AptGameWindow)==0x258)?1:-1];
 typedef char ChatControlSize[(sizeof(InGameChatSlot)==0x10)?1:-1];
 union InGameChatMethodBits { FunctorMethod member; unsigned int words[2]; };
@@ -242,7 +242,7 @@ extern void j_0001ce63();
 extern void j_00018dd1();
 extern void j_0002263d();
 
-BfmeAptScreenInGameChat::BfmeAptScreenInGameChat( void *context )
+AptInGameChat::AptInGameChat( void *context )
 	: _bfme_AptGameWindow( context ), m_field258(0), m_field260(0), m_field264(0), m_field268(0)
 {
 	InGameChatRegistry *registry =

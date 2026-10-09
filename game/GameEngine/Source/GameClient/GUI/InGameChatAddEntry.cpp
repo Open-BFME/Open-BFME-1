@@ -26,7 +26,7 @@ int GadgetListBoxAddEntryText( GameWindow *listBox, UnicodeString text, int colo
 	int row, int column, bool overwrite );
 void bfmeCall926A( void *listBox, void *row, void *data, int unused );
 
-class BfmeAptScreenInGameChat
+class AptInGameChat
 {
 public:
 	bool addEntry( UnicodeString text, int color );
@@ -38,8 +38,8 @@ private:
 	GameWindow *m_listBox;
 };
 
-// ?addEntry@BfmeAptScreenInGameChat@@QAE_NVUnicodeString@@H@Z
-bool BfmeAptScreenInGameChat::addEntry( UnicodeString text, int color )
+// ?addEntry@AptInGameChat@@QAE_NVUnicodeString@@H@Z
+bool AptInGameChat::addEntry( UnicodeString text, int color )
 {
 	if( m_window0 && m_window1 && m_listBox )
 	{

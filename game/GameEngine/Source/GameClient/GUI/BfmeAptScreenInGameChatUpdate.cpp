@@ -42,10 +42,10 @@ extern void HideInGameChat( void );
 extern void j_00023cc7( void );
 extern int g_012F4994;
 
-class BfmeAptScreenInGameChat
+class AptInGameChat
 {
 public:
-	virtual ~BfmeAptScreenInGameChat();
+	virtual ~AptInGameChat();
 	virtual int update( void );
 
 private:
@@ -55,10 +55,10 @@ private:
 
 void forceBfmeAptScreenInGameChatDeletingDestructor()
 {
-	BfmeAptScreenInGameChat value;
+	AptInGameChat value;
 }
 
-int BfmeAptScreenInGameChat::update( void )
+int AptInGameChat::update( void )
 {
 	if( ++g_012F4994 > 20 )
 		j_00023cc7();

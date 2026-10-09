@@ -46,7 +46,7 @@ public:
 extern WindowManager *g_rva012F19E8WindowManager;
 extern GameWindowManager *TheWindowManager;
 
-class BfmeAptScreenInGameChat
+class AptInGameChat
 {
 public:
 	void _bfme_enableChat( bool enable );
@@ -61,8 +61,8 @@ private:
 	bool m_enabled;
 };
 
-// ?_bfme_enableChat@BfmeAptScreenInGameChat@@QAEX_N@Z
-void BfmeAptScreenInGameChat::_bfme_enableChat( bool enable )
+// ?_bfme_enableChat@AptInGameChat@@QAEX_N@Z
+void AptInGameChat::_bfme_enableChat( bool enable )
 {
 	if( !m_busy && enable == m_enabled )
 		return;

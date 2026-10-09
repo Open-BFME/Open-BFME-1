@@ -85,7 +85,7 @@ private:
 	unsigned char m_tail[0xc];
 };
 
-class __multiple_inheritance BfmeAptScreenInGameChat
+class __multiple_inheritance AptInGameChat
 	: public _bfme_AptGameWindow
 {
 public:
@@ -134,8 +134,8 @@ static inline Rva002EE330PlayerList *rva002EE330ThePlayers( void )
 // List-box text column read from .rdata at VA 0x01106F04 (value 2).
 extern const Int Rva01106F04;
 
-// ?rva00513BF0@BfmeAptScreenInGameChat@@QAEHPAVGameWindow@@PAXH_N@Z
-Int BfmeAptScreenInGameChat::rva00513BF0( GameWindow *list, void *selected, Int buddyMask, Bool skipStatusFilter )
+// ?rva00513BF0@AptInGameChat@@QAEHPAVGameWindow@@PAXH_N@Z
+Int AptInGameChat::rva00513BF0( GameWindow *list, void *selected, Int buddyMask, Bool skipStatusFilter )
 {
 	std::vector<Int> *profileIDs = (std::vector<Int> *)selected;
 	Int entries = GadgetListBoxGetNumEntries( list );
@@ -183,7 +183,7 @@ Int BfmeAptScreenInGameChat::rva00513BF0( GameWindow *list, void *selected, Int 
 
 // The ledger spells the global pointer's type Rva005127A0InGameChat, so the
 // screen keeps that spelling where the pointer is declared.
-class Rva005127A0InGameChat : public BfmeAptScreenInGameChat {};
+class Rva005127A0InGameChat : public AptInGameChat {};
 extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;
 
 // The callback pair and the dialog call are the ones
@@ -282,8 +282,8 @@ public:
 
 // The constructor pairs AptInGameChat::OnBttnAddFriend with ILT 0x0001CE63.
 // Retail RET4 at RVA 0x0051544E ends this 609-byte callback.
-// @?OnBttnAddFriend@BfmeAptScreenInGameChat@@QAEXPBD@Z 0x005151F0
-void BfmeAptScreenInGameChat::OnBttnAddFriend( const char *name )
+// @?OnBttnAddFriend@AptInGameChat@@QAEXPBD@Z 0x005151F0
+void AptInGameChat::OnBttnAddFriend( const char *name )
 {
 	(void)name;
 
@@ -322,8 +322,8 @@ void BfmeAptScreenInGameChat::OnBttnAddFriend( const char *name )
 }
 
 // The constructor at 0x005160E0 pairs AptInGameChat::OnBttnRemoveFriend with ILT 0x00018DD1.
-// @?OnBttnRemoveFriend@BfmeAptScreenInGameChat@@QAEXPBD@Z 0x00514DA0
-void BfmeAptScreenInGameChat::OnBttnRemoveFriend( const char *name )
+// @?OnBttnRemoveFriend@AptInGameChat@@QAEXPBD@Z 0x00514DA0
+void AptInGameChat::OnBttnRemoveFriend( const char *name )
 {
 	(void)name;
 

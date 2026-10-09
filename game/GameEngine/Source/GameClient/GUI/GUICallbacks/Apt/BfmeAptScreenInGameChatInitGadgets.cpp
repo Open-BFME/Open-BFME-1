@@ -132,10 +132,10 @@ extern GameSpyInfoInterface *TheGameSpyInfo;
 extern UnicodeString g_unicode12F498C;
 
 // Layout witnessed by BfmeAptScreenInGameChatConstructor.cpp at 0x005160E0.
-class BfmeAptScreenInGameChat
+class AptInGameChat
 {
 public:
-	void _bfme_initGadgets( const char *name, void *userData, GameWindow *window );
+	void InitGadgets( const char *name, void *userData, GameWindow *window );
 	void Rva00515810( void );
 
 private:
@@ -148,7 +148,7 @@ private:
 	Gen_00479A60 m_removeFriendSlot;
 };
 
-void BfmeAptScreenInGameChat::_bfme_initGadgets( const char *name, void *userData,
+void AptInGameChat::InitGadgets( const char *name, void *userData,
 	GameWindow *window )
 {
 	(void)userData;

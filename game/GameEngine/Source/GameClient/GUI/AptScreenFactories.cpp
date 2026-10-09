@@ -1297,10 +1297,10 @@ void * __stdcall createAptScreenCampaignReview( void *context )
 }
 
 // InGameChat.apt, retail 0x001050C0, object 0x2A4 bytes.
-class BfmeAptScreenInGameChat
+class AptInGameChat
 {
 public:
-	BfmeAptScreenInGameChat( void *context );
+	AptInGameChat( void *context );
 
 private:
 	char m_unmodelled[ 0x2A4 ];
@@ -1309,7 +1309,7 @@ private:
 // ?createAptScreenInGameChat@@YGPAXPAX@Z
 void * __stdcall createAptScreenInGameChat( void *context )
 {
-	return new BfmeAptScreenInGameChat( context );
+	return new AptInGameChat( context );
 }
 
 // SpellStore.apt, retail 0x00105140, object 0x2D4 bytes.

@@ -212,7 +212,7 @@ extern GameInfo *TheGameInfo;
 // and cleans its own argument.
 extern void j_000084db();
 
-class BfmeAptScreenInGameChat
+class AptInGameChat
 {
 public:
 	void _bfme_send( const char *name );
@@ -234,8 +234,8 @@ private:
 UnicodeString GadgetTextEntryGetText( GameWindow *textEntry );
 void GadgetTextEntrySetText( GameWindow *textEntry, UnicodeString text );
 
-// @?_bfme_send@BfmeAptScreenInGameChat@@QAEXPBD@Z 0x00514000
-void BfmeAptScreenInGameChat::_bfme_send( const char *name )
+// @?_bfme_send@AptInGameChat@@QAEXPBD@Z 0x00514000
+void AptInGameChat::_bfme_send( const char *name )
 {
 	if( m_rva0258 != 1 )
 		return;
@@ -317,7 +317,7 @@ extern void j_0002a112();
 // when chat mode is 3. InitGadgets identifies the fields at +0x260 and +0x264 as
 // the chat entry and friends list. No selector names this helper, so its RVA
 // remains in the method name.
-void BfmeAptScreenInGameChat::rva00513E70( const char *name )
+void AptInGameChat::rva00513E70( const char *name )
 {
 	UnicodeString msg;
 	msg.set( GadgetTextEntryGetText( m_chatEntry ) );

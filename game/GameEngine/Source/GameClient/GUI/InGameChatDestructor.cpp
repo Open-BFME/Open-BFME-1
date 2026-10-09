@@ -51,10 +51,10 @@ extern const void *BfmeAptScreenInGameChatSecondaryVftable[];
 class Rva005127A0InGameChat;
 extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;
 
-class BfmeAptScreenInGameChat : public _bfme_AptGameWindow
+class AptInGameChat : public _bfme_AptGameWindow
 {
 public:
-	virtual ~BfmeAptScreenInGameChat();
+	virtual ~AptInGameChat();
 
 private:
 	char m_pad[ 0x1C ];
@@ -62,8 +62,8 @@ private:
 	InGameChatSlot m_slot1;
 };
 
-// ??1BfmeAptScreenInGameChat@@UAE@XZ
-BfmeAptScreenInGameChat::~BfmeAptScreenInGameChat()
+// ??1AptInGameChat@@UAE@XZ
+AptInGameChat::~AptInGameChat()
 {
 	*(const void ***)( this ) = BfmeAptScreenInGameChatVftable;
 	*(const void ***)( (char *)this + 0x218 ) =

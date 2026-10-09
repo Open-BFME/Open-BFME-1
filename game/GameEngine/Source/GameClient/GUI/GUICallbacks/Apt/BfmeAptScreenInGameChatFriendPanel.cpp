@@ -89,7 +89,7 @@ extern GameWindowManager *TheWindowManager;
 
 // Layout witnessed by game/GameEngine/Source/GameClient/GUI/
 // BfmeAptScreenInGameChatConstructor.cpp at 0x005160E0.
-class BfmeAptScreenInGameChat
+class AptInGameChat
 {
 public:
 	void rva00512050( Int mode );
@@ -107,8 +107,8 @@ private:
 	GameWindow *m_secondWindow;
 };
 
-// @?rva00512050@BfmeAptScreenInGameChat@@QAEXH@Z 0x00512050
-void BfmeAptScreenInGameChat::rva00512050( Int mode )
+// @?rva00512050@AptInGameChat@@QAEXH@Z 0x00512050
+void AptInGameChat::rva00512050( Int mode )
 {
 	m_field26C = mode;
 
