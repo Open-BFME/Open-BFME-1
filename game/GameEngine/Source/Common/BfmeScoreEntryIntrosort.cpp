@@ -12,15 +12,24 @@ struct BfmeScoreEntryLess
 		const BfmeScoreEntry *right) const;
 };
 
-extern BfmeScoreEntry *BfmeScoreEntryPartition005724D0(
-	BfmeScoreEntry *, BfmeScoreEntry *, BfmeScoreEntry,
-	BfmeScoreEntryLess);
-extern void BfmeScoreEntryPartialSort00574410(
-	BfmeScoreEntry *, BfmeScoreEntry *, BfmeScoreEntry *, int,
-	BfmeScoreEntryLess);
-extern void BfmeScoreEntryIntrosortSelf00575450(
-	BfmeScoreEntry *, BfmeScoreEntry *, BfmeScoreEntry *, int,
-	BfmeScoreEntryLess);
+// Callees per tools/callees.py: ILT 0x2A595 -> 0x005724D0 and ILT 0x37B5F ->
+// 0x00574410, the matched STLport helpers of BfmeScoreEntryUnguardedPartition.cpp
+// and BfmeScoreEntrySort.cpp; ILT 0x152C1 -> 0x00575450 is this body itself.
+namespace _STL
+{
+
+template <class RandomAccessIter, class Tp, class Compare>
+RandomAccessIter __unguarded_partition(RandomAccessIter first,
+	RandomAccessIter last, Tp pivot, Compare comp);
+
+template <class RandomAccessIterator, class Distance, class Tp, class Compare>
+void __partial_sort(RandomAccessIterator first, RandomAccessIterator middle,
+	RandomAccessIterator last, Tp *, Compare comp);
+
+}
+
+void Gen00575450(BfmeScoreEntry *first, BfmeScoreEntry *last,
+	BfmeScoreEntry *tag, int depthLimit, BfmeScoreEntryLess comp);
 
 static __forceinline BfmeScoreEntry *BfmeScoreEntryMedian00575450(
 	const BfmeScoreEntry *a, const BfmeScoreEntry *b,
@@ -48,16 +57,18 @@ void Gen00575450(BfmeScoreEntry *first, BfmeScoreEntry *last,
 	{
 		if (depthLimit == 0)
 		{
-			BfmeScoreEntryPartialSort00574410(first, last, last, 0, comp);
+			_STL::__partial_sort<BfmeScoreEntry *, int, BfmeScoreEntry,
+				BfmeScoreEntryLess>(first, last, last,
+				(BfmeScoreEntry *)0, comp);
 			return;
 		}
 		--depthLimit;
 		BfmeScoreEntryLess medianComp;
-		BfmeScoreEntry *cut = BfmeScoreEntryPartition005724D0(
+		BfmeScoreEntry *cut = _STL::__unguarded_partition(
 			first, last,
 			*BfmeScoreEntryMedian00575450(first,
 				first + (last - first) / 2, last - 1, medianComp), comp);
-		BfmeScoreEntryIntrosortSelf00575450(cut, last,
+		Gen00575450(cut, last,
 			(BfmeScoreEntry *)0, depthLimit, comp);
 		last = cut;
 	}
