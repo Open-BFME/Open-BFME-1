@@ -8,23 +8,27 @@ public:
 	virtual ~Rva0019A260Owned() {}
 };
 
-class BfmeMapObjectExtra
+class Dict
 {
 public:
-	void bfmeReset(void);
-	void finalize(void *object);
-
+    void clear();
+    Dict &operator=(const Dict &);
 private:
-	char m_padding[4];
+    char m_padding[4];
 };
 
-class Rva0076F980Mid
+struct Gen_t_00065960_p4cd;
+namespace _STL
+{
+template <class Value> class allocator;
+template <class Value, class Alloc> class vector
 {
 public:
-	AsciiString *erase(AsciiString *first, AsciiString *last);
-	AsciiString *m_first;
-	AsciiString *m_last;
+    Value *erase(Value *, Value *);
+    Value *m_first;
+    Value *m_last;
 };
+}
 
 class Rva0019A260State
 {
@@ -33,9 +37,9 @@ public:
 
 private:
 	Rva0019A260Owned *m_first;
-	BfmeMapObjectExtra m_extra;
+	Dict m_extra;
 	Rva0019A260Owned *m_second;
-	Rva0076F980Mid m_range;
+	_STL::vector<Gen_t_00065960_p4cd, _STL::allocator<Gen_t_00065960_p4cd> > m_range;
 };
 
 void Rva0019A260State::cleanup(void *object)
@@ -43,14 +47,14 @@ void Rva0019A260State::cleanup(void *object)
 	if (m_first != 0)
 		delete m_first;
 	m_first = 0;
-	m_extra.bfmeReset();
+	m_extra.clear();
 
 	if (m_second != 0)
 		delete m_second;
 	m_second = 0;
-	Rva0076F980Mid *range = &m_range;
+	_STL::vector<Gen_t_00065960_p4cd, _STL::allocator<Gen_t_00065960_p4cd> > *range = &m_range;
 	range->erase(range->m_first, range->m_last);
 
 	if (object != 0)
-		m_extra.finalize(object);
+		m_extra = *reinterpret_cast<const Dict *>(object);
 }
