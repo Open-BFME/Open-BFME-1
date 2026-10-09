@@ -1,10 +1,17 @@
+// Retail 0x009706F0 calls HLodClass(const HLodDefClass &) at 0x0097D0D0.
+class HLodDefClass;
+class HLodClass
+{
+public:
+	HLodClass(const HLodDefClass &definition);
+	unsigned char m_body[0x170];
+};
+
 class BfmeSrcEVC;
 
 class BfmeNodeEVC
 {
 public:
-	BfmeNodeEVC(BfmeSrcEVC *src);
-
 	unsigned char m_bfmeBodyEVC[0x170];
 };
 
@@ -38,5 +45,5 @@ BfmeNodeEVC *BfmeHostEVC::bfmeMakeEVC()
 	if (m_bfmeSrcEVC == 0)
 		return 0;
 
-	return new BfmeNodeEVC(m_bfmeSrcEVC);
+	return (BfmeNodeEVC *)new HLodClass(*(const HLodDefClass *)m_bfmeSrcEVC);
 }
