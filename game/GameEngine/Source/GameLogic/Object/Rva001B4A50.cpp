@@ -1,4 +1,4 @@
-// cl: /O2 /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /O2 /DNDEBUG /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 #include "vector3.h"
 #include "matrix3d.h"
 // Retail [0x001B4A50,0x001B4B30): receiver's matrix is at +0x64.
