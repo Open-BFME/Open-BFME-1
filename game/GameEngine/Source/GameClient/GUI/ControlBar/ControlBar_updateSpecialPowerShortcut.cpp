@@ -19,7 +19,7 @@ public:
     Bool winIsHidden(void);
     Int winHide(Bool hide);
     Int winEnable(Bool enable);
-    UnsignedInt winSetStatus(UnsignedInt status);
+    UnsignedInt _bfme_winSetStatus(UnsignedInt status);
     UnsignedInt winClearStatus(UnsignedInt status);
 };
 
@@ -51,7 +51,6 @@ private:
 
 extern PlayerList *ThePlayerList;
 extern Real g_bfmeDefaultBU;
-extern Real g_bfmeScaleBC;
 
 void *GadgetButtonGetData(GameWindow *window);
 void GadgetButtonDrawInverseClock(GameWindow *window, Int percent, Int color);
@@ -196,19 +195,19 @@ void ControlBar::updateSpecialPowerShortcut(void)
         case COMMAND_RESTRICTED:
         case COMMAND_RESTRICTED_SPECIAL:
             win->winEnable(FALSE);
-            win->winSetStatus(0x80000000);
+            win->_bfme_winSetStatus(0x80000000);
             if(availability == COMMAND_RESTRICTED_SPECIAL)
-                win->winSetStatus(0x01000000);
+                win->_bfme_winSetStatus(0x01000000);
             break;
         case COMMAND_NOT_READY:
             color = m_buildUpClockColor;
             win->winEnable(FALSE);
-            win->winSetStatus(0x00400000);
+            win->_bfme_winSetStatus(0x00400000);
             break;
         case COMMAND_CANT_AFFORD:
         case COMMAND_NOT_READY_SPECIAL:
             win->winEnable(FALSE);
-            win->winSetStatus(0x01000000);
+            win->_bfme_winSetStatus(0x01000000);
             break;
         case COMMAND_AVAILABLE:
         case COMMAND_ACTIVE:
@@ -218,6 +217,6 @@ void ControlBar::updateSpecialPowerShortcut(void)
         }
 
         if(percent < g_bfmeDefaultBU)
-            GadgetButtonDrawInverseClock(win, (Int)(((volatile Real &)percent) * g_bfmeScaleBC), color);
+            GadgetButtonDrawInverseClock(win, (Int)(((volatile Real &)percent) * 100.0f), color);
     }
 }
