@@ -46,11 +46,18 @@ public:
 	virtual StateReturnType update() = 0;
 
 protected:
-	TurretAI *getTurretAI() { return m_machine->getTurretAI(); }
+	// TurretState::getTurretAI is expanded through a TU-static helper: this
+	// partial layout's copy differs from the canonical COMDAT other TUs keep.
+	friend TurretAI *turretOf(TurretState *state);
 
 	unsigned char m_padAfterVptr[0x18];
 	TurretStateMachine *m_machine;
 };
+
+static __forceinline TurretAI *turretOf(TurretState *state)
+{
+	return state->m_machine->getTurretAI();
+}
 
 class TurretAIRecenterTurretState : public TurretState
 {
@@ -71,7 +78,7 @@ private:
 // ?update@TurretAIRecenterTurretState@@UAE?AW4StateReturnType@@XZ
 StateReturnType TurretAIRecenterTurretState::update()
 {
-	TurretAI *turret = getTurretAI();
+	TurretAI *turret = turretOf(this);
 	bool angleAligned = turret->friend_turnTowardsAngle(turret->getNaturalTurretAngle(), 0.5f, 0.0f);
 	bool pitchAligned = turret->friend_turnTowardsPitch(turret->getNaturalTurretPitch(), 0.5f);
 
@@ -84,10 +91,10 @@ StateReturnType TurretAIRecenterTurretState::update()
 // ?update@TurretAIIdleScanState@@UAE?AW4StateReturnType@@XZ
 StateReturnType TurretAIIdleScanState::update()
 {
-	bool angleAligned = getTurretAI()->friend_turnTowardsAngle(
-		getTurretAI()->getNaturalTurretAngle() + m_desiredAngle, 0.5f, 0.0f);
-	bool pitchAligned = getTurretAI()->friend_turnTowardsPitch(
-		getTurretAI()->getNaturalTurretPitch(), 0.5f);
+	bool angleAligned = turretOf(this)->friend_turnTowardsAngle(
+		turretOf(this)->getNaturalTurretAngle() + m_desiredAngle, 0.5f, 0.0f);
+	bool pitchAligned = turretOf(this)->friend_turnTowardsPitch(
+		turretOf(this)->getNaturalTurretPitch(), 0.5f);
 
 	if (angleAligned && pitchAligned)
 		return STATE_SUCCESS;
