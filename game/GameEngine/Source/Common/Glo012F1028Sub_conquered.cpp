@@ -20,9 +20,14 @@ public:
 class Rva003BAD00Owner
 {
 public:
-	void notify0C(const AsciiString &key, const void *payload, int b);
-	void notify08(const AsciiString &key, int a);
+	void notify0C(int key, int a, int b);	// ILT 0x0000B316 -> 0x003BAD30
+	void notify08(int key, int a);		// ILT 0x00006BAE -> 0x003BAD70
 };
+
+// The matched ledger rows take the lookup key as a plain int: callers hand
+// them the address of an AsciiString temporary. The helper inlines to that
+// address, so the temporary form below keeps its retail byte shape.
+inline int bfmeAsciiKey(const AsciiString &key) { return (int)&key; }
 
 class BfmeItemVector
 {
@@ -53,8 +58,8 @@ private:
 void Glo012F1028Sub::bfmeConquered(Glo012F1028Item *item)
 {
 	Rva003BAD00Owner *owner = &m_bfmeHolder->m_bfmeOwner;
-	owner->notify0C(AsciiString("ConqueredEffectFlareup"),
-		&item->m_bfmePayload, 0);
+	owner->notify0C(bfmeAsciiKey(AsciiString("ConqueredEffectFlareup")),
+		(int)&item->m_bfmePayload, 0);
 
 	BfmeItemVector *vec = &m_bfmeHolder->m_bfmeItems;
 	Glo012F1028Item **it = vec->m_bfmeStart;
@@ -63,12 +68,12 @@ void Glo012F1028Sub::bfmeConquered(Glo012F1028Item *item)
 	{
 		do
 		{
-			owner->notify0C(AsciiString("ConqueredEffectEvenglow"),
-				&(*it)->m_bfmePayload, 0);
+			owner->notify0C(bfmeAsciiKey(AsciiString("ConqueredEffectEvenglow")),
+				(int)&(*it)->m_bfmePayload, 0);
 			++it;
 		} while (it != vec->m_bfmeFinish);
 	}
 
-	owner->notify08(AsciiString("ConqueredEffectFlareup"), 1);
-	owner->notify08(AsciiString("ConqueredEffectEvenglow"), 1);
+	owner->notify08(bfmeAsciiKey(AsciiString("ConqueredEffectFlareup")), 1);
+	owner->notify08(bfmeAsciiKey(AsciiString("ConqueredEffectEvenglow")), 1);
 }
