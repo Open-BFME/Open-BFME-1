@@ -1,15 +1,20 @@
-class BfmeThingDGF
+class BfmeThingDGF;
+class Rva007EAServiceList;
+
+class Gen007F0130
 {
 public:
-	BfmeThingDGF *bfmeInitDGF(void *a);
+	static void *operator new(unsigned int size);
 };
 
-void *__cdecl bfmeAllocDGF(unsigned int size);
+class BfmeThingTWA : public Gen007F0130
+{
+public:
+	BfmeThingTWA(Rva007EAServiceList *a) throw();
+	unsigned char m_bfmeBody[0x30];
+};
 
 BfmeThingDGF *bfmeGoDGF(void *a)
 {
-	void *p = bfmeAllocDGF(0x30);
-	if (p != 0)
-		return ((BfmeThingDGF *)p)->bfmeInitDGF(a);
-	return 0;
+	return reinterpret_cast<BfmeThingDGF *>(new BfmeThingTWA(static_cast<Rva007EAServiceList *>(a)));
 }
