@@ -257,26 +257,4 @@ void View::getScreenCornerWorldPointsAtZ( Coord3D *topLeft, Coord3D *topRight,
 // ------------------------------------------------------------------------------------------------
 /** Xfer method for a view */
 // ------------------------------------------------------------------------------------------------
-// ?xfer@View@@MAEXPAVXfer@@@Z present-unmatched
-void View::xfer( Xfer *xfer )
-{
-
-	// version
-	XferVersion currentVersion = 1;
-	XferVersion version = currentVersion;
-	xfer->xferVersion( &version, currentVersion );
-
-	// camera angle
-	Real angle = getAngle();
-	xfer->xferReal( &angle );
-	setAngle( angle );
-
-	// view position
-	Coord3D viewPos;
-	getPosition( &viewPos );
-	xfer->xferReal( &viewPos.x );
-	xfer->xferReal( &viewPos.y );
-	xfer->xferReal( &viewPos.z );
-	lookAt( &viewPos );
-
-}  // end xfer
+  // end xfer
