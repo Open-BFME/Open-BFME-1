@@ -52,9 +52,15 @@ class BaseHeightMapRenderObjClass
 	char m_pad0[0x30B8];
 	W3DShroud *m_shroud;
 
-public:
-	W3DShroud *getShroud() { return m_shroud; }
+	// getShroud is expanded through a TU-static helper: this partial
+	// layout's COMDAT differs from the canonical copy other TUs keep.
+	friend W3DShroud *shroudOf(BaseHeightMapRenderObjClass *terrain);
 };
+
+static __forceinline W3DShroud *shroudOf(BaseHeightMapRenderObjClass *terrain)
+{
+	return terrain->m_shroud;
+}
 
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 // retail 0x012F9D28: the shader texture-handle table (BfmeHandleCX[8]),
@@ -80,9 +86,9 @@ public:
 // ?Install_Materials@W3DShroudMaterialPassClass@@UBEXXZ
 void W3DShroudMaterialPassClass::Install_Materials(void) const
 {
-	if (TheTerrainRenderObject->getShroud())
+	if (shroudOf(TheTerrainRenderObject))
 	{
-		W3DShaderManager::setTexture(0, TheTerrainRenderObject->getShroud()->getShroudTexture());
+		W3DShaderManager::setTexture(0, shroudOf(TheTerrainRenderObject)->getShroudTexture());
 		W3DShaderManager::setShader(W3DShaderManager::ST_SHROUD_TEXTURE, 0);
 	}
 }
