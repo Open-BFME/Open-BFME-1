@@ -156,6 +156,13 @@ public:
 		(reinterpret_cast<Rva006ABDA0Call *>(this)->*thunk006ABDA0<Function>(j_00023911))(portion);
 	}
 
+	// ?clamp@AudioEventRTS@@QAEXMM@Z absent-from-retail
+	void clamp(float low, float high)
+	{
+		typedef void (Rva006ABDA0Call::*Function)(float, float);
+		(reinterpret_cast<Rva006ABDA0Call *>(this)->*thunk006ABDA0<Function>(j_00001b77))(low, high);
+	}
+
 	const AudioEventInfo *getAudioEventInfo(void) const { return m_eventInfo; }
 
 	char pad0[8];
@@ -164,7 +171,7 @@ public:
 	char pad10[0x28 - 0x10];
 	int category28;					// +0x28
 	char pad2c[0x44 - 0x2c];
-	bool m_44;					// +0x44
+	union { bool m_44; bool m_flag; };					// +0x44
 	bool flag45;				// +0x45
 	char pad46[0x54 - 0x46];
 	float m_delay;					// +0x54
@@ -444,6 +451,7 @@ class MilesAudioManager
 {
 public:
 	void rva006ABDA0(PlayingAudioRef *playing);
+	void rva006A59F0(PlayingAudio *release);
 	bool rva006ABFD0(PlayingAudioRef *playing);
 	void rva006ADD50(PlayingAudioRef *playing);
 	void rva006AE250(PlayingAudioRef *playing);
@@ -452,6 +460,9 @@ public:
 
 
 private:
+	friend class Rva006B0630Owner;
+	void setHardwareAccelerated(unsigned char accelerated);
+
 	// 0x006955C0 via ILT 0x00023F79: a new 0x18-byte request.
 	AudioRequest006A6B40 *rva006955C0(void)
 	{
@@ -747,4 +758,142 @@ bool MilesAudioManager::rva006B2230(AudioEventRTS *event)
 		}
 	}
 	return false;
+}
+
+extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(void *handle, unsigned long milliseconds);
+extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
+class Rva006ABFD0Event
+{
+public:
+	bool hasMoreLoops() const;
+	void advance();
+	void advanceNextPlayPortion();
+	void clamp(float low, float high);
+	char m_pad[0x44];
+	unsigned char m_flag;
+};
+
+typedef _STL::list<PlayingAudioRef> PlayingAudioList;
+typedef char PlayingAudioListMustBeFourBytes[
+	(sizeof(PlayingAudioList) == 4) ? 1 : -1];
+
+class Rva006ABFD0Playing
+{
+public:
+	char m_pad00[0x0c];
+	int m_type;
+	char m_pad10[4];
+	Rva006ABFD0Event *m_event;
+};
+
+class Rva006ABFD0Slot
+{
+public:
+	Rva006ABFD0Playing *m_playing;
+};
+
+class Rva006ABFD0
+{
+public:
+	friend class Rva006B0630Owner;
+
+private:
+	void add(Rva006ABFD0Slot *slot);
+};
+
+class Rva0069AB70Owner
+{
+public:
+	void closeProvider();
+};
+
+class BfmeOwnerVOB
+{
+public:
+	void bfmeClearVOB();
+};
+
+class Rva00695AB0Owner
+{
+public:
+	void setRoomType(int room);
+};
+
+class Rva006B0630Owner
+{
+public:
+	void rva006B0410(unsigned char enabled);
+	virtual void slot00();
+	virtual void slot04();
+	virtual void slot08();
+	virtual void slot0C();
+	virtual void slot10();
+	virtual void slot14();
+	char m_pad04[0x954];
+	int m_selectedProvider;
+	void *m_mutex;
+	char m_pad960[0x6c];
+	PlayingAudioList m_playingAudio;
+	char m_padListEnd[0xB54 - 0x9cc - sizeof(PlayingAudioList)];
+	int m_roomType;
+};
+
+class Rva006B0410MutexGuard
+{
+public:
+	Rva006B0410MutexGuard(void *handle)
+	{
+		m_owned = false;
+		m_handle = handle;
+		if (WaitForSingleObject(m_handle, 0xffffffffu) != 0x102u)
+			m_owned = true;
+	}
+	~Rva006B0410MutexGuard()
+	{
+		if (m_owned)
+		{
+			ReleaseMutex(m_handle);
+			m_owned = false;
+		}
+	}
+	void *m_handle;
+	bool m_owned;
+};
+
+// ?rva006B0410@Rva006B0630Owner@@QAEXE@Z
+void Rva006B0630Owner::rva006B0410(unsigned char enabled)
+{
+	if (m_selectedProvider != -1)
+	{
+		Rva006B0410MutexGuard guard(m_mutex);
+		for (PlayingAudioList::iterator it = m_playingAudio.begin();
+			it != m_playingAudio.end(); )
+		{
+			PlayingAudioRef local(*it);
+			PlayingAudio *audio = local;
+			Rva006ABFD0Playing *playing =
+				reinterpret_cast<Rva006ABFD0Playing *>(audio);
+			if (audio->m_audioEventRTS->hasMoreLoops())
+			{
+				audio->m_audioEventRTS->bfmeGenerateFilename();
+				if (audio->m_audioEventRTS->hasMoreLoops())
+				{
+					audio->m_audioEventRTS->advanceNextPlayPortion();
+					audio->m_audioEventRTS->clamp(34.3333321f, g_Va0112E8B0.value);
+					audio->m_audioEventRTS->m_flag = 1;
+					((MilesAudioManager *)this)->rva006ABDA0(&local);
+				}
+			}
+			((MilesAudioManager *)this)->rva006A59F0(audio);
+			it = m_playingAudio.erase(it);
+		}
+		((BfmeOwnerVOB *)this)->bfmeClearVOB();
+		((Rva0069AB70Owner *)this)->closeProvider();
+	}
+	((MilesAudioManager *)this)->setHardwareAccelerated(enabled);
+	if (m_selectedProvider != -1)
+	{
+		((Rva00695AB0Owner *)this)->setRoomType(m_roomType);
+		slot14();
+	}
 }
