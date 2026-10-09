@@ -8,6 +8,8 @@ set -uo pipefail
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
 GIT_DIR="$(git rev-parse --git-dir)"
+# Tool stamps (tools/gate_writers.py) cover one commit: drop the ones it used.
+[ -f tools/gate_writers.py ] && { python3 tools/gate_writers.py --consume 2>/dev/null || true; }
 [ -d "$GIT_DIR/rebase-merge" ] || [ -d "$GIT_DIR/rebase-apply" ] && exit 0
 # pre-commit records the tree it verified with the same two checks; a commit of
 # exactly that tree needs no second run. The record is consumed either way.

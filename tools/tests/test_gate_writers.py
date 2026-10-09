@@ -94,7 +94,7 @@ def test_a_hand_edited_imp_pin_is_refused_with_the_import_binding_command(repo, 
     assert gw.staged_problems()["imp_pin"] == ["+__imp__GetClientRect@8,0x01359020",
                                                "-__imp__GetClientRect@8,0x0135901C"]
     assert gw.main(["x", "--staged"]) == 1
-    assert "tools/import_binding.py apply" in capsys.readouterr().err
+    assert "tools/import_binding.py pin NAME ADDR" in capsys.readouterr().err
     write(repo, SYMS, SYMS_HEAD + "__imp__Sleep@4,0x01359000,new\n")
     assert "imp_pin" in gw.staged_problems()
 
@@ -105,3 +105,77 @@ def test_other_symbols_csv_writers_still_pass(repo):
     write(repo, SYMS, SYMS_HEAD.replace("iat", "iat slot").replace("\n", "\r\n")
           + "?g@@YAXXZ,0x00002000,pin\r\n")
     assert gw.staged_problems() == {}
+
+
+# ---------------------------------------------------------------- import_binding pin / retire-pin
+SLOT = 0x00F5901C                       # RVA of the retail IAT slot __imp__GetClientRect@8 binds
+
+
+def _imports():
+    import types
+    key = ("user32.dll", "GetClientRect")
+    return types.SimpleNamespace(slots={SLOT: key, SLOT + 4: ("user32.dll", "GetDC")},
+                                 imp={"__imp__GetClientRect@8": key}, by_import={key: SLOT})
+
+
+def _binding(repo, monkeypatch):
+    import argparse
+    import import_binding as ib
+    monkeypatch.setattr(ib, "ROOT", repo)
+    monkeypatch.setattr(ib, "SYMBOLS", repo / SYMS)
+    return ib, argparse.Namespace
+
+
+def _obj_referencing(path, name):
+    """A minimal i386 COFF object with one undefined external NAME."""
+    import struct
+    raw = name.encode() + b"\0"
+    head = struct.pack("<HHIIIHH", 0x14C, 0, 0, 20, 1, 0, 0)
+    sym = struct.pack("<II", 0, 4) + struct.pack("<IhHBB", 0, 0, 0, 2, 0)
+    path.write_bytes(head + sym + struct.pack("<I", 4 + len(raw)) + raw)
+
+
+def test_retire_pin_of_an_unused_pin_passes_and_stamps(repo, monkeypatch, tmp_path):
+    ib, ns = _binding(repo, monkeypatch)
+    obj = tmp_path / "a.obj"
+    _obj_referencing(obj, "__imp__Sleep@4")
+    assert ib.cmd_retire_pin(ns(name="__imp__GetClientRect@8"), objects={obj: "game/a.cpp"}) == 0
+    assert "__imp__GetClientRect" not in (repo / SYMS).read_text()
+    git(repo, "add", SYMS)
+    assert gw.staged_problems() == {}
+
+
+def test_retire_pin_of_a_still_bound_pin_is_refused(repo, monkeypatch, tmp_path):
+    ib, ns = _binding(repo, monkeypatch)
+    obj = tmp_path / "a.obj"
+    _obj_referencing(obj, "__imp__GetClientRect@8")
+    with pytest.raises(ib.Refused, match="game/a.cpp"):
+        ib.cmd_retire_pin(ns(name="__imp__GetClientRect@8"), objects={obj: "game/a.cpp"})
+    with pytest.raises(ib.Refused, match="build.sh game/b.cpp"):
+        ib.cmd_retire_pin(ns(name="__imp__GetClientRect@8"), objects={tmp_path / "none.obj": "game/b.cpp"})
+    assert (repo / SYMS).read_text() == SYMS_HEAD
+
+
+def test_pin_at_retail_slot_passes_and_a_wrong_slot_is_refused(repo, monkeypatch):
+    ib, ns = _binding(repo, monkeypatch)
+    with pytest.raises(ib.Refused, match="not 0x01359020"):
+        ib.cmd_pin(ns(name="__imp__GetClientRect@8", address="0x01359020", note=None), imports=_imports())
+    with pytest.raises(ib.Refused, match="no import library"):
+        ib.cmd_pin(ns(name="__imp__Nope@4", address="0x0135901C", note=None), imports=_imports())
+    assert (repo / SYMS).read_text() == SYMS_HEAD
+    write(repo, SYMS, SYMS_HEAD.replace("0x0135901C", "0x01359020"))       # hand move
+    assert ib.cmd_pin(ns(name="__imp__GetClientRect@8", address="0x0135901C", note=None),
+                      imports=_imports()) == 0                            # tool moves it back
+    git(repo, "add", SYMS)
+    assert gw.staged_problems() == {}
+
+
+def test_consume_drops_the_stamps_a_commit_used(repo):
+    write(repo, DATA, DATA_HEAD + ROW_A + ROW_B, tool_kind="data_row")
+    git(repo, "commit", "-qm", "tool row")
+    gw.consume()
+    assert gw.stamped() == set()
+    write(repo, DATA, DATA_HEAD + ROW_A)
+    git(repo, "commit", "-qm", "drop")
+    write(repo, DATA, DATA_HEAD + ROW_A + ROW_B)         # the old stamp no longer covers a hand re-add
+    assert "data_row" in gw.staged_problems()

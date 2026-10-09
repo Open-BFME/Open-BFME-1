@@ -37,6 +37,11 @@ the body is the 6-byte `jmp [slot]`, else `RvaXXXXXXXX_<name>`.
   python3 tools/import_binding.py next [--objects RSP]    # one repairable TU and its plan
   python3 tools/import_binding.py apply <source>          # rewrite its import declarations
   python3 tools/import_binding.py check <source>          # rebuild, bind, strict link; PASS/FAIL + receipt
+  python3 tools/import_binding.py pin NAME ADDR           # add/move an __imp_ pin to retail's slot for it
+  python3 tools/import_binding.py retire-pin NAME         # drop a pin no built object references
+
+`pin` and `retire-pin` are the only writers of __imp_ pins in symbols.csv: they
+stamp their write for the pre-commit check (tools/gate_writers.py).
 
 `check` compiles the TU with build.py (the scoped byte gate), then requires
 of the fresh object: no alias/invented/conflict/wrong-slot import and no
@@ -1113,6 +1118,105 @@ def cmd_next(args):
     return 1
 
 
+# ---------------------------------------------------------------- __imp_ pins
+SYMBOLS = ROOT / "targets/game/reverse/symbols.csv"
+
+
+def pin_slot_problem(name, address, imports):
+    """None when retail's import directory has NAME's import at ADDRESS (a VA or
+    an RVA), through the import libraries (oldnames aliases included), else why not."""
+    if not name.startswith("__imp_"):
+        return f"{name} is not an __imp_ name"
+    slot = address - BASE if address - BASE in imports.slots else address
+    if slot not in imports.slots:
+        return f"0x{address:08X} is not a retail IAT slot"
+    if name not in imports.imp:
+        return f"no import library defines {name} for an import retail has"
+    real = imports.by_import[imports.imp[name]]
+    if real != slot:
+        dll, imported = imports.imp[name]
+        return (f"{name} imports {dll}!{imported}, whose retail slot is VA 0x{real + BASE:08X}, "
+                f"not 0x{address:08X}")
+    return None
+
+
+def pin_dependents(name, objects=None):
+    """(sources whose built object references NAME, sources with no object)."""
+    objects = census_objects() if objects is None else objects
+    bound, missing = set(), set()
+    for obj, source in objects.items():
+        if not Path(obj).exists():
+            missing.add(source)
+        elif name in object_facts(Path(obj))[0]:
+            bound.add(source)
+    return sorted(bound), sorted(missing)
+
+
+def _write_pins(edit):
+    """Rewrite symbols.csv under the ledger lock with EDIT(lines) -> lines, and
+    stamp the __imp_ change for the pre-commit check (tools/gate_writers.py)."""
+    import gate_writers
+    from portable_lock import lock, unlock
+    lock_file = (SYMBOLS.parent / ".add_match.lock").open("a")
+    lock(lock_file, exclusive=True, wait_notice="import_binding: waiting for the ledger lock...")
+    try:
+        before = SYMBOLS.read_bytes()
+        lines = before.split(b"\n")
+        after = b"\n".join(edit(lines))
+        SYMBOLS.write_bytes(after)
+        gate_writers.stamp("imp_pin", before, after)
+    finally:
+        unlock(lock_file)
+        lock_file.close()
+
+
+def _pin_name(line):
+    return line.split(b",", 1)[0].decode("utf-8", "replace")
+
+
+def cmd_pin(args, imports=None):
+    """Add or move an __imp_ pin to the IAT slot retail imports it at."""
+    address = int(args.address, 16)
+    imports = imports or Imports(retail_slots(), libraries())
+    problem = pin_slot_problem(args.name, address, imports)
+    if problem:
+        raise Refused(problem)
+    va = address if address - BASE in imports.slots else address + BASE
+
+    def edit(lines):
+        cr = b"\r" if lines and lines[0].endswith(b"\r") else b""
+        note = (args.note or "import_binding pin: retail IAT slot").replace(",", " ").encode()
+        new = f"{args.name},0x{va:08X},".encode() + note + cr
+        hits = [i for i, line in enumerate(lines) if _pin_name(line) == args.name]
+        if hits:
+            for i in hits:
+                cells = lines[i].rstrip(b"\r").split(b",", 2)
+                lines[i] = b",".join([cells[0], f"0x{va:08X}".encode(), *cells[2:]]) + cr
+            return lines
+        at = len(lines) - 1 if lines and lines[-1] == b"" else len(lines)
+        return lines[:at] + [new] + lines[at:]
+    _write_pins(edit)
+    print(f"import_binding: pinned {args.name} at 0x{va:08X}")
+    return 0
+
+
+def cmd_retire_pin(args, objects=None):
+    """Remove an __imp_ pin that no built object of the tree still references."""
+    if not args.name.startswith("__imp_"):
+        raise Refused(f"{args.name} is not an __imp_ name")
+    if not any(_pin_name(line) == args.name for line in SYMBOLS.read_bytes().split(b"\n")):
+        raise Refused(f"{args.name} has no pin in {SYMBOLS.relative_to(ROOT)}")
+    bound, missing = pin_dependents(args.name, objects)
+    if bound:
+        raise Refused(f"{len(bound)} source(s) still bind {args.name}: " + ", ".join(bound[:10]))
+    if missing:
+        raise Refused(f"{len(missing)} source(s) have no object, so what binds {args.name} is unknown; "
+                      "build them first: " + ", ".join(f"./build.sh {s}" for s in missing[:10]))
+    _write_pins(lambda lines: [line for line in lines if _pin_name(line) != args.name])
+    print(f"import_binding: retired the {args.name} pin")
+    return 0
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     sub = parser.add_subparsers(dest="command", required=True)
@@ -1128,6 +1232,14 @@ def main(argv=None):
         p.add_argument("source")
         p.add_argument("--model", default=os.environ.get("BFME_MODEL", ""))
         p.set_defaults(func=func)
+    p = sub.add_parser("pin", help="add or move an __imp_ pin to retail's IAT slot for it")
+    p.add_argument("name")
+    p.add_argument("address", help="the IAT slot, VA or RVA")
+    p.add_argument("--note")
+    p.set_defaults(func=cmd_pin)
+    p = sub.add_parser("retire-pin", help="remove an __imp_ pin nothing built still references")
+    p.add_argument("name")
+    p.set_defaults(func=cmd_retire_pin)
     args = parser.parse_args(argv)
     try:
         return args.func(args)

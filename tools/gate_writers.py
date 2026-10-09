@@ -3,9 +3,8 @@
 
 Two kinds of fact, each with one writer:
 
-  imp_pin   targets/game/reverse/symbols.csv: an `__imp_` pin (name, address). No
-            tool writes these: the import itself is repaired in source with
-            tools/import_binding.py (apply/check), which needs no pin.
+  imp_pin   targets/game/reverse/symbols.csv: an `__imp_` pin (name, address). Writer:
+            tools/import_binding.py pin / retire-pin.
   data_row  targets/game/reverse/data_rows.csv: an added or changed row (name,
             address, kind, size, section, source, status). Writer:
             tools/add_data_match.py. Deleting a row, or editing only its
@@ -17,8 +16,11 @@ its write; the facts that differ go to a stamp file in this worktree's own git d
 `--staged` with this file AS OF HEAD (an edit cannot approve itself): every fact
 the staged change makes against HEAD must be in the stamp, else the commit is
 refused with the tool command to use. Merges (MERGE_HEAD) are skipped.
+post-commit runs `--consume`: the stamps of each kind whose file the commit
+touched are dropped, so an old stamp cannot cover a later hand edit.
 
   python3 tools/gate_writers.py --staged
+  python3 tools/gate_writers.py --consume
 """
 import csv
 import json
@@ -30,8 +32,8 @@ FILES = {
     "data_row": "targets/game/reverse/data_rows.csv",
 }
 TOOLS = {
-    "imp_pin": "no tool writes __imp_ pins: repair the import in source with "
-               "python3 tools/import_binding.py apply <source>, then check <source>",
+    "imp_pin": "python3 tools/import_binding.py pin NAME ADDR (retail's IAT slot for it) or "
+               "retire-pin NAME (nothing built still references it)",
     "data_row": "python3 tools/add_data_match.py NAME ADDR --va|--rva SOURCE --model <you> "
                 "--evidence ...  (to move a row: delete it, then add it with the tool)",
 }
@@ -132,7 +134,33 @@ def staged_problems():
     return out
 
 
+def consume():
+    """After a commit: drop the stamps of every kind whose file the commit
+    touched, so an old stamp cannot cover a later hand edit."""
+    path = stamp_path()
+    names = set(_git("diff-tree", "--no-commit-id", "--name-only", "-r", "HEAD").stdout.decode().split())
+    kinds = {kind for kind, rel in FILES.items() if rel in names}
+    try:
+        with open(path, encoding="utf-8") as handle:
+            lines = handle.readlines()
+    except (OSError, TypeError):
+        return
+    kept = []
+    for line in lines:
+        try:
+            if json.loads(line)["kind"] in kinds:
+                continue
+        except (ValueError, KeyError, TypeError):
+            continue
+        kept.append(line)
+    with open(path, "w", encoding="utf-8") as handle:
+        handle.writelines(kept)
+
+
 def main(argv):
+    if argv[1:] == ["--consume"]:
+        consume()
+        return 0
     if argv[1:] != ["--staged"]:
         print(__doc__, file=sys.stderr)
         return 2
