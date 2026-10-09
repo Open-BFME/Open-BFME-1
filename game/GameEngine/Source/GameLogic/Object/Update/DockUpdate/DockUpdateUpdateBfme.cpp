@@ -93,6 +93,11 @@ public:
 	const ThingTemplate *getTemplate() const;
 	Bool isKindOf(KindOfType kind) const;
 
+	const ThingTemplate *getThingTemplate() const
+	{
+		return m_template;
+	}
+
 	OVERRIDE<ThingTemplate> m_template;
 	UnsignedInt m_unused;
 };
@@ -111,11 +116,6 @@ public:
 		return this;
 	}
 
-	const ThingTemplate *getThingTemplate() const
-	{
-		const Thing *thing = static_cast<const Thing *>(this);
-		return thing->m_template;
-	}
 };
 
 class Object : public Thing
@@ -226,7 +226,7 @@ union ConstructBitSetCall
 	ConstructBitSet memberFunction;
 };
 
-inline const ThingTemplate *Thing::getTemplate() const { return m_template; }
+// The retail accessor is defined in Common/Thing/Thing_isKindOf.cpp.
 
 inline Bool Thing::isKindOf(KindOfType kind) const
 {
@@ -269,7 +269,7 @@ UpdateSleepTime DockUpdate::update()
 	else
 	{
 		ObjectView *object = getObject();
-		const ThingTemplate *thingTemplate = object->getTemplate();
+		const ThingTemplate *thingTemplate = object->getThingTemplate();
 		if (thingTemplate->isKindOf(KINDOF_SUPPLY_SOURCE))
 		{
 			FindObjectByIDCall findObjectByID;

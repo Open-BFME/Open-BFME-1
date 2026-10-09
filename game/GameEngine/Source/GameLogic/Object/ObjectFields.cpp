@@ -247,16 +247,7 @@ public:
 	Overridable*	m_nextOverride;
 };
 
-const ThingTemplate* Thing::getTemplate( void ) const
-{
-	const Overridable* tmpl = (const Overridable*)m_template;
-	if( tmpl != NULL )
-	{
-		if( tmpl->m_nextOverride != NULL )
-			tmpl = tmpl->getFinalOverride();
-	}
-	return (const ThingTemplate*)tmpl;
-}
+// The retail accessor is defined in Common/Thing/Thing_isKindOf.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Locomotor.h
