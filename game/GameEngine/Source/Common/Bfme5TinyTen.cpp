@@ -27,7 +27,7 @@ int Gen_004891C0::bfmeIsClear(void) const
 
 class Gen_004902A0;
 
-extern Gen_004902A0 *g_bfmeHeadCA;				// retail 0x012F3350
+Gen_004902A0 *g_bfmeHeadCA;				// retail 0x012F3350
 
 class Gen_004902A0
 {
