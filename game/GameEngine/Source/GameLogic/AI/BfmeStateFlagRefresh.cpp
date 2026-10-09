@@ -24,6 +24,11 @@ struct BfmeFlagData
 	bool m_invertedFlag;
 };
 
+// Retail route 1727E -> 22CDB0 -> 2ECC1 -> 225960 reaches the matched
+// Rva00225960Owner list drain. Name the first ledger-owned thunk and preserve
+// its nullary thiscall ECX through a one-register fastcall view.
+extern void j_0001727e();
+
 class BfmeStateFlagOwner
 {
 public:
@@ -44,7 +49,6 @@ public:
 	virtual void v28() = 0; virtual void v29() = 0;
 	virtual void updateBase(int value) = 0;
 
-	void updateCachedState();
 	void bfmeRefreshStateFlag();
 
 private:
@@ -58,7 +62,7 @@ private:
 void BfmeStateFlagOwner::bfmeRefreshStateFlag()
 {
 	updateBase(0);
-	updateCachedState();
+	((void (__fastcall *)(BfmeStateFlagOwner *))j_0001727e)(this);
 	if (m_cachedFlag != !m_data->m_invertedFlag)
 		m_sink.refreshFlag();
 }
