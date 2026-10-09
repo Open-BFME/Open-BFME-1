@@ -51,16 +51,27 @@ public:
 class Player
 {
 public:
-	PlayerType getPlayerType() const { return m_playerType; }
 
 	char m_pad000[0x2c];
 	PlayerType m_playerType;
 };
 
-class Object : public Thing
+// This local Player view must not emit the getter for different layouts.
+static inline PlayerType getPlayerType(const Player *player)
+{
+	return player->m_playerType;
+}
+
+// Retail ILT17607 targets the matched const-bool body at 0x001C9270.
+class ObjectIsMobileBody
 {
 public:
 	Bool isMobile() const;
+};
+
+class Object : public Thing
+{
+public:
 	Weapon *getCurrentWeapon(WeaponSlotType *wslot = 0);
 	Player *getControllingPlayer() const;
 	Bool crushPolicy(Object *otherObject, CrushSquishTestType test) const;
@@ -214,7 +225,7 @@ static __declspec(noinline) Bool canPursue(Object *attacker, Weapon *weapon, Obj
 	if (TheAI->m_aiData->m_aiCrushesInfantry)
 	{
 		if (attacker->getControllingPlayer() &&
-			(attacker->getControllingPlayer()->getPlayerType() == PLAYER_COMPUTER) &&
+			(getPlayerType(attacker->getControllingPlayer()) == PLAYER_COMPUTER) &&
 			attacker->crushPolicy(target, TEST_CRUSH_OR_SQUISH))
 			return true;
 	}
@@ -285,7 +296,7 @@ Bool AIAttackPursueTargetState::computePath()
 	CRCDEBUG_LOG("CritterDesync: ComputePath12");
 
 	Bool forceRepath = false;
-	if (m_machine->m_owner->isMobile() == false)
+	if (reinterpret_cast<const ObjectIsMobileBody *>(m_machine->m_owner)->isMobile() == false)
 		return false;
 
 	AIUpdateInterface *ai = m_machine->m_owner->m_ai;
