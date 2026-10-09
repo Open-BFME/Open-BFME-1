@@ -1,3 +1,5 @@
+#include "../GameLogic/command_source_type.h"
+
 #define BFME_TEN_VIRTUALS(PREFIX) \
 	virtual void PREFIX##0(void); virtual void PREFIX##1(void); \
 	virtual void PREFIX##2(void); virtual void PREFIX##3(void); \
@@ -24,16 +26,18 @@ public:
 	virtual void bfmeBefore(void);
 };
 
-class BfmeInnerAKA
+// ILT 0x00024D70 reaches the canonical aiIdle body at RVA 0x000D87E0.
+// It is a non-virtual thiscall with one CommandSourceType stack argument.
+class AICommandInterface
 {
 public:
-	void bfmeSetAKA(int value);
+	void aiIdle(CommandSourceType source);
 };
 
 struct BfmeOptionalSub
 {
 	char m_bfmeFields[0x20];
-	BfmeInnerAKA m_bfmeInner;
+	AICommandInterface m_bfmeInner;
 };
 
 struct BfmeOptionalState
@@ -65,7 +69,7 @@ void Gen_0027DE90::bfmeNotify(void *before, int value)
 
 		BfmeOptionalSub *sub = m_bfmeState->m_bfmeSub;
 		if (sub != 0)
-			sub->m_bfmeInner.bfmeSetAKA(value);
+			sub->m_bfmeInner.aiIdle(static_cast<CommandSourceType>(value));
 
 		target->bfmeApply(value);
 	}
