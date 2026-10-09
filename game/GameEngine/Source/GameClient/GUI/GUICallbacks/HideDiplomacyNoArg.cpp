@@ -40,6 +40,13 @@ extern void *g_obj12F49E4;
 extern Shell *TheShell;
 extern WindowManager *g_rva012F19E8WindowManager;
 
+// Matched row ?apply@Rva00465B80@@QAEXXZ at 0x00465B80 (__thiscall void(void)).
+class Rva00465B80
+{
+public:
+	void apply(void);
+};
+
 // ?HideDiplomacy@@YAXXZ
 void HideDiplomacy(void)
 {
@@ -54,5 +61,5 @@ void HideDiplomacy(void)
 	window->m_hidden = true;
 	((InGameUI *)TheShell)->m_diplomacyHidden = true;
 
-	g_rva012F19E8WindowManager->hideQuitMenu();
+	((Rva00465B80 *)g_rva012F19E8WindowManager)->apply();
 }
