@@ -428,148 +428,19 @@ void W3DRenderObjectSnapshot::loadPostProcess( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ??0W3DGhostObject@@QAE@XZ present-unmatched
-W3DGhostObject::W3DGhostObject()
-{
-
-	for (Int i=0; i< MAX_PLAYER_COUNT; i++) 
-		m_parentSnapshots[i]=NULL;
-
-	m_drawableInfo.m_drawable = NULL;
-	m_drawableInfo.m_flags = 0;
-	m_drawableInfo.m_ghostObject = NULL;
-	m_drawableInfo.m_shroudStatusObjectID = INVALID_ID;
-
-	m_nextSystem = NULL;
-	m_prevSystem = NULL;
-
-}
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ??1W3DGhostObject@@UAE@XZ present-unmatched
-W3DGhostObject::~W3DGhostObject()
-{
-#ifdef DEBUG_FOG_MEMORY
-	for (Int i=0; i<MAX_PLAYER_COUNT; i++)
-	{
-		DEBUG_ASSERTCRASH(m_parentSnapshots[i] == NULL, ("Delete of non-empty GhostObject"));
-	}
-#else
-	DEBUG_ASSERTCRASH(m_parentSnapshots[TheGhostObjectManager->getLocalPlayerIndex()] == NULL, ("Delete of non-empty GhostObject"));
-#endif
-}
 
 // ------------------------------------------------------------------------------------------------
 /** Record the current state of the renderobjects used by this parent object
 so we can display cached state when player is looking at fogged object.
 Should only be called when object enters the fogged state.*/
 // ------------------------------------------------------------------------------------------------
-// ?snapShot@W3DGhostObject@@UAEXH@Z present-unmatched
-void W3DGhostObject::snapShot(int playerIndex)
-{
-#ifndef DEBUG_FOG_MEMORY
-	if (playerIndex != TheGhostObjectManager->getLocalPlayerIndex())
-		return;	//we only snapshot things for the initial local player because local player can't change in non-debug game.
-#endif
-
-	Drawable *draw=m_parentObject->getDrawable();
-	if (draw->isDrawableEffectivelyHidden())
-		return;	//don't bother to snapshot things which nobody can see.
-	
-	W3DRenderObjectSnapshot *snap=m_parentSnapshots[playerIndex],*prevSnap=NULL;
-
-	//walk through all W3D render objects used by this object
-	for (DrawModule ** dm = draw->getDrawModules(); *dm; ++dm)
-	{
-		const ObjectDrawInterface* di = (*dm)->getObjectDrawInterface();
-		if (di)
-		{
-			W3DModelDraw *w3dDraw= (W3DModelDraw *)di;
-			RenderObjClass *robj=NULL;
-
-			robj=w3dDraw->getRenderObject();
-			//robj may be null for modules which have no render objects such
-			//as for build-ups that are currently disabled.
-			if (robj)
-			{
-				if (snap == NULL)
-				{	
-					snap = NEW W3DRenderObjectSnapshot(robj, &m_drawableInfo);	// poolify
-					if (prevSnap)
-						prevSnap->m_next=snap;
-					else
-						m_parentSnapshots[playerIndex]=snap;
-				}
-				else
-					m_parentSnapshots[playerIndex]->update(robj, &m_drawableInfo);
-
-				//Adding and removing render objects to the scene is expensive
-				//so only do it for the real player watching the screen.  There is
-				//also no point in displaying the other player's ghost objects to
-				//the current player.
-				if (playerIndex == TheGhostObjectManager->getLocalPlayerIndex())
-				{
-					robj->Remove();	//remove normal object from scene
-					snap->addToScene();
-				}
-
-				prevSnap=snap;
-				snap = snap->m_next;
-			}
-		}
-	}
-
-	//Check if we captured at least one snapshot
-	if (snap != m_parentSnapshots[playerIndex])
-	{	//save off other info we may need in case the parent object is destroyed.
-		///@todo: We're going to ignore the case where each player index could be
-		//looking at a different geometry info/orientation because ghostobjects
-		//are supposed to be used on immobile buildings.
-		m_parentGeometryType=m_parentObject->getGeometryInfo().getGeomType();
-		m_parentGeometryIsSmall=m_parentObject->getGeometryInfo().getIsSmall();
-		m_parentGeometryMajorRadius=m_parentObject->getGeometryInfo().getMajorRadius();
-		m_parentGeometryminorRadius=m_parentObject->getGeometryInfo().getMinorRadius();
-		m_parentPosition=*m_parentObject->getPosition();
-		m_parentAngle=m_parentObject->getOrientation();
-	}
-}
 
 // ------------------------------------------------------------------------------------------------
 /** Remove the original object from our 3D scene*/
 // ------------------------------------------------------------------------------------------------
-// ?removeParentObject@W3DGhostObject@@IAEXXZ present-unmatched
-void W3DGhostObject::removeParentObject(void)
-{
-
-	// sanity
-	if( m_parentObject == NULL )
-		return;
-
-	Drawable *draw=m_parentObject->getDrawable();
-
-	//After we remove the unfogged object, we also disable
-	//anything that should be hidden inside fog - shadow, particles, etc.
-	draw->setFullyObscuredByShroud(true);
-
-	//walk through all W3D render objects used by this object
-	for (DrawModule ** dm = draw->getDrawModules(); *dm; ++dm)
-	{
-		const ObjectDrawInterface* di = (*dm)->getObjectDrawInterface();
-		if (di)
-		{
-			W3DModelDraw *w3dDraw= (W3DModelDraw *)di;
-			RenderObjClass *robj=NULL;
-
-			robj=w3dDraw->getRenderObject();
-			if (robj)
-			{
-				DEBUG_ASSERTCRASH(robj->Peek_Scene() != NULL, ("Removing GhostObject parent not in scene "));
-				robj->Remove();
-			}
-		}
-	}
-}
 
 // ------------------------------------------------------------------------------------------------
 /** Reinsert the original object into our 3D scene*/
@@ -1102,38 +973,6 @@ GhostObject *W3DGhostObjectManager::addGhostObject(Object *object, PartitionData
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?setLocalPlayerIndex@W3DGhostObjectManager@@UAEXH@Z present-unmatched
-void W3DGhostObjectManager::setLocalPlayerIndex(int index)
-{
-	//Whenever we switch local players, we need to remove all ghost objects belonging
-	//to another player from the map.  We then insert the current local player's
-	//ghost objects into the map.
-
-	W3DGhostObject *mod = m_usedModules;
-
-	while (mod)
-	{
-		mod->removeFromScene(m_localPlayer);
-		if (mod->m_parentSnapshots[index])
-		{	//new player has his own snapshot
-			if (!mod->m_parentSnapshots[m_localPlayer] && mod->m_parentObject)
-			{	//previous player didn't have a snapshot so real object must
-				//have been in the scene.  Replace it with our snapshot.
-				mod->removeParentObject();
-			}
-			mod->addToScene(index);
-		}
-		//new player doesn't have a snapshot which means restore original object
-		//if it was replaced by a snapshot by the previous player.
-		else
-		if (mod->m_parentSnapshots[m_localPlayer] && mod->m_parentObject)
-			mod->restoreParentObject();
-	
-		mod=mod->m_nextSystem;
-	}
-
-	m_localPlayer = index;
-}
 
 // ------------------------------------------------------------------------------------------------
 /** When a game object/drawable dies, it is removed from the rest of the engine.  It leaves behind
