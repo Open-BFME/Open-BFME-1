@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "230a63c267f4f4269070f4fa42bc44a86b10c5a5df578dfef8b5ece8cd4a67a4",
+  "symbol": "??0Rva0045EF90Object@@QAE@XZ",
+  "score_kind": "measured",
+  "score": 0.82,
+  "source": "// ??0Rva0045EF90Object@@QAE@XZ\n// partial score=0.82 date=2026-10-08\n// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline\n\n#include \"StringInline.h\"\n\nclass Rva0045EF90Base\n{\npublic:\n\tRva0045EF90Base() : m_value(0xFFFFFFFF) {}\n\tRva0045EF90Base(const Rva0045EF90Base &source) : m_value(source.m_value) {}\n\tvirtual ~Rva0045EF90Base() {}\n\nprivate:\n\tunsigned m_value;\n};\n\nclass Rva0045EF90Object : public Rva0045EF90Base\n{\npublic:\n\tRva0045EF90Object();\n\tRva0045EF90Object(const Rva0045EF90Object &source);\n\tvirtual ~Rva0045EF90Object();\n\nprivate:\n\tAsciiString m_first;\n\tAsciiString m_second;\n\tunsigned m_handle;\n\tfloat m_value14;\n\tfloat m_value18;\n\tfloat m_value1c;\n\tfloat m_value20;\n\tunsigned char m_value24;\n\tunsigned char m_padding25[3];\n\tAsciiString m_last;\n};\n\nRva0045EF90Object::Rva0045EF90Object()\n\t: Rva0045EF90Base()\n\t, m_first()\n\t, m_second()\n\t, m_handle(0)\n\t, m_value24(0)\n\t, m_last()\n{\n\tm_value14 = -1.0f;\n\tm_value18 = -1.0f;\n\tm_value1c = -1.0f;\n\tm_value20 = -1.0f;\n}\n\nRva0045EF90Object::Rva0045EF90Object(const Rva0045EF90Object &source)\n\t: Rva0045EF90Base(source)\n\t, m_first(source.m_first)\n\t, m_second(source.m_second)\n\t, m_handle(source.m_handle)\n\t, m_value14(source.m_value14)\n\t, m_value18(source.m_value18)\n\t, m_value1c(source.m_value1c)\n\t, m_value20(source.m_value20)\n\t, m_value24(source.m_value24)\n\t, m_last(source.m_last)\n{\n}\n"
+}
