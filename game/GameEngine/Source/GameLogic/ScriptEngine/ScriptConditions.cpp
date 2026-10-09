@@ -852,24 +852,7 @@ Bool ScriptConditions::evaluateNamedOutsideArea(Parameter *pUnitParm, Parameter 
 //-------------------------------------------------------------------------------------------------
 /** evaluateTeamInsideAreaEntirely */ 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions_insideArea.cpp
-// ?evaluateTeamInsideAreaEntirely@ScriptConditions@@IAE_NPAVParameter@@00@Z present-unmatched
-Bool ScriptConditions::evaluateTeamInsideAreaEntirely(Parameter *pTeamParm, Parameter *pTriggerParm, Parameter *pTypeParm)
-{// This is actually TeamInside(...)
-	Team *theTeam = TheScriptEngine->getTeamNamed( pTeamParm->getString() );
-	// The team is the team based on the name, and the calling team (if any) and the team that
-	// is being considered for the condition.  jba. :)
-	AsciiString triggerName = pTriggerParm->getString();
-	PolygonTrigger *pTrig = TheScriptEngine->getQualifiedTriggerAreaByName(pTriggerParm->getString());
-	
-	if (pTrig == NULL) 
-		return false;
-
-	if (theTeam) {
-		return theTeam->allInside(pTrig, (UnsignedInt)pTypeParm->getInt());
-	}
-	return false; // Non existent team isn't in trigger area. :)
-}
+// Defined by the retail reconstruction in ScriptConditionsTriggerAreas.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** evaluateTeamOutsideAreaEntirely */

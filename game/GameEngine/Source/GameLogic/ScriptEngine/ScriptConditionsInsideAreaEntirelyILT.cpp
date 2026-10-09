@@ -2,13 +2,13 @@
 
 class Parameter;
 
-class ScriptConditionsEvaluateTeamInsideAreaEntirelyShim
+class ScriptConditions
 {
-public:
-	bool evaluate(Parameter *, Parameter *, Parameter *);
+protected:
+	bool evaluateTeamInsideAreaEntirely(Parameter *, Parameter *, Parameter *);
 };
 
-class Rva00013219ScriptConditionsThunk
+class Rva00013219ScriptConditionsThunk : public ScriptConditions
 {
 public:
 	bool forward(Parameter *, Parameter *, Parameter *);
@@ -17,6 +17,5 @@ public:
 bool Rva00013219ScriptConditionsThunk::forward(
 	Parameter *team, Parameter *trigger, Parameter *type)
 {
-	return ((ScriptConditionsEvaluateTeamInsideAreaEntirelyShim *)this)->evaluate(
-		team, trigger, type);
+	return evaluateTeamInsideAreaEntirely(team, trigger, type);
 }
