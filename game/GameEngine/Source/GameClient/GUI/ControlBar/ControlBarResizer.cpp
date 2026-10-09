@@ -105,29 +105,6 @@ ControlBarResizer::~ControlBarResizer( void )
 }
 	
 	
-// ?findResizerWindow@ControlBarResizer@@QAEPAVResizerWindow@@VAsciiString@@@Z present-unmatched
-ResizerWindow *ControlBarResizer::findResizerWindow( AsciiString name )
-{
-	ResizerWindowList::iterator it = m_resizerWindowsList.begin();
-
-	while (it != m_resizerWindowsList.end())
-	{
-		ResizerWindow *rWin = *it;
-		if( !rWin )
-		{
-			DEBUG_ASSERTCRASH(FALSE,("There's no resizerWindow in ControlBarResizer::findResizerWindow"));
-			it++;
-			continue;
-		}
-		// find the scheme that best matches our resolution
-		if(rWin->m_name.compare(name) == 0)
-		{
-			return rWin;
-		}
-		it ++;	
-	}
-	return NULL;
-}
 
 ResizerWindow *ControlBarResizer::newResizerWindow( AsciiString name )
 {
