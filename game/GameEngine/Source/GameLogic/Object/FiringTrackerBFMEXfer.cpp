@@ -112,6 +112,10 @@ class BehaviorModule : public ObjectModule, public BehaviorModuleInterface
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
+// ABI view of the existing matched UpdateModule transfer provider.
+class FlagPairTarget;
+class Gen002B2080 { public: void handle(FlagPairTarget *target); };
+
 class UpdateModule : public BehaviorModule, public UpdateModuleInterface
 {
 protected:
@@ -178,7 +182,9 @@ private:
 
 void FiringTracker::xfer(Xfer *xfer)
 {
-	UpdateModule::xfer(xfer);
+	// Retail ILT 000044C1 reaches the matched 002B2080 ledger body.
+	reinterpret_cast<Gen002B2080 *>(this)->handle(
+		reinterpret_cast<FlagPairTarget *>(xfer));
 
 	if (xfer->IsLightCRC())
 		return;
