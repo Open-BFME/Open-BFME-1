@@ -47,13 +47,21 @@ public:
 	virtual void bfmeByteAY(unsigned char *dst);
 };
 
-extern "C" void __cdecl bfmeXferAY(BfmeAgentAY *ag, void *dst);
+// Retail calls ILT 0x2379 -> 0x0016B140 and 0x4B79 -> 0x0010BE00.
+// Use the matched bodies' declarations: thiscall handoff, cdecl transfer.
+class FlagPairTarget;
+class Gen0016B140
+{
+public:
+	void handle(FlagPairTarget *target);
+};
+class MidVirtualSlot90Receiver;
+void Rva0010BE00(MidVirtualSlot90Receiver *receiver, void *context);
 
 class BfmeHostAY
 {
 public:
 	void bfmeSaveAY(BfmeAgentAY *ag);
-	void bfmeBeginAY(BfmeAgentAY *ag);
 
 	unsigned char m_bfmeHeadAY[0x50];
 	unsigned char m_bfmeSlotAAY[4];
@@ -76,7 +84,7 @@ void BfmeHostAY::bfmeSaveAY(BfmeAgentAY *ag)
 	info.m_bfmeLevelAY = 3;
 	ag->bfmeFillAY(&info);
 
-	bfmeBeginAY(ag);
+	((Gen0016B140 *)this)->handle((FlagPairTarget *)ag);
 
 	if (ag->bfmeSkipAY() != 0)
 		return;
@@ -89,7 +97,7 @@ void BfmeHostAY::bfmeSaveAY(BfmeAgentAY *ag)
 	if (info.m_bfmeLevelAY > 1)
 	{
 		ag->bfmeWordAY(m_bfmeSlotBAY);
-		bfmeXferAY(ag, m_bfmeSlotGAY);
+		Rva0010BE00((MidVirtualSlot90Receiver *)ag, m_bfmeSlotGAY);
 
 		if (m_bfmeSlotHAY != 0)
 			ag->bfmeLinkAY(m_bfmeSlotHAY);
