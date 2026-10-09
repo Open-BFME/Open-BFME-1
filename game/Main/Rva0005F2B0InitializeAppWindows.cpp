@@ -76,7 +76,7 @@ UnicodeString getBfmeDisplayName();
 extern HINSTANCE ApplicationHInstance;
 extern HWND ApplicationHWnd;
 Bool g_Va012ED248Initializing = false;
-extern Bool g_Va012A6514;
+Bool g_Va012A6514 = true;
 
 // ?applicationInstance@@YAAAPAXXZ absent-from-retail
 static HINSTANCE &applicationInstance()
