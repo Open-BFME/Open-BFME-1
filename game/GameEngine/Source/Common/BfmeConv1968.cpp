@@ -1,7 +1,17 @@
+class BfmeSubESD;
+namespace _STL {
+ template<class T> class char_traits;
+ template<class T> class allocator;
+ struct __false_type;
+ template<class C, class T, class A> class basic_string {
+  template<class I> basic_string &_M_assign_dispatch(I, I, const __false_type &);
+  friend class ::BfmeSubESD;
+ };
+}
+
 class BfmeSubESD
 {
 public:
-	void bfmeAssignESD(void *a, void *b, void **spare);
 
 	BfmeSubESD &operator=(const BfmeSubESD &other)
 	{
@@ -9,7 +19,7 @@ public:
 		{
 			void *spare;
 
-			bfmeAssignESD(other.m_bfmeAESD, other.m_bfmeBESD, &spare);
+			reinterpret_cast<_STL::basic_string<char, _STL::char_traits<char>, _STL::allocator<char> > *>(this)->_M_assign_dispatch<char *>((char *)other.m_bfmeAESD, (char *)other.m_bfmeBESD, *reinterpret_cast<const _STL::__false_type *>(&spare));
 		}
 
 		return *this;
