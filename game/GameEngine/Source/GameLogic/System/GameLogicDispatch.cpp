@@ -158,24 +158,7 @@ static Object * getSingleObjectFromSelection(const AIGroup *currentlySelectedGro
 	return NULL;
 }
 
-void GameLogic::closeWindows( void )
-{
-	HideDiplomacy();
-	ResetDiplomacy();
-	HideInGameChat();
-	ResetInGameChat();
-	TheControlBar->hidePurchaseScience();
-	TheControlBar->hideSpecialPowerShortcut();
-	HideQuitMenu();
-	
-	// hide the options menu
-	NameKeyType buttonID = TheNameKeyGenerator->nameToKey( "OptionsMenu.wnd:ButtonBack" );
-	GameWindow *button = TheWindowManager->winGetWindowFromId( NULL, buttonID );
-	GameWindow *window = TheWindowManager->winGetWindowFromId( NULL, TheNameKeyGenerator->nameToKey("OptionsMenu.wnd:OptionsMenuParent") );
-	if(window)
-		TheWindowManager->winSendSystemMsg( window, GBM_SELECTED, 
-																			(WindowMsgData)button, buttonID );
-}
+// Retail closeWindows is defined in GameLogicCloseWindows.cpp.
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------

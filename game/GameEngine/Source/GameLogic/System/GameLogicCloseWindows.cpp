@@ -134,6 +134,18 @@ void HideQuitMenu(void);
 void HideSaveLoadMenu(void);
 void ReleaseWindowLayout(WindowLayout *layout);
 
+// Retail ILT 0x20347 reaches the separate five-byte thunk at 0x49D0A0,
+// which then jumps to hidePurchaseScience. Use that thunk's ledger name.
+extern void j_0049d0a0();
+
+static __forceinline void hidePurchaseScienceThunk(ControlBar *bar)
+{
+	typedef void (ControlBar::*Function)();
+	union { void (*raw)(); Function member; } call;
+	call.raw = j_0049d0a0;
+	(bar->*call.member)();
+}
+
 extern ControlBar *TheControlBar;
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern GameWindowManager *TheWindowManager;
@@ -149,7 +161,7 @@ void GameLogic::closeWindows(void)
 	HideDiplomacy();
 	HideInGameChat();
 	ResetInGameChat();
-	TheControlBar->hidePurchaseScience();
+	hidePurchaseScienceThunk(TheControlBar);
 	TheControlBar->hideSpecialPowerShortcut();
 	if (reinterpret_cast<void * &>(g_obj12F4AD4))
 	{
