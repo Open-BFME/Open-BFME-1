@@ -15,18 +15,8 @@ RGBColor &RGBColor::operator=(const RGBColor &that)
     return *this;
 }
 
-int RGBColor::getAsInt() const
-{
-    return ((int)(red * 255.0) << 16) | ((int)(green * 255.0) << 8) | ((int)(blue * 255.0) << 0);
-}
-
-void RGBColor::setFromInt(int color)
-{
-    static const float scale = 1.0f / 255.0f;
-    red = (float)((color >> 16) & 0xFF) * scale;
-    green = (float)((color >> 8) & 0xFF) * scale;
-    blue = (float)(color & 0xFF) * scale;
-}
+// RGBColor conversion bodies are emitted inline by the donor BaseType.h
+// in InGameUI.cpp; that retail-proven copy owns the ledger rows.
 
 bool operator==(const RGBColor &left, const RGBColor &right)
 {
