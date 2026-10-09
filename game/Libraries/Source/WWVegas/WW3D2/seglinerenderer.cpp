@@ -210,22 +210,8 @@ void SegLineRendererClass::Reset_Line(void)
 
 
 
-void SegLineRendererClass::Render
-(	
-	RenderInfoClass & rinfo,
-	const Matrix3D & transform,
-	unsigned int num_points,
-	Vector3 * points,
-	const SphereClass & obj_sphere,
-	Vector4 * rgbas
-)
-{
-	// BFME match note: Render is the DX8/Direct3D render path (DynamicVBAccess,
-	// DX8Wrapper draw calls) — not reproducible with the byte-match toolchain, so
-	// its body is stubbed to let the 12 non-DX8 methods in this TU compile and
-	// locate. Render itself is intentionally left unmatched.
-}
-
+// Render is declared in seglinerenderer.h; retail calls resolve to 0x00960A30.
+// Do not emit an empty definition that overrides the retail body.
 
 // ?SegLineRendererClass::subdivision_util present-unmatched (addr 0x9602A0, size 1724; scheduling drift at +0x28 near Is_Freeze_Random; Vector3SolidBoxRandomizer callees unresolved)
 void SegLineRendererClass::subdivision_util(unsigned int point_cnt, const Vector3 *xformed_pts,
