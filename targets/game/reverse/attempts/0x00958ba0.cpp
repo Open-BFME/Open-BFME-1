@@ -1,5 +1,5 @@
 // ?rva00958ba0@@YAXXZ
-// partial score=0.7 date=2026-09-06
+// partial score=0.987 date=2026-10-09
 // ?rva00958ba0@@YAXXZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
@@ -11,7 +11,7 @@ extern void __stdcall _com_issue_errorex(long error, IUnknown *object,
 	const GUID &iid);
 extern GUID g_bfmeIidTSA;
 
-extern "C" __declspec(dllimport) void __stdcall Rva0135918CCall(void);
+extern "C" __declspec(dllimport) void __stdcall CoUninitialize(void);
 
 class BfmeObjECF
 {
@@ -20,7 +20,7 @@ public:
 	{
 		void *slot00;
 		void *slot04;
-		long(__stdcall *slot08)(BfmeObjECF *);
+		unsigned long(__stdcall *slot08)(BfmeObjECF *);
 		void *slot0c;
 		void *slot10;
 		void *slot14;
@@ -30,29 +30,24 @@ public:
 	};
 
 	Vtable *vtable;
+    void shutdown() {
+        long result = vtable->slot20(this);
+        if (result < 0) _com_issue_errorex(result, (IUnknown *)this, g_bfmeIidTSA);
+    }
 };
 
 extern BfmeObjECF *g_bfmeObjECF;
 extern int g_bfmeObjECFFlag27C;
-
-void __cdecl rva00958ba0(void)
-{
-	BfmeObjECF *obj = g_bfmeObjECF;
-	if (!obj)
-		return;
-
-	BfmeObjECF::Vtable *vt = obj->vtable;
-	long result = vt->slot20(obj);
-	if (result < 0)
-		_com_issue_errorex(result, (IUnknown *)obj, g_bfmeIidTSA);
-
-	obj = g_bfmeObjECF;
-	if (!obj)
-		return;
-
-	g_bfmeObjECF = 0;
-	obj->vtable->slot08(obj);
-
-	g_bfmeObjECFFlag27C = 0;
-	Rva0135918CCall();
+// Open BFME 2 donor Code/GameEngine/Source/Common/BfmeConv804.cpp.
+void rva00958ba0() {
+    if (g_bfmeObjECF) {
+        g_bfmeObjECF->shutdown();
+        if (g_bfmeObjECF) {
+            BfmeObjECF *browser = g_bfmeObjECF;
+            g_bfmeObjECF = 0;
+            browser->vtable->slot08(browser);
+        }
+        g_bfmeObjECFFlag27C = 0;
+        CoUninitialize();
+    }
 }

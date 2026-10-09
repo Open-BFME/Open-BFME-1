@@ -1,5 +1,5 @@
-// ?d_0049a1c0@@YAXXZ
-// partial score=0.55 date=2026-09-10
+// ?bfmeDuplicateInto@Gen_0049A070@@QAE?AVRva00499F30Result@@XZ
+// partial score=0.2121 date=2026-10-09
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
 // Retail 0x0049A1C0, 99 bytes. Allocates a copy of *this via operator new
@@ -24,21 +24,26 @@ public:
 	~BfmeGuardVY(void);
 };
 
+class Gen_0049A070;
+class Rva00499F30Result {
+public:
+    Rva00499F30Result(Gen_0049A070 *p) : m_ptr(p) {}
+    ~Rva00499F30Result();
+    Gen_0049A070 *m_ptr;
+};
 class Gen_0049A070 : public BfmeGuardVY
 {
 public:
 	Gen_0049A070(const Gen_0049A070 &other);
-	Gen_0049A070 **bfmeDuplicateInto(Gen_0049A070 **result);
+	Rva00499F30Result bfmeDuplicateInto();
 
 	int *m_bfmeVtable;					// +0x00
 	BfmeWideVY m_bfmeText;					// +0x04
 	int m_bfmeValue;					// +0x08
 };
 
-// ?bfmeDuplicateInto@Gen_0049A070@@QAEPAPAV1@PAPAV1@@Z present-unmatched
-Gen_0049A070 **Gen_0049A070::bfmeDuplicateInto(Gen_0049A070 **result)
-{
-	Gen_0049A070 *temp = new Gen_0049A070(*this);
-	*result = temp;
-	return result;
+// Open BFME 2 donor Code/Libraries/Source/WWVegas/WW3D2/Rva0015b110Cluster.cpp.
+Rva00499F30Result Gen_0049A070::bfmeDuplicateInto() {
+    Rva00499F30Result temp(new Gen_0049A070(*this));
+    return temp;
 }
