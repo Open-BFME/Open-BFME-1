@@ -1,7 +1,15 @@
 // Open-BFME5 conversions.
 
 extern "C" void *__cdecl memset(void *d, int c, unsigned int n);
-extern "C" char g_bfmeV1159[];
+// Retail D26B14 contains five ordinary ILT pointers, then a zero terminator.
+void j_0000b587();
+void j_0001967d();
+void j_0001628e();
+void j_00045efd();
+void j_000407fa();
+extern "C" void (*g_bfmeV1159[5])() = {
+    j_0000b587, j_0001967d, j_0001628e, j_00045efd, j_000407fa
+};
 
 class BfmeA1159
 {
@@ -25,7 +33,7 @@ BfmeA1159::BfmeA1159(void)
 	m_bfme08 = 0;
 	m_bfme0c = 0;
 	m_bfme10 = 0;
-	m_bfme00 = g_bfmeV1159;
+	m_bfme00 = reinterpret_cast<char *>(g_bfmeV1159);
 	m_bfme14 = 0;
 	m_bfme15 = 0;
 	m_bfme18 = 0;
