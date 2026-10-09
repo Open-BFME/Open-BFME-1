@@ -7,12 +7,30 @@
 
 extern "C" __declspec(dllimport) void * __cdecl memmove(void *destination, const void *source, unsigned int bytes);
 
-class BfmeElemW
+class GameWindow
 {
 public:
-	void bfmeEnable(int first, int second);			// retail thunk 0x000482AC -> 0x004482AC
-	void bfmeSelect(int first, int second);			// retail thunk 0x0001949D -> 0x0041949D
+    int winSetSize(int, int);
+    int winSetPosition(int, int);
 };
+class BfmeElemW {};
+struct Gen_t_004b07d0_k4;
+struct Gen_t_004b07d0_p4pod;
+class BfmeListW;
+namespace _STL
+{
+template <class First, class Second> struct pair;
+template <class Value> struct _Select1st;
+template <class Key> struct less;
+template <class Value> class allocator;
+template <class Value> struct _Rb_tree_node;
+template <class Key, class Value, class Extract, class Compare, class Alloc>
+class _Rb_tree
+{
+    friend class ::BfmeListW;
+    void _M_erase(_Rb_tree_node<Value> *);
+};
+}
 
 inline BfmeElemW **bfmeCopyElems(BfmeElemW **destination, BfmeElemW **first, BfmeElemW **last)
 {
@@ -58,7 +76,13 @@ public:
 	{
 		if (m_bfmeCount)
 		{
-			bfmeEraseFrom(m_bfmeNode->m_bfmeHead);
+			reinterpret_cast<_STL::_Rb_tree<Gen_t_004b07d0_k4,
+                _STL::pair<const Gen_t_004b07d0_k4, Gen_t_004b07d0_p4pod>,
+                _STL::_Select1st<_STL::pair<const Gen_t_004b07d0_k4, Gen_t_004b07d0_p4pod> >,
+                _STL::less<Gen_t_004b07d0_k4>,
+                _STL::allocator<_STL::pair<const Gen_t_004b07d0_k4, Gen_t_004b07d0_p4pod> > > *>(this)
+                ->_M_erase(reinterpret_cast<_STL::_Rb_tree_node<_STL::pair<const Gen_t_004b07d0_k4,
+                    Gen_t_004b07d0_p4pod> > *>(m_bfmeNode->m_bfmeHead));
 
 			m_bfmeNode->m_bfmeNext = m_bfmeNode;
 			m_bfmeNode->m_bfmeHead = 0;
@@ -68,7 +92,6 @@ public:
 		}
 	}
 
-	void bfmeEraseFrom(BfmeNodeW *node);			// retail thunk 0x00037AB5 -> 0x00437AB5
 
 	BfmeNodeW *m_bfmeNode;					// +0x00
 	int m_bfmeCount;					// +0x04
@@ -97,9 +120,9 @@ void Gen_004B1720::bfmeClear(void)
 
 		if (element)
 		{
-			element->bfmeEnable(1, 1);
+			reinterpret_cast<GameWindow *>(element)->winSetSize(1, 1);
 
-			element->bfmeSelect(-1, -1);
+			reinterpret_cast<GameWindow *>(element)->winSetPosition(-1, -1);
 		}
 
 		++it;
