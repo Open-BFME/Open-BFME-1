@@ -8,12 +8,14 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 #include <list>
-template<int N> class BitFlags { _STL::bitset<N> bits; public:
+template<int N> class BitFlags { public: _STL::bitset<N> bits;
+ BitFlags() {}
  enum Init { kInit }; BitFlags(Init,int n) { bits.set(n); }
  BitFlags(Init,int a,int b) {bits.set(a);bits.set(b);}
  __forceinline bool test(int n) const { return bits.test(n); }
  __forceinline void set(int n) { bits._Unchecked_set(n); }
 };
+template<int N> static __forceinline void checkedFlag(BitFlags<N> *flags,int n) { flags->bits.set(n); }
 class Object; class Module; class Drawable;
 enum ObjectID { INVALID_ID };
 class AudioEventRTS { public: AudioEventRTS(const AudioEventRTS&); ~AudioEventRTS(); void setObjectID(ObjectID); AudioEventRTS& operator=(const AudioEventRTS&); void setPlayingHandle(unsigned); void* vptr; char payload[0x6c]; };
@@ -164,8 +166,12 @@ class Object { public:
  Relationship getRelationship(const Object*)const; bool isLocallyControlled()const;
  char pad004[0x70]; ObjectID id; char pad078[0x98]; BitFlags<320> conditions;
  char pad138[0xc4]; Contain002A9420* contain; char pad200[4]; void* ai; char pad208[0x34]; void* team;
- __forceinline void setCondition(int n) { if(!conditions.test(n)) { conditions.set(n); notifyModelConditionChanged(); } }
+ void setCondition(int n);
 };
+
+// Keep the witnessed model-condition test and update local to this TU.
+static __forceinline void setObjectCondition(Object *obj,int n)
+{ if(!obj->conditions.test(n)) { obj->conditions.set(n); obj->notifyModelConditionChanged(); } }
 
 class SpecialAbilityUpdateModuleData { public:
  char pad000[0xe8]; AudioEventRTS m_prepSoundLoop; char pad158[0x80]; SpecialPowerTemplate* m_specialPowerTemplate;
@@ -184,8 +190,10 @@ void SpecialAbilityUpdate::startPreparation() {
  Object* target=TheGameLogic->findObjectByID(targetID);
  Contain002A9420* contain=object->contain;
  if(contain&&target) contain->useTarget(target);
- object->clearAndSetModelConditionFlags(BitFlags<320>(BitFlags<320>::kInit,95,111),BitFlags<320>(BitFlags<320>::kInit,94));
- if(d->field208) {if(d->field208==1)object->setCondition(96);else if(d->field208==2)object->setCondition(97);else if(d->field208==3)object->setCondition(98);}
+ BitFlags<320> set; checkedFlag(&set,94);
+ BitFlags<320> clear; checkedFlag(&clear,95); checkedFlag(&clear,111);
+ object->clearAndSetModelConditionFlags(clear,set);
+ if(d->field208) {if(d->field208==1)setObjectCondition(object,96);else if(d->field208==2)setObjectCondition(object,97);else if(d->field208==3)setObjectCondition(object,98);}
  }
  switch(power->getType()) {
  case 29: {
