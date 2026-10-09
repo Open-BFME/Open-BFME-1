@@ -147,19 +147,35 @@ class Gen_001F61B0
 	friend class Gen_001FC950;
 
 	private:
-	void bfmeAccept(BfmeSeedTarget *target);
-
 	char m_base[0x1c];
 	int m_item1c;
 	int m_item20;
 };
 
-class Gen_001ED0C0
-{
-	friend class Gen_001FC950;
+// The two accept helpers this body called never had definitions: each is the
+// same retail address as a matched row reached through an ILT jump entry, so
+// the calls spell those names instead (pattern: BfmeConv1898.cpp).
+//   call ILT 0x000160B3 (jmp 0x001EF3D0)
+//     -> ?invoke@Rva001EF3D0Caller@@QAEXPAVFlagPairTarget@@@Z
+//        (game/GameEngine/Source/Common/FlagPairThenDirectCallers.cpp)
+//   call ILT 0x000044C1 (jmp 0x002B2080)
+//     -> ?handle@Gen002B2080@@QAEXPAVFlagPairTarget@@@Z
+//        (game/GameEngine/Source/GameLogic/AI/Gen002B2080Handle.cpp)
+// Both take `this` in ecx plus one pushed pointer, exactly like the old
+// private thiscall members they replace; only the access and parameter type
+// spelling differ, which does not change codegen.
+class FlagPairTarget;
 
-private:
-	void bfmeAccept(BfmeSeedTarget *target);
+class Rva001EF3D0Caller
+{
+public:
+	void invoke(FlagPairTarget *target);
+};
+
+class Gen002B2080
+{
+public:
+	void handle(FlagPairTarget *target);
 };
 
 class Gen_001FC950 : public Gen_001F61B0
@@ -182,7 +198,7 @@ private:
 // ?bfmeSeed@Gen_001FC950@@QAEXPAVBfmeSeedTarget@@@Z
 void Gen_001FC950::bfmeSeed(BfmeSeedTarget *target)
 {
-	bfmeAccept(target);
+	((Rva001EF3D0Caller *)this)->invoke((FlagPairTarget *)target);
 
 	BfmeSeedPair pair;
 	pair.m_first = 1;
@@ -190,7 +206,7 @@ void Gen_001FC950::bfmeSeed(BfmeSeedTarget *target)
 	target->seed(&pair);
 
 	if (pair.m_second >= 3)
-		((Gen_001ED0C0 *)this)->bfmeAccept(target);
+		((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 
 	int item24 = m_item24;
 	target->takeAt78(&item24);
