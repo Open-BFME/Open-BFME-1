@@ -16,11 +16,18 @@
 
 namespace _STL
 {
-	class __new_alloc
-	{
-	public:
-		static void *allocate( unsigned int bytes );
-	};
+	// Retail 0x0082E540 is the matched node pool refill/mutex body.
+static __forceinline void *vectorSmallAllocate(unsigned int bytes);
+template <bool Threads, int Instance>
+class __node_alloc
+{
+	static void *__cdecl _M_allocate(unsigned int bytes);
+	friend void *vectorSmallAllocate(unsigned int bytes);
+};
+static __forceinline void *vectorSmallAllocate(unsigned int bytes)
+{
+	return __node_alloc<true, 0>::_M_allocate(bytes);
+}
 }
 
 class Rva00606060TreeHeader
@@ -41,7 +48,7 @@ public:
 	{
 		m_header = 0;
 		m_header = static_cast<Rva00606060TreeHeader *>(
-			_STL::__new_alloc::allocate( 0x70 ) );
+			_STL::vectorSmallAllocate( 0x70 ) );
 		m_count = 0;
 		m_header->m_color = 0;
 		m_header->m_parent = 0;
