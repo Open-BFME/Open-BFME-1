@@ -36,7 +36,7 @@ multi_name.different = 0
 size_outlier.indicted = 1
 ctor_vtable.contradicted = 20
 ctor_vtable.unreadable = 0
-one_identity.surplus = 2150
+one_identity.surplus = 2149
 # Retail registration proves DynamicPortalBehaviour owns ctor 001F8B80 and factory 001156B0; four false aliases retired.
 # fcf825b4f7 retired the false FXNugget zero-store claim; the body still has aliases.
 # 4c8346b3c9 retired the GDIFileStream ctor over-claim at 0x00087A50 (a zero-store body).
@@ -1060,8 +1060,6 @@ null_reloc.max_unreadable = 1000
 @ one_identity.surplus 0x002CFCD0 ?getRallyPoint@SupplyCenterProductionExitUpdate@@UBEPBUCoord3D@@XZ
 @ one_identity.surplus 0x002D5280 ??0ActiveShroudUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z
 @ one_identity.surplus 0x002D5280 ??0GarrisonUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z
-@ one_identity.surplus 0x002D6370 ?buildFieldParse@MaxHealthUpgradeModuleData@@SAXAAVMultiIniFieldParse@@@Z
-@ one_identity.surplus 0x002D6370 ?buildFieldParse@ModelConditionUpgradeModuleData@@SAXAAVMultiIniFieldParse@@@Z
 @ one_identity.surplus 0x002E2FD0 ??$__uninitialized_copy@PAVWeaponTemplateSet@@PAV1@@_STL@@YAPAVWeaponTemplateSet@@PAV1@00ABU__false_type@0@@Z
 @ one_identity.surplus 0x002E2FD0 ??$__uninitialized_copy@PBVWeaponTemplateSet@@PAV1@@_STL@@YAPAVWeaponTemplateSet@@PBV1@0PAV1@ABU__false_type@0@@Z
 @ one_identity.surplus 0x002E3110 ??$__copy@PAVWeaponTemplateSet@@PAV1@H@_STL@@YAPAVWeaponTemplateSet@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z
