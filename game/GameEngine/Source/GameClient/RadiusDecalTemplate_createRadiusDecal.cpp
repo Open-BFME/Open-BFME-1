@@ -118,15 +118,19 @@ public:
 	Shadow *m_decal;
 	bool m_empty;
 
-	void clear(void)
-	{
-		m_template = 0;
-		if (m_decal)
-			m_decal->release();
-		m_decal = 0;
-		m_empty = true;
-	}
 };
+
+// RadiusDecal::clear (retail 0x00458310) is defined once in RadiusDecal.cpp;
+// retail inlines it here, so expand it through a TU-static helper that emits
+// no external copy.
+static __forceinline void clearRadiusDecal(RadiusDecal &decal)
+{
+	decal.m_template = 0;
+	if (decal.m_decal)
+		decal.m_decal->release();
+	decal.m_decal = 0;
+	decal.m_empty = true;
+}
 
 class RadiusDecalTemplate
 {
@@ -148,7 +152,7 @@ private:
 void RadiusDecalTemplate::createRadiusDecal(
 	const Coord3D &pos, float radius, const Player *owningPlayer, RadiusDecal &result) const
 {
-	result.clear();
+	clearRadiusDecal(result);
 
 	if (owningPlayer == 0)
 		return;

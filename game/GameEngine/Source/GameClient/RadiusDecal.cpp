@@ -191,29 +191,7 @@ RadiusDecal::~RadiusDecal()
 }
 
 // ------------------------------------------------------------------------------------------------
-// ?update@RadiusDecal@@ present-unmatched
-void RadiusDecal::update()
-{
-	if (m_decal && m_template)
-	{
-		UnsignedInt now = TheGameLogic->getFrame();
-		Real theta = (2*PI) * (Real)(now % m_template->m_opacityThrobTime) / (Real)m_template->m_opacityThrobTime;
-		Real percent = 0.5f * (Sin(theta) + 1.0f);
-		Int opac;
-		if( TheGameLogic->getDrawIconUI() )
-		{
-			opac = REAL_TO_INT((m_template->m_minOpacity + percent * (m_template->m_maxOpacity - m_template->m_minOpacity)) * 255.0f);
-		}
-		else
-		{
-			//Scripts turned this off, so don't show them!
-			opac = 0;
-		}
-		m_decal->setOpacity(opac);
-	}
-}
-
-
+// RadiusDecal::update (retail 0x004585F0) lives in RadiusDecal_update.cpp.
 
 void RadiusDecal::setOpacity( Real o )
 {
