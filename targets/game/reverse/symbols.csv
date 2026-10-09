@@ -12873,7 +12873,6 @@ name,address,notes
 ?Rva009B6BB0@@YAXXZ,0x009B6BB0,codec dispatch slot19 filler (generic tier); no ghidra boundary or identity yet
 ?Rva009B6D40@@YAXXZ,0x009B6D40,codec dispatch slot1 filler (SSE and MMX tiers); no ghidra boundary or identity yet
 ?Rva009B6D80@@YAXXZ,0x009B6D80,codec dispatch slot10 filler (MMX tier only); no ghidra boundary or identity yet
-?Rva009BD570@@YAXXZ,0x009BD570,codec dispatch slot19 filler (MMX tier only); no ghidra boundary or identity yet
 ?Rva009C0D10Src@@3PAGA,0x01356A7C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x009C0D10 calls; autopin
 ?Rva009C0D10Table@@3PAGA,0x013566C0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x009C0D10 calls; autopin
 ?Rva009C2CE0@@YAXXZ,0x009C2CE0,codec spread-table loop tail-range filler (SSE array2 and MMX array1); no ghidra boundary or identity yet
