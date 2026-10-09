@@ -1,8 +1,8 @@
 // ?d_008d1ca0@@YAXXZ
-// partial score=0.4248 date=2026-09-28
+// partial score=0.6062 date=2026-10-09
 #include <new>
 
-// Apt's dispatch table at VA 0x00ED5A68 points to this body from slot 105.
+// Apt's dispatch table at VA 0x012D5A68 points to this body from slot 105.
 // Its action identity is unproven, so the source name remains address-derived.
 //
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
@@ -129,6 +129,7 @@ public:
 class BfmeBase99CB0
 {
 public:
+	// ??0BfmeBase99CB0@@QAE@XZ absent-from-retail
 	__forceinline BfmeBase99CB0()
 	{
 		unsigned int flags = m_flags;
@@ -155,7 +156,9 @@ typedef char CheckHolderSize[sizeof(Rva89ACB0Holder) == 0x1c ? 1 : -1];
 
 extern char g_rva8D0D80CreateTag;
 extern void *Rva00897560(unsigned int bytes);
+extern void *(__cdecl *Rva008C5D70Alloc)(unsigned int bytes);
 
+// ?rva008D1CA0@@YAXPAVRva8D0D80State@@PAURva8D0D80Context@@@Z present-unmatched
 void rva008D1CA0(Rva8D0D80State *state, Rva8D0D80Context *context)
 {
 	Rva8D0D80Value *top = state->m_stack[state->m_count - 1];
@@ -193,7 +196,7 @@ void rva008D1CA0(Rva8D0D80State *state, Rva8D0D80Context *context)
 		underView->slot20(1);
 		underView->slot18()->bfmeSet((BfmeTaggedItem *)created);
 		((Rva008D1CA0ResultView *)created)->slot18()->bfmeSet((BfmeTaggedItem *)topHeld);
-		unsigned int *holderSlot = (unsigned int *)Rva00897560(4);
+		unsigned int *holderSlot = (unsigned int *)Rva008C5D70Alloc(4);
 		*holderSlot = topHeld;
 		underView->slot40(holderSlot, 1);
 	}
