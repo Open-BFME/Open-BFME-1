@@ -1,5 +1,5 @@
 // ?d_003e9720@@YAXXZ
-// partial score=0.5095785440613028 date=2026-09-21
+// partial score=0.5096 date=2026-09-21
 // Compile symbol: ?updateGoal@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@W4PathfindLayerEnum@@PBDH@Z
 // cl: /DNDEBUG /MD /EHsc /Igame/GameEngine/Include/Precompiled
 //

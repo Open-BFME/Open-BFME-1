@@ -1,5 +1,5 @@
 // ?d_008091c0@@YAXXZ
-// partial score=0.3 date=2026-09-22
+// partial score=0.4072 date=2026-10-09
 // cl: /O2 /GX- /GS
 // The owner and attribute offsets are taken from the matched dispatcher and
 // player-data neighbours.  Unknown private fields retain address-derived names.
@@ -9,8 +9,11 @@
 class BfmeC994
 {
 public:
-	void bfmeGoCIB( void *one, void *two );
-	void bfmeGoCIC( void *one, void *two );
+	void addString( const char *key, const char *value );
+};
+
+class BfmeThingCIB {
+public: void bfmeGoCIB(void *key, void *value);
 };
 
 class Energy
@@ -89,23 +92,23 @@ public:
 void Rva008091C0Owner::handle( BfmeC994 *message, int gid, char *name )
 {
 	Rva00802040Owner *registry = m_owner->m_registry;
-	message->bfmeGoCIB( (void *)0x0112b52c, (void *)-2 );
-	message->bfmeGoCIB( (void *)0x0112b568, (void *)gid );
-	message->bfmeGoCIC( (void *)0x01075a9c, m_owner->m_player->getEnergy() );
-	message->bfmeGoCIC( (void *)0x01102fcc, (char *)m_game + 0x0c );
-	message->bfmeGoCIB( (void *)0x0112bf74, (void *)m_game->m_maxPlayers );
-	message->bfmeGoCIC( (void *)0x0112be6c, name );
+	((BfmeThingCIB*)message)->bfmeGoCIB( (void *)"LID", (void *)-2 );
+	((BfmeThingCIB*)message)->bfmeGoCIB( (void *)"GID", (void *)gid );
+	message->addString( "V", (const char *)m_owner->m_player->getEnergy() );
+	message->addString( "N", (char *)m_game + 0x0c );
+	((BfmeThingCIB*)message)->bfmeGoCIB( (void *)"MP", (void *)m_game->m_maxPlayers );
+	message->addString( "I", name );
 
 	void *value = m_owner->m_field2c != 0
 		? m_owner->m_field2c : m_owner->m_field28;
-	message->bfmeGoCIC( (void *)0x0112be20, value );
-	message->bfmeGoCIC( (void *)0x0112bf60, &m_field174 );
+	((BfmeThingCIB*)message)->bfmeGoCIB( (void *)"P", value );
+	message->addString( "HN", &m_field174 );
 
 	int matches;
 	int other;
 	registry->rva00801ae0( &matches, &other );
-	message->bfmeGoCIB( (void *)0x0112bf6c, (void *)matches );
-	message->bfmeGoCIB( (void *)0x0112bf68, (void *)other );
+	((BfmeThingCIB*)message)->bfmeGoCIB( (void *)"AP", (void *)matches );
+	((BfmeThingCIB*)message)->bfmeGoCIB( (void *)"JP", (void *)other );
 
 	Rva008091C0Attributes *attributes = &m_owner->m_attributes;
 	int count = attributes->m_count;
@@ -113,7 +116,7 @@ void Rva008091C0Owner::handle( BfmeC994 *message, int gid, char *name )
 	{
 		char key[ 0x40 ];
 		const char *attribute = attributes->at( index )->m_key;
-		sprintf( key, (const char *)0x0112c844, attribute );
-		message->bfmeGoCIC( key, registry->valueForKey( attribute ) );
+		sprintf( key, "B-%.60s", attribute );
+		message->addString( key, (const char *)registry->valueForKey( attribute ) );
 	}
 }
