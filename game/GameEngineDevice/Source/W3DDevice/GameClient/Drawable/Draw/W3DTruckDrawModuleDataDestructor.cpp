@@ -21,27 +21,27 @@ public:
 	virtual ~W3DTruckDrawModuleData();
 
 private:
-	AsciiString m_string00;
-	AsciiString m_string01;
-	AsciiString m_string02;
-	AsciiString m_string03;
-	AsciiString m_string04;
-	AsciiString m_string05;
-	AsciiString m_string06;
-	AsciiString m_string07;
-	AsciiString m_string08;
-	AsciiString m_string09;
-	AsciiString m_string10;
-	AsciiString m_string11;
-	AsciiString m_string12;
+	AsciiString m_dustEffectName;
+	AsciiString m_dirtEffectName;
+	AsciiString m_powerslideEffectName;
+	AsciiString m_frontLeftTireBoneName;
+	AsciiString m_frontRightTireBoneName;
+	AsciiString m_rearLeftTireBoneName;
+	AsciiString m_rearRightTireBoneName;
+	AsciiString m_midFrontLeftTireBoneName;
+	AsciiString m_midFrontRightTireBoneName;
+	AsciiString m_midRearLeftTireBoneName;
+	AsciiString m_midRearRightTireBoneName;
+	AsciiString m_midMidLeftTireBoneName;
+	AsciiString m_midMidRightTireBoneName;
 	AsciiString m_string13;
 	AsciiString m_string14;
 	AsciiString m_string15;
 	AsciiString m_string16;
 	AsciiString m_string17;
 	AsciiString m_string18;
-	AsciiString m_string19;
-	AsciiString m_string20;
+	AsciiString m_cabBoneName;
+	AsciiString m_trailerBoneName;
 	char m_tail[ 0x14 ];
 };
 
