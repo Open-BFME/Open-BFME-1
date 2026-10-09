@@ -77,8 +77,8 @@ typedef void (Rva002BC260GoalOwner::*RunFn)(void *position, void *goalData,
 
 class AerialPathfinder;
 extern AerialPathfinder *TheAerialPathfinder;
-extern int g_012F02D4;
-extern int g_012F02D8;
+int g_012F02D4;
+int g_012F02D8;
 
 // ?choose@Rva002BCB60Owner@@QAEHPAXH@Z
 int Rva002BCB60Owner::choose(void *mode, int fullRange)
