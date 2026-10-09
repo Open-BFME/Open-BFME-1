@@ -16,11 +16,23 @@ struct BfmeAttributePlainBlock
 	UnsignedInt m_values[6];
 };
 
-class Gen00043699
+// Retail calls the 0x0039DCC0 element destructor through its ILT jump entry
+// 0x00043699, which the ledger names ??1S4Elem0039EBE0@@QAE@XZ (the body
+// landed in S4Elem0039EBE0Destructor.cpp). The constructor call goes to the
+// ILT 0x00008067, pinned ??0Gen00043699@@QAE@XZ (Gen00043699Constructor.cpp).
+// One local type needs both spellings, so the dtor owner is an empty base:
+// its destructor is non-trivial, hence emitted and called, and the empty base
+// still sits at offset 0 so Gen00043699's 0x88 layout is unchanged.
+class S4Elem0039EBE0
+{
+public:
+	~S4Elem0039EBE0();
+};
+
+class Gen00043699 : public S4Elem0039EBE0
 {
 public:
 	Gen00043699();
-	~Gen00043699();
 
 	unsigned char m_head[0x48];
 	BfmeAttributePlainBlock m_firstPlain;
