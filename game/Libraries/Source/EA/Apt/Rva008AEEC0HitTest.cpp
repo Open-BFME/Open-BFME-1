@@ -48,13 +48,16 @@ public:
 struct Rva008AE770Stack
 {
 	int m_count;
+	int m_rva0133874C;
+	AptValue **m_rva01338750;
 };
 
 typedef void (*BfmeProcVB)(void);
 typedef int (__cdecl *Rva008AEEC0PointTest)(float x, float y, BfmeN1235 *owner);
 
+// The array pointer at VA 0x01338750 is offset 8 of the existing stack
+// object at VA 0x01338748, also witnessed by Rva008AE7C0CreateChannels.cpp.
 extern Rva008AE770Stack Rva008AE770TheStack;
-extern AptValue **g_bfmeArr1233;
 extern int g_bfmeB1038;
 extern BfmeProcVB g_bfmeSlot30VB;
 
@@ -62,7 +65,7 @@ AptValue *__cdecl Rva008AEEC0(BfmeN1235 *owner, int count)
 {
 	if (count == 1)
 	{
-		AptValue *value = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1];
+		AptValue *value = (*reinterpret_cast<AptValue **>(4 * (Rva008AE770TheStack.m_count - 1) + reinterpret_cast<unsigned int>(Rva008AE770TheStack.m_rva01338750)));
 		int type = value->m_flags & 0x3f;
 		if (type >= 0xc && type <= 0x13)
 		{
@@ -87,9 +90,9 @@ AptValue *__cdecl Rva008AEEC0(BfmeN1235 *owner, int count)
 	}
 	else if (count > 1)
 	{
-		float x = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toNumber();
-		float y = g_bfmeArr1233[Rva008AE770TheStack.m_count - 2]->toNumber();
-		if (count > 2 && g_bfmeArr1233[Rva008AE770TheStack.m_count - 3]->toInteger() != 0)
+		float x = (*reinterpret_cast<AptValue **>(4 * (Rva008AE770TheStack.m_count - 1) + reinterpret_cast<unsigned int>(Rva008AE770TheStack.m_rva01338750)))->toNumber();
+		float y = (*reinterpret_cast<AptValue **>(4 * (Rva008AE770TheStack.m_count - 2) + reinterpret_cast<unsigned int>(Rva008AE770TheStack.m_rva01338750)))->toNumber();
+		if (count > 2 && (*reinterpret_cast<AptValue **>(4 * (Rva008AE770TheStack.m_count - 3) + reinterpret_cast<unsigned int>(Rva008AE770TheStack.m_rva01338750)))->toInteger() != 0)
 			return AptInteger::Create(((Rva008AEEC0PointTest)g_bfmeSlot30VB)(x, y, owner));
 
 		Rva8BB1A0Bounds mine;

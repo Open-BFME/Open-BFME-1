@@ -43,9 +43,15 @@ public:
 	void bfmeInitEmpty1235(Rva8BB1A0Bounds *bounds);
 };
 
-extern AptValue **g_bfmeArr1233;
 // 0x01338748: the Apt stack depth global, defined in Rva00C6DCC0StaticInit.cpp.
-struct Rva008AE770Stack { int m_count; };
+struct Rva008AE770Stack
+{
+	int m_count;
+	int m_rva0133874C;
+	AptValue **m_rva01338750;
+};
+// The array pointer at VA 0x01338750 is offset 8 of the existing stack
+// object at VA 0x01338748, also witnessed by Rva008AE7C0CreateChannels.cpp.
 extern Rva008AE770Stack Rva008AE770TheStack;
 extern AptValue *g_bfmeFallbackDB;
 
@@ -58,11 +64,11 @@ AptValue *rva008C6730(BfmeN1235 *target, int argc)
 	if (argc <= 1)
 		return fallback;
 
-	float x = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1]->toNumber();
-	float y = g_bfmeArr1233[Rva008AE770TheStack.m_count - 2]->toNumber();
+	float x = (*reinterpret_cast<AptValue **>(4 * (Rva008AE770TheStack.m_count - 1) + reinterpret_cast<unsigned int>(Rva008AE770TheStack.m_rva01338750)))->toNumber();
+	float y = (*reinterpret_cast<AptValue **>(4 * (Rva008AE770TheStack.m_count - 2) + reinterpret_cast<unsigned int>(Rva008AE770TheStack.m_rva01338750)))->toNumber();
 
 	if (argc > 2)
-		g_bfmeArr1233[Rva008AE770TheStack.m_count - 3]->toInteger();
+		(*reinterpret_cast<AptValue **>(4 * (Rva008AE770TheStack.m_count - 3) + reinterpret_cast<unsigned int>(Rva008AE770TheStack.m_rva01338750)))->toInteger();
 
 	Rva8BB1A0Bounds bounds;
 	target->bfmeInitEmpty1235(&bounds);
