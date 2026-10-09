@@ -1158,11 +1158,8 @@ void ParticleSystem::setSlave( ParticleSystem *slave )
 // ------------------------------------------------------------------------------------------------
 /** Stop a particle system from emitting */
 // ------------------------------------------------------------------------------------------------
-// ?stop@ParticleSystem@@QAEXXZ present-unmatched
-void ParticleSystem::stop( void )
-{
-	m_isStopped = true;
-}
+// The retail stop body is emitted by ParticleSystemStop.cpp.
+
 
 // ------------------------------------------------------------------------------------------------
 /** Stop emitting, wait for all of our particles to die, then destroy self. */
