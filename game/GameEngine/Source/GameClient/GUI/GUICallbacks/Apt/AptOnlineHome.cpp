@@ -111,10 +111,10 @@ extern WindowManager *g_rva012F19E8WindowManager;
 extern GameTextInterface *TheGameText;
 extern int g_bfmePeerReqE4, g_bfmePeerReqE8;
 extern const char *g_onlineHomeGadgetsImageLevelIconMain;
-extern unsigned int g_012F4A10[8];
-extern unsigned int g_012F4A30[8];
-extern unsigned int g_012F4A50[8];
-extern unsigned int g_012F4A70[8];
+extern unsigned int g_Va012F4A10[8];
+extern unsigned int g_Va012F4A30[8];
+extern unsigned int g_Va012F4A50[8];
+extern unsigned int g_Va012F4A70[8];
 // retail 0x012F1484 is TheGlobalLanguageData, a GlobalLanguage* (see
 // game/GameEngine/Source/GameClient/GlobalLanguage.cpp, which defines it).
 // Only the base of the language object is read here, so the forward
@@ -232,10 +232,10 @@ void BfmeAptScreenOnlineHome::rva00547730() {
   }
   setText("APT:TimeZone",initials);
   j_0000bbcc();
-  int gondor=(int)(((float(__cdecl*)(int*,int))j_00047974)((int*)g_012F4A10,3)*100.0f+0.5f);
-  int rohan=(int)(((float(__cdecl*)(int*,int))j_00047974)((int*)g_012F4A30,3)*100.0f+0.5f);
-  int isengard=(int)(((float(__cdecl*)(int*,int))j_00047974)((int*)g_012F4A50,3)*100.0f+0.5f);
-  int mordor=(int)(((float(__cdecl*)(int*,int))j_00047974)((int*)g_012F4A70,3)*100.0f+0.5f);
+  int gondor=(int)(((float(__cdecl*)(int*,int))j_00047974)((int*)g_Va012F4A10,3)*100.0f+0.5f);
+  int rohan=(int)(((float(__cdecl*)(int*,int))j_00047974)((int*)g_Va012F4A30,3)*100.0f+0.5f);
+  int isengard=(int)(((float(__cdecl*)(int*,int))j_00047974)((int*)g_Va012F4A50,3)*100.0f+0.5f);
+  int mordor=(int)(((float(__cdecl*)(int*,int))j_00047974)((int*)g_Va012F4A70,3)*100.0f+0.5f);
   int total=gondor+rohan+isengard+mordor;
   if(total>0) gondor=10000-(rohan+isengard+mordor);
   UnicodeString decimal(L".");
