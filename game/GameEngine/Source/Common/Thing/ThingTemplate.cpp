@@ -557,31 +557,6 @@ void ModuleInfo::addModuleInfo(ThingTemplate *thingTemplate,
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?clearModuleDataWithTag@ModuleInfo@@QAE_NABVAsciiString@@AAV2@@Z present-unmatched
-Bool ModuleInfo::clearModuleDataWithTag(const AsciiString& tagToClear, AsciiString& clearedModuleNameOut) 
-{ 
-	Bool cleared = false;
-
-	// do NOT clear... we only want to modify this if we return true.
-	// if we return false, we should leave this unmodified.
-	//clearedModuleNameOut.clear();
-
-	for (std::vector<Nugget>::iterator it = m_info.begin(); it != m_info.end(); /* empty */ ) 
-	{
-		if (it->m_moduleTag == tagToClear)
-		{
-			DEBUG_ASSERTCRASH(!cleared, ("Hmm, multiple clears in ModuleInfo::clearModuleDataWithTag, should this be possible?"));
-			clearedModuleNameOut = it->first;
-			it = m_info.erase(it);
-			cleared = true;
-		}
-		else
-		{
-			++it;
-		}
-	}
-	return cleared;
-}
 
 
 
@@ -799,101 +774,19 @@ void ThingTemplate::parsePerUnitSounds( INI* ini, void *instance, void *store, c
 /** Parse modules to add to the existing set of modules. */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/ThingTemplate_parseAddModule_Thunk.cpp
-// ?parseAddModule@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z present-unmatched
-void ThingTemplate::parseAddModule(INI *ini, void *instance, void *store, const void *userData)
-{
-	// don't care about the result.
-	ThingTemplate* self = (ThingTemplate*)instance;	
-
-	ModuleParseMode oldMode = (ModuleParseMode)self->m_moduleParsingMode;
-	if (oldMode != MODULEPARSE_NORMAL)
-		throw INI_INVALID_DATA;
-
-	self->m_moduleParsingMode = MODULEPARSE_ADD_REMOVE_REPLACE;
-
-	ini->initFromINI(self, self->getFieldParse());
-
-	self->m_moduleParsingMode = oldMode;
-}
 
 //-------------------------------------------------------------------------------------------------
 /** Parse modules to remove from the existing set of modules. */
 //-------------------------------------------------------------------------------------------------
-// ?parseRemoveModule@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z present-unmatched
-void ThingTemplate::parseRemoveModule(INI *ini, void *instance, void *store, const void *userData)
-{
-	ThingTemplate* self = (ThingTemplate*)instance;	
-
-	ModuleParseMode oldMode = (ModuleParseMode)self->m_moduleParsingMode;
-	if (oldMode != MODULEPARSE_NORMAL)
-		throw INI_INVALID_DATA;
-
-	self->m_moduleParsingMode = MODULEPARSE_ADD_REMOVE_REPLACE;
-
-	const char *modToRemove = ini->getNextToken();
-	AsciiString removedModuleName;
-	Bool removed = self->removeModuleInfo(modToRemove, removedModuleName);
-	if (!removed)
-	{
-		DEBUG_ASSERTCRASH(removed, ("RemoveModule %s was not found for %s. The game will crash now!\n",modToRemove, self->getName().str()));
-		throw INI_INVALID_DATA;
-	}
-
-	self->m_moduleParsingMode = oldMode;
-}
 
 //-------------------------------------------------------------------------------------------------
 /** Replace the existing tagged modules with the new modules. */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/ThingTemplate_parseReplaceModule_Thunk.cpp
-// ?parseReplaceModule@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z present-unmatched
-void ThingTemplate::parseReplaceModule(INI *ini, void *instance, void *store, const void *userData)
-{
-	ThingTemplate* self = (ThingTemplate*)instance;	
-
-	ModuleParseMode oldMode = (ModuleParseMode)self->m_moduleParsingMode;
-	if (oldMode != MODULEPARSE_NORMAL)
-		throw INI_INVALID_DATA;
-
-	self->m_moduleParsingMode = MODULEPARSE_ADD_REMOVE_REPLACE;
-
-	const char *modToRemove = ini->getNextToken();
-	AsciiString removedModuleName;
-	Bool removed = self->removeModuleInfo(modToRemove, removedModuleName);
-	if (!removed)
-	{
-		DEBUG_CRASH(("[LINE: %d - FILE: '%s'] ReplaceModule %s was not found for %s; cannot continue.\n",
-															ini->getLineNum(), ini->getFilename().str(), modToRemove, self->getName().str()));
-		throw INI_INVALID_DATA;
-	}
-
-	self->m_moduleBeingReplacedName = removedModuleName;
-	self->m_moduleBeingReplacedTag = modToRemove;
-	ini->initFromINI(self, self->getFieldParse());
-	self->m_moduleBeingReplacedName.clear();
-	self->m_moduleBeingReplacedTag.clear();
-
-	self->m_moduleParsingMode = oldMode;
-}
 
 //-------------------------------------------------------------------------------------------------
 /** mark the module(s) as being "Inheritable". */
 //-------------------------------------------------------------------------------------------------
-// ?parseInheritableModule@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z present-unmatched
-void ThingTemplate::parseInheritableModule(INI *ini, void *instance, void *store, const void *userData)
-{
-	ThingTemplate* self = (ThingTemplate*)instance;	
-
-	ModuleParseMode oldMode = (ModuleParseMode)self->m_moduleParsingMode;
-	if (oldMode != MODULEPARSE_NORMAL)
-		throw INI_INVALID_DATA;
-
-	self->m_moduleParsingMode = MODULEPARSE_INHERITABLE;
-
-	ini->initFromINI(self, self->getFieldParse());
-
-	self->m_moduleParsingMode = oldMode;
-}
 
 
 //-------------------------------------------------------------------------------------------------
@@ -923,33 +816,6 @@ void ThingTemplate::OverrideableByLikeKind(INI *ini, void *instance, void *store
 //-------------------------------------------------------------------------------------------------
 /** Remove the module whose tag matches moduleToRemove. */
 //-------------------------------------------------------------------------------------------------
-// ?removeModuleInfo@ThingTemplate@@IAE_NABVAsciiString@@AAV2@@Z present-unmatched
-Bool ThingTemplate::removeModuleInfo(const AsciiString& moduleToRemove, AsciiString& clearedModuleNameOut)
-{
-	Bool removed = false;
-
-	// do NOT clear... we only want to modify this if we return true.
-	// if we return false, we should leave this unmodified.
-	//clearedModuleNameOut.clear();
-
-	if (m_behaviorModuleInfo.clearModuleDataWithTag(moduleToRemove, clearedModuleNameOut))
-	{
-		DEBUG_ASSERTCRASH(!removed, ("Hmm, multiple removed in ThingTemplate::removeModuleInfo, should this be possible?"));
-		removed = true;
-	}
-	if (m_drawModuleInfo.clearModuleDataWithTag(moduleToRemove, clearedModuleNameOut))
-	{
-		DEBUG_ASSERTCRASH(!removed, ("Hmm, multiple removed in ThingTemplate::removeModuleInfo, should this be possible?"));
-		removed = true;
-	}
-	if (m_clientUpdateModuleInfo.clearModuleDataWithTag(moduleToRemove, clearedModuleNameOut))
-	{
-		DEBUG_ASSERTCRASH(!removed, ("Hmm, multiple removed in ThingTemplate::removeModuleInfo, should this be possible?"));
-		removed = true;
-	}
-
-	return removed;
-}
 
 //-------------------------------------------------------------------------------------------------
 /// @todo srj -- move this to another file
