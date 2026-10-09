@@ -66,14 +66,6 @@ unsigned Debug::curStackFrame;
 
 // this constructor is empty on purpose because all construction
 // work is done in PreStaticInit (and some in PostStaticInit)
-// ??0Debug@@AAE@XZ present-unmatched
-Debug::Debug(void)
-{
-  // do not put any code in here (but it's good for keeping module global todo's)
-  /// @todo what about frame based logging?
-  /// @todo have new DLOG with category, add DWARN, DPERF, DERR etc. based on that,
-  ///       make it possible to enable/disable categories by adding category to log ID
-}
 
 // ?PreStaticInit@Debug@@CAXXZ present-unmatched
 void Debug::PreStaticInit(void)
