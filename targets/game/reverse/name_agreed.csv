@@ -588,3 +588,4 @@ game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp|member||m_bfmeSending,m_h
 game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp|member||m_bfmeReceiving,m_hiddenByStealth,claude-opus+gpt-6.1-sol,agreed,2026-10-09
 game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp|function|Gen_00410BA0@|bfmeBusy,isDrawableEffectivelyHidden,claude-opus+gpt-6.1-sol,agreed,2026-10-09
 game/GameEngine/Source/Common/BfmeConv1789.cpp|member||m_bfmeSlotLU,m_thingTemplate,claude-opus+gpt-6-astra+gpt-6.1-sol,agreed,2026-10-09
+game/GameEngine/Source/Common/Rva0029BE60Sweep.cpp|type||Rva0029BE60,ProductionUpdate,gpt-6.1-sol+grok,agreed,2026-10-09
