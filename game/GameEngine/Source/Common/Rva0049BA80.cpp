@@ -12,16 +12,10 @@
 typedef int Int;
 typedef unsigned int UInt;
 
-class BFMEWeaponSetFlags
+class Rva001BEF20FieldAddress
 {
 public:
-	UInt m_bits;
-};
-
-class BFMEWeaponSetOwner
-{
-public:
-	const BFMEWeaponSetFlags &getWeaponSetFlags() const;
+	char *get();
 };
 
 struct RvaC4390First;
@@ -55,10 +49,10 @@ public:
     virtual void slotd0(); virtual void slotd4(); virtual bool slotd8();
 };
 
-class BfmeHold1004
+class Object
 {
 public:
-	BfmeX1004 *bfmeFind1004();
+	void *unidentified_001BFE20() const;
 };
 
 class BFMEActionObject
@@ -67,10 +61,10 @@ public:
 	bool testStatus( Int code ) const;
 };
 
-class BFMESelectionStatusBits
+class Rva000D3F10
 {
 public:
-	bool test( UInt bit ) const;
+	int test( UInt bit );
 };
 
 class Object;
@@ -112,9 +106,9 @@ void Rva0049BA80::call( Object *object, bool flag ) const
 
 	if ( flags & 0x1000000 )
 	{
-		BFMEWeaponSetOwner *owner = reinterpret_cast<BFMEWeaponSetOwner *>( object );
-		const BFMEWeaponSetFlags &weaponFlags = owner->getWeaponSetFlags();
-		bool bitSet = ( weaponFlags.m_bits & m_field7c ) != 0;
+		Rva001BEF20FieldAddress *owner = reinterpret_cast<Rva001BEF20FieldAddress *>( object );
+		const UInt &weaponFlags = *reinterpret_cast<const UInt *>(owner->get());
+		bool bitSet = ( weaponFlags & m_field7c ) != 0;
 		m_cached148 = ( bitSet != flag ) ? 1 : 0;
 		return;
 	}
@@ -126,8 +120,8 @@ void Rva0049BA80::call( Object *object, bool flag ) const
 		if ( first == 0 )
 			return;
 
-		BfmeHold1004 *holder = reinterpret_cast<BfmeHold1004 *>( first );
-		BfmeX1004 *found = holder->bfmeFind1004();
+		Object *holder = reinterpret_cast<Object *>( first );
+		void *found = holder->unidentified_001BFE20();
 		if ( found == 0 )
 			return;
 
@@ -139,14 +133,14 @@ void Rva0049BA80::call( Object *object, bool flag ) const
 	{
         switch (m_field10) { case 0x22:
         {
-			BFMESelectionStatusBits *bits =
-				reinterpret_cast<BFMESelectionStatusBits *>( object );
-			if ( bits->test( 0x89 ) )
+			Rva000D3F10 *bits =
+				reinterpret_cast<Rva000D3F10 *>( object );
+			if ( (unsigned char)bits->test( 0x89 ) )
 			{
 				m_cached148 = m_field74;
 				return;
 			}
-			if ( bits->test( 0x8a ) )
+			if ( (unsigned char)bits->test( 0x8a ) )
 			{
 				m_cached148 = m_field78;
 				return;
