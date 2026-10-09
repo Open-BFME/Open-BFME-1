@@ -19,6 +19,16 @@ template <>
 bool _STL::basic_filebuf<wchar_t, _STL::char_traits<wchar_t> >::_M_allocate_buffers(
 	wchar_t *, _STL::streamsize);
 
+// NarrowFilebufInputError.cpp owns the independently byte-verified error
+// transition at 0x0084A5D0. Avoid selecting the different vendor copy here.
+template <>
+int _STL::basic_filebuf<char, _STL::char_traits<char> >::_M_input_error();
+
+// The 96-byte wide input transition at 0x00843680 also has a verified
+// provider; keep its copy rather than the generic allocation-call variant.
+template <>
+bool _STL::basic_filebuf<wchar_t, _STL::char_traits<wchar_t> >::_M_switch_to_input_mode();
+
 // BFME's two-argument filebuf opens forward to the three-argument Win32
 // implementation with the retail default protection constant (0x80).
 template <>
