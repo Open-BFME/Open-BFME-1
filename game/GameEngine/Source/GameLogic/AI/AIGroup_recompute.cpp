@@ -74,17 +74,7 @@ public:
 class Object
 {
 public:
-	const ThingTemplate *getTemplate(void) const
-	{
-		const ThingTemplate *tmpl = m_template;
-		if (tmpl == 0)
-			return 0;
-		if (tmpl->m_nextOverride)
-			tmpl = (const ThingTemplate *)tmpl->m_nextOverride->getFinalOverride();
-		return tmpl;
-	}
-
-	bool isKindOf(KindOfType t) const { return getTemplate()->isKindOf(t); }
+	bool isKindOf(KindOfType t) const;
 	float getPosX(void) const { return m_position.x; }
 	float getPosY(void) const { return m_position.y; }
 	AIUpdateInterface *getAIUpdateInterface(void) { return m_ai; }
@@ -93,7 +83,9 @@ public:
 
 private:
 	virtual ~Object();
+public:
 	const ThingTemplate *m_template;
+private:
 	unsigned char m_unreconstructed_08[0x38 - 0x08];
 	Coord3D m_position;
 	unsigned char m_unreconstructed_44[0x1A4 - 0x44];
@@ -102,6 +94,22 @@ private:
 	BodyModuleInterface *m_body;
 	AIUpdateInterface *m_ai;
 };
+
+// Read this TU's BFME template view independently of the shared accessor.
+static inline const ThingTemplate *getTemplate(const Object *object)
+{
+	const ThingTemplate *tmpl = object->m_template;
+	if (tmpl == 0)
+		return 0;
+	if (tmpl->m_nextOverride)
+		tmpl = (const ThingTemplate *)tmpl->m_nextOverride->getFinalOverride();
+	return tmpl;
+}
+
+inline bool Object::isKindOf(KindOfType t) const
+{
+	return getTemplate(this)->isKindOf(t);
+}
 
 struct BfmeListNodeBase
 {

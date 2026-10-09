@@ -80,11 +80,6 @@ public:
 class Object
 {
 public:
-	__forceinline const ThingTemplate *getTemplate() const
-	{
-		return m_template;
-	}
-
 	__forceinline BodyModuleInterface *getBodyModule() const
 	{
 		return m_body;
@@ -92,10 +87,18 @@ public:
 
 private:
 	void *m_vtable;
+public:
 	ThingTemplateOverride m_template;
+private:
 	unsigned char m_unreconstructed_08[0x200 - 0x08];
 	BodyModuleInterface *m_body;
 };
+
+// Read this TU's BFME template view independently of the shared accessor.
+static __forceinline const ThingTemplate *getTemplate(const Object *object)
+{
+	return object->m_template;
+}
 
 class GettingBuiltBehaviorModuleData
 {
@@ -153,7 +156,7 @@ public:
 
 Real GettingBuiltBehavior::rva001FE8A0(const Player *player) const
 {
-	Real cost = (Real)getObject()->getTemplate()->calcCostToBuild(player, -1);
+	Real cost = (Real)getTemplate(getObject())->calcCostToBuild(player, -1);
 	return cost * getModuleData()->m_costByDamageState[
 		getObject()->getBodyModule()->getDamageState()];
 }
