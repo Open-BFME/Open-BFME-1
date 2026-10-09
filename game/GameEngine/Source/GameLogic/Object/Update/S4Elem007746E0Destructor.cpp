@@ -21,6 +21,9 @@ class __node_alloc
 static inline void nodePoolDeallocate(void *block, unsigned int bytes) { __node_alloc<true, 0>::_M_deallocate(block, bytes); }
 }
 
+// File-local: other TUs emit different bodies under these helper names.
+namespace
+{
 inline void bfmeRelease(void *block, unsigned int bytes)
 {
 	if (bytes > 0x80)
@@ -47,6 +50,7 @@ private:
 	char *m_bfmeFinish;
 	char *m_bfmeEnd;
 };
+}
 
 class S4Elem007746E0
 {
