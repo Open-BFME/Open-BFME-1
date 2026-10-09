@@ -30,13 +30,25 @@ extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;
 class LivingWorldLogic;
 extern LivingWorldLogic *TheLivingWorldLogic;
 
+class Glo012F1024Type
+{
+public:
+	void step();
+};
+
+class Rva003BEED0
+{
+public:
+	void finish();
+};
+
 void bfmeGoCHF()
 {
 	BfmeTwoCHF *two = (BfmeTwoCHF *)TheLivingWorldLogic;
 	if (two->m_bfmeFlag)
 	{
-		((BfmeOneCHF *)TheLivingWorldCampaignManager)->bfmeOneCHF();
-		two->bfmeTwoCHF();
+		((Glo012F1024Type *)TheLivingWorldCampaignManager)->step();
+		((Rva003BEED0 *)two)->finish();
 		((BfmeTwoCHF *)TheLivingWorldLogic)->m_bfmeFlag = false;
 	}
 }
