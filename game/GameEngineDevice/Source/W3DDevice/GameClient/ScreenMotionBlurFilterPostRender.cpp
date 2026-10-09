@@ -93,14 +93,15 @@ struct BfmeSnapshot
 class GameLogic : public BfmeSubsystem, public BfmeSnapshot
 {
 public:
-	Int getFrame(void) const
+	// GameLogic.h declares the simulation-frame accessor unsigned and non-const.
+	unsigned int getFrame(void)
 	{
 		return m_frame;
 	}
 
 private:
 	char pad008[0x34];
-	Int m_frame;
+	unsigned int m_frame;
 };
 
 extern GameLogic *TheGameLogic;
