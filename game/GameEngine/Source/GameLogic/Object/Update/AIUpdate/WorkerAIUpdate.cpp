@@ -135,47 +135,6 @@ enum
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate_ctor_Thunk.cpp
-// ??0WorkerAIUpdate@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
-WorkerAIUpdate::WorkerAIUpdate( Thing *thing, const ModuleData* moduleData ) : 
-							 AIUpdateInterface( thing, moduleData )
-               
-{
-
-	//
-	// initialize the dozer machine to NULL, we want to do this and create it during the update
-	// implementation because at this point we don't have the object all setup
-	//
-
-	//Added By Sadullah Nader
-	//Initialization(s) inserted
-	m_isRebuild = FALSE;
-	//
-	m_dozerMachine = NULL;
-	for( Int i = 0; i < DOZER_NUM_TASKS; i++ )
-	{
-		m_task[ i ].m_targetObjectID = INVALID_ID;
-		m_task[ i ].m_taskOrderFrame = 0;
-		for( Int j = 0; j < DOZER_NUM_DOCK_POINTS; j++ )
-		{
-			m_dockPoint[ i ][ j ].valid = FALSE;
-			m_dockPoint[ i ][ j ].location.zero();
-		}
-	} 
-	m_currentTask = DOZER_TASK_INVALID;
-	m_buildSubTask = DOZER_SELECT_BUILD_DOCK_LOCATION;  // irrelavant, but I want non-garbage value
-	
-	m_supplyTruckStateMachine = NULL;
-	m_numberBoxes = 0;
-	m_forcePending = FALSE;
-	m_forcedBusyPending = FALSE;
-
-	m_workerMachine = NULL;
-
- 	m_suppliesDepletedVoice = getWorkerAIUpdateModuleData()->m_suppliesDepletedVoice;
-	
-	createMachines();
-
-}
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
