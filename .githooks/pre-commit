@@ -166,6 +166,14 @@ if migration_marker=$(python3 tools/layout_migration.py detect "$layout_base" :)
     exit 0
 fi
 
+# Gate-read ledger facts (data_rows.csv rows, ...) change only through their one
+# writer, which stamps its write in this worktree's git dir (tools/gate_writers.py).
+# HEAD's checker, so an edit cannot approve itself; a layout migration exited above.
+if git cat-file -e HEAD:tools/gate_writers.py 2>/dev/null; then
+    git show HEAD:tools/gate_writers.py | python3 - --staged \
+        || fail "a gate-read ledger fact was edited by hand (see above)"
+fi
+
 staged_sources=()
 staged_c_sources=()
 ledger_changed=0

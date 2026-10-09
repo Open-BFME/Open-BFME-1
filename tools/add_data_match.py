@@ -113,6 +113,8 @@ def main(argv=None):
     if not ok:
         raise SystemExit(f"add_data_match: {args.name} does not verify: {message}")
     path.write_bytes(candidate)
+    import gate_writers
+    gate_writers.stamp("data_row", existing, candidate)
     admit_address_global(row["source"], args.name)
     print(f"add_data_match: {args.name} -> {row['source']}: {message}")
     return 0
