@@ -61,12 +61,16 @@ class Player
 {
 public:
 	Bool isPlayerActive() const;
-	Int getPlayerColor() const { return m_playerColor; }
 
-private:
 	unsigned char m_head[0x1C4];
 	Int m_playerColor;
 };
+
+// This TU reads the BFME player view, independently of the shared accessor.
+static inline Int getPlayerColor(const Player *player)
+{
+	return player->m_playerColor;
+}
 
 class PlayerList
 {
@@ -126,7 +130,7 @@ void bfme_notificationOtherMode(AsciiString nick, UnicodeString message)
 	if (!fromObserver && !TheGameInfo->getSlot(playerID)->isMuted())
 	{
 		RGBColor rgb;
-		rgb.setFromInt(player->getPlayerColor());
+		rgb.setFromInt(getPlayerColor(player));
 		TheInGameUI->messageColor(&rgb, UnicodeString(L"%s"), message.str());
 	}
 }
