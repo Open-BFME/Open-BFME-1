@@ -147,13 +147,6 @@ void WeaponTemplateSet::parseAutoChoose(INI* ini, void *instance, void * /*store
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Weapon/WeaponTemplateSet_parsePreferredAgainst_Thunk.cpp
-// ?parsePreferredAgainst@WeaponTemplateSet@@CAXPAVINI@@PAX1PBX@Z present-unmatched
-void WeaponTemplateSet::parsePreferredAgainst(INI* ini, void *instance, void * /*store*/, const void* userData)
-{
-	WeaponTemplateSet* self = (WeaponTemplateSet*)instance;
-	WeaponSlotType wslot = (WeaponSlotType)INI::scanIndexList(ini->getNextToken(), TheWeaponSlotTypeNames);
-	KindOfMaskType::parseFromINI(ini, instance, &self->m_preferredAgainst[wslot], NULL);
-}
 
 //-------------------------------------------------------------------------------------------------
 void WeaponTemplateSet::parseWeaponTemplateSet( INI* ini, const ThingTemplate* tt )
