@@ -3,11 +3,18 @@
 // Open-BFME: STLport _Rb_tree<Rva006930B0Key, pair<const Rva006930B0Key, V> >::
 // _M_insert, the four-argument form, at retail 0x006930B0.  Near-twin of
 // RvaTreeMInsertRva00198190.cpp: node = 16-byte base + 8-byte pair (4-byte
-// key, 4-byte mapped body).  Both the compare and construct callees are
-// fresh pins here since no existing symbols.csv row named either retail
-// address.
+// key, 4-byte mapped body). Calls use the existing matched construct
+// at 0x00692510 (ILT 0x000102B2) and comparator at 0x00692570
+// (ILT 0x0001BB85), with their cdecl and thiscall ABIs.
 
 struct BfmeRbTreeInsert006930B0AnchorHelper;
+struct Gen_t_00692510_p12cd;
+struct Rva00692570Key;
+class Rva00692570Less
+{
+public:
+	bool operator()(const Rva00692570Key &, const Rva00692570Key &) const;
+};
 
 namespace _STL
 {
@@ -45,6 +52,9 @@ struct pair
 	T1 first;
 	T2 second;
 };
+
+// Only the matched construct pointer/reference ABI is needed here.
+template <> struct pair<const int, Gen_t_00692510_p12cd>;
 
 template <class T>
 struct _Select1st
@@ -124,7 +134,8 @@ private:
 	_Link_type _M_create_node(const Value &v)
 	{
 		_Link_type tmp = (_Link_type)BfmeNodeAllocate(sizeof(_Node));
-		_Construct(&tmp->_M_value_field, v);
+		_Construct(reinterpret_cast<pair<const int, Gen_t_00692510_p12cd> *>(&tmp->_M_value_field),
+			reinterpret_cast<const pair<const int, Gen_t_00692510_p12cd> &>(v));
 		return tmp;
 	}
 
@@ -166,7 +177,9 @@ _Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::_M_insert(
 	_Link_type z;
 
 	if (y == this->_M_header._M_data
-		|| (w == 0 && (x != 0 || _M_key_compare(KeyOfValue()(v), _S_key(y)))))
+		|| (w == 0 && (x != 0 || reinterpret_cast<const Rva00692570Less &>(_M_key_compare)(
+			reinterpret_cast<const Rva00692570Key &>(KeyOfValue()(v)),
+			reinterpret_cast<const Rva00692570Key &>(_S_key(y))))))
 	{
 		z = _M_create_node(v);
 		y->_M_left = z;
