@@ -57,14 +57,7 @@ public:
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ??0RailedTransportDockUpdateModuleData@@QAE@XZ present-unmatched
-RailedTransportDockUpdateModuleData::RailedTransportDockUpdateModuleData( void )
-{
-
-	m_pullInsideDurationInFrames = 0;
-	m_pushOutsideDurationInFrames = 0;
-	m_toleranceDistance = 50.0f;
-}  // end RailedTransportDockUpdateModuleData
+  // end RailedTransportDockUpdateModuleData
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
@@ -93,26 +86,11 @@ RailedTransportDockUpdateModuleData::RailedTransportDockUpdateModuleData( void )
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/RailedTransportDockUpdateConstructor.cpp
-// ??0RailedTransportDockUpdate@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
-RailedTransportDockUpdate::RailedTransportDockUpdate( Thing *thing, const ModuleData *moduleData )
-												 : DockUpdate( thing, moduleData )
-{
-
-	m_dockingObjectID = INVALID_ID;
-	m_pullInsideDistancePerFrame = 0.0f;
-	m_unloadingObjectID = INVALID_ID;
-	m_pushOutsideDistancePerFrame = 0.0f;
-	m_unloadCount = UNLOAD_ALL;
-
-}  // end RailedTransportDockUpdate
+  // end RailedTransportDockUpdate
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ??1RailedTransportDockUpdate@@MAE@XZ present-unmatched
-RailedTransportDockUpdate::~RailedTransportDockUpdate( void )
-{
-
-}  // end ~RailedTransportDockUpdate
+  // end ~RailedTransportDockUpdate
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
@@ -242,90 +220,7 @@ void RailedTransportDockUpdate::unloadSingleObject( Object *obj )
 /** If we have an object recorded as currently docking with us, pull that object inside
 	* and when it is inside, contain it */
 // ------------------------------------------------------------------------------------------------
-// ?doPullInDocking@RailedTransportDockUpdate@@IAEXXZ present-unmatched
-void RailedTransportDockUpdate::doPullInDocking( void )
-{
-
-	//
-	// if we're pulling an object inside of us, do that pull now.  we need this so that the
-	// railed transport can "pull" objects inside it because typically those objects can only drive
-	// on land and have a hard time driving "inside" the railed transport ... so we fake it!
-	//
-	if( m_dockingObjectID != INVALID_ID )
-	{
-		Object *us = getObject();
-		Object *docker = TheGameLogic->findObjectByID( m_dockingObjectID );
-		
-		// check for docker gone
-		if( docker == NULL )
-			m_dockingObjectID = INVALID_ID;
-
-		// pull it
-		if( docker )
-		{
-			const Coord3D *dockerPos = docker->getPosition();
-			const Coord3D *dockPos = us->getPosition();
-
-			// get the vector from the docker to the dock pos
-			Coord3D v;
-			v.x = dockPos->x - dockerPos->x;
-			v.y = dockPos->y - dockerPos->y;
-			v.z = dockPos->z - dockerPos->z;
-			v.normalize();
-
-			// apply "movement" to the vector
-			v.x *= m_pullInsideDistancePerFrame;
-			v.y *= m_pullInsideDistancePerFrame;
-
-			// apply current position of the docker to the vector
-			v.x += dockerPos->x;
-			v.y += dockerPos->y;
-			v.z  = dockerPos->z;  // keep Z height the same and just scoot along the ground
-
-			// set the new position
-			docker->setPosition( &v );
-
-			//
-			// set the model condition for the object as "moving" even though it really
-			// isn't in the traditional sense, but we don't want them to scoot slide into
-			// the transport and look wierd
-			//
-			docker->setModelConditionState( MODELCONDITION_MOVING );
-
-			// if we're at the destination then stop and put is inside the dock object
-			Real distSq = ThePartitionManager->getDistanceSquared( docker, us, FROM_CENTER_2D );
-			Real closeEnoughDistance = 6.0f;
-			if( distSq <= (closeEnoughDistance * closeEnoughDistance) )
-			{
-
-				// the object is now no longer "moving"
-				docker->clearModelConditionState( MODELCONDITION_MOVING );
-
-				// stop the dock action
-				cancelDock( docker );
-
-				// stop the docker from doing anything by going idle
-				AIUpdateInterface *dockerAI = docker->getAIUpdateInterface();
-				if( dockerAI )
-					dockerAI->aiIdle( CMD_FROM_AI );
-
-				// put object inside us
-				ContainModuleInterface *contain = us->getContain();
-				if( contain )
-				{
-					contain->addToContain( docker );
-				}
-				
-				// no object is docking now
-				m_dockingObjectID = INVALID_ID;
-
-			}  // end if
-
-		}  // end if
-
-	}  // end if
-
-}  // end doPullInDocking
+  // end doPullInDocking
 
 // ------------------------------------------------------------------------------------------------
 /** If we have an object recorded as being pushed out of us then do that here */
@@ -473,11 +368,4 @@ void RailedTransportDockUpdate::crc( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@RailedTransportDockUpdate@@MAEXXZ present-unmatched
-void RailedTransportDockUpdate::loadPostProcess( void )
-{
-
-	// extend base class
-	DockUpdate::loadPostProcess();
-
-}  // end loadPostProcess
+  // end loadPostProcess
