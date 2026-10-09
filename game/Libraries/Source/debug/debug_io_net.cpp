@@ -33,10 +33,6 @@
 #include <new>      // needed for placement new prototype
 
 // byte-exact reconstruction: game/Libraries/Source/WWVegas/WWDebug/DebugIONetConstructorThunk.cpp
-// ??0DebugIONet@@QAE@XZ present-unmatched
-DebugIONet::DebugIONet(void)
-{
-}
 
 // byte-exact reconstruction: game/GameEngine/Source/Common/DebugIONetDestructorThunk.cpp
 // ??1DebugIONet@@UAE@XZ present-unmatched
@@ -142,11 +138,6 @@ void DebugIONet::Execute(class Debug& dbg, const char *cmd, bool structuredCmd,
   }
 }
 
-// ?Create@DebugIONet@@SAPAVDebugIOInterface@@XZ present-unmatched
-DebugIOInterface *DebugIONet::Create(void)
-{
-  return new (DebugAllocMemory(sizeof(DebugIONet))) DebugIONet();
-}
 
 void DebugIONet::Delete(void)
 {
