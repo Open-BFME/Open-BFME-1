@@ -2,8 +2,14 @@
 // Scalar VP6 fractional-pixel block predictor at retail 0x009A7B00 (spread-table slot B54).
 // Tables: four-tap weights at 0x012D7798 and two-tap weights at 0x012D7818, eight modes each.
 
-extern const int g_012D7798[8][4];
-extern const int g_012D7818[8][2];
+// Retail keeps both tables in writable .data (not .rdata), so they are not const.
+int g_012D7798[8][4] = {
+	{ 0, 128, 0, 0 }, { -4, 118, 16, -2 }, { -7, 106, 34, -5 }, { -8, 90, 53, -7 },
+	{ -8, 72, 72, -8 }, { -7, 53, 90, -8 }, { -5, 34, 106, -7 }, { -2, 16, 118, -4 }
+};
+int g_012D7818[8][2] = {
+	{ 128, 0 }, { 112, 16 }, { 96, 32 }, { 80, 48 }, { 64, 64 }, { 48, 80 }, { 32, 96 }, { 16, 112 }
+};
 
 extern void __cdecl d_009a75f0(void);
 extern void __cdecl bfmeGo7820(void *, void *, void *, void *, void *);
