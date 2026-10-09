@@ -1,8 +1,13 @@
-class BfmeSubBVB
+class BfmeOwnCH
 {
 public:
-	void bfmeOneBVB();
-	void bfmeTwoBVB(BfmeSubBVB *other);
+	BfmeOwnCH *bfmeMakeCH(void *other);
+};
+
+class TeamsInfoRec
+{
+public:
+	void clear();
 };
 
 class BfmeThingBVB
@@ -10,12 +15,12 @@ class BfmeThingBVB
 public:
 	void bfmeGoBVB(BfmeThingBVB *other);
 	unsigned char m_bfmeHead[0x630];
-	BfmeSubBVB m_bfmeSub;
+	TeamsInfoRec m_bfmeSub;
 };
 
 void BfmeThingBVB::bfmeGoBVB(BfmeThingBVB *other)
 {
-	BfmeSubBVB *sub = &m_bfmeSub;
-	sub->bfmeOneBVB();
-	sub->bfmeTwoBVB(&other->m_bfmeSub);
+	TeamsInfoRec *sub = &m_bfmeSub;
+	sub->clear();
+	reinterpret_cast<BfmeOwnCH *>(sub)->bfmeMakeCH(&other->m_bfmeSub);
 }
