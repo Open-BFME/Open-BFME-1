@@ -126102,11 +126102,7 @@ present_unmatched	game/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp
 present_unmatched	game/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp	1ProcessAnimateWindowSlideFromTop@@UAE@XZ	1
 present_unmatched	game/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp	1ProcessAnimateWindowSlideFromTopFast@@UAE@XZ	1
 present_unmatched	game/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp	1ProcessAnimateWindowSpiral@@UAE@XZ	1
-present_unmatched	game/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp	initReverseAnimateWindow@ProcessAnimateWindowSlideFromRight@@UAEXPAVAnimateWindow@@I@Z	1
-present_unmatched	game/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp	initReverseAnimateWindow@ProcessAnimateWindowSlideFromTopFast@@UAEXPAVAnimateWindow@@I@Z	1
 present_unmatched	game/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp	reverseAnimateWindow@ProcessAnimateWindowSlideFromBottomTimed@@UAE_NPAVAnimateWindow@@@Z	1
-present_unmatched	game/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp	reverseAnimateWindow@ProcessAnimateWindowSlideFromRight@@UAE_NPAVAnimateWindow@@@Z	1
-present_unmatched	game/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp	reverseAnimateWindow@ProcessAnimateWindowSlideFromTopFast@@UAE_NPAVAnimateWindow@@@Z	1
 present_unmatched	game/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp	updateAnimateWindow@ProcessAnimateWindowSlideFromRight@@UAE_NPAVAnimateWindow@@@Z	1
 present_unmatched	game/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp	updateAnimateWindow@ProcessAnimateWindowSlideFromRightFast@@UAE_NPAVAnimateWindow@@@Z	1
 present_unmatched	game/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp	updateAnimateWindow@ProcessAnimateWindowSlideFromTop@@UAE_NPAVAnimateWindow@@@Z	1
