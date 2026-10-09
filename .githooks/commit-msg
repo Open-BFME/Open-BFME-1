@@ -20,3 +20,12 @@ elif [ -f "$checker" ]; then
     python3 "$checker" --commit-msg "$1" \
         || { echo "COMMIT-MSG FAILED: protected verifier/baseline change (see above)" >&2; exit 1; }
 fi
+
+# dir32_addresses.csv: a deleted line needs a matching Dir32-Retire trailer
+# (tools/dir32_record.py retire). Only this hook sees the message; the guard
+# runs AS OF HEAD, so an edit to it cannot approve itself.
+guard=tools/dir32_record_guard.py
+if git cat-file -e "HEAD:$guard" 2>/dev/null && git show "HEAD:$guard" | grep -q -e '--commit-msg'; then
+    git show "HEAD:$guard" | python3 - --commit-msg "$1" \
+        || { echo "COMMIT-MSG FAILED: dir32_addresses.csv line deleted outside tools/dir32_record.py (see above)" >&2; exit 1; }
+fi

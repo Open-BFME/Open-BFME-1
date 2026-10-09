@@ -3502,7 +3502,7 @@ def propose_dir32_addresses(sym2base, whitelist):
         f"{sym},0x{base:08X}\n" for sym, base in sorted(proposed.items())))
     print(f"DIR32 addresses: {len(proposed.keys() - recorded.keys())} symbol(s) not yet recorded, "
           f"{len(recorded.keys() - proposed.keys())} no longer referenced. With the gate green, record "
-          f"them: cp {DIR32_PROPOSAL.relative_to(ROOT)} {DIR32_ADDRESSES.relative_to(ROOT)}")
+          f"the new ones: python3 tools/dir32_record.py record --msg <message file>")
 
 
 def verify_dir32_addresses(rows):
