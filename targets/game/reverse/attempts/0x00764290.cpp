@@ -1,213 +1,276 @@
 // ?method@BfmeRva64290@@QAEXXZ
-// partial score=0.15 date=2026-09-05
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: address-derived body, retail 0x00764290, 899 bytes. Neighbours
-// (0x00764220 Rva00764220::setup, 0x00764700 Gen00764700 controlling-player
-// notify, 0x00764780 AudioEventRTS dup) and the ZH twin
-// reference/CnC_Generals_Zero_Hour/GeneralsMD/.../W3DModelDraw.cpp (the
-// "*** ASSET ERROR: SubObject %s not found (%s)!" DEBUG_CRASH string at
-// retail 0x01123990 is verbatim from W3DModelDraw::doHideShowSubObjs) place
-// this in the W3DDevice GameClient Drawable Draw family. The body iterates
-// TWO 0x18-byte-element vectors at this+0x40/0x44 and this+0x4c/0x50 (not
-// ZH's single 8-byte HideShowSubObjInfo vector -- BFME widened the element
-// with extra transition-blend floats), looks a sub-object up by name through
-// m_renderObject (this+0x28), and on a miss builds the same DEBUG_CRASH
-// string through a vtable-based Debug object at global 0x01336E5C (the
-// debug-manager global also used by _bfme_debugRecordCallsite /
-// _bfme_debugReportingEnabled). Identity of the owning method/class could not
-// be proven within budget; landed under an address-derived name per
-// IDENTITY POLICY.
+// partial score=0.9922 date=2026-10-09
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /MD /EHsc /Iinputs/reference/shims/debugvtable /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/w3dmodeldraw /Iinputs/reference/shims/asciistring8 /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+#include "WW3D2/RendObj.h"
+#include "WW3D2/HTree.h"
+#include "string_base.h"
+#include "ascii_string.h"
 
-extern "C" char *__cdecl strcpy(char *dest, const char *src);
+typedef bool Bool;
+typedef int Int;
+typedef float Real;
+extern const Real g_rva01075350;
+extern Real g_bfmeDefaultBU;
 
-class BfmeRva64290RenderObj
-{
-public:
-	virtual void *s00(); virtual void *s01(); virtual void *s02(); virtual void *s03();
-	virtual void *s04(); virtual void *s05(); virtual void *s06(); virtual void *s07();
-	virtual void *s08(); virtual void *s09(); virtual void *s0a(); virtual void *s0b();
-	virtual void *s0c(); virtual void *s0d(); virtual void *s0e(); virtual void *s0f();
-	virtual void *s10(); virtual void *s11(); virtual void *s12(); virtual void *s13();
-	virtual void *s14(); virtual void *s15(); virtual void *s16(); virtual void *s17();
-	virtual void *s18(); virtual void *s19(); virtual void *s1a(); // pad to 0x68
-	virtual int getSubObjectBoneIndex(int zero, int arg); // +0x6c
-	virtual void *s1c(); virtual void *s1d(); virtual void *s1e(); virtual void *s1f();
-	virtual void *getSubObjectByName(const char *name, int *outIndex); // +0x7c
-	virtual void *s21(); virtual void *s22(); virtual void *s23();
-	virtual int getNumSubObjects(); // +0x88
-	virtual void *s25(); virtual void *s26(); virtual void *s27(); virtual void *s28();
-	virtual void *s29(); virtual void *s2a(); virtual void *s2b(); virtual void *s2c();
-	virtual void *s2d();
-	virtual void *getBoneIndex2(int a, int b); // +0xbc
-	virtual void *s2f(); virtual void *s30(); virtual void *s31(); virtual void *s32();
-	virtual void *s33(); virtual void *s34(); virtual void *s35(); virtual void *s36();
-	virtual void *s37(); virtual void *s38(); virtual void *s39(); virtual void *s3a();
-	virtual void *getHTree(); // +0xe4
-};
-
-class BfmeRva64290SubObj
-{
-public:
-	virtual void *s00(); virtual void *s01(); virtual void *s02(); virtual void *s03();
-	virtual void *s04(); virtual void *s05(); virtual void *s06(); virtual void *s07();
-	virtual void *s08(); virtual void *s09(); virtual void *s0a(); virtual void *s0b();
-	virtual void *s0c(); virtual void *s0d(); virtual void *s0e(); virtual void *s0f();
-	virtual void *s10(); virtual void *s11(); virtual void *s12(); virtual void *s13();
-	virtual void *s14(); virtual void *s15(); virtual void *s16(); virtual void *s17();
-	virtual void *s18(); virtual void *s19(); virtual void *s1a(); virtual void *s1b();
-	virtual void *s1c(); virtual void *s1d(); virtual void *s1e(); virtual void *s1f();
-	virtual void *s20(); virtual void *s21(); virtual void *s22(); virtual void *s23();
-	virtual void *s24(); virtual void *s25(); virtual void *s26(); virtual void *s27();
-	virtual void *s28(); virtual void *s29(); virtual void *s2a(); virtual void *s2b();
-	virtual void *s2c(); virtual void *s2d(); virtual void *s2e(); virtual void *s2f();
-	virtual void *s30(); virtual void *s31(); virtual void *s32(); virtual void *s33();
-	virtual void *s34(); virtual void *s35(); virtual void *s36(); virtual void *s37();
-	virtual void *s38(); virtual void *s39(); virtual void *s3a(); virtual void *s3b();
-	virtual void *s3c(); virtual void *s3d(); virtual void *s3e(); virtual void *s3f();
-	virtual void setHidden(unsigned char hide); // +0x100 (index 64)
-};
-
-// TU-local minimal view of the debug manager: only the slots this body calls.
-class BfmeRva64290Debug
-{
-public:
-	virtual void *s00(); virtual void *s01(); virtual void *s02(); virtual void *s03();
-	virtual void *s04(); virtual void *s05(); virtual void *s06(); virtual void *s07();
-	virtual void *s08(); virtual void *s09(); virtual void *s0a(); virtual void *s0b();
-	virtual void *s0c(); virtual void *s0d(); virtual void *s0e(); virtual void *s0f();
-	virtual void *s10(); virtual void *s11(); virtual void *s12(); virtual void *s13();
-	virtual void *s14(); virtual void *s15(); virtual void *s16(); virtual void *s17();
-	virtual void *getStream(int a, int b); // +0x60 -> the outer object at 0x1336e5c
-};
+typedef RenderObjClass BfmeRva64290RenderObj;
+typedef RenderObjClass BfmeRva64290SubObj;
 
 class BfmeRva64290DebugStream
 {
 public:
-	virtual void *s00(); virtual void *s01(); virtual void *s02(); virtual void *s03();
-	virtual void *s04(); virtual void *s05(); virtual void *s06(); virtual void *s07();
-	virtual void *s08(); virtual void *s09(); virtual void *s0a(); virtual void *s0b();
-	virtual void *s0c(); virtual void *s0d();
-	virtual void logFormat(void *format); // +0x38
-	virtual void *s0f(); virtual void *s10(); virtual void *s11(); virtual void *s12();
-	virtual void flushCrash(int severity); // +0x4c
+	virtual void slot00(); virtual void slot04(); virtual void slot08();
+	virtual void slot0c(); virtual void slot10(); virtual void slot14();
+	virtual void slot18(); virtual void slot1c(); virtual void slot20();
+	virtual void slot24(); virtual void slot28(); virtual void slot2c();
+	virtual void slot30(); virtual void slot34();
+	virtual BfmeRva64290DebugStream *logFormat(const void *); // +0x38
+	virtual void slot3c(); virtual void slot40(); virtual void slot44();
+	virtual void slot48();
+	virtual void flushCrash(int);                              // +0x4c
 };
 
-class DebugFormat
+class BfmeRva64290Debug
 {
-	DebugFormat(const DebugFormat &);
-	DebugFormat &operator=(const DebugFormat &);
-	char m_buffer[512];
-
 public:
-	explicit DebugFormat(const char *format, ...);
+	virtual void slot00(); virtual void slot04(); virtual void slot08();
+	virtual void slot0c(); virtual void slot10(); virtual void slot14();
+	virtual void slot18(); virtual void slot1c(); virtual void slot20();
+	virtual void slot24(); virtual void slot28(); virtual void slot2c();
+	virtual void slot30(); virtual void slot34(); virtual void slot38();
+	virtual void slot3c(); virtual void slot40(); virtual void slot44();
+	virtual void slot48(); virtual void slot4c(); virtual void slot50();
+	virtual void slot54(); virtual void slot58(); virtual void slot5c();
+	virtual void beginReport();                            // +0x60
+	virtual void slot64(); virtual void slot68();
+	virtual BfmeRva64290DebugStream *getStream(void *, void *); // +0x6c
 };
 
-extern BfmeRva64290Debug *g_BFMEIndexBufferDebug; // 0x01336E5C
-extern bool _bfme_debugReportingEnabled();
-extern void _bfme_debugRecordCallsite(int kind);
-extern void ask_still_a_dump(); // placeholder, unused
+extern BfmeRva64290Debug *g_BFMEIndexBufferDebug;
+extern Bool __cdecl _bfme_debugReportingEnabled();
+extern void __cdecl _bfme_debugRecordCallsite(int);
+
+#include "debug/debug.h"
+typedef Debug::Format DebugFormat;
+
+class Rva0075C8B0RenderTarget;
+class Rva0075C8B0Owner
+{
+public:
+	void update(Rva0075C8B0RenderTarget *, Real);
+};
 
 struct BfmeRva64290WeaponBarrel
 {
-	char m_pad0[4];
-	unsigned char m_hide; // +4
-	char m_pad1[3];
-	float m_f8;
-	float m_fc;
-	float m_f10;
-	float m_f14;
+	AsciiString m_name;
+	Bool m_hide;
+	unsigned char m_pad04[3];
+	Real m_f8;
+	Real m_fc;
+	Real m_f10;
+	Real m_f14;
+
+	const char *name() const
+	{
+		return m_name.str();
+	}
 };
 
-extern void j_0001aec9(void); // still a dump target -> transition setter
+class BfmeRva64290WeaponBarrelVector
+{
+public:
+	BfmeRva64290WeaponBarrel *m_begin;
+	BfmeRva64290WeaponBarrel *m_end;
+	BfmeRva64290WeaponBarrel *m_capacity;
+	bool empty() const { return m_begin == m_end; }
+	BfmeRva64290WeaponBarrel *begin() const { return m_begin; }
+	BfmeRva64290WeaponBarrel *end() const { return m_end; }
+};
+
+#include "Lib/BaseType.h"
+#include "Common/GameMemory.h"
+#include "Common/Override.h"
+class Rva00764290Template : public Overridable
+{
+public:
+    unsigned char m_pad0c[0x14];
+    AsciiString m_name;
+};
+
+class Rva00764290Drawable
+{
+public:
+    void *m_pad00;
+    OVERRIDE<Rva00764290Template> m_template;
+    const Rva00764290Template *getTemplate() const { return m_template; }
+};
+
+static void doHideShowBoneSubObjs(Bool state, Int numSubObjects, Int boneIdx, RenderObjClass *fullObject, const HTreeClass *htree)
+{
+	for (Int i=0; i < numSubObjects; i++) 
+	{
+		RenderObjClass *childObject = fullObject->Get_Sub_Object(i);
+		if (childObject)
+		{
+			Int parentBoneIndex = fullObject->Get_Sub_Object_Bone_Index(childObject);
+			childObject->Release_Ref();
+			while (parentBoneIndex > 0 && parentBoneIndex < fullObject->Get_Num_Bones())
+			{
+				parentBoneIndex = htree->Get_Parent_Index(parentBoneIndex);
+				if (parentBoneIndex == boneIdx)
+				{
+					childObject = fullObject->Get_Sub_Object(i);
+					if (childObject)
+					{
+						childObject->Set_Hidden(state);
+						childObject->Release_Ref();
+					}
+					break;
+				}
+			}
+		}
+	}
+}
+
 
 class BfmeRva64290
 {
 public:
 	void method();
 
-	char m_pad0[0x28];
-	BfmeRva64290RenderObj *m_renderObject; // +0x28
-	char m_pad1[0x40 - 0x2c];
-	BfmeRva64290WeaponBarrel *m_vecABegin; // +0x40
-	BfmeRva64290WeaponBarrel *m_vecAEnd;   // +0x44
-	char m_pad2[0x4c - 0x48];
-	BfmeRva64290WeaponBarrel *m_vecBBegin; // +0x4c
-	BfmeRva64290WeaponBarrel *m_vecBEnd;   // +0x50
-	char m_pad3[0x9c - 0x54];
-	int m_debugBudget; // +0x9c
-	char m_pad4[0x164 - 0xa0];
-	unsigned char m_flag164; // +0x164
-	unsigned char m_flag165; // +0x165
+	char m_pad00[0x28];
+	BfmeRva64290RenderObj *m_renderObject; // +0x28 in the observed view
+	char m_pad2c[0x40 - 0x2c];
+	union {
+		BfmeRva64290WeaponBarrelVector m_vecA;
+		struct { BfmeRva64290WeaponBarrel *m_vecABegin; BfmeRva64290WeaponBarrel *m_vecAEnd; char m_pad2[4]; };
+	};
+	union {
+		BfmeRva64290WeaponBarrelVector m_vecB;
+		struct { BfmeRva64290WeaponBarrel *m_vecBBegin; BfmeRva64290WeaponBarrel *m_vecBEnd; void *m_capacityB; };
+	};
+	char m_pad54[0x9c - 0x58];
+	int m_debugBudget;             // +0x9c
+	char m_pad_a0[0x164 - 0xa0];
+	unsigned char m_flag164;       // +0x164
+	unsigned char m_flag165;       // +0x165
 };
 
-typedef void *(BfmeRva64290WeaponBarrel::*BfmeRva64290TransitionFn)(BfmeRva64290SubObj *, unsigned char);
-
-// ?d_00764290@@YAXXZ
+// ?method@BfmeRva64290@@QAEXXZ present-unmatched
 void BfmeRva64290::method()
 {
 	m_flag164 = 0;
 	m_flag165 = 0;
-	if (m_vecABegin == 0)
+	if (!m_renderObject)
 		return;
 
-	for (BfmeRva64290WeaponBarrel *cur = m_vecABegin; cur != m_vecAEnd; cur = (BfmeRva64290WeaponBarrel *)((char *)cur + 0x18))
+	if (!m_vecA.empty())
 	{
-		int outIndex = 0;
-		if (m_renderObject == 0)
-			continue;
-
-		BfmeRva64290SubObj *subObj = (BfmeRva64290SubObj *)m_renderObject->getSubObjectByName("", &outIndex);
-		if (subObj == 0)
-			continue;
-
-		subObj->setHidden(cur->m_hide);
-
-		void *htree = m_renderObject->getHTree();
-		if (htree == 0)
-			continue;
-
-		int boneIdx = (int)(unsigned)m_renderObject->getBoneIndex2(0, outIndex);
-		int numSubObjects = m_renderObject->getNumSubObjects();
-		if (boneIdx <= 0 || boneIdx >= numSubObjects)
-			continue;
-
-		m_renderObject->getSubObjectBoneIndex(0, boneIdx);
-
-		union { void *asVoid; BfmeRva64290TransitionFn asMember; } fn;
-		fn.asVoid = (void *)j_0001aec9;
-		(cur->*fn.asMember)(subObj, cur->m_hide);
-
-		if (--m_debugBudget > 0)
-			continue;
-
-		if (_bfme_debugReportingEnabled())
+		for (BfmeRva64290WeaponBarrel *entry = m_vecA.begin();
+			entry != m_vecA.end(); ++entry)
 		{
-			_bfme_debugRecordCallsite(1);
-			void *stream = g_BFMEIndexBufferDebug->getStream(0, 0);
-			DebugFormat fmt("*** ASSET ERROR: SubObject %s not found (%s)!\n", "", "");
-			((BfmeRva64290DebugStream *)stream)->logFormat(&fmt);
-			((BfmeRva64290DebugStream *)stream)->flushCrash(2);
+			int objIndex;
+			BfmeRva64290RenderObj *subObj =
+				m_renderObject->Get_Sub_Object_By_Name(entry->name(), &objIndex);
+			if (subObj)
+			{
+				subObj->Set_Hidden(entry->m_hide);
+				HTreeClass *htree =
+					(HTreeClass *)m_renderObject->Get_HTree();
+				if (htree)
+				{
+					int boneIdx = m_renderObject->Get_Sub_Object_Bone_Index(0, objIndex);
+					if (boneIdx > 0 && boneIdx < m_renderObject->Get_Num_Bones())
+					{
+						doHideShowBoneSubObjs(entry->m_hide, m_renderObject->Get_Num_Sub_Objects(), boneIdx, m_renderObject, htree);
+					}
+				}
+				((BfmeRva64290SubObj *)subObj)->Release_Ref();
+			}
+			else
+			{
+				if (m_debugBudget > 0)
+				{
+					--m_debugBudget;
+					if (_bfme_debugReportingEnabled())
+					{
+						_bfme_debugRecordCallsite(1);
+						g_BFMEIndexBufferDebug->beginReport();
+						Rva00764290Drawable *drawable =
+							*(Rva00764290Drawable **)((char *)this - 4);
+						const Rva00764290Template *thing = drawable->getTemplate();
+						const char *templateName =
+							thing->m_name.str();
+						const char *entryName = entry->name();
+						BfmeRva64290DebugStream *stream =
+							g_BFMEIndexBufferDebug->getStream(0, 0);
+						((Debug *)stream)->Debug::operator<<(DebugFormat(
+							"*** ASSET ERROR: SubObject %s not found (%s)!\n",
+							entryName, templateName));
+						stream->flushCrash(2);
+					}
+				}
+			}
 		}
 	}
 
-	// Second, structurally identical vector -- BFME-added twin of the loop
-	// above; kept separate rather than folded into one pass because retail
-	// keeps two full copies of the body with independent counters.
-	for (BfmeRva64290WeaponBarrel *cur = m_vecBBegin; cur != m_vecBEnd; cur = (BfmeRva64290WeaponBarrel *)((char *)cur + 0x18))
+	if (!m_vecB.empty())
 	{
-		int outIndex = 0;
-		if (m_renderObject == 0)
-			continue;
+		for (BfmeRva64290WeaponBarrel *entry = m_vecB.begin();
+			entry != m_vecB.end(); ++entry)
+		{
+			int objIndex;
+			BfmeRva64290RenderObj *subObj =
+				m_renderObject->Get_Sub_Object_By_Name(entry->name(), &objIndex);
+			if (subObj)
+			{
+				if (entry->m_f8 != g_rva01075350)
+				{
+					Rva00764290Drawable *drawable =
+						*(Rva00764290Drawable **)((char *)this - 4);
+					if (!*((unsigned char *)drawable + 0x3b2))
+					{
+						entry->m_f10 = 0.0f;
+						entry->m_f14 = 0.0f;
+						entry->m_fc = entry->m_f8 > g_rva01075350
+							? g_bfmeDefaultBU : g_rva01075350;
+						entry->m_f8 = 0.0f;
+						((Rva0075C8B0Owner *)((char *)this - 0xc))->update(
+							(Rva0075C8B0RenderTarget *)subObj, entry->m_fc);
+					}
+					else if (entry->m_f10 > g_rva01075350 &&
+						entry->m_f14 > g_rva01075350)
+					{
+						entry->m_f14 -= entry->m_f10;
+						if (entry->m_f14 <= g_rva01075350)
+							entry->m_f14 = 0.0f;
+						m_flag165 = 1;
+					}
+					else
+					{
+						entry->m_fc += entry->m_f8;
+						if (entry->m_fc > g_bfmeDefaultBU)
+							entry->m_fc = 1.0f;
+						else if (entry->m_fc < g_rva01075350)
+							entry->m_fc = 0.0f;
+						((Rva0075C8B0Owner *)((char *)this - 0xc))->update(
+							(Rva0075C8B0RenderTarget *)subObj, entry->m_fc);
+					}
+				}
+				else
+					subObj->Set_Hidden(entry->m_hide);
 
-		BfmeRva64290SubObj *subObj = (BfmeRva64290SubObj *)m_renderObject->getSubObjectByName("", &outIndex);
-		if (subObj == 0)
-			continue;
-
-		void *htree = m_renderObject->getHTree();
-		(void)htree;
-
-		union { void *asVoid; BfmeRva64290TransitionFn asMember; } fn;
-		fn.asVoid = (void *)j_0001aec9;
-		(cur->*fn.asMember)(subObj, cur->m_hide);
+				HTreeClass *htree =
+					(HTreeClass *)m_renderObject->Get_HTree();
+				if (htree)
+				{
+					int boneIdx = m_renderObject->Get_Sub_Object_Bone_Index(0, objIndex);
+					if (boneIdx > 0 && boneIdx < m_renderObject->Get_Num_Bones())
+					{
+						doHideShowBoneSubObjs(entry->m_hide, m_renderObject->Get_Num_Sub_Objects(), boneIdx, m_renderObject, htree);
+					}
+				}
+				((BfmeRva64290SubObj *)subObj)->Release_Ref();
+			}
+		}
 	}
 }
