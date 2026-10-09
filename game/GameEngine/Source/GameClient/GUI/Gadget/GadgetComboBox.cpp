@@ -293,23 +293,7 @@ WindowMsgHandledType GadgetComboBoxInput( GameWindow *window, UnsignedInt msg,
 // HideListBox ================================================================
 /** Called to close the listbox if it is opened */
 //=============================================================================
-void HideListBox(GameWindow * window)
-{
-	ICoord2D winSize;
-	ICoord2D newSize;
-	GameWindow *listBox = GadgetComboBoxGetListBox(window);
-	if (!listBox)
-		return;
-
-	if(!listBox->winIsHidden())
-	{
-		listBox->winHide(TRUE);
-		GameWindow *editBox = GadgetComboBoxGetEditBox(window);
-		editBox->winGetSize(&winSize.x, &winSize.y);
-		window->winGetSize(&newSize.x, &newSize.y);
-		window->winSetSize(newSize.x, winSize.y );
-	}
-}
+// Retail HideListBox is defined in HideListBox_Thunk.cpp.
 
 // GadgetComboBoxSystem =======================================================
 // ?GadgetComboBoxSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z
