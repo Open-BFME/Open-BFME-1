@@ -1,18 +1,19 @@
 // Store the three low color channels as normalized floating-point values.
 // The address-derived name retains the unproven calling owner.
 extern const float g_0107C64C;
-extern float Rva00783F90Red;
-extern float Rva00783F90Green;
-extern float Rva00783F90Blue;
+// Retail .bss VA 0x0130696C/70/74: the stored red, green and blue channels. Address-derived names.
+float g_Va0130696C;
+float g_Va01306970;
+float g_Va01306974;
 
 void Rva00783F90StorePackedColor(unsigned int color)
 {
     unsigned int red = (color >> 16) & 255;
-    Rva00783F90Red = (float)red * g_0107C64C;
+    g_Va0130696C = (float)red * g_0107C64C;
     unsigned int green = (color >> 8) & 255;
-    Rva00783F90Green = (float)green * g_0107C64C;
+    g_Va01306970 = (float)green * g_0107C64C;
     unsigned int blue = color & 255;
-    Rva00783F90Blue = (float)blue * g_0107C64C;
+    g_Va01306974 = (float)blue * g_0107C64C;
 }
 
 // Retail .rdata at VA 0x0107C64C: 81 80 80 3b (float 1/255).

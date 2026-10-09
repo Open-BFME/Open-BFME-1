@@ -670,6 +670,9 @@ address_global	game/GameEngine/Source/GameClient/GUI/Rva007833E0AptScaledTransfo
 address_global	game/GameEngine/Source/GameClient/GUI/Rva007833E0AptScaledTransform.cpp	g_Rva012BB874InverseX	3
 address_global	game/GameEngine/Source/GameClient/GUI/Rva007833E0AptScaledTransform.cpp	g_Rva012BB878InverseY	3
 address_global	game/GameEngine/Source/GameClient/GUI/Rva007833E0AptScaledTransform.cpp	g_Rva0130699CDimensions	9
+address_global	game/GameEngine/Source/GameClient/GUI/Rva00783F90PackedColor.cpp	g_Va0130696C	2	allow=3d888464e261d36ae03ba47bc3f9cf02157d3313
+address_global	game/GameEngine/Source/GameClient/GUI/Rva00783F90PackedColor.cpp	g_Va01306970	2	allow=3d888464e261d36ae03ba47bc3f9cf02157d3313
+address_global	game/GameEngine/Source/GameClient/GUI/Rva00783F90PackedColor.cpp	g_Va01306974	2	allow=3d888464e261d36ae03ba47bc3f9cf02157d3313
 address_global	game/GameEngine/Source/GameClient/GUI/Shell/Rva000E6090Ctor.cpp	g_Rva000E6090Handlers	2
 address_global	game/GameEngine/Source/GameClient/GUI/SkirmishScreenShowError.cpp	g_Rva01088AF4EmptyWideString	2
 address_global	game/GameEngine/Source/GameClient/GameClient.cpp	g_Rva0107301CEmptyString	2
