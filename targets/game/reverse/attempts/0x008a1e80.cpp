@@ -1,15 +1,7 @@
 // ?d_008a1e80@@YAXXZ
-// partial score=0.2381 date=2026-09-30
-// ?d_008a1e80@@YAXXZ
+// partial score=0.265 date=2026-10-09
 // cl: /O2 /DNDEBUG /MD /EHsc
-// Partial 0x008A1E80: 485B vs retail 483B; normalized instruction shape 0.928.
-// Startup registers this callback beside matched Rva008A1DF0 for the
-// 0x12B4-byte object constructed by the matched BfmeThingUEW ctor. The name
-// stays address-derived because registration gives no semantic method name.
-// Record indexing is 0x20-byte stride, as retail's two SHL EAX,5 instructions
-// and the ctor's BfmeVecEVE element size independently show.
-// Remaining first divergence: retail saves EBP only at +0x16E for the final
-// record scan, while MSVC currently saves EBP at +0x26 for the whole body.
+
 class BfmeSlotLD
 {
 public:
@@ -30,10 +22,22 @@ private:
 class BfmeItemGC;
 BfmeItemGC *bfmeCheckGC(BfmeItemGC *item);
 
-class Rva008BD1B0Node
+struct Rva008BD1B0Node
 {
-public:
-	int count() const;
+    Rva008BD1B0Node *m_next;
+    char m_pad[0x54];
+    Rva008BD1B0Node *m_link;
+    __declspec(noinline) int count() const
+    {
+        const Rva008BD1B0Node *node = m_next;
+        int count = 0;
+        while (node != 0)
+        {
+            node = node->m_link;
+            ++count;
+        }
+        return count;
+    }
 };
 
 class BfmeNodeDB;
@@ -54,7 +58,7 @@ struct Rva008A1E80Record
 	int m_value10;
 	int m_count14;
 	int m_value18;
-BfmeItemGC **m_values1c;
+	BfmeItemGC **m_values1c;
 };
 
 struct Rva008A1E80Block
@@ -93,12 +97,13 @@ struct Rva008A1E80State
 	int m_count12B0;
 };
 
-int __cdecl Rva008A1E80(Rva008A1E80State *state, int offset)
+// ?Rva008A1E80@@YAPAXPAURva008A1E80State@@H@Z present-unmatched
+void *__cdecl Rva008A1E80(Rva008A1E80State *state, int offset)
 {
 	if (offset == 0)
-		return reinterpret_cast<int>(state->m_value126C);
+		return reinterpret_cast<void *>(state->m_value126C);
 	if (offset == 1)
-		return reinterpret_cast<int>(state->m_value129C);
+		return reinterpret_cast<void *>(state->m_value129C);
 
 	int index = offset;
 	index -= 2;
@@ -116,14 +121,14 @@ int __cdecl Rva008A1E80(Rva008A1E80State *state, int offset)
 		if (slot->m_words[0] == 0)
 		{
 			if ((index & 1) != 0)
-				return slot->m_words[4];
+				return reinterpret_cast<void *>(slot->m_words[4]);
 			return 0;
 		}
 		if (slot->m_words[0] == 1)
 		{
 			if ((index & 1) != 0)
-				return slot->m_words[2];
-			return reinterpret_cast<int>(bfmeCheckGC((BfmeItemGC *)slot->m_words[3]));
+				return reinterpret_cast<void *>(slot->m_words[2]);
+			return reinterpret_cast<void *>(bfmeCheckGC((BfmeItemGC *)slot->m_words[3]));
 		}
 	}
 	int wrappedCount;
@@ -133,26 +138,26 @@ int __cdecl Rva008A1E80(Rva008A1E80State *state, int offset)
 		wrappedCount = state->m_count12B0 + count;
 	index = index - wrappedCount * 2;
 	if (index < state->m_count10)
-		return reinterpret_cast<int>(state->m_values0c[index]);
+		return reinterpret_cast<void *>(state->m_values0c[index]);
 	index -= state->m_count10;
 	if (index < 0x200)
-		return reinterpret_cast<int>(state->m_inline18[index]);
+		return reinterpret_cast<void *>(state->m_inline18[index]);
 	index -= 0x200;
 	if (index < state->m_count818)
-		return reinterpret_cast<int>(state->m_value81c[index].m_value00);
+		return reinterpret_cast<void *>(state->m_value81c[index].m_value00);
 	index -= state->m_count818;
 	if (index < 0x40)
-		return reinterpret_cast<int>(bfmeCheckGC(state->m_values824[index]));
+		return reinterpret_cast<void *>(bfmeCheckGC(state->m_values824[index]));
 	index -= 0x40;
 	if (index < 0x40)
-		return reinterpret_cast<int>(bfmeCheckGC(state->m_values928[index]));
+		return reinterpret_cast<void *>(bfmeCheckGC(state->m_values928[index]));
 	index -= 0x40;
 	if (index < 0x200)
-		return reinterpret_cast<int>(state->m_valuesA2C[index]);
+		return reinterpret_cast<void *>(state->m_valuesA2C[index]);
 	index -= 0x200;
 	int nodeCount = ((Rva008BD1B0Node *)state->m_node122C)->count();
 	if (index < nodeCount)
-		return reinterpret_cast<int>(((Gen_008BD1D0 *)state->m_node122C)->bfmeAdvance(index));
+		return reinterpret_cast<void *>(((Gen_008BD1D0 *)state->m_node122C)->bfmeAdvance(index));
 
 	int originalNodeCount = ((Rva008BD1B0Node *)state->m_node122C)->count();
 	int remaining = index - originalNodeCount;
@@ -165,13 +170,11 @@ int __cdecl Rva008A1E80(Rva008A1E80State *state, int offset)
 		if (record->m_value00 != 0)
 		{
 			if (remaining == 0)
-				return reinterpret_cast<int>(base[recordIndex].m_value04);
+				return reinterpret_cast<void *>(base[recordIndex].m_value04);
 			--remaining;
 			if (remaining < record->m_count14)
 			{
-				return reinterpret_cast<int>(bfmeCheckGC(
-					*(base[recordIndex].m_values1c - 1 +
-						(record->m_count14 - remaining))));
+				return reinterpret_cast<void *>(bfmeCheckGC(*(base[recordIndex].m_values1c - 1 + (record->m_count14 - remaining))));
 			}
 			remaining -= record->m_count14;
 			--recordsRemaining;
