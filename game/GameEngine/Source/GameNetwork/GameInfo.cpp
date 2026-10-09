@@ -87,25 +87,6 @@ GameSlot::GameSlot()
 	reset();
 }
 
-// ?reset@GameSlot@@UAEXXZ present-unmatched
-void GameSlot::reset()
-{
-	m_state = SLOT_CLOSED; // decent default
-	m_isAccepted = false;
-	m_hasMap = true;
-	m_color = -1;
-	m_startPos = -1;
-	m_playerTemplate = -1;
-	m_teamNumber = -1;
-	m_connectInfo.m_nat = FirewallHelperClass::FIREWALL_TYPE_SIMPLE;
-	m_lastFrameInGame = 0;
-	m_disconnected = FALSE;
-	m_connectInfo.m_port = 0;
-	m_isMuted = FALSE;
-	m_origPlayerTemplate = -1;
-	m_origStartPos = -1;
-	m_origColor = -1;
-}
 
 void GameSlot::saveOffOriginalInfo( void )
 {
@@ -306,15 +287,6 @@ Bool GameSlot::isOpen( void ) const
 // GameInfo ----------------------------------------
 
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/GameInfo_ctor.cpp
-// ??0GameInfo@@QAE@XZ present-unmatched
-GameInfo::GameInfo()
-{
-	for (int i=0; i<MAX_SLOTS; ++i)
-	{
-		m_slot[i] = NULL;
-	}
-	reset();
-}
 
 // ?init@GameInfo@@QAEXXZ present-unmatched
 void GameInfo::init( void )
@@ -339,15 +311,6 @@ void GameInfo::markPlayerAsPreorder(Int index)
 
 
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/GameInfo_clearSlotList_Thunk.cpp
-// ?clearSlotList@GameInfo@@QAEXXZ present-unmatched
-void GameInfo::clearSlotList( void )
-{
-	for (int i=0; i<MAX_SLOTS; ++i)
-	{
-		if (m_slot[i])
-			m_slot[i]->setState(SLOT_CLOSED);
-	}
-}
 
 Int GameInfo::getNumPlayers( void ) const
 {
@@ -490,23 +453,6 @@ Int GameInfo::getLocalSlotNum( void ) const
 }
 
 // byte-exact reconstruction: game/GameEngine/Source/Common/GameInfo_getSlotNum_Thunk.cpp
-// ?getSlotNum@GameInfo@@QBEHVAsciiString@@@Z present-unmatched
-Int GameInfo::getSlotNum( AsciiString userName ) const
-{
-	DEBUG_ASSERTCRASH(m_inGame, ("Looking for game slot while not in game"));
-	if (!m_inGame)
-		return -1;
-
-	UnicodeString uName;
-	uName.translate(userName);
-	for (Int i=0; i<MAX_SLOTS; ++i)
-	{
-		const GameSlot *slot = getConstSlot(i);
-		if (slot->isPlayer( uName ))
-			return i;
-	}
-	return -1;
-}
 
 // ?amIHost@GameInfo@@UBE_NXZ present-unmatched
 Bool GameInfo::amIHost( void ) const
@@ -524,78 +470,7 @@ void GameInfo::setMapContentsMask( Int mask )
 	m_mapMask = mask;
 }
 
-// ?setMapCRC@GameInfo@@QAEXI@Z present-unmatched
-void GameInfo::setMapCRC( UnsignedInt mapCRC )
-{
-	m_mapCRC = mapCRC;
-	if (!TheMapCache)
-		return;
 
-	// check the map cache
-	if (m_inGame && getLocalSlotNum() >= 0)
-	{
-		//TheMapCache->updateCache();
-		AsciiString lowerMap = m_mapName;
-		lowerMap.toLower();
-		//DEBUG_LOG(("GameInfo::setMapCRC - looking for map file \"%s\" in the map cache\n", lowerMap.str()));
-		std::map<AsciiString, MapMetaData>::iterator it = TheMapCache->find(lowerMap);
-		if (it == TheMapCache->end())
-		{
-			/*
-			DEBUG_LOG(("GameInfo::setMapCRC - could not find map file.\n"));
-			it = TheMapCache->begin();
-			while (it != TheMapCache->end())
-			{
-				DEBUG_LOG(("\t\"%s\"\n", it->first.str()));
-				++it;
-			}
-			*/
-			getSlot(getLocalSlotNum())->setMapAvailability(false);
-		}
-		else if (m_mapCRC != it->second.m_CRC)
-		{
-			DEBUG_LOG(("GameInfo::setMapCRC - map CRC's do not match (%X/%X).\n", m_mapCRC, it->second.m_CRC));
-			getSlot(getLocalSlotNum())->setMapAvailability(false);
-		}
-		else
-		{
-			//DEBUG_LOG(("GameInfo::setMapCRC - map CRC's match.\n"));
-			getSlot(getLocalSlotNum())->setMapAvailability(true);
-		}
-	}
-}
-
-// ?setMapSize@GameInfo@@QAEXI@Z present-unmatched
-void GameInfo::setMapSize( UnsignedInt mapSize )
-{
-	m_mapSize = mapSize;
-	if (!TheMapCache)
-		return;
-
-	// check the map cache
-	if (m_inGame && getLocalSlotNum() >= 0)
-	{
-		//TheMapCache->updateCache();
-		AsciiString lowerMap = m_mapName;
-		lowerMap.toLower();
-		std::map<AsciiString, MapMetaData>::iterator it = TheMapCache->find(lowerMap);
-		if (it == TheMapCache->end())
-		{
-			DEBUG_LOG(("GameInfo::setMapSize - could not find map file.\n"));
-			getSlot(getLocalSlotNum())->setMapAvailability(false);
-		}
-		else if (m_mapCRC != it->second.m_CRC)
-		{
-			DEBUG_LOG(("GameInfo::setMapSize - map CRC's do not match.\n"));
-			getSlot(getLocalSlotNum())->setMapAvailability(false);
-		}
-		else
-		{
-			//DEBUG_LOG(("GameInfo::setMapSize - map CRC's match.\n"));
-			getSlot(getLocalSlotNum())->setMapAvailability(true);
-		}
-	}
-}
 
 void GameInfo::setSeed( Int seed )
 {
@@ -673,71 +548,7 @@ void GameInfo::resetStartSpots()
 // adjust the slots in the game to open or closed
 // depending on the players in there now and the number of
 // players the map can hold.
-// ?adjustSlotsForMap@GameInfo@@UAEXXZ present-unmatched
-void GameInfo::adjustSlotsForMap()
-{
-	const MapMetaData *md = TheMapCache->findMap(m_mapName);
-	if (md != NULL)
-	{
-		// get the number of players allowed from the map.
-		Int numPlayers = md->m_numPlayers;
-		Int numPlayerSlots = 0;
 
-		// first get the number of occupied slots.
-		for (Int i = 0; i < MAX_SLOTS; ++i)
-		{
-			GameSlot *tempSlot = getSlot(i);
-			if (tempSlot->isOccupied())
-			{
-				++numPlayerSlots;
-			}
-		}
-
-		// now go through and close the appropriate number of slots.
-		// note that no players are kicked in this process, we leave
-		// that up to the user.
-		for (i = 0; i < MAX_SLOTS; ++i)
-		{
-			// we have room for more players, if this slot is unoccupied, set it to open.
-			GameSlot *slot = getSlot(i);
-			if (numPlayers > numPlayerSlots)
-			{
-				if (!(slot->isOccupied()))
-				{
-					GameSlot newSlot;
-					newSlot.setState(SLOT_OPEN);
-					setSlot(i, newSlot);
-					++numPlayerSlots;
-				}
-			}
-			else
-			{
-				if (!(slot->isOccupied()))
-				{
-					// we don't have any more room, set this slot to closed.
-					GameSlot newSlot;
-					newSlot.setState(SLOT_CLOSED);
-					setSlot(i, newSlot);
-				}
-			}
-		}
-	}
-}
-
-// ?closeOpenSlots@GameInfo@@UAEXXZ present-unmatched
-void GameInfo::closeOpenSlots()
-{
-	for (Int i = 0; i < MAX_SLOTS; ++i)
-	{
-		GameSlot *slot = getSlot(i);
-		if (!(slot->isOccupied()))
-		{
-			GameSlot newSlot;
-			newSlot.setState(SLOT_CLOSED);
-			setSlot(i, newSlot);
-		}
-	}
-}
 
 static Bool isSlotLocalAlly(GameInfo *game, const GameSlot *slot)
 {
