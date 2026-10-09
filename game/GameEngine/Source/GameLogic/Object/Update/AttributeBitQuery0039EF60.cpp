@@ -10,10 +10,16 @@
 struct BitWords0039EF60 {
     unsigned words[6];
 };
-class Gen00043699 {
+// The temporary uses the matched ??0Gen00043699 ctor but its destructor is the
+// matched ??1S4Elem0039EBE0 body; a trivial base class gives the destructor its
+// own ledger identity without disturbing the constructed type's codegen.
+class S4Elem0039EBE0 {
+public:
+    ~S4Elem0039EBE0();
+};
+class Gen00043699 : public S4Elem0039EBE0 {
 public:
     Gen00043699();
-    ~Gen00043699();
     unsigned char prefix[0x60];
     BitWords0039EF60 bits;
     unsigned char tail[0x10];
