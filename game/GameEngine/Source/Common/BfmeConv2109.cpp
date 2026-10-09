@@ -1,9 +1,9 @@
-class BfmeVecFN;
-
-class BfmeOwnerFN
+// The direct retail call is the matched FESL key-index helper at 0x007F76F0.
+struct Rva007F76F0Vector;
+class Rva00802240Host
 {
 public:
-	int bfmeFindFN(BfmeVecFN *v, const char *name);
+	int rva007F76F0(Rva007F76F0Vector *vector, const char *name);
 };
 
 class BfmeVecFN
@@ -34,7 +34,8 @@ void *BfmeHostZL::bfmeLookupZL(const char *name)
 {
 	if (m_bfme38ZL)
 	{
-		int i = ((BfmeOwnerFN *)m_bfme04ZL)->bfmeFindFN((BfmeVecFN *)&m_bfme04ZL->m_bfme2B0ZL, name);
+		int i = ((Rva00802240Host *)m_bfme04ZL)->rva007F76F0(
+			(Rva007F76F0Vector *)&m_bfme04ZL->m_bfme2B0ZL, name);
 
 		if (i != -1)
 			return m_bfme38ZL[i];
