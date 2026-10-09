@@ -60,6 +60,19 @@ private:
 	int m_field2C;
 };
 
+class BfmeCtxGB;
+class BfmeOwnerGB
+{
+public:
+	void bfmeAddGB(BfmeCtxGB *ctx, int unused);
+};
+
+class Gen_001BEC20
+{
+public:
+	int bfmeScale() const;
+};
+
 void Rva001FD120Owner::run(Object *candidate, void *, void *)
 {
 	if (m_field2C != 1)
@@ -77,7 +90,7 @@ void Rva001FD120Owner::run(Object *candidate, void *, void *)
 	if (*(const unsigned char *)((const char *)template_ + 0xC8) & 4)
 		return;
 
-	if (((BFMEObjectLayerQuery *)candidate)->getLayer() != 1)
+	if (((const Gen_001BEC20 *)candidate)->bfmeScale() != 1)
 		return;
 	AIUpdateInterface *ai = candidate->m_ai;
 	if (ai != 0)
@@ -92,5 +105,5 @@ void Rva001FD120Owner::run(Object *candidate, void *, void *)
 			return;
 	}
 
-	((Rva001FD120Dispatch *)this)->dispatch(candidate, 0x41855C29);
+	((BfmeOwnerGB *)this)->bfmeAddGB((BfmeCtxGB *)candidate, 0x41855C29);
 }
