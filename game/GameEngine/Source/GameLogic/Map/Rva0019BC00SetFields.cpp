@@ -16,11 +16,23 @@ private:
 	char *m_data;
 };
 
+class Rva0019BE80TeamRec
+{
+public:
+	void updateTeam(int index);
+};
+
+class BfmeIndexedNodesFM
+{
+public:
+	void bfmePrepareRelease(int index);
+};
+
 void Rva0019BC00Owner::apply(int index, const AsciiString &a, const AsciiString &b)
 {
-	prepare(index);
+	((BfmeIndexedNodesFM *)this)->bfmePrepareRelease(index);
 	Dict *field = (Dict *)(m_data + (index << 4) + 0xC);
 	field->setAsciiString(TheKey_teamOwner.key(), a);
 	field->setAsciiString(TheKey_teamName.key(), b);
-	finish(index);
+	((Rva0019BE80TeamRec *)this)->updateTeam(index);
 }
