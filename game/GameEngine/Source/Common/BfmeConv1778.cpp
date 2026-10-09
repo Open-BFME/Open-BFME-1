@@ -3,11 +3,18 @@ inline void * __cdecl operator new(unsigned int size, void *place) { return plac
 namespace _STL
 {
 
-class __new_alloc
+// Retail 0x0082E540 is the matched node pool refill/mutex body.
+static __forceinline void *vectorSmallAllocate(unsigned int bytes);
+template <bool Threads, int Instance>
+class __node_alloc
 {
-public:
-	static void *allocate(unsigned int size);
+	static void *__cdecl _M_allocate(unsigned int bytes);
+	friend void *vectorSmallAllocate(unsigned int bytes);
 };
+static __forceinline void *vectorSmallAllocate(unsigned int bytes)
+{
+	return __node_alloc<true, 0>::_M_allocate(bytes);
+}
 
 }
 
@@ -164,7 +171,7 @@ void InGameUI::addIdleWorker(BfmeItemDB *item)
 
 	BfmeNodeDB *head = m_idleWorkers[
 		reinterpret_cast<Object *>(item)->getControllingPlayer()->m_playerIndex];
-	BfmeNodeDB *node = (BfmeNodeDB *)_STL::__new_alloc::allocate(0xc);
+	BfmeNodeDB *node = (BfmeNodeDB *)_STL::vectorSmallAllocate(0xc);
 
 	new (&node->m_bfmeValueDB) BfmeValDB(item);
 
