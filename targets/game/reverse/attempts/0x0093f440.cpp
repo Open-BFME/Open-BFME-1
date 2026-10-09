@@ -1,29 +1,17 @@
 // ?Store_GDI_Char@FontCharsClass@@AAEPBVFontCharsClassCharDataStruct@@G@Z
-// partial score=0.1843 date=2026-09-28
+// partial score=0.2829 date=2026-10-09
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug
 // stlport
-// Store_GDI_Char, BFME supersampled glyph rasterizer (retail 0x0093F440, 1329 bytes).
-// Identity: caller 0x009412F0 has Zero Hour Get_Char_Data's shape (ASCII
-// lookup / Grow_Unicode_Array / Unicode lookup, this call on NULL, -1 falls
-// back to AlternateUnicodeFont); the body does ZH Store_GDI_Char's work
-// (ExtTextOutW, GetTextExtentPoint32W, Update_Current_Buffer, CharData insert,
-// CurrPixelOffset += (width + PixelOverlap) * CharHeight) plus a
-// GetGlyphIndicesW missing-glyph check and supersampling.
-// Banked partial (opus-5.5): 1354/1329 bytes, frame 0xAC matches, shape 0.816.
-// Residue: retail does NOT strength-reduce the block_y loop (imul per
-// iteration, inc/cmp counter) while ours turns it into four IVs and a
-// count-down; the x loop header is duplicated where retail jumps in; and
-// ebx/ebp hold SelectObject/this swapped. Tried: while loop, function-scope
-// IVs, unsigned IV, origins in the outer body, /G6, family levers (13 trials).
 #include <windows.h>
 #include "always.h"
 #include "refcount.h"
 #include "wwstring.h"
 #include "vector.h"
 #include "bittype.h"
+#include "vector2i.h"
 #include <string.h>
+#include <algorithm>
 
-// Not declared by the SDK the build uses.
 extern "C" __declspec(dllimport) DWORD WINAPI GetGlyphIndicesW(
 	HDC hdc, LPCWSTR lpstr, int c, LPWORD pgi, DWORD fl);
 #ifndef GGI_MARK_NONEXISTING_GLYPHS
@@ -42,12 +30,9 @@ public:
 	HDC m_dc;
 };
 
-// VA 0x0134AEAC: the shared GDI state the constructor at 0x00940610 creates.
 extern FontCharsClassGdiState *g_fontCharsGdiState0134AEAC;
 #define g_fontCharsGdiState g_fontCharsGdiState0134AEAC
 
-// BFME drops FontCharsClassCharDataStruct's W3DMPO vtable: operator new(0xC)
-// with Value at +0, Width at +2, a zeroed short at +4 and Buffer at +8.
 class FontCharsClassCharDataStruct
 {
 public:
@@ -57,8 +42,6 @@ public:
 	uint16 *Buffer;
 };
 
-// Restores the previous GDI object on scope exit; the EH funclet calls the
-// out-of-line copy at 0x0093C330.
 class FontCharsSelectObjectGuard
 {
 public:
@@ -100,7 +83,7 @@ private:
 	int CharOverhang;
 	int PixelOverlap;
 	float PointSize;
-	int ExtraSetting;	// Initialize_GDI_Font's fourth argument (ctor default 1); this body uses it as the supersampling factor (64/n cell, n*n samples)
+	int ExtraSetting;
 	StringClass GDIFontName;
 	HFONT GDIFont;
 	FontCharsClassCharDataStruct *ASCIICharArray[256];
@@ -116,9 +99,9 @@ FontCharsClass::Store_GDI_Char(WCHAR ch)
 {
 	FontCharsSelectObjectGuard old_font(g_fontCharsGdiState->m_dc, GDIFont);
 
-	WORD glyph_index = 0xFFFF;
-	::GetGlyphIndicesW(g_fontCharsGdiState->m_dc, &ch, 1, &glyph_index, GGI_MARK_NONEXISTING_GLYPHS);
-	if (glyph_index == 0xFFFF) {
+	unsigned int glyph_index = 0xFFFF;
+	::GetGlyphIndicesW(g_fontCharsGdiState->m_dc, &ch, 1, (WORD*)&glyph_index, GGI_MARK_NONEXISTING_GLYPHS);
+	if ((WORD)glyph_index == 0xFFFF) {
 		if (ch < 256) {
 			ASCIICharArray[ch] = (FontCharsClassCharDataStruct *)-1;
 		} else {
@@ -154,8 +137,11 @@ FontCharsClass::Store_GDI_Char(WCHAR ch)
 
 	int blocks_x = (char_width + step - 1) / step;
 	int blocks_y = (char_height + step - 1) / step;
-	for (int block_y = 0; block_y < blocks_y; block_y++) {
-		for (int block_x = 0; block_x < blocks_x; block_x++) {
+	Vector2i block;
+	int &block_x = block.I;
+	int &block_y = block.J;
+	for (block_y = 0; block_y < blocks_y; block_y++) {
+		for (block_x = 0; block_x < blocks_x; block_x++) {
 			RECT rect = { 0, 0, cell.cx, cell.cy };
 			::ExtTextOutW(g_fontCharsGdiState->m_dc, -(block_x * cell.cx), -(block_y * cell.cy),
 				ETO_OPAQUE, &rect, &ch, 1, NULL);
@@ -174,10 +160,7 @@ FontCharsClass::Store_GDI_Char(WCHAR ch)
 			for (int y = y_begin; y < y_end; y++) {
 				uint16 *dest = glyph_p + y * char_width + x_begin;
 				int sy_begin = ExtraSetting * y;
-				int sy_end = ExtraSetting + sy_begin;
-				if (sy_end > char_size.cy) {
-					sy_end = char_size.cy;
-				}
+				int sy_end = _STL::min<int>(ExtraSetting + sy_begin, char_size.cy);
 				for (int x = x_begin; x < x_end; x++) {
 					int sx_begin = ExtraSetting * x;
 					int sx_end = ExtraSetting + sx_begin;
