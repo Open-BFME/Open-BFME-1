@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
-// ControlBar::updateContextMultiSelect, retail 0x004A9620, 655 bytes (jump table follows).
+// ControlBar::updateContextMultiSelect, retail 0x004A9620, 688 bytes including the eight-entry jump table.
 // Twin: Zero Hour ControlBarMultiSelect.cpp; reached from ControlBar::update for context 7.
 
 typedef int Int;
@@ -41,7 +41,7 @@ class GameWindow
 public:
 	int winHide(bool hide);
 	Bool winIsHidden(void);
-	UnsignedInt winSetStatus(UnsignedInt status);
+	UnsignedInt _bfme_winSetStatus(UnsignedInt status);
 	UnsignedInt winClearStatus(UnsignedInt status);
 	Int winEnable(Bool enable);
 };
@@ -52,12 +52,16 @@ class Object;
 class Drawable
 {
 public:
-	Object *getObject(void) { return m_object; }
+	// Existing field view for retail's inlined object access.
 
-private:
 	char m_slice_pad[0xFC];					// retail this+0x00 .. +0xFB, untouched
 	Object *m_object;					// this+0xFC
 };
+
+static __forceinline Object *drawableObject(const Drawable *draw)
+{
+    return draw->m_object;
+}
 
 // BFME list layout: the list holds its sentinel node at +0; nodes link next/prev
 // at +0/+4 and carry the drawable at +8.
@@ -191,8 +195,8 @@ void ControlBar::updateContextMultiSelect(void)
 		draw = it->value;
 
 		// Object::isKindOf(KINDOF_IGNORED_IN_GUI): bit 15 of the final template's mask at +0xCC.
-		obj = draw->getObject();
-		const ThingTemplate *thingTemplate = *(const ThingTemplate *const *)((const char *)draw->getObject() + 4);
+		obj = drawableObject(draw);
+		const ThingTemplate *thingTemplate = *(const ThingTemplate *const *)((const char *)drawableObject(draw) + 4);
 		if (thingTemplate && thingTemplate->m_nextOverride)
 			thingTemplate = (const ThingTemplate *)thingTemplate->m_nextOverride->getFinalOverride();
 		if (*(const UnsignedInt *)((const char *)thingTemplate + 0xCC) & 0x8000)
@@ -238,21 +242,21 @@ void ControlBar::updateContextMultiSelect(void)
 				case 0:
 				case 7:
 					win->winEnable(false);
-					win->winSetStatus(0x80000000);
+					win->_bfme_winSetStatus(0x80000000);
 					if (availability == 7)
-						win->winSetStatus(0x01000000);
+						win->_bfme_winSetStatus(0x01000000);
 					break;
 
 				case 4:
 					color = m_buildUpClockColor;
 					win->winEnable(false);
-					win->winSetStatus(0x00400000);
+					win->_bfme_winSetStatus(0x00400000);
 					break;
 
 				case 5:
 				case 6:
 					win->winEnable(false);
-					win->winSetStatus(0x01000000);
+					win->_bfme_winSetStatus(0x01000000);
 					break;
 
 				default:
