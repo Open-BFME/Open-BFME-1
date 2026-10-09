@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "3a3ef4d2b9f72774061995a1909186b3885a028d33eecbc78829babb17061b6d",
+  "symbol": "?rva00958ba0@@YAXXZ",
+  "score_kind": "measured",
+  "score": 0.987,
+  "source": "// ?rva00958ba0@@YAXXZ\n// partial score=0.987 date=2026-10-09\n// ?rva00958ba0@@YAXXZ\r\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\r\n\r\nstruct _GUID { unsigned char bytes[16]; };\r\ntypedef _GUID GUID;\r\nstruct IUnknown;\r\n\r\nextern void __stdcall _com_issue_errorex(long error, IUnknown *object,\r\n\tconst GUID &iid);\r\nextern GUID g_bfmeIidTSA;\r\n\r\nextern \"C\" __declspec(dllimport) void __stdcall CoUninitialize(void);\r\n\r\nclass BfmeObjECF\r\n{\r\npublic:\r\n\tstruct Vtable\r\n\t{\r\n\t\tvoid *slot00;\r\n\t\tvoid *slot04;\r\n\t\tunsigned long(__stdcall *slot08)(BfmeObjECF *);\r\n\t\tvoid *slot0c;\r\n\t\tvoid *slot10;\r\n\t\tvoid *slot14;\r\n\t\tvoid *slot18;\r\n\t\tvoid *slot1c;\r\n\t\tlong(__stdcall *slot20)(BfmeObjECF *);\r\n\t};\r\n\r\n\tVtable *vtable;\r\n    void shutdown() {\r\n        long result = vtable->slot20(this);\r\n        if (result < 0) _com_issue_errorex(result, (IUnknown *)this, g_bfmeIidTSA);\r\n    }\r\n};\r\n\r\nextern BfmeObjECF *g_bfmeObjECF;\r\nextern int g_bfmeObjECFFlag27C;\r\n// Open BFME 2 donor Code/GameEngine/Source/Common/BfmeConv804.cpp.\r\nvoid rva00958ba0() {\r\n    if (g_bfmeObjECF) {\r\n        g_bfmeObjECF->shutdown();\r\n        if (g_bfmeObjECF) {\r\n            BfmeObjECF *browser = g_bfmeObjECF;\r\n            g_bfmeObjECF = 0;\r\n            browser->vtable->slot08(browser);\r\n        }\r\n        g_bfmeObjECFFlag27C = 0;\r\n        CoUninitialize();\r\n    }\r\n}\r\n"
+}
