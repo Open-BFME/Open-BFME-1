@@ -19,7 +19,7 @@ extern int g_bfmeFourthEB;
 extern int g_bfmeFifthEB;
 int g_bfmeResetZ;
 int g_bfmeBlendSrc;
-int g_bfmeBlendDst;
+int g_bfmeBlendDst = 0x100;
 
 // ?Rva00933B80StencilBlendA@@YAXXZ
 void Rva00933B80StencilBlendA(void)

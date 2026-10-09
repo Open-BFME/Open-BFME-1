@@ -8,7 +8,7 @@
 #include <windows.h>
 
 extern char g_bfme911Flag;
-extern int g_bfme911Val;
+extern int g_bfmeBlendDst;
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
@@ -20,7 +20,7 @@ void bfmeGo911A(void)
 {
 	if (g_bfme911Flag) {
 		if (DX8Wrapper::Has_Stencil())
-			g_bfme911Val = 0x100;
+			g_bfmeBlendDst = 0x100;
 		g_bfme911Flag = 0;
 	}
 }
