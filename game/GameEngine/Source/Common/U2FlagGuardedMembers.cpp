@@ -1,3 +1,16 @@
+struct Rva00841E10Owner;
+struct Rva008427B0Owner;
+namespace _STL {
+ template<class T> class char_traits;
+ class locale;
+ template<class C, class T> class basic_filebuf {
+  void _M_setup_codecvt(const locale &);
+  friend struct ::Rva00841E10Owner;
+  friend struct ::Rva008427B0Owner;
+ };
+ template<class C, class T> class _Underflow { public: static int _M_doit(basic_filebuf<C,T> *); };
+}
+
 // Four neighbouring members from 0x00841540-0x008427B0, all of them a guard
 // over a call and nothing else.
 //
@@ -29,10 +42,9 @@ struct Rva00841540Owner
 {
 	int run();
 };
-extern int Rva0084B210Run(Rva00841540Owner *self);
 int Rva00841540Owner::run()
 {
-	return Rva0084B210Run(this);
+	return _STL::_Underflow<char, _STL::char_traits<char> >::_M_doit(reinterpret_cast<_STL::basic_filebuf<char, _STL::char_traits<char> > *>(this));
 }
 
 struct Rva00841640Stream
@@ -72,13 +84,12 @@ struct Rva00841E10Owner
 	char m_closed;
 
 	void set(int value);
-	void apply(int value);
 };
 
 void Rva00841E10Owner::set(int value)
 {
 	if (!m_busy && !m_locked && !m_closed)
-		apply(value);
+		reinterpret_cast<_STL::basic_filebuf<char, _STL::char_traits<char> > *>(this)->_M_setup_codecvt(*reinterpret_cast<const _STL::locale *>(value));
 }
 
 struct Rva008427B0Owner
@@ -89,11 +100,10 @@ struct Rva008427B0Owner
 	char m_closed;
 
 	void set(int value);
-	void apply(int value);
 };
 
 void Rva008427B0Owner::set(int value)
 {
 	if (!m_busy && !m_locked && !m_closed)
-		apply(value);
+		reinterpret_cast<_STL::basic_filebuf<unsigned short, _STL::char_traits<unsigned short> > *>(this)->_M_setup_codecvt(*reinterpret_cast<const _STL::locale *>(value));
 }
