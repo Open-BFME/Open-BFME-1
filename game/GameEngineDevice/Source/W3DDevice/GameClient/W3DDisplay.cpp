@@ -559,14 +559,8 @@ void W3DDisplay::getDisplayModeDescription(Int modeIndex, Int *xres, Int *yres, 
 }
 
 // byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplaySetGamma.cpp
-// ?setGamma@W3DDisplay@@UAEXMMM_N@Z present-unmatched
-void W3DDisplay::setGamma(Real gamma, Real bright, Real contrast, Bool calibrate)
-{
-	if (m_windowed)
-		return;	//we don't allow gamma to change in window because it would affect desktop.
+// The retail gamma body is emitted by W3DDisplayMode.cpp.
 
-	DX8Wrapper::Set_Gamma(gamma,bright,contrast,calibrate, false);
-}
 
 /*Giant hack in order to keep the game from getting stuck when alt-tabbing*/
 void Reset_D3D_Device(bool active)
@@ -598,56 +592,21 @@ void Reset_D3D_Device(bool active)
 
 /** Set resolution of display */
 //=============================================================================
-// ?setDisplayMode@W3DDisplay@@UAE_NIII_N@Z present-unmatched
-Bool W3DDisplay::setDisplayMode( UnsignedInt xres, UnsignedInt yres, UnsignedInt bitdepth, Bool windowed )
-{
-	// retail 0x008FD1C0 returns a BOOL (see ww3d.cpp), so the test is the value itself
-	if (WW3D::Set_Device_Resolution(xres,yres,bitdepth,windowed,true))
-	{
-		Render2DClass::Set_Screen_Resolution(RectClass(0, 0, xres, yres));
-		Display::setDisplayMode(xres, yres, bitdepth, windowed);
-		return TRUE;
-	}
+// The retail mode body is emitted by W3DDisplayMode.cpp.
 
-	//set back to the original mode.
-	WW3D::Set_Device_Resolution(getWidth(),getHeight(),getBitDepth(),getWindowed(), true);
-	Render2DClass::Set_Screen_Resolution(RectClass(0, 0, getWidth(),getHeight()));
-	Display::setDisplayMode(getWidth(),getHeight(),getBitDepth(), getWindowed());
-	return FALSE;	//did not change to a new mode.
-}
 
 /** Set width of display */
 //=============================================================================
 // byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplaySetWidth.cpp
-// ?setWidth@W3DDisplay@@UAEXI@Z present-unmatched
-void W3DDisplay::setWidth( UnsignedInt width )
-{
-
-	// extending functionality
-	Display::setWidth( width );
-
-	// our 2D renderer will use mapping coords to make (0,0) the upper left
-	// of the screen with (width,height) at the lower right
-	m_2DRender->Set_Coordinate_Range( RectClass( 0, 0, getWidth(), getHeight() ) );
-
-}  // end set width
+// The retail width body is emitted by W3DDisplayMode.cpp.
+  // end set width
 
 // W3DDisplay::setHeight ======================================================
 /** Set height of display */
 //=============================================================================
 // byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplaySetWidth.cpp
-// ?setHeight@W3DDisplay@@UAEXI@Z present-unmatched
-void W3DDisplay::setHeight( UnsignedInt height )
-{
-
-	// extending functionality
-	Display::setHeight( height );
-
-	// our 2D renderer will use mapping coords to make (0,0) the upper left
-	// of the screen with (width,height) at the lower right
-	m_2DRender->Set_Coordinate_Range( RectClass( 0, 0, getWidth(), getHeight() ) );
-
-}  // end set height
+// The retail height body is emitted by W3DDisplayMode.cpp.
+  // end set height
 
 // W3DDisplay::initAssets =====================================================
 /** */

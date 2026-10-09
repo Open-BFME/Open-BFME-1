@@ -130100,12 +130100,8 @@ present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.c
 present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp	reset@W3DDisplay@@UAEXXZ	1
 present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp	setBorderShroudLevel@W3DDisplay@@UAEXE@Z	1
 present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp	setClipRegion@W3DDisplay@@UAEXPAUIRegion2D@@@Z	1
-present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp	setDisplayMode@W3DDisplay@@UAE_NIII_N@Z	1
-present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp	setGamma@W3DDisplay@@UAEXMMM_N@Z	1
-present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp	setHeight@W3DDisplay@@UAEXI@Z	1
 present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp	setShroudLevel@W3DDisplay@@UAEXHHW4CellShroudStatus@@@Z	1
 present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp	setTimeOfDay@W3DDisplay@@UAEXW4TimeOfDay@@@Z	1
-present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp	setWidth@W3DDisplay@@UAEXI@Z	1
 present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp	toggleLetterBox@W3DDisplay@@UAEXXZ	1
 present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp	toggleMovieCapture@W3DDisplay@@UAEXXZ	1
 present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayString.cpp	draw@W3DDisplayString@@	2
