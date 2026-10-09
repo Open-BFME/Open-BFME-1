@@ -1,7 +1,20 @@
+// Callees (tools/callees.py 0x16C930 56): ILT 0x9C41 -> 0x001BE270
+// AssistedTargetingObjectShim::find, ILT 0x28F74 -> 0x001E1770 Rva001E1770ByteField::get.
+class AssistedTargetingObjectShim
+{
+public:
+	void *find(int out);
+};
+
+class Rva001E1770ByteField
+{
+public:
+	unsigned char get(void) const;
+};
+
 class BfmeInnerFX
 {
 public:
-	char bfmeReadyFX(void);
 
 	unsigned char m_bfmeHeadFX[0x68];
 	int m_bfmeValueFX;
@@ -14,17 +27,11 @@ public:
 	BfmeInnerFX *m_bfmeInnerFX;
 };
 
-class BfmeFinderFX
-{
-public:
-	BfmeThingFX *bfmeFindFX(int *out);
-};
-
 class BfmeHolderFX
 {
 public:
 	unsigned char m_bfmeHeadFX[0x10];
-	BfmeFinderFX *m_bfmeFinderFX;
+	AssistedTargetingObjectShim *m_bfmeFinderFX;
 };
 
 class BfmeOwnerFX
@@ -40,12 +47,12 @@ char BfmeOwnerFX::bfmeCheckFX(void)
 {
 	int scratch;
 	int *out = &scratch;
-	BfmeFinderFX *finder = m_bfmeHolderFX->m_bfmeFinderFX;
+	AssistedTargetingObjectShim *finder = m_bfmeHolderFX->m_bfmeFinderFX;
 
-	BfmeThingFX *thing = finder->bfmeFindFX(out);
+	BfmeThingFX *thing = (BfmeThingFX *)finder->find((int)out);
 	if (thing != 0)
 	{
-		if (thing->m_bfmeInnerFX->bfmeReadyFX())
+		if (reinterpret_cast<Rva001E1770ByteField *>(thing->m_bfmeInnerFX)->get())
 			return 1;
 
 		if (thing->m_bfmeInnerFX->m_bfmeValueFX >= 0)
