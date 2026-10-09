@@ -2,7 +2,7 @@
 //
 // Apt main-menu helper at 0x0051D690: clear this+0x25b, optionally restore
 // Shell audio through TheAudio vslot +0x6c, then GameWindowTransitionsHandler
-// setGroup on 0x012F3330 with an AsciiString temporary.  Shell predicates
+// reverse on 0x012F3330 with an AsciiString temporary.  Shell predicates
 // 0x0057F250 checks the shell music handle. 0x0057F130 restores shell music.
 
 #include <wchar.h>
@@ -11,12 +11,18 @@
 class Rva0051D690Shell
 {
 public:
-	bool check();
 	void restore();
 
 private:
 	char m_padding[0x64];
 	unsigned int m_musicHandle;
+};
+
+// ILT 0x0002000E reaches the matched int-returning predicate at 0x0057F250.
+class BfmeThingMC
+{
+public:
+	int bfmeGoMC();
 };
 
 typedef unsigned int AudioHandle;
@@ -119,7 +125,7 @@ public:
 class GameWindowTransitionsHandler
 {
 public:
-	void setGroup(AsciiString name);
+	void reverse(AsciiString name);
 };
 
 // Retail's global at 0x012F4B58 is EA's shell singleton, `Shell *TheShell`
@@ -154,12 +160,12 @@ private:
 void Rva0051D690::apply()
 {
 	m_flag25b = 0;
-	if (TheShell && !((Rva0051D690Shell *)TheShell)->check())
+	if (TheShell && !static_cast<unsigned char>(reinterpret_cast<BfmeThingMC *>(TheShell)->bfmeGoMC()))
 	{
 		reinterpret_cast<Rva0051D690Audio *>(TheAudio)->slot6c(2, 1, 0);
 		((Rva0051D690Shell *)TheShell)->restore();
 	}
-	TheTransitionHandler->setGroup(AsciiString("MainMenuToSubMenu"));
+	TheTransitionHandler->reverse(AsciiString("MainMenuToSubMenu"));
 }
 
 void Rva0051D690Shell::restore()
