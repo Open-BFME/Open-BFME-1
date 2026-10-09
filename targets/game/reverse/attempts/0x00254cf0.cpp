@@ -1,6 +1,9 @@
-// ?d_00254cf0@@YAXXZ
-// partial score=0.33 date=2026-09-25
+// ?onDie@CrushDie@@UAEXPBVDamageInfo@@@Z
+// partial score=1.0 date=2026-10-09
 // cl: /DNDEBUG /MD /EHsc
+// CrushDie die-interface callback; evidence: targets/game/reverse/identity_evidence/00254cf0-crushdie-abi-recovery.md
+
+extern "C" void *__cdecl memset(void *, int, unsigned int);
 
 enum ObjectID
 {
@@ -13,18 +16,7 @@ class DamageInfo;
 
 typedef float Real;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
-
-class Thing
-{
-public:
-	const Coord3D *getUnitDirectionVector2D() const;
-};
+#include "../../../../game/Libraries/Include/Lib/Coord3D.h"
 
 class GeometryInfo
 {
@@ -39,22 +31,13 @@ private:
 	Real m_majorRadius;
 };
 
-class AsciiString
+#include "../../../../game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+template <class T> inline bool StringBase<T>::isEmpty() const
 {
-public:
-	AsciiString();
-	AsciiString(const AsciiString &right);
-	~AsciiString();
-	AsciiString &operator=(const AsciiString &right);
-
-	bool isEmpty() const
-	{
-		return m_text == 0 || *(const unsigned short *)(m_text + 4) == 0;
-	}
-
-private:
-	char *m_text;
-};
+	validate();
+	return m_data == 0 || m_data->length == 0;
+}
 
 class CountedPtr
 {
@@ -73,7 +56,7 @@ public:
 
 	const AsciiString &getEventName() const
 	{
-		return *(const AsciiString *)((const char *)this + 0x14);
+		return m_eventName;
 	}
 
 	void setObjectID(ObjectID objectID);
@@ -114,19 +97,27 @@ private:
 	AsciiString m_tail;
 };
 
-class AudioManager;
-struct AudioManagerVtable;
-typedef void (__fastcall *AddAudioEventCall)(AudioManager *, AudioManagerVtable *,
-	const AudioEventRTS *event);
-
-struct AudioManagerVtable
-{
-	void *slots00_40[17];
-	AddAudioEventCall addAudioEvent;
-};
-
 class AudioManager
 {
+public:
+	virtual void slot00();
+	virtual void slot04();
+	virtual void slot08();
+	virtual void slot0C();
+	virtual void slot10();
+	virtual void slot14();
+	virtual void slot18();
+	virtual void slot1C();
+	virtual void slot20();
+	virtual void slot24();
+	virtual void slot28();
+	virtual void slot2C();
+	virtual void slot30();
+	virtual void slot34();
+	virtual void slot38();
+	virtual void slot3C();
+	virtual void slot40();
+	virtual unsigned int addAudioEvent(const AudioEventRTS *event);
 };
 
 extern AudioManager *TheAudio;
@@ -184,7 +175,6 @@ public:
 class DieModuleInterface
 {
 public:
-	virtual void dieModuleInterfaceAnchor();
 	virtual void onDie(const DamageInfo *damageInfo) = 0;
 };
 
@@ -218,6 +208,9 @@ struct DamageInfoInput
 	int m_sourceID;
 	unsigned char m_gap[4];
 	int m_damageType;
+	unsigned char m_unreconstructed_014[4];
+	int m_deathType;
+	Real m_amount;
 };
 
 class DamageInfo
@@ -245,32 +238,16 @@ public:
 
 class ModelConditionFlags;
 
-class Object : public Thing
-{
-public:
-	BodyModuleInterface *getBodyModule() const
-	{
-		return *(BodyModuleInterface **)((const char *)this + 0x200);
-	}
-
-	ObjectID getID() const
-	{
-		return *(const ObjectID *)((const char *)this + 0x74);
-	}
-
-	const Coord3D *getPosition() const
-	{
-		return (const Coord3D *)((const char *)this + 0x38);
-	}
-
-	const GeometryInfo &getGeometryInfo() const
-	{
-		return *(const GeometryInfo *)((const char *)this + 0xac);
-	}
-
-	void clearAndSetModelConditionFlags(const ModelConditionFlags &clear,
-		const ModelConditionFlags &set);
-};
+#define BFME_HAVE_COORD3D 1
+#define BFME_HAVE_OBJECTID 1
+#define THING_TU_MEMBERS const Coord3D *getUnitDirectionVector2D() const;
+#define OBJECT_TU_MEMBERS \
+    BodyModuleInterface *getBodyModule() const { return m_body; } \
+    ObjectID getID() const { return m_id; } \
+    const Coord3D *getPosition() const { return &m_cachedPos; } \
+    const GeometryInfo &getGeometryInfo() const { return *(const GeometryInfo *)m_geometryInfo; } \
+    void clearAndSetModelConditionFlags(const ModelConditionFlags &, const ModelConditionFlags &);
+#include "../../../../game/GameEngine/Source/GameLogic/Object/object.h"
 
 class BfmeI1166
 {
@@ -290,16 +267,7 @@ class ModelConditionFlags
 public:
 	ModelConditionFlags()
 	{
-		m_words[0] = 0;
-		m_words[1] = 0;
-		m_words[2] = 0;
-		m_words[3] = 0;
-		m_words[4] = 0;
-		m_words[5] = 0;
-		m_words[6] = 0;
-		m_words[7] = 0;
-		m_words[8] = 0;
-		m_words[9] = 0;
+		memset(m_words, 0, sizeof(m_words));
 	}
 
 	void set(unsigned int index, int value)
@@ -310,7 +278,6 @@ public:
 	unsigned int m_words[10];
 };
 
-extern void j_00004048();
 class GameLogic
 {
 public:
@@ -410,7 +377,7 @@ __declspec(noinline) static CrushEnum crushLocationCheck(Object *crusherObject,
 	return retval;
 }
 
-class Rva00254CF0 : public DieModule
+class CrushDie : public DieModule
 {
 public:
 	virtual void onDie(const DamageInfo *damageInfo);
@@ -421,8 +388,8 @@ public:
 	}
 };
 
-// ?onDie@Rva00254CF0@@UAEXPBVDamageInfo@@@Z
-void Rva00254CF0::onDie(const DamageInfo *damageInfo)
+// ?onDie@CrushDie@@UAEXPBVDamageInfo@@@Z
+void CrushDie::onDie(const DamageInfo *damageInfo)
 {
 	if (!isDieApplicable(damageInfo))
 		return;
@@ -443,34 +410,24 @@ void Rva00254CF0::onDie(const DamageInfo *damageInfo)
 			{
 				AudioEventRTS crushSound(getCrushDieModuleData()->m_crushSounds[crushType]);
 				crushSound.setObjectID(getObject()->getID());
-				AudioManagerVtable &audioVtable = **(AudioManagerVtable **)TheAudio;
-				audioVtable.addAudioEvent(TheAudio, &audioVtable, &crushSound);
+				TheAudio->addAudioEvent(&crushSound);
 			}
 		}
 		{
 			Object *me = getObject();
 
 			if (me)
-		{
+			{
 				me->getBodyModule()->setFrontCrushed(
 					crushType == TOTAL_CRUSH || crushType == FRONT_END_CRUSH);
 				me->getBodyModule()->setBackCrushed(
 					crushType == TOTAL_CRUSH || crushType == BACK_END_CRUSH);
 
 				ModelConditionFlags newCrushed;
-				if (crushType == TOTAL_CRUSH || crushType == FRONT_END_CRUSH)
-					newCrushed.set(1, 1);
-				else
-					newCrushed.set(1, 0);
-				if (crushType == TOTAL_CRUSH || crushType == BACK_END_CRUSH)
-					newCrushed.set(2, 1);
-				else
-					newCrushed.set(2, 0);
+				newCrushed.set(1, crushType == TOTAL_CRUSH || crushType == FRONT_END_CRUSH);
+				newCrushed.set(2, crushType == TOTAL_CRUSH || crushType == BACK_END_CRUSH);
 
-				BfmeI1166 clearMask(0, 2, 1);
-
-				me->clearAndSetModelConditionFlags(
-					(const ModelConditionFlags &)clearMask, newCrushed);
+				me->clearAndSetModelConditionFlags((const ModelConditionFlags &)BfmeI1166(0, 2, 1), newCrushed);
 			}
 		}
 	}
