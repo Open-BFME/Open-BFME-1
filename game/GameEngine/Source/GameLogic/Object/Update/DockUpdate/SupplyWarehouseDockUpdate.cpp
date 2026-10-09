@@ -80,16 +80,7 @@ SupplyWarehouseDockUpdateModuleData::SupplyWarehouseDockUpdateModuleData( void )
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyWarehouseDockUpdateConstructor.cpp
-// ??0SupplyWarehouseDockUpdate@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
-SupplyWarehouseDockUpdate::SupplyWarehouseDockUpdate( Thing *thing, const ModuleData* moduleData ) : DockUpdate( thing, moduleData )
-{
-	m_boxesStored = getSupplyWarehouseDockUpdateModuleData()->m_startingBoxesData;
-}
 
-// ??1SupplyWarehouseDockUpdate@@MAE@XZ present-unmatched
-SupplyWarehouseDockUpdate::~SupplyWarehouseDockUpdate()
-{
-}
 
 class SupplyWarehouseCreatedObject
 {
@@ -326,39 +317,6 @@ Bool SupplyWarehouseDockUpdate::action( Object* docker, Object *drone )
 }
 
 // byte-exact reconstruction: game/GameEngine/Source/Common/SupplyWarehouseDockUpdate_setDockCrippledMethodThunk.cpp
-// ?setDockCrippled@SupplyWarehouseDockUpdate@@UAEX_N@Z present-unmatched
-void SupplyWarehouseDockUpdate::setDockCrippled( Bool setting )
-{
-	// At this level, Crippling means I kill any activeDocker between enter and exit.
-	if( setting )
-	{
-		if( m_activeDocker != INVALID_ID )
-		{
-			Object *victim = TheGameLogic->findObjectByID( m_activeDocker );
-			if( victim )
-			{
-				if( m_dockerInside )
-				{
-					if( !victim->isUsingAirborneLocomotor() )
-						victim->kill();
-				}
-				else
-				{
-					// Else, he was between Approach and Enter.  Lucky guy.  Tell him to stop, but then
-					// remind him that he wants to try again later
-					SupplyTruckAIInterface* supplyTruckAI = victim->getAI()->getSupplyTruckAIInterface();
-					if( supplyTruckAI )
-					{
-						victim->getAI()->aiIdle( CMD_FROM_AI );
-						supplyTruckAI->setForceWantingState( TRUE );
-					}
-				}
-			}
-		}
-	}
-
-	DockUpdate::setDockCrippled( setting );
-}
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */
