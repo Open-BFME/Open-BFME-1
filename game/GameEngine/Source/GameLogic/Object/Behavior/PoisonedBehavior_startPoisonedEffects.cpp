@@ -108,17 +108,10 @@ class PoisonedBehavior : public UpdateModule
 	protected:
 	void startPoisonedEffects(const DamageInfo *damageInfo);
 
-	UpdateSleepTime calcSleepTime()
-	{
-		UnsignedInt now = TheGameLogic->getFrame();
-		if (m_poisonOverallStopFrame == 0 || m_poisonOverallStopFrame == now)
-			return UPDATE_SLEEP_FOREVER;
-		typedef UpdateSleepTime (UpdateModule::*Fn)(UnsignedInt, UnsignedInt,
-			UnsignedInt, UnsignedInt);
-		union { void (*fn)(); Fn call; } u = { j_000202a7 };
-		return (this->*u.call)(m_poisonDamageFrame, m_poisonOverallStopFrame,
-			UPDATE_SLEEP_FOREVER, UPDATE_SLEEP_FOREVER);
-	}
+	// PoisonedBehavior::calcSleepTime (retail 0x00202930) is defined once in
+	// PoisonedBehavior.cpp; retail inlines it here, so this TU expands it
+	// through a TU-static helper that emits no external copy.
+	friend UpdateSleepTime calcSleepTimeInline(PoisonedBehavior *self);
 
 private:
 	UnsignedInt m_poisonDamageFrame;
@@ -126,6 +119,18 @@ private:
 	float m_poisonDamageAmount;
 	DeathType m_deathType;
 };
+
+static __forceinline UpdateSleepTime calcSleepTimeInline(PoisonedBehavior *self)
+{
+	UnsignedInt now = TheGameLogic->getFrame();
+	if (self->m_poisonOverallStopFrame == 0 || self->m_poisonOverallStopFrame == now)
+		return UPDATE_SLEEP_FOREVER;
+	typedef UpdateSleepTime (UpdateModule::*Fn)(UnsignedInt, UnsignedInt,
+		UnsignedInt, UnsignedInt);
+	union { void (*fn)(); Fn call; } u = { j_000202a7 };
+	return ((UpdateModule *)self->*u.call)(self->m_poisonDamageFrame,
+		self->m_poisonOverallStopFrame, UPDATE_SLEEP_FOREVER, UPDATE_SLEEP_FOREVER);
+}
 
 // ?startPoisonedEffects@PoisonedBehavior@@IAEXPBVDamageInfo@@@Z
 void PoisonedBehavior::startPoisonedEffects(const DamageInfo *damageInfo)
@@ -150,5 +155,5 @@ void PoisonedBehavior::startPoisonedEffects(const DamageInfo *damageInfo)
 
 	typedef void (UpdateModule::*Fn)(Object *, UpdateSleepTime);
 	union { void (*fn)(); Fn call; } u = { j_000157da };
-	(this->*u.call)(getObject(), calcSleepTime());
+	(this->*u.call)(getObject(), calcSleepTimeInline(this));
 }

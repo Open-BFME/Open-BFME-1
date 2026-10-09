@@ -155,31 +155,8 @@ UpdateSleepTime PoisonedBehavior::calcSleepTime()
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?startPoisonedEffects@PoisonedBehavior@@IAEXPBVDamageInfo@@@Z present-unmatched
-void PoisonedBehavior::startPoisonedEffects( const DamageInfo *damageInfo )
-{
-	const PoisonedBehaviorModuleData* d = getPoisonedBehaviorModuleData();
-	UnsignedInt now = TheGameLogic->getFrame();
-
-	// We are going to take the damage dealt by the original poisoner every so often for a while.
-	m_poisonDamageAmount = damageInfo->out.m_actualDamageDealt;
-	
-	m_poisonOverallStopFrame = now + d->m_poisonDurationData;
-
-	// If we are getting re-poisoned, don't reset the damage counter if running, but do set it if unset
-	if( m_poisonDamageFrame != 0 )
-		m_poisonDamageFrame = min( m_poisonDamageFrame, now + d->m_poisonDamageIntervalData );
-	else
-		m_poisonDamageFrame = now + d->m_poisonDamageIntervalData;
-
-	m_deathType = damageInfo->in.m_deathType;
-
-	Drawable *myDrawable = getObject()->getDrawable();
-	if( myDrawable )
-		myDrawable->setTintStatus( TINT_STATUS_POISONED );// Graham, It has changed, see UpdateDrawable()
-
-	setWakeFrame(getObject(), calcSleepTime());
-}
+// PoisonedBehavior::startPoisonedEffects (retail 0x00202C10) lives in
+// PoisonedBehavior_startPoisonedEffects.cpp.
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
