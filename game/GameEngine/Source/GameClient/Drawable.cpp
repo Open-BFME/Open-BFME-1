@@ -5118,33 +5118,8 @@ void Drawable::xfer( Xfer *xfer )
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/RTS/DrawableLoadPostProcessThunk.cpp
-// ?loadPostProcess@Drawable@@MAEXXZ present-unmatched
-void Drawable::loadPostProcess( void )
-{
-		// if we have an object, we don't need to save/load the pos, just restore it.
-		// if we don't, we'd better save it!
-	if (m_object != NULL)
-	{
-		setTransformMatrix(m_object->getTransformMatrix());
-	}
-	
-	if( m_ambientSoundEnabled && m_ambientSoundEnabledFromScript )
-	{
-    // Do we actually want to start the ambient sound up? 
-    // If it is a permanent sound, then yes; but if it is
-    // a one-shot sound, we don't want to start it even
-    // if it's enabled (because the sound might have finished
-    // playing long ago). This is what the "onlyIfPermanent"
-    // parameter does -- almost like it was added just for
-    // this special case! 
-    startAmbientSound( true );
-	}
-	else
-	{
-		stopAmbientSound();
-	}
-
-}  // end loadPostProcess
+// The retail load post-process body is emitted by DrawableLoadPostProcessThunk.cpp.
+  // end loadPostProcess
 
 //=================================================================================================
 //=================================================================================================
