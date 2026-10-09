@@ -1,34 +1,16 @@
-// ?method@Rva002632F0@@QAEXPBUCoord3DBase@@I@Z
-// partial score=0.3927 date=2026-10-03
+// ?method@Rva002632F0@@QAEXPBUCoord3D@@I@Z
+// partial score=0.6336 date=2026-10-09
 // cl: /DNDEBUG /MD /EHsc /I. /Igame/Libraries/Source/WWVegas/WWLib
+
 // stlport
-// BANK ONLY: complete BFME control-flow draft; unknown receiver views keep RVAs.
-// Retail 2632F0..2636A9 code, 3-byte alignment and eight switch pointers through2636CC.
-// Call binding/layout audit remains required before promotion.
-// Native AsciiString/vector plus canonical Coord3DBase header. This is a complete
-// eight-case BFME draft, not the 444B ZH six-case routine. RET8 at2636A6 and
-// eight-pointer table2636AC..2636CC prove988B including table/alignment.
-// First draft924B/577dif; visible real Coord3DBase assignment984B/592dif;
-// native Coord3D + retail case order968B/617dif; native raw copy984B/660dif.
-// Preferred quality0.3927 still has37 relocation sites displaced. No exact claim.
-// Receiver is secondary this-10: object at-8 and module data at-C; create mode
-// +220 and vector<AsciiString> +224 are witnessed fields, no semantic owner guess.
-// The four literals are directly read from retail. 3DAD60 is a bool thiscall
-// updater(RET4), independently banked exact by n4 in577c598212; do not promote
-// its old declaration-only header or infer a semantic method name from this bank.
-// Dispatch3E360 has competing FXList/ObjectCreationList pins. Upgrade-center and
-// object views below are bank conveniences: canonical-header/binding audit is
-// required before source promotion, even if later masked probes become exact.
 #define _STLP_NO_EXCEPTIONS 1
 #include <new>
 #include "ascii_string.h"
 #pragma auto_inline(off)
 #include <vector>
 #pragma auto_inline(on)
-#include "game/Libraries/Source/WWVegas/WWMath/coord3d.h"
-inline Coord3DBase &Coord3DBase::operator=(const Coord3DBase &that) {
- struct Raw {unsigned x,y,z;}; *(Raw*)this=*(const Raw*)&that;return *this;
-}
+#include "game/Libraries/Include/Lib/Coord3D.h"
+typedef Coord3D Coord3DBase;
 class ObjectCreationList;
 class OCLSpecialPower { public: const ObjectCreationList *findOCL() const; };
 class SpecialPowerModuleInterface { public: void doSpecialPowerAtLocation(const Coord3D*,unsigned); };
@@ -62,41 +44,59 @@ static __forceinline BfmeR1095 *rva001BE3F0(Rva002632F0Object *o) {
 }
 class BfmeSubBUC;
 void bfmeGoBUC(BfmeSubBUC*,void*,void*,void*,void*);
+extern void j_000443e1();
 void j_000443e1(const ObjectCreationList*,Rva002632F0Object*,const Coord3DBase*,const Coord3DBase*,int,int);
 class Rva002632F0 {
 public: void method(const Coord3DBase *loc,unsigned options);
  Rva002632F0Object *object() const {return *(Rva002632F0Object**)((char*)this-8);}
 };
+extern void j_00043464();
+extern void j_0000e4e4();
+extern void j_000170da();
+extern void j_0002F95A();
+// ?GetLengthEstimate2D@@YAMPBUCoord3D@@@Z absent-from-retail
+static __forceinline float GetLengthEstimate2D(const Coord3D *that) {
+ typedef float (Coord3D::*Length)() const;
+ union {void(*f)();Length m;} length;
+ length.f=&j_00043464;
+ return (that->*length.m)();
+}
 void Rva002632F0::method(const Coord3DBase *loc,unsigned options) {
  if(object()->field1a4 || !loc)return;
- ((SpecialPowerModuleInterface*)this)->doSpecialPowerAtLocation((const Coord3D*)loc,options);
+ typedef void (SpecialPowerModuleInterface::*DoSpecialPowerAtLocation)(const Coord3D*,unsigned);
+ union {void(*f)();DoSpecialPowerAtLocation m;} base;
+ base.f=&j_000170da;
+ (((SpecialPowerModuleInterface*)this)->*base.m)(loc,options);
  const ObjectCreationList *ocl=((OCLSpecialPower*)((char*)this-16))->findOCL();
  char *data=*(char**)((char*)this-12);
  Coord3DBase creation;
+ typedef bool (Rva003DAD60::*Adjust003DAD60)(Coord3D*);
+ union {void(*f)();Adjust003DAD60 m;} adjust;adjust.f=&j_0000e4e4;
  switch(*(unsigned*)(data+0x220)) {
  case 0:
   creation=Rva012EF4CC->s34((const Coord3DBase*)((char*)object()+0x38));
-  Rva012EF214->pathfinder->adjust003DAD60((Coord3D*)&creation);
+  (Rva012EF214->pathfinder->*adjust.m)((Coord3D*)&creation);
   bfmeGoBUC((BfmeSubBUC*)ocl,object(),&creation,(void*)loc,0);break;
  case 1:
   creation=Rva012EF4CC->s34(loc);
-  Rva012EF214->pathfinder->adjust003DAD60((Coord3D*)&creation);
+  (Rva012EF214->pathfinder->*adjust.m)((Coord3D*)&creation);
   bfmeGoBUC((BfmeSubBUC*)ocl,object(),&creation,0,0);break;
  case 2:
   creation=Rva012EF4CC->s34(loc);
-  Rva012EF214->pathfinder->adjust003DAD60((Coord3D*)&creation);
+  (Rva012EF214->pathfinder->*adjust.m)((Coord3D*)&creation);
+  bfmeGoBUC((BfmeSubBUC*)ocl,object(),&creation,(void*)loc,0);break;
+ case 6:
+  creation=Rva012EF4CC->s38(loc);creation.z+=300.0f;
+  (Rva012EF214->pathfinder->*adjust.m)((Coord3D*)&creation);
   bfmeGoBUC((BfmeSubBUC*)ocl,object(),&creation,(void*)loc,0);break;
  case 3:
   creation=*loc;bfmeGoBUC((BfmeSubBUC*)ocl,object(),&creation,0,0);break;
  case 4:
   creation.x=loc->x;creation.y=loc->y;creation.z=loc->z;
-  j_000443e1(ocl,object(),&creation,loc,0,0);break;
+  ((void (__cdecl *)(const ObjectCreationList*,Rva002632F0Object*,const Coord3DBase*,const Coord3DBase*,int,int))
+   (void(*)())&j_000443e1)(ocl,object(),&creation,loc,0,0);break;
  case 5:
   creation=*loc;creation.z+=300.0f;bfmeGoBUC((BfmeSubBUC*)ocl,object(),&creation,0,0);break;
- case 6:
-  creation=Rva012EF4CC->s38(loc);creation.z+=300.0f;
-  Rva012EF214->pathfinder->adjust003DAD60((Coord3D*)&creation);
-  bfmeGoBUC((BfmeSubBUC*)ocl,object(),&creation,(void*)loc,0);break;
  case 7: {
   Rva002632F0Waypoint *points[4];
   points[0]=Rva012EF4CC->s7c(AsciiString("TopArmySpawnPoint"));
@@ -107,7 +107,7 @@ void Rva002632F0::method(const Coord3DBase *loc,unsigned options) {
   for(int i=0;i<4;++i) if(points[i]) {
    Coord3DBase delta=points[i]->position;
    delta.x-=loc->x;delta.y-=loc->y;delta.z-=loc->z;
-   float d=((Coord3D*)&delta)->GetLengthEstimate2D();
+   float d=GetLengthEstimate2D(&delta);
    if(d<distance) {distance=d;best=i;}
   }
   if(best>=0) {creation=points[best]->position;creation.z+=300.0f;
@@ -117,7 +117,10 @@ void Rva002632F0::method(const Coord3DBase *loc,unsigned options) {
  }
  std::vector<AsciiString> upgrades(*(const std::vector<AsciiString>*)(data+0x224));
  for(unsigned i=0;i<upgrades.size();++i) {
-  BfmeZ1095B *upgrade=Rva012EF188->rva0010B0E0(upgrades[i]);
+  typedef BfmeZ1095B *(Rva002632F0UpgradeCenter::*Lookup0010B0E0)(const AsciiString&);
+  union {void(*f)();Lookup0010B0E0 m;} lookup;
+  lookup.f=&j_0002F95A;
+  BfmeZ1095B *upgrade=(Rva012EF188->*lookup.m)(upgrades[i]);
   if(!upgrade)break;
   if(upgrade->field04==0)rva001BE3F0(object())->bfmeAdd1095(upgrade,2);
  }
