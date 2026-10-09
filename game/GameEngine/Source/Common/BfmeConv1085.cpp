@@ -15,19 +15,17 @@ class BfmeR1085 : public WindowManager
 {
 };
 
-#define bfmeOpen1085(a) hideAptWindow((int)(a))
-#define bfmeShut1085(a) showAptWindow((int)(a))
 
 // Retail 0x012F19E8 is the game-wide manager pointer EA defines as
 // `WindowManager *g_rva012F19E8WindowManager` in
 // game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU only needs
-// the open/shut calls through it, so the pointee stays the local BfmeR1085 view
+// the hide/show calls through it, so the pointee stays the local BfmeR1085 view
 // and the access is cast at the use.
 extern WindowManager *g_rva012F19E8WindowManager;
 // The global at 0x012B7D80 is EA's `int g_aptPalantirWindow` (defined once in
 // game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptPalantir.cpp). This
-// TU only pushes its address as the open/shut interface argument, so the int is
-// cast at the use and the pushed bytes stay identical.
+// TU only passes its value to hideAptWindow/showAptWindow, so the int is
+// passed as is.
 extern int g_aptPalantirWindow;
 extern unsigned char g_aptPalantirClosed;
 extern unsigned char g_aptPalantirShowRequested;
@@ -36,14 +34,14 @@ extern unsigned char g_aptPalantirCloseRequested;
 void bfmeGo1085A(void)
 {
 	if (g_aptPalantirCloseRequested) {
-		((BfmeR1085 *)g_rva012F19E8WindowManager)->bfmeOpen1085((BfmeX1085 *)g_aptPalantirWindow);
+		((BfmeR1085 *)g_rva012F19E8WindowManager)->hideAptWindow(g_aptPalantirWindow);
 		g_aptPalantirClosed = 1;
 		g_aptPalantirCloseRequested = 0;
 	} else if (!g_aptPalantirClosed) {
 		return;
 	}
 	if (!g_aptPalantirShowRequested) {
-		((BfmeR1085 *)g_rva012F19E8WindowManager)->bfmeShut1085((BfmeX1085 *)g_aptPalantirWindow);
+		((BfmeR1085 *)g_rva012F19E8WindowManager)->showAptWindow(g_aptPalantirWindow);
 		g_aptPalantirShowRequested = 1;
 	}
 }
@@ -61,7 +59,6 @@ class BfmeSub1085 : public AICommandInterface
 {
 };
 
-#define bfmeSet1085(a) aiIdle((CommandSourceType)(a))
 
 struct BfmeF1085
 {
@@ -120,7 +117,6 @@ public:
 	void setSequentialTimer(Object *obj, int frameCount);
 };
 
-#define bfmeUse1085(a, b) setSequentialTimer((Object *)(a), (b))
 
 extern ScriptEngine *TheScriptEngine;
 
@@ -132,9 +128,9 @@ void __stdcall bfmeGo1085B(int a, int b, char c)
 		return;
 	if (!e->m_bfme204)
 		return;
-	e->m_bfme204->m_bfme20.bfmeSet1085(1);
+	e->m_bfme204->m_bfme20.aiIdle((CommandSourceType)1);
 	if (c)
-		TheScriptEngine->bfmeUse1085(e, b * 5);
+		TheScriptEngine->setSequentialTimer((Object *)e, b * 5);
 	else
-		TheScriptEngine->bfmeUse1085(e, b);
+		TheScriptEngine->setSequentialTimer((Object *)e, b);
 }

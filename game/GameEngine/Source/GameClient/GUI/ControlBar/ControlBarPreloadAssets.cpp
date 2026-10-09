@@ -17,7 +17,6 @@ class ControlBarSchemeManager : public Rva00170460AIStateMachine
 {
 };
 
-#define bfme_preloadAssets_impl() Rva00170460AIStateMachine::clear()
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
@@ -33,5 +32,5 @@ private:
 void ControlBar::bfme_preloadAssets_wrapper()
 {
 	if (m_controlBarSchemeManager)
-		m_controlBarSchemeManager->bfme_preloadAssets_impl();
+		m_controlBarSchemeManager->Rva00170460AIStateMachine::clear();
 }

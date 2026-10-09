@@ -18,7 +18,6 @@ class BfmeUnit1013 : public GameWindow
 {
 };
 
-#define bfmeStop1013(n) winEnable((n) != 0)
 
 class BfmeObjENK;
 void bfmeGoENK(BfmeObjENK *o, char v);
@@ -41,7 +40,6 @@ class GenActionSink : public BfmeLevelAN
 {
 };
 
-#define invokeAtLevel(level, name, kind, value, a, b, c, d) bfmeBuildAN((unsigned int)(level), (int)(name), (kind), (int)(value), (a), (b), (c), (d))
 
 // retail ILT 0x00003EA4 -> 0x0056AB50 is the matched
 // Rva0056AB50Owner::getSelectedItemData row
@@ -51,7 +49,6 @@ public:
 	void *getSelectedItemData(void);
 };
 
-#define bfmeTestME() getSelectedItemData()
 
 extern WindowManager *g_rva012F19E8WindowManager;	// retail 0x012F19E8
 
@@ -74,26 +71,26 @@ void BfmeThingME::apply(void)
 	int level = bfmeAptLevel00465CE0((BfmeH1065 *)this);
 	if (m_first)
 	{
-		m_first->bfmeStop1013(1);
+		m_first->winEnable(true);
 		bfmeGoENK((BfmeObjENK *)m_first, 1);
 	}
 	if (m_second)
 	{
-		m_second->bfmeStop1013(1);
+		m_second->winEnable(true);
 		Rva004B7A10SetScrollButtonsHidden((GameWindow *)m_second, true);
 	}
 	if (m_third)
-		m_third->bfmeStop1013(1);
+		m_third->winEnable(true);
 
 	if (m_state == 2)
 	{
-		if (!bfmeTestME())
+		if (!getSelectedItemData())
 		{
-			((GenActionSink *)g_rva012F19E8WindowManager)->invokeAtLevel(level, "disableButton", 1, "Load", 0, 0, 0, 0);
-			((GenActionSink *)g_rva012F19E8WindowManager)->invokeAtLevel(level, "disableButton", 1, "Delete", 0, 0, 0, 0);
+			((GenActionSink *)g_rva012F19E8WindowManager)->bfmeBuildAN((unsigned int)level, (int)"disableButton", 1, (int)"Load", 0, 0, 0, 0);
+			((GenActionSink *)g_rva012F19E8WindowManager)->bfmeBuildAN((unsigned int)level, (int)"disableButton", 1, (int)"Delete", 0, 0, 0, 0);
 			return;
 		}
-		((GenActionSink *)g_rva012F19E8WindowManager)->invokeAtLevel(level, "enableButton", 1, "Load", 0, 0, 0, 0);
-		((GenActionSink *)g_rva012F19E8WindowManager)->invokeAtLevel(level, "enableButton", 1, "Delete", 0, 0, 0, 0);
+		((GenActionSink *)g_rva012F19E8WindowManager)->bfmeBuildAN((unsigned int)level, (int)"enableButton", 1, (int)"Load", 0, 0, 0, 0);
+		((GenActionSink *)g_rva012F19E8WindowManager)->bfmeBuildAN((unsigned int)level, (int)"enableButton", 1, (int)"Delete", 0, 0, 0, 0);
 	}
 }

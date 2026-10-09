@@ -81,12 +81,9 @@ class Gen_000c8a30
 public:
 	int m();
 };
-#define BfmeTeamInstanceLink Gen_000c8a30
-#define _bfme_nextInInstanceList m
 
 // Address-derived COMDAT spelling: other TUs inline different
 // BfmePlayerTeamInstanceIterator::advance bodies.
-#define BfmePlayerTeamInstanceIterator Rva002F48B0TeamInstanceIterator
 
 class Player
 {
@@ -98,10 +95,10 @@ public:
 class BfmePlayerObjectDlinkObject;
 class BfmePlayerTeamView;
 
-class BfmePlayerTeamInstanceIterator
+class Rva002F48B0TeamInstanceIterator
 {
 public:
-	BfmePlayerTeamInstanceIterator(BfmePlayerTeamView *cur) : m_cur(cur) {}
+	Rva002F48B0TeamInstanceIterator(BfmePlayerTeamView *cur) : m_cur(cur) {}
 
 	bool done() const { return m_cur == 0; }
 	BfmePlayerTeamView *cur() const { return m_cur; }
@@ -109,8 +106,8 @@ public:
 	{
 		if (m_cur)
 			m_cur = (BfmePlayerTeamView *)
-				((BfmeTeamInstanceLink *)m_cur)
-					->_bfme_nextInInstanceList();
+				((Gen_000c8a30 *)m_cur)
+					->m();
 	}
 
 private:
@@ -203,7 +200,7 @@ Bool ScriptActions::rva002F48B0(const AsciiString &player,
 		for (BfmePlayerTeamListNode *teamNode = teams->m_head->m_next;
 			teamNode != teams->m_head; teamNode = teamNode->m_next)
 		{
-			BfmePlayerTeamInstanceIterator iter(
+			Rva002F48B0TeamInstanceIterator iter(
 				teamNode->m_prototype->m_teamInstanceList);
 			for (; !iter.done(); iter.advance())
 			{

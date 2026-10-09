@@ -18968,5 +18968,55 @@
   "after_sha256": "902433382ef8f6d22051f1078b2df0cb6809cf283e9e0bdc9dd3118b9c915c2c",
   "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
   "reason": "Owner forwarder pass (group 1): sendFeslMessage was a #define forwarder onto ledger row Rva007F93E0 (0x007F93E0), a worker paraphrase with no witness: ilt_oracle is UNTESTABLE for this FESL library-region body and Zero Hour has no FESL counterpart. The call now spells the ledger name and the forwarder is deleted; bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva0022A1F0A200ConstantGetters.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva0022A1F0A200ConstantGetters.cpp",
+  "old_name": "ModelConditionNames",
+  "new_name": "Rva00EA6918ModelConditionNames",
+  "before_sha256": "2c12d68de6535f354e53d3dc8433ee1f32e7c2fb32ce5cc25b1e32784481c965",
+  "after_sha256": "020c4367f8ba1262d3faf17601f5f5fb7106cb4a6c7166a8316000c731b95cef",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 1): ModelConditionNames was a #define forwarder onto data row Rva00EA6918ModelConditionNames (0x00EA6918). The table is the model-condition name list and the ledger name keeps that meaning, but EA's symbol is unproven (body_guard_baseline records a competing ?ModelConditionNames@@3QBQBDB claim), so the use spells the ledger name; bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/System/ParticleSystem_DoXfer_BFME.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/System/ParticleSystem_DoXfer_BFME.cpp",
+  "old_name": "BfmeParticleSystemXferHandle",
+  "new_name": "Rva0010C3E0",
+  "before_sha256": "7a5b52aadf452876bdb425ad2f0559a062e267a7b9e311140f9a123f040074ef",
+  "after_sha256": "b9f168a4beaaa4ea69c1544016563c7c03cd888d1dda7ced12bc9b4f0e47450b",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 1): BfmeParticleSystemXferHandle was a worker-invented #define forwarder onto ledger row Rva0010C3E0 (0x0010C3E0, cdecl forwarder onto virtual slot 0x90) with no witness; the call spells the ledger name; bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/System/ParticleSystem_DoXfer_BFME.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/System/ParticleSystem_DoXfer_BFME.cpp",
+  "old_name": "bfmeHandOver_0000240A",
+  "new_name": "Rva0010C2E0",
+  "before_sha256": "7a5b52aadf452876bdb425ad2f0559a062e267a7b9e311140f9a123f040074ef",
+  "after_sha256": "b9f168a4beaaa4ea69c1544016563c7c03cd888d1dda7ced12bc9b4f0e47450b",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2): bfmeHandOver_0000240A was a placeholder #define forwarder onto ledger row Rva0010C2E0 (0x0010C2E0); the call spells the ledger name; bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_FireSpecialPowerHelper.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_FireSpecialPowerHelper.cpp",
+  "old_name": "BfmePlayerTeamInstanceIterator",
+  "new_name": "Rva002F48B0TeamInstanceIterator",
+  "before_sha256": "162451ff4df09454f1383bedb64708363313b47a5b7ef2683619a60a95f5a318",
+  "after_sha256": "c1c0cff26fd027c4a0fa5f1f69df3ca71bf83db2e8a176381ec96283f8feda00",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 1): BfmePlayerTeamInstanceIterator was a worker-invented #define forwarder onto the TU-local Rva002F48B0TeamInstanceIterator with no witness; the class is now spelled by its address-derived name; bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_FireSpecialPowerHelper.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_FireSpecialPowerHelper.cpp",
+  "old_name": "BfmeTeamInstanceLink",
+  "new_name": "Gen_000c8a30",
+  "before_sha256": "162451ff4df09454f1383bedb64708363313b47a5b7ef2683619a60a95f5a318",
+  "after_sha256": "c1c0cff26fd027c4a0fa5f1f69df3ca71bf83db2e8a176381ec96283f8feda00",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 1): BfmeTeamInstanceLink was a worker-invented #define forwarder onto ledger type Gen_000c8a30 (getter 0x000C8A30) with no witness; the cast spells the ledger name; bytes unchanged."
  }
 ]

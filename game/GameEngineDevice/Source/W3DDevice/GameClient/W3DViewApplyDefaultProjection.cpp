@@ -12,7 +12,6 @@ class Rva0045B5D0
 public:
 	void run();
 };
-#define helper() ( (Rva0045B5D0 *)this )->run()
 
 class Rva00742DF0Sub
 {
@@ -51,7 +50,7 @@ private:
 
 void W3DView::applyDefaultProjection()
 {
-	helper();
+	( (Rva0045B5D0 *)this )->run();
 	m_sub.apply(0, &m_at28);
 	m_a *= m_scale;
 	m_pitch = 1.0f;

@@ -25,8 +25,6 @@ Xfer & Rva0010C3C0( MidVirtualSlot90Receiver *target, void *item );
 // sibling forwarders in MidVirtualSlot90Forwarders.cpp
 void Rva0010C2E0( MidVirtualSlot90Receiver *target, void *item );
 void Rva0010C3E0( MidVirtualSlot90Receiver *target, void *item );
-#define bfmeHandOver_0000240A( target, item ) Rva0010C2E0( (MidVirtualSlot90Receiver *)( target ), ( item ) )
-#define BfmeParticleSystemXferHandle( xfer, value ) Rva0010C3E0( (MidVirtualSlot90Receiver *)&( xfer ), ( value ) )
 void bfmeHandOver_00001A50( BfmeSeedTarget *target, void *item );
 
 class Particle
@@ -72,8 +70,8 @@ void ParticleSystem::DoXfer( Xfer &xfer )
 	}
 
 	((Y3NotifyTail_005CBB30 *)( (unsigned char *)this + 0x1b4 ))->notifyAll( (void *)&xfer );
-	bfmeHandOver_0000240A( (BfmeSeedTarget *)&xfer, (unsigned char *)this + 0xac );
-	BfmeParticleSystemXferHandle( xfer, (unsigned char *)this + 0xb4 );
+	Rva0010C2E0( (MidVirtualSlot90Receiver *)&xfer, (unsigned char *)this + 0xac );
+	Rva0010C3E0( (MidVirtualSlot90Receiver *)&xfer, (unsigned char *)this + 0xb4 );
 	Rva0010C3C0( (MidVirtualSlot90Receiver *)&xfer, (unsigned char *)this + 0xb8 );
 
 	xfer == *(bool *)( (unsigned char *)this + 0x1a4 );
@@ -104,8 +102,8 @@ void ParticleSystem::DoXfer( Xfer &xfer )
 	xfer == *(Coord3DBase *)( (unsigned char *)this + 0x148 );
 	xfer == *(Coord3DBase *)( (unsigned char *)this + 0x154 );
 	xfer == *(bool *)( (unsigned char *)this + 0x1a9 );
-	bfmeHandOver_0000240A( (BfmeSeedTarget *)&xfer, (unsigned char *)this + 0x16c );
-	bfmeHandOver_0000240A( (BfmeSeedTarget *)&xfer, (unsigned char *)this + 0x17c );
+	Rva0010C2E0( (MidVirtualSlot90Receiver *)&xfer, (unsigned char *)this + 0x16c );
+	Rva0010C2E0( (MidVirtualSlot90Receiver *)&xfer, (unsigned char *)this + 0x17c );
 
 	particleCount = *(unsigned int *)( (unsigned char *)this + 0xa8 );
 	xfer == particleCount;
