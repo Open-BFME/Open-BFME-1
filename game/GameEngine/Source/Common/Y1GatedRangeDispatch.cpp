@@ -83,6 +83,14 @@ public:
 	bool check( int mode );
 };
 
+// These ILT rows are already emitted. Bind their proven thiscall ABIs at the
+// call sites instead of the unimplemented member names previously pinned to
+// them. The element bodies return with ret 4; the second predicate uses ret 8.
+extern void j_00006d20();
+extern void j_00025c75();
+extern void j_00003b1b();
+extern void j_00008e68();
+
 // --- the two argument shapes ------------------------------------------------
 class Y1RangeContext
 {
@@ -151,23 +159,35 @@ bool Gen0003C2E5::test( void *low, void *high )
 
 void Rva003D08F0::run( Y1RangeWrapper *wrapper )
 {
-	bool ok = wrapper->getContext()->m_first.test( m_lowA, m_highA )
-			&& wrapper->getContext()->m_second.test( m_lowB, m_highB );
+	union { void (*raw)(); bool (Gen00008E68::*member)(void *, void *); } second;
+	second.raw = j_00008e68;
+	union { void (*raw)(); bool (Gen00003B1B::*member)(int); } stop;
+	stop.raw = j_00003b1b;
+	union { void (*raw)(); void (Gen00006D20::*member)(Y1RangeWrapper *); } apply;
+	apply.raw = j_00006d20;
 
-	if ( m_gate && ( (Gen00003B1B *)wrapper->getContext() )->check( 0 ) )
+	bool ok = wrapper->getContext()->m_first.test( m_lowA, m_highA )
+			&& (wrapper->getContext()->m_second.*second.member)( m_lowB, m_highB );
+
+	if ( m_gate && ( ( (Gen00003B1B *)wrapper->getContext() )->*stop.member )( 0 ) )
 		return;
 
 	if ( !ok )
 		return;
 
 	for ( Gen00006D20 **it = m_begin; it != m_end; ++it )
-		( *it )->apply( wrapper );
+		( ( *it )->*apply.member )( wrapper );
 }
 
 void Rva003D08F0::run( Y1RangeContext *context )
 {
+	union { void (*raw)(); bool (Gen00008E68::*member)(void *, void *); } second;
+	second.raw = j_00008e68;
+	union { void (*raw)(); void (Gen00025C75::*member)(Y1RangeContext *); } apply;
+	apply.raw = j_00025c75;
+
 	bool ok = context->m_first.test( m_lowA, m_highA )
-			&& context->m_second.test( m_lowB, m_highB );
+			&& (context->m_second.*second.member)( m_lowB, m_highB );
 
 	if ( m_gate && context->m_stop )
 		return;
@@ -176,5 +196,5 @@ void Rva003D08F0::run( Y1RangeContext *context )
 		return;
 
 	for ( Gen00025C75 **it = (Gen00025C75 **)m_begin; it != (Gen00025C75 **)m_end; ++it )
-		( *it )->apply( context );
+		( ( *it )->*apply.member )( context );
 }
