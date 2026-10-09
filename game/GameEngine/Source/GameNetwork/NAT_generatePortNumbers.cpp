@@ -20,13 +20,6 @@ struct GameSlotConnectInfo
 class GameSlot
 {
 public:
-	void setPort(UnsignedShort port)
-	{
-		GameSlotConnectInfo temp = m_connectInfo;
-		temp.m_port = port;
-		m_connectInfo = temp;
-	}
-
 	UnsignedByte m_unreconstructed_00[0x30];
 	GameSlotConnectInfo m_connectInfo;
 };
@@ -61,7 +54,9 @@ void NAT::generatePortNumbers(GameSlot **slotList, Int localSlot)
 				temp.m_port = overridePort;
 				slotList[i]->m_connectInfo = temp;
 			} else {
-				slotList[i]->setPort((UnsignedShort)(i + m_startingPortNumber));
+				GameSlotConnectInfo temp = slotList[i]->m_connectInfo;
+				temp.m_port = (UnsignedShort)(i + m_startingPortNumber);
+				slotList[i]->m_connectInfo = temp;
 			}
 		}
 	}

@@ -603,18 +603,7 @@ Int NAT::getSlotPort(Int slot) {
 	return 0;
 }
 
-// ?generatePortNumbers@NAT@@IAEXPAPAVGameSlot@@H@Z present-unmatched
-void NAT::generatePortNumbers(GameSlot *slotList[], Int localSlot) {
-	for (Int i = 0; i < MAX_SLOTS; ++i) {
-		if (slotList[i] != NULL) {
-			if ((i == localSlot) && (TheWritableGlobalData->m_firewallPortOverride != 0)) {
-				slotList[i]->setPort(TheWritableGlobalData->m_firewallPortOverride);
-			} else {
-				slotList[i]->setPort(i + m_startingPortNumber);
-			}
-		}
-	}
-}
+// NAT::generatePortNumbers: retail body 0x00670A30 lives in NAT_generatePortNumbers.cpp.
 
 // ?getTransport@NAT@@QAEPAVTransport@@XZ present-unmatched
 Transport * NAT::getTransport() {
