@@ -92,21 +92,22 @@ private:
 	std::vector<GeometryShape> m_shapes;
 };
 
-// ?rva0087ED00@GeometryShape@@QBEMXZ: a semantically faithful but not
-// byte-exact model of retail 0x0087ED00 (101 bytes; this compiles to 89),
-// kept visible only so calcBoundingStuff's register allocation matches.
+// ?rva0087ED00@GeometryShape@@QBEMXZ
+// Open BFME 2: Code/GameEngine/Source/Common/System/GeometryInfoCalcBoundingStuff.cpp.
 __declspec(noinline) Real GeometryShape::rva0087ED00() const
 {
-	Real y = m_offset.y;
+	Coord3D offset = {m_offset.x, m_offset.y, m_offset.z};
 	Real result = 0.0f;
 	switch (m_type)
 	{
 		case GEOMETRY_SPHERE:
+			result = sqrt(sqr(offset.x) + sqr(offset.y)) + m_majorRadius;
+			break;
 		case GEOMETRY_CYLINDER:
-			result = sqrt(sqr(m_offset.x) + sqr(y)) + m_majorRadius;
+			result = sqrt(sqr(offset.x) + sqr(offset.y)) + m_majorRadius;
 			break;
 		case GEOMETRY_BOX:
-			result = sqrt(sqr(fabs(m_offset.x) + m_majorRadius) + sqr(fabs(y) + m_minorRadius));
+			result = sqrt(sqr(fabs(offset.x) + m_majorRadius) + sqr(fabs(offset.y) + m_minorRadius));
 			break;
 	}
 	return result;
