@@ -13,19 +13,19 @@ public:
 // call executeHotKey/searchHotKey on it, and the upstream
 // GameClient/HotKey.h header declares `extern HotKeyManager *TheHotKeyManager;`.
 // Only the forward declaration is spelled here: the header's class carries no
-// BFME member, and the call below still names the pinned callee
-// ?bfmeDetach@BfmeTransitionMD@@QAEXPAVGameWindow@@@Z (0x00027895), so the
-// receiver is reinterpreted rather than re-owned.
+// BFME member; the call below (ILT 0x27895) lands on the matched 0x005B3270
+// Rva005B3270Owner::remove, so the receiver is reinterpreted rather than
+// re-owned. ILT 0x10D39 -> 0x00564E10 Rva00564E10 (tools/callees.py 0x588D10 79).
 class HotKeyManager;
 
-class BfmeTransitionMD
+class Rva005B3270Owner
 {
 public:
-	void bfmeDetach(GameWindow *window);
+	void remove(GameWindow *window);
 };
 
 extern HotKeyManager *TheHotKeyManager;
-void bfmeTransitionFinished(void);
+void Rva00564E10(void);
 
 class Gen_00588D10
 {
@@ -48,11 +48,11 @@ void Gen_00588D10::bfmeFinish(void)
 	if (m_bfmeWindow)
 	{
 		if (TheHotKeyManager)
-			((BfmeTransitionMD *)TheHotKeyManager)->bfmeDetach(m_bfmeWindow);
+			((Rva005B3270Owner *)TheHotKeyManager)->remove(m_bfmeWindow);
 		m_bfmeWindow->winEnable(false);
 		m_bfmeWindow->winHide(true);
 	}
 
-	bfmeTransitionFinished();
+	Rva00564E10();
 	m_bfmeActive = false;
 }
