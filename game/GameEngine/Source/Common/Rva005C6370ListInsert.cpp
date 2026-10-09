@@ -17,10 +17,18 @@ struct Rva005C5580Element
 	Real z;
 };
 
+class BfmeNodeZK;
+class BfmeOwnerZK;
+void bfmeJoinZS(BfmeNodeZK *node, BfmeOwnerZK **holder);
+
 namespace _STL
 {
 template <>
-void _Construct(Rva005C5580Element *p, const Rva005C5580Element &val);
+__forceinline void _Construct(Rva005C5580Element *p, const Rva005C5580Element &val)
+{
+	bfmeJoinZS(reinterpret_cast<BfmeNodeZK *>(p),
+		reinterpret_cast<BfmeOwnerZK **>(const_cast<Rva005C5580Element *>(&val)));
+}
 }
 
 void Rva005C6370ListInsertAnchor(
