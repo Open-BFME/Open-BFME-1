@@ -499,35 +499,9 @@ Real GeometryInfo::getFootprintArea() const
 }
 
 //=============================================================================
-// ?GeometryInfo::calcBoundingStuff present-unmatched
-void GeometryInfo::calcBoundingStuff()
-{
-	switch(m_type)
-	{
-		case GEOMETRY_SPHERE:
-		{
-			m_boundingSphereRadius = m_majorRadius;
-			m_boundingCircleRadius = m_majorRadius;
-			break;
-		}
-		case GEOMETRY_CYLINDER:
-		{
-			m_boundingCircleRadius = m_majorRadius;
-
-			m_boundingSphereRadius = m_height*0.5;
-			if (m_boundingSphereRadius < m_majorRadius)
-				m_boundingSphereRadius = m_majorRadius;
-			break;
-		}
-
-		case GEOMETRY_BOX:
-		{
-			m_boundingCircleRadius = sqrt(sqr(m_majorRadius) + sqr(m_minorRadius));
-			m_boundingSphereRadius = sqrt(sqr(m_majorRadius) + sqr(m_minorRadius) + sqr(m_height*0.5));
-			break;
-		}
-	};
-}
+// Retail calcBoundingStuff is defined in GeometryInfoCalcBoundingStuff.cpp.
+// Retain the verified math helper that the removed ZH body alone instantiated.
+template double sqr<double>(double);
 
 #if defined(_DEBUG) || defined(_INTERNAL)
 //=============================================================================
