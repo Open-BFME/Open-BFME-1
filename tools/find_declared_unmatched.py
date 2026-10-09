@@ -119,6 +119,33 @@ def find_defined_functions(text: str):
     return {(cls, method, note) for _line, cls, method, note in iter_definitions(text)}
 
 
+LINE_COMMENT_RE = re.compile(r"//[^\n]*")
+BLOCK_COMMENT_RE = re.compile(r"/\*.*?\*/", re.DOTALL)
+
+
+def _call_statement(lines, index, open_paren):
+    """Whether the `Qualified::name(` at lines[index][open_paren] is a call.
+
+    A call split over lines (`_STL::_Construct(&p->m_value,` / `value);`)
+    has the definition shape and no ';' on its first line. Its balanced
+    argument list is followed by ';', ',', ')' or an operator, never by the
+    '{', ':', qualifier or end of text that follows a definition's
+    parameter list.
+    """
+    text = "\n".join([lines[index][open_paren:]] + lines[index + 1:index + 60])
+    text = BLOCK_COMMENT_RE.sub(" ", LINE_COMMENT_RE.sub(" ", text))
+    depth = 0
+    for position, char in enumerate(text):
+        if char == "(":
+            depth += 1
+        elif char == ")":
+            depth -= 1
+            if depth == 0:
+                rest = text[position + 1:].lstrip()
+                return bool(rest) and rest[0] in ";,)]+-*/%&|^?.<>=!"
+    return False
+
+
 def iter_definitions(text: str):
     """Yield (1-based line, class, method, annotation) per definition, in file order.
 
@@ -150,8 +177,8 @@ def iter_definitions(text: str):
     # body is then read as ordinary code. Fourteen such files made this checker
     # report a class called NAME and fail a commit. Normalise first: the parse
     # below cares about lines, not about how they were terminated.
-    for lineno, line in enumerate(
-            text.replace("\r\n", "\n").replace("\r", "\n").split("\n"), 1):
+    all_lines = text.replace("\r\n", "\n").replace("\r", "\n").split("\n")
+    for lineno, line in enumerate(all_lines, 1):
         stripped = line.strip()
         # A function definition written inside a #define body is not a
         # definition -- it is macro text, and the identifiers in it are
@@ -220,6 +247,12 @@ def iter_definitions(text: str):
             match = None
         else:
             match = definition_pattern.match(line)
+        # A multi-line explicit instantiation (`template T &C::f(` / `...);`)
+        # emits the function; keep reading it as before.
+        if match and not stripped.startswith("template") and _call_statement(all_lines, lineno - 1, match.end() - 1):
+            # An annotation written above a call belongs to that call, not to
+            # the next definition.
+            match = symbol_comment = None
         if match:
             class_name = match.group(1)
             method_name = match.group(2)
