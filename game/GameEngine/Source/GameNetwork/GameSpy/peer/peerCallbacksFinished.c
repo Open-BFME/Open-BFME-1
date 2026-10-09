@@ -21,7 +21,15 @@ typedef struct piConnection
 	void *callbackList;
 } piConnection;
 
-int piIsCallbackFinishedCompareCallback(const void *left, const void *right);
+// Retail's callback search passes this local comparator at RVA 0x0085E1F0.
+// Its +0x14 ID loads distinguish the callback record contract; the unrelated
+// GP transfer comparator has its own retail body at RVA 0x008F3D20.
+static int piIsCallbackFinishedCompareCallback(const void *left, const void *right)
+{
+	const piCallbackData *leftData = (const piCallbackData *)left;
+	const piCallbackData *rightData = (const piCallbackData *)right;
+	return leftData->ID - rightData->ID;
+}
 int ArraySearch(void *array, const void *key,
 	int (*compare)(const void *, const void *), int skip, int startIndex);
 
