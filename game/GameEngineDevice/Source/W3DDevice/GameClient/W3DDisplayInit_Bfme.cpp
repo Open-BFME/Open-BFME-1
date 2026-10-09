@@ -107,7 +107,8 @@ struct Rva006ED5B0Guard {
 // and 0x006EDB15 respectively. Sizes are the preceding allocation immediates.
 class Rva009EB960 { char bytes[12]; public: Rva009EB960(); };
 class Rva006FC970 { char bytes[0x2868]; public: Rva006FC970(); };
-extern Rva009EB960 *Rva0134FAA0;
+// Retail VA 0x0134FAA0 starts zero; init publishes the allocated object here.
+Rva009EB960 *Rva0134FAA0 = 0;
 class Rva00711050 { public: void store(Open2Counted *, int); };
 class FontLibrary { public: GameFont *getFont(AsciiString *, float, bool); };
 // Retail global 0x012F1B38 is defined as `FontLibrary *TheFontLibrary`
