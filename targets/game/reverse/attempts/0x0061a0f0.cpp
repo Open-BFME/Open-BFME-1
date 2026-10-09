@@ -1,9 +1,7 @@
 // ?dispatch@Rva0061A0F0Owner@@QAEXXZ
-// partial score=0.52112676 date=2026-09-25
+// partial score=0.5446 date=2026-10-10
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 #include "ascii_string.h"
-template <> inline int StringBase<char>::getLength() const { return m_data ? m_data->length : 0; }
-inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 class Rva003B3950StringOwner {
 public:
     AsciiString getString();
@@ -16,6 +14,8 @@ public:
     unsigned char byte18;
     char opaque19[0xB];
 };
+struct Rva00619C40Entry;
+void __stdcall dispatchEntry(Rva00619C40Entry *, int, const AsciiString &);
 class Rva0061A0F0Owner {
 public:
     void dispatch();
@@ -31,7 +31,7 @@ void Rva0061A0F0Owner::dispatch()
     bool found = false;
     for (int index = 0; !found; ++index) {
         if (entries[index].byte18 == 0) {
-            dispatchEntry(&entries[index], 1, entries[index].getString());
+            ::dispatchEntry((Rva00619C40Entry *)&entries[index], 1, entries[index].getString());
             found = true;
         }
     }
