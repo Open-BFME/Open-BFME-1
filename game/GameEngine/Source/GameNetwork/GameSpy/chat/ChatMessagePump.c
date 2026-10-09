@@ -451,3 +451,41 @@ void chatEnumUsersA(
 		} while (ciCheckForID(chatHandle, ID));
 	}
 }
+
+/* Keep the ESI-contract blocking caller with static ciThink, as its peers are. */
+int ciGetUserMode(CHAT, const char *, const char *);
+int ciAddUMODEFilter(CHAT, const char *, const char *,
+ void (*)(CHAT, int, const char *, const char *, int, void *), void *);
+
+static __forceinline void Rva008615F0Wait(CHAT chat, int id)
+{
+ do {
+  ciThink(chat, id);
+  msleep(10);
+ } while (ciCheckFiltersForID(chat, id) || ciCheckCallbacksForID(chat, id));
+}
+
+// Separate body at 0x008615F0, bracketed by int3 padding; ret at 0x008616F0.
+void Rva008615F0(CHAT chat, const char *channel, const char *user,
+ void *callback, void *param, int blocking)
+{
+ ciConnection *connection = (ciConnection *)chat;
+ int mode;
+ int id;
+ if (!chat || !connection->connected) return;
+ mode = ciGetUserMode(chat, channel, user);
+ if (mode != -1) {
+  struct { int success; const char *channel; const char *user; int mode; } args;
+  args.success = 1;
+  args.channel = channel;
+  args.user = user;
+  args.mode = mode;
+  id = ciGetNextID(chat);
+  ciAddCallback_(chat, 23, callback, &args, param, id, 0, sizeof(args));
+  if (blocking) Rva008615F0Wait(chat, id);
+ }
+ ciSocketSendf(&connection->socketOpaque, "WHO %s", user);
+ id = ciAddUMODEFilter(chat, user, channel,
+  (void (*)(CHAT, int, const char *, const char *, int, void *))callback, param);
+ if (blocking) Rva008615F0Wait(chat, id);
+}
