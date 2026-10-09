@@ -19,6 +19,11 @@
 // two-byte value while giving VC7.1 the same positive argument-home slot that
 // retail reuses after the vector argument has been copied into EDI.
 
+// The shared overflow helper at 0x003C16A0 is the exception-free
+// specialization verified by both LivingWorld objective setters. Keep this
+// Xfer TU's helper copy under that same STLport policy; explicit Xfer throws
+// still use the compiler's normal exception machinery.
+#define _STLP_NO_EXCEPTIONS 1
 #define BFME_STLP_NODE_ALLOC
 #include <vector>
 
