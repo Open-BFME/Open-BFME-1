@@ -762,24 +762,34 @@ def test_forward_declaration_does_not_preserve_renamed_type():
 
 def test_retained_class_spelling_does_not_hide_unrelated_method_rename():
     before = """
-    class BfmeThingESN { public: int m_bfme74ESN; };
-    class BfmeHostESN {
+    class ThingESN { public: int m_countESN; };
+    class HostESN {
     public:
-        void BfmeThingESN();
+        void ThingESN();
     };
-    void BfmeHostESN::BfmeThingESN() {}
+    void HostESN::ThingESN() {}
     """
     after = """
-    class BfmeThingESN { public: int m_bfme74ESN; };
+    class ThingESN { public: int m_countESN; };
     namespace Rva00256AE0 {
-    class BfmeHostESN {
+    class HostESN {
     public:
         void Rva00256AE0();
     };
-    void BfmeHostESN::Rva00256AE0() {}
+    void HostESN::Rva00256AE0() {}
     }
     """
-    assert ('BfmeThingESN', 'Rva00256AE0') in N.regressions(before, after)
+    assert ('ThingESN', 'Rva00256AE0') in N.regressions(before, after)
+
+
+def test_bfme_placeholder_respelled_to_ledger_name_is_not_a_regression():
+    assert N.regressions('void bfmeThingFoo();', 'void Rva00256AE0();') == []
+    assert N.regressions('struct BfmeConv12 *p;', 'struct Gen_00256ae0 *p;') == []
+
+
+def test_descriptive_name_respelled_to_bfme_placeholder_still_fails():
+    assert ('UpdateWeapon', 'bfmeThing00256AE0') in N.regressions(
+        'void UpdateWeapon();', 'void bfmeThing00256AE0();')
 
 
 @pytest.mark.parametrize('spelling', ['__declspec', '_declspec'])

@@ -43,7 +43,10 @@ IDENT = re.compile(r'^[A-Za-z_]\w*$')
 OPAQUE = re.compile(
     r'^(?:Rva[0-9a-f]{8}|(?:d|dup|j|sub|FUN)_[0-9a-f]{8}|'
     r'Gen_?[0-9a-f]{8}|Gen_t_[0-9a-f]{8}|'
-    r'(?:rva|func|fn)_?[0-9a-f]{8})', re.I)
+    r'(?:rva|func|fn)_?[0-9a-f]{8}|'
+    # Owner ruling 2026-10-09: bfme*/Bfme* names are converter-invented
+    # placeholders, as ilt_oracle, name_lane and ilt_guard already treat them.
+    r'_?bfme)', re.I)
 KEYWORDS = set('void bool char short int long float double signed unsigned const volatile static extern class struct public private protected return true false nullptr typedef typename auto Bool Byte Short UnsignedByte UnsignedShort WideChar Int UnsignedInt UnsignedInt32 Real Int64 UnsignedInt64 _emit __emit'.split())
 ADDRESS = re.compile(r'(?:rva|0x|(?:^|_)\s*)([0-9a-f]{8})(?![0-9a-f])', re.I)
 
