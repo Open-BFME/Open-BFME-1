@@ -1,0 +1,59 @@
+# 0x007DBD40: complete render reconstruction, still partial
+
+The tested revision is c3bd800878be3befe20ca86b9726ddec6cb245f5. The ledger still assigns the 1911-byte extent to the generated dump. This run retains a complete candidate rather than claiming an exact recovery. The final candidate uses the canonical Coord2D header and the four-word postRender interface witnessed by the matched wrapper at 0x00716A50. The original filter class name remains unknown; Rva007DCA80 retains its address identity.
+
+## Boundary and ownership
+
+The retail decode starts at 0x007DBD40 and ends at 0x007DC4B7. All three return paths terminate with RET 16, at offsets +0x50, +0x6F and +0x774. Every direct conditional branch stays inside the extent, and there is no outgoing tail jump or exception registration. The constructor at 0x007DCA80 installs vtable VA 0x01128C5C. Slot 3 contains ILT RVA 0x00003F5D, which routes to this body; the neighbouring init, preRender, set and reset recoveries independently establish the same owner and interface. A different thunk route, an escaping branch or an unaccounted return path would refute these claims.
+
+Raw boundary evidence is in build/target-007dbd40/retail-007dbd40.txt and build/target-007dbd40/checked-007dbd40.log. The complete wrapper and direct helpers were checked separately; their decoded extents and raw inventories are retained beside that log. The checked helpers include the 48-byte array constructor iterator, the three-byte callback, the 117-byte CRT conversion, the current-data getter, the texture accessor, the 1936-byte highlight helper and all four named render-state helpers. No helper extent was enlarged to conceal an outgoing branch. The full decodes and the branch/return inventory are retained in complete-extents.json and complete-extents.log. All non-thunk extents decode completely and have no outgoing direct branch; the six thunk jumps route to the separately decoded bodies. The vtable lookup is retained in vtable-01128c5c.log.
+
+## New evidence and corrections
+
+The preferred old bank omitted the three offset wrap/update blocks at +0x1AE through +0x22B and the stage-0 texture bind at +0x22E. Its primary vertex coordinates, secondary texture coordinates and several texture-stage values did not represent the complete decoded body. It also called a declared __ftol2(double) with stack arguments, whereas the retail conversion consumes ST(0). The candidate restores those operations, uses the native BaseType fast_float2long_round implementation after imported floor, and lets the compiler emit the CRT conversion for the scaled count. Thus the retry tests missing source structure rather than another spelling of the old incomplete x87 path.
+
+The frame table contains thirteen signed dwords, each independently written before FILD consumes the selected value. The draw uses a 44-byte stride and FVF 0x344; the complete stores establish four position floats, one colour dword and six texture-coordinate floats per vertex. The array iterator receives size 44 and count 4 and calls the callback with ECX as the element receiver. The callback only returns that receiver and writes no fields, so it does not independently prove a D3DX type identity. D3DXVECTOR4 is the tested representation used by the matched filter donors and the SDK; no original vertex typedef is claimed.
+
+The instance accesses agree with the neighbouring sources: count at +0x18, saved flag at +0x1C, three float offsets at +0x20/+0x24/+0x28, size at +0x2C, valid flag at +0x30, opaque snapshot at +0x34, textures at +0x40/+0x44 and surfaces at +0x4C/+0x50. The handle at +0x58 is passed by address to the existing texture-accessor pin; its complete callee first dereferences that address, then checks the pointed object's +0x28 virtual and loads the resource through object +0x14 and resource +8. The snapshot remains void* and no STL payload identity, ledger row or pin was added.
+
+The accessor's existing TextureBaseClass pin is a routing name, not independent owner evidence. The canonical header gives TextureBaseClass a vptr at +0, whereas this callee reads [ECX] as an object pointer and the target passes a one-pointer handle address. The already landed texture.cpp implementation itself projects that handle layout through the same pin. The bank explicitly retains this as a routing declaration and does not assert the original accessor owner. Trial 14 tested an address-qualified handle parameter bound with __identifier and one-register __fastcall. Its instruction bytes were unchanged, but the actual relocation acquired an unwanted @4 suffix, so that declaration was rejected and is not banked. The two raw relocation records and object-byte hashes are in 12-portable-object.json, 14-handle-declaration-object.json and handle-object.log. Resolving the original owner is not required to use an address-qualified identity, but a future exact landing must retain a correct routing declaration and prove that it does not assert the upstream texture-object layout.
+
+The COM calls push the receiver explicitly and use the decoded stdcall argument widths. Texture-stage state uses +0x10C; sampler state uses +0x114. The +0x164 call installs FVF 0x344, consistent with slot 89 in the matched DX8Wrapper Draw view. The +0x170 call clears the vertex shader. The old bank's names for these two slots were corrected. The target itself has no constructor unwind map or owned local cleanup; the vertex callback and array iterator have no cleanup path.
+
+## Measurements and rejected hypotheses
+
+All trials and unedited probe outputs are retained in build/target-007dbd40/. The measurements below come directly from those logs; normalized instruction shape is diagnostic and is not byte equality. Missing bytes are charged in the measured banking quality.
+
+| Candidate | Emitted bytes | Non-relocation differences | First difference | Normalized shape | Raw output |
+|---|---:|---:|---|---:|---|
+| Original saved body | 1574 | 1143 | +0xFE | 0.643 | 00-saved-native-probe.log |
+| Restored complete structure | 1901 | 765 | +0x2 | 0.956 | 01-structural-probe.log |
+| Remove obsolete frame padding | 1901 | 739 | +0xFE | 0.956 | 02-unpadded-probe.log |
+| Typed members and compiler listing | 1901 | 739 | +0xFE | 0.956 | 03-typed-listing-probe.log |
+| Scale declaration first | 1901 | 739 | +0xFE | 0.956 | 04-scale-first-probe.log |
+| Origin declarations first | 1901 | 739 | +0xFE | 0.956 | 05-origin-first-probe.log |
+| Chained secondary-coordinate bases | 1888 | 1013 | +0x2 | 0.889 | 06-shared-uv-probe.log |
+| Shared scalar secondary-coordinate bases | 1879 | 983 | +0x2 | 0.911 | 07-scalar-uv-probe.log |
+| Copy v2 before the horizontal adjustment | 1901 | 735 | +0xFE | 0.972 | 08-store-1-probe.log |
+| SDK constructor body instead of initializer list | 1901 | 735 | +0xFE | 0.972 | 09-sdk-subset-probe.log |
+| Explicit display-size reciprocals | 1902 | 982 | +0x2 | 0.907 | 10-reciprocal-probe.log |
+| Bool representation of blend flag | 1901 | 735 | +0xFE | 0.972 | 11-bool-flag-probe.log |
+| Portable headers and corrected interface | 1901 | 735 | +0xFE | 0.972 | 12-portable-probe.log |
+| Colour after each point construction | 1897 | 1007 | +0xFE | 0.904 | 13-color-per-point-probe.log |
+| Address-qualified accessor declaration (rejected relocation) | 1901 | 735 | +0xFE | 0.972 | 14-handle-declaration-probe.log |
+| Plain thirteen-dword table | 1901 | 735 | +0xFE | 0.972 | 15-plain-table-probe.log |
+| Final bank candidate with routing qualification | 1901 | 735 | +0xFE | 0.972 | 16-final-bank-probe.log |
+
+The two declaration-order experiments emitted identical bytes and were not repeated. Explicit shared coordinate values and explicit reciprocals worsened both the frame and byte distance. The SDK constructor form and bool flag representation emitted unchanged instruction shapes. A bounded shape_search trial tested the secondary-coordinate copy order; its choices, sources and raw result are retained in build/target-007dbd40/store-search.log and the directory recorded by store-search-directory.txt. The full SDK header trial did not compile with the repository's Windows shim; that failure is retained and is not a byte measurement. The subsequently tested constructor subset follows the actual SDK field writes. Colour stores beside each point worsened the byte distance. Replacing the enclosing FrameTable plus alias pointer with a plain table emitted identical bytes and did not explain the frameScale slot; the saved alternative sources were checked before this trial, with the declaration inventory retained in table-history.json.
+
+## Remaining mismatch and reopening condition
+
+The final candidate is ten bytes shorter than retail. The first byte mismatch remains +0xFE: frameScale is stored at ESP+0x0C where retail uses ESP+0x20. Later origin, height and D3DX temporary slots form another permutation. The compiler listing in build/target-007dbd40/03-typed.cod records the actual local and temporary allocation. The first normalized structural divergence is retail +0x487 versus candidate +0x484, within the final position stores and secondary-coordinate schedule. The banked body was reproduced independently in build/target-007dbd40/banked-probe.log. The scoped strict byte gate fails; its final raw output is build/target-007dbd40/banked-scoped-gate.log. Its late REL32 diagnostics are produced after layout drift and do not justify changing any pin. The measured banking quality is 0.6049, including the size penalty; 0.972 is only the normalized instruction-shape diagnostic. The final candidate is build/target-007dbd40/16-final-bank.cpp and is banked as targets/game/reverse/attempts/0x007dbd40.cpp. Exactly one verdict row was appended by re_log.py; bank-record.log retains the recording receipt and four-to-five target-row count check.
+
+Reopening needs evidence for a different native temporary or local lifetime that explains those slot permutations and delayed stores, or an independently supported source operation missing from the complete candidate. Another unchanged declaration permutation, FISTP spelling, volatile workaround or reciprocal respelling is not justified. The original class and vertex typedef names remain unproven; their absence does not block an address-qualified recovery. This candidate has not passed the exact byte and relocation gate and must not be collected as a source recovery.
+
+## Collection checks
+
+The final CSV check and bank class check pass, with raw outputs check-csv-final.log and banked-class-gate.log and exit receipts in final-checks.json. The unchanged pin inventory passed pin-consistency.log. The original filename-form name_regression command is unsupported by this tool, which expects Git revisions; its failure is retained in banked-name-regression.log. The same tool's pure file-comparison function reports one change, GlobalData to Rva007DBD40GlobalDataView, in banked-name-regression-files.log. The old bank's private GlobalData definition represented only the observed byte at +0xDBD. The new bank retains the canonical GlobalData forward declaration and isolates that byte in an address-qualified view, without claiming the full canonical layout. An exact correction proposal, including the before/after source hashes and this evidence path, is retained in build/target-007dbd40/name-correction-proposal.json for the coordinator's collection check. Shared correction data and the Git index remain untouched.
+
+The declared-unmatched check on the scratch candidate refuses its zero matched ledger rows; declared-unmatched.log retains that result. This is a banked partial, with the generated ledger row unchanged. No game source, shared header, pin, baseline or policy was changed, so a full source gate was not run. The bank and immutable source JSON preserve the candidate, and all scratch trials remain under build/ for collection.
