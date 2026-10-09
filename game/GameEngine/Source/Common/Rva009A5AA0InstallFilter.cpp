@@ -13,14 +13,16 @@ extern void __cdecl bfmeInstallCpuDispatchTable(void);
 typedef void (__cdecl *Rva009A5AA0TierInstaller)(int);
 
 extern unsigned char g_bfmeClampTable[];	// retail 0x01356EE0; zero point at +256
-extern const unsigned int *g_rva01356AA0;
-extern const unsigned int *g_rva01356A98;
 extern const void *g_rva01356A88;
 extern int g_rva01356940[64];
 extern unsigned short *Rva009C0D10Src;			// retail 0x01356A7C
 // VA 0x01356A9C is a zero-filled 4-byte pointer: this retail body stores
 // int-table addresses, and RVA 0x009C2170 loads it for indexed dword reads.
 int *g_rva01356A9C = 0;
+// VA 0x01356AA0 / 0x01356A98: zero-filled 4-byte table pointers this body
+// publishes; RVA 0x009AF200/0x009AF320 pass them to copyPlane009AF0D0.
+const unsigned int *g_rva01356AA0 = 0;
+const unsigned int *g_rva01356A98 = 0;
 
 extern unsigned short g_rva012D7C58[128];
 extern unsigned short g_rva012D7D58[128];
