@@ -57,6 +57,7 @@ extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
 extern unsigned int g_bfmeHalfBX;
+extern unsigned int g_bfmeFullBX;
 
 // Retail Flush uses the BFME dynamic vertex-buffer access ABI.
 class BoxDynamicVBAccessClass
@@ -149,14 +150,12 @@ struct BfmeSortingRenderStateStruct
 #endif
 
 bool SortingRendererClass::_EnableTriangleDraw=true;
-static unsigned DEFAULT_SORTING_POLY_COUNT = 16384;	// (count * 3) must be less than 65536
-static unsigned DEFAULT_SORTING_VERTEX_COUNT = 32768;	// count must be less than 65536
 
 // ?SetMinVertexBufferSize@SortingRendererClass@@SAXI@Z present-unmatched
 void SortingRendererClass::SetMinVertexBufferSize( unsigned val )
 {
-	DEFAULT_SORTING_VERTEX_COUNT = val;
-	DEFAULT_SORTING_POLY_COUNT = val/2;	//typically have 2:1 vertex:triangle ratio.
+	g_bfmeFullBX = val;
+	g_bfmeHalfBX = val/2;	//typically have 2:1 vertex:triangle ratio.
 }
 
 struct ShortVectorIStruct
@@ -314,8 +313,8 @@ static unsigned temp_index_array_count;
 
 static __forceinline TempIndexStruct* Get_Temp_Index_Array(unsigned count)
 {
-	if (count < DEFAULT_SORTING_POLY_COUNT)
-		count = DEFAULT_SORTING_POLY_COUNT;
+	if (count < g_bfmeHalfBX)
+		count = g_bfmeHalfBX;
 	if (count>temp_index_array_count) {
 		delete[] temp_index_array;
 		temp_index_array=W3DNEWARRAY TempIndexStruct[count];
@@ -548,11 +547,11 @@ void SortingRendererClass::Flush_Sorting_Pool()
 	TempIndexStruct* tis=Get_Temp_Index_Array(overlapping_polygon_count);
 
 	unsigned vertexAllocCount = overlapping_vertex_count;
-	if (DynamicVBAccessClass::Get_Default_Vertex_Count() < DEFAULT_SORTING_VERTEX_COUNT)
-		vertexAllocCount = DEFAULT_SORTING_VERTEX_COUNT;	//make sure that we force the DX8 dynamic vertex buffer to maximum size
+	if (DynamicVBAccessClass::Get_Default_Vertex_Count() < g_bfmeFullBX)
+		vertexAllocCount = g_bfmeFullBX;	//make sure that we force the DX8 dynamic vertex buffer to maximum size
 	if (overlapping_vertex_count > vertexAllocCount)
 		vertexAllocCount = overlapping_vertex_count;
-	WWASSERT(DEFAULT_SORTING_VERTEX_COUNT == 1 || vertexAllocCount <= DEFAULT_SORTING_VERTEX_COUNT);
+	WWASSERT(g_bfmeFullBX == 1 || vertexAllocCount <= g_bfmeFullBX);
 	BoxDynamicVBAccessClass dyn_vb_access(BUFFER_TYPE_DYNAMIC_DX8,5,vertexAllocCount,0);
 	unsigned vertex_array_offset=0;
 	{
@@ -661,11 +660,11 @@ void SortingRendererClass::Flush_Sorting_Pool()
 
 		// The index-buffer fill and draw pass below handles this chunk.
 	unsigned polygonAllocCount = overlapping_polygon_count;
-	if ((unsigned)(DynamicIBAccessClass::Get_Default_Index_Count()/3) < DEFAULT_SORTING_POLY_COUNT)
-		polygonAllocCount = DEFAULT_SORTING_POLY_COUNT;	//make sure that we force the DX8 index buffer to maximum size
+	if ((unsigned)(DynamicIBAccessClass::Get_Default_Index_Count()/3) < g_bfmeHalfBX)
+		polygonAllocCount = g_bfmeHalfBX;	//make sure that we force the DX8 index buffer to maximum size
 	if (overlapping_polygon_count > polygonAllocCount)
 		polygonAllocCount = overlapping_polygon_count;
-	WWASSERT(DEFAULT_SORTING_POLY_COUNT <= 1 || polygonAllocCount <= DEFAULT_SORTING_POLY_COUNT);
+	WWASSERT(g_bfmeHalfBX <= 1 || polygonAllocCount <= g_bfmeHalfBX);
 
 	DynamicIBAccessClass dyn_ib_access(BUFFER_TYPE_DYNAMIC_DX8,polygonAllocCount*3);
 	{
