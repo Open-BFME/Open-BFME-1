@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "9a3b30285b7adc15a784b8537b634f00d99d0a0afbcf75713c6947186d8d8e6c",
+  "symbol": "?d_00892fd0@@YAXXZ",
+  "score_kind": "measured",
+  "score": 0.7042,
+  "source": "// ?d_00892fd0@@YAXXZ\n// partial score=0.7042 date=2026-10-08\n// cl: /O2\n\nstruct Rva00892FD0Entry\n{\n\tint value;\n\tint key;\n};\n\nclass Rva00892FD0Table\n{\npublic:\n\tbool Rva00892FD0(int first, int second);\n\nprivate:\n\tint count;\n\tchar pad4[4];\n\tRva00892FD0Entry *entries;\n};\n\nbool Rva00892FD0Table::Rva00892FD0(int first, int second)\n{\n\tRva00892FD0Entry *cursor = entries;\n\tif (cursor != entries + count)\n\t{\n\t\tdo\n\t\t{\n\t\t\tif (cursor->key != first && cursor->key != second)\n\t\t\t{\n\t\t\t\treturn false;\n\t\t\t}\n\t\t\t++cursor;\n\t\t} while (cursor != entries + count);\n\t}\n\treturn true;\n}\n"
+}

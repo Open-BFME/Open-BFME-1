@@ -1,5 +1,5 @@
 // ?rva00892FD0@Rva00892FD0Table@@QAE_NHH@Z
-// partial score=0.88 date=2026-09-25
+// partial score=0.7042 date=2026-09-25
 // Retail 0x00892FD0, 71 bytes, a carved extent.  A __thiscall predicate over an
 // array of eight-byte entries: count at +0x00, entry array at +0x08, the tested
 // field at +0x04 of each entry, two dword arguments, `mov al,1` / `xor al,al`
