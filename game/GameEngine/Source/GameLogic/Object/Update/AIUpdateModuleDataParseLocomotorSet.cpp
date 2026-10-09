@@ -92,7 +92,7 @@ extern const char *TheLocomotorSetNames[];   // VA012B1220: SET_NORMAL..SET_COMB
     self->m_locomotorTemplates[set].clear();
     for (const char *locoName = ini->getNextToken(); locoName; locoName = ini->getNextTokenOrNull())
     {
-        if (!*locoName || !_stricmp(locoName, "None"))
+        if (!*locoName || !_strcmpi(locoName, "None"))
             continue;
 
         NameKeyType locoKey = NAMEKEY(locoName);

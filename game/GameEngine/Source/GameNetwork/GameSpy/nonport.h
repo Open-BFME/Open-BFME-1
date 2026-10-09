@@ -282,7 +282,7 @@ void SocketShutDown();
 #endif
 
 #if defined(_WIN32) && !defined(UNDER_CE)
-	#define strcasecmp _stricmp
+	#define strcasecmp _strcmpi
 	#define strncasecmp _strnicmp
 #else	
 	char *_strlwr(char *string);

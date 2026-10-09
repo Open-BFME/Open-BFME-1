@@ -21,7 +21,7 @@ typedef int Int;
 typedef float Real;
 
 extern "C" __declspec(dllimport) char *__cdecl strtok( char *s, const char *delim );
-extern "C" __declspec(dllimport) int __cdecl _stricmp( const char *a, const char *b );
+extern "C" __declspec(dllimport) int __cdecl _strcmpi( const char *a, const char *b );
 extern "C" __declspec(dllimport) double __cdecl ceil( double value );
 extern "C" int __cdecl strcmp( const char *left, const char *right );
 
@@ -126,7 +126,7 @@ void INI::parseNonPositiveReal( INI *ini, void *, void *store, const void * )
 
 // Open-BFME7: INI::parseStaticGameLODLevel (retail 0x0007BCF0 105 B; a gap
 // claimed through its exception literal).  Zero Hour's body: the token is
-// matched case-insensitively (imported _stricmp) against the six
+// matched case-insensitively (imported _strcmpi) against the six
 // StaticGameLODNames and its index stored else INIException(3 "invalid
 // GameLODLevel token %s -- expected LOW/MEDIUM/HIGH") is thrown; retail places
 // the matching store after the throw block.
@@ -137,7 +137,7 @@ void INI::parseStaticGameLODLevel( INI *ini, void *, void *store, const void * )
 	const char *tok = ini->getNextToken();
 	for( Int i = 0; i < STATIC_GAME_LOD_COUNT; i++ )
 	{
-		if( _stricmp( tok, StaticGameLODNames[ i ] ) == 0 )
+		if( _strcmpi( tok, StaticGameLODNames[ i ] ) == 0 )
 		{
 			*(StaticGameLODLevel *)store = (StaticGameLODLevel)i;
 			return;

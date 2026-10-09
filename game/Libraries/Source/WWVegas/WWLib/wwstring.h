@@ -575,7 +575,7 @@ StringClass::Compare (const TCHAR *string) const
 inline int
 StringClass::Compare_No_Case (const TCHAR *string) const
 {
-	return _tcsicmp (m_Buffer, string);
+	return _strcmpi (m_Buffer, string);
 }
 
 #endif //__WWSTRING_H

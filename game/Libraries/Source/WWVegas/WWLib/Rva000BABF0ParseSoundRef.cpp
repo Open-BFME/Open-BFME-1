@@ -10,7 +10,7 @@
 // any caller, so the method keeps its address.
 
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement( long volatile *lpAddend );
-extern "C" __declspec(dllimport) int __cdecl _stricmp( const char *a, const char *b );
+extern "C" __declspec(dllimport) int __cdecl _strcmpi( const char *a, const char *b );
 
 template <typename T> class StringBase
 {
@@ -173,7 +173,7 @@ void INI::rva000BABF0( INI *ini, void *, void *store, const void * )
 {
 	const char *token = ini->getNextToken();
 	Rva00087750Ref *handle = (Rva00087750Ref *)store;
-	if( _stricmp( token, "NoSound" ) == 0 )
+	if( _strcmpi( token, "NoSound" ) == 0 )
 	{
 		if( handle->m_ptr )
 		{
