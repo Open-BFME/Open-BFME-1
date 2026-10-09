@@ -36,6 +36,10 @@ class Gen009D8C30
 {
 public:
 	void bfmeSkipPrefixed();
+
+private:
+	unsigned char m_pad[0x14];
+	BfmeByteStream *m_stream;
 };
 
 class Xfer
@@ -207,4 +211,22 @@ void XferLoad::SkipBadBlock(void *snapshot, int size)
 		m_callback(snapshot, m_ctx, m_extra);
 	m_extra = -1;
 	--m_count;
+}
+
+// Ported from Open BFME 2 Code/Libraries/Source/xfer/xfer_load.cpp.
+// ?bfmeSkipPrefixed@Gen009D8C30@@QAEXXZ
+void Gen009D8C30::bfmeSkipPrefixed()
+{
+	unsigned char length;
+	if (m_stream->read(&length, 1) != 1)
+	{
+		XferException error;
+		bfmeFormatText(&error, 1, 0);
+		_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
+	}
+
+	if (length == 0)
+		return;
+	int count = (length == 0xff) ? 4 : length;
+	m_stream->skip(count, 1);
 }

@@ -1,6 +1,6 @@
 // ?run@Rva001F9C60UpdateModule@@QAEXXZ
-// partial score=0.56 date=2026-09-21
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// partial score=1.0 date=2026-10-09
+// cl: /O2 /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
 // Retail 0x001F9C60: an UpdateModule-interface method whose receiver is an
 // interior pointer (multiple-inheritance layout not modelled; sibling
@@ -92,10 +92,10 @@ __forceinline int bfmeGetLength(AsciiStringData *data)
 	return data ? data->m_numCharsAllocated : 0;
 }
 
-class UpdateModuleName
+#include "ascii_string.h"
+
+class UpdateModuleName : public AsciiString
 {
-public:
-	AsciiStringData *m_data;
 };
 
 struct UpdateModuleData
@@ -133,6 +133,7 @@ public:
 	void run(void);
 };
 
+// Ported from Open BFME 2 Code/GameEngine/Source/GameLogic/Object/Behavior/DynamicPortalBehaviourSlots.cpp.
 void Rva001F9C60UpdateModule::run(void)
 {
 	((BfmeBaseTCB *)((char *)this - 0x10))->bfmeInitTCB();
@@ -144,17 +145,15 @@ void Rva001F9C60UpdateModule::run(void)
 	{
 		UpdateModuleData *moduleData = *(UpdateModuleData **)((char *)this - 0xc);
 
-		AsciiStringData *name = moduleData->m_moduleName.m_data;
-
-		if (bfmeGetLength(name) > 0)
+		if (moduleData->m_moduleName.getLength() > 0)
 		{
-			_ReadWriteBarrier();
-			((Rva00414230GuardedVCall *)drawable)->forward((int)bfmeEffectiveStr(name));
+			((Rva00414230GuardedVCall *)drawable)->forward((int)moduleData->m_moduleName.str());
+			TheAI->m_bfmePathCL->bfmeDropOneCL((BfmeHostCL *)obj);
+			((BFMEPathfinderMapShim *)TheAI->m_bfmePathCL)->addObjectToPathfindMap(obj);
+
 		}
 	}
 
-	TheAI->m_bfmePathCL->bfmeDropOneCL((BfmeHostCL *)obj);
-	((BFMEPathfinderMapShim *)TheAI->m_bfmePathCL)->addObjectToPathfindMap(obj);
 
 	((BfmeBaseFW *)((char *)this - 0x10))->bfmeDoFW();
 

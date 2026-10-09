@@ -96,6 +96,17 @@ class Rva006A1C60 {
 		return (this->*u.f)(p,e,v);
 	}
 };
+// Ported from Open BFME 2 Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManager.cpp.
+// ?rva006A1C10@@YA_NAAURva006A1C60Wrapper@@PBURva006A1C60Coord@@PAURva006A1C60Region@@@Z
+static bool rva006A1C10(Rva006A1C60Wrapper &playing, const Rva006A1C60Coord *pos, Rva006A1C60Region *trigger)
+{
+    if (playing.inner->event->ownerType == 2 && TheGameLogic) {
+        Rva006A1C60Object *object = ((Rva006A1C60Logic *)TheGameLogic)->rva0009A510(playing.inner->event->rva000B2280());
+        if (object)
+            return object->rva001BEA90(trigger);
+    }
+    return trigger->rva0018FA20(*(Rva006A1C60Coord *)pos);
+}
 void Rva006A1C60::body(Rva006A1C60Wrapper *w,unsigned char *out) {
 	if(regions.empty()) {
 		*out = w->inner->volume != 1.0f ? 1 : 0;
@@ -145,9 +156,7 @@ void Rva006A1C60::body(Rva006A1C60Wrapper *w,unsigned char *out) {
 		if(regions[i].value<value) {
 			Rva006A1C60Region *region=regions[i].region;
 			bool contains;
-			Rva006A1C60Object *object;
-			if(w->inner->event->ownerType==2 && TheGameLogic && (object=((Rva006A1C60Logic *)TheGameLogic)->rva0009A510(w->inner->event->rva000B2280()))!=0) contains=object->rva001BEA90(region);
-			else contains=region->rva0018FA20(pos);
+			contains=rva006A1C10(*w, &pos, region);
 			if(contains) {
 				value=regions[i].value;
 				best=i;

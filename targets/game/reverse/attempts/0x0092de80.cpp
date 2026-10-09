@@ -1,5 +1,5 @@
 // ?Replace_Texture@MeshClass@@QAEXABVBfmeHandleCX@@0@Z
-// partial score=0.83 date=2026-09-11
+// partial score=1.0 date=2026-10-09
 // cl: /DNDEBUG /MD /O2 /Ob2
 
 class TextureClass
@@ -16,6 +16,8 @@ public:
 class BfmeHandleCX
 {
 public:
+    BfmeHandleCX(const BfmeHandleCX &other) : m_ptr(other.m_ptr) { if (m_ptr) m_ptr->Add_Ref(); }
+    ~BfmeHandleCX() { if (m_ptr) m_ptr->Release_Ref(); }
 	BfmeHandleCX &operator=(const BfmeHandleCX &other)
 	{
 		if (other.m_ptr != 0)
@@ -207,6 +209,7 @@ private:
 };
 
 // ?Replace_Texture@MeshClass@@QAEXABVBfmeHandleCX@@0@Z
+// Ported from Open BFME 2 Code/Libraries/Source/WWVegas/WW3D2/MeshTextureReplacement.cpp.
 void MeshClass::Replace_Texture(const BfmeHandleCX &oldTexture, const BfmeHandleCX &newTexture)
 {
 	if (m_model != 0)
@@ -216,12 +219,7 @@ void MeshClass::Replace_Texture(const BfmeHandleCX &oldTexture, const BfmeHandle
 	MaterialInfoClass *material = getMaterialInfo();
 	for (int index = 0; index < material->Texture_Count(); ++index)
 	{
-		TextureClass *tex_ptr = material->Get_Texture(index).m_ptr;
-		TextureClass *old_ptr = oldTexture.m_ptr;
-		bool matched = old_ptr == tex_ptr;
-		if (tex_ptr != 0)
-			tex_ptr->Release_Ref();
-		if (matched)
+		if (material->Get_Texture(index) == oldTexture)
 		{
 			model->Replace_Texture(oldTexture, newTexture);
 			material->Replace_Texture(index, newTexture);

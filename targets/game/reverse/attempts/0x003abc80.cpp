@@ -1,5 +1,5 @@
 // ??0Rva003B6680@@QAE@ABV0@@Z
-// partial score=0.84 date=2026-09-09
+// partial score=1.0 date=2026-10-09
 // cl: /O2 /EHsc
 // stlport
 
@@ -99,6 +99,7 @@ struct Rva003B6680Vector : public Rva003B6680VectorBase
 
 struct Rva003B6680FalseType
 {
+    Rva003B6680FalseType() {}
 };
 
 __forceinline void Rva003B6680Vector::initialize_from(
@@ -144,6 +145,7 @@ private:
 	bool mD8;
 };
 
+// Ported from Open BFME 2 Code/GameEngine/Source/Common/System/Rva0056616BCopy.cpp.
 Rva003B6680::Rva003B6680(const Rva003B6680 &other)
 	: m04(other.m04)
 	, m08(other.m08)

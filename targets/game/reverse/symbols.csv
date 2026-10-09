@@ -90940,3 +90940,4 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ?d_0078ff40@@YAXXZ,0x0078FF40,legacy address-only compatibility pin for the retired dump name
 ?d_0078fde0@@YAXXZ,0x0078FDE0,legacy address-only alias of ?drawCheckBoxText@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z; game/gen_asm/d_0078b310.asm still names this symbol after the dump conversion
 ?d_00933af0@@YAXXZ,0x00933AF0,legacy address-only compatibility pin; decoded caller 0x0079553A calls complete no-argument ret0 body
+?d_009d8c30@@YAXXZ,0x009D8C30,Legacy address-only compatibility for retired dump referenced by d_009cf9a0.asm; no type identity claim
