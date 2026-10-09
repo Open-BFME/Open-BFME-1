@@ -19,10 +19,9 @@
 // BFMEConnectionManager::attachPlayersFromGameInfo (0x00666610), which calls
 // this immediately after fetching GameInfo's player count, before attaching
 // any per-player slots -- i.e. once, at match-attach time.
-// NetworkUtil.cpp's static UnsignedShort commandID (0x012BA084). No name for
-// it is recorded yet, so the address-derived g_Va012BA084 owns it here;
-// retail .data holds its initial value 0x0064 (100).
-unsigned short g_Va012BA084 = 100;
+// The shared counter at VA 0x012BA084 is owned by NetworkUtil.cpp.
+// Retail .data holds its initial value 0x0064 (100).
+extern unsigned short g_Va012BA084;
 
 void SeedNextCommandIDFromPlayerCount(Int numPlayers)
 {
