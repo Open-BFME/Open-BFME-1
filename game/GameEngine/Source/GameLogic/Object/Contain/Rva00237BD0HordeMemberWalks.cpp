@@ -20,8 +20,12 @@ typedef unsigned int UnsignedInt;
 #include <hash_map>
 #include <list>
 
+class AttributeModifierPoolUpdate;
+class Rva00237BD0HordeContain;
 class Object
 {
+    friend class Rva00237BD0HordeContain;
+    AttributeModifierPoolUpdate *findAttributeModifierPoolUpdate() const;
 };
 
 typedef _STL::list<Object *> BfmeMemberList;
@@ -141,18 +145,23 @@ public:
 	unsigned int m_bfmeFlags90;
 };
 
-struct BfmeBoxAFB
+struct Gen_t_001d2940_p16cd;
+namespace _STL
 {
-	void *first;
-	void *second;
-	void go(void *a, void *b);
+template <class Value, class Alloc> class vector;
+template <> class vector<Gen_t_001d2940_p16cd, allocator<Gen_t_001d2940_p16cd> >
+{
+public:
+    Gen_t_001d2940_p16cd *erase(Gen_t_001d2940_p16cd *, Gen_t_001d2940_p16cd *);
+    Gen_t_001d2940_p16cd *first;
+    Gen_t_001d2940_p16cd *second;
 };
+}
 
 class BfmeThingAFB
 {
 public:
 	void bfmeGoAFB();
-	BfmeBoxAFB *bfmeGetBoxAFB();
 };
 
 class Rva00237BD0HordeContain
@@ -311,10 +320,11 @@ void Rva00237BD0HordeContain::refreshMemberAttributeModifiers()
 			(_STL::_Rb_tree_node_base *)entry);
 	}
 
-	BfmeBoxAFB *helper = (*(BfmeThingAFB **)((char *)this - 0xdc))->bfmeGetBoxAFB();
+	AttributeModifierPoolUpdate *helper = (*(Object **)((char *)this - 0xdc))->findAttributeModifierPoolUpdate();
 	if (helper)
 	{
-		BfmeBoxAFB *pair = reinterpret_cast<BfmeBoxAFB *>(reinterpret_cast<char *>(helper) + 0x20);
-		pair->go(pair->first, pair->second);
+		_STL::vector<Gen_t_001d2940_p16cd, _STL::allocator<Gen_t_001d2940_p16cd> > *pair =
+            reinterpret_cast<_STL::vector<Gen_t_001d2940_p16cd, _STL::allocator<Gen_t_001d2940_p16cd> > *>(reinterpret_cast<char *>(helper) + 0x20);
+		pair->erase(pair->first, pair->second);
 	}
 }
