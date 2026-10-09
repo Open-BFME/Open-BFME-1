@@ -27,26 +27,36 @@ public:
     BfmeDelayedLuaEvent events[3];
 };
 
+// Retail 0x00087A80 is the ledger's Overridable::getFinalOverride const.
+class Overridable {
+public:
+    const Overridable *getFinalOverride() const;
+};
 class ThingTemplate {
 public:
-    ThingTemplate *getFinalOverride();
     char pad0[4];
     ThingTemplate *overrideTemplate;
 };
 class Object {
 public:
-    ThingTemplate *getTemplate() const {
-        ThingTemplate *t = thingTemplate;
-        if (t && t->overrideTemplate)
-            t = t->overrideTemplate->getFinalOverride();
-        return t;
-    }
     char pad0[4];
     ThingTemplate *thingTemplate;
     char pad8[0x8C];
     unsigned status;
 };
 class Drawable;
+// Object::getTemplate inlined into the body. A TU-static helper keeps the
+// inline expansion without emitting this partial layout's getTemplate COMDAT,
+// which differs from the other TUs' copies (the real Object header cannot be
+// adopted by this partial-layout TU).
+static __forceinline ThingTemplate *objectTemplate(const Object *obj)
+{
+    ThingTemplate *t = obj->thingTemplate;
+    if (t && t->overrideTemplate)
+        t = (ThingTemplate *)reinterpret_cast<const Overridable *>(
+            t->overrideTemplate)->getFinalOverride();
+    return t;
+}
 enum DrawableStatus { DRAWABLE_STATUS_NONE = 0, DRAWABLE_STATUS_UNK20 = 0x20 };
 class BFMEThingFactory {
 public:
@@ -60,7 +70,7 @@ public:
 };
 class LuaScriptEngine;
 extern LuaScriptEngine *TheLuaScriptEngine;
-int GetGameLogicRandomValue(int, int, const char *, int);
+int GetGameLogicRandomValue(int, int, char *, int);
 class GameLogic {
 public:
     void sendObjectCreated(Object *);
@@ -70,12 +80,12 @@ public:
 void GameLogic::sendObjectCreated(Object *obj)
 {
     int randomValue = GetGameLogicRandomValue(1, 999,
-        "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\System\\GameLogic.cpp", 0x1697);
+        (char *)"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\System\\GameLogic.cpp", 0x1697);
     DrawableStatus status = DRAWABLE_STATUS_NONE;
     if (obj->status & 0x400000)
         status = DRAWABLE_STATUS_UNK20;
     Drawable *draw = reinterpret_cast<BFMEThingFactory *>(TheThingFactory)->newDrawable(
-        obj->getTemplate(), status, randomValue);
+        objectTemplate(obj), status, randomValue);
     bindObjectAndDrawable(obj, draw);
     DelayedLuaEventList events;
     reinterpret_cast<BfmeOwnerBR *>(TheLuaScriptEngine)->bfmeGo939B(12, obj, &events);
