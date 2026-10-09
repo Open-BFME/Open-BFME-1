@@ -146,3 +146,29 @@ def test_fixture_requires_wine_on_non_windows(monkeypatch, tmp_path):
     monkeypatch.setattr(shutil, "which", lambda name: None)
     with pytest.raises(AssertionError, match="wine not found"):
         fixture_commands(tmp_path, tmp_path, windows=False)
+
+
+def _missing_run(monkeypatch, tmp_path, argv):
+    rows = [{"name": "$L100", "target_rva": "0x00100000", "source": "game/a.cpp", "notes": ""},
+            {"name": "?f@@YAXXZ", "target_rva": "0x00100100", "source": "game/a.cpp", "notes": ""}]
+    monkeypatch.setattr(build, "load_function_rows", lambda: rows)
+    monkeypatch.setattr(build, "row_object", lambda r: tmp_path / "absent.obj")
+    monkeypatch.setattr(build, "ledger_object_symbol", lambda r: r["name"])
+    monkeypatch.setattr(ep, "Retail", lambda: type("R", (), {"action_index": lambda self: {}})())
+    applied = []
+    monkeypatch.setattr(ep, "apply_fixes", lambda fixes, model: applied.append(fixes))
+    code = ep.main([*argv, "--out", str(tmp_path / "out")])
+    return code, applied
+
+
+def test_a_missing_object_fails_and_names_the_source_to_build(monkeypatch, tmp_path, capsys):
+    code, _ = _missing_run(monkeypatch, tmp_path, [])
+    out = capsys.readouterr().out
+    assert code == 2
+    assert "./build.sh game/a.cpp" in out
+
+
+def test_fix_writes_nothing_while_an_object_is_missing(monkeypatch, tmp_path, capsys):
+    code, applied = _missing_run(monkeypatch, tmp_path, ["--fix", "--model", "m"])
+    assert code == 2 and applied == []
+    assert "--fix refused" in capsys.readouterr().out

@@ -27,8 +27,12 @@ the same relocation targets (what the byte gate alone cannot separate).
   python3 tools/eh_state_pins.py [--commit SHA | --source FILE ...] [--objects-root DIR]
       [--fix --model M]      # repoint wrong/stale rows' labels (apply_fixes)
 
-Objects come from build/match (build.py's output); a row whose object is
-missing is `unprovable (no object)`, never skipped. Report: build/eh_state_pins/.
+Objects come from build/match (build.py's output). A row whose object is
+missing is `missing`, never skipped and never a pass: the run names the sources
+to build first (./build.sh <file>), exits 2 (before 1 for wrong/stale/split),
+and `--fix` writes nothing while any in-scope object is missing.
+Exit: 0 all clean, 1 wrong/stale/split pins, 2 objects missing.
+Report: build/eh_state_pins/.
 """
 import argparse
 import collections
@@ -332,7 +336,7 @@ def main(argv=None):
         obj, eh_tables = cache[obj_path]
         label = label_of(row)
         if obj is None:
-            verdict = {"verdict": "unprovable", "why": "no object", "ambiguous": None}
+            verdict = {"verdict": "missing", "why": f"no object {obj_path}", "ambiguous": None}
         else:
             verdict = judge(obj, eh_tables, row, label)
         if verdict["verdict"] == "unprovable":
@@ -352,6 +356,15 @@ def main(argv=None):
         if r["verdict"] in ("wrong", "split") or (r["verdict"] == "stale" and r.get("ambiguous")):
             print(f"  {r['verdict']}: {r['rva']} {r['name']} pinned {r['label']} -> "
                   f"{r.get('correct') or r.get('labels')} ({r['source']})")
+    missing = sorted({r["source"] for r in results if r["verdict"] == "missing"})
+    if missing:
+        print(f"FAIL: {len(missing)} source(s) have no object, so their funclet pins are unchecked. "
+              "Build them first:")
+        for source in missing:
+            print(f"  ./build.sh {source}")
+        if args.fix:
+            print("--fix refused: nothing written while an in-scope object is missing")
+        return 2
     if args.fix:
         fixes = {}
         for r in results:
