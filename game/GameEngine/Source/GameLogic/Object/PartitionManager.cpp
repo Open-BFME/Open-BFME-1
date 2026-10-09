@@ -4743,62 +4743,6 @@ Real PartitionManager::getGroundOrStructureHeight(Real posx, Real posy)
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpProcess.c
-// ?getMostValuableLocation@PartitionManager@@QAEXHIW4ValueOrThreat@@PAUCoord3D@@@Z present-unmatched
-void PartitionManager::getMostValuableLocation( Int playerIndex, UnsignedInt whichPlayerTypes, ValueOrThreat valType, Coord3D *outLocation )
-{
-	if (!outLocation)
-		return;
-
-	PlayerMaskType playerMask = ThePlayerList->getPlayersWithRelationship(playerIndex, whichPlayerTypes);
-	if (playerMask == 0)
-		return;
-
-	Int cellCount = m_cellCountX * m_cellCountY;
-	
-	PlayerMaskType allPlayerMasks[MAX_PLAYER_COUNT] = { 0 };
-	Int totalPlayerCount = ThePlayerList->getPlayerCount();
-	
-	Int i;
-	for (i = 0; i < totalPlayerCount; ++i) {
-		Player *player = ThePlayerList->getNthPlayer(i);
-		if (!player) {
-			continue;
-		}
-
-		allPlayerMasks[i] = player->getPlayerMask();
-	}
-
-	Int greatestValueCell = -1;
-	Int maxCellValue = -1;
-	for (i = 0; i < cellCount; ++i) {
-		Int cellValue = 0;
-
-		for (Int player = 0; player < MAX_PLAYER_COUNT; ++player) {
-			if (BitTest(allPlayerMasks[player], playerMask)) {
-				if (valType == VOT_CashValue) {
-					cellValue += m_cells[i].getCashValue(player);
-				} else {
-					cellValue += m_cells[i].getThreatValue(player);
-				}
-			}
-		}
-
-		if (cellValue > maxCellValue) {
-			maxCellValue = cellValue;
-			greatestValueCell = i;
-		}
-	}
-
-	if (greatestValueCell == -1 || maxCellValue == -1) {
-		DEBUG_CRASH(("PartitionManager::getMostValuableLocation: jkmcd"));
-		return;
-	}
-
-	outLocation->set(m_cells[greatestValueCell].getCellX() * TheGlobalData->m_partitionCellSize,
-									 m_cells[greatestValueCell].getCellY() * TheGlobalData->m_partitionCellSize,
-									 0
-									);
-}
 
 //-------------------------------------------------------------------------------------------------
 // ?getNearestGroupWithValue@PartitionManager@@QAEXHIW4ValueOrThreat@@PBUCoord3D@@H_NPAU3@@Z present-unmatched
@@ -4932,64 +4876,8 @@ void PartitionManager::restoreFoggedCells(const ShroudStatusStoreRestore &inPart
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// ??0PartitionFilterRejectBuildings@@QAE@PBVObject@@@Z present-unmatched
-PartitionFilterRejectBuildings::PartitionFilterRejectBuildings(const Object *o) : 
-	m_self(o),
-	m_acquireEnemies(false)
-{ 
-	// if I am a computer-controlled opponent, auto-aquire enemy buildings
-	if (m_self->getControllingPlayer()->getPlayerType() == PLAYER_COMPUTER)
-	{
-		m_acquireEnemies = true;
-	}
-}
 
 //-----------------------------------------------------------------------------
-// ?allow@PartitionFilterRejectBuildings@@MAE_NPAVObject@@@Z present-unmatched
-Bool PartitionFilterRejectBuildings::allow( Object *other )
-{
-	// this filter allows all non-buildings
-	// um, no, it clearly doesn't any more.
-	// didn't the person adding the code below read the comment?
-	if (!other->isKindOf( KINDOF_STRUCTURE ))
-		return true;
-
-	const Player* myPlayer = m_self->getControllingPlayer();
-	if (!myPlayer)
-		return false;
-
-	// Get the controlling team of other.
-	ContainModuleInterface* contain = other->getContain();
-	const Player* otherPlayer = contain ? contain->getApparentControllingPlayer(myPlayer) : NULL;
-
-	if (!otherPlayer)
-		otherPlayer = other->getControllingPlayer();
-
-	if (!otherPlayer)
-		return false;
-
-	Relationship relationship = myPlayer->getRelationship(otherPlayer->getDefaultTeam());
-	if (relationship != ENEMIES)
-		return false;
-
-	// if I am a computer-controlled opponent, auto-aquire enemy buildings (if we can see them!)
-	if (m_acquireEnemies)
-		return true;
-
-	if (other->isKindOf( KINDOF_FS_BASE_DEFENSE))
-	{
-		// Don't reject base defenses.
-		return true;
-	}
-
-	if (other->getContain() != NULL && other->isAbleToAttack())
-	{
-		// Don't reject garrisoned buildings that can attack
-		return true;
-  }
-
-	return false;
-}
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
