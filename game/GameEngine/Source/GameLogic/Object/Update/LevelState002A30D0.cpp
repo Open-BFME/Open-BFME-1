@@ -12,6 +12,8 @@
 #include <bitset>
 // ObjectStatusBits.h defines a narrower Object without the methods below.
 // Its BitFlags representation and kInit constructor are retained here.
+// This constructor is private to the local status-mask layout.
+namespace Rva002A30D0 { namespace {
 template <int N> class BitFlags
 {
 	_STL::bitset<N> bits;
@@ -29,6 +31,10 @@ template <int N> class BitFlags
 		bits.set(bit);
 	}
 };
+}}
+
+// Canonical reference types at the Object boundary.
+template <int N> class BitFlags;
 class Player;
 class BfmeConditionFlags;
 enum DisabledType
@@ -38,13 +44,12 @@ enum DisabledType
 class Object
 {
   public:
-	void clearAndSetModelConditionFlags(const BfmeConditionFlags &, const BfmeConditionFlags &);
+	void clearAndSetModelConditionFlags(const BitFlags<320> &, const BitFlags<320> &);
 	void setStatus(const BitFlags<86> &, bool);
 	void setDisabled(DisabledType);
 	void setEffectivelyDead(bool);
 	Player *getControllingPlayer() const;
 };
-#define MAKE_OBJECT_STATUS_MASK(k) BitFlags<86>(BitFlags<86>::kInit, k)
 struct Rva002A23B0Record
 {
 	unsigned level;
@@ -143,13 +148,16 @@ void LevelState002A30D0::apply()
 				return;
 			}
 		}
-		obj->clearAndSetModelConditionFlags(BfmeConditionFlags(), d->flags);
+		obj->clearAndSetModelConditionFlags(
+			reinterpret_cast<const BitFlags<320> &>(BfmeConditionFlags()),
+			reinterpret_cast<const BitFlags<320> &>(d->flags));
 		const FXList *fx = d->fx;
 		if (fx && !const_cast<FXList *>(fx)->bfmeIsBlocked())
 			fx->doFXObj(obj, 0);
 		obj->setDisabled(Disabled4);
 		obj->setEffectivelyDead(true);
-		obj->setStatus(MAKE_OBJECT_STATUS_MASK(3), true);
+		obj->setStatus(reinterpret_cast<const BitFlags<86> &>(
+			Rva002A30D0::BitFlags<86>(Rva002A30D0::BitFlags<86>::kInit, 3)), true);
 		m_f40 = !it->m_autoSpawn;
 		m_f38 = it->m_time;
 		m_f3c = it->m_cost;
