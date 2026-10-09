@@ -5291,12 +5291,8 @@ StateReturnType AIMoveAndDeleteState::update()
 }
 
 //----------------------------------------------------------------------------------------------------------
-// ?onExit@AIMoveAndDeleteState@@UAEXW4StateExitType@@@Z present-unmatched
-void AIMoveAndDeleteState::onExit( StateExitType status )
-{
-	getMachine()->unlock();
-	AIInternalMoveToState::onExit( status );
-}
+// The retail exit body is emitted by AIMoveTerminalStateExit.cpp.
+
 
 //----------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------
