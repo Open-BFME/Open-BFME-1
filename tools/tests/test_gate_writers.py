@@ -14,7 +14,9 @@ DATA = "targets/game/reverse/data_rows.csv"
 DATA_HEAD = "name,address,address_kind,size,section,source,status,evidence,model\n"
 ROW_A = "?g_a@@3HA,0x01000000,va,4,.data,game/a.cpp,matched,old evidence,m\n"
 ROW_B = "?g_b@@3HA,0x01000004,va,4,.data,game/a.cpp,matched,e,m\n"
-EXTRA = {}
+SYMS = "targets/game/reverse/symbols.csv"
+SYMS_HEAD = "name,address,notes\n__imp__GetClientRect@8,0x0135901C,iat\n?f@@YAXXZ,0x00001000,pin\n"
+EXTRA = {SYMS: SYMS_HEAD}
 
 
 def git(root, *args):
@@ -85,3 +87,21 @@ def test_merges_are_skipped(repo):
 def test_add_data_match_stamps_its_write():
     text = (Path(__file__).resolve().parents[1] / "add_data_match.py").read_text()
     assert 'gate_writers.stamp("data_row", existing, candidate)' in text
+
+
+def test_a_hand_edited_imp_pin_is_refused_with_the_import_binding_command(repo, capsys):
+    write(repo, SYMS, SYMS_HEAD.replace("0x0135901C", "0x01359020"))
+    assert gw.staged_problems()["imp_pin"] == ["+__imp__GetClientRect@8,0x01359020",
+                                               "-__imp__GetClientRect@8,0x0135901C"]
+    assert gw.main(["x", "--staged"]) == 1
+    assert "tools/import_binding.py apply" in capsys.readouterr().err
+    write(repo, SYMS, SYMS_HEAD + "__imp__Sleep@4,0x01359000,new\n")
+    assert "imp_pin" in gw.staged_problems()
+
+
+def test_other_symbols_csv_writers_still_pass(repo):
+    # an ordinary pin added (pin tools, add_match), an __imp_ note reworded, and a
+    # dedup/line-ending rewrite (dedup_csv.py) change no __imp_ (name, address)
+    write(repo, SYMS, SYMS_HEAD.replace("iat", "iat slot").replace("\n", "\r\n")
+          + "?g@@YAXXZ,0x00002000,pin\r\n")
+    assert gw.staged_problems() == {}
