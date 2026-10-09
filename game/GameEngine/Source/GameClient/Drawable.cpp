@@ -932,36 +932,7 @@ void Drawable::setFullyObscuredByShroud(Bool fullyObscured)
 	}
 }
 
-//-------------------------------------------------------------------------------------------------
-/** Set drawable's "selected" status, if not already set.  Also update running
- * total count of selected drawables. */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/BfmeThreeHundredNine.cpp
-// ?friend_setSelected@Drawable@@QAEXXZ present-unmatched
-void Drawable::friend_setSelected( void ) 
-{ 
-	if(isSelected() == false)
-	{
-		m_selected = TRUE;
-		onSelected();
-	}
-
-}			
-
-//-------------------------------------------------------------------------------------------------
-/** Clear drawable's "selected" status, if not already clear.  Also update running
- * total count of selected drawables. */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/BfmeThreeHundredNine.cpp
-// ?friend_clearSelected@Drawable@@QAEXXZ present-unmatched
-void Drawable::friend_clearSelected( void ) 
-{
-	if(isSelected()) 
-	{
-		m_selected = FALSE;
-		onUnselected();
-	}
-}
+// Drawable::friend_setSelected / friend_clearSelected: retail bodies in DrawableBFME.cpp.
 
 // ------------------------------------------------------------------------------------------------
 /** Flash the drawable with the color */
