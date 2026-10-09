@@ -142,6 +142,28 @@ private:
 	UnsignedInt m_handle;
 };
 
+// Retail calls the 0x0039E8D0 body through ILT 0x0001082F with ECX = owner.
+class AsciiString;
+class Rva0039E8D0Xfer;
+namespace _STL { template <class T> class allocator; template <class T, class A> class vector; }
+typedef _STL::vector<AsciiString, _STL::allocator<AsciiString> > Rva0039E8D0StringVector;
+void __stdcall Rva0039E8D0StringVectorXfer(Rva0039E8D0Xfer *xfer, Rva0039E8D0StringVector *vector);
+extern void j_0001082f();
+class Route0001082F {};
+static __forceinline void callRva0039E8D0StringVectorXfer(void *self, Xfer *xfer, void *vector)
+{
+	typedef void (Route0001082F::*Fn)(Xfer *, void *);
+	union { void (*fn)(); Fn call; } route = { j_0001082f };
+	(((Route0001082F *)self)->*route.call)(xfer, vector);
+}
+
+// Retail-matched cdecl helper for the 0x88-byte filter at 0x0039E2B0.
+class ObjectFilter
+{
+public:
+	static void rva0039E2B0ResolveNames(ObjectFilter *filter);
+};
+
 void BfmeOwnerCGF::bfmeOneCGF(void *what)
 {
 	register Xfer *xfer = (Xfer *)what;
@@ -180,9 +202,9 @@ void BfmeOwnerCGF::bfmeOneCGF(void *what)
 	}
 	else
 	{
-		transferAttributeStrings(xfer, (char *)source + 0x00);
-		transferAttributeStrings(xfer, (char *)source + 0x0C);
-		bfmeDestroyAttributeEntry((Gen_t_0039e9d0_p128pod *)source);
+		callRva0039E8D0StringVectorXfer(owner, xfer, (char *)source + 0x00);
+		callRva0039E8D0StringVectorXfer(owner, xfer, (char *)source + 0x0C);
+		ObjectFilter::rva0039E2B0ResolveNames((ObjectFilter *)source);
 
 		int count = (int)(TheBfmeAttributePool.m_finish
 			- TheBfmeAttributePool.m_start);
