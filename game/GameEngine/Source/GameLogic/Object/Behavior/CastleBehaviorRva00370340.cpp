@@ -81,10 +81,14 @@ static __forceinline const Overridable *getFinalOverride0022bb(
 	return (overridable->*u.call)();
 }
 
+// Retail increments the tree cursor through _Rb_global::_M_increment
+// directly. Spell that operation here without emitting another const-iterator
+// operator++ copy (the earlier lobby TU owns that COMDAT).
 Bool CastleBehavior::rva00370340(ObjectTypes *filter)
 {
 	for (_STL::set<ObjectID>::iterator it = m_ownedObjectSetF4.begin();
-		it != m_ownedObjectSetF4.end(); ++it) {
+		it != m_ownedObjectSetF4.end();
+        it._M_node = _STL::_Rb_global<bool>::_M_increment(it._M_node)) {
 		ObjectID id = *it;
 		if (id != 0) {
 			CastleObjectMap::iterator objectIt =
