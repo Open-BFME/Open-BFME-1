@@ -76986,8 +76986,8 @@ name,address,notes
 ?bfmeFixupThunk@@YADPAVMeshClass@@@Z,0x0002C43A,recursive BFME mesh shader fixer call through the generated thunk
 ?bfmeFlag@Gen_0039B020@@QBEEXZ,0x00049FDA,0x006E2540 witnessed caller ABI;route=0x0039B020
 ?$S1@?1??bfmeGoCWB@@YAHXZ@4IA,0x00EF1034,pin
-?bfmeFlagCWC@@3IA,0x00EF14A4,pin
-?bfmeFlagCWD@@3IA,0x00EF3698,pin
+?$S1@?1??bfmeGoCWC@@YAHXZ@4IA,0x00EF14A4,pin
+?$S1@?1??bfmeGoCWD@@YAHXZ@4IA,0x00EF3698,pin
 ?bfmeFlagForRead@ScriptEngine@@IAEPA_NVAsciiString@@@Z,0x0004278F,read-only flag lookup target decoded from ScriptEngine setFlag
 ?bfmeFlagForWrite@ScriptEngine@@IAEPA_NVAsciiString@@@Z,0x0002E1CC,writable flag lookup target decoded from ScriptEngine setFlag
 ?bfmeFlagTN@BfmeXTN@@QAEXH@Z,0x00034C3E,pin flag for BfmeConv2024
@@ -77557,8 +77557,8 @@ name,address,notes
 ?bfmeIdAIA@BfmeThingAIA@@QAEPAXXZ,0x00020824,pin
 ?bfmeIdALA@BfmeKeyALA@@QAEPAUBfmeIdALA@@XZ,0x00020824,pin
 ?s_bfmeIdCWB@?1??bfmeGoCWB@@YAHXZ@4HA,0x00EF102C,pin
-?bfmeIdCWC@@3HA,0x00EF14A0,pin
-?bfmeIdCWD@@3HA,0x00EF3694,pin
+?s_bfmeIdCWC@?1??bfmeGoCWC@@YAHXZ@4HA,0x00EF14A0,pin
+?s_bfmeIdCWD@?1??bfmeGoCWD@@YAHXZ@4HA,0x00EF3694,pin
 ?bfmeIdESB@BfmeThingESB@@QAEHXZ,0x00020824,pin
 ?bfmeIdleBX@BfmeOwnerBX@@QAEXHH@Z,0x00014506
 ?bfmeIdlePT@@YAXXZ,0x00027336,pin

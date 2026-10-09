@@ -1,14 +1,8 @@
-extern unsigned int bfmeFlagCWC;
 extern int g_rva012F1030;
-extern int bfmeIdCWC;
 
+// Guarded function-local static, as in BfmeConv657.
 int bfmeGoCWC()
 {
-	if (!(bfmeFlagCWC & 1))
-	{
-		bfmeFlagCWC |= 1;
-		bfmeIdCWC = g_rva012F1030++;
-		return bfmeIdCWC;
-	}
-	return bfmeIdCWC;
+	static int s_bfmeIdCWC = g_rva012F1030++;
+	return s_bfmeIdCWC;
 }
