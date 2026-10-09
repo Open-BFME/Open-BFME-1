@@ -25,13 +25,20 @@ public:
 	void deposit(unsigned int amount, bool flag);
 };
 
-class Player;
+class UpgradeTemplate;
+class BfmeThingEL;
+class ProductionEntry;
 
-class BfmePlayerZB
+class Gen_000D2480
 {
 public:
-	bool bfmeCanZB(BfmeItemZB *item);
-	void bfmeFinishZB(BfmeItemZB *item);
+	bool bfmeHasBit(const BfmeThingEL *thing) const;
+};
+
+class Player
+{
+public:
+	void removeUpgrade(const UpgradeTemplate *upgradeTemplate);
 
 	unsigned char m_bfmeHeadZB[0x48];
 	Money m_bfmeMoneyZB;
@@ -45,10 +52,12 @@ public:
 	Player *getControllingPlayer() const;
 };
 
-class BfmeSinkZB
+class ProductionUpdate
 {
-public:
-	void bfmeNotifyZB(BfmeNodeZB *n);
+protected:
+	void removeFromProductionQueue(ProductionEntry *production);
+
+	friend class BfmeHostZB;
 };
 
 class BfmeHostZB
@@ -65,11 +74,11 @@ void BfmeHostZB::bfmeGiveZB(BfmeItemZB *item)
 	if (item == 0)
 		return;
 
-	BfmePlayerZB *pl = (BfmePlayerZB *)(*(Object **)((char *)this - 0x18))->getControllingPlayer();
+	Player *pl = (Player *)(*(Object **)((char *)this - 0x18))->getControllingPlayer();
 
 	if (item->m_bfme04ZB == 0)
 	{
-		if (!pl->bfmeCanZB(item))
+		if (!((const Gen_000D2480 *)pl)->bfmeHasBit((const BfmeThingEL *)item))
 			return;
 	}
 
@@ -80,11 +89,11 @@ void BfmeHostZB::bfmeGiveZB(BfmeItemZB *item)
 		if (n->m_bfme04ZB == 2 && n->m_bfme0CZB == item)
 		{
 			pl->m_bfmeMoneyZB.deposit(n->m_bfme28ZB, 1);
-			((BfmeSinkZB *)((char *)this - 0x20))->bfmeNotifyZB(n);
+			((ProductionUpdate *)((char *)this - 0x20))->removeFromProductionQueue((ProductionEntry *)n);
 			n->bfmeCloseZB(1);
 
 			if (item->m_bfme04ZB == 0)
-				pl->bfmeFinishZB(item);
+				pl->removeUpgrade((const UpgradeTemplate *)item);
 
 			return;
 		}

@@ -3730,40 +3730,7 @@ void Player::onUpgradeCompleted( const UpgradeTemplate *upgradeTemplate )
 	}
 }
 
-//=================================================================================================
-/** Remove upgrade from a player */
-//=================================================================================================
-// ?removeUpgrade@Player@@QAEXPBVUpgradeTemplate@@@Z present-unmatched
-void Player::removeUpgrade( const UpgradeTemplate *upgradeTemplate )
-{
-	Upgrade *upgrade = findUpgrade( upgradeTemplate );
-	
-	if( upgrade )
-	{
-		if( upgrade->friend_getNext() )
-			upgrade->friend_getNext()->friend_setPrev( upgrade->friend_getPrev() );
-		if( upgrade->friend_getPrev() )
-			upgrade->friend_getPrev()->friend_setNext( upgrade->friend_getNext() );
-		else
-			m_upgradeList = upgrade->friend_getNext();
-
-		// Clear this upgrade's bits from our mind
-		UpgradeMaskType oldMask = upgradeTemplate->getUpgradeMask();
-		m_upgradesInProgress.clear( oldMask );
-		m_upgradesCompleted.clear( oldMask );
-
-		if( upgrade->getStatus() == UPGRADE_STATUS_COMPLETE )
-			onUpgradeRemoved();
-
-	if( ThePlayerList->getLocalPlayer() == this )
-	{
-		TheControlBar->markUIDirty();
-	}
-
-	}  // end if
-
-}  // end removeUpgrade
-
+// Player::removeUpgrade is defined by the retail-matched PlayerUpgrades.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // BFME reads all four flags in place rather than through accessors. The
