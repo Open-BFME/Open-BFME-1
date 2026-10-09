@@ -18928,5 +18928,45 @@
   "after_sha256": "51dfa24ed5422e45b891a3473d2af76be574fa1c8fced30c1450e2c29391d793",
   "evidence": "targets/game/reverse/identity_evidence/stl46-ilt-allocator-rows.md",
   "reason": "STLport 4.6 switch: allocate no longer exists as compiled for this address (4.6 allocate/deallocate are non-const; _STLP_alloc_proxy::deallocate is inlined) and retail's ILT contradicts the 4.6 spelling the TU compiles here, so ilt_guard refuses it; the byte-verified body keeps an address-derived name aliased to the compiled symbol (object-symbol=), with the ILT-confirmed candidate spelling in the evidence"
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameNetwork/FeslEchoNotifier.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/FeslEchoNotifier.cpp",
+  "old_name": "sendFeslMessage",
+  "new_name": "Rva007F93E0",
+  "before_sha256": "1f344c8eb6ef1975c2ba955274853a6ba256db46eb5bf5ae525a529075e1dae8",
+  "after_sha256": "d2ee4567f200c8c31db9dfbfb5f3dbf7843e2133fd8e753895fdb612910067a5",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 1): sendFeslMessage was a #define forwarder onto ledger row Rva007F93E0 (0x007F93E0), a worker paraphrase with no witness: ilt_oracle is UNTESTABLE for this FESL library-region body and Zero Hour has no FESL counterpart. The call now spells the ledger name and the forwarder is deleted; bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameNetwork/Rva00803730FeslAttrs.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/Rva00803730FeslAttrs.cpp",
+  "old_name": "sendFeslMessage",
+  "new_name": "Rva007F93E0",
+  "before_sha256": "dec1acadd54d1cef5c09fd65568f627c170fc4f8c8c5c15bee2b667f505a4aad",
+  "after_sha256": "eff1f42f435de37172e71249491ac2f2fdcce0375f56a23df685ef7681725127",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 1): sendFeslMessage was a #define forwarder onto ledger row Rva007F93E0 (0x007F93E0), a worker paraphrase with no witness: ilt_oracle is UNTESTABLE for this FESL library-region body and Zero Hour has no FESL counterpart. The call now spells the ledger name and the forwarder is deleted; bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameNetwork/Rva008097D0LanTheaterRemove.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/Rva008097D0LanTheaterRemove.cpp",
+  "old_name": "sendFeslMessage",
+  "new_name": "Rva007F93E0",
+  "before_sha256": "b924ed403b610d948c3ee5c28341f399f6ed8df979fe3f2074b714349fda9de9",
+  "after_sha256": "e9b5c8b6187e3c3f0dcbee3b6e9ae74dcc78a696b3ef7304ec35371423f36536",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 1): sendFeslMessage was a #define forwarder onto ledger row Rva007F93E0 (0x007F93E0), a worker paraphrase with no witness: ilt_oracle is UNTESTABLE for this FESL library-region body and Zero Hour has no FESL counterpart. The call now spells the ledger name and the forwarder is deleted; bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameNetwork/Rva0080A110Route.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/Rva0080A110Route.cpp",
+  "old_name": "sendFeslMessage",
+  "new_name": "Rva007F93E0",
+  "before_sha256": "339b9a8efcbc927527bfd93801b2799c35c1ec866b5b49b2b7927e7ae5888059",
+  "after_sha256": "902433382ef8f6d22051f1078b2df0cb6809cf283e9e0bdc9dd3118b9c915c2c",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 1): sendFeslMessage was a #define forwarder onto ledger row Rva007F93E0 (0x007F93E0), a worker paraphrase with no witness: ilt_oracle is UNTESTABLE for this FESL library-region body and Zero Hour has no FESL counterpart. The call now spells the ledger name and the forwarder is deleted; bytes unchanged."
  }
 ]

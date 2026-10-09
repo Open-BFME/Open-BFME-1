@@ -33,7 +33,6 @@ class BfmeThingCIB
 public:
 	void bfmeGoCIB(void *key, void *value);
 };
-#define addInt(message, key, value) ((BfmeThingCIB *)&(message))->bfmeGoCIB((void *)(key), (void *)(value))
 
 // Retail 0x008038F0 is the sink submit (callees.py), matched as
 // Rva008038F0Sender::send.
@@ -42,7 +41,6 @@ class Rva008038F0Sender
 public:
 	void send(BfmeC994 *message);
 };
-#define submit(message) ((Rva008038F0Sender *)this)->send(message)
 
 class BfmeSinkSKA
 {
@@ -58,8 +56,8 @@ void BfmeSinkSKA::bfmeSendSKA(int category, int transactionId, int depth)
 	BfmeC994 message(buffer, sizeof(buffer));
 	message.m_category = category;
 	message.m_depth = depth;
-	addInt(message, "TID", transactionId);
-	submit(&message);
+	((BfmeThingCIB *)&message)->bfmeGoCIB((void *)"TID", (void *)transactionId);
+	((Rva008038F0Sender *)this)->send(&message);
 	reinterpret_cast< Gen_007e86c0 * >( &message )->m();
 }
 
@@ -71,12 +69,12 @@ void BfmeSinkSKA::sendCreateGameRequest(int transactionId, int gameId,
 	char buffer[64];
 	BfmeC994 message(buffer, sizeof(buffer));
 	message.m_category = 'CGAM';
-	addInt(message, "TID", transactionId);
-	addInt(message, "GID", gameId);
-	addInt(message, "LID", -2);
-	addInt(message, "MAX-PLAYERS", maxPlayers);
+	((BfmeThingCIB *)&message)->bfmeGoCIB((void *)"TID", (void *)transactionId);
+	((BfmeThingCIB *)&message)->bfmeGoCIB((void *)"GID", (void *)gameId);
+	((BfmeThingCIB *)&message)->bfmeGoCIB((void *)"LID", (void *)(-2));
+	((BfmeThingCIB *)&message)->bfmeGoCIB((void *)"MAX-PLAYERS", (void *)maxPlayers);
 	message.addString("UGID", userGameId);
 	message.addString("SECRET", "0");
-	submit(&message);
+	((Rva008038F0Sender *)this)->send(&message);
 	reinterpret_cast< Gen_007e86c0 * >( &message )->m();
 }

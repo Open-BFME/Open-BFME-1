@@ -70,7 +70,6 @@ extern "C" void Rva0080F0D0( unsigned char *object );
 
 // Retail 0x007F93E0 is the FESL sender, matched as Rva007F93E0.
 void *Rva007F93E0( void *message, void *route, void *owner );
-#define sendFeslMessage( message, kind, owner ) Rva007F93E0( ( message ), ( void * )( kind ), ( owner ) )
 
 // Retail 0x007E88D0 is the integer field writer, matched as
 // BfmeThingCIB::bfmeGoCIB.
@@ -79,7 +78,6 @@ class BfmeThingCIB
 public:
 	void bfmeGoCIB( void *key, void *value );
 };
-#define addInt( message, key, value ) ( (BfmeThingCIB *)&( message ) )->bfmeGoCIB( (void *)( key ), (void *)( value ) )
 
 class Rva007EFFC0Allocator
 {
@@ -92,7 +90,6 @@ public:
 
 // Retail 0x007EFFC0 is the allocator getter, matched as bfmeGo929C.
 void *bfmeGo929C();
-#define Rva007EFFC0Get() ( (Rva007EFFC0Allocator *)bfmeGo929C() )
 
 // Retail 0x007F0170 is the class operator delete matched as
 // Gen007F0170::operator delete; these callers also push the block size, which
@@ -103,7 +100,6 @@ public:
 	static void operator delete( void *block );
 };
 typedef void ( __cdecl *Gen00809750SizedDelete )( void *block, unsigned int size );
-#define Gen00809750_delete( block, size ) ( (Gen00809750SizedDelete)&Gen007F0170::operator delete )( block, size )
 
 struct Rva008097D0Player
 {
@@ -138,12 +134,12 @@ Rva00808920LanGame::~Rva00808920LanGame()
 		if ( player != 0 )
 		{
 			player->Rva007E86B0Base::~Rva007E86B0Base();
-			Gen00809750_delete( player, 0x38 );
+			( (Gen00809750SizedDelete)&Gen007F0170::operator delete )( player, 0x38 );
 		}
 		m_players[ index ] = 0;
 	}
 
-	Rva007EFFC0Get()->release( m_players, 0 );
+	( (Rva007EFFC0Allocator *)bfmeGo929C() )->release( m_players, 0 );
 	m_players = 0;
 }
 
@@ -246,14 +242,14 @@ void BfmeSinkTCA::bfmeUseTCA( void *value )
 			{
 				BfmeC994 message( buffer, sizeof( buffer ) );
 				message.m_category = 'GREM';
-				addInt( message, "LID", -2 );
-				addInt( message, "GID", player->m_gameId );
+				( (BfmeThingCIB *)&message )->bfmeGoCIB( (void *)"LID", (void *)(-2) );
+				( (BfmeThingCIB *)&message )->bfmeGoCIB( (void *)"GID", (void *)player->m_gameId );
 				*reinterpret_cast< volatile int * >( &message.m_field04 ) = player->m_field04;
 				_WriteBarrier();
 				*reinterpret_cast< volatile int * >( &message.m_field08 ) = *reinterpret_cast< volatile int * >( &player->m_field08 );
 				const volatile int *field0c = &player->m_field0c;
 				message.m_field0c = *field0c;
-				sendFeslMessage( &message, "->L", m_field10 );
+				Rva007F93E0( &message, ( void * )"->L", m_field10 );
 				reinterpret_cast< Gen_007e86c0 * >( &message )->m();
 			}
 		}
@@ -263,11 +259,11 @@ void BfmeSinkTCA::bfmeUseTCA( void *value )
 	if ( current != 0 )
 	{
 		if ( current->m_field14 != 0 )
-			Rva007EFFC0Get()->release( (void *)current->m_field14, 0 );
+			( (Rva007EFFC0Allocator *)bfmeGo929C() )->release( (void *)current->m_field14, 0 );
 		current->m_field14 = 0;
 		current->m_field10 = 0;
 		current->Rva007E86B0Base::~Rva007E86B0Base();
-		Gen00809750_delete( current, 0x20 );
+		( (Gen00809750SizedDelete)&Gen007F0170::operator delete )( current, 0x20 );
 	}
 	m_current = 0;
 
@@ -275,7 +271,7 @@ void BfmeSinkTCA::bfmeUseTCA( void *value )
 	{
 		Rva00808920LanGame *game = m_game;
 		game->Rva00808920LanGame::~Rva00808920LanGame();
-		Gen00809750_delete( game, 0xB4 );
+		( (Gen00809750SizedDelete)&Gen007F0170::operator delete )( game, 0xB4 );
 	}
 	m_game = 0;
 	Rva0080F0D0( (unsigned char *)m_field0c );

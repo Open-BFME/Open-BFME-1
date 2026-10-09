@@ -2,7 +2,6 @@
 
 // Retail 0x007F93E0 is the FESL sender (callees.py), matched as Rva007F93E0.
 void *Rva007F93E0( void *message, void *route, void *owner ) throw();
-#define sendFeslMessage( message, route, connection ) Rva007F93E0( ( message ), ( void * )( route ), ( connection ) )
 
 // Retail 0x007E88D0 is the integer field writer, matched as
 // BfmeThingCIB::bfmeGoCIB.
@@ -11,7 +10,6 @@ class BfmeThingCIB
 public:
 	void bfmeGoCIB( void *key, void *value ) throw();
 };
-#define addInt( message, key, value ) ( (BfmeThingCIB *)&( message ) )->bfmeGoCIB( (void *)( key ), (void *)( value ) )
 
 // Retail 0x007E86C0: the shared seven-byte cleanup the FESL message bodies call
 // (store the base vtable 0x01129358 into *this, then ret).  The local message's
@@ -43,7 +41,6 @@ public:
 	char m_ready;
 	char m_pad31[ 3 ];
 };
-typedef BfmeC994 FeslEchoMessage;
 
 class FeslEchoNotifier
 {
@@ -69,7 +66,7 @@ extern const char g_feslTypeKey[5] = "TYPE";
 void FeslEchoNotifier::notifyEcho()
 {
 	char buffer[ 0x100 ];
-	FeslEchoMessage message( buffer, sizeof( buffer ) );
+	BfmeC994 message( buffer, sizeof( buffer ) );
 
 	int *echo = (int *)( (char *)m_owner[ 3 ] + 0x28c );
 	message.m_04 = echo[ 1 ];
@@ -78,13 +75,13 @@ void FeslEchoNotifier::notifyEcho()
 	message.m_type = 'ECHO';
 	message.m_20 = 0;
 	message.m_ready = 1;
-	addInt( message, g_feslTransactionIdKey, m_transactionId );
-	addInt( message, g_feslTypeKey, 1 );
+	( (BfmeThingCIB *)&message )->bfmeGoCIB( (void *)g_feslTransactionIdKey, (void *)m_transactionId );
+	( (BfmeThingCIB *)&message )->bfmeGoCIB( (void *)g_feslTypeKey, (void *)1 );
 	if( m_userId[ 0 ] )
 	{
 		message.addString( "UGID", m_userId );
 		message.addString( "SECRET", m_secret );
 	}
-	sendFeslMessage( &message, "->D", m_connection );
+	Rva007F93E0( &message, ( void * )"->D", m_connection );
 	reinterpret_cast< Gen_007e86c0 * >( &message )->m();
 }

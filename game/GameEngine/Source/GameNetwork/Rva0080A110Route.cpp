@@ -64,7 +64,6 @@ public:
 
 // The FESL sender's ledger row is Rva007F93E0 (0x007F93E0, triple pointer cdecl, pointer return).
 void *Rva007F93E0( void *message, void *route, void *owner );
-#define sendFeslMessage( message, route, owner ) Rva007F93E0( ( message ), ( void * )( route ), ( owner ) )
 extern const char g_feslTransactionIdKey[4];
 extern "C" char bfmeInfoDFI[];
 
@@ -129,7 +128,7 @@ void Rva0080A110Owner::route( Rva0080A110Message *input )
 	if( m_state->m_sender == 0 || m_lookup == 0 )
 	{
 		message.m_field20 = 0x6e67616d;
-		sendFeslMessage( &message, "->L", m_routeOwner );
+		Rva007F93E0( &message, ( void * )"->L", m_routeOwner );
 	}
 	else
 	{
@@ -138,11 +137,11 @@ void Rva0080A110Owner::route( Rva0080A110Message *input )
 		if( found == 0 )
 		{
 			message.m_field20 = 0x6e69676d;
-			sendFeslMessage( &message, "->L", m_routeOwner );
+			Rva007F93E0( &message, ( void * )"->L", m_routeOwner );
 		}
 		else
 		{
-			sendFeslMessage( &message, "->L", m_routeOwner );
+			Rva007F93E0( &message, ( void * )"->L", m_routeOwner );
 
 			BfmeC994 kick( buffer, sizeof( buffer ) );
 			kick.m_category = 0x4b49434b;
