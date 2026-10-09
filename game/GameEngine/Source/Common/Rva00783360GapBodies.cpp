@@ -6,8 +6,9 @@ int Rva00783360() { return 0; }
 void Rva00783370() {}
 void Rva00783380() {}
 void Rva00783390() {}
-extern float Rva01126AB0;
-extern float Rva01126AB4;
+// Retail .rdata holds these independently verified 4-byte constants.
+extern const float Rva01126AB0 = 1024.0f;
+extern const float Rva01126AB4 = 768.0f;
 float Rva007833A0() { return Rva01126AB0; }
 float Rva007833B0() { return Rva01126AB4; }
 void Rva007833C0() {}
