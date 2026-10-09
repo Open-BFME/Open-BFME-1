@@ -20,9 +20,8 @@ class Parameter
 {
 public:
     int getInt() const { return m_int; }
-    const AsciiString &getString() const { return m_string; }
 
-private:
+    // Read directly: this TU's accessor COMDAT differed from the linked copy.
     char m_unknown[8];
     int m_int;
     float m_real;
@@ -73,9 +72,7 @@ private:
 class Script
 {
 public:
-    OrCondition *getOrCondition() const { return m_condition; }
-
-private:
+    // Read directly: this TU's accessor COMDAT differed from the linked copy.
     char m_unknown[0x1c];
     OrCondition *m_condition;
 };
@@ -142,7 +139,7 @@ protected:
     __forceinline bool evaluateTimer(Condition *condition)
     {
         ScriptCounter *counter = bfmeCounter(
-            condition->getParameter(0)->getString());
+            condition->getParameter(0)->m_string);
         if (!counter->m_isCountdownTimer)
             return false;
         return counter->m_value < 1;
@@ -179,7 +176,7 @@ Bool ScriptEngine::evaluateConditions(Script *script, Team *thisTeam, Player *pl
     if (player == 0)
         player = *(Player **)((char *)this + 0x170ac);
     LatchRestore<Player *> latch2(*(Player **)((char *)this + 0x170ac), player);
-    OrCondition *conditionHead = script->getOrCondition();
+    OrCondition *conditionHead = script->m_condition;
     Bool testValue = false;
     OrCondition *currentOr;
     for (currentOr = conditionHead; currentOr; currentOr = currentOr->getNextOrCondition())
