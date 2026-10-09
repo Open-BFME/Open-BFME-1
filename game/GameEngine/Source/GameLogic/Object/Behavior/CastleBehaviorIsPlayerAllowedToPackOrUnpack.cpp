@@ -71,6 +71,8 @@ class CastleBehavior
 public:
 	Bool isPlayerAllowedToPackOrUnpack(Player *player,
 		Bool playerAllowedToPackOrUnpack);
+	// The matched row at 0x0036FD20, reached through the b_0036fd20 address.
+	Bool isPlayerAllowedCommon(Player *player, Int allowed);
 
 private:
 	void *m_vtable;
@@ -94,8 +96,8 @@ Bool CastleBehavior::isPlayerAllowedToPackOrUnpack(Player *player,
 	Bool alreadyMyCastle = player == object->getControllingPlayer();
 
 	AllowedCall allowedCall;
-	union { void *asVoid; AllowedCall asMember; } allowedCast;
-	allowedCast.asVoid = (void *)b_0036fd20;
+	union { Bool (CastleBehavior::*asCommon)(Player *, Int); AllowedCall asMember; } allowedCast;
+	allowedCast.asCommon = &CastleBehavior::isPlayerAllowedCommon;
 	Bool allowed = (this->*allowedCast.asMember)(player,
 		playerAllowedToPackOrUnpack);
 
