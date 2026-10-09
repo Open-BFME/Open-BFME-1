@@ -1,0 +1,11 @@
+# Four-tap byte-to-word filter at 0x009A75F0
+
+The tested base is 2e661a49fb01f4664b324ceff8df105f6da85c5c. The function keeps the saved reconstruction's address-derived name Rva009A75F0. No native vendor name is claimed.
+
+The complete retail decode covers [0x009A75F0, 0x009A769E). Its zero-row branch reaches the same RET at 0x009A769D used by the loop epilogue. All conditional branches and jumps stay within the extent. Two INT3 bytes precede the next independent prologue at 0x009A76A0. There are no calls, indirect calls, tail calls or exception cleanup paths.
+
+The complete matched caller at 0x009A7B00 has calls at 0x009A7B47 and 0x009A7CD6. Both push seven dwords and remove 0x1C bytes afterward. They pass the source byte pointer, destination word pointer, source pitch, pixel step, eight rows, eight columns and the four-int weight row, in that order. The callee loads unsigned bytes, multiplies by four signed dword coefficients, shifts the rounded sum arithmetically, clamps it to 0..255 and writes a word. Its unsigned loop comparisons support unsigned row and column counts. It returns no consumed value and uses no receiver or hidden return storage. This agrees with the matched caller's Rva009A7B00FourTapFilter declaration. A signed interpretation of the source bytes or a different stack-slot mapping would refute this ABI.
+
+Open BFME 2 donor Code/GameEngine/Source/Common/Rva009A75F0Vp6FourTapFilter.cpp at game.dat 0x001B8050 supplies a direct-indexed loop. The old bank creates separate next and previous pointers and reproduces 174 bytes with 11 differences beginning at +0x44. Replacing that loop with the donor's indexed expressions, while preserving the bank's function and parameter names, produces 174 bytes with zero differences and no relocation slots. This supports the source-structure hypothesis without claiming that the donor's descriptive function name is BFME 1 identity evidence.
+
+Raw target and caller decodes, checked callee inventories, the original bank, the donor trial and both probe outputs are preserved under build/donor-port-writer11/. The relevant probe logs are probe-009a75f0-bank.log and probe-009a75f0-donor.log. A reproduced probe difference or a decoded outgoing path beyond the claimed extent would refute the recovery.
