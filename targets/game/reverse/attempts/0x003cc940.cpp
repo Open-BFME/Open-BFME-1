@@ -1,19 +1,22 @@
 // ?method@Rva003CC940@@QAE?AURva003CC940Point@@XZ
-// partial score=0.6957 date=2026-10-01
-// Retail RVA 003CC940, 437B: RET4 at +1B2 and INT3 at +1B5.
-// ECX receiver and one hidden output pointer return three observed floats.
-// No original receiver, method or declared result identity is claimed.
-// Neighbor counts are signed dwords at +30; links occupy receiver+10..2C.
-// Retail constants: float 1/3 at VA01097120, float zero at VA01075350,
-// double sqrt(1/2) at VA010EE0F0. Only a terrain slot+18 is called.
-// Source remains nonmatching: x87 scheduling, pointer lifetime and stack layout.
-struct Rva003CC940Point { float m_at00, m_at04, m_at08; };
+// partial score=0.7483 date=2026-10-09
+// Opaque layout and ABI evidence: targets/game/reverse/identity_evidence/003cc940-position-retry.md
+struct Rva003CC940Point {
+    float m_at00, m_at04, m_at08;
+    // ??0Rva003CC940Point@@QAE@XZ absent-from-retail
+    Rva003CC940Point() {}
+    // ??0Rva003CC940Point@@QAE@ABU0@@Z absent-from-retail
+    Rva003CC940Point(const Rva003CC940Point &other)
+        : m_at00(other.m_at00), m_at04(other.m_at04), m_at08(other.m_at08) {}
+};
+class TerrainLogic;
+struct Coord3D;
 struct Rva003CC940Terrain {
     virtual void slot00(); virtual void slot04(); virtual void slot08();
     virtual void slot0C(); virtual void slot10(); virtual void slot14();
-    virtual float slot18(float, float, void *);
+    virtual float slot18(float, float, Coord3D *) const;
 };
-extern void *TheTerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 struct Rva003CC940Config { char m_at00[0xc]; float m_at0c; };
 struct Rva003CC940Node { char m_at00[0x30]; int m_at30; };
 class Rva003CC940 {
@@ -34,7 +37,7 @@ Rva003CC940Point Rva003CC940::method()
     float xOffset = 0.0f, xWeight = 0.0f;
     float yWeight = 0.0f, yOffset = 0.0f;
     if (m_at10[0]) { xOffset = (float)m_at10[0]->m_at30; xWeight = (float)m_at10[0]->m_at30; }
-    if (m_at10[1]) { float n = (float)m_at10[1]->m_at30; xOffset -= n; xWeight += n; }
+    if (m_at10[1]) { xWeight += (float)m_at10[1]->m_at30; xOffset -= (float)m_at10[1]->m_at30; }
     if (m_at10[2]) { yWeight = (float)m_at10[2]->m_at30; yOffset = (float)m_at10[2]->m_at30; }
     if (m_at10[3]) { float n = (float)m_at10[3]->m_at30; yWeight += n; yOffset -= n; }
     if (m_at10[4]) {
