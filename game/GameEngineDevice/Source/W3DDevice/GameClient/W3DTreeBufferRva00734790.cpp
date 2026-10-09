@@ -6,7 +6,15 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef float Real;
 
-void Rva00739900Forward(void *object, Real value);
+// The matched opacity walker takes the float payload as one raw int slot.
+unsigned char Rva00739900Forward(void *object, volatile int value);
+
+static inline void forwardOpacity(void *object, Real value)
+{
+	// The provider reads this slot as float; retain the native float argument
+	// expression so VC7.1 pushes its x87 value directly.
+	reinterpret_cast<unsigned char (*)(void *, Real)>(Rva00739900Forward)(object, value);
+}
 
 struct Rva00734790TypeData
 {
@@ -65,9 +73,9 @@ void W3DTreeBuffer::rva00734790(Int index)
 	--m_trees[index].m_fieldd4;
 	Real fraction = (Real)m_trees[index].m_fieldd4 / (Real)m_treeTypes[type].m_data->m_duration;
 	if (m_trees[index].m_fieldd8 != 0)
-		Rva00739900Forward(m_trees[index].m_fieldd8, fraction);
+		forwardOpacity(m_trees[index].m_fieldd8, fraction);
 	if (m_trees[index].m_fielddc != 0)
-		Rva00739900Forward(m_trees[index].m_fielddc, 1.0f - fraction);
+		forwardOpacity(m_trees[index].m_fielddc, 1.0f - fraction);
 	if (m_trees[index].m_fieldd4 == 0)
 		removeTreeAtIndex(index);
 }

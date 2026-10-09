@@ -73,7 +73,7 @@ struct Rva00733FD0Tree
 	unsigned char m_pad0290[0x2A0 - 0x290];
 };
 
-class Rva00733FD0W3DTreeBuffer
+class W3DTreeBuffer
 {
 public:
 	void removeTreeAtIndex(const Int index);
@@ -85,7 +85,7 @@ private:
 };
 
 // ?removeTreeAtIndex@W3DTreeBuffer@@QAEXH@Z
-void Rva00733FD0W3DTreeBuffer::removeTreeAtIndex(const Int index)
+void W3DTreeBuffer::removeTreeAtIndex(const Int index)
 {
 	if (index < m_numTrees) {
 		if (*(Int *)(reinterpret_cast<unsigned char *>(this) +
