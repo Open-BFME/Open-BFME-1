@@ -2,6 +2,11 @@
 
 #include "ascii_string.h"
 
+// Matched callee rows (callees.py): ILT 0x00041164 -> Rva003C92A0 0x003C92A0,
+// ILT 0x0000B316 -> Rva003BAD00Owner::notify0C 0x003BAD30 and ILT 0x00027287 ->
+// Rva003BAD00Owner::notify04 0x003BAD00; both notifiers take the key's address.
+int __cdecl Rva003C92A0(int a, int b);
+
 // Glo012F1028Sub::bfmeFinish, retail 0x003CA7C0, 423 bytes, ret 8. The matched
 // Glo012F1028Sub::bfmeNotify (0x003CAD20) calls it through ILT 0x00038910 with
 // each item and a zero, right after bfmeBegin (0x003C7010) cleared the same
@@ -29,8 +34,8 @@ public:
 class Rva003BAD00Owner
 {
 public:
-	void notify0C(const AsciiString &key, int a, int b);	// ILT 0x0000B316
-	void notify04(const AsciiString &key, int a);		// ILT 0x00027287
+	void notify0C(int key, int a, int b);			// ILT 0x0000B316
+	void notify04(int key, int a);				// ILT 0x00027287
 };
 
 // Only the AsciiString at +0x94 (see GlobalDataDestructor.cpp) is read here,
@@ -44,7 +49,7 @@ public:
 
 extern GlobalData *TheWritableGlobalData;
 
-int __cdecl bfmeCallFHA(void *a, void *b);			// ILT 0x00041164
+#define bfmeCallFHA(a, b) Rva003C92A0((int)(a), (int)(b))
 
 class Glo012F1028Holder
 {
@@ -77,22 +82,22 @@ void Glo012F1028Sub::bfmeFinish(Glo012F1028Item *item, bool flag)
 		void *text = TheWritableGlobalData->m_s94;
 		if (text == 0 || *(unsigned short *)((char *)text + 4) == 0)
 		{
-			owner->notify0C(AsciiString("HilightBordersEffect"),
+			owner->notify0C((int)&AsciiString("HilightBordersEffect"),
 				(int)&item->m_bfmePayload, 1);
-			owner->notify04(AsciiString("HilightBordersEffect"), 0);
+			owner->notify04((int)&AsciiString("HilightBordersEffect"), 0);
 		}
 	}
 
 	if (bfmeCallFHA(item->m_bfmeValue, item->m_bfmeValue) == 1)
 	{
-		owner->notify0C(AsciiString("FriendlyBordersEffect"),
+		owner->notify0C((int)&AsciiString("FriendlyBordersEffect"),
 			(int)&item->m_bfmePayload, 1);
-		owner->notify04(AsciiString("FriendlyBordersEffect"), 0);
+		owner->notify04((int)&AsciiString("FriendlyBordersEffect"), 0);
 	}
 	else
 	{
-		owner->notify0C(AsciiString("EnemyBordersEffect"),
+		owner->notify0C((int)&AsciiString("EnemyBordersEffect"),
 			(int)&item->m_bfmePayload, 1);
-		owner->notify04(AsciiString("EnemyBordersEffect"), 0);
+		owner->notify04((int)&AsciiString("EnemyBordersEffect"), 0);
 	}
 }
