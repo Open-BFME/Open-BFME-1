@@ -131,7 +131,7 @@ class Object : public Thing { public:
 class Overridable { public:
     void *vtable;
     Overridable *m_nextOverride;
-    Overridable *getFinalOverride();
+    const Overridable *getFinalOverride() const;
 };
 struct Rva001B80D0Template : Overridable {
     char before14[0x14-8];

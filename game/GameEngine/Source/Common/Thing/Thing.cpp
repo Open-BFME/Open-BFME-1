@@ -214,48 +214,7 @@ void Thing::getUnitDirectionVector3D(Coord3D& dir) const
 }
 
 //=============================================================================
-// the nice thing about this is that we don't have to recalc out cached terrain stuff.
-// ?setPositionZ@Thing@@QAEXM@Z present-unmatched
-void Thing::setPositionZ( Real z )
-{
-	//USE_PERF_TIMER(ThingMatrixStuff)
-	if( !(reinterpret_cast<const unsigned char *>(m_template.operator->())[0xc8] & 0x10) )
-	{
-		Real oldAngle;
-		Coord3D oldPos;
-		oldAngle = m_cachedAngle;
-		oldPos.x = m_cachedPos.x;
-		oldPos.y = m_cachedPos.y;
-		oldPos.z = m_cachedPos.z;
-		Matrix3D oldMtx = m_transform;
-
-		m_transform.Set_Z_Translation( z );
-		m_cachedPos.z = z;
-
-		if (m_cacheFlags & VALID_ALTITUDE_TERRAIN)
-		{
-			m_cachedAltitudeAboveTerrain += (z - oldPos.z);
-		}
-		if (m_cacheFlags & VALID_ALTITUDE_SEALEVEL)
-		{
-			m_cachedAltitudeAboveTerrainOrWater += (z - oldPos.z);
-		}
-
-		reinterpret_cast<BFMERetailThingVTable *>(this)->reactToTransformChange(&oldMtx, &oldPos, oldAngle);
-	}
-	else
-	{
-		Matrix3D mtx;
-		const Bool stickToGround = true;	// yes, set the "z" pos		
-		Coord3D pos;
-		pos.x = m_cachedPos.x;
-		pos.y = m_cachedPos.y;
-		pos.z = z;
-		reinterpret_cast<BFMERetailTerrainLogicVTable *>(TheTerrainLogic)->alignOnTerrain(getOrientation(), pos, stickToGround, mtx );
-		setTransformMatrix(&mtx);
-	}
-	DEBUG_ASSERTCRASH(!(_isnan(getPosition()->x) || _isnan(getPosition()->y) || _isnan(getPosition()->z)), ("Drawable/Object position NAN! '%s'\n", m_template->getName().str() ));
-}
+// setPositionZ: retail body lives in Thing_setPositionZ.cpp.
 
 //=============================================================================
 void Thing::setPosition( const Coord3D *pos )
