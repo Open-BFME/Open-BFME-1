@@ -1,0 +1,52 @@
+# 0x008B0D21 retry and split boundary
+
+The assigned 433-byte row is an interior suffix of the complete 482-byte function at RVA 0x008B0CF0. The retry produced and measured C++ reconstructions, but it did not recover a standalone function at 0x008B0D21. Collection requires a new assignment covering the enclosing function and reconciliation of its two generated ledger rows. Both existing rows remain unchanged.
+
+## Boundary evidence and refutation condition
+
+At revision 20f64813a005b14e1c5326631287c2ea4bb1f878, retail begins the enclosing function with `push -1`, the handler address, an FS registration sequence, and a four-byte local slot. The conditional jump at RVA 0x008B0D0B enters the assigned suffix at 0x008B0D21. The early return is at 0x008B0D20. The suffix restores the inherited registration at 0x008B0EC7, discards the inherited 16-byte frame at 0x008B0ECE, and returns at 0x008B0ED1. All decoded direct branches remain inside the enclosing extent. The following fourteen bytes are INT3 padding. The preceding function returns at 0x008B0CE2 and has INT3 padding through 0x008B0CEF.
+
+This boundary finding would be refuted by a verified independent entry route to 0x008B0D21 that establishes the same frame and arguments, or by a different independently verified retail extent. Instruction alignment at 0x008B0D21 alone does not refute it. The raw decode is retained in `build/rva008b0d21/retail_008b0cf0.txt`, with all branches and both returns in `build/rva008b0d21/boundary.json`. `checked_callees.py` accepted both the 433-byte suffix and the 482-byte enclosing extent; that check establishes complete linear decoding, not independent entry boundaries.
+
+## New context checked before experiments
+
+The five prior explicit-target attempts reported a split boundary, and no saved body existed. The nearby landed bodies include `Rva008B09A0ApplyRecord.cpp`, `Rva008B02A0RelativeRect.cpp`, `Rva008B0170Ctor.cpp`, `Rva008B0120Ctor.cpp`, and `Rva008AD2C0Assign.cpp`. The next served neighbour, `WideHeaderedAlloc.cpp`, supplies the allocator callback and intrusive-header conventions. Their actual source was read. A matching Zero Hour Apt implementation was not found in the supplied reference tree. Current declarations address the older payload-layout and ownership screening questions but do not address the split entry point. Neither `Rva008B0170` nor `Rva8CB820Payload` has a layout witness in `name_oracle.py`.
+
+The new hypothesis was that the current landed layouts would permit a complete enclosing C++ reconstruction whose suffix could be measured, and might establish whether a standalone source could reproduce the served row. An unavoidable independent EH prologue at the served address refutes the standalone hypothesis. Trial 06 removes the enclosing count guard and still emits an independent EH registration at byte zero. Its source and raw probe output are preserved.
+
+## ABI, layout, and cleanup observations
+
+The enclosing body reads its first incoming stack word as an owner pointer and its second as a signed count; it returns a full pointer in EAX with plain RET on both paths. No incoming ECX receiver is consumed. No complete external caller was established, so the proposed two-argument cdecl signature remains a body-derived ABI view rather than a fully verified original declaration. The existing dump's `void(void)` signature is not ABI evidence.
+
+The entire 442-byte constructor at 0x008AD100 consumes thirteen dword stack arguments and returns with RET 0x34. It writes an owning string at payload offset zero and scalar words at offsets 4, 8, 0x0C, 0x10, 0x14, 0x18, and 0x1C. Its first and ninth argument words are dereferenced as value pointers. The complete copy constructor at 0x008B0120 initializes the empty string and calls the complete 103-byte assignment helper at 0x008AD2C0, which copies every scalar field and updates the string reference count. These helpers were decoded through all return paths. No STL container type is proposed.
+
+The complete adjacent 339-byte body at 0x008B09A0 reads the same owner field at +0x50 and payload field at +0x68. At RVAs 0x008B0A91 and 0x008B0A94, it loads the source record's +4 word with FLD and stores it to context +0x60 with FST. This independently supports floating-point storage for that word. It does not alone prove that the original thirteen-argument constructor declared its second parameter as float. Trial 03 tests that declaration while retaining the existing class and function names. Its proposed constructor symbol `??0Rva8CB820Payload@@QAE@HMHHHHHHHHHHH@Z` is unpinned; the current landed declaration uses thirteen ints. No pin or declaration correction is claimed.
+
+The target's native unwind map has four states, each with predecessor -1. State 0 calls global scalar delete at 0x00881EB0. State 1 passes size 0x40 to the complete headered delete at 0x008AB870. States 2 and 3 tail-jump to the complete 22-byte EAStringC destructor at 0x00891B80, with stack receivers at saved-frame +8 and -0x10. The candidate emits the same four cleanup shapes. Its state 1 references the unbound symbol `??3Rva008B0170@@SAXPAXI@Z`; ownership and canonical operator identity remain unresolved. The raw map is in `build/rva008b0d21/eh_parent.txt`, and candidate cleanup bytes and relocations are in `build/rva008b0d21/compiled_eh_symbols.txt`. The allocator and pool callbacks are indirect cdecl calls with caller stack cleanup. The target has no virtual calls.
+
+Every directly used callee and cleanup helper was checked at its complete extent. An auxiliary check of the string conversion helper at 0x008985C0 failed linear decoding of its current 1866-byte ledger extent at 0x00898CFD. Its retained output is `build/rva008b0d21/checked_008985c0.txt`; that helper was excluded from independent type evidence and remains an unresolved auxiliary check.
+
+## Compiler measurements
+
+All rows below are the unmodified probe's positional masked-byte counts. Several relocation sites do not align with retail operands, so these diagnostics are not relocation verification or exact-match evidence. Scores follow `finish_measure.py`, including its size penalty.
+
+| Trial | Hypothesis | Enclosing extent, 482 bytes | Assigned extent, 433 bytes |
+|---|---|---|---|
+| 01 | Existing int constructor and native string lifetimes | 461 emitted bytes; 318 differences; first +0x32; score 0.2531 | 461 emitted bytes; 357 differences; first +0; score 0.0462 |
+| 02 | Visible raw-float-bit adapter keeps the existing int signature | 461 emitted bytes; 314 differences; first +0x32; score 0.2614 | Not selected as the preferred assigned-extent experiment |
+| 03 | Float second argument removes union storage | 456 emitted bytes; 336 differences; first +0x32; score 0.1950 | 456 emitted bytes; 350 differences; first +0; score 0.0855 |
+| 04 | Force the retail-inlined string assignment | 478 emitted bytes; 357 differences; first +0x32; score 0.2427 | 478 emitted bytes; 356 differences; first +0; score 0.0000 |
+| 05 | Represent the observed array subobject at +8 | 481 emitted bytes; 271 differences; first +0x95; score 0.4336 | 481 emitted bytes; 355 differences; first +0; score 0.0000 |
+| 06 | Standalone suffix without the count guard | Not an enclosing-body candidate | 454 emitted bytes; 359 differences; first +0; score 0.0739 |
+
+The EH choices generator was run before hand iteration. Five generated shapes were attempted: three compiled and two generated invalid declarations. The valid EH toggle and throw specification did not remove the independent prologue. The original and every generated source are in `build/shape_search/44843881cb1c4721a498aae41a1313af/`; its `result.json` records all outcomes. Raw successful probe outputs are `build/rva008b0d21/probe_eh_00.txt` through `probe_eh_02.txt`. Each hand trial has an unchanged source and full raw probe under `build/rva008b0d21/`. No /Ob or x87 register experiment was repeated.
+
+Trial 05 reproduces the enclosing function's prefix through +0x94 modulo aligned relocation slots. The first remaining difference at +0x95 is retail LEA versus a MOV and ADD. Later differences include the selection receiver copy, selected-index reload, and array pointer load. A longer diagnostic shape score is not a verified recovery. Further parent-shape work needs the enclosing function assignment, constructor-parameter evidence, and reconciliation of the sized delete binding.
+
+## Preserved sources and checks
+
+The best assigned-extent measurement is stored by `re_log.archive_attempt` in `targets/game/reverse/attempt_history/0x008b0d21/aa36b32f847b0b96b634d9d0aca71fcf736da67af8eb1f1e728ba411e4484ea6.json`. Its source is trial 03 and its assigned-extent diagnostic score is 0.0855. The stronger enclosing-function diagnostic is stored in `targets/game/reverse/attempt_history/0x008b0d21/7e28d3ccee831c3e1661fc0bfdf575590babec735b986da443d88c4fea0755a0.json`. Its source is trial 05; its archive score is 0.0000 against the assigned suffix, and its separately measured enclosing-extent score is 0.4336. These immutable archives preserve the bodies without presenting the interior suffix as an independently callable bank.
+
+`check_csv.py` passed before implementation. The existing generated suffix passed the scoped byte gate through explicit Git Bash, with raw output in `build/rva008b0d21/gate_existing_row_bash.txt`. Candidate strict byte gates failed for both extents, with raw output in `build/rva008b0d21/gate_candidate_suffix_raw.txt` and `gate_candidate_parent_raw.txt`; they include the unresolved float-constructor symbol and code differences. The candidate cleanup operator is also unresolved and must be checked separately. The `build.cmd` launcher failed to locate Python; its raw launcher output is retained in `gate_existing_row.txt`, and the Git Bash retry completed successfully. No production source, shared header, symbol pin, or ledger row changed. A full gate is not required for this evidence-only result.
+
+Exactly one blocked verdict row was appended with `re_log.py`. A byte comparison confirmed that the original attempt-log bytes remain an unchanged prefix. The tool appended its normal CRLF terminator to an existing mixed-terminator log. Plain `git diff --check` flags that terminator; the check with `core.whitespace=cr-at-eol` passes. Both raw outputs are retained as `build/rva008b0d21/diff_check_raw.txt` and `diff_check_crlf.txt`. The final CSV check passed, with raw output in `build/rva008b0d21/check_csv_handoff.txt`.
