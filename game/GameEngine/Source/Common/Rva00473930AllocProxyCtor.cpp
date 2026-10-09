@@ -5,11 +5,18 @@ typedef bool Bool;
 
 namespace _STL
 {
-class __new_alloc
+// Retail 0x0082E540 is the matched node pool refill/mutex body.
+static __forceinline void *vectorSmallAllocate(unsigned int bytes);
+template <bool Threads, int Instance>
+class __node_alloc
 {
-public:
-	static void *allocate( UnsignedInt bytes );
+	static void *__cdecl _M_allocate(unsigned int bytes);
+	friend void *vectorSmallAllocate(unsigned int bytes);
 };
+static __forceinline void *vectorSmallAllocate(unsigned int bytes)
+{
+	return __node_alloc<true, 0>::_M_allocate(bytes);
+}
 }
 
 class Rva00473930
@@ -38,5 +45,5 @@ Rva00473930::Rva00473930( int flags )
 	union { void (*fn)(); Initialize call; } initialize = { j_0000e7cd };
 	( ( ( Route00473930 * ) this )->*initialize.call )( &ok, 0 );
 
-	m_bfmePtr = _STL::__new_alloc::allocate( 0x18 );
+	m_bfmePtr = _STL::vectorSmallAllocate( 0x18 );
 }
