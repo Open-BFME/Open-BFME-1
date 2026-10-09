@@ -26,11 +26,6 @@ enum PathfindLayerEnum
 };
 
 // BFME's REAL_TO_INT_FLOOR: CRT floor() then the engine's x87 round.
-__forceinline Real fast_float_floor(Real f)
-{
-	return (Real)floor((double)f);
-}
-
 __forceinline long fast_float2long_round(Real f)
 {
 	long i;
@@ -41,7 +36,7 @@ __forceinline long fast_float2long_round(Real f)
 	return i;
 }
 
-#define REAL_TO_INT_FLOOR(x) (fast_float2long_round(fast_float_floor(x)))
+#define REAL_TO_INT_FLOOR(x) (fast_float2long_round((Real)floor((double)(x))))
 #define __max(a,b) (((a) > (b)) ? (a) : (b))
 
 #define MAP_XY_FACTOR 10.0f
@@ -89,12 +84,7 @@ extern TerrainLogic *TheTerrainLogic;
 class WorldHeightMap
 {
 public:
-	Int getXExtent(void) { return m_width; }
-	Int getYExtent(void) { return m_height; }
-	Int getBorderSizeInline(void) const { return m_borderSize; }
-	UnsignedShort *getDataPtr(void) { return m_data; }
 
-private:
 	char m_padding00[8];
 	Int m_width;
 	Int m_height;
@@ -121,7 +111,7 @@ Bool BaseHeightMapRenderObjClass::isClearLineOfSight(const Coord3D& pos, const C
 
 	const Real MAP_XY_FACTOR_INV = 1.0f / MAP_XY_FACTOR;
 
-	Int borderSize = m_map->getBorderSizeInline();
+	Int borderSize = m_map->m_borderSize;
 	Int start_x = REAL_TO_INT_FLOOR(pos.x * MAP_XY_FACTOR_INV) + borderSize;
 	Int start_y = REAL_TO_INT_FLOOR(pos.y * MAP_XY_FACTOR_INV) + borderSize;
 	Int end_x = REAL_TO_INT_FLOOR(posOther.x * MAP_XY_FACTOR_INV) + borderSize;
@@ -182,9 +172,9 @@ Bool BaseHeightMapRenderObjClass::isClearLineOfSight(const Coord3D& pos, const C
 
 	Bool sawGround = false;
 	Bool result = true;
-	const UnsignedShort* data = m_map->getDataPtr();
-	Int xExtent = m_map->getXExtent();
-	Int yExtent = m_map->getYExtent();
+	const UnsignedShort* data = m_map->m_data;
+	Int xExtent = m_map->m_width;
+	Int yExtent = m_map->m_height;
 	for (Int curpixel = 0; curpixel < numpixels; curpixel++)
 	{
 		if (x < 0 ||
