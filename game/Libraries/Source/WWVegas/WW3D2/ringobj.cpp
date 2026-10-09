@@ -993,17 +993,8 @@ void RingRenderObjClass::Get_Obj_Space_Bounding_Box(AABoxClass & box) const
 
 
 // byte-exact reconstruction: game/Libraries/Source/WWVegas/WW3D2/RingRenderObjPrepareLOD.cpp
-// ?Prepare_LOD@RingRenderObjClass@@UAEXAAVCameraClass@@@Z present-unmatched
-void RingRenderObjClass::Prepare_LOD(CameraClass &camera)
-{
-	if (Is_Not_Hidden_At_All() == false) {
-		return;
-	}
+// The retail LOD preparation body is emitted by RingRenderObjPrepareLOD.cpp.
 
-	calculate_value_array(Get_Screen_Size(camera), Value);
-
-	PredictiveLODOptimizerClass::Add_Object(this);
-}
 
 // ?Increment_LOD@RingRenderObjClass@@UAEXXZ present-unmatched
 void RingRenderObjClass::Increment_LOD(void)
@@ -1011,11 +1002,8 @@ void RingRenderObjClass::Increment_LOD(void)
 	if (CurrentLOD < RING_NUM_LOD) CurrentLOD++;
 }
 
-// ?Decrement_LOD@RingRenderObjClass@@UAEXXZ present-unmatched
-void RingRenderObjClass::Decrement_LOD(void)
-{
-	if (CurrentLOD > 0) CurrentLOD--;
-}
+// The retail LOD decrement body is emitted by RingRenderObjPrepareLOD.cpp.
+
 
 float RingRenderObjClass::Get_Cost(void) const
 {
@@ -1023,18 +1011,12 @@ float RingRenderObjClass::Get_Cost(void) const
 }
 
 // byte-exact reconstruction: game/Libraries/Source/WWVegas/WW3D2/RingRenderObjPrepareLOD.cpp
-// ?Get_Value@RingRenderObjClass@@UBEMXZ present-unmatched
-float RingRenderObjClass::Get_Value(void) const
-{
-	return Value[CurrentLOD];
-}
+// The retail LOD value body is emitted by RingRenderObjPrepareLOD.cpp.
+
 
 // byte-exact reconstruction: game/Libraries/Source/WWVegas/WW3D2/RingRenderObjPrepareLOD.cpp
-// ?Get_Post_Increment_Value@RingRenderObjClass@@UBEMXZ present-unmatched
-float RingRenderObjClass::Get_Post_Increment_Value(void) const
-{
-	return Value[CurrentLOD + 1];
-}
+// The retail next-LOD value body is emitted by RingRenderObjPrepareLOD.cpp.
+
 
 // ?Set_LOD_Level@RingRenderObjClass@@UAEXH@Z present-unmatched
 void RingRenderObjClass::Set_LOD_Level(int lod)

@@ -131563,7 +131563,6 @@ present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Calculate_Cost
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Class_ID@RingRenderObjClass@@UBEHXZ	1
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Clone@RingRenderObjClass@@UBEPAVRenderObjClass@@XZ	1
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Create@RingPrototypeClass@@UAEPAVRenderObjClass@@XZ	1
-present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Decrement_LOD@RingRenderObjClass@@UAEXXZ	1
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Free@RingMeshClass@@AAEXXZ	1
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Generate@RingMeshClass@@QAEXMH@Z	1
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Generate_Shared_Mesh_Arrays@RingRenderObjClass@@KAXXZ	1
@@ -131579,13 +131578,10 @@ present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Get_Name@RingR
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Get_Num_Polys@RingRenderObjClass@@UBEHXZ	1
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Get_Obj_Space_Bounding_Box@RingRenderObjClass@@UBEXAAVAABoxClass@@@Z	1
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Get_Obj_Space_Bounding_Sphere@RingRenderObjClass@@UBEXAAVSphereClass@@@Z	1
-present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Get_Post_Increment_Value@RingRenderObjClass@@UBEMXZ	1
-present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Get_Value@RingRenderObjClass@@UBEMXZ	1
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Increment_LOD@RingRenderObjClass@@UAEXXZ	1
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Init_Material@RingRenderObjClass@@IAEXXZ	1
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Load@RingPrototypeClass@@QAE_NAAVChunkLoadClass@@@Z	1
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Load_W3D@RingLoaderClass@@UAEPAVPrototypeClass@@AAVChunkLoadClass@@@Z	1
-present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Prepare_LOD@RingRenderObjClass@@UAEXAAVCameraClass@@@Z	1
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Render@RingRenderObjClass@@UAEXAAVRenderInfoClass@@@Z	1
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Save@RingPrototypeClass@@QAE_NAAVChunkSaveClass@@@Z	1
 present_unmatched	game/Libraries/Source/WWVegas/WW3D2/ringobj.cpp	Scale@RingMeshClass@@QAEXABVVector2@@0@Z	1
