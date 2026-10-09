@@ -116,22 +116,6 @@ void SimpleObjectIterator::reset()
 
 //=============================================================================
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/SimpleObjectIteratorClear.cpp
-// ?makeEmpty@SimpleObjectIterator@@QAEXXZ present-unmatched
-void SimpleObjectIterator::makeEmpty()
-{
-	while (m_firstClump)
-	{
-		Clump *next = m_firstClump->m_nextClump;
-		m_firstClump->deleteInstance();
-		m_firstClump = next;
-		--m_clumpCount;
-	}
-	DEBUG_ASSERTCRASH(m_clumpCount == 0, ("hmm"));
-
-	m_firstClump = NULL;
-	m_curClump = NULL;
-	m_clumpCount = 0;
-}
 
 //=============================================================================
 void SimpleObjectIterator::sort(IterOrderType order)
