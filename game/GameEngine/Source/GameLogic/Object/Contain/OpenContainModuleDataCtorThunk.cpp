@@ -186,20 +186,20 @@ private:
 	unsigned int m_word128;                             // +0x128, untouched by retail
 	Rva00212CThreePointer m_three12C;                   // +0x12C
 	float m_real138;                                    // +0x138
-	unsigned int m_zero13C;                             // +0x13C
+	unsigned int m_damagePercentageToUnits;                             // +0x13C
 	int m_containMax;                                   // +0x140
 	int m_numberOfExitPaths;                            // +0x144
 	unsigned int m_word148;                             // +0x148
 	bool m_flag14C;                                     // +0x14C
-	bool m_flag14D;                                     // +0x14D
-	bool m_flag14E;                                     // +0x14E
-	bool m_flag14F;                                     // +0x14F
+	bool m_allowAlliesInside;                                     // +0x14D
+	bool m_allowEnemiesInside;                                     // +0x14E
+	bool m_allowNeutralInside;                                     // +0x14F
 	bool m_flag150;                                     // +0x150
 	bool m_flag151;                                     // +0x151
 	bool m_flag152;                                     // +0x152
 	bool m_flag153;                                     // +0x153
 	bool m_flag154;                                     // +0x154
-	bool m_flag155;                                     // +0x155
+	bool m_passengersInTurret;                                     // +0x155
 	bool m_flag156;                                     // +0x156
 	Rva002158StringVector m_sounds;                     // +0x158
 	unsigned int m_doorOpenTime;                       // +0x164
@@ -212,14 +212,14 @@ OpenContainModuleData::OpenContainModuleData()
 {
 	m_containMax = -1;
 	m_real138 = -1000.0f;
-	m_flag155 = false;
+	m_passengersInTurret = false;
 	m_numberOfExitPaths = 1;
-	m_zero13C = 0;
+	m_damagePercentageToUnits = 0;
 	m_word148 = 1;
 	m_flag14C = false;
-	m_flag14D = true;
-	m_flag14E = true;
-	m_flag14F = true;
+	m_allowAlliesInside = true;
+	m_allowEnemiesInside = true;
+	m_allowNeutralInside = true;
 	m_flag150 = true;
 	m_flag151 = true;
 	m_flag152 = true;
