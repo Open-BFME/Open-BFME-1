@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "de76e95fcae51f37907aa4a4f49bee2bec5b829e522e8e2c6cd2e229e278f0b1",
+  "symbol": "?d_001c9310@@YAXXZ",
+  "score_kind": "measured",
+  "score": 0.775,
+  "source": "// ?d_001c9310@@YAXXZ\n// partial score=0.775 date=2026-10-08\n// cl: /O2\n\nclass Overridable\n{\npublic:\n\tconst Overridable *getFinalOverride() const;\n\n\tchar pad0[4];\n\tOverridable *next;\n\tchar pad8[0x28 - 8];\n\tint field28;\n\tchar pad2c[0xd0 - 0x2c];\n\tunsigned int flags;\n\tchar pad_d4[0x448 - 0xd4];\n\tint field448;\n};\n\nclass Rva001C9310Host\n{\npublic:\n\tint Rva001C9310();\n\nprivate:\n\tchar pad0[4];\n\tOverridable *object;\n\tchar pad8[0x210 - 8];\n\tOverridable *other;\n};\n\nint Rva001C9310Host::Rva001C9310()\n{\n\tconst Overridable *node = object;\n\tif (node && node->next)\n\t{\n\t\tnode = node->next->getFinalOverride();\n\t}\n\tint value = node->field448;\n\tnode = object;\n\tif (node && node->next)\n\t{\n\t\tnode = node->next->getFinalOverride();\n\t}\n\tif (node->flags & 0x2000000)\n\t{\n\t\treturn other->field28 * value;\n\t}\n\treturn value;\n}\n"
+}
