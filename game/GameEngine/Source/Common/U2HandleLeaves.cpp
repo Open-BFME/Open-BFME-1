@@ -33,21 +33,34 @@ Rva00831F50Object *Rva00831F50Release(Rva00831F50Object *p)
 	return p;
 }
 
+// The two refresh calls reach the matched wide iterator helper at
+// 0x00833D90. Its private const member must remain an out-of-line call.
+struct Rva00845250Node;
+int Rva00845250Equal(Rva00845250Node *a, Rva00845250Node *b);
+namespace _STL
+{
+template <class C> class char_traits;
+template <class C, class Traits> class istreambuf_iterator
+{
+	void _M_getc() const;
+	friend int ::Rva00845250Equal(Rva00845250Node *, Rva00845250Node *);
+};
+}
+
 struct Rva00845250Node
 {
 	void *m_source;
 	char m_pad[2];
 	char m_kind;
 
-	void refresh();
 };
 
 int Rva00845250Equal(Rva00845250Node *a, Rva00845250Node *b)
 {
 	if (a->m_source != 0)
-		a->refresh();
+		reinterpret_cast<const _STL::istreambuf_iterator<unsigned short, _STL::char_traits<unsigned short> > *>(a)->_M_getc();
 	if (b->m_source != 0)
-		b->refresh();
+		reinterpret_cast<const _STL::istreambuf_iterator<unsigned short, _STL::char_traits<unsigned short> > *>(b)->_M_getc();
 	return a->m_kind == b->m_kind;
 }
 
