@@ -122,6 +122,13 @@ public:
 	int resolveMode() const;
 };
 
+// Ledger row ?getSelectedItemData@Rva0056AB50Owner@@QAEPAXXZ (0x0056AB50).
+class Rva0056AB50Owner
+{
+public:
+	void *getSelectedItemData();
+};
+
 class Rva56E070StateOwner : public BfmeThingME
 {
 public:
@@ -147,7 +154,7 @@ void Rva56E070StateOwner::rva0056D070()
 		return;
 
 	UnicodeString description = GadgetTextEntryGetText((GameWindow *)m_context26c);
-	Rva56E070SelectedItem *selected = (Rva56E070SelectedItem *)(unsigned int)bfmeTestME();
+	Rva56E070SelectedItem *selected = (Rva56E070SelectedItem *)((Rva0056AB50Owner *)this)->getSelectedItemData();
 	AsciiString filename;
 	if (selected != 0)
 		filename = selected->filename;
