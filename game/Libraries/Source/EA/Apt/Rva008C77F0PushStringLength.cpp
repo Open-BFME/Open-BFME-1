@@ -90,7 +90,7 @@ struct Rva00899560Pool
 // so forward-declare it and spell the reference with its defining type.
 class Rva008D2A10;
 extern Rva008D2A10 *g_rva008D2A10;
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+extern Rva00899560Pool *g_rva01337810GcRoots;
 extern void *(*Rva008C5D70Alloc)(unsigned int bytes);
 
 __forceinline AptValue::AptValue(int type)
@@ -100,7 +100,7 @@ __forceinline AptValue::AptValue(int type)
 	if (type != 0x1c && type != 0xa)
 	{
 		m_flags = flags | 0x40000000;
-		g_rva8CD130IdleHook->addPooled(this);
+		g_rva01337810GcRoots->addPooled(this);
 	}
 	else
 	{
@@ -134,7 +134,7 @@ public:
 		if (object != 0)
 		{
 			g_rva008D2A10 = (Rva008D2A10 *)object->m_next;
-			g_rva8CD130IdleHook->addPooled(object);
+			g_rva01337810GcRoots->addPooled(object);
 			object->m_value = value;
 			return object;
 		}

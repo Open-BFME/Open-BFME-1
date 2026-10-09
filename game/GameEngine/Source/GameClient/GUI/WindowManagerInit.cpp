@@ -48,7 +48,7 @@ extern void d_00894800();
 extern void j_00025086();
 extern void j_00039f1d();
 struct Rva00899560Pool;
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+extern Rva00899560Pool *g_rva01337810GcRoots;
 
 class WindowManager
 {
@@ -84,7 +84,7 @@ void WindowManager::init()
 	typedef void ( __cdecl *ConfigureWindowParameters )( Gen_004659D0 * );
 	( (ConfigureWindowParameters)(void *)d_00894800 )( &parameters );
 	*reinterpret_cast< unsigned int * >(
-		reinterpret_cast< unsigned char * >( &g_rva8CD130IdleHook ) + 8 ) |= 2;
+		reinterpret_cast< unsigned char * >( &g_rva01337810GcRoots ) + 8 ) |= 2;
 	j_00025086();
 	j_00039f1d();
 

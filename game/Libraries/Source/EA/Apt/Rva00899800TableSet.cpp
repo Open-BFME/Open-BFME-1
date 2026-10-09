@@ -39,7 +39,7 @@ struct Rva00899560Pool
 // ?g_rva008D2A80@@3PAVRva008D2A80@@A, defined by Rva008D2A80Link.cpp.
 class Rva008D2A80;
 extern Rva008D2A80 *g_rva008D2A80;
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+extern Rva00899560Pool *g_rva01337810GcRoots;
 extern void *(__cdecl *Rva008C5D70Alloc)(UnsignedInt bytes);
 
 class AptValue
@@ -161,7 +161,7 @@ struct Rva00899800Boolean
 		if (object != 0)
 		{
 			g_rva008D2A80 = (Rva008D2A80 *)object->m_next;
-			g_rva8CD130IdleHook->addPooled((Rva008D2A30Node *)object);
+			g_rva01337810GcRoots->addPooled((Rva008D2A30Node *)object);
 			object->m_value = 0;
 			return object;
 		}
@@ -171,7 +171,7 @@ struct Rva00899800Boolean
 		{
 			object->m_vtable = (void *)vtable01135D68;
 			object->m_flags = (object->m_flags & 0xf0008005) | 0x40008005;
-			g_rva8CD130IdleHook->addPooled((Rva008D2A30Node *)object);
+			g_rva01337810GcRoots->addPooled((Rva008D2A30Node *)object);
 			object->m_vtable = (void *)__identifier("??_7Rva008995E0Value@@6B@");
 			object->m_value = 0;
 			return object;
@@ -187,7 +187,7 @@ struct Rva00899800Boolean
 		if (object != 0)
 		{
 			g_rva008D2A80 = (Rva008D2A80 *)object->m_next;
-			g_rva8CD130IdleHook->addPooled((Rva008D2A30Node *)object);
+			g_rva01337810GcRoots->addPooled((Rva008D2A30Node *)object);
 			object->m_value = 1;
 			return object;
 		}
@@ -199,7 +199,7 @@ struct Rva00899800Boolean
 				(object->m_flags & 0xf0008005) | 0x40008005;
 			object->m_vtable = (void *)vtable01135D68;
 			object->m_flags = flags;
-			g_rva8CD130IdleHook->addPooled((Rva008D2A30Node *)object);
+			g_rva01337810GcRoots->addPooled((Rva008D2A30Node *)object);
 			object->m_vtable = (void *)__identifier("??_7Rva008995E0Value@@6B@");
 			object->m_value = 1;
 			return object;

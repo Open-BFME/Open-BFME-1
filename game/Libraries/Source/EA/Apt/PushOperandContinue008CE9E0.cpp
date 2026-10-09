@@ -40,7 +40,7 @@ struct Rva00899560Pool {
  int m_capacity,m_count; Rva008A9B00 **m_items;
  void add(Rva008A9B00 *v) { int i=m_count; int *count=&m_count; if(i>=m_capacity) v->m_flags&=~0x40000000; else { m_items[i]=v; ++*count; } }
 };
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+extern Rva00899560Pool *g_rva01337810GcRoots;
 extern Rva008A9B00 *Rva008C3B60Head;
 class Rva8CEE00State { public: int m_00; int m_04; Rva008A9B00 **m_08; };
 struct Rva8CEE00Cursor { unsigned m_00; };
@@ -51,7 +51,7 @@ void pushOperandContinue008CE9E0(Rva8CEE00State *state,Rva8CEE00Cursor *cursor) 
  Rva008A9B00 *value=Rva008C3B60Head;
  if(value) {
   Rva008C3B60Head=value->m_next;
-  g_rva8CD130IdleHook->add(value);
+  g_rva01337810GcRoots->add(value);
   if(value->m_name.m_bfme00!=(BfmeHdrVKI *)&g_rva012D5298Empty)
    ((BfmeStrVKK *)&value->m_name)->bfmeTruncVKK(0);
  } else value=new Rva008A9B00;

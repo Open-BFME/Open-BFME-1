@@ -27,7 +27,7 @@ struct Rva00899560Pool {
 // ?g_rva008D2A80@@3PAVRva008D2A80@@A, defined by Rva008D2A80Link.cpp.
 class Rva008D2A80;
 extern Rva008D2A80 *g_rva008D2A80;
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+extern Rva00899560Pool *g_rva01337810GcRoots;
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned);
 extern const char vtable01135D68[];
 // 0x011360A8 is Rva008995E0Value's vftable, emitted as a COMDAT by
@@ -43,7 +43,7 @@ struct Boolean008A58C0 {
   Boolean008A58C0 *object=(Boolean008A58C0*)g_rva008D2A80;
   if(object) {
    g_rva008D2A80=(Rva008D2A80*)object->m_next;
-   g_rva8CD130IdleHook->addPooled((Rva008D2A30Node*)object);
+   g_rva01337810GcRoots->addPooled((Rva008D2A30Node*)object);
    object->m_value=value;
    return object;
   }
@@ -53,7 +53,7 @@ struct Boolean008A58C0 {
  __forceinline Boolean008A58C0(bool value) {
    m_vtable=(void*)vtable01135D68;
    m_flags=(m_flags&0xf0008005)|0x40008005;
-   g_rva8CD130IdleHook->addPooled((Rva008D2A30Node*)this);
+   g_rva01337810GcRoots->addPooled((Rva008D2A30Node*)this);
    m_vtable=(void*)__identifier("??_7Rva008995E0Value@@6B@");
    m_value=value;
  }

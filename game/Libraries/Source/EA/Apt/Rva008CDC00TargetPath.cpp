@@ -114,7 +114,7 @@ struct Rva00899560Pool
 		}
 	}
 };
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+extern Rva00899560Pool *g_rva01337810GcRoots;
 extern Rva008C3B60Node *Rva008C3B60Head;
 extern AptValue *g_bfmeFallbackDB;
 
@@ -124,7 +124,7 @@ static __forceinline Rva008C3B60Node *createStringValue()
 	if (node)
 	{
 		Rva008C3B60Head = node->m_next;
-		g_rva8CD130IdleHook->addPooled(node);
+		g_rva01337810GcRoots->addPooled(node);
 		if (node->m_data != &g_bfmeDefaultString1284)
 			((BfmeStrVKK *)&node->m_data)->bfmeTruncVKK(0);
 		return node;

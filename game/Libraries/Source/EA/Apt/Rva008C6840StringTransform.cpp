@@ -87,7 +87,7 @@ struct Rva00899560Pool
         }
     }
 };
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+extern Rva00899560Pool *g_rva01337810GcRoots;
 // The Apt global node free list at 0x01338478, defined once by
 // game/GameEngine/Source/Common/Data/Rva01338478.cpp.  These bodies keep their
 // own view of a node (Rva008A9B00) and reach the next link through it.
@@ -111,7 +111,7 @@ Rva008A9B00 *rva008C6840StringTransform()
     if (result)
     {
         rva01338478FreeHead() = result->m_next;
-        g_rva8CD130IdleHook->addPooled(result);
+        g_rva01337810GcRoots->addPooled(result);
         if (result->m_data != &g_bfmeDefaultString1284)
             ((BfmeStrVKK *)&result->m_data)->bfmeTruncVKK(0);
     }

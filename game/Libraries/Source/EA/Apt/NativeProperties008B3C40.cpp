@@ -15,7 +15,7 @@ struct Rva00899560Pool {
         ++count;
     }
 };
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+extern Rva00899560Pool *g_rva01337810GcRoots;
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned);
 struct Rva00899560Value {
     virtual ~Rva00899560Value();
@@ -25,7 +25,7 @@ struct Rva00899560Value {
         m_flags = flags;
         if (type != 0x1c && type != 0xa) {
             m_flags = flags | 0x40000000;
-            g_rva8CD130IdleHook->addPooled(this);
+            g_rva01337810GcRoots->addPooled(this);
         } else
             m_flags = flags & 0xBFFFFFFF;
     }
@@ -43,7 +43,7 @@ static __forceinline Rva008A1110Value *pooledInteger(int value) {
     Rva008A1110Value *v = Rva013387D0;
     if (v) {
         Rva013387D0 = v->m_next;
-        g_rva8CD130IdleHook->addPooled(v);
+        g_rva01337810GcRoots->addPooled(v);
         v->m_value = value;
         return v;
     }
@@ -80,7 +80,7 @@ static __forceinline Rva008995E0Value *pooledBoolean(bool value) {
     Rva008995E0Value *v = (Rva008995E0Value *)g_rva008D2A80;
     if (v) {
         g_rva008D2A80 = (Rva008D2A80 *)v->m_next;
-        g_rva8CD130IdleHook->addPooled(v);
+        g_rva01337810GcRoots->addPooled(v);
         v->m_value = value;
         return v;
     }
@@ -112,7 +112,7 @@ static __forceinline Rva008A9B00 *pooledString() {
     Rva008A9B00 *v = rva01338478FreeHead();
     if (v) {
         rva01338478FreeHead() = v->field0C;
-        g_rva8CD130IdleHook->addPooled(v);
+        g_rva01337810GcRoots->addPooled(v);
         if (v->field08 != &g_default012D5298)
             ((BfmeStrVKK *)&v->field08)->bfmeTruncVKK(0);
     } else v = new Rva008A9B00;

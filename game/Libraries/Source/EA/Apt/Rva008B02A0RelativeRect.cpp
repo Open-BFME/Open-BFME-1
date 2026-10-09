@@ -15,7 +15,7 @@ struct Rva00899560Pool {
 // referenced by its own class name (forward declared, never defined here).
 class Rva008D29A0;
 extern Rva008D29A0 *g_rva008D29A0;
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+extern Rva00899560Pool *g_rva01337810GcRoots;
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned);
 extern const char vtable01135D68[],vtable01136698[];
 struct Float008B02A0 {
@@ -25,7 +25,7 @@ struct Float008B02A0 {
   Float008B02A0 *object=(Float008B02A0*)g_rva008D29A0;
   if(object) {
    g_rva008D29A0=(Rva008D29A0*)object->m_next;
-   g_rva8CD130IdleHook->addPooled((Rva008D2950Node*)object);
+   g_rva01337810GcRoots->addPooled((Rva008D2950Node*)object);
    object->m_value=value;
    return object;
   }
@@ -35,7 +35,7 @@ struct Float008B02A0 {
  __forceinline Float008B02A0(float value) {
    m_vtable=(void*)vtable01135D68;
    m_flags=(m_flags&0xf0008006)|0x40008006;
-   g_rva8CD130IdleHook->addPooled((Rva008D2950Node*)this);
+   g_rva01337810GcRoots->addPooled((Rva008D2950Node*)this);
    m_vtable=(void*)vtable01136698;
    m_value=value;
  }

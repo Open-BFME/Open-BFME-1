@@ -40,7 +40,7 @@ struct Rva00899560Pool {
         ++count;
     }
 };
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+extern Rva00899560Pool *g_rva01337810GcRoots;
 class Rva00899560Value {
 public:
     virtual ~Rva00899560Value();
@@ -50,7 +50,7 @@ public:
         m_flags = flags;
         if (type != 0x1c && type != 0xa) {
             m_flags = flags | 0x40000000;
-            g_rva8CD130IdleHook->addPooled(this);
+            g_rva01337810GcRoots->addPooled(this);
         } else {
             m_flags = flags & 0xBFFFFFFF;
         }
@@ -78,7 +78,7 @@ static __forceinline Rva008A4C00Value *makeValue4C0(float value)
     Rva008A4C00Value *result = (Rva008A4C00Value *)g_rva008D29A0;
     if (result) {
         g_rva008D29A0 = (Rva008D29A0 *)result->m_next;
-        g_rva8CD130IdleHook->addPooled(result);
+        g_rva01337810GcRoots->addPooled(result);
         result->m_value = value;
         return result;
     }

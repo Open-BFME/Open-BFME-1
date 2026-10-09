@@ -34,7 +34,7 @@ struct Rva00899560Pool {
 // so forward-declare it and spell the reference with its defining type.
 class Rva008D2A10;
 extern Rva008D2A10 *g_rva008D2A10;
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+extern Rva00899560Pool *g_rva01337810GcRoots;
 // The Apt value tables the two stores below stamp are retail's own
 // ??_7AptValue@@6B@ and ??_7AptInteger@@6B@; __identifier binds those
 // symbols directly, so no linker alias stand-in is needed here.
@@ -45,7 +45,7 @@ __forceinline Rva8CD130Value *integerOne008CD8E0() {
  Rva008CD8E0Integer *v=(Rva008CD8E0Integer *)g_rva008D2A10;
  if(v) {
   g_rva008D2A10=(Rva008D2A10 *)v->m_next;
-  g_rva8CD130IdleHook->add(v);
+  g_rva01337810GcRoots->add(v);
   v->m_value=1;
   return (Rva8CD130Value *)v;
  }
@@ -53,7 +53,7 @@ __forceinline Rva8CD130Value *integerOne008CD8E0() {
  if(v) {
   v->m_vtable=(void *)__identifier("??_7AptValue@@6B@");
   v->m_flags=(v->m_flags&0xf0008007)|0x40008007;
-  g_rva8CD130IdleHook->add(v);
+  g_rva01337810GcRoots->add(v);
   v->m_vtable=(void *)__identifier("??_7AptInteger@@6B@");
   v->m_value=1;
   return (Rva8CD130Value *)v;
