@@ -47,9 +47,39 @@ public:
 	BfmeThingCJ m_bfmeThingCM;
 };
 
+// The 12-byte guard storage is built and torn down through two already-matched
+// ledger rows: retail 0x00339DA0 (BfmeConv1627.cpp) and 0x00339E20
+// (BfmeConv1764.cpp).  The guard's destructor forwards inline to the matched
+// BfmeOwnCD destructor so the automatic object (and its SEH frame) is kept
+// while both calls resolve to the matched symbols.
+//   ??0BfmeOwnVTY@@QAE@PAVBfmeStrVTY@@ABV1@@Z
+//   ??1BfmeOwnCD@@UAE@XZ
+class BfmeStrVTY
+{
+public:
+	unsigned short *m_bfme00;
+};
+
+class BfmeOwnCD
+{
+public:
+	virtual ~BfmeOwnCD(void);
+};
+
+class BfmeOwnVTY
+{
+public:
+	BfmeOwnVTY(BfmeStrVTY *first, const BfmeStrVTY &second);
+	__forceinline ~BfmeOwnVTY() { ((BfmeOwnCD *)this)->BfmeOwnCD::~BfmeOwnCD(); }
+
+	int m_00;
+	BfmeStrVTY m_bfme04;
+	BfmeStrVTY *m_bfme08;
+};
+
 char BfmeOwnCM::bfmeGuardedCM(void *first, void *second, void *third, void *fourth)
 {
-	BfmeGuardCJ guard(&m_bfmeThingCM, first);
+	BfmeOwnVTY guard((BfmeStrVTY *)&m_bfmeThingCM, *(const BfmeStrVTY *)first);
 
 	return bfmeRunCM(second, third, fourth);
 }
