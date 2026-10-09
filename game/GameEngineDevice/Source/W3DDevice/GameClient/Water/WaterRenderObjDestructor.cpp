@@ -31,25 +31,32 @@ public:
 	void Release_Ref(void);
 };
 
-class SkyBoxRenderObject
+class SkyBoxRenderObject;
+
+// Ordinary ILT 0x00048108 jumps to the matched 0x007AAED0 body.
+class BfmeThingEU
 {
 public:
-	void Release_Ref(void);
+	void bfmeAlsoEU(void);
 };
 
 #define REF_PTR_RELEASE(x) { if (x) { x->Release_Ref(); x = 0; } }
 
 void W3DRadarResetLock(void);
-void BFME_DX8_Thread_Assert(void);
+// Retail 0x00905B10 returns char; this scoped release ignores the result.
+char bfmeUnlock1179(void);
 
+// Private RAII helper: another TU has a different guard with this name.
+namespace {
 class WaterDestructorGuard
 {
 public:
 	~WaterDestructorGuard(void)
 	{
-		BFME_DX8_Thread_Assert();
+		bfmeUnlock1179();
 	}
 };
+}
 
 class WaterRenderObjClass
 {
@@ -106,7 +113,7 @@ WaterRenderObjClass::~WaterRenderObjClass(void)
 	if (m_reflectionTexture != 0)
 		releaseReflection(const_cast<TextureBaseClass *&>(m_reflectionTexture));
 	if (m_skyBox != 0)
-		m_skyBox->Release_Ref();
+		reinterpret_cast<BfmeThingEU *>(m_skyBox)->bfmeAlsoEU();
 
 	if (m_bumpTexture0 != 0) {
 		m_bumpTexture0->Release();
