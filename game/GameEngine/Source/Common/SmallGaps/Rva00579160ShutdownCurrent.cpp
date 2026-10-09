@@ -15,6 +15,8 @@ struct Rva00579160Owner {
 	Rva00579160Sub m_sub;
 	void shutdownCurrent(int unused);
 };
+// ?apply@Rva00465B80@@QAEXXZ (0x00465B80, 8-byte thiscall byte-field setter)
+struct Rva00465B80 { void apply(); };
 void Rva00579160Owner::shutdownCurrent(int unused)
 {
 	m_sub.shutdown();
@@ -22,5 +24,5 @@ void Rva00579160Owner::shutdownCurrent(int unused)
 		reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo)->m_part.release(1);
 	TheSkirmishGameInfo = 0;
 	if (reinterpret_cast<int &>(Rva012F4B54Skirmish))
-		((Rva00579160Manager*)g_rva012F19E8WindowManager)->notify();
+		((Rva00465B80 *)g_rva012F19E8WindowManager)->apply();
 }
