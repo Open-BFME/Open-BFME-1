@@ -329,8 +329,16 @@ def regressions(before, after, retained=frozenset()):
                 template_mismatch = (
                     _templated_type_declaration(old, old_pos) !=
                     _templated_type_declaration(new, new_pos))
+                # A destructor's name is its class's name. Aligning `~Owner`
+                # with an ordinary identifier (a method `m` lined up with an
+                # added `virtual ~Rva00802380Base()`) renames neither; two
+                # destructors still pair, so a class rename is still caught.
+                destructor_mismatch = (
+                    (old_pos > 0 and old[old_pos - 1] == '~') !=
+                    (new_pos > 0 and new[new_pos - 1] == '~'))
                 if (downgrade(x, y) and not moved_type and
                         not compiler_attribute and not template_mismatch and
+                        not destructor_mismatch and
                         old_pos not in macro_parameters):
                     found.add((x, y))
     found.update(_function_declaration_regressions(old, new, macro_parameters))

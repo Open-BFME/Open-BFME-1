@@ -819,6 +819,21 @@ def test_macro_parameter_spelling_outside_its_define_is_still_checked():
     assert ('count', 'm_field0') in N.regressions(before, after)
 
 
+def test_method_aligned_with_an_added_destructor_is_not_a_rename():
+    # 0x00802330: moving the constructor into the destructors' TU aligned the
+    # kept `void *m();` with the file's `virtual ~Rva00802380Base()`.
+    before = 'class Gen_00800340 { public: void *m(); };\n'
+    after = 'class Rva00802380Base { public: virtual ~Rva00802380Base() {} };\n'
+    assert ('m', 'Rva00802380Base') not in N.regressions(before, after)
+
+
+def test_destructor_of_a_renamed_class_is_still_checked():
+    assert ('Foo', 'Rva00123456') in N.regressions(
+        'class Foo { public: ~Foo(); };', 'class Rva00123456 { public: ~Rva00123456(); };')
+    assert ('Foo', 'Rva00123456') in N.regressions(
+        'Foo::~Foo() {}', 'Rva00123456::~Rva00123456() {}')
+
+
 def test_bfme_field_respelled_to_offset_field_is_not_a_regression():
     before = 'struct A { int m_bfmeCount; }; int g(A *a) { return a->m_bfmeCount; }'
     after = 'struct A { int m_field4; }; int g(A *a) { return a->m_field4; }'
