@@ -88,14 +88,14 @@ public:
 	Bool testStatus(Int bit) const;
 	Bool bfmeCanUseCommandButton(const CommandButton *command) const;
 	ObjectID getID() const { return m_id; }
-	AIUpdateInterface *getAI() { return m_ai; }
-	Object *getContainedBy() { return m_containedBy; }
+	AIUpdateInterface *getAI();
+	Object *getContainedBy();
 	Module *findUpdateModule(NameKeyType key) const { return findModule(key); }
 
 protected:
 	Module *findModule(NameKeyType key) const;
 
-private:
+public:
 	unsigned char m_unreconstructed_08[0x74 - 0x08];
 	ObjectID m_id;							// +0x74
 	unsigned char m_unreconstructed_78[0x204 - 0x78];
@@ -174,11 +174,17 @@ private:
 class Drawable
 {
 public:
-	Object *getObject() { return m_object; }
-private:
+	Object *getObject();
+public:
 	unsigned char m_unreconstructed_00[0xfc];
 	Object *m_object;						// +0xfc
 };
+
+// Keep the witnessed BFME field loads local; public accessors have other
+// layout copies elsewhere in the link.
+static __forceinline Object *drawableObject(Drawable *draw) { return draw->m_object; }
+static __forceinline Object *containedBy(Object *obj) { return obj->m_containedBy; }
+static __forceinline AIUpdateInterface *objectAI(Object *obj) { return obj->m_ai; }
 
 class InGameUI
 {
@@ -223,8 +229,8 @@ Bool InGameUI::rva00447F10(Object *target)
 	const DrawableList *selected = TheInGameUI->getAllSelectedDrawables();
 	for (DrawableList::const_iterator it = selected->begin(); it != selected->end(); ++it)
 	{
-		Object *obj = (*it)->getObject();
-		if (obj == 0 || obj->getContainedBy() != 0)
+		Object *obj = drawableObject(*it);
+		if (obj == 0 || containedBy(obj) != 0)
 			continue;
 
 		const CommandButton *button;
@@ -237,7 +243,7 @@ Bool InGameUI::rva00447F10(Object *target)
 			|| !obj->bfmeCanUseCommandButton(button) || !button->isReady(obj))
 			continue;
 
-		if (obj->getAI() == 0)
+		if (objectAI(obj) == 0)
 			return true;
 
 		static NameKeyType key_SiegeDockingBehavior = TheNameKeyGenerator->nameToKey("SiegeDockingBehavior");
@@ -249,7 +255,7 @@ Bool InGameUI::rva00447F10(Object *target)
 		Coord3D pos;
 		if (!dock->slot1(obj->getID(), &pos))
 			return true;
-		if (obj->getAI()->isQuickPathAvailable(&pos))
+		if (objectAI(obj)->isQuickPathAvailable(&pos))
 			return true;
 	}
 	return false;
