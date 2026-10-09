@@ -1,3 +1,5 @@
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
 class BfmeThingCJ
 {
 public:
@@ -76,9 +78,30 @@ public:
 	BfmeThingCJ m_bfmeThingCJ;
 };
 
+// The guard this frame constructs at 0x0034C7A0 is retail BfmeOwnVTY
+// (ctor 0x00339DA0) built on retail BfmeOwnCD (dtor 0x00339E20): both
+// bodies live at the addresses the BfmeGuardCJ calls reach.
+class BfmeStrVTY;
+
+class BfmeOwnCD
+{
+public:
+	virtual ~BfmeOwnCD(void);
+
+	AsciiString m_bfmeTextCD;
+	AsciiString *m_bfmeTargetCD;
+};
+
+class BfmeOwnVTY : public BfmeOwnCD
+{
+public:
+	BfmeOwnVTY(BfmeStrVTY *first, const BfmeStrVTY &second);
+};
+
 void *BfmeOwnCJ::bfmeMakeCJ(void *first, void *second, void *third)
 {
-	BfmeGuardCJ guard(&m_bfmeThingCJ, first);
+	BfmeOwnVTY guard(reinterpret_cast<BfmeStrVTY *>(&m_bfmeThingCJ),
+	                 *reinterpret_cast<const BfmeStrVTY *>(first));
 
 	return bfmeRunCJ(second, third);
 }
