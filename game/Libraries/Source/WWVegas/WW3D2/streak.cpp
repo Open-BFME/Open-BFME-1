@@ -345,11 +345,8 @@ float StreakLineClass::Get_Texture_Tile_Factor(void)
 	return LineRenderer.Get_Texture_Tile_Factor();
 }
 
-// ?Get_UV_Offset_Rate@StreakLineClass@@ present-unmatched
-Vector2 StreakLineClass::Get_UV_Offset_Rate(void)
-{
-	return LineRenderer.Get_UV_Offset_Rate();
-}
+// Retail implementation: StreakLineUVOffsetRate.cpp
+
 
 // ?Is_Merge_Intersections@StreakLineClass@@ present-unmatched
 int StreakLineClass::Is_Merge_Intersections(void)
@@ -418,13 +415,8 @@ void StreakLineClass::Set_Opacity(float opacity)
 	reinterpret_cast<StreakRendererClass *>(reinterpret_cast<char *>(&StreakRenderer) + 0x38)->Set_Opacity(opacity);
 }
 
-// ?Set_Noise_Amplitude@StreakLineClass@@ present-unmatched
-void StreakLineClass::Set_Noise_Amplitude(float amplitude)
-{
-	LineRenderer.Set_Noise_Amplitude(WWMath::Fabs(amplitude));
+// Retail implementation: StreakLineUVOffsetRate.cpp
 
-	Invalidate_Cached_Bounding_Volumes();
-}
 
 void StreakLineClass::Set_Merge_Abort_Factor(float factor)
 {
@@ -454,11 +446,8 @@ void StreakLineClass::Set_Texture_Tile_Factor(float factor)
 	LineRenderer.Set_Texture_Tile_Factor(factor);
 }
 
-// ?Set_UV_Offset_Rate@StreakLineClass@@ present-unmatched
-void StreakLineClass::Set_UV_Offset_Rate(const Vector2 &rate)
-{
-	LineRenderer.Set_UV_Offset_Rate(rate);
-}
+// Retail implementation: StreakLineUVOffsetRate.cpp
+
 
 // ?Set_Merge_Intersections@StreakLineClass@@ present-unmatched
 void StreakLineClass::Set_Merge_Intersections(int onoff)
