@@ -40,20 +40,17 @@ public:
 };
 
 // The singleton itself is retail's PlayerList (game/GameEngine/Source/Common/RTS/PlayerList.cpp
-// defines `PlayerList *ThePlayerList`); only the member this body calls is still
-// address-named, so the global keeps its real spelling and the call is cast.
-class PlayerList;
-
-struct Rva002EE330PlayerList
+// defines `PlayerList *ThePlayerList`). ILT 00044C60 reaches the matched
+// three-argument query at 000DF5A0; use its ledger owner and unchanged ABI.
+class PlayerList
 {
+public:
 	PlayerMaskType getPlayersWithRelationship(Int playerIndex, Int allowedRelationships, Bool includeSelf);
 };
 
 extern PlayerList *ThePlayerList;	// retail [0x012ED748]
 
-extern const Real BfmeShadowScale;
 extern const Real g_rva01075350;
-extern "C" const Real g_bfmeScaleBK;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate
@@ -127,15 +124,15 @@ private:
 Real Rva001CA6C0::rva001CA6C0(UnsignedInt *lookingMask)
 {
 	if (!m_flag304)
-		return BfmeShadowScale;
+		return -1.0f;
 
 	Player *controller = m_team ? m_team->getControllingPlayer() : 0;
 	if (!controller)
-		return BfmeShadowScale;
+		return -1.0f;
 
 	Object *obj = getObject();
 	if (obj->inlineShroudClearingRange() <= g_rva01075350)
-		return BfmeShadowScale;
+		return -1.0f;
 
 	if (obj->isKindOf(KINDOF_RVA001CA6C0_REVEALS_TO_ALL))
 	{
@@ -143,13 +140,13 @@ Real Rva001CA6C0::rva001CA6C0(UnsignedInt *lookingMask)
 	}
 	else
 	{
-		*lookingMask = (PlayerMaskType)((Rva002EE330PlayerList *)ThePlayerList)->getPlayersWithRelationship(
+		*lookingMask = (PlayerMaskType)ThePlayerList->getPlayersWithRelationship(
 				controller->getPlayerIndex(), 3, false)
 			| ((Rva000C9CE0WordGetter *)controller)->get();
 	}
 
 	if ((m_status & 1) || (m_privateStatus & 1))
-		return g_bfmeScaleBK;
+		return 0.1f;
 
 	return obj->getShroudClearingRange();
 }
@@ -194,17 +191,17 @@ private:
 Real Rva001CA7D0::rva001CA7D0(Int mode, UnsignedInt *value, UnsignedInt *playerMask)
 {
 	if (!m_flag304)
-		return BfmeShadowScale;
+		return -1.0f;
 
 	if (mode < 0 || mode > 1 || !m_team)
 	{
-		Real noRange = BfmeShadowScale;
+		Real noRange = -1.0f;
 		*value = 0;
 		return noRange;
 	}
 	if (!m_team->getControllingPlayer())
 	{
-		Real noRange = BfmeShadowScale;
+		Real noRange = -1.0f;
 		*value = 0;
 		return noRange;
 	}
@@ -212,7 +209,7 @@ Real Rva001CA7D0::rva001CA7D0(Int mode, UnsignedInt *value, UnsignedInt *playerM
 	if ((m_status & 4) || (m_privateStatus & 1)
 		|| getObject()->getShroudClearingRange() <= g_rva01075350)
 	{
-		Real noRange = BfmeShadowScale;
+		Real noRange = -1.0f;
 		*value = 0;
 		return noRange;
 	}
@@ -229,7 +226,7 @@ Real Rva001CA7D0::rva001CA7D0(Int mode, UnsignedInt *value, UnsignedInt *playerM
 		*value = getObject()->getTemplate()->m_threatValue;
 		*playerMask = (PlayerMaskType)(1 << getObject()->getControllingPlayer()->getPlayerIndex());
 		Real range = getObject()->getTemplate()->m_rva001CA7D0Range40C;
-		if (range == BfmeShadowScale && !getObject()->isKindOf(KINDOF_STRUCTURE))
+		if (range == -1.0f && !getObject()->isKindOf(KINDOF_STRUCTURE))
 		{
 			*value = (Int)m_source200->slot04();
 			range = getObject()->getTemplate()->m_visionRange;
@@ -238,7 +235,7 @@ Real Rva001CA7D0::rva001CA7D0(Int mode, UnsignedInt *value, UnsignedInt *playerM
 	}
 
 	default:
-		Real noRange = BfmeShadowScale;
+		Real noRange = -1.0f;
 		*value = 0;
 		return noRange;
 	}
