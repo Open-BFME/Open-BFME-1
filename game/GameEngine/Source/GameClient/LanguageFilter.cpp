@@ -187,46 +187,6 @@ wchar_t ignoredChars[] = L"-_*'\"";
 
 // LanguageFilter::filterLine: retail 0x0044DB90 lives in LanguageFilter_filterLine.cpp.
 
-// ?unHaxor@LanguageFilter@@IAEXAAVUnicodeString@@@Z present-unmatched
-void LanguageFilter::unHaxor(UnicodeString &word) {
-	Int len = word.getLength();
-	UnicodeString newWord(L"");
-	for (Int i = 0; i < len; ++i) {
-		wchar_t c = word.getCharAt(i);
-		if ((c == L'p') || (c == L'P')) {
-			if (((i + 1) < len) && ((word.getCharAt(i+1) == L'h') || (word.getCharAt(i+1) == L'H'))) {
-				newWord.concat(L'f');
-				++i; // skip the h
-			} else {
-				// not a problem at all.
-				newWord.concat(c);
-			}
-		} else if (c == L'1') {
-			newWord.concat(L'l');
-		} else if (c == L'3') {
-			newWord.concat(L'e');
-		} else if (c == L'4') {
-			newWord.concat(L'a');
-		} else if (c == L'5') {
-			newWord.concat(L's');
-		} else if (c == L'6') {
-			newWord.concat(L'b');
-		} else if (c == L'7') {
-			newWord.concat(L't');
-		} else if (c == L'0') {
-			newWord.concat(L'o');
-		} else if (c == L'@') {
-			newWord.concat(L'a');
-		} else if (c == L'$') {
-			newWord.concat(L's');
-		} else if (c == L'+') {
-			newWord.concat(L't');
-		} else if (wcsrchr(ignoredChars, c) == NULL) {
-			newWord.concat(c);
-		}
-	}
-	word.set(newWord);
-}
 
 LanguageFilter * createLanguageFilter() 
 {
