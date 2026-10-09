@@ -194,8 +194,8 @@ static __forceinline GameWindow *GadgetComboBoxGetListBox(GameWindow *window)
     ComboBoxData *data = (ComboBoxData *)window->winGetUserData();
     return data ? data->listBox : 0;
 }
-// ?d_004b3e30@@YAXPAVGameWindow@@@Z present-unmatched
-static __declspec(noinline) void d_004b3e30(GameWindow *window)
+// ?Rva004B3E30@@YAXPAVGameWindow@@@Z
+static __declspec(noinline) void Rva004B3E30(GameWindow *window)
 {
     if (!window) return;
     ComboBoxData *comboData = (ComboBoxData *)window->winGetUserData();
@@ -278,7 +278,7 @@ WindowMsgHandledType GadgetComboBoxInput(GameWindow *window, unsigned int msg, u
             TheAudio->addAudioEvent(&buttonClick);
         }
         // The complete static helper lets VC7.1 pass window in EBX.
-        d_004b3e30(window);
+        Rva004B3E30(window);
         bfmeGo1017Y(0, 1, 1);
         break;
     case GWM_LEFT_DRAG:
