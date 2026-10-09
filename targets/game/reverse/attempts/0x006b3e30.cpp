@@ -1,9 +1,17 @@
 // ?start@Rva006B3E30Owner@@QAE_NPAURva006B3E30PlayingRef@@@Z
-// partial score=0.3333333 date=2026-09-28
+// partial score=0.9852 date=2026-10-10
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 class AsciiString;
 extern const AsciiString Rva01336E50EmptyString;
 
 extern void j_0001978b(void);
+extern void j_00021ff3(void);
+class Rva006B1B40PlayingAudioRef;
+class Rva006B1B40MilesAudioManager {
+public:
+	void rva006B1B40InitFilters(Rva006B1B40PlayingAudioRef *);
+};
+class Rva006A8210Owner { public: void dispatch(int, int); };
 
 extern "C" __declspec(dllimport) void __stdcall AIL_init_sample(unsigned int sample);
 extern "C" __declspec(dllimport) void *__stdcall AIL_register_EOS_callback(
@@ -17,8 +25,7 @@ extern "C" __declspec(dllimport) void __stdcall AIL_stop_sample(unsigned int sam
 struct Rva006B3E30Info
 {
 	char m_pad00[0x8c];
-	int m_begin;
-	int m_end;
+	struct List { int m_begin; int m_end; } m_list;
 };
 
 struct Rva006B3E30Event
@@ -37,14 +44,25 @@ struct Rva006B3E30File
 	void *m_data;
 };
 
+struct Rva006B3E30EventRef {
+	Rva006B3E30Event *m_ptr;
+	Rva006B3E30Event *operator->() const { return m_ptr; }
+};
+struct Rva006B3E30FileRef {
+	Rva006B3E30File *m_ptr;
+	bool isOpen() const { return m_ptr != 0; }
+	void *fileData() const { return m_ptr ? m_ptr->m_data : 0; }
+	const void *fileName() const { return m_ptr ? m_ptr : (const void *)&Rva01336E50EmptyString; }
+};
+
 struct Rva006B3E30Playing
 {
 	char m_pad00[8];
 	unsigned int m_sample;
 	int m_type;
 	char m_pad10[4];
-	Rva006B3E30Event *m_event;
-	Rva006B3E30File *m_file;
+	Rva006B3E30EventRef m_event;
+	Rva006B3E30FileRef m_file;
 	char m_pad1c[0x1d];
 	bool m_state39;
 	bool m_state3a;
@@ -53,71 +71,67 @@ struct Rva006B3E30Playing
 
 	const void *fileName() const
 	{
-		if (m_file != 0)
-			return m_file;
-		return &Rva01336E50EmptyString;
+		return m_file.fileName();
 	}
 };
 
 struct Rva006B3E30PlayingRef
 {
 	Rva006B3E30Playing *m_playing;
+	Rva006B3E30Playing *operator->() const { return m_playing; }
 };
 
 class Rva006B3E30Owner
 {
 public:
 	bool start(Rva006B3E30PlayingRef *ref);
-	void initFilters(Rva006B3E30PlayingRef *ref);
-	void dispatch(void *entry, int kind);
-	void touch(const void *value);
+	void initFilters(Rva006B3E30PlayingRef *ref) {
+		((Rva006B1B40MilesAudioManager *)this)->rva006B1B40InitFilters((Rva006B1B40PlayingAudioRef *)ref);
+	}
+	void dispatch(void *entry, int kind) {
+		((Rva006A8210Owner *)this)->dispatch((int)entry, kind);
+	}
+	void touch(const void *value) {
+		typedef void (Rva006B3E30Owner::*Call)(const void *);
+		union { void (*function)(); Call member; } target;
+		target.function = j_00021ff3;
+		(this->*target.member)(value);
+	}
 
 private:
 	char m_pad00[0x604];
 	int m_field604;
 };
 
-#pragma comment(linker, "/alternatename:?initFilters@Rva006B3E30Owner@@QAEXPAVRva006B3E30PlayingRef@@@Z=?j_00016928@@YAXXZ")
-#pragma comment(linker, "/alternatename:?dispatch@Rva006B3E30Owner@@QAEXPAXH@Z=?j_0000b43d@@YAXXZ")
-#pragma comment(linker, "/alternatename:?touch@Rva006B3E30Owner@@QAEXPBX@Z=?j_00021ff3@@YAXXZ")
 
+// Ported from Open BFME 2 Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManager.cpp.
 bool Rva006B3E30Owner::start(Rva006B3E30PlayingRef *ref)
 {
-	Rva006B3E30Owner *owner = this;
-	Rva006B3E30Playing *playing = ref->m_playing;
+	Rva006B3E30PlayingRef &playing = *ref;
 	unsigned int sample = playing->m_sample;
+	Rva006B3E30EventRef &event = playing->m_event;
 	AIL_init_sample(sample);
 	AIL_register_EOS_callback(sample, j_0001978b);
-	owner->initFilters(ref);
-
-	if (ref->m_playing->m_file != 0)
+	initFilters(ref);
+	if (playing->m_file.isOpen())
 	{
-		Rva006B3E30Event *event = playing->m_event;
 		Rva006B3E30Info *info = event->m_info;
-		int begin = info->m_begin;
-		if (begin != info->m_end)
-			owner->dispatch(&event->m_info, event->m_kind);
-
-		void *data = ref->m_playing->m_file != 0
-			? ref->m_playing->m_file->m_data : 0;
+		Rva006B3E30Info::List *list = &info->m_list;
+		if (list->m_begin != list->m_end)
+			dispatch(&event->m_info, event->m_kind);
+		void *data = playing->m_file.fileData();
 		AIL_set_sample_file(sample, data, 0);
 		AIL_start_sample(sample);
-		playing->m_event->m_started = true;
-
-		Rva006B3E30Playing *current = ref->m_playing;
-		if (current->m_event->m_kind != 2 &&
-			current->m_event->m_kind != owner->m_field604)
-			current->m_state3b = true;
+		event->m_started = true;
+		if (playing->m_event->m_kind != 2 && playing->m_event->m_kind != m_field604)
+			playing->m_state3b = true;
 		else
-			current->m_state3b = false;
-
-		if (!current->m_state39 && !current->m_state3a &&
-			!current->m_state3b && !current->m_state3c)
-			AIL_resume_sample(current->m_sample);
+			playing->m_state3b = false;
+		if (!playing->m_state39 && !playing->m_state3a && !playing->m_state3b && !playing->m_state3c)
+			AIL_resume_sample(playing->m_sample);
 		else
-			AIL_stop_sample(current->m_sample);
-
-		owner->touch(ref->m_playing->fileName());
+			AIL_stop_sample(playing->m_sample);
+		touch(playing->m_file.fileName());
 		return true;
 	}
 	return false;

@@ -90959,3 +90959,5 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ?d_008ae770@@YAXXZ,0x008AE770,legacy address-only compatibility pin for retired generated name; referenced by game/gen_asm/d_0083c710.asm
 ?isLeapYear@@YG_NH@Z,0x008B64E0,existing LeapYearPredicateThunk.cpp object symbol; complete 65-byte body reads one signed stack word returns AL and ret4 with incoming ECX ignored; evidence=targets/game/reverse/identity_evidence/008b6580-bfme2-calendar.md
 ?d_008b6580@@YAXXZ,0x008B6580,legacy address-only compatibility pin for retired generated name; referenced by game/gen_asm/d_008af650.asm
+?d_00790970@@YAXXZ,0x00790970,address-only compatibility for retired dump name; native image-combo callback now in W3DComboBox.cpp
+?d_0061a470@@YAXXZ,0x0061A470,address-only compatibility for retired dump name; complete string erase body now in S3GuardedDelegateEraseStrings.cpp

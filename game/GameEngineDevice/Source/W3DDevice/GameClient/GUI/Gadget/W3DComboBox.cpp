@@ -304,3 +304,55 @@ void W3DGadgetComboBoxImageDraw( GameWindow *window, WinInstanceData *instData )
 
 
 }  // end W3DGadgetComboBoxImageDraw
+
+#include "GameClient/Image.h"
+class Gen_004b5a50 { public: void *m(int); };
+class Gen_004b5a70 { public: void m(); };
+class BfmeC1040 { public: int bfmeGo1040C(); };
+struct Rva00790970Adapter {
+ GameWindow *window;
+ // ??0Rva00790970Adapter@@QAE@PAVGameWindow@@@Z absent-from-retail
+ Rva00790970Adapter(GameWindow *w) { ((Gen_004b5a50 *)this)->m((int)w); }
+ // ??1Rva00790970Adapter@@QAE@XZ absent-from-retail
+ ~Rva00790970Adapter() { ((Gen_004b5a70 *)this)->m(); }
+ // ?selected@Rva00790970Adapter@@QAEHXZ absent-from-retail
+ int selected() { return ((BfmeC1040 *)this)->bfmeGo1040C(); }
+};
+struct Rva00790970Combo { int m_00; GameWindow *m_04,*m_08; };
+struct Rva00790970Cell { int m_00; Color m_04; const Image *m_08; int m_0c,m_10,m_14; };
+struct Rva00790970Entry { int m_00,m_04; Rva00790970Cell *m_08; };
+struct Rva00790970List { char m_00[0x18]; Rva00790970Entry *m_18; };
+// Ported from Open BFME 2 Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DComboBox.cpp.
+// ?W3DGadgetImageComboBoxDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
+void W3DGadgetImageComboBoxDraw(GameWindow *window,WinInstanceData *instData) {
+ ICoord2D position;
+ GameWindow *list;
+ ICoord2D size;
+ window->winGetScreenPosition(&position.x,&position.y);
+ window->winGetSize(&size.x,&size.y);
+ Rva00790970Adapter combo(window);
+ int selected=combo.selected();
+ if(selected>=0) {
+  list=((Rva00790970Combo *)combo.window->winGetUserData())->m_08;
+  Rva00790970Entry *entry=&((Rva00790970List *)((Rva00790970Combo *)combo.window->winGetUserData())->m_08->winGetUserData())->m_18[selected];
+  int width=entry->m_08->m_10;
+  const Image *image=entry->m_08->m_08;
+  int height=entry->m_08->m_14;
+  if(width<0) width=image->getImageWidth();
+  if(height<0) height=image->getImageHeight();
+  if(!(list->winGetStatus()&0x10)) {
+   int w,h;
+   list->winGetSize(&w,&h);
+   size.y-=h;
+  }
+  ICoord2D button={0,0};
+  if(!((Rva00790970Combo *)combo.window->winGetUserData())->m_04->winIsHidden()) {
+   GameWindow *buttonWindow=((Rva00790970Combo *)combo.window->winGetUserData())->m_04;
+   buttonWindow->winGetSize(&button.x,&button.y);
+  }
+  int y=position.y+(size.y-height)/2;
+  int x=(position.x+position.x+size.x-button.x-width)/2;
+  Color color=entry->m_08->m_04;
+  TheWindowManager->winDrawImage(image,x,y,x+width,y+height,color);
+ }
+}
