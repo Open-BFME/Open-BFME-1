@@ -1,6 +1,6 @@
 // ?d_004341a0@@YAXXZ
-// partial score=0.1004 date=2026-09-30
-// 0x00434810 SubtitleEntry constructor. This is a reconstruction trial.
+// partial score=0.9843 date=2026-10-09
+// SubtitleEntry virtual slot 1 uses the matched constructor field layout.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2
 
 typedef int Int;
@@ -9,7 +9,8 @@ typedef float Real;
 
 struct Rva004340C0SubtitleOwner
 {
-	unsigned char m_pad00[0x60];
+	unsigned char m_pad00[0x24];
+	Real m_lineCoordinates[15];
 	unsigned char m_alternateMode;
 };
 
@@ -37,7 +38,7 @@ public:
 	virtual void slot1C();
 	virtual void slot20();
 	virtual void slot24();
-	virtual void slot28(Int mode, UnsignedInt color);
+	virtual void slot28(UnsignedInt color, Int mode);
 	virtual void slot2C();
 	virtual void slot30();
 	virtual void slot34(Int x, Int y);
@@ -72,10 +73,10 @@ public:
 	RVA004341A0_DISPLAY_SLOT(98) RVA004341A0_DISPLAY_SLOT(9C)
 	RVA004341A0_DISPLAY_SLOT(A0) RVA004341A0_DISPLAY_SLOT(A4)
 	RVA004341A0_DISPLAY_SLOT(A8) RVA004341A0_DISPLAY_SLOT(AC)
-	virtual Int slotB0();
+	virtual void slotB0();
 	RVA004341A0_DISPLAY_SLOT(B4) RVA004341A0_DISPLAY_SLOT(B8)
 	RVA004341A0_DISPLAY_SLOT(BC)
-	virtual void slotC0(Real x, Real y, Real length, Int width,
+	virtual void slotC0(Real x, Real y, Real length, Real width,
 		Int alpha);
 	RVA004341A0_DISPLAY_SLOT(C4) RVA004341A0_DISPLAY_SLOT(C8)
 	RVA004341A0_DISPLAY_SLOT(CC) RVA004341A0_DISPLAY_SLOT(D0)
@@ -87,7 +88,7 @@ public:
 class Rva004341A0SubtitleBaseView
 {
 public:
-	virtual ~Rva004341A0SubtitleBaseView() {}
+	virtual ~Rva004341A0SubtitleBaseView();
 
 protected:
 	void *m_text;
@@ -115,95 +116,66 @@ private:
 	Rva004341A0DisplayStringView *m_displayStrings[3];
 	Int m_displayStringCount;
 	Int m_displayStringCapacity;
-	unsigned char m_pad38[0x10];
-	Real m_lineCoordinates[15];
-	unsigned char m_alternateMode;
-	unsigned char m_pad85[3];
 };
 
+// ?rva004341A0@Rva004341A0SubtitleEntryView@@UAEXHPAURva004340C0SubtitleOwner@@MMMM@Z present-unmatched
 void Rva004341A0SubtitleEntryView::rva004341A0(Int frame,
-	Rva004340C0SubtitleOwner *owner, Real alignmentLow,
-	Real coordinateLow, Real alignmentHigh, Real coordinateHigh)
+    Rva004340C0SubtitleOwner *owner, Real alignmentLow,
+    Real coordinateLow, Real alignmentHigh, Real coordinateHigh)
 {
-	Int currentFrame = frame;
-	Rva004341A0SubtitleEntryView *self = this;
-	UnsignedInt alpha = 0xFF;
-	if (currentFrame >= self->m_startFrame)
-	{
-		if (currentFrame > self->m_endFrame)
-		{
-			if ((self->m_style & 1) == 0)
-				return;
-			if (currentFrame > self->m_endFrame + 0x0F)
-				return;
-			Int fade = (currentFrame - self->m_endFrame) * 18;
-			if (fade >= 0xFF)
-				fade = 0xFF;
-			alpha -= fade;
-		}
-	}
-	else
-	{
-		if ((self->m_style & 1) == 0)
-			return;
-		if (currentFrame < self->m_startFrame - 0x0F)
-			return;
-		alpha -= (self->m_startFrame - currentFrame) * 9;
-	}
+    UnsignedInt alpha = 0xFF;
+    if (frame < m_startFrame || frame > m_endFrame)
+    {
+        if ((m_style & 1) == 0)
+            return;
+        Int fade;
+        if (frame < m_startFrame && frame >= m_startFrame - 15)
+            fade = (m_startFrame - frame) * 18;
+        else if (frame > m_endFrame && frame <= m_endFrame + 15)
+            fade = (frame - m_endFrame) * 18;
+        else
+            return;
+        if (fade >= 255)
+            fade = 255;
+        alpha -= fade;
+    }
 
-	alpha <<= 24;
-	Int first = 0;
-	Int second;
-	self->m_displayStrings[0]->slot3C(&second, &first);
+    Int first = 0;
+    Int second;
+    alpha <<= 24;
+    m_displayStrings[0]->slot3C(&second, &first);
 
-	if ((self->m_style & 4) != 0)
-	{
-		Int count = self->m_displayStringCount;
-		if (count <= 0)
-			return;
-
-		Int index = 0;
-		Rva004341A0DisplayStringView **current = self->m_displayStrings;
-		while (index < count)
-		{
-			Rva004341A0DisplayStringView *text = *current;
-			Int length = text->slot40(-1);
-			Int x = bfmeAlignVIL(self->m_alignment, length,
-				reinterpret_cast<Int>(self->m_displayStrings), alignmentLow,
-				alignmentHigh);
-			Int y = rva004340C0SubtitleCoordinate(self->m_line + frame,
-				reinterpret_cast<Rva004340C0SubtitleOwner *>(
-					self->m_displayStrings), coordinateLow, coordinateHigh);
-
-			Rva004341A0DisplayView *display =
-				reinterpret_cast<Rva004341A0DisplayView *>(TheDisplay);
-			display->slotB0();
-			display->slotC0((Real)x, (Real)y, (Real)length, first,
-				(Int)alpha);
-			display->slotDC();
-			text->slot28(0, self->m_color | alpha);
-			text->slot34(x, y);
-			++index;
-			++current;
-		}
-	}
-	else
-	{
-		Int count = self->m_displayStringCount;
-		Int index = 0;
-		Rva004341A0DisplayStringView **current = self->m_displayStrings;
-		while (index < count)
-		{
-			Rva004341A0DisplayStringView *text = *current;
-			Int length = text->slot40(-1);
-			Int x = bfmeAlignVIL(self->m_alignment, length,
-				reinterpret_cast<Int>(owner), alignmentLow, alignmentHigh);
-			Int y = rva004340C0SubtitleCoordinate(self->m_line + index,
-				owner, coordinateLow, coordinateHigh);
-			text->slot28(0, self->m_color | alpha);
-			text->slot34(x, y);
-			++index;
-			++current;
-		}
-	}
+    if ((m_style & 4) != 0)
+    {
+        for (Int index = 0; index < m_displayStringCount; ++index)
+        {
+            Int length = m_displayStrings[index]->slot40(-1);
+            Int x = bfmeAlignVIL(m_alignment, length,
+                reinterpret_cast<Int>(owner), alignmentLow, alignmentHigh);
+            Int y = rva004340C0SubtitleCoordinate(m_line + index,
+                owner, coordinateLow, coordinateHigh);
+            Rva004341A0DisplayView *display =
+                reinterpret_cast<Rva004341A0DisplayView *>(TheDisplay);
+            Real width = (Real)first;
+            display->slotB0();
+            display->slotC0((Real)x, (Real)y, (Real)length, width,
+                (Int)alpha);
+            display->slotDC();
+            m_displayStrings[index]->slot28(m_color | alpha, 0);
+            m_displayStrings[index]->slot34(x, y);
+        }
+    }
+    else
+    {
+        for (Int index = 0; index < m_displayStringCount; ++index)
+        {
+            Int length = m_displayStrings[index]->slot40(-1);
+            Int x = bfmeAlignVIL(m_alignment, length,
+                reinterpret_cast<Int>(owner), alignmentLow, alignmentHigh);
+            Int y = rva004340C0SubtitleCoordinate(m_line + index,
+                owner, coordinateLow, coordinateHigh);
+            m_displayStrings[index]->slot28(m_color | alpha, 0);
+            m_displayStrings[index]->slot34(x, y);
+        }
+    }
 }
