@@ -51,3 +51,24 @@ and declaration repair is required; removing an implicit definition without
 fixing its header/callers is insufficient. Both competing emitter TUs and
 the owner were supplied explicitly; LINKED remains 0 -> 0. No body,
 reference header, alias, or pin was changed.
+
+## GameState::isInSaveDirectory, RVA 0x0010F1E0, 118 bytes
+
+At +0x5E, native calls StringBase<char>::releaseBuffer at 0x00887940;
+the old owner named AsciiString destruction whose ledger body is the
+separate 5-byte tail-jump function at 0x0005EE90. A padded tail-jump
+function is not an ILT stub and cannot stand in for a different relocation
+identity. The shared ascii_string.h correctly inlines the derived/base
+destructors to releaseBuffer. An inline specialization of the existing
+StringBase<char> prefix overload preserves the original 118-byte shape.
+The private string declarations and GameState.cpp's competing definition
+were removed. No string-family implementation or reference header changed.
+
+The edit renumbered 12 GameState.cpp EH labels. Each new label was identified
+and verified with build.compile_function in its already-recorded parent's
+group; the one masked-prefix tie was resolved by its native tail-jump target.
+Only the existing object-symbol label values changed in the ledger.
+Builds preserve 1/1 owner, 25/25 emitter and 2/2 caller rows plus three
+emitter data rows. link_check with both emitter TUs and the ambient-light
+caller reports 0/3 -> 2/3 clean, LINKED 0 -> 1056 bytes: 118 owner plus
+938 caller. GameState.cpp retains separate pre-existing link debt.

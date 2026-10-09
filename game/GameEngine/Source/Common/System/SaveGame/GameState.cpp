@@ -741,12 +741,6 @@ SaveCode GameState::loadGame( AvailableGameInfo gameInfo )
 //-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
-// ?isInSaveDirectory@GameState@@QBE_NABVAsciiString@@@Z present-unmatched
-Bool GameState::isInSaveDirectory(const AsciiString& path) const
-{
-	return path.startsWithNoCase(getSaveDirectory());
-}
-
 // ------------------------------------------------------------------------------------------------
 
 // ------------------------------------------------------------------------------------------------
