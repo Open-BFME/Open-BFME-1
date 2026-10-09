@@ -1,3 +1,15 @@
+class Rva002E7C50Element;
+class BfmeVector28;
+class BfmeHostXZ { public: int bfmeStartXZ(unsigned int, int); };
+namespace _STL {
+ template<class T> class allocator;
+ struct __false_type;
+ template<class T, class A> class vector {
+ protected: void _M_insert_overflow(T *, const T &, const __false_type &, unsigned int, bool);
+ friend class ::BfmeVector28;
+ };
+}
+
 class ThingTemplate;
 class AsciiString;
 
@@ -66,7 +78,6 @@ public:
 	unsigned char pad[0x58];
 	BfmeField58_FCD *m_field58;
 	int m_field5C;
-	void notify(void *field4, int neg2);
 };
 
 struct BfmeThingFCD
@@ -80,7 +91,7 @@ void BfmeThingFCD::checkAndNotify()
 {
 	BfmeSub30_FCD *sub = m_sub30;
 	if (sub->m_field58 && sub->m_field5C == -1) {
-		sub->notify(sub->m_field58->m_field4, -2);
+		reinterpret_cast<BfmeHostXZ *>(sub)->bfmeStartXZ((unsigned int)sub->m_field58->m_field4, -2);
 	}
 }
 
@@ -94,7 +105,6 @@ struct BfmeVector28
 	void *m_start0;
 	BfmeItem28 *m_cur4;
 	BfmeItem28 *m_end8;
-	void insertHelper(void *edi, const BfmeItem28 *src, void *temp, int one1, int one2);
 	void push_back(const BfmeItem28 &item);
 };
 
@@ -107,6 +117,6 @@ void BfmeVector28::push_back(const BfmeItem28 &item)
 		m_cur4++;
 	} else {
 		void *temp;
-		insertHelper(m_cur4, &item, &temp, 1, 1);
+		reinterpret_cast<_STL::vector<Rva002E7C50Element, _STL::allocator<Rva002E7C50Element> > *>(this)->_M_insert_overflow(reinterpret_cast<Rva002E7C50Element *>(m_cur4), *reinterpret_cast<const Rva002E7C50Element *>(&item), *reinterpret_cast<const _STL::__false_type *>(&temp), 1, true);
 	}
 }
