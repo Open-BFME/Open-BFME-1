@@ -775,39 +775,7 @@ static void persAuthCallback(int localid, int profileid, int authenticated, char
 		t->persAuthCallback(authenticated != 0);
 }
 
-// ?tryLogin@PSThreadClass@@ present-unmatched
-Bool PSThreadClass::tryLogin( Int id, std::string nick, std::string password, std::string email )
-{
-	char validate[33];
-	DEBUG_LOG(("PSThreadClass::tryLogin id = %d, nick = %s, password = %s, email = %s\n", id, nick.c_str(), password.c_str(), email.c_str()));
-	/***********
-	We'll go ahead and start the authentication, using a Presence & Messaging SDK
-	profileid / password.  To generate the new validation token, we'll need to pass
-	in the password for the profile we are authenticating.
-	Again, if this is done in a client/server setting, with the Persistent Storage
-	access being done on the server, and the P&M SDK is used on the client, the
-	server will need to send the challenge (GetChallenge(NULL)) to the client, the
-	client will create the validation token using GenerateAuth, and send it
-	back to the server for use in PreAuthenticatePlayerPM
-	***********/
-	char *munkeeHack = strdup(password.c_str()); // GenerateAuth takes a char*, not a const char* :P
-	GenerateAuth(GetChallenge(NULL), munkeeHack, validate);
-	free (munkeeHack);
-
-	/************
-	After we get the validation token, we pass it and the profileid of the user
-	we are authenticating into PreAuthenticatePlayerPM.
-	We pass the same authentication callback as for the first user, but a different
-	localid this time.
-	************/
-	m_loginOK = false;
-	m_doneTryingToLogin = false;
-	PreAuthenticatePlayerPM(id, id, validate, ::persAuthCallback, this);
-	while (!m_doneTryingToLogin && IsStatsConnected())
-		PersistThink();
-	DEBUG_LOG(("Persistant Storage Login success %d\n", m_loginOK));
-	return m_loginOK;
-}
+// The matched PSThreadClass::tryLogin (0x006549C0) lives in PSThreadLogin.cpp.
 
 static void getPersistentDataCallback(int localid, int profileid, persisttype_t type, int index, int success, char *data, int len, void *instance)
 {
