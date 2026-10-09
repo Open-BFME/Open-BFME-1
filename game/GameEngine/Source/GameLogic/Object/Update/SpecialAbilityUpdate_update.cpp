@@ -149,8 +149,9 @@ class Object {public:
  char pad000[0x38]; Coord3D position; char pad044[0xcc]; _STL::bitset<320> conditions;
  char pad138[0xcc]; AI002AA9D0* ai; char pad208[0x34]; void* team;
  char pad240[0x104]; unsigned flags344;
- __forceinline void setCondition(int n){if(!conditions.test(n)){conditions._Unchecked_set(n);notifyModelConditionChanged();}}
 };
+// TU-local helper: no retail Object::setCondition body exists to share.
+static __forceinline void setObjectCondition(Object* o,int n){if(!o->conditions.test(n)){o->conditions._Unchecked_set(n);o->notifyModelConditionChanged();}}
 class GameLogic {public:Object* findObjectByID(int);char pad000[0x3c];unsigned frame;};extern GameLogic* TheGameLogic;
 class SpecialPowerTemplate {public:SpecialPowerType getSpecialPowerType()const;};
 class SpecialAbilityUpdateModuleData {public:
@@ -161,7 +162,47 @@ struct BfmeThingFEC {int bfmeGoFEC();char pad000[4];SpecialAbilityUpdateModuleDa
 // BfmeConv894.cpp owns the byte-verified bfmeGoFEC definition.
 static __forceinline int bfmeGoFECInline(BfmeThingFEC* self){if(!self->active){if(!self->data->m_alwaysValidateSpecialObjects){if(self->field02c==0)return 0x3fffffff;}}return 1;}
 struct BfmeA999 {char bfmeGo999A();};
-#include "Rva002A59F0BfmeReady.cpp"
+// Retail 0x002A59F0: needToFace lives in this TU; the update body below
+// matches only with its definition visible here.
+typedef unsigned char Bool;
+
+class BfmeAi59F0
+{
+private:
+	unsigned char m_gap[0x204];
+
+public:
+	void *m_work;
+};
+
+class Gen_002A59F0
+{
+public:
+	int needToFace(void) const;
+
+private:
+	unsigned char m_gap00[8];
+	BfmeAi59F0 *m_ai;
+	unsigned char m_gap0c[0xd4];
+	unsigned char m_marked;
+	unsigned char m_working;
+};
+
+int Gen_002A59F0::needToFace(void) const
+{
+	BfmeAi59F0 *ai = m_ai;
+	if (ai->m_work == 0)
+	{
+		__asm
+		{
+			xor al, al
+			ret
+		}
+	}
+	if (m_marked != 0 && m_working != 0)
+		return 0;
+	return 1;
+}
 class BfmeThing5F30 {public:unsigned char bfmeReady5F30()const;};
 class BfmeThingXR {public:unsigned char bfmeReadyXR()const;};
 class Rva002A7DB0 {public:bool check()const;};
@@ -210,7 +251,7 @@ int SpecialAbilityUpdateUpdateInterface002AA9D0::update(){
  if(targetID){Object* target=TheGameLogic->findObjectByID(targetID);if(target)targetPos=target->position;}
  if(ai->getLastCommandSource()!=2){base->onExit(false,true);return ((BfmeThingFEC*)base)->bfmeGoFEC();}
  bool shouldAbort=false;
- if(d->field24a&&!field0e4){field0e4=true;getObject()->setCondition(124);}
+ if(d->field24a&&!field0e4){field0e4=true;setObjectCondition(getObject(),124);}
  if(d->m_specialPowerTemplate->getSpecialPowerType()==43){
  Object* target=TheGameLogic->findObjectByID(targetID);
  if(target&&(target->flags344&1)&&ai->isIdle())shouldAbort=true;
