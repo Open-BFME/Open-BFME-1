@@ -120891,6 +120891,7 @@ pin	targets/game/reverse/symbols.csv	0x009A9920	1
 pin	targets/game/reverse/symbols.csv	0x009AA4F0	1
 pin	targets/game/reverse/symbols.csv	0x009AB530	1
 pin	targets/game/reverse/symbols.csv	0x009ACBA0	1
+pin	targets/game/reverse/symbols.csv	0x009ACC80	1	allow=90c9a3eca0cd18f6ae62e475de86b31e4e20e09b
 pin	targets/game/reverse/symbols.csv	0x009ACF90	1
 pin	targets/game/reverse/symbols.csv	0x009ADAA0	1
 pin	targets/game/reverse/symbols.csv	0x009ADD80	1
