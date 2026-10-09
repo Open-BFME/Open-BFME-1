@@ -15,6 +15,12 @@ template <>
 bool _STL::basic_filebuf<wchar_t, _STL::char_traits<wchar_t> >::_M_allocate_buffers(
 	wchar_t *, _STL::streamsize);
 
+// Retail's two-argument narrow name constructor is owned by
+// stlport_file_stream_name_ctors.cpp and passes the witnessed protection 0x80.
+template <>
+_STL::basic_ofstream<char, _STL::char_traits<char> >::basic_ofstream(
+    const char *, _STL::ios_base::openmode);
+
 template class _STL::basic_ifstream<char, _STL::char_traits<char> >;
 template class _STL::basic_ofstream<char, _STL::char_traits<char> >;
 template class _STL::basic_fstream<char, _STL::char_traits<char> >;
