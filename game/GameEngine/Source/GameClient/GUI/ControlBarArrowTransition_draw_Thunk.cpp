@@ -76,7 +76,7 @@ public:
 
 extern Display *TheDisplay;
 extern Real g_bfmeDefaultBU;
-extern Real g_bfmeScaleB3;
+
 
 inline Int GameMakeColor(unsigned char red, unsigned char green,
 	unsigned char blue, unsigned char alpha)
@@ -128,7 +128,7 @@ void ControlBarArrowTransition::draw()
 	else
 	{
 		Real alphaValue = (g_bfmeDefaultBU -
-			m_fadePercent * (m_drawState - 16)) * g_bfmeScaleB3;
+			m_fadePercent * (m_drawState - 16)) * 255.0f;
 		Int alpha = alphaValue;
 		if(alpha > 255)
 			alpha = 255;
