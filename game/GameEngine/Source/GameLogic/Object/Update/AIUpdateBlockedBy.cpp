@@ -179,9 +179,9 @@ virtual void slot1E8();
 virtual bool isDoingGroundMovement()const;
 Object*getObject()const{return object;}
 AIStateMachine*getStateMachine()const{return state;}
-const ICoord2D*getPathfindGoalCell()const{return &object->goalCell;}
+const ICoord2D*getPathfindGoalCell()const;
 BfmeSub1CC_EC3*getCurLocomotor()const{return locomotor;}
-bool isAiInDeadState()const{return dead;}
+bool isAiInDeadState()const;
 int getNumFramesBlocked()const{return framesBlocked;}
 char pad04[4];Object*object;char pad0c[0x30-12];AIStateMachine*state;
 char pad34[0x140-0x34];Path*path;char pad144[0x16c-0x144];int framesBlocked;
@@ -192,7 +192,7 @@ bool AIUpdateInterface::blockedBy(Object*blockingObject)
 {
  Coord3D goalPos=*getStateMachine()->getGoalPosition();
  Object*ownerObject=getObject();Coord3D objectPosition=*ownerObject->getPosition();
- ICoord2D goalCell=*getPathfindGoalCell();
+ ICoord2D goalCell=object->goalCell;
  if(goalCell.x>0&&goalCell.y>0){float goalDeltaX=fabs(goalPos.x-objectPosition.x),goalDeltaY=fabs(goalPos.y-objectPosition.y);if(goalDeltaX<10.0f&&goalDeltaY<10.0f)return false;}
  bool canCrush=ownerObject->crushPolicy(blockingObject,TEST_CRUSH_OR_SQUISH);if(canCrush)return false;
  AIUpdateInterface*blockingAI=blockingObject->ai;
@@ -237,12 +237,13 @@ bool AIUpdateInterface::blockedBy(Object*blockingObject)
    else return false;
   }else return false;
  }
- if(!blockingAI->isAiInDeadState())return true;
+ if(!blockingAI->dead)return true;
  return false;
 }
 
 extern float ACos(float);
-#define BFME_ZERO_RANGE 0.0f
+extern const float g_rva01075350;
+#define BFME_ZERO_RANGE (g_rva01075350)
 #define BFME_DEFAULT_BU 1.0f
 #define BFME_MINUS_ONE -1.0
 #define BFME_ONE 1.0
@@ -262,7 +263,7 @@ float Thing::bfmeRelativeAngleTo(const Coord3D *point) const
 	delta.x *= scale;
 	delta.y *= scale;
 	const Coord3D *direction = getUnitDirectionVector2D();
-	float cosine = delta.y * direction->y + delta.x * direction->x;
+	float cosine = *(const volatile float *)&delta.x * direction->x + delta.y * direction->y;
 	if (cosine < BFME_MINUS_ONE)
 		cosine = -1.0f;
 	else if (cosine > BFME_ONE)
