@@ -19,13 +19,19 @@ __forceinline Vector3 operator*(const Vector3&v,float s){return Vector3(v.X*s,v.
 class Overridable {public: virtual ~Overridable(); const Overridable* getFinalOverride() const {if(next)return next->getFinalOverride();return this;} Overridable* next;};
 template<class T>class OVERRIDE {const T*p;public:const T*operator*()const {if(!p)return 0;return(T*)p->getFinalOverride();}operator const T*()const{return operator*();}};
 class AsciiString {public:char*data;const char*str()const{return data?data+8:"";}};
-class ThingTemplate:public Overridable {public:char pad08[0x18];AsciiString name;const AsciiString&getName()const{return name;}};
-class GeometryInfo {public:float majorRadius;float getMajorRadius()const{return majorRadius;}};
+class ThingTemplate:public Overridable {public:char pad08[0x18];AsciiString name;};
+class GeometryInfo {public:float majorRadius;};
 class Object {public:
  virtual ~Object(); OVERRIDE<ThingTemplate> m_template;char pad08[0x30];Coord3D position;char pad44[0x30];unsigned id;char pad78[0x44];GeometryInfo geometry;
- const ThingTemplate*getTemplate()const{return m_template;} unsigned getID()const{return id;} const Coord3D*getPosition()const{return &position;}
- const GeometryInfo&getGeometryInfo()const{return geometry;} bool isUsingAirborneLocomotor()const;
+ unsigned getID()const{return id;} const Coord3D*getPosition()const{return &position;}
+ bool isUsingAirborneLocomotor()const;
 };
+// Retail inlines these four accesses. Keep this TU's partial layout views
+// local rather than emitting competing external accessor COMDATs.
+static inline const ThingTemplate* workerTemplate(const Object*obj){return obj->m_template;}
+static inline const AsciiString& workerTemplateName(const ThingTemplate*value){return value->name;}
+static inline const GeometryInfo& workerGeometry(const Object*obj){return obj->geometry;}
+static inline float workerMajorRadius(const GeometryInfo&value){return value.majorRadius;}
 class CRCParameterCheck;extern CRCParameterCheck*TheCRCParameterCheck;
 extern bool g_bfmeDockingTraceActive;
 extern "C" void bfmeRetailCritterDesyncLog(CRCParameterCheck*,const char*,...);
@@ -42,7 +48,7 @@ class WorkerAIUpdate:public AIUpdateInterface {protected: bool findGoodBuildOrRe
 
 bool WorkerAIUpdate::findGoodBuildOrRepairPosition(const Object*me,const Object*target,Coord3D&positionOut){
  if(g_bfmeDockingTraceActive&&TheCRCParameterCheck)
-  bfmeRetailCritterDesyncLog(TheCRCParameterCheck,"    WorkerAIUpdate::findGoodBuildOrRepairPosition() BEGIN: Object %s(%d) with target %s(%d)",me->getTemplate()->getName().str(),me->getID(),target?target->getTemplate()->getName().str():"NULL",target?target->getID():0);
+  bfmeRetailCritterDesyncLog(TheCRCParameterCheck,"    WorkerAIUpdate::findGoodBuildOrRepairPosition() BEGIN: Object %s(%d) with target %s(%d)",workerTemplateName(workerTemplate(me)).str(),me->getID(),target?workerTemplateName(workerTemplate(target)).str():"NULL",target?target->getID():0);
  Coord3D ourPosition=*me->getPosition();
  Coord3D theirPosition=*target->getPosition();
  if(g_bfmeDockingTraceActive&&TheCRCParameterCheck)
@@ -51,7 +57,7 @@ bool WorkerAIUpdate::findGoodBuildOrRepairPosition(const Object*me,const Object*
  Coord3D workingPosition=theirPosition;
  Vector3 offset(ourPosition.x-theirPosition.x,ourPosition.y-theirPosition.y,ourPosition.z-theirPosition.z);
  offset.Normalize();
- float targetRadius=target->getGeometryInfo().getMajorRadius();
+ float targetRadius=workerMajorRadius(workerGeometry(target));
  offset=offset*targetRadius*0.5f;
  if(g_bfmeDockingTraceActive&&TheCRCParameterCheck)
   bfmeRetailCritterDesyncLog(TheCRCParameterCheck,"    offset=%g,%g,%g, radius=%g",offset.X,offset.Y,offset.Z,targetRadius);
