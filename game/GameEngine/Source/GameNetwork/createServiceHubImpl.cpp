@@ -34,8 +34,10 @@ void Rva007EBAA0(void);
 // The factory stores its constructor result in the four-byte pointer cell at
 // VA 0x0130A588; retail .data initializes that cell to 00 00 00 00.
 ServiceHubImpl *ServiceHubImpl::gInstance = 0;
-extern unsigned char g_Va0130A58C;
-extern unsigned char g_Va0130A58D;
+// Byte flags at VA 0x0130A58C/0x0130A58D (retail .bss, zero): set when this
+// factory started the two global helpers; Rva007EB270Shutdown tests them.
+unsigned char g_Va0130A58C = 0;
+unsigned char g_Va0130A58D = 0;
 
 ServiceHubImpl *createServiceHubImpl(void *a, void *b, void *c, void *d, void *e, void *f)
 {
