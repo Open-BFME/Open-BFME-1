@@ -36,12 +36,12 @@ private:
 	AHB_BaseModuleData m_base;			// this+0x08
 	bool m_initiallyActive;							// this+0x70
 	bool m_x71;
-	bool m_x72;
-	unsigned int m_x74;
-	int m_x78;
-	unsigned int m_x7c;
-	unsigned int m_x80;
-	bool m_x84;
+	bool m_singleBurst;
+	unsigned int m_healingAmount;
+	int m_healingDelay;
+	unsigned int m_startHealingDelay;
+	unsigned int m_radius;
+	bool m_affectsWholePlayer;
 	bool m_x85;
 	bool m_x86;
 	_STL::bitset<181> m_bits;			// this+0x88
@@ -54,16 +54,16 @@ AutoHealBehaviorModuleData::AutoHealBehaviorModuleData()
 {
 	m_initiallyActive = false;
 	m_x71 = false;
-	m_x72 = false;
-	m_x74 = 0;
-	m_x7c = 0;
-	m_x80 = 0;
-	m_x84 = false;
+	m_singleBurst = false;
+	m_healingAmount = 0;
+	m_startHealingDelay = 0;
+	m_radius = 0;
+	m_affectsWholePlayer = false;
 	m_x85 = false;
 	m_x86 = false;
 	m_xa0 = false;
 	m_xa4 = 0;
-	m_x78 = -1;
+	m_healingDelay = -1;
 	m_bits.reset();
 	m_bits.flip();
 }
