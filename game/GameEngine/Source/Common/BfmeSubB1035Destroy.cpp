@@ -8,6 +8,10 @@ public:
 	void handle(void);
 };
 
+// The destructor route 8976E0 -> 89CC70 -> 89C900 ends at the matched
+// Q3EhMember0089C900 cleanup. The first jump body owns this call target.
+extern void j_008976e0();
+
 class BfmeSubB1035
 {
 public:
@@ -23,5 +27,9 @@ private:
 void BfmeSubB1035::bfmeDestroy1035(void)
 {
 	((Gen0089C880 *)this)->handle();
-	delete this;
+	if (this)
+	{
+		((void (__fastcall *)(BfmeSubB1035 *))j_008976e0)(this);
+		BfmeSubB1035::operator delete(this, sizeof(BfmeSubB1035));
+	}
 }
