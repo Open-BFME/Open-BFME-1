@@ -66,7 +66,7 @@ private:
 	AsciiString m_bfmeName;					// +0x0C
 	int m_creationChance;					// +0x10
 	int m_veterancyLevel;					// +0x14
-	BfmeCrateChances m_bfmeChances;				// +0x18
+	BfmeCrateChances m_killedByTypeKindof;				// +0x18
 	int m_killerScience;					// +0x30
 	_STL::list<crateCreationEntry> m_bfmeEntries;		// +0x34
 	bool m_isOwnedByMaker;					// +0x38
@@ -80,7 +80,7 @@ CrateTemplate &CrateTemplate::operator=(const CrateTemplate &other)
 	m_bfmeName = other.m_bfmeName;
 	m_creationChance = other.m_creationChance;
 	m_veterancyLevel = other.m_veterancyLevel;
-	m_bfmeChances = other.m_bfmeChances;
+	m_killedByTypeKindof = other.m_killedByTypeKindof;
 	m_killerScience = other.m_killerScience;
 	m_bfmeEntries = other.m_bfmeEntries;
 	m_isOwnedByMaker = other.m_isOwnedByMaker;
