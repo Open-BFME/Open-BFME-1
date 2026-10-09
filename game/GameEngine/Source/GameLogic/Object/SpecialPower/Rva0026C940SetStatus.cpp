@@ -47,6 +47,18 @@ public:
 	float getFormationMovementSpeed(BfmeUpdateObject *object);
 };
 
+class Rva001BE010
+{
+public:
+	int get();
+};
+
+class BfmeSub1CC_EC3
+{
+public:
+	float effectiveMaxSpeed(void *objectArgument);
+};
+
 class BfmeA1011
 {
 public:
@@ -67,10 +79,10 @@ static BfmeUpdateObject *rva0026C940Object(Rva0026C940Owner *self)
 // ?apply@Rva0026C940Owner@@QAEXHHHHH@Z
 void Rva0026C940Owner::apply(int a, int b, int c, int d, int e)
 {
-	BfmeAIUpdateInterface *ai = rva0026C940Object(this)->getAIUpdateInterface();
+	BfmeAIUpdateInterface *ai = (BfmeAIUpdateInterface *)((Rva001BE010 *)rva0026C940Object(this))->get();
 	if (ai != 0)
 	{
-		if (ai->getFormationMovementSpeed(rva0026C940Object(this)) == g_rva01075350)
+		if (((BfmeSub1CC_EC3 *)ai)->effectiveMaxSpeed(rva0026C940Object(this)) == g_rva01075350)
 			return;
 	}
 	bfmeSend1011(a, b, c, d, e);
