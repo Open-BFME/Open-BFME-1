@@ -1,3 +1,19 @@
+// stlport
+#include <vector>
+
+struct Gen_t_000955c0_p8cd { int a[2]; Gen_t_000955c0_p8cd(); Gen_t_000955c0_p8cd(const Gen_t_000955c0_p8cd&); ~Gen_t_000955c0_p8cd(); Gen_t_000955c0_p8cd& operator=(const Gen_t_000955c0_p8cd&); };
+class Gen_00095130 { public: int m(int); };
+struct Gen_t_000b5370_p8cd { int a[2]; Gen_t_000b5370_p8cd(); Gen_t_000b5370_p8cd(const Gen_t_000b5370_p8cd&); ~Gen_t_000b5370_p8cd(); Gen_t_000b5370_p8cd& operator=(const Gen_t_000b5370_p8cd&); };
+class Gen_000b5200 { public: int m(int); };
+struct Gen_t_003a8c60_p8cd { int a[2]; Gen_t_003a8c60_p8cd(); Gen_t_003a8c60_p8cd(const Gen_t_003a8c60_p8cd&); ~Gen_t_003a8c60_p8cd(); Gen_t_003a8c60_p8cd& operator=(const Gen_t_003a8c60_p8cd&); };
+class Gen_003a63c0 { public: int m(int); };
+namespace _STL
+{
+template <> _Vector_base<Gen_t_000955c0_p8cd, allocator<Gen_t_000955c0_p8cd> >::_Vector_base(unsigned int, const allocator<Gen_t_000955c0_p8cd> &);
+template <> _Vector_base<Gen_t_000b5370_p8cd, allocator<Gen_t_000b5370_p8cd> >::_Vector_base(unsigned int, const allocator<Gen_t_000b5370_p8cd> &);
+template <> _Vector_base<Gen_t_003a8c60_p8cd, allocator<Gen_t_003a8c60_p8cd> >::_Vector_base(unsigned int, const allocator<Gen_t_003a8c60_p8cd> &);
+}
+
 // Three vector assignments, 0x00095A50, 0x000B54C0 and 0x003A9560 (0x002F8980
 // is the SolutionVec copy constructor, SolutionVecCopyConstructor.cpp).
 //
@@ -12,11 +28,6 @@
 // destination, and the null test in front of each element is placement-new
 // codegen. The finish pointer is written from the cursor at the end and this
 // is handed back.
-
-inline void *operator new(unsigned int, void *place)
-{
-	return place;
-}
 
 struct BfmePair
 {
@@ -37,28 +48,15 @@ struct BfmeVectorRange
 };
 
 
-class BfmeSourceA
-{
-public:
-	void *bfmeGrab(void **slot);			// ILT 0x00019876
-};
-
 class Gen_00095A50
 {
 public:
 	Gen_00095A50 *bfmeAssign(BfmeVectorRange *source);
 
 private:
-	void bfmeReserve(int count, void *grabbed);		// ILT 0x000472DA
 
 	BfmePair *m_bfmeStart;					// +0x00
 	BfmePair *m_bfmeFinish;					// +0x04
-};
-
-class BfmeSourceB
-{
-public:
-	void *bfmeGrab(void **slot);			// ILT 0x000314E9
 };
 
 class Gen_000B54C0
@@ -67,16 +65,9 @@ public:
 	Gen_000B54C0 *bfmeAssign(BfmeVectorRange *source);
 
 private:
-	void bfmeReserve(int count, void *grabbed);		// ILT 0x00043E37
 
 	BfmePair *m_bfmeStart;					// +0x00
 	BfmePair *m_bfmeFinish;					// +0x04
-};
-
-class BfmeSourceD
-{
-public:
-	void *bfmeGrab(void **slot);			// ILT 0x00018697
 };
 
 class Gen_003A9560
@@ -85,7 +76,6 @@ public:
 	Gen_003A9560 *bfmeAssign(BfmeVectorRange *source);
 
 private:
-	void bfmeReserve(int count, void *grabbed);		// ILT 0x00027098
 
 	BfmePair *m_bfmeStart;					// +0x00
 	BfmePair *m_bfmeFinish;					// +0x04
@@ -94,10 +84,13 @@ private:
 // ?bfmeAssign@Gen_00095A50@@QAEPAV1@PAUBfmeVectorRange@@@Z
 Gen_00095A50 *Gen_00095A50::bfmeAssign(BfmeVectorRange *source)
 {
-	void *slot;
-	void *grabbed = ((BfmeSourceA *)source)->bfmeGrab(&slot);
+	_STL::allocator<Gen_t_000955c0_p8cd> allocatorSlot;
+	void *grabbed = reinterpret_cast<void *>(reinterpret_cast<Gen_00095130 *>(source)->m(
+		reinterpret_cast<int>(&allocatorSlot)));
 
-	bfmeReserve(source->m_bfmeFinish - source->m_bfmeStart, grabbed);
+	reinterpret_cast<_STL::_Vector_base<Gen_t_000955c0_p8cd, _STL::allocator<Gen_t_000955c0_p8cd> > *>(this)->_STL::_Vector_base<Gen_t_000955c0_p8cd, _STL::allocator<Gen_t_000955c0_p8cd> > ::_Vector_base(
+		(unsigned int)(source->m_bfmeFinish - source->m_bfmeStart),
+		*reinterpret_cast<const _STL::allocator<Gen_t_000955c0_p8cd> *>(grabbed));
 
 	const BfmePair *last = source->m_bfmeFinish;
 	const BfmePair *element = source->m_bfmeStart;
@@ -118,10 +111,13 @@ Gen_00095A50 *Gen_00095A50::bfmeAssign(BfmeVectorRange *source)
 // ?bfmeAssign@Gen_000B54C0@@QAEPAV1@PAUBfmeVectorRange@@@Z
 Gen_000B54C0 *Gen_000B54C0::bfmeAssign(BfmeVectorRange *source)
 {
-	void *slot;
-	void *grabbed = ((BfmeSourceB *)source)->bfmeGrab(&slot);
+	_STL::allocator<Gen_t_000b5370_p8cd> allocatorSlot;
+	void *grabbed = reinterpret_cast<void *>(reinterpret_cast<Gen_000b5200 *>(source)->m(
+		reinterpret_cast<int>(&allocatorSlot)));
 
-	bfmeReserve(source->m_bfmeFinish - source->m_bfmeStart, grabbed);
+	reinterpret_cast<_STL::_Vector_base<Gen_t_000b5370_p8cd, _STL::allocator<Gen_t_000b5370_p8cd> > *>(this)->_STL::_Vector_base<Gen_t_000b5370_p8cd, _STL::allocator<Gen_t_000b5370_p8cd> > ::_Vector_base(
+		(unsigned int)(source->m_bfmeFinish - source->m_bfmeStart),
+		*reinterpret_cast<const _STL::allocator<Gen_t_000b5370_p8cd> *>(grabbed));
 
 	const BfmePair *last = source->m_bfmeFinish;
 	const BfmePair *element = source->m_bfmeStart;
@@ -142,10 +138,13 @@ Gen_000B54C0 *Gen_000B54C0::bfmeAssign(BfmeVectorRange *source)
 // ?bfmeAssign@Gen_003A9560@@QAEPAV1@PAUBfmeVectorRange@@@Z
 Gen_003A9560 *Gen_003A9560::bfmeAssign(BfmeVectorRange *source)
 {
-	void *slot;
-	void *grabbed = ((BfmeSourceD *)source)->bfmeGrab(&slot);
+	_STL::allocator<Gen_t_003a8c60_p8cd> allocatorSlot;
+	void *grabbed = reinterpret_cast<void *>(reinterpret_cast<Gen_003a63c0 *>(source)->m(
+		reinterpret_cast<int>(&allocatorSlot)));
 
-	bfmeReserve(source->m_bfmeFinish - source->m_bfmeStart, grabbed);
+	reinterpret_cast<_STL::_Vector_base<Gen_t_003a8c60_p8cd, _STL::allocator<Gen_t_003a8c60_p8cd> > *>(this)->_STL::_Vector_base<Gen_t_003a8c60_p8cd, _STL::allocator<Gen_t_003a8c60_p8cd> > ::_Vector_base(
+		(unsigned int)(source->m_bfmeFinish - source->m_bfmeStart),
+		*reinterpret_cast<const _STL::allocator<Gen_t_003a8c60_p8cd> *>(grabbed));
 
 	const BfmePair *last = source->m_bfmeFinish;
 	const BfmePair *element = source->m_bfmeStart;
