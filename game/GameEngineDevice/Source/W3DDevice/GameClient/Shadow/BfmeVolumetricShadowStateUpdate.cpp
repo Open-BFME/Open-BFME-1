@@ -1,17 +1,8 @@
-// cl: /DNDEBUG /MD /GR-
-
-class W3DShadowManager;
-extern W3DShadowManager *TheW3DShadowManager;
-
-typedef float Real;
-
-class Vector3
-{
-public:
-	float X;
-	float Y;
-	float Z;
-};
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+#include "PreRTS.h"
+#include "always.h"
+#include "W3DDevice/GameClient/W3DShadow.h"
 
 class ShadowOffset
 {
@@ -35,20 +26,6 @@ class RenderObjClass
 {
 public:
 	Vector3 Get_Position() const;
-};
-
-class Open2Triple
-{
-public:
-	Real m_x;
-	Real m_y;
-	Real m_z;
-};
-
-class Open27110B0Source
-{
-public:
-	const Open2Triple *fetch(int which);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
@@ -217,28 +194,9 @@ public:
 	virtual Real getHeightMapHeight(Real x, Real y, void *normal) const;
 };
 
-class WWMath
-{
-public:
-	static Real __fastcall Inv_Sqrt(Real value);
-	static __forceinline Real Sqrt(Real value)
-	{
-		Real retval;
-		__asm {
-			fld [value]
-			fsqrt
-			fstp [retval]
-		}
-		return retval;
-	}
-};
-
-
 extern TerrainLogic *TheTerrainLogic;
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 extern const Real g_rva01075350;
-extern const Real BfmeShadowZLimit;
-extern const Real BfmeShadowScale;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DVolumetricShadow.h
 class W3DVolumetricShadow
@@ -271,10 +229,10 @@ void W3DVolumetricShadow::updateShadowState()
 	m_lightOffsetY = pos.Y;
 	m_lightOffsetZ = pos.Z;
 
-	const Open2Triple *light = ((Open27110B0Source *&)TheW3DShadowManager)->fetch(0);
-	m_lightOffsetX = m_lightOffsetX - (Real)light->m_x;
-	m_lightOffsetY = m_lightOffsetY - (Real)light->m_y;
-	m_lightOffsetZ = *(volatile Real *)&m_lightOffsetZ - (Real)light->m_z;
+	const Vector3 *light = &TheW3DShadowManager->getLightPosWorld(0);
+	m_lightOffsetX = m_lightOffsetX - (Real)light->X;
+	m_lightOffsetY = m_lightOffsetY - (Real)light->Y;
+	m_lightOffsetZ = *(volatile Real *)&m_lightOffsetZ - (Real)light->Z;
 
 	Real lengthSquared = m_lightOffset.Length2();
 	if (lengthSquared != g_rva01075350)
@@ -294,7 +252,7 @@ void W3DVolumetricShadow::updateShadowState()
 			m_lightOffsetZ = WWMath::Sqrt(horizontalSquared);
 	}
 
-	if (!(m_lightOffsetZ > BfmeShadowZLimit))
+	if (!(m_lightOffsetZ > -0.01f))
 	{
 		Real groundHeight;
 		if (TheTerrainLogic)
@@ -304,7 +262,7 @@ void W3DVolumetricShadow::updateShadowState()
 				pos.Y, 0);
 
 		Real scale = (pos.Z + m_extraExtrusionPadding - groundHeight +
-			m_lightOffsetZAdd) * (BfmeShadowScale / m_lightOffsetZ);
+			m_lightOffsetZAdd) * (-1.0f / m_lightOffsetZ);
 		m_lightOffsetX *= scale;
 		m_lightOffsetY *= scale;
 		m_lightOffsetZ *= scale;
