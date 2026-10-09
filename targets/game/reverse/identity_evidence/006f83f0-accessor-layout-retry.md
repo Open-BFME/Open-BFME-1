@@ -1,0 +1,54 @@
+# 0x006F83F0 accessor and layout retry
+
+The target remains a 618-byte generated dump. No source recovery or identity correction is claimed. The preferred bank, `targets/game/reverse/attempts/0x006f83f0.cpp`, remains unchanged because none of the measured alternatives improves its byte score. The tested revision is `37a9ed497fc6e74a11e4522d8a37db8b4d8ad6bd`; the model is `gpt-6.1-sol`.
+
+## Retry hypothesis and result
+
+The landed caller `Rva006F8F00Payload::perNode` supplies independent argument and member-offset evidence. The current shared `meshmdl.h` supplies inline material accessors that the preceding attempt suggested testing. The hypothesis was that replacing the offset casts with typed inline accessor calls would change the temporary allocation before `Get_Color_Array` returns and remove the ECX/EDX discrepancy. Unchanged register allocation or a result no closer than the bank refutes that hypothesis for the tested forms.
+
+The complete target, caller, wrapper and direct callees were decoded before these trials. The bank reproduces 618 bytes with 95 nonrelocation differences. The nonvolatile alternative reproduces its earlier 98 differences. Both class-member accessor forms preserve the incorrect register choice. The unchanged register experiments stopped at the assigned limit. Existing local-order, rotation-sweep and arithmetic-permutation experiments were not repeated.
+
+| Saved source under `build/rva006f83f0/` | Symbol measured | Emitted size | Differing nonrelocation bytes | First differing byte |
+|---|---|---:|---:|---:|
+| `baseline.cpp` | `??0Vector3@@QAE@XZ` | 3 | 3 within its emitted extent; 615 target bytes missing | `+0x0` |
+| `baseline.cpp` | `?rva006F83F0@Rva006F8700Owner@@QAEHPAXH00@Z` | 618 | 95 | `+0x157` |
+| `native.cpp` | Same address-derived method | 618 | 98 | `+0x157` |
+| `canonical.cpp` | Same address-derived method | 618 | 100 | `+0xAD` |
+| `member-accessors.cpp` | Same address-derived method | 618 | 98 | `+0x157` |
+| `mixed-canonical.cpp` | Same address-derived method | 618 | 100 | `+0x126` |
+
+`baseline.cpp` is an exact source snapshot of the preferred bank. `native.cpp` is extracted from immutable alternative `22bbe3c55a4e3afce088f0d63165158564b320b49c2ea17c315c354272ba191e.json`. The dispatch note about probing `Vector3` first was checked: that constructor is an unrelated three-byte emitted helper, whereas the bank also defines the complete address-derived target method. The three-byte probe is not a measurement of the target reconstruction.
+
+## Boundary, identity and ABI evidence
+
+`decoded.log` retains every instruction in the target's 618-byte extent. Its three returns are `ret 0x10` at offsets `+0x16`, `+0xD4` and `+0x267`. All conditional and unconditional branches stay inside the extent, and the final return is followed by `int3` padding. There is no target exception-registration prologue, unwind state or tail jump. The compiler frame is `0x44` bytes.
+
+The complete 121-byte caller at `0x006F8E60` loads the mesh from owner `+0x24`, pushes it at caller `+0x29`, takes the matrix address at owner `+0x4C`, then pushes matrix, signed running vertex count and destination. It loads the unchanged owner into ECX and calls ILT `0x0000F9BB` at caller `+0x36`. That five-byte ILT jumps to `0x006F83F0`. The result is consumed from EAX as a 32-bit vertex count. No receiver adjustment or hidden return storage occurs. The 20-byte wrapper at `0x006F8700` checks the fourth stack argument and otherwise tail-jumps through the same ILT without changing ECX or argument order. The wrapper's null path is a bare `ret 0x10`, so it is not used as proof that EAX is zero on that path.
+
+The target uses four 32-bit stack slots and a thiscall receiver. Its mesh load at `+0xA5` is `MeshClass::Model` at `+0xC8`; the landed sibling at `0x006F8720` reads that same member. Retail reads vertex count at model `+0x28` and the vertex buffer at `+0x30`, then its data pointer at `+0x0C`. Each source vertex has three 32-bit floats with stride 12. The matrix uses twelve 32-bit floats in three rows. Output stride is 36, with XYZ at `+0x0/+0x4/+0x8`, diffuse at `+0x18`, and UV at `+0x1C/+0x20`. The target writes no normal fields.
+
+Owner reads establish the pointer at `+0x28`, three float offsets at `+0x2C/+0x30/+0x34`, and the fallback alpha float at `+0x80`. The pointed object's `+0xB4` and `+0xB0` are multiplied as 32-bit floats, and the product is recomputed on the override path. No independent owner or provider identity was established; their address-derived names remain. A Drawable opacity getter is only a semantic resemblance: the name oracle does not witness Drawable at either provider offset, so no Drawable declaration or pin was introduced.
+
+The outgoing calls are independently decoded in full in `decoded.log`: `__ftol2` at `0x009F6E38` (117 bytes); `VertexMaterialClass::Get_Emissive` at `0x00921A30` (29 bytes); UV helper at `0x006D7BB0` (166 bytes), reached through ILT `0x0001D179`; color helper at `0x006DB370` (184 bytes), reached through ILT `0x0002F8E2`; and lighting at `0x006F7DA0` (610 bytes), reached through ILT `0x00028EA7`. `checked-target.log`, `checked-ftol.log`, `checked-emissive.log`, `checked-uv.log`, `checked-colors.log` and `checked-lighting.log` retain the checked inventories. No conditional branch leaves any of these extents.
+
+The UV and color helpers read the index as a 32-bit stack slot and the create flag as the low byte of the next slot, returning a pointer in EAX with `ret 8`. Both calls pass index zero and create false, so their allocation and exception-cleanup paths are not entered by this target. UV storage is independently read as two float fields per eight-byte element by the target, and color storage as one 32-bit word per four-byte element. No STL container key or payload is inferred from allocation size.
+
+The emissive getter reads its material pointer at receiver `+0x8`, reads all three floats at material `+0x30/+0x34/+0x38`, writes all three destination floats and returns with `ret 4`. The lighting body reads the lighting and emissive pointers, a 32-bit color, a four-byte float scale and a 32-bit alpha in that order. It returns a packed color in EAX with `ret 0x14`. Its owner identity remains the existing `Rva006F7DA0TreeBuffer` view. The CRT conversion consumes ST(0), returns its integer in EDX:EAX and uses a plain `ret`; the target uses only EAX after converting the clamped alpha multiplied by the double literal 255.
+
+The indirect call at target `+0xF4` is through mesh vtable offset `+0x150`. `virtual-abi.log` reads the current retail table at VA `0x0113C390` and confirms slot 84 points directly to `MeshClass::Get_Material_Info`, `0x0092CF50`. Its complete 39-byte body reads Model at mesh `+0xC8`, reads material info at model `+0xA0`, increments its reference count at `+0x4`, and returns the pointer in EAX. The target subsequently reads the first vertex-material pointer through material info `+0xC`, releases the same reference at `+0x4`, and calls vtable slot zero when it reaches zero. The material-info table at VA `0x0113C65C` routes that slot through ILT `0x00005D5D` to the complete 12-byte `RefCountClass::Delete_This` body at `0x005F38C0`. It uses the unchanged receiver and dispatches the scalar deleting destructor through slot `+0x4` with flag one. `checked-materialinfo.log`, `checked-delete-this.log`, `vtable-mesh.log` and `vtable-material.log` retain those checks. The bank's reference-release declaration agrees with this receiver and ownership behavior.
+
+## Canonical-header discrepancy
+
+The existing name oracle witnesses `MeshGeometryClass::VertexCount` at `+0x28`, `MeshGeometryClass::Vertex` at `+0x30`, and `MeshModelClass::CurMatDesc` at `+0x9C`. Those agree with this target's decoded accesses. Including current `game/Libraries/Source/WWVegas/WW3D2/meshmdl.h` before the donor include block emits count at `+0x2C` and vertex buffer at `+0x34`; the material accessor still emits `+0x9C`. `canonical.log` records the two additional incorrect displacement bytes. Pre-including the donor geometry header repairs the two geometry accesses but moves CurMatDesc to `+0x98`; `mixed-canonical.log` records that distinct failure. Neither trial is a usable canonical declaration for this body. The shared headers were not changed.
+
+The minimal address-derived model view in `member-accessors.cpp` reads only the independently verified CurMatDesc pointer at `+0x9C`, with member functions forwarding to the existing UV and color declarations. Its output is identical to `native.cpp`, including the register residue. The current headers therefore supply a concrete negative layout result, but no successful new compiler lever.
+
+## Remaining mismatch and verification
+
+`baseline-measurement.json` retains every mismatching byte offset, all relocation names, source and object hashes, target hash, and the exact measured score `523/618`. `baseline.obj`, `baseline.bin` and `retail.bin` retain the emitted object and compared bytes. The first differing instruction is at `+0x156`: retail moves the color result from EAX into EDX, while the candidate chooses ECX. Later UV and alias-check temporaries exchange ECX and EDX. Retail reloads the owner into ECX at `+0x1B2`; the bank reloads it later and also retains differing x87 ordering. The nonvolatile alternative fixes the x87 arithmetic sequence but retains the register allocation and scheduling residue, with 98 differing bytes. No exact recovery is claimed.
+
+The unmodified `build.verify_functions` scoped byte check was run on one in-memory candidate row using the existing target extent and symbol map, without editing the ledger. `scoped-byte-gate.log` reports `Functions: FAIL 1/1`; all five direct call relocations resolve. `check-csv.log` and `pin-consistency.log` pass. The class-gate checks for both saved bodies pass. The non-EH family generator reports no applicable register or pointer-copy source lever; its output and exit code are retained. No shared header, symbol pin, ledger row or baseline changed, so no full gate is required for this evidence-only result.
+
+`find_declared_unmatched.py` refuses the scratch body because it has no ledger claim; it is not a proposed landed source. The requested file-to-file invocation of `name_regression.py` fails because this revision's CLI expects Git revisions. Neither result is a landing certificate, and no names or bank bytes were changed. The complete raw diagnostics are retained as `declared-unmatched.log` and `name-regression.log`.
+
+Reopening requires an independently justified source or declaration change that alters the register allocation before `+0x156`, or reconciliation of the canonical geometry layout without contradicting the decoded offsets. Repeating these accessor forms, the recorded local-order and rotation sweeps, or unrelated constructor probes is not justified by this result.
