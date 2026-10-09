@@ -90954,3 +90954,5 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ?d_0062fe40@@YAXXZ,0x0062FE40,legacy address-only compatibility pin for retired dump; source identity is Rva0062FE40
 ?d_004867a0@@YAXXZ,0x004867A0,legacy address-only compatibility pin for retired dump; source identity is Rva004867A0
 ?d_00486850@@YAXXZ,0x00486850,legacy address-only compatibility pin for retired dump; source identity is Rva00486850
+??0ImageCollection@@QAE@XZ,0x005D30E0,canonical Image.cpp object provider; GameClient init calls ILT 0x0002E433 then ImageCollection::load on TheMappedImageCollection; evidence=identity_evidence/0042F5A0-gameclient-init.md
+?d_0042f5a0@@YAXXZ,0x0042F5A0,legacy address-only compatibility pin for retired GameClient init dump spelling
