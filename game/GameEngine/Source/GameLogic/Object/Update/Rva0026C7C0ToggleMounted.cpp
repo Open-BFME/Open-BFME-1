@@ -47,17 +47,23 @@ public:
 	float m_cachedAngle;               // +0x44
 };
 
+// ILT0B95B reaches Object::clearModelConditionFlags(const BitFlags<304>&).
+// The native BfmeE1166 constructor initializes the same ten-word mask storage.
+template <unsigned int NUMBITS> class BitFlags;
+
 class Object : public Thing
 {
 public:
-	void clearModelConditionFlags(const BfmeE1166 &flags);
+	void clearModelConditionFlags(const BitFlags<304> &flags);
+protected:
+	friend class Rva0026C7C0Owner;
 	Module *findModule(NameKeyType key) const;
 };
 
 class StealthUpdate
 {
 public:
-	void receiveGrant(Bool active, UnsignedInt frames);
+	void markAsDetected(UnsignedInt frames, Bool propagate);
 };
 
 class NameKeyGenerator
@@ -130,7 +136,8 @@ Bool Rva0026C7C0Owner::bfmeAdvance()
 	{
 		Object *target = m_target;
 		target->clearModelConditionFlags(
-			BfmeE1166(0, 0x5f, 0x60, 0x61, 0x62, 0x5d));
+			reinterpret_cast<const BitFlags<304> &>(
+				BfmeE1166(0, 0x5f, 0x60, 0x61, 0x62, 0x5d)));
 
 		if (m_mode == 2)
 		{
@@ -162,7 +169,7 @@ Bool Rva0026C7C0Owner::bfmeAdvance()
 			StealthUpdate *stealth =
 				(StealthUpdate *)target->findModule(key);
 			if (stealth != 0)
-				stealth->receiveGrant(false, 1);
+				stealth->markAsDetected(0, true);
 		}
 		return true;
 	}
