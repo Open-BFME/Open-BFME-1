@@ -30,22 +30,44 @@ public:
 	};
 };
 
-struct Rva00660470Deque
+// Declaration-only retail STLport specializations. Member extents are
+// independently fixed by this object's +1C/+44/+74/+80 layout.
+struct Gen_t_00660470_p12cd;
+struct Gen_t_00660610_p12cd;
+struct Gen_t_0064c290_p12cd;
+namespace _STL
 {
-	~Rva00660470Deque();
-	char m_body[ 0x28 ];
-};
+template <class T> class allocator;
+template <class T> struct less;
+template <class T> struct _Select1st;
+template <class A, class B> struct pair;
+template <class K, class V, class Extract, class Compare, class Alloc> class _Rb_tree;
+template <class T, class Alloc> class deque;
 
-struct Rva00660610Deque
+template <> class deque<Gen_t_00660470_p12cd, allocator<Gen_t_00660470_p12cd> >
 {
-	~Rva00660610Deque();
-	char m_body[ 0x28 ];
+public:
+	~deque();
+	char m_body[0x28];
 };
-
-struct Rva0064C290Tree
+template <> class deque<Gen_t_00660610_p12cd, allocator<Gen_t_00660610_p12cd> >
 {
-	~Rva0064C290Tree();
-	char m_body[ 0x0C ];
+public:
+	~deque();
+	char m_body[0x28];
+};
+template <> class _Rb_tree<int, _STL::pair<const int, Gen_t_0064c290_p12cd>, _STL::_Select1st<_STL::pair<const int, Gen_t_0064c290_p12cd> >, _STL::less<int>, _STL::allocator<_STL::pair<const int, Gen_t_0064c290_p12cd> > >
+{
+public:
+	~_Rb_tree();
+	char m_body[0x0C];
+};
+}
+
+class BfmeThingVHX
+{
+public:
+	void bfmeClearVHX();
 };
 
 struct Rva006609D0LockHolder
@@ -71,15 +93,13 @@ public:
 	virtual ~Rva006609D0();
 
 private:
-	void bfmeClearVHX( void );
-
 	GameResultsCounter m_counter04;
 	GameResultsCounter m_counter0C;
 	GameResultsCounter m_counter14;
-	Rva00660470Deque m_deque1C;
-	Rva00660610Deque m_deque44;
+	_STL::deque<Gen_t_00660470_p12cd, _STL::allocator<Gen_t_00660470_p12cd> > m_deque1C;
+	_STL::deque<Gen_t_00660610_p12cd, _STL::allocator<Gen_t_00660610_p12cd> > m_deque44;
 	char m_unreconstructed6C[ 8 ];
-	Rva0064C290Tree m_tree74;
+	_STL::_Rb_tree<int, _STL::pair<const int, Gen_t_0064c290_p12cd>, _STL::_Select1st<_STL::pair<const int, Gen_t_0064c290_p12cd> >, _STL::less<int>, _STL::allocator<_STL::pair<const int, Gen_t_0064c290_p12cd> > > m_tree74;
 	char m_unreconstructed80[ 0xA8 - 0x80 ];
 	GameResultsCounter m_counterA8;
 	Rva006609D0LockHolder m_lockB0;
@@ -88,5 +108,5 @@ private:
 // ??1Rva006609D0@@UAE@XZ
 Rva006609D0::~Rva006609D0()
 {
-	bfmeClearVHX();
+	reinterpret_cast<BfmeThingVHX *>(this)->bfmeClearVHX();
 }
