@@ -1,8 +1,11 @@
 // ?run@Rva006EE800W3DDisplay@@QAEXXZ
-// partial score=0.13 date=2026-09-27
-// Retail BFME display status updater at RVA 0x006EE800.
-// The caller and receiver are proven; the semantic method name remains opaque.
-// cl: /O2 /Ob0 /EHsc
+// partial score=0.463 date=2026-10-09
+// ?run@Rva006EE800W3DDisplay@@QAEXXZ
+// cl: /O2 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/stringbaseunicode
+// Retail network overlay updater with the bank's retained address identity.
+#include <wchar.h>
+#include "ascii_string.h"
+#include "Common/UnicodeString.h"
 
 typedef unsigned char Bool;
 typedef unsigned short WideChar;
@@ -10,75 +13,21 @@ typedef unsigned int UnsignedInt;
 typedef int Int;
 typedef float Real;
 
-template <typename T> class StringBase;
-class AsciiString;
-class UnicodeString;
 
 template <typename T>
-class StringBase
+inline bool StringBase<T>::isEmpty() const
 {
-    friend class AsciiString;
-    friend class UnicodeString;
+    return m_data == 0 || m_data->length == 0;
+}
 
-    struct Header
-    {
-        Int refCount;
-        unsigned short length;
-        unsigned short capacity;
-        T data[1];
-    };
 
-public:
-    StringBase() : m_data(0) {}
-    StringBase(const T *text);
-    StringBase(const StringBase<T> &source);
-    ~StringBase() {}
-    void releaseBuffer();
-    void concat(const T *text, Int length);
-    void set(const T *text, Int length);
-
-protected:
-    Header *m_data;
-};
-
-class AsciiString : private StringBase<char>
+template <>
+inline void StringBase<WideChar>::set(const WideChar *text)
 {
-public:
-    AsciiString() : StringBase<char>() {}
-    AsciiString(const char *text) : StringBase<char>(text) {}
-    AsciiString(const UnicodeString &source);
-    ~AsciiString() { releaseBuffer(); }
-};
+    set(text, (Int)wcslen(text));
+}
 
-class UnicodeString : private StringBase<WideChar>
-{
-public:
-    UnicodeString() : StringBase<WideChar>() {}
-    UnicodeString(const WideChar *text) : StringBase<WideChar>(text) {}
-    UnicodeString(const UnicodeString &source)
-        : StringBase<WideChar>(source)
-    {
-    }
-    ~UnicodeString() { releaseBuffer(); }
-    void format(UnicodeString format, ...);
-    void concat(const WideChar *text, Int length)
-    {
-        StringBase<WideChar>::concat(text, length);
-    }
-    void set(const WideChar *text, Int length)
-    {
-        StringBase<WideChar>::set(text, length);
-    }
-    void releaseBuffer()
-    {
-        StringBase<WideChar>::releaseBuffer();
-    }
-    const WideChar *str() const
-    {
-        return m_data ? m_data->data : reinterpret_cast<const WideChar *>(0x0107388C);
-    }
-};
-
+inline UnicodeString::~UnicodeString() { ((StringBase<WideChar> *)this)->clear(); }
 class GameFont;
 
 class FontLibraryBFMERetail
@@ -123,7 +72,7 @@ struct PlayerLeaveStatus
     Bool notPresent;
     char padding[3];
     Int isHuman;
-    UnicodeString playerName;
+    AsciiString playerName;
 };
 
 class GameLogic
@@ -131,7 +80,7 @@ class GameLogic
 public:
     PlayerLeaveStatus *getPlayerLeaveStatus(Int playerIndex);
     char m_padding00[0x3c];
-    Int m_frame;
+    UnsignedInt m_frame;
 };
 
 class NetworkInterface
@@ -156,21 +105,21 @@ public:
     virtual void slot80() = 0; virtual void slot84() = 0;
     virtual void slot88() = 0;
     virtual Bool isPacketRouter() = 0;
-    virtual Int getLocalPlayerID() = 0;
+    virtual UnsignedInt getLocalPlayerID() = 0;
     virtual void slot94() = 0; virtual void slot98() = 0;
-    virtual UnicodeString *getPlayerName(UnicodeString *name, Int player) = 0;
+    virtual UnicodeString getPlayerName(Int player) = 0;
     virtual void slota0() = 0; virtual void slota4() = 0;
     virtual void slota8() = 0; virtual void slotac() = 0;
     virtual Real slotb0() = 0;
-    virtual Real getPacketsPerSecondIn() = 0;
     virtual Real getBytesPerSecondIn() = 0;
-    virtual Real getPacketsPerSecondOut() = 0;
+    virtual Real getPacketsPerSecondIn() = 0;
     virtual Real getBytesPerSecondOut() = 0;
+    virtual Real getPacketsPerSecondOut() = 0;
     virtual void slotc4() = 0; virtual void slotc8() = 0;
     virtual Int getFramesBehindPacketRouter() = 0;
     virtual Int getRunAheadFrames() = 0;
     virtual Int getSequentialBuffers(Int player) = 0;
-    virtual Int getPlayerLatestFrame(Int player) = 0;
+    virtual UnsignedInt getPlayerLatestFrame(Int player) = 0;
 };
 
 class GameEngine
@@ -197,179 +146,191 @@ private:
     DisplayString *m_displayStrings[17];
 };
 
-#define BFME_AT(type, address) (*reinterpret_cast<type *>(address))
+
+
+struct Rva006EE800Language
+{
+    char m_padding00[0xc4];
+    AsciiString m_fieldc4;
+    Int m_fieldc8;
+    unsigned char m_fieldcc;
+};
+
+struct Rva006EE800GlobalData
+{
+    char m_padding00[0x24];
+    Int m_framesPerSecondLimit;
+    char m_padding28[0xbc8 - 0x28];
+    Int m_fieldbc8;
+    Int m_fieldbcc;
+    Int m_fieldbd0;
+    Int m_fieldbd4;
+};
+
+extern void *Rva012F1484;
+extern void *Rva012F1B38;
+extern void *TheWritableGlobalData;
+extern DisplayStringManager *TheDisplayStringManager;
+extern GameLogic *TheGameLogic;
+extern NetworkInterface *TheNetwork;
+extern GameEngine *TheGameEngine;
+extern Int BfmeSkippedClientFrames;
+extern UnsignedInt g_012ED50C;
+extern UnsignedInt g_012ED510;
+extern UnsignedInt g_012ED514;
+extern UnsignedInt g_012ED51C;
+extern Bool g_012ED520;
+extern Real g_012F8050;
+extern Real g_012A72A4;
+extern Int g_012F8054;
+extern Int g_012F81C0;
 
 void Rva006EE800W3DDisplay::run()
 {
-    DisplayString **strings = m_displayStrings;
-    GameFont *font;
     UnicodeString text;
     UnicodeString aux;
-
-    if (strings[0] == 0)
+    if (m_displayStrings[0] == 0)
     {
-        void *language = BFME_AT(void *, 0x012F1484);
-        if (language != 0 && *reinterpret_cast<void **>(static_cast<char *>(language) + 0xc4) != 0 &&
-            *reinterpret_cast<unsigned short *>(*reinterpret_cast<char **>(static_cast<char *>(language) + 0xc4) + 4) != 0)
-        {
-            AsciiString *name = reinterpret_cast<AsciiString *>(static_cast<char *>(language) + 0xc4);
-            font = BFME_AT(FontLibraryBFMERetail *, 0x012F1B38)->getFont(
-                name,
-                (Real)*reinterpret_cast<Int *>(static_cast<char *>(language) + 0xc8),
-                *reinterpret_cast<unsigned char *>(static_cast<char *>(language) + 0xcc));
-        }
+        GameFont *font;
+        Rva006EE800Language *language = static_cast<Rva006EE800Language *>(Rva012F1484);
+        if (language != 0 && !language->m_fieldc4.isEmpty())
+            font = static_cast<FontLibraryBFMERetail *>(Rva012F1B38)->getFont(
+                &language->m_fieldc4,
+                (Real)language->m_fieldc8,
+                language->m_fieldcc);
         else
         {
             AsciiString name("FixedSys");
-            font = BFME_AT(FontLibraryBFMERetail *, 0x012F1B38)->getFont(&name, 8.0f, 0);
+            font = static_cast<FontLibraryBFMERetail *>(Rva012F1B38)->getFont(&name, 8.0f, 0);
         }
-
         for (Int i = 0; i < 17; ++i)
-        {
-            if (strings[i] == 0)
+            if (m_displayStrings[i] == 0)
             {
-                strings[i] = BFME_AT(DisplayStringManager *, 0x012F12CC)->newDisplayString();
-                strings[i]->setFont(font);
+                m_displayStrings[i] = TheDisplayStringManager->newDisplayString();
+                m_displayStrings[i]->setFont(font);
             }
-        }
     }
-
-    char *globalData = static_cast<char *>(BFME_AT(void *, 0x012ED5C8));
-    Int frameTime = *reinterpret_cast<Int *>(globalData + 0x24);
-    Real frameSeconds = (Real)frameTime * BFME_AT(Real, 0x012F8050);
-    Int slept = (Int)(frameSeconds * 1000.0f);
-    Int delta = (Int)((Real)(bfme_timeGetTime() - BFME_AT(UnsignedInt, 0x012ED51C)) * 0.001f);
-    Int skipped = BFME_AT(Int, 0x012ED504);
-    Real maxPercentSource = frameSeconds * BFME_AT(Real, 0x0107FAC4);
-    Real fps = BFME_AT(Real, 0x012A72A4);
-    Real scalar = BFME_AT(Real, 0x012A72A4);
-
     {
-        if (BFME_AT(Bool, 0x012ED520))
+        Real fps = (Real)static_cast<Rva006EE800GlobalData *>(TheWritableGlobalData)->m_framesPerSecondLimit * g_012F8050;
+        Real sleepTime = (Real)g_012ED50C;
+        Int sleepMinutes = (Int)(sleepTime * (1.0f / 60000.0f));
+        Int sleepSeconds = (Int)((sleepTime - sleepMinutes * 60000.0f) * 0.001f);
+        Int sleepTenths = (Int)((sleepTime - (sleepSeconds * 1000.0f + sleepMinutes * 60000.0f)) * 0.1f);
+        Real totalTime = (Real)(bfme_timeGetTime() - g_012ED51C);
+        Int totalMinutes = (Int)(totalTime * (1.0f / 60000.0f));
+        Int totalSeconds = (Int)((totalTime - totalMinutes * 60000.0f) * 0.001f);
+        Int totalTenths = (Int)((totalTime - (totalSeconds * 1000.0f + totalMinutes * 60000.0f)) * 0.1f);
+        if (g_012ED520)
+            text.format(UnicodeString(L"FPS:%2.2f (%3d%% max) FPSLimit:%d, SCALAR:%1.2f, FSkipped:%d, Slept:%02dms, Delta:%02dms"),
+                fps, (Int)(g_012F8050 * 100.0f), TheGameEngine->getFramesPerSecondLimit(), g_012A72A4,
+                BfmeSkippedClientFrames, g_012ED510, g_012ED514);
+        else
+            text.format(UnicodeString(L"FPS:%2.2f (%3d%% max) FPSLimit:NA, SCALAR:%1.2f, FSkipped:%d, Slept:%02dms, Delta:%02dms"),
+                fps, (Int)(g_012F8050 * 100.0f), g_012A72A4, BfmeSkippedClientFrames, g_012ED510, g_012ED514);
+        aux.format(UnicodeString(L", TSlept:%02d:%02d:%02d, Total:%02d:%02d:%02d"), sleepMinutes, sleepSeconds, sleepTenths,
+            totalMinutes, totalSeconds, totalTenths);
+        text.concat(aux);
+    }
+    m_displayStrings[0]->setText(text);
+    Rva006EE800GlobalData *globalData = static_cast<Rva006EE800GlobalData *>(TheWritableGlobalData);
+    text.format(UnicodeString(L"Frame: %d -- exeCRC=%d, iniCRC=%d, cmdCRC=%d"), TheGameLogic->m_frame,
+        globalData->m_fieldbcc, globalData->m_fieldbd0,
+        globalData->m_fieldbc8, globalData->m_fieldbd4);
+    m_displayStrings[1]->setText(text);
+    if (TheNetwork)
+    {
+        text.format(UnicodeString(L"Bandwidth IN: %.2f bytes/sec, %.2f packets/sec"),
+            TheNetwork->getBytesPerSecondIn(), TheNetwork->getPacketsPerSecondIn());
+        m_displayStrings[2]->setText(text);
+        text.format(UnicodeString(L"Bandwidth OUT: %.2f bytes/sec, %.2f packets/sec"),
+            TheNetwork->getBytesPerSecondOut(), TheNetwork->getPacketsPerSecondOut());
+        m_displayStrings[3]->setText(text);
+        UnsignedInt localPlayer = TheNetwork->getLocalPlayerID();
+        if (localPlayer >= 8)
+            return;
+        if (TheNetwork->isPacketRouter())
         {
-            Int maxFps = BFME_AT(GameEngine *, 0x012ED524)->getFramesPerSecondLimit();
-            text.format(UnicodeString(reinterpret_cast<const WideChar *>(0x0111ECF0)), fps,
-                (Int)maxPercentSource, maxFps, scalar, skipped, slept, delta);
+            UnicodeString name;
+            AsciiString asciiName(TheNetwork->getPlayerName(localPlayer));
+            text.format(UnicodeString(L"**** I (Slot %d:%S) am the packet router ****"), localPlayer, asciiName.str());
+            m_displayStrings[7]->setText(text);
+            text.format(UnicodeString(L"Frame: %d"), TheGameLogic->m_frame);
+            m_displayStrings[9]->setText(text);
         }
         else
-            text.format(UnicodeString(reinterpret_cast<const WideChar *>(0x0111EC18)), fps,
-                (Int)maxPercentSource, scalar, skipped, slept, delta);
-        aux.format(UnicodeString(reinterpret_cast<const WideChar *>(0x0111EBA8)),
-            BFME_AT(Int, 0x012ED514), BFME_AT(Int, 0x012ED510), skipped,
-            BFME_AT(Int, 0x012ED504), BFME_AT(Int, 0x012ED510), BFME_AT(Int, 0x012ED514));
-        text.concat(aux.str(), 0);
-        strings[0]->setText(text);
-    }
-
-    {
-        text.format(UnicodeString(reinterpret_cast<const WideChar *>(0x0111EB38)),
-            BFME_AT(GameLogic *, 0x012F0898)->m_frame,
-            *reinterpret_cast<Int *>(globalData + 0xbd0),
-            *reinterpret_cast<Int *>(globalData + 0xbc8),
-            *reinterpret_cast<Int *>(globalData + 0xbd4));
-        strings[1]->setText(text);
-    }
-
-    NetworkInterface *network = BFME_AT(NetworkInterface *, 0x012F7714);
-    {
-        if (network != 0)
-            text.format(UnicodeString(reinterpret_cast<const WideChar *>(0x0111EAC8)),
-                network->getBytesPerSecondIn(), network->getPacketsPerSecondIn());
-        strings[2]->setText(text);
-    }
-
-    {
-        if (network != 0)
-            text.format(UnicodeString(reinterpret_cast<const WideChar *>(0x0111EA50)),
-                network->getBytesPerSecondOut(), network->getPacketsPerSecondOut());
-        strings[3]->setText(text);
-    }
-
-    if (network != 0)
-    {
-        Int localPlayer = network->getLocalPlayerID();
-        if (localPlayer < 8 && network->isPacketRouter())
         {
-            network->getPlayerName(&aux, localPlayer);
-            AsciiString asciiName(aux);
-            text.format(UnicodeString(reinterpret_cast<const WideChar *>(0x0111E9E0)),
-                localPlayer, asciiName);
-            strings[7]->setText(text);
+            AsciiString asciiName(TheNetwork->getPlayerName(localPlayer));
+            text.format(UnicodeString(L"---- Other machine (Slot %d:%S) is the packet router ----"), localPlayer, asciiName.str());
+            m_displayStrings[7]->setText(text);
+            text.format(UnicodeString(L"Frames behind the packet router: %d"), TheNetwork->getFramesBehindPacketRouter());
+            m_displayStrings[8]->setText(text);
+            text.format(UnicodeString(L"Total # of times we've hit the run-ahead ceiling: %d times within %d frames"),
+                TheNetwork->getRunAheadFrames(), TheGameLogic->m_frame);
+            m_displayStrings[9]->setText(text);
         }
-    }
-
-    if (network != 0)
-    {
-        text.format(UnicodeString(reinterpret_cast<const WideChar *>(0x0111E8E0)),
-            network->getFramesBehindPacketRouter());
-        strings[8]->setText(text);
-    }
-
-    if (network != 0)
-    {
-        text.format(UnicodeString(reinterpret_cast<const WideChar *>(0x0111E828)),
-            BFME_AT(Int, 0x012F7724), network->getFramesBehindPacketRouter());
-        strings[9]->setText(text);
-    }
-
-    for (Int playerIndex = 1; playerIndex < 8; ++playerIndex)
-    {
-        PlayerLeaveStatus *player = BFME_AT(GameLogic *, 0x012F0898)->getPlayerLeaveStatus(playerIndex);
-        if (player == 0 || player->notPresent)
-            continue;
-
-        const WideChar *name = player->playerName.str();
-        if (player->status == 0)
-            text.format(UnicodeString(reinterpret_cast<const WideChar *>(0x0111E5EC)), playerIndex, name);
-        else if (player->status == 2)
-            text.format(UnicodeString(reinterpret_cast<const WideChar *>(0x0111E7C8)), playerIndex, name, player->quitFrame);
-        else if (player->isHuman == 1)
-            text.format(UnicodeString(reinterpret_cast<const WideChar *>(0x0111E738)), playerIndex, name);
-        else if (network != 0 && network->isPacketRouter())
+        for (Int playerIndex = 1; playerIndex < 8; ++playerIndex)
         {
-            Int frame = network->getPlayerLatestFrame(playerIndex);
-            text.format(UnicodeString(reinterpret_cast<const WideChar *>(0x0111E628)), playerIndex, name,
-                frame, frame - BFME_AT(GameLogic *, 0x012F0898)->m_frame);
+            PlayerLeaveStatus *player = TheGameLogic->getPlayerLeaveStatus(playerIndex);
+            if (player->notPresent)
+                continue;
+            if (player->status)
+            {
+                if (player->status == 2)
+                    text.format(UnicodeString(L"Player %d(%S) was voted out on frame %d"), playerIndex, player->playerName.str(), player->quitFrame);
+                else if (player->status == 1)
+                    text.format(UnicodeString(L"Player %d(%S) quit gracefully on frame %d"), playerIndex, player->playerName.str(), player->quitFrame);
+            }
+            else
+            {
+                if (player->isHuman == 1)
+                    text.format(UnicodeString(L"AIPlayer %d(%S)"), playerIndex, player->playerName.str());
+                else if (TheNetwork->isPacketRouter())
+                {
+                    Int currentFrame = TheGameLogic->m_frame;
+                    Int frame = TheNetwork->getPlayerLatestFrame(playerIndex) + (1 - currentFrame);
+                    if (frame == -10)
+                        text.format(UnicodeString(L"Player %d(%S) is on frame#: %d (%d) -- NETWORK SIGNAL FLATLINED (WAITING...)"),
+                            playerIndex, player->playerName.str(), TheNetwork->getPlayerLatestFrame(playerIndex), frame);
+                    else
+                        text.format(UnicodeString(L"Player %d(%S) is on frame#: %d (%d)"),
+                            playerIndex, player->playerName.str(), TheNetwork->getPlayerLatestFrame(playerIndex), frame);
+                }
+                else
+                    text.format(UnicodeString(L"Player %d(%S) is active"), playerIndex, player->playerName.str());
+                if (player->victoryFrame)
+                    aux.format(UnicodeString(L" -- Victorious on frame %d"), player->victoryFrame);
+                else if (player->defeatFrame)
+                {
+                    if (player->isHuman == 0)
+                        aux.format(UnicodeString(L" -- Defeated on frame %d (OBSERVING)"), player->defeatFrame);
+                    else
+                        aux.format(UnicodeString(L" -- Defeated on frame %d"), player->defeatFrame);
+                }
+                text.concat(aux);
+            }
+            m_displayStrings[10 + playerIndex - 1]->setText(text);
         }
-        else
-            text.format(UnicodeString(reinterpret_cast<const WideChar *>(0x0111E628)), playerIndex, name,
-                BFME_AT(GameLogic *, 0x012F0898)->m_frame, 0);
-        strings[10 + playerIndex - 1]->setText(text);
-    }
-
-    {
-        GameLogic *logic = BFME_AT(GameLogic *, 0x012F0898);
-        Int currentFrame = logic->m_frame;
-        Int runAhead = network != 0 ? network->getRunAheadFrames() : 0;
-        if (network != 0 && runAhead != BFME_AT(Int, 0x012F81C0) && currentFrame > 5)
+        if (g_012F81C0 != TheNetwork->getRunAheadFrames() && (UnsignedInt)TheGameLogic->m_frame > 5)
         {
-            BFME_AT(Int, 0x012F81C0) = runAhead;
-            BFME_AT(Int, 0x012F8054) = currentFrame;
+            g_012F81C0 = TheNetwork->getRunAheadFrames();
+            g_012F8054 = TheGameLogic->m_frame;
         }
-        text.format(UnicodeString(reinterpret_cast<const WideChar *>(0x0111E58C)), currentFrame);
-        strings[4]->setText(text);
-    }
-
-    {
-        text.set(reinterpret_cast<const WideChar *>(0x0111E55C), 19);
+        text.format(UnicodeString(L"No Run Ahead"));
+        m_displayStrings[4]->setText(text);
+        text.set(L"SequentialBuffers: ");
         for (Int playerIndex = 0; playerIndex < 9; ++playerIndex)
         {
-            aux.format(UnicodeString(reinterpret_cast<const WideChar *>(0x0111E550)),
-                network != 0 ? network->getSequentialBuffers(playerIndex) : 0);
-            text.concat(aux.str(), 0);
+            aux.format(UnicodeString(L"%d "), TheNetwork->getSequentialBuffers(playerIndex));
+            text.concat(aux);
         }
-        strings[5]->setText(text);
+        m_displayStrings[5]->setText(text);
     }
-
+    else
     {
-        text.format(UnicodeString(reinterpret_cast<const WideChar *>(0x01088AF4)),
-            BFME_AT(Int, 0x012F8054));
-        strings[2]->setText(text);
-        strings[3]->setText(text);
-        strings[4]->setText(text);
-        strings[6]->setText(text);
+        text.format(UnicodeString(L""));
+        m_displayStrings[3]->setText(text);
+        m_displayStrings[2]->setText(text);
+        m_displayStrings[4]->setText(text);
+        m_displayStrings[6]->setText(text);
     }
-
 }
-
-#undef BFME_AT
