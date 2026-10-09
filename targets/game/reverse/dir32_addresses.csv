@@ -8347,7 +8347,6 @@ name,va
 ?buildFieldParse@ExperienceScalarUpgradeModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00449C0B
 ?buildFieldParse@FireSpreadUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00403215
 ?buildFieldParse@FireWeaponUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x0041906A
-?buildFieldParse@FireWeaponWhenDamagedBehaviorModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x0042B1F7
 ?buildFieldParse@FireWeaponWhenDeadBehaviorModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x0042F3B0
 ?buildFieldParse@FirestormDynamicGeometryInfoUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x0044A5ED
 ?buildFieldParse@FlightDeckBehaviorModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00407E64
@@ -8591,12 +8590,10 @@ name,va
 ?d_009c6d30@@YAXXZ,0x00DC6D30
 ?d_009c74f0@@YAXXZ,0x00DC74F0
 ?d_009c7760@@YAXXZ,0x00DC7760
-?dataFieldParse@?1??buildFieldParse@AutoHealBehaviorModuleData@@SAXAAVMultiIniFieldParse@@@Z@4QBUFieldParse@@B,0x010A5D68
 ?dataFieldParse@?1??buildFieldParse@CountermeasuresBehaviorModuleData@@SAXAAVMultiIniFieldParse@@@Z@4QBUFieldParse@@B,0x0108B330
 ?dataFieldParse@?1??buildFieldParse@CreateCrateDieModuleData@@SAXAAVMultiIniFieldParse@@@Z@4QBUFieldParse@@B,0x0108B560
 ?dataFieldParse@?1??buildFieldParse@CrushDieModuleData@@SAXAAVMultiIniFieldParse@@@Z@4QBUFieldParse@@B,0x0108B5AC
 ?dataFieldParse@?1??buildFieldParse@DamageModuleData@@SAXAAVMultiIniFieldParse@@@Z@4QBUFieldParse@@B,0x0108AE8C
-?dataFieldParse@?1??buildFieldParse@FireWeaponWhenDamagedBehaviorModuleData@@SAXAAVMultiIniFieldParse@@@Z@4QBUFieldParse@@B,0x0108EE60
 ?dataFieldParse@?1??buildFieldParse@SpecialPowerCompletionDieModuleData@@SAXAAVMultiIniFieldParse@@@Z@4QBUFieldParse@@B,0x0108B6D0
 ?dataFieldParse@?1??buildFieldParse@SpyVisionUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z@4QBUFieldParse@@B,0x0108B330
 ?dataFieldParse@?1??buildFieldParse@TransitionDamageFXModuleData@@SAXAAVMultiIniFieldParse@@@Z@4QBUFieldParse@@B,0x0108DBF0
