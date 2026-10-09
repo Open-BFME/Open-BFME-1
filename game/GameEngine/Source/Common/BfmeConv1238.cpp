@@ -45,6 +45,28 @@ public:
 	int count() const;
 };
 
+// Retail's call behind `BfmeT1238::bfmeGet1238` lands on the 3-byte getter
+// body at 0x008BD690, whose matched ledger identity is
+// ?m@Gen_008bd690@@QAEHXZ (game/gen_small/fun_005.cpp). Same thiscall ABI
+// (this in ECX, result in EAX), so the receiver - the embedded BfmeT1238
+// subobject at q+0x24 - is called through the defining struct's name.
+struct Gen_008bd690
+{
+	int m();
+};
+
+// Retail's call behind `BfmeU1238::bfmeAt1238C` lands on 0x008BD1D0, matched
+// as ?bfmeAdvance@Gen_008BD1D0@@QBEPAVBfmeNodeDB@@H@Z
+// (game/GameEngine/Source/Common/Bfme5ThirtyFour.cpp): same thiscall ABI,
+// int parameter, pointer result. BfmeNodeDB is TU-local there; a forward
+// declaration suffices here for the return type's spelling.
+class BfmeNodeDB;
+class Gen_008BD1D0
+{
+public:
+	BfmeNodeDB *bfmeAdvance(int count) const;
+};
+
 class BfmeN1238
 {
 public:
@@ -97,7 +119,7 @@ int BfmeN1238::bfmeSize1237() const
 add_count:
 	q = that->m_bfme50;
 	if (q != 0)
-		n += ((Rva008BD1B0Node *)q->m_bfme24.bfmeGet1238())->count();
+		n += ((Rva008BD1B0Node *)((Gen_008bd690 *)&q->m_bfme24)->m())->count();
 	return n;
 }
 
@@ -129,5 +151,5 @@ BfmeS1238 *BfmeN1238::bfmeAt1238(int i)
 	if (i > 0 && i < n)
 		return s->bfmeAt1238B(i - 1);
 
-	return m_bfme50->m_bfme24.bfmeGet1238()->bfmeAt1238C(i - n);
+	return (BfmeS1238 *)((Gen_008BD1D0 *)((Gen_008bd690 *)&m_bfme50->m_bfme24)->m())->bfmeAdvance(i - n);
 }
