@@ -92,48 +92,106 @@ public:
 	void bfmeApply(void *a);				// ILT 0x00013471
 };
 
+// Matched rows the ILT entries reach (link_check near + callees.py):
+//   ILT 0x138EF -> Rva00256AE0::BfmeHostESN::bfmeStepESN
+//   ILT 0x3DE5B -> Gen002569F0::apply
+//   ILT 0xFD35  -> Gen_00256a60::m
+//   ILT 0x40E17 -> BfmeThing922G::bfmeGo922G
+//   ILT 0x204F0 -> 0x0037D730 BfmeCompareBOB::lessThan
+//   ILT 0x2B210 -> 0x0052E880 S4SortElem12::BfmeLess0052E880
+//   ILT 0x13471 -> 0x00574AA0 S4SortElem8::BfmeLess00574AA0
+class BfmeThingESN;
+class Object;
+struct BfmeArg922G;
+struct S4SortElem12;
+struct S4SortElem8;
+
+class Rva00256AE0
+{
+public:
+	class BfmeHostESN
+	{
+	public:
+		void bfmeStepESN(BfmeThingESN *a);
+	};
+};
+
+class Gen002569F0
+{
+public:
+	void apply(Gen_001BF4F0 *a);
+};
+
+class Gen_00256a60
+{
+public:
+	void m(Object *a);
+};
+
+class BfmeThing922G
+{
+public:
+	void bfmeGo922G(BfmeArg922G *a);
+};
+
+class BfmeCompareBOB
+{
+public:
+	bool lessThan(BfmeCompareBOB *other);
+};
+
+struct S4SortElem12
+{
+	bool BfmeLess0052E880(const S4SortElem12 &other) const;
+};
+
+struct S4SortElem8
+{
+	bool BfmeLess00574AA0(const S4SortElem8 &other) const;
+};
+
 // ?bfmeForward@Gen_001BF490@@QAEXPAX@Z
 void Gen_001BF490::bfmeForward(void *a)
 {
 	if (m_bfmeImpl)
-		m_bfmeImpl->bfmeForward(a);
+		((Rva00256AE0::BfmeHostESN *)m_bfmeImpl)->bfmeStepESN((BfmeThingESN *)a);
 }
 
 // ?bfmeForward@Gen_001BF4B0@@QAEXPAX@Z
 void Gen_001BF4B0::bfmeForward(void *a)
 {
 	if (m_bfmeImpl)
-		m_bfmeImpl->bfmeForward(a);
+		((Gen002569F0 *)m_bfmeImpl)->apply((Gen_001BF4F0 *)a);
 }
 
 // ?bfmeForward@Gen_001BF4D0@@QAEXPAX@Z
 void Gen_001BF4D0::bfmeForward(void *a)
 {
 	if (m_bfmeImpl)
-		m_bfmeImpl->bfmeForward(a);
+		((Gen_00256a60 *)m_bfmeImpl)->m((Object *)a);
 }
 
 // ?bfmeForward@Gen_001BF4F0@@QAEXPAX@Z
 void Gen_001BF4F0::bfmeForward(void *a)
 {
 	if (m_bfmeImpl)
-		m_bfmeImpl->bfmeForward(a);
+		((BfmeThing922G *)m_bfmeImpl)->bfmeGo922G((BfmeArg922G *)a);
 }
 
 // ?bfmeInvoke_0037DF60@@YGXPAVGen_0037DF60Owner@@PAX@Z
 void __stdcall bfmeInvoke_0037DF60(Gen_0037DF60Owner *owner, void *a)
 {
-	owner->bfmeApply(a);
+	((BfmeCompareBOB *)owner)->lessThan((BfmeCompareBOB *)a);
 }
 
 // ?bfmeInvoke_0052F050@@YGXPAVGen_0052F050Owner@@PAX@Z
 void __stdcall bfmeInvoke_0052F050(Gen_0052F050Owner *owner, void *a)
 {
-	owner->bfmeApply(a);
+	((S4SortElem12 *)owner)->BfmeLess0052E880(*(S4SortElem12 *)a);
 }
 
 // ?bfmeInvoke_00574F40@@YGXPAVGen_00574F40Owner@@PAX@Z
 void __stdcall bfmeInvoke_00574F40(Gen_00574F40Owner *owner, void *a)
 {
-	owner->bfmeApply(a);
+	((S4SortElem8 *)owner)->BfmeLess00574AA0(*(S4SortElem8 *)a);
 }
