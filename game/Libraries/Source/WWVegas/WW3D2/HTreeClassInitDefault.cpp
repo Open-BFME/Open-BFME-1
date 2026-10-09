@@ -8,6 +8,9 @@
 // identity code and the already-matched PivotClass constructor.
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/htree.h
 
+// Retail calls operator new/delete (??2/??3, callees.py 0x952670) for the
+// pivot array: built without always.h's operator new[]/delete[] declarations.
+#define _OPERATOR_NEW_DEFINED_
 #include "matrix3d.h"
 #include <string.h>
 
