@@ -376,3 +376,16 @@ def test_strict_link_refuses_an_invented_import_and_accepts_the_real_one():
         assert linked is ok, output
         assert ib.link_verdict(linked, found, imports) == ([] if ok else ["strict link failed"])
     shutil.rmtree(tmp_path, ignore_errors=True)
+
+
+def test_link_verdict_accepts_a_name_retail_imports_from_another_dll():
+    """WSock32.Lib and WS2_32.Lib both define _recvfrom@24; retail imports it
+    from WS2_32. The TU cannot pick the DLL, so that is no TU failure (re_attempts 58765)."""
+    imports = FakeImports()
+    imports.slots = {**imports.slots, 0x958CBC: ("ws2_32.dll", "recvfrom"),
+                     0x959718: ("wsock32.dll", "htonl")}
+    linked = [("wsock32.dll", "recvfrom"), ("wsock32.dll", "htonl")]
+    assert ib.link_verdict(True, linked, imports) == []
+    # A name retail imports from no DLL is still refused.
+    assert ib.link_verdict(True, [("wsock32.dll", "WSAAsyncSelect")], imports) == [
+        "links wsock32.dll!WSAAsyncSelect, which retail does not import"]

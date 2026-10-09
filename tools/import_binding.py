@@ -875,7 +875,16 @@ def link_verdict(ok, linked, imports):
     retail = set(imports.slots.values())
     if not ok:
         return ["strict link failed"]
-    return [f"links {dll}!{name}, which retail does not import" for dll, name in linked if (dll, name) not in retail]
+    # Two import libraries can define one symbol (WSock32.Lib and WS2_32.Lib:
+    # _recvfrom@24, _htonl@4). The TU spells the symbol, not the DLL; which
+    # library provides it is the link order's choice, and one order cannot
+    # follow retail for both htonl (WSOCK32) and recvfrom (WS2_32). A name
+    # retail imports from another DLL is that order's artifact, not the TU's.
+    by_name = collections.defaultdict(set)
+    for dll, name in retail:
+        by_name[name].add(dll)
+    return [f"links {dll}!{name}, which retail does not import" for dll, name in linked
+            if (dll, name) not in retail and not by_name.get(name)]
 
 
 EVIDENCE = ROOT / "targets/game/reverse/identity_evidence"
