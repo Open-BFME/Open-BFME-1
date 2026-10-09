@@ -75,6 +75,11 @@ public:
 	const SpecialPowerTemplate *findSpecialPowerTemplate(BfmeAsciiStringArg name);
 };
 
+// Ledger row ?findSpecialPowerTemplate@SpecialPowerStore@@QAEPBVSpecialPowerTemplate@@VAsciiString@@@Z
+// (retail 0x000BA930, reached through ILT 0x00020F04): the call below is spelled
+// through the real class so it links. The by-value AsciiString argument builds
+// through the same inline StringBase<char> constructors, so the bytes match.
+
 // These three small methods have no safe canonical identity yet.  Their
 // retail thunks are used as the function values, while the local PMF types
 // preserve the MSVC thiscall argument order.
@@ -120,10 +125,22 @@ extern UpgradeCenter *TheUpgradeCenter;
 class SpecialPowerStore;
 extern SpecialPowerStore *TheSpecialPowerStore;
 
+// Ledger row ?findSpecialPowerTemplate@SpecialPowerStore@@QAEPBVSpecialPowerTemplate@@VAsciiString@@@Z
+// (body at retail 0x000BA930, reached through ILT 0x00020F04). The declaration
+// below is kept for name preservation; the call in doTeamGiveTeamUpgrade goes
+// through the ?j_00020f04@@YAXXZ thunk row instead, because the body's COMDAT
+// has a kept copy that is not retail's.
+class SpecialPowerStore
+{
+public:
+	const SpecialPowerTemplate *findSpecialPowerTemplate(AsciiString name);
+};
+
 extern void j_00044e18();
 extern void j_0001df16();
 extern void j_00018449();
 extern void j_0003fd41();
+extern void j_00020f04();
 
 static __forceinline Object *bfmeFirstKindMember(Team *team,
 	UnsignedInt kind)
@@ -185,9 +202,20 @@ void ScriptActions::doTeamGiveTeamUpgrade(Parameter *sourceTeam,
 	if (!upgrade || !bfmeTeamCanReceiveUpgrade(target, upgrade))
 		return;
 
-	const SpecialPowerTemplate *power =
-		((BfmeSpecialPowerStoreView *)TheSpecialPowerStore)
-			->findSpecialPowerTemplate("SpecialAbilityGiveUpgrade");
+	const SpecialPowerTemplate *power;
+	{
+		// The lookup's retail target is the ILT thunk ?j_00020f04@@YAXXZ at
+		// 0x00020F04 (a 5-byte jmp to the SpecialPowerStore body at
+		// 0x000BA930). Calling the thunk row directly keeps the by-value
+		// AsciiString build and the thiscall shape but avoids the COMDAT copy
+		// of ?findSpecialPowerTemplate@SpecialPowerStore@@ whose kept
+		// definition is not retail's.
+		typedef const SpecialPowerTemplate *(SpecialPowerStore::*Function)(AsciiString);
+		union { void (*raw)(void); Function member; } fn;
+		fn.raw = j_00020f04;
+		power = (((SpecialPowerStore *)TheSpecialPowerStore)->*fn.member)(
+			"SpecialAbilityGiveUpgrade");
+	}
 	if (!power)
 		return;
 
