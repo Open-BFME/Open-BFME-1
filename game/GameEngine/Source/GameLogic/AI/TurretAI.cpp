@@ -801,45 +801,6 @@ void TurretAI::setTurretTargetObject( Object *victim, Bool forceAttacking )
 }
 
 //----------------------------------------------------------------------------------------------------------
-// ?setTurretTargetPosition@TurretAI@@QAEXPBUCoord3D@@@Z present-unmatched
-void TurretAI::setTurretTargetPosition( const Coord3D* pos )
-{
-	if (!pos ||	!isOwnersCurWeaponOnTurret())
-	{
-		if( !getOwner()->getAI()->areTurretsLinked() )
-		{
-			pos = NULL;
-		}
-	}
-
-	// remove self as targeter before doing anything else.
-	// (note that we never ADD self as targeter here; that is done in the aim state)
-	removeSelfAsTargeter();
-
-	m_turretStateMachine->setGoalObject( NULL );
-	if (pos)
-		m_turretStateMachine->setGoalPosition( pos );
-	m_target = pos ? TARGET_POSITION : TARGET_NONE;
-	m_targetWasSetByIdleMood = false;
-
-	StateID sid = m_turretStateMachine->getCurrentStateID();
-	if (pos != NULL)
-	{
-		// if we're already in the aim state, don't call setState, since
-		// it would go thru the exit/enter stuff, which we don't really want
-		// to do... 
-		if (sid != TURRETAI_AIM && sid != TURRETAI_FIRE)
-			m_turretStateMachine->setState( TURRETAI_AIM );
-		m_victimInitialTeam = NULL;
-	}
-	else
-	{
-		// only change states if we are aiming.
-		if (sid == TURRETAI_AIM || sid == TURRETAI_FIRE)
-			m_turretStateMachine->setState(TURRETAI_HOLD);
-		m_victimInitialTeam = NULL;
-	}
-}
 
 //----------------------------------------------------------------------------------------------------------
 void TurretAI::recenterTurret()
@@ -1358,25 +1319,6 @@ StateReturnType TurretAIRecenterTurretState::onEnter()
  * Rotate the owner's turret to its home orientation.
  */
 
-// ?update@TurretAIRecenterTurretState@@UAE?AW4StateReturnType@@XZ present-unmatched
-StateReturnType TurretAIRecenterTurretState::update()
-{
-	//DEBUG_LOG(("TurretAIRecenterTurretState frame %d: %08lx\n",TheGameLogic->getFrame(),getTurretAI()->getOwner()));
-
-
-  if( getMachineOwner()->testStatus( OBJECT_STATUS_UNDER_CONSTRUCTION))
-    return STATE_CONTINUE;//ML so that under-construction base-defenses do not re-center while under construction
-
-
-	TurretAI* turret = getTurretAI();
-	Bool angleAligned = turret->friend_turnTowardsAngle(turret->getNaturalTurretAngle(), 0.5f, 0.0f);
-	Bool pitchAligned = turret->friend_turnTowardsPitch(turret->getNaturalTurretPitch(), 0.5f);
-
-	if( angleAligned && pitchAligned )
-		return STATE_SUCCESS;
-
-	return STATE_CONTINUE;
-}
 
 //-------------------------------------------------------------------------------------------------
 /**
@@ -1585,22 +1527,6 @@ StateReturnType TurretAIIdleScanState::onEnter()
  * Rotate the owner's turret to its scan orientation.
  */
 
-// ?update@TurretAIIdleScanState@@UAE?AW4StateReturnType@@XZ present-unmatched
-StateReturnType TurretAIIdleScanState::update()
-{
-	//DEBUG_LOG(("TurretAIIdleScanState frame %d: %08lx\n",TheGameLogic->getFrame(),getTurretAI()->getOwner()));
-
-  if( getMachineOwner()->testStatus( OBJECT_STATUS_UNDER_CONSTRUCTION))
-    return STATE_CONTINUE;//ML so that under-construction base-defenses do not idle-scan while under construction
-
-	Bool angleAligned = getTurretAI()->friend_turnTowardsAngle(getTurretAI()->getNaturalTurretAngle() + m_desiredAngle, 0.5f, 0.0f);
-	Bool pitchAligned = getTurretAI()->friend_turnTowardsPitch(getTurretAI()->getNaturalTurretPitch(), 0.5f);
-
-	if( angleAligned && pitchAligned )
-		return STATE_SUCCESS;
-
-	return STATE_CONTINUE;
-}
 
 //-------------------------------------------------------------------------------------------------
 /**
