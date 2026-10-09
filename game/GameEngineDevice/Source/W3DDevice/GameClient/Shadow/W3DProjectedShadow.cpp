@@ -219,17 +219,6 @@ public:
 
 /******************** Start of W3DProjectedShadowManager implementation ***********************/
 // byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManagerConstructor.cpp
-// ??0W3DProjectedShadowManager@@QAE@XZ present-unmatched
-W3DProjectedShadowManager::W3DProjectedShadowManager(void)
-{
-	m_shadowList = NULL;
-	m_decalList = NULL;
-	m_numDecalShadows = 0;
-	m_numProjectionShadows  = 0;
-	m_W3DShadowTextureManager = NULL;
-	m_shadowCamera = NULL;
-	m_shadowContext= NULL;
-}
 
 // ??1W3DProjectedShadowManager@@UAE@XZ present-unmatched
 W3DProjectedShadowManager::~W3DProjectedShadowManager(void)
@@ -271,18 +260,6 @@ Bool W3DProjectedShadowManager::init( void )
 
 
 // byte-exact reconstruction: game/GameEngine/Source/Common/promoted_ReleaseResources_W3DProjectedShadowManager_QAEXXZ_007B1450.cpp
-// ?ReleaseResources@W3DProjectedShadowManager@@QAEXXZ present-unmatched
-void W3DProjectedShadowManager::ReleaseResources(void)
-{
-	invalidateCachedLightPositions();	//textures need to be updated
-	REF_PTR_RELEASE(m_dynamicRenderTarget);	//need to create a new render target
-	if (shadowDecalIndexBufferD3D)
-		shadowDecalIndexBufferD3D->Release();
-	if (shadowDecalVertexBufferD3D)
-		shadowDecalVertexBufferD3D->Release();
-	shadowDecalIndexBufferD3D=NULL;
-	shadowDecalVertexBufferD3D=NULL;
-}
 
 // ?invalidateCachedLightPositions@W3DProjectedShadowManager@@QAEXXZ present-unmatched
 void W3DProjectedShadowManager::invalidateCachedLightPositions(void)
@@ -1706,34 +1683,6 @@ void W3DProjectedShadowManager::removeShadow (W3DProjectedShadow *shadow)
 }
 
 // byte-exact reconstruction: game/GameEngine/Source/Common/promoted__removeAllShadows_W3DProjectedShadowManager_QAEXXZ_007AEA90.cpp
-// ?removeAllShadows@W3DProjectedShadowManager@@QAEXXZ present-unmatched
-void W3DProjectedShadowManager::removeAllShadows(void)
-{
-
-	W3DProjectedShadow *cur_shadow=NULL;
-	W3DProjectedShadow *next_shadow=m_shadowList;
-	m_shadowList = NULL;
-	m_numDecalShadows  = 0;
-	m_numProjectionShadows = 0;
-
-	//search for this shadow
-	for( cur_shadow = next_shadow; cur_shadow; cur_shadow = next_shadow )
-	{
-		next_shadow = cur_shadow->m_next;
-		cur_shadow->m_next = NULL;
-		delete cur_shadow;
-	}  // end for
-
-	next_shadow=m_decalList;
-	cur_shadow=NULL;
-	m_decalList=NULL;
-	for( cur_shadow = next_shadow; cur_shadow; cur_shadow = next_shadow )
-	{
-		next_shadow = cur_shadow->m_next;
-		cur_shadow->m_next = NULL;
-		delete cur_shadow;
-	}  // end for
-}
 
 #if defined(_DEBUG) || defined(_INTERNAL)	
 // ?getRenderCost@W3DProjectedShadow@@ present-unmatched
