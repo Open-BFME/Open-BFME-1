@@ -36,6 +36,12 @@ public:
 	void ReturnToGame(const char *argument);
 };
 
+class Rva00465B80
+{
+public:
+	void apply(void);
+};
+
 // The combined Objectives/PlayerStatus screen constructor binds this same
 // member through ILT 0x0003244D under both ReturnToGame registration strings.
 // ?ReturnToGame@AptPlayerStatus@@QAEXPBD@Z
@@ -52,5 +58,5 @@ void AptPlayerStatus::ReturnToGame(const char *)
 	window->m_hidden = true;
 	TheShell->m_playerStatusHidden = true;
 
-	g_rva012F19E8WindowManager->hideQuitMenu();
+	((Rva00465B80 *)g_rva012F19E8WindowManager)->apply();
 }
