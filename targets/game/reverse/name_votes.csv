@@ -1215,3 +1215,4 @@ game/GameEngine/Source/Common/Bfme5SixtyFive.cpp|function|Gen_000D5930@|bfmeHasB
 game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp|member||m_bfmeSending,d2cf836a0c24a6c8775008ee,gpt-6.1-sol,20261009204500-20ce89,2026-10-09
 game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp|member||m_bfmeReceiving,1dc27b340bdea2e2245b3348,gpt-6.1-sol,20261009204500-20ce89,2026-10-09
 game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp|function|Gen_00410BA0@|bfmeBusy,4419c9752a627b4f78c1260b,gpt-6.1-sol,20261009204500-20ce89,2026-10-09
+game/GameEngine/Source/Common/BfmeConv1789.cpp|member||m_bfmeSlotLU,d9581471c65eb238cd013612,gpt-6.1-sol,20261009205120-c65f1b,2026-10-09
