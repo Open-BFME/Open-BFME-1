@@ -68,6 +68,7 @@ class CastleBehavior
 {
 public:
 	Bool isPlayerAllowedToCapture(Player *player, Bool playerAllowedToCapture);
+	Bool isPlayerAllowedCommon(Player *player, Int key);
 
 private:
 	void *m_vtable;
@@ -77,11 +78,9 @@ private:
 
 extern void *g_012ED4FC;
 extern GameLogic *TheGameLogic;
-extern void b_0036fd20(void);
 extern "C" void bfmeRetailCritterDesyncLog(void *context,
 	const char *format, ...);
 
-typedef Bool (CastleBehavior::*AllowedCall)(Player *, Bool);
 typedef void (__cdecl *DebugLogFunction)(void *, const char *, ...);
 
 Bool CastleBehavior::isPlayerAllowedToCapture(Player *player,
@@ -90,11 +89,7 @@ Bool CastleBehavior::isPlayerAllowedToCapture(Player *player,
 	Object *object = m_object;
 	Bool alreadyMyCastle = player == object->getControllingPlayer();
 
-	AllowedCall allowedCall;
-	union { void *asVoid; AllowedCall asMember; } allowedCast;
-	allowedCast.asVoid = (void *)b_0036fd20;
-	Bool allowed = (this->*allowedCast.asMember)(player,
-		playerAllowedToCapture);
+	Bool allowed = isPlayerAllowedCommon(player, *(Int *)&playerAllowedToCapture);
 
 	if (g_012ED4FC)
 	{
