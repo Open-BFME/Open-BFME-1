@@ -288,7 +288,7 @@ public:
 
 extern GameLogic *TheGameLogic;
 extern TerrainLogic *TheTerrainLogic;
-extern int g_Rva012F02D4;
+extern int g_012F02D4;
 extern int g_Rva012F02DC;
 extern int g_Rva012F02E4;
 
@@ -452,7 +452,7 @@ StateReturnType AIGiantBirdSwoopState::onEnter()
 	else if (m_enabled)
 		((Rva002BC260Owner *)ai)->run(&m_rva002C3020_28, &g_Rva012F02E4, 0, 0);
 	else
-		((Rva002BC260Owner *)ai)->run(&m_rva002C3020_28, &g_Rva012F02D4, 0, 0);
+		((Rva002BC260Owner *)ai)->run(&m_rva002C3020_28, &g_012F02D4, 0, 0);
 
 	return ai->m_continue424 ? STATE_CONTINUE : STATE_FAILURE;
 }
