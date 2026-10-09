@@ -23,8 +23,8 @@ int Rva007EC030( char *text, const char *tag );
 extern void d_007e8b00( void );
 typedef int ( __cdecl *Rva007E8B00Replace )( char *record, int size, char *field );
 
-extern char g_Rva011293A0HexFirst[];
-extern char g_Rva011294A8HexSecond[];
+// Retail VA 0x011293A0 and 0x011294A8 are 256-character hex
+// lookup strings followed by NUL. Their complete literals are indexed below.
 
 // The record's "name=" prefix, as the DirtySock copy's Rva007EC730 writes it:
 // a null name empties the record instead.
@@ -95,9 +95,17 @@ static int Rva007E8D30( const char *name, const char *value, char *record, int s
 			{
 				*p = '%';
 				p++;
-				*p = g_Rva011293A0HexFirst[ *pSrc ];
+				*p = (
+					"0000000000000000111111111111111122222222222222223333333333333333"
+					"4444444444444444555555555555555566666666666666667777777777777777"
+					"88888888888888889999999999999999aaaaaaaaaaaaaaaabbbbbbbbbbbbbbbb"
+					"ccccccccccccccccddddddddddddddddeeeeeeeeeeeeeeeeffffffffffffffff" )[ *pSrc ];
 				p++;
-				*p = g_Rva011294A8HexSecond[ *pSrc ];
+				*p = (
+					"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+					"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+					"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+					"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef" )[ *pSrc ];
 				p++;
 			}
 
