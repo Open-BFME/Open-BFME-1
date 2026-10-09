@@ -28,15 +28,7 @@
 #include "PreRTS.h"
 #include "Common/BezFwdIterator.h"
 
-//-------------------------------------------------------------------------------------------------
-BezFwdIterator::BezFwdIterator(): mStep(0), mStepsDesired(0)
-{ 
-	// Added by Sadullah Nader
-	mCurrPoint.zero();
-	mDDDq.zero();
-	mDDq.zero();
-	mDq.zero();
-} 
+// The default constructor and getCurrent are owned by Common/bez_fwd_iterator.cpp.
 
 //-------------------------------------------------------------------------------------------------
 BezFwdIterator::BezFwdIterator(Int stepsDesired, const BezierSegment *bezSeg)
@@ -108,13 +100,6 @@ void BezFwdIterator::start(void)
 Bool BezFwdIterator::done(void)
 {
 	return (mStep >= mStepsDesired);
-}
-
-//-------------------------------------------------------------------------------------------------
-// ?getCurrent@BezFwdIterator@@QBEABUCoord3D@@XZ present-unmatched
-const Coord3D& BezFwdIterator::getCurrent(void) const
-{
-	return mCurrPoint;
 }
 
 //-------------------------------------------------------------------------------------------------

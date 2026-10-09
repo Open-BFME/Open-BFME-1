@@ -42,75 +42,10 @@ BezFwdIterator::BezFwdIterator(): mStep(0), mStepsDesired(0)
 
 // Retail BezFwdIterator::BezFwdIterator (0x000B65C0) is implemented in BezFwdIterator.cpp.
 
-//-------------------------------------------------------------------------------------------------
-// ?BezFwdIterator::start present-unmatched
-void BezFwdIterator::start(void)
-{
-	mStep = 0;
-
-	if (mStepsDesired <= 1)
-		return;
-
-	float d	 = 1.0f / (mStepsDesired - 1);
-	float d2 = d * d;
-	float d3 = d * d2;
-
-	D3DXVECTOR4 px(mBezSeg.m_controlPoints[0].x, mBezSeg.m_controlPoints[1].x, mBezSeg.m_controlPoints[2].x, mBezSeg.m_controlPoints[3].x);
-	D3DXVECTOR4 py(mBezSeg.m_controlPoints[0].y, mBezSeg.m_controlPoints[1].y, mBezSeg.m_controlPoints[2].y, mBezSeg.m_controlPoints[3].y);
-	D3DXVECTOR4 pz(mBezSeg.m_controlPoints[0].z, mBezSeg.m_controlPoints[1].z, mBezSeg.m_controlPoints[2].z, mBezSeg.m_controlPoints[3].z);
-
-	D3DXVECTOR4 cVec[3];
-	D3DXVec4Transform(&cVec[0], &px, &BezierSegment::s_bezBasisMatrix);
-	D3DXVec4Transform(&cVec[1], &py, &BezierSegment::s_bezBasisMatrix);
-	D3DXVec4Transform(&cVec[2], &pz, &BezierSegment::s_bezBasisMatrix);
-
-	mCurrPoint = mBezSeg.m_controlPoints[0];
-
-	int i = 3;
-	while (i--) {
-		float a = cVec[i].x;
-		float b = cVec[i].y;
-		float c = cVec[i].z;
-
-		float *pD, *pDD, *pDDD;
-
-		if (i == 2) {
-			pD = &mDq.z;
-			pDD = &mDDq.z;
-			pDDD = &mDDDq.z;
-		} else if (i == 1) {
-			pD = &mDq.y;
-			pDD = &mDDq.y;
-			pDDD = &mDDDq.y;
-		} else if (i == 0) {
-			pD = &mDq.x;
-			pDD = &mDDq.x;
-			pDDD = &mDDDq.x;
-		}
-
-		(*pD) = a * d3 + b * d2 + c * d;
-		(*pDD) = 6 * a * d3 + 2 * b * d2;
-		(*pDDD) = 6 * a * d3;
-	}
-}
-
-//-------------------------------------------------------------------------------------------------
-Bool BezFwdIterator::done(void)
-{
-	return (mStep >= mStepsDesired);
-}
+// start, done and next are owned by Common/Bezier/BezFwdIterator.cpp.
 
 const Coord3D& BezFwdIterator::getCurrent(void) const
 {
 	return mCurrPoint;
 }
 
-//-------------------------------------------------------------------------------------------------
-void BezFwdIterator::next(void)
-{
-	mCurrPoint.add(&mDq);
-	mDq.add(&mDDq);
-	mDDq.add(&mDDDq);
-
-	++mStep;
-}
