@@ -7,7 +7,7 @@ class BfmeCursorXF;
 struct BfmeBits1186;
 struct Rva009A6130Context;
 void Rva009A8410(unsigned int *result);
-void d_009acb60(void);
+int d_009acb60(unsigned char *s);
 void bfmeReadWordXF(BfmeCursorXF *out, const unsigned char *data);
 void bfmeInit1186(BfmeBits1186 *s, unsigned char *p);
 void Rva009ABFC0DecodeFrame(unsigned char *s);
@@ -28,7 +28,7 @@ static int Rva009A5620DecodeFrame(unsigned char *s, unsigned char *data, unsigne
 	Rva009A8410(&start);
 	U(0x1e8) = size;
 	bfmeReadWordXF((BfmeCursorXF *)(s + 0x450c), data);
-	if (!((int (__cdecl *)(unsigned char *))d_009acb60)(s))
+	if (!d_009acb60(s))
 		return -1;
 	if (U(0x944) || !B(0x19d))
 	{

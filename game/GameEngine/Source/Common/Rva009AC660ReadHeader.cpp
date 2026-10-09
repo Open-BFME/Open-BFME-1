@@ -111,10 +111,13 @@ static int Rva009AC660ReadHeader(unsigned char* s)
     return 1;
 }
 
-// Absent-from-retail harness; reproduces the witnessed caller's boolean use.
-int Rva009AC660ReadHeaderHarness(unsigned char* s)
+// The sole retail caller passes the codec state and consumes an int boolean.
+int d_009acb60(unsigned char* s)
 {
-    return Rva009AC660ReadHeader(s) ? 1 : 0;
+    int result = 1;
+    if (!Rva009AC660ReadHeader(s))
+        result = 0;
+    return result;
 }
 
 #undef U
