@@ -551,14 +551,14 @@ inline int AsciiString::compare(const char* s) const
 inline int AsciiString::compareNoCase(const AsciiString& stringSrc) const
 {
 	validate();
-	return _stricmp(this->str(), stringSrc.str());
+	return _strcmpi(this->str(), stringSrc.str());
 }
 
 // -----------------------------------------------------
 inline int AsciiString::compareNoCase(const char* s) const
 {
 	validate();
-	return _stricmp(this->str(), s);
+	return _strcmpi(this->str(), s);
 }
 
 // -----------------------------------------------------
