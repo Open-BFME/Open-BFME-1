@@ -1,7 +1,6 @@
 // ?d_00426c60@@YAXXZ
-// partial score=0.46 date=2026-09-23
+// partial score=0.8192 date=2026-10-09
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
-// Address-derived Eva event parser; its branch tables and record ABI are read from retail.
 
 #include "ascii_string.h"
 
@@ -16,31 +15,16 @@ public:
 	void initFromINI( void *object, const FieldParse *fieldParse );
 };
 
-class BFMERetailAsciiString
-{
-public:
-	BFMERetailAsciiString( const char *text );
-	~BFMERetailAsciiString() { releaseBuffer(); }
-
-	const char *str() const
-	{
-		return m_data ? m_data + 8 : "";
-	}
-
-private:
-	void releaseBuffer();
-	char *m_data;
-};
-
 class INIException
 {
 public:
 	INIException( Int code, const char *message, ... );
 	INIException( const INIException &other );
+	~INIException();
 
 private:
-	Int m_code;
-	const char *m_message;
+	char *mFailureMessage;
+	Int m_argCount;
 };
 
 namespace _STL
@@ -55,8 +39,9 @@ struct pair
 	pair( const T1 &left, const T2 &right ) : first( left ), second( right ) {}
 };
 
-template <class T> struct allocator {};
+template <class T> class allocator {};
 template <class T> struct less {};
+template <class T> struct equal_to {};
 
 template <class T>
 struct _Select1st
@@ -154,7 +139,7 @@ struct Rva004246F0ExtractKey
 
 typedef _STL::hashtable<Rva004246F0Value, AsciiString,
 	rts::hash<AsciiString>, Rva004246F0ExtractKey,
-	rts::equal_to<AsciiString>, _STL::allocator<Rva004246F0Value> >
+	_STL::equal_to<AsciiString>, _STL::allocator<Rva004246F0Value> >
 	Rva00426C60NameMap;
 
 struct Rva00424D30Value
@@ -162,7 +147,7 @@ struct Rva00424D30Value
 	int m_payload;
 };
 
-typedef _STL::pair<const AsciiString, Rva00424D30Value *> Rva00424D30Pair;
+typedef _STL::pair<const AsciiString, Int> Rva00424D30Pair;
 
 struct Rva00424D30ExtractKey
 {
@@ -173,7 +158,7 @@ struct Rva00424D30ExtractKey
 };
 
 typedef _STL::hashtable<Rva00424D30Pair, AsciiString,
-	rts::hash<AsciiString>, Rva00424D30ExtractKey,
+	rts::hash<AsciiString>, _STL::_Select1st<Rva00424D30Pair>,
 	rts::equal_to<AsciiString>, _STL::allocator<Rva00424D30Pair> >
 	Rva00426C60InsertMap;
 
@@ -182,33 +167,75 @@ struct Rva004240F0Value
 	unsigned int m_payload;
 };
 
-typedef _STL::pair<const AsciiString, Rva004240F0Value *> Rva004240F0Pair;
+typedef _STL::pair<const AsciiString, Int> Rva004240F0Pair;
 
 typedef _STL::hashtable<Rva004240F0Pair, AsciiString,
 	rts::hash<AsciiString>, _STL::_Select1st<Rva004240F0Pair>,
 	rts::equal_to<AsciiString>, _STL::allocator<Rva004240F0Pair> >
 	Rva00426C60ResizeMap;
 
-struct Gen00425060
+class BfmeEvaCheckInfoTail
 {
-	char m_body[ 28 ];
-	~Gen00425060();
+public:
+	~BfmeEvaCheckInfoTail();
+private:
+	char m_body[12];
 };
 
-class Rva00425680Object : public Gen00425060
+class EvaMessageTail
+{
+public:
+	EvaMessageTail &operator=(const EvaMessageTail &);
+private:
+	char m_body[12];
+};
+
+struct Gen00425060
+{
+	int m_field0;
+	int m_field4;
+	int m_field8;
+	int m_fieldC;
+	BfmeEvaCheckInfoTail m_tail;
+	~Gen00425060() {}
+};
+
+class Rva00425680Object
 {
 public:
 	Rva00425680Object();
+	~Rva00425680Object() {}
+	int m_field0;
+	int m_field4;
+	int m_field8;
+	int m_fieldC;
+	BfmeEvaCheckInfoTail m_tail;
 };
 
 struct Rva00426C00Element
 {
-	char m_body[ 28 ];
+	int m_field0;
+	int m_field4;
+	int m_field8;
+	int m_fieldC;
+	EvaMessageTail m_tail;
+	__forceinline Rva00426C00Element &operator=(const Rva00426C00Element &other)
+	{
+		m_field0 = other.m_field0;
+		m_field4 = other.m_field4;
+		m_field8 = other.m_field8;
+		m_fieldC = other.m_fieldC;
+		m_tail = other.m_tail;
+		return *this;
+	}
 };
 
 struct Gen_t_004258e0_p24cd
 {
-	char m_body[ 24 ];
+	float m_triggeredOnFrame;
+	float m_timeForNextCheck;
+	char m_position[12];
+	bool m_alreadyPlayed;
 };
 
 namespace _STL
@@ -239,6 +266,7 @@ public:
 
 class Eva;
 extern Eva *TheEva;
+extern "C" unsigned char bfmeStrEBJ[];
 
 class Rva00426C60EvaEvent
 {
@@ -249,109 +277,81 @@ public:
 void Rva00426C60EvaEvent::parse( INI *ini )
 {
 	const char *token = ini->getNextToken( 0 );
-	BFMERetailAsciiString name( token );
-	if ( ( (AsciiString *)&name )->compareNoCase( "None" ) == 0 )
-		throw INIException( 3,
-			"Cannot use 'None' as a new Eva event's name" );
-
+	AsciiString name( token );
+	if ( name.compareNoCase( "None" ) == 0 )
+		throw INIException( 3, "Cannot use 'None' as a new Eva event's name" );
+	Rva00426C00Element *destination;
 	const Int loadType = *(const Int *)((const char *)ini + 8);
 	if ( loadType == 2 )
 	{
 		const _STL::_Hashtable_node<Rva004246F0Value> *found =
 			reinterpret_cast<Rva00426C60NameMap *>( (char *)TheEva + 0x24 )->find(
-			*(const AsciiString *)&name );
+				name );
 		Int index = found ? found->m_val.m_message : -1;
-		if ( index != -1 )
+		if ( index == -1 )
 		{
-			if ( index < 0x11 )
-				throw INIException( 3,
-					"'%s' is a predefined Eva event name, and cannot be used as a new",
-					name.str() );
-			Rva00426C00Element *destination =
-				reinterpret_cast<_STL::vector<Rva00426C00Element,
-				_STL::allocator<Rva00426C00Element> > *>( (char *)TheEva + 0x0c )->m_begin
-				+ index;
-			ini->initFromINI( destination, (const FieldParse *)0x010F1B68 );
-			return;
-		}
-
-		{
-			Rva00425680Object value;
-			_STL::vector<Rva00426C00Element,
-				_STL::allocator<Rva00426C00Element> > *messages =
-				reinterpret_cast<_STL::vector<Rva00426C00Element,
-					_STL::allocator<Rva00426C00Element> > *>( (char *)TheEva + 0x0c );
-			index = (Int)( messages->m_finish - messages->m_begin );
-			messages->push_back( (const Rva00426C00Element *)&value );
-		}
-		{
-			Rva00424D30Pair value( *(const AsciiString *)&name,
-				(Rva00424D30Value *)(unsigned long)index );
+			index = (Int)( reinterpret_cast<_STL::vector<Rva00426C00Element,
+				_STL::allocator<Rva00426C00Element> > *>( (char *)TheEva + 0x0c )->m_finish
+				- reinterpret_cast<_STL::vector<Rva00426C00Element,
+				_STL::allocator<Rva00426C00Element> > *>( (char *)TheEva + 0x0c )->m_begin );
+			reinterpret_cast<_STL::vector<Rva00426C00Element,
+				_STL::allocator<Rva00426C00Element> > *>( (char *)TheEva + 0x0c )->push_back(
+				(const Rva00426C00Element *)&Rva00425680Object() );
+			destination = reinterpret_cast<_STL::vector<Rva00426C00Element,
+				_STL::allocator<Rva00426C00Element> > *>( (char *)TheEva + 0x0c )->m_begin + index;
+			Rva00424D30Pair value( name,
+				index );
 			Rva00426C60ResizeMap *resizeMap =
 				reinterpret_cast<Rva00426C60ResizeMap *>( (char *)TheEva + 0x24 );
 			resizeMap->resize( resizeMap->m_num_elements + 1 );
-			reinterpret_cast<Rva00426C60InsertMap *>( (char *)TheEva + 0x24 )
-				->insert_unique_noresize( value );
+			reinterpret_cast<Rva00426C60InsertMap *>(resizeMap)->insert_unique_noresize( value );
+			Gen_t_004258e0_p24cd check;
+			check.m_triggeredOnFrame = -1.0f;
+			check.m_timeForNextCheck = -1.0f;
+			check.m_alreadyPlayed = false;
+			reinterpret_cast<_STL::vector<Gen_t_004258e0_p24cd,
+				_STL::allocator<Gen_t_004258e0_p24cd> > *>( (char *)TheEva + 0x4c )->push_back( check );
 		}
-		Gen_t_004258e0_p24cd check;
-		*(float *)( check.m_body + 0 ) = -1.0f;
-		*(float *)( check.m_body + 4 ) = -1.0f;
-		*( check.m_body + 0x14 ) = 0;
-		reinterpret_cast<_STL::vector<Gen_t_004258e0_p24cd,
-			_STL::allocator<Gen_t_004258e0_p24cd> > *>( (char *)TheEva + 0x4c )
-			->push_back( check );
-		Rva00426C00Element *destination =
-		reinterpret_cast<_STL::vector<Rva00426C00Element,
-				_STL::allocator<Rva00426C00Element> > *>( (char *)TheEva + 0x0c )->m_begin
-			+ index;
-		ini->initFromINI( destination, (const FieldParse *)0x010F1B68 );
+		else
+		{
+			if ( index < 0x11 )
+				throw INIException( 3,
+					"'%s' is a predefined Eva event name, and cannot be used as a new", name.str() );
+			destination = reinterpret_cast<_STL::vector<Rva00426C00Element,
+				_STL::allocator<Rva00426C00Element> > *>( (char *)TheEva + 0x0c )->m_begin + index;
+		}
 	}
 	else
 	{
 		const _STL::_Hashtable_node<Rva004246F0Value> *found =
 			reinterpret_cast<Rva00426C60NameMap *>( (char *)TheEva + 0x38 )->find(
-			*(const AsciiString *)&name );
+				name );
 		if ( found != 0 )
 		{
 			if ( found->m_val.m_message < 0x11 )
 				throw INIException( 3,
-					"'%s' is a predefined Eva event name, and cannot be used as a new",
-					name.str() );
-			throw INIException( 3,
-				"Cannot redefine existing Eva event '%s' in Eva.ini",
-				name.str() );
+					"'%s' is a predefined Eva event name, and cannot be used as a new", name.str() );
+			throw INIException( 3, "Cannot redefine existing Eva event '%s' in Eva.ini", name.str() );
 		}
-
-		Int index;
+		Int index = (Int)( reinterpret_cast<_STL::vector<Rva00426C00Element,
+			_STL::allocator<Rva00426C00Element> > *>( (char *)TheEva + 0x18 )->m_finish
+			- reinterpret_cast<_STL::vector<Rva00426C00Element,
+			_STL::allocator<Rva00426C00Element> > *>( (char *)TheEva + 0x18 )->m_begin );
+		reinterpret_cast<_STL::vector<Rva00426C00Element,
+			_STL::allocator<Rva00426C00Element> > *>( (char *)TheEva + 0x18 )->push_back(
+			(const Rva00426C00Element *)&Rva00425680Object() );
+		destination = reinterpret_cast<_STL::vector<Rva00426C00Element,
+			_STL::allocator<Rva00426C00Element> > *>( (char *)TheEva + 0x18 )->m_begin + index;
 		{
-			Rva00425680Object value;
-			_STL::vector<Rva00426C00Element,
-				_STL::allocator<Rva00426C00Element> > *messages =
-				reinterpret_cast<_STL::vector<Rva00426C00Element,
-				_STL::allocator<Rva00426C00Element> > *>( (char *)TheEva + 0x18 );
-			index = (Int)( messages->m_finish - messages->m_begin );
-			messages->push_back( (const Rva00426C00Element *)&value );
-		}
-		{
-			Rva00424D30Pair value( *(const AsciiString *)&name,
-				(Rva00424D30Value *)(unsigned long)index );
+			Rva00424D30Pair value( name,
+				index );
 			Rva00426C60ResizeMap *resizeMap =
 				reinterpret_cast<Rva00426C60ResizeMap *>( (char *)TheEva + 0x38 );
 			resizeMap->resize( resizeMap->m_num_elements + 1 );
-			reinterpret_cast<Rva00426C60InsertMap *>( (char *)TheEva + 0x38 )
-				->insert_unique_noresize( value );
+			reinterpret_cast<Rva00426C60InsertMap *>(resizeMap)->insert_unique_noresize( value );
 		}
-		Gen_t_004258e0_p24cd check;
-		*(float *)( check.m_body + 0 ) = -1.0f;
-		*(float *)( check.m_body + 4 ) = -1.0f;
-		*( check.m_body + 0x14 ) = 0;
-		reinterpret_cast<_STL::vector<Gen_t_004258e0_p24cd,
-			_STL::allocator<Gen_t_004258e0_p24cd> > *>( (char *)TheEva + 0x4c )
-			->push_back( check );
-		Rva00426C00Element *destination =
-			reinterpret_cast<_STL::vector<Rva00426C00Element,
-				_STL::allocator<Rva00426C00Element> > *>( (char *)TheEva + 0x18 )->m_begin
-			+ index;
-		ini->initFromINI( destination, (const FieldParse *)0x010F1B68 );
 	}
+	*destination = *reinterpret_cast<_STL::vector<Rva00426C00Element,
+			_STL::allocator<Rva00426C00Element> > *>( (char *)TheEva + 0x18 )->m_begin;
+	ini->initFromINI( destination, (const FieldParse *)bfmeStrEBJ );
 }
