@@ -22,17 +22,7 @@ int __cdecl Rva0054E960(int, int);					// ILT 0x00029771 -> 0x0054E960
 int __cdecl Rva0056DEC0(int, int);					// ILT 0x0003C65A -> 0x0056DEC0
 int __cdecl Rva00527830(int, int);	// ILT 0x00042FA0 -> 0x00527830
 
-#define bfmeMakeW0(a, b) Rva003897C0((int)(a), (int)(b))
-#define bfmeMakeW1(a, b) Rva003C9220((int)(a), (int)(b))
-#define bfmeMakeW2(a, b) Rva0054E860((int)(a), (int)(b))
-#define bfmeMakeW3(a, b) Rva0054E8E0((int)(a), (int)(b))
-#define bfmeMakeW4(a, b) Rva00593060((int)(a), (int)(b))
 
-#define bfmeMake_00529B60(a, b) Rva005277B0((int)(a), (int)(b))
-#define bfmeMake_0054F920(a, b) Rva0054E760((int)(a), (int)(b))
-#define bfmeMake_0054FA00(a, b) Rva0054E960((int)(a), (int)(b))
-#define bfmeMake_0056E900(a, b) Rva0056DEC0((int)(a), (int)(b))
-#define bfmeHashCombineA(a, b) Rva00527830((int)(a), (int)(b))
 
 enum { BFME_KIND_MADE = 1, BFME_KIND_GIVEN = 2 };
 
@@ -136,7 +126,7 @@ Gen_00390830::Gen_00390830(int kind, unsigned int made, unsigned int given)
 	if (kind == BFME_KIND_GIVEN)
 		m_bfmeValue = given;
 	else if (kind == BFME_KIND_MADE)
-		m_bfmeValue = bfmeMakeW0(made, made);
+		m_bfmeValue = Rva003897C0((int)made, (int)made);
 }
 
 // ??0Gen_003CA5F0@@QAE@HII@Z
@@ -145,7 +135,7 @@ Gen_003CA5F0::Gen_003CA5F0(int kind, unsigned int made, unsigned int given)
 	if (kind == BFME_KIND_GIVEN)
 		m_bfmeValue = given;
 	else if (kind == BFME_KIND_MADE)
-		m_bfmeValue = bfmeMakeW1(made, made);
+		m_bfmeValue = Rva003C9220((int)made, (int)made);
 }
 
 // ??0Gen_0054F770@@QAE@HII@Z
@@ -154,7 +144,7 @@ Gen_0054F770::Gen_0054F770(int kind, unsigned int made, unsigned int given)
 	if (kind == BFME_KIND_GIVEN)
 		m_bfmeValue = given;
 	else if (kind == BFME_KIND_MADE)
-		m_bfmeValue = bfmeMakeW2(made, made);
+		m_bfmeValue = Rva0054E860((int)made, (int)made);
 }
 
 // ??0Gen_0054F7C0@@QAE@HII@Z
@@ -163,7 +153,7 @@ Gen_0054F7C0::Gen_0054F7C0(int kind, unsigned int made, unsigned int given)
 	if (kind == BFME_KIND_GIVEN)
 		m_bfmeValue = given;
 	else if (kind == BFME_KIND_MADE)
-		m_bfmeValue = bfmeMakeW3(made, made);
+		m_bfmeValue = Rva0054E8E0((int)made, (int)made);
 }
 
 // ??0Gen_00596C40@@QAE@HII@Z
@@ -172,7 +162,7 @@ Gen_00596C40::Gen_00596C40(int kind, unsigned int made, unsigned int given)
 	if (kind == BFME_KIND_GIVEN)
 		m_bfmeValue = given;
 	else if (kind == BFME_KIND_MADE)
-		m_bfmeValue = bfmeMakeW4(made, made);
+		m_bfmeValue = Rva00593060((int)made, (int)made);
 }
 
 // ??0Gen_00529340@@QAE@HFI@Z
@@ -181,13 +171,13 @@ Gen_00529340::Gen_00529340(int kind, short made, unsigned int given)
 	if (kind == BFME_KIND_GIVEN)
 		m_bfmeValue = given;
 	else if (kind == BFME_KIND_MADE)
-		m_bfmeValue = bfmeMake_00529B60(made, made);
+		m_bfmeValue = Rva005277B0((int)made, (int)made);
 }
 
 // ?bfmeAdvance@Gen_00529340@@QAE?AV1@XZ
 Gen_00529340 Gen_00529340::bfmeAdvance()
 {
-	m_bfmeValue = bfmeHashCombineA(m_bfmeValue, 0xE4CD9C42);
+	m_bfmeValue = Rva00527830((int)m_bfmeValue, (int)0xE4CD9C42);
 	return Gen_00529340(m_bfmeValue);
 }
 
@@ -197,7 +187,7 @@ Gen_0054F720::Gen_0054F720(int kind, short made, unsigned int given)
 	if (kind == BFME_KIND_GIVEN)
 		m_bfmeValue = given;
 	else if (kind == BFME_KIND_MADE)
-		m_bfmeValue = bfmeMake_0054F920(made, made);
+		m_bfmeValue = Rva0054E760((int)made, (int)made);
 }
 
 // ??0Gen_0054F810@@QAE@HFI@Z
@@ -206,7 +196,7 @@ Gen_0054F810::Gen_0054F810(int kind, short made, unsigned int given)
 	if (kind == BFME_KIND_GIVEN)
 		m_bfmeValue = given;
 	else if (kind == BFME_KIND_MADE)
-		m_bfmeValue = bfmeMake_0054FA00(made, made);
+		m_bfmeValue = Rva0054E960((int)made, (int)made);
 }
 
 // ??0Gen_0056E860@@QAE@HFI@Z
@@ -215,5 +205,5 @@ Gen_0056E860::Gen_0056E860(int kind, short made, unsigned int given)
 	if (kind == BFME_KIND_GIVEN)
 		m_bfmeValue = given;
 	else if (kind == BFME_KIND_MADE)
-		m_bfmeValue = bfmeMake_0056E900(made, made);
+		m_bfmeValue = Rva0056DEC0((int)made, (int)made);
 }

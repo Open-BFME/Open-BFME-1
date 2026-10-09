@@ -14,8 +14,6 @@ struct Q3SortCompare
 	void *state;
 };
 
-void b_002618d0();
-void b_002610b0();
 
 // Both sort passes are matched ledger rows (callees.py): the body at
 // 0x002618D0 is rva002618D0ForEach and the one at 0x002610B0 is bfmeGoCXB.
@@ -25,8 +23,6 @@ struct BfmePairCXB;
 void rva002618D0ForEach(Rva002618D0Elem *, Rva002618D0Elem *, void *);
 void bfmeGoCXB(BfmePairCXB *, BfmePairCXB *, void *);
 
-#define b_002618d0 rva002618D0ForEach
-#define b_002610b0 bfmeGoCXB
 
 typedef void (__cdecl *SortPass)(Q3SortElem8 *, Q3SortElem8 *, Q3SortCompare);
 
@@ -34,11 +30,11 @@ void Gen00261A20(Q3SortElem8 *first, Q3SortElem8 *last, Q3SortCompare comp)
 {
 	if (last - first > 16)
 	{
-		((SortPass)b_002618d0)(first, first + 16, comp);
-		((SortPass)b_002610b0)(first + 16, last, comp);
+		((SortPass)rva002618D0ForEach)(first, first + 16, comp);
+		((SortPass)bfmeGoCXB)(first + 16, last, comp);
 	}
 	else
 	{
-		((SortPass)b_002618d0)(first, last, comp);
+		((SortPass)rva002618D0ForEach)(first, last, comp);
 	}
 }

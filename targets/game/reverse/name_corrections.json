@@ -19018,5 +19018,285 @@
   "after_sha256": "c1c0cff26fd027c4a0fa5f1f69df3ca71bf83db2e8a176381ec96283f8feda00",
   "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
   "reason": "Owner forwarder pass (group 1): BfmeTeamInstanceLink was a worker-invented #define forwarder onto ledger type Gen_000c8a30 (getter 0x000C8A30) with no witness; the cast spells the ledger name; bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1037.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1037.cpp",
+  "old_name": "bfmeDo1037",
+  "new_name": "rva00284810",
+  "before_sha256": "e419c85a4d9eb2a2ccbda8b4f4c2682a5013322d1533c02b7ac7bed0d60827bd",
+  "after_sha256": "6ff3d7fa4f83e2566af715883231492974c33793aa3693dcfc3af68a9fb07803",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeDo1037 was a #define forwarder onto ledger row rva00284810; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1037.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1037.cpp",
+  "old_name": "bfmeFind1037F",
+  "new_name": "rva002323B0FindBannerCarrierUpdate",
+  "before_sha256": "e419c85a4d9eb2a2ccbda8b4f4c2682a5013322d1533c02b7ac7bed0d60827bd",
+  "after_sha256": "6ff3d7fa4f83e2566af715883231492974c33793aa3693dcfc3af68a9fb07803",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeFind1037F was a #define forwarder onto ledger row rva002323B0FindBannerCarrierUpdate; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3RefCountedCopies.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3RefCountedCopies.cpp",
+  "old_name": "bfmeHashCombineA",
+  "new_name": "Rva00527830",
+  "before_sha256": "2c380ee28cce0bd5ab6a88d0cefb2b3b8791c86ef3b968558bb11ef28a8b2289",
+  "after_sha256": "0cae0aa2343f5e768638cb2c3025d3845c4c501359172dc5cdfa9d6bc9fd9ab1",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeHashCombineA was a #define forwarder onto ledger row Rva00527830; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3RefCountedCopies.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3RefCountedCopies.cpp",
+  "old_name": "bfmeMake_00529B60",
+  "new_name": "Rva005277B0",
+  "before_sha256": "2c380ee28cce0bd5ab6a88d0cefb2b3b8791c86ef3b968558bb11ef28a8b2289",
+  "after_sha256": "0cae0aa2343f5e768638cb2c3025d3845c4c501359172dc5cdfa9d6bc9fd9ab1",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeMake_00529B60 was a #define forwarder onto ledger row Rva005277B0; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3RefCountedCopies.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3RefCountedCopies.cpp",
+  "old_name": "bfmeMake_0054F920",
+  "new_name": "Rva0054E760",
+  "before_sha256": "2c380ee28cce0bd5ab6a88d0cefb2b3b8791c86ef3b968558bb11ef28a8b2289",
+  "after_sha256": "0cae0aa2343f5e768638cb2c3025d3845c4c501359172dc5cdfa9d6bc9fd9ab1",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeMake_0054F920 was a #define forwarder onto ledger row Rva0054E760; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3RefCountedCopies.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3RefCountedCopies.cpp",
+  "old_name": "bfmeMake_0054FA00",
+  "new_name": "Rva0054E960",
+  "before_sha256": "2c380ee28cce0bd5ab6a88d0cefb2b3b8791c86ef3b968558bb11ef28a8b2289",
+  "after_sha256": "0cae0aa2343f5e768638cb2c3025d3845c4c501359172dc5cdfa9d6bc9fd9ab1",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeMake_0054FA00 was a #define forwarder onto ledger row Rva0054E960; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3RefCountedCopies.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3RefCountedCopies.cpp",
+  "old_name": "bfmeMake_0056E900",
+  "new_name": "Rva0056DEC0",
+  "before_sha256": "2c380ee28cce0bd5ab6a88d0cefb2b3b8791c86ef3b968558bb11ef28a8b2289",
+  "after_sha256": "0cae0aa2343f5e768638cb2c3025d3845c4c501359172dc5cdfa9d6bc9fd9ab1",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeMake_0056E900 was a #define forwarder onto ledger row Rva0056DEC0; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3ShortMakerPairs.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3ShortMakerPairs.cpp",
+  "old_name": "bfmeMake_00528ef0",
+  "new_name": "Rva005277B0",
+  "before_sha256": "6a5d257c5b5a467a3cd7a224fa8c896657aa73d522f6b3b31ad5b59112db41fb",
+  "after_sha256": "d640f9da73d3728590d97418515168435714acb2fb03a1876e000807689d17ce",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeMake_00528ef0 was a #define forwarder onto ledger row Rva005277B0; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3ShortMakerPairs.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3ShortMakerPairs.cpp",
+  "old_name": "bfmeMake_0054ed70",
+  "new_name": "Rva0054E760",
+  "before_sha256": "6a5d257c5b5a467a3cd7a224fa8c896657aa73d522f6b3b31ad5b59112db41fb",
+  "after_sha256": "d640f9da73d3728590d97418515168435714acb2fb03a1876e000807689d17ce",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeMake_0054ed70 was a #define forwarder onto ledger row Rva0054E760; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3ShortMakerPairs.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3ShortMakerPairs.cpp",
+  "old_name": "bfmeMake_0054ee00",
+  "new_name": "Rva0054E960",
+  "before_sha256": "6a5d257c5b5a467a3cd7a224fa8c896657aa73d522f6b3b31ad5b59112db41fb",
+  "after_sha256": "d640f9da73d3728590d97418515168435714acb2fb03a1876e000807689d17ce",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeMake_0054ee00 was a #define forwarder onto ledger row Rva0054E960; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3ShortMakerPairs.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3ShortMakerPairs.cpp",
+  "old_name": "bfmeMake_0056e1c0",
+  "new_name": "Rva0056DEC0",
+  "before_sha256": "6a5d257c5b5a467a3cd7a224fa8c896657aa73d522f6b3b31ad5b59112db41fb",
+  "after_sha256": "d640f9da73d3728590d97418515168435714acb2fb03a1876e000807689d17ce",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeMake_0056e1c0 was a #define forwarder onto ledger row Rva0056DEC0; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3VariantCtors.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3VariantCtors.cpp",
+  "old_name": "bfmeHashCombineA",
+  "new_name": "Rva00527830",
+  "before_sha256": "5430d86ea9534786e82c5accc12e9fbe7ba62ad0e799201c490032ce91dc3bb6",
+  "after_sha256": "c7ca8577b5a3c0d12a089c3c08b8eee1fb6ba0fbbe72b008a850bf302d9aa6b7",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeHashCombineA was a #define forwarder onto ledger row Rva00527830; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3VariantCtors.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3VariantCtors.cpp",
+  "old_name": "bfmeMakeW0",
+  "new_name": "Rva003897C0",
+  "before_sha256": "5430d86ea9534786e82c5accc12e9fbe7ba62ad0e799201c490032ce91dc3bb6",
+  "after_sha256": "c7ca8577b5a3c0d12a089c3c08b8eee1fb6ba0fbbe72b008a850bf302d9aa6b7",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeMakeW0 was a #define forwarder onto ledger row Rva003897C0; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3VariantCtors.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3VariantCtors.cpp",
+  "old_name": "bfmeMakeW1",
+  "new_name": "Rva003C9220",
+  "before_sha256": "5430d86ea9534786e82c5accc12e9fbe7ba62ad0e799201c490032ce91dc3bb6",
+  "after_sha256": "c7ca8577b5a3c0d12a089c3c08b8eee1fb6ba0fbbe72b008a850bf302d9aa6b7",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeMakeW1 was a #define forwarder onto ledger row Rva003C9220; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3VariantCtors.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3VariantCtors.cpp",
+  "old_name": "bfmeMakeW2",
+  "new_name": "Rva0054E860",
+  "before_sha256": "5430d86ea9534786e82c5accc12e9fbe7ba62ad0e799201c490032ce91dc3bb6",
+  "after_sha256": "c7ca8577b5a3c0d12a089c3c08b8eee1fb6ba0fbbe72b008a850bf302d9aa6b7",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeMakeW2 was a #define forwarder onto ledger row Rva0054E860; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3VariantCtors.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3VariantCtors.cpp",
+  "old_name": "bfmeMakeW3",
+  "new_name": "Rva0054E8E0",
+  "before_sha256": "5430d86ea9534786e82c5accc12e9fbe7ba62ad0e799201c490032ce91dc3bb6",
+  "after_sha256": "c7ca8577b5a3c0d12a089c3c08b8eee1fb6ba0fbbe72b008a850bf302d9aa6b7",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeMakeW3 was a #define forwarder onto ledger row Rva0054E8E0; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3VariantCtors.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3VariantCtors.cpp",
+  "old_name": "bfmeMakeW4",
+  "new_name": "Rva00593060",
+  "before_sha256": "5430d86ea9534786e82c5accc12e9fbe7ba62ad0e799201c490032ce91dc3bb6",
+  "after_sha256": "c7ca8577b5a3c0d12a089c3c08b8eee1fb6ba0fbbe72b008a850bf302d9aa6b7",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeMakeW4 was a #define forwarder onto ledger row Rva00593060; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3VariantCtors.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3VariantCtors.cpp",
+  "old_name": "bfmeMake_00529B60",
+  "new_name": "Rva005277B0",
+  "before_sha256": "5430d86ea9534786e82c5accc12e9fbe7ba62ad0e799201c490032ce91dc3bb6",
+  "after_sha256": "c7ca8577b5a3c0d12a089c3c08b8eee1fb6ba0fbbe72b008a850bf302d9aa6b7",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeMake_00529B60 was a #define forwarder onto ledger row Rva005277B0; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3VariantCtors.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3VariantCtors.cpp",
+  "old_name": "bfmeMake_0054F920",
+  "new_name": "Rva0054E760",
+  "before_sha256": "5430d86ea9534786e82c5accc12e9fbe7ba62ad0e799201c490032ce91dc3bb6",
+  "after_sha256": "c7ca8577b5a3c0d12a089c3c08b8eee1fb6ba0fbbe72b008a850bf302d9aa6b7",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeMake_0054F920 was a #define forwarder onto ledger row Rva0054E760; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3VariantCtors.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3VariantCtors.cpp",
+  "old_name": "bfmeMake_0054FA00",
+  "new_name": "Rva0054E960",
+  "before_sha256": "5430d86ea9534786e82c5accc12e9fbe7ba62ad0e799201c490032ce91dc3bb6",
+  "after_sha256": "c7ca8577b5a3c0d12a089c3c08b8eee1fb6ba0fbbe72b008a850bf302d9aa6b7",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeMake_0054FA00 was a #define forwarder onto ledger row Rva0054E960; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S3VariantCtors.cpp",
+  "new_path": "game/GameEngine/Source/Common/S3VariantCtors.cpp",
+  "old_name": "bfmeMake_0056E900",
+  "new_name": "Rva0056DEC0",
+  "before_sha256": "5430d86ea9534786e82c5accc12e9fbe7ba62ad0e799201c490032ce91dc3bb6",
+  "after_sha256": "c7ca8577b5a3c0d12a089c3c08b8eee1fb6ba0fbbe72b008a850bf302d9aa6b7",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeMake_0056E900 was a #define forwarder onto ledger row Rva0056DEC0; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S5HandleHashCompares.cpp",
+  "new_path": "game/GameEngine/Source/Common/S5HandleHashCompares.cpp",
+  "old_name": "bfmeHash00007518",
+  "new_name": "Rva00592FE0",
+  "before_sha256": "f29b8a6ff20415de8b06a604f84b93906d27f54e59025801e8237e25d1256b0a",
+  "after_sha256": "4dd4266297bb186b7f3efcb7f225d91fc0352b56f6e804fa660d5a64a31fe8f8",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeHash00007518 was a #define forwarder onto ledger row Rva00592FE0; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S5HandleHashCompares.cpp",
+  "new_path": "game/GameEngine/Source/Common/S5HandleHashCompares.cpp",
+  "old_name": "bfmeHash0000DD28",
+  "new_name": "Rva0061A350",
+  "before_sha256": "f29b8a6ff20415de8b06a604f84b93906d27f54e59025801e8237e25d1256b0a",
+  "after_sha256": "4dd4266297bb186b7f3efcb7f225d91fc0352b56f6e804fa660d5a64a31fe8f8",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeHash0000DD28 was a #define forwarder onto ledger row Rva0061A350; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S5HandleHashCompares.cpp",
+  "new_path": "game/GameEngine/Source/Common/S5HandleHashCompares.cpp",
+  "old_name": "bfmeHash00010AFA",
+  "new_name": "Rva0056DE40",
+  "before_sha256": "f29b8a6ff20415de8b06a604f84b93906d27f54e59025801e8237e25d1256b0a",
+  "after_sha256": "4dd4266297bb186b7f3efcb7f225d91fc0352b56f6e804fa660d5a64a31fe8f8",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeHash00010AFA was a #define forwarder onto ledger row Rva0056DE40; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S5HandleHashCompares.cpp",
+  "new_path": "game/GameEngine/Source/Common/S5HandleHashCompares.cpp",
+  "old_name": "bfmeHash00013412",
+  "new_name": "Rva0054E5E0",
+  "before_sha256": "f29b8a6ff20415de8b06a604f84b93906d27f54e59025801e8237e25d1256b0a",
+  "after_sha256": "4dd4266297bb186b7f3efcb7f225d91fc0352b56f6e804fa660d5a64a31fe8f8",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeHash00013412 was a #define forwarder onto ledger row Rva0054E5E0; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S5HandleHashCompares.cpp",
+  "new_path": "game/GameEngine/Source/Common/S5HandleHashCompares.cpp",
+  "old_name": "bfmeHash0002A473",
+  "new_name": "Rva00527730",
+  "before_sha256": "f29b8a6ff20415de8b06a604f84b93906d27f54e59025801e8237e25d1256b0a",
+  "after_sha256": "4dd4266297bb186b7f3efcb7f225d91fc0352b56f6e804fa660d5a64a31fe8f8",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeHash0002A473 was a #define forwarder onto ledger row Rva00527730; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/S5HandleHashCompares.cpp",
+  "new_path": "game/GameEngine/Source/Common/S5HandleHashCompares.cpp",
+  "old_name": "bfmeHash0002BB70",
+  "new_name": "Rva0054E560",
+  "before_sha256": "f29b8a6ff20415de8b06a604f84b93906d27f54e59025801e8237e25d1256b0a",
+  "after_sha256": "4dd4266297bb186b7f3efcb7f225d91fc0352b56f6e804fa660d5a64a31fe8f8",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): bfmeHash0002BB70 was a #define forwarder onto ledger row Rva0054E560; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/Rva00261A20FinalInsertionSort.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/Rva00261A20FinalInsertionSort.cpp",
+  "old_name": "b_002618d0",
+  "new_name": "rva002618D0ForEach",
+  "before_sha256": "3eb06732bbce9bd11fce3fb6b86ed7f5d277a256a61adf56e67b643d14a4e1cd",
+  "after_sha256": "fbeb0b828feaeace176b1df96ab073c8aa47d7f8bbb04c26e80850812ad1be04",
+  "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
+  "reason": "Owner forwarder pass (group 2, placeholder to placeholder): b_002618d0 was a #define forwarder onto ledger row rva002618D0ForEach; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
  }
 ]

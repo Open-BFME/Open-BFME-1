@@ -25,11 +25,6 @@ int __cdecl Rva0054E960(int, int);				// ILT 0x00029771 -> 0x0054E960
 int __cdecl Rva0056DEC0(int, int);				// ILT 0x0003C65A -> 0x0056DEC0
 int __cdecl Rva00527830(int, int);	// ILT 0x00042FA0 -> 0x00527830
 
-#define bfmeMake_00529B60(a, b) ((int)Rva005277B0((int)(a), (int)(b)))
-#define bfmeMake_0054F920(a, b) ((int)Rva0054E760((int)(a), (int)(b)))
-#define bfmeMake_0054FA00(a, b) ((int)Rva0054E960((int)(a), (int)(b)))
-#define bfmeMake_0056E900(a, b) ((int)Rva0056DEC0((int)(a), (int)(b)))
-#define bfmeHashCombineA(a, b) ((unsigned int)Rva00527830((int)(a), (int)(b)))
 
 struct BfmeSharedBlock
 {
@@ -137,31 +132,31 @@ Gen_00749E10::Gen_00749E10(const Gen_00749E10 &other)
 // ??0Gen_00529B60@@QAE@PBUBfmeShortSource@@@Z
 Gen_00529B60::Gen_00529B60(const BfmeShortSource *source)
 {
-	m_bfmeResult = bfmeMake_00529B60(source->m_bfmeValue, source->m_bfmeValue);
+	m_bfmeResult = Rva005277B0((int)source->m_bfmeValue, (int)source->m_bfmeValue);
 }
 
 // ?bfmeAdvance@Gen_00529B60@@QAE?AV1@H@Z
 Gen_00529B60 Gen_00529B60::bfmeAdvance(int)
 {
 	int previous = m_bfmeResult;
-	m_bfmeResult = bfmeHashCombineA(m_bfmeResult, 0xE4CD9C42);
+	m_bfmeResult = Rva00527830(m_bfmeResult, (int)0xE4CD9C42);
 	return Gen_00529B60(previous);
 }
 
 // ??0Gen_0054F920@@QAE@PBUBfmeShortSource@@@Z
 Gen_0054F920::Gen_0054F920(const BfmeShortSource *source)
 {
-	m_bfmeResult = bfmeMake_0054F920(source->m_bfmeValue, source->m_bfmeValue);
+	m_bfmeResult = Rva0054E760((int)source->m_bfmeValue, (int)source->m_bfmeValue);
 }
 
 // ??0Gen_0054FA00@@QAE@PBUBfmeShortSource@@@Z
 Gen_0054FA00::Gen_0054FA00(const BfmeShortSource *source)
 {
-	m_bfmeResult = bfmeMake_0054FA00(source->m_bfmeValue, source->m_bfmeValue);
+	m_bfmeResult = Rva0054E960((int)source->m_bfmeValue, (int)source->m_bfmeValue);
 }
 
 // ??0Gen_0056E900@@QAE@PBUBfmeShortSource@@@Z
 Gen_0056E900::Gen_0056E900(const BfmeShortSource *source)
 {
-	m_bfmeResult = bfmeMake_0056E900(source->m_bfmeValue, source->m_bfmeValue);
+	m_bfmeResult = Rva0056DEC0((int)source->m_bfmeValue, (int)source->m_bfmeValue);
 }

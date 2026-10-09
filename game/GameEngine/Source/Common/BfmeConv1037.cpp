@@ -40,15 +40,13 @@ BfmeD1037 *BfmeE1037::bfmeGo1037E(void)
 }
 
 Module * __stdcall rva002323B0FindBannerCarrierUpdate(const Object *obj);
-#define bfmeDo1037(b, c) rva00284810(b, c)
-#define bfmeFind1037F(a) rva002323B0FindBannerCarrierUpdate(a)
 
 void __stdcall bfmeGo1037F(int a, int b, int c)
 {
-	BannerCarrierUpdate *g = (BannerCarrierUpdate *)bfmeFind1037F((const Object *)a);
+	BannerCarrierUpdate *g = (BannerCarrierUpdate *)rva002323B0FindBannerCarrierUpdate((const Object *)a);
 
 	if (g != 0)
-		g->bfmeDo1037((BannerCarrierObjectName *)b, *(bool *)&c);
+		g->rva00284810((BannerCarrierObjectName *)b, *(bool *)&c);
 }
 
 struct Rva007EB810Diag

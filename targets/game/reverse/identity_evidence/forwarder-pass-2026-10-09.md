@@ -64,3 +64,11 @@ workers to keep the old call text compiling; a define is not evidence for its ow
   `bfmeUse1085` -> `setSequentialTimer` are respelled likewise (group 2).
 - Rva0056ABE0PauseButtons: `bfmeStop1013` -> `GameWindow::winEnable`, `bfmeTestME` ->
   `Rva0056AB50Owner::getSelectedItemData` respelled (group 2).
+
+## Group 2 cleanup (S3VariantCtors, S3ShortMakerPairs, S3RefCountedCopies, S5HandleHashCompares, BfmeConv1037, Rva00261A20FinalInsertionSort)
+
+Placeholder-to-placeholder forwarders (`bfmeMake_*`, `bfmeMakeW*`, `bfmeHashCombineA`, `bfmeHash*`,
+`bfmeDo1037`, `bfmeFind1037F`, `b_002618d0`, `b_002610b0`). Neither side claims an identity; the owner's
+verdict asks only that the calls spell the ledger name. The three S3 TUs carried the same `bfmeMake_*`
+block with different casts (`(int)`, `(void *)`, none); every copy is now a direct call to the ledger rows
+`Rva005277B0`, `Rva0054E760`, `Rva0054E960`, `Rva0056DEC0` and `Rva00527830`, with the cast at the use.

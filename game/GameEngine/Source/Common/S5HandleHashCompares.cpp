@@ -29,12 +29,6 @@ int __cdecl Rva0054E5E0(int, int);	// ILT 0x00013412 -> 0x0054E5E0
 int __cdecl Rva00527730(int, int);	// ILT 0x0002A473 -> 0x00527730
 int __cdecl Rva0054E560(int, int);	// ILT 0x0002BB70 -> 0x0054E560
 
-#define bfmeHash00007518(a, b) Rva00592FE0((int)(a), (int)(b))
-#define bfmeHash0000DD28(a, b) Rva0061A350((int)(a), (int)(b))
-#define bfmeHash00010AFA(a, b) Rva0056DE40((int)(a), (int)(b))
-#define bfmeHash00013412(a, b) Rva0054E5E0((int)(a), (int)(b))
-#define bfmeHash0002A473(a, b) Rva00527730((int)(a), (int)(b))
-#define bfmeHash0002BB70(a, b) Rva0054E560((int)(a), (int)(b))
 
 enum { BFME_HASH_EQUAL_00007518 = 0x944ADA98 };
 enum { BFME_HASH_EQUAL_0000DD28 = 0x462E416F };
@@ -169,7 +163,7 @@ bool Gen_00528EC0::bfmeDiffers(const Gen_00528EC0 &other) const
 	unsigned int theirs = other.m_bfmeValue;
 	unsigned int mine = m_bfmeValue;
 
-	return bfmeHash0002A473(mine, theirs) != BFME_HASH_EQUAL_0002A473;
+	return Rva00527730((int)mine, (int)theirs) != BFME_HASH_EQUAL_0002A473;
 }
 
 // ?bfmeDiffers@Gen_00529270@@QBE_NABV1@@Z		35B
@@ -178,7 +172,7 @@ bool Gen_00529270::bfmeDiffers(const Gen_00529270 &other) const
 	unsigned int theirs = other.m_bfmeValue;
 	unsigned int mine = m_bfmeValue;
 
-	return bfmeHash0002A473(mine, theirs) != BFME_HASH_EQUAL_0002A473;
+	return Rva00527730((int)mine, (int)theirs) != BFME_HASH_EQUAL_0002A473;
 }
 
 // ?bfmeDiffers@Gen_0054EC50@@QBE_NABV1@@Z		35B
@@ -187,7 +181,7 @@ bool Gen_0054EC50::bfmeDiffers(const Gen_0054EC50 &other) const
 	unsigned int theirs = other.m_bfmeValue;
 	unsigned int mine = m_bfmeValue;
 
-	return bfmeHash0002BB70(mine, theirs) != BFME_HASH_EQUAL_0002BB70;
+	return Rva0054E560((int)mine, (int)theirs) != BFME_HASH_EQUAL_0002BB70;
 }
 
 // ?bfmeDiffers@Gen_0054EC80@@QBE_NABV1@@Z		35B
@@ -196,7 +190,7 @@ bool Gen_0054EC80::bfmeDiffers(const Gen_0054EC80 &other) const
 	unsigned int theirs = other.m_bfmeValue;
 	unsigned int mine = m_bfmeValue;
 
-	return bfmeHash00013412(mine, theirs) != BFME_HASH_EQUAL_00013412;
+	return Rva0054E5E0((int)mine, (int)theirs) != BFME_HASH_EQUAL_00013412;
 }
 
 // ?bfmeDiffers@Gen_0054F1A0@@QBE_NABV1@@Z		35B
@@ -205,7 +199,7 @@ bool Gen_0054F1A0::bfmeDiffers(const Gen_0054F1A0 &other) const
 	unsigned int theirs = other.m_bfmeValue;
 	unsigned int mine = m_bfmeValue;
 
-	return bfmeHash0002BB70(mine, theirs) != BFME_HASH_EQUAL_0002BB70;
+	return Rva0054E560((int)mine, (int)theirs) != BFME_HASH_EQUAL_0002BB70;
 }
 
 // ?bfmeDiffers@Gen_0054F1D0@@QBE_NABV1@@Z		35B
@@ -214,7 +208,7 @@ bool Gen_0054F1D0::bfmeDiffers(const Gen_0054F1D0 &other) const
 	unsigned int theirs = other.m_bfmeValue;
 	unsigned int mine = m_bfmeValue;
 
-	return bfmeHash00013412(mine, theirs) != BFME_HASH_EQUAL_00013412;
+	return Rva0054E5E0((int)mine, (int)theirs) != BFME_HASH_EQUAL_00013412;
 }
 
 // ?bfmeDiffers@Gen_0056E190@@QBE_NABV1@@Z		35B
@@ -223,7 +217,7 @@ bool Gen_0056E190::bfmeDiffers(const Gen_0056E190 &other) const
 	unsigned int theirs = other.m_bfmeValue;
 	unsigned int mine = m_bfmeValue;
 
-	return bfmeHash00010AFA(mine, theirs) != BFME_HASH_EQUAL_00010AFA;
+	return Rva0056DE40((int)mine, (int)theirs) != BFME_HASH_EQUAL_00010AFA;
 }
 
 // ?bfmeDiffers@Gen_0056E790@@QBE_NABV1@@Z		35B
@@ -232,7 +226,7 @@ bool Gen_0056E790::bfmeDiffers(const Gen_0056E790 &other) const
 	unsigned int theirs = other.m_bfmeValue;
 	unsigned int mine = m_bfmeValue;
 
-	return bfmeHash00010AFA(mine, theirs) != BFME_HASH_EQUAL_00010AFA;
+	return Rva0056DE40((int)mine, (int)theirs) != BFME_HASH_EQUAL_00010AFA;
 }
 
 // ?bfmeDiffers@Gen_005941B0@@QBE_NABV1@@Z		35B
@@ -241,7 +235,7 @@ bool Gen_005941B0::bfmeDiffers(const Gen_005941B0 &other) const
 	unsigned int theirs = other.m_bfmeValue;
 	unsigned int mine = m_bfmeValue;
 
-	return bfmeHash00007518(mine, theirs) != BFME_HASH_EQUAL_00007518;
+	return Rva00592FE0((int)mine, (int)theirs) != BFME_HASH_EQUAL_00007518;
 }
 
 // ?bfmeDiffers@Gen_005958C0@@QBE_NABV1@@Z		35B
@@ -250,7 +244,7 @@ bool Gen_005958C0::bfmeDiffers(const Gen_005958C0 &other) const
 	unsigned int theirs = other.m_bfmeValue;
 	unsigned int mine = m_bfmeValue;
 
-	return bfmeHash00007518(mine, theirs) != BFME_HASH_EQUAL_00007518;
+	return Rva00592FE0((int)mine, (int)theirs) != BFME_HASH_EQUAL_00007518;
 }
 
 // ?bfmeDiffers@Gen_0061A5C0@@QBE_NABV1@@Z		35B
@@ -259,7 +253,7 @@ bool Gen_0061A5C0::bfmeDiffers(const Gen_0061A5C0 &other) const
 	unsigned int theirs = other.m_bfmeValue;
 	unsigned int mine = m_bfmeValue;
 
-	return bfmeHash0000DD28(mine, theirs) != BFME_HASH_EQUAL_0000DD28;
+	return Rva0061A350((int)mine, (int)theirs) != BFME_HASH_EQUAL_0000DD28;
 }
 
 // ?bfmeDiffers@Gen_0061A8D0@@QBE_NABV1@@Z		35B
@@ -268,5 +262,5 @@ bool Gen_0061A8D0::bfmeDiffers(const Gen_0061A8D0 &other) const
 	unsigned int theirs = other.m_bfmeValue;
 	unsigned int mine = m_bfmeValue;
 
-	return bfmeHash0000DD28(mine, theirs) != BFME_HASH_EQUAL_0000DD28;
+	return Rva0061A350((int)mine, (int)theirs) != BFME_HASH_EQUAL_0000DD28;
 }
