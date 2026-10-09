@@ -5,8 +5,8 @@ struct Rva00920AE0Slot
 	int m_selected;
 };
 
-extern Rva00920AE0Slot g_bfmeOptionSlotsA[ 8 ];  // retail 0x01346C50
-extern Rva00920AE0Slot g_bfmeOptionSlotsB[ 8 ];  // retail 0x01346CF0
+Rva00920AE0Slot g_bfmeOptionSlotsA[ 8 ] = {};  // retail 0x01346C50
+Rva00920AE0Slot g_bfmeOptionSlotsB[ 8 ] = {};  // retail 0x01346CF0
 
 void __cdecl Rva00920AE0SelectOption( int index )
 {
