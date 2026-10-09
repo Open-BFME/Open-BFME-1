@@ -1,18 +1,20 @@
 // ?method@Rva006C3500W3DRadar@@UAEXXZ
-// partial score=0.37 date=2026-09-28
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringinline
-// Opaque W3DRadar virtual at retail RVA 0x006C3500.
+// partial score=0.9898 date=2026-10-09
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringinline /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 
 #include <string.h>
-#include "StringInline.h"
+#include "ascii_string.h"
+#include "surfaceclass.h"
 
 typedef unsigned char Bool;
 typedef unsigned int UnsignedInt;
 
+extern const char g_bfmeEmptyAscii[];
+
 static __forceinline char *bfmeString(const AsciiString &value)
 {
 	char *data = *(char **)&value;
-	return data ? data + 8 : (char *)0x0107388b;
+	return data ? data + 8 : (char *)g_bfmeEmptyAscii;
 }
 
 class SurfaceResource
@@ -50,18 +52,7 @@ public:
 	SurfaceResource *m_surface;
 };
 
-struct SurfaceDescription
-{
-	UnsignedInt format;
-	UnsignedInt width;
-	UnsignedInt height;
-};
-
-class SurfaceClass
-{
-public:
-	void Get_Description(SurfaceDescription &description);
-};
+typedef SurfaceClass::SurfaceDescription SurfaceDescription;
 
 class W3DRadarTextureObject
 {
@@ -77,11 +68,7 @@ public:
 	W3DRadarTextureObject *m_texture;
 };
 
-class TextureClass
-{
-public:
-	void Release_Ref();
-};
+class TextureClass;
 
 class BFMEWaterTrackTexture
 {
@@ -117,6 +104,11 @@ public:
 		return m_filename;
 	}
 
+	W3DRadarResetTexture *getRawTextureData() const
+	{
+		return reinterpret_cast<W3DRadarResetTexture *>(m_rawTextureData);
+	}
+
 	char m_bfmePrefix[8];
 	AsciiString m_filename;
 	char m_padding0c[0x20];
@@ -131,7 +123,7 @@ public:
 
 extern ImageCollection *TheMappedImageCollection;
 extern void W3DRadarResetLock(void);
-extern unsigned char bfmeUnlock1179(void);
+extern char bfmeUnlock1179(void);
 extern void _bfme_debugRecordCallsite(int kind);
 
 class Rva006C3500Lock
@@ -207,7 +199,7 @@ static __forceinline void recordSurfaceError(int result)
 	{
 		_bfme_debugRecordCallsite(1);
 		TheBfmeAwakenDebug->slot60();
-		TheBfmeAwakenDebug->slot6c(0, 0)->slot38((const void *)0x111d770)
+		TheBfmeAwakenDebug->slot6c(0, 0)->slot38("DX8 error ")
 			->slot00(result)->slot4c(1);
 	}
 }
@@ -256,7 +248,7 @@ void Rva006C3500W3DRadar::method()
 		BFMEGetWaterTrackTexture(bfmeString(image->getFilename()), 1, 0);
 	((Gen_0090E810 *)&texture)->bfmeSetFlag(1);
 
-	W3DRadarResetTexture *sourceTexture = !image->m_rawTextureData ? reinterpret_cast<W3DRadarResetTexture *>(&texture) : reinterpret_cast<W3DRadarResetTexture *>(image->m_rawTextureData);
+	W3DRadarResetTexture *sourceTexture = !image->getRawTextureData() ? reinterpret_cast<W3DRadarResetTexture *>(&texture) : image->getRawTextureData();
 	if (sourceTexture)
 	{
 
@@ -266,7 +258,7 @@ void Rva006C3500W3DRadar::method()
 	SurfaceDescription sourceDescription;
 	((SurfaceClass *)&source)->Get_Description(sourceDescription);
 	((SurfaceClass *)&destination)->Get_Description(destinationDescription);
-	if (sourceDescription.format == destinationDescription.format)
+	if (sourceDescription.Format == destinationDescription.Format)
 	{
 
 	Rva006C3500Lock lock;
@@ -283,33 +275,33 @@ void Rva006C3500W3DRadar::method()
 		lockResult = destinationSurface->LockRect(&destinationLocked, 0, 0);
 		recordSurfaceError(lockResult);
 
-		if (sourceDescription.width == destinationDescription.width &&
-			sourceDescription.height == destinationDescription.height)
+		if (sourceDescription.Width == destinationDescription.Width &&
+			sourceDescription.Height == destinationDescription.Height)
 		{
 			UnsignedInt bytesPerPixel;
-			if (sourceDescription.format == 0x15)
+			if (sourceDescription.Format == 0x15)
 				bytesPerPixel = 4;
-			else if (sourceDescription.format == 0x1a)
+			else if (sourceDescription.Format == 0x1a)
 				bytesPerPixel = 2;
 
-			if (sourceDescription.format == 0x15 || sourceDescription.format == 0x1a)
+			if (sourceDescription.Format == 0x15 || sourceDescription.Format == 0x1a)
 			{
 				char *sourceBits = (char *)sourceLocked.bits;
 				char *destinationBits = (char *)destinationLocked.bits;
-				for (int row = destinationDescription.height - 1; row >= 0; --row)
+				for (int row = destinationDescription.Height - 1; row >= 0; --row)
 				{
 					memcpy(destinationBits, sourceBits,
-						bytesPerPixel * sourceDescription.width);
+						bytesPerPixel * sourceDescription.Width);
 					sourceBits += sourceLocked.pitch;
 					destinationBits += destinationLocked.pitch;
 				}
 			}
 		}
-		else if (destinationDescription.format == 0x15 ||
-			destinationDescription.format == 0x1a)
+		else if (destinationDescription.Format == 0x15 ||
+			destinationDescription.Format == 0x1a)
 		{
 			memset(destinationLocked.bits, 0,
-				destinationLocked.pitch * destinationDescription.height);
+				destinationLocked.pitch * destinationDescription.Height);
 		}
 
 		recordSurfaceError(destinationSurface->UnlockRect());
