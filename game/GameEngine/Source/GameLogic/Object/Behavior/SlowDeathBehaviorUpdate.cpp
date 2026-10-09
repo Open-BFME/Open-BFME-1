@@ -15,7 +15,10 @@ class Rva00170C70BitSet { public: Rva00170C70BitSet(void*,unsigned); unsigned wo
 template<int N> class BitFlags;
 class S4Sink004135C0 { public: void invoke(const AsciiString&,int,int,int,int); };
 class BfmeHostEX { public: void bfmeSetEX(float); };
-class Thing { public: virtual void slot0(); float getHeightAboveTerrain() const; bool isSignificantlyAboveTerrain() const; void setPosition(const Coord3D*); };
+class Thing { public: virtual void slot0(); float getHeightAboveTerrain() const; void setPosition(const Coord3D*); };
+// Retail ILT19FF1/3F288 reach these existing matched native providers.
+class BfmeOwnerRW { public: int bfmeCheckRW(); };
+class BfmeInit962 { public: void bfmeInit962(int); };
 class Drawable { public:
  virtual void slot0();
  virtual void slot1();
@@ -27,7 +30,6 @@ class Drawable { public:
  virtual void slot7();
  virtual void slot20(void*);
  char pad04[0xe0]; bool flagE4; char padE5[0x13]; float fieldF8;
- void bfmeDelayA(int);
  void setShadowsEnabled(bool);
 };
 class Module208A50 { public:
@@ -56,7 +58,7 @@ class Object : public Thing { public:
  virtual Drawable* drawable28();
  char pad04[0x34]; Position208A50 position38; char pad44[0xcc]; unsigned words110[10];
  char pad138[0x6c]; unsigned status1A4; char pad1A8[0x54]; Module208A50* module1FC;
- void notifyModelConditionChanged(); void setDisabled(DisabledType); void setMode(int,int); int getLayer() const;
+ void notifyModelConditionChanged(); void setDisabled(DisabledType); void setStatusBit(int,bool); int getLayer() const;
  void clearAndSetModelConditionFlags(const BitFlags<320>&,const BitFlags<320>&);
  __forceinline void clear5() { if(*(unsigned char*)words110 & 32) { words110[0]&=~32u;notifyModelConditionChanged(); } }
  __forceinline void set5() { if(!(*(unsigned char*)words110 & 32)) { words110[0]|=32;notifyModelConditionChanged(); } }
@@ -131,10 +133,10 @@ UpdateSleepTime SlowDeathBehavior::update() {
   }
  }
  Drawable* drawable=obj->drawable28();
- if(drawable && now>=frame3C && d->sentinel1A0!=0xfacade00 && !flag38) {flag38=true;drawable->bfmeDelayA(d->delay19C);}
+ if(drawable && now>=frame3C && d->sentinel1A0!=0xfacade00 && !flag38) {flag38=true;((BfmeInit962*)drawable)->bfmeInit962(d->delay19C);}
  if(now>=m_sinkFrame && d->sinkRate34>0.0f) {
-  if(!(obj->status1A4&8) && !obj->isSignificantlyAboveTerrain()) obj->setDisabled(DisabledHeld208A50);
-  obj->setMode(55,1);
+  if(!(obj->status1A4&8) && !(unsigned char)((BfmeOwnerRW*)obj)->bfmeCheckRW()) obj->setDisabled(DisabledHeld208A50);
+  obj->setStatusBit(55,true);
   Position208A50 pos; pos.x=obj->position38.x; pos.y=obj->position38.y; pos.z=obj->position38.z;
   pos.z-=d->sinkRate34/m_acceleratedTimeScale;
   if(((Terrain208A50*)TheTerrainLogic)->height1C(pos.x,pos.y,obj->getLayer(),0,true)<pos.z) pos.z-=5.7f;
