@@ -100,6 +100,7 @@ extern ScriptEngine *TheScriptEngine;
 extern SpecialPowerStore *TheSpecialPowerStore;
 extern void j_000033b4();
 extern void j_000241fe();
+extern void j_00020f04();
 
 static __forceinline Coord3D *bfmeGetEstimateTeamPosition(Team *team,
 	Coord3D *position)
@@ -123,6 +124,21 @@ static __forceinline Bool bfmeFireSpecialPowerAtPosition(ScriptActions *actions,
 	return (actions->*fn.member)(player, power, position);
 }
 
+static __forceinline const SpecialPowerTemplate *bfmeFindSpecialPowerTemplate(
+	const AsciiString &name)
+{
+	// ILT 0x00020F04 -> SpecialPowerStore::findSpecialPowerTemplate
+	// (0x000BA930, ?findSpecialPowerTemplate@SpecialPowerStore@@QAEPBVSpecialPowerTemplate@@VAsciiString@@@Z).
+	// The view's by-value BfmeAsciiStringArg build is kept: the reference
+	// header inlines the addref, so the argument bytes stay as matched.
+	typedef const SpecialPowerTemplate *(BfmeSpecialPowerStoreView::*Function)(
+		BfmeAsciiStringArg);
+	union { void (*raw)(void); Function member; } fn;
+	fn.raw = j_00020f04;
+	return (((BfmeSpecialPowerStoreView *)TheSpecialPowerStore)->*fn.member)(
+		name);
+}
+
 // ?doFireSpecialPowerOnTeam@ScriptActions@@IAEXABVAsciiString@@00@Z
 void ScriptActions::doFireSpecialPowerOnTeam(const AsciiString &player,
 	const AsciiString &specialPower, const AsciiString &teamName)
@@ -135,8 +151,7 @@ void ScriptActions::doFireSpecialPowerOnTeam(const AsciiString &player,
 	bfmeGetEstimateTeamPosition(team, &position);
 
 	const SpecialPowerTemplate *power =
-		((BfmeSpecialPowerStoreView *)TheSpecialPowerStore)
-			->findSpecialPowerTemplate(specialPower);
+		bfmeFindSpecialPowerTemplate(specialPower);
 	if (!power)
 		return;
 
