@@ -4,7 +4,7 @@
 
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2 /Iinputs/reference/shims/campaignmanagerascii /Iinputs/reference/shims/asciistring_downloadmanager
 
-#include "Common/AsciiString.h"
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 typedef bool Bool;
 
@@ -28,7 +28,7 @@ extern unsigned fadeQueueKey;
 class AudioEventRTS
 {
 public:
-	AudioEventRTS( const AsciiString &name, ObjectID owner );
+	AudioEventRTS( const AsciiString &name, int owner );
 	virtual void slot00();
 	~AudioEventRTS();
 
@@ -202,7 +202,7 @@ void _bfme_leaveScoreScreen()
 		return;
 	}
 
-	AudioEventRTS event( AsciiString( "Shell2Music" ), (ObjectID)2 );
+	AudioEventRTS event( AsciiString( "Shell2Music" ), 2 );
 	((LwsAudioEventRTS *)&event)->setIsLogicalAudio( false );
 	((ClientSubsystem *)TheAudio)->addAudioEvent( &event );
 	g_theWindowManager->returnToShell();

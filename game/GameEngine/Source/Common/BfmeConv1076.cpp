@@ -7,16 +7,20 @@ class BfmeX1076;
 // this body calls and is cast at the use site.
 class WindowManager;
 
-class BfmeR1076
+class BfmeLevelAN
 {
 public:
-	void bfmeRun1076(BfmeX1076 *a, char *b, int c, char *d, char *e, char *f, char *g, char *h);
+	char *bfmeBuildAN(unsigned int level, int p2, int p3, int p4, int p5, int p6, int p7, int p8);
 };
 
 extern WindowManager *g_rva012F19E8WindowManager;	// retail 0x012F19E8
 
-extern bool j_000490a8(void);
-extern void j_00011464(void);
+class BfmeAptScreenScoreScreen
+{
+public:
+	bool rva005778E0();
+};
+void _bfme_leaveScoreScreen();
 extern void j_00010762(void);
 
 class Rva003BCB00
@@ -66,7 +70,6 @@ class BfmeQ1076
 {
 public:
 	int bfmeGo1076A(int a, char b, char c);
-	void bfmeF1076(void);
 	void bfmeG1076(int a);
 	char m_bfmePad[0x250];
 	BfmeX1076 *m_bfme250;
@@ -80,9 +83,9 @@ int BfmeQ1076::bfmeGo1076A(int a, char b, char c)
 	if (a != 0x15 || b != 1 || !(c & 1))
 		return 0;
 	if (m_bfme25c == 0 && m_bfme258 != 2)
-		((BfmeR1076 *)g_rva012F19E8WindowManager)->bfmeRun1076(m_bfme250, "EscapeButtonPressed", 0, 0, 0, 0, 0, 0);
+		((BfmeLevelAN *)g_rva012F19E8WindowManager)->bfmeBuildAN((unsigned int)m_bfme250, (int)"EscapeButtonPressed", 0, 0, 0, 0, 0, 0);
 	else if (m_bfme25c != 0 && m_bfme258 == 0)
-		bfmeF1076();
+		_bfme_leaveScoreScreen();
 	else if (m_bfme25c == 0 && m_bfme258 == 2)
 		bfmeG1076(0);
 	return 1;
@@ -92,7 +95,7 @@ void BfmeQ1076::bfmeG1076(int)
 {
 	if (m_bfme258 != 2)
 	{
-		if (j_000490a8())
+		if (((BfmeAptScreenScoreScreen *)this)->rva005778E0())
 		{
 			m_bfme258 = 2;
 			return;
@@ -102,7 +105,7 @@ void BfmeQ1076::bfmeG1076(int)
 	if (!BFME_GLOBAL_AT(Rva003BCB00 *, &TheLivingWorldLogic)->flag())
 	{
 		BFME_GLOBAL_AT(BfmeThingBZF *, &TheGameLogic)->bfmeGoBZF();
-		j_00011464();
+		_bfme_leaveScoreScreen();
 		return;
 	}
 
