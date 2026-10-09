@@ -19,11 +19,11 @@ public:
 	}
 };
 
-class BfmeDX8VertexBuffer : public RefCountClass
+class DX8VertexBufferClass : public RefCountClass
 {
 public:
 	enum UsageType { USAGE_DEFAULT, USAGE_DYNAMIC };
-	BfmeDX8VertexBuffer(unsigned fvf, unsigned short count, UsageType usage, unsigned size);
+	DX8VertexBufferClass(unsigned fvf, unsigned short count, UsageType usage, unsigned size);
 	char m_storage[0x18];
 };
 
@@ -38,7 +38,7 @@ public:
 class W3DBibBuffer
 {
 public:
-	BfmeDX8VertexBuffer *m_vertexBib;
+	DX8VertexBufferClass *m_vertexBib;
 	int m_vertexBibSize;
 	DX8IndexBufferClass *m_indexBib;
 	int m_indexBibSize;
@@ -67,8 +67,8 @@ void W3DBibBuffer::allocateBibBuffers()
 		}
 	}
 
-	m_vertexBib = new BfmeDX8VertexBuffer(0x142,
-		(unsigned short)(m_vertexBibSize + 4), BfmeDX8VertexBuffer::USAGE_DYNAMIC, 0);
+	m_vertexBib = new DX8VertexBufferClass(0x142,
+		(unsigned short)(m_vertexBibSize + 4), DX8VertexBufferClass::USAGE_DYNAMIC, 0);
 	m_indexBib = new DX8IndexBufferClass(m_indexBibSize + 4,
 		DX8IndexBufferClass::USAGE_DYNAMIC);
 	m_curNumBibVertices = 0;

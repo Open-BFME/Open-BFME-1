@@ -256,15 +256,6 @@ void W3DBibBuffer::freeBibBuffers(void)
 //=============================================================================
 /** Allocates the index and vertex buffers. */
 //=============================================================================
-// ?allocateBibBuffers@W3DBibBuffer@@IAEXXZ present-unmatched
-void W3DBibBuffer::allocateBibBuffers(void)
-{
-	m_vertexBib=NEW_REF(DX8VertexBufferClass,(DX8_FVF_XYZDUV1,m_vertexBibSize+4,DX8VertexBufferClass::USAGE_DYNAMIC));
-	m_indexBib=NEW_REF(DX8IndexBufferClass,((unsigned)(m_indexBibSize+4), DX8IndexBufferClass::USAGE_DYNAMIC));
-	m_curNumBibVertices=0;
-	m_curNumBibIndices=0;
-}
-
 //=============================================================================
 // W3DBibBuffer::clearAllBibs
 //=============================================================================
