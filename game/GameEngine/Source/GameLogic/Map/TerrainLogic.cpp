@@ -824,67 +824,8 @@ Bool Bridge::pickBridge(const Vector3 &from, const Vector3 &to, Vector3 *pos)
 /** updateDamageState - Update the damage state. */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/Bridge.cpp
-// ?updateDamageState@Bridge@@QAEXXZ present-unmatched
-void Bridge::updateDamageState( void )
-{
-	m_bridgeInfo.damageStateChanged = false;
-	if (m_bridgeInfo.bridgeObjectID==0) return;
-	Object *bridge = TheGameLogic->findObjectByID(m_bridgeInfo.bridgeObjectID);
-	if (bridge) {
-		// get object damage state
-		{
-			enum BodyDamageType damageState = bridge->getBodyModule()->getDamageState(); 
-			enum BodyDamageType curState = m_bridgeInfo.curDamageState;
-			if (damageState != curState) {
-				m_bridgeInfo.curDamageState = damageState;
-				if (damageState == BODY_RUBBLE) {
-					TheAI->pathfinder()->changeBridgeState(m_layer, false);
-					m_bridgeInfo.damageStateChanged = true;
-					Object *obj;
-					for (obj = TheGameLogic->getFirstObject(); obj; obj=obj->getNextObject()) {
-						if (obj->getLayer() == m_layer) {
-							// don't consider the bridge health, 'cuz it's already dead. (srj)
-							const Bool considerBridgeHealth = false;
-							if (TheTerrainLogic->objectInteractsWithBridgeLayer(obj, obj->getLayer(), considerBridgeHealth)) 
-							{
-								// srj sez: if we use this threshold, then stuff on the bridge apron doesn't die but
-								// might sink thru the eyecandy of bridge drbris, looking funny. so now we just indiscriminately
-								// kill everything that was on the bridge, regardless of height they might fall.
-								//Real deltaHeight = obj->getPosition()->z - TheTerrainLogic->getGroundHeight(obj->getPosition()->x, obj->getPosition()->y);
-								//if (deltaHeight>PATHFIND_CELL_SIZE_F * 0.5f) 
-								{
-									// The object fell off the bridge.
-									// Destroy it.
-									DamageInfo extraDamageInfo;
-									extraDamageInfo.in.m_damageType = DAMAGE_FALLING;
-									extraDamageInfo.in.m_deathType = DEATH_SPLATTED;
-									extraDamageInfo.in.m_sourceID = obj->getID();
-									extraDamageInfo.in.m_amount = HUGE_DAMAGE_AMOUNT;
-									obj->attemptDamage(&extraDamageInfo);
-								}
-							}
-						}
-					}
-				}
-				if (curState==BODY_RUBBLE) {
+// The retail damage-state body is emitted by Bridge.cpp.
 
-					//
-					// we do not set the bridge as usable if scaffolding is up ... the scaffolding
-					// code will take care of that
-					//
-					BridgeBehaviorInterface *bbi = BridgeBehavior::getBridgeBehaviorInterfaceFromObject( bridge );
-					if( bbi == NULL || bbi->isScaffoldPresent() == FALSE )
-						TheAI->pathfinder()->changeBridgeState(m_layer, true);
-					m_bridgeInfo.damageStateChanged = true;
-				}
-			}
-		}
-	}	else {
-		m_bridgeInfo.bridgeObjectID = INVALID_ID;
-		DEBUG_CRASH(("Bridge object disappeared - unexpected. jba."));
-	}
-
-}
 
 
 // Retail Bridge::getBridgeHeight (0x0000B802) is implemented in BridgeMemberThunks.cpp.
@@ -1911,25 +1852,8 @@ void TerrainLogic::getBridgeAttackPoints(const Object *bridge, TBridgeAttackInfo
 /** Picks a bridge, and returns it's drawable. */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicBridges.cpp
-// ?pickBridge@TerrainLogic@@UAE_NABVVector3@@0PAV2@@Z present-unmatched
-Bool TerrainLogic::pickBridge(const Vector3 &from, const Vector3 &to, Vector3 *pos)
-{
-	Bool curDraw = FALSE;
-	Vector3 curPos(0,0,0);
+// The retail picker is emitted by TerrainLogicBridges.cpp.
 
-	Bridge *pBridge = getFirstBridge();
-	while (pBridge) {
-		Vector3 thisPos;
-		Bool thisDraw = pBridge->pickBridge(from, to , &thisPos);
-		if (!curDraw) {
-			curDraw = thisDraw;
-			curPos = thisPos;
-		}
-		pBridge = pBridge->getNext();
-	}
-	*pos = curPos;
-	return(curDraw);
-}
 
 // Retail TerrainLogic::deleteBridges (0x001AB150) is implemented in TerrainLogicBridges.cpp.
 

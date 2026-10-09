@@ -127187,11 +127187,9 @@ present_unmatched	game/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp	isPointO
 present_unmatched	game/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp	isPurposeOfPath@TerrainLogic@@UAE_NPAVWaypoint@@VAsciiString@@@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp	loadMap@TerrainLogic@@UAE_NVAsciiString@@_N@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp	loadPostProcess@TerrainLogic@@MAEXXZ	1
-present_unmatched	game/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp	pickBridge@TerrainLogic@@UAE_NABVVector3@@0PAV2@@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp	setActiveBoundary@TerrainLogic@@QAEXH@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp	setWaterHeight@TerrainLogic@@UAEXPBVWaterHandle@@MM_N@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp	update@TerrainLogic@@UAEXXZ	1
-present_unmatched	game/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp	updateDamageState@Bridge@@QAEXXZ	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Armor.cpp	1ArmorStore@@UAE@XZ	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Behavior/AutoHealBehavior.cpp	1AutoHealBehavior@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Behavior/AutoHealBehavior.cpp	crc@AutoHealBehavior@@	1
