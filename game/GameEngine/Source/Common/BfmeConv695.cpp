@@ -1,15 +1,17 @@
-class BfmeThingDGD
+class Gen007F0130
 {
 public:
-	BfmeThingDGD *bfmeInitDGD(void *a);
+	static void *operator new(unsigned int size);
 };
 
-void *__cdecl bfmeAllocDGD(unsigned int size);
+class BfmeThingDGD : public Gen007F0130
+{
+public:
+	BfmeThingDGD(void *a) throw();
+	unsigned char m_bfmeBody[0x6e0];
+};
 
 BfmeThingDGD *bfmeGoDGD(void *a)
 {
-	void *p = bfmeAllocDGD(0x6e0);
-	if (p != 0)
-		return ((BfmeThingDGD *)p)->bfmeInitDGD(a);
-	return 0;
+	return new BfmeThingDGD(a);
 }
