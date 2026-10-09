@@ -11176,7 +11176,7 @@ name,address,notes
 ??_C@_0GH@DGLCHLCD@Watchdog?3?5Parent?5thread?5?$CIID?5?$CFd?$CJ?5@,0x01088DB8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0010B8A0 calls; autopin
 ??_C@_0L@BJCDJCGK@UpgradeDie?$AA@,0x00C90838,pool-glue cascade static (back-solved)
 ??_C@_0L@BJHONFCE@DestroyDie?$AA@,0x00C908C0,pool-glue cascade static (back-solved)
-??_C@_0L@OBFJOAEI@MODE?5?$CFs?5?$CLb?$AA@,0x00D311D8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00861470 calls; autopin
+??_C@_0L@OBFJOAEI@MODE?5?$CFs?5?$CLb?$AA@,0x00D31184,retail literal "MODE %s +b" pushed by _chatEnumChannelBansA at 0x00860F80+0x17 (was misplaced at 0x00D311D8 = "WHO %s")
 ??_C@_0L@PMFBCIMB@ActiveBody?$AA@,0x00C8FB98,pool-glue cascade static (back-solved)
 ??_C@_0M@BLHDDDNA@LaserUpdate?$AA@,0x00C90534,pool-glue cascade static (back-solved)
 ??_C@_0M@DGBAOIAO@ios?5failure?$AA@,0x0112EBAC,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0083ED40 calls; autopin
