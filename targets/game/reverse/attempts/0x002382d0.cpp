@@ -1,9 +1,7 @@
-// ?d_002382d0@@YAXXZ
-// partial score=0.6335 date=2026-09-28
-// Retail 0x002382D0 is a secondary containment interface method at slot +0x64.
-// Address-qualified reconstruction. m_contain and m_team use the shared Object witness.
-// List link traversal, virtual offsets, and LatchRestore<bool> vtable 0x010892D8
-// are read directly from retail. No semantic method identity is asserted.
+// ?replace002382D0@ContainView002382D0@@UAEXPBVThingTemplate@@@Z
+// partial score=0.7072 date=2026-10-09
+// Retail secondary-interface slot 25; owner and method identities remain address-qualified.
+// Pointer payloads and the boolean latch follow complete decoded helpers.
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Igame/GameEngine/Source/GameLogic/Object
 // stlport
 #include <list>
@@ -16,12 +14,13 @@ class Team;
 class ThingTemplate;
 template<int N> class BitFlags { public: _STL::bitset<N> bits; };
 class ThingFactory { public: Object *newObject(const ThingTemplate *,Team *,const BitFlags<86>&,unsigned int);
+ // ?create002382D0@ThingFactory@@QAEPAVObject@@PBVThingTemplate@@PAVTeam@@@Z absent-from-retail
  Object *create002382D0(const ThingTemplate *t, Team *team) { return newObject(t,team,BitFlags<86>(),0); }
 };
 class GameLogic { public: void destroyObject(Object *); Object *findObjectByID(int); };
 extern ThingFactory *TheThingFactory;
 extern GameLogic *TheGameLogic;
-typedef _STL::list<int> MemberList002382D0;
+typedef _STL::list<Object *> MemberList002382D0;
 class ContainView002382D0;
 struct Owner002382D0;
 class ModuleView002382D0 {
@@ -82,10 +81,10 @@ class ContainView002382D0 { public:
  virtual void slot22();
  virtual void slot23();
  virtual void slot24();
- virtual void slot25();
+ virtual void replace002382D0(const ThingTemplate *);
  virtual void slot26();
  virtual void slot27();
- virtual void slot28(Object *,Object *,bool);
+ virtual Object *slot28(Object *,Object *,bool);
  virtual void slot29(MemberList002382D0 *);
  virtual void slot30();
  virtual void slot31();
@@ -180,7 +179,6 @@ class ContainView002382D0 { public:
  virtual void slot120();
  virtual void slot121();
  virtual Owner002382D0 *slot122();
- void replace002382D0(const ThingTemplate *);
 };
 struct Owner002382D0 {
  char prefix[0xe4];
@@ -200,8 +198,7 @@ void ContainView002382D0::replace002382D0(const ThingTemplate *t)
  slot17(&members);
  Object *held=TheGameLogic->findObjectByID(*(int *)((char *)this+0xd8));
  if (held) {
-  MemberList002382D0::iterator it=members.begin();
-  while(it!=members.end() && *it!=(int)held) ++it;
+  MemberList002382D0::iterator it=_STL::find(members.begin(),members.end(),held);
   if(it!=members.end()) members.erase(it);
  }
  bool enabled=((char *)(*(Object **)((char *)this-0xdc))->getDrawable())[0x3ac]!=0;
@@ -212,7 +209,7 @@ void ContainView002382D0::replace002382D0(const ThingTemplate *t)
  if(held) {
   if(members.size()>0) {
    LatchRestore<bool> restore(replacement->flag210,true);
-   Object *first=(Object *)members.front();
+   Object *first=members.front();
    if(first) { other->slot28(held,first,true); held=0; }
   }
   if(held) TheGameLogic->destroyObject(held);
