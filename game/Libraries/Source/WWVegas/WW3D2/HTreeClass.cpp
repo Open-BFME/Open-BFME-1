@@ -10,6 +10,8 @@ public:
 	~HTreeClass();
 
 private:
+	void Free();
+
 	unsigned char m_name0;
 	unsigned char m_pad[0xf];
 	void *m_pivots;
@@ -26,6 +28,20 @@ HTreeClass::HTreeClass()
 	m_pivotCountOrPtr = 0;
 	m_scale = 1.0f;
 	m_name0 = 0;
+}
+
+// ?Free@HTreeClass@@AAEXXZ
+// Retail 0x00952230 sits between the ctor and Get_Bone_Index; Load_W3D calls it
+// through ILT on hierarchy load failure.
+void HTreeClass::Free()
+{
+	if (m_pivotCountOrPtr)
+	{
+		operator delete(m_pivotCountOrPtr);
+		m_pivotCountOrPtr = 0;
+	}
+	m_pivots = 0;
+	m_scale = 1.0f;
 }
 
 // ??1HTreeClass@@QAE@XZ

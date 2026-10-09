@@ -36,15 +36,7 @@ public:
 	void Init_Default();
 
 private:
-	void Free()
-	{
-		if (Pivot != 0) {
-			delete[] Pivot;
-			Pivot = 0;
-		}
-		NumPivots = 0;
-		ScaleFactor = 1.0f;
-	}
+	void Free();	// out of line in HTreeClass.cpp (retail 0x00952230)
 
 	char Name[16];
 	int NumPivots;
@@ -54,7 +46,13 @@ private:
 
 void HTreeClass::Init_Default()
 {
-	Free();
+	// Retail inlines Free() here.
+	if (Pivot != 0) {
+		delete[] Pivot;
+		Pivot = 0;
+	}
+	NumPivots = 0;
+	ScaleFactor = 1.0f;
 
 	NumPivots = 1;
 	Pivot = new PivotClass[NumPivots];
