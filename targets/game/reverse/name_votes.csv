@@ -1202,3 +1202,6 @@ game/Libraries/Source/Apt/Rva008AE2E0BoundsGetter.cpp|local|Rva8BB1A0BoundsSourc
 game/GameEngine/Source/Common/BfmeConv827.cpp|function||bfmeLookupAndSendDB0,6ec85a67ffa182ba85d18c75,gpt-6-astra,20261008171357-93da5a,2026-10-08
 game/GameEngine/Source/Common/Bfme5SixtyFive.cpp|type||Gen_000D5930,f0c076bdc5bff992cb5c6cc6,claude-opus,20261009203851-34d56f,2026-10-09
 game/GameEngine/Source/Common/Bfme5SixtyFive.cpp|function|Gen_000D5930@|bfmeHasBit,203d50b613e1c92975daf2dc,claude-opus,20261009203851-34d56f,2026-10-09
+game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp|member||m_bfmeSending,d2cf836a0c24a6c8775008ee,claude-opus,20261009203918-6a75c0,2026-10-09
+game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp|member||m_bfmeReceiving,1dc27b340bdea2e2245b3348,claude-opus,20261009203918-6a75c0,2026-10-09
+game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp|function|Gen_00410BA0@|bfmeBusy,4419c9752a627b4f78c1260b,claude-opus,20261009203918-6a75c0,2026-10-09
