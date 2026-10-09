@@ -37,8 +37,6 @@ public:
 	~UnicodeString() {}
 };
 
-extern const unsigned short g_Rva01088AF4EmptyWideString[];
-
 class WinInstanceData;
 class GameWindow;
 typedef void (*GameWinTooltipFunc)(GameWindow *, WinInstanceData *, unsigned int);
@@ -180,7 +178,9 @@ private:
 };
 
 // The white entry colour every combo population in this screen passes.
-extern Color g_012B76F4;
+// Retail VA 0x012B76F4 is a mutable four-byte colour cell initialized
+// to FFFFFFFF (opaque white); the original BFME identifier is unproven.
+Color g_012B76F4 = -1;
 #define Rva012B76F4Color g_012B76F4
 
 // Retail 0x00527220 (911 B), reached through ILT 0x00029C35 from the matched
@@ -285,7 +285,7 @@ void SkirmishScreenState::refreshPlayerTypeCombo00527220(int index)
 	// path through two call sites whose tails it merges.
 	if (selected == -1)
 	{
-		if (text.compare(g_Rva01088AF4EmptyWideString) != 0)
+		if (text.compare(L"") != 0)
 			GadgetComboBoxSetText(m_playerTypeCombos[index], text);
 		else
 			GadgetComboBoxSetSelectedPos(m_playerTypeCombos[index], 0, false);
