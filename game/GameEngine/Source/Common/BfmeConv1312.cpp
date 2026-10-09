@@ -1,23 +1,35 @@
 // Open-BFME5 conversions.
 
+class BfmeHostBU
+{
+public:
+	void bfmeDieBU();
+};
+
+class BfmePosTP;
+
+class BfmeHostTP
+{
+public:
+	void bfmeSetPositionTP(const BfmePosTP *pos, bool flag);
+};
+
 class BfmeThingTFB
 {
 public:
 	void bfmeGoTFB(int a);
-	void bfmeOneTFB();
-	void bfmeTwoTFB(int a, int b);
 };
 
 void BfmeThingTFB::bfmeGoTFB(int a)
 {
-	bfmeOneTFB();
-	bfmeTwoTFB(a, 0);
+	reinterpret_cast<BfmeHostBU *>(this)->bfmeDieBU();
+	reinterpret_cast<BfmeHostTP *>(this)->bfmeSetPositionTP(reinterpret_cast<const BfmePosTP *>(a), false);
 }
 
-class BfmeSinkTFC
+class BfmeThingVJM
 {
 public:
-	void bfmeUseTFC(void *a, void *b);
+	void bfmeGoVJM(int a, int b);
 };
 
 class BfmeThingTFC
@@ -45,7 +57,7 @@ public:
 	virtual void bfmeV19TFC() = 0;
 	virtual void bfmeStartTFC() = 0;
 	void bfmeGoTFC();
-	BfmeSinkTFC *m_bfmeSink;
+	BfmeThingVJM *m_bfmeSink;
 	void *m_bfmeFirst;
 	void *m_bfmeSecond;
 };
@@ -53,7 +65,7 @@ public:
 void BfmeThingTFC::bfmeGoTFC()
 {
 	bfmeStartTFC();
-	m_bfmeSink->bfmeUseTFC(m_bfmeSecond, m_bfmeFirst);
+	m_bfmeSink->bfmeGoVJM((int)m_bfmeSecond, (int)m_bfmeFirst);
 }
 
 // The holder is a real header type: CriticalSectionClass::LockClass, whose
