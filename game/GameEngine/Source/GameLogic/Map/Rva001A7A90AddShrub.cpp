@@ -70,14 +70,8 @@ public:
 		return (Int)(m_end - m_begin);
 	}
 
-	const ModuleData *getNthData(Int i) const
-	{
-		if ((UnsignedInt)i < (UnsignedInt)getCount())
-			return m_begin[i].second;
-		return 0;
-	}
-
-private:
+	// Retail's ModuleInfo::getNthData (0x000EE950) is the Drawable.cpp copy;
+	// this TU reads the nugget directly so it emits no competing COMDAT.
 	Nugget *m_begin;
 	Nugget *m_end;
 	Nugget *m_capacity;
@@ -95,8 +89,6 @@ struct Rva001A7A90StringData
 class ThingTemplate
 {
 public:
-	const ModuleInfo &getDrawModuleInfo() const { return m_drawModuleInfo; }
-
 	const char *getString20() const
 	{
 		return m_string20 ? m_string20->m_text : "";
@@ -183,10 +175,11 @@ extern void _bfme_debugRecordCallsite(int kind);
 void __stdcall Rva001A7A90AddShrub(const ThingTemplate *tmpl, const Coord3D *pos,
 	Real angle, Real scale)
 {
-	const ModuleInfo &info = tmpl->getDrawModuleInfo();
+	const ModuleInfo &info = tmpl->m_drawModuleInfo;
 	for (Int i = 0; i < info.getCount(); ++i)
 	{
-		const ModuleData *data = info.getNthData(0);
+		const ModuleData *data = (UnsignedInt)0 < (UnsignedInt)info.getCount()
+			? info.m_begin[0].second : 0;
 		if (!data)
 			continue;
 
