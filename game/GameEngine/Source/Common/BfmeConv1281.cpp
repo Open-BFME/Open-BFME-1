@@ -13,7 +13,6 @@ struct BfmeR1281
 	BfmeE1281 *m_bfme10;
 };
 
-extern "C" void bfmeFree1281(void *p);
 
 class BfmeA1281
 {
@@ -24,6 +23,19 @@ public:
 	BfmeR1281 *m_bfme0c;
 };
 
+// Matched callee rows (callees.py, via ILT): Rva00354A60, Rva00359530StringRecordTable::release, operator delete.
+class Rva00354A60
+{
+public:
+	void invoke();
+};
+
+class Rva00359530StringRecordTable
+{
+public:
+	void release(int i);
+};
+
 void BfmeA1281::bfmeRemove1281(int i)
 {
 	BfmeE1281 *e;
@@ -32,7 +44,7 @@ void BfmeA1281::bfmeRemove1281(int i)
 	r = &m_bfme0c[i];
 	e = r->m_bfme10;
 	r->m_bfme10 = e->m_bfme00;
-	e->bfmeClose1281();
-	bfmeFree1281(e);
-	bfmeNotify1281(i);
+	((Rva00354A60 *)e)->invoke();
+	operator delete(e);
+	((Rva00359530StringRecordTable *)this)->release(i);
 }
