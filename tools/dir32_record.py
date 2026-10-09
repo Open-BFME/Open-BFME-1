@@ -24,6 +24,7 @@ Stage the record yourself: git add targets/game/reverse/dir32_addresses.csv
 """
 import argparse
 import csv
+import re
 import sys
 from pathlib import Path
 
@@ -57,13 +58,23 @@ def write_dropping(path, name):
     Path(path).write_text("".join(kept), newline="")
 
 
+TRAILER_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9-]*: \S")
+
+
 def append_trailer(msg, line):
     if not msg:
         return
     text = Path(msg).read_text() if Path(msg).exists() else ""
     if line in text.splitlines():
         return
-    Path(msg).write_text(text.rstrip("\n") + ("\n\n" if text.strip() else "") + line + "\n")
+    body = text.rstrip("\n")
+    paras = body.split("\n\n") if body.strip() else []
+    # Join the message's trailer block (its last paragraph, if every line is a
+    # `Token: value` trailer and it is not the subject) so git sees one block.
+    if len(paras) > 1 and all(TRAILER_RE.match(l) for l in paras[-1].splitlines()):
+        Path(msg).write_text(body + "\n" + line + "\n")
+        return
+    Path(msg).write_text(body + ("\n\n" if paras else "") + line + "\n")
 
 
 def retire(args):

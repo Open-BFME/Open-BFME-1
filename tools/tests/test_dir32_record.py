@@ -132,3 +132,29 @@ def test_bare_identifier():
     assert guard.bare_identifier("?Foo@Bar@@3HA") == "Foo"
     assert guard.bare_identifier("_g_x") == "g_x"
     assert guard.bare_identifier("?$S1@?1??f@@YAXXZ@4IA") is None
+
+
+def test_append_trailer_joins_existing_trailer_block(tmp_path):
+    import dir32_record
+    msg = tmp_path / "m.txt"
+    msg.write_text("Subject\n\nBody text.\n\nClaim-Lease: abc\nCo-Authored-By: X <x@y>\n")
+    dir32_record.append_trailer(str(msg), "Dir32-Retire: A 0x1 for B")
+    dir32_record.append_trailer(str(msg), "Dir32-Retire: C 0x2 for D")
+    paras = msg.read_text().rstrip("\n").split("\n\n")
+    assert paras[-1].splitlines() == ["Claim-Lease: abc", "Co-Authored-By: X <x@y>",
+                                      "Dir32-Retire: A 0x1 for B", "Dir32-Retire: C 0x2 for D"]
+    out = subprocess.run(["git", "interpret-trailers", "--parse", str(msg)],
+                         capture_output=True, text=True, check=True).stdout
+    assert "Dir32-Retire: A 0x1 for B" in out and "Claim-Lease: abc" in out
+
+
+def test_append_trailer_new_block_after_prose(tmp_path):
+    import dir32_record
+    msg = tmp_path / "m.txt"
+    msg.write_text("Subject: not a trailer\n\nProse: this line\nis not all trailers.\n")
+    dir32_record.append_trailer(str(msg), "Dir32-Retire: A 0x1 for B")
+    assert msg.read_text().endswith("is not all trailers.\n\nDir32-Retire: A 0x1 for B\n")
+    one = tmp_path / "s.txt"
+    one.write_text("Subject: x\n")
+    dir32_record.append_trailer(str(one), "Dir32-Retire: A 0x1 for B")
+    assert one.read_text() == "Subject: x\n\nDir32-Retire: A 0x1 for B\n"
