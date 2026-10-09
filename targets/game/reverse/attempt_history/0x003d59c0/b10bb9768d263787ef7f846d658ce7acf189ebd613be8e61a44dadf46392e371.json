@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "b10bb9768d263787ef7f846d658ce7acf189ebd613be8e61a44dadf46392e371",
+  "symbol": "_Rva003D59C0@16",
+  "score_kind": "measured",
+  "score": 0.5641,
+  "source": "// _Rva003D59C0@16\n// partial score=0.5641 date=2026-10-08\n// cl: /O2 /MD\nextern \"C\" int __stdcall Rva003D59C0(int a1, const unsigned char *object, int a3, int a4)\n{\n\tunsigned flags = *(const unsigned *)(object + 0x0C);\n\tunsigned kind = flags & 7;\n\tif (kind == 0 || kind == 1) {\n\t\treturn (flags >> 18) & 1;\n\t}\n\treturn 1;\n}\n"
+}

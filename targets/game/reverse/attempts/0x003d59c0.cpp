@@ -1,5 +1,5 @@
 // ?rva003D59C0@@YGHHPBURva003D59C0Obj@@HH@Z
-// partial score=0.72 date=2026-09-24
+// partial score=0.5641 date=2026-09-24
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 //
 // Open-BFME5: stdcall filter at retail 0x003D59C0 (39B).
