@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/Wwutil /Igame/Libraries/Source/WWVegas/WWDownload /Igame/Libraries/Source/Compression /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
-// WWLib BufferedFileClass, verbatim from the Generals Zero Hour reference
-// (GeneralsMD/.../WWVegas/WWLib/bufffile.cpp). Derives from RawFileClass; the
+// WWLib BufferedFileClass, adapted from the Generals Zero Hour reference
+// for BFME scalar byte-buffer allocation and release. Derives from RawFileClass; the
 // BFME FileClass vtable drift lives in wwfile.h. always.h supplies W3DNEWARRAY
 // (plain new under NDEBUG); wwdebug.h makes WWASSERT a no-op under release.
 #include	"always.h"
@@ -79,7 +79,8 @@ int BufferedFileClass::Read(void * buffer, int size)
 	// If we dont have a buffer, get one
 	if ( BufferSize == 0 ) {
 		BufferSize = desired_buffer_size;
-		Buffer = W3DNEWARRAY unsigned char [BufferSize];
+		// Retail allocates this byte buffer through scalar operator new (0x00881F30).
+		Buffer = (unsigned char *)::operator new(BufferSize);
 		BufferAvailable = 0;
 		BufferOffset = 0;
 	}
@@ -136,7 +137,8 @@ int BufferedFileClass::Seek(int pos, int dir)
 void	BufferedFileClass::Reset_Buffer( void )
 {
 	if ( Buffer != NULL ) {
-		delete [] Buffer;
+		// Retail releases the raw buffer through scalar operator delete (0x00881EB0).
+		::operator delete(Buffer);
 		Buffer = NULL;
 		BufferSize = 0;
 		BufferAvailable = 0;
