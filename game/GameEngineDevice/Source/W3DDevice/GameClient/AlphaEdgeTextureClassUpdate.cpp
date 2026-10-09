@@ -162,7 +162,7 @@ struct BfmeCoord2D
 
 class TileData : public BfmeRefCountClass
 {
-protected:
+public:
 	unsigned char m_tileData[0x4000];
 	unsigned char m_tileDataMip32[0x1000];
 	unsigned char m_tileDataMip16[0x400];
@@ -174,17 +174,20 @@ protected:
 public:
 	BfmeCoord2D m_tileLocationInTexture;
 
-	unsigned char *getRGBDataForWidth(int width)
-	{
-		if (width == 32) return m_tileDataMip32;
-		if (width == 16) return m_tileDataMip16;
-		if (width == 8) return m_tileDataMip8;
-		if (width == 4) return m_tileDataMip4;
-		if (width == 2) return m_tileDataMip2;
-		if (width == 1) return m_tileDataMip1;
-		return m_tileData;
-	}
+
 };
+
+// TU-local copy of the accessor used by retail's constant-width expansion.
+static __forceinline unsigned char *tileRGBDataForWidth(TileData *tile, int width)
+{
+    if (width == 32) return tile->m_tileDataMip32;
+    if (width == 16) return tile->m_tileDataMip16;
+    if (width == 8) return tile->m_tileDataMip8;
+    if (width == 4) return tile->m_tileDataMip4;
+    if (width == 2) return tile->m_tileDataMip2;
+    if (width == 1) return tile->m_tileDataMip1;
+    return tile->m_tileData;
+}
 
 class WorldHeightMap
 {
@@ -253,7 +256,7 @@ int AlphaEdgeTextureClass::update(WorldHeightMap *htMap)
 			for (j = 0; j < tilePixelExtent; j++)
 			{
 				int row = position.y + j;
-				unsigned char *pBGR = htMap->getEdgeTile(tileNdx)->getRGBDataForWidth(tilePixelExtent);
+				unsigned char *pBGR = tileRGBDataForWidth(htMap->getEdgeTile(tileNdx), tilePixelExtent);
 				pBGR += (tilePixelExtent - 1 - j) * 4 * tilePixelExtent;
 				unsigned char *pBGRX = ((unsigned char *)locked_rect.pBits) +
 					row * surface_desc.Width * pixelBytes;
