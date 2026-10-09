@@ -6,9 +6,12 @@
 // pair (mapped body 8 bytes).  The key comparator reuses the
 // Rva0019BC70Key tag already pinned to retail 0x0000B050 by an existing
 // symbols.csv row, so no new pin is needed for the compare call.  The
-// _Construct callee is a fresh pin to the retail address below.
+// _Construct follows ILT 0x00017FD0 to the matched Rva001954D0 helper.
+// Bind its existing pointer/reference ABI without adding a pin.
 
 struct BfmeRbTreeInsertRva00198190AnchorHelper;
+
+struct Rva001954D0;
 
 namespace _STL
 {
@@ -125,7 +128,8 @@ private:
 	_Link_type _M_create_node(const Value &v)
 	{
 		_Link_type tmp = (_Link_type)BfmeNodeAllocate(sizeof(_Node));
-		_Construct(&tmp->_M_value_field, v);
+		_Construct(reinterpret_cast<Rva001954D0 *>(&tmp->_M_value_field),
+			reinterpret_cast<const Rva001954D0 &>(v));
 		return tmp;
 	}
 
