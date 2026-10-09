@@ -1,37 +1,16 @@
 // ?draw@Rva00785FD0Item@@QAEXXZ
-// partial score=0.886 date=2026-09-28
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// partial score=0.8109 date=2026-10-09
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Benchmark /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Igame/Libraries/Source/WWVegas/WWMath
 // stlport
-//
-// Retail 0x00785300 (1264 bytes): the per-item draw that the APT queue flush
-// 0x00785FD0 runs for every queued item (ECX = node->item, via ILT 0x00049062).
-// It walks the item's shape list, asks each shape its kind through a virtual,
-// transforms the shape's points through the item's 2x3 matrix at +0x10..+0x24,
-// binds the shape's texture (or none), reserves vertices from the renderer
-// singleton 0x01306954 and writes 32-byte vertices:
-//   kind 0: textured triangles, UVs through the shape's own matrix at +0x1C
-//   kind 1: flat triangles
-//   kind 2: lines, six vertices each through emitLine0078B040
-// No class, vtable or string names the item or the shapes, so every name here
-// keeps an address token or describes only the shape the body proves.
-//
-// STATUS (opus-5.5, 2026-09-28): probe 1262/1264 bytes, 249 differing, shape
-// 0.886; 396 instructions each side, 324 identical after normalising.
-// Exact already: EH states 0/1/2, frame slots, switch layout, filter fix-up,
-// line argument schedule. Left: commutative x87 operand/term order in about
-// 15 product pairs (type 0 UV and its last vertex, type 1 vertex p1, type 2
-// a.x/a.y/b.x), plus one alignment nop that follows the size. Operand order
-// ignores spelling, names and struct declaration order; it moves only with
-// symbol structure (helper nesting, a matrix alias, by-value returns), in no
-// visible pattern. The layout matches the geometry parser's classes
-// (Rva00788A30GeometryParser.cpp: Geometry00786B70 item, BfmeA1159 textured,
-// Rva00787380 solid, Rva007876D0 line records).
-// Landing needs four REL32 pins (retail ABI proven at the call sites here):
-// bfmeGoRD by value (ILT 0x3B90D), closeA/closeB taking EDX (ILTs 0x361D3 and
-// 0x39559), and rva0078C430DoubleDispatch returning the cursor (ILT 0x42F73).
+
 #include <vector>
 
-struct LinePoint0078B040 { float x, y; };
+struct LinePoint0078B040
+{
+	LinePoint0078B040() {}
+	LinePoint0078B040(const LinePoint0078B040 &other) : x(other.x), y(other.y) {}
+	float x, y;
+};
 struct LineVertex0078B040 { float x, y, z; unsigned color; float field10[4]; };
 
 void __fastcall emitLine0078B040(void *, LineVertex0078B040 **cursor,
@@ -40,28 +19,26 @@ void __fastcall emitLine0078B040(void *, LineVertex0078B040 **cursor,
 struct Rva00785FD0Renderer;
 extern Rva00785FD0Renderer *g_rva00785FD0Renderer;
 void *__fastcall rva0078C300RendererAppend(Rva00785FD0Renderer *renderer, int count);
-LineVertex0078B040 *__fastcall rva0078C430DoubleDispatch(Rva00785FD0Renderer *renderer, int count);
+void __fastcall rva0078C430DoubleDispatch(void *renderer, int count);
 
 int bfmeHelpWI(int color);
 extern int g_Rva012BB860TransformMode;
 
-class TextureClass
-{
-public:
-	void Release_Ref();
-};
+#define _OPERATOR_NEW_DEFINED_
+#include "texture.h"
 
 // Four-byte texture reference returned by value; its destructor releases.
 class Rva00785300TextureRef
 {
 public:
 	Rva00785300TextureRef() : m_texture(0) {}
+	Rva00785300TextureRef(const Rva00785300TextureRef &other) : m_texture(other.m_texture) { if (m_texture) m_texture->Add_Ref(); }
 	~Rva00785300TextureRef() { if (m_texture) m_texture->Release_Ref(); }
 	TextureClass *m_texture;
 };
 
-// Renderer entry points under their ledger identities (0x0078B220, 0x0078AE40,
-// 0x0078AE70); ECX is the renderer singleton and EDX the argument.
+// The close helpers ignore EDX; their call sites still forward the vertex cursor.
+// The casts retain that forwarding while naming the canonical declarations.
 class BfmeTexVGS;
 class BfmeThingVGV
 {
@@ -71,8 +48,8 @@ public:
 class Rva0078AE40
 {
 public:
-	void __fastcall closeA(void *end);
-	void __fastcall closeB(void *end);
+	void closeA();
+	void closeB();
 };
 
 class Gen_00920a60
@@ -120,7 +97,9 @@ struct Rva00785300Triangle
 
 struct Rva00785300Line
 {
-	LinePoint0078B040 a, b;
+	LinePoint0078B040 p[2];
+	const LinePoint0078B040 &a() const { return p[0]; }
+	const LinePoint0078B040 &b() const { return p[1]; }
 };
 
 class Rva00785300SolidShape
@@ -276,7 +255,7 @@ void Rva00785FD0Item::draw()
 					setUV(v, tri->m_uv, t->p[2]);
 					++v;
 				}
-				((Rva0078AE40 *)g_rva00785FD0Renderer)->closeA(v);
+				(((Rva0078AE40 *)g_rva00785FD0Renderer)->*reinterpret_cast<void (__fastcall Rva0078AE40::*)(void *)>(&Rva0078AE40::closeA))(v);
 			}
 			break;
 		}
@@ -301,7 +280,7 @@ void Rva00785FD0Item::draw()
 				setVertex(v, m_matrix, t->p[1], color);
 				++v;
 			}
-			((Rva0078AE40 *)g_rva00785FD0Renderer)->closeA(v);
+			(((Rva0078AE40 *)g_rva00785FD0Renderer)->*reinterpret_cast<void (__fastcall Rva0078AE40::*)(void *)>(&Rva0078AE40::closeA))(v);
 			break;
 		}
 		case 2:
@@ -311,19 +290,17 @@ void Rva00785FD0Item::draw()
 				break;
 			unsigned color = bfmeHelpWI(line->m_color);
 			setTexture(Rva00785300TextureRef());
-			LineVertex0078B040 *cursor = rva0078C430DoubleDispatch(g_rva00785FD0Renderer, line->m_lines.size());
+			LineVertex0078B040 *cursor = reinterpret_cast<LineVertex0078B040 *(__fastcall *)(void *, int)>(rva0078C430DoubleDispatch)(g_rva00785FD0Renderer, line->m_lines.size());
 			if (!cursor)
 				break;
 			LinePoint0078B040 a, b;
 			for (std::vector<Rva00785300Line>::iterator l = line->m_lines.begin(); l != line->m_lines.end(); ++l)
 			{
-				a.x = m_matrix.a * l->a.x + m_matrix.c * l->a.y + m_matrix.tx;
-				a.y = m_matrix.b * l->a.x + m_matrix.d * l->a.y + m_matrix.ty;
-				b.x = m_matrix.a * l->b.x + m_matrix.c * l->b.y + m_matrix.tx;
-				b.y = m_matrix.b * l->b.x + m_matrix.d * l->b.y + m_matrix.ty;
+				m_matrix.transform(l->a(), a.x, a.y);
+				m_matrix.transform(l->b(), b.x, b.y);
 				emitLine0078B040(g_rva00785FD0Renderer, &cursor, a, b, line->m_width, color);
 			}
-			((Rva0078AE40 *)g_rva00785FD0Renderer)->closeB(cursor);
+			(((Rva0078AE40 *)g_rva00785FD0Renderer)->*reinterpret_cast<void (__fastcall Rva0078AE40::*)(void *)>(&Rva0078AE40::closeB))(cursor);
 			break;
 		}
 		}
