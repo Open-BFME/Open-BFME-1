@@ -16,7 +16,7 @@ struct Rva00882BA0Block {
 extern Rva008838F0Owner g_bfmeRva0130EA10Owner;
 extern int g_rva0130E9FC;
 extern unsigned int g_rva0130E9F4;
-extern unsigned int g_rva00883040Count;
+extern unsigned int g_Va012D4D10Count;
 extern unsigned char g_rva0130E9F9;
 extern void *g_rva0130E9C4;
 extern char g_rva0130E9D8[24];
@@ -29,7 +29,7 @@ void MemoryPool::_Free(void *ptr, AllocType type)
     unsigned int *large = (unsigned int *)ptr - 1;
     unsigned int size = *large;
     g_rva0130E9F4 -= size;
-    if (size > g_rva00883040Count * 4) {
+    if (size > g_Va012D4D10Count * 4) {
         if (g_rva0130E9F9) g_bfmeRva0130EA10Owner.rva008839B0(type, ptr);
         EnterCriticalSection(g_rva0130E9D8);
         HeapFree(g_rva0130E9C4, 0, large);

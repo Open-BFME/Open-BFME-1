@@ -605,6 +605,8 @@ address_global	game/GameEngine/Source/Common/SmallLeafBodies2.cpp	g_Va0133F42C	2
 address_global	game/GameEngine/Source/Common/SmallLeafBodies2.cpp	g_Va0133F451	2
 address_global	game/GameEngine/Source/Common/StateSelfNamingCtorsWithFields.cpp	g_Va0109B558	2
 address_global	game/GameEngine/Source/Common/System/MemoryPoolFree.cpp	g_bfmeRva0130EA10Owner	3
+address_global	game/GameEngine/Source/Common/System/Rva00883040.cpp	g_Va012D4D10Count	2	allow=1f027dc22929a9c7dd9038783d3fadc8729880a4
+address_global	game/GameEngine/Source/Common/System/Rva00883040.cpp	g_Va0130E9F0Buf	3	allow=1f027dc22929a9c7dd9038783d3fadc8729880a4
 address_global	game/GameEngine/Source/Common/System/XferKindOf.cpp	g_bfmeRva012AA068	4
 address_global	game/GameEngine/Source/Common/System/memory_pool.cpp	g_bfmeRva0130EA10Owner	3
 address_global	game/GameEngine/Source/Common/Thing/ThingFactory_newObject.cpp	g_Va012EF1DC	5
