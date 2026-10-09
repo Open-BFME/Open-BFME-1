@@ -52,6 +52,13 @@
 
 //-------------------------------------------------------------------------
 
+// The independently matched deque-pop TUs own these specializations at
+// 0063C270 and0063C2D0.  Keep queue users from emitting competing copies.
+namespace std {
+template <> void deque<BuddyRequest>::pop_front();
+template <> void deque<BuddyResponse>::pop_front();
+}
+
 typedef std::queue<BuddyRequest> RequestQueue;
 typedef std::queue<BuddyResponse> ResponseQueue;
 class BuddyThreadClass;
