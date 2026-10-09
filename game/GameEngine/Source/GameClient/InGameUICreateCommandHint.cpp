@@ -153,16 +153,16 @@ char pad822[2]; int m_mouseMode; Mouse::MouseCursor m_mouseModeCursor;
 unsigned int m_mousedOverDrawableID;
 void setMouseCursor(Mouse::MouseCursor cursor);
 };
-// Shared existing method, exposed here for the constant-cursor inlines.
-void InGameUI::setMouseCursor(Mouse::MouseCursor cursor)
+// Retail inlines constant cursors and calls the shared method for dynamic ones.
+static __forceinline void setConstantCursor(InGameUI *ui, Mouse::MouseCursor cursor)
 {
-    if (m_isSelecting || m_isScrolling) return;
+    if (ui->m_isSelecting || ui->m_isScrolling) return;
     if (TheMouse == 0) return;
     TheMouse->setCursor(cursor);
-    if (m_mouseMode == 2 && cursor != Mouse::ARROW && cursor != Mouse::SCROLL)
-        m_mouseModeCursor = cursor;
+    if (ui->m_mouseMode == 2 && cursor != Mouse::ARROW && cursor != Mouse::SCROLL)
+        ui->m_mouseModeCursor = cursor;
 }
-#define CURSOR(n) setMouseCursor((Mouse::MouseCursor)(n))
+#define CURSOR(n) setConstantCursor(this,(Mouse::MouseCursor)(n))
 void InGameUI::createCommandHint(const GameMessage *msg)
 {
     if (TheRecorder->getMode() == RECORDER_PLAYBACK) return;
@@ -208,7 +208,7 @@ void InGameUI::createCommandHint(const GameMessage *msg)
                 Radar *radar = TheRadar;
                 if (radar->isRadarWindow(window) && !radar->m_field00d &&
                     (radar->m_field00c || !ThePlayerList->m_local->hasRadar()))
-                    CURSOR(2);
+                    setMouseCursor((Mouse::MouseCursor)2);
                 else CURSOR(5);
             }
             break;
@@ -241,7 +241,7 @@ void InGameUI::createCommandHint(const GameMessage *msg)
         case 0xaf: CURSOR(39); break;
         case 0xb0: CURSOR(5); break;
         case 0xb1: CURSOR(12); break;
-        case 0x7d6: CURSOR(msg->getArgument(1)->integer); break;
+        case 0x7d6: setMouseCursor((Mouse::MouseCursor)msg->getArgument(1)->integer); break;
         case 0x7d7: CURSOR(42); break;
         case 0x7d8: CURSOR(49); break;
         }
@@ -266,7 +266,7 @@ void InGameUI::createCommandHint(const GameMessage *msg)
                     case 0x96: index = TheMouse->getCursorIndex(m_pendingGUICommand->m_cursorName); break;
                     default: index = TheMouse->getCursorIndex(m_pendingGUICommand->m_invalidCursorName); break;
                     }
-                    if (index != -1) CURSOR(index); else CURSOR(4);
+                    if (index != -1) setMouseCursor((Mouse::MouseCursor)index); else CURSOR(4);
                 } else {
                     CURSOR(0);
                     setRadiusCursor(m_pendingGUICommand->m_radiusCursor,m_pendingGUICommand->m_specialPower,
@@ -276,7 +276,7 @@ void InGameUI::createCommandHint(const GameMessage *msg)
                 if (m_pendingGUICommand->m_radiusCursor == 0) {
                     setRadiusCursorNone();
                     int index = TheMouse->getCursorIndex(m_pendingGUICommand->m_cursorName);
-                    if (index != -1) CURSOR(index); else CURSOR(4);
+                    if (index != -1) setMouseCursor((Mouse::MouseCursor)index); else CURSOR(4);
                 } else {
                     CURSOR(0);
                     setRadiusCursor(m_pendingGUICommand->m_radiusCursor,m_pendingGUICommand->m_specialPower,
