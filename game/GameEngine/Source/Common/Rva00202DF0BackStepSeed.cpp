@@ -20,17 +20,29 @@ public:
 	virtual void *slot10();
 };
 
-class Rva00202DF0Doer
+class BfmeThingYY
 {
 public:
-	void doit(int value);
+	void bfmeClearYY(unsigned int mask);
+};
+
+class Object;
+
+enum UpdateSleepTime
+{
+	UPDATE_SLEEP_FOREVER = 0x3FFFFFFF
+};
+
+class UpdateModule
+{
+protected:
+	void setWakeFrame(Object *obj, UpdateSleepTime wakeDelay);
+	friend class Rva00202DF0Part;
 };
 
 class Rva00202DF0Head
 {
 public:
-	void apply(Rva00202DF0Face *face, int mask);
-
 	char m_pad[0x24];
 	int m_a;
 	int m_b;
@@ -50,8 +62,8 @@ void Rva00202DF0Part::seed(int unused)
 	head->m_a = 0;
 	head->m_b = 0;
 	head->m_c = 0;
-	Rva00202DF0Doer *doer = (Rva00202DF0Doer *)face->slot10();
+	BfmeThingYY *doer = (BfmeThingYY *)face->slot10();
 	if (doer)
-		doer->doit(4);
-	head->apply(*(Rva00202DF0Face **)((char *)this - 0x18), 0x3FFFFFFF);
+		doer->bfmeClearYY(4);
+	reinterpret_cast<UpdateModule *>(head)->setWakeFrame(*(Object **)((char *)this - 0x18), UPDATE_SLEEP_FOREVER);
 }
