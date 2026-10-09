@@ -288,40 +288,6 @@ void RadarObject::crc( Xfer *xfer )
 	* Version Info:
 	* 1: Initial version */
 // ------------------------------------------------------------------------------------------------
-// ?xfer@RadarObject@@MAEXPAVXfer@@@Z present-unmatched
-void RadarObject::xfer( Xfer *xfer )
-{
-
-	// version
-	XferVersion currentVersion = 1;
-	XferVersion version = currentVersion;
-	xfer->xferVersion( &version, currentVersion );
-
-	// object id
-	ObjectID objectID = m_object ? m_object->getID() : INVALID_ID;
-	xfer->xferObjectID( &objectID );
-	if( xfer->getXferMode() == XFER_LOAD )
-	{
-
-		// find the object and save
-		m_object = TheGameLogic->findObjectByID( objectID );
-		if( m_object == NULL )
-		{
-
-			DEBUG_CRASH(( "RadarObject::xfer - Unable to find object for radar data\n" ));
-			throw SC_INVALID_DATA;
-
-		}  // end if
-
-		// tell the object we now have some radar data
-		m_object->friend_setRadarData( this );
-
-	}  // end if
-
-	// color
-	xfer->xferColor( &m_color );
-
-}  // end xfer
 
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
@@ -809,44 +775,6 @@ allocate_radar_object:
 /** Try to delete an object from a specific list */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameClient/Radar_deleteFromList.cpp
-// ?deleteFromList@Radar@@IAE_NPAVObject@@PAPAVRadarObject@@@Z present-unmatched
-Bool Radar::deleteFromList( Object *obj, RadarObject **list )
-{
-	RadarObject *radarObject, *prevObject = NULL;
-					
-	// find the object in list
-	for( radarObject = *list; radarObject; radarObject = radarObject->friend_getNext() )
-	{
-		
-		if( radarObject->friend_getObject() == obj )
-		{
-
-			// unlink the object from list
-			if( prevObject == NULL )
-				*list = radarObject->friend_getNext();  // removing head of list
-			else
-				prevObject->friend_setNext( radarObject->friend_getNext() );
-
-			// set the object radar data to NULL
-			obj->friend_setRadarData( NULL );
-
-			// delete the object instance
-			radarObject->deleteInstance();
-
-			// all done, object found and deleted
-			return TRUE;
-
-		}  // end if
-
-		// save this object as previous one encountered in the list
-		prevObject = radarObject;
-
-	}  // end for, radarObject
-
-	// object was not found in this list
-	return FALSE;
-
-}  // end deleteFromList
 
 //-------------------------------------------------------------------------------------------------
 /** Remove an object from the radar, the object may reside in any list */
@@ -1641,78 +1569,10 @@ static void xferRadarObjectList( Xfer *xfer, RadarObject **head )
 	* Version Info:
 	* 1: Initial version */
 // ------------------------------------------------------------------------------------------------
-// ?xfer@Radar@@MAEXPAVXfer@@@Z present-unmatched
-void Radar::xfer( Xfer *xfer )
-{
-
-	// version
-	XferVersion currentVersion = 1;
-	XferVersion version = currentVersion;
-	xfer->xferVersion( &version, currentVersion );
-
-	// radar hidden
-	xfer->xferBool( &m_radarHidden );
-
-	// radar force on
-	xfer->xferBool( &m_radarForceOn );
-
-	// save our local object list
-	xferRadarObjectList( xfer, &m_localObjectList );
-
-	// save the regular object list
-	xferRadarObjectList( xfer, &m_objectList );
-
-	// save the radar event count and data
-	UnsignedShort eventCountVerify = MAX_RADAR_EVENTS;
-	UnsignedShort eventCount = eventCountVerify;
-	xfer->xferUnsignedShort( &eventCount );
-	if( eventCount != eventCountVerify )
-	{
-
-		DEBUG_CRASH(( "Radar::xfer - size of MAX_RADAR_EVENTS has changed, you must version this xfer method to accomodate the new array size.  Was '%d' and is now '%d'\n",
-									eventCount, eventCountVerify ));
-		throw SC_INVALID_DATA;
-
-	}  // end if
-	for( UnsignedShort i = 0; i < eventCount; ++i )
-	{
-
-		// xfer event data
-		xfer->xferUser( &m_event[ i ].type, sizeof( RadarEventType ) );
-		xfer->xferBool( &m_event[ i ].active );
-		xfer->xferUnsignedInt( &m_event[ i ].createFrame );
-		xfer->xferUnsignedInt( &m_event[ i ].dieFrame );
-		xfer->xferUnsignedInt( &m_event[ i ].fadeFrame );
-		xfer->xferRGBAColorInt( &m_event[ i ].color1 );
-		xfer->xferRGBAColorInt( &m_event[ i ].color2 );
-		xfer->xferCoord3D( &m_event[ i ].worldLoc );
-		xfer->xferICoord2D( &m_event[ i ].radarLoc );
-		xfer->xferBool( &m_event[ i ].soundPlayed );
-		
-	}  // end for i
-
-	// next event index
-	xfer->xferInt( &m_nextFreeRadarEvent );
-
-	// last event index
-	xfer->xferInt( &m_lastRadarEvent );
-
-}  // end xfer
 
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@Radar@@MAEXXZ present-unmatched
-void Radar::loadPostProcess( void )
-{
-
-	//
-	// refresh the radar texture now that all the objects (specifically bridges) have
-	// been loaded with their correct damage states from save game file
-	//
-	refreshTerrain( TheTerrainLogic );
-
-}  // end loadPostProcess
 
 // ------------------------------------------------------------------------------------------------
 /** Is the priority type passed in a "visible" one that can show up on the radar */
