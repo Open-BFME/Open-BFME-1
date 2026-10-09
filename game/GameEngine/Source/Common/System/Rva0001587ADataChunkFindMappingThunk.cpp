@@ -18,7 +18,15 @@ public:
 	Mapping *forward(const AsciiString &name);
 };
 
+class DataChunkTableOfContents
+{
+	friend class Rva0001587ADataChunkFindMappingThunk;
+
+private:
+	Mapping *findMapping(const AsciiString &name);
+};
+
 Mapping *Rva0001587ADataChunkFindMappingThunk::forward(const AsciiString &name)
 {
-	return ((DataChunkTableOfContentsFindMappingShim *)this)->find(name);
+	return ((DataChunkTableOfContents *)this)->findMapping(name);
 }
