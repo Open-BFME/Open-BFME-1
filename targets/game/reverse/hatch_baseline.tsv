@@ -126349,7 +126349,6 @@ present_unmatched	game/GameEngine/Source/GameClient/System/CampaignManager.cpp	1
 present_unmatched	game/GameEngine/Source/GameClient/System/CampaignManager.cpp	getFinalVictoryMovie@Campaign@@QAE?AVAsciiString@@XZ	1
 present_unmatched	game/GameEngine/Source/GameClient/System/CampaignManager.cpp	getMission@Campaign@@QAEPAVMission@@VAsciiString@@@Z	1
 present_unmatched	game/GameEngine/Source/GameClient/System/CampaignManager.cpp	getNextMission@Campaign@@QAEPAVMission@@PAV2@@Z	1
-present_unmatched	game/GameEngine/Source/GameClient/System/CampaignManager.cpp	init@CampaignManager@@QAEXXZ	1
 present_unmatched	game/GameEngine/Source/GameClient/System/CampaignManager.cpp	loadPostProcess@CampaignManager@@UAEXXZ	1
 present_unmatched	game/GameEngine/Source/GameClient/System/CampaignManager.cpp	newCampaign@CampaignManager@@QAEPAVCampaign@@VAsciiString@@@Z	1
 present_unmatched	game/GameEngine/Source/GameClient/System/CampaignManager.cpp	newMission@Campaign@@QAEPAVMission@@VAsciiString@@@Z	1

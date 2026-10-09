@@ -247,14 +247,8 @@ CampaignManager::CampaignManager( void )
 }
 
 //-----------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/promoted__init_CampaignManager_QAEXXZ_005BB8C0.cpp
-// ?init@CampaignManager@@QAEXXZ present-unmatched
-void CampaignManager::init( void )
-{
-	INI ini;
-	// Read from INI all the CampaignManager
-	ini.load( AsciiString( "Data\\INI\\Campaign.ini" ), INI_LOAD_OVERWRITE, NULL );
-}
+// CampaignManager::init: retail body in CampaignManager_init.cpp.
+
 
 //-----------------------------------------------------------------------------
 Campaign *CampaignManager::getCurrentCampaign( void )
