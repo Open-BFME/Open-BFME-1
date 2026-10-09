@@ -176,22 +176,7 @@ public:
 
 
 //----------------------------------------------------------------------------------------------------------
-// ??0AICommandParms@@QAE@W4AICommandType@@W4CommandSourceType@@@Z present-unmatched
-AICommandParms::AICommandParms(AICommandType commandType, CommandSourceType commandSource) :
-	m_cmd(commandType),
-	m_cmdSource(commandSource),
-	m_obj(NULL),
-	m_otherObj(NULL),
-	m_team(NULL),
-	m_waypoint(NULL),
-	m_polygon(NULL),
-	m_intValue(0),
-	m_commandButton(NULL),
-	m_path(NULL)
-{ 
-		m_pos.zero();
-		m_coords.clear();
-}
+// The retail constructor is owned by AICommandInterfaceAttackCommands.cpp.
 
 //----------------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AICommandParmsStorage_store.cpp

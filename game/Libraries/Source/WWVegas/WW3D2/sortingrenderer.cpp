@@ -56,7 +56,6 @@
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-extern unsigned char *BfmeCurrentCaps;
 extern unsigned int g_bfmeHalfBX;
 
 // Retail Flush uses the BFME dynamic vertex-buffer access ABI.
@@ -448,7 +447,7 @@ void Release_Refs(SortingNodeStruct* state)
 	}
 	BFME_RELEASE_REFS(state->sorting_state.index_buffer);
 	BFME_RELEASE_REFS(state->sorting_state.material);
-	for (i=0;i<*(const int *)(BfmeCurrentCaps+0x278);++i)
+	for (i=0;i<*(const int *)(reinterpret_cast<const unsigned char *>(DX8Wrapper::Get_Current_Caps())+0x278);++i)
 	{
 		state->sorting_state.Textures[i].Clear();
 	}
@@ -494,7 +493,7 @@ void Rva009391B0::apply(RenderStateStruct &render_state)
 
 	DX8Wrapper::Set_Material(render_state.material);
 
-	for (int i = 0; i < *(int *)(BfmeCurrentCaps + 0x278); ++i)
+	for (int i = 0; i < *(const int *)(reinterpret_cast<const unsigned char *>(DX8Wrapper::Get_Current_Caps()) + 0x278); ++i)
 		BoxSetTexture(i, render_state.Textures[i]);
 
 	if (render_state.material->Get_Lighting()) {
@@ -526,7 +525,7 @@ static __forceinline bool RenderStatesDifferRva00939370(RenderStateStruct& a, Re
 {
 	if (a.shader != b.shader) return true;
 	if (a.material != b.material) return true;
-	for (int i=0;i<*(const int *)(BfmeCurrentCaps+0x278);++i) {
+	for (int i=0;i<*(const int *)(reinterpret_cast<const unsigned char *>(DX8Wrapper::Get_Current_Caps())+0x278);++i) {
 		if (a.Textures[i] != b.Textures[i]) return true;
 	}
 	if (a.material->Get_Lighting()) {

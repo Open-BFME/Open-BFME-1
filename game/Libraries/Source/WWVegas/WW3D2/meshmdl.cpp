@@ -53,7 +53,6 @@ class CameraClass;
 #include "dx8renderer.h"
 #include "hashtemplate.h"
 
-extern unsigned char *BfmeCurrentCaps;
 
 
 /*
@@ -596,7 +595,7 @@ void GapFillerClass::Shrink_Buffers()
 // fields. The three temporary hash tables are cleared before and after use.
 void MeshModelClass::Init_For_NPatch_Rendering()
 {
-	if (!BfmeCurrentCaps[0x13b]) return;
+	if (!reinterpret_cast<const unsigned char *>(DX8Wrapper::Get_Current_Caps())[0x13b]) return;
 	if (!Get_Flag(MeshGeometryClass::ALLOW_NPATCHES)) return;
 
 	struct BfmeMeshGeometryFields {

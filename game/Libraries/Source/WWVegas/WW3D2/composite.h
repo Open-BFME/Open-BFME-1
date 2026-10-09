@@ -86,7 +86,15 @@ public:
 	virtual void					Delete_Decal(uint32 decal_id);
 
 	virtual void					Get_Obj_Space_Bounding_Sphere(SphereClass	& sphere) const { sphere = ObjSphere; }
-   virtual void					Get_Obj_Space_Bounding_Box(AABoxClass & box) const { box = ObjBox; }
+   virtual void					Get_Obj_Space_Bounding_Box(AABoxClass & box) const
+   {
+      box.Center.X = ObjBox.Center.X;
+      box.Center.Y = ObjBox.Center.Y;
+      box.Center.Z = ObjBox.Center.Z;
+      box.Extent.X = ObjBox.Extent.X;
+      box.Extent.Y = ObjBox.Extent.Y;
+      box.Extent.Z = ObjBox.Extent.Z;
+   }
 	virtual void					Update_Obj_Space_Bounding_Volumes(void);
 
 	virtual void					Set_User_Data(void *value, bool recursive = false);
