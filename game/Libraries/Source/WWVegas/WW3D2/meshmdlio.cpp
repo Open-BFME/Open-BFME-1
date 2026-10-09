@@ -1613,52 +1613,6 @@ WW3DErrorType MeshModelClass::read_prelit_material (ChunkLoadClass &cload, MeshL
  *   05/02/00   IML : Created.                                                                 *
  *   7/13/2001  hy : Added static sort postprocessing                                          *
  *=============================================================================================*/
-// ?post_process@MeshModelClass@@IAEXXZ present-unmatched
-void MeshModelClass::post_process()
-{
-#if 0
-	// we want to allow this now due to usage of the static sort 
-	// Ensure no sorting, multipass meshes (for they are abomination...)
-	if (DefMatDesc->Get_Pass_Count() > 1 && Get_Flag(SORT)) {
-		WWDEBUG_SAY(( "Turning SORT off for multipass mesh %s\n",Get_Name() ));
-		Set_Flag(SORT, false);
-	}
-#endif
-
-	// skinned meshes should not have cull trees
-	if (Get_Flag(MeshGeometryClass::SKIN)) {
-		if (CullTree) {
-			REF_PTR_RELEASE(CullTree);
-		}
-	}
-
-	// turn off backface culling if the mesh is supposed to be two-sided
-	if (Get_Flag(MeshGeometryClass::TWO_SIDED)) {
-
-		DefMatDesc->Disable_Backface_Culling();
-		if (AlternateMatDesc != NULL) {
-			AlternateMatDesc->Disable_Backface_Culling();
-		}
-
-	}
-
-	// fog activation.
-	if (WW3DAssetManager::Get_Instance()->Get_Activate_Fog_On_Load()) { 
-		post_process_fog();
-	}
-
-	// if the mesh is sorting, pick an appropriate static sort level
-	// if default isn't set
-	if (Get_Flag(SORT) && SortLevel==SORT_LEVEL_NONE && WW3D::Is_Munge_Sort_On_Load_Enabled()) {
-		compute_static_sort_levels();
-	}
-
-	// If we need to, modify the mesh model to support overbrightening (change all
-	// GRADIENT_MODULATE to GRADIENT_MODULATE2X)
-	if (WW3D::Is_Overbright_Modify_On_Load_Enabled()) {
-		modify_for_overbright();
-	}
-}
 
 class BFMEWaterTrackTextureHandle;
 
@@ -1858,43 +1812,6 @@ void MeshModelClass::modify_for_overbright(void)
 
 }
 
-// ?install_materials@MeshModelClass@@IAEXPAVMeshLoadContextClass@@@Z present-unmatched
-void MeshModelClass::install_materials(MeshLoadContextClass * context)
-{
-	int i;
-
-	/*
-	** If alternate material chunks were loaded, initialize the AlternateMatDesc
-	*/
-	install_alternate_material_desc(context);
-	
-	/*
-	** Finish configuring the vertex materials and color arrays.
-	*/
-	bool lighting_enabled=true;
-	// vertex-lit models need the lighting turned off!
-	if (Get_Flag(MeshGeometryClass::PRELIT_VERTEX)) {
-		lighting_enabled=false;
-	}
-	DefMatDesc->Post_Load_Process (lighting_enabled,this);
-	if (AlternateMatDesc != NULL) {
-		AlternateMatDesc->Post_Load_Process (lighting_enabled,this);
-	}
-
-	/*
-	** transfer the refs to our textures into the MatInfo
-	*/
-	for (i=0; i<context->Texture_Count(); i++) {
-		MatInfo->Add_Texture(context->Peek_Texture(i));
-	}
-
-	/*
-	** transfer the refs to our vertex materials into the MatInfo
-	*/
-	for (i=0; i<context->Vertex_Material_Count(); i++) {
-		MatInfo->Add_Vertex_Material(context->Peek_Vertex_Material(i));
-	}
-}
 
 
 void MeshModelClass::clone_materials(const MeshModelClass & srcmesh)
