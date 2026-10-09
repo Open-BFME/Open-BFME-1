@@ -140,7 +140,7 @@ private:
 	Bool m_armorCopiedFromDefault;					// +0x489
 	Bool m_weaponsCopiedFromDefault;				// +0x48A
 	unsigned char m_pad48b[0x497 - 0x48b];
-	Bool m_bfme497;									// +0x497
+	Bool m_structureRubbleHeight;									// +0x497
 };
 
 void ThingTemplate::initForLTA( const AsciiString &name )
@@ -179,7 +179,7 @@ void ThingTemplate::initForLTA( const AsciiString &name )
 	m_kindof = *(const KindOfMaskType *)&KINDOFMASK_NONE;
 	m_assetScale = 1.0f;
 	m_instanceScaleFuzziness = 0.0f;
-	m_bfme497 = false;
+	m_structureRubbleHeight = false;
 	m_displayName.translate( name );
 	m_shadowType = SHADOW_VOLUME;
 
