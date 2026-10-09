@@ -90930,3 +90930,7 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ?d_00886020@@YAXXZ,0x00886020,legacy address-only alias of ?FindFile@Rva00884Ftp@@QAEJPBDPAH@Z; game/gen_asm/d_008592e0.asm still calls this symbol after the dump conversion
 ?d_009a75f0@@YAXXZ,0x009A75F0,legacy address-only alias of ?Rva009A75F0@@YAXPBEPAGIIIIPBH@Z; game/GameEngine/Source/Common/Rva009A7B00Vp6Filter.cpp still names this symbol after the dump conversion
 ?d_009f2ae0@@YAXXZ,0x009F2AE0,legacy address-only alias of ?link@PartitionFilter@@QAEPAV1@PAV1@@Z; AIPlayerFindSupplyCenter.cpp and 18 game/gen_asm files still names this symbol after the dump conversion
+?rva00880AF0@BfmeBoxF0@@QBE_NPBV1@@Z,0x00880AF0,Complete 296-byte BFME1 leaf reads two 32-byte boxes; thiscall RET4 AL result; evidence=targets/game/reverse/identity_evidence/0x00880c30-donor-port.md
+?d_00895950@@YAXXZ,0x00895950,legacy address-only alias of ?rva00895950@Rva00893030Manager@@QAE?AVRefHandle008958D0@@PAVBfmeStrVKI@@@Z; game/gen_asm/d_0088a430.asm still names this symbol after the dump conversion
+?d_009f4ed0@@YAXXZ,0x009F4ED0,legacy address-only alias of ?Rva009F4ED0@Rva009F40E0Owner@@QAEXXZ; game/GameEngine/Source/Common/Bfme/T_009F4FB0.cpp still names this symbol after the dump conversion
+?d_009a3630@@YAXXZ,0x009A3630,legacy address-only alias of ?unlinkChain@Rva009A36F0Owner@@QAEXPAVRva009A36F0Thing@@@Z; game/gen_asm/d_0099d0c0.asm (?d_009a3ad0@@YAXXZ calls it) still names this symbol after the dump conversion

@@ -1,4 +1,4 @@
-// cl: /O2 /Ob0
+// cl: /O2 /Ob1
 // Retail 0x009A36F0 (?d_009a36f0@@YAXXZ, dump d_0099d0c0.asm).
 // Full control-flow decode (verified against tools/dis_retail.py):
 //   this = ebx (a large object; the only fields it touches are a list-head
@@ -27,6 +27,8 @@ public:
 	unsigned char m_pad8[8];
 	void *m_10;
 	Rva009A36F0Thing *m_14;
+	unsigned char m_pad18[8];
+	void *m_queueHead;
 };
 
 class Rva009A36F0Param
@@ -59,7 +61,11 @@ public:
 private:
 	unsigned char m_pad0[8];
 	Rva009A36F0Thing *m_listHead;
-	unsigned char m_padToFlag[0xc06d - 0xc];
+	unsigned char m_padToFlag[0xae04 - 0xc];
+	void *m_freeHead;
+	unsigned char m_unreconstructed_ae08[4];
+	void *m_cursor;
+	unsigned char m_padToFlagAE10[0xc06d - 0xae10];
 	unsigned char m_flag;
 };
 
@@ -100,4 +106,66 @@ void Rva009A36F0Owner::apply(Rva009A36F0Param *param)
 // scalar-deleting destructor ??_GT@@QAEPAXI@Z, which retail does not call here.
 	((Rva009A45A0CollisionData *)thing)->Rva009A45A0CollisionData::~Rva009A45A0CollisionData();
 	operator delete(thing);
+}
+
+struct Rva009A3300Node
+{
+    char m_pad0[8];
+    unsigned int m_key0;
+    unsigned int m_key1;
+    char m_pad10[0x1c];
+};
+class Rva009A3300HashTable
+{
+public:
+    void remove(Rva009A3300Node *entry);
+    // ?removeKey@Rva009A3300HashTable@@QAEXII@Z absent-from-retail
+    __forceinline void removeKey(unsigned a, unsigned b)
+    {
+        Rva009A3300Node key;
+        key.m_key0 = a;
+        key.m_key1 = b;
+        remove(&key);
+    }
+};
+struct PairNode3630
+{
+    struct Link { Link **backlink; Link *next; };
+    char pad00[8];
+    unsigned key0, key1, counter;
+    Link first;
+    unsigned pad1c;
+    Link second;
+    unsigned pad28;
+    PairNode3630 **backlink;
+    PairNode3630 *next;
+};
+
+// ?unlinkChain@Rva009A36F0Owner@@QAEXPAVRva009A36F0Thing@@@Z
+// Open BFME 2: Code/GameEngine/Source/Common/Rva009A36F0Owner.cpp.
+void Rva009A36F0Owner::unlinkChain(Rva009A36F0Thing *thing)
+{
+    while (thing->m_queueHead)
+    {
+        PairNode3630 *node = *(PairNode3630 **)((char *)thing->m_queueHead + 8);
+        if (node->first.next)
+            node->first.next->backlink = node->first.backlink;
+        *node->first.backlink = node->first.next;
+        PairNode3630::Link *next = node->second.next;
+        node->first.backlink = 0;
+        if (next)
+            next->backlink = node->second.backlink;
+        *node->second.backlink = node->second.next;
+        node->second.backlink = 0;
+        ((Rva009A3300HashTable *)((char *)this + 0xae10))->removeKey(node->key0, node->key1);
+        PairNode3630 *cursor = (PairNode3630 *)m_cursor;
+        if (cursor == node)
+            m_cursor = cursor->next;
+        if (node->next)
+            node->next->backlink = node->backlink;
+        *node->backlink = node->next;
+        node->backlink = 0;
+        node->next = (PairNode3630 *)m_freeHead;
+        m_freeHead = node;
+    }
 }

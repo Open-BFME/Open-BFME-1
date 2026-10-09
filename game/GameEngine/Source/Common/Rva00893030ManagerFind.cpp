@@ -55,6 +55,7 @@
 // spellings listed in docs/shape_levers.md, "Read the member again instead of
 // caching it in a local" -- collapses those three instructions to
 // `mov eax,[eax+4]` and shifts the rest of the body.
+extern void (__cdecl *TheBfmeFree)(void *, unsigned int);
 extern "C" int memcmp(const void *a, const void *b, unsigned int n);
 
 #pragma intrinsic(memcmp)
@@ -69,12 +70,6 @@ public:
 	char m_data[1];
 };
 
-class BfmeStrVKI
-{
-public:
-	BfmeStringData3AF0 *m_data;
-};
-
 class BfmeString3AF0
 {
 public:
@@ -84,8 +79,31 @@ public:
 class BfmeDropObjectA
 {
 public:
+	~BfmeDropObjectA();
+	void operator delete(void *storage, unsigned int bytes)
+	{
+		TheBfmeFree(storage, bytes);
+	}
 	int m_refCount;						// +0x00
 	BfmeString3AF0 m_string;				// +0x04
+	int m_kind;
+	int m_rva00895950_tail[3];
+};
+
+
+class BfmeStrVKI
+{
+public:
+	BfmeStringData3AF0 *m_data;
+};
+
+class RefHandle008958D0
+{
+public:
+    RefHandle008958D0(BfmeDropObjectA *p = 0) : m_object(p) { if(p) ++p->m_refCount; }
+    RefHandle008958D0(const RefHandle008958D0& o) { m_object = o.m_object; if(m_object) ++m_object->m_refCount; }
+    ~RefHandle008958D0() { BfmeDropObjectA *p = m_object; if (p && --p->m_refCount == 0) { p->~BfmeDropObjectA(); TheBfmeFree(p, 24); } }
+    BfmeDropObjectA *m_object;
 };
 
 class Rva00893030Node
@@ -95,35 +113,11 @@ public:
 	Rva00893030Node *m_next;				// +0x04
 };
 
-class RefHandle008958D0
-{
-public:
-	RefHandle008958D0(void)
-	{
-		m_object = 0;
-	}
-
-	RefHandle008958D0(BfmeDropObjectA *o)
-	{
-		m_object = o;
-
-		if (o != 0)
-			++o->m_refCount;
-	}
-
-	~RefHandle008958D0(void)
-	{
-		if (m_object != 0)
-			--m_object->m_refCount;
-	}
-
-	BfmeDropObjectA *m_object;				// +0x00
-};
-
 class Rva00893030Manager
 {
 public:
-	RefHandle008958D0 find008958D0(BfmeStrVKI *key);
+	__declspec(noinline) RefHandle008958D0 find008958D0(BfmeStrVKI *key);
+	RefHandle008958D0 rva00895950(BfmeStrVKI *);
 
 private:
 	Rva00893030Node *m_head;				// +0x00
@@ -156,4 +150,14 @@ RefHandle008958D0 Rva00893030Manager::find008958D0(BfmeStrVKI *key)
 	}
 
 	return RefHandle008958D0();
+}
+
+// ?rva00895950@Rva00893030Manager@@QAE?AVRefHandle008958D0@@PAVBfmeStrVKI@@@Z
+// Open BFME 2: Code/GameEngine/Source/Common/Bfme5ThirtyFour.cpp.
+RefHandle008958D0 Rva00893030Manager::rva00895950(BfmeStrVKI *key)
+{
+    RefHandle008958D0 found = find008958D0(key);
+    if (found.m_object && (found.m_object->m_kind == 4 || found.m_object->m_kind == 5))
+        return found;
+    return RefHandle008958D0();
 }
