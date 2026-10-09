@@ -14,8 +14,8 @@
 // last, the same way the reserve family at 0x007B9E80 needed it -- written as
 // an early return on the negative case the false exit moves inline.
 //
-// Each lookup is its own thunk and is pinned here; nothing relates the four
-// classes beyond the shape.
+// Retail ILTs 000190F1, 00026A3F and 0004B218 reach the authored
+// BitFlags<304>, BitFlags<86> and BitFlags<116> name lookups respectively.
 
 typedef unsigned int UnsignedInt;
 
@@ -33,8 +33,6 @@ public:
 	UnsignedInt m_bfmeBits[1];					// +0x00
 };
 
-int bfmeLookup_001c62b0(void *name);				// ILT 0x000190F1
-
 class Gen_001c62b0
 {
 public:
@@ -43,8 +41,6 @@ public:
 	UnsignedInt m_bfmeBits[1];					// +0x00
 };
 
-int bfmeLookup_001c6340(void *name);				// ILT 0x00026A3F
-
 class Gen_001c6340
 {
 public:
@@ -52,8 +48,6 @@ public:
 
 	UnsignedInt m_bfmeBits[1];					// +0x00
 };
-
-int bfmeLookup_001c63d0(void *name);				// ILT 0x0004B218
 
 class Gen_001c63d0
 {
@@ -83,7 +77,7 @@ bool Gen_000d1020::bfmeSet(void *name)
 // ?bfmeSet@Gen_001c62b0@@QAE_NPAX@Z
 bool Gen_001c62b0::bfmeSet(void *name)
 {
-	int index = bfmeLookup_001c62b0(name);
+	int index = BitFlags<304>::getSingleBitFromName((const char *)name);
 
 	if (index >= 0)
 	{
@@ -100,7 +94,7 @@ bool Gen_001c62b0::bfmeSet(void *name)
 // ?bfmeSet@Gen_001c6340@@QAE_NPAX@Z
 bool Gen_001c6340::bfmeSet(void *name)
 {
-	int index = bfmeLookup_001c6340(name);
+	int index = BitFlags<86>::getSingleBitFromName((const char *)name);
 
 	if (index >= 0)
 	{
@@ -117,7 +111,7 @@ bool Gen_001c6340::bfmeSet(void *name)
 // ?bfmeSet@Gen_001c63d0@@QAE_NPAX@Z
 bool Gen_001c63d0::bfmeSet(void *name)
 {
-	int index = bfmeLookup_001c63d0(name);
+	int index = BitFlags<116>::getSingleBitFromName((const char *)name);
 
 	if (index >= 0)
 	{
