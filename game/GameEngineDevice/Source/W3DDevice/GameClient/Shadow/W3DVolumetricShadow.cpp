@@ -334,26 +334,11 @@ public:
 	W3DShadowGeometryMesh::~W3DShadowGeometryMesh( void );
 
 	/// @todo: Cache/Store face normals someplace so they are not recomputed when lights move.
-	const Vector3& GetPolygonNormal(long dwPolyNormId) const
-	{
-		WWASSERT(m_polygonNormals);
-		return m_polygonNormals[dwPolyNormId];
-	}
+	const Vector3& GetPolygonNormal(long dwPolyNormId) const;
 	int GetNumPolygon (void) const {return m_numPolygons;}
 	/// given loaded geometry this builds the polygon neighbor information
 	void buildPolygonNeighbors( void );
-	void buildPolygonNormals(void)
-	{
-		if (!m_polygonNormals)
-		{	//need to allocate storage
-			Vector3 *tempVec = NEW Vector3[m_numPolygons];
-			for (int i=0; i<m_numPolygons; i++)
-			{
-				buildPolygonNormal(i,&tempVec[i]);
-			}
-			m_polygonNormals = tempVec;
-		}
-	}
+	void buildPolygonNormals(void); // retail owner: W3DShadowGeometryMesh_buildPolygonNormalsMethodThunk.cpp
 protected:
 	Vector3 *buildPolygonNormal (long dwPolyNormId, Vector3 *pvNorm) const
 	{
@@ -423,6 +408,14 @@ protected:
 	W3DShadowGeometry *m_parentGeometry; // mesh hierarchy containing this mesh.
 
 };	//end of meshInfo
+
+// Keep the existing matched accessor after removing its old neighbor caller.
+const Vector3& W3DShadowGeometryMesh::GetPolygonNormal(long dwPolyNormId) const
+{
+    WWASSERT(m_polygonNormals);
+    return m_polygonNormals[dwPolyNormId];
+}
+
 
 #ifdef DO_TERRAIN_SHADOW_VOLUMES
 
@@ -1022,194 +1015,7 @@ if (!m_polyNeighbors) {
 
 }  // end GetPolyNeighbor
 
-// buildPolygonNeighbors ======================================================
-// Whenever we set a new geometry we want to build some information about
-// the faces in the new geometry so that we can efficienty traverse across
-// the surface to neighboring polygons
-// ============================================================================
-// ?buildPolygonNeighbors@W3DShadowGeometryMesh@@QAEXXZ present-unmatched
-void W3DShadowGeometryMesh::buildPolygonNeighbors( void )
-{
-	Int numPolys;
-	Int i, j;
-	// Jani: Make sure we have polygon normals BEFORE we need them...
-	buildPolygonNormals();
-
-	// how many polygons are in our geometry
-	numPolys = GetNumPolygon();
-
-	//
-	// if there are no polygons for this geometry then we should have no
-	// neighbor information
-	//
-	if( numPolys == 0 )
-	{
-
-		//
-		// if our geometry has somehow deformed and we used to have polygon
-		// neighbor information we should delete it before we bail
-		//
-		if( m_numPolyNeighbors != 0 )
-			deleteNeighbors();
-
-		return;  // nothing to see here people, move along
-
-	}  // end if
-
-	//
-	// in the event that this geometry can deform on the fly or we are
-	// building our neighbor information for the very first time ...
-	// if our current geometry has a different number of polygons than
-	// we had previously calculated we need to delete and reallocate a
-	// new storate space for the neighbor information
-	//
-	if( numPolys != m_numPolyNeighbors )
-	{
-
-		// delete the old neighbor storage
-		deleteNeighbors();
-
-		// allocate a new pool for neighbor information
-		if( allocateNeighbors( numPolys ) == FALSE )
-			return;
-
-	}  // end if
-
-	//
-	// initialize all polygon neighbor information to none and assign our
-	// own reference to myIndex so we know who we are
-	//
-	for( i = 0; i < m_numPolyNeighbors; i++ )
-	{
-
-		// assign our own identification
-		m_polyNeighbors[ i ].myIndex = i;
-
-		// assign our neighbors to none
-		for( j = 0; j < MAX_POLYGON_NEIGHBORS; j++ )
-			m_polyNeighbors[ i ].neighbor[ j ].neighborIndex = NO_NEIGHBOR;
-
-	}  // end for i
-
-	// assign polygon data for each of our polygons
-	for( i = 0; i < m_numPolyNeighbors; i++ )
-	{
-		Short poly[ 3 ];  // vertex indices for this polygon
-		Short otherPoly[ 3 ];  // vertex indices for other polygon
-
-		// get the indices of the three triangle points for this polygon
-		GetPolygonIndex( i, poly );
-		const Vector3& vNorm=GetPolygonNormal(i);
-
-		// find the neighbors of this polygon
-		for( j = 0; j < m_numPolyNeighbors; j++ )
-		{
-			Int a, b;
-			Int index1, index2;
-			Int index1Pos[2]; //positions of shared edge vertices in triangle list. (0,1 or 2)
-			Int diff1,diff2;
-
-			// ignore our own polygon
-			if( i == j )
-				continue;
-
-			// get the vertex index information for this other polygon
-			GetPolygonIndex( j, otherPoly );
-
-			//
-			// if 2 of the 3 vertex indices are the same then these polygons
-			// are neighbors
-			//
-			//Also check if winding order of vertices on edge is opposite.
-			//If vertices are in same order as our polygon, then it's
-			//not a valid edge because the neighbor is flipped.
-
-			index1 = -1;
-			index2 = -1;
-			for( a = 0; a < 3; a++ )
-				for( b = 0; b < 3; b++ )
-					if( poly[ a ] == otherPoly[ b ] )
-					{
-
-						if( index1 == -1 )
-						{	index1 = poly[ a ];  // record matching index1
-							index1Pos[0]=a;
-							index1Pos[1]=b;
-						}
-						else if( index2 == -1 )
-						{	//Check direction of edge in each polygon.  If they are same direction skip it.
-							diff1 = a-index1Pos[0];
-							diff2 = b-index1Pos[1];
-							if ( ((diff1&0x80000000)^((abs(diff1)&2)<<30)) != ((diff2&0x80000000)^((abs(diff2)&2)<<30)))
-							{
-
-								const Vector3& vOtherNorm=GetPolygonNormal(j);
-								
-								//Check if the 2 polygons face in exactly opposite directions - don't allow this type of neighbor.
-								if (fabs(Vector3::Dot_Product(vOtherNorm,vNorm) + 1.0f) <= 0.01f)
-									continue;
-
-								index2 = poly[ a ];  // record matching index2
-							}
-							else
-								continue;
-						}
-						else
-						{//This is the same poly facing opposite direction.	//assert( 0 );  // should never match 3 vertices!
-							index1=index2=-1;
-							continue; 
-						}
-					}  // end if
-			if( index1 != -1 && index2 != -1  )
-			{
-				//
-				// the polygon j is a neighbor of our polygon i, put the j
-				// index into the first free neighbor slot for polygon i
-				//
-				for( a = 0; a < MAX_POLYGON_NEIGHBORS; a++ )
-					if( m_polyNeighbors[ i ].neighbor[ a ].neighborIndex == NO_NEIGHBOR )
-					{
-
-						// record the neighbor index
-						m_polyNeighbors[ i ].neighbor[ a ].neighborIndex = j;
-
-						// record the sharded edge vertex indices
-						m_polyNeighbors[ i ].neighbor[ a ].neighborEdgeIndex[ 0 ] = index1;
-						m_polyNeighbors[ i ].neighbor[ a ].neighborEdgeIndex[ 1 ] = index2;
-
-						break;  // exit for a
-
-					}  // end if
-
-				//
-				// error condition, if our counter a is at the max number
-				// of neighbors, which is 3 for a triangle mesh, we did something
-				// wrong here because that would mean we found a 4th match!
-				//
-				if (a == MAX_POLYGON_NEIGHBORS)
-				{
-//					Vector3 pv[3];
-//					char errorText[255];
-
-//					GetVertex (poly[0], &pv[0]);
-//					GetVertex (poly[1], &pv[1]);
-//					GetVertex (poly[2], &pv[2]);
-
-//					pv[0] = pv[0] + pv[1] + pv[2];
-//					pv[0] /= 3.0f;	//find center of polygon
-
-//					sprintf(errorText,"%s: Shadow Polygon with too many neighbors at %f,%f,%f",m_parentGeometry->Get_Name(),pv[0].X,pv[0].Y,pv[0].Z);
-//					DEBUG_LOG(("****%s Shadow Polygon with too many neighbors at %f,%f,%f\n",m_parentGeometry->Get_Name(),pv[0].X,pv[0].Y,pv[0].Z));
-//					DEBUG_ASSERTCRASH(a != MAX_POLYGON_NEIGHBORS,(errorText));
-				}
-
-			}  // end if
-
-		}  // end for j
-
-	}  // end for i
-
-}  // end buildPolygonNeighbors
+// buildPolygonNeighbors is owned by Rva007BD430BuildPolygonNeighbors.cpp.
 
 // allocateNeighbors ==========================================================
 // Allocate storage for the polygon neighbors and record its size
