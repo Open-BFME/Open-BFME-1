@@ -11,11 +11,16 @@ typedef unsigned int UnsignedInt;
 
 enum { BFME_NO_ATTRIBUTE_HANDLE = 0xFFFFFFFF };
 
-class Gen00043699
+class S4Elem0039EBE0
+{
+public:
+	~S4Elem0039EBE0();
+};
+
+class Gen00043699 : public S4Elem0039EBE0
 {
 public:
 	Gen00043699();
-	~Gen00043699();
 
 	unsigned char m_head[0x88];
 };
