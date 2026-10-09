@@ -17,6 +17,7 @@ class GameWindowTransitionsHandler
 {
 public:
 	bool isFinished();
+	void setGroup(AsciiString name, bool immediate);
 };
 extern GameWindowTransitionsHandler *TheTransitionHandler;
 
@@ -45,6 +46,12 @@ public:
 class Mouse;
 extern Mouse *TheMouse;
 
+class Mouse
+{
+public:
+	void _bfme_setEngineVisibility(bool visible);
+};
+
 // ?rva00565170@@YAHH_N@Z
 int rva00565170(int, bool start)
 {
@@ -52,9 +59,9 @@ int rva00565170(int, bool start)
 
 	if (start)
 	{
-		((BfmeRankTransitionHandler *)TheTransitionHandler)->setGroup(AsciiString("FadeScreenToBlack"), 0);
+		TheTransitionHandler->setGroup(AsciiString("FadeScreenToBlack"), 0);
 		((Rva004893C0ByteSetter *)TheTransitionHandler)->set();
-		((BfmeZ1100 *)TheMouse)->bfmeEnd1100(0);
+		TheMouse->_bfme_setEngineVisibility(false);
 	}
 	else if (TheTransitionHandler->isFinished())
 	{
