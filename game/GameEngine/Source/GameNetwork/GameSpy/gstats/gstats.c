@@ -560,26 +560,7 @@ statsgame_t NewGame(int usebuckets)
 
 
 /****************************************************************************/
-void FreeGame(statsgame_t game)
-{
-	if (!game)
-	{
-		game = g_statsgame;
-		g_statsgame = NULL;
-	}
-	if (!game)
-		return;
-	if (game->usebuckets)
-	{
-		if (game->buckets != NULL)
-			FreeBucketSet(game->buckets);
-		if (game->playernums != NULL)
-			ArrayFree(game->playernums);
-		if (game->teamnums != NULL)
-			ArrayFree(game->teamnums);
-	}
-	gsifree(game);
-}
+/* FreeGame is the retail-proven BFME variant in FreeGameBfme.cpp. */
 
 /****************************************************************************/
 int SendGameSnapShotA(statsgame_t game, const char *snapshot, int final)
