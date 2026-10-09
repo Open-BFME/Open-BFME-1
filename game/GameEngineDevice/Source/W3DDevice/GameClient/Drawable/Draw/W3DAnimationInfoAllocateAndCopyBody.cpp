@@ -6,9 +6,8 @@
 //
 // The element is 16 bytes, which is what the byte count the allocator sees
 // is scaled by and what the copy loop strides. The per-element call goes
-// through the ILT at 0x0000927D; the helper is named apart from _STL::_Construct
-// so this call site pins to that ILT without disturbing the _Construct name
-// the ledger already pins elsewhere.
+// through ILT 0x0000927D to the matched _Construct at 0x003A93F0.
+// Its ledger payload spelling is opaque; the pointer/reference ABI is preserved.
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DModelDraw.h
 class W3DAnimationInfo
@@ -20,6 +19,8 @@ private:
 // Declared before the friend declarations below so they name this function
 // and not a fresh _STL-scope declaration.
 void j_0003D3C5(void);
+
+struct Gen_t_003a93f0_p16s;
 
 namespace _STL
 {
@@ -38,7 +39,8 @@ class __node_alloc
 static inline void *vectorLargeAllocate(unsigned int bytes) { return ::operator new(bytes); }
 static inline void *vectorSmallAllocate(unsigned int bytes) { return __node_alloc<true, 0>::_M_allocate(bytes); }
 
-void __cdecl BfmeElementConstruct(void *destination, const W3DAnimationInfo &value);
+template <class First, class Second>
+void __cdecl _Construct(First *destination, const Second &value);
 
 template <class Type>
 class allocator {};
@@ -80,7 +82,8 @@ Type *vector<Type, Allocator>::_M_allocate_and_copy(
 		int offset = (char *)result - (char *)first;
 		do
 		{
-			BfmeElementConstruct((Type *)((char *)first + offset), *first);
+			_Construct(reinterpret_cast<Gen_t_003a93f0_p16s *>((char *)first + offset),
+				*reinterpret_cast<const Gen_t_003a93f0_p16s *>(first));
 			++first;
 		}
 		while (first != last);
