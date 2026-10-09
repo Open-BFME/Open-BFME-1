@@ -27,14 +27,26 @@ public:
 	BfmeSink1018 *m_bfmeSink;
 };
 
+class Gen001C9A10
+{
+public:
+	void handle(int n);
+};
+
+class Object
+{
+public:
+	void setWeaponLock(int a, int b);
+};
+
 void BfmeI1018::bfmeGo1018I(void)
 {
 	BfmeK1018 *k = m_bfmeK;
 
-	m_bfmeSink->bfmeReset1018(0);
+	((Gen001C9A10 *)m_bfmeSink)->handle(0);
 
 	if (k->m_bfmeFlag != 0)
-		m_bfmeSink->bfmeSet1018(k->m_bfmeA, 1);
+		((Object *)m_bfmeSink)->setWeaponLock(k->m_bfmeA, 1);
 	else
-		m_bfmeSink->bfmeSet1018(k->m_bfmeB, 1);
+		((Object *)m_bfmeSink)->setWeaponLock(k->m_bfmeB, 1);
 }
