@@ -32,6 +32,10 @@ enum ScienceType
 	SCIENCE_INVALID = -1
 };
 
+struct Gen_t_000bc360_k4;
+struct Gen_t_000bc360_p12cd;
+struct Gen_t_000bdca0_p12cd;
+
 namespace _STL
 {
 struct __false_type
@@ -58,8 +62,9 @@ class __node_alloc
 static inline void *vectorLargeAllocate(unsigned int bytes) { return ::operator new(bytes); }
 static inline void *vectorSmallAllocate(unsigned int bytes) { return __node_alloc<true, 0>::_M_allocate(bytes); }
 
-template <class Type>
-void __cdecl BfmeElementConstruct(Type *destination, const Type &value);
+template <class First, class Second> struct pair;
+template <class First, class Second>
+void __cdecl _Construct(First *destination, const Second &value);
 
 template <class Type>
 __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
@@ -68,7 +73,8 @@ __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
 	{
 		do
 		{
-			BfmeElementConstruct(result, *first);
+			_Construct(reinterpret_cast<_STL::pair<const Gen_t_000bc360_k4, Gen_t_000bc360_p12cd> *>(result),
+			reinterpret_cast<const _STL::pair<const Gen_t_000bc360_k4, Gen_t_000bc360_p12cd> &>(*first));
 			++first;
 			++result;
 		}
@@ -83,7 +89,8 @@ __forceinline Type *uninitialized_fill_n(Type *result, unsigned int count,
 {
 	for (; count > 0; --count)
 	{
-		BfmeElementConstruct(result, value);
+		_Construct(reinterpret_cast<_STL::pair<const Gen_t_000bc360_k4, Gen_t_000bc360_p12cd> *>(result),
+			reinterpret_cast<const _STL::pair<const Gen_t_000bc360_k4, Gen_t_000bc360_p12cd> &>(value));
 		++result;
 	}
 	return result;
@@ -92,6 +99,7 @@ __forceinline Type *uninitialized_fill_n(Type *result, unsigned int count,
 template <class Type, class Allocator>
 class vector
 {
+	template <class, class> friend class vector;
 protected:
 	void _M_insert_overflow(Type *position, const Type &value,
 		const __false_type &, unsigned int fillLength, bool atEnd);
@@ -129,7 +137,8 @@ void vector<Type, Allocator>::_M_insert_overflow(
 
 	if (fillLength == 1)
 	{
-		BfmeElementConstruct(newFinish, value);
+		_Construct(reinterpret_cast<_STL::pair<const Gen_t_000bc360_k4, Gen_t_000bc360_p12cd> *>(newFinish),
+			reinterpret_cast<const _STL::pair<const Gen_t_000bc360_k4, Gen_t_000bc360_p12cd> &>(value));
 		++newFinish;
 	}
 	else
@@ -140,7 +149,7 @@ void vector<Type, Allocator>::_M_insert_overflow(
 	if (!atEnd)
 		newFinish = uninitialized_copy(position, _M_finish, newFinish);
 
-	_M_clear();
+	reinterpret_cast<vector<Gen_t_000bdca0_p12cd, allocator<Gen_t_000bdca0_p12cd> > *>(this)->_M_clear();
 
 	_M_finish = newFinish;
 	_M_start = newStart;
