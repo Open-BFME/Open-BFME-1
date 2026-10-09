@@ -159,57 +159,6 @@ void RoadType::applyTexture(void)
 
 
 //=============================================================================
-// RoadType loadTexture
-//=============================================================================
-/** Sets the W3D texture. */
-//=============================================================================
-// ?loadTexture@RoadType@@QAEXVAsciiString@@H@Z present-unmatched
-void RoadType::loadTexture(AsciiString path, Int ID)
-{
-	/// @todo - delay loading textures and only load textures referenced by map.
-	WW3DAssetManager *pMgr = W3DAssetManager::Get_Instance();
-
-	m_roadTexture = pMgr->Get_Texture(path.str(), MIP_LEVELS_3);
-	//Hack to disable texture reduction
-	//m_roadTexture = pMgr->Get_Texture(path.str(), MIP_LEVELS_3, WW3D_FORMAT_UNKNOWN,true,TextureBaseClass::TEX_REGULAR, false);
-
-	m_roadTexture->Get_Filter().Set_Mip_Mapping( TextureFilterClass::FILTER_TYPE_BEST );
-
-	m_roadTexture->Get_Filter().Set_U_Addr_Mode(TextureFilterClass::TEXTURE_ADDRESS_REPEAT);
-	m_roadTexture->Get_Filter().Set_V_Addr_Mode(TextureFilterClass::TEXTURE_ADDRESS_REPEAT);
-
-	m_vertexRoad=NEW_REF(DX8VertexBufferClass,(DX8_FVF_XYZDUV1,TheGlobalData->m_maxRoadVertex+4, (s_dynamic?DX8VertexBufferClass::USAGE_DYNAMIC:DX8VertexBufferClass::USAGE_DEFAULT)));
-	m_indexRoad=NEW_REF(DX8IndexBufferClass,((unsigned)(TheGlobalData->m_maxRoadIndex+4), (s_dynamic?DX8IndexBufferClass::USAGE_DYNAMIC:DX8IndexBufferClass::USAGE_DEFAULT)));
-	m_numRoadVertices=0;
-	m_numRoadIndices=0;
-
-#ifdef LOAD_TEST_ASSETS
-	m_texturePath = path;
-#endif
-	m_uniqueID = ID;
-}
-
-#ifdef LOAD_TEST_ASSETS
-//=============================================================================
-// RoadType loadTexture
-//=============================================================================
-/** Sets the W3D texture. */
-//=============================================================================
-// ?loadTestTexture@RoadType@@QAEXXZ present-unmatched
-void RoadType::loadTestTexture(void)
-{
-	if (m_isAutoLoaded && m_uniqueID>0 && !m_texturePath.isEmpty()) {
-		/// @todo - delay loading textures and only load textures referenced by map.
-		m_roadTexture = NEW_REF(TextureClass, (m_texturePath.str(), m_texturePath.str(), MIP_LEVELS_3));
-		m_roadTexture->Get_Filter().Set_Mip_Mapping( TextureFilterClass::FILTER_TYPE_BEST );
-
-		m_roadTexture->Get_Filter().Set_U_Addr_Mode(TextureFilterClass::TEXTURE_ADDRESS_REPEAT);
-		m_roadTexture->Get_Filter().Set_V_Addr_Mode(TextureFilterClass::TEXTURE_ADDRESS_REPEAT);
-	}
-}
-#endif
-
-//=============================================================================
 // RoadSegment constructor
 //=============================================================================
 /** Nulls index & vertex data. */
@@ -343,26 +292,6 @@ Int RoadSegment::GetIndices(UnsignedShort *destination_ib, Int numToCopy, Int of
 		destination_ib[i] = m_ib[i]+offset;
 	}
 	return(numToCopy);
-}
-
-//=============================================================================
-// RoadSegment::updateSegLighting
-//=============================================================================
-/** Updates the diffuse lighting in the vertex buffer. */
-//=============================================================================
-// byte-exact reconstruction: game/GameEngine/Source/Common/RoadSegment_updateSegLightingMethodThunk.cpp
-// ?updateSegLighting@RoadSegment@@QAEXXZ present-unmatched
-void RoadSegment::updateSegLighting(void)
-{
-	Int i;
-	Int borderSizeInLine=TheTerrainRenderObject->getMap()->getBorderSizeInline();
-	for (i=0; i<m_numVertex; i++) {
-		Int x = m_vb[i].x/MAP_XY_FACTOR+0.5;
-		Int y = m_vb[i].y/MAP_XY_FACTOR+0.5;
-		x += borderSizeInLine;
-		y += borderSizeInLine;
-		m_vb[i].diffuse = (255<<24)|TheTerrainRenderObject->getStaticDiffuse(x, y);
-	}
 }
 
 //-----------------------------------------------------------------------------

@@ -130128,10 +130128,7 @@ present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DPropBuffe
 present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp	applyTexture@RoadType@@QAEXXZ	1
 present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp	drawRoads@W3DRoadBuffer@@QAEXPAVCameraClass@@PAVTextureClass@@1_NHHHHPAV?$RefMultiListIterator@VRenderObjClass@@@@@Z	1
 present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp	insertY@W3DRoadBuffer@@IAE_NVVector2@@HM@Z	1
-present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp	loadTestTexture@RoadType@@QAEXXZ	1
-present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp	loadTexture@RoadType@@QAEXVAsciiString@@H@Z	1
 present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp	setTexture@W3DShaderManager@@SAXHPAVTextureClass@@@Z	2
-present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp	updateSegLighting@RoadSegment@@QAEXXZ	1
 present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DScene.cpp	0RTS2DScene@@QAE@XZ	1
 present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DScene.cpp	0RTS3DInterfaceScene@@QAE@XZ	1
 present_unmatched	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DScene.cpp	1RTS3DInterfaceScene@@UAE@XZ	1
