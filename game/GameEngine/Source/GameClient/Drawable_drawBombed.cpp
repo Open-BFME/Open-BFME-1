@@ -57,12 +57,25 @@ extern Anim2DCollection *TheAnim2DCollection;
 class Drawable
 {
 public:
-	DrawableIconInfo *getIconInfo();
 
 private:
 	static Anim2DTemplate **s_animationTemplates;
 	void drawBombed();
 };
+
+// Retail ILT102A8 reaches the matched 0x00410F10 lazy allocation body.
+class Rva00410F10Allocation;
+class Rva00410F10Owner
+{
+public:
+	Rva00410F10Allocation *ensure();
+};
+
+static inline DrawableIconInfo *getIconInfo(Drawable *drawable)
+{
+	return reinterpret_cast<DrawableIconInfo *>(
+		reinterpret_cast<Rva00410F10Owner *>(drawable)->ensure());
+}
 
 struct ICoord2D
 {
@@ -104,21 +117,21 @@ void Drawable::drawBombed()
 	const UnsignedInt status = object->m_status;
 	if ((status & 4) != 0 || (_ReadWriteBarrier(), (status & 0x40) != 0))
 	{
-		if (getIconInfo()->m_icon[6] == 0)
+		if (getIconInfo(this)->m_icon[6] == 0)
 		{
-			getIconInfo()->m_icon[6] = new Anim2D(
+			getIconInfo(this)->m_icon[6] = new Anim2D(
 				Drawable::s_animationTemplates[6],
 				TheAnim2DCollection);
 		}
 
 		const IRegion2D *region = (const IRegion2D *)((unsigned char *)self + 0x3C4);
 		int barHeight = region->hi.y - region->lo.y;
-		int frameWidth = getIconInfo()->m_icon[6]->getCurrentFrameWidth();
-		int frameHeight = getIconInfo()->m_icon[6]->getCurrentFrameHeight();
+		int frameWidth = getIconInfo(this)->m_icon[6]->getCurrentFrameWidth();
+		int frameHeight = getIconInfo(this)->m_icon[6]->getCurrentFrameHeight();
 		ICoord2D screen;
 		screen.x = region->lo.x;
 		screen.y = region->hi.y - frameHeight - barHeight;
-		getIconInfo()->m_icon[6]->draw(screen.x, screen.y, frameWidth, frameHeight);
+		getIconInfo(this)->m_icon[6]->draw(screen.x, screen.y, frameWidth, frameHeight);
 	}
 	else
 	{
