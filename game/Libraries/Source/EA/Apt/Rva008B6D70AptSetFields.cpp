@@ -2,7 +2,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME7: six Apt script setter callbacks (68 B each) that store the
 // last argument as an integer into one member of the object and refresh it.
-class AptValue { public: int toInteger(); };
+class AptValue { public: int toInteger() const; };
 extern AptValue* g_bfmeFallbackDB;
 struct Rva008AE770Stack
 {
