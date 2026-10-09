@@ -59,7 +59,19 @@ class Overridable
 public:
 	Overridable();
 	virtual ~Overridable();
-	Overridable *friend_getFinalOverride();
+	Overridable *friend_getFinalOverride()
+	{
+		if (m_nextOverride)
+			return m_nextOverride->friend_getFinalOverride();
+		return this;
+	}
+
+	const Overridable *finalOverrideViaFriend() const
+	{
+		return m_nextOverride != 0
+			? m_nextOverride->friend_getFinalOverride()
+			: this;
+	}
 
 protected:
 	Overridable *m_nextOverride;
@@ -116,7 +128,18 @@ public:
 	ExperienceLevel(const ExperienceLevel &that);
 	~ExperienceLevel();
 
-	bool operator<(const ExperienceLevel &that) const;
+	// Same retail comparator contract as ExperienceLevelListMerge.cpp:
+	// follow both override chains before comparing required experience.
+	bool operator<(const ExperienceLevel &that) const
+	{
+		const ExperienceLevel *left = static_cast<const ExperienceLevel *>(
+			finalOverrideViaFriend());
+		const ExperienceLevel *right = static_cast<const ExperienceLevel *>(
+			that.finalOverrideViaFriend());
+		if (left == 0 || right == 0)
+			return false;
+		return left->m_requiredExperience < right->m_requiredExperience;
+	}
 
 private:
 	friend class ExperienceLevelSystem;
