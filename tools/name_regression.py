@@ -644,6 +644,57 @@ class Finding:
     after_sha256: str
 
 
+DIR32_RECORD = 'targets/game/reverse/dir32_addresses.csv'
+ILT_TOKEN = re.compile(r'^\??j_([0-9A-Fa-f]{8})(?:@@YAXXZ)?$')
+IMAGE_BASE = 0x400000
+
+
+def _bare(name):
+    """`?Foo@Bar@@..` -> Foo, `_Foo` -> Foo, `Foo` -> Foo."""
+    head = name[1:].split('@', 1)[0] if name.startswith('?') else (
+        name[1:] if name.startswith('_') else name)
+    return head if IDENT.fullmatch(head) else None
+
+
+def _ilt_respellings(root, old, new):
+    """(old, j_XXXXXXXX) pairs that respell a DIR32-recorded stand-in to the
+    canonical `?j_` ILT row at the very address the stand-in was recorded at.
+
+    A `?j_XXXXXXXX@@YAXXZ` row is a thunk's canonical identity (AGENTS.md),
+    not an invented placeholder; naming the recorded address by its ledger row
+    loses nothing. Only an exact address match counts.
+    """
+    recorded = {}
+    for row in csv.DictReader(io.StringIO(read(root, old, DIR32_RECORD) or '')):
+        try:
+            va = int(row['va'], 16)
+        except (KeyError, TypeError, ValueError):
+            continue
+        bare = _bare(row.get('name') or '')
+        if bare:
+            recorded.setdefault(bare, set()).add(va - IMAGE_BASE)
+    ilt = set()
+    for line in (read(root, new, 'targets/game/reverse/functions.csv') or '').splitlines():
+        if not line.startswith('?j_'):
+            continue
+        cols = line.split(',')
+        try:
+            rva = int(cols[2], 16)
+        except (IndexError, ValueError):
+            continue
+        if cols[0] == f'?j_{rva:08X}@@YAXXZ':
+            ilt.add(rva)
+    return recorded, ilt
+
+
+def _is_ilt_respelling(finding, recorded, ilt):
+    m = ILT_TOKEN.match(finding.new_name)
+    if not m:
+        return False
+    rva = int(m.group(1), 16)
+    return rva in ilt and rva in recorded.get(_bare(finding.old_name) or '', ())
+
+
 def digest(text):
     return hashlib.sha256(text.encode()).hexdigest()
 
@@ -671,6 +722,9 @@ def check(root, old, new):
             found = [(x, y) for x, y in found if x not in names]
         candidates.extend(Finding(a, b, x, y, digest(before), digest(after)) for x, y in found)
     candidates.extend(ledger_symbol_regressions(root, old, new))
+    if any(ILT_TOKEN.match(f.new_name) for f in candidates):
+        recorded, ilt = _ilt_respellings(root, old, new)
+        candidates = [f for f in candidates if not _is_ilt_respelling(f, recorded, ilt)]
     for finding in candidates:
         allowed = False
         for entry in corrections:

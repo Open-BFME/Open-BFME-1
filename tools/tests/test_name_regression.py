@@ -1009,3 +1009,44 @@ def test_only_actual_layout_definitions_are_retained(tmp_path):
     path = 'game/example.cpp'
     text = 'class Forward; // class Comment {};\nclass Actual { int m_count; };'
     assert N.retained_types(tmp_path, ':', {path: text}, [path])[path] == {'Actual'}
+
+
+ILT_SRC = 'game/GameEngine/Source/GameLogic/Object/Contain/IltRespell.cpp'
+ILT_BEFORE = 'extern "C" void ContestableContainFieldParse();\nvoid* f() { return (void*)&ContestableContainFieldParse; }\n'
+
+
+def _ilt_case(tmp_path, new_name, ilt_rva=0x00015654, record_va=0x00415654):
+    git(tmp_path, 'init', '-q')
+    git(tmp_path, 'config', 'user.name', 'Fixture')
+    git(tmp_path, 'config', 'user.email', 'fixture@example.invalid')
+    put(tmp_path, ILT_SRC, ILT_BEFORE)
+    put(tmp_path, 'targets/game/reverse/dir32_addresses.csv',
+        f'name,va\n_ContestableContainFieldParse,0x{record_va:08X}\n')
+    put(tmp_path, 'targets/game/reverse/functions.csv',
+        f'?j_{ilt_rva:08X}@@YAXXZ,,0x{ilt_rva:08X},5,game/gen_small/thunks_009.cpp,matched,gen-thunk\n')
+    commit(tmp_path)
+    put(tmp_path, ILT_SRC, ILT_BEFORE.replace('extern "C" ', '').replace(
+        'ContestableContainFieldParse', new_name))
+    return N.check(tmp_path, 'HEAD', ':')[0]
+
+
+def test_respelling_recorded_standin_to_ilt_row_at_its_address_passes(tmp_path):
+    assert _ilt_case(tmp_path, 'j_00015654') == []
+
+
+def test_respelling_to_ilt_row_at_a_different_address_still_fails(tmp_path):
+    found = _ilt_case(tmp_path, 'j_00005245', ilt_rva=0x00005245)
+    assert [(f.old_name, f.new_name) for f in found] == [('ContestableContainFieldParse', 'j_00005245')]
+
+
+def test_respelling_to_ilt_name_without_ledger_row_still_fails(tmp_path):
+    found = _ilt_case(tmp_path, 'j_00015654', ilt_rva=0x00019772)
+    assert [(f.old_name, f.new_name) for f in found] == [('ContestableContainFieldParse', 'j_00015654')]
+
+
+def test_respelling_recorded_standin_to_bfme_or_rva_still_fails(tmp_path):
+    for i, name in enumerate(('bfme00415654', 'Rva00015654')):
+        root = tmp_path / str(i)
+        root.mkdir()
+        found = _ilt_case(root, name)
+        assert [(f.old_name, f.new_name) for f in found] == [('ContestableContainFieldParse', name)]
