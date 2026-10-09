@@ -26,15 +26,15 @@ typedef void (__cdecl *Rva009AA260VerticalScale)(
 
 extern void __cdecl bfmeCopy(const void *, unsigned int, void *);
 
-extern Rva009AA260HorizontalScale g_01356DA4;
-extern Rva009AA260HorizontalScale g_01356EB0;
-extern Rva009AA260HorizontalScale g_01356E80;
-extern Rva009AA260VerticalScale g_01356E7C;
-extern Rva009AA260VerticalScale g_01356EA8;
-extern Rva009AA260VerticalScale g_01356E70;
-extern Rva009AA260VerticalScale g_01356E78;
-extern Rva009AA260VerticalScale g_01356E90;
-extern Rva009AA260VerticalScale g_01356EA4;
+Rva009AA260HorizontalScale g_Va01356DA4;
+Rva009AA260HorizontalScale g_Va01356EB0;
+Rva009AA260HorizontalScale g_Va01356E80;
+Rva009AA260VerticalScale g_Va01356E7C;
+Rva009AA260VerticalScale g_Va01356EA8;
+Rva009AA260VerticalScale g_Va01356E70;
+Rva009AA260VerticalScale g_Va01356E78;
+Rva009AA260VerticalScale g_Va01356E90;
+Rva009AA260VerticalScale g_Va01356EA4;
 
 static void __cdecl Rva009A91C0NullScale(
 	unsigned char *, unsigned int, unsigned int)
@@ -43,47 +43,47 @@ static void __cdecl Rva009A91C0NullScale(
 
 static Rva009AA260HorizontalScale rva009AA260Horizontal45(void)
 {
-	return g_01356DA4;
+	return g_Va01356DA4;
 }
 
 static Rva009AA260HorizontalScale rva009AA260Horizontal35(void)
 {
-	return g_01356EB0;
+	return g_Va01356EB0;
 }
 
 static Rva009AA260HorizontalScale rva009AA260Horizontal21(void)
 {
-	return g_01356E80;
+	return g_Va01356E80;
 }
 
 static Rva009AA260VerticalScale rva009AA260Vertical45(void)
 {
-	return g_01356E7C;
+	return g_Va01356E7C;
 }
 
 static Rva009AA260VerticalScale rva009AA260Vertical35(void)
 {
-	return g_01356EA8;
+	return g_Va01356EA8;
 }
 
 static Rva009AA260VerticalScale rva009AA260Vertical21(void)
 {
-	return g_01356E70;
+	return g_Va01356E70;
 }
 
 static Rva009AA260VerticalScale rva009AA260LastVertical45(void)
 {
-	return g_01356E78;
+	return g_Va01356E78;
 }
 
 static Rva009AA260VerticalScale rva009AA260LastVertical35(void)
 {
-	return g_01356E90;
+	return g_Va01356E90;
 }
 
 static Rva009AA260VerticalScale rva009AA260LastVertical21(void)
 {
-	return g_01356EA4;
+	return g_Va01356EA4;
 }
 
 int __cdecl Rva009AA260Scale(
