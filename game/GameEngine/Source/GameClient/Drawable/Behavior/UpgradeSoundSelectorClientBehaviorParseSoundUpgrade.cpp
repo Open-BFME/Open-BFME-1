@@ -31,6 +31,28 @@ struct Rva00608FE0Element
 #pragma comment(linker, "/alternatename:??0Rva00608FE0Element@@QAE@ABU0@@Z=?j_00042339@@YAXXZ")
 #pragma comment(linker, "/alternatename:??1Rva00608FE0Element@@QAE@XZ=?j_00034158@@YAXXZ")
 
+// The matched 00608DE0 overflow body is owned by
+// RvaVectorInsertOverflowOutOfLineCopy.cpp.  Preserve the caller's empty tag
+// without instantiating a competing overflow implementation here.
+namespace _STL {
+template <>
+void vector<Rva00608FE0Element>::_M_insert_overflow(Rva00608FE0Element *,
+	const Rva00608FE0Element &, const __false_type &, size_t, bool);
+
+template <>
+__forceinline void vector<Rva00608FE0Element>::push_back(
+	const Rva00608FE0Element &value)
+{
+	if (_M_finish != _M_end_of_storage._M_data) {
+		_Construct(_M_finish, value);
+		++_M_finish;
+	} else {
+		__false_type tag;
+		_M_insert_overflow(_M_finish, value, tag, 1, true);
+	}
+}
+}
+
 class UpgradeSoundSelectorClientBehaviorModuleData
 {
 public:
