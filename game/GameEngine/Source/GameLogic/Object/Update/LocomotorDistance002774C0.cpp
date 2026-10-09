@@ -16,15 +16,10 @@
 inline Coord3D::Coord3D() {}
 inline Coord3D::~Coord3D() {}
 inline Coord3D::Coord3D(const Coord3D &c) { x=c.x; y=c.y; z=c.z; }
-inline Coord3DBase &Coord3DBase::operator=(const Coord3DBase &c) {
+inline Coord3D &Coord3D::operator=(const Coord3D &c) {
     struct Words { unsigned x,y,z; };
     *(Words*)this=*(const Words*)&c; return *this;
 }
-inline Coord3D &Coord3D::operator=(const Coord3D &c) {
-    Coord3DBase *base=this; *base=c; return *this;
-}
-inline Coord3D &Coord3D::Sub(const Coord3DBase &c) { x-=c.x;y-=c.y;z-=c.z;return *this; }
-inline float Coord3D::GetLength() const { return (float)sqrt(x*x+y*y+z*z); }
 extern void j_0003251f();
 extern void j_00048e4b();
 extern void j_00024d1b();
@@ -99,8 +94,11 @@ float AIUpdateInterface::rva002774c0() {
     case 2:
     case 4: {
         Coord3D delta(at1dc);
-        delta.Sub(m_object->at038);
-        return delta.GetLength();
+        const Coord3DBase &position=m_object->at038;
+        delta.x-=position.x;
+        delta.y-=position.y;
+        delta.z-=position.z;
+        return (float)sqrt(delta.x*delta.x+delta.y*delta.y+delta.z*delta.z);
     }
     case 1: {
         DistancePath002774C0 *path=m_path;
