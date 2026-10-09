@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "3dc7f922fccd21844a6a765432a8717c8c8533e85b62c0ce7c172350c9b487a1",
+  "symbol": "?rva0081E650MaxCompressedSize@@YAHHW4CompressionType@@@Z",
+  "score_kind": "measured",
+  "score": 1.0,
+  "source": "// ?rva0081E650MaxCompressedSize@@YAHHW4CompressionType@@@Z\n// partial score=1.0 date=2026-10-09\n// cl: /DNDEBUG /MD /EHs-c-\nextern \"C\" __declspec(dllimport) double __cdecl ceil(double);\nunsigned int __cdecl __identifier(\"?j_0081eb70@@YAXXZ\")(unsigned int);\n\nenum CompressionType\n{\n    COMPRESSION_NONE = 0, COMPRESSION_REFPACK, COMPRESSION_NOXLZH,\n    COMPRESSION_ZLIB1, COMPRESSION_ZLIB2, COMPRESSION_ZLIB3,\n    COMPRESSION_ZLIB4, COMPRESSION_ZLIB5, COMPRESSION_ZLIB6,\n    COMPRESSION_ZLIB7, COMPRESSION_ZLIB8, COMPRESSION_ZLIB9,\n    COMPRESSION_BTREE, COMPRESSION_HUFF\n};\n\n// Open BFME 2: Code/Libraries/Source/Compression/CompressionManager_decompressData.cpp.\nint rva0081E650MaxCompressedSize(int uncompressedLen, CompressionType compType)\n{\n    switch (compType)\n    {\n        case COMPRESSION_NOXLZH:\n            return __identifier(\"?j_0081eb70@@YAXXZ\")(uncompressedLen) + 8;\n        case COMPRESSION_BTREE:\n        case COMPRESSION_HUFF:\n        case COMPRESSION_REFPACK:\n            return uncompressedLen + 8;\n        case COMPRESSION_ZLIB1:\n        case COMPRESSION_ZLIB2:\n        case COMPRESSION_ZLIB3:\n        case COMPRESSION_ZLIB4:\n        case COMPRESSION_ZLIB5:\n        case COMPRESSION_ZLIB6:\n        case COMPRESSION_ZLIB7:\n        case COMPRESSION_ZLIB8:\n        case COMPRESSION_ZLIB9:\n            return (int)(ceil(uncompressedLen * 1.1 + 12 + 8));\n    }\n    return 0;\n}\n"
+}
