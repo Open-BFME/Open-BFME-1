@@ -106,7 +106,7 @@ void DX8PolygonRendererClass::Log()
 		index_offset,
 		min_vertex_index,
 		vertex_index_range,
-		mmc->Get_Name());
+		mmc->Get_User_Text());
 
 /*	work.Format(
 		"		Index count: %d (%d polys) i_offset: %d min_vi: %d vi_range: %d ident: %d (%s)\n",

@@ -306,14 +306,7 @@ void MeshGeometryClass::Set_Name(const char * newname)
  * HISTORY:                                                                                    *
  *   11/9/2000  gth : Created.                                                                 *
  *=============================================================================================*/
-// ?MeshGeometryClass::Get_User_Text present-unmatched
-const char * MeshGeometryClass::Get_User_Text(void)
-{
-	if (UserText) {
-		return UserText->Get_Array();
-	}
-	return NULL;
-}
+// Retail Get_User_Text lives in MeshGeometryMeshModelLeafThunks.cpp.
 
 
 /***********************************************************************************************
