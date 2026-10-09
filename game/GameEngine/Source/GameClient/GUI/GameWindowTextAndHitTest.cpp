@@ -38,7 +38,7 @@ enum ObjectID
 class AudioEventRTS
 {
 public:
-	AudioEventRTS(const AsciiString &eventName, ObjectID ownerID);
+	AudioEventRTS(const AsciiString &eventName, int timeOfDay);
 	~AudioEventRTS();
 
 private:
@@ -180,7 +180,7 @@ GameWindow *GameWindow::winPointInChild(Int x, Int y, Bool ignoreEnableCheck, Bo
 				}
 				else if (playDisabledSound)
 				{
-					AudioEventRTS disabledClick("GUIClickDisabled", (ObjectID)2);
+					AudioEventRTS disabledClick("GUIClickDisabled", 2);
 					if (TheAudio)
 					{
 						TheAudio->addAudioEvent(&disabledClick);

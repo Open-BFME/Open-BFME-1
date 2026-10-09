@@ -1421,63 +1421,6 @@ Int GameWindow::winDrawWindow( void )
 
 }  // end WinDrawWindow
 
-// GameWindow::winPointInChild ================================================
-/** Given a window and the mouse coordinates, return the child
-	* window which contains the mouse pointer.  Child windows are
-	* relative to their parents */
-//=============================================================================
-// byte-exact reconstruction: game/GameEngine/Source/Common/GameWindowTextAndHitTest.cpp
-// ?winPointInChild@GameWindow@@QAEPAV1@HH_N0@Z present-unmatched
-GameWindow *GameWindow::winPointInChild( Int x, Int y, Bool ignoreEnableCheck, Bool playDisabledSound )
-{
-	GameWindow *parent;
-	GameWindow *child;
-	ICoord2D origin;
-
-	for( child = m_child; child; child = child->m_next ) 
-	{
-
-		origin = child->m_region.lo;
-		parent = child->winGetParent();
-
-		while( parent ) 
-		{
-
-			origin.x += parent->m_region.lo.x;
-			origin.y += parent->m_region.lo.y;
-			parent = parent->m_parent;
-
-		}  // end while
-
-		if( x >= origin.x && x <= origin.x + child->m_size.x &&
-				y >= origin.y && y <= origin.y + child->m_size.y )
-		{
-			Bool enabled = ignoreEnableCheck || BitTest( child->m_status, WIN_STATUS_ENABLED );
-			Bool hidden = BitTest( child->m_status, WIN_STATUS_HIDDEN );
-			if( !hidden )
-			{
-				if( enabled )
-				{
-					return child->winPointInChild( x, y, ignoreEnableCheck, playDisabledSound );
-				}
-				else if( playDisabledSound )
-				{
-					AudioEventRTS disabledClick( "GUIClickDisabled" );
-					if( TheAudio )
-					{
-						TheAudio->addAudioEvent( &disabledClick );
-					}
-				}
-			}
-		}
-
-	}  // end for child
-
-	// not in any children, must be in parent
-	return this;
-
-}  // end WinPointInChild
-
 // GameWindow::winPointInAnyChild =============================================
 /** Find the child in which the cursor resides; regardless of
 	* whether or not the window is actually enabled */
