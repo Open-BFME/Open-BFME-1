@@ -1,14 +1,20 @@
 // cl: /Od
 
-class BfmeStrV44
+namespace _STL
+{
+template <class Character> class char_traits;
+template <class Value> class allocator;
+template <class Character, class Traits, class Alloc> class basic_string;
+template <> class basic_string<char, char_traits<char>, allocator<char> >
 {
 public:
-	void bfmeEraseV44(char *a, char *b);
-	void bfmeImplV44(char *a, char *b, char *c, char *d);
-
-	char *b;
-	char *e;
+    char *erase(char *, char *);
 };
+}
+// A type alias lets MSVC's inline assembler spell the exact template member.
+typedef _STL::basic_string<char, _STL::char_traits<char>, _STL::allocator<char> >
+    BfmeRangeEraseString44;
+void __stdcall bfmeInsertRangeV49(char *, char *, char *, char *);
 
 void __stdcall bfmeReplaceRangeV44(char *d0, char *d1, char *s0, char *s1, int extra)
 {
@@ -57,7 +63,7 @@ void __stdcall bfmeReplaceRangeV44(char *d0, char *d1, char *s0, char *s1, int e
 		add edx, dword ptr [ebp-8]
 		push edx
 		mov ecx, dword ptr [ebp-0xBC]
-		call BfmeStrV44::bfmeEraseV44
+		call BfmeRangeEraseString44::erase
 		jmp done
 	grow_path:
 		mov eax, dword ptr [ebp+0x10]
@@ -104,7 +110,7 @@ void __stdcall bfmeReplaceRangeV44(char *d0, char *d1, char *s0, char *s1, int e
 		mov eax, dword ptr [ebp+0x0C]
 		push eax
 		mov ecx, dword ptr [ebp-0xBC]
-		call BfmeStrV44::bfmeImplV44
+		call bfmeInsertRangeV49
 	done:
 		mov eax, dword ptr [ebp-0xBC]
 	}
