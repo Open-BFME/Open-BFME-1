@@ -29,14 +29,7 @@ public:
 	int winSetHiliteBorderColor(int index, Color color);
 	GameWindow *winGetChild(void);
 
-	Color winGetEnabledColor(int index) { return m_enabledDrawData[index].color; }
-	Color winGetEnabledBorderColor(int index) { return m_enabledDrawData[index].borderColor; }
-	Color winGetDisabledColor(int index) { return m_disabledDrawData[index].color; }
-	Color winGetDisabledBorderColor(int index) { return m_disabledDrawData[index].borderColor; }
-	Color winGetHiliteColor(int index) { return m_hiliteDrawData[index].color; }
-	Color winGetHiliteBorderColor(int index) { return m_hiliteDrawData[index].borderColor; }
-
-private:
+	// Retail inlines these reads; use the fields without emitting getter copies.
 	unsigned char m_bfmeHead[0x48];
 	WinDrawData m_enabledDrawData[9];
 	WinDrawData m_disabledDrawData[9];
@@ -89,49 +82,49 @@ void GadgetListBoxSetColors(GameWindow *listbox,
 		GameWindow *upButton = listboxData->upButton;
 		GameWindow *downButton = listboxData->downButton;
 
-		slider->winSetEnabledColor(0, listbox->winGetEnabledColor(0));
-		slider->winSetEnabledBorderColor(0, listbox->winGetEnabledBorderColor(0));
-		slider->winSetDisabledColor(0, listbox->winGetDisabledColor(0));
-		slider->winSetDisabledBorderColor(0, listbox->winGetDisabledBorderColor(0));
-		slider->winSetHiliteColor(0, listbox->winGetHiliteColor(0));
-		slider->winSetHiliteBorderColor(0, listbox->winGetHiliteBorderColor(0));
+		slider->winSetEnabledColor(0, listbox->m_enabledDrawData[0].color);
+		slider->winSetEnabledBorderColor(0, listbox->m_enabledDrawData[0].borderColor);
+		slider->winSetDisabledColor(0, listbox->m_disabledDrawData[0].color);
+		slider->winSetDisabledBorderColor(0, listbox->m_disabledDrawData[0].borderColor);
+		slider->winSetHiliteColor(0, listbox->m_hiliteDrawData[0].color);
+		slider->winSetHiliteBorderColor(0, listbox->m_hiliteDrawData[0].borderColor);
 
-		upButton->winSetEnabledColor(0, slider->winGetEnabledColor(0));
-		upButton->winSetEnabledBorderColor(0, slider->winGetEnabledBorderColor(0));
+		upButton->winSetEnabledColor(0, slider->m_enabledDrawData[0].color);
+		upButton->winSetEnabledBorderColor(0, slider->m_enabledDrawData[0].borderColor);
 		GameWindow *thumb = slider->winGetChild();
-		upButton->winSetEnabledColor(1, thumb ? thumb->winGetEnabledColor(1) : 0x00FFFFFF);
+		upButton->winSetEnabledColor(1, thumb ? thumb->m_enabledDrawData[1].color : 0x00FFFFFF);
 		thumb = slider->winGetChild();
-		upButton->winSetEnabledBorderColor(1, thumb ? thumb->winGetEnabledBorderColor(1) : 0x00FFFFFF);
-		upButton->winSetDisabledColor(0, slider->winGetDisabledColor(0));
-		upButton->winSetDisabledBorderColor(0, slider->winGetDisabledBorderColor(0));
+		upButton->winSetEnabledBorderColor(1, thumb ? thumb->m_enabledDrawData[1].borderColor : 0x00FFFFFF);
+		upButton->winSetDisabledColor(0, slider->m_disabledDrawData[0].color);
+		upButton->winSetDisabledBorderColor(0, slider->m_disabledDrawData[0].borderColor);
 		thumb = slider->winGetChild();
-		upButton->winSetDisabledColor(1, thumb ? thumb->winGetDisabledColor(1) : 0x00FFFFFF);
+		upButton->winSetDisabledColor(1, thumb ? thumb->m_disabledDrawData[1].color : 0x00FFFFFF);
 		thumb = slider->winGetChild();
-		upButton->winSetDisabledBorderColor(1, thumb ? thumb->winGetDisabledBorderColor(1) : 0x00FFFFFF);
-		upButton->winSetHiliteColor(0, slider->winGetHiliteColor(0));
-		upButton->winSetHiliteBorderColor(0, slider->winGetHiliteBorderColor(0));
+		upButton->winSetDisabledBorderColor(1, thumb ? thumb->m_disabledDrawData[1].borderColor : 0x00FFFFFF);
+		upButton->winSetHiliteColor(0, slider->m_hiliteDrawData[0].color);
+		upButton->winSetHiliteBorderColor(0, slider->m_hiliteDrawData[0].borderColor);
 		thumb = slider->winGetChild();
-		upButton->winSetHiliteColor(1, thumb ? thumb->winGetHiliteColor(1) : 0x00FFFFFF);
+		upButton->winSetHiliteColor(1, thumb ? thumb->m_hiliteDrawData[1].color : 0x00FFFFFF);
 		thumb = slider->winGetChild();
-		upButton->winSetHiliteBorderColor(1, thumb ? thumb->winGetHiliteBorderColor(1) : 0x00FFFFFF);
+		upButton->winSetHiliteBorderColor(1, thumb ? thumb->m_hiliteDrawData[1].borderColor : 0x00FFFFFF);
 
-		downButton->winSetEnabledColor(0, slider->winGetEnabledColor(0));
-		downButton->winSetEnabledBorderColor(0, slider->winGetEnabledBorderColor(0));
+		downButton->winSetEnabledColor(0, slider->m_enabledDrawData[0].color);
+		downButton->winSetEnabledBorderColor(0, slider->m_enabledDrawData[0].borderColor);
 		thumb = slider->winGetChild();
-		downButton->winSetEnabledColor(1, thumb ? thumb->winGetEnabledColor(1) : 0x00FFFFFF);
+		downButton->winSetEnabledColor(1, thumb ? thumb->m_enabledDrawData[1].color : 0x00FFFFFF);
 		thumb = slider->winGetChild();
-		downButton->winSetEnabledBorderColor(1, thumb ? thumb->winGetEnabledBorderColor(1) : 0x00FFFFFF);
-		downButton->winSetDisabledColor(0, slider->winGetDisabledColor(0));
-		downButton->winSetDisabledBorderColor(0, slider->winGetDisabledBorderColor(0));
+		downButton->winSetEnabledBorderColor(1, thumb ? thumb->m_enabledDrawData[1].borderColor : 0x00FFFFFF);
+		downButton->winSetDisabledColor(0, slider->m_disabledDrawData[0].color);
+		downButton->winSetDisabledBorderColor(0, slider->m_disabledDrawData[0].borderColor);
 		thumb = slider->winGetChild();
-		downButton->winSetDisabledColor(1, thumb ? thumb->winGetDisabledColor(1) : 0x00FFFFFF);
+		downButton->winSetDisabledColor(1, thumb ? thumb->m_disabledDrawData[1].color : 0x00FFFFFF);
 		thumb = slider->winGetChild();
-		downButton->winSetDisabledBorderColor(1, thumb ? thumb->winGetDisabledBorderColor(1) : 0x00FFFFFF);
-		downButton->winSetHiliteColor(0, slider->winGetHiliteColor(0));
-		downButton->winSetHiliteBorderColor(0, slider->winGetHiliteBorderColor(0));
+		downButton->winSetDisabledBorderColor(1, thumb ? thumb->m_disabledDrawData[1].borderColor : 0x00FFFFFF);
+		downButton->winSetHiliteColor(0, slider->m_hiliteDrawData[0].color);
+		downButton->winSetHiliteBorderColor(0, slider->m_hiliteDrawData[0].borderColor);
 		thumb = slider->winGetChild();
-		downButton->winSetHiliteColor(1, thumb ? thumb->winGetHiliteColor(1) : 0x00FFFFFF);
+		downButton->winSetHiliteColor(1, thumb ? thumb->m_hiliteDrawData[1].color : 0x00FFFFFF);
 		thumb = slider->winGetChild();
-		downButton->winSetHiliteBorderColor(1, thumb ? thumb->winGetHiliteBorderColor(1) : 0x00FFFFFF);
+		downButton->winSetHiliteBorderColor(1, thumb ? thumb->m_hiliteDrawData[1].borderColor : 0x00FFFFFF);
 	}
 }
