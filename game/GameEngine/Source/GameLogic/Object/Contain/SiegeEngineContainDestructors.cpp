@@ -91,18 +91,19 @@ public:
 	virtual ~SiegeEngineContainTenthBase() {}
 };
 
-class __declspec(novtable) SiegeEngineContainBase
+// ILT 0x0003FF49 jumps to the matched ??1TransportContain@@MAE@XZ (ilt_oracle CONFIRMED).
+class __declspec(novtable) TransportContain
 	: public OpenContain,
 	  public SiegeEngineContainTenthBase	///< vptr at 0xD4
 {
-public:
-	virtual ~SiegeEngineContainBase();
+protected:
+	virtual ~TransportContain();
 
 private:
 	unsigned char m_pad[0x0c];					///< out to sizeof() == 0xE4
 };
 
-class SiegeEngineContain : public SiegeEngineContainBase
+class SiegeEngineContain : public TransportContain
 {
 protected:
 	virtual ~SiegeEngineContain();
