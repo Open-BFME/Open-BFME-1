@@ -18,7 +18,7 @@ extern AnimationSoundModuleManager *TheAnimationSoundModuleManager;
 // The position accessor is matched as BFMERopeDrawableGetPositionShim::get and
 // the notify helper as Gen_00409040Registry::m. Both declare a Coord3D that
 // this file cannot spell at the same time, so they go through their thunks.
-extern void j_0004b12d();
+extern "C" void __identifier("?getPosition@BFMERopeDrawable@@QBEPBUCoord3D@@XZ")();
 extern void j_000281c8();
 
 typedef const Coord3D *(__fastcall *Rva00604EE0GetPosition)(void *rope);
@@ -51,8 +51,8 @@ void Rva00604EE0Module::reactToTransformChange(void *oldMatrix, const Coord3D *o
 	void *rope = m_rope;
 
 	if (oldPosition != 0 && rope != 0
-		&& ((Rva00604EE0GetPosition)j_0004b12d)(rope) != 0
-		&& ((Rva00604EE0GetPosition)j_0004b12d)(rope)->IsExactlyEqualTo(*oldPosition))
+		&& ((Rva00604EE0GetPosition)__identifier("?getPosition@BFMERopeDrawable@@QBEPBUCoord3D@@XZ"))(rope) != 0
+		&& ((Rva00604EE0GetPosition)__identifier("?getPosition@BFMERopeDrawable@@QBEPBUCoord3D@@XZ"))(rope)->IsExactlyEqualTo(*oldPosition))
 		return;
 
 	BfmeResetSubsystem *subsystem = (BfmeResetSubsystem *)TheAnimationSoundModuleManager;
