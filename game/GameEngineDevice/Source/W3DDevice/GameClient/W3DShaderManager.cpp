@@ -67,7 +67,16 @@ extern "C" __declspec(dllimport) int __stdcall HeapFree(void *, unsigned long, v
 // for why they cannot stay there here.
 // Confined to this include: leaving it on re-mangles every protected member
 // declared later in this file (?...@@IAE... becomes ?...@@QAE...), which breaks
-// the ledger rows that name them.
+// the ledger rows that name them. cpudetect.h (pulled in by dx8wrapper.h) is
+// included first so CPUDetectClass keeps its private statics' mangling and its
+// inline getters stay identical to cpudetect.cpp's COMDAT copies; wwstring.h
+// (which cpudetect.h includes) still comes in under the override.
+#define private public
+#define protected public
+#include "wwstring.h"
+#undef private
+#undef protected
+#include "cpudetect.h"
 #define private public
 #define protected public
 #include "dx8wrapper.h"
