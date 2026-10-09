@@ -1,8 +1,8 @@
 // ?translateGameMessage@SelectionTranslator@@UAE?AW4GameMessageDisposition@@PBVGameMessage@@@Z
-// partial score=0.106 date=2026-09-23
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// partial score=0.566 date=2026-10-09
+// ?translateGameMessage@SelectionTranslator@@UAE?AW4GameMessageDisposition@@PBVGameMessage@@@Z
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/mouselayout /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
-// STASH NOTE: probe target is ?translateGameMessage@SelectionTranslator@@UAE?AW4GameMessageDisposition@@PBVGameMessage@@@Z at retail 0x005B8520 (4578 B incl. inline switch tables); the body below is the unmodified ZH twin (measured 4190/4578 B 3318 diffs). BFME differences seen so far: input gate is TheInGameUI+0xD && +0xE && !vcall+0x154; frame 0xC0 not 0x80; switch on type-3 with 13 cases (byte index table 0x5B9670).
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -64,1304 +64,892 @@
 #include "GameClient/SelectionXlat.h"
 #include "GameClient/TerrainVisual.h"
 
-#ifdef _INTERNAL
-// for occasional debugging...
-//#pragma optimize("", off)
-//#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
-#endif
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-// Lorenzen changed this to a member of SelectionTranslator, providing external access
-// name ly in rebuildholeexposedie, where we decide whether to create GLA Holes when hand-of-Godding
-//#if defined(_DEBUG) || defined(_INTERNAL) || defined(_ALLOW_DEBUG_CHEATS_IN_RELEASE)
-//static Bool TheHandOfGodSelectionMode = false;
-//#endif
-
-#if defined(_DEBUG) || defined(_INTERNAL)
-static Bool TheHurtSelectionMode = false;
-static Bool TheDebugSelectionMode = false;
-#endif
-
-//-----------------------------------------------------------------------------
-static Bool currentlyLookingForSelection( )
-{
-	// This needs to check if we are currently targetting for special weapons fire.
-	return TheInGameUI->getGUICommand() == NULL;
+#include <hash_map>
+#include "GameLogic/TerrainLogic.h"
+Bool areAllSelected(const DrawableList &listToCheck);
+extern Int Rva00459060(Bool mode);
+namespace Rva005B8520ABI {
+// ?getPickTypesForContext@Rva005B8520ABI@@YAI_N@Z absent-from-retail
+static __forceinline UnsignedInt getPickTypesForContext(Bool mode) { return Rva00459060(mode); }
 }
 
-//-----------------------------------------------------------------------------
-Bool areAllSelected( const DrawableList& listToCheck );
-
-//-----------------------------------------------------------------------------
-struct SFWRec
-{
-	SelectionTranslator *translator;
-	GameMessage *createTeamMsg;
-	Bool dragSelecting;
+extern void bfmeGoEGEb();
+class Rva000C4A70 { public: Bool field() const; };
+class Rva005B8520Terrain { public: PathfindLayerEnum getLayerForDestination(Object *obj, const Coord3D *point); };
+class BFMEActionObject { public: Bool testStatus(Int status) const; };
+class BFMERopeDrawableGetPositionShim { public: const Coord3D *get() const; };
+class Rva005B8520Mouse {
+public:
+    virtual void unused00();
+    virtual void unused01();
+    virtual void unused02();
+    virtual void unused03();
+    virtual void unused04();
+    virtual void unused05();
+    virtual void unused06();
+    virtual void unused07();
+    virtual void unused08();
+    virtual void unused09();
+    virtual void unused10();
+    virtual void unused11();
+    virtual void unused12();
+    virtual void unused13();
+    virtual void slot38(Int cursor);
 };
-
-//-----------------------------------------------------------------------------
-/*friend*/ Bool selectFriendsWrapper( Drawable *draw, void *userData )
-{
-	SFWRec *info = (SFWRec *)userData;
-	return info->translator->selectFriends(draw, info->createTeamMsg, info->dragSelecting) != 0;
-}  // end selectFriendsWrapper
-
-/*friend*/ Bool killThemKillThemAllWrapper( Drawable *draw, void *userData )
-{
-	SFWRec *info = (SFWRec *)userData;
-	info->translator->killThemKillThemAll( draw, info->createTeamMsg );
-	return true;
+class Rva005B8520ObjectSlots {
+public:
+    virtual void unused00();
+    virtual void unused01();
+    virtual void unused02();
+    virtual void unused03();
+    virtual void unused04();
+    virtual void unused05();
+    virtual void unused06();
+    virtual void unused07();
+    virtual void unused08();
+    virtual void unused09();
+    virtual Drawable *getDrawable();
+};
+static __forceinline Object *bfmeDrawableObject(const Drawable *draw) { return *(Object *const *)((const char *)draw+0xFC); }
+static __forceinline ObjectID bfmeObjectID(const Object *obj) { return *(const ObjectID *)((const char *)obj+0x74); }
+static __forceinline Drawable *bfmeObjectDrawable(const Object *obj) { return ((Rva005B8520ObjectSlots *)obj)->getDrawable(); }
+static __forceinline Object *bfmeContainedBy(const Object *obj) { return *(Object *const *)((const char *)obj+0x214); }
+static __forceinline ObjectID bfmeObjectField78(const Object *obj) { return *(const ObjectID *)((const char *)obj+0x78); }
+static __forceinline Team *bfmeObjectTeam(const Object *obj) { return *(Team *const *)((const char *)obj+0x23C); }
+static __forceinline Bool bfmeObjectDead(const Object *obj) { return (*(const unsigned int *)((const char *)obj+0x344)&1)!=0; }
+static __forceinline DrawableID bfmeDrawableID(const Drawable *draw) { return draw->getID(); }
+static __forceinline Bool bfmeDrawableSelected(const Drawable *draw) { return *(const Bool *)((const char *)draw+0x3AC); }
+static __forceinline Drawable *bfmeNextDrawable(const Drawable *draw) { return *(Drawable *const *)((const char *)draw+0x104); }
+static __forceinline const Coord3D *bfmeDrawablePosition(const Drawable *draw) { return ((const BFMERopeDrawableGetPositionShim *)draw)->get(); }
+static __forceinline Bool &bfmeUIByte(unsigned int offset) { return *(Bool *)((char *)TheInGameUI+offset); }
+static __forceinline UnsignedInt bfmeMouseWord(unsigned int offset) { return *(const UnsignedInt *)((const char *)TheMouse+offset); }
+static __forceinline Bool bfmeAlternateMouse() { return *(const Bool *)((const char *)TheGlobalData+0x60); }
+static __forceinline unsigned int bfmeGameFrame() { return *(const unsigned int *)((const char *)TheGameLogic+0x3C); }
+static __forceinline Player *bfmeLocalPlayer() { return *(Player **)((char *)ThePlayerList+0x0C); }
+class BfmeVecAK {
+public:
+    Object **m_bfmeStart;
+    Object **m_bfmeFinish;
+    Object **m_bfmeEnd;
+    Int size() const { return m_bfmeFinish-m_bfmeStart; }
+    Object *operator[](Int i) const { return m_bfmeStart[i]; }
+};
+class Gen_0018BC70 { public: BfmeVecAK *bfmeCompact(Bool restart); };
+static __forceinline BfmeVecAK *bfmeLiveObjects(Squad *squad) { return ((Gen_0018BC70 *)squad)->bfmeCompact(FALSE); }
+class Rva005B8520UI {
+public:
+    virtual void unused00();
+    virtual void unused01();
+    virtual void unused02();
+    virtual void unused03();
+    virtual void unused04();
+    virtual void unused05();
+    virtual void unused06();
+    virtual void unused07();
+    virtual void unused08();
+    virtual void unused09();
+    virtual void unused10();
+    virtual void unused11();
+    virtual void unused12();
+    virtual void unused13();
+    virtual void unused14();
+    virtual void unused15();
+    virtual void unused16();
+    virtual void unused17();
+    virtual void unused18();
+    virtual void unused19();
+    virtual void unused20();
+    virtual void unused21();
+    virtual void unused22();
+    virtual void unused23();
+    virtual void unused24();
+    virtual void slot64(Bool value);
+    virtual void endAreaSelectHint(const GameMessage *msg);
+    virtual void unused27();
+    virtual void unused28();
+    virtual void unused29();
+    virtual void createMouseoverHint(const GameMessage *msg);
+    virtual void unused31();
+    virtual void unused32();
+    virtual void unused33();
+    virtual void unused34();
+    virtual void unused35();
+    virtual void unused36();
+    virtual void unused37();
+    virtual void unused38();
+    virtual void unused39();
+    virtual void setScrolling(Bool value);
+    virtual Bool isScrolling();
+    virtual void setSelecting(Bool value);
+    virtual void unused43();
+    virtual void unused44();
+    virtual void unused45();
+    virtual void unused46();
+    virtual const CommandButton *getGUICommand() const;
+    virtual void unused48();
+    virtual void unused49();
+    virtual ObjectID getPendingPlaceSourceObjectID();
+    virtual void unused51();
+    virtual void unused52();
+    virtual void unused53();
+    virtual void unused54();
+    virtual void unused55();
+    virtual void selectDrawable(Drawable *draw);
+    virtual void deselectDrawable(Drawable *draw);
+    virtual void deselectAllDrawables();
+    virtual void unused59();
+    virtual Int getSelectCount();
+    virtual void unused61();
+    virtual UnsignedInt getFrameSelectionChanged();
+    virtual const DrawableList *getAllSelectedDrawables() const;
+    virtual void unused64();
+    virtual void unused65();
+    virtual void unused66();
+    virtual void unused67();
+    virtual Bool isAnySelectedKindOf(KindOfType type);
+    virtual void unused69();
+    virtual void unused70();
+    virtual void unused71();
+    virtual void unused72();
+    virtual void unused73();
+    virtual void unused74();
+    virtual void unused75();
+    virtual void unused76();
+    virtual void unused77();
+    virtual void unused78();
+    virtual void unused79();
+    virtual void unused80();
+    virtual void unused81();
+    virtual void unused82();
+    virtual void unused83();
+    virtual void unused84();
+    virtual Bool isQuitMenuVisible() const;
+};
+static __forceinline Rva005B8520UI *selectionUI() { return (Rva005B8520UI *)TheInGameUI; }
+class Rva005B8520View {
+public:
+    virtual void unused00();
+    virtual void unused01();
+    virtual void unused02();
+    virtual void unused03();
+    virtual void unused04();
+    virtual void unused05();
+    virtual void unused06();
+    virtual void unused07();
+    virtual void unused08();
+    virtual Drawable *pickDrawable(const ICoord2D *point, Bool attack, Int flags);
+    virtual void iterateDrawablesInRegion(const IRegion2D *region, Bool (*callback)(Drawable *, void *), void *data);
+    virtual void unused11();
+    virtual void unused12();
+    virtual void unused13();
+    virtual void unused14();
+    virtual void unused15();
+    virtual void unused16();
+    virtual void unused17();
+    virtual void unused18();
+    virtual void unused19();
+    virtual void unused20();
+    virtual void lookAt(const Coord3D *point);
+    virtual void unused22();
+    virtual void unused23();
+    virtual void unused24();
+    virtual void unused25();
+    virtual void unused26();
+    virtual void unused27();
+    virtual void unused28();
+    virtual void unused29();
+    virtual void unused30();
+    virtual void unused31();
+    virtual void unused32();
+    virtual void unused33();
+    virtual void unused34();
+    virtual void unused35();
+    virtual void unused36();
+    virtual void unused37();
+    virtual void unused38();
+    virtual void unused39();
+    virtual void unused40();
+    virtual void unused41();
+    virtual void unused42();
+    virtual void unused43();
+    virtual void unused44();
+    virtual void unused45();
+    virtual void unused46();
+    virtual void unused47();
+    virtual void unused48();
+    virtual void unused49();
+    virtual void unused50();
+    virtual void unused51();
+    virtual void unused52();
+    virtual void unused53();
+    virtual void unused54();
+    virtual void unused55();
+    virtual void unused56();
+    virtual void unused57();
+    virtual void unused58();
+    virtual void unused59();
+    virtual void unused60();
+    virtual void unused61();
+    virtual void unused62();
+    virtual void unused63();
+    virtual void unused64();
+    virtual void unused65();
+    virtual void unused66();
+    virtual void unused67();
+    virtual void unused68();
+    virtual void getPosition(Coord3D *point);
+    virtual void unused70();
+    virtual void unused71();
+    virtual void unused72();
+    virtual void unused73();
+    virtual void unused74();
+    virtual void unused75();
+    virtual void unused76();
+    virtual void unused77();
+    virtual void unused78();
+    virtual void unused79();
+    virtual void unused80();
+    virtual void unused81();
+    virtual void unused82();
+    virtual void unused83();
+    virtual void unused84();
+    virtual void unused85();
+    virtual void unused86();
+    virtual void unused87();
+    virtual void unused88();
+    virtual void screenToTerrain(const ICoord2D *pixel, Coord3D *point, Bool value);
+    virtual void unused90();
+    virtual void unused91();
+    virtual void unused92();
+    virtual void unused93();
+    virtual void unused94();
+    virtual void unused95();
+    virtual void unused96();
+    virtual void unused97();
+    virtual void unused98();
+    virtual void unused99();
+    virtual void unused100();
+    virtual void unused101();
+    virtual void unused102();
+    virtual void slot19C();
+    virtual void setMouseLock(Bool value);
+    virtual void unused105();
+    virtual void unused106();
+    virtual void unused107();
+    virtual void unused108();
+    virtual void unused109();
+    virtual void unused110();
+    virtual void unused111();
+    virtual void unused112();
+    virtual void unused113();
+    virtual Bool slot1C8();
+};
+static __forceinline Rva005B8520View *selectionView() { return (Rva005B8520View *)TheTacticalView; }
+class Rva005B8520Client {
+public:
+    virtual void unused00();
+    virtual void unused01();
+    virtual void unused02();
+    virtual void unused03();
+    virtual void unused04();
+    virtual void unused05();
+    virtual void unused06();
+    virtual void unused07();
+    virtual void unused08();
+    virtual void unused09();
+    virtual void unused10();
+    virtual Drawable *findDrawableByID(DrawableID id);
+    virtual void unused12();
+    virtual GameMessage::Type evaluateContextCommand(Drawable *draw, const Coord3D *position, Int type);
+    virtual void unused14();
+    virtual void unused15();
+    virtual void unused16();
+    virtual void unused17();
+    virtual void unused18();
+    virtual void unused19();
+    virtual void unused20();
+    virtual void unused21();
+    virtual void unused22();
+    virtual void unused23();
+    virtual void unused24();
+    virtual void unused25();
+    virtual void unused26();
+    virtual void unused27();
+    virtual void unused28();
+    virtual void unused29();
+    virtual void unused30();
+    virtual Drawable *getDrawableList();
+};
+static __forceinline Rva005B8520Client *selectionClient() { return (Rva005B8520Client *)TheGameClient; }
+class Rva005B8520Point : public ICoord2D {
+public:
+    Rva005B8520Point(const ICoord2D &point) { x=point.x; y=point.y; }
+};
+class Rva005B8520UILasso {
+public:
+    void appendPoint(Rva005B8520Point point);
+    Int iterate(Bool (*callback)(Drawable *, void *), void *data);
+};
+class BfmeOwnerVNY { public: void bfmeResetVNY(); };
+static __forceinline void resetLasso() { ((BfmeOwnerVNY *)TheInGameUI)->bfmeResetVNY(); }
+static __forceinline void appendLassoPoint(ICoord2D point) { ((Rva005B8520UILasso *)TheInGameUI)->appendPoint(point); }
+namespace Rva005B8520Layout {
+class PickDrawableStruct : public ::PickDrawableStruct {
+public:
+    unsigned int m_reservedMask[(56-sizeof(::PickDrawableStruct))/4];
+};
 }
-
-//-----------------------------------------------------------------------------
-/** 
- * Returns true if the drawable can be selected under the current rules
- * of the system 
- */
-Bool CanSelectDrawableZeroHourReference( const Drawable *draw, Bool dragSelecting )
-{
-
-	if(!draw || !draw->getObject())
-	{
-		return FALSE;  // can't select
-	}
-	const Object *obj = draw->getObject();
-	
-	if( obj->isEffectivelyDead() && !obj->isKindOf(KINDOF_ALWAYS_SELECTABLE))
-	{
-		//Don't select dead/dying units.
-		return FALSE;
-	}
-
-	//Added this to support attacking cargo planes without being able to select them.
-	//I added the KINDOF_FORCEATTACKABLE to them, but unsure if it's possible to select
-	//something without the KINDOF_SELECTABLE -- so doing a LATE code change. My gut
-	//says we should simply have the KINDOF_SELECTABLE check only... but best to be safe.
-	if( !obj->isKindOf( KINDOF_SELECTABLE ) && obj->isKindOf( KINDOF_FORCEATTACKABLE ) )
-	{
-		return FALSE;		
-	}
-
-	// hidden objects cannot be selected
-	if( draw->isDrawableEffectivelyHidden() )
-	{
-		return FALSE;  // can't select
-	}
-
-	// ignore objects obscured by the GUI
-	GameWindow *window = NULL;
-	if (TheWindowManager)
-	{
-		const Coord3D *c = draw->getPosition();
-		ICoord2D c2;
-		TheTacticalView->worldToScreen(c, &c2);
-		window = TheWindowManager->getWindowUnderCursor(c2.x, c2.y);
-	}
-
-	while (window)
-	{
-		// check to see if it or any of its parents are opaque.  If so, we can't select anything.
-		if (!BitTest( window->winGetStatus(), WIN_STATUS_SEE_THRU ))
-		{
-			return FALSE;
-		}
-
-		window = window->winGetParent();
-	}
-
-	//
-	// structures cannot be selected by a drag select, you must individually pick them
-	// NOTE that this is really a convenience for the multi select context sensitive UI,
-	// later we might want to allow you to drag select buildings if only one building is
-	// actually in the selection area, but don't forget complications like holding down
-	// a key to "add" to an already existing selection list
-	//
-	// not allowing you to have multiple buildings selected drastically simplifies the
-	// user interface ... including all those context sensitive commands that we
-	// can just assume are for a single building selected.
-	//
-	if( dragSelecting && draw->isKindOf( KINDOF_STRUCTURE ) )
-	{
-		return FALSE;
-	}
-
-	// You cannot select something that has a logic override of unselectability or masked
-	if( obj->getStatusBits().testForAny( MAKE_OBJECT_STATUS_MASK2( OBJECT_STATUS_UNSELECTABLE, OBJECT_STATUS_MASKED ) ) )
-	{
-		return FALSE;
-	}
-
-	if (!obj->isSelectable())
-	{
-		return false;
-	}
-	//Now allowing the selection of everything including enemies... but only if not drag selecting.
-	//In fact the only way you can drag select is if the unit is on your team.
-	if( dragSelecting && !obj->isLocallyControlled() )
-	{
-		return FALSE;
-	}
-
-	//Now we can select anything that is selectable.
-	return TRUE;
-
-}  // end canSelect
-
-//-----------------------------------------------------------------------------
-static Bool canSelectWrapper( Drawable *draw, void *userData )
-{
-	Bool dragSelecting = *((Bool *)userData);
-	return CanSelectDrawable( draw, dragSelecting );
+typedef char Rva005B8520PickSize[sizeof(Rva005B8520Layout::PickDrawableStruct)==56?1:-1];
+namespace _STL {
+template <> struct hash<ObjectID> { size_t operator()(ObjectID key) const { return (size_t)key; } };
 }
+typedef std::hash_map<UnsignedInt, Bool> Rva005B8520SelectedIDs;
 
-//-----------------------------------------------------------------------------
-/**
- * Deselect all drawables, and emit a "TEAM_DESTROY" message, since
- * the "team" was the group of currently selected units.
- */
-static void deselectAll()
-{
-
-	// deselect it all
-	TheInGameUI->deselectAllDrawables();
+namespace _STL {
+extern template hash_map<UnsignedInt, Bool, hash<UnsignedInt>, equal_to<UnsignedInt>, allocator<pair<const UnsignedInt, Bool> > >::hash_map();
 }
-
-//-----------------------------------------------------------------------------
-/**
- * Select the given drawable, without playing its sound.
- * Returns true.
- */
-static Bool selectSingleDrawableWithoutSound( Drawable *draw )
-{
-
-	// since we are single selecting a drawable, unselect everything else
-	deselectAll();
-
-	// do the drawble selection
-	TheInGameUI->selectDrawable( draw );
-
-	Object *obj = draw->getObject();
-	if (obj != NULL) {
-		GameMessage *msg = TheMessageStream->appendMessage(GameMessage::MSG_CREATE_SELECTED_GROUP_NO_SOUND);
-		msg->appendBooleanArgument(TRUE);
-		msg->appendObjectIDArgument(obj->getID());
-	}
-
-	return true;
-
-}
-
-SelectionTranslator *TheSelectionTranslator = NULL;
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-
-//-----------------------------------------------------------------------------
-SelectionTranslator::SelectionTranslator()
-{
-	m_leftMouseButtonIsDown = FALSE;
-	m_dragSelecting = FALSE;
-	// BFME retains the release hand-of-god state byte between these flags and
-	// the first aligned integer member.
-	*reinterpret_cast<Bool *>(reinterpret_cast<char *>(this) + 6) = FALSE;
-	m_lastGroupSelTime = 0;
-	m_lastGroupSelGroup = -1;
-	m_selectFeedbackAnchor.x = 0;
-	m_selectFeedbackAnchor.y = 0;
-	m_deselectFeedbackAnchor.x = 0;
-	m_deselectFeedbackAnchor.y = 0;
-	m_lastClick = 0;
-	//Added By Sadullah Nader
-	//Initializtion(s) inserted
-	m_deselectDownCameraPosition.zero();
-	m_displayedMaxWarning = FALSE;
-	//
-	m_selectCountMap.clear();
-
-	TheSelectionTranslator = this;
-
-#if defined(_DEBUG) || defined(_INTERNAL) || defined(_ALLOW_DEBUG_CHEATS_IN_RELEASE)
-  m_HandOfGodSelectionMode = FALSE;
-#endif
-}
-
-//-----------------------------------------------------------------------------
-SelectionTranslator::~SelectionTranslator()
-{
-}
-
-//-----------------------------------------------------------------------------
-/** 
- * If this drawable is a 'friend' of mine, select it.
- */
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/MessageStream/SelectionTranslator_selectFriends.cpp
-// ?selectFriends@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@_N@Z present-unmatched
-Bool SelectionTranslator::selectFriends( Drawable *draw, GameMessage *createTeamMsg, 
-																				 Bool dragSelecting )
-{
-	if (CanSelectDrawable( draw, dragSelecting ))
-	{
-		// enforce an optional selection size limit
-		if (TheInGameUI->getMaxSelectCount() > 0 && TheInGameUI->getSelectCount() >= TheInGameUI->getMaxSelectCount())
-		{
-			if (!m_displayedMaxWarning)
-			{
-				m_displayedMaxWarning = TRUE;
-				UnicodeString msg;
-				msg.format(TheGameText->fetch("GUI:MaxSelectionSize").str(), TheInGameUI->getMaxSelectCount());
-				TheInGameUI->message(msg);
-			}
-			return false;
-		}
-
-		TheInGameUI->selectDrawable( draw );
-
-		m_selectCountMap[draw->getTemplate()]++;
-
-		// add to message's argument list if an object is present
-		if( draw->getObject() && createTeamMsg )
-			createTeamMsg->appendObjectIDArgument( draw->getObject()->getID() );
-
-		return true;  // selected
-
-	}  // end if
-
-	return false;  // not selected
-
-}  // end selectFriends
+typedef char Rva005B8520MapSize[sizeof(Rva005B8520SelectedIDs)==20?1:-1];
 
 
-//-----------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/MessageStream/SelectionTranslator_killThemKillThemAll_Thunk.cpp
-// ?killThemKillThemAll@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@@Z present-unmatched
-Bool SelectionTranslator::killThemKillThemAll( Drawable *draw, GameMessage *killThemAllMsg )
-{
-	if( draw )
-	{
-		Object *obj = draw->getObject();
-		if( obj )
-		{
-			// enforce an optional selection size limit
-			if (TheInGameUI->getMaxSelectCount() > 0 && TheInGameUI->getSelectCount() >= TheInGameUI->getMaxSelectCount())
-			{
-				if (!m_displayedMaxWarning)
-				{
-					m_displayedMaxWarning = TRUE;
-					UnicodeString msg;
-					msg.format(TheGameText->fetch("GUI:MaxSelectionSize").str(), TheInGameUI->getMaxSelectCount());
-					TheInGameUI->message(msg);
-				}
-				return false;
-			}
-
-			// add to message's argument list if an object is present
-			if( killThemAllMsg )
-			{
-				killThemAllMsg->appendObjectIDArgument( draw->getObject()->getID() );
-			}
-
-			return true;  // selected
-		}
-	}
-	return false;
-}  // end selectFriends
-
-//-----------------------------------------------------------------------------
-/**
- * The SelectionTranslator is responsible for all selection semantics, 
- * including click selection, area drag selection, right-click de-selection, 
- * and CTRL-key group selection.
- * NOTE: This handler changes the event semantics for mouse buttons from 
- * LEFT_DOWN -> LEFT_UP  to  LEFT_DOWN -> { LEFT_UP, AREA_SELECTION, or DRAWABLE_PICKED }
- */
-// ?translateGameMessage@SelectionTranslator@@UAE?AW4GameMessageDisposition@@PBVGameMessage@@@Z present-unmatched
+class Rva005B8520Stream {
+public:
+    virtual void unused00();
+    virtual void unused01();
+    virtual void unused02();
+    virtual void unused03();
+    virtual void unused04();
+    virtual void unused05();
+    virtual void unused06();
+    virtual void unused07();
+    virtual void unused08();
+    virtual void unused09();
+    virtual void unused10();
+    virtual void unused11();
+    virtual void unused12();
+    virtual GameMessage *appendMessage(GameMessage::Type type);
+};
+static __forceinline Rva005B8520Stream *selectionStream() { return (Rva005B8520Stream *)TheMessageStream; }
+// ?translateGameMessage@SelectionTranslator@@UAE?AW4GameMessageDisposition@@PBVGameMessage@@@Z
 GameMessageDisposition SelectionTranslator::translateGameMessage(const GameMessage *msg)
 {
-	GameMessageDisposition disp = KEEP_MESSAGE;
-
-	if(	!TheInGameUI->getInputEnabled() ) 
-	{
-		//Keep the message so the other translaters (WindowXlat) can handle.
-		if( m_dragSelecting )
-		{
-			//Turn off drag select
-			m_dragSelecting = FALSE;
-			TheInGameUI->setSelecting( FALSE );
-			TheInGameUI->endAreaSelectHint(NULL);
-			TheTacticalView->setMouseLock( FALSE );
-		}
-		return KEEP_MESSAGE;
-	}
-
-	GameMessage::Type t = msg->getType();
-	switch (t)
-	{
-		case GameMessage::MSG_META_BEGIN_FORCEATTACK:
-			TheInGameUI->setForceAttackMode( true );
-			break;
-
-		case GameMessage::MSG_META_END_FORCEATTACK:
-			TheInGameUI->setForceAttackMode( false );
-			break;
-
-		//-----------------------------------------------------------------------------
-		case GameMessage::MSG_RAW_MOUSE_POSITION:
-		{
-			ICoord2D pixel;
-			pixel = msg->getArgument( 0 )->pixel;
-
-
-			// modifier appears to be unused, and the argument doesn't exist.  jba.
-			//Int modifier = msg->getArgument( 1 )->integer;
-
-			if (m_leftMouseButtonIsDown)
-			{
-				ICoord2D delta;
-
-				delta.x = abs(pixel.x - m_selectFeedbackAnchor.x);
-				delta.y = abs(pixel.y - m_selectFeedbackAnchor.y);
-
-				// if mouse has moved while left button is down, begin drag selection
-				if (delta.x > TheMouse->m_dragTolerance || delta.y > TheMouse->m_dragTolerance)
-				{
-					if (m_dragSelecting == false)
-					{
-						m_dragSelecting = true;
-						TheTacticalView->setMouseLock( TRUE );
-						TheInGameUI->setSelecting( TRUE );
-					}
-				}
-
-				// create "hint" messages defining selection region under construction
-				if (m_dragSelecting)
-				{
-					// insert area selection "hint" message into stream
-					GameMessage *hintMsg = TheMessageStream->appendMessage( GameMessage::MSG_AREA_SELECTION_HINT );
-
-					// build rectangular region defined by the drag selection
-					IRegion2D pixelRegion;
-					buildRegion( &m_selectFeedbackAnchor, &pixel, &pixelRegion );
-					hintMsg->appendPixelRegionArgument( pixelRegion );
-				}
-			}
-			else //left button is not down (not drag select)
-			{
-				// insert Mouseover hint into stream for CommandTranslator and HintSpy to see.
-				GameMessage *mouseoverMessage;
-
-				//Kris: We want to show information such as the popup text on objects that are forceattackable even
-				//      when we're not in force attackable mode!
-				UnsignedInt pickType = getPickTypesForContext( true /*TheInGameUI->isInForceAttackMode()*/ );
-				
-				Drawable *underCursor = TheTacticalView->pickDrawable( &pixel, TheInGameUI->isInForceAttackMode(), (PickType) pickType );
-				Object *objUnderCursor = underCursor ? underCursor->getObject() : NULL;
-
-				if( objUnderCursor && (!objUnderCursor->isEffectivelyDead() || objUnderCursor->isKindOf( KINDOF_ALWAYS_SELECTABLE )) )
-				{
-					mouseoverMessage = TheMessageStream->appendMessage( GameMessage::MSG_MOUSEOVER_DRAWABLE_HINT );
-					mouseoverMessage->appendDrawableIDArgument( underCursor->getID() );
-				}
-				else// else this is a mouseover terrain
-				{
-					Coord3D position;
-
-					TheTacticalView->screenToTerrain( &pixel, &position );
-					mouseoverMessage = TheMessageStream->appendMessage( GameMessage::MSG_MOUSEOVER_LOCATION_HINT );
-					mouseoverMessage->appendLocationArgument( position );
-				}
-			}
-
-			break;
-		}
-
-		//-----------------------------------------------------------------------------
-		case GameMessage::MSG_MOUSE_LEFT_DOUBLE_CLICK:
-		{
-			Int modifiers = msg->getArgument(1)->integer;
-			
-			// Pressing ctrl is disallowed for double clicking 
-			if (TheInGameUI->isInForceAttackMode())
-				break;
-
-			const IRegion2D& region = msg->getArgument(0)->pixelRegion;
-	
-			// Single point. If there's a unit in there, double click will select all of them.
-			if (region.height() == 0 && region.width() == 0) 
-			{
-				Bool selectAcrossMap = (BitTest(modifiers, KEY_STATE_ALT) ? TRUE : FALSE);
-
-				// only allow things that are selectable. Also, we aren't allowed to 
-				Drawable *picked = TheTacticalView->pickDrawable( &region.lo, FALSE, PICK_TYPE_SELECTABLE);
-
-				// If there wasn't anyone to pick, then we want to propagate this double click.
-				if (picked == NULL)
-					break;
-
-				if (!picked->isMassSelectable())
-					break;
-
-				Object *pickedObj = picked->getObject();
-
-				// We have to have an object in order to be able to do interesting double click stuff on
-				// him. Also, if it is a structure, it is already selected, so don't select all the units
-				// like him.
-				if (pickedObj == NULL || !pickedObj->isLocallyControlled())
-					break;
-
-				// Ok. The logic is a little bit weird here. What we need to do is deselect everything 
-				// except for this one picked thing. Store off the old selection, pick the single clicked thing.
-				// Then if 
-				DrawableList listOfSelectedDrawables;
-				if (TheInGameUI->isInPreferSelectionMode()) {
-					listOfSelectedDrawables	= *TheInGameUI->getAllSelectedDrawables();
-				}
-
-				// Pick just that one guy.
-				selectSingleDrawableWithoutSound(picked);
-
-				// Yay. Either select across the screen or the world depending on selectAcrossMap
-				if (selectAcrossMap)
-					TheInGameUI->selectMatchingAcrossMap();
-				else 
-					TheInGameUI->selectMatchingAcrossScreen();
-
-				// emit "picked" message
-				GameMessage *pickMsg = TheMessageStream->appendMessage( GameMessage::MSG_AREA_SELECTION );
-				pickMsg->appendDrawableIDArgument( picked->getID() );  /// note we are putting in a drawable id
-
-				if (TheInGameUI->isInPreferSelectionMode() && !listOfSelectedDrawables.empty()) {
-					GameMessage *selectMore = TheMessageStream->appendMessage( GameMessage::MSG_CREATE_SELECTED_GROUP_NO_SOUND );
-					selectMore->appendBooleanArgument(FALSE);
-					for (DrawableListIt it = listOfSelectedDrawables.begin(); it != listOfSelectedDrawables.end(); ++it) {
-						Drawable *draw = *it;
-						if (draw && draw->isSelectable()) {
-							TheInGameUI->selectDrawable(draw);
-							selectMore->appendObjectIDArgument(draw->getObject()->getID());
-						}
-					}
-				}
-
-				disp = DESTROY_MESSAGE;
-			}
-			break;
-		}
-
-		//-----------------------------------------------------------------------------
-		case GameMessage::MSG_MOUSEOVER_DRAWABLE_HINT:
-		{
-			if (TheInGameUI->isScrolling()) {
-				// dont show this now.
-				break;
-			}
-
-			DrawableID id = msg->getArgument(0)->drawableID;
-			Drawable *draw = TheGameClient->findDrawableByID(id);
-			if (!draw) {
-				break;
-			}
-
-			GameMessage::Type msgType = TheGameClient->evaluateContextCommand(draw, draw->getPosition(), CommandTranslator::EVALUATE_ONLY);
-			if( msgType == GameMessage::MSG_INVALID )
-			{
-				TheInGameUI->createMouseoverHint(msg); // this sets the cursor
-				disp = DESTROY_MESSAGE;
-				const CommandButton *command = TheInGameUI->getGUICommand();
-
-				Bool ignoreCommand = FALSE;
-				if( command )
-				{
-					if( command->getCommandType() == GUI_COMMAND_ATTACK_MOVE ||
-							command->getCommandType() == GUI_COMMAND_GUARD ||
-							command->getCommandType() == GUI_COMMAND_GUARD_WITHOUT_PURSUIT ||
-							command->getCommandType() == GUI_COMMAND_GUARD_FLYING_UNITS_ONLY )
-					{
-						//These GUI commands can take care of themselves -- don't let
-						//the selection translator meddle.
-						ignoreCommand = TRUE;
-					}
-				}
-				if( !ignoreCommand && !draw->getTemplate()->isKindOf( KINDOF_SHRUBBERY ) )
-				{
-					if( CanSelectDrawable( draw, FALSE ) )
-					{
-						TheMouse->setCursor(Mouse::SELECTING);
-					}
-					else
-					{
-						TheMouse->setCursor( Mouse::ARROW );
-					}
-				}
-			}
-
-			break;
-		}
-
-		//-----------------------------------------------------------------------------
-		case GameMessage::MSG_MOUSE_LEFT_CLICK:
-		{
-			// If the quit menu is visible, we need to not process left clicks through the selection translator.
-			if (TheInGameUI->isQuitMenuVisible()) 
-			{
-				disp = DESTROY_MESSAGE;
-				break;
-			}
-
-			// Basically, we need to first determine if there are any drawables in the region of interest.
-			// If there aren't then this click should move forward.
-			IRegion2D selectionRegion = msg->getArgument(0)->pixelRegion;
-			Bool isPoint = (selectionRegion.height() == 0 && selectionRegion.width() == 0);
-			
-			DrawableList drawablesThatWillSelect;
-			PickDrawableStruct pds;
-			pds.drawableListToFill = &drawablesThatWillSelect;
-			TheTacticalView->iterateDrawablesInRegion(&selectionRegion, addDrawableToList, &pds);
-
-			if (drawablesThatWillSelect.empty()) 
-			{
-				break;
-			}
-
-			// if there were drawables in the region, then we should determine if there is a context 
-			// sensitive command that should take place. If there is, then this isn't a selection thing
-			const DrawableList *currentList = TheInGameUI->getAllSelectedDrawables();
-			if (!currentlyLookingForSelection()) 
-			{
-				break;
-			}
-
-			SelectionInfo si;
-			if (contextCommandForNewSelection(currentList, &drawablesThatWillSelect, &si, isPoint))
-			{
-				break;
-			}
-
-			// There isn't a context command, so this is a selection thing. Now, based on the keys, 
-			// determine whether or not we should create a new group, or append these guys to our existing
-			// group.
-			
-			Bool addToGroup = TheInGameUI->isInPreferSelectionMode();
-
-			if (si.currentCountEnemies > 0 || 
-					si.currentCountCivilians > 0 || 
-					si.currentCountFriends > 0 ||
-					si.currentCountMineBuildings > 0) 
-			{
-				// force a new group creation
-				addToGroup = FALSE;
-			}
-
-			// If there are any of my units, then select those.
-			if (si.newCountMine > 0) 
-			{
-				si.selectMine = TRUE;
-
-        // EXACTLY ONE CLICKED OR DRAGGED BUILDING
-				if ( si.newCountMineBuildings == 1 && si.newCountMine == 1 ) 
-				{
-					addToGroup = FALSE;
-					si.selectMineBuildings = TRUE;
-        }
-        else if ( si.newCountMineBuildings > 0 )////////////// SO SORRY, I KNOW THIS IS MICKEY MOUSE ///////////////////
-        { // What we are after here is to allow the drag select to get the building, 
-          // if the other things in the list are going to be ignored anyway
-          // so we find out whether the other things are not selectible
-          // this came up with the new AmericaBuildingFireBase, which shows its contained
-          // but does not let you select them. The selection is propagated to the container
-          // in new code in SelectionInfo.cpp, in the static addDrawableToList();
-          // -Mark Lorenzen, 6/12/03
-          Bool onlyTheOneBuildingIsSelectableAnyway = TRUE;
-          DrawableID buildingID = INVALID_DRAWABLE_ID;
-          for (DrawableListIt it = drawablesThatWillSelect.begin(); it != drawablesThatWillSelect.end(); ++it) 
-				  {
-            const Drawable *d = *it;
-            if ( d->isKindOf( KINDOF_STRUCTURE ) ) 
-            {// make sure there is really only the one building in the list, as it may be multiply listed
-              
-              if ( buildingID == INVALID_DRAWABLE_ID ) // this is the first building
-                buildingID = d->getID();  
-              else if ( buildingID != d->getID() )//oops, more than one building!
-                onlyTheOneBuildingIsSelectableAnyway = FALSE;
+    GameMessageDisposition disp = KEEP_MESSAGE;
+    if (bfmeUIByte(0x0D) && bfmeUIByte(0x0E) && !((Rva005B8520UI *)TheInGameUI)->isQuitMenuVisible())
+    {
+    Int t=msg->getType();
+    switch (t)
+    {
+    case 3:
+    {
+        Rva005B8520Point pixel=msg->getArgument(0)->pixel;
+        if (m_leftMouseButtonIsDown)
+        {
+            if (!bfmeMouseWord(0x4D28))
+            {
+                m_leftMouseButtonIsDown=FALSE;
+                ((Rva005B8520View *)TheTacticalView)->setMouseLock(FALSE);
+                ((Rva005B8520UI *)TheInGameUI)->setSelecting(FALSE);
+                ((Rva005B8520UI *)TheInGameUI)->endAreaSelectHint(NULL);
             }
-					  else if ( d->isSelectable() )
-              onlyTheOneBuildingIsSelectableAnyway = FALSE;
-
-            if ( ! onlyTheOneBuildingIsSelectableAnyway )
-              break;
-          }
-          if ( onlyTheOneBuildingIsSelectableAnyway )
-          {
-					  addToGroup = FALSE;
-					  si.selectMineBuildings = TRUE;
-          }
-				}
-
-			}
-			else if (si.newCountEnemies > 0 && si.newCountCivilians > 0 && si.newCountFriends > 0) 
-			{
-				// No go here
-				break;
-			} 
-			else if (si.newCountEnemies == 1) 
-			{
-				addToGroup = FALSE;
-				si.selectEnemies = TRUE;
-			} 
-			else if (si.newCountCivilians == 1) 
-			{
-				addToGroup = FALSE;
-				si.selectCivilians = TRUE;
-			} 
-			else if (si.newCountFriends == 1) 
-			{
-				addToGroup = FALSE;
-				si.selectFriends = TRUE;
-			}
-
-			// If we're not going to select anything, just bail now.
-			if (!(si.selectMine || si.selectEnemies || si.selectCivilians || si.selectFriends)) 
-			{
-				break;
-			}
-
-			// If we've made it here, its time to do some selecting.
-			disp = DESTROY_MESSAGE;
-
-			// Whenever we manually select something, reset the last selected group.
-			m_lastGroupSelGroup = -1;
-			
-			if (TheInGameUI->isInPreferSelectionMode() && isPoint && areAllSelected(drawablesThatWillSelect)) 
-			{
-				// If this was a point, shift was pressed and we already have that unit selected, then we
-				// need to deselect those units.
-				GameMessage *newMsg = TheMessageStream->appendMessage(GameMessage::MSG_REMOVE_FROM_SELECTED_GROUP);
-				Drawable *draw = NULL;
-				DrawableListIt it;
-				for (it = drawablesThatWillSelect.begin(); it != drawablesThatWillSelect.end(); ++it) 
-				{
-					draw = *it;
-					if (!draw) 
-					{
-						continue;
-					}
-
-					Object *objToDeselect = draw->getObject();
-					if (!objToDeselect) 
-					{
-						continue;
-					}
-
-					newMsg->appendObjectIDArgument(objToDeselect->getID());
-					TheInGameUI->deselectDrawable(draw);
-				}
-			} 
-			else 
-			{
-				if (!addToGroup) 
-				{
-					deselectAll();
-				}
-
-				GameMessage *newMsg = TheMessageStream->appendMessage(GameMessage::MSG_CREATE_SELECTED_GROUP);
-				newMsg->appendBooleanArgument(!addToGroup);
-				
-				Player *localPlayer = ThePlayerList->getLocalPlayer();
-
-				Int newDrawablesSelected = 0;
-				Drawable *draw = NULL;
-				DrawableListIt it;
-				for (it = drawablesThatWillSelect.begin(); it != drawablesThatWillSelect.end(); ++it) 
-				{
-					draw = *it;
-					if (!draw) 
-					{
-						continue;
-					}
-
-					Object *obj = draw->getObject();
-					if (!obj) 
-					{
-						continue;
-					}
-					
-					if (obj && obj->getContainedBy() != NULL) 
-					{
-						// we're contained, and so we shouldn't be selectable.
-						continue;
-					}
-
-					Drawable *drawToSelect = NULL;
-					ObjectID objToAppend = INVALID_ID;
-					if (si.selectMine && obj->isLocallyControlled()) 
-					{
-						if (!obj->isKindOf(KINDOF_STRUCTURE) || si.selectMineBuildings) 
-						{
-							drawToSelect = draw;
-							objToAppend = obj->getID();
-						}
-					} 
-					else 
-					{
-						Relationship rel = localPlayer->getRelationship(obj->getTeam());
-						if (si.selectEnemies && rel == ENEMIES) 
-						{
-							drawToSelect = draw;
-							objToAppend = obj->getID();
-						} 
-						else if (si.selectCivilians && rel == NEUTRAL) 
-						{
-							drawToSelect = draw;
-							objToAppend = obj->getID();
-						} 
-						else if (si.selectFriends && rel == ALLIES) 
-						{
-							drawToSelect = draw;
-							objToAppend = obj->getID();
-						}
-					}
-
-					if (drawToSelect && objToAppend != INVALID_ID) 
-					{
-						newMsg->appendObjectIDArgument(objToAppend);
-						TheInGameUI->selectDrawable(drawToSelect);
-						++newDrawablesSelected;
-					}
-				}
-
-				if( newDrawablesSelected > 1 )
-				{
-					localPlayer->getAcademyStats()->recordDragSelection();
-				}
-
-				if (newDrawablesSelected == 1 && draw) 
-				{
-
-
-#if defined(_DEBUG) || defined(_INTERNAL) 
-
-
-          if (m_HandOfGodSelectionMode && draw)
-					{
-						Object* obj = draw->getObject();
-						if (obj)
-						{
-							TheAudio->addAudioEvent(&TheAudio->getMiscAudio()->m_noCanDoSound);
-							GameMessage* msg = TheMessageStream->appendMessage( GameMessage::MSG_DEBUG_KILL_OBJECT );
-							msg->appendObjectIDArgument(obj->getID());
-						}
-						disp = DESTROY_MESSAGE;
-						break;
-					}
-					else
-
-          if (TheHurtSelectionMode && draw)
-					{
-						Object* obj = draw->getObject();
-						if (obj)
-						{
-							TheAudio->addAudioEvent(&TheAudio->getMiscAudio()->m_noCanDoSound);
-							GameMessage* msg = TheMessageStream->appendMessage( GameMessage::MSG_DEBUG_HURT_OBJECT );
-							msg->appendObjectIDArgument(obj->getID());
-						}
-						disp = DESTROY_MESSAGE;
-						break;
-					}
-
-  #ifdef DEBUG_OBJECT_ID_EXISTS
-					if (TheDebugSelectionMode && draw && draw->getObject())
-					{
-						if (TheObjectIDToDebug == 0)
-						{
-							TheObjectIDToDebug = draw->getObject()->getID();
-							AsciiString msg;
-							msg.format("Item %s %08x selected for debugging",draw->getTemplate()->getName().str(),TheObjectIDToDebug);
-							UnicodeString msgu;
-							msgu.translate(msg);
-							TheInGameUI->message(msgu);
-							disp = DESTROY_MESSAGE;
-							break;
-						}
-					}
-  #endif
-
-#endif
-
-
-#if defined(_ALLOW_DEBUG_CHEATS_IN_RELEASE)
-          if (m_HandOfGodSelectionMode && draw)
-					{
-						Object* obj = draw->getObject();
-						if (obj)
-						{
-							TheAudio->addAudioEvent(&TheAudio->getMiscAudio()->m_noCanDoSound);
-							GameMessage* msg = TheMessageStream->appendMessage( GameMessage::MSG_DEBUG_KILL_OBJECT );
-							msg->appendObjectIDArgument(obj->getID());
-						}
-						disp = DESTROY_MESSAGE;
-						break;
-					}
-#endif    
-
-        
         }
-			}
-
-			if (disp == DESTROY_MESSAGE)
-				TheInGameUI->clearAttackMoveToMode();
-			
-			break;
-		}
-
-		//-----------------------------------------------------------------------------
-		// Note that the raw left messages are only used to draw feedback now when 
-		// appropriate. All actual selection code takes place in 
-		// MSG_MOUSE_LEFT_CLICK & MSG_MOUSE_LEFT_DOUBLE_CLICK
-		case GameMessage::MSG_RAW_MOUSE_LEFT_BUTTON_DOWN:
-		{
-			// cannot actually start area selection yet - have to wait for cursor to move a bit
-			m_leftMouseButtonIsDown = true;
-			m_selectFeedbackAnchor = msg->getArgument( 0 )->pixel;
-			break;
-		}
-
-		//-----------------------------------------------------------------------------
-		// Note that the raw left messages are only used to draw feedback now when 
-		// appropriate. All actual selection code takes place in 
-		// MSG_MOUSE_LEFT_CLICK & MSG_MOUSE_LEFT_DOUBLE_CLICK
-		case GameMessage::MSG_RAW_MOUSE_LEFT_BUTTON_UP:
-		{
-			m_leftMouseButtonIsDown = FALSE;
-			
-			if (m_dragSelecting) {
-				// Stop drag selecting now, thanks.
-				m_dragSelecting = FALSE;
-
-				TheTacticalView->setMouseLock( FALSE );
-				TheInGameUI->setSelecting( FALSE );
-				TheInGameUI->endAreaSelectHint(NULL);
-
-				// insert area selection message into stream
-				GameMessage *dragMsg = TheMessageStream->appendMessage( GameMessage::MSG_AREA_SELECTION );
-
-				IRegion2D selectionRegion;
-				buildRegion( &m_selectFeedbackAnchor, &msg->getArgument(0)->pixel, &selectionRegion );
-				dragMsg->appendPixelRegionArgument( selectionRegion );
-			}
-			else 
-			{
-				// left click behavior (not right drag)
-
-				//Added support to cancel the GUI command without deselecting the unit(s) involved
-				//when you right click.
-				if( !TheInGameUI->getGUICommand() && !TheKeyboard->isShift() && !TheKeyboard->isCtrl() && !TheKeyboard->isAlt() )
-				{
-					//No GUI command mode, so deselect everyone if we're in alternate mouse mode.
-					if( TheGlobalData->m_useAlternateMouse && TheInGameUI->getPendingPlaceSourceObjectID() == INVALID_ID )
-					{
-						if( !TheInGameUI->getPreventLeftClickDeselectionInAlternateMouseModeForOneClick() )
-						{
-							deselectAll();
-						}
-						else
-						{
-							//Prevent deselection of unit if it just issued some type of UI order such as attack move, guard, 
-							//initiating construction of a new structure.
-							TheInGameUI->setPreventLeftClickDeselectionInAlternateMouseModeForOneClick( FALSE );
-						}
-					}
-				}
-			}
-
-			break;
-		}
-
-		//-----------------------------------------------------------------------------
-		case GameMessage::MSG_RAW_MOUSE_RIGHT_BUTTON_DOWN:
-		{
-			// There are three ways in which we can ignore this as a deselect:
-			// 1) 2-D position on screen
-			// 2) Time has exceeded the time which we allow for this to be a click.
-			// 3) 3-D camera position has changed
-			m_deselectFeedbackAnchor = msg->getArgument( 0 )->pixel;
-			m_lastClick = (UnsignedInt) msg->getArgument( 2 )->integer;
-			TheTacticalView->getPosition(&m_deselectDownCameraPosition);
-
-			break;
-		}
-
-		//-----------------------------------------------------------------------------
-		case GameMessage::MSG_RAW_MOUSE_RIGHT_BUTTON_UP:
-		{
-			ICoord2D delta, pixel;
-			UnsignedInt currentTime;
-			Coord3D cameraPos;
-
-			TheTacticalView->getPosition(&cameraPos);
-			cameraPos.sub(&m_deselectDownCameraPosition);
-			
-			pixel = msg->getArgument( 0 )->pixel;
-			currentTime = (UnsignedInt) msg->getArgument( 2 )->integer;
-
-			delta.x = m_deselectFeedbackAnchor.x - pixel.x;
-			delta.y = m_deselectFeedbackAnchor.y - pixel.y;
-
-			Bool isClick = TRUE;
-			if (isClick && 
-					abs(delta.x) > TheMouse->m_dragTolerance || 
-					abs(delta.y) > TheMouse->m_dragTolerance)
-			{
-				isClick = FALSE;
-			}
-
-			if (isClick && 
-					currentTime - m_lastClick > TheMouse->m_dragToleranceMS)
-			{
-				isClick = FALSE;
-			}
-
-			if (isClick &&
-					cameraPos.length() > TheMouse->m_dragTolerance3D)
-			{
-				isClick = FALSE;
-			}
-
-			// right click behavior (not right drag)
-			if (isClick)
-			{
-				//Added support to cancel the GUI command without deselecting the unit(s) involved
-				//when you right click.
-				if( TheInGameUI->getGUICommand() )
-				{
-					//Cancel GUI command mode... don't deselect units.
-					TheInGameUI->setGUICommand( NULL );
-
-					//With a GUI command cancel, we want no other behavior.
-					disp = DESTROY_MESSAGE;
-					TheInGameUI->setScrolling( FALSE );
-				}
-				else
-				{
-					//No GUI command mode, so deselect everyone if we're in regular mouse mode.
-					//In alternate mouse mode, right click still cancels building placement.
-					if (! TheGlobalData->m_useAlternateMouse || TheInGameUI->getPendingPlaceSourceObjectID() != INVALID_ID)
-					{
-						deselectAll();
-					}
-				}
-			}
-
-			break;
-		}
-
-		//-----------------------------------------------------------------------------
-		case GameMessage::MSG_META_CREATE_TEAM0:
-		case GameMessage::MSG_META_CREATE_TEAM1:
-		case GameMessage::MSG_META_CREATE_TEAM2:
-		case GameMessage::MSG_META_CREATE_TEAM3:
-		case GameMessage::MSG_META_CREATE_TEAM4:
-		case GameMessage::MSG_META_CREATE_TEAM5:
-		case GameMessage::MSG_META_CREATE_TEAM6:
-		case GameMessage::MSG_META_CREATE_TEAM7:
-		case GameMessage::MSG_META_CREATE_TEAM8:
-		case GameMessage::MSG_META_CREATE_TEAM9:
-		{
-			Int group = t - GameMessage::MSG_META_CREATE_TEAM0;
-			if ( group >= 0 && group < 10 )
-			{
-				DEBUG_LOG(("META: create team %d\n",group));
-				// Assign selected items to a group
-				GameMessage *newmsg = TheMessageStream->appendMessage((GameMessage::Type)(GameMessage::MSG_CREATE_TEAM0 + group));
-				Drawable *drawable = TheGameClient->getDrawableList();
-				while (drawable != NULL)
-				{
-					if (drawable->isSelected() && drawable->getObject() && drawable->getObject()->isLocallyControlled())
-					{
-						newmsg->appendObjectIDArgument(drawable->getObject()->getID());
-					}
-					drawable = drawable->getNextDrawable();
-				}
-			}
-			disp = DESTROY_MESSAGE;
-			break;
-		}
-
-		//-----------------------------------------------------------------------------
-		case GameMessage::MSG_META_SELECT_TEAM0:
-		case GameMessage::MSG_META_SELECT_TEAM1:
-		case GameMessage::MSG_META_SELECT_TEAM2:
-		case GameMessage::MSG_META_SELECT_TEAM3:
-		case GameMessage::MSG_META_SELECT_TEAM4:
-		case GameMessage::MSG_META_SELECT_TEAM5:
-		case GameMessage::MSG_META_SELECT_TEAM6:
-		case GameMessage::MSG_META_SELECT_TEAM7:
-		case GameMessage::MSG_META_SELECT_TEAM8:
-		case GameMessage::MSG_META_SELECT_TEAM9:
-		{
-			Int group = t - GameMessage::MSG_META_SELECT_TEAM0;
-			if ( group >= 0 && group < 10 )
-			{
-				DEBUG_LOG(("META: select team %d\n",group));
-
-				UnsignedInt now = TheGameLogic->getFrame();
-				if ( m_lastGroupSelTime == 0 )
-				{
-					m_lastGroupSelTime = now;
-				}
-
-				// check for double-press to jump view
-				if ( now - m_lastGroupSelTime < 20 && group == m_lastGroupSelGroup )
-				{
-					DEBUG_LOG(("META: DOUBLETAP select team %d\n",group));
-					Player *player = ThePlayerList->getLocalPlayer();
-					if (player)
-					{
-						Squad *selectedSquad = player->getHotkeySquad(group);
-						if (selectedSquad != NULL)
-						{
-							VecObjectPtr objlist = selectedSquad->getLiveObjects();
-							Int numObjs = objlist.size();
-							if (numObjs > 0)
-							{
-								// if theres someone in the group, center the camera on them.
-								TheTacticalView->lookAt( objlist[numObjs-1]->getDrawable()->getPosition() );
-							}
-						}
-					}
-				} 
-				else 
-				{
-					TheInGameUI->deselectAllDrawables( false ); //No need to post message because we're just creating a new group!
-
-					// no need to send two messages for selecting the same group.
-					TheMessageStream->appendMessage((GameMessage::Type)(GameMessage::MSG_SELECT_TEAM0 + group));
-					Player *player = ThePlayerList->getLocalPlayer();
-					if (player)
-					{
-						Squad *selectedSquad = player->getHotkeySquad(group);
-						if (selectedSquad != NULL)
-						{
-							VecObjectPtr objlist = selectedSquad->getLiveObjects();
-							Int numObjs = objlist.size();
-							for (Int i = 0; i < numObjs; ++i)
-							{
-								if( objlist[i]->getControllingPlayer() == player )
-								{
-									TheInGameUI->selectDrawable(objlist[i]->getDrawable());
-								}
-							}
-						}
-					}
-				}
-				m_lastGroupSelTime = now;
-				m_lastGroupSelGroup = group;
-			}
-			disp = DESTROY_MESSAGE;
-			break;
-		}
-
-		case GameMessage::MSG_META_ADD_TEAM0:
-		case GameMessage::MSG_META_ADD_TEAM1:
-		case GameMessage::MSG_META_ADD_TEAM2:
-		case GameMessage::MSG_META_ADD_TEAM3:
-		case GameMessage::MSG_META_ADD_TEAM4:
-		case GameMessage::MSG_META_ADD_TEAM5:
-		case GameMessage::MSG_META_ADD_TEAM6:
-		case GameMessage::MSG_META_ADD_TEAM7:
-		case GameMessage::MSG_META_ADD_TEAM8:
-		case GameMessage::MSG_META_ADD_TEAM9:
-		{
-			Int group = t - GameMessage::MSG_META_ADD_TEAM0;
-			if ( group >= 0 && group < 10 )
-			{
-				DEBUG_LOG(("META: select team %d\n",group));
-
-				UnsignedInt now = TheGameLogic->getFrame();
-				if ( m_lastGroupSelTime == 0 )
-				{
-					m_lastGroupSelTime = now;
-				}
-
-				// check for double-press to jump view
-
-				if ( now - m_lastGroupSelTime < 20 && group == m_lastGroupSelGroup )
-				{
-					DEBUG_LOG(("META: DOUBLETAP select team %d\n",group));
-					Player *player = ThePlayerList->getLocalPlayer();
-					if (player)
-					{
-						Squad *selectedSquad = player->getHotkeySquad(group);
-						if (selectedSquad != NULL)
-						{
-							VecObjectPtr objlist = selectedSquad->getLiveObjects();
-							Int numObjs = objlist.size();
-							if (numObjs > 0)
-							{
-								// if theres someone in the group, center the camera on them.
-								TheTacticalView->lookAt( objlist[numObjs-1]->getDrawable()->getPosition() );
-							}
-						}
-					}
-
-				}
-				else
-				{
-
-					Drawable *draw = TheInGameUI->getFirstSelectedDrawable();
-					if( draw && draw->isKindOf( KINDOF_STRUCTURE ) )
-					{
-						//Kris: Jan 12, 2005
-						//Can't select other units if you have a structure selected. So deselect the structure to prevent
-						//group force attack exploit.
-						TheInGameUI->deselectAllDrawables();
-					}
-
-					// no need to send two messages for selecting the same group.
-					TheMessageStream->appendMessage((GameMessage::Type)(GameMessage::MSG_ADD_TEAM0 + group));
-					Player *player = ThePlayerList->getLocalPlayer();
-					if (player)
-					{
-						Squad *selectedSquad = player->getHotkeySquad(group);
-						if (selectedSquad != NULL)
-						{
-							VecObjectPtr objlist = selectedSquad->getLiveObjects();
-							Int numObjs = objlist.size();
-							for (Int i = 0; i < numObjs; ++i)
-							{
-								TheInGameUI->selectDrawable(objlist[i]->getDrawable());
-							}
-						}
-					}
-				}
-				m_lastGroupSelTime = now;
-				m_lastGroupSelGroup = group;
-			}
-			disp = DESTROY_MESSAGE;
-			break;
-		}
-
-		//-----------------------------------------------------------------------------
-		case GameMessage::MSG_META_VIEW_TEAM0:
-		case GameMessage::MSG_META_VIEW_TEAM1:
-		case GameMessage::MSG_META_VIEW_TEAM2:
-		case GameMessage::MSG_META_VIEW_TEAM3:
-		case GameMessage::MSG_META_VIEW_TEAM4:
-		case GameMessage::MSG_META_VIEW_TEAM5:
-		case GameMessage::MSG_META_VIEW_TEAM6:
-		case GameMessage::MSG_META_VIEW_TEAM7:
-		case GameMessage::MSG_META_VIEW_TEAM8:
-		case GameMessage::MSG_META_VIEW_TEAM9:
-		{
-			Int group = t - GameMessage::MSG_META_VIEW_TEAM0;
-			if ( group >= 1 && group <= 10 )
-			{
-				DEBUG_LOG(("META: view team %d\n",group));
-				Player *player = ThePlayerList->getLocalPlayer();
-				if (player) 
-				{
-					Squad *selectedSquad = player->getHotkeySquad(group);
-					if (selectedSquad != NULL) 
-					{
-						VecObjectPtr objlist = selectedSquad->getLiveObjects();
-						Int numObjs = objlist.size();
-						if (numObjs > 0) 
-						{
-							// if theres someone in the group, center the camera on them.
-							TheTacticalView->lookAt( objlist[ numObjs-1 ]->getDrawable()->getPosition() );
-						}
-					}
-				}
-			}
-			disp = DESTROY_MESSAGE;
-			break;
-		}
-		
-		//-----------------------------------------------------------------------------------------
-		case GameMessage::MSG_META_OPTIONS:
-		{
-			// stop drawing selection feedback, as we're going to ignore the selection.
-			m_leftMouseButtonIsDown = FALSE;
-			// let this message drop through, the commandXLat will show the options screen itself.
-			break;
-		}
-
-
-#if defined(_DEBUG) || defined(_INTERNAL) 
-		//-----------------------------------------------------------------------------------------
-		case GameMessage::MSG_META_DEMO_TOGGLE_HAND_OF_GOD_MODE:
-		{
-			if ( !TheGameLogic->isInMultiplayerGame() )
-			{
-				m_HandOfGodSelectionMode = !m_HandOfGodSelectionMode;
-				TheInGameUI->message( UnicodeString( L"Meta Hand-Of-God Mode is %s" ), m_HandOfGodSelectionMode ? L"ON" : L"OFF" );
-				disp = DESTROY_MESSAGE;
-			}
-			break;
-		}
-#endif
-
-#if defined(_ALLOW_DEBUG_CHEATS_IN_RELEASE)
-		//-----------------------------------------------------------------------------------------
-		case GameMessage::MSG_CHEAT_TOGGLE_HAND_OF_GOD_MODE://NOTICE THE DIFFERENT NAME!!!!!!!!!!!!!!!!!!!!!!!!!!ML
-		{
-			if ( !TheGameLogic->isInMultiplayerGame() )
-			{
-				m_HandOfGodSelectionMode = !m_HandOfGodSelectionMode;
-				TheInGameUI->message( UnicodeString( L"Hand-Of-God Mode is %s" ), m_HandOfGodSelectionMode ? L"ON" : L"OFF" );
-				disp = DESTROY_MESSAGE;
-			}
-			break;
-		}
-#endif
-
-#if defined(_DEBUG) || defined(_INTERNAL)
-		//-----------------------------------------------------------------------------------------
-		case GameMessage::MSG_META_DEMO_TOGGLE_HURT_ME_MODE:
-		{
-			if ( !TheGameLogic->isInMultiplayerGame() )
-			{
-				TheHurtSelectionMode = !TheHurtSelectionMode;
-				TheInGameUI->message( UnicodeString( L"Hurt-Me Mode is %s" ), TheHurtSelectionMode ? L"ON" : L"OFF" );
-				disp = DESTROY_MESSAGE;
-			}
-			break;
-		}
-#endif
-
-#if defined(_DEBUG) || defined(_INTERNAL)
-		//-----------------------------------------------------------------------------------------
-		case GameMessage::MSG_META_DEMO_DEBUG_SELECTION:
-		{
-			TheDebugSelectionMode = !TheDebugSelectionMode;
-			TheInGameUI->message( UnicodeString( L"Debug-Selected-Item Mode is %s" ), TheDebugSelectionMode ? L"ON" : L"OFF" );
-		#ifdef DEBUG_OBJECT_ID_EXISTS
-			TheObjectIDToDebug = INVALID_ID;
-		#endif
-			disp = DESTROY_MESSAGE;
-			break;
-		}
-#endif
-	}
-
-	return disp;
-}
-
-
-//Added By Sadullah Nader
-
-//setDragSelecting(Bool dragSelect)
-//Added to fix the drag selection problem in control bar
-////////////////////////////////////////////////////////////////////////
-void SelectionTranslator::setDragSelecting(Bool dragSelect)
-{
-	m_dragSelecting = dragSelect; 
-}
-
-//setLeftMouseButton(Bool state)
-//Added to turn of Left button down when left button goes up
-////////////////////////////////////////////////////////////////////////
-void SelectionTranslator::setLeftMouseButton(Bool state)
-{
-	m_leftMouseButtonIsDown = state;
+        if (m_leftMouseButtonIsDown)
+        {
+                ICoord2D delta;
+                delta.x=abs(pixel.x-m_selectFeedbackAnchor.x);
+                delta.y=abs(pixel.y-m_selectFeedbackAnchor.y);
+                if ((UnsignedInt)delta.x>bfmeMouseWord(0x10EC) || (UnsignedInt)delta.y>bfmeMouseWord(0x10EC))
+                {
+                    if (!m_dragSelecting)
+                    {
+                        m_dragSelecting=TRUE;
+                        *(Bool *)((char *)this+6)=TRUE;
+                        ((Rva005B8520View *)TheTacticalView)->setMouseLock(TRUE);
+                        ((Rva005B8520UI *)TheInGameUI)->setSelecting(TRUE);
+                    }
+                }
+                if (m_dragSelecting)
+                {
+                    if (bfmeUIByte(0x1318))
+                    {
+                        ((Rva005B8520UILasso *)TheInGameUI)->appendPoint(pixel);
+                        ((Rva005B8520UI *)TheInGameUI)->slot64(FALSE);
+                    }
+                    else
+                    {
+                        GameMessage *hintMsg=((Rva005B8520Stream *)TheMessageStream)->appendMessage((GameMessage::Type)152);
+                        IRegion2D pixelRegion;
+                        buildRegion(&m_selectFeedbackAnchor,&pixel,&pixelRegion);
+                        hintMsg->appendPixelRegionArgument(pixelRegion);
+                    }
+                }
+        }
+        else
+        {
+            Coord3D position;
+            Int pickType=Rva005B8520ABI::getPickTypesForContext(TRUE);
+            Bool forceAttackMode=bfmeUIByte(0x12B1);
+            Drawable *underCursor=((Rva005B8520View *)TheTacticalView)->pickDrawable(&pixel,forceAttackMode,pickType);
+            Object *objUnderCursor=underCursor?bfmeDrawableObject(underCursor):NULL;
+            Object *selectedObj=NULL;
+            if (((Rva005B8520UI *)TheInGameUI)->getSelectCount()==1)
+            {
+                Drawable *draw=*((Rva005B8520UI *)TheInGameUI)->getAllSelectedDrawables()->begin();
+                selectedObj=draw?bfmeDrawableObject(draw):NULL;
+            }
+            if (objUnderCursor && (!selectedObj || !selectedObj->isKindOf((KindOfType)133)))
+            {
+                if (objUnderCursor->isKindOf((KindOfType)59) && !objUnderCursor->isKindOf((KindOfType)117) && !objUnderCursor->isKindOf((KindOfType)149)
+                    && ((Rva005B8520UI *)TheInGameUI)->getSelectCount()>0 && !((Rva005B8520UI *)TheInGameUI)->isAnySelectedKindOf((KindOfType)92)
+                    && !((Rva005B8520UI *)TheInGameUI)->isAnySelectedKindOf((KindOfType)54) && !((Rva005B8520UI *)TheInGameUI)->isAnySelectedKindOf((KindOfType)146))
+                {
+                    ((Rva005B8520View *)TheTacticalView)->screenToTerrain(&pixel,&position,FALSE);
+                    if (((Rva005B8520Terrain *)TheTerrainLogic)->getLayerForDestination(NULL,&position)!=(PathfindLayerEnum)1) goto mouseoverTerrain;
+                }
+                if ((!bfmeObjectDead(objUnderCursor) || ((Rva000C4A70 *)objUnderCursor)->field() || objUnderCursor->isKindOf((KindOfType)57)))
+                {
+                    GameMessage *mouseoverMessage=((Rva005B8520Stream *)TheMessageStream)->appendMessage((GameMessage::Type)148);
+                    mouseoverMessage->appendDrawableIDArgument(bfmeDrawableID(underCursor));
+                    break;
+                }
+            }
+        mouseoverTerrain:
+            ((Rva005B8520View *)TheTacticalView)->screenToTerrain(&pixel,&position,FALSE);
+            GameMessage *mouseoverMessage=((Rva005B8520Stream *)TheMessageStream)->appendMessage((GameMessage::Type)149);
+            mouseoverMessage->appendLocationArgument(position);
+        }
+        break;
+    }
+    case 148:
+    {
+        if (((Rva005B8520UI *)TheInGameUI)->isScrolling()) break;
+        DrawableID id=msg->getArgument(0)->drawableID;
+        Drawable *draw=((Rva005B8520Client *)TheGameClient)->findDrawableByID(id);
+        if (!draw) break;
+        GameMessage::Type msgType=((Rva005B8520Client *)TheGameClient)->evaluateContextCommand(draw,bfmeDrawablePosition(draw),2);
+        if (msgType==GameMessage::MSG_INVALID)
+        {
+            ((Rva005B8520UI *)TheInGameUI)->createMouseoverHint(msg);
+            disp=DESTROY_MESSAGE;
+            const CommandButton *command=((Rva005B8520UI *)TheInGameUI)->getGUICommand();
+            Bool ignoreCommand=FALSE;
+            if (command)
+            {
+                Int commandType=command->getCommandType();
+                if (commandType==9 || commandType==10 || commandType==11 || commandType==12) ignoreCommand=TRUE;
+            }
+            if (!ignoreCommand && !draw->getTemplate()->isKindOf((KindOfType)6))
+            {
+                if (CanSelectDrawable(draw,FALSE)) ((Rva005B8520Mouse *)TheMouse)->slot38(13);
+                else ((Rva005B8520Mouse *)TheMouse)->slot38(2);
+            }
+        }
+        break;
+    }
+    case 23:
+    {
+        Bool dragSelecting=*(Bool *)((char *)this+6);
+        *(Bool *)((char *)this+6)=FALSE;
+        if (((Rva005B8520UI *)TheInGameUI)->isQuitMenuVisible() || (TheTacticalView && ((Rva005B8520View *)TheTacticalView)->slot1C8()))
+        {
+            disp=DESTROY_MESSAGE;
+            break;
+        }
+        IRegion2D selectionRegion=msg->getArgument(0)->pixelRegion;
+        Bool isPoint=selectionRegion.height()==0 && selectionRegion.width()==0;
+        DrawableList drawablesThatWillSelect;
+        Rva005B8520Layout::PickDrawableStruct pds;
+        pds.drawableListToFill=&drawablesThatWillSelect;
+        ((Bool *)&pds)[5]=dragSelecting;
+        if (bfmeUIByte(0x1318) || !isPoint)
+        {
+            ((UnsignedInt *)&pds)[10]|=0x800;
+            ((UnsignedInt *)&pds)[11]|=0x80;
+        }
+        if (bfmeUIByte(0x1318))
+        {
+            ((Rva005B8520UILasso *)TheInGameUI)->iterate(addDrawableToList,&pds);
+            resetLasso();
+            bfmeUIByte(0x1318)=FALSE;
+            bfmeUIByte(0x12B1)=FALSE;
+        }
+        else ((Rva005B8520View *)TheTacticalView)->iterateDrawablesInRegion(&selectionRegion,addDrawableToList,&pds);
+        Bool addToGroup=bfmeUIByte(0x12B3);
+        if (drawablesThatWillSelect.empty() && !addToGroup)
+        {
+            const CommandButton *command=((Rva005B8520UI *)TheInGameUI)->getGUICommand();
+            Int commandType=command?command->getCommandType():0;
+            Bool ignoreCommand=command && (commandType==23 || commandType==36 || commandType==31 || commandType==22 || commandType==25 || commandType==28 || commandType==29);
+            if (bfmeAlternateMouse() && !ignoreCommand) bfmeGoEGEb();
+            break;
+        }
+        const DrawableList *currentList=((Rva005B8520UI *)TheInGameUI)->getAllSelectedDrawables();
+        if (((Rva005B8520UI *)TheInGameUI)->getGUICommand()) break;
+        SelectionInfo si;
+        if (contextCommandForNewSelection(currentList,&drawablesThatWillSelect,&si,isPoint)) break;
+        if (si.currentCountEnemies>0 || si.currentCountCivilians>0 || si.currentCountFriends>0 || si.currentCountMineBuildings>0) addToGroup=FALSE;
+        if (si.newCountMine>0)
+        {
+            si.selectMine=TRUE;
+            if (si.newCountMine==1 && si.newCountMineBuildings==1)
+            {
+                addToGroup=FALSE;
+                si.selectMineBuildings=TRUE;
+            }
+        }
+        else if (si.newCountEnemies>0 && si.newCountCivilians>0 && si.newCountFriends>0) break;
+        else if (si.newCountEnemies==1) { addToGroup=FALSE; si.selectEnemies=TRUE; }
+        else if (si.newCountCivilians==1) { addToGroup=FALSE; si.selectCivilians=TRUE; }
+        else if (si.newCountFriends==1) { addToGroup=FALSE; si.selectFriends=TRUE; }
+        if (!(si.selectMine || si.selectEnemies || si.selectCivilians || si.selectFriends)) break;
+        m_lastGroupSelGroup=-1;
+        disp=DESTROY_MESSAGE;
+        if (bfmeUIByte(0x12B3) && isPoint && areAllSelected(drawablesThatWillSelect))
+        {
+            GameMessage *newMsg=((Rva005B8520Stream *)TheMessageStream)->appendMessage((GameMessage::Type)1004);
+            Drawable *draw=NULL;
+            DrawableListIt it;
+            for (it=drawablesThatWillSelect.begin();it!=drawablesThatWillSelect.end();++it)
+            {
+                draw=*it;
+                if (!draw) continue;
+                Object *objToDeselect=bfmeDrawableObject(draw);
+                if (!objToDeselect) continue;
+                newMsg->appendObjectIDArgument(bfmeObjectID(objToDeselect));
+                ((Rva005B8520UI *)TheInGameUI)->deselectDrawable(draw);
+            }
+        }
+        else
+        {
+            if (!addToGroup) ((Rva005B8520UI *)TheInGameUI)->deselectAllDrawables();
+            GameMessage *newMsg=((Rva005B8520Stream *)TheMessageStream)->appendMessage((GameMessage::Type)1001);
+            newMsg->appendBooleanArgument(!addToGroup);
+            Player *localPlayer=bfmeLocalPlayer();
+            Rva005B8520SelectedIDs selectedIDs;
+            Drawable *draw=NULL;
+            DrawableListIt it;
+            for (it=drawablesThatWillSelect.begin();it!=drawablesThatWillSelect.end();++it)
+            {
+                draw=*it;
+                if (!draw) continue;
+                Object *obj=bfmeDrawableObject(draw);
+                if (!obj) continue;
+                ObjectID containedID=bfmeObjectField78(obj);
+                if (containedID!=INVALID_ID)
+                {
+                    Object *container=TheGameLogic->findObjectByID(containedID);
+                    if (container && container->isKindOf((KindOfType)108))
+                    {
+                        if (((BFMEActionObject *)container)->testStatus(3)) continue;
+                        obj=container;
+                        draw=((Rva005B8520ObjectSlots *)(container))->getDrawable();
+                    }
+                }
+                Object *containedBy=bfmeContainedBy(obj);
+                if (containedBy && !obj->isKindOf((KindOfType)54))
+                {
+                    obj=containedBy;
+                    draw=((Rva005B8520ObjectSlots *)(containedBy))->getDrawable();
+                }
+                Drawable *drawToSelect=NULL;
+                ObjectID objToAppend=INVALID_ID;
+                if (si.selectMine && obj->isLocallyControlled())
+                {
+                    if (!obj->isKindOf((KindOfType)7) || si.selectMineBuildings)
+                    {
+                        drawToSelect=draw;
+                        objToAppend=bfmeObjectID(obj);
+                    }
+                }
+                else
+                {
+                    Relationship rel=localPlayer->getRelationship(bfmeObjectTeam(obj));
+                    if ((si.selectEnemies && rel==ENEMIES) || (si.selectCivilians && rel==NEUTRAL) || (si.selectFriends && rel==ALLIES))
+                    {
+                        drawToSelect=draw;
+                        objToAppend=bfmeObjectID(obj);
+                    }
+                }
+                if (drawToSelect && objToAppend!=INVALID_ID)
+                {
+                    Rva005B8520SelectedIDs::iterator already=selectedIDs.find(objToAppend);
+                    if (already!=selectedIDs.end()) continue;
+                    newMsg->appendObjectIDArgument(objToAppend);
+                    ((Rva005B8520UI *)TheInGameUI)->selectDrawable(drawToSelect);
+                    selectedIDs[objToAppend]=TRUE;
+                }
+            }
+        }
+        break;
+    }
+    case 4:
+    {
+        m_leftMouseButtonIsDown=TRUE;
+        resetLasso();
+        if (TheKeyboard->isCtrl())
+        {
+            bfmeUIByte(0x1318)=TRUE;
+            ((Rva005B8520UILasso *)TheInGameUI)->appendPoint(msg->getArgument(0)->pixel);
+        }
+        else
+        {
+            bfmeUIByte(0x1318)=FALSE;
+            m_selectFeedbackAnchor=msg->getArgument(0)->pixel;
+        }
+        break;
+    }
+    case 6:
+    {
+        m_leftMouseButtonIsDown=FALSE;
+        if (m_dragSelecting)
+        {
+            m_dragSelecting=FALSE;
+            if (bfmeUIByte(0x1318))
+            {
+                ((Rva005B8520View *)TheTacticalView)->setMouseLock(FALSE);
+                ((Rva005B8520UI *)TheInGameUI)->setSelecting(FALSE);
+                ((Rva005B8520UILasso *)TheInGameUI)->appendPoint(msg->getArgument(0)->pixel);
+                ((Rva005B8520UI *)TheInGameUI)->endAreaSelectHint(NULL);
+            }
+            else
+            {
+                ((Rva005B8520View *)TheTacticalView)->setMouseLock(FALSE);
+                ((Rva005B8520UI *)TheInGameUI)->setSelecting(FALSE);
+                ((Rva005B8520UI *)TheInGameUI)->endAreaSelectHint(NULL);
+                GameMessage *dragMsg=((Rva005B8520Stream *)TheMessageStream)->appendMessage((GameMessage::Type)1059);
+                IRegion2D selectionRegion;
+                buildRegion(&m_selectFeedbackAnchor,&msg->getArgument(0)->pixel,&selectionRegion);
+                dragMsg->appendPixelRegionArgument(selectionRegion);
+            }
+        }
+        break;
+    }
+    case 14:
+    {
+        m_deselectFeedbackAnchor=msg->getArgument(0)->pixel;
+        m_lastClick=(UnsignedInt)msg->getArgument(2)->integer;
+        ((Rva005B8520View *)TheTacticalView)->getPosition(&m_deselectDownCameraPosition);
+        break;
+    }
+    case 16:
+    {
+        ICoord2D delta,pixel;
+        UnsignedInt currentTime;
+        Coord3D cameraPos;
+        ((Rva005B8520View *)TheTacticalView)->getPosition(&cameraPos);
+        cameraPos.sub(&m_deselectDownCameraPosition);
+        pixel=msg->getArgument(0)->pixel;
+        currentTime=(UnsignedInt)msg->getArgument(2)->integer;
+        delta.x=m_deselectFeedbackAnchor.x-pixel.x;
+        delta.y=m_deselectFeedbackAnchor.y-pixel.y;
+        if ((UnsignedInt)abs(delta.x)>bfmeMouseWord(0x10EC) || (UnsignedInt)abs(delta.y)>bfmeMouseWord(0x10EC)) break;
+        if (currentTime-m_lastClick>2*bfmeMouseWord(0x10F4)) { ((Rva005B8520View *)TheTacticalView)->slot19C(); break; }
+        if (cameraPos.length()>bfmeMouseWord(0x10F0)) break;
+        if (((Rva005B8520UI *)TheInGameUI)->getGUICommand() && !bfmeAlternateMouse())
+        {
+            disp=DESTROY_MESSAGE;
+            ((Rva005B8520UI *)TheInGameUI)->setScrolling(FALSE);
+        }
+        else if (!bfmeAlternateMouse() || ((Rva005B8520UI *)TheInGameUI)->getPendingPlaceSourceObjectID()!=INVALID_ID) bfmeGoEGEb();
+        break;
+    }
+    case 49:
+    case 50:
+    case 51:
+    case 52:
+    case 53:
+    case 54:
+    case 55:
+    case 56:
+    case 57:
+    case 58:
+    {
+        Int group=t-49;
+        if (group>=0 && group<10)
+        {
+            GameMessage *newmsg=((Rva005B8520Stream *)TheMessageStream)->appendMessage((GameMessage::Type)(1005+group));
+            Drawable *drawable=((Rva005B8520Client *)TheGameClient)->getDrawableList();
+            while (drawable!=NULL)
+            {
+                if (bfmeDrawableSelected(drawable) && bfmeDrawableObject(drawable) && bfmeDrawableObject(drawable)->isLocallyControlled())
+                    newmsg->appendObjectIDArgument(bfmeObjectID(bfmeDrawableObject(drawable)));
+                drawable=bfmeNextDrawable(drawable);
+            }
+        }
+        disp=DESTROY_MESSAGE;
+        break;
+    }
+    case 59:
+    case 60:
+    case 61:
+    case 62:
+    case 63:
+    case 64:
+    case 65:
+    case 66:
+    case 67:
+    case 68:
+    {
+        Int group=t-59;
+        if (group>=0 && group<10)
+        {
+            UnsignedInt now=bfmeGameFrame();
+            if (m_lastGroupSelTime==0) m_lastGroupSelTime=now;
+            if (m_lastGroupSelGroup>=0)
+            {
+                if (((Rva005B8520UI *)TheInGameUI)->getFrameSelectionChanged()>m_lastGroupSelTime) m_lastGroupSelGroup=-1;
+                else
+                {
+                    Player *player=bfmeLocalPlayer();
+                    Squad *selectedSquad=player?player->getHotkeySquad(m_lastGroupSelGroup):NULL;
+                    if (!selectedSquad) m_lastGroupSelGroup=-1;
+                    else
+                    {
+                            BfmeVecAK *objlist=bfmeLiveObjects(selectedSquad);
+                            Int numObjs=objlist->size();
+                            for (Int i=0;i<numObjs;++i)
+                            {
+                                Drawable *draw=((Rva005B8520ObjectSlots *)((*objlist)[i]))->getDrawable();
+                                if (draw && !bfmeDrawableSelected(draw)) { m_lastGroupSelGroup=-1; break; }
+                            }
+                    }
+                }
+            }
+            if (now-m_lastGroupSelTime<5 && group==m_lastGroupSelGroup)
+            {
+                Player *player=bfmeLocalPlayer();
+                if (player)
+                {
+                    Squad *selectedSquad=player->getHotkeySquad(group);
+                    if (selectedSquad)
+                    {
+                        BfmeVecAK *objlist=bfmeLiveObjects(selectedSquad);
+                        Int numObjs=objlist->size();
+                        if (numObjs>0) ((Rva005B8520View *)TheTacticalView)->lookAt(((const BFMERopeDrawableGetPositionShim *)((Rva005B8520ObjectSlots *)((*objlist)[numObjs-1]))->getDrawable())->get());
+                    }
+                }
+            }
+            else
+            {
+                GameMessage *newMsg=((Rva005B8520Stream *)TheMessageStream)->appendMessage((GameMessage::Type)1003);
+                newMsg->appendBooleanArgument(TRUE);
+                ((Rva005B8520UI *)TheInGameUI)->deselectAllDrawables();
+                ((Rva005B8520Stream *)TheMessageStream)->appendMessage((GameMessage::Type)(1015+group));
+                Player *player=bfmeLocalPlayer();
+                if (player)
+                {
+                    Squad *selectedSquad=player->getHotkeySquad(group);
+                    if (selectedSquad)
+                    {
+                        BfmeVecAK *objlist=bfmeLiveObjects(selectedSquad);
+                        Int numObjs=objlist->size();
+                        for (Int i=0;i<numObjs;++i)
+                        {
+                            if ((*objlist)[i]->getControllingPlayer()==player) ((Rva005B8520UI *)TheInGameUI)->selectDrawable(((Rva005B8520ObjectSlots *)((*objlist)[i]))->getDrawable());
+                        }
+                    }
+                }
+            }
+            m_lastGroupSelTime=now;
+            m_lastGroupSelGroup=group;
+        }
+        disp=DESTROY_MESSAGE;
+        break;
+    }
+    case 69:
+    case 70:
+    case 71:
+    case 72:
+    case 73:
+    case 74:
+    case 75:
+    case 76:
+    case 77:
+    case 78:
+    {
+        Int group=t-69;
+        if (group>=0 && group<10)
+        {
+            UnsignedInt now=bfmeGameFrame();
+            if (!m_lastGroupSelTime) m_lastGroupSelTime=now;
+            if (now-m_lastGroupSelTime<5 && group==m_lastGroupSelGroup)
+            {
+                Player *player=bfmeLocalPlayer();
+                if (player)
+                {
+                    Squad *selectedSquad=player->getHotkeySquad(group);
+                    if (selectedSquad)
+                    {
+                        BfmeVecAK *objlist=bfmeLiveObjects(selectedSquad);
+                        Int numObjs=objlist->size();
+                        if (numObjs>0) ((Rva005B8520View *)TheTacticalView)->lookAt(((const BFMERopeDrawableGetPositionShim *)((Rva005B8520ObjectSlots *)((*objlist)[numObjs-1]))->getDrawable())->get());
+                    }
+                }
+            }
+            else
+            {
+                ((Rva005B8520Stream *)TheMessageStream)->appendMessage((GameMessage::Type)(1025+group));
+                Player *player=bfmeLocalPlayer();
+                if (player)
+                {
+                    Squad *selectedSquad=player->getHotkeySquad(group);
+                    if (selectedSquad)
+                    {
+                        BfmeVecAK *objlist=bfmeLiveObjects(selectedSquad);
+                        Int numObjs=objlist->size();
+                        for (Int i=0;i<numObjs;++i) ((Rva005B8520UI *)TheInGameUI)->selectDrawable(((Rva005B8520ObjectSlots *)((*objlist)[i]))->getDrawable());
+                    }
+                }
+            }
+            m_lastGroupSelTime=now;
+            m_lastGroupSelGroup=group;
+        }
+        disp=DESTROY_MESSAGE;
+        break;
+    }
+    case 79:
+    case 80:
+    case 81:
+    case 82:
+    case 83:
+    case 84:
+    case 85:
+    case 86:
+    case 87:
+    case 88:
+    {
+        Int group=t-79;
+        if (group>=1 && group<=10)
+        {
+            Player *player=bfmeLocalPlayer();
+            if (player)
+            {
+                Squad *selectedSquad=player->getHotkeySquad(group);
+                if (selectedSquad)
+                {
+                    BfmeVecAK *objlist=bfmeLiveObjects(selectedSquad);
+                    Int numObjs=objlist->size();
+                    if (numObjs>0) ((Rva005B8520View *)TheTacticalView)->lookAt(((const BFMERopeDrawableGetPositionShim *)((Rva005B8520ObjectSlots *)((*objlist)[numObjs-1]))->getDrawable())->get());
+                }
+            }
+        }
+        disp=DESTROY_MESSAGE;
+        break;
+    }
+    case 109:
+        m_leftMouseButtonIsDown=FALSE;
+        break;
+    }
+    }
+    else
+    {
+        if (m_dragSelecting)
+        {
+            m_dragSelecting=FALSE;
+            ((Rva005B8520UI *)TheInGameUI)->setSelecting(FALSE);
+            ((Rva005B8520UI *)TheInGameUI)->endAreaSelectHint(NULL);
+            ((Rva005B8520View *)TheTacticalView)->setMouseLock(FALSE);
+        }
+        return KEEP_MESSAGE;
+    }
+    return disp;
 }
