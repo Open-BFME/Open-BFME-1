@@ -36,12 +36,33 @@ private:
 	unsigned char m_layout0061BF00[0x34];
 };
 
-class BfmeMapEQV
+// Exact declarations of the matched native subscript and private const
+// lookup; do not import their template bodies into this caller.
+class BfmeLivingWorldManager;
+struct Rva00613AE0Value;
+struct Rva00613AE0ExtractKey;
+namespace rts { template <class T> struct hash; }
+namespace _STL
+{
+template <class T> class allocator;
+template <class T> struct equal_to;
+template <class A, class B> struct pair;
+template <class V> struct _Hashtable_node;
+template <class V, class K, class Hash, class Extract, class Equal, class Alloc>
+class hashtable
+{
+	template <class Key> _Hashtable_node<V> *_M_find(const Key &) const;
+	friend class ::BfmeLivingWorldManager;
+};
+template <class K, class V, class Hash, class Equal, class Alloc>
+class hash_map
 {
 public:
-	BfmeItemEQV *bfmeFindEQV(void *key);
-	BfmeItemEQV **bfmeAtEQV(void *key);
+	V &operator[](const K &);
 };
+}
+
+class BfmeMapEQV {};
 
 class BfmeLivingWorldManager
 {
@@ -56,15 +77,19 @@ private:
 BfmeItemEQV *BfmeLivingWorldManager::rva006155e0(void *key)
 {
 	BfmeMapEQV *map = &m_objects;
-	BfmeItemEQV *item = map->bfmeFindEQV(key);
+	BfmeItemEQV *item = reinterpret_cast<BfmeItemEQV *>(
+		reinterpret_cast<const _STL::hashtable<Rva00613AE0Value, AsciiString, rts::hash<AsciiString>, Rva00613AE0ExtractKey, _STL::equal_to<AsciiString>, _STL::allocator<Rva00613AE0Value> > *>(map)->_M_find<AsciiString>(
+			*static_cast<const AsciiString *>(key)));
 
 	if (item != 0)
-		return *map->bfmeAtEQV(key);
+		return reinterpret_cast<BfmeItemEQV *>((*reinterpret_cast<_STL::hash_map<AsciiString, LivingWorldSound *, rts::hash<AsciiString>, _STL::equal_to<AsciiString>, _STL::allocator<_STL::pair<const AsciiString, LivingWorldSound *> > > *>(map))[
+			*static_cast<const AsciiString *>(key)]);
 
 	item = reinterpret_cast<BfmeItemEQV *>(
 		new LivingWorldSound(*static_cast<const AsciiString *>(key)));
 
-	*map->bfmeAtEQV(key) = item;
+	(*reinterpret_cast<_STL::hash_map<AsciiString, LivingWorldSound *, rts::hash<AsciiString>, _STL::equal_to<AsciiString>, _STL::allocator<_STL::pair<const AsciiString, LivingWorldSound *> > > *>(map))[*static_cast<const AsciiString *>(key)] =
+		reinterpret_cast<LivingWorldSound *>(item);
 
 	return item;
 }
