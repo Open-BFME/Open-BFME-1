@@ -79,6 +79,8 @@ protected:
 	Bool isRoomForDisconnectFrameMessage(NetCommandRef *msg);
 	Bool isRoomForInformPlayerLeaveFrameMessage(NetCommandRef *msg);
 	Bool isRoomForFileProgressMessage(NetCommandRef *msg);
+	Bool isRoomForRequestPlayerLeaveMessage(NetCommandRef *msg);
+	Bool isRoomForRequestFrameDataMessage(NetCommandRef *msg);
 
 public:
 
@@ -217,5 +219,77 @@ Bool NetPacket::isRoomForFileProgressMessage(NetCommandRef *msg) {
 		return false;
 	}
 
+	return true;
+}
+
+// NetPacket::isRoomForRequestPlayerLeaveMessage, 0x00677950, 128 bytes, and
+// NetPacket::isRoomForRequestFrameDataMessage, 0x006779F0, 128 bytes: the
+// isRoomFor calls of the matched addRequestPlayerLeaveCommand (0x00679E10) and
+// addRequestFrameDataCommand (0x0067A100). Retail has no ICF, so each is its
+// own body (same charge as the disconnect-frame / inform-leave shapes).
+
+Bool NetPacket::isRoomForRequestPlayerLeaveMessage(NetCommandRef *msg) {
+	Int len = 0;
+	Bool needNewCommandID = false;
+	NetCommandMsg *cmdMsg = (NetCommandMsg *)(msg->getCommand());
+	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
+		++len;
+		len += sizeof(UnsignedByte);
+	}
+	if (m_lastRelay != msg->getRelay()) {
+		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
+	}
+	if (m_lastFrame != cmdMsg->getExecutionFrame()) {
+		len += sizeof(UnsignedInt) + sizeof(UnsignedByte);
+	}
+	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
+		++len;
+		len += sizeof(UnsignedByte);
+		needNewCommandID = true;
+	}
+	if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == true)) {
+		len += sizeof(UnsignedShort) + sizeof(UnsignedByte);
+	}
+
+	++len; // for 'D'
+	len += sizeof(UnsignedInt); // for the disconnect frame
+	if ((len + m_packetLen) > MAX_PACKET_SIZE) {
+		return false;
+	}
+	return true;
+}
+
+Bool NetPacket::isRoomForRequestFrameDataMessage(NetCommandRef *msg) {
+	Int len = 0;
+	Bool needNewCommandID = false;
+	NetCommandMsg *cmdMsg = (NetCommandMsg *)(msg->getCommand());
+	if (m_lastCommandType != cmdMsg->getNetCommandType()) {
+		++len;
+		len += sizeof(UnsignedByte);
+	}
+	if (m_lastRelay != msg->getRelay()) {
+		len += sizeof(UnsignedByte) + sizeof(UnsignedByte);
+	}
+	if (m_lastFrame != cmdMsg->getExecutionFrame()) {
+		len += sizeof(UnsignedInt) + sizeof(UnsignedByte);
+	}
+	if (m_lastPlayerID != cmdMsg->getPlayerID()) {
+		++len;
+		len += sizeof(UnsignedByte);
+		needNewCommandID = true;
+	}
+	if (((m_lastCommandID + 1) != (UnsignedShort)(cmdMsg->getID())) || (needNewCommandID == true)) {
+		len += sizeof(UnsignedShort) + sizeof(UnsignedByte);
+	}
+
+	++len; // for 'D'
+	// Two words, not one: addInformPlayerLeaveFrameCommand (0x00679B00)
+	// writes two dwords after the 'D', each read back through its own getter
+	// call on the message, so the trailing total is nine.
+	len += sizeof(UnsignedInt);
+	len += sizeof(UnsignedInt);
+	if ((len + m_packetLen) > MAX_PACKET_SIZE) {
+		return false;
+	}
 	return true;
 }
