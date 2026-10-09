@@ -1,3 +1,5 @@
+// stlport
+//
 // Five __thiscall members that hand a sub-object its own first two dwords:
 //
 //     mov eax,[ecx+<K>+4] / mov edx,[ecx+<K>] / add ecx,<K> / push eax /
@@ -6,56 +8,88 @@
 // WHAT THE BYTES SHOW.  ecx is ADJUSTED IN PLACE by a constant rather than
 // replaced by a load, so the receiver is a sub-object at a fixed offset, not a
 // stored pointer.  Both pushed values are read relative to the SAME constant,
-// from that sub-object's offsets 0 and 4, and they are pushed right-to-left --
-// so the call is `sub.f(sub.m_a, sub.m_b)` with m_a first.  The bare `ret`
-// leaves the callee to clean up, making it __thiscall with two stack arguments.
+// from that sub-object's offsets 0 and 4, and they are pushed right-to-left.
+// The bare `ret` leaves the callee to clean up, making it __thiscall with two
+// stack arguments.
 //
-// THE SPELLING IS NOT FREE HERE.  Writing the obvious `m_sub.handle(m_sub.m_a,
-// m_sub.m_b)` compiles to a DIFFERENT nineteen-byte body -- MSVC 7.1 copies
-// `this` into eax and forms the receiver with `lea ecx,[eax+K]`.  Binding the
-// sub-object to a reference first (`GenX &s = m_sub;`) is what makes it destroy
-// `this` in place with `add ecx,K`, which is what retail does.  That is a real
-// source distinction recovered from seventeen concrete bytes.
+// THE CALLEES ARE STLPORT RANGE ERASES.  Each REL32 lands on an ordinary ILT
+// entry that jumps to a matched vector<T>::erase(T*,T*) row (0x00065960,
+// 0x000FAF90, 0x003668E0, 0x003A3280; tools/callees.py), and the two pushed
+// dwords are the embedded vector's _M_start and _M_finish, so each body is
+// `v.erase(v.begin(), v.end())`.  000FB1F0 and 003C3AC0 share the element
+// type while embedding the vector at different offsets (4 and 0x68).
 //
-// FOUR CALLEES OVER FIVE CALLERS: 000FB1F0 and 003C3AC0 both call 0x0001D63D,
-// so they share a sub-object TYPE while embedding it at different offsets (4
-// and 0x68).  Every callee address is read out of the REL32 displacement and
-// lands on a low-RVA incremental-link thunk.
+// THE SPELLING IS NOT FREE HERE.  Binding the sub-object to a reference first
+// is what makes MSVC 7.1 adjust `this` in place with `add ecx,K`, which is what
+// retail does.
 //
-// IDENTITY IS NOT RECOVERED.  Names are address-derived, the argument types are
-// spelled int because a dword push cannot say more, and the leading char arrays
-// are padding that reproduces a proven offset.
+// The element payloads repeat the declarations of the TUs that own those erase
+// rows.  The owners' identities are not recovered: names are address-derived,
+// and the leading char arrays are padding that reproduces a proven offset.
 
-#define BFME_PAIR_CALL_CALLEE( ADDR )                                     \
-	class Gen##ADDR                                                       \
-	{                                                                     \
-	public:                                                               \
-		void handle( int a, int b );                                      \
-		int m_a;                                                          \
-		int m_b;                                                          \
-	};
+#include <vector>
 
-#define BFME_PAIR_CALL( NAME, CALLEE, LEAD )                              \
+struct Gen_t_00065960_p4cd { int a[1]; Gen_t_00065960_p4cd(); Gen_t_00065960_p4cd(const Gen_t_00065960_p4cd&); ~Gen_t_00065960_p4cd(); Gen_t_00065960_p4cd& operator=(const Gen_t_00065960_p4cd&); };
+
+struct BfmeVecElem_000FAFF0
+{
+	char m_body[ 0x60 ];
+
+	~BfmeVecElem_000FAFF0();
+	BfmeVecElem_000FAFF0();
+	BfmeVecElem_000FAFF0( const BfmeVecElem_000FAFF0 & );
+	BfmeVecElem_000FAFF0 &operator=( const BfmeVecElem_000FAFF0 & );
+};
+
+class LivingWorldPlayerArmy
+{
+public:
+	LivingWorldPlayerArmy &operator=( const LivingWorldPlayerArmy &other );
+	virtual ~LivingWorldPlayerArmy();
+
+private:
+	char m_body[ 0x54 ];
+};
+
+class Open2Elem3A3280
+{
+public:
+	~Open2Elem3A3280();
+
+private:
+	char m_storage[ 0xb8 ];
+};
+
+// The erase bodies are matched in their own TUs; declaring the specializations
+// keeps this TU from instantiating a second copy.
+namespace _STL
+{
+template<> Gen_t_00065960_p4cd *vector<Gen_t_00065960_p4cd>::erase(
+	Gen_t_00065960_p4cd *first, Gen_t_00065960_p4cd *last );
+template<> BfmeVecElem_000FAFF0 *vector<BfmeVecElem_000FAFF0>::erase(
+	BfmeVecElem_000FAFF0 *first, BfmeVecElem_000FAFF0 *last );
+template<> LivingWorldPlayerArmy *vector<LivingWorldPlayerArmy>::erase(
+	LivingWorldPlayerArmy *first, LivingWorldPlayerArmy *last );
+template<> Open2Elem3A3280 *vector<Open2Elem3A3280>::erase(
+	Open2Elem3A3280 *first, Open2Elem3A3280 *last );
+}
+
+#define BFME_PAIR_CALL( NAME, ELEM, LEAD )                               \
 	class NAME                                                            \
 	{                                                                     \
 	public:                                                               \
 		void forward();                                                   \
 		char m_lead[ LEAD ];                                              \
-		CALLEE m_sub;                                                     \
+		_STL::vector<ELEM> m_sub;                                         \
 	};                                                                    \
 	void NAME::forward()                                                  \
 	{                                                                     \
-		CALLEE &sub = m_sub;                                              \
-		sub.handle( sub.m_a, sub.m_b );                                   \
+		_STL::vector<ELEM> &sub = m_sub;                                  \
+		sub.erase( sub.begin(), sub.end() );                              \
 	}
 
-BFME_PAIR_CALL_CALLEE( 00024C17 )
-BFME_PAIR_CALL_CALLEE( 0001D63D )
-BFME_PAIR_CALL_CALLEE( 00046B00 )
-BFME_PAIR_CALL_CALLEE( 0001D3EA )
-
-BFME_PAIR_CALL( Rva00065A40, Gen00024C17, 4 )
-BFME_PAIR_CALL( Rva000FB1F0, Gen0001D63D, 4 )
-BFME_PAIR_CALL( Rva00366C80, Gen00046B00, 0x18 )
-BFME_PAIR_CALL( Rva003A3580, Gen0001D3EA, 0x2C )
-BFME_PAIR_CALL( Rva003C3AC0, Gen0001D63D, 0x68 )
+BFME_PAIR_CALL( Rva00065A40, Gen_t_00065960_p4cd, 4 )
+BFME_PAIR_CALL( Rva000FB1F0, BfmeVecElem_000FAFF0, 4 )
+BFME_PAIR_CALL( Rva00366C80, LivingWorldPlayerArmy, 0x18 )
+BFME_PAIR_CALL( Rva003A3580, Open2Elem3A3280, 0x2C )
+BFME_PAIR_CALL( Rva003C3AC0, BfmeVecElem_000FAFF0, 0x68 )
