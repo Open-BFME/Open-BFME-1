@@ -20,14 +20,19 @@
 // and +0x40 before +0x38.  None of those is ascending, so none of them is the
 // compiler laying out a memset.
 //
-// 0x0029BD50's store of an absolute address at offset 0 IS NOT A VPTR -- this
-// is a void member, not a constructor, so nothing here initialises a class.
-// It is an ordinary pointer-valued field; the address is a DIR32 site the
-// patcher fills from retail and the extern name is address-derived.
+// 0x0029BD50 writes the single-entry dispatch table at VA010C0D90.
+// The member body retains its address-derived identity; constructors and
+// production callers independently establish the table storage.
 //
 // IDENTITY IS NOT RECOVERED.  Every name is derived from an address.
 
-extern int R2Data010C0D90;
+// Retail VA010C0D90 is a one-entry dispatch table: ILT00031651.
+// Its existing recorded C symbol is shared by the matched production bodies.
+extern "C" void __identifier("?j_00031651@@YAXXZ")();
+extern "C" void *bfmeVftVG[1] =
+{
+    (void *)__identifier("?j_00031651@@YAXXZ")
+};
 
 class Rva000C7A10
 {
@@ -158,7 +163,7 @@ public:
 };
 void Rva0029BD50::reset()
 {
-	m_at00 = &R2Data010C0D90;
+	m_at00 = bfmeVftVG;
 	m_at3C = 0;
 	m_at40 = 0;
 	m_at38 = 0;
