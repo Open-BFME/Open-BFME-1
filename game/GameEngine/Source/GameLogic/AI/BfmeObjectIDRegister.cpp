@@ -11,17 +11,31 @@ private:
 	int m_id;
 };
 
-struct BfmeInsertResult
+enum Rva000EEC50Key { RVA_000EEC50_KEY_ZERO = 0 };
+namespace _STL
 {
-	void *m_iterator;
-	bool m_inserted;
+template <class First, class Second> struct pair
+{
+    // STLport's copy constructor preserves the hidden eight-byte result ABI.
+    pair(const pair &);
+    First first;
+    Second second;
 };
-
-class BfmeObjectIDTree
+template <class Value> struct _Identity;
+template <class Value> struct less;
+template <class Value> struct _Nonconst_traits;
+template <class Value, class Traits> struct _Rb_tree_iterator { void *_M_node; };
+template <class Value> class allocator;
+template <class Key, class Value, class Extract, class Compare, class Alloc>
+class _Rb_tree
 {
 public:
-	BfmeInsertResult insertUnique(const int &id);
+    pair<_Rb_tree_iterator<Value, _Nonconst_traits<Value> >, bool>
+        insert_unique(const Value &);
 };
+}
+
+class BfmeObjectIDTree {};
 
 class BfmeObjectNotifyBase
 {
@@ -50,7 +64,10 @@ private:
 
 void BfmeObjectIDRegisterView::bfmeRegisterObject(Object *object)
 {
-	m_ids.insertUnique(object->getID());
+	reinterpret_cast<_STL::_Rb_tree<Rva000EEC50Key, Rva000EEC50Key,
+        _STL::_Identity<Rva000EEC50Key>, _STL::less<Rva000EEC50Key>,
+        _STL::allocator<Rva000EEC50Key> > *>(&m_ids)
+        ->insert_unique(static_cast<Rva000EEC50Key>(object->getID()));
 	reinterpret_cast<BfmeObjectNotifyBase *>(
 		reinterpret_cast<unsigned char *>(this) - 0xc4)->notifyObject(object, false);
 }
