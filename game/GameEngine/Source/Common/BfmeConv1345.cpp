@@ -1,7 +1,7 @@
-// cl: /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /Iinputs/reference/shims/stringbaseascii /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME5 conversions.
 
-#include "ascii_string.h"
+#include "Common/AsciiString.h"
 
 struct BfmeVecUXA
 {
@@ -41,11 +41,12 @@ void BfmeThingUXB::bfmeGoUXB()
 }
 
 // The +0x00 member is retail's StringBase<char>. bfmeGoUXC builds it from the
-// argument through the out-of-line copy constructor (0x00887B60) that
-// AsciiString's inline copy constructor forwards to; retail emits that
-// constructor call from a member-initializer list (esi-preserving prologue,
-// `pop esi; ret 8`), which is why the call cannot be spelled from inside the
-// body of a non-constructor member.
+// argument through the out-of-line copy constructor (0x00887B60, matched as
+// ??0?$StringBase@D@@AAE@ABV0@@Z). The stringbaseascii shim's AsciiString copy
+// constructor is a visible delegation to StringBase<char>'s, so the qualified
+// constructor call inlines away and this object references the retail body
+// itself rather than an undefined placeholder name -- the respelling
+// BfmeConv526 uses for the same private body.
 class BfmeThingUXC
 {
 public:
@@ -59,10 +60,7 @@ public:
 
 BfmeThingUXC *BfmeThingUXC::bfmeGoUXC(const char *s, float v)
 {
-	// PENDING: the callee is StringBase<char>'s copy constructor, reached from
-	// retail's constructor body; a placement new here only matches the bytes
-	// with a call to the out-of-line AsciiString copy constructor (0x0005EE50).
-	bfmeSetStrUXC(s);
+	m_bfmeStr.AsciiString::AsciiString(*(const AsciiString *)s);
 	m_bfmeKind = 2;
 	int n = (int)v;
 	m_bfme08 = n;
