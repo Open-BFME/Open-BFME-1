@@ -1,25 +1,6 @@
 // ?W3DGadgetHorizontalSliderImageDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
-// partial score=0.97 date=2026-09-16
+// partial score=0.9828 date=2026-10-09
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
-// W3DGadgetHorizontalSliderImageDraw, retail 0x00790EA0 (699 bytes).
-// The name comes from the W3D draw lexicon table row at 0x012BA4FC, which
-// stores the string next to the ILT thunk that jumps here. The earlier 639
-// byte extent was short: the body pops four registers, adds 0x44 to esp and
-// returns at 0x0079115A, with int3 padding after that.
-// Two levers closed the size gap. The box height is scaledWidth, not
-// boxWidth. Writing the selected fraction as two named Real locals divided
-// by each other makes the compiler emit two fild loads and a fdivp where a
-// single expression emits fild and fidiv.
-// Twenty bytes still differ at three sites, all of them scheduling choices
-// the source does not reach. Retail loads maxVal before the numerator fild,
-// puts the end.x lea before the fdivp with boxWidth as the lea base, and
-// starts the blankness sum from boxWidth rather than from size.x.
-//
-// The BFME retail slider keeps the reference callback's image-array and
-// SliderData contract, but scales the control for the active display.  The
-// status guard, 1/800 and 1/600 scale factors, 0.6 box-width factor, 1-pixel
-// padding, and 0.8 highlight offset are all present in the retail body.
-// This TU keeps those BFME layouts local; no shared header is moved.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -37,9 +18,11 @@ private:
 	Int m_imageWidth;
 };
 
+// ??0ICoord2D@@QAE@XZ absent-from-retail
 struct ICoord2D
 {
 	Int x, y;
+	ICoord2D() {}
 
 	Int length(void) const { return (Int)sqrt((double)(x * x + y * y)); }
 };
@@ -205,6 +188,7 @@ inline Int BitTest(UnsignedInt value, UnsignedInt mask)
 enum { WIN_STATE_HILITED = 0x00000002 };
 enum { WIN_STATUS_NO_SCALE = 0x08000000 };
 
+// Open BFME 2 donor: Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DHorizontalSlider.cpp.
 void W3DGadgetHorizontalSliderImageDraw(GameWindow *window,
 														WinInstanceData *instData)
 {

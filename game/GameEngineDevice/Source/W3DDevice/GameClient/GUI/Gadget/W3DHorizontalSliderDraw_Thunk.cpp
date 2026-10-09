@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringbaseunicode /Igame/Libraries/Source/WWVegas/WWLib
 // W3DGadgetHorizontalSliderDraw, retail 0x00790D80 (227 bytes).
 //
 // Zero Hour's W3DHorizontalSlider.cpp body verbatim; the only thing that ever
@@ -23,12 +23,26 @@
 // look like allocation noise rather than a source-level fact.  Same fix as
 // IMECandidateMainDraw 0x004C4AB0.
 
+#include <wchar.h>
+#include "string_base.h"
+#include "Common/UnicodeString.h"
+inline UnicodeString::~UnicodeString() { ((StringBase<wchar_t> *)this)->releaseBuffer(); }
+
 typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef float Real;
 typedef int Color;
 
-class Image;
+class Image
+{
+public:
+    Int getImageWidth() const { return m_imageSize.x; }
+    Int getImageHeight() const { return m_imageSize.y; }
+
+private:
+    unsigned char m_unmodelled00[0x24];
+    struct { Int x, y; } m_imageSize;
+};
 
 enum { WIN_STATUS_ENABLED = 0x00000008 };
 enum { WIN_STATE_HILITED = 0x00000002 };
@@ -39,6 +53,7 @@ struct ICoord2D
 {
 	Int x;
 	Int y;
+	ICoord2D() {}
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WinInstanceData.h
@@ -54,10 +69,14 @@ class WinInstanceData
 {
 public:
 	UnsignedInt getState(void) const { return m_state; }
+	void setTooltipText(UnicodeString tip);
 
 private:
 	unsigned char m_unreconstructed_00[0x08];
 	UnsignedInt m_state;								///< retail this+0x08
+	unsigned char m_unmodelled0c[0x17c - 0x0c];
+public:
+	ICoord2D m_imageOffset;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
@@ -67,6 +86,9 @@ public:
 	Int winGetScreenPosition(Int *x, Int *y);			///< ILT thunk at 0x0002F94B
 	Int winGetSize(Int *width, Int *height);			///< ILT thunk at 0x00036EBC
 	UnsignedInt winGetStatus(void);						///< ILT thunk at 0x00023DDA
+	void *winGetUserData(void);
+	const Image *winGetDisabledImage(Int index) { return m_disabledDrawData[index].image; }
+	const Image *winGetHiliteImage(Int index) { return m_hiliteDrawData[index].image; }
 
 	Color winGetEnabledColor(Int index) { return m_enabledDrawData[index].color; }
 	Color winGetEnabledBorderColor(Int index) { return m_enabledDrawData[index].borderColor; }
@@ -148,7 +170,7 @@ public:
 	virtual void unused58();
 	virtual void unused59();
 	virtual void unused60();
-	virtual void unused61();
+	virtual void winDrawImage(const Image *image, Int startX, Int startY, Int endX, Int endY, Color color = 0xFFFFFFFF);
 
 	virtual void winFillRect(Color color, Real width,
 													 Int startX, Int startY,
@@ -232,3 +254,147 @@ void W3DGadgetHorizontalSliderDraw( GameWindow *window, WinInstanceData *instDat
 	}  // end if
 
 }  // end W3DGadgetHorizontalSliderDraw
+
+struct SliderData
+{
+	Int minVal;
+	Int maxVal;
+	Real numTicks;
+	Int position;
+};
+
+class Display
+{
+public:
+	virtual void slot00( void ) = 0;
+	virtual void slot04( void ) = 0;
+	virtual void slot08( void ) = 0;
+	virtual void slot0c( void ) = 0;
+	virtual void slot10( void ) = 0;
+	virtual void slot14( void ) = 0;
+	virtual void slot18( void ) = 0;
+	virtual void slot1c( void ) = 0;
+	virtual void slot20( void ) = 0;
+	virtual void slot24( void ) = 0;
+	virtual void slot28( void ) = 0;
+	virtual UnsignedInt getWidth( void ) = 0;
+	virtual UnsignedInt getHeight( void ) = 0;
+};
+
+
+extern Display *TheDisplay;
+
+#define INT_TO_REAL(x) ((Real)(x))
+// W3DGadgetHorizontalSliderImageDraw =========================================
+/** Draw horizontal slider with user supplied images */
+//=============================================================================
+// ?W3DGadgetHorizontalSliderImageDrawB@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
+// Open BFME 2 donor: Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DHorizontalSlider.cpp.
+void W3DGadgetHorizontalSliderImageDrawB( GameWindow *window,
+																				 WinInstanceData *instData )
+{
+	const Image *fillSquare, *blankSquare, *highlightSquare;//, *progressArrow;
+	ICoord2D origin, size, start, end;
+	Int xOffset, yOffset;
+
+	// get screen position and size
+	window->winGetScreenPosition( &origin.x, &origin.y );
+	window->winGetSize( &size.x, &size.y );
+
+	SliderData *s = (SliderData *)window->winGetUserData();
+
+	Real xMulti = 1.0f;
+	Real yMulti = 1.0f;
+	if( !( window->winGetStatus() & 0x08000000 ) )
+	{
+		xMulti = INT_TO_REAL(TheDisplay->getWidth()) / 800;
+		yMulti = INT_TO_REAL(TheDisplay->getHeight()) / 600;
+	}
+	// get image offset
+	xOffset = instData->m_imageOffset.x;
+	yOffset = instData->m_imageOffset.y;
+
+	UnicodeString tooltip, tmp;
+	tooltip.format(UnicodeString(L"mult:%g/%g, img offset:%d,%d"), xMulti, yMulti, xOffset, yOffset);
+
+	tmp.format(UnicodeString(L"\norigin: %d,%d size:%d,%d"), origin.x, origin.y, size.x, size.y);
+	tooltip.concat(tmp);
+
+	tmp.format(UnicodeString(L"\ns= %d <--> %d, numTicks=%g, pos = %d"), s->minVal, s->maxVal, s->numTicks, s->position);
+	tooltip.concat(tmp);
+
+	if( instData->getState() & WIN_STATE_HILITED )
+	{
+		highlightSquare					= window->winGetHiliteImage( 0 );
+		ICoord2D backgroundStart, backgroundEnd;
+		backgroundStart.x = origin.x - (highlightSquare->getImageWidth() * xMulti)/2;
+		backgroundStart.y = origin.y + (highlightSquare->getImageHeight() *yMulti)/3;
+		backgroundEnd.y = backgroundStart.y + highlightSquare->getImageHeight()* yMulti;
+		backgroundEnd.x = backgroundStart.x + highlightSquare->getImageWidth() * xMulti;
+
+		tmp.format(UnicodeString(L"\nHighlighted: (%d,%d) -> (%d,%d), step %d/%g, full %d/%d"), backgroundStart.x, backgroundStart.y,
+			backgroundEnd.x, backgroundEnd.y, highlightSquare->getImageWidth(), highlightSquare->getImageWidth() * xMulti,
+			origin.x, size.x);
+		tooltip.concat(tmp);
+
+		while(backgroundStart.x < origin.x + size.x)
+		{
+			TheWindowManager->winDrawImage( highlightSquare,
+																		backgroundStart.x, backgroundStart.y,
+																		backgroundEnd.x, backgroundEnd.y );
+			backgroundStart.x = backgroundEnd.x;
+			backgroundEnd.x = backgroundStart.x + highlightSquare->getImageWidth() * xMulti;
+		}
+		tmp.format(UnicodeString(L"\n  bsX = %d, beX = %d (%d < %d+%d or %d?)"), backgroundStart.x, backgroundEnd.x,
+			backgroundStart.x, origin.x, size.x, origin.x + size.x);
+		tooltip.concat(tmp);
+	}
+
+	fillSquare = window->winGetDisabledImage( 0 );
+	start.x = origin.x;
+	start.y = origin.y;
+	end.y = start.y + fillSquare->getImageHeight() * yMulti;
+	end.x	= start.x + fillSquare->getImageWidth()* xMulti;
+
+	tmp.format(UnicodeString(L"\ntop: start=%d,%d, end=%d,%d"), start.x, start.y, end.x, end.y);
+	tooltip.concat(tmp);
+
+	while(start.x <= origin.x + (s->numTicks * (s->position - s->minVal)) && end.x < origin.x + size.x && s->position != s->minVal)
+	{
+		TheWindowManager->winDrawImage( fillSquare,
+																		start.x, start.y,
+																		end.x, end.y );
+		start.x = end.x + 2;
+		end.x	= start.x + fillSquare->getImageWidth()* xMulti;
+
+	}
+
+	blankSquare	= window->winGetDisabledImage( 1 );
+	end.x	= start.x + blankSquare->getImageWidth()* xMulti;
+
+	while(end.x < origin.x + size.x )
+	{
+		TheWindowManager->winDrawImage( blankSquare,
+																		start.x, start.y,
+																		end.x, end.y );
+		start.x = end.x + 2;
+		end.x	= start.x + blankSquare->getImageWidth()* xMulti;
+	}
+
+	instData->setTooltipText(tooltip);
+
+//	if( BitTest( instData->getState(), WIN_STATE_HILITED ) )
+//	{
+//		progressArrow				= GadgetSliderGetHiliteImageRight( window );
+//		if(!progressArrow)
+//			return;
+//		Int transPos = (s->numTicks * (s->position - s->minVal)) - progressArrow->getImageWidth() /2;
+//		start.x = origin.x + transPos;
+//		start.y = origin.y + fillSquare->getImageHeight()/3*2;
+//		end.y = start.y + progressArrow->getImageHeight();
+//		end.x	= start.x + progressArrow->getImageWidth();
+//		TheWindowManager->winDrawImage( progressArrow,
+//																			start.x, start.y,
+//																			end.x, end.y );
+//	}
+}

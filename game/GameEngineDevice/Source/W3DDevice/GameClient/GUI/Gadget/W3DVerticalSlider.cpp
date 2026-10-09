@@ -80,16 +80,23 @@
 // W3DGadgetVerticalSliderImageDraw ===========================================
 /** Draw vertical slider with user supplied images */
 //=============================================================================
-void W3DGadgetVerticalSliderImageDraw( GameWindow *window, 
-																			 WinInstanceData *instData )
+// ??0CtorCoord@@QAE@XZ absent-from-retail
+struct CtorCoord : ICoord2D { CtorCoord() {} };
+
+// ?W3DGadgetVerticalSliderImageDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
+// Open BFME 2 donor: Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DVerticalSlider.cpp.
+void W3DGadgetVerticalSliderImageDraw( GameWindow *window,
+																 WinInstanceData *instData )
 {
 	const Image *topImage, *bottomImage, *centerImage, *smallCenterImage;
-	ICoord2D origin, size, start, end;
+	CtorCoord origin;
+	Int &originX = origin.x, &originY = origin.y;
+	CtorCoord size, start, end;
 	Int xOffset, yOffset;
 	Int i;
 
 	// get screen position and size
-	window->winGetScreenPosition( &origin.x, &origin.y );
+	window->winGetScreenPosition( &originX, &originY );
 	window->winGetSize( &size.x, &size.y );
 
 	// get image offset
@@ -97,41 +104,42 @@ void W3DGadgetVerticalSliderImageDraw( GameWindow *window,
 	yOffset = instData->m_imageOffset.y;
 
 	// get the right images
+	// BFME 1 keeps the draw-data arrays 4 bytes later than the shared GameWindow header, hence the window + 4 below.
 	if( BitTest( window->winGetStatus(), WIN_STATUS_ENABLED ) == FALSE )
 	{
 
-		topImage					= GadgetSliderGetDisabledImageTop( window );
-		bottomImage				= GadgetSliderGetDisabledImageBottom( window );
-		centerImage				= GadgetSliderGetDisabledImageCenter( window );
-		smallCenterImage	= GadgetSliderGetDisabledImageSmallCenter( window );
+		topImage					= GadgetSliderGetDisabledImageTop( reinterpret_cast<GameWindow *>(reinterpret_cast<char *>(window) + 4) );
+		bottomImage				= GadgetSliderGetDisabledImageBottom( reinterpret_cast<GameWindow *>(reinterpret_cast<char *>(window) + 4) );
+		centerImage				= GadgetSliderGetDisabledImageCenter( reinterpret_cast<GameWindow *>(reinterpret_cast<char *>(window) + 4) );
+		smallCenterImage	= GadgetSliderGetDisabledImageSmallCenter( reinterpret_cast<GameWindow *>(reinterpret_cast<char *>(window) + 4) );
 
 	}  // end if, disabled
 	else if( BitTest( instData->getState(), WIN_STATE_HILITED ) )
 	{
 
-		topImage					= GadgetSliderGetHiliteImageTop( window );
-		bottomImage				= GadgetSliderGetHiliteImageBottom( window );
-		centerImage				= GadgetSliderGetHiliteImageCenter( window );
-		smallCenterImage	= GadgetSliderGetHiliteImageSmallCenter( window );
+		topImage					= GadgetSliderGetHiliteImageTop( reinterpret_cast<GameWindow *>(reinterpret_cast<char *>(window) + 4) );
+		bottomImage				= GadgetSliderGetHiliteImageBottom( reinterpret_cast<GameWindow *>(reinterpret_cast<char *>(window) + 4) );
+		centerImage				= GadgetSliderGetHiliteImageCenter( reinterpret_cast<GameWindow *>(reinterpret_cast<char *>(window) + 4) );
+		smallCenterImage	= GadgetSliderGetHiliteImageSmallCenter( reinterpret_cast<GameWindow *>(reinterpret_cast<char *>(window) + 4) );
 
 	}  // end else if, hilited
 	else
 	{
 
-		topImage					= GadgetSliderGetEnabledImageTop( window );
-		bottomImage				= GadgetSliderGetEnabledImageBottom( window );
-		centerImage				= GadgetSliderGetEnabledImageCenter( window );
-		smallCenterImage	= GadgetSliderGetEnabledImageSmallCenter( window );
+		topImage					= GadgetSliderGetEnabledImageTop( reinterpret_cast<GameWindow *>(reinterpret_cast<char *>(window) + 4) );
+		bottomImage				= GadgetSliderGetEnabledImageBottom( reinterpret_cast<GameWindow *>(reinterpret_cast<char *>(window) + 4) );
+		centerImage				= GadgetSliderGetEnabledImageCenter( reinterpret_cast<GameWindow *>(reinterpret_cast<char *>(window) + 4) );
+		smallCenterImage	= GadgetSliderGetEnabledImageSmallCenter( reinterpret_cast<GameWindow *>(reinterpret_cast<char *>(window) + 4) );
 
 	}  // end else, enabled
 
 	// sanity, we need to have these images to make it look right
-	if( topImage == NULL || bottomImage == NULL || 
+	if( topImage == NULL || bottomImage == NULL ||
 			centerImage == NULL || smallCenterImage == NULL )
 		return;
 
 	// get image sizes for the ends
-	ICoord2D topSize, bottomSize;
+	CtorCoord topSize, bottomSize;
 	topSize.x = topImage->getImageWidth();
 	topSize.y = topImage->getImageHeight();
 	bottomSize.x = bottomImage->getImageWidth();
@@ -140,27 +148,27 @@ void W3DGadgetVerticalSliderImageDraw( GameWindow *window,
 	if(topSize.y + bottomSize.y >= size.y)
 	{
 		// draw top end
-		start.x = origin.x + xOffset;
-		start.y = origin.y + yOffset;
-		end.x = origin.x + xOffset + topSize.x;
-		end.y = origin.y + size.y /2;
+		start.x = originX + xOffset;
+		start.y = originY + yOffset;
+		end.x = originX + xOffset + topSize.x;
+		end.y = originY + size.y /2;
 		TheWindowManager->winDrawImage(topImage, start.x, start.y, end.x, end.y);
 
 		// draw bottom end
-		start.y = origin.y + size.y /2;
-		end.x = origin.x + xOffset + bottomSize.x;
-		end.y = origin.y + yOffset + size.y;
+		start.y = originY + size.y /2;
+		end.x = originX + xOffset + bottomSize.x;
+		end.y = originY + yOffset + size.y;
 		TheWindowManager->winDrawImage(bottomImage, start.x, start.y, end.x, end.y);
 	}
 	else
 	{
 
 		// get two key points used in the end drawing
-		ICoord2D topEnd, bottomStart;
-		topEnd.x = origin.x + topSize.x + xOffset;
-		topEnd.y = origin.y + topSize.y + yOffset;
-		bottomStart.x = origin.x + xOffset;
-		bottomStart.y = origin.y + size.y - bottomSize.y + yOffset;
+		CtorCoord topEnd, bottomStart;
+		topEnd.x = originX + topSize.x + xOffset;
+		topEnd.y = originY + topSize.y + yOffset;
+		bottomStart.x = originX + xOffset;
+		bottomStart.y = originY + size.y - bottomSize.y + yOffset;
 
 		// draw the center repeating bar
 		Int centerHeight, pieces;
@@ -172,7 +180,7 @@ void W3DGadgetVerticalSliderImageDraw( GameWindow *window,
 		pieces = centerHeight / centerImage->getImageHeight();
 
 		// draw the pieces
-		start.x = origin.x + xOffset;
+		start.x = originX + xOffset;
 		start.y = topEnd.y;
 		end.x = start.x + centerImage->getImageWidth();
 		end.y = start.y + centerImage->getImageHeight();
@@ -207,8 +215,8 @@ void W3DGadgetVerticalSliderImageDraw( GameWindow *window,
 		}  // end for i
 
 		// draw top end
-		start.x = origin.x + xOffset;
-		start.y = origin.y + yOffset;
+		start.x = originX + xOffset;
+		start.y = originY + yOffset;
 		end = topEnd;
 		TheWindowManager->winDrawImage(topImage, start.x, start.y, end.x, end.y);
 
