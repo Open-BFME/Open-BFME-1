@@ -550,16 +550,6 @@ MetaMap::MetaMap() :
 }
 
 //-------------------------------------------------------------------------------------------------
-// ??1MetaMap@@UAE@XZ present-unmatched
-MetaMap::~MetaMap()
-{
-	while (m_metaMaps)
-	{
-		MetaMapRec *next = m_metaMaps->m_next;
-		m_metaMaps->deleteInstance();
-		m_metaMaps = next;
-	}
-}
 
 //-------------------------------------------------------------------------------------------------
 GameMessage::Type MetaMap::findGameMessageMetaType(const char* name)
