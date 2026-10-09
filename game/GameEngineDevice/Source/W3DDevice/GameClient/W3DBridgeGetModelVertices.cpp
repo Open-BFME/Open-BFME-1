@@ -58,6 +58,7 @@ extern "C" void _ReadWriteBarrier(void);
 #include "common/GlobalData.h"
 #include "W3DDevice/GameClient/HeightMap.h"
 #include "sharebuf.h"
+#include "vector3i.h"
 
 class BfmeC998
 {
@@ -81,33 +82,12 @@ public:
 
 class MeshGeometryClass
 {
-	char m_prefix[0x28];
-	Int m_vertexCount;
-	ShareBufferClass<Vector3> *m_poly;
-	ShareBufferClass<Vector3> *m_vertex;
-	char m_materialPadding[0x68];
-
 public:
-	Int Get_Vertex_Count() const
-	{
-		return m_vertexCount;
-	}
-
-	Vector3 *Get_Vertex_Array()
-	{
-		return m_vertex->Get_Array();
-	}
-
-	const Vector3 *Get_Vertex_Normal_Array()
-	{
-		union
-		{
-			void (BfmeC998::*void_function)(Int);
-			const Vector3 *(BfmeC998::*normal_function)(Int);
-		} function;
-		function.void_function = &BfmeC998::bfmeGo998C;
-		return (((BfmeC998 *)this)->*function.normal_function)(0);
-	}
+	char m_prefix[0x28];
+	Int VertexCount;
+	ShareBufferClass<Vector3i16> *Poly;
+	ShareBufferClass<Vector3> *Vertex;
+	char m_materialPadding[0x68];
 };
 
 class MeshModelClass : public MeshGeometryClass
@@ -204,9 +184,15 @@ Int W3DBridgeGetModelVerticesShim::getModelVertices(VertexFormatXYZNDUV1 *destin
 
 	Int i;
 	MeshModelClass *model = (MeshModelClass *)pMesh->Peek_Model();
-	Int numVertex = model->Get_Vertex_Count();
-	Vector3 *pVert = model->Get_Vertex_Array();
-	const Vector3 *pNormal = model->Get_Vertex_Normal_Array();
+	Int numVertex = model->VertexCount;
+	Vector3 *pVert = model->Vertex->Get_Array();
+	union
+	{
+		void (BfmeC998::*void_function)(Int);
+		const Vector3 *(BfmeC998::*normal_function)(Int);
+	} function;
+	function.void_function = &BfmeC998::bfmeGo998C;
+	const Vector3 *pNormal = (((BfmeC998 *)model)->*function.normal_function)(0);
 
 	// If we happen to have too many bridges, stop.  BFME's limit is 8000, half
 	// the Zero Hour header's 12000, and it is the same 8000 the matched
