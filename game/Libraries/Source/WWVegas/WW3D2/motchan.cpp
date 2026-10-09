@@ -140,7 +140,7 @@ void MotionChannelClass::Free(void)
 {
 	// BFME frees Data unconditionally: retail's 0x00978140 loads [esi+0x14],
 	// deletes it and nulls it, with no test between and no second field.
-	delete[] Data;
+	::operator delete(Data);
 	Data = NULL;
 }
 
@@ -179,7 +179,8 @@ bool MotionChannelClass::Load_W3D(ChunkLoadClass & cload)
 	num_floats*=VectorLen;
 	unsigned int datasize=(num_floats-1)*sizeof(float);
 
-	Data = MSGW3DNEWARRAY("MotionChannelClass::Data") float32[num_floats];
+	// Retail uses scalar operator new (0x00881F30), not array new.
+	Data = (float32 *)::operator new(num_floats * sizeof(float32));
 	Data[0] = chan.Data[0];
 	
 	if (cload.Read(&(Data[1]),datasize) != datasize) {
@@ -254,7 +255,7 @@ BitChannelClass::~BitChannelClass(void)
 void BitChannelClass::Free(void)
 {
 	if (Bits != NULL) {
-		delete[] Bits;
+		::operator delete(Bits);
 		Bits = NULL;
 	}
 }
@@ -296,7 +297,8 @@ bool BitChannelClass::Load_W3D(ChunkLoadClass & cload)
 
 	assert((sizeof(W3dBitChannelStruct) + bytesleft) == (unsigned)chunk_size);
 
-	Bits = MSGW3DNEWARRAY("BitChannelClass::Bits") uint8[numbytes];
+	// Retail pairs this raw byte buffer with scalar operator delete.
+	Bits = (uint8 *)::operator new(numbytes);
 	assert(Bits);
 
 	Bits[0] = chan.Data[0];
