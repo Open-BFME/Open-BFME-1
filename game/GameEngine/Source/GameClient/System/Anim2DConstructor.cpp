@@ -97,7 +97,6 @@ extern Int __cdecl GetGameClientRandomValue(Int lo, Int hi, char *file, Int line
 class Snapshot
 {
 public:
-	Snapshot() {}
 	~Snapshot();
 
 
