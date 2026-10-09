@@ -62,12 +62,13 @@ public:
 	int m_state;
 };
 
+struct Q3HeapCompare { void *m_state; };
+void Rva00531BE0(int **first, int **last, Q3HeapCompare compare);
+class BfmeRecAU;
+class BfmeCompAV { void *m_state; };
+
 namespace _STL
 {
-
-template <class RandomAccessIterator, class Compare, class Tp, class Distance>
-void __make_heap(RandomAccessIterator first, RandomAccessIterator last,
-	Compare comp, Tp *, Distance *);
 
 template <class RandomAccessIterator, class Distance, class Tp, class Compare>
 void __adjust_heap(RandomAccessIterator first, Distance holeIndex,
@@ -81,18 +82,23 @@ template <class RandomAccessIterator, class Distance, class Tp, class Compare>
 void __partial_sort(RandomAccessIterator first, RandomAccessIterator middle,
 	RandomAccessIterator last, Tp *, Compare comp)
 {
-	__make_heap(first, middle, comp, (Tp *)0, (Distance *)0);
+	// The matched cdecl body reads the first three dwords; retail also
+	// pushes two unused STL tag arguments. Preserve all five caller slots.
+	reinterpret_cast<void (__cdecl *)(RandomAccessIterator, RandomAccessIterator,
+		Compare, Tp *, Distance *)>(&Rva00531BE0)(first, middle, comp, (Tp *)0, (Distance *)0);
 	for (RandomAccessIterator i = middle; i < last; ++i)
 	{
 		if (comp(*i, *first))
 		{
 			Tp item = *i;
 			*i = *first;
-			__adjust_heap(first, (Distance)0,
-				(Distance)(middle - first), item, comp);
+			__adjust_heap(reinterpret_cast<BfmeRecAU **>(first), (Distance)0,
+				(Distance)(middle - first), reinterpret_cast<BfmeRecAU *>(item),
+				*reinterpret_cast<BfmeCompAV *>(&comp));
 		}
 	}
-	sort_heap(first, middle, comp);
+	sort_heap(reinterpret_cast<BfmeRecAU **>(first),
+		reinterpret_cast<BfmeRecAU **>(middle), *reinterpret_cast<BfmeCompAV *>(&comp));
 }
 
 template void __partial_sort<Rva00532DF0Rec **, int, Rva00532DF0Rec *, Rva00532DF0Comp>(
