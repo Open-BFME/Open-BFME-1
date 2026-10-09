@@ -45,11 +45,10 @@ public:
 class BfmeThingDGG;
 
 BfmeThingUNB *bfmeNewUNB(void);
-// 0x007F8FB0 is retail's free cdecl body (it never reads ECX, and the call
-// site reloads this+0x254 only after it), so it stays spelled as a free
-// function here; the gen-shim that defines that address as a member is the
-// side that is wrong.
-unsigned Rva007F8FB0(void);
+// The ledger-owned provider at 0x007F8FB0 is a six-byte immediate return:
+// mov eax,0x012C3B34; ret. It reads no ECX and pops no arguments, so the
+// nullary cdecl call site can name its existing object symbol directly.
+extern "C" unsigned __identifier("?m@Gen_007f8fb0@@QAEIXZ")(void);
 BfmeThingDGG *bfmeGoDGG(void *a);
 int Rva007EB380Startup(char *params);
 
@@ -93,7 +92,7 @@ void Rva007EA9C0Owner::init()
 		adj = 0;
 	m_250->attach(adj);
 	((Gen_007f9590 *)m_254)->m((int)m_250);
-	m_254->m_24 = Rva007F8FB0();
+	m_254->m_24 = __identifier("?m@Gen_007f8fb0@@QAEIXZ")();
 	void *svc = m_254;
 	if (svc)
 		svc = (char *)svc + 8;
