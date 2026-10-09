@@ -7,7 +7,7 @@ struct BfmeStringPool3AF0
 	void (__cdecl *free)(void *storage);
 };
 
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 class EAStringC
 {
@@ -50,7 +50,7 @@ EAStringC &EAStringC::UTF8_Initialize008A0320(int value)
 	StringDataC *oldData = m_pData;
 	--oldData->m_refCount;
 	if (oldData->m_refCount == 0)
-		g_bfmeStringPool1284->free(oldData);
+		g_rva01337A30AllocPair->free(oldData);
 
 	m_pData = &g_rva012D5298Empty;
 	++g_rva012D5298Empty.m_refCount;
