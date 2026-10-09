@@ -7,16 +7,29 @@ public:
 	void run();
 };
 
+// Matched serializers at 0x007E8A10 and 0x007E88D0; both are
+// thiscall RET 8. The integer writer forwards its second word as an int.
+class BfmeC994
+{
+public:
+	void addString(const char *key, const char *value);
+};
+
+class BfmeThingCIB
+{
+public:
+	void bfmeGoCIB(void *key, void *value);
+};
+
 class BfmeMsgVJC
 {
 public:
-	void bfmeSetVJC(const char *k, void *v);
-	void bfmeSet3VJC(const char *k, int v);
 	char m_bfmePad[0x1c];
 	int m_bfme1c;
 };
 
-extern void *g_bfmeVJC;
+// Shipped zero transaction-string pointer, VA 0x0130A5DC.
+void *g_Va0130A5DC = 0;
 
 // retail 0x007F1800: FESL search serializer shared by the VJC/VJD/VJE wrappers.
 class Rva007E8810Message
@@ -39,22 +52,23 @@ public:
 
 void BfmeThingVJC::bfmeGoVJC(BfmeMsgVJC *m, int ratingMin, int ratingMax, int downloadMin, int downloadMax, void *a, void *b)
 {
-	void *g = g_bfmeVJC;
+	void *g = g_Va0130A5DC;
 	((Rva007E8AC0 *)m)->run();
 	m->m_bfme1c = 0x626c6f62;
-	m->bfmeSetVJC("TXN", g);
+	((BfmeC994 *)m)->addString("TXN", (const char *)g);
 	((Rva007F1800Search *)this)->serialize((Rva007E8810Message *)m, (int)a, b);
 	if (ratingMin > -1)
-		m->bfmeSet3VJC("ratingMin", ratingMin);
+		((BfmeThingCIB *)m)->bfmeGoCIB("ratingMin", (void *)ratingMin);
 	if (ratingMax > -1)
-		m->bfmeSet3VJC("ratingMax", ratingMax);
+		((BfmeThingCIB *)m)->bfmeGoCIB("ratingMax", (void *)ratingMax);
 	if (downloadMin > -1)
-		m->bfmeSet3VJC("downloadMin", downloadMin);
+		((BfmeThingCIB *)m)->bfmeGoCIB("downloadMin", (void *)downloadMin);
 	if (downloadMax > -1)
-		m->bfmeSet3VJC("downloadMax", downloadMax);
+		((BfmeThingCIB *)m)->bfmeGoCIB("downloadMax", (void *)downloadMax);
 }
 
-extern void *g_bfmeVJD;
+// Shipped zero transaction-string pointer, VA 0x0130A618.
+void *g_Va0130A618 = 0;
 
 class BfmeThingVJD
 {
@@ -64,19 +78,19 @@ public:
 
 void BfmeThingVJD::bfmeGoVJD(BfmeMsgVJC *m, int ratingMin, int ratingMax, int topN, int periodType, int periodsPast, void *b)
 {
-	void *g = g_bfmeVJD;
+	void *g = g_Va0130A618;
 	((Rva007E8AC0 *)m)->run();
 	m->m_bfme1c = 0x626c6f62;
-	m->bfmeSetVJC("TXN", g);
+	((BfmeC994 *)m)->addString("TXN", (const char *)g);
 	((Rva007F1800Search *)this)->serialize((Rva007E8810Message *)m, topN, b);
 	if (ratingMin > -1)
-		m->bfmeSet3VJC("ratingMin", ratingMin);
+		((BfmeThingCIB *)m)->bfmeGoCIB("ratingMin", (void *)ratingMin);
 	if (ratingMax > -1)
-		m->bfmeSet3VJC("ratingMax", ratingMax);
+		((BfmeThingCIB *)m)->bfmeGoCIB("ratingMax", (void *)ratingMax);
 	if (topN > 0)
-		m->bfmeSet3VJC("topN", topN);
+		((BfmeThingCIB *)m)->bfmeGoCIB("topN", (void *)topN);
 	if (periodType > -1)
-		m->bfmeSet3VJC("periodType", periodType);
+		((BfmeThingCIB *)m)->bfmeGoCIB("periodType", (void *)periodType);
 	if (periodsPast > -1)
-		m->bfmeSet3VJC("periodsPast", periodsPast);
+		((BfmeThingCIB *)m)->bfmeGoCIB("periodsPast", (void *)periodsPast);
 }
