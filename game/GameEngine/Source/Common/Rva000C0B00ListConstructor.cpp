@@ -10,11 +10,18 @@ extern "C" void _ReadWriteBarrier(void);
 namespace _STL
 {
 
-class __new_alloc
+// Retail 0x0082E540 is the matched node pool refill/mutex body.
+static __forceinline void *vectorSmallAllocate(unsigned int bytes);
+template <bool Threads, int Instance>
+class __node_alloc
 {
-public:
-	static void *allocate(unsigned int size);
+	static void *__cdecl _M_allocate(unsigned int bytes);
+	friend void *vectorSmallAllocate(unsigned int bytes);
 };
+static __forceinline void *vectorSmallAllocate(unsigned int bytes)
+{
+	return __node_alloc<true, 0>::_M_allocate(bytes);
+}
 
 }
 
@@ -51,7 +58,7 @@ Rva000C0B00::Rva000C0B00()
 	m_status = -1;
 	_ReadWriteBarrier();
 	m_node = 0;
-	m_node = (Rva000C0B00Node *)_STL::__new_alloc::allocate(0x14);
+	m_node = (Rva000C0B00Node *)_STL::vectorSmallAllocate(0x14);
 	m_count = 0;
 	m_node->m_flag = 0;
 	m_node->m_value = 0;
