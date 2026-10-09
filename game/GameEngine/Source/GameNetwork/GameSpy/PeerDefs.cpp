@@ -74,11 +74,8 @@ GameSpyInfoInterface *TheGameSpyInfo = NULL;
 extern GameSpyStagingRoom *TheGameSpyGame = NULL;
 void deleteNotificationBox( void );
 
-// ??RAsciiComparator@@QBE_NVAsciiString@@0@Z present-unmatched
-bool AsciiComparator::operator()(AsciiString s1, AsciiString s2) const
-{
-	return _strcmpi(s1.str(), s2.str()) < 0;
-}
+// AsciiComparator::operator(): retail body in PeerDefs_AsciiComparator.cpp.
+
 
 GameSpyInfo::GameSpyInfo()
 {

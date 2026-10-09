@@ -129337,7 +129337,6 @@ present_unmatched	game/GameEngine/Source/GameNetwork/GameSpy/GSConfig.cpp	0GameS
 present_unmatched	game/GameEngine/Source/GameNetwork/GameSpy/GSConfig.cpp	create@GameSpyConfigInterface@@SAPAV1@VAsciiString@@@Z	1
 present_unmatched	game/GameEngine/Source/GameNetwork/GameSpy/GSConfig.cpp	isPlayerVIP@GameSpyConfig@@UAE_NH@Z	1
 present_unmatched	game/GameEngine/Source/GameNetwork/GameSpy/GameSpyConfigConstructor.cpp	getQMMaps@GameSpyConfig@@UAE?AV?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@XZ	1
-present_unmatched	game/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp	RAsciiComparator@@QBE_NVAsciiString@@0@Z	1
 present_unmatched	game/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp	addGroupRoom@GameSpyInfo@@UAEXVGameSpyGroupRoom@@@Z	1
 present_unmatched	game/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp	isIgnored@PlayerInfo@@QAE_NXZ	1
 present_unmatched	game/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp	joinBestGroupRoom@GameSpyInfo@@UAEXXZ	1
