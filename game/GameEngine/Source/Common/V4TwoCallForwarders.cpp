@@ -85,14 +85,24 @@ void Rva003BEED0::run()
 	finish();
 }
 
+class AsciiString;
+class Gen_003BEA30;
+class BfmeItemAM;
+
+class Gen_003BEBA0
+{
+public:
+	Gen_003BEA30 *find( const AsciiString &name ) const;
+	void          bfmeRemove( BfmeItemAM *item );
+};
+
 class Rva003C0E40
 {
 public:
 	void  run( int a );
-	int   first( int a );
-	void  second( int value );
 };
 void Rva003C0E40::run( int a )
 {
-	second( first( a ) );
+	Gen_003BEBA0 *self = reinterpret_cast<Gen_003BEBA0 *>( this );
+	self->bfmeRemove( reinterpret_cast<BfmeItemAM *>( self->find( *reinterpret_cast<const AsciiString *>( a ) ) ) );
 }
