@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
+// Retail ILT110D6 and ILT30652 call the matched BfmeHandleCX ctor/dtor.
 // BFME stores the texture stages as one-word owning wrappers.  Keeping that
 // layout local avoids changing the later vendored MaterialPassClass header,
 // while allowing MSVC to emit the retail array-destructor cleanup sequence.
@@ -7,11 +8,11 @@
 // __purecall vftable under the same COMDAT name as retail's two-slot table.
 #include "refcount.h"
 
-class MaterialPassStage
+class BfmeHandleCX
 {
 public:
-	MaterialPassStage();
-	~MaterialPassStage();
+	BfmeHandleCX();
+	~BfmeHandleCX();
 
 private:
 	void *Pointer;
@@ -25,7 +26,7 @@ public:
 	virtual ~MaterialPassClass();
 
 private:
-	MaterialPassStage Stages[8];
+	BfmeHandleCX Stages[8];
 	int Shader;
 	RefCountClass *Material;
 	bool EnableOnTranslucentMeshes;
