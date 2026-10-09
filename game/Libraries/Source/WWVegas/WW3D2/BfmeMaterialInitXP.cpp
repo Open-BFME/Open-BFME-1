@@ -24,8 +24,8 @@ private:
 };
 
 VertexMaterialClass *_BoxMaterial = 0;			// retail 0x0134B210
-extern int g_bfmeTargetXP;					// retail 0x012D7300
-extern bool g_bfmeReadyXP;					// retail 0x0134B208
+int g_bfmeTargetXP = 0x0010441B;					// retail 0x012D7300
+bool g_bfmeReadyXP;					// retail 0x0134B208
 
 // ?bfmeInitMaterialXP@@YAXXZ
 void bfmeInitMaterialXP(void)
