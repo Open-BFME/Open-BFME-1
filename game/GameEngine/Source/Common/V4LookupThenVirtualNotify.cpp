@@ -35,6 +35,20 @@
 // IDENTITY IS NOT RECOVERED.  Every name is derived from an address; the lookup
 // pin is address-derived and additive.
 
+class AsciiString;
+struct Rva003B9DC0Value;
+struct Rva003B9DC0KeyOfValue;
+class Rva003BAD00Owner;
+namespace _STL {
+ template<class T> struct less;
+ template<class T> class allocator;
+ template<class T> struct _Rb_tree_node;
+ template<class K, class V, class E, class C, class A> class _Rb_tree {
+  template<class Q> _Rb_tree_node<V> *_M_find(const Q &) const;
+  friend class ::Rva003BAD00Owner;
+ };
+}
+
 class Gen003BAD00Target
 {
 public:
@@ -54,7 +68,6 @@ public:
 class Rva003BAD00Owner
 {
 public:
-	Gen003B9DC0Node * find( int key );
 	void notify04( int key, int a );
 	void notify08( int key, int a );
 	void notify0C( int key, int a, int b );
@@ -63,7 +76,7 @@ public:
 
 void Rva003BAD00Owner::notify04( int key, int a )
 {
-	Gen003B9DC0Node *node = find( key );
+	Gen003B9DC0Node *node = reinterpret_cast<Gen003B9DC0Node *>(reinterpret_cast<const _STL::_Rb_tree<AsciiString, Rva003B9DC0Value, Rva003B9DC0KeyOfValue, _STL::less<AsciiString>, _STL::allocator<Rva003B9DC0Value> > *>(this)->_M_find<AsciiString>(*reinterpret_cast<const AsciiString *>(key)));
 	if( node == m_at00 )
 		return;
 	Gen003BAD00Target *t = node->m_at14;
@@ -74,7 +87,7 @@ void Rva003BAD00Owner::notify04( int key, int a )
 
 void Rva003BAD00Owner::notify0C( int key, int a, int b )
 {
-	Gen003B9DC0Node *node = find( key );
+	Gen003B9DC0Node *node = reinterpret_cast<Gen003B9DC0Node *>(reinterpret_cast<const _STL::_Rb_tree<AsciiString, Rva003B9DC0Value, Rva003B9DC0KeyOfValue, _STL::less<AsciiString>, _STL::allocator<Rva003B9DC0Value> > *>(this)->_M_find<AsciiString>(*reinterpret_cast<const AsciiString *>(key)));
 	if( node == m_at00 )
 		return;
 	Gen003BAD00Target *t = node->m_at14;
@@ -85,7 +98,7 @@ void Rva003BAD00Owner::notify0C( int key, int a, int b )
 
 void Rva003BAD00Owner::notify08( int key, int a )
 {
-	Gen003B9DC0Node *node = find( key );
+	Gen003B9DC0Node *node = reinterpret_cast<Gen003B9DC0Node *>(reinterpret_cast<const _STL::_Rb_tree<AsciiString, Rva003B9DC0Value, Rva003B9DC0KeyOfValue, _STL::less<AsciiString>, _STL::allocator<Rva003B9DC0Value> > *>(this)->_M_find<AsciiString>(*reinterpret_cast<const AsciiString *>(key)));
 	if( node == m_at00 )
 		return;
 	Gen003BAD00Target *t = node->m_at14;
