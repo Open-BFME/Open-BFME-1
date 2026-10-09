@@ -11,19 +11,24 @@ void *__cdecl operator new(unsigned int);
 class Rva00412140
 {
 public:
-	// Declared as a thiscall that returns `this` so the call site can keep the
-	// pointer in eax across the call (same bytes as ??0Rva00412140@@QAE@XZ).
-	Rva00412140 *construct();				///< ILT 0x00037475 -> 0x00412140
+	Rva00412140() throw();							///< ILT 0x00037475 -> 0x00412140
 
 	char m_pad[0x38];
 	char m_at38;							///< +0x38
 	char m_tail[0x50 - 0x39];
 };
 
+struct RGBColor;
+
+class Drawable
+{
+public:
+	void colorFlash(const RGBColor *color, unsigned int decayFrames, unsigned int attackFrames, unsigned int sustainAtPeak);	///< ILT 0x0003A2A1 -> 0x00416440
+};
+
 class BfmeHost4164E0
 {
 public:
-	void apply(int a, int b, int c, int d);	///< ILT 0x0003A2A1 -> 0x00416440
 	void setFlagged(int on);
 
 private:
@@ -38,18 +43,13 @@ void BfmeHost4164E0::setFlagged(int on)
 {
 	if (on)
 	{
-		apply(on, 0, 0, -2);
+		reinterpret_cast<Drawable *>(this)->colorFlash(reinterpret_cast<const RGBColor *>(on), 0, 0, (unsigned int)-2);
 		m_flags |= 4;
 		return;
 	}
 	if (!m_child)
 	{
-		Rva00412140 *p = (Rva00412140 *)operator new(sizeof(Rva00412140));
-		if (p)
-			p = p->construct();
-		else
-			p = 0;
-		m_child = p;
+		m_child = new Rva00412140;
 	}
 	m_child->m_at38 = 0;
 	m_flags &= ~4u;
