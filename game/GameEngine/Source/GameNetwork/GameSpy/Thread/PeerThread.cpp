@@ -386,26 +386,7 @@ std::string PeerThreadClass::packStatKey(const char *nick, const char *key)
 	return s;
 }
 
-// ?lookupStatForPlayer@PeerThreadClass@@ present-unmatched
-int PeerThreadClass::lookupStatForPlayer(RoomType roomType, const char *nick, const char *key)
-{
-	std::string fullKey = packStatKey(nick, key);
-	PlayerStatMap::const_iterator it;
-	switch (roomType)
-	{
-		case GroupRoom:
-			it = m_groupRoomStats.find(fullKey);
-			if (it != m_groupRoomStats.end())
-				return it->second;
-			break;
-		case StagingRoom:
-			it = m_stagingRoomStats.find(fullKey);
-			if (it != m_stagingRoomStats.end())
-				return it->second;
-			break;
-	}
-	return 0;
-}
+// The matched PeerThreadClass::lookupStatForPlayer (0x00647DD0) lives in PeerThreadLookupStatForPlayer.cpp.
 
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThreadClearPlayerStats.cpp
 // ?clearPlayerStats@PeerThreadClass@@ present-unmatched
