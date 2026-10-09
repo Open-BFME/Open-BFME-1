@@ -235,7 +235,6 @@ inline Int BitTest(UnsignedInt bits, UnsignedInt mask) { return (bits & mask) !=
 
 // GadgetStaticText.h header inlines over draw-data index 0.
 inline const Image *GadgetStaticTextGetEnabledImage( GameWindow *g ) { return g->enabledDrawData( 0 )->image; }
-inline const Image *GadgetStaticTextGetDisabledImage( GameWindow *g ) { return g->disabledDrawData( 0 )->image; }
 
 #define WIN_DRAW_LINE_WIDTH 1.0f
 
@@ -390,7 +389,7 @@ void W3DGadgetStaticTextImageDraw( GameWindow *window, WinInstanceData *instData
 	if( BitTest( window->winGetStatus(), WIN_STATUS_ENABLED ) == FALSE )
 	{
 
-		image							= GadgetStaticTextGetDisabledImage( window );
+		image							= window->disabledDrawData( 0 )->image;
 		textColor					= window->winGetDisabledTextColor();
 		textOutlineColor	= window->winGetDisabledTextBorderColor();
 
