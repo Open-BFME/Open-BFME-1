@@ -42,12 +42,12 @@ typedef unsigned int UnsignedInt;
 extern "C" __declspec(dllimport) double __cdecl floor(double);
 extern "C" __declspec(dllimport) double __cdecl ceil(double);
 
-__forceinline Real fast_float_floor(Real f)
+static __forceinline Real fast_float_floor(Real f)
 {
 	return (Real)floor((double)f);
 }
 
-__forceinline Real fast_float_ceil(Real f)
+static __forceinline Real fast_float_ceil(Real f)
 {
 	return (Real)ceil((double)f);
 }

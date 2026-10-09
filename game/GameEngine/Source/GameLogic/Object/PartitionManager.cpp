@@ -1150,7 +1150,7 @@ CellAndObjectIntersection::CellAndObjectIntersection()
 
 //-----------------------------------------------------------------------------
 // ??1CellAndObjectIntersection@@QAE@XZ present-unmatched
-CellAndObjectIntersection::~CellAndObjectIntersection()
+inline CellAndObjectIntersection::~CellAndObjectIntersection()
 {
 	DEBUG_ASSERTCRASH(m_prevCoi == NULL && m_nextCoi == NULL, ("destroying a linked COI"));
 	DEBUG_ASSERTCRASH(!getModule(), ("destroying an in-use COI"));
