@@ -160,9 +160,17 @@ public:
 	unsigned char m_pad14[0x3c];
 	ObjectID m_nemesisID;								///< this+0x50
 
-	void setNemesisID(ObjectID id) { m_nemesisID = id; }
-	ObjectID getNemesisID() const { return m_nemesisID; }
 };
+
+// TU-local accessors retain the inline return/store shape without shared COMDATs.
+static inline void setNemesisID(BfmeGuardMachine *machine, ObjectID id)
+{
+	machine->m_nemesisID = id;
+}
+static inline ObjectID getNemesisID(const BfmeGuardMachine *machine)
+{
+	return machine->m_nemesisID;
+}
 
 class State
 {
@@ -243,11 +251,11 @@ StateReturnType AITNGuardAttackAggressorState::onEnter( void )
 
 	if (obj->getBodyModule() && obj->getBodyModule()->getLastDamageInfo()->m_sourceID) {
 		nemID = obj->getBodyModule()->getLastDamageInfo()->m_sourceID;
-		getGuardMachine()->setNemesisID(nemID);	 
+		setNemesisID(getGuardMachine(), nemID);	 
 
 	}
 
-	Object *nemesis = TheGameLogic->findObjectByID(getGuardMachine()->getNemesisID());
+	Object *nemesis = TheGameLogic->findObjectByID(getNemesisID(getGuardMachine()));
 	if (nemesis == 0) 
 	{
 		return STATE_SUCCESS;
