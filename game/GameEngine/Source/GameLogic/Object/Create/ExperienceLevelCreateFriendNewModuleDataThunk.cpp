@@ -30,7 +30,7 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl __identifier("ExperienceLevelCreateFieldParse")();
+void __cdecl j_00013719(); // ?j_00013719@@YAXXZ, ILT 0x00413719
 
 class ExperienceLevelCreate
 {
@@ -44,7 +44,7 @@ ModuleData *ExperienceLevelCreate::friend_newModuleData(INI *ini)
 	ExperienceLevelCreateModuleData *data = new ExperienceLevelCreateModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(__identifier("ExperienceLevelCreateFieldParse")));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_00013719));
 	return (ModuleData *)data;
 }
 
@@ -53,5 +53,5 @@ ModuleData *ExperienceLevelCreate::friend_newModuleData(INI *ini)
 // symbol the build defines at that address is the five-byte ILT thunk
 // ?j_00013719@@YAXXZ (game/gen_small/gthunks_020.cpp), a `jmp` to 0x0024F6D0, the
 // module-data class's static field-parse builder.  The old
-// `extern "C" ExperienceLevelCreateFieldParse` was invented in this TU and nothing
+// address-of spelling was an invented extern "C" name that nothing
 // defines it; the thunk is retail's real spelling of this operand.
