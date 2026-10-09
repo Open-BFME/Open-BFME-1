@@ -109,6 +109,38 @@ DEBUG_PROCESS = 0x1
 DBG_CONTINUE, DBG_NOT_HANDLED = 0x00010002, 0x80010001
 EXCEPTION, CREATE_PROCESS, EXIT_PROCESS, LOAD_DLL = 1, 3, 5, 6
 BREAKPOINTS = {0x80000003, 0x4000001F}          # int3, WOW64 int3
+
+
+def under_wine():
+    """Wine's ntdll exports wine_get_version; Windows' does not."""
+    try:
+        return hasattr(ctypes.WinDLL("ntdll"), "wine_get_version")
+    except (AttributeError, OSError):
+        return False
+
+
+# A process's loader breakpoint: imports bound, no game code run. Windows raises
+# it from the 32-bit ntdll as the WOW64 int3, after a native int3 that comes
+# before the imports are bound. Wine's WoW64 raises only a plain int3, with the
+# imports already bound, so under Wine a process's first int3 is the one.
+LOADER_BREAKPOINTS = {0x4000001F, 0x80000003} if sys.platform == "win32" and under_wine() else {0x4000001F}
+
+
+def alloc32(k, hproc, size):
+    """RWX memory in the 32-bit game the stubs can address (32-bit pointers to it).
+    Windows places a WOW64 process's allocations below 4 GiB; Wine's WoW64 may
+    hand a 64-bit debugger an address above it, so then ask for one low down
+    (k from k32(), which types both calls)."""
+    mem = k.VirtualAllocEx(hproc, None, size, 0x3000, 0x40)
+    if mem and mem + size <= 1 << 32:
+        return mem
+    if mem:
+        k.VirtualFreeEx(hproc, mem, 0, 0x8000)              # MEM_RELEASE
+    for at in range(0x7F000000, 0x01000000, -0x10000):      # below the 2 GiB user limit
+        mem = k.VirtualAllocEx(hproc, at, size, 0x3000, 0x40)
+        if mem:
+            return mem
+    return None
 SINGLE_STEP = {0x80000004, 0x4000001E}          # single step, WOW64 single step
 QUIET = {0x406D1388, 0xE06D7363, 0x40010006}    # thread naming, C++ throw, OutputDebugString
 
@@ -141,6 +173,7 @@ def k32():
                                  ctypes.c_void_p, wt.LPCWSTR, ctypes.c_void_p, ctypes.c_void_p]
     k.VirtualAllocEx.restype = ctypes.c_void_p
     k.VirtualAllocEx.argtypes = [wt.HANDLE, ctypes.c_void_p, ctypes.c_size_t, wt.DWORD, wt.DWORD]
+    k.VirtualFreeEx.argtypes = [wt.HANDLE, ctypes.c_void_p, ctypes.c_size_t, wt.DWORD]
     k.OpenThread.restype = wt.HANDLE
     return k
 
@@ -218,7 +251,7 @@ def xp_version_lie(k, hproc, base, exe):
             if d.dll.lower() == b"kernel32.dll" and imp.name in (b"GetVersion", b"GetVersionExA"):
                 slots[imp.name] = imp.address - pe.OPTIONAL_HEADER.ImageBase + base
     pe.close()
-    mem = k.VirtualAllocEx(hproc, None, 0x1000, 0x3000, 0x40)
+    mem = alloc32(k, hproc, 0x1000)
     info = struct.pack("<IIIII", 156, 5, 1, 2600, 2) + b"Service Pack 3".ljust(128, bytes(1)) \
         + struct.pack("<HHHBB", 3, 0, 0x100, 1, 0)
     get_version = bytes.fromhex("B8 05 01 28 0A C3")                      # mov eax, 0x0A280105; ret
@@ -350,7 +383,7 @@ def install_appdata_lie(k, hproc, base, exe, appdata):
     for name in FOLDER_IMPORTS:
         slot = found[name][0]
         orig = read_mem(k, hproc, slot, 4)
-        mem = k.VirtualAllocEx(hproc, None, 0x1000, 0x3000, 0x40)
+        mem = alloc32(k, hproc, 0x1000)
         if len(orig) != 4 or not mem:
             raise RedirectError(f"cannot read the import slot {slot:#x} or allocate the stub")
         blob = appdata_stub(mem, struct.unpack("<I", orig)[0], appdata, wide=name.endswith(b"W"))
@@ -662,7 +695,7 @@ def run(exe, game_dir, args, timeout, *, appdata, patches=(), version_lie=True, 
                 elif hit is not None:
                     clear_probe(k, procs[pid][0], tid, hit, armed.pop(hit))
                     res["probes_hit"].append(hit - procs[pid][2])
-                elif exc == 0x4000001F and pid in procs and not procs[pid][3]:
+                elif exc in LOADER_BREAKPOINTS and pid in procs and not procs[pid][3]:
                     h, path, base, _ = procs[pid]
                     procs[pid][3] = True
                     if game:                                # first, so a failure leaves nothing running

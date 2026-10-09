@@ -104,6 +104,9 @@ class FakeProcess:
         self.next += 0x1000 if got else 0
         return got
 
+    def VirtualFreeEx(self, *a):
+        return 1
+
     def VirtualProtectEx(self, *a):
         return 1
 
@@ -353,3 +356,38 @@ def test_slow_loads_and_refusals_are_not_breakage():
     for ok in ("reached-menu", "loading-screen", "link-error", "guard-violation", "profile-changed",
                "launcher-lie-failed", "profile-redirect-failed"):
         assert not bs.broke(ok)
+
+
+class Alloc32Kernel:
+    """VirtualAllocEx that answers anywhere=`anywhere` and honours an asked address."""
+
+    def __init__(self, anywhere):
+        self.anywhere, self.freed = anywhere, []
+
+        def alloc(h, at, size, kind, prot):
+            return self.anywhere if at is None else at
+        self.VirtualAllocEx = alloc
+        self.VirtualFreeEx = lambda h, at, size, kind: self.freed.append(at) or 1
+
+
+def test_alloc32_keeps_a_low_address():
+    k = Alloc32Kernel(0x02000000)
+    assert bs.alloc32(k, 1, 0x1000) == 0x02000000 and k.freed == []
+
+
+def test_alloc32_frees_a_high_address_and_asks_low():    # Wine's WoW64 can answer above 4 GiB
+    k = Alloc32Kernel(0x1_0000_0000)
+    mem = bs.alloc32(k, 1, 0x1000)
+    assert k.freed == [0x1_0000_0000] and mem + 0x1000 < 1 << 31
+
+
+def test_alloc32_without_memory_is_none():
+    k = Alloc32Kernel(0)
+    k.VirtualAllocEx = lambda *a: 0
+    assert bs.alloc32(k, 1, 0x1000) is None
+
+
+def test_windows_waits_for_the_wow64_loader_int3():
+    if sys.platform == "win32" and bs.under_wine():
+        pytest.skip("running under Wine")
+    assert bs.LOADER_BREAKPOINTS == {0x4000001F}
