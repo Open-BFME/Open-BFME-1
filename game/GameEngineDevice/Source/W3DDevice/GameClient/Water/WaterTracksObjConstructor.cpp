@@ -5,7 +5,8 @@
 // BFME water-track payload through +0xb4.  Keep the object byte layout local
 // so this isolated constructor does not pull in the still-unmatched siblings.
 
-extern "C" void *bfmeWaterTracksObjVft[];
+// Shared byte-verified table owned by WaterTracksObjDeletingDestructor.cpp.
+extern "C" void (*const bfmeVftSH[3])();
 
 class WaterTracksObj
 {
@@ -20,7 +21,7 @@ WaterTracksObj::WaterTracksObj(void)
 {
     unsigned char *object = m_storage;
 
-    *(void * volatile *)object = bfmeWaterTracksObjVft;
+    *(void * volatile *)object = (void *)bfmeVftSH;
     *(volatile unsigned int *)(object + 0x04) = 0;
 
     *(volatile unsigned int *)(object + 0x34) = 2;
