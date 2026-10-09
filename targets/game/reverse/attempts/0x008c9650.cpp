@@ -1,18 +1,6 @@
-// ?d_008c9650@@YAXXZ
-// partial score=0.5337 date=2026-09-27
+// ?stackNumber008C9650@@YAXPAUStack008C9650@@PAX@Z
+// partial score=0.536 date=2026-10-09
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// RVA 008C9650: numeric validation and stack replacement; address-qualified identity.
-// COMPLETE PARTIAL, NOT BYTE EXACT. Retail extent: 1304 bytes through RET at +0x517.
-// Probe symbol: ?stackNumber008C9650@@YAXPAUStack008C9650@@@Z
-// Shape 0.9664082687338501; compiled size 1278. Shape normalizes registers/constants;
-// it is not a byte score. Remaining: frame 0x10 vs 0x14, state-pointer lifetime,
-// first count/array load order, shared rather than duplicated replacement tail.
-// String/value/pool contracts reused from Rva008AF330StringToFloatValue.cpp,
-// FindStringValue008A9C30.cpp, and Rva008C9B70StackString.cpp. No new pins.
-// The volatile pointer locals are explicit spill-shape experiments, not claims
-// that the original declaration was volatile. Remove/rework if a native lifetime
-// formulation reproduces the retail spills. EH and finite shape searches tried.
-// GhidraSQL requests timed out; every branch was reconstructed from retail bytes.
 struct BfmeStringData3AF0 {
     unsigned short m_refCount, m_length, m_capacity, m_flags;
 };
@@ -20,12 +8,13 @@ struct BfmeStringPool3AF0 {
     void *m_unused;
     void (__cdecl *free)(void *);
 };
-extern BfmeStringData3AF0 g_bfmeDefaultString1284;
+class EAStringC { public: class StringDataC; };
+extern EAStringC::StringDataC g_rva012D5298Empty;
 extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
 
 class Rva8CD130String {
 public:
-    Rva8CD130String() : m_data(&g_bfmeDefaultString1284) { ++m_data->m_refCount; }
+    Rva8CD130String() : m_data((BfmeStringData3AF0 *)&g_rva012D5298Empty) { ++m_data->m_refCount; }
     __forceinline ~Rva8CD130String() { BfmeStringData3AF0 *old=m_data; if (--old->m_refCount==0) g_bfmeStringPool1284->free(old); }
     int find0089FF80(const char *, int);
     int length() const { return m_data->m_length; }
@@ -48,7 +37,7 @@ public:
     bool pooled() const { return ((m_flags>>30)&1)!=0; }
 };
 extern AptValue *g_bfmeFallbackDB;
-extern int Rva00892370Get();
+extern unsigned int AptGetSwfVersion();
 extern "C" long __cdecl strtol(const char *, char **, int);
 extern "C" int __cdecl isdigit(int);
 class Rva00899560Value;
@@ -62,17 +51,18 @@ struct Rva00899560Pool {
         ++count;
     }
 };
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+extern Rva00899560Pool *g_rva01337810GcRoots;
 class Rva00899560Value {
 public:
-    virtual ~Rva00899560Value();
+    virtual void retain();
+    virtual void release();
     unsigned int m_flags;
     __forceinline Rva00899560Value(int type) {
         unsigned int flags = (((m_flags & ~0x3f) | type) & 0xF000803F) | 0x8000;
         m_flags = flags;
         if (type != 0x1c && type != 0xa) {
             m_flags = flags | 0x40000000;
-            g_rva8CD130IdleHook->addPooled(this);
+            g_rva01337810GcRoots->addPooled(this);
         } else {
             m_flags = flags & 0xBFFFFFFF;
         }
@@ -87,22 +77,24 @@ public:
     union { Rva008A4C00Value *m_next; float m_value; };
 };
 
-extern Rva008A4C00Value *Rva008AF330Head;
+class Rva008D29A0;
+extern Rva008D29A0 *g_rva008D29A0;
 
 struct Rva008A1110Value : Rva00899560Value {
-    int m_value;
+    union { int m_value; Rva008A1110Value *m_next; };
     static void *operator new(unsigned bytes) { return Rva008C5D70Alloc(bytes); }
     __forceinline Rva008A1110Value(int value) : Rva00899560Value(7), m_value(value) {}
 };
-extern Rva008A1110Value *g_free013387D0;
+class Rva008D2A10;
+extern Rva008D2A10 *g_rva008D2A10;
 static __forceinline AptValue *makeInteger(int value) {
-    Rva008A1110Value *obj=g_free013387D0;
-    if(obj) { g_free013387D0=(Rva008A1110Value *)obj->m_value; g_rva8CD130IdleHook->addPooled(obj); obj->m_value=value; return (AptValue *)obj; }
+    Rva008A1110Value *obj=(Rva008A1110Value *)g_rva008D2A10;
+    if(obj) { g_rva008D2A10=(Rva008D2A10 *)obj->m_next; g_rva01337810GcRoots->addPooled(obj); obj->m_value=value; return (AptValue *)obj; }
     return (AptValue *)new Rva008A1110Value(value);
 }
 static __forceinline AptValue *makeFloat(float value) {
-    Rva008A4C00Value *obj=Rva008AF330Head;
-    if(obj) { Rva008AF330Head=obj->m_next; g_rva8CD130IdleHook->addPooled(obj); obj->m_value=value; return (AptValue *)obj; }
+    Rva008A4C00Value *obj=(Rva008A4C00Value *)g_rva008D29A0;
+    if(obj) { g_rva008D29A0=(Rva008D29A0 *)obj->m_next; g_rva01337810GcRoots->addPooled(obj); obj->m_value=value; return (AptValue *)obj; }
     return (AptValue *)new Rva008A4C00Value(value);
 }
 struct Stack008C9650 {
@@ -141,17 +133,16 @@ static __forceinline bool numeric008C9650(AptValue *value, AptValue *volatile &p
         }
         return true;
     }
-    if(value->undefined() || value->type()==3) { if(Rva00892370Get()==7) return false; return true; }
+    if(value->undefined() || value->type()==3) { if(AptGetSwfVersion()==7) return false; return true; }
     return false;
 }
-void stackNumber008C9650(Stack008C9650 *state) {
-    AptValue **entries=state->m_values;
-    AptValue *value=entries[state->m_count-1];
+void stackNumber008C9650(Stack008C9650 *state, void *context) {
+    AptValue *value=state->m_values[state->m_count-1];
     AptValue *volatile preserved=value;
     if(value->isFloat() || value->isInteger()) return;
     AptValue *volatile result=g_bfmeFallbackDB;
     if(numeric008C9650(value,preserved)) {
-        int mode=Rva00892370Get();
+        int mode=AptGetSwfVersion();
         value=preserved;
         if(mode==7 && value->undefined()) {
             state->pop(1); state->push(result); return;
