@@ -1,3 +1,16 @@
+class BfmeThingAUD;
+struct Gen_t_00234730_m4pod;
+namespace _STL {
+ template<class T> struct _Identity;
+ template<class T> struct less;
+ template<class T> class allocator;
+ template<class T> struct _Rb_tree_node;
+ template<class K,class V,class E,class C,class A> class _Rb_tree {
+  void _M_erase(_Rb_tree_node<V> *);
+  friend class ::BfmeThingAUD;
+ };
+}
+
 struct BfmeHeadAUD
 {
 	unsigned char m_bfmePad[4];
@@ -9,7 +22,6 @@ struct BfmeHeadAUD
 class BfmeListAUD
 {
 public:
-	void bfmeDropAUD(void *what);
 	BfmeHeadAUD *m_bfmeHead;
 	int m_bfmeCount;
 };
@@ -30,7 +42,7 @@ void BfmeThingAUD::bfmeGoAUD()
 	m_bfmeFlag = false;
 	if (list->m_bfmeCount != 0)
 	{
-		list->bfmeDropAUD(list->m_bfmeHead->m_bfmeOne);
+		reinterpret_cast<_STL::_Rb_tree<Gen_t_00234730_m4pod, Gen_t_00234730_m4pod, _STL::_Identity<Gen_t_00234730_m4pod>, _STL::less<Gen_t_00234730_m4pod>, _STL::allocator<Gen_t_00234730_m4pod> > *>(list)->_M_erase(reinterpret_cast<_STL::_Rb_tree_node<Gen_t_00234730_m4pod> *>(list->m_bfmeHead->m_bfmeOne));
 		list->m_bfmeHead->m_bfmeTwo = list->m_bfmeHead;
 		list->m_bfmeHead->m_bfmeOne = 0;
 		list->m_bfmeHead->m_bfmeThree = list->m_bfmeHead;
