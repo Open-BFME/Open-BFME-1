@@ -1,7 +1,11 @@
 // ?_FunctionAptActionEquals2@AptActionInterpreter@@SAXPAV1@PAULocalContextT@1@@Z
-// partial score=0.24 date=2026-09-02
+// partial score=0.1682 date=2026-10-09
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
+extern "C" int __cdecl memcmp(const void *, const void *, unsigned);
+#pragma intrinsic(memcmp)
+extern "C" double __cdecl fabs(double);
+#pragma intrinsic(fabs)
 extern "C" int __cdecl isdigit(int c);
 extern "C" long __cdecl strtol(const char *text, char **end, int base);
 
@@ -19,8 +23,10 @@ struct AptStringPool
 	void (__cdecl *m_free)(AptStringBlock *block);
 };
 
-extern AptStringBlock g_aptEmptyString;
-extern AptStringPool *g_aptStringPool;
+extern "C" AptStringBlock __identifier("?g_bfmeDefaultString1284@@3UAptStringBlock@@A");
+#define g_aptEmptyString __identifier("?g_bfmeDefaultString1284@@3UAptStringBlock@@A")
+extern "C" AptStringPool *__identifier("?g_pool01337A30@@3PAUAptStringPool@@A");
+#define g_aptStringPool __identifier("?g_pool01337A30@@3PAUAptStringPool@@A")
 
 class EAStringC
 {
@@ -31,7 +37,7 @@ public:
 		++m_block->m_refs;
 	}
 
-	~EAStringC()
+	__forceinline ~EAStringC()
 	{
 		if (--m_block->m_refs == 0)
 			g_aptStringPool->m_free(m_block);
@@ -39,24 +45,21 @@ public:
 
 	int Find(char c, int start);
 
-	bool equals(const EAStringC &other) const
+	int length() const { return m_block->m_length; }
+	char *text() const { return m_block->m_text; }
+	__forceinline bool equals(const EAStringC &other) const
 	{
 		unsigned length = m_block->m_length;
-		if (length != other.m_block->m_length)
-			return false;
-		if (m_block == other.m_block)
-			return true;
-		const char *left = m_block->m_text;
-		const char *right = other.m_block->m_text;
-		while (length-- != 0) {
-			if (*left++ != *right++)
-				return false;
-		}
-		return true;
+		if (length != other.m_block->m_length) return false;
+		if (m_block == other.m_block) return true;
+		return memcmp(m_block->m_text, other.m_block->m_text, length) == 0;
 	}
 
 	AptStringBlock *m_block;
 };
+
+class Rva8CD130String;
+class Rva8CD130Value { public: void getName(Rva8CD130String *); };
 
 class AptValue
 {
@@ -65,11 +68,12 @@ public:
 	virtual void Release();
 
 	int toInteger() const;
-	float toFloat() const;
-	void getName(EAStringC *out) const;
+	float toNumber();
+	float toFloat() const { return const_cast<AptValue *>(this)->toNumber(); }
+	void getName(EAStringC *out) const { ((Rva8CD130Value *)this)->getName((Rva8CD130String *)out); }
 
 	unsigned type() const { return m_bits & 0x3f; }
-	bool isUndefined() const { return ((m_bits >> 15) & 1) == 0; }
+	bool isUndefined() const { return ((unsigned char)~(m_bits >> 15) & 1) != 0; }
 	bool maxRefCountHit() const { return ((m_bits >> 30) & 1) != 0; }
 
 	EAStringC *stringValue()
@@ -99,11 +103,13 @@ struct AptValueRegistry
 };
 
 extern AptValue *gpUndefinedValue;
-extern AptValue *g_aptBooleanFreeList;
-extern AptValueRegistry *g_aptValueRegistry;
+extern "C" AptValue *__identifier("?g_rva008D2A80@@3PAVRva008D2A80@@A");
+#define g_aptBooleanFreeList __identifier("?g_rva008D2A80@@3PAVRva008D2A80@@A")
+extern "C" AptValueRegistry *__identifier("?g_bfmeRegistryVNF@@3PAUAptValueRegistry@@A");
+#define g_aptValueRegistry __identifier("?g_bfmeRegistryVNF@@3PAUAptValueRegistry@@A")
 extern void *(__cdecl *g_aptAllocate)(unsigned size);
-extern void *g_AptValueVtable[];
-extern void *g_AptBooleanVtable[];
+#define g_AptValueVtable __identifier("??_7Rva00899560Value@@6B@")
+#define g_AptBooleanVtable __identifier("??_7Rva008995E0Value@@6B@")
 
 unsigned int AptGetSwfVersion();
 
@@ -124,122 +130,142 @@ static __forceinline bool IsDefinedType(AptValue *value, unsigned type)
 	return value->type() == type && !value->isUndefined();
 }
 
-static __forceinline bool IsPrimitive(AptValue *value)
-{
-	unsigned type = value->type();
-	return !value->isUndefined()
-		&& (type == 7 || type == 6 || type == 5 || type == 1 || type == 42);
-}
-
 static __forceinline bool IsString(AptValue *value)
 {
 	unsigned type = value->type();
-	return !value->isUndefined() && (type == 1 || type == 42);
+	return (type == 1 || type == 42) && !value->isUndefined();
 }
-
+static __forceinline bool IsPrimitive(AptValue *value)
+{
+	return IsDefinedType(value, 7) || IsDefinedType(value, 6)
+		|| IsDefinedType(value, 5) || IsString(value);
+}
 static __forceinline bool IsNumber(AptValue *value)
 {
-	unsigned type = value->type();
-	return !value->isUndefined() && (type == 7 || type == 6);
+	return IsDefinedType(value, 7) || IsDefinedType(value, 6);
 }
 
 static __forceinline bool IsNaNValue(AptValue *value)
 {
-	unsigned type = value->type();
-	bool defined = !value->isUndefined();
-
-	if ((type == 7 || type == 6) && defined)
+	if (IsDefinedType(value, 7) || IsDefinedType(value, 6))
 		return false;
 
-	if ((type == 1 || type == 42) && defined) {
-		AptStringBlock *string = value->stringValue()->m_block;
-		const char *text = string->m_text;
-		int length = string->m_length;
+	if (IsString(value))
+	{
+		EAStringC string;
+		value->getName(&string);
 
-		if (length == 0)
+		if (string.length() == 0)
 			return true;
 
-		if (length > 2 && text[0] == '0' && text[1] == 'x') {
-			char *end = 0;
-			strtol(text, &end, 16);
-			return *end != 0;
+		if (string.text()[0] == '0' && string.length() > 2 && string.text()[1] == 'x')
+		{
+			char *end;
+			strtol(string.text(), &end, 16);
+			if (*end == 0)
+				return false;
 		}
 
-		unsigned char last = (unsigned char)text[length - 1];
+		bool sawDot = false;
+		char last = string.text()[string.length() - 1];
 		if (last != '-' && last != '+' && last != 'e' && last != '.' && !isdigit(last))
 			return true;
-		unsigned char first = (unsigned char)text[0];
+
+		char first = string.text()[0];
 		if (first != '.' && first != '-' && first != '+' && !isdigit(first))
 			return true;
 
-		bool dotSeen = false;
-		for (int i = 1; i < length; ++i) {
-			char c = text[i];
-			if (c == '.' && !dotSeen) {
-				dotSeen = true;
+		for (int index = 1; index < string.length(); ++index)
+		{
+			char current = string.text()[index];
+			if (current == '.' && !sawDot)
+			{
+				sawDot = true;
 				continue;
 			}
-			if (c == 'e' && i != 1) {
-				if (i == 2 && (text[0] == '+' || text[0] == '-'))
+			if (current == 'e' && index != 1)
+			{
+				if (index == 2 && (string.text()[0] == '+' || string.text()[0] == '-'))
 					return true;
-				int next = i + 1;
-				if (next < length) {
-					char c2 = text[next];
-					if (c2 == '-' || c2 == '+') {
-						++i;
-						continue;
-					}
-					if (!isdigit((unsigned char)c2))
+				int next = index + 1;
+				if (next < string.length())
+				{
+					char following = string.text()[index + 1];
+					if (following != '-' && following != '+' && !isdigit(following))
 						return true;
+					index = next;
 				}
 				continue;
 			}
-			if (!isdigit((unsigned char)c))
+			if (!isdigit(current))
 				return true;
 		}
 		return false;
 	}
 
-	if (defined && type != 5)
+	if (!value->isUndefined() && value->type() != 3)
 		return true;
-	return AptGetSwfVersion() == 7;
+	bool swf7 = AptGetSwfVersion() == 7;
+	return swf7;
 }
 
+static __forceinline void RegisterBoolean(AptValue *result)
+{
+	int &count = g_aptValueRegistry->m_count;
+	if (count >= g_aptValueRegistry->m_capacity)
+		result->m_bits &= 0xbfffffff;
+	else {
+		g_aptValueRegistry->m_values[count] = result;
+		++count;
+	}
+}
+class Rva00899560Value
+{
+public:
+	virtual void retain();
+	virtual void release();
+	unsigned m_flags;
+	__forceinline Rva00899560Value(int type)
+	{
+		unsigned flags = (((m_flags & ~0x3f) | type) & 0xf000803f) | 0x8000;
+		m_flags = flags;
+		if (type != 0x1c && type != 0xa) {
+			m_flags = flags | 0x40000000;
+			RegisterBoolean((AptValue *)this);
+		} else m_flags = flags & 0xbfffffff;
+	}
+};
+class Rva008995E0Value : public Rva00899560Value
+{
+public:
+	static void *operator new(unsigned size) { return g_aptAllocate(size); }
+	__forceinline Rva008995E0Value(bool value) : Rva00899560Value(5), m_value(value) {}
+	bool m_value;
+};
 static __forceinline AptValue *CreateBoolean(bool value)
 {
-	AptValue *result = g_aptBooleanFreeList;
+	AptValue *result = (AptValue *)g_aptBooleanFreeList;
 	if (result != 0) {
-		g_aptBooleanFreeList = *(AptValue **)((char *)result + 8);
-	} else {
-		result = (AptValue *)g_aptAllocate(12);
-		if (result == 0)
-			return 0;
-		*(void **)result = g_AptValueVtable;
-		result->m_bits = (result->m_bits & 0xf0008005) | 0x40008005;
+		g_aptBooleanFreeList = (AptValue *)result->m_value.m_string;
+		RegisterBoolean(result);
+		result->m_value.m_boolean = value;
+		return result;
 	}
-
-	AptValueRegistry *registry = g_aptValueRegistry;
-	if (registry->m_count < registry->m_capacity) {
-		registry->m_values[registry->m_count++] = result;
-		*(void **)result = g_AptBooleanVtable;
-	} else {
-		result->m_bits &= 0xbfffffff;
-	}
-	result->m_value.m_boolean = value;
-	return result;
+	return (AptValue *)new Rva008995E0Value(value);
 }
-
-static __forceinline void CollapseTwo(AptActionInterpreter *interpreter, AptValue *result)
+static __forceinline void PopTwo(AptActionInterpreter *interpreter)
 {
 	for (int index = 1; index <= 2; ++index) {
 		AptValue *value = interpreter->m_stack[interpreter->m_stackTop - index];
-		if (!value->maxRefCountHit())
-			value->Release();
+		if (!value->maxRefCountHit()) value->Release();
 	}
 	interpreter->m_stackTop -= 2;
+}
+static __forceinline void PushBoolean(AptActionInterpreter *interpreter, bool equal)
+{
+	AptValue *result = CreateBoolean(equal);
 	interpreter->m_stack[interpreter->m_stackTop++] = result;
-	if (!result->maxRefCountHit())
-		result->AddRef();
+	if (!result->maxRefCountHit()) result->AddRef();
 }
 
 void AptActionInterpreter::_FunctionAptActionEquals2(
@@ -255,42 +281,34 @@ void AptActionInterpreter::_FunctionAptActionEquals2(
 		under = gpUndefinedValue;
 
 	if (AptGetSwfVersion() == 7) {
-		int undefinedCount = 0;
 		if (top->isUndefined())
-			undefinedCount = 1;
+			equal = 1;
 		if (under->isUndefined())
-			++undefinedCount;
-		if (undefinedCount > 0) {
-			CollapseTwo(interpreter, CreateBoolean(undefinedCount == 2));
+			++equal;
+		if (equal > 0) {
+			PopTwo(interpreter);
+			PushBoolean(interpreter, equal == 2);
 			return;
 		}
 	}
 
-	unsigned topType = top->type();
-	unsigned underType = under->type();
-
-	if (IsPrimitive(top) && IsPrimitive(under)) {
+	if ((IsPrimitive(top) && IsPrimitive(under)) || top->type() == under->type()) {
 		if (top->isUndefined()) {
 			equal = 1;
-		} else if (topType == 7 && IsDefinedType(under, 7)) {
+		} else if (top->type() == 7 && IsDefinedType(under, 7)) {
 			equal = under->toInteger() == top->toInteger();
-		} else if (topType == 6 && IsDefinedType(under, 6)) {
-			equal = top->toFloat() == under->toFloat();
-		} else if ((topType == 1 || topType == 42) && IsString(under)) {
+		} else if (top->type() == 6 && IsDefinedType(under, 6)) {
+			equal = top->toNumber() == under->toNumber();
+		} else if ((top->type() == 1 || top->type() == 42) && IsString(under)) {
 			equal = top->stringValue()->equals(*under->stringValue());
 		} else {
 			goto mixedCompare;
 		}
-		CollapseTwo(interpreter, CreateBoolean(equal != 0));
-		return;
+		goto finish;
 	}
 
-	if (topType != underType) {
-		if (top->isUndefined() && under->isUndefined())
-			equal = 1;
-		CollapseTwo(interpreter, CreateBoolean(equal != 0));
-		return;
-	}
+	if (top->isUndefined() && under->isUndefined()) equal = 1;
+	goto finish;
 
 mixedCompare:
 	{
@@ -301,75 +319,56 @@ mixedCompare:
 		}
 
 		if (stringLadder) {
-			bool topString = IsString(top);
-			bool underBoolean = IsDefinedType(under, 5);
-			bool underString = IsString(under);
-
-			if (topString && !underBoolean) {
+			if (IsString(top) && !IsDefinedType(under, 5)) {
 				EAStringC topScratch;
 				EAStringC underScratch;
 				top->getName(&topScratch);
 				under->getName(&underScratch);
 				equal = topScratch.equals(underScratch);
-				CollapseTwo(interpreter, CreateBoolean(equal != 0));
-				return;
-			}
-
-			bool identityCompare = false;
-			if (!topString || underString) {
-				if (!underBoolean || topString)
-					identityCompare = true;
-			}
-			if (identityCompare)
-				equal = under == top;
-			else
+			} else if (IsDefinedType(top, 5) && !IsString(under)) {
 				equal = under->toInteger() == top->toInteger();
+			} else {
+				equal = under == top;
+			}
 
-			CollapseTwo(interpreter, CreateBoolean(equal != 0));
-			return;
+			goto finish;
 		}
 
 		bool topHasDot = false;
 		bool underHasDot = false;
 		if (IsString(top) || IsDefinedType(top, 6)) {
-			if (!IsDefinedType(top, 6) && top->stringValue()->Find('.', 0) != -1)
+			if (top->type() == 6 || top->stringValue()->Find('.', 0) != -1)
 				topHasDot = true;
 		}
 		if (IsString(under) || IsDefinedType(under, 6)) {
-			if (!IsDefinedType(under, 6) && under->stringValue()->Find('.', 0) != -1)
+			if (under->type() == 6 || under->stringValue()->Find('.', 0) != -1)
 				underHasDot = true;
 		}
 
-		float topFloat;
-		float underFloat;
+		float difference;
 		if (IsDefinedType(top, 7)) {
 			int topInt = top->toInteger();
 			if (!underHasDot) {
 				equal = under->toInteger() == topInt;
-				CollapseTwo(interpreter, CreateBoolean(equal != 0));
-				return;
+				goto finish;
 			}
-			topFloat = (float)topInt;
-			underFloat = under->toFloat();
+			difference = (float)topInt - under->toNumber();
 		} else if (IsDefinedType(under, 7)) {
 			int underInt = under->toInteger();
 			if (!topHasDot) {
 				equal = underInt == top->toInteger();
-				CollapseTwo(interpreter, CreateBoolean(equal != 0));
-				return;
+				goto finish;
 			}
-			topFloat = top->toFloat();
-			underFloat = (float)underInt;
+			difference = top->toNumber() - underInt;
 		} else {
-			topFloat = top->toFloat();
-			underFloat = under->toFloat();
+			float topFloat = top->toNumber();
+			difference = topFloat - under->toNumber();
 		}
 
-		float difference = topFloat - underFloat;
-		if (difference < 0.0f)
-			difference = -difference;
-		equal = difference < 0.001f;
+		equal = (float)fabs(difference) < 0.001f;
 	}
 
-	CollapseTwo(interpreter, CreateBoolean(equal != 0));
+	finish:
+	PopTwo(interpreter);
+	PushBoolean(interpreter, equal != 0);
 }
