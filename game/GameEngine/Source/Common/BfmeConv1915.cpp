@@ -126,6 +126,19 @@ public:
 	BfmeABP *m_bfmeABP;
 };
 
+// Matched ledger rows called by respelling (TU-local declarations).
+class Gen_00411580
+{
+public:
+	int m();
+};
+
+class Drawable
+{
+public:
+	void setDrawableHidden(bool hidden);
+};
+
 void BfmeHostBP::bfmeSweepBP()
 {
 	BfmeBBP *b = m_bfmeABP->bfmeMakeBP();
@@ -133,9 +146,9 @@ void BfmeHostBP::bfmeSweepBP()
 	if (b == 0)
 		return;
 
-	b->bfmeSetBP(0);
+	((Drawable *)b)->setDrawableHidden(false);
 
-	for (BfmeItemBP **p = b->bfmeListBP(); *p != 0; p++)
+	for (BfmeItemBP **p = (BfmeItemBP **)((Gen_00411580 *)b)->m(); *p != 0; p++)
 	{
 		BfmeUBP *u = (*p)->bfmeGetBP();
 
