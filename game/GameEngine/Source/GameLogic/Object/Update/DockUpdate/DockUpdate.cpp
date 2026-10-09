@@ -338,61 +338,7 @@ void DockUpdate::onApproachReached( Object* docker )
 	}
 }
 
-// ?onExitReached@DockUpdate@@UAEXPAVObject@@@Z present-unmatched
-void DockUpdate::onExitReached( Object* docker )
-{
-	Object *me = getObject();
-	me->clearAndSetModelConditionFlags( MAKE_MODELCONDITION_MASK2(MODELCONDITION_DOCKING_ACTIVE, MODELCONDITION_DOCKING), 
-																			MAKE_MODELCONDITION_MASK(MODELCONDITION_DOCKING_ENDING) );
-	docker->clearAndSetModelConditionFlags( MAKE_MODELCONDITION_MASK2(MODELCONDITION_DOCKING_ACTIVE, MODELCONDITION_DOCKING), 
-																					MAKE_MODELCONDITION_MASK(MODELCONDITION_DOCKING_ENDING) );
-	m_dockerInside = FALSE;
 
-	ObjectID dockerID = docker->getID();
-	if( dockerID == m_activeDocker )
-		m_activeDocker = INVALID_ID;
-	else
-	{
-
-		//
-		// we only assert here if the dock is open, for closed docks it's OK to allow somebody
-		// to continue moving to the exit position cause they are leaving after all
-		//
-		if( isDockOpen() )
-			DEBUG_ASSERTCRASH( FALSE, ("Fiddle.  Someone said goodbye to a dock when the dock didn't think it was talking to that someone."));
-
-	}
-}
-
-// ?cancelDock@DockUpdate@@UAEXPAVObject@@@Z present-unmatched
-void DockUpdate::cancelDock( Object* docker )
-{
-	ObjectID dockerID = docker->getID();
-	for( Int positionIndex = 0; positionIndex < m_approachPositionOwners.size(); ++positionIndex )
-	{
-		if( m_approachPositionOwners[positionIndex] == dockerID )
-		{
-			m_approachPositionOwners[positionIndex] = INVALID_ID;
-			m_approachPositionReached[positionIndex] = FALSE;
-		}
-	}
-	if( m_activeDocker == dockerID )
-	{
-		Object *dockingObject = TheGameLogic->findObjectByID(m_activeDocker);
-		m_activeDocker = INVALID_ID;
-		m_dockerInside = FALSE;
-		// clear any model conditions related to docking that may be set on us and them.  
-		// (Normal clear is part of each stage, but we won't get there.)
-		ModelConditionFlags clear;
-		clear.set( MODELCONDITION_DOCKING_ENDING );
-		clear.set( MODELCONDITION_DOCKING_BEGINNING );
-		clear.set( MODELCONDITION_DOCKING_ACTIVE );
-		clear.set( MODELCONDITION_DOCKING );
-		getObject()->clearModelConditionFlags( clear );
-		if( dockingObject )
-			dockingObject->clearModelConditionFlags( clear );
-	}
-}
 
 void DockUpdate::setDockCrippled( Bool setting )
 {
@@ -403,49 +349,6 @@ void DockUpdate::setDockCrippled( Bool setting )
 // DockUpdate::update: retail body matched in DockUpdateUpdateBfme.cpp.
 
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/DockUpdateComputeApproachPositionThunk.cpp
-// ?computeApproachPosition@DockUpdate@@IAE?AUCoord3D@@HPAVObject@@@Z present-unmatched
-Coord3D DockUpdate::computeApproachPosition( Int positionIndex, Object *forWhom )
-{
-	// load dock positions if not loaded yet
-	if( m_positionsLoaded == FALSE )
-		loadDockPositions();
-
-	Coord3D bestPosition;// This answer is the best, as it includes findPositionAround
-	Coord3D workingPosition;// But if findPositionAround fails, we need to say something.
-	
-	FindPositionOptions fpOptions;
-	// Start with the pristine bone, then convert it to the world, then find a clean spot around it.
-	
-	Object *us = getObject();
-	us->convertBonePosToWorldPos( &m_approachPositions[positionIndex], NULL, &workingPosition, NULL );
-
-	if( m_numberApproachPositionBones == 0 )
-	{
-		Coord3D ourPosition = *us->getPosition();
-		Coord3D theirPosition = *forWhom->getPosition();
-		// A Boneless building wants to bias towards the caller for the arbitrary position
-		Vector3 offset( theirPosition.x - ourPosition.x, theirPosition.y - ourPosition.y, theirPosition.z - ourPosition.z );
-		offset.Normalize();
-		offset = offset * (us->getGeometryInfo().getMajorRadius() / 2);
-
-		workingPosition.x += offset.X;
-		workingPosition.y += offset.Y;
-		workingPosition.z += offset.Z;
-	}
-
-	fpOptions.minRadius = 0.0f;
-	fpOptions.maxRadius = 100.0f;
-	fpOptions.sourceToPathToDest = forWhom;// This makes it find a place forWhom can get to.
-	if( forWhom->isUsingAirborneLocomotor() )
-		fpOptions.ignoreObject = getObject();// Flyers can ignore us, so they can approach right over us if they want.
-
-	Bool spotFound = ThePartitionManager->findPositionAround( &workingPosition, &fpOptions, &bestPosition );
-
-	if( spotFound)
-		return bestPosition;
-
-	return workingPosition;
-}
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
