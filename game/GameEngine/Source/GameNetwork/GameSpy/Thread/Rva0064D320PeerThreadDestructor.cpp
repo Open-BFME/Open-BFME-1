@@ -34,14 +34,23 @@ typedef _STL::_Rb_tree<int, TgPair_tree_int_p4pod_00645480,
 	_STL::_Select1st<TgPair_tree_int_p4pod_00645480>, _STL::less<int>,
 	_STL::allocator<TgPair_tree_int_p4pod_00645480> > RvaStagingServerMap;
 
-struct Rva0064C290Tree
+// The matched dtor at 0x0064C290 is this STLport tree specialization.
+// Its declaration suppresses the inline vendor dtor while retaining layout.
+struct Gen_t_0064c290_p12cd
 {
-	char bytes[12];
-	~Rva0064C290Tree();
+	int a[3];
+	Gen_t_0064c290_p12cd();
+	Gen_t_0064c290_p12cd(const Gen_t_0064c290_p12cd &);
+	~Gen_t_0064c290_p12cd();
+	Gen_t_0064c290_p12cd &operator=(const Gen_t_0064c290_p12cd &);
 };
+namespace _STL
+{
+template <> _STL::_Rb_tree<int, _STL::pair<const int, Gen_t_0064c290_p12cd>, _STL::_Select1st<_STL::pair<const int, Gen_t_0064c290_p12cd> >, _STL::less<int>, _STL::allocator<_STL::pair<const int, Gen_t_0064c290_p12cd> > >::~_Rb_tree();
+}
 
 typedef char PeerRequestSizeCheck[sizeof(PeerRequest) == 0x194 ? 1 : -1];
-typedef char StatsMapSizeCheck[sizeof(Rva0064C290Tree) == 12 ? 1 : -1];
+typedef char StatsMapSizeCheck[sizeof(_STL::_Rb_tree<int, _STL::pair<const int, Gen_t_0064c290_p12cd>, _STL::_Select1st<_STL::pair<const int, Gen_t_0064c290_p12cd> >, _STL::less<int>, _STL::allocator<_STL::pair<const int, Gen_t_0064c290_p12cd> > >) == 12 ? 1 : -1];
 typedef char StagingServerMapSizeCheck[sizeof(RvaStagingServerMap) == 12 ? 1 : -1];
 typedef char ThreadBaseSizeCheck[sizeof(ThreadClass) == 0x54 ? 1 : -1];
 
@@ -57,8 +66,8 @@ private:
 	std::string m_password;
 	std::string m_email;
 	char m_padding_84_94[0x10];
-	Rva0064C290Tree m_groupRoomStats;
-	Rva0064C290Tree m_stagingRoomStats;
+	_STL::_Rb_tree<int, _STL::pair<const int, Gen_t_0064c290_p12cd>, _STL::_Select1st<_STL::pair<const int, Gen_t_0064c290_p12cd> >, _STL::less<int>, _STL::allocator<_STL::pair<const int, Gen_t_0064c290_p12cd> > > m_groupRoomStats;
+	_STL::_Rb_tree<int, _STL::pair<const int, Gen_t_0064c290_p12cd>, _STL::_Select1st<_STL::pair<const int, Gen_t_0064c290_p12cd> >, _STL::less<int>, _STL::allocator<_STL::pair<const int, Gen_t_0064c290_p12cd> > > m_stagingRoomStats;
 	char m_padding_AC_B0[4];
 	std::string m_mapName;
 	char m_padding_BC_C0[4];
