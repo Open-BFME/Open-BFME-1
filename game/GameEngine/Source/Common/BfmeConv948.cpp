@@ -74,12 +74,19 @@ struct BfmeDim948
 	int m_bfmeH;
 };
 
-class BfmeGrid948C
+// Retail ILT 0x00017049 reaches the matched STLport bool subscript at
+// 0x002CB9E0. Declare the specialization without its inline body.
+namespace _STL
+{
+template <class T> class allocator;
+template <class T, class Alloc> class vector;
+template <> class vector<bool, allocator<bool> >
 {
 public:
-	bool bfmeGet948C(int i);
+	bool operator[](unsigned int i) const;
 	int m_bfmeData;
 };
+}
 
 class BfmeMap948C
 {
@@ -88,7 +95,7 @@ public:
 	char m_bfmePad[0x2ff4];
 	BfmeDim948 *m_bfmeDim;
 	char m_bfmePad2[0x28];
-	BfmeGrid948C m_bfmeGrid;
+	_STL::vector<bool, _STL::allocator<bool> > m_bfmeGrid;
 };
 
 bool BfmeMap948C::bfmeGo948C(int x, int y)
@@ -96,16 +103,9 @@ bool BfmeMap948C::bfmeGo948C(int x, int y)
 	BfmeDim948 *d = m_bfmeDim;
 	int w = d->m_bfmeW;
 	if (x >= 0 && y >= 0 && y < d->m_bfmeH && x < w)
-		return m_bfmeGrid.bfmeGet948C(w * y + x);
+		return m_bfmeGrid[w * y + x];
 	return false;
 }
-
-class BfmeGrid948D
-{
-public:
-	bool bfmeGet948D(int i);
-	int m_bfmeData;
-};
 
 class BfmeMap948D
 {
@@ -114,7 +114,7 @@ public:
 	char m_bfmePad[0x2ff4];
 	BfmeDim948 *m_bfmeDim;
 	char m_bfmePad2[0x3c];
-	BfmeGrid948D m_bfmeGrid;
+	_STL::vector<bool, _STL::allocator<bool> > m_bfmeGrid;
 };
 
 bool BfmeMap948D::bfmeGo948D(int x, int y)
@@ -122,6 +122,6 @@ bool BfmeMap948D::bfmeGo948D(int x, int y)
 	BfmeDim948 *d = m_bfmeDim;
 	int w = d->m_bfmeW;
 	if (x >= 0 && y >= 0 && y < d->m_bfmeH && x < w)
-		return m_bfmeGrid.bfmeGet948D(w * y + x);
+		return m_bfmeGrid[w * y + x];
 	return false;
 }
