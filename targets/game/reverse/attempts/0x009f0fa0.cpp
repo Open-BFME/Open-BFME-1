@@ -1,23 +1,8 @@
 // ?m009F0FA0@Q1Receiver0134FAAC@@QAEXPAVRva009EF0D0Element@@@Z
-// partial score=0.4015 date=2026-09-28
+// partial score=0.8819 date=2026-10-09
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
-// ?m009F0FA0@Q1Receiver0134FAAC@@QAEXPAVRva009EF0D0Element@@@Z
-// Retail RVA 0x009F0FA0: 1198 bytes of code, ret 4, then a 7-entry switch
-// table (row size 1228). Identity is address-derived. Receiver layout is the
-// matched 0x009F1510 sibling's Q1Receiver0134FAAC (lock +0x60, seven entry
-// deques +0x78, set wrappers +0x190..+0x1cc, flags +0x1EC..+0x1EE, cost +0x20).
-// Body: demand-load an entry. Record its +8 key in set +0x1CC (and +0x190)
-// unless +0x190 already has it or bit 26 is set, with an "[info] Demand load: "
-// debug report for names that are not '#'/apt_/sfe_ (returns holding the lock
-// when +0x1ED is clear, as retail does). Then wait out queues 1/5/8, remove the
-// entry from its deque (swap with last, pop_back), set bit 25 and run the
-// fall-through per-queue virtuals 5->6->0->1->2 (queue 2 gathers its keys into
-// a local set and hands them to Queue_Keys_009EFBF0 under a lock guard). Last,
-// queue it on deque 3.
-// Callees needing pins before landing: _Deque_iterator<Rva009EF0D0Element*>::
-// operator[] (0x009EF060) and deque<Rva009EF0D0Element*>::pop_back
-// (0x009ED8A0), both byte-identical deque<int> instances.
+// Evidence: targets/game/reverse/identity_evidence/009f0fa0-native-queue.md
 
 #include <deque>
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
@@ -82,8 +67,7 @@ public:
 
 typedef _STL::deque<Rva009EF0D0Element *> Q1Queue009F0FA0;
 
-// Retail calls the iterator subscript out of line and reloads the deque's
-// iterators after every call: the body is not visible to this TU.
+// The retail iterator subscript is out of line; queue state reloads after it.
 template <>
 Rva009EF0D0Element *&_STL::_Deque_iterator<Rva009EF0D0Element *,
 	_STL::_Nonconst_traits<Rva009EF0D0Element *> >::operator[](difference_type n) const;
@@ -131,10 +115,10 @@ extern BFMEIndexBufferDebugClass *g_BFMEIndexBufferDebug;
 bool _bfme_debugReportingEnabled();
 void _bfme_debugRecordCallsite(int kind);
 
-class AssetRegistry
+class AssetManagerImpl
 {
 public:
-	void Queue_Keys_009EFBF0(bool known, const Rva001408C0Set &keys);
+	void AddRequiredAssets(bool known, const Rva001408C0Set &keys);
 };
 
 class Q1ReceiverLock009F0FA0
@@ -183,12 +167,15 @@ protected:
 
 typedef char Q1Receiver009F0FA0SizeCheck[sizeof(Q1Receiver0134FAAC) == 0x1f4 ? 1 : -1];
 
+// ?m009F0FA0@Q1Receiver0134FAAC@@QAEXPAVRva009EF0D0Element@@@Z
+// RVA 0x009F0FA0 has 1198 code bytes and a seven-entry switch table.
 void Q1Receiver0134FAAC::m009F0FA0(Rva009EF0D0Element *entry)
 {
 	if (entry->m_key08 == 0 || entry->m_queue == 3)
 		return;
 
-	EnterCriticalSection(&m_lock60);
+	CRITICAL_SECTION *initialLock = &m_lock60;
+	EnterCriticalSection(initialLock);
 	if (m_set190.m_set.find(entry->key()) == m_set190.m_set.end() &&
 		!entry->m_bit26)
 	{
@@ -215,32 +202,32 @@ void Q1Receiver0134FAAC::m009F0FA0(Rva009EF0D0Element *entry)
 	while ((entry->m_queue == 1 || entry->m_queue == 5) &&
 		m_deques78[entry->m_queue].front() == entry && m_flag1ec)
 	{
-		LeaveCriticalSection(&m_lock60);
+		LeaveCriticalSection(initialLock);
 		Sleep(1);
-		EnterCriticalSection(&m_lock60);
+		EnterCriticalSection(initialLock);
 	}
 	while (entry->m_queue == 8)
 	{
-		LeaveCriticalSection(&m_lock60);
+		LeaveCriticalSection(initialLock);
 		Sleep(1);
-		EnterCriticalSection(&m_lock60);
+		EnterCriticalSection(initialLock);
 	}
 
 	int queue = entry->m_queue;
 	if (queue != 7)
 	{
-		Q1Queue009F0FA0 &deque = m_deques78[queue];
 		unsigned int i;
-		for (i = 0; i < deque.size(); ++i)
+		for (i = 0; i < m_deques78[queue].size(); ++i)
 		{
-			if (deque[i] == entry)
+			if (m_deques78[queue][i] == entry)
 				break;
 		}
-		if (i < deque.size())
+		if (i < m_deques78[queue].size())
 		{
-			Rva009EF0D0Element *&last = deque[deque.size() - 1];
-			deque[i] = last;
-			deque.pop_back();
+			int lastIndex = m_deques78[queue].size() - 1;
+			Rva009EF0D0Element *&last = m_deques78[queue][lastIndex];
+			m_deques78[queue][i] = last;
+			m_deques78[queue].pop_back();
 		}
 	}
 	LeaveCriticalSection(&m_lock60);
@@ -274,16 +261,15 @@ void Q1Receiver0134FAAC::m009F0FA0(Rva009EF0D0Element *entry)
 		entry->slot10(&set);
 		if (entry->m_keys0c && entry->m_keys0c[0])
 		{
-			int k = 0;
-			do
+			for (int k = 0; entry->m_keys0c[k]; ++k)
 			{
 				set.m_set.insert(entry->m_keys0c[k]);
-			} while (entry->m_keys0c[++k]);
+			}
 		}
 		if (set.m_set.size() != 0)
 		{
 			Q1ReceiverLock009F0FA0 lock(&m_lock60);
-			((AssetRegistry *)this)->Queue_Keys_009EFBF0(true, set.m_set);
+			((AssetManagerImpl *)this)->AddRequiredAssets(true, set.m_set);
 		}
 	}
 	loaded:
