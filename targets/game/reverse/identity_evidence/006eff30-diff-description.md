@@ -1,0 +1,41 @@
+# RVA 0x006EFF30 difference description
+
+The recovered source retains the opaque owner `Rva006EFF30`. The body describes differences between two model-condition flag sets, but no matched caller or export establishes the original class and four-argument overload spelling. This conversion makes no claim to that spelling. The tested base revision is `dc7ee718a119215c162013556ac667722df8e2b8`.
+
+## New hypothesis and result
+
+The previous attempts had no saved reconstruction and reported identity and exception-frame layout blockers. The current canonical `game/Libraries/Source/WWVegas/WWLib/ascii_string.h` and `string_base.h` supply the one-pointer owning string, inline forwarding constructors and destructor, unsigned-short length and inline accessors. The initial hypothesis was that these declarations and native bit-accessor layers reproduce the exception frame while an opaque owner avoids an unsupported overload claim. A caller with different argument storage or a compiled frame that differs from retail would refute it.
+
+The first complete reconstruction reproduced the frame and bit-access sequence but placed the shared formatting and append blocks differently. The successful experiment puts the append statement inside each formatting arm. MSVC merges those repeated tails and places the merged formatting call beyond the epilogue exactly as retail does. This source, recompiled at its final path, is exact modulo relocation slots. Raw measurements are `build/eff30/probe01-reproduced.log`, `probe33.log` and `probe-final-source.log`. The scoped landing gate separately checks relocations and literals.
+
+## Complete extent and callers
+
+The complete extent is `[0x006EFF30, 0x006F00DA)`. The only return is `ret 16` at RVA `0x006F009D`. The code after it is reachable through internal branches: the minus-format arm starts at `0x006F00A0`, the shared format call is at `0x006F00BE`, and the final jump at `0x006F00D5` returns to the append at `0x006F0056`. Padding begins at `0x006F00DA`. All decoded instructions are reachable and every direct branch stays inside the extent. Evidence is `build/eff30/retail-decode.log`, `cleanup-decode.log`, `cfg.log` and `checked-target.log`.
+
+The complete caller at RVA `0x006F2CC0` ends with its return at `0x006F3BE8`. Both target call sites, at `0x006F377C` and `0x006F3A2F`, are decoded instruction boundaries in that body. Each calls ILT RVA `0x00031872`, whose complete instruction jumps to the assigned target. Each passes the current flags in ECX and pushes, in reverse order, a signed line limit of four, a zero inclusion flag, the comparison flags pointer and the address of a local one-pointer narrow string. Neither consumes a return value. The target reads the output and comparison pointers as dwords, the inclusion flag as a byte in its own four-byte argument slot, and the signed line limit as a dword; it removes all four argument slots. There is no hidden return storage or receiver adjustment inside the target. Evidence is `retail-decode.log` and `checked-caller.log`.
+
+## Flag and string storage
+
+The target scans indices below `0x130`. For each index it loads a 32-bit word at `4 * (index >> 5)` from both flag receivers and tests `1 << (index & 31)`. It writes neither flag set. These accesses support the ten-word representation used by `_STL::bitset<304>` and the native boolean accessor; they do not establish a broader owner layout. This is a bit array, with no inferred container payload or allocation-size argument.
+
+The table is declared by the existing DIR32 name `ModelConditionNames`, which records VA `0x012A6918`. The target uses one pointer per bit. The literal bytes at its actual references are `+%s`, `%s`, `-%s`, comma-space and newline, verified in `build/eff30/data.log`. No new global or callee pin is needed.
+
+All four actual string callees were completely decoded and checked: releaseBuffer at RVA `0x00887940`, concat(pointer, signed length) at `0x00887D60`, the narrow string constructor at `0x00888BC0`, and the by-value format member at `0x00888FF0`. Their decoded returns and accesses agree with the canonical declarations. The constructor zeros the sole data pointer and reads the input character sequence; concat reads the buffer's unsigned-short length at offset four; the release helper decrements the buffer's dword reference count, frees the buffer only at zero, and clears the object's sole pointer. Format uses stack-passed receiver and owned format value under cdecl, reads the format buffer text at offset eight, forwards the varargs address, destroys the value, and returns without popping arguments. The caller removes the receiver, format value and string argument together. There are no register-indirect or virtual calls in the target or those four callees. The release helper's IAT calls are InitializeCriticalSection, EnterCriticalSection, LeaveCriticalSection and CRT free. Each receives one pointer; the critical-section calls remove that argument and the free call's caller removes it. These agree with the established StringBase implementation and import identities reported in `checked-release.log`. Raw inventories are `build/eff30/checked-release.log`, `checked-concat.log`, `checked-cstr.log` and `checked-format.log`; the complete bytes are in `retail-decode.log`.
+
+## Unwind ownership
+
+Retail has one unwind state, with predecessor minus one and cleanup at RVA `0x00C4B840`. Its complete cleanup adjusts ECX to `[ebp-0x18]`, the local description string, then jumps through RVA `0x0000D828` and the AsciiString destructor at `0x0005EE90` to releaseBuffer at `0x00887940`. The default constructor has already zeroed the pointer before state zero is installed. This also explains the destructor on the null-output path.
+
+The compiled object has the same state predecessor and cleanup receiver adjustment. Its cleanup relocation names the canonical AsciiString destructor. Each by-value format temporary is owned and destroyed by the format callee, whose own unwind state cleans up the format at `[ebp+8]` through the same destructor route. The target needs no extra caller cleanup for those transferred values. Evidence is `build/eff30/retail-eh.log`, `format-eh.log`, `cleanup-decode.log`, `unwind-check.log` and the retained object `verified.obj`.
+
+## Rejected experiments and limits
+
+The mechanical EH alternatives, implicit format conversions, guard polarity, continue form, append-accessor ordering, explicit null-buffer branches and visibility of the authentic concat helper did not recover the shared-tail placement. Size optimization and partial-inlining flags made earlier instructions worse. Their trial sources and unedited search results remain under `build/eff30/` and `build/shape_search/`. No assembly, fabricated callee, baseline change, shared header edit or new STL ledger name was used.
+
+The address-derived owner remains required unless an independently named caller, export or equivalent identity evidence proves the original owner and overload. A decoded caller that disagrees with the four-slot ABI, a string helper or unwind route that disagrees with the canonical ownership model, or a failing scoped byte/relocation gate would refute the recovery.
+
+## Verification at the final working tree
+
+The verified `add_match.py` transaction replaced only the assigned scaffold and wrote its deletion-ledger tombstone. `build/eff30/add-match.log` and `build-sh-gate.log` record the passing scoped source-claim, function-byte, string-reference, constant-reference, DIR32 and body-guard checks. `declared-unmatched.log`, `class-gate-final.log`, `pin-consistency.log` and `unwind-check.log` record the remaining passing checks. The checkout has no shared-header or shim change requiring a full gate. The Windows `build.cmd` launcher could not find Python under the sandbox; the explicit Git Bash `build.sh` entry point passed.
+
+`build/eff30/check_csv-final.log` reports only that the new source is not in the Git index. The sandbox forbids Git writes, so the coordinator must stage the listed source and rerun this check with hooks active. The initial ledger check passed in `check_csv-initial.log`. No pin file was changed. These are working-tree verification receipts, not a committed revision certificate.
