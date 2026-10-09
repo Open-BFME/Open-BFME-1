@@ -94,14 +94,14 @@ public:
 	ProductionUpdateModuleData(void);
 
 private:
-	int m_bfme08;
-	unsigned int m_bfme0c;
-	unsigned int m_bfme10;
-	unsigned int m_bfme14;
-	unsigned int m_bfme18;
-	std::vector<Gen_t_0029e190_p8cd> m_bfme1c;
-	int m_bfme28;
-	unsigned int m_bfme2c;
+	int m_numDoorAnimations;
+	unsigned int m_doorOpeningTime;
+	unsigned int m_doorWaitOpenTime;
+	unsigned int m_doorClosingTime;
+	unsigned int m_constructionCompleteDuration;
+	std::vector<Gen_t_0029e190_p8cd> m_quantityModifiers;
+	int m_maxQueueEntries;
+	unsigned int m_disabledTypesToProcess;
 	bool m_bfme30;
 	unsigned int m_bfme34;
 	unsigned int m_bfme38;
@@ -113,16 +113,16 @@ private:
 
 // ??0ProductionUpdateModuleData@@QAE@XZ
 ProductionUpdateModuleData::ProductionUpdateModuleData(void)
-	: m_bfme2c(0)
+	: m_disabledTypesToProcess(0)
 {
-	m_bfme08 = 0;
-	m_bfme0c = 0;
-	m_bfme10 = 0;
-	m_bfme14 = 0;
-	m_bfme18 = 0;
-	m_bfme1c.clear();
-	m_bfme28 = 20;
-	m_bfme2c = 8;
+	m_numDoorAnimations = 0;
+	m_doorOpeningTime = 0;
+	m_doorWaitOpenTime = 0;
+	m_doorClosingTime = 0;
+	m_constructionCompleteDuration = 0;
+	m_quantityModifiers.clear();
+	m_maxQueueEntries = 20;
+	m_disabledTypesToProcess = 8;
 	m_bfme30 = false;
 	m_bfme34 = 0;
 	m_bfme38 = 0;
