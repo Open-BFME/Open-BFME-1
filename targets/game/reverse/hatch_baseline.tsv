@@ -567,6 +567,10 @@ address_global	game/GameEngine/Source/Common/SmallGaps/Rva009B3EC0Init.cpp	g_Rva
 address_global	game/GameEngine/Source/Common/SmallGaps/Rva009B3EC0Init.cpp	g_Rva009B3E40Arr2	2
 address_global	game/GameEngine/Source/Common/SmallGaps/Rva009B3EC0Init.cpp	g_Rva009B3E40Arr3	2
 address_global	game/GameEngine/Source/Common/SmallGaps/Rva009B3EC0Init.cpp	g_Rva009B3EC0Blocks	6
+address_global	game/GameEngine/Source/Common/SmallGaps/releasePair.cpp	g_Va01337AC0	4	allow=ca63fe2960465acf9f4090c2e987f89ed44ad5a4
+address_global	game/GameEngine/Source/Common/SmallGaps/releasePair.cpp	g_Va01337AC4	4	allow=ca63fe2960465acf9f4090c2e987f89ed44ad5a4
+address_global	game/GameEngine/Source/Common/SmallGaps/resolveHostAddress.cpp	g_Va01336CF4	3	allow=ca50e83eb71d41e57ddcef5e469bff1370121dd5
+address_global	game/GameEngine/Source/Common/SmallGaps/resolveHostAddress.cpp	g_Va01336D00	2	allow=ca50e83eb71d41e57ddcef5e469bff1370121dd5
 address_global	game/GameEngine/Source/Common/SmallLeafBodies.cpp	g_Va011098B0	2
 address_global	game/GameEngine/Source/Common/SmallLeafBodies.cpp	g_Va012B49FC	2
 address_global	game/GameEngine/Source/Common/SmallLeafBodies.cpp	g_Va012BBD98	2
