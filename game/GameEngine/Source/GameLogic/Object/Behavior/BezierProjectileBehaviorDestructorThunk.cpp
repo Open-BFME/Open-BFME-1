@@ -85,7 +85,7 @@ class BezierProjectileBehavior
 	  public BezierProjectileBehaviorSecondaryBase<1>,		///< vptr at 0x20
 	  public BezierProjectileBehaviorSecondaryBase<2>		///< vptr at 0x24
 {
-public:
+protected:
 	virtual ~BezierProjectileBehavior();
 
 private:
@@ -95,7 +95,7 @@ private:
 	_STL::list<int> m_list;									///< retail this+0x7C
 };
 
-// ??1BezierProjectileBehavior@@UAE@XZ
+// ??1BezierProjectileBehavior@@MAE@XZ
 BezierProjectileBehavior::~BezierProjectileBehavior()
 {
 }
