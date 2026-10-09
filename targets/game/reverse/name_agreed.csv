@@ -582,3 +582,5 @@ game/GameEngine/Source/Common/BfmeConv827.cpp|function||bfmeLookupAndSendDB0,doM
 game/GameEngine/Source/Common/BfmeConv827.cpp|function||bfmeLookupAndSendDB0,doModifyBuildableStatus,gpt-6-astra+grok,applied,2026-10-08
 game/GameEngine/Source/Common/Bfme5SixtyFive.cpp|type||Gen_000D5930,Player,claude-opus+gpt-6.1-sol,agreed,2026-10-09
 game/GameEngine/Source/Common/Bfme5SixtyFive.cpp|function|Gen_000D5930@|bfmeHasBit,hasUpgradeComplete,claude-opus+gpt-6.1-sol,agreed,2026-10-09
+game/GameEngine/Source/Common/Bfme5SixtyFive.cpp|type||Gen_000D5930,Player,claude-opus+gpt-6.1-sol,blocked: game/GameEngine/Source/Common/Bfme5SixtyFive.cpp: FAIL ?bfmeHasBit@Player@@QBE_NPBVBfmeThingEL@@@Z (game/GameEngine/Source/Common/Bfme5SixtyFive.cpp),2026-10-09
+game/GameEngine/Source/Common/Bfme5SixtyFive.cpp|function|Gen_000D5930@|bfmeHasBit,hasUpgradeComplete,claude-opus+gpt-6.1-sol,blocked: game/GameEngine/Source/Common/Bfme5SixtyFive.cpp: FAIL ?bfmeHasBit@Player@@QBE_NPBVBfmeThingEL@@@Z (game/GameEngine/Source/Common/Bfme5SixtyFive.cpp),2026-10-09
