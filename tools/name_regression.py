@@ -80,8 +80,17 @@ def downgrade(old, new):
 PRAGMA = re.compile(r'^[ \t]*#[ \t]*pragma\b[^\n]*', re.M)
 
 
+# MSVC's `__identifier("Name")` spells the identifier Name; read it as one
+# token, or a rename of it aligns `__identifier` against the new name.
+MS_IDENTIFIER = re.compile(r'\b__identifier\s*\(\s*"([A-Za-z_]\w*)"\s*\)')
+
+
+def _normalize(text):
+    return MS_IDENTIFIER.sub(r'\1', PRAGMA.sub('', text))
+
+
 def tokens(text):
-    return [t for t in TOKEN.findall(PRAGMA.sub('', text)) if not t.startswith(('//', '/*', '"', "'"))]
+    return [t for t in TOKEN.findall(_normalize(text)) if not t.startswith(('//', '/*', '"', "'"))]
 
 
 # A function-like macro's parameter names whatever argument the expansion
@@ -95,7 +104,7 @@ FUNCTION_MACRO = re.compile(
 
 def macro_parameter_positions(text):
     """Token indices (as tokens() numbers them) of parameters in their #define."""
-    stripped = PRAGMA.sub('', text)
+    stripped = _normalize(text)
     spans = [(m.start(), m.end(), {p.strip() for p in m[1].split(',')})
              for m in FUNCTION_MACRO.finditer(stripped)]
     found, index = set(), 0

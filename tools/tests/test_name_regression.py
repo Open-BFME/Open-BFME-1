@@ -1015,11 +1015,11 @@ ILT_SRC = 'game/GameEngine/Source/GameLogic/Object/Contain/IltRespell.cpp'
 ILT_BEFORE = 'extern "C" void ContestableContainFieldParse();\nvoid* f() { return (void*)&ContestableContainFieldParse; }\n'
 
 
-def _ilt_case(tmp_path, new_name, ilt_rva=0x00015654, record_va=0x00415654):
+def _ilt_case(tmp_path, new_name, ilt_rva=0x00015654, record_va=0x00415654, before=ILT_BEFORE):
     git(tmp_path, 'init', '-q')
     git(tmp_path, 'config', 'user.name', 'Fixture')
     git(tmp_path, 'config', 'user.email', 'fixture@example.invalid')
-    put(tmp_path, ILT_SRC, ILT_BEFORE)
+    put(tmp_path, ILT_SRC, before)
     put(tmp_path, 'targets/game/reverse/dir32_addresses.csv',
         f'name,va\n_ContestableContainFieldParse,0x{record_va:08X}\n')
     put(tmp_path, 'targets/game/reverse/functions.csv',
@@ -1050,3 +1050,31 @@ def test_respelling_recorded_standin_to_bfme_or_rva_still_fails(tmp_path):
         root.mkdir()
         found = _ilt_case(root, name)
         assert [(f.old_name, f.new_name) for f in found] == [('ContestableContainFieldParse', name)]
+
+
+# The shape of ContestableContainFriendNewModuleDataThunk.cpp (re_attempts 58818).
+ILT_IDENTIFIER_BEFORE = (
+    'extern "C" void __cdecl __identifier("ContestableContainFieldParse")(MultiIniFieldParse &parse);\n'
+    'void f(INI *ini, void *data) { ini->initFromINIMultiProc(data, &__identifier("ContestableContainFieldParse")); }\n')
+
+
+def _identifier_after(name):
+    # ?j_XXXXXXXX@@YAXXZ takes no parameters; the call site casts it.
+    return (f'void __cdecl {name}();\n'
+            f'void f(INI *ini, void *data) {{ ini->initFromINIMultiProc(data, (MultiIniFieldParseProc)&{name}); }}\n')
+
+
+def test_identifier_spelled_standin_to_ilt_row_at_its_address_passes(tmp_path):
+    _ilt_case(tmp_path, 'unused', before=ILT_IDENTIFIER_BEFORE)
+    put(tmp_path, ILT_SRC, _identifier_after('j_00015654'))
+    assert N.check(tmp_path, 'HEAD', ':')[0] == []
+
+
+def test_identifier_spelled_name_to_bfme_or_rva_still_fails(tmp_path):
+    for i, name in enumerate(('bfme00415654', 'Rva00015654')):
+        root = tmp_path / str(i)
+        root.mkdir()
+        _ilt_case(root, 'unused', before=ILT_IDENTIFIER_BEFORE)
+        put(root, ILT_SRC, _identifier_after(name))
+        found = N.check(root, 'HEAD', ':')[0]
+        assert ('ContestableContainFieldParse', name) in [(f.old_name, f.new_name) for f in found]
