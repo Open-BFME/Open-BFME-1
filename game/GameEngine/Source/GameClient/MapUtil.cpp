@@ -351,27 +351,10 @@ static void getExtent( Region3D *extent )
 
 const char * MapCache::m_mapCacheName = "MapCache.ini";
 
-// ?getMapDir@MapCache@@QBE?AVAsciiString@@XZ present-unmatched
-AsciiString MapCache::getMapDir() const 
-{ 
-	return AsciiString("Maps"); 
-}
 
 // byte-exact reconstruction: game/GameEngine/Source/Common/RTS/MapCacheGetUserMapDirThunk.cpp
-// ?getUserMapDir@MapCache@@QBE?AVAsciiString@@XZ present-unmatched
-AsciiString MapCache::getUserMapDir() const
-{
-	AsciiString tmp = TheGlobalData->getPath_UserData();
-	tmp.concat(getMapDir());
-	return tmp;
-}
 
 // byte-exact reconstruction: game/GameEngine/Source/GameClient/MapCacheGetMapExtension.cpp
-// ?getMapExtension@MapCache@@QBE?AVAsciiString@@XZ present-unmatched
-AsciiString MapCache::getMapExtension() const
-{
-	return AsciiString("map");
-}
 
 // byte-exact reconstruction: game/GameEngine/Source/Common/RTS/MapCacheWriteCacheINIThunk.cpp
 // ?writeCacheINI@MapCache@@AAEX_N@Z present-unmatched
@@ -510,24 +493,6 @@ Bool MapCache::clearUnseenMaps( AsciiString dirName )
 }
 
 // byte-exact reconstruction: game/GameEngine/Source/Common/RTS/MapCacheLoadStandardMapsThunk.cpp
-// ?loadStandardMaps@MapCache@@AAEXXZ present-unmatched
-void MapCache::loadStandardMaps(void)
-{
-	INI ini;
-	AsciiString fname;
-	fname.format("%s\\%s", getMapDir().str(), m_mapCacheName);
-#if defined(_DEBUG) || defined(_INTERNAL)
-	File *fp = TheFileSystem->openFile(fname.str(), File::READ);
-	if (fp != NULL)
-	{
-		fp->close();
-		fp = NULL;
-#endif
-		ini.load( fname, INI_LOAD_OVERWRITE, NULL );
-#if defined(_DEBUG) || defined(_INTERNAL)
-	}
-#endif
-}
 
 // MapCache::loadUserMaps is implemented in MapCacheLoadUserMaps.cpp.
 
