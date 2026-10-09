@@ -22,6 +22,47 @@ public:
 	void bfmeCloseAJ(int reason);
 };
 
+// Matched row ?bfmeBuildAN@BfmeLevelAN@@QAEPADIHHHHHHH@Z (retail 0x004675F0,
+// defined in BfmeLevelPathAN.cpp): the ILT entry 0x00015235 jumps here, so the
+// builder call below names this row. Declaration copied from that TU.
+class BfmeLevelAN
+{
+public:
+	char *bfmeBuildAN(unsigned int level, int p2, int p3, int p4, int p5, int p6,
+		int p7, int p8);
+};
+
+// Matched row ?_bfme_cancel@BfmeAptScreenOptions@@QAEXPBD@Z (retail 0x0055DCB0,
+// defined in BfmeAptScreenOptionsCancel.cpp): the ILT entry 0x0003D811 jumps
+// here, so the close calls below name this row. Declaration copied from that
+// TU (thiscall void of one pointer-sized argument, same as bfmeCloseAJ).
+class BfmeAptScreenOptions
+{
+public:
+	void _bfme_cancel(const char *name);
+};
+
+// The cancel call at 0x0055E198 reaches retail through the incremental-link
+// thunk 0x0003D811, which the ledger owns as ?j_0003d811@@YAXXZ
+// (game/gen_small/thunks_029.cpp). That thunk is the definition the link
+// keeps and its census verdict is retail's, while the body row
+// ?_bfme_cancel@BfmeAptScreenOptions@@QAEXPBD@Z is judged "wrong" by the
+// one-hop retail-truth closure, so the call below names the thunk. VC7.1 has
+// no __thiscall function-pointer type, so the object goes through a
+// pointer-to-member taken out of a union, the pattern the tree's other
+// matched thunk callers already use (BfmeConv993.cpp).
+extern void j_0003d811();
+class Rva0055E120Receiver {};
+typedef void (Rva0055E120Receiver::*Rva0003D811Cancel)(const char *);
+
+template<class T> __forceinline T Rva0055E120Member(void (*raw)())
+{
+	union { void (*raw)(); T member; } fn;
+	fn.raw = raw;
+	return fn.member;
+}
+#define CALL1075(T, obj, fn) (((Rva0055E120Receiver*)(obj))->*Rva0055E120Member<T>(fn))
+
 class BfmeQ1075
 {
 public:
@@ -56,20 +97,20 @@ int BfmeQ1075::bfmeGo1075A(int code, unsigned char kind, char flags)
 	{
 		case 4:
 			if (g_optByte12F4AD1)
-				((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAJ(m_bfmeSinkAJ, "assignClose", 1,
-					"online", 0, 0, 0, 0);
+				((BfmeLevelAN *)g_rva012F19E8WindowManager)->bfmeBuildAN((unsigned int)m_bfmeSinkAJ,
+					(int)"assignClose", 1, (int)"online", 0, 0, 0, 0);
 			else
-				((BfmeMgr19E *)g_rva012F19E8WindowManager)->bfmeAddAJ(m_bfmeSinkAJ, "assignClose", 1,
-					"normal", 0, 0, 0, 0);
-			((BfmeOwnAJ *)this)->bfmeCloseAJ(0);
+				((BfmeLevelAN *)g_rva012F19E8WindowManager)->bfmeBuildAN((unsigned int)m_bfmeSinkAJ,
+					(int)"assignClose", 1, (int)"normal", 0, 0, 0, 0);
+			CALL1075(Rva0003D811Cancel, this, j_0003d811)(0);
 			break;
 
 		case 2:
-			((BfmeOwnAJ *)this)->bfmeCloseAJ(0);
+			CALL1075(Rva0003D811Cancel, this, j_0003d811)(0);
 			break;
 
 		case 3:
-			((BfmeOwnAJ *)this)->bfmeCloseAJ(0);
+			CALL1075(Rva0003D811Cancel, this, j_0003d811)(0);
 			break;
 	}
 
