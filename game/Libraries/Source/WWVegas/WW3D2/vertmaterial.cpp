@@ -508,34 +508,6 @@ int VertexMaterialClass::Get_UV_Source(int stage)
 }
 
 
-// ?Init_From_Material3@VertexMaterialClass@@QAEXABUW3dMaterial3Struct@@@Z present-unmatched
-void VertexMaterialClass::Init_From_Material3(const W3dMaterial3Struct & mat3)
-{
-	Vector3 tmp0,tmp1,tmp2;
-	
-	W3dUtilityClass::Convert_Color(mat3.DiffuseColor,&tmp0);
-	W3dUtilityClass::Convert_Color(mat3.DiffuseCoefficients,&tmp1);
-	tmp2.X = tmp0.X * tmp1.X;
-	tmp2.Y = tmp0.Y * tmp1.Y;
-	tmp2.Z = tmp0.Z * tmp1.Z;
-	Set_Diffuse(tmp2);
-
-	W3dUtilityClass::Convert_Color(mat3.SpecularColor,&tmp0);
-	W3dUtilityClass::Convert_Color(mat3.SpecularCoefficients,&tmp1);
-	tmp2.X = tmp0.X * tmp1.X;
-	tmp2.Y = tmp0.Y * tmp1.Y;
-	tmp2.Z = tmp0.Z * tmp1.Z;
-	Set_Specular(tmp2);
-
-	W3dUtilityClass::Convert_Color(mat3.EmissiveCoefficients,&tmp0);
-	Set_Emissive(tmp0);
-
-	W3dUtilityClass::Convert_Color(mat3.AmbientCoefficients,&tmp0);
-	Set_Ambient(tmp0);
-
-	Set_Shininess(mat3.Shininess);
-	Set_Opacity(mat3.Opacity);
-}
 
 WW3DErrorType VertexMaterialClass::Load_W3D(ChunkLoadClass & cload)
 {
