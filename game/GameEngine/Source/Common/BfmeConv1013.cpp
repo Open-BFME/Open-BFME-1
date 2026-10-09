@@ -1,9 +1,9 @@
 // Open-BFME5 conversions.
 
-class BfmeUnit1013
+class GameWindow
 {
 public:
-	void bfmeStop1013(int n);
+	int winEnable(bool enable);
 };
 
 class BfmeA1013
@@ -14,8 +14,8 @@ public:
 	char m_bfmePad[0x188];
 	int m_bfmeState;
 	char m_bfmePad2[0x14];
-	BfmeUnit1013 *m_bfmeA;
-	BfmeUnit1013 *m_bfmeB;
+	GameWindow *m_bfmeA;
+	GameWindow *m_bfmeB;
 };
 
 void BfmeA1013::bfmeGo1013A(int unused)
@@ -23,8 +23,8 @@ void BfmeA1013::bfmeGo1013A(int unused)
 	int s = m_bfmeState;
 
 	if (s == 2 || s == 3) {
-		m_bfmeA->bfmeStop1013(0);
-		m_bfmeB->bfmeStop1013(0);
+		m_bfmeA->winEnable(false);
+		m_bfmeB->winEnable(false);
 		m_bfmeState = 4;
 	}
 }
@@ -45,11 +45,12 @@ class GameWindowTransitionsHandler;
 
 extern GameWindowTransitionsHandler *TheTransitionHandler;
 
+void _bfme_leaveScoreScreen();
+
 class BfmeB1013
 {
 public:
 	int bfmeGo1013B();
-	void bfmeFinish1013();
 
 	char m_bfmePad[0x258];
 	int m_bfmeMode;
@@ -61,7 +62,7 @@ int BfmeB1013::bfmeGo1013B()
 {
 	if (m_bfmeFlag) {
 		m_bfmeFlag = 0;
-		bfmeFinish1013();
+		_bfme_leaveScoreScreen();
 		return 1;
 	}
 
@@ -74,10 +75,10 @@ int BfmeB1013::bfmeGo1013B()
 }
 
 // TU-local view of the retail WindowManager; the global below is the real class.
-class BfmeLog1013
+class BfmeLevelAN
 {
 public:
-	void bfmeLog1013(int a, char *fmt, int n, int p, int q, int r, int s, int t);
+	char *bfmeBuildAN(unsigned int level, int p2, int p3, int p4, int p5, int p6, int p7, int p8);
 };
 
 class WindowManager;
@@ -86,7 +87,11 @@ class WindowManager;
 // game/GameEngine/Source/GameClient/GUI/WindowManager.cpp
 extern WindowManager *g_rva012F19E8WindowManager;
 
-char bfmeAsk1013(void);
+class BfmeAptScreenLanLobby
+{
+public:
+	bool refreshLanGameRva00519CB0();
+};
 
 class AptLanLobby
 {
@@ -104,8 +109,8 @@ void AptLanLobby::OnGameJoin()
 	if (m_bfmeState != 8)
 		return;
 
-	if (bfmeAsk1013()) {
-		((BfmeLog1013 *)g_rva012F19E8WindowManager)->bfmeLog1013(m_bfmeId, "JoinGame", 0, 0, 0, 0, 0, 0);
+	if (((BfmeAptScreenLanLobby *)this)->refreshLanGameRva00519CB0()) {
+		((BfmeLevelAN *)g_rva012F19E8WindowManager)->bfmeBuildAN((unsigned int)m_bfmeId, (int)"JoinGame", 0, 0, 0, 0, 0, 0);
 		m_bfmeState = 9;
 	} else {
 		m_bfmeState = 1;
