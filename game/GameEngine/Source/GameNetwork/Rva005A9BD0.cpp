@@ -4,7 +4,7 @@
 // third argument is zero, the second holder's +0xfc object's ID is appended
 // to a new TheMessageStream message (type 0x424), then its +0x214 Thing is
 // asked isKindOf(0x6c) and, if so, a pointer returned by that Thing's
-// vtbl+0x28 gets bfmeThenBXF(0) called on it. No named caller (brief lists
+// vtbl+0x28 gets the selection flash called with a null color. No named caller (brief lists
 // none) and no vtable/string ties an owner, so this keeps the address token.
 
 typedef int Int;
@@ -36,11 +36,13 @@ public:
 	bool isKindOf(KindOfType t) const;
 };
 
-// The already-pinned ?bfmeThenBXF@BfmeThingBXF@@QAEXH@Z (REL32 0x0004067E).
-class BfmeThingBXF
+// ILT 0x0004067E reaches the matched selection flash at 0x0041A2E0.
+extern void j_0004067e();
+struct RGBColor;
+class Rva0041A2E0
 {
 public:
-	void bfmeThenBXF(int arg);
+	void flash(const RGBColor *color);
 };
 
 struct Rva005A9BD0Object
@@ -113,7 +115,14 @@ int __stdcall rva005A9BD0(Rva005A9BD0Holder *holder1, Rva005A9BD0Holder *holder2
 			target = aiThing->rva005A9BD0Slot10();
 
 		if (target)
-			((BfmeThingBXF *)target)->bfmeThenBXF(0);
+		{
+			union FlashCall {
+				void (*thunk)();
+				void (Rva0041A2E0::*member)(const RGBColor *);
+			} call;
+			call.thunk = j_0004067e;
+			(((Rva0041A2E0 *)target)->*call.member)(0);
+		}
 	}
 
 	return 0x424;
