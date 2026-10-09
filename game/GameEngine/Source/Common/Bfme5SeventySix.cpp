@@ -57,8 +57,9 @@ public:
 	int m_bfmeThird;
 };
 
-extern BfmeTripleDU g_bfmeEntriesDU[16];
-extern int g_bfmeCountDU;
+// Recorded retail zero-filled table and count at VA 0x013378E0 / 0x013379A4.
+BfmeTripleDU g_bfmeEntriesDU[16];
+int g_bfmeCountDU;
 
 void __cdecl bfmeAppend(int first, int second, int third)
 {
