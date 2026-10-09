@@ -8,6 +8,11 @@
 #include <locale>
 
 namespace _STL {
+// WriteIntegerBackward.cpp owns the verified signed-long formatter at
+// 0x00835940.  Do not instantiate a competing copy through num_put.
+template <>
+char *_STLP_CALL __write_integer_backward<long>(char *, ios_base::fmtflags, long);
+
 typedef ostreambuf_iterator<char, char_traits<char> > BfmeNarrowPointerIterator;
 
 // This overload is owned by NumPutPointerNarrow.cpp.  Declare its explicit
