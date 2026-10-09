@@ -74,9 +74,9 @@ public:
 	int m_bfmeData[9];					// 36 bytes
 };
 
-extern BfmeBlockCU g_bfmeDefaultCU;				// retail 0x012B4FF8
-extern BfmeBlockCU g_bfmeCurrentCU;				// retail 0x012B501C
-extern bool g_bfmeDirtyCU;					// retail 0x012F13FC
+BfmeBlockCU g_bfmeDefaultCU = {{0, 17, 0x3F800000, 256, 0, 0, 0, 0, 0}}; // VA 0x012B4FF8
+BfmeBlockCU g_bfmeCurrentCU = {{0, 17, 0x3F800000, 256, 0, 0, 0, 0, 0}}; // VA 0x012B501C
+bool g_bfmeDirtyCU = false; // VA 0x012F13FC
 
 // ?bfmeReset@@YAXXZ
 void __cdecl bfmeReset(void)
