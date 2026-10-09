@@ -14,7 +14,9 @@ extern Display* TheDisplay;
 // Retail VA 010F7540 contains float 0.75 (0000403f); distinct constant pool.
 static const float ElvenTextScale010F7540[] = { 0.75f };
 class GameFont;
-class FontLibrary { public: GameFont* getFont(AsciiString*,float,unsigned char); };
+class FontLibrary;
+// Retail ILT 0xABC3 -> matched FontLibraryBFMERetail::getFont at 0x004772D0.
+class FontLibraryBFMERetail { public: GameFont* getFont(AsciiString*,float,unsigned char); };
 extern FontLibrary* TheFontLibrary;
 struct ImageSize00471900 { int x,y; };
 class Image { public: char field00[0x24]; ImageSize00471900 m_imageSize; };
@@ -48,7 +50,7 @@ void ElvenTextAssets00471900::initialize() {
  float scale=float(TheDisplay->getWidth())/800.0f;
  scale *= ElvenTextScale010F7540[0];
  if(scale!=field38) { field04=0; field38=scale; }
- if(!field04) field04=TheFontLibrary->getFont(&field3c,float(field48)*scale,0);
+ if(!field04) field04=((FontLibraryBFMERetail*)TheFontLibrary)->getFont(&field3c,float(field48)*scale,0);
  if(!field34) {
   field1c.push_back(TheMappedImageCollection->findImageByName(AsciiString("elv_text_A")));
   field1c.push_back(TheMappedImageCollection->findImageByName(AsciiString("elv_text_B")));
