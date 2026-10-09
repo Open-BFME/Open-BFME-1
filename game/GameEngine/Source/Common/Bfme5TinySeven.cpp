@@ -3,8 +3,8 @@
 // clean-up), three fields initialised from a global and a zero, and an offset
 // built out of two counts with two leas.
 
-extern unsigned int g_bfmeFullBX;				// retail 0x012D71AC
-extern unsigned int g_bfmeHalfBX;				// retail 0x012D71A8
+unsigned int g_bfmeFullBX = 32768;			// retail 0x012D71AC
+unsigned int g_bfmeHalfBX = 16384;			// retail 0x012D71A8
 
 // ?bfmeSetSize@@YAXI@Z
 void __cdecl bfmeSetSize(unsigned int value)

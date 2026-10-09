@@ -868,3 +868,5 @@ _g_bfmeV1159,0x00D26B14,rva,20,.rdata,game/GameEngine/Source/Common/BfmeConv1159
 ?g_bfmeTableDstBQ@@3PAHA,0x012B50A0,va,96,.data,game/GameEngine/Source/Common/Bfme5TinySix2.cpp,matched,targets/game/reverse/identity_evidence/012b5040-table-pair.md,gpt-6.1-sol
 ?g_bfmeOptionSlotsA@@3PAURva00920AE0Slot@@A,0x01346C50,va,160,.data,game/GameEngine/Source/Common/Rva00920AE0SelectOptions.cpp,matched,targets/game/reverse/identity_evidence/01346c50-slot-arrays.md,gpt-6.1-sol
 ?g_bfmeOptionSlotsB@@3PAURva00920AE0Slot@@A,0x01346CF0,va,160,.data,game/GameEngine/Source/Common/Rva00920AE0SelectOptions.cpp,matched,targets/game/reverse/identity_evidence/01346c50-slot-arrays.md,gpt-6.1-sol
+?g_bfmeFullBX@@3IA,0x012D71AC,va,4,.data,game/GameEngine/Source/Common/Bfme5TinySeven.cpp,matched,targets/game/reverse/identity_evidence/012d71a8-size-pair.md,gpt-6.1-sol
+?g_bfmeHalfBX@@3IA,0x012D71A8,va,4,.data,game/GameEngine/Source/Common/Bfme5TinySeven.cpp,matched,targets/game/reverse/identity_evidence/012d71a8-size-pair.md,gpt-6.1-sol
