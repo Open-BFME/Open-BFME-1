@@ -1,23 +1,5 @@
 // ?W3DGadgetPushButtonImageDrawOne@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
-// partial score=0.95 date=2026-09-28
-// ?W3DGadgetPushButtonImageDrawOne@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
-// Retail 0x00795140 (2761 bytes): EH prologue through the final ret at +0xAC8
-// (int3 padding follows at 0x00795C09); the ledger extent is already correct.
-//
-// Identity: the matched W3DGadgetPushButtonImageDraw dispatcher (0x00795EE0)
-// calls this symbol for the single-image button.  The body is the Zero Hour
-// W3DPushButton.cpp DrawOne with BFME's additions: seven function statics
-// looked up at entry (Cameo_push, Cameo_hilited, RadialPush, RadialOver,
-// RadialBorder, RadialClockOverlay1, RadialClockOverlay2), a status-bit
-// 0x04000000 radial mode with stencil helpers, the radial clock overlays and
-// a static file-local overlay helper at 0x00794040.  Status bit names come
-// from their position in the ZH DrawOne control flow.  drawButtonText is the
-// matched file-local helper at 0x00793EE0.
-//
-// NEAR MISS: same size, instruction stream equal; 139 bytes differ, all
-// stack-slot displacements.  Retail frame: image -64, string temps and colours
-// -60, block floats -56..-40, start -36, size -28, end -20.  Ours puts the
-// seventh AsciiString temporary alone on -56 and rotates end/start/size.
+// partial score=0.954 date=2026-10-09
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 #include "ascii_string.h"
 
@@ -240,12 +222,84 @@ void Rva00933810StencilStateA(void);
 void j_000327a4(GameWindow *window, WinInstanceData *instData,
 	struct PushButtonData *pData);
 
+class Bfme5Host
+{
+public:
+	virtual void bfmeVM0();
+	virtual void bfmeVM1();
+	virtual void bfmeVM2();
+	virtual void bfmeVM3();
+	virtual void bfmeVM4();
+	virtual void bfmeVM5();
+	virtual void bfmeVM6();
+	virtual void bfmeVM7();
+	virtual void bfmeVM8();
+	virtual void bfmeVM9();
+	virtual void bfmeVM10();
+	virtual void bfmeVM11();
+	virtual void bfmeVM12();
+	virtual void bfmeVM13();
+	virtual void bfmeVM14();
+	virtual void bfmeVM15();
+	virtual void bfmeVM16();
+	virtual void bfmeVM17();
+	virtual void bfmeVM18();
+	virtual void bfmeVM19();
+	virtual void bfmeVM20();
+	virtual void bfmeVM21();
+	virtual void bfmeVM22();
+	virtual void bfmeVM23();
+	virtual void bfmeVM24();
+	virtual void bfmeVM25();
+	virtual void bfmeVM26();
+	virtual void bfmeVM27();
+	virtual void bfmeVM28();
+	virtual void bfmeVM29();
+	virtual void bfmeVM30();
+	virtual void bfmeVM31();
+	virtual void bfmeVM32();
+	virtual void bfmeVM33();
+	virtual void bfmeVM34();
+	virtual void bfmeVM35();
+	virtual void bfmeVM36();
+	virtual void bfmeVM37();
+	virtual void bfmeVM38();
+	virtual void bfmeVM39();
+	virtual void bfmeVM40();
+	virtual void bfmeVM41();
+	virtual void bfmeVM42();
+	virtual void bfmeVM43();
+	virtual void bfmeBegin();
+	virtual void bfmeWorkA(int a, int b, int c, int d, int e, int f, int g);
+	virtual void bfmeVM46();
+	virtual void bfmeVM47();
+	virtual void bfmeWorkB(int a, int b, int c, int d, int e);
+	virtual void bfmeWorkC(int a, int b, int c, int d, int e);
+	virtual void bfmeVM50();
+	virtual void bfmeVM51();
+	virtual void bfmeWorkD(int a, int b, int c, int d, int e, int f, int g);
+	virtual void bfmeWorkE(const Image *a, float b, float c, float d, float e, int f, int g);
+	virtual void bfmeVM54();
+	virtual void bfmeEnd();
+
+	void bfmeRunB(int a, int b, int c, int d, int e);
+	void bfmeRunC(int a, int b, int c, int d, int e);
+	void bfmeRunA(int a, int b, int c, int d, int e, int f, int g);
+	void bfmeRunD(int a, int b, int c, int d, int e, int f, int g);
+	void bfmeRunE(const Image *a, float b, float c, float d, float e, int f, int g);
+};
+
+inline void Bfme5Host::bfmeRunE(const Image *a, float b, float c, float d, float e, int f, int g)
+{
+	bfmeBegin();
+	bfmeWorkE(a, b, c, d, e, f, g);
+	bfmeEnd();
+}
+
 inline void drawImageInline(Display *display, const Image *image,
 	Real startX, Real startY, Real endX, Real endY, Color color, Int mode)
 {
-	display->beginImageDraw();
-	display->drawImageCore(image, startX, startY, endX, endY, color, mode);
-	display->endImageDraw();
+	((Bfme5Host *)display)->bfmeRunE(image, startX, startY, endX, endY, color, mode);
 }
 
 inline void fillRectInline(Display *display, Real x, Real y, Real width,
@@ -375,6 +429,7 @@ static void drawCenteredScaledImage00794040(const Image *image, const ICoord2D *
 		centerX + extentX, centerY + extentY, color, 2);
 }
 
+// Open BFME 2: Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DPushButton.cpp
 // ?W3DGadgetPushButtonImageDrawOne@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
 void W3DGadgetPushButtonImageDrawOne(GameWindow *window, WinInstanceData *instData)
 {
@@ -387,7 +442,7 @@ void W3DGadgetPushButtonImageDrawOne(GameWindow *window, WinInstanceData *instDa
 	static const Image *radialClock2 = TheMappedImageCollection->findImageByName("RadialClockOverlay2");
 
 	const Image *image = 0;
-	ICoord2D size, start, end;
+	ICoord2D start, size, end;
 
 	image = buttonEnabled(window, 0);
 
@@ -505,16 +560,12 @@ void W3DGadgetPushButtonImageDrawOne(GameWindow *window, WinInstanceData *instDa
 				Real halfY = size.y * 0.5f;
 				Real centerX = start.x + halfX;
 				Real centerY = start.y + halfY;
-				Real extentX = halfX * (46.0f / 48.0f);
-				Real extentY = halfY * (46.0f / 48.0f);
-				Real bottom = centerY + extentY;
-				Real right = centerX + extentX;
-				Real top = centerY - extentY;
-				Real left = centerX - extentX;
-				TheDisplay->bfmeRunD(radialClock1, left, top, right, bottom,
-					pData->percentClock, pData->colorClock);
-				TheDisplay->bfmeRunD(radialClock2, left, top, right, bottom,
-					pData->percentClock, clockColor);
+				halfX *= (46.0f / 48.0f);
+				halfY *= (46.0f / 48.0f);
+				TheDisplay->bfmeRunD(radialClock1, centerX - halfX, centerY - halfY,
+					centerX + halfX, centerY + halfY, pData->percentClock, pData->colorClock);
+				TheDisplay->bfmeRunD(radialClock2, centerX - halfX, centerY - halfY,
+					centerX + halfX, centerY + halfY, pData->percentClock, clockColor);
 			}
 			pData->drawClock = 0;
 			window->winSetUserData(pData);
