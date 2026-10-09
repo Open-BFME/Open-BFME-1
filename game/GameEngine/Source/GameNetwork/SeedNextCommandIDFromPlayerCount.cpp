@@ -20,11 +20,11 @@
 // this immediately after fetching GameInfo's player count, before attaching
 // any per-player slots -- i.e. once, at match-attach time.
 // NetworkUtil.cpp's static UnsignedShort commandID (0x012BA084). No name for
-// it is recorded yet, so the address-derived g_012BA084 stands in; declaring
-// it keeps the store relocatable in a linked build.
-extern unsigned short g_012BA084;
+// it is recorded yet, so the address-derived g_Va012BA084 owns it here;
+// retail .data holds its initial value 0x0064 (100).
+unsigned short g_Va012BA084 = 100;
 
 void SeedNextCommandIDFromPlayerCount(Int numPlayers)
 {
-	g_012BA084 = static_cast<unsigned short>((numPlayers + 10) * 1000);
+	g_Va012BA084 = static_cast<unsigned short>((numPlayers + 10) * 1000);
 }
