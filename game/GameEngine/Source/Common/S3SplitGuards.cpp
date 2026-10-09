@@ -109,6 +109,15 @@ private:
 	Gen_001eda90Sub m_bfmeSub;					// +0x20
 };
 
+// Matched ledger row: ?AllowBroadcasts@UDP@@QAEH_N@Z at 0x006848C0, the body
+// the ILT at 0x00004F6B jumps to. New declaration only; nothing existing is
+// renamed or removed.
+class UDP
+{
+public:
+	int AllowBroadcasts(bool status);
+};
+
 // ?bfmeMatches@Gen_0061e5f0@@QBEHPBVBfmeShortKey@@@Z
 int Gen_0061e5f0::bfmeMatches(const BfmeShortKey *key) const
 {
@@ -132,7 +141,7 @@ int Gen_00684b90::bfmeCheck(void *argument)
 {
 	Gen_00684b90Holder *holder = m_bfmeHolder;
 
-	if (holder && holder->bfmeAccepts(argument))
+	if (holder && ((UDP *)holder)->AllowBroadcasts(*(bool *)&argument))
 		return 1;
 
 	return 0;
@@ -143,7 +152,7 @@ int Gen_001eda90::bfmeCheck(Gen_001eda90Arg *argument)
 {
 	if (m_bfmeSub.m_bfmeText
 		&& ((BfmeCountedText *)m_bfmeSub.m_bfmeText)->m_bfmeCount != 0
-		&& m_bfmeSub.compare(argument->m_bfmeText) == 0)
+		&& ((StringBase<char> *)&m_bfmeSub)->compare(argument->m_bfmeText) == 0)
 		return 1;
 
 	return 0;
