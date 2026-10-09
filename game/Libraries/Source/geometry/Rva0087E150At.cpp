@@ -5,7 +5,20 @@ struct BfmeShapeE15
 	char m[0x24];
 };
 
-extern BfmeShapeE15 g_bfmeBadE15;
+// Full 0x24-byte out-of-range sentinel at retail VA 0x012D4CE8.
+// The three IEEE 1.0f words at +4/+8/+12 and byte 1 at +0x20
+// are initialized in the shipped image; the remaining bytes are zero.
+BfmeShapeE15 g_bfmeBadE15 = {{
+	0, 0, 0, 0,
+	0, 0, -128, 63,
+	0, 0, -128, 63,
+	0, 0, -128, 63,
+	0, 0, 0, 0,
+	0, 0, 0, 0,
+	0, 0, 0, 0,
+	0, 0, 0, 0,
+	1, 0, 0, 0
+}};
 
 class BfmeObjE15
 {
