@@ -20,7 +20,7 @@ struct BfmeStringPool3AF0
 };
 
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned int);
 
 inline void *operator new(unsigned int, void *memory)
@@ -42,7 +42,7 @@ public:
 	{
 		BfmeStringData3AF0 *data = m_data;
 		if (--data->m_refCount == 0)
-			g_bfmeStringPool1284->free(data);
+			g_rva01337A30AllocPair->free(data);
 	}
 
 	BfmeStringData3AF0 *m_data;
@@ -61,7 +61,7 @@ public:
 	{
 		BfmeStringData3AF0 *data = m_data;
 		if (--data->m_refCount == 0)
-			g_bfmeStringPool1284->free(data);
+			g_rva01337A30AllocPair->free(data);
 	}
 
 	BfmeStringData3AF0 *m_data;
@@ -95,7 +95,7 @@ public:
 	{
 		BfmeStringData3AF0 *data = m_data;
 		if (--data->m_refCount == 0)
-			g_bfmeStringPool1284->free(data);
+			g_rva01337A30AllocPair->free(data);
 	}
 
 	BfmeStringData3AF0 *m_data;
@@ -222,7 +222,7 @@ Rva008C3B60Node *rva008AA130(BfmeHostEAW *first, int count)
 	++result.m_data->m_refCount;
 	BfmeStringData3AF0 *old = node->m_data;
 	if (--old->m_refCount == 0)
-		g_bfmeStringPool1284->free(old);
+		g_rva01337A30AllocPair->free(old);
 	node->m_data = result.m_data;
 	return node;
 }
@@ -272,7 +272,7 @@ Rva008C3B60Node *rva008AA2B0(int unused, int count)
 	++result.m_data->m_refCount;
 	BfmeStringData3AF0 *old = node->m_data;
 	if (--old->m_refCount == 0)
-		g_bfmeStringPool1284->free(old);
+		g_rva01337A30AllocPair->free(old);
 	node->m_data = result.m_data;
 	return node;
 }

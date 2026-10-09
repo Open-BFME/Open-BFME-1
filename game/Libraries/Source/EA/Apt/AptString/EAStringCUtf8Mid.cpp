@@ -17,7 +17,7 @@ struct EAStringData
 };
 
 extern EAStringData g_emptyStringData;
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 class EAStringC
 {
@@ -32,7 +32,7 @@ public:
 	{
 		EAStringData *data = m_data;
 		if (--data->m_refCount == 0)
-			g_bfmeStringPool1284->free(data);
+			g_rva01337A30AllocPair->free(data);
 	}
 
 	EAStringC Mid(int start) const;

@@ -5,7 +5,7 @@
 struct BfmeStringData3AF0 { unsigned short m_refs; };
 struct BfmeStringPool3AF0 { void *m_unknown00; void (__cdecl *free)(void *); };
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 class Rva8CD130String
 {
@@ -16,7 +16,7 @@ public:
     }
     __forceinline ~Rva8CD130String() {
         BfmeStringData3AF0 *old = m_block;
-        if (--old->m_refs == 0) g_bfmeStringPool1284->free(old);
+        if (--old->m_refs == 0) g_rva01337A30AllocPair->free(old);
     }
     BfmeStringData3AF0 *m_block;
 };

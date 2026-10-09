@@ -9,7 +9,7 @@ struct BfmeStringPool3AF0
 	void (__cdecl *free)(void *storage);
 };
 
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 struct BfmeAllocVKJ
 {
@@ -41,7 +41,7 @@ public:
 	{
 		StringDataC *data = m_pData;
 		if (--data->m_uRefCount == 0)
-			g_bfmeStringPool1284->free(data);
+			g_rva01337A30AllocPair->free(data);
 	}
 
 	EAStringC rva0089E0C0(const EAStringC &other) const;

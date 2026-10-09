@@ -81,19 +81,19 @@ public:
 };
 struct BfmeStringData3AF0 { unsigned short m_refCount, m_length, m_capacity, m_unknown06; };
 struct BfmeStringPool3AF0 { void *m_unknown00; void (__cdecl *free)(void *); };
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 class BfmeStrVKI {
 public:
     void bfmeSetVKI(const char *);
     __forceinline BfmeStrVKI(const char *text) { bfmeSetVKI(text); }
     __forceinline ~BfmeStrVKI() {
         BfmeStringData3AF0 *old = m_data;
-        if (--old->m_refCount == 0) g_bfmeStringPool1284->free(old);
+        if (--old->m_refCount == 0) g_rva01337A30AllocPair->free(old);
     }
     __forceinline BfmeStrVKI &operator=(const BfmeStrVKI &other) {
         ++other.m_data->m_refCount;
         BfmeStringData3AF0 *old = m_data;
-        if (--old->m_refCount == 0) g_bfmeStringPool1284->free(old);
+        if (--old->m_refCount == 0) g_rva01337A30AllocPair->free(old);
         m_data = other.m_data;
         return *this;
     }

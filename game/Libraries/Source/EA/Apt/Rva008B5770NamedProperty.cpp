@@ -23,7 +23,7 @@ struct BfmeStringPool3AF0
 };
 
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 class Rva8CD130String
 {
@@ -36,7 +36,7 @@ public:
 	{
 		BfmeStringData3AF0 *data = m_data;
 		if (--data->m_refCount == 0)
-			g_bfmeStringPool1284->free(data);
+			g_rva01337A30AllocPair->free(data);
 	}
 	BfmeStringData3AF0 *m_data;
 };

@@ -9,7 +9,7 @@ struct BfmeStringPool3AF0 {
     void (__cdecl *free)(void *);
 };
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 class Rva8CD130String {
 public:
     __forceinline Rva8CD130String() {
@@ -18,12 +18,12 @@ public:
     }
     __forceinline ~Rva8CD130String() {
         BfmeStringData3AF0 *old = m_data;
-        if (--old->m_refCount == 0) g_bfmeStringPool1284->free(old);
+        if (--old->m_refCount == 0) g_rva01337A30AllocPair->free(old);
     }
     __forceinline Rva8CD130String &operator=(const Rva8CD130String &source) {
         ++source.m_data->m_refCount;
         BfmeStringData3AF0 *old = m_data;
-        if (--old->m_refCount == 0) g_bfmeStringPool1284->free(old);
+        if (--old->m_refCount == 0) g_rva01337A30AllocPair->free(old);
         m_data = source.m_data;
         return *this;
     }

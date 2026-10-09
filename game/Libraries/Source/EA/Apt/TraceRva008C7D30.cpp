@@ -16,7 +16,7 @@ struct BfmeStringPool3AF0
 };
 
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 extern BfmeStringData3AF0 *g_stringBlock01338724;
 extern void (__cdecl *g_bfmeSlot04VB)(void);
 
@@ -45,7 +45,7 @@ public:
     {
         BfmeStringData3AF0 *old = m_data;
         if (--old->m_refCount == 0)
-            g_bfmeStringPool1284->free(old);
+            g_rva01337A30AllocPair->free(old);
     }
 
     BfmeStringData3AF0 *m_data;

@@ -14,7 +14,7 @@ struct BfmeStringPool3AF0
 	void (__cdecl *free)(void *storage);
 };
 
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
 
 class BfmeStrVKI
@@ -44,7 +44,7 @@ public:
 	{
 		BfmeStringData3AF0 *data = m_data;
 		if (--data->m_refCount == 0)
-			g_bfmeStringPool1284->free(data);
+			g_rva01337A30AllocPair->free(data);
 	}
 
 	BfmeStrVKI &operator=(const BfmeStrVKI &other)
@@ -52,7 +52,7 @@ public:
 		++other.m_data->m_refCount;
 		BfmeStringData3AF0 *data = m_data;
 		if (--data->m_refCount == 0)
-			g_bfmeStringPool1284->free(data);
+			g_rva01337A30AllocPair->free(data);
 		m_data = other.m_data;
 		return *this;
 	}

@@ -5,7 +5,7 @@ extern "C" char* __cdecl strchr(const char*, int);
 #pragma intrinsic(strlen, memcmp)
 int __cdecl bfmeCompareVSC(const char* a, const char* b);
 struct BfmeStringPool3AF0 { void* (__cdecl* m_alloc)(unsigned int bytes); };
-extern BfmeStringPool3AF0* g_bfmeStringPool1284;
+extern BfmeStringPool3AF0* g_rva01337A30AllocPair;
 struct Rva0089E4F0Data { unsigned short m_refs; unsigned short m_len; unsigned short m_cap; unsigned short m_hash; char m_chars[1]; };
 struct Rva0089E4F0String {
 	Rva0089E4F0Data* m_data;
@@ -43,7 +43,7 @@ bool Rva0089E4F0String::equalsHashed(const Rva0089E4F0String* other)
 void Rva0089E4F0String::allocate(int length)
 {
 	unsigned int size = (length + 0xc) & ~3;
-	m_data = (Rva0089E4F0Data*)g_bfmeStringPool1284->m_alloc(size);
+	m_data = (Rva0089E4F0Data*)g_rva01337A30AllocPair->m_alloc(size);
 	m_data->m_refs = 1;
 	m_data->m_cap = (unsigned short)(size - 9);
 }

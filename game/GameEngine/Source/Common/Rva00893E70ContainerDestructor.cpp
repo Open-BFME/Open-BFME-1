@@ -12,7 +12,7 @@ struct BfmeStringPool3AF0
 };
 
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 struct Rva00892640Item
 {

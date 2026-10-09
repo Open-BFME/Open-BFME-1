@@ -8,7 +8,7 @@ struct BfmeStringPool3AF0 {
     void (__cdecl *free)(void *);
 };
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 class EAStringC {
 public:
     __forceinline EAStringC() {
@@ -17,7 +17,7 @@ public:
     }
     __forceinline ~EAStringC() {
         BfmeStringData3AF0 *old = m_data;
-        if (--old->m_refCount == 0) g_bfmeStringPool1284->free(old);
+        if (--old->m_refCount == 0) g_rva01337A30AllocPair->free(old);
     }
     EAStringC &rva0089FDA0(const char *source, int limit);
     BfmeStringData3AF0 *m_data;
@@ -104,7 +104,7 @@ Rva008A9B00 *rva008A9E20CodepointStringValue(AptValue *value) {
     }
     ++result.m_data->m_refCount;
     BfmeStringData3AF0 *old = obj->m_string.m_data;
-    if (--old->m_refCount == 0) g_bfmeStringPool1284->free(old);
+    if (--old->m_refCount == 0) g_rva01337A30AllocPair->free(old);
     obj->m_string.m_data = result.m_data;
     return obj;
     }

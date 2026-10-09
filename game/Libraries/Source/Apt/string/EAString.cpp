@@ -25,7 +25,7 @@ struct BfmeStringPool3AF0
 };
 
 extern EAStringData g_emptyStringData;
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 template <typename T>
 class StringBase
@@ -40,7 +40,7 @@ protected:
 	{
 		EAStringData *old = data;
 		if (--old->refCount == 0)
-			g_bfmeStringPool1284->free(old);
+			g_rva01337A30AllocPair->free(old);
 	}
 
 	friend class EAStringC;
@@ -62,7 +62,7 @@ public:
 		++other.data->refCount;
 		EAStringData *old = data;
 		if (--old->refCount == 0)
-			g_bfmeStringPool1284->free(old);
+			g_rva01337A30AllocPair->free(old);
 		data = other.data;
 		return *this;
 	}

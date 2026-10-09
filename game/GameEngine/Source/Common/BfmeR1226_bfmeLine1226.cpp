@@ -7,7 +7,7 @@ struct BfmeStringBlock1226
 // to it is retail VA 0x01337A30, which the ledger's data row
 // ?g_rva01337A30AllocPair@@3PAUBfmeStringPool3AF0@@A defines once, in
 // game/Libraries/Source/Apt/Apt.cpp; this file used a second spelling
-// (g_bfmeStringPool1284) that nothing defined, so the reference is respelled to
+// (g_rva01337A30AllocPair) that nothing defined, so the reference is respelled to
 // the defined name and the DIR32 target is unchanged.  Only slot +4 (the free
 // callback) is called here, as at the other 275 call sites.
 struct BfmeStringPool3AF0

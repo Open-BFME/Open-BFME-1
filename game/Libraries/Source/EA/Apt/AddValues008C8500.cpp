@@ -15,7 +15,7 @@ struct BfmeStringPool3AF0
 };
 
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 extern BfmeStringData3AF0 *g_stringBlock01338724;
 
 class Rva8CD130String
@@ -31,7 +31,7 @@ public:
     {
         BfmeStringData3AF0 *old = m_data;
         if (--old->m_refCount == 0)
-            g_bfmeStringPool1284->free(old);
+            g_rva01337A30AllocPair->free(old);
     }
 
     void assign(const Rva8CD130String &other)
@@ -39,7 +39,7 @@ public:
         ++other.m_data->m_refCount;
         BfmeStringData3AF0 *old = m_data;
         if (--old->m_refCount == 0)
-            g_bfmeStringPool1284->free(old);
+            g_rva01337A30AllocPair->free(old);
         m_data = other.m_data;
     }
 

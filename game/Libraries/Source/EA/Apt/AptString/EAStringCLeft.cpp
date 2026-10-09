@@ -33,7 +33,7 @@ struct EAStringData
 // canonically before EAStringC's own definition; the TU-local EAStringData
 // view has the same layout and is what the bodies read through.
 static inline EAStringData *rva012D5298Block();
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 template <typename T> class StringBase
 {
@@ -57,7 +57,7 @@ template <typename T> class StringBase
 	{
 		EAStringData *data = m_data;
 		if (--data->m_refCount == 0)
-			g_bfmeStringPool1284->free(data);
+			g_rva01337A30AllocPair->free(data);
 	}
 
 	~StringBase() { releaseBuffer(); }
@@ -148,7 +148,7 @@ void EAStringC::ChangeBuffer(unsigned int reserve, unsigned int offset,
 	}
 
 	if (--oldData->m_refCount == 0)
-		g_bfmeStringPool1284->free(oldData);
+		g_rva01337A30AllocPair->free(oldData);
 }
 
 EAStringC EAStringC::Left(int count) const

@@ -3,7 +3,7 @@
 // Fields and inline tables witnessed in docs/analysis/0x008985c0.md.
 struct BfmeStringData3AF0 { unsigned short m_refCount, m_length, m_capacity, m_unknown06; };
 struct BfmeStringPool3AF0 { void *m_unknown00; void (__cdecl *free)(void *); };
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 extern "C" int __cdecl sprintf(char *, const char *, ...);
 extern "C" int __cdecl abs(int);
 #pragma intrinsic(abs)
@@ -13,7 +13,7 @@ public:
     void __declspec(nothrow) bfmeSetVKI(const char *s);
     __forceinline ~BfmeStrVKI() {
         BfmeStringData3AF0 *old = m_data;
-        if (--old->m_refCount == 0) g_bfmeStringPool1284->free(old);
+        if (--old->m_refCount == 0) g_rva01337A30AllocPair->free(old);
     }
     BfmeStringData3AF0 *m_data;
 };
@@ -22,7 +22,7 @@ public:
     __forceinline Rva8CD130String &operator=(const BfmeStrVKI &s) {
         ++s.m_data->m_refCount;
         BfmeStringData3AF0 *old = m_data;
-        if (--old->m_refCount == 0) g_bfmeStringPool1284->free(old);
+        if (--old->m_refCount == 0) g_rva01337A30AllocPair->free(old);
         m_data = s.m_data;
         return *this;
     }

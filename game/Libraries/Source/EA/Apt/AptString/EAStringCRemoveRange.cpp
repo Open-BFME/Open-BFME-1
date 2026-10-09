@@ -22,7 +22,7 @@ struct BfmeStringData3AF0
 };
 
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 class EAStringC
 {
@@ -48,7 +48,7 @@ int EAStringC::rva0089EEF0(int start, int count)
 	{
 		BfmeStringData3AF0 *data = m_data;
 		if (--data->m_refCount == 0)
-			g_bfmeStringPool1284->free(data);
+			g_rva01337A30AllocPair->free(data);
 		m_data = &g_bfmeDefaultString1284;
 		++g_bfmeDefaultString1284.m_refCount;
 		return 0;
@@ -57,7 +57,7 @@ int EAStringC::rva0089EEF0(int start, int count)
 	{
 		BfmeStringData3AF0 *data = m_data;
 		if (--data->m_refCount == 0)
-			g_bfmeStringPool1284->free(data);
+			g_rva01337A30AllocPair->free(data);
 		m_data = &g_bfmeDefaultString1284;
 		++g_bfmeDefaultString1284.m_refCount;
 		return 0;

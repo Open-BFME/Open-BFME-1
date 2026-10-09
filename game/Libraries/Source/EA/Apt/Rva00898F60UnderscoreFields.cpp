@@ -14,7 +14,7 @@ struct BfmeStringPool3AF0
     void (__cdecl *free)(void *);
 };
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 class BfmeStrVKJ
 {
 public:
@@ -33,7 +33,7 @@ public:
     ~Rva8CD130String()
     {
         BfmeStringData3AF0 *old = m_data;
-        if (--old->m_refCount == 0) g_bfmeStringPool1284->free(old);
+        if (--old->m_refCount == 0) g_rva01337A30AllocPair->free(old);
     }
     Rva8CD130String &rva0089EA60Append(const char *text);
     void append(const Rva8CD130String &source)

@@ -21,7 +21,7 @@ struct BfmeStringPool3AF0
 };
 
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 extern const float g_rva01075350;
 extern double g_bfmeSubB3;
 extern "C" BfmeStringData3AF0 *g_bfmeRouteKeys1282[];
@@ -39,7 +39,7 @@ public:
     {
         BfmeStringData3AF0 *old = m_data;
         if (--old->m_refCount == 0)
-            g_bfmeStringPool1284->free(old);
+            g_rva01337A30AllocPair->free(old);
     }
     BfmeStringData3AF0 *m_data;
 };
@@ -51,7 +51,7 @@ public:
     {
         BfmeStringData3AF0 *old = m_data;
         if (--old->m_refCount == 0)
-            g_bfmeStringPool1284->free(old);
+            g_rva01337A30AllocPair->free(old);
         m_data = &g_bfmeDefaultString1284;
         ++m_data->m_refCount;
     }
@@ -60,7 +60,7 @@ public:
         ++source.m_data->m_refCount;
         BfmeStringData3AF0 *old = m_data;
         if (--old->m_refCount == 0)
-            g_bfmeStringPool1284->free(old);
+            g_rva01337A30AllocPair->free(old);
         m_data = source.m_data;
     }
     __forceinline Rva8CD130String &operator=(const BfmeStrVKI &source)
@@ -68,7 +68,7 @@ public:
         ++source.m_data->m_refCount;
         BfmeStringData3AF0 *old = m_data;
         if (--old->m_refCount == 0)
-            g_bfmeStringPool1284->free(old);
+            g_rva01337A30AllocPair->free(old);
         m_data = source.m_data;
         return *this;
     }
