@@ -519,37 +519,7 @@ void LANAPI::OnGameList( LANGameInfo *gameList )
 	}
 }//void LANAPI::OnGameList( LANGameInfo *gameList ) 
 
-// ?OnGameCreate@LANAPI@@ present-unmatched
-void LANAPI::OnGameCreate( ReturnType ret )
-{
-	if (ret == RET_OK)
-	{
-
-		LANbuttonPushed = true;
-		TheShell->push( AsciiString("Menus/LanGameOptionsMenu.wnd") );
-
-		RequestLobbyLeave( false );
-		//RequestGameAnnounce( ); // can't do this here, since we don't have a map set
-	}
-	else
-	{
-		if(m_inLobby)
-		{
-			switch( ret )
-			{
-			case RET_GAME_EXISTS:
-				GadgetListBoxAddEntryText(listboxChatWindow, TheGameText->fetch("LAN:ErrorGameExists"), chatSystemColor, -1, -1);
-				break;
-			case RET_BUSY:
-				GadgetListBoxAddEntryText(listboxChatWindow, TheGameText->fetch("LAN:ErrorBusy"), chatSystemColor, -1, -1);
-				break;
-			default:
-				GadgetListBoxAddEntryText(listboxChatWindow, TheGameText->fetch("LAN:ErrorUnknown"), chatSystemColor, -1, -1);
-			}
-		}
-	}
-
-}//void OnGameCreate( ReturnType ret )
+// The matched LANAPI::OnGameCreate (0x00689910) lives in LANAPIOnGameCreate.cpp.
 
 // Retail LANAPI table111AF50 slot28 enters matched OnPlayerList689A40.
 class Rva00689B70CallbackView

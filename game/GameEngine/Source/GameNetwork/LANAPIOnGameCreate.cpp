@@ -31,12 +31,12 @@ struct BfmeObj935C;
 class BfmeAptScreenLanLobby;
 extern BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
 
-// Address-qualified view of the actual no-argument thiscall helper.
-// ILT2A5B8 enters body51A5D0 directly; no this adjustment is needed here.
-class Rva0051A5D0Receiver
+// ILT 0x2A5B8 enters the matched AptLanLobby::OnGameCreate body at 0x51A5D0
+// (BfmeConv1064.cpp) directly; no this adjustment is needed here.
+class AptLanLobby
 {
 public:
-    void Rva0051A5D0Advance(void);
+    void OnGameCreate(void);
 };
 
 class Shell
@@ -147,7 +147,7 @@ void LANAPI::OnGameCreate(LANAPIInterface::ReturnType ret)
 	{
 		if (reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby))
 		{
-			reinterpret_cast<Rva0051A5D0Receiver *>(reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby))->Rva0051A5D0Advance();
+			reinterpret_cast<AptLanLobby *>(reinterpret_cast<BfmeObj935C * &>(g_rva012F4998LanLobby))->OnGameCreate();
 		}
 		else
 		{
