@@ -3,20 +3,20 @@
 // m_handle and m_lock is 4 bytes narrower here, so m_lock sits at +0x70
 // instead of +0x74.
 
-class Gen009DB400
+class BFMEAutoLockRef
 {
 public:
-	~Gen009DB400();
+	~BFMEAutoLockRef();
 };
 
-class Open2LiveHandle
+class ThreadClass
 {
 public:
-	virtual ~Open2LiveHandle();
-	void close( void );
+	virtual ~ThreadClass();
+	void Stop( void );
 };
 
-inline void open2DeleteAndClear( Gen009DB400 *&slot )
+inline void open2DeleteAndClear( BFMEAutoLockRef *&slot )
 {
 	delete slot;
 	slot = 0;
@@ -27,9 +27,9 @@ class Rva0063B750
 public:
 	void shutdown( void );
 	char m_pad[0x64];
-	Open2LiveHandle *m_handle;
+	ThreadClass *m_handle;
 	char m_pad2[8];
-	Gen009DB400 *m_lock;
+	BFMEAutoLockRef *m_lock;
 };
 
 // @?shutdown@Rva0063B750@@QAEXXZ 0x0063B750
@@ -38,7 +38,7 @@ void Rva0063B750::shutdown( void )
 	if( m_handle )
 	{
 		open2DeleteAndClear( m_lock );
-		m_handle->close();
+		m_handle->Stop();
 		delete m_handle;
 	}
 	m_handle = 0;
