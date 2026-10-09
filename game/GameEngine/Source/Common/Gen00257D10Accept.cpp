@@ -57,6 +57,14 @@ class Gen_001ED0C0
 	void bfmeAccept(BfmeSeedTarget *target);
 };
 
+// ILT 0x44C1 reaches the matched row Gen002B2080::handle (0x002B2080).
+class FlagPairTarget;
+class Gen002B2080
+{
+public:
+	void handle(FlagPairTarget *target);
+};
+
 class BfmeSubAccept_0002C41C
 {
 public:
@@ -102,7 +110,7 @@ public:
 extern AudioManager *TheAudio;
 
 class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
-void bfmeHandOver_0000FFE2(BfmeSeedTarget *target, void *item);
+BfmeSeedTarget *bfmeHandOver_0000FFE2(BfmeSeedTarget *target, void *item);
 
 class Gen_00257D10
 {
@@ -113,7 +121,7 @@ private:
 
 void Gen_00257D10::bfmeAccept(BfmeSeedTarget *target)
 {
-	((Gen_001ED0C0 *)this)->bfmeAccept(target);
+	((Gen002B2080 *)this)->handle((FlagPairTarget *)target);
 
 	if (target->skip())
 		return;
