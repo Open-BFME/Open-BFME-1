@@ -9,6 +9,11 @@ Two kinds of fact, each with one writer:
             address, kind, size, section, source, status). Writer:
             tools/add_data_match.py. Deleting a row, or editing only its
             evidence/model text, is not refused.
+  eh_label  targets/game/reverse/functions.csv: the funclet label (`$L1234`, the row
+            name or its `object-symbol=`) of a row present before and after, keyed
+            by target_rva. Writers: tools/eh_state_pins.py --fix and add_match.py
+            --replace-existing/--replace-rva. SHADOW: an unstamped relabel prints a
+            note and is never refused (kinds in SHADOW; drop it from that set to enforce).
 
 A writer calls `stamp(kind, before, after)` with the file's bytes before and after
 its write; the facts that differ go to a stamp file in this worktree's own git dir
@@ -24,14 +29,21 @@ touched are dropped, so an old stamp cannot cover a later hand edit.
 """
 import csv
 import json
+import re
 import subprocess
 import sys
 
 FILES = {
     "imp_pin": "targets/game/reverse/symbols.csv",
     "data_row": "targets/game/reverse/data_rows.csv",
+    "eh_label": "targets/game/reverse/functions.csv",
 }
+# Kinds that only report. Enforcing one is deleting it here (one line).
+SHADOW = {"eh_label"}
+LABEL = re.compile(r"^\$L\d+$")
+OBJECT_SYMBOL = re.compile(r"(?:^|;)object-symbol=([^;]+)")
 TOOLS = {
+    "eh_label": "python3 tools/eh_state_pins.py --source <file> --fix --model <you>",
     "imp_pin": "python3 tools/import_binding.py pin NAME ADDR (retail's IAT slot for it) or "
                "retire-pin NAME (nothing built still references it)",
     "data_row": "python3 tools/add_data_match.py NAME ADDR --va|--rva SOURCE --model <you> "
@@ -68,9 +80,32 @@ def _changed(before, after):
     return [line for line in old - new if line], [line for line in new - old if line]
 
 
+def _label(f):
+    if len(f) < 7:
+        return None
+    m = OBJECT_SYMBOL.search(f[6])
+    name = m.group(1) if m else f[0]
+    return name if LABEL.match(name) else None
+
+
 def facts(kind, before, after):
     """The gate-read facts AFTER changes against BEFORE (bytes or text)."""
     removed, added = _changed(before, after)
+    if kind == "eh_label":
+        removed = [line for line in removed if "$L" in line]
+        if not removed:
+            return set()
+        olds, news = {}, {}
+        for side, lines in ((olds, removed), (news, added)):
+            for f in _rows(lines):
+                if len(f) > 2 and f[2].startswith("0x"):
+                    side.setdefault(f"0x{int(f[2], 16):08X}", set()).add(_label(f))
+        out = set()
+        for rva in olds.keys() & news.keys():
+            a, b = olds[rva] - {None}, news[rva] - {None}
+            if a != b:
+                out.add(f"{rva} {','.join(sorted(a)) or '-'} -> {','.join(sorted(b)) or '-'}")
+        return out
     if kind == "imp_pin":
         def pins(lines):
             got = set()
@@ -167,6 +202,10 @@ def main(argv):
     if _git("rev-parse", "-q", "--verify", "MERGE_HEAD").returncode == 0:
         return 0
     found = staged_problems()
+    for kind in sorted(SHADOW & found.keys()):
+        for fact in found.pop(kind):
+            print(f"gate_writers: shadow: {kind} {fact} in {FILES[kind]} would be refused; "
+                  f"use {TOOLS[kind]}", file=sys.stderr)
     for kind, missing in found.items():
         print(f"gate_writers: FAIL {len(missing)} {kind} change(s) in {FILES[kind]} no tool wrote "
               f"in this worktree. Use: {TOOLS[kind]}", file=sys.stderr)

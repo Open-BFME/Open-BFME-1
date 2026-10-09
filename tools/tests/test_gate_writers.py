@@ -16,7 +16,11 @@ ROW_A = "?g_a@@3HA,0x01000000,va,4,.data,game/a.cpp,matched,old evidence,m\n"
 ROW_B = "?g_b@@3HA,0x01000004,va,4,.data,game/a.cpp,matched,e,m\n"
 SYMS = "targets/game/reverse/symbols.csv"
 SYMS_HEAD = "name,address,notes\n__imp__GetClientRect@8,0x0135901C,iat\n?f@@YAXXZ,0x00001000,pin\n"
-EXTRA = {SYMS: SYMS_HEAD}
+FUNCS = "targets/game/reverse/functions.csv"
+FUNCS_HEAD = ("name,export_rva,target_rva,target_size,source,status,notes\r\n"
+              "?f@@YAXXZ,,0x00100000,40,game/a.cpp,matched,\r\n"
+              "?d_1@@YAXXZ,,0x00100100,12,game/a.cpp,matched,parent=?f@@YAXXZ;object-symbol=$L100\r\n")
+EXTRA = {SYMS: SYMS_HEAD, FUNCS: FUNCS_HEAD}
 
 
 def git(root, *args):
@@ -179,3 +183,30 @@ def test_consume_drops_the_stamps_a_commit_used(repo):
     git(repo, "commit", "-qm", "drop")
     write(repo, DATA, DATA_HEAD + ROW_A + ROW_B)         # the old stamp no longer covers a hand re-add
     assert "data_row" in gw.staged_problems()
+
+
+# ---------------------------------------------------------------- eh_label (shadow)
+def test_a_stamped_relabel_is_quiet(repo, capsys):
+    write(repo, FUNCS, FUNCS_HEAD.replace("$L100", "$L104"), tool_kind="eh_label")
+    assert gw.main(["x", "--staged"]) == 0
+    assert "shadow" not in capsys.readouterr().err
+
+
+def test_a_hand_relabel_notes_and_never_refuses(repo, capsys):
+    write(repo, FUNCS, FUNCS_HEAD.replace("$L100", "$L104"))
+    assert gw.main(["x", "--staged"]) == 0
+    err = capsys.readouterr().err
+    assert "gate_writers: shadow: eh_label 0x00100100 $L100 -> $L104" in err
+    assert "would be refused" in err and "eh_state_pins.py" in err
+
+
+def test_a_new_label_row_produces_no_note(repo, capsys):
+    write(repo, FUNCS, FUNCS_HEAD + "?d_2@@YAXXZ,,0x00100200,12,game/a.cpp,matched,object-symbol=$L7\r\n")
+    assert gw.main(["x", "--staged"]) == 0
+    assert capsys.readouterr().err == ""
+
+
+def test_label_writers_stamp():
+    tools = Path(__file__).resolve().parents[1]
+    assert 'gate_writers.stamp("eh_label", raw, functions_csv.read_bytes())' in (tools / "add_match.py").read_text()
+    assert 'gate_writers.stamp("eh_label", raw, functions.read_bytes())' in (tools / "eh_state_pins.py").read_text()

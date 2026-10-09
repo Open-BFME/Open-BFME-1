@@ -677,6 +677,9 @@ def main():
              "marker strip REVERTED; nothing was changed")
     print("add_match: verified OK — row is live")
     admit_compiler_label_alias(root, args.notes, rva, raw)
+    if replaced is not None:
+        import gate_writers             # a verified relabel of an existing row (pre-commit shadow check)
+        gate_writers.stamp("eh_label", raw, functions_csv.read_bytes())
     remove_stash(rva, args.root)
     # Verified HERE is not landed: the commit may never be pushed, or be
     # rejected. Releasing now (force, anyone's claim -- the old behaviour) let

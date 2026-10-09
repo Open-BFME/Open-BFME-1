@@ -280,6 +280,8 @@ def apply_fixes(fixes, model):
         if failed:
             ledger_io.atomic_write_bytes(functions, raw)
             raise SystemExit("eh_state_pins: verification failed, ledger restored:\n" + failed[0][1])
+        import gate_writers
+        gate_writers.stamp("eh_label", raw, functions.read_bytes())
         print(f"repinned rows in {len(sources)} source(s), all byte-verified; skipped {len(skipped)}")
         for line in skipped:
             print(f"  skipped {line}")
