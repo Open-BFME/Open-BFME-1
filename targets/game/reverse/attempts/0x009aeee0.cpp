@@ -1,20 +1,12 @@
 // ?copyPlane009AEEE0@@YAXPAURva009AF200Context@@HHH@Z
-// partial score=0.32 date=2026-09-23
+// partial score=0.3238 date=2026-10-09
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
-extern "C" void * __cdecl memset(void *, int, unsigned int);
-#pragma intrinsic(memset)
-
-struct Rva009ACBA0Context;
-int *Rva009ACBA0SetupBounding(Rva009ACBA0Context *ctx, int flimit);
-
-extern int *g_rva01356A9C;
 extern const unsigned int *g_rva01356AA0;
 extern const unsigned int *g_rva01356A98;
-extern const unsigned int *g_rva01356A88;
+extern const void *g_rva01356A88;
 
 struct Rva009AF200Context;
-void copyPlane009AF0D0(Rva009AF200Context *, unsigned, int, unsigned, unsigned, unsigned char *, unsigned char *, const unsigned int *);
 
 typedef void (__cdecl *Rva009AEEE0Operation)(
 	Rva009AF200Context *, unsigned char *, unsigned char *, unsigned,
@@ -26,8 +18,9 @@ extern Rva009AEEE0Operation g_rva01356E88;
 void __cdecl Rva009AD750(
 	Rva009AF200Context *, unsigned char *, unsigned char *, unsigned,
 	unsigned, int, const unsigned int *);
-void __cdecl Rva009ACC80(
-	Rva009AF200Context *, unsigned char *, unsigned char *, unsigned,
+struct Rva009ACC80Context;
+void __cdecl Rva009ACC80Filter(
+	Rva009ACC80Context *, unsigned char *, unsigned char *, unsigned,
 	unsigned, int, const unsigned int *);
 
 struct Rva009AF200Context
@@ -52,151 +45,120 @@ struct Rva009AF200Context
 	unsigned m_strideUV;
 };
 
+struct Rva009AEEE0DirectRows
+{
+	unsigned char *row;
+	unsigned rows;
+};
+
 void copyPlane009AEEE0(Rva009AF200Context *ctx, int x, int y, int plane)
 {
 	Rva009AF200Context *self = ctx;
 	int mode = self->m_mode;
-	int sourceOffset = 0;
+	int sourceOffset;
 	const unsigned int *callback = 0;
 	Rva009AEEE0Operation operation;
 	Rva009AEEE0Operation finalOperation;
 	unsigned char *base;
-	unsigned width;
-	unsigned height;
+	struct { unsigned width; unsigned height; } dimensions;
 	unsigned stride;
 	unsigned char *source;
 	unsigned char *destination;
 	int delta;
-	unsigned char *row;
-	unsigned rows;
+	Rva009AEEE0DirectRows direct;
 
 	if (mode >= 2) {
 		operation = g_rva01356E94;
 		finalOperation = Rva009AD750;
 	} else {
 		operation = g_rva01356E88;
-		finalOperation = Rva009ACC80;
+		finalOperation = reinterpret_cast<Rva009AEEE0Operation>(Rva009ACC80Filter);
 	}
 
-	int selector = plane - sourceOffset;
-	if (selector == 0) {
-		width = self->m_width;
+	int selector = plane;
+	switch (selector) {
+	case 0:
+		sourceOffset = 0;
+		dimensions.width = self->m_width;
 		stride = self->m_strideY;
 		base = self->m_planeY;
-		height = self->m_height;
-	} else {
+		dimensions.height = self->m_height;
+		break;
+	case 1:
 		stride = self->m_strideUV;
-		--selector;
-		width = self->m_width >> 1;
-		if (selector == 0) {
-			sourceOffset = self->m_extra84;
-			base = self->m_planeU;
-		} else {
-			sourceOffset = self->m_extra84 + self->m_extra88;
-			base = self->m_planeV;
-		}
-		height = self->m_height >> 1;
-	}
-
-	if (mode >= 2) {
-		if (plane == 0) {
-			callback = g_rva01356AA0;
-		} else if (plane == 1 || plane == 2) {
-			callback = g_rva01356A98;
-		}
-	} else {
-		callback = g_rva01356A88;
+		sourceOffset = self->m_extra84;
+		base = self->m_planeU;
+		dimensions.width = self->m_width >> 1;
+		dimensions.height = self->m_height >> 1;
+		break;
+	default:
+		stride = self->m_strideUV;
+		sourceOffset = self->m_extra84 + self->m_extra88;
+		base = self->m_planeV;
+		dimensions.width = self->m_width >> 1;
+		dimensions.height = self->m_height >> 1;
+		break;
 	}
 
 	source = base + x;
 	destination = base + y;
+
+	if (mode >= 2) {
+		switch ((unsigned)plane) {
+		case 0:
+			callback = g_rva01356AA0;
+			break;
+		case 1:
+		case 2:
+			callback = g_rva01356A98;
+			break;
+		}
+	} else {
+		callback = static_cast<const unsigned int *>(g_rva01356A88);
+	}
+
 	delta = (int)(source - destination);
-	row = destination;
-	rows = 4;
-	while (rows != 0) {
-		unsigned char *cursor = row;
+	direct.row = destination;
+	direct.rows = 4;
+	while (direct.rows != 0) {
+		unsigned char *cursor = direct.row;
 		unsigned bytes = stride;
 		while (bytes != 0) {
 			*cursor = cursor[delta];
 			++cursor;
 			--bytes;
 		}
-		row += stride;
-		--rows;
+		direct.row += stride;
+		--direct.rows;
 	}
 
-	if (height > 1) {
-		unsigned count = height - 1;
-		unsigned char *callbackSource = source + stride * 8;
-		unsigned char *callbackDestination = destination + stride * 8;
+	if (dimensions.height > 1) {
+		unsigned count = dimensions.height - 1;
+		unsigned eightRows = stride * 8;
 		do {
-			operation(
-				self, callbackSource, callbackDestination, stride, width,
-				sourceOffset, callback);
-			sourceOffset += width;
+			source += eightRows;
+			destination += eightRows;
+			operation(self, source, destination, stride, dimensions.width, sourceOffset, callback);
+			sourceOffset += dimensions.width;
 			--count;
 		} while (count != 0);
 	}
 
-	row = destination + stride * 4;
-	rows = 4;
-	while (rows != 0) {
-		unsigned char *cursor = row;
+	delta = (int)(source - destination);
+	direct.row = destination + stride * 4;
+	direct.rows = 4;
+	while (direct.rows != 0) {
+		unsigned char *cursor = direct.row;
 		unsigned bytes = stride;
 		while (bytes != 0) {
 			*cursor = cursor[delta];
 			++cursor;
 			--bytes;
 		}
-		row += stride;
-		--rows;
+		direct.row += stride;
+		--direct.rows;
 	}
 
-	finalOperation(
-		self, source, destination, stride, width, sourceOffset, callback);
+	finalOperation(self, source, destination, stride, dimensions.width, sourceOffset, callback);
 }
 
-void Rva009AF200CopyPlanes(Rva009AF200Context *ctx, int x, int y)
-{
-	memset(ctx->m_scratch, 0, ctx->m_scratchCount * 4);
-
-	if (ctx->m_mode >= 2) {
-		int value = g_rva01356A9C[ctx->m_tableIndex];
-		ctx->m_bounding = Rva009ACBA0SetupBounding(
-			(Rva009ACBA0Context *)ctx, value);
-	}
-
-	if (ctx->m_mode >= 5) {
-		copyPlane009AF0D0(
-			ctx,
-			ctx->m_strideY,
-			0,
-			ctx->m_width,
-			ctx->m_height,
-			ctx->m_planeY + x,
-			ctx->m_planeY + y,
-			g_rva01356AA0);
-		copyPlane009AF0D0(
-			ctx,
-			ctx->m_strideUV,
-			0,
-			ctx->m_width >> 1,
-			ctx->m_height >> 1,
-			ctx->m_planeU + x,
-			ctx->m_planeU + y,
-			g_rva01356A98);
-		copyPlane009AF0D0(
-			ctx,
-			ctx->m_strideUV,
-			0,
-			ctx->m_width >> 1,
-			ctx->m_height >> 1,
-			ctx->m_planeV + x,
-			ctx->m_planeV + y,
-			g_rva01356A98);
-	} else {
-		copyPlane009AEEE0(ctx, x, y, 0);
-		copyPlane009AEEE0(ctx, x, y, 1);
-		copyPlane009AEEE0(ctx, x, y, 2);
-	}
-}
