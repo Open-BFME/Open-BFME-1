@@ -66,6 +66,7 @@ class Rva002C3B90Terrain : public Rva002C3B90Slots<6>
 class TerrainLogic;
 extern TerrainLogic *TheTerrainLogic;
 extern int g_012F02D4;
+extern int g_012F02D8;
 extern void j_00033a87();
 
 class BfmeGiantBirdFollowThruState
@@ -129,7 +130,7 @@ StateReturnType BfmeGiantBirdFollowThruState::onEnter()
     if (!result && !ai->test(3))
         ((Rva002BC260Owner *)ai)->run(&goal, &g_012F02D4, 0, (void *)1);
     else
-        ((Rva002BC260Owner *)ai)->run(&goal, (&g_012F02D4 + 1), 0, (void *)1);
+        ((Rva002BC260Owner *)ai)->run(&goal, &g_012F02D8, 0, (void *)1);
     ai->m_word3f0 &= ~8;
     if (!ai->m_bool424)
         return STATE_FAILURE;
