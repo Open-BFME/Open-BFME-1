@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME: OpenContain::markAllPassengersDetected, retail 0x00226CF0.
 // The BFME body walks the contain list directly, checks the stealth-garrison
-// kind bit after resolving the template override, then removes the passenger's
-// stealth grant with the BFME two-argument receiveGrant call.
+// kind bit after resolving the template override, then marks the passenger detected
+// through the BFME two-argument StealthUpdate::markAsDetected (0x002AD380).
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
@@ -22,7 +22,7 @@ extern NameKeyGenerator *TheNameKeyGenerator;
 class Overridable
 {
 public:
-	Overridable *getFinalOverride();
+	const Overridable *getFinalOverride() const;
 
 	void *m_vtable;
 	Overridable *m_nextOverride;
@@ -39,7 +39,7 @@ public:
 class StealthUpdate
 {
 public:
-	void receiveGrant(Bool active, UnsignedInt frames);
+	void markAsDetected(UnsignedInt numFrames, Bool flag);
 };
 
 class Module;
@@ -98,7 +98,7 @@ void OpenContain::markAllPassengersDetected()
 			static const NameKeyType key_StealthUpdate = NAMEKEY("StealthUpdate");
 			StealthUpdate *stealth = (StealthUpdate *)rider->findModule(key_StealthUpdate);
 			if (stealth != 0)
-				stealth->receiveGrant(false, 1);
+				stealth->markAsDetected(0, true);
 		}
 		while (node != m_containList.m_node);
 	}

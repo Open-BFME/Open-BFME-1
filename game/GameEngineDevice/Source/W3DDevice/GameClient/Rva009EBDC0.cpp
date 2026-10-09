@@ -1,11 +1,14 @@
 // Retail 0x009EBDC0: return the registry's current counted asset.
 // The dump's generated name is replaced by the recovered return-by-value ABI.
 
-class CountedAsset
+// Retail's AssetReference release calls TextureBaseClass::Release_Ref (0x009EB7A0).
+class TextureBaseClass
 {
 public:
 	void Release_Ref();
 };
+
+class CountedAsset;
 
 class AssetReference
 {
@@ -22,7 +25,7 @@ public:
 	{
 		if ( m_object )
 		{
-			m_object->Release_Ref();
+			((TextureBaseClass *)m_object)->Release_Ref();
 		}
 	}
 
