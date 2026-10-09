@@ -10,10 +10,25 @@ private:
 	unsigned char m_pad[8];
 };
 
-class StreakDrawBase : public Rva0002B8C8TailBase
+// The out-of-line base destructor this hierarchy tail-calls is the anonymous
+// retail body at 0x00113E60, whose one ledger identity is
+// ?m@Gen_00113e60@@QAEXXZ (game/gen_small/fun_000.cpp).
+class Gen_00113e60
 {
 public:
-	virtual ~StreakDrawBase() {}
+	void m();
+};
+
+class StreakDrawBase
+{
+public:
+	virtual ~StreakDrawBase()
+	{
+		((Gen_00113e60 *)this)->m();
+	}
+
+private:
+	unsigned char m_pad[8];
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DScene.h
