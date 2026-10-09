@@ -71,18 +71,6 @@
 #endif
 
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Behavior/FlightDeckBehaviorModuleDataConstructor.cpp
-// ??0FlightDeckBehaviorModuleData@@ present-unmatched
-FlightDeckBehaviorModuleData::FlightDeckBehaviorModuleData()
-{
-	//m_framesForFullHeal = 0;
-	m_healAmount = 0;
-	m_numRows = 0;
-	m_numCols = 0;
-	m_approachHeight = 0.0f;
-	m_landingDeckHeightOffset = 0.0f;
-	m_dockAnimationFrames = 0;
-	m_catapultFireFrames = 0;
-}
 
 //-------------------------------------------------------------------------------------------------
 // ?parseRunwayStrip@FlightDeckBehaviorModuleData@@ present-unmatched
