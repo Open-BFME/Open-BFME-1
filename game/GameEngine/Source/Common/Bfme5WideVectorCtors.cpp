@@ -14,14 +14,25 @@
 // instead of jumping to a shared one. That falls out of the same source.
 
 void *__cdecl operator new(unsigned int bytes);				// retail 0x00881F30
-namespace _STL { class __new_alloc { public: static void *allocate(unsigned int bytes); }; }			// retail 0x0082E540
+namespace _STL { // Retail 0x0082E540 is the matched node pool refill/mutex body.
+static __forceinline void *vectorSmallAllocate(unsigned int bytes);
+template <bool Threads, int Instance>
+class __node_alloc
+{
+	static void *__cdecl _M_allocate(unsigned int bytes);
+	friend void *vectorSmallAllocate(unsigned int bytes);
+};
+static __forceinline void *vectorSmallAllocate(unsigned int bytes)
+{
+	return __node_alloc<true, 0>::_M_allocate(bytes);
+} }			// retail 0x0082E540
 
 static inline void *bfmeAllocate(unsigned int bytes)
 {
 	if (bytes > 0x80)
 		return ::operator new(bytes);
 
-	return _STL::__new_alloc::allocate(bytes);
+	return _STL::vectorSmallAllocate(bytes);
 }
 
 #define BFME_INITIALIZE_ALLOC_PROXY(ROW, STORAGE, ALLOCATOR) ((ROW *)&(STORAGE))->m((int)(ALLOCATOR), 0)
