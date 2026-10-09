@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "99a696a1e6fe34aa12fb122f143b1fa733416b3a1417dbedaf1ba7614ced48ae",
+  "symbol": "??$__copy@PBURva003B3560Elem32@@PAU1@H@_STL@@YAPAURva003B3560Elem32@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z",
+  "score_kind": "measured",
+  "score": 1.0,
+  "source": "// ??$__copy@PBURva003B3560Elem32@@PAU1@H@_STL@@YAPAURva003B3560Elem32@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z\n// partial score=1.0 date=2026-10-09\n// ??$__copy@PBURva003B3560Elem32@@PAU1@H@_STL@@YAPAURva003B3560Elem32@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z\r\n// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS\r\n// stlport\r\n\r\n#include \"../../../../game/Libraries/Include/Lib/Coord3D.h\"\r\n#include <algorithm>\r\n\r\n// Payload mapping: targets/game/reverse/identity_evidence/003b3560-nested-payload-copy.md\r\nstruct Rva003B3560Elem32\r\n{\r\n    virtual ~Rva003B3560Elem32();\r\n    unsigned int m_a;\r\n    Coord3D m_triple;\r\n    float m_e;\r\n    unsigned int m_f;\r\n    bool m_flag;\r\n};\r\n\r\ntemplate Rva003B3560Elem32 *_STL::__copy<\r\n    const Rva003B3560Elem32 *, Rva003B3560Elem32 *, int>(\r\n    const Rva003B3560Elem32 *, const Rva003B3560Elem32 *,\r\n    Rva003B3560Elem32 *, const _STL::random_access_iterator_tag &, int *);\r\n"
+}
