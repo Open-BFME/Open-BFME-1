@@ -15,8 +15,24 @@ public:
 	BfmeSlotSQA m_bfmeSlot;
 };
 
+struct Coord3D;
+
+class RadiusDecal
+{
+public:
+	void setPosition( const Coord3D &position );
+};
+
+class BfmeTripleCV;
+
+class Gen_004583D0
+{
+public:
+	void bfmeSetTriple( const BfmeTripleCV *value );
+};
+
 void BfmeThingSQA::bfmeGoSQA(int a, int b)
 {
-	m_bfmeSlot.bfmeOneSQA(a);
-	m_bfmeSlot.bfmeTwoSQA(b);
+	((RadiusDecal *)&m_bfmeSlot)->setPosition( *(const Coord3D *)a );
+	((Gen_004583D0 *)&m_bfmeSlot)->bfmeSetTriple( (const BfmeTripleCV *)b );
 }
