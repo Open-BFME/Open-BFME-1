@@ -30,8 +30,18 @@ class Gen00587600
 {
 public:
 	void apply( int value, int which );
-	void applySingle( int value );
-	void notify( void );
+};
+
+class BfmeThingAZB
+{
+public:
+	void bfmeGoAZB( void *what );
+};
+
+class Gen_00587C50
+{
+public:
+	void bfmeReset( void );
 };
 
 class Gen00587600;
@@ -44,7 +54,7 @@ void Rva0051A6E0( void )
 	Gen00587600 *object = g_bfmeSubsystem012F4B78;
 	g_aptLivingWorldInitialized = 1;
 	if ( object )
-		object->notify();
+		( (Gen_00587C50 *)object )->bfmeReset();
 }
 
 #define BFME_ATOI_MEMBER_CALL( NAME, WHICH )                              \
@@ -69,5 +79,5 @@ BFME_ATOI_MEMBER_CALL( Rva0051A7F0, 5 )
 // @?Rva0051A820@@YAXPBD@Z 0x0051A820
 void Rva0051A820( const char *text )
 {
-	g_bfmeSubsystem012F4B78->applySingle( atoi( text ) );
+	( (BfmeThingAZB *)g_bfmeSubsystem012F4B78 )->bfmeGoAZB( (void *)atoi( text ) );
 }
