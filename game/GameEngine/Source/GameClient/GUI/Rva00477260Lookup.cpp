@@ -12,6 +12,30 @@
 
 #include "ascii_string.h"
 
+enum Rva00475300Mapped { Rva00475300MappedZero = 0 };
+struct Rva00475680Value;
+struct Rva00475680KeyOfValue;
+class Rva00477260Lookup;
+namespace _STL
+{
+template <class First, class Second> struct pair;
+template <class Value> struct less;
+template <class Value> class allocator;
+template <class Value> struct _Rb_tree_node;
+template <class Key, class Value, class Extract, class Compare, class Alloc>
+class _Rb_tree
+{
+    friend class ::Rva00477260Lookup;
+    template <class Lookup>
+    _Rb_tree_node<Value> *_M_find(const Lookup &) const;
+};
+template <class Key, class Mapped, class Compare, class Alloc> class map
+{
+public:
+    Mapped &operator[](const Key &);
+};
+}
+
 class Rva004779C0Vector
 {
 public:
@@ -30,8 +54,6 @@ struct Rva00475680Node
 class Rva00475680Tree
 {
 public:
-	Rva00475680Node *find(const AsciiString &key) const;
-	Rva004779C0Vector **at(const AsciiString &key);
 	Rva00475680Node *m_header;
 };
 
@@ -49,12 +71,15 @@ Rva004779C0Vector *Rva00477260Lookup::getOrCreate(const AsciiString &key)
 {
 	Rva00475680Tree *tree = &m_tree;
 	Rva00475680Node *volatile emptyIterator = 0;
-	Rva00475680Node *node = tree->find(key);
+	Rva00475680Node *node = reinterpret_cast<Rva00475680Node *>(reinterpret_cast<const _STL::_Rb_tree<AsciiString, Rva00475680Value, Rva00475680KeyOfValue, _STL::less<AsciiString>, _STL::allocator<Rva00475680Value> > *>(tree)->_M_find<AsciiString>(key));
 	if (node == tree->m_header)
 	{
 		Rva004779C0Vector *created = new Rva004779C0Vector;
-		*tree->at(key) = created;
-		node = tree->find(key);
+		reinterpret_cast<Rva004779C0Vector *&>(
+            (*reinterpret_cast<_STL::map<AsciiString, Rva00475300Mapped,
+                _STL::less<AsciiString>, _STL::allocator<_STL::pair<const AsciiString,
+                Rva00475300Mapped> > > *>(tree))[key]) = created;
+		node = reinterpret_cast<Rva00475680Node *>(reinterpret_cast<const _STL::_Rb_tree<AsciiString, Rva00475680Value, Rva00475680KeyOfValue, _STL::less<AsciiString>, _STL::allocator<Rva00475680Value> > *>(tree)->_M_find<AsciiString>(key));
 	}
 	return node->m_value;
 }
