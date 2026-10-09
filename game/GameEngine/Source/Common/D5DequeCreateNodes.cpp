@@ -20,10 +20,13 @@ void *__cdecl operator new(unsigned int bytes);
 
 namespace _STL
 {
-class __new_alloc
+// Calls to the small pool use its matched private static cdecl member.
+template <class Type, class Allocator> class _Deque_base;
+template <bool Threads, int Instance>
+class __node_alloc
 {
-public:
-	static void *allocate(unsigned int bytes);
+	static void *__cdecl _M_allocate(unsigned int bytes);
+	template <class Type, class Allocator> friend class _Deque_base;
 };
 
 template <class Type>
@@ -49,7 +52,7 @@ void _Deque_base<Type, Allocator>::_M_create_nodes( Type **start, Type **finish 
 		if ( bytes > 128 )
 			*cur = (Type *)::operator new( bytes );
 		else
-			*cur = (Type *)__new_alloc::allocate( bytes );
+			*cur = (Type *)__node_alloc<true, 0>::_M_allocate( bytes );
 	}
 }
 
