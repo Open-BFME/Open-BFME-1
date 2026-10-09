@@ -41,17 +41,8 @@ extern "C" int d_0088d240(void *, bool);
 void dup_0088dfe0();
 void d_0088dc30();
 
-class DebugStackwalk
-{
-public:
-    class Signature
-    {
-        unsigned m_numAddr;
-        unsigned m_addr[256];
-    };
-
-    static int StackWalk(Signature &, struct _CONTEXT *, bool);
-};
+class Debug;
+#include "../WWVegas/WWDebug/debug_stack.h"
 
 // Zero Hour debug_debug.h declares these overloads in this order; MSVC
 // places the overload group in reverse, which reproduces the retail slots
@@ -233,4 +224,145 @@ LONG __stdcall DebugExceptionhandler::ExceptionFilter(struct _EXCEPTION_POINTERS
   dbg.m_unmodelled9F58=false;
   inExceptionFilter=false;
   ExitProcess(666);
+}
+typedef int(__stdcall *RvaIsDebuggerPresentFn)(void);
+
+// Open BFME 2: Code/Libraries/Source/WWVegas/WWDebug/DebugExceptionFilter.cpp.
+extern "C" INT_PTR __stdcall Rva0088DC30DialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM)
+{
+	switch (msg)
+	{
+	case 0x110:
+		break;
+	case 0x111:
+		if ((unsigned short)wParam == 1 || (unsigned short)wParam == 4)
+			EndDialog(hDlg, (unsigned short)wParam);
+	default:
+		return 0;
+	}
+
+	HMODULE kernel = LoadLibraryA("kernel32");
+	if (kernel)
+	{
+		RvaIsDebuggerPresentFn isDebuggerPresent =
+			(RvaIsDebuggerPresentFn)GetProcAddress(kernel, "IsDebuggerPresent");
+		if (isDebuggerPresent && !isDebuggerPresent())
+			ShowWindow(GetDlgItem(hDlg, 4), 0);
+	}
+
+	SendDlgItemMessageA(hDlg, 103, 0xC, 0, (long)verInfo);
+
+	char *p = regInfo;
+	for (char *q = p;; q++)
+	{
+		if (!*q || *q == '\n')
+		{
+			bool quit = !*q;
+			*q = 0;
+			SendDlgItemMessageA(hDlg, 105, 0x180, 0, (long)p);
+			if (quit)
+				break;
+			p = q + 1;
+		}
+		else if (*q == '\r')
+			*q = 0;
+	}
+
+	SendDlgItemMessageA(hDlg, 105, 0x30, (unsigned int)CreateFontA(13, 0, 0, 0, 400,
+		0, 0, 0, 0, 0, 0, 0, 0x31, 0), 1);
+
+	SendDlgItemMessageA(hDlg, 100, 0xC, 0, (long)
+		DebugExceptionhandler::GetExceptionType(exPtrs, regInfo));
+	SendDlgItemMessageA(hDlg, 101, 0xC, 0, (long)regInfo);
+
+	_CONTEXT &ctx = *exPtrs->ContextRecord;
+	DebugStackwalk::Signature::GetSymbol(ctx.Eip, regInfo,
+		sizeof(regInfo));
+	SendDlgItemMessageA(hDlg, 102, 0xC, 0, (long)regInfo);
+
+	HWND list;
+	list = GetDlgItem(hDlg, 104);
+	if (!sig.Size())
+	{
+		LVCOLUMNA c;
+		c.mask = 6;
+		c.pszText = "";
+		c.cx = 690;
+		ListView_InsertColumn(list, 0, &c);
+
+		LVITEMA item;
+		item.iItem = 0;
+		item.iSubItem = 0;
+		item.mask = 1;
+		item.pszText = "No stack data available - check for dbghelp.dll";
+
+		item.iItem = ListView_InsertItem(list, &item);
+	}
+	else
+	{
+
+		LVCOLUMNA c;
+		c.mask = 6;
+		c.pszText = "";
+		c.cx = 0;
+		ListView_InsertColumn(list, 0, &c);
+
+		c.mask = 7;
+		c.pszText = "Address";
+		c.cx = 60;
+		c.fmt = 1;
+		ListView_InsertColumn(list, 1, &c);
+
+		c.mask = 6;
+		c.pszText = "Module";
+		c.cx = 120;
+		ListView_InsertColumn(list, 2, &c);
+
+		c.pszText = "Symbol";
+		c.cx = 300;
+		ListView_InsertColumn(list, 3, &c);
+
+		c.pszText = "File";
+		c.cx = 130;
+		ListView_InsertColumn(list, 4, &c);
+
+		c.pszText = "Line";
+		c.cx = 80;
+		ListView_InsertColumn(list, 5, &c);
+
+		for (unsigned k = 0; k < sig.Size(); k++)
+		{
+			DebugStackwalk::Signature::GetSymbol(sig.GetAddress(k),
+				regInfo, sizeof(regInfo));
+
+			LVITEMA item;
+			item.iItem = k;
+			item.iSubItem = 0;
+			item.mask = 0;
+			item.iItem = ListView_InsertItem(list, &item);
+			item.mask = 1;
+
+			item.iSubItem++;
+			item.pszText = strtok(regInfo, " ");
+			ListView_SetItem(list, &item);
+
+			item.iSubItem++;
+			item.pszText = strtok(0, ",");
+			ListView_SetItem(list, &item);
+
+			item.iSubItem++;
+			item.pszText = strtok(0, ",");
+			ListView_SetItem(list, &item);
+
+			item.iSubItem++;
+			item.pszText = strtok(0, ":");
+			ListView_SetItem(list, &item);
+
+			item.iSubItem++;
+			item.pszText = strtok(0, "");
+			ListView_SetItem(list, &item);
+		}
+	}
+
+	return 1;
 }
