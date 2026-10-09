@@ -1,9 +1,20 @@
 // Open-BFME5 conversions.
 
-class BfmeI1015A
+// Callees: bfmeGo1015I (0x6C8890) ILT 0x449F4 -> 0x00720C20 Rva00720BB0Context::scan,
+// ILT 0x20CC -> bfmeDo1015B; bfmeGo1015L (0x808800) tail jump -> 0x007E86C0
+// Gen_007e86c0::m; bfmeGo1015M (0x8CB730) -> 0x008A48A0 BfmeM1015::bfmeFallback1015.
+struct Rva00720C20Coord3D;
+
+class Rva00720BB0Context
 {
 public:
-	void bfmeDo1015A(int a, int b, int c);
+	void scan(const Rva00720C20Coord3D &center, float radius, void *arg);
+};
+
+class Gen_007e86c0
+{
+public:
+	void m(void);
 };
 
 class BfmeI1015B
@@ -18,14 +29,14 @@ public:
 	void bfmeGo1015I(int a, int b, int c);
 
 	char m_bfmePad[0x3098];
-	BfmeI1015A *m_bfmeA;
+	Rva00720BB0Context *m_bfmeA;
 	BfmeI1015B *m_bfmeB;
 };
 
 void BfmeI1015::bfmeGo1015I(int a, int b, int c)
 {
 	if (m_bfmeA != 0)
-		m_bfmeA->bfmeDo1015A(a, b, c);
+		m_bfmeA->scan(*(const Rva00720C20Coord3D *)a, *reinterpret_cast<float *>(&b), (void *)c);
 
 	if (m_bfmeB != 0)
 		m_bfmeB->bfmeDo1015B(a, b);
@@ -47,7 +58,6 @@ class BfmeL1015
 {
 public:
 	void bfmeGo1015L(void);
-	void bfmeReset1015(void);
 
 	char m_bfmePad[0x10];
 	int m_bfmeCount;
@@ -61,7 +71,7 @@ void BfmeL1015::bfmeGo1015L(void)
 
 	m_bfmeH = 0;
 	m_bfmeCount = 0;
-	bfmeReset1015();
+	reinterpret_cast<Gen_007e86c0 *>(this)->m();
 }
 
 class BfmeSub1015
@@ -84,7 +94,7 @@ class BfmeM1015
 {
 public:
 	void bfmeGo1015M(int a, int b);
-	void bfmeFallback1015(int a, int b);
+	int bfmeFallback1015(int a, const char **b);
 
 	char m_bfmePad[0x20];
 	BfmeSub1015 *m_bfmeSub;
@@ -93,7 +103,7 @@ public:
 void BfmeM1015::bfmeGo1015M(int a, int b)
 {
 	if (m_bfmeSub->bfmeTry1015(a, b) == 0)
-		bfmeFallback1015(a, b);
+		bfmeFallback1015(a, (const char **)b);
 }
 
 // The 0x012F12CC singleton is DisplayStringManager *TheDisplayStringManager,
