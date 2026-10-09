@@ -563,7 +563,7 @@ static int get_sockaddrin(const char *host, int port, struct sockaddr_in *saddr,
 	struct hostent *hent = NULL;
 
 	saddr->sin_family = AF_INET;
-	saddr->sin_port = htons((unsigned short)port);
+	saddr->sin_port = ntohs((unsigned short)port);
 	if (host == NULL)
 		saddr->sin_addr.s_addr = INADDR_ANY;
 	else
@@ -726,7 +726,7 @@ static void qr_build_partial_query_reply(qr2_t qrec, qr2_buffer_t buf, qr2_key_t
 		if (AVAILABLE_BUFFER_LEN(buf) < sizeof(cttemp))
 			return; //no more space
 		playerteamcount = qrec->playerteam_count_callback(keytype, qrec->udata);
-		cttemp = htons((unsigned short)playerteamcount);
+		cttemp = ntohs((unsigned short)playerteamcount);
 		memcpy(buf->buffer + buf->len, &cttemp, sizeof(cttemp));
 		buf->len += sizeof(cttemp);
 	} else
@@ -923,7 +923,7 @@ static void qr_process_client_message(qr2_t qrec, char *buf, int len)
 		int cookie;
 		memcpy(&cookie, buf + NATNEG_MAGIC_LEN, 4);
 		if (qrec->nn_callback)
-			qrec->nn_callback((int)ntohl((unsigned int)cookie), qrec->udata); 
+			qrec->nn_callback((int)htonl((unsigned int)cookie), qrec->udata); 
 	} else
 		if (qrec->cm_callback)
 		{
