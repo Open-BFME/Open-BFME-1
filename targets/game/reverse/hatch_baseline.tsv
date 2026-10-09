@@ -125563,8 +125563,6 @@ present_unmatched	game/GameEngine/Source/Common/Thing/Module.cpp	getUpgradeActiv
 present_unmatched	game/GameEngine/Source/Common/Thing/Module.cpp	isTriggeredBy@UpgradeMuxData@@	1
 present_unmatched	game/GameEngine/Source/Common/Thing/Module.cpp	loadPostProcess@DrawableModule@@	1
 present_unmatched	game/GameEngine/Source/Common/Thing/Module.cpp	loadPostProcess@Module@@	1
-present_unmatched	game/GameEngine/Source/Common/Thing/Module.cpp	muxDataProcessUpgradeRemoval@UpgradeMuxData@@	1
-present_unmatched	game/GameEngine/Source/Common/Thing/Module.cpp	performUpgradeFX@UpgradeMuxData@@	1
 present_unmatched	game/GameEngine/Source/Common/Thing/Module.cpp	xfer@DrawableModule@@	1
 present_unmatched	game/GameEngine/Source/Common/Thing/Module.cpp	xfer@Module@@	1
 present_unmatched	game/GameEngine/Source/Common/Thing/Module.cpp	xfer@ObjectModule@@	1

@@ -264,38 +264,13 @@ void DrawableModule::loadPostProcess( void )
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/Thing/UpgradeMuxData.cpp
-// ?performUpgradeFX@UpgradeMuxData@@ present-unmatched
-void UpgradeMuxData::performUpgradeFX(Object* obj) const
-{
-	if (m_fxListUpgrade)
-	{
-		FXList::doFXObj(m_fxListUpgrade, obj);
-	}
-}
+// The retail upgrade-FX body is emitted by UpgradeMuxData.cpp.
+
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/Thing/UpgradeMuxData.cpp
-// ?muxDataProcessUpgradeRemoval@UpgradeMuxData@@ present-unmatched
-void UpgradeMuxData::muxDataProcessUpgradeRemoval(Object* obj) const
-{
-	if( !m_removalUpgradeNames.empty() )
-	{
-		std::vector<AsciiString>::const_iterator it;
-		for( it = m_removalUpgradeNames.begin();
-					it != m_removalUpgradeNames.end();
-					it++)
-		{
-			const UpgradeTemplate* theTemplate = TheUpgradeCenter->findUpgrade( *it );
-			if( !theTemplate && !it->isEmpty() && !it->isNone())
-			{
-				DEBUG_CRASH(("An upgrade module references %s, which is not an Upgrade", it->str()));
-				throw INI_INVALID_DATA;
-			}
+// The retail removal body is emitted by UpgradeMuxData.cpp.
 
-			obj->removeUpgrade(theTemplate);
-		}
-	}
-}
 
 //-------------------------------------------------------------------------------------------------
 // ?isTriggeredBy@UpgradeMuxData@@ present-unmatched
