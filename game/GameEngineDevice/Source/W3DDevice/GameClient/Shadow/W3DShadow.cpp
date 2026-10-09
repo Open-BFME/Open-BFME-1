@@ -185,18 +185,6 @@ void W3DShadowManager::Reset( void )
 }
 
 // byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DShadowManagerReAcquireThunk.cpp
-// ?ReAcquireResources@W3DShadowManager@@QAE_NXZ present-unmatched
-Bool W3DShadowManager::ReAcquireResources()
-{
-	Bool result = TRUE;
-
-	if (TheW3DVolumetricShadowManager && !TheW3DVolumetricShadowManager->ReAcquireResources())
-		result = FALSE;
-	if (TheW3DProjectedShadowManager && !TheW3DProjectedShadowManager->ReAcquireResources())
-		result = FALSE;
-
-	return result;
-}
 
 // ?ReleaseResources@W3DShadowManager@@QAEXXZ present-unmatched
 void W3DShadowManager::ReleaseResources(void)
