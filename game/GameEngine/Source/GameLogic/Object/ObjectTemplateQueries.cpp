@@ -72,7 +72,6 @@ public:
 class ThingTemplate : public Overridable
 {
 public:
-	UnsignedInt getOcclusionDelay() const { return m_occlusionDelay; }
 
 	unsigned char m_unmodelled_008[0xc8 - 0x08];
 	UnsignedInt m_kindOf[3];			// +0x0C8
@@ -81,6 +80,12 @@ public:
 	unsigned char m_unmodelled_42c[0x490 - 0x42c];
 	signed char m_radarPriority;			// +0x490
 };
+
+// This local layout accessor must not compete with other template views.
+static inline UnsignedInt getOcclusionDelay(const ThingTemplate *thingTemplate)
+{
+	return thingTemplate->m_occlusionDelay;
+}
 
 // KINDOF bits, numbered from m_kindOf[0] bit 0.
 enum { KINDOF_STRUCTURE_BIT = 7, KINDOF_RADAR_STRUCTURE_BIT = 49 };
@@ -104,6 +109,8 @@ class BitFlags;
 
 // The five faction kinds isNonFactionStructure excludes, built on the stack as a
 // six-dword mask.
+// This stack-only, nonpolymorphic mask is private to these queries.
+namespace {
 class BfmeKindOfMask
 {
 public:
@@ -119,6 +126,7 @@ public:
 private:
 	std::bitset<192> m_bits;
 };
+}
 
 // Object under the spelling the kind-of test is pinned as.
 class BfmeKindOfTester
@@ -240,6 +248,6 @@ void Object::bfmeResetSafeOcclusionFrame()
 	{
 		UnsignedInt frame = gameLogic->m_frame;
 		const ThingTemplate *thingTemplate = getTemplate();
-		m_safeOcclusionFrame = frame + thingTemplate->getOcclusionDelay();
+		m_safeOcclusionFrame = frame + getOcclusionDelay(thingTemplate);
 	}
 }
