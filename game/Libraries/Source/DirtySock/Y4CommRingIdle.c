@@ -235,9 +235,10 @@ struct Rva007FD4E0Socket;
 
 int Rva007FD920( struct Rva007FD4E0Socket *socket, const char *buffer,
 	int length, int flags, void *to, int toLength );
+/* Retail logging literals at VA 0x012C4B38, 0x012C4B64 and 0x012C4B98.
+ * Emit their complete NUL-terminated strings in this TU rather than refer
+ * to undefined address globals; the body guard verifies all three blobs. */
 int Rva007FE780( const char *format, ... );
-
-extern char g_Rva012C4B64Message[];
 
 /* 0x00815680 SENDS ONE PACKET.  The length on the wire is the payload length
  * PLUS ONE, and the buffer starts at +0x08 -- so the leading data byte is a
@@ -268,7 +269,7 @@ int Rva00815680( struct Rva00815B50Comm *comm, struct Rva00815680Packet *packet 
 
 	if ( iSent != iLength )
 	{
-		Rva007FE780( g_Rva012C4B64Message, iSent );
+		Rva007FE780( "_CommSRPSendImmediate: SocketSendto returned %d\n", iSent );
 		return -1;
 	}
 
@@ -313,9 +314,6 @@ void *__cdecl memcpy( void *destination, const void *source,
 	unsigned int count );
 
 void Rva00816160( struct Rva00815B50Comm *comm, const void *from );
-
-extern char g_Rva012C4B98Message[];
-extern char g_Rva012C4B38Message[];
 
 /* 0x00816020 is the CONTROL-PACKET HANDLER -- the connection handshake.  The
  * packet's first data byte selects the action, and the five recognised values
@@ -388,7 +386,7 @@ void Rva00816020( struct Rva00815B50Comm *comm,
 		break;
 
 	default:
-		Rva007FE780( g_Rva012C4B98Message, packet->m_data[ 0 ] );
+		Rva007FE780( "_CommSRPProcessSetup: Unrecognized control packet type %d\n", packet->m_data[ 0 ] );
 		break;
 	}
 }
@@ -427,7 +425,7 @@ void Rva00816160( struct Rva00815B50Comm *comm, const unsigned char *from )
 		( ( ( (unsigned char *)SockAddr )[ 2 ] << 8 )
 		| ( (unsigned char *)SockAddr )[ 3 ] );
 
-	Rva007FE780( g_Rva012C4B38Message, comm->m_peerAddress, comm->m_peerPort,
+	Rva007FE780( "commsrp: peer=0x%08x:%d, host=0x%08x:%d\n", comm->m_peerAddress, comm->m_peerPort,
 		comm->m_localAddress, comm->m_localPort );
 }
 
