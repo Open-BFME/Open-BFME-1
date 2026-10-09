@@ -1,0 +1,65 @@
+# Position-maintenance dispatcher at RVA 0x001BCB10
+
+The complete candidate is byte-exact with relocations verified by the scoped gate, but it is banked rather than landed. The current field witness conflicts with the inherited bank name at Locomotor offset +0x3c. Resolving that conflict requires the operator's identity correction process. No ledger, pin, shared header or policy change is included.
+
+## Retry hypothesis and current evidence
+
+The retry started from the existing bank and inspected all four explicit-RVA verdicts, the two immutable historical reconstructions, the ledger and current callee pins. The initial hypothesis was that canonical declarations and the landed neighbours would resolve the earlier dispatcher boolean live range and matrix-copy shape. Its refutation test was unchanged output at the first divergence after replacing the private call views. Trial 01 refuted declarations alone. Trial 02 tested a different live range taken directly from the Zero Hour donor: initialize the Bool to true after the physics guard, then assign false after the four appearance branch calls. That eliminated the extra frame slot and restored the retail entry shape. It differs from the previously rejected full-width unsigned accumulator experiment.
+
+The neighbouring sources inspected were Locomotor_maintainCurrentPositionWings.cpp, Locomotor_rva001BC820.cpp and Rva001BD0D0LocomotorBinding.cpp. Current ledger bodies provide the 26-byte const Overridable walker, the 46-byte Object notifier and the 257-byte Thing matrix callback. The four branch bodies are now recorded as 36 bytes, not the 48 bytes asserted in an older verdict. Their decoded instructions, not the pin names, established the stack ABI. The bank's obsolete alternatename directives were removed. Existing pins were sufficient; no new pin was added.
+
+The actual Zero Hour donor in inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameLogic/Object/Locomotor.cpp initializes requiresConstantCalling after the missing-physics early return and overwrites it after appearance calls. Its BFME differences include the matrix save, condition clears and final transform callback. The donor supplied a tested source hypothesis, not independent BFME type evidence.
+
+## Boundary and control flow
+
+The complete code extent is [0x001BCB10, 0x001BCD51). The null-object return is ret 4 at +0x14, the null-physics return is ret 4 at +0x191, and the main return is ret 4 at +0x23e. Every decoded direct conditional branch remains inside that extent. The switch range check admits nine entries, and every table destination is an instruction boundary inside the complete target. There is no external tail jump and no EH frame in this target.
+
+The code is followed by the three-byte alignment instruction 8d 49 00 and nine DIR32 table entries at [0x001BCD54, 0x001BCD78). Therefore the emitted symbol extent is 616 bytes: 577 code bytes plus 39 alignment/table bytes. Bytes immediately after it are int3 padding. The current generated ledger row covers only the code. Probe's linear decode warning at the end of the 616-byte span decodes table data as code; it is not a dangling control-flow path. boundary-evidence.log preserves the complete target decode, alignment bytes, all table entries, following padding and the eligibility module's current dump-row verdict.
+
+## Identity, types and ABI
+
+The target's incoming ILT at 0x00020EEB jumps to 0x001BCB10. In the complete caller at 0x002768A0, the instruction-aligned call at 0x00277163 follows an Object pointer pushed from EDI and a Locomotor receiver loaded into ECX from [ESI+0x1cc]. The caller consumes AL immediately at 0x00277168. Together with all three target return paths, this establishes thiscall, one pointer argument, callee cleanup of four bytes and a Bool result. There is no receiver adjustment or hidden return buffer. The caller's code ends after 2434 bytes; its later table is data. checked-caller.log and decode.log retain the caller evidence.
+
+The target name is supported by the appearance dispatcher structure, the matched protected wings call through 0x0004A2D2 to 0x001BC670, the inspected donor and the independent ILT ordering check. ilt-target.log reports an exact name confirmation. The unknown branch owners and post-move handler retain the bank's address-derived names. No semantic identity is inferred from a named pin alone.
+
+The complete 257-byte helper at 0x00132200 copies all twelve matrix words into Thing+8, refreshes cached position fields at +0x38, +0x3c and +0x40 from matrix translation components, refreshes the angle at +0x44 and clears the cache flags at +0x5c. Its complete rotation callee at 0x008D68A0 loads floating-point matrix elements at +0x10 and +0 before fpatan and returns in ST(0). This independently supports the native Matrix3D layout rather than relying on the 48-byte copy size. Its virtual callback at slot +0x14 receives old matrix, old position and old float angle in that order and consumes twelve stack bytes. The target itself makes no virtual call. decode.log, rotation-decode.log, checked-matrix.log and checked-rotation.log retain these checks. The candidate includes the canonical Matrix3D, Coord3D and Object/Thing headers.
+
+The notifier at 0x001BE1C0 reads Drawable at Object+0x80, passes the ModelConditionFlags at +0x110 and two zero arguments, then optionally tail-jumps through 0x0003611A to the 38-byte AI notifier at 0x0026ED10. Both notifier paths use no stack arguments from the target. The complete Drawable helper at 0x0041CCD0 copies and compares ten consecutive dwords, writes ten dwords to its saved flags and returns with ret 12 on every path. Its indirect call sites and early returns are included in notifier-helpers-decode.log. This establishes the complete ten-word flag payload independently of its name or allocation size. The target accesses flag words at Object+0x114, +0x11c and +0x120. The final candidate's clear indices were checked against those actual offsets and masks; trial 07's two incorrect indices were rejected rather than accepted on its improved score.
+
+All four 36-byte appearance helpers load Object from [ESP+4], ignore incoming ECX, clear the flag at Object+0x114 and finish with ret 4. Their existing bank member-call views preserve the retail caller's explicit ECX forwarding and its one stack slot. The landed stdcall Gen declarations describe the same observed cleanup; the unused receiver does not establish a semantic owner. No claim that these are the donor's named Legs, Wheels, Treads or Thrust methods is made.
+
+The complete 1615-byte helper at 0x001BA1C0 reads Object from its first stack argument and the goal Coord3D from its second, including goal z at +8, and every normal return consumes eight bytes. Its early result is AL=0 and its main result is AL=BL, with BL assigned Boolean values. Therefore the retained address-derived handler declaration has the verified argument order, pointer widths, receiver and Bool return width. Its internal indirect calls are not used to infer new class names or pins. decode.log and checked-handler.log retain the complete helper and call inventory. checked-target.log and checked-helpers.log retain the target, branch, override-walker and wings inventories.
+
+## Compiler experiments
+
+The table below is generated directly from the unedited probe logs. Difference counts compare against the original 577-byte ledger size with relocation slots masked. Every trial source is retained alongside its corresponding raw log under build/loco-001bcb10/. Zero differences at that size is not by itself acceptance of the extra table extent.
+
+| Trial | Hypothesis | Emitted bytes | Differences | First difference | Raw log |
+| --- | --- | ---: | ---: | --- | --- |
+| 00 | Saved reconstruction with current include paths | 624 | 457 | +0x0 | probe00.log |
+| 01 | Canonical Coord3D, const override walker and Object notifier declarations | 624 | 457 | +0x0 | probe01.log |
+| 02 | Donor Bool initialized after the physics guard; false branch results assigned after calls | 592 | 378 | +0x26 | probe02.log |
+| 03 | Native Matrix3D assignment | 592 | 362 | +0x66 | probe03.log |
+| 04 | Shared Object and Thing declarations | 592 | 362 | +0x66 | probe04.log |
+| 05 | Explicit Bool for the shifted maintain-position flag | 600 | 261 | +0x9a | probe05.log |
+| 06 | Inline flag accessor instead of the Bool local | 592 | 362 | +0x66 | probe06.log |
+| 07 | Unsigned bitset test and layered clear helper; incorrect bit indices rejected | 592 | 48 | +0xe2 | probe07.log |
+| 08 | Direct bit clearing instead of layered helper | 600 | 261 | +0x9a | probe08.log |
+| 09 | Correct bit indices with layered helper | 592 | 44 | +0x1c6 | probe09.log |
+| 10 | Explicit default-case read, clear, store and notifier call | 616 | 0 | +0x241 | probe10.log |
+
+The final cleaned candidate was recompiled and measured over the complete emitted extent in final-probe616.log. final-shape.log records the finite shape-family choices passed to shape_search; the unchanged candidate already reached the exact shape, so the search stopped without redundant alternatives. The target budget did not require further register-allocation trials after the exact shape was reached. Rejected hypotheses include canonical declarations alone, the inline flag accessor replacing the explicit Bool local and direct condition clearing replacing the layered test/clear helper. The final default branch uses an explicit local word because the layered helper there caused a distinct out-of-line clear function and shorter branch distances.
+
+## Collection blocker and reopening condition
+
+name-oracle10.log reports one new conflict: Locomotor+0x3c is named m_donutTimer in the inherited bank but m_preferredHeight in the current witness. The matched constructor at 0x001B60E0 zeroes +0x3c and loads the template's floating-point preferred-height field at +0x54 into Locomotor+0x44. Its complete decoded body is in boundary-evidence.log and its inventory is in checked-constructor.log. The current getter at 0x001B46A0 really loads float [ECX+0x3c], but that proves the load, not its published identity; ilt-height.log contradicts that getter name's ILT placement. The constructor and ILT result challenge the witness, but they do not independently prove the lexical name m_donutTimer. Resolving the field identity and the witness through the operator's correction process is required before landing. Renaming the inherited bank or editing the shared witness is outside this assignment.
+
+There is no remaining byte mismatch in the complete candidate. The honest bank score is still computed automatically against the unchanged 577-byte ledger row, which penalizes the 39 extra table/alignment bytes. It must not be read as an unexplained instruction mismatch. Reopening requires resolving the field-name conflict, then replacing the generated row with this candidate and its proven complete extent through the ordinary add_match gate. Unknown branch owners may remain address-derived.
+
+## Validation and tested revision
+
+The tested base revision is 1d420eb6792fca0c5ecbeeace4694608e16693ea. The candidate-only scoped gate in candidate-gate.log used the unmodified build verification functions and a 616-byte row supplied in memory. Function bytes, string references, constants, DIR32 addresses and body guard passed. It did not modify the ledger. pin-consistency.log passed. class10.log passed. names10-api.log compared the old and new sources through name_regression.regressions and found no renamed bank declarations; the CLI expects Git revisions rather than the file arguments in the assignment, and names10.log retains that failed CLI invocation. declarations10.log reports zero matched ledger rows for the candidate, as expected for a bank that has not been landed. Name-oracle validation remains blocked as described above. No full gate was required for a bank-only change; no shared header was edited.
+
+The preferred bank was checked at its final path. bank-probe616.log is exact, bank-scoped-gate.log passes all scoped checks, bank-check-csv.log passes, bank-class.log passes and bank-names.log has no name regressions. bank-name-oracle.log retains the field-name conflict, and bank-declarations.log retains the expected failure for a bank with no matched ledger claim. The banking tool computed its score against the unchanged ledger size and archived both the exact previous source bytes and the new bank bytes. handoff-receipt.txt records their SHA verification and confirms exactly one added verdict row. Git's default whitespace check flags the banking tool's CRLF row terminator; diff-check-crlf.stdout.log and diff-check-crlf.stderr.log preserve the passing read-only check that recognizes CRLF without altering the attempt log.
+
+The actual model was gpt-6.1-sol. The run started at 2026-10-09 08:13:28 UTC. Final elapsed time is recorded from the clock in the handoff receipt, not estimated. One verdict is written for this run. No Git write, synchronization or publication was performed.
