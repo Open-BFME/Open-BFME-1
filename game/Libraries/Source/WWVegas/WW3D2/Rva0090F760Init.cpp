@@ -3,8 +3,9 @@
 #define BFME_DYNAMIC_IB_UINT_CTOR_ABI
 #include "dx8indexbuffer.h"
 
-extern DX8IndexBufferClass *Rva01341214IndexBuffer;
-extern SortingIndexBufferClass *Rva01341218SortingIndexBuffer;
+// Retail zero-initialized globals; addresses are recorded in dir32_addresses.csv.
+DX8IndexBufferClass *Rva01341214IndexBuffer;
+SortingIndexBufferClass *Rva01341218SortingIndexBuffer;
 
 void Rva0090F760Init()
 {
