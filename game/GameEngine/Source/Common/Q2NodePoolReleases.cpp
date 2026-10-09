@@ -43,8 +43,8 @@
 // rather than two classes, since nothing about a non-virtual member forces
 // them apart the way a constructor or a vtable would.
 //
-// IDENTITY IS NOT RECOVERED.  Every name but _M_deallocate is derived from an
-// address.
+// Game owners remain address-derived. Three cleanup targets are the matched
+// STLport _List_base::clear specializations; the fourth remains opaque.
 
 class Q2NodeAlloc;
 
@@ -67,18 +67,24 @@ public:
 	}
 };
 
-#define Q2_NODE_POOL_RELEASE( NAME )                                      \
-	void NAME::NAME##Release()                                            \
-	{                                                                     \
-		cleanup();                                                        \
-		if ( m_node )                                                     \
-			Q2NodeAlloc::deallocate( m_node, NAME##NodeSize );            \
-	}
+// Retail ILT targets identify these exact public clear() instantiations.
+// Declare them without the inline list implementation so calls remain calls.
+struct Z1Elem0013BF00;
+struct Z1Elem0056D960;
+struct Z1Elem0076AE50;
+namespace _STL
+{
+template <class T> class allocator;
+template <class T, class Alloc> class _List_base
+{
+public:
+	void clear();
+};
+}
 
 class Gen0013BF00Owner
 {
 public:
-	void cleanup();									///< body 0x0013BF00
 	void Rva0013C080();
 	void Rva0013C110();
 private:
@@ -88,7 +94,6 @@ private:
 class Gen0056D960Owner
 {
 public:
-	void cleanup();									///< body 0x0056D960
 	void Rva0056DE10();
 private:
 	void *m_node;
@@ -107,26 +112,24 @@ private:
 class Gen0076AE50Owner
 {
 public:
-	void cleanup();									///< body 0x0076AE50
 	void Rva0076D530();
 	void Rva0076F770();
 private:
 	void *m_node;
 };
 
-#undef Q2_NODE_POOL_RELEASE
-#define Q2_NODE_POOL_RELEASE( OWNER, NAME, SIZE )                         \
+#define Q2_NODE_POOL_RELEASE( OWNER, NAME, SIZE, CLEANUP )                         \
 	void OWNER::NAME()                                                    \
 	{                                                                     \
-		cleanup();                                                        \
+		CLEANUP;                                                          \
 		if ( m_node )                                                     \
 			Q2NodeAlloc::deallocate( m_node, SIZE );                      \
 	}
 
-Q2_NODE_POOL_RELEASE( Gen0013BF00Owner, Rva0013C080, 0x2C )
-Q2_NODE_POOL_RELEASE( Gen0013BF00Owner, Rva0013C110, 0x2C )
-Q2_NODE_POOL_RELEASE( Gen0056D960Owner, Rva0056DE10, 0x44 )
-Q2_NODE_POOL_RELEASE( Gen00627270Owner, Rva00627340, 0x24 )
-Q2_NODE_POOL_RELEASE( Gen00627270Owner, Rva00627590, 0x24 )
-Q2_NODE_POOL_RELEASE( Gen0076AE50Owner, Rva0076D530, 0x1C )
-Q2_NODE_POOL_RELEASE( Gen0076AE50Owner, Rva0076F770, 0x1C )
+Q2_NODE_POOL_RELEASE( Gen0013BF00Owner, Rva0013C080, 0x2C, (reinterpret_cast<_STL::_List_base<Z1Elem0013BF00, _STL::allocator<Z1Elem0013BF00> > *>(this)->clear()) )
+Q2_NODE_POOL_RELEASE( Gen0013BF00Owner, Rva0013C110, 0x2C, (reinterpret_cast<_STL::_List_base<Z1Elem0013BF00, _STL::allocator<Z1Elem0013BF00> > *>(this)->clear()) )
+Q2_NODE_POOL_RELEASE( Gen0056D960Owner, Rva0056DE10, 0x44, (reinterpret_cast<_STL::_List_base<Z1Elem0056D960, _STL::allocator<Z1Elem0056D960> > *>(this)->clear()) )
+Q2_NODE_POOL_RELEASE( Gen00627270Owner, Rva00627340, 0x24, cleanup() )
+Q2_NODE_POOL_RELEASE( Gen00627270Owner, Rva00627590, 0x24, cleanup() )
+Q2_NODE_POOL_RELEASE( Gen0076AE50Owner, Rva0076D530, 0x1C, (reinterpret_cast<_STL::_List_base<Z1Elem0076AE50, _STL::allocator<Z1Elem0076AE50> > *>(this)->clear()) )
+Q2_NODE_POOL_RELEASE( Gen0076AE50Owner, Rva0076F770, 0x1C, (reinterpret_cast<_STL::_List_base<Z1Elem0076AE50, _STL::allocator<Z1Elem0076AE50> > *>(this)->clear()) )
