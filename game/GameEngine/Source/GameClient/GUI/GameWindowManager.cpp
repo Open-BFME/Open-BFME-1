@@ -1637,6 +1637,153 @@ GameWindow *GameWindowManager::winCreate( GameWindow *parent,
 
 }  // end WinCreate
 
+// The BFME virtual at manager slot 29 consumes this record; the upstream
+// eight-argument winCreate above is a separate overload and a separate RVA.
+// This zero-offset view preserves that proven owner without editing its header.
+struct Rva0047EDE0CreateInfo
+{
+	GameWindow *m_parent;
+	UnsignedInt m_field04;
+	Int m_field08, m_field0C, m_field10, m_field14;
+	GameWindow *(__stdcall *m_allocator)( Rva0047EDE0CreateInfo * );
+	void *m_field1C;
+	Int m_field20, m_field24, m_field28, m_field2C;
+	WinInstanceData *m_field30;
+};
+
+class GameWindowRva0047EDE0View
+{
+public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02();
+	virtual void slot03(); virtual void slot04(); virtual void slot05();
+	virtual void slot06(); virtual void slot07(); virtual void slot08();
+	virtual void slot09(); virtual Bool rva0047EDE0Slot10();
+	void *m_field04;
+	UnsignedByte m_unmodelled008[0x1F0];
+	GameWindowRva0047EDE0View *m_next;
+	GameWindowRva0047EDE0View *m_prev;
+	GameWindowRva0047EDE0View *m_parent;
+	GameWindowRva0047EDE0View *m_child;
+};
+
+class GameWindowManagerRva0047EDE0Slots
+{
+public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02();
+	virtual void slot03(); virtual void slot04(); virtual void slot05();
+	virtual void slot06(); virtual void slot07(); virtual void slot08();
+	virtual void *slot09();
+	virtual GameWindow *rva0078F520Slot10( Rva0047EDE0CreateInfo * );
+	virtual void slot11(); virtual void slot12(); virtual void slot13();
+	virtual void slot14(); virtual void slot15(); virtual void slot16();
+	virtual void slot17(); virtual void slot18(); virtual void slot19();
+	virtual void slot20(); virtual void slot21(); virtual void slot22();
+	virtual void slot23(); virtual void slot24(); virtual void slot25();
+	virtual void slot26(); virtual void slot27(); virtual void slot28();
+	virtual void slot29(); virtual void slot30(); virtual void slot31();
+	virtual void slot32(); virtual void slot33(); virtual void slot34();
+	virtual void slot35(); virtual void slot36(); virtual void slot37();
+	virtual void slot38(); virtual void slot39(); virtual void slot40();
+	virtual void slot41(); virtual void slot42(); virtual void slot43();
+	virtual void slot44(); virtual void slot45(); virtual void slot46();
+	virtual void slot47(); virtual void slot48(); virtual void slot49();
+	virtual void slot50();
+	virtual void addWindowToParent( GameWindow *, GameWindow * );
+	virtual void slot52();
+	virtual WindowMsgHandledType winSendSystemMsg(
+		GameWindow *, UnsignedInt, WindowMsgData, WindowMsgData );
+	virtual void slot54(); virtual void slot55(); virtual void slot56();
+	virtual void slot57(); virtual void slot58(); virtual void slot59();
+	virtual void slot60(); virtual void slot61(); virtual void slot62();
+	virtual void slot63(); virtual void slot64(); virtual void slot65();
+	virtual void slot66(); virtual void slot67(); virtual void slot68();
+	virtual void slot69(); virtual void slot70();
+	virtual GameFont *winFindFont( AsciiString, Int, Bool );
+};
+
+struct Rva00477DF0
+{
+	void orderPairs();
+};
+
+struct Rva0047EDE0FontDesc
+{
+	AsciiString name;
+	Int size;
+	bool bold;
+};
+
+struct Rva0047EDE0GlobalLanguage
+{
+	UnsignedByte m_unmodelled000[0xA0];
+	Rva0047EDE0FontDesc m_defaultWindowFont;
+};
+
+class GameWindowManagerRva0047EDE0View : public GameWindowManager
+{
+public:
+	using GameWindowManager::dumpWindow;
+	GameWindow *winCreate( Rva0047EDE0CreateInfo *info );
+};
+
+// Retail inlines these queries at this site; elsewhere the TU retains the
+// established out-of-line StringBase bodies.
+template <typename T> inline bool StringBase<T>::isEmpty() const
+{
+	return m_data == 0 || m_data->length == 0;
+}
+template <typename T> inline bool StringBase<T>::isNotEmpty() const
+{
+	return !isEmpty();
+}
+
+GameWindow *GameWindowManagerRva0047EDE0View::winCreate( Rva0047EDE0CreateInfo *info )
+{
+	GameWindowManagerRva0047EDE0Slots *managerSlots =
+		reinterpret_cast<GameWindowManagerRva0047EDE0Slots *>( this );
+	GameWindowRva0047EDE0View *window;
+	if ( info->m_allocator )
+	{
+		window = reinterpret_cast<GameWindowRva0047EDE0View *>( info->m_allocator( info ) );
+		if ( window->m_field04 == 0 && window->rva0047EDE0Slot10() )
+			window->m_field04 = managerSlots->slot09();
+	}
+	else
+	{
+		window = reinterpret_cast<GameWindowRva0047EDE0View *>(
+			managerSlots->rva0078F520Slot10( info ) );
+		if ( window == 0 )
+		{
+			for ( GameWindow *win = m_windowList; win;
+				win = reinterpret_cast<GameWindow *>(
+					reinterpret_cast<GameWindowRva0047EDE0View *>( win )->m_next ) )
+				dumpWindow( win );
+			return 0;
+		}
+	}
+	if ( info->m_parent )
+		managerSlots->addWindowToParent(
+			reinterpret_cast<GameWindow *>( window ), info->m_parent );
+	else
+		linkWindow( reinterpret_cast<GameWindow *>( window ) );
+	if ( info->m_field30 )
+		reinterpret_cast<GameWindow *>( window )->winSetInstanceData( info->m_field30 );
+	((Rva00477DF0 *)window)->orderPairs();
+	managerSlots->winSendSystemMsg(
+		reinterpret_cast<GameWindow *>( window ), 1, 0, 0 );
+	Rva0047EDE0GlobalLanguage *language =
+		reinterpret_cast<Rva0047EDE0GlobalLanguage *>( TheGlobalLanguageData );
+	if ( language && language->m_defaultWindowFont.name.isNotEmpty() )
+		reinterpret_cast<GameWindow *>( window )->GameWindow::winSetFont(
+			managerSlots->winFindFont( language->m_defaultWindowFont.name,
+				language->m_defaultWindowFont.size,
+				language->m_defaultWindowFont.bold ) );
+	else
+		reinterpret_cast<GameWindow *>( window )->GameWindow::winSetFont(
+			managerSlots->winFindFont( AsciiString( "Times New Roman" ), 14, FALSE ) );
+	return reinterpret_cast<GameWindow *>( window );
+}
+
 //-------------------------------------------------------------------------------------------------
 /** Take a window and its children off the top level list and free
 	* their allocation class data. */
