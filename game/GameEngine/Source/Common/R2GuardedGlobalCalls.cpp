@@ -1,3 +1,8 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Benchmark /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// stlport
+#include "PreRTS.h"
+#include "W3DDevice/GameClient/W3DShaderManager.h"
+
 // Nine more members of the mnemonic-only families anchored at 0x0007C530,
 // 0x000659C0, 0x00098430 and 0x004C11B0 -- five guarded dispatches and four
 // straight-line field writes.  They share a mnemonic sequence with their
@@ -211,17 +216,6 @@ extern int ZoomFadeFrames;
 extern int ZoomFadeDirection;
 extern int ZoomPulse;
 extern bool ZoomPulseDown;
-class ScreenBWFilter
-{
-protected:
-	static int m_curFadeFrame;
-	static int m_fadeFrames;
-	static int m_fadeDirection;
-	friend void __stdcall Rva0073B540(int, int);
-};
-extern int __identifier("?m_curFadeFrame@ScreenCrossFadeFilter@@1HA");
-extern int __identifier("?m_fadeFrames@ScreenCrossFadeFilter@@1HA");
-extern int __identifier("?m_fadeDirection@ScreenCrossFadeFilter@@1HA");
 
 void Rva0073A860( int unused, void *value )
 {
@@ -235,17 +229,13 @@ void Rva0073A860( int unused, void *value )
 // ?Rva0073B540@@YGXHH@Z
 void __stdcall Rva0073B540( int first, int second )
 {
-	ScreenBWFilter::m_curFadeFrame = 0;
-	ScreenBWFilter::m_fadeFrames = first;
-	ScreenBWFilter::m_fadeDirection = second;
+	ScreenBWFilter::setFadeParameters(first, second);
 	ZoomCurrentFrame = 0;
 	ZoomFadeFrames = 12;
 	ZoomFadeDirection = second;
 	ZoomPulse = 1;
 	ZoomPulseDown = 0;
-	__identifier("?m_curFadeFrame@ScreenCrossFadeFilter@@1HA") = 0;
-	__identifier("?m_fadeFrames@ScreenCrossFadeFilter@@1HA") = first;
-	__identifier("?m_fadeDirection@ScreenCrossFadeFilter@@1HA") = second;
+	ScreenCrossFadeFilter::setFadeParameters(first, second);
 }
 
 // Paired with the adjacent retail selector at 0x00739CC0; both are
