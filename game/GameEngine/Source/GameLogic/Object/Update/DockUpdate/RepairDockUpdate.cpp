@@ -83,11 +83,6 @@ RepairDockUpdate::RepairDockUpdate( Thing *thing, const ModuleData* moduleData )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ??1RepairDockUpdate@@MAE@XZ present-unmatched
-RepairDockUpdate::~RepairDockUpdate( void )
-{
-
-}  // end ~RepairDockUpdate
 
 // action is implemented in RepairDockUpdateAction.cpp.
 
