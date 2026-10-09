@@ -6,7 +6,7 @@
 // readable body of ??0JetAIUpdateModuleData@@: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/JetAIUpdate.cpp
 // readable body of ??0MinefieldBehaviorModuleData@@: game/GameEngine/Source/GameLogic/Object/Behavior/MinefieldBehavior.cpp
 // readable body of ??0RailedTransportDockUpdateModuleData@@QAE@XZ: game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/RailedTransportDockUpdate.cpp
-// readable body of ??0RebuildHoleExposeDieModuleData@@: game/GameEngine/Source/GameLogic/Object/Die/RebuildHoleExposeDie.cpp
+// readable body of ??0RebuildHoleExposeDieModuleData@@: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameLogic/Object/Die/RebuildHoleExposeDie.cpp
 // readable body of ??0W3DModelDrawModuleData@@QAE@XZ: game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp
 // readable body of ??0W3DOverlordAircraftDrawModuleData@@: game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DOverlordAircraftDraw.cpp
 // readable body of ?getNextSubToken@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp

@@ -58,6 +58,7 @@ EjectPilotDieModuleData::EjectPilotDieModuleData() :
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// ?buildFieldParse@EjectPilotDieModuleData@@ present-unmatched (0x00123290 is RefundDieModuleData::buildFieldParse)
 void EjectPilotDieModuleData::buildFieldParse(MultiIniFieldParse& p) 
 {
   DieModuleData::buildFieldParse(p);

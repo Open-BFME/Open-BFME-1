@@ -95,6 +95,7 @@ static void parseWeapon( INI* ini, void *instance, void * /*store*/, const void*
 }
 
 //-------------------------------------------------------------------------------------------------
+// ?buildFieldParse@InstantDeathBehaviorModuleData@@ present-unmatched (0x00123290 is RefundDieModuleData::buildFieldParse)
 /*static*/ void InstantDeathBehaviorModuleData::buildFieldParse(MultiIniFieldParse& p) 
 {
   DieModuleData::buildFieldParse(p);

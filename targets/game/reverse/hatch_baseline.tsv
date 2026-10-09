@@ -127677,13 +127677,6 @@ present_unmatched	game/GameEngine/Source/GameLogic/Object/Die/FXListDie.cpp	1FXL
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Die/FXListDie.cpp	crc@FXListDie@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Die/FXListDie.cpp	loadPostProcess@FXListDie@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Die/FXListDie.cpp	xfer@FXListDie@@	1
-present_unmatched	game/GameEngine/Source/GameLogic/Object/Die/RebuildHoleExposeDie.cpp	0RebuildHoleExposeDie@@	1
-present_unmatched	game/GameEngine/Source/GameLogic/Object/Die/RebuildHoleExposeDie.cpp	0RebuildHoleExposeDieModuleData@@	1
-present_unmatched	game/GameEngine/Source/GameLogic/Object/Die/RebuildHoleExposeDie.cpp	1RebuildHoleExposeDie@@	1
-present_unmatched	game/GameEngine/Source/GameLogic/Object/Die/RebuildHoleExposeDie.cpp	crc@RebuildHoleExposeDie@@	1
-present_unmatched	game/GameEngine/Source/GameLogic/Object/Die/RebuildHoleExposeDie.cpp	loadPostProcess@RebuildHoleExposeDie@@	1
-present_unmatched	game/GameEngine/Source/GameLogic/Object/Die/RebuildHoleExposeDie.cpp	onDie@RebuildHoleExposeDie@@	1
-present_unmatched	game/GameEngine/Source/GameLogic/Object/Die/RebuildHoleExposeDie.cpp	xfer@RebuildHoleExposeDie@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/ExperienceTracker.cpp	0ExperienceTracker@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/ExperienceTracker.cpp	addExperiencePoints@ExperienceTracker@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/ExperienceTracker.cpp	canGainExpForLevel@ExperienceTracker@@	1

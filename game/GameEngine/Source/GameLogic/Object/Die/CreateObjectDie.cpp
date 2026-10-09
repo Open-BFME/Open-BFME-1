@@ -82,6 +82,7 @@ CreateObjectDieModuleData::CreateObjectDieModuleData()
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// ?buildFieldParse@CreateObjectDieModuleData@@ present-unmatched (0x00123290 is RefundDieModuleData::buildFieldParse)
 /*static*/ void CreateObjectDieModuleData::buildFieldParse(MultiIniFieldParse& p)
 {
 	DieModuleData::buildFieldParse(p);
