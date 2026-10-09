@@ -59,9 +59,14 @@ def addresses(text):
         value = int(match.group(1), 16)
         # Not addresses: low 12 bits clear (sizes, flag words), two or fewer bits
         # set (flags), one repeated hex digit (masks and fill patterns: 0xffffff).
+        # One contiguous run of set bits is a mask or sentinel too (0x7fffff,
+        # 0x7ffff0: integer bounds and capacity counts), never a plausible
+        # code or data address.
         digits = match.group(1).lstrip("0").lower()
+        low = value & -value
+        contiguous = ((value + low) & value) == 0
         if (IMAGE_LOW <= value < IMAGE_HIGH and value & 0xFFF and bin(value).count("1") > 2
-                and len(set(digits)) > 1):
+                and len(set(digits)) > 1 and not contiguous):
             found.append(match.group(0))
     return found
 

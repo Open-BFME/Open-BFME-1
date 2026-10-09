@@ -152,3 +152,15 @@ def test_addresses_skip_flags_masks_sizes_comments_and_strings():
     int small = 0x3FC;
     """
     assert L.addresses(text) == []
+
+
+def test_contiguous_bit_run_sentinels_are_not_addresses():
+    # re_attempts.log: PolygonTrigger::updateBounds BIG_INT 0x7ffff0 and
+    # ScriptActions transport capacity 0x7fffff are integer bounds.
+    text = """
+    const Int BIG_INT = 0x7ffff0;
+    if (slots == 0) slots = 0x7fffff;
+    """
+    assert L.addresses(text) == []
+    # An address with a broken bit run is still one.
+    assert L.addresses("m_vptr = 0x007ffef0;") == ["0x007ffef0"]
