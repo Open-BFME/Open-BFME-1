@@ -1,17 +1,24 @@
 // Open-BFME5 conversions.
 
-class BfmeA1059;
+// Callees: bfmeGo1059A (0x6BE140) ILT 0x398BF -> 0x006C7630
+// BaseHeightMapRenderObjClass::loadRoadsAndBridges, ILT 0x3B93 -> 0x001AE190
+// TerrainLogic::newMap (direct); bfmeGo1059C (0x43CEC0) ILT 0x18A07 -> 0x00396AD0 Rva00396AD0 ctor.
+class W3DTerrainLogic;
 
-class BfmeG1059
+class TerrainLogic
 {
 public:
-	void bfmeAdd1059(BfmeA1059 *a, int b);
+	virtual void newMap(bool saveGame);
 };
 
 // Retail 0x012F7FE0: BaseHeightMapRenderObjClass *TheTerrainRenderObject
 // (W3DDevice/GameClient/BaseHeightMap.h). The add hook is called on it, so the
 // class stays opaque and the cast happens at the one use.
-class BaseHeightMapRenderObjClass;
+class BaseHeightMapRenderObjClass
+{
+public:
+	void loadRoadsAndBridges(W3DTerrainLogic *pTerrainLogic, bool saveGame);
+};
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 
 class BfmeH1059
@@ -35,20 +42,19 @@ class BfmeA1059
 {
 public:
 	void bfmeGo1059A(int a);
-	void bfmeUse1059(int a);
 };
 
 void BfmeA1059::bfmeGo1059A(int a)
 {
-	((BfmeG1059 *)TheTerrainRenderObject)->bfmeAdd1059(this, a);
-	bfmeUse1059(a);
+	TheTerrainRenderObject->loadRoadsAndBridges((W3DTerrainLogic *)this, *reinterpret_cast<bool *>(&a));
+	reinterpret_cast<TerrainLogic *>(this)->TerrainLogic::newMap(*reinterpret_cast<bool *>(&a));
 	((BfmeH1059 *)TheTerrainVisual)->bfmeV1059E(a);
 }
 
-class BfmeS1059
+class Rva00396AD0
 {
 public:
-	BfmeS1059(void);
+	Rva00396AD0(void);
 	int m_bfme00;
 	char m_bfmeBuf[0x1c];
 };
@@ -147,7 +153,7 @@ public:
 	virtual void bfmeSlot1059_88(void);
 	virtual void bfmeSlot1059_89(void);
 	virtual void bfmeSlot1059_90(void);
-	virtual void bfmeSlot1059_91(BfmeS1059 *s);
+	virtual void bfmeSlot1059_91(Rva00396AD0 *s);
 };
 
 // Retail spells this global View *TheTacticalView (0x012F1600); the TU-local
@@ -157,7 +163,7 @@ extern View *TheTacticalView;
 
 void bfmeGo1059C(void)
 {
-	BfmeS1059 s;
+	Rva00396AD0 s;
 
 	((BfmeC1059 *)TheTacticalView)->bfmeSlot1059_91(&s);
 	((BfmeC1059 *)TheTacticalView)->bfmeSlot1059_49(s.m_bfmeBuf, 1, 0, 0);
