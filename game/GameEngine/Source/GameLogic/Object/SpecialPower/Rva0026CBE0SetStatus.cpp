@@ -49,12 +49,21 @@ public:
 	ObjectV28 *asV28() { return (ObjectV28 *)this; }
 };
 
+// ILT 0x000392B1 reaches the matched finishAbility body at 0x002AA4B0.
+class SpecialAbilityUpdate
+{
+public:
+	void finishAbility();
+};
+
+// Keep the first ledger-owned route and its nullary thiscall receiver.
+extern void j_000392b1();
+
 class Rva0026CBE0Owner
 {
 public:
 	void apply();
 
-	void prep();
 
 private:
 	char m_pad00[8];
@@ -64,7 +73,7 @@ private:
 // ?apply@Rva0026CBE0Owner@@QAEXXZ
 void Rva0026CBE0Owner::apply()
 {
-	prep();
+	((void (__fastcall *)(Rva0026CBE0Owner *))j_000392b1)(this);
 	float *host = m_object->asV28()->getFloatHost();
 	if (host != 0)
 	{
