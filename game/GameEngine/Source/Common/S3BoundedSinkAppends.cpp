@@ -24,13 +24,51 @@
 
 typedef int Int;
 
+// Exact matched auxiliary declarations; keep these calls out of line.
+class Gen_00089d90;
+class Gen_0035b840;
+class Gen_0035b870;
+class Gen_0035bb10;
+class Gen_0035bb40;
+class Gen_0035c3a0;
+class Gen_0035c3d0;
+class Gen_0035c840;
+class Gen_0035c870;
+class Gen_00369a30;
+class Gen_00369e30;
+class Gen_00647430;
+class MapObject;
+struct Gen_t_00089ce0_p4pod;
+struct Gen_t_0035ae40_p4pod;
+struct Gen_t_0035aec0_p4pod;
+struct Gen_t_0035b2a0_p4pod;
+struct Gen_t_0035b320_p4pod;
+namespace _STL
+{
+template <class Value> class allocator;
+template <class Value, class Alloc> class deque
+{
+    friend class ::Gen_00089d90;
+    friend class ::Gen_0035b840;
+    friend class ::Gen_0035b870;
+    friend class ::Gen_0035bb10;
+    friend class ::Gen_0035bb40;
+    friend class ::Gen_0035c3a0;
+    friend class ::Gen_0035c3d0;
+    friend class ::Gen_0035c840;
+    friend class ::Gen_0035c870;
+    friend class ::Gen_00369a30;
+    friend class ::Gen_00369e30;
+    friend class ::Gen_00647430;
+protected:
+    void _M_push_back_aux_v(const Value &);
+};
+}
+
 class Gen_00089d90
 {
 public:
 	void bfmeAppend(void *const &value);
-
-protected:
-	void bfmePushBackAux(void *const &value);
 
 private:
 	char m_bfmeHead[0x10];
@@ -44,9 +82,6 @@ class Gen_0035b840
 public:
 	void bfmeAppend(void *const &value);
 
-protected:
-	void bfmePushBackAux(void *const &value);
-
 private:
 	char m_bfmeHead[0x10];
 	void **m_bfmeCur;							// +0x10
@@ -58,9 +93,6 @@ class Gen_0035b870
 {
 public:
 	void bfmeAppend(void *const &value);
-
-protected:
-	void bfmePushBackAux(void *const &value);
 
 private:
 	char m_bfmeHead[0x10];
@@ -74,9 +106,6 @@ class Gen_0035bb10
 public:
 	void bfmeAppend(void *const &value);
 
-protected:
-	void bfmePushBackAux(void *const &value);
-
 private:
 	char m_bfmeHead[0x10];
 	void **m_bfmeCur;							// +0x10
@@ -88,9 +117,6 @@ class Gen_0035bb40
 {
 public:
 	void bfmeAppend(void *const &value);
-
-protected:
-	void bfmePushBackAux(void *const &value);
 
 private:
 	char m_bfmeHead[0x10];
@@ -104,9 +130,6 @@ class Gen_0035c3a0
 public:
 	void bfmeAppend(void *const &value);
 
-protected:
-	void bfmePushBackAux(void *const &value);
-
 private:
 	char m_bfmeHead[0x10];
 	void **m_bfmeCur;							// +0x10
@@ -118,9 +141,6 @@ class Gen_0035c3d0
 {
 public:
 	void bfmeAppend(void *const &value);
-
-protected:
-	void bfmePushBackAux(void *const &value);
 
 private:
 	char m_bfmeHead[0x10];
@@ -134,9 +154,6 @@ class Gen_0035c840
 public:
 	void bfmeAppend(void *const &value);
 
-protected:
-	void bfmePushBackAux(void *const &value);
-
 private:
 	char m_bfmeHead[0x10];
 	void **m_bfmeCur;							// +0x10
@@ -148,9 +165,6 @@ class Gen_0035c870
 {
 public:
 	void bfmeAppend(void *const &value);
-
-protected:
-	void bfmePushBackAux(void *const &value);
 
 private:
 	char m_bfmeHead[0x10];
@@ -164,9 +178,6 @@ class Gen_00369a30
 public:
 	void bfmeAppend(void *const &value);
 
-protected:
-	void bfmePushBackAux(void *const &value);
-
 private:
 	char m_bfmeHead[0x10];
 	void **m_bfmeCur;							// +0x10
@@ -179,9 +190,6 @@ class Gen_00369e30
 public:
 	void bfmeAppend(void *const &value);
 
-protected:
-	void bfmePushBackAux(void *const &value);
-
 private:
 	char m_bfmeHead[0x10];
 	void **m_bfmeCur;							// +0x10
@@ -193,9 +201,6 @@ class Gen_00647430
 {
 public:
 	void bfmeAppend(void *const &value);
-
-protected:
-	void bfmePushBackAux(void *const &value);
 
 private:
 	char m_bfmeHead[0x10];
@@ -216,7 +221,8 @@ void Gen_00089d90::bfmeAppend(void *const &value)
 	}
 	else
 	{
-		bfmePushBackAux(value);
+		reinterpret_cast<_STL::deque<Gen_t_00089ce0_p4pod, _STL::allocator<Gen_t_00089ce0_p4pod> > *>(this)
+            ->_M_push_back_aux_v(reinterpret_cast<const Gen_t_00089ce0_p4pod &>(value));
 	}
 }
 
@@ -232,7 +238,8 @@ void Gen_0035b840::bfmeAppend(void *const &value)
 	}
 	else
 	{
-		bfmePushBackAux(value);
+		reinterpret_cast<_STL::deque<Gen_t_0035ae40_p4pod, _STL::allocator<Gen_t_0035ae40_p4pod> > *>(this)
+            ->_M_push_back_aux_v(reinterpret_cast<const Gen_t_0035ae40_p4pod &>(value));
 	}
 }
 
@@ -248,7 +255,8 @@ void Gen_0035b870::bfmeAppend(void *const &value)
 	}
 	else
 	{
-		bfmePushBackAux(value);
+		reinterpret_cast<_STL::deque<Gen_t_0035aec0_p4pod, _STL::allocator<Gen_t_0035aec0_p4pod> > *>(this)
+            ->_M_push_back_aux_v(reinterpret_cast<const Gen_t_0035aec0_p4pod &>(value));
 	}
 }
 
@@ -264,7 +272,8 @@ void Gen_0035bb10::bfmeAppend(void *const &value)
 	}
 	else
 	{
-		bfmePushBackAux(value);
+		reinterpret_cast<_STL::deque<Gen_t_0035b2a0_p4pod, _STL::allocator<Gen_t_0035b2a0_p4pod> > *>(this)
+            ->_M_push_back_aux_v(reinterpret_cast<const Gen_t_0035b2a0_p4pod &>(value));
 	}
 }
 
@@ -280,7 +289,8 @@ void Gen_0035bb40::bfmeAppend(void *const &value)
 	}
 	else
 	{
-		bfmePushBackAux(value);
+		reinterpret_cast<_STL::deque<Gen_t_0035b320_p4pod, _STL::allocator<Gen_t_0035b320_p4pod> > *>(this)
+            ->_M_push_back_aux_v(reinterpret_cast<const Gen_t_0035b320_p4pod &>(value));
 	}
 }
 
@@ -296,7 +306,8 @@ void Gen_0035c3a0::bfmeAppend(void *const &value)
 	}
 	else
 	{
-		bfmePushBackAux(value);
+		reinterpret_cast<_STL::deque<Gen_t_0035ae40_p4pod, _STL::allocator<Gen_t_0035ae40_p4pod> > *>(this)
+            ->_M_push_back_aux_v(reinterpret_cast<const Gen_t_0035ae40_p4pod &>(value));
 	}
 }
 
@@ -312,7 +323,8 @@ void Gen_0035c3d0::bfmeAppend(void *const &value)
 	}
 	else
 	{
-		bfmePushBackAux(value);
+		reinterpret_cast<_STL::deque<Gen_t_0035aec0_p4pod, _STL::allocator<Gen_t_0035aec0_p4pod> > *>(this)
+            ->_M_push_back_aux_v(reinterpret_cast<const Gen_t_0035aec0_p4pod &>(value));
 	}
 }
 
@@ -328,7 +340,8 @@ void Gen_0035c840::bfmeAppend(void *const &value)
 	}
 	else
 	{
-		bfmePushBackAux(value);
+		reinterpret_cast<_STL::deque<Gen_t_0035b2a0_p4pod, _STL::allocator<Gen_t_0035b2a0_p4pod> > *>(this)
+            ->_M_push_back_aux_v(reinterpret_cast<const Gen_t_0035b2a0_p4pod &>(value));
 	}
 }
 
@@ -344,7 +357,8 @@ void Gen_0035c870::bfmeAppend(void *const &value)
 	}
 	else
 	{
-		bfmePushBackAux(value);
+		reinterpret_cast<_STL::deque<Gen_t_0035b320_p4pod, _STL::allocator<Gen_t_0035b320_p4pod> > *>(this)
+            ->_M_push_back_aux_v(reinterpret_cast<const Gen_t_0035b320_p4pod &>(value));
 	}
 }
 
@@ -360,7 +374,8 @@ void Gen_00369a30::bfmeAppend(void *const &value)
 	}
 	else
 	{
-		bfmePushBackAux(value);
+		reinterpret_cast<_STL::deque<MapObject *, _STL::allocator<MapObject *> > *>(this)
+            ->_M_push_back_aux_v(reinterpret_cast<MapObject *const &>(value));
 	}
 }
 
@@ -376,7 +391,8 @@ void Gen_00369e30::bfmeAppend(void *const &value)
 	}
 	else
 	{
-		bfmePushBackAux(value);
+		reinterpret_cast<_STL::deque<MapObject *, _STL::allocator<MapObject *> > *>(this)
+            ->_M_push_back_aux_v(reinterpret_cast<MapObject *const &>(value));
 	}
 }
 
@@ -392,6 +408,7 @@ void Gen_00647430::bfmeAppend(void *const &value)
 	}
 	else
 	{
-		bfmePushBackAux(value);
+		reinterpret_cast<_STL::deque<int, _STL::allocator<int> > *>(this)
+            ->_M_push_back_aux_v(reinterpret_cast<const int &>(value));
 	}
 }
