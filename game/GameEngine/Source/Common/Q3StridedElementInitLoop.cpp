@@ -1,5 +1,7 @@
-// Nine copies of one loop that walks an array of fixed-stride elements, calls a
-// two-argument cdecl helper on each, and returns the cursor PAST the last one.
+// stlport
+//
+// Nine copies of one loop that walks an array of fixed-stride elements,
+// copy-constructs one value into each, and returns the cursor PAST the last.
 //
 // WHAT THE BYTES SHOW.  Three cdecl parameters: a base pointer, a COUNT tested
 // with `test edi,edi` / `jbe` -- an UNSIGNED "greater than zero" test, not a
@@ -16,40 +18,74 @@
 // is the compiler's induction rewrite of a forward count-up loop -- writing the
 // countdown explicitly costs a different compare.
 //
-// TWO AXES.  The stride -- 0x28, 0x88, 0x8C, 0xB4, 0xB8, 0xDC, 0x124, 0x128,
-// 0x1F0, 0x210 -- and the helper.  Nine rows, nine distinct strides, nine
-// distinct helpers, so neither axis is standing in for the other.
+// THE HELPERS ARE STLPORT _Construct INSTANCES.  Each REL32 lands on an
+// ordinary ILT entry that jumps to a matched _STL::_Construct<T,T>(T*, const T&)
+// row (tools/callees.py: 0x000E3B70 for PlayerTemplate, the rest map-node pair
+// rows), so the loop copy-constructs `*extra` into each slot.  The helpers are
+// declared as explicit specializations so this TU calls the matched bodies
+// instead of inlining a second copy.
 //
-// IDENTITY IS NOT RECOVERED.  Names are address-derived; helper pins are
-// address-derived and additive, read from the REL32 at the call site.
+// IDENTITY IS NOT RECOVERED.  The loop names are address-derived, and the
+// pair payload names are the address-derived ones of the matched helper rows,
+// sized as those rows' generated payloads; only their names reach the bytes.
 //
-// WHAT THE BYTES CANNOT DECIDE.  What the helper does -- it is not necessarily a
-// constructor, only a per-element call.  The third parameter's type: it is one
+// WHAT THE BYTES CANNOT DECIDE.  The third parameter's declared type: it is one
 // dword, never dereferenced here.  And whether the count is `unsigned` or a
-// pointer difference the compiler proved non-negative; only the UNSIGNED test is
-// visible.
+// pointer difference the compiler proved non-negative; only the UNSIGNED test
+// is visible.
 
-#define BFME_STRIDED_INIT_LOOP( NAME, HELPER, STRIDE )                        \
+#include <utility>
+#include <memory>
+
+class PlayerTemplate;
+
+namespace _STL
+{
+template<> void _Construct<PlayerTemplate, PlayerTemplate>(
+	PlayerTemplate *p, const PlayerTemplate &value );
+}
+
+#define BFME_PAIR_PAYLOAD( ADDR )                                             \
+	struct Gen_t_##ADDR##_k4 { int a[1]; };                                   \
+	struct Gen_t_##ADDR##_p12cd { int a[3]; };                                \
+	typedef _STL::pair<const Gen_t_##ADDR##_k4, Gen_t_##ADDR##_p12cd>         \
+		Pair##ADDR;                                                           \
+	namespace _STL                                                            \
+	{                                                                         \
+	template<> void _Construct<Pair##ADDR, Pair##ADDR>(                       \
+		Pair##ADDR *p, const Pair##ADDR &value );                             \
+	}
+
+BFME_PAIR_PAYLOAD( 00195060 )
+BFME_PAIR_PAYLOAD( 00363a60 )
+BFME_PAIR_PAYLOAD( 0039e0a0 )
+BFME_PAIR_PAYLOAD( 003a2460 )
+BFME_PAIR_PAYLOAD( 003abf20 )
+BFME_PAIR_PAYLOAD( 00607280 )
+BFME_PAIR_PAYLOAD( 00608af0 )
+BFME_PAIR_PAYLOAD( 0013a700 )
+
+#define BFME_STRIDED_INIT_LOOP( NAME, VALUE, STRIDE )                         \
 	struct NAME##Elem { char m_bytes[ STRIDE ]; };                            \
-	void HELPER( NAME##Elem *p, void *extra );                                \
 	NAME##Elem *NAME( NAME##Elem *base, unsigned int count, void *extra );    \
 	NAME##Elem *NAME( NAME##Elem *base, unsigned int count, void *extra )     \
 	{                                                                         \
 		NAME##Elem *cursor = base;                                            \
 		for ( unsigned int i = 0; i < count; ++i )                            \
 		{                                                                     \
-			HELPER( cursor, extra );                                          \
+			_STL::_Construct( reinterpret_cast<VALUE *>( cursor ),            \
+				*static_cast<const VALUE *>( extra ) );                       \
 			++cursor;                                                         \
 		}                                                                     \
 		return cursor;                                                        \
 	}
 
-BFME_STRIDED_INIT_LOOP( Rva000E3C10, Gen000E3B70, 0x124 )
-BFME_STRIDED_INIT_LOOP( Rva001952C0, Gen00195060, 0x8C )
-BFME_STRIDED_INIT_LOOP( Rva00363B00, Gen00363A60, 0xB4 )
-BFME_STRIDED_INIT_LOOP( Rva0039E140, Gen0039E0A0, 0x88 )
-BFME_STRIDED_INIT_LOOP( Rva003A2530, Gen003A2460, 0xB8 )
-BFME_STRIDED_INIT_LOOP( Rva003ABFC0, Gen003ABF20, 0xDC )
-BFME_STRIDED_INIT_LOOP( Rva00607320, Gen00607280, 0x1F0 )
-BFME_STRIDED_INIT_LOOP( Rva00608B90, Gen00608AF0, 0x210 )
-BFME_STRIDED_INIT_LOOP( Rva007747A0, Gen0013A700, 0x128 )
+BFME_STRIDED_INIT_LOOP( Rva000E3C10, PlayerTemplate, 0x124 )
+BFME_STRIDED_INIT_LOOP( Rva001952C0, Pair00195060, 0x8C )
+BFME_STRIDED_INIT_LOOP( Rva00363B00, Pair00363a60, 0xB4 )
+BFME_STRIDED_INIT_LOOP( Rva0039E140, Pair0039e0a0, 0x88 )
+BFME_STRIDED_INIT_LOOP( Rva003A2530, Pair003a2460, 0xB8 )
+BFME_STRIDED_INIT_LOOP( Rva003ABFC0, Pair003abf20, 0xDC )
+BFME_STRIDED_INIT_LOOP( Rva00607320, Pair00607280, 0x1F0 )
+BFME_STRIDED_INIT_LOOP( Rva00608B90, Pair00608af0, 0x210 )
+BFME_STRIDED_INIT_LOOP( Rva007747A0, Pair0013a700, 0x128 )
