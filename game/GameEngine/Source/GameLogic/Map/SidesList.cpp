@@ -143,11 +143,6 @@ SidesInfo::SidesInfo(const SidesInfo& thatref) :
  SidesInfo - Destructor - 
 */
 // byte-exact reconstruction: game/GameEngine/Source/Common/SidesInfoDestructorThunk.cpp
-// ??1SidesInfo@@QAE@XZ present-unmatched
-SidesInfo::~SidesInfo(void)
-{
-	clear();
-}
 
 // ?init@SidesInfo@@QAEXPBVDict@@@Z present-unmatched
 void SidesInfo::init(const Dict* d)
@@ -449,35 +444,7 @@ TeamsInfo *SidesList::findTeamInfo(AsciiString name, Int* index /*= NULL*/)
 	return m_teamrec.findTeamInfo(name, index);
 }
 
-// ?findSideInfo@SidesList@@QAEPAVSidesInfo@@VAsciiString@@PAH@Z present-unmatched
-SidesInfo *SidesList::findSideInfo(AsciiString name, Int* index /*= NULL*/)
-{
-	for (int i = 0; i < m_numSides; i++) 
-	{
-		if (m_sides[i].getDict()->getAsciiString(TheKey_playerName) == name)
-		{
-			if (index)
-				*index = i;
-			return &m_sides[i];
-		}
-	}
-	return NULL;
-}
 
-// ?findSkirmishSideInfo@SidesList@@QAEPAVSidesInfo@@VAsciiString@@PAH@Z present-unmatched
-SidesInfo *SidesList::findSkirmishSideInfo(AsciiString name, Int* index /*= NULL*/)
-{
-	for (int i = 0; i < m_numSkirmishSides; i++) 
-	{
-		if (m_skirmishSides[i].getDict()->getAsciiString(TheKey_playerName) == name)
-		{
-			if (index)
-				*index = i;
-			return &m_skirmishSides[i];
-		}
-	}
-	return NULL;
-}
 
 static AsciiString static_readPlayerNames[MAX_PLAYER_COUNT];
 
@@ -723,25 +690,6 @@ void SidesList::prepareForMP_or_Skirmish() {
 }
 
 // byte-exact reconstruction: game/GameEngine/Source/Common/SidesList_isPlayerDefaultTeam_Thunk.cpp
-// ?isPlayerDefaultTeam@SidesList@@QAE_NPAVTeamsInfo@@@Z present-unmatched
-Bool SidesList::isPlayerDefaultTeam(TeamsInfo *t)
-{
-	// if our name is "teamfoo" and there is a player named "foo", we are a player-default team.
-	AsciiString tname = t->getDict()->getAsciiString(TheKey_teamName);
-	if (tname.startsWith("team"))
-	{
-		const char* rest = tname.str() + 4;
-		for (int j = 0; j < m_numSides; j++)
-		{
-			AsciiString pname = m_sides[j].getDict()->getAsciiString(TheKey_playerName);
-			if (strcmp(pname.str(), rest) == 0)
-			{
-				return true;
-			}
-		}
-	}
-	return false;
-}
 
 // ?emptySides@SidesList@@QAEXXZ present-unmatched
 void SidesList::emptySides() 
@@ -779,20 +727,6 @@ void SidesList::addSkirmishTeam(const Dict* d)
 }
 
 // byte-exact reconstruction: game/GameEngine/Source/Common/SidesList_removeSideMethodThunk.cpp
-// ?removeSide@SidesList@@QAEXH@Z present-unmatched
-void SidesList::removeSide(Int i)
-{
-	if (i < 0 || i >= m_numSides || m_numSides <= 1)
-		return;
-
-	for ( ; i < m_numSides-1; i++)
-		m_sides[i] = m_sides[i+1];
-
-	for ( ; i < MAX_PLAYER_COUNT; i++)
-		m_sides[i].clear();
-
-	--m_numSides;
-}
 
 // RE-HOMED, with ::addTeam below. Retail's 0x00C2787D is
 // `add ecx,0x194; jmp 0x0000D828`, and 0x0000D828 is `jmp 0x0005EE90` =
@@ -2741,20 +2675,6 @@ m_buildingName(AsciiString::TheEmptyString)
  BuildListInfo - Destructor - note - if linked, deletes linked items.
 */
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/BuildListInfoDestructors.cpp
-// ??1BuildListInfo@@MAE@XZ present-unmatched
-BuildListInfo::~BuildListInfo(void)
-{
-	if (m_nextBuildList) {
-		BuildListInfo *cur = m_nextBuildList;
-		BuildListInfo *next;
-		while (cur) {
-			next = cur->getNext();
-			cur->setNextBuildList(NULL); // prevents recursion. 
-			cur->deleteInstance();
-			cur = next; 
-		}
-	}
-}
 
 void BuildListInfo::parseStructure(INI *ini, void *instance, void* /*store*/, const void* /*userData*/)
 {
