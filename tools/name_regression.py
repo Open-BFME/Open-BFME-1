@@ -84,6 +84,30 @@ def tokens(text):
     return [t for t in TOKEN.findall(PRAGMA.sub('', text)) if not t.startswith(('//', '/*', '"', "'"))]
 
 
+# A function-like macro's parameter names whatever argument the expansion
+# supplies; it names no entity. Expanding such a macro by hand aligns the
+# parameter against the argument it stood for (`NAME` -> Rva00065A40), which
+# is not a rename. Only occurrences inside their own #define are exempt: an
+# identifier with the same spelling elsewhere is still checked.
+FUNCTION_MACRO = re.compile(
+    r'^[ \t]*#[ \t]*define[ \t]+[A-Za-z_]\w*\(([^)]*)\)(?:\\\r?\n|[^\n])*', re.M)
+
+
+def macro_parameter_positions(text):
+    """Token indices (as tokens() numbers them) of parameters in their #define."""
+    stripped = PRAGMA.sub('', text)
+    spans = [(m.start(), m.end(), {p.strip() for p in m[1].split(',')})
+             for m in FUNCTION_MACRO.finditer(stripped)]
+    found, index = set(), 0
+    for m in TOKEN.finditer(stripped):
+        if m[0].startswith(('//', '/*', '"', "'")):
+            continue
+        if any(start <= m.start() < end and m[0] in params for start, end, params in spans):
+            found.add(index)
+        index += 1
+    return found
+
+
 FUNCTION_DECL_TAIL = {
     ';', '{', '=', ':', 'const', 'volatile', 'noexcept', 'override',
     'final', 'try', '->',
@@ -190,7 +214,7 @@ def _templated_type_declaration(values, name_index):
     return False
 
 
-def _function_declaration_regressions(old, new):
+def _function_declaration_regressions(old, new, exempt=frozenset()):
     """Find only declaration names whose parameter boundaries remain aligned.
 
     The ordinary token pass intentionally handles equal-sized identifier
@@ -205,6 +229,8 @@ def _function_declaration_regressions(old, new):
     alignment = _equal_token_alignment(old, new)
     found = set()
     for old_name_index, (old_open, old_close) in old_declarations.items():
+        if old_name_index in exempt:
+            continue
         new_open = alignment.get(old_open)
         new_close = alignment.get(old_close)
         if new_open is None or new_close is None:
@@ -270,6 +296,7 @@ def regressions(before, after, retained=frozenset()):
     old, new = tokens(before), tokens(after)
     if old == new:
         return []
+    macro_parameters = macro_parameter_positions(before)
     # Moving a retained type before a new namespace can align its old
     # declaration with the namespace declaration. That is not a type rename.
     type_definition = re.compile(r'\b(?:class|struct)\s+([A-Za-z_]\w*)[^;{}]*\{')
@@ -303,9 +330,10 @@ def regressions(before, after, retained=frozenset()):
                     _templated_type_declaration(old, old_pos) !=
                     _templated_type_declaration(new, new_pos))
                 if (downgrade(x, y) and not moved_type and
-                        not compiler_attribute and not template_mismatch):
+                        not compiler_attribute and not template_mismatch and
+                        old_pos not in macro_parameters):
                     found.add((x, y))
-    found.update(_function_declaration_regressions(old, new))
+    found.update(_function_declaration_regressions(old, new, macro_parameters))
     left, right = layouts(before), layouts(after)
     left_shapes, right_shapes = _shapes(left), _shapes(right)
     for owner, members in left.items():

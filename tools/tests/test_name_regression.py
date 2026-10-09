@@ -796,6 +796,29 @@ def test_descriptive_name_respelled_to_bfme_placeholder_still_fails():
         'void UpdateWeapon();', 'void bfmeThing00256AE0();')
 
 
+def test_hand_expanded_macro_parameter_is_not_a_rename():
+    # 0x000FB1F0: four 17-byte forwarders were written through a macro whose
+    # parameter NAME aligned with the class each expansion stands for.
+    before = ('#define FORWARD(NAME, TARGET) \\\n'
+              'void NAME::forward() \\\n'
+              '{ TARGET(); }\n'
+              'FORWARD(Rva000FB1F0, Rva00065A40)\n')
+    after = 'void Rva000FB1F0::forward()\n{ Rva00065A40(); }\n'
+    assert N.regressions(before, after) == []
+    # A one-line helper macro whose parameter is the declared function name.
+    before = '#define LOOP(HELPER) int *HELPER(int *p) { return p; }\nLOOP(f)\n'
+    after = 'int *Rva000E3C10(int *p) { return p; }\n'
+    assert N.regressions(before, after) == []
+
+
+def test_macro_parameter_spelling_outside_its_define_is_still_checked():
+    before = ('#define CALL(count) use(count)\n'
+              'struct A { int count; };\nint g(A *a) { return a->count; }\n')
+    after = ('#define CALL(count) use(count)\n'
+             'struct A { int m_field0; };\nint g(A *a) { return a->m_field0; }\n')
+    assert ('count', 'm_field0') in N.regressions(before, after)
+
+
 def test_bfme_field_respelled_to_offset_field_is_not_a_regression():
     before = 'struct A { int m_bfmeCount; }; int g(A *a) { return a->m_bfmeCount; }'
     after = 'struct A { int m_field4; }; int g(A *a) { return a->m_field4; }'
