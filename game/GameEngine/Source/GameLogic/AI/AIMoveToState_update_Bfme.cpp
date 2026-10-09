@@ -192,10 +192,7 @@ public:
 		return &m_position;
 	}
 
-	const GeometryInfo &getGeometryInfo(void) const
-	{
-		return *(const GeometryInfo *)((const UnsignedByte *)this + 0xac);
-	}
+	const GeometryInfo &getGeometryInfo(void) const;
 
 	UnsignedByte m_unreconstructed_008[0x38 - 0x08];
 	Coord3D m_position;
@@ -204,6 +201,13 @@ public:
 };
 
 // upstream layout: .../GameLogic/StateMachine.h
+// Keep the witnessed BFME geometry load local, without a public accessor
+// COMDAT competing with other layout copies.
+static __forceinline const GeometryInfo &objectGeometry(const Object *obj)
+{
+	return *(const GeometryInfo *)((const UnsignedByte *)obj + 0xac);
+}
+
 class StateMachine
 {
 public:
@@ -255,7 +259,7 @@ StateReturnType AIMoveToState::update()
 		m_goalPosition = *goalObj->getPosition();
 		Bool isMissile = obj->getTemplate()->isKindOf(KINDOF_PROJECTILE);
 		if (isMissile) {
-			Real halfHeight = m_machine->getGoalObject()->getGeometryInfo().getMaxHeightAbovePosition()/2.0f;
+			Real halfHeight = objectGeometry(m_machine->getGoalObject()).getMaxHeightAbovePosition()/2.0f;
 			m_goalPosition.z += halfHeight;
 			Real zDelta = m_goalPosition.z - obj->getPosition()->z;
 			if (zDelta>0) {

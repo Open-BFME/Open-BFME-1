@@ -2075,72 +2075,7 @@ void AIMoveToState::onExit( StateExitType status )
 }
 
 //----------------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/AIMoveToState_updateMethodThunk.cpp
-// ?update@AIMoveToState@@UAE?AW4StateReturnType@@XZ present-unmatched
-StateReturnType AIMoveToState::update()
-{
-	AIUpdateInterface *ai = getMachineOwner()->getAI();
-
-	//Kris: 7/01/03 (Temporary debug hook for units not being able to leave maps)
-	if( getMachineOwner()->testStatus( OBJECT_STATUS_RIDER8 ) )
-	{
-		Int blah = 0;
-		blah++;
-	}
-
-	UnsignedInt adjustment = ai->getMoodMatrixActionAdjustment(MM_Action_Move);
-	if (m_isMoveTo && (adjustment & MAA_Action_To_AttackMove))
-		ai->aiAttackMoveToPosition(&m_goalPosition, NO_MAX_SHOTS_LIMIT, CMD_FROM_AI);
-
-	// if we have a goal object, move to it, as it may have moved
-	Object* goalObj = getMachineGoalObject();
-	Object *obj = getMachineOwner();
-	if (goalObj)
-	{
-		m_goalPosition = *goalObj->getPosition();
-		Bool gotPhysics = obj->getPhysics()!=NULL && goalObj->getPhysics()!=NULL;
-		Bool isMissile = obj->isKindOf(KINDOF_PROJECTILE);
-		if (isMissile) {
-			Real halfHeight = getMachineGoalObject()->getGeometryInfo().getMaxHeightAbovePosition()/2.0f;
-			m_goalPosition.z += halfHeight;
-			Real zDelta = m_goalPosition.z - obj->getPosition()->z;
-			if (zDelta>0) {
-				m_goalPosition.z += zDelta;
-			}
-		}
-		//gotPhysics = false;
-		if (gotPhysics && isMissile && !goalObj->isKindOf(KINDOF_IMMOBILE)) {
-			Coord3D ourPos = *obj->getPosition();
-			Coord3D delta;
-			delta.x = m_goalPosition.x - ourPos.x;
-			delta.y = m_goalPosition.y - ourPos.y;
-			delta.z = m_goalPosition.z - ourPos.z;
-			Real mySpeed = obj->getPhysics()->getVelocityMagnitude();
-			Real goalSpeed = goalObj->getPhysics()->getVelocityMagnitude();
-			if (mySpeed<5.0f) mySpeed = 5.0f; // avoid divide by 0.
-			Real leadDistance = (0.5*delta.length()) * goalSpeed / mySpeed;
-			Coord3D dir;
-			goalObj->getUnitDirectionVector3D(dir);
-			m_goalPosition.x += dir.x*leadDistance;
-			m_goalPosition.y += dir.y*leadDistance;
-			m_goalPosition.z += dir.z*leadDistance;
-		}
-		//DEBUG_LOG(("update goal pos to %f %f %f\n",m_goalPosition.x,m_goalPosition.y,m_goalPosition.z));
-	} else {
-		Bool isMissile = obj->isKindOf(KINDOF_PROJECTILE);
-		if (isMissile) {
-			// When missiles are moving uphill, they need to start up quickly to clear hills.  jba.
-			m_goalPosition = *getMachineGoalPosition();
-			Real zDelta = m_goalPosition.z - obj->getPosition()->z;
-			if (zDelta>0) {
-				m_goalPosition.z += zDelta;
-			}
-		}
-
-	}
-
-	return AIInternalMoveToState::update();
-}
+// Retail AIMoveToState::update is owned by AIMoveToState_update_Bfme.cpp.
 
 //----------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------
