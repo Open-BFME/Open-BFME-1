@@ -3,8 +3,6 @@
 class BfmeMsgVJC
 {
 public:
-	void bfmeSetVJC(const char *k, void *v);
-	void bfmeSet3VJC(const char *k, int v);
 	char m_bfmePad[0x1c];
 	int m_bfme1c;
 };
@@ -12,7 +10,22 @@ public:
 // retail 0x007E8AC0
 class Rva007E8AC0 { public: void run(); };
 
-extern void *g_bfmeVJE;
+// Canonical serializer names from the matched 0x007E8A10 and 0x007E88D0
+// bodies. The integer writer forwards its second word to Rva007EC5C0's int.
+class BfmeC994
+{
+public:
+	void addString(const char *key, const char *value);
+};
+
+class BfmeThingCIB
+{
+public:
+	void bfmeGoCIB(void *key, void *value);
+};
+
+// Retail's transaction-string pointer is zero in the shipped virtual image.
+void *g_Va0130A5B8 = 0;
 
 // retail 0x007F1800: FESL search serializer shared by the VJC/VJD/VJE wrappers.
 class Rva007E8810Message
@@ -35,19 +48,19 @@ public:
 
 void BfmeThingVJE::bfmeGoVJE(BfmeMsgVJC *m, int downloadMin, int downloadMax, int topN, int periodType, int periodsPast, void *b)
 {
-	void *g = g_bfmeVJE;
+	void *g = g_Va0130A5B8;
 	((Rva007E8AC0*)m)->run();
 	m->m_bfme1c = 0x626c6f62;
-	m->bfmeSetVJC("TXN", g);
+	((BfmeC994 *)m)->addString("TXN", (const char *)g);
 	((Rva007F1800Search *)this)->serialize((Rva007E8810Message *)m, topN, b);
 	if (downloadMin > -1)
-		m->bfmeSet3VJC("downloadMin", downloadMin);
+		((BfmeThingCIB *)m)->bfmeGoCIB("downloadMin", (void *)downloadMin);
 	if (downloadMax > -1)
-		m->bfmeSet3VJC("downloadMax", downloadMax);
+		((BfmeThingCIB *)m)->bfmeGoCIB("downloadMax", (void *)downloadMax);
 	if (topN > -1)
-		m->bfmeSet3VJC("topN", topN);
+		((BfmeThingCIB *)m)->bfmeGoCIB("topN", (void *)topN);
 	if (periodType > -1)
-		m->bfmeSet3VJC("periodType", periodType);
+		((BfmeThingCIB *)m)->bfmeGoCIB("periodType", (void *)periodType);
 	if (periodsPast > -1)
-		m->bfmeSet3VJC("periodsPast", periodsPast);
+		((BfmeThingCIB *)m)->bfmeGoCIB("periodsPast", (void *)periodsPast);
 }
