@@ -45,7 +45,7 @@ private:
 	BfmeWaterTriple m_radarColor;				// +0x20
 	char m_additiveBlend;						// +0x2C
 	char m_bfmePad2D[3];
-	AsciiString m_bfmeName;					// +0x30
+	AsciiString m_standingWaterTexture;					// +0x30
 	Int m_bfme34;						// +0x34
 	Int m_bfme38;						// +0x38
 	Int m_bfme3C;						// +0x3C
@@ -62,7 +62,7 @@ WaterTransparencySetting &WaterTransparencySetting::operator=(
 	m_skyboxTextureT = other.m_skyboxTextureT;
 	m_radarColor = other.m_radarColor;
 	m_additiveBlend = other.m_additiveBlend;
-	m_bfmeName = other.m_bfmeName;
+	m_standingWaterTexture = other.m_standingWaterTexture;
 	m_bfme34 = other.m_bfme34;
 	m_bfme38 = other.m_bfme38;
 	m_bfme3C = other.m_bfme3C;
