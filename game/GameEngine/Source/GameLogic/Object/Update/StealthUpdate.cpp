@@ -72,31 +72,6 @@
 #endif
 
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/StealthUpdateModuleDataCtorThunk.cpp
-// ??0StealthUpdateModuleData@@ present-unmatched
-StealthUpdateModuleData::StealthUpdateModuleData()
-{
-		//Added By Sadullah Nader
-		//Initialization(s) inserted
-		m_disguiseFX = NULL;
-    m_disguiseRevealFX = NULL;
-    //
-    m_stealthDelay		= UINT_MAX;
-    m_stealthLevel		= 0;
-    m_stealthSpeed		= 0.0f;
-    m_friendlyOpacityMin = 0.5f;
-    m_friendlyOpacityMax = 1.0f;
-    m_pulseFrames = 30;
-    m_teamDisguised		= false;
-    m_revealDistanceFromTarget = 0.0f;
-    m_orderIdleEnemiesToAttackMeUponReveal = false;
-    m_innateStealth   = true;
-    m_disguiseTransitionFrames = 0;
-    m_disguiseRevealTransitionFrames = 0;
-    m_blackMarketCheckFrames = 0;
-    m_enemyDetectionEvaEvent = EVA_Invalid;
-    m_ownDetectionEvaEvent = EVA_Invalid;
-    m_grantedBySpecialPower = FALSE;
-}
 
 
 //-------------------------------------------------------------------------------------------------
@@ -842,50 +817,6 @@ void StealthUpdate::markAsDetected(UnsignedInt numFrames)
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?disguiseAsObject@StealthUpdate@@ present-unmatched
-void StealthUpdate::disguiseAsObject( const Object *target )
-{
-	Object *self = getObject();
-	const StealthUpdateModuleData *data = getStealthUpdateModuleData();
-	if( target && target->getControllingPlayer() )
-	{
-    StealthUpdate* stealth = target->getStealth();
-		if( stealth && stealth->getDisguisedTemplate() )
-		{
-			m_disguiseAsTemplate				= stealth->getDisguisedTemplate();
-			m_disguiseAsPlayerIndex			= stealth->getDisguisedPlayerIndex();
-		}
-		else
-		{
-			m_disguiseAsTemplate				= target->getTemplate();
-			m_disguiseAsPlayerIndex			= target->getControllingPlayer()->getPlayerIndex();
-		}
-		
-		m_enabled										= true;
-		m_transitioningToDisguise		= true; //Means we are gaining disguise over time.
-		m_disguiseTransitionFrames	= data->m_disguiseTransitionFrames;
-		m_disguiseHalfpointReached  = false;
-
-		//Wake up so I can process!
-		setWakeFrame( getObject(), UPDATE_SLEEP_NONE );
-
-	}
-	else if( m_disguised )
-	{
-		m_disguiseAsTemplate				= NULL;
-		m_disguiseAsPlayerIndex			= 0;
-		m_disguiseTransitionFrames	= data->m_disguiseRevealTransitionFrames;
-		m_transitioningToDisguise		= false; //Means we are losing the disguise over time.
-		m_disguiseHalfpointReached  = false;
-	}
-
-	Drawable *draw = self->getDrawable();
-	if( draw && draw->isSelected() )
-	{
-		TheControlBar->markUIDirty();
-	}
-	
-}
 
 //-------------------------------------------------------------------------------------------------
 // Exact BFME changeVisualDisguise body: StealthUpdateChangeVisualDisguise.cpp.
