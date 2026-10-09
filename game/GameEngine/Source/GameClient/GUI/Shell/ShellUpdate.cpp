@@ -64,7 +64,7 @@ public:
 	virtual void slot0C();
 	virtual void slot10();
 	virtual void update();
-	void setGroup(AsciiString name);
+	void reverse(AsciiString groupName);
 };
 
 class Rva0051D690Shell
@@ -145,7 +145,7 @@ void Shell::update()
 			BfmeThingVMZ *display = (BfmeThingVMZ *)TheDisplay;
 			display->m_imageDrawActive = 1;
 			((BfmeThingVMZ *)TheDisplay)->bfmeGo2VMZ((Int)image, 0, 0, 0, 0x3F800000, 0x3F800000);
-			TheTransitionHandler->setGroup(AsciiString("FadeInGameMovie"));
+			TheTransitionHandler->reverse(AsciiString("FadeInGameMovie"));
 			TheTransitionHandler->update();
 		}
 		reinterpret_cast<Rva0051D690Shell *>(self)->restore();

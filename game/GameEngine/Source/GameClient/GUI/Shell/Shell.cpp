@@ -181,48 +181,6 @@ void Shell::reset( void )
 /** Update shell system cycle.  All windows are updated that are on the stack, starting
 	* with the top layout and progressing to the bottom one */
 //-------------------------------------------------------------------------------------------------
-// ?update@Shell@@ present-unmatched
-void Shell::update( void )
-{
-	static Int lastUpdate = timeGetTime();
-	static const Int shellUpdateDelay = 30;  // try to update 30 frames a second
-	Int now = timeGetTime();
-	
-	//
-	// we keep the shell updates fixed in time so that we can write consitent animation
-	// speeds during the screen update functions
-	//
-	if( now - lastUpdate >= ((1000.0f / shellUpdateDelay ) - 1) )
-	{
-
-		// run the updates for every window layout on the stack
-		for( Int i = m_screenCount - 1; i >= 0; i-- )
-		{
-
-			DEBUG_ASSERTCRASH( m_screenStack[ i ], ("Top of shell stack is NULL!\n") );
-			m_screenStack[ i ]->runUpdate( NULL );
-
-		}  // end for i
-		if(TheGlobalData->m_shellMapOn && m_shellMapOn &&m_background)
-		{
-			
-			m_background->destroyWindows();
-			m_background->deleteInstance();
-			m_background = NULL;
-			
-		}
-		
-		// Update the animate window manager
-		m_animateWindowManager->update();
-
-		m_schemeManager->update();
-
-		// mark last time we ran the updates
-		lastUpdate = now;
-
-	}  // end if
-
-}  // end update
 
 //-------------------------------------------------------------------------------------------------
 /** Find a screen via the .wnd script filename loaded */
