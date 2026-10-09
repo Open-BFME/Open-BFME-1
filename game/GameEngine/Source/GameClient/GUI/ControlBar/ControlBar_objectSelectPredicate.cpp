@@ -1,21 +1,23 @@
 // cl: /DNDEBUG /MD /EHsc
 
-// retail 0x004A6570, 71 bytes. Object* predicate: non-null, bfmeTailJB,
+// retail 0x004A6570, 71 bytes. Object* predicate: non-null, isLocallyControlled,
 // isMassSelectable, then a third thiscall; on success fires InGameUI vslot
 // +0x160 and returns true.
 
-class BfmeTargetJB
+// Callees (tools/callees.py 0x4A6570 71): ILT 0x1FF91 -> Object::isLocallyControlled,
+// ILT 0x1C03 -> Object::isMassSelectable, ILT 0x4039A -> 0x001C80F0 Rva001C80F0::value.
+class Rva001C80F0
 {
 public:
-	bool bfmeTailJB(void);
+	unsigned int value(void) const;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object : public BfmeTargetJB
+class Object
 {
 public:
 	bool isMassSelectable(void) const;
-	bool bfmeCheckC80F0(void);
+	bool isLocallyControlled(void) const;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
@@ -126,11 +128,11 @@ int ControlBar::objectSelectPredicate(Object *obj)
 {
 	if (obj)
 	{
-		if (obj->bfmeTailJB())
+		if (obj->isLocallyControlled())
 		{
 			if (obj->isMassSelectable())
 			{
-				if (!obj->bfmeCheckC80F0())
+				if (!(unsigned char)reinterpret_cast<const Rva001C80F0 *>(obj)->value())
 				{
 					TheInGameUI->slot160();
 					return 1;
