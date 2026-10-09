@@ -1,9 +1,8 @@
 // ?Rva009B6D80@@YAXPAURva009B6D80Context@@PBEPAEHIIPBI@Z
-// partial score=0.9785 date=2026-10-09
+// partial score=0.9986 date=2026-10-09
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 // MMX edge kernels with scalar threshold selection and variance accumulation.
-// Sum all eight variance words for each block.
 // cl: /O2 /Z7 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 struct Rva009B6D80Context
 {
@@ -14,6 +13,7 @@ struct Rva009B6D80Context
 static const unsigned short packedThree[4] = {3, 3, 3, 3};
 static const unsigned short packedFour[4] = {4, 4, 4, 4};
 
+// Open BFME 2: Code/GameEngine/Source/Common/Rva001CA000Vp6WideAccum.cpp
 void __cdecl Rva009B6D80(Rva009B6D80Context *context, const unsigned char *source,
     unsigned char *destination, int stride, unsigned int count, unsigned int start,
     const unsigned int *strength)
@@ -654,10 +654,11 @@ void __cdecl Rva009B6D80(Rva009B6D80Context *context, const unsigned char *sourc
         destinationWalk += 8;
     }
 
-    destinationWalk += 8 - stride * 8 - count * 8;
+    destinationWalk += 8 - ((unsigned int)stride << 3) - (count << 3);
     sourceWalk = destinationWalk;
-    --end;
-    for (index = start; index < end; ++index)
+    index = start;
+    end = count + index - 1;
+    for (; index < end;)
     {
         unsigned int value = strength[context->m_24[index + 1]];
         if (value > 3)
@@ -1329,6 +1330,7 @@ void __cdecl Rva009B6D80(Rva009B6D80Context *context, const unsigned char *sourc
             context->m_28[index + 1] += (unsigned int)rightLow[0] + rightLow[1] + rightLow[2] + rightLow[3]
                 + rightHigh[0] + rightHigh[1] + rightHigh[2] + rightHigh[3];
         }
+        ++index;
         sourceWalk += 8;
         destinationWalk += 8;
     }
