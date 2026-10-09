@@ -1,7 +1,7 @@
 // ?rva002850A0@Rva002850A0@@QAEXXZ
-// partial score=0.232 date=2026-09-23
-// Address-derived method view; caller and receiver ABI are verified, owner is not.
+// partial score=0.2839 date=2026-10-09
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/bfmekindof /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+
 // stlport
 
 #define _STLP_USE_STATIC_LIB 1
@@ -9,20 +9,24 @@
 #define BFME_STLP_NODE_ALLOC 1
 #define __PLACEMENT_VEC_NEW_INLINE
 #include <vector>
-#include "PreRTS.h"
-#include "Common/KindOf.h"
+#include "Lib/BaseType.h"
+#include "Common/BitFlags.h"
+extern const BitFlags<192> KINDOFMASK_NONE;
 
 class Object;
+class Rva002850A0;
+struct Coord3D;
 class Player;
 class FXList;
 
-class Object
-{
-public:
-	Player *getControllingPlayer(void) const;
-	void *unidentified_001BFE20(void) const;
-	void bfmeRefreshPartitionCells(void);
-};
+#define OBJECT_TU_MEMBERS \
+	Player *getControllingPlayer(void) const; \
+	void *unidentified_001BFE20(void) const; \
+	void updateShroudNow(void); \
+	void bfmeRefreshPartitionCells(void) { updateShroudNow(); } \
+	const Coord3D *getPosition() const \
+	{ return (const Coord3D *)&m_cachedPos; }
+#include "../../../../game/GameEngine/Source/GameLogic/Object/object.h"
 
 class FXList
 {
@@ -44,15 +48,18 @@ public:
 class PartitionFilterPlayerAffiliation : public PartitionFilter
 {
 public:
-	explicit PartitionFilterPlayerAffiliation(Player *player)
-		: m_player(player), m_match(true), m_affiliation(2) {}
+	PartitionFilterPlayerAffiliation(const Player *player, UnsignedInt whichAffiliation, Bool match)
+		: m_player(player), m_affiliation(whichAffiliation), m_match(match) {}
+protected:
 	virtual ~PartitionFilterPlayerAffiliation() {}
+	friend class Rva002850A0;
+public:
 	virtual Bool allow(Object *);
 	virtual Int getPlayerMask();
 
-	Player *m_player;
+	const Player *m_player;
 	Bool m_match;
-	Int m_affiliation;
+	UnsignedInt m_affiliation;
 };
 
 typedef BitFlags<192> Rva002850A0KindOfMask;
@@ -64,7 +71,10 @@ public:
 		const Rva002850A0KindOfMask &mustBeSet,
 		const Rva002850A0KindOfMask &mustBeClear)
 		: m_mustBeSet(mustBeSet), m_mustBeClear(mustBeClear) {}
+protected:
 	virtual ~PartitionFilterAcceptByKindOf() {}
+	friend class Rva002850A0;
+public:
 	virtual Bool allow(Object *);
 
 	Rva002850A0KindOfMask m_mustBeSet;
@@ -89,7 +99,11 @@ struct BfmeWideResult
 	Rva002850A0Payload *value;
 	BfmeWideResult();
 	BfmeWideResult(const BfmeWideResult &);
-	~BfmeWideResult();
+	~BfmeWideResult()
+	{
+		if (--value->m_refCount == 0)
+			delete value;
+	}
 	Object *next(Object *&object)
 	{
 		if (value->m_cursor == value->m_entries.end())
@@ -106,10 +120,11 @@ private:
 	void *m_source;
 
 public:
-	BfmeWideResult bfmeForwardWideC(int, int, int, int, int);
+	BfmeWideResult bfmeForwardWideC(int, float, int, int, int);
 };
 
-extern BfmeWideForwardC *ThePartitionManager;
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
 
 class Rva002850A0Interface
 {
@@ -143,7 +158,7 @@ public:
 	virtual void slot150(void) = 0;
 	virtual void slot154(void) = 0;
 	virtual UnsignedInt slot158(void) = 0;
-	virtual Object *slot15c(Object *) = 0;
+	virtual Object *slot15c(const Matrix3D *) = 0;
 };
 
 struct Rva002850A0ModuleData
@@ -153,7 +168,7 @@ struct Rva002850A0ModuleData
 	unsigned char m_38;
 	Bool m_continue;
 	unsigned char m_3a_to3c[2];
-	UnsignedInt m_rangeBits;
+	Real m_rangeBits;
 };
 
 class Rva002850A0
@@ -163,7 +178,7 @@ public:
 
 private:
 	void *m_vtable;
-	Rva002850A0ModuleData *m_moduleData;
+	const Rva002850A0ModuleData *m_moduleData;
 	Object *m_object;
 };
 
@@ -173,17 +188,13 @@ void Rva002850A0::rva002850A0(void)
 	if (player == 0)
 		return;
 
-	Rva002850A0ModuleData *moduleData = m_moduleData;
-	PartitionFilterPlayerAffiliation playerFilter(player);
-	Rva002850A0KindOfMask kindMask;
-	kindMask.set(172);
-	PartitionFilterAcceptByKindOf kindFilter(kindMask,
-		*reinterpret_cast<const Rva002850A0KindOfMask *>(&KINDOFMASK_NONE));
-
-	BfmeWideResult iterator = ((BfmeWideForwardC *)ThePartitionManager)->
-		bfmeForwardWideC((int)((unsigned char *)m_object + 0x38),
-			(int)moduleData->m_rangeBits, 0,
-			(int)kindFilter.link(&playerFilter), 1);
+	const Rva002850A0ModuleData *moduleData = m_moduleData;
+	BfmeWideResult iterator = ((BfmeWideForwardC *)ThePartitionManager)->bfmeForwardWideC(
+		(int)m_object->getPosition(), moduleData->m_rangeBits, 0,
+		(int)PartitionFilterAcceptByKindOf(
+			Rva002850A0KindOfMask(Rva002850A0KindOfMask::kInit, 108),
+			*reinterpret_cast<const Rva002850A0KindOfMask *>(&KINDOFMASK_NONE)).link(
+				&PartitionFilterPlayerAffiliation(player, 2, true)), 1);
 	Object *candidate;
 	while (iterator.next(candidate))
 	{
@@ -197,23 +208,23 @@ void Rva002850A0::rva002850A0(void)
 
 		const UnsignedInt first = interfaceView->slot14c();
 		const UnsignedInt second = interfaceView->slot158();
-		if (second >= first)
+		if (second < first)
+		{
+			Object *updated = interfaceView->slot15c((const Matrix3D *)&candidate->m_transform);
+			if (updated != 0)
+			{
+				updated->bfmeRefreshPartitionCells();
+				FXList *effect = moduleData->m_effect;
+				if (effect != 0)
+					FXList::doFXObj(effect, updated, 0);
+			}
+			if (!moduleData->m_continue)
+				break;
+		}
+		else
 		{
 			if (interfaceView->slot148() > 1)
 				interfaceView->slot144(1);
-			continue;
 		}
-
-		Object *updated = interfaceView->slot15c(
-			(Object *)((unsigned char *)candidate + 8));
-		if (updated != 0)
-		{
-			updated->bfmeRefreshPartitionCells();
-			FXList *effect = moduleData->m_effect;
-			if (effect != 0)
-				FXList::doFXObj(effect, updated, 0);
-		}
-		if (!moduleData->m_continue)
-			break;
 	}
 }

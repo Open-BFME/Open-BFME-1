@@ -1,0 +1,69 @@
+# RVA 0x002850A0: corrected filter lifetime attempt
+
+The body remains a partial reconstruction under `?rva002850A0@Rva002850A0@@QAEXXZ`. The saved body is `targets/game/reverse/attempts/0x002850a0.cpp`. No function row or symbol pin is changed. The tested base revision is `8c0324f884629de45a838529af467c6cb668331e`; all trial sources and unedited command outputs are retained in `build/target-002850a0/`.
+
+## Retry hypothesis and evidence
+
+The earlier callee blocker is partly resolved by the current matched `Object::getControllingPlayer` row and its canonical declaration in `object.h`. The actual retail call reaches ILT `0x00020824`, then the complete body at `0x001BE3F0`, then ILT `0x0002369B` and the complete `Team` accessor at `0x000EC8F0`. Both accessor bodies return a pointer in EAX without stack arguments. The saved attempt's private `Object` declaration is replaced by the shared header. Canonical declarations are also used for `updateShroudNow` and `ThePartitionManager`.
+
+The new source hypothesis is that the two partition filters are temporary objects destroyed at the end of iterator initialization, and that iterator release is visible to the compiler. The retail base-vptr stores immediately after the query and the five-state unwind map support this lifetime. The hypothesis would be refuted if complete cleanup decodes showed different receiver offsets or owned fields, or if an isolated constructor or destructor compiled to a different instruction shape. Those checks support the lifetime; they do not resolve the remaining main-body scheduling mismatch.
+
+## Boundary, receiver and calls
+
+The complete target decode covers the assigned extent, ends with RET at `0x0028527E`, and has no outgoing conditional branch or external tail jump. The null-player path bypasses the loop's extra register saves. The next instructions are alignment padding. `retail-decoded.txt` and `checked-target.txt` retain the decode and direct-call inventory.
+
+The complete matched `BannerCarrierUpdate::update` caller at `0x00285300` adjusts ECX by `-0x10` at its call through ILT `0x0003767D`, which jumps to this target. It passes no stack arguments and ignores EAX. Its source and the matched constructor establish module data at receiver `+4` and the owning `Object` at `+8`. This establishes the BannerCarrier callback context, but no original method name is proven. The inherited address-derived method name is retained. See `caller-routes.txt`, `retail-decoded.txt` and `checked-caller.txt`.
+
+The actual query wrapper at `0x009F2960` was decoded completely and compared with `BfmeWideResultForward.cpp`. It forwards through its member at `+0x0C`, receives hidden return storage followed by a position pointer, float radius, integer order, filter pointer and integer flag, returns the hidden-storage address, and uses RET 24. Its underlying query at `0x009F63D0` uses RET 28. The candidate retains the existing wrapper name and uses the float argument declaration. Making this wrapper visible reproduced the wrapper's instruction shape but did not improve the target. The complete `PartitionFilter::link` decode has two return paths, links through `+4`, returns the original receiver and uses RET 4. A visible C++ link trial did not match that helper and was rejected. See `helper-decoded.txt`, `checked-wrapper.txt`, `checked-link.txt`, `probe-018-helper.log` and `probe-025-helper.log`.
+
+The complete Object accessor at `0x001BFE20` reads the contain interface at `+0x1FC` and tail-calls virtual slot `+0x68`. One independently traced implementation (n=1), reached through HordeContain's installed secondary vtable, returns its interface at root `+0xE4`. The interface table supplies the target's integer setter and getters at slots `+0x144`, `+0x148`, `+0x14C` and `+0x158`, and a pointer-returning method with one pointer argument at `+0x15C`. Their complete bodies are retained; the setter and the last method use RET 4. The count method delegates to slots `+0x150` and `+0x154`; those implementation bodies were not decoded and remain unverified. The proposed slot view describes the witnessed calls without assigning semantic member names. See `horde-getter.txt`, `indirect-decoded-complete.txt`, `indirect-decoded.txt` and the corresponding `checked-interface-*.txt` files. Only the independently traced Horde table in `indirect-slots.json` is evidence; the second table in that screening output is not used.
+
+The `+0x15C` implementation forwards its argument to the complete Object transform body at `0x001C16A0`, which forwards it through ILT `0x000361CE` to the complete matched Thing body at `0x00132200`. The latter copies all twelve dwords at argument offsets `0..0x2C` into receiver offsets `8..0x34`. This supports the canonical `const Matrix3D *` view and the target's Object `+8` argument. The Object transform body also has indirect calls whose target implementations are not fully audited here. The FX helper's complete body at `0x00065DE0` accepts three pointer arguments with caller cleanup and returns without a value consumed by this target. See `transform-and-fx-abi.txt`, `tail-and-matrix-copy.txt`, `checked-transform.txt`, `checked-matrix-copy.txt` and `checked-fx.txt`.
+
+## Mask and value type
+
+The saved bit index 172 is refuted by decoded stack arithmetic. At target offset `+0x68`, the mask pointer is formed after one push as `[esp+0x28]`. At `+0x81`, the nonzero word is stored after two pushes as `[esp+0x38]`. Relative to the same pre-push stack pointer these are `+0x24` and `+0x30`. The nonzero word is therefore word three, with value `0x1000`, giving bit 108. `check_mask.py` asserts all six words and retains its trace in `mask-proof.json`. A differing normalized mask pointer or intervening write would refute this conclusion. Earlier trials retaining bit 172 are semantically rejected regardless of their higher diagnostic similarity.
+
+The complete result constructor at `0x009F39F0` initializes vector begin, finish and end-storage at payload offsets `0`, `4` and `8`, cursor at `0x0C` and reference count at `0x10`. The complete append helper at `0x009F3C00` initializes both fields of each value, advances finish by eight, and writes its two arguments into those fields. Its actual overflow helper at `0x009F36F0` copies both field zero and field four in each copy loop. The complete query at `0x009F4130` supplies an Object pointer and float distance bits. The target itself treats field zero as an Object pointer and advances the cursor by eight. These field reads and writes support `Rva002850A0Entry { Object *m_object; Real m_distance; }`; allocation size and template spelling are not the type evidence. See `helper-decoded.txt`, `value-and-routes.txt`, `copy-decoded.txt`, `checked-result-ctor.txt`, `checked-append.txt`, `checked-copy.txt` and `checked-query.txt`.
+
+## Exception cleanup and ownership
+
+The retail handler at `0x00C10CD8` uses FuncInfo at `0x00DFFFC0`. Its predecessor states are `0 -> -1`, `1 -> 0`, `2 -> 1`, `3 -> -1` and `4 -> 3`. Actions adjust ECX to frame offsets `-0x70` for player affiliation, `-0x44` for kind filtering and `-0x74` for iterator release. The candidate emits the same predecessor states and receiver adjustments. `eh-retail.log` and `eh-object-024.txt` retain both maps and all compiled relocation names.
+
+Both filter cleanup bodies only install the base vptr. The complete iterator release at `0x000C5FC0` decrements the reference count at `+0x10`, releases the vector on zero, then deletes the payload. Its vector cleanup routes through ILT `0x00030841` to `0x000C4CF0`; that complete body checks vector storage, computes its byte count from the eight-byte stride and selects operator delete or node-allocator deallocation. The elements have no nontrivial cleanup. The node allocator body was decoded through its return. See `iterator-vector-cleanup.txt`, `helper-decoded.txt`, `checked-iterator-release.txt`, `checked-vector-base.txt`, `checked-player-dtor.txt` and `checked-kind-dtor.txt`.
+
+## Measurements and rejected shapes
+
+Each measurement below is one compiler probe of the retained source (n=1). Sizes and differences come from raw logs, with relocations masked by the probe. Repository bank quality is `max(0, 1 - (different bytes + 2 * absolute size error) / retail size)`; it is a diagnostic distance, not evidence of identity or correctness.
+
+| Source or experiment | Compiled bytes | Retail bytes | Different non-relocation bytes | First difference | Bank quality | Raw output |
+| --- | ---: | ---: | ---: | --- | ---: | --- |
+| Saved body, paths repaired | 417 | 479 | 306 | +0x17 | 0.1023 | `baseline-raw.log` |
+| Temporary filters only | 414 | 479 | 311 | +0x2A | 0.0793 | `probe-001.log` |
+| Inline release | 476 | 479 | 364 | +0x2A | 0.2276 | `probe-002.log` |
+| Loop branch order, still wrong mask | 477 | 479 | 280 | +0x2A | 0.4071 | `probe-003.log` |
+| Canonical header and getter, still wrong mask | 477 | 479 | 278 | +0x2A | 0.4113 | `probe-007.log` |
+| Duplicate for-loop next, rejected | 517 | 479 | 390 | +0x1E | 0.0271 | `probe-012.log` |
+| Named mask local, still wrong mask | 478 | 479 | 319 | +0x2A | 0.3299 | `probe-016.log` |
+| Correct bit 108 | 479 | 479 | 343 | +0x32 | 0.2839 | `probe-019.log` |
+| Final protected-destructor body | 479 | 479 | 343 | +0x32 | 0.2839 | `probe-024.log`, `probe-bank-input.log` |
+
+The mechanically generated EH choices and finite loop choices did not change the then-current target result; the choices, exact sources and raw results are retained in `eh-choices.json`, `eh-sweep-raw.log`, `family-sweep.log` and their referenced `build/shape_search/` directories. Radius typing, canonical calls, Matrix3D typing, release reloads, scoped loops, a positive entry guard and visible wrapper source did not resolve the mismatch. With the corrected mask, nothrow link, nothrow filter copy, native affiliation argument order, const module data, protected destructor access and visible link also left the target result unchanged. Trials and raw outputs are individually numbered; compile failures for private-header conflicts were corrected before drawing byte conclusions.
+
+Separate helper probes produced exact instruction shapes modulo relocations: the kind-filter constructor (`probe-filter-helper.log`), iterator destructor (`probe-result-dtor.log`), vector cleanup (`probe-vector-cleanup.log`) and both protected filter destructors (`probe-024-player-dtor.log`, `probe-024-kind-dtor.log`). These results do not establish complete relocated helper identities, and no helper was added to the ledger.
+
+## Remaining blockers and reopening condition
+
+The final target has thirteen shifted relocation sites. The first mismatch is an early EBP save at `+0x32`, where retail begins filter initialization. Retail saves EBP only at `+0xCF`. This changes the initialization stack displacements and EH state-store encoding. The candidate also schedules the position adjustment before the link call, while retail schedules it later, and restores EBP and EBX before payload cleanup. The scoped byte gate fails for this candidate; its negative-address callee diagnostics are consequences of shifted relocation operands and must not be interpreted as real retail targets. Raw outputs are `scoped-gate.log` and the final bank-path verification `scoped-gate-banked.log`.
+
+A future exact landing would also need independently justified cleanup bindings for `??1PartitionFilterAcceptByKindOf@@MAE@XZ`, `??1BfmeWideResult@@QAE@XZ` and `??1?$_Vector_base@URva002850A0Entry@@V?$allocator@URva002850A0Entry@@@_STL@@@_STL@@QAE@XZ`. The last name is in the paused STL family; no row or pin was added for it. The existing generated vector row's `Gen_p8cd` type spelling is not independent type evidence. Unverified indirect implementations and relocated EH cleanup targets remain checks to complete before any exact recovery claim.
+
+Reopen with evidence for a source lifetime or declaration that delays the EBP save and position adjustment while retaining the proven temporary cleanup map, or with the approved STL header transition and independently verified cleanup bindings. An unchanged register spelling experiment or a return to bit 172 is not justified by these measurements. The preferred bank keeps the corrected semantics even though some rejected wrong-mask trials have higher byte similarity.
+
+## Final checks
+
+`check-csv-final.log`, `pin-consistency-full.log` and `class-gate-banked.log` record passing CSV, pin consistency and bank class checks. The direct file comparison using `name_regression.regressions` reports no descriptive-name regressions in `final-checks.log`; the command-line tool in this revision accepts Git revisions rather than the file arguments in the worker brief, and its unsuccessful file invocation is retained in `name-regression.log`. `final-checks.log` also verifies exactly one appended verdict, byte preservation of the preceding attempt log, the original bank's CRLF convention and the absence of source, ledger, pin or shared-header edits. The bank measurement's unedited probe streams and exact measured sources are retained as `bank-measure-1.*` and `bank-measure-2.*`.
+
+The default Git whitespace check flags the required CRLF ending on the appended verdict. The check with command-scoped `cr-at-eol` passes; both results are retained in `diff-check-default.log` and `diff-check-crlf.log`. No Git configuration was written and the verdict's required line ending was preserved.
+
+The earlier `find_declared_unmatched` trial check reports zero matched ledger rows for the candidate in `declared-check.log`. That condition is unresolved because this is a bank, not a landing; no whitelist was added. A full gate was not run because the only changes are the bank, immutable attempts, one verdict and this evidence note. All started exec sessions have completed, and no monitor or service was launched.
