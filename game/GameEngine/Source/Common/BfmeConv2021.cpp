@@ -1,4 +1,14 @@
-extern "C" void *bfmeVftTF[];
+// Retail VA0111936C has three slots; the non-code zero dword at
+// VA01119378 ends its three code pointers. Preserve retail's ILT pointers.
+extern "C" void __identifier("?j_0001fb77@@YAXXZ")();
+extern "C" void __identifier("?Execute@ThreadClass@@UAEXXZ")();
+extern "C" void __identifier("?j_00049030@@YAXXZ")();
+extern "C" void *bfmeVftTF[3] =
+{
+    (void *)__identifier("?j_0001fb77@@YAXXZ"),
+    (void *)__identifier("?Execute@ThreadClass@@UAEXXZ"),
+    (void *)__identifier("?j_00049030@@YAXXZ")
+};
 
 class MutexClass
 {
