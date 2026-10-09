@@ -1,15 +1,18 @@
 // cl: /DNDEBUG /MD /EHsc
 
-class Rva000F92B0Product
+class BfmeUseB980
 {
 public:
-	void *evaluate(void *argument, void *context);
+	void *bfmeApply980B(int argument, int context);
 };
 
-class Rva000F92B0Factory
+class AsciiString;
+class ThingTemplate;
+
+class BfmeThingFactory
 {
 public:
-	Rva000F92B0Product *find(void *key);
+	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
 // Retail global 0x012EF1D8 is EA's ThingFactory singleton, defined once in
@@ -30,8 +33,8 @@ private:
 
 void *Rva000F92B0FactoryLookup::evaluate(void *argument)
 {
-	Rva000F92B0Product *product = ((Rva000F92B0Factory *)TheThingFactory)->find(this);
+	BfmeUseB980 *product = (BfmeUseB980 *)((BfmeThingFactory *)TheThingFactory)->findTemplate(*reinterpret_cast<const AsciiString *>(this));
 	if (product)
-		return product->evaluate(argument, m_context);
+		return product->bfmeApply980B((int)argument, (int)m_context);
 	return 0;
 }
