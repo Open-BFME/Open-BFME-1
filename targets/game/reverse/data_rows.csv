@@ -864,3 +864,5 @@ _g_bfmeV1159,0x00D26B14,rva,20,.rdata,game/GameEngine/Source/Common/BfmeConv1159
 ?g_bfmeDefaultCU@@3VBfmeBlockCU@@A,0x012B4FF8,va,36,.data,game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp,matched,targets/game/reverse/identity_evidence/012b4ff8-reset-blocks.md,gpt-6.1-sol
 ?g_bfmeCurrentCU@@3VBfmeBlockCU@@A,0x012B501C,va,36,.data,game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp,matched,targets/game/reverse/identity_evidence/012b4ff8-reset-blocks.md,gpt-6.1-sol
 ?g_bfmeDirtyCU@@3_NA,0x012F13FC,va,1,.data,game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp,matched,targets/game/reverse/identity_evidence/012b4ff8-reset-blocks.md,gpt-6.1-sol
+?g_bfmeTableSrcBQ@@3PAHA,0x012B5040,va,96,.data,game/GameEngine/Source/Common/Bfme5TinySix2.cpp,matched,targets/game/reverse/identity_evidence/012b5040-table-pair.md,gpt-6.1-sol
+?g_bfmeTableDstBQ@@3PAHA,0x012B50A0,va,96,.data,game/GameEngine/Source/Common/Bfme5TinySix2.cpp,matched,targets/game/reverse/identity_evidence/012b5040-table-pair.md,gpt-6.1-sol
