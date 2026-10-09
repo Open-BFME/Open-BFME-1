@@ -239,127 +239,6 @@ GameClient::GameClient()
 //std::vector<std::string>	preloadTextureNamesGlobalHack2;
 
 //-------------------------------------------------------------------------------------------------
-// ??1GameClient@@ present-unmatched
-GameClient::~GameClient()
-{
-#ifdef PERF_TIMERS
-	delete TheGraphDraw;
-	TheGraphDraw = NULL;
-#endif
-
-	if (TheDrawGroupInfo) 
-	{
-		delete TheDrawGroupInfo;
-		TheDrawGroupInfo = NULL;
-	}
-
-	// clear any drawable TOC we might have
-	m_drawableTOC.clear();
-
-	//DEBUG_LOG(("Preloaded texture files ------------------------------------------\n"));
-	//for (Int oog=0; oog<preloadTextureNamesGlobalHack2.size(); ++oog)
-	//{
-	//	DEBUG_LOG(("%s\n", preloadTextureNamesGlobalHack2[oog]));
-	//}
-	//DEBUG_LOG(("------------------------------------------------------------------\n"));
-	//for (oog=0; oog<preloadTextureNamesGlobalHack.size(); ++oog)
-	//{
-	//	DEBUG_LOG(("%s\n", preloadTextureNamesGlobalHack[oog]));
-	//}
-	//DEBUG_LOG(("End Texture files ------------------------------------------------\n"));
-	if(TheCampaignManager)
-		delete TheCampaignManager;
-	TheCampaignManager = NULL;
-
-	// destroy all Drawables
-	Drawable *draw, *nextDraw;
-	for( draw = m_drawableList; draw; draw = nextDraw )
-	{
-		nextDraw = draw->getNextDrawable();
-		destroyDrawable( draw );
-	}
-	m_drawableList = NULL;
-
-	// delete the ray effects
-	delete TheRayEffects;
-	TheRayEffects = NULL;
-
-	// delete the hot key manager
-	delete TheHotKeyManager;
-	TheHotKeyManager = NULL;
-
-	// destroy the in-game user interface
-	delete TheInGameUI;
-	TheInGameUI = NULL;
-
-	delete TheChallengeGenerals;
-	TheChallengeGenerals = NULL;
-
-	// delete the shell
-	delete TheShell;
-	TheShell = NULL;
-
-	delete TheIMEManager;
-	TheIMEManager = NULL;
-
-	// delete window manager
-	delete TheWindowManager;
-	TheWindowManager = NULL;
-
-	// delete the font library
-	TheFontLibrary->reset();
-	delete TheFontLibrary;
-	TheFontLibrary = NULL;
-
-	delete TheMouse;
-	TheMouse = NULL;
-
-	///@todo :  TheTerrainVisual used to be the first thing destroyed.
-	//I had to put in here so that drawables free their track marks before
-	//the terrain visual deletes the track laying system. MW
-
-	// destroy the terrain visual representation
-	delete TheTerrainVisual;
-	TheTerrainVisual = NULL;
-
-	// destroy the display
-	delete TheDisplay;
-	TheDisplay = NULL;
-
-	delete TheHeaderTemplateManager;
-	TheHeaderTemplateManager = NULL;
-	
-	delete TheLanguageFilter;
-	TheLanguageFilter = NULL;
-
-	delete TheVideoPlayer;
-	TheVideoPlayer = NULL;
-
-	// destroy all translators
-	for( Int i = 0; i < m_numTranslators; i++ )
-		TheMessageStream->removeTranslator( m_translators[ i ] );	
-	m_numTranslators = 0;
-	m_commandTranslator = NULL;
-
-	delete TheAnim2DCollection;
-	TheAnim2DCollection = NULL;	
-
-	delete TheMappedImageCollection;
-	TheMappedImageCollection = NULL;	
-	
-	delete TheKeyboard;
-	TheKeyboard = NULL;
-
-	delete TheDisplayStringManager;
-	TheDisplayStringManager = NULL;
-
-	delete TheEva;
-	TheEva = NULL;
-
-	delete TheSnowManager;
-	TheSnowManager = NULL;
-
-}  // end ~GameClient
 
 //-------------------------------------------------------------------------------------------------
 /** Initialize resources for the game client */
@@ -926,25 +805,6 @@ void GameClient::update( void )
 /** -----------------------------------------------------------------------------------------------
  * Call the given callback function for each object contained within the given region.
  */
-// ?iterateDrawablesInRegion@GameClient@@ present-unmatched
-void GameClient::iterateDrawablesInRegion( Region3D *region, GameClientFuncPtr userFunc, void *userData )
-{
-	Drawable *draw, *nextDrawable;
-
-	for( draw = m_drawableList; draw; draw=nextDrawable )
-	{
-		nextDrawable = draw->getNextDrawable();
-
-		Coord3D pos = *draw->getPosition();
-		if( region == NULL ||
-			  (pos.x >= region->lo.x && pos.x <= region->hi.x &&
-			   pos.y >= region->lo.y && pos.y <= region->hi.y &&
-				 pos.z >= region->lo.z && pos.z <= region->hi.z) )
-		{
-			(*userFunc)( draw, userData );
-		}
-	}
-}
 
 /**Helper function to update fake GLA structures to become visible to certain players.
 We should only call this during critical moments, such as changing teams, changing to
@@ -970,37 +830,6 @@ void GameClient::updateFakeDrawables(void)
 /** -----------------------------------------------------------------------------------------------
  * Destroy the drawable immediately.
  */
-// ?destroyDrawable@GameClient@@ present-unmatched
-void GameClient::destroyDrawable( Drawable *draw )
-{
-
-	// remove any notion of the Drawable in the in-game user interface
-	TheInGameUI->disregardDrawable( draw );
-
-	// remove from the master list
-	draw->removeFromList(&m_drawableList);
-
-	//
-	// because drawables and objects are tightly coupled, not only MUST we maintain
-	// our links in all instances, but it is NECESSARY for the client to actually
-	// modify data in the logic, that is the pointer in an object to *this* drawable
-	//
-	Object *obj = draw->getObject();
-	if( obj )
-	{
-
-		DEBUG_ASSERTCRASH( obj->getDrawable() == draw, ("Object/Drawable pointer mismatch!\n") );
-		obj->friend_bindToDrawable( NULL );
-
-	}  // end if
-
-	// remove the drawable from our hash of drawables
-	removeDrawableFromLookupTable( draw );
-
-	// free storage
-	draw->deleteInstance();
-
-}
 
 // ------------------------------------------------------------------------------------------------
 /** Add drawable to lookup table for fast id searching */
@@ -1028,19 +857,6 @@ void GameClient::addDrawableToLookupTable(Drawable *draw )
 /** Remove drawable from lookup table of fast id searching */
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameClient/GameClientDrawableLookupTable.cpp
-// ?removeDrawableFromLookupTable@GameClient@@ present-unmatched
-void GameClient::removeDrawableFromLookupTable( Drawable *draw )
-{
-
-	// sanity
-	if( draw == NULL )
-		return;
-
-	// remove from table
-//	m_drawableHash.erase( draw->getID() );
-	m_drawableVector[ draw->getID() ] = NULL;
-
-}  // end removeDrawableFromLookupTable
 
 //-------------------------------------------------------------------------------------------------
 /** Load a map into the game interface */
@@ -1377,17 +1193,6 @@ void GameClient::preloadAssets( TimeOfDay timeOfDay )
 // ------------------------------------------------------------------------------------------------
 /** Given a string name, find the drawable TOC entry (if any) associated with it */
 // ------------------------------------------------------------------------------------------------
-// ?findTOCEntryByName@GameClient@@ present-unmatched
-GameClient::DrawableTOCEntry *GameClient::findTOCEntryByName( AsciiString name )
-{
-
-	for( DrawableTOCListIterator it = m_drawableTOC.begin(); it != m_drawableTOC.end(); ++it )
-		if( (*it).name == name )
-			return &(*it);
-
-	return NULL;
-
-}  // end findTOCEntryByname
 
 // ------------------------------------------------------------------------------------------------
 /** Given a drawable TOC identifier, find the drawable TOC if any */
@@ -1429,89 +1234,6 @@ static Bool shouldSaveDrawable(const Drawable* draw)
 // ------------------------------------------------------------------------------------------------
 /** Xfer drawable table of contents */
 // ------------------------------------------------------------------------------------------------
-// ?xferDrawableTOC@GameClient@@ present-unmatched
-void GameClient::xferDrawableTOC( Xfer *xfer )
-{
-
-	// version
-	XferVersion currentVersion = 1;
-	XferVersion version = currentVersion;
-	xfer->xferVersion( &version, currentVersion );
-
-	// clear our current table of contents
-	m_drawableTOC.clear();
-
-	// xfer the table
-	UnsignedInt tocCount = 0;
-	if( xfer->getXferMode() == XFER_SAVE )
-	{
-		AsciiString templateName;
-
-		// generate a new TOC based on the drawables that are in the map
-		for( Drawable *draw = getDrawableList(); draw; draw = draw->getNextDrawable() )
-		{
-			if (!shouldSaveDrawable(draw))
-				continue;
-
-			// get the name we're working with
-			templateName = draw->getTemplate()->getName();
-
-			// if is this drawable name already in the TOC, skip it
-			if( findTOCEntryByName( templateName ) != NULL )
-				continue;
-			
-			// add this entry to the TOC
-			addTOCEntry( draw->getTemplate()->getName(), ++tocCount );
-
-		}  // end for obj
-
-		// xfer entries in the TOC
-		xfer->xferUnsignedInt( &tocCount );
-
-		// xfer each TOC entry
-		DrawableTOCListIterator it;
-		DrawableTOCEntry *tocEntry;
-		for( it = m_drawableTOC.begin(); it != m_drawableTOC.end(); ++it )
-		{
-
-			// get this toc entry
-			tocEntry = &(*it);
-
-			// xfer the name
-			xfer->xferAsciiString( &tocEntry->name );
-
-			// xfer the paired id
-			xfer->xferUnsignedShort( &tocEntry->id );
-
-		}  // end for
-
-	}  // end if
-	else
-	{
-		AsciiString templateName;
-		UnsignedShort id;
-
-		// how many entries are we going to read
-		xfer->xferUnsignedInt( &tocCount );
-
-		// read all the entries
-		for( UnsignedInt i = 0; i < tocCount; ++i )
-		{
-
-			// read the name
-			xfer->xferAsciiString( &templateName );
-
-			// read the id
-			xfer->xferUnsignedShort( &id );
-			
-			// add this to the TOC
-			addTOCEntry( templateName, id );
-					
-		}  // end for i
-
-	}  // end else
-
-}  // end xferDrawableTOC
 
 // ------------------------------------------------------------------------------------------------
 /** Xfer method for Game Client
@@ -1753,21 +1475,6 @@ void GameClient::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@GameClient@@ present-unmatched
-void GameClient::loadPostProcess( void )
-{
-
-	//
-	// due to the fact that during the load process we have called newDrawable for drawables
-	// without objects, and then overwrote their ids with data from the save file, our allocater
-	// id may be far higher than it needs to be.  We'll pull it back down as low as we can
-	//
-	Drawable *draw;
-	for( draw = getDrawableList(); draw; draw = draw->getNextDrawable() )
-		if( draw->getID() >= m_nextDrawableID )
-			m_nextDrawableID = (DrawableID)((UnsignedInt)draw->getID() + 1);
-
-}  // end loadPostProcess
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */
