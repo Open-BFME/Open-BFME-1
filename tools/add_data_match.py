@@ -38,6 +38,29 @@ def row_text(row):
     return out.getvalue()
 
 
+def address_token(name):
+    """The bare address-spelled global a mangled data name defines
+    (`?g_Va012BA084@@3GA` -> `g_Va012BA084`), else None."""
+    import hatch_counters
+    if name.startswith("?"):
+        bare = name[1:].split("@", 1)[0]
+    else:
+        bare = name[1:] if name.startswith("_") else name
+    return bare if hatch_counters.ADDR_GLOBAL.fullmatch(bare) else None
+
+
+def admit_address_global(source, name):
+    """After a verified write: admit this row's address-spelled global in the
+    escape-hatch register (tools/hatch_counters.py) as a tool allowance. Only
+    that one token; any other address global in the file stays counted growth."""
+    import hatch_counters
+    token = address_token(name)
+    if token is None:
+        return None
+    return hatch_counters.admit(source, "add_data_match: verified data row names its address",
+                                tokens={token})
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("name", help="the COFF symbol the source defines (mangled)")
@@ -90,6 +113,7 @@ def main(argv=None):
     if not ok:
         raise SystemExit(f"add_data_match: {args.name} does not verify: {message}")
     path.write_bytes(candidate)
+    admit_address_global(row["source"], args.name)
     print(f"add_data_match: {args.name} -> {row['source']}: {message}")
     return 0
 
