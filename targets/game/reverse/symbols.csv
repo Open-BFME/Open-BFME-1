@@ -90956,3 +90956,6 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ?d_00486850@@YAXXZ,0x00486850,legacy address-only compatibility pin for retired dump; source identity is Rva00486850
 ??0ImageCollection@@QAE@XZ,0x005D30E0,canonical Image.cpp object provider; GameClient init calls ILT 0x0002E433 then ImageCollection::load on TheMappedImageCollection; evidence=identity_evidence/0042F5A0-gameclient-init.md
 ?d_0042f5a0@@YAXXZ,0x0042F5A0,legacy address-only compatibility pin for retired GameClient init dump spelling
+?d_008ae770@@YAXXZ,0x008AE770,legacy address-only compatibility pin for retired generated name; referenced by game/gen_asm/d_0083c710.asm
+?isLeapYear@@YG_NH@Z,0x008B64E0,existing LeapYearPredicateThunk.cpp object symbol; complete 65-byte body reads one signed stack word returns AL and ret4 with incoming ECX ignored; evidence=targets/game/reverse/identity_evidence/008b6580-bfme2-calendar.md
+?d_008b6580@@YAXXZ,0x008B6580,legacy address-only compatibility pin for retired generated name; referenced by game/gen_asm/d_008af650.asm
