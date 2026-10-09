@@ -33,13 +33,22 @@ typedef _STL::hashtable<RvaHashValue, RvaHashKey,
 	RvaHashFn, _STL::_Select1st<RvaHashValue>, RvaHashEq,
 	_STL::allocator<RvaHashValue> > RvaHashTable;
 
-extern void Rva00927800Target();
-
-class RvaHashFindRoute
+struct Rva00927800Hash;
+struct Rva00927800Eq;
+class Rva00927C10Find;
+class Rva00928200Find;
+namespace _STL
 {
-public:
-	typedef void *(RvaHashFindRoute::*Call)(const RvaHashKey &key) const;
+template <> class hashtable<RvaHashValue, RvaHashKey,
+    Rva00927800Hash, _Select1st<RvaHashValue>, Rva00927800Eq,
+    allocator<RvaHashValue> >
+{
+    friend class ::Rva00927C10Find;
+    friend class ::Rva00928200Find;
+    template <class Lookup>
+    _Hashtable_node<RvaHashValue> *_M_find(const Lookup &) const;
 };
+}
 
 struct Rva00927C10Result
 {
@@ -61,8 +70,9 @@ public:
 Rva00927C10Result *Rva00927C10Find::find(Rva00927C10Result *out,
 	const RvaHashKey &key) const
 {
-	union { void (*address)(); RvaHashFindRoute::Call member; } route = { Rva00927800Target };
-	out->m_node = (reinterpret_cast<const RvaHashFindRoute *>(this)->*route.member)(key);
+	out->m_node = reinterpret_cast<const _STL::hashtable<RvaHashValue, RvaHashKey,
+        Rva00927800Hash, _STL::_Select1st<RvaHashValue>, Rva00927800Eq,
+        _STL::allocator<RvaHashValue> > *>(this)->_M_find<RvaHashKey>(key);
 	out->m_owner = (void *)this;
 	return out;
 }
@@ -85,8 +95,9 @@ public:
 Rva00928200Result *Rva00928200Find::find(Rva00928200Result *out,
 	const RvaHashKey &key) const
 {
-	union { void (*address)(); RvaHashFindRoute::Call member; } route = { Rva00927800Target };
-	out->m_node = (reinterpret_cast<const RvaHashFindRoute *>(this)->*route.member)(key);
+	out->m_node = reinterpret_cast<const _STL::hashtable<RvaHashValue, RvaHashKey,
+        Rva00927800Hash, _STL::_Select1st<RvaHashValue>, Rva00927800Eq,
+        _STL::allocator<RvaHashValue> > *>(this)->_M_find<RvaHashKey>(key);
 	out->m_owner = (void *)this;
 	return out;
 }
