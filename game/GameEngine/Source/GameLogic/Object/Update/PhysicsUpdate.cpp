@@ -172,39 +172,6 @@ const Real INVALID_VEL_MAG = -1.0f;
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/PhysicsBehaviorConstructor.cpp
-// ??0PhysicsBehavior@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
-PhysicsBehavior::PhysicsBehavior( Thing *thing, const ModuleData* moduleData ) : UpdateModule( thing, moduleData )
-{
-	m_accel.zero();
-	m_prevAccel = m_accel;
-	m_vel.zero();
-	m_velMag = 0.0f;
-	m_yawRate = 0.0f;
-	m_rollRate = 0.0f;
-	m_pitchRate = 0.0f;
-	m_mass = getPhysicsBehaviorModuleData()->m_mass;
-	m_motiveForceExpires = 0;
-
-	m_flags = 0;
-	m_extraBounciness = 0.0f;
-	m_extraFriction = 0.0f;
-
-	m_currentOverlap = INVALID_ID;
-	m_previousOverlap = INVALID_ID;
-	m_lastCollidee = INVALID_ID;
-
-	m_ignoreCollisionsWith = INVALID_ID;
-
-	setAllowBouncing(getPhysicsBehaviorModuleData()->m_allowBouncing);
-	setAllowCollideForce(getPhysicsBehaviorModuleData()->m_allowCollideForce);
-
-	m_pui = NULL;
-	m_bounceSound = NULL;
-
-#ifdef SLEEPY_PHYSICS
-	setWakeFrame(getObject(), UPDATE_SLEEP_NONE);
-#endif
-}
 
 //-------------------------------------------------------------------------------------------------
 static ProjectileUpdateInterface* getPui(Object* obj)
