@@ -1394,11 +1394,6 @@ CountUpTransition::CountUpTransition ( void )
 }
 
 // byte-exact reconstruction: game/GameEngine/Source/Common/CountUpTransitionDestructorThunk.cpp
-// ??1CountUpTransition@@UAE@XZ present-unmatched
-CountUpTransition::~CountUpTransition( void )
-{
-	m_win = NULL;
-}
 
 // Open-BFME5: convert CountUpTransition::init from retail ASM to clean C++.
 void CountUpTransition::init( GameWindow *win )
@@ -1692,28 +1687,6 @@ void ControlBarArrowTransition::reverse( void )
 }
 
 // byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/ControlBarArrowTransition_draw_Thunk.cpp
-// ?draw@ControlBarArrowTransition@@UAEXXZ present-unmatched
-void ControlBarArrowTransition::draw( void )
-{
-	if(m_drawState <0)
-		return;
-	if(m_drawState < CONTROLBARARROWTRANSITION_BEGIN_FADE)
-	{
-		Int yPos = 	m_pos.y + m_incrementPos.y* m_drawState;
-		TheDisplay->drawImage(m_arrowImage, m_pos.x, yPos, m_pos.x + m_size.x, yPos + m_size.y );
-
-	}
-	else
-	{
-		Int alpha = (1 - (m_fadePercent *(m_drawState - CONTROLBARARROWTRANSITION_BEGIN_FADE )) )*255 ;
-		if(alpha > 255)
-			alpha = 255;
-		Int yPos = 	m_pos.y + m_incrementPos.y* (CONTROLBARARROWTRANSITION_BEGIN_FADE - 1);
-
-		TheDisplay->drawImage(m_arrowImage, m_pos.x, yPos, m_pos.x + m_size.x, yPos + m_size.y , GameMakeColor(255,255,255,alpha));
-	}
-	
-}
 	
 void ControlBarArrowTransition::skip( void )
 {
@@ -1785,19 +1758,6 @@ void FullFadeTransition::reverse( void )
 	m_isForward = FALSE;
 }
 
-// ?draw@FullFadeTransition@@UAEXXZ present-unmatched
-void FullFadeTransition::draw( void )
-{
-	Int alpha;
-	if(m_drawState > (FULLFADETRANSITION_END/2))
-		alpha = m_percent * 255 * (FULLFADETRANSITION_END - m_drawState);
-	else
-		alpha = m_percent * 255 *m_drawState;
-	if(alpha > 255)
-		alpha = 255;
-	TheDisplay->drawFillRect(m_pos.x, m_pos.y, m_size.x, m_size.y , GameMakeColor(0,0,0,alpha));
-	TheDisplay->drawOpenRect(m_pos.x, m_pos.y, m_size.x, m_size.y , 1.0f, GameMakeColor(60,60,180,alpha));
-}
 	
 void FullFadeTransition::skip( void )
 {
