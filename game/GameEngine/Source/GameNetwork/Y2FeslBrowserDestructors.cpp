@@ -94,6 +94,12 @@ public:
 	int m_count;
 };
 
+class Gen_00800340
+{
+public:
+	void *m();
+};
+
 // ------------------------------------------------ 0x00802EC0, two buffers
 class Rva00802EC0Base
 {
@@ -151,25 +157,41 @@ Rva00802CA0Owner::~Rva00802CA0Owner()
 
 // ------------------------ 0x00802380 + its wrapper 0x00802510, one embedded
 //                          three-field owner and two trailing dwords
+struct V2ZeroInt
+{
+	__forceinline V2ZeroInt() : m_value(0) {}
+	int m_value;
+};
+
 class Rva00802380Base
 {
 public:
 	virtual ~Rva00802380Base() {}
 
 	int m_field4;
-	int m_field8;
 };
 
 class Rva00802380Owner : public Rva00802380Base
 {
 public:
+	Rva00802380Owner();
 	virtual ~Rva00802380Owner();
 
+	// Preserve the ctor's zero-initializing +8 subobject before its body.
+	V2ZeroInt m_field8;
 	char              m_pad00C[ 0x0C ];
 	Rva00800630Owner  m_owner;      // +0x18
 	int               m_field24;
 	int               m_field28;
 };
+
+Rva00802380Owner::Rva00802380Owner()
+{
+	reinterpret_cast<Gen_00800340 *>(&m_owner)->m();
+	m_field4 = 0;
+	m_field24 = 0;
+	m_field28 = 0;
+}
 
 Rva00802380Owner::~Rva00802380Owner()
 {
