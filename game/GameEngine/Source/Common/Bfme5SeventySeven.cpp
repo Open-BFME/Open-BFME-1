@@ -11,7 +11,14 @@ public:
 };
 
 extern unsigned int HighlightColorIndex;					// retail 0x012F1400
-extern BfmeEntryFA g_bfmeTableFA[];				// retail 0x012B4FC8
+// Three independently addressed 16-byte entries end at the next datum,
+// g_bfmeDefaultCU (retail VA 0x012B4FF8). Each starts with three 0.5f
+// bit patterns; the fourth word is zero.
+BfmeEntryFA g_bfmeTableFA[3] = {
+    {0x3F000000, 0x3F000000, 0x3F000000, 0},
+    {0x3F000000, 0x3F000000, 0x3F000000, 0},
+    {0x3F000000, 0x3F000000, 0x3F000000, 0}
+};
 
 // ?bfmeLoad@@YAXPAH00H@Z
 void __cdecl bfmeLoad(int *first, int *second, int *third, int index)
