@@ -11,7 +11,8 @@
 // bit 88 when the cached condition changes.
 // BitFlags::set(i, value), including its STLport wrapper, preserves the retail
 // test-before-write and mask allocation. reset(i) has a different code shape.
-extern float Rva012AEE3CTransportHealthRegenScale;
+// Retail .data 0x012AEE3C holds cd cc 4c 3e (0.2f).
+float Rva012AEE3CTransportHealthRegenScale = 0.2f;
 extern void j_0000c1e9();
 
 
@@ -173,21 +174,23 @@ private:
 		return *(TransportContainModuleData *const *)((const char *)this - 0xc);
 	}
 
-	Object *getObject() const
-	{
-		return *(Object *const *)((const char *)this - 8);
-	}
 
 	unsigned char m_unknown004[0xcc];
 	Bool m_propagatedCondition;
 };
+
+// Private accessor for this secondary-base view; other TUs use different views.
+static inline Object *getObject(const TransportContain *contain)
+{
+	return *(Object *const *)((const char *)contain - 8);
+}
 
 UpdateSleepTime TransportContain::update()
 {
 	TransportContainModuleData *moduleData = getModuleData();
 	if (moduleData != 0 && moduleData->m_healthRegen != 0.0f)
 	{
-		ContainModuleInterface *contain = getObject()->m_contain;
+		ContainModuleInterface *contain = getObject(this)->m_contain;
 		if (contain != 0)
 		{
 			ContainedItemsList *items = contain->getContainedItemsList();
@@ -203,14 +206,14 @@ UpdateSleepTime TransportContain::update()
 					{
 						float regen = body->getMaxHealth() *
 							Rva012AEE3CTransportHealthRegenScale * moduleData->m_healthRegen / 100.0f;
-						passenger->attemptHealing(regen, getObject());
+						passenger->attemptHealing(regen, getObject(this));
 					}
 				}
 			}
 		}
 	}
 
-	Bool ownerCondition = getObject()->m_conditions.test(60);
+	Bool ownerCondition = getObject(this)->m_conditions.test(60);
 	if (m_propagatedCondition && !ownerCondition)
         m_propagatedCondition = false;
     else if (!m_propagatedCondition && ownerCondition)
@@ -218,7 +221,7 @@ UpdateSleepTime TransportContain::update()
     else
         goto finished;
     {
-		ContainModuleInterface *contain = getObject()->m_contain;
+		ContainModuleInterface *contain = getObject(this)->m_contain;
 		if (contain != 0)
 		{
 			ContainedItemsList *items = contain->getContainedItemsList();
