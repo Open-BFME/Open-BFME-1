@@ -16,6 +16,8 @@ enum
 	BFME_MODEL_CONTINUOUS_FIRE_SLOW = 108
 };
 
+// This stack-only ten-word mask is private to this cooldown reconstruction.
+namespace {
 class ModelConditionFlags
 {
 public:
@@ -37,6 +39,10 @@ public:
 private:
 	UnsignedInt m_bits[10];
 };
+}
+
+// Retail ILT095ED -> 1C7720 takes these two ten-word reference views.
+template <int N> class BitFlags;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
@@ -52,8 +58,8 @@ public:
 		m_weaponBonusCondition &= ~(1 << condition);
 	}
 
-	void clearAndSetModelConditionFlags(const ModelConditionFlags &clr,
-		const ModelConditionFlags &set);
+	void clearAndSetModelConditionFlags(const BitFlags<320> &clr,
+		const BitFlags<320> &set);
 
 private:
 	unsigned char m_pad[0x2A0];
@@ -103,7 +109,9 @@ void FiringTracker::coolDown(Bool forceReset)
 		*reinterpret_cast<UnsignedInt *>(self + 0x50) = 0;
 	}
 
-	(*reinterpret_cast<Object **>(self + 8))->clearAndSetModelConditionFlags(clr, set);
+	(*reinterpret_cast<Object **>(self + 8))->clearAndSetModelConditionFlags(
+		reinterpret_cast<const BitFlags<320> &>(clr),
+		reinterpret_cast<const BitFlags<320> &>(set));
 	*reinterpret_cast<UnsignedInt *>(self + 0x20) = 0;
 	*reinterpret_cast<UnsignedInt *>(self + 0x24) = 0;
 }
