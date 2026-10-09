@@ -1217,3 +1217,11 @@ game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp|member||m_bfmeReceiving,1
 game/GameEngine/Source/Common/Bfme5TinyTwentySeven.cpp|function|Gen_00410BA0@|bfmeBusy,4419c9752a627b4f78c1260b,gpt-6.1-sol,20261009204500-20ce89,2026-10-09
 game/GameEngine/Source/Common/BfmeConv1789.cpp|member||m_bfmeSlotLU,d9581471c65eb238cd013612,gpt-6.1-sol,20261009205120-c65f1b,2026-10-09
 game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|local|ExamineCellsStruct::cellCallback|p,85c87394e273334ba6c41a93,gpt-6.1-sol,20261009205225-0c490e,2026-10-09
+game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|member||m_4c,89934eeabdc1298969ca46c7,gpt-6.1-sol,20261009205225-4acc6f,2026-10-09
+game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|member||m_50,10416a1138da2e62c3a2e69b,gpt-6.1-sol,20261009205225-4acc6f,2026-10-09
+game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|member||m_54,fdc6272e3a61d0f8deb62557,gpt-6.1-sol,20261009205225-4acc6f,2026-10-09
+game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|member||m_58,29961d67e9c952e959b854b2,gpt-6.1-sol,20261009205225-4acc6f,2026-10-09
+game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|member||m_60,cff7f6b6611bebf07194de97,gpt-6.1-sol,20261009205225-4acc6f,2026-10-09
+game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|member||m_64,1ca4907c3f266e92b8777504,gpt-6.1-sol,20261009205225-4acc6f,2026-10-09
+game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|member||m_98,a33e6f64e117045635f4d44e,gpt-6.1-sol,20261009205225-4acc6f,2026-10-09
+game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|function|BfmeThingTBA@|rva007243A0,63dcc9de4d8ccf1dd2ca42c9,gpt-6.1-sol,20261009205225-4acc6f,2026-10-09
