@@ -1,10 +1,6 @@
 // ?d_005f1370@@YAXXZ
-// partial score=0.1432496075353218 date=2026-09-27
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/Wwutil /Igame/Libraries/Source/WWVegas/WWDownload /Igame/Libraries/Source/Compression /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
-// Unfinished native reconstruction, retail RVA005F1370 / 5096 bytes.
-// Full algorithm recovered; frame, x87 scheduling and vector lifetimes differ.
-// Evidence: targets/game/reverse/identity_evidence/005f1370-particle-geometry.md.
-// No byte coverage claimed. No pins added. Canonical WWMath owns its x87 intrinsics.
+// partial score=0.1022 date=2026-10-09
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/Wwutil /Igame/Libraries/Source/WWVegas/WWDownload /Igame/Libraries/Source/Compression /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep /Igame/Libraries/Include
 #define Matrix4x4 Matrix4
 #include "aabox.h"
 #include "ascii_string.h"
@@ -15,7 +11,8 @@
 #include "vector2.h"
 #include "vector3.h"
 #include "vector4.h"
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
+#include "Lib/Coord3D.h"
+
 
 class Rva005C30A0Owner {
   public:
@@ -34,8 +31,8 @@ class Particle {
   public:
     bool isInvisible();
     unsigned char unknown00[0x10];
-    Vector3 vector10;
-    Vector3 vector1C;
+    Coord3D vector10;
+    Coord3D vector1C;
     unsigned char unknown28[0x14];
     Particle *next3C;
 };
@@ -94,25 +91,22 @@ extern ShareBufferClass<Vector4> *Va012F6DCC;
 extern Rva0090FEE0Renderer *Va012F6D88;
 extern ShaderClass Va012D6E30, Va012D6E34, Va012D6E48, Va012D6E60, Va012D6E24, Va012D6E28;
 typedef D3DXMATRIX Rva005F1370Matrix;
-// The retail call goes through D3DX9's runtime-selected MatrixRotationZ stub
-// at009FB93B, whose dispatch slot012DBE78 initially targets init009FB91F.
 
 class Rva005F1370Owner {
   public:
-    int render(unsigned, const AABoxClass &, int *);
-    unsigned unknown00;
+    virtual int render(unsigned, const AABoxClass &, int *);
     ParticleSystemZA *system04;
     ParticleSystemZA *system() const { return system04 ? system04 : bfmeNullSystemZA(); }
 };
 
 static __forceinline void Rotate5096(const Rva005F1370Matrix &m, Vector4 &p) { p = *(const Matrix4 *)&m * p; }
-static __forceinline void Place5096(const Matrix4 &m, Vector4 &p, const Vector3 &position, Vector3 *out) {
-    p.X += position.X;
-    p.Y += position.Y;
-    p.Z += position.Z;
-    *out = Vector3(m[0][0] * p.X + m[0][1] * p.Y + m[0][2] * p.Z + m[0][3] * p.W,
-                   m[1][0] * p.X + m[1][1] * p.Y + m[1][2] * p.Z + m[1][3] * p.W,
-                   m[2][0] * p.X + m[2][1] * p.Y + m[2][2] * p.Z + m[2][3] * p.W);
+static __forceinline void Place5096(const Matrix4 &m, Vector4 &p, const Coord3D &position, Vector3 *out) {
+    p.X += position.x;
+    p.Y += position.y;
+    p.Z += position.z;
+    out->Set(m[0][0] * p.X + m[0][1] * p.Y + m[0][2] * p.Z + m[0][3] * p.W,
+             m[1][0] * p.X + m[1][1] * p.Y + m[1][2] * p.Z + m[1][3] * p.W,
+             m[2][0] * p.X + m[2][1] * p.Y + m[2][2] * p.Z + m[2][3] * p.W);
 }
 
 int Rva005F1370Owner::render(unsigned info, const AABoxClass &box, int *fieldCount) {
@@ -126,14 +120,14 @@ int Rva005F1370Owner::render(unsigned info, const AABoxClass &box, int *fieldCou
     for (Particle *p = system()->firstA0; p; p = p->next3C) {
         if (p->isInvisible())
             continue;
-        const Vector3 *position = &p->vector1C;
+        const Coord3D *position = &p->vector1C;
         float size = ((Rva005C30A0Owner *)p)->Rva005C30A0();
         float angle = ((Rva005C30A0Owner *)p)->Rva005C3120();
-        if (WWMath::Fabs(position->X - centerX) > extentX + size)
+        if (WWMath::Fabs(position->x - centerX) > extentX + size)
             continue;
-        if (WWMath::Fabs(position->Y - centerY) > extentY + size)
+        if (WWMath::Fabs(position->y - centerY) > extentY + size)
             continue;
-        if (WWMath::Fabs(position->Z - centerZ) > extentZ + size)
+        if (WWMath::Fabs(position->z - centerZ) > extentZ + size)
             continue;
         *fieldCount += (system()->field7C == 11 && system()->field80);
         float c = WWMath::Cos(angle);
@@ -151,9 +145,9 @@ int Rva005F1370Owner::render(unsigned info, const AABoxClass &box, int *fieldCou
         vertices[5].Set(-spread, size, height, 1.0f);
         vertices[6].Set(0.0f, -size, 0.0f, 1.0f);
         vertices[7].Set(-spread, -size, height, 1.0f);
-        if ((float)fabs(p->vector10.X) > 0.0001f) {
+        if ((float)fabs(p->vector10.x) > 0.0001f) {
             Rva005F1370Matrix rotation;
-            float z = (float)(atan2(-p->vector10.Y, p->vector10.X) - 1.5707963267948966);
+            float z = (float)(atan2(-p->vector10.y, p->vector10.x) - 1.5707963267948966);
             D3DXMatrixRotationZ(&rotation, z);
             Rotate5096(rotation, vertices[0]);
             Rotate5096(rotation, vertices[1]);
@@ -164,14 +158,15 @@ int Rva005F1370Owner::render(unsigned info, const AABoxClass &box, int *fieldCou
             Rotate5096(rotation, vertices[6]);
             Rotate5096(rotation, vertices[7]);
         }
-        Place5096(view, vertices[0], *position, positions + 0);
-        Place5096(view, vertices[1], *position, positions + 1);
-        Place5096(view, vertices[2], *position, positions + 2);
-        Place5096(view, vertices[3], *position, positions + 3);
-        Place5096(view, vertices[4], *position, positions + 4);
-        Place5096(view, vertices[5], *position, positions + 5);
-        Place5096(view, vertices[6], *position, positions + 6);
-        Place5096(view, vertices[7], *position, positions + 7);
+        const Coord3D positionCopy = *position;
+        Place5096(view, vertices[0], positionCopy, positions + 0);
+        Place5096(view, vertices[1], positionCopy, positions + 1);
+        Place5096(view, vertices[2], positionCopy, positions + 2);
+        Place5096(view, vertices[3], positionCopy, positions + 3);
+        Place5096(view, vertices[4], positionCopy, positions + 4);
+        Place5096(view, vertices[5], positionCopy, positions + 5);
+        Place5096(view, vertices[6], positionCopy, positions + 6);
+        Place5096(view, vertices[7], positionCopy, positions + 7);
         const Vector3 *rgb = (const Vector3 *)((Rva005C3180 *)p)->dispatch();
         float alpha = ((Rva005C3160Owner *)p)->Rva005C3160();
         Vector4 *color = colors;
