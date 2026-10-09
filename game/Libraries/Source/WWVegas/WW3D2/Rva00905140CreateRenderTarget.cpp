@@ -44,11 +44,17 @@ public:
 	void Release_Ref();
 };
 
+class TextureBaseClass
+{
+public:
+	void Release_Ref();
+};
+
 class Rva006D6050
 {
 public:
 	Rva006D6050() : m_texture(0) {}
-	~Rva006D6050() { if (m_texture != 0) m_texture->Release_Ref(); }
+	~Rva006D6050() { if (m_texture != 0) ((TextureBaseClass *)m_texture)->Release_Ref(); }
 	void init(unsigned, unsigned, unsigned, unsigned, unsigned, unsigned);
 
 private:
@@ -67,7 +73,7 @@ public:
 	~Gen_005D2040()
 	{
 		if (m_texture != 0)
-			m_texture->Release_Ref();
+			((TextureBaseClass *)m_texture)->Release_Ref();
 	}
 
 private:
