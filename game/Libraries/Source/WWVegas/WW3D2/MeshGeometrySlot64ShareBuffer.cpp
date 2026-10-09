@@ -22,6 +22,14 @@ class ShareBufferClass : public RefCountClass
 public:
 	ShareBufferClass(int count, const char *msg, int alignment);
 	__declspec(noinline) void Resize(int newsize);
+	~ShareBufferClass(void)
+	{
+		if (RawBuffer) {
+			delete[] RawBuffer;
+			RawBuffer = 0;
+			Array = 0;
+		}
+	}
 
 protected:
 	T *RawBuffer;
