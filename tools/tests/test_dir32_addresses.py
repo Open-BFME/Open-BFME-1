@@ -122,3 +122,32 @@ def test_a_pin_on_another_import_slot_fails(monkeypatch, capsys):
         _pins(monkeypatch, {"__imp__GetClientRect@8": [0x0135901C]},
               {"__imp__GetClientRect@8": 0x01358FEC})
     assert "pinned 0x0135901C, matched references use 0x01358FEC" in capsys.readouterr().out
+
+
+def _unrecorded(monkeypatch, sym, base, symbol_map, data=None, follow=None):
+    import body_guard
+    follow = follow or {}
+    monkeypatch.setattr(body_guard, "_text_follow", lambda rva: follow.get(rva, rva))
+    monkeypatch.setattr(body_guard, "_row_sizes", lambda: {})
+    return build.unrecorded_dir32_problem(sym, base, ({}, dict(data or {})), symbol_map)
+
+
+def test_a_function_reached_through_its_ilt_thunk_passes(monkeypatch):
+    # C4: ??1BfmeOwnerCC +0x40 reads ILT VA 0x004145BF, a jmp to the matched
+    # body at RVA 0x00739F00; the name spells its class placeholder 0x00739C70.
+    sym = "??1Rva00739C70@@QAE@XZ"
+    assert _unrecorded(monkeypatch, sym, 0x004145BF, {sym: [0x000145BF, 0x00739F00]},
+                       follow={0x000145BF: 0x00739F00}) is None
+
+
+def test_a_function_whose_thunk_reaches_another_body_fails(monkeypatch):
+    sym = "??1Rva00739C70@@QAE@XZ"
+    problem = _unrecorded(monkeypatch, sym, 0x004145BF, {sym: [0x00739F00]},
+                          follow={0x000145BF: 0x00800000})
+    assert "places elsewhere" in problem
+
+
+def test_a_data_name_encoding_another_address_still_fails(monkeypatch):
+    sym = "?g_Va012BA084@@3GA"
+    problem = _unrecorded(monkeypatch, sym, 0x012BA088, {sym: [0x00EBA088]})
+    assert "encodes 0x012BA084" in problem

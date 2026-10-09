@@ -3468,6 +3468,16 @@ def unrecorded_dir32_problem(sym, base, identities, symbol_map=None):
         return (f"retail 0x{base:08X} is already recorded as {others[0]}"
                 + (f" (+{len(others) - 1} more)" if len(others) > 1 else "")
                 + "; reference that name, not a new one")
+    # A function the ledger places is decided by that placement, not by an
+    # address its name spells: `??1Rva00739C70@@QAE@XZ` encodes its CLASS
+    # placeholder. callee_twin follows retail's ILT `jmp rel32` thunks, so a
+    # DIR32 to the thunk VA compares against the body the thunk reaches.
+    if (symbol_map is not None and sym in symbol_map and sym not in data
+            and not re.search(r"@@[23]", sym)):
+        import body_guard
+        if body_guard.callee_twin(base - 0x400000, symbol_map[sym]):
+            return None
+        return f"{sym} is a function the ledger places elsewhere, not at 0x{base:08X}"
     encoded = ENCODED_ADDRESS_RE.search(sym)
     if encoded:
         value = int(encoded.group(1), 16)
@@ -3476,11 +3486,6 @@ def unrecorded_dir32_problem(sym, base, identities, symbol_map=None):
         return f"the name encodes 0x{value:08X} but retail reads 0x{base:08X}"
     if data.get(sym) == base:
         return None
-    if symbol_map is not None and sym in symbol_map:
-        import body_guard
-        if body_guard.callee_twin(base - 0x400000, symbol_map[sym]):
-            return None
-        return f"{sym} is a function the ledger places elsewhere, not at 0x{base:08X}"
     return (f"nothing in the ledger owns 0x{base:08X}. Give the datum a data row first "
             "(tools/add_data_match.py), or use an address name (g_Va<VA>)")
 
