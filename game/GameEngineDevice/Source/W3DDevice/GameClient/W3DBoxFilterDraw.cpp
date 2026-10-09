@@ -16,7 +16,6 @@ extern W3DShadowManager *TheW3DShadowManager; // 0x01306EEC
 
 
 extern ShaderClass TheScorchShader; // 0x012BAD70
-void BaseHeightMapScorchSetShader(const ShaderClass &);
 
 
 extern VertexMaterialClass *ScreenMaterial;   // 0x01340EC4
@@ -40,7 +39,7 @@ void Rva00711600FilterDraw(unsigned color, unsigned mask, bool useAltCluster, un
 	if (!TheW3DShadowManager)
 		return;
 
-	BaseHeightMapScorchSetShader(TheScorchShader);
+	DX8Wrapper::Set_Shader(TheScorchShader);
 
 	VertexMaterialClass *vmat = VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
 	if (vmat)
