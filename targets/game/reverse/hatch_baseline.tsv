@@ -127718,7 +127718,7 @@ present_unmatched	game/GameEngine/Source/GameLogic/Object/FiringTracker.cpp	getN
 present_unmatched	game/GameEngine/Source/GameLogic/Object/FiringTracker.cpp	shotFired@FiringTracker@@QAEXPBVWeapon@@W4ObjectID@@@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/GhostObjectManagerEnergyDupCtor.cpp	0GhostObjectManagerEnergyDup@@QAE@XZ	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Locomotor.cpp	0Locomotor@@	1
-present_unmatched	game/GameEngine/Source/GameLogic/Object/Locomotor.cpp	0LocomotorSet@@	2
+present_unmatched	game/GameEngine/Source/GameLogic/Object/Locomotor.cpp	0LocomotorSet@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Locomotor.cpp	0LocomotorTemplate@@QAE@XZ	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Locomotor.cpp	1LocomotorSet@@QAE@XZ	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Locomotor.cpp	1LocomotorTemplate@@MAE@XZ	1

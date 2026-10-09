@@ -2498,14 +2498,8 @@ void Locomotor::maintainCurrentPositionOther(Object* obj, PhysicsBehavior *physi
 //-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
-// ??0LocomotorSet@@ present-unmatched
-LocomotorSet::LocomotorSet()
-{
-	m_locomotors.clear();
-	m_validLocomotorSurfaces = 0;
-	m_downhillOnly = FALSE;
+// LocomotorSet default ctor: retail body in S2ZeroFillCtors.cpp.
 
-}
 
 //-------------------------------------------------------------------------------------------------
 // ??0LocomotorSet@@ present-unmatched
