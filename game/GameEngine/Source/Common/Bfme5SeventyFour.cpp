@@ -30,7 +30,10 @@ void __cdecl bfmeReplaceWords(unsigned short *first, unsigned short *last, const
 }
 
 int g_bfmeLeft1221 = -1;					// retail 0x012D5DC8
-extern int g_bfmeStateFA[];					// retail 0x013387E0
+// Retail's seeder writes 624 DWORDs. The reload loop additionally reads
+// the lookahead word at index 624; its next-pointer datum starts at
+// VA 0x013391A4, immediately after all 625 words.
+int g_bfmeStateFA[625] = {};
 
 // ?bfmeSeed@@YAXH@Z
 void __cdecl bfmeSeed(int seed)
