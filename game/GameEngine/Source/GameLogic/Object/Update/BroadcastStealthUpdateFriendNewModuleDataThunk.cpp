@@ -31,7 +31,7 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl BroadcastStealthUpdateFieldParse(MultiIniFieldParse &parse);
+void __cdecl j_000094F3(); // ?j_000094F3@@YAXXZ, ILT 0x004094F3
 
 class BroadcastStealthUpdate
 {
@@ -44,6 +44,6 @@ ModuleData *BroadcastStealthUpdate::friend_newModuleData(INI *ini)
 {
 	BroadcastStealthUpdateModuleData *data = new BroadcastStealthUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &BroadcastStealthUpdateFieldParse);
+		ini->initFromINIMultiProc(data, reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_000094F3));
 	return (ModuleData *)data;
 }
