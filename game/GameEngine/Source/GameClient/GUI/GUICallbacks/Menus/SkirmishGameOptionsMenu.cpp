@@ -248,48 +248,11 @@ UnicodeString SkirmishPreferences::getUserName(void)
 	return ret;
 }
 
-// ?getPreferredColor@SkirmishPreferences@@ present-unmatched
-Int SkirmishPreferences::getPreferredColor(void)
-{
-	Int ret;
-	SkirmishPreferences::const_iterator it = find("Color");
-	if (it == end())
-	{
-		return -1;
-	}
+// The retail color getter is emitted by SkirmishPreferences_getPreferredColor.cpp.
 
-	ret = atoi(it->second.str());
-	if (ret < -1 || ret >= TheMultiplayerSettings->getNumColors())
-		ret = -1;
 
-	return ret;
-}
+// The retail faction getter is emitted by SkirmishPreferences_getPreferredColor.cpp.
 
-// ?getPreferredFaction@SkirmishPreferences@@ present-unmatched
-Int SkirmishPreferences::getPreferredFaction(void)
-{
-	Int ret;
-	SkirmishPreferences::const_iterator it = find("PlayerTemplate");
-	if (it == end())
-	{
-		return PLAYERTEMPLATE_RANDOM;
-	}
-
-	ret = atoi(it->second.str());
-	if (ret < PLAYERTEMPLATE_MIN || ret >= ThePlayerTemplateStore->getPlayerTemplateCount())
-		ret = PLAYERTEMPLATE_RANDOM;
-
-	if (ret >= 0)
-	{
-		const PlayerTemplate *fac = ThePlayerTemplateStore->getNthPlayerTemplate(ret);
-		if (!fac)
-			ret = PLAYERTEMPLATE_RANDOM;
-		else if (fac->getStartingBuilding().isEmpty())
-			ret = PLAYERTEMPLATE_RANDOM;
-	}
-
-	return ret;
-}
 
 // ?usesSystemMapDir@SkirmishPreferences@@ present-unmatched
 Bool SkirmishPreferences::usesSystemMapDir(void)

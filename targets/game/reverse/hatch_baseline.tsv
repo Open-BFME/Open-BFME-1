@@ -125907,8 +125907,6 @@ present_unmatched	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/Optio
 present_unmatched	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupPlayerInfo.cpp	0RankPoints@@	1
 present_unmatched	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishGameOptionsMenu.cpp	0SkirmishPreferences@@	1
 present_unmatched	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishGameOptionsMenu.cpp	1SkirmishPreferences@@	1
-present_unmatched	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishGameOptionsMenu.cpp	getPreferredColor@SkirmishPreferences@@	1
-present_unmatched	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishGameOptionsMenu.cpp	getPreferredFaction@SkirmishPreferences@@	1
 present_unmatched	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishGameOptionsMenu.cpp	getPreferredMap@SkirmishPreferences@@	1
 present_unmatched	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishGameOptionsMenu.cpp	getStartingCash@SkirmishPreferences@@	1
 present_unmatched	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishGameOptionsMenu.cpp	getSuperweaponRestricted@SkirmishPreferences@@	1
