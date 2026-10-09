@@ -1,21 +1,14 @@
 // ?getTeamNamed@ScriptEngine@@UAEPAVTeam@@VAsciiString@@_N@Z
-// partial score=0.29 date=2026-09-23
-// Retail 0x0034F160: BFME's by-value team lookup with the create flag.
-// The slot, reference map and team context offsets are established by landed
-// ScriptEngine callers, vtable evidence and the adjacent reference-map body.
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib
+// partial score=0.4355 date=2026-10-09
+// cl: /G7 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib
 
+// stlport
 #include "ascii_string.h"
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
 #include <map>
 #include <utility>
-
-inline AsciiString::~AsciiString()
-{
-	((StringBase<char> *)this)->releaseBuffer();
-}
 
 __forceinline int bfmeCompareAscii(const AsciiString &left,
 	const AsciiString &right)
@@ -24,11 +17,23 @@ __forceinline int bfmeCompareAscii(const AsciiString &left,
 		*(const StringBase<char> *)&right);
 }
 
+class BfmeScriptEngineSlashName
+{
+public:
+	AsciiString bfmeName(AsciiString &name);
+
+private:
+	char m_pad[0x17088];
+	AsciiString m_fallback;
+};
+
 class BFMEScriptEngineFlagLookup
 {
 public:
-	AsciiString canonicalFlagName(const AsciiString &name);
+	AsciiString canonicalFlagName(AsciiString &name);
 };
+
+extern const AsciiString Rva01336E50EmptyAscii;
 
 class Team;
 
@@ -37,12 +42,14 @@ class TeamPrototype
 public:
 	bool getIsSingleton() const { return (m_flags & 1) != 0; }
 	int countTeamInstances();
+	const AsciiString &getName() const { return m_name; }
+	const AsciiString &getOwnerName() const { return m_owner; }
+	Team *getFirstItemIn_TeamInstanceList() const { return m_teamInstanceList; }
 
 	char m_pad0[0x10];
 	AsciiString m_name;
 	AsciiString m_owner;
-	unsigned char m_flags;
-	char m_pad1[3];
+	union { unsigned int m_flags; char m_pad1[4]; };
 	char m_pad2[0x258];
 
 	public:
@@ -54,19 +61,30 @@ class Team
 public:
 	void *m_vtable;
 	TeamPrototype *m_prototype;
-	char m_pad0[0x29];
-	unsigned char m_active;
-	unsigned char m_created;
+	unsigned int m_id;
+	char m_pad0[0x25];
+	bool m_active;
+	bool m_created;
+
+	bool isActive() { return m_active; }
+	void setActive()
+	{
+		if (!m_active)
+		{
+			m_created = true;
+			m_active = true;
+		}
+	}
 
 	const AsciiString &getName() const
 	{
-		return m_prototype == 0 ? *(const AsciiString *)0x01336E50
-			: m_prototype->m_name;
+		return m_prototype == 0 ? Rva01336E50EmptyAscii
+			: m_prototype->getName();
 	}
 	const AsciiString &getOwnerName() const
 	{
-		return m_prototype == 0 ? *(const AsciiString *)0x01336E50
-			: m_prototype->m_owner;
+		return m_prototype == 0 ? Rva01336E50EmptyAscii
+			: m_prototype->getOwnerName();
 	}
 };
 
@@ -138,7 +156,7 @@ Team *ScriptEngine::getTeamNamed(AsciiString name, bool exact)
 	}
 
 	AsciiString canonical =
-		((BFMEScriptEngineFlagLookup *)this)->canonicalFlagName(name);
+		((BfmeScriptEngineSlashName *)this)->bfmeName(name);
 
 	Team *callingTeam = m_callingTeam;
 	if (callingTeam)
@@ -174,19 +192,15 @@ Team *ScriptEngine::getTeamNamed(AsciiString name, bool exact)
 
 	if (prototype->getIsSingleton())
 	{
-		Team *theTeam = prototype->m_teamInstanceList;
-		if (theTeam == 0)
-			return 0;
-		if (theTeam->m_active)
+		Team *theTeam = prototype->getFirstItemIn_TeamInstanceList();
+		if (theTeam && theTeam->isActive())
 			return theTeam;
-		if (!exact)
-			return 0;
-		if (!theTeam->m_active)
+		if (theTeam && exact)
 		{
-			theTeam->m_created = 1;
-			theTeam->m_active = 1;
+			theTeam->setActive();
+			return theTeam;
 		}
-		return theTeam;
+		return 0;
 	}
 
 	static int warnCount = 0;
@@ -202,10 +216,13 @@ Team *ScriptEngine::getTeamNamed(AsciiString name, bool exact)
 		}
 	}
 
-	Team *theTeam = prototype->m_teamInstanceList;
+	Team *theTeam = prototype->getFirstItemIn_TeamInstanceList();
 	if (theTeam)
 		return theTeam;
-	if (!exact)
-		return 0;
-	return TheTeamFactory->createTeam(canonical, name);
+	if (exact)
+	{
+		theTeam = TheTeamFactory->createTeam(canonical, name);
+		return theTeam;
+	}
+	return 0;
 }
