@@ -9,7 +9,7 @@
 #include "ascii_string.h"
 
 enum NetCommandType { NETCOMMANDTYPE_FRAMEINFO = 3 };
-bool DoesCommandRequireACommandID(NetCommandType);
+int DoesCommandRequireACommandID(NetCommandType);
 AsciiString GetAsciiNetCommandType(NetCommandType);
 class NetCommandMsg {
 public:
@@ -33,7 +33,7 @@ bool NetCommandMsg::unknownSlot08()
 AsciiString NetCommandMsg::getContentsAsAsciiString()
 {
     AsciiString result;
-    if (DoesCommandRequireACommandID(type))
+    if ((unsigned char)DoesCommandRequireACommandID(type))
         result.format("%s, frame=%d, player=%d, id=%d", GetAsciiNetCommandType(type).str(), frame, player, id);
     else
         result.format("%s, frame=%d, player=%d", GetAsciiNetCommandType(type).str(), frame, player);
