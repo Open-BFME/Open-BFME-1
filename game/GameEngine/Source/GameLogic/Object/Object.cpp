@@ -5652,58 +5652,6 @@ Bool Object::getSingleLogicalBonePosition(const char* boneName, Coord3D* positio
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/ObjectGetSingleLogicalBonePositionOnTurretThunk.cpp
-// ?getSingleLogicalBonePositionOnTurret@Object@@QBE_NW4WhichTurretType@@PBDPAUCoord3D@@PAVMatrix3D@@@Z present-unmatched
-Bool Object::getSingleLogicalBonePositionOnTurret( WhichTurretType whichTurret, const char* boneName, Coord3D* position, Matrix3D* transform ) const
-{
-	Coord3D turretPosition;
-	Coord3D bonePosition;
-	if( getDrawable() == NULL  || getAI() == NULL )
-		return FALSE;
-
-	// We need to find the TurretBone's pristine position.
-	getDrawable()->getProjectileLaunchOffset( PRIMARY_WEAPON, 1, NULL, whichTurret, &turretPosition, NULL );
-	// And the required bone's pristine position
-	if( getDrawable()->getPristineBonePositions(boneName, 0, &bonePosition, NULL, 1) != 1 )
-		return FALSE;
-	//Then we mojo the Logic position of the required bone like Missile firing does.  Using the logic twist of the turret
-	Real turretRotation;
-	getAI()->getTurretRotAndPitch( whichTurret, &turretRotation, NULL );
-
-	Matrix3D boneOffset(TRUE);// This will be from the turret to the requested bone
-
-//	Vector3 bonePositionVector(	bonePosition.x - turretPosition.x, 
-//															bonePosition.y - turretPosition.y, 
-//															bonePosition.z - turretPosition.z );
-	Vector3 bonePositionVector(	bonePosition.x, 
-															bonePosition.y, 
-															bonePosition.z );
-	boneOffset.Translate(bonePositionVector);
-
-	Matrix3D turnAdjustment(TRUE);// this is the turret twist to be applied to the final answer
-
-	turnAdjustment.Translate( turretPosition.x, turretPosition.y, turretPosition.z );
-	turnAdjustment.In_Place_Pre_Rotate_Z(turretRotation);
-	turnAdjustment.Translate( -turretPosition.x, -turretPosition.y, -turretPosition.z );
-
-	Matrix3D boneLogicTransform;
-	boneLogicTransform.mul( turnAdjustment, boneOffset );
-
-	Matrix3D worldTransform;
-	convertBonePosToWorldPos(NULL, &boneLogicTransform, NULL, &worldTransform);
-
-	Vector3 tmp = worldTransform.Get_Translation();
-	Coord3D worldPos;
-	worldPos.x = tmp.X;
-	worldPos.y = tmp.Y;
-	worldPos.z = tmp.Z;
-
-	if( position )
-		*position = worldPos;
-	if( transform )
-		*transform = worldTransform;
-
-	return TRUE;
-}
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
