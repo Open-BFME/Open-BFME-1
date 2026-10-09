@@ -114,10 +114,6 @@ ToppleUpdate::ToppleUpdate( Thing *thing, const ModuleData* moduleData ) : Updat
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ??1ToppleUpdate@@MAE@XZ present-unmatched
-ToppleUpdate::~ToppleUpdate( void )
-{
-}
 
 //-------------------------------------------------------------------------------------------------
 Real angleClosestTo(Real a1, Real a2, Real desired)
@@ -153,101 +149,6 @@ static void deathByToppling(Object* obj)
 //-------------------------------------------------------------------------------------------------
 ///< Keep track of rotational fall distance, bounce and/or stop when needed.
 //-------------------------------------------------------------------------------------------------
-// ?update@ToppleUpdate@@UAE?AW4UpdateSleepTime@@XZ present-unmatched
-UpdateSleepTime ToppleUpdate::update()
-{
-	//DEBUG_LOG(("updating ToppleUpdate %08lx\n",this));
-	DEBUG_ASSERTCRASH(m_toppleState != TOPPLE_UPRIGHT, ("hmm, we should be sleeping here"));
-	if ( (m_toppleState == TOPPLE_UPRIGHT)  ||  (m_toppleState == TOPPLE_DOWN) )
-		return UPDATE_SLEEP_FOREVER;
-
-	const ToppleUpdateModuleData* d = getToppleUpdateModuleData();
-	const Real VELOCITY_BOUNCE_LIMIT = 0.01f;				// if the velocity after a bounce will be this or lower, just stop at zero
-	const Real VELOCITY_BOUNCE_SOUND_LIMIT = 0.03f;	// and if this low, then skip the bounce sound
-
-	Object* obj = getObject();
-	if (m_numAngleDeltaX)
-	{
-		Matrix3D xfrm = *obj->getTransformMatrix();
-		xfrm.In_Place_Pre_Rotate_Z(m_angleDeltaX);
-		obj->setTransformMatrix(&xfrm);
-		--m_numAngleDeltaX;
-	}
-
-	Real curVelToUse = m_angularVelocity;
-	if (m_angularAccumulation + curVelToUse > ANGULAR_LIMIT)
-		curVelToUse = ANGULAR_LIMIT - m_angularAccumulation;
-
-	Matrix3D xfrm = *obj->getTransformMatrix();
-	xfrm.In_Place_Pre_Rotate_X(-curVelToUse * m_toppleDirection.y);
-	xfrm.In_Place_Pre_Rotate_Y(curVelToUse * m_toppleDirection.x);
-	obj->setTransformMatrix(&xfrm);
-
-	m_angularAccumulation += curVelToUse;
-	if ((m_angularAccumulation >= ANGULAR_LIMIT) && (m_angularVelocity > 0))
-	{
-		// Hit so either bounce or stop if too little remaining velocity.
-		m_angularVelocity *= -d->m_bounceVelocityPercent;
-
-		if( BitTest( m_options, TOPPLE_OPTIONS_NO_BOUNCE ) == TRUE || 
-				fabs(m_angularVelocity) < VELOCITY_BOUNCE_LIMIT )
-		{
-			// too slow, just stop
-			m_angularVelocity = 0;
-			m_toppleState = TOPPLE_DOWN;
-
-			if (d->m_killWhenToppled)
-			{
-				deathByToppling(obj);
-				if (d->m_reorientToppledRubble)
-				{
-					// we have a separate rubble state that needs to be upright, and centered
-					// on the new "center" pos...
-					Vector3 pos;
-					pos.X = 0;
-					pos.Y = 0;
-					pos.Z = obj->getGeometryInfo().getMaxHeightAbovePosition();
-					Matrix3D::Transform_Vector(*obj->getTransformMatrix(), pos, &pos);
-
-					Coord3D tmp;
-					tmp.x = pos.X;
-					tmp.y = pos.Y;
-					tmp.z = pos.Z;
-					obj->setPosition(&tmp);
-
-					// this relies on the fact that setOrientation always forces us straight up in the Z axis!
-					obj->setOrientation(obj->getOrientation());
-
-				}
-			} // if kill when toppled
-
-			if (d->m_killStumpWhenToppled)
-			{
-				Object* stump = TheGameLogic->findObjectByID(m_stumpID);
-				if (stump)
-				{
-					deathByToppling(stump);
-				}
-			}
-		}
-		else if( fabs(m_angularVelocity) >= VELOCITY_BOUNCE_SOUND_LIMIT )
-		{
-			// fast enough bounce to warrant the bounce fx
-			if( BitTest( m_options, TOPPLE_OPTIONS_NO_FX ) == FALSE )
-				FXList::doFXObj(d->m_bounceFX, obj);
-		}
-	}
-	else
-	{
-		m_angularVelocity += m_angularAcceleration;
-	}
-
-	Drawable *draw=obj->getDrawable();
-	if (draw)
-		draw->setShadowsEnabled(false);
-
-	return UPDATE_SLEEP_NONE;
-}
 
 //-------------------------------------------------------------------------------------------------
 /** Do the collision */
