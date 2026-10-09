@@ -14,10 +14,17 @@ struct Rva0014C4C0Element
 	unsigned m_b;
 };
 
+class Open2Rec14BBC0;
+void Open2Construct14BBC0(Open2Rec14BBC0 *place, const Open2Rec14BBC0 &value);
+
 namespace _STL
 {
 template <>
-void _Construct(Rva0014C4C0Element *p, const Rva0014C4C0Element &value);
+__forceinline void _Construct(Rva0014C4C0Element *p, const Rva0014C4C0Element &value)
+{
+	Open2Construct14BBC0(reinterpret_cast<Open2Rec14BBC0 *>(p),
+		reinterpret_cast<const Open2Rec14BBC0 &>(value));
+}
 }
 
 void Rva0014C5A0ListInsertAnchor(
