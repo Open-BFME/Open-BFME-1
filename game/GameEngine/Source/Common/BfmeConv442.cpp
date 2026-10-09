@@ -14,7 +14,13 @@ public:
 	BfmeSubBCF m_bfmeSub;
 };
 
+class Gen_009CBC90
+{
+public:
+	int bfmeAt(int index) const;
+};
+
 void BfmeThingBCF::bfmeGoBCF()
 {
-	m_bfmeSub.bfmeSendBCF(m_bfmeWhat);
+	((Gen_009CBC90 *)&m_bfmeSub)->bfmeAt((int)m_bfmeWhat);
 }
