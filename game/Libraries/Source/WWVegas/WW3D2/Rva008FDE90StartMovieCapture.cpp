@@ -21,7 +21,7 @@ struct Rva008FDE90Rect
     long bottom;
 };
 extern "C" __declspec(dllimport) int __stdcall GetWindowRect(void *, Rva008FDE90Rect *);
-extern const float Rva00C75350Zero;
+extern const float g_rva01075350;
 
 class BfmeThingTXA
 {
@@ -56,7 +56,7 @@ void Rva008FDE90StartMovieCapture(const char *filename_base, float frame_rate,
     int height = bounds.bottom - bounds.top;
     int width = bounds.right - bounds.left;
     int depth = 24;
-    if (frame_rate == Rva00C75350Zero)
+    if (frame_rate == g_rva01075350)
     {
         frame_rate = 1.0f;
         WW3D::PauseRecord = true;
