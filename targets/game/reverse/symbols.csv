@@ -12568,6 +12568,7 @@ name,address,notes
 ?Rva00064680NegativeScale@@3MB,0x01075354,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00064680 calls; autopin
 ?Rva00066A40Construct@@YAXPAXPBX@Z,0x00066A40,plain two-pointer spelling of the STLport _Construct<pair<const NameKeyType DamageFX>> the ledger already names at this address (U3_node_allocators.cpp)
 ?d_0005f2b0@@YAXXZ,0x0005F2B0,Address-only compatibility for withdrawn dump; native Rva0005F2B0InitializeAppWindows body (game/Main/Rva0005F2B0InitializeAppWindows.cpp); game/gen_asm/d_0005d5b0.asm still calls this name
+?d_00112a50@@YAXXZ,0x00112A50,Address-only compatibility for withdrawn dump; native embedPristineMap body (game/GameEngine/Source/Common/System/SaveGame/GameStateMap_embedPristineMap.cpp); game/gen_asm/d_000f93a0.asm still names this dump
 ?startHeadlessClients@GameEngine@@QAEXH@Z,0x0002E8FC
 ?Rva00094010Register@@YAXPAVINI@@ABVAsciiString@@PAVRva000940F0Definition@@@Z,0x00023344,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000940F0 calls; autopin
 ?Rva00094010Register@@YAXPAVINI@@ABVAsciiString@@PAVRva00094470Definition@@@Z,0x00023344,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00094470 calls; autopin
