@@ -2,17 +2,22 @@
 // (game/GameEngine/Source/Common/Rva00261920PartialSort.cpp). Same shape,
 // element is a plain int and the comparator is a raw cdecl function pointer
 // (retail calls it with `call ebp` directly, no vtable indirection).
-// Callees, in body order: gen00483480 (already declared/pinned by
-// ConstantZeroForwarders.cpp, zero-tail family), the still-unconverted
-// int-heap-adjust body at 0x0047E4F0 (reached through ILT thunk 0x0004293D),
+// Callees, in body order: matched Rva00483480 (zero-tail family),
+// the matched int-heap-adjust specialization at 0x0047E4F0
+// (reached through ILT thunk 0x0004293D),
 // and the sort-heap-finish body at 0x00483C20 (reached
 // through ILT thunk 0x000103CA). Real STLport template identity not
 // recovered.
 
 typedef bool ( *GenIntLess )( int, int );
 
-void gen00483480( void *first, void *last, void *compare, int zero, int alsoZero );
-void gen0047E4F0( int *first, int holeIndex, int len, int value, GenIntLess comp );
+struct Q3HeapCompare { void *m_state; };
+void Rva00483480(int **first, int **last, Q3HeapCompare compare);
+namespace _STL
+{
+template <class Iterator, class Distance, class Value, class Compare>
+void __adjust_heap(Iterator, Distance, Distance, Value, Compare);
+}
 void gen00483C20( void *first, void *last, void *compare );
 
 void gen00483E00( void *firstArgument, void *middleArgument,
@@ -23,14 +28,17 @@ void gen00483E00( void *firstArgument, void *middleArgument,
 	int *last = (int *)lastArgument;
 	GenIntLess compare = (GenIntLess)compareArgument;
 
-	gen00483480( first, middle, compare, 0, 0 );
+	// The matched heap primitive reads only the first three stack dwords;
+    // preserve the retail caller's two unused trailing tag arguments.
+    reinterpret_cast<void (__cdecl *)(int *, int *, GenIntLess, int, int)>(
+        &Rva00483480)(first, middle, compare, 0, 0);
 	for( int *i = middle; i < last; ++i )
 	{
 		if( compare( *i, *first ) )
 		{
 			int item = *i;
 			*i = *first;
-			gen0047E4F0( first, 0, (int)( middle - first ), item, compare );
+			_STL::__adjust_heap(first, 0, (int)(middle - first), item, compare);
 		}
 	}
 	gen00483C20( first, middle, compare );
@@ -46,7 +54,7 @@ void gen00483C20( void *firstArgument, void *lastArgument, void *compareArgument
 	{
 		int item = *( last - 1 );
 		*( last - 1 ) = *first;
-		gen0047E4F0( first, 0, (int)( ( last - 1 ) - first ), item, compare );
+		_STL::__adjust_heap(first, 0, (int)((last - 1) - first), item, compare);
 		--last;
 	}
 }
