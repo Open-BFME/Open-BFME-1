@@ -1,3 +1,22 @@
+// stlport
+#include <vector>
+
+struct Gen_t_000bb4e0_p4cd { int a[1]; Gen_t_000bb4e0_p4cd(); Gen_t_000bb4e0_p4cd(const Gen_t_000bb4e0_p4cd&); ~Gen_t_000bb4e0_p4cd(); Gen_t_000bb4e0_p4cd& operator=(const Gen_t_000bb4e0_p4cd&); };
+class Gen_000b9800 { public: int m(int); };
+struct Gen_t_000cc740_p4cd { int a[1]; Gen_t_000cc740_p4cd(); Gen_t_000cc740_p4cd(const Gen_t_000cc740_p4cd&); ~Gen_t_000cc740_p4cd(); Gen_t_000cc740_p4cd& operator=(const Gen_t_000cc740_p4cd&); };
+class Gen_000cc700 { public: int m(int); };
+struct Gen_t_0036d7d0_p4cd { int a[1]; Gen_t_0036d7d0_p4cd(); Gen_t_0036d7d0_p4cd(const Gen_t_0036d7d0_p4cd&); ~Gen_t_0036d7d0_p4cd(); Gen_t_0036d7d0_p4cd& operator=(const Gen_t_0036d7d0_p4cd&); };
+class Gen_0036c930 { public: int m(int); };
+struct Gen_t_00585a70_p4cd { int a[1]; Gen_t_00585a70_p4cd(); Gen_t_00585a70_p4cd(const Gen_t_00585a70_p4cd&); ~Gen_t_00585a70_p4cd(); Gen_t_00585a70_p4cd& operator=(const Gen_t_00585a70_p4cd&); };
+class Gen_005852f0 { public: int m(int); };
+namespace _STL
+{
+template <> _Vector_base<Gen_t_000bb4e0_p4cd, allocator<Gen_t_000bb4e0_p4cd> >::_Vector_base(unsigned int, const allocator<Gen_t_000bb4e0_p4cd> &);
+template <> _Vector_base<Gen_t_000cc740_p4cd, allocator<Gen_t_000cc740_p4cd> >::_Vector_base(unsigned int, const allocator<Gen_t_000cc740_p4cd> &);
+template <> _Vector_base<Gen_t_0036d7d0_p4cd, allocator<Gen_t_0036d7d0_p4cd> >::_Vector_base(unsigned int, const allocator<Gen_t_0036d7d0_p4cd> &);
+template <> _Vector_base<Gen_t_00585a70_p4cd, allocator<Gen_t_00585a70_p4cd> >::_Vector_base(unsigned int, const allocator<Gen_t_00585a70_p4cd> &);
+}
+
 // Four 76-byte vector copy constructors. Each asks the source for its
 // allocator, hands the element count and that allocator to an allocate-and-copy
 // member, and then copies the elements itself before writing the finish
@@ -22,27 +41,12 @@
 // that order. Left as member reads the compare goes against memory and the
 // body comes out three bytes longer.
 
-inline void *operator new(unsigned int, void *place)
-{
-	return place;
-}
-
-class BfmeAllocator
-{
-public:
-	BfmeAllocator(const BfmeAllocator &other);
-
-	char m_bfmeBody[0x04];
-};
-
 class Gen_000bb890
 {
 public:
 	Gen_000bb890(const Gen_000bb890 &other);
 
 private:
-	BfmeAllocator bfmeGetAllocator(void) const;			// ILT 0x0001E2A4
-	void bfmeAllocateAndCopy(int count, const BfmeAllocator &allocator);	// ILT 0x0001E579
 
 	int *m_bfmeStart;						// +0x00
 	int *m_bfmeFinish;						// +0x04
@@ -54,8 +58,6 @@ public:
 	Gen_000ce890(const Gen_000ce890 &other);
 
 private:
-	BfmeAllocator bfmeGetAllocator(void) const;			// ILT 0x00008BED
-	void bfmeAllocateAndCopy(int count, const BfmeAllocator &allocator);	// ILT 0x000067C1
 
 	int *m_bfmeStart;						// +0x00
 	int *m_bfmeFinish;						// +0x04
@@ -67,8 +69,6 @@ public:
 	Gen_0036e170(const Gen_0036e170 &other);
 
 private:
-	BfmeAllocator bfmeGetAllocator(void) const;			// ILT 0x000441BB
-	void bfmeAllocateAndCopy(int count, const BfmeAllocator &allocator);	// ILT 0x00019BF0
 
 	int *m_bfmeStart;						// +0x00
 	int *m_bfmeFinish;						// +0x04
@@ -80,8 +80,6 @@ public:
 	Gen_005862c0(const Gen_005862c0 &other);
 
 private:
-	BfmeAllocator bfmeGetAllocator(void) const;			// ILT 0x0003FFB7
-	void bfmeAllocateAndCopy(int count, const BfmeAllocator &allocator);	// ILT 0x00038122
 
 	int *m_bfmeStart;						// +0x00
 	int *m_bfmeFinish;						// +0x04
@@ -90,7 +88,12 @@ private:
 // ??0Gen_000bb890@@QAE@ABV0@@Z
 Gen_000bb890::Gen_000bb890(const Gen_000bb890 &other)
 {
-	bfmeAllocateAndCopy(other.m_bfmeFinish - other.m_bfmeStart, other.bfmeGetAllocator());
+	_STL::allocator<Gen_t_000bb4e0_p4cd> allocatorSlot;
+	reinterpret_cast<_STL::_Vector_base<Gen_t_000bb4e0_p4cd, _STL::allocator<Gen_t_000bb4e0_p4cd> > *>(this)->_STL::_Vector_base<Gen_t_000bb4e0_p4cd, _STL::allocator<Gen_t_000bb4e0_p4cd> > ::_Vector_base(
+		(unsigned int)(other.m_bfmeFinish - other.m_bfmeStart),
+		*reinterpret_cast<const _STL::allocator<Gen_t_000bb4e0_p4cd> *>(
+			reinterpret_cast<Gen_000b9800 *>(const_cast<Gen_000bb890 *>(&other))->m(
+				reinterpret_cast<int>(&allocatorSlot))));
 
 	const int *last = other.m_bfmeFinish;
 	const int *first = other.m_bfmeStart;
@@ -110,7 +113,12 @@ Gen_000bb890::Gen_000bb890(const Gen_000bb890 &other)
 // ??0Gen_000ce890@@QAE@ABV0@@Z
 Gen_000ce890::Gen_000ce890(const Gen_000ce890 &other)
 {
-	bfmeAllocateAndCopy(other.m_bfmeFinish - other.m_bfmeStart, other.bfmeGetAllocator());
+	_STL::allocator<Gen_t_000cc740_p4cd> allocatorSlot;
+	reinterpret_cast<_STL::_Vector_base<Gen_t_000cc740_p4cd, _STL::allocator<Gen_t_000cc740_p4cd> > *>(this)->_STL::_Vector_base<Gen_t_000cc740_p4cd, _STL::allocator<Gen_t_000cc740_p4cd> > ::_Vector_base(
+		(unsigned int)(other.m_bfmeFinish - other.m_bfmeStart),
+		*reinterpret_cast<const _STL::allocator<Gen_t_000cc740_p4cd> *>(
+			reinterpret_cast<Gen_000cc700 *>(const_cast<Gen_000ce890 *>(&other))->m(
+				reinterpret_cast<int>(&allocatorSlot))));
 
 	const int *last = other.m_bfmeFinish;
 	const int *first = other.m_bfmeStart;
@@ -130,7 +138,12 @@ Gen_000ce890::Gen_000ce890(const Gen_000ce890 &other)
 // ??0Gen_0036e170@@QAE@ABV0@@Z
 Gen_0036e170::Gen_0036e170(const Gen_0036e170 &other)
 {
-	bfmeAllocateAndCopy(other.m_bfmeFinish - other.m_bfmeStart, other.bfmeGetAllocator());
+	_STL::allocator<Gen_t_0036d7d0_p4cd> allocatorSlot;
+	reinterpret_cast<_STL::_Vector_base<Gen_t_0036d7d0_p4cd, _STL::allocator<Gen_t_0036d7d0_p4cd> > *>(this)->_STL::_Vector_base<Gen_t_0036d7d0_p4cd, _STL::allocator<Gen_t_0036d7d0_p4cd> > ::_Vector_base(
+		(unsigned int)(other.m_bfmeFinish - other.m_bfmeStart),
+		*reinterpret_cast<const _STL::allocator<Gen_t_0036d7d0_p4cd> *>(
+			reinterpret_cast<Gen_0036c930 *>(const_cast<Gen_0036e170 *>(&other))->m(
+				reinterpret_cast<int>(&allocatorSlot))));
 
 	const int *last = other.m_bfmeFinish;
 	const int *first = other.m_bfmeStart;
@@ -150,7 +163,12 @@ Gen_0036e170::Gen_0036e170(const Gen_0036e170 &other)
 // ??0Gen_005862c0@@QAE@ABV0@@Z
 Gen_005862c0::Gen_005862c0(const Gen_005862c0 &other)
 {
-	bfmeAllocateAndCopy(other.m_bfmeFinish - other.m_bfmeStart, other.bfmeGetAllocator());
+	_STL::allocator<Gen_t_00585a70_p4cd> allocatorSlot;
+	reinterpret_cast<_STL::_Vector_base<Gen_t_00585a70_p4cd, _STL::allocator<Gen_t_00585a70_p4cd> > *>(this)->_STL::_Vector_base<Gen_t_00585a70_p4cd, _STL::allocator<Gen_t_00585a70_p4cd> > ::_Vector_base(
+		(unsigned int)(other.m_bfmeFinish - other.m_bfmeStart),
+		*reinterpret_cast<const _STL::allocator<Gen_t_00585a70_p4cd> *>(
+			reinterpret_cast<Gen_005852f0 *>(const_cast<Gen_005862c0 *>(&other))->m(
+				reinterpret_cast<int>(&allocatorSlot))));
 
 	const int *last = other.m_bfmeFinish;
 	const int *first = other.m_bfmeStart;
