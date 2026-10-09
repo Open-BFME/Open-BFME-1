@@ -10,11 +10,18 @@ enum NameKeyType
 namespace _STL
 {
 
-class __new_alloc
+// Retail 0x0082E540 is the matched node pool refill/mutex body.
+static __forceinline void *vectorSmallAllocate(unsigned int bytes);
+template <bool Threads, int Instance>
+class __node_alloc
 {
-public:
-	static void *allocate( unsigned int bytes );
+	static void *__cdecl _M_allocate(unsigned int bytes);
+	friend void *vectorSmallAllocate(unsigned int bytes);
 };
+static __forceinline void *vectorSmallAllocate(unsigned int bytes)
+{
+	return __node_alloc<true, 0>::_M_allocate(bytes);
+}
 
 }
 
@@ -62,7 +69,7 @@ public:
 	__forceinline Rva00197AE0Temporary()
 		: m_header( 0 )
 	{
-		m_header = _STL::__new_alloc::allocate( 0x14 );
+		m_header = _STL::vectorSmallAllocate( 0x14 );
 		m_count = 0;
 		*(unsigned char *)m_header = 0;
 		*(void **)((char *)m_header + 4) = 0;
