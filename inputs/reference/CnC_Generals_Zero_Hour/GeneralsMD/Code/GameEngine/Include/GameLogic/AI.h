@@ -138,6 +138,7 @@ class TAiData : public Snapshot
 public:
 	TAiData();
 	~TAiData();
+	TAiData &operator=(const TAiData &other);  // BFME: out of line (retail 0x0014A130)
 
 	void addSideInfo(AISideInfo *info);
 	void addFactionBuildList(AISideBuildList *buildList);

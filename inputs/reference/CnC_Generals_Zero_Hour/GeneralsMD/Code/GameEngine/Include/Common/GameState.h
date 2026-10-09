@@ -122,6 +122,7 @@ struct AvailableGameInfo
 	AvailableGameInfo *next;
 	AvailableGameInfo *prev;
 
+	~AvailableGameInfo();  // BFME: out of line (retail 0x0010DAE0)
 };
 
 // ------------------------------------------------------------------------------------------------

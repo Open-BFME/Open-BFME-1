@@ -57,7 +57,7 @@ public:
 	void detach();
 
 	// For debugging purposes
-	virtual AsciiString getContentsAsAsciiString(void) { return AsciiString::TheEmptyString; }
+	virtual AsciiString getContentsAsAsciiString(void);  // BFME: out of line (retail 0x006747C0)
 
 protected:
 	UnsignedInt m_timestamp;
