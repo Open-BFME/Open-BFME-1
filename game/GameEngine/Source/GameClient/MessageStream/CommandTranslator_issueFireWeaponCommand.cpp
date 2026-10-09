@@ -46,11 +46,20 @@ public:
 	char m_padding70[0x10];
 	int m_maxShotsToFire;
 
-	WeaponSlotType getWeaponSlot() const { return m_weaponSlot; }
-	int getMaxShotsToFire() const { return m_maxShotsToFire; }
 	const SpecialPowerTemplate *getSpecialPowerTemplate() const { return m_specialPowerTemplate; }
 	Bool isValidObjectTarget(const Drawable *source, const Drawable *target) const;
 };
+
+// Keep the retail field reads local instead of emitting conflicting accessor COMDATs.
+static __forceinline WeaponSlotType fireWeaponSlot(const CommandButton *command)
+{
+	return command->m_weaponSlot;
+}
+
+static __forceinline int fireWeaponMaxShots(const CommandButton *command)
+{
+	return command->m_maxShotsToFire;
+}
 
 typedef _STL::list<Drawable *> DrawableList;
 
@@ -125,7 +134,7 @@ public:
 
 extern InGameUI *TheInGameUI;
 extern MessageStream *TheMessageStream;
-void pickAndPlayUnitVoiceResponse(const DrawableList *list, GameMessage::Type type,
+bool pickAndPlayUnitVoiceResponse(const DrawableList *list, GameMessage::Type type,
 	PickAndPlayInfo *info);
 
 class CommandTranslator
@@ -165,16 +174,16 @@ GameMessage::Type CommandTranslator::issueFireWeaponCommand(
 			if (commandType == DO_COMMAND)
 			{
 				GameMessage *msg = TheMessageStream->appendMessage(msgType);
-				msg->appendIntegerArgument(command->getWeaponSlot());
+				msg->appendIntegerArgument(fireWeaponSlot(command));
 				msg->appendLocationArgument(*pos);
-				msg->appendIntegerArgument(command->getMaxShotsToFire());
+				msg->appendIntegerArgument(fireWeaponMaxShots(command));
 				UnsignedInt targetID = (target && target->m_object) ? target->m_object->m_id : 0;
 				msg->appendObjectIDArgument(targetID);
 
 				PickAndPlayInfo info;
 				info.m_position = *pos;
 				info.m_drawTarget = target;
-				WeaponSlotType slot = command->getWeaponSlot();
+				WeaponSlotType slot = fireWeaponSlot(command);
 				info.m_weaponSlot = &slot;
 				pickAndPlayUnitVoiceResponse(TheInGameUI->getAllSelectedDrawables(), GameMessage::MSG_DO_WEAPON_AT_LOCATION, &info);
 			}
@@ -185,14 +194,14 @@ GameMessage::Type CommandTranslator::issueFireWeaponCommand(
 			if (commandType == DO_COMMAND)
 			{
 				GameMessage *msg = TheMessageStream->appendMessage(msgType);
-				msg->appendIntegerArgument(command->getWeaponSlot());
+				msg->appendIntegerArgument(fireWeaponSlot(command));
 				UnsignedInt targetID = (target && target->m_object) ? target->m_object->m_id : 0;
 				msg->appendObjectIDArgument(targetID);
-				msg->appendIntegerArgument(command->getMaxShotsToFire());
+				msg->appendIntegerArgument(fireWeaponMaxShots(command));
 
 				PickAndPlayInfo info;
 				info.m_drawTarget = target;
-				WeaponSlotType slot = command->getWeaponSlot();
+				WeaponSlotType slot = fireWeaponSlot(command);
 				info.m_weaponSlot = &slot;
 				pickAndPlayUnitVoiceResponse(TheInGameUI->getAllSelectedDrawables(), GameMessage::MSG_DO_WEAPON_AT_OBJECT, &info);
 			}
@@ -204,16 +213,16 @@ GameMessage::Type CommandTranslator::issueFireWeaponCommand(
 		if (commandType == DO_COMMAND)
 		{
 			GameMessage *msg = TheMessageStream->appendMessage(msgType);
-			msg->appendIntegerArgument(command->getWeaponSlot());
+			msg->appendIntegerArgument(fireWeaponSlot(command));
 			msg->appendLocationArgument(*pos);
-			msg->appendIntegerArgument(command->getMaxShotsToFire());
+			msg->appendIntegerArgument(fireWeaponMaxShots(command));
 			UnsignedInt targetID = (target && target->m_object) ? target->m_object->m_id : 0;
 			msg->appendObjectIDArgument(targetID);
 
 			PickAndPlayInfo info;
 			info.m_position = *pos;
 			info.m_drawTarget = target;
-			WeaponSlotType slot = command->getWeaponSlot();
+			WeaponSlotType slot = fireWeaponSlot(command);
 			info.m_weaponSlot = &slot;
 			pickAndPlayUnitVoiceResponse(TheInGameUI->getAllSelectedDrawables(), GameMessage::MSG_DO_WEAPON_AT_LOCATION, &info);
 		}
@@ -230,7 +239,7 @@ GameMessage::Type CommandTranslator::issueFireWeaponCommand(
 			info.m_drawTarget = target;
 			if (pos)
 				info.m_position = *pos;
-			WeaponSlotType slot = command->getWeaponSlot();
+			WeaponSlotType slot = fireWeaponSlot(command);
 			info.m_weaponSlot = &slot;
 			pickAndPlayUnitVoiceResponse(TheInGameUI->getAllSelectedDrawables(), GameMessage::MSG_DO_WEAPON, &info);
 		}
