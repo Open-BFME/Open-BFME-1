@@ -2124,18 +2124,6 @@ void GameWindowManager::freeStaticStrings(void)
 	theDrawString.~AsciiString();
 }
 
-// ??0WindowLayoutInfo@@QAE@XZ present-unmatched
-WindowLayoutInfo::WindowLayoutInfo() :
-	version(0),
-	init(NULL),
-	update(NULL),
-	shutdown(NULL),
-	initNameString(AsciiString::TheEmptyString),
-	updateNameString(AsciiString::TheEmptyString),
-	shutdownNameString(AsciiString::TheEmptyString)
-{
-		windows.clear();
-}
 
 // GameWindowManager::winCreateFromScript =====================================
 /** Parse through a window .wnd file and create all the windows
