@@ -17,7 +17,9 @@ extern "C" unsigned char Vp6FilterConst8740[];
 extern "C" unsigned char Vp6FilterConst8750[];
 extern "C" unsigned char Vp6FilterConst8760[];
 extern "C" unsigned char Vp6FilterConst8770[];
-extern "C" unsigned char Vp6FilterConst8790[];
+// Retail MMX loads eight bytes at 0x012D8790; alignment padding is excluded.
+extern "C" { __declspec(align(16)) unsigned char Vp6FilterConst8790[8] =
+	{0xe7, 0xe7, 0xe7, 0xe7, 0xe7, 0xe7, 0xe7, 0xe7}; }
 
 extern "C" void __cdecl Rva009BE180Vp6FilterWideV2(
 	void *unused, void *sourceArgument, void *destinationArgument,
