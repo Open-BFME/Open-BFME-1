@@ -53,9 +53,9 @@ Bool Rva00099A40Owner::dup_00099A40(AsciiString *a, UnicodeString *b)
 	if (fileSize < 0x25)
 		return false;
 	AsciiString path;
-	if (!a->isEmpty()) {
+	if (!a->StringBase<char>::isEmpty()) {
 		path = RecorderClass::getReplayDir();
-		path.concat(*a);
+		path.StringBase<char>::concat(*a);
 	} else {
 		Int i = 1;
 		while (true) {
@@ -81,7 +81,7 @@ Bool Rva00099A40Owner::dup_00099A40(AsciiString *a, UnicodeString *b)
 		return false;
 	// Skips the source title so the new one in b replaces it.
 	UnicodeString title = readUnicodeString();
-	fwprintf(out, L"%ws", b->str());
+	fwprintf(out, L"%ws", ((const StringBase<unsigned short> *)b)->str());
 	fputwc(0, out);
 	while (true) {
 		UnsignedInt n = fread(buf, 1, 0x10000, m_file);
