@@ -22,7 +22,7 @@
 
 extern void * (__cdecl *bfmeMemCopy)(void *destination, const void *source, unsigned int bytes);
 
-void __cdecl bfmeFreeScalar(void *block);			// retail 0x00881EB0
+void __cdecl operator delete(void *block);			// retail 0x00881EB0
 
 class BfmeOwnedE
 {
@@ -148,7 +148,7 @@ void Gen_002901C0::bfmeClear(void)
 		{
 			element->~BfmeElemF();
 
-			bfmeFreeScalar(element);
+			operator delete(element);
 		}
 
 		++it;

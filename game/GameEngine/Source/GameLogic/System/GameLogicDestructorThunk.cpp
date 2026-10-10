@@ -64,7 +64,7 @@ public:
 	void bfmeClearXY(void);
 };
 
-extern void __cdecl bfmeFreeScalar(void *block);                     // 0x00881EB0
+extern void __cdecl operator delete(void *block);                     // 0x00881EB0
 extern void __cdecl bfmeDeallocate(void *block, unsigned int bytes); // 0x0082E5F0
 
 // Existing matched receiver declarations.  These names are real source-level
@@ -451,7 +451,7 @@ public:
 			unsigned int bytes = sizeof(int) * (m_end - start);
 
 			if (bytes > 0x80)
-				bfmeFreeScalar(start);
+				operator delete(start);
 			else
 				bfmeDeallocate(start, bytes);
 		}

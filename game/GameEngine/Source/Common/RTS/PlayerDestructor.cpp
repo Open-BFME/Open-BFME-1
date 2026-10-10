@@ -46,7 +46,7 @@ public:
     virtual ~BfmeBaseVUQ() {}
 };
 
-void __cdecl bfmeFreeScalar(void *block);
+void __cdecl operator delete(void *block);
 void __cdecl bfmeDeallocate(void *block, unsigned int bytes);
 
 class BfmeVecMemberY
@@ -57,7 +57,7 @@ public:
         int *start = m_start;
         if (start) {
             unsigned int bytes = sizeof(int) * (m_end - start);
-            if (bytes > 0x80) bfmeFreeScalar(start);
+            if (bytes > 0x80) operator delete(start);
             else bfmeDeallocate(start, bytes);
         }
     }

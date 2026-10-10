@@ -21,7 +21,6 @@ static inline void nodePoolDeallocate(void *block, unsigned int bytes) { __node_
 }
 
 extern void __cdecl operator delete(void *block);
-extern void __cdecl bfmeFreeScalar(void *block);
 
 class SoundKeyPair
 {
@@ -96,7 +95,7 @@ LargeGroupAudioMap::~LargeGroupAudioMap()
 		if (pair)
 		{
 			pair->~SoundKeyPair();
-			bfmeFreeScalar(pair);
+			operator delete(pair);
 		}
 		++it;
 		end = m_sound.m_end;

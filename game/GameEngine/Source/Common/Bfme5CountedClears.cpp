@@ -85,7 +85,7 @@ public:
 	~BfmeElemN(void);					// retail thunk 0x000295FF -> 0x0060AA70
 };
 
-void __cdecl bfmeFreeScalar(void *block);			// retail 0x00881EB0
+void __cdecl operator delete(void *block);			// retail 0x00881EB0
 
 inline BfmeElemN **bfmeCopyElems(BfmeElemN **destination, BfmeElemN **first, BfmeElemN **last)
 {
@@ -107,7 +107,7 @@ public:
 			unsigned int bytes = sizeof(BfmeElemN *) * (m_bfmeEnd - m_bfmeStart);
 
 			if (bytes > 0x80)
-				bfmeFreeScalar(m_bfmeStart);
+				operator delete(m_bfmeStart);
 			else
 				bfmeDeallocate(m_bfmeStart, bytes);
 		}
@@ -208,7 +208,7 @@ void Gen_0060B470::bfmeClear(void)
 		{
 			element->~BfmeElemN();
 
-			bfmeFreeScalar(element);
+			operator delete(element);
 		}
 	}
 

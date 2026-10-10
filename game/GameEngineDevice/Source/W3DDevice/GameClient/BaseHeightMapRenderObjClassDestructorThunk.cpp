@@ -4,7 +4,7 @@
 // the retail BFME additions (two vector<bool> objects and terrain buffers)
 // while leaving the imported ZH header untouched.
 
-void __cdecl bfmeFreeScalar(void *block); // retail 0x00881EB0
+void __cdecl operator delete(void *block); // retail 0x00881EB0
 void __cdecl bfmeDeallocate(void *block, unsigned int bytes); // retail 0x0082E5F0
 void __cdecl operator delete[](void *block); // retail 0x00881EF0
 
@@ -55,7 +55,7 @@ public:
 		{
 			unsigned int bytes = sizeof(int) * (m_end - start);
 			if (bytes > 0x80)
-				bfmeFreeScalar(start);
+				operator delete(start);
 			else
 				bfmeDeallocate(start, bytes);
 		}
