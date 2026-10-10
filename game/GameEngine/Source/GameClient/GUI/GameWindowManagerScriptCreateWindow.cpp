@@ -134,7 +134,7 @@ static GameWindow *peekWindow( void )
 // ?setWindowText@@YAXPAVGameWindow@@VAsciiString@@@Z present-unmatched
 static void setWindowText( GameWindow *window, AsciiString textLabel )
 {
-	if( textLabel.isEmpty() )
+	if( textLabel.StringBase<char>::isEmpty() )
 		return;
 
 	UnicodeString theText, entryText;
