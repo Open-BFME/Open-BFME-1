@@ -9,33 +9,32 @@
 
 // 0x0080B070, the teardown all three destructors here hand the record's first
 // pointer to; address-derived and pinned.
-void Rva0080B070Destroy( void *object );
+extern "C" void Rva0080B070( void *object );
 
 // 0x007F0030, the one-argument release the rest of this directory uses.
 void bfmeGo1019C( int block );
 
-// An import thunk the ledger already names; the C spelling is what this call
-// site needs.
-extern "C" void Rva0081BDE4( void );
+// Preserve the ledger-owned import thunk spelling and its direct rel32 call.
+void ji_0081bde4( void );
 
-__declspec(dllimport) void __stdcall Rva01358F30Sleep( unsigned int ms );
+extern "C" __declspec(dllimport) void __stdcall Sleep( unsigned long ms );
 
 // The two byte swaps in Y4DirtySock's range and the reset at 0x0080DFC0.
-unsigned short Rva007FFA60Swap16( unsigned short value );   // 0x007FFA60
+extern "C" unsigned short Rva007FFA60( unsigned short value );   // 0x007FFA60
 unsigned int   Rva007FFAD0( unsigned int value );           // 0x007FFAD0
 // The second argument is a KEY POINTER, not a flag: 0x00806710 passes the
 // 0x20-byte Secret it just derived, and 0x00806A90 passes null.
-void Rva0080DFC0( void *object, const void *secret );        // 0x0080DFC0
-int  Rva0080DF70( const char *key, char *secret, char *ticket ); // 0x0080DF70
+extern "C" void Rva0080DFC0( void *object, const void *secret );        // 0x0080DFC0
+extern "C" int  Rva0080DF70( const char *key, char *secret, char *ticket ); // 0x0080DF70
 extern "C" char *strncpy( char *dest, const char *src, unsigned int count );
 extern "C" void *memcpy( void *dest, const void *src, unsigned int count );
 extern "C" void *memset( void *dest, int value, unsigned int count );
 void *Rva007F0000Alloc( int size );                         // 0x007F0000
-unsigned short Rva007FF990Swap16( unsigned short value );   // 0x007FF990
-unsigned int   Rva007FF9F0Swap32( unsigned int value );     // 0x007FF9F0
-void *Rva0080B000Create( void );                            // 0x0080B000
-int   Rva0080B150( void *object, void *addr, int addrLen );  // 0x0080B150
-int   Rva0080B460( void *object, int mode );                // 0x0080B460
+extern "C" unsigned short Rva007FF990( unsigned short value );   // 0x007FF990
+extern "C" unsigned int   Rva007FF9F0( unsigned int value );     // 0x007FF9F0
+extern "C" void *Rva0080B000( void );                            // 0x0080B000
+extern "C" int   Rva0080B150( void *object, void *addr, int addrLen );  // 0x0080B150
+extern "C" int   Rva0080B460( void *object, int mode );                // 0x0080B460
 extern "C" int Rva0080ADE0( void *object, int releaseState );
 extern "C" void *Rva007FD2D0( int family, int type, int protocol );
 extern "C" int Rva007FF790( char *address, const char *text );
@@ -48,7 +47,7 @@ int   Rva00807370( Rva00806580Record *record, int selector, int flag,
 int   Rva008076E0( Rva00806580Record *record, unsigned int *outA,
 		unsigned int *outB, char **outText );               // 0x008076E0
 void  Rva00806B10( Rva00806580Record *record );             // 0x00806B10
-int   Rva0080E330( void *crypto, int length );              // 0x0080E330
+extern "C" int   Rva0080E330( void *crypto, int length );              // 0x0080E330
 // Accept at 0x0080B0A0, connect at 0x0080B1B0, the comm pump at 0x0080B4B0,
 // send/recv/info through the comm object, and the three crypto helpers the
 // packet path uses after a complete header has arrived.
@@ -64,18 +63,18 @@ extern "C" int   Rva0080E200( void *crypto, const unsigned char *data,
 		int length );
 extern "C" int   Rva0080E300( void *crypto, int length );
 int   Rva00807520( Rva00806580Record *record, int length, int limit ); // 0x00807520
-void  Rva0080E350( void *crypto, char *packet, int length );  // 0x0080E350
-void  Rva0080E410( void *crypto, char *packet, int length );  // 0x0080E410
+extern "C" void  Rva0080E350( void *crypto, char *packet, int length );  // 0x0080E350
+extern "C" void  Rva0080E410( void *crypto, char *packet, int length );  // 0x0080E410
 extern "C" unsigned int strlen( const char *text );
 
-// The empty string this module hands back for a block with no payload.
-extern char g_Rva0130ACE0Empty[];
-extern char g_0130ACF8[];
+// Witnessed NUL bytes used as empty strings; no larger array extent is claimed.
+char g_Rva0130ACE0Empty[1];
+char g_Va0130ACF8[1];
 // 0x007FEA00 is retail's tick forwarder; it is declared with its defining
 // (C) spelling further down with the rest of the socket prototypes.
 
 // The tick this module first ran at, filled in once and never again.
-extern unsigned int g_Rva0130ACDCEpoch;
+unsigned int g_Rva0130ACDCEpoch;
 
 // Declared here rather than included: retail reaches WSAStartup by a direct
 // rel32 to the stub at 0x0081BDF6, which a <winsock2.h> declaration's dllimport
@@ -529,7 +528,7 @@ extern "C" int Rva0080B1B0( Rva0080B1B0Comm *comm, int secu, char *name,
 	comm->m_field114 = 0;
 
 	if( name == 0 )
-		name = g_0130ACF8;
+		name = g_Va0130ACF8;
 
 	if( port <= 0 )
 		port = comm->m_backend != 0 ? 0x1BB : 0x50;
@@ -594,10 +593,10 @@ extern "C" int Rva0080B1B0( Rva0080B1B0Comm *comm, int secu, char *name,
 void Rva00806580( Rva00806580Record *record )
 {
 	if( record->m_field00 != 0 )
-		Rva0080B070Destroy( record->m_field00 );
+		Rva0080B070( record->m_field00 );
 
-	Rva01358F30Sleep( 50 );
-	Rva0081BDE4();
+	Sleep( 50 );
+	ji_0081bde4();
 
 	if( record->m_field7C != 0 )
 		bfmeGo1019C( (int)record->m_field7C );
@@ -621,7 +620,7 @@ int Rva008068B0( Rva00806580Record *record )
 {
 	if( record->m_field00 != 0 )
 	{
-		Rva0080B070Destroy( record->m_field00 );
+		Rva0080B070( record->m_field00 );
 		record->m_field00 = 0;
 	}
 
@@ -639,7 +638,7 @@ int Rva00806A10( Rva00806580Record *record )
 {
 	if( record->m_field00 != 0 )
 	{
-		Rva0080B070Destroy( record->m_field00 );
+		Rva0080B070( record->m_field00 );
 		record->m_field00 = 0;
 	}
 
@@ -683,7 +682,7 @@ int Rva00806600( Rva00806580Record *record, int selector )
 	int pending;
 
 	if( selector == 'port' )
-		return Rva007FFA60Swap16( record->m_port );
+		return Rva007FFA60( record->m_port );
 	if( selector == 'addr' )
 		return Rva007FFAD0( record->m_addr );
 	if( selector == 'ladr' )
@@ -815,10 +814,10 @@ int Rva00806910( Rva00806580Record *record, unsigned int addr,
 
 	memset( &record->m_family, 0, 0x10 );
 	record->m_family = 2;
-	record->m_addr = Rva007FF9F0Swap32( addr );
-	record->m_port = Rva007FF990Swap16( port );
+	record->m_addr = Rva007FF9F0( addr );
+	record->m_port = Rva007FF990( port );
 
-	record->m_field00 = Rva0080B000Create();
+	record->m_field00 = Rva0080B000();
 	if( record->m_field00 == 0 )
 		return -1;
 
@@ -871,8 +870,8 @@ int Rva00806710( Rva00806580Record *record, const char *name, unsigned int addr,
 
 	memset( &record->m_family, 0, 0x10 );
 	record->m_family = 2;
-	record->m_addr = Rva007FF9F0Swap32( addr );
-	record->m_port = Rva007FF990Swap16( port );
+	record->m_addr = Rva007FF9F0( addr );
+	record->m_port = Rva007FF990( port );
 
 	if( name != 0 )
 	{
@@ -920,7 +919,7 @@ void Rva008078B0( Rva00806580Record *record )
 	if( record->m_field00 == 0 )
 		return;
 
-	Rva0080B070Destroy( record->m_field00 );
+	Rva0080B070( record->m_field00 );
 	record->m_field00 = 0;
 }
 
@@ -1209,7 +1208,7 @@ void Rva00806B10( Rva00806580Record *record )
 		if( ref == 0 )
 			return;
 
-		Rva0080B070Destroy( record->m_field00 );
+		Rva0080B070( record->m_field00 );
 		record->m_field00 = ref;
 		record->m_field5C = 3;
 		record->m_outSent = 0;
@@ -1240,9 +1239,9 @@ void Rva00806B10( Rva00806580Record *record )
 		if( Rva007FEA00() > (unsigned int)record->m_field60 )
 		{
 			if( record->m_field00 != 0 )
-				Rva0080B070Destroy( record->m_field00 );
+				Rva0080B070( record->m_field00 );
 
-			record->m_field00 = Rva0080B000Create();
+			record->m_field00 = Rva0080B000();
 			if( record->m_field00 == 0 )
 				return;
 
@@ -1250,7 +1249,7 @@ void Rva00806B10( Rva00806580Record *record )
 					record->m_field8C != 0,
 					record->m_name,
 					Rva007FFAD0( record->m_addr ),
-					Rva007FFA60Swap16( record->m_port ) ) < 0 )
+					Rva007FFA60( record->m_port ) ) < 0 )
 				return;
 
 			record->m_field60 = Rva007FEA00() + 0x7530;
@@ -1271,7 +1270,7 @@ void Rva00806B10( Rva00806580Record *record )
 		if( Rva0080DBF0( record->m_field00, 'bind', addr, 0x10 ) == 0 )
 		{
 			record->m_localAddr = Rva007FFAD0( *(unsigned int *)( addr + 4 ) );
-			record->m_localPort = Rva007FFA60Swap16( *(unsigned short *)( addr + 2 ) );
+			record->m_localPort = Rva007FFA60( *(unsigned short *)( addr + 2 ) );
 		}
 
 		record->m_field5C = 3;
@@ -1310,7 +1309,7 @@ void Rva00806B10( Rva00806580Record *record )
 				record->m_outUsed - record->m_outSent );
 		if( len < 0 )
 		{
-			Rva0080B070Destroy( record->m_field00 );
+			Rva0080B070( record->m_field00 );
 			record->m_field00 = 0;
 			return;
 		}
@@ -1338,7 +1337,7 @@ void Rva00806B10( Rva00806580Record *record )
 				record->m_field74 - record->m_field78 );
 		if( len < 0 )
 		{
-			Rva0080B070Destroy( record->m_field00 );
+			Rva0080B070( record->m_field00 );
 			record->m_field00 = 0;
 			return;
 		}
@@ -1355,7 +1354,7 @@ void Rva00806B10( Rva00806580Record *record )
 
 			if( record->m_field74 < 0xC || record->m_field74 > 0x8000 )
 			{
-				Rva0080B070Destroy( record->m_field00 );
+				Rva0080B070( record->m_field00 );
 				record->m_field00 = 0;
 				return;
 			}
@@ -1363,7 +1362,7 @@ void Rva00806B10( Rva00806580Record *record )
 			record->m_field7C = Rva007F0000Alloc( record->m_field74 + 1 );
 			if( record->m_field7C == 0 )
 			{
-				Rva0080B070Destroy( record->m_field00 );
+				Rva0080B070( record->m_field00 );
 				record->m_field00 = 0;
 				return;
 			}
@@ -1389,7 +1388,7 @@ void Rva00806B10( Rva00806580Record *record )
 					record->m_field74 - record->m_field78 );
 			if( len < 0 )
 			{
-				Rva0080B070Destroy( record->m_field00 );
+				Rva0080B070( record->m_field00 );
 				record->m_field00 = 0;
 				return;
 			}
@@ -1406,7 +1405,7 @@ void Rva00806B10( Rva00806580Record *record )
 						(unsigned char *)record->m_field7C,
 						record->m_field74 ) < 0 )
 				{
-					Rva0080B070Destroy( record->m_field00 );
+					Rva0080B070( record->m_field00 );
 					record->m_field00 = 0;
 					return;
 				}

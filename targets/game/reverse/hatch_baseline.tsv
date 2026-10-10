@@ -844,6 +844,7 @@ address_global	game/Libraries/Source/DirtySock/Y2Rva007EBAE0Module.cpp	g_Rva0130
 address_global	game/Libraries/Source/DirtySock/Y2Rva00806580Module.cpp	g_Rva0080B4B0ClientPrefix	2
 address_global	game/Libraries/Source/DirtySock/Y2Rva00806580Module.cpp	g_Rva0130ACDCEpoch	3
 address_global	game/Libraries/Source/DirtySock/Y2Rva00806580Module.cpp	g_Rva0130ACE0Empty	2
+address_global	game/Libraries/Source/DirtySock/Y2Rva00806580Module.cpp	g_Va0130ACF8	2	allow=3666e4de4d8230669d7c4ff97390e8c7dac245b4
 address_global	game/Libraries/Source/DirtySock/Y4CivilTime.c	g_Rva0112A110Hex	2
 address_global	game/Libraries/Source/DirtySock/Y4CivilTime.c	g_Rva0112A530MonthDays	2
 address_global	game/Libraries/Source/DirtySock/Y4CommAlloc.c	g_Rva0130ACFAFilter	2
