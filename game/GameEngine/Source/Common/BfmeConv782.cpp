@@ -1,7 +1,20 @@
-class BfmeSubDUB
+// cl: /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WWDebug
+#include "../../../Libraries/Source/WWVegas/WW3D2/seglinerenderer.h"
+
+class TeamsInfoRec
 {
 public:
-	void bfmeCallDUB();
+	void clear();
+};
+
+class Rva0095C7F0State
+{
+public:
+	void initialize();
+};
+
+class BfmeSubDUB
+{
 };
 
 struct BfmeThingDUB
@@ -15,20 +28,16 @@ struct BfmeThingDUB
 
 void BfmeThingDUB::bfmeGoDUB()
 {
-	m_bfmeA.bfmeCallDUB();
-	m_bfmeB.bfmeCallDUB();
+	((TeamsInfoRec *)&m_bfmeA)->clear();
+	((TeamsInfoRec *)&m_bfmeB)->clear();
 }
 
 class BfmeSubDUC
 {
-public:
-	void bfmeOneDUC();
 };
 
 class BfmeSubDUD
 {
-public:
-	void bfmeTwoDUD();
 };
 
 struct BfmeThingDUC
@@ -42,6 +51,6 @@ struct BfmeThingDUC
 
 void BfmeThingDUC::bfmeGoDUC()
 {
-	m_bfmeA.bfmeOneDUC();
-	m_bfmeB.bfmeTwoDUD();
+	((SegLineRendererClass *)&m_bfmeA)->Reset_Line();
+	((Rva0095C7F0State *)&m_bfmeB)->initialize();
 }
