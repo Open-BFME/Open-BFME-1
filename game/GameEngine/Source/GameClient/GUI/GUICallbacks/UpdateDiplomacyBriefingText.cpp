@@ -40,7 +40,7 @@ void UpdateDiplomacyBriefingText(const UnicodeString &text, bool clear);
 
 void UpdateDiplomacyBriefingText(const AsciiString &text, bool clear)
 {
-	if (text.isEmpty())
+	if (text.StringBase<char>::isEmpty())
 		UpdateDiplomacyBriefingText(UnicodeString(L""), clear);
 	else
 	{
