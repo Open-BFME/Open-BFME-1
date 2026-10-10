@@ -1,9 +1,17 @@
 // cl: /DNDEBUG /MD /EHsc
 
-class Rva0025FA10Object
+// Retail ILT 000348EC reaches the matched signed-int handler at 001C9A10.
+class Gen001C9A10
 {
 public:
-	void clearCondition(int condition);
+	void handle(int player);
+};
+
+// Retail ILT 00017D5F reaches the matched nullary member at 002A8CE0.
+class SpecialAbilityUpdate
+{
+public:
+	void startUnpacking();
 };
 
 struct Rva0026DE30ModuleData
@@ -31,13 +39,12 @@ extern GameLogic *TheGameLogic;
 class Rva0025FA10HeroModeUpdate
 {
 public:
-	void begin();
 	void applyModeClear();
 
 private:
 	unsigned char m_lead[4];
 	Rva0026DE30ModuleData *m_data;
-	Rva0025FA10Object *m_object;
+	Gen001C9A10 *m_object;
 	unsigned char m_gap[0x20];
 	unsigned int m_endFrame;
 };
@@ -45,14 +52,14 @@ private:
 // ?applyModeClear@Rva0025FA10HeroModeUpdate@@QAEXXZ
 void Rva0025FA10HeroModeUpdate::applyModeClear()
 {
-	begin();
+	((SpecialAbilityUpdate *)this)->startUnpacking();
 	Rva0026DE30ModuleData *data = m_data;
 	unsigned int mode = data->m_mode;
-	Rva0025FA10Object *object = m_object;
+	Gen001C9A10 *object = m_object;
 	if (mode == 1)
-		object->clearCondition(0x12);
+		object->handle(0x12);
 	else if (mode == 2)
-		object->clearCondition(0x13);
+		object->handle(0x13);
 	m_endFrame = data->m_add220 + data->m_add254 +
 		((Rva0026DE30LogicView *)TheGameLogic)->m_frame;
 }
