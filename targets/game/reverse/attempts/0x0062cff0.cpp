@@ -1,5 +1,5 @@
 // ?gameTooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z
-// partial score=0.974 date=2026-09-27
+// partial score=0.3895 date=2026-10-10
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Copyright 2025 Electronic Arts Inc. SPDX-License-Identifier: GPL-3.0-or-later
 // BFME gameTooltip 0062CFF0..0062D668 (1656 B). Saved whole-body reconstruction.
@@ -9,20 +9,27 @@
 // String payload +8 and forwarding copy ctor are native, unlike the previous ZH bank.
 // reverseFind below is independently exact at 00072C40 (56 B); making it visible
 // removes two otherwise-spurious EH state stores in the caller.
-// Residue: 2 leading NULL-action EH states absent, then register scheduling.
+// Residue, 2026-10-10 refresh: the WWLib string_base.h now defines str() and
+// ~StringBase inline (TheNullChr static local), so the old template<>
+// specializations of str()/~StringBase no longer compile; this copy drops them
+// and uses the header bodies. New lever applied: hoisting m_ladderPort into a
+// const unsigned short local before the ladder test takes the body from
+// 1662B/18 structural diffs to 1655B/15 (retail 1656B). Still blocked by the
+// retail unwind map's two leading NULL-action states 0/1 (transitions
+// 1->0->-1, no state store anywhere in the body reaches them, ours starts
+// checkTooltip-era states at 0 so every state immediate is retail-2), plus the
+// port-load/virtual-call register schedule and one frame dword (retail state
+// slot at [esp+0x50] vs ours [esp+0x4c] at equal depth).
 // Canonical unicode_string.h currently has no inherited StringBase model; this
 // native forwarding view is confined to banked evidence, not a shared-header edit.
 #include <wchar.h>
 #include "ascii_string.h"
 
-template<> inline const char *StringBase<char>::str() const {return m_data ? m_data->data : "";}
-template<> inline const unsigned short *StringBase<unsigned short>::str() const {return m_data ? m_data->data : (const unsigned short*)L"";}
 template<> __declspec(noinline) const char *StringBase<char>::reverseFind(char c) const {
 const char *start=m_data ? m_data->data : "";
 const char *p=start+(m_data ? m_data->length : 0);
 while(p!=start){--p;if(*p==c)return p;}return 0;
 }
-template<> inline StringBase<char>::~StringBase() {releaseBuffer();}
 template<> inline StringBase<unsigned short>::StringBase(){m_data=0;}
 template<> inline StringBase<unsigned short>::~StringBase(){releaseBuffer();}
 class UnicodeString : public StringBase<unsigned short> {
@@ -220,9 +227,10 @@ void gameTooltip(GameWindow *window,
 	UnicodeString tmp;
 	tooltip.format(TheGameText->fetch("TOOLTIP:GameInfoGameName"), room->getGameName().str());
 	const GameSpyStagingRoom *bfmeRoom = room;
-	if (bfmeRoom->m_ladderPort != 0)
+	const unsigned short ladderPort = bfmeRoom->m_ladderPort;
+	if (ladderPort != 0)
 	{
-		const LadderInfo *linfo = TheLadderList->findLadder(bfmeRoom->getLadderIP(), bfmeRoom->m_ladderPort);
+		const LadderInfo *linfo = TheLadderList->findLadder(bfmeRoom->getLadderIP(), ladderPort);
 		if (linfo)
 		{
 			tmp.format(TheGameText->fetch("TOOLTIP:GameInfoLadderName"), linfo->name.str());
