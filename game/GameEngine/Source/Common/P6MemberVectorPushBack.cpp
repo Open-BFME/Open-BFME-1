@@ -57,9 +57,6 @@ struct __false_type
 };
 
 template <class Type>
-void __cdecl _Construct( Type *destination, const Type &value );
-
-template <class Type>
 class allocator
 {
 };
@@ -95,9 +92,6 @@ struct Rva003B0060Element
 };
 
 typedef ::Rva001E9020Element Rva001E9020Element;
-
-void __cdecl BfmeRva001E9020Construct( Rva001E9020Element *destination,
-	const Rva001E9020Element &value );
 
 template <>
 class vector<Rva000A8500Element, allocator<Rva000A8500Element> >
@@ -164,112 +158,80 @@ struct P6Elem00365520
 	char m_body[ 0xB4 ];
 };
 
-void __cdecl Bfme00365520Construct( P6Elem00365520 *destination, const P6Elem00365520 &value );	// ILT 0x00003193
-
 struct P6Elem003AC1C0
 {
 	char m_body[ 0xDC ];
 };
-
-void __cdecl Bfme003AC1C0Construct( P6Elem003AC1C0 *destination, const P6Elem003AC1C0 &value );	// ILT 0x00015C85
 
 struct P6Elem003B18A0
 {
 	char m_body[ 0x28 ];
 };
 
-void __cdecl Bfme003B18A0Construct( P6Elem003B18A0 *destination, const P6Elem003B18A0 &value );	// ILT 0x000181A6
-
 struct P6Elem003B18F0
 {
 	char m_body[ 0x30 ];
 };
-
-void __cdecl Bfme003B18F0Construct( P6Elem003B18F0 *destination, const P6Elem003B18F0 &value );	// ILT 0x000200BD
 
 struct P6Elem003B1940
 {
 	char m_body[ 0x20 ];
 };
 
-void __cdecl Bfme003B1940Construct( P6Elem003B1940 *destination, const P6Elem003B1940 &value );	// ILT 0x0003CA24
-
 struct P6Elem003B1990
 {
 	char m_body[ 0xC ];
 };
-
-void __cdecl Bfme003B1990Construct( P6Elem003B1990 *destination, const P6Elem003B1990 &value );	// ILT 0x000140E2
 
 struct P6Elem003B19E0
 {
 	char m_body[ 0x14 ];
 };
 
-void __cdecl Bfme003B19E0Construct( P6Elem003B19E0 *destination, const P6Elem003B19E0 &value );	// ILT 0x0003D843
-
 struct P6Elem003B1A30
 {
 	char m_body[ 0x20 ];
 };
-
-void __cdecl Bfme003B1A30Construct( P6Elem003B1A30 *destination, const P6Elem003B1A30 &value );	// ILT 0x0000F9A2
 
 struct P6Elem003B1A80
 {
 	char m_body[ 0x10 ];
 };
 
-void __cdecl Bfme003B1A80Construct( P6Elem003B1A80 *destination, const P6Elem003B1A80 &value );	// ILT 0x00013B79
-
 struct P6Elem003B1AE0
 {
 	char m_body[ 0x14 ];
 };
-
-void __cdecl Bfme003B1AE0Construct( P6Elem003B1AE0 *destination, const P6Elem003B1AE0 &value );	// ILT 0x00031DA4
 
 struct P6Elem003B1DF0
 {
 	char m_body[ 0x10 ];
 };
 
-void __cdecl Bfme003B1DF0Construct( P6Elem003B1DF0 *destination, const P6Elem003B1DF0 &value );	// ILT 0x0000927D
-
 struct P6Elem003B1E50
 {
 	char m_body[ 0xC ];
 };
-
-void __cdecl Bfme003B1E50Construct( P6Elem003B1E50 *destination, const P6Elem003B1E50 &value );	// ILT 0x00049F49
 
 struct P6Elem003B2060
 {
 	char m_body[ 0xC ];
 };
 
-void __cdecl Bfme003B2060Construct( P6Elem003B2060 *destination, const P6Elem003B2060 &value );	// ILT 0x0003C1A0
-
 struct P6Elem003B2890
 {
 	char m_body[ 0x18 ];
 };
-
-void __cdecl Bfme003B2890Construct( P6Elem003B2890 *destination, const P6Elem003B2890 &value );	// ILT 0x000027A2
 
 struct P6Elem003B7030
 {
 	char m_body[ 0x20 ];
 };
 
-void __cdecl Bfme003B7030Construct( P6Elem003B7030 *destination, const P6Elem003B7030 &value );	// ILT 0x00031791
-
 struct P6Elem003C3B50
 {
 	char m_body[ 0x60 ];
 };
-
-void __cdecl Bfme003C3B50Construct( P6Elem003C3B50 *destination, const P6Elem003C3B50 &value );	// ILT 0x0002E3BB
 
 class Gen00365520
 {
@@ -471,6 +433,44 @@ private:
 	_STL::public_vector<_STL::Rva001E9020Element, _STL::allocator<_STL::Rva001E9020Element> > m_bfmeItems;
 };
 
+// Existing retail ILT identities: cdecl element copies and thiscall overflow.
+extern "C" void __cdecl __identifier("?j_00003193@@YAXXZ")(P6Elem00365520 *, const P6Elem00365520 &);
+extern "C" void __cdecl __identifier("?j_00015c85@@YAXXZ")(P6Elem003AC1C0 *, const P6Elem003AC1C0 &);
+extern "C" void __cdecl __identifier("?j_000181a6@@YAXXZ")(P6Elem003B18A0 *, const P6Elem003B18A0 &);
+extern "C" void __cdecl __identifier("?j_000200bd@@YAXXZ")(P6Elem003B18F0 *, const P6Elem003B18F0 &);
+extern "C" void __cdecl __identifier("?j_0003ca24@@YAXXZ")(P6Elem003B1940 *, const P6Elem003B1940 &);
+extern "C" void __cdecl __identifier("?j_000140e2@@YAXXZ")(P6Elem003B1990 *, const P6Elem003B1990 &);
+extern "C" void __cdecl __identifier("?j_0003d843@@YAXXZ")(P6Elem003B19E0 *, const P6Elem003B19E0 &);
+extern "C" void __cdecl __identifier("?j_0000f9a2@@YAXXZ")(P6Elem003B1A30 *, const P6Elem003B1A30 &);
+extern "C" void __cdecl __identifier("?j_00013b79@@YAXXZ")(P6Elem003B1A80 *, const P6Elem003B1A80 &);
+extern "C" void __cdecl __identifier("?j_00031da4@@YAXXZ")(P6Elem003B1AE0 *, const P6Elem003B1AE0 &);
+extern "C" void __cdecl __identifier("?j_0000927d@@YAXXZ")(P6Elem003B1DF0 *, const P6Elem003B1DF0 &);
+extern "C" void __cdecl __identifier("?j_00049f49@@YAXXZ")(P6Elem003B1E50 *, const P6Elem003B1E50 &);
+extern "C" void __cdecl __identifier("?j_0003c1a0@@YAXXZ")(P6Elem003B2060 *, const P6Elem003B2060 &);
+extern "C" void __cdecl __identifier("?j_000027a2@@YAXXZ")(P6Elem003B2890 *, const P6Elem003B2890 &);
+extern "C" void __cdecl __identifier("?j_00031791@@YAXXZ")(P6Elem003B7030 *, const P6Elem003B7030 &);
+extern "C" void __cdecl __identifier("?j_0002e3bb@@YAXXZ")(P6Elem003C3B50 *, const P6Elem003C3B50 &);
+extern "C" void __cdecl __identifier("?j_00044675@@YAXXZ")(_STL::Rva000A8500Element *, const _STL::Rva000A8500Element &);
+extern "C" void __cdecl __identifier("?j_0001b99b@@YAXXZ")(_STL::Rva0025CB00Element *, const _STL::Rva0025CB00Element &);
+extern "C" void __cdecl __identifier("?j_00033ff0@@YAXXZ")(_STL::Rva003B0060Element *, const _STL::Rva003B0060Element &);
+extern "C" void __cdecl __identifier("?j_00046af1@@YAXXZ")(_STL::Rva001E9020Element *, const _STL::Rva001E9020Element &);
+extern "C" void __cdecl __identifier("?j_0002c331@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00005d08@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00024a00@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_000043cc@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0001e54c@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0002541e@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00018421@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0002cce1@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0003c5e2@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0000db25@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_000330aa@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00037439@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0000f047@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00044cb5@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0001200d@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_000266e3@@YAXXZ")();
+
 // ?bfmeAppend@Gen00365520@@QAEXPBUP6Elem00365520@@@Z		63B
 void Gen00365520::bfmeAppend( const P6Elem00365520 *value )
 {
@@ -478,12 +478,19 @@ void Gen00365520::bfmeAppend( const P6Elem00365520 *value )
 
 	if ( items._M_finish != items._M_end_of_storage )
 	{
-		Bfme00365520Construct( items._M_finish, *value );
+		__identifier("?j_00003193@@YAXXZ")( items._M_finish, *value );
 		++items._M_finish;
 	}
 	else
 	{
-		items._M_insert_overflow( items._M_finish, *value,
+		union
+		{
+			void (__cdecl *symbol)();
+			void (_STL::vector<P6Elem00365520, _STL::allocator<P6Elem00365520> >::*member)(
+				P6Elem00365520 *, const P6Elem00365520 &, const _STL::__false_type &, unsigned int, bool);
+		} grow;
+		grow.symbol = &__identifier("?j_0002c331@@YAXXZ");
+		(items.*grow.member)( items._M_finish, *value,
 			reinterpret_cast<const _STL::__false_type &>( value ), 1, true );
 	}
 }
@@ -495,12 +502,19 @@ void Gen003AC1C0::bfmeAppend( const P6Elem003AC1C0 *value )
 
 	if ( items._M_finish != items._M_end_of_storage )
 	{
-		Bfme003AC1C0Construct( items._M_finish, *value );
+		__identifier("?j_00015c85@@YAXXZ")( items._M_finish, *value );
 		++items._M_finish;
 	}
 	else
 	{
-		items._M_insert_overflow( items._M_finish, *value,
+		union
+		{
+			void (__cdecl *symbol)();
+			void (_STL::vector<P6Elem003AC1C0, _STL::allocator<P6Elem003AC1C0> >::*member)(
+				P6Elem003AC1C0 *, const P6Elem003AC1C0 &, const _STL::__false_type &, unsigned int, bool);
+		} grow;
+		grow.symbol = &__identifier("?j_00005d08@@YAXXZ");
+		(items.*grow.member)( items._M_finish, *value,
 			reinterpret_cast<const _STL::__false_type &>( value ), 1, true );
 	}
 }
@@ -512,12 +526,19 @@ void Gen003B18A0::bfmeAppend( const P6Elem003B18A0 *value )
 
 	if ( items._M_finish != items._M_end_of_storage )
 	{
-		Bfme003B18A0Construct( items._M_finish, *value );
+		__identifier("?j_000181a6@@YAXXZ")( items._M_finish, *value );
 		++items._M_finish;
 	}
 	else
 	{
-		items._M_insert_overflow( items._M_finish, *value,
+		union
+		{
+			void (__cdecl *symbol)();
+			void (_STL::vector<P6Elem003B18A0, _STL::allocator<P6Elem003B18A0> >::*member)(
+				P6Elem003B18A0 *, const P6Elem003B18A0 &, const _STL::__false_type &, unsigned int, bool);
+		} grow;
+		grow.symbol = &__identifier("?j_00024a00@@YAXXZ");
+		(items.*grow.member)( items._M_finish, *value,
 			reinterpret_cast<const _STL::__false_type &>( value ), 1, true );
 	}
 }
@@ -529,12 +550,19 @@ void Gen003B18F0::bfmeAppend( const P6Elem003B18F0 *value )
 
 	if ( items._M_finish != items._M_end_of_storage )
 	{
-		Bfme003B18F0Construct( items._M_finish, *value );
+		__identifier("?j_000200bd@@YAXXZ")( items._M_finish, *value );
 		++items._M_finish;
 	}
 	else
 	{
-		items._M_insert_overflow( items._M_finish, *value,
+		union
+		{
+			void (__cdecl *symbol)();
+			void (_STL::vector<P6Elem003B18F0, _STL::allocator<P6Elem003B18F0> >::*member)(
+				P6Elem003B18F0 *, const P6Elem003B18F0 &, const _STL::__false_type &, unsigned int, bool);
+		} grow;
+		grow.symbol = &__identifier("?j_000043cc@@YAXXZ");
+		(items.*grow.member)( items._M_finish, *value,
 			reinterpret_cast<const _STL::__false_type &>( value ), 1, true );
 	}
 }
@@ -546,12 +574,19 @@ void Gen003B1940::bfmeAppend( const P6Elem003B1940 *value )
 
 	if ( items._M_finish != items._M_end_of_storage )
 	{
-		Bfme003B1940Construct( items._M_finish, *value );
+		__identifier("?j_0003ca24@@YAXXZ")( items._M_finish, *value );
 		++items._M_finish;
 	}
 	else
 	{
-		items._M_insert_overflow( items._M_finish, *value,
+		union
+		{
+			void (__cdecl *symbol)();
+			void (_STL::vector<P6Elem003B1940, _STL::allocator<P6Elem003B1940> >::*member)(
+				P6Elem003B1940 *, const P6Elem003B1940 &, const _STL::__false_type &, unsigned int, bool);
+		} grow;
+		grow.symbol = &__identifier("?j_0001e54c@@YAXXZ");
+		(items.*grow.member)( items._M_finish, *value,
 			reinterpret_cast<const _STL::__false_type &>( value ), 1, true );
 	}
 }
@@ -563,12 +598,19 @@ void Gen003B1990::bfmeAppend( const P6Elem003B1990 *value )
 
 	if ( items._M_finish != items._M_end_of_storage )
 	{
-		Bfme003B1990Construct( items._M_finish, *value );
+		__identifier("?j_000140e2@@YAXXZ")( items._M_finish, *value );
 		++items._M_finish;
 	}
 	else
 	{
-		items._M_insert_overflow( items._M_finish, *value,
+		union
+		{
+			void (__cdecl *symbol)();
+			void (_STL::vector<P6Elem003B1990, _STL::allocator<P6Elem003B1990> >::*member)(
+				P6Elem003B1990 *, const P6Elem003B1990 &, const _STL::__false_type &, unsigned int, bool);
+		} grow;
+		grow.symbol = &__identifier("?j_0002541e@@YAXXZ");
+		(items.*grow.member)( items._M_finish, *value,
 			reinterpret_cast<const _STL::__false_type &>( value ), 1, true );
 	}
 }
@@ -580,12 +622,19 @@ void Gen003B19E0::bfmeAppend( const P6Elem003B19E0 *value )
 
 	if ( items._M_finish != items._M_end_of_storage )
 	{
-		Bfme003B19E0Construct( items._M_finish, *value );
+		__identifier("?j_0003d843@@YAXXZ")( items._M_finish, *value );
 		++items._M_finish;
 	}
 	else
 	{
-		items._M_insert_overflow( items._M_finish, *value,
+		union
+		{
+			void (__cdecl *symbol)();
+			void (_STL::vector<P6Elem003B19E0, _STL::allocator<P6Elem003B19E0> >::*member)(
+				P6Elem003B19E0 *, const P6Elem003B19E0 &, const _STL::__false_type &, unsigned int, bool);
+		} grow;
+		grow.symbol = &__identifier("?j_00018421@@YAXXZ");
+		(items.*grow.member)( items._M_finish, *value,
 			reinterpret_cast<const _STL::__false_type &>( value ), 1, true );
 	}
 }
@@ -597,12 +646,19 @@ void Gen003B1A30::bfmeAppend( const P6Elem003B1A30 *value )
 
 	if ( items._M_finish != items._M_end_of_storage )
 	{
-		Bfme003B1A30Construct( items._M_finish, *value );
+		__identifier("?j_0000f9a2@@YAXXZ")( items._M_finish, *value );
 		++items._M_finish;
 	}
 	else
 	{
-		items._M_insert_overflow( items._M_finish, *value,
+		union
+		{
+			void (__cdecl *symbol)();
+			void (_STL::vector<P6Elem003B1A30, _STL::allocator<P6Elem003B1A30> >::*member)(
+				P6Elem003B1A30 *, const P6Elem003B1A30 &, const _STL::__false_type &, unsigned int, bool);
+		} grow;
+		grow.symbol = &__identifier("?j_0002cce1@@YAXXZ");
+		(items.*grow.member)( items._M_finish, *value,
 			reinterpret_cast<const _STL::__false_type &>( value ), 1, true );
 	}
 }
@@ -614,12 +670,19 @@ void Gen003B1A80::bfmeAppend( const P6Elem003B1A80 *value )
 
 	if ( items._M_finish != items._M_end_of_storage )
 	{
-		Bfme003B1A80Construct( items._M_finish, *value );
+		__identifier("?j_00013b79@@YAXXZ")( items._M_finish, *value );
 		++items._M_finish;
 	}
 	else
 	{
-		items._M_insert_overflow( items._M_finish, *value,
+		union
+		{
+			void (__cdecl *symbol)();
+			void (_STL::vector<P6Elem003B1A80, _STL::allocator<P6Elem003B1A80> >::*member)(
+				P6Elem003B1A80 *, const P6Elem003B1A80 &, const _STL::__false_type &, unsigned int, bool);
+		} grow;
+		grow.symbol = &__identifier("?j_0003c5e2@@YAXXZ");
+		(items.*grow.member)( items._M_finish, *value,
 			reinterpret_cast<const _STL::__false_type &>( value ), 1, true );
 	}
 }
@@ -631,12 +694,19 @@ void Gen003B1AE0::bfmeAppend( const P6Elem003B1AE0 *value )
 
 	if ( items._M_finish != items._M_end_of_storage )
 	{
-		Bfme003B1AE0Construct( items._M_finish, *value );
+		__identifier("?j_00031da4@@YAXXZ")( items._M_finish, *value );
 		++items._M_finish;
 	}
 	else
 	{
-		items._M_insert_overflow( items._M_finish, *value,
+		union
+		{
+			void (__cdecl *symbol)();
+			void (_STL::vector<P6Elem003B1AE0, _STL::allocator<P6Elem003B1AE0> >::*member)(
+				P6Elem003B1AE0 *, const P6Elem003B1AE0 &, const _STL::__false_type &, unsigned int, bool);
+		} grow;
+		grow.symbol = &__identifier("?j_0000db25@@YAXXZ");
+		(items.*grow.member)( items._M_finish, *value,
 			reinterpret_cast<const _STL::__false_type &>( value ), 1, true );
 	}
 }
@@ -648,12 +718,19 @@ void Gen003B1DF0::bfmeAppend( const P6Elem003B1DF0 *value )
 
 	if ( items._M_finish != items._M_end_of_storage )
 	{
-		Bfme003B1DF0Construct( items._M_finish, *value );
+		__identifier("?j_0000927d@@YAXXZ")( items._M_finish, *value );
 		++items._M_finish;
 	}
 	else
 	{
-		items._M_insert_overflow( items._M_finish, *value,
+		union
+		{
+			void (__cdecl *symbol)();
+			void (_STL::vector<P6Elem003B1DF0, _STL::allocator<P6Elem003B1DF0> >::*member)(
+				P6Elem003B1DF0 *, const P6Elem003B1DF0 &, const _STL::__false_type &, unsigned int, bool);
+		} grow;
+		grow.symbol = &__identifier("?j_000330aa@@YAXXZ");
+		(items.*grow.member)( items._M_finish, *value,
 			reinterpret_cast<const _STL::__false_type &>( value ), 1, true );
 	}
 }
@@ -665,12 +742,19 @@ void Gen003B1E50::bfmeAppend( const P6Elem003B1E50 *value )
 
 	if ( items._M_finish != items._M_end_of_storage )
 	{
-		Bfme003B1E50Construct( items._M_finish, *value );
+		__identifier("?j_00049f49@@YAXXZ")( items._M_finish, *value );
 		++items._M_finish;
 	}
 	else
 	{
-		items._M_insert_overflow( items._M_finish, *value,
+		union
+		{
+			void (__cdecl *symbol)();
+			void (_STL::vector<P6Elem003B1E50, _STL::allocator<P6Elem003B1E50> >::*member)(
+				P6Elem003B1E50 *, const P6Elem003B1E50 &, const _STL::__false_type &, unsigned int, bool);
+		} grow;
+		grow.symbol = &__identifier("?j_00037439@@YAXXZ");
+		(items.*grow.member)( items._M_finish, *value,
 			reinterpret_cast<const _STL::__false_type &>( value ), 1, true );
 	}
 }
@@ -682,12 +766,19 @@ void Gen003B2060::bfmeAppend( const P6Elem003B2060 *value )
 
 	if ( items._M_finish != items._M_end_of_storage )
 	{
-		Bfme003B2060Construct( items._M_finish, *value );
+		__identifier("?j_0003c1a0@@YAXXZ")( items._M_finish, *value );
 		++items._M_finish;
 	}
 	else
 	{
-		items._M_insert_overflow( items._M_finish, *value,
+		union
+		{
+			void (__cdecl *symbol)();
+			void (_STL::vector<P6Elem003B2060, _STL::allocator<P6Elem003B2060> >::*member)(
+				P6Elem003B2060 *, const P6Elem003B2060 &, const _STL::__false_type &, unsigned int, bool);
+		} grow;
+		grow.symbol = &__identifier("?j_0000f047@@YAXXZ");
+		(items.*grow.member)( items._M_finish, *value,
 			reinterpret_cast<const _STL::__false_type &>( value ), 1, true );
 	}
 }
@@ -699,12 +790,19 @@ void Gen003B2890::bfmeAppend( const P6Elem003B2890 *value )
 
 	if ( items._M_finish != items._M_end_of_storage )
 	{
-		Bfme003B2890Construct( items._M_finish, *value );
+		__identifier("?j_000027a2@@YAXXZ")( items._M_finish, *value );
 		++items._M_finish;
 	}
 	else
 	{
-		items._M_insert_overflow( items._M_finish, *value,
+		union
+		{
+			void (__cdecl *symbol)();
+			void (_STL::vector<P6Elem003B2890, _STL::allocator<P6Elem003B2890> >::*member)(
+				P6Elem003B2890 *, const P6Elem003B2890 &, const _STL::__false_type &, unsigned int, bool);
+		} grow;
+		grow.symbol = &__identifier("?j_00044cb5@@YAXXZ");
+		(items.*grow.member)( items._M_finish, *value,
 			reinterpret_cast<const _STL::__false_type &>( value ), 1, true );
 	}
 }
@@ -716,12 +814,19 @@ void Gen003B7030::bfmeAppend( const P6Elem003B7030 *value )
 
 	if ( items._M_finish != items._M_end_of_storage )
 	{
-		Bfme003B7030Construct( items._M_finish, *value );
+		__identifier("?j_00031791@@YAXXZ")( items._M_finish, *value );
 		++items._M_finish;
 	}
 	else
 	{
-		items._M_insert_overflow( items._M_finish, *value,
+		union
+		{
+			void (__cdecl *symbol)();
+			void (_STL::vector<P6Elem003B7030, _STL::allocator<P6Elem003B7030> >::*member)(
+				P6Elem003B7030 *, const P6Elem003B7030 &, const _STL::__false_type &, unsigned int, bool);
+		} grow;
+		grow.symbol = &__identifier("?j_0001200d@@YAXXZ");
+		(items.*grow.member)( items._M_finish, *value,
 			reinterpret_cast<const _STL::__false_type &>( value ), 1, true );
 	}
 }
@@ -733,12 +838,19 @@ void Gen003C3B50::bfmeAppend( const P6Elem003C3B50 *value )
 
 	if ( items._M_finish != items._M_end_of_storage )
 	{
-		Bfme003C3B50Construct( items._M_finish, *value );
+		__identifier("?j_0002e3bb@@YAXXZ")( items._M_finish, *value );
 		++items._M_finish;
 	}
 	else
 	{
-		items._M_insert_overflow( items._M_finish, *value,
+		union
+		{
+			void (__cdecl *symbol)();
+			void (_STL::vector<P6Elem003C3B50, _STL::allocator<P6Elem003C3B50> >::*member)(
+				P6Elem003C3B50 *, const P6Elem003C3B50 &, const _STL::__false_type &, unsigned int, bool);
+		} grow;
+		grow.symbol = &__identifier("?j_000266e3@@YAXXZ");
+		(items.*grow.member)( items._M_finish, *value,
 			reinterpret_cast<const _STL::__false_type &>( value ), 1, true );
 	}
 }
@@ -750,7 +862,7 @@ void Gen000A87D0::bfmeAppend( const _STL::Rva000A8500Element *value )
 
 	if ( items._M_finish != items._M_end_of_storage )
 	{
-		_STL::_Construct( items._M_finish, *value );
+		__identifier("?j_00044675@@YAXXZ")( items._M_finish, *value );
 		++items._M_finish;
 	}
 	else
@@ -767,7 +879,7 @@ void Gen0025CD50::bfmeAppend( const _STL::Rva0025CB00Element *value )
 
 	if ( items._M_finish != items._M_end_of_storage )
 	{
-		_STL::_Construct( items._M_finish, *value );
+		__identifier("?j_0001b99b@@YAXXZ")( items._M_finish, *value );
 		++items._M_finish;
 	}
 	else
@@ -784,7 +896,7 @@ void Gen003B1850::bfmeAppend( const _STL::Rva003B0060Element *value )
 
 	if ( items._M_finish != items._M_end_of_storage )
 	{
-		_STL::_Construct( items._M_finish, *value );
+		__identifier("?j_00033ff0@@YAXXZ")( items._M_finish, *value );
 		++items._M_finish;
 	}
 	else
@@ -801,7 +913,7 @@ void Gen0060CF90::bfmeAppend( const _STL::Rva001E9020Element *value )
 
 	if ( items._M_finish != items._M_end_of_storage )
 	{
-		_STL::BfmeRva001E9020Construct( items._M_finish, *value );
+		__identifier("?j_00046af1@@YAXXZ")( items._M_finish, *value );
 		++items._M_finish;
 	}
 	else
