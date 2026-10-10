@@ -566,21 +566,6 @@ public:
     void assign(const void *source);
 };
 
-class LightningDrawTemplateAssignShim {
-public:
-    void assign(const void *source);
-};
-
-class RenderObjectDrawTemplateAssignShim {
-public:
-    void assign(const void *source);
-};
-
-class RenderObjectUpdateTemplateAssignShim {
-public:
-    void assign(const void *source);
-};
-
 class RenderObjectUpdateModuleCtorShim {
 public:
     void construct(TrackingPtr<ParticleSystem> &sys, const void *source);
@@ -730,11 +715,6 @@ public:
     void construct(const void *source);
 };
 
-class DefaultModuleTemplate0AssignShim {
-public:
-    void assign(const void *source);
-};
-
 class DefaultModule0CtorShim {
 public:
     void construct(TrackingPtr<ParticleSystem> &sys, const void *source);
@@ -793,11 +773,6 @@ public:
 class DefaultModuleTemplate2CopyCtorShim {
 public:
     void construct(const void *source);
-};
-
-class DefaultModuleTemplate2AssignShim {
-public:
-    void assign(const void *source);
 };
 
 class DefaultModule2CtorShim {
@@ -885,11 +860,6 @@ public:
 class DefaultModuleTemplate7CopyCtorShim {
 public:
     void construct(const void *source);
-};
-
-class DefaultModuleTemplate7AssignShim {
-public:
-    void assign(const void *source);
 };
 
 class DefaultModule7CtorShim {
@@ -3054,7 +3024,8 @@ ConcreteModuleTemplate<DefaultModuleTag<0> > &ConcreteModuleTemplate<DefaultModu
 {
     const void *source = &that;
     const unsigned char *info = source ? (const unsigned char *)source + 8 : 0;
-    ((DefaultModuleTemplate0AssignShim *)((unsigned char *)this + 8))->assign(info);
+    ((DefaultColorModuleInfo *)((unsigned char *)this + 8))->operator=(
+        *(const DefaultColorModuleInfo *)info);
     return *this;
 }
 
@@ -3143,7 +3114,8 @@ ConcreteModuleTemplate<DefaultModuleTag<2> > &ConcreteModuleTemplate<DefaultModu
 {
     const void *source = &that;
     const unsigned char *info = source ? (const unsigned char *)source + 8 : 0;
-    ((DefaultModuleTemplate2AssignShim *)((unsigned char *)this + 8))->assign(info);
+    ((DefaultUpdateModuleInfo *)((unsigned char *)this + 8))->operator=(
+        *(const DefaultUpdateModuleInfo *)info);
     return *this;
 }
 
@@ -3281,7 +3253,8 @@ ConcreteModuleTemplate<DefaultModuleTag<7> > &ConcreteModuleTemplate<DefaultModu
 {
     const void *source = &that;
     const unsigned char *info = source ? (const unsigned char *)source + 8 : 0;
-    ((DefaultModuleTemplate7AssignShim *)((unsigned char *)this + 8))->assign(info);
+    ((WindModuleInfo *)((unsigned char *)this + 8))->operator=(
+        *(const WindModuleInfo *)info);
     return *this;
 }
 
@@ -3325,7 +3298,8 @@ ConcreteModuleTemplate<ModuleTag<2, RENDEROBJECT_UPDATE_MODULE_KEY, RENDEROBJECT
 {
     const void *source = &that;
     const unsigned char *info = source ? (const unsigned char *)source + 8 : 0;
-    ((RenderObjectUpdateTemplateAssignShim *)((unsigned char *)this + 8))->assign(info);
+    ((RenderObjectUpdateModuleInfo *)((unsigned char *)this + 8))->operator=(
+        *(const RenderObjectUpdateModuleInfo *)info);
     return *this;
 }
 
@@ -3950,7 +3924,8 @@ ConcreteModuleTemplate<ModuleTag<6, LIGHTNING_DRAW_MODULE_KEY, LIGHTNING_DRAW_MO
 {
     const void *source = &that;
     const unsigned char *info = source ? (const unsigned char *)source + 8 : 0;
-    ((LightningDrawTemplateAssignShim *)((unsigned char *)this + 8))->assign(info);
+    ((LightningDrawModuleInfo *)((unsigned char *)this + 8))->operator=(
+        *(const LightningDrawModuleInfo *)info);
     return *this;
 }
 
@@ -4041,7 +4016,8 @@ ConcreteModuleTemplate<ModuleTag<6, RENDEROBJECT_DRAW_MODULE_KEY, RENDEROBJECT_D
 {
     const void *source = &that;
     const unsigned char *info = source ? (const unsigned char *)source + 8 : 0;
-    ((RenderObjectDrawTemplateAssignShim *)((unsigned char *)this + 8))->assign(info);
+    ((RenderObjectDrawModuleInfo *)((unsigned char *)this + 8))->operator=(
+        *(const RenderObjectDrawModuleInfo *)info);
     return *this;
 }
 
@@ -8908,7 +8884,8 @@ RenderObjectDrawModuleTemplate &RenderObjectDrawModuleTemplate::operator=(const 
 {
     const void *source = &that;
     const unsigned char *info = source ? (const unsigned char *)source + 8 : 0;
-    ((RenderObjectDrawTemplateAssignShim *)((unsigned char *)this + 8))->assign(info);
+    ((RenderObjectDrawModuleInfo *)((unsigned char *)this + 8))->operator=(
+        *(const RenderObjectDrawModuleInfo *)info);
     return *this;
 }
 
@@ -8942,7 +8919,8 @@ RenderObjectUpdateModuleTemplate &RenderObjectUpdateModuleTemplate::operator=(co
 {
     const void *source = &that;
     const unsigned char *info = source ? (const unsigned char *)source + 8 : 0;
-    ((RenderObjectUpdateTemplateAssignShim *)((unsigned char *)this + 8))->assign(info);
+    ((RenderObjectUpdateModuleInfo *)((unsigned char *)this + 8))->operator=(
+        *(const RenderObjectUpdateModuleInfo *)info);
     return *this;
 }
 
