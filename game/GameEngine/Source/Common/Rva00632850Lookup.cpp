@@ -31,7 +31,7 @@ struct Rva00632850Record
 {
 	unsigned int m_unmodelled_00[1];
 	AsciiString m_unmodelled_04;
-	int compare(const char *text) const { return m_unmodelled_04.compare(text); }
+	int compare(const char *text) const { return m_unmodelled_04.StringBase<char>::compare(text); }
 };
 
 // Only the four-byte key footprint is witnessed; this lookup never reads it.
