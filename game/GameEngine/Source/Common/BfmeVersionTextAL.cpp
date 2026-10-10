@@ -12,38 +12,23 @@
 // body for.  UnicodeString::format (0x00889190, matched in
 // game/Libraries/Source/WWVegas/WWLib/unicode_string.cpp) is the real one, so
 // it comes from the by-value string model and is named through the real class.
-// The stand-in class itself stays: it is this method's return type, so retail
-// mangles the enclosing body with it.
+// The existing UnicodeStringAL return view is also used by the four matched
+// callers. It has no storage beyond its native UnicodeString base. Its inline
+// lifetime members now reach the matched StringBase<unsigned short> bodies.
+// bfmeTextAL keeps the original inlined character access at header +8.
 
-class StringBaseWideAL
-{
-protected:
-	StringBaseWideAL(void)
-	{
-		m_bfmeWideAL = 0;
-	}
-
-	StringBaseWideAL(const unsigned short *text);
-
-	StringBaseWideAL(const StringBaseWideAL &other);
-
-	~StringBaseWideAL(void);
-
-	unsigned short *m_bfmeWideAL;
-};
-
-class UnicodeStringAL : public StringBaseWideAL
+class UnicodeStringAL : public UnicodeString
 {
 public:
 	UnicodeStringAL(void)
 	{
 	}
 
-	UnicodeStringAL(const unsigned short *text) : StringBaseWideAL(text)
+	UnicodeStringAL(const unsigned short *text) : UnicodeString(text)
 	{
 	}
 
-	UnicodeStringAL(const UnicodeStringAL &other) : StringBaseWideAL(other)
+	UnicodeStringAL(const UnicodeStringAL &other) : UnicodeString(other)
 	{
 	}
 
@@ -53,7 +38,8 @@ public:
 
 	const unsigned short *bfmeTextAL(void) const
 	{
-		return (m_bfmeWideAL != 0) ? m_bfmeWideAL + 4 : L"";
+		const unsigned short *data = *reinterpret_cast<const unsigned short *const *>(this);
+		return data ? data + 4 : L"";
 	}
 };
 
