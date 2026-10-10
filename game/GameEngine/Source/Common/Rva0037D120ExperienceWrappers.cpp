@@ -3,8 +3,6 @@
 class ExperienceTracker
 {
 public:
-	void addExperiencePoints(float experienceGain, bool canScaleForBonus,
-		bool isShared, bool allowLevelGain, bool provideFeedback);
 };
 
 struct BfmeObjectD120
@@ -13,10 +11,15 @@ struct BfmeObjectD120
 	ExperienceTracker *m_experienceTracker;
 };
 
+extern "C" void __cdecl __identifier("?j_00010096@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_000326f5@@YAXXZ")();
+
 // ?bfmeRva0037D120AddExperience@@YAHPAVBfmeObjectD120@@H@Z
 int bfmeRva0037D120AddExperience(BfmeObjectD120 *object, int experience)
 {
-	object->m_experienceTracker->addExperiencePoints(
+	union { void (*raw)(); void (ExperienceTracker::*member)(float, bool, bool, bool, bool); }
+		add = { __identifier("?j_00010096@@YAXXZ") };
+	(object->m_experienceTracker->*add.member)(
 		(float)experience, true, true, true, false);
 	return 1;
 }
@@ -24,7 +27,6 @@ int bfmeRva0037D120AddExperience(BfmeObjectD120 *object, int experience)
 class BfmeSub210_4B0
 {
 public:
-	void apply(float value, int flags);
 };
 
 struct BfmeObjectD150
@@ -36,6 +38,8 @@ struct BfmeObjectD150
 // ?bfmeRva0037D150Apply@@YAHPAVBfmeObjectD150@@H@Z
 int bfmeRva0037D150Apply(BfmeObjectD150 *object, int value)
 {
-	object->m_sub210->apply((float)value, 0);
+	union { void (*raw)(); void (BfmeSub210_4B0::*member)(float, int); }
+		apply = { __identifier("?j_000326f5@@YAXXZ") };
+	(object->m_sub210->*apply.member)((float)value, 0);
 	return 1;
 }
