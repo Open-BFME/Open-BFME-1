@@ -33,7 +33,6 @@ enum DeathType
 };
 
 #define OBJECT_TU_MEMBERS \
-	Module *findModule(NameKeyType key) const; \
 	void kill(DamageType damageType, DeathType deathType);
 #include "../object.h"
 #undef OBJECT_TU_MEMBERS
@@ -41,8 +40,14 @@ enum DeathType
 class BfmeItemRY
 {
 public:
-    void bfmeDoRY(void *first, void *second);
 };
+
+// Retail ILT2AE23 reaches Object::findModule (ECX, NameKeyType, RET4).
+// ILT2852E reaches the matched pointer tail stub at1BE220, which forwards
+// both operands to ObjectSMCHelper::setModelConditionState(int, unsigned),
+// RET8. Name the exact ILTs while retaining those independently proven ABIs.
+extern "C" void __identifier("?j_0002ae23@@YAXXZ")();
+extern "C" void __identifier("?j_0002852e@@YAXXZ")();
 
 class GameLogic
 {
@@ -100,8 +105,12 @@ void ObjectCreationUpgrade::removeUpgrade()
     static NameKeyType slaveWatcherBehaviorKey =
         TheNameKeyGenerator->nameToKey("SlaveWatcherBehavior");
     Object *object = *(Object **)((char *)this + 0x10);
+    union {
+        void (*raw)();
+        Module *(Object::*member)(NameKeyType) const;
+    } find = { __identifier("?j_0002ae23@@YAXXZ") };
     Gen_002072a0 *slaveWatcher =
-        (Gen_002072a0 *)object->findModule(slaveWatcherBehaviorKey);
+        (Gen_002072a0 *)(object->*find.member)(slaveWatcherBehaviorKey);
     if (slaveWatcher == 0)
         return;
 
@@ -113,8 +122,12 @@ void ObjectCreationUpgrade::removeUpgrade()
 
     if (data->m_firstInvokeArgument != -1)
     {
-        ((BfmeItemRY *)slave)->bfmeDoRY(
-            (void *)data->m_firstInvokeArgument,
-            (void *)data->m_secondInvokeArgument);
+        union {
+            void (*raw)();
+            void (BfmeItemRY::*member)(int, unsigned int);
+        } invoke = { __identifier("?j_0002852e@@YAXXZ") };
+        (((BfmeItemRY *)slave)->*invoke.member)(
+            data->m_firstInvokeArgument,
+            (unsigned int)data->m_secondInvokeArgument);
     }
 }
