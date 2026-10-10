@@ -8,7 +8,7 @@
 // by this complete body; address-qualified fields retain unknown identities.
 // translateBounds preserves the retail x87 operand order while evaluating
 // the selected array elements once.
-#include "StringInline.h"
+#include "ascii_string.h"
 #include "vector3.h"
 #include "matrix3d.h"
 #include "sphere.h"
@@ -57,7 +57,7 @@ void W3DTreeBuffer::rva00736b60(unsigned int id,Rva00736B60Coord location,float 
  if(!initialized) return;
  int type=-2;
  for(int i=0;i<numTypes;++i) {
-  if(types[i].modelName.compareNoCase(data->modelName)==0 && types[i].nameC.compareNoCase(data->nameC)==0) {type=i;break;}
+  if(types[i].modelName.StringBase<char>::compareNoCase(data->modelName)==0 && types[i].nameC.StringBase<char>::compareNoCase(data->nameC)==0) {type=i;break;}
  }
  if(type<0) {
   type=addTreeType(data->modelName,data->nameC,data,shadowKind,textureName,nameD);
