@@ -36,22 +36,22 @@ HAnimClass *Rva007657F0::resolve(const AsciiString &prefix, bool numbered, int n
 {
     AsciiString name("");
 
-    if (!prefix.isEmpty()) {
+    if (!prefix.StringBase<char>::isEmpty()) {
         name = prefix;
         char buffer[64];
         sprintf(buffer, "%d", number);
-        if (numbered) name.concat(buffer);
-        name.concat('.');
+        if (numbered) name.StringBase<char>::concat(buffer);
+        name.StringBase<char>::concat('.');
         name.StringBase<char>::concat(at08);
-        if (numbered) name.concat(buffer);
+        if (numbered) name.StringBase<char>::concat(buffer);
     } else {
         name = at08;
     }
     HAnimClass *handle = 0;
     if (bfmeHasVNV(name.str())) handle = Get_HAnim(name.str());
-    if (!handle && numbered && !prefix.isEmpty()) {
+    if (!handle && numbered && !prefix.StringBase<char>::isEmpty()) {
         name = prefix;
-        name.concat('.');
+        name.StringBase<char>::concat('.');
         name.StringBase<char>::concat(at08);
         if (bfmeHasVNV(name.str()))
             handle = Get_HAnim(name.str());
