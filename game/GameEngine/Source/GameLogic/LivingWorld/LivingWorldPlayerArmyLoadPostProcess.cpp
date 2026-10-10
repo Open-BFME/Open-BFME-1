@@ -1,22 +1,7 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /GX
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /GX /Igame/Libraries/Source/WWVegas/WWLib
 
-struct Rva00365830StringHeader
-{
-	int m_refCount;
-	unsigned short m_length;
-	unsigned short m_capacity;
-	char m_text[ 1 ];
-};
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	bool isEmpty() const { return !m_data || m_data->m_length == 0; }
-
-private:
-	Rva00365830StringHeader *m_data;
-};
+#include "ascii_string.h"
+template<> inline bool StringBase<char>::isEmpty() const { return !m_data || m_data->length == 0; }
 
 class LivingWorldPlayerArmy;
 
@@ -55,7 +40,7 @@ private:
 
 void LivingWorldPlayerArmy::loadPostProcess()
 {
-	if( currentCommandPoints() < m_minCommandPoints && !m_replenishArmyName.isEmpty() )
+	if( currentCommandPoints() < m_minCommandPoints && !m_replenishArmyName.StringBase<char>::isEmpty() )
 	{
 		LivingWorldArmy *army = ((BfmeLivingWorldCampaignManager *)TheLivingWorldCampaignManager)->findArmy( m_replenishArmyName );
 		if( army )
