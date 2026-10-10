@@ -3,10 +3,19 @@
 class BfmeStrV52
 {
 public:
-	void bfmeInsertV52(char *a, char *b, char *c, char *d, char *e);
 	char *b;
 	char *e;
 	char *c;
+};
+
+// The retail call targets the matched aliased-range replace body at
+// 0x008312E0. Its last stack word is a reference to the local iterator tag.
+struct Rva008312E0Tag;
+class Rva008312E0String
+{
+public:
+	Rva008312E0String &bfmeReplaceAliasedRange(char *, char *, char *, char *,
+		const Rva008312E0Tag &);
 };
 
 void __stdcall bfmeWrapInsertV52(char *pos, char *first, char *other)
@@ -35,6 +44,6 @@ void __stdcall bfmeWrapInsertV52(char *pos, char *first, char *other)
 		mov eax, dword ptr [ebp+0x8]
 		push eax
 		mov ecx, dword ptr [ebp-0xA0]
-		call BfmeStrV52::bfmeInsertV52
+		call Rva008312E0String::bfmeReplaceAliasedRange
 	}
 }
