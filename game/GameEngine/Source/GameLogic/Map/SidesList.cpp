@@ -124,14 +124,6 @@ static const Int K_SIDES_DATA_VERSION_3 = 3;	// includes Team list.
 */
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/SidesInfoConstructorThunk.cpp
 // ??0SidesInfo@@ present-unmatched
-SidesInfo::SidesInfo(void) :
-	m_pBuildList(NULL),
-	m_scripts(NULL)
-{
-}
-
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/SidesInfoConstructorThunk.cpp
-// ??0SidesInfo@@ present-unmatched
 SidesInfo::SidesInfo(const SidesInfo& thatref) :
 	m_pBuildList(NULL),
 	m_scripts(NULL)

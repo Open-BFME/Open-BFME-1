@@ -4,10 +4,11 @@
 // Open-BFME5: SidesInfo ctor
 // Retail: zero +0, construct sub at +4 with arg 0, zero +8..+14.
 
-class SidesInfoSub
+// Retail calls ILT 0x00002ECD -> 0x00068550, the matched ??0Dict@@QAE@H@Z.
+class Dict
 {
 public:
-	SidesInfoSub(int arg);
+	Dict(int numPairs);
 
 private:
 	char opaque[4];
@@ -21,7 +22,7 @@ public:
 
 private:
 	unsigned int m_0;
-	SidesInfoSub m_sub;
+	Dict m_sub;
 	unsigned int m_8;
 	unsigned int m_c;
 	unsigned int m_10;
