@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 
 // Open-BFME5: STLport _Rb_tree<...>::_M_lower_bound at 0x00605550, a
@@ -32,34 +32,18 @@ extern "C" __declspec(dllimport) int __cdecl _memicmp(const void *buf1, const vo
 
 extern const char g_bfmeEmptyAscii[];
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
+#include "ascii_string.h"
+
+template<> inline int StringBase<char>::compareNoCase(const StringBase<char> &str) const
 {
-public:
-	int compareNoCase(const AsciiString &str) const
-	{
-		const int len = str.m_data ? str.m_data->length : 0;
-		const char *data = str.m_data ? &str.m_data->data[0] : g_bfmeEmptyAscii;
-		const int myLen = m_data ? m_data->length : 0;
-		const char *myData = m_data ? &m_data->data[0] : g_bfmeEmptyAscii;
-		int result = _memicmp(myData, data, myLen < len ? myLen : len);
-		if (result == 0) {
-			result = myLen - len;
-		}
-		return result;
-	}
-
-private:
-	struct Header
-	{
-		int ref_count;
-		unsigned short length;
-		unsigned short capacity;
-		char data[1];
-	};
-
-	Header *m_data;
-};
+    const int len = str.m_data ? str.m_data->length : 0;
+    const char *data = str.m_data ? &str.m_data->data[0] : g_bfmeEmptyAscii;
+    const int myLen = m_data ? m_data->length : 0;
+    const char *myData = m_data ? &m_data->data[0] : g_bfmeEmptyAscii;
+    int result = _memicmp(myData, data, myLen < len ? myLen : len);
+    if (result == 0) result = myLen - len;
+    return result;
+}
 
 // ---- 0x00605550: AsciiString primary key, float secondary tiebreak. -------
 
@@ -74,7 +58,7 @@ struct Rva00605800Less
 {
 	bool operator()( const Rva00605800Value &left, const Rva00605800Value &right ) const
 	{
-		int c = left.m_key.compareNoCase( right.m_key );
+		int c = left.m_key.StringBase<char>::compareNoCase( right.m_key );
 		if ( c < 0 )
 			return true;
 		if ( c > 0 )
