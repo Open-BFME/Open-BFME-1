@@ -12,6 +12,18 @@ typedef Rva0013FA60Target *Rva00751A70Key;
 typedef _STL::set<Rva00751A70Key, _STL::less<Rva00751A70Key>,
 	_STL::allocator<Rva00751A70Key> > Rva00751A70Set;
 
+// The four-argument node insertion is provided by the verified retail body
+// at 0x0013F760 in RvaTreeMInsertIdentity.cpp.
+template <>
+_STL::_Rb_tree<Rva00751A70Key, Rva00751A70Key,
+    _STL::_Identity<Rva00751A70Key>, _STL::less<Rva00751A70Key>,
+    _STL::allocator<Rva00751A70Key> >::iterator
+_STL::_Rb_tree<Rva00751A70Key, Rva00751A70Key,
+    _STL::_Identity<Rva00751A70Key>, _STL::less<Rva00751A70Key>,
+    _STL::allocator<Rva00751A70Key> >::_M_insert(
+    _STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+    const Rva00751A70Key &, _STL::_Rb_tree_node_base *);
+
 void *bfmeGoEMEb(void *);
 typedef Rva00751A70Key (__cdecl *FindPrototypeFn)(const char *name);
 
