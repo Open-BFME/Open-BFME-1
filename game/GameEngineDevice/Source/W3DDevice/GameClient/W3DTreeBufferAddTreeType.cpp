@@ -21,31 +21,7 @@ class RenderObjClass;
 #include "sphere.h"
 #include "aabox.h"
 
-// The BFME narrow string owns one reference-counted data pointer. The
-// copy-set target is the matched StringBase<char> body at RVA 0x00887C90.
-template <typename T> struct TreeStringData
-{
-    int m_refCount;
-    int m_length;
-    T m_text[1];
-};
-
-template <typename T> class StringBase
-{
-public:
-    void set(const StringBase<T> &other);
-    void concat(const T *str);
-protected:
-    TreeStringData<T> *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-    void set(const AsciiString &other) { StringBase<char>::set(other); }
-    void concat(const char *s) { StringBase<char>::concat(s); }
-    const char *str(void) const { return m_data ? m_data->m_text : ""; }
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Rva00735E10TreeType
 {
@@ -238,11 +214,11 @@ Int W3DTreeBuffer::addTreeType(const AsciiString &modelName,
 	m_treeTypes[m_numTreeTypes].m_data = data;
 	m_treeTypes[m_numTreeTypes].m_offset = offset;
 	m_treeTypes[m_numTreeTypes].m_doShadow = (shadowKind == 1);
-	m_treeTypes[m_numTreeTypes].m_textureName.set(textureName);
-	m_treeTypes[m_numTreeTypes].m_textureName.concat(".tga");
-	m_treeTypes[m_numTreeTypes].m_modelName.set(modelName);
-	m_treeTypes[m_numTreeTypes].m_nameC.set(nameC);
-	m_treeTypes[m_numTreeTypes].m_nameD.set(nameD);
+	m_treeTypes[m_numTreeTypes].m_textureName.StringBase<char>::set(textureName);
+	m_treeTypes[m_numTreeTypes].m_textureName.StringBase<char>::concat(".tga");
+	m_treeTypes[m_numTreeTypes].m_modelName.StringBase<char>::set(modelName);
+	m_treeTypes[m_numTreeTypes].m_nameC.StringBase<char>::set(nameC);
+	m_treeTypes[m_numTreeTypes].m_nameD.StringBase<char>::set(nameD);
 	// Retail initializes this per-type sentinel after the string fields.
 	m_treeTypes[m_numTreeTypes].m_field0058 = -2;
 	m_numTreeTypes++;
