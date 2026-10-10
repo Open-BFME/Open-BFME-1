@@ -43,6 +43,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::less<int>,
 	_STL::allocator<Rva0008EAA0Pair> > Rva0008EAA0Tree;
 
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva0008EAA0Tree::iterator Rva0008EAA0Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva0008EAA0Pair &, _STL::_Rb_tree_node_base *);
+
 template _STL::pair<Rva0008EAA0Tree::iterator, bool>
 Rva0008EAA0Tree::insert_unique( const Rva0008EAA0Pair & );
 
@@ -58,6 +64,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::_Select1st<Rva000A3F30Pair>,
 	_STL::less<int>,
 	_STL::allocator<Rva000A3F30Pair> > Rva000A3F30Tree;
+
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva000A3F30Tree::iterator Rva000A3F30Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva000A3F30Pair &, _STL::_Rb_tree_node_base *);
 
 template _STL::pair<Rva000A3F30Tree::iterator, bool>
 Rva000A3F30Tree::insert_unique( const Rva000A3F30Pair & );
@@ -75,6 +87,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::less<int>,
 	_STL::allocator<Rva000E1970Pair> > Rva000E1970Tree;
 
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva000E1970Tree::iterator Rva000E1970Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva000E1970Pair &, _STL::_Rb_tree_node_base *);
+
 template _STL::pair<Rva000E1970Tree::iterator, bool>
 Rva000E1970Tree::insert_unique( const Rva000E1970Pair & );
 
@@ -90,6 +108,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::_Select1st<Rva000E1B10Pair>,
 	_STL::less<int>,
 	_STL::allocator<Rva000E1B10Pair> > Rva000E1B10Tree;
+
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva000E1B10Tree::iterator Rva000E1B10Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva000E1B10Pair &, _STL::_Rb_tree_node_base *);
 
 template _STL::pair<Rva000E1B10Tree::iterator, bool>
 Rva000E1B10Tree::insert_unique( const Rva000E1B10Pair & );
@@ -107,6 +131,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::less<int>,
 	_STL::allocator<Rva000E7930Pair> > Rva000E7930Tree;
 
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva000E7930Tree::iterator Rva000E7930Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva000E7930Pair &, _STL::_Rb_tree_node_base *);
+
 template _STL::pair<Rva000E7930Tree::iterator, bool>
 Rva000E7930Tree::insert_unique( const Rva000E7930Pair & );
 
@@ -122,6 +152,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::_Select1st<Rva00127850Pair>,
 	_STL::less<int>,
 	_STL::allocator<Rva00127850Pair> > Rva00127850Tree;
+
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva00127850Tree::iterator Rva00127850Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva00127850Pair &, _STL::_Rb_tree_node_base *);
 
 template _STL::pair<Rva00127850Tree::iterator, bool>
 Rva00127850Tree::insert_unique( const Rva00127850Pair & );
@@ -139,6 +175,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::less<int>,
 	_STL::allocator<Rva00140DE0Pair> > Rva00140DE0Tree;
 
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva00140DE0Tree::iterator Rva00140DE0Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva00140DE0Pair &, _STL::_Rb_tree_node_base *);
+
 template _STL::pair<Rva00140DE0Tree::iterator, bool>
 Rva00140DE0Tree::insert_unique( const Rva00140DE0Pair & );
 
@@ -154,6 +196,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::_Select1st<Rva00145360Pair>,
 	_STL::less<int>,
 	_STL::allocator<Rva00145360Pair> > Rva00145360Tree;
+
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva00145360Tree::iterator Rva00145360Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva00145360Pair &, _STL::_Rb_tree_node_base *);
 
 template _STL::pair<Rva00145360Tree::iterator, bool>
 Rva00145360Tree::insert_unique( const Rva00145360Pair & );
@@ -171,6 +219,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::less<int>,
 	_STL::allocator<Rva0019BD50Pair> > Rva0019BD50Tree;
 
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva0019BD50Tree::iterator Rva0019BD50Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva0019BD50Pair &, _STL::_Rb_tree_node_base *);
+
 template _STL::pair<Rva0019BD50Tree::iterator, bool>
 Rva0019BD50Tree::insert_unique( const Rva0019BD50Pair & );
 
@@ -186,6 +240,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::_Select1st<Rva0019E470Pair>,
 	_STL::less<int>,
 	_STL::allocator<Rva0019E470Pair> > Rva0019E470Tree;
+
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva0019E470Tree::iterator Rva0019E470Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva0019E470Pair &, _STL::_Rb_tree_node_base *);
 
 template _STL::pair<Rva0019E470Tree::iterator, bool>
 Rva0019E470Tree::insert_unique( const Rva0019E470Pair & );
@@ -203,6 +263,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::less<int>,
 	_STL::allocator<Rva001B6DA0Pair> > Rva001B6DA0Tree;
 
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva001B6DA0Tree::iterator Rva001B6DA0Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva001B6DA0Pair &, _STL::_Rb_tree_node_base *);
+
 template _STL::pair<Rva001B6DA0Tree::iterator, bool>
 Rva001B6DA0Tree::insert_unique( const Rva001B6DA0Pair & );
 
@@ -218,6 +284,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::_Select1st<Rva001D8660Pair>,
 	_STL::less<int>,
 	_STL::allocator<Rva001D8660Pair> > Rva001D8660Tree;
+
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva001D8660Tree::iterator Rva001D8660Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva001D8660Pair &, _STL::_Rb_tree_node_base *);
 
 template _STL::pair<Rva001D8660Tree::iterator, bool>
 Rva001D8660Tree::insert_unique( const Rva001D8660Pair & );
@@ -235,6 +307,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::less<int>,
 	_STL::allocator<Rva00223E00Pair> > Rva00223E00Tree;
 
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva00223E00Tree::iterator Rva00223E00Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva00223E00Pair &, _STL::_Rb_tree_node_base *);
+
 template _STL::pair<Rva00223E00Tree::iterator, bool>
 Rva00223E00Tree::insert_unique( const Rva00223E00Pair & );
 
@@ -250,6 +328,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::_Select1st<Rva00224140Pair>,
 	_STL::less<int>,
 	_STL::allocator<Rva00224140Pair> > Rva00224140Tree;
+
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva00224140Tree::iterator Rva00224140Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva00224140Pair &, _STL::_Rb_tree_node_base *);
 
 template _STL::pair<Rva00224140Tree::iterator, bool>
 Rva00224140Tree::insert_unique( const Rva00224140Pair & );
@@ -267,6 +351,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::less<int>,
 	_STL::allocator<Rva002253A0Pair> > Rva002253A0Tree;
 
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva002253A0Tree::iterator Rva002253A0Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva002253A0Pair &, _STL::_Rb_tree_node_base *);
+
 template _STL::pair<Rva002253A0Tree::iterator, bool>
 Rva002253A0Tree::insert_unique( const Rva002253A0Pair & );
 
@@ -282,6 +372,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::_Select1st<Rva00225540Pair>,
 	_STL::less<int>,
 	_STL::allocator<Rva00225540Pair> > Rva00225540Tree;
+
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva00225540Tree::iterator Rva00225540Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva00225540Pair &, _STL::_Rb_tree_node_base *);
 
 template _STL::pair<Rva00225540Tree::iterator, bool>
 Rva00225540Tree::insert_unique( const Rva00225540Pair & );
@@ -299,6 +395,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::less<int>,
 	_STL::allocator<Rva0023B5B0Pair> > Rva0023B5B0Tree;
 
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva0023B5B0Tree::iterator Rva0023B5B0Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva0023B5B0Pair &, _STL::_Rb_tree_node_base *);
+
 template _STL::pair<Rva0023B5B0Tree::iterator, bool>
 Rva0023B5B0Tree::insert_unique( const Rva0023B5B0Pair & );
 
@@ -314,6 +416,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::_Select1st<Rva00372570Pair>,
 	_STL::less<int>,
 	_STL::allocator<Rva00372570Pair> > Rva00372570Tree;
+
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva00372570Tree::iterator Rva00372570Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva00372570Pair &, _STL::_Rb_tree_node_base *);
 
 template _STL::pair<Rva00372570Tree::iterator, bool>
 Rva00372570Tree::insert_unique( const Rva00372570Pair & );
@@ -331,6 +439,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::less<int>,
 	_STL::allocator<Rva00375F30Pair> > Rva00375F30Tree;
 
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva00375F30Tree::iterator Rva00375F30Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva00375F30Pair &, _STL::_Rb_tree_node_base *);
+
 template _STL::pair<Rva00375F30Tree::iterator, bool>
 Rva00375F30Tree::insert_unique( const Rva00375F30Pair & );
 
@@ -346,6 +460,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::_Select1st<Rva003FFA70Pair>,
 	_STL::less<int>,
 	_STL::allocator<Rva003FFA70Pair> > Rva003FFA70Tree;
+
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva003FFA70Tree::iterator Rva003FFA70Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva003FFA70Pair &, _STL::_Rb_tree_node_base *);
 
 template _STL::pair<Rva003FFA70Tree::iterator, bool>
 Rva003FFA70Tree::insert_unique( const Rva003FFA70Pair & );
@@ -363,6 +483,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::less<int>,
 	_STL::allocator<Rva004746D0Pair> > Rva004746D0Tree;
 
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva004746D0Tree::iterator Rva004746D0Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva004746D0Pair &, _STL::_Rb_tree_node_base *);
+
 template _STL::pair<Rva004746D0Tree::iterator, bool>
 Rva004746D0Tree::insert_unique( const Rva004746D0Pair & );
 
@@ -378,6 +504,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::_Select1st<Rva004A6D40Pair>,
 	_STL::less<int>,
 	_STL::allocator<Rva004A6D40Pair> > Rva004A6D40Tree;
+
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva004A6D40Tree::iterator Rva004A6D40Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva004A6D40Pair &, _STL::_Rb_tree_node_base *);
 
 template _STL::pair<Rva004A6D40Tree::iterator, bool>
 Rva004A6D40Tree::insert_unique( const Rva004A6D40Pair & );
@@ -395,6 +527,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::less<int>,
 	_STL::allocator<Rva004E4F60Pair> > Rva004E4F60Tree;
 
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva004E4F60Tree::iterator Rva004E4F60Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva004E4F60Pair &, _STL::_Rb_tree_node_base *);
+
 template _STL::pair<Rva004E4F60Tree::iterator, bool>
 Rva004E4F60Tree::insert_unique( const Rva004E4F60Pair & );
 
@@ -410,6 +548,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::_Select1st<Rva00587A60Pair>,
 	_STL::less<int>,
 	_STL::allocator<Rva00587A60Pair> > Rva00587A60Tree;
+
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva00587A60Tree::iterator Rva00587A60Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva00587A60Pair &, _STL::_Rb_tree_node_base *);
 
 template _STL::pair<Rva00587A60Tree::iterator, bool>
 Rva00587A60Tree::insert_unique( const Rva00587A60Pair & );
@@ -427,6 +571,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::less<int>,
 	_STL::allocator<Rva00593160Pair> > Rva00593160Tree;
 
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva00593160Tree::iterator Rva00593160Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva00593160Pair &, _STL::_Rb_tree_node_base *);
+
 template _STL::pair<Rva00593160Tree::iterator, bool>
 Rva00593160Tree::insert_unique( const Rva00593160Pair & );
 
@@ -442,6 +592,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::_Select1st<Rva00611F60Pair>,
 	_STL::less<int>,
 	_STL::allocator<Rva00611F60Pair> > Rva00611F60Tree;
+
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva00611F60Tree::iterator Rva00611F60Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva00611F60Pair &, _STL::_Rb_tree_node_base *);
 
 template _STL::pair<Rva00611F60Tree::iterator, bool>
 Rva00611F60Tree::insert_unique( const Rva00611F60Pair & );
@@ -459,6 +615,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::less<int>,
 	_STL::allocator<Rva006325D0Pair> > Rva006325D0Tree;
 
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva006325D0Tree::iterator Rva006325D0Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva006325D0Pair &, _STL::_Rb_tree_node_base *);
+
 template _STL::pair<Rva006325D0Tree::iterator, bool>
 Rva006325D0Tree::insert_unique( const Rva006325D0Pair & );
 
@@ -474,6 +636,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::_Select1st<Rva00645EC0Pair>,
 	_STL::less<int>,
 	_STL::allocator<Rva00645EC0Pair> > Rva00645EC0Tree;
+
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva00645EC0Tree::iterator Rva00645EC0Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva00645EC0Pair &, _STL::_Rb_tree_node_base *);
 
 template _STL::pair<Rva00645EC0Tree::iterator, bool>
 Rva00645EC0Tree::insert_unique( const Rva00645EC0Pair & );
@@ -491,6 +659,12 @@ typedef _STL::_Rb_tree<int,
 	_STL::less<int>,
 	_STL::allocator<Rva00653E70Pair> > Rva00653E70Tree;
 
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva00653E70Tree::iterator Rva00653E70Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva00653E70Pair &, _STL::_Rb_tree_node_base *);
+
 template _STL::pair<Rva00653E70Tree::iterator, bool>
 Rva00653E70Tree::insert_unique( const Rva00653E70Pair & );
 
@@ -507,6 +681,30 @@ typedef _STL::_Rb_tree<int,
 	_STL::less<int>,
 	_STL::allocator<Rva0065DC00Pair> > Rva0065DC00Tree;
 
+// RvaTreeMInsertPair.cpp owns the verified four-argument insertion.
+template <>
+Rva0065DC00Tree::iterator Rva0065DC00Tree::_M_insert(
+	_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+	const Rva0065DC00Pair &, _STL::_Rb_tree_node_base *);
+
 template _STL::pair<Rva0065DC00Tree::iterator, bool>
 Rva0065DC00Tree::insert_unique( const Rva0065DC00Pair & );
 
+
+// Keep the retail-proven constructors already supplied by this TU.
+template void _STL::_Construct<Rva000A3F30Pair, Rva000A3F30Pair>(Rva000A3F30Pair *, const Rva000A3F30Pair &);
+template void _STL::_Construct<Rva000E1970Pair, Rva000E1970Pair>(Rva000E1970Pair *, const Rva000E1970Pair &);
+template void _STL::_Construct<Rva000E1B10Pair, Rva000E1B10Pair>(Rva000E1B10Pair *, const Rva000E1B10Pair &);
+template void _STL::_Construct<Rva00127850Pair, Rva00127850Pair>(Rva00127850Pair *, const Rva00127850Pair &);
+template void _STL::_Construct<Rva00140DE0Pair, Rva00140DE0Pair>(Rva00140DE0Pair *, const Rva00140DE0Pair &);
+template void _STL::_Construct<Rva001B6DA0Pair, Rva001B6DA0Pair>(Rva001B6DA0Pair *, const Rva001B6DA0Pair &);
+template void _STL::_Construct<Rva00223E00Pair, Rva00223E00Pair>(Rva00223E00Pair *, const Rva00223E00Pair &);
+template void _STL::_Construct<Rva00224140Pair, Rva00224140Pair>(Rva00224140Pair *, const Rva00224140Pair &);
+template void _STL::_Construct<Rva002253A0Pair, Rva002253A0Pair>(Rva002253A0Pair *, const Rva002253A0Pair &);
+template void _STL::_Construct<Rva003FFA70Pair, Rva003FFA70Pair>(Rva003FFA70Pair *, const Rva003FFA70Pair &);
+template void _STL::_Construct<Rva004A6D40Pair, Rva004A6D40Pair>(Rva004A6D40Pair *, const Rva004A6D40Pair &);
+template void _STL::_Construct<Rva004E4F60Pair, Rva004E4F60Pair>(Rva004E4F60Pair *, const Rva004E4F60Pair &);
+template void _STL::_Construct<Rva00611F60Pair, Rva00611F60Pair>(Rva00611F60Pair *, const Rva00611F60Pair &);
+template void _STL::_Construct<Rva006325D0Pair, Rva006325D0Pair>(Rva006325D0Pair *, const Rva006325D0Pair &);
+template void _STL::_Construct<Rva00645EC0Pair, Rva00645EC0Pair>(Rva00645EC0Pair *, const Rva00645EC0Pair &);
+template void _STL::_Construct<Rva00653E70Pair, Rva00653E70Pair>(Rva00653E70Pair *, const Rva00653E70Pair &);
