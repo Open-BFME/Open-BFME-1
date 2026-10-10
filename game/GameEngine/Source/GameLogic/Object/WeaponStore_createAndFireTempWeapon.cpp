@@ -37,9 +37,6 @@ class Weapon
 public:
 	virtual ~Weapon();
 	void loadAmmoNow(const Object *source);
-	bool privateFireWeapon(const Object *source, const Coord3D *sourcePos,
-		const Object *victim, int victimId, const Coord3D *victimPos,
-		int a, int b, int c, int *projectileID);
 	void deleteInstance() { delete this; }
 
 	int m_pad04; // +0x04
@@ -70,6 +67,8 @@ public:
 extern WeaponStore *TheWeaponStore;
 extern GameLogic *TheGameLogic;
 
+extern "C" void __cdecl __identifier("?j_00030a8a@@YAXXZ")();
+
 void WeaponStore::createAndFireTempWeapon(const WeaponTemplate *weaponTemplate, const Coord3D *sourcePos,
 	const Object *source, const Coord3D *pos, int extra)
 {
@@ -77,7 +76,10 @@ void WeaponStore::createAndFireTempWeapon(const WeaponTemplate *weaponTemplate, 
 	if (source)
 		temporaryWeapon->m_sourceId = source->m_id;
 	temporaryWeapon->loadAmmoNow(source);
-	temporaryWeapon->privateFireWeapon(source, sourcePos, 0, 0, pos, 1, 0, extra, 0);
+	union { void (*raw)(); void (Weapon::*member)(const Object *, const Coord3D *,
+		const Object *, int, const Coord3D *, int, int, int, int *); }
+		fire = { __identifier("?j_00030a8a@@YAXXZ") };
+	(temporaryWeapon->*fire.member)(source, sourcePos, 0, 0, pos, 1, 0, extra, 0);
 	if (temporaryWeapon)
 		temporaryWeapon->deleteInstance();
 }
@@ -91,7 +93,10 @@ void WeaponStore::createAndFireTempWeapon(const WeaponTemplate *weaponTemplate, 
 		temporaryWeapon->m_sourceId = source->m_id;
 	temporaryWeapon->loadAmmoNow(source);
 	temporaryWeapon->m_when = TheGameLogic->m_frame + 1;
-	temporaryWeapon->privateFireWeapon(source, &source->m_position, 0, 0, pos, 0, 0, 0, 0);
+	union { void (*raw)(); void (Weapon::*member)(const Object *, const Coord3D *,
+		const Object *, int, const Coord3D *, int, int, int, int *); }
+		fire = { __identifier("?j_00030a8a@@YAXXZ") };
+	(temporaryWeapon->*fire.member)(source, &source->m_position, 0, 0, pos, 0, 0, 0, 0);
 	temporaryWeapon->deleteInstance();
 }
 
@@ -104,6 +109,9 @@ void WeaponStore::createAndFireTempWeapon(const WeaponTemplate *weaponTemplate, 
 		temporaryWeapon->m_sourceId = source->m_id;
 	temporaryWeapon->loadAmmoNow(source);
 	temporaryWeapon->m_when = TheGameLogic->m_frame + 1;
-	temporaryWeapon->privateFireWeapon(source, &source->m_position, target, target->m_id, 0, 0, 0, 0, 0);
+	union { void (*raw)(); void (Weapon::*member)(const Object *, const Coord3D *,
+		const Object *, int, const Coord3D *, int, int, int, int *); }
+		fire = { __identifier("?j_00030a8a@@YAXXZ") };
+	(temporaryWeapon->*fire.member)(source, &source->m_position, target, target->m_id, 0, 0, 0, 0, 0);
 	temporaryWeapon->deleteInstance();
 }
