@@ -56,13 +56,13 @@ void Rva006B0630Owner::updateMode()
  {
   AsciiString &name = m_providers[m_selectedProvider].m_name;
   bool enabled = true;
-  if (name.compare("Creative Labs EAX 3 (TM)") == 0) goto keep;
+  if (name.StringBase<char>::compare("Creative Labs EAX 3 (TM)") == 0) goto keep;
   if (m_fieldB60 > 0 && m_fieldB60 <= 5) {
    Rva006B0630LODView *lod = (Rva006B0630LODView *)TheGameLODManager;
    if (lod && lod->m_index >= 0 && lod->m_index < 2)
     enabled = lod->m_entries[lod->m_index].m_field04;
   } else enabled = false;
-  unsigned char surround = (name.compare("Dolby Surround") == 0);
+  unsigned char surround = (name.StringBase<char>::compare("Dolby Surround") == 0);
   if (enabled != surround) {
 refresh:
    rva006B0410(0);
