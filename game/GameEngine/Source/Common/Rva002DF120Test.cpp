@@ -9,9 +9,9 @@ extern "C" float fabs(float);
 
 class Rva002DF100
 {
-public:
-	unsigned char testOne(void *value);
 };
+extern "C" void __cdecl __identifier("?j_0000baeb@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00019ff1@@YAXXZ")();
 
 enum KindOfType
 {
@@ -45,7 +45,6 @@ class Object
 public:
 	Player *getControllingPlayer() const;
 	Relationship getRelationship(const Object *that) const;
-	bool isSignificantlyAboveTerrain() const;
 
 	char m_pad00[0x40];
 	float m_positionZ;
@@ -93,15 +92,19 @@ struct Rva002DF120MatchContext
 unsigned char Rva002DF120::test(void *first, void *second)
 {
 	Object *other = (Object *)second;
+	union { void (*raw)(); unsigned char (Rva002DF100::*member)(void *); }
+		one = { __identifier("?j_0000baeb@@YAXXZ") };
+	union { void (*raw)(); int (Object::*member)() const; }
+		above = { __identifier("?j_00019ff1@@YAXXZ") };
 	if (other == 0)
 		return 0;
-	if (!testOne(first))
+	if (!(this->*one.member)(first))
 		return 0;
 
 	Object *found = TheGameLogic->findObjectByID(
 		((Rva002DF120MatchContext *)first)->m_id);
 	if (found == 0)
-		return testOne(first);
+		return (this->*one.member)(first);
 
 	int flags = ((Rva002DF120MatchContext *)first)->m_object->m_flags4d8;
 	if ((flags & 1) == 0)
@@ -121,7 +124,8 @@ unsigned char Rva002DF120::test(void *first, void *second)
 	if (((Thing *)other)->isKindOf((KindOfType)0x19) &&
 		(flags & 0x80) == 0)
 		return 0;
-	if ((flags & 0x40) != 0 && other->isSignificantlyAboveTerrain())
+	// Retail tests only AL from the full-EAX predicate.
+	if ((flags & 0x40) != 0 && (unsigned char)(other->*above.member)())
 		return 0;
 
 	if ((flags & 0x100) != 0)
