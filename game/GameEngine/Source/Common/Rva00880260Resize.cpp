@@ -1,4 +1,12 @@
 // cl: /O2 /Ob0 /G6
+// stlport
+
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+#include <vector>
+
+struct Rva0087FDC0Element;
+extern template class _STL::vector<Rva0087FDC0Element>;
+extern "C" void __identifier("?releaseBuffer@?$StringBase@D@@AAEXXZ")();
 
 struct BfmeTail60
 {
@@ -24,7 +32,7 @@ class BfmeVec60
 {
 public:
 	void resize(unsigned n, BfmeElem60 value);
-	void erase(BfmeElem60 *first, BfmeElem60 *last);
+	BfmeElem60 *erase(BfmeElem60 *first, BfmeElem60 *last);
 	void insert(BfmeElem60 *pos, unsigned count, const BfmeElem60 &value);
 
 	BfmeElem60 *_M_start;
@@ -34,14 +42,19 @@ public:
 
 void BfmeVec60::resize(unsigned n, BfmeElem60 value)
 {
+	union { void (*raw)(); void (BfmeTail60::*member)(); } release;
+	release.raw = __identifier("?releaseBuffer@?$StringBase@D@@AAEXXZ");
 	if (n < (unsigned)(_M_finish - _M_start))
 	{
 		erase(_M_start + n, _M_finish);
-		value.m_1C.release();
+		(value.m_1C.*release.member)();
 	}
 	else
 	{
-		insert(_M_finish, n - (unsigned)(_M_finish - _M_start), value);
-		value.m_1C.release();
+		reinterpret_cast<_STL::vector<Rva0087FDC0Element> *>(this)->_M_fill_insert(
+			reinterpret_cast<Rva0087FDC0Element *>(_M_finish),
+			n - (unsigned)(_M_finish - _M_start),
+			*reinterpret_cast<const Rva0087FDC0Element *>(&value));
+		(value.m_1C.*release.member)();
 	}
 }
