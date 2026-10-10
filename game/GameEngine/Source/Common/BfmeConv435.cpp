@@ -1,8 +1,8 @@
-bool bfmeAskBBC();
-void bfmeElseBBC();
+unsigned char Rva0051A6D0GetFlag();
+void showAptLivingWorldUI();
 
 void bfmeGoBBC()
 {
-	if (!bfmeAskBBC())
-		bfmeElseBBC();
+	if (!Rva0051A6D0GetFlag())
+		showAptLivingWorldUI();
 }
