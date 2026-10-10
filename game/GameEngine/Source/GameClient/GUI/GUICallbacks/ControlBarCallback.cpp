@@ -41,6 +41,10 @@
 #include "GameClient/Mouse.h"
 #include "GameClient/CommandXlat.h"
 
+// Retail calls ILT 0x000196C8; the BFME dispatcher returns bool (AL).
+extern "C" bool __cdecl __identifier("?j_000196c8@@YAXXZ")(
+    const DrawableList *, GameMessage::Type, PickAndPlayInfo *);
+
 // BFME interface slices: these offsets differ from the available ZH headers.
 // Each used slot is witnessed in this callback; see astra_M/LAYOUTS.md.
 class Rva004BFFE0MouseSlots {
@@ -373,7 +377,7 @@ WindowMsgHandledType LeftHUDInput( GameWindow *window, UnsignedInt msg,
 
 					Rva004BFFE0VoiceInfo info;
                     info.m_position = world;
-                    pickAndPlayUnitVoiceResponse(((Rva004BFFE0UISlots *)TheInGameUI)->getAllSelectedDrawables(), (GameMessage::Type)0x42F, &info);
+                    __identifier("?j_000196c8@@YAXXZ")(((Rva004BFFE0UISlots *)TheInGameUI)->getAllSelectedDrawables(), (GameMessage::Type)0x42F, &info);
                     TheInGameUI->setGUICommand(NULL);
 				}
 				else
@@ -384,7 +388,7 @@ WindowMsgHandledType LeftHUDInput( GameWindow *window, UnsignedInt msg,
 					newMsg->appendLocationArgument(world);
 					Rva004BFFE0VoiceInfo info;
                     info.m_position = world;
-                    pickAndPlayUnitVoiceResponse(drawableList, (GameMessage::Type)0x42E, &info);
+                    __identifier("?j_000196c8@@YAXXZ")(drawableList, (GameMessage::Type)0x42E, &info);
 				
 				}  // end else
 
