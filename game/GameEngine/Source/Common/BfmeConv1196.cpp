@@ -1,6 +1,15 @@
 // Open-BFME5 conversions.
 
-extern "C" char g_bfmeV1196[];
+void j_0003a666();
+void j_0003b9e4();
+extern "C" void __identifier("?allow@BfmeA1196@@QAE_NPAVObject@@@Z")();
+
+// Retail VA0109FB78 has three ILT pointer slots, then zero at VA0109FB84.
+void *g_Va0109FB78[3] = {
+	(void *)&j_0003a666,
+	(void *)&__identifier("?allow@BfmeA1196@@QAE_NPAVObject@@@Z"),
+	(void *)&j_0003b9e4
+};
 
 struct BfmeSrc1196
 {
@@ -81,7 +90,7 @@ BfmeA1196::BfmeA1196(BfmeSrc1196 *a, char b)
 	float v;
 
 	m_bfme04 = 0;
-	m_bfme00 = g_bfmeV1196;
+	m_bfme00 = reinterpret_cast<char *>(g_Va0109FB78);
 	m_bfme08 = a->m_bfme38;
 	m_bfme0c = a->m_bfme3c;
 	m_bfme10 = a->m_bfme40;
