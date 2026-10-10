@@ -4,9 +4,9 @@
 //   F:\bfme\Code\gameenginedevice\Source\W3DDevice\GameClient\Drawable\W3DScriptedModelDraw.cpp
 // with line 1116, so the body lives in that translation unit.  Its one caller
 // (0x00765FB0, through ILT 0x0003AAC6) passes the model-state pointer at +0x14
-// of the draw object as `this` and stores the result at +0x28.  The owner is
-// kept under the address-token class Gen_0075F090 (0x0075F090 reads the same
-// +0x2C vector of 0x38-byte elements); the method keeps its own address.
+// of the draw object as `this` and stores the result at +0x28.  The owner
+// carries EA's own class name (WorldBuilder label, ea_evidence.csv 0x0075F0E0
+// name AnimConditionInfo::pickRandomAnimation); the method keeps its own address.
 //
 // Sums the +0x28 weight of the first min(size, limit) elements, one less for
 // element `index`, draws a value below that total and returns the element the
@@ -39,18 +39,18 @@ public:
 	Elem0075F0E0 *m_finish;					// +0x04
 };
 
-class Gen_0075F090
+class AnimConditionInfo
 {
 public:
-	int rva0075F0E0(int index, int limit) const;
+	int pickRandomAnimation(int index, int limit) const;
 
 private:
 	int dword_00[11];					// +0x00
 	Vec0075F0E0 m_vector;					// +0x2C
 };
 
-// ?rva0075F0E0@Gen_0075F090@@QBEHHH@Z
-int Gen_0075F090::rva0075F0E0(int index, int limit) const
+// ?pickRandomAnimation@AnimConditionInfo@@QBEHHH@Z
+int AnimConditionInfo::pickRandomAnimation(int index, int limit) const
 {
 	int size = m_vector.size();
 	if (size > limit)

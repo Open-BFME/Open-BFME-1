@@ -28,7 +28,7 @@ public:
 	BfmeElemCY *m_bfmeFinish;				// +0x04
 };
 
-class Gen_0075F090
+class AnimConditionInfo
 {
 public:
 	int bfmeValue(void) const;
@@ -40,8 +40,8 @@ private:
 	int m_bfmeIndex;					// +0x4C
 };
 
-// ?bfmeValue@Gen_0075F090@@QBEHXZ
-int Gen_0075F090::bfmeValue(void) const
+// ?bfmeValue@AnimConditionInfo@@QBEHXZ
+int AnimConditionInfo::bfmeValue(void) const
 {
 	// Both guards have to fail forward, so the read is the fall-through and
 	// the two ones share the block at the end.
