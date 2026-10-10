@@ -224,13 +224,7 @@ UpdateSleepTime CommandButtonHuntUpdate::huntSpecialPower(AIUpdateInterface *ai)
 	return (UpdateSleepTime)data->m_scanFrames;
 }
 
-class BFMERetailAsciiString
-{
-public:
-	void clear() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Rva0028B540AIView : public BfmeVirtualSlots<128>
 {
@@ -255,7 +249,7 @@ UpdateSleepTime PB_Iface2::rva0028b540Update()
 		if (ai->status() != 2)
 		{
 			*(const CommandButton **)((char *)self + 0x14) = 0;
-			((BFMERetailAsciiString *)((char *)self + 0x10))->clear();
+			((AsciiString *)((char *)self + 0x10))->StringBase<char>::clear();
 			return UPDATE_SLEEP_FOREVER;
 		}
 		const CommandButton *button = *(const CommandButton **)((char *)self + 0x14);
