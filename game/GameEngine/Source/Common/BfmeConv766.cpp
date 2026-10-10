@@ -14,17 +14,17 @@
 extern void j_000294e7();
 typedef void *(__stdcall *Rva000A1D60Thunk)(void *what);
 
-class BfmeThingDSA
+class StateMachine
 {
 public:
-	void *bfmeGoDSA(void *what);
+	void *setState(void *what);
 	char m_bfmeHead[0x40];
-	char m_bfmeFlag;
+	char m_locked;
 };
 
-void *BfmeThingDSA::bfmeGoDSA(void *what)
+void *StateMachine::setState(void *what)
 {
-	if (m_bfmeFlag)
+	if (m_locked)
 		return 0;
 	return ((Rva000A1D60Thunk)&j_000294e7)(what);
 }

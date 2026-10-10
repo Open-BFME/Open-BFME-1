@@ -35237,3 +35237,4 @@ _GdipCloneImage@8,0x009F6C2E,claim superseded by the gate-required claim for ?Rv
 ?bfmeAtYJ@Gen_0048DE20@@QAEPAVAsciiStringYJ@@H@Z,0x0048DE20,claim superseded by the gate-required claim for ?bfmeAtYJ@Gen_0048DE20@@QAEPAVAsciiString@@H@Z at 0x0048DE20/92B from game/GameEngine/Source/Common/BfmeSlotAccessorYJ.cpp. The prior claim at 0x0048DE20/92B from game/GameEngine/Source/Common/BfmeSlotAccessorYJ.cpp was retired.
 ?bfmeHasBit@Gen_000D5930@@QBE_NPBVBfmeThingEL@@@Z,0x000D5930,renamed to ?hasUpgradeComplete@Player@@QBE_NPBVBfmeThingEL@@@Z by tools/name_lane.py: two models agreed
 ?bfmeBusy@Gen_00410BA0@@QBEHXZ,0x00410BA0,renamed to ?isDrawableEffectivelyHidden@Gen_00410BA0@@QBEHXZ by tools/name_lane.py: two models agreed
+?bfmeGoDSA@BfmeThingDSA@@QAEPAXPAX@Z,0x000A1D60,renamed to ?setState@StateMachine@@QAEPAXPAX@Z by tools/name_lane.py: two models agreed

@@ -79157,7 +79157,7 @@ name,address,notes
 ?bfmeTailDFA@BfmeThingDFA@@QAEPAV1@XZ,0x0083FB50,pin
 ?bfmeTailDFG@BfmeThingDFG@@QAEPAV1@XZ,0x0083FB50,pin
 ?bfmeTailDFH@BfmeThingDFH@@QAEPAV1@XZ,0x0083FB50,pin
-?bfmeTailDSA@BfmeThingDSA@@QAEPAXPAX@Z,0x000294E7,pin
+?bfmeTailDSA@StateMachine@@QAEPAXPAX@Z,0x000294E7,pin
 ?bfmeTailDSB@BfmeThingDSB@@QAE_NXZ,0x0002FE05,pin
 ?bfmeTailDTK@BfmeThingDTK@@QAEXXZ,0x0001C75B,pin
 ?bfmeTailDTK@Rva00168850DTK@@QAEXXZ,0x0001C75B,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00168850 calls; autopin
