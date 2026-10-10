@@ -52,7 +52,7 @@ void __cdecl Rva004605F0(void *nodeArg, void *textArg)
 		return;
 	if (text == 0 || *text == 0)
 		return;
-	if (node->m_text.compare(text) == 0)
+	if (node->m_text.StringBase<char>::compare(text) == 0)
 		return;
 
 	node->m_text = text;
