@@ -90963,3 +90963,4 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ?d_0061a470@@YAXXZ,0x0061A470,address-only compatibility for retired dump name; complete string erase body now in S3GuardedDelegateEraseStrings.cpp
 ?d_008a6100@@YAXXZ,0x008A6100,address-only compatibility pin for retired dump name; callback immediate in matched lookup 008A73E0; native spelling unclaimed
 ?d_008a62a0@@YAXXZ,0x008A62A0,address-only compatibility pin for retired dump name; callback immediate in matched lookup 008A78D0; native spelling unclaimed
+??2Rva00899FC0@@SAPAXI@Z,0x00897640,address-derived allocator ABI;independent 33-byte provider and constructor call sites;proof=targets/game/reverse/identity_evidence/008b4da0-allocator-binding.md
