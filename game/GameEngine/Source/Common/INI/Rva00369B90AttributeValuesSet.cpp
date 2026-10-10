@@ -14,6 +14,9 @@ struct Gen_t_00369920_p8pod
 
 class Rva00369B90AttributeValues;
 
+// Existing retail ILT 000200AE -> 00369590, thiscall and RET20.
+extern "C" void __cdecl __identifier("?j_000200ae@@YAXXZ")();
+
 namespace _STL
 {
 struct __false_type
@@ -73,6 +76,15 @@ void Rva00369B90AttributeValues::set(int attribute, float value)
 	{
 		const _STL::__false_type &tag =
 			*reinterpret_cast<const _STL::__false_type *>(&value);
-		m_values._M_insert_overflow(m_values.m_finish, entry, tag, 1, true);
+		union
+		{
+			void (__cdecl *symbol)();
+			void (_STL::vector<Gen_t_00369920_p8pod,
+				_STL::allocator<Gen_t_00369920_p8pod> >::*member)(
+				Gen_t_00369920_p8pod *, const Gen_t_00369920_p8pod &,
+				const _STL::__false_type &, unsigned int, bool);
+		} overflow;
+		overflow.symbol = &__identifier("?j_000200ae@@YAXXZ");
+		(m_values.*overflow.member)(m_values.m_finish, entry, tag, 1, true);
 	}
 }
