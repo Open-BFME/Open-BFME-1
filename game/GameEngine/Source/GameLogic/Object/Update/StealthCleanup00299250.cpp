@@ -11,12 +11,12 @@ public:
 enum NameKeyType { INVALID_NAME=0 };
 class NameKeyGenerator { public: NameKeyType nameToKey(const char*); };
 extern NameKeyGenerator* TheNameKeyGenerator;
-class StealthUpdate { public: void update002AD250(); char pad00[0x2d]; bool at2d; };
+class StealthUpdate { public: char pad00[0x2d]; bool at2d; };
 class Module;
 enum ObjectStatusTypes { STATUS18=18 };
 enum DamageType { DAMAGE8=8 }; enum DeathType { DEATH0=0 };
 #define BFME_HAVE_OBJECTID
-#define OBJECT_TU_MEMBERS Module* findModule(NameKeyType) const; void clearStatus(ObjectStatusTypes); void bfmeApplySpecialModelCondition(int,const void*,int); void kill(DamageType,DeathType);
+#define OBJECT_TU_MEMBERS void clearStatus(ObjectStatusTypes); void bfmeApplySpecialModelCondition(int,const void*,int); void kill(DamageType,DeathType);
 #include "../object.h"
 class GameLogic { public: Object* findObjectByID(int); char pad00[0x3c]; unsigned at3c; };
 extern GameLogic* TheGameLogic;
@@ -34,6 +34,8 @@ static inline AudioDispatch00299250 *localTheAudio()
 }
 struct Config00299250 { char pad00[0x20]; AudioEventInfoRef at20; };
 class StealthCleanup00299250 { public: void apply(); char pad00[4]; Config00299250* at04; Object* at08; char pad0c[0x18]; int at24; int at28; int at2c; unsigned at30; };
+extern "C" void __cdecl __identifier("?j_0002ae23@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_000272af@@YAXXZ")();
 void StealthCleanup00299250::apply() {
  unsigned frame=TheGameLogic->at3c;
  Config00299250* config=at04;
@@ -41,9 +43,13 @@ void StealthCleanup00299250::apply() {
  Object* object=at08;
  at28=0;
  static NameKeyType key=TheNameKeyGenerator->nameToKey("StealthUpdate");
- StealthUpdate* stealth=(StealthUpdate*)object->findModule(key);
+ union { void (*raw)(); Module* (Object::*member)(NameKeyType) const; }
+  find={ __identifier("?j_0002ae23@@YAXXZ") };
+ StealthUpdate* stealth=(StealthUpdate*)(object->*find.member)(key);
  if(stealth && stealth->at2d) {
-  stealth->update002AD250();
+  union { void (*raw)(); void (StealthUpdate::*member)(); }
+   update={ __identifier("?j_000272af@@YAXXZ") };
+  (stealth->*update.member)();
   object->clearStatus(STATUS18);
   object->bfmeApplySpecialModelCondition(5,0,1);
   if(config->at20.ptr) {
@@ -55,4 +61,3 @@ void StealthCleanup00299250::apply() {
  Object* previous=TheGameLogic->findObjectByID(at24);
  if(previous) { previous->kill(DAMAGE8,DEATH0); at24=0; }
 }
-
