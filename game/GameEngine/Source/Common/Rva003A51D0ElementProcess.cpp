@@ -21,12 +21,16 @@ public:
 class LivingWorldLogic;
 extern LivingWorldLogic *TheLivingWorldLogic;
 
+// Retail ILT00020509 ->003A44A0 reads one byte-valued stack argument and
+// returns RET4; ILT00049355 ->003A50F0 uses the receiver and RET0. Retain
+// the existing thiscall contracts while naming the opaque matched bodies.
+extern "C" void __cdecl __identifier("?d_003a44a0@@YAXXZ")();
+extern "C" void __cdecl __identifier("?d_003a50f0@@YAXXZ")();
+
 class Gen003BDE80Element
 {
 public:
 	void process();
-	void rva003A50F0();
-	void rva003A44A0(bool on);
 
 	char m_prefix1C[0x1c];
 	unsigned char m_byte1C;
@@ -42,7 +46,15 @@ void Gen003BDE80Element::process()
 	int was = m_byte1C;
 
 	if (m_byte1C)
-		rva003A50F0();
+	{
+		union
+		{
+			void (__cdecl *symbol)();
+			void (Gen003BDE80Element::*member)();
+		} step;
+		step.symbol = &__identifier("?d_003a50f0@@YAXXZ");
+		(this->*step.member)();
+	}
 
 	if (was && !m_byte1C && m_byte1F)
 	{
@@ -50,5 +62,11 @@ void Gen003BDE80Element::process()
 		m_byte1F = 0;
 	}
 
-	rva003A44A0(was || m_byte1C);
+	union
+	{
+		void (__cdecl *symbol)();
+		void (Gen003BDE80Element::*member)(bool);
+	} step;
+	step.symbol = &__identifier("?d_003a44a0@@YAXXZ");
+	(this->*step.member)(was || m_byte1C);
 }
