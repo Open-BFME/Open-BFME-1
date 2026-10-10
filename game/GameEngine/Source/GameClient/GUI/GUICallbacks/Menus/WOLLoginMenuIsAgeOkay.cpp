@@ -13,53 +13,16 @@ extern const char g_bfmeEmptyAscii[];
 typedef bool Bool;
 typedef int Int;
 
-struct AsciiStringData
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+template<> inline bool StringBase<char>::isEmpty() const
 {
-	unsigned int m_refCount;
-	unsigned short m_length;
-};
-
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase() : m_data(0) {}
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-	AsciiStringData *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-
-	int getLength() const
-	{
-		return m_data ? m_data->m_length : 0;
-	}
-
-	Bool isEmpty() const
-	{
-		return m_data == 0 || m_data->m_length == 0;
-	}
-
-	const char *str() const
-	{
-		return m_data ? (const char *)m_data + 8 : g_bfmeEmptyAscii;
-	}
-
-	void format(AsciiString format, ...);
-};
+    return m_data == 0 || m_data->length == 0;
+}
 
 static Bool isAgeOkay(AsciiString &month, AsciiString &day, AsciiString year)
 {
-	if(month.isEmpty() || day.isEmpty() || year.isEmpty() || year.getLength() != 4)
+	if(month.StringBase<char>::isEmpty() || day.StringBase<char>::isEmpty() || year.StringBase<char>::isEmpty() || year.StringBase<char>::getLength() != 4)
 		return FALSE;
 
 	Int monthInt = atoi(month.str());
