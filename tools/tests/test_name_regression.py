@@ -1183,3 +1183,68 @@ def test_pinned_standin_respelled_to_ilt_row_at_its_address_passes(tmp_path):
 
 def test_pinned_standin_at_another_address_still_fails(tmp_path):
     assert ('destroy', 'j_00753450') in _pin_case(tmp_path, 0x00753454)
+
+
+def test_pinned_standin_respelled_to_lowercase_ilt_row_passes(tmp_path):
+    # Ledger ?j_ rows spell hex in either case (?j_0000955c, re_attempts 59148).
+    git(tmp_path, 'init', '-q')
+    git(tmp_path, 'config', 'user.name', 'Fixture')
+    git(tmp_path, 'config', 'user.email', 'fixture@example.invalid')
+    put(tmp_path, PIN_SRC, PIN_BEFORE)
+    put(tmp_path, 'targets/game/reverse/symbols.csv',
+        'name,address,notes\n?destroy@Shim@@QAEXXZ,0x0075345C,pin\n')
+    put(tmp_path, 'targets/game/reverse/functions.csv',
+        '?j_0075345c@@YAXXZ,,0x0075345C,5,game/gen_small/thunks_037.cpp,matched,gen-thunk\n')
+    commit(tmp_path)
+    put(tmp_path, PIN_SRC, 'void j_0075345c();\nvoid f(void *p) { j_0075345c(); }\n')
+    assert ('destroy', 'j_0075345c') not in [
+        (f.old_name, f.new_name) for f in N.check(tmp_path, 'HEAD', ':')[0]]
+
+
+LEDGER_SRC = 'game/GameEngine/Source/GameLogic/PinToLedger.cpp'
+LEDGER_BEFORE = ('class GameLogic { public: bool isLivingWorld(); };\n'
+                 'bool f(GameLogic *g) { return g->isLivingWorld(); }\n')
+LEDGER_AFTER = ('class GameLogic { public: bool _bfme_isInLivingWorldCampaign(); };\n'
+                'bool f(GameLogic *g) { return g->_bfme_isInLivingWorldCampaign(); }\n')
+
+
+def _ledger_pin_case(tmp_path, pin_rva, rows):
+    git(tmp_path, 'init', '-q')
+    git(tmp_path, 'config', 'user.name', 'Fixture')
+    git(tmp_path, 'config', 'user.email', 'fixture@example.invalid')
+    put(tmp_path, LEDGER_SRC, LEDGER_BEFORE)
+    put(tmp_path, 'targets/game/reverse/symbols.csv',
+        f'name,address,notes\n?isLivingWorld@GameLogic@@QAE_NXZ,0x{pin_rva:08X},pin\n')
+    put(tmp_path, 'targets/game/reverse/functions.csv', rows)
+    commit(tmp_path)
+    put(tmp_path, LEDGER_SRC, LEDGER_AFTER)
+    return [(f.old_name, f.new_name) for f in N.check(tmp_path, 'HEAD', ':')[0]]
+
+
+BODY_ROW = ('?_bfme_isInLivingWorldCampaign@GameLogic@@QAE_NXZ,,0x00382B50,91,'
+            'game/GameEngine/Source/GameLogic/System/X.cpp,matched\n')
+ILT_ROW = '?j_0001d1c9@@YAXXZ,,0x0001D1C9,5,game/gen_small/thunks_013.cpp,matched,gen-thunk;target=FUN_00782b50\n'
+PAIR = ('isLivingWorld', '_bfme_isInLivingWorldCampaign')
+
+
+def test_pin_respelled_to_ledger_row_at_its_address_passes(tmp_path):
+    assert PAIR not in _ledger_pin_case(tmp_path, 0x00382B50, BODY_ROW)
+
+
+def test_ilt_pin_respelled_to_ledger_row_at_ilt_target_passes(tmp_path):
+    # re_attempts 58979: pin at ILT 0x1D1C9, ledger body at its target 0x382B50.
+    assert PAIR not in _ledger_pin_case(tmp_path, 0x0001D1C9, ILT_ROW + BODY_ROW)
+
+
+def test_pin_at_another_address_than_ledger_row_still_fails(tmp_path):
+    assert PAIR in _ledger_pin_case(tmp_path, 0x00382B60, BODY_ROW)
+
+
+def test_pin_without_ledger_row_at_its_address_still_fails(tmp_path):
+    # The ILT row's target is not the pin's address: nothing proves the spelling.
+    assert PAIR in _ledger_pin_case(tmp_path, 0x00382B50, ILT_ROW)
+
+
+def test_name_the_ledger_row_spells_is_not_dropped(tmp_path):
+    rows = BODY_ROW + '?isLivingWorld@GameLogic@@QAE_NXZ,,0x00382B50,91,game/x.cpp,matched\n'
+    assert PAIR in _ledger_pin_case(tmp_path, 0x00382B50, rows)

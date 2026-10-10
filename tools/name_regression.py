@@ -706,9 +706,69 @@ def _ilt_respellings(root, old, new):
             rva = int(cols[2], 16)
         except (IndexError, ValueError):
             continue
-        if cols[0] == f'?j_{rva:08X}@@YAXXZ':
+        # Ledger ?j_ names spell the address in either case (?j_0000955c,
+        # re_attempts 59148); the address, not its case, is the identity.
+        if cols[0].lower() == f'?j_{rva:08x}@@yaxxz':
             ilt.add(rva)
     return recorded, ilt
+
+
+def _recorded_components(root, ref):
+    """Name component -> RVAs where a symbols.csv pin or DIR32 record (a
+    candidate, AGENTS.md) spells it as the method/datum or its owner."""
+    out = defaultdict(set)
+    for path, column, base in ((SYMBOLS, 'address', 0), (DIR32_RECORD, 'va', IMAGE_BASE)):
+        for row in csv.DictReader(io.StringIO(read(root, ref, path) or '')):
+            try:
+                rva = int(row[column], 16) - base
+            except (KeyError, TypeError, ValueError):
+                continue
+            name = row.get('name') or ''
+            parts = set(_symbol_names(name)) | {_bare(name)}
+            for part in parts - {'', None}:
+                out[part].add(rva)
+    return out
+
+
+ILT_TARGET = re.compile(r'target=(?:0x([0-9A-Fa-f]{8})|FUN_([0-9A-Fa-f]{8}))')
+
+
+def _ledger_rows_by_rva(root, ref):
+    """RVA -> ledger names (functions.csv and data_rows.csv), and the ILT
+    rows' recorded jump targets (RVA -> target RVA)."""
+    names, targets = defaultdict(list), {}
+    for line in (read(root, ref, 'targets/game/reverse/functions.csv') or '').splitlines():
+        cols = line.split(',')
+        try:
+            rva = int(cols[2], 16)
+        except (IndexError, ValueError):
+            continue
+        names[rva].append(cols[0])
+        if cols[0].lower() == f'?j_{rva:08x}@@yaxxz':
+            m = ILT_TARGET.search(line)
+            if m:
+                targets[rva] = int(m.group(1), 16) if m.group(1) else int(m.group(2), 16) - IMAGE_BASE
+    for row in csv.DictReader(io.StringIO(read(root, ref, 'targets/game/reverse/data_rows.csv') or '')):
+        try:
+            rva = int(row['address'], 16) - (IMAGE_BASE if row.get('address_kind') == 'va' else 0)
+        except (KeyError, TypeError, ValueError):
+            continue
+        names[rva].append(row.get('name') or '')
+    return names, targets
+
+
+def _is_pin_respelling(finding, recorded, names, targets):
+    """A name known only as a pin/DIR32 record at address A, respelled to a
+    component of the ledger row at A (or, for an ILT pin, at the ILT row's
+    recorded target), as callees.py prints it. The ledger row is that address's
+    identity; a name the ledger row itself spells is never dropped here."""
+    word = lambda n: re.compile(r'(?<![A-Za-z0-9_])' + re.escape(n) + r'(?![A-Za-z0-9_])')
+    new, old = word(finding.new_name), word(finding.old_name)
+    for rva in recorded.get(finding.old_name, ()):
+        rows = names.get(rva, []) + (names.get(targets[rva], []) if rva in targets else [])
+        if any(new.search(n) for n in rows) and not any(old.search(n) for n in rows):
+            return True
+    return False
 
 
 # A word followed by an embedded 6-8 hex-digit address (`forward4125F0`,
@@ -793,6 +853,12 @@ def check(root, old, new):
     if any(ILT_TOKEN.match(f.new_name) for f in candidates):
         recorded, ilt = _ilt_respellings(root, old, new)
         candidates = [f for f in candidates if not _is_ilt_respelling(f, recorded, ilt)]
+    if candidates:
+        recorded = _recorded_components(root, old)
+        if any(f.old_name in recorded for f in candidates):
+            names, targets = _ledger_rows_by_rva(root, new)
+            candidates = [f for f in candidates
+                          if not _is_pin_respelling(f, recorded, names, targets)]
     if any(ADDRESS_TAIL.match(f.old_name) for f in candidates):
         ledger = _ledger_names_by_rva(root, new)
         candidates = [f for f in candidates if not _is_address_respelling(f, ledger)]
