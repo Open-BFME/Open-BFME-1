@@ -8,10 +8,18 @@
 // (S3ArrayOwnerDestructors.cpp).
 void operator delete[](void *block);
 
+// ILT 0x00018FCF reaches the five-byte destructor forwarding body at
+// 0x0005DBF0, which jumps to this verified provider at 0x008FC5B0.
+class W3DRadarResetSurface
+{
+public:
+    ~W3DRadarResetSurface();
+};
+
 class BfmeElementD
 {
 public:
-    ~BfmeElementD();
+    __declspec(noinline) ~BfmeElementD() { ((W3DRadarResetSurface *)this)->~W3DRadarResetSurface(); }
 private:
     char m_bfmeBytes[0x24];
 };
