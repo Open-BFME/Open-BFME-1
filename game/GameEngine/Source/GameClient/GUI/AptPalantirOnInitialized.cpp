@@ -21,8 +21,6 @@ public:
 class WindowManager
 {
 public:
-	void add( void *window, const char *name, int type, void *value,
-		int unused0, int unused1, int unused2, int unused3 );
 };
 
 extern AptPalantir *TheAptPalantir;
@@ -34,6 +32,7 @@ extern unsigned char g_aptPalantirShowRequested;
 extern int g_aptPalantirWindow;
 extern const char g_rva01080FC0[2];
 extern const char g_rva01081238[];
+extern "C" void __cdecl __identifier("?j_00015235@@YAXXZ")();
 
 // ?aptPalantirOnInitialized@@YAXXZ
 void aptPalantirOnInitialized()
@@ -53,6 +52,9 @@ void aptPalantirOnInitialized()
 			jewel = g_rva01081238;
 			break;
 	}
-	g_rva012F19E8WindowManager->add( (void *)g_aptPalantirWindow,
+	union { void (*raw)(); char *(WindowManager::*member)(void *, const char *,
+		int, void *, int, int, int, int); }
+		add = { __identifier("?j_00015235@@YAXXZ") };
+	(g_rva012F19E8WindowManager->*add.member)( (void *)g_aptPalantirWindow,
 		"BrightenJewel", 1, (void *)jewel, 0, 0, 0, 0 );
 }
