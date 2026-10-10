@@ -23,7 +23,7 @@ class BfmeOwnerLU
 public:
 	ThingTemplate *bfmeThingLU(void)
 	{
-		ThingTemplate *thing = m_bfmeSlotLU;
+		ThingTemplate *thing = m_thingTemplate;
 
 		if (thing && thing->m_nextOverride)
 			thing = (ThingTemplate *)thing->m_nextOverride->getFinalOverride();
@@ -34,7 +34,7 @@ public:
 	ThingTemplate *getThingTemplate(void);
 
 	unsigned char m_bfmeHeadLU[0x1c];
-	ThingTemplate *m_bfmeSlotLU;
+	ThingTemplate *m_thingTemplate;
 };
 
 ThingTemplate *BfmeOwnerLU::getThingTemplate(void)
