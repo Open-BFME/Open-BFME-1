@@ -28,8 +28,9 @@
 // value of "TXN".  Hoisting a load across a call means the compiler proved the
 // call cannot change it, which is what a `const` pointer object gives; the
 // spelling below is a local copy of a const global, which is what reproduces
-// the schedule.  The pointed-to strings are NOT evidence -- every data operand
-// here is a DIR32 site whose four bytes build.py copies from retail.
+// the schedule. Retail stores these transaction slots in writable .data as
+// zero-initialized four-byte words. Each definition below owns a verified data
+// row; the local pointer snapshot preserves the load before reset().
 //
 // WHAT THE BYTES CANNOT DECIDE.  Nothing names the transactions, the message
 // class, or the argument identifiers.  Key spellings ("clubId", "userId",
@@ -53,14 +54,32 @@ public:
 	void run( void );                                                // 0x007E8AC0
 };
 
+// Existing ledger owners of the retail message primitives (callees.py).
+class BfmeC994
+{
+public:
+	void addString( const char *key, const char *value );
+};
+class BfmeThingCIB
+{
+public:
+	void bfmeGoCIB( void *key, void *value );
+};
+class Rva007E8980
+{
+public:
+	void go( int key, unsigned char value );
+};
+class Gen_007e88c0
+{
+public:
+	void m( int code );
+};
+
 class Rva007E8810Message
 {
 public:
-	void addString( const char *key, const char *value );            // 0x007E8A10
-	void addInt( const char *key, int value );                       // 0x007E88D0
 	void addInt64( const char *key, FeslInt64 value );               // 0x007E8E90
-	void addBool( const char *key, bool value );                     // 0x007E8980
-	void setError( int code );                                       // 0x007E88C0
 
 	char m_head[ 0x1C ];
 	unsigned int m_category;
@@ -82,190 +101,190 @@ struct Rva007F3B50Attribute
 	const char *value;
 };
 
-extern const char * const g_Rva0130A678;
-extern const char * const g_Rva0130A6D8;
-extern const char * const g_Rva0130A750;
-extern const char * const g_Rva0130A78C;
-extern const char * const g_Rva0130A684;
-extern const char * const g_Rva0130A720;
-extern const char * const g_Rva0130A72C;
-extern const char * const g_Rva0130A738;
-extern const char * const g_Rva0130A744;
-extern const char * const g_Rva0130A75C;
-extern const char * const g_Rva0130A774;
-extern const char * const g_Rva0130A798;
-extern const char * const g_Rva0130A7A4;
+unsigned int g_Va0130A678 = 0;
+unsigned int g_Va0130A6D8 = 0;
+unsigned int g_Va0130A750 = 0;
+unsigned int g_Va0130A78C = 0;
+unsigned int g_Va0130A684 = 0;
+unsigned int g_Va0130A720 = 0;
+unsigned int g_Va0130A72C = 0;
+unsigned int g_Va0130A738 = 0;
+unsigned int g_Va0130A744 = 0;
+unsigned int g_Va0130A75C = 0;
+unsigned int g_Va0130A774 = 0;
+unsigned int g_Va0130A798 = 0;
+unsigned int g_Va0130A7A4 = 0;
 
 void __stdcall Rva007F4310( Rva007E8810Message *msg )
 {
-	const char *txn = g_Rva0130A7A4;
+	const char *txn = reinterpret_cast<const char *>(g_Va0130A7A4);
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'fsys';
-	msg->addString( "TXN", txn );
+	((BfmeC994 *)msg)->addString( "TXN", txn );
 }
 
 void __stdcall Rva007F4340( Rva007E8810Message *msg )
 {
-	const char *txn = g_Rva0130A798;
+	const char *txn = reinterpret_cast<const char *>(g_Va0130A798);
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'fsys';
-	msg->addString( "TXN", txn );
+	((BfmeC994 *)msg)->addString( "TXN", txn );
 }
 
 void __stdcall Rva007F3E50( Rva007E8810Message *msg, FeslInt64 clubId )
 {
-	const char *txn = g_Rva0130A774;
+	const char *txn = reinterpret_cast<const char *>(g_Va0130A774);
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'club';
-	msg->addString( "TXN", txn );
+	((BfmeC994 *)msg)->addString( "TXN", txn );
 	msg->addInt64( "clubId", clubId );
 }
 
 void __stdcall Rva007F3F40( Rva007E8810Message *msg, FeslInt64 clubId )
 {
-	const char *txn = g_Rva0130A744;
+	const char *txn = reinterpret_cast<const char *>(g_Va0130A744);
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'club';
-	msg->addString( "TXN", txn );
+	((BfmeC994 *)msg)->addString( "TXN", txn );
 	msg->addInt64( "clubId", clubId );
 }
 
 void __stdcall Rva007F3F90( Rva007E8810Message *msg, FeslInt64 clubId, int state )
 {
-	const char *txn = g_Rva0130A738;
+	const char *txn = reinterpret_cast<const char *>(g_Va0130A738);
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'club';
-	msg->addString( "TXN", txn );
+	((BfmeC994 *)msg)->addString( "TXN", txn );
 	msg->addInt64( "clubId", clubId );
 	if( state )
-		msg->addInt( "state", state );
+		((BfmeThingCIB *)msg)->bfmeGoCIB( (void *)"state", (void *)(state) );
 }
 
 void __stdcall Rva007F3AF0( Rva007E8810Message *msg, FeslInt64 clubId, FeslInt64 userId )
 {
-	const char *txn = g_Rva0130A720;
+	const char *txn = reinterpret_cast<const char *>(g_Va0130A720);
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'club';
-	msg->addString( "TXN", txn );
+	((BfmeC994 *)msg)->addString( "TXN", txn );
 	msg->addInt64( "clubId", clubId );
 	msg->addInt64( "userId", userId );
 }
 
 void __stdcall Rva007F3A80( Rva007E8810Message *msg, FeslInt64 clubId, FeslInt64 userId, int state )
 {
-	const char *txn = g_Rva0130A72C;
+	const char *txn = reinterpret_cast<const char *>(g_Va0130A72C);
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'club';
-	msg->addString( "TXN", txn );
+	((BfmeC994 *)msg)->addString( "TXN", txn );
 	msg->addInt64( "clubId", clubId );
 	msg->addInt64( "userId", userId );
-	msg->addInt( "state", state );
+	((BfmeThingCIB *)msg)->bfmeGoCIB( (void *)"state", (void *)(state) );
 }
 
 void __stdcall Rva007F3B50( Rva007E8810Message *msg, FeslInt64 clubId,
 	FeslInt64 userId, const Rva007F3B50Attribute *attributes, unsigned int count )
 {
-	const char *txn = g_Rva0130A75C;
+	const char *txn = reinterpret_cast<const char *>(g_Va0130A75C);
 	unsigned int i;
 
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'club';
-	msg->addString( "TXN", txn );
+	((BfmeC994 *)msg)->addString( "TXN", txn );
 	msg->addInt64( "clubId", clubId );
 	msg->addInt64( "userId", userId );
-	msg->addInt( "attributes.[]", count );
+	((BfmeThingCIB *)msg)->bfmeGoCIB( (void *)"attributes.[]", (void *)(count) );
 	for( i = 0; i < count; ++i )
 	{
 		char key[ 0x40 ] = "";
 
 		sprintf( key, "attributes.%d.key", i );
-		msg->addString( key, attributes[ i ].key );
+		((BfmeC994 *)msg)->addString( key, attributes[ i ].key );
 		sprintf( key, "attributes.%d.value", i );
-		msg->addString( key, attributes[ i ].value );
+		((BfmeC994 *)msg)->addString( key, attributes[ i ].value );
 	}
 }
 
 void __stdcall Rva007F2D10( Rva007E8810Message *msg, const char *key, int periodId )
 {
-	const char *txn = g_Rva0130A678;
+	const char *txn = reinterpret_cast<const char *>(g_Va0130A678);
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'rank';
-	msg->addString( "TXN", txn );
-	msg->addString( "key", key );
-	msg->addInt( "periodId", periodId );
+	((BfmeC994 *)msg)->addString( "TXN", txn );
+	((BfmeC994 *)msg)->addString( "key", key );
+	((BfmeThingCIB *)msg)->bfmeGoCIB( (void *)"periodId", (void *)(periodId) );
 }
 
 void __stdcall Rva007F2B70( Rva007E8810Message *msg, const char *key, int ownerType,
 	int minRank, int maxRank, int periodId, int periodPast )
 {
-	const char *txn = g_Rva0130A684;
+	const char *txn = reinterpret_cast<const char *>(g_Va0130A684);
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'rank';
-	msg->addString( "TXN", txn );
-	msg->addString( "key", key );
-	msg->addInt( "ownerType", ownerType );
-	msg->addInt( "minRank", minRank );
-	msg->addInt( "maxRank", maxRank );
-	msg->addInt( "periodId", periodId );
-	msg->addInt( "periodPast", periodPast );
+	((BfmeC994 *)msg)->addString( "TXN", txn );
+	((BfmeC994 *)msg)->addString( "key", key );
+	((BfmeThingCIB *)msg)->bfmeGoCIB( (void *)"ownerType", (void *)(ownerType) );
+	((BfmeThingCIB *)msg)->bfmeGoCIB( (void *)"minRank", (void *)(minRank) );
+	((BfmeThingCIB *)msg)->bfmeGoCIB( (void *)"maxRank", (void *)(maxRank) );
+	((BfmeThingCIB *)msg)->bfmeGoCIB( (void *)"periodId", (void *)(periodId) );
+	((BfmeThingCIB *)msg)->bfmeGoCIB( (void *)"periodPast", (void *)(periodPast) );
 }
 
 void __stdcall Rva007F30F0( Rva007E8810Message *msg, const Rva007F30F0Owner *owner,
 	const char *recordName )
 {
-	const char *txn = g_Rva0130A6D8;
+	const char *txn = reinterpret_cast<const char *>(g_Va0130A6D8);
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'recp';
-	msg->addString( "TXN", txn );
+	((BfmeC994 *)msg)->addString( "TXN", txn );
 	if( owner )
 	{
 		if( owner->ownerType == 1 )
 		{
 			msg->addInt64( "owner", owner->owner );
-			msg->addInt( "ownerType", owner->ownerType );
+			((BfmeThingCIB *)msg)->bfmeGoCIB( (void *)"ownerType", (void *)(owner->ownerType) );
 		}
 		else
 		{
-			msg->setError( -113 );
+			((Gen_007e88c0 *)msg)->m( -113 );
 			return;
 		}
 	}
-	msg->addString( "recordName", recordName );
+	((BfmeC994 *)msg)->addString( "recordName", recordName );
 }
 
 void __stdcall Rva007F3EA0( Rva007E8810Message *msg, bool memberOnly,
 	const char *lookupString, FeslInt64 userId, int state )
 {
-	const char *txn = g_Rva0130A750;
+	const char *txn = reinterpret_cast<const char *>(g_Va0130A750);
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'club';
-	msg->addString( "TXN", txn );
-	msg->addBool( "memberOnly", memberOnly );
+	((BfmeC994 *)msg)->addString( "TXN", txn );
+	((Rva007E8980 *)msg)->go( (int)"memberOnly", memberOnly );
 	if( lookupString && strlen( lookupString ) != 0 )
-		msg->addString( "lookupString", lookupString );
+		((BfmeC994 *)msg)->addString( "lookupString", lookupString );
 	if( userId )
 		msg->addInt64( "userId", userId );
 	if( state )
-		msg->addInt( "state", state );
+		((BfmeThingCIB *)msg)->bfmeGoCIB( (void *)"state", (void *)(state) );
 }
 
 void __stdcall Rva007F4240( Rva007E8810Message *msg, const char *clientString,
 	const char *sku, const char *locale, const char *clientVersion,
 	const char *SDKVersion, const char *clientPlatform, const char *clientType )
 {
-	const char *txn = g_Rva0130A78C;
+	const char *txn = reinterpret_cast<const char *>(g_Va0130A78C);
 	((Rva007E8AC0 *)msg)->run();
 	msg->m_category = 'fsys';
-	msg->addString( "TXN", txn );
-	msg->addString( "clientString", clientString );
-	msg->addString( "sku", sku );
-	msg->addString( "locale", locale );
-	msg->addString( "clientPlatform", clientPlatform );
-	msg->addString( "clientVersion", clientVersion );
-	msg->addString( "SDKVersion", SDKVersion );
-	msg->addString( "protocolVersion", "2.0" );
-	msg->addInt( "fragmentSize", 2048 );
+	((BfmeC994 *)msg)->addString( "TXN", txn );
+	((BfmeC994 *)msg)->addString( "clientString", clientString );
+	((BfmeC994 *)msg)->addString( "sku", sku );
+	((BfmeC994 *)msg)->addString( "locale", locale );
+	((BfmeC994 *)msg)->addString( "clientPlatform", clientPlatform );
+	((BfmeC994 *)msg)->addString( "clientVersion", clientVersion );
+	((BfmeC994 *)msg)->addString( "SDKVersion", SDKVersion );
+	((BfmeC994 *)msg)->addString( "protocolVersion", "2.0" );
+	((BfmeThingCIB *)msg)->bfmeGoCIB( (void *)"fragmentSize", (void *)(2048) );
 	msg->m_depth = 3;
 	if( clientType )
-		msg->addString( "clientType", clientType );
+		((BfmeC994 *)msg)->addString( "clientType", clientType );
 }

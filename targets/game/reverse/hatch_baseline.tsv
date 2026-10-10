@@ -810,19 +810,19 @@ address_global	game/GameEngine/Source/GameNetwork/Rva00803890FeslDtor.cpp	g_Rva0
 address_global	game/GameEngine/Source/GameNetwork/V2FeslFeedbackRequest.cpp	g_Rva012DAC14	1
 address_global	game/GameEngine/Source/GameNetwork/V2FeslFeedbackRequest.cpp	g_Rva0130A63C	2
 address_global	game/GameEngine/Source/GameNetwork/V2FeslResultCursors.cpp	g_Rva0130A708	2
-address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Rva0130A678	2
-address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Rva0130A684	2
-address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Rva0130A6D8	2
-address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Rva0130A720	2
-address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Rva0130A72C	2
-address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Rva0130A738	2
-address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Rva0130A744	2
-address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Rva0130A750	2
-address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Rva0130A75C	2
-address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Rva0130A774	2
-address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Rva0130A78C	2
-address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Rva0130A798	2
-address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Rva0130A7A4	2
+address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Va0130A678	2	allow=6d738c0f26ac61fa4a816b80ce1e98d6d5283baf
+address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Va0130A684	2	allow=6d738c0f26ac61fa4a816b80ce1e98d6d5283baf
+address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Va0130A6D8	2	allow=6d738c0f26ac61fa4a816b80ce1e98d6d5283baf
+address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Va0130A720	2	allow=6d738c0f26ac61fa4a816b80ce1e98d6d5283baf
+address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Va0130A72C	2	allow=6d738c0f26ac61fa4a816b80ce1e98d6d5283baf
+address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Va0130A738	2	allow=6d738c0f26ac61fa4a816b80ce1e98d6d5283baf
+address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Va0130A744	2	allow=6d738c0f26ac61fa4a816b80ce1e98d6d5283baf
+address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Va0130A750	2	allow=6d738c0f26ac61fa4a816b80ce1e98d6d5283baf
+address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Va0130A75C	2	allow=6d738c0f26ac61fa4a816b80ce1e98d6d5283baf
+address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Va0130A774	2	allow=6d738c0f26ac61fa4a816b80ce1e98d6d5283baf
+address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Va0130A78C	2	allow=6d738c0f26ac61fa4a816b80ce1e98d6d5283baf
+address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Va0130A798	2	allow=6d738c0f26ac61fa4a816b80ce1e98d6d5283baf
+address_global	game/GameEngine/Source/GameNetwork/V2FeslTxnRequests.cpp	g_Va0130A7A4	2	allow=6d738c0f26ac61fa4a816b80ce1e98d6d5283baf
 address_global	game/GameEngine/Source/GameNetwork/Y4DirtySockTickMix.c	g_Rva0130ACE8	4
 address_global	game/GameEngine/Source/GameNetwork/Y4DirtySockTickMix.c	g_Rva0130ACEC	3
 address_global	game/GameEngine/Source/GameNetwork/Y4DirtySockTickMix.c	g_Rva0130ACF0	3
