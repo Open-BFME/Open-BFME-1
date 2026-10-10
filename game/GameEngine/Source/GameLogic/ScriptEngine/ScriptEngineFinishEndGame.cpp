@@ -1,9 +1,11 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /O2 /GX
 
-class Rva00367810GameLogic
+// retail 0x003371A0 calls ILT 0x0001D1C9 -> 0x00382B50, the matched
+// ?_bfme_isInLivingWorldCampaign@GameLogic@@QAE_NXZ row.
+class GameLogic
 {
 public:
-	bool isLivingWorld(void);
+	bool _bfme_isInLivingWorldCampaign(void);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/CampaignManager.h
@@ -35,18 +37,17 @@ public:
 	void _bfme_finishEndGame(void);
 };
 
-class GameLogic;
 extern GameLogic *TheGameLogic;
-class BfmeLivingWorldCampaignManager;
-extern BfmeLivingWorldCampaignManager *TheLivingWorldCampaignManager;
+// data_rows.csv 0x012F1024 ?TheLivingWorldCampaignManager@@3PAVLivingWorldCampaignManager@@A
+class LivingWorldCampaignManager;
+extern LivingWorldCampaignManager *TheLivingWorldCampaignManager;
 extern MessageStream *TheMessageStream;
 
-#define TheGameLogic ((Rva00367810GameLogic *)TheGameLogic)
 #define TheCampaignManager ((CampaignManager *)TheLivingWorldCampaignManager)
 
 void ScriptEngine::_bfme_finishEndGame(void)
 {
-	if (TheGameLogic->isLivingWorld()) {
+	if (TheGameLogic->_bfme_isInLivingWorldCampaign()) {
 		if (TheCampaignManager->m_victorious) {
 			TheMessageStream->appendMessage(2009);
 		} else {
