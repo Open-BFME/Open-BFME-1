@@ -17,5 +17,5 @@ char __stdcall bfmeLessZP(const BfmeKeyZP *a, const BfmeKeyZP *b)
 	if ((b->m_bfmeFlagZP == 0) ^ (c == 0))
 		return c;
 
-	return a->m_bfmeNameZP.compareNoCase(b->m_bfmeNameZP) < 0;
+	return a->m_bfmeNameZP.StringBase<char>::compareNoCase(b->m_bfmeNameZP) < 0;
 }
