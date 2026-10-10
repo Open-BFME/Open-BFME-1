@@ -36,9 +36,6 @@ enum SupplyTruckStateTypes
 class State
 {
 public:
-	unsigned int getID( void ) const { return m_id; }
-
-private:
 	unsigned char m_unreconstructed_00[4];
 	unsigned int m_id;								///< retail this+0x04
 };
@@ -47,9 +44,6 @@ private:
 class StateMachine
 {
 public:
-	unsigned int getCurrentStateID( void ) const { return m_currentState ? m_currentState->getID() : INVALID_STATE_ID; }
-
-private:
 	unsigned char m_unreconstructed_00[0x1c];
 	State *m_currentState;							///< retail this+0x1C
 };
@@ -70,7 +64,7 @@ bool WorkerAIUpdate::isCurrentlyFerryingSupplies() const
 {
 	if (m_supplyTruckStateMachine)
 	{
-		switch (m_supplyTruckStateMachine->getCurrentStateID())
+		switch ((m_supplyTruckStateMachine->m_currentState ? m_supplyTruckStateMachine->m_currentState->m_id : INVALID_STATE_ID))
 		{
 			case ST_IDLE:
 			case ST_BUSY:

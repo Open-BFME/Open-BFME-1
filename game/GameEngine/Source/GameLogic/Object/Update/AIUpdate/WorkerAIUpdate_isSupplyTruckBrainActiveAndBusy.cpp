@@ -23,9 +23,6 @@ typedef int Bool;
 class State
 {
 public:
-	unsigned int getID( void ) const { return m_id; }
-
-private:
 	unsigned char m_unreconstructed_00[4];
 	unsigned int m_id;
 };
@@ -34,9 +31,6 @@ private:
 class StateMachine
 {
 public:
-	unsigned int getCurrentStateID( void ) const { return m_currentState ? m_currentState->getID() : INVALID_STATE_ID; }
-
-private:
 	unsigned char m_unreconstructed_00[0x1c];
 	State *m_currentState;
 };
@@ -58,6 +52,6 @@ private:
 // ?isSupplyTruckBrainActiveAndBusy@WorkerAIUpdate@@QAEHXZ
 Bool WorkerAIUpdate::isSupplyTruckBrainActiveAndBusy()
 {
-	return (m_workerMachine->getCurrentStateID() == AS_SUPPLY_TRUCK)
-		&& (m_supplyTruckStateMachine->getCurrentStateID() == ST_BUSY);
+	return ((m_workerMachine->m_currentState ? m_workerMachine->m_currentState->m_id : INVALID_STATE_ID) == AS_SUPPLY_TRUCK)
+		&& ((m_supplyTruckStateMachine->m_currentState ? m_supplyTruckStateMachine->m_currentState->m_id : INVALID_STATE_ID) == ST_BUSY);
 }
