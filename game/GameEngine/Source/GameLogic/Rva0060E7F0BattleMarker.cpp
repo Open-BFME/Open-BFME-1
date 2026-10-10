@@ -7,29 +7,12 @@
 
 extern "C" __declspec(dllimport) int __cdecl sprintf(char *, const char *, ...);
 
-template <typename T> class StringBase
-{
-	friend class BFMERetailAsciiString;
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringBase(const T *text);
-	StringBase(const StringBase &other);
-	void releaseBuffer();
-	void *m_data;
-};
-
-class BFMERetailAsciiString : private StringBase<char>
-{
-public:
-	BFMERetailAsciiString(const char *text) : StringBase<char>(text) {}
-	BFMERetailAsciiString(const BFMERetailAsciiString &other) : StringBase<char>(other) {}
-	~BFMERetailAsciiString() { releaseBuffer(); }
-};
-
-extern "C" BFMERetailAsciiString rva0060E7F0(int marker)
+extern "C" AsciiString rva0060E7F0(int marker)
 {
 	char buffer[64];
 	sprintf(buffer, "BattleMarker%04d", marker);
-	BFMERetailAsciiString value(buffer);
-	return BFMERetailAsciiString(value);
+	AsciiString value(buffer);
+	return AsciiString(value);
 }
