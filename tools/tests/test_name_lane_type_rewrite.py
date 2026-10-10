@@ -24,3 +24,16 @@ def test_type_rewrite_keeps_vtable_addresses_and_unrelated_alias_names(monkeypat
     assert "??0KnownOwner@@QAE@XZ" in ledger.read_text()
     assert addresses.read_text() == before.replace("??_7OpaqueOwner@@", "??_7KnownOwner@@")
     assert "??0OpaqueOwner@@QAE@XZ,0x00100000" in tombstones.read_text()
+
+
+def test_type_and_method_rename_rewrites_the_method_before_its_owner(monkeypatch, tmp_path):
+    ledger = tmp_path / "functions.csv"
+    tombstones = tmp_path / "deleted_rows.csv"
+    ledger.write_text("name,export_rva,target_rva\n?bfmeHasBit@Gen_000D5930@@QBE_NPBVBfmeThingEL@@@Z,,0x000D5930\n")
+    tombstones.write_text("name,rva,reason\n")
+    monkeypatch.setattr(n, "LEDGER", ledger)
+    monkeypatch.setattr(n, "TOMBSTONES", tombstones)
+    monkeypatch.setattr(n, "STORED", [ledger])
+    n.rewrite_stored([("type", "", "Gen_000D5930", "Player"),
+                      ("function", "Gen_000D5930@", "bfmeHasBit", "hasUpgradeComplete")], why="fixture")
+    assert "?hasUpgradeComplete@Player@@QBE_NPBVBfmeThingEL@@@Z" in ledger.read_text()

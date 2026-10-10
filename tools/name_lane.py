@@ -553,7 +553,10 @@ def commit(paths, message):
 def rewrite_stored(renames, why="two models agreed"):
     """Every stored mangled name: ledger names and object-symbol= notes, pins, DIR32 names."""
     subs = []
-    for kind, scope, old, new in renames:
+    # A method's pattern names its OLD owner (`?m@Owner@`): rewrite methods
+    # before their owner type, or an agreed type+method pair leaves the stale
+    # `?bfmeHasBit@Player@` (Bfme5SixtyFive.cpp, re_attempts 58804).
+    for kind, scope, old, new in sorted(renames, key=lambda r: r[0] == "type"):
         if kind == "type":
             subs.append((re.compile(rf"(?<=[@?VU017GE]){re.escape(old)}@"), f"{new}@"))
         else:
