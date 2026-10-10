@@ -1,5 +1,5 @@
 // ?rva009c74f0@@YAXHHHHHHH@Z
-// partial score=0.95 date=2026-09-21
+// partial score=1.0 date=2026-09-21
 // cl: /DNDEBUG /MD /O2
 //
 // Retail 0x009C74F0, 465 bytes. Bink CPU-dispatch wrapper in the SSE2
