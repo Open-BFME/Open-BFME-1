@@ -111,7 +111,7 @@ void BfmeAptScreenOnlineLogin::rva00552C40(bool argument) {
  AsciiString email(bfmeGetTextAt74());
  login.translate(bfmeGetTextAt78());
  password.translate(bfmeGetTextAt7C());
- if(!email.isEmpty() && !login.isEmpty() && !password.isEmpty()) {
+ if(!email.StringBase<char>::isEmpty() && !login.StringBase<char>::isEmpty() && !password.StringBase<char>::isEmpty()) {
   field98=timeGetTime();
   BuddyRequest req;
   req.buddyRequestType=BuddyRequest::BUDDYREQUEST_LOGIN;
@@ -133,13 +133,13 @@ void BfmeAptScreenOnlineLogin::rva00552C40(bool argument) {
   ((void (__fastcall *)(Rva00550500Target *))&Rva00550500::startPings)((Rva00550500Target*)this);
  } else {
   const char *message;
-  if(email.isEmpty() && login.isEmpty() && password.isEmpty()) message="GUI:GSNoLoginInfoAll";
-  else if(email.isEmpty() && login.isEmpty()) message="GUI:GSNoLoginInfoEmailNickname";
-  else if(email.isEmpty() && password.isEmpty()) message="GUI:GSNoLoginInfoEmailPassword";
-  else if(login.isEmpty() && password.isEmpty()) message="GUI:GSNoLoginInfoNicknamePassword";
-  else if(email.isEmpty()) message="GUI:GSNoLoginInfoEmail";
-  else if(password.isEmpty()) message="GUI:GSNoLoginInfoPassword";
-  else if(login.isEmpty()) message="GUI:GSNoLoginInfoNickname";
+  if(email.StringBase<char>::isEmpty() && login.StringBase<char>::isEmpty() && password.StringBase<char>::isEmpty()) message="GUI:GSNoLoginInfoAll";
+  else if(email.StringBase<char>::isEmpty() && login.StringBase<char>::isEmpty()) message="GUI:GSNoLoginInfoEmailNickname";
+  else if(email.StringBase<char>::isEmpty() && password.StringBase<char>::isEmpty()) message="GUI:GSNoLoginInfoEmailPassword";
+  else if(login.StringBase<char>::isEmpty() && password.StringBase<char>::isEmpty()) message="GUI:GSNoLoginInfoNicknamePassword";
+  else if(email.StringBase<char>::isEmpty()) message="GUI:GSNoLoginInfoEmail";
+  else if(password.StringBase<char>::isEmpty()) message="GUI:GSNoLoginInfoPassword";
+  else if(login.StringBase<char>::isEmpty()) message="GUI:GSNoLoginInfoNickname";
   else message="GUI:GSNoLoginInfoAll";
   GSMessageBoxOk(TheGameText->fetch("GUI:GSErrorTitle"),TheGameText->fetch(message));
  }
