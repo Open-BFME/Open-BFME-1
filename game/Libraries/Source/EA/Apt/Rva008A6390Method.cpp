@@ -9,8 +9,11 @@ class AptValue;
 
 extern const BfmeW1228 *bfmeFind1228(const char *text, unsigned int length);
 extern AptValue *g_bfmeFallbackDB;
-extern float (__cdecl *Rva008A6390GetterA)(void);
-extern float (__cdecl *Rva008A6390GetterB)(void);
+// The installer at 0x00789440 owns these callback cells (VA 0x013378C8/CC)
+// under their data-ledger names. Its generic storage type is void(), but
+// the installed targets 0x007833A0/B0 each return float in ST(0): fld; ret.
+extern void (__cdecl *g_bfmeSlot31VB)(void);
+extern void (__cdecl *g_bfmeSlot32VB)(void);
 extern AptValue *__cdecl Rva008A4EA0MakeFloat(float value);
 
 class Rva008A6390
@@ -35,9 +38,9 @@ AptValue *Rva008A6390::method(void *arg1, BfmeStrVKI *arg2)
     case 3:
         return g_bfmeFallbackDB;
     case 1:
-        return Rva008A4EA0MakeFloat(Rva008A6390GetterA());
+        return Rva008A4EA0MakeFloat(reinterpret_cast<float (__cdecl *)(void)>(g_bfmeSlot31VB)());
     case 2:
-        return Rva008A4EA0MakeFloat(Rva008A6390GetterB());
+        return Rva008A4EA0MakeFloat(reinterpret_cast<float (__cdecl *)(void)>(g_bfmeSlot32VB)());
     default:
         return 0;
     }
