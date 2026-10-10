@@ -56,12 +56,12 @@ public:
 class FontLibrary
 {
 public:
-	GameFont *getFont(AsciiString *name, Real pointSize, Bool bold);	///< ILT thunk at 0x0000ABC3
 };
 
 class GlobalLanguage;
 extern GlobalLanguage *TheGlobalLanguageData;				///< retail [0x012F1484]
 extern FontLibrary *TheFontLibrary;							///< retail [0x012F1B38]
+extern "C" void __cdecl __identifier("?j_0000abc3@@YAXXZ")();
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/HeaderTemplate.h
 class HeaderTemplateManager
@@ -74,12 +74,15 @@ class HeaderTemplateManager
 // ?populateGameFonts@HeaderTemplateManager@@AAEXXZ
 void HeaderTemplateManager::populateGameFonts(void)
 {
+	union { void (*raw)(); GameFont *(FontLibrary::*member)(AsciiString *, Real, Bool); }
+		fontCall = { __identifier("?j_0000abc3@@YAXXZ") };
 	HeaderTemplateNode *it = m_headerTemplateList->m_next;
 	while (it != m_headerTemplateList)
 	{
 		HeaderTemplate *hTemplate = it->m_template;
 		Real pointSize = (Real)reinterpret_cast<GlobalLanguageData *>( TheGlobalLanguageData )->adjustFontSize(hTemplate->m_point);
-		GameFont *font = TheFontLibrary->getFont(&hTemplate->m_fontName, pointSize, hTemplate->m_bold);
+		GameFont *font = (TheFontLibrary->*fontCall.member)(
+			&hTemplate->m_fontName, pointSize, hTemplate->m_bold);
 
 		hTemplate->m_font = font;
 
