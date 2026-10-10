@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: lift PopupPlayerInfo's rank-image helper to clean C++.
 
 typedef int Int;
@@ -6,46 +6,7 @@ typedef int Int;
 extern "C" int __cdecl strcmp(const char *left, const char *right);
 #pragma intrinsic(strcmp)
 
-template <typename T>
-class StringBase
-{
-private:
-	friend class AsciiString;
-	StringBase();
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-	void releaseBuffer();
-
-public:
-	int compare(const T *text) const;
-};
-
-class AsciiString
-{
-public:
-	AsciiString() : m_data(0) {}
-	AsciiString(const char *text)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(text);
-	}
-	AsciiString(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(*(const StringBase<char> *)&other);
-	}
-	~AsciiString()
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
-	AsciiString &operator=(const char *text);
-	void __cdecl format(AsciiString format, ...);
-	int compare(const char *text) const
-	{
-		return ((const StringBase<char> *)this)->compare(text);
-	}
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class Image;
 
@@ -92,13 +53,13 @@ static const Image *lookupRankImage(AsciiString side, Int rank)
 	if (rank < 0 || rank >= 10)
 		return 0;
 
-	if (side.compare("America") == 0)
+	if (side.StringBase<char>::compare("America") == 0)
 		side = "_USA";
-	else if (side.compare("China") == 0)
+	else if (side.StringBase<char>::compare("China") == 0)
 		side = "_China";
-	else if (side.compare("GLA") == 0)
+	else if (side.StringBase<char>::compare("GLA") == 0)
 		side = "_GLA";
-	else if (side.compare("Random") == 0)
+	else if (side.StringBase<char>::compare("Random") == 0)
 		side = "Elite";
 
 	AsciiString fullImageName;
