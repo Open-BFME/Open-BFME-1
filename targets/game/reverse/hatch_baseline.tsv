@@ -55,6 +55,7 @@ address_global	game/GameEngine/Source/Common/BfmeMovieThreadWait.cpp	g_Rva00F36E
 address_global	game/GameEngine/Source/Common/BfmeNormalizeEVF.cpp	g_Rva0107301CEmptyString	2
 address_global	game/GameEngine/Source/Common/BfmeOneHundredEight.cpp	g_Va0112E8AC	13
 address_global	game/GameEngine/Source/Common/BfmeOwnerCDECount.cpp	g_Rva00F36E5C	2
+address_global	game/GameEngine/Source/Common/BfmeStateAU.cpp	g_Va01096348	2	allow=73dd67e6bd132ba0cd3e8b66e72b5cc2002ce77f
 address_global	game/GameEngine/Source/Common/BfmeThreeHundredFortyTwo.cpp	g_bfmeRva011051ECVt	2
 address_global	game/GameEngine/Source/Common/DownloadManagerCallbackRva006279F0.cpp	g_Va012F70A4	2
 address_global	game/GameEngine/Source/Common/DownloadManagerCallbackRva00627A20.cpp	g_Va012F70A4	2
@@ -740,7 +741,7 @@ address_global	game/GameEngine/Source/GameLogic/AI/PathfinderRva003DF250.cpp	g_R
 address_global	game/GameEngine/Source/GameLogic/AI/PathfinderRva003E5E40.cpp	g_Rva01095F98	2
 address_global	game/GameEngine/Source/GameLogic/AI/PathfinderRva003E5E40.cpp	g_Rva010977E0	2
 address_global	game/GameEngine/Source/GameLogic/AI/PathfinderStepD4F90.cpp	g_Va012B49FC	2
-address_global	game/GameEngine/Source/GameLogic/AI/Rva002C1150PickUpCrateStateCtor.cpp	g_Rva010C7D30StateVTable	2
+address_global	game/GameEngine/Source/GameLogic/AI/Rva002C1150PickUpCrateStateCtor.cpp	g_Va010C7D30	2	allow=5a94efab16e03306e46def93eea06fdf911b9966
 address_global	game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldSoundParseRva0061C410.cpp	g_Rva00F36E5C	5
 address_global	game/GameEngine/Source/GameLogic/LivingWorld/Rva003B82D0ParseArmyMoveToBlock.cpp	g_Rva0107301CEmptyString	2
 address_global	game/GameEngine/Source/GameLogic/LivingWorld/Rva0060BEB0Ctor.cpp	g_Va01115E90	2	allow=1382d46803e3bff6ee61ae03ee52dc8865774995

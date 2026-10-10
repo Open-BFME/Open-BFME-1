@@ -29,7 +29,46 @@ public:
 	AIInternalMoveToState( StateMachine *machine, AsciiString name );
 };
 
-extern "C" void *bfmeVftableAU[];			// retail 0x01096348
+void j_0004ab1a();
+void j_00026c60();
+void j_00025fa4();
+void j_0002d411();
+void j_000089a9();
+void j_0000ce05();
+void j_0002802e();
+void j_0000c79d();
+void j_00028b87();
+void j_00023416();
+void j_00015d9d();
+void j_000273bd();
+void j_0002cb42();
+void j_00021a7b();
+void j_000351b1();
+void j_00007405();
+void j_00016b3a();
+void j_0002ca66();
+
+// Retail VA01096348: eighteen existing ILT entries.
+extern "C" void *g_Va01096348[18] = {
+	reinterpret_cast<void *>(&j_0004ab1a),
+	reinterpret_cast<void *>(&j_00026c60),
+	reinterpret_cast<void *>(&j_00025fa4),
+	reinterpret_cast<void *>(&j_0002d411),
+	reinterpret_cast<void *>(&j_000089a9),
+	reinterpret_cast<void *>(&j_0000ce05),
+	reinterpret_cast<void *>(&j_0002802e),
+	reinterpret_cast<void *>(&j_0000c79d),
+	reinterpret_cast<void *>(&j_00028b87),
+	reinterpret_cast<void *>(&j_00023416),
+	reinterpret_cast<void *>(&j_00015d9d),
+	reinterpret_cast<void *>(&j_000273bd),
+	reinterpret_cast<void *>(&j_0002cb42),
+	reinterpret_cast<void *>(&j_00021a7b),
+	reinterpret_cast<void *>(&j_000351b1),
+	reinterpret_cast<void *>(&j_00007405),
+	reinterpret_cast<void *>(&j_00016b3a),
+	reinterpret_cast<void *>(&j_0002ca66),
+};
 
 class BfmeStateAU : public AIInternalMoveToState
 {
@@ -46,5 +85,5 @@ BfmeStateAU::BfmeStateAU(void *owner)
 {
 	m_bfmeFieldAU = 0;
 
-	m_bfmeVfptrAU = bfmeVftableAU;
+	m_bfmeVfptrAU = g_Va01096348;
 }
