@@ -604,6 +604,14 @@ address_global	game/GameEngine/Source/Common/SmallGaps/syncGlobals.cpp	g_Va01356
 address_global	game/GameEngine/Source/Common/SmallGaps/syncGlobals.cpp	g_Va01356504	2	allow=b171857fc2c98fd4536fd6d677bf325240139d71
 address_global	game/GameEngine/Source/Common/SmallGaps/syncGlobals.cpp	g_Va0135654C	2	allow=b171857fc2c98fd4536fd6d677bf325240139d71
 address_global	game/GameEngine/Source/Common/SmallGaps/syncGlobals.cpp	g_Va01356564	2	allow=b171857fc2c98fd4536fd6d677bf325240139d71
+address_global	game/GameEngine/Source/Common/SmallIniParseCallbacks.cpp	g_Va01081710	2	allow=7289cba8341d47695bf6ec981ac4d667d36943cc
+address_global	game/GameEngine/Source/Common/SmallIniParseCallbacks.cpp	g_Va010F2C6C	2	allow=7289cba8341d47695bf6ec981ac4d667d36943cc
+address_global	game/GameEngine/Source/Common/SmallIniParseCallbacks.cpp	g_Va010F2C7C	2	allow=7289cba8341d47695bf6ec981ac4d667d36943cc
+address_global	game/GameEngine/Source/Common/SmallIniParseCallbacks.cpp	g_Va010F2C88	2	allow=7289cba8341d47695bf6ec981ac4d667d36943cc
+address_global	game/GameEngine/Source/Common/SmallIniParseCallbacks.cpp	g_Va010F2C94	2	allow=7289cba8341d47695bf6ec981ac4d667d36943cc
+address_global	game/GameEngine/Source/Common/SmallIniParseCallbacks.cpp	g_Va010F2CA0	2	allow=7289cba8341d47695bf6ec981ac4d667d36943cc
+address_global	game/GameEngine/Source/Common/SmallIniParseCallbacks.cpp	g_Va010F2CAC	2	allow=7289cba8341d47695bf6ec981ac4d667d36943cc
+address_global	game/GameEngine/Source/Common/SmallIniParseCallbacks.cpp	g_Va012AD1A0	2	allow=7289cba8341d47695bf6ec981ac4d667d36943cc
 address_global	game/GameEngine/Source/Common/SmallLeafBodies.cpp	g_Va011098B0	2
 address_global	game/GameEngine/Source/Common/SmallLeafBodies.cpp	g_Va012B49FC	2
 address_global	game/GameEngine/Source/Common/SmallLeafBodies.cpp	g_Va012BBD98	2

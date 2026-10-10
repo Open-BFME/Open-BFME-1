@@ -53,8 +53,31 @@ struct LookupListRec;
 
 extern "C" __declspec(dllimport) int __cdecl atoi( const char * );
 
-extern const LookupListRec TheRva00427670TypeNames[];
-extern Real TheRva001D5F40Scale;
+// Retail table at VA010F2CAC: six 8-byte name/value records and a zero
+// terminator. Keep an address-derived view: this table's native identity is
+// unproven. LookupListRec stays forward-declared for the existing callee ABI.
+struct Rva00CF2CAC
+{
+	const char *m_at00;
+	int m_at04;
+};
+extern const char g_Va010F2CA0[] = "SCORCH_1";
+extern const char g_Va010F2C94[] = "SCORCH_2";
+extern const char g_Va010F2C88[] = "SCORCH_3";
+extern const char g_Va010F2C7C[] = "SCORCH_4";
+extern const char g_Va010F2C6C[] = "SHADOW_SCORCH";
+extern const char g_Va01081710[] = "RANDOM";
+extern const Rva00CF2CAC g_Va010F2CAC[] =
+{
+	{ g_Va010F2CA0, 0 },
+	{ g_Va010F2C94, 1 },
+	{ g_Va010F2C88, 2 },
+	{ g_Va010F2C7C, 3 },
+	{ g_Va010F2C6C, 4 },
+	{ g_Va01081710, -1 },
+	{ 0, 0 }
+};
+Real g_Va012AD1A0 = 0.2f;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
@@ -98,7 +121,7 @@ void parseOnlyIfEnemyThreatBelow( INI *ini, void *, void *store, const void * )
 
 void parseRva00427670Type( INI *ini, void *, void *store, const void * )
 {
-	*(Int *)store = INI::scanLookupList( ini->getNextToken( 0 ), TheRva00427670TypeNames );
+	*(Int *)store = INI::scanLookupList( ini->getNextToken( 0 ), reinterpret_cast<const LookupListRec *>(g_Va010F2CAC) );
 }
 
 void parseCanMoveBackwards( INI *ini, void *, void *store, const void * )
@@ -114,7 +137,7 @@ void parseCanMoveBackwards( INI *ini, void *, void *store, const void * )
 void parseExtraFriction( INI *ini, void *, void *store, const void * )
 {
 	Real value = INI::scanReal( ini->getNextToken( 0 ) );
-	*(Real *)store = TheRva001D5F40Scale * value;
+	*(Real *)store = g_Va012AD1A0 * value;
 }
 
 extern const char *const TheWeaponSlotTypeNames[] = { "PRIMARY", "SECONDARY", "TERTIARY", 0 };
