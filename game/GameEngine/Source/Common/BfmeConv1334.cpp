@@ -4,10 +4,16 @@
 // 0x00881EF0). Without the declaration cl falls back to scalar
 // operator delete for the block, which is a different body at 0x00881EB0.
 void __cdecl operator delete[](void *block);
+class W3DRadarResetSurface
+{
+public:
+	~W3DRadarResetSurface();
+};
+
 class BfmeElemUJA
 {
 public:
-	~BfmeElemUJA();
+	~BfmeElemUJA() { ((W3DRadarResetSurface *)this)->~W3DRadarResetSurface(); }
 	char m_bfmePad[0x24];
 };
 
