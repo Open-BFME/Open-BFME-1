@@ -49,14 +49,11 @@ class SpecialPowerCommandOptions;
 class ElvenWoodSpecialPower
 {
 public:
-	void finish( SpecialPowerLocation *subject );
 };
 
 class SpecialPowerModuleInterface
 {
 public:
-	void doSpecialPowerAtLocation( SpecialPowerLocation *subject,
-		SpecialPowerCommandOptions *context );
 };
 
 class ElvenWoodSpecialPowerInterface : public SpecialPowerModuleInterface
@@ -66,9 +63,17 @@ public:
 		SpecialPowerCommandOptions *context );
 };
 
+extern "C" void __cdecl __identifier("?j_000170da@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0003e757@@YAXXZ")();
+
 void ElvenWoodSpecialPowerInterface::doSpecialPowerAtLocation(
 	SpecialPowerLocation *subject, SpecialPowerCommandOptions *context )
 {
+	union { void (*raw)(); void (SpecialPowerModuleInterface::*member)(
+		SpecialPowerLocation *, SpecialPowerCommandOptions *); }
+		base = { __identifier("?j_000170da@@YAXXZ") };
+	union { void (*raw)(); void (ElvenWoodSpecialPower::*member)(SpecialPowerLocation *); }
+		finish = { __identifier("?j_0003e757@@YAXXZ") };
 	ObjectFields *owner = *(ObjectFields **)( (char *)this - 8 );
 	if ( owner->m_disabledMask != 0 )
 		return;
@@ -80,6 +85,6 @@ void ElvenWoodSpecialPowerInterface::doSpecialPowerAtLocation(
 	ElvenWoodNameToken *token = *tokenSlot;
 	if ( token == 0 || token->m_count == 0 )
 		return;
-	SpecialPowerModuleInterface::doSpecialPowerAtLocation( subject, context );
-	( (ElvenWoodSpecialPower *)( (char *)this - 0x10 ) )->finish( subject );
+	(this->*base.member)( subject, context );
+	( (ElvenWoodSpecialPower *)( (char *)this - 0x10 )->*finish.member )( subject );
 }
