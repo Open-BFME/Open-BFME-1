@@ -1,29 +1,29 @@
 class BfmeHostXP;
 
-struct Rva00579160Manager
+class Gen_004674E0
 {
-	void bfmeDetachXP(int id);
-	void bfmeCloseXP(int id);
+public:
+	void bfmePop(int id);
 };
 
 // Retail global 0x012F19E8. EA's own name for this pointer; see
 // game/GameEngine/Source/GameClient/GUI/WindowManager.cpp for the definition.
-// This TU keeps its local view type Rva00579160Manager and casts at the uses.
-class WindowManager;
+// The pop helper has an address-derived owner; the hide call uses the
+// authored WindowManager name and signature.
+class WindowManager
+{
+public:
+	bool hideAptWindow(int id);
+};
 extern WindowManager *g_rva012F19E8WindowManager;
 
 // Retail global 0x012F4B58 is EA's shell singleton, defined once under the
 // canonical spelling (Shell *TheShell).
+class WindowLayout;
 class Shell
 {
-};
-
-// bfmeDoneXP is pinned under the Shell40D9 spelling (ILT 0x00002F1D), so the
-// call goes through that view; the cast is pointer-size neutral.
-class Shell40D9
-{
 public:
-	void bfmeDoneXP(BfmeHostXP *layout, int flag);
+	void shutdownComplete(WindowLayout *layout, bool impendingPush);
 };
 
 extern Shell *TheShell;
@@ -76,10 +76,10 @@ void BfmeHostXP::bfmeCloseAllXP(int unused)
 
 	if (m_bfme28XP)
 	{
-		((Rva00579160Manager *)g_rva012F19E8WindowManager)->bfmeDetachXP(m_bfme24XP->m_bfme250XP);
-		((Rva00579160Manager *)g_rva012F19E8WindowManager)->bfmeCloseXP(m_bfme24XP->m_bfme250XP);
+		((Gen_004674E0 *)g_rva012F19E8WindowManager)->bfmePop(m_bfme24XP->m_bfme250XP);
+		g_rva012F19E8WindowManager->hideAptWindow(m_bfme24XP->m_bfme250XP);
 		m_bfme28XP = 0;
 	}
 
-	((Shell40D9 *)TheShell)->bfmeDoneXP(this, 0);
+	TheShell->shutdownComplete(reinterpret_cast<WindowLayout *>(this), false);
 }
