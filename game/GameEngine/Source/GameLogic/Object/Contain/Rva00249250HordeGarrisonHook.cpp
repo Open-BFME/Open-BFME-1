@@ -54,7 +54,7 @@ public:
 class Gen_00410BA0
 {
 public:
-	int bfmeBusy(void) const;
+	int isDrawableEffectivelyHidden(void) const;
 };
 
 class Gen_00411DD0
@@ -145,7 +145,7 @@ void BfmeRva49250Base::bfmeApplyObject(BfmeRva49250Object *object, void *)
 				(BfmeRva491F0Object *)object);
 			BfmeRva49250AI *ai = object->getAI();
 			// Retail consumes AL; the matched provider returns only 0 or 1.
-			if (ai != 0 && (char)((Gen_00410BA0 *)ai)->bfmeBusy() == 1)
+			if (ai != 0 && (char)((Gen_00410BA0 *)ai)->isDrawableEffectivelyHidden() == 1)
 				((Gen_00411DD0 *)ai)->bfmeSet(false);
 		}
 

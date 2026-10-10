@@ -25,7 +25,7 @@
 // register allocation. No volatile casts, custom compiler switches, or asm.
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
-class Gen_00410BA0 { public: int bfmeBusy() const; };
+class Gen_00410BA0 { public: int isDrawableEffectivelyHidden() const; };
 class Rva0092D660 { public: int test(); };
 class Render00755170 {
 public:
@@ -213,7 +213,7 @@ void Synchronize00755170::apply(Entry00755170 **first, Entry00755170 **last)
  for (Entry00755170 **it=first; it!=last; ++it) {
   Module00755170 *module=(*it)->module;
   Flags00755170 *flags=module->field008;
-  if (!flags->field3b1 || (char)((Gen_00410BA0*)flags)->bfmeBusy() || flags->field3b0) continue;
+  if (!flags->field3b1 || (char)((Gen_00410BA0*)flags)->isDrawableEffectivelyHidden() || flags->field3b0) continue;
   Render00755170 *model=module->slot46();
   if (!model) continue;
   if (!selected) { selected=*it; selectedModel=model; }
@@ -247,7 +247,7 @@ selected_ready:
  for (Entry00755170 **it=first; it!=last; ++it) {
   Module00755170 *module=(*it)->module;
   Flags00755170 *flags=module->field008;
-  if (!flags->field3b1 || (char)((Gen_00410BA0*)flags)->bfmeBusy() || flags->field3b0) continue;
+  if (!flags->field3b1 || (char)((Gen_00410BA0*)flags)->isDrawableEffectivelyHidden() || flags->field3b0) continue;
   Gen_t_00715d40_p4pod trackedModel = { (int)module->slot46() };
   Render00755170 *model=(Render00755170*)trackedModel.a[0];
   if (!model) continue;

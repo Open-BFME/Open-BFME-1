@@ -51,18 +51,18 @@ BfmeTripleCU Gen_004108D0::bfmeGetTriple(void) const
 class Gen_00410BA0
 {
 public:
-	int bfmeBusy(void) const;
+	int isDrawableEffectivelyHidden(void) const;
 
 private:
 	char m_bfmeHead[0x3AD];					// +0x000
-	bool m_bfmeSending;					// +0x3AD
-	bool m_bfmeReceiving;					// +0x3AE
+	bool m_hidden;					// +0x3AD
+	bool m_hiddenByStealth;					// +0x3AE
 };
 
-// ?bfmeBusy@Gen_00410BA0@@QBEHXZ
-int Gen_00410BA0::bfmeBusy(void) const
+// ?isDrawableEffectivelyHidden@Gen_00410BA0@@QBEHXZ
+int Gen_00410BA0::isDrawableEffectivelyHidden(void) const
 {
-	if (!m_bfmeSending && !m_bfmeReceiving)
+	if (!m_hidden && !m_hiddenByStealth)
 		return 0;
 
 	return 1;

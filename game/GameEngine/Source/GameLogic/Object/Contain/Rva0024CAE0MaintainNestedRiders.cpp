@@ -15,7 +15,7 @@ class BfmeXCQE;
 class Gen_00410BA0
 {
 public:
-	int bfmeBusy(void) const;
+	int isDrawableEffectivelyHidden(void) const;
 };
 
 // ILT 0x8337 reaches 0x411DD0: byte boolean argument, ret 4, no result.
@@ -146,7 +146,7 @@ void Rva0024CAE0Owner::maintainNestedRiders(void)
 		{
 			Object *object = *nestedIt;
 			BfmeXCQE *state = object->getState();
-			if (state == 0 || (char)((Gen_00410BA0 *)state)->bfmeBusy())
+			if (state == 0 || (char)((Gen_00410BA0 *)state)->isDrawableEffectivelyHidden())
 			{
 				result->removeNested(object);
 				m_notifier.notifyRemoved(object, 0);
