@@ -54,12 +54,12 @@ GHTTPBool __cdecl configHeadCallback(int request, GHTTPResult result, char *buff
     {
         AsciiString headers(ghttpGetHeaders(request));
         AsciiString line;
-        while (headers.nextToken(&line, "\n\r"))
+        while (headers.StringBase<char>::nextToken(&line, "\n\r"))
         {
             AsciiString key;
             AsciiString val;
-            line.nextToken(&key, ": ");
-            line.nextToken(&val, ": \r\n");
+            line.StringBase<char>::nextToken(&key, ": ");
+            line.StringBase<char>::nextToken(&val, ": \r\n");
             Rva0062F130Header *valueData = *(Rva0062F130Header **)&val;
             if (compareContentLength(key) == 0 &&
                 valueData && valueData->length != 0)
