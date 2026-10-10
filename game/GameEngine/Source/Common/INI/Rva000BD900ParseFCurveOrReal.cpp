@@ -13,7 +13,8 @@ struct random_access_iterator_tag
 {
 };
 
-char *__cdecl __copy(char *, char *, char *, const random_access_iterator_tag &, int *);
+// Retail call 0001E6A5 routes to 000B98F0: cdecl, result in EAX, caller cleanup.
+extern "C" char *__cdecl __identifier("?j_0001e6a5@@YAXXZ")(char *, char *, char *, const random_access_iterator_tag &, int *);
 }
 
 class INIException
@@ -44,7 +45,7 @@ public:
 		_STL::random_access_iterator_tag tag;
 		Int *none = 0;
 		char *result = m_start;
-		m_finish = _STL::__copy(m_finish, m_finish, result, tag, none);
+		m_finish = _STL::__identifier("?j_0001e6a5@@YAXXZ")(m_finish, m_finish, result, tag, none);
 		m_field0 = 0;
 		m_field4 = 0;
 	}
