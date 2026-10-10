@@ -2,8 +2,16 @@
 // readable body of ?winCreateLayout@GameWindowManager@@UAEPAVWindowLayout@@VAsciiString@@@Z: game/GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
-#include "ascii_string.h"
 class WindowLayout;
+// The mangled signature takes AsciiString by value; the naked body below already
+// inlines the retail releaseBuffer cleanup, so this TU-local view keeps the
+// parameter's compiler cleanup from emitting a second destructor call past the
+// __emit ret that retail does not have.
+// class-gate: allow AsciiString the canonical dtor emits a second releaseBuffer call past the __emit ret (lea ecx,[ebp+8]; call) that retail 0x004889A0 does not carry: it ends at ret 4 +0xfe with int3 padding
+class AsciiString
+{
+	char m_pad[16];
+};
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {

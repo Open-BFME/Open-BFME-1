@@ -1287,7 +1287,6 @@ static,0x004582D0,?parseRadiusDecalTemplate@RadiusDecalTemplate@@SAXPAVINI@@PAX1
 static,0x0058AE70,?getFieldParseTable@AudioManager@@QBEPBUFieldParse@@XZ,+1 _audioSettingsFieldParseTable outside the retail image
 static,0x006250A0,?parseOnlineChatColorDefinition@INI@@SAXPAV1@@Z,"+5 _GameSpyColorFieldParse@0x01117700: 8 byte(s) differ, first +432: source 000000000000000000000000000000000000000000000000 retail 14570701e031c500000000000000"
 tail,0x0043FA90,?hideIdleWorkerLayout@InGameUI@@EAEXXZ,"compiled=73 ledger=72 tail=1: 1 byte(s) differ from retail, first +72"
-tail,0x004889A0,?winCreateLayout@GameWindowManager@@UAEPAVWindowLayout@@VAsciiString@@@Z,"compiled=265 ledger=257 tail=8: 4 byte(s) differ from retail, first +257"
 tail,0x0080DD80,_Rva0080DD80,"compiled=488 ledger=427 tail=61: 16 byte(s) differ from retail, first +471"
 tail,0x0080E030,_Rva0080E030,"compiled=384 ledger=320 tail=64: 17 byte(s) differ from retail, first +364"
 tail,0x00853B30,?load@INI@@QAE_NVBFMERetailAsciiString@@00HH@Z,"compiled=377 ledger=250 tail=127: 18 byte(s) differ from retail, first +287"
