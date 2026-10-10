@@ -42,6 +42,7 @@ public:
 	char *m_samplePool;
 };
 
+// ?getHandle@Rva0069A6F0Owner@@QAEHPAPAURva0069A6F0Playing@@@Z present-unmatched
 int Rva0069A6F0Owner::getHandle(Rva0069A6F0Playing **pp)
 {
 	Rva0069A6F0Playing *p = *pp;
@@ -61,7 +62,7 @@ void Rva0069A6F0Owner::setReverb(Rva0069A6F0Playing **pp)
 	Rva0069A6F0Playing *p = *pp;
 	switch (p->m_type)
 	{
-	case 0:
+	case 3:
 		if (m_bytes[0x633])
 		{
 			Rva0069A6F0AudioInfo *info = p->m_event->m_info;
@@ -70,7 +71,7 @@ void Rva0069A6F0Owner::setReverb(Rva0069A6F0Playing **pp)
 		else
 			_AIL_set_stream_reverb_levels(p->m_handle, 1.0f, 0.0f);
 		return;
-	case 1:
+	case 0:
 		if (m_bytes[0x633])
 		{
 			Rva0069A6F0AudioInfo *info = p->m_event->m_info;
@@ -79,8 +80,8 @@ void Rva0069A6F0Owner::setReverb(Rva0069A6F0Playing **pp)
 		else
 			_AIL_set_sample_reverb_levels(p->m_handle, 1.0f, 0.0f);
 		return;
+	case 1:
 	case 2:
-	case 3:
 	{
 		int handle = getHandle(pp);
 		if (handle)
