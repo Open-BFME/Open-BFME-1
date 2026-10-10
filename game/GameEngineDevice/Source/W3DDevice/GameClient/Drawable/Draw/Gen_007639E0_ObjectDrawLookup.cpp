@@ -6,25 +6,12 @@
 // primary W3DModelDraw view starts 0x0C bytes earlier.
 //
 // The address-derived class name avoids claiming a method name that the
-// retail image does not prove. The local string view uses the ledger's
-// UnicodeString spelling for the one-pointer copy body at 0x00887C90.
+// retail image does not prove. Char Base set887C90/release887940 and
+// the narrow-text virtual slot establish the local AsciiString.
 
 extern const char g_bfmeEmptyAscii[];
 
-class BFMERetailAsciiString
-{
-public:
-    void releaseBuffer();
-};
-
-class UnicodeString
-{
-public:
-    UnicodeString() : m_data(0) {}
-    ~UnicodeString() { ((BFMERetailAsciiString *)this)->releaseBuffer(); }
-    void set(const UnicodeString &other);
-    void *m_data;
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Gen_007639E0Base
 {
@@ -74,10 +61,10 @@ int Gen_007639E0::method()
     if (result)
     {
         const char *text;
-        UnicodeString local;
+        AsciiString local;
         self = (char *)*(void **)(self - 8);
-        local.set(*(UnicodeString *)(self + 0xE4));
-        text = local.m_data ? (const char *)local.m_data + 8 : g_bfmeEmptyAscii;
+        local.StringBase<char>::set(*(AsciiString *)(self + 0xE4));
+        text = local.str();
         result = result->slot31(text, 0);
         if (result)
         {
