@@ -45,42 +45,13 @@ enum NameKeyType
 	NAMEKEY_INVALID = 0
 };
 
-template <typename T>
-class StringBase
-{
-    friend class BFMERetailAsciiString;
-
-protected:
-	T *m_data;
-
-private:
-	StringBase(const T *text);
-	void releaseBuffer();
-};
-
-class BFMERetailAsciiString : private StringBase<char>
-{
-public:
-	BFMERetailAsciiString(const char *text)
-		: StringBase<char>(text)
-	{
-	}
-	~BFMERetailAsciiString()
-	{
-		releaseBuffer();
-	}
-
-	const char *str() const
-	{
-		return m_data ? m_data + 8 : "";
-	}
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class NameKeyGenerator
 {
 public:
 	NameKeyType nameToKey(const char *name);
-	NameKeyType nameToKey(const BFMERetailAsciiString &name)
+	NameKeyType nameToKey(const AsciiString &name)
 	{
 		return nameToKey(name.str());
 	}
@@ -149,13 +120,13 @@ WindowMsgHandledType MessageBoxSystem(GameWindow *window, UnsignedInt msg,
 		GameWindow *control = (GameWindow *)mData1;
 		Int controlID = control->winGetWindowId();
 		static NameKeyType buttonOkID = TheNameKeyGenerator->nameToKey(
-			BFMERetailAsciiString("MessageBox.wnd:ButtonOk"));
+			AsciiString("MessageBox.wnd:ButtonOk"));
 		static NameKeyType buttonYesID = TheNameKeyGenerator->nameToKey(
-			BFMERetailAsciiString("MessageBox.wnd:ButtonYes"));
+			AsciiString("MessageBox.wnd:ButtonYes"));
 		static NameKeyType buttonNoID = TheNameKeyGenerator->nameToKey(
-			BFMERetailAsciiString("MessageBox.wnd:ButtonNo"));
+			AsciiString("MessageBox.wnd:ButtonNo"));
 		static NameKeyType buttonCancelID = TheNameKeyGenerator->nameToKey(
-			BFMERetailAsciiString("MessageBox.wnd:ButtonCancel"));
+			AsciiString("MessageBox.wnd:ButtonCancel"));
 		WindowMessageBoxData *callbacks =
 			(WindowMessageBoxData *)window->winGetUserData();
 
