@@ -1,4 +1,11 @@
 // cl: /O2 /Ob0
+// stlport
+
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+#include <vector>
+
+struct Rva003AC170Element;
+extern template class _STL::vector<Rva003AC170Element>;
 
 class Rva0036CA00Str
 {
@@ -35,9 +42,11 @@ public:
 
 Rva003B6C40 &Rva003B6C40::operator=(const Rva003B6C40 &other)
 {
-	m_04 = other.m_04;
+	reinterpret_cast<StringBase<char> *>(&m_04)->set(
+		*reinterpret_cast<const StringBase<char> *>(&other.m_04));
 	m_08 = other.m_08;
-	m_0C = other.m_0C;
+	*reinterpret_cast<_STL::vector<Rva003AC170Element> *>(&m_0C) =
+		*reinterpret_cast<const _STL::vector<Rva003AC170Element> *>(&other.m_0C);
 	m_18 = other.m_18;
 	m_1C = other.m_1C;
 	return *this;
