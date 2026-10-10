@@ -92,13 +92,20 @@ struct Rva003FD060TerrainLogic
 class TerrainLogic;
 extern TerrainLogic *TheTerrainLogic;
 
-extern "C" void __cdecl bfmeXferIntAX(BfmeAgentAX *ag, int *value);
+class MidVirtualSlot90Receiver;
+void __cdecl Rva0010BE80(MidVirtualSlot90Receiver *ag, void *value);
+
+class BfmeSeedTarget;
+class Gen_002D9BD0
+{
+public:
+	void bfmeSeed(BfmeSeedTarget *target);
+};
 
 class BfmeHostAX
 {
 public:
 	void bfmeSaveAX(BfmeAgentAX *ag);
-	void bfmeBeginAX(BfmeAgentAX *ag);
 
 	unsigned char m_bfmeHeadAX[0x24];
 	BfmeThingAX *m_bfmeArrayAX[6];
@@ -108,7 +115,8 @@ public:
 
 void BfmeHostAX::bfmeSaveAX(BfmeAgentAX *ag)
 {
-	bfmeBeginAX(ag);
+	reinterpret_cast<Gen_002D9BD0 *>(this)->bfmeSeed(
+		reinterpret_cast<BfmeSeedTarget *>(ag));
 
 	if (ag->bfmeSkipAX() != 0)
 		return;
@@ -128,7 +136,7 @@ void BfmeHostAX::bfmeSaveAX(BfmeAgentAX *ag)
 		{
 			int id;
 
-			bfmeXferIntAX(ag, &id);
+			Rva0010BE80(reinterpret_cast<MidVirtualSlot90Receiver *>(ag), &id);
 
 			BfmeThingAX *t;
 
@@ -149,7 +157,7 @@ void BfmeHostAX::bfmeSaveAX(BfmeAgentAX *ag)
 				v = 0x7fffffff;
 
 			out = v;
-			bfmeXferIntAX(ag, &out);
+			Rva0010BE80(reinterpret_cast<MidVirtualSlot90Receiver *>(ag), &out);
 		}
 
 		p++;
