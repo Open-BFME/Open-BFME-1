@@ -1,3 +1,13 @@
+// cl: /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// stlport
+#include <list>
+
+struct Gen_t_00443e40_p8cd;
+
+// ILT 0x0002E1C7 reaches the existing clear body at 0x00443E40.
+template <> void _STL::_List_base<Gen_t_00443e40_p8cd,
+	_STL::allocator<Gen_t_00443e40_p8cd> >::clear();
+
 struct Rva004488B0Block
 {
 	void *first;
@@ -7,8 +17,6 @@ struct Rva004488B0Block
 
 class BfmeSubBQC
 {
-public:
-	void bfmeStepBQC();
 };
 
 class Rva004488B0FourBlockRecord
@@ -34,5 +42,6 @@ void Rva004488B0FourBlockRecord::copy(
 	m_b = a;
 	m_c = c;
 	m_d = d;
-	m_bqc.bfmeStepBQC();
+	reinterpret_cast<_STL::_List_base<Gen_t_00443e40_p8cd,
+		_STL::allocator<Gen_t_00443e40_p8cd> > *>(&m_bqc)->clear();
 }
