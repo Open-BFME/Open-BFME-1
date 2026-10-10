@@ -3,7 +3,9 @@
 // or nothing when it does not stand there at all. Built without optimisation;
 // the searcher is pinned by address.
 
-char *bfmeSearchQW(char *first, char *last, unsigned char one);
+// Retail calls matched cdecl 0x0082DF70, whose eax is the forwarded
+// bfmeFindChV28 result; spelled by its ledger name.
+extern "C" char *__cdecl __identifier("?bfmeGoOR@@YAXPAX0E@Z")(char *first, char *last, unsigned char one);
 
 struct BfmeThingQW
 {
@@ -20,7 +22,7 @@ int BfmeThingQW::bfmeFindQW(unsigned char what, unsigned int from)
 
 	unsigned char one = what;
 
-	char *found = bfmeSearchQW(m_bfmeAt + from, m_bfmeEnd, one);
+	char *found = __identifier("?bfmeGoOR@@YAXPAX0E@Z")(m_bfmeAt + from, m_bfmeEnd, one);
 
 	return (found != m_bfmeEnd) ? (int)(found - m_bfmeAt) : -1;
 }
