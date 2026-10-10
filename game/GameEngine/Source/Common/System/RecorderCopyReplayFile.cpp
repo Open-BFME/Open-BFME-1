@@ -21,83 +21,18 @@ typedef unsigned short WideChar;
 
 static const Int MAX_REPLAY_FILE_NUMBER = 99999999;
 
-template <typename T> class StringBase
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+
+inline UnicodeString::UnicodeString() { m_text = 0; }
+inline UnicodeString::~UnicodeString() { ((StringBase<wchar_t> *)this)->releaseBuffer(); }
+template<> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
+template<> inline void StringBase<char>::concat(const StringBase<char> &str)
 {
-	friend class AsciiString;
-	friend class UnicodeString;
-
-private:
-	struct Header
-	{
-		int m_refCount;
-		unsigned short m_length;
-		unsigned short m_capacity;
-		T m_text[1];
-	};
-
-	StringBase() : m_data(0) {}
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-	~StringBase() { releaseBuffer(); }
-
-public:
-	void set(const StringBase<T> &other);
-	void concat(const T *text, Int length);
-
-private:
-	void releaseBuffer();
-
-private:
-	Header *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-
-	AsciiString &operator=(const AsciiString &other)
-	{
-		StringBase<char>::set(other);
-		return *this;
-	}
-
-	void concat(const char *text, Int length) { StringBase<char>::concat(text, length); }
-
-	void concat(const AsciiString &other)
-	{
-		const Int length = other.m_data ? other.m_data->m_length : 0;
-		const char *text = other.str();
-		StringBase<char>::concat(text, length);
-	}
-
-	void __cdecl format(AsciiString fmt, ...);
-
-	const char *str() const
-	{
-		static const char TheNullChr = 0;
-		return m_data ? m_data->m_text : &TheNullChr;
-	}
-	Int getLength() const { return m_data ? m_data->m_length : 0; }
-	Bool isEmpty() const { return m_data == 0 || m_data->m_length == 0; }
-};
-
-class UnicodeString : private StringBase<WideChar>
-{
-public:
-	UnicodeString() : StringBase<WideChar>() {}
-	UnicodeString(const UnicodeString &other) : StringBase<WideChar>(other) {}
-	~UnicodeString() {}
-
-	const WideChar *str() const
-	{
-		static const WideChar TheNullChr = 0;
-		return m_data ? m_data->m_text : &TheNullChr;
-	}
-};
+    const int len = str.m_data ? str.m_data->length : 0;
+    const char *data = str.m_data ? &str.m_data->data[0] : "";
+    concat(data, len);
+}
 
 class RecorderClass
 {
@@ -112,11 +47,11 @@ Bool dup_00099E10(AsciiString *src, AsciiString *dst, UnicodeString *title)
 {
 	AsciiString srcPath;
 	srcPath = RecorderClass::getReplayDir();
-	srcPath.concat(*src);
+	srcPath.StringBase<char>::concat(*src);
 	AsciiString dstPath;
-	if (!dst->isEmpty()) {
+	if (!dst->StringBase<char>::isEmpty()) {
 		dstPath = RecorderClass::getReplayDir();
-		dstPath.concat(*dst);
+		dstPath.StringBase<char>::concat(*dst);
 	} else {
 		Int i = 1;
 		while (true) {
@@ -144,7 +79,7 @@ Bool dup_00099E10(AsciiString *src, AsciiString *dst, UnicodeString *title)
 	if (seekRes != 0 || got < 0x25 || put < 0x25)
 		return false;
 	UnicodeString name = readUnicodeString(in);
-	fwprintf(out, L"%ws", title->str());
+	fwprintf(out, L"%ws", ((const StringBase<unsigned short> *)title)->str());
 	fputwc(0, out);
 	UnsignedInt n;
 	UnsignedInt w;
