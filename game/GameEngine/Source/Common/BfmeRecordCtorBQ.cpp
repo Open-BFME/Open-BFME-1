@@ -6,26 +6,13 @@
 
 extern "C" void *memset(void *dest, int fill, unsigned int count);
 
-class StringBaseNarrowBQ
-{
-protected:
-	StringBaseNarrowBQ(const StringBaseNarrowBQ &other) throw();
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-	~StringBaseNarrowBQ(void) throw();
-
-	char *m_bfmeNarrowBQ;
-};
-
-class AsciiStringBQ : public StringBaseNarrowBQ
+class AsciiStringBQ : public AsciiString
 {
 public:
-	AsciiStringBQ(const AsciiStringBQ &other) throw() : StringBaseNarrowBQ(other)
-	{
-	}
-
-	~AsciiStringBQ(void) throw()
-	{
-	}
+	AsciiStringBQ(const AsciiStringBQ &other) throw() : AsciiString(other) {}
+	~AsciiStringBQ() throw() {}
 };
 
 class BfmeRecordBQ
@@ -33,7 +20,7 @@ class BfmeRecordBQ
 public:
 	BfmeRecordBQ(int owner, const AsciiStringBQ &name);
 
-	AsciiStringBQ m_bfmeNameBQ;
+	AsciiString m_bfmeNameBQ;
 	int m_bfmeOwnerBQ;
 	int m_bfmeSlotsBQ[9];
 	int m_bfmeABQ;
