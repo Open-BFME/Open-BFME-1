@@ -7,42 +7,10 @@
 // addGameToAvailableList establish that this is the owner of 0x0010D700,
 // formerly mislabelled BfmeOwnVUN.
 
-template <typename T> struct BfmeStringData
-{
-	int refs;
-	unsigned short length;
-	unsigned short capacity;
-	T text[1];
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
 
-template <typename T> class StringBase
-{
-protected:
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase<T> &other);
-	~StringBase() { releaseBuffer(); }
-	BfmeStringData<T> *m_data;
-
-private:
-	void releaseBuffer();
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-};
-
-class UnicodeString : private StringBase<unsigned short>
-{
-public:
-	UnicodeString() : StringBase<unsigned short>() {}
-	UnicodeString(const UnicodeString &other)
-		: StringBase<unsigned short>(other) {}
-	~UnicodeString() {}
-};
+inline UnicodeString::~UnicodeString() { ((StringBase<wchar_t> *)this)->releaseBuffer(); }
 
 struct SaveDate
 {
