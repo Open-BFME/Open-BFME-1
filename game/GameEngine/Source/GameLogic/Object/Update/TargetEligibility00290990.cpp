@@ -7,11 +7,16 @@ enum Relationship { ENEMY=0 };
 #define THING_TU_MEMBERS bool isKindOf(KindOfType) const;
 #define OBJECT_TU_MEMBERS Relationship getRelationship(const Object*) const; bool query(Object*,int);
 #include "../object.h"
-class BfmeHolderNS { public: int bfmeQueryNS(); };
+class BfmeHolderNS {};
 class BfmeRvaA760Object;
-class BfmeRvaA760ProbeInterface { public: bool accepts(BfmeRvaA760Object*,int); };
-class Rva0037C310Owner { public: bool Rva0037C310(int,int,Object*); };
-class Pathfinder { public: bool bfmeGroundCellThreshold(const Coord3D*,bool); bool worldLineNoHit(const Coord3D*,const Coord3D*); };
+class BfmeRvaA760ProbeInterface {};
+class Rva0037C310Owner {};
+class Pathfinder { public: bool bfmeGroundCellThreshold(const Coord3D*,bool); };
+// Exact ILT identities; member views preserve ECX and3/2/0/2 stack slots.
+extern "C" void __cdecl __identifier("?j_000466b4@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0001da34@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0003a391@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00030ecc@@YAXXZ")();
 struct PathSystem00290990 { char pad00[12]; Pathfinder* at0c; Pathfinder* getPathfinder() { return at0c; } };
 // retail's TheAI singleton; PathSystem00290990 is the view its pathfinder sits in
 class AI;
@@ -38,18 +43,21 @@ bool TargetEligibility00290990::accepts(Object* target) {
  if(!target->query(at10,0)) return false;
  at20=true;
  Config00290990* config=at08->at04;
- if(config->at10.accepts((BfmeRvaA760Object*)target,0)) return false;
+ union { void (*raw)(); bool (BfmeRvaA760ProbeInterface::*member)(BfmeRvaA760Object*,int); } filter = { __identifier("?j_0001da34@@YAXXZ") };
+ if((config->at10.*filter.member)((BfmeRvaA760Object*)target,0)) return false;
  const Coord3D* position=(const Coord3D*)((char*)target+0x38);
  if(reinterpret_cast<PathSystem00290990 *>(TheAI)->at0c->bfmeGroundCellThreshold(position,false)) return false;
  Rva0037C310Owner** it=at08->at80;
  for(;it!=at08->at84;++it) {
   int kind=*(int*)(*(char**)((char*)*it+4)+4);
-  if((kind==0 || kind==3) && (*it)->Rva0037C310(at14,at18,target)) break;
+  union { void (*raw)(); bool (Rva0037C310Owner::*member)(int,int,Object*); } test = { __identifier("?j_000466b4@@YAXXZ") };
+  if((kind==0 || kind==3) && ((*it)->*test.member)(at14,at18,target)) break;
  }
  if(it==at08->at84) return false;
- if(!reinterpret_cast<PathSystem00290990 *>(TheAI)->getPathfinder()->bfmeGroundCellThreshold((const Coord3D*)((char*)at0c+0x38),false) && ((BfmeHolderNS*)target)->bfmeQueryNS()==1 && !reinterpret_cast<PathSystem00290990 *>(TheAI)->getPathfinder()->worldLineNoHit((const Coord3D*)((char*)at0c+0x38),position)) return false;
+ union { void (*raw)(); int (BfmeHolderNS::*member)(); } query = { __identifier("?j_0003a391@@YAXXZ") };
+ union { void (*raw)(); bool (Pathfinder::*member)(const Coord3D*,const Coord3D*); } line = { __identifier("?j_00030ecc@@YAXXZ") };
+ if(!reinterpret_cast<PathSystem00290990 *>(TheAI)->getPathfinder()->bfmeGroundCellThreshold((const Coord3D*)((char*)at0c+0x38),false) && (((BfmeHolderNS*)target)->*query.member)()==1 && !(reinterpret_cast<PathSystem00290990 *>(TheAI)->getPathfinder()->*line.member)((const Coord3D*)((char*)at0c+0x38),position)) return false;
  at1c=target;
  return true;
 }
-
 
