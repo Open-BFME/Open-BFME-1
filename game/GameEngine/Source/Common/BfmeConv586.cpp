@@ -1,26 +1,26 @@
-struct BfmeSrcCEC
+// Retail 0x000BF090 (40 bytes) builds { AsciiString, three words }: the name
+// through StringBase<char>'s copy constructor (0x00887B60), then a copy of a
+// three-word value. Owner unknown; the types keep the address.
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+struct Rva000BF090Value
 {
-	int m_bfmeA;
-	int m_bfmeB;
-	int m_bfmeC;
+	int m_a;
+	int m_b;
+	int m_c;
 };
 
-class BfmeThingCEC
+class Rva000BF090
 {
 public:
-	void bfmeBaseCEC(void *what);
-	BfmeThingCEC *bfmeInitCEC(void *what, BfmeSrcCEC *src);
-	unsigned char m_bfmeHead[4];
-	int m_bfmeA;
-	int m_bfmeB;
-	int m_bfmeC;
+	Rva000BF090(const AsciiString &name, const Rva000BF090Value &value);
+	AsciiString m_name;
+	int m_a;
+	int m_b;
+	int m_c;
 };
 
-BfmeThingCEC *BfmeThingCEC::bfmeInitCEC(void *what, BfmeSrcCEC *src)
+Rva000BF090::Rva000BF090(const AsciiString &name, const Rva000BF090Value &value)
+	: m_name(name), m_a(value.m_a), m_b(value.m_b), m_c(value.m_c)
 {
-	bfmeBaseCEC(what);
-	m_bfmeA = src->m_bfmeA;
-	m_bfmeB = src->m_bfmeB;
-	m_bfmeC = src->m_bfmeC;
-	return this;
 }

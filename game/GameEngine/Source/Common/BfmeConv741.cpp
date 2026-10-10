@@ -1,25 +1,17 @@
-class BfmeItemDOB
-{
-	unsigned char m_bfmeHead[4];
-};
+// Retail 0x001A87C0 returns, by value, the AsciiString at index `index` of an
+// eight-entry array at +0x54: the hidden-return copy is StringBase<char>'s
+// copy constructor (0x00887B60). Owner unknown; the class keeps the address.
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class BfmeOtherDOB
+class Rva001A87C0
 {
 public:
-	void bfmeCallDOB(BfmeItemDOB *item);
+	AsciiString rva001A87C0(int index);
+	unsigned char m_head[0x54];
+	AsciiString m_names[8];
 };
 
-class BfmeThingDOB
+AsciiString Rva001A87C0::rva001A87C0(int index)
 {
-public:
-	BfmeOtherDOB *bfmeGoDOB(BfmeOtherDOB *other, int index);
-	unsigned char m_bfmeHead[0x54];
-	BfmeItemDOB m_bfmeItems[8];
-};
-
-BfmeOtherDOB *BfmeThingDOB::bfmeGoDOB(BfmeOtherDOB *other, int index)
-{
-	volatile int tmp = 0;
-	other->bfmeCallDOB(&m_bfmeItems[index]);
-	return other;
+	return m_names[index];
 }

@@ -37,17 +37,13 @@ public:
 	Vector3 Extent;
 };
 
-class BfmeOtherDOA;
-
 // 0x00190560 copy-constructs the AsciiString at this+0x48+index*4 into the
 // hidden return slot and returns it (ret 8).
-class BfmeThingDOA
+class Rva00190560
 {
 public:
-	BfmeOtherDOA *bfmeGoDOA(BfmeOtherDOA *other, Int index);
+	AsciiString rva00190560(Int index);
 };
-
-typedef AsciiString (BfmeThingDOA::*Rva007A4D40TextureGetter)(Int index);
 
 enum WaterTextureIndex
 {
@@ -260,11 +256,9 @@ void Rva007A1230ArrayOwner::rva007A4D40(void *source)
 	Rva007A4D40AssetList assets;
 	for (Int index = 0; index < 6; ++index)
 	{
-		BfmeThingDOA *textures = reinterpret_cast<BfmeThingDOA *>(record);
-		Rva007A4D40TextureGetter getTexture =
-			reinterpret_cast<Rva007A4D40TextureGetter>(&BfmeThingDOA::bfmeGoDOA);
-		setTexture((textures->*getTexture)(index), (WaterTextureIndex)index);
-		assets.addName((textures->*getTexture)(index).str());
+		Rva00190560 *textures = reinterpret_cast<Rva00190560 *>(record);
+		setTexture(textures->rva00190560(index), (WaterTextureIndex)index);
+		assets.addName(textures->rva00190560(index).str());
 	}
 
 	Rva009EBAC0((Int)&assets);

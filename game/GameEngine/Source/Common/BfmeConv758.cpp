@@ -1,27 +1,23 @@
-class BfmeSubDQC
+// Retail 0x0058D740 returns, by value, the AsciiString at +0x84 of the object
+// its +4 pointer names: the hidden-return copy is StringBase<char>'s copy
+// constructor (0x00887B60). Owner unknown; the types keep the address.
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+struct Rva0058D740Data
 {
-public:
-	unsigned char m_bfmeHead[0x84];
-	unsigned char m_bfmeTail[4];
+	unsigned char m_head[0x84];
+	AsciiString m_name;
 };
 
-class BfmeOtherDQC
+class Rva0058D740
 {
 public:
-	void bfmeCallDQC(void *what);
+	AsciiString rva0058D740();
+	unsigned char m_head[4];
+	Rva0058D740Data *m_data;
 };
 
-class BfmeThingDQC
+AsciiString Rva0058D740::rva0058D740()
 {
-public:
-	BfmeOtherDQC *bfmeGoDQC(BfmeOtherDQC *other);
-	unsigned char m_bfmeHead[4];
-	BfmeSubDQC *m_bfmeSub;
-};
-
-BfmeOtherDQC *BfmeThingDQC::bfmeGoDQC(BfmeOtherDQC *other)
-{
-	volatile int tmp = 0;
-	other->bfmeCallDQC(m_bfmeSub->m_bfmeTail);
-	return other;
+	return m_data->m_name;
 }

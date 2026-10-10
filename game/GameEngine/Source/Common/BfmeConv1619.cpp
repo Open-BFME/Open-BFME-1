@@ -1,11 +1,7 @@
-// Open-BFME5 conversions.
+// Open-BFME5 conversions. The returned name is an AsciiString: the
+// hidden-return copy is StringBase<char>'s copy constructor (0x00887B60).
 
-class BfmeStrVTN
-{
-public:
-	BfmeStrVTN(const BfmeStrVTN &other);
-	char *m_bfme00;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class BfmeHostVTN;
 
@@ -27,19 +23,18 @@ public:
 	int m_bfme00;
 	BfmeSinkVTN *m_bfme04;
 	char m_bfmePad08[0x18];
-	BfmeStrVTN m_bfme20;
+	AsciiString m_bfme20;
 };
 
 class BfmeOwnVTN
 {
 public:
-	BfmeStrVTN bfmeNameVTN();
+	AsciiString bfmeNameVTN();
 };
 
-BfmeStrVTN BfmeOwnVTN::bfmeNameVTN()
+AsciiString BfmeOwnVTN::bfmeNameVTN()
 {
 	BfmeHostVTN *host = *(BfmeHostVTN **)((char *)this - 0x60);
-	volatile int scratch = 0;
 
 	if (host != 0 && host->m_bfme04 != 0)
 		host = (BfmeHostVTN *)(const void *)((const Overridable *)host->m_bfme04)->getFinalOverride();

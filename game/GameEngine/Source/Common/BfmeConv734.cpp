@@ -1,29 +1,22 @@
-class BfmeSubDNB
+// Retail 0x0020E820 returns, by value, the AsciiString at +0x2C of the object
+// stored 0xC bytes before `this` (the method runs on a subobject): the
+// hidden-return copy is StringBase<char>'s copy constructor (0x00887B60).
+// Owner unknown; the types keep the address.
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+struct Rva0020E820Owner
 {
-	unsigned char m_bfmeHead[4];
+	unsigned char m_head[0x2c];
+	AsciiString m_name;
 };
 
-struct BfmeOwnerDNB
+struct Rva0020E820
 {
-	unsigned char m_bfmeHead[0x2c];
-	BfmeSubDNB m_bfmeSub;
+	AsciiString rva0020E820();
 };
 
-class BfmeOtherDNB
+AsciiString Rva0020E820::rva0020E820()
 {
-public:
-	void bfmeCallDNB(BfmeSubDNB *sub);
-};
-
-struct BfmeThingDNB
-{
-	BfmeOtherDNB *bfmeGoDNB(BfmeOtherDNB *other);
-};
-
-BfmeOtherDNB *BfmeThingDNB::bfmeGoDNB(BfmeOtherDNB *other)
-{
-	volatile int tmp = 0;
-	BfmeOwnerDNB *owner = *(BfmeOwnerDNB **)((char *)this - 0xc);
-	other->bfmeCallDNB(&owner->m_bfmeSub);
-	return other;
+	Rva0020E820Owner *owner = *(Rva0020E820Owner **)((char *)this - 0xc);
+	return owner->m_name;
 }

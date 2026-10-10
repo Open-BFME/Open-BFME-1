@@ -1,24 +1,20 @@
-// The pinned empty-string literal (symbols.csv ?g_Rva0107301CEmptyString@@3QBDB,
-// RVA 0x00C7301C); the census alias _bfmeTextBME was a placeholder for it.
+// Retail 0x002937B0 (26 bytes) default-constructs { int, AsciiString }: the
+// int is zeroed and the name is built by StringBase<char>(const char *)
+// (0x00888BC0) from the pinned empty-string literal (symbols.csv
+// ?g_Rva0107301CEmptyString@@3QBDB, RVA 0x00C7301C). Owner unknown.
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
 extern const char g_Rva0107301CEmptyString[];
 
-struct BfmeSubBME
-{
-	void bfmeSetBME(void *text);
-	unsigned char m_bfmeHead[4];
-};
-
-class BfmeThingBME
+class Rva002937B0
 {
 public:
-	BfmeThingBME *bfmeInitBME();
-	int m_bfmeZero;
-	BfmeSubBME m_bfmeSub;
+	Rva002937B0();
+	int m_value;
+	AsciiString m_name;
 };
 
-BfmeThingBME *BfmeThingBME::bfmeInitBME()
+Rva002937B0::Rva002937B0()
+	: m_value(0), m_name(g_Rva0107301CEmptyString)
 {
-	m_bfmeZero = 0;
-	m_bfmeSub.bfmeSetBME((void *)g_Rva0107301CEmptyString);
-	return this;
 }
