@@ -1,5 +1,5 @@
 // ?Rva0053FF10@BfmeAptScreenOnlineCustomMatch@@QAEHPAXI00@Z
-// partial score=0.9694 date=2026-10-08
+// partial score=0.995 date=2026-10-08
 // ?Rva0053FF10@BfmeAptScreenOnlineCustomMatch@@QAEHPAXI00@Z
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/peerdefs /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source
 // stlport
@@ -115,8 +115,8 @@ int BfmeAptScreenOnlineCustomMatch::Rva0053FF10(void *window, unsigned int messa
             bool enable = !text.isEmpty();
             if (field1D6 != enable)
             {
-                const char *button = enable ? "EnableButtonCreatePopup" : "DisableButtonCreatePopup";
                 field1D6 = enable;
+                const char *button = enable ? "EnableButtonCreatePopup" : "DisableButtonCreatePopup";
                 unsigned int movie = field034->field250;
                 ((BfmeLevelAN*)g_theWindowManager)->bfmeBuildAN(movie,(int)"CallChild",1,(int)button,0,0,0,0);
             }
