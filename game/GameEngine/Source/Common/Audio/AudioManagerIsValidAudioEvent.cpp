@@ -94,7 +94,7 @@ Bool AudioManager::isValidAudioEvent(const AudioEventRTS *eventToCheck) const
 	if (!eventToCheck)
 		return false;
 
-	if (eventToCheck->getEventName().isEmpty())
+	if (eventToCheck->getEventName().StringBase<char>::isEmpty())
 		return false;
 
 	getInfoForAudioEvent(eventToCheck);
