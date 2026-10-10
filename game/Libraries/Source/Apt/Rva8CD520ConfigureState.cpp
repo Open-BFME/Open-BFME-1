@@ -63,11 +63,14 @@ public:
 
 class BfmeStrVKI;
 class Rva00899770;
-class Rva008AE770Stack
+// Body at 0x008cc940: ?d_008cc940@@YAXXZ. The retail callee is linked as a
+// cdecl void() body, so the thiscall state method is recovered through a
+// member-pointer call (the pattern aptExportString.cpp uses).
+struct Rva008AE770Stack
 {
-public:
-	Rva00899770 *createString(void *, int, BfmeStrVKI *, int, int, int);
 };
+
+extern void d_008cc940();
 
 class BfmeA1232
 {
@@ -119,7 +122,9 @@ void rva8CD520ConfigureState(Rva8CD520State *state, Rva8CD520Context *context)
 		Rva8CD520String name;
 		((Rva8CD520ResolveName)d_008c6320)(context->m_owner, context->m_scope,
 			&value->string(), &output, &name);
-		value = (Rva8CD520Value *)((Rva008AE770Stack *)state)->createString(output,
+		typedef Rva00899770 *(Rva008AE770Stack::*Fn)(void *, int, BfmeStrVKI *, int, int, int);
+		union { void (*fn)(); Fn call; } u = { d_008cc940 };
+		value = (Rva8CD520Value *)(((Rva008AE770Stack *)state)->*u.call)(output,
 			(int)context->m_scope, (BfmeStrVKI *)&name, 1, 1, 0);
 	}
 

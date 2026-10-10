@@ -87,12 +87,14 @@ inline Rva8CCD60StringValue *rva892940CreateStringValue()
 class Rva00899770;
 class BfmeStrVKI;
 
-class Rva008AE770Stack
+// Body at 0x008cc940: ?d_008cc940@@YAXXZ. The retail callee is linked as a
+// cdecl void() body, so the thiscall state method is recovered through a
+// member-pointer call (the pattern aptExportString.cpp uses).
+struct Rva008AE770Stack
 {
-public:
-	Rva00899770 *createString(void *value, int unused, BfmeStrVKI *name,
-		int one, int another, int zero);
 };
+
+extern void d_008cc940();
 
 class Rva8CCD60State
 {
@@ -101,7 +103,9 @@ public:
 	Rva8CCD60Value *makeValue(void *first, void *second, void *data,
 		int one1, int one2, int zero)
 	{
-		return (Rva8CCD60Value *)((Rva008AE770Stack *)this)->createString(
+		typedef Rva00899770 *(Rva008AE770Stack::*Fn)(void *, int, BfmeStrVKI *, int, int, int);
+		union { void (*fn)(); Fn call; } u = { d_008cc940 };
+		return (Rva8CCD60Value *)(((Rva008AE770Stack *)this)->*u.call)(
 			first, (int)second, (BfmeStrVKI *)data, one1, one2, zero);
 	}
 

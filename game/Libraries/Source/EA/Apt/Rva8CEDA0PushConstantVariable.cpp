@@ -22,11 +22,14 @@ public:
 	Rva008CEDA0Value *m_stringObject;
 };
 
-class Rva008AE770Stack
+// Body at 0x008cc940: ?d_008cc940@@YAXXZ. The retail callee is linked as a
+// cdecl void() body, so the thiscall state method is recovered through a
+// member-pointer call (the pattern aptExportString.cpp uses).
+struct Rva008AE770Stack
 {
-public:
-	Rva00899770 *createString(void *, int, BfmeStrVKI *, int, int, int);
 };
+
+extern void d_008cc940();
 
 struct Rva008CEDA0State
 {
@@ -50,7 +53,9 @@ void rva8CEDA0PushConstantVariable(Rva008CEDA0State *state, Rva008CEDA0Context *
 	Rva008CEDA0Value *constant = state->m_constants[index];
 	if ((constant->m_valueBits & 0x3f) != 1)
 		constant = constant->m_stringObject;
-	Rva008CEDA0Value *value = (Rva008CEDA0Value *)((Rva008AE770Stack *)state)->createString(
+	typedef Rva00899770 *(Rva008AE770Stack::*Fn)(void *, int, BfmeStrVKI *, int, int, int);
+	union { void (*fn)(); Fn call; } u = { d_008cc940 };
+	Rva008CEDA0Value *value = (Rva008CEDA0Value *)(((Rva008AE770Stack *)state)->*u.call)(
 		context->m_owner, context->m_scope, (BfmeStrVKI *)((char *)constant + 8), 1, 1, 0);
 	state->m_stack[state->m_count++] = value;
 	if (!((unsigned char)(value->m_valueBits >> 30) & 1))
