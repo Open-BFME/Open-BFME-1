@@ -1534,25 +1534,10 @@ WeaponTemplate *WeaponStore::newOverride(WeaponTemplate *weaponTemplate)
 } 
 
 //-------------------------------------------------------------------------------------------------
-// ?update@WeaponStore@@UAEXXZ present-unmatched
-void WeaponStore::update()
-{
-	for (std::list<WeaponDelayedDamageInfo>::iterator ddi = m_weaponDDI.begin(); ddi != m_weaponDDI.end(); )
-	{
-		UnsignedInt curFrame = TheGameLogic->getFrame();
-		if (curFrame >= ddi->m_delayDamageFrame)
-		{
-			// we never do projectile-detonation-damage via this code path.
-			const isProjectileDetonation = false;
-			ddi->m_delayedWeapon->dealDamageInternal(ddi->m_delaySourceID, ddi->m_delayIntendedVictimID, &ddi->m_delayDamagePos, ddi->m_bonus, isProjectileDetonation);
-			ddi = m_weaponDDI.erase(ddi);
-		}
-		else
-		{
-			++ddi;
-		}
-	}
-}
+// Retail WeaponStore::update is the empty body at 0x001E17B0, owned by
+// WeaponStore_update.cpp. The upstream delayed-damage implementation is not
+// emitted here because it conflicts with that verified retail definition.
+
 
 //-------------------------------------------------------------------------------------------------
 // ?deleteAllDelayedDamage@WeaponStore@@IAEXXZ present-unmatched
