@@ -19,10 +19,10 @@ struct ContainedItemsList
 	ContainedItemNode *m_node;
 };
 
-class BfmeInnerRQ
+class AICommandInterface
 {
 public:
-	void bfmeSetRQ(int object, int commandSource);
+	void aiExit(Object *obj, CommandSourceType commandSource);
 };
 
 #include "../object.h"
@@ -76,9 +76,9 @@ void OpenContain::orderAllPassengersToIdle(CommandSourceType commandSource)
 			morePassengers = node != getContainedItemsList()->m_node;
 			if (rider->m_ai != 0)
 			{
-				BfmeInnerRQ *aiCommand = reinterpret_cast<BfmeInnerRQ *>(
+				AICommandInterface *aiCommand = reinterpret_cast<AICommandInterface *>(
 					reinterpret_cast<unsigned char *>(rider->m_ai) + 0x20);
-				aiCommand->bfmeSetRQ(reinterpret_cast<int>(getObject()), commandSource);
+				aiCommand->aiExit(getObject(), commandSource);
 			}
 		} while (morePassengers);
 	}

@@ -1328,22 +1328,6 @@ void OpenContain::orderAllPassengersToExit( CommandSourceType commandSource, Boo
 
  
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Contain/OpenContainOrderPassengersIdle.cpp
-// ?orderAllPassengersToIdle@OpenContain@@ present-unmatched
-void OpenContain::orderAllPassengersToIdle( CommandSourceType commandSource )
-{
-	for( ContainedItemsList::const_iterator it = getContainedItemsList()->begin(); it != getContainedItemsList()->end(); )
-	{
-		Object* rider = *it;
-		++it;
-		
-		if( rider->getAI() )
-		{
-			rider->getAI()->aiIdle( commandSource );
-		}
-	}
-}
-
 //-------------------------------------------------------------------------------------------------
 // ?orderAllPassengersToHackInternet@OpenContain@@ present-unmatched
 void OpenContain::orderAllPassengersToHackInternet( CommandSourceType commandSource )
