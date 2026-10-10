@@ -1533,9 +1533,15 @@ def load_symbol_map():
         alias = ledger_object_symbol(row)
         if alias != row["name"] and not alias.startswith("$"):
             aliases.append((alias, thunks.get(body, []) + [body]))
+    # Only a name no ledger row carries, emitted by exactly one row: a real
+    # row's name keeps only its own address, and two rows emitting one name
+    # give it no single identity.
+    emitted = {}
     for alias, candidates in aliases:
-        listed = symbol_map.setdefault(alias, [])
-        listed.extend(c for c in candidates if c not in listed)
+        emitted.setdefault(alias, []).append(candidates)
+    for alias, found in emitted.items():
+        if alias not in symbol_map and len(found) == 1:
+            symbol_map[alias] = found[0]
     if SYMBOLS.exists():
         # Membership sets mirroring the candidate lists, built only for the names
         # symbols.csv actually pins: `candidate not in candidates` is a linear

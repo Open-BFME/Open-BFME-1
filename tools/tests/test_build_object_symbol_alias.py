@@ -34,10 +34,16 @@ def test_funclet_label_is_not_a_global_alias(monkeypatch):
     assert "$L1234" not in _map(monkeypatch, [row])
 
 
-def test_ledger_name_keeps_its_own_address_first(monkeypatch):
+def test_ledger_name_keeps_only_its_own_address(monkeypatch):
     real = {"name": ROW["notes"].split("=", 1)[1], "target_rva": "0x00500000", "notes": ""}
     found = _map(monkeypatch, [ROW, real])
-    assert found[real["name"]] == [0x500000, 0x3A5370]
+    assert found[real["name"]] == [0x500000]
+
+
+def test_name_emitted_by_two_rows_is_not_aliased(monkeypatch):
+    other = dict(ROW, name="?dup_003a6000@@YAXXZ", target_rva="0x003A6000")
+    found = _map(monkeypatch, [ROW, other])
+    assert ROW["notes"].split("=", 1)[1] not in found
 
 
 def test_row_without_object_symbol_adds_nothing(monkeypatch):
