@@ -3,7 +3,8 @@
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
-#include "Common/AsciiString.h"
+#include "ascii_string.h"
+template<> inline bool StringBase<char>::isEmpty() const { return !m_data || m_data->length == 0; }
 
 class Object;
 
@@ -55,7 +56,7 @@ void ScriptEngine::createNamedCache(void)
 	Object *object = (Object *)((Gen_00383090 *)TheGameLogic)->m();
 	while (object != 0)
 	{
-		if (!object->getName().isEmpty())
+		if (!object->getName().StringBase<char>::isEmpty())
 		{
 			NamedRequest request;
 			request.first = object->getName();
