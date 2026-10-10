@@ -665,28 +665,7 @@ static void getInfoResponseForStatus(GPConnection * connection, GPGetInfoRespons
 	strcpy(resp->arg.status.countrycode, arg->countrycode);
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThreadCallbacks.cpp
-// ?statusCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyStatusArg@@@Z present-unmatched
-void BuddyThreadClass::statusCallback( GPConnection *con, GPRecvBuddyStatusArg *arg )
-{
-	BuddyResponse response;
-
-	// get user's name
-	response.buddyResponseType = BuddyResponse::BUDDYRESPONSE_STATUS;
-	gpGetInfo( con, arg->profile, GP_CHECK_CACHE, GP_BLOCKING, (GPCallback)getInfoResponseForStatus, &response);
-
-	// get user's status
-	GPBuddyStatus status;
-	gpGetBuddyStatus( con, arg->index, &status );
-	strcpy(response.arg.status.location, status.locationString);
-	strcpy(response.arg.status.statusString, status.statusString);
-	response.arg.status.status = status.status;
-	DEBUG_LOG(("Got buddy status for %d(%s) - status %d\n", status.profile, response.arg.status.nick, status.status));
-
-	// relay to UI
-	TheGameSpyBuddyMessageQueue->addResponse( response );
-}
-
+// The retail status callback is defined in BuddyThreadCallbacks.cpp.
 
 //-------------------------------------------------------------------------
 
