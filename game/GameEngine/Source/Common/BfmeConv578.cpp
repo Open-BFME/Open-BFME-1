@@ -1,22 +1,4 @@
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-
-	private:
-	StringBase() : m_data(0) {}
-	StringBase(const T *text);
-	~StringBase();
-
-	void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	~AsciiString() {}
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class WindowManager
 {
