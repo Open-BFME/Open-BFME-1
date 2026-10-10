@@ -27,6 +27,33 @@ public:
 	void handle(FlagPairTarget *target);
 };
 
+// Existing retail identities for the pin-only handoffs below. All nine
+// targets take ECX plus one callee-popped pointer; caller results are unused.
+class Xfer;
+class Rva000A1510Owner { public: void transfer(Xfer *xfer); };
+class BfmeSeedTarget;
+class Gen_0016D180 { public: void bfmeSeed(BfmeSeedTarget *target); };
+class Rva001EF3D0Caller { public: void invoke(FlagPairTarget *target); };
+class Rva00256C90Caller { public: void invoke(FlagPairTarget *target); };
+class Gen_0026A980 { public: void bfmeSeed(BfmeSeedTarget *target); };
+class Gen_00257D10
+{
+    friend class Gen_0025DA40;
+    friend class Gen_0026E160;
+private:
+    void bfmeAccept(BfmeSeedTarget *target);
+};
+class DockUpdate
+{
+    friend class Gen_002CDC70;
+protected:
+    virtual void xfer(Xfer *xfer);
+};
+class Rva00113E70Target;
+class Rva00113E70Caller { public: void invoke(Rva00113E70Target *target); };
+// Same matched opaque target and one-slot thiscall view as S3SeedPairsSweep.
+extern "C" void __cdecl __identifier("?d_002298b0@@YAXXZ")();
+
 struct BfmeSeedPair
 {
 	unsigned char m_bfmeFirst;
@@ -80,7 +107,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x00022363
 
 	char m_bfmePad0[0x44];
 	char m_bfmeItem0;				// +0x44
@@ -118,7 +144,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x0001C3FA
 
 	char m_bfmePad0[0x54];
 	char m_bfmeItem0;				// +0x54
@@ -168,7 +193,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000489DC
 
 	char m_bfmePad0[0xD4];
 	char m_bfmeItem0;				// +0xD4
@@ -181,7 +205,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000160B3
 
 	char m_bfmePad0[0x14];
 	char m_bfmeItem0;				// +0x14
@@ -193,7 +216,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x00003AEE
 
 	char m_bfmePad0[0x20];
 	char m_bfmeItem0;				// +0x20
@@ -211,7 +233,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x00033B77
 
 	char m_bfmePad0[0x3C];
 	char m_bfmeItem0;				// +0x3C
@@ -224,7 +245,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000289F7
 
 	char m_bfmePad0[0xE8];
 	char m_bfmeItem0;				// +0xE8
@@ -239,7 +259,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000289F7
 
 	char m_bfmePad0[0xE8];
 	char m_bfmeItem0;				// +0xE8
@@ -385,7 +404,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x0001D043
 
 	char m_bfmePad0[0x88];
 	char m_bfmeItem0;				// +0x88
@@ -424,7 +442,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x0003D2A8
 
 	char m_bfmePad0[0xC];
 	char m_bfmeItem0;				// +0x0C
@@ -449,7 +466,7 @@ private:
 // ?bfmeSeed@Gen_0014F150@@QAEXPAVBfmeSeedTarget@@@Z		52 bytes
 void Gen_0014F150::bfmeSeed(BfmeSeedTarget *target)
 {
-	bfmeAccept(target);
+	((Rva000A1510Owner *)this)->transfer((Xfer *)target);
 
 	BfmeSeedPair pair;
 
@@ -487,7 +504,7 @@ void Gen_00168910::bfmeSeed(BfmeSeedTarget *target)
 // ?bfmeSeed@Gen_00189FA0@@QAEXPAVBfmeSeedTarget@@@Z		63 bytes
 void Gen_00189FA0::bfmeSeed(BfmeSeedTarget *target)
 {
-	bfmeAccept(target);
+	((Gen_0016D180 *)this)->bfmeSeed(target);
 
 	if ( !target->bfmeSkip() )
 	{
@@ -547,7 +564,12 @@ void Gen_0020D890::bfmeSeed(BfmeSeedTarget *target)
 // ?bfmeSeed@Gen_0022F410@@QAEXPAVBfmeSeedTarget@@@Z		86 bytes
 void Gen_0022F410::bfmeSeed(BfmeSeedTarget *target)
 {
-	bfmeAccept(target);
+	union
+    {
+        void (*raw)();
+        void (Gen_0022F410::*member)(BfmeSeedTarget *);
+    } handoff = { __identifier("?d_002298b0@@YAXXZ") };
+    (this->*handoff.member)(target);
 
 	if ( !target->bfmeSkip() )
 	{
@@ -565,7 +587,7 @@ void Gen_0022F410::bfmeSeed(BfmeSeedTarget *target)
 // ?bfmeSeed@Gen_0024F500@@QAEXPAVBfmeSeedTarget@@@Z		66 bytes
 void Gen_0024F500::bfmeSeed(BfmeSeedTarget *target)
 {
-	bfmeAccept(target);
+	((Rva001EF3D0Caller *)this)->invoke((FlagPairTarget *)target);
 
 	if ( !target->bfmeSkip() )
 	{
@@ -582,7 +604,7 @@ void Gen_0024F500::bfmeSeed(BfmeSeedTarget *target)
 // ?bfmeSeed@Gen_00256360@@QAEXPAVBfmeSeedTarget@@@Z		99 bytes
 void Gen_00256360::bfmeSeed(BfmeSeedTarget *target)
 {
-	bfmeAccept(target);
+	((Rva00256C90Caller *)this)->invoke((FlagPairTarget *)target);
 
 	if ( !target->bfmeSkip() )
 	{
@@ -602,7 +624,7 @@ void Gen_00256360::bfmeSeed(BfmeSeedTarget *target)
 // ?bfmeSeed@Gen_0025A590@@QAEXPAVBfmeSeedTarget@@@Z		80 bytes
 void Gen_0025A590::bfmeSeed(BfmeSeedTarget *target)
 {
-	bfmeAccept(target);
+	((Gen_0026A980 *)this)->bfmeSeed(target);
 
 	if ( !target->bfmeSkip() )
 	{
@@ -620,7 +642,7 @@ void Gen_0025A590::bfmeSeed(BfmeSeedTarget *target)
 // ?bfmeSeed@Gen_0025DA40@@QAEXPAVBfmeSeedTarget@@@Z		100 bytes
 void Gen_0025DA40::bfmeSeed(BfmeSeedTarget *target)
 {
-	bfmeAccept(target);
+	((Gen_00257D10 *)this)->bfmeAccept(target);
 
 	if ( !target->bfmeSkip() )
 	{
@@ -639,7 +661,7 @@ void Gen_0025DA40::bfmeSeed(BfmeSeedTarget *target)
 // ?bfmeSeed@Gen_0026E160@@QAEXPAVBfmeSeedTarget@@@Z		69 bytes
 void Gen_0026E160::bfmeSeed(BfmeSeedTarget *target)
 {
-	bfmeAccept(target);
+	((Gen_00257D10 *)this)->bfmeAccept(target);
 
 	if ( !target->bfmeSkip() )
 	{
@@ -833,7 +855,7 @@ void Gen_002A0B40::bfmeSeed(BfmeSeedTarget *target)
 // ?bfmeSeed@Gen_002CDC70@@QAEXPAVBfmeSeedTarget@@@Z		100 bytes
 void Gen_002CDC70::bfmeSeed(BfmeSeedTarget *target)
 {
-	bfmeAccept(target);
+	((DockUpdate *)this)->DockUpdate::xfer((Xfer *)target);
 
 	if ( !target->bfmeSkip() )
 	{
@@ -888,7 +910,7 @@ void Gen_002D2580::bfmeSeed(BfmeSeedTarget *target)
 // ?bfmeSeed@Gen_00604760@@QAEXPAVBfmeSeedTarget@@@Z		157 bytes
 void Gen_00604760::bfmeSeed(BfmeSeedTarget *target)
 {
-	bfmeAccept(target);
+	((Rva00113E70Caller *)this)->invoke((Rva00113E70Target *)target);
 
 	if ( !target->bfmeSkip() )
 	{
