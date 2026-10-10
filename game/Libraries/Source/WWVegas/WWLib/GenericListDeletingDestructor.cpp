@@ -5,11 +5,9 @@
 // 0x009E3030 (30 bytes).  The matched GenericList constructor at 0x009E2EC0
 // and complete virtual destructor at 0x009E2F30 establish the identity.
 
-class GenericList
-{
-public:
-	virtual ~GenericList();
-};
+// Use the real list layout and constructor, as the retail-proven copies in
+// ini.cpp and INISectionListDeletingDestructor.cpp do.
+#include "listnode.h"
 
 void forceGenericListDeletingDestructor()
 {
