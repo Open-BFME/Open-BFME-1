@@ -95,27 +95,41 @@ Q2LowerBoundElement20 *__lower_bound(
 	return first;
 }
 
-#define Q2_TRAILING_ZERO_CALLEE( BODY )                                   \
-	void Gen##BODY( void *a0, void *a1, void *a2, void *a3, void *a4 );
+// Retail calls each callee through an ILT entry that jumps to the matched
+// five-argument __cdecl body named here (callees.py: 0x23E2, 0x49896,
+// 0x31250, 0x435B8, 0x2D92, 0x9B97, 0x280DD).  The literal ledger names keep
+// the cdecl stack contract; the forwarders ignore the returned pointer.
+#define Q2_TRAILING_ZERO_CALLEE( SYMBOL )                                 \
+	extern "C" void __cdecl __identifier( SYMBOL )(                       \
+		void *a0, void *a1, void *a2, void *a3, void *a4 );
 
-#define Q2_TRAILING_ZERO_FORWARDER( NAME, CALLEE )                        \
+#define Q2_TRAILING_ZERO_FORWARDER( NAME, SYMBOL )                        \
 	void NAME( void *a0, void *a1, void *a2, void *a3 )                   \
 	{                                                                     \
-		CALLEE( a0, a1, a2, a3, 0 );                                      \
+		__identifier( SYMBOL )( a0, a1, a2, a3, 0 );                      \
 	}
 
-Q2_TRAILING_ZERO_CALLEE( 00069DF0 )
-Q2_TRAILING_ZERO_CALLEE( 00069E60 )
-Q2_TRAILING_ZERO_CALLEE( 002DFFD0 )
-Q2_TRAILING_ZERO_CALLEE( 002E7EE0 )
-Q2_TRAILING_ZERO_CALLEE( 004371E0 )
-Q2_TRAILING_ZERO_CALLEE( 00437260 )
-Q2_TRAILING_ZERO_CALLEE( 00473A40 )
+#define Q2_CALLEE_00069DF0 "?Rva00069DF0UpperBound@@YAPAURva00069DF0Element@@PAU1@0ABU1@@Z"
+#define Q2_CALLEE_00069E60 "?Rva00069E60LowerBound@@YAPAURva00069DF0Element@@PAU1@0ABU1@@Z"
+#define Q2_CALLEE_002DFFD0 "?Gen002DFFD0@@YAPAUGen002DFFD0Elem@@PAU1@0ABHUGen002DFFD0Less@@PAH@Z"
+#define Q2_CALLEE_002E7EE0 "?__lower_bound@@YAPAUQ2LowerBoundElement20@@PAU1@0ABUQ2LowerBoundString@@UQ2LowerBoundLess@@PAH@Z"
+#define Q2_CALLEE_004371E0 "?GameTextLowerBound004371E0@@YAPAUGameTextStringLookUp@@PAU1@0ABQBDUGameTextStringCompare@@PAH@Z"
+#define Q2_CALLEE_00437260 "?GameTextUpperBound00437260@@YAPAUGameTextStringLookUp@@PAU1@0ABQBDUGameTextStringCompare@@PAH@Z"
+#define Q2_CALLEE_00473A40 "?Gen00473A40@@YAPAUGen00473A40Elem@@PAU1@0ABHUGen00473A40Less@@PAH@Z"
 
-Q2_TRAILING_ZERO_FORWARDER( Rva00069FB0, Gen00069DF0 )
-Q2_TRAILING_ZERO_FORWARDER( Rva0006A030, Gen00069E60 )
-Q2_TRAILING_ZERO_FORWARDER( Rva002E0530, Gen002DFFD0 )
-Q2_TRAILING_ZERO_FORWARDER( Rva002E8F90, Gen002E7EE0 )
-Q2_TRAILING_ZERO_FORWARDER( Rva004378C0, Gen004371E0 )
-Q2_TRAILING_ZERO_FORWARDER( upper_bound, Gen00437260 )
-Q2_TRAILING_ZERO_FORWARDER( Rva00474060, Gen00473A40 )
+Q2_TRAILING_ZERO_CALLEE( Q2_CALLEE_00069DF0 )
+Q2_TRAILING_ZERO_CALLEE( Q2_CALLEE_00069E60 )
+Q2_TRAILING_ZERO_CALLEE( Q2_CALLEE_002DFFD0 )
+Q2_TRAILING_ZERO_CALLEE( Q2_CALLEE_004371E0 )
+Q2_TRAILING_ZERO_CALLEE( Q2_CALLEE_00437260 )
+Q2_TRAILING_ZERO_CALLEE( Q2_CALLEE_00473A40 )
+
+Q2_TRAILING_ZERO_FORWARDER( Rva00069FB0, Q2_CALLEE_00069DF0 )
+Q2_TRAILING_ZERO_FORWARDER( Rva0006A030, Q2_CALLEE_00069E60 )
+Q2_TRAILING_ZERO_FORWARDER( Rva002E0530, Q2_CALLEE_002DFFD0 )
+Q2_TRAILING_ZERO_FORWARDER( Rva004378C0, Q2_CALLEE_004371E0 )
+Q2_TRAILING_ZERO_FORWARDER( upper_bound, Q2_CALLEE_00437260 )
+Q2_TRAILING_ZERO_FORWARDER( Rva00474060, Q2_CALLEE_00473A40 )
+
+Q2_TRAILING_ZERO_CALLEE( Q2_CALLEE_002E7EE0 )
+Q2_TRAILING_ZERO_FORWARDER( Rva002E8F90, Q2_CALLEE_002E7EE0 )
