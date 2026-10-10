@@ -1,68 +1,21 @@
-// cl: /GX
+// cl: /GX /Igame/Libraries/Source/WWVegas/WWLib
 
-class AsciiString;
-AsciiString GetBasePathFromPath(AsciiString path);
-
+#include "ascii_string.h"
 extern "C" void *memcpy(void *destination, const void *source, unsigned int count);
-
-template <typename T>
-class StringBase
+template<> inline const char *StringBase<char>::reverseFind(char match) const
 {
-	friend class AsciiString;
-	friend AsciiString GetBasePathFromPath(AsciiString path);
-
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase<T> &other);
-	StringBase(const T *str);
-	~StringBase() { releaseBuffer(); }
-	void releaseBuffer();
-
-public:
-	T *getBufferForRead(int length);
-
-private:
-	struct Header
-	{
-		int ref_count;
-		unsigned short length;
-		unsigned short capacity;
-		T data[1];
-	};
-
-	Header *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	~AsciiString() {}
-	const char *str() const
-	{
-		return m_data ? &m_data->data[0] : "";
-	}
-	const char *reverseFind(char match) const
-	{
-		const char *first = str();
-		const char *p = first + (m_data ? m_data->length : 0);
-		while (p != first)
-		{
-			--p;
-			if (*p == match)
-				return p;
-		}
-		return 0;
-	}
-
-	static const AsciiString TheEmptyString;
-	friend AsciiString GetBasePathFromPath(AsciiString path);
-};
+    const char *first = m_data ? &m_data->data[0] : "";
+    const char *p = first + (m_data ? m_data->length : 0);
+    while (p != first) {
+        --p;
+        if (*p == match) return p;
+    }
+    return 0;
+}
 
 AsciiString GetBasePathFromPath(AsciiString path)
 {
-	const char *separator = path.reverseFind('\\');
+	const char *separator = path.StringBase<char>::reverseFind('\\');
 	if (separator)
 	{
 		int prefixLength = separator - path.str();
