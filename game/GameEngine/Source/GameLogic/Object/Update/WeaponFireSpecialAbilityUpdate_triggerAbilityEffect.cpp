@@ -16,10 +16,12 @@ enum WeaponStatus {};
 class Weapon { public:
     WeaponStatus getStatus() const;
     bool rva001EA5F0(const Object*,int,const Object*,int*);
-    Object* forceFireWeapon(const Object*,const struct Coord3D*);
 };
 class Rva001CD990FiringTracker { public: void rva001B3510(const Weapon*,int,const void*,unsigned char); };
-class BfmeOwnBZ { public: void bfmeInitBZ(); };
+class BfmeOwnBZ {};
+// Retail ILTs: ECX/RET0 handoff and ECX plus two pointers/RET8 weapon call.
+extern "C" void __cdecl __identifier("?j_0003fa30@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00040746@@YAXXZ")();
 class SpecialPowerModuleInterface;
 class Rva002A6180 { public: SpecialPowerModuleInterface* forward(); };
 struct Position0026DA00 { float x,y,z; bool equal(const Coord3D& p) const { return reinterpret_cast<const Coord3D*>(this)->IsExactlyEqualTo(p); } };
@@ -118,7 +120,13 @@ struct Weapon0026DA00 {
     char pad00[8]; int field08;
     int status() const { return reinterpret_cast<const Weapon*>(this)->getStatus(); }
     bool fire(Target0026DA00* a,int b,Target0026DA00* c,int* d) { return reinterpret_cast<Weapon*>(this)->rva001EA5F0((Object*)a,b,(Object*)c,d); }
-    Target0026DA00* force(Target0026DA00* a,const Position0026DA00* b) { return (Target0026DA00*)reinterpret_cast<Weapon*>(this)->forceFireWeapon((Object*)a,(const Coord3D*)b); }
+    Target0026DA00* force(Target0026DA00* a,const Position0026DA00* b) {
+        union {
+            void (*raw)();
+            Object* (Weapon::*member)(const Object*,const Coord3D*);
+        } handoff = { __identifier("?j_00040746@@YAXXZ") };
+        return (Target0026DA00*)(reinterpret_cast<Weapon*>(this)->*handoff.member)((Object*)a,(const Coord3D*)b);
+    }
 };
 struct Tracker0026DA00 {
     void cool(bool b) { reinterpret_cast<FiringTracker*>(this)->coolDown(b); }
@@ -145,7 +153,13 @@ public:
     Data0026DA00* field04; Target0026DA00* field08;
     char pad0C[0xa0]; int fieldAC; Position0026DA00 fieldB0;
     char padBC[0x2c]; Weapon0026DA00* fieldE8;
-    void finish() { reinterpret_cast<BfmeOwnBZ*>(this)->bfmeInitBZ(); }
+    void finish() {
+        union {
+            void (*raw)();
+            void (BfmeOwnBZ::*member)();
+        } handoff = { __identifier("?j_0003fa30@@YAXXZ") };
+        (reinterpret_cast<BfmeOwnBZ*>(this)->*handoff.member)();
+    }
     Power0026DA00* power() { return (Power0026DA00*)reinterpret_cast<Rva002A6180*>(this)->forward(); }
 };
 
