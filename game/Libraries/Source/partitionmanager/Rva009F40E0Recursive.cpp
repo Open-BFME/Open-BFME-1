@@ -17,11 +17,11 @@ struct Rva009F4ED0ListNode
 	void **m_slot;
 };
 
-class Rva009F40E0Owner
+class PartitionManagerImpl
 {
 public:
 	void run(void **slot, unsigned int count);
-	void Rva009F4ED0();
+	void RemoveAllObjects();
 
 private:
 	unsigned char m_pad00[0x18];
@@ -30,8 +30,8 @@ private:
 };
 
 
-// ?run@Rva009F40E0Owner@@QAEXPAPAXI@Z
-void Rva009F40E0Owner::run(void **slot, unsigned int count)
+// ?run@PartitionManagerImpl@@QAEXPAPAXI@Z
+void PartitionManagerImpl::run(void **slot, unsigned int count)
 {
 	if (*slot == 0)
 		return;
@@ -50,9 +50,9 @@ void Rva009F40E0Owner::run(void **slot, unsigned int count)
 	}
 }
 
-// ?Rva009F4ED0@Rva009F40E0Owner@@QAEXXZ
+// ?RemoveAllObjects@PartitionManagerImpl@@QAEXXZ
 // Open BFME 2: Code/Libraries/Source/partitionmanager/partitionmanager_impl.cpp.
-void Rva009F40E0Owner::Rva009F4ED0()
+void PartitionManagerImpl::RemoveAllObjects()
 {
     for (Rva009F4ED0ListNode *node = m_list; node; node = node->m_next) {
         *node->m_slot = 0;
