@@ -1,28 +1,10 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
-template <typename T> class StringBase
-{
-	friend class UnicodeString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
 
-private:
-	StringBase( const StringBase<T> &other );
-	~StringBase();
-
-protected:
-	void *m_data;
-};
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString : private StringBase<unsigned short>
-{
-public:
-	UnicodeString( const UnicodeString &other ) : StringBase<unsigned short>( other ) {}
-	~UnicodeString() {}
-	bool isEmpty() const
-	{
-		return !m_data || *(const unsigned short *)( (const char *)m_data + 4 ) == 0;
-	}
-};
+inline UnicodeString::UnicodeString(const UnicodeString &s) { ((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short> *)&s); }
+template<> inline bool StringBase<unsigned short>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
+inline UnicodeString::~UnicodeString() { ((StringBase<wchar_t> *)this)->releaseBuffer(); }
 
 class GameWindow;
 
@@ -47,7 +29,7 @@ bool BfmeAptScreenOnlineLogin::bfmeSetTextAt7C(
 	if( m_textEntry )
 	{
 		if( m_dependentControl && updateEnabled )
-			GadgetCheckBoxSetChecked( m_dependentControl, !text.isEmpty() );
+			GadgetCheckBoxSetChecked( m_dependentControl, !((const StringBase<unsigned short> *)&text)->isEmpty() );
 
 		GadgetTextEntrySetText( m_textEntry, text );
 		textWasSet = true;
