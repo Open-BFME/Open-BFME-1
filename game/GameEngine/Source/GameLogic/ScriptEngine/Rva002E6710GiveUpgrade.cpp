@@ -14,26 +14,6 @@ unsigned Rva00990030Lookup(lua_State *state, int index);
 
 #include "ascii_string.h"
 
-class BFMERetailAsciiString;
-
-class BFMEPlayerTemplateAsciiString
-{
-	friend class BFMERetailAsciiString;
-	public:
-	BFMEPlayerTemplateAsciiString(const char *text);
-};
-
-class BFMERetailAsciiString : private BFMEPlayerTemplateAsciiString
-{
-public:
-	BFMERetailAsciiString(const char *text) : BFMEPlayerTemplateAsciiString(text) {}
-	~BFMERetailAsciiString() { releaseBuffer(); }
-
-private:
-	void releaseBuffer();
-	char *m_data;
-};
-
 class UpgradeTemplate;
 
 class UpgradeCenter
@@ -75,8 +55,8 @@ int Rva002E6710GiveUpgrade(lua_State *state)
 
 	const UpgradeTemplate *upgrade = 0;
 	{
-		BFMERetailAsciiString name(lua_tostring(state, 2));
-		upgrade = TheUpgradeCenter->findUpgrade(*(const AsciiString *)&name);
+		AsciiString name(lua_tostring(state, 2));
+		upgrade = TheUpgradeCenter->findUpgrade(name);
 	}
 	if (!upgrade)
 		return 0;
