@@ -8,7 +8,7 @@
 typedef unsigned short UnsignedShort;
 typedef bool Bool;
 
-class BFMERetailAsciiString;
+class AsciiString;
 
 class Xfer
 {
@@ -39,53 +39,21 @@ public:
 	virtual void slot23(void);
 	virtual void slot24(void);
 	virtual void slot25(void);
-	virtual Xfer &xferAsciiString(BFMERetailAsciiString *value);
+	virtual Xfer &xferAsciiString(AsciiString *value);
 	virtual void slot26(void);
 	virtual void slot27(void);
 	virtual void slot28(void);
 	virtual Xfer &xferUnsignedShort(UnsignedShort *value);
 };
 
-template <typename T>
-class StringBase
-{
-public:
-	void concat(const T *text, int length);
-};
-
-class BFMERetailAsciiString
-{
-public:
-	BFMERetailAsciiString(const char *text);
-	~BFMERetailAsciiString() { releaseBuffer(); }
-
-	const char *str() const
-	{
-		return m_data ? (const char *)m_data + 8 : "";
-	}
-
-	int getLength() const
-	{
-		return m_data ? *(const unsigned short *)((const char *)m_data + 4) : 0;
-	}
-
-	void concat(const char *text, int length)
-	{
-		((StringBase<char> *)this)->concat(text, length);
-	}
-
-	void *m_data;
-
-private:
-	void releaseBuffer();
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 struct Rva0039D770Record
 {
 	char m_pad[0x20];
-	BFMERetailAsciiString m_name;
+	AsciiString m_name;
 
-	BFMERetailAsciiString *name()
+	AsciiString *name()
 	{
 		return &m_name;
 	}
@@ -117,9 +85,9 @@ void Rva0039D770Owner::xfer(Xfer *xfer, Rva0039D770Vector *first,
 	{
 		do
 		{
-			BFMERetailAsciiString string("S:");
-			BFMERetailAsciiString *value = ((Rva0039D770Record *)*it)->name();
-			string.concat(value->str(), value->getLength());
+			AsciiString string("S:");
+			AsciiString *value = ((Rva0039D770Record *)*it)->name();
+			string.StringBase<char>::concat(value->str(), value->StringBase<char>::getLength());
 			xfer->xferAsciiString(&string);
 		}
 		while (++it != first->m_finish);
