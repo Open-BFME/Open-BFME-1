@@ -7,7 +7,7 @@
 // divided by eight (sar edi,3), while the __copy_backward at 0x000BCCE0 and the
 // fill reach 0x00018A70 -> 0x000BC4B0, which divides by four (sar edi,2). One
 // symbol cannot pin two bodies, so the eight-byte-element instantiation is spelled
-// here over a TU-local PmICoord2D and pinned on a name of its own.
+// here over a TU-local PmICoord2D and called through its existing ILT name.
 //
 // ICoord2D is two ints, so eight bytes is the element width this __copy wants; the
 // four-byte body stays under the spelling PartitionManager.cpp keeps.
@@ -21,6 +21,9 @@ struct PmICoord2D
 	int x;
 	int y;
 };
+
+// Retail ILT00026C6A -> vector assignment001E7330 uses ECX and RET4.
+extern "C" void __cdecl __identifier("?j_00026c6a@@YAXXZ")();
 
 namespace _STL
 {
@@ -46,8 +49,15 @@ template <class RandomAccessIterator, class OutputIterator, class Distance>
 OutputIterator __copy(RandomAccessIterator first, RandomAccessIterator last,
 	OutputIterator result, const random_access_iterator_tag &, Distance *)
 {
+	union
+	{
+		void (__cdecl *symbol)();
+		vector<PmICoord2D, allocator<PmICoord2D> > &(vector<PmICoord2D, allocator<PmICoord2D> >::*member)(
+			const vector<PmICoord2D, allocator<PmICoord2D> > &);
+	} assign;
+	assign.symbol = &__identifier("?j_00026c6a@@YAXXZ");
 	for (Distance n = last - first; n > 0; --n, ++first, ++result)
-		*result = *first;
+		(result->*assign.member)(*first);
 	return result;
 }
 
