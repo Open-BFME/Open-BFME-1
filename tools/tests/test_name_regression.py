@@ -1147,3 +1147,11 @@ def test_bank_pair_introduced_by_this_change_still_fails(repo):
     put(repo, CODE, AFTER)
     findings, _ = N.check(repo, 'HEAD', ':')
     assert EXPECTED <= {(f.old_name, f.new_name) for f in findings}
+
+
+def test_bank_loss_already_landed_is_not_reported_when_alignment_shifts(repo):
+    put(repo, BANK, BEFORE)
+    put(repo, CODE, AFTER)
+    commit(repo)
+    put(repo, CODE, 'extern void d_003e0930();\nextern void d_003e05b0();\n' + AFTER)
+    assert N.check(repo, 'HEAD', ':')[0] == []

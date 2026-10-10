@@ -766,10 +766,16 @@ def check(root, old, new):
             # shows against the same bank landed (and was checked) earlier;
             # this change did not introduce it (Rva003E5A50InfoCallback.cpp
             # against attempts/0x003e5a50.cpp, re_attempts 58887).
+            # Token alignment shifts with unrelated insertions, so the same
+            # earlier loss can pair differently; key it on the old name: a
+            # bank name the old snapshot already reported as lost against
+            # this bank, or no longer spelled at all, was not lost by this
+            # change.
             landed = read(root, old, b)
             if landed is not None:
-                earlier = set(regressions(before, landed, retained.get(a, frozenset())))
-                found = [pair for pair in found if pair not in earlier]
+                earlier = {x for x, _ in regressions(before, landed, retained.get(a, frozenset()))}
+                carried = set(tokens(landed))
+                found = [(x, y) for x, y in found if x not in earlier and x in carried]
         candidates.extend(Finding(a, b, x, y, digest(before), digest(after)) for x, y in found)
     candidates.extend(ledger_symbol_regressions(root, old, new))
     if any(ILT_TOKEN.match(f.new_name) for f in candidates):
