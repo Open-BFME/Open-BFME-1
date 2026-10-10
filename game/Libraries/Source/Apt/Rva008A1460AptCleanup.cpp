@@ -50,10 +50,10 @@ public:
 struct BfmePickWorld1284;
 extern BfmePickWorld1284 *g_bfmeHolderBU;
 
-class Rva008A1460Owner
+class AptAnimationPoolData
 {
 public:
-	void cleanup(void);
+	void PreDestroy(void);
 
 private:
 	char m_padding[0x14];
@@ -68,9 +68,9 @@ private:
 	Rva008A1460Tail m_tail;
 };
 
-void Rva008A1460Owner::cleanup(void)
+void AptAnimationPoolData::PreDestroy(void)
 {
-	register Rva008A1460Owner *owner = this;
+	register AptAnimationPoolData *owner = this;
 	int counts[2];
 	counts[0] = owner->m_owner.m_count;
 	register int index = 0;

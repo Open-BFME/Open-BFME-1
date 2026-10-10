@@ -8,7 +8,7 @@ template<> struct pair<const Gen_t_00894a10_k4, Gen_t_00894a10_p12cd> { ~pair();
 }
 typedef _STL::pair<const Gen_t_00894a10_k4, Gen_t_00894a10_p12cd> Rva00894A10Pair;
 
-class Rva008A1460Owner { public: void cleanup(); };
+class AptAnimationPoolData { public: void PreDestroy(); };
 class Rva00896060Owner { public: ~Rva00896060Owner(); };
 class Rva008A2CF0Owner { public: ~Rva008A2CF0Owner(); };
 class Rva008A30A0Object { public: void clear(); };
@@ -79,7 +79,7 @@ class Rva008A30A0Delete { public: ~Rva008A30A0Delete() { ((Rva008A30A0Object *)t
 void dup_00894A90(int mode)
 {
 	bfmeGoDWG();
-	((Rva008A1460Owner *)Rva008A5380Holder)->cleanup();
+	((AptAnimationPoolData *)Rva008A5380Holder)->PreDestroy();
 	((IntCall)d_00893820)(1);
 
 	void *zero = 0;
