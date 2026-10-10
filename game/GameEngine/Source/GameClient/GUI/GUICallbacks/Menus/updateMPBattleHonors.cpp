@@ -109,11 +109,11 @@ static __declspec(noinline) void updateMPBattleHonors(Int &honors, PSPlayerStats
 	if (stats.winsInARow >= 25)
 		honors |= 0x10;
 
-	if (stats.gamesInRowWithLastGeneral >= 20 && localPlayer->m_side.compare("America") == 0)
+	if (stats.gamesInRowWithLastGeneral >= 20 && localPlayer->m_side.StringBase<char>::compare("America") == 0)
 		honors |= 0x20;
-	if (stats.gamesInRowWithLastGeneral >= 20 && localPlayer->m_side.compare("China") == 0)
+	if (stats.gamesInRowWithLastGeneral >= 20 && localPlayer->m_side.StringBase<char>::compare("China") == 0)
 		honors |= 0x40;
-	if (stats.gamesInRowWithLastGeneral >= 20 && localPlayer->m_side.compare("GLA") == 0)
+	if (stats.gamesInRowWithLastGeneral >= 20 && localPlayer->m_side.StringBase<char>::compare("GLA") == 0)
 		honors |= 0x200;
 
 	BfmeA1112 validMask(BfmeA1112::kInit, KINDOF_VEHICLE);
