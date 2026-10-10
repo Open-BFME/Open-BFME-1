@@ -20,6 +20,9 @@
 
 typedef int Int;
 
+// Retail ILT 0x0000266C -> resize at 0x0048A970 uses ECX and RET4.
+extern "C" void __cdecl __identifier("?j_0000266c@@YAXXZ")();
+
 enum NameKeyType { NAMEKEY_INVALID = 0 };
 
 class Transition;
@@ -118,8 +121,6 @@ public:
 	Value &_M_insert(const Value &obj);
 
 private:
-	void resize(size_type numElementsHint);			// ILT 0x0000266C
-
 	size_type _M_bkt_num_key(const Key &key) const
 	{
 		return _M_hash(key) % _M_buckets.size();
@@ -148,7 +149,13 @@ private:
 template <class Value, class Key, class HashFcn, class ExtractKey, class EqualKey, class Alloc>
 Value &hashtable<Value, Key, HashFcn, ExtractKey, EqualKey, Alloc>::_M_insert(const Value &obj)
 {
-	resize(_M_num_elements + 1);
+	union
+	{
+		void (__cdecl *symbol)();
+		void (hashtable::*member)(size_type);
+	} grow;
+	grow.symbol = &__identifier("?j_0000266c@@YAXXZ");
+	(this->*grow.member)(_M_num_elements + 1);
 
 	size_type n = _M_bkt_num(obj);
 	_Node *first = (_Node *)_M_buckets[n];
