@@ -90969,3 +90969,4 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ?d_000da060@@YAXXZ,0x000DA060,address-only legacy dump compatibility
 ?getFilename@Rva000BD060INIView@@QBE?AVAsciiString@@XZ,0x00093F40,INI receiver plus4 copied through StringBase<char>; evidence=targets/game/reverse/identity_evidence/000bd060-fxlist-vector-parser.md
 ?getLineNum@Rva000BD060INIView@@QBEHXZ,0x00850810,INI receiver plus0C selects line record from plus834; evidence=targets/game/reverse/identity_evidence/000bd060-fxlist-vector-parser.md
+??$__copy@PAVRva003A5250Element@@PAV1@H@_STL@@YAPAVRva003A5250Element@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x003A4270,Five-argument STLport 4.6 copy ABI over address-derived string-bearing payload; complete constructor and callers decoded; identity_evidence/003a5670-destructor.md
