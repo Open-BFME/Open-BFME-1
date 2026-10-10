@@ -33,9 +33,9 @@
 // passed as an ordinary stack argument.  NO STACK ADJUSTMENT FOLLOWS THE CALL,
 // so the callee pops its own argument: the pointer is __stdcall, not __cdecl --
 // the __cdecl spelling compiles three bytes longer with an `add esp,4`.  The
-// call site is a DIR32 the patcher fills from retail and the extern name is
-// address-derived; the argument and result types are a guess consistent with
-// one pushed dword and a discarded result.
+// call goes through the KERNEL32 ReleaseMutex import slot (IAT 0x01358ECC);
+// the argument is the mutex handle the owner holds; the result is discarded,
+// consistent with one pushed dword.
 //
 // IDENTITY IS NOT RECOVERED.  Every name is derived from an address.
 
@@ -121,23 +121,11 @@ void Rva007837C0( Rva007837C0Owner *owner )
 	owner->m_owned = 0;
 }
 
-extern void ( __stdcall *R2Fptr01358ECC )( void *object );
+// The global function pointer is the KERNEL32 ReleaseMutex import (IAT 0x01358ECC).
+extern "C" __declspec( dllimport ) int __stdcall ReleaseMutex( void *mutex );
 
-class Rva006915E0
-{
-public:
-	void *m_object;
-	bool m_live;
-	void release();
-};
-void Rva006915E0::release()
-{
-	if ( m_live )
-	{
-		R2Fptr01358ECC( m_object );
-		m_live = false;
-	}
-}
+// 0x006915E0, byte-identical to the body below, is the scoped mutex hold's
+// inline release() that MilesAudioManagerConstructor.cpp emits as a COMDAT.
 class Rva00691600
 {
 public:
@@ -149,7 +137,7 @@ void Rva00691600::release()
 {
 	if ( m_live )
 	{
-		R2Fptr01358ECC( m_object );
+		ReleaseMutex( m_object );
 		m_live = false;
 	}
 }
