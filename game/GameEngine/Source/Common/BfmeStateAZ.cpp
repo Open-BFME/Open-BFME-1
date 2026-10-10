@@ -33,7 +33,7 @@ public:
 };
 
 extern "C" void *bfmeVftableAZ[];
-extern "C" void *bfmeGuardTableAZ[];
+extern int g_Va0109B558;
 
 class BfmeStateAZ
 {
@@ -57,7 +57,7 @@ BfmeStateAZ::BfmeStateAZ(void *owner)
 
 	m_bfmeFirstAZ = 0;
 
-	m_bfmeTableAZ = bfmeGuardTableAZ;
+	m_bfmeTableAZ = (void *)&g_Va0109B558;
 
 	m_bfmeSecondAZ = 0;
 }

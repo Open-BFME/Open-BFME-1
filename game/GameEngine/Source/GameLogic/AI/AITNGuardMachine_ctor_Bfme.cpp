@@ -97,7 +97,7 @@ extern int g_AITNGuardInnerStateVTable;
 extern int g_AITNGuardOuterStateVTable;
 extern int g_AITNGuardPickUpCrateStateVTable;
 extern int g_AITNGuardAttackAggressorStateVTable;
-extern int g_Rva0109B558StateSecondaryVTable;
+extern int g_Va0109B558;
 
 class AITNGuardReturnState : public AIInternalMoveToState
 {
@@ -142,7 +142,7 @@ public:
 		: Rva000A19E0StateBase(machine, AsciiString("AITNGuardInner"))
 	{
 		m_vftable = &g_AITNGuardInnerStateVTable;
-		m_field24 = &g_Rva0109B558StateSecondaryVTable;
+		m_field24 = &g_Va0109B558;
 		m_field28 = 0;
 	}
 
@@ -163,7 +163,7 @@ public:
 		: Rva000A19E0StateBase(machine, AsciiString("AITNGuardOuter"))
 	{
 		m_vftable = &g_AITNGuardOuterStateVTable;
-		m_field24 = &g_Rva0109B558StateSecondaryVTable;
+		m_field24 = &g_Va0109B558;
 		m_field28 = 0;
 		m_field2c = 0;
 	}
@@ -202,7 +202,7 @@ public:
 		: Rva000A19E0StateBase(machine, AsciiString("AITNGuardAttackAggressorState"))
 	{
 		m_vftable = &g_AITNGuardAttackAggressorStateVTable;
-		m_field24 = &g_Rva0109B558StateSecondaryVTable;
+		m_field24 = &g_Va0109B558;
 		m_field28 = 0;
 		m_field2c = 0;
 	}

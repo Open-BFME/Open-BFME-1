@@ -692,6 +692,7 @@ address_global	game/GameEngine/Source/GameClient/Rva006A9800.cpp	g_Rva13596C0	2
 address_global	game/GameEngine/Source/GameClient/Rva006AEE00Init.cpp	g_Va01336E50	1
 address_global	game/GameEngine/Source/GameClient/Rva006AEE00MapString.cpp	g_Va01336E50	3
 address_global	game/GameEngine/Source/GameLogic/AI/AIFollowWaypointPathState_onEnter.cpp	g_bfmeRva0109A028	3
+address_global	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	g_Va0109B558	1	allow=ad26331c00dcf32763bde141d606cb68e99dd35d
 address_global	game/GameEngine/Source/GameLogic/AI/AITNGuardMachine_ctor_Bfme.cpp	g_Rva0109B558StateSecondaryVTable	4
 address_global	game/GameEngine/Source/GameLogic/AI/GiantBirdGuardAttackAggressorState_ctor.cpp	g_Rva002C11E0VTableA	2
 address_global	game/GameEngine/Source/GameLogic/AI/GiantBirdGuardAttackAggressorState_ctor.cpp	g_Rva002C11E0VTableB	2
@@ -127011,7 +127012,6 @@ present_unmatched	game/GameEngine/Source/GameLogic/AI/AIStates.cpp	xfer@AttackSt
 present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	0AITNGuardAttackAggressorState@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	0AITNGuardMachine@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	0AITNGuardPickUpCrateState@@	1
-present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	1AITNGuardMachine@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	crc@AITNGuardAttackAggressorState@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	crc@AITNGuardIdleState@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	crc@AITNGuardInnerState@@	1
@@ -127024,7 +127024,6 @@ present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	loadPostProc
 present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	loadPostProcess@AITNGuardReturnState@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	onEnter@AITNGuardIdleState@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	onEnter@AITNGuardPickUpCrateState@@	1
-present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	onEnter@AITNGuardReturnState@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	onExit@AITNGuardAttackAggressorState@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	onExit@AITNGuardIdleState@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	onExit@AITNGuardInnerState@@	1
@@ -127032,7 +127031,6 @@ present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	onExit@AITNG
 present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	onExit@AITNGuardPickUpCrateState@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	onExit@AITNGuardReturnState@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	update@AITNGuardAttackAggressorState@@	1
-present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	update@AITNGuardIdleState@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	update@AITNGuardInnerState@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	update@AITNGuardOuterState@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp	update@AITNGuardPickUpCrateState@@	1

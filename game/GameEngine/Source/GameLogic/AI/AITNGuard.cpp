@@ -690,3 +690,11 @@ void AITNGuardAttackAggressorState::loadPostProcess()
 {
 	onEnter();
 }
+
+// Address-derived datum at VA 0x0109B558 (.rdata): one slot holding ILT
+// 0x00039888, which jumps to TunnelNetworkExitConditions::shouldExit
+// (RVA 0x00189AE0). The AITNGuard Inner/Outer state constructors and the
+// 0x00189DF0 pair initialiser store its address at this+0x24 / this+0.
+void j_00039888();
+
+int g_Va0109B558 = (int)&j_00039888;

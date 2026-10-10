@@ -18,7 +18,7 @@
 //     0x000A19E0 is the ledger's ??0State@@QAE@PAVStateMachine@@VAsciiString@@@Z
 //     (game/GameEngine/Source/Common/StateConstructor.cpp).  No header declares
 //     State/StateMachine, so this file cannot spell it.
-//   _bfmeVftableAY / _bfmeGuardTableAY -- retail RVA 0x00C9B650 and 0x00C9B558,
+//   _bfmeVftableAY / g_Va0109B558 -- retail RVA 0x00C9B650 and 0x00C9B558,
 //     anonymous .rdata (a vftable and a transition-handler table) that
 //     exports.csv does not name.  Needs a datum.
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
@@ -43,7 +43,7 @@ public:
 };
 
 extern "C" void *bfmeVftableAY[];
-extern "C" void *bfmeGuardTableAY[];
+extern int g_Va0109B558;
 
 class BfmeStateAY
 {
@@ -67,7 +67,7 @@ BfmeStateAY::BfmeStateAY(void *owner)
 
 	m_bfmeFirstAY = 0;
 
-	m_bfmeTableAY = bfmeGuardTableAY;
+	m_bfmeTableAY = (void *)&g_Va0109B558;
 
 	m_bfmeSecondAY = 0;
 }
