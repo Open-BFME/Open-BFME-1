@@ -1248,3 +1248,37 @@ def test_pin_without_ledger_row_at_its_address_still_fails(tmp_path):
 def test_name_the_ledger_row_spells_is_not_dropped(tmp_path):
     rows = BODY_ROW + '?isLivingWorld@GameLogic@@QAE_NXZ,,0x00382B50,91,game/x.cpp,matched\n'
     assert PAIR in _ledger_pin_case(tmp_path, 0x00382B50, rows)
+
+
+PREF_SRC = 'game/GameEngine/Source/GameClient/PrefShim.cpp'
+
+
+def _pref_case(tmp_path, new_type, pin_rva=0x0000AEAC):
+    # re_attempts 59109: a pinned TU shim owner respelled to the types of the
+    # ledger row at the pinned ILT's target.
+    git(tmp_path, 'init', '-q')
+    git(tmp_path, 'config', 'user.name', 'Fixture')
+    git(tmp_path, 'config', 'user.email', 'fixture@example.invalid')
+    put(tmp_path, PREF_SRC, 'struct CustomPreferenceMapShim { void *find(); };\n'
+        'void *f(CustomPreferenceMapShim *m) { return m->find(); }\n')
+    put(tmp_path, 'targets/game/reverse/symbols.csv',
+        f'name,address,notes\n?find@CustomPreferenceMapShim@@QAEPAXXZ,0x{pin_rva:08X},shim\n')
+    put(tmp_path, 'targets/game/reverse/functions.csv',
+        '?j_0000aeac@@YAXXZ,,0x0000AEAC,5,game/gen_small/thunks_004.cpp,matched,gen-thunk;target=FUN_00480600\n'
+        '??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@URva00080600Value@@@_STL@@QBEPAU_Rb_tree_node_base@1@ABVAsciiString@@@Z,,0x00080600,90,game/x.cpp,matched\n')
+    commit(tmp_path)
+    put(tmp_path, PREF_SRC, f'struct {new_type} {{ void *find(); }};\n'
+        f'void *f({new_type} *m) {{ return m->find(); }}\n')
+    return [(f.old_name, f.new_name) for f in N.check(tmp_path, 'HEAD', ':')[0]]
+
+
+def test_pinned_owner_respelled_to_decorated_ledger_type_passes(tmp_path):
+    assert ('CustomPreferenceMapShim', 'Rva00080600Value') not in _pref_case(tmp_path, 'Rva00080600Value')
+
+
+def test_pinned_owner_respelled_to_its_address_name_passes(tmp_path):
+    assert ('CustomPreferenceMapShim', 'Rva00080600Tree') not in _pref_case(tmp_path, 'Rva00080600Tree')
+
+
+def test_pinned_owner_respelled_to_another_address_name_fails(tmp_path):
+    assert ('CustomPreferenceMapShim', 'Rva00080610Tree') in _pref_case(tmp_path, 'Rva00080610Tree')

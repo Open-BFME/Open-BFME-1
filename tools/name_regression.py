@@ -762,11 +762,28 @@ def _is_pin_respelling(finding, recorded, names, targets):
     component of the ledger row at A (or, for an ILT pin, at the ILT row's
     recorded target), as callees.py prints it. The ledger row is that address's
     identity; a name the ledger row itself spells is never dropped here."""
-    word = lambda n: re.compile(r'(?<![A-Za-z0-9_])' + re.escape(n) + r'(?![A-Za-z0-9_])')
+    # In a decorated name a class/struct/union/enum type carries a one-letter
+    # code (URva00080600Value@@); the identifier still ends at '@'.
+    word = lambda n: re.compile(r'(?:(?<![A-Za-z0-9_])|(?<=[^A-Za-z0-9_][UVTW]))'
+                                + re.escape(n) + r'(?![A-Za-z0-9_])')
     new, old = word(finding.new_name), word(finding.old_name)
+    embedded = re.match(r'(?:Rva|Glo|Gen_?|(?:d|dup|j|sub|FUN)_)([0-9A-Fa-f]{8})(?![0-9A-Fa-f])',
+                        finding.new_name, re.I)
     for rva in recorded.get(finding.old_name, ()):
-        rows = names.get(rva, []) + (names.get(targets[rva], []) if rva in targets else [])
-        if any(new.search(n) for n in rows) and not any(old.search(n) for n in rows):
+        places = [rva] + ([targets[rva]] if rva in targets else [])
+        rows = [n for a in places for n in names.get(a, [])]
+        if not rows or any(old.search(n) for n in rows):
+            continue
+        if any(new.search(n) for n in rows):
+            return True
+        # An address-derived placeholder naming that very ledger body
+        # (Rva00080600Tree for the 0x00080600 row) is honest (AGENTS.md). An
+        # ILT's own address is named only by its ?j_ row (test_respelling_
+        # recorded_standin_to_bfme_or_rva_still_fails).
+        bodies = {a for a in places
+                  if not any(ILT_TOKEN.match(n) for n in names.get(a, []))}
+        if embedded and opaque(finding.new_name) and int(embedded.group(1), 16) in (
+                bodies | {a + IMAGE_BASE for a in bodies}):
             return True
     return False
 
