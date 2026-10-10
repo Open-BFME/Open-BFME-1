@@ -1,9 +1,18 @@
 // ?Rva008FFF40@Rva00900FF0@@UAEXXZ
-// partial score=0.16 date=2026-09-23
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
-// Rva00900FF0 vtable slot 3 at retail RVA 0x008FFF40.
-// The owner and member offsets are witnessed by the matched constructor and destructor.
+// partial score=0.9978 date=2026-10-10
+// ?Rva008FFF40@Rva00900FF0@@UAEXXZ
+// stlport
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/Compression /Iinputs/reference/shims/sweep
 
+#define _OPERATOR_NEW_DEFINED_ 1
+#include <string.h>
+#include <stddef.h>
+
+#define _STLP_NO_EXCEPTIONS 1
+#include <string>
+#include "wwstring.h"
+class MeshClass;
+class MaterialInfoClass;
 class TextureClass
 {
 public:
@@ -25,37 +34,29 @@ public:
 extern BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(
 	char *name, int mipCount, int format);
 
-class Rva00900FF0InnerVector
-{
-public:
-	char *m_start;
-	char *m_finish;
-	char *m_endOfStorage;
-};
+typedef _STL::string Rva00900FF0InnerVector;
 
 class Rva00900FF0VecOfVec
 {
 public:
 	Rva00900FF0VecOfVec(const Rva00900FF0VecOfVec &source);
 	~Rva00900FF0VecOfVec();
-	void process(Rva00900FF0VecOfVec *other, class RenderObjClass *object,
-		int value);
+	bool empty() const { return m_start==m_finish; }
+	unsigned size() const { return (unsigned)(m_finish-m_start); }
+	void pop_back() { if(!empty()) (--m_finish)->~Rva00900FF0InnerVector(); }
 
 	Rva00900FF0InnerVector *m_start;
 	Rva00900FF0InnerVector *m_finish;
 	Rva00900FF0InnerVector *m_endOfStorage;
 };
 
-#pragma comment(linker, "/alternatename:??0Rva00900FF0VecOfVec@@QAE@ABV0@@Z=?d_008ffb80@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1Rva00900FF0VecOfVec@@QAE@XZ=?j_0000b109@@YAXXZ")
-#pragma comment(linker, "/alternatename:?process@Rva00900FF0VecOfVec@@QAEXPAV0@PAVRenderObjClass@@H@Z=?d_008ff0f0@@YAXXZ")
 
 class Rva00900FF0VectorHolder
 {
 public:
-	void **m_start;
-	void **m_finish;
-	void **m_endOfStorage;
+	int *m_start;
+	int *m_finish;
+	int *m_endOfStorage;
 };
 
 class RenderObjClass
@@ -66,9 +67,9 @@ public:
 	virtual void slot02(void);
 	virtual void slot03(void);
 	virtual void slot04(void);
-	virtual void slot05(void);
-	virtual void slot06(void);
-	virtual int slot07(int value);
+	virtual MeshClass *Mesh_Self();
+	virtual const char *Get_Name() const;
+	virtual void slot07(const char *value);
 	virtual void slot08(void);
 	virtual void slot09(void);
 	virtual void slot10(void);
@@ -92,7 +93,7 @@ public:
 	virtual void slot28(void);
 	virtual RenderObjClass *Get_Sub_Object(int index);
 	virtual void slot30(void);
-	virtual void slot31(void);
+	virtual RenderObjClass *Get_Sub_Object_By_Name(const char *,int * =0) const;
 	virtual void slot32(void);
 	virtual void slot33(void);
 	virtual void slot34(void);
@@ -145,7 +146,7 @@ public:
 	virtual void slot81(void);
 	virtual void slot82(void);
 	virtual void slot83(void);
-	virtual void slot84(void);
+	virtual MaterialInfoClass *Get_Material_Info() const;
 	virtual void slot85(void);
 	virtual void slot86(void);
 	virtual void slot87(void);
@@ -189,22 +190,130 @@ public:
 	virtual void replaceTexture(const BFMEWaterTrackTextureHandle &oldTexture,
 		const BFMEWaterTrackTextureHandle &newTexture);
 	virtual void slot126(int value);
+	int m_ref_count;
 };
 
 extern RenderObjClass *Create_Render_Obj(const char *name);
 extern void Rva008FEB90(RenderObjClass *object);
 
-void Rva008FF060(char *name, int value);
-void Rva008FF6A0(RenderObjClass *object, Rva00900FF0InnerVector *first,
-	Rva00900FF0InnerVector *second, void *source);
 
-#pragma comment(linker, "/alternatename:?Rva008FF060@@YAXPADH@Z=?d_008ff060@@YAXXZ")
-#pragma comment(linker, "/alternatename:?Rva008FF6A0@@YAXPAVRenderObjClass@@PAVRva00900FF0InnerVector@@1PAX@Z=?d_008ff6a0@@YAXXZ")
+void Rva008FF6A0(RenderObjClass *object, Rva00900FF0InnerVector *first,
+	Rva00900FF0InnerVector *second, int source);
+
+
+class BfmeHandleCX
+{
+public:
+	BfmeHandleCX(void) { m_bfmeThing = 0; }
+	~BfmeHandleCX(void)
+	{
+		if (m_bfmeThing)
+			m_bfmeThing->Release_Ref();
+	}
+
+	TextureClass *m_bfmeThing;			// +0x00
+};
+
+class MaterialInfoClass
+{
+public:
+	virtual void Delete_This();
+	virtual void _bfme_mi_v1();
+	virtual void _bfme_mi_v2();
+	virtual void _bfme_mi_v3();
+	virtual void _bfme_mi_v4();
+	virtual void *_bfme_mi_slot14();
+
+	BfmeHandleCX Get_Texture(int index) const;
+
+	int m_ref_count;
+	char m_pad_08[0x30 - 8];
+	int m_bfme30;
+};
+
+class Rva0092C3E0Trampoline
+{
+public:
+	void invoke(BfmeHandleCX *out, TextureClass **src);
+};
+
+class Bfme5TextureArray
+{
+public:
+	void bfmeSetSlot(int i, TextureClass **src);
+};
+
+static __declspec(noinline) bool Rva008FEF60Method(RenderObjClass *self, TextureClass **src, int index)
+{
+	if (!self)
+		return false;
+	if (!*src)
+		return false;
+
+	MaterialInfoClass *material = self->Get_Material_Info();
+	if (!material)
+		return false;
+
+	if (material->m_bfme30 <= index)
+		return false;
+
+	Rva0092C3E0Trampoline *sink = (Rva0092C3E0Trampoline *)self->Mesh_Self();
+
+	BfmeHandleCX handle = material->Get_Texture(index);
+	if (handle.m_bfmeThing == *src)
+	{
+		if (--material->m_ref_count == 0)
+			material->Delete_This();
+
+		return false;
+	}
+
+	sink->invoke(&handle, src);
+
+	((Bfme5TextureArray *)material)->bfmeSetSlot(index, src);
+
+	if (--material->m_ref_count == 0)
+		material->Delete_This();
+
+	return true;
+}
+
+
+static __declspec(noinline) bool Rva008FF060Method(RenderObjClass *self, char *name, int index)
+{
+    if (!self)
+        return false;
+    bool result = false;
+    BFMEWaterTrackTextureHandle handle = BFMEGetWaterTrackTexture(name, 0, 0);
+    if (handle.m_texture)
+        result = Rva008FEF60Method(self, &handle.m_texture, index);
+    return result;
+}
+
+
+static __declspec(noinline) bool Rva008FF0F0Method(RenderObjClass *object, Rva00900FF0VecOfVec *first, Rva00900FF0VecOfVec *second, int index)
+{
+    if (!object) return false;
+    if (first->empty()) return false;
+    char *meshName=(char *)(first->m_finish-1)->c_str();
+    char *textureName=(char *)(second->m_finish-1)->c_str();
+    bool result=false;
+    if (strcmp(object->Get_Name(),meshName)==0)
+        result=Rva008FF060Method(object,textureName,index);
+    else {
+        RenderObjClass *sub=object->Get_Sub_Object_By_Name(meshName);
+        if(sub) {
+            result=Rva008FF060Method(sub,textureName,index);
+            if(--sub->m_ref_count==0) sub->slot00();
+        }
+    }
+    return result;
+}
 
 class Rva00900FF0Base
 {
 public:
-	virtual int slot00(void);
+	virtual const char *slot00(void);
 	virtual void slot01(void);
 	virtual void slot02(void);
 	char m_base[0x10];
@@ -216,8 +325,8 @@ public:
 	virtual void Rva008FFF40(void);
 
 private:
-	char *m_str14;
-	char *m_str18;
+	StringClass m_str14;
+	StringClass m_str18;
 	Rva00900FF0VecOfVec m_vec1c;
 	Rva00900FF0VecOfVec m_vec28;
 	Rva00900FF0VecOfVec m_vec34;
@@ -230,94 +339,53 @@ private:
 	RenderObjClass *m_render70;
 };
 
+
 void Rva00900FF0::Rva008FFF40(void)
 {
-	m_render70 = Create_Render_Obj(m_str18);
-	if (m_render70 == 0)
-		return;
-	RenderObjClass *object = m_render70;
-
-	int value = slot00();
-	object->slot07(value);
-	union
-	{
-		float real;
-		unsigned int bits;
-	} magnitude;
-	magnitude.real = m_field64 - *(const float *)0x01075334;
-	magnitude.bits &= 0x7fffffff;
-	bool close = true;
-	if (magnitude.real > *(const float *)0x01076c24)
-		close = false;
-	bool hasFlags = (m_field68 & 0x00ffffff) != 0;
-	bool hasBoth = m_vec1c.m_start != m_vec1c.m_finish &&
-		m_vec28.m_start != m_vec28.m_finish;
-	if (close)
-		object->slot91(m_field64);
-	if (!close && !hasFlags && !hasBoth &&
-		m_vec40.m_start == m_vec40.m_finish)
-		return;
-
-	if (m_vec28.m_start != m_vec28.m_finish &&
-		m_vec1c.m_start == m_vec1c.m_finish)
-	{
-		Rva008FEB90(object);
-		if (m_vec34.m_start != m_vec34.m_finish)
-		{
-			Rva00900FF0VecOfVec first(m_vec34);
-			Rva00900FF0VecOfVec second(m_vec28);
-			first.process(&second, object, m_field6c);
-		}
-		else
-		{
-			Rva00900FF0InnerVector *last = m_vec28.m_finish - 1;
-			Rva008FF060(last->m_start, m_field6c);
-			if (object->Get_Num_Sub_Objects() > 0)
-			{
-				for (int index = 0;
-					index < object->Get_Num_Sub_Objects(); ++index)
-				{
-					RenderObjClass *sub = object->Get_Sub_Object(index);
-					if (sub != 0)
-					{
-						Rva008FF060(last->m_start, m_field6c);
-						if (--*(int *)((char *)sub + 4) == 0)
-							sub->slot00();
-					}
-				}
-			}
-		}
-	}
-
-	else
-	{
-		if (m_vec40.m_start != m_vec40.m_finish)
-		{
-			Rva008FEB90(object);
-			int count = (int)(m_vec40.m_finish - m_vec40.m_start);
-			for (int index = 0; index < count; ++index)
-			{
-				Rva008FF6A0(object, m_vec40.m_start + index,
-					m_vec4c.m_start + index, m_vector58.m_start[index]);
-			}
-		}
-
-		if (hasBoth)
-		{
-			Rva008FEB90(object);
-			Rva00900FF0InnerVector *last1 = m_vec28.m_finish - 1;
-			Rva00900FF0InnerVector *last2 = m_vec1c.m_finish - 1;
-			BFMEWaterTrackTextureHandle first = BFMEGetWaterTrackTexture(
-				last1->m_start, 0, 0);
-			BFMEWaterTrackTextureHandle second = BFMEGetWaterTrackTexture(
-				last2->m_start, 0, 2);
-			object->replaceTexture(first, second);
-		}
-	}
-
-	if (hasFlags)
-	{
-		Rva008FEB90(object);
-		object->slot126(m_field68);
-	}
+    m_render70=Create_Render_Obj(m_str18);
+    if(!m_render70) return;
+    m_render70->slot07(slot00());
+    float delta=m_field64-1.0f;
+    *(unsigned *)&delta &= 0x7fffffff;
+    bool close=delta>0.01f;
+    bool hasFlags=(m_field68&0xffffff)!=0;
+    bool hasBoth=!m_vec1c.empty()&&!m_vec28.empty();
+    bool hasPerMesh=!m_vec40.empty();
+    if(!close&&!hasFlags&&!hasBoth&&!hasPerMesh) return;
+    if(close) m_render70->slot91(m_field64);
+    if(!m_vec28.empty()&&m_vec1c.empty()) {
+        Rva008FEB90(m_render70);
+        if(!m_vec34.empty()) {
+            Rva00900FF0VecOfVec first(m_vec34);
+            Rva00900FF0VecOfVec second(m_vec28);
+            while(!first.empty()) {
+                Rva008FF0F0Method(m_render70,&first,&second,m_field6c);
+                second.pop_back();
+                first.pop_back();
+            }
+        } else {
+            char *name=(char *)(m_vec28.m_finish-1)->c_str();
+            Rva008FF060Method(m_render70,name,m_field6c);
+            for(int i=0;i<m_render70->Get_Num_Sub_Objects();++i) {
+                RenderObjClass *sub=m_render70->Get_Sub_Object(i);
+                if(sub) {
+                    Rva008FF060Method(sub,name,m_field6c);
+                    if(--sub->m_ref_count==0) sub->slot00();
+                }
+            }
+        }
+    } else if(!m_vec40.empty()) {
+        Rva008FEB90(m_render70);
+        for(unsigned i=0;i<m_vec40.size();++i)
+            Rva008FF6A0(m_render70,m_vec40.m_start+i,m_vec4c.m_start+i,m_vector58.m_start[i]);
+    } else if(hasBoth) {
+        Rva008FEB90(m_render70);
+        char *textureName=(char *)(m_vec28.m_finish-1)->c_str();
+        char *oldTextureName=(char *)(m_vec1c.m_finish-1)->c_str();
+        m_render70->replaceTexture(BFMEGetWaterTrackTexture(oldTextureName,0,0),BFMEGetWaterTrackTexture(textureName,0,0));
+    }
+    if(hasFlags) {
+        Rva008FEB90(m_render70);
+        m_render70->slot126(m_field68);
+    }
 }
