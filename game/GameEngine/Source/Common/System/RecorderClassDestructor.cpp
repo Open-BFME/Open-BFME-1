@@ -10,26 +10,7 @@
 
 extern "C" __declspec(dllimport) void __cdecl fclose(void *p) throw();
 
-template <typename T>
-class StringBase
-{
-public:
-    ~StringBase()
-    {
-        releaseBuffer();
-    }
-
-    void *m_data;
-
-private:
-    void releaseBuffer();
-};
-
-class BFMERetailAsciiString : private StringBase<char>
-{
-public:
-    ~BFMERetailAsciiString() {}
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // Out-of-line: retail already landed this body at 0x00099000 as
 // BfmeOwnerBU::~BfmeOwnerBU (BfmeOwnerDtorBU.cpp); declare only, so the call
@@ -54,10 +35,10 @@ public:
 private:
     char m_unreconstructed04[0x0C - 0x04];
     void *m_bfmeFile;					// +0x0C
-    BFMERetailAsciiString m_bfmeFileName;		// +0x10
+    AsciiString m_bfmeFileName;		// +0x10
     int m_bfmeCurrentFilePosition;			// +0x14
     int m_bfmeMode;					// +0x18
-    BFMERetailAsciiString m_bfmeCurrentReplayFilename;	// +0x1C
+    AsciiString m_bfmeCurrentReplayFilename;	// +0x1C
     BfmeOwnerBU m_bfmeGameInfo;				// +0x20
 };
 
