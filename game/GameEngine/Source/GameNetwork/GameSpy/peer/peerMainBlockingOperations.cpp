@@ -195,7 +195,6 @@ void piPingThink(PEER peer);
 void piSBThink(PEER peer);
 void piQRThink(PEER peer);
 __declspec(noinline) void piDisconnect(PEER peer);
-void bfmePiDisconnect(PEER peer);
 void chatDisconnect(void *chat);
 void piClearOperations(PEER peer);
 void piCallbacksThink(PEER peer, int opID);
@@ -425,20 +424,6 @@ static void piDisconnectCleanup(PEER peer)
 	connection->disconnect = 0;
 }
 
-__declspec(noinline) void piDisconnect(PEER peer)
-{
-	piConnection *connection = (piConnection *)peer;
-
-	if (connection->callbackDepth > 0)
-	{
-		connection->disconnect = 1;
-		return;
-	}
-	connection->stayInTitleRoom = 0;
-	piDisconnectCleanup(peer);
-	piThink(peer, -1);
-}
-
 void peerShutdown(PEER peer)
 {
 	piConnection *connection = (piConnection *)peer;
@@ -501,7 +486,7 @@ static void piThink(PEER peer, int opID)
 	piSBThink(peer);
 	piQRThink(peer);
 	if (connection->disconnect && connection->callbackDepth == 0)
-		bfmePiDisconnect(peer);
+		piDisconnect(peer);
 	piCallbacksThink(peer, opID);
 }
 
@@ -1904,5 +1889,23 @@ void Rva00858B70JoinStagingRoom(PEER peer,void* server,const char* password,void
 { Rva00858960Join(peer,server,0,password,callback,param,blocking); }
 void Rva00858BA0JoinChannel(PEER peer,const char* channel,const char* password,void* callback,void* param,int blocking)
 { Rva00858960Join(peer,0,channel,password,callback,param,blocking); }
+
+/* Compiled last on purpose. piThink calls this body directly (retail
+ * 0x00858410); defined above piThink, VC7.1 sees the piThink <-> piDisconnect
+ * call cycle and demotes piThink's private ESI peer convention, breaking all
+ * 21 callers. After every piThink caller it keeps retail's conventions. */
+__declspec(noinline) void piDisconnect(PEER peer)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (connection->callbackDepth > 0)
+	{
+		connection->disconnect = 1;
+		return;
+	}
+	connection->stayInTitleRoom = 0;
+	piDisconnectCleanup(peer);
+	piThink(peer, -1);
+}
 
 } // extern "C"

@@ -88674,7 +88674,6 @@ _bfmeOffEAB,0x00D05E70,pin
 _bfmeOnEAA,0x00D09920,pin
 _bfmeOnEAB,0x00D05E6C,pin
 _bfmePathVftIC,0x010C7E28,pin path vftable for BfmeConv2075
-_bfmePiDisconnect,0x00858410,GameSpy Peer TU shim preserving retail piThink call while piDisconnect is reconstructed in the same file
 _bfmePiDisconnectCleanupFromEsi,0x008572E0,GameSpy Peer static disconnect cleanup with peer carried in ESI
 _bfmePiThinkFromEsi,0x00857370,GameSpy Peer static think helper with peer carried in ESI
 _bfmeQuery1239,0x00892370,pin
