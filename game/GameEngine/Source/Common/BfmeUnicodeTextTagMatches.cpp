@@ -15,5 +15,6 @@ private:
 
 bool BfmeUnicodeTextTag::matches(const BfmeUnicodeTextTag *other) const
 {
-	return m_text.compare(other->m_text) == 0 && m_tag == other->m_tag;
+	return reinterpret_cast<const StringBase<unsigned short> &>(m_text).compare(
+        reinterpret_cast<const StringBase<unsigned short> &>(other->m_text)) == 0 && m_tag == other->m_tag;
 }
