@@ -33,12 +33,10 @@
 // the merged class carries the vtable slice AND the field, which is what says
 // m_ai is at +0x204 rather than at "0x204 bytes in from wherever this starts".
 //
-// One callee is deliberately spelled two ways. doCommandButton takes its command
-// source as a plain int because `?doCommandButton@Object@@QAEXPBVCommandButton@@
-// HH@Z` is the decorated name the ledger pins on ILT 0x000063CF, while its
-// AtPosition and AtObject siblings take W4CommandSourceType@@. Both spellings are
-// pinned; neither can be respelled to match the other without repointing the
-// call.
+// Three handoffs use the ledger-owned ILT identities. Their measured thiscall
+// contracts consume three, four and four stack slots respectively; the upgrade
+// predicate returns its bool in AL. The TU-local member views preserve those
+// contracts without publishing the pin-only stand-in names.
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
@@ -119,8 +117,6 @@ public:
 	virtual void unusedSlot09();
 	virtual Drawable *getDrawable(void) const;		// vtable +0x28
 
-	void doCommandButton(const CommandButton *commandButton, Int commandSource, Int bfmeArg);	// ILT 0x000063CF
-	void doCommandButtonAtPosition(const CommandButton *commandButton, const Coord3D *position, CommandSourceType commandSource, Bool bfmeFlag);	// ILT 0x00026EF4
 	void doCommandButtonAtObject(const CommandButton *commandButton, Object *targetObject, CommandSourceType commandSource, Bool bfmeFlag);	// ILT 0x00033AA0
 	SpecialPowerUpdateInterface *findSpecialPowerWithOverridableDestinationActive(SpecialPowerType spType) const;	// ILT 0x00039766
 	Player *getControllingPlayer(void) const;					// ILT 0x00020824
@@ -161,11 +157,11 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
-class UpgradeCenter
-{
-public:
-	Bool canAffordUpgrade(Player *player, const UpgradeTemplate *upgrade, Bool bfmeFlag, Bool forceCheck) const;	// ILT 0x0001CEA9
-};
+class UpgradeCenter {};
+
+extern "C" void __cdecl __identifier("?j_000063cf@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00026ef4@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0001cea9@@YAXXZ")();
 
 extern BuildAssistant *TheBuildAssistant;
 extern UpgradeCenter *TheUpgradeCenter;
@@ -226,7 +222,11 @@ void AIGroup::groupDoCommandButton( const CommandButton *commandButton, CommandS
 		// get object
 		source = *i;
 
-		source->doCommandButton( commandButton, commandSource, 0 );
+		union {
+			void (*raw)();
+			void (Object::*member)(const CommandButton *, Int, Int);
+		} handoff = { __identifier("?j_000063cf@@YAXXZ") };
+		(source->*handoff.member)( commandButton, commandSource, 0 );
 	}  // end for, i
 }
 
@@ -245,7 +245,11 @@ void AIGroup::groupDoCommandButtonAtPosition( const CommandButton *commandButton
 		// get object
 		source = *i;
 
-		source->doCommandButtonAtPosition( commandButton, position, commandSource, false );
+		union {
+			void (*raw)();
+			void (Object::*member)(const CommandButton *, const Coord3D *, CommandSourceType, Bool);
+		} handoff = { __identifier("?j_00026ef4@@YAXXZ") };
+		(source->*handoff.member)( commandButton, position, commandSource, false );
 	}  // end for, i
 }
 
@@ -291,7 +295,11 @@ void AIGroup::queueUpgrade( const UpgradeTemplate *upgrade, Bool bfmeFlag )
 	for( memberIterator = m_memberList.begin(); memberIterator != m_memberList.end(); ++memberIterator )
 	{
 		Object *thisMember = (*memberIterator);
-		if( ! TheUpgradeCenter->canAffordUpgrade( thisMember->getControllingPlayer(), upgrade, bfmeFlag, false ) )
+		union {
+			void (*raw)();
+			Bool (UpgradeCenter::*member)(Player *, const UpgradeTemplate *, Bool, Bool) const;
+		} handoff = { __identifier("?j_0001cea9@@YAXXZ") };
+		if( ! (TheUpgradeCenter->*handoff.member)( thisMember->getControllingPlayer(), upgrade, bfmeFlag, false ) )
 		{
 			continue;
 		}
