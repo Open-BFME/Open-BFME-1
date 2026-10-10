@@ -8,64 +8,10 @@ typedef bool Bool;
 
 enum NameKeyType {};
 
-template <typename T> class StringBase;
-class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase() : m_data(0) {}
-
-	struct Header
-	{
-		int ref_count;
-		unsigned short length;
-		unsigned short capacity;
-		T data[1];
-	};
-
-	Header *m_data;
-
-public:
-	void set(const T *text, int length);
-	void concat(const T *text, int length);
-
-private:
-	void releaseBuffer();
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-
-	~AsciiString()
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
-
-	void clear()
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
-
-	void set(const char *text)
-	{
-		((StringBase<char> *)this)->set(text, text ? (int)strlen(text) : 0);
-	}
-
-	void concat(const char *text)
-	{
-		((StringBase<char> *)this)->concat(text, text ? (int)strlen(text) : 0);
-	}
-
-	const char *str() const
-	{
-		return m_data ? (const char *)m_data + 8 : "";
-	}
-};
+template<> inline void StringBase<char>::set(const char *str) { set(str, str ? strlen(str) : 0); }
+template<> inline void StringBase<char>::concat(const char *str) { concat(str, str ? strlen(str) : 0); }
 
 class Dict
 {
@@ -117,11 +63,11 @@ void Handicap::readFromDict(const Dict *d)
 	{
 		for (int j = 0; j < 2; ++j)
 		{
-			c.clear();
-			c.set("HANDICAP_");
-			c.concat(htNames[i]);
-			c.concat("_");
-			c.concat(ttNames[j]);
+			c.StringBase<char>::clear();
+			c.StringBase<char>::set("HANDICAP_");
+			c.StringBase<char>::concat(htNames[i]);
+			c.StringBase<char>::concat("_");
+			c.StringBase<char>::concat(ttNames[j]);
 			NameKeyType k = TheNameKeyGenerator->nameToKey(c.str());
 			Bool exists;
 			Real r = d->getReal(k, &exists);
