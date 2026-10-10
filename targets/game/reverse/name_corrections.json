@@ -19298,5 +19298,15 @@
   "after_sha256": "fbeb0b828feaeace176b1df96ab073c8aa47d7f8bbb04c26e80850812ad1be04",
   "evidence": "targets/game/reverse/identity_evidence/forwarder-pass-2026-10-09.md",
   "reason": "Owner forwarder pass (group 2, placeholder to placeholder): b_002618d0 was a #define forwarder onto ledger row rva002618D0ForEach; neither spelling claims an identity, so the call spells the ledger name and the forwarder is deleted (the bfmeMake_* copies in the three S3 TUs, which carried different casts, are gone with it); bytes unchanged."
- }
+ },
+{
+  "old_path": "game/GameEngine/Source/Common/RTS/ProductionPrerequisiteShims.cpp",
+  "new_path": "game/GameEngine/Source/Common/RTS/ProductionPrerequisiteShims.cpp",
+  "old_name": "ProductionPrerequisiteRetailCopy",
+  "new_name": "Rva00783D50PodCopy",
+  "before_sha256": "75486e403e3614ed1109bdd62e8977cef38411eb545efc836947e1e550fe8915",
+  "after_sha256": "d65aadbd2d47e6d15f19a434938a51d7112e6f140c0eb823e8bbf39369524ad2",
+  "evidence": "targets/game/reverse/identity_evidence/2026-10-10-prerequisite-copy-binding.md",
+  "reason": "Bind the adapter call to the verified address-qualified provider; the callee has no proven prerequisite identity."
+}
 ]

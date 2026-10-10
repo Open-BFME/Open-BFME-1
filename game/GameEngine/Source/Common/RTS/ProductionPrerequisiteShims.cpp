@@ -33,10 +33,10 @@ public:
     ProductionPrerequisite(const ProductionPrerequisite &);
 };
 
-class ProductionPrerequisiteRetailCopy
+class Rva00783D50PodCopy
 {
 public:
-    ProductionPrerequisiteRetailCopy(const ProductionPrerequisiteRetailCopy &);
+    Rva00783D50PodCopy(const Rva00783D50PodCopy &);
 };
 
 namespace _STL
@@ -58,8 +58,8 @@ public:
 void ProductionPrerequisiteConstructShim::construct(ProductionPrerequisite *p, const ProductionPrerequisite &v)
 {
     if (p)
-        new (p) ProductionPrerequisiteRetailCopy(
-            *(const ProductionPrerequisiteRetailCopy *)&v);
+        new (p) Rva00783D50PodCopy(
+            *(const Rva00783D50PodCopy *)&v);
 }
 
 namespace
