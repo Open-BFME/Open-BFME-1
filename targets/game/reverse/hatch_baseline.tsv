@@ -507,6 +507,8 @@ address_global	game/GameEngine/Source/Common/Rva00627A50Clear.cpp	g_Va012F70A4	3
 address_global	game/GameEngine/Source/Common/Rva00755C80GuardedQuery.cpp	g_Va01304B5C	2
 address_global	game/GameEngine/Source/Common/Rva00770E70Ctor.cpp	g_Rva0107301CEmptyString	2
 address_global	game/GameEngine/Source/Common/Rva00789900Init.cpp	g_Rva00789900Table	2
+address_global	game/GameEngine/Source/Common/Rva007AAFA0AdvanceNodes.cpp	g_Va01306D9C	4	allow=04370f88ef9bff8a7e47aa4957fdee98eac85c5f
+address_global	game/GameEngine/Source/Common/Rva007AAFA0AdvanceNodes.cpp	g_Va01306DA0	3	allow=04370f88ef9bff8a7e47aa4957fdee98eac85c5f
 address_global	game/GameEngine/Source/Common/Rva007D74B0ConditionalGlobals.cpp	g_Rva012F9D04	2
 address_global	game/GameEngine/Source/Common/Rva007D74B0ConditionalGlobals.cpp	g_Rva012F9D0C	2
 address_global	game/GameEngine/Source/Common/Rva007E9A50Lookups.cpp	g_Rva012C37F8	2

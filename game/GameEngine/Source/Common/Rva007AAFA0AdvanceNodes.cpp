@@ -4,8 +4,8 @@
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 // Zero .bss pair read only here: the once-flag (bit 0) at 0x01306DA0 and the
 // last timeGetTime() sample at 0x01306D9C.
-unsigned int g_rva007AAFA0Flags;
-unsigned int g_rva007AAFA0Time;
+unsigned int g_Va01306DA0;
+unsigned int g_Va01306D9C;
 
 struct Rva007AAFA0Node
 {
@@ -33,16 +33,16 @@ void Rva007AAFA0Owner::advanceAndMoveNodes()
 {
 	unsigned long (__stdcall *clock)() = timeGetTime;
 	unsigned int one = 1;
-	unsigned char flags = *(unsigned char *)&g_rva007AAFA0Flags;
+	unsigned char flags = *(unsigned char *)&g_Va01306DA0;
 	if ( (flags & one) == 0 )
 	{
-		g_rva007AAFA0Flags |= one;
-		g_rva007AAFA0Time = clock();
+		g_Va01306DA0 |= one;
+		g_Va01306D9C = clock();
 	}
 
 	Rva007AAFA0Node *node = m_active;
-	unsigned int elapsed = clock() - g_rva007AAFA0Time;
-	g_rva007AAFA0Time += elapsed;
+	unsigned int elapsed = clock() - g_Va01306D9C;
+	g_Va01306D9C += elapsed;
 
 	while ( node != 0 )
 	{
