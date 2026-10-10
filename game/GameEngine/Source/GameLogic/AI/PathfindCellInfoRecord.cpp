@@ -78,9 +78,6 @@ public:
 	Bool startPathfind(PathfindCell *goalCell);
 	UnsignedInt costToHierGoal(PathfindCell *goal);
 
-	UnsignedShort getXIndex(void) const { return m_info->m_pos.x; }
-	UnsignedShort getYIndex(void) const { return m_info->m_pos.y; }
-
 private:
 	PathfindCellInfo *m_info;
 };
@@ -110,8 +107,9 @@ Bool PathfindCell::startPathfind(PathfindCell *)
 // ?costToHierGoal@PathfindCell@@QAEIPAV1@@Z
 UnsignedInt PathfindCell::costToHierGoal(PathfindCell *goal)
 {
-	Int cellDeltaX = m_info->m_pos.x - goal->getXIndex();
-	Int cellDeltaY = m_info->m_pos.y - goal->getYIndex();
+	// Retail reads the goal's info record directly and narrows both indices.
+	Int cellDeltaX = m_info->m_pos.x - (UnsignedShort)goal->m_info->m_pos.x;
+	Int cellDeltaY = m_info->m_pos.y - (UnsignedShort)goal->m_info->m_pos.y;
 	Int heuristicCost = REAL_TO_INT_FLOOR(
 		10.0f * (Real)sqrt(cellDeltaX * cellDeltaX + cellDeltaY * cellDeltaY) + 0.5f);
 	return heuristicCost;
