@@ -148,42 +148,42 @@ protected:
 void W3DTruckDraw::updateBones()
 {
     if (getW3DTruckDrawModuleData()) {
-        if (!getW3DTruckDrawModuleData()->m_frontLeftTireBoneName.isEmpty()) {
+        if (!getW3DTruckDrawModuleData()->m_frontLeftTireBoneName.StringBase<char>::isEmpty()) {
             m_frontLeftTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_frontLeftTireBoneName.str());
             TRUCK_ASSERT(m_frontLeftTireBone, ("Missing front-left tire bone %s in model %s\n", getW3DTruckDrawModuleData()->m_frontLeftTireBoneName.str(), getRenderObject()));
             m_frontRightTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_frontRightTireBoneName.str());
             TRUCK_ASSERT(m_frontRightTireBone, ("Missing front-right tire bone %s in model %s\n", getW3DTruckDrawModuleData()->m_frontRightTireBoneName.str(), getRenderObject()));
             if (!m_frontRightTireBone) m_frontLeftTireBone = 0;
         }
-        if (!getW3DTruckDrawModuleData()->m_rearLeftTireBoneName.isEmpty()) {
+        if (!getW3DTruckDrawModuleData()->m_rearLeftTireBoneName.StringBase<char>::isEmpty()) {
             m_rearLeftTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_rearLeftTireBoneName.str());
             TRUCK_ASSERT(m_rearLeftTireBone, ("Missing rear-left tire bone %s in model %s\n", getW3DTruckDrawModuleData()->m_rearLeftTireBoneName.str(), getRenderObject()));
             m_rearRightTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_rearRightTireBoneName.str());
             TRUCK_ASSERT(m_rearRightTireBone, ("Missing rear-left tire bone %s in model %s\n", getW3DTruckDrawModuleData()->m_rearRightTireBoneName.str(), getRenderObject()));
             if (!m_rearRightTireBone) m_rearLeftTireBone = 0;
         }
-        if (!getW3DTruckDrawModuleData()->m_midFrontLeftTireBoneName.isEmpty()) {
+        if (!getW3DTruckDrawModuleData()->m_midFrontLeftTireBoneName.StringBase<char>::isEmpty()) {
             m_midFrontLeftTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_midFrontLeftTireBoneName.str());
             TRUCK_ASSERT(m_midFrontLeftTireBone, ("Missing mid-front-left tire bone %s in model %s\n", getW3DTruckDrawModuleData()->m_midFrontLeftTireBoneName.str(), getRenderObject()));
             m_midFrontRightTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_midFrontRightTireBoneName.str());
             TRUCK_ASSERT(m_midFrontRightTireBone, ("Missing mid-front-right tire bone %s in model %s\n", getW3DTruckDrawModuleData()->m_midFrontRightTireBoneName.str(), getRenderObject()));
             if (!m_midFrontRightTireBone) m_midFrontLeftTireBone = 0;
         }
-        if (!getW3DTruckDrawModuleData()->m_midRearLeftTireBoneName.isEmpty()) {
+        if (!getW3DTruckDrawModuleData()->m_midRearLeftTireBoneName.StringBase<char>::isEmpty()) {
             m_midRearLeftTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_midRearLeftTireBoneName.str());
             TRUCK_ASSERT(m_midRearLeftTireBone, ("Missing mid-rear-left tire bone %s in model %s\n", getW3DTruckDrawModuleData()->m_midRearLeftTireBoneName.str(), getRenderObject()));
             m_midRearRightTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_midRearRightTireBoneName.str());
             TRUCK_ASSERT(m_midRearRightTireBone, ("Missing mid-rear-right tire bone %s in model %s\n", getW3DTruckDrawModuleData()->m_midRearRightTireBoneName.str(), getRenderObject()));
             if (!m_midRearRightTireBone) m_midRearLeftTireBone = 0;
         }
-        if (!getW3DTruckDrawModuleData()->m_midMidLeftTireBoneName.isEmpty()) {
+        if (!getW3DTruckDrawModuleData()->m_midMidLeftTireBoneName.StringBase<char>::isEmpty()) {
             m_midMidLeftTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_midMidLeftTireBoneName.str());
             TRUCK_ASSERT(m_midMidLeftTireBone, ("Missing mid-mid-left tire bone %s in model %s\n", getW3DTruckDrawModuleData()->m_midMidLeftTireBoneName.str(), getRenderObject()));
             m_midMidRightTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_midMidRightTireBoneName.str());
             TRUCK_ASSERT(m_midMidRightTireBone, ("Missing mid-mid-right tire bone %s in model %s\n", getW3DTruckDrawModuleData()->m_midMidRightTireBoneName.str(), getRenderObject()));
             if (!m_midMidRightTireBone) m_midMidLeftTireBone = 0;
         }
-        if (!getW3DTruckDrawModuleData()->field190.isEmpty()) {
+        if (!getW3DTruckDrawModuleData()->field190.StringBase<char>::isEmpty()) {
             m_secondaryFrontLeftTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->field190.str());
             TRUCK_ASSERT(!m_secondaryFrontLeftTireBone, ("Missing secondary front-left tire bone %s in model %s\n", getW3DTruckDrawModuleData()->field190.str(), getRenderObject()));
             m_secondaryFrontRightTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->field194.str());
@@ -192,7 +192,7 @@ void W3DTruckDraw::updateBones()
             if (m_secondaryFrontLeftTireBone && !m_frontLeftTireBone) m_secondaryFrontLeftTireBone = 0;
             if (m_secondaryFrontRightTireBone && !m_frontRightTireBone) m_secondaryFrontRightTireBone = 0;
         }
-        if (!getW3DTruckDrawModuleData()->field198.isEmpty()) {
+        if (!getW3DTruckDrawModuleData()->field198.StringBase<char>::isEmpty()) {
             m_secondaryRearLeftTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->field198.str());
             TRUCK_ASSERT(!m_secondaryRearLeftTireBone, ("Missing secondary rear-left tire bone %s in model %s\n", getW3DTruckDrawModuleData()->field198.str(), getRenderObject()));
             m_secondaryRearRightTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->field19c.str());
@@ -201,7 +201,7 @@ void W3DTruckDraw::updateBones()
             if (m_secondaryRearLeftTireBone && !m_rearLeftTireBone) m_secondaryRearLeftTireBone = 0;
             if (m_secondaryRearRightTireBone && !m_rearRightTireBone) m_secondaryRearRightTireBone = 0;
         }
-        if (!getW3DTruckDrawModuleData()->field1a0.isEmpty()) {
+        if (!getW3DTruckDrawModuleData()->field1a0.StringBase<char>::isEmpty()) {
             m_secondaryMidMidLeftTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->field1a0.str());
             TRUCK_ASSERT(!m_secondaryMidMidLeftTireBone, ("Missing secondary mid-mid-left tire bone %s in model %s\n", getW3DTruckDrawModuleData()->field1a0.str(), getRenderObject()));
             m_secondaryMidMidRightTireBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->field1a4.str());
@@ -210,7 +210,7 @@ void W3DTruckDraw::updateBones()
             if (m_secondaryMidMidLeftTireBone && !m_midMidLeftTireBone) m_secondaryMidMidLeftTireBone = 0;
             if (m_secondaryMidMidRightTireBone && !m_midMidRightTireBone) m_secondaryMidMidRightTireBone = 0;
         }
-        if (!getW3DTruckDrawModuleData()->m_cabBoneName.isEmpty()) {
+        if (!getW3DTruckDrawModuleData()->m_cabBoneName.StringBase<char>::isEmpty()) {
             m_cabBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_cabBoneName.str());
             TRUCK_ASSERT(!m_cabBone, ("Missing cab bone %s in model %s\n", getW3DTruckDrawModuleData()->m_cabBoneName.str(), getRenderObject()));
             m_trailerBone = getRenderObject()->Get_Bone_Index(getW3DTruckDrawModuleData()->m_trailerBoneName.str());
