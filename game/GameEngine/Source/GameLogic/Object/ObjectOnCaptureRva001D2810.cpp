@@ -27,17 +27,16 @@ public:
 class Player
 {
 public:
-	ScoreKeeper *getScoreKeeper()
-	{
-		return &m_scoreKeeper;
-	}
-
 	Bool isLocalPlayer() const;
-
-private:
-	unsigned char m_unmodelled000[0x348];
-	ScoreKeeper m_scoreKeeper;
 };
+
+// The reference Player header has a different layout.  Retail onCapture's
+// LEA at +0x27 addresses the embedded ScoreKeeper at +0x348; keep that access
+// local instead of exporting a Player accessor for this partial layout.
+static __forceinline ScoreKeeper *getScoreKeeper(Player *player)
+{
+	return reinterpret_cast<ScoreKeeper *>(reinterpret_cast<char *>(player) + 0x348);
+}
 
 #include "../command_source_type.h"
 
@@ -141,7 +140,7 @@ void Object::onCapture(Player *oldOwner, Player *newOwner)
 	if (fields->m_ai != 0 && oldOwner != newOwner)
 		fields->m_ai->m_commandInterface.aiIdle(CMD_FROM_AI);
 
-	newOwner->getScoreKeeper()->addObjectCaptured(this);
+	getScoreKeeper(newOwner)->addObjectCaptured(this);
 
 	for (BehaviorModule **module = fields->m_behaviors; *module; ++module)
 		(*module)->onCapture(oldOwner, newOwner);
