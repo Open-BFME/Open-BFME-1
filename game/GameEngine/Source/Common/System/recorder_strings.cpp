@@ -219,7 +219,7 @@ void RecorderClass::stopRecording()
         fclose(m_file);
         m_file = 0;
     }
-    m_fileName.clear();
+    m_fileName.StringBase<char>::clear();
 }
 
 void RecorderClass::stopPlayback()
@@ -228,7 +228,7 @@ void RecorderClass::stopPlayback()
         fclose(m_file);
         m_file = 0;
     }
-    m_fileName.clear();
+    m_fileName.StringBase<char>::clear();
     if (!m_doingAnalysis) {
         TheMessageStream->appendMessage(GameMessage::MSG_CLEAR_GAME_DATA);
     }
@@ -274,7 +274,7 @@ void RecorderClass::readNextFrame()
             fclose(m_file);
             m_file = 0;
         }
-        m_fileName.clear();
+        m_fileName.StringBase<char>::clear();
         if (!m_doingAnalysis) {
             TheMessageStream->appendMessage(0x1d);
         }
