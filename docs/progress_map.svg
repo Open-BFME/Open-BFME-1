@@ -13,271 +13,269 @@
   <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif">
     <text x="28" y="29" class="muted" font-size="13" font-weight="600" letter-spacing="1.3">BFME 1 · MAP</text>
     <rect x="150" y="20" width="10" height="10" rx="2" fill="url(#dots)"/><text x="166" y="29" class="muted" font-size="12.5">linked</text><rect x="222" y="20" width="10" height="10" rx="2" fill="#2ea043"/><text x="238" y="29" class="muted" font-size="12.5">byte-matched: our own source</text><rect x="420" y="20" width="10" height="10" rx="2" fill="#196c2e"/><text x="436" y="29" class="muted" font-size="12.5">generated code, Microsoft libraries</text><rect x="660" y="20" width="10" height="10" rx="2" fill="#6e7681"/><text x="676" y="29" class="muted" font-size="12.5">still original</text>
-    <g><title>dumps
-1,140,965 bytes
-byte-matched 0.0% (own source 0.0%)
-linked (last census) 0.0%</title><clipPath id="t0"><rect x="28.0" y="44.0" width="193.0" height="127.9"/></clipPath><g clip-path="url(#t0)"><rect class="rest" x="28.0" y="44.0" width="193.0" height="127.9"/>
-<text x="32.0" y="58.5" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Dumps</text>
-</g><rect class="edge" x="28.0" y="44.0" width="193.0" height="127.9" fill="none"/></g>
     <g><title>game/GameEngine/Source/Common
-1,130,931 bytes
+1,141,124 bytes
 byte-matched 99.3% (own source 95.0%)
-linked (last census) 46.2%</title><clipPath id="t1"><rect x="28.0" y="171.9" width="193.0" height="126.8"/></clipPath><g clip-path="url(#t1)"><rect class="rest" x="28.0" y="171.9" width="193.0" height="126.8"/>
-<rect x="28.0" y="171.9" width="191.6" height="126.8" fill="#196c2e"/>
-<rect x="28.0" y="171.9" width="183.3" height="126.8" fill="#2ea043"/>
-<rect x="28.0" y="171.9" width="89.1" height="126.8" fill="url(#dots)"/>
-<text x="32.0" y="186.5" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Common</text>
-</g><rect class="edge" x="28.0" y="171.9" width="193.0" height="126.8" fill="none"/></g>
+linked (last census) 45.8%</title><clipPath id="t0"><rect x="28.0" y="44.0" width="190.7" height="129.5"/></clipPath><g clip-path="url(#t0)"><rect class="rest" x="28.0" y="44.0" width="190.7" height="129.5"/>
+<rect x="28.0" y="44.0" width="189.3" height="129.5" fill="#196c2e"/>
+<rect x="28.0" y="44.0" width="181.2" height="129.5" fill="#2ea043"/>
+<rect x="28.0" y="44.0" width="87.3" height="129.5" fill="url(#dots)"/>
+<text x="32.0" y="58.5" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Common</text>
+</g><rect class="edge" x="28.0" y="44.0" width="190.7" height="129.5" fill="none"/></g>
+    <g><title>dumps
+1,104,014 bytes
+byte-matched 0.0% (own source 0.0%)
+linked (last census) 0.0%</title><clipPath id="t1"><rect x="28.0" y="173.5" width="190.7" height="125.2"/></clipPath><g clip-path="url(#t1)"><rect class="rest" x="28.0" y="173.5" width="190.7" height="125.2"/>
+<text x="32.0" y="188.0" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Dumps</text>
+</g><rect class="edge" x="28.0" y="173.5" width="190.7" height="125.2" fill="none"/></g>
     <g><title>game/gen_small
-951,149 bytes
+951,119 bytes
 byte-matched 98.4% (own source 0.0%)
-linked (last census) 0.0%</title><clipPath id="t2"><rect x="221.0" y="44.0" width="156.3" height="131.6"/></clipPath><g clip-path="url(#t2)"><rect class="rest" x="221.0" y="44.0" width="156.3" height="131.6"/>
-<rect x="221.0" y="44.0" width="153.8" height="131.6" fill="#196c2e"/>
-<text x="225.0" y="58.5" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Generated C++</text>
-</g><rect class="edge" x="221.0" y="44.0" width="156.3" height="131.6" fill="none"/></g>
+linked (last census) 0.0%</title><clipPath id="t2"><rect x="218.7" y="44.0" width="156.3" height="131.6"/></clipPath><g clip-path="url(#t2)"><rect class="rest" x="218.7" y="44.0" width="156.3" height="131.6"/>
+<rect x="218.7" y="44.0" width="153.8" height="131.6" fill="#196c2e"/>
+<text x="222.7" y="58.5" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Generated C++</text>
+</g><rect class="edge" x="218.7" y="44.0" width="156.3" height="131.6" fill="none"/></g>
     <g><title>inputs/vendor/d3dx9
 889,332 bytes
 byte-matched 100.0% (own source 0.0%)
-linked (last census) 0.0%</title><clipPath id="t3"><rect x="221.0" y="175.6" width="156.3" height="123.1"/></clipPath><g clip-path="url(#t3)"><rect class="rest" x="221.0" y="175.6" width="156.3" height="123.1"/>
-<rect x="221.0" y="175.6" width="156.3" height="123.1" fill="#196c2e"/>
-<text x="225.0" y="190.2" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">d3dx9 (Microsoft)</text>
-</g><rect class="edge" x="221.0" y="175.6" width="156.3" height="123.1" fill="none"/></g>
+linked (last census) 0.0%</title><clipPath id="t3"><rect x="218.7" y="175.6" width="156.3" height="123.1"/></clipPath><g clip-path="url(#t3)"><rect class="rest" x="218.7" y="175.6" width="156.3" height="123.1"/>
+<rect x="218.7" y="175.6" width="156.3" height="123.1" fill="#196c2e"/>
+<text x="222.7" y="190.2" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">d3dx9 (Microsoft)</text>
+</g><rect class="edge" x="218.7" y="175.6" width="156.3" height="123.1" fill="none"/></g>
     <g><title>game/GameEngine/Source/GameClient/GUI
-647,272 bytes
-byte-matched 98.2% (own source 95.9%)
-linked (last census) 13.6%</title><clipPath id="t4"><rect x="377.3" y="44.0" width="108.0" height="129.6"/></clipPath><g clip-path="url(#t4)"><rect class="rest" x="377.3" y="44.0" width="108.0" height="129.6"/>
-<rect x="377.3" y="44.0" width="106.1" height="129.6" fill="#196c2e"/>
-<rect x="377.3" y="44.0" width="103.6" height="129.6" fill="#2ea043"/>
-<rect x="377.3" y="44.0" width="14.7" height="129.6" fill="url(#dots)"/>
-<text x="381.3" y="58.5" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">GUI</text>
-</g><rect class="edge" x="377.3" y="44.0" width="108.0" height="129.6" fill="none"/></g>
+648,249 bytes
+byte-matched 98.3% (own source 95.9%)
+linked (last census) 13.5%</title><clipPath id="t4"><rect x="375.0" y="44.0" width="108.3" height="129.4"/></clipPath><g clip-path="url(#t4)"><rect class="rest" x="375.0" y="44.0" width="108.3" height="129.4"/>
+<rect x="375.0" y="44.0" width="106.4" height="129.4" fill="#196c2e"/>
+<rect x="375.0" y="44.0" width="103.9" height="129.4" fill="#2ea043"/>
+<rect x="375.0" y="44.0" width="14.7" height="129.4" fill="url(#dots)"/>
+<text x="379.0" y="58.5" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">GUI</text>
+</g><rect class="edge" x="375.0" y="44.0" width="108.3" height="129.4" fill="none"/></g>
     <g><title>game/GameEngine/Source/GameLogic/Object
-624,555 bytes
-byte-matched 93.8% (own source 89.7%)
-linked (last census) 24.9%</title><clipPath id="t5"><rect x="377.3" y="173.6" width="108.0" height="125.1"/></clipPath><g clip-path="url(#t5)"><rect class="rest" x="377.3" y="173.6" width="108.0" height="125.1"/>
-<rect x="377.3" y="173.6" width="101.3" height="125.1" fill="#196c2e"/>
-<rect x="377.3" y="173.6" width="96.9" height="125.1" fill="#2ea043"/>
-<rect x="377.3" y="173.6" width="26.9" height="125.1" fill="url(#dots)"/>
-<text x="381.3" y="188.2" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Object</text>
-</g><rect class="edge" x="377.3" y="173.6" width="108.0" height="125.1" fill="none"/></g>
+627,276 bytes
+byte-matched 94.1% (own source 90.0%)
+linked (last census) 24.8%</title><clipPath id="t5"><rect x="375.0" y="173.4" width="108.3" height="125.3"/></clipPath><g clip-path="url(#t5)"><rect class="rest" x="375.0" y="173.4" width="108.3" height="125.3"/>
+<rect x="375.0" y="173.4" width="101.9" height="125.3" fill="#196c2e"/>
+<rect x="375.0" y="173.4" width="97.5" height="125.3" fill="#2ea043"/>
+<rect x="375.0" y="173.4" width="26.9" height="125.3" fill="url(#dots)"/>
+<text x="379.0" y="188.0" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Object</text>
+</g><rect class="edge" x="375.0" y="173.4" width="108.3" height="125.3" fill="none"/></g>
     <g><title>game/GameEngineDevice/Source/W3DDevice/GameClient
-530,161 bytes
+534,039 bytes
 byte-matched 96.9% (own source 95.7%)
-linked (last census) 23.2%</title><clipPath id="t6"><rect x="485.3" y="44.0" width="110.1" height="104.1"/></clipPath><g clip-path="url(#t6)"><rect class="rest" x="485.3" y="44.0" width="110.1" height="104.1"/>
-<rect x="485.3" y="44.0" width="106.7" height="104.1" fill="#196c2e"/>
-<rect x="485.3" y="44.0" width="105.4" height="104.1" fill="#2ea043"/>
-<rect x="485.3" y="44.0" width="25.5" height="104.1" fill="url(#dots)"/>
-<text x="489.3" y="58.5" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">GameClient</text>
-</g><rect class="edge" x="485.3" y="44.0" width="110.1" height="104.1" fill="none"/></g>
+linked (last census) 23.2%</title><clipPath id="t6"><rect x="483.3" y="44.0" width="82.5" height="139.9"/></clipPath><g clip-path="url(#t6)"><rect class="rest" x="483.3" y="44.0" width="82.5" height="139.9"/>
+<rect x="483.3" y="44.0" width="80.0" height="139.9" fill="#196c2e"/>
+<rect x="483.3" y="44.0" width="79.0" height="139.9" fill="#2ea043"/>
+<rect x="483.3" y="44.0" width="19.2" height="139.9" fill="url(#dots)"/>
+<text x="487.3" y="58.5" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">GameClient</text>
+</g><rect class="edge" x="483.3" y="44.0" width="82.5" height="139.9" fill="none"/></g>
     <g><title>game/Libraries/Source/WWVegas/WW3D2
-433,019 bytes
+437,848 bytes
 byte-matched 97.8% (own source 96.9%)
-linked (last census) 24.6%</title><clipPath id="t7"><rect x="485.3" y="148.1" width="110.1" height="85.0"/></clipPath><g clip-path="url(#t7)"><rect class="rest" x="485.3" y="148.1" width="110.1" height="85.0"/>
-<rect x="485.3" y="148.1" width="107.7" height="85.0" fill="#196c2e"/>
-<rect x="485.3" y="148.1" width="106.7" height="85.0" fill="#2ea043"/>
-<rect x="485.3" y="148.1" width="27.1" height="85.0" fill="url(#dots)"/>
-<text x="489.3" y="162.7" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">WW3D2</text>
-</g><rect class="edge" x="485.3" y="148.1" width="110.1" height="85.0" fill="none"/></g>
+linked (last census) 24.4%</title><clipPath id="t7"><rect x="483.3" y="183.9" width="82.5" height="114.7"/></clipPath><g clip-path="url(#t7)"><rect class="rest" x="483.3" y="183.9" width="82.5" height="114.7"/>
+<rect x="483.3" y="183.9" width="80.7" height="114.7" fill="#196c2e"/>
+<rect x="483.3" y="183.9" width="80.0" height="114.7" fill="#2ea043"/>
+<rect x="483.3" y="183.9" width="20.1" height="114.7" fill="url(#dots)"/>
+<text x="487.3" y="198.5" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">WW3D2</text>
+</g><rect class="edge" x="483.3" y="183.9" width="82.5" height="114.7" fill="none"/></g>
     <g><title>game/GameEngine/Source/GameNetwork/GameSpy
-333,690 bytes
+336,137 bytes
 byte-matched 98.8% (own source 93.1%)
-linked (last census) 45.3%</title><clipPath id="t8"><rect x="485.3" y="233.2" width="110.1" height="65.5"/></clipPath><g clip-path="url(#t8)"><rect class="rest" x="485.3" y="233.2" width="110.1" height="65.5"/>
-<rect x="485.3" y="233.2" width="108.8" height="65.5" fill="#196c2e"/>
-<rect x="485.3" y="233.2" width="102.5" height="65.5" fill="#2ea043"/>
-<rect x="485.3" y="233.2" width="49.9" height="65.5" fill="url(#dots)"/>
-<text x="489.3" y="247.7" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">GameSpy</text>
-</g><rect class="edge" x="485.3" y="233.2" width="110.1" height="65.5" fill="none"/></g>
+linked (last census) 45.0%</title><clipPath id="t8"><rect x="565.9" y="44.0" width="80.6" height="90.2"/></clipPath><g clip-path="url(#t8)"><rect class="rest" x="565.9" y="44.0" width="80.6" height="90.2"/>
+<rect x="565.9" y="44.0" width="79.6" height="90.2" fill="#196c2e"/>
+<rect x="565.9" y="44.0" width="75.1" height="90.2" fill="#2ea043"/>
+<rect x="565.9" y="44.0" width="36.3" height="90.2" fill="url(#dots)"/>
+<text x="569.9" y="58.5" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">GameSpy</text>
+</g><rect class="edge" x="565.9" y="44.0" width="80.6" height="90.2" fill="none"/></g>
     <g><title>game/Libraries/Source/WWVegas/WWLib
 321,859 bytes
 byte-matched 99.7% (own source 96.9%)
-linked (last census) 22.3%</title><clipPath id="t9"><rect x="595.4" y="44.0" width="73.8" height="94.4"/></clipPath><g clip-path="url(#t9)"><rect class="rest" x="595.4" y="44.0" width="73.8" height="94.4"/>
-<rect x="595.4" y="44.0" width="73.5" height="94.4" fill="#196c2e"/>
-<rect x="595.4" y="44.0" width="71.5" height="94.4" fill="#2ea043"/>
-<rect x="595.4" y="44.0" width="16.5" height="94.4" fill="url(#dots)"/>
-<text x="599.4" y="58.5" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">WWLib</text>
-</g><rect class="edge" x="595.4" y="44.0" width="73.8" height="94.4" fill="none"/></g>
+linked (last census) 22.3%</title><clipPath id="t9"><rect x="565.9" y="134.2" width="80.6" height="86.3"/></clipPath><g clip-path="url(#t9)"><rect class="rest" x="565.9" y="134.2" width="80.6" height="86.3"/>
+<rect x="565.9" y="134.2" width="80.4" height="86.3" fill="#196c2e"/>
+<rect x="565.9" y="134.2" width="78.1" height="86.3" fill="#2ea043"/>
+<rect x="565.9" y="134.2" width="18.0" height="86.3" fill="url(#dots)"/>
+<text x="569.9" y="148.7" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">WWLib</text>
+</g><rect class="edge" x="565.9" y="134.2" width="80.6" height="86.3" fill="none"/></g>
     <g><title>game/GameEngine/Source/GameLogic/ScriptEngine
 291,432 bytes
 byte-matched 98.3% (own source 97.9%)
-linked (last census) 49.3%</title><clipPath id="t10"><rect x="595.4" y="138.4" width="73.8" height="85.4"/></clipPath><g clip-path="url(#t10)"><rect class="rest" x="595.4" y="138.4" width="73.8" height="85.4"/>
-<rect x="595.4" y="138.4" width="72.5" height="85.4" fill="#196c2e"/>
-<rect x="595.4" y="138.4" width="72.2" height="85.4" fill="#2ea043"/>
-<rect x="595.4" y="138.4" width="36.4" height="85.4" fill="url(#dots)"/>
-<text x="599.4" y="151.6" font-size="9.8" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">ScriptEngine</text>
-</g><rect class="edge" x="595.4" y="138.4" width="73.8" height="85.4" fill="none"/></g>
+linked (last census) 49.3%</title><clipPath id="t10"><rect x="565.9" y="220.5" width="80.6" height="78.2"/></clipPath><g clip-path="url(#t10)"><rect class="rest" x="565.9" y="220.5" width="80.6" height="78.2"/>
+<rect x="565.9" y="220.5" width="79.3" height="78.2" fill="#196c2e"/>
+<rect x="565.9" y="220.5" width="79.0" height="78.2" fill="#2ea043"/>
+<rect x="565.9" y="220.5" width="39.7" height="78.2" fill="url(#dots)"/>
+<text x="569.9" y="234.9" font-size="10.8" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">ScriptEngine</text>
+</g><rect class="edge" x="565.9" y="220.5" width="80.6" height="78.2" fill="none"/></g>
     <g><title>Libraries: 37 smaller folders
-255,358 bytes
-byte-matched 98.8% (own source 93.6%)
-linked (last census) 41.2%</title><clipPath id="t11"><rect x="595.4" y="223.8" width="73.8" height="74.9"/></clipPath><g clip-path="url(#t11)"><rect class="rest" x="595.4" y="223.8" width="73.8" height="74.9"/>
-<rect x="595.4" y="223.8" width="72.9" height="74.9" fill="#196c2e"/>
-<rect x="595.4" y="223.8" width="69.1" height="74.9" fill="#2ea043"/>
-<rect x="595.4" y="223.8" width="30.4" height="74.9" fill="url(#dots)"/>
-<text x="599.4" y="238.4" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Libraries:</text>
-<text x="599.4" y="252.7" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">37 smaller</text>
-<text x="599.4" y="267.0" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">folders</text>
-</g><rect class="edge" x="595.4" y="223.8" width="73.8" height="74.9" fill="none"/></g>
+259,623 bytes
+byte-matched 98.9% (own source 93.7%)
+linked (last census) 40.6%</title><clipPath id="t11"><rect x="646.5" y="44.0" width="76.2" height="73.7"/></clipPath><g clip-path="url(#t11)"><rect class="rest" x="646.5" y="44.0" width="76.2" height="73.7"/>
+<rect x="646.5" y="44.0" width="75.3" height="73.7" fill="#196c2e"/>
+<rect x="646.5" y="44.0" width="71.4" height="73.7" fill="#2ea043"/>
+<rect x="646.5" y="44.0" width="30.9" height="73.7" fill="url(#dots)"/>
+<text x="650.5" y="58.5" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Libraries:</text>
+<text x="650.5" y="72.8" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">37 smaller</text>
+<text x="650.5" y="87.2" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">folders</text>
+</g><rect class="edge" x="646.5" y="44.0" width="76.2" height="73.7" fill="none"/></g>
     <g><title>game/GameEngine/Source/GameLogic/AI
-224,366 bytes
+224,502 bytes
 byte-matched 93.1% (own source 92.3%)
-linked (last census) 31.7%</title><clipPath id="t12"><rect x="669.2" y="44.0" width="64.0" height="75.8"/></clipPath><g clip-path="url(#t12)"><rect class="rest" x="669.2" y="44.0" width="64.0" height="75.8"/>
-<rect x="669.2" y="44.0" width="59.6" height="75.8" fill="#196c2e"/>
-<rect x="669.2" y="44.0" width="59.0" height="75.8" fill="#2ea043"/>
-<rect x="669.2" y="44.0" width="20.3" height="75.8" fill="url(#dots)"/>
-<text x="673.2" y="58.5" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">AI</text>
-</g><rect class="edge" x="669.2" y="44.0" width="64.0" height="75.8" fill="none"/></g>
+linked (last census) 31.7%</title><clipPath id="t12"><rect x="722.7" y="44.0" width="65.9" height="73.7"/></clipPath><g clip-path="url(#t12)"><rect class="rest" x="722.7" y="44.0" width="65.9" height="73.7"/>
+<rect x="722.7" y="44.0" width="61.3" height="73.7" fill="#196c2e"/>
+<rect x="722.7" y="44.0" width="60.8" height="73.7" fill="#2ea043"/>
+<rect x="722.7" y="44.0" width="20.9" height="73.7" fill="url(#dots)"/>
+<text x="726.7" y="58.5" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">AI</text>
+</g><rect class="edge" x="722.7" y="44.0" width="65.9" height="73.7" fill="none"/></g>
     <g><title>game/GameEngine/Source/GameNetwork
-215,454 bytes
+216,292 bytes
 byte-matched 95.7% (own source 94.7%)
-linked (last census) 32.3%</title><clipPath id="t13"><rect x="733.2" y="44.0" width="61.5" height="75.8"/></clipPath><g clip-path="url(#t13)"><rect class="rest" x="733.2" y="44.0" width="61.5" height="75.8"/>
-<rect x="733.2" y="44.0" width="58.8" height="75.8" fill="#196c2e"/>
-<rect x="733.2" y="44.0" width="58.2" height="75.8" fill="#2ea043"/>
-<rect x="733.2" y="44.0" width="19.8" height="75.8" fill="url(#dots)"/>
-<text x="737.2" y="56.1" font-size="8.7" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">GameNetwork</text>
-</g><rect class="edge" x="733.2" y="44.0" width="61.5" height="75.8" fill="none"/></g>
+linked (last census) 32.4%</title><clipPath id="t13"><rect x="788.5" y="44.0" width="63.5" height="73.7"/></clipPath><g clip-path="url(#t13)"><rect class="rest" x="788.5" y="44.0" width="63.5" height="73.7"/>
+<rect x="788.5" y="44.0" width="60.7" height="73.7" fill="#196c2e"/>
+<rect x="788.5" y="44.0" width="60.1" height="73.7" fill="#2ea043"/>
+<rect x="788.5" y="44.0" width="20.5" height="73.7" fill="url(#dots)"/>
+<text x="792.5" y="56.5" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">GameNetwork</text>
+</g><rect class="edge" x="788.5" y="44.0" width="63.5" height="73.7" fill="none"/></g>
     <g><title>Game engine: 24 smaller folders
-201,092 bytes
+202,470 bytes
 byte-matched 97.9% (own source 96.2%)
-linked (last census) 34.1%</title><clipPath id="t14"><rect x="794.6" y="44.0" width="57.4" height="75.8"/></clipPath><g clip-path="url(#t14)"><rect class="rest" x="794.6" y="44.0" width="57.4" height="75.8"/>
-<rect x="794.6" y="44.0" width="56.2" height="75.8" fill="#196c2e"/>
-<rect x="794.6" y="44.0" width="55.2" height="75.8" fill="#2ea043"/>
-<rect x="794.6" y="44.0" width="19.6" height="75.8" fill="url(#dots)"/>
-<text x="798.6" y="56.5" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Game</text>
-<text x="798.6" y="68.2" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">engine:</text>
-<text x="798.6" y="79.8" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">24</text>
-<text x="798.6" y="91.6" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">smaller</text>
-<text x="798.6" y="103.2" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">folders</text>
-</g><rect class="edge" x="794.6" y="44.0" width="57.4" height="75.8" fill="none"/></g>
+linked (last census) 33.9%</title><clipPath id="t14"><rect x="646.5" y="117.7" width="64.8" height="67.6"/></clipPath><g clip-path="url(#t14)"><rect class="rest" x="646.5" y="117.7" width="64.8" height="67.6"/>
+<rect x="646.5" y="117.7" width="63.5" height="67.6" fill="#196c2e"/>
+<rect x="646.5" y="117.7" width="62.4" height="67.6" fill="#2ea043"/>
+<rect x="646.5" y="117.7" width="21.9" height="67.6" fill="url(#dots)"/>
+<text x="650.5" y="132.3" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Game</text>
+<text x="650.5" y="146.6" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">engine:</text>
+<text x="650.5" y="160.9" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">24</text>
+<text x="650.5" y="175.2" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">smalle…</text>
+</g><rect class="edge" x="646.5" y="117.7" width="64.8" height="67.6" fill="none"/></g>
     <g><title>game/GameEngine/Source/GameClient
-172,900 bytes
-byte-matched 93.4% (own source 91.1%)
-linked (last census) 17.4%</title><clipPath id="t15"><rect x="669.2" y="119.8" width="58.2" height="64.2"/></clipPath><g clip-path="url(#t15)"><rect class="rest" x="669.2" y="119.8" width="58.2" height="64.2"/>
-<rect x="669.2" y="119.8" width="54.4" height="64.2" fill="#196c2e"/>
-<rect x="669.2" y="119.8" width="53.0" height="64.2" fill="#2ea043"/>
-<rect x="669.2" y="119.8" width="10.1" height="64.2" fill="url(#dots)"/>
-<text x="673.2" y="132.3" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">GameClient</text>
-</g><rect class="edge" x="669.2" y="119.8" width="58.2" height="64.2" fill="none"/></g>
+175,887 bytes
+byte-matched 93.5% (own source 91.3%)
+linked (last census) 17.1%</title><clipPath id="t15"><rect x="646.5" y="185.3" width="64.8" height="58.7"/></clipPath><g clip-path="url(#t15)"><rect class="rest" x="646.5" y="185.3" width="64.8" height="58.7"/>
+<rect x="646.5" y="185.3" width="60.6" height="58.7" fill="#196c2e"/>
+<rect x="646.5" y="185.3" width="59.1" height="58.7" fill="#2ea043"/>
+<rect x="646.5" y="185.3" width="11.1" height="58.7" fill="url(#dots)"/>
+<text x="650.5" y="199.0" font-size="10.1" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">GameClient</text>
+</g><rect class="edge" x="646.5" y="185.3" width="64.8" height="58.7" fill="none"/></g>
     <g><title>inputs/vendor/dxerr9
 163,771 bytes
 byte-matched 100.0% (own source 0.0%)
-linked (last census) 0.0%</title><clipPath id="t16"><rect x="669.2" y="184.0" width="58.2" height="60.8"/></clipPath><g clip-path="url(#t16)"><rect class="rest" x="669.2" y="184.0" width="58.2" height="60.8"/>
-<rect x="669.2" y="184.0" width="58.2" height="60.8" fill="#196c2e"/>
-<text x="673.2" y="196.5" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">dxerr9</text>
-<text x="673.2" y="208.2" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">(Microsoft)</text>
-</g><rect class="edge" x="669.2" y="184.0" width="58.2" height="60.8" fill="none"/></g>
+linked (last census) 0.0%</title><clipPath id="t16"><rect x="646.5" y="244.0" width="64.8" height="54.7"/></clipPath><g clip-path="url(#t16)"><rect class="rest" x="646.5" y="244.0" width="64.8" height="54.7"/>
+<rect x="646.5" y="244.0" width="64.8" height="54.7" fill="#196c2e"/>
+<text x="650.5" y="258.6" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">dxerr9</text>
+<text x="650.5" y="272.9" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">(Microsoft)</text>
+</g><rect class="edge" x="646.5" y="244.0" width="64.8" height="54.7" fill="none"/></g>
     <g><title>unclaimed
-144,918 bytes
+143,439 bytes
 byte-matched 0.0% (own source 0.0%)
-linked (last census) 0.0%</title><clipPath id="t17"><rect x="669.2" y="244.9" width="58.2" height="53.8"/></clipPath><g clip-path="url(#t17)"><rect class="rest" x="669.2" y="244.9" width="58.2" height="53.8"/>
-<text x="673.2" y="257.3" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Unclaimed</text>
-</g><rect class="edge" x="669.2" y="244.9" width="58.2" height="53.8" fill="none"/></g>
+linked (last census) 0.0%</title><clipPath id="t17"><rect x="711.3" y="117.7" width="50.1" height="61.9"/></clipPath><g clip-path="url(#t17)"><rect class="rest" x="711.3" y="117.7" width="50.1" height="61.9"/>
+<text x="715.3" y="129.5" font-size="8.4" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Unclaimed</text>
+</g><rect class="edge" x="711.3" y="117.7" width="50.1" height="61.9" fill="none"/></g>
     <g><title>game/GameEngine/Source/Common/System
-137,935 bytes
+138,036 bytes
 byte-matched 98.7% (own source 92.1%)
-linked (last census) 24.7%</title><clipPath id="t18"><rect x="727.4" y="119.8" width="66.3" height="45.0"/></clipPath><g clip-path="url(#t18)"><rect class="rest" x="727.4" y="119.8" width="66.3" height="45.0"/>
-<rect x="727.4" y="119.8" width="65.4" height="45.0" fill="#196c2e"/>
-<rect x="727.4" y="119.8" width="61.0" height="45.0" fill="#2ea043"/>
-<rect x="727.4" y="119.8" width="16.3" height="45.0" fill="url(#dots)"/>
-<text x="731.4" y="134.4" font-size="11.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">System</text>
-</g><rect class="edge" x="727.4" y="119.8" width="66.3" height="45.0" fill="none"/></g>
+linked (last census) 24.7%</title><clipPath id="t18"><rect x="761.4" y="117.7" width="48.2" height="61.9"/></clipPath><g clip-path="url(#t18)"><rect class="rest" x="761.4" y="117.7" width="48.2" height="61.9"/>
+<rect x="761.4" y="117.7" width="47.6" height="61.9" fill="#196c2e"/>
+<rect x="761.4" y="117.7" width="44.4" height="61.9" fill="#2ea043"/>
+<rect x="761.4" y="117.7" width="11.9" height="61.9" fill="url(#dots)"/>
+<text x="765.4" y="130.2" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">System</text>
+</g><rect class="edge" x="761.4" y="117.7" width="48.2" height="61.9" fill="none"/></g>
     <g><title>game/GameEngine/Source/GameClient/System
-121,339 bytes
-byte-matched 96.3% (own source 94.2%)
-linked (last census) 19.6%</title><clipPath id="t19"><rect x="793.7" y="119.8" width="58.3" height="45.0"/></clipPath><g clip-path="url(#t19)"><rect class="rest" x="793.7" y="119.8" width="58.3" height="45.0"/>
-<rect x="793.7" y="119.8" width="56.2" height="45.0" fill="#196c2e"/>
-<rect x="793.7" y="119.8" width="54.9" height="45.0" fill="#2ea043"/>
-<rect x="793.7" y="119.8" width="11.5" height="45.0" fill="url(#dots)"/>
-<text x="797.7" y="132.3" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">System</text>
-</g><rect class="edge" x="793.7" y="119.8" width="58.3" height="45.0" fill="none"/></g>
+121,467 bytes
+byte-matched 96.3% (own source 94.3%)
+linked (last census) 19.6%</title><clipPath id="t19"><rect x="809.6" y="117.7" width="42.4" height="61.9"/></clipPath><g clip-path="url(#t19)"><rect class="rest" x="809.6" y="117.7" width="42.4" height="61.9"/>
+<rect x="809.6" y="117.7" width="40.9" height="61.9" fill="#196c2e"/>
+<rect x="809.6" y="117.7" width="40.0" height="61.9" fill="#2ea043"/>
+<rect x="809.6" y="117.7" width="8.3" height="61.9" fill="url(#dots)"/>
+<text x="813.6" y="130.2" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">System</text>
+</g><rect class="edge" x="809.6" y="117.7" width="42.4" height="61.9" fill="none"/></g>
     <g><title>game/GameEngine/Source/Common/RTS
-108,047 bytes
+108,441 bytes
 byte-matched 95.2% (own source 86.4%)
-linked (last census) 19.3%</title><clipPath id="t20"><rect x="727.4" y="164.9" width="43.2" height="54.1"/></clipPath><g clip-path="url(#t20)"><rect class="rest" x="727.4" y="164.9" width="43.2" height="54.1"/>
-<rect x="727.4" y="164.9" width="41.1" height="54.1" fill="#196c2e"/>
-<rect x="727.4" y="164.9" width="37.3" height="54.1" fill="#2ea043"/>
-<rect x="727.4" y="164.9" width="8.3" height="54.1" fill="url(#dots)"/>
-<text x="731.4" y="177.3" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">RTS</text>
-</g><rect class="edge" x="727.4" y="164.9" width="43.2" height="54.1" fill="none"/></g>
+linked (last census) 19.2%</title><clipPath id="t20"><rect x="711.3" y="179.7" width="56.9" height="41.2"/></clipPath><g clip-path="url(#t20)"><rect class="rest" x="711.3" y="179.7" width="56.9" height="41.2"/>
+<rect x="711.3" y="179.7" width="54.2" height="41.2" fill="#196c2e"/>
+<rect x="711.3" y="179.7" width="49.2" height="41.2" fill="#2ea043"/>
+<rect x="711.3" y="179.7" width="10.9" height="41.2" fill="url(#dots)"/>
+<text x="715.3" y="192.1" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">RTS</text>
+</g><rect class="edge" x="711.3" y="179.7" width="56.9" height="41.2" fill="none"/></g>
     <g><title>game/Libraries/Source/WWVegas/WWMath
 104,063 bytes
 byte-matched 100.0% (own source 99.5%)
-linked (last census) 83.2%</title><clipPath id="t21"><rect x="770.7" y="164.9" width="41.6" height="54.1"/></clipPath><g clip-path="url(#t21)"><rect class="rest" x="770.7" y="164.9" width="41.6" height="54.1"/>
-<rect x="770.7" y="164.9" width="41.6" height="54.1" fill="#196c2e"/>
-<rect x="770.7" y="164.9" width="41.4" height="54.1" fill="#2ea043"/>
-<rect x="770.7" y="164.9" width="34.6" height="54.1" fill="url(#dots)"/>
-<text x="774.7" y="177.3" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">WWMath</text>
-</g><rect class="edge" x="770.7" y="164.9" width="41.6" height="54.1" fill="none"/></g>
+linked (last census) 83.2%</title><clipPath id="t21"><rect x="711.3" y="220.9" width="56.9" height="39.5"/></clipPath><g clip-path="url(#t21)"><rect class="rest" x="711.3" y="220.9" width="56.9" height="39.5"/>
+<rect x="711.3" y="220.9" width="56.9" height="39.5" fill="#196c2e"/>
+<rect x="711.3" y="220.9" width="56.7" height="39.5" fill="#2ea043"/>
+<rect x="711.3" y="220.9" width="47.4" height="39.5" fill="url(#dots)"/>
+<text x="715.3" y="233.3" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">WWMath</text>
+</g><rect class="edge" x="711.3" y="220.9" width="56.9" height="39.5" fill="none"/></g>
     <g><title>game/Libraries/Source/DirtySock
-99,248 bytes
+100,750 bytes
 byte-matched 97.8% (own source 97.8%)
-linked (last census) 29.5%</title><clipPath id="t22"><rect x="812.3" y="164.9" width="39.7" height="54.1"/></clipPath><g clip-path="url(#t22)"><rect class="rest" x="812.3" y="164.9" width="39.7" height="54.1"/>
-<rect x="812.3" y="164.9" width="38.8" height="54.1" fill="#196c2e"/>
-<rect x="812.3" y="164.9" width="38.8" height="54.1" fill="#2ea043"/>
-<rect x="812.3" y="164.9" width="11.7" height="54.1" fill="url(#dots)"/>
-<text x="816.3" y="175.2" font-size="7.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">DirtySock</text>
-</g><rect class="edge" x="812.3" y="164.9" width="39.7" height="54.1" fill="none"/></g>
+linked (last census) 29.1%</title><clipPath id="t22"><rect x="711.3" y="260.4" width="56.9" height="38.3"/></clipPath><g clip-path="url(#t22)"><rect class="rest" x="711.3" y="260.4" width="56.9" height="38.3"/>
+<rect x="711.3" y="260.4" width="55.7" height="38.3" fill="#196c2e"/>
+<rect x="711.3" y="260.4" width="55.7" height="38.3" fill="#2ea043"/>
+<rect x="711.3" y="260.4" width="16.6" height="38.3" fill="url(#dots)"/>
+<text x="715.3" y="272.9" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">DirtySock</text>
+</g><rect class="edge" x="711.3" y="260.4" width="56.9" height="38.3" fill="none"/></g>
     <g><title>game/Libraries/Source/EA/Apt
-90,878 bytes
+92,215 bytes
 byte-matched 100.0% (own source 99.2%)
-linked (last census) 17.8%</title><clipPath id="t23"><rect x="727.4" y="218.9" width="44.6" height="44.1"/></clipPath><g clip-path="url(#t23)"><rect class="rest" x="727.4" y="218.9" width="44.6" height="44.1"/>
-<rect x="727.4" y="218.9" width="44.6" height="44.1" fill="#196c2e"/>
-<rect x="727.4" y="218.9" width="44.2" height="44.1" fill="#2ea043"/>
-<rect x="727.4" y="218.9" width="7.9" height="44.1" fill="url(#dots)"/>
-<text x="731.4" y="231.4" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Apt</text>
-</g><rect class="edge" x="727.4" y="218.9" width="44.6" height="44.1" fill="none"/></g>
+linked (last census) 17.5%</title><clipPath id="t23"><rect x="768.2" y="179.7" width="46.6" height="42.8"/></clipPath><g clip-path="url(#t23)"><rect class="rest" x="768.2" y="179.7" width="46.6" height="42.8"/>
+<rect x="768.2" y="179.7" width="46.6" height="42.8" fill="#196c2e"/>
+<rect x="768.2" y="179.7" width="46.3" height="42.8" fill="#2ea043"/>
+<rect x="768.2" y="179.7" width="8.2" height="42.8" fill="url(#dots)"/>
+<text x="772.2" y="192.1" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Apt</text>
+</g><rect class="edge" x="768.2" y="179.7" width="46.6" height="42.8" fill="none"/></g>
     <g><title>game/GameEngine/Source/Common/Audio
 73,464 bytes
 byte-matched 99.4% (own source 24.9%)
-linked (last census) 7.0%</title><clipPath id="t24"><rect x="727.4" y="263.0" width="44.6" height="35.7"/></clipPath><g clip-path="url(#t24)"><rect class="rest" x="727.4" y="263.0" width="44.6" height="35.7"/>
-<rect x="727.4" y="263.0" width="44.3" height="35.7" fill="#196c2e"/>
-<rect x="727.4" y="263.0" width="11.1" height="35.7" fill="#2ea043"/>
-<rect x="727.4" y="263.0" width="3.1" height="35.7" fill="url(#dots)"/>
-<text x="731.4" y="275.5" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Audio</text>
-</g><rect class="edge" x="727.4" y="263.0" width="44.6" height="35.7" fill="none"/></g>
+linked (last census) 7.0%</title><clipPath id="t24"><rect x="814.9" y="179.7" width="37.1" height="42.8"/></clipPath><g clip-path="url(#t24)"><rect class="rest" x="814.9" y="179.7" width="37.1" height="42.8"/>
+<rect x="814.9" y="179.7" width="36.9" height="42.8" fill="#196c2e"/>
+<rect x="814.9" y="179.7" width="9.3" height="42.8" fill="#2ea043"/>
+<rect x="814.9" y="179.7" width="2.6" height="42.8" fill="url(#dots)"/>
+<text x="818.9" y="192.1" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Audio</text>
+</g><rect class="edge" x="814.9" y="179.7" width="37.1" height="42.8" fill="none"/></g>
     <g><title>game/Libraries/Source/Lua
 66,456 bytes
 byte-matched 100.0% (own source 99.2%)
-linked (last census) 99.2%</title><clipPath id="t25"><rect x="772.0" y="218.9" width="34.9" height="41.2"/></clipPath><g clip-path="url(#t25)"><rect class="rest" x="772.0" y="218.9" width="34.9" height="41.2"/>
-<rect x="772.0" y="218.9" width="34.9" height="41.2" fill="#196c2e"/>
-<rect x="772.0" y="218.9" width="34.6" height="41.2" fill="#2ea043"/>
-<rect x="772.0" y="218.9" width="34.6" height="41.2" fill="url(#dots)"/>
-<text x="776.0" y="231.4" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Lua</text>
-</g><rect class="edge" x="772.0" y="218.9" width="34.9" height="41.2" fill="none"/></g>
+linked (last census) 99.2%</title><clipPath id="t25"><rect x="768.2" y="222.4" width="36.5" height="39.4"/></clipPath><g clip-path="url(#t25)"><rect class="rest" x="768.2" y="222.4" width="36.5" height="39.4"/>
+<rect x="768.2" y="222.4" width="36.5" height="39.4" fill="#196c2e"/>
+<rect x="768.2" y="222.4" width="36.1" height="39.4" fill="#2ea043"/>
+<rect x="768.2" y="222.4" width="36.1" height="39.4" fill="url(#dots)"/>
+<text x="772.2" y="234.9" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Lua</text>
+</g><rect class="edge" x="768.2" y="222.4" width="36.5" height="39.4" fill="none"/></g>
     <g><title>game/GameEngine/Source/Common/Thing
-62,228 bytes
+62,054 bytes
 byte-matched 98.8% (own source 96.1%)
-linked (last census) 26.7%</title><clipPath id="t26"><rect x="772.0" y="260.1" width="34.9" height="38.6"/></clipPath><g clip-path="url(#t26)"><rect class="rest" x="772.0" y="260.1" width="34.9" height="38.6"/>
-<rect x="772.0" y="260.1" width="34.5" height="38.6" fill="#196c2e"/>
-<rect x="772.0" y="260.1" width="33.5" height="38.6" fill="#2ea043"/>
-<rect x="772.0" y="260.1" width="9.3" height="38.6" fill="url(#dots)"/>
-<text x="776.0" y="272.6" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Thing</text>
-</g><rect class="edge" x="772.0" y="260.1" width="34.9" height="38.6" fill="none"/></g>
+linked (last census) 26.7%</title><clipPath id="t26"><rect x="768.2" y="261.9" width="36.5" height="36.8"/></clipPath><g clip-path="url(#t26)"><rect class="rest" x="768.2" y="261.9" width="36.5" height="36.8"/>
+<rect x="768.2" y="261.9" width="36.0" height="36.8" fill="#196c2e"/>
+<rect x="768.2" y="261.9" width="35.0" height="36.8" fill="#2ea043"/>
+<rect x="768.2" y="261.9" width="9.7" height="36.8" fill="url(#dots)"/>
+<text x="772.2" y="274.3" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Thing</text>
+</g><rect class="edge" x="768.2" y="261.9" width="36.5" height="36.8" fill="none"/></g>
     <g><title>Device &amp; graphics: 7 smaller folders
-59,443 bytes
+59,560 bytes
 byte-matched 96.6% (own source 95.2%)
-linked (last census) 40.0%</title><clipPath id="t27"><rect x="806.9" y="218.9" width="45.1" height="28.5"/></clipPath><g clip-path="url(#t27)"><rect class="rest" x="806.9" y="218.9" width="45.1" height="28.5"/>
-<rect x="806.9" y="218.9" width="43.6" height="28.5" fill="#196c2e"/>
-<rect x="806.9" y="218.9" width="42.9" height="28.5" fill="#2ea043"/>
-<rect x="806.9" y="218.9" width="18.1" height="28.5" fill="url(#dots)"/>
-<text x="810.9" y="231.4" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Device</text>
-<text x="810.9" y="243.1" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">&amp;…</text>
-</g><rect class="edge" x="806.9" y="218.9" width="45.1" height="28.5" fill="none"/></g>
+linked (last census) 40.1%</title><clipPath id="t27"><rect x="804.7" y="222.4" width="47.3" height="27.2"/></clipPath><g clip-path="url(#t27)"><rect class="rest" x="804.7" y="222.4" width="47.3" height="27.2"/>
+<rect x="804.7" y="222.4" width="45.7" height="27.2" fill="#196c2e"/>
+<rect x="804.7" y="222.4" width="45.1" height="27.2" fill="#2ea043"/>
+<rect x="804.7" y="222.4" width="19.0" height="27.2" fill="url(#dots)"/>
+<text x="808.7" y="234.9" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Devic…</text>
+</g><rect class="edge" x="804.7" y="222.4" width="47.3" height="27.2" fill="none"/></g>
     <g><title>game/GameEngine/Source/GameLogic/Map
 55,858 bytes
 byte-matched 95.2% (own source 94.6%)
-linked (last census) 24.5%</title><clipPath id="t28"><rect x="806.9" y="247.4" width="45.1" height="26.8"/></clipPath><g clip-path="url(#t28)"><rect class="rest" x="806.9" y="247.4" width="45.1" height="26.8"/>
-<rect x="806.9" y="247.4" width="42.9" height="26.8" fill="#196c2e"/>
-<rect x="806.9" y="247.4" width="42.7" height="26.8" fill="#2ea043"/>
-<rect x="806.9" y="247.4" width="11.1" height="26.8" fill="url(#dots)"/>
-<text x="810.9" y="259.9" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Map</text>
-</g><rect class="edge" x="806.9" y="247.4" width="45.1" height="26.8" fill="none"/></g>
+linked (last census) 24.5%</title><clipPath id="t28"><rect x="804.7" y="249.7" width="47.3" height="25.5"/></clipPath><g clip-path="url(#t28)"><rect class="rest" x="804.7" y="249.7" width="47.3" height="25.5"/>
+<rect x="804.7" y="249.7" width="45.0" height="25.5" fill="#196c2e"/>
+<rect x="804.7" y="249.7" width="44.8" height="25.5" fill="#2ea043"/>
+<rect x="804.7" y="249.7" width="11.6" height="25.5" fill="url(#dots)"/>
+<text x="808.7" y="262.1" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">Map</text>
+</g><rect class="edge" x="804.7" y="249.7" width="47.3" height="25.5" fill="none"/></g>
     <g><title>game/GameEngine/Source/Common/INI
-50,990 bytes
-byte-matched 98.5% (own source 80.3%)
-linked (last census) 12.3%</title><clipPath id="t29"><rect x="806.9" y="274.2" width="45.1" height="24.5"/></clipPath><g clip-path="url(#t29)"><rect class="rest" x="806.9" y="274.2" width="45.1" height="24.5"/>
-<rect x="806.9" y="274.2" width="44.4" height="24.5" fill="#196c2e"/>
-<rect x="806.9" y="274.2" width="36.2" height="24.5" fill="#2ea043"/>
-<rect x="806.9" y="274.2" width="5.6" height="24.5" fill="url(#dots)"/>
-<text x="810.9" y="286.7" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">INI</text>
-</g><rect class="edge" x="806.9" y="274.2" width="45.1" height="24.5" fill="none"/></g>
+51,396 bytes
+byte-matched 98.5% (own source 80.4%)
+linked (last census) 12.2%</title><clipPath id="t29"><rect x="804.7" y="275.2" width="47.3" height="23.5"/></clipPath><g clip-path="url(#t29)"><rect class="rest" x="804.7" y="275.2" width="47.3" height="23.5"/>
+<rect x="804.7" y="275.2" width="46.6" height="23.5" fill="#196c2e"/>
+<rect x="804.7" y="275.2" width="38.1" height="23.5" fill="#2ea043"/>
+<rect x="804.7" y="275.2" width="5.8" height="23.5" fill="url(#dots)"/>
+<text x="808.7" y="287.6" font-size="9.0" fill="#ffffff" style="paint-order:stroke" stroke="#0008" stroke-width="2">INI</text>
+</g><rect class="edge" x="804.7" y="275.2" width="47.3" height="23.5" fill="none"/></g>
   </g>
 </svg>
