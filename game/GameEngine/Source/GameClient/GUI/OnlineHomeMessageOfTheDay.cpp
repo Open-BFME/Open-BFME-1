@@ -23,7 +23,7 @@ inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->St
 
 template<class T> inline T StringBase<T>::getCharAt(int i) const {return m_data?m_data->data[i]:0;}
 template<class T> inline bool StringBase<T>::isEmpty() const {return !m_data || m_data->length==0;}
-template<> inline bool StringBase<char>::startsWith(const char *s) const {return startsWith(s,strlen(s));}
+template<> inline bool StringBase<char>::startsWith(const char *s) const {return startsWith(s,s?strlen(s):0);}
 inline AsciiString &AsciiString::operator=(const char *s) {StringBase<char>::set(s); return *this;}
 inline UnicodeString::UnicodeString(const wchar_t* s) {
  ((StringBase<unsigned short>*)this)->StringBase<unsigned short>::StringBase((const unsigned short*)s);
@@ -125,13 +125,13 @@ void BfmeAptScreenOnlineHome::bfmeRefreshMessageOfTheDay() {
   AsciiString aLine;
   UnicodeString line;
   AsciiString aMotd = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getMOTD();
-  while(aMotd.nextToken(&aLine,"\n")) {
-   if(aLine.getCharAt(aLine.getLength()-1)=='\r') aLine.removeLastChar();
-   aLine.trim();
-   if(aLine.isEmpty()) aLine=" ";
+  while(aMotd.StringBase<char>::nextToken(&aLine,"\n")) {
+   if(aLine.StringBase<char>::getCharAt(aLine.StringBase<char>::getLength()-1)=='\r') aLine.StringBase<char>::removeLastChar();
+   aLine.StringBase<char>::trim();
+   if(aLine.StringBase<char>::isEmpty()) aLine=" ";
    int c=GameSpyColor[27];
-   if(aLine.startsWith("\\\\")) aLine=aLine.str()+1;
-   else if(aLine.startsWith("\\") && aLine.getLength()>9) {
+   if(aLine.StringBase<char>::startsWith("\\\\")) aLine=aLine.str()+1;
+   else if(aLine.StringBase<char>::startsWith("\\") && aLine.StringBase<char>::getLength()>9) {
     unsigned char a,r,g,b;
     a=grabUByte(aLine.str()+1); r=grabUByte(aLine.str()+3);
     g=grabUByte(aLine.str()+5); b=grabUByte(aLine.str()+7);
