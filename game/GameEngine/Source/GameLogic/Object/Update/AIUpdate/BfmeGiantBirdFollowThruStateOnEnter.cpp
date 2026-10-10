@@ -59,8 +59,8 @@ struct ModelConditionFlags
 #define OBJECT_TU_MEMBERS void notifyModelConditionChanged();
 #include "GameEngine/Source/GameLogic/Object/object.h"
 
-class Rva002BC260Owner
-{ public: void run(void *, void *, void *, void *); };
+class Rva002BC260GoalOwner
+{ public: void run(void *, void *, void *, unsigned char); };
 class Rva002C3B90Terrain : public Rva002C3B90Slots<6>
 { public: virtual float slot18(float, float, Coord3D *) = 0; };
 class TerrainLogic;
@@ -128,9 +128,9 @@ StateReturnType BfmeGiantBirdFollowThruState::onEnter()
     }
     m_machine->setGoalPosition(&goal);
     if (!result && !ai->test(3))
-        ((Rva002BC260Owner *)ai)->run(&goal, &g_012F02D4, 0, (void *)1);
+        ((Rva002BC260GoalOwner *)ai)->run(&goal, &g_012F02D4, 0, 1);
     else
-        ((Rva002BC260Owner *)ai)->run(&goal, &g_012F02D8, 0, (void *)1);
+        ((Rva002BC260GoalOwner *)ai)->run(&goal, &g_012F02D8, 0, 1);
     ai->m_word3f0 &= ~8;
     if (!ai->m_bool424)
         return STATE_FAILURE;

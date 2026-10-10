@@ -247,10 +247,10 @@ public:
 	Int m_mode494;
 };
 
-class Rva002BC260Owner
+class Rva002BC260GoalOwner
 {
 public:
-	void run(void *arg1, void *arg2, void *arg3, void *arg4);
+	void run(void *arg1, void *arg2, void *arg3, unsigned char arg4);
 };
 
 class TerrainLogic
@@ -448,11 +448,11 @@ StateReturnType AIGiantBirdSwoopState::onEnter()
 		ai->setLocomotorSet(6);
 
 	if (ai->testFlag3f0(2) || ai->testFlag3f0(3))
-		((Rva002BC260Owner *)ai)->run(&m_rva002C3020_28, &g_Rva012F02DC, 0, 0);
+		((Rva002BC260GoalOwner *)ai)->run(&m_rva002C3020_28, &g_Rva012F02DC, 0, 0);
 	else if (m_enabled)
-		((Rva002BC260Owner *)ai)->run(&m_rva002C3020_28, &g_Rva012F02E4, 0, 0);
+		((Rva002BC260GoalOwner *)ai)->run(&m_rva002C3020_28, &g_Rva012F02E4, 0, 0);
 	else
-		((Rva002BC260Owner *)ai)->run(&m_rva002C3020_28, &g_012F02D4, 0, 0);
+		((Rva002BC260GoalOwner *)ai)->run(&m_rva002C3020_28, &g_012F02D4, 0, 0);
 
 	return ai->m_continue424 ? STATE_CONTINUE : STATE_FAILURE;
 }

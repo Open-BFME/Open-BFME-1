@@ -8,7 +8,7 @@ extern void j_00049ae9();
 class Rva002BC260Global
 {
 public:
-	void initialize(void *a, void *b, void *c, void *d, void *e, void *f);
+	void initialize(void *a, void *b, void *c, void *d, void *e, unsigned char f);
 };
 
 class Rva002BC260Goal
@@ -30,10 +30,10 @@ struct Rva002BC260Coord3D
 	float z;
 };
 
-class Rva002BC260Owner
+class Rva002BC260GoalOwner
 {
 public:
-	void run(void *arg1, void *arg2, void *arg3, void *arg4);
+	void run(void *arg1, void *arg2, void *arg3, unsigned char arg4);
 
 private:
 	unsigned char m_unreconstructed000[8];
@@ -51,10 +51,10 @@ private:
 class AerialPathfinder;
 extern AerialPathfinder *TheAerialPathfinder;
 
-void Rva002BC260Owner::run(void *arg1, void *arg2, void *arg3, void *arg4)
+void Rva002BC260GoalOwner::run(void *arg1, void *arg2, void *arg3, unsigned char arg4)
 {
 	Rva002BC260Goal *goal = &m_goal;
-	typedef void (Rva002BC260Global::*Init)(void *, void *, void *, void *, void *, void *);
+	typedef void (Rva002BC260Global::*Init)(void *, void *, void *, void *, void *, unsigned char);
 	union { void (*fn)(); Init call; } init = { j_0000a795 };
 	(((Rva002BC260Global *)TheAerialPathfinder)->*init.call)(m_goalArguments, arg1, goal, arg2, arg3, arg4);
 	goal->configure(1, 0xfa0, 0x447a0000, 0x447a0000, 0, 0);
