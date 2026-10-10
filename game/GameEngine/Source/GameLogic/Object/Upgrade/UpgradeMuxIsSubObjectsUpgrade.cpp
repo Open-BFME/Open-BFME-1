@@ -9,18 +9,6 @@
 
 typedef bool Bool;
 
-// 0x001ee800: slot 4 of AutoHealBehavior's table 0x010a1c20
-class AutoHealBehavior
-{
-protected:
-	virtual Bool isSubObjectsUpgrade();
-};
-
-Bool AutoHealBehavior::isSubObjectsUpgrade()
-{
-	return false;
-}
-
 // 0x001fb250: slot 4 of FireWeaponWhenDamagedBehavior's table 0x010a3de8
 class FireWeaponWhenDamagedBehavior
 {
@@ -29,18 +17,6 @@ protected:
 };
 
 Bool FireWeaponWhenDamagedBehavior::isSubObjectsUpgrade()
-{
-	return false;
-}
-
-// 0x001fbec0: slot 4 of FireWeaponWhenDeadBehavior's table 0x010a3f40
-class FireWeaponWhenDeadBehavior
-{
-protected:
-	virtual Bool isSubObjectsUpgrade();
-};
-
-Bool FireWeaponWhenDeadBehavior::isSubObjectsUpgrade()
 {
 	return false;
 }
