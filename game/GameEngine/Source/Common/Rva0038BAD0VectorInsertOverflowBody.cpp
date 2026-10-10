@@ -6,7 +6,8 @@
 // The element type is not recoverable: all three phases reach the same
 // out-of-line _STL::_Construct through the ILT at 0x0002A56D, whose body at
 // 0x00385CC0 the ledger holds only under a synthetic
-// pair<const int, Gen_p4pod> spelling. So the element is named for the address
+// pair<const int, Gen_p4pod> spelling. Calls bind to the existing ILT row;
+// the element is named for the address
 // of the body it belongs to and modelled by width.
 //
 // Eight bytes is what the bytes say: the size arithmetic shifts the byte
@@ -56,7 +57,7 @@ static inline void *vectorSmallAllocate(unsigned int bytes) { return __node_allo
 static inline void vectorLargeDeallocate(void *block) { ::operator delete(block); }
 static inline void vectorSmallDeallocate(void *block, unsigned int bytes) { __node_alloc<true, 0>::_M_deallocate(block, bytes); }
 
-void __cdecl BfmeRva0038BAD0Construct(Rva0038BAD0Element *destination,
+extern "C" void __cdecl __identifier("?j_0002a56d@@YAXXZ")(Rva0038BAD0Element *destination,
 	const Rva0038BAD0Element &value);
 
 template <class Type>
@@ -66,7 +67,7 @@ __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
 	{
 		do
 		{
-			BfmeRva0038BAD0Construct(result, *first);
+			__identifier("?j_0002a56d@@YAXXZ")(result, *first);
 			++first;
 			++result;
 		}
@@ -80,7 +81,7 @@ __forceinline Type *uninitialized_fill_n(Type *result, unsigned int count, const
 {
 	for (; count > 0; --count)
 	{
-		BfmeRva0038BAD0Construct(result, value);
+		__identifier("?j_0002a56d@@YAXXZ")(result, value);
 		++result;
 	}
 	return result;
@@ -125,7 +126,7 @@ void vector<Type, Allocator>::_M_insert_overflow(
 
 	if (fillLength == 1)
 	{
-		BfmeRva0038BAD0Construct(newFinish, value);
+		__identifier("?j_0002a56d@@YAXXZ")(newFinish, value);
 		++newFinish;
 	}
 	else
@@ -141,7 +142,7 @@ void vector<Type, Allocator>::_M_insert_overflow(
 			Type *cur = position;
 			do
 			{
-				BfmeRva0038BAD0Construct(newFinish, *cur);
+				__identifier("?j_0002a56d@@YAXXZ")(newFinish, *cur);
 				++cur;
 				++newFinish;
 			}
