@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
+#include "../command_source_type.h"
+
 // Retail 0x002C5240, 126 bytes, __thiscall taking one const AICommandParms*
 // and cleaning 4 bytes (ret 4). Shares its "this-0x20" Root view and the
 // AICommandParms layout with the already-landed sibling
@@ -12,9 +14,9 @@
 // the already-landed BfmeB1004::bfmeGo1004B() (BfmeConv1004.cpp) on the same
 // "this-0x20" pointer, and, non-virtually (ClassName::method, matching the
 // idiom the sibling file itself uses for aiDoCommand), the sibling's own
-// Rva002C45E0::dispatch on the OUTER this. The command==0x42 arm reaches the
-// already-pinned but still-unconverted BfmeHostESE::bfmeDoAESE
-// (BfmeConv1969.cpp declares the class; 0x002C4FD0 itself is still a dump).
+// Rva002C45E0::dispatch on the OUTER this. The command==0x13 arm reaches the
+// matched Rva002C4FD0::method through ILT 0x0003C8CB. Its Object* and
+// CommandSourceType arguments occupy the same two dwords passed by retail.
 // No caller or vtable-install evidence names this function's own identity,
 // so it and its owning class stay address-derived.
 
@@ -176,12 +178,12 @@ public:
 	virtual void dispatch(const AICommandParms *parms);
 };
 
-class BfmeThingESE;
+class Object;
 
-class BfmeHostESE
+class Rva002C4FD0
 {
 public:
-	void bfmeDoAESE(BfmeThingESE *thing, void *ctx);
+	void method(Object *thing, CommandSourceType ctx);
 };
 
 class Rva002C5240Owner
@@ -213,8 +215,8 @@ void Rva002C5240Owner::rvaHandleCommand(const AICommandParms *command)
 	switch (command->m_cmd)
 	{
 	case 0x13:
-		((BfmeHostESE *)root)->bfmeDoAESE(
-				(BfmeThingESE *)command->m_obj, (void *)command->m_cmdSource);
+		((Rva002C4FD0 *)root)->method(
+				(Object *)command->m_obj, (CommandSourceType)command->m_cmdSource);
 		return;
 
 	case 0x42:
