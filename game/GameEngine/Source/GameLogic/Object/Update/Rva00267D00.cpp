@@ -9,7 +9,7 @@
 //
 // The SpecialDisguiseUpdate vtable slot 15 body at 0x00267D80 calls ILT 0x00020847
 // with ECX=this and one byte argument. Its target at 0x00267B10 returns with ret 4.
-// The helper name keeps its RVA, and targets/game/reverse/symbols.csv routes it through the ILT.
+// The call names the ledger's exact ILT entry and keeps its unsigned-byte ABI.
 
 typedef bool Bool;
 typedef int Int;
@@ -43,7 +43,6 @@ class Matrix3D;
 class FXList
 {
 public:
-	Bool isEmpty(void) const;
 	void doFXPos(const Coord3D *primary, const Matrix3D *primaryMtx,
 		Real primaryScale, const Coord3D *secondary) const;
 };
@@ -78,7 +77,6 @@ public:
 class Rva00267B10
 {
 public:
-	void m00267B10(unsigned char value);
 };
 
 class Rva00267D00
@@ -91,8 +89,15 @@ public:
 	Object *m_object;
 };
 
+extern "C" void __cdecl __identifier("?j_00020847@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00011f77@@YAXXZ")();
+
 void Rva00267D00::m00267D00(char quiet)
 {
+	union { void (*raw)(); void (Rva00267B10::*member)(unsigned char); }
+		notify = { __identifier("?j_00020847@@YAXXZ") };
+	union { void (*raw)(); Bool (FXList::*member)() const; }
+		blocked = { __identifier("?j_00011f77@@YAXXZ") };
 	Object *obj = m_object;
 	if (!clearRva00267D00ModelCondition(obj))
 		return;
@@ -100,14 +105,14 @@ void Rva00267D00::m00267D00(char quiet)
 	if (quiet != 0)
 		return;
 
-	((Rva00267B10 *)this)->m00267B10(1);
+	(((Rva00267B10 *)this)->*notify.member)(1);
 
 	const FXList *fx = m_moduleData->m_fx264;
 
 	if (fx == 0)
 		return;
 
-	if (fx->isEmpty())
+	if ((fx->*blocked.member)())
 		return;
 
 	fx->doFXPos(&obj->m_coord038, 0, 0.0f, 0);
