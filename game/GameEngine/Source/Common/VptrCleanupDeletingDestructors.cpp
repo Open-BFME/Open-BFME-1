@@ -31,29 +31,26 @@
 //
 // IDENTITY IS NOT RECOVERED.  Every name is derived from an address.
 
-class Rva0000B9CECleanup
+// Each callee is called by its existing ledger name at the address retail's
+// call reaches (callees.py): 0x7EB6C0 ??1BfmeDirtyBase, 0x7FA650
+// ??1Rva00803890Base, 0x9EDD30 SList<TagBlockIndex>::Remove_All, and ILT
+// 0xB9CE, whose emitted object symbol is the VectorClass Clear thunk.  All
+// are no-argument __thiscall; the member-pointer view keeps `this` in ecx.
+class BfmeVptrCleanupTarget
 {
 public:
 	void run();
 };
 
-class Rva007EB6C0Cleanup
-{
-public:
-	void run();
-};
+#define BFME_CLEANUP_0000B9CE "?Clear@?$VectorClass@U_ArcInfoStruct@VehicleCurveClass@@@@UAEXXZ"
+#define BFME_CLEANUP_007EB6C0 "??1BfmeDirtyBase@@UAE@XZ"
+#define BFME_CLEANUP_007FA650 "??1Rva00803890Base@@UAE@XZ"
+#define BFME_CLEANUP_009EDD30 "?Remove_All@?$SList@VTagBlockIndex@@@@UAEXXZ"
 
-class Rva007FA650Cleanup
-{
-public:
-	void run();
-};
-
-class Rva009EDD30Cleanup
-{
-public:
-	void run();
-};
+extern "C" void __cdecl __identifier( BFME_CLEANUP_0000B9CE )();
+extern "C" void __cdecl __identifier( BFME_CLEANUP_007EB6C0 )();
+extern "C" void __cdecl __identifier( BFME_CLEANUP_007FA650 )();
+extern "C" void __cdecl __identifier( BFME_CLEANUP_009EDD30 )();
 
 #define BFME_VPTR_CLEANUP_DELETING_DTOR( NAME, CLEANUP )                      \
 	class NAME                                                                \
@@ -63,18 +60,24 @@ public:
 	};                                                                        \
 	NAME::~NAME()                                                             \
 	{                                                                         \
-		( (CLEANUP *)this )->run();                                           \
+		union                                                                 \
+		{                                                                     \
+			void ( __cdecl *symbol )();                                       \
+			void ( BfmeVptrCleanupTarget::*member )();                        \
+		} cleanup;                                                            \
+		cleanup.symbol = &__identifier( CLEANUP );                            \
+		( ( (BfmeVptrCleanupTarget *)this )->*cleanup.member )();             \
 	}
 
-BFME_VPTR_CLEANUP_DELETING_DTOR( Rva00673550CleanupDeleting, Rva0000B9CECleanup )
-BFME_VPTR_CLEANUP_DELETING_DTOR( Rva007E92C0CleanupDeleting, Rva007EB6C0Cleanup )
-BFME_VPTR_CLEANUP_DELETING_DTOR( Rva007F0C80CleanupDeleting, Rva007EB6C0Cleanup )
-BFME_VPTR_CLEANUP_DELETING_DTOR( Rva007F1DB0CleanupDeleting, Rva007EB6C0Cleanup )
-BFME_VPTR_CLEANUP_DELETING_DTOR( Rva007F2650CleanupDeleting, Rva007EB6C0Cleanup )
-BFME_VPTR_CLEANUP_DELETING_DTOR( Rva007F2F50CleanupDeleting, Rva007EB6C0Cleanup )
-BFME_VPTR_CLEANUP_DELETING_DTOR( Rva007F37F0CleanupDeleting, Rva007EB6C0Cleanup )
-BFME_VPTR_CLEANUP_DELETING_DTOR( Rva007F41E0CleanupDeleting, Rva007EB6C0Cleanup )
-BFME_VPTR_CLEANUP_DELETING_DTOR( Rva007F4900CleanupDeleting, Rva007FA650Cleanup )
-BFME_VPTR_CLEANUP_DELETING_DTOR( Rva007FADF0CleanupDeleting, Rva007EB6C0Cleanup )
-BFME_VPTR_CLEANUP_DELETING_DTOR( Rva007FC120CleanupDeleting, Rva007EB6C0Cleanup )
-BFME_VPTR_CLEANUP_DELETING_DTOR( Rva009EEA70CleanupDeleting, Rva009EDD30Cleanup )
+BFME_VPTR_CLEANUP_DELETING_DTOR( Rva00673550CleanupDeleting, BFME_CLEANUP_0000B9CE )
+BFME_VPTR_CLEANUP_DELETING_DTOR( Rva007E92C0CleanupDeleting, BFME_CLEANUP_007EB6C0 )
+BFME_VPTR_CLEANUP_DELETING_DTOR( Rva007F0C80CleanupDeleting, BFME_CLEANUP_007EB6C0 )
+BFME_VPTR_CLEANUP_DELETING_DTOR( Rva007F1DB0CleanupDeleting, BFME_CLEANUP_007EB6C0 )
+BFME_VPTR_CLEANUP_DELETING_DTOR( Rva007F2650CleanupDeleting, BFME_CLEANUP_007EB6C0 )
+BFME_VPTR_CLEANUP_DELETING_DTOR( Rva007F2F50CleanupDeleting, BFME_CLEANUP_007EB6C0 )
+BFME_VPTR_CLEANUP_DELETING_DTOR( Rva007F37F0CleanupDeleting, BFME_CLEANUP_007EB6C0 )
+BFME_VPTR_CLEANUP_DELETING_DTOR( Rva007F41E0CleanupDeleting, BFME_CLEANUP_007EB6C0 )
+BFME_VPTR_CLEANUP_DELETING_DTOR( Rva007F4900CleanupDeleting, BFME_CLEANUP_007FA650 )
+BFME_VPTR_CLEANUP_DELETING_DTOR( Rva007FADF0CleanupDeleting, BFME_CLEANUP_007EB6C0 )
+BFME_VPTR_CLEANUP_DELETING_DTOR( Rva007FC120CleanupDeleting, BFME_CLEANUP_007EB6C0 )
+BFME_VPTR_CLEANUP_DELETING_DTOR( Rva009EEA70CleanupDeleting, BFME_CLEANUP_009EDD30 )

@@ -60,6 +60,10 @@
 #include "tagblock.h"
 #include "realcrc.h"
 
+// The retail specialization is owned by SListTagBlockIndexRemoveAllThunk.cpp.
+// Do not instantiate the upstream linked-list cleanup for this type.
+template <> void SList<TagBlockIndex>::Remove_All(void);
+
 #include <assert.h>
 
 int TagBlockHandle::_InDestructor = 0;
