@@ -2,7 +2,7 @@
 // readable body of ??1ProductionPrerequisite@@QAE@XZ: game/GameEngine/Source/Common/RTS/ProductionPrerequisite.cpp
 
 // The three five-byte bodies that forward ProductionPrerequisite's
-// construct/destroy plumbing to a shim, each one a single tail jump:
+// construct/destroy plumbing, each one a single tail jump:
 //
 //   0x00011D47  _STL::_Destroy<ProductionPrerequisite *>
 //   0x0003AA26  _STL::_Construct<PP, PP>
@@ -44,16 +44,15 @@ public:
     ~ProductionPrerequisite();
 };
 
-class ProductionPrerequisiteDestructorShim
-{
-public:
-    void destroy();
-};
+// The destructor's retail ILT route ends at StringBase<char>::releaseBuffer.
+extern "C" void __identifier("?releaseBuffer@?$StringBase@D@@AAEXXZ")();
 
 // ??1ProductionPrerequisite@@QAE@XZ
 ProductionPrerequisite::~ProductionPrerequisite()
 {
-	((ProductionPrerequisiteDestructorShim *)this)->destroy();
+	union { void (*raw)(); void (ProductionPrerequisite::*member)(); } release;
+	release.raw = __identifier("?releaseBuffer@?$StringBase@D@@AAEXXZ");
+	(this->*release.member)();
 }
 
 namespace _STL
