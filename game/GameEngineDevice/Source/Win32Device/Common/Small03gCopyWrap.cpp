@@ -16,6 +16,16 @@
 #include "Common/AsciiString.h"
 #include <set>
 
+// Both wrappers call the existing 61-byte specialization at 0x009CC4C0.
+// Let its verified TU supply the body and its iterator operations.
+namespace _STL
+{
+template <>
+AsciiString *__copy<set<AsciiString>::iterator, AsciiString *, int>(
+	set<AsciiString>::iterator first, set<AsciiString>::iterator last,
+	AsciiString *out, const input_iterator_tag &tag, int *distance);
+}
+
 AsciiString * __cdecl Rva009CC6C0Copy(_STL::set<AsciiString>::iterator first,
 	_STL::set<AsciiString>::iterator last, AsciiString *out)
 {
