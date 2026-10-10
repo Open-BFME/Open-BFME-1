@@ -1,70 +1,22 @@
 // cl: /O2 /EHsc
 // CreditsManager::getUnicodeString — ZH twin, BFME StringBase ABI.
 
-template <typename T>
-struct StringHeader
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+
+inline UnicodeString::UnicodeString() { m_text = 0; }
+inline UnicodeString::UnicodeString(const UnicodeString &s) { ((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short> *)&s); }
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+inline UnicodeString &UnicodeString::operator=(const UnicodeString &s) { ((StringBase<unsigned short> *)this)->set(*(const StringBase<unsigned short> *)&s); return *this; }
+template<> inline const char *StringBase<char>::find(char c) const
 {
-	int refCount;
-	unsigned short length;
-	unsigned short capacity;
-	T text[1];
-};
-
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-	friend class UnicodeString;
-
-private:
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase &other);
-	~StringBase() { releaseBuffer(); }
-	void releaseBuffer();
-	const T *find(T c) const
-	{
-		const T *start = m_data ? m_data->text : (const T *)"";
-		const T *end = start + (m_data ? m_data->length : 0);
-		for (const T *p = start; p != end; ++p)
-		{
-			if (*p == c)
-				return p;
-		}
-		return 0;
-	}
-
-public:
-	void set(const StringBase &other);
-	int compare(const T *s) const;
-
-private:
-	StringHeader<T> *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-	int compare(const char *s) const { return StringBase<char>::compare(s); }
-	const char *find(char c) const { return StringBase<char>::find(c); }
-};
-
-class UnicodeString : private StringBase<unsigned short>
-{
-public:
-	UnicodeString() {}
-	UnicodeString(const UnicodeString &other) : StringBase<unsigned short>(other) {}
-	~UnicodeString() {}
-	UnicodeString &operator=(const UnicodeString &other)
-	{
-		StringBase<unsigned short>::set(other);
-		return *this;
-	}
-	void translate(const AsciiString &src);
-	static UnicodeString TheEmptyString;
-};
+    const char *start = m_data ? &m_data->data[0] : (const char *)"";
+    const char *end = start + (m_data ? m_data->length : 0);
+    for (const char *p = start; p != end; ++p) {
+        if (*p == c) return p;
+    }
+    return 0;
+}
 
 class GameTextInterface
 {
@@ -91,10 +43,10 @@ class CreditsManager
 UnicodeString CreditsManager::getUnicodeString(AsciiString str)
 {
 	UnicodeString uStr;
-	if (str.compare("<BLANK>") == 0)
+	if (str.StringBase<char>::compare("<BLANK>") == 0)
 		return UnicodeString::TheEmptyString;
 
-	if (str.find(':'))
+	if (str.StringBase<char>::find(':'))
 		uStr = TheGameText->fetch(str);
 	else
 		uStr.translate(str);
