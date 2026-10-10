@@ -30,7 +30,30 @@ public:
 
 typedef void (Rva0061DA30Base::*BaseConstructorCall)( AsciiString name );
 
-extern int g_Rva0060BEB0VTable;
+void j_0002259d();
+void j_00038997();
+void j_0002441a();
+void j_00030017();
+void j_00037290();
+void j_00037df3();
+void j_00005b78();
+void j_0000b785();
+void j_0003b449();
+void j_000200a9();
+
+// Retail VA01115E90: ten existing ILT slots.
+void *g_Va01115E90[10] = {
+	reinterpret_cast<void *>(&j_0002259d),
+	reinterpret_cast<void *>(&j_00038997),
+	reinterpret_cast<void *>(&j_0002441a),
+	reinterpret_cast<void *>(&j_00030017),
+	reinterpret_cast<void *>(&j_00037290),
+	reinterpret_cast<void *>(&j_00037df3),
+	reinterpret_cast<void *>(&j_00005b78),
+	reinterpret_cast<void *>(&j_0000b785),
+	reinterpret_cast<void *>(&j_0003b449),
+	reinterpret_cast<void *>(&j_000200a9),
+};
 
 class Rva0060BEB0Object : public Rva0061DA30Base
 {
@@ -50,7 +73,7 @@ Rva0060BEB0Object::Rva0060BEB0Object( AsciiString name )
 	union { void (__cdecl *raw)(); BaseConstructorCall member; } base;
 	base.raw = j_0001bd5b;
 	( static_cast<Rva0061DA30Base *>( this )->*base.member )( name );
-	m_vftable = &g_Rva0060BEB0VTable;
+	m_vftable = reinterpret_cast<int *>(g_Va01115E90);
 	m_fieldA0 = 0;
 	m_fieldA4 = 0;
 	m_fieldA8 = 0;

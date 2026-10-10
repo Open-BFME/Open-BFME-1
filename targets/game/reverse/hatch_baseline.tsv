@@ -725,7 +725,7 @@ address_global	game/GameEngine/Source/GameLogic/AI/PathfinderStepD4F90.cpp	g_Va0
 address_global	game/GameEngine/Source/GameLogic/AI/Rva002C1150PickUpCrateStateCtor.cpp	g_Rva010C7D30StateVTable	2
 address_global	game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldSoundParseRva0061C410.cpp	g_Rva00F36E5C	5
 address_global	game/GameEngine/Source/GameLogic/LivingWorld/Rva003B82D0ParseArmyMoveToBlock.cpp	g_Rva0107301CEmptyString	2
-address_global	game/GameEngine/Source/GameLogic/LivingWorld/Rva0060BEB0Ctor.cpp	g_Rva0060BEB0VTable	2
+address_global	game/GameEngine/Source/GameLogic/LivingWorld/Rva0060BEB0Ctor.cpp	g_Va01115E90	2	allow=1382d46803e3bff6ee61ae03ee52dc8865774995
 address_global	game/GameEngine/Source/GameLogic/Map/PolygonTriggerRva00190F10.cpp	g_Rva00EEF418	2
 address_global	game/GameEngine/Source/GameLogic/Map/Rva0018EDB0LinkedListInsert.cpp	g_Rva00EEF418	2
 address_global	game/GameEngine/Source/GameLogic/Map/Rva00190E10PolygonParserCtor.cpp	g_Rva00EEF418	2
