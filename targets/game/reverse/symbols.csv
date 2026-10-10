@@ -90966,3 +90966,4 @@ _printf,0x009F7244,route=MSVCR71.dll!printf; IAT 0x01359464; CRT printf import j
 ??2Rva00899FC0@@SAPAXI@Z,0x00897640,address-derived allocator ABI;independent 33-byte provider and constructor call sites;proof=targets/game/reverse/identity_evidence/008b4da0-allocator-binding.md
 ??4?$basic_string@GV?$char_traits@G@_STL@@V?$allocator@G@2@@_STL@@QAEAAV01@ABV01@@Z,0x004F6890,STLport 4.6 wide string copy assignment; complete helper and caller ABI; template probe exact; evidence=targets/game/reverse/identity_evidence/0064b6b0-stl-assignment.md
 ?d_0021ca50@@YAXXZ,0x0021CA50,address-only compatibility pin for retired dump; body and ABI evidence=targets/game/reverse/identity_evidence/0021ca50-existing-bindings.md
+?d_000da060@@YAXXZ,0x000DA060,address-only legacy dump compatibility
