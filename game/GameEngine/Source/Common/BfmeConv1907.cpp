@@ -45,10 +45,16 @@ public:
 	virtual void bfmeByteBA(unsigned char *dst);
 };
 
-extern "C" void __cdecl bfmeXferOneBA(Xfer *ag, void *dst);
-extern "C" void __cdecl bfmeXferTwoBA(Xfer *ag, void *dst);
-extern "C" void __cdecl bfmeXferThreeBA(Xfer *ag, void *dst);
-extern "C" void __cdecl bfmeXferFourBA(Xfer *ag, void *dst);
+// Retail calls ILT2097D -> 0010C400, ILT3E81F -> 0010BDE0,
+// ILT08D14 -> 000D7010 and ILT35814 -> 0010CC40. All four helpers
+// take two pointer stack arguments with cdecl cleanup. The science-vector
+// helper returns Xfer* in EAX; this caller discards it. Its literal ledger
+// identity keeps the vector pointee opaque in this existing layout view.
+class MidVirtualSlot90Receiver;
+void Rva0010C400(MidVirtualSlot90Receiver *ag, void *dst);
+void Rva0010BDE0(MidVirtualSlot90Receiver *ag, void *dst);
+extern "C" Xfer *__cdecl __identifier("?Rva000D7010XferScienceVector@@YAPAVXfer@@PAV1@PAV?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@@Z")(Xfer *ag, void *dst);
+void xferBlob_0010CC40(Xfer *ag, void *dst);
 
 class BfmeHostBA
 {
@@ -85,21 +91,21 @@ void BfmeHostBA::bfmeSaveBA(Xfer *ag)
 
 	ag->bfmeWordBA(m_bfmeSlotABA);
 	ag->bfmeMarkBA(m_bfmeSlotBBA);
-	bfmeXferOneBA(ag, m_bfmeSlotCBA);
+	Rva0010C400(reinterpret_cast<MidVirtualSlot90Receiver *>(ag), m_bfmeSlotCBA);
 	ag->bfmeByteBA(&m_bfmeSlotDBA);
 	ag->bfmeWordBA(m_bfmeSlotEBA);
 	ag->bfmeByteBA(&m_bfmeSlotFBA);
 	ag->bfmeByteBA(&m_bfmeSlotGBA);
-	bfmeXferTwoBA(ag, m_bfmeSlotHBA);
+	Rva0010BDE0(reinterpret_cast<MidVirtualSlot90Receiver *>(ag), m_bfmeSlotHBA);
 
 	if (info.m_bfmeLevelBA >= 2)
 	{
 		ag->bfmeWordBA(m_bfmeSlotJBA);
-		bfmeXferThreeBA(ag, m_sciences);
+		__identifier("?Rva000D7010XferScienceVector@@YAPAVXfer@@PAV1@PAV?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@@Z")(ag, m_sciences);
 	}
 
 	if (info.m_bfmeLevelBA >= 3)
-		bfmeXferFourBA(ag, m_upgradeMask);
+		xferBlob_0010CC40(ag, m_upgradeMask);
 
 	if (info.m_bfmeLevelBA >= 4)
 		ag->bfmeLateBA(m_bfmeSlotKBA);
