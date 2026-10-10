@@ -8,24 +8,7 @@
 #include <vector>
 #undef _M_insert_overflow
 
-class BFMERetailAsciiString;
-
-template <typename T> class StringBase
-{
-	friend class BFMERetailAsciiString;
-
-private:
-	StringBase(const T *text);
-	void releaseBuffer();
-	void *m_data;
-};
-
-class BFMERetailAsciiString : private StringBase<char>
-{
-public:
-	BFMERetailAsciiString(const char *text) : StringBase<char>(text) {}
-	~BFMERetailAsciiString() { releaseBuffer(); }
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class INI
 {
@@ -33,7 +16,6 @@ public:
 	const char *getNextTokenOrNull(const char *separators = 0);
 };
 
-class AsciiString;
 class UpgradeTemplate;
 
 class UpgradeCenter
@@ -60,9 +42,9 @@ void parseExperienceLevelUpgrade(INI *ini, void *instance, void *store, const vo
 	{
 		const UpgradeTemplate *upgrade;
 		{
-			BFMERetailAsciiString name(token);
+			AsciiString name(token);
 			upgrade = TheUpgradeCenter->findUpgrade(
-				*(const AsciiString *)&name);
+				name);
 		}
 
 		if (upgrade != 0)
