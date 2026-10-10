@@ -45,12 +45,12 @@ bool BaseHeightMapFloorElement::init006F8A60()
   switch (*(int *)((char *)TheGameLODManager+0x16c4)) {
   case 0: case 1: suffix="L"; break;
   case 2: suffix="M"; break;
-  case 3: case 4: suffix.clear(); break;
+  case 3: case 4: suffix.StringBase<char>::clear(); break;
   }
  }
  AsciiString &name=*(AsciiString *)((char *)this+0x88);
  filename=name;
- static_cast<StringBase<char> &>(filename).concat(suffix.str(), suffix.getLength());
+ static_cast<StringBase<char> &>(filename).concat(suffix.str(), suffix.StringBase<char>::getLength());
  if (!bfmeGo1025F((BfmeR1025 *)&filename)) filename=name;
  RenderObjClass *obj=Create_Render_Obj(filename.str());
  if (obj) {
