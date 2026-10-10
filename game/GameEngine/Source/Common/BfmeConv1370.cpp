@@ -2,17 +2,24 @@
 
 void __cdecl operator delete(void *p);
 
-class BfmeLockVHX
+// Retail 0x009DB400: the matched lock-ref release (icf owner of the row).
+class BFMEAutoLockRef
 {
 public:
-	~BfmeLockVHX();
+	__declspec(noinline) ~BFMEAutoLockRef();
+};
+
+// Retail 0x009DB5A0: the matched no-argument ThreadClass::Stop.
+class ThreadClass
+{
+public:
+	void Stop();
 };
 
 class BfmeHandleVHX
 {
 public:
 	virtual ~BfmeHandleVHX();
-	void bfmeCloseVHX();
 };
 
 class BfmeThingVHX
@@ -22,7 +29,7 @@ public:
 	char m_bfmePad[0x80];
 	BfmeHandleVHX *m_bfmeArr[10];
 	char m_bfmePad2[8];
-	BfmeLockVHX *m_bfmeLock;
+	BFMEAutoLockRef *m_bfmeLock;
 };
 
 void BfmeThingVHX::bfmeClearVHX()
@@ -35,7 +42,7 @@ void BfmeThingVHX::bfmeClearVHX()
 		BfmeHandleVHX *h = m_bfmeArr[i];
 		if (h)
 		{
-			h->bfmeCloseVHX();
+			((ThreadClass *)h)->Stop();
 			delete m_bfmeArr[i];
 			m_bfmeArr[i] = 0;
 		}
@@ -55,7 +62,8 @@ public:
 	int m_bfmeRefs;
 };
 
-void __cdecl bfmeDelArrVHY(void *p);
+// Retail 0x00881EF0, the matched operator delete[].
+void operator delete[](void *p);
 
 class BfmeThingVHY
 {
@@ -77,14 +85,14 @@ void BfmeThingVHY::bfmeClearVHY()
 {
 	if (m_bfme24)
 	{
-		bfmeDelArrVHY(m_bfme24);
+		operator delete[](m_bfme24);
 		m_bfme24 = 0;
 		m_bfme28 = 0;
 	}
 	if (m_bfme20)
-		bfmeDelArrVHY(m_bfme20);
+		operator delete[](m_bfme20);
 	if (m_bfme10 && !m_bfme30)
-		bfmeDelArrVHY(m_bfme10);
+		operator delete[](m_bfme10);
 	if (m_bfme00)
 	{
 		m_bfme00->bfmeReleaseVHY();
