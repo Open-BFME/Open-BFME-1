@@ -18,10 +18,17 @@ name: Daily link census
 # takes about 3 h on the 4-core runner and the link about 45 min; a restored
 # cache leaves mostly the link.
 #
-# Manual runs record nothing unless `record` is set; the daily schedule is added
-# once a dry run has passed on the hosted runner.
+# Manual runs record nothing unless `record` is set. The daily schedule records
+# (publish's `github.event_name == 'schedule'`): recorded hosted runs passed on
+# 2026-10-03 and 2026-10-05, and from 10-07 to 10-10 a maintainer ran the census
+# by hand on a laptop, so a day nobody did left Linking stale again. 04:23 UTC
+# (off the hour, when schedules are least delayed) leaves even a cold run time to
+# land before readme-progress.yml posts at 08:37 New York. Run no other census
+# host alongside it: two writers race on link_status.csv.
 
 on:
+  schedule:
+    - cron: '23 4 * * *'
   workflow_dispatch:
     inputs:
       record:
