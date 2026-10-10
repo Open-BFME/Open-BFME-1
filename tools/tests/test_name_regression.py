@@ -1130,3 +1130,20 @@ def test_descriptive_type_respelled_to_glo_address_name_still_fails():
 
 def test_glo_prefix_without_an_address_stays_descriptive():
     assert not N.opaque('GlobalData') and not N.opaque('GlowEffect')
+
+
+def test_bank_pairs_already_landed_in_the_source_are_not_reintroduced(repo):
+    put(repo, BANK, BEFORE)
+    put(repo, CODE, AFTER)
+    commit(repo)
+    put(repo, CODE, AFTER + '\nint addedLater() { return 1; }\n')
+    assert N.check(repo, 'HEAD', ':')[0] == []
+
+
+def test_bank_pair_introduced_by_this_change_still_fails(repo):
+    put(repo, BANK, BEFORE)
+    put(repo, CODE, BEFORE)
+    commit(repo)
+    put(repo, CODE, AFTER)
+    findings, _ = N.check(repo, 'HEAD', ':')
+    assert EXPECTED <= {(f.old_name, f.new_name) for f in findings}

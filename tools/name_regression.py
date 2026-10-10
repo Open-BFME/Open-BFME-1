@@ -760,6 +760,16 @@ def check(root, old, new):
             kept = read(root, new, a)
             names = set(tokens(kept)) if kept is not None else set()
             found = [(x, y) for x, y in found if x not in names]
+        if found and a != b and '/attempts/' in a:
+            # A bank stays paired with every later edit of the source its
+            # address names. A pair the OLD snapshot of that source already
+            # shows against the same bank landed (and was checked) earlier;
+            # this change did not introduce it (Rva003E5A50InfoCallback.cpp
+            # against attempts/0x003e5a50.cpp, re_attempts 58887).
+            landed = read(root, old, b)
+            if landed is not None:
+                earlier = set(regressions(before, landed, retained.get(a, frozenset())))
+                found = [pair for pair in found if pair not in earlier]
         candidates.extend(Finding(a, b, x, y, digest(before), digest(after)) for x, y in found)
     candidates.extend(ledger_symbol_regressions(root, old, new))
     if any(ILT_TOKEN.match(f.new_name) for f in candidates):
