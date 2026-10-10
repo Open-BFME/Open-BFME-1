@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "17160fe95171ea61c0e9e9f3b1a541df5481f3b22d5ce64bbefd08ad33844f9d",
+  "symbol": "?Rva00C6B050@@YAXXZ",
+  "score_kind": "measured",
+  "score": 0.3817,
+  "source": "// ?Rva00C6B050@@YAXXZ\n// partial score=0.3817 date=2026-10-10\n// cl: /O2 /MD\r\n#include <new>\r\n\r\nclass BfmeD1166\r\n{\r\npublic:\r\n    BfmeD1166(int tag, unsigned int bitIndex1, unsigned int bitIndex2,\r\n        unsigned int bitIndex3, unsigned int bitIndex4, unsigned int bitIndex5,\r\n        unsigned int bitIndex6, unsigned int bitIndex7) throw();\r\n    unsigned int m_bitWords[10];\r\n};\r\n\r\nextern BfmeD1166 g_rva012EF648;\r\nextern BfmeD1166 g_rva012EF670;\r\nextern BfmeD1166 g_rva012EF698;\r\nextern unsigned int g_rva012EF6C0[10];\r\n\r\n// Open BFME 2: Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp\r\nvoid Rva00C6B050()\r\n{\r\n    new (&g_rva012EF648) BfmeD1166(0, 40, 41, 42, 43, 44, 39, 116);\r\n    new (&g_rva012EF670) BfmeD1166(0, 46, 47, 48, 49, 50, 45, 117);\r\n    new (&g_rva012EF698) BfmeD1166(0, 52, 53, 54, 55, 56, 51, 118);\r\n    g_rva012EF6C0[0] = 0;\r\n    g_rva012EF6C0[1] = 0;\r\n    g_rva012EF6C0[2] = 0;\r\n    g_rva012EF6C0[3] = 0;\r\n    g_rva012EF6C0[4] = 0;\r\n    g_rva012EF6C0[5] = 0;\r\n    g_rva012EF6C0[6] = 0;\r\n    g_rva012EF6C0[7] = 0;\r\n    g_rva012EF6C0[8] = 0;\r\n    g_rva012EF6C0[9] = 0;\r\n}\r\n"
+}

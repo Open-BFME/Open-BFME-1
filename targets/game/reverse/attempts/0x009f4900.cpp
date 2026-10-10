@@ -1,5 +1,5 @@
 // ?calculate_009F4900@Gen009F5040@@QAEXPAUGen009F5040Node@@PAH11@Z
-// partial score=0.6267 date=2026-10-05
+// partial score=0.8444 date=2026-10-10
 struct Gen009F5040Item;
 
 // Independently matched overlapping receiver views, both called without a
@@ -85,6 +85,7 @@ public:
 
 // Retail preserves ECX for all four index calls and returns RET16. The
 // first getter result remains live across the second virtual call.
+// Open BFME 2: Code/GameEngine/Source/Common/Gen_00943CF0_First.cpp
 void Gen009F5040::calculate_009F4900(Gen009F5040Node *node,
 	int *result28, int *result2c, int *result24)
 {
@@ -96,8 +97,8 @@ void Gen009F5040::calculate_009F4900(Gen009F5040Node *node,
 	unsigned int difference = ((BfmeHostER *)this)->bfmeIndexER(value10 + value1->m_value00) ^ *result28;
 	difference |= ((BfmeHostES *)this)->bfmeIndexES(value10 + value1->m_value04) ^ *result2c;
 	*result24 = difference;
-	if (difference != 0) {
-		unsigned int v = difference;
+	if (*result24 != 0) {
+		unsigned int v = *result24;
 		int r = 0;
 		if (v & 0xffff0000) { v >>= 16; r = 16; }
 		if (v & 0xff00) { v >>= 8; r |= 8; }
