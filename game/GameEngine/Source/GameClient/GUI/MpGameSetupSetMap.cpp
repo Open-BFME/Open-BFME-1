@@ -3,21 +3,13 @@
 
 #include "StringInline.h"
 
-class AsciiStringCompareShim
-{
-public:
-	int compare(const AsciiString &other) const;
-};
+extern "C" void __identifier("?getMap@GameInfo@@QBE?AVAsciiString@@XZ")();
+extern "C" void __identifier("?compare@?$StringBase@D@@QBEHABV1@@Z")();
+extern "C" void __identifier("?releaseBuffer@?$StringBase@D@@AAEXXZ")();
 
 struct AsciiStringStorage
 {
 	void *m_data;
-};
-
-class AsciiStringDtorShim
-{
-public:
-	void destroy(void);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
@@ -26,12 +18,6 @@ class GameInfo
 public:
 	AsciiString getMap(void) const;
 	void setMap(AsciiString mapName);
-};
-
-class GameInfoMapShim
-{
-public:
-	AsciiString *getMapTo(AsciiString *result) const;
 };
 
 class Gen00525EE0Owner
@@ -80,10 +66,18 @@ void MpGameSetup::bfmeSetMap(const AsciiString &mapName)
 	if (m_first)
 	{
 		AsciiStringStorage current;
-		bool changed = reinterpret_cast<const AsciiStringCompareShim *>(&mapName)->compare(
-			*reinterpret_cast<const GameInfoMapShim *>(m_first)->getMapTo(
-				reinterpret_cast<AsciiString *>(&current))) != 0;
-		reinterpret_cast<AsciiStringDtorShim *>(&current)->destroy();
+		// The native nontrivial return ABI takes a hidden output pointer and
+		// returns that pointer in EAX; retail cleans its one stack slot.
+		union { void (*raw)(); AsciiString *(GameInfo::*member)(AsciiString *) const; } getMap;
+		getMap.raw = __identifier("?getMap@GameInfo@@QBE?AVAsciiString@@XZ");
+		union { void (*raw)(); int (StringBase<char>::*member)(const StringBase<char> &) const; } compare;
+		compare.raw = __identifier("?compare@?$StringBase@D@@QBEHABV1@@Z");
+		bool changed = (reinterpret_cast<const StringBase<char> *>(&mapName)->*compare.member)(
+			*reinterpret_cast<const StringBase<char> *>((m_first->*getMap.member)(
+				reinterpret_cast<AsciiString *>(&current)))) != 0;
+		union { void (*raw)(); void (StringBase<char>::*member)(); } release;
+		release.raw = __identifier("?releaseBuffer@?$StringBase@D@@AAEXXZ");
+		(reinterpret_cast<StringBase<char> *>(&current)->*release.member)();
 		if (changed)
 		{
 			m_first->setMap(mapName);
