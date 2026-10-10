@@ -12,7 +12,8 @@ extern "C" unsigned char __identifier("??_7Rva0033C070TailDtor@@6B@")[];
 #define g_bfmeVftRva0033C070TailDtor __identifier("??_7Rva0033C070TailDtor@@6B@")
 
 class Rva00339A80ParticleNode;
-extern Rva00339A80ParticleNode *g_rva00339a80Node;
+// Zero .bss pointer at 0x012F0754; the sink pointer is at 0x012F0778.
+Rva00339A80ParticleNode *g_rva00339a80Node;
 
 class Rva00339A80ParticleNode
 {
@@ -46,7 +47,7 @@ public:
 	void *m_sinkData;
 };
 
-extern Rva00339A80ParticleSink *g_rva00339a80Sink;
+Rva00339A80ParticleSink *g_rva00339a80Sink;
 extern ParticleSystemManager *TheParticleSystemManager;
 
 void Rva00339A80ParticleSystemSinkStart()
