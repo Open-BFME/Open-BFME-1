@@ -11,25 +11,32 @@ struct S4SortElem8_009F3400
 	int m_b;
 };
 
-void q3MakeHeap009F3400(S4SortElem8_009F3400 *, S4SortElem8_009F3400 *, int,
-	S4SortElem8_009F3400 *, int *);
-void q3AdjustHeap009F3400(S4SortElem8_009F3400 *, int, int, int, int, int);
-void q3SortHeap009F3400(S4SortElem8_009F3400 *, S4SortElem8_009F3400 *, int);
+// These cdecl declarations spell the existing matched STLport instantiations.
+// The caller hands __adjust_heap a POD value as two adjacent dwords and the
+// comparator as one dword: six stack slots, caller cleanup, no hidden slots.
+// Keep that measured scalar view of the same physical by-value contract.
+extern "C" void __cdecl __identifier("??$__make_heap@PAUS4SortElem8@@US4Cmp009F3400@@U1@H@_STL@@YAXPAUS4SortElem8@@0US4Cmp009F3400@@0PAH@Z")(
+    S4SortElem8_009F3400 *, S4SortElem8_009F3400 *, int,
+    S4SortElem8_009F3400 *, int *);
+extern "C" void __cdecl __identifier("??$__adjust_heap@PAUS4SortElem8@@HU1@US4Cmp009F3400@@@_STL@@YAXPAUS4SortElem8@@HHU1@US4Cmp009F3400@@@Z")(
+    S4SortElem8_009F3400 *, int, int, int, int, int);
+extern "C" void __cdecl __identifier("??$sort_heap@PAUS4SortElem8@@US4Cmp009F3400@@@_STL@@YAXPAUS4SortElem8@@0US4Cmp009F3400@@@Z")(
+    S4SortElem8_009F3400 *, S4SortElem8_009F3400 *, int);
 
 void Gen009F3B00(S4SortElem8_009F3400 *first, S4SortElem8_009F3400 *middle,
 	S4SortElem8_009F3400 *last, int, int comp)
 {
-	q3MakeHeap009F3400(first, middle, comp, (S4SortElem8_009F3400 *)0, (int *)0);
+	__identifier("??$__make_heap@PAUS4SortElem8@@US4Cmp009F3400@@U1@H@_STL@@YAXPAUS4SortElem8@@0US4Cmp009F3400@@0PAH@Z")(first, middle, comp, (S4SortElem8_009F3400 *)0, (int *)0);
 	for (S4SortElem8_009F3400 *i = middle; i < last; ++i) {
 	if (*(const float *)&i->m_b < *(const float *)&first->m_b) {
             int itemA = i->m_a;
             int itemB = i->m_b;
 			int frontA = first->m_a;
-			q3AdjustHeap009F3400(
+			__identifier("??$__adjust_heap@PAUS4SortElem8@@HU1@US4Cmp009F3400@@@_STL@@YAXPAUS4SortElem8@@HHU1@US4Cmp009F3400@@@Z")(
 				(i->m_b = first->m_b, first),
 				(i->m_a = frontA, 0),
 				(int)(middle - first), itemA, itemB, comp);
 		}
 	}
-	q3SortHeap009F3400(first, middle, comp);
+	__identifier("??$sort_heap@PAUS4SortElem8@@US4Cmp009F3400@@@_STL@@YAXPAUS4SortElem8@@0US4Cmp009F3400@@@Z")(first, middle, comp);
 }
