@@ -133,6 +133,9 @@ def _top_level_blocks(text, base=0):
             header_from = index + 1
 
 
+_PP_LINE_RE = re.compile(r"^[ \t]*#.*$", re.M)
+
+
 def asm_only_bodies(text):
     """Functions whose whole body is mnemonic __asm: a lift without __emit.
 
@@ -144,6 +147,10 @@ def asm_only_bodies(text):
     lines = text.splitlines()
     out = []
     for header, body, offset in _top_level_blocks(stripped):
+        # A preprocessor line between the previous declaration and this one
+        # (an /alternatename pragma) is not part of the signature: deleting a
+        # neighbour must not make an unchanged body read as added (59378).
+        header = _PP_LINE_RE.sub(" ", header)
         if "(" not in header or "__asm" not in body and "_asm" not in body:
             continue
         instructions = sum(
