@@ -29,11 +29,8 @@
 // EmotionTrackerUpdate's other matched rows (createEmotion's ILT, the entry
 // destructor at 0x00028FCE). That is evidence -- not proof -- that BfmeSMCTarget
 // is EmotionTrackerUpdate under an address-derived name given by a converter who
-// could only see the one body. Both spellings are kept because
-// ?bfmeApply@BfmeSMCTarget@@... is a matched pin and renaming it is identity work,
-// but the member is declared once, as the emotion tracker, and the model-condition
-// body casts. If the two classes are later shown to be one, this file is the only
-// place that has to change.
+// could only see the one body. Keep the existing receiver views but name each
+// call with its exact ledger ILT entry; neither view claims a callee identity.
 //
 // bfmeApplySpecialModelCondition came here out of ObjectModelConditions.cpp. It
 // was grouped there by its name, but it never touches the condition flags at
@@ -52,7 +49,6 @@ enum EmotionType
 class EmotionTrackerUpdate
 {
 public:
-	void forceEmotion(EmotionType emotion, float duration, const Object *source);
 };
 
 // The same object at Object+0x1F8, under the spelling its other matched method is
@@ -60,7 +56,6 @@ public:
 class BfmeSMCTarget
 {
 public:
-	void bfmeApply(Int condition, const void *animation, Int frames);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
@@ -77,6 +72,9 @@ private:
 	Object *m_containedBy;				// +0x214
 };
 
+extern "C" void __cdecl __identifier("?j_0003f4ef@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0002ad88@@YAXXZ")();
+
 // ?forceEmotion@Object@@QAEXW4EmotionType@@MPBV1@@Z
 void Object::forceEmotion(EmotionType emotion, float duration, const Object *source)
 {
@@ -88,7 +86,9 @@ void Object::forceEmotion(EmotionType emotion, float duration, const Object *sou
 			return;
 	}
 
-	object->m_emotionTracker->forceEmotion(emotion, duration, source);
+	union { void (*raw)(); void (EmotionTrackerUpdate::*member)(EmotionType,
+		float, const Object *); } force = { __identifier("?j_0003f4ef@@YAXXZ") };
+	(object->m_emotionTracker->*force.member)(emotion, duration, source);
 }
 
 // ?bfmeApplySpecialModelCondition@Object@@QAEXHPBXH@Z
@@ -103,6 +103,10 @@ void Object::bfmeApplySpecialModelCondition(Int condition, const void *animation
 		last = last->m_containedBy;
 
 	if (last->m_emotionTracker != 0)
-		reinterpret_cast<BfmeSMCTarget *>(last->m_emotionTracker)->bfmeApply(
+	{
+		union { void (*raw)(); void (BfmeSMCTarget::*member)(Int,
+			const void *, Int); } apply = { __identifier("?j_0002ad88@@YAXXZ") };
+		(reinterpret_cast<BfmeSMCTarget *>(last->m_emotionTracker)->*apply.member)(
 			condition, animation, frames);
+	}
 }
