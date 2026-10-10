@@ -34,7 +34,7 @@ template <> inline void StringBase<char>::concat(const StringBase<char> &s)
 	const char *data = s.m_data ? &s.m_data->data[0] : "";
 	concat(data, len);
 }
-template <> inline void StringBase<char>::concat(const char *s) { concat(s, (int)strlen(s)); }
+template <> inline void StringBase<char>::concat(const char *s) { concat(s, s ? strlen(s) : 0); }
 
 #define MY_INNER_PERIMETER "[Skirmish]MyInnerPerimeter"
 #define MY_OUTER_PERIMETER "[Skirmish]MyOuterPerimeter"
@@ -146,10 +146,10 @@ private:
 
 PolygonTrigger *ScriptEngine::getQualifiedTriggerAreaByName( AsciiString name )
 {
-	if (name.compare(MY_INNER_PERIMETER) == 0 || name.compare(MY_OUTER_PERIMETER) == 0) {
+	if (name.StringBase<char>::compare(MY_INNER_PERIMETER) == 0 || name.StringBase<char>::compare(MY_OUTER_PERIMETER) == 0) {
 		if (m_currentPlayer) {
 			Int ndx = m_currentPlayer->getMpStartIndex()+1;
-			if (name.compare(MY_INNER_PERIMETER) == 0) {
+			if (name.StringBase<char>::compare(MY_INNER_PERIMETER) == 0) {
 				name.format("%s%d", INNER_PERIMETER, ndx);
 			}	else {
 				name.format("%s%d", OUTER_PERIMETER, ndx);
@@ -157,7 +157,7 @@ PolygonTrigger *ScriptEngine::getQualifiedTriggerAreaByName( AsciiString name )
 		}	else {
 			return 0;
 		}
-	} else if (name.compare(ENEMY_INNER_PERIMETER) == 0 || name.compare(ENEMY_OUTER_PERIMETER) == 0) {
+	} else if (name.StringBase<char>::compare(ENEMY_INNER_PERIMETER) == 0 || name.StringBase<char>::compare(ENEMY_OUTER_PERIMETER) == 0) {
 
 		Int mpNdx;
 		mpNdx = -1;
@@ -167,7 +167,7 @@ PolygonTrigger *ScriptEngine::getQualifiedTriggerAreaByName( AsciiString name )
 				mpNdx = enemy->getMpStartIndex()+1;
 			}
 		}
-		if (name.compare(ENEMY_INNER_PERIMETER) == 0) {
+		if (name.StringBase<char>::compare(ENEMY_INNER_PERIMETER) == 0) {
 			name.format("%s%d", INNER_PERIMETER, mpNdx);
 		}	else {
 			name.format("%s%d", OUTER_PERIMETER, mpNdx);
