@@ -1,6 +1,7 @@
 // ?checkTimeouts@Rva00383690Owner@@QAEXXZ
-extern void* TheNetwork;
-int __cdecl Rva00383690Now();
+class NetworkInterface;
+extern NetworkInterface *TheNetwork;
+extern "C" unsigned long __stdcall bfme_timeGetTime(void);
 struct Rva00383690Owner {
 	char m_pad[0x10c];
 	int m_state;
@@ -20,7 +21,7 @@ void Rva00383690Owner::checkTimeouts()
 		return;
 	for (int i = 0; i < 8; ++i) {
 		if (!m_ready[i]) {
-			int now = Rva00383690Now();
+			int now = (int)bfme_timeGetTime();
 			for (int j = 0; j < 8; ++j) {
 				if (!m_ready[j] && m_since[j] + 90000 > now)
 					return;
