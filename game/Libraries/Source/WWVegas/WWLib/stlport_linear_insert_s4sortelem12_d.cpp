@@ -41,7 +41,8 @@ struct random_access_iterator_tag
 {
 };
 
-S4SortElem12 *BfmeCopyBackward0052D370(S4SortElem12 *first,
+// ILT00019CBD -> 0052D370/86: cdecl five pointers, EAX result, bare RET.
+extern "C" S4SortElem12 *__cdecl __identifier("??$__copy_backward@PAUWeaponRecoilInfo@W3DModelDraw@@PAU12@H@_STL@@YAPAUWeaponRecoilInfo@W3DModelDraw@@PAU12@00ABUrandom_access_iterator_tag@0@PAH@Z")(S4SortElem12 *first,
 	S4SortElem12 *last, S4SortElem12 *result,
 	const random_access_iterator_tag &tag, int *distance);
 
@@ -56,7 +57,7 @@ void __linear_insert(RandomAccessIter first,
 	if (less(val, *first))
 	{
 		random_access_iterator_tag tag;
-		BfmeCopyBackward0052D370(first, last, last + 1, tag, (int *)0);
+		__identifier("??$__copy_backward@PAUWeaponRecoilInfo@W3DModelDraw@@PAU12@H@_STL@@YAPAUWeaponRecoilInfo@W3DModelDraw@@PAU12@00ABUrandom_access_iterator_tag@0@PAH@Z")(first, last, last + 1, tag, (int *)0);
 		*first = val;
 	}
 	else
