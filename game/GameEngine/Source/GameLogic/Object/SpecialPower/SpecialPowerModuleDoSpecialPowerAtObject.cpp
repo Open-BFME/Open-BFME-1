@@ -54,8 +54,6 @@ public:
 class SpecialPowerModule : public SpecialPowerModuleBaseView, public SpecialPowerModuleInterface
 {
 public:
-	Bool initiateIntentToDoSpecialPower(const Object *targetObj, const Coord3D *targetPos, const Waypoint *way, UnsignedInt commandOptions);
-	void finishSpecialPower(UnsignedInt arg);
 	virtual void doSpecialPowerAtObject(Object *target, UnsignedInt commandOptions);
 
 private:
@@ -63,8 +61,16 @@ private:
 	Int m_pausedCount;
 };
 
+extern "C" void __cdecl __identifier("?j_000361ab@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_000251ad@@YAXXZ")();
+
 void SpecialPowerModule::doSpecialPowerAtObject(Object *target, UnsignedInt commandOptions)
 {
+	union { void (*raw)(); void (SpecialPowerModuleBaseView::*member)(
+		const Object *, const Coord3D *, UnsignedInt, UnsignedInt); }
+		intent = { __identifier("?j_000361ab@@YAXXZ") };
+	union { void (*raw)(); void (SpecialPowerModuleBaseView::*member)(UnsignedInt); }
+		finish = { __identifier("?j_000251ad@@YAXXZ") };
 	if ((commandOptions & 0x40000) == 0)
 	{
 		if (m_pausedCount > 0)
@@ -72,7 +78,8 @@ void SpecialPowerModule::doSpecialPowerAtObject(Object *target, UnsignedInt comm
 		if (m_object[0x1a4 / 4] != 0)
 			return;
 	}
-	initiateIntentToDoSpecialPower(target, 0, (const Waypoint *)commandOptions, 0);
+	SpecialPowerModuleBaseView *mod = this;
+	(mod->*intent.member)(target, 0, commandOptions, 0);
 	if (m_moduleData[0xc] == 0)
-		finishSpecialPower((UnsignedInt)target + 0x38);
+		(mod->*finish.member)((UnsignedInt)target + 0x38);
 }
