@@ -1,8 +1,19 @@
 // cl: /O2 /Ob0 /G6
 
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
+extern "C" void __identifier("??0?$StringBase@D@@AAE@ABV0@@Z")();
+
+struct BfmeElemCD;
+struct BfmeFalseCD;
+class BfmeVecCD
+{
+public:
+	void overflow(BfmeElemCD *, const BfmeElemCD &, const BfmeFalseCD &, unsigned, bool);
+};
+
 struct BfmeTail50
 {
-	void copyFrom(const BfmeTail50 *src);
 };
 
 struct BfmeElem50
@@ -21,8 +32,6 @@ class BfmeVec50
 {
 public:
 	void push_back(const BfmeElem50 *value);
-	void overflow(BfmeElem50 *pos, const BfmeElem50 &value,
-		const BfmeFalse50 &, unsigned fill, bool atEnd);
 
 	BfmeElem50 *_M_start;
 	BfmeElem50 *_M_finish;
@@ -40,12 +49,18 @@ void BfmeVec50::push_back(const BfmeElem50 *value)
 			f->m_00 = v->m_00;
 			f->m_04 = v->m_04;
 			f->m_08 = v->m_08;
-			f->m_0C.copyFrom(&v->m_0C);
+			union { void (*raw)(); void (StringBase<char>::*member)(const StringBase<char> &); } copy;
+			copy.raw = __identifier("??0?$StringBase@D@@AAE@ABV0@@Z");
+			(reinterpret_cast<StringBase<char> *>(&f->m_0C)->*copy.member)(
+				*reinterpret_cast<const StringBase<char> *>(&v->m_0C));
 		}
 		++_M_finish;
 	}
 	else
 	{
-		overflow(_M_finish, *value, reinterpret_cast<const BfmeFalse50 &>(value), 1, true);
+		reinterpret_cast<BfmeVecCD *>(this)->overflow(
+			reinterpret_cast<BfmeElemCD *>(_M_finish),
+			*reinterpret_cast<const BfmeElemCD *>(value),
+			reinterpret_cast<const BfmeFalseCD &>(value), 1, true);
 	}
 }
