@@ -6,15 +6,17 @@
 
 class ScriptPoolObject
 {
-public:
-	void deleteInstance(int destroy);
 };
 
 class ScriptGroupPoolObject
 {
-public:
-	void deleteInstance(int destroy);
 };
+
+// These ILTs reach the matched scalar-deleting PoolAllocation wrappers at
+// 0x00350E00 and 0x00350E30. Both take ECX and one unsigned flag, return the
+// receiver in EAX, and RET 4; the caller discards that returned pointer.
+extern "C" void __identifier("?j_00022039@@YAXXZ")();
+extern "C" void __identifier("?j_00002338@@YAXXZ")();
 
 void __cdecl operator delete(void *pointer);
 
@@ -124,7 +126,13 @@ void Gen0035B3A0::unlink(void *slot)
 			handle->m_next = 0;
 			Gen0035B3A0ScriptHandle *nextAfterClear = handle->m_next;
 			if (nextAfterClear != 0)
-				nextAfterClear->deleteInstance(1);
+			{
+				union {
+					void (*raw)();
+					void *(ScriptPoolObject::*member)(unsigned int);
+				} drop = { __identifier("?j_00022039@@YAXXZ") };
+				(nextAfterClear->*drop.member)(1);
+			}
 			operator delete(handle);
 		}
 		while (*link != 0);
@@ -151,7 +159,13 @@ void Gen0035B3A0::unlink(void *slot)
 			handle->m_next = 0;
 			Gen0035B3A0GroupHandle *nextAfterClear = handle->m_next;
 			if (nextAfterClear != 0)
-				nextAfterClear->deleteInstance(1);
+			{
+				union {
+					void (*raw)();
+					void *(ScriptGroupPoolObject::*member)(unsigned int);
+				} drop = { __identifier("?j_00002338@@YAXXZ") };
+				(nextAfterClear->*drop.member)(1);
+			}
 			operator delete(handle);
 		}
 		while (*groupLink != 0);
