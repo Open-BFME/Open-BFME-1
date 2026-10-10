@@ -6,6 +6,14 @@ public:
 	static float Random_Float();
 };
 
+// Retail ILTs 0x12846 / 0xF880 reach these existing particle helpers.
+class LivingWorldEyeTower
+{
+public:
+    void startParticleSystems();
+    void stopParticleSystems();
+};
+
 class Gen0060BE20
 {
 public:
@@ -24,8 +32,6 @@ public:
 
 private:
 	void refresh();
-	void onRandomGate();
-	void onLimitPassed();
 
 	char m_pad04[0x04];
 	void *m_object;
@@ -48,8 +54,8 @@ private:
 };
 
 extern volatile float g_bfmeUint32Scale;
-void Rva00739900Forward( void *object, float value );
-void __cdecl bfmeReportGN( void *object, void *red, void *green, void *blue );
+unsigned char Rva00739900Forward(void *object, int value);
+bool Rva007397E0(void *object, float red, float green, float blue);
 
 void Gen0060BE20::refresh()
 {
@@ -107,13 +113,15 @@ void Gen0060BE20::refresh()
 
 		if( m_target == 0 )
 		{
-			Rva00739900Forward( m_object, value );
+			// The matched opacity walk stores its raw float argument in an int
+            // slot and reads it as float. Keep the same cdecl stack bits.
+            reinterpret_cast<unsigned char (__cdecl *)(void *, float)>(Rva00739900Forward)(
+                m_object, value);
 			goto finish;
 		}
 		if( m_target == reinterpret_cast<void *>( 1 ) )
 		{
-			reinterpret_cast<void (__cdecl *)( void *, float, float, float )>( bfmeReportGN )(
-				m_object, value * m_red, value * m_green, value * m_blue );
+			Rva007397E0(m_object, value * m_red, value * m_green, value * m_blue);
 		}
 	}
 
@@ -128,8 +136,8 @@ void Gen0060BE20::updateGate()
 	refresh();
 
 	if (m_value > m_lower && m_value < m_upper && WWMath::Random_Float() > 0.7f)
-		onRandomGate();
+		((LivingWorldEyeTower *)this)->startParticleSystems();
 
 	if (m_value > m_limit)
-		onLimitPassed();
+		((LivingWorldEyeTower *)this)->stopParticleSystems();
 }
