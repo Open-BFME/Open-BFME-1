@@ -5,7 +5,8 @@ extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
 	void *handle, unsigned long milliseconds);
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
 
-extern void __stdcall initializeRva006B3C50(void *buffer);
+// Retail ILT 0004AC82 -> 006B2FC0; use the existing thunk row.
+extern void j_0004ac82();
 extern void j_0002fbbc();
 
 class GlobalData;
@@ -62,10 +63,10 @@ void Rva006B47F0Owner::refresh006B47F0()
 		typedef void (Rva006B47F0Owner::*RvaInit)(void *);
 		union
 		{
-			void (__stdcall *freeInit)(void *);
+			void (__cdecl *freeInit)();
 			RvaInit memberInit;
 		} init;
-		init.freeInit = ::initializeRva006B3C50;
+		init.freeInit = ::j_0004ac82;
 		(self->*init.memberInit)(buffer);
 	}
 }
@@ -85,10 +86,10 @@ void Rva006B47F0Owner::refresh006B48B0()
 		typedef void (Rva006B47F0Owner::*RvaInit)(void *);
 		union
 		{
-			void (__stdcall *freeInit)(void *);
+			void (__cdecl *freeInit)();
 			RvaInit memberInit;
 		} init;
-		init.freeInit = ::initializeRva006B3C50;
+		init.freeInit = ::j_0004ac82;
 		(self->*init.memberInit)(buffer);
 	}
 }

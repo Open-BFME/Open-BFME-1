@@ -5,7 +5,8 @@ extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
 	void *handle, unsigned long milliseconds);
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
 extern void j_00011748();
-extern void __stdcall initializeRva006B3C50(void *buffer);
+// Retail ILT 0004AC82 -> 006B2FC0; use the existing thunk row.
+extern void j_0004ac82();
 
 class Rva006B3C70MutexGuard
 {
@@ -83,9 +84,9 @@ void Rva006B3C70Owner::reset006B3C70(int value, int mask)
 	typedef void (Rva006B3C70Owner::*Initialize)(void *);
 	union
 	{
-		void (__stdcall *freeInitialize)(void *);
+		void (__cdecl *freeInitialize)();
 		Initialize memberInitialize;
 	} initialize;
-	initialize.freeInitialize = ::initializeRva006B3C50;
+	initialize.freeInitialize = ::j_0004ac82;
 	(self->*initialize.memberInitialize)(buffer);
 }
