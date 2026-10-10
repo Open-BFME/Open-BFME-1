@@ -21,6 +21,10 @@
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
+// Retail calls ILT 0x0000E4D0 -> hashtable::resize at 0x00430F10.
+// The target receives this in ECX and one unsigned stack argument (RET4).
+extern "C" void __cdecl __identifier("?j_0000e4d0@@YAXXZ")();
+
 namespace _STL
 {
 
@@ -105,8 +109,6 @@ public:
 	Value &_M_insert(const Value &obj);
 
 private:
-	void resize(size_type numElementsHint);			// ILT 0x0000E4D0
-
 	size_type _M_bkt_num_key(const Key &key) const
 	{
 		return _M_hash(key) % _M_buckets.size();
@@ -135,7 +137,13 @@ private:
 template <class Value, class Key, class HashFcn, class ExtractKey, class EqualKey, class Alloc>
 Value &hashtable<Value, Key, HashFcn, ExtractKey, EqualKey, Alloc>::_M_insert(const Value &obj)
 {
-	resize(_M_num_elements + 1);
+	union
+	{
+		void (__cdecl *symbol)();
+		void (hashtable::*member)(size_type);
+	} grow;
+	grow.symbol = &__identifier("?j_0000e4d0@@YAXXZ");
+	(this->*grow.member)(_M_num_elements + 1);
 
 	size_type n = _M_bkt_num(obj);
 	_Node *first = (_Node *)_M_buckets[n];
