@@ -3,10 +3,11 @@
 // table at 89A745. Complete 56B body ends RET8 at 8D2AD5, then INT3.
 // The receiver and method retain existing opaque/address-derived identities.
 // Callee 89CEF0 is a 520B ECX/one-stack-slot lookup with EAX result and RET4;
-// use the existing pinned BfmeTab1024 ABI view, not its dump's void signature.
+// reference the existing literal ledger identity through that measured ABI.
 // Both global cells and their +8 table subobjects are confirmed by retail.
 // See identity_evidence/008d2aa0-table-lookup.md.
-class BfmeTab1024 { public: int bfmeFind1024(int); };
+class BfmeTab1024 {};
+extern "C" void __cdecl __identifier("?d_0089cef0@@YAXXZ")();
 struct BfmeMap1024;
 struct Rva00899C20Registry;
 extern BfmeMap1024 *g_bfmeMap1024;
@@ -14,10 +15,16 @@ extern Rva00899C20Registry *g_Va013387D8;
 class Rva89A6E0Derived { public: int rva008D2AA0(int, int); };
 int Rva89A6E0Derived::rva008D2AA0(int, int key)
 {
-    int result = reinterpret_cast<BfmeTab1024 *>(
-        reinterpret_cast<char *>(g_bfmeMap1024) + 8)->bfmeFind1024(key);
+    union
+    {
+        void (__cdecl *symbol)();
+        int (BfmeTab1024::*member)(int);
+    } lookup;
+    lookup.symbol = &__identifier("?d_0089cef0@@YAXXZ");
+    int result = (reinterpret_cast<BfmeTab1024 *>(
+        reinterpret_cast<char *>(g_bfmeMap1024) + 8)->*lookup.member)(key);
     if (!result || (static_cast<unsigned char>(~(*reinterpret_cast<unsigned int *>(result + 4) >> 15)) & 1))
-        result = reinterpret_cast<BfmeTab1024 *>(
-            reinterpret_cast<char *>(g_Va013387D8) + 8)->bfmeFind1024(key);
+        result = (reinterpret_cast<BfmeTab1024 *>(
+            reinterpret_cast<char *>(g_Va013387D8) + 8)->*lookup.member)(key);
     return result;
 }
