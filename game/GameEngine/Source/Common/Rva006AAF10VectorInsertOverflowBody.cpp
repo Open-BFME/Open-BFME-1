@@ -6,7 +6,7 @@
 // The element type is not recoverable: all three phases reach one out-of-line
 // _STL::_Construct through the ILT at 0x00008BDE (body 0x0069C370) and the
 // teardown reaches _STL::_Destroy through the ILT at 0x000096FB (body 0x0069F100),
-// and the ledger holds neither under a real name. So the element is named for
+// Calls use the existing ILT rows, preserving their cdecl stack ABI. The element is named for
 // the address of the body it belongs to and modelled by width.
 //
 // Four bytes is what the bytes say: the size arithmetic shifts right by two and
@@ -59,10 +59,10 @@ static inline void vectorSmallDeallocate(void *block, unsigned int bytes) { __no
 // The old range is destroyed by an out-of-line _STL::_Destroy before the block
 // goes back to the allocator; it takes the same trailing dispatch tag the rest
 // of the family passes to its phase helpers.
-void __cdecl BfmeRva006AAF10Destroy(Rva006AAF10Element *first, Rva006AAF10Element *last,
+extern "C" void __cdecl __identifier("?j_000096fb@@YAXXZ")(Rva006AAF10Element *first, Rva006AAF10Element *last,
 	const __false_type &);
 
-void __cdecl BfmeRva006AAF10Construct(Rva006AAF10Element *destination,
+extern "C" void __cdecl __identifier("?j_00008bde@@YAXXZ")(Rva006AAF10Element *destination,
 	const Rva006AAF10Element &value);
 
 template <class Type>
@@ -72,7 +72,7 @@ __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
 	{
 		do
 		{
-			BfmeRva006AAF10Construct(result, *first);
+			__identifier("?j_00008bde@@YAXXZ")(result, *first);
 			++first;
 			++result;
 		}
@@ -86,7 +86,7 @@ __forceinline Type *uninitialized_fill_n(Type *result, unsigned int count, const
 {
 	for (; count > 0; --count)
 	{
-		BfmeRva006AAF10Construct(result, value);
+		__identifier("?j_00008bde@@YAXXZ")(result, value);
 		++result;
 	}
 	return result;
@@ -131,7 +131,7 @@ void vector<Type, Allocator>::_M_insert_overflow(
 
 	if (fillLength == 1)
 	{
-		BfmeRva006AAF10Construct(newFinish, value);
+		__identifier("?j_00008bde@@YAXXZ")(newFinish, value);
 		++newFinish;
 	}
 	else
@@ -142,7 +142,7 @@ void vector<Type, Allocator>::_M_insert_overflow(
 	if (!atEnd)
 		newFinish = uninitialized_copy(position, _M_finish, newFinish);
 
-	BfmeRva006AAF10Destroy(_M_start, _M_finish, reinterpret_cast<const __false_type &>(atEnd));
+	__identifier("?j_000096fb@@YAXXZ")(_M_start, _M_finish, reinterpret_cast<const __false_type &>(atEnd));
 
 	if (_M_start)
 	{
