@@ -1,4 +1,4 @@
-// BFME shim: the reference GameNetwork/GameInfo.h with two GameInfo members
+// BFME shim: the reference GameNetwork/GameInfo.h with several members
 // out of line, because retail has exactly one body of each and its callers
 // reach it through a call:
 //   GameInfo::operator=  0x004F07F0 (GameInfo_assign.cpp; GameSpyStagingRoom's
@@ -6,6 +6,9 @@
 //                        operator= emits a COMDAT copy in every TU that assigns
 //   GameInfo::getMap     0x00098E70 (MpGameSetup.cpp), where this header's
 //                        inline definition emits a COMDAT copy per TU
+//   GameSlot::getName    0x003879C0 (LANGameInfoSlotLookup.cpp), where this
+//                        header's inline body copies through ZH's UnicodeString
+//                        instead of retail's StringBase<G> copy constructor
 // Those COMDATs collide with the strong retail definitions at link time.
 // The class layout is unchanged.
 /*
@@ -114,7 +117,7 @@ public:
 	Int getTeamNumber( void ) const { return m_teamNumber; }
 
 	inline void setName( UnicodeString name ) { m_name = name; }
-	inline UnicodeString getName( void ) const { return m_name; }
+	UnicodeString getName( void ) const;	///< out of line in BFME (0x003879C0)
 
 	inline void setIP( UnsignedInt IP ) { m_IP = IP; }
 	inline UnsignedInt getIP( void ) const { return m_IP; }

@@ -121,7 +121,7 @@ public:
 	Int getTeamNumber( void ) const { return m_teamNumber; }
 
 	inline void setName( UnicodeString name ) { m_name = name; }
-	inline UnicodeString getName( void ) const { return m_name; }
+	UnicodeString getName( void ) const;	///< out of line in BFME (0x003879C0)
 
 	inline void setIP( UnsignedInt IP ) { m_IP = IP; }
 	inline UnsignedInt getIP( void ) const { return m_IP; }
