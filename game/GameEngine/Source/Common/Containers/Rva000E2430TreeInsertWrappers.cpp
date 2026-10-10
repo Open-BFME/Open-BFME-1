@@ -1,3 +1,8 @@
+// Native hinted inserts: ECX tree; output iterator, by-value hint, value ref; RET12.
+extern "C" void __identifier("?insert_unique@?$_Rb_tree@HU?$pair@$$CBHUGen_t_000e1c50_p12cd@@@_STL@@U?$_Select1st@U?$pair@$$CBHUGen_t_000e1c50_p12cd@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHUGen_t_000e1c50_p12cd@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHUGen_t_000e1c50_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_000e1c50_p12cd@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHUGen_t_000e1c50_p12cd@@@2@@Z")();
+extern "C" void __identifier("?insert_unique@?$_Rb_tree@HU?$pair@$$CBHUGen_t_00400d80_p12cd@@@_STL@@U?$_Select1st@U?$pair@$$CBHUGen_t_00400d80_p12cd@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHUGen_t_00400d80_p12cd@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHUGen_t_00400d80_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_00400d80_p12cd@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHUGen_t_00400d80_p12cd@@@2@@Z")();
+extern "C" void __identifier("?insert_unique@?$_Rb_tree@HU?$pair@$$CBHUGen_t_004e5130_p12cd@@@_STL@@U?$_Select1st@U?$pair@$$CBHUGen_t_004e5130_p12cd@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHUGen_t_004e5130_p12cd@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHUGen_t_004e5130_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_004e5130_p12cd@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHUGen_t_004e5130_p12cd@@@2@@Z")();
+
 // Three hinted-insert wrappers whose old PlayerTemplate.cpp specializations
 // named value semantics contradicted the routed retail tree bodies. The
 // payload type stays incomplete; each address gets separate tree and iterator
@@ -13,6 +18,18 @@ struct Rva000E2430Value;
 struct Rva000E2430Iterator
 {
 	Rva000E2430Iterator(const Rva000E2430Iterator &that) : m_node(that.m_node) {}
+	// Construct the result in the caller-provided return storage; this
+	// source-only constructor avoids a second aggregate-return temporary.
+	template <class Tree>
+	__forceinline Rva000E2430Iterator(Tree *tree, const Rva000E2430Iterator &position, const Rva000E2430Value &value)
+	{
+		union
+		{
+			void (*address)();
+			void (Tree::*member)(Rva000E2430Iterator *, Rva000E2430Iterator, const Rva000E2430Value &);
+		} route = { __identifier("?insert_unique@?$_Rb_tree@HU?$pair@$$CBHUGen_t_000e1c50_p12cd@@@_STL@@U?$_Select1st@U?$pair@$$CBHUGen_t_000e1c50_p12cd@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHUGen_t_000e1c50_p12cd@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHUGen_t_000e1c50_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_000e1c50_p12cd@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHUGen_t_000e1c50_p12cd@@@2@@Z") };
+		(tree->*route.member)(this, position, value);
+	}
 	void *m_node;
 };
 struct Rva000E1C50Tree
@@ -29,7 +46,7 @@ struct Rva000E2430Map
 Rva000E2430Iterator Rva000E2430Map::insert(
 	Rva000E2430Iterator position, const Rva000E2430Value &value)
 {
-	return m_tree.insert_unique(position, value);
+	return Rva000E2430Iterator(&m_tree, position, value);
 }
 
 // 0x00401630 calls ILT 0x00040F6B -> 0x00400D80. Its own complete
@@ -41,6 +58,18 @@ struct Rva00401630Value;
 struct Rva00401630Iterator
 {
 	Rva00401630Iterator(const Rva00401630Iterator &that) : m_node(that.m_node) {}
+	// Construct the result in the caller-provided return storage; this
+	// source-only constructor avoids a second aggregate-return temporary.
+	template <class Tree>
+	__forceinline Rva00401630Iterator(Tree *tree, const Rva00401630Iterator &position, const Rva00401630Value &value)
+	{
+		union
+		{
+			void (*address)();
+			void (Tree::*member)(Rva00401630Iterator *, Rva00401630Iterator, const Rva00401630Value &);
+		} route = { __identifier("?insert_unique@?$_Rb_tree@HU?$pair@$$CBHUGen_t_00400d80_p12cd@@@_STL@@U?$_Select1st@U?$pair@$$CBHUGen_t_00400d80_p12cd@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHUGen_t_00400d80_p12cd@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHUGen_t_00400d80_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_00400d80_p12cd@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHUGen_t_00400d80_p12cd@@@2@@Z") };
+		(tree->*route.member)(this, position, value);
+	}
 	void *m_node;
 };
 struct Rva00400D80Tree
@@ -57,7 +86,7 @@ struct Rva00401630Map
 Rva00401630Iterator Rva00401630Map::insert(
 	Rva00401630Iterator position, const Rva00401630Value &value)
 {
-	return m_tree.insert_unique(position, value);
+	return Rva00401630Iterator(&m_tree, position, value);
 }
 
 // 0x004E5D30 calls ILT 0x000186D3 -> 0x004E5130. Its own complete
@@ -69,6 +98,18 @@ struct Rva004E5D30Value;
 struct Rva004E5D30Iterator
 {
 	Rva004E5D30Iterator(const Rva004E5D30Iterator &that) : m_node(that.m_node) {}
+	// Construct the result in the caller-provided return storage; this
+	// source-only constructor avoids a second aggregate-return temporary.
+	template <class Tree>
+	__forceinline Rva004E5D30Iterator(Tree *tree, const Rva004E5D30Iterator &position, const Rva004E5D30Value &value)
+	{
+		union
+		{
+			void (*address)();
+			void (Tree::*member)(Rva004E5D30Iterator *, Rva004E5D30Iterator, const Rva004E5D30Value &);
+		} route = { __identifier("?insert_unique@?$_Rb_tree@HU?$pair@$$CBHUGen_t_004e5130_p12cd@@@_STL@@U?$_Select1st@U?$pair@$$CBHUGen_t_004e5130_p12cd@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHUGen_t_004e5130_p12cd@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHUGen_t_004e5130_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_004e5130_p12cd@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHUGen_t_004e5130_p12cd@@@2@@Z") };
+		(tree->*route.member)(this, position, value);
+	}
 	void *m_node;
 };
 struct Rva004E5130Tree
@@ -85,5 +126,5 @@ struct Rva004E5D30Map
 Rva004E5D30Iterator Rva004E5D30Map::insert(
 	Rva004E5D30Iterator position, const Rva004E5D30Value &value)
 {
-	return m_tree.insert_unique(position, value);
+	return Rva004E5D30Iterator(&m_tree, position, value);
 }
