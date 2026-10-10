@@ -18,10 +18,13 @@ extern "C" __declspec(dllimport) char *__cdecl strtok(char *, const char *);
 
 class GameFont;
 
-class FontLibrary
+class FontLibrary;
+
+// ILT 0x0000ABC3 reaches the verified 60-byte provider at 0x004772D0.
+class FontLibraryBFMERetail
 {
 public:
-	GameFont *getFont(AsciiString *name, Real pointSize, Bool bold);
+	GameFont *getFont(AsciiString *name, Real pointSize, unsigned char bold);
 };
 
 extern FontLibrary *TheFontLibrary;
@@ -73,7 +76,8 @@ Bool __cdecl parseFont(char *, WinInstanceData *instanceData, char *buffer, void
 		GameFont *resolvedFont;
 		{
 			AsciiString name(fontName);
-			resolvedFont = TheFontLibrary->getFont(&name, pointSize, boldFlag);
+			resolvedFont = reinterpret_cast<FontLibraryBFMERetail *>(TheFontLibrary)->getFont(
+				&name, pointSize, static_cast<Bool>(boldFlag));
 		}
 		if (resolvedFont)
 			instanceData->m_font = resolvedFont;
