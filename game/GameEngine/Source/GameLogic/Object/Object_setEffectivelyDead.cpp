@@ -85,11 +85,13 @@ class DieModule : public ObjectModule, public DieModuleInterface
 {
 };
 
-class Drawable
+class Drawable;
+
+// 0x004125F0 (matched ?bfmeForward@Gen_004125F0) forwards to 409850: signed
+// slot bounds 1..5 and a bool action, both passed as dwords.
+struct Gen_004125F0
 {
-public:
-	// 4125F0 forwards to 409850: signed slot bounds1..5 and bool action.
-	void forward4125F0(int slot, bool immediately);
+	void bfmeForward(void *slot, void *immediately);
 };
 
 class BfmeObjectDrawableDispatch
@@ -118,6 +120,8 @@ class Object : public Thing
 {
 public:
 	void setEffectivelyDead(Bool dead);
+
+protected:
 	Module *findModule(NameKeyType key) const;
 
 private:
@@ -152,7 +156,7 @@ void Object::setEffectivelyDead(Bool dead)
 		if (drawable)
 		{
 			for (int slot = 1; slot < 6; ++slot)
-				drawable->forward4125F0(slot, false);
+				reinterpret_cast<Gen_004125F0 *>(drawable)->bfmeForward((void *)slot, 0);
 		}
 	}
 	else
