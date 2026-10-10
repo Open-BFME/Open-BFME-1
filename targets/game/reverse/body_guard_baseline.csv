@@ -926,7 +926,6 @@ dir32,0x012EF630,?RvaObject012EF630@@3UGen_001bdc90@@A,"nothing in the ledger ow
 dir32,0x012F0054,?$S198@?1??getClassMemoryPool@SpecialAbilityUpdate@@CAPAVMemoryPool@@XZ@4IA,"retail 0x012F0054 is already recorded as ?$S281@?1??getClassMemoryPool@SpecialAbilityUpdate@@CAPAVMemoryPool@@XZ@4IA; reference that name, not a new one"
 dir32,0x012F02D4,?g_Rva012F02D4@@3HA,"retail 0x012F02D4 is already recorded as ?g_012F02D4@@3HA; reference that name, not a new one"
 dir32,0x012F02D8,?g_012F02D8@@3HA,"nothing in the ledger owns 0x012F02D8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x012F075C,?ClientCanAppContinue@@3_NA,"retail 0x012F075C is already recorded as ?g_012F075C@@3_NA; reference that name, not a new one"
 dir32,0x012F075D,?LogicCanAppContinue@@3_NA,"retail 0x012F075D is already recorded as ?g_012F075D@@3_NA; reference that name, not a new one"
 dir32,0x012F0760,?g_scriptFrame012F0764@@3HA,"nothing in the ledger owns 0x012F0760. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F0764,?g_scriptFrame012F0760@@3HA,"nothing in the ledger owns 0x012F0764. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
@@ -1325,3 +1324,4 @@ genalias,0x003AA640,??$__uninitialized_copy@PBVW3DAnimationInfo@@PAV1@@_STL@@YAP
 genalias,0x000A8D60,??4LadderPref@@QAEAAV0@ABV0@@Z,masked call is not a retail twin; fix the callee or drop the gen-alias note
 genalias,0x00100570,?clear@?$vector@UGen_t_000ff890_p16cd@@V?$allocator@UGen_t_000ff890_p16cd@@@_STL@@@_STL@@QAEXXZ,masked call is not a retail twin; fix the callee or drop the gen-alias note
 genalias,0x00633760,?erase@?$_Rb_tree@UGen_t_00076a90_k4@@U1@U?$_Identity@UGen_t_00076a90_k4@@@_STL@@U?$less@UGen_t_00076a90_k4@@@3@V?$allocator@UGen_t_00076a90_k4@@@3@@_STL@@QAEXU?$_Rb_tree_iterator@UGen_t_00076a90_k4@@U?$_Nonconst_traits@UGen_t_00076a90_k4@@@_STL@@@2@0@Z,masked call is not a retail twin; fix the callee or drop the gen-alias note
+

@@ -199,7 +199,8 @@ protected:
 extern int g_scriptFrame012F0760;
 extern int g_scriptFrame012F0764;
 extern bool LogicCanAppContinue;
-extern bool ClientCanAppContinue;
+extern bool g_012F075C;
+#define ClientCanAppContinue g_012F075C
 
 ScriptEngine::ScriptEngine()
 	: m_00018(0),
