@@ -4,11 +4,19 @@ struct BfmeAsciiData
 	unsigned short m_bfmeLength;
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
+// retail 0x28B360 assigns the name with a direct call to 0x887C90
+// ?set@?$StringBase@D@@QAEXABV1@@Z
+template <class T>
+class StringBase
 {
 public:
-	AsciiString &operator=(const AsciiString &other);
+	void set(const StringBase &other);
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
+class AsciiString : public StringBase<char>
+{
+public:
 	int compare(const AsciiString &other) const;
 
 	bool bfmeHasText(void) const
@@ -75,11 +83,23 @@ public:
 	virtual void bfmeReset(void);
 };
 
-class Gen_0028B360
+enum UpdateSleepTime
+{
+	UPDATE_SLEEP_NONE = 0
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
+class UpdateModule
+{
+protected:
+	// retail 0x28B360 calls ILT 0x157DA -> 0x2B2040 ?setWakeFrame@UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z
+	void setWakeFrame(Object *obj, UpdateSleepTime wakeDelay);
+};
+
+class Gen_0028B360 : public UpdateModule
 {
 public:
 	void bfmeSelect(const AsciiString &name);
-	void bfmeFinish(Object *object, int enabled);
 
 private:
 	char m_bfmeFields[8];
@@ -95,7 +115,7 @@ private:
 void Gen_0028B360::bfmeSelect(const AsciiString &name)
 {
 	Object *object = m_bfmeObject;
-	m_bfmeName = name;
+	m_bfmeName.set(name);
 	m_bfmeSelected = 0;
 
 	const AsciiString &commandSetName = object->getCommandSetString();
@@ -113,6 +133,6 @@ void Gen_0028B360::bfmeSelect(const AsciiString &name)
 	if (m_bfmeSelected != 0 && object->m_bfmeAI != 0) {
 		object->m_bfmeAI->m_bfmeCommands.aiIdle(CMD_FROM_AI);
 		m_bfmeReset.bfmeReset();
-		bfmeFinish(object, 1);
+		setWakeFrame(object, (UpdateSleepTime)1);
 	}
 }
