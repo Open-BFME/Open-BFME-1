@@ -25,9 +25,9 @@ struct Rva0051B5F0Large
 };
 #pragma pack(pop)
 
-extern Rva0051B5F0Small g_rva0051B5F0Small;
-extern Rva0051B5F0Medium g_rva0051B5F0Medium;
-extern Rva0051B5F0Large g_rva0051B5F0Large;
+Rva0051B5F0Small g_Va01105FA8 = { 0x6E616C5F, 0x0 };
+Rva0051B5F0Medium g_Va01105FB0 = { 0x696B735F, 0x73696D72, 0x68 };
+Rva0051B5F0Large g_Va01105FBC = { 0x746E695F, 0x656E7265, 0x76644174, 0x0 };
 
 class Rva0051B5F0Owner
 {
@@ -49,13 +49,13 @@ void Rva0051B5F0Owner::copyPreset( void *, void *destination, bool skip )
 	switch( m_kind )
 	{
 		case 1:
-			*(Rva0051B5F0Small *)destination = g_rva0051B5F0Small;
+			*(Rva0051B5F0Small *)destination = g_Va01105FA8;
 			break;
 		case 2:
-			*(Rva0051B5F0Medium *)destination = g_rva0051B5F0Medium;
+			*(Rva0051B5F0Medium *)destination = g_Va01105FB0;
 			break;
 		case 5:
-			*(Rva0051B5F0Large *)destination = g_rva0051B5F0Large;
+			*(Rva0051B5F0Large *)destination = g_Va01105FBC;
 			break;
 	}
 }
