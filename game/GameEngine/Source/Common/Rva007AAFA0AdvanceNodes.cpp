@@ -2,8 +2,10 @@
 // Retail 0x007AAFA0: advance inactive-node time and move the active chain.
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
-extern unsigned int g_rva007AAFA0Flags;
-extern unsigned int g_rva007AAFA0Time;
+// Zero .bss pair read only here: the once-flag (bit 0) at 0x01306DA0 and the
+// last timeGetTime() sample at 0x01306D9C.
+unsigned int g_rva007AAFA0Flags;
+unsigned int g_rva007AAFA0Time;
 
 struct Rva007AAFA0Node
 {
