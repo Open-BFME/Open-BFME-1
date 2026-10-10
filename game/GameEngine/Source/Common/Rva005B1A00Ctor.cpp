@@ -1,6 +1,13 @@
 // cl: /O2 /Ob0
 
-extern void *g_0110DDFC[];
+void j_000300df();
+void j_00040d54();
+
+// Retail table VA 0x0110DDFC: the two existing ILT entries.
+void *g_Va0110DDFC[2] = {
+	reinterpret_cast<void *>(&j_000300df),
+	reinterpret_cast<void *>(&j_00040d54)
+};
 
 class Rva005B1A00
 {
@@ -26,7 +33,7 @@ public:
 
 Rva005B1A00::Rva005B1A00()
 {
-	m_vptr = (void *)g_0110DDFC;
+	m_vptr = (void *)g_Va0110DDFC;
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0;

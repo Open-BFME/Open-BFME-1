@@ -503,6 +503,7 @@ address_global	game/GameEngine/Source/Common/Rva004E9CF0OnlineShellTeardown.cpp	
 address_global	game/GameEngine/Source/Common/Rva004E9CF0OnlineShellTeardown.cpp	g_Va012F4248	4	allow=f33ada543684d11e80c15aa357240c47b0f541bb
 address_global	game/GameEngine/Source/Common/Rva0059EE10AttackNuggetFactory.cpp	g_s4HeadRva0059EE10	2
 address_global	game/GameEngine/Source/Common/Rva005A01F0AttackNuggetFactory.cpp	g_s4HeadRva005A01F0	2
+address_global	game/GameEngine/Source/Common/Rva005B1A00Ctor.cpp	g_Va0110DDFC	2	allow=9c1572fb7f957500e28e70aa36db867c3b1ff34f
 address_global	game/GameEngine/Source/Common/Rva00627A50Clear.cpp	g_Va012F70A4	3
 address_global	game/GameEngine/Source/Common/Rva00755C80GuardedQuery.cpp	g_Va01304B5C	2
 address_global	game/GameEngine/Source/Common/Rva00770E70Ctor.cpp	g_Rva0107301CEmptyString	2
