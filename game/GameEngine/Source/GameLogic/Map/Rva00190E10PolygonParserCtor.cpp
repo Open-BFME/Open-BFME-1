@@ -28,7 +28,7 @@ extern int *g_rva0018EC80;  // retail 0x012ACB50, defined in Rva0018EC80Get.cpp
 extern int g_bfmeBFAE;
 extern unsigned int g_Rva00EEF418;
 class BfmeLinkNode;
-extern BfmeLinkNode *TheBfmeLinkHead;
+extern BfmeLinkNode *g_Rva00EEF41C;
 // Retail dispatch cells contain the deleting destructor and parse callback.
 extern void *g_0109BFBC[2];
 void j_00017837();
@@ -49,10 +49,10 @@ private:
 
 Rva00190E10PolygonParser::Rva00190E10PolygonParser(
     DataChunkInput *table, AsciiString *label)
-    : Rva00190610ParserRegistration(&TheBfmeLinkHead, table, label)
+    : Rva00190610ParserRegistration(&g_Rva00EEF41C, table, label)
 {
     m_vptr = g_0109BFBC;
-    m_10 = &TheBfmeLinkHead;
+    m_10 = &g_Rva00EEF41C;
     m_14 = 0;
     PolygonTrigger *old = ((BfmePolygonTriggerTable*)g_rva0018EC80)->head;
     ((BfmePolygonTriggerTable*)g_rva0018EC80)->head = 0;

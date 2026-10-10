@@ -21,14 +21,14 @@ public:
 };
 
 extern unsigned int g_Rva00EEF418;					// 0x012EF418
-extern BfmeLinkNode *TheBfmeLinkHead;					// 0x012EF41C
+BfmeLinkNode *g_Rva00EEF41C;					// 0x012EF41C, list head; identity unproven
 
 // ?Gen_0018edf0@@YAXPAVBfmeLinkNode@@@Z
 void Gen_0018edf0(BfmeLinkNode *node)
 {
 	g_Rva00EEF418 |= 1;
 
-	BfmeLinkNode **link = &TheBfmeLinkHead;
+	BfmeLinkNode **link = &g_Rva00EEF41C;
 
 	while (*link != node)
 	{

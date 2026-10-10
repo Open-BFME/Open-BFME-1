@@ -564,6 +564,7 @@ address_global	game/GameEngine/Source/Common/Rva00C715A0StaticCleanups.cpp	g_bfm
 address_global	game/GameEngine/Source/Common/Rva189DF0PairInitializer.cpp	g_Rva0109B558StateSecondaryVTable	2
 address_global	game/GameEngine/Source/Common/S1ZeroingThroughFixedTargets.cpp	g_bfmeVftRva0033C070TailDtor	2
 address_global	game/GameEngine/Source/Common/S2DebugCommandRegistrars.cpp	g_Rva00F36E5C	2
+address_global	game/GameEngine/Source/Common/S3GlobalListUnlink.cpp	g_Rva00EEF41C	2	allow=eead19ba86d6a2bb5d89618c413564679fbf06ce
 address_global	game/GameEngine/Source/Common/SizedDeleteDestructors.cpp	g_Va01337830	2
 address_global	game/GameEngine/Source/Common/SmallGaps/Rva0018EEF0ScaleTriples.cpp	g_Rva00EEF418	2
 address_global	game/GameEngine/Source/Common/SmallGaps/Rva009B3E40Init.cpp	g_Rva009B3E40Arr0	2

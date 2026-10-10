@@ -6938,7 +6938,6 @@ name,va
 ?TheBfmeImeManager@@3PAVBfmeImeManager@@A,0x012F3344
 ?TheBfmeImpl_002EFC30@@3PAUGen_002EFC30Impl@@A,0x012EF4CC
 ?TheBfmeKeyboardModifiers@@3PAVBfmeKeyboardModifiers@@A,0x012F4C50
-?TheBfmeLinkHead@@3PAVBfmeLinkNode@@A,0x012EF41C
 ?TheBfmeLivingWorldCampaignState@@3PAVCampaignManager@@A,0x012F1028
 ?TheBfmeLogicXG@@3PAVBfmeLogicXG@@A,0x012F0898
 ?TheBfmeManagerZE@@3PAVBfmeManagerZE@@A,0x012F1B40
