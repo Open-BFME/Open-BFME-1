@@ -286,12 +286,12 @@ class ControlBar
 public:
 	void rva004A9010(void *draw, Bool populate);
 	const CommandSet *findCommandSet(const AsciiString &name);
+	void setControlCommand(GameWindow *window, const CommandButton *button);
 
 protected:
 	void updateContextMultiSelect(void);
 
 private:
-	void setControlCommand(GameWindow *window, const CommandButton *button);
 	char m_slice_pad[0x5C];					// retail this+0x00 .. +0x5B, untouched
 	Drawable *m_currentSelectedDrawable;			// this+0x5C
 	char m_slice_padC[0x100 - 0x60];			// this+0x60 .. +0xFF, untouched
