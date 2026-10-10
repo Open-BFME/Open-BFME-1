@@ -1,5 +1,5 @@
 // ?_bfme_updateProfileDisplay@BfmeAptScreenSkirmish@@QAEXXZ
-// partial score=0.9573 date=2026-10-03
+// partial score=0.9581 date=2026-10-10
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /FAsc /Fa/tmp/bfmeProfileDisplay.cod
 #include "ascii_string.h"
 #include "unicode_string.h"
@@ -132,8 +132,9 @@ static __forceinline void setText(const char *name,
 void BfmeAptScreenSkirmish::_bfme_updateProfileDisplay() {
   UnicodeString text;
   UnicodeString dash;
-  char fallbackMovie[16];
-  char factionMovie[16];
+  char movieBufs[2][16];
+  char *fallbackMovie = movieBufs[0];
+  char *factionMovie = movieBufs[1];
   dash.format(TheGameText->fetch("APT:DashDash"));
   int faction;
   if (!preferences.unidentified_00017AF8()) {
