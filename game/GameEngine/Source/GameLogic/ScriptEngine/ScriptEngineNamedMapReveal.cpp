@@ -41,64 +41,7 @@ extern "C" int __cdecl memcmp(const void *buf1, const void *buf2, unsigned int c
 
 struct Coord3D { Real x, y, z; };
 
-struct BfmeAsciiStringData
-{
-	UnsignedShort m_refCount;
-	UnsignedShort m_numCharsAllocated;
-	UnsignedShort m_len;					// this+0x04
-	UnsignedShort m_pad;
-};
-
-template <class T> class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase(const StringBase &);
-	~StringBase();
-};
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	// Delegating, and visibly so: it is what puts the __$SEHRec$ store ahead of
-	// `mov ecx, esp` when the by-value name is built in the outgoing argument
-	// slot for getWaypointByName.
-	AsciiString(void) : m_data(0) {}
-	AsciiString(const AsciiString &that)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&that);
-	}
-
-	~AsciiString();
-
-	AsciiString &operator=(const AsciiString &that);
-
-	Int getLength(void) const { return m_data ? m_data->m_len : 0; }
-	const char *str(void) const { return m_data ? (const char *)(m_data + 1) : ""; }
-
-	Int compare(const AsciiString &other) const
-	{
-		Int lenOther = other.getLength();
-		const char *pOther = other.str();
-		Int lenThis = getLength();
-		const char *pThis = str();
-		Int shorter = lenThis < lenOther ? lenThis : lenOther;
-
-		Int diff = memcmp(pThis, pOther, shorter);
-		if (diff != 0)
-			return diff;
-
-		return lenThis - lenOther;
-	}
-
-	Bool operator==(const AsciiString &rhs) const { return compare(rhs) == 0; }
-
-private:
-	BfmeAsciiStringData *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 struct NamedReveal
@@ -232,7 +175,7 @@ void ScriptEngine::doNamedMapReveal(const AsciiString& revealName)
 
 	NamedReveal *reveal = 0;
 	for (it = m_namedReveals.begin(); it != m_namedReveals.end(); ++it) {
-		if (it->m_revealName == revealName) {
+		if (it->m_revealName.compare(revealName) == 0) {
 			reveal = &(*it);
 			break;
 		}
@@ -258,7 +201,7 @@ void ScriptEngine::undoNamedMapReveal(const AsciiString& revealName)
 
 	NamedReveal *reveal = 0;
 	for (it = m_namedReveals.begin(); it != m_namedReveals.end(); ++it) {
-		if (it->m_revealName == revealName) {
+		if (it->m_revealName.compare(revealName) == 0) {
 			reveal = &(*it);
 			break;
 		}
@@ -283,7 +226,7 @@ void ScriptEngine::removeNamedMapReveal(const AsciiString& revealName)
 	VecNamedRevealIt it;
 
 	for (it = m_namedReveals.begin(); it != m_namedReveals.end(); ++it) {
-		if (it->m_revealName == revealName) {
+		if (it->m_revealName.compare(revealName) == 0) {
 			m_namedReveals.erase(it);
 			return;
 		}
@@ -296,7 +239,7 @@ void ScriptEngine::createNamedMapReveal(const AsciiString& revealName, const Asc
 
 	// Will fail if there's already one in existence of the same name.
 	for (it = m_namedReveals.begin(); it != m_namedReveals.end(); ++it) {
-		if (it->m_revealName == revealName) {
+		if (it->m_revealName.compare(revealName) == 0) {
 			return;
 		}
 	}
