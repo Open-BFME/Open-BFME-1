@@ -11,8 +11,10 @@
 // The receiver ('this') is the UpgradeMux sub-object, an
 // interior pointer whose sibling fields sit at NEGATIVE offsets (-0x8, -0xC,
 // -0x10), so those are read with raw pointer arithmetic rather than modelled
-// as real members. Callees are pinned/landed: BfmeBaseZJ::bfmeClearZJ,
-// BfmePathCL::bfmeDropOneCL, BfmeBBP::bfmeListBP, BfmeObjF9::setFlag
+// as real members. ILT41970 reaches the opaque thiscall/RET0 body002D9F90;
+// ILT06D7F reaches Pathfinder::removeObjectFromPathfindMap at003D5810;
+// ILT21472 reaches Gen_00411580::m, an int-returning pointer-sized getter.
+// The other callees are landed: BfmeObjF9::setFlag
 // (landed, Rva0087F9C0Flag.cpp), Pathfinder::addObjectToPathfindMap (landed,
 // PathfindMapObjectWrappers.cpp), and BfmeHostCL::bfmeResetCL (landed,
 // BfmeConv1924.cpp).
@@ -21,14 +23,12 @@ class BfmeHostCL;
 
 class BfmeBaseZJ
 {
-public:
-	void bfmeClearZJ();
 };
+
+extern "C" void __cdecl __identifier("?d_002d9f90@@YAXXZ")();
 
 class BfmePathCL
 {
-public:
-	void bfmeDropOneCL(BfmeHostCL *o);
 };
 
 class AI
@@ -48,6 +48,7 @@ class Pathfinder
 {
 public:
 	void addObjectToPathfindMap(Object *object);
+	void removeObjectFromPathfindMap(Object *object);
 };
 
 class BfmeItemBP
@@ -73,8 +74,11 @@ public:
 
 class BfmeBBP
 {
-public:
-	BfmeItemBP **bfmeListBP();
+};
+
+struct Gen_00411580
+{
+	int m();
 };
 
 class BfmeHostCL
@@ -151,11 +155,17 @@ void GeometryUpgrade::removeUpgrade()
 	if (!canTeardown())
 		return;
 
-	((BfmeBaseZJ *)((char *)this - 0x10))->bfmeClearZJ();
+	union
+	{
+		void (__cdecl *symbol)();
+		void (BfmeBaseZJ::*member)();
+	} clear;
+	clear.symbol = &__identifier("?d_002d9f90@@YAXXZ");
+	(((BfmeBaseZJ *)((char *)this - 0x10))->*clear.member)();
 	BfmeHostCL *host = *(BfmeHostCL **)((char *)this - 8);
-	TheAI->m_bfmePathCL->bfmeDropOneCL(host);
+	((Pathfinder *)TheAI->m_bfmePathCL)->removeObjectFromPathfindMap((Object *)host);
 
-	BfmeItemBP **list = host->bfmeGetBBP()->bfmeListBP();
+	BfmeItemBP **list = (BfmeItemBP **)((Gen_00411580 *)host->bfmeGetBBP())->m();
 	for (BfmeItemBP *item = list[0]; item != 0; item = list[1], ++list)
 	{
 		item->bfmeItem48(0);
