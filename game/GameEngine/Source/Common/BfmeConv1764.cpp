@@ -15,5 +15,5 @@ BfmeOwnCD::~BfmeOwnCD(void)
 {
 	AsciiString *target = m_bfmeTargetCD;
 
-	target->set(m_bfmeTextCD);
+	target->StringBase<char>::set(m_bfmeTextCD);
 }
