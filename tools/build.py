@@ -1522,9 +1522,20 @@ def load_symbol_map():
     # name; it never changes what this resolver does or what the bytes must be.
     thunks = build_call_thunks()
     symbol_map = {}
+    aliases = []
     for row in load_all_function_rows():
         body = int(row["target_rva"], 16)
         symbol_map[row["name"]] = thunks.get(body, []) + [body]
+        # A row whose source emits its body under an object-symbol= name is
+        # the same body: a caller compiled against that emitted name calls the
+        # ledger row (re_attempts 59002/59046/59065/59164/59324). A funclet's
+        # $L label is TU-local and names nothing outside its TU.
+        alias = ledger_object_symbol(row)
+        if alias != row["name"] and not alias.startswith("$"):
+            aliases.append((alias, thunks.get(body, []) + [body]))
+    for alias, candidates in aliases:
+        listed = symbol_map.setdefault(alias, [])
+        listed.extend(c for c in candidates if c not in listed)
     if SYMBOLS.exists():
         # Membership sets mirroring the candidate lists, built only for the names
         # symbols.csv actually pins: `candidate not in candidates` is a linear
