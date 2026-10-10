@@ -12,13 +12,7 @@ typedef int Int;
 typedef bool Bool;
 
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	void clear();
-	void concat( const char *text, Int length );
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 template <size_t NUMBITS>
 class BitFlags
@@ -37,7 +31,7 @@ void BitFlags<NUMBITS>::buildDescription( AsciiString *str, Int maxPerLine ) con
 	if ( str == 0 )
 		return;
 
-	str->clear();
+	str->StringBase<char>::clear();
 	Bool first = true;
 	Int count = 0;
 	for ( Int i = 0; i < static_cast<Int>( NUMBITS ); ++i )
@@ -50,14 +44,14 @@ void BitFlags<NUMBITS>::buildDescription( AsciiString *str, Int maxPerLine ) con
 			continue;
 
 		if ( !first )
-			str->concat( ", ", 2 );
+			str->StringBase<char>::concat( ", ", 2 );
 		if ( count >= maxPerLine )
 		{
 			count = 0;
-			str->concat( "\n", 1 );
+			str->StringBase<char>::concat( "\n", 1 );
 		}
 		first = false;
-		str->concat( bitName, strlen( bitName ) );
+		str->StringBase<char>::concat( bitName, strlen( bitName ) );
 		++count;
 	}
 }
