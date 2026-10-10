@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath
-// Compile symbol: ?request@MeleeApproach002705D0@@QAE_NPBVCoord3D@@_N@Z
+// Compile symbol: ?requestMeleeApproachPath@AIUpdateInterface@@QAE_NPAVCoord3D@@_N@Z
 // Retail RVA 002705D0, 783 bytes. Source-family and behavior witness:
 // literal "CritterDesync: requestMeleeApproachPath1" at VA 010B9758.
 // Offset view is deliberately address-derived; no unverified class layout.
@@ -78,7 +78,7 @@ extern bool Glo012F0239;
 class CRCParameterCheck;
 extern CRCParameterCheck *TheCRCParameterCheck;
 
-class MeleeApproach002705D0 {
+class AIUpdateInterface {
 public:
     unsigned char pad000[8];
     Melee002705D0Object *m_object;
@@ -109,10 +109,10 @@ public:
         union { void (*address)(); Call member; } route={j_000065e1};
         (((Melee002705D0Route *)this)->*route.member)();
     }
-    bool request(const Coord3D *destination,bool flag);
+    bool requestMeleeApproachPath(Coord3D *destination,bool flag);
 };
 
-bool MeleeApproach002705D0::request(const Coord3D *destination,bool flag) {
+bool AIUpdateInterface::requestMeleeApproachPath(Coord3D *destination,bool flag) {
     Melee002705D0Object *obj=m_object;
     Coord3D oldPosition;
     Melee002705D0CopyCoord(oldPosition,*obj->position());
