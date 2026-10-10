@@ -124,7 +124,7 @@ void SiegeEngineContain::createPayload() {
  int count=self->field230;
  typedef const ThingTemplate* (ThingFactory::*Find)(const AsciiString&);
  union { void (*fn)(); Find call; } find={j_00028560};
- const ThingTemplate* payloadTemplate=self->field22c.isEmpty() ? 0 : (TheThingFactory->*find.call)(self->field22c);
+ const ThingTemplate* payloadTemplate=self->field22c.StringBase<char>::isEmpty() ? 0 : (TheThingFactory->*find.call)(self->field22c);
  Object* owner=object;
  PayloadContain0022BA20* contain=owner->m_contain;
  if(contain && payloadTemplate) {
@@ -138,7 +138,7 @@ void SiegeEngineContain::createPayload() {
    if(contain->isValidContainerFor(payload,true)) {
     int value=(int)(payloadTemplate->field2f4*5.0f);
     if(value>0) (((PayloadApply0022BA20*)payload)->*applyCall.call)(207,value);
-    if(!owner->m_name.isEmpty()) {
+    if(!owner->m_name.StringBase<char>::isEmpty()) {
      char name[256]; sprintf(name,"%s%d",owner->m_name.str(),i);
      payload->m_name=AsciiString(name);
     }
