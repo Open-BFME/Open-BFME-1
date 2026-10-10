@@ -627,6 +627,16 @@ void Rva0080DD80(unsigned char *output, const unsigned char *key,
 	Rva0080F300(Arc4, output + 0x30, 0x24);
 }
 
+/* Retail's /GZ stack-check table names this function's RC4 state local
+ * Arc4: the framedesc the compiler places after the body reads
+ * strCrypt, Ticket, Arc4 (retail 0x0080E170..0x0080E1B0), so the
+ * reconstruction must spell the identifier Arc4 for the bytes to match.
+ * The naming lane cannot serve this file (it is over the lane's
+ * 15000-char serve limit), so the retail spelling is applied through the
+ * preprocessor; drop the #define and rename the local directly once the
+ * lane can land that name. */
+#define rc4 Arc4
+
 int Rva0080E030(int *crypto, const unsigned char *input,
 	const unsigned char *key, unsigned int totalLength)
 {
