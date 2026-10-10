@@ -1155,3 +1155,31 @@ def test_bank_loss_already_landed_is_not_reported_when_alignment_shifts(repo):
     commit(repo)
     put(repo, CODE, 'extern void d_003e0930();\nextern void d_003e05b0();\n' + AFTER)
     assert N.check(repo, 'HEAD', ':')[0] == []
+
+
+PIN_SRC = 'game/GameEngine/Source/Common/RTS/PinRespell.cpp'
+PIN_BEFORE = ('class Shim { public: void destroy(); };\n'
+              'void f(void *p) { ((Shim *)p)->destroy(); }\n')
+PIN_AFTER = 'void j_00753450();\nvoid f(void *p) { j_00753450(); }\n'
+
+
+def _pin_case(tmp_path, pin_rva):
+    git(tmp_path, 'init', '-q')
+    git(tmp_path, 'config', 'user.name', 'Fixture')
+    git(tmp_path, 'config', 'user.email', 'fixture@example.invalid')
+    put(tmp_path, PIN_SRC, PIN_BEFORE)
+    put(tmp_path, 'targets/game/reverse/symbols.csv',
+        f'name,address,notes\n?destroy@Shim@@QAEXXZ,0x{pin_rva:08X},pin\n')
+    put(tmp_path, 'targets/game/reverse/functions.csv',
+        '?j_00753450@@YAXXZ,,0x00753450,5,game/gen_small/thunks_037.cpp,matched,gen-thunk\n')
+    commit(tmp_path)
+    put(tmp_path, PIN_SRC, PIN_AFTER)
+    return [(f.old_name, f.new_name) for f in N.check(tmp_path, 'HEAD', ':')[0]]
+
+
+def test_pinned_standin_respelled_to_ilt_row_at_its_address_passes(tmp_path):
+    assert ('destroy', 'j_00753450') not in _pin_case(tmp_path, 0x00753450)
+
+
+def test_pinned_standin_at_another_address_still_fails(tmp_path):
+    assert ('destroy', 'j_00753450') in _pin_case(tmp_path, 0x00753454)

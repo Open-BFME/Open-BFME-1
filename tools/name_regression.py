@@ -657,6 +657,7 @@ class Finding:
 
 
 DIR32_RECORD = 'targets/game/reverse/dir32_addresses.csv'
+SYMBOLS = 'targets/game/reverse/symbols.csv'
 ILT_TOKEN = re.compile(r'^\??j_([0-9A-Fa-f]{8})(?:@@YAXXZ)?$')
 IMAGE_BASE = 0x400000
 
@@ -685,6 +686,17 @@ def _ilt_respellings(root, old, new):
         bare = _bare(row.get('name') or '')
         if bare:
             recorded.setdefault(bare, set()).add(va - IMAGE_BASE)
+    # A symbols.csv pin records its stand-in at an RVA the same way
+    # (?destroy@ProductionPrerequisiteDestructorShim pinned at 0x753450,
+    # the ?j_00753450 row; re_attempts 28c943e424).
+    for row in csv.DictReader(io.StringIO(read(root, old, SYMBOLS) or '')):
+        try:
+            rva = int(row['address'], 16)
+        except (KeyError, TypeError, ValueError):
+            continue
+        bare = _bare(row.get('name') or '')
+        if bare:
+            recorded.setdefault(bare, set()).add(rva)
     ilt = set()
     for line in (read(root, new, 'targets/game/reverse/functions.csv') or '').splitlines():
         if not line.startswith('?j_'):
