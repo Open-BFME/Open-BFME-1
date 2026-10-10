@@ -30,7 +30,7 @@ void DeathStatusFlags::parse(AsciiString description)
 	Bool foundAddOrSub = false;
 	AsciiString token;
 
-	while (description.nextToken(&token))
+	while (description.StringBase<char>::nextToken(&token, 0))
 	{
 		if (!reinterpret_cast<Rva00204770BitFlagsParser *>(this)->parseToken(
 			token.str(), &foundNormal, &foundAddOrSub))
