@@ -3472,8 +3472,13 @@ def unrecorded_dir32_problem(sym, base, identities, symbol_map=None):
     # address its name spells: `??1Rva00739C70@@QAE@XZ` encodes its CLASS
     # placeholder. callee_twin follows retail's ILT `jmp rel32` thunks, so a
     # DIR32 to the thunk VA compares against the body the thunk reaches.
+    # Function manglings end with the argument-list terminator Z; data
+    # manglings end with a cv-qualifier letter. `@@[23]` anywhere in the name
+    # is NOT that marker: STL nested-class names carry `@@2` inside their
+    # template args (`V?$allocator@...@@@2@`), and skipping on it refused the
+    # matched ??1?$list@...@_STL dtor reached through its ILT.
     if (symbol_map is not None and sym in symbol_map and sym not in data
-            and not re.search(r"@@[23]", sym)):
+            and sym.endswith("Z")):
         import body_guard
         if body_guard.callee_twin(base - 0x400000, symbol_map[sym]):
             return None

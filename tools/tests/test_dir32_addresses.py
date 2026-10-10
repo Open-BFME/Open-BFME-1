@@ -140,6 +140,17 @@ def test_a_function_reached_through_its_ilt_thunk_passes(monkeypatch):
                        follow={0x000145BF: 0x00739F00}) is None
 
 
+def test_an_stl_function_name_with_a_nested_class_marker_passes(monkeypatch):
+    # The ScriptEngine ctor's cleanup reads the ??1?$list<pair<AsciiString,ObjectID>>
+    # dtor at its ILT VA 0x004183BD; `@@2` there is the allocator template's
+    # nesting marker, not a data storage class. The thunk reaches the matched
+    # body at RVA 0x00343CA0, so the placement decides the name.
+    sym = ("??1?$list@U?$pair@VAsciiString@@W4ObjectID@@@_STL@@"
+           "V?$allocator@U?$pair@VAsciiString@@W4ObjectID@@@_STL@@@2@@_STL@@QAE@XZ")
+    assert _unrecorded(monkeypatch, sym, 0x004183BD, {sym: [0x000183BD, 0x00343CA0]},
+                       follow={0x000183BD: 0x00343CA0}) is None
+
+
 def test_a_function_whose_thunk_reaches_another_body_fails(monkeypatch):
     sym = "??1Rva00739C70@@QAE@XZ"
     problem = _unrecorded(monkeypatch, sym, 0x004145BF, {sym: [0x00739F00]},
