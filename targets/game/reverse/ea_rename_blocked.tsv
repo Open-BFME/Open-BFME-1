@@ -24,3 +24,16 @@
 0x0091F730	EA class rename BoxDynamicVBAccessClass -> DynamicVBAccessClass held back: the shared dx8vertexbuffer.h already declares the real DynamicVBAccessClass with the Zero Hour shape (3-arg ctor ??0DynamicVBAccessClass@@QAE@IIG@Z, no FVF/Start members), while the byte-verified BFME stand-in carries the retail 4-arg ctor (retail mangles IIGI at 0x0091F730) plus FVF and Start between Type and VertexCount; the rename collides (C2011 redefinition) in the four TUs that include the header and keep a local view (boxrobj, sortingrenderer, Line3DClass_Render, PointGroupClassSubmit), and sortingrenderer also calls the header class static Get_Default_Vertex_Count through the same TU. Adopting the header first needs a header shape correction whose member-offset shift must be re-verified against every dependent matched row (DX8Wrapper::Set_Vertex_Buffer 0x00904510, dx8vertexbuffer.cpp members) -- a full-gate edit, not a rename. Held back so the TUs keep one class name (precedent 0x006F9900)
 0x002E2870	ilt_oracle contradicts every new name at this address (window 20477:13854-13863); name-evidence cannot land
 0x002E2970	ilt_oracle contradicts every new name at this address (window 47189:28113-28127); name-evidence cannot land
+0x006FCFC0	ilt_oracle contradicts ?bfmeSendBE@AptDisplayListState@@QAEXPAX@Z (window 23633:15485-15490); class rename cannot land
+0x0090E670	gen_asm/d_00734180.asm (5 live gen-dump rows) EXTERNs and calls ?getSurfaceLevel@W3DRadarResetTexture@@; gen_asm is not hand-editable, so the class rename breaks the link
+0x005249B0	ilt_oracle contradicts 17 of the 18 new MpGameSetup->AptMpGameSetup names; class rename cannot land
+0x00537B90	ilt_oracle contradicts 19 of the 21 new BfmeAptScreenOnlineCustomMatch->AptOnlineCustomMatch names; class rename cannot land
+0x00662A50	ilt_oracle contradicts 42 of the 44 new BFMEConnectionManager->ConnectionManager names; class rename cannot land
+0x0026FBE0	ilt_oracle contradicts ?SetEmotionState@AIUpdateInterface@@QAEXHH@Z (window 46177:27581-27586)
+0x006956D0	ilt_oracle contradicts the new MilesAudioManager name
+0x006C6910	ilt_oracle contradicts ?EstimateMaxHeightAlongLine@BaseHeightMapRenderObjClass
+0x003E6110	ilt_oracle contradicts the new Pathfinder_IsCheckForAdjust name
+0x003A7460	ilt_oracle contradicts the new LivingWorldCampaign name
+0x0076EBE0	ilt_oracle contradicts the new W3DScriptedModelDraw name
+0x00784480	ilt_oracle contradicts the new AptTexturedShape name
+0x00409E20	ilt_oracle contradicts the new BuffInstance name
