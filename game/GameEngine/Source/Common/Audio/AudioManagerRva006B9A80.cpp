@@ -11,12 +11,15 @@ class AudioEventRTS;
 class AudioManager
 {
 public:
-	unsigned int addAudioEventEx(const AudioEventRTS *event, int a, int b, int c);
 	unsigned int rva006B9A80(const AudioEventRTS *event, int extra);
 };
+
+extern "C" void __cdecl __identifier("?j_00020b08@@YAXXZ")();
 
 // ?rva006B9A80@AudioManager@@QAEIPBVAudioEventRTS@@H@Z
 unsigned int AudioManager::rva006B9A80(const AudioEventRTS *event, int extra)
 {
-	return addAudioEventEx(event, 1, 1, extra);
+	union { void (*raw)(); unsigned int (AudioManager::*member)(const AudioEventRTS *, int, int, int); }
+		dispatch = { __identifier("?j_00020b08@@YAXXZ") };
+	return (this->*dispatch.member)(event, 1, 1, extra);
 }
