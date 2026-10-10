@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 // Open-BFME7: STLport vector<12-byte record>::_M_fill_insert, retail
 // 0x0076D560, 306 bytes.  A byte twin of the vector<Coord3D> body at
@@ -8,6 +8,8 @@
 // address-derived tag.
 
 #define _STLP_NO_EXCEPTIONS 1
+// The overflow callee at 0x0076B160 uses scalar new/delete.
+#define _OPERATOR_NEW_DEFINED_
 #include <vector>
 
 struct Rva0076D560Record
