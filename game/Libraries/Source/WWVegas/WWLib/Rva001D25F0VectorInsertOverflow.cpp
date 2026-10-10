@@ -15,4 +15,23 @@ struct Rva001D28F0Element
 	Rva001D28F0Element &operator=(const Rva001D28F0Element &other);
 };
 
-template class _STL::vector<Rva001D28F0Element>;
+// ILT 0x1811A reaches the existing 60-byte construction body at 0x1C3E00.
+// It constructs the two snapshot subobjects, rather than calling an opaque
+// element copy constructor whose symbol has no retail binding.
+struct BfmeThingCNI;
+void __cdecl bfmeCopyCNI(BfmeThingCNI *, BfmeThingCNI *);
+
+namespace _STL
+{
+template <>
+__forceinline void _Construct(Rva001D28F0Element *destination,
+    const Rva001D28F0Element &value)
+{
+    bfmeCopyCNI(reinterpret_cast<BfmeThingCNI *>(destination),
+        reinterpret_cast<BfmeThingCNI *>(const_cast<Rva001D28F0Element *>(&value)));
+}
+}
+
+template void _STL::vector<Rva001D28F0Element>::_M_insert_overflow(
+    Rva001D28F0Element *, const Rva001D28F0Element &,
+    const _STL::__false_type &, unsigned int, bool);

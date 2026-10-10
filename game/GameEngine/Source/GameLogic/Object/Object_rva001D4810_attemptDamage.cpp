@@ -13,6 +13,10 @@ struct Rva001D28F0Element
 	unsigned char m_afterDelay[0x34];
 };
 
+// Existing cdecl construction body reached by retail ILT 0x1811A.
+struct BfmeThingCNI;
+void __cdecl bfmeCopyCNI(BfmeThingCNI *, BfmeThingCNI *);
+
 class ObjectDamageFallback
 {
 public:
@@ -46,6 +50,14 @@ class allocator
 
 template <class Destination, class Value>
 void __cdecl _Construct(Destination *destination, const Value &value);
+
+template <>
+__forceinline void _Construct(Rva001D28F0Element *destination,
+	const Rva001D28F0Element &value)
+{
+	bfmeCopyCNI(reinterpret_cast<BfmeThingCNI *>(destination),
+		reinterpret_cast<BfmeThingCNI *>(const_cast<Rva001D28F0Element *>(&value)));
+}
 
 template <class Type, class Allocator = allocator<Type> >
 class vector
