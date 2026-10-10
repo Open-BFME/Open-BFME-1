@@ -50,14 +50,35 @@
 // store is a null terminator; it happens after the call, so the callee is what
 // puts a usable value there.
 //
-// IDENTITY IS NOT RECOVERED.  All three callees are unclaimed and enter as
-// declarations pinned by address; every name here comes from a row or callee
-// address.
+// The adapter identities remain address-derived. Their calls bind the
+// existing matched STLport ostream and constructor identities proven by the
+// retail ILT targets below.
+
+// The ordinary retail ILTs resolve to the existing STLport ostream rows.
+// Specialization declarations keep their bodies external to this TU.
+// stlport
+#include <ostream>
+
+namespace _STL
+{
+template <> void basic_ostream<char, char_traits<char> >::_M_put_nowiden(const char *);
+template <> void basic_ostream<char, char_traits<char> >::_M_put_char(char);
+template <> basic_ostream<char, char_traits<char> > &
+    basic_ostream<char, char_traits<char> >::put(char);
+template <> basic_ostream<char, char_traits<char> > &
+    _M_put_num<char, char_traits<char>, double>(
+        basic_ostream<char, char_traits<char> > &, double);
+}
+
+// ILT 0x00016527 -> 0x005C46C0: ECX receiver, two pushed dwords,
+// ret8 on both exits, EAX=this unused here. Its constructor is the matched
+// Gen_005C46C0 row. This address declaration is used only to form the measured
+// single-inheritance member-pointer call below; it is never called as cdecl.
+extern "C" void __cdecl __identifier("??0Gen_005C46C0@@QAE@PAXI@Z")();
 
 // ------------------------------------------------------------ float widening
 
 class U1FloatSink;
-void u1Widen_005C5E40( U1FloatSink *self, double value );
 
 class U1FloatSink
 {
@@ -67,50 +88,32 @@ public:
 
 void U1FloatSink::set( float value )
 {
-	u1Widen_005C5E40( this, value );
+	_STL::_M_put_num(
+        *reinterpret_cast<_STL::basic_ostream<char, _STL::char_traits<char> > *>(this),
+        static_cast<double>(value));
 }
 
 // ---------------------------------------------------------- indexed element
 
-class U1CallReceiver_005C5BD0
-{
-public:
-	void step( int amount );
-};
-
-class U1CallSink
-{
-public:
-	void add( const char *text );
-};
-
-
-class U1CallReceiver_005C47D0
-{
-public:
-	class Argument;
-	void apply( Argument *argument );
-};
-
 void u1Call_005C7110( void *a, void *b, void *c, void **element )
 {
-	U1CallReceiver_005C5BD0 *receiver = (U1CallReceiver_005C5BD0 *)a;
-	U1CallSink *sink = (U1CallSink *)a;
+	_STL::basic_ostream<char, _STL::char_traits<char> > *receiver =
+        reinterpret_cast<_STL::basic_ostream<char, _STL::char_traits<char> > *>(a);
+	_STL::basic_ostream<char, _STL::char_traits<char> > *sink = receiver;
 	unsigned int count = (unsigned int)b;
 	if( count > 0 )
 	{
 		do
 		{
-			receiver->step( 0x20 );
+			receiver->put( ' ' );
 			--count;
 		} while( count != 0 );
 	}
 
-	sink->add( (const char *)c );
-	sink->add( " = " );
-	sink->add( (const char *)*element );
-	((U1CallReceiver_005C47D0 *)a)->apply(
-		(U1CallReceiver_005C47D0::Argument *)0x0A );
+	sink->_M_put_nowiden( (const char *)c );
+	sink->_M_put_nowiden( " = " );
+	sink->_M_put_nowiden( (const char *)*element );
+	receiver->_M_put_char( '\n' );
 }
 
 void u1Range_005C8320( void *a, void *b, void *c, int index, int end, void **array )
@@ -127,7 +130,6 @@ class U1Buffer_005C5FB0
 {
 public:
 	U1Buffer_005C5FB0( void *unused, int count, void *source );
-	void reserve( void *source, int count );
 
 	void *m_first;
 	char *m_end;
@@ -135,6 +137,11 @@ public:
 
 U1Buffer_005C5FB0::U1Buffer_005C5FB0( void *unused, int count, void *source )
 {
-	reserve( source, count + 1 );
+    union
+    {
+        void (*address)();
+        void (U1Buffer_005C5FB0::*member)(void *, unsigned int);
+    } route = { __identifier("??0Gen_005C46C0@@QAE@PAXI@Z") };
+    (this->*route.member)(source, static_cast<unsigned int>(count + 1));
 	*m_end = 0;
 }
