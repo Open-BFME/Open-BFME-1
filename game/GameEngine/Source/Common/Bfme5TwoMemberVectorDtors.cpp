@@ -1,3 +1,7 @@
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+#include <vector>
+
 // Two destructors over a vector and a second member.
 //
 // The body is one call taking the address of the second member; then that
@@ -9,17 +13,6 @@
 // only the low byte changes. Neither class is polymorphic: there is no vftable
 // store anywhere.
 
-void __cdecl bfmeFreeScalar(void *block);			// retail 0x00881EB0
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);	// retail 0x0082E5F0
-
-inline void bfmeRelease(void *block, unsigned int bytes)
-{
-	if (bytes > 0x80)
-		bfmeFreeScalar(block);
-	else
-		bfmeDeallocate(block, bytes);
-}
-
 class BfmeVecMemberZ
 {
 public:
@@ -28,7 +21,7 @@ public:
 		int *start = m_bfmeStart;
 
 		if (start)
-			bfmeRelease(start, sizeof(int) * (m_bfmeEnd - start));
+			_STL::__node_alloc<true, 0>::deallocate(start, sizeof(int) * (m_bfmeEnd - start));
 	}
 
 private:
@@ -37,14 +30,13 @@ private:
 	int *m_bfmeEnd;						// +0x08
 };
 
-class BfmeSecondZ
-{
-public:
-	~BfmeSecondZ(void);					// retail 0x00017E63
-
-private:
-	int m_bfmeField;
-};
+// Retail's second members are twelve-byte STLport vectors; the ILTs reach
+// the matched destructor specializations at 0x0035A980 and 0x0035AA50.
+struct Gen0035A980;
+struct Gen0035AA50;
+template <> _STL::vector<Gen0035A980>::~vector();
+template <> _STL::vector<Gen0035AA50>::~vector();
+class BfmeSecondZ;
 
 void __cdecl bfmeUnregister(BfmeSecondZ *second);		// retail 0x00035328
 
@@ -55,23 +47,16 @@ public:
 
 private:
 	BfmeVecMemberZ m_bfmeFirst;				// +0x00
-	BfmeSecondZ m_bfmeSecond;				// +0x0C
+	_STL::vector<Gen0035A980> m_bfmeSecond;				// +0x0C
 };
 
 // ??1Gen_0035B8A0@@QAE@XZ
 Gen_0035B8A0::~Gen_0035B8A0(void)
 {
-	bfmeUnregister(&m_bfmeSecond);
+	bfmeUnregister((BfmeSecondZ *)&m_bfmeSecond);
 }
 
-class BfmeSecondY
-{
-public:
-	~BfmeSecondY(void);					// retail 0x0002A699
-
-private:
-	int m_bfmeField;
-};
+class BfmeSecondY;
 
 void __cdecl bfmeUnregisterY(BfmeSecondY *second);		// retail 0x0002F0EF
 
@@ -82,11 +67,11 @@ public:
 
 private:
 	BfmeVecMemberZ m_bfmeFirst;				// +0x00
-	BfmeSecondY m_bfmeSecond;				// +0x0C
+	_STL::vector<Gen0035AA50> m_bfmeSecond;				// +0x0C
 };
 
 // ??1Gen_0035B960@@QAE@XZ
 Gen_0035B960::~Gen_0035B960(void)
 {
-	bfmeUnregisterY(&m_bfmeSecond);
+	bfmeUnregisterY((BfmeSecondY *)&m_bfmeSecond);
 }
