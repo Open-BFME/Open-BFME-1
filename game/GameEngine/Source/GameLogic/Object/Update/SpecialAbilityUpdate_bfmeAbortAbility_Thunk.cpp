@@ -2,9 +2,12 @@
 // Open-BFME5: convert the SpecialAbilityUpdate abort callback ILT to clean C++.
 
 // The retail callback is a five-byte ILT to the already matched body at
-// 0x002A5A30.  Its generated ledger name is the stable local spelling used by
-// the byte verifier for that body.
-void d_002a5a30();
+// 0x002A5A30. Its existing emitted member calls virtual slot11 with (0,1).
+// The five-byte jump preserves ECX, matching this member ABI.
+struct VirtualSlot11CallThunk
+{
+    void invokeZeroOne();
+};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialAbilityUpdate.h
 class SpecialAbilityUpdate
@@ -16,5 +19,5 @@ public:
 // ?bfmeAbortAbility@SpecialAbilityUpdate@@QAEXXZ
 void SpecialAbilityUpdate::bfmeAbortAbility()
 {
-    d_002a5a30();
+    reinterpret_cast<VirtualSlot11CallThunk *>(this)->invokeZeroOne();
 }
