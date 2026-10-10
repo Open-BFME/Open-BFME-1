@@ -44,6 +44,9 @@ OPAQUE = re.compile(
     r'^(?:Rva[0-9a-f]{8}|(?:d|dup|j|sub|FUN)_[0-9a-f]{8}|'
     r'Gen_?[0-9a-f]{8}|Gen_t_[0-9a-f]{8}|'
     r'(?:rva|func|fn)_?[0-9a-f]{8}|'
+    # Glo<VA>: a type or datum named after the global's address, as
+    # rename_addressed_sources.py already reads it (Glo012F4B98Type).
+    r'Glo[0-9a-f]{8}|'
     # Owner ruling 2026-10-09: bfme*/Bfme* names are converter-invented
     # placeholders, as ilt_oracle, name_lane and ilt_guard already treat them.
     r'_?bfme)', re.I)

@@ -1114,3 +1114,19 @@ def test_descriptive_address_name_to_rva_without_matching_row_still_fails(tmp_pa
 
 def test_plain_descriptive_name_to_ledger_row_still_fails(tmp_path):
     assert _addr_case(tmp_path, 'forwardBuffer', 'bfmeForward', GEN_ROW) == [('forwardBuffer', 'bfmeForward')]
+
+
+def test_glo_address_type_respelled_to_rva_owner_is_not_a_regression():
+    before = 'struct Glo012F4B98Type; void f(Glo012F4B98Type *p) { g(p); }\n'
+    after = 'struct Rva00592D60Owner; void f(Rva00592D60Owner *p) { g(p); }\n'
+    assert N.regressions(before, after) == []
+
+
+def test_descriptive_type_respelled_to_glo_address_name_still_fails():
+    before = 'struct GameWindow; void f(GameWindow *p) { g(p); }\n'
+    after = 'struct Glo012F4B98Type; void f(Glo012F4B98Type *p) { g(p); }\n'
+    assert ('GameWindow', 'Glo012F4B98Type') in N.regressions(before, after)
+
+
+def test_glo_prefix_without_an_address_stays_descriptive():
+    assert not N.opaque('GlobalData') and not N.opaque('GlowEffect')
