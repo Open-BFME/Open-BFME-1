@@ -1,51 +1,37 @@
-class BfmeTmplERD;
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class BfmeStrERD
+namespace FXParticleSystem
+{
+// Retail's allocation is 0xD0; initialization belongs to the native ctor.
+class ParticleSystemTemplate
 {
 public:
-	BfmeStrERD(const char *text);
-
-	~BfmeStrERD() { releaseBuffer(); }
-
-	void *m_bfmeDataERD;
-
+	ParticleSystemTemplate(const ParticleSystemTemplate &);
 private:
-	void releaseBuffer();
+	unsigned char m_bfmeBodyERD[0xd0];
 };
+}
 
-// Retail's global at 0x012F64BC is ParticleSystemManager *TheParticleSystemManager;
-// only the global's spelling matters to the link, so the pointee keeps this
-// TU's own template-lookup view (BfmeMgrERD) and is cast at the use.
-class ParticleSystemManager;
-
-class BfmeMgrERD
+class ParticleSystemTemplate;
+class BfmeSysERD;
+class ParticleSystemManager
 {
 public:
-	BfmeTmplERD *bfmeFindERD(const BfmeStrERD &name);
+	ParticleSystemTemplate *findTemplate(const AsciiString &) const;
 };
 
 extern ParticleSystemManager *TheParticleSystemManager;
 
-class BfmeSysERD
-{
-public:
-	BfmeSysERD(BfmeTmplERD *tmpl);
-
-	unsigned char m_bfmeBodyERD[0xd0];
-};
-
 BfmeSysERD * __stdcall bfmeMakeERD(const char *name)
 {
-	BfmeTmplERD *tmpl;
-
+	ParticleSystemTemplate *tmpl;
 	{
-		const BfmeStrERD &text = BfmeStrERD(name);
-
-		tmpl = ((BfmeMgrERD *)TheParticleSystemManager)->bfmeFindERD(text);
+		const AsciiString &text = AsciiString(name);
+		tmpl = TheParticleSystemManager->findTemplate(text);
 	}
-
 	if (tmpl == 0)
 		return 0;
-
-	return new BfmeSysERD(tmpl);
+	return reinterpret_cast<BfmeSysERD *>(
+		new FXParticleSystem::ParticleSystemTemplate(
+			*reinterpret_cast<const FXParticleSystem::ParticleSystemTemplate *>(tmpl)));
 }
