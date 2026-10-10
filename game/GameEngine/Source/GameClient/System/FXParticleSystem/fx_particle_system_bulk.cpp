@@ -586,11 +586,6 @@ private:
     unsigned char m_storage[0xb4];
 };
 
-class ParticleSystemTemplateInfoAssignShim {
-public:
-    void assign(const void *source);
-};
-
 class ParticleSystemTemplateTailAssignShim {
 public:
     ParticleSystemTemplateTailAssignShim &operator=(const ParticleSystemTemplateTailAssignShim &that);
@@ -8827,7 +8822,7 @@ ParticleSystemInfo &ParticleSystemInfo::operator=(const ParticleSystemInfo &that
 ParticleSystemTemplate &ParticleSystemTemplate::operator=(const ParticleSystemTemplate &that)
 {
     const unsigned char *source = (const unsigned char *)&that;
-    ((ParticleSystemTemplateInfoAssignShim *)this)->assign(source);
+    ((ParticleSystemInfo *)this)->operator=(*(const ParticleSystemInfo *)source);
     ((LifeEventAsciiStringAssignShim *)((unsigned char *)this + 0x98))->assign(source + 0x98);
     unsigned char *tail = (unsigned char *)this + 0xa0;
     *(unsigned int *)((unsigned char *)this + 0x9c) = 0;
