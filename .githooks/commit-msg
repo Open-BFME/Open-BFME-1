@@ -12,9 +12,31 @@ cd "$ROOT"
 # a copy without its helper uses python3 as before.
 . "$(dirname "${BASH_SOURCE[0]}")/python3.sh" 2>/dev/null || require_python3() { :; }
 require_python3 commit-msg
+
+# A checker HEAD lists must be read, not skipped: `git cat-file -e` failing on a
+# missing or corrupt object read as "no checker" and the message went unchecked
+# (GPT-6.1-Sol, hook port round 2). No HEAD yet, or HEAD without the file, is absent.
+head_lists() {
+    local listed
+    git rev-parse -q --verify HEAD > /dev/null || return 1
+    listed="$(git ls-tree --name-only HEAD -- "$1")" \
+        || { echo "COMMIT-MSG FAILED: cannot list $1 at HEAD" >&2; exit 1; }
+    [ -n "$listed" ]
+}
+# Read once into a variable, never piped into an early-exiting reader: under pipefail
+# `grep -q` exiting at its match killed a long `git show` with SIGPIPE, and the dir32
+# guard silently did not run.
+head_text() {
+    local text
+    text="$(git show "HEAD:$1")" \
+        || { echo "COMMIT-MSG FAILED: $1 is in HEAD but cannot be read" >&2; exit 1; }
+    printf -v "$2" '%s' "$text"
+}
+
 checker=tools/protected_paths.py
-if git cat-file -e "HEAD:$checker" 2>/dev/null; then
-    git show "HEAD:$checker" | python3 - --commit-msg "$1" \
+if head_lists "$checker"; then
+    head_text "$checker" checker_text
+    python3 - --commit-msg "$1" <<< "$checker_text" \
         || { echo "COMMIT-MSG FAILED: protected verifier/baseline change (see above)" >&2; exit 1; }
 elif [ -f "$checker" ]; then
     python3 "$checker" --commit-msg "$1" \
@@ -25,7 +47,10 @@ fi
 # (tools/dir32_record.py retire). Only this hook sees the message; the guard
 # runs AS OF HEAD, so an edit to it cannot approve itself.
 guard=tools/dir32_record_guard.py
-if git cat-file -e "HEAD:$guard" 2>/dev/null && git show "HEAD:$guard" | grep -q -e '--commit-msg'; then
-    git show "HEAD:$guard" | python3 - --commit-msg "$1" \
-        || { echo "COMMIT-MSG FAILED: dir32_addresses.csv line deleted outside tools/dir32_record.py (see above)" >&2; exit 1; }
+if head_lists "$guard"; then
+    head_text "$guard" guard_text
+    if grep -q -e '--commit-msg' <<< "$guard_text"; then
+        python3 - --commit-msg "$1" <<< "$guard_text" \
+            || { echo "COMMIT-MSG FAILED: dir32_addresses.csv line deleted outside tools/dir32_record.py (see above)" >&2; exit 1; }
+    fi
 fi

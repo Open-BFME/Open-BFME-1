@@ -103,6 +103,21 @@ def test_shared_source_remains_in_both_targets(repo):
     assert not out.read_text()
 
 
+def test_a_source_owning_a_game_data_row_stays_in_the_game_gate(repo):
+    # Sol, BFME1 hook port round 1: only game FUNCTION rows counted, so a source with a
+    # WorldBuilder function and a game data row was exclusive and its data unverified
+    put(repo, SHARED, "void function() {}\nint g = 1;\n")
+    ledger(repo, [SHARED])
+    put(repo, "targets/game/reverse/data_rows.csv",
+        "name,address,address_kind,size,section,source,status,evidence,model\n"
+        f"?g@@3HA,0x00A00000,va,4,.data,{SHARED},matched,x,m\n")
+    git(repo, "add", SHARED, H.LEDGER, "targets/game/reverse/data_rows.csv")
+    out = repo / "exclusive"
+    assert H.run(repo, ":", "HEAD", out)
+    assert calls(repo) == ["check", "verify"]
+    assert not out.read_text()
+
+
 def test_staged_source_with_unstaged_edits_fails_before_compilation(repo):
     add_source(repo)
     put(repo, SOURCE, "BAD unstaged body\n")

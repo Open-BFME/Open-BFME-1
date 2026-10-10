@@ -63,7 +63,8 @@ git() {
         'cat-file -e :tools/target_hooks.py'|'cat-file -e :tools/name_regression.py'|'cat-file -e :tools/name_oracle.py') return 0 ;;
         'diff --quiet -- tools/name_regression.py'|'diff --quiet -- tools/name_oracle.py') return 0 ;;
         'diff --cached --quiet -- targets/game/reverse/functions.csv') return 1 ;;
-        'diff --cached --quiet -- targets/game/reverse/symbols.csv'|'diff --cached --quiet -- targets/game/reverse/pin_consistency_baseline.csv') return 0 ;;
+        'diff --cached --name-only --no-renames --diff-filter=D') return 0 ;;
+        'diff --cached --quiet -- targets/game/reverse/symbols.csv'|'diff --cached --quiet -- targets/game/reverse/data_rows.csv'|'diff --cached --quiet -- targets/game/reverse/pin_consistency_baseline.csv') return 0 ;;
         'diff --cached --quiet -- targets/game/reverse/full_gate_baseline.txt targets/game/reverse/dir32_known_red.txt') return 0 ;;
         'diff --quiet -- targets/game/reverse/functions.csv') return 0 ;;
         'diff --quiet -- '*) return 0 ;;
@@ -349,6 +350,8 @@ def test_disabled_msys_path_conversion_does_not_break_the_hook(hook_runner, vari
 
 @pytest.mark.parametrize('listing,what,kwargs', [
     ('diff --cached --name-only --diff-filter=ACMRT', 'listing staged files', {}),
+    ('diff --cached --name-only --diff-filter=ACMR', 'listing staged files', {}),   # the lessons ban's list
+    ('diff --cached --name-only --no-renames --diff-filter=D', 'listing deleted files', {}),
     ('diff --cached --name-only --diff-filter=A', 'listing added files', {}),
     ('diff --cached --name-only -z --diff-filter=ACM -- tools/*.py', 'listing staged tools', {}),
     ('diff --name-only -z', 'listing unstaged edits',

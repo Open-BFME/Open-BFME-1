@@ -7,8 +7,9 @@ set -euo pipefail
 # Publication verifies every affected target; worker selection must not redirect its checks.
 unset BFME_TARGET BFME_TARGET_SHA256
 # This mode is valid only for callers that independently prove untouched TUs;
-# publishing always uses the normal dependency-aware selection below.
-unset BUILD_RECOMPILE_ONLY
+# publishing always uses the normal dependency-aware selection below. CL and _CL_
+# add flags to every cl.exe the build runs, so a caller's copy must not reach it.
+unset BUILD_RECOMPILE_ONLY CL _CL_
 # mktemp's /tmp paths and build.sh's /c/... script path reach native Python only
 # through Git Bash's path conversion; a caller's MSYS_NO_PATHCONV=1 disables it.
 unset MSYS_NO_PATHCONV MSYS2_ARG_CONV_EXCL
@@ -280,12 +281,11 @@ def git(*argv):
 
 claimed = {r["source"] for r in csv.DictReader(io.StringIO(
     git("show", "%s:targets/game/reverse/functions.csv" % rev))) if r.get("status") == "matched"}
-# a data-only TU owns data_rows.csv rows (tools/data_rows.py): its edits are verified too
-data = subprocess.run(("git", "show", "%s:targets/game/reverse/data_rows.csv" % rev),
-                      capture_output=True, text=True)
-if data.returncode == 0:
-    claimed |= {r["source"] for r in csv.DictReader(io.StringIO(data.stdout))
-                if r.get("status") == "matched"}
+# a data-only TU owns data_rows.csv rows (tools/data_rows.py): its edits are verified too.
+# Absent is "no data rows"; present but unreadable fails (check=True), never reads as empty.
+if git("ls-tree", "--name-only", rev, "--", "targets/game/reverse/data_rows.csv").strip():
+    claimed |= {r["source"] for r in csv.DictReader(io.StringIO(
+        git("show", "%s:targets/game/reverse/data_rows.csv" % rev))) if r.get("status") == "matched"}
 # No suffix list here: the ledger owns which paths are claimed sources
 # (.c, .cc, .cpp, .cxx, .asm today), so every changed game/ path is
 # intersected with the claimed set. A hook-local extension list let a .cc,
@@ -335,7 +335,8 @@ PY
         [ -n "${seen_sources[$s]:-}" ] && continue
         seen_sources["$s"]=1
         [ -f "$s" ] || fail "outgoing rows reference missing source $s"
-        git diff --quiet HEAD -- "$s" || fail "$s differs from HEAD; commit or stash before pushing"
+        # The pushed commit's copy, not HEAD's: build.sh verifies the file on disk.
+        git diff --quiet "$local_sha" -- "$s" || fail "$s differs from the pushed commit ${local_sha:0:10}; commit or stash before pushing"
     done
     delta_source_selectors=()
     for s in "${delta_sources[@]}" "${pin_delta_sources[@]}"; do

@@ -65,14 +65,25 @@ def _sources(root, snapshot, paths):
     return result
 
 
-def _game_sources(root, snapshot, candidates):
+GAME_DATA_ROWS = "targets/game/reverse/data_rows.csv"
+
+
+def _game_sources(root, snapshot, candidates, paths):
+    """Candidates the game gate verifies: a matched function row OR a matched data
+    row (tools/data_rows.py). A source owning a WorldBuilder function and only a game
+    data row was reported WorldBuilder-exclusive, and the game hook skipped its data."""
     if not candidates:
         return set()
-    rows = csv.DictReader(io.StringIO(_blob(root, snapshot, "targets/game/reverse/functions.csv").decode("utf-8-sig")))
-    if not rows.fieldnames or not {"source", "status"} <= set(rows.fieldnames):
-        raise HookError("targets/game/reverse/functions.csv: invalid source membership schema")
-    return {row["source"] for row in rows
-            if row.get("status") == "matched" and row.get("source") in candidates}
+    owned = set()
+    for ledger in ("targets/game/reverse/functions.csv", GAME_DATA_ROWS):
+        if ledger == GAME_DATA_ROWS and ledger not in paths:
+            continue
+        rows = csv.DictReader(io.StringIO(_blob(root, snapshot, ledger).decode("utf-8-sig")))
+        if not rows.fieldnames or not {"source", "status"} <= set(rows.fieldnames):
+            raise HookError(f"{ledger}: invalid source membership schema")
+        owned |= {row["source"] for row in rows
+                  if row.get("status") == "matched" and row.get("source") in candidates}
+    return owned
 
 
 def _checker_paths(root, snapshot, paths):
@@ -199,7 +210,7 @@ def run(root, snapshot, base=None, exclusive_output=None):
         for command in ("check", "verify"):
             subprocess.run([sys.executable, "tools/worldbuilder.py", command], cwd=root, check=True)
     if exclusive_output:
-        exclusive = sources - _game_sources(root, snapshot, sources)
+        exclusive = sources - _game_sources(root, snapshot, sources, paths)
         Path(exclusive_output).write_text("".join(path + "\n" for path in sorted(exclusive)))
     return affected
 

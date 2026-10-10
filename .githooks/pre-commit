@@ -11,6 +11,10 @@ unset BFME_TARGET BFME_TARGET_SHA256
 # cl.exe flags by hand, turns that off: Python then reads /tmp/tmp.XXXX as C:\tmp\...,
 # and a commit with anything to verify failed "filtering claimed sources".
 unset MSYS_NO_PATHCONV MSYS2_ARG_CONV_EXCL
+# Compiler state a caller exported must not reach the byte gate: BUILD_RECOMPILE_ONLY
+# reuses every unlisted object (valid only for callers that prove untouched TUs), and
+# CL/_CL_ add flags to every cl.exe the build runs. pre-push unsets the same three.
+unset BUILD_RECOMPILE_ONLY CL _CL_
 
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
@@ -87,10 +91,15 @@ rm -f "$staged_tools_out"
 # merge duplicate row") no longer existed in it, so it had stopped working as a
 # reference as well. An operational fact belongs in the commit message, in the tool
 # that enforces it, or next to the code it is about -- not in a growing middens.
-if git diff --cached --name-only --diff-filter=ACMR \
-        | grep -qE '^docs/lessons(-archive)?\.md$'; then
+# Through a file, not a pipe: under pipefail, `grep -q` exiting at its match killed
+# a long `git diff` with SIGPIPE, the pipeline failed, and the ban never fired.
+# Case-insensitive: Docs/Lessons.md is the same file on Windows and macOS.
+capture staged_names_out "listing staged files" git diff --cached --name-only --diff-filter=ACMR
+if grep -qiE '^docs/lessons(-archive)?\.md$' "$staged_names_out"; then
+    rm -f "$staged_names_out"
     fail "docs/lessons.md was deleted deliberately; put the fact where it is enforced, not in a new middens"
 fi
+rm -f "$staged_names_out"
 
 # Direction: conversions run asm -> C++, never the reverse. Byte-verification
 # cannot see this (an __emit lift of a retail dump is byte-true), so it gets
@@ -181,8 +190,10 @@ pins_changed=0
 wide_change=0
 baseline_changed=0
 body_baseline_changed=0
+full_baseline_changed=0
 dir32_record_changed=0
 attempts_changed=0
+data_rows_changed=0
 capture staged_out "listing staged files" git diff --cached --name-only --diff-filter=ACMRT
 while IFS= read -r path; do
     [ -z "${target_only_sources[$path]:-}" ] || continue
@@ -192,17 +203,28 @@ while IFS= read -r path; do
         # 216 C sources carry ledger rows (GameSpy, Lua). pre-push byte-verifies an
         # edited one; this hook only collected *.cpp, so such an edit left through
         # the early exit below with nothing verified. Kept apart from
-        # staged_sources, whose other consumers parse C++.
-        game/*.c) staged_c_sources+=("$path") ;;
+        # staged_sources, whose other consumers parse C++. The ledger also claims
+        # .cc, .cxx and .asm sources (pre-push intersects every changed game/ path
+        # with it); an edit to one with no row change left the same way. The
+        # claimed-source filter below drops any that no matched row names.
+        game/*.c|game/*.cc|game/*.cxx|game/*.asm) staged_c_sources+=("$path") ;;
+        # Data rows are byte-verified like function rows (delta_sources.py selects
+        # their sources), but a commit staging only data_rows.csv took the early
+        # exit below: gate_writers proves who wrote a row, not its bytes.
+        targets/game/reverse/data_rows.csv) data_rows_changed=1 ;;
         targets/game/reverse/pin_consistency_baseline.csv) baseline_changed=1 ;;
         targets/game/reverse/body_guard_baseline.csv) body_baseline_changed=1 ;;
+        # Rows already red on origin: a removed line claims a repair (gate_baseline
+        # --validate, HEAD's repair_queue verify-removed), so it may not take the exit.
+        targets/game/reverse/full_gate_baseline.txt|targets/game/reverse/dir32_known_red.txt) full_baseline_changed=1 ;;
         # verify_dir32_addresses trusts this record, so a hand edit is a free pass.
         targets/game/reverse/dir32_addresses.csv) dir32_record_changed=1 ;;
         # symbols.csv gets its own flag as well as ledger_changed: a PIN
         # DELETION is byte-verified by a different query than a ledger row is,
         # and only this file can trigger it.
         targets/game/reverse/symbols.csv) ledger_changed=1; pins_changed=1 ;;
-        targets/game/reverse/functions.csv) ledger_changed=1 ;;
+        # deleted_rows.csv tombstones are a ledger check_csv judges against functions.csv.
+        targets/game/reverse/functions.csv|targets/game/reverse/deleted_rows.csv) ledger_changed=1 ;;
         # A stash-only commit changes no ledger and no source, so without this
         # it takes the early exit below and check_csv never validates the very
         # file it just added. It stays out of the byte-verify set: a banked
@@ -218,6 +240,27 @@ while IFS= read -r path; do
     esac
 done < "$staged_out"
 rm -f "$staged_out"
+# Deletions and the old side of renames. The ACMRT listing above never shows them,
+# so deleting or renaming a ledger, a baseline or the DIR32 record took the early
+# exit below and nothing checked it (GPT-6.1-Sol, hook port rounds 1-2). The same
+# flags as above; a deleted game/ source is check_csv's to refuse while a row names it.
+# (header_dependents --staged already lists deleted headers.)
+deleted_source=0
+capture deleted_out "listing deleted files" git diff --cached --name-only --no-renames --diff-filter=D
+while IFS= read -r path; do
+    case "$path" in
+        targets/game/reverse/data_rows.csv) data_rows_changed=1 ;;
+        targets/game/reverse/pin_consistency_baseline.csv) baseline_changed=1 ;;
+        targets/game/reverse/body_guard_baseline.csv) body_baseline_changed=1 ;;
+        targets/game/reverse/full_gate_baseline.txt|targets/game/reverse/dir32_known_red.txt) full_baseline_changed=1 ;;
+        targets/game/reverse/dir32_addresses.csv) dir32_record_changed=1 ;;
+        targets/game/reverse/symbols.csv) ledger_changed=1; pins_changed=1 ;;
+        targets/game/reverse/functions.csv|targets/game/reverse/deleted_rows.csv) ledger_changed=1 ;;
+        targets/game/reverse/attempts/*) attempts_changed=1 ;;
+        game/*) deleted_source=1 ;;
+    esac
+done < "$deleted_out"
+rm -f "$deleted_out"
 
 # A staged .cpp, .c or table that another file #includes compiles inside it, and the
 # pattern above misses .inl and .H headers: header_dependents names both, so widen.
@@ -261,10 +304,14 @@ while IFS= read -r path; do
 done < <(grep -E '\.(cpp|c|h|hpp|asm)$' "$added_out" || true)
 rm -f "$added_out"
 
+# Every flag set above, so no change this hook knows how to check can skip it: the
+# DIR32 record and the body-guard baseline took this exit before (Sol round 2).
 if [ "${#staged_sources[@]}" -eq 0 ] && [ "${#staged_c_sources[@]}" -eq 0 ] \
-   && [ "$ledger_changed" -eq 0 ] \
+   && [ "$ledger_changed" -eq 0 ] && [ "$data_rows_changed" -eq 0 ] \
    && [ "$wide_change" -eq 0 ] && [ "$baseline_changed" -eq 0 ] \
-   && [ "$attempts_changed" -eq 0 ]; then
+   && [ "$body_baseline_changed" -eq 0 ] && [ "$full_baseline_changed" -eq 0 ] \
+   && [ "$dir32_record_changed" -eq 0 ] \
+   && [ "$attempts_changed" -eq 0 ] && [ "$deleted_source" -eq 0 ]; then
     exit 0
 fi
 
@@ -340,7 +387,7 @@ for path in "${staged_sources[@]}" "${staged_c_sources[@]}"; do
         dirty+=("$path")
     fi
 done
-for ledger in targets/game/reverse/functions.csv targets/game/reverse/symbols.csv targets/game/reverse/pin_consistency_baseline.csv; do
+for ledger in targets/game/reverse/functions.csv targets/game/reverse/symbols.csv targets/game/reverse/data_rows.csv targets/game/reverse/pin_consistency_baseline.csv; do
     if ! git diff --cached --quiet -- "$ledger" && ! git diff --quiet -- "$ledger"; then
         dirty+=("$ledger")
     fi
@@ -365,7 +412,9 @@ python3 tools/check_csv.py --staged || fail "ledger integrity (see above)"
 #     ledger-only edit never triggers the full gate — it takes the scoped path —
 #     so the one check built for exactly this change had never run on it. 1.6s,
 #     reads only the retail image and the ledgers.
-if [ "$ledger_changed" -ne 0 ]; then
+# A baseline change is judged here too: a removed line must be a fixed violation, and
+# a deleted or renamed baseline is missing for this check (it refuses).
+if [ "$ledger_changed" -ne 0 ] || [ "$baseline_changed" -ne 0 ]; then
     python3 tools/pin_consistency.py --check || fail "pin consistency (see above)"
 fi
 # 1c) Every b_<rva>() a compiled source calls keeps its ?b_<rva>@@YAXXZ pin.
@@ -383,9 +432,13 @@ fi
 if [ "$body_baseline_changed" -ne 0 ]; then
     python3 tools/body_guard.py --assert-shrink-only HEAD \
         || fail "body_guard_baseline.csv grew (see above)"
-    # A deleted debt line is credited as a repair (next_work, progress_v2,
-    # agent_yield), so its row is re-verified: the delta verify builds staged
-    # sources, this builds the rest. HEAD's checker, so an edit cannot approve itself.
+fi
+# A deleted debt line is credited as a repair (next_work, progress_v2,
+# agent_yield), so its row is re-verified: the delta verify builds staged
+# sources, this builds the rest. HEAD's checker, so an edit cannot approve itself.
+# Both debt registers: verify-removed reads body_guard_baseline.csv and
+# full_gate_baseline.txt, and a full-gate line removed alone was never rebuilt.
+if [ "$body_baseline_changed" -ne 0 ] || [ "$full_baseline_changed" -ne 0 ]; then
     if git cat-file -e HEAD:tools/repair_queue.py 2>/dev/null; then
         git show HEAD:tools/repair_queue.py | python3 - verify-removed \
             || fail "a deleted gate-debt line's row still fails its check (see above)"

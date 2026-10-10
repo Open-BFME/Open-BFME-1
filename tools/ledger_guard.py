@@ -24,10 +24,14 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+# data_rows.csv too: build.py byte-verifies a source's data rows from the
+# working-tree file (tools/data_rows.py), so an unstaged row would be proven
+# in place of the committed one.
 if (ROOT / "targets" / "game" / "reverse" / "functions.csv").exists():      # Open-BFME-1
-    LEDGERS = ("targets/game/reverse/functions.csv", "targets/game/reverse/symbols.csv")
+    LEDGERS = ("targets/game/reverse/functions.csv", "targets/game/reverse/symbols.csv",
+               "targets/game/reverse/data_rows.csv")
 else:                                                                         # Open-BFME-2
-    LEDGERS = ("reverse/functions.csv", "reverse/symbols.csv")
+    LEDGERS = ("reverse/functions.csv", "reverse/symbols.csv", "reverse/data_rows.csv")
 
 
 def differing(*spec):

@@ -18,8 +18,10 @@ verified="$(cat "$record" 2>/dev/null || true)"
 rm -f "$record"
 [ -n "$verified" ] && [ "$verified" = "$(git rev-parse -q --verify 'HEAD^{tree}')" ] && exit 0
 
-if git diff-tree --no-commit-id --name-only -r HEAD 2>/dev/null \
-        | grep -qE '^targets/game/reverse/(functions|symbols|deleted_rows)\.csv$|^game/.*\.cpp$'; then
+# A here-string, not a pipe: under pipefail, `grep -q` exiting at its match killed a
+# long diff-tree with SIGPIPE, the pipeline failed, and the re-check was skipped.
+changed="$(git diff-tree --no-commit-id --name-only -r HEAD 2>/dev/null || true)"
+if grep -qE '^targets/game/reverse/(functions|symbols|deleted_rows|data_rows)\.csv$|^game/.*\.cpp$' <<< "$changed"; then
     # Beside the hook, not the tree: tests and seats run copies of a hook elsewhere;
     # a copy without its helper uses python3 as before.
     . "$(dirname "${BASH_SOURCE[0]}")/python3.sh" 2>/dev/null || require_python3() { :; }

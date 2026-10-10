@@ -67,6 +67,20 @@ def test_push_refuses_a_ledger_that_is_not_the_pushed_commits(repo):
     assert G.main(["--commit", git(repo, "rev-parse", "HEAD").strip()]) == 0
 
 
+def test_an_unstaged_data_row_is_refused_at_commit_and_push(repo):
+    # Open-BFME-2 36a0bdc042: build.py proves data rows from the working-tree data_rows.csv
+    data = G.LEDGERS[2]
+    (repo / data).write_text("name,rva,size,source,status,notes\ng,0x00A00000,4,Unit.cpp,matched,\n")
+    git(repo, "add", data)
+    git(repo, "commit", "-qm", "data row")
+    head = git(repo, "rev-parse", "HEAD").strip()
+    (repo / data).write_text("name,rva,size,source,status,notes\ng,0x00A00004,4,Unit.cpp,matched,\n")
+    assert G.main(["--staged"]) == 1
+    assert G.main(["--commit", head]) == 1
+    git(repo, "add", data)
+    assert G.main(["--staged"]) == 0 and G.main(["--commit", head]) == 1
+
+
 @pytest.mark.parametrize("hook,call", [("pre-commit", "ledger_guard.py --staged"),
                                        ("pre-push", 'ledger_guard.py --commit "$local_sha"')])
 def test_hooks_guard_before_any_build(hook, call):
