@@ -4,14 +4,12 @@ class Object {};
 class FXList
 {
 public:
-	bool isEmpty(void) const;
 	void doFXObj(const Object *source, const Object *target) const;
 };
 
 class BfmeSecondaryTarget
 {
 public:
-	void bfmeRun(Object *object, int mode, int enabled);
 };
 
 struct BfmeDualDispatchOwner
@@ -24,7 +22,10 @@ struct BfmeDualDispatchOwner
 	BfmeSecondaryTarget **m_bfmeTargetEnd;
 };
 
-int StructureCollapseRandom(int low, int high, const char *source, int line);
+extern "C" int __cdecl __identifier("?j_00001bae@@YAXXZ")(
+	int low, int high, const char *source, int line);
+extern "C" void __cdecl __identifier("?j_00011f77@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_000160d1@@YAXXZ")();
 
 class Coord3D;
 
@@ -43,6 +44,11 @@ private:
 // ?onCollide@CritterEmitterUpdate@@UAEXPAVObject@@PBVCoord3D@@1@Z
 void CritterEmitterUpdate::onCollide(Object *, const Coord3D *, const Coord3D *)
 {
+	union { void (*raw)(); bool (FXList::*member)() const; }
+		blocked = { __identifier("?j_00011f77@@YAXXZ") };
+	union { void (*raw)(); void (BfmeSecondaryTarget::*member)(
+		const Object *, const Object *, unsigned) const; }
+		create = { __identifier("?j_000160d1@@YAXXZ") };
 	if (m_bfmeComplete)
 		return;
 
@@ -50,24 +56,24 @@ void CritterEmitterUpdate::onCollide(Object *, const Coord3D *, const Coord3D *)
 		reinterpret_cast<char *>(this) - 0x1C);
 	int fxCount = owner->m_bfmeFXEnd - owner->m_bfmeFXBegin;
 	if (fxCount > 0) {
-		int index = StructureCollapseRandom(0, fxCount - 1,
+		int index = __identifier("?j_00001bae@@YAXXZ")(0, fxCount - 1,
 			"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\CritterEmitter.cpp", 127);
 		FXList *fx = owner->m_bfmeFXBegin[index];
 		Object *object = *reinterpret_cast<Object **>(
 			reinterpret_cast<char *>(this) - 0x18);
-		if (fx != 0 && !fx->isEmpty())
+		if (fx != 0 && !(fx->*blocked.member)())
 			fx->doFXObj(object, 0);
 	}
 
 	int targetCount = owner->m_bfmeTargetEnd - owner->m_bfmeTargetBegin;
 	if (targetCount > 0) {
-		int index = StructureCollapseRandom(0, targetCount - 1,
+		int index = __identifier("?j_00001bae@@YAXXZ")(0, targetCount - 1,
 			"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\CritterEmitter.cpp", 138);
 		BfmeSecondaryTarget *target = owner->m_bfmeTargetBegin[index];
 		if (target != 0) {
 			Object *object = *reinterpret_cast<Object **>(
 				reinterpret_cast<char *>(this) - 0x18);
-			target->bfmeRun(object, 0, 0);
+			(target->*create.member)(object, 0, 0);
 		}
 	}
 
