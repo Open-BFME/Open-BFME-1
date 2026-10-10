@@ -34,7 +34,6 @@ public:
 class WaterTracksObjInitShim
 {
 public:
-	WaterTracksObjInitShim *construct(void);
 
 	unsigned char m_beforeLinks[0xb0];
 	WaterTracksObjInitShim *m_next;
@@ -55,7 +54,6 @@ extern void *operator new(unsigned int size);
 class WaterTracksRenderSystemInitShim
 {
 public:
-	void ReAcquireResources(void);
 	void init(void);
 
 private:
@@ -70,12 +68,19 @@ private:
 	float m_level;
 };
 
+extern "C" void __cdecl __identifier("?j_000206bc@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00027c0a@@YAXXZ")();
+
 void WaterTracksRenderSystemInitShim::init(void)
 {
+	union { void (*raw)(); void (WaterTracksRenderSystemInitShim::*member)(); }
+		reacquire = { __identifier("?j_000206bc@@YAXXZ") };
+	union { void (*raw)(); WaterTracksObjInitShim *(WaterTracksObjInitShim::*member)(); }
+		construct = { __identifier("?j_00027c0a@@YAXXZ") };
 	m_stripSizeX = 2;
 	m_stripSizeY = 2;
 	m_level = *(float *)((unsigned char *)TheWritableGlobalData + 0x7c);
-	ReAcquireResources();
+	(this->*reacquire.member)();
     m_vertexMaterialClass = VertexMaterialClass::Get_Preset((VertexMaterialClass::PresetType)0);
 
     m_shaderClass = ShaderClass::_PresetAlphaShader;
@@ -91,7 +96,7 @@ void WaterTracksRenderSystemInitShim::init(void)
 		mod = (WaterTracksObjInitShim *)operator new(0xb8);
 		if (!mod)
 			break;
-		mod = mod->construct();
+		mod = (mod->*construct.member)();
 		if (!mod)
 			break;
 
