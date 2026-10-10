@@ -96,7 +96,7 @@ void BfmeAptScreenOnlineChat::Rva00536870()
  text=GadgetTextEntryGetText(m_chatEntry);
  GadgetTextEntrySetText(m_chatEntry,UnicodeString::TheEmptyString);
  trim(text);
- if(!text.isEmpty()) {
+ if(!reinterpret_cast<const StringBase<unsigned short> &>(text).isEmpty()) {
   if(!Rva00536530HandleSlashCommands(text))
    ((Rva00536870Dispatch *)TheGameSpyInfo)->sendChat(text,false,m_playersList);
  }
