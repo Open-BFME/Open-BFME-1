@@ -12,10 +12,12 @@ public:
 class DX8Wrapper
 {
 public:
-	static bool Owns_Device_Lock(void);
+	static int Owns_Device_Lock(void);
 };
 
-extern void BFME_DX8_Thread_Assert(void);
+// Retail 0x00905B10 (matched ?bfmeUnlock1179@@YADXZ, BfmeConv1179.cpp)
+// releases one level of the DX8 device lock; callers ignore its result.
+extern char bfmeUnlock1179(void);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
@@ -34,11 +36,11 @@ void GameLogic::destroyLoadScreen(void)
 	{
 		delete m_loadScreen;
 		m_loadScreen = 0;
-		if (DX8Wrapper::Owns_Device_Lock())
+		if ((unsigned char)DX8Wrapper::Owns_Device_Lock())
 		{
 			do
-				BFME_DX8_Thread_Assert();
-			while (DX8Wrapper::Owns_Device_Lock());
+				bfmeUnlock1179();
+			while ((unsigned char)DX8Wrapper::Owns_Device_Lock());
 		}
 	}
 }
