@@ -1,11 +1,18 @@
 // cl: /O2 /EHsc
 
+class Open2Rec74A060
+{
+public:
+	Open2Rec74A060(const Open2Rec74A060 &other);
+	char m_body[40];
+};
+
 class BfmeRecWL
 {
 public:
-	BfmeRecWL(const BfmeRecWL &);
+	BfmeRecWL(const Open2Rec74A060 &other) : m_rec(other) {}
 	~BfmeRecWL();
-	char m_body[40];
+	Open2Rec74A060 m_rec;
 };
 
 class BfmeOwnerWL
@@ -20,5 +27,5 @@ private:
 
 BfmeRecWL BfmeOwnerWL::getAt(int idx)
 {
-	return m_recs[idx];
+	return m_recs[idx].m_rec;
 }
