@@ -3,7 +3,8 @@
 // game/GameEngine/Source/Common/BfmeConv1188.cpp).
 extern "C" unsigned char __identifier("??_7ShdDefFactoryClass@@6B@")[];
 
-void bfmeFreeUB(void *what);
+// Retail tail-calls operator delete[] at 0x00881EF0.
+void operator delete[](void *what);
 
 class BfmeThingUB
 {
@@ -17,5 +18,5 @@ public:
 void BfmeThingUB::bfmeResetUB()
 {
 	m_bfmeVft = __identifier("??_7ShdDefFactoryClass@@6B@");
-	bfmeFreeUB(m_bfmeWhat);
+	operator delete[](m_bfmeWhat);
 }
