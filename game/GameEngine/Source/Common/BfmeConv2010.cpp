@@ -1,19 +1,21 @@
-class BfmeStrEAU
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+// Retail allocates 0xD0 bytes before calling the recorded copy constructor.
+// This TU uses only the complete allocation extent; the native constructor
+// owns all subobject initialization.
+namespace FXParticleSystem
+{
+class ParticleSystemTemplate
 {
 public:
-	BfmeStrEAU(const char *text);
-	~BfmeStrEAU();
-
-	void *m_bfmeDataEAU;
-};
-
-class BfmeThingEAU
-{
-public:
-	BfmeThingEAU(void *param);
-
+	ParticleSystemTemplate(const ParticleSystemTemplate &);
+private:
 	unsigned char m_bfmeBodyEAU[0xd0];
 };
+}
+
+class BfmeStrEAU;
+class BfmeThingEAU;
 
 class ParticleSystemManager
 {
@@ -42,11 +44,14 @@ void BfmeHostEAU::bfmeSpawnEAU(const char *name, void *param)
 {
 	bfmeResetEAU();
 
-	BfmeThingEAU *thing = new BfmeThingEAU(param);
+	FXParticleSystem::ParticleSystemTemplate *thing =
+		new FXParticleSystem::ParticleSystemTemplate(
+			*reinterpret_cast<const FXParticleSystem::ParticleSystemTemplate *>(param));
 
 	{
-		BfmeStrEAU text(name);
+		AsciiString text(name);
 
-		TheParticleSystemManager->bfmeRegisterEAU(&text, thing);
+		TheParticleSystemManager->bfmeRegisterEAU(reinterpret_cast<BfmeStrEAU *>(&text),
+			reinterpret_cast<BfmeThingEAU *>(thing));
 	}
 }
