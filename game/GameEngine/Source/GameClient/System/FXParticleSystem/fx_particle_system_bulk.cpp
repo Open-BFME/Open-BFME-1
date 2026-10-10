@@ -765,11 +765,6 @@ public:
     void construct(const void *source);
 };
 
-class DefaultModuleTemplate1AssignShim {
-public:
-    void assign(const void *source);
-};
-
 class DefaultModule1CtorShim {
 public:
     void construct(TrackingPtr<ParticleSystem> &sys, const void *source);
@@ -3103,7 +3098,8 @@ ConcreteModuleTemplate<DefaultModuleTag<1> > &ConcreteModuleTemplate<DefaultModu
 {
     const void *source = &that;
     const unsigned char *info = source ? (const unsigned char *)source + 8 : 0;
-    ((DefaultModuleTemplate1AssignShim *)((unsigned char *)this + 8))->assign(info);
+    ((DefaultAlphaModuleInfo *)((unsigned char *)this + 8))->operator=(
+        *(const DefaultAlphaModuleInfo *)info);
     return *this;
 }
 
