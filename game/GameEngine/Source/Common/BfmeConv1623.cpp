@@ -1,28 +1,15 @@
 // Open-BFME5 conversions.
 
-class BfmeStrAVTV
-{
-public:
-	BfmeStrAVTV(const BfmeStrAVTV &other);
-	~BfmeStrAVTV();
-	char *m_bfme00;
-};
-
-class BfmeStrBVTV
-{
-public:
-	BfmeStrBVTV(const BfmeStrBVTV &other);
-	~BfmeStrBVTV();
-	char *m_bfme00;
-};
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+#include "../../../../inputs/reference/shims/stringinline/StringInline.h"
 
 class BfmeEntVTV
 {
 public:
 	BfmeEntVTV(const BfmeEntVTV &other);
-	BfmeStrAVTV m_bfme00;
+	AsciiString m_bfme00;
 	int m_bfme04;
-	BfmeStrBVTV m_bfme08;
+	UnicodeString m_bfme08;
 };
 
 BfmeEntVTV::BfmeEntVTV(const BfmeEntVTV &other)
