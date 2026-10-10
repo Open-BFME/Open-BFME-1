@@ -12,11 +12,23 @@ public:
 	void addInt64(const char *key, FeslInt64 value);
 };
 
+// Matched serializers at 0x007E8A10 and 0x007E88D0; both are
+// thiscall RET 8. The integer writer forwards its second word as an int.
+class BfmeC994
+{
+public:
+	void addString(const char *key, const char *value);
+};
+
+class BfmeThingCIB
+{
+public:
+	void bfmeGoCIB(void *key, void *value);
+};
+
 class BfmeMsgVJF
 {
 public:
-	void bfmeSetVJF(const char *k, void *v);
-	void bfmeSet3VJF(const char *k, int v);
 	char m_bfmePad[0x1c];
 	int m_bfme1c;
 };
@@ -34,19 +46,20 @@ struct BfmePairVJF
 // BfmePairVJF already is one 8-byte slot, so the entry is read in place instead
 // of being loaded as two pointers and recombined at the call site.
 
-extern void *g_bfmeVJF;
+// Shipped zero transaction-string pointer, VA 0x0130A630.
+void *g_Va0130A630 = 0;
 
 void __stdcall bfmeGoVJF(BfmeMsgVJF *m, BfmePairVJF *arr, int n)
 {
 	char buf[0x10];
-	void *g = g_bfmeVJF;
+	void *g = g_Va0130A630;
 	((Rva007E8AC0*)m)->run();
 	m->m_bfme1c = 0x6664626b;
-	m->bfmeSetVJF("TXN", g);
+	((BfmeC994 *)m)->addString("TXN", (const char *)g);
 	for (int i = 0; i < n; ++i)
 	{
 		sprintf(buf, "users.%d", i);
 		((Rva007E8810Message *)m)->addInt64(buf, *reinterpret_cast<const FeslInt64 *>(&arr[i]));
 	}
-	m->bfmeSet3VJF("users.[]", n);
+	((BfmeThingCIB *)m)->bfmeGoCIB("users.[]", (void *)n);
 }

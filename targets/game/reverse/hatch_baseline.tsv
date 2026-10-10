@@ -35,6 +35,7 @@ address_global	game/GameEngine/Source/Common/BfmeConv1339.cpp	g_Rva0107301CEmpty
 address_global	game/GameEngine/Source/Common/BfmeConv1382.cpp	g_Va0130A5DC	2	allow=0c470874dd5a2c0f47bcd6cf7f62a57c7e18305c
 address_global	game/GameEngine/Source/Common/BfmeConv1382.cpp	g_Va0130A618	2	allow=0c470874dd5a2c0f47bcd6cf7f62a57c7e18305c
 address_global	game/GameEngine/Source/Common/BfmeConv1383.cpp	g_Va0130A5B8	2	allow=95158e7ef19059d81796af7b95de7141fa5b3e5a
+address_global	game/GameEngine/Source/Common/BfmeConv1384.cpp	g_Va0130A630	2	allow=66aaf1a874948d43cbe8fe48376b5bd5f3cbec25
 address_global	game/GameEngine/Source/Common/BfmeConv1940.cpp	g_Rva0107301CEmptyString	2
 address_global	game/GameEngine/Source/Common/BfmeConv1997.cpp	g_Rva0107301CEmptyString	2
 address_global	game/GameEngine/Source/Common/BfmeConv2019.cpp	g_Rva0107301CEmptyString	3
