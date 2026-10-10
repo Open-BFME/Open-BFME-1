@@ -31,6 +31,9 @@
 //
 // Only the assignment member is claimed from this template instantiation.
 
+// Retail's allocate/copy helper has no exception cleanup and calls scalar new.
+#define _STLP_NO_EXCEPTIONS 1
+#define _OPERATOR_NEW_DEFINED_
 #include <vector>
 
 struct Rva00170200Elem
