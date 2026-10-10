@@ -12,24 +12,7 @@
 // bfmeDestroy(), pinned 0x00021FC1, reaching ??1S4Owner@@UAE@XZ) runs
 // unconditionally, same shape as OnlineHomeDestructor.cpp / OnlineChatDestructor.cpp.
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase( const T *text );
-	~StringBase();
-
-	void *m_data;
-};
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString( const char *text ) : StringBase<char>( text ) {}
-	~AsciiString() {}
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class BfmeAptGameWindow
 {
