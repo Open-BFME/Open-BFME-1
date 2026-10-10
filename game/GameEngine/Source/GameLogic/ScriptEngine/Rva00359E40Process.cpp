@@ -8,16 +8,16 @@
 class ScriptPoolObject
 {
 public:
-	void deleteInstance(int destroy);
 };
 
 class ScriptGroupPoolObject
 {
 public:
-	void deleteInstance(int destroy);
 };
 
 void __cdecl operator delete(void *pointer);
+extern "C" void __cdecl __identifier("?j_00022039@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00002338@@YAXXZ")();
 
 struct Rva00359E40Version
 {
@@ -93,6 +93,10 @@ static __forceinline void rva00359E40Process(
 
 void Rva00359E40HeldBody::rvaProcess(void *heads)
 {
+	union { void (*raw)(); void (ScriptPoolObject::*member)(int); }
+		dropScript = { __identifier("?j_00022039@@YAXXZ") };
+	union { void (*raw)(); void (ScriptGroupPoolObject::*member)(int); }
+		dropGroup = { __identifier("?j_00002338@@YAXXZ") };
 	void *headBase = heads;
 	Rva00359E40HeldBody *self = this;
 	Rva00359E40ScriptHandle * volatile *link =
@@ -134,7 +138,7 @@ void Rva00359E40HeldBody::rvaProcess(void *heads)
 				handle->m_next = 0;
 				Rva00359E40ScriptHandle *nextAfterClear = handle->m_next;
 				if (nextAfterClear != 0)
-						nextAfterClear->deleteInstance(1);
+						(nextAfterClear->*dropScript.member)(1);
 				operator delete(handle);
 			}
 			else
@@ -160,7 +164,7 @@ void Rva00359E40HeldBody::rvaProcess(void *heads)
 				handle->m_next = 0;
 				Rva00359E40GroupHandle *nextAfterClear = handle->m_next;
 				if (nextAfterClear != 0)
-						nextAfterClear->deleteInstance(1);
+						(nextAfterClear->*dropGroup.member)(1);
 				operator delete(handle);
 			}
 			else
