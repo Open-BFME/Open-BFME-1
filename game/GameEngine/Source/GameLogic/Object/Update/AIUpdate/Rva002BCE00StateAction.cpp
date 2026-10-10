@@ -19,13 +19,11 @@ class Object;
 class AIUpdateInterface
 {
 public:
-	void ignoreObstacle(Object *object);
 };
 
 class BfmeSubCSA
 {
 public:
-	bool bfmeAskCSA();
 };
 
 class Rva002BC470StateAction
@@ -59,8 +57,6 @@ public:
 	virtual void unused018() = 0;
 	virtual void unused01c() = 0;
 	virtual void signalAction(Int code) = 0;
-	void bfmeSetGoalPosition(const Coord3D *position);
-	void step2(void *argument);
 };
 
 class Rva002BCE00Path
@@ -85,10 +81,23 @@ private:
 	Int m_actionStarted;
 };
 
+extern "C" void __cdecl __identifier("?j_00017607@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0000314d@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0000315c@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00016e55@@YAXXZ")();
+
 void Rva002BCE00StateAction::run(Rva002BCE00Path *path, Object *obstacle,
 	void *finishArgument, void *unused)
 {
-	if (m_object->bfmeAskCSA())
+	union { void (*raw)(); bool (BfmeSubCSA::*member)() const; }
+		mobile = { __identifier("?j_00017607@@YAXXZ") };
+	union { void (*raw)(); void (BfmeSub30_7F0::*member)(const Coord3D *); }
+		setGoal = { __identifier("?j_0000314d@@YAXXZ") };
+	union { void (*raw)(); void (BfmeSub30_7F0::*member)(void *); }
+		step = { __identifier("?j_00016e55@@YAXXZ") };
+	union { void (*raw)(); void (AIUpdateInterface::*member)(const Object *); }
+		ignore = { __identifier("?j_0000315c@@YAXXZ") };
+	if ((m_object->*mobile.member)())
 	{
 		m_sink->beginAction();
 
@@ -104,14 +113,14 @@ void Rva002BCE00StateAction::run(Rva002BCE00Path *path, Object *obstacle,
 			goalFields[0] = source[0];
 			goalFields[1] = source[1];
 			goalFields[2] = source[2];
-			m_sink->bfmeSetGoalPosition((const Coord3D *)&goal);
+			(m_sink->*setGoal.member)((const Coord3D *)&goal);
 		}
 
-		m_sink->step2(path);
+		(m_sink->*step.member)(path);
 		Rva002BC470FinishPointer finishCall;
 		finishCall.entry = j_0003f42c;
 		(((Rva002BC470StateAction *)this)->*finishCall.member)(finishArgument);
-		ignoreObstacle(obstacle);
+		(this->*ignore.member)(obstacle);
 		m_sink->signalAction(0x3f6);
 		m_actionStarted = 1;
 	}
