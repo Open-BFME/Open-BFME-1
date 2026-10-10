@@ -23,16 +23,8 @@ private:
 	unsigned char m_data[0x68];
 };
 
-class BFMERetailAsciiString
-{
-public:
-	~BFMERetailAsciiString() { releaseBuffer(); }
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	void releaseBuffer();
-
-	char *m_data;
-};
 
 class __declspec(novtable) CommandSetUpgradeModuleDataIntermediateBase
 	: public CommandSetUpgradeModuleDataPrimaryBase
@@ -51,7 +43,7 @@ public:
 	virtual ~CommandSetUpgradeModuleData();
 
 private:
-	BFMERetailAsciiString m_member;
+	AsciiString m_member;
 };
 
 // ??1CommandSetUpgradeModuleData@@UAE@XZ

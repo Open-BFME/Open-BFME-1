@@ -8,15 +8,8 @@
 // AsciiString, not the WWLib Buffer whose own destructor is the 40-byte
 // body at 0x009E1E30, so name it the way the other lifted ModuleData
 // destructors already do.
-class BFMERetailAsciiString
-{
-public:
-	~BFMERetailAsciiString() { releaseBuffer(); }
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	void releaseBuffer();
-	unsigned char m_pad[4];
-};
 
 class INIMemberA
 {
@@ -33,7 +26,7 @@ public:
 	~INI();
 private:
 	unsigned char m_gap0[4];
-	BFMERetailAsciiString m_a; // +0x04
+	AsciiString m_a; // +0x04
 	unsigned char m_gap[0x82c]; // to +0x834
 	INIMemberA m_b; // +0x834
 };
