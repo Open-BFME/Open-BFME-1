@@ -4281,10 +4281,7 @@ CylinderEmissionVolumeModuleTemplate::CylinderEmissionVolumeModuleTemplate()
 {}
 
 
-// ??0EmissionVelocityInfo@FXParticleSystem@@QAE@ABV01@@Z
-EmissionVelocityInfo::EmissionVelocityInfo(const EmissionVelocityInfo &that)
-{
-}
+// EmissionVelocityInfo copy construction is emitted by EmissionVelocityModuleCtors.cpp.
 
 // ??0CylindricalEmissionVelocityInfo@FXParticleSystem@@QAE@XZ
 CylindricalEmissionVelocityInfo::CylindricalEmissionVelocityInfo()
