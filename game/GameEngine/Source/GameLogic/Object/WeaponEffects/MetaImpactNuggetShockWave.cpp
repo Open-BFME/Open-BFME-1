@@ -23,20 +23,20 @@
 // BfmeWideResult descriptor: vector start/end/capacity, cursor at +0x0c and
 // reference count at +0x10; entries are eight bytes (see
 // AutoFindHealingUpdateScanClosestTarget.cpp).
-struct ShockWaveEntry
+struct BfmeIterEntry
 {
 	Object *object;
 	unsigned int unknown04;
 };
-struct ShockWaveResultData
+struct BfmeObjectIterator
 {
-	std::vector<ShockWaveEntry> entries;
-	ShockWaveEntry *current;
+	std::vector<BfmeIterEntry> entries;
+	BfmeIterEntry *current;
 	int references;
 };
 struct BfmeWideResult
 {
-	ShockWaveResultData *m_value;
+	BfmeObjectIterator *m_value;
 	BfmeWideResult();
 	BfmeWideResult(const BfmeWideResult &);
 	~BfmeWideResult()
@@ -55,6 +55,18 @@ class BfmeWideForwardA
 {
 public:
 	BfmeWideResult bfmeForwardWideA(int, int, int, int);
+};
+
+// BaseType.h declares Coord3D::length inline, so naming it here makes this TU
+// emit its own COMDAT copy of ?length@Coord3D@@QBEMXZ, which collides at link
+// with retail's only copy of that body (game/Libraries/Source/WWVegas/WWMath/
+// coord3d.cpp, the ledger owner). The call is inlined at this site -- retail
+// computes the square root in place -- so the same arithmetic under a TU-local
+// name keeps the bytes and drops the colliding symbol.
+struct RvaCoord3DLength
+{
+	float x, y, z;
+	float length(void) const { return (float)sqrt(x * x + y * y + z * z); }
 };
 
 class GameLogic
@@ -115,7 +127,7 @@ void MetaImpactNugget::rva002DD680(Weapon *weapon, const Coord3D *pos)
 			away.set(pos);
 			away.sub(source->getPosition());
 			Vector3 facing(away.x, away.y, away.z);
-			if (away.length() == 0.0f)
+			if (((const RvaCoord3DLength *)&away)->length() == 0.0f)
 				facing = source->getTransformMatrix()->Get_X_Vector();
 			Vector3 toTarget(delta.x, delta.y, delta.z);
 			facing.Normalize();

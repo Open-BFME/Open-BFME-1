@@ -158,7 +158,7 @@ Bool PartitionFilterStealthedOrStealthGarrisoned::allow( Object *objOther)
 //-------------------------------------------------------------------------------------------------
 /** The update callback. */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/StealthDetectorUpdateThunk.cpp
+// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/StealthDetectorUpdate_update.cpp
 // ?update@StealthDetectorUpdate@@ present-unmatched
 UpdateSleepTime StealthDetectorUpdate::update( void )
 {

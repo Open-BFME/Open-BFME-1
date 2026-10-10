@@ -74,62 +74,76 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 //-------------------------------------------------------------------------------------------------
+// Retail's LightPointsUpSound / ObjectiveAddedSound / ObjectiveCompletedSound entries all
+// call the sound-reference parser whose body is 0x000BABF0 (ledger ?rva000BABF0@INI@@,
+// reached in retail's table through ILT thunk ?j_00018e7b). Its identity is unproven
+// beyond the address, so the table references it through the ?b_000babf0@@YAXXZ pin.
+void b_000babf0();
+
 /*static*/ const FieldParse* PlayerTemplate::getFieldParse()
 {
+	// Retail's table at 0x010847E0 is the BFME1 field list, not the ZH list the
+	// reference tree carries: it parses IntrinsicSciencesMP, the sound and
+	// objective fields, InitialUpgrades, DefaultPlayerAIType, SpellBook(Mp),
+	// MaxLevelMP/SP, Evil, BuildableHeroesMP and the spell-store labels, and it
+	// has no BaseSide, OldFaction, ScoreScreenMusic, GeneralImage or medallion
+	// entries. The offset column holds retail's raw byte offsets copied from
+	// that table: the shim PlayerTemplate class keeps the ZH members plus
+	// layout padding, so the BFME1 members these offsets address are not
+	// modeled as class members yet, and offsetof would read the ZH layout.
 	static const FieldParse TheFieldParseTable[] = 
 	{
-		{ "Side",											INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_side ) },
-		{ "BaseSide",								INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_baseSide ) },
-		{ "PlayableSide",							INI::parseBool,																	NULL, offsetof( PlayerTemplate, m_playableSide ) },
-		{ "DisplayName",							INI::parseAndTranslateLabel,										NULL, offsetof( PlayerTemplate, m_displayName) },
-		{ "StartMoney",								PlayerTemplate::parseStartMoney,								NULL, offsetof( PlayerTemplate, m_money ) },
-		{ "PreferredColor",						INI::parseRGBColor,															NULL, offsetof( PlayerTemplate, m_preferredColor ) },
-		{ "StartingBuilding",					INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_startingBuilding ) },
-		{ "StartingUnit0",						INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_startingUnits[0] ) },
-		{ "StartingUnit1",						INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_startingUnits[1] ) },
-		{ "StartingUnit2",						INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_startingUnits[2] ) },
-		{ "StartingUnit3",						INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_startingUnits[3] ) },
-		{ "StartingUnit4",						INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_startingUnits[4] ) },
-		{ "StartingUnit5",						INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_startingUnits[5] ) },
-		{ "StartingUnit6",						INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_startingUnits[6] ) },
-		{ "StartingUnit7",						INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_startingUnits[7] ) },
-		{ "StartingUnit8",						INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_startingUnits[8] ) },
-		{ "StartingUnit9",						INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_startingUnits[9] ) },
-		{ "ProductionCostChange",			PlayerTemplate::parseProductionCostChange,			NULL, 0 },
-		{ "ProductionTimeChange",			PlayerTemplate::parseProductionTimeChange,			NULL, 0 },
+		{ "Side",					INI::parseAsciiString,					NULL, 0x8 },
+		{ "PlayableSide",			INI::parseBool,						NULL, 0xBD },
+		{ "DisplayName",			INI::parseAndTranslateLabel,		NULL, 0x4 },
+		{ "StartMoney",				PlayerTemplate::parseStartMoney,		NULL, 0x1C },
+		{ "PreferredColor",			INI::parseRGBColor,					NULL, 0x28 },
+		{ "StartingBuilding",		INI::parseAsciiString,				NULL, 0x34 },
+		{ "StartingUnit0",			INI::parseAsciiString,				NULL, 0x38 },
+		{ "StartingUnit1",			INI::parseAsciiString,				NULL, 0x3C },
+		{ "StartingUnit2",			INI::parseAsciiString,				NULL, 0x40 },
+		{ "StartingUnit3",			INI::parseAsciiString,				NULL, 0x44 },
+		{ "StartingUnit4",			INI::parseAsciiString,				NULL, 0x48 },
+		{ "StartingUnit5",			INI::parseAsciiString,				NULL, 0x4C },
+		{ "StartingUnit6",			INI::parseAsciiString,				NULL, 0x50 },
+		{ "StartingUnit7",			INI::parseAsciiString,				NULL, 0x54 },
+		{ "StartingUnit8",			INI::parseAsciiString,				NULL, 0x58 },
+		{ "StartingUnit9",			INI::parseAsciiString,				NULL, 0x5C },
+		{ "ProductionCostChange",		PlayerTemplate::parseProductionCostChange,		NULL, 0 },
+		{ "ProductionTimeChange",		PlayerTemplate::parseProductionTimeChange,		NULL, 0 },
 		{ "ProductionVeterancyLevel",	PlayerTemplate::parseProductionVeterancyLevel,	NULL, 0 },
-		{ "IntrinsicSciences",				INI::parseScienceVector,												NULL, offsetof( PlayerTemplate, m_intrinsicSciences ) },
-		{ "PurchaseScienceCommandSetRank1",INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_purchaseScienceCommandSetRank1 ) },
-		{ "PurchaseScienceCommandSetRank3",INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_purchaseScienceCommandSetRank3 ) },
-		{ "PurchaseScienceCommandSetRank8",INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_purchaseScienceCommandSetRank8 ) },
-		{ "SpecialPowerShortcutCommandSet",INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_specialPowerShortcutCommandSet ) },
-		{ "SpecialPowerShortcutWinName"		,INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_specialPowerShortcutWinName) },
-		{ "SpecialPowerShortcutButtonCount",INI::parseInt,												NULL, offsetof( PlayerTemplate, m_specialPowerShortcutButtonCount ) },
-		{ "IsObserver",								INI::parseBool,																	NULL, offsetof( PlayerTemplate, m_observer ) },
-    { "OldFaction",               INI::parseBool,                                 NULL, offsetof( PlayerTemplate, m_oldFaction ) },
-		{ "IntrinsicSciencePurchasePoints",				INI::parseInt,												NULL, offsetof( PlayerTemplate, m_intrinsicSPP ) },
-		{ "ScoreScreenImage",					INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_scoreScreenImage ) },
-		{ "LoadScreenImage",					INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_loadScreenImage ) },
-		{ "LoadScreenMusic",					INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_loadScreenMusic ) },
-		{ "ScoreScreenMusic",					INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_scoreScreenMusic ) },
+		{ "IntrinsicSciences",		INI::parseScienceVector,				NULL, 0x8C },
+		{ "IntrinsicSciencesMP",	INI::parseScienceVector,				NULL, 0x98 },
+		{ "PurchaseScienceCommandSet",		INI::parseAsciiString,				NULL, 0xA4 },
+		{ "PurchaseScienceCommandSetMP",	INI::parseAsciiString,				NULL, 0xA8 },
+		{ "SpecialPowerShortcutCommandSet",	INI::parseAsciiString,				NULL, 0xAC },
+		{ "SpecialPowerShortcutWinName",	INI::parseAsciiString,				NULL, 0xB0 },
+		{ "SpecialPowerShortcutButtonCount",	INI::parseInt,					NULL, 0xB4 },
+		{ "IsObserver",			INI::parseBool,						NULL, 0xBC },
+		{ "IntrinsicSciencePurchasePoints",	INI::parseInt,					NULL, 0xC0 },
+		{ "ScoreScreenImage",		INI::parseAsciiString,				NULL, 0xCC },
+		{ "LoadScreenImage",			INI::parseAsciiString,				NULL, 0xD0 },
+		{ "LoadScreenMusic",			INI::parseAsciiString,				NULL, 0xB8 },
+		{ "HeadWaterMark",			INI::parseAsciiString,				NULL, 0xD4 },
+		{ "FlagWaterMark",			INI::parseAsciiString,				NULL, 0xD8 },
+		{ "EnabledImage",			INI::parseAsciiString,				NULL, 0xDC },
+		{ "SideIconImage",			INI::parseAsciiString,				NULL, 0xE0 },
+		{ "BeaconName",			INI::parseAsciiString,				NULL, 0xE4 },
+		{ "LightPointsUpSound",			(INIFieldParseProc)b_000babf0,			NULL, 0x100 },
+		{ "ObjectiveAddedSound",			(INIFieldParseProc)b_000babf0,			NULL, 0x104 },
+		{ "ObjectiveCompletedSound",		(INIFieldParseProc)b_000babf0,			NULL, 0x108 },
+		{ "InitialUpgrades",		INI::parseAsciiStringVector,			NULL, 0xE8 },
+		{ "DefaultPlayerAIType",		INI::parseAsciiString,				NULL, 0x10C },
+		{ "SpellBook",				INI::parseAsciiString,				NULL, 0x110 },
+		{ "SpellBookMp",			INI::parseAsciiString,				NULL, 0x114 },
+		{ "MaxLevelMP",			INI::parseInt,					NULL, 0xC4 },
+		{ "MaxLevelSP",			INI::parseInt,					NULL, 0xC8 },
+		{ "Evil",				INI::parseBool,						NULL, 0x118 },
+		{ "BuildableHeroesMP",		INI::parseAsciiStringVector,			NULL, 0xF4 },
+		{ "SpellStoreCurrentPowerLabel",	INI::parseAsciiString,				NULL, 0x11C },
+		{ "SpellStoreMaximumPowerLabel",	INI::parseAsciiString,				NULL, 0x120 },
 
-		{ "HeadWaterMark",						INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_headWaterMark ) },
-		{ "FlagWaterMark",						INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_flagWaterMark ) },
-		{ "EnabledImage",							INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_enabledImage ) },
-		//{ "DisabledImage",						INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_disabledImage ) },
-		//{ "HiliteImage",							INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_hiliteImage ) },
-		//{ "PushedImage",							INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_pushedImage ) },
-		{ "SideIconImage",						INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_sideIconImage ) },
-		{ "GeneralImage",						INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_generalImage ) },
-
-		{ "BeaconName",								INI::parseAsciiString,													NULL, offsetof( PlayerTemplate, m_beaconTemplate ) },
-		{ "ArmyTooltip",						INI::parseAsciiString,					NULL, offsetof( PlayerTemplate, m_tooltip ) },
-		{ "Features",						INI::parseAsciiString,					NULL, offsetof( PlayerTemplate, m_strGeneralFeatures ) },
-		{ "MedallionRegular",						INI::parseAsciiString,					NULL, offsetof( PlayerTemplate, m_strMedallionNormal ) },
-		{ "MedallionHilite",						INI::parseAsciiString,					NULL, offsetof( PlayerTemplate, m_strMedallionHilite ) },
-		{ "MedallionSelect",						INI::parseAsciiString,					NULL, offsetof( PlayerTemplate, m_strMedallionSelected ) },
-
-		{ NULL,											NULL,																				NULL, 0 },
+		{ NULL,						NULL,										NULL, 0 },
 	};
 
 	return TheFieldParseTable;

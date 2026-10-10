@@ -20,20 +20,20 @@
 #include "GameLogic/PartitionManager.h"
 
 
-struct HealingEntry
+struct BfmeIterEntry
 {
     Object *object;
     unsigned int unknown04;
 };
-struct HealingResultData
+struct BfmeObjectIterator
 {
-    std::vector<HealingEntry> entries;
-    HealingEntry *current;
+    std::vector<BfmeIterEntry> entries;
+    BfmeIterEntry *current;
     int references;
 };
 struct BfmeWideResult
 {
-    HealingResultData *m_value;
+    BfmeObjectIterator *m_value;
     BfmeWideResult();
     BfmeWideResult(const BfmeWideResult &);
     ~BfmeWideResult()

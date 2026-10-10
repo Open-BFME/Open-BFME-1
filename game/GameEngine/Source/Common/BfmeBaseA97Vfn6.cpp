@@ -12,20 +12,20 @@ extern PartitionManager *ThePartitionManager;
 
 // BfmeWideResult descriptor: vector start/end/capacity, cursor at +0x0c and
 // reference count at +0x10; entries are eight bytes.
-struct BfmeWideEntryA97
+struct BfmeIterEntry
 {
 	void *object;
 	unsigned int unknown04;
 };
-struct BfmeWideDataA97
+struct BfmeObjectIterator
 {
-	std::vector<BfmeWideEntryA97> entries;
-	BfmeWideEntryA97 *current;
+	std::vector<BfmeIterEntry> entries;
+	BfmeIterEntry *current;
 	int references;
 };
 struct BfmeWideResult
 {
-	BfmeWideDataA97 *m_value;
+	BfmeObjectIterator *m_value;
 	BfmeWideResult();
 	BfmeWideResult(const BfmeWideResult &);
 	~BfmeWideResult()

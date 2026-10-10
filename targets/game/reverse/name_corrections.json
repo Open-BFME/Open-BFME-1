@@ -19348,5 +19348,45 @@
   "after_sha256": "cbd3aae60b1516f30cea838e6dc4935eb44cd78869a08d7143d9c1d1f47ee7ef",
   "evidence": "targets/game/reverse/identity_evidence/0000a984-thunk-call.md",
   "reason": "Retail's call relocation at 0x00096A60 lands on the packed ILT thunk at 0x0000A984 (jmp 0x00065250), not on the packet CRC body BFMEComputeCRC at 0x00065250; the call site must name the thunk so the object's relocation matches retail."
- }
-]
+ },
+  {
+ "old_path": "game/GameEngine/Source/GameLogic/Object/Update/AutoFindHealingUpdateScanClosestTarget.cpp",
+ "new_path": "game/GameEngine/Source/GameLogic/Object/Update/AutoFindHealingUpdateScanClosestTarget.cpp",
+ "old_name": "HealingEntry",
+ "new_name": "BfmeIterEntry",
+ "before_sha256": "4ad4e6c4e03872de547706b08e93cb32d99988e64dee23a6e0971e7b9798cea1",
+ "after_sha256": "208c12ea7b599eda606c52da55ebc1926210b650ab312f959a70c00c26ea5efa",
+ "evidence": "targets/game/reverse/link_queue.csv",
+ "reason": "Private per-TU spelling of the shared refcounted partition wide-iterator entry; the emitted ??1BfmeWideResult@@QAE@XZ COMDAT must byte-match the copy link.exe keeps (first in link order), whose chain BfmeConv1845DoneXJ/TerrainLogicSetWaterHeight/BridgeBehaviorHandleObjectsOnDie already names BfmeIterEntry/BfmeObjectIterator (link_queue row 17, census 96123b2483). No retail identity existed to preserve; the mangled identity is fixed by the kept copy."
+},
+  {
+ "old_path": "game/GameEngine/Source/GameLogic/Object/Update/AutoFindHealingUpdateScanClosestTarget.cpp",
+ "new_path": "game/GameEngine/Source/GameLogic/Object/Update/AutoFindHealingUpdateScanClosestTarget.cpp",
+ "old_name": "HealingResultData",
+ "new_name": "BfmeObjectIterator",
+ "before_sha256": "4ad4e6c4e03872de547706b08e93cb32d99988e64dee23a6e0971e7b9798cea1",
+ "after_sha256": "208c12ea7b599eda606c52da55ebc1926210b650ab312f959a70c00c26ea5efa",
+ "evidence": "targets/game/reverse/link_queue.csv",
+ "reason": "Private per-TU spelling of the shared refcounted partition wide-iterator value struct; the emitted ??1BfmeWideResult@@QAE@XZ COMDAT must byte-match the copy link.exe keeps (first in link order), which calls ??1BfmeObjectIterator@@QAE@XZ (digest 9f7bf78dce02), the spelling BfmeConv1845DoneXJ/TerrainLogicSetWaterHeight/BridgeBehaviorHandleObjectsOnDie already established (link_queue row 17, census 96123b2483). No retail identity existed to preserve; the mangled identity is fixed by the kept copy."
+},
+  {
+ "old_path": "game/GameEngine/Source/GameLogic/Object/WeaponEffects/MetaImpactNuggetShockWave.cpp",
+ "new_path": "game/GameEngine/Source/GameLogic/Object/WeaponEffects/MetaImpactNuggetShockWave.cpp",
+ "old_name": "ShockWaveEntry",
+ "new_name": "BfmeIterEntry",
+ "before_sha256": "1bbb48d2025021ba59e25accd17d499bc3da784a0b39b055ae697d032b3fa1e1",
+ "after_sha256": "5f7bf42ae278002656b428bc045830bbe5bee398cc8d7338250d1f56c4d6623d",
+ "evidence": "targets/game/reverse/link_queue.csv",
+ "reason": "Private per-TU spelling of the shared refcounted partition wide-iterator entry; the emitted ??1BfmeWideResult@@QAE@XZ COMDAT must byte-match the copy link.exe keeps (first in link order), whose chain BfmeConv1845DoneXJ/TerrainLogicSetWaterHeight/BridgeBehaviorHandleObjectsOnDie already names BfmeIterEntry/BfmeObjectIterator (link_queue row 17, census 96123b2483). No retail identity existed to preserve; the mangled identity is fixed by the kept copy."
+},
+  {
+ "old_path": "game/GameEngine/Source/GameLogic/Object/WeaponEffects/MetaImpactNuggetShockWave.cpp",
+ "new_path": "game/GameEngine/Source/GameLogic/Object/WeaponEffects/MetaImpactNuggetShockWave.cpp",
+ "old_name": "ShockWaveResultData",
+ "new_name": "BfmeObjectIterator",
+ "before_sha256": "1bbb48d2025021ba59e25accd17d499bc3da784a0b39b055ae697d032b3fa1e1",
+ "after_sha256": "5f7bf42ae278002656b428bc045830bbe5bee398cc8d7338250d1f56c4d6623d",
+ "evidence": "targets/game/reverse/link_queue.csv",
+ "reason": "Private per-TU spelling of the shared refcounted partition wide-iterator value struct; the emitted ??1BfmeWideResult@@QAE@XZ COMDAT must byte-match the copy link.exe keeps (first in link order), which calls ??1BfmeObjectIterator@@QAE@XZ (digest 9f7bf78dce02), the spelling BfmeConv1845DoneXJ/TerrainLogicSetWaterHeight/BridgeBehaviorHandleObjectsOnDie already established (link_queue row 17, census 96123b2483). No retail identity existed to preserve; the mangled identity is fixed by the kept copy."
+}
+ ]
