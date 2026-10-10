@@ -1,7 +1,7 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/sweep
 // Retail FVF layout initializer; the EA member spelling is unproven.
 
-extern "C" unsigned __stdcall D3DXGetFVFVertexSize(unsigned);
+#include "../WW3D2/dx8fvf.h"
 
 class BFMEVertexFVFInfo
 {
@@ -26,7 +26,7 @@ typedef char BFMEVertexFVFInfoSizeCheck[sizeof(BFMEVertexFVFInfo) == 0x40 ? 1 : 
 static const unsigned FVFInfoClassBFMEFormats[15] = {
 	0x00000002, 0x00000012, 0x00000112, 0x00000212, 0x00000152,
 	0x00000252, 0x00000142, 0x00000242, 0x00000102, 0x00000202,
-	0x00540452, 0x000b0312, 0x00000052, 0x00000344, 0x00000444
+	DX8_FVF_XYZNDUV1TG3, 0x000b0312, 0x00000052, 0x00000344, 0x00000444
 };
 
 void BFMEVertexFVFInfo::Rva00964150(unsigned fvf, unsigned vertexSize)
