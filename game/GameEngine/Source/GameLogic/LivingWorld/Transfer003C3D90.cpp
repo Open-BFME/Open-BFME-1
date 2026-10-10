@@ -9,6 +9,10 @@ struct MissionObjectiveState { bool m_visible, m_completed; };
 Xfer *Rva003C2830XferMissionObjectiveStateVector(Xfer *, std::vector<MissionObjectiveState> *);
 class Xfer;
 class BfmeHostBA { public: void bfmeSaveBA(Xfer *); };
+// Retail 0x003C3480 is one body reached as both the free function d_003c3480
+// (Load003C4160's union-pointer call) and this member spelling; the alias
+// binds the member call to the same retail body.
+#pragma comment(linker, "/alternatename:?vector003C3480@Transfer003C3D90@@QAEXPAVXfer@@PAX@Z=?d_003c3480@@YAXXZ")
 inline UnicodeString::UnicodeString()
 {
     m_text = 0;
