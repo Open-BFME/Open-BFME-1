@@ -10,23 +10,8 @@ struct FlagPair2B2080
 	Bool second;
 };
 
-class AsciiString
-{
-public:
-	int compare(const AsciiString &other) const;
-	bool isEmpty() const
-	{
-		return m_text == 0 || m_text->length == 0;
-	}
-
-private:
-	struct StringData
-	{
-		char m_prefix[4];
-		unsigned short length;
-	};
-	StringData *m_text;
-};
+#include "ascii_string.h"
+template<> inline bool StringBase<char>::isEmpty() const { return !m_data || m_data->length == 0; }
 
 class Object
 {
@@ -148,7 +133,7 @@ void CommandButtonHuntUpdate::onObjectCreated(Object *source)
 		return;
 
 	m_commandButton = 0;
-	if (m_commandButtonName.isEmpty())
+	if (m_commandButtonName.StringBase<char>::isEmpty())
 		return;
 	const CommandSet *commandSet =
 		TheControlBar->findCommandSet(m_object->getCommandSetString());
@@ -160,7 +145,7 @@ void CommandButtonHuntUpdate::onObjectCreated(Object *source)
 		const CommandButton *commandButton = commandSet->getCommandButton(index);
 		if (commandButton == 0)
 			continue;
-		if (commandButton->m_name.compare(m_commandButtonName) == 0)
+		if (commandButton->m_name.StringBase<char>::compare(m_commandButtonName) == 0)
 		{
 			m_commandButton = commandButton;
 			break;
