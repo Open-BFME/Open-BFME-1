@@ -51,6 +51,23 @@ STORAGE_EXTERNAL = 2
 STORAGE_STATIC = 3
 FUNCTION_TYPE = 0x20
 
+# mov eax, dword ptr [ebp - 4]: MSVC 7.1 appends a constructor's return-this load
+# after the last __emit of a __declspec(naked) ctor definition, past the asm
+# block, unreachable after its ret. Retail was compiled from real ctors, so no
+# retail extent ends with it; only a dump row can carry it.
+NAKED_CTOR_TRAILER = b"\x8b\x45\xfc"
+
+
+def _naked_ctor_dump(row):
+    """True when the row's body is a __declspec(naked) constructor dump."""
+    if not row["name"].startswith("??0"):
+        return False
+    try:
+        text = (ROOT / row["source"]).read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return False
+    return "__declspec(naked)" in text
+
 
 def _u32(data, offset):
     return struct.unpack_from("<I", data, offset)[0]
@@ -165,6 +182,11 @@ def row_findings(row, ctx, stats=None):
     func_end = _next_after(_starts(info["symbols"], secno, functions_only=True), start,
                            sec["raw_size"])
     func = body[: func_end - start].rstrip(b"\xcc")
+    # A naked ctor's whole tail past the ledger extent is the compiler's
+    # return-this trailer (proven with MSVC 7.1: member vs free, throw(),
+    # struct, /EHsc and -EHsc- all emit it); it is machinery, not a body byte.
+    if func[size:] == NAKED_CTOR_TRAILER and _naked_ctor_dump(row):
+        func = func[:size]
     retail = _retail(rva, max(len(func), size))
     findings = []
 

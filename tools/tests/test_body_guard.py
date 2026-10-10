@@ -132,6 +132,51 @@ def test_bytes_past_the_extent_must_equal_retail(monkeypatch):
     assert findings(monkeypatch, bad, "?h@@YAHH@Z", image, first_diff) == ["tail"]
 
 
+def _ctor_findings(monkeypatch, name, source, image, size):
+    monkeypatch.setattr(build, "read_target_bytes", lambda rva, n: bytes(image[rva:rva + n]))
+    monkeypatch.setattr(build, "row_object", lambda row: source["obj"])
+    ctx = object.__new__(body_guard.Context)
+    ctx.symbol_map, ctx._follow = {}, (lambda rva: rva)
+    row = {"name": name, "target_rva": f"0x{R:08X}", "target_size": str(size),
+           "source": source["row_src"], "notes": ""}
+    return [check for check, _ in body_guard.row_findings(row, ctx)]
+
+
+def test_a_naked_ctor_dumps_return_this_trailer_is_machinery(monkeypatch):
+    # MSVC 7.1 appends mov eax,[ebp-4] (the ctor return-this load) after a
+    # naked ctor's __emit block: unreachable after its ret, absent from retail.
+    good = compiled("naked_ctor", "class Thing;\nclass A { public: A(Thing *); };\n"
+                    "__declspec(naked) A::A(Thing *t) { __asm { _emit 0xC3 } }\n")
+    body, _ = build.read_object_symbol_bytes(good, "??0A@@QAE@PAVThing@@@Z")
+    assert body.rstrip(b"\xcc") == b"\xc3\x8b\x45\xfc"
+    image = bytearray(0x10000)
+    image[R:R + 1] = b"\xc3"                # retail's body ends at the ret
+    image[R + 1:R + 4] = b"\xcc\xcc\xcc"    # int3 padding where the object trails
+    row_src = (WORK / "naked_ctor.cpp").relative_to(build.ROOT).as_posix()
+    sym = "??0A@@QAE@PAVThing@@@Z"
+    # the ledger extent stops at the __emit ret: the trailer is machinery
+    assert _ctor_findings(monkeypatch, sym, {"obj": good, "row_src": row_src}, image, 1) == []
+    # a source that is not a naked dump keeps the finding: the strip is earned
+    assert _ctor_findings(monkeypatch, sym, {"obj": good, "row_src": "game/x.cpp"},
+                          image, 1) == ["tail"]
+
+
+def test_a_ctor_tail_is_still_checked_outside_the_naked_dump_trailer(monkeypatch):
+    # A compiled (non-naked) ctor whose ledger stops before a real difference
+    # keeps its tail finding: only the exact three-byte trailer on a naked
+    # ctor dump row is machinery.
+    text = "class Thing;\nclass B { public: int m; B(Thing *); };\nB::B(Thing *t) : m(%d) {}\n"
+    good = compiled("plain_ctor_good", "// cl: /O2\n" + text % 3)
+    bad = compiled("plain_ctor_bad", "// cl: /O2\n" + text % 4)
+    image = bytearray(0x10000)
+    size = link(good, "??0B@@QAE@PAVThing@@@Z", image)
+    body, _ = build.read_object_symbol_bytes(bad, "??0B@@QAE@PAVThing@@@Z")
+    first_diff = next(i for i in range(size) if body[i] != image[R + i])
+    sym = "??0B@@QAE@PAVThing@@@Z"
+    assert "tail" in _ctor_findings(monkeypatch, sym, {"obj": bad, "row_src": "game/x.cpp"},
+                                    image, first_diff)
+
+
 def test_shrink_only_baseline_refuses_growth(tmp_path, monkeypatch):
     path = tmp_path / "b.csv"
     path.write_text("check,target_rva,name,detail\nltable,0x00001000,?f@@YAHH@Z,x\n")
