@@ -6,12 +6,12 @@
 // step helper it calls through the incremental-link thunk 0x0003A09E IS the
 // body landed at 0x006DF420 in this batch, which is what fixes this as a
 // member of the same class rather than a free function.  The shroud query,
-// the two globals and the +0x1C predicate reuse pins other landed bodies
-// already emit.  ONE NEW PIN: 0x0000C9AA (thunk to 0x0018FBF0) sits in the
-// same 0x0018Fxxx block as the two predicates and the centre-point getter that
-// are already pinned on this pointer, and this call passes it the centre, the
-// target, an out-parameter and a flag -- so it is named address-derived, on
-// the same address-derived class, and claims nothing beyond its arity.
+// the two globals reuse identities other landed bodies already emit.
+// ILT 0x0000A7DB reaches PolygonTrigger's matched float-coordinate predicate
+// at 0x0018FA20; ILT 0x0000C9AA reaches the opaque matched body at 0x0018FBF0.
+// The latter takes four stack arguments, returns in AL and pops 16 bytes.
+// One-word member-pointer views retain those thiscall ABIs while referencing
+// the existing ledger symbols, without giving the opaque body a new name.
 //
 // SHAPE.  Only when the target is FARTHER than 100 from the centre does the
 // ring search run, walking the step from zero to 500 in increments of 30.
@@ -45,7 +45,7 @@ struct Coord3D
 	float z;
 };
 
-// The spelling the 0x0000A7DB pin already carries; identical layout to Coord3D.
+// The clipping caller's existing coordinate view; identical layout to Coord3D.
 struct BfmeCoord6DF1F0
 {
 	float x;
@@ -55,11 +55,10 @@ struct BfmeCoord6DF1F0
 
 class BfmePolygon6DF1F0
 {
-public:
-	char bfmeContains6DF1F0(const BfmeCoord6DF1F0 &point) const;
-	char bfmeClipSegment6DF730(const BfmeCoord6DF1F0 *from,
-		const BfmeCoord6DF1F0 *to, BfmeCoord6DF1F0 *clipped, int flags) const;
 };
+
+extern "C" void __cdecl __identifier("?bfmeContainsPointAt0018FA20@PolygonTrigger@@QBE_NAAUCoord3D@@@Z")();
+extern "C" void __cdecl __identifier("?d_0018fbf0@@YAXXZ")();
 
 enum CellShroudStatus
 {
@@ -154,14 +153,27 @@ void Rva006DF550::bfmeClampToArea(Coord3D *position)
 		return;
 	}
 
-	if (m_polygon1c->bfmeContains6DF1F0(*(const BfmeCoord6DF1F0 *)position))
+	union
+	{
+		void (__cdecl *symbol)();
+		bool (BfmePolygon6DF1F0::*member)(Coord3D &) const;
+	} contains;
+	contains.symbol = &__identifier("?bfmeContainsPointAt0018FA20@PolygonTrigger@@QBE_NAAUCoord3D@@@Z");
+	if ((m_polygon1c->*contains.member)(*position))
 	{
 		*center = *position;
 		return;
 	}
 
 	Coord3D clipped;
-	if (m_polygon1c->bfmeClipSegment6DF730((const BfmeCoord6DF1F0 *)center,
+	union
+	{
+		void (__cdecl *symbol)();
+		char (BfmePolygon6DF1F0::*member)(const BfmeCoord6DF1F0 *,
+			const BfmeCoord6DF1F0 *, BfmeCoord6DF1F0 *, int) const;
+	} clip;
+	clip.symbol = &__identifier("?d_0018fbf0@@YAXXZ");
+	if ((m_polygon1c->*clip.member)((const BfmeCoord6DF1F0 *)center,
 			(const BfmeCoord6DF1F0 *)position, (BfmeCoord6DF1F0 *)&clipped, 1))
 	{
 		*position = clipped;
