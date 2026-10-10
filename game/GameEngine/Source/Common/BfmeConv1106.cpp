@@ -1,12 +1,22 @@
 // Open-BFME5 conversions.
+// stlport
+#include <set>
 
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class BfmeK1105
+// ILT 0x0000CEA5 jumps to the authored clear body at 0x003B9450.
+class GenBase003BB1E0
 {
 public:
-	void bfmeDrop1105(void);
+	void clear();
 };
+
+// Keep the external /Od iterator body at 0x0082B870 as a call.
+namespace _STL
+{
+template <> _Rb_tree_node_base * __cdecl _Rb_global<bool>::_M_increment(
+	_Rb_tree_node_base *node);
+}
 
 struct BfmeCreate1106
 {
@@ -94,7 +104,7 @@ public:
 void BfmeK1106::bfmeDrop1106(void)
 {
 	BfmeK1106 *self = this;
-	reinterpret_cast<BfmeK1105 *>(self)->bfmeDrop1105();
+	reinterpret_cast<GenBase003BB1E0 *>(self)->clear();
 
 	BfmeCreate1106 *creator = ((Glo012F1028Type *)TheLivingWorldLogic)->m_create;
 	BfmeEntry1106 *entry = self->m_begin;
@@ -140,7 +150,6 @@ struct BfmeNode1106
 	int m_bfme34;
 };
 
-BfmeNode1106 *__cdecl bfmeNext1106(BfmeNode1106 *p);
 
 class BfmeW1106
 {
@@ -160,7 +169,9 @@ void BfmeW1106::bfmeGo1106A(void)
 	while (p != h) {
 		if (p->m_bfme14)
 			p->m_bfme14->bfmeDrop1106();
-		p = bfmeNext1106(p);
+		p = reinterpret_cast<BfmeNode1106 *>(
+			_STL::_Rb_global<bool>::_M_increment(
+				reinterpret_cast<_STL::_Rb_tree_node_base *>(p)));
 		h = m_bfme00;
 	}
 }
@@ -178,7 +189,9 @@ int BfmeW1106::bfmeGo1106B(void)
 			if (n < v)
 				n = v;
 		}
-		p = bfmeNext1106(p);
+		p = reinterpret_cast<BfmeNode1106 *>(
+			_STL::_Rb_global<bool>::_M_increment(
+				reinterpret_cast<_STL::_Rb_tree_node_base *>(p)));
 	}
 	return n;
 }
