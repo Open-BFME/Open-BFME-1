@@ -20,11 +20,14 @@ public:
 	void bfmeGoCIB( void *one, void *two );
 };
 
-class BfmeMsgVJH
+// Retail constructs the TADG message with the matched body at 0x007E8810
+// (Common/Rva007E8810Ctor.cpp) and sends both messages through the matched
+// sender at 0x008038F0 (GameNetwork/Rva008038F0Sender.cpp).
+class Rva007E8810
 {
 public:
 	virtual void handle();
-	BfmeMsgVJH();
+	Rva007E8810();
 
 	char m_pad04[ 0x0c ];
 	int m_value10;
@@ -36,10 +39,10 @@ public:
 	char m_pad30;
 };
 
-class BfmeThingVJH
+class Rva008038F0Sender
 {
 public:
-	void bfmeSendVJH( BfmeMsgVJH *message );
+	void send( BfmeC994 *message );
 };
 
 class Gen_007e86c0
@@ -64,7 +67,7 @@ public:
 	void process( unsigned int timestamp );
 
 	char m_pad00[ 0x04 ];
-	BfmeThingVJH *m_sender;
+	Rva008038F0Sender *m_sender;
 	char m_pad08[ 0x10 ];
 	Rva00809520Entry *m_entries[ 16 ];
 	int m_pad58;
@@ -106,9 +109,9 @@ void Gen0080AB50::process( unsigned int timestamp )
 	summaryCIB->bfmeGoCIB( const_cast<char *>(g_feslTransactionIdKey), (void *)m_tid );
 	summaryCIB->bfmeGoCIB( "LID", (void *)-2 );
 	summaryCIB->bfmeGoCIB( "NUM-GAMES", (void *)recentCount );
-	m_sender->bfmeSendVJH( reinterpret_cast< BfmeMsgVJH * >( &summary ) );
+	m_sender->send( &summary );
 
-	BfmeMsgVJH message;
+	Rva007E8810 message;
 	message.m_category = 0x47444154;
 	entry = m_entries;
 	int remaining = 16;
@@ -119,7 +122,7 @@ void Gen0080AB50::process( unsigned int timestamp )
 		{
 			message.m_value10 = item->m_gameId;
 			message.m_value14 = item->m_lobbyId;
-			m_sender->bfmeSendVJH( &message );
+			m_sender->send( reinterpret_cast< BfmeC994 * >( &message ) );
 		}
 		++entry;
 	}
