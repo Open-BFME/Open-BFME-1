@@ -39,6 +39,8 @@ struct Rva00959410Ptr {
 };
 extern Rva00959410Ptr Rva00959410Dispatch;
 struct HWND__;
+// Existing owner of the retail DX8WebBrowser::hWnd cell at VA 0x0134B27C.
+extern HWND__ *g_bfmeObjECFFlag27C;
 struct IDispatch;
 class DX8WebBrowser {
 public:
@@ -48,7 +50,7 @@ public:
 void DX8WebBrowser::CreateBrowser(const char *browsername,const char *url,int x,int y,int w,int h,int updateticks,long options,IDispatch *gamedispatch) {
  if(Rva00959410Dispatch) {
   BfmeBstrVGP brsname(browsername);
-  ((Rva00958C80*)Rva00959410Dispatch.operator->())->invoke(brsname,BfmeBstrVGP(url),(long)hWnd,x,y,w,h,options,gamedispatch);
+  ((Rva00958C80*)Rva00959410Dispatch.operator->())->invoke(brsname,BfmeBstrVGP(url),(long)g_bfmeObjECFFlag27C,x,y,w,h,options,gamedispatch);
   Rva00959410Dispatch->invoke(brsname,(void*)updateticks);
  }
 }
