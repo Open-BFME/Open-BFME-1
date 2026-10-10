@@ -1,4 +1,5 @@
 #include <stddef.h>
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 inline void *operator new( size_t, void *where ) { return where; }
 
@@ -26,25 +27,17 @@ public:
 typedef __node_alloc<true, 0> _Node_alloc;
 }
 
-template <typename T> class StringBase
-{
-friend class BFMETransitionAsciiString;
-private:
-	StringBase( const StringBase<T> &other );
-	void releaseBuffer( void );
-};
-
 class BFMETransitionAsciiString
 {
 public:
 	BFMETransitionAsciiString( const BFMETransitionAsciiString &other )
 	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&other );
+		((AsciiString *)this)->AsciiString::AsciiString(
+			*(const AsciiString *)&other );
 	}
 	~BFMETransitionAsciiString()
 	{
-		((StringBase<char> *)this)->StringBase<char>::releaseBuffer();
+		((AsciiString *)this)->AsciiString::~AsciiString();
 	}
 	bool isEmpty() const
 	{
@@ -58,9 +51,21 @@ class BFMETransitionGroup
 {
 public:
 	BFMETransitionGroup();
-	void setName( BFMETransitionAsciiString name );
 private:
 	char m_unmodelled[0x14];
+};
+
+class TransitionGroup;
+class GameWindowTransitionsHandler
+{
+public:
+	TransitionGroup *findGroup(AsciiString name);
+};
+
+class Gen00489B60
+{
+public:
+	void bfmeSet(AsciiString name);
 };
 
 struct BFMETransitionGroupNode
@@ -74,7 +79,6 @@ class BFMETransitionHandler
 {
 public:
 	BFMETransitionGroup *getNewGroup( BFMETransitionAsciiString name );
-	BFMETransitionGroup *findGroup( BFMETransitionAsciiString name );
 private:
 	char m_unmodelled[0x1c];
 	BFMETransitionGroupNode *m_groupHead;
@@ -84,11 +88,14 @@ BFMETransitionGroup *BFMETransitionHandler::getNewGroup( BFMETransitionAsciiStri
 {
 	if ( name.isEmpty() )
 		return 0;
-	if ( findGroup( name ) != 0 )
+	// ILT00024172 -> matched0048A520; the callee owns the outgoing string.
+	if ( ((GameWindowTransitionsHandler *)this)->findGroup(
+		*(const AsciiString *)&name ) != 0 )
 		return 0;
 
 	BFMETransitionGroup *group = new BFMETransitionGroup;
-	group->setName( name );
+	// ILT0000F894 -> matched00489B60, also taking one string by value.
+	((Gen00489B60 *)group)->bfmeSet( *(const AsciiString *)&name );
 
 	BFMETransitionGroupNode *head = m_groupHead;
 	BFMETransitionGroupNode *node = static_cast<BFMETransitionGroupNode *>(
