@@ -1,5 +1,14 @@
 // cl: /O2 /GX- /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
+#include <map>
+
+struct Gen_t_00424ac0_p12cd;
+
+// ILT 0x000083E1 reaches the ledger-owned tree assignment at 0x00424AC0.
+extern template class _STL::_Rb_tree<int,
+	_STL::pair<const int, Gen_t_00424ac0_p12cd>,
+	_STL::_Select1st<_STL::pair<const int, Gen_t_00424ac0_p12cd> >,
+	_STL::less<int>, _STL::allocator<_STL::pair<const int, Gen_t_00424ac0_p12cd> > >;
 
 // Open-BFME5: STLport __copy for the 28-byte Rva004262F0 element.  The first
 // four dwords are inline fields; the trailing twelve-byte map member uses its
@@ -7,9 +16,6 @@
 
 class BfmeRva004262F0Map
 {
-public:
-	BfmeRva004262F0Map &operator=( const BfmeRva004262F0Map & );
-
 private:
 	char m_raw[ 12 ];
 };
@@ -28,26 +34,20 @@ struct Rva004262F0Elem
 		m_field4 = that.m_field4;
 		m_field8 = that.m_field8;
 		m_fieldC = that.m_fieldC;
-		m_map = that.m_map;
+		*reinterpret_cast<_STL::_Rb_tree<int,
+			_STL::pair<const int, Gen_t_00424ac0_p12cd>,
+			_STL::_Select1st<_STL::pair<const int, Gen_t_00424ac0_p12cd> >,
+			_STL::less<int>, _STL::allocator<_STL::pair<const int, Gen_t_00424ac0_p12cd> > > *>(&m_map) =
+			*reinterpret_cast<const _STL::_Rb_tree<int,
+				_STL::pair<const int, Gen_t_00424ac0_p12cd>,
+				_STL::_Select1st<_STL::pair<const int, Gen_t_00424ac0_p12cd> >,
+				_STL::less<int>, _STL::allocator<_STL::pair<const int, Gen_t_00424ac0_p12cd> > > *>(&that.m_map);
 		return *this;
 	}
 };
 
 namespace _STL
 {
-struct random_access_iterator_tag
-{
-};
-
-template <class InputIterator, class OutputIterator, class Distance>
-OutputIterator __copy( InputIterator first, InputIterator last,
-	OutputIterator result, const random_access_iterator_tag &, Distance * )
-{
-	for ( Distance count = last - first; count > 0; --count, ++first, ++result )
-		*result = *first;
-	return result;
-}
-
 template Rva004262F0Elem *__copy<Rva004262F0Elem *, Rva004262F0Elem *, int>(
 	Rva004262F0Elem *, Rva004262F0Elem *, Rva004262F0Elem *,
 	const random_access_iterator_tag &, int *);
