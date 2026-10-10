@@ -41,7 +41,6 @@ class ObjectStatusMask
 class Parameter
 {
 public:
-	void friend_setInt(int value) { m_int = value; }
 	void friend_setReal(float value) { m_real = value; }
  void setWord24(unsigned value) { *(unsigned*)((char*)this+0x24)=value; }
 
@@ -58,6 +57,14 @@ private:
 	Coord3D m_coord;
 	ObjectStatusMask m_objectStatus;
 };
+
+// Scripts.h's Parameter inherits MemoryPoolObject and puts the integer at
+// +0x0c.  This BFME callback stores it at +8 (+0x136 and +0x1a3 in retail).
+// Keep the setter local so this partial layout exports no competing accessor.
+static __forceinline void friend_setInt(Parameter *parameter, int value)
+{
+	*reinterpret_cast<int *>(reinterpret_cast<char *>(parameter) + 8) = value;
+}
 
 class ScriptAction
 {
@@ -160,7 +167,7 @@ int ExecuteAction(lua_State *state)
 		{
 			double value = lua_tonumber(state, i + 2);
 			parameter->friend_setReal(value);
-			parameter->friend_setInt(value);
+			friend_setInt(parameter, value);
 		}
 		else if (lua_isstring(state, i + 2))
 		{
@@ -169,7 +176,7 @@ int ExecuteAction(lua_State *state)
 		}
 		else if (lua_type(state, i + 2) == 6)
         {
-            parameter->friend_setInt(Rva00990210Lookup(state,i+2)!=0);
+            friend_setInt(parameter, Rva00990210Lookup(state,i+2)!=0);
         }
         else if (lua_type(state,i+2)==4 && Rva00990030Lookup(state,i+2))
         {
