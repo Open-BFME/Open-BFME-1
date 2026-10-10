@@ -1,26 +1,9 @@
 class Image;
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-struct AsciiStringData
-{
-	int m_refCount;
-	unsigned short m_length;
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	bool isNotEmpty(void) const
-	{
-		return m_data != 0 && m_data->m_length != 0;
-	}
-
-	void clear(void);
-
-private:
-	AsciiStringData *m_data;
-};
+template<> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
+template<> inline bool StringBase<char>::isNotEmpty() const { return !isEmpty(); }
 
 class ImageCollection
 {
@@ -45,10 +28,10 @@ private:
 // ?getSelectedPortraitImage@ThingTemplatePortraitShim@@QBEPBVImage@@XZ
 const Image *ThingTemplatePortraitShim::getSelectedPortraitImage(void) const
 {
-	if (m_bfmePortraitName.isNotEmpty() && TheMappedImageCollection)
+	if (m_bfmePortraitName.StringBase<char>::isNotEmpty() && TheMappedImageCollection)
 	{
 		m_bfmeCachedPortrait = TheMappedImageCollection->findImageByName(m_bfmePortraitName);
-		m_bfmePortraitName.clear();
+		m_bfmePortraitName.StringBase<char>::clear();
 	}
 
 	return m_bfmeCachedPortrait;
