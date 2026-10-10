@@ -73,7 +73,7 @@ bool OptionPreferences::getFirewallNeedToRefresh(void)
 
 	bool needToRefresh = false;
 	AsciiString val = it->m_value;
-	if (val.compareNoCase("TRUE") == 0)
+	if (val.StringBase<char>::compareNoCase("TRUE") == 0)
 	{
 		needToRefresh = true;
 	}
