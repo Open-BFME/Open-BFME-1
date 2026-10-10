@@ -614,7 +614,8 @@ const char *RenderObjectDrawModuleInfo::GetSnapshotName()
     return "RenderObjectDrawModuleInfo";
 }
 
-RenderObjectUpdateModuleInfo::~RenderObjectUpdateModuleInfo()
+// Retail scalar-delete calls this destructor out of line through ILT000095F7.
+__declspec(noinline) RenderObjectUpdateModuleInfo::~RenderObjectUpdateModuleInfo()
 {
 }
 
