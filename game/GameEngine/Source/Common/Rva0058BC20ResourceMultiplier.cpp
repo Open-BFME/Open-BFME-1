@@ -2,19 +2,19 @@
 
 #include "ascii_string.h"
 
-class Rva0058C100CommandManager
+class CommandButton;
+class GameWindow;
+
+// Retail global 0x012F33F8 ?TheControlBar@@3PAVControlBar@@A.
+// retail 0x58BC20 calls ILT 0x3B59D -> 0x4A0310 findCommandButton and
+// ILT 0x3BCCD -> 0x4C1B60 rva004C1B60 (both matched ControlBar rows).
+class ControlBar
 {
 public:
-	void *find( const AsciiString *name );
-	void execute( int value, void *command );
+	const CommandButton *findCommandButton( const AsciiString &name );
+	void rva004C1B60( GameWindow *window, void *command );
 };
-
-// Retail global 0x012F33F8; the canonical mangled spelling is
-// ?TheControlBar@@3PAVControlBar@@A, so the pointee must be the real
-// ControlBar and only the calls need the TU-local view of it.
-class ControlBar;
 extern ControlBar *TheControlBar;
-extern float g_rva0058BC20DefaultMultiplier;
 
 struct Rva0058BC20State
 {
@@ -32,14 +32,14 @@ private:
 
 void Gen0058BC20::handle( int )
 {
-	if( m_state->m_multiplier != g_rva0058BC20DefaultMultiplier )
+	if( m_state->m_multiplier != 1.0f )
 	{
-		void *command;
+		const CommandButton *command;
 		{
 			AsciiString name( "NonCommand_ResourceMultiplier" );
-			command = ((Rva0058C100CommandManager *)TheControlBar)->find( &name );
+			command = TheControlBar->findCommandButton( name );
 		}
 		if( command )
-			((Rva0058C100CommandManager *)TheControlBar)->execute( 0, command );
+			TheControlBar->rva004C1B60( 0, (void *)command );
 	}
 }
