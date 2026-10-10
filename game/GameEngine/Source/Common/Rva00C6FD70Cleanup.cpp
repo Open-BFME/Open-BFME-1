@@ -13,21 +13,21 @@ struct Gen_001bdc50 { void m(); };
 struct Gen_001bdc90 { void m(); };
 struct Gen_001c0d00 { void m(); };
 
-extern Gen_001bdcb0 RvaObject012EF5E0;
-extern Gen_001bdc30 RvaObject012EF5F0;
-extern Gen_001bdc10 RvaObject012EF600;
-extern Gen_001bdc70 RvaObject012EF610;
-extern Gen_001bdc50 RvaObject012EF620;
-extern Gen_001bdc90 RvaObject012EF630;
-extern Gen_001c0d00 RvaObject012EF5D0;
+unsigned g_Va012EF5E0 = 0;
+unsigned g_Va012EF5F0 = 0;
+unsigned g_Va012EF600 = 0;
+unsigned g_Va012EF610 = 0;
+unsigned g_Va012EF620 = 0;
+unsigned g_Va012EF630 = 0;
+unsigned g_Va012EF5D0 = 0;
 
-void rva00C6FD70() { RvaObject012EF5E0.m(); }
-void rva00C6FD80() { RvaObject012EF5F0.m(); }
-void rva00C6FD90() { RvaObject012EF600.m(); }
-void rva00C6FDA0() { RvaObject012EF610.m(); }
-void rva00C6FDB0() { RvaObject012EF620.m(); }
-void rva00C6FDC0() { RvaObject012EF630.m(); }
-void rva00C6FDD0() { RvaObject012EF5D0.m(); }
+void rva00C6FD70() { reinterpret_cast<Gen_001bdcb0 *>(&g_Va012EF5E0)->m(); }
+void rva00C6FD80() { reinterpret_cast<Gen_001bdc30 *>(&g_Va012EF5F0)->m(); }
+void rva00C6FD90() { reinterpret_cast<Gen_001bdc10 *>(&g_Va012EF600)->m(); }
+void rva00C6FDA0() { reinterpret_cast<Gen_001bdc70 *>(&g_Va012EF610)->m(); }
+void rva00C6FDB0() { reinterpret_cast<Gen_001bdc50 *>(&g_Va012EF620)->m(); }
+void rva00C6FDC0() { reinterpret_cast<Gen_001bdc90 *>(&g_Va012EF630)->m(); }
+void rva00C6FDD0() { reinterpret_cast<Gen_001c0d00 *>(&g_Va012EF5D0)->m(); }
 void rva00C6FDE0() {}
 void rva00C6FDF0() {}
 void rva00C6FE00() {}
