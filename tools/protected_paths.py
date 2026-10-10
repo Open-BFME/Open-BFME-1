@@ -59,7 +59,7 @@ PROTECTED = (
     # the linked-build rules
     "tools/link_census.py", "tools/link_debt.py", "tools/alias_guard.py",
     # ledger, identity and direction guards the hooks call
-    "tools/check_csv.py", "tools/conversion_gate.py", "tools/identity_guard.py",
+    "tools/check_csv.py", "tools/check_case_collisions.py", "tools/conversion_gate.py", "tools/identity_guard.py",
     "tools/multi_name.py", "tools/ctor_vtable.py", "tools/null_reloc.py",
     "tools/size_outlier.py", "tools/one_identity.py", "tools/pin_consistency.py", "tools/class_gate.py", "tools/ledger_guard.py",
     "tools/b_pin_check.py", "tools/name_regression.py", "tools/name_history.py",

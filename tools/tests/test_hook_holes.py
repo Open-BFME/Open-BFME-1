@@ -430,3 +430,23 @@ def test_pre_push_binds_sources_and_compiler_state_to_the_pushed_commit():
     assert 'git diff --quiet HEAD -- "$s"' not in text
     assert 'git diff --quiet "$local_sha" -- "$s"' in text
     assert re.search(r"^unset BUILD_RECOMPILE_ONLY CL _CL_$", text, re.M)
+
+
+def test_pre_push_checks_the_pushed_trees_spelling_before_any_early_continue():
+    # Open-BFME-2 eca813ee88: pre-push never ran the case checker, so a ledger tracked
+    # under another case (targets/game/reverse/Data_Rows.csv) reached origin unread
+    text = (HOOKS / "pre-push").read_text(encoding="utf-8")
+    call = text.index('check_case_collisions.py --ref "$local_sha"')
+    assert call < text.index("no known remote base") and call < text.index("BUILD_POOL=")
+
+
+@pytest.mark.parametrize("path", ["mods/README.md", "mods/features/x/README.md", "mods/features/A/B/README.md"])
+def test_the_case_checker_and_doc_budget_agree_on_mod_readmes(path):
+    # Sol, shared case checker round 2: doc_budget caps mods/features/*/README.md with
+    # fnmatch (its * spans "/"), so the spelling rule must cover every depth it caps
+    import check_case_collisions
+    import doc_budget
+    assert check_case_collisions.wanted(path) == path and doc_budget.mod_readme(path)
+    assert check_case_collisions.wanted(path.replace("README.md", "readme.md")) == path
+    assert doc_budget.problems({path}, {}, {path: doc_budget.MOD_README_CAP + 1})
+    assert not doc_budget.problems({path}, {}, {path: doc_budget.MOD_README_CAP})

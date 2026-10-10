@@ -59,7 +59,11 @@ done
 # No two tracked paths may differ only in case — such a pair cannot check out on
 # Windows/macOS (case-insensitive FS), silently dropping a file and breaking those
 # clones. Reflects the staged index, so a colliding add is caught before it lands.
-python3 tools/check_case_collisions.py || fail "case-only path collision (see above)"
+# Control paths (the root, targets/, tools/, .githooks/, .github/) are also refused
+# unless lowercase: every gate reads a ledger or baseline by its exact spelling, and
+# would verify nothing through targets/game/reverse/Data_Rows.csv.
+python3 tools/check_case_collisions.py \
+    || fail "case-only path collision, or a control path not spelled as the hooks read it (see above)"
 
 # A script under tools/ is neither a game/ source nor a ledger file, so nothing
 # else in this hook looks at it: one with a syntax error commits cleanly and only
