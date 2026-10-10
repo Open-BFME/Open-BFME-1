@@ -11,6 +11,11 @@ extern "C" void _ReadWriteBarrier(void);
 
 #include "GameLogic/AIPathfind.h"
 
+// Retail calls ILT0x24299 -> 0x003E0930 and ILT0x4A980 -> 0x003E05B0; both
+// bodies are ledger rows d_003e0930/d_003e05b0 (thiscall, RET12/RET8, AL).
+extern void d_003e0930();
+extern void d_003e05b0();
+
 enum
 {
 	LAYER_WALL_START = 2,
@@ -59,12 +64,18 @@ Int Rva003E5A50Info::rva003e5b80( PathfindCell *from,
 	m_at08.layer = to->getLayer();
 
 	if (from) {
-		if (!m_at00->bfmeStepE0930( m_at04, &m_at08.cell, &m_at3c.cell )) {
+		typedef Bool (Pathfinder::*Step2)( Object *, ICoord2D *, ICoord2D * );
+		union { void (*freeFunction)(); Step2 memberFunction; } step2;
+		step2.freeFunction = ::d_003e0930;
+		if (!(m_at00->*step2.memberFunction)( m_at04, &m_at08.cell, &m_at3c.cell )) {
 			_WriteBarrier();
 			return 1;
 		}
 	} else {
-		if (!m_at00->bfmeStepE05B0( m_at04, &m_at08.cell )) {
+		typedef Bool (Pathfinder::*Step1)( Object *, ICoord2D * );
+		union { void (*freeFunction)(); Step1 memberFunction; } step1;
+		step1.freeFunction = ::d_003e05b0;
+		if (!(m_at00->*step1.memberFunction)( m_at04, &m_at08.cell )) {
 			_ReadWriteBarrier();
 			return 1;
 		}
