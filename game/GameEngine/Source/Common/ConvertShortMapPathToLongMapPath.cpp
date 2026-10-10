@@ -1,111 +1,27 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 #include <string.h>
 
-class AsciiString;
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-template <typename T>
-class StringBase
+template<> inline const char *StringBase<char>::find(char c) const
 {
-    friend class AsciiString;
-
-private:
-    struct Header
-    {
-        int ref_count;
-        unsigned short length;
-        unsigned short capacity;
-        T data[1];
-    };
-
-    StringBase() : m_data(0) {}
-    StringBase(const StringBase<T> &other);
-    ~StringBase();
-
-public:
-    int getLength() const
-    {
-        if (m_data != 0)
-            return static_cast<int>(m_data->length);
-        return 0;
+    const char *start = m_data ? &m_data->data[0] : (const char *)"";
+    const char *end = start + (m_data ? m_data->length : 0);
+    for (const char *p = start; p != end; ++p) {
+        if (*p == c) return p;
     }
-    const T *str() const;
-    bool endsWithNoCase(const T *text, int length) const;
-    void concat(const T *text, int length);
-    bool nextToken(StringBase<T> *token, const T *delimiters);
-    void removeLastChar();
-    void set(const StringBase<T> &other);
-    void set(const T *text, int length);
+    return 0;
+}
 
-private:
-    Header *m_data;
-};
-
-class AsciiString : private StringBase<char>
+template<> inline void StringBase<char>::concat(const StringBase<char> &str)
 {
-public:
-    AsciiString() : StringBase<char>() {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
+    const int len = str.m_data ? str.m_data->length : 0;
+    const char *data = str.m_data ? &str.m_data->data[0] : "";
+    concat(data, len);
+}
 
-	const char *str() const
-	{
-		return m_data ? m_data->data : "";
-	}
-
-	int getLength() const
-	{
-		return StringBase<char>::getLength();
-	}
-
-	const char *find(char value) const
-	{
-		const char *first = str();
-		const char *last = first + getLength();
-		for (const char *current = first; current != last; ++current)
-		{
-			if (*current == value)
-				return current;
-		}
-		return 0;
-	}
-
-	bool endsWithNoCase(const char *text, int length) const
-	{
-		return StringBase<char>::endsWithNoCase(text, length);
-	}
-
-	void concat(const char *text, int length)
-	{
-		StringBase<char>::concat(text, length);
-	}
-
-	void concat(const AsciiString &other)
-	{
-		concat(other.str(), other.getLength());
-	}
-
-	void concat(char value)
-	{
-		concat(&value, 1);
-	}
-
-	void removeLastChar()
-	{
-		StringBase<char>::removeLastChar();
-	}
-
-	void set(const AsciiString &other)
-	{
-		StringBase<char>::set(reinterpret_cast<const StringBase<char> &>(other));
-	}
-
-	void set(const char *text)
-	{
-		StringBase<char>::set(text, text ? strlen(text) : 0);
-	}
-
-	AsciiString &operator=(const char *text);
-};
+template<> inline void StringBase<char>::concat(char c) { concat(&c, 1); }
+template<> inline void StringBase<char>::set(const char *str) { set(str, str ? strlen(str) : 0); }
 
 static __forceinline bool shortMapPathNextToken(
 	AsciiString *path, AsciiString *token, const char *delimiters)
@@ -120,35 +36,35 @@ __declspec(noinline) static void ConvertShortMapPathToLongMapPath(AsciiString &m
 	AsciiString token;
 	AsciiString actualpath;
 
-	if (path.find('\\') == 0 && path.find('/') == 0)
+	if (path.StringBase<char>::find('\\') == 0 && path.StringBase<char>::find('/') == 0)
 		return;
 
 	shortMapPathNextToken(&path, &token, "\\/");
 	for (;;)
 	{
-		if (token.endsWithNoCase(".map", 4))
+		if (token.StringBase<char>::endsWithNoCase(".map", 4))
 			goto done;
-		if (token.getLength() <= 0)
+		if (token.StringBase<char>::getLength() <= 0)
 			goto done;
-		actualpath.concat(token);
-		actualpath.concat('\\');
+		actualpath.StringBase<char>::concat(token);
+		actualpath.StringBase<char>::concat('\\');
 		if (shortMapPathNextToken(&path, &token, "\\/"))
 			continue;
 		goto done;
 	}
 
 done:
-	token.endsWithNoCase(".map", 4);
+	token.StringBase<char>::endsWithNoCase(".map", 4);
 
-	token.removeLastChar();
-	token.removeLastChar();
-	token.removeLastChar();
-	token.removeLastChar();
-	actualpath.concat(token);
-	actualpath.concat('\\');
-	actualpath.concat(token);
-	actualpath.concat(".map", 4);
-    mapName.set(actualpath);
+	token.StringBase<char>::removeLastChar();
+	token.StringBase<char>::removeLastChar();
+	token.StringBase<char>::removeLastChar();
+	token.StringBase<char>::removeLastChar();
+	actualpath.StringBase<char>::concat(token);
+	actualpath.StringBase<char>::concat('\\');
+	actualpath.StringBase<char>::concat(token);
+	actualpath.StringBase<char>::concat(".map", 4);
+    mapName.StringBase<char>::set(actualpath);
 }
 
 void ConvertShortMapPathToLongMapPathAnchor(AsciiString &mapName)
@@ -212,7 +128,7 @@ int Rva00062D00ParseMapName(char **arguments, int count)
 {
 	if (localWritableGlobalData() != 0 && count >= 2)
 	{
-		localWritableGlobalData()->m_bfmeMapName008.set(arguments[1]);
+		localWritableGlobalData()->m_bfmeMapName008.StringBase<char>::set(arguments[1]);
 		ConvertShortMapPathToLongMapPath(localWritableGlobalData()->m_bfmeMapName008);
 	}
 
