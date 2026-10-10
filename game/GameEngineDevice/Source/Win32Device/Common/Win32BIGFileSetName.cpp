@@ -21,30 +21,9 @@
 
 typedef int Int;
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	void set( const AsciiString &that )
-	{
-		((StringBase<char> *)this)->set( *(const StringBase<char> *)&that );
-	}
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-	void set( const char *s, Int len )
-	{
-		((StringBase<char> *)this)->set( s, len );
-	}
-
-	void set( const char *s )
-	{
-		((StringBase<char> *)this)->set( s, s ? (Int)strlen( s ) : 0 );
-	}
-
-	const char *str( void ) const { return m_data ? m_data + 8 : ""; }
-
-private:
-	char *m_data;
-};
+template<> inline void StringBase<char>::set(const char *str) { set(str, str ? strlen(str) : 0); }
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/Common/Win32BIGFile.h
 class Win32BIGFile
@@ -72,20 +51,20 @@ void Win32BIGFile::setNameAndPath( const AsciiString &filename )
 		// hoist its address into a callee-saved register ahead of the inlined
 		// strlen, which is what costs the register that forces `this` onto the
 		// stack and grows the frame by the four bytes retail's chkstk asks for.
-		// Writing m_name.set(...) twice instead recomputes the address after the
+		// Writing m_name.StringBase<char>::set(...) twice instead recomputes the address after the
 		// strlen, needs no spill, and allocates four bytes less.
 		AsciiString &name = m_name;
 
-		name.set( token + 1 );
+		name.StringBase<char>::set( token + 1 );
 
 		strcpy( buffer, str );
 		buffer[token - str - 1] = 0;
 
-		m_path.set( name );
+		m_path.StringBase<char>::set( name );
 	}
 	else
 	{
-		m_name.set( filename );
-		m_path.set( ".", 1 );
+		m_name.StringBase<char>::set( filename );
+		m_path.StringBase<char>::set( ".", 1 );
 	}
 }
