@@ -1,5 +1,5 @@
 // ?bfmeGo002BD940@Rva002BD940Owner@@QAEXXZ
-// partial score=0.4 date=2026-09-26
+// partial score=0.8966 date=2026-10-10
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/bfmekindof /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define BFME_STLP_NODE_ALLOC 1
@@ -11,18 +11,9 @@
 
 #include "Common/KindOf.h"
 
-// Address-derived: no named caller (ILT-mediated only) and no vtable/string
-// proves the owning class, so identity stays opaque per docs/naming_evidence.md.
-// The kind-of mask (bit7=STRUCTURE, bit10/11=BFME_HOLE_10/11 per the shim's
-// enum comment) plus the getClosestObject/normalize/setPosition shape place
-// this in the GiantBird-neighbourhood cluster (0x002BD8B0..0x002BDB30) without
-// proving a specific state class.
+extern "C" const BitFlags<192> __identifier("?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B");
 
-// Coord3D and Thing are already declared for real via PreRTS.h's include chain
-// (Lib/BaseType.h and Common/Thing.h); Thing::setPosition is used through a
-// cast below, matching the already-landed GiantBirdAIUpdate.cpp convention.
-
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
+// Object position and the scalar at +0xBC are read directly in retail.
 class Object
 {
 public:
@@ -35,18 +26,21 @@ public:
 class PartitionFilter
 {
 public:
+	PartitionFilter() : m_next(0) {}
 	virtual ~PartitionFilter() {}
 	virtual bool allow(Object *objOther) = 0;
+	virtual int getPlayerMask();
 	PartitionFilter *m_next;
 };
 
 class PartitionFilterAcceptByKindOf : public PartitionFilter
 {
 public:
-	PartitionFilterAcceptByKindOf(const KindOfMaskType &mustBeSet, const KindOfMaskType &mustBeClear);
-	virtual bool allow(Object *objOther) { return true; }
+	__declspec(noinline) PartitionFilterAcceptByKindOf(const BitFlags<181> &mustBeSet, const BitFlags<181> &mustBeClear)
+		: m_mustBeSet(mustBeSet), m_mustBeClear(mustBeClear) {}
+	virtual bool allow(Object *objOther);
 private:
-	KindOfMaskType m_mustBeSet, m_mustBeClear;
+	BitFlags<181> m_mustBeSet, m_mustBeClear;
 };
 
 class PartitionManager
@@ -58,8 +52,7 @@ public:
 extern PartitionManager *ThePartitionManager;
 extern float __cdecl GetGameLogicRandomValueReal(float lo, float hi, char *file, int line);
 
-// The owning class/method are unproven (see header comment); +0x8 is the only
-// witnessed this-relative field (the brief's evidence pack).
+// The matched 0x002C12E0 caller passes this receiver without adjustment.
 class Rva002BD940Owner
 {
 public:
@@ -69,6 +62,7 @@ public:
 	Object *m_owner008;
 };
 
+// ?bfmeGo002BD940@Rva002BD940Owner@@QAEXXZ
 void Rva002BD940Owner::bfmeGo002BD940()
 {
 	Object *owner = m_owner008;
@@ -78,7 +72,7 @@ void Rva002BD940Owner::bfmeGo002BD940()
 	pos.y = owner->m_position.y;
 	pos.z = owner->m_position.z;
 
-	PartitionFilterAcceptByKindOf filterKind(KindOfMaskType(KindOfMaskType::kInit, 7, 10, 11), KINDOFMASK_NONE);
+	PartitionFilterAcceptByKindOf filterKind(BitFlags<181>(BitFlags<181>::kInit, 7, 10, 11), *(const BitFlags<181> *)&__identifier("?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B"));
 
 	Object *target = ThePartitionManager->getClosestObject(&pos, rawRadius * 2.0f, 0, &filterKind);
 	if (target)
@@ -89,16 +83,10 @@ void Rva002BD940Owner::bfmeGo002BD940()
 		delta.z = 0.0f;
 		delta.normalize();
 
-		float jitterX = GetGameLogicRandomValueReal(-0.1f, 0.1f, __FILE__, 3655);
-		float finalX = jitterX + delta.x * 2.0f;
-		float jitterY = GetGameLogicRandomValueReal(-0.1f, 0.1f, __FILE__, 3656);
-		float finalY = jitterY + delta.y * 2.0f;
-
-		Coord3D newPos;
-		newPos.x = pos.x + finalX;
-		newPos.y = pos.y + finalY;
-		newPos.z = pos.z;
-
-		((Thing *)owner)->setPosition(&newPos);
+		delta.scale(2.0f);
+		delta.x += GetGameLogicRandomValueReal(-0.1f, 0.1f, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\AIUpdate\\GiantBirdAIUpdate.cpp", 3655);
+		delta.y += GetGameLogicRandomValueReal(-0.1f, 0.1f, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\AIUpdate\\GiantBirdAIUpdate.cpp", 3656);
+		pos.add(&delta);
+		((Thing *)owner)->setPosition(&pos);
 	}
 }
