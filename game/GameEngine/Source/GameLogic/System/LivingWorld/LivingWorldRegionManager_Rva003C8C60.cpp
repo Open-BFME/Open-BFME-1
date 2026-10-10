@@ -84,7 +84,7 @@ void LivingWorldRegionManager::rva003C8C60(
 	unsigned char reclaimOrphans,
 	unsigned char requireSpawner)
 {
-	if (regionName.compare("All") == 0)
+	if (regionName.StringBase<char>::compare("All") == 0)
 	{
 		LivingWorldRegionCampaign *campaign = m_currentCampaign;
 		LivingWorldRegionVector *regions = &campaign->m_regions;
