@@ -99,7 +99,7 @@ void BfmeAptScreenOnlineLogin::submitNewLogin00551060() {
  email.translate(bfmeGetTextAt74());
  login.translate(bfmeGetTextAt78());
  password.translate(bfmeGetTextAt7C());
- if(!email.isEmpty() && !login.isEmpty() && !password.isEmpty()) {
+ if(!email.StringBase<char>::isEmpty() && !login.StringBase<char>::isEmpty() && !password.StringBase<char>::isEmpty()) {
   field98=timeGetTime();
   BuddyRequest req;
   req.buddyRequestType=BuddyRequest::BUDDYREQUEST_LOGINNEW;
@@ -118,13 +118,13 @@ void BfmeAptScreenOnlineLogin::submitNewLogin00551060() {
   ((void (__fastcall *)(Rva00550500Target *))&Rva00550500::startPings)(
       (Rva00550500Target *)this);
  } else {
-  if(email.isEmpty() && login.isEmpty() && password.isEmpty()) GSMessageBoxOk(TheGameText->fetch("GUI:Error"),TheGameText->fetch("GUI:GSNoLoginInfoAll"));
-  else if(email.isEmpty() && login.isEmpty()) GSMessageBoxOk(TheGameText->fetch("GUI:Error"),TheGameText->fetch("GUI:GSNoLoginInfoEmailNickname"));
-  else if(email.isEmpty() && password.isEmpty()) GSMessageBoxOk(TheGameText->fetch("GUI:Error"),TheGameText->fetch("GUI:GSNoLoginInfoEmailPassword"));
-  else if(login.isEmpty() && password.isEmpty()) GSMessageBoxOk(TheGameText->fetch("GUI:Error"),TheGameText->fetch("GUI:GSNoLoginInfoNicknamePassword"));
-  else if(email.isEmpty()) GSMessageBoxOk(TheGameText->fetch("GUI:Error"),TheGameText->fetch("GUI:GSNoLoginInfoEmail"));
-  else if(password.isEmpty()) GSMessageBoxOk(TheGameText->fetch("GUI:Error"),TheGameText->fetch("GUI:GSNoLoginInfoPassword"));
-  else if(login.isEmpty()) GSMessageBoxOk(TheGameText->fetch("GUI:Error"),TheGameText->fetch("GUI:GSNoLoginInfoNickname"));
+  if(email.StringBase<char>::isEmpty() && login.StringBase<char>::isEmpty() && password.StringBase<char>::isEmpty()) GSMessageBoxOk(TheGameText->fetch("GUI:Error"),TheGameText->fetch("GUI:GSNoLoginInfoAll"));
+  else if(email.StringBase<char>::isEmpty() && login.StringBase<char>::isEmpty()) GSMessageBoxOk(TheGameText->fetch("GUI:Error"),TheGameText->fetch("GUI:GSNoLoginInfoEmailNickname"));
+  else if(email.StringBase<char>::isEmpty() && password.StringBase<char>::isEmpty()) GSMessageBoxOk(TheGameText->fetch("GUI:Error"),TheGameText->fetch("GUI:GSNoLoginInfoEmailPassword"));
+  else if(login.StringBase<char>::isEmpty() && password.StringBase<char>::isEmpty()) GSMessageBoxOk(TheGameText->fetch("GUI:Error"),TheGameText->fetch("GUI:GSNoLoginInfoNicknamePassword"));
+  else if(email.StringBase<char>::isEmpty()) GSMessageBoxOk(TheGameText->fetch("GUI:Error"),TheGameText->fetch("GUI:GSNoLoginInfoEmail"));
+  else if(password.StringBase<char>::isEmpty()) GSMessageBoxOk(TheGameText->fetch("GUI:Error"),TheGameText->fetch("GUI:GSNoLoginInfoPassword"));
+  else if(login.StringBase<char>::isEmpty()) GSMessageBoxOk(TheGameText->fetch("GUI:Error"),TheGameText->fetch("GUI:GSNoLoginInfoNickname"));
   else GSMessageBoxOk(TheGameText->fetch("GUI:Error"),TheGameText->fetch("GUI:GSNoLoginInfoAll"));
  }
 }
