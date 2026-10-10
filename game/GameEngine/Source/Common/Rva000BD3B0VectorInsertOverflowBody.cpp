@@ -4,10 +4,15 @@
 // 0x000BD3B0, 328 bytes. The body carried only a machine byte-dump row and no name.
 //
 // The element type is not recoverable: all three phases reach one out-of-line
-// _STL::_Construct through the ILT at 0x0002D30D (body 0x000BA5B0) and the
-// teardown reaches _STL::_Destroy through the ILT at 0x000247E9 (body 0x000BB5D0),
-// and the ledger holds neither under a real name. So the element is named for
-// the address of the body it belongs to and modelled by width.
+// _STL::_Construct at 0x000BA5B0 (retail ILT 0x0002D30D, ledger row
+// ?gen_000BA5B0@@YAXPAPAX0@Z -- a two-slot refcount assign, so the element is
+// a 4-byte refcounted handle) and the teardown reaches _STL::__destroy_aux
+// over a range of 4-byte refcounted handles at 0x000BB5D0 (retail ILT
+// 0x000247E9, ledger row ?__destroy_aux@_STL@@YAXPAVRva000BB5D0Ref@@0ABU__false_type@1@@Z,
+// game/Libraries/Source/WWVegas/WWLib/_STL___destroy_aux.cpp). Both take
+// pointer-sized slots, which is all this 4-byte element is, so the calls are
+// respelled to those ledger rows under TU-local declarations. The element keeps
+// an address-derived name and is modelled by width.
 //
 // Four bytes is what the bytes say: the size arithmetic shifts right by two and
 // the allocator's byte count is a scale-4 lea. Unlike the wider elements in this
@@ -18,6 +23,13 @@ struct Rva000BD3B0Element
 {
 	unsigned char m_data[4];
 };
+
+// Retail ILTs 0x0002D30D and 0x000247E9 route to these ledger-owned bodies at
+// 0x000BA5B0 and 0x000BB5D0 respectively. The two-slot assign helper is a
+// global-scope row, the destroy range helper is _STL's.
+class Rva000BB5D0Ref;
+
+void gen_000BA5B0(void **dst, void **src);
 
 namespace _STL
 {
@@ -56,14 +68,13 @@ static inline void *vectorSmallAllocate(unsigned int bytes) { return __node_allo
 static inline void vectorLargeDeallocate(void *block) { ::operator delete(block); }
 static inline void vectorSmallDeallocate(void *block, unsigned int bytes) { __node_alloc<true, 0>::_M_deallocate(block, bytes); }
 
-// The old range is destroyed by an out-of-line _STL::_Destroy before the block
-// goes back to the allocator; it takes the same trailing dispatch tag the rest
-// of the family passes to its phase helpers.
-void __cdecl BfmeRva000BD3B0Destroy(Rva000BD3B0Element *first, Rva000BD3B0Element *last,
-	const __false_type &);
-
-void __cdecl BfmeRva000BD3B0Construct(Rva000BD3B0Element *destination,
-	const Rva000BD3B0Element &value);
+// The old range is destroyed by an out-of-line _STL::__destroy_aux before the
+// block goes back to the allocator; it takes the same trailing dispatch tag
+// the rest of the family passes to its phase helpers.
+// Declaration moved into _STL namespace to match ledger row
+// ?__destroy_aux@_STL@@YAXPAVRva000BB5D0Ref@@0ABU__false_type@1@@Z
+void __cdecl __destroy_aux(Rva000BB5D0Ref *first, Rva000BB5D0Ref *last,
+	const __false_type &tag);
 
 template <class Type>
 __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
@@ -72,7 +83,7 @@ __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
 	{
 		do
 		{
-			BfmeRva000BD3B0Construct(result, *first);
+			gen_000BA5B0((void **)result, (void **)&*first);
 			++first;
 			++result;
 		}
@@ -86,7 +97,7 @@ __forceinline Type *uninitialized_fill_n(Type *result, unsigned int count, const
 {
 	for (; count > 0; --count)
 	{
-		BfmeRva000BD3B0Construct(result, value);
+		gen_000BA5B0((void **)result, (void **)&value);
 		++result;
 	}
 	return result;
@@ -131,7 +142,7 @@ void vector<Type, Allocator>::_M_insert_overflow(
 
 	if (fillLength == 1)
 	{
-		BfmeRva000BD3B0Construct(newFinish, value);
+		gen_000BA5B0((void **)newFinish, (void **)&value);
 		++newFinish;
 	}
 	else
@@ -142,7 +153,9 @@ void vector<Type, Allocator>::_M_insert_overflow(
 	if (!atEnd)
 		newFinish = uninitialized_copy(position, _M_finish, newFinish);
 
-	BfmeRva000BD3B0Destroy(_M_start, _M_finish, reinterpret_cast<const __false_type &>(atEnd));
+	__destroy_aux(reinterpret_cast<Rva000BB5D0Ref *>(_M_start),
+		reinterpret_cast<Rva000BB5D0Ref *>(_M_finish),
+		reinterpret_cast<const __false_type &>(atEnd));
 
 	if (_M_start)
 	{
