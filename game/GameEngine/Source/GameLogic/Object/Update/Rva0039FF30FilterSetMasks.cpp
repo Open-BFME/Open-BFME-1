@@ -110,9 +110,10 @@ struct RespawnPolicy
 
 class RespawnPolicyMember
 {
-public:
-    void setPolicies(RespawnPolicy first, RespawnPolicy second);
 };
+
+// ILT 0x0000D3E1 forwards ECX and two six-word masks (RET 48).
+extern "C" void __cdecl __identifier("?j_0000d3e1@@YAXXZ")();
 
 // ?setMasks@Rva0039FF30Filter@@QAEXURva0021FC80Mask@@0@Z
 void Rva0039FF30Filter::setMasks(Rva0021FC80Mask first,
@@ -140,7 +141,12 @@ void Rva0039FF30Filter::setMasks(Rva0021FC80Mask first,
         handle = bfmeInternAttributeEntry(&entry);
         return;
     }
-    reinterpret_cast<RespawnPolicyMember *>(this)->setPolicies(
+    union
+    {
+        void (*raw)();
+        void (RespawnPolicyMember::*member)(RespawnPolicy, RespawnPolicy);
+    } handoff = { __identifier("?j_0000d3e1@@YAXXZ") };
+    (reinterpret_cast<RespawnPolicyMember *>(this)->*handoff.member)(
         *reinterpret_cast<const RespawnPolicy *>(&KINDOFMASK_NONE),
         *reinterpret_cast<const RespawnPolicy *>(&KINDOFMASK_NONE));
 }
