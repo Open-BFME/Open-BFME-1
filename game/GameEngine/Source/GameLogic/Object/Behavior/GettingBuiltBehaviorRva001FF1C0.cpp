@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 //
 // Retail 0x001FF1C0, 321 bytes: slot 3 of GettingBuiltBehavior's secondary
@@ -58,29 +58,8 @@ enum DeathType
 
 typedef Int ObjectID;
 
-template <typename T>
-struct StringData
-{
-	Int m_refCount;
-	unsigned short m_length;
-	unsigned short m_capacity;
-	T m_text[1];
-};
-
-template <typename T>
-class StringBase
-{
-friend class AsciiString;
-
-private:
-	StringData<T> *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	Bool isEmpty() const { return !m_data || m_data->m_length == 0; }
-};
+#include "ascii_string.h"
+template<> inline bool StringBase<char>::isEmpty() const { return !m_data || m_data->length == 0; }
 
 class Rva00414930
 {
@@ -261,7 +240,7 @@ void GettingBuiltBehavior::rva001FF1C0(Object *other)
 
 	if (!rvaSlot05())
 	{
-		if (!data->m_workerName.isEmpty())
+		if (!data->m_workerName.StringBase<char>::isEmpty())
 			return;
 
 		if (object && other
