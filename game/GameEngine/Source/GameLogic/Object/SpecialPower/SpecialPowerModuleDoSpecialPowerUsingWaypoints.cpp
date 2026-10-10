@@ -28,8 +28,6 @@ class Waypoint;
 class SpecialPowerModule
 {
 public:
-	Bool initiateIntentToDoSpecialPower(const Object *targetObj, const Coord3D *targetPos, const Waypoint *way, UnsignedInt commandOptions);
-	void finishSpecialPower(UnsignedInt arg);
 };
 
 class SpecialPowerModuleInterface
@@ -56,8 +54,16 @@ static SpecialPowerModuleBase *specialPowerModuleBase(SpecialPowerModuleInterfac
 	return (SpecialPowerModuleBase *)((char *)self - 0x10);
 }
 
+extern "C" void __cdecl __identifier("?j_000361ab@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_000251ad@@YAXXZ")();
+
 void SpecialPowerModuleInterface::doSpecialPowerUsingWaypoints(const Coord3D *loc, UnsignedInt mid, UnsignedInt commandOptions)
 {
+	union { void (*raw)(); void (SpecialPowerModule::*member)(
+		const Object *, const Coord3D *, UnsignedInt, UnsignedInt); }
+		intent = { __identifier("?j_000361ab@@YAXXZ") };
+	union { void (*raw)(); void (SpecialPowerModule::*member)(UnsignedInt); }
+		finish = { __identifier("?j_000251ad@@YAXXZ") };
 	if ((commandOptions & 0x40000) == 0)
 	{
 		if (m_pausedCount > 0)
@@ -66,7 +72,7 @@ void SpecialPowerModuleInterface::doSpecialPowerUsingWaypoints(const Coord3D *lo
 			return;
 	}
 	SpecialPowerModule *mod = (SpecialPowerModule *)specialPowerModuleBase(this);
-	mod->initiateIntentToDoSpecialPower(0, loc, (const Waypoint *)commandOptions, mid);
+	(mod->*intent.member)(0, loc, commandOptions, mid);
 	if (specialPowerModuleBase(this)->m_moduleData[0xc] == 0)
-		mod->finishSpecialPower(0);
+		(mod->*finish.member)(0);
 }
