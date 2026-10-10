@@ -45,11 +45,6 @@ class Object;
 class StateMachine
 {
 public:
-	Object *getOwner()
-	{
-		return m_owner;
-	}
-
 	Object *getGoalObject();
 
 	Int getCurrentStateID() const
@@ -58,7 +53,7 @@ public:
 		return currentState ? *(Int *)((char *)currentState + 4) : 999999;
 	}
 
-private:
+public:
 	unsigned char m_unreconstructed_00[ 0x10 ];
 	Object *m_owner;
 	unsigned char m_unreconstructed_14[ 0x1c - 0x14 ];
@@ -69,7 +64,7 @@ private:
 class Overridable
 {
 public:
-	Overridable *getFinalOverride();
+	const Overridable *getFinalOverride() const;
 
 	unsigned char m_unreconstructed_00[ 4 ];
 	Overridable *m_nextOverride;
@@ -165,7 +160,7 @@ public:
 
 	Object *getMachineOwner()
 	{
-		return m_machine->getOwner();
+		return m_machine->m_owner;
 	}
 
 	Object *getMachineGoalObject()
@@ -207,7 +202,7 @@ StateReturnType Rva0016FC30AIExitState::update()
 
 		Overridable *thingTemplate = obj->getTemplate();
 		if (thingTemplate && thingTemplate->m_nextOverride)
-			thingTemplate = thingTemplate->m_nextOverride->getFinalOverride();
+			thingTemplate = (Overridable *)thingTemplate->m_nextOverride->getFinalOverride();
 		ExitDoorType exitDoor = exitInterface ?
 			exitInterface->reserveDoorForExit( thingTemplate, obj ) : DOOR_NONE_AVAILABLE;
 		if (exitDoor == DOOR_NONE_AVAILABLE)
