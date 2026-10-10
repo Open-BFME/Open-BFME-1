@@ -8,18 +8,18 @@ public:
 	unsigned int m_bfmeIndex;				// +0x20
 };
 
-class Gen_000D5930
+class Player
 {
 public:
-	bool bfmeHasBit(const BfmeThingEL *thing) const;
+	bool hasUpgradeComplete(const BfmeThingEL *thing) const;
 
 private:
 	int m_bfmeHead[35];					// +0x00
 	unsigned int m_bfmeWords[8];				// +0x8C
 };
 
-// ?bfmeHasBit@Gen_000D5930@@QBE_NPBVBfmeThingEL@@@Z
-bool Gen_000D5930::bfmeHasBit(const BfmeThingEL *thing) const
+// ?hasUpgradeComplete@Player@@QBE_NPBVBfmeThingEL@@@Z
+bool Player::hasUpgradeComplete(const BfmeThingEL *thing) const
 {
 	if (thing == 0)
 		return false;
