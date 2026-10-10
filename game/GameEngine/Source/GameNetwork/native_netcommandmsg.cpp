@@ -1,6 +1,16 @@
 // cl: /DNDEBUG /MD /GX
 
-extern "C" const void *g_0111A5A0[];
+void j_0001e6aa();
+void j_00006767();
+void j_0001cd87();
+void j_0002f676();
+// Retail four-slot pointer table at VA0111A5A0; targets are exact ILT rows.
+extern "C" const void *g_Va0111A5A0[4] = {
+    reinterpret_cast<const void *>(&j_0001e6aa),
+    reinterpret_cast<const void *>(&j_00006767),
+    reinterpret_cast<const void *>(&j_0001cd87),
+    reinterpret_cast<const void *>(&j_0002f676),
+};
 extern "C" const void *bfmeVftNetCommandMsg[];
 #pragma comment(linker, "/alternatename:_bfmeVftNetCommandMsg=??_7NetCommandMsg@@6B@")
 
@@ -22,7 +32,7 @@ void *BFMENetRequestPlayerLeaveCommandMsg::construct()
 	*reinterpret_cast<unsigned int *>(base + 0x0c) = 0;
 	*reinterpret_cast<unsigned int *>(base + 0x04) = 0;
 	*reinterpret_cast<unsigned int *>(base + 0x18) = 1;
-	*reinterpret_cast<unsigned int *>(base) = reinterpret_cast<unsigned int>(g_0111A5A0);
+	*reinterpret_cast<unsigned int *>(base) = reinterpret_cast<unsigned int>(g_Va0111A5A0);
 	*reinterpret_cast<unsigned int *>(base + 0x14) = 7;
 	*reinterpret_cast<unsigned int *>(base + 0x1c) = 0xffffffff;
 	return this;

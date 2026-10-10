@@ -798,6 +798,7 @@ address_global	game/GameEngine/Source/GameNetwork/Y4DirtySockTickMix.c	g_Rva0130
 address_global	game/GameEngine/Source/GameNetwork/Y4FeslBuddyRequests.cpp	g_Rva012C3BC4	2
 address_global	game/GameEngine/Source/GameNetwork/createServiceHubImpl.cpp	g_Va0130A58C	2
 address_global	game/GameEngine/Source/GameNetwork/createServiceHubImpl.cpp	g_Va0130A58D	2
+address_global	game/GameEngine/Source/GameNetwork/native_netcommandmsg.cpp	g_Va0111A5A0	2	allow=84bbc53680005a79320e4a9378dc12d65b9db02b
 address_global	game/GameEngineDevice/Source/MilesAudioDevice/BufferedStreamStarter006B7E70.cpp	g_Rva00F36E5C	3
 address_global	game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerSetHardwareAccelerated.cpp	g_Rva00F36E5C	2
 address_global	game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerStopChain.cpp	g_Va0112E8B0	2
