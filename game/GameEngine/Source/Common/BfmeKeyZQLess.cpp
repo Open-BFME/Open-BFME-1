@@ -22,7 +22,7 @@ char BfmeKeyZQ::bfmeLessZQ(const BfmeKeyZQ *other) const
 	if ((other->m_bfmeFlagZQ == 0) ^ (flag == 0))
 		return flag;
 
-	int comparison = m_bfmeNameZQ.compareNoCase(other->m_bfmeNameZQ);
+	int comparison = m_bfmeNameZQ.StringBase<char>::compareNoCase(other->m_bfmeNameZQ);
 
 	return (char)(0 | (comparison < 0));
 }
