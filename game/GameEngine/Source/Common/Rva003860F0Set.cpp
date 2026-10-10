@@ -1,11 +1,14 @@
 // cl: /O2 /Ob0
 
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
+// Retail calls the private StringBase release directly. Keep its native
+// linkage and zero-argument thiscall ABI without defining another wrapper.
+extern "C" void __identifier("?releaseBuffer@?$StringBase@D@@AAEXXZ")();
+
 class Rva0036CA00Str
 {
 public:
-	Rva0036CA00Str &operator=(const Rva0036CA00Str &other);
-	void clear();
-
 	struct Data
 	{
 		short a;
@@ -44,13 +47,15 @@ void Rva003860F0::set(Rva0036CA00Str *a, Rva0036CA00Str *b, Rva0036CA00Str *c)
 	if (a->m_item && a->m_item->first && !TheWritableGlobalData->flag)
 	{
 		m_6d = 1;
-		m_80 = *a;
-		m_84 = *b;
-		m_88 = *c;
+		((StringBase<char> *)&m_80)->set(*(const StringBase<char> *)a);
+		((StringBase<char> *)&m_84)->set(*(const StringBase<char> *)b);
+		((StringBase<char> *)&m_88)->set(*(const StringBase<char> *)c);
 		return;
 	}
 	m_6d = 0;
-	m_80.clear();
-	m_84.clear();
-	m_88.clear();
+	union { void (*raw)(); void (StringBase<char>::*member)(); } release;
+	release.raw = __identifier("?releaseBuffer@?$StringBase@D@@AAEXXZ");
+	(((StringBase<char> *)&m_80)->*release.member)();
+	(((StringBase<char> *)&m_84)->*release.member)();
+	(((StringBase<char> *)&m_88)->*release.member)();
 }
