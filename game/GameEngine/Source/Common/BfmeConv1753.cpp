@@ -21,23 +21,30 @@ struct BfmeStateBQ
 	char m_bfmeBusyBQ;
 };
 
-extern BfmeStateBQ *g_bfmeStateBQ;
-extern int g_bfmeModeBQ;
+// These reads are fields of the ledger-owned RenderStateStruct at
+// VA 0x01340EC0: vertex_buffer_types[0] at +0x24C and vertex_buffers[0]
+// at +0x260. Access the protected static through a TU-local derived scope.
+class Rva00904BA0 : public DX8Wrapper
+{
+public:
+	static __forceinline RenderStateStruct &state() { return render_state; }
+};
 extern unsigned int number_of_DX8_calls;
 
 void __cdecl bfmeApplyBQ(void)
 {
-	if (g_bfmeStateBQ == 0)
+	if (Rva00904BA0::state().vertex_buffers[0] == 0)
 		return;
 
-	if (g_bfmeModeBQ != 0 && g_bfmeModeBQ != 2)
+	if (Rva00904BA0::state().vertex_buffer_types[0] != 0 &&
+		Rva00904BA0::state().vertex_buffer_types[0] != 2)
 		return;
 
-	if (g_bfmeStateBQ->m_bfmeBusyBQ)
+	if (reinterpret_cast<BfmeStateBQ *>(Rva00904BA0::state().vertex_buffers[0])->m_bfmeBusyBQ)
 		return;
 
 	reinterpret_cast<BfmeDevBQ *>(DX8Wrapper::_Get_D3D_Device8())->m_bfmeVtblBQ->m_bfmeSetBQ(reinterpret_cast<BfmeDevBQ *>(DX8Wrapper::_Get_D3D_Device8()),
-		*g_bfmeStateBQ->m_bfmeSourceBQ);
+		*reinterpret_cast<BfmeStateBQ *>(Rva00904BA0::state().vertex_buffers[0])->m_bfmeSourceBQ);
 
 	++number_of_DX8_calls;
 }
