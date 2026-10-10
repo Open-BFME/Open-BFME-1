@@ -33,9 +33,8 @@ public:
 // Retail pushes the ILT thunk in front of this class's buildFieldParse body,
 // 0x00415654 = `jmp 0x00648F00`, which the ledger owns as
 // ?j_00015654@@YAXXZ (game/gen_small/thunks_009.cpp). The body it jumps to
-// (RVA 0x00248F00) is still unclaimed, so name the thunk: nothing defines a
-// ContestableContainFieldParse symbol at link time.
-extern "C" void __cdecl __identifier("ContestableContainFieldParse")(MultiIniFieldParse &parse);
+// (RVA 0x00248F00) is ?buildFieldParse@Rva00248F00; name the thunk row.
+void __cdecl j_00015654(); // ?j_00015654@@YAXXZ, ILT 0x00415654
 
 class ContestableContain
 {
@@ -48,6 +47,6 @@ ModuleData *ContestableContain::friend_newModuleData(INI *ini)
 {
 	ContestableContainModuleData *data = new ContestableContainModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &__identifier("ContestableContainFieldParse"));
+		ini->initFromINIMultiProc(data, reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_00015654));
 	return (ModuleData *)data;
 }

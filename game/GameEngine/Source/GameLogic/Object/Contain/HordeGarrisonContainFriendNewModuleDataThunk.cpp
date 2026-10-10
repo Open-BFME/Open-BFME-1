@@ -20,13 +20,13 @@ class MultiIniFieldParse;
 class INI { public: void initFromINIMultiProc(void *what,
 	void (__cdecl *buildFieldParse)(MultiIniFieldParse &)); };
 // Retail pushes the ILT thunk in front of this class's buildFieldParse body,
-// 0x00405245 = `jmp 0x0064B6E0`. The symbol table pins that thunk as
-// HordeGarrisonContainFieldParse, so the reference names the pin. The real
+// 0x00405245 = `jmp 0x0064B6E0`, which the ledger owns as the ILT thunk row
+// ?j_00005245@@YAXXZ, so the reference names that row. The real
 // buildFieldParse body behind that second thunk is still unclaimed.
-extern "C" void __cdecl __identifier("HordeGarrisonContainFieldParse")(MultiIniFieldParse &parse);
+void __cdecl j_00005245(); // ?j_00005245@@YAXXZ, ILT 0x00405245
 class HordeGarrisonContain { public: static ModuleData *friend_newModuleData(INI *ini); };
 ModuleData *HordeGarrisonContain::friend_newModuleData(INI *ini) {
 	HordeGarrisonContainModuleData *data = new HordeGarrisonContainModuleData;
-	if (ini) ini->initFromINIMultiProc(data, &__identifier("HordeGarrisonContainFieldParse"));
+	if (ini) ini->initFromINIMultiProc(data, reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&j_00005245));
 	return (ModuleData *)data;
 }

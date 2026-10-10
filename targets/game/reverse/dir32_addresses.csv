@@ -13034,7 +13034,6 @@ _CommSRPListen,0x00C16660
 _CommSRPResolve,0x00C15760
 _CommSRPSend,0x00C158B0
 _CommTCPResolve,0x00C143D0
-_ContestableContainFieldParse,0x00415654
 _ContestableContainModuleData_vtbl,0x010AFE60
 _CritterEmitterUpdateFieldParse,0x004215DA
 _CylinderEmissionVolumeConcrete_vtbl0,0x0111122C
@@ -13129,7 +13128,6 @@ _HealCrateCollideFieldParse,0x00412742
 _HijackerUpdateFieldParse,0x00420BDA
 _HordeAIUpdateFieldParse,0x0043572E
 _HordeContainFieldParse,0x0043DE29
-_HordeGarrisonContainFieldParse,0x00405245
 _HordeMemberCollideFieldParse,0x004173DC
 _HorseHordeContainFieldParse,0x004334F6
 _IID_ID3DXBaseMesh,0x0114DAD8
