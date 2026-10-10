@@ -1,3 +1,5 @@
+// cl: /Igame/Libraries/Source/WWVegas/WWLib
+
 // Two fifteen-byte __thiscall members that forward their whole argument list to
 // a member of a pointer held at +0x28, and do nothing when it is null:
 //
@@ -21,29 +23,37 @@
 // IDENTITY IS NOT RECOVERED.  Every name is derived from an address; the callee
 // pins are address-derived and additive.
 
-class Gen003C8C60
+#include "ascii_string.h"
+
+class Rva0076F980Mid;
+
+// Declared by the same mangled names their defining TUs use, so the guarded
+// calls below link.  This TU only needs each class as a pointer type; the
+// layouts live with the definitions (Gen_003C6340 in S3GuardedDelegatesBulk.cpp,
+// LivingWorldRegionManager in LivingWorldRegionManager_Rva003C8C60.cpp).
+class LivingWorldRegionManager
 {
 public:
-	void handle( int a, int b, int c, int d, int e, int f, int g, int h );
+	void rva003C8C60( const AsciiString &regionName, const Rva0076F980Mid &names, unsigned int spawnNumber, unsigned int startNumber, unsigned int replaceDelay, unsigned char oneShot, unsigned char reclaimOrphans, unsigned char requireSpawner );
 };
 
-class Gen003C6340
+class Gen_003C6340
 {
 public:
-	void handle( int a );
+	void bfmeForward( void *a0 );
 };
 
 class Rva003BCA50
 {
 public:
 	void forward( int a, int b, int c, int d, int e, int f, int g, int h );
-	char          m_pad00[ 0x28 ];
-	Gen003C8C60 * m_regionManager;
+	char                      m_pad00[ 0x28 ];
+	LivingWorldRegionManager *m_regionManager;
 };
 void Rva003BCA50::forward( int a, int b, int c, int d, int e, int f, int g, int h )
 {
 	if( m_regionManager )
-		m_regionManager->handle( a, b, c, d, e, f, g, h );
+		m_regionManager->rva003C8C60( *reinterpret_cast<const AsciiString *>( a ), *reinterpret_cast<const Rva0076F980Mid *>( b ), (unsigned int)c, (unsigned int)d, (unsigned int)e, (unsigned char)f, (unsigned char)g, (unsigned char)h );
 }
 
 class Rva003BCA70
@@ -51,10 +61,10 @@ class Rva003BCA70
 public:
 	void forward( int a );
 	char          m_pad00[ 0x28 ];
-	Gen003C6340 * m_regionManager;
+	Gen_003C6340 *m_regionManager;
 };
 void Rva003BCA70::forward( int a )
 {
 	if( m_regionManager )
-		m_regionManager->handle( a );
+		m_regionManager->bfmeForward( reinterpret_cast<void *>( a ) );
 }
