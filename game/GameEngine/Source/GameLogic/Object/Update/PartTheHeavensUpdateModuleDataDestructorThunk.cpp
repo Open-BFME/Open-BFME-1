@@ -19,16 +19,7 @@ struct HeavensEntry
 	int m_d;
 };
 
-class BFMERetailAsciiString
-{
-public:
-	~BFMERetailAsciiString() { releaseBuffer(); }
-
-private:
-	void releaseBuffer();
-
-	char *m_data;
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Xfer;
@@ -49,7 +40,7 @@ public:
 
 private:
 	unsigned char m_gap0[0x04];
-	BFMERetailAsciiString m_name;
+	AsciiString m_name;
 	unsigned char m_gap1[0x0C];
 	std::vector<HeavensEntry> m_vec0;
 	unsigned char m_gap2[0x20];
