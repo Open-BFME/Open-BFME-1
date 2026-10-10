@@ -206,7 +206,8 @@ struct BfmeWideResult {
  }
 };
 class BfmeWideForwardC {
-public: BfmeWideResult bfmeForwardWideC(int,float,int,int,int);
+// RVA 0x009F2960 forwards five raw stack words; use its ledger signature.
+public: BfmeWideResult bfmeForwardWideC(int,int,int,int,int);
 };
 class BfmeThingDTJ { public: float bfmeGoDTJ(); };
 
@@ -236,7 +237,7 @@ Bool ScriptConditions::evaluateSkirmishSuppliesWithinDistancePerimeter(
   Real distance = reinterpret_cast<BfmeThingDTJ *>(trigger)->bfmeGoDTJ() + p1->getReal();
   Real compareToValue = p3->getReal();
   Real maxValue = 0;
-  BfmeWideResult iter = (*reinterpret_cast<BfmeWideForwardC **>(&ThePartitionManager))->bfmeForwardWideC((int)&center, distance, 0,
+  BfmeWideResult iter = (*reinterpret_cast<BfmeWideForwardC **>(&ThePartitionManager))->bfmeForwardWideC((int)&center, *reinterpret_cast<const int*>(&distance), 0,
    (int)PartitionFilterAcceptByKindOf(KindOfMaskType(KindOfMaskType::INIT_ZERO, KINDOF_STRUCTURE),KINDOFMASK_NONE).link(
     PartitionFilterPlayerAffiliation(player, ALLOW_NEUTRAL, true).link(&PartitionFilterOnMap())), 0);
   while (Object *object = iter.next()) {

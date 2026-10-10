@@ -113,7 +113,8 @@ struct BfmeWideResult
 class BfmeWideForwardC
 {
 public:
-    BfmeWideResult bfmeForwardWideC(int, float, int, int, int);
+    // RVA 0x009F2960 owns the five raw-word call signature.
+    BfmeWideResult bfmeForwardWideC(int, int, int, int, int);
 };
 class PartitionManager;
 extern PartitionManager *ThePartitionManager;
@@ -279,7 +280,7 @@ Bool VeterancyCrateCollide::executeCrateBehavior(Object *other)
     else
     {
         BfmeWideResult result = ((BfmeWideForwardC *)ThePartitionManager)->bfmeForwardWideC(
-            (int)((char *)other + 0x38), range, 0,
+            (int)((char *)other + 0x38), *reinterpret_cast<const int*>(&range), 0,
             (int)PlayerFilter0028AE90(player(other)).link(&Rva0025ED50ObjectFilter(other)), 0);
         while (Object *potential = result.next())
         {

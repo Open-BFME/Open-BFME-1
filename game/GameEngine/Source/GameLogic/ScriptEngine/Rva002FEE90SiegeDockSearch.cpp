@@ -72,7 +72,9 @@ class PartitionFilterAcceptByKindOf: public PartitionFilter {public:
 struct Rva002FEE90Entry { Object *object; int unknown04; };
 struct Rva002FEE90Data { Rva002FEE90Entry *begin,*end,*capacity,*current; };
 struct BfmeWideResult { Rva002FEE90Data *value; BfmeWideResult(const BfmeWideResult&); ~BfmeWideResult() {call0<void>(j_0002c471,this);} Rva002FEE90Entry *endPointer() { return value->end; } Object *next(Object *&object) {Rva002FEE90Entry *end=endPointer(); if(value->current==end)return 0; object=(value->current++)->object; return object;} };
-class BfmeWideForwardC {public: BfmeWideResult bfmeForwardWideC(int,float,int,int,int);};
+// The matched 57-byte wrapper at 0x009F2960 forwards raw stack words.
+// Keep the radius's IEEE bits when calling its ledger-owned integer signature.
+class BfmeWideForwardC {public: BfmeWideResult bfmeForwardWideC(int,int,int,int,int);};
 extern PartitionManager *ThePartitionManager;
 extern ScriptEngine *TheScriptEngine;
 extern TerrainLogic *TheTerrainLogic;
@@ -88,7 +90,7 @@ void Rva002FEE90ScriptActions::apply(const AsciiString &name,Rva002FEE90Paramete
  if(!power || !power->ready())return;
  Rva002FEE90Waypoint *wp=TheTerrainLogic->findWaypoint(waypoint->string10); if(!wp)return;
  Coord3D position; position.x=wp->position.x; position.y=wp->position.y; position.z=wp->position.z; float distance=radius->value0C;
- BfmeWideResult iterator=((BfmeWideForwardC*)ThePartitionManager)->bfmeForwardWideC((int)&position,distance,0,(int)&PartitionFilterAcceptByKindOf(BitFlags<192>(BitFlags<192>::kInit,59),KINDOFMASK_NONE),1);
+ BfmeWideResult iterator=((BfmeWideForwardC*)ThePartitionManager)->bfmeForwardWideC((int)&position,*reinterpret_cast<const int*>(&distance),0,(int)&PartitionFilterAcceptByKindOf(BitFlags<192>(BitFlags<192>::kInit,59),KINDOFMASK_NONE),1);
  Object *target;
  while((iterator.next(target))!=0) {
   static int key=call1<int>(j_0003add7,TheNameKeyGenerator,(const char*)"SiegeDockingBehavior");
