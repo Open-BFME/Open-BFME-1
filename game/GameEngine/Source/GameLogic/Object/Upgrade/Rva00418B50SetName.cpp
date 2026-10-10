@@ -6,9 +6,11 @@
 // clears or assigns the AsciiString member at +0x2D4.
 #include "ascii_string.h"
 
+template<> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
+
 template <typename T> inline bool StringBase<T>::isNotEmpty() const
 {
-	return m_data != 0 && m_data->length != 0;
+	return !isEmpty();
 }
 
 class Rva00418B50Owner
@@ -25,7 +27,7 @@ void Rva00418B50Owner::setName(const AsciiString &name)
 {
 	AsciiString key("ReferenceDisplayName");
 	if (name.StringBase<char>::compare(key) == 0)
-		m_name.clear();
-	else if (name.isNotEmpty())
+		m_name.StringBase<char>::clear();
+	else if (name.StringBase<char>::isNotEmpty())
 		m_name = name;
 }
