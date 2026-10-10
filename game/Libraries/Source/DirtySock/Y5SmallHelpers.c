@@ -599,7 +599,7 @@ void Rva0080DD80(unsigned char *output, const unsigned char *key,
 	int value, const char *name)
 {
 	unsigned char MD5[0x54];
-	unsigned char rc4[0x102];
+	unsigned char Arc4[0x102];
 	char strCrypt[0x100];
 	int combinedLength;
 
@@ -623,8 +623,8 @@ void Rva0080DD80(unsigned char *output, const unsigned char *key,
 
 	combinedLength = Rva0080DC90(key, output + 0x20,
 		(unsigned char *)strCrypt);
-	Rva0080F200(rc4, (const unsigned char *)strCrypt, combinedLength, -1);
-	Rva0080F300(rc4, output + 0x30, 0x24);
+	Rva0080F200(Arc4, (const unsigned char *)strCrypt, combinedLength, -1);
+	Rva0080F300(Arc4, output + 0x30, 0x24);
 }
 
 int Rva0080E030(int *crypto, const unsigned char *input,
