@@ -9,22 +9,11 @@ typedef int Int;
 
 class ModuleData;
 
-class BFMERetailAsciiString
+// ILT0000EB56 routes to the existing matched0013B2F0 getter row.
+class Rva0013B2F0StringTable
 {
-private:
-	void releaseBuffer();
-	char *m_data;
-
 public:
-	~BFMERetailAsciiString()
-	{
-		releaseBuffer();
-	}
-
-	operator const AsciiString &() const
-	{
-		return *(const AsciiString *)this;
-	}
+    AsciiString getField0(int index) const;
 };
 
 class ModuleInfo
@@ -32,8 +21,8 @@ class ModuleInfo
 private:
 	struct Nugget
 	{
-		BFMERetailAsciiString first;
-		BFMERetailAsciiString second;
+		AsciiString first;
+		AsciiString second;
 		const ModuleData *data;
 		char padding[8];
 	};
@@ -46,7 +35,6 @@ public:
 		return m_info.size();
 	}
 
-	BFMERetailAsciiString getNthName(Int i) const;
 
 	const ModuleData *getNthData(Int i) const
 	{
@@ -81,7 +69,7 @@ void Rva00140070::collectModuleAssets(ModuleInfo *moduleInfo, Int type,
 {
 	for (Int i = 0; i < moduleInfo->getCount(); ++i)
 	{
-		TheModuleFactory->rva00127e80(moduleInfo->getNthName(i),
+		TheModuleFactory->rva00127e80(reinterpret_cast<const Rva0013B2F0StringTable *>(moduleInfo)->getField0(i),
 			(void *)moduleInfo->getNthData(i), (ModuleType)type, context, assets);
 	}
 }
