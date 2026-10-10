@@ -1,19 +1,10 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+#include <memory>
 //
 // Retail 0x00181DF0: virtual destructor of the owner that lazily holds the
 // 0x1C inner at +0x54.  Guarded delete of that pointer, then the inlined
 // destructor of a 12-byte-element vector at +0x44, then the base destructor.
-
-void __cdecl bfmeFreeScalar( void *block );
-void __cdecl bfmeDeallocate( void *block, unsigned int bytes );
-
-inline void bfmeRelease( void *block, unsigned int bytes )
-{
-	if ( bytes > 0x80 )
-		bfmeFreeScalar( block );
-	else
-		bfmeDeallocate( block, bytes );
-}
 
 struct Rva00181DF0Elem
 {
@@ -30,7 +21,8 @@ public:
 		Rva00181DF0Elem *start = m_start;
 
 		if ( start )
-			bfmeRelease( start, sizeof( Rva00181DF0Elem ) * ( m_end - start ) );
+			_STL::__node_alloc<true, 0>::deallocate(
+				start, sizeof( Rva00181DF0Elem ) * ( m_end - start ) );
 	}
 
 	Rva00181DF0Elem *m_start;
