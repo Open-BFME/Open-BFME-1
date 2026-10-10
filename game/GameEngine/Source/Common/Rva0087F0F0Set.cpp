@@ -1,9 +1,12 @@
 // cl: /O2 /Ob0 /G6
 
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+
+extern "C" void __identifier("??0?$StringBase@D@@AAE@ABV0@@Z")();
+
 struct BfmeTailF0
 {
 	char *m_p;
-	void copyFrom(const BfmeTailF0 *src);
 };
 
 struct BfmeShapeF0
@@ -58,7 +61,14 @@ BfmeObjF0 *BfmeObjF0::set(const BfmePosF0 *pos, const BfmeShapeF0 *src, int extr
 	m_10 = v->m_10;
 	m_14 = v->m_14;
 	m_18 = v->m_18;
-	m_1C.copyFrom(&v->m_1C);
+	// Retail constructs the string head in place through 00887B60.
+	union
+	{
+		void (*raw)();
+		void (StringBase<char>::*member)(const StringBase<char> &);
+	} copy;
+	copy.raw = __identifier("??0?$StringBase@D@@AAE@ABV0@@Z");
+	(((StringBase<char> *)&m_1C)->*copy.member)(*(const StringBase<char> *)&v->m_1C);
 	m_20 = v->m_20;
 	m_24 = pos->m_x;
 	m_28 = pos->m_y;
