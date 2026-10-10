@@ -1,10 +1,16 @@
-// cl: /O2 /Ob1 /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /O2 /Ob1 /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
 
 #include "string_base.h"
+#include <vector>
+
+struct Gen_t_002e13b0_p12cd;
+
+// Retail ILT 0x00033640 reaches this existing vector assignment.
+extern template class _STL::vector<Gen_t_002e13b0_p12cd>;
 
 struct BfmeSubA100
 {
-	void set(const BfmeSubA100 &other);
 	char m_bfmeBytes[12];
 };
 
@@ -26,7 +32,8 @@ BfmeElemA100 *bfmeCopyA100(const BfmeElemA100 *first, const BfmeElemA100 *last, 
 		{
 			dest->m_bfmeKey.set(first->m_bfmeKey);
 			dest->m_bfmeFlag = first->m_bfmeFlag;
-			dest->m_bfmeSub.set(first->m_bfmeSub);
+			*reinterpret_cast<_STL::vector<Gen_t_002e13b0_p12cd> *>(&dest->m_bfmeSub) =
+				*reinterpret_cast<const _STL::vector<Gen_t_002e13b0_p12cd> *>(&first->m_bfmeSub);
 			++first;
 			++dest;
 		}
