@@ -9,16 +9,16 @@
 class Overridable
 {
 public:
-	Overridable *getFinalOverride();
+	const Overridable *getFinalOverride() const;
 
 	void *m_vtable;
 	Overridable *m_nextOverride;
 };
 
-class BfmeHead416B90
+struct Rva001C3A00Entry;
+struct Rva001C3A00Owner
 {
-public:
-	void *lookup(int index);				///< ILT 0x0004775D -> 0x001C3A00
+	Rva001C3A00Entry *getEntryOrDefault(int index); // ILT 0x0004775D
 };
 
 class BfmeHost416B90
@@ -30,19 +30,19 @@ private:
 	int m_pad00;
 	Overridable *m_slot;					///< +0x04
 	char m_pad08[0xF4];
-	BfmeHead416B90 *m_head;					///< +0xFC
+	Rva001C3A00Owner *m_head;					///< +0xFC
 };
 
 // ?getSlot@BfmeHost416B90@@QAEPAXH@Z
 void *BfmeHost416B90::getSlot(int index)
 {
-	BfmeHead416B90 *head = m_head;
+	Rva001C3A00Owner *head = m_head;
 	if (head)
-		return head->lookup(index);
+		return head->getEntryOrDefault(index);
 	Overridable *slot = m_slot;
 	if (!slot)
 		return (void *)0x60;
-	Overridable *r = slot;
+	const Overridable *r = slot;
 	if (slot->m_nextOverride)
 		r = slot->m_nextOverride->getFinalOverride();
 	return (char *)r + 0x60;
