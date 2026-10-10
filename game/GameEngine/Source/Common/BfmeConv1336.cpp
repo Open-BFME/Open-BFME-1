@@ -1,14 +1,12 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/toolchains/vs2003/PROG~FBU/MICR~2RR.NET/Vc7/PLAT~MIB/Include
 // Open-BFME5 conversions.
 
-struct BfmeGuidULA
-{
-	char m_bfmeBytes[16];
-};
-
-// Retail 0x0113DF00: the uuid attribute on IFEBrowserEngine2 (see
-// DX8WebBrowserInitialize.cpp) makes the compiler reference this C-linkage
-// GUID constant by its __GUID_<uuid> spelling, so that is the name used here.
-extern "C" BfmeGuidULA __GUID_ee883b17_0778_4b18_a12b_e44c0d298412;
+// Retail COM error helper at RVA00AFD550 is the vendored comsupp body.
+#include <objbase.h>
+extern void __stdcall _com_issue_errorex(HRESULT, IUnknown *, const IID &);
+// The interface UUID is witnessed by DX8WebBrowserInitialize.cpp and its retail
+// 16-byte constant at VA0113DF00; let VC7.1 emit its native UUID symbol.
+struct __declspec(uuid("ee883b17-0778-4b18-a12b-e44c0d298412")) IFEBrowserEngine2;
 
 class BfmeThingULA;
 
@@ -31,8 +29,6 @@ struct BfmeVtULA
 	long (__stdcall *m_bfmeCallULA)(BfmeThingULA *self, void *a);
 };
 
-void __stdcall bfmeReportULA(long hr, BfmeThingULA *o, BfmeGuidULA *iid);
-
 class BfmeThingULA
 {
 public:
@@ -44,7 +40,7 @@ long BfmeThingULA::bfmeGoULA(void *a)
 {
 	long hr = m_bfmeVt->m_bfmeCallULA(this, a);
 	if (hr < 0)
-		bfmeReportULA(hr, this, &__GUID_ee883b17_0778_4b18_a12b_e44c0d298412);
+		_com_issue_errorex(hr, reinterpret_cast<IUnknown *>(this), __uuidof(IFEBrowserEngine2));
 	return hr;
 }
 
