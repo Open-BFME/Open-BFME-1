@@ -39,66 +39,14 @@ struct Region2D
 	Real height(void) const { return hi.y - lo.y; }
 };
 
-template <class T> class StringBase
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+template<> inline void StringBase<char>::concat(const StringBase<char> &str)
 {
-	friend class AsciiString;
-
-public:
-	struct Data
-	{
-		Int refCount;
-		unsigned short length;
-		unsigned short capacity;
-		T text[1];
-	};
-
-private:
-	StringBase(void);
-	StringBase(const StringBase<T> &other);
-	void concat(const T *text, Int length);
-	void releaseBuffer(void);
-
-	Data *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(void) { m_data = 0; }
-	AsciiString(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&other);
-	}
-	~AsciiString(void)
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
-
-	void concat(const char *text, Int length)
-	{
-		((StringBase<char> *)this)->concat(text, length);
-	}
-
-	const char *str(void) const
-	{
-		return m_data ? (const char *)m_data + 8 : "";
-	}
-
-	Int getLength(void) const
-	{
-		return m_data ? m_data->length : 0;
-	}
-
-	void concat(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->concat(other.str(), other.getLength());
-	}
-
-	Int bfmeCompare1294(const char *text) const;
-
-private:
-};
+    const int len = str.m_data ? str.m_data->length : 0;
+    const char *data = str.m_data ? &str.m_data->data[0] : "";
+    concat(data, len);
+}
 
 class Team;
 
@@ -246,7 +194,7 @@ void AISkirmishPlayer::acquireEnemy(void)
 		if (m_player->getRelationship(curPlayer->getDefaultTeam()) == ENEMIES) {
 			if (curPlayer->hasAnyObjects(false) == false) continue;
 
-			if (curPlayer->m_playerName.bfmeCompare1294(
+			if (curPlayer->m_playerName.StringBase<char>::compare(
 				"PlyrCreeps") == 0)
 				continue;
 
@@ -292,8 +240,8 @@ void AISkirmishPlayer::acquireEnemy(void)
 		m_currentEnemy = bestEnemy;
 		AsciiString msg = TheNameKeyGenerator->keyToName(
 			m_player->getPlayerNameKey());
-		msg.concat(" acquiring target enemy player: ", 32);
-		msg.concat(TheNameKeyGenerator->keyToName(
+		msg.StringBase<char>::concat(" acquiring target enemy player: ", 32);
+		msg.StringBase<char>::concat(TheNameKeyGenerator->keyToName(
 			m_currentEnemy->getPlayerNameKey()));
 		TheScriptEngine->AppendDebugMessage(msg, false);
 	}
