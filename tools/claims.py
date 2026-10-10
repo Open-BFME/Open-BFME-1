@@ -24,7 +24,9 @@ claimed bodies. fleet_run and astra_seats claim what they serve.
 
   python3 tools/claims.py list                 # live claims
   python3 tools/claims.py whoami               # this worker's owner string
-  python3 tools/claims.py claim 0xRVA [...]    # claim for this worker (TTL 4 h)
+  python3 tools/claims.py claim 0xRVA [...]    # claim for this worker (TTL 4 h);
+      # prints one `Claim-Lease: 0xRVA=<lease>` trailer per body for the landing commit
+  python3 tools/claims.py lease [0xRVA ...]    # reprint those trailers for claims you hold
   python3 tools/claims.py release 0xRVA [...]  # release your own claims
   python3 tools/claims.py release --landed [SHA]
       # release claims whose rows are ON origin/master (SHA: rows it names by Claim-Lease trailer)
@@ -152,6 +154,23 @@ def _mirror(rva, sha, root=None):
     """Record in refs/claims-seen/ a claim write origin just accepted."""
     seen = SEEN + ref_of(rva)[len(NS):]
     _git(*(("update-ref", seen, sha) if sha else ("update-ref", "-d", seen)), cwd=root)
+
+
+def trailer(rva, lease):
+    """The `Claim-Lease:` commit trailer line lease_trailers() reads back."""
+    return f"Claim-Lease: 0x{int(rva):08X}={lease}"
+
+
+def held_leases(rvas=(), who=None, root=None):
+    """{rva: lease} of `who`'s live claims (all of them, or those in `rvas`),
+    after refreshing the local mirror from origin."""
+    if not fetch(root):
+        raise ClaimsUnavailable("claims: could not fetch refs/claims/* from origin")
+    who = who or owner(root)
+    wanted = set(_ints(rvas)) if rvas else None
+    return {rva: entry[1].get("lease") or entry[0]
+            for rva, entry in sorted(live(_read_local(root)).items())
+            if entry[1].get("owner") == who and (wanted is None or rva in wanted)}
 
 
 def current_lease(rva, who=None, root=None):
@@ -736,7 +755,7 @@ def release_landed(sha=None, root=None, who=None, keep_days=1.0):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    ap.add_argument("action", choices=["list", "claim", "release", "whoami"])
+    ap.add_argument("action", choices=["list", "claim", "lease", "release", "whoami"])
     ap.add_argument("rvas", nargs="*")
     ap.add_argument("--note", default="")
     ap.add_argument("--force", action="store_true", help="release: also claims owned by others")
@@ -754,6 +773,18 @@ def main(argv=None):
             print(f"0x{rva:08X}  {info.get('owner', '?'):30} {left:5.1f} h left  {info.get('note', '')}")
         print(f"{len(claims)} live claim(s)")
         return 0
+    if args.action == "lease":
+        try:
+            held = held_leases(args.rvas)
+        except ClaimsUnavailable as error:
+            print(error, file=sys.stderr)
+            return 2
+        for rva, lease in held.items():
+            print(trailer(rva, lease))
+        missing = sorted(set(_ints(args.rvas)) - set(held))
+        if missing:
+            print(f"not held by {owner()}: {' '.join(f'0x{r:08X}' for r in missing)}", file=sys.stderr)
+        return 0 if not missing else 1
     if args.action == "claim":
         try:
             result = claim(args.rvas, note=args.note)
@@ -764,6 +795,8 @@ def main(argv=None):
             return 2
         got, refused = result
         print(f"claimed {len(got)}: {' '.join(f'0x{r:08X}' for r in got)}")
+        for rva in got:
+            print(trailer(rva, result.leases[rva]))
         if refused:
             print(f"not claimed: {' '.join(f'0x{r:08X}' for r in refused)}"
                   + (f" (unconfirmed, origin trouble: {' '.join(f'0x{r:08X}' for r in result.unconfirmed)})"

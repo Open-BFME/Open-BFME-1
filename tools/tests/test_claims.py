@@ -526,3 +526,26 @@ def test_fetch_master_preserves_commands_and_reports_failed_step(
             "timeout": "claims: git fetch fixture-origin master failed (exit 124): timed out after 300s\n",
         }
         assert captured.err == expected[failure]
+
+
+def test_printed_trailers_round_trip_and_release(hosts, capsys):
+    a = hosts("a")
+    _commit_ledger(a, [], "base")
+    assert claims.main(["claim", "0x500", "0x600"]) == 0
+    printed = [l for l in capsys.readouterr().out.splitlines() if l.startswith("Claim-Lease:")]
+    assert len(printed) == 2
+    assert claims.main(["lease", "0x500"]) == 0
+    recovered = capsys.readouterr().out.splitlines()
+    assert recovered == [printed[0]]
+    assert claims.main(["lease"]) == 0
+    assert capsys.readouterr().out.splitlines() == printed
+    hosts("b")
+    assert claims.main(["lease", "0x500"]) == 1          # not b's claim
+    a = hosts("a")
+    sha = _commit_ledger(a, ["?g@@YAXXZ,,0x00000500,8,game/y.cpp,matched,",
+                             "?h@@YAXXZ,,0x00000600,8,game/y.cpp,matched,"],
+                         "land\n\n" + "\n".join(printed) + "\n")
+    _git(a, "push", "-q", "origin", "HEAD:refs/heads/master")
+    assert set(claims.lease_trailers(sha)) == {0x500, 0x600}
+    assert claims.main(["release", "--landed", sha]) == 0
+    assert claims.active() == {}
