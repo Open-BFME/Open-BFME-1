@@ -109,9 +109,6 @@ struct _Hashtable_node
 	V _M_val;
 };
 
-template <class T1, class T2>
-void _Construct(T1 *p, const T2 &value);
-
 template <class Value, class Key, class HashFcn, class ExtractKey, class EqualKey, class Alloc>
 class hashtable
 {
@@ -147,8 +144,6 @@ public:
 	}
 
 private:
-	void resize(size_type numElementsHint);			// retail 0x000D10F0
-
 	size_type _M_bkt_num_key(const Key &key) const
 	{
 		return _M_hash(key) % _M_buckets.size();
@@ -159,14 +154,6 @@ private:
 		return _M_bkt_num_key(_M_get_key(obj));
 	}
 
-	_Node *_M_new_node(const Value &obj)
-	{
-		_Node *n = (_Node *)vectorSmallAllocate(sizeof(_Node));
-		n->_M_next = 0;
-		_Construct(&n->_M_val, obj);
-		return n;
-	}
-
 	HashFcn _M_hash;					// +0x00
 	EqualKey _M_equals;
 	ExtractKey _M_get_key;
@@ -174,14 +161,35 @@ private:
 	size_type _M_num_elements;				// +0x10
 };
 
-template <class Value, class Key, class HashFcn, class ExtractKey, class EqualKey, class Alloc>
-Value &hashtable<Value, Key, HashFcn, ExtractKey, EqualKey, Alloc>::_M_insert(const Value &obj)
+
+
+struct Open2Mapped382010 { Int m_value; };
+
+typedef pair<const Int, Open2Mapped382010> Open2Pair382010;
+
+// Retail382010: resize is thiscall/RET4, construct is cdecl/RET0.
+extern "C" void __cdecl __identifier("?j_000368db@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00049ad5@@YAXXZ")(Open2Pair382010 *, const Open2Pair382010 &);
+
+template <>
+Open2Pair382010 &hashtable<Open2Pair382010, Int, hash<Int>,
+	_Select1st<Open2Pair382010>, equal_to<Int>,
+	allocator<Open2Pair382010> >::_M_insert(const Open2Pair382010 &obj)
 {
-	resize(_M_num_elements + 1);
+	union
+	{
+		void (__cdecl *symbol)();
+		void (hashtable::*member)(size_type);
+	} grow;
+	grow.symbol = &__identifier("?j_000368db@@YAXXZ");
+	(this->*grow.member)(_M_num_elements + 1);
 
 	size_type n = _M_bkt_num(obj);
 	_Node *first = (_Node *)_M_buckets[n];
-	_Node *tmp = _M_new_node(obj);
+	_Node *tmp = (_Node *)vectorSmallAllocate(sizeof(_Node));
+	tmp->_M_next = 0;
+	__identifier("?j_00049ad5@@YAXXZ")(&tmp->_M_val, obj);
+
 	tmp->_M_next = first;
 	_M_buckets[n] = tmp;
 	++_M_num_elements;
@@ -189,22 +197,38 @@ Value &hashtable<Value, Key, HashFcn, ExtractKey, EqualKey, Alloc>::_M_insert(co
 }
 
 
-struct Open2Mapped382010 { Int m_value; };
-
-typedef pair<const Int, Open2Mapped382010> Open2Pair382010;
-
-template Open2Pair382010 &hashtable<Open2Pair382010, Int, hash<Int>,
-	_Select1st<Open2Pair382010>, equal_to<Int>,
-	allocator<Open2Pair382010> >::_M_insert(const Open2Pair382010 &);
-
-
 struct Open2Mapped494DA0 { Int m_value; };
 
 typedef pair<const Int, Open2Mapped494DA0> Open2Pair494DA0;
 
-template Open2Pair494DA0 &hashtable<Open2Pair494DA0, Int, hash<Int>,
+// Retail494DA0: resize is thiscall/RET4, construct is cdecl/RET0.
+extern "C" void __cdecl __identifier("?j_0001c1ca@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0003974d@@YAXXZ")(Open2Pair494DA0 *, const Open2Pair494DA0 &);
+
+template <>
+Open2Pair494DA0 &hashtable<Open2Pair494DA0, Int, hash<Int>,
 	_Select1st<Open2Pair494DA0>, equal_to<Int>,
-	allocator<Open2Pair494DA0> >::_M_insert(const Open2Pair494DA0 &);
+	allocator<Open2Pair494DA0> >::_M_insert(const Open2Pair494DA0 &obj)
+{
+	union
+	{
+		void (__cdecl *symbol)();
+		void (hashtable::*member)(size_type);
+	} grow;
+	grow.symbol = &__identifier("?j_0001c1ca@@YAXXZ");
+	(this->*grow.member)(_M_num_elements + 1);
+
+	size_type n = _M_bkt_num(obj);
+	_Node *first = (_Node *)_M_buckets[n];
+	_Node *tmp = (_Node *)vectorSmallAllocate(sizeof(_Node));
+	tmp->_M_next = 0;
+	__identifier("?j_0003974d@@YAXXZ")(&tmp->_M_val, obj);
+
+	tmp->_M_next = first;
+	_M_buckets[n] = tmp;
+	++_M_num_elements;
+	return tmp->_M_val;
+}
 
 template Open2Mapped494DA0 &hashtable<Open2Pair494DA0, Int, hash<Int>,
 	_Select1st<Open2Pair494DA0>, equal_to<Int>,
@@ -215,26 +239,101 @@ struct Open2Mapped498B30 { Int m_value; };
 
 typedef pair<const Int, Open2Mapped498B30> Open2Pair498B30;
 
-template Open2Pair498B30 &hashtable<Open2Pair498B30, Int, hash<Int>,
+// Retail498B30: resize is thiscall/RET4, construct is cdecl/RET0.
+extern "C" void __cdecl __identifier("?j_0004a395@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0002b260@@YAXXZ")(Open2Pair498B30 *, const Open2Pair498B30 &);
+
+template <>
+Open2Pair498B30 &hashtable<Open2Pair498B30, Int, hash<Int>,
 	_Select1st<Open2Pair498B30>, equal_to<Int>,
-	allocator<Open2Pair498B30> >::_M_insert(const Open2Pair498B30 &);
+	allocator<Open2Pair498B30> >::_M_insert(const Open2Pair498B30 &obj)
+{
+	union
+	{
+		void (__cdecl *symbol)();
+		void (hashtable::*member)(size_type);
+	} grow;
+	grow.symbol = &__identifier("?j_0004a395@@YAXXZ");
+	(this->*grow.member)(_M_num_elements + 1);
+
+	size_type n = _M_bkt_num(obj);
+	_Node *first = (_Node *)_M_buckets[n];
+	_Node *tmp = (_Node *)vectorSmallAllocate(sizeof(_Node));
+	tmp->_M_next = 0;
+	__identifier("?j_0002b260@@YAXXZ")(&tmp->_M_val, obj);
+
+	tmp->_M_next = first;
+	_M_buckets[n] = tmp;
+	++_M_num_elements;
+	return tmp->_M_val;
+}
 
 
 struct Open2Mapped5B7CE0 { Int m_value; };
 
 typedef pair<const Int, Open2Mapped5B7CE0> Open2Pair5B7CE0;
 
-template Open2Pair5B7CE0 &hashtable<Open2Pair5B7CE0, Int, hash<Int>,
+// Retail5B7CE0: resize is thiscall/RET4, construct is cdecl/RET0.
+extern "C" void __cdecl __identifier("?j_0002cf5c@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00022499@@YAXXZ")(Open2Pair5B7CE0 *, const Open2Pair5B7CE0 &);
+
+template <>
+Open2Pair5B7CE0 &hashtable<Open2Pair5B7CE0, Int, hash<Int>,
 	_Select1st<Open2Pair5B7CE0>, equal_to<Int>,
-	allocator<Open2Pair5B7CE0> >::_M_insert(const Open2Pair5B7CE0 &);
+	allocator<Open2Pair5B7CE0> >::_M_insert(const Open2Pair5B7CE0 &obj)
+{
+	union
+	{
+		void (__cdecl *symbol)();
+		void (hashtable::*member)(size_type);
+	} grow;
+	grow.symbol = &__identifier("?j_0002cf5c@@YAXXZ");
+	(this->*grow.member)(_M_num_elements + 1);
+
+	size_type n = _M_bkt_num(obj);
+	_Node *first = (_Node *)_M_buckets[n];
+	_Node *tmp = (_Node *)vectorSmallAllocate(sizeof(_Node));
+	tmp->_M_next = 0;
+	__identifier("?j_00022499@@YAXXZ")(&tmp->_M_val, obj);
+
+	tmp->_M_next = first;
+	_M_buckets[n] = tmp;
+	++_M_num_elements;
+	return tmp->_M_val;
+}
 
 
 struct Open2Mapped613250 { Int m_value; };
 
 typedef pair<const Int, Open2Mapped613250> Open2Pair613250;
 
-template Open2Pair613250 &hashtable<Open2Pair613250, Int, hash<Int>,
+// Retail613250: resize is thiscall/RET4, construct is cdecl/RET0.
+extern "C" void __cdecl __identifier("?j_00020f86@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0002a11c@@YAXXZ")(Open2Pair613250 *, const Open2Pair613250 &);
+
+template <>
+Open2Pair613250 &hashtable<Open2Pair613250, Int, hash<Int>,
 	_Select1st<Open2Pair613250>, equal_to<Int>,
-	allocator<Open2Pair613250> >::_M_insert(const Open2Pair613250 &);
+	allocator<Open2Pair613250> >::_M_insert(const Open2Pair613250 &obj)
+{
+	union
+	{
+		void (__cdecl *symbol)();
+		void (hashtable::*member)(size_type);
+	} grow;
+	grow.symbol = &__identifier("?j_00020f86@@YAXXZ");
+	(this->*grow.member)(_M_num_elements + 1);
+
+	size_type n = _M_bkt_num(obj);
+	_Node *first = (_Node *)_M_buckets[n];
+	_Node *tmp = (_Node *)vectorSmallAllocate(sizeof(_Node));
+	tmp->_M_next = 0;
+	__identifier("?j_0002a11c@@YAXXZ")(&tmp->_M_val, obj);
+
+	tmp->_M_next = first;
+	_M_buckets[n] = tmp;
+	++_M_num_elements;
+	return tmp->_M_val;
+}
 
 }
