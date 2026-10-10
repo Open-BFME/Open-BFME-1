@@ -696,6 +696,34 @@ def _ilt_respellings(root, old, new):
     return recorded, ilt
 
 
+# A word followed by an embedded 6-8 hex-digit address (`forward4125F0`,
+# dc77a7e650). The tail starts with a digit and holds at least three digits.
+ADDRESS_TAIL = re.compile(r'^[A-Za-z_]*[a-z_]((?=(?:[A-Fa-f]*[0-9]){3})[0-9][0-9A-Fa-f]{5,7})$')
+
+
+def _ledger_names_by_rva(root, ref):
+    out = defaultdict(list)
+    for line in (read(root, ref, 'targets/game/reverse/functions.csv') or '').splitlines():
+        cols = line.split(',')
+        try:
+            out[int(cols[2], 16)].append(cols[0])
+        except (IndexError, ValueError):
+            continue
+    return out
+
+
+def _is_address_respelling(finding, ledger):
+    """The old name encodes address A and the new name is part of the decorated
+    name of the ledger row at A (RVA, or VA - image base)."""
+    m = ADDRESS_TAIL.match(finding.old_name)
+    if not m:
+        return False
+    a = int(m.group(1), 16)
+    names = ledger.get(a, []) + (ledger.get(a - IMAGE_BASE, []) if a >= IMAGE_BASE else [])
+    return any(re.search(r'(?<![A-Za-z0-9_])' + re.escape(finding.new_name) + r'(?![A-Za-z0-9_])', n)
+               for n in names)
+
+
 def _is_ilt_respelling(finding, recorded, ilt):
     m = ILT_TOKEN.match(finding.new_name)
     if not m:
@@ -734,6 +762,9 @@ def check(root, old, new):
     if any(ILT_TOKEN.match(f.new_name) for f in candidates):
         recorded, ilt = _ilt_respellings(root, old, new)
         candidates = [f for f in candidates if not _is_ilt_respelling(f, recorded, ilt)]
+    if any(ADDRESS_TAIL.match(f.old_name) for f in candidates):
+        ledger = _ledger_names_by_rva(root, new)
+        candidates = [f for f in candidates if not _is_address_respelling(f, ledger)]
     for finding in candidates:
         allowed = False
         for entry in corrections:

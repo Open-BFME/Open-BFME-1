@@ -1078,3 +1078,39 @@ def test_identifier_spelled_name_to_bfme_or_rva_still_fails(tmp_path):
         put(root, ILT_SRC, _identifier_after(name))
         found = N.check(root, 'HEAD', ':')[0]
         assert ('ContestableContainFieldParse', name) in [(f.old_name, f.new_name) for f in found]
+
+
+ADDR_SRC = 'game/GameEngine/Source/GameLogic/Object/AddrRespell.cpp'
+
+
+def _addr_case(tmp_path, old, new, rows):
+    git(tmp_path, 'init', '-q')
+    git(tmp_path, 'config', 'user.name', 'Fixture')
+    git(tmp_path, 'config', 'user.email', 'fixture@example.invalid')
+    body = 'void {0}(void*, void*);\nvoid g(void*a){{ {0}(a, a); }}\n'
+    put(tmp_path, ADDR_SRC, body.format(old))
+    put(tmp_path, 'targets/game/reverse/functions.csv', rows)
+    commit(tmp_path)
+    put(tmp_path, ADDR_SRC, body.format(new))
+    return [(f.old_name, f.new_name) for f in N.check(tmp_path, 'HEAD', ':')[0]]
+
+
+GEN_ROW = '?bfmeForward@Gen_004125F0@@QAEXPAX0@Z,,0x004125F0,40,game/x.cpp,matched,evidence\n'
+
+
+def test_address_named_callee_respelled_to_its_ledger_row_passes(tmp_path):
+    assert _addr_case(tmp_path, 'forward4125F0', 'bfmeForward', GEN_ROW) == []
+
+
+def test_address_named_callee_without_a_row_at_its_address_still_fails(tmp_path):
+    rows = GEN_ROW.replace('0x004125F0', '0x004125F4')
+    assert _addr_case(tmp_path, 'forward4125F0', 'bfmeForward', rows) == [('forward4125F0', 'bfmeForward')]
+
+
+def test_descriptive_address_name_to_rva_without_matching_row_still_fails(tmp_path):
+    assert _addr_case(tmp_path, 'applyObjectColorIndex383930', 'Rva00383930', GEN_ROW) == [
+        ('applyObjectColorIndex383930', 'Rva00383930')]
+
+
+def test_plain_descriptive_name_to_ledger_row_still_fails(tmp_path):
+    assert _addr_case(tmp_path, 'forwardBuffer', 'bfmeForward', GEN_ROW) == [('forwardBuffer', 'bfmeForward')]
