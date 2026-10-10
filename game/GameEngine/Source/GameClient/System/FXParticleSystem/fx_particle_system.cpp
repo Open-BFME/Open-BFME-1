@@ -499,11 +499,8 @@ const char *EmissionVelocityInfo::GetSnapshotName()
     return "EmissionVelocityInfo";
 }
 
-EmissionVolumeInfo::EmissionVolumeInfo()
-    : m_flag(false)
-{
-}
-
+// The five volume-info default constructors are emitted from the shared
+// header by fx_particle_system_bulk.cpp, which owns their matched rows.
 EmissionVolumeInfo::EmissionVolumeInfo(const EmissionVolumeInfo &that)
     : m_flag(that.m_flag)
 {
@@ -529,30 +526,12 @@ LightningEmissionInfo::LightningEmissionInfo(const LightningEmissionInfo &that)
     m_points[10] = that.m_points[10];
 }
 
-BoxEmissionVolumeInfo::BoxEmissionVolumeInfo()
-    : EmissionVolumeInfo()
-{
-    m_unk[0] = 0.0f;
-    m_unk[1] = 0.0f;
-    m_unk[2] = 0.0f;
-}
-
 BoxEmissionVolumeInfo::BoxEmissionVolumeInfo(const BoxEmissionVolumeInfo &that)
     : EmissionVolumeInfo(that)
 {
     m_unk[0] = that.m_unk[0];
     m_unk[1] = that.m_unk[1];
     m_unk[2] = that.m_unk[2];
-}
-
-CylinderEmissionVolumeInfo::CylinderEmissionVolumeInfo()
-    : EmissionVolumeInfo()
-{
-    m_unk[0] = 0.0f;
-    m_unk[1] = 0.0f;
-    m_unk[2] = 0.0f;
-    m_unk[3] = 0.0f;
-    m_unk[4] = 0.0f;
 }
 
 CylinderEmissionVolumeInfo::CylinderEmissionVolumeInfo(const CylinderEmissionVolumeInfo &that)
@@ -565,17 +544,6 @@ CylinderEmissionVolumeInfo::CylinderEmissionVolumeInfo(const CylinderEmissionVol
     m_unk[4] = that.m_unk[4];
 }
 
-LineEmissionVolumeInfo::LineEmissionVolumeInfo()
-    : EmissionVolumeInfo()
-{
-    m_unk[0] = 0.0f;
-    m_unk[1] = 0.0f;
-    m_unk[2] = 0.0f;
-    m_unk[3] = 0.0f;
-    m_unk[4] = 0.0f;
-    m_unk[5] = 0.0f;
-}
-
 LineEmissionVolumeInfo::LineEmissionVolumeInfo(const LineEmissionVolumeInfo &that)
     : EmissionVolumeInfo(that)
 {
@@ -586,11 +554,6 @@ LineEmissionVolumeInfo::LineEmissionVolumeInfo(const LineEmissionVolumeInfo &tha
     m_unk[4] = that.m_unk[4];
     m_unk[5] = that.m_unk[5];
 }
-
-SphereEmissionVolumeInfo::SphereEmissionVolumeInfo()
-    : EmissionVolumeInfo()
-    , m_radius(0.0f)
-{}
 
 SphereEmissionVolumeInfo::SphereEmissionVolumeInfo(const SphereEmissionVolumeInfo &that)
     : EmissionVolumeInfo(that)
