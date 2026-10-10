@@ -3,10 +3,10 @@
 
 class SkirmishScreenState
 {
-public:
-	bool shouldRefresh( void );
-	void apply( void *gameInfo, bool force );
 };
+
+extern "C" void __cdecl __identifier("?j_0003029c@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_0003ab48@@YAXXZ")();
 
 class SkirmishScreenAnimation
 {
@@ -37,12 +37,16 @@ extern "C" void _ReadWriteBarrier(void);
 
 void BfmeAptScreenSkirmish::_bfme_refresh( void )
 {
-	if( !m_state.shouldRefresh() )
+	union { void (*raw)(); bool (SkirmishScreenState::*member)(); }
+		query = { __identifier("?j_0003029c@@YAXXZ") };
+	union { void (*raw)(); bool (SkirmishScreenState::*member)(void *, int); }
+		apply = { __identifier("?j_0003ab48@@YAXXZ") };
+	if( !(m_state.*query.member)() )
 	{
 		_ReadWriteBarrier();
 		return;
 	}
 
 	m_animation.reset();
-	m_state.apply( TheSkirmishGameInfo, true );
+	(m_state.*apply.member)( TheSkirmishGameInfo, 1 );
 }
