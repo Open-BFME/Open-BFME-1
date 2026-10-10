@@ -7,22 +7,7 @@
 // Rva00410CC0Fetch.cpp; the fields below only name the two offsets touched by
 // this body.
 
-class BFMERetailAsciiString
-{
-public:
-	~BFMERetailAsciiString() { releaseBuffer(); }
-
-private:
-	void releaseBuffer();
-	char *m_data;
-};
-
-class AsciiString : private BFMERetailAsciiString
-{
-public:
-	int bfmeCompare1294(const char *text) const;
-	~AsciiString() {}
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class BfmeGlobCC0
 {
@@ -56,7 +41,7 @@ void __stdcall Rva00612560(AsciiString text)
 	if (g_bfmeGlobCC0 != 0)
 	{
 		g_bfmeGlobCC0->v9();
-		if (text.bfmeCompare1294("ACTIVE") == 0)
+		if (text.StringBase<char>::compare("ACTIVE") == 0)
 		{
 			g_bfmeGlobCC0->m_active = 1;
 			if (g_bfmeGlobCC0->m_stateA8 == 0)
