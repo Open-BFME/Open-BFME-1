@@ -13,6 +13,10 @@ struct Rva00366890Element
 	char m_body[ 0x58 ];
 };
 
+// Retail ILT 0x000344A0 reaches the owned cdecl two-reference construct.
+extern "C" void __cdecl __identifier("??$_Construct@U?$pair@$$CBUGen_t_003661e0_k4@@UGen_t_003661e0_p12cd@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBUGen_t_003661e0_k4@@UGen_t_003661e0_p12cd@@@0@ABU10@@Z")(
+	Rva00366890Element *destination, const Rva00366890Element &value);
+
 class Rva00366970Store;
 
 namespace _STL
@@ -25,9 +29,6 @@ template <class Type>
 class allocator
 {
 };
-
-template <class Type>
-void __cdecl BfmeElementConstruct( Type *destination, const Type &value );
 
 template <class Type, class Allocator>
 class vector
@@ -68,7 +69,7 @@ void Rva00366970Store::append( const Rva00366890Element *value,
 
 	if ( finish != entries->m_end_of_storage )
 	{
-		_STL::BfmeElementConstruct( finish, *value );
+		__identifier("??$_Construct@U?$pair@$$CBUGen_t_003661e0_k4@@UGen_t_003661e0_p12cd@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBUGen_t_003661e0_k4@@UGen_t_003661e0_p12cd@@@0@ABU10@@Z")( finish, *value );
 		entries->m_finish = entries->m_finish + 1;
 	}
 	else
