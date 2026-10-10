@@ -863,7 +863,14 @@ address_global	game/Libraries/Source/DirtySock/Y4CommTransportLife.c	g_Rva012C4F
 address_global	game/Libraries/Source/DirtySock/Y4CommTransportLife.c	g_Rva0130AD08Count	5
 address_global	game/Libraries/Source/DirtySock/Y4CommTransportLife.c	g_Rva0130AF38Lock	9
 address_global	game/Libraries/Source/DirtySock/Y4CommTransportLife.c	g_Rva0130B188List	9
+address_global	game/Libraries/Source/DirtySock/Y4LookupTables.c	g_Rva0112A010HexHigh	1	allow=47c9aca58aee98eebbc320935874228d26438da6
+address_global	game/Libraries/Source/DirtySock/Y4LookupTables.c	g_Rva0112A210Fold	1	allow=47c9aca58aee98eebbc320935874228d26438da6
+address_global	game/Libraries/Source/DirtySock/Y4LookupTables.c	g_Rva0112A310Class	1	allow=47c9aca58aee98eebbc320935874228d26438da6
 address_global	game/Libraries/Source/DirtySock/Y4LookupTables.c	g_Rva0112C8D0	6
+address_global	game/Libraries/Source/DirtySock/Y4LookupTables.c	g_Rva012C391CSeparator	1	allow=47c9aca58aee98eebbc320935874228d26438da6
+address_global	game/Libraries/Source/DirtySock/Y4LookupTables.c	g_Rva012C392CSuffix	1	allow=47c9aca58aee98eebbc320935874228d26438da6
+address_global	game/Libraries/Source/DirtySock/Y4LookupTables.c	g_Rva012C3950DefaultKey	1	allow=47c9aca58aee98eebbc320935874228d26438da6
+address_global	game/Libraries/Source/DirtySock/Y4LookupTables.c	g_Rva0130A5ACEmpty	1	allow=47c9aca58aee98eebbc320935874228d26438da6
 address_global	game/Libraries/Source/DirtySock/Y4TextToValue.c	g_Rva0112A010HexHigh	7
 address_global	game/Libraries/Source/DirtySock/Y4TextToValue.c	g_Rva0112A110Hex	8
 address_global	game/Libraries/Source/DirtySock/Y4TextToValue.c	g_Rva0112A210Fold	3
