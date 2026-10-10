@@ -10,6 +10,9 @@ namespace _STL
 {
 
 template <>
+// Keep the verified specialization emitted as an inline COMDAT, alongside
+// the identical retail copies emitted by other string users.
+__declspec(dllexport) inline
 basic_string<char, char_traits<char>, allocator<char> >::size_type
 basic_string<char, char_traits<char>, allocator<char> >::find(
 	char c, size_type pos) const
