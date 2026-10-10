@@ -50,17 +50,7 @@ public:
 
 extern FileSystem *TheFileSystem;
 
-class BFMERetailAsciiString
-{
-public:
-	BFMERetailAsciiString(const char *string);
-	~BFMERetailAsciiString() { releaseBuffer(); }
-
-	char *m_data;
-
-private:
-	void releaseBuffer();
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Rva002E55C0LuaHost
 {
@@ -83,8 +73,8 @@ void Rva002E55C0LuaHost::loadFile(const char *filename)
 		file->close();
 
 		{
-			BFMERetailAsciiString name(filename);
-			const char *scriptName = name.m_data != 0 ? name.m_data + 8 : g_bfmeEmptyAscii;
+			AsciiString name(filename);
+			const char *scriptName = name.str();
 			lua_dobuffer(m_state, buffer, size, scriptName);
 			lua_settop(m_state, 0);
 		}
