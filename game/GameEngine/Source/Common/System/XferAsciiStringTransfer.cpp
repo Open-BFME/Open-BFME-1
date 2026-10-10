@@ -50,7 +50,7 @@ Xfer &Xfer::operator==(AsciiString &as)
     Rva009D6940TransferView *receiver = reinterpret_cast<Rva009D6940TransferView *>(this);
     if (receiver->isStoring())
     {
-        int length = as.getLength();
+        int length = as.StringBase<char>::getLength();
         if (length >= 255)
         {
             unsigned char marker = 255;
@@ -73,7 +73,7 @@ Xfer &Xfer::operator==(AsciiString &as)
             reinterpret_cast<StringBase<char> *>(&as)->getBufferForRead(length)[length] = 0;
         }
         else
-            as.clear();
+            as.StringBase<char>::clear();
     }
     return *this;
 }
