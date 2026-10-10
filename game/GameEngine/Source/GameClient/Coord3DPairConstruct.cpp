@@ -5,6 +5,13 @@ struct Coord3D { float x, y, z; };
 
 namespace _STL
 {
+struct Rva00143CE0Element;
+
+// Retail's full five-byte JMP at 0x0001BE23 targets this existing
+// single-type _Construct specialization at 0x00134F70 (cdecl, two pointers).
+template <class T>
+void _Construct(T *, const T &);
+
 template <class T, class U>
 struct pair
 {
@@ -15,16 +22,11 @@ struct pair
 template <class T, class U>
 void _Construct(T *, const U &);
 
-class Coord3DPairConstructShim
-{
-public:
-    static void construct(pair<ICoord2D, Coord3D> *p, const pair<ICoord2D, Coord3D> &v);
-};
-
 template <class T, class U>
 void _Construct(T *p, const U &v)
 {
-    Coord3DPairConstructShim::construct((pair<ICoord2D, Coord3D> *)p, *(const pair<ICoord2D, Coord3D> *)&v);
+    _Construct<Rva00143CE0Element>((Rva00143CE0Element *)p,
+        *(const Rva00143CE0Element *)&v);
 }
 
 template void _Construct<pair<ICoord2D, Coord3D>, pair<ICoord2D, Coord3D> >(pair<ICoord2D, Coord3D> *, const pair<ICoord2D, Coord3D> &);
