@@ -10,12 +10,20 @@ public:
 	void handle();
 };
 
-class BfmeChildA
+// The child is destroyed through the body at retail 0x0089C900,
+// ??1Q3EhMember0089C900@@QAE@XZ, matched in
+// game/GameEngine/Source/GameClient/EvaSideSoundsArrayDtor.cpp.  Retail's
+// call at +0x201 lands on the first jump of the incremental-link chain
+// 0x008976E0 -> 0x0089CC70 -> 0x0089C900, so it must relocate against
+// ?j_008976e0@@YAXXZ (game/gen_small/thunks_037.cpp), the row that owns that
+// call target.  The destructor is declared but not defined here; the destroy
+// routes through the jump, as in BfmeSubB1035Destroy.cpp.
+extern void j_008976e0();
+
+class Q3EhMember0089C900
 {
 public:
-	~BfmeChildA();
-	// ??3BfmeChildA@@SAXPAX@Z absent-from-retail
-	static __forceinline void operator delete(void *p) { TheBfmeFree(p, 16); }
+	~Q3EhMember0089C900();
 };
 
 struct Rva008D3610Nested
@@ -132,7 +140,11 @@ void Rva008D3610Owner::update(int delta, void *context)
 	{
 		Gen0089C880 *child = (Gen0089C880 *)m_child;
 		child->handle();
-		delete (BfmeChildA *)child;
+		if (child != 0)
+		{
+			((void (__fastcall *)(Q3EhMember0089C900 *))j_008976e0)((Q3EhMember0089C900 *)child);
+			TheBfmeFree(child, 16);
+		}
 		m_child = 0;
 	}
 }
