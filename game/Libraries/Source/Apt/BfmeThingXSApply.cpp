@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
-// BfmeThingXS::bfmeApplyXS: transforms the four corners of a rectangle by a 2x3 matrix
+// AssetManagerImpl::bfmeApplyXS: transforms the four corners of a rectangle by a 2x3 matrix
 // and grows a min/max bounds rectangle to cover them.
 #include "vector2.h"
 
-class BfmeThingXS
+class AssetManagerImpl
 {
 public:
 	void bfmeApplyXS(void *what, void *sub);
@@ -16,7 +16,7 @@ private:
 };
 
 // 0x008D2E20: what is the bounds rectangle (minX, minY, maxX, maxY), sub the source rectangle.
-void BfmeThingXS::bfmeApplyXS(void *what, void *sub)
+void AssetManagerImpl::bfmeApplyXS(void *what, void *sub)
 {
 	float *bounds = (float *)what;
 	const float *input = (const float *)sub;

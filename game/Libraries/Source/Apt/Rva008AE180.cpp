@@ -7,7 +7,7 @@ class Gen_008D2C80 { public: void bfmePush(); };
 class BfmeThingDXH { public: void bfmeGoDXH(void *); };
 class BfmeH1235 { public: void bfmeWalk1235(void *, void *); };
 class BfmeA1210 { public: void bfmePop1210(); };
-class BfmeThingXS { public: void bfmeApplyXS(void *, void *); };
+class AssetManagerImpl { public: void bfmeApplyXS(void *, void *); };
 class Rva008A0F20Header { public: int isKind11() const; };
 class BfmeQ1235 { public: int m_bfme00, m_bfme04; };
 struct Rva008AE180Record { int m_at00, m_at04; char m_at08[16]; };
@@ -44,17 +44,17 @@ void BfmeN1235::bfmeDo1235(void *a, void *b)
   ((BfmeA1210 *)a)->bfmePop1210(); return;
  }
  if (kind008AE180(15)) {
-  ((BfmeThingXS *)a)->bfmeApplyXS(b,(char *)m_bfme50+0x50);
+  ((AssetManagerImpl *)a)->bfmeApplyXS(b,(char *)m_bfme50+0x50);
   ((BfmeA1210 *)a)->bfmePop1210(); return;
  }
  if (!(unsigned char)((Rva008A0F20Header *)this)->isKind11()) {
   Rva008AE180Record *record = owner->m_at0C;
   switch (record->m_at00) {
   case 10:
-   ((BfmeThingXS *)a)->bfmeApplyXS(b,record->m_at08);
+   ((AssetManagerImpl *)a)->bfmeApplyXS(b,record->m_at08);
    ((BfmeA1210 *)a)->bfmePop1210(); return;
   case 1:
-   ((BfmeThingXS *)a)->bfmeApplyXS(b,record->m_at08);
+   ((AssetManagerImpl *)a)->bfmeApplyXS(b,record->m_at08);
   }
  }
  ((BfmeA1210 *)a)->bfmePop1210();

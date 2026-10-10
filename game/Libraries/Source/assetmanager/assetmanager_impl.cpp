@@ -195,10 +195,10 @@ void Q1Receiver0134FAAC::m009F0D40(int value)
 	}
 }
 
-class BfmeThingXS
+class AssetManagerImpl
 {
 public:
-	unsigned char bfmeMarkXS(int which) const;
+	unsigned char IsEnabled(int which) const;
 
 private:
 	unsigned char m_bfmeHead[0x1ec];
@@ -207,7 +207,7 @@ private:
 	unsigned char m_bfmeThird;
 };
 
-unsigned char BfmeThingXS::bfmeMarkXS(int which) const
+unsigned char AssetManagerImpl::IsEnabled(int which) const
 {
 	switch (which)
 	{

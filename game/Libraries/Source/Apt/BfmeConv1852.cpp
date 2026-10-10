@@ -6,7 +6,7 @@ public:
 	void bfmePush(void);
 };
 
-class BfmeThingXS
+class AssetManagerImpl
 {
 public:
 	void bfmeApplyXS(void *what, void *sub);
@@ -27,14 +27,14 @@ public:
 class BfmeOwnerXS
 {
 public:
-	void bfmeRunXS(BfmeThingXS *thing, void *what, void *flag);
+	void bfmeRunXS(AssetManagerImpl *thing, void *what, void *flag);
 
 	int m_bfmeModeXS;
 	unsigned char m_bfmePadXS[4];
 	unsigned char m_bfmeSubXS[4];
 };
 
-void BfmeOwnerXS::bfmeRunXS(BfmeThingXS *thing, void *what, void *flag)
+void BfmeOwnerXS::bfmeRunXS(AssetManagerImpl *thing, void *what, void *flag)
 {
 	if (flag != 0)
 	{

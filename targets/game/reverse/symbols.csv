@@ -75703,7 +75703,7 @@ name,address,notes
 ?bfmeApplyXA@BfmeStateXA@@QAEXPAXH@Z,0x00047807
 ?bfmeApplyXC@BfmeStateXC@@QAEXPAXH@Z,0x00047807
 ?bfmeApplyXJ@BfmeOwnerXJ@@QAEXPAXPAVBfmeThingXJ@@@Z,0x0003392E
-?bfmeApplyXS@BfmeThingXS@@QAEXPAX0@Z,0x008D2E20
+?bfmeApplyXS@AssetManagerImpl@@QAEXPAX0@Z,0x008D2E20
 ?bfmeApplyXT@BfmeHostXT@@QAEXPAVObject@@H@Z,0x000157DA,Open-BFME5 ILT apply the 0x001FAEE0 refresh tail-calls
 ?bfmeApplyXW@BfmeHostXW@@QAEXPAVObject@@H@Z,0x000157DA,Open-BFME5 ILT apply the 0x00256CD0 setter calls
 ?bfmeApplyYP@BfmeThingYP@@QAEXPAX0@Z,0x00022BBA
@@ -77450,7 +77450,7 @@ name,address,notes
 ?bfmeGoTLB@BfmeThingTLB@@QAEHH@Z,0x00013CA5,route=0x00248ED0; retail 0x0021B310 accepts calls this ILT for its non-enemy fallback
 ?bfmeGoVJH@BfmeOwner803BF0@@QAEXH@Z,0x00803970,bfmeGoVJH alias for 0x00803BF0 caller
 ?bfmeGoVM0@BfmeStrVM0@@QAEXH@Z,0x0000BEE7,pin
-?bfmeGoXS@BfmeThingXS@@QAEXPAX@Z,0x008D2E00
+?bfmeGoXS@AssetManagerImpl@@QAEXPAX@Z,0x008D2E00
 ?bfmeGoZF@BfmeSubZF@@QAEXPAX00PAUBfmeStateZF@@@Z,0x00008FBC
 ?bfmeGoZG@BfmeSmallZG@@QAEHPAX0H@Z,0x000480F4
 ?bfmeGoZX@BfmeSubZX@@QAEXXZ,0x008F8BC0
@@ -78182,7 +78182,7 @@ name,address,notes
 ?bfmePopHeap00531A40@@YAXPAUS4SortElem12_00532740@@00U1@PAXPAH@Z,0x00020A27,address-derived pop-heap callee of gen00531D80; target read from the REL32 at its call site
 ?bfmePopHeapVOU@@YAXPAUBfmeElemVOU@@00U1@PAXPAH@Z,0x009CD560,address-derived pop-heap callee of bfmeStepVOU; target read from the REL32 at its call site
 ?bfmePopVJU@BfmeStackVJU@@QAEXXZ,0x008D2CC0,pin
-?bfmePopXS@BfmeThingXS@@QAEXXZ,0x008D2CC0
+?bfmePopXS@AssetManagerImpl@@QAEXXZ,0x008D2CC0
 ?bfmePos9F@BfmePos9F@@QAEPBUBfmeC39F@@XZ,0x0004B12D,Open-BFME5 thunk to 0x0041D090 getPosition for 0x00409F40
 ?bfmePosZC@BfmeObjZC@@QAEPAUCoord3D@@XZ,0x0003EE55,BfmeHostZC::bfmeHeightZC position accessor from retail 0x0076CDD0
 ?bfmePred@BfmeElem340@@QAEEXZ,0x0003C5B0,Open-BFME5 ILT from 0x0013E340 any-of walk
@@ -78229,7 +78229,7 @@ name,address,notes
 ?bfmePushStrVHR@@YAXPAUBfmeLuaVHR@@PBD@Z,0x00990480,pin
 ?bfmePushUserVHR@@YAXPAUBfmeLuaVHR@@PAXH@Z,0x009904F0,pin
 ?bfmePushVJU@BfmeStackVJU@@QAEXXZ,0x008D2C80,pin
-?bfmePushXS@BfmeThingXS@@QAEXXZ,0x008D2C80
+?bfmePushXS@AssetManagerImpl@@QAEXXZ,0x008D2C80
 ?bfmePut1242@BfmeN1242@@QAEXHPAVBfmeE1242@@@Z,0x008B84C0,pin
 ?bfmeQuery1040@@YAXHPAH@Z,0x00008945,pin
 ?bfmeQuery1279@BfmeQuery1279@@QAEXPAXHPAPAX1@Z,0x008BD0F0,address-derived query method called by the 0x008BD4D0 forwarding body
