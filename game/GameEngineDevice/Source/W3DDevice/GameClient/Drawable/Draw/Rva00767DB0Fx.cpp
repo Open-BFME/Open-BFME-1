@@ -100,7 +100,7 @@ public:
 void Rva00767DB0::invoke(Rva00767DB0Value value)
 {
     if (value.at10) {
-        if (!value.at0c.isEmpty()) {
+        if (!value.at0c.StringBase<char>::isEmpty()) {
             Matrix3D matrix = at34->atcc(value.at0c.str());
             Coord3D pos;
             pos.x = matrix[0][3];
