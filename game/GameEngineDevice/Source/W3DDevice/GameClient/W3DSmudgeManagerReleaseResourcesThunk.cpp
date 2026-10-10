@@ -1,17 +1,12 @@
 // cl: /O2 /MD
 // 5-byte ILT at 0x000309CC; its sole target is the W3DSmudgeManager
-// ReleaseResources body at 0x00722190, pinned as the shim member below.
+// ReleaseResources body at 0x00722190 (vtable slot 0x0C). Naming the virtual
+// member's decorated symbol directly keeps the plain `E9 rel32` with ECX
+// untouched.
 
-class FontLibraryDeleteAllFontsShim
-{
-public:
-	void deleteAllFonts();
-};
+extern "C" void __identifier("?ReleaseResources@W3DSmudgeManager@@UAEXXZ")();
 
 void j_000309cc()
 {
-	typedef void (FontLibraryDeleteAllFontsShim::*Call)();
-	union { void (*fn)(); Call call; } u;
-	u.call = &FontLibraryDeleteAllFontsShim::deleteAllFonts;
-	u.fn();
+	__identifier("?ReleaseResources@W3DSmudgeManager@@UAEXXZ")();
 }
