@@ -65,23 +65,6 @@ private:
 	static VertexMaterialClass *Presets[PRESET_COUNT];
 };
 
-void VertexMaterialClass::Set_Diffuse_Color_Source(ColorSourceType src)
-{
-	CRCDirty = true;
-	switch (src)
-	{
-	case COLOR1:	DiffuseColorSource = 1; break;
-	case COLOR2:	DiffuseColorSource = 2; break;
-	default:			DiffuseColorSource = 0; break;
-	}
-}
-
-void VertexMaterialClass::Set_Lighting(bool lighting)
-{
-	CRCDirty = true;
-	UseLighting = lighting;
-}
-
 // ?Init@VertexMaterialClass@@SAXXZ
 void VertexMaterialClass::Init()
 {
@@ -90,7 +73,22 @@ void VertexMaterialClass::Init()
 		Presets[i] = new VertexMaterialClass();
 
 	// Set up presets
-	Presets[PRELIT_DIFFUSE]->Set_Diffuse_Color_Source(COLOR1);
-	Presets[PRELIT_DIFFUSE]->Set_Lighting(false);
-	Presets[PRELIT_NODIFFUSE]->Set_Lighting(false);
+	// Retail inlines these constant setters. Their out-of-line definitions
+	// belong to vertmaterial.cpp and W3DWater.cpp; keep only Init's stores
+	// in this layout view to avoid duplicate definitions.
+	{
+		VertexMaterialClass *preset = Presets[PRELIT_DIFFUSE];
+		preset->CRCDirty = true;
+		preset->DiffuseColorSource = 1;
+	}
+	{
+		VertexMaterialClass *preset = Presets[PRELIT_DIFFUSE];
+		preset->CRCDirty = true;
+		preset->UseLighting = false;
+	}
+	{
+		VertexMaterialClass *preset = Presets[PRELIT_NODIFFUSE];
+		preset->CRCDirty = true;
+		preset->UseLighting = false;
+	}
 }
