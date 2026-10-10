@@ -1,3 +1,8 @@
+// ILT122AB -> Gen001C9AC0::handle(int); ILT41970 -> d_002d9f90.
+// Retain the clear body's independently verified ECX/no-argument/RET0 ABI.
+extern "C" void __cdecl __identifier("?d_002d9f90@@YAXXZ")();
+class Gen001C9AC0 { public: void handle(int); };
+
 // WeaponSetUpgrade::removeUpgrade at retail 0x002DA630: slot 7 of the UpgradeMux table 0x010CE710, reached only
 // through ILT 0x0001FD48 (its VA appears once in the image). WeaponSetUpgrade's registered
 // constructor 0x002DA4E0 stores that table. Slot 7 is
@@ -9,13 +14,11 @@
 class BfmeSubTEB
 {
 public:
-	void bfmeSetTEB(int a);
 };
 
 class BfmeBaseTEB
 {
 public:
-	void bfmeInitTEB();
 };
 
 class WeaponSetUpgrade
@@ -36,7 +39,13 @@ public:
 
 void WeaponSetUpgrade::removeUpgrade()
 {
-	(*(BfmeSubTEB **)((char *)this - 8))->bfmeSetTEB(3);
-	((BfmeBaseTEB *)((char *)this - 0x10))->bfmeInitTEB();
+	(*(Gen001C9AC0 **)((char *)this - 8))->handle(3);
+	union
+	{
+		void (__cdecl *symbol)();
+		void (BfmeBaseTEB::*member)();
+	} clear;
+	clear.symbol = &__identifier("?d_002d9f90@@YAXXZ");
+	(((BfmeBaseTEB *)((char *)this - 0x10))->*clear.member)();
 	bfmeDoTEB(0);
 }
