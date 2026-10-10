@@ -10,64 +10,24 @@
 // filename literals and the neighboring StatsCollector methods identify the
 // body, while the local declarations keep the string calls at their retail
 // WWLib addresses.
-template <typename T>
-class StringBase
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+template<> inline const char *StringBase<char>::reverseFind(char c) const
 {
-    friend class AsciiString;
+    const char *start = m_data ? &m_data->data[0] : (const char *)"";
+    const char *p = start + (m_data ? m_data->length : 0);
+    while (p != start) {
+        --p;
+        if (*p == c) return p;
+    }
+    return 0;
+}
 
-public:
-    StringBase() : m_data( 0 ) {}
-
-private:
-    StringBase( const StringBase<T> &other );
-    StringBase( const T *text );
-    void releaseBuffer();
-
-public:
-    void set( const T *text, int length );
-    void removeLastChar();
-
-    struct Header
-    {
-        int refCount;
-        unsigned short length;
-        unsigned short capacity;
-        T data[ 1 ];
-    };
-
-    Header *m_data;
-};
-
-class AsciiString : public StringBase<char>
+inline AsciiString &AsciiString::operator=(const char *str)
 {
-public:
-    AsciiString() : StringBase<char>() {}
-    AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-    AsciiString( const char *text ) : StringBase<char>( text ) {}
-    ~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
-
-    void clear() { ((StringBase<char> *)this)->releaseBuffer(); }
-    const char *str() const { return m_data ? m_data->data : ""; }
-    const char *reverseFind( char character ) const
-    {
-        const char *start = m_data ? m_data->data : "";
-        const char *end = start + (m_data ? m_data->length : 0);
-        while( end != start )
-        {
-            --end;
-            if( *end == character )
-                return end;
-        }
-        return 0;
-    }
-    void removeLastChar() { ((StringBase<char> *)this)->removeLastChar(); }
-    AsciiString &operator=( const char *text )
-    {
-        ((StringBase<char> *)this)->set( text, text ? strlen( text ) : 0 );
-        return *this;
-    }
-    void __cdecl format( AsciiString format, ... );
-};
+    ((StringBase<char> *)this)->set(str, str ? strlen(str) : 0);
+    return *this;
+}
 
 static char statsDir[ 255 ] = "Stats\\";
 
@@ -90,7 +50,7 @@ extern GlobalData *TheWritableGlobalData;
 
 void StatsCollector::createFileName()
 {
-    m_statsFileName.clear();
+    m_statsFileName.StringBase<char>::clear();
 
     char datestr[ 256 ] = "";
     time_t longTime;
@@ -100,15 +60,15 @@ void StatsCollector::createFileName()
     strftime( datestr, 256, "_%b%d_%I%M%p", curtime );
 
     AsciiString name = TheWritableGlobalData->m_mapName;
-    const char *fname = name.reverseFind( '\\' );
+    const char *fname = name.StringBase<char>::reverseFind( '\\' );
     if( fname )
         name = fname + 1;
 
-    name.removeLastChar();
-    name.removeLastChar();
-    name.removeLastChar();
-    name.removeLastChar();
+    name.StringBase<char>::removeLastChar();
+    name.StringBase<char>::removeLastChar();
+    name.StringBase<char>::removeLastChar();
+    name.StringBase<char>::removeLastChar();
 
-    m_statsFileName.clear();
+    m_statsFileName.StringBase<char>::clear();
     m_statsFileName.format( "%s%s%s.txt", statsDir, name.str(), datestr );
 }
