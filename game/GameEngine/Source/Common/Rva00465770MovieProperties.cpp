@@ -12,23 +12,7 @@
 extern "C" unsigned strlen(const char *);
 #pragma intrinsic(strlen)
 
-// retail AsciiString view: buffer header with the length word at +4 and the
-// characters at +8, inlined by retail at every check below
-class BFMERetailAsciiString
-{
-public:
-	BFMERetailAsciiString() : m_data(0) {}
-	~BFMERetailAsciiString() { releaseBuffer(); }
-	void set(const char *text, int length);
-	void set(const BFMERetailAsciiString &other);
-	const char *str() const { return m_data ? m_data + 8 : ""; }
-	unsigned getLength() const { return m_data ? *(const unsigned short *)(m_data + 4) : 0; }
-
-private:
-	void releaseBuffer();
-
-	const char *m_data;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class BfmeStrVMZ;
 char bfmeGetParamVMZ(const char *hay, const char *key, BfmeStrVMZ *out);
@@ -69,21 +53,21 @@ struct Rva00465770MovieMessage
 {
 	Rva00465770MovieMessage() : flags(0), callback(0), window(0) {}
 
-	BFMERetailAsciiString movieName;	// +0x0 the "_MovieName" value
+	AsciiString movieName;	// +0x0 the "_MovieName" value
 	unsigned flags;				// +0x4 bits 0x4 / 0x40 / 0x80
 	void (*callback)();			// +0x8 ILT 0x00030477 (body 0x00465670)
 	GameWindow *window;			// +0xC the window argument
 };
 
-static inline BfmeStrVMZ *asParam(BFMERetailAsciiString *s)
+static inline BfmeStrVMZ *asParam(AsciiString *s)
 {
 	return reinterpret_cast<BfmeStrVMZ *>(s);
 }
 
-static inline bool containsT(const BFMERetailAsciiString &s)
+static inline bool containsT(const AsciiString &s)
 {
 	const char *p = s.str();
-	const char *end = p + s.getLength();
+	const char *end = p + s.StringBase<char>::getLength();
 	for (; p != end; ++p)
 		if (*p == 't')
 			return true;
@@ -97,14 +81,14 @@ void Rva00465770MovieProperties(void *, const char *query, GameWindow *window)
 	if (!window)
 		return;
 
-	BFMERetailAsciiString param;
+	AsciiString param;
 	Rva00465770MovieMessage msg;
 	char found = bfmeGetParamVMZ(query, "_MovieName", asParam(&param));
 	if (found != 0)
 	{
 		const char *movie = param.str();
 		unsigned length = movie ? strlen(movie) : 0;
-		msg.movieName.set(movie, length);
+		msg.movieName.StringBase<char>::set(movie, length);
 		bfmeGetParamVMZ(query, "_Loop", asParam(&param));
 		if (containsT(param))
 			msg.flags |= 4;
@@ -116,9 +100,9 @@ void Rva00465770MovieProperties(void *, const char *query, GameWindow *window)
 			msg.flags |= 0x80;
 		if (bfmeGetParamVMZ(query, "_CallOnLastFrame", asParam(&param)))
 		{
-			BFMERetailAsciiString &callOnLastFrame =
-				*reinterpret_cast<BFMERetailAsciiString *>((char *)window + 0x268);
-			callOnLastFrame.set(param);
+			AsciiString &callOnLastFrame =
+				*reinterpret_cast<AsciiString *>((char *)window + 0x268);
+			callOnLastFrame.StringBase<char>::set(param);
 			msg.callback = j_00030477;
 			msg.window = window;
 		}
