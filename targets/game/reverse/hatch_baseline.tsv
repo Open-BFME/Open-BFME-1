@@ -2012,7 +2012,6 @@ emit	game/GameEngine/Source/GameLogic/Object/Update/PathfindLayer_isPointOnWall_
 emit	game/GameEngine/Source/GameLogic/Object/Update/PointDefenseLaserUpdateDestructorThunk.cpp	*	346
 emit	game/GameEngine/Source/GameLogic/Object/Update/SmartBombTargetHomingUpdateDestructorThunk.cpp	*	346
 emit	game/GameEngine/Source/GameLogic/Object/Update/SpecialDisguiseUpdateSlot15Rva00267D80Thunk.cpp	*	433
-emit	game/GameEngine/Source/GameLogic/Object/Update/StealthDetectorUpdateThunk.cpp	*	1954
 emit	game/GameEngine/Source/GameLogic/Object/Update/StealthUpdate_ctor_Thunk.cpp	*	252
 emit	game/GameEngine/Source/GameLogic/Object/Update/StructureCollapseUpdateUpdateThunk.cpp	*	944
 emit	game/GameEngine/Source/GameLogic/Object/Update/StructureToppleUpdate_onDie_Thunk.cpp	*	145
@@ -128773,7 +128772,6 @@ present_unmatched	game/GameEngine/Source/GameLogic/Object/Update/SpectreGunshipU
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Update/SpectreGunshipUpdate.cpp	update@SpectreGunshipUpdate@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Update/SpectreGunshipUpdate.cpp	xfer@SpectreGunshipUpdate@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Update/StealthDetectorUpdate.cpp	0StealthDetectorUpdate@@	1
-present_unmatched	game/GameEngine/Source/GameLogic/Object/Update/StealthDetectorUpdate.cpp	1StealthDetectorUpdate@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Update/StealthDetectorUpdate.cpp	allow@PartitionFilterStealthedOrStealthGarrisoned@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Update/StealthDetectorUpdate.cpp	buildFieldParse@StealthDetectorUpdateModuleData@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/Object/Update/StealthDetectorUpdate.cpp	crc@StealthDetectorUpdate@@	1
