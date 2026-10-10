@@ -9,10 +9,10 @@
 
 #include "subsystem_interface.h"
 
-class Gen_dtor_009eb9e0
+class AssetManagerImpl
 {
 public:
-	~Gen_dtor_009eb9e0();
+	~AssetManagerImpl();
 };
 
 class Rva009EB960 : public SubsystemInterface
@@ -21,7 +21,7 @@ public:
 	virtual ~Rva009EB960();
 
 private:
-	Gen_dtor_009eb9e0 *m_renderObject;			// +0x08
+	AssetManagerImpl *m_renderObject;			// +0x08
 };
 
 Rva009EB960::~Rva009EB960()

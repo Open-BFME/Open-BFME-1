@@ -1,11 +1,11 @@
-// ??1Gen_dtor_009eb9e0@@QAE@XZ
+// ??1AssetManagerImpl@@QAE@XZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 //
 // Retail RVA 0x009F23C0, 563 bytes: the complete-object destructor of the
-// object at global 0x0134FAAC (pins ??1Gen_dtor_009eb9e0 on this row; callers
+// object at global 0x0134FAAC (pins ??1AssetManagerImpl on this row; callers
 // Rva009EB960::~Rva009EB960 and the generated
-// ??_GGen_dtor_009eb9e0). Its constructor ??0Gen_dtor_009eb9e0 at 0x009F2140
+// ??_GAssetManagerImpl). Its constructor ??0AssetManagerImpl at 0x009F2140
 // (Rva009EB960Ctor.cpp) fixes the 0x1F4-byte layout used here,
 // and the retail member-destructor order matches it: four set groups
 // (+0x1CC..+0x190) through ILT 0x00015D7A, the seven deques through the EH
@@ -120,10 +120,10 @@ typedef _STL::hash_map<int, Gen_t_009ee630_p12cd> GenHashMap0C;
 typedef _STL::hash_map<int, Gen_t_009ee750_p12cd> GenHashMap44;
 typedef _STL::deque<Gen_t_009edfe0_p12cd> GenDeque;
 
-class Gen_dtor_009eb9e0
+class AssetManagerImpl
 {
 public:
-	~Gen_dtor_009eb9e0();
+	~AssetManagerImpl();
 
 private:
 	uintptr_t m_thread;
@@ -153,9 +153,9 @@ private:
 	Rva009EEA70CleanupDeleting *m_hashContext;
 };
 
-typedef char GenDtorSizeCheck[sizeof(Gen_dtor_009eb9e0) == 0x1f4 ? 1 : -1];
+typedef char GenDtorSizeCheck[sizeof(AssetManagerImpl) == 0x1f4 ? 1 : -1];
 
-Gen_dtor_009eb9e0::~Gen_dtor_009eb9e0()
+AssetManagerImpl::~AssetManagerImpl()
 {
 	Q1Receiver0134FAAC *receiver = (Q1Receiver0134FAAC *)this;
 

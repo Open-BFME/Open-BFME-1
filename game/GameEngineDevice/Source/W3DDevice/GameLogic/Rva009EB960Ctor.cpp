@@ -94,11 +94,11 @@ typedef std::hash_map<int, Gen_t_009f1470_p12cd> GenHashMap1470;
 typedef std::hash_map<int, Gen_t_009f14c0_p12cd> GenHashMap14C0;
 typedef std::deque<Gen_t_009edfe0_p12cd> GenDeque;
 
-class Gen_dtor_009eb9e0
+class AssetManagerImpl
 {
 public:
-	Gen_dtor_009eb9e0();
-	~Gen_dtor_009eb9e0();
+	AssetManagerImpl();
+	~AssetManagerImpl();
 
 private:
 	uintptr_t m_thread;
@@ -128,7 +128,7 @@ private:
 	Rva009EEA70CleanupDeleting *m_hashContext;
 };
 
-typedef char GenDtorSizeCheck[sizeof(Gen_dtor_009eb9e0) == 0x1f4 ? 1 : -1];
+typedef char GenDtorSizeCheck[sizeof(AssetManagerImpl) == 0x1f4 ? 1 : -1];
 typedef char RegistryWorkerSizeCheck[sizeof(Rva009EEA70CleanupDeleting) == 0x2bf44 ? 1 : -1];
 
 class Rva009EB960 : public SubsystemInterface
@@ -138,15 +138,15 @@ public:
 	virtual ~Rva009EB960();
 
 private:
-	Gen_dtor_009eb9e0 *m_renderObject;
+	AssetManagerImpl *m_renderObject;
 };
 
 Rva009EB960::Rva009EB960()
 {
-	m_renderObject = new Gen_dtor_009eb9e0;
+	m_renderObject = new AssetManagerImpl;
 }
 
-Gen_dtor_009eb9e0::Gen_dtor_009eb9e0()
+AssetManagerImpl::AssetManagerImpl()
 	: m_active(false),
 	  m_map0c(100),
 	  m_field20(0),
