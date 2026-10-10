@@ -349,6 +349,170 @@ def test_pointer_inside_data_checks_pin_and_one_to_one():
     assert "data-ptr-fwd:_b" in m.data_ref(0x3000, 0x3100, "_a", o[1][0], o, 0)[0]
 
 
+# ---- signed DIR32 addends (port of Open-BFME-2 0113e6e7a4, GPT-6.1-Sol rounds 1-4 there)
+def _disp_setup(local, a_tail=b"GOOD", b_head=b"GOOD", L=0x3000):
+    """_a, _b, _c (0x10 each) linked at L and at retail L + 0x100; a reference
+    naming one of them from its own object (local) or from another one through
+    the map. Linked, _a ends with `a_tail` and _b starts with `b_head`; retail
+    has GOOD at both."""
+    I, R = bytearray(0x6000), bytearray(0x6000)
+    _put(I, L + 0xC, a_tail + b_head)
+    _put(R, L + 0x10C, b"GOODGOOD")
+    syms = {0: _sym(0, "_a", 1), 1: _sym(1, "_b", 1, value=0x10), 2: _sym(2, "_c", 1, value=0x20)}
+    o = ([_sec(1, ".data", 0x30)], syms, bytes(0x30))
+    allsyms = [(L, "_a", "a.obj"), (L + 0x10, "_b", "a.obj"), (L + 0x20, "_c", "a.obj")]
+    if local:
+        return _measure(I, R, [], allsyms), o, syms
+    pub = {"_a": L, "_b": L + 0x10, "_c": L + 0x20}
+    objs = FakeObjs({"a.obj": o})
+    objs.cache = {Path("a.obj"): o}
+    ref = ([_sec(1, ".text", 8)], {0: _sym(0, "_a", 0), 1: _sym(1, "_b", 0)}, b"")
+    return _measure(I, R, [], allsyms, objs=objs, pub=pub, pubobj={k: "a.obj" for k in pub}), ref, ref[1]
+
+
+@pytest.mark.parametrize("local", [True, False])
+@pytest.mark.parametrize("before, addend", [(4, 0xFFFFFFFC), (2, 0xFFFFFFFE)])
+@pytest.mark.parametrize("a_tail, b_head", [(b"GOOD", b"GOOD"), (b"BAD!", b"GOOD"), (b"GOOD", b"BAD!")])
+def test_displacement_before_its_symbol_is_unresolved(local, before, addend, a_tail, b_head):
+    """MSVC folds table[i - 1] into [reg*4 + table-4]: a DIR32 addend of -4. Read
+    unsigned (0xFFFFFFFC), a symbol its own object defines reached the section's
+    last datum at a negative retail start (data-extent). Signed, `_b-4` is an
+    indexed read of _b, a direct read of _a's last bytes or (`_b-2`) both:
+    judging _b alone credits a bad _a, judging _a alone a bad _b. Until both are
+    judged it stays unresolved, whatever the bytes, on both paths."""
+    m, o, syms = _disp_setup(local, a_tail, b_head)
+    lt = 0x3010 - before
+    fails, edges, _ = m.data_ref(lt, lt + 0x100, "_b", syms[1], o, addend)
+    assert "data-unmapped:_b" in fails and edges == set()
+    assert not [f for f in fails if f.startswith("data-extent")]
+
+
+@pytest.mark.parametrize("local", [True, False])
+def test_displacement_before_its_section_is_unresolved(local):
+    m, o, syms = _disp_setup(local, L=0x3040)                         # _a-4: another section's bytes
+    fails, edges, _ = m.data_ref(0x303C, 0x313C, "_a", syms[0], o, 0xFFFFFFFC)
+    assert "data-unmapped:_a" in fails and edges == set()
+
+
+@pytest.mark.parametrize("local", [True, False])
+def test_displacement_inside_its_symbol_is_judged_by_it(local):
+    m, o, syms = _disp_setup(local)                                   # control: _b+4
+    assert m.data_ref(0x3014, 0x3114, "_b", syms[1], o, 4)[:2] == ([], {("datum", (0x3010, 0x3110, 0x10))})
+    m, o, syms = _disp_setup(local, b_head=b"BAD!")
+    assert m.data_ref(0x3014, 0x3114, "_b", syms[1], o, 4)[0] == ["data-content:_b"]
+
+
+def _strictly_closed(m, recs):
+    """Unit 0 in the strict closure of the rows and datums, the measure only:
+    as measure() builds it, a unit is ok when every row is and holds the union
+    of their edges (shift checks, twins, EH and dump edges are not modelled; the
+    fixtures here have none)."""
+    ok, edges = {}, {}
+    for rec in recs:
+        n = ("unit", rec["unit"]["id"])
+        ok[n] = ok.get(n, True) and rec["measured"] and not rec["fails"]
+        edges.setdefault(n, set()).update(rec["edges"])
+    for key, node in m.dnodes.items():
+        ok[("datum", key)], edges[("datum", key)] = not node["fails"], set(node["edges"])
+    return ("unit", 0) in lc.greatest_closure(ok, edges)
+
+
+def _indexed_row(addend, a_tail=b"GOOD", b_head=b"GOOD"):
+    """A row `mov eax,[eax*4 + _b+addend]; ret` (DIR32 at +3 against _b, defined in
+    d.obj's .data with _a and _c) measured end to end by Measure.run()."""
+    disp = addend if addend >= 0 else addend + (1 << 32)
+    code = b"\x8b\x04\x85" + struct.pack("<I", disp) + b"\xc3"
+    a = Path("x/a.obj")
+    row = ([_sec(1, ".text", 8, relocs=[(3, 1, lc.DIR32)], ptr=4)],
+           {0: _sym(0, "?f@@YAXXZ", 1), 1: _sym(1, "_b", 0)}, b"\0" * 4 + code)
+    data = ([_sec(1, ".data", 0x30)], {0: _sym(0, "_a", 1), 1: _sym(1, "_b", 1, value=0x10),
+                                       2: _sym(2, "_c", 1, value=0x20)}, bytes(0x30))
+    I, R = bytearray(0x6000), bytearray(0x6000)
+    _put(I, 0x1000, code[:3] + struct.pack("<I", B + 0x3010 + addend) + b"\xc3")
+    _put(R, 0x1000, code[:3] + struct.pack("<I", B + 0x3110 + addend) + b"\xc3")
+    _put(I, 0x300C, a_tail + b_head)
+    _put(R, 0x310C, b"GOODGOOD")
+    objs = FakeObjs({"d.obj": data})
+    objs.cache[a] = row
+    u = {"id": 0, "obj": str(a), "sec": 1, "secname": ".text", "size": 8, "head": "?f@@YAXXZ",
+         "head_cls": lc.EXTERNAL, "starts": [0x1000],
+         "rows": [{"name": "?f@@YAXXZ", "rva": 0x1000, "size": 8, "off": 0, "sym": "?f@@YAXXZ"}]}
+    pub = {"?f@@YAXXZ": 0x1000, "_a": 0x3000, "_b": 0x3010, "_c": 0x3020}
+    mapped = (pub, {}, sorted([(0x1000, "?f@@YAXXZ", "a.obj"), (0x3000, "_a", "d.obj"), (0x3010, "_b", "d.obj"),
+                               (0x3020, "_c", "d.obj")]), {"?f@@YAXXZ": "a.obj", "_a": "d.obj", "_b": "d.obj", "_c": "d.obj"})
+    m = lc.Measure([u], [], mapped, I, R, {".text": (0x1000, 0x1000), ".data": (0x3000, 0x1000)}, {}, {}, {}, objs,
+                   {0x1000: 8})
+    return m, m.run()
+
+
+@pytest.mark.parametrize("a_tail, b_head", [(b"GOOD", b"GOOD"), (b"BAD!", b"GOOD"), (b"GOOD", b"BAD!")])
+def test_indexed_read_before_its_symbol_never_credits_the_row(a_tail, b_head):
+    """`[eax*4 + _b-4]` with eax = 1 reads _b; the row must not close whichever
+    datum is wrong (Open-BFME-2's review round 2 reproduction, through run())."""
+    m, recs = _indexed_row(-4, a_tail, b_head)
+    rec = recs[0]
+    assert rec["measured"] and "data-unmapped:_b" in rec["fails"] and not rec["edges"] & {
+        ("datum", (0x3000, 0x3100, 0x10)), ("datum", (0x3010, 0x3110, 0x10))}
+    assert not _strictly_closed(m, recs)
+    m, recs = _indexed_row(4, a_tail, b_head)                         # control: inside _b
+    assert recs[0]["fails"] == ([] if b_head == b"GOOD" else ["data-content:_b"])
+    assert ("datum", (0x3010, 0x3110, 0x10)) in recs[0]["edges"]
+    assert _strictly_closed(m, recs) == (b_head == b"GOOD")
+
+
+def _common_pointer_row(addend):
+    """A row `mov eax,[_D]; ret` whose datum _D (d.obj .data) holds a DIR32 pointer
+    to COMMON _x + addend; _x is 4 bytes at linked 0x3040, retail 0x3140."""
+    a = Path("x/a.obj")
+    row = ([_sec(1, ".text", 6, relocs=[(1, 1, lc.DIR32)], ptr=4)],
+           {0: _sym(0, "?f@@YAXXZ", 1), 1: _sym(1, "_D", 0)}, b"\0" * 4 + b"\xa1\0\0\0\0\xc3")
+    disp = addend if addend >= 0 else addend + (1 << 32)
+    data = ([_sec(1, ".data", 4, relocs=[(0, 1, lc.DIR32)], ptr=4)],
+            {0: _sym(0, "_D", 1), 1: _sym(1, "_x", 0)}, b"\0" * 4 + struct.pack("<I", disp))
+    I, R = bytearray(0x6000), bytearray(0x6000)
+    _put(I, 0x1000, b"\xa1" + struct.pack("<I", B + 0x3000) + b"\xc3")
+    _put(R, 0x1000, b"\xa1" + struct.pack("<I", B + 0x3100) + b"\xc3")
+    _put(I, 0x3000, struct.pack("<I", B + 0x3040 + addend))
+    _put(R, 0x3100, struct.pack("<I", B + 0x3140 + addend))
+    objs = FakeObjs({"d.obj": data})
+    objs.cache[a] = row
+    objs.cache[Path("c.obj")] = ([_sec(1, ".text", 4)], {0: _sym(0, "_x", 0, value=4)}, b"")  # COMMON, 4 bytes
+    u = {"id": 0, "obj": str(a), "sec": 1, "secname": ".text", "size": 6, "head": "?f@@YAXXZ",
+         "head_cls": lc.EXTERNAL, "starts": [0x1000],
+         "rows": [{"name": "?f@@YAXXZ", "rva": 0x1000, "size": 6, "off": 0, "sym": "?f@@YAXXZ"}]}
+    pub = {"?f@@YAXXZ": 0x1000, "_D": 0x3000, "_x": 0x3040}
+    mapped = (pub, {}, [(0x1000, "?f@@YAXXZ", "a.obj"), (0x3000, "_D", "d.obj"), (0x3040, "_x", "other.obj")],
+              {"?f@@YAXXZ": "a.obj", "_D": "d.obj", "_x": "other.obj"})
+    m = lc.Measure([u], [], mapped, I, R, {".text": (0x1000, 0x1000), ".data": (0x3000, 0x1000)}, {}, {}, {}, objs,
+                   {0x1000: 6})
+    return m, m.run()
+
+
+def test_pointer_before_a_common_global_fails_what_reaches_it():
+    """Transitive: a datum holding `&_x - 4` (COMMON _x) is not resolved, so the
+    datum fails and the row reading it does not close; `&_x` closes."""
+    m, recs = _common_pointer_row(-4)
+    assert any(f.endswith("unmapped:_x") for f in m.dnodes[(0x3000, 0x3100, 4)]["fails"])
+    assert not _strictly_closed(m, recs)
+    recs[0]["fails"] = []                                             # the edge alone keeps it out
+    assert ("datum", (0x3000, 0x3100, 4)) in recs[0]["edges"] and not _strictly_closed(m, recs)
+    m, recs = _common_pointer_row(0)                                  # control
+    assert m.dnodes[(0x3000, 0x3100, 4)]["fails"] == [] and recs[0]["fails"] == []
+    assert _strictly_closed(m, recs)
+
+
+def test_displacement_before_a_common_global_is_unresolved():
+    I, R = bytearray(0x6000), bytearray(0x6000)
+    name = "?TheX@@3PAVX@@A"
+    ref = ([_sec(1, ".text", 8)], {0: _sym(0, name, 0)}, b"")
+    objs = FakeObjs({})
+    objs.cache = {Path("d.obj"): ([_sec(1, ".text", 8)], {0: _sym(0, name, 0, value=4)}, b"")}  # COMMON, 4 bytes
+    m = _measure(I, R, [], [(0x3040, name, "other.obj")], pub={name: 0x3040}, pubobj={name: "other.obj"}, objs=objs)
+    assert m.data_ref(0x3040, 0x3140, name, ref[1][0], ref, 0)[0] == []                # control
+    fails, edges, _ = m.data_ref(0x303C, 0x313C, name, ref[1][0], ref, 0xFFFFFFFC)
+    assert f"data-unmapped:{name}" in fails and edges == set()
+
+
 def _shifted(I, S):
     sh = lc.Shifted.__new__(lc.Shifted)
     sh.I, sh.S, sh.delta, sh.base_s, sh.why, sh.failed = I, S, lc.SHIFT_BASE - B, lc.SHIFT_BASE, None, collections.Counter()
