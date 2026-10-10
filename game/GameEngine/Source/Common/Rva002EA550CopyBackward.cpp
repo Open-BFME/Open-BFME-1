@@ -1,11 +1,19 @@
 // cl: /O2
+// stlport
+
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+#include <vector>
+
+struct Gen_t_002e13b0_p12cd;
+extern template class _STL::vector<Gen_t_002e13b0_p12cd>;
 
 class Rva002EA550Str
 {
 public:
 	Rva002EA550Str &operator=(const Rva002EA550Str &other)
 	{
-		set(other);
+		reinterpret_cast<StringBase<char> *>(this)->set(
+			*reinterpret_cast<const StringBase<char> *>(&other));
 		return *this;
 	}
 
@@ -48,7 +56,8 @@ Rva002EA550Elem *rva002EA550CopyBackward(Rva002EA550Elem *first,
 		--result;
 		result->m_name = last->m_name;
 		result->m_flag = last->m_flag;
-		result->m_tail = last->m_tail;
+		*reinterpret_cast<_STL::vector<Gen_t_002e13b0_p12cd> *>(&result->m_tail) =
+			*reinterpret_cast<const _STL::vector<Gen_t_002e13b0_p12cd> *>(&last->m_tail);
 	}
 	return result;
 }
