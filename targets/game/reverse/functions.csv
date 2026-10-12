@@ -35225,7 +35225,6 @@ _piSBStopListingAutoMatches,,0x00864BF0,54,game/GameEngine/Source/Common/BfmeCon
 ?d_003a60a0@@YAXXZ,,0x003A60A0,1,game/GameEngine/Source/Common/Rva003A60C0Noop.cpp,matched,carved one byte ret with no semantic evidence; address-derived identity preserves the boundary
 ?d_003a6150@@YAXXZ,,0x003A6150,1,game/GameEngine/Source/Common/Rva003A6150.cpp,matched,carved ret body; caller and ret plus int3 boundary evidence; address-derived identity
 ?d_003a9f60@@YAXXZ,,0x003A9F60,134,game/gen_asm/d_003a04a0.asm,matched,gen-dump;ghidra=FUN_007a9f60
-?d_003abc80@@YAXXZ,,0x003ABC80,490,game/gen_asm/d_003a04a0.asm,matched,gen-dump;ghidra=FUN_007abc80
 ?d_003ad560@@YAXXZ,,0x003AD560,548,game/gen_asm/d_003ad560.asm,matched,gen-dump;ghidra=FUN_007ad560
 ?d_003ad8b0@@YAXXZ,,0x003AD8B0,524,game/gen_asm/d_003ad560.asm,matched,gen-dump;ghidra=FUN_007ad8b0
 ?d_003adb40@@YAXXZ,,0x003ADB40,182,game/gen_asm/d_003ad560.asm,matched,gen-dump;ghidra=FUN_007adb40
@@ -35813,7 +35812,6 @@ _piSBStopListingAutoMatches,,0x00864BF0,54,game/GameEngine/Source/Common/BfmeCon
 ?d_005805b0@@YAXXZ,,0x005805B0,1,game/GameEngine/Source/Common/Rva005805B0Noop.cpp,matched,carved one-byte ret body with no proven owner
 ?d_00583680@@YAXXZ,,0x00583680,679,game/gen_asm/d_00499050.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=ret+int3 callers=1;ghidra=FUN_00983680
 ?d_005847f0@@YAXXZ,,0x005847F0,205,game/gen_asm/d_00572210.asm,matched,gen-dump;bounds=high
-?d_005849a0@@YAXXZ,,0x005849A0,521,game/gen_asm/d_0057da50.asm,matched,gen-dump;ghidra=FUN_009849a0
 ?d_005850b0@@YAXXZ,,0x005850B0,1,game/GameEngine/Source/Common/Rva005850B0.cpp,matched,carved one-byte ret body; ret plus int3 boundary; address-derived identity
 ?d_005855a0@@YAXXZ,,0x005855A0,167,game/gen_asm/d_0057da50.asm,matched,gen-dump;ghidra=FUN_009855a0
 ?d_00585750@@YAXXZ,,0x00585750,1,game/GameEngine/Source/Common/Rva00585750Empty.cpp,matched,carved boundary contains only ret; no semantic identity evidence
@@ -172548,3 +172546,5 @@ uw_00c1b9d0,,0x00C1B9D0,8,game/GameEngine/Source/GameLogic/System/GameLogic_load
 ?insertGame@@YAHPAVGameWindow@@PAVGameSpyStagingRoom@@_N@Z,,0x0062DB90,1487,game/GameEngine/Source/GameNetwork/GameSpy/LobbyUtilsInsertGame.cpp,matched,real C++ for the retired 1487B MASM dump; exact 1487B at 92 relocs; string anchors Password/Observer/GUI:UnknownLadder/NoLadder;model=opus-5.5;host=chalco.vps
 ?parseCastleToUnpackForFaction@Rva00374CF0Owner@@SAXPAVINI@@PAX1PBX@Z,,0x00374CF0,410,game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorParseCastleToUnpackForFaction.cpp,matched,real C++ for the retired gen-dump row; exact 410B at 28 relocs; INI per-faction castle unpack-list parser; identity lands under the address-derived owner because ilt_oracle refutes the descriptive CastleBehaviorModuleData decoration; four STL pins added from its own retail bytes;model=opus-5.5;host=chalco.vps
 ?W3DGadgetProgressBarDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,,0x00793260,553,game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DGadgetProgressBarDraw.cpp,matched,real C++ for the retired gen-dump row; exact 553B at 10 relocs; progress bar draw callback with the empty-coordinate template lever;model=opus-5.5;host=chalco.vps
+??0BannerUI@@QAE@XZ,,0x005849A0,521,game/GameEngine/Source/GameClient/GUI/BannerUIConstructor.cpp,matched,real C++ for the retired gen-dump row; exact 521B at 34 relocs; BannerUI subsystem constructor binding the nine BannerUI apt callbacks; class named by the recorded vftable 0x0110B828 and confirmed by ilt_oracle; two callee pins added from its own retail bytes;model=opus-5.5;host=chalco.vps
+??0Rva003B6680@@QAE@ABV0@@Z,,0x003ABC80,490,game/GameEngine/Source/Common/Rva003B6680Copy.cpp,matched,real C++ for the retired gen-dump row; exact 490B at 26 relocs; copy constructor of the landed Rva003B6680 family; twenty member/vector callee pins added from its own retail bytes;model=opus-5.5;host=chalco.vps

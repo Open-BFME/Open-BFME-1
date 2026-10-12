@@ -1,5 +1,13 @@
 // ??0Rva003B6680@@QAE@ABV0@@Z
-// partial score=1.0 date=2026-10-09
+// Retail 0x003ABC80 (490 bytes): the copy constructor of the Rva003B6680
+// object whose converting constructor and assignment operator are already
+// landed (Rva003B6680Ctor.cpp at 0x003B2900, Rva003B6680Assign.cpp at
+// 0x003B6680).  It member-copies the string at +4, the twelve 12-byte members,
+// the second string at +0x50, the vector at +0xA8 (through
+// initialize_base/copyVectorElements), the three trailing members and the flag
+// at +0xD8.
+//
+// Identity stays address-derived, like the rest of the family.
 // cl: /O2 /EHsc
 // stlport
 
