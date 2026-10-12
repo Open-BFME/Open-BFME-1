@@ -34934,7 +34934,6 @@ _piSBStopListingAutoMatches,,0x00864BF0,54,game/GameEngine/Source/Common/BfmeCon
 ?d_00269c50@@YAXXZ,,0x00269C50,1073,game/gen_asm/d_00266ef0.asm,matched,gen-dump;ghidra=FUN_00669c50
 ?d_0026FED0@@YAXXZ,,0x0026FED0,1,game/GameEngine/Source/Common/Rva0026FED0.cpp,matched,opaque address-derived body with proven ret boundary
 ?d_0026c9e0@@YAXXZ,,0x0026C9E0,406,game/gen_asm/d_00259090.asm,matched,gen-dump;bounds=high
-?d_0026e1f0@@YAXXZ,,0x0026E1F0,310,game/gen_asm/d_00266ef0.asm,matched,gen-dump;ghidra=FUN_0066e1f0
 ?d_0026eed0@@YAXXZ,,0x0026EED0,289,game/gen_asm/d_00266ef0.asm,matched,gen-dump;ghidra=FUN_0066eed0
 ?d_00271b40@@YAXXZ,,0x00271B40,282,game/gen_asm/d_00266ef0.asm,matched,gen-dump;ghidra=FUN_00671b40
 ?d_00273f90@@YAXXZ,,0x00273F90,917,game/gen_asm/d_00272800.asm,matched,gen-dump;ghidra=FUN_00673f90
@@ -172548,3 +172547,4 @@ uw_00c1b9d0,,0x00C1B9D0,8,game/GameEngine/Source/GameLogic/System/GameLogic_load
 ?Compute_Ram_Size@AABTreeClass@@QAEHXZ,,0x0096A630,17,game/Libraries/Source/WWVegas/WW3D2/meshgeometry.cpp,matched,AABTreeClass ram-size formula; aabtree.h inline; meshgeometry.cpp COMDAT equals retail (census c1012a);model=claude-opus-5-5;host=GreatFaram
 ?Class_ID@HLodClass@@UBEHXZ,,0x0097BC00,6,game/Libraries/Source/WWVegas/WW3D2/hlod.cpp,matched,returns CLASSID_HLOD; hlod.h declares it inline; hlod.cpp COMDAT equals retail (census c1012a);model=claude-opus-5-5;host=GreatFaram
 ?Rva009C0A30Vp6AddNoise@@YAXPAEIIHH@Z,,0x009C0A30,524,game/GameEngine/Source/Common/Rva009C0A30Vp6AddNoise.cpp,matched,VP6 plane denoise pass ported from the Open BFME 2 donor VP6/PlaneAddNoiseWmt.cpp; builds a gaussian char distribution from the noise level seeds the 2048-byte noise table with rand() then adds it per row through the SSE clamp sequence; 16-byte aligned clamp vectors force the entry alloca alignment retail shows; all three callees are matched rows;model=codex-cli;host=chalco.vps
+?update@WoundArrowUpdate@@UAE?AW4UpdateSleepTime@@XZ,,0x0026E1F0,310,game/GameEngine/Source/GameLogic/Object/Update/WoundArrowUpdateUpdate.cpp,matched,WoundArrowUpdate::update applied-wound gate then command the target AI to approach within module data range and set model condition bit 76 / clear 196; owner and module data read through the module offset witnesses;model=codex-cli;host=chalco.vps
