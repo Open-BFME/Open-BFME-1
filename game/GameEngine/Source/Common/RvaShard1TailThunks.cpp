@@ -15,6 +15,7 @@ extern void rva00010B2CTarget(void);
 extern void rva00011E87Target(void);
 extern void rva00014470Target(void);
 extern void rva000119E1Target(void);
+extern void rva00011B76Target(void);
 extern void rva00022683Target(void);
 extern void rva0002F095Target(void);
 extern void rva000399A5Target(void);
@@ -31,6 +32,7 @@ extern void rva0003D7B2Target(void);
 #pragma comment(linker, "/alternatename:?rva00011E87Target@@YAXXZ=??$_M_insert_dispatch@U?$_List_iterator@UCoord3D@@U?$_Const_traits@UCoord3D@@@_STL@@@_STL@@@?$list@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAEXU?$_List_iterator@UCoord3D@@U?$_Nonconst_traits@UCoord3D@@@_STL@@@1@U?$_List_iterator@UCoord3D@@U?$_Const_traits@UCoord3D@@@_STL@@@1@1ABU__false_type@1@@Z")
 #pragma comment(linker, "/alternatename:?rva00014470Target@@YAXXZ=??$_M_allocate_and_copy@PBUPrereqUnitRec@ProductionPrerequisite@@@?$vector@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@IAEPAUPrereqUnitRec@ProductionPrerequisite@@IPBU23@0@Z")
 #pragma comment(linker, "/alternatename:?rva000119E1Target@@YAXXZ=?newLocomotor@LocomotorStore@@QBEPAVLocomotor@@PBVLocomotorTemplate@@@Z")
+#pragma comment(linker, "/alternatename:?rva00011B76Target@@YAXXZ=?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$04$E?LINE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?LINE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVLineEmissionVolumeModule@2@VLineEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ")
 #pragma comment(linker, "/alternatename:?rva00022683Target@@YAXXZ=?readDict@DataChunkInput@@QAE?AVDict@@XZ")
 #pragma comment(linker, "/alternatename:?rva0002F095Target@@YAXXZ=?copy@UnsignedPairTreeCopyShim@_STL@@QAEPAU?$_Rb_tree_node@U?$pair@$$CBGE@_STL@@@2@PAU32@0@Z")
 #pragma comment(linker, "/alternatename:?rva000399A5Target@@YAXXZ=?setOrientation@Thing@@QAEXM@Z")
@@ -89,6 +91,11 @@ void j_00014470(void)
 void j_000119E1(void)
 {
 	rva000119E1Target();
+}
+
+void j_00011B76(void)
+{
+	rva00011B76Target();
 }
 
 void j_00022683(void)
