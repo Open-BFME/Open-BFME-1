@@ -91090,3 +91090,6 @@ Rva01338454SortReceiver,0x01338454,callback-receiver+0x28 global stored beside R
 ?rva0041AD20@Rva001D0610Drawable@@QAEXABV?$Rva001D0610Ref@VRva001D0610AudioInfo@@@@@Z,0x00017C15,additive: retail call target of the red row ?updateObjValuesFromMapProperties@Object@@QAEXPAVDict@@@Z
 ?rva0041B040@Rva001D0610Drawable@@QAEX_N@Z,0x0002D2EF,additive: retail call target of the red row ?updateObjValuesFromMapProperties@Object@@QAEXPAVDict@@@Z
 ?rva0041CCD0@Rva001D0610Drawable@@QAEXABV?$BitFlags@$0BEA@@@II@Z,0x0001343F,additive: retail call target of the red row ?updateObjValuesFromMapProperties@Object@@QAEXPAVDict@@@Z
+??0?$Rva00026085VectorBase@PAXV?$allocator@PAX@_STL@@@_STL@@QAE@IABV?$allocator@PAX@1@@Z,0x00026085,Open-BFME5 address-scoped STLport vector-base constructor ILT to body 0x00066A90 used by the vector void pointer copy constructor at 0x0082EB30
+?bfmeGetAllocator00009C28@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@QBE?AV?$allocator@PAX@2@XZ,0x00009C28,Open-BFME5 address-scoped STLport get_allocator ILT to body 0x000665A0 used by the vector void pointer copy constructor at 0x0082EB30
+?__copy_trivial@_STL@@YAPAXPBX0PAX@Z,0x00018179,Open-BFME5 ILT to body 0x00065E30 encoded by the vector void pointer copy constructor at 0x0082EB30; ilt_oracle confirms this slot for the name
