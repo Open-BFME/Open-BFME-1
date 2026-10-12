@@ -34766,7 +34766,6 @@ _piSBStopListingAutoMatches,,0x00864BF0,54,game/GameEngine/Source/Common/BfmeCon
 ?d_001ca2e0@@YAXXZ,,0x001CA2E0,367,game/gen_asm/d_001c7e60.asm,matched,gen-dump;ghidra=FUN_005ca2e0
 ?d_001cabe0@@YAXXZ,,0x001CABE0,376,game/gen_asm/d_001c7e60.asm,matched,gen-dump;ghidra=FUN_005cabe0
 ?d_001cbdc0@@YAXXZ,,0x001CBDC0,924,game/gen_asm/d_001cbdc0.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=ret+int3 refs=1;ghidra=FUN_005cbdc0
-?d_001ccfc0@@YAXXZ,,0x001CCFC0,332,game/gen_asm/d_001adb10.asm,matched,gen-dump;bounds=high
 ?d_001cdbe0@@YAXXZ,,0x001CDBE0,56,game/gen_asm/d_001c7e60.asm,matched,gen-dump;ghidra=FUN_005cdbe0
 ?d_001cee10@@YAXXZ,,0x001CEE10,336,game/gen_asm/d_001adb10.asm,matched,gen-dump;bounds=high
 ?d_001d1020@@YAXXZ,,0x001D1020,2501,game/gen_asm/d_001d1020.asm,matched,gen-dump;ghidra=FUN_005d1020
@@ -35323,7 +35322,6 @@ _piSBStopListingAutoMatches,,0x00864BF0,54,game/GameEngine/Source/Common/BfmeCon
 ?d_003eeb90@@YAXXZ,,0x003EEB90,4836,game/gen_asm/d_003eeb90.asm,matched,gen-dump;ghidra=FUN_007eeb90
 ?d_003f0f40@@YAXXZ,,0x003F0F40,1496,game/gen_asm/d_003eeb90.asm,matched,gen-dump;ghidra=FUN_007f0f40
 ?d_003f4190@@YAXXZ,,0x003F4190,2830,game/gen_asm/d_003f4190.asm,matched,gen-dump;carved start=rel32-call/jmp end=ret+int3 refs=1
-?d_003f5c70@@YAXXZ,,0x003F5C70,335,game/gen_asm/d_003eeb90.asm,matched,gen-dump;ghidra=FUN_007f5c70
 ?d_003f5e20@@YAXXZ,,0x003F5E20,345,game/gen_asm/d_003eeb90.asm,matched,gen-dump;ghidra=FUN_007f5e20
 ?d_003f6f60@@YAXXZ,,0x003F6F60,146,game/gen_asm/d_003eeb90.asm,matched,gen-dump;ghidra=FUN_007f6f60
 ?d_003f7020@@YAXXZ,,0x003F7020,146,game/gen_asm/d_003eeb90.asm,matched,gen-dump;ghidra=FUN_007f7020
@@ -35839,7 +35837,6 @@ _piSBStopListingAutoMatches,,0x00864BF0,54,game/GameEngine/Source/Common/BfmeCon
 ?d_00590480@@YAXXZ,,0x00590480,498,game/gen_small/dumps_000.cpp,matched,gen-dump;ghidra=FUN_00990480
 ?d_00591640@@YAXXZ,,0x00591640,322,game/gen_asm/d_00499050.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=ret+int3 callers=1;ghidra=FUN_00991640
 ?d_00592130@@YAXXZ,,0x00592130,265,game/gen_asm/d_00499050.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=ret+int3 callers=1;ghidra=FUN_00992130
-?d_00592640@@YAXXZ,,0x00592640,339,game/gen_asm/d_0058b1f0.asm,matched,gen-dump;ghidra=FUN_00992640
 ?d_00593440@@YAXXZ,,0x00593440,482,game/gen_asm/d_0058b1f0.asm,matched,gen-dump;ghidra=FUN_00993440
 ?d_005936a0@@YAXXZ,,0x005936A0,584,game/gen_asm/d_0058b1f0.asm,matched,gen-dump;ghidra=FUN_009936a0
 ?d_00594ad0@@YAXXZ,,0x00594AD0,524,game/gen_asm/d_00593a30.asm,matched,gen-dump;ghidra=FUN_00994ad0
@@ -172548,3 +172545,6 @@ uw_00c1b9d0,,0x00C1B9D0,8,game/GameEngine/Source/GameLogic/System/GameLogic_load
 ?W3DGadgetProgressBarDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,,0x00793260,553,game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DGadgetProgressBarDraw.cpp,matched,real C++ for the retired gen-dump row; exact 553B at 10 relocs; progress bar draw callback with the empty-coordinate template lever;model=opus-5.5;host=chalco.vps
 ??0BannerUI@@QAE@XZ,,0x005849A0,521,game/GameEngine/Source/GameClient/GUI/BannerUIConstructor.cpp,matched,real C++ for the retired gen-dump row; exact 521B at 34 relocs; BannerUI subsystem constructor binding the nine BannerUI apt callbacks; class named by the recorded vftable 0x0110B828 and confirmed by ilt_oracle; two callee pins added from its own retail bytes;model=opus-5.5;host=chalco.vps
 ??0Rva003B6680@@QAE@ABV0@@Z,,0x003ABC80,490,game/GameEngine/Source/Common/Rva003B6680Copy.cpp,matched,real C++ for the retired gen-dump row; exact 490B at 26 relocs; copy constructor of the landed Rva003B6680 family; twenty member/vector callee pins added from its own retail bytes;model=opus-5.5;host=chalco.vps
+??0Rva00592640Owner@@QAE@XZ,,0x00592640,339,game/GameEngine/Source/GameClient/Rva00592640OwnerConstructor.cpp,matched,constructor of the opaque +0x488 member of Rva00597FC0Client (AptPalantir base) - containment proved by 0x005980AF and the matched destructor;model=opus-5.5;host=chalco.vps
+?rva003f5c70@Pathfinder@@QAE_NPAVObject@@PAXPAUCoord3D@@@Z,,0x003F5C70,335,game/GameEngine/Source/GameLogic/Pathfinder/PathfinderRva003F5C70.cpp,matched,Pathfinder predicate snapping a movement destination to a valid cell - address-derived spelling;model=opus-5.5;host=chalco.vps
+?rva001CCFC0@Rva001CCFC0Owner@@QAEXABVRva001CCFC0Mask@@@Z,,0x001CCFC0,332,game/GameEngine/Source/Common/Rva001CCFC0OwnerApplyMask.cpp,matched,Rva001CCFC0Owner mask-merge over its template-view list - opaque ABI views;model=opus-5.5;host=chalco.vps

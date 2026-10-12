@@ -1,5 +1,12 @@
 // ?rva001CCFC0@Rva001CCFC0Owner@@QAEXABVRva001CCFC0Mask@@@Z
-// partial score=1.0 date=2026-10-03
+// Retail 0x001CCFC0 (332 bytes): the Rva001CCFC0Owner method that merges a
+// 320-bit Rva001CCFC0Mask into the owner.  It walks the owner's ordered list of
+// template views, applies the mask to each view's flag word, and honours the
+// kind ordinal through Rva000A2CF0.  The mask is exposed as an opaque ABI view
+// (_STL::bitset<320>) because the underlying class layout is not yet known.
+//
+// Identity is address-derived; the declarations are opaque ABI views with no
+// new pins or production identities.
 // BANK ONLY: opaque ABI views; no new pins or production identities.
 // cl: /DNDEBUG /MD /EHsc
 // stlport

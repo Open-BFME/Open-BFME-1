@@ -1,5 +1,14 @@
 // ?rva003f5c70@Pathfinder@@QAE_NPAVObject@@PAXPAUCoord3D@@@Z
-// partial score=1.0 date=2026-10-03
+// Retail 0x003F5C70 (335 bytes): the Pathfinder predicate that snaps a movement
+// destination to a valid cell.  It refreshes the object's template override,
+// shortcuts templates flagged 0x02000000, derives the search radius and
+// centring from the object's template, converts the (possibly nudged)
+// destination to a cell, then runs the radius-200 neighbour scan at 0x003F55E0
+// over a 0x003E6200 info record carrying the destination layer height; on a hit
+// (or an in-range fallback) it rewrites *dest through adjustCoordToCell.
+//
+// Identity is address-derived: the native spelling of this Pathfinder entry
+// point is unknown, so it lands as Pathfinder::rva003f5c70.
 // cl: /DWIN32 /D_WINDOWS /Igame/GameEngine/Include/Precompiled /Igame/GameEngine/Source/Common/System /DNDEBUG /MD /EHsc /Igame/GameEngine/Source/GameLogic/Object /Igame/Libraries/Source/WWVegas/WWMath
 // BANK ONLY: 003F5C70, 335 bytes exact modulo 12 relocation slots.
 // Native coord.h POD and Object header plus visible native radius helper fix
@@ -114,9 +123,34 @@ public:
 
 protected:
 	void getRadiusAndCenter(const Object *obj, Int &radius, Bool &center);
-	void adjustCoordToCell(Int x, Int y, Bool center, Coord3D &pos,
-		PathfindLayerEnum layer);
 };
+
+// Retail reaches adjustCoordToCell through the incremental-link thunk at RVA
+// 0x000411D2 (the matched j_000411d2 row), not through the body at RVA
+// 0x003D6040, so the call site encodes the raw thunk address and dispatches
+// thiscall through a member-pointer union -- the same shape the sibling
+// PathfinderCheckForTargetBfme.cpp uses for the identical call.
+extern void j_000411d2(void);
+
+class Rva003F5C70AdjustReceiver
+{
+};
+
+typedef void (Rva003F5C70AdjustReceiver::*Rva003F5C70AdjustCall)(Int, Int, Bool,
+	Coord3D &, PathfindLayerEnum);
+
+static __forceinline void adjustCoordToCell(Pathfinder *self, Int x, Int y,
+	Bool center, Coord3D &dest, PathfindLayerEnum layer)
+{
+	union
+	{
+		void (*raw)(void);
+		Rva003F5C70AdjustCall member;
+	} call;
+	call.raw = j_000411d2;
+	(reinterpret_cast<Rva003F5C70AdjustReceiver *>(self)->*call.member)(
+		x, y, center, dest, layer);
+}
 
 Bool Pathfinder::rva003f5c70(Object *obj, void *arg3, Coord3D *dest)
 {
@@ -148,14 +182,14 @@ Bool Pathfinder::rva003f5c70(Object *obj, void *arg3, Coord3D *dest)
 		ICoord2D found;
 		if (((Rva003F55E0 *)this)->call(&cell, 200, &found, &info))
 		{
-			adjustCoordToCell(found.x, found.y, center, *dest,
+			adjustCoordToCell(this, found.x, found.y, center, *dest,
 				(PathfindLayerEnum)info.m_layer);
 			return true;
 		}
 	}
 	if (info.m_zero24)
 	{
-		adjustCoordToCell(info.m_pad1c, info.m_pad20, center, *dest,
+		adjustCoordToCell(this, info.m_pad1c, info.m_pad20, center, *dest,
 			(PathfindLayerEnum)info.m_layer);
 		return true;
 	}
