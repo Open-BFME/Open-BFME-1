@@ -34915,7 +34915,6 @@ _piSBStopListingAutoMatches,,0x00864BF0,54,game/GameEngine/Source/Common/BfmeCon
 ?d_0024eca0@@YAXXZ,,0x0024ECA0,126,game/gen_asm/d_00234360.asm,matched,gen-dump;bounds=high
 ?d_0024ed40@@YAXXZ,,0x0024ED40,1066,game/gen_asm/d_0024e310.asm,matched,gen-dump;ghidra=FUN_0064ed40
 ?d_00251a20@@YAXXZ,,0x00251A20,4,game/GameEngine/Source/Common/Rva00251A20DwordGetter.cpp,matched,object-symbol=?get@Rva00251A20DwordField@@QBEIXZ;address-derived dword getter reads this plus 4;carved boundary and retail bytes prove the body
-?d_00254cf0@@YAXXZ,,0x00254CF0,486,game/gen_asm/d_00234360.asm,matched,gen-dump;bounds=high
 ?d_002579d0@@YAXXZ,,0x002579D0,529,game/gen_asm/d_0024e310.asm,matched,gen-dump;ghidra=FUN_006579d0
 ?d_002593f0@@YAXXZ,,0x002593F0,496,game/gen_small/dumps_000.cpp,matched,gen-dump;ghidra=FUN_006593f0
 ?d_00259910@@YAXXZ,,0x00259910,440,game/gen_asm/d_00259090.asm,matched,gen-dump;bounds=high
@@ -172548,3 +172547,4 @@ uw_00c1b9d0,,0x00C1B9D0,8,game/GameEngine/Source/GameLogic/System/GameLogic_load
 ?rank004B24F0@@YAHPAVObject@@@Z,,0x004B24F0,90,game/GameEngine/Source/GameClient/GUI/Rva004B24F0.cpp,matched,address-derived TooltipText rank helper; joins the 0x004B2470-0x004B25D0 family;model=codex-cli;host=chalco.vps
 ?bfmeRva00896470@@YAXVBfmeRefHolder@@@Z,,0x00896470,142,game/GameEngine/Source/Common/Rva00896470RefHolderSubmit.cpp,matched,address-derived ref-counted handle submitter to the tracker singleton at 0x013377F8 then the flag-gated builder at 0x00895790; both callees stay dump-named and are bound through the union idiom;model=codex-cli;host=chalco.vps
 ?bfmeRva00896540@@YGXVBfmeRefHolder@@@Z,,0x00896540,111,game/GameEngine/Source/Common/Rva00896540RefHolderForward.cpp,matched,address-derived by-value ref-counted handle forwarder into the landed submitter at 0x00896470; the by-value parameter destructor is the whole tail;model=codex-cli;host=chalco.vps
+?onDie@CrushDie@@UAEXPBVDamageInfo@@@Z,,0x00254CF0,486,game/GameEngine/Source/GameLogic/Object/Die/CrushDieOnDie.cpp,matched,model=codex-cli;host=chalco.vps

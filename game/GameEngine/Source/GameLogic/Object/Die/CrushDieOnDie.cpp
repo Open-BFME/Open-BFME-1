@@ -1,7 +1,11 @@
 // ?onDie@CrushDie@@UAEXPBVDamageInfo@@@Z
-// partial score=1.0 date=2026-10-09
 // cl: /DNDEBUG /MD /EHsc
-// CrushDie die-interface callback; evidence: targets/game/reverse/identity_evidence/00254cf0-crushdie-abi-recovery.md
+//
+// BFME retail RVA 0x00254CF0 (486 bytes): the CrushDie die-interface callback,
+// reached from the constructor's one-slot interface table 0x010B2BB8 through
+// ILT 0x00435A08. Evidence:
+// targets/game/reverse/identity_evidence/00254cf0-crushdie-abi-recovery.md and
+// targets/game/reverse/identity_evidence/00254cf0-crushdie-ondie.md.
 
 extern "C" void *__cdecl memset(void *, int, unsigned int);
 
@@ -52,7 +56,13 @@ class AudioEventRTS
 {
 public:
 	AudioEventRTS(const AudioEventRTS &right);
-	virtual ~AudioEventRTS();
+
+	// This TU-only view stores the vptr explicitly and uses the scalar
+	// destructor spelling owned at RVA 0x000B31F0 (ILT 0x00026F35). The owner
+	// has a virtual destructor elsewhere, but this TU makes only direct
+	// subobject cleanup calls and emits no vtable, so the historical UAE pin
+	// names another body; see Common/Audio/MiscAudio.cpp for the same view.
+	~AudioEventRTS();
 
 	const AsciiString &getEventName() const
 	{
@@ -62,6 +72,7 @@ public:
 	void setObjectID(ObjectID objectID);
 
 private:
+	void *m_vptr;
 	AsciiString m_filenameToLoad;
 	CountedPtr m_eventInfo;
 	unsigned int m_playingHandle;
