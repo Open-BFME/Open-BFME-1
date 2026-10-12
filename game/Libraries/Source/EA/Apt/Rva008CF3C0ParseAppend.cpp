@@ -85,7 +85,8 @@ struct BfmeRegistryKind1
 
 struct Rva00899560Pool;
 extern Rva00899560Pool *g_rva01337810GcRoots;
-extern Rva008A9B00 *g_rva008C3B60Free;
+struct Rva008C3B60Node;
+extern Rva008C3B60Node *g_rva01338478NodeHead;
 
 class Rva008CF3C0State
 {
@@ -123,10 +124,10 @@ void Rva008CF3C0State::parseAndAppend(void *owner, void *scope,
 	{
 		if (name.m_block != &g_default012D5298)
 		{
-			Rva008A9B00 *node = g_rva008C3B60Free;
+			Rva008A9B00 *node = (*(Rva008A9B00 **)&g_rva01338478NodeHead);
 			if (node != 0)
 			{
-				g_rva008C3B60Free = node->m_next;
+				(*(Rva008A9B00 **)&g_rva01338478NodeHead) = node->m_next;
 				((BfmeRegistryKind1 *)g_rva01337810GcRoots)->addOrClear(node);
 				if (node->m_block != &g_default012D5298)
 					((BfmeStrVKK *)&node->m_block)->bfmeTruncVKK(0);

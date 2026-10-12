@@ -79,7 +79,8 @@ struct BfmeRegistryKind1
 };
 struct Rva00899560Pool;
 extern Rva00899560Pool *g_rva01337810GcRoots;
-extern Rva008A9B00 *g_rva008AAFD0Free;
+struct Rva008C3B60Node;
+extern Rva008C3B60Node *g_rva01338478NodeHead;
 struct Stack008C7950
 {
     int m_count;
@@ -91,10 +92,10 @@ void StringLiteralPush008CB050(Stack008C7950 *state, const char **cursor)
 {
     const char **literal = (const char **)(((unsigned)*cursor + 3) & ~3);
     *cursor = (const char *)(literal + 1);
-    Rva008A9B00 *result = g_rva008AAFD0Free;
+    Rva008A9B00 *result = (*(Rva008A9B00 **)&g_rva01338478NodeHead);
     if (result)
     {
-        g_rva008AAFD0Free = result->m_next;
+        (*(Rva008A9B00 **)&g_rva01338478NodeHead) = result->m_next;
         ((BfmeRegistryKind1 *)g_rva01337810GcRoots)->addOrClear(result);
         if (result->m_string.m_data != sharedEmptyString012D5298())
             reinterpret_cast<BfmeStrVKK *>(&result->m_string)->bfmeTruncVKK(0);

@@ -79,7 +79,7 @@ public:
     Rva008A9B00 *m_next;
 };
 struct Rva008C3B60Node;
-extern Rva008C3B60Node *Rva008C3B60Head;
+extern Rva008C3B60Node *g_rva01338478NodeHead;
 struct Rva00899560Pool {
     int m_capacity, m_count;
     void **m_items;
@@ -219,9 +219,9 @@ bool rva008AF650Implementation(Rva008AF650Object *object, BfmeStrVKI *key, AptVa
                             if (!scope->m_unknown4c) break;
                             scope = scope->m_unknown4c;
                         }
-                        Rva008A9B00 *node = (Rva008A9B00 *)Rva008C3B60Head;
+                        Rva008A9B00 *node = (Rva008A9B00 *)g_rva01338478NodeHead;
                         if (node) {
-                            Rva008C3B60Head = (Rva008C3B60Node *)node->m_next;
+                            g_rva01338478NodeHead = (Rva008C3B60Node *)node->m_next;
                             g_rva01337810GcRoots->add(node);
                             if (node->m_string.m_data != sharedEmptyString012D5298())
                                 ((BfmeStrVKK *)&node->m_string)->bfmeTruncVKK(0);

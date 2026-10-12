@@ -76,7 +76,8 @@ struct Rva00899560Pool {
     }
 };
 extern Rva00899560Pool *g_rva01337810GcRoots;
-extern Rva008A9B00 *g_free01338478;
+struct Rva008C3B60Node;
+extern Rva008C3B60Node *g_rva01338478NodeHead;
 // 0x013379BC: the Apt undefined-value sentinel, defined as AptValue* in
 // Bfme5AppendFallback8CAFF0.cpp.  Retail's byte here is a plain pointer load,
 // so the reinterpret_cast below compiles to the same mov.
@@ -98,9 +99,9 @@ Rva008A9B00 *rva008A9E20CodepointStringValue(AptValue *value) {
     {
     EAStringC result;
     result.rva0089FDA0((const char *)p, 1);
-    Rva008A9B00 *obj = g_free01338478;
+    Rva008A9B00 *obj = (*(Rva008A9B00 **)&g_rva01338478NodeHead);
     if (obj) {
-        g_free01338478 = obj->m_next;
+        (*(Rva008A9B00 **)&g_rva01338478NodeHead) = obj->m_next;
         g_rva01337810GcRoots->add(obj);
         if (obj->m_string.m_data != sharedEmptyString012D5298())
             ((BfmeStrVKK *)&obj->m_string)->bfmeTruncVKK(0);

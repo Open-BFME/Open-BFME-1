@@ -168,7 +168,7 @@ struct Rva00899560Pool
 };
 
 extern Rva00899560Pool *g_rva01337810GcRoots;
-extern Rva008C3B60Node *Rva008C3B60Head;
+extern Rva008C3B60Node *g_rva01338478NodeHead;
 
 struct Rva008AE770Stack
 {
@@ -206,10 +206,10 @@ Rva008C3B60Node *rva008AA130(BfmeHostEAW *first, int count)
 		} while (index < count);
 	}
 
-	Rva008C3B60Node *node = Rva008C3B60Head;
+	Rva008C3B60Node *node = g_rva01338478NodeHead;
 	if (node != 0)
 	{
-		Rva008C3B60Head = node->m_next;
+		g_rva01338478NodeHead = node->m_next;
 		g_rva01337810GcRoots->addOrClear(node);
 		if (node->m_data != sharedEmptyString012D5298())
 			((BfmeStrVKK *)&node->m_data)->bfmeTruncVKK(0);
@@ -256,10 +256,10 @@ Rva008C3B60Node *rva008AA2B0(int unused, int count)
 		} while (index < count);
 	}
 
-	Rva008C3B60Node *node = Rva008C3B60Head;
+	Rva008C3B60Node *node = g_rva01338478NodeHead;
 	if (node != 0)
 	{
-		Rva008C3B60Head = node->m_next;
+		g_rva01338478NodeHead = node->m_next;
 		g_rva01337810GcRoots->addOrClear(node);
 		if (node->m_data != sharedEmptyString012D5298())
 			((BfmeStrVKK *)&node->m_data)->bfmeTruncVKK(0);

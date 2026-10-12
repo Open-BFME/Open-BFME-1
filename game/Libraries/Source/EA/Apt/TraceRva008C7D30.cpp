@@ -106,7 +106,7 @@ struct Rva00899560Pool
     }
 };
 
-extern Rva008C3B60Node *Rva008C3B60Head;
+extern Rva008C3B60Node *g_rva01338478NodeHead;
 extern Rva00899560Pool *g_rva01337810GcRoots;
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned);
 
@@ -123,10 +123,10 @@ public:
 
 static __forceinline Rva008C3B60Node *CreateStringRva008C7D30()
 {
-    Rva008C3B60Node *node = Rva008C3B60Head;
+    Rva008C3B60Node *node = g_rva01338478NodeHead;
     if (node)
     {
-        Rva008C3B60Head = node->m_next;
+        g_rva01338478NodeHead = node->m_next;
         g_rva01337810GcRoots->add(node);
         if (node->m_data != sharedEmptyString012D5298())
             ((BfmeStrVKK *)&node->m_data)->bfmeTruncVKK(0);

@@ -66,7 +66,8 @@ struct Rva00893410Registry {
     }
 };
 extern Rva00893410Registry *g_rva8CD130IdleHook;
-extern Rva008A9B00 *Rva01338478FreeHead;
+struct Rva008C3B60Node;
+extern Rva008C3B60Node *g_rva01338478NodeHead;
 class BfmeNestedBE;
 extern BfmeNestedBE *Rva008930C0AptLookup(int);
 // Retail's object at 0x01338748 is `struct Rva008AE770Stack` (Rva00C6DCC0StaticInit.cpp
@@ -105,9 +106,9 @@ bool Rva00893670(const char *name)
 }
 
 static __forceinline Rva008A9B00 *createValue() {
-    Rva008A9B00 *value = Rva01338478FreeHead;
+    Rva008A9B00 *value = (*(Rva008A9B00 **)&g_rva01338478NodeHead);
     if (value) {
-        Rva01338478FreeHead = value->next;
+        (*(Rva008A9B00 **)&g_rva01338478NodeHead) = value->next;
         g_rva8CD130IdleHook->addOrClear(value);
         if (value->block != localEmptyString1284())
             ((BfmeStrVKK *)&value->block)->bfmeTruncVKK(0);
