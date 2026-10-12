@@ -91027,3 +91027,4 @@ Rva01338454SortReceiver,0x01338454,callback-receiver+0x28 global stored beside R
 ?rva0002C34FTarget@@YAXXZ,0x5deee0,No-argument tail-thunk view of independently matched getInstance body
 ?rva00032867Target@@YAXXZ,0x5e0790,No-argument tail-thunk view of independently matched getInstance body
 ?rva00036458Target@@YAXXZ,0x005E11C0,No-argument tail-thunk view of independently matched getInstance body
+?rva00037F4CTarget@@YAXXZ,0x005DEF70,No-argument tail-thunk view of independently matched getInstance body
