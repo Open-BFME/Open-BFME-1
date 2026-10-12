@@ -35674,7 +35674,6 @@ _piSBStopListingAutoMatches,,0x00864BF0,54,game/GameEngine/Source/Common/BfmeCon
 ?d_004b21c0@@YAXXZ,,0x004B21C0,23,game/gen_asm/d_004844f0.asm,matched,gen-dump;int3-carved start=int3-aligned end=ret+int3 refs=0
 ?d_004b2330@@YAXXZ,,0x004B2330,252,game/gen_small/dumps_000.cpp,matched,gen-dump;ghidra=FUN_008b2330
 ?d_004b2470@@YAXXZ,,0x004B2470,95,game/gen_asm/d_004b2470.asm,matched,gen-dump;ghidra=FUN_008b2470
-?d_004b24f0@@YAXXZ,,0x004B24F0,90,game/gen_asm/d_004b2470.asm,matched,gen-dump;ghidra=FUN_008b24f0
 ?d_004b2560@@YAXXZ,,0x004B2560,88,game/gen_asm/d_004b2470.asm,matched,gen-dump;ghidra=FUN_008b2560
 ?d_004b25d0@@YAXXZ,,0x004B25D0,1365,game/gen_asm/d_004b2470.asm,matched,gen-dump;ghidra=FUN_008b25d0
 ?d_004be210@@YAXXZ,,0x004BE210,242,game/gen_asm/d_004b2470.asm,matched,gen-dump;ghidra=FUN_008be210
@@ -172548,3 +172547,4 @@ uw_00c1b9d0,,0x00C1B9D0,8,game/GameEngine/Source/GameLogic/System/GameLogic_load
 ?j_00044E31@@YAXXZ,,0x00044E31,5,game/GameEngine/Source/Common/RvaShard1TailThunks.cpp,matched,carved five-byte tail thunk; target 0x005DDFE0 independently matched LifeEventModuleTemplate destructor;model=claude-sonnet-5-5;host=SARUMAN
 ?j_00038410@@YAXXZ,,0x00038410,5,game/GameEngine/Source/Common/RvaShard1TailThunks.cpp,matched,carved five-byte tail thunk; target 0x005DE870 independently matched TerrainCollisionModuleTemplate destructor;model=claude-sonnet-5-5;host=SARUMAN
 ?j_00027656@@YAXXZ,,0x00027656,5,game/GameEngine/Source/Common/RvaShard1TailThunks.cpp,matched,carved five-byte tail thunk; target 0x005DE490 independently matched RenderObjectDrawModuleTemplate destructor;model=claude-sonnet-5-5;host=SARUMAN
+?rank004B24F0@@YAHPAVObject@@@Z,,0x004B24F0,90,game/GameEngine/Source/GameClient/GUI/Rva004B24F0.cpp,matched,address-derived TooltipText rank helper; joins the 0x004B2470-0x004B25D0 family;model=codex-cli;host=chalco.vps
