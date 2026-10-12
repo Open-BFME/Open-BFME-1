@@ -172532,3 +172532,4 @@ uw_00c1b9d0,,0x00C1B9D0,8,game/GameEngine/Source/GameLogic/System/GameLogic_load
 ?j_00016595@@YAXXZ,,0x00016595,5,game/GameEngine/Source/Common/RvaShard1TailThunks.cpp,matched,carved five-byte tail thunk; target 0x005E08B0 independently matched getInstance;model=claude-sonnet-5-5;host=SARUMAN
 ?j_00033479@@YAXXZ,,0x00033479,5,game/GameEngine/Source/Common/RvaShard1TailThunks.cpp,matched,carved five-byte tail thunk; target 0x005E19B0 independently matched getInstance;model=claude-sonnet-5-5;host=SARUMAN
 ?j_00006B4A@@YAXXZ,,0x00006B4A,5,game/GameEngine/Source/Common/RvaShard1TailThunks.cpp,matched,carved five-byte tail thunk; target independently matched getInstance;model=claude-sonnet-5-5;host=SARUMAN
+?j_000124AE@@YAXXZ,,0x000124AE,5,game/GameEngine/Source/Common/RvaShard1TailThunks.cpp,matched,carved five-byte tail thunk; target independently matched getInstance;model=claude-sonnet-5-5;host=SARUMAN
