@@ -36199,7 +36199,6 @@ _piSBStopListingAutoMatches,,0x00864BF0,54,game/GameEngine/Source/Common/BfmeCon
 ?d_007ccf50@@YAXXZ,,0x007CCF50,3931,game/gen_asm/d_007ccf50.asm,matched,gen-dump;ghidra=FUN_00bccf50
 ?d_007ce290@@YAXXZ,,0x007CE290,8147,game/gen_asm/d_007ccf50.asm,matched,gen-dump;ghidra=FUN_00bce290
 ?d_007d24a0@@YAXXZ,,0x007D24A0,1749,game/gen_asm/d_00776ac0.asm,matched,gen-dump;carved start=rel32-call/jmp end=ret+int3 callers=1
-?d_007d3d40@@YAXXZ,,0x007D3D40,1817,game/gen_asm/d_007ccf50.asm,matched,gen-dump;ghidra=FUN_00bd3d40
 ?d_007d5020@@YAXXZ,,0x007D5020,3851,game/gen_asm/d_007d1f00.asm,matched,gen-dump;bounds=high
 ?d_007d9aa0@@YAXXZ,,0x007D9AA0,4005,game/gen_asm/d_007d9aa0.asm,matched,gen-dump;bounds=high
 ?d_007dbd40@@YAXXZ,,0x007DBD40,1911,game/gen_asm/d_007d9aa0.asm,matched,gen-dump;bounds=high
@@ -172548,3 +172547,4 @@ uw_00c1b9d0,,0x00C1B9D0,8,game/GameEngine/Source/GameLogic/System/GameLogic_load
 ?Rva009C0A30Vp6AddNoise@@YAXPAEIIHH@Z,,0x009C0A30,524,game/GameEngine/Source/Common/Rva009C0A30Vp6AddNoise.cpp,matched,VP6 plane denoise pass ported from the Open BFME 2 donor VP6/PlaneAddNoiseWmt.cpp; builds a gaussian char distribution from the noise level seeds the 2048-byte noise table with rand() then adds it per row through the SSE clamp sequence; 16-byte aligned clamp vectors force the entry alloca alignment retail shows; all three callees are matched rows;model=codex-cli;host=chalco.vps
 ?update@WoundArrowUpdate@@UAE?AW4UpdateSleepTime@@XZ,,0x0026E1F0,310,game/GameEngine/Source/GameLogic/Object/Update/WoundArrowUpdateUpdate.cpp,matched,WoundArrowUpdate::update applied-wound gate then command the target AI to approach within module data range and set model condition bit 76 / clear 196; owner and module data read through the module offset witnesses;model=codex-cli;host=chalco.vps
 ?start@Rva006B3E30Owner@@QAE_NPAURva006B3E30PlayingRef@@@Z,,0x006B3E30,270,game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva006B3E30.cpp,matched,Address-qualified Miles start-sample; goto-ON tail merge keeps any-set first call order; exact 270B;model=codex-cli;host=chalco.vps
+?set@Rva007D3D40CrossFadeFilter@@MAEHW4FilterModes@@@Z,,0x007D3D40,1817,game/GameEngineDevice/Source/W3DDevice/GameClient/ScreenCrossFadeFilterSet.cpp,matched,Address-derived owner for the vtable-slot-5 crossfade filter setter; exact 1817B masked shape with eleven unwind states; the Zero Hour ScreenCrossFadeFilter decoration is ILT-contradicted so this row keeps an Rva-qualified class;model=codex-cli;host=chalco.vps

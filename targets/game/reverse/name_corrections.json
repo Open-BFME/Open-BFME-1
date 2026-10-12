@@ -19488,5 +19488,15 @@
  "after_sha256": "a41adcc3712494a39c3c464644ff98bd90315ce070e91b81d274d5b208c3f7ec",
  "evidence": "targets/game/reverse/identity_evidence/00793520-empty-coordinate.md",
  "reason": "The ZH accessor spellings name GameWindow image fields whose offsets sit four bytes lower than BFME: the independently decoded retail reads in this callback are +0x90/+0x84/+0x48/+0x54/+0x60, and name_oracle has no GameWindow+90 witness that would justify binding those accessor names to the BFME fields. The TU-local reader leaves the shared getters and their verified rows untouched, and every other call site of these accessors in this same file (W3DGadgetProgressBarImageDrawLocalCopy and the backColor accessor block) keeps the descriptive spelling. Retail ILT 0001CAA3 proves the callback identity at 0x00793520, and the converted body matches all 203 bytes with the scoped gate reporting Functions OK 34/34."
+},
+  {
+ "old_path": "targets/game/reverse/attempts/0x007d3d40.cpp",
+ "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/ScreenCrossFadeFilterSet.cpp",
+ "old_name": "ScreenCrossFadeFilter",
+ "new_name": "Rva007D3D40CrossFadeFilter",
+ "before_sha256": "a06454d4a3815580a7b5ec7b1b32297727e04ce253ff1d1221f0a85a849ddb37",
+ "after_sha256": "3b4528592a4cbeb19afc8880e137003c4957ed25bf75f6a81728cb4d7ed4f907",
+ "evidence": "targets/game/reverse/identity_evidence/007d3d40-class-spelling.md",
+ "reason": "The class spelling ScreenCrossFadeFilter is a Zero Hour donor name whose decorated names retail's incremental-link thunk table contradicts for every member: init, preRender, reset, postRender, updateFadeLevel, setFadeParameters and this set each miss a different slot window and all seven already sit in the shrink-only ilt_contradicted_baseline.txt, so ilt_guard refuses an eighth key; a wrong class name moves every member's bucket at once, which is that signature. The operation is independently proven (vtable 0x01128A50 slot 5 -> ILT 0x0000FECF -> 0x007D3D40, caller postRender 0x007D38B0, ZH W3DShaderManager.cpp:860), so the landed row keeps an address-qualified class as docs/naming_evidence.md's address-named partial layout view; the class name is unknown and a search over the documented candidates fits none of the four 0x007D3xxx member windows."
 }
 ]

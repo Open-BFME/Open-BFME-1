@@ -1,7 +1,9 @@
-// ?set@ScreenCrossFadeFilter@@MAEHW4FilterModes@@@Z
-// partial score=1.0 date=2026-10-11
+// ?set@Rva007D3D40CrossFadeFilter@@MAEHW4FilterModes@@@Z
+// Address-derived stand-in: the vtable-slot-5 identity is the Zero Hour
+// ScreenCrossFadeFilter::set, but retail's ILT window contradicts that
+// decoration, so this row keeps an Rva-qualified owner.
 // cl: /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /MD /EHsc
-// ScreenCrossFadeFilter vtable slot 5; BFME device slots and local lifetimes.
+// Rva007D3D40CrossFadeFilter vtable slot 5; BFME device slots and local lifetimes.
 // Evidence: targets/game/reverse/identity_evidence/007d3d40-set.md
 #include "shader.h"
 // Keep the native string constructor visible at each snapshot call site.
@@ -80,7 +82,7 @@ typedef int (__stdcall *BFMESetRSFn)(Device *, unsigned, unsigned);
 enum FilterModes {FM_NULL_MODE=0,FM_VIEW_CROSSFADE_CIRCLE=4};
 enum CustomScenePassModes;
 struct Coord2D;
-class ScreenCrossFadeFilter {
+class Rva007D3D40CrossFadeFilter {
 public:
     virtual int init();
     virtual int shutdown();
@@ -92,8 +94,8 @@ protected:
     virtual void reset();
 };
 
-// ?set@ScreenCrossFadeFilter@@MAEHW4FilterModes@@@Z
-int ScreenCrossFadeFilter::set(FilterModes mode)
+// ?set@Rva007D3D40CrossFadeFilter@@MAEHW4FilterModes@@@Z
+int Rva007D3D40CrossFadeFilter::set(FilterModes mode)
 {
 	if(mode>FM_NULL_MODE) {
 		VertexMaterialClass *vmat=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
