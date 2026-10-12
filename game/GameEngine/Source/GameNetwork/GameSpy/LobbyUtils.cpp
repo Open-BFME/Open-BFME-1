@@ -519,7 +519,7 @@ struct GameSortStruct
 };
 
 // ?insertGame@@YAHPAVGameWindow@@PAVGameSpyStagingRoom@@_N@Z
-// Body in LobbyUtils_insertGame.asm (exact 1487B retail @ 0x0062DB90).
+// Body in LobbyUtilsInsertGame.cpp (exact 1487B retail @ 0x0062DB90).
 // Drift candidate 0x0062DA40 was INSIDE matched GrabWindowInfo (0x62D810/713).
 Int insertGame( GameWindow *win, GameSpyStagingRoom *game, Bool showMap );
 

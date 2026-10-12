@@ -13,7 +13,7 @@ typedef unsigned short WideChar;
 typedef bool Bool;
 typedef int Color;
 
-extern const char g_bfmeEmptyUnicode[];
+extern const unsigned short BFMEEmptyUnicodeString;
 extern const char g_bfmeEmptyAscii[];
 
 template <typename T> struct StringInlineData
@@ -55,6 +55,10 @@ public:
 	UnicodeString &operator=(const UnicodeString &);
 };
 
+// class-gate: allow AsciiString this unit is a byte-proved reconstruction whose private
+// StringBase<char>/UnicodeString/AsciiString triple reproduces retail's inlined string ABI
+// at 0x0062DB90 (92 relocation slots, build.sh exact 1487/1487); adopting the shared
+// headers is a separate reconciliation, not a drop-in for this body.
 class AsciiString : private StringBase<char>
 {
 public:
@@ -64,29 +68,27 @@ public:
 	~AsciiString() {}
 
 	const char *str(void) const;
-	const char *reverseFind(char c) const;
+	const char *reverseFind(char c) const
+	{
+		const char *text = str();
+		const char *end = text + (m_data ? m_data->m_length : 0);
+		while (end != text)
+		{
+			if (*--end == c)
+				return end;
+		}
+		return 0;
+	}
 };
 
 const unsigned short *UnicodeString::str(void) const
 {
-	return m_data ? m_data->m_text : reinterpret_cast<const unsigned short *>(g_bfmeEmptyUnicode);
+	return m_data ? m_data->m_text : &BFMEEmptyUnicodeString;
 }
 
 const char *AsciiString::str(void) const
 {
 	return m_data ? m_data->m_text : g_bfmeEmptyAscii;
-}
-
-const char *AsciiString::reverseFind(char c) const
-{
-	const char *text = str();
-	const char *end = text + (m_data ? m_data->m_length : 0);
-	while (end != text)
-	{
-		if (*--end == c)
-			return end;
-	}
-	return 0;
 }
 
 #define TRUE 1
@@ -186,7 +188,7 @@ public:
 class ImageCollection
 {
 public:
-	Image *findImageByName(const AsciiString &name);
+	const Image *findImageByName(const AsciiString &name);
 };
 
 class GameSpyConfigInterface
@@ -231,7 +233,7 @@ extern GameSpyConfigInterface *TheGameSpyConfig;
 extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GlobalData *TheWritableGlobalData;
 extern Int GameSpyColor[];
-extern Image *pingImages[3];
+extern Image *g_Va012F713C[3];
 
 enum
 {
@@ -376,19 +378,19 @@ crc_ok:
 	GadgetListBoxAddEntryText(win, s, gameColor, index, 6);
 	Int ping = game->getPingAsInt();
 	Int width = 10, height = 10;
-	if (pingImages[0])
+	if (g_Va012F713C[0])
 	{
-		const Image *image = pingImages[0];
+		const Image *image = g_Va012F713C[0];
 		width = image->getImageWidth();
 		_ReadWriteBarrier();
 		height = image->getImageHeight();
 	}
 	if (ping < TheGameSpyConfig->getPingCutoffGood())
-		GadgetListBoxAddEntryImage(win, pingImages[0], index, 6, width, height);
+		GadgetListBoxAddEntryImage(win, g_Va012F713C[0], index, 6, width, height);
 	else if (ping < TheGameSpyConfig->getPingCutoffBad())
-		GadgetListBoxAddEntryImage(win, pingImages[1], index, 6, width, height);
+		GadgetListBoxAddEntryImage(win, g_Va012F713C[1], index, 6, width, height);
 	else
-		GadgetListBoxAddEntryImage(win, pingImages[2], index, 6, width, height);
+		GadgetListBoxAddEntryImage(win, g_Va012F713C[2], index, 6, width, height);
 
 	}
 	return index;

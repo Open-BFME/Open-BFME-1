@@ -1644,7 +1644,6 @@ asm_bytes	game/GameEngine/Source/GameLogic/AI/AIPathfind_findGroundPath.asm	*	20
 asm_bytes	game/GameEngine/Source/GameLogic/AI/AIPlayer_recruitSpecificAITeam.asm	*	1654
 asm_bytes	game/GameEngine/Source/GameLogic/Object/Locomotor_locoUpdate_moveTowardsPosition.asm	*	1701
 asm_bytes	game/GameEngine/Source/GameLogic/Object/Update/StructureToppleUpdate_update.asm	*	1211
-asm_bytes	game/GameEngine/Source/GameNetwork/GameSpy/LobbyUtils_insertGame.asm	*	1487
 asm_bytes	game/GameEngine/Source/GameNetwork/LANAPIhandlers_handleRequestJoin.asm	*	1119
 asm_bytes	game/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_renderObjectList.asm	*	1296
 asm_bytes	game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap_Cast_Ray.asm	*	2839
