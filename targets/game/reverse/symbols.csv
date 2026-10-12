@@ -91015,3 +91015,4 @@ Rva01338450SortFunction,0x01338450,callback-receiver global that qsort callers s
 Rva01338454SortReceiver,0x01338454,callback-receiver+0x28 global stored beside Rva01338450SortFunction in the body at 0x008B9930; autopin
 ?rva00011B76Target@@YAXXZ,0x005E14F0,No-argument tail-thunk view of independently matched LineEmissionVolume ConcreteModuleClass getInstance body
 ?rva00016595Target@@YAXXZ,0x005E08B0,No-argument tail-thunk view of independently matched getInstance body
+?rva00033479Target@@YAXXZ,0x005E19B0,No-argument tail-thunk view of independently matched getInstance body
