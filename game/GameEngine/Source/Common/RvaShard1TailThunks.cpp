@@ -31,6 +31,7 @@ extern void rva0001361FTarget(void);
 extern void rva00014088Target(void);
 extern void rva00026684Target(void);
 extern void rva0002969FTarget(void);
+extern void rva0002C34FTarget(void);
 #pragma comment(linker, "/alternatename:?rva0000EF5CTarget@@YAXXZ=??0PropagandaTowerBehavior@@QAE@PAVThing@@PBVModuleData@@@Z")
 
 #pragma comment(linker, "/alternatename:?rva000078E7Target@@YAXXZ=??$__copy@PBVProductionPrerequisite@@PAV1@H@_STL@@YAPAVProductionPrerequisite@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z")
@@ -57,6 +58,7 @@ extern void rva0002969FTarget(void);
 #pragma comment(linker, "/alternatename:?rva00014088Target@@YAXXZ=?getInstance@?$ConcreteModuleClass@V?$DefaultModuleTag@$02@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ")
 #pragma comment(linker, "/alternatename:?rva00026684Target@@YAXXZ=?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$05$E?RENDEROBJECT_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?RENDEROBJECT_DRAW_MODULE_NAME@2@3QBDBVRenderObjectDrawModule@2@VRenderObjectDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ")
 #pragma comment(linker, "/alternatename:?rva0002969FTarget@@YAXXZ=?getInstance@?$ConcreteModuleClass@V?$DefaultModuleTag@$0A@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ")
+#pragma comment(linker, "/alternatename:?rva0002C34FTarget@@YAXXZ=?getInstance@?$ConcreteModuleClass@V?$DefaultModuleTag@$05@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ")
 
 void j_0000EF5C(void)
 {
@@ -186,4 +188,9 @@ void j_00026684(void)
 void j_0002969F(void)
 {
 	rva0002969FTarget();
+}
+
+void j_0002C34F(void)
+{
+	rva0002C34FTarget();
 }
