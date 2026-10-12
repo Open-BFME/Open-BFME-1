@@ -19498,5 +19498,15 @@
  "after_sha256": "3b4528592a4cbeb19afc8880e137003c4957ed25bf75f6a81728cb4d7ed4f907",
  "evidence": "targets/game/reverse/identity_evidence/007d3d40-class-spelling.md",
  "reason": "The class spelling ScreenCrossFadeFilter is a Zero Hour donor name whose decorated names retail's incremental-link thunk table contradicts for every member: init, preRender, reset, postRender, updateFadeLevel, setFadeParameters and this set each miss a different slot window and all seven already sit in the shrink-only ilt_contradicted_baseline.txt, so ilt_guard refuses an eighth key; a wrong class name moves every member's bucket at once, which is that signature. The operation is independently proven (vtable 0x01128A50 slot 5 -> ILT 0x0000FECF -> 0x007D3D40, caller postRender 0x007D38B0, ZH W3DShaderManager.cpp:860), so the landed row keeps an address-qualified class as docs/naming_evidence.md's address-named partial layout view; the class name is unknown and a search over the documented candidates fits none of the four 0x007D3xxx member windows."
-}
+},
+ {
+  "old_path": "targets/game/reverse/attempts/0x00374cf0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorParseCastleToUnpackForFaction.cpp",
+  "old_name": "CastleBehaviorModuleData",
+  "new_name": "Rva00374CF0Owner",
+  "before_sha256": "6a6cb212c29205b5e44017d1e5daf01898fc9653031c3c78e0235e84005c9663",
+  "after_sha256": "00d0898b51a3aa995b239e974f94b497769b4e9e0fd47893c68b3c27baf8999e",
+  "evidence": "targets/game/reverse/identity_evidence/00374cf0-stl46-ilt-review.md",
+  "reason": "The bank's class CastleBehaviorModuleData is refuted by retail's incremental-link thunk table: ilt_oracle places the descriptive decoration ?parseCastleToUnpackForFaction@CastleBehaviorModuleData@@SAXPAVINI@@PAX1PBX@Z outside every window of the target's slots 5491:5760-5765, and all six public/protected/private static x class/struct INI combinations were contradicted; its landed sibling parseFactionDecal@@SAXPAVINI@@PAX1PBX@Z fails the same way at 0x003760C0. docs/naming_evidence.md keeps the address token when identity is unproven and warns that a plausible wrong name misleads every reader, so the 410 verified bytes land under the address-derived owner Rva00374CF0Owner with the field-table name CastleToUnpackForFaction kept as the method name."
+ }
 ]
