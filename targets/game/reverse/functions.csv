@@ -36316,7 +36316,6 @@ _piSBStopListingAutoMatches,,0x00864BF0,54,game/GameEngine/Source/Common/BfmeCon
 ?d_00895d30@@YAXXZ,,0x00895D30,462,game/gen_asm/d_00894a90.asm,matched,gen-dump;ghidra=FUN_00c95d30
 ?d_008961e0@@YAXXZ,,0x008961E0,316,game/gen_asm/d_00894a90.asm,matched,gen-dump;ghidra=FUN_00c961e0
 ?d_00896390@@YAXXZ,,0x00896390,214,game/gen_asm/d_00894a90.asm,matched,gen-dump;ghidra=FUN_00c96390
-?d_00896540@@YAXXZ,,0x00896540,111,game/gen_asm/d_00894a90.asm,matched,gen-dump;ghidra=FUN_00c96540
 ?d_008965b0@@YAXXZ,,0x008965B0,352,game/gen_asm/d_00894a90.asm,matched,gen-dump;ghidra=FUN_00c965b0
 ?d_00896710@@YAXXZ,,0x00896710,871,game/gen_asm/d_00882630.asm,matched,gen-dump;carved start=ghidra-start end=ret+int3 callers=0;ghidra=FUN_00c96710
 ?d_00896af0@@YAXXZ,,0x00896AF0,1272,game/gen_asm/d_00894a90.asm,matched,gen-dump;ghidra=FUN_00c96af0
@@ -172548,3 +172547,4 @@ uw_00c1b9d0,,0x00C1B9D0,8,game/GameEngine/Source/GameLogic/System/GameLogic_load
 ?j_00027656@@YAXXZ,,0x00027656,5,game/GameEngine/Source/Common/RvaShard1TailThunks.cpp,matched,carved five-byte tail thunk; target 0x005DE490 independently matched RenderObjectDrawModuleTemplate destructor;model=claude-sonnet-5-5;host=SARUMAN
 ?rank004B24F0@@YAHPAVObject@@@Z,,0x004B24F0,90,game/GameEngine/Source/GameClient/GUI/Rva004B24F0.cpp,matched,address-derived TooltipText rank helper; joins the 0x004B2470-0x004B25D0 family;model=codex-cli;host=chalco.vps
 ?bfmeRva00896470@@YAXVBfmeRefHolder@@@Z,,0x00896470,142,game/GameEngine/Source/Common/Rva00896470RefHolderSubmit.cpp,matched,address-derived ref-counted handle submitter to the tracker singleton at 0x013377F8 then the flag-gated builder at 0x00895790; both callees stay dump-named and are bound through the union idiom;model=codex-cli;host=chalco.vps
+?bfmeRva00896540@@YGXVBfmeRefHolder@@@Z,,0x00896540,111,game/GameEngine/Source/Common/Rva00896540RefHolderForward.cpp,matched,address-derived by-value ref-counted handle forwarder into the landed submitter at 0x00896470; the by-value parameter destructor is the whole tail;model=codex-cli;host=chalco.vps
