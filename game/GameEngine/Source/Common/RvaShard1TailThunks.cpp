@@ -35,6 +35,7 @@ extern void rva0002C34FTarget(void);
 extern void rva00032867Target(void);
 extern void rva00036458Target(void);
 extern void rva00037F4CTarget(void);
+extern void rva00044BFCTarget(void);
 #pragma comment(linker, "/alternatename:?rva0000EF5CTarget@@YAXXZ=??0PropagandaTowerBehavior@@QAE@PAVThing@@PBVModuleData@@@Z")
 
 #pragma comment(linker, "/alternatename:?rva000078E7Target@@YAXXZ=??$__copy@PBVProductionPrerequisite@@PAV1@H@_STL@@YAPAVProductionPrerequisite@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z")
@@ -65,6 +66,7 @@ extern void rva00037F4CTarget(void);
 #pragma comment(linker, "/alternatename:?rva00032867Target@@YAXXZ=?getInstance@?$ConcreteModuleClass@V?$DefaultModuleTag@$06@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ")
 #pragma comment(linker, "/alternatename:?rva00036458Target@@YAXXZ=?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$03$E?OUTWARD_EMISSION_VELOCITY_MODULE_KEY@FXParticleSystem@@3QBDB$E?OUTWARD_EMISSION_VELOCITY_MODULE_NAME@2@3QBDBVOutwardEmissionVelocityModule@2@VOutwardEmissionVelocityModuleTemplate@2@V?$DefaultParticleModule@$03@2@V?$DefaultParticleModuleTemplate@$03@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ")
 #pragma comment(linker, "/alternatename:?rva00037F4CTarget@@YAXXZ=?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$05$E?STREAK_DRAW_MODULE_KEY@FXParticleSystem@@3QBDB$E?STREAK_DRAW_MODULE_NAME@2@3QBDBVStreakDrawModule@2@VStreakDrawModuleTemplate@2@V?$DefaultParticleModule@$05@2@V?$DefaultParticleModuleTemplate@$05@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ")
+#pragma comment(linker, "/alternatename:?rva00044BFCTarget@@YAXXZ=?getInstance@?$ConcreteModuleClass@V?$ModuleTag@$07$E?LIFE_EVENT_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIFE_EVENT_MODULE_NAME@2@3QBDBVLifeEventModule@2@VLifeEventModuleTemplate@2@VParticleLifeEventModule@2@VParticleLifeEventModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ")
 
 void j_0000EF5C(void)
 {
@@ -214,4 +216,9 @@ void j_00036458(void)
 void j_00037F4C(void)
 {
 	rva00037F4CTarget();
+}
+
+void j_00044BFC(void)
+{
+	rva00044BFCTarget();
 }
