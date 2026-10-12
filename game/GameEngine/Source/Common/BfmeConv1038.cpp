@@ -16,7 +16,7 @@ struct Rva008BD5B0Item
 class Rva008BD5B0
 {
 public:
-	void insert(Rva008BD5B0Item *item);
+	__declspec(noinline) void insert(Rva008BD5B0Item *item);
 
 	Rva008BD5B0Item *items[32];
 	int count;
@@ -150,10 +150,37 @@ int __stdcall bfmeGo1038E(int a)
 	return y->bfmeVal1038();
 }
 
+class Rva008BDBB0Child
+{
+public:
+	int m_00;
+	int m_04;
+};
+
+class Rva008BDBB0Node
+{
+public:
+	void *m_00;
+	unsigned int m_04;
+	int m_08;
+	char m_0c[0x44];
+	Rva008BDBB0Child *m_50;
+	int m_54;
+	Rva008BDBB0Node *m_58;
+};
+
+class Rva008BDBB0List
+{
+public:
+	Rva008BDBB0Node *m_00;
+};
+
 class BfmeSubF1038
 {
 public:
 	void bfmeAdd1038(int a, int b);
+
+	Rva008BDBB0List *m_00;
 };
 
 class BfmeAObj1038
@@ -181,6 +208,72 @@ void bfmeGo1038F(void)
 	g_bfmeC1038 -= 0x60;
 }
 
+class BfmeA1236;
+class BfmeB1236;
+
+void bfmeGo1236(BfmeA1236 *a, BfmeB1236 *b, void *c);
+void bfmeTransform1236(void *a, BfmeB1236 *b, void *c);
+
+class BfmeZero1236
+{
+public:
+	BfmeZero1236();
+
+	void *items[32];
+	int count;
+};
+
+extern unsigned char g_bfmeExtra1282Flags;
+
+class Rva008BDBB0Pending
+{
+public:
+	void *volatile items[32];
+	int count;
+};
+
+void BfmeSubF1038::bfmeAdd1038(int a, int b)
+{
+	void *context = (void *)a;
+	Rva008BDBB0Node *node = m_00->m_00->m_58;
+	BfmeZero1236 storage;
+	Rva008BDBB0Pending &pending = (Rva008BDBB0Pending &)storage;
+	void (__cdecl *emit)(void *, BfmeB1236 *, void *);
+
+	if (g_bfmeExtra1282Flags & 4)
+		emit = bfmeTransform1236;
+	else
+		emit = (void (__cdecl *)(void *, BfmeB1236 *, void *))bfmeGo1236;
+	while (node)
+	{
+		if (!((unsigned char)(~(node->m_04 >> 15)) & 1) && (node->m_04 & 0x3f) != 0x13)
+		{
+			if (node->m_50->m_04 >= 0)
+			{
+				((Rva008BD5B0 *)&pending)->insert((Rva008BD5B0Item *)node);
+				emit(context, (BfmeB1236 *)node, (void *)1);
+			}
+			else
+			{
+				while (pending.count > 0 && ((Rva008BDBB0Node *)pending.items[pending.count - 1])->m_50->m_04 < node->m_08)
+				{
+					emit(context, (BfmeB1236 *)pending.items[pending.count - 1], (void *)-1);
+					--pending.count;
+				}
+				emit(context, (BfmeB1236 *)node, (void *)b);
+			}
+		}
+		node = node->m_58;
+	}
+	while (pending.count > 0)
+	{
+		emit(context, (BfmeB1236 *)pending.items[0], (void *)-1);
+		for (int i = 0; i < pending.count - 1; ++i)
+			pending.items[i] = pending.items[i + 1];
+		--pending.count;
+	}
+}
+
 class BfmeI1038
 {
 public:
@@ -200,3 +293,5 @@ void BfmeI1038::bfmeGo1038I(void)
 		m_bfmeFn = 0;
 	}
 }
+
+inline __declspec(noinline) BfmeZero1236::BfmeZero1236() { count = 0; for (int i = 0; i < 32; ++i) items[i] = 0; }
