@@ -19509,4 +19509,15 @@
   "evidence": "targets/game/reverse/identity_evidence/00374cf0-stl46-ilt-review.md",
   "reason": "The bank's class CastleBehaviorModuleData is refuted by retail's incremental-link thunk table: ilt_oracle places the descriptive decoration ?parseCastleToUnpackForFaction@CastleBehaviorModuleData@@SAXPAVINI@@PAX1PBX@Z outside every window of the target's slots 5491:5760-5765, and all six public/protected/private static x class/struct INI combinations were contradicted; its landed sibling parseFactionDecal@@SAXPAVINI@@PAX1PBX@Z fails the same way at 0x003760C0. docs/naming_evidence.md keeps the address token when identity is unproven and warns that a plausible wrong name misleads every reader, so the 410 verified bytes land under the address-derived owner Rva00374CF0Owner with the field-table name CastleToUnpackForFaction kept as the method name."
  }
+,
+ {
+  "old_path": "targets/game/reverse/attempts/0x0051c2d0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptLoadScreenInit.cpp",
+  "old_name": "m_game",
+  "new_name": "m_unknown5c",
+  "before_sha256": "6b277e0dc24cc6beca789d636fd93539c4dfcb1ace1dac2df56f3aa86f7c07f1",
+  "after_sha256": "959c6707422c452e80e6c9be3e3fa0229b3543e86eec3fd8eabfbee6413d0651",
+  "evidence": "targets/game/reverse/identity_evidence/0x0051c2d0-init-retry.md",
+  "reason": "Both names stay declared; the correction is the offset the bank got wrong. The bank put the receiver's GameInfo pointer at +0x5C (vptr + char m_head[0x58]), so its int m_unknown5c sat at +0x60. The already matched constructor ??0LoadScreen0051BF30@@QAE@I@Z at 0x0051BF30 and the complete target body both place the pointer at +0x58 and a separate int at +0x5C, so the converted TU declares char m_head[0x54], GameInfo *m_game then int m_unknown5c. name_regression derives member offsets from the declaration, so the same 4-byte span at +0x5C now carries m_unknown5c where the bank spelled m_game -- a positional change, not a lost name: the converted file still declares m_game (at +0x58) and m_unknown5c (at +0x5C), and the 2702-byte body is byte-identical to retail outside its 177 relocation slots with all 27 unwind states matching. Authorised by the repository maintainer."
+ }
 ]
