@@ -1,5 +1,6 @@
-// ?start@Rva006B3E30Owner@@QAE_NPAURva006B3E30PlayingRef@@@Z
-// partial score=0.9852 date=2026-10-10
+// Retail 0x006B3E30: start a sample for a playing-audio record once its file
+// is open. The flag tail gates the AIL stop/resume pair on the four
+// playing-state bytes at +0x39..+0x3C.
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 class AsciiString;
 extern const AsciiString Rva01336E50EmptyString;
@@ -127,10 +128,19 @@ bool Rva006B3E30Owner::start(Rva006B3E30PlayingRef *ref)
 			playing->m_state3b = true;
 		else
 			playing->m_state3b = false;
-		if (!playing->m_state39 && !playing->m_state3a && !playing->m_state3b && !playing->m_state3c)
-			AIL_resume_sample(playing->m_sample);
-		else
-			AIL_stop_sample(playing->m_sample);
+		if (playing->m_state39)
+			goto ON;
+		if (playing->m_state3a)
+			goto ON;
+		if (playing->m_state3b)
+			goto ON;
+		if (playing->m_state3c)
+			goto ON;
+		AIL_resume_sample(playing->m_sample);
+		goto FINISH;
+	ON:
+		AIL_stop_sample(playing->m_sample);
+	FINISH:
 		touch(playing->m_file.fileName());
 		return true;
 	}
