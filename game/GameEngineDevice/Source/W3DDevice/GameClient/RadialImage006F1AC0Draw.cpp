@@ -1,9 +1,29 @@
 // ?draw@RadialImage006F1AC0@@QAEXPAVImage@@MMMMMK@Z
-// partial score=1.0 date=2026-10-02
-// ?draw@RadialImage006F1AC0@@QAEXPAVImage@@MMMMMK@Z
-// Exact instructions; strict gate fails five PI DIR32 references. See session evidence.
-// Retail private texture helper 0x006F18F0 and its radial-image caller 0x006F1AC0.
-// See targets/game/reverse/identity_evidence/006f1ac0-native-setters.md.
+// Retail 0x006F1AC0 (1416 bytes): the radial textured fan whose only return is
+// the RET 0x1C at +0x585.  The gen-dump row ?d_006f1ac0@@YAXXZ carried these
+// same 1416 bytes from game/gen_asm/d_006ebf20.asm, so this is a rename to a
+// real body and not a new match.
+//
+// Identity: the owner/method identity stays unproved, so the body keeps the
+// address-qualified RadialImage006F1AC0::draw the bank's evidence records
+// (targets/game/reverse/identity_evidence/006f1ac0-native-setters.md).  The
+// five fan triangles go through ILT 0x00024BCC to the already matched
+// Render2DClass::Add_Tri row at 0x006EB070, and the texture handoff uses the
+// already matched Rva006EB000::method row at 0x006EB000.
+//
+// The private helper 0x006F18F0 stays TU-local: it carries compiler-private
+// ECX plus caller-cleaned sret ABI, which a standalone declaration cannot
+// reproduce.
+//
+// Data identities: the two float boundaries the body reads are the addresses the
+// tree already records, so they are named as recorded (BfmeBoundaryZero3D at
+// 0x01075350, Rva0109BF40ZeroRange at 0x0109BF40).  The five pi reads are the
+// folded literal __real@40490fdb, which retail keeps in two .rdata copies; the
+// 0x0111F874 copy this body reads is the dir32_consistency_whitelist entry
+// beside __real@3f800000.
+//
+// Body is byte-identical to retail outside relocation slots (probe:
+// ours=1416 retail=1416 relocs=43, first divergence none).
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug
 
 // stlport
@@ -104,10 +124,9 @@ struct RadialImage006F1AC0 {
  char unknown00[0x164]; Render006F1AC0 *field164;
  void draw(Image *,float,float,float,float,float,unsigned long);
 };
-extern const float zero01075350;
-extern const float epsilon0109BF40;
+extern const float BfmeBoundaryZero3D;
+extern const float Rva0109BF40ZeroRange;
 inline float pi006F1AC0() { return 3.14159265358979323846f; }
-// ?draw@RadialImage006F1AC0@@QAEXPAVImage@@MMMMMK@Z present-unmatched
 void RadialImage006F1AC0::draw(Image *image,float left,float top,float right,float bottom,float percent,unsigned long color)
 {
  if(!image) return;
@@ -117,7 +136,7 @@ void RadialImage006F1AC0::draw(Image *image,float left,float top,float right,flo
  static float angle012F81F4=pi006F1AC0()*1.5f;
  static float angle012F81F0=pi006F1AC0()*2.0f;
  float angle=angle012F81F0-(angle012F81F0*percent)*0.01f;
- if(angle<=zero01075350) return;
+ if(angle<=BfmeBoundaryZero3D) return;
  if(angle>angle012F81F0) angle=angle012F81F0;
  field164->set00_006F1AC0(2);
  field164->set54_006F1AC0(true);
@@ -200,10 +219,11 @@ void RadialImage006F1AC0::draw(Image *image,float left,float top,float right,flo
  start=end; startUV=endUV;
  end.x=center.x; endUV.x=centerUV.x;
  float remaining=angle012F81F0-angle;
- if(remaining>epsilon0109BF40) {
+ if(remaining>Rva0109BF40ZeroRange) {
   float t=(float)tan(remaining);
   end.x=(float)(center.x+halfHeight*t);
   endUV.x=(float)(centerUV.x+t*halfU*heightWidth);
  }
  field164->tri006EB070(center,end,start,centerUV,endUV,startUV,color);
 }
+

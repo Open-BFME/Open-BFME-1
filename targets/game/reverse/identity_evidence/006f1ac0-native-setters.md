@@ -160,3 +160,29 @@ reason to reject that variant. No helper or source mutation was promoted.
 The paired texture helper alone resolves all its current REL32 names and its
 patched 371 bytes equal retail; the unresolved caller dependency and five PI
 identity failures still prevent the paired source from landing.
+
+## Data identities of the caller (conversion 2026-10-12)
+
+The 1416-byte body reads two float globals. Both are named as the tree already
+records them, because the DIR32 gate refuses a second name at an address
+`dir32_addresses.csv` already fills:
+
+* `BfmeBoundaryZero3D` at VA 0x01075350 -- 26 recorded names share that address;
+  it is the `angle <= 0` early return at +0x9B.
+* `Rva0109BF40ZeroRange` at VA 0x0109BF40 -- the only recorded name there; it is
+  the `remaining > 0` guard at +0x4F9.
+
+The bank spelled those two `zero01075350` and `epsilon0109BF40`. Neither is
+recorded, and `build.verify_dir32_addresses` refuses them with "retail
+0x01075350 is already recorded as ?BfmeBoundaryZero3D@@3MB (+25 more); reference
+that name, not a new one". The two corrections are documented in
+`targets/game/reverse/name_corrections.json`.
+
+The five pi reads fold to the literal `__real@40490fdb` (3.14159274f). Its
+canonical address in the tree is 0x01087B14, but this body reads the second
+per-TU copy at 0x0111F874. Naming that datum instead of folding it reverses the
+x87 operand order at the +0x325 FADD and moves the relocation from +0x325 to
++0x321 (measured: 5 non-relocation differences), so the source keeps the folded
+literal and the symbol joins `__real@3f800000` in
+`dir32_consistency_whitelist.txt`, the file's documented per-TU float-constant
+COMDAT class.

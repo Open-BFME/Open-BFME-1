@@ -373,3 +373,8 @@ __real@40e00000
 __real@41000000
 __real@43c80000
 __real@c47a0000
+# __real@40490fdb is 3.14159274f (pi): retail holds it at 0x01087B14 (the copy
+# dir32_addresses.csv records) and at 0x0111F874, and the 0x006F1AC0 radial-fan
+# caller reads the 0x0111F874 copy at +0x23D/+0x325/+0x364/+0x375/+0x39B. Same
+# per-TU COMDAT class as __real@3f800000 above.
+__real@40490fdb

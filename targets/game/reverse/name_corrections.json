@@ -19519,5 +19519,25 @@
   "after_sha256": "959c6707422c452e80e6c9be3e3fa0229b3543e86eec3fd8eabfbee6413d0651",
   "evidence": "targets/game/reverse/identity_evidence/0x0051c2d0-init-retry.md",
   "reason": "Both names stay declared; the correction is the offset the bank got wrong. The bank put the receiver's GameInfo pointer at +0x5C (vptr + char m_head[0x58]), so its int m_unknown5c sat at +0x60. The already matched constructor ??0LoadScreen0051BF30@@QAE@I@Z at 0x0051BF30 and the complete target body both place the pointer at +0x58 and a separate int at +0x5C, so the converted TU declares char m_head[0x54], GameInfo *m_game then int m_unknown5c. name_regression derives member offsets from the declaration, so the same 4-byte span at +0x5C now carries m_unknown5c where the bank spelled m_game -- a positional change, not a lost name: the converted file still declares m_game (at +0x58) and m_unknown5c (at +0x5C), and the 2702-byte body is byte-identical to retail outside its 177 relocation slots with all 27 unwind states matching. Authorised by the repository maintainer."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006f1ac0.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/RadialImage006F1AC0Draw.cpp",
+  "old_name": "zero01075350",
+  "new_name": "BfmeBoundaryZero3D",
+  "before_sha256": "eac538ac2fbc285b1187206c09dd6c162fcfd385159ef1a3cf7b5854be1928b9",
+  "after_sha256": "1dfda4363a545f8d45d3f8eb2397aa21401492e7c8042163f5003b7efc2455f7",
+  "evidence": "targets/game/reverse/identity_evidence/006f1ac0-native-setters.md",
+  "reason": "dir32_addresses.csv already records 26 names at 0x01075350, so verify_dir32_addresses refuses the bank's unrecorded spelling; the source must carry a recorded name at that address."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006f1ac0.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/RadialImage006F1AC0Draw.cpp",
+  "old_name": "epsilon0109BF40",
+  "new_name": "Rva0109BF40ZeroRange",
+  "before_sha256": "eac538ac2fbc285b1187206c09dd6c162fcfd385159ef1a3cf7b5854be1928b9",
+  "after_sha256": "1dfda4363a545f8d45d3f8eb2397aa21401492e7c8042163f5003b7efc2455f7",
+  "evidence": "targets/game/reverse/identity_evidence/006f1ac0-native-setters.md",
+  "reason": "dir32_addresses.csv records only Rva0109BF40ZeroRange at 0x0109BF40, so verify_dir32_addresses refuses the bank's unrecorded spelling; the source must carry the recorded name at that address."
  }
 ]
