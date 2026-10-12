@@ -91034,3 +91034,4 @@ Rva01338454SortReceiver,0x01338454,callback-receiver+0x28 global stored beside R
 ?rva00038410Target@@YAXXZ,0x005DE870,No-argument tail-thunk view of independently matched TerrainCollisionModuleTemplate destructor
 ?rva00027656Target@@YAXXZ,0x005DE490,No-argument tail-thunk view of independently matched RenderObjectDrawModuleTemplate destructor
 ?d_004b24f0@@YAXXZ,0x004B24F0,Address-only compatibility for withdrawn dump; native ?rank004B24F0@@YAHPAVObject@@@Z body (game/GameEngine/Source/GameClient/GUI/Rva004B24F0.cpp); game/gen_asm/d_004b2470.asm still calls this name
+?d_00896470@@YAXXZ,0x00896470,Address-only compatibility for withdrawn dump; native ?bfmeRva00896470@@YAXVBfmeRefHolder@@@Z body (game/GameEngine/Source/Common/Rva00896470RefHolderSubmit.cpp); game/gen_asm/d_00894a90.asm still calls this name
