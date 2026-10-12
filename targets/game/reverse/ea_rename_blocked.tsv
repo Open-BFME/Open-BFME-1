@@ -37,3 +37,4 @@
 0x0076EBE0	ilt_oracle contradicts the new W3DScriptedModelDraw name
 0x00784480	ilt_oracle contradicts the new AptTexturedShape name
 0x00409E20	ilt_oracle contradicts the new BuffInstance name
+0x005ACD40	EA class rename Rva005ACD40CommandTranslator -> CommandTranslator refused by ilt_guard: 160 decorations of the strong EA label CommandTranslator::issueAttackCommand all fall outside the target slot 44790 window 26813-26825, and the four landed sibling rows (0x005AD9C0 0x005ADB50 0x005ADC10 0x005AFFB0) are contradicted the same way, so the address-derived class stays; the 456-byte match is unaffected
