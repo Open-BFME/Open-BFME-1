@@ -1,18 +1,29 @@
-// ?Rva00798F30@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
-// partial score=0.998 date=2026-10-02
-// Banked reconstruction of RVA 00798F30; original callback name unproven.
-// Retail: 495 bytes through RET +0x1EE, then INT3.
-// One byte differs: SIB +0x14B is 01 here versus retail 08.
-// The +0x15 byte and DisplayString virtual slot +0x3C are BFME offsets;
-// existing headers are retained, with explicit ABI access for those differences.
-// Volatile width preserves the observed, otherwise dead size.x-10 store.
-// Rva007986C0 needs an independently checked seven-word cdecl pin before gating;
-// the historical ten-argument drawTextEntryText pin is not its ABI.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/gamewindow /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
 // stlport
+// ?W3DGadgetTextEntryDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
+//
+// Retail 0x00798F30 (495 bytes through RET +0x1EE, then INT3) is the text
+// entry gadget's draw callback. It cancels the pending-unichar flag, reads
+// the window's screen position and size, selects the composite/text/back
+// colours for the disabled, hilited and enabled states, draws the back
+// border and the filled back, measures the entry text through the
+// DisplayString vtable and draws the edit text through the file-static
+// seven-word helper at 0x007986C0.
+//
+// Identity: ilt_oracle confirms this decorated name at 0x00798F30 exactly
+// (p_false=3.91e-04); the address-derived spelling is contradicted.
+//
+// Shape: the four ICoord2D locals carry an empty default constructor through
+// an address-qualified local template derived from ICoord2D. Construction
+// alone leaves one LEA SIB byte (end.x at +0x14B); constructing every
+// coordinate removes it, the same lever banked for 0x00793260
+// (targets/game/reverse/identity_evidence/00793260-empty-coordinate.md).
+// The template adds no field, store, destructor or escaping object and keeps
+// ICoord2D itself in use.
+
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -37,7 +48,7 @@
 //																																						//
 ////////////////////////////////////////////////////////////////////////////////
 
-// FILE: W3DTextEntry.cpp /////////////////////////////////////////////////////
+// FILE: W3DGadgetTextEntryDraw.cpp //////////////////////////////////////////
 //-----------------------------------------------------------------------------
 //                                                                          
 //                       Westwood Studios Pacific.                          
@@ -49,7 +60,7 @@
 //
 // Project:   RTS3
 //
-// File name: W3DTextEntry.cpp
+// File name: W3DGadgetTextEntryDraw.cpp
 //
 // Created:   Colin Day, June 2001
 //
@@ -68,12 +79,19 @@
 #include "W3DDevice/GameClient/W3DGadget.h"
 #include "W3DDevice/GameClient/W3DDisplay.h"
 
+// A local, address-qualified construction-only view of ICoord2D: no field,
+// store, destructor or escaping object, and ICoord2D itself stays in use.
+template <class Coord>
+struct DefaultConstructed00798f30 : Coord
+{
+    DefaultConstructed00798f30() {}
+};
 
 extern void Rva007986C0(GameWindow*, Color, Color, Color, Color, Int, Int);
-void Rva00798F30( GameWindow *window, WinInstanceData *instData )
+void W3DGadgetTextEntryDraw( GameWindow *window, WinInstanceData *instData )
 {
 	EntryData *e = (EntryData *)window->winGetUserData();
-	ICoord2D origin, size, start, end;
+	DefaultConstructed00798f30<ICoord2D> origin, size, start, end;
 	Color backBorder, backColor, textColor, textBorder, 
 			compositeColor, compositeBorder;
 
@@ -164,7 +182,6 @@ void Rva00798F30( GameWindow *window, WinInstanceData *instData )
 	Rva007986C0( window, textColor, textBorder, compositeColor, compositeBorder,
 										 start.x, start.y );
 
-	
-
 }  // end W3DGadgetTextEntryDraw
+
 
