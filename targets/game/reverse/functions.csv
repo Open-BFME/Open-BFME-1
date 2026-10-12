@@ -36349,7 +36349,7 @@ _piSBStopListingAutoMatches,,0x00864BF0,54,game/GameEngine/Source/Common/BfmeCon
 ?d_008bc120@@YAXXZ,,0x008BC120,544,game/gen_asm/d_008b9460.asm,matched,gen-dump;ghidra=FUN_00cbc120
 ?d_008bc3e0@@YAXXZ,,0x008BC3E0,767,game/gen_asm/d_008b9460.asm,matched,gen-dump;ghidra=FUN_00cbc3e0
 ?d_008bd760@@YAXXZ,,0x008BD760,71,game/gen_asm/d_008a5160.asm,matched,gen-dump;int3-carved start=int3-aligned end=ret+int3 refs=0
-?bfmeAdd1038@BfmeSubF1038@@QAEXHH@Z,,0x008BDBB0,272,game/GameEngine/Source/Common/BfmeConv1038.cpp,matched,gen-dump;carved start=ghidra-start end=ret-tail callers=0;ghidra=FUN_00cbdbb0;body byte-identical to retail outside its 5 relocation slots;reloc-named identity from the pinned callers 0x00892000 and 0x00892040 which set ECX=this and pass two stack words with RET8
+?bfmeAdd1038@BfmeSubF1038@@QAEXHH@Z,,0x008BDBB0,272,game/GameEngine/Source/Common/BfmeConv1038.cpp,matched,converted from the 0x008BDBB0 gen-dump row at this address; carved start=ghidra-start end=ret-tail callers=0; ghidra=FUN_00cbdbb0; body byte-identical to retail outside its 5 relocation slots; reloc-named identity from the pinned callers 0x00892000 and 0x00892040 which set ECX=this and pass two stack words with RET8
 ?d_008bde60@@YAXXZ,,0x008BDE60,1117,game/gen_asm/d_00882630.asm,matched,gen-dump;carved start=ghidra-start end=jmp+int3 callers=0;ghidra=FUN_00cbde60
 ?d_008be760@@YAXXZ,,0x008BE760,1162,game/gen_asm/d_008b9460.asm,matched,gen-dump;ghidra=FUN_00cbe760
 ?d_008bf100@@YAXXZ,,0x008BF100,18655,game/gen_asm/d_008bf100.asm,matched,gen-dump;ghidra=FUN_00cbf100
