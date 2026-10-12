@@ -11,3 +11,18 @@ The first complete renderer candidate compiles to 144 bytes with ten masked diff
 This is an exact masked target bank, not a verified landing. It includes the helper's existing descriptive names without asserting they are original identities. The helper still conflicts with canonical renderer declarations: the name Mesh_Self for virtual slot +0x14 lacks independent proof; the actual material texture getter returns an owning four-byte handle, whereas `matinfo.h` declares a raw pointer; and the 0x0092C3E0 indirect tail thunk receives two stack arguments despite its existing zero-argument declaration. The target cannot be compiled separately with an external ordinary declaration while retaining the private EBX helper parameter. No new pin or helper ledger row is added, and the assigned scope excludes landing that helper.
 
 The saved candidate is `targets/game/reverse/attempts/0x008ff060.cpp`. Unedited experiments, complete target, helper, caller, texture-lookup and release decodes, and object unwind evidence are under `build/writer-12-donor/`. Reopening is justified by an independently verified canonical contract for the 0x008FEF60 cluster and a byte-verified helper in the same translation unit. Refutation of this bank is a caller that supplies a different filename or index position, a helper that consumes a different register, or an unwind action that destroys something other than the single retained texture pointer.
+
+## Landed
+
+The caller row landed 2026-10-12 as a real C++ body in
+`game/Libraries/Source/WWVegas/WW3D2/Rva008FF060WaterMaterialTextureSwap.cpp`
+over the same 144-byte range; `./build.sh` verifies 1/1 row, 8 relocation
+slots, 0 string refs, 0 float constants, 0 DIR32 references and the body
+guard. The 244-byte helper at 0x008FEF60 is compiled in the same TU because
+retail's private ECX/EBX/index-and-stack convention is only reproducible for
+a static callee the compiler can see (docs/shape_levers.md, "Compiler-private
+ABI"). It stays TU-local rather than taking a row: its body still differs from
+retail in the single branch-displacement byte at +0x79 the bank records, so a
+`symbols.csv` pin resolves the caller's direct call instead and the caller's
+own byte gate proves that address. The texture lookup 0x0090E910 and the
+release leaf 0x009EB7A0 resolve from their existing ledger rows.

@@ -1,8 +1,23 @@
 // ?Rva008FF060Method@@YA_NPAVRenderObjClass@@PADH@Z
-// partial score=1.0 date=2026-10-09
-// ?Rva008FEF60Method@@YA_NPAVRenderObjClass@@PAPAVTextureClass@@H@Z
-// partial: 244 bytes; one differing branch displacement at +0x7A (2026-09-28).
-// ?d_008fef60@@YAXXZ
+// Retail 0x008FF060 (144 bytes): a private renderer helper that looks a
+// water-track texture up by name and swaps it into a material slot.  Its only
+// callers (0x008FF0F0, 0x008FF6A0, 0x008FFF40) hand the renderer over in ESI
+// and clean both stack words, so the body keeps the address-qualified identity
+// the bank records (targets/game/reverse/identity_evidence/008ff060-donor-refuted-bank.md).
+//
+// The 244-byte helper at 0x008FEF60 is the same-TU static body this row calls
+// with the receiver in ECX, the handle address in EBX and the index on the
+// stack -- a compiler-private convention (docs/shape_levers.md, "compile the
+// static helper with its caller") that no external declaration can reproduce.
+// Its body is byte-identical to retail outside one branch-displacement byte at
+// +0x79 (retail's JNE reaches +0x85, this TU's reload joins at +0x81), so it
+// stays TU-local and a symbols.csv pin resolves this row's direct call; the
+// caller's own byte gate proves that address.
+//
+// The texture lookup is the already matched 0x0090E910 row and the release leaf
+// is the already matched 0x009EB7A0 row, so both direct calls resolve from the
+// ledger without a new pin.
+//
 // cl: /DNDEBUG /MD /EHsc
 //
 // Address-derived method; the retail owner class is unknown, so the owning
