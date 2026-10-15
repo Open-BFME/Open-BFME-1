@@ -20028,5 +20028,15 @@
   "after_sha256": "c0c73d2041b80d1ad2b418fd5ae8506ad066b1b7873593c7d18531e280d64586",
   "evidence": "targets/game/reverse/identity_evidence/0x0066af40-dword-setter.md",
   "reason": "0x0066AF40 is GameLogic's +0x290 setter: retail never calls it (only its own ILT 0x00016FD1 references it), it sits at the head of DisconnectManager's code beside the uncalled GameSlot::markAsDisconnected copy, and that code's only +0x290 stores go to TheGameLogic. Object::setSafeOcclusionFrame came only from the removed Zero Hour onRemoving donor (BFME keeps that frame at +0x334), and no caller or string names the method, so it keeps its address; an agent proposed this entry and the project lead approved it manually on 2026-10-13"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00462d40.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/Rva00462D40DisableComponents.cpp",
+  "old_name": "GameWindowManager",
+  "new_name": "Rva0045F0A0",
+  "before_sha256": "b907e820a27689ec071dcd49cda23a8aa8ab3b5dcb72e07cb6d6dd89d44bffcf",
+  "after_sha256": "38b6e0c2e175437c79b8561c8432ad9a832f7fd4cdc6c525898a42ef46fa3542",
+  "evidence": "targets/game/reverse/identity_evidence/00462d40-disablecomponents-callback.md",
+  "reason": "No rename: the bank declared a local stand-in class GameWindowManager (44 dummy slots); the conversion includes the real GameClient/GameWindowManager.h and still uses GameWindowManager/TheWindowManager. Token alignment pairs the removed stand-in class with the matched for_each functor Rva0045F0A0 (named by ledger row 0x00462710)."
  }
 ]
