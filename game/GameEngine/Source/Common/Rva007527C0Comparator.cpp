@@ -1,7 +1,9 @@
 // Opaque record comparator with the decoded retail layout.
 // cl: /O2 /Ob2 /GR- /EHsc- /MD /DNDEBUG
+// stlport
 
 #include <math.h>
+#include <algorithm>
 
 enum DrawableID
 {
@@ -188,11 +190,54 @@ bool Rva007527C0::rva00752A20(const Rva007527C0 &o, float tolerance) const
 struct Q4Sort00755050
 {
  void *m_state;
- bool operator()(int a, int b) const;
+ // In-class visibility preserves the comparator's stack home in partial_sort.
+ // The compiler still emits the independently verified 465-byte operator.
+ bool operator()(int a, int b) const
+ {
+  return ((const Rva007527C0 *)a)->lessThan(*(const Rva007527C0 *)b);
+ }
 };
 
-// ??RQ4Sort00755050@@QBE_NHH@Z
-bool Q4Sort00755050::operator()(int a, int b) const
+// These existing address-derived views name the matched heap helpers.
+// Their comparator payload is a single stack word, forwarded unchanged.
+struct Q3HeapCompare { void *m_state; };
+struct Q4Cmp00753DD0 { void *m_state; };
+void Rva00753DD0(int **first, int **last, Q3HeapCompare comp);
+
+namespace _STL
 {
- return ((const Rva007527C0 *)a)->lessThan(*(const Rva007527C0 *)b);
+template <> void __adjust_heap<int *, int, int, Q4Cmp00753DD0>(
+ int *, int, int, int, Q4Cmp00753DD0);
+template <> void sort_heap<int *, Q4Cmp00753DD0>(
+ int *, int *, Q4Cmp00753DD0);
+
+template <> __forceinline void __make_heap<int *, Q4Sort00755050, int, int>(
+ int *first, int *last, Q4Sort00755050 comp, int *, int *)
+{
+ // ILT 0003B66F reaches 00753DD0. This caller passes the two unused STLport
+ // type tags as well as the three words modeled by the existing body view.
+ typedef void (__cdecl *Make)(int *, int *, Q4Sort00755050, int *, int *);
+ reinterpret_cast<Make>(&Rva00753DD0)(first, last, comp, 0, 0);
 }
+
+template <> __forceinline void __adjust_heap<int *, int, int, Q4Sort00755050>(
+ int *first, int hole, int len, int value, Q4Sort00755050 comp)
+{
+ // ILT 00036791 reaches the existing 113-byte specialization at 007538A0.
+ __adjust_heap<int *, int, int, Q4Cmp00753DD0>(
+  first, hole, len, value, *reinterpret_cast<Q4Cmp00753DD0 *>(&comp));
+}
+
+template <> __forceinline void sort_heap<int *, Q4Sort00755050>(
+ int *first, int *last, Q4Sort00755050 comp)
+{
+ // ILT 00026C8D reaches the existing 80-byte specialization at 007547E0.
+ sort_heap<int *, Q4Cmp00753DD0>(
+  first, last, *reinterpret_cast<Q4Cmp00753DD0 *>(&comp));
+}
+}
+
+// Retail 00754C60, 121 bytes: native STLport heap-select fallback, calling
+// the helpers under their existing verified names without new ILT aliases.
+template void _STL::__partial_sort<int *, int, Q4Sort00755050>(
+ int *, int *, int *, int *, Q4Sort00755050);
