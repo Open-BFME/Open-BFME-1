@@ -20878,5 +20878,35 @@
   "after_sha256": "bf1c5d77533944f7a1e1be6a32031d65c7fe478ba4e7ba87d40bdfe1b33ce702",
   "evidence": "targets/game/reverse/identity_evidence/004b2330-007921e0-bank-renames.md",
   "reason": "The W3DListBox.cpp static drawHiliteBar is replaced by the retail 0x007921E0 helper, which takes three images where the Zero Hour drawHiliteBar takes four (smallCenter is only null-tested by the caller), so the Zero Hour symbol is not this body; the row keeps its recorded address-derived name ?Rva007921E0@@YAXPBVImage@@00HHHH@Z. See targets/game/reverse/identity_evidence/004b2330-007921e0-bank-renames.md."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/System/SaveGame/WeaponTemplateSet_parsePreferredAgainst_Thunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Rva0010FE90CallbackLists.cpp",
+  "old_name": "WeaponTemplateSet",
+  "new_name": "Rva0010FE90Named",
+  "before_sha256": "c415ab2b1d510e15f8a6dcd5273d44917c01e36d8587b0efa9fdc86d8246b2dd",
+  "after_sha256": "bd5dfbff5992fd19b29c1e8476b253c7e7a264389c423527d3bd7744cce32c34",
+  "evidence": "targets/game/reverse/identity_evidence/0010fe90-callback-lists.md",
+  "reason": "The matched 00110790 callback passes ECX and two stack arguments to 0010FE90 which returns ret8; this refutes the static four-argument WeaponTemplateSet INI parser claim. The owner remains address-derived. The source pairing to Rva0010FE90Named is a token-alignment artifact: that separate type models only the item vslot8 name call."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "WeaponTemplateSet",
+  "new_name": "Rva00110790Receiver",
+  "before_sha256": "5d76b20176c722e8d7bbe66a86384d4a1534260f4c7fffb33f95e91fd650b101",
+  "after_sha256": "6da28a94681d37a96df48901e14dc7781498a47a708b29e4465532db05d5fe39",
+  "evidence": "targets/game/reverse/identity_evidence/0010fe90-callback-lists.md",
+  "reason": "The matched 00110790 callback passes ECX and two stack arguments to 0010FE90 which returns ret8; this refutes the static four-argument WeaponTemplateSet INI parser claim. The owner remains address-derived. The source pairing to Rva0010FE90Named is a token-alignment artifact: that separate type models only the item vslot8 name call."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "parsePreferredAgainst",
+  "new_name": "rva0010fe90",
+  "before_sha256": "5d76b20176c722e8d7bbe66a86384d4a1534260f4c7fffb33f95e91fd650b101",
+  "after_sha256": "6da28a94681d37a96df48901e14dc7781498a47a708b29e4465532db05d5fe39",
+  "evidence": "targets/game/reverse/identity_evidence/0010fe90-callback-lists.md",
+  "reason": "The matched 00110790 callback passes ECX and two stack arguments to 0010FE90 which returns ret8; this refutes the static four-argument WeaponTemplateSet INI parser claim. The owner remains address-derived. The source pairing to Rva0010FE90Named is a token-alignment artifact: that separate type models only the item vslot8 name call."
  }
 ]

@@ -1,15 +1,15 @@
-// ?rva0010fe90@Rva00110790Receiver@@QAEXPAX0@Z
-// partial score=0.3431 date=2026-10-16
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// Retail 0x0010FE90, 204 bytes. The callback at 0x00110790 proves the
+// receiver and two-argument thiscall ABI; the owner's semantic name is unknown.
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 #include <string.h>
 
 struct Rva0010EBE0Element
 {
-	void *m_body;
-	Rva0010EBE0Element(void *body) : m_body(body) {}
+	int m_body;
+	Rva0010EBE0Element(void *body) : m_body((int)body) {}
 };
 
 struct Rva0010ECA0Elem
@@ -18,7 +18,15 @@ struct Rva0010ECA0Elem
 	void *m_b;
 };
 
-template <> void _STL::list<Rva0010EBE0Element, _STL::allocator<Rva0010EBE0Element> >::push_front(const Rva0010EBE0Element &);
+// Keep STLport's real push_front visible, but out of line as in retail.
+// Its 47 bytes also match 0x0010EBE0. Visibility proves that it copies the
+// argument without retaining its address, preserving the caller's arg home.
+template <> __declspec(noinline)
+void _STL::list<Rva0010EBE0Element, _STL::allocator<Rva0010EBE0Element> >::push_front(
+	const Rva0010EBE0Element &value)
+{
+	insert(begin(), value);
+}
 
 class Rva0010ECA0List
 {
@@ -41,11 +49,10 @@ public:
 	void rva0010fe90(void *item, void *value);
 private:
 	unsigned char m_unmodelled_00[0x48];
-	_STL::list<Rva0010EBE0Element> m_items;		// +0x48
-	Rva0010ECA0List m_pairs;				// +0x4C
+	_STL::list<Rva0010EBE0Element> m_items; // +0x48
+	Rva0010ECA0List m_pairs;               // +0x4C
 };
 
-// ?rva0010fe90@Rva00110790Receiver@@QAEXPAX0@Z
 void Rva00110790Receiver::rva0010fe90(void *item, void *value)
 {
 	if (item == 0)
@@ -56,7 +63,8 @@ void Rva00110790Receiver::rva0010fe90(void *item, void *value)
 	{
 		if (strcmp(name, "Object") == 0)
 		{
-			m_items.push_front(Rva0010EBE0Element(item));
+			// Retail passes the address of the original four-byte argument.
+			m_items.push_front(reinterpret_cast<const Rva0010EBE0Element &>(item));
 			Rva0010ECA0Elem pair;
 			pair.m_a = item;
 			pair.m_b = value;
