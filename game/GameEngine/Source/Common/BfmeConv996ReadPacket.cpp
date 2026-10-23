@@ -1,5 +1,5 @@
-// ?readPacket@BfmeB996@@QAEDPAPAHPAH1PADD@Z
-// partial score=0.9831 date=2026-10-13
+// BfmeB996::readPacket reconstructed from retail 0x007E2F50.
+// Byte-exact modulo relocation slots; kept in the Bfme996 conversion family.
 // ?readPacket@BfmeB996@@QAEDPAPAHPAH0PADD@Z [retail body 0x007E2F50]
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
 
@@ -22,6 +22,7 @@ public:
 };
 
 void *operator new[](unsigned int size);
+void operator delete[](void *block);
 extern "C" void *memset(void *destination, int value, unsigned int size);
 
 class BfmeB996
@@ -76,7 +77,9 @@ packet:
 		*(int *)buffer = firstValue;
 		*outputPointer = (int *)buffer;
 
-		if (reader->m_dev->consume(buffer + 8, *secondPointer - 8) ==
+		char *payload = flag ? buffer + 8 : buffer + 8;
+		if (reader->m_dev->consume(payload,
+				*secondPointer - 8) ==
 			*secondPointer - 8)
 			return 1;
 

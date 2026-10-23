@@ -21010,5 +21010,15 @@
   "after_sha256": "b985913a139eb9ab049d566d10b62b565db2c30dce1fc6f81885ce4e7c2ad5ad",
   "evidence": "targets/game/reverse/identity_evidence/006d8c10-w3dbridge-load.md",
   "reason": "False pairing: getTexture remains in the converted W3DBridgeLoad.cpp. The checker aligned the deleted bank with the unrelated bfmeGo998C mesh-normal helper still present in W3DBridgeBuffer.cpp; no identity was renamed."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva007E32A0DispatchWhenReady.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva007E32A0DispatchWhenReady.cpp",
+  "old_name": "ForwardView",
+  "new_name": "BfmeB996",
+  "before_sha256": "b57e13920ddadb6ed7d9e03ad99e14c4cbfd206b2c5ea68610b71d31fcf2d1c3",
+  "after_sha256": "9cf03d608830d6bb61af3ea806a394e1cc3ea20fa7a928f8dea5e50e7e245c2a",
+  "evidence": "targets/game/reverse/identity_evidence/007e2f50-bfme996-readpacket-caller.md",
+  "reason": "ForwardView was an ABI-only stand-in, not a recovered identity. ILT 0x0003F80F jumps to the newly matched BfmeB996::readPacket at 0x007E2F50; the caller now declares that real callee and remains byte-exact."
  }
 ]
