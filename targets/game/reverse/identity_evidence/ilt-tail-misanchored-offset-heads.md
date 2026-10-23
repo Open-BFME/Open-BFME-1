@@ -95,3 +95,18 @@ REL32 reaches the retired tail address.
 
 0x0026EDA0 (22 bytes, tail `?j_0026edb1`) has the same defect but is not landed: every
 spelling tried loads the argument into EAX where retail uses EDX (3 bytes).
+
+## Real-named rows that were the store tail of a setter
+
+Three 17-byte setters of the class matched as `Gen_0018F210` (Bfme5SmallAccessors.cpp:
+`or dword [0x012EF418],1 / store argument / ret 4`, the same shape as its matched
+setWaterArea 0x0018F210, setRiver 0x0018F270 and setRiverStart 0x0018F2E0) are entered by
+one ILT `E9` each at the `or`. Their last 10 bytes (`mov / mov / ret 4`) had been claimed by
+generic setters from unrelated classes; nothing reaches those interior addresses, so the
+claims were byte coincidences and are retired:
+
+| head | tail | retired claims |
+|---|---|---|
+| 0x0018F230 | 0x0018F237 | AnimateWindow::setNeedsToFinish, AudioEventRTS::setShouldFade |
+| 0x0018F250 | 0x0018F257 | View::setHeightAboveGround, AITNGuardMachine::setNemesisID |
+| 0x0018F300 | 0x0018F307 | PhysicsBehavior::setExtraFriction |

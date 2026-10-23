@@ -36,7 +36,7 @@ multi_name.different = 0
 size_outlier.indicted = 1
 ctor_vtable.contradicted = 19
 ctor_vtable.unreadable = 0
-one_identity.surplus = 2099
+one_identity.surplus = 2097
 # Retail registration proves DynamicPortalBehaviour owns ctor 001F8B80 and factory 001156B0; four false aliases retired.
 # fcf825b4f7 retired the false FXNugget zero-store claim; the body still has aliases.
 # 4c8346b3c9 retired the GDIFileStream ctor over-claim at 0x00087A50 (a zero-store body).
@@ -807,10 +807,6 @@ null_reloc.max_unreadable = 1000
 @ one_identity.surplus 0x00189B30 ?getStdGuardRange@AIGuardMachine@@SAMPBVObject@@@Z
 @ one_identity.surplus 0x00189B30 ?getStdGuardRange@AIGuardRetaliateMachine@@SAMPBVObject@@@Z
 @ one_identity.surplus 0x00189B30 ?getStdGuardRange@AITNGuardMachine@@SAMPBVObject@@@Z
-@ one_identity.surplus 0x0018F237 ?setNeedsToFinish@AnimateWindow@@QAEX_N@Z
-@ one_identity.surplus 0x0018F237 ?setShouldFade@AudioEventRTS@@QAEX_N@Z
-@ one_identity.surplus 0x0018F257 ?setHeightAboveGround@View@@UAEXM@Z
-@ one_identity.surplus 0x0018F257 ?setNemesisID@AITNGuardMachine@@QAEXW4ObjectID@@@Z
 @ one_identity.surplus 0x001A19C0 ?Set_Remap@ConvertClass@@QAEXPBE@Z
 @ one_identity.surplus 0x001A19C0 ?setProfileID@GameSpyGameSlot@@QAEXH@Z
 @ one_identity.surplus 0x001A7860 ?ParseBlendTileData@WorldHeightMap@@IAE_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z

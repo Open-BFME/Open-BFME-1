@@ -86,14 +86,22 @@ public:
 	void setWaterArea(bool value);
 	void setRiver(bool value);
 	void setRiverStart(int value);
+	void rva0018F230(bool value);
+	void rva0018F250(int value);
+	void rva0018F300(int value);
 
 private:
 	char m_bfmeHead[0x32];					// +0x00
 	bool m_isWaterArea;						// +0x32
-	char m_bfmeGap[0x2D];					// +0x33
+	char m_bfmeGap[0x0D];					// +0x33
+	bool m_bfmeFlag40;						// +0x40
+	int m_bfmeValue44;						// +0x44
+	char m_bfmeGap1[0x18];					// +0x48
 	bool m_isRiver;						// +0x60
 	char m_bfmeGap2[0x13];					// +0x61
 	int m_riverStart;						// +0x74
+	int m_bfmeGap3;						// +0x78
+	int m_bfmeValue7C;						// +0x7C
 };
 
 // ?setWaterArea@Gen_0018F210@@QAEX_N@Z
@@ -118,6 +126,34 @@ void Gen_0018F210::setRiverStart(int value)
 	g_bfmeDirtyBG |= 1;
 
 	m_riverStart = value;
+}
+
+// The three setters below share the dirty-mark-then-store shape and sit among
+// the ones above (0x0018F230, 0x0018F250, 0x0018F300). The fields they store
+// are unidentified, so the names keep the address.
+
+// ?rva0018F230@Gen_0018F210@@QAEX_N@Z
+void Gen_0018F210::rva0018F230(bool value)
+{
+	g_bfmeDirtyBG |= 1;
+
+	m_bfmeFlag40 = value;
+}
+
+// ?rva0018F250@Gen_0018F210@@QAEXH@Z
+void Gen_0018F210::rva0018F250(int value)
+{
+	g_bfmeDirtyBG |= 1;
+
+	m_bfmeValue44 = value;
+}
+
+// ?rva0018F300@Gen_0018F210@@QAEXH@Z
+void Gen_0018F210::rva0018F300(int value)
+{
+	g_bfmeDirtyBG |= 1;
+
+	m_bfmeValue7C = value;
 }
 
 // The carved retail boundary at 0x000EC5D0 contains only ret.
