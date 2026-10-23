@@ -310,51 +310,10 @@ TerrainRoadCollection::~TerrainRoadCollection( void )
 }  // end ~TerrainRoadCollection
 
 //-------------------------------------------------------------------------------------------------
-/** Find road with matching name */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/TerrainRoads_find.cpp
-// ?findRoad@TerrainRoadCollection@@QAEPAVTerrainRoadType@@VAsciiString@@@Z present-unmatched
-TerrainRoadType *TerrainRoadCollection::findRoad( AsciiString name )
-{
-	TerrainRoadType *road;
-
-	for( road = m_roadList; road; road = nextRoad( road ) )
-	{
-
-		if( road->getName() == name )
-			return road;
-
-	}  // end for road
-
-	// not found
-	return NULL;
-
-}  // end findRoad
-
-//-------------------------------------------------------------------------------------------------
-/** Find bridge with matching name */
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/TerrainRoads_find.cpp
-// ?findBridge@TerrainRoadCollection@@QAEPAVTerrainRoadType@@VAsciiString@@@Z present-unmatched
-TerrainRoadType *TerrainRoadCollection::findBridge( AsciiString name )
-{
-	TerrainRoadType *bridge;
-
-	for( bridge = m_bridgeList; bridge; bridge = nextBridge( bridge ) )
-	{
-
-		if( bridge->getName() == name )
-			return bridge;
-
-	}  // end for bridge
-
-	// not found
-	return NULL;
-
-}  // end findBridge
-
-//-------------------------------------------------------------------------------------------------
 /** Search the roads AND bridge lists for the name */
+// NOTE: findRoad/findBridge live in TerrainRoads_find.cpp (the retail-proven
+// matched copy); this TU calls them via GameClient/TerrainRoads.h and must not
+// re-emit them, or the link keeps this non-retail duplicate.
 //-------------------------------------------------------------------------------------------------
 TerrainRoadType *TerrainRoadCollection::findRoadOrBridge( AsciiString name )
 {
