@@ -40,6 +40,8 @@ def read_rows(target):
 
 DATA_FIELDS = ("name", "target_rva", "size", "section", "witnesses", "evidence", "model")
 
+CALLEE_FIELDS = ("name", "target_rva", "size", "witnesses", "evidence", "model")
+
 
 def read_data_rows(target):
     """Unexported data a target's bodies may reference, keyed by symbol.
@@ -93,6 +95,102 @@ def read_data_rows(target):
     return rows
 
 
+def _swept_call_witness(target, start, site):
+    """Decode forward from an established function start; True when the sweep
+    reaches `site` on an instruction boundary holding a 5-byte direct call."""
+    if not start <= site:
+        return False
+    decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+    try:
+        code = target.read_rva(start, site + 5 - start)
+    except ValueError:
+        return False
+    for ins in decoder.disasm(code, start):
+        if ins.address > site:
+            return False
+        if ins.address == site:
+            return ins.size == 5 and code[site - start] == 0xE8
+        if ins.address + ins.size > site:
+            return False
+    return False
+
+
+def _witness_starts(target, validated):
+    """Established function starts a callee witness may sweep from: export
+    routes and validated ledger rows."""
+    starts = {target.follow_ilt(entry.rva) for entry in target.exports
+              if entry.name is not None and entry.forwarder is None}
+    starts.update(start for start, _, _, _ in validated)
+    return {rva for rva in starts if _executable(target, rva, 1)}
+
+
+def read_callee_rows(target, validated):
+    """Unexported code a target's bodies may call, keyed by symbol.
+
+    A row names one callee and lists the retail call sites that witness it:
+    each witness must decode, swept forward from an export-routed body or a
+    validated ledger row, to a direct call whose destination is the callee's
+    address, so the witness cannot come from the body being verified. The
+    name stays a claim the evidence must carry; the address is proven by the
+    witnesses alone. A missing file means no callee rows.
+    """
+    path = target.ledger_root / "callees.csv"
+    if not path.exists():
+        return {}
+    raw = path.read_bytes()
+    _require(b"\r" not in raw and raw.endswith(b"\n"),
+             f"{path}: target callee ledger must use LF and end with newline")
+    reader = csv.DictReader(io.StringIO(raw.decode("utf-8")))
+    _require(reader.fieldnames == list(CALLEE_FIELDS),
+             f"{path}: expected header {','.join(CALLEE_FIELDS)}")
+    exports = _exports(target)
+    ledger_names = {row["name"] for _, _, row, _ in validated}
+    ledger_spans = sorted((start, end) for start, end, _, _ in validated)
+    rows, spans = {}, []
+    starts = _witness_starts(target, validated)
+    for row in reader:
+        _require(set(row) == set(CALLEE_FIELDS) and all(row[key] for key in CALLEE_FIELDS),
+                 f"{path}: callee row needs nonempty {', '.join(sorted(CALLEE_FIELDS))}")
+        name = row["name"]
+        _require(name not in rows, f"{path}: duplicate callee symbol {name}")
+        _require(name not in exports and name not in ledger_names,
+                 f"{name}: an export or ledger row needs no callee row")
+        rva, size = _number(row["target_rva"]), _number(row["size"])
+        _require(size > 0, f"{name}: callee size must be positive")
+        _require(_executable(target, rva, size),
+                 f"{name}: callee extent must lie within executable file-backed code")
+        for start, end in ledger_spans:
+            _require(end <= rva or rva + size <= start,
+                     f"{name}: callee extent overlaps ledger row {start:#x}..{end:#x}")
+        body = target.read_rva(rva, size)
+        decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+        insns = list(decoder.disasm(body, rva))
+        _require(insns and sum(ins.size for ins in insns) == size,
+                 f"{name}: callee body contains undecodable bytes")
+        _require(insns[-1].mnemonic in ("ret", "jmp"),
+                 f"{name}: callee body must end in ret or tail jmp")
+        witnesses = [_number(value) for value in row["witnesses"].split(";")]
+        _require(len(set(witnesses)) == len(witnesses), f"{name}: duplicate witness")
+        for site in witnesses:
+            _require(_executable(target, site, 5),
+                     f"{name}: witness {site:#x} is not in executable code")
+            _require(not rva <= site < rva + size,
+                     f"{name}: witness {site:#x} lies in the callee itself")
+            swept = any(_swept_call_witness(target, start, site)
+                        for start in sorted((s for s in starts if s <= site), reverse=True))
+            _require(swept,
+                     f"{name}: witness {site:#x} is not a swept call from an identified body")
+            value = struct.unpack("<i", target.read_rva(site + 1, 4))[0]
+            _require(site + 5 + value == rva,
+                     f"{name}: witness {site:#x} calls {site + 5 + value:#x}, not {rva:#x}")
+        rows[name] = {**row, "rva": rva, "size_bytes": size, "witness_rvas": witnesses}
+        spans.append((rva, rva + size, name))
+    spans.sort()
+    for before, after in zip(spans, spans[1:]):
+        _require(before[1] <= after[0], f"overlapping callee rows: {before[2]} and {after[2]}")
+    return rows
+
+
 def _exclusive_roots(target):
     return (target.root / "worldbuilder",)
 
@@ -104,6 +202,7 @@ def validate_rows(target, rows):
     for _, _, row, _ in validated:
         _identity(target, row)
     read_data_rows(target)
+    read_callee_rows(target, validated)
     claimed = {source for _, _, _, source in validated}
     roots = [path.relative_to(target.root).as_posix() for path in _exclusive_roots(target)]
     tracked = subprocess.run(["git", "ls-files", "-z", "--", *roots], cwd=target.root,
@@ -312,8 +411,9 @@ def _import_identity(target, entry, symbol, *, call=False):
     return receipt
 
 
-def _relocate(target, row, obj, code, relocs, known, data=None):
+def _relocate(target, row, obj, code, relocs, known, data=None, callees=None):
     data = {} if data is None else data
+    callees = {} if callees is None else callees
     rva = _number(row["target_rva"])
     retail = target.read_rva(rva, len(code))
     linked = bytearray(code)
@@ -338,10 +438,16 @@ def _relocate(target, row, obj, code, relocs, known, data=None):
             if symbol in known:
                 _require(_route(target, destination) == _route(target, known[symbol]),
                          f"{symbol}: call target RVA {destination:#x} contradicts target identity")
+            elif symbol in callees:
+                _require(destination == callees[symbol]["rva"],
+                         f"{symbol}: call target RVA {destination:#x} contradicts witnessed callee "
+                         f"{callees[symbol]['rva']:#x}")
+                check["callee"] = {"rva": callees[symbol]["rva"],
+                                   "witnesses": callees[symbol]["witness_rvas"]}
             else:
                 stub = target.read_rva(destination, 6)
                 _require(stub[:2] == b"\xff\x25",
-                         f"{symbol}: unresolved target callee at RVA {destination:#x}; add independently verified identity")
+                         f"{symbol}: unresolved target callee at RVA {destination:#x}; land the callee or add a witnessed callees.csv row")
                 iat = struct.unpack_from("<I", stub, 2)[0] - target.image_base
                 entry = imports.get(iat)
                 check["import"] = _import_identity(target, entry, symbol, call=True)
@@ -413,6 +519,7 @@ def _verify(target, rows, selectors, *, probing=False):
     known = _exports(target)
     known.update({row["name"]: _number(row["target_rva"]) for _, _, row, _ in validated})
     data = read_data_rows(target)
+    callees = read_callee_rows(target, validated)
     selected = validated
     if selectors:
         missing = [selector for selector in selectors if not any(
@@ -439,7 +546,7 @@ def _verify(target, rows, selectors, *, probing=False):
         code, relocations = _object_body(obj, row["name"])
         _require(len(code) == end - start,
                  f"{row['name']}: object extent {len(code)} differs from target extent {end-start}")
-        linked, checks = _relocate(target, row, obj, code, relocations, known, data)
+        linked, checks = _relocate(target, row, obj, code, relocations, known, data, callees)
         _extent(target, start, linked, checks)
         section = next(section for section in target.sections
                        if section.rva <= start and end <= section.rva + section.raw_size)

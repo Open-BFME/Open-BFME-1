@@ -1,0 +1,2 @@
+name,target_rva,size,witnesses,evidence,model
+?Rva0012E0E0@@YA_NH@Z,0x0012E0E0,33,0x0001CEFD;0x0001CFFE,"Math assert helper taking a value flag; calls the Debug singleton's slot 0x5c with the flag and the global at 0x1046508. Witnessed by direct calls from exported ?GetLengthSqrd@Coord2D@@QBEMXZ (body 0x1ceef, call at 0x1cefd) and the following engine body (call at 0x1cffe)",muse-spark

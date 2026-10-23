@@ -27,6 +27,8 @@ def target(tmp_path):
         image_bytes=bytes(image), image_base=0x400000,
         expected_sha256=hashlib.sha256(image).hexdigest(),
         ledger_path=tmp_path / "targets/worldbuilder/reverse/functions.csv",
+        data_ledger_path=tmp_path / "targets/worldbuilder/reverse/data.csv",
+        ledger_root=tmp_path / "targets/worldbuilder/reverse",
         build_root=tmp_path / "build/worldbuilder",
         profiles={"size": SimpleNamespace(flags=("-O1", "-Gy"), toolchain_includes=())},
         exports=(SimpleNamespace(name="_Example", rva=0x1000, forwarder=None),),
