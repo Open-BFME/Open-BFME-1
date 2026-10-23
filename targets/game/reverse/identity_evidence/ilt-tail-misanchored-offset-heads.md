@@ -110,3 +110,12 @@ claims were byte coincidences and are retired:
 | 0x0018F230 | 0x0018F237 | AnimateWindow::setNeedsToFinish, AudioEventRTS::setShouldFade |
 | 0x0018F250 | 0x0018F257 | View::setHeightAboveGround, AITNGuardMachine::setNemesisID |
 | 0x0018F300 | 0x0018F307 | PhysicsBehavior::setExtraFriction |
+
+## More tail-only claims (IltTailHeads.cpp)
+
+| head | size | retired claim at | shape |
+|---|---|---|---|
+| 0x001B49A0 | 24 | AnimateWindow::setAnimType @0x001B49AE | lower the +0x3C float to the argument when larger |
+| 0x0034FF20 | 31 | PathNode::setPosition @0x0034FF25 | copy Coord3D to +0x14 when the +0x00 tag is 0x10 |
+| 0x00537A10 | 23 | InGameUI::disregardDrawable @0x00537A1A | TheGameSpyInfo ? virtual +0xC8 (tail jmp) : false, ret 4 |
+| 0x005BE810 | 13 | ?dup_005be812 / ?dup_5be812 (deleteInstance aliases) @0x005BE812 | delete the polymorphic +0x00 pointer |
