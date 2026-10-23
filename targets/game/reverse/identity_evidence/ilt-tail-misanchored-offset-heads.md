@@ -87,3 +87,11 @@ REL32 reaches the retired tail address.
 | 0x00699C50 | 22 | ?j_00699c61@@YAXXZ @0x00699C61 | same, 0x012BA134, 2 |
 | 0x00699C70 | 22 | ?j_00699c81@@YAXXZ @0x00699C81 | same, 0x012BA13C, 4 |
 | 0x00699C90 | 22 | ?j_00699ca1@@YAXXZ @0x00699CA1 | same, 0x012BA138, 3 |
+| 0x00505780 | 11 | ?j_00505786@@YAXXZ @0x00505786 | `mov ecx,[ecx+0x2AC] / jmp` ILT 0x00027F2A |
+| 0x007AF700 | 11 | ?j_007af706@@YAXXZ @0x007AF706 | `mov ecx,[ecx+0x24C] / jmp` ILT 0x0001E344 |
+| 0x0026E460 | 11 | ?j_0026e466@@YAXXZ @0x0026E466 | `fld [ecx+0x18C] / jmp __ftol2` |
+| 0x0022F110 | 19 | ?j_0022f11e@@YAXXZ @0x0022F11E | owner at this-0x18, call ILT 0x00020824, `[eax+0x22C]`, jmp ILT 0x00027746 |
+| 0x0022F2C0 | 19 | ?j_0022f2ce@@YAXXZ @0x0022F2CE | same, jmp ILT 0x000456E2 |
+
+0x0026EDA0 (22 bytes, tail `?j_0026edb1`) has the same defect but is not landed: every
+spelling tried loads the argument into EAX where retail uses EDX (3 bytes).
