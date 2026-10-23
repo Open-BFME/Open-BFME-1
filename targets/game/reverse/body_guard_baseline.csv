@@ -1055,7 +1055,6 @@ dir32,0x0134FBA4,__newmode,"nothing in the ledger owns 0x0134FBA4. Give the datu
 dir32,0x0134FBA8,__commode,"nothing in the ledger owns 0x0134FBA8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0134FBAC,__fmode,"nothing in the ledger owns 0x0134FBAC. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x013571F8,__adjust_fdiv,"nothing in the ledger owns 0x013571F8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-static,0x0058AE70,?getFieldParseTable@AudioManager@@QBEPBUFieldParse@@XZ,+1 _audioSettingsFieldParseTable outside the retail image
 tail,0x00C23607,?dup_00C23607@@YAXXZ,"compiled=32 ledger=24 tail=8: 3 byte(s) differ from retail, first +24"
 genalias,0x000A7AA0,??$__uninitialized_copy@PBUParticleSysBoneInfo@@PAU1@@_STL@@YAPAUParticleSysBoneInfo@@PBU1@0PAU1@ABU__false_type@0@@Z,masked call is not a retail twin; fix the callee or drop the gen-alias note
 genalias,0x003AB7A0,??$__uninitialized_copy@PBUPrereqUnitRec@ProductionPrerequisite@@PAU12@@_STL@@YAPAUPrereqUnitRec@ProductionPrerequisite@@PBU12@0PAU12@ABU__false_type@0@@Z,masked call is not a retail twin; fix the callee or drop the gen-alias note

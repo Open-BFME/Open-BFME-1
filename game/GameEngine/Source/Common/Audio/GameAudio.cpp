@@ -981,9 +981,12 @@ MiscAudio *AudioManager::friend_getMiscAudio( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-const FieldParse *AudioManager::getFieldParseTable( void ) const
+// Retail 0x0058AE70 is `mov eax, 10; ret`, reached only from its ILT 0x000204D7, which nothing
+// calls or references. It is not getFieldParseTable (no table address in it), so the body keeps
+// an address-derived name until a caller identifies it.
+int Rva0058AE70ReturnsTen( void )
 {
-	return audioSettingsFieldParseTable;
+	return 10;
 }
 
 //-------------------------------------------------------------------------------------------------

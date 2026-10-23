@@ -20960,7 +20960,7 @@
   "reason": "Generated zero-argument delegate m is not a semantic identity. Matched DoXfer supplies two CDEProvider pointers and the matched tail target returns ret8; preserve the unknown member identity with its retail address. See docs/naming_evidence.md snapshot-specific correction process.",
   "old_source_sha256": "7f93cb3ff00a682b97d58aff7027203efc8c6792268d89f8f7427587310bded0",
   "new_source_sha256": "7f4def889d3a3810be357156d22591d18eedcb7040fbb8993ea4daa1b5a1278a"
-},
+ },
  {
   "old_path": "targets/game/reverse/attempts/0x00504600.cpp",
   "new_path": "targets/game/reverse/attempts/0x00504600.cpp",
@@ -20970,7 +20970,7 @@
   "after_sha256": "015ab2ef98673521cb47fe0d8b0e070af8f6e4113b8b32190cab4f6fb86e7438",
   "evidence": "targets/game/reverse/identity_evidence/0x00504600-mapselect-call-targets.md",
   "reason": "The dropped token is the throw() specification of the bank's own Rva00098E70GameInfoView workaround class, removed with the class when the two menu call sites were rebound to ILT 0x00029CEE -> 0x00457090 and to GameInfo::getMap(). Every matched sibling declares AsciiString getMap() const; without it. The token pairing against the new import stub is a diff artefact, not an identity claim."
-},
+ },
  {
   "old_path": "targets/game/reverse/attempts/0x0092d4b0.cpp",
   "new_path": "game/Libraries/Source/WWVegas/WW3D2/MeshClassRva0092D4B0.cpp",
@@ -21020,5 +21020,15 @@
   "after_sha256": "9cf03d608830d6bb61af3ea806a394e1cc3ea20fa7a928f8dea5e50e7e245c2a",
   "evidence": "targets/game/reverse/identity_evidence/007e2f50-bfme996-readpacket-caller.md",
   "reason": "ForwardView was an ABI-only stand-in, not a recovered identity. ILT 0x0003F80F jumps to the newly matched BfmeB996::readPacket at 0x007E2F50; the caller now declares that real callee and remains byte-exact."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "getFieldParseTable",
+  "new_name": "Rva0058AE70ReturnsTen",
+  "before_sha256": "fe6cb19e73b2b0dd0b68e0b4ab6964e2be084446cd52c0937123a22ba0cdab11",
+  "after_sha256": "142a2b02443b6b6fb82a3f30a95b248753d6fae8c1cce5ea4dd09fade7dd6d83",
+  "evidence": "targets/game/reverse/identity_evidence/2026-10-23-0058ae70-returns-ten.md",
+  "reason": "Retail 0x0058AE70 is mov eax,0Ah; ret with no caller or data reference; it returns the constant 10, not audioSettingsFieldParseTable, so the getFieldParseTable claim is refuted and the body keeps an address-derived name."
  }
 ]

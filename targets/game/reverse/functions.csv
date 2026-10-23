@@ -57745,7 +57745,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?getFieldC@Rva002E2650Owner@@QBEIXZ,,0x002E2650,4,game/GameEngine/Source/Common/RvaTinyLeafBatch.cpp,matched,opaque owner dword field at 0xc
 ?getFieldParse@DamageFX@@QBEPBUFieldParse@@XZ,,0x00066800,6,game/GameEngine/Source/Common/DamageFX.cpp,matched,Open-BFME5 clean C++ static FieldParse address return; retail 0x010757C0 is AmountForMajorFX table first entry
 ?getFieldParse@DieMuxData@@SAPBUFieldParse@@XZ,,0x00019326,5,game/GameEngine/Source/GameLogic/Object/Die/DieMuxDataGetFieldParseThunk.cpp,matched,Open-BFME5 exact ILT thunk; real body 0x655140
-?getFieldParseTable@AudioManager@@QBEPBUFieldParse@@XZ,,0x0058AE70,6,game/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,icf-scan
 ?getFile@Rva000971A0Recorder@@QBEPAXXZ,,0x000971A0,4,game/GameEngine/Source/Common/System/Rva000971A0RecorderFile.cpp,matched,Carved getter reads this+0x0C and nearby RecorderClass methods support a file pointer; owner name stays RVA-derived.
 ?getFileData@NetFileCommandMsg@@QAEPAEXZ,,0x00673F90,4,game/GameEngine/Source/GameNetwork/NetCommandMsg_ctors.cpp,matched,
 ?getFileID@NetFileAnnounceCommandMsg@@QAEGXZ,,0x00673FF0,5,game/GameEngine/Source/GameNetwork/NetCommandMsg_ctors.cpp,matched,
@@ -173040,3 +173039,4 @@ _CommUdpProcess,,0x00817B30,2207,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?invoke@Rva0026E460@@QAEHXZ,,0x0026E460,11,game/GameEngine/Source/Common/IltTailHeads.cpp,matched,boundary-interior-row=retired j_ tail jmp per identity_evidence/ilt-tail-misanchored-offset-heads.md; ILT entry lands on the head; address-derived;model=claude-opus-5-5;host=vm
 ?invoke@Rva0022F110@@QAEXXZ,,0x0022F110,19,game/GameEngine/Source/Common/IltTailHeads.cpp,matched,boundary-interior-row=retired j_ tail jmp per identity_evidence/ilt-tail-misanchored-offset-heads.md; ILT entry lands on the head; address-derived;model=claude-opus-5-5;host=vm
 ?invoke@Rva0022F2C0@@QAEXXZ,,0x0022F2C0,19,game/GameEngine/Source/Common/IltTailHeads.cpp,matched,boundary-interior-row=retired j_ tail jmp per identity_evidence/ilt-tail-misanchored-offset-heads.md; ILT entry lands on the head; address-derived;model=claude-opus-5-5;host=vm
+?Rva0058AE70ReturnsTen@@YAHXZ,,0x0058AE70,6,game/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/2026-10-23-0058ae70-returns-ten.md;address-derived: retail mov eax 10; ret with no caller or data reference (ILT 0x000204D7 unreferenced); not getFieldParseTable;model=claude-opus-5-5;host=ymo-workstation
