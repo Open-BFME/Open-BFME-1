@@ -21030,5 +21030,15 @@
   "after_sha256": "142a2b02443b6b6fb82a3f30a95b248753d6fae8c1cce5ea4dd09fade7dd6d83",
   "evidence": "targets/game/reverse/identity_evidence/2026-10-23-0058ae70-returns-ten.md",
   "reason": "Retail 0x0058AE70 is mov eax,0Ah; ret with no caller or data reference; it returns the constant 10, not audioSettingsFieldParseTable, so the getFieldParseTable claim is refuted and the body keeps an address-derived name."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "clear",
+  "new_name": "dup_00100570",
+  "before_sha256": "6795303458340816c9e45fbb8fa217953ed2f0e2189e7a5078bc085e7489adfd",
+  "after_sha256": "389135f0e74a0c5d38333d1052c8d35d50d3fce0e97c1202e57b276859010196",
+  "evidence": "targets/game/reverse/identity_evidence/2026-10-23-00100570-geometryrecord-vector-clear.md",
+  "reason": "The generated row named a clear over the placeholder element Gen_t_000ff890_p16cd; ilt_oracle contradicts the GeometryRecord spelling for this clear and for its erase callee, so the proven body keeps the opaque dup_ name with object-symbol= the emitted clear."
  }
 ]
