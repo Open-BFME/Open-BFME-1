@@ -123713,12 +123713,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?j_006936a0@@YAXXZ,,0x006936A0,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=thunk_FUN_00a93350
 ?j_00693af0@@YAXXZ,,0x00693AF0,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x00007027
 ?j_00695630@@YAXXZ,,0x00695630,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=thunk_FUN_004b31f0
-?j_00699bf7@@YAXXZ,,0x00699BF7,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x0002FBBC
-?j_00699c21@@YAXXZ,,0x00699C21,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x00047F3C
-?j_00699c41@@YAXXZ,,0x00699C41,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x00047F3C
-?j_00699c61@@YAXXZ,,0x00699C61,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x00047F3C
-?j_00699c81@@YAXXZ,,0x00699C81,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x00047F3C
-?j_00699ca1@@YAXXZ,,0x00699CA1,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x00047F3C
 ?j_0069cef0@@YAXXZ,,0x0069CEF0,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=releaseBuffer
 ?j_0069fd10@@YAXXZ,,0x0069FD10,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=thunk_FUN_00a9e0b0
 ?j_0069fe40@@YAXXZ,,0x0069FE40,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=thunk_FUN_00a9e220
@@ -173040,3 +173034,9 @@ _CommUdpProcess,,0x00817B30,2207,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?drawTrapezoidWater@WaterRenderObjClass@@IAEXPAVRva007A8FF0Data@@QAVVector3@@@Z,,0x007A8FF0,4953,game/GameEngineDevice/Source/W3DDevice/GameClient/Water/Rva007AA820WaterDraw.cpp,matched,Exact 4953B full body; retail count scale plus operand/order variant; probe exact modulo 233 relocations; replaces gen-dump row;model=gpt-6.1-sol;host=chalco.vps
 ?method@Rva001D48A0@@QAEXPAVXfer@@@Z,,0x001D48A0,3988,game/GameEngine/Source/GameLogic/Object/Rva001D48A0Xfer.cpp,matched,recovered from gen-dump; exact 3988-byte body; first int3 at +0x0F94;model=gpt-6-astra;host=chalco.vps
 ?readPacket@BfmeB996@@QAEDPAPAHPAH1PADD@Z,,0x007E2F50,236,game/GameEngine/Source/Common/BfmeConv996ReadPacket.cpp,matched,exact 236B modulo 3 relocation slots; branch-identical ternary orders payload add before the two pushes; declaring global operator delete[] preserves the ??_V array-delete relocation; re-probed in main;model=deepseek-v4.1-flash;host=chalco.vps
+?Rva00699BF0ClearFlag@@YAXXZ,,0x00699BF0,12,game/GameEngine/Source/Common/Rva00699C00FlagTail.cpp,matched,boundary-interior-row=retired j_ tail jmp per identity_evidence/ilt-tail-misanchored-offset-heads.md; ILT entry lands on the head; address-derived;model=claude-opus-5-5;host=vm
+?Rva00699C10@@YAXM@Z,,0x00699C10,22,game/GameEngine/Source/Common/Rva00699C00FlagTail.cpp,matched,boundary-interior-row=retired j_ tail jmp per identity_evidence/ilt-tail-misanchored-offset-heads.md; ILT entry lands on the head; address-derived;model=claude-opus-5-5;host=vm
+?Rva00699C30@@YAXM@Z,,0x00699C30,22,game/GameEngine/Source/Common/Rva00699C00FlagTail.cpp,matched,boundary-interior-row=retired j_ tail jmp per identity_evidence/ilt-tail-misanchored-offset-heads.md; ILT entry lands on the head; address-derived;model=claude-opus-5-5;host=vm
+?Rva00699C50@@YAXM@Z,,0x00699C50,22,game/GameEngine/Source/Common/Rva00699C00FlagTail.cpp,matched,boundary-interior-row=retired j_ tail jmp per identity_evidence/ilt-tail-misanchored-offset-heads.md; ILT entry lands on the head; address-derived;model=claude-opus-5-5;host=vm
+?Rva00699C70@@YAXM@Z,,0x00699C70,22,game/GameEngine/Source/Common/Rva00699C00FlagTail.cpp,matched,boundary-interior-row=retired j_ tail jmp per identity_evidence/ilt-tail-misanchored-offset-heads.md; ILT entry lands on the head; address-derived;model=claude-opus-5-5;host=vm
+?Rva00699C90@@YAXM@Z,,0x00699C90,22,game/GameEngine/Source/Common/Rva00699C00FlagTail.cpp,matched,boundary-interior-row=retired j_ tail jmp per identity_evidence/ilt-tail-misanchored-offset-heads.md; ILT entry lands on the head; address-derived;model=claude-opus-5-5;host=vm

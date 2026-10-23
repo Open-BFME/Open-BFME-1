@@ -72,3 +72,18 @@ address-derived callee/override name.
 | 0x00746170 | `81 e9 fc 00 00 00 e9 16 b0 8f ff` | 0x00036D63 | ?j_00746176@@YAXXZ @0x00746176 | 0 | cc |
 | 0x00746180 | `81 e9 fc 00 00 00 e9 ad e8 8c ff` | 0x0003F995 | ?j_00746186@@YAXXZ @0x00746186 | 0 | cc |
 
+
+## Same defect, longer heads
+
+The scan also found generated `j_` rows that are the final `jmp` of bodies longer than
+eleven bytes. Each head is the target of one ILT `E9`, int3 surrounds the body, and no
+REL32 reaches the retired tail address.
+
+| head | size | tail row retired | shape |
+|---|---|---|---|
+| 0x00699BF0 | 12 | ?j_00699bf7@@YAXXZ @0x00699BF7 | `mov byte [0x012BA144],0 / jmp` (twin of matched 0x00699C00) |
+| 0x00699C10 | 22 | ?j_00699c21@@YAXXZ @0x00699C21 | store arg to 0x012BA12C, arg slot = 0, jmp ILT 0x00047F3C |
+| 0x00699C30 | 22 | ?j_00699c41@@YAXXZ @0x00699C41 | same, 0x012BA130, 1 |
+| 0x00699C50 | 22 | ?j_00699c61@@YAXXZ @0x00699C61 | same, 0x012BA134, 2 |
+| 0x00699C70 | 22 | ?j_00699c81@@YAXXZ @0x00699C81 | same, 0x012BA13C, 4 |
+| 0x00699C90 | 22 | ?j_00699ca1@@YAXXZ @0x00699CA1 | same, 0x012BA138, 3 |
