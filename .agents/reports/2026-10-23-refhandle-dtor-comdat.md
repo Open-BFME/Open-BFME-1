@@ -45,6 +45,23 @@ perturbs register allocation across the whole 294 B body. Removing the
 definition instead would turn the inlined destruction into an out-of-line call
 and break the same row. Working tree left clean (edit reverted).
 
+## Update 2026-10-23 (retry): link order keeps the good copy
+
+`link_census.link_order` sorts objects by lowest matched retail RVA, so
+Find.obj (0x008958D0) links before CreateHandle (0x00895A00), Dependencies
+(0x00895B20) and Submit (0x00895D30). link.exe therefore folds to a good copy
+and the shipped game already carries retail-consistent bytes; the wrong copy
+is discarded. The queue row's loser labels contradict this recomputation, so
+the row is most likely census staleness or a subtlety invisible without a
+full census rebuild (~35 min) — either way, zero game impact.
+
+Also ruled out: `__forceinline` does NOT suppress the out-of-line COMDAT
+(CreateHandle.cpp's dtor is `__forceinline` and still emits sec 25), so the
+wrong emitter cannot be silenced by declaration spelling. There is a pin
+`??1RefHandle008958D0@@QAE@XZ -> 0x000463AD` (ILT thunk), but retail holds no
+standalone copy of either shape, so the dtor cannot be landed as its own row
+to give the census a retail verdict.
+
 ## Suggested next step
 
 Rebuild the link census and check which copy link.exe keeps. If a good copy is
