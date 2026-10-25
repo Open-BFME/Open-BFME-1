@@ -2132,3 +2132,10 @@ retail destructor and unwind-state ownership independently before adapting
 it. Retain the producer's canonical callable symbol: a fresh view-name pin
 alone can byte-match while leaving an unresolved linker reference. See
 `targets/game/reverse/identity_evidence/00c61819-registry-return-view.md`.
+The neighboring parents `009EBDC0` (175 bytes) and `009EBEC0` (196 bytes)
+also keep their public `AssetReference` result: convert the inner opaque
+handle into that result with the witnessed pointer copy/refcount increment.
+This preserves both parents and emits their correct state-1 cleanups at
+`00C61840` and `00C61880`; their outer cleanups remain separate work. See
+the corresponding `00c61840-registry-temporary.md` and
+`00c61880-registry-temporary.md` evidence in that directory.

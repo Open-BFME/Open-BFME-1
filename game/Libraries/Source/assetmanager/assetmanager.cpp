@@ -3,10 +3,42 @@
 
 #include "../WWVegas/WW3D2/texture.h"
 
+class Rva009EBCE0AssetReference
+{
+	friend class AssetReference;
+public:
+	Rva009EBCE0AssetReference() : m_object( 0 ) {}
+	Rva009EBCE0AssetReference( const Rva009EBCE0AssetReference &that )
+		: m_object( that.m_object )
+	{
+		if ( m_object )
+		{
+			++*(unsigned short *)((char *)m_object + 4);
+		}
+	}
+	~Rva009EBCE0AssetReference()
+	{
+		if ( m_object )
+		{
+			((TextureBaseClass *)m_object)->Release_Ref();
+		}
+	}
+
+private:
+	void *m_object;
+};
+
 class AssetReference
 {
 public:
 	AssetReference() : m_object( 0 ) {}
+	AssetReference( const Rva009EBCE0AssetReference &that ) : m_object(static_cast<TextureBaseClass *>(that.m_object))
+	{
+		if ( m_object )
+		{
+			++*(unsigned short *)((char *)m_object + 4);
+		}
+	}
 	AssetReference( const AssetReference &that ) : m_object( that.m_object )
 	{
 		if ( m_object )
@@ -68,7 +100,13 @@ AssetRegistry *g_theAssetRegistry = 0;
 
 AssetReference Rva009EBEC0( const AssetName &name )
 {
+	// Retail state 1 uses the same inner-handle destructor as the registry lookup.
+	// Keep the canonical provider and the wrapper's public result type.
+	typedef AssetReference (AssetManagerImpl::*CanonicalLookup)(const char *);
+	typedef Rva009EBCE0AssetReference (AssetManagerImpl::*LookupView)(const char *);
+	typedef char Rva009EEC60ResultWidth[sizeof(AssetReference) == sizeof(Rva009EBCE0AssetReference) ? 1 : -1];
+	union { CanonicalLookup canonical; LookupView view; } lookup = { &AssetManagerImpl::Find_Asset };
 	return g_theAssetRegistry
-		? ((AssetManagerImpl *)g_theAssetRegistry)->Find_Asset( name.Peek_Buffer() )
-		: AssetReference();
+		? (((AssetManagerImpl *)g_theAssetRegistry)->*lookup.view)( name.Peek_Buffer() )
+		: Rva009EBCE0AssetReference();
 }

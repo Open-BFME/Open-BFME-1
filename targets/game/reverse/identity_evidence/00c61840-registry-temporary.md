@@ -22,7 +22,7 @@ one hidden result pointer, and the callee pops four bytes.
 
 ## Source and donor evidence
 
-Apply the repair established in commit `b1fc1f41af` to the inner conditional
+Apply the repair recorded in `00c61819-registry-return-view.md` to the inner conditional
 temporary, retaining the wrapper's `AssetReference` return type. A typed
 member-pointer union references the existing canonical provider with the
 proven one-word handle result view. Both result widths are checked in the

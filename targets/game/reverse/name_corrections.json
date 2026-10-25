@@ -21141,5 +21141,15 @@
  "after_sha256": "d78683f0e6313862cbc8ca2fd33fd95d42ba303b0092f16e63a025dd82c3cfb4",
  "evidence": "targets/game/reverse/identity_evidence/00c61840-registry-temporary.md",
  "reason": "Correct only the inner conditional temporary to the independently proved handle destructor 0005C640. The public AssetReference result and canonical EnumAssets provider remain intact. Retail FuncInfo E51098 state 1 proves ownership; the full 175-byte parent, 25-byte action and 224-byte provider pass normal gates."
+},
+{
+ "old_path": "game/Libraries/Source/assetmanager/assetmanager.cpp",
+ "new_path": "game/Libraries/Source/assetmanager/assetmanager.cpp",
+ "old_name": "AssetReference",
+ "new_name": "Rva009EBCE0AssetReference",
+ "before_sha256": "237cec3c7c96aeae25c94282a27bb68a86e2fc806b531fa972fdedea476ad619",
+ "after_sha256": "ae4bb38a19139e3c8465529f5f27a064a819969c6685dd93829e260babba3a7b",
+ "evidence": "targets/game/reverse/identity_evidence/00c61880-registry-temporary.md",
+ "reason": "Correct only the inner conditional temporary to the independently proved handle destructor 0005C640. The public AssetReference result, AssetName input and canonical Find_Asset provider remain intact. Retail FuncInfo E510C4 state 1 proves ownership; the 196-byte parent, 25-byte action and 188-byte provider pass normal gates."
 }
 ]
