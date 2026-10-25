@@ -1,4 +1,0 @@
-// ?aptPalantirOnRollOverButtonCommand@@YAXXZ
-void aptPalantirOnRollOverButtonCommand()
-{
-}

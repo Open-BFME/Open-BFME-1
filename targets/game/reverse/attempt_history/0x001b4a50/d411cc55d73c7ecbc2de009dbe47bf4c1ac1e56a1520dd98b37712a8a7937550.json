@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "d411cc55d73c7ecbc2de009dbe47bf4c1ac1e56a1520dd98b37712a8a7937550",
-  "symbol": "?bfmeSetXC@BfmeXformXC@@QAEXM@Z",
-  "score_kind": "author-estimate",
-  "score": 0.8,
-  "source": "// ?bfmeSetXC@BfmeXformXC@@QAEXM@Z\n// partial score=0.8 date=2026-09-08\nextern const float BfmeZeroRange;\n\nfloat Cos(float a);\nfloat Sin(float a);\n\nclass BfmeXformXC\n{\npublic:\n\tvoid bfmeSetXC(float a);\n\n\tunsigned char m_bfmeHeadXC[0x64];\n\tfloat m_bfme64XC;\n\tfloat m_bfme68XC;\n\tfloat m_bfme6CXC;\n\tfloat m_bfme70XC;\n\tfloat m_bfme74XC;\n\tfloat m_bfme78XC;\n\tfloat m_bfme7CXC;\n\tfloat m_bfme80XC;\n\tfloat m_bfme84XC;\n\tfloat m_bfme88XC;\n\tfloat m_bfme8CXC;\n\tfloat m_bfme90XC;\n};\n\nvoid BfmeXformXC::bfmeSetXC(float a)\n{\n\tfloat tx = m_bfme70XC;\n\tfloat ty = m_bfme80XC;\n\tfloat tz = m_bfme90XC;\n\n\tfloat c = Cos(a);\n\tfloat s = Sin(a);\n\tfloat ns = -s;\n\n\tfloat t1 = *(volatile float *)&s * BfmeZeroRange - *(volatile float *)&c * BfmeZeroRange;\n\tfloat *pt1 = &t1;\n\tfloat t2 = t1 * BfmeZeroRange;\n\n\tm_bfme64XC = c - t2;\n\tm_bfme68XC = ns;\n\tm_bfme6CXC = 0.0f;\n\tm_bfme70XC = tx;\n\tm_bfme74XC = t2 - ns;\n\tm_bfme78XC = c;\n\tm_bfme7CXC = 0.0f;\n\tm_bfme80XC = ty;\n\tm_bfme84XC = ns * BfmeZeroRange - c * BfmeZeroRange;\n\tm_bfme88XC = *pt1;\n\tm_bfme8CXC = 1.0f;\n\tm_bfme90XC = tz;\n}\n"
-}

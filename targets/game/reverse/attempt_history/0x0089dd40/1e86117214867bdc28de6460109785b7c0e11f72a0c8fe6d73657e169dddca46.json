@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "1e86117214867bdc28de6460109785b7c0e11f72a0c8fe6d73657e169dddca46",
-  "symbol": "?utf8Decode@@YAIPBE@Z",
-  "score_kind": "author-estimate",
-  "score": 0.8,
-  "source": "// ?utf8Decode@@YAIPBE@Z\n// partial score=0.8 date=2026-09-06\n// 120/124 B: logic matches; retail keeps the lead byte in al and the pointer in ecx and uses movzx for the 2-byte continuation (register colour wall).\n// Open-BFME7: UTF-8 decode of one sequence (124 B).\nunsigned int utf8Decode(const unsigned char* p)\n{\n\tunsigned char b = *p;\n\tif (b <= 0x7f)\n\t\treturn b;\n\tif ((b & 0xe0) == 0xc0)\n\t\treturn ((b & 0x1f) << 6) | (p[1] & 0x3f);\n\tif ((b & 0xf0) == 0xe0)\n\t\treturn ((((b & 0xf) << 6) | (p[1] & 0x3f)) << 6) | (p[2] & 0x3f);\n\treturn ((((((b & 0x7) << 6) | (p[1] & 0x3f)) << 6) | (p[2] & 0x3f)) << 6) | (p[3] & 0x3f);\n}\n"
-}

@@ -1,9 +1,0 @@
-# Recovery at RVA 0x009B4740
-
-Open BFME 2 donor `Code/Libraries/Source/VP6/Rva001C5040PeekBits.cpp` at game.dat RVA 0x001C5040 reproduces all 47 BFME 1 bytes as plain C++. The function is named `Rva009B4740PeekBits` to retain an address identity. The descriptive suffix states the decoded operation rather than an original vendor name. The earlier attempt records at this address concern a 108-byte window combining two bodies; the independent complete decode establishes the smaller extent.
-
-The preceding assigned reader at RVA 0x009B46E0 ends with RET at RVA 0x009B473D and two INT3 bytes. The target starts at RVA 0x009B4740 and ends at RVA 0x009B476F, after RET at RVA 0x009B476E and before INT3. Its alternative return at offset 0x1B is also inside the body. The only conditional branch stays inside the extent, and no jump, call, exception state or cleanup helper occurs.
-
-The entry reads the reader pointer from EAX and an unsigned 32-bit peek width from ESI. It reads the remaining-bit word at offset 0, unsigned buffered value at offset 4 and next-byte pointer at offset 8. It masks the available low bits and uses an unsigned comparison to choose between shifting the buffered bits or extending them with one next byte. Both paths return the extracted 32-bit value in EAX. The reader memory is never written, and EDI is preserved. The source retains the unsigned count declaration of the already matched `Vp6RawBits`, and that declaration also passes the strict byte gate.
-
-No named direct caller was found by the repository's inventory. The helper remains static, and its marked absent-from-retail integration entry emits the independently decoded private EAX and ESI convention. It does not assert that the C++ decoration names a public cdecl ABI. A complete caller proving another register contract, a write to reader state, a branch outside the extent or a failing strict byte gate would refute this recovery.

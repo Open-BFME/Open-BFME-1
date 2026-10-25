@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "377f92cb4e9669e702ea4ad6b7ec4d7d3f123bf2eba16af7ee0b0f3e14918df6",
-  "symbol": "?copyClearMask@AttributeModifierDefinitionStore@@QBE?AV?$BitFlags@$0BEA@@@H@Z",
-  "score_kind": "measured",
-  "score": 0.568,
-  "source": "// ?copyClearMask@AttributeModifierDefinitionStore@@QBE?AV?$BitFlags@$0BEA@@@H@Z\n// partial score=0.568 date=2026-10-13\n// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /I. /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include\n// stlport\n#include \"Lib/BaseType.h\"\n#include \"Common/BitFlags.h\"\n#include <vector>\ntypedef BitFlags<320> BfmeBlobJD;\n\nclass BfmeEntryJD\n{\npublic:\n\tunsigned char m_bfmeHeadJD[0x44];\n\tBfmeBlobJD m_bfmeBlobJD;\n};\n\nclass AttributeModifierDefinitionStore\n{\npublic:\n\tBitFlags<320> copyClearMask(int index) const;\n\n\tunsigned char m_bfmeHeadJD[8];\n\tstd::vector<BfmeEntryJD *> m_definitions;\n};\n\nBitFlags<320> AttributeModifierDefinitionStore::copyClearMask(int index) const\n{\n\tBfmeBlobJD zero;\n\n\tzero.clear();\n\n\tif (index >= 0)\n\t{\n\t\tunsigned int last = m_definitions.size() - 1;\n\n\t\tif ((unsigned int)index <= (unsigned int)last)\n\t\t{\n\t\t\tBfmeEntryJD *e = m_definitions[index];\n\n\t\t\tif (e != 0)\n\t\t\t{\n\t\t\t\treturn e->m_bfmeBlobJD;\n\t\t\t}\n\t\t}\n\t}\n\n\treturn zero;\n}\n"
-}

@@ -1,9 +1,0 @@
-# RVA 0x00902FF0 virtual forwarding
-
-Open BFME 2 `Code/GameEngine/Source/Common/GapBodiesGE41.cpp` supplies a verbatim 27-byte donor at game.dat RVA 0x0011C300. The BFME 1 predecessor is the matched Get_DX8_Debug_Monitor_Token_Name body at RVA 0x00902FD0. It ends with RET at RVA 0x00902FED, followed by two INT3 bytes. The target starts at RVA 0x00902FF0, ends with RET at +0x1A, and has INT3 at +0x1B through +0x1F. The next function starts at +0x20. Raw decoding is build/x15-shroud/902ff0-boundary.txt.
-
-The wrapper forwards three four-byte stack values in their original order. It loads ECX from VA 0x01336E5C, loads the vtable from [ECX], pushes the third, second and first values, and calls [vtable+0x78]. There is no receiver adjustment or null guard. The virtual callee cleans twelve bytes; the wrapper uses an ordinary RET, leaving its own arguments for its caller. The result is not inspected, so the source asserts no semantic return-value identity. Integer parameters are raw four-byte ABI carriers, not inferred application types. No indirect target or concrete class is inferred from the slot number.
-
-The existing TheBfmeAwakenDebug declaration is used because symbols.csv and dir32_addresses.csv already bind that exact symbol to VA 0x01336E5C. The vtable view is address-owned. No new global, pin or semantic debug-method name is introduced. The wrapper keeps rva00902FF0 because callers_of.py finds no named direct caller and the donor's anonymous function name establishes no BFME 1 identity. The Python oracle reports UNTESTABLE for the address-owned name.
-
-The first donor port matches all 27 bytes outside the single recorded global relocation. The strict scoped gate passes in build/x15-shroud/902ff0-landing.log. Probe, checked decode and caller inventory are 902ff0-donor-01.log, 902ff0-callees.txt and 902ff0-callers.txt under build/x15-shroud/. A different virtual slot, stack-value order, global operand or endpoint would refute this recovery.

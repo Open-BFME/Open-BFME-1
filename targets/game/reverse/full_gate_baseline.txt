@@ -1,1 +1,0 @@
-# full-gate red rows, shrink-only (tools/gate_baseline.py). One 'name (source)' per line.

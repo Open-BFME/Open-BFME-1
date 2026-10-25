@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "411fbec277bfbe6765b0b1bf11099bb418a94e83f8e4dc7ca3274fd4f24cf97a",
-  "symbol": "?aptKeyMatches@@YAPAVAptValue@@PAXH@Z",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?aptKeyMatches@@YAPAVAptValue@@PAXH@Z\n// partial score=0.9 date=2026-09-06\n// cl: /DNDEBUG /MD /EHsc\nclass AptValue { public: int toInteger(); };\nextern AptValue** g_bfmeArr1233;\nextern int g_bfmeCount1233;\nextern unsigned int Rva008A5250LastKey;\nextern const int Rva008A5250KeyTable[0x14];\nint __cdecl Rva008A5250KeyChar(int code);\nAptValue* __cdecl Rva008A53D0MakeBool(int value);\nAptValue* aptKeyMatches(void* self, int argc)\n{\n\tAptValue* v = g_bfmeArr1233[g_bfmeCount1233 - 1];\n\tunsigned int key = Rva008A5250LastKey;\n\tif ((key & 3) == 1) {\n\t\tint code = key >> 17;\n\t\tif (code >= 0x20 && code <= 0x7e) {\n\t\t\tint c = Rva008A5250KeyChar(code);\n\t\t\treturn Rva008A53D0MakeBool(c == v->toInteger());\n\t\t}\n\t\tif (code < 0x14) {\n\t\t\tint m = Rva008A5250KeyTable[code];\n\t\t\treturn Rva008A53D0MakeBool(m == v->toInteger());\n\t\t}\n\t}\n\treturn Rva008A53D0MakeBool(0);\n}\n"
-}

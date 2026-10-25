@@ -1,6 +1,0 @@
-compile  reused verified dependency cache
-history  0 prior experiment(s) with this instruction/relocation result
-symbol   ?rva8CF1B0ProcessRecord@@YAXPAVRva8CF1B0State@@PAURva8CF1B0Cursor@@@Z
-size     ours=520 retail=520  relocs=15
-result   EXACT (modulo relocation slots)
-lever    instruction shape matches; validate callees and identity with tools/add_match.py before claiming a conversion

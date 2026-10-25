@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "1d6a1e6291f999f64639763df787f37fc8aa5d175e107deab0e93a1b63ea4ca1",
-  "symbol": "?rva00958ba0@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.7,
-  "source": "// ?rva00958ba0@@YAXXZ\n// partial score=0.7 date=2026-09-06\n// ?rva00958ba0@@YAXXZ\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\n\nstruct _GUID { unsigned char bytes[16]; };\ntypedef _GUID GUID;\nstruct IUnknown;\n\nextern void __stdcall _com_issue_errorex(long error, IUnknown *object,\n\tconst GUID &iid);\nextern GUID g_bfmeIidTSA;\n\nextern \"C\" __declspec(dllimport) void __stdcall Rva0135918CCall(void);\n\nclass BfmeObjECF\n{\npublic:\n\tstruct Vtable\n\t{\n\t\tvoid *slot00;\n\t\tvoid *slot04;\n\t\tlong(__stdcall *slot08)(BfmeObjECF *);\n\t\tvoid *slot0c;\n\t\tvoid *slot10;\n\t\tvoid *slot14;\n\t\tvoid *slot18;\n\t\tvoid *slot1c;\n\t\tlong(__stdcall *slot20)(BfmeObjECF *);\n\t};\n\n\tVtable *vtable;\n};\n\nextern BfmeObjECF *g_bfmeObjECF;\nextern int g_bfmeObjECFFlag27C;\n\nvoid __cdecl rva00958ba0(void)\n{\n\tBfmeObjECF *obj = g_bfmeObjECF;\n\tif (!obj)\n\t\treturn;\n\n\tBfmeObjECF::Vtable *vt = obj->vtable;\n\tlong result = vt->slot20(obj);\n\tif (result < 0)\n\t\t_com_issue_errorex(result, (IUnknown *)obj, g_bfmeIidTSA);\n\n\tobj = g_bfmeObjECF;\n\tif (!obj)\n\t\treturn;\n\n\tg_bfmeObjECF = 0;\n\tobj->vtable->slot08(obj);\n\n\tg_bfmeObjECFFlag27C = 0;\n\tRva0135918CCall();\n}\n"
-}

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "67ce71d64822b5a4012c943207109b936c57c569715687a2d27aea6959b86a53",
-  "symbol": "?unlinkAfterQuery@BfmeQuery1279@@QAEXPAURva008BD760Node@@@Z",
-  "score_kind": "measured",
-  "score": 0.4085,
-  "source": "// ?unlinkAfterQuery@BfmeQuery1279@@QAEXPAURva008BD760Node@@@Z\n// partial score=0.4085 date=2026-10-15\nextern \"C\" void *__cdecl memset(void *, int, unsigned int);\r\n#pragma intrinsic(memset)\r\n// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD\r\nstruct Rva008BD760Node\r\n{\r\n\tchar m_padding00[0x54];\r\n\tRva008BD760Node *m_prev;\r\n\tRva008BD760Node *m_next;\r\n};\r\n\r\nclass BfmeQuery1279\r\n{\r\npublic:\r\n\tvoid bfmeQuery1279(void *key, int name, void **previousResult, void **nodeResult);\r\n\tvoid unlinkAfterQuery(Rva008BD760Node *node);\r\n\r\n\tvoid *find(void *key)\r\n\t{\r\n\t\tvoid *previous;\r\n\t\tbfmeQuery1279(key, 0, &previous, &key);\r\n\t\treturn key;\r\n\t}\r\n};\r\n\r\nstatic __forceinline Rva008BD760Node *rva008BD760Unlink(Rva008BD760Node *found)\r\n{\r\n    if (found->m_prev) found->m_prev->m_next = found->m_next;\r\n    if (found->m_next) found->m_next->m_prev = found->m_prev;\r\n    memset(&found->m_prev, 0, sizeof(found->m_prev) + sizeof(found->m_next));\r\n    return found;\r\n}\r\n\r\n// Open BFME 2: Code/Libraries/Source/Apt/AptDisplayList.cpp.\r\nvoid BfmeQuery1279::unlinkAfterQuery(Rva008BD760Node *node)\r\n{\r\n    void *previous;\r\n    bfmeQuery1279(node, 0, &previous, (void **)&node);\r\n    rva008BD760Unlink(node);\r\n}\r\n"
-}

@@ -1,3 +1,0 @@
-DirectX 8.1 SDK headers (include/ only), extracted from archive.org item
-dx81sdk_full (dx81sdk_full.exe, InstallShield payload DXF/DXSDK/include).
-Staged for WW3D2/renderer work; pass as an extra -I, not merged into vs2003.

@@ -1,2 +1,0 @@
-# DIR32 symbols that resolve to more than one retail address and are not in
-# dir32_consistency_whitelist.txt. Shrink-only (tools/gate_baseline.py). One symbol per line.
