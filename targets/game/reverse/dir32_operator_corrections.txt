@@ -1,5 +1,0 @@
-# Owner-approved dir32_addresses.csv operator corrections (tools/dir32_record_guard.py).
-# One line per approved move: <name> 0x<oldVA> -> 0x<newVA>  # who approved, when, why.
-# A correction commit is accepted only for a line present here in its PARENT commit,
-# and only when the retail image proves it (correction_problems). Protected path.
-??_7BattlePlanUpdateModuleData@@6B@ 0x010A5C78 -> 0x010BBFC0  # approved by the project lead 2026-10-16: 0x010A5C78 is ReplenishUnitsBehaviorModuleData's table; ctor 0x00285F10 stores 0x010BBFC0, whose slot 0 is the matched ??_G 0x00285FE0

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "73c7cdd14a5823ab652952524582ae6d59209f785b96ab95ff8cd9a59c6e9d35",
-  "symbol": "??0DefaultPhysicsModuleInfo@FXParticleSystem@@QAE@XZ",
-  "score_kind": "measured",
-  "score": 0.8462,
-  "source": "// ??0DefaultPhysicsModuleInfo@FXParticleSystem@@QAE@XZ\n// partial score=0.8462 date=2026-10-11\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/GameEngine/Source/Common/System\n\n#define SNAPSHOT_CPP\n#include \"snapshot.h\"\n\ninline Snapshot::Snapshot() {}\n\n#include \"game_client_random_variable.h\"\n\nnamespace FXParticleSystem\n{\n\nclass DefaultPhysicsModuleInfo : public Snapshot\n{\npublic:\n\tDefaultPhysicsModuleInfo();\n\tvirtual ~DefaultPhysicsModuleInfo();\n    virtual const char *GetSnapshotName();\n    virtual void LoadPostProcess();\n    virtual void DoXfer(Xfer &xfer);\n\nprivate:\n\tfloat m_field0;\n\tfloat m_field1;\n\tfloat m_field2;\n\tint m_field3;\n\tGameClientRandomVariable m_var1;\n};\n\n// ??0DefaultPhysicsModuleInfo@FXParticleSystem@@QAE@XZ\nDefaultPhysicsModuleInfo::DefaultPhysicsModuleInfo()\n    : m_field3(0)\n{\n\tm_field0 = 0.0f;\n\tm_field1 = 0.0f;\n\tm_field2 = 0.0f;\n\tm_var1.setRange(0.0f, 0.0f, GameClientRandomVariable::UNIFORM);\n}\n\n}\n"
-}

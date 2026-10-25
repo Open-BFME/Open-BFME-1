@@ -1,5 +1,0 @@
-# Buffer-type triangle overload duplicate
-
-Queue222, BFME1 49cf4d91b7. The retail provider DX8Wrapper_Draw_Triangles.cpp constructs a zero-center sphere and calls the sphere-taking SortingRenderer overload; the unmatched dxwrapper.cpp provider calls the older no-sphere overload. Removing only that obsolete body verifies 122 of 124 rows but loses two independent EH actions: 0xC5B500/17B and 0xC5B511/11B. Their tracked ownership is the 0x9080A0 parent, witnessed via handler 0xC5B51C and FuncInfo 0xE4A56C. The object no longer emits the VectorClass<RenderDeviceDescClass> constructor group that previously supplied those actions. No equal replacement remains; this is not merely a renumbered label.
-
-Restored the source, without changing pins or weakening funclet ownership. Reconcile native VectorClass<RenderDeviceDescClass> constructor ownership before removing the obsolete draw provider; preserve both cleanup states through a legitimate source consumer. BFME2 linking-provider sweep found no same-symbol donor and its tree contains no WW3D2/dxwrapper.cpp; native provider/callee evidence establishes this discrepancy. Existing TU flags and MSVC7.1 were retained.

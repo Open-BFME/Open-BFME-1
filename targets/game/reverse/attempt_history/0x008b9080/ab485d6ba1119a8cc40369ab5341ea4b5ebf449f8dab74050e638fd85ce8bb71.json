@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "ab485d6ba1119a8cc40369ab5341ea4b5ebf449f8dab74050e638fd85ce8bb71",
-  "symbol": "?rva008B9080ShiftCache@@YAPAXPAURva008B9020Owner@@@Z",
-  "score_kind": "measured",
-  "score": 0.8972,
-  "source": "// ?rva008B9080ShiftCache@@YAPAXPAURva008B9020Owner@@@Z\n// partial score=0.8972 date=2026-10-17\n// Sibling of the matched pop-back 0x008B9020 (game/Libraries/Source/EA/Apt/Rva008B9020PopCache.cpp):\n// land it there, after that body, sharing Rva008B9020Owner.\nclass AptValue;\nextern AptValue *g_bfmeFallbackDB;\nstruct Rva008B9020Owner\n{\n\tunsigned char m_pad0[4];\n\tunsigned int m_flags;\n\tunsigned char m_pad1[0x20 - 8];\n\tvoid **m_arr;\n\tunsigned char m_pad2[4];\n\tint m_count;\n};\n\n// 0x008B9080: shift the front entry off the same tagged array, falling back to\n// the Apt null value.\nextern \"C\" void *__cdecl memmove(void *dst, const void *src, unsigned int size);\n\nvoid *rva008B9080ShiftCache(Rva008B9020Owner *obj)\n{\n\tvoid *fallback = g_bfmeFallbackDB;\n\tunsigned int flags = obj->m_flags;\n\tif ((flags & 0x3f) == 0x16)\n\t{\n\t\tunsigned char bit = (unsigned char)(flags >> 15);\n\t\tbit = ~bit;\n\t\tif (bit & 1)\n\t\t\treturn fallback;\n\t\tint count = obj->m_count;\n\t\tif (count <= 0)\n\t\t\treturn fallback;\n\t\tunsigned int masked = (unsigned int)obj->m_arr[0] & ~1u;\n\t\tvoid *result = masked ? (void *)masked : fallback;\n\t\tint newCount = count - 1;\n\t\tint *countPtr = &obj->m_count;\n\t\t*countPtr = newCount;\n\t\tif (newCount != 0)\n\t\t\tmemmove(obj->m_arr, obj->m_arr + 1, newCount * sizeof(void *));\n\t\tobj->m_arr[obj->m_count] = 0;\n\t\treturn result;\n\t}\n\treturn fallback;\n}\n"
-}

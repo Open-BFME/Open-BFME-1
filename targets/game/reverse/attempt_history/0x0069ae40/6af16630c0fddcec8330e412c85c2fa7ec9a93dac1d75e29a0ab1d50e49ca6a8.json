@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "6af16630c0fddcec8330e412c85c2fa7ec9a93dac1d75e29a0ab1d50e49ca6a8",
-  "symbol": "?validate@Rva006B9320Owner@@QAE_NPAURva006B9320Request@@@Z",
-  "score_kind": "measured",
-  "score": 0.5111,
-  "source": "// ?validate@Rva006B9320Owner@@QAE_NPAURva006B9320Request@@@Z\n// partial score=0.5111 date=2026-10-24\n// cl: /O2 /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD\ntypedef float Real;\nextern const Real BfmeShareThirdEQQ;\n\nstruct BfmeOwnerEQQ\n{\n\tunsigned char m_bfmeHeadEQQ[0x41];\n\tchar m_bfmeReadyEQQ;\n\tchar m_bfmeDoneEQQ;\n};\n\nstruct BfmeBodyEQQ\n{\n\tunsigned char m_bfmeHeadEQQ[0x54];\n\tReal m_bfmeHealthEQQ;\n};\n\nstruct BfmeUnitEQQ\n{\n\tunsigned char m_bfmeHeadEQQ[4];\n\tBfmeBodyEQQ *m_bfmeBodyEQQ;\n\tunsigned char m_bfmeMidEQQ[4];\n\tBfmeOwnerEQQ *volatile m_bfmeOwnerEQQ;\n\tunsigned char m_bfmeTailEQQ[2];\n\tchar m_bfmeFlagAEQQ;\n\tchar m_bfmeFlagBEQQ;\n\tchar m_bfmeFlagCEQQ;\n};\n\nchar __stdcall bfmeCheckEQQ(BfmeUnitEQQ *unit)\n{\n\tif (!unit->m_bfmeFlagAEQQ && !unit->m_bfmeFlagBEQQ && !unit->m_bfmeFlagCEQQ)\n\t{\n\t\tBfmeBodyEQQ *body = unit->m_bfmeBodyEQQ;\n\t\tif (body == 0 || !(body->m_bfmeHealthEQQ >= BfmeShareThirdEQQ))\n\t\t{\n\t\t\tBfmeOwnerEQQ *owner = unit->m_bfmeOwnerEQQ;\n\t\t\tif (owner == 0)\n\t\t\t\treturn 1;\n\t\t\tif (owner != 0 && owner->m_bfmeReadyEQQ)\n\t\t\t\treturn 1;\n\t\t\tBfmeOwnerEQQ *other = unit->m_bfmeOwnerEQQ;\n\t\t\tif (other == 0 || other->m_bfmeDoneEQQ)\n\t\t\t\treturn 1;\n\t\t}\n\t}\n\treturn 0;\n}\n"
-}

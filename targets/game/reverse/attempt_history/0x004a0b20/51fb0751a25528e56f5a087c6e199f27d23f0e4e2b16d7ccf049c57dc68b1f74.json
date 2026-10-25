@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "51fb0751a25528e56f5a087c6e199f27d23f0e4e2b16d7ccf049c57dc68b1f74",
-  "symbol": "?d_004a0b20@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.75,
-  "source": "// ?d_004a0b20@@YAXXZ\n// partial score=0.75 date=2026-09-07\n// 73/81 bytes. The call shape is worked out: a __stdcall taking SIX arguments,\n// pushed so that left-to-right they are\n//   (a1 by value, a2 by value, &localAtE-4, &a2's slot, &a1's slot, &localAtE-5)\n// -- i.e. the two incoming parameter slots are handed to the callee as\n// bool out-parameters and read back afterwards as BYTES:\n//   [E+8] tested first, then [E+4], then the byte local at E-5.\n// The byte local at E-4 is written by the callee and never read.\n// What is not modelled: retail reserves EIGHT bytes (`sub esp,8`) and uses only\n// E-5 and E-4 of them, leaving E-8..E-6 dead, while four `bool` locals make\n// MSVC reserve four (`push ecx`) and spread them differently. Something in the\n// original gives those two bytes a wider or aligned home.\nvoid __stdcall bfmeQueryWD(int first, int second, bool *fourth, bool *secondOut, bool *firstOut, bool *third);\n\nint __stdcall bfmeCheckWD(int first, int second)\n{\n\tbool third;\n\tbool fourth;\n\tbool firstOut;\n\tbool secondOut;\n\n\tbfmeQueryWD(first, second, &fourth, &secondOut, &firstOut, &third);\n\n\tif (!secondOut)\n\t\treturn 0;\n\n\tif (!firstOut)\n\t\treturn 0;\n\n\tif (third)\n\t\treturn 0;\n\n\treturn 1;\n}\n"
-}

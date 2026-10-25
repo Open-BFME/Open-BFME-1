@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "5a2eb06eb53732e3340ff5b7387d45a0473806c7b8431f7ae882778d67d8fe91",
-  "symbol": "?handleBfmeJ1017Event00892100@@YAXHHHH@Z",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?handleBfmeJ1017Event00892100@@YAXHHHH@Z\n// partial score=0.85 date=2026-09-06\n// ?handleBfmeJ1017Event00892100@@YAXHHHH@Z\n// cl: /O2 /DNDEBUG /MD\n\nextern int g_bfme1017H;\nextern int g_bfme1017I;\n\nclass BfmeJ1017\n{\npublic:\n\tvoid rva008A1BB0(int a, int b, unsigned char c, int type);\n};\n\nextern BfmeJ1017 *g_bfmeHolderBU;\n\nvoid __cdecl handleBfmeJ1017Event00892100(int a, int b, int c, int type)\n{\n\tif (!g_bfme1017H)\n\t\treturn;\n\tif (g_bfme1017I)\n\t\treturn;\n\tBfmeJ1017 *holder = g_bfmeHolderBU;\n\tif (!holder)\n\t\treturn;\n\tholder->rva008A1BB0(a, b, (unsigned char)c, type);\n}\n"
-}

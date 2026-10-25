@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "8fb9fdca5e4cf6c23e32759063b556ec1d8091fcff740d2347e361b68c807bfa",
-  "symbol": "??0Rva008D9EC0Owner@@QAE@PAURva008D9EC0Vec3@@000@Z",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ??0Rva008D9EC0Owner@@QAE@PAURva008D9EC0Vec3@@000@Z\n// partial score=0.85 date=2026-09-06\n// ??0Rva008D9EC0Owner@@QAE@PAURva008D9EC0Vec3@@000@Z\nstruct Rva008D9EC0Vec3 { float x; float y; float z; };\nstruct Rva008D9EC0Owner {\n\tbool m_flag;\n\tint m_count;\n\tint m_index;\n\tint m_field_c;\n\tfloat m_diff1[3];\n\tfloat m_diff2[3];\n\tRva008D9EC0Vec3* m_pA;\n\tRva008D9EC0Vec3* m_pC;\n\tRva008D9EC0Owner(Rva008D9EC0Vec3* a, Rva008D9EC0Vec3* b, Rva008D9EC0Vec3* c, Rva008D9EC0Vec3* d);\n};\nRva008D9EC0Owner::Rva008D9EC0Owner(Rva008D9EC0Vec3* a, Rva008D9EC0Vec3* b, Rva008D9EC0Vec3* c, Rva008D9EC0Vec3* d)\n{\n\tm_flag = true;\n\tm_pC = c;\n\tm_index = -1;\n\tm_count = 0;\n\tm_field_c = 0;\n\tm_pA = a;\n\tm_diff1[0] = c->x - a->x;\n\tm_diff1[1] = c->y - a->y;\n\tm_diff1[2] = c->z - a->z;\n\tm_diff2[0] = d->x - b->x;\n\tm_diff2[1] = d->y - b->y;\n\tm_diff2[2] = d->z - b->z;\n}\n"
-}
