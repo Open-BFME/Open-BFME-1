@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "26b10cd92acd7548e100327ce66f76ba216a02fb14388635f3ed0f489ec7f202",
-  "symbol": "?provideBattleStat@BfmeAptScreenScoreScreen@@QAEXHPAD_N@Z",
-  "score_kind": "author-estimate",
-  "score": 0.86,
-  "source": "// ?provideBattleStat@BfmeAptScreenScoreScreen@@QAEXHPAD_N@Z\n// partial score=0.86 date=2026-09-08\n// cl: /DNDEBUG /MD /EHsc\n\nextern \"C\" int __declspec(dllimport) __cdecl sprintf(\n\tchar *buffer, const char *format, ... );\n\nclass BfmeAptScreenScoreScreen\n{\npublic:\n\tvoid provideBattleStat( int index, char *text, bool setting );\n};\n\nvoid BfmeAptScreenScoreScreen::provideBattleStat(\n\tint index, char *text, bool setting )\n{\n\tif (setting)\n\t\treturn;\n\n\tchar *output = text;\n\tint columns = 3;\n\tint group = index / columns;\n\tint column = index % columns;\n\t*(short *)output = '0';\n\tif (group < 0)\n\t\treturn;\n\tif (group >= 7)\n\t\treturn;\n\tif (column < 0)\n\t\treturn;\n\tif (column >= columns)\n\t\treturn;\n\n\tif (column == 1) {\n\t\tint value = *(int *)((char *)this + 0x298 + group * 12);\n\t\tsprintf(output, \"x %d\", value);\n\t\treturn;\n\t}\n\n\tint tableIndex = group + 0x37 + column * 2;\n\tsprintf(output, \"%d\", ((int *)this)[tableIndex]);\n}\n"
-}

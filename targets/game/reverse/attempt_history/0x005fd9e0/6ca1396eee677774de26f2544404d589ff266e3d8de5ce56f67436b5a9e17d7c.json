@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "6ca1396eee677774de26f2544404d589ff266e3d8de5ce56f67436b5a9e17d7c",
-  "symbol": "??0DefaultPhysicsModuleInfo@FXParticleSystem@@QAE@XZ",
-  "score_kind": "author-estimate",
-  "score": 0.89,
-  "source": "// ??0DefaultPhysicsModuleInfo@FXParticleSystem@@QAE@XZ\n// partial score=0.89 date=2026-09-08\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\n\nnamespace FXParticleSystem {\n\nclass GameClientRandomVariable\n{\npublic:\n\tenum DistributionType { UNIFORM = 1 };\n\tGameClientRandomVariable() : m_low(0.0f), m_high(0.0f), m_distribution(0) {}\n\tvoid setRange(float low, float high, DistributionType distribution);\n\nprivate:\n\tfloat m_low;\n\tfloat m_high;\n\tint m_distribution;\n};\n\nclass Snapshot\n{\npublic:\n\tvirtual ~Snapshot();\n};\n\nclass DefaultPhysicsModuleInfo : public Snapshot\n{\npublic:\n\tDefaultPhysicsModuleInfo();\n\tvirtual ~DefaultPhysicsModuleInfo();\n\nprivate:\n\tfloat m_field0;\n\tfloat m_field1;\n\tfloat m_field2;\n\tint m_field3;\n\tGameClientRandomVariable m_var1;\n};\n\nDefaultPhysicsModuleInfo::DefaultPhysicsModuleInfo()\n{\n\tm_field0 = 0.0f;\n\tm_field1 = 0.0f;\n\tm_field2 = 0.0f;\n\tm_field3 = 0;\n\tm_var1.setRange(0.0f, 0.0f, GameClientRandomVariable::UNIFORM);\n}\n\n}\n"
-}

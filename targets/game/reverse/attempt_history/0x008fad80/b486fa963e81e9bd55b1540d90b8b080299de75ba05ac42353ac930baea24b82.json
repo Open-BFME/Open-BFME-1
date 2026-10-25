@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "b486fa963e81e9bd55b1540d90b8b080299de75ba05ac42353ac930baea24b82",
-  "symbol": "?rva008fad80@@YAXPAUGen_t_008fb410_p16pod@@00PAPAU1@0001@Z",
-  "score_kind": "author-estimate",
-  "score": 0.8,
-  "source": "// ?rva008fad80@@YAXPAUGen_t_008fb410_p16pod@@00PAPAU1@0001@Z\n// partial score=0.8 date=2026-09-06\n// ?rva008fad80@@YAXUGen_t_008fb410_p16pod_iter@@0@Z\n// cl: /DNDEBUG /MD /D_STLP_USE_STATIC_LIB\n// stlport\n\n#include <deque>\n\nstruct Gen_t_008fb410_p16pod { int a[4]; };\nbool operator==(const Gen_t_008fb410_p16pod &, const Gen_t_008fb410_p16pod &);\nbool operator<(const Gen_t_008fb410_p16pod &, const Gen_t_008fb410_p16pod &);\n\ntemplate class _STL::deque<Gen_t_008fb410_p16pod>;\n\ntypedef _STL::deque<Gen_t_008fb410_p16pod>::iterator Iter;\n\nvoid __cdecl rva008fad80(\n\tGen_t_008fb410_p16pod *firstCur, Gen_t_008fb410_p16pod *firstFirst,\n\tGen_t_008fb410_p16pod *firstLast, Gen_t_008fb410_p16pod **firstNode,\n\tGen_t_008fb410_p16pod *lastCur, Gen_t_008fb410_p16pod *lastFirst,\n\tGen_t_008fb410_p16pod *lastLast, Gen_t_008fb410_p16pod **lastNode)\n{\n\tIter last;\n\tlast._M_cur = lastCur;\n\tlast._M_first = lastFirst;\n\tlast._M_last = lastLast;\n\tlast._M_node = lastNode;\n\n\tIter first;\n\tfirst._M_cur = firstCur;\n\tfirst._M_first = firstFirst;\n\tfirst._M_last = firstLast;\n\tfirst._M_node = firstNode;\n\n\t_STL::__destroy_aux(first, last, _STL::__false_type());\n}\n"
-}

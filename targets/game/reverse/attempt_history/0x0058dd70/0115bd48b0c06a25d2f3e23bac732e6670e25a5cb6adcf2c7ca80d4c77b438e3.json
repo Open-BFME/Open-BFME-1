@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "0115bd48b0c06a25d2f3e23bac732e6670e25a5cb6adcf2c7ca80d4c77b438e3",
-  "symbol": "?bfmeResetXX@BfmeHostXX@@QAEXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.97,
-  "source": "// ?bfmeResetXX@BfmeHostXX@@QAEXXZ\n// partial score=0.97 date=2026-09-08\nclass BfmeHostXX\n{\npublic:\n\tvoid bfmeResetXX();\n\n\tvolatile int m_bfme00XX;\n\tvolatile int m_bfme04XX;\n\tvolatile char m_bfme08XX;\n\tunsigned char m_bfme09XX[3];\n\tvolatile int m_bfme0CXX;\n\tvolatile int m_bfme10XX;\n\tvolatile int m_bfme14XX;\n\tvolatile int m_bfme18XX;\n\tvolatile int m_bfme1CXX;\n\tvoid *volatile m_bfme20XX;\n\tvoid *volatile m_bfme24XX;\n};\n\nvoid BfmeHostXX::bfmeResetXX()\n{\n\tint none = -2;\n\n\tm_bfme08XX = 0;\n\tm_bfme0CXX = none;\n\tm_bfme10XX = none;\n\tm_bfme14XX = none;\n\tm_bfme18XX = 0;\n\n\tvoid *p20 = m_bfme20XX;\n\n\tif (p20)\n\t\t::operator delete(p20);\n\n\tm_bfme20XX = 0;\n\n\tvoid *p24 = m_bfme24XX;\n\n\t::operator delete(p24);\n\n\tm_bfme24XX = 0;\n\tm_bfme00XX = 0;\n\tm_bfme04XX = 0;\n\tm_bfme1CXX = 0;\n}\n"
-}

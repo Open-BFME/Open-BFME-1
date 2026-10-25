@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "c3826798cb26cc767d00b704739763bf6143cbbc98122d68c863639632f48583",
-  "symbol": "?bfmeCalcHL@BfmeStateHL@@QAE?AVBfmeVec3HL@@H@Z",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?bfmeCalcHL@BfmeStateHL@@QAE?AVBfmeVec3HL@@H@Z\n// partial score=0.85 date=2026-09-08\nextern const float g_bfmeK1253;\nextern float g_bfmeDefaultBU;\n\nstruct Rva006C9270GlobalData\n{\n\tunsigned char m_bfmeHeadHL[0xab4];\n\tfloat m_bfmeRateHL;\n};\n\nextern Rva006C9270GlobalData *TheWritableGlobalData;\n\nclass BfmeVec3HL\n{\npublic:\n\tBfmeVec3HL(float x, float y, float z)\n\t{\n\t\tm_bfmeXHL = x;\n\t\tm_bfmeYHL = y;\n\t\tm_bfmeZHL = z;\n\t}\n\n\tfloat m_bfmeXHL;\n\tfloat m_bfmeYHL;\n\tfloat m_bfmeZHL;\n};\n\nclass BfmeSlotHL\n{\npublic:\n\tunsigned char m_bfmeGapHL[4];\n};\n\nclass BfmeBHL\n{\npublic:\n\tunsigned char m_bfmeHeadHL[0x18];\n\tBfmeSlotHL m_bfmeSlotHL;\n};\n\nBfmeVec3HL __stdcall bfmeComputeHL(int p, void *a, float f, BfmeSlotHL *s);\n\nstatic __forceinline BfmeSlotHL *bfmeSlotHL(BfmeBHL *p)\n{\n\tif (p != 0)\n\t\treturn &p->m_bfmeSlotHL;\n\n\treturn 0;\n}\n\nclass BfmeStateHL\n{\npublic:\n\tBfmeVec3HL bfmeCalcHL(int p);\n\n\tunsigned char m_bfmeHeadHL[0x134];\n\tint m_bfme134HL;\n\tunsigned char m_bfmeGap2HL[0x88];\n\tvoid *m_bfme1c0HL;\n\tBfmeBHL *m_bfme1c4HL;\n};\n\nBfmeVec3HL BfmeStateHL::bfmeCalcHL(int p)\n{\n\tBfmeStateHL *self = this;\n\n\tif (self->m_bfme1c0HL != 0)\n\t{\n\t\tBfmeBHL *b = self->m_bfme1c4HL;\n\n\t\tif (b != 0)\n\t\t{\n\t\t\tfloat f = (TheWritableGlobalData->m_bfmeRateHL + g_bfmeDefaultBU) * g_bfmeK1253;\n\n\t\t\treturn bfmeComputeHL(p, &self->m_bfme134HL, f, bfmeSlotHL(b));\n\t\t}\n\t}\n\n\treturn BfmeVec3HL(0, 0, 0);\n}\n"
-}

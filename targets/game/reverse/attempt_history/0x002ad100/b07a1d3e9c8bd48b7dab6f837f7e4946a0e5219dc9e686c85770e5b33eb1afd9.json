@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "b07a1d3e9c8bd48b7dab6f837f7e4946a0e5219dc9e686c85770e5b33eb1afd9",
-  "symbol": "?apply@Rva002AD100@@QAEXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.63,
-  "source": "// ?apply@Rva002AD100@@QAEXXZ\n// partial score=0.63 date=2026-09-04\n// ?apply@Rva002AD100@@QAEXXZ\n// partial score=0.63 date=2026-09-04\n// cl: /DNDEBUG /MD\n\n// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h\nstruct Coord3D\n{\n\tfloat x, y, z;\n};\n\nstruct RvaC4390First\n{\n\tunsigned char m_pad[ 0x38 ];\n\tCoord3D m_pos;\n};\n\nclass RvaC4390Second\n{\npublic:\n\tRvaC4390First *resolve( int allowLookup );\n\tCoord3D *getPosition() { return &m_pos; }\n\n\tunsigned char m_pad[ 0x38 ];\n\tCoord3D m_pos;\n};\n\nclass Rva002AD100\n{\npublic:\n\tvoid apply();\n\nprivate:\n\tvoid sibling( Coord3D *a, Coord3D *b );\n\n\tvoid *m_vtable;\n\tvoid *m_moduleData;\n\tRvaC4390Second *m_object;\n};\n\n// ?apply@Rva002AD100@@QAEXXZ\nvoid Rva002AD100::apply()\n{\n\tRvaC4390First *resolved = m_object->resolve( 0 );\n\tif( !resolved )\n\t{\n\t\tRva002AD100 *self = this;\n\t\tself->sibling( m_object->getPosition(), m_object->getPosition() );\n\t\treturn;\n\t}\n\tRva002AD100 *self = this;\n\tself->sibling( &m_object->m_pos, &resolved->m_pos );\n}\n"
-}

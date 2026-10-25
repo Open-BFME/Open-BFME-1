@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "799b1bd3563f4d776bd2cc18f7700fe6dc29ed43cc4baabb273220e0757cbbae",
-  "symbol": "??1Rva00937F60Owner@@UAE@XZ",
-  "score_kind": "author-estimate",
-  "score": 0.82,
-  "source": "// ??1Rva00937F60Owner@@UAE@XZ\n// partial score=0.82 date=2026-09-06\n// ??1Rva00937F60Owner@@UAE@XZ\n\nclass NetCommandMsg;\n\nclass NetCommandRef\n{\npublic:\n\t~NetCommandRef();\n\nprivate:\n\tNetCommandMsg *m_msg;\n\tNetCommandRef *m_next;\n\tNetCommandRef *m_prev;\n};\n\nclass Rva00937F60Owner\n{\npublic:\n\tvirtual ~Rva00937F60Owner();\n\n\tNetCommandRef *m_array;\n\tvoid *m_8;\n\tchar m_padC;\n\tbool m_hasArray;\n};\n\nRva00937F60Owner::~Rva00937F60Owner()\n{\n\tif (m_array != 0 && m_hasArray)\n\t{\n\t\tdelete[] m_array;\n\t}\n\n\tm_array = 0;\n\tm_hasArray = false;\n\tm_8 = 0;\n}\n"
-}

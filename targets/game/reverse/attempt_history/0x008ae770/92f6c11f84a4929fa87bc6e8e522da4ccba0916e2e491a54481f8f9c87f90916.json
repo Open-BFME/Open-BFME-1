@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "92f6c11f84a4929fa87bc6e8e522da4ccba0916e2e491a54481f8f9c87f90916",
-  "symbol": "?aptInvokeThree@@YAPAVAptValue@@PAXH@Z",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?aptInvokeThree@@YAPAVAptValue@@PAXH@Z\n// partial score=0.85 date=2026-09-06\n// 75/75 B, 17 diff bytes: retail loads arr[n-1] between the argc compare and its branch and keeps it in edi with the optional third arg in esi; ours swaps the two callee-saved registers (a,c,b order) or loads before the compare (a,b,c order).\n// cl: /DNDEBUG /MD /EHsc\nclass AptValue { public: int toInteger() const; };\nstruct Rva008AE770Stack { void invoke(void* a, int b, void* c, AptValue* d, int e, void* f); };\nextern Rva008AE770Stack Rva008AE770TheStack;\nextern AptValue** g_bfmeArr1233;\nextern AptValue* g_bfmeFallbackDB;\nAptValue* aptInvokeThree(void* self, int argc)\n{\n\tAptValue** arr = g_bfmeArr1233;\n\tint n = *(int*)&Rva008AE770TheStack;\n\tAptValue* a = arr[n - 2];\n\tAptValue* c = argc >= 3 ? arr[n - 3] : 0;\n\tAptValue* b = arr[n - 1];\n\tRva008AE770TheStack.invoke(self, 0, self, b, a->toInteger() + 0x4000, c);\n\treturn g_bfmeFallbackDB;\n}\n"
-}

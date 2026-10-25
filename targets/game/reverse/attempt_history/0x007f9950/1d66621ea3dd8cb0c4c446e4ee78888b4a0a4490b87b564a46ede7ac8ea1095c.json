@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "1d66621ea3dd8cb0c4c446e4ee78888b4a0a4490b87b564a46ede7ac8ea1095c",
-  "symbol": "?rva007F9950Copy@Rva007F9950Struct@@QAEXPBV1@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?rva007F9950Copy@Rva007F9950Struct@@QAEXPBV1@@Z\n// partial score=0.85 date=2026-09-06\n// ?rva007F9950Copy@Rva007F9950Struct@@QAEXPBV1@@Z\n// Address-derived: field-wise copy of an 11-int-plus-byte struct from\n// *other into *this, leaving offset 0 untouched (a preserved vtable or id\n// field).\nclass Rva007F9950Struct\n{\npublic:\n\tint m_0;\n\tint m_4;\n\tint m_8;\n\tint m_c;\n\tint m_10;\n\tint m_14;\n\tint m_18;\n\tint m_1c;\n\tint m_20;\n\tint m_24;\n\tint m_28;\n\tint m_2c;\n\tunsigned char m_30;\n\n\tvoid rva007F9950Copy(const Rva007F9950Struct *other);\n};\n\nvoid Rva007F9950Struct::rva007F9950Copy(const Rva007F9950Struct *other)\n{\n\tRva007F9950Struct *self = this;\n\tself->m_4 = other->m_4;\n\tm_8 = other->m_8;\n\tm_c = other->m_c;\n\tm_10 = other->m_10;\n\tm_14 = other->m_14;\n\tm_18 = other->m_18;\n\tm_1c = other->m_1c;\n\tm_20 = other->m_20;\n\tm_24 = other->m_24;\n\tm_28 = other->m_28;\n\tm_2c = other->m_2c;\n\tm_30 = other->m_30;\n}\n"
-}

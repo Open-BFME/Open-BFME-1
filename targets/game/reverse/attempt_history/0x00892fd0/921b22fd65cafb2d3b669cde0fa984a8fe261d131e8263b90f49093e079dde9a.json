@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "921b22fd65cafb2d3b669cde0fa984a8fe261d131e8263b90f49093e079dde9a",
-  "symbol": "?d_00892fd0@@YAXXZ",
-  "score_kind": "measured",
-  "score": 0.6197,
-  "source": "// ?d_00892fd0@@YAXXZ\n// partial score=0.6197 date=2026-10-12\n// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /I.\n// Retail 0x00892FD0, 71 bytes: a carved leaf with no direct caller and no\n// identity evidence. It walks the owner's 8-byte node array and returns true\n// only when every node key is one of the two argument values; the first is\n// skipped rather than compared, so the predicate is \"all keys are a or b\".\n\nstruct Rva00892FD0Node\n{\n\tint m_bfmeValue;\t// +0x00\n\tint m_bfmeKey;\t\t// +0x04\n};\n\nclass Rva00892FD0KeySet\n{\npublic:\n\tbool bfmeAllKeysAre(int skip, int want) const;\n\nprivate:\n\tint m_bfmeCount;\t\t\t// +0x00\n\tint m_bfmeUnused;\t\t\t// +0x04\n\t// Retail re-reads this pointer on every trip, so it is volatile.\n\tRva00892FD0Node *volatile m_bfmeData;\t// +0x08\n};\n\n// ?bfmeAllKeysAre@Rva00892FD0KeySet@@QBE_NHH@Z\nbool Rva00892FD0KeySet::bfmeAllKeysAre(int skip, int want) const\n{\n\tconst Rva00892FD0Node *node = m_bfmeData;\n\n\twhile (node != m_bfmeData + m_bfmeCount)\n\t{\n\t\tif (node->m_bfmeKey != skip && node->m_bfmeKey != want)\n\t\t\treturn false;\n\n\t\t++node;\n\t}\n\n\treturn true;\n}\n"
-}

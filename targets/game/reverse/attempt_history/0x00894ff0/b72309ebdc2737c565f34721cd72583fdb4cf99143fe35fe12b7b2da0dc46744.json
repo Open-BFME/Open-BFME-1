@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "b72309ebdc2737c565f34721cd72583fdb4cf99143fe35fe12b7b2da0dc46744",
-  "symbol": "?d_00894ff0@@YAXXZ",
-  "score_kind": "measured",
-  "score": 0.4688,
-  "source": "// ?d_00894ff0@@YAXXZ\n// partial score=0.4688 date=2026-10-15\n// cl: /DNDEBUG /MD /O1\n// ?Rva00894FF0@@YGXPAPAURva00894FF0Node@@@Z  retail 0x00894FF0 size 32\n\nstruct Rva00894FF0Node\n{\n\tint m_unused;\n\tRva00894FF0Node *m_next;\n};\nextern void (*Rva008A30A0ReleasePtr)( void * );\nvoid __stdcall Rva00894FF0(Rva00894FF0Node **head)\n{\n\tRva00894FF0Node *owner = *head;\n\tRva00894FF0Node *node = owner->m_next;\n\tif (node)\n\t\towner->m_next = node->m_next;\n\tRva008A30A0ReleasePtr(node);\n}\n"
-}
