@@ -21131,5 +21131,15 @@
   "after_sha256": "deddeffe459a7f68886a9ce75bd0c333f31ca749bb52d00eaec93198c0924a14",
   "evidence": "targets/game/reverse/identity_evidence/00c61819-registry-return-view.md",
   "reason": "Correct the conditional temporary ownership type, not the preserved AssetReference declaration or producer API. Both independent retail unwind states of parent 009EBCE0 reach the already proved address-qualified handle destructor 0005C640. The canonical Find_Asset symbol is retained through a physically checked one-word result view; all 211 parent bytes and both 25-byte actions verify."
- }
+ },
+{
+ "old_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Rva009EBDC0.cpp",
+ "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Rva009EBDC0.cpp",
+ "old_name": "AssetReference",
+ "new_name": "Rva009EBCE0AssetReference",
+ "before_sha256": "6548fd7c7018e9f6dc50b8196e71b2bfe6535b6a9d1444148bd4b32a47c0e069",
+ "after_sha256": "d78683f0e6313862cbc8ca2fd33fd95d42ba303b0092f16e63a025dd82c3cfb4",
+ "evidence": "targets/game/reverse/identity_evidence/00c61840-registry-temporary.md",
+ "reason": "Correct only the inner conditional temporary to the independently proved handle destructor 0005C640. The public AssetReference result and canonical EnumAssets provider remain intact. Retail FuncInfo E51098 state 1 proves ownership; the full 175-byte parent, 25-byte action and 224-byte provider pass normal gates."
+}
 ]
