@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "72eb41c6fe935f4af2f712dfce3d63a1622bbc53b54222f98dd3f4e5b28ae1e5",
-  "symbol": "?bfmeFillAAM@@YAPAUBfmeEntryAAM@@PAU1@IABU1@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?bfmeFillAAM@@YAPAUBfmeEntryAAM@@PAU1@IABU1@@Z\n// partial score=0.85 date=2026-09-08\ninline void *operator new(unsigned int, void *p)\n{\n\treturn p;\n}\n\nclass GameSpyGroupRoom\n{\npublic:\n\tGameSpyGroupRoom(const GameSpyGroupRoom &o);\n\n\tvoid *m_bfmeDataAAM;\n};\n\nstruct BfmeEntryAAM\n{\n\tint m_bfme00AAM;\n\tint m_bfme04AAM;\n\tint m_bfme08AAM;\n\tint m_bfme0CAAM;\n\tint m_bfme10AAM;\n\tint m_bfme14AAM;\n\tint m_bfme18AAM;\n\tGameSpyGroupRoom m_bfme1CAAM;\n\tchar m_bfme20AAM;\n};\n\nBfmeEntryAAM *bfmeFillAAM(BfmeEntryAAM *dst, unsigned int count, const BfmeEntryAAM &src);\n\nBfmeEntryAAM *bfmeFillAAM(BfmeEntryAAM *dst, unsigned int count, const BfmeEntryAAM &src)\n{\n\tfor (unsigned int n = count; n != 0; --n)\n\t{\n\t\tnew (dst) BfmeEntryAAM(src);\n\t\t++dst;\n\t}\n\n\treturn dst;\n}\n"
-}

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "512ebdef90184f50fcd7e57c0efe4b00c199e04452aef1188040441004bd8bc6",
-  "symbol": "?method@Rva00372FA0Owner@@QAEHPBXH_N@Z",
-  "score_kind": "measured",
-  "score": 0.9227,
-  "source": "// ?method@Rva00372FA0Owner@@QAEHPBXH_N@Z\n// partial score=0.9227 date=2026-10-20\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB\n// stlport\nint Rva00372E40(void *, int, const void *, bool);\n\nclass Rva00372FA0Owner {\npublic:\n    int method(const void *whatToBuild, int slot, bool flag);\nprivate:\n    struct SlotRange { int *begin; int *end; };\n    char m_pad00[0x9c];\n    int m_state;\n    void *m_fieldA0; void *context() const { return m_fieldA0; }\n    char m_padA4[0x14];\n    SlotRange m_primary;\n    char m_padC0[0x1c];\n    SlotRange m_secondary;\n};\n\nint Rva00372FA0Owner::method(const void *whatToBuild, int slot, bool flag)\n{\n    if (!whatToBuild) return 0;\n    SlotRange *range = &m_primary;\n    if (*(const unsigned int *)((const char *)whatToBuild + 0xcc) & 0x80000000u)\n        range = &m_secondary;\n    if (slot == -2) {\n        for (int *entry = range->begin; entry != range->end; ++entry) {\n            int result = Rva00372E40(context(), *entry, whatToBuild, flag);\n            if (result) return result;\n        }\n    } else {\n        unsigned int count = range->end - range->begin;\n        if (count > 0) {\n            if ((unsigned int)slot > count - 1) slot = count - 1;\n            else if (slot < 0) slot = 0;\n            int result = Rva00372E40(context(), range->begin[slot], whatToBuild, flag);\n            if (result) return result;\n        }\n    }\n    return 0;\n}\n"
-}

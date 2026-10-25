@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "388b7a9322e2eec174ac881a3306bcad77c5d755ba25bd2393d36a2e9ddb6a77",
-  "symbol": "?aptCallWithBias@@YAPAVAptValue@@PAXH@Z",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?aptCallWithBias@@YAPAVAptValue@@PAXH@Z\n// partial score=0.9 date=2026-09-06\n// cl: /DNDEBUG /MD /EHsc\nclass AptValue { public: int toInteger(); };\nextern AptValue* g_bfmeFallbackDB;\nextern AptValue** g_bfmeArr1233;\nextern int g_bfmeCount1233;\nstruct Rva008AE770Stack { void invoke(void* self, int zero, void* self2, AptValue* target, int biased, AptValue* extra); };\nextern Rva008AE770Stack Rva008AE770TheStack;\nAptValue* aptCallWithBias(void* self, int argc)\n{\n\tAptValue* first = g_bfmeArr1233[g_bfmeCount1233 - 2];\n\tAptValue* second = g_bfmeArr1233[g_bfmeCount1233 - 1];\n\tAptValue* third = argc >= 3 ? g_bfmeArr1233[g_bfmeCount1233 - 3] : 0;\n\tRva008AE770TheStack.invoke(self, 0, self, second, first->toInteger() + 0x4000, third);\n\treturn g_bfmeFallbackDB;\n}\n"
-}

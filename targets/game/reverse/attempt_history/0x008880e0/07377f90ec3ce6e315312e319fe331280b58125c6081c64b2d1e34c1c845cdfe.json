@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "07377f90ec3ce6e315312e319fe331280b58125c6081c64b2d1e34c1c845cdfe",
-  "symbol": "?nextToken@?$StringBase@D@@QAE_NPAV1@PBD@Z",
-  "score_kind": "author-estimate",
-  "score": 0.26,
-  "source": "// ?nextToken@?$StringBase@D@@QAE_NPAV1@PBD@Z\n// partial score=0.26 date=2026-09-07\n// Banked real-C++ attempt for StringBase<char>::nextToken,\n// RVA 0x008880E0, retail size 186 bytes.\n// StringBase layout, separator-helper ABI, and all five retail call routes\n// are proven; the remaining mismatch is MSVC's entry register/save choice\n// and the resulting out/end/length allocation.\nstatic char *skipSeps(char *, const char *);\nstatic char *skipNonSeps(char *, const char *);\n\nbool StringBase<char>::nextToken(StringBase<char> *out,\n                                 const char *delimiters)\n{\n    if (isEmpty() || out == this)\n        return false;\n\n    static const char kDefault[] = \" \\n\\r\\t\";\n    if (delimiters == 0)\n        delimiters = kDefault;\n\n    char *start = skipSeps(peek(), delimiters);\n    char *end = skipNonSeps(start, delimiters);\n    if (end > start)\n    {\n        int len = (int)(end - start);\n        char *tmp = out->getBufferForRead(len);\n        memcpy(tmp, start, len);\n        tmp[len] = 0;\n\n        int remaining = getLength();\n        remaining -= (int)(end - peek());\n        set(end, remaining);\n        return true;\n    }\n\n    clear();\n    out->clear();\n    return false;\n}\n"
-}

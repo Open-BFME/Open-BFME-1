@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "9dbc5f55d550da817976eecdb25ee24eff312998e29232d9f74aff9af7b08673",
-  "symbol": "?Rva009B3180FilterVert@@YAXPAXPAEHPBH@Z",
-  "score_kind": "measured",
-  "score": 1.0,
-  "source": "// ?Rva009B3180FilterVert@@YAXPAXPAEHPBH@Z\n// partial score=1.0 date=2026-10-11\n// cl: /O2 /G6 /DNDEBUG /MD\nextern unsigned char g_bfmeClampTable[];\n\n// Ported from Open BFME 2 Code/Libraries/Source/VP6/FilterHorizSimple2.cpp.\n// ?Rva009B3180FilterVert@@YAXPAXPAEHPBH@Z\nvoid Rva009B3180FilterVert(void *, unsigned char *ptr, int pitch, const int *bounding)\n{\n\tint i, step, left, right, amount, half;\n\tfor (i = 0; i < 8; i++) {\n\t\tstep = ptr[2] - ptr[1];\n\t\tif (step != 0) {\n\t\t\tleft = ptr[1] - ptr[0];\n\t\t\tright = ptr[3] - ptr[2];\n\t\t\tamount = bounding[(step * 2 - left + right + 4) >> 3];\n\t\t\tptr[1] = g_bfmeClampTable[ptr[1] + amount + 256];\n\t\t\tptr[2] = g_bfmeClampTable[ptr[2] - amount + 256];\n\t\t\thalf = ((right | left) == 0) * (amount >> 1);\n\t\t\tptr[0] = g_bfmeClampTable[ptr[0] + half + 256];\n\t\t\tptr[3] = g_bfmeClampTable[ptr[3] - half + 256];\n\t\t\tptr += pitch;\n\t\t}\n\t}\n}\n"
-}

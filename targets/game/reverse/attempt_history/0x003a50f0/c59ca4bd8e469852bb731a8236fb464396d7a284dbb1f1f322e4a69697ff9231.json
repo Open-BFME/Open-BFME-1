@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "c59ca4bd8e469852bb731a8236fb464396d7a284dbb1f1f322e4a69697ff9231",
-  "symbol": "?rva003A50F0@Gen003BDE80Element@@QAEXXZ",
-  "score_kind": "measured",
-  "score": 0.4693,
-  "source": "// ?rva003A50F0@Gen003BDE80Element@@QAEXXZ\n// partial score=0.4693 date=2026-10-16\n// ?rva003A50F0@Gen003BDE80Element@@QAEXXZ\n// cl: /DNDEBUG /MD /EHsc\nextern \"C\" double __cdecl sqrt(double value);\n#pragma intrinsic(sqrt)\nextern const float g_bfmeDefaultBU;\nextern const double g_bfmeSubB3;\n\ntypedef float Real;\n\nstruct Coord2D\n{\n\tReal x, y;\n\tReal length() const { return (Real)sqrt(x * x + y * y); }\n\tvoid scale(Real s) { x *= s; y *= s; }\n\tvoid add(const Coord2D &o) { x += o.x; y += o.y; }\n\tvoid sub(const Coord2D &o) { x -= o.x; y -= o.y; }\n};\n\nclass Gen003BDE80Element\n{\npublic:\n\tvoid rva003A50F0();\n\tReal rva003A40A0();\n\tvoid rva003A4FD0(Coord2D *delta);\n\nprivate:\n\tchar m_unmodelled_00[0x0c];\n\tCoord2D m_current;\n\tCoord2D m_target;\n};\n\n// ?rva003A50F0@Gen003BDE80Element@@QAEXXZ\nvoid Gen003BDE80Element::rva003A50F0()\n{\n\tCoord2D dir = m_target;\n\tdir.x -= m_current.x;\n\tdir.y -= m_current.y;\n\tdir.scale(g_bfmeDefaultBU / dir.length());\n\tReal amount = rva003A40A0();\n\tdir.scale(amount);\n\tm_current.add(dir);\n\tCoord2D remaining;\n\tremaining.x = m_target.x;\n\tremaining.y = m_target.y;\n\tremaining.x -= m_current.x;\n\tremaining.y -= m_current.y;\n\tif (remaining.length() < g_bfmeSubB3)\n\t\trva003A4FD0(&remaining);\n}\n"
-}

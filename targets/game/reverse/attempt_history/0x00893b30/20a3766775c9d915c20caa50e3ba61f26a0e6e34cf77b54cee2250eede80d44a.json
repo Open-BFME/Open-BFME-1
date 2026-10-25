@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "20a3766775c9d915c20caa50e3ba61f26a0e6e34cf77b54cee2250eede80d44a",
-  "symbol": "?d_00893b30@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.72,
-  "source": "// ?d_00893b30@@YAXXZ\n// partial score=0.72 date=2026-09-07\n// cl: /DNDEBUG /MD /EHs-c-\n\nstruct BfmeStringData3AF0\n{\n\tunsigned short m_refs;\n};\n\nstruct BfmeStringPool3AF0\n{\n\tvoid *m_pad;\n\tvoid (__cdecl *m_destroy)(BfmeStringData3AF0 *);\n};\n\nextern BfmeStringPool3AF0 *g_bfmeStringPool1284;\n\nstruct Rva00892640Item\n{\n\tRva00892640Item();\n\t~Rva00892640Item();\n\n\tBfmeStringData3AF0 *m_handle;\n\tvoid *m_extra;\n};\n\n// ?Rva00893B30ResizeItems@@YAPAURva00892640Item@@PAU1@HH@Z\nRva00892640Item *Rva00893B30ResizeItems(\n\tRva00892640Item *data, int logical_count, int new_capacity)\n{\n\tif (data == 0)\n\t\treturn new Rva00892640Item[new_capacity];\n\n\tRva00892640Item *replacement = new Rva00892640Item[new_capacity];\n\tint count = logical_count;\n\tif (new_capacity < count)\n\t\tcount = new_capacity;\n\tif (count != 0)\n\t{\n\t\tRva00892640Item *source = data;\n\t\tRva00892640Item *destination = replacement;\n\t\tdo\n\t\t{\n\t\t\tBfmeStringData3AF0 *incoming = source->m_handle;\n\t\t\t++incoming->m_refs;\n\t\t\tBfmeStringData3AF0 *old = destination->m_handle;\n\t\t\t--old->m_refs;\n\t\t\tif (old->m_refs == 0)\n\t\t\t\tg_bfmeStringPool1284->m_destroy(old);\n\t\t\tdestination->m_handle = source->m_handle;\n\t\t\tdestination->m_extra = source->m_extra;\n\t\t\t++source;\n\t\t\t++destination;\n\t\t}\n\t\twhile (--count != 0);\n\t}\n\tdelete[] data;\n\treturn replacement;\n}\n"
-}

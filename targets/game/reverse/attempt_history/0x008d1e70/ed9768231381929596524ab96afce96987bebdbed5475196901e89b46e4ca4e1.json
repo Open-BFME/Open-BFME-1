@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "ed9768231381929596524ab96afce96987bebdbed5475196901e89b46e4ca4e1",
-  "symbol": "?atLevel@Rva008D1E70Node@@QAEPAXH@Z",
-  "score_kind": "author-estimate",
-  "score": 0.82,
-  "source": "// ?atLevel@Rva008D1E70Node@@QAEPAXH@Z\n// partial score=0.82 date=2026-09-06\n// ?atLevel@Rva008D1E70Node@@QAEPAXH@Z\n// Address-derived: walk the m_4c singly-linked chain from this to compute a\n// depth, then either return -1 (n beyond depth), this->m_8 (n == depth), or\n// walk (depth-n) steps from `this` via m_4c and return that node's m_8.\nstruct Rva008D1E70Node\n{\n\tunsigned char m_pad0[8];\n\tvoid* m_8;\n\tunsigned char m_padC[0x4c - 0xC];\n\tRva008D1E70Node* m_4c;\n\n\tvoid* atLevel(int n);\n};\n\nvoid* Rva008D1E70Node::atLevel(int n)\n{\n\tint depth = 0;\n\tRva008D1E70Node* p = m_4c;\n\twhile (p)\n\t{\n\t\tp = p->m_4c;\n\t\t++depth;\n\t}\n\n\tif (n > depth)\n\t\treturn (void*)-1;\n\n\tif (depth == n)\n\t\treturn m_8;\n\n\tRva008D1E70Node* cur = this;\n\tint steps = depth - n;\n\tdo\n\t{\n\t\tcur = cur->m_4c;\n\t} while (--steps);\n\treturn cur->m_8;\n}\n"
-}

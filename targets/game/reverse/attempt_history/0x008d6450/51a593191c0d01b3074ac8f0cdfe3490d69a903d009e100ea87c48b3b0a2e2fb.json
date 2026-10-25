@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "51a593191c0d01b3074ac8f0cdfe3490d69a903d009e100ea87c48b3b0a2e2fb",
-  "symbol": "?rva008d6450@@YAXPAUElem16@@0@Z",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?rva008d6450@@YAXPAUElem16@@0@Z\n// partial score=0.85 date=2026-09-06\n// ?rva008d6450@@YAXPAUElem16@@0@Z\n\nstruct Elem16\n{\n\tfloat x;\n\tfloat y;\n\tint i;\n\tint j;\n};\n\nstruct Temp2\n{\n\tint i;\n\tint j;\n};\n\nvoid __cdecl rva008d6450(Elem16 *a, Elem16 *b)\n{\n\tTemp2 t;\n\tt.i = a->i;\n\tfloat ax = a->x;\n\tt.j = a->j;\n\tfloat ay = a->y;\n\n\ta->x = b->x;\n\ta->y = b->y;\n\ta->i = b->i;\n\ta->j = b->j;\n\n\tb->x = ax;\n\tb->y = ay;\n\tb->i = t.i;\n\tb->j = t.j;\n}\n"
-}
