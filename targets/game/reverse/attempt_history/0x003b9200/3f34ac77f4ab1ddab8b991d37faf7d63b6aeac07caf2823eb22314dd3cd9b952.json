@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "3f34ac77f4ab1ddab8b991d37faf7d63b6aeac07caf2823eb22314dd3cd9b952",
-  "symbol": "?rva003B9200Contains@Rva003B9200Owner@@QAE_NPAVRva003B9200Predicate@@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.4,
-  "source": "// ?rva003B9200Contains@Rva003B9200Owner@@QAE_NPAVRva003B9200Predicate@@@Z\n// partial score=0.4 date=2026-09-06\n// ?rva003B9200Contains@Rva003B9200Owner@@QBE_NPAVRva003B9200Predicate@@@Z\n// Address-derived: linear scan over a pointer array [m_begin, m_end) (4-byte\n// elements), calling the already-named thunk 0x000202BB as pred->matches(*it)\n// for each element; returns true on the first match, false if the array is\n// exhausted. The element count is recomputed from m_begin/m_end every\n// iteration rather than cached, matching retail's re-read.\nclass Rva003B9200Predicate\n{\npublic:\n\tbool matches(void *element);\n};\n\nclass Rva003B9200Owner\n{\npublic:\n\tunsigned char m_pad0[0xc];\n\tvoid **m_begin;\n\tchar *m_end;\n\n\tbool rva003B9200Contains(Rva003B9200Predicate *pred);\n};\n\nbool Rva003B9200Owner::rva003B9200Contains(Rva003B9200Predicate *pred)\n{\n\tvoid **it = m_begin;\n\tint count = (int)(m_end - (char *)m_begin) >> 2;\n\tif (count <= 0)\n\t\treturn false;\n\n\tint i = 0;\n\tdo\n\t{\n\t\tif (pred->matches(*it))\n\t\t\treturn true;\n\t\tcount = (int)(m_end - (char *)m_begin) >> 2;\n\t\t++i;\n\t\t++it;\n\t} while (i < count);\n\n\treturn false;\n}\n"
-}

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "d5a24e76e1d52cd8c4262a15e4e59de412525ef0e706e6612b0202a453857636",
-  "symbol": "?bfmeFireDN@BfmeHostDN@@QAEXH@Z",
-  "score_kind": "author-estimate",
-  "score": 0.7,
-  "source": "// ?bfmeFireDN@BfmeHostDN@@QAEXH@Z\n// partial score=0.7 date=2026-09-08\nextern \"C\" void *bfmeMsgVftDN[];\n\nclass BfmeMsgDN\n{\npublic:\n\tBfmeMsgDN(void *p)\n\t{\n\t\tm_bfmeVftDN = bfmeMsgVftDN;\n\t\tm_bfmePtrDN = p;\n\t\tm_bfmeFlagDN = 0;\n\t}\n\n\t~BfmeMsgDN();\n\n\tvoid *m_bfmeVftDN;\n\tvoid *m_bfmePtrDN;\n\tint m_bfmeFlagDN;\n};\n\nclass ControlBar\n{\npublic:\n\tvoid bfmeSendDN(BfmeMsgDN *m);\n};\n\nextern ControlBar *TheControlBar;\n\nclass BfmeNodeDN\n{\npublic:\n\tunsigned char m_bfmeHeadDN[8];\n\tvoid *m_bfmeValDN;\n};\n\nclass BfmeSlotDN\n{\npublic:\n\tBfmeNodeDN *m_bfmeFirstDN;\n\tunsigned char m_bfmeGapDN[0x14];\n};\n\nclass BfmeBucketDN\n{\npublic:\n\tunsigned char m_bfmeHeadDN[4];\n\tBfmeNodeDN *m_bfmeEndDN;\n\tBfmeSlotDN m_bfmeSlotsDN[1];\n};\n\nclass BfmeHostDN\n{\npublic:\n\tvoid bfmeFireDN(int unused);\n\n\tBfmeBucketDN *m_bfmeBucketDN;\n\tint m_bfmeIndexDN;\n};\n\nvoid BfmeHostDN::bfmeFireDN(int unused)\n{\n\tBfmeBucketDN *b = m_bfmeBucketDN;\n\tBfmeNodeDN *e = b->m_bfmeSlotsDN[m_bfmeIndexDN].m_bfmeFirstDN;\n\n\tif (e != b->m_bfmeEndDN)\n\t{\n\t\tBfmeMsgDN msg(e->m_bfmeValDN);\n\n\t\tTheControlBar->bfmeSendDN(&msg);\n\t}\n}\n"
-}

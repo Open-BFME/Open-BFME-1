@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "7d907bd8c92dc20408e4a2aab4b0971f27404e54fa89a10bc2710d5833378556",
-  "symbol": "?nextToken@?$StringBase@G@@QAE_NPAV1@PBG@Z",
-  "score_kind": "author-estimate",
-  "score": 0.59,
-  "source": "// ?nextToken@?$StringBase@G@@QAE_NPAV1@PBG@Z\n// partial score=0.59 date=2026-09-07\n// Banked real-C++ attempt for StringBase<wchar_t>::nextToken,\n// RVA 0x008889B0, retail size 197 bytes.\n// The header layout and all five retail call routes are proven; the remaining\n// mismatch is MSVC's callee-saved register allocation in the prologue and\n// dependent arithmetic/call setup.\nstatic unsigned short *skipSepsW(unsigned short *, const unsigned short *);\nstatic unsigned short *skipNonSepsW(unsigned short *, const unsigned short *);\n\nbool StringBase<wchar_t>::nextToken(StringBase<wchar_t> *out,\n                                    const wchar_t *delimiters)\n{\n    if (isEmpty() || out == this)\n        return false;\n\n    static const wchar_t kDefault[] = L\" \\n\\r\\t\";\n    if (delimiters == 0)\n        delimiters = kDefault;\n\n    wchar_t *start = skipSepsW(peek(), delimiters);\n    wchar_t *end = skipNonSepsW(start, delimiters);\n    if (end > start)\n    {\n        int len = (int)(end - start);\n        wchar_t *tmp = out->getBufferForRead(len);\n        memcpy(tmp, start, len * 2);\n        tmp[len] = 0;\n\n        int remaining = getLength();\n        remaining -= (int)(end - peek());\n        set(end, remaining);\n        return true;\n    }\n\n    clear();\n    out->clear();\n    return false;\n}\n"
-}

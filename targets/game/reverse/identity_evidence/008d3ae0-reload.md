@@ -1,9 +1,0 @@
-# Reload at 0x008D3AE0
-
-The complete retail body starts after the seeder's return and one INT3 byte. Its only return is at +0x118, followed by seven INT3 bytes before 0x008D3C00. The extent is 281 bytes. The old 275-byte ledger extent cuts the final shift instruction. Both loops have internal back edges and there are no outgoing conditional branches.
-
-The matched bfmeNext1221 body tail-jumps here when its signed countdown becomes negative and consumes the unsigned 32-bit return in EAX. This establishes the existing _bfmeReload1221 identity and cdecl zero-argument ABI independently of the donor. The optional seeding call pushes 4357 and restores four stack bytes. The complete bfmeSeed body writes the same signed countdown and 624 consecutive 32-bit state words. The reload reads the extra lookahead word at index 624. The recorded g_bfmeLeft1221, g_bfmeStateFA and g_bfmeNext1221 names resolve the actual BFME 1 operands.
-
-Open BFME 2 donor Code/GameEngine/Source/Common/BfmeReload1221.cpp at game.dat 0x0070F710 introduces a distinct tempering variable before the final twist store. The saved bank emits 279 bytes with 60 non-relocation differences. The port emits all 281 bytes exactly outside relocation slots. This confirms the proposed final-word lifetime experiment; any non-relocation difference or inconsistent relocation target would refute it. The ILT Python API reports UNTESTABLE for the existing C name, so the matched caller is the identity evidence.
-
-Raw evidence: build/donor-port/8d3ae0-retail.log, build/donor-port/8d3ae0-callees.log, build/donor-port/8d3ab0-callees.log, build/donor-port/reload/bank-probe.log and build/donor-port/reload/port-probe.log. The source preserves the previous bank's callee and global names. There is no exception handler, indirect call or owned member cleanup in this body.

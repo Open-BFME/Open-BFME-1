@@ -1,9 +1,0 @@
-# Recovery at RVA 0x009B4770
-
-Open BFME 2 donor `Code/Libraries/Source/VP6/Rva001C5070SkipBits.cpp` at game.dat RVA 0x001C5070 reproduces all 60 BFME 1 bytes as plain C++. The function is named `Rva009B4770SkipBits` to retain an address identity. The descriptive suffix states the decoded operation and does not claim an original vendor name.
-
-The complete preceding body at RVA 0x009B4740 ends with RET at RVA 0x009B476E followed by INT3. The target starts at RVA 0x009B4770 and ends at RVA 0x009B47AC, after RET at RVA 0x009B47AB and before four INT3 bytes. Its only conditional branch lands on that RET. There are no outgoing jumps, calls, exception states or cleanup helpers.
-
-The entry reads the reader from EAX and a 32-bit consumed count from ECX. It subtracts the count from the state word at offset 0, testing the signed result. The source retains the already matched `Vp6RawBits` unsigned count declaration and explicitly casts the difference to signed for that test; this form also passes the strict byte gate. A negative remainder reloads the next four bytes in big-endian order into the buffered value at offset 4, advances the byte pointer at offset 8 by four and adds 32 to the remaining count. The state layout agrees with the completely decoded readers at RVAs 0x009B46E0 and 0x009B47B0. It preserves ESI and EDI, consumes no stack arguments and calculates no result. The source chooses `void`; the original source return declaration is not independently named.
-
-No named direct caller was found by the repository's inventory. The helper is static, and a marked absent-from-retail integration entry reproduces the exact private EAX and ECX convention. It does not introduce a public calling-convention adapter. A complete caller proving different incoming registers or value use, an outgoing branch, a different state layout or a failing strict byte gate would refute this recovery.

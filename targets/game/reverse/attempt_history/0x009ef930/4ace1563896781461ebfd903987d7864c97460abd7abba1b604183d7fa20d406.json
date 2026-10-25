@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "4ace1563896781461ebfd903987d7864c97460abd7abba1b604183d7fa20d406",
-  "symbol": "?Rva009EF930@@YAXXZ",
-  "score_kind": "measured",
-  "score": 1.0,
-  "source": "// ?Rva009EF930@@YAXXZ\n// partial score=1.0 date=2026-10-15\n// cl: /EHsc /MD /D_STLP_USE_STATIC_LIB\r\n// stlport\r\n#include <deque>\r\n\r\nclass Rva009EF0D0Element;\r\nnamespace _STL {\r\ntemplate <> void deque<Rva009EF0D0Element *>::_M_reallocate_map(unsigned int, bool);\r\ntemplate <> void deque<Rva009EF0D0Element *>::_M_push_front_aux_v(Rva009EF0D0Element *const &);\r\n// Open BFME 2: Code/Libraries/Source/WWVegas/WWLib/stlport_deque_int.cpp\r\ntemplate void deque<Rva009EF0D0Element *>::push_front(Rva009EF0D0Element *const &);\r\n}\r\n"
-}

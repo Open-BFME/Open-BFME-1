@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "8fb51ff04c10af9ffdf09de708cb89ca76771a5ab26f2928f4e8a7a4c59058c3",
-  "symbol": "?bfmeRefreshAAK@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.8,
-  "source": "// ?bfmeRefreshAAK@@YAXXZ\n// partial score=0.8 date=2026-09-08\nstruct Rva005A00B0AudioClient\n{\n\tunsigned char m_bfmeHeadAAK[0xb8];\n\tunsigned char m_bfmeSlotsAAK[0x54c];\n};\n\nextern Rva005A00B0AudioClient *volatile TheAudioClientUpdate;\n\nvoid __stdcall refreshPair(int a, int b);\n\nvoid bfmeRefreshAAK();\n\nvoid bfmeRefreshAAK()\n{\n\tif (TheAudioClientUpdate == 0)\n\t\treturn;\n\n\tfor (int off = 0; off < 0x54c; off += 0x1c4)\n\t{\n\t\tunsigned char *volatile slot = TheAudioClientUpdate->m_bfmeSlotsAAK + off;\n\n\t\tfor (int j = 0; j < 6; ++j)\n\t\t\tfor (int k = 0; k < 2; ++k)\n\t\t\t\trefreshPair(j, k);\n\t}\n}\n"
-}

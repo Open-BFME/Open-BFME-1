@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "eb77ccdc32ff7ebf3d76ac31b8e9b02824bb951ffaeb6b63f193714bf4fa0ee3",
-  "symbol": "?applyUpgradeIfAllowed@Rva00256240Inner@@QAEXH@Z",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?applyUpgradeIfAllowed@Rva00256240Inner@@QAEXH@Z\n// partial score=0.9 date=2026-09-06\nclass Object;\nclass GameLogic { public: Object* bfmeFind1011(int id); };\nextern GameLogic* TheBfmeGameLogic;\nstruct Rva00256240Upgrade;\nstruct Rva00256240Center { Rva00256240Upgrade* findUpgrade(void* name); };\nextern Rva00256240Center* Rva00256240TheUpgradeCenter;\nstruct Rva00256240Def { char m_pad[0x8]; char m_gate[0x2c]; char m_upgradeName[1]; bool allows(void* ctx, int arg); };\nstruct Rva00256240Ctx { char m_pad[0x78]; int m_objectId; };\nclass Object { public: bool canApply(Rva00256240Upgrade* u); void apply(Rva00256240Upgrade* u); };\nstruct Rva00256240Inner { void applyUpgradeIfAllowed(int arg); };\nstruct Rva00256240Outer { Rva00256240Def* m_def; Rva00256240Ctx* m_ctx; int m_8; Rva00256240Inner m_inner; };\nvoid Rva00256240Inner::applyUpgradeIfAllowed(int arg)\n{\n\tRva00256240Outer* outer = (Rva00256240Outer*)((char*)this - 0xc);\n\tif (((Rva00256240Def*)outer->m_def->m_gate)->allows(outer->m_ctx, arg)) {\n\t\tObject* obj = TheBfmeGameLogic->bfmeFind1011(outer->m_ctx->m_objectId);\n\t\tif (obj) {\n\t\t\tRva00256240Upgrade* u = Rva00256240TheUpgradeCenter->findUpgrade(outer->m_def->m_upgradeName);\n\t\t\tif (u && obj->canApply(u))\n\t\t\t\tobj->apply(u);\n\t\t}\n\t}\n}\n"
-}

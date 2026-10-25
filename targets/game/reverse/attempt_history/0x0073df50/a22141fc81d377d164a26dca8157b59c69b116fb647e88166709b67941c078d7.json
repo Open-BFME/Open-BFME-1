@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "a22141fc81d377d164a26dca8157b59c69b116fb647e88166709b67941c078d7",
-  "symbol": "?d_0073df50@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.7,
-  "source": "// ?d_0073df50@@YAXXZ\n// partial score=0.7 date=2026-09-07\nclass Vector3EUF\n{\npublic:\n\tVector3EUF() {}\n\tVector3EUF(float x, float y, float z) { X = x; Y = y; Z = z; }\n\tfloat X;\n\tfloat Y;\n\tfloat Z;\n};\n\nclass BfmeFrustumEUF\n{\npublic:\n\tunsigned char m_bfmeBodyEUF[4];\n};\n\nclass BfmeSphereEUF\n{\npublic:\n\tVector3EUF Center;\n\tfloat Radius;\n};\n\nclass BfmeCamEUF\n{\npublic:\n\tvoid bfmeUpdateFrustumEUF();\n\n\tunsigned char m_bfmeHeadEUF[0x104];\n\tBfmeFrustumEUF m_bfmeFrustumEUF;\n};\n\nint bfmeOverlapEUF(const BfmeFrustumEUF &frustum, const BfmeSphereEUF &sphere);\n\nclass BfmeHostEUF\n{\npublic:\n\tint bfmeVisibleEUF(const Vector3EUF *pos, float radius);\n\n\tunsigned char m_bfmeHeadEUF[0x104];\n\tBfmeCamEUF *m_bfmeCamEUF;\n};\n\nint BfmeHostEUF::bfmeVisibleEUF(const Vector3EUF *pos, float radius)\n{\n\tBfmeCamEUF *cam = m_bfmeCamEUF;\n\tVector3EUF center(pos->X, pos->Y, pos->Z);\n\tBfmeSphereEUF sphere;\n\n\tsphere.Center = center;\n\tsphere.Radius = radius;\n\n\tcam->bfmeUpdateFrustumEUF();\n\n\treturn bfmeOverlapEUF(cam->m_bfmeFrustumEUF, sphere) != 1;\n}\n"
-}
