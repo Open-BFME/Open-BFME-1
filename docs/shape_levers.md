@@ -1407,6 +1407,18 @@ and GiantBird variants (0x0018A470, 0x0018A6C0, 0x002BD6F0) landed with it.
 
 ## A float pair written through an out pointer: return it by value
 
+For the free STLport callback-array helper at 0x0083EF20, returning the
+vendored non-POD `pair<Callback *, unsigned>` also fixes its caller's
+allocation. The explicit-output POD surrogate left three differing operand
+bytes in `ios_base::register_callback` (0x0083F1C0, 132 B): its stderr tail
+used ECX instead of retail EDX at +0x66/+0x6C/+0x6E. Using the actual pair
+return supplies the hidden result argument and matches both the 147 B
+helper and 132 B caller under MSVC 7.1 `/O2 /GR- /EHsc- /MD /G6 /Ob1`,
+with the canonical STLport headers and exceptions disabled. This is an
+observed allocation effect, not proof of the helper's original spelling;
+see `targets/game/reverse/identity_evidence/0x0083f1c0-ios-callback.md` and
+`game/Libraries/Source/WWVegas/WWLib/stlport_ios_base_iword.cpp`.
+
 A member function that takes a hidden result address, returns that address in
 EAX and ends in `ret 4` or `ret 8` is returning a small struct by value; MSVC
 7.1 returns every class type from a member function this way, even an 8-byte

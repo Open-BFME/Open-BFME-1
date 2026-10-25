@@ -21100,5 +21100,15 @@
     "after_sha256": "5f4e6a71d7ec884a14ae5f715eeffc0b95afd89b8e07e1f9f751c8ca92b6d2e9",
     "evidence": "targets/game/reverse/identity_evidence/0x002147e0-filter-name.md",
     "reason": "Rva2225E0Filter is BFME1's matched owner name at 0x003A04A0 (accepts); Module is still declared for findModule. The alignment paired two unrelated names."
-  }
+  },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0083f1c0.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WWLib/stlport_ios_base_iword.cpp",
+  "old_name": "grow_array",
+  "new_name": "rva0083EF20",
+  "before_sha256": "756378164ed56ebc48d47a1453c4f84a28fd9251e5dfe045fa51ab65000e7a90",
+  "after_sha256": "8b09ad4f8a4cf9363651b033b2308e68dd108166b9910d301af9db6dd7a41b4c",
+  "evidence": "targets/game/reverse/identity_evidence/0x0083f1c0-ios-callback.md",
+  "reason": "The bank uses a reconstructed grow_array spelling and private POD return surrogate; no independent retail evidence establishes that spelling. The real STLport pair return reproduces the native hidden-result ABI and all 132 caller bytes. Keep the proven helper address rather than assigning the invented spelling to its corrected native-type signature."
+ }
 ]
