@@ -2112,3 +2112,23 @@ residue; source-field volatility alone left 17 differences. The measured
 effect is constrained scheduling in this method; an original volatile
 declaration and broader applicability are unproven. See
 [002214f0-containment-slot.md](../targets/game/reverse/identity_evidence/002214f0-containment-slot.md).
+
+## Identical parent bytes can hide a wrong temporary destructor
+
+In `game/Libraries/Source/assetmanager/RegistryPrototypeLookup.cpp`, two
+nominal one-word handle types reproduced all 211 bytes and nine relocation
+positions of parent `009EBCE0`, but its state-1 cleanup called an unsupported
+`AssetReference` destructor. Retail's two unwind actions both reach the
+already proved `Rva009EBCE0AssetReference` destructor at `0005C640`.
+Using that existing opaque handle for both conditional arms and a typed
+member-pointer return view of the canonical lookup provider preserves every parent
+instruction and emits the correct 25-byte state-1 cleanup at `00C61819`.
+The predecessor sequence remains `[-1, 0]`; the cleanup callee changes.
+Measured with pinned MSVC 7.1, `/DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc`,
+the unit's existing WWLib/WW3D2/WWMath includes, and normal byte verification.
+This is a return-lifetime repair, not proof that arbitrary same-sized types
+are interchangeable. Establish the result storage, copy/refcount behavior,
+retail destructor and unwind-state ownership independently before adapting
+it. Retain the producer's canonical callable symbol: a fresh view-name pin
+alone can byte-match while leaving an unresolved linker reference. See
+`targets/game/reverse/identity_evidence/00c61819-registry-return-view.md`.

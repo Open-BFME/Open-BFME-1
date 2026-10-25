@@ -21121,5 +21121,15 @@
   "after_sha256": "4de6d65be117b96f6736977b5ce5e873866d1252c84a99e0ff9440d6f93a9ee5",
   "evidence": "targets/game/reverse/identity_evidence/008c6ad0-canonical-coercion.md",
   "reason": "The old bank's g_bfmeCount1233 used a different image base. Retail reads the stack count at VA 0x01338748 and its array pointer at VA 0x01338750. Rva00C6DCC0StaticInit.cpp independently binds the existing canonical object Rva008AE770TheStack at 0x01338748; the matched adjacent Rva008C6800.cpp consumer establishes the same count+0 and array+8 prefix. This corrects the bank's data binding to that proven owner without inventing an identity."
+ },
+ {
+  "old_path": "game/Libraries/Source/assetmanager/RegistryPrototypeLookup.cpp",
+  "new_path": "game/Libraries/Source/assetmanager/RegistryPrototypeLookup.cpp",
+  "old_name": "AssetReference",
+  "new_name": "Rva009EBCE0AssetReference",
+  "before_sha256": "c57051a76f07169621015a46253b1cd4b80c0b1437947e4cf1dd054bba3ae914",
+  "after_sha256": "deddeffe459a7f68886a9ce75bd0c333f31ca749bb52d00eaec93198c0924a14",
+  "evidence": "targets/game/reverse/identity_evidence/00c61819-registry-return-view.md",
+  "reason": "Correct the conditional temporary ownership type, not the preserved AssetReference declaration or producer API. Both independent retail unwind states of parent 009EBCE0 reach the already proved address-qualified handle destructor 0005C640. The canonical Find_Asset symbol is retained through a physically checked one-word result view; all 211 parent bytes and both 25-byte actions verify."
  }
 ]

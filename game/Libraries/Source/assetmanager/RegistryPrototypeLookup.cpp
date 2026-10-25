@@ -75,7 +75,13 @@ Rva009EBCE0AssetReference Rva009EBCE0_GetPrototype( const char *name )
 		return Rva009EBCE0AssetReference();
 	}
 
+	// Both retail unwind states use the existing address-qualified handle.
+	// Keep the producer's canonical symbol while viewing its one-word result.
+	typedef AssetReference (AssetManagerImpl::*Rva009EEC60CanonicalLookup)(const char *);
+	typedef Rva009EBCE0AssetReference (AssetManagerImpl::*Rva009EEC60LookupView)(const char *);
+	typedef char Rva009EEC60ResultWidth[sizeof(AssetReference) == sizeof(Rva009EBCE0AssetReference) ? 1 : -1];
+	union { Rva009EEC60CanonicalLookup canonical; Rva009EEC60LookupView view; } lookup = { &AssetManagerImpl::Find_Asset };
 	return g_theAssetRegistry
-		? ((AssetManagerImpl *)g_theAssetRegistry)->Find_Asset( name )
-		: AssetReference();
+		? (((AssetManagerImpl *)g_theAssetRegistry)->*lookup.view)( name )
+		: Rva009EBCE0AssetReference();
 }
