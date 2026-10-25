@@ -1,0 +1,63 @@
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_NO_EXCEPTIONS /D_STLP_USE_STATIC_LIB /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
+#define __PLACEMENT_VEC_NEW_INLINE
+#include "vector3.h"
+#include <algorithm>
+#include <vector>
+
+struct Rva00261CC0Subject
+{
+    unsigned char m_unmodelled000[0x38];
+    float m_positionX;
+    float m_positionY;
+    float m_positionZ;
+};
+
+typedef _STL::vector<Rva00261CC0Subject *> Rva00261CC0SubjectVector;
+
+struct Rva00261CC0InputEntry
+{
+    Rva00261CC0Subject *m_subject;
+    Rva00261CC0SubjectVector m_destination;
+};
+
+typedef _STL::vector<Rva00261CC0InputEntry> Rva00261CC0InputCollection;
+
+struct Rva00261CC0DistancePair
+{
+    float first;
+    Rva00261CC0SubjectVector *second;
+};
+
+typedef _STL::vector<Rva00261CC0DistancePair> Rva00261CC0DistancePairs;
+
+extern bool __cdecl Rva00260650Compare(
+    const Rva00261CC0DistancePair &left,
+    const Rva00261CC0DistancePair &right);
+
+class Rva00261F40Owner
+{
+public:
+    void buildPairsAt00261CC0(Rva00261CC0InputCollection *input,
+        Rva00261CC0Subject *subject, Rva00261CC0DistancePairs *out);
+};
+
+void Rva00261F40Owner::buildPairsAt00261CC0(
+    Rva00261CC0InputCollection *input,
+    Rva00261CC0Subject *subject,
+    Rva00261CC0DistancePairs *out)
+{
+    const Vector3 position(subject->m_positionX, subject->m_positionY, subject->m_positionZ);
+
+    for (Rva00261CC0InputEntry *entry = input->begin(); entry != input->end(); ++entry)
+    {
+        Rva00261CC0Subject *candidate = entry->m_subject;
+        Vector3 delta = Vector3(candidate->m_positionX, candidate->m_positionY, candidate->m_positionZ) - position;
+        Rva00261CC0DistancePair value;
+        value.first = delta.X * delta.X + delta.Y * delta.Y;
+        value.second = &entry->m_destination;
+        out->push_back(value);
+    }
+
+    _STL::sort(out->begin(), out->end(), Rva00260650Compare);
+}
