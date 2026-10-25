@@ -1,5 +1,0 @@
-[submodule "inputs/reference/open-bfme-2"]
-	path = inputs/reference/open-bfme-2
-	url = https://github.com/Open-BFME/Open-BFME-2.git
-	fetchRecurseSubmodules = false
-	shallow = true

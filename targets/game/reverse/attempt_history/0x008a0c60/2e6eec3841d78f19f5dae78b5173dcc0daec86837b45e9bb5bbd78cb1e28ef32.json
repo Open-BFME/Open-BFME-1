@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "2e6eec3841d78f19f5dae78b5173dcc0daec86837b45e9bb5bbd78cb1e28ef32",
-  "symbol": "?getCount@Rva008A0C60Owner@@QBEHXZ",
-  "score_kind": "author-estimate",
-  "score": 0.8,
-  "source": "// ?getCount@Rva008A0C60Owner@@QBEHXZ\n// partial score=0.8 date=2026-09-06\nstruct Rva008A0C60Elem { int m_v[5]; };\nstruct Rva008A0C60Owner {\n\tint m_0; Rva008A0C60Elem* m_begin; Rva008A0C60Elem* m_end; char m_pad[0x12b0 - 12]; int m_wrap;\n\tint getCount() const;\n};\nint Rva008A0C60Owner::getCount() const\n{\n\tint n = m_end - m_begin;\n\tif (n < 0)\n\t\tn += m_wrap;\n\treturn n;\n}\n"
-}

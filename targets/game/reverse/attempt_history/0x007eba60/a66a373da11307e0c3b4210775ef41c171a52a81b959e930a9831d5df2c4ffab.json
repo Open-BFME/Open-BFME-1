@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "a66a373da11307e0c3b4210775ef41c171a52a81b959e930a9831d5df2c4ffab",
-  "symbol": "?Rva007EBA60Get@@YAPAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.88,
-  "source": "// ?Rva007EBA60Get@@YAPAXXZ\n// partial score=0.88 date=2026-09-06\n// cl: /O2\n// 0x007EBA60: getter twin of Rva007EBAA0 (Code/GameEngine/Source/GameNetwork/\n// Rva007EBAA0Create.cpp) -- same 0x14-byte FESL diagnostic singleton at\n// 0x0130A5A0, but this entry point returns the pointer instead of void.\n\nvoid *Gen007F0130(unsigned int size);\n\nextern int vftable_01129D30;\nextern void Rva007EB820(void);\nextern void *g_Va0130A5A0;\n\nvoid *Rva007EBA60Get(void)\n{\n\tif (g_Va0130A5A0)\n\t\treturn g_Va0130A5A0;\n\tvoid *p = Gen007F0130(0x14);\n\tif (p)\n\t{\n\t\t*((int *)p + 2) = 0;\n\t\t*((int *)p + 3) = 0;\n\t\t*((int *)p + 4) = 0;\n\t\t*(int *)p = (int)&vftable_01129D30;\n\t\t*((int *)p + 1) = (int)&Rva007EB820;\n\t\tg_Va0130A5A0 = p;\n\t\treturn p;\n\t}\n\tg_Va0130A5A0 = p;\n\treturn g_Va0130A5A0;\n}\n"
-}

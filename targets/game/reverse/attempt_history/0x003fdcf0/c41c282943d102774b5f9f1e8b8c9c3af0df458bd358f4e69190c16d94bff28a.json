@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "c41c282943d102774b5f9f1e8b8c9c3af0df458bd358f4e69190c16d94bff28a",
-  "symbol": "?d_003fdcf0@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.93,
-  "source": "// ?d_003fdcf0@@YAXXZ\n// partial score=0.93 date=2026-09-08\nclass BfmeVec3FY\n{\npublic:\n\tfloat x;\n\tfloat y;\n\tfloat z;\n};\n\nclass BfmeNodeFY\n{\npublic:\n\tunsigned char m_bfmeHeadFY[8];\n\tBfmeNodeFY *m_bfmeNextFY;\n\tBfmeVec3FY m_bfmePosFY;\n\tunsigned char m_bfmeGapFY[8];\n\tint m_bfmeKeyFY;\n};\n\nclass BfmeHostFY\n{\npublic:\n\tvoid bfmeResolveFY(BfmeVec3FY *out);\n\n\tunsigned char m_bfmeHeadFY[0x10];\n\tBfmeNodeFY *m_bfmeNodeFY;\n\tfloat m_bfmeXFY;\n\tfloat m_bfmeYFY;\n\tfloat m_bfmeZFY;\n};\n\nvoid BfmeHostFY::bfmeResolveFY(BfmeVec3FY *out)\n{\n\tBfmeVec3FY p;\n\n\tp.x = m_bfmeXFY;\n\tp.y = m_bfmeYFY;\n\tp.z = m_bfmeZFY;\n\n\tBfmeNodeFY *n = m_bfmeNodeFY;\n\n\tif (n != 0)\n\t{\n\t\tBfmeNodeFY *a = n->m_bfmeNextFY;\n\n\t\tif (a != 0)\n\t\t{\n\t\t\tp = a->m_bfmePosFY;\n\n\t\t\tBfmeNodeFY *b = a->m_bfmeNextFY;\n\n\t\t\tif (b != 0)\n\t\t\t{\n\t\t\t\tp = b->m_bfmePosFY;\n\n\t\t\t\tBfmeNodeFY *c = b->m_bfmeNextFY;\n\n\t\t\t\tif (c != 0 && c->m_bfmeKeyFY != 0x7fffffff)\n\t\t\t\t\tp = c->m_bfmePosFY;\n\t\t\t}\n\t\t}\n\t}\n\n\t*out = p;\n}\n"
-}

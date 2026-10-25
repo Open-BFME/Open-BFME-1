@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "43703a301512fd8144b4fc17406561cb95a7492ed5e3c97efa27730a8a465c79",
-  "symbol": "?bfmeRunXG@BfmeHostXG@@QAEXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?bfmeRunXG@BfmeHostXG@@QAEXXZ\n// partial score=0.9 date=2026-09-08\n// pin needed: ?bfmeApplyXG@BfmeHostXG@@QAEXPAUBfmeFieldAXG@@PAUBfmeFieldBXG@@@Z,0x0001B04A\nstruct BfmeFieldAXG\n{\n\tint m_bfmeVXG;\n};\n\nstruct BfmeFieldBXG\n{\n\tint m_bfmeVXG;\n};\n\nstruct RvaC4390First\n{\n\tunsigned char m_bfmeHeadXG[0x38];\n\tBfmeFieldBXG m_bfme38XG;\n};\n\nclass RvaC4390Second\n{\npublic:\n\tRvaC4390First *resolve(int k);\n\n\tunsigned char m_bfmeHeadXG[0x38];\n\tBfmeFieldAXG m_bfme38XG;\n};\n\nclass BfmeHostXG\n{\npublic:\n\tvoid bfmeRunXG();\n\tvoid bfmeApplyXG(BfmeFieldAXG *a, BfmeFieldBXG *b);\n\n\tunsigned char m_bfmeHeadXG[8];\n\tRvaC4390Second *m_bfme08XG;\n};\n\nvoid BfmeHostXG::bfmeRunXG()\n{\n\tRvaC4390First *p = m_bfme08XG->resolve(0);\n\n\tif (p == 0)\n\t\tbfmeApplyXG(&m_bfme08XG->m_bfme38XG, &((RvaC4390First *)m_bfme08XG)->m_bfme38XG);\n\telse\n\t\tbfmeApplyXG(&m_bfme08XG->m_bfme38XG, &p->m_bfme38XG);\n}\n"
-}

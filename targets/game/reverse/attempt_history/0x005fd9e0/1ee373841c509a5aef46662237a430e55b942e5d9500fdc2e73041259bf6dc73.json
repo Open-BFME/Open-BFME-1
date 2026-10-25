@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "1ee373841c509a5aef46662237a430e55b942e5d9500fdc2e73041259bf6dc73",
-  "symbol": "??0DefaultPhysicsModuleInfo@FXParticleSystem@@QAE@XZ",
-  "score_kind": "author-estimate",
-  "score": 0.55,
-  "source": "// ??0DefaultPhysicsModuleInfo@FXParticleSystem@@QAE@XZ\r\n// partial score=0.55 date=2026-09-01\r\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include/Common /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib\r\n\r\n#include \"fx_particle_system.h\"\r\n\r\nnamespace FXParticleSystem {\r\n\r\nDefaultPhysicsModuleInfo::DefaultPhysicsModuleInfo()\r\n\t: m_field0(0.0f), m_field1(0.0f), m_field2(0.0f), m_field3(0)\r\n{\r\n\tm_var1.setRange(0.0f, 0.0f, GameClientRandomVariable::UNIFORM);\r\n}\r\n\r\n}\r\n\r\n"
-}

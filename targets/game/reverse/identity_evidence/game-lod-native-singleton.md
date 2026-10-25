@@ -1,3 +1,0 @@
-Native GameLOD singleton
-
-GeneralsMD/Code/GameEngine/Source/Common/GameLOD.cpp:55 defines GameLODManager *TheGameLODManager=NULL. Existing BFME typed matched caller Rva00752E10ClampLod at RVA00752E10/28B reads VA012ED5AC+170C through that native declaration. AudioManager::init at RVA006B8220/953B reads the same retail slot and its speaker-table view. dir32_addresses.csv records the native pointer at VA012ED5AC; retail Image.read returns 00000000 for its four-byte pointer extent. Existing BFME Common/GameLOD.cpp:66 defines this native pointer; the source is unchanged. Admit that existing definition with the sole data writer. Audio caller retains its existing view via a cast; no new pin, alias, raw object zero, or copied initializer.

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "f3c04a62ce830b2fbc28d0b7f7d596042b3b88c48e698c17e4948b3a475ceeda",
-  "symbol": "?d_00205a20@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.8,
-  "source": "// ?d_00205a20@@YAXXZ\n// partial score=0.8 date=2026-09-08\nextern \"C\" double sqrt(double x);\n\n#pragma intrinsic(sqrt)\n\nextern float g_bfmeDefaultBU;\nextern const float BfmeZeroRange;\n\nclass BfmePosBU\n{\npublic:\n\tfloat m_bfmeXBU;\n\tfloat m_bfmeYBU;\n\tfloat m_bfmeZBU;\n};\n\nclass BfmeThingBU\n{\npublic:\n\tunsigned char m_bfmeHeadBU[0x38];\n\tfloat m_bfmeXBU;\n\tfloat m_bfmeYBU;\n\tfloat m_bfmeZBU;\n};\n\nclass BfmeInfoBU\n{\npublic:\n\tunsigned char m_bfmeHeadBU[8];\n\tfloat m_bfmeRangeBU;\n\tfloat m_bfmeScaleBU;\n};\n\nclass BfmeHostBU\n{\npublic:\n\tfloat bfmeFalloffBU(const BfmePosBU *from, const BfmeThingBU *to) const;\n\n\tvoid *m_bfmeVfBU;\n\tBfmeInfoBU *m_bfmeInfoBU;\n};\n\nfloat BfmeHostBU::bfmeFalloffBU(const BfmePosBU *from, const BfmeThingBU *to) const\n{\n\tif (m_bfmeInfoBU->m_bfmeScaleBU == 1.0f)\n\t{\n\t\tvolatile BfmePosBU d;\n\n\t\td.m_bfmeXBU = to->m_bfmeXBU - from->m_bfmeXBU;\n\t\td.m_bfmeYBU = to->m_bfmeYBU - from->m_bfmeYBU;\n\t\td.m_bfmeZBU = to->m_bfmeZBU - from->m_bfmeZBU;\n\n\t\tfloat v = g_bfmeDefaultBU - (float)sqrt(d.m_bfmeXBU * d.m_bfmeXBU + d.m_bfmeYBU * d.m_bfmeYBU + d.m_bfmeZBU * d.m_bfmeZBU) / m_bfmeInfoBU->m_bfmeRangeBU;\n\n\t\tif (v < BfmeZeroRange)\n\t\t\treturn BfmeZeroRange;\n\n\t\treturn v;\n\t}\n\n\treturn g_bfmeDefaultBU;\n}\n"
-}

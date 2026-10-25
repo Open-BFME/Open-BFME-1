@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "c5ebf5c56787d49809cd2551f58e7653af3d1acafb67f725a3028b3fabec35f2",
-  "symbol": "?lessXYZ@@YAHPBURva009266C0Point@@0@Z",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?lessXYZ@@YAHPBURva009266C0Point@@0@Z\n// partial score=0.9 date=2026-09-06\nstruct Rva009266C0Point { int x; int y; int z; };\nint lessXYZ(const Rva009266C0Point* a, const Rva009266C0Point* b)\n{\n\tint ax = a->x;\n\tif (b->x > ax) return 1;\n\telse if (b->x < ax) return 0;\n\telse {\n\t\tint ay = a->y;\n\t\tif (b->y > ay) return 1;\n\t\telse if (b->y < ay) return 0;\n\t\telse if (a->z < b->z) return 1;\n\t\telse return 0;\n\t}\n}\n"
-}

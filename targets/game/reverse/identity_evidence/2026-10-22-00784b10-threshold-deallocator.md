@@ -1,5 +1,0 @@
-# Four-byte threshold deallocator at 0x00784B10
-
-The `?dup_00784b10@@YAXXZ` row was a generated alias whose object symbol is `_STL::allocator<int>::deallocate`, the body matched at 0x008F9D40. Retail was linked without identical-COMDAT folding, so one name cannot own two addresses: the alias made the census's `RvaShard2TailThunks.cpp` ILT thunk 0x00035FF8 reference `?dup_00784b10@@YAXXZ`, which nothing defines (link queue #83, unresolved).
-
-`tools/dis_retail.py 0x00784B10 47` shows a complete 47-byte body ending in `ret 8`: null check, byte count `count << 2`, `operator delete` above 0x80 bytes, else `__node_alloc<true,0>::_M_deallocate`. It is byte-identical to 0x008F9D40 apart from relocations, so it is a different four-byte-element instantiation whose element type is not proven. It therefore gets the opaque address-derived name `rva00784B10Deallocate`, written in clean C++ on the established 0x00784C30 sibling (`Rva784C30DeallocateThunk.cpp`, 16-byte elements). The ILT thunk 0x00035FF8 now targets that name like the other thunks in its file.
