@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "fe382437135a1ebc1706e2d04c286967e51d727127e5583cad9b872406e32385",
-  "symbol": "?bfmeSetupJY@@YAXPAVBfmeCodecJY@@PBI@Z",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?bfmeSetupJY@@YAXPAVBfmeCodecJY@@PBI@Z\n// partial score=0.85 date=2026-09-08\nextern \"C\" void *__cdecl memcpy(void *d, const void *s, unsigned int n);\n\nclass BfmeCodecJY\n{\npublic:\n\tunsigned char m_bfmeHeadJY[0x40];\n\tunsigned int m_bfme40JY;\n\tunsigned int m_bfme44JY;\n\tunsigned int m_bfme48JY;\n\tunsigned int m_bfme4cJY;\n\tunsigned int m_bfmeRestJY[10];\n\tunsigned int m_bfme78JY;\n\tunsigned int m_bfme7cJY;\n\tunsigned int m_bfme80JY;\n\tunsigned int m_bfme84JY;\n\tunsigned int m_bfme88JY;\n\tunsigned int m_bfme8cJY;\n\tunsigned int m_bfme90JY;\n\tunsigned int m_bfme94JY;\n\tunsigned int m_bfme98JY;\n\tunsigned int m_bfme9cJY;\n\tunsigned char m_bfmeGapJY[0x14];\n\tunsigned int m_bfmeB4JY;\n};\n\nvoid bfmeSetupJY(BfmeCodecJY *p, const unsigned int *src)\n{\n\tmemcpy(&p->m_bfme40JY, src, 14 * 4);\n\n\tunsigned int a = p->m_bfme40JY;\n\tunsigned int m44 = p->m_bfme44JY;\n\tunsigned int m48 = p->m_bfme48JY;\n\n\ta = a >> 3;\n\n\tunsigned int b = m44 >> 3;\n\n\tp->m_bfme94JY = b;\n\n\tunsigned int ab = b * a;\n\n\tp->m_bfme84JY = ab;\n\n\tunsigned int c = p->m_bfme4cJY;\n\tunsigned int q = ab >> 2;\n\n\tp->m_bfme8cJY = ab + q * 2;\n\tp->m_bfme90JY = a;\n\n\tunsigned int d = (m48 - a * 8) >> 1;\n\n\tp->m_bfme78JY = (m48 + 1) * d;\n\n\tunsigned int e = (m44 + d * 2) * m48;\n\n\tp->m_bfme98JY = m48;\n\n\tunsigned int h = d >> 1;\n\n\tp->m_bfmeB4JY = d;\n\tp->m_bfme88JY = q;\n\tp->m_bfme7cJY = (c + 1) * h + e;\n\tp->m_bfme9cJY = c;\n\tp->m_bfme80JY = h * c + (((m44 >> 1) + d) * c + h) + e;\n}\n"
-}

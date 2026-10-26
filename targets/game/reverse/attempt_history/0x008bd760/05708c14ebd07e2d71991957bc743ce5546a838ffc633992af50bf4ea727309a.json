@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "05708c14ebd07e2d71991957bc743ce5546a838ffc633992af50bf4ea727309a",
-  "symbol": "?unlinkAfterQuery@BfmeQuery1279@@QAEXPAURva008BD760Node@@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.0423,
-  "source": "// ?unlinkAfterQuery@BfmeQuery1279@@QAEXPAURva008BD760Node@@@Z\r\n// partial score=0.0423 date=2026-10-15\r\n// ?unlinkAfterQuery@BfmeQuery1279@@QAEXPAURva008BD760Node@@@Z\r\n// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD\r\nstruct Rva008BD760Node\r\n{\r\n\tchar m_padding00[0x54];\r\n\tRva008BD760Node *m_prev;\r\n\tRva008BD760Node *m_next;\r\n};\r\n\r\nclass BfmeQuery1279\r\n{\r\npublic:\r\n\tvoid bfmeQuery1279(void *key, int name, void **previousResult, void **nodeResult);\r\n\tvoid unlinkAfterQuery(Rva008BD760Node *node);\r\n\r\n\tvoid *find(void *key)\r\n\t{\r\n\t\tvoid *previous;\r\n\t\tbfmeQuery1279(key, 0, &previous, &key);\r\n\t\treturn key;\r\n\t}\r\n};\r\n\r\nvoid BfmeQuery1279::unlinkAfterQuery(Rva008BD760Node *node)\r\n{\r\n\tRva008BD760Node *found = (Rva008BD760Node *)find(node);\r\n\tif (found->m_prev != 0)\r\n\t\tfound->m_prev->m_next = found->m_next;\r\n\tif (found->m_next != 0)\r\n\t\tfound->m_next->m_prev = found->m_prev;\r\n\tfound->m_prev = 0;\r\n\tfound->m_next = 0;\r\n}\r\n"
-}

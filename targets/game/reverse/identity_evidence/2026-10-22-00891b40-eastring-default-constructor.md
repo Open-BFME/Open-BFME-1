@@ -1,9 +1,0 @@
-# EAStringC default constructor at 0x00891B40
-
-The old `??0Rva00891B40@@QAE@XZ` row is a four-byte owning string constructor. Replace it with `??0EAStringC@@QAE@XZ`, preserving its independently verified 16-byte extent. The existing native definition in `game/Libraries/Source/EA/Apt/AptString/EAStringCMid.cpp` reproduces all 16 retail bytes and both references to `EAStringC::StringDataC g_rva012D5298Empty`; the constructor stores the empty singleton and increments its 16-bit reference count. `tools/probe.py` measured EXACT before any ledger edit. Only the constructor access declaration changes from private to public to expose the actual public default constructor. Other members keep their access.
-
-Identity is established by the native array lifetime, not just matching constructor bytes. Retail initializer 0x00C6DC90 supplies constructor 0x00891B40 and destructor 0x00891B80 to the compiler iterator for 178 four-byte objects at VA 0x01338480. Cleanup 0x00C70F60 repeats that destructor/stride/count. The paired destructor is independently proven as EAStringC by the matched Mid hidden-result cleanup, documented in `00891b80-eastring-return-cleanup.md`. The native EAStringC default constructor initializes exactly the same singleton that those lifetimes release. The RET ends the 16-byte constructor before the following padding.
-
-BFME 2 provides supporting source evidence: `Code/Libraries/Source/Apt/AptValue/AptValueUrlEncode.cpp` defines the same 16-byte EAStringC default initialization against its own real empty singleton, rowed at 0x006D2F90. Its RVAs and folding assumptions are not used as BFME 1 proof.
-
-This change retires the redundant address-named constructor provider, keeps one identity at 0x00891B40, and makes the array construction and destruction name their existing native providers. It adds no byte coverage and no candidate pins.

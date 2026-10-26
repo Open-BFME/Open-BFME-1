@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "8029c1851e73ec4c2899d35402faa1daf187c3194d530cb1a590c5c82b1be134",
-  "symbol": "?bfmeFindAAT@BfmeHostAAT@@QAEPAURva002EE330Player@@XZ",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?bfmeFindAAT@BfmeHostAAT@@QAEPAURva002EE330Player@@XZ\n// partial score=0.9 date=2026-09-08\nstruct Rva002EE330Player\n{\n\tunsigned char m_bfmeHeadAAT[0x2c];\n\tint m_bfme2CAAT;\n};\n\nstruct Rva002EE330PlayerList\n{\n\tunsigned char m_bfmeHeadLAAT[0x10];\n\tint m_bfmeCountAAT;\n};\n\nextern Rva002EE330PlayerList *Rva002EE330ThePlayers;\n\nRva002EE330Player *__stdcall Rva002EF110GetPlayer(int index);\n\nclass BfmeSubAAT\n{\npublic:\n\tRva002EE330Player *bfmeCheckAAT();\n};\n\nclass BfmeHostAAT\n{\npublic:\n\tRva002EE330Player *bfmeFindAAT();\n\n\tunsigned char m_bfmeHeadHAAT[0x170ac];\n\tBfmeSubAAT *m_bfme170ACAAT;\n};\n\nRva002EE330Player *BfmeHostAAT::bfmeFindAAT()\n{\n\tBfmeSubAAT *s = m_bfme170ACAAT;\n\n\tif (s != 0)\n\t{\n\t\tRva002EE330Player *r = s->bfmeCheckAAT();\n\n\t\tif (r != 0)\n\t\t\treturn r;\n\n\t\tfor (int i = 0; i < Rva002EE330ThePlayers->m_bfmeCountAAT; ++i)\n\t\t{\n\t\t\tRva002EE330Player *p = Rva002EF110GetPlayer(i);\n\n\t\t\tif (p->m_bfme2CAAT == 0)\n\t\t\t\treturn p;\n\t\t}\n\t}\n\n\treturn 0;\n}\n"
-}

@@ -1,9 +1,0 @@
-# Python packages the repository tools need: python3 -m pip install -r tools/requirements.txt
-# The commit hooks run check_csv, which reads target PE images through pefile
-# (tools/targets.py, since 904cff16ec); without it every commit on the host fails.
-capstone>=5.0
-pefile>=2023.2.7
-pytest>=8
-# tools/diffexec.py emulates retail and rebuilt bodies with Unicorn: the nightly audit
-# red team (tools/audit/redteam.py) and repair_queue.py diffexec pass tests run it.
-unicorn>=2.0

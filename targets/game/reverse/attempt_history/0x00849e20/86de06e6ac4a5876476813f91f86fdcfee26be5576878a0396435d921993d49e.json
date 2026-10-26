@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "86de06e6ac4a5876476813f91f86fdcfee26be5576878a0396435d921993d49e",
-  "symbol": "?rva00849E20DecodeFlags@@YGII@Z",
-  "score_kind": "author-estimate",
-  "score": 0.75,
-  "source": "// ?rva00849E20DecodeFlags@@YGII@Z\n// partial score=0.75 date=2026-09-06\n// ?rva00849E20DecodeFlags@@YAIK@Z\n// Address-derived: decode the low 2 bits of an unsigned parameter into a\n// fixed size constant (8/16/24), and for the remaining case (low bits == 3)\n// pass the value through with bit0 set when bit 0x800 is set and bit2 set\n// when bit 0x8000 is set.\nunsigned int __stdcall rva00849E20DecodeFlags(unsigned int p)\n{\n\tswitch (p & 3)\n\t{\n\tcase 0:\n\t\treturn 8;\n\tcase 1:\n\t\treturn 0x10;\n\tcase 2:\n\t\treturn 0x18;\n\tdefault:\n\t\tbreak;\n\t}\n\n\tunsigned int result = p;\n\tif (p & 0x800)\n\t\tresult |= 1;\n\tif (p & 0x8000)\n\t\tresult |= 4;\n\treturn result;\n}\n"
-}

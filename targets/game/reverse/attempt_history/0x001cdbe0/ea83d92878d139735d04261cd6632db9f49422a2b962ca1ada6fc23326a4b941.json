@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "ea83d92878d139735d04261cd6632db9f49422a2b962ca1ada6fc23326a4b941",
-  "symbol": "?d_001cdbe0@@YAXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.7,
-  "source": "// ?d_001cdbe0@@YAXXZ\n// partial score=0.7 date=2026-09-06\n// 48 bytes from MSVC against retail's 56. The structure is certain: a null\n// check on TheBfmeGameLogic kept in a callee-saved register across the call,\n// a busy predicate called with 0x25, and an unsigned frame-versus-due\n// comparison.\n// Residue: retail BRANCHES on the last comparison (two full epilogues, one\n// `mov eax,1` and one `xor eax,eax`) while MSVC folds it branchlessly into\n// `sbb al,al` / `inc al`, eight bytes shorter. Tried: the guard both\n// polarities, char and int return types, a `2 - 1` true value, a named self\n// local, and the flags /G7 /Ob1 /Ot /Oy-. Also note esi/edi are swapped\n// relative to retail (this in esi there, the logic local in esi here).\nclass GameLogic\n{\npublic:\n\tunsigned char m_bfmeHeadBW[0x3c];\n\tunsigned int m_bfmeFrameBW;\n};\n\nextern GameLogic *TheBfmeGameLogic;\n\nclass BfmeOwnBW\n{\npublic:\n\tchar bfmeReadyBW(void);\n\tchar bfmeBusyBW(int kind);\n\n\tunsigned char m_bfmeHeadBW[0x334];\n\tunsigned int m_bfmeDueBW;\n};\n\nchar BfmeOwnBW::bfmeReadyBW(void)\n{\n\tGameLogic *logic = TheBfmeGameLogic;\n\n\tif (logic == 0)\n\t\treturn 0;\n\n\tif (bfmeBusyBW(0x25))\n\t\treturn 0;\n\n\tif (logic->m_bfmeFrameBW < m_bfmeDueBW)\n\t\treturn 0;\n\n\treturn 1;\n}\n"
-}

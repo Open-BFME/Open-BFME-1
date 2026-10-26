@@ -1,7 +1,0 @@
-deps-cache: not caching build/finish-003a1080-e6e8a97b/04-visible-ease.cpp — ['(macro or parent-traversing include has unknown search roots)', '(included header lies outside the snapshotted search roots)', '(.cpp includes are outside the directory inventory)']
-compile  compiled new experiment
-history  0 prior experiment(s) with this instruction/relocation result
-symbol   ?setEaseTimes@ParabolicEase@@QAEXMMM@Z
-size     ours=300 retail=300  relocs=17
-result   EXACT (modulo relocation slots)
-lever    instruction shape matches; validate callees and identity with tools/add_match.py before claiming a conversion
