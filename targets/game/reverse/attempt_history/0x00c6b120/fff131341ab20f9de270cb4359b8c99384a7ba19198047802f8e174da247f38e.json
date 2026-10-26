@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "fff131341ab20f9de270cb4359b8c99384a7ba19198047802f8e174da247f38e",
-  "symbol": "?d_00c6b120@@YAXXZ",
-  "score_kind": "measured",
-  "score": 0.0,
-  "source": "// ?d_00c6b120@@YAXXZ\n// partial score=0.0 date=2026-10-16\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ob0 /D_STLP_USE_STATIC_LIB\n// stlport\n//\n// The registry of live LargeGroupAudioUpdateModuleData objects at VA\n// 0x012EFFA0: their matched constructors insert `this` and the destructor\n// removes it. Retail's initializer 0x00C6B120 default-constructs it through\n// ILT 0x0000B1F9 and registers the cleanup 0x00C6FE10, which tail-jumps to\n// the destructor at ILT 0x000390C7; ilt_oracle confirms both ILT names as\n// set<LargeGroupAudioUpdateModuleData *>. The other TUs still reach it\n// through their LGA_Global stand-in declaration.\n#include <set>\n\nclass LargeGroupAudioUpdateModuleData;\n\n_STL::set<LargeGroupAudioUpdateModuleData *> g_lgaGlobal;\n"
-}

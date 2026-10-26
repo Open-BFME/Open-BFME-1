@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "a3b9b13595034f2a6afa217d91c1df57b151ddf56c9d122f1675a47f0493c4ab",
-  "symbol": "?rva008BD760@BfmeQuery1279@@QAEXPAURva008BD760Node@@@Z",
-  "score_kind": "measured",
-  "score": 0.0423,
-  "source": "// ?rva008BD760@BfmeQuery1279@@QAEXPAURva008BD760Node@@@Z\n// partial score=0.0423 date=2026-10-15\n// ?rva008BD760@BfmeQuery1279@@QAEXPAURva008BD760Node@@@Z\n// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD\nstruct Rva008BD760Node\n{\n\tchar m_padding00[0x54];\n\tRva008BD760Node *m_prev;\n\tRva008BD760Node *m_next;\n};\n\nclass BfmeQuery1279\n{\npublic:\n\tvoid bfmeQuery1279(void *key, int name, void **previousResult, void **nodeResult);\n\tvoid rva008BD760(Rva008BD760Node *node);\n\n\tvoid *find(void *key)\n\t{\n\t\tvoid *previous;\n\t\tbfmeQuery1279(key, 0, &previous, &key);\n\t\treturn key;\n\t}\n};\n\nvoid BfmeQuery1279::rva008BD760(Rva008BD760Node *node)\n{\n\tRva008BD760Node *found = (Rva008BD760Node *)find(node);\n\tif (found->m_prev != 0)\n\t\tfound->m_prev->m_next = found->m_next;\n\tif (found->m_next != 0)\n\t\tfound->m_next->m_prev = found->m_prev;\n\tfound->m_prev = 0;\n\tfound->m_next = 0;\n}\n"
-}

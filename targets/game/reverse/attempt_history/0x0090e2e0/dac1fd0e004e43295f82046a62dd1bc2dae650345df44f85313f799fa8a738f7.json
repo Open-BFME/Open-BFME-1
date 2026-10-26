@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "dac1fd0e004e43295f82046a62dd1bc2dae650345df44f85313f799fa8a738f7",
-  "symbol": "?predicate@Rva0090E2E0Owner@@QAE_NXZ",
-  "score_kind": "author-estimate",
-  "score": 0.6,
-  "source": "// ?predicate@Rva0090E2E0Owner@@QAE_NXZ\n// partial score=0.6 date=2026-09-06\n// ?predicate@Rva0090E2E0Owner@@QAE_NXZ\n// Open-BFME7: split from a merged 126-byte listing -- true size is 0x50 (80)\n// bytes; the remainder at 0x0090E330 is an unrelated allocator helper.\nclass BfmeThingGN\n{\npublic:\n\tint bfmeAskGN(void);\n};\n\nstruct Rva0090E2E0Sub\n{\n\tunsigned char m_pad[0x24];\n\tint m_flag24;\n};\n\nstruct Rva0090E2E0Item\n{\n\tvirtual void v00(); virtual void v01(); virtual void v02(); virtual void v03();\n\tvirtual void v04(); virtual void v05(); virtual void v06(); virtual void v07();\n\tvirtual void v08(); virtual void v09(); virtual bool v10(); virtual void v11();\n\tvirtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();\n\tvirtual bool v16();\n\n\tunsigned char m_pad4[0x14 - 4];\n\tRva0090E2E0Sub* m_sub;\n};\n\nstruct Rva0090E2E0Owner\n{\n\tRva0090E2E0Item* m_item;\n\n\tbool predicate();\n};\n\nbool Rva0090E2E0Owner::predicate()\n{\n\tRva0090E2E0Item* obj = m_item;\n\tif (obj == 0)\n\t\treturn true;\n\n\tif (obj->v16())\n\t\treturn true;\n\n\tif (!obj->v10())\n\t\tobj->v11();\n\n\tRva0090E2E0Sub* sub = obj->m_sub;\n\tif (sub != 0) {\n\t\tif (sub->m_flag24 != 1)\n\t\t\treturn false;\n\t}\n\n\tif (reinterpret_cast<BfmeThingGN*>(this)->bfmeAskGN() != 1)\n\t\treturn false;\n\n\treturn true;\n}\n"
-}

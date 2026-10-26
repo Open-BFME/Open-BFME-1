@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "0f2db8b102eaa9a40a32b726205615a4004fa4b745b1335a377a454853794e54",
-  "symbol": "?d_003f6f60@@YAXXZ",
-  "score_kind": "measured",
-  "score": 0.9658,
-  "source": "// ?d_003f6f60@@YAXXZ\n// partial score=0.9658 date=2026-10-16\nclass PathfindCell;\nstruct PathfindCellInfo\n{\n\tchar m_pad00[0x24];\n\tunsigned int m_flags;\n\tPathfindCell *m_cell;\n\tPathfindCellInfo *m_next;\n\tPathfindCellInfo **m_back;\n\tvoid unlink()\n\t{\n\t\tif (m_back)\n\t\t{\n\t\t\t*m_back = m_next;\n\t\t\tif (m_next)\n\t\t\t\tm_next->m_back = m_back;\n\t\t\tm_back = 0;\n\t\t\tm_next = 0;\n\t\t}\n\t}\n};\nstruct PathfindCell { PathfindCellInfo *m_info; char p[8]; unsigned int m_packed; };\nstruct Pool { void releaseInto(void *head); };\nextern int g_bfmePathfindFreeList;\nnamespace Rva003F6F60 {\nint method(void *p)\n{\n\tPathfindCellInfo *list = (PathfindCellInfo *)p;\n\tif (list == 0) return 0;\n\tint count = 0;\n\twhile (list)\n\t{\n\t\t++count;\n\t\tPathfindCellInfo *cur = list;\n\t\tlist = cur->m_next;\n\t\tcur->unlink();\n\t\tcur->m_flags &= ~0x8u;\n\t\tPathfindCell *cell = cur->m_cell;\n\t\tif (cell)\n\t\t{\n\t\t\tunsigned int packed = cell->m_packed;\n\t\t\tif ((packed & 7) != 4 && (packed & 0x38) == 0 && (packed & 0x80000) == 0 &&\n\t\t\t\tcell->m_info && cell->m_info->m_back == 0 && (cell->m_info->m_flags & 0x18) == 0)\n\t\t\t{\n\t\t\t\t((Pool *)cell->m_info)->releaseInto(&g_bfmePathfindFreeList);\n\t\t\t\tcell->m_info = 0;\n\t\t\t}\n\t\t}\n\t}\n\treturn count;\n}\n}\n"
-}

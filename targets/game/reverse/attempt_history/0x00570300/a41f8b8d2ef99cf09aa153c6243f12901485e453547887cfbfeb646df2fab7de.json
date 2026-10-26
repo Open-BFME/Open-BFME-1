@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "a41f8b8d2ef99cf09aa153c6243f12901485e453547887cfbfeb646df2fab7de",
-  "symbol": "?provideBattleStat@BfmeAptScreenScoreScreen@@QAEXHPAD_N@Z",
-  "score_kind": "measured",
-  "score": 0.4397,
-  "source": "// ?provideBattleStat@BfmeAptScreenScoreScreen@@QAEXHPAD_N@Z\n// partial score=0.4397 date=2026-10-23\n// ?provideBattleStat@BfmeAptScreenScoreScreen@@QAEXHPAD_N@Z\n// cl: /DNDEBUG /MD /EHsc\n\nextern \"C\" int __declspec(dllimport) __cdecl sprintf(\n\tchar *buffer, const char *format, ... );\n\nclass BfmeAptScreenScoreScreen\n{\npublic:\n\tvoid provideBattleStat( int index, char *text, bool setting );\n\n\tunsigned char m_unmodelled00[0x294];\n\tint m_battleStats[7][3];\t\t\t\t// +0x294\n};\n\nvoid BfmeAptScreenScoreScreen::provideBattleStat(\n\tint index, char *text, bool setting )\n{\n\tif (setting)\n\t\treturn;\n\n\tint row = index / 3;\n\tint column = index % 3;\n\t*(short *)text = '0';\n\tif (row < 0 || row >= 7 || column < 0 || column >= 3)\n\t\treturn;\n\n\tif (column == 1)\n\t\tsprintf(text, \"x %d\", m_battleStats[row][1]);\n\telse\n\t\tsprintf(text, \"%d\", m_battleStats[row][column]);\n}\n"
-}

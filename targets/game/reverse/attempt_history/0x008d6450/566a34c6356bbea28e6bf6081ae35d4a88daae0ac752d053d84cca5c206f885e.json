@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "566a34c6356bbea28e6bf6081ae35d4a88daae0ac752d053d84cca5c206f885e",
-  "symbol": "?rva008d6450@@YAXPAUElem16@@0@Z",
-  "score_kind": "measured",
-  "score": 0.0649,
-  "source": "// ?rva008d6450@@YAXPAUElem16@@0@Z\n// partial score=0.0649 date=2026-10-11\nstruct Elem16\r\n{\r\n    float x;\r\n    float y;\r\n    int i;\r\n    int j;\r\n    Elem16() {}\r\n    Elem16(const Elem16 &a) : x(a.x), y(a.y), i(a.i), j(a.j) {}\r\n};\r\nstruct Temp2 { int i; int j; };\r\n\r\n// ?rva008d6450@@YAXPAUElem16@@0@Z\r\nvoid __cdecl rva008d6450(Elem16 *a, Elem16 *b)\r\n{\r\n    Elem16 t(*a);\r\n    *a = *b;\r\n    *b = t;\r\n}\r\n"
-}

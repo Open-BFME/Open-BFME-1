@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "7b195083b3e1bd50218fba4f01b0003ebbcdbfbabd9796f49d28ef48eeda3733",
-  "symbol": "?rva001B40F0Formula@@YAMMMM@Z",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?rva001B40F0Formula@@YAMMMM@Z\n// partial score=0.85 date=2026-09-06\n// ?rva001B40F0Formula@@YAMMMM@Z\ntypedef float Real;\nextern const Real BfmeZeroRange;\nextern float g_bfmeDefaultBU;\nextern const Real g_bfmeK1253;\nextern float g_bfmeK2SMA;\n\nReal rva001B40F0Formula(Real a, Real b, Real c)\n{\n\tReal diff = a - b;\n\tif (diff <= BfmeZeroRange)\n\t\treturn BfmeZeroRange;\n\n\tReal q = c;\n\tq /= diff;\n\tReal sum = c + g_bfmeDefaultBU;\n\treturn (q * g_bfmeK1253 + b) * sum * g_bfmeK2SMA;\n}\n"
-}

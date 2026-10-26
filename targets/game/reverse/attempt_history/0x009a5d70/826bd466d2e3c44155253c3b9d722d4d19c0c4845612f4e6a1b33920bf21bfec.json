@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "826bd466d2e3c44155253c3b9d722d4d19c0c4845612f4e6a1b33920bf21bfec",
-  "symbol": "?bfmeInitD70@@YAXPAX0@Z",
-  "score_kind": "author-estimate",
-  "score": 0.7,
-  "source": "// ?bfmeInitD70@@YAXPAX0@Z\n// partial score=0.7 date=2026-09-02\n// cl: /DNDEBUG /MD /O2\n\nstruct BfmeBlock14\n{\n\tint m_word[14];\n};\n\nstruct BfmeHolderD70\n{\n\tunsigned char m_lead[0x40];\n\tunsigned int m_at40;\n\tunsigned int m_at44;\n\tunsigned int m_at48;\n\tunsigned int m_at4C;\n\tunsigned char m_gap[0x78 - 0x50];\n\tunsigned int m_at78;\n\tunsigned int m_at7C;\n\tunsigned int m_at80;\n\tunsigned int m_at84;\n\tunsigned int m_at88;\n\tunsigned int m_at8C;\n\tunsigned int m_at90;\n\tunsigned int m_at94;\n\tunsigned int m_at98;\n\tunsigned int m_at9C;\n\tunsigned char m_gap2[0xB4 - 0xA0];\n\tunsigned int m_atB4;\n};\n\n// ?bfmeInitD70@@YAXPAX0@Z\nvoid __cdecl bfmeInitD70(void *self, void *src)\n{\n\tBfmeHolderD70 *dst = (BfmeHolderD70 *)self;\n\n\t*(BfmeBlock14 *)((unsigned char *)dst + 0x40) = *(BfmeBlock14 *)src;\n\n\tunsigned int a = dst->m_at40 >> 3;\n\tunsigned int b = dst->m_at44 >> 3;\n\tunsigned int c = dst->m_at48;\n\n\tdst->m_at94 = b;\n\tregister unsigned int ab = b * a;\n\tdst->m_at84 = ab;\n\tregister unsigned int d = dst->m_at4C;\n\tunsigned int ab4 = ab >> 2;\n\tdst->m_at8C = ab + ab4 * 2;\n\tdst->m_at90 = a;\n\n\tunsigned int e = c - (a * 8);\n\te >>= 1;\n\tunsigned int cPlusOne = c + 1;\n\tdst->m_at78 = e * cPlusOne;\n\tunsigned int f = (dst->m_at44 + e * 2) * c;\n\tdst->m_at98 = c;\n\n\tunsigned int e2 = e >> 1;\n\tunsigned int g = ((dst->m_at44 >> 1) + e) * d;\n\tdst->m_atB4 = e;\n\tdst->m_at88 = ab4;\n\tdst->m_at7C = (d + 1) * e2 + f;\n\tdst->m_at9C = d;\n\tdst->m_at80 = e2 * d + g + e2 + f;\n}\n"
-}
