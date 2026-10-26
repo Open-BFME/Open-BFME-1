@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "5b835f6b256eb0dc83e6d37c2499c74f75a4657bf0d992143df90becd62ed0da",
-  "symbol": "?bfmeSetBitAAP@BfmeBitmapAAP@@QAEXHH_N@Z",
-  "score_kind": "author-estimate",
-  "score": 0.92,
-  "source": "// ?bfmeSetBitAAP@BfmeBitmapAAP@@QAEXHH_N@Z\n// partial score=0.92 date=2026-09-08\nclass BfmeBitmapAAP\n{\npublic:\n\tvoid bfmeSetBitAAP(int x, int y, bool on);\n\n\tunsigned char m_bfmeHeadAAP[8];\n\tint m_bfmeWidthAAP;\n\tint m_bfmeHeightAAP;\n\tunsigned char m_bfmeGapAAP[0x34 - 0x10];\n\tint m_bfmeStrideAAP;\n\tunsigned char m_bfmeGapBAAP[0x68 - 0x38];\n\tunsigned char *m_bfmeBeginAAP;\n\tunsigned char *m_bfmeEndAAP;\n};\n\nvoid BfmeBitmapAAP::bfmeSetBitAAP(int x, int y, bool on)\n{\n\tif (x < 0)\n\t\treturn;\n\n\tif (y < 0)\n\t\treturn;\n\n\tif (y >= m_bfmeHeightAAP)\n\t\treturn;\n\n\tif (x >= m_bfmeWidthAAP)\n\t\treturn;\n\n\tint idx = m_bfmeStrideAAP * y + (x >> 3);\n\n\tif ((unsigned int)idx >= (unsigned int)(m_bfmeEndAAP - m_bfmeBeginAAP))\n\t\treturn;\n\n\tunsigned char *p = m_bfmeBeginAAP + idx;\n\tunsigned char mask = (unsigned char)(1 << (x & 7));\n\tunsigned char v = *p;\n\n\tif (on)\n\t\t*p = (unsigned char)(v | mask);\n\telse\n\t\t*p = (unsigned char)(v & ~mask);\n}\n"
-}

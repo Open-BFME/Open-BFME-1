@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "8e34c48c2f59f45ba2de31ac5e85dcb8bc647f3351f0b9230da1f675047a27d8",
-  "symbol": "?bfmeGetJD@BfmeArrJD@@QAEXPAVBfmeBlobJD@@H@Z",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?bfmeGetJD@BfmeArrJD@@QAEXPAVBfmeBlobJD@@H@Z\n// partial score=0.85 date=2026-09-08\nextern \"C\" void *__cdecl memset(void *d, int c, unsigned int n);\n\nclass BfmeBlobJD\n{\npublic:\n\tBfmeBlobJD()\n\t{\n\t\tbfmeClearJD();\n\t}\n\n\tvoid bfmeClearJD()\n\t{\n\t\tvolatile int *p = (volatile int *)&m_bfmeF0JD;\n\n\t\tp[0] = 0;\n\t\tp[1] = 0;\n\t\tp[2] = 0;\n\t\tp[3] = 0;\n\t\tp[4] = 0;\n\t\tp[5] = 0;\n\t\tp[6] = 0;\n\t\tp[7] = 0;\n\t\tp[8] = 0;\n\t\tp[9] = 0;\n\t}\n\n\tint m_bfmeF0JD;\n\tint m_bfmeF1JD;\n\tint m_bfmeF2JD;\n\tint m_bfmeF3JD;\n\tint m_bfmeF4JD;\n\tint m_bfmeF5JD;\n\tint m_bfmeF6JD;\n\tint m_bfmeF7JD;\n\tint m_bfmeF8JD;\n\tint m_bfmeF9JD;\n};\n\nclass BfmeEntryJD\n{\npublic:\n\tunsigned char m_bfmeHeadJD[0x44];\n\tBfmeBlobJD m_bfmeBlobJD;\n};\n\nclass BfmeArrJD\n{\npublic:\n\tvoid bfmeGetJD(BfmeBlobJD *dst, int index);\n\n\tunsigned char m_bfmeHeadJD[8];\n\tBfmeEntryJD **m_bfmeBeginJD;\n\tBfmeEntryJD **m_bfmeEndJD;\n};\n\nvoid BfmeArrJD::bfmeGetJD(BfmeBlobJD *dst, int index)\n{\n\tBfmeBlobJD zero;\n\n\tmemset(&zero, 0, sizeof(zero));\n\n\tif (index >= 0)\n\t{\n\t\tint last = (int)(m_bfmeEndJD - m_bfmeBeginJD) - 1;\n\n\t\tif ((unsigned int)index <= (unsigned int)last)\n\t\t{\n\t\t\tBfmeEntryJD *e = m_bfmeBeginJD[index];\n\n\t\t\tif (e != 0)\n\t\t\t{\n\t\t\t\t*dst = e->m_bfmeBlobJD;\n\t\t\t\treturn;\n\t\t\t}\n\t\t}\n\t}\n\n\t*dst = zero;\n}\n"
-}

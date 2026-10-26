@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "8665de8019f0291ea5cc98d1a04f5a85e95f50d8f30419946f519e7c92bb4e92",
-  "symbol": "??0Rva009A45A0CollisionData@@QAE@XZ",
-  "score_kind": "author-estimate",
-  "score": 0.8,
-  "source": "// ??0Rva009A45A0CollisionData@@QAE@XZ\n// partial score=0.8 date=2026-09-03\n// cl: /DNDEBUG /MD /EHsc\n\nextern \"C\" void *__cdecl memset(void *destination, int value, unsigned int count);\n#pragma intrinsic(memset)\n\nclass Rva009A45A0CollisionData\n{\npublic:\n\tRva009A45A0CollisionData();\n\nprivate:\n\tstruct TripleZero\n\t{\n\t\tTripleZero() : first(0), second(0), third(0) {}\n\t\tunsigned int first;\n\t\tunsigned int second;\n\t\tunsigned int third;\n\t};\n\tstruct PairZero\n\t{\n\t\tPairZero() : first(0), second(0) {}\n\t\tunsigned int first;\n\t\tunsigned int second;\n\t};\n\n\tTripleZero m_firstThree;\n\tunsigned int m_000c;\n\tunsigned int m_0010;\n\tunsigned int m_0014;\n\tunsigned int m_first[0x2b7c];\n\tPairZero m_ae08;\n\tunsigned int m_second[0x494];\n\tunsigned int m_c060;\n\tunsigned int m_c064;\n\tunsigned int m_c068;\n\tunsigned char m_c06c;\n\tunsigned char m_c06d;\n\tunsigned char m_c06e[2];\n};\n\nRva009A45A0CollisionData::Rva009A45A0CollisionData()\n{\n\tunsigned int *first = m_first;\n\tmemset(first, 0, sizeof(m_first) - sizeof(*first));\n\tfirst[0x2b7b] = 0;\n\tm_c060 = 0;\n\tm_c064 = 0;\n\n\tunsigned int *second = m_second;\n\tmemset(second, 0, sizeof(m_second) - sizeof(*second));\n\tsecond[0x493] = 0;\n\tm_c06c = 0;\n\tm_c06d = 0;\n\tm_c068 = 3;\n\tm_000c = 0;\n\tm_0010 = 0;\n\tm_0014 = 0;\n}\n"
-}

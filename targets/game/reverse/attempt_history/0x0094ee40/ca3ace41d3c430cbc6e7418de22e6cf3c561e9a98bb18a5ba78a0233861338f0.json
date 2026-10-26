@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "ca3ace41d3c430cbc6e7418de22e6cf3c561e9a98bb18a5ba78a0233861338f0",
-  "symbol": "?firstValue@Rva0094EE40Owner@@QBEHXZ",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?firstValue@Rva0094EE40Owner@@QBEHXZ\n// partial score=0.85 date=2026-09-06\nstruct Rva0094EE40Link { Rva0094EE40Link* m_prev; Rva0094EE40Link* m_next; };\nstruct Rva0094EE40Inner { char m_pad[0x34]; int m_value; };\nstruct Rva0094EE40Node : Rva0094EE40Link { int m_8; Rva0094EE40Inner* m_inner; };\nstruct Rva0094EE40Owner {\n\tchar m_pad[0xa8];\n\tRva0094EE40Link m_head;\n\tRva0094EE40Node* getFirst() const { return m_head.m_next == &m_head ? 0 : (Rva0094EE40Node*)m_head.m_next; }\n\tint firstValue() const;\n};\nint Rva0094EE40Owner::firstValue() const\n{\n\tif (!getFirst())\n\t\treturn 0;\n\treturn getFirst()->m_inner->m_value;\n}\n"
-}

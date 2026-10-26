@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "bb44bf6de3a927ae8d49529054ee584d74fe2ff5d7cc4dd3b0016248bfab59ae",
-  "symbol": "?rva004533f0@@YA_NPBURva004533F0Record@@0@Z",
-  "score_kind": "author-estimate",
-  "score": 0.7739,
-  "source": "// ?rva004533f0@@YA_NPBURva004533F0Record@@0@Z\n// partial score=0.7739 date=2026-10-22\n// cl: /DNDEBUG /MD\nstruct Rva004533F0TreeNode\n{\n\tunsigned char m_pad[8];\n\tRva004533F0TreeNode *m_payload;\n};\n\n// ILT 0x000162E8 jumps to 0x008525B0, the matched _STL::equal\n// instantiation over three Rb-tree iterator values.\nextern \"C\" bool __cdecl __identifier(\"?j_000162e8@@YAXXZ\")(\n\tRva004533F0TreeNode *first, Rva004533F0TreeNode *last,\n\tRva004533F0TreeNode *second);\n\nstruct Rva004533F0Record\n{\n\tunsigned char m_byte0, m_byte1, m_byte2, m_pad3;\n\tint m_word4;\n\tRva004533F0TreeNode *m_item8;\n\tint m_serialC;\n\tint m_unused10;\n};\n\nbool __cdecl rva004533f0(const Rva004533F0Record *first,\n\tconst Rva004533F0Record *second)\n{\n\tconst Rva004533F0Record *a = first;\n\tconst Rva004533F0Record *b = second;\n\tfor (int i = 0; i < 8; ++i, ++a, ++b)\n\t{\n\t\tif (a->m_byte0 != b->m_byte0 || a->m_byte1 != b->m_byte1 ||\n\t\t\ta->m_byte2 != b->m_byte2 || a->m_word4 != b->m_word4 ||\n\t\t\ta->m_serialC != b->m_serialC)\n\t\t\treturn 0;\n\t\tRva004533F0TreeNode *item = a->m_item8;\n\t\tif (!__identifier(\"?j_000162e8@@YAXXZ\")(\n\t\t\titem->m_payload, item, b->m_item8->m_payload))\n\t\t\treturn 0;\n\t}\n\treturn 1;\n}\n"
-}

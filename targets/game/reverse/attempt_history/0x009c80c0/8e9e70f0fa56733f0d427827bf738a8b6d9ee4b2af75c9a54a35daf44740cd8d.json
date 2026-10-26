@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "8e9e70f0fa56733f0d427827bf738a8b6d9ee4b2af75c9a54a35daf44740cd8d",
-  "symbol": "?Rva009C80C0@@YAXPBF0PAF@Z",
-  "score_kind": "measured",
-  "score": 1.0,
-  "source": "// ?Rva009C80C0@@YAXPBF0PAF@Z\n// partial score=1.0 date=2026-10-11\n// cl: /O2 /G6 /Z7 /MD\r\n// ?Rva009C80C0@@YAXPBF0PAF@Z\r\n// Ported from Open BFME 2 Code/Libraries/Source/VP6/Idct1Wmt.cpp.\r\nvoid __cdecl Rva009C80C0(const short *input, const short *table, short *output)\r\n{\r\n\t__asm {\r\n\t\tmov eax, input\r\n\t\tmov edx, 15\r\n\t\tmovd xmm2, edx\r\n\t\tmov ecx, table\r\n\t\tmov edx, output\r\n\t\tmovq xmm0, qword ptr [eax]\r\n\t\tmovq xmm1, qword ptr [ecx]\r\n\t\tpmullw xmm0, xmm1\r\n\t\tpaddw xmm0, xmm2\r\n\t\tpsraw xmm0, 5\r\n\t\tpunpcklwd xmm0, xmm0\r\n\t\tpunpckldq xmm0, xmm0\r\n\t\tpunpcklqdq xmm0, xmm0\r\n\t\tmovdqa xmm1, xmm0\r\n\t\tmovdqa [edx], xmm0\r\n\t\tmovdqa [edx+10h], xmm1\r\n\t\tmovdqa [edx+20h], xmm0\r\n\t\tmovdqa [edx+30h], xmm1\r\n\t\tmovdqa [edx+40h], xmm0\r\n\t\tmovdqa [edx+50h], xmm1\r\n\t\tmovdqa [edx+60h], xmm0\r\n\t\tmovdqa [edx+70h], xmm1\r\n\t}\r\n}\r\n"
-}

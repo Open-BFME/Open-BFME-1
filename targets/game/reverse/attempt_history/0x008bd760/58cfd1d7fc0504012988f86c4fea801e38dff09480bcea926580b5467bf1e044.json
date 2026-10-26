@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "58cfd1d7fc0504012988f86c4fea801e38dff09480bcea926580b5467bf1e044",
-  "symbol": "?unlinkAfterQuery@@YGXPAURva008BD760Node@@@Z",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?unlinkAfterQuery@@YGXPAURva008BD760Node@@@Z\n// partial score=0.85 date=2026-09-06\nstruct Rva008BD760Node { char m_pad[0x54]; Rva008BD760Node* m_prev; Rva008BD760Node* m_next; };\nvoid __stdcall Rva008BD760Query(Rva008BD760Node* node, int flag, int* out, Rva008BD760Node** nodeRef);\nvoid __stdcall unlinkAfterQuery(Rva008BD760Node* node)\n{\n\tint out;\n\tRva008BD760Query(node, 0, &out, &node);\n\tif (node->m_prev)\n\t\tnode->m_prev->m_next = node->m_next;\n\tif (node->m_next)\n\t\tnode->m_next->m_prev = node->m_prev;\n\tnode->m_prev = 0;\n\tnode->m_next = 0;\n}\n"
-}
