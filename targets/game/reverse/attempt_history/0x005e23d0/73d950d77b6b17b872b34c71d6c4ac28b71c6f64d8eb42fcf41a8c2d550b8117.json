@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "73d950d77b6b17b872b34c71d6c4ac28b71c6f64d8eb42fcf41a8c2d550b8117",
-  "symbol": "??1BfmeOwnerZZ@@UAE@XZ",
-  "score_kind": "author-estimate",
-  "score": 0.3,
-  "source": "// ??1BfmeOwnerZZ@@UAE@XZ\n// partial score=0.3 date=2026-09-08\nextern \"C\" void *bfmeVftCUAb[];\nextern \"C\" void *bfmeVftDrawZZ[];\n\nclass BfmeSubZZ\n{\npublic:\n\tvirtual ~BfmeSubZZ();\n};\n\nclass BfmeDrawZZ\n{\npublic:\n\tvirtual void bfmeAnchorZZ();\n};\n\nclass BfmeBaseZZ\n{\npublic:\n\t~BfmeBaseZZ();\n\n\tvoid *m_bfmeBase04ZZ;\n\tvoid *m_bfmeBase08ZZ;\n\tvoid *m_bfmeBase0CZZ;\n\tvoid *m_bfmeBase10ZZ;\n};\n\nclass BfmeOwnerZZ : public virtual BfmeDrawZZ, public virtual BfmeSubZZ\n{\npublic:\n\tvirtual ~BfmeOwnerZZ();\n\n\tBfmeBaseZZ m_bfme04ZZ;\n};\n\nBfmeOwnerZZ::~BfmeOwnerZZ()\n{\n}\n"
-}

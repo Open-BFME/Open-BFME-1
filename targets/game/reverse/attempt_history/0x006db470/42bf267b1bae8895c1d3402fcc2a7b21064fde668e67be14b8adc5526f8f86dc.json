@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "42bf267b1bae8895c1d3402fcc2a7b21064fde668e67be14b8adc5526f8f86dc",
-  "symbol": "??0Rva006DABB0@@QAE@PAVRva006DABB0Source@@H@Z",
-  "score_kind": "author-estimate",
-  "score": 0.79,
-  "source": "// ??0Rva006DABB0@@QAE@PAVRva006DABB0Source@@H@Z\n// partial score=0.79 date=2026-09-02\n// cl: /DNDEBUG /MD /EHsc\n// Twin of ??1Rva006DABB0@@UAE@XZ. Retail 0x006DB470 (160 bytes).\n// Two stack args: source object and an int stored at +4. Increments g_012F801C.\n\nextern int g_012F801C;\n\nclass Rva006DABB0Source\n{\npublic:\n\tfloat getFloat(void);\n\tint *getTriple(void);\n\tunsigned char m_unmodelled_000[0x3B1];\n\tunsigned char m_flag3B1;\n};\n\nclass Rva006DABB0Base\n{\npublic:\n\tvirtual ~Rva006DABB0Base() {}\n};\n\nclass Rva006DABB0 : public Rva006DABB0Base\n{\npublic:\n\tRva006DABB0(Rva006DABB0Source *src, int extra);\n\n\tint m_04;\n\tint m_08;\n\tint m_0C;\n\tunsigned char m_10;\n\tunsigned char m_unmodelled_011[0x44 - 0x11];\n\tunsigned char m_44;\n\tint m_48;\n\tint m_4C;\n\tint m_50;\n\tfloat m_54;\n};\n\nRva006DABB0::Rva006DABB0(Rva006DABB0Source *src, int extra)\n{\n\tint extraLocal = extra;\n\tRva006DABB0Source *srcLocal = src;\n\tm_04 = extraLocal;\n\tm_08 = 0;\n\tm_0C = 0;\n\tm_10 = 0;\n\tm_44 = 0;\n\tm_48 = 0;\n\tm_4C = 0;\n\tm_50 = 0;\n\tm_54 = 1.0f;\n\tif (srcLocal)\n\t{\n\t\tm_44 = srcLocal->m_flag3B1;\n\t\tm_54 = srcLocal->getFloat();\n\t\tint *t = srcLocal->getTriple();\n\t\tm_48 = t[0];\n\t\tm_4C = t[1];\n\t\tm_50 = t[2];\n\t}\n\t++g_012F801C;\n}\n"
-}

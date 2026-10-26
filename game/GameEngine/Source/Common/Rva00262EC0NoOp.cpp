@@ -1,7 +1,0 @@
-// cl: /DNDEBUG /MD
-
-// Retail RVA 0x00262EC0 contains one ret byte at a carved boundary.
-// No semantic owner is proven, so the source keeps the address-derived name.
-void Rva00262EC0NoOp()
-{
-}

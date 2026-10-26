@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "d32161c1da36cf3e95c6586ef04af2b3b049f1dd2a799274afe0bbcb569c8a84",
-  "symbol": "?aptKeyMatches@@YAPAVAptValue@@PAXH@Z",
-  "score_kind": "measured",
-  "score": 0.9846,
-  "source": "// ?aptKeyMatches@@YAPAVAptValue@@PAXH@Z\n// partial score=0.9846 date=2026-10-11\n// ?aptKeyMatches@@YAPAVAptValue@@PAXH@Z\r\n// cl: /O2 /Ob2 /DNDEBUG /MD /EHsc\r\nclass AptValue { public: int toInteger() const; };\r\nextern AptValue** g_bfmeArr1233;\r\nextern int g_bfmeCount1233;\r\nextern unsigned int Rva008A5250LastKey;\r\nextern const int Rva008A5250KeyTable[0x14];\r\nextern \"C\" int __cdecl toupper(int);\r\n#define Rva008A5250KeyChar(code) toupper(code)\r\nclass AptBoolean {public:static AptBoolean *Create(bool);};\r\n#define Rva008A53D0MakeBool(value) reinterpret_cast<AptValue *>(AptBoolean::Create(value))\r\n// Open BFME 2 donor: Code/Libraries/Source/Apt/AptObject/AptKeyLookup.cpp.\r\nAptValue *aptKeyMatches(void *,int) {\r\n AptValue *v=g_bfmeArr1233[g_bfmeCount1233-1];\r\n unsigned int key=Rva008A5250LastKey;\r\n if((key&3)==1) {\r\n  int code=key>>17;\r\n  if(code>=32&&code<=126) { int c=Rva008A5250KeyChar(code); return Rva008A53D0MakeBool(c==v->toInteger()); }\r\n  else if(code<20)code=Rva008A5250KeyTable[code];\r\n  return Rva008A53D0MakeBool(code==v->toInteger());\r\n }\r\n return Rva008A53D0MakeBool(false);\r\n}\r\n"
-}

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "7ddf29b39f0d6e081871024df1c3557e0ff0c566b10373248b21186a1cf97a94",
-  "symbol": "?bfmeAddAAD@BfmeHostAAD@@QAEXVBfmeUniStrAAD@@G@Z",
-  "score_kind": "author-estimate",
-  "score": 0.97,
-  "source": "// ?bfmeAddAAD@BfmeHostAAD@@QAEXVBfmeUniStrAAD@@G@Z\n// partial score=0.97 date=2026-09-08\nvoid *Rva0082E540NodeAllocate(unsigned int n);\n\nclass BfmeUniStrAAD\n{\npublic:\n\tBfmeUniStrAAD() { m_bfmeDataAAD = 0; }\n\t~BfmeUniStrAAD() { bfmeReleaseAAD(); }\n\n\tvoid bfmeSetAAD(const BfmeUniStrAAD &o);\n\n\tvoid *m_bfmeDataAAD;\n\nprivate:\n\tvoid bfmeReleaseAAD();\n};\n\nstruct BfmePairAAD\n{\n\tBfmeUniStrAAD m_bfmeFirstAAD;\n\tunsigned short m_bfmeSecondAAD;\n};\n\nvoid bfmeConstructAAD(BfmePairAAD *dst, const BfmePairAAD &src);\n\nstruct BfmeNodeAAD\n{\n\tBfmeNodeAAD *m_bfmePrevAAD;\n\tBfmeNodeAAD *m_bfmeNextAAD;\n\tBfmePairAAD m_bfmeValAAD;\n};\n\nclass BfmeHostAAD\n{\npublic:\n\tvoid bfmeAddAAD(BfmeUniStrAAD name, unsigned short id);\n\n\tunsigned char m_bfmeHeadAAD[0x1ac];\n\tBfmeNodeAAD *m_bfme1ACAAD;\n};\n\nvoid BfmeHostAAD::bfmeAddAAD(BfmeUniStrAAD name, unsigned short id)\n{\n\tBfmePairAAD p;\n\n\tp.m_bfmeFirstAAD.bfmeSetAAD(name);\n\tp.m_bfmeSecondAAD = id;\n\n\tBfmeNodeAAD *h = m_bfme1ACAAD;\n\tBfmeNodeAAD *n = (BfmeNodeAAD *)Rva0082E540NodeAllocate(16);\n\n\tbfmeConstructAAD(&n->m_bfmeValAAD, p);\n\n\tBfmeNodeAAD *nx = h->m_bfmeNextAAD;\n\n\tn->m_bfmePrevAAD = h;\n\tn->m_bfmeNextAAD = nx;\n\tnx->m_bfmePrevAAD = n;\n\th->m_bfmeNextAAD = n;\n}\n"
-}

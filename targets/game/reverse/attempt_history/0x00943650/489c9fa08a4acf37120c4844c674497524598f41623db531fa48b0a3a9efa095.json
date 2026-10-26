@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "489c9fa08a4acf37120c4844c674497524598f41623db531fa48b0a3a9efa095",
-  "symbol": "??0Rva00943650Owner@@QAE@XZ",
-  "score_kind": "author-estimate",
-  "score": 0.7,
-  "source": "// ??0Rva00943650Owner@@QAE@XZ\n// partial score=0.7 date=2026-09-06\nstruct Rva00943650Link {\n\tRva00943650Link* m_next; Rva00943650Link* m_prev; int m_count; int m_a; int m_b;\n\tRva00943650Link()\n\t{\n\t\tm_count = 0; m_prev = 0; m_next = 0; m_a = 0; m_b = 0;\n\t\tm_next = this; m_prev = this; m_a = 0; m_count = 0;\n\t}\n};\nstruct Rva00943650Sub : Rva00943650Link { virtual ~Rva00943650Sub(); };\nstruct Rva00943650Owner { int m_0; Rva00943650Sub m_sub; Rva00943650Owner(); };\nRva00943650Owner::Rva00943650Owner() : m_0(0) {}\n"
-}

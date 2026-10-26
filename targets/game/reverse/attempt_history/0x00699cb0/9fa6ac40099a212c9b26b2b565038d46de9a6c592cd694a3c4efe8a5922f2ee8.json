@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "9fa6ac40099a212c9b26b2b565038d46de9a6c592cd694a3c4efe8a5922f2ee8",
-  "symbol": "??0BfmeBinkPlayerAAB@@QAE@XZ",
-  "score_kind": "author-estimate",
-  "score": 0.92,
-  "source": "// ??0BfmeBinkPlayerAAB@@QAE@XZ\n// partial score=0.92 date=2026-09-08\nclass BfmeBinkStateAAB\n{\npublic:\n\tBfmeBinkStateAAB();\n\t~BfmeBinkStateAAB();\n\n\tvoid *m_bfmeStateAAB;\n};\n\nclass BfmeBinkPlayerMember\n{\npublic:\n\tBfmeBinkPlayerMember();\n\t~BfmeBinkPlayerMember();\n\n\tvoid *m_bfmeSlotAAB;\n};\n\nclass BfmeGuardAAB\n{\npublic:\n\t~BfmeGuardAAB();\n};\n\nclass BfmeBinkPlayerAAB : public BfmeGuardAAB\n{\npublic:\n\tBfmeBinkPlayerAAB();\n\n\tchar m_bfme00AAB;\n\tchar m_bfme01AAB;\n\tint m_bfme04AAB;\n\tint m_bfme08AAB;\n\tchar m_bfme0CAAB;\n\tint m_bfme10AAB;\n\tint m_bfme14AAB;\n\tint m_bfme18AAB;\n\tBfmeBinkStateAAB m_bfme1CAAB;\n\tBfmeBinkPlayerMember m_bfme20AAB;\n\tBfmeBinkPlayerMember m_bfme24AAB;\n\tint m_bfme28AAB;\n\tint m_bfme2CAAB;\n\tint m_bfme30AAB;\n\tint m_bfme34AAB;\n\tint m_bfme38AAB;\n\tchar m_bfme3CAAB;\n};\n\nBfmeBinkPlayerAAB::BfmeBinkPlayerAAB()\n\t: m_bfme00AAB(0),\n\t  m_bfme01AAB(0),\n\t  m_bfme04AAB(0),\n\t  m_bfme08AAB(0),\n\t  m_bfme0CAAB(0),\n\t  m_bfme10AAB(0),\n\t  m_bfme14AAB(0),\n\t  m_bfme18AAB(0),\n\t  m_bfme28AAB(0),\n\t  m_bfme2CAAB(0),\n\t  m_bfme30AAB(0),\n\t  m_bfme34AAB(0),\n\t  m_bfme38AAB(0),\n\t  m_bfme3CAAB(0)\n{\n}\n"
-}

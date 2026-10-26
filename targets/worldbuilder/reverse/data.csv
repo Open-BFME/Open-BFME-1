@@ -1,2 +1,0 @@
-name,target_rva,size,section,witnesses,evidence,model
-?m_disableFeedback@DrawObject@@1_NA,0x0100C899,1,.data,0x000722B3;0x000722BC;0x000722CC;0x00072306,"ZH WorldBuilder DrawObject.h:150-155 declares protected static Bool m_disableFeedback, DrawObject.cpp:99 defines it false; byte operands in the MFC-proven CMainFrame::OnViewBrushfeedback (+2 cmp, +0xB and +0x1B stores) and OnUpdateViewBrushfeedback (+0xA cmp) all address it, matching the donor toggle/isFeedbackEnabled pair",claude-opus-5-5

@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "a7e29bcfb062e7c388488a2d7cb504bbf56cfb2650e88fbd650f920c131f1209",
-  "symbol": "?allEntriesMatch@Rva00892FD0Owner@@QAE_NHH@Z",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?allEntriesMatch@Rva00892FD0Owner@@QAE_NHH@Z\n// partial score=0.85 date=2026-09-06\nstruct Rva00892FD0Entry { int m_0; int m_key; };\nstruct Rva00892FD0Owner {\n\tint m_count;\n\tint m_4;\n\tRva00892FD0Entry* m_entries;\n\tbool allEntriesMatch(int a, int b);\n};\nbool Rva00892FD0Owner::allEntriesMatch(int a, int b)\n{\n\tint n = m_count;\n\tfor (int i = 0; i < n; ++i) {\n\t\tif (m_entries[i].m_key != a && m_entries[i].m_key != b)\n\t\t\treturn false;\n\t}\n\treturn true;\n}\n"
-}

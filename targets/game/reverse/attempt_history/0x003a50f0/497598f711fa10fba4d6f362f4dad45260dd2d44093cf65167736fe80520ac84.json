@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "497598f711fa10fba4d6f362f4dad45260dd2d44093cf65167736fe80520ac84",
-  "symbol": "?rva003A50F0@Gen003BDE80Element@@QAEXXZ",
-  "score_kind": "author-estimate",
-  "score": 0.63,
-  "source": "// ?rva003A50F0@Gen003BDE80Element@@QAEXXZ\n// partial score=0.63 date=2026-09-26\n// cl: /DNDEBUG /MD /EHsc\n// Retail 0x003A50F0: advances a two-dimensional element toward its destination.\nextern \"C\" double __cdecl sqrt(double value);\n#pragma intrinsic(sqrt)\nextern const float g_bfmeDefaultBU;\nextern const double g_bfmeSubB3;\n\nstruct Coord2D { float x, y; };\n\nclass Gen003BDE80Element\n{\npublic:\n\tvoid rva003A50F0();\n\tfloat rva003A40A0();\n\tvoid rva003A4FD0(Coord2D *delta);\nprivate:\n\tchar m_beforeCurrent[0x0c];\n\tfloat m_currentX;\n\tfloat m_currentY;\n\tfloat m_targetX;\n\tfloat m_targetY;\n};\n\n#pragma comment(linker, \"/alternatename:?rva003A40A0@Gen003BDE80Element@@QAEMXZ=?j_000239d9@@YAXXZ\")\n#pragma comment(linker, \"/alternatename:?rva003A4FD0@Gen003BDE80Element@@QAEXPAUCoord2D@@@Z=?j_0001b577@@YAXXZ\")\n\nvoid Gen003BDE80Element::rva003A50F0()\n{\n\tCoord2D target = *(const Coord2D *)&m_targetX;\n\tfloat dx = target.x - m_currentX;\n\tfloat dy = target.y - m_currentY;\n\tfloat inverse = g_bfmeDefaultBU / (float)sqrt(dx * dx + dy * dy);\n\tfloat directionX = dx * inverse;\n\tfloat directionY = dy * inverse;\n\tfloat amount = rva003A40A0();\n\tm_currentX += directionX * amount;\n\tm_currentY += directionY * amount;\n\tCoord2D remaining;\n\tremaining.x = m_targetX - m_currentX;\n\tremaining.y = m_targetY - m_currentY;\n\tif ((float)sqrt(remaining.x * remaining.x + remaining.y * remaining.y) <= g_bfmeSubB3)\n\t\trva003A4FD0(&remaining);\n}\n"
-}

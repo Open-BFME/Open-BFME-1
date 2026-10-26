@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "dee30398bd7c186aa06b3090456568b4f7cc9245ddcabb39ada75c439f76e7e5",
-  "symbol": "?divideBy@Rva008D63A0Vec4@@QAEXM@Z",
-  "score_kind": "author-estimate",
-  "score": 0.85,
-  "source": "// ?divideBy@Rva008D63A0Vec4@@QAEXM@Z\n// partial score=0.85 date=2026-09-06\n// 41/43 B: identical FPU sequence but retail copies this into eax first (mov eax,ecx) and addresses through eax; array/pointer/local-alias forms all keep ecx.\nextern float g_bfmeDefaultBU;\nstruct Rva008D63A0Vec4 {\n\tfloat x; float y; float z; float w;\n\tvoid divideBy(float d);\n};\nvoid Rva008D63A0Vec4::divideBy(float d)\n{\n\tfloat s = g_bfmeDefaultBU / d;\n\tx *= s;\n\ty *= s;\n\tz *= s;\n\tw *= s;\n}\n"
-}
