@@ -97,6 +97,62 @@ def test_ledger_owner_and_equal_digest_never_override_retail_truth():
     assert len(f["wrong_emitters"]) == 1
 
 
+def test_name_contradiction_vetoes_even_a_byte_proven_ledger_owner():
+    checks = [{"rva": "0x00106670", "verdict": "CONTRADICTED"}]
+    family = analyze(homes={NAME: {0x00106670}}, identities={NAME: checks})["families"][0]
+    assert family["identity_contradicted"]
+    assert family["identity_oracle"] == checks
+    assert family["canonical_provider"] is None
+    assert family["proven_copies"][0]["object"] == "provider.obj"
+    assert not family["servable"]
+    assert "identity contradicted" in family["status"]
+    assert "Resolve" in family["hypothesis"]
+
+
+@pytest.mark.parametrize("verdict", ["CONFIRMED", "UNTESTABLE", "UNAVAILABLE"])
+def test_noncontradicting_oracle_result_is_reported_without_becoming_identity_proof(verdict):
+    checks = [{"rva": "0x1000", "verdict": verdict}]
+    family = analyze(homes={NAME: {0x1000}}, identities={NAME: checks})["families"][0]
+    assert not family["identity_contradicted"]
+    assert family["identity_oracle"] == checks
+    assert family["canonical_provider"] is not None
+    assert "independent evidence" in family["canonical_provider"]["evidence"]
+
+
+def test_identity_oracle_reads_only_supplied_root_and_claimed_homes(tmp_path, monkeypatch):
+    import ilt_oracle
+    path = tmp_path / "targets/game/reverse/ilt_windows.tsv"
+    path.parent.mkdir(parents=True)
+    path.write_text("fixture")
+    seen = []
+
+    class Oracle:
+        def __init__(self, windows):
+            assert windows == path
+
+        def check(self, name, rva):
+            seen.append((name, rva))
+            return "CONTRADICTED", 0.001, "outside window"
+
+    monkeypatch.setattr(ilt_oracle, "Oracle", Oracle)
+    result = C.identity_checks(tmp_path, {NAME: {0x2000, 0x1000}})
+    assert seen == [(NAME, 0x1000), (NAME, 0x2000)]
+    assert result[NAME][0]["rva"] == "0x00001000"
+    assert result[NAME][1]["verdict"] == "CONTRADICTED"
+
+
+def test_missing_identity_windows_are_explicit(tmp_path):
+    result = C.identity_checks(tmp_path, {NAME: {0x1000}})
+    assert result[NAME][0]["verdict"] == "UNAVAILABLE"
+    assert result[NAME][0]["p_false"] is None
+
+
+@pytest.mark.parametrize("name", ["?get@Rva0009FEF0Dword@@QBEIXZ", "?get@BfmeOwner@@QBEIXZ"])
+def test_opaque_names_do_not_claim_the_retail_spelling(tmp_path, name):
+    result = C.identity_checks(tmp_path, {name: {0x9FEF0}})
+    assert result[name][0]["verdict"] == "NOT_APPLICABLE"
+
+
 def test_unknown_map_holder_is_not_first_copy_fallback():
     ix = census()
     ix["selection"]["exceptions"][NAME] = None

@@ -13,6 +13,9 @@ are report-only. Reports are census diagnostics, never LINKED verdicts.
 JSON goes to stdout; redirect it to build/comdat_families/ if desired. The only
 mutation is an explicitly requested ``next`` lease through claims.py. Pickles
 must be trusted local BFME1 census artifacts. No compiler/linker is invoked.
+Byte agreement does not prove a name: frozen ILT contradictions at claimed
+real-name homes veto provider recommendations. Fits are only corroboration;
+opaque spellings deliberately do not claim retail's original symbol name.
 """
 import argparse
 import collections
@@ -255,11 +258,37 @@ def retail_homes(root, names):
     return homes
 
 
-def analyze(index, intervals, patterns=None, references=None, reference_scan=None, homes=None):
+def identity_checks(root, homes):
+    """Check names at their claimed homes, independently of matching bytes.
+
+    An ILT fit is corroboration, never identity proof. A contradiction prevents
+    offering that name's byte-matching copy as a canonical repair provider.
+    """
+    from ilt_oracle import Oracle, tier
+    path = root / "targets/game/reverse/ilt_windows.tsv"
+    oracle = Oracle(path) if path.is_file() else None
+    result = {}
+    for name, addresses in homes.items():
+        checks = []
+        for rva in sorted(addresses):
+            if tier(name) != "real":
+                verdict, chance, reason = "NOT_APPLICABLE", None, "opaque/invented spelling does not claim a retail symbol name"
+            else:
+                verdict, chance, reason = (oracle.check(name, rva) if oracle else
+                                          ("UNAVAILABLE", None, "frozen ILT windows missing"))
+            checks.append({"rva": f"0x{rva:08X}", "verdict": verdict,
+                           "p_false": chance, "reason": reason})
+        result[name] = checks
+    return result
+
+
+def analyze(index, intervals, patterns=None, references=None, reference_scan=None, homes=None,
+            identities=None):
     """Pure analysis over the BFME1 census tables. Does not open/write files."""
     patterns = patterns or {}
     references = references or {}
     homes = homes or {}
+    identities = identities or {}
     sources = collections.defaultdict(list)
     affected = collections.defaultdict(set)
     for source, entry in index["blockers"].items():
@@ -292,11 +321,13 @@ def analyze(index, intervals, patterns=None, references=None, reference_scan=Non
         # on an offline reader. Several proven addresses are ambiguous even
         # when their bytes happen to agree (retail did not use ICF).
         ambiguous = len({p["digest"] for p in proven}) > 1 or len(homes.get(name, ())) > 1
+        checks = identities.get(name, [])
+        contradicted = any(c["verdict"] == "CONTRADICTED" for c in checks)
         # Prefer the proven ledger owner's TU, then the first proven copy.
         proven.sort(key=lambda p: (p["object"] not in selection.get("owners", {}).get(name, ()), p["link_order"]))
-        provider = proven[0] if proven and not ambiguous else None
+        provider = proven[0] if proven and not ambiguous and not contradicted else None
         if provider:
-            provider = {**provider, "evidence": "census RetailTruth: bytes and relocations retail-proven for this exact name",
+            provider = {**provider, "evidence": "census RetailTruth: bytes and relocations match a claimed home; name identity needs independent evidence",
                         "ledger_owner": provider["object"] in selection.get("owners", {}).get(name, ()),
                         "truth_fingerprint": index.get("weak_truth"), "census": index.get("meta", {})}
         wrong = [unit(i, d, v) for i, d, v in copies if v == "wrong"]
@@ -306,7 +337,8 @@ def analyze(index, intervals, patterns=None, references=None, reference_scan=Non
         ready = {s for s in affected[name] if blocked_names(index["blockers"][s]) <= {name}
                  and not index["blockers"][s].get("addresses")}
         ready_spans = merge_intervals([part for s in ready for part in intervals.get(s, ())])
-        status = ("ambiguous provider — needs analysis" if ambiguous else "owner-held" if owner
+        status = ("identity contradicted — needs analysis" if contradicted else
+                  "ambiguous provider — needs analysis" if ambiguous else "owner-held" if owner
                   else "needs provider analysis" if not provider else "provider proven")
         pattern = patterns.get(name, [])
         consumer_objects = sorted(references.get(name, ()))
@@ -316,6 +348,8 @@ def analyze(index, intervals, patterns=None, references=None, reference_scan=Non
                          "status": status, "owner_family": owner or None,
                          "retail_homes": [f"0x{rva:08X}" for rva in sorted(homes.get(name, ()))],
                          "ambiguous_provider": ambiguous,
+                         "identity_oracle": checks, "identity_contradicted": contradicted,
+                         "identity_note": "ILT fits corroborate names; they do not prove identity. Contradictions veto provider recommendations.",
                          "canonical_provider": provider, "proven_copies": proven,
                          "definers": [unit(i, d, v) for i, d, v in copies] + [unit(i, verdict="strong") for i in sorted(exclusive - {j for j, _, _ in copies})],
                          "wrong_emitters": wrong,
@@ -331,10 +365,11 @@ def analyze(index, intervals, patterns=None, references=None, reference_scan=Non
                          "bfme2_pattern": bool(pattern), "bfme2_evidence": pattern,
                          "bfme2_pattern_status": "exact evidence found" if pattern else "not established by bounded lookup",
                          "repair_applicability": "template specialization hypothesis" if "?$" in name else "non-template name; decl-only applicability unestablished",
-                         "confidence": status if ambiguous else "needs provider analysis" if not provider else "established pattern" if pattern else "provider proven; repair unestablished",
+                         "confidence": status if ambiguous or contradicted else "needs provider analysis" if not provider else "established pattern" if pattern else "provider proven; repair unestablished",
                          "suggested_model_tier": tier, "tier_reason": reason,
                          "servable": bool(provider and wrong and "?$" in name and not owner and not exclusive and selected_verdict != "unknown"),
-                         "hypothesis": HYPOTHESIS})
+                         "hypothesis": ("Resolve the contradicted name/home identity before selecting a provider; "
+                                        "matching bytes cannot establish ownership." if contradicted else HYPOTHESIS)})
     families.sort(key=lambda f: (-f["bytes_blocked"], f["family"]))
     total = interval_bytes([span for f in families for span in f["blocked_intervals"]])
     return {"schema": "bfme1-comdat-families-1", "census": index.get("meta", {}),
@@ -408,7 +443,9 @@ def main(argv=None):
         intervals = source_intervals(ROOT, wanted)
         patterns, scan = bfme2_patterns(args.bfme2, names)
         references, reference_scan = census_consumers(index, names, args.objects_dir)
-        report = analyze(index, intervals, patterns, references, reference_scan, retail_homes(ROOT, names))
+        homes = retail_homes(ROOT, names)
+        report = analyze(index, intervals, patterns, references, reference_scan, homes,
+                         identity_checks(ROOT, homes))
         report["bfme2_lookup"] = scan
         report["index"] = str(args.index.resolve())
         if args.command == "next":
