@@ -635,7 +635,10 @@ protected:
 
 public:
 
-	inline StateID getCurrentStateID() const { return getStateMachine()->getCurrentStateID(); }	///< return the id of the current state of the machine
+	// BFME owns this out of line at 0x000C3D90 (ILT 0x0002FAEA).
+	// This ZH class view has m_stateMachine at +0x2c and State::m_ID at +8;
+	// retail reads +0x30 and +4. Do not emit a same-named ZH COMDAT.
+	StateID getCurrentStateID() const;	///< return the id of the current state of the machine
 /// @ todo -- srj sez: JBA NUKE THIS CODE, IT IS EVIL
 	inline void friend_addToWaypointGoalPath( const Coord3D *pathPoint ) { getStateMachine()->addToGoalPath(pathPoint); }
 

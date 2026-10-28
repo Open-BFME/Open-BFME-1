@@ -162,3 +162,31 @@ def test_a_data_name_encoding_another_address_still_fails(monkeypatch):
     sym = "?g_Va012BA084@@3GA"
     problem = _unrecorded(monkeypatch, sym, 0x012BA088, {sym: [0x00EBA088]})
     assert "encodes 0x012BA084" in problem
+
+
+def test_owned_data_is_not_rejected_by_historical_dir32_names():
+    sym = "?g_rva01075350@@3MB"
+    identities = ({0x01075350: {"?BfmeBoundaryZero3D@@3MB", "__real@00000000"}},
+                  {sym: 0x01075350})
+    assert build.unrecorded_dir32_problem(sym, 0x01075350, identities) is None
+
+
+def test_unowned_data_cannot_override_recorded_names():
+    identities = ({0x01075350: {"__real@00000000"}}, {})
+    assert "already recorded" in build.unrecorded_dir32_problem(
+        "?g_rva01075350@@3MB", 0x01075350, identities)
+
+
+@pytest.mark.parametrize("recorded", [{}, {0x01075350: {"__real@00000000"}}])
+def test_data_ledger_placement_takes_precedence_over_address_spelling(recorded):
+    sym = "?g_rva01075350@@3MB"
+    identities = (recorded, {sym: 0x01075354})
+    assert "data ledger places" in build.unrecorded_dir32_problem(
+        sym, 0x01075350, identities)
+
+
+def test_owned_data_still_must_agree_with_its_encoded_address():
+    sym = "?g_rva01075350@@3MB"
+    identities = ({0x01075354: {"?Existing@@3MB"}}, {sym: 0x01075354})
+    assert "encodes 0x01075350" in build.unrecorded_dir32_problem(
+        sym, 0x01075354, identities)

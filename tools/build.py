@@ -3640,8 +3640,14 @@ def unrecorded_dir32_problem(sym, base, identities, symbol_map=None):
     reading the wrong global byte-matches, and the next full gate would even
     record it."""
     at, data = identities
+    if sym in data and data[sym] != base:
+        return (f"the data ledger places {sym} at 0x{data[sym]:08X}, "
+                f"not at 0x{base:08X}")
     others = sorted(at.get(base, set()) - {sym})
-    if others:
+    # A matched data row is already an owned identity, not a proposed alias.
+    # Historical DIR32 names at the same address must not hide that ownership.
+    # Keep the encoded-address check below, even for ledger-owned data.
+    if others and data.get(sym) != base:
         return (f"retail 0x{base:08X} is already recorded as {others[0]}"
                 + (f" (+{len(others) - 1} more)" if len(others) > 1 else "")
                 + "; reference that name, not a new one")
