@@ -17,6 +17,8 @@
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
+extern void j_00022a70();
+
 typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef unsigned short UnsignedShort;
@@ -134,10 +136,15 @@ private:
 	BfmeGetNextTeamMemberFunc m_getNext;
 };
 
+// Team instance-list advance is reached through the ILT at 0x00022A70
+// (canonical owner ?j_00022a70@@YAXXZ; pinned provider
+// ?_bfme_nextInInstanceList@Team@@QAEPAV1@XZ). Same union pattern as the
+// sibling ScriptConditionsRva00326F40.cpp; the undefined member declaration
+// above used to leave ?_bfme_nextInInstanceList@BfmeTeamInstanceLink@@QAEPAV1@XZ
+// unresolved at link time.
 class BfmeTeamInstanceLink
 {
 public:
-	BfmeTeamInstanceLink *_bfme_nextInInstanceList();
 };
 
 class Team
@@ -157,6 +164,11 @@ public:
 };
 
 typedef BfmeTeamInstanceLink *(BfmeTeamInstanceLink::*BfmeGetNextTeamFunc)();
+static __forceinline BfmeGetNextTeamFunc bfmeTeamInstanceNext()
+{
+	union { void (*fn)(); BfmeGetNextTeamFunc call; } u = { j_00022a70 };
+	return u.call;
+}
 
 class BfmeTeamIterator
 {
@@ -180,7 +192,7 @@ class TeamPrototype
 public:
 	unsigned char m_pad[0x274];
 	Team *m_firstInstance;
-	BfmeTeamIterator iterate_TeamInstanceList() const { return BfmeTeamIterator(m_firstInstance, &BfmeTeamInstanceLink::_bfme_nextInInstanceList); }
+	BfmeTeamIterator iterate_TeamInstanceList() const { return BfmeTeamIterator(m_firstInstance, bfmeTeamInstanceNext()); }
 };
 
 struct PlayerTeamNode
