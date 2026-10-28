@@ -38529,7 +38529,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_00c096b1@@YAXXZ,,0x00C096B1,8,game/gen_asm/d_009f6921.asm,matched,gen-dump;ghidra=Unwind@010096b1
 ?d_00c096c9@@YAXXZ,,0x00C096C9,11,game/gen_asm/d_00c06477.asm,matched,gen-dump;ghidra=Unwind@010096c9
 ?d_00c09714@@YAXXZ,,0x00C09714,11,game/gen_asm/d_00c06477.asm,matched,gen-dump;ghidra=Unwind@01009714
-?d_00c0990c@@YAXXZ,,0x00C0990C,20,game/gen_asm/d_00c06477.asm,matched,gen-dump;ghidra=Unwind@0100990c
 ?d_00c09c79@@YAXXZ,,0x00C09C79,11,game/gen_asm/d_00c06477.asm,matched,gen-dump;ghidra=Unwind@01009c79
 ?d_00c09c8f@@YAXXZ,,0x00C09C8F,31,game/gen_asm/d_00c06477.asm,matched,gen-dump;ghidra=Unwind@01009c8f
 ?d_00c0b050@@YAXXZ,,0x00C0B050,22,game/gen_asm/d_00c06477.asm,matched,gen-dump;ghidra=Unwind@0100b050
@@ -173392,3 +173391,4 @@ uw_00c519fc,,0x00C519FC,14,game/GameEngineDevice/Source/W3DDevice/GameClient/GUI
 ??0Rva008B9C90HeaderedDeleting@@QAE@XZ,,0x008B9C60,33,game/GameEngine/Source/Common/BfmeConv1030.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/0x008B9C60.md;out-of-line ctor of the type-22 array with vtable 0x01136D58 (??_7Rva008B9C90HeaderedDeleting@@6B@); ConcatArray 0x008B9CC0 inlines the same ctor;model=claude-opus-5.5;host=GreatFaram
 uw_00c22380,,0x00C22380,11,game/GameEngine/Source/GameClient/GameTextManager_initMapStringFile_Thunk.cpp,matched,gen-funclet;parent=?initMapStringFile@GameTextManager@@UAEXABVAsciiString@@@Z;object-symbol=$L2128;model=claude-opus-5-5;host=Desktop
 ?insert@SimpleObjectIterator@@QAEXPAVObject@@M@Z,,0x001DDCB0,68,game/GameEngine/Source/Common/Bfme5RefNodes.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/001ddcb0-simpleobjectiterator-insert.md;Zero Hour SimpleObjectIterator::insert: 16-byte Clump pushed at the front with the numeric copied as a dword; ILT 0x0002CAE8; previously placeholder Bfme5PushList::bfmePushFront;model=claude-opus-5-5;host=Desktop
+?Rva00C0990CCleanup@@YAXXZ,,0x00C0990C,20,game/GameEngine/Source/GameLogic/Object/Rva001D48A0Xfer.cpp,matched,gen-funclet;object-symbol=$L12196;parent=?DoXfer@Object@@MAEXAAVXfer@@@Z;retail parent 1D48A0 -> handler C0994C -> FuncInfo DF81C0 map DF8178 state4->3;model=claude-opus-5-5;host=app
