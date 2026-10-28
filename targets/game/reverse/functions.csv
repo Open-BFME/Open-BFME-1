@@ -22371,7 +22371,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?Rva00804630HttpGet@@YAXPAURva008042B0Http@@PBDH11@Z,,0x00804630,164,game/Libraries/Source/DirtySock/Y2ProtoMangleHelpers.cpp,matched,Y2 DirtySock lane: protomangle.cpp file-static; local names read from the /GZ RTC frame descriptor after the body
 ?Rva008046E0HttpRequest@@YAHPAURva008042B0Http@@PBDH1@Z,,0x008046E0,423,game/Libraries/Source/DirtySock/Y2ProtoMangleHelpers.cpp,matched,Y2 DirtySock lane: protomangle.cpp file-static (/Od /GZ); address-derived name
 ?Rva00804890StrCaseCmp@@YAHPBD0@Z,,0x00804890,144,game/Libraries/Source/DirtySock/Y2ProtoMangleHelpers.cpp,matched,Y2 DirtySock lane: protomangle.cpp file-static (/Od /GZ); address-derived name
-?Rva00804920Update@@YAPBDPAURva008042B0Http@@@Z,,0x00804920,2668,game/Libraries/Source/DirtySock/Y2ProtoMangleHelpers.cpp,matched,no commas;model=gpt-5.6-luna
 ?Rva008053C0Connect@@YAXPAURva00804150ProtoMangleRef@@PAXPBD@Z,,0x008053C0,223,game/Libraries/Source/DirtySock/Y2ProtoMangleHelpers.cpp,matched,ProtoMangle connect entry; stores the caller socket and reads its bound port
 ?Rva008054A0@@YAXPAURva00804150ProtoMangleRef@@@Z,,0x008054A0,363,game/Libraries/Source/DirtySock/Y2ProtoMangleHelpers.cpp,matched,ProtoMangle state machine
 ?Rva00805610HttpCode@@YAHPAURva00804150ProtoMangleRef@@@Z,,0x00805610,14,game/Libraries/Source/DirtySock/Y2ProtoMangleHelpers.cpp,matched,reader for the http sub-object response code
@@ -139267,7 +139266,6 @@ _Rva007FFB50AddrText,,0x007FFB50,186,game/Libraries/Source/Y4DirtySock/Y4DirtySo
 _Rva007FFC10,,0x007FFC10,158,game/Libraries/Source/Y4DirtySock/Y4DirtySockAddrText.c,matched,parse then extract the 32-bit address
 _Rva007FFCB0,,0x007FFCB0,282,game/Libraries/Source/Y4DirtySock/Y4DirtySockAddrText.c,matched,build a socket address from text
 _Rva007FFDD0,,0x007FFDD0,442,game/Libraries/Source/Y4DirtySock/Y4DirtySockAddrText.c,matched,host and port text parser returning a found-mask
-_Rva0080AD00,,0x0080AD00,196,game/GameEngine/Source/GameNetwork/Y4DirtySockTickMix.c,matched,DirtySock tick mix into iCount window then optional RC4 key of caller state
 _Rva0080ADE0,,0x0080ADE0,542,game/Libraries/Source/DirtySock/Rva0080ADE0CommStateReset.cpp,matched,address-derived; callers 0x0080B050 0x0080B070 0x0080B480
 _Rva0080B000,,0x0080B000,69,game/Libraries/Source/DirtySock/Y4CommAlloc.c,matched,allocate and zero a comm object
 _Rva0080B050,,0x0080B050,26,game/Libraries/Source/DirtySock/Y4CommAlloc.c,matched,releases the comm object state without freeing its allocation
@@ -139277,7 +139275,6 @@ _Rva0080B150,,0x0080B150,90,game/Libraries/Source/DirtySock/Y4CommAlloc.c,matche
 _Rva0080B1B0,,0x0080B1B0,678,game/Libraries/Source/DirtySock/Y2Rva00806580Module.cpp,matched,address-derived DirtySock connect helper; matched caller Rva00806B10 at 0x00806B10; five-argument socket/host/port ABI
 _Rva0080B460,,0x0080B460,30,game/Libraries/Source/DirtySock/Y4CommAlloc.c,matched,forwards a mode change to the comm socket
 _Rva0080B480,,0x0080B480,42,game/Libraries/Source/DirtySock/Y4CommAlloc.c,matched,releases comm state according to the stored flag
-_Rva0080C960,,0x0080C960,3040,game/Libraries/Source/DirtySock/ProtoSSLParseCertificate.c,matched,DirtySock ProtoSSL certificate parser and verifier
 _Rva0080D7A0,,0x0080D7A0,234,game/Libraries/Source/DirtySock/Y4BoundedCopy.c,matched,parses a tag byte followed by a short or long-form encoded length
 _Rva0080D890,,0x0080D890,154,game/Libraries/Source/DirtySock/Y4LookupTables.c,matched,finds the first table entry whose byte prefix matches the input
 _Rva0080D930,,0x0080D930,79,game/Libraries/Source/DirtySock/Y4BoundedCopy.c,matched,copies a bounded byte range and terminates when capacity remains
@@ -139350,10 +139347,8 @@ _Rva00814460,,0x00814460,91,game/Libraries/Source/DirtySock/Y4CommTickIdle.c,mat
 _Rva008144C0,,0x008144C0,91,game/Libraries/Source/DirtySock/Y4CommTickIdle.c,matched,reconstructed
 _Rva00814540,,0x00814540,434,game/Libraries/Source/DirtySock/Y4CommTickIdle.c,matched,reconstructed
 _Rva00814700,,0x00814700,106,game/Libraries/Source/DirtySock/Y4CommTickIdle.c,matched,socket callback sampling the clock once per pump
-_Rva00814770,,0x00814770,1466,game/Libraries/Source/DirtySock/Y4CommTickIdle.c,matched,
 _Rva00814EA0,,0x00814EA0,194,game/Libraries/Source/DirtySock/Y4CommTickIdle.c,matched,reconstructed
 _Rva00814F70,,0x00814F70,98,game/Libraries/Source/DirtySock/Y4CommTickIdle.c,matched,advance the ring only on success
-_Rva00814FE0,,0x00814FE0,367,game/Libraries/Source/DirtySock/Y4CommTickIdle.c,matched,reconstructed
 _Rva00815170,,0x00815170,109,game/Libraries/Source/DirtySock/Y4CommTickIdle.c,matched,reconstructed
 _Rva008151E0,,0x008151E0,287,game/Libraries/Source/DirtySock/Y4CommTickIdle.c,matched,reconstructed
 _Rva00815300,,0x00815300,496,game/Libraries/Source/DirtySock/commsrp.cpp,matched,
@@ -172183,7 +172178,6 @@ _Rva0018A0F0Predicate,,0x0018A0F0,118,game/GameEngine/Source/GameLogic/AI/Rva001
 ?addPostProcessSnapshot@GameState@@QAEXPAVSnapshot@@I@Z,,0x0010FE90,204,game/GameEngine/Source/GameLogic/Object/Rva0010FE90CallbackLists.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/ea-worldbuilder-labels.md;model=claude-opus-5-5;host=ymo-workstation
 ?rva00110790Forward@@YAXPAVSnapshot@@PAVGameState@@I@Z,,0x00110790,20,game/GameEngine/Source/GameLogic/Object/Rva00110790CallbackForward.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/ea-worldbuilder-labels.md;model=claude-opus-5-5;host=ymo-workstation
 ?rva007F97B0@Rva007FA2C0@@QAEXPAVRva007E8810Message@@PAURva007FA170Slot@@@Z,,0x007F97B0,414,game/GameEngine/Source/GameNetwork/Rva007F97B0Transactor.cpp,matched,model=claude-opus-5-5;host=ymo-workstation
-_CommUdpProcess,,0x00817B30,2207,game/Libraries/Source/DirtySock/commudp.cpp,matched,model=claude-opus-5-5;host=ymo-workstation
 ?clip@Pathfinder@@QAEXPAUCoord3D@@0@Z,,0x003D5DE0,373,game/GameEngine/Source/GameLogic/AI/PathfinderFindGroundPath.cpp,matched,Retail callers retain the byte-exact inline noinline clip body; remove the redundant strong pathfind_getcell emitter to resolve link queue rank 52;model=gpt-6.1-sol;host=ymo-workstation
 ?Cast_Ray@MeshGeometryClass@@QAE_NAAVRayCollisionTestClass@@@Z,,0x009278F0,34,game/Libraries/Source/WWVegas/WW3D2/MeshGeometryIntersectOBBoxThunk.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/009278f0-meshgeometry-cast-ray.md;model=claude-opus-5-5;host=ymo-workstation
 ?zeroOutStats@StatsCollector@@AAEXXZ,,0x000A22F0,63,game/GameEngine/Source/Common/StatsCollector.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/bfme2-twin-ilt-confirmed-names.md;model=claude-opus-5-5;host=ymo-workstation
@@ -173390,3 +173384,9 @@ uw_00c22380,,0x00C22380,11,game/GameEngine/Source/GameClient/GameTextManager_ini
 ?advance@Rva0083FD50@@QAEXH@Z,,0x0083FD50,13,game/GameEngine/Source/Common/UnclaimedSlotTailsAndConstants.cpp,matched,unowned 16-aligned gap body; shape-only; identity not recovered;extent corrected 11->13 B: row cut ret 4 after its opcode byte; bytes to int3 padding equal the compiled symbol;model=claude-opus-5-5;host=app
 ?Rva007D9940ResetStages@@YAXXZ,,0x007D9940,111,game/GameEngineDevice/Source/W3DDevice/GameClient/Rva007D9940ResetStages.cpp,matched,clears device textures on stages 0-4 via SetTexture vtable+0x104 then calls device vtable slot at +0x1ac (index107 1 uint arg=0) tail-jmps to DX8Wrapper::Invalidate_Cached_Render_States (thunk j_007d99aa already owns +0x6a tail); device global aliased as Rva01340534DeviceB same VA as Rva01340534Device;extent includes the tail jmp to DX8Wrapper::Invalidate_Cached_Render_States that a gen-thunk row had claimed (row retired in deleted_rows.csv);model=claude-opus-5-5;host=app
 ?Rva007DD0E0ResetStages01@@YAXXZ,,0x007DD0E0,110,game/GameEngineDevice/Source/W3DDevice/GameClient/Rva007DD0E0ResetStages01.cpp,matched,table listed size 105; body compiles to 110B with compiler-emitted tail-jmp to DX8Wrapper::Invalidate_Cached_Render_States at +0x69 already owned by matched row j_007dd149; resets texture stages 2/3/4 color+alpha ops then clears textures on stage0/1 via Rva01340534Device SetTexture vtable+0x104 pinned by 0x006C9270;extent includes the tail jmp to DX8Wrapper::Invalidate_Cached_Render_States that a gen-thunk row had claimed (row retired in deleted_rows.csv);model=claude-opus-5-5;host=app
+?Rva00804920Update@@YAPBDPAURva008042B0Http@@@Z,,0x00804920,2714,game/Libraries/Source/DirtySock/Y2ProtoMangleHelpers.cpp,matched,no commas;extent 2668->2714 B includes the switch jump table the body indexes (object emits it after the code);model=claude-opus-5-5;host=app
+_Rva0080AD00,,0x0080AD00,223,game/GameEngine/Source/GameNetwork/Y4DirtySockTickMix.c,matched,DirtySock tick mix into iCount window then optional RC4 key of caller state;extent 196->223 B includes the switch jump table the body indexes (object emits it after the code);model=claude-opus-5-5;host=app
+_Rva0080C960,,0x0080C960,3109,game/Libraries/Source/DirtySock/ProtoSSLParseCertificate.c,matched,DirtySock ProtoSSL certificate parser and verifier;extent 3040->3109 B includes the switch jump table the body indexes (object emits it after the code);model=claude-opus-5-5;host=app
+_Rva00814770,,0x00814770,1511,game/Libraries/Source/DirtySock/Y4CommTickIdle.c,matched,extent 1466->1511 B includes the switch jump table the body indexes (object emits it after the code);model=claude-opus-5-5;host=app
+_Rva00814FE0,,0x00814FE0,396,game/Libraries/Source/DirtySock/Y4CommTickIdle.c,matched,reconstructed;extent 367->396 B includes the switch jump table the body indexes (object emits it after the code);model=claude-opus-5-5;host=app
+_CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,matched,extent 2207->2247 B includes the switch jump table the body indexes (object emits it after the code);model=claude-opus-5-5;host=app
