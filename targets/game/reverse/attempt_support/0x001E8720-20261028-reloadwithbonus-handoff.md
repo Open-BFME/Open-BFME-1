@@ -18,11 +18,14 @@
   BFME2 `WeaponReloadWithBonus.cpp` is a BFME1-donated port but diverged
   (164B vs 371B) — not portable. BFME2's own `blocked` verdict on its
   0x001E8720 is its own binary's `LocomotorSet::DoXfer` range, inapplicable.
-- Supporting pin (landed in `symbols.csv`, consistency-checked):
-  `?isSharedReloadTime@WeaponSet@@QBE_NXZ` → 0x001EB140, 17B null-checked
-  flag read (`m_curWeaponTemplateSet+4`, flag `+0xE8`); the two retail call
+- Rename lead for the name lane (NOT landed: a unilateral pin here would
+  over-claim row 54677 `?get@Rva001EB140@@QAE_NXZ`, matched 17B in
+  `R2GuardedFieldGetters.cpp`, "identity not recovered"): the body reads
+  like `?isSharedReloadTime@WeaponSet@@QBE_NXZ` — 17B null-checked flag
+  read (`m_curWeaponTemplateSet+4`, flag `+0xE8`); the two retail call
   sites `0x001E8720+0x6F`/`+0x12C` sit where ZH calls
-  `sourceObj->isReloadTimeShared()`.
+  `sourceObj->isReloadTimeShared()` (ZH `WeaponSet.h:243` declares it;
+  `WeaponSet.cpp:1039` already defines it present-unmatched).
 - Next step: beat the x87 order problem (consult `docs/shape_levers.md`
   x87 entries and BFME2 recipes); loop-tail regalloc after that.
 
