@@ -25,7 +25,10 @@ typedef unsigned int UnsignedInt;
 
 class Rva0005CBD0Buffer
 {
-protected:
+public:
+	// Public so the reference mangles as ?grow@Rva0005CBD0Buffer@@QAEXI@Z,
+	// the row at 0x0005CBD0 shared by the reserve() twins below (never
+	// /alternatename); protected would emit @@IAEXI@Z and leave it unresolved.
 	void grow(UnsignedInt size);
 
 	char *m_cursor;										///< retail this+0x00
