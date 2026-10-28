@@ -141,7 +141,9 @@ struct StateConditionInfo
 /**
  * An abstraction of a machine's "state".
  */
-class State : public MemoryPoolObject
+// This partial constructor view must not emit the non-retail State vtable.
+// The matched State constructor/destructor owners provide the base vptr.
+class __declspec(novtable) State : public MemoryPoolObject
 {
 	MEMORY_POOL_GLUE_ABC( State )						///< this abstract class needs memory pool hooks
 public:

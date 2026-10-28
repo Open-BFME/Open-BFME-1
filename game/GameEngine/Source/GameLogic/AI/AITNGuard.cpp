@@ -476,18 +476,8 @@ void AITNGuardIdleState::loadPostProcess( void )
 }  // end loadPostProcess
 
 //--------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AITNGuardIdleStateOnEnter.cpp
-// ?onEnter@AITNGuardIdleState@@ present-unmatched
-StateReturnType AITNGuardIdleState::onEnter( void )
-{
-	// first time thru, use a random amount so that everyone doesn't scan on the same frame,
-	// to avoid "spikes". 
-	UnsignedInt now = TheGameLogic->getFrame();
-	m_nextEnemyScanTime = now + GameLogicRandomValue(0, TheAI->getAiData()->m_guardEnemyScanRate);
-
-	getMachineOwner()->getAI()->friend_setGoalObject(NULL);
-	return STATE_CONTINUE;
-}
+// Retail AITNGuardIdleState::onEnter 0x00189C90/74B is owned by
+// AITNGuardIdleStateOnEnter.cpp. Do not emit the Zero Hour body here.
 
 //--------------------------------------------------------------------------------------
 // AITNGuardIdleState::update: retail's body (0x0018A910) is

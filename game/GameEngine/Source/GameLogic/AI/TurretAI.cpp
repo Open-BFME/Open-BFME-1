@@ -319,59 +319,9 @@ void TurretAIData::buildFieldParse(MultiIniFieldParse& p)
 //----------------------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/TurretAI_ctor_Thunk.cpp
-// ??0TurretAI@@QAE@PAVObject@@PBVTurretAIData@@W4WhichTurretType@@@Z present-unmatched
-TurretAI::TurretAI(Object* owner, const TurretAIData* data, WhichTurretType tur) : 
-	m_owner(owner),
-	m_whichTurret(tur),
-	m_data(data),
-	m_turretStateMachine(NULL),
-	m_playRotSound(false),
-	m_playPitchSound(false),
-	m_positiveSweep(true),
-	m_enableSweepUntil(0),
-	m_sleepUntil(0),
-	m_didFire(false),
-	m_target(TARGET_NONE),
-	m_targetWasSetByIdleMood(false),
-	m_enabled(!data->m_initiallyDisabled),
-	m_firesWhileTurning(data->m_firesWhileTurning),
-	m_isForceAttacking(false),
-	//Added By Sadullah Nader
-	//Initialization(s) inserted
-	m_victimInitialTeam(NULL)
-	//
-{
-	//Added By Sadullah Nader
-	//Initialization(s) inserted
-	m_continuousFireExpirationFrame = -1;
-	//
-	if (!m_data)
-	{
-		DEBUG_CRASH(("TurretAI MUST have ModuleData"));
-		throw INI_INVALID_DATA;
-	}
-
-	if (m_data->m_turretWeaponSlots == 0)
-	{
-		DEBUG_CRASH(("TurretAI MUST specify controlled weapon slots!"));
-		throw INI_INVALID_DATA;
-	}
-	m_angle = getNaturalTurretAngle();
-	m_pitch = getNaturalTurretPitch();
-
-#ifdef _DEBUG
-	char smbuf[256];
-	sprintf(smbuf, "TurretStateMachine for tur %08lx slot %d",this,tur);
-	const char* smname = smbuf;
-#else
-	const char* smname = "TurretStateMachine";
-#endif
-	m_turretStateMachine = newInstance(TurretStateMachine)(this, m_owner, smname);
-	m_turretStateMachine->initDefaultState();
-
-	m_turretRotOrPitchSound = *(m_owner->getTemplate()->getPerUnitSound("TurretMoveLoop"));
-}
+// Retail TurretAI constructor 0x0018DED0/383B is owned by
+// game/GameEngine/Source/GameLogic/AI/TurretAI_ctor_Thunk.cpp.
+// Do not emit the incompatible Zero Hour constructor here.
 
 //----------------------------------------------------------------------------------------------------------
 // ??1TurretAI@@MAE@XZ present-unmatched
@@ -1608,3 +1558,8 @@ StateReturnType TurretAIHoldTurretState::update()
 
 	return frameToSleepTime(turret->friend_getNextIdleMoodTargetFrame(), m_timestamp);
 }
+
+// Emission anchor, absent from retail: the removed ZH constructor was the
+// only caller forcing this already-matched placement-delete COMDAT (007EFFF0).
+typedef void (*TurretStateMachinePlacementDelete)(void *, TurretStateMachine::TurretStateMachineMagicEnum);
+TurretStateMachinePlacementDelete g_turretStateMachinePlacementDelete = &TurretStateMachine::operator delete;
