@@ -53,13 +53,15 @@ Validation before final census:
   Operator-correction tests: 17 passed in isolation. Running the record and
   operator suites together has three pre-existing order-dependent failures;
   the identical combined command fails on pristine HEAD as well.
-- The commit gate and final-link measurement are still required. No new
-  LINKED-byte gain is claimed from these scoped checks.
+- The normal full commit gate passed all 3,331 matched rows across 98 TUs,
+  including relocation, data-reference and body checks. Final-link measurement
+  remains separate; these checks alone do not establish a LINKED-byte gain.
 
-Related next family: StateMachine::getCurrentStateID at RVA 0x0009FF60.
+Related repaired family: StateMachine::getCurrentStateID at RVA 0x0009FF60.
 The same census identifies eight wrong emitters with the same digest and
 19,084 affected bytes. Its retail owner reads state+4; the sweep header
-composes the state+8 accessor. It requires its own dependent-body gate.
+composes the state+8 accessor. The separate repair and dependent-body gate
+are documented in `0009fee0-state-accessor-comdat.md`.
 
 PlayerInfo is a separate layout issue: the retail 0x004F1120 copy owns
 three AsciiStrings and ten dwords (52 bytes); both the ZH header and
