@@ -159,10 +159,12 @@ public:
 	//Definition of busy -- when explicitly in the busy state. Moving or attacking is not considered busy!
 	virtual Bool isBusy() const { return false; }
 
-	// Retail's State accessors inline `mov eax,[ecx+0x20]` / `[ecx+8]` (matched getMachine 0x232180, getID 0x106670);
-	// m_machine and m_ID sit at +0x1c/+4 in this layout, so only the accessor bodies read retail's offsets.
-	inline StateMachine* getMachine() { return *(StateMachine**)((char*)this + 0x20); }		///< return the machine this state is part of
-	inline StateID getID() const { return *(const StateID*)((const char*)this + 8); }			///< get this state's id 
+	// BFME State constructor 0x000A19E0 and the exact-name ILT windows place
+	// getID at 0x0009FEF0 (+4), getMachine at 0x0009FEE0 (+0x1c).
+	// This ZH-derived declaration has an extra Snapshot base; do not use its
+	// natural member offsets for these BFME-named accessors. See identity_evidence/0009fee0-state-accessor-comdat.md.
+	inline StateMachine* getMachine() { return *(StateMachine**)((char*)this + 0x1c); }		///< return the machine this state is part of
+	inline StateID getID() const { return *(const StateID*)((const char*)this + 4); }			///< get this state's id
 
 	Object* getMachineOwner();
 	const Object* getMachineOwner() const;

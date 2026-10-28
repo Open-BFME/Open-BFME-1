@@ -21091,16 +21091,16 @@
   "evidence": "targets/game/reverse/identity_evidence/2026-10-24-00150c90-aigroup-ilt-window.md",
   "reason": "ilt_oracle contradicts every AIGroup spelling of groupDoSpecialPowerAtLocation at 0x00150C90, so the proven body keeps the address token in its owner as the 0x00152110 sibling does."
  },
-  {
-    "old_path": "targets/game/reverse/attempts/0x002147e0.cpp",
-    "new_path": "game/GameEngine/Source/GameLogic/Object/Body/RespawnBodyInternalChangeHealth.cpp",
-    "old_name": "Module",
-    "new_name": "Rva2225E0Filter",
-    "before_sha256": "b1447db83183e137b6251c3ef2180a771e4703eef9c4420d992ae2e5292e570a",
-    "after_sha256": "5f4e6a71d7ec884a14ae5f715eeffc0b95afd89b8e07e1f9f751c8ca92b6d2e9",
-    "evidence": "targets/game/reverse/identity_evidence/0x002147e0-filter-name.md",
-    "reason": "Rva2225E0Filter is BFME1's matched owner name at 0x003A04A0 (accepts); Module is still declared for findModule. The alignment paired two unrelated names."
-  },
+ {
+  "old_path": "targets/game/reverse/attempts/0x002147e0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Body/RespawnBodyInternalChangeHealth.cpp",
+  "old_name": "Module",
+  "new_name": "Rva2225E0Filter",
+  "before_sha256": "b1447db83183e137b6251c3ef2180a771e4703eef9c4420d992ae2e5292e570a",
+  "after_sha256": "5f4e6a71d7ec884a14ae5f715eeffc0b95afd89b8e07e1f9f751c8ca92b6d2e9",
+  "evidence": "targets/game/reverse/identity_evidence/0x002147e0-filter-name.md",
+  "reason": "Rva2225E0Filter is BFME1's matched owner name at 0x003A04A0 (accepts); Module is still declared for findModule. The alignment paired two unrelated names."
+ },
  {
   "old_path": "targets/game/reverse/attempts/0x0083f1c0.cpp",
   "new_path": "game/Libraries/Source/WWVegas/WWLib/stlport_ios_base_iword.cpp",
@@ -21110,8 +21110,7 @@
   "after_sha256": "8b09ad4f8a4cf9363651b033b2308e68dd108166b9910d301af9db6dd7a41b4c",
   "evidence": "targets/game/reverse/identity_evidence/0x0083f1c0-ios-callback.md",
   "reason": "The bank uses a reconstructed grow_array spelling and private POD return surrogate; no independent retail evidence establishes that spelling. The real STLport pair return reproduces the native hidden-result ABI and all 132 caller bytes. Keep the proven helper address rather than assigning the invented spelling to its corrected native-type signature."
- }
- ,
+ },
  {
   "old_path": "targets/game/reverse/attempts/0x008c6ad0.cpp",
   "new_path": "targets/game/reverse/attempts/0x008c6ad0.cpp",
@@ -21132,135 +21131,135 @@
   "evidence": "targets/game/reverse/identity_evidence/00c61819-registry-return-view.md",
   "reason": "Correct the conditional temporary ownership type, not the preserved AssetReference declaration or producer API. Both independent retail unwind states of parent 009EBCE0 reach the already proved address-qualified handle destructor 0005C640. The canonical Find_Asset symbol is retained through a physically checked one-word result view; all 211 parent bytes and both 25-byte actions verify."
  },
-{
- "old_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Rva009EBDC0.cpp",
- "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Rva009EBDC0.cpp",
- "old_name": "AssetReference",
- "new_name": "Rva009EBCE0AssetReference",
- "before_sha256": "6548fd7c7018e9f6dc50b8196e71b2bfe6535b6a9d1444148bd4b32a47c0e069",
- "after_sha256": "d78683f0e6313862cbc8ca2fd33fd95d42ba303b0092f16e63a025dd82c3cfb4",
- "evidence": "targets/game/reverse/identity_evidence/00c61840-registry-temporary.md",
- "reason": "Correct only the inner conditional temporary to the independently proved handle destructor 0005C640. The public AssetReference result and canonical EnumAssets provider remain intact. Retail FuncInfo E51098 state 1 proves ownership; the full 175-byte parent, 25-byte action and 224-byte provider pass normal gates."
-},
-{
- "old_path": "game/Libraries/Source/assetmanager/assetmanager.cpp",
- "new_path": "game/Libraries/Source/assetmanager/assetmanager.cpp",
- "old_name": "AssetReference",
- "new_name": "Rva009EBCE0AssetReference",
- "before_sha256": "237cec3c7c96aeae25c94282a27bb68a86e2fc806b531fa972fdedea476ad619",
- "after_sha256": "ae4bb38a19139e3c8465529f5f27a064a819969c6685dd93829e260babba3a7b",
- "evidence": "targets/game/reverse/identity_evidence/00c61880-registry-temporary.md",
- "reason": "Correct only the inner conditional temporary to the independently proved handle destructor 0005C640. The public AssetReference result, AssetName input and canonical Find_Asset provider remain intact. Retail FuncInfo E510C4 state 1 proves ownership; the 196-byte parent, 25-byte action and 188-byte provider pass normal gates."
-},
  {
-   "old_path": "targets/game/reverse/attempts/0x006870f0.cpp",
-   "new_path": "game/GameEngine/Source/GameNetwork/LANAPIUpdate.cpp",
-   "old_name": "RvaLANGameText",
-   "new_name": "BfmeGameText",
-   "before_sha256": "3665907ac1459debfcab8fb454a7e7f7ae72d65f86269b0d284824e3db93a2ba",
-   "after_sha256": "0f7a820da85f2398023becd74fb5868be4e2f50145314c3f415e74cc2f5bcf31",
-   "evidence": "targets/game/reverse/dir32_addresses.csv",
-   "reason": "TheGameText at 0x012F147C is recorded in dir32_addresses.csv as ?TheGameText@@3PAVBfmeGameText@@A; the DIR32 gate refuses the bank's RvaLANGameText spelling, so the local class takes the recorded name and RvaLANGameText stays as a typedef."
+  "old_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Rva009EBDC0.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/Rva009EBDC0.cpp",
+  "old_name": "AssetReference",
+  "new_name": "Rva009EBCE0AssetReference",
+  "before_sha256": "6548fd7c7018e9f6dc50b8196e71b2bfe6535b6a9d1444148bd4b32a47c0e069",
+  "after_sha256": "d78683f0e6313862cbc8ca2fd33fd95d42ba303b0092f16e63a025dd82c3cfb4",
+  "evidence": "targets/game/reverse/identity_evidence/00c61840-registry-temporary.md",
+  "reason": "Correct only the inner conditional temporary to the independently proved handle destructor 0005C640. The public AssetReference result and canonical EnumAssets provider remain intact. Retail FuncInfo E51098 state 1 proves ownership; the full 175-byte parent, 25-byte action and 224-byte provider pass normal gates."
  },
  {
-   "old_path": "targets/game/reverse/attempts/0x0021ac30.cpp",
-   "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/Rva0021AC30ContestableContainOverride.cpp",
-   "old_name": "Owner",
-   "new_name": "Rva0021AC30ContestableContain",
-   "before_sha256": "6e5bcf8f69267fac499d8a1265cef857ee82c0cfd3340223aa7e8bee9cd9d1ef",
-   "after_sha256": "30e87b5702a741d32c2af526f8fd6527674f8eac4bb65090512ef85abffa4e7f",
-   "evidence": "targets/game/reverse/identity_evidence/0021ac30-contestable-contain-slot48.md",
-   "reason": "The bank's Owner was a generic placeholder; the matched ContestableContain ctor/dtor install vtable 0x010AB3C0 whose slot +0x48 is this body, overriding the OpenContain slot body 0x00228050 that it calls, so the owner becomes the address-derived ContestableContain view."
+  "old_path": "game/Libraries/Source/assetmanager/assetmanager.cpp",
+  "new_path": "game/Libraries/Source/assetmanager/assetmanager.cpp",
+  "old_name": "AssetReference",
+  "new_name": "Rva009EBCE0AssetReference",
+  "before_sha256": "237cec3c7c96aeae25c94282a27bb68a86e2fc806b531fa972fdedea476ad619",
+  "after_sha256": "ae4bb38a19139e3c8465529f5f27a064a819969c6685dd93829e260babba3a7b",
+  "evidence": "targets/game/reverse/identity_evidence/00c61880-registry-temporary.md",
+  "reason": "Correct only the inner conditional temporary to the independently proved handle destructor 0005C640. The public AssetReference result, AssetName input and canonical Find_Asset provider remain intact. Retail FuncInfo E510C4 state 1 proves ownership; the 196-byte parent, 25-byte action and 188-byte provider pass normal gates."
  },
  {
-   "old_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
-   "new_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
-   "old_name": "AI_MOVE_OUT_OF_THE_WAY",
-   "new_name": "BFME_AI_MOVE_OUT_OF_THE_WAY",
-   "before_sha256": "1fff0ade83b44ab4020b550367c905bd26d4fe597bd0bdfc65a5975372aa9a46",
-   "after_sha256": "442a6febbd563f4d16837c2cb0bba751389075620b0f1efca30ef33f77f43e46",
-   "evidence": "targets/game/reverse/identity_evidence/0027d7f0-aiupdate-name-corrections.md",
-   "reason": "Retail 0x0027D7F0 compares and sets temporary state 0x1A, not the reference enum value 0x17; the BFME constant names the BFME number."
+  "old_path": "targets/game/reverse/attempts/0x006870f0.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/LANAPIUpdate.cpp",
+  "old_name": "RvaLANGameText",
+  "new_name": "BfmeGameText",
+  "before_sha256": "3665907ac1459debfcab8fb454a7e7f7ae72d65f86269b0d284824e3db93a2ba",
+  "after_sha256": "0f7a820da85f2398023becd74fb5868be4e2f50145314c3f415e74cc2f5bcf31",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "TheGameText at 0x012F147C is recorded in dir32_addresses.csv as ?TheGameText@@3PAVBfmeGameText@@A; the DIR32 gate refuses the bank's RvaLANGameText spelling, so the local class takes the recorded name and RvaLANGameText stays as a typedef."
  },
  {
-   "old_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
-   "new_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
-   "old_name": "g_rva01075350",
-   "new_name": "BfmeBoundaryZero3D",
-   "before_sha256": "1fff0ade83b44ab4020b550367c905bd26d4fe597bd0bdfc65a5975372aa9a46",
-   "after_sha256": "442a6febbd563f4d16837c2cb0bba751389075620b0f1efca30ef33f77f43e46",
-   "evidence": "targets/game/reverse/identity_evidence/0027d7f0-aiupdate-name-corrections.md",
-   "reason": "Same VA 0x01075350; dir32_addresses.csv records ?BfmeBoundaryZero3D@@3MB there and the DIR32 check refuses the unrecorded spelling."
+  "old_path": "targets/game/reverse/attempts/0x0021ac30.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/Rva0021AC30ContestableContainOverride.cpp",
+  "old_name": "Owner",
+  "new_name": "Rva0021AC30ContestableContain",
+  "before_sha256": "6e5bcf8f69267fac499d8a1265cef857ee82c0cfd3340223aa7e8bee9cd9d1ef",
+  "after_sha256": "30e87b5702a741d32c2af526f8fd6527674f8eac4bb65090512ef85abffa4e7f",
+  "evidence": "targets/game/reverse/identity_evidence/0021ac30-contestable-contain-slot48.md",
+  "reason": "The bank's Owner was a generic placeholder; the matched ContestableContain ctor/dtor install vtable 0x010AB3C0 whose slot +0x48 is this body, overriding the OpenContain slot body 0x00228050 that it calls, so the owner becomes the address-derived ContestableContain view."
  },
  {
-   "old_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewRva00743CE0.cpp",
-   "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewRva00743CE0.cpp",
-   "old_name": "slot118",
-   "new_name": "rva0073D4C0",
-   "before_sha256": "8929e64906aba871fca3d9546ec79a3860c177a2130e03c03d4479d206520380",
-   "after_sha256": "e62da240965ca496074c7f12f45b31dbf97fc07bdb39738c7f6228c225c3ad48",
-   "evidence": "targets/game/reverse/identity_evidence/0073d4c0-w3dview-slot118.md",
-   "reason": "Vtable 0x011217A0 slot 118 resolves to 0x0073D4C0, which this TU now defines under the address-derived name; the slot-number placeholder named nothing."
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
+  "old_name": "AI_MOVE_OUT_OF_THE_WAY",
+  "new_name": "BFME_AI_MOVE_OUT_OF_THE_WAY",
+  "before_sha256": "1fff0ade83b44ab4020b550367c905bd26d4fe597bd0bdfc65a5975372aa9a46",
+  "after_sha256": "442a6febbd563f4d16837c2cb0bba751389075620b0f1efca30ef33f77f43e46",
+  "evidence": "targets/game/reverse/identity_evidence/0027d7f0-aiupdate-name-corrections.md",
+  "reason": "Retail 0x0027D7F0 compares and sets temporary state 0x1A, not the reference enum value 0x17; the BFME constant names the BFME number."
  },
  {
-   "old_path": "targets/game/reverse/attempts/0x00259910.cpp",
-   "new_path": "targets/game/reverse/attempts/0x00259910.cpp",
-   "old_name": "aiBfmeCommand45",
-   "new_name": "bfmeForwardWideC",
-   "before_sha256": "9ddeb663e29bdf89f60b52c463b5bdc032425f034c8760e69941f784bd13c0be",
-   "after_sha256": "303c924fbc591b93562407caf71a4a2e97bfe50ba0a72eae53a36012d5b81a09",
-   "evidence": "targets/game/reverse/attempt_support/20261027-00259910-combinehorde-dospecialpower.md",
-   "reason": "Bank rewrite, not a rename: the new stash still calls aiBfmeCommand45 and adds the 0x009F2960 bfmeForwardWideC iterate call; token alignment paired the two."
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
+  "old_name": "g_rva01075350",
+  "new_name": "BfmeBoundaryZero3D",
+  "before_sha256": "1fff0ade83b44ab4020b550367c905bd26d4fe597bd0bdfc65a5975372aa9a46",
+  "after_sha256": "442a6febbd563f4d16837c2cb0bba751389075620b0f1efca30ef33f77f43e46",
+  "evidence": "targets/game/reverse/identity_evidence/0027d7f0-aiupdate-name-corrections.md",
+  "reason": "Same VA 0x01075350; dir32_addresses.csv records ?BfmeBoundaryZero3D@@3MB there and the DIR32 check refuses the unrecorded spelling."
  },
  {
-   "old_path": "targets/game/reverse/attempts/0x00302240.cpp",
-   "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamGarrisonNearestBuilding.cpp",
-   "old_name": "SimpleObjectIterator",
-   "new_name": "Rva00302240RangePayload",
-   "before_sha256": "4ca9ad69ed4d12e5d5c87c208ff04cea27751c55e901fe64773c8f7814ad8c56",
-   "after_sha256": "7e43ef82263cb27f187f87728095cbdc17228bdb66237b1b30574bb4376765b6",
-   "evidence": "targets/game/reverse/bfme_layouts.json",
-   "reason": "The bank's TU-local view borrowed the Zero Hour name SimpleObjectIterator for the 0x009F2960 result payload, whose fields (+4 end, +8 capacity, +0xC cursor) contradict the witnessed SimpleObjectIterator layout (m_firstClump/m_curClump/m_clumpCount); the view now carries an address-derived name."
+  "old_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewRva00743CE0.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewRva00743CE0.cpp",
+  "old_name": "slot118",
+  "new_name": "rva0073D4C0",
+  "before_sha256": "8929e64906aba871fca3d9546ec79a3860c177a2130e03c03d4479d206520380",
+  "after_sha256": "e62da240965ca496074c7f12f45b31dbf97fc07bdb39738c7f6228c225c3ad48",
+  "evidence": "targets/game/reverse/identity_evidence/0073d4c0-w3dview-slot118.md",
+  "reason": "Vtable 0x011217A0 slot 118 resolves to 0x0073D4C0, which this TU now defines under the address-derived name; the slot-number placeholder named nothing."
  },
  {
-   "old_path": "targets/game/reverse/attempts/0x00302240.cpp",
-   "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamGarrisonNearestBuilding.cpp",
-   "old_name": "SimpleObjectIterator",
-   "new_name": "Rva00302240RangePayload",
-   "before_sha256": "cc7930f0573a8e8fdef7c4aaed0ea1305b5fa8313849077e2e1fdc75b1696d06",
-   "after_sha256": "7e43ef82263cb27f187f87728095cbdc17228bdb66237b1b30574bb4376765b6",
-   "evidence": "targets/game/reverse/bfme_layouts.json",
-   "reason": "The bank's TU-local view borrowed the Zero Hour name SimpleObjectIterator for the 0x009F2960 result payload, whose fields (+4 end, +8 capacity, +0xC cursor) contradict the witnessed SimpleObjectIterator layout (m_firstClump/m_curClump/m_clumpCount); the view now carries an address-derived name."
+  "old_path": "targets/game/reverse/attempts/0x00259910.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00259910.cpp",
+  "old_name": "aiBfmeCommand45",
+  "new_name": "bfmeForwardWideC",
+  "before_sha256": "9ddeb663e29bdf89f60b52c463b5bdc032425f034c8760e69941f784bd13c0be",
+  "after_sha256": "303c924fbc591b93562407caf71a4a2e97bfe50ba0a72eae53a36012d5b81a09",
+  "evidence": "targets/game/reverse/attempt_support/20261027-00259910-combinehorde-dospecialpower.md",
+  "reason": "Bank rewrite, not a rename: the new stash still calls aiBfmeCommand45 and adds the 0x009F2960 bfmeForwardWideC iterate call; token alignment paired the two."
  },
  {
-   "old_path": "targets/game/reverse/attempts/0x0027db50.cpp",
-   "new_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfacePrivateAttackPosition.cpp",
-   "old_name": "PartitionFilterPossibleToAttack",
-   "new_name": "Rva010956C4AttackFilter",
-   "before_sha256": "384b7ffb73f0503b2f9875e4718cec5b90d0959a86f580c3534925b7084cc7a3",
-   "after_sha256": "78e76b24716eb8478fddeca2c9b62277a7b34c0b77e49bad7cb2fac6078e1b0b",
-   "evidence": "targets/game/reverse/symbols.csv",
-   "reason": "The filter privateAttackPosition builds installs vtable 0x010956C4 (recorded only as g_010956C4), while symbols.csv records ??_7PartitionFilterPossibleToAttack@@6B@ at 0x00CFD964 (VA 0x010FD964) from its exact constructor 0x004C12B0; the two tables differ, so the bank's borrowed Zero Hour name is not this class and an address-derived name replaces it."
+  "old_path": "targets/game/reverse/attempts/0x00302240.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamGarrisonNearestBuilding.cpp",
+  "old_name": "SimpleObjectIterator",
+  "new_name": "Rva00302240RangePayload",
+  "before_sha256": "4ca9ad69ed4d12e5d5c87c208ff04cea27751c55e901fe64773c8f7814ad8c56",
+  "after_sha256": "7e43ef82263cb27f187f87728095cbdc17228bdb66237b1b30574bb4376765b6",
+  "evidence": "targets/game/reverse/bfme_layouts.json",
+  "reason": "The bank's TU-local view borrowed the Zero Hour name SimpleObjectIterator for the 0x009F2960 result payload, whose fields (+4 end, +8 capacity, +0xC cursor) contradict the witnessed SimpleObjectIterator layout (m_firstClump/m_curClump/m_clumpCount); the view now carries an address-derived name."
  },
  {
-   "old_path": "targets/game/reverse/attempts/0x005c37e0.cpp",
-   "new_path": "targets/game/reverse/attempts/0x005c37e0.cpp",
-   "old_name": "GenNode_006fa270",
-   "new_name": "BfmeParticleSystemHandle",
-   "before_sha256": "56fe8d6ccdccae1b9401affb0cc6e7b6bac373d19c27ccaa5fe25adffef435c1",
-   "after_sha256": "7a4e08a64cba909dea980f6e7cb2606cfb93eede1ae32113173777bc194f1600",
-   "evidence": "targets/game/reverse/symbols.csv",
-   "reason": "The matched sibling ParticleSystemManager::reset already models this {system, previous, next} list value as BfmeParticleSystemHandle, and symbols.csv pins its destructor ??1BfmeParticleSystemHandle@@QAE@XZ at ILT 0x00013994, the call this body ends with; the bank's generated GenNode_006fa270 name is the same type."
+  "old_path": "targets/game/reverse/attempts/0x00302240.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamGarrisonNearestBuilding.cpp",
+  "old_name": "SimpleObjectIterator",
+  "new_name": "Rva00302240RangePayload",
+  "before_sha256": "cc7930f0573a8e8fdef7c4aaed0ea1305b5fa8313849077e2e1fdc75b1696d06",
+  "after_sha256": "7e43ef82263cb27f187f87728095cbdc17228bdb66237b1b30574bb4376765b6",
+  "evidence": "targets/game/reverse/bfme_layouts.json",
+  "reason": "The bank's TU-local view borrowed the Zero Hour name SimpleObjectIterator for the 0x009F2960 result payload, whose fields (+4 end, +8 capacity, +0xC cursor) contradict the witnessed SimpleObjectIterator layout (m_firstClump/m_curClump/m_clumpCount); the view now carries an address-derived name."
  },
  {
-   "old_path": "targets/game/reverse/attempts/0x005c37e0.cpp",
-   "new_path": "targets/game/reverse/attempts/0x005c37e0.cpp",
-   "old_name": "m_lastUpdateSeconds",
-   "new_name": "m_lastUpdateMilliseconds",
-   "before_sha256": "56fe8d6ccdccae1b9401affb0cc6e7b6bac373d19c27ccaa5fe25adffef435c1",
-   "after_sha256": "7a4e08a64cba909dea980f6e7cb2606cfb93eede1ae32113173777bc194f1600",
-   "evidence": "targets/game/reverse/dir32_addresses.csv",
-   "reason": "The stored value is (counter difference * 1000.0f) / frequency; dir32_addresses.csv records the multiplier at 0x01075C68 as __real@447a0000 (1000.0f), so the field holds milliseconds, not seconds."
+  "old_path": "targets/game/reverse/attempts/0x0027db50.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfacePrivateAttackPosition.cpp",
+  "old_name": "PartitionFilterPossibleToAttack",
+  "new_name": "Rva010956C4AttackFilter",
+  "before_sha256": "384b7ffb73f0503b2f9875e4718cec5b90d0959a86f580c3534925b7084cc7a3",
+  "after_sha256": "78e76b24716eb8478fddeca2c9b62277a7b34c0b77e49bad7cb2fac6078e1b0b",
+  "evidence": "targets/game/reverse/symbols.csv",
+  "reason": "The filter privateAttackPosition builds installs vtable 0x010956C4 (recorded only as g_010956C4), while symbols.csv records ??_7PartitionFilterPossibleToAttack@@6B@ at 0x00CFD964 (VA 0x010FD964) from its exact constructor 0x004C12B0; the two tables differ, so the bank's borrowed Zero Hour name is not this class and an address-derived name replaces it."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005c37e0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x005c37e0.cpp",
+  "old_name": "GenNode_006fa270",
+  "new_name": "BfmeParticleSystemHandle",
+  "before_sha256": "56fe8d6ccdccae1b9401affb0cc6e7b6bac373d19c27ccaa5fe25adffef435c1",
+  "after_sha256": "7a4e08a64cba909dea980f6e7cb2606cfb93eede1ae32113173777bc194f1600",
+  "evidence": "targets/game/reverse/symbols.csv",
+  "reason": "The matched sibling ParticleSystemManager::reset already models this {system, previous, next} list value as BfmeParticleSystemHandle, and symbols.csv pins its destructor ??1BfmeParticleSystemHandle@@QAE@XZ at ILT 0x00013994, the call this body ends with; the bank's generated GenNode_006fa270 name is the same type."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005c37e0.cpp",
+  "new_path": "targets/game/reverse/attempts/0x005c37e0.cpp",
+  "old_name": "m_lastUpdateSeconds",
+  "new_name": "m_lastUpdateMilliseconds",
+  "before_sha256": "56fe8d6ccdccae1b9401affb0cc6e7b6bac373d19c27ccaa5fe25adffef435c1",
+  "after_sha256": "7a4e08a64cba909dea980f6e7cb2606cfb93eede1ae32113173777bc194f1600",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "The stored value is (counter difference * 1000.0f) / frequency; dir32_addresses.csv records the multiplier at 0x01075C68 as __real@447a0000 (1000.0f), so the field holds milliseconds, not seconds."
  },
  {
   "old_path": "targets/game/reverse/attempts/0x004389e0.cpp",
@@ -21392,24 +21391,44 @@
   "evidence": "targets/game/reverse/identity_evidence/0x008B9C60.md",
   "reason": "0x008B9C60 installs vtable 0x01136D58 recorded as ??_7Rva008B9C90HeaderedDeleting@@6B@; it is that class ctor (ConcatArray 0x008B9CC0 inlines the same one)"
  },
-  {
-    "old_path": "game/GameEngine/Source/GameClient/GameText.cpp",
-    "new_path": "game/GameEngine/Source/GameClient/GameTextManager_initMapStringFile_Thunk.cpp",
-    "old_name": "qsort",
-    "new_name": "bfmeSortLookUp",
-    "before_sha256": "6369b62b4bf9e0f8318c73f51bf18986cef3d5cace5184fd1a24d4343cf2c2d1",
-    "after_sha256": "7d87ba26218169e9c04cd00391b6ba7896ab2f8abbfc0c4340c52107eff72598",
-    "evidence": "targets/game/reverse/identity_evidence/00438d50-initmapstringfile-sort.md",
-    "reason": "retail initMapStringFile 0x00438D50 sorts with STLport sort (ILTs 0x000323F3/0x00007F4F), never qsort; the ZH qsort copy was non-retail and removed, and only its funclet row moved"
-  },
-  {
-    "old_path": "targets/game/reverse/attempts/0x003a1080.cpp",
-    "new_path": "targets/game/reverse/attempts/0x003a1080.cpp",
-    "old_name": "p5",
-    "new_name": "m_bfme0cJG",
-    "before_sha256": "f34047a967d012124ae2697804f6e072838038dc17a170753dc25474fd27ab86",
-    "after_sha256": "35de82af9647b706585a03c469346afd334e7c849c8987cc1fcc968c9f50412e",
-    "evidence": "targets/game/reverse/attempt_support/20261029-003a1080-bfmesetupjg-tail-substruct.md",
-    "reason": "bank rewrite: the 0x46 flag now reads the stored field m_bfme0cJG instead of parameter p5 (same value); positional token pairing, no rename"
-  }
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GameText.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GameTextManager_initMapStringFile_Thunk.cpp",
+  "old_name": "qsort",
+  "new_name": "bfmeSortLookUp",
+  "before_sha256": "6369b62b4bf9e0f8318c73f51bf18986cef3d5cace5184fd1a24d4343cf2c2d1",
+  "after_sha256": "7d87ba26218169e9c04cd00391b6ba7896ab2f8abbfc0c4340c52107eff72598",
+  "evidence": "targets/game/reverse/identity_evidence/00438d50-initmapstringfile-sort.md",
+  "reason": "retail initMapStringFile 0x00438D50 sorts with STLport sort (ILTs 0x000323F3/0x00007F4F), never qsort; the ZH qsort copy was non-retail and removed, and only its funclet row moved"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x003a1080.cpp",
+  "new_path": "targets/game/reverse/attempts/0x003a1080.cpp",
+  "old_name": "p5",
+  "new_name": "m_bfme0cJG",
+  "before_sha256": "f34047a967d012124ae2697804f6e072838038dc17a170753dc25474fd27ab86",
+  "after_sha256": "35de82af9647b706585a03c469346afd334e7c849c8987cc1fcc968c9f50412e",
+  "evidence": "targets/game/reverse/attempt_support/20261029-003a1080-bfmesetupjg-tail-substruct.md",
+  "reason": "bank rewrite: the 0x46 flag now reads the stored field m_bfme0cJG instead of parameter p5 (same value); positional token pairing, no rename"
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "State",
+  "new_name": "Rva00232180Dword",
+  "before_sha256": "7bae3b6ad836f02cffa01f52c516242c1b7ba1a8fe389249559251c3d2c47069",
+  "after_sha256": "6bcc8187cc1a73bba1d82898ead674c539f19b1b67f786e38700fd380bea86c3",
+  "evidence": "targets/game/reverse/identity_evidence/0009fee0-state-accessor-comdat.md",
+  "reason": "The exact-name ILT contradicts this State getter claim; independently matched State constructor and bounded exact-name ILT candidates establish the real getters at 0x0009FEE0/0x0009FEF0. Preserve this unrelated four-byte body with an address-derived identity."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "State",
+  "new_name": "Rva00106670Dword",
+  "before_sha256": "dd08c6e00a0ab4ca1e27268b8f1fa056557533e88909032a778c19fb13a08a61",
+  "after_sha256": "f292198c2825be782870726340ea0793a482be64d82164e0250b46a840da4109",
+  "evidence": "targets/game/reverse/identity_evidence/0009fee0-state-accessor-comdat.md",
+  "reason": "The exact-name ILT contradicts this State getter claim; independently matched State constructor and bounded exact-name ILT candidates establish the real getters at 0x0009FEE0/0x0009FEF0. Preserve this unrelated four-byte body with an address-derived identity."
+ }
 ]

@@ -619,3 +619,18 @@ void AITNGuardAttackAggressorState::loadPostProcess()
 void j_00039888();
 
 int g_Va0109B558 = (int)&j_00039888;
+
+// Former State accessor claim refuted by the frozen ILT and State constructor.
+// Preserve the independent four-byte retail body under an opaque identity.
+class Rva00106670Dword
+{
+    char m_padding[8];
+    unsigned int m_value;
+public:
+    unsigned int get() const;
+};
+
+unsigned int Rva00106670Dword::get() const
+{
+    return m_value;
+}

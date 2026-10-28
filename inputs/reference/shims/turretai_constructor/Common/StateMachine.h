@@ -159,7 +159,7 @@ public:
 	//Definition of busy -- when explicitly in the busy state. Moving or attacking is not considered busy!
 	virtual Bool isBusy() const { return false; }
 
-	inline StateMachine* getMachine() { return *reinterpret_cast<StateMachine **>(reinterpret_cast<char *>(this) + 0x20); }		///< return the machine this state is part of
+	inline StateMachine* getMachine() { return *reinterpret_cast<StateMachine **>(reinterpret_cast<char *>(this) + 0x1c); }		///< return the machine this state is part of
 	inline StateID getID() const { return m_ID; }							///< return this state's id
 
 	Object* getMachineOwner();

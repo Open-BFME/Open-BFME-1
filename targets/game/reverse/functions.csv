@@ -53984,8 +53984,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?get@Rva00098F40False@@SA_NXZ,,0x00098F40,3,game/GameEngine/Source/Common/Rva00097E50To000A30B0TinyBodies.cpp,matched,carved boundary direct thunk no callees opaque ABI
 ?get@Rva0009C1C0Dword@@QBEIXZ,,0x0009C1C0,4,game/GameEngine/Source/Common/Rva00097E50To000A30B0TinyBodies.cpp,matched,carved boundary direct thunk no callees opaque ABI
 ?get@Rva0009C1D0Dword@@QBEIXZ,,0x0009C1D0,4,game/GameEngine/Source/Common/Rva00097E50To000A30B0TinyBodies.cpp,matched,carved boundary direct thunk no callees opaque ABI
-?get@Rva0009FEE0Dword@@QBEIXZ,,0x0009FEE0,4,game/GameEngine/Source/Common/Rva00097E50To000A30B0TinyBodies.cpp,matched,carved boundary direct thunk no callees opaque ABI
-?get@Rva0009FEF0Dword@@QBEIXZ,,0x0009FEF0,4,game/GameEngine/Source/Common/Rva00097E50To000A30B0TinyBodies.cpp,matched,carved boundary direct thunk no callees opaque ABI
 ?get@Rva000A03A0Address@@QBEPADXZ,,0x000A03A0,4,game/GameEngine/Source/Common/Rva00097E50To000A30B0TinyBodies.cpp,matched,carved boundary direct thunk no callees opaque ABI
 ?get@Rva000A14D0@@QBEPAVObject@@XZ,,0x000A14D0,16,game/GameEngine/Source/Common/R1ForwardToStoredObject.cpp,matched,TheGameLogic->findObjectByID(member); both the global and the callee are the ledger's own identified symbols
 ?get@Rva000A14F0@@QBEPAVObject@@XZ,,0x000A14F0,16,game/GameEngine/Source/Common/R1ForwardToStoredObject.cpp,matched,TheGameLogic->findObjectByID(member); both the global and the callee are the ledger's own identified symbols
@@ -57703,7 +57701,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?getID@Drawable@@QBE?AW4DrawableID@@XZ,,0x004116B0,7,game/GameEngine/Source/GameClient/Drawable.cpp,matched,thunk-dump converted; retail Drawable field load at +0x100
 ?getID@ObjectWithID@@QBEIXZ,,0x0009FF80,4,game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate_updateAndPrivateDock_Thunk.cpp,matched,gen-icf;object-symbol=?getID@ObjectWithID@@QBEIXZ
 ?getID@SpecialPowerTemplate@@QBEIXZ,,0x000BA900,27,game/GameEngine/Source/Common/RTS/SpecialPower.cpp,matched,
-?getID@State@@QBEIXZ,,0x00106670,4,game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp,matched,elimination-collapse TIE(2) vs getPrototype@Team now claimed elsewhere
 ?getID@View@@UAEIXZ,,0x0045B9D0,4,game/GameEngine/Source/GameClient/ViewTinyMethodsBfme.cpp,matched,View vtable 0x010F6940 slot 6 reads witnessed m_id at this plus 0x8
 ?getIP@GameSlot@@QBEIXZ,,0x000C8F40,4,game/GameEngine/Source/GameNetwork/GameInfo.cpp,matched,gen-icf;object-symbol=?getIP@GameSlot@@QBEIXZ
 ?getIdleWorkerCount@InGameUI@@EAEHXZ,,0x004422C0,41,game/GameEngine/Source/GameClient/InGameUIBodies.cpp,matched,
@@ -57838,7 +57835,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?getLosses@SkirmishBattleHonors@@QBEHVAsciiString@@@Z,,0x0009C8D0,128,game/GameEngine/Source/Common/SkirmishBattleHonorsPlayerStats.cpp,matched,per-player Losses concatenates key onto name then getInt
 ?getLosses@SkirmishBattleHonors@@QBEHXZ,,0x0009DE50,247,game/GameEngine/Source/Common/SkirmishBattleHonorsTotals.cpp,matched,BFME total losses sums four faction counters in Gondor Rohan Isengard Mordor order; zero argument calls in SkirmishGameOptionsMenu.cpp prove the overload identity; retail faction name addresses and lengths match 0x0009DE50
 ?getMOTD@GameSpyInfo@@UAEABVAsciiString@@XZ,,0x006306B0,4,game/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp,matched,Vtable-bound GameSpyInfo accessor
-?getMachine@State@@QAEPAVStateMachine@@XZ,,0x00232180,4,game/GameEngine/Source/GameLogic/AI/TurretAI.cpp,matched,
 ?getMachineGoalPosition@AIInternalMoveToState@@QBEPBUCoord3D@@XZ,,0x0015F6D0,7,game/GameEngine/Source/GameLogic/AI/AIMoveAndTightenState_onEnter_Thunk.cpp,matched,gen-alias;object-symbol=?getMachineGoalPosition@AIInternalMoveToState@@QBEPBUCoord3D@@XZ;C++ alias
 ?getMachineName@IPEnumeration@@QAE?AVAsciiString@@XZ,,0x00624F30,177,game/GameEngine/Source/GameNetwork/IPEnumerationRuntime.cpp,matched,
 ?getManglerLocation@GameSpyConfig@@UAE_NHAAVAsciiString@@AAG@Z,,0x00628580,68,game/GameEngine/Source/GameNetwork/GameSpy/GSConfig.cpp,matched,
@@ -173390,3 +173386,7 @@ _Rva00814FE0,,0x00814FE0,396,game/Libraries/Source/DirtySock/Y4CommTickIdle.c,ma
 _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,matched,extent 2207->2247 B includes the switch jump table the body indexes (object emits it after the code);model=claude-opus-5-5;host=app
 ?rva003A25A0@Rva003A35A0Element@@QAEPAU1@PBVWaypoint@@@Z,,0x003A25A0,282,game/GameEngine/Source/Common/Containers/Rva003A3770LinkedRecords.cpp,matched,named by the matched caller Rva003A3770Obj::method in this TU (ILT call); RET4 +0x117 INT3 +0x11A;model=claude-opus-5-5;host=app
 ?limit@Rva003A40A0Host@@QAEMXZ,,0x003A40A0,117,game/GameEngine/Source/Common/Rva003A40A0Limit.cpp,matched,ret +0x74 INT3 +0x75; only caller unmatched 0x003A50F0 via ILT 0x000239D9; callee Keyboard::isShift via ILT 0x000156B3;model=claude-opus-5-5;host=app
+?get@Rva00106670Dword@@QBEIXZ,,0x00106670,4,game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/0009fee0-state-accessor-comdat.md;model=gpt-6-astra;host=GreatFaram
+?get@Rva00232180Dword@@QBEIXZ,,0x00232180,4,game/GameEngine/Source/Common/Rva00232180Dword.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/0009fee0-state-accessor-comdat.md;model=gpt-6-astra;host=GreatFaram
+?getID@State@@QBEIXZ,,0x0009FEF0,4,game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/0009fee0-state-accessor-comdat.md;model=gpt-6-astra;host=GreatFaram
+?getMachine@State@@QAEPAVStateMachine@@XZ,,0x0009FEE0,4,game/GameEngine/Source/GameLogic/AI/TurretAI.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/0009fee0-state-accessor-comdat.md;model=gpt-6-astra;host=GreatFaram

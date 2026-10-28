@@ -65,34 +65,6 @@ void *Rva0009EC30Identity::identity()
 	return this;
 }
 
-class Rva0009FEE0Dword
-{
-	char m_padding[0x1C];
-	unsigned int m_value;
-public:
-	unsigned int get() const;
-};
-
-// ?get@Rva0009FEE0Dword@@QBEIXZ
-unsigned int Rva0009FEE0Dword::get() const
-{
-	return m_value;
-}
-
-class Rva0009FEF0Dword
-{
-	char m_padding[4];
-	unsigned int m_value;
-public:
-	unsigned int get() const;
-};
-
-// ?get@Rva0009FEF0Dword@@QBEIXZ
-unsigned int Rva0009FEF0Dword::get() const
-{
-	return m_value;
-}
-
 class Rva000A0140Identity
 {
 public:
