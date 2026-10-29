@@ -5027,29 +5027,8 @@ void AIUpdateInterface::privateAttackPosition( const Coord3D *pos, Int maxShotsT
 /**
  * Attack move to the given location
  */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateAttackMoveToPosition.cpp
-// ?privateAttackMoveToPosition@AIUpdateInterface@@ present-unmatched
-void AIUpdateInterface::privateAttackMoveToPosition( const Coord3D *pos, Int maxShotsToFire, CommandSourceType cmdSource )
-{
-	if (m_isAiDead || getObject()->isMobile() == FALSE)
-		return;
-
-	//Resetting the locomotor here was initially added for scripting purposes. It has been moved
-	//to the responsibility of the script to reset the locomotor before moving. This is needed because
-	//other systems (like the battle drone) change the locomotor based on what it's trying to do, and
-	//doesn't want to get reset when ordered to move.
-	//chooseLocomotorSet(LOCOMOTORSET_NORMAL);
-
-	getStateMachine()->clear();
-	setGoalPositionClipped(pos, cmdSource);
-	setLastCommandSource( cmdSource );
-	getStateMachine()->setState( AI_ATTACK_MOVE_TO );
-
-	// do this after setting it as the current state, as the max-shots-to-fire is reset in AttackState::onEnter()
-	Weapon* weapon = getObject()->getCurrentWeapon();
-	if (weapon)
-		weapon->setMaxShotCount(maxShotsToFire);
-}
+// AIUpdateInterface::privateAttackMoveToPosition(const Coord3D*, Int, CommandSourceType)
+// Body in AIUpdateInterfacePrivateCommands.cpp (exact 131B retail).
 
 //----------------------------------------------------------------------------------------
 /**
