@@ -68,12 +68,6 @@ public:
 	const Coord3D *bfmeGetPosition421AE(Coord3D *position, Coord3D *normal);
 };
 
-class Rva001A7C20TerrainLogic
-{
-public:
-	PathfindLayerEnum getLayerForDestination(Object *object, const Coord3D *position);
-};
-
 // ?bfmeGetPosition421AE@Object@@QAEPBUCoord3D@@PAU2@0@Z
 const Coord3D *Object::bfmeGetPosition421AE(Coord3D *position, Coord3D *normal)
 {
@@ -100,7 +94,7 @@ const Coord3D *Object::bfmeGetPosition421AE(Coord3D *position, Coord3D *normal)
 
 		if (m_status.test(6))
 		{
-			PathfindLayerEnum layer = ((Rva001A7C20TerrainLogic *)TheTerrainLogic)->getLayerForDestination(this, &sample);
+			PathfindLayerEnum layer = TheTerrainLogic->getLayerForDestination(this, &sample);
 			sample.z = TheTerrainLogic->getLayerHeight(
 				sample.x, sample.y, layer, normal, true);
 		}
