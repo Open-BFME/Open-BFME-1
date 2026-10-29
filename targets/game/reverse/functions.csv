@@ -165508,7 +165508,7 @@ uw_00c3d4e0,,0x00C3D4E0,8,game/gen_small/uw_gen_004.cpp,matched,gen-funclet;obje
 uw_00c3d500,,0x00C3D500,8,game/gen_small/uw_gen_011.cpp,matched,gen-funclet;object-symbol=$L7044
 uw_00c3d508,,0x00C3D508,11,game/GameEngine/Source/GameLogic/Object/Update/LaserUpdate.cpp,matched,gen-funclet;parent=??1LaserUpdateModuleData@@UAE@XZ;object-symbol=$L62364
 uw_00c3d513,,0x00C3D513,11,game/gen_small/uw_gen_012.cpp,matched,gen-funclet;object-symbol=$L529
-uw_00c3d540,,0x00C3D540,14,game/GameEngine/Source/GameClient/Drawable/Update/SwayClientUpdate.cpp,matched,gen-funclet;parent=?getModuleNameKey@SwayClientUpdate@@UBE?AW4NameKeyType@@XZ;object-symbol=$L53978;eh-state-pin $L53985->$L53978: retail unwind map (?getModuleNameKey@SwayClientUpdate@@UBE?AW4NameKeyType@@XZ states [0]) binds this address to $L53978;repin-model=claude-sonnet
+uw_00c3d540,,0x00C3D540,14,game/GameEngine/Source/GameClient/Drawable/Update/SwayClientUpdate.cpp,matched,gen-funclet;parent=?getModuleNameKey@SwayClientUpdate@@UBE?AW4NameKeyType@@XZ;object-symbol=$L55170;eh-state-pin $L53985->$L53978: retail unwind map (?getModuleNameKey@SwayClientUpdate@@UBE?AW4NameKeyType@@XZ states [0]) binds this address to $L53978;repin-model=claude-sonnet
 uw_00c3d560,,0x00C3D560,8,game/gen_small/uw_gen_015.cpp,matched,gen-funclet;object-symbol=$L12667
 uw_00c3d5a0,,0x00C3D5A0,8,game/gen_small/uw_gen_012.cpp,matched,gen-funclet;object-symbol=$L526
 uw_00c3d5c0,,0x00C3D5C0,8,game/gen_small/uw_gen_015.cpp,matched,gen-funclet;object-symbol=$L12667
@@ -166959,11 +166959,11 @@ uw_00c44dd0,,0x00C44DD0,11,game/gen_small/uw_gen_004.cpp,matched,gen-funclet;obj
 uw_00c44ddb,,0x00C44DDB,11,game/gen_small/uw_gen_003.cpp,matched,gen-funclet;object-symbol=$L3507
 uw_00c44de6,,0x00C44DE6,11,game/gen_small/uw_gen_003.cpp,matched,gen-funclet;object-symbol=$L3498
 uw_00c44df1,,0x00C44DF1,11,game/gen_small/uw_gen_006.cpp,matched,gen-funclet;object-symbol=$L2895
-uw_00c44e20,,0x00C44E20,11,game/GameEngine/Source/GameNetwork/nat.cpp,matched,gen-funclet;parent=?notifyUsersOfConnectionDone@NAT@@IAEXH@Z;object-symbol=$L45513
-uw_00c44e2b,,0x00C44E2B,11,game/GameEngine/Source/GameNetwork/nat.cpp,matched,gen-funclet;parent=?notifyUsersOfConnectionDone@NAT@@IAEXH@Z;object-symbol=$L45514
-uw_00c44e36,,0x00C44E36,11,game/GameEngine/Source/GameNetwork/nat.cpp,matched,gen-funclet;parent=?notifyUsersOfConnectionDone@NAT@@IAEXH@Z;object-symbol=$L45515
-uw_00c44e41,,0x00C44E41,11,game/GameEngine/Source/GameNetwork/nat.cpp,matched,gen-funclet;parent=?notifyUsersOfConnectionDone@NAT@@IAEXH@Z;object-symbol=$L45516
-uw_00c44e4c,,0x00C44E4C,11,game/GameEngine/Source/GameNetwork/nat.cpp,matched,gen-funclet;parent=?notifyUsersOfConnectionDone@NAT@@IAEXH@Z;object-symbol=$L45517
+uw_00c44e20,,0x00C44E20,11,game/GameEngine/Source/GameNetwork/nat.cpp,matched,gen-funclet;parent=?notifyUsersOfConnectionDone@NAT@@IAEXH@Z;object-symbol=$L45770
+uw_00c44e2b,,0x00C44E2B,11,game/GameEngine/Source/GameNetwork/nat.cpp,matched,gen-funclet;parent=?notifyUsersOfConnectionDone@NAT@@IAEXH@Z;object-symbol=$L45771
+uw_00c44e36,,0x00C44E36,11,game/GameEngine/Source/GameNetwork/nat.cpp,matched,gen-funclet;parent=?notifyUsersOfConnectionDone@NAT@@IAEXH@Z;object-symbol=$L45772
+uw_00c44e41,,0x00C44E41,11,game/GameEngine/Source/GameNetwork/nat.cpp,matched,gen-funclet;parent=?notifyUsersOfConnectionDone@NAT@@IAEXH@Z;object-symbol=$L45773
+uw_00c44e4c,,0x00C44E4C,11,game/GameEngine/Source/GameNetwork/nat.cpp,matched,gen-funclet;parent=?notifyUsersOfConnectionDone@NAT@@IAEXH@Z;object-symbol=$L45774
 uw_00c44e80,,0x00C44E80,11,game/gen_small/uw_gen_004.cpp,matched,gen-funclet;object-symbol=$L3691
 uw_00c44e8b,,0x00C44E8B,11,game/gen_small/uw_gen_003.cpp,matched,gen-funclet;object-symbol=$L3498
 uw_00c44e96,,0x00C44E96,11,game/gen_small/uw_gen_003.cpp,matched,gen-funclet;object-symbol=$L3516

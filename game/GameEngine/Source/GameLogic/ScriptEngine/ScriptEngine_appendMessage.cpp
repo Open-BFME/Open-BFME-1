@@ -27,6 +27,10 @@
 // (not +0x28) and emits that COMDAT copy; rename it so only retail's 0x00112980
 // (reads +0x28) carries the name. Inlined calls are unchanged.
 #define getAction getAction_LocalView
+// This unit's Script view defines setFrameToEvaluate inline at another offset than
+// retail's 0x00191490 (+0x34) and emits that COMDAT copy; rename it so only
+// retail-equal copies carry the name. Inlined calls are unchanged.
+#define setFrameToEvaluate setFrameToEvaluate_LocalView
 #include <map>
 
 typedef int Int;

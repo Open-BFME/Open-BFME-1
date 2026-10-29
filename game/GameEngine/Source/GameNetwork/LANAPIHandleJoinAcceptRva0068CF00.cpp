@@ -2,6 +2,10 @@
 // Join-accept packet handler at 0x0068CF00, 818 retail bytes.
 // LANAPI::update calls its ILT with a packet and sender address.
 
+// This unit's GameSlot view defines setIP inline at another offset than
+// retail's 0x000C8DB0 (+0x2C) and emits that COMDAT copy; rename it so only
+// retail-equal copies carry the name. Inlined calls are unchanged.
+#define setIP setIP_LocalView
 #include <stl/_config.h>
 #undef _STLP_DEFAULT_CONSTRUCTOR_BUG
 #include <map>

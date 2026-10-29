@@ -11,6 +11,10 @@
 #define __PLACEMENT_VEC_NEW_INLINE
 #define ASCIISTRING_H
 #define UNICODESTRING_H
+// This unit's GameSpyGameSlot view defines setProfileID inline at another offset than
+// retail's 0x001A19C0 (+0x40) and emits that COMDAT copy; rename it so only
+// retail-equal copies carry the name. Inlined calls are unchanged.
+#define setProfileID setProfileID_LocalView
 #include "ascii_string.h"
 #include "unicode_string.h"
 

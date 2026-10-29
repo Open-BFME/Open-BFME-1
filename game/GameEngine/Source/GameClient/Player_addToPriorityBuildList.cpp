@@ -5,6 +5,10 @@
 // reference (ILT oracle CONFIRMED) and Coord3D is class-keyed. The by-value
 // setTemplateName copy lands in the dead reference slot, as in retail.
 
+// This unit's BuildListInfo view defines setNumRebuilds inline at another offset than
+// retail's 0x0016A630 (+0x2C) and emits that COMDAT copy; rename it so only
+// retail-equal copies carry the name. Inlined calls are unchanged.
+#define setNumRebuilds setNumRebuilds_LocalView
 #include "ascii_string.h"
 
 // class-gate: allow Coord3D BFME decorations key Coord3D as a class (ILT oracle CONFIRMED); canonical Lib header declares a struct

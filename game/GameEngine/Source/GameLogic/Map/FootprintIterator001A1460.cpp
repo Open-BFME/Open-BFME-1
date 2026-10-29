@@ -65,6 +65,10 @@ public:
 
 // BFME's 0x5C-byte GeometryInfo (GeometryInfoCopyConstructor.cpp); only the
 // bounding-circle radius at +0x10 is read directly.
+// This unit's GeometryInfo view defines getBoundingCircleRadius inline at another offset than
+// retail's 0x005E7B90 (+0x18) and emits that COMDAT copy; rename it so only
+// retail-equal copies carry the name. Inlined calls are unchanged.
+#define getBoundingCircleRadius getBoundingCircleRadius_LocalView
 class GeometryInfo
 {
 public:

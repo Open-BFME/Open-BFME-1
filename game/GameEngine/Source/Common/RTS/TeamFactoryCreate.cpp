@@ -45,6 +45,10 @@ class TeamFactory;
 class TeamPrototype;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
+// This unit's TeamPrototype view defines getIsSingleton inline at another offset than
+// retail's 0x000EC410 (+0x18) and emits that COMDAT copy; rename it so only
+// retail-equal copies carry the name. Inlined calls are unchanged.
+#define getIsSingleton getIsSingleton_LocalView
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 

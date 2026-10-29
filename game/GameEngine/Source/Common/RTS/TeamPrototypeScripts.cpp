@@ -59,6 +59,10 @@ private:
 
 // Temp cleanup at 0x00887940 is StringBase<char>::releaseBuffer (export
 // ?releaseBuffer@?$StringBase@D@@AAEXXZ), not UnicodeString::~ (0x005EEA0).
+// This unit's Script view defines setFrameToEvaluate inline at another offset than
+// retail's 0x00191490 (+0x34) and emits that COMDAT copy; rename it so only
+// retail-equal copies carry the name. Inlined calls are unchanged.
+#define setFrameToEvaluate setFrameToEvaluate_LocalView
 #include "string_base.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h

@@ -9,6 +9,10 @@
 // +0x188) passes in ECX through ILT 0x7E32. The method keeps the twin's name;
 // the owning object's class is not recovered, so it keeps the address.
 
+// This unit's ThingTemplate view defines getDrawModuleInfo inline at another offset than
+// retail's 0x000C8B80 (+0x114) and emits that COMDAT copy; rename it so only
+// retail-equal copies carry the name. Inlined calls are unchanged.
+#define getDrawModuleInfo getDrawModuleInfo_LocalView
 #include "ascii_string.h"
 
 extern "C" void *__cdecl memset(void *dst, int value, unsigned int count);

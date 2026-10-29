@@ -32,6 +32,10 @@
 // Desc:   Resolves NAT'd IPs and port numbers for the other players in a game.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+// This unit's GameSlot view defines setIP inline at another offset than
+// retail's 0x000C8DB0 (+0x2C) and emits that COMDAT copy; rename it so only
+// retail-equal copies carry the name. Inlined calls are unchanged.
+#define setIP setIP_LocalView
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "GameNetwork/NAT.h"

@@ -30,6 +30,10 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // INCLUDES ///////////////////////////////////////////////////////////////////////////////////////
+// This unit's Drawable view defines getInstanceMatrix inline at another offset than
+// retail's 0x003BC600 (+0xD4) and emits that COMDAT copy; rename it so only
+// retail-equal copies carry the name. Inlined calls are unchanged.
+#define getInstanceMatrix getInstanceMatrix_LocalView
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "GameClient/Drawable.h"

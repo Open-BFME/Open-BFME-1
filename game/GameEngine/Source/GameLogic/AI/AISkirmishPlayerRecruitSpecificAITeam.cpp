@@ -22,6 +22,10 @@
 //
 // Evidence: targets/game/reverse/identity_evidence/001699c2-recruit-specific-team.md
 // and targets/game/reverse/identity_evidence/001699c0-recruit-specific-team.md
+// This unit's TeamPrototype view defines getIsSingleton inline at another offset than
+// retail's 0x000EC410 (+0x18) and emits that COMDAT copy; rename it so only
+// retail-equal copies carry the name. Inlined calls are unchanged.
+#define getIsSingleton getIsSingleton_LocalView
 #include "ascii_string.h"
 
 typedef bool Bool;

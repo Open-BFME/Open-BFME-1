@@ -2,6 +2,10 @@
 // W3DShrubBuffer method at retail 0x007209F0, twin of W3DTreeBuffer's at 0x00736940: finds or adds the shrub
 // type for a template's tree draw module data under the template's own name; returns its index, or -2.
 
+// This unit's ThingTemplate view defines getDrawModuleInfo inline at another offset than
+// retail's 0x000C8B80 (+0x114) and emits that COMDAT copy; rename it so only
+// retail-equal copies carry the name. Inlined calls are unchanged.
+#define getDrawModuleInfo getDrawModuleInfo_LocalView
 #include "ascii_string.h"
 
 template<> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }

@@ -10,6 +10,10 @@
 // 0x520E is bound by its existing ILT symbol: the named ledger owner is
 // StructureCollapseUpdate, so no new semantic claim is made for that call.
 
+// This unit's Drawable view defines getInstanceMatrix inline at another offset than
+// retail's 0x003BC600 (+0xD4) and emits that COMDAT copy; rename it so only
+// retail-equal copies carry the name. Inlined calls are unchanged.
+#define getInstanceMatrix getInstanceMatrix_LocalView
 #include "matrix3d.h"
 struct Coord3D
 {

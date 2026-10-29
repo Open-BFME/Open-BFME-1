@@ -2,6 +2,10 @@
 // W3DTreeBuffer method at retail 0x00736940: finds or adds the tree type for a template's tree draw
 // module data and returns its index, or -2; a template without that module reports it and fails.
 
+// This unit's ThingTemplate view defines getDrawModuleInfo inline at another offset than
+// retail's 0x000C8B80 (+0x114) and emits that COMDAT copy; rename it so only
+// retail-equal copies carry the name. Inlined calls are unchanged.
+#define getDrawModuleInfo getDrawModuleInfo_LocalView
 #include "ascii_string.h"
 
 template<> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }

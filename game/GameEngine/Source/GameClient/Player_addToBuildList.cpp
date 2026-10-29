@@ -81,6 +81,10 @@ public:
 	unsigned int m_id;
 };
 
+// This unit's BuildListInfo view defines setNumRebuilds inline at another offset than
+// retail's 0x0016A630 (+0x2C) and emits that COMDAT copy; rename it so only
+// retail-equal copies carry the name. Inlined calls are unchanged.
+#define setNumRebuilds setNumRebuilds_LocalView
 class BuildListInfo
 {
 public:

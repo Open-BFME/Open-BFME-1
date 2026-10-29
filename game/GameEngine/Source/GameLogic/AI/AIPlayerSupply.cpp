@@ -91,6 +91,10 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Geometry.h
+// This unit's GeometryInfo view defines getBoundingCircleRadius inline at another offset than
+// retail's 0x005E7B90 (+0x18) and emits that COMDAT copy; rename it so only
+// retail-equal copies carry the name. Inlined calls are unchanged.
+#define getBoundingCircleRadius getBoundingCircleRadius_LocalView
 class GeometryInfo
 {
 public:

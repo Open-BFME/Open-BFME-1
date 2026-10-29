@@ -18,6 +18,10 @@
 // getDrawable at slot 10/0x28) so both get minimal TU-local views sized to
 // the verified slot instead of the real classes.
 
+// This unit's Drawable view defines getInstanceMatrix inline at another offset than
+// retail's 0x003BC600 (+0xD4) and emits that COMDAT copy; rename it so only
+// retail-equal copies carry the name. Inlined calls are unchanged.
+#define getInstanceMatrix getInstanceMatrix_LocalView
 #include "PreRTS.h"
 
 struct Coord3D

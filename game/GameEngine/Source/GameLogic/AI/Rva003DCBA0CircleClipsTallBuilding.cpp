@@ -3,6 +3,10 @@
 // stlport
 
 #define ASCIISTRING_H
+// This unit's GeometryInfo view defines getBoundingCircleRadius inline at another offset than
+// retail's 0x005E7B90 (+0x18) and emits that COMDAT copy; rename it so only
+// retail-equal copies carry the name. Inlined calls are unchanged.
+#define getBoundingCircleRadius getBoundingCircleRadius_LocalView
 #include "ascii_string.h"
 #define __THING_H_
 #define __KINDOF_H_

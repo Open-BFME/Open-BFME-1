@@ -54,6 +54,10 @@
 #define PartitionManager ZHPartitionManager
 #define ThePartitionManager ZHThePartitionManager
 
+// This unit's State view defines getMachine inline at another offset than
+// retail's 0x0009FEE0 (+0x1C) and emits that COMDAT copy; rename it so only
+// retail-equal copies carry the name. Inlined calls are unchanged.
+#define getMachine getMachine_LocalView
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "Common/PerfTimer.h"

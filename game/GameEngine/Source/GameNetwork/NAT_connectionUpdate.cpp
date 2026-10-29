@@ -43,6 +43,10 @@ struct NetPacketAddress {
     unsigned short port;
 };
 
+// This unit's GameSlot view defines setIP inline at another offset than
+// retail's 0x000C8DB0 (+0x2C) and emits that COMDAT copy; rename it so only
+// retail-equal copies carry the name. Inlined calls are unchanged.
+#define setIP setIP_LocalView
 class GameSlot {
 public:
     UnicodeString getName() const;
