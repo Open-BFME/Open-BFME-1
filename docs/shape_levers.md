@@ -2423,3 +2423,21 @@ fstp st(1); fstp [esp+4]`, ours popped the dead `dy` before `fsqrt` with
 sqrt(dx * dx + dy * dy); len[0] = (float)root;`. Measured effect: whole body
 exact (the bank's volatile reads are still needed for the dx spill). VC7.1
 `/O2`, intrinsic sqrt. Source `game/GameEngine/Source/Common/Rva003A40A0Limit.cpp`.
+
+## Inline budget: expose the nested helper as a non-static inline (2026-10-29)
+
+Mismatch (0x005313B0 STLport `__find<UnicodeString*>`, 627 B, bank 0.05):
+retail inlines the element compare at 4 of 7 sites (calls the out-of-line
+compare at the other 3), and the inline copies contain the 0x0005DC70 run
+compare. A compare written as one flat member body (null-check ternaries plus
+its own word loop) was never inlined; without the ternaries it inlined at 4.
+Source change: the compare forwards to `compare(data, len)`, which calls the
+run compare as a separate helper with the one-byte flags argument retail's
+out-of-line compare pushes. Measured effects: a `static inline` or
+`__forceinline` helper is never inlined (361 B, 7 calls); a non-static
+`inline` helper inlines into 3 compares; a pre-tested `while` loop instead
+of `if (n > 0) do {} while` inlines into all 4 (627 B, register residue only);
+defining the cursors `p` then `q` loads `*q` before `*p` in the mismatch
+delta (exact). The diff spelling, local temporaries and a delta helper call
+had no effect. VC7.1 `/MD /EHsc`, STLport. Source
+`game/Libraries/Source/WWVegas/WWLib/stlport_unicode_string_find.cpp`.

@@ -37949,7 +37949,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_005280a0@@YAXXZ,,0x005280A0,570,game/gen_asm/d_00525450.asm,matched,gen-dump;ghidra=FUN_009280a0
 ?d_00529be0@@YAXXZ,,0x00529BE0,186,game/gen_asm/d_00525450.asm,matched,gen-dump;ghidra=FUN_00929be0
 ?d_0052a2e0@@YAXXZ,,0x0052A2E0,1306,game/gen_asm/d_00525450.asm,matched,gen-dump;ghidra=FUN_0092a2e0
-?d_005313b0@@YAXXZ,,0x005313B0,627,game/gen_asm/d_0052b540.asm,matched,gen-dump;ghidra=FUN_009313b0
 ?d_005337e0@@YAXXZ,,0x005337E0,1382,game/gen_asm/d_00499050.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=ret+int3 callers=1;ghidra=FUN_009337e0
 ?d_00533ea0@@YAXXZ,,0x00533EA0,999,game/gen_asm/d_00499050.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=ret+int3 callers=1;ghidra=FUN_00933ea0
 ?d_00534380@@YAXXZ,,0x00534380,1358,game/gen_asm/d_00499050.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=ret+int3 callers=1;ghidra=FUN_00934380
@@ -173390,3 +173389,4 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?getID@State@@QBEIXZ,,0x0009FEF0,4,game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/0009fee0-state-accessor-comdat.md;model=gpt-6-astra;host=GreatFaram
 ?getMachine@State@@QAEPAVStateMachine@@XZ,,0x0009FEE0,4,game/GameEngine/Source/GameLogic/AI/TurretAI.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/0009fee0-state-accessor-comdat.md;model=gpt-6-astra;host=GreatFaram
 ??$find@PAVUnicodeString@@V1@@_STL@@YAPAVUnicodeString@@PAV1@0ABV1@@Z,,0x00531F10,30,game/Libraries/Source/WWVegas/WWLib/stlport_unicode_string_find.cpp,matched,STLport find() front end; random-access tag at esp+3; calls __find via ILT 0x00007220; ilt_oracle CONFIRMED at ILT 0x00032D67 (generated uninitialized_copy spelling CONTRADICTED);model=claude-opus-5-5;host=app
+??$__find@PAVUnicodeString@@V1@@_STL@@YAPAVUnicodeString@@PAV1@0ABV1@ABUrandom_access_iterator_tag@0@@Z,,0x005313B0,627,game/Libraries/Source/WWVegas/WWLib/stlport_unicode_string_find.cpp,matched,STLport random-access __find 4x unroll; callers 0x00531F10 and 0x005337E0 via ILT 0x00007220 (ilt_oracle CONFIRMED); element compare calls StringBase<G>::compare ILT 0x000226EC (pinned UnicodeString::compare); StringBase ctors private to AsciiString/UnicodeString so element is UnicodeString; twin of 0x001DBC10; inline 0x0005DC70 run compare as non-static inline while-loop p-then-q;model=claude-opus-5-5;host=app
