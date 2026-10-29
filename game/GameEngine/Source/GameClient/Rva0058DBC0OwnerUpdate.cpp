@@ -67,7 +67,15 @@ public:
 	bool m_byte2d;
 };
 
-extern Glo012F1028Type *Glo012F1028;
+// The existing owner at 0x012F1028 is LivingWorldLogic.cpp's singleton.
+// Keep this TU's witnessed field layout as a view of that same object.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
+
+static inline Glo012F1028Type *ownerUpdateLivingWorldLogic()
+{
+	return (Glo012F1028Type *)TheLivingWorldLogic;
+}
 
 class BfmeCampaignManagerVictorious
 {
@@ -273,7 +281,9 @@ void Rva0058DBC0Owner::rva0058DD70()
 
 void Rva0058DBC0Owner::rva0058DDD0()
 {
-	bool livingWorld = Glo012F1028 && Glo012F1028->m_byte2c && Glo012F1028->m_byte2d;
+	bool livingWorld = ownerUpdateLivingWorldLogic()
+		&& ownerUpdateLivingWorldLogic()->m_byte2c
+		&& ownerUpdateLivingWorldLogic()->m_byte2d;
 
 	Player *player = getLocalPlayer( ThePlayerList );
 	bool moneyShown = false;
@@ -319,7 +329,7 @@ void Rva0058DBC0Owner::rva0058DDD0()
 		typedef int ( Rva0058DDD0Call::*Function )();
 		union { void ( *raw )(); Function member; } function;
 		function.raw = j_0000353f;
-		int value = ( reinterpret_cast<Rva0058DDD0Call *>( Glo012F1028 )
+		int value = ( reinterpret_cast<Rva0058DDD0Call *>( ownerUpdateLivingWorldLogic() )
 			->*function.member )();
 		if( value != m_lastCount00 )
 		{
@@ -377,14 +387,14 @@ void Rva0058DBC0Owner::rva0058DDD0()
 	if( !livingWorld )
 	{
 		m_multiplierAnim24.clear();
-		if( Glo012F1028 && Glo012F1028->m_byte2c )
-			multiplier = rva003BDCF0Get( Glo012F1028 ) * 0.01f + 1.0f;
+		if( ownerUpdateLivingWorldLogic() && ownerUpdateLivingWorldLogic()->m_byte2c )
+			multiplier = rva003BDCF0Get( ownerUpdateLivingWorldLogic() ) * 0.01f + 1.0f;
 		else
 			multiplier = 1.0f;
 	}
 	else
 	{
-		int percent = rva003BDCF0Get( Glo012F1028 );
+		int percent = rva003BDCF0Get( ownerUpdateLivingWorldLogic() );
 		if( percent > m_lastPercent04 )
 		{
 			m_multiplierAnim24.reset( new Rva0058DDD0MultiplierAnim(
