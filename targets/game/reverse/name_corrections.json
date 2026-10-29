@@ -21481,5 +21481,15 @@
   "after_sha256": "2952adb72095971bea8e7fdca2f660ddaf7e53c55ab8567559d839bab1be1aeb",
   "evidence": "targets/game/reverse/attempt_support/0087f590-getbestcontactpoint-visible-intersects-20261029.md",
   "reason": "ILT 0x0003A17A reaches the ledger row _bfmeRetailCritterDesyncLog at 0x00065C80 (a CRC parameter-check logger, not the CRT fprintf); the call uses that row name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0024eca0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/Rva0024ECA0.cpp",
+  "old_name": "askDG",
+  "new_name": "bfmeAskRaw",
+  "before_sha256": "c4a74885e6ff3fc7320c57f93af43ac38722dce85283e7fffe29805f466de80f",
+  "after_sha256": "7c3f3d95d3521408f6b0cee6e779a51a8daecd60947902c3b7d834aafe171b61",
+  "evidence": "targets/game/reverse/identity_evidence/0x0024eca0-askdg-callee-spelling.md",
+  "reason": "askDG was a bank-local name bound by /alternatename to ILT 0x00036C05; symbols.csv pins that ILT as the thiscall ?bfmeAskRaw@Gen_0021AD10@@AAEPAXPAX@Z, which the converted source calls."
  }
 ]

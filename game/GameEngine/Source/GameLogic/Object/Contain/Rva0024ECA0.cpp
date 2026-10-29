@@ -1,38 +1,37 @@
 // ?rva0024ECA0@Rva0024ECA0Owner@@QAEXPAURva0024ECA0Object@@@Z
-// partial score=0.976 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: address-derived method spelling. Retail 0x0024ECA0, 126B, SlaughterHordeContain's
-// +0x20 secondary-interface slot 34 (+0x88, same slot HordeGarrisonContain
-// overrides at 0x00248C60). No header source or matched caller names this
-// BFME-only virtual (reverse/re_attempts.log 0x00248C60 / 0x0024ECA0).
-// name_oracle.py and bfme_layout.py have no witnessed SlaughterHordeContain
-// member layout or method spelling. The worker's `step` spelling was therefore
-// replaced with the honest address-derived rva0024ECA0.
 //
-// Calls the already-landed bfmeAskDG (BfmeOneHundredEightySix.cpp, via its
-// thunk j_00036c05) as a thiscall member so retail's `mov ecx,esi` before the
-// call reproduces; the returned pointer's own slot 64 (+0x100) is called when
-// non-null. Otherwise checks owner slot 27 (+0x6c), then falls back to
-// Thing::isKindOf(0x6c) through the pinned bfmeAskAIA thunk (j_0002130f is
-// unrelated; this is j_0002e... no -- thunk 0x0003251F, still a dump) before
-// choosing owner slot 29 (+0x74) or slot 30 (+0x78), always closing with the
-// owner cleanup call at slot 17 (+0x44).
+// Retail 0x0024ECA0, 126 B (ret 4 at +0x7B). SlaughterHordeContain's +0x20
+// secondary-interface slot 34 (+0x88), the same slot HordeGarrisonContain
+// overrides at 0x00248C60; no header source or matched caller names this
+// BFME-only virtual, so the owner and method stay address-derived.
+//
+// The body adjusts to the primary container (this - 0x20) and asks it,
+// through ILT 0x00036C05 (matched bfmeAskDG at 0x00248AE0, called with the
+// container in ECX), for a deep pointer whose slot 64 runs when present;
+// otherwise container slot 27 (+0x6C) and Thing::isKindOf(0x6C) (ILT
+// 0x0003251F -> 0x000A2CF0) choose container slot 29 (+0x74) or slot 30
+// (+0x78), and every path ends with container slot 17 (+0x44).
+//
+// Shape: the slot-30 call is written in both failing arms, which VC7.1
+// cross-jumps into one block; that reproduces retail's `mov ecx,esi`
+// before `push edi` there (docs/shape_levers.md, tail-merge receiver order).
 
-class Rva0024ECA0Deep;
-struct Rva0024ECA0Object;
+enum KindOfType { KINDOF_INVALID = 0 };
 
-class Rva0024ECA0AskDG
+class Thing
 {
 public:
-	Rva0024ECA0Deep *askDG( Rva0024ECA0Object *obj );
+	bool isKindOf( KindOfType t ) const;
 };
 
-#pragma comment(linker, "/alternatename:?askDG@Rva0024ECA0AskDG@@QAEPAVRva0024ECA0Deep@@PAURva0024ECA0Object@@@Z=?j_00036c05@@YAXXZ")
+class Rva0024ECA0Owner;
 
-class BfmeThingAIA
+// Pinned thiscall spelling of ILT 0x00036C05 (symbols.csv).
+class Gen_0021AD10
 {
-public:
-	bool bfmeAskAIA( int kind );
+	friend class Rva0024ECA0Owner;
+	void *bfmeAskRaw( void *a );
 };
 
 #define BFME_SLOT( N ) virtual void bfmeSlot##N( void ) = 0
@@ -85,17 +84,6 @@ public:
 
 #undef BFME_SLOT
 
-struct Rva0024ECA0ContainerVtable
-{
-	void *slots17[17];
-	void (__fastcall *bfmeSlot44)(Rva0024ECA0Container *self, Rva0024ECA0ContainerVtable *table);
-	void *slots18[9];
-	int (__fastcall *bfmeSlot6C)(Rva0024ECA0Container *self, Rva0024ECA0ContainerVtable *table, Rva0024ECA0Object *obj);
-	void *slot28;
-	void (__fastcall *bfmeSlot74)(Rva0024ECA0Container *self, Rva0024ECA0ContainerVtable *table, Rva0024ECA0Object *obj);
-	void (__fastcall *bfmeSlot78)(Rva0024ECA0Container *self, Rva0024ECA0ContainerVtable *table, Rva0024ECA0Object *obj);
-};
-#define VT(c) (*(Rva0024ECA0ContainerVtable **)(c))
 
 class Rva0024ECA0Owner
 {
@@ -113,23 +101,18 @@ void Rva0024ECA0Owner::rva0024ECA0( Rva0024ECA0Object *obj )
 	Rva0024ECA0Container *container =
 		reinterpret_cast<Rva0024ECA0Container *>( reinterpret_cast<char *>( this ) - 0x20 );
 
-	Rva0024ECA0Deep *deep = reinterpret_cast<Rva0024ECA0AskDG *>( container )->askDG( obj );
-	if ( deep != 0 )
+	Rva0024ECA0Deep *deep = static_cast<Rva0024ECA0Deep *>(
+		reinterpret_cast<Gen_0021AD10 *>( container )->bfmeAskRaw( obj ) );
+	if( deep != 0 )
 	{
 		deep->bfmeDeepCall();
 		container->bfmeSlot74( obj );
-		container->bfmeSlot44();
-		return;
 	}
-
-	if( !VT(container)->bfmeSlot6C( container, VT(container), obj ) &&
-			reinterpret_cast<BfmeThingAIA *>( obj )->bfmeAskAIA( 0x6c ) )
-	{
-		VT(container)->bfmeSlot74( container, VT(container), obj );
-	}
-	else
-	{
+	else if( container->bfmeSlot6C( obj ) )
 		container->bfmeSlot78( obj );
-	}
+	else if( reinterpret_cast<Thing *>( obj )->isKindOf( static_cast<KindOfType>( 0x6c ) ) )
+		container->bfmeSlot74( obj );
+	else
+		container->bfmeSlot78( obj );
 	container->bfmeSlot44();
 }
