@@ -2798,30 +2798,8 @@ void ScriptActions::doNamedSetGarrisonEvacDisposition(const AsciiString& unitNam
 //-------------------------------------------------------------------------------------------------
 /** doNamedFollowWaypoints */
 //-------------------------------------------------------------------------------------------------
-// ?doNamedFollowWaypoints@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
-void ScriptActions::doNamedFollowWaypoints(const AsciiString& unitName, const AsciiString& waypointPathLabel)
-{
-	Object *theUnit = TheScriptEngine->getUnitNamed( unitName );
-	if (!theUnit) {
-		return;
-	}
-	Coord3D pos = *theUnit->getPosition();
-	AIUpdateInterface* aiUpdate = theUnit->getAIUpdateInterface();
-	if (!aiUpdate) {
-		return;
-	}
-
-	Waypoint *way = TheTerrainLogic->getClosestWaypointOnPath( &pos, waypointPathLabel );
-	if (!way) {
-		return;
-	}
-
-	DEBUG_ASSERTLOG(TheTerrainLogic->isPurposeOfPath(way, waypointPathLabel), ("***Wrong waypoint purpose. Make jba fix this.\n"));
-	
-	theUnit->leaveGroup();
-	aiUpdate->chooseLocomotorSet(LOCOMOTORSET_NORMAL);
-	aiUpdate->aiFollowWaypointPath(way, CMD_FROM_SCRIPT);
-}
+// ScriptActions::doNamedFollowWaypoints(const AsciiString&, const AsciiString&)
+// Body in ScriptActionsNamedUnitMovement.cpp (exact 128B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** doTeamFollowSkirmishApproachPath */
