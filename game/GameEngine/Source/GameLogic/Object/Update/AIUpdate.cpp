@@ -6519,23 +6519,8 @@ void AIUpdateInterface::loadPostProcess( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?friend_getWaypointGoalPathSize@AIUpdateInterface@@ present-unmatched
-Int AIUpdateInterface::friend_getWaypointGoalPathSize() const 
-{ 
-			//
-			// it is VERY IMPORTANT to check for the current state type as being follow-path, 
-			// because "getGoalPath" and friends are used for other things (eg, jet takeoff and landing).
-			// if you don't do this check, you will end up with really bizarre behavior in obscure jet-related
-			// cases, and our users will all laugh at us.
-			//
-			// the goalpath should really be completely private, but at this point, this ugly scheme
-			// has to be lived with. (srj)
-			//
-	if (getAIStateType() != AI_FOLLOW_PATH)
-		return 0;
-
-	return getStateMachine()->getGoalPathSize(); 
-}
+// AIUpdateInterface::friend_getWaypointGoalPathSize() const
+// Body in AIUpdateInterfaceWaypointGoalPathSize.cpp (exact 77B retail).
 
 // ------------------------------------------------------------------------------------------------
 // ?hasLocomotorForSurface@AIUpdateInterface@@ present-unmatched
