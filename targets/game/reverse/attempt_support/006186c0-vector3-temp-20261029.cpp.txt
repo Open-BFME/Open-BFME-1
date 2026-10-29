@@ -1,0 +1,94 @@
+// cl: /O2 /DNDEBUG /MD
+typedef float Real;
+
+struct Coord3D
+{
+	Coord3D(Real ax, Real ay, Real az) { x = ax; y = ay; z = az; }
+	Real x;
+	Real y;
+	Real z;
+};
+
+class Vector3
+{
+public:
+	Vector3() {}
+	Vector3(Real x, Real y, Real z) { X = x; Y = y; Z = z; }
+	Vector3(const Vector3 &v) { X = v.X; Y = v.Y; Z = v.Z; }
+	Vector3 &operator=(const Vector3 &v) { X = v.X; Y = v.Y; Z = v.Z; return *this; }
+	Real X;
+	Real Y;
+	Real Z;
+};
+
+class Matrix3D
+{
+public:
+	Vector3 Get_Translation() const { return Vector3(Row[0][3], Row[1][3], Row[2][3]); }
+	Real Row[3][4];
+};
+
+class Rva00615D50Item
+{
+public:
+	virtual void d00();
+	virtual void d04();
+	virtual void d08();
+	virtual void d0C();
+	virtual void d10();
+	virtual void d14();
+	virtual void d18();
+	virtual void d1C();
+	virtual void d20();
+	virtual void d24();
+	virtual void d28();
+	virtual void d2C();
+	virtual void d30();
+	virtual void d34();
+	virtual void d38();
+	virtual void d3C();
+	virtual void d40();
+	virtual void d44();
+	virtual void d48();
+	virtual void d4C();
+	virtual void Validate_Transform() const;
+
+	Vector3 Get_Position() const
+	{
+		Validate_Transform();
+		return Transform.Get_Translation();
+	}
+
+	unsigned char m_at04[0x14];
+	Matrix3D Transform;
+};
+
+struct Rva00615D50Holder
+{
+	unsigned char m_at00[8];
+	Rva00615D50Item *m_item;
+};
+
+struct Rva00615D50Object
+{
+	Coord3D rva0001895d();
+
+	void *m_at00;
+	void *m_type;
+	int m_id;
+	Rva00615D50Holder *m_holder;
+};
+
+Coord3D Rva00615D50Object::rva0001895d()
+{
+	Coord3D pos(0.0f, 0.0f, 0.0f);
+	Rva00615D50Item *item = m_holder->m_item;
+	if (item != 0)
+	{
+		Vector3 v = item->Get_Position();
+		pos.x = v.X;
+		pos.y = v.Y;
+		pos.z = v.Z;
+	}
+	return Coord3D(pos.x, pos.y, pos.z);
+}
