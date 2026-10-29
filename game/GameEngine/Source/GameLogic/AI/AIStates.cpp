@@ -8120,29 +8120,8 @@ void AIGuardRetaliateState::crc( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Xfer Method */
 // ------------------------------------------------------------------------------------------------
-// ?xfer@AIGuardRetaliateState@@MAEXPAVXfer@@@Z present-unmatched
-void AIGuardRetaliateState::xfer( Xfer *xfer )
-{
-  // version
-  XferVersion currentVersion = 1;
-  XferVersion version = currentVersion;
-  xfer->xferVersion( &version, currentVersion );
-
-	Bool hasMachine = m_guardRetaliateMachine!=NULL;
-	
-	xfer->xferBool(&hasMachine);
-
-	if (hasMachine && m_guardRetaliateMachine==NULL)	
-	{
-		// create new state machine for guard behavior
-		m_guardRetaliateMachine = newInstance(AIGuardRetaliateMachine)( getMachineOwner());
-	}
-	if (hasMachine) 
-	{
-		xfer->xferSnapshot(m_guardRetaliateMachine);	
-	}
-
-}  // end xfer
+// AIGuardRetaliateState::xfer( Xfer *xfer )
+// Body in AIGuardRetaliateState_xfer.cpp (exact 204B retail).
 
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
