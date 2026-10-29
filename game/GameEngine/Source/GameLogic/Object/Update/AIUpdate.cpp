@@ -4138,31 +4138,8 @@ Bool AIUpdateInterface::isAllowedToRespondToAiCommands(const AICommandParms* par
 /**
  * Move to given object
  */
-// ?privateMoveToObject@AIUpdateInterface@@ present-unmatched
-void AIUpdateInterface::privateMoveToObject( Object *obj, CommandSourceType cmdSource ) 
-{
-	// the dead don't listen very well
-	if (m_isAiDead)
-		return;
-
-	if (getObject()->isMobile() == FALSE)
-		return;
-
-	//Resetting the locomotor here was initially added for scripting purposes. It has been moved
-	//to the responsibility of the script to reset the locomotor before moving. This is needed because
-	//other systems (like the battle drone) change the locomotor based on what it's trying to do, and
-	//doesn't want to get reset when ordered to move.
-	//chooseLocomotorSet(LOCOMOTORSET_NORMAL);
-	
-	getStateMachine()->clear();
-	getStateMachine()->setGoalObject( obj );
-	m_blockedFrames = 0;
-	m_isBlocked = FALSE;
-	m_isBlockedAndStuck = FALSE;
-	setLastCommandSource( cmdSource );
-	getStateMachine()->setState( AI_MOVE_TO );
-
-}
+// AIUpdateInterface::privateMoveToObject(Object*, CommandSourceType)
+// Body in AIUpdateInterfacePrivateCommands.cpp (exact 70B retail).
 
 //----------------------------------------------------------------------------------------
 // Face a specified object -- succeed when facing
