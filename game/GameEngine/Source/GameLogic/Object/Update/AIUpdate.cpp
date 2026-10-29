@@ -4811,39 +4811,8 @@ void AIUpdateInterface::privateFollowPathAppend( const Coord3D *pos, CommandSour
 /**
  * Follow the path defined by the given array of points
  */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateFollowPath_bfme.cpp
-// ?privateFollowPath@AIUpdateInterface@@ present-unmatched
-void AIUpdateInterface::privateFollowPath( const std::vector<Coord3D>* path, Object *ignoreObject, CommandSourceType cmdSource, Bool exitProduction )
-{
-	if (getObject()->isMobile() == FALSE)
-		return;
-
-	//Resetting the locomotor here was initially added for scripting purposes. It has been moved
-	//to the responsibility of the script to reset the locomotor before moving. This is needed because
-	//other systems (like the battle drone) change the locomotor based on what it's trying to do, and
-	//doesn't want to get reset when ordered to move.
-	//chooseLocomotorSet(LOCOMOTORSET_NORMAL);
-
-	// clear current state machine
-	getStateMachine()->clear();
-
-	if (path->size()>0) {
-		const Coord3D goal = (*path)[path->size()-1];
-		getStateMachine()->setGoalPosition(&goal);
-	}
-	// set path info
-	getStateMachine()->setGoalPath( path );
-
-
-	// set the command source
-	setLastCommandSource( cmdSource );
-
-	ignoreObstacle(ignoreObject);
-
-	// start us following
-	getStateMachine()->setState( exitProduction ? AI_FOLLOW_EXITPRODUCTION_PATH : AI_FOLLOW_PATH );
-
-}
+// AIUpdateInterface::privateFollowPath(const std::vector<Coord3D>*, Object*, CommandSourceType, Bool)
+// Body in AIUpdateInterfaceFollowPath.cpp (exact 197B retail).
 
 //----------------------------------------------------------------------------------------
 /**

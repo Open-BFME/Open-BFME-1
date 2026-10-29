@@ -1,6 +1,5 @@
 // cl: /DNDEBUG /MD /D_STLP_USE_STATIC_LIB
 // stlport
-// readable body of ?privateFollowPath@AIUpdateInterface@@: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 //
 // Open-BFME: the three AIUpdateInterface handlers that take a whole path.
 //
