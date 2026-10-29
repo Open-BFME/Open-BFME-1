@@ -1,0 +1,110 @@
+// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+#define _STLP_USE_OWN_NAMESPACE 1
+
+#include <deque>
+
+extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long volatile *);
+extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(long volatile *);
+
+typedef float Real;
+
+class RefCountedPlayingAudio
+{
+public:
+	virtual ~RefCountedPlayingAudio();
+	void Add_Ref() { InterlockedIncrement(&m_refCount); }
+	void Release_Ref()
+	{
+		if (InterlockedDecrement(&m_refCount) <= 0)
+			delete this;
+	}
+private:
+	long m_refCount;
+};
+
+class PlayingAudio : public RefCountedPlayingAudio
+{
+public:
+	char m_pad08[0x20];
+	Real m_fadeFrame;
+	char m_pad2c[8];
+	bool m_flag34;
+	bool m_flag35;
+};
+
+class PlayingAudioRef
+{
+public:
+	PlayingAudioRef() : m_audio(0) {}
+	PlayingAudioRef(const PlayingAudioRef &other) : m_audio(other.m_audio)
+	{
+		if (m_audio)
+			m_audio->Add_Ref();
+	}
+	~PlayingAudioRef()
+	{
+		if (m_audio)
+			m_audio->Release_Ref();
+	}
+	PlayingAudio *operator->() const { return m_audio; }
+private:
+	PlayingAudio *m_audio;
+};
+
+typedef _STL::deque<PlayingAudioRef> PlayingAudioDeque;
+
+// 0x00696810 via ILT 0x0000B60E: the out-of-line PlayingAudioRef assignment.
+extern void j_0000b60e();
+
+struct Rva006A56A0AudioSettings
+{
+	char m_pad00[0x3c];
+	int m_fadeAudioFrames;
+};
+
+class Rva006A56A0
+{
+public:
+	void rva006A56A0(int a, int b, int c);
+
+private:
+	char m_pad00[0x0c];
+	Rva006A56A0AudioSettings *m_audioSettings;
+	char m_pad10[0x9c4];
+	PlayingAudioDeque m_cells[6];
+	int m_map[3];
+	PlayingAudioRef m_current[3];
+};
+
+void Rva006A56A0::rva006A56A0(int a, int b, int c)
+{
+	if (m_cells[b + a * 2].empty())
+		return;
+
+	typedef void (PlayingAudioRef::*Assign)(const PlayingAudioRef &);
+	union { void (__cdecl *raw)(); Assign member; } assign;
+	assign.raw = j_0000b60e;
+	(m_current[a].*assign.member)(m_cells[b + a * 2].back());
+
+	if (c == 0)
+	{
+		if (m_current[a]->m_flag34)
+		{
+			m_current[a]->m_flag34 = false;
+			m_current[a]->m_flag35 = true;
+		}
+		else
+		{
+			m_current[a]->m_fadeFrame = (Real)m_audioSettings->m_fadeAudioFrames;
+			m_current[a]->m_flag35 = true;
+		}
+	}
+	else
+	{
+		m_current[a]->m_flag34 = false;
+		m_current[a]->m_flag35 = false;
+		m_current[a]->m_fadeFrame = 0.0f;
+	}
+	m_cells[b + a * 2].pop_back();
+}
