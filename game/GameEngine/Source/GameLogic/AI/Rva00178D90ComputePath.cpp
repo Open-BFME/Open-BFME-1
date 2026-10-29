@@ -56,7 +56,11 @@ protected:
 };
 
 extern unsigned char g_012F0239;
-extern void *g_012ED4FC;
+// Retail 0x012ED4FC is ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
+// (data_rows.csv); g_012ED4FC was only a pin nothing defines.
+class CRCParameterCheck;
+extern CRCParameterCheck *TheCRCParameterCheck;
+#define g_012ED4FC ( (void *)TheCRCParameterCheck )
 extern void j_0003a17a(void);
 
 typedef void (__cdecl *Rva00178D90CritterDesyncLog)(void *, const char *);

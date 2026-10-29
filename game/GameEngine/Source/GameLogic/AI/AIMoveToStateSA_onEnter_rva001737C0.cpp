@@ -99,7 +99,11 @@ public:
 };
 
 extern unsigned char g_012F0239;
-extern void *g_012ED4FC;
+// Retail 0x012ED4FC is ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
+// (data_rows.csv); g_012ED4FC was only a pin nothing defines.
+class CRCParameterCheck;
+extern CRCParameterCheck *TheCRCParameterCheck;
+#define g_012ED4FC ( (void *)TheCRCParameterCheck )
 // This is the existing 215-byte CRCParameterCheck logger body at 0x00065C80;
 // the retail 0x0003A17A ILT reaches it.  Its cdecl varargs ABI is also used by
 // the matched AIDock and CRCParameterCheck callers.

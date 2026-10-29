@@ -76,7 +76,11 @@ private:
 	Object *m_object;
 };
 
-extern void *g_012ED4FC;
+// Retail 0x012ED4FC is ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
+// (data_rows.csv); g_012ED4FC was only a pin nothing defines.
+class CRCParameterCheck;
+extern CRCParameterCheck *TheCRCParameterCheck;
+#define g_012ED4FC ( (void *)TheCRCParameterCheck )
 extern GameLogic *TheGameLogic;
 extern "C" void bfmeRetailCritterDesyncLog(void *context,
 	const char *format, ...);
