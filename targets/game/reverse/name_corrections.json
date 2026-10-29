@@ -21441,5 +21441,15 @@
   "after_sha256": "ffb24019c7c94e9cd5df40c4ad84a3de5d63fb07202296f8b78e5dd186a72dca",
   "evidence": "targets/game/reverse/identity_evidence/0079d3a0-aptpalantir-slot11.md",
   "reason": "The bank's W3DGameWindowManager::init name is refuted: AptPalantir vtable 0x01127A48 slot 11 owns the body and it calls the AptPalantir base reset. The semantic name is unproven, so the method keeps an address-derived name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x005cb720.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/System/FXParticleSystem/ParticleSystemManagerResolveTextures.cpp",
+  "old_name": "preloadAssets",
+  "new_name": "rva005CB720",
+  "before_sha256": "4595f14b43eec6fa0cd0340e77d0df7abc30466c9ebe28c13e9278048d10e74e",
+  "after_sha256": "b1a87e7fcb4eca079ae02b2509106cb5cd20cc774a010387fc564f5e4b6957fe",
+  "evidence": "targets/game/reverse/identity_evidence/005cb720-fxparticlesystem-texture-resolve.md",
+  "reason": "The bank's ParticleSystemManager::preloadAssets(TimeOfDay) name is refuted: the body ends with a plain RET (no stack argument) and retail's ILT contradicts the name; FXParticleSystem::ParticleSystemManager vtable 0x0110FDCC slot 14 owns it. The semantic name is unproven, so the method keeps an address-derived name."
  }
 ]
