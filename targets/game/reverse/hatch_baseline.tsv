@@ -104589,7 +104589,7 @@ pin	targets/game/reverse/symbols.csv	0x005CB570	1
 pin	targets/game/reverse/symbols.csv	0x005CB580	1
 pin	targets/game/reverse/symbols.csv	0x005CB590	1
 pin	targets/game/reverse/symbols.csv	0x005CB600	1
-pin	targets/game/reverse/symbols.csv	0x005CB720	2
+pin	targets/game/reverse/symbols.csv	0x005CB720	1
 pin	targets/game/reverse/symbols.csv	0x005CB960	1
 pin	targets/game/reverse/symbols.csv	0x005CB9C0	1
 pin	targets/game/reverse/symbols.csv	0x005CB9F0	1

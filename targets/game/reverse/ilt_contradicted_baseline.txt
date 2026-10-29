@@ -8758,7 +8758,6 @@ pins	0x005C76A0	?find@ParticleSystemHashtableFindShim@_STL@@QBEPAU?$_Hashtable_n
 pins	0x005C8D40	?fill@U1SupplierLow@@QAEXPAVU1FillTargetLow@@PAX@Z
 pins	0x005C8E90	?fill@U1SupplierHigh@@QAEXPAVU1FillTargetHigh@@PAX@Z
 pins	0x005C9660	?_M_initialize_buckets@?$hashtable@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@@_STL@@AAEXI@Z
-pins	0x005CB720	?preloadAssets@ParticleSystemManager@@UAEXW4TimeOfDay@@@Z
 pins	0x005D5760	?destroy@HashTemplateEntryDestructorShim@@QAEXXZ
 pins	0x005DC1E0	?destroy@Render2DSentenceClassPendingSurfaceStructDestructorShim@@QAEXXZ
 pins	0x005F40C0	?s4Second@@YAXXZ

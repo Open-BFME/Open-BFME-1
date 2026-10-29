@@ -86977,7 +86977,6 @@ name,address,notes
 ?preTeamDestroy@Rva000F4250PlayerCall@@QAEXPBVTeam@@@Z,0x00014DCB,Team destructor retail call via proven ILT
 ?preflight@HordeTransportContain@@QBE_NPAVObject@@_N@Z,0x000237B8,HordeTransportContain validity preflight helper reaches retail 0x00226A80
 ?preflight@Rva00249310Owner@@QAE_NPAVRva00249310Object@@_N@Z,0x0002C836,secondary interface preflight call uses the existing incremental thunk
-?preloadAssets@ParticleSystemManager@@UAEXW4TimeOfDay@@@Z,0x005cb720,vtable-slot ??_7W3DParticleSystemManager@@6BSubsystemInterface@@@ slot 14 anchors=7
 ?prep@BfmeSub1CC_EC3@@QAEMPAUMat12@@@Z,0x00024EA6,ILT thunk to 0x001B5860 the copyMatrixAndGo prep at 0x001B9C50
 ?prep@Rva0026CBE0Owner@@QAEXXZ,0x000392B1,Open-BFME6 ILT prep callee of 0x0026CBE0
 ?prepFile@INI@@IAEXVBFMERetailAsciiString@@H@Z,0x00853610,address-derived five-argument INI loader call with the retail AsciiString ABI
