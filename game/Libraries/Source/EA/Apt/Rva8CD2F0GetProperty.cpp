@@ -1,6 +1,4 @@
 // ?rva8CD2F0GetProperty@@YAXPAVRva8CD2F0State@@PAURva8CD2F0Context@@@Z
-// partial score=0.9685 date=2026-09-30
-// ?rva8CD2F0GetProperty@@YAXPAVRva8CD2F0State@@PAURva8CD2F0Context@@@Z
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // EA Apt ActionScript GetProperty (opcode 0x22), retail 0x008CD2F0: slot 0x22
 // of the opcode table based at 0x00ED5A68 (see
@@ -14,6 +12,7 @@
 // pushed.
 
 class BfmeStrVKI;
+class AptValue { public: int toInteger() const; };
 class Rva00899770;
 
 class Rva8CCCE0Value
@@ -21,7 +20,6 @@ class Rva8CCCE0Value
 public:
 	virtual void addRef();
 	virtual void release();
-	int toInteger() const;
 
 	unsigned m_flags;
 };
@@ -49,10 +47,16 @@ public:
 
 extern int g_rva8CD3F0RouteIndices[];
 extern int g_bfmeRouteKeys1282[];
-extern Rva8CCCE0Value *g_bfmeFallbackDB;
+extern AptValue *g_bfmeFallbackDB;
 
 void rva8CCCE0ResolveValue(void *first, void *second, Rva8CCCE0Value *value,
 	Rva8CCCE0Value **result);
+
+// The key is fetched through an inline lookup taking the mapped route code,
+// the shape Open BFME 2's _FunctionAptActionGetProperty (AptActionInterpreterConstantHandlers.cpp
+// at b5a7b8290a) spells as
+// Rva0070B4F0GetString(g_aptPropertyCodes[n]); it keeps retail's registers.
+inline BfmeStrVKI *rva8CD2F0GetString(int code) { return (BfmeStrVKI *)&g_bfmeRouteKeys1282[code]; }
 
 void rva8CD2F0GetProperty(Rva8CD2F0State *state, Rva8CD2F0Context *context)
 {
@@ -63,9 +67,9 @@ void rva8CD2F0GetProperty(Rva8CD2F0State *state, Rva8CD2F0Context *context)
 	Rva8CCCE0Value *target = resolved;
 	if (target != 0)
 	{
-		int keyIndex = g_rva8CD3F0RouteIndices[top->toInteger()];
+		unsigned int n = ((const AptValue *)top)->toInteger();
 		Rva8CCCE0Value *value = (Rva8CCCE0Value *)((Rva008AE770Stack *)state)->createString(
-			target, (int)context->m_second, (BfmeStrVKI *)&g_bfmeRouteKeys1282[keyIndex], 1, 1, 0);
+			target, (int)context->m_second, rva8CD2F0GetString(g_rva8CD3F0RouteIndices[n]), 1, 1, 0);
 		for (int i = 1; i <= 2; ++i)
 		{
 			Rva8CCCE0Value *old = state->m_stack[state->m_count - i];
@@ -86,7 +90,7 @@ void rva8CD2F0GetProperty(Rva8CD2F0State *state, Rva8CD2F0Context *context)
 				old->release();
 		}
 		state->m_count -= 2;
-		Rva8CCCE0Value *fallback = g_bfmeFallbackDB;
+		Rva8CCCE0Value *fallback = (Rva8CCCE0Value *)g_bfmeFallbackDB;
 		state->m_stack[state->m_count++] = fallback;
 		if (!((unsigned char)(fallback->m_flags >> 30) & 1))
 			fallback->addRef();
