@@ -94,7 +94,6 @@ extern ScriptEngine *TheScriptEngine;
 extern GameClient *TheGameClient;
 extern void *g_Rva00F36E5C; // VA 01336E5C debug manager cell (data_rows.csv owner)
 #define TheBfmeAwakenDebug (static_cast<BfmeAwakenDebug *>(g_Rva00F36E5C))
-extern double g_bfmeFactorBW;
 
 #define FirstUpdateSubsystem ((UpdateSubsystem *)Rva0134FAA0)
 #define SecondUpdateSubsystem ((UpdateSubsystem *)Glo012F1028)
@@ -102,7 +101,11 @@ extern double g_bfmeFactorBW;
 #define TheDebugManager ((DebugManager *)TheBfmeAwakenDebug)
 #define Zero 0.0f
 #define One 1.0f
-#define MillisecondsToSeconds g_bfmeFactorBW
+// 0.001: the compiler constant __real@3f50624dd2f1a9fc (VA 0x01075D80), read
+// as an opaque extern like retail (its load is not hoisted across the stores);
+// extern "C" adds the leading underscore.
+extern "C" const double __identifier("_real@3f50624dd2f1a9fc");
+#define MillisecondsToSeconds __identifier("_real@3f50624dd2f1a9fc")
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameEngine.h
 class GameEngine
