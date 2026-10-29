@@ -5120,26 +5120,8 @@ void AIUpdateInterface::privateAttackFollowWaypointPath( const Waypoint *way, In
 /**
  * Begin "seek and destroy"
  */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateHunt.cpp
-// ?privateHunt@AIUpdateInterface@@ present-unmatched
-void AIUpdateInterface::privateHunt( CommandSourceType cmdSource )
-{
-	if (getObject()->isMobile() == FALSE)
-		return;
-
-	if (getObject()->isKindOf(KINDOF_PROJECTILE))
-		return;
-
-	//Resetting the locomotor here was initially added for scripting purposes. It has been moved
-	//to the responsibility of the script to reset the locomotor before moving. This is needed because
-	//other systems (like the battle drone) change the locomotor based on what it's trying to do, and
-	//doesn't want to get reset when ordered to move.
-	//chooseLocomotorSet(LOCOMOTORSET_NORMAL);
-
-	getStateMachine()->clear();
-	setLastCommandSource( cmdSource );
-	getStateMachine()->setState( AI_HUNT );
-}
+// AIUpdateInterface::privateHunt(CommandSourceType)
+// Body in AIUpdateInterfacePrivateCommands.cpp (exact 97B retail).
 
 //----------------------------------------------------------------------------------------
 /**

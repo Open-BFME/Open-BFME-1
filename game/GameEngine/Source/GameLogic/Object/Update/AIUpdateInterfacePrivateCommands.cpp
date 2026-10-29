@@ -1,6 +1,5 @@
 // cl: /DNDEBUG /MD
 // readable body of ?privateAttackMoveToPosition@AIUpdateInterface@@: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
-// readable body of ?privateHunt@AIUpdateInterface@@: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 // readable body of ?privateFaceObject@AIUpdateInterface@@: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 // readable body of ?privateGetRepaired@AIUpdateInterface@@: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 // readable body of ?privateGuardObject@AIUpdateInterface@@: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
