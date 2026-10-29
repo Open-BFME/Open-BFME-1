@@ -53,7 +53,7 @@ public:
 class Glo012F1028Type
 {
 public:
-    int j_0000353f();
+    int rva003BDD60(); // 0x003BDD60 via ILT 0x0000353F (Glo012F1028Type_Rva003BDD60.cpp)
 };
 
 extern PlayerList *ThePlayerList;              // retail [0x012ED748]
@@ -161,7 +161,7 @@ void BfmePlayerMapState::init(Int field, Bool flag)
             m_value04 = globalValue;
         }
         if (Glo012F1028)
-            m_value04 += Glo012F1028->j_0000353f();
+            m_value04 += Glo012F1028->rva003BDD60();
         return;
     }
     else

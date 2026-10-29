@@ -14,12 +14,9 @@ struct BfmeNode912C
 	BfmeNode912C *m_next;
 };
 
-// The cleanup call at 0x009F4FB0+0x04 goes to 0x009F4ED0, which the ledger
-// defines as the gen-dump body ?d_009f4ed0@@YAXXZ in
-// game/gen_asm/d_009f2f00.asm.  It is a free body, not a member of the state
-// class, so it is called as one; `this` already sits in ecx and the call takes
-// no argument, exactly as the member call did.
-extern void d_009f4ed0();
+// The cleanup call at 0x009F4FB0+0x04 goes to 0x009F4ED0, matched as
+// PartitionManagerImpl::RemoveAllObjects (Rva009F40E0Recursive.cpp); `this`
+// already sits in ecx and the call takes no argument.
 
 // The loop call at 0x009F4FB0+0x73 goes to 0x009F4D80, which the ledger
 // defines as PartitionManagerImpl::_InsertObjectIntoTree in
@@ -31,6 +28,7 @@ class PartitionManagerImpl
 {
 public:
 	void _InsertObjectIntoTree(Gen009F5040Node *node);
+	void RemoveAllObjects(void);
 };
 
 extern float g_bfmeDefaultBU;
@@ -51,7 +49,7 @@ public:
 void T_009f4fb0::m(Rva009F5970StateInit *value)
 {
 	T_009f4fb0 *self = this;
-	d_009f4ed0();
+	((PartitionManagerImpl *)self)->RemoveAllObjects();
 
 	self->m_values = *value;
 

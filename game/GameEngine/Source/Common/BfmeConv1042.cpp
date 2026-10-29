@@ -92,10 +92,11 @@ struct BfmeR1042
 	char *m_bfmeName;
 };
 
-class BfmeSub1042
+// 0x00942BC0, matched as Gen_00942BC0::process (Gen_00942BC0.cpp).
+class Gen_00942BC0
 {
 public:
-	void bfmeSet1042(char *t, int a, int b);
+	void process(void *t, void *a, void *b);
 };
 
 extern const unsigned short BFMEEmptyUnicodeString;
@@ -106,7 +107,7 @@ public:
 	void bfmeGo1042E(BfmeR1042 *p);
 
 	char m_bfmePad[4];
-	BfmeSub1042 m_bfmeSub;
+	Gen_00942BC0 m_bfmeSub;
 	char m_bfmePad2[0xd7];
 	char m_bfmeFlag;
 };
@@ -120,7 +121,7 @@ void BfmeC1042::bfmeGo1042E(BfmeR1042 *p)
 	else
 		t = (char *)&BFMEEmptyUnicodeString;
 
-	m_bfmeSub.bfmeSet1042(t, 0, 0);
+	m_bfmeSub.process(t, 0, 0);
 	m_bfmeFlag = 1;
 }
 
