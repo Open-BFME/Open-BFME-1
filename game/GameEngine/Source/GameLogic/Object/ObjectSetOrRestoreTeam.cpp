@@ -9,6 +9,10 @@
 // it does not add an exception specification or change string semantics.
 // The prior pinharvest at ILT0002BF2B actually reaches setScriptStatus and
 // cannot establish this function's identity.
+// This unit's AIUpdateInterface view defines setAttackInfo inline at another offset than
+// retail's (+0x60) and emits that COMDAT copy; rename it so only retail-equal
+// copies carry the name. Inlined calls are unchanged.
+#define setAttackInfo setAttackInfo_LocalView
 #include "ascii_string.h"
 template <typename T> inline bool StringBase<T>::isEmpty() const
 {

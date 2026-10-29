@@ -18,6 +18,10 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
+// This unit's Drawable view defines setSecondMaterialPassOpacity inline at another offset than
+// retail's (+0x140) and emits that COMDAT copy; rename it so only retail-equal
+// copies carry the name. Inlined calls are unchanged.
+#define setSecondMaterialPassOpacity setSecondMaterialPassOpacity_LocalView
 class Drawable
 {
 public:

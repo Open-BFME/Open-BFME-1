@@ -42,6 +42,10 @@
 // Direct calls use existing ledger names and the measured ILT routes. The
 // speed route 0x000300BC has a float result, while 0x0000EBAB takes one float.
 
+// This unit's Team view defines setCurrentWaypoint inline at another offset than
+// retail's (+0x30) and emits that COMDAT copy; rename it so only retail-equal
+// copies carry the name. Inlined calls are unchanged.
+#define setCurrentWaypoint setCurrentWaypoint_LocalView
 #include <math.h>
 
 typedef bool Bool;

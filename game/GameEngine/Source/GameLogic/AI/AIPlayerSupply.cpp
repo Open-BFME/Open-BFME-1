@@ -134,6 +134,10 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/SidesList.h
+// This unit's BuildListInfo view defines setDesiredGatherers inline at another offset than
+// retail's (+0x84) and emits that COMDAT copy; rename it so only retail-equal
+// copies carry the name. Inlined calls are unchanged.
+#define setDesiredGatherers setDesiredGatherers_LocalView
 class BuildListInfo
 {
 public:

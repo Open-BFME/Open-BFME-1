@@ -1,6 +1,10 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Oy /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // GPL-3.0-or-later; EA Zero Hour and Open BFME 2 derived source.
+// This unit's PeerThreadClass view defines setSawCompleteGameList inline at another offset than
+// retail's (+0x94) and emits that COMDAT copy; rename it so only retail-equal
+// copies carry the name. Inlined calls are unchanged.
+#define setSawCompleteGameList setSawCompleteGameList_LocalView
 #include <string>
 #include <vector>
 #include <map>

@@ -18,6 +18,10 @@
 // setters independently identify password at+0xAD and observers at+0x13C;
 // the old bank had both semantic labels swapped despite preserving the bytes.
 
+// This unit's PeerThreadClass view defines hasPassword inline at another offset than
+// retail's (+0xB1) and emits that COMDAT copy; rename it so only retail-equal
+// copies carry the name. Inlined calls are unchanged.
+#define hasPassword hasPassword_LocalView
 #include <string>
 #include <string.h>
 typedef bool Bool;

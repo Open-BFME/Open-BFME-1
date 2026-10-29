@@ -6,6 +6,10 @@
 // targets/game/reverse/identity_evidence/00621c40-gameinfo-parser.md.
 #define __PLACEMENT_VEC_NEW_INLINE
 #define _STLP_NO_EXCEPTIONS 1
+// This unit's GameInfo view defines setMapContentsMask inline at another offset than
+// retail's (+0x44) and emits that COMDAT copy; rename it so only retail-equal
+// copies carry the name. Inlined calls are unchanged.
+#define setMapContentsMask setMapContentsMask_LocalView
 #include "ascii_string.h"
 #include "unicode_string.h"
 #include <stdlib.h>

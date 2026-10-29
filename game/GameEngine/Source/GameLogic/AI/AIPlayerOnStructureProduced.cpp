@@ -16,6 +16,10 @@
 // result unused.
 
 #define _STLP_NO_EXCEPTIONS 1
+// This unit's BuildListInfo view defines setUnderConstruction inline at another offset than
+// retail's (+0x54) and emits that COMDAT copy; rename it so only retail-equal
+// copies carry the name. Inlined calls are unchanged.
+#define setUnderConstruction setUnderConstruction_LocalView
 #include <bitset>
 
 #include "ascii_string.h"
