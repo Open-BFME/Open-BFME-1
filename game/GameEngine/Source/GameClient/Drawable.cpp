@@ -865,21 +865,8 @@ void Drawable::setTerrainDecalFadeTarget(Real target, Real rate)
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/DrawableVisualState.cpp
-// ?setShadowsEnabled@Drawable@@QAEX_N@Z present-unmatched
-void Drawable::setShadowsEnabled(Bool enable)
-{
-	// set status bit
-	if( enable )
-		setDrawableStatus( DRAWABLE_STATUS_SHADOWS );
-	else
-		clearDrawableStatus( DRAWABLE_STATUS_SHADOWS );
-
-	for (DrawModule** dm = getDrawModules(); *dm; ++dm)
-	{
-		(*dm)->setShadowsEnabled(enable);
-	}
-}
+// Drawable::setShadowsEnabled(Bool)
+// Body in DrawableVisualState.cpp (exact 69B retail).
 
 //-------------------------------------------------------------------------------------------------
 /**frees all shadow resources used by this module - used by Options screen.*/
