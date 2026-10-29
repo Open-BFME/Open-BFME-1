@@ -2486,23 +2486,8 @@ void Drawable::clearEmoticon()
 }
 
 //------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/DrawableVisualState.cpp
-// ?setEmoticon@Drawable@@QAEXABVAsciiString@@H@Z present-unmatched
-void Drawable::setEmoticon( const AsciiString &name, Int duration )
-{
-	//A duration of -1 means FOREVER
-	clearEmoticon();
-	Anim2DTemplate *animTemplate = TheAnim2DCollection->findTemplate( name );
-	if( animTemplate )
-	{
-		DEBUG_ASSERTCRASH( getIconInfo()->m_icon[ ICON_EMOTICON ] == NULL, ("Drawable::setEmoticon - Emoticon isn't empty, need to refuse to set or destroy the old one in favor of the new one\n") );
-		if( getIconInfo()->m_icon[ ICON_EMOTICON ] == NULL )
-		{
-			getIconInfo()->m_icon[ ICON_EMOTICON ] = newInstance(Anim2D)( animTemplate, TheAnim2DCollection );
-			getIconInfo()->m_keepTillFrame[ ICON_EMOTICON ] = duration >= 0 ? TheGameLogic->getFrame() + duration : FOREVER;
-		}
-	}
-}
+// Drawable::setEmoticon(const AsciiString &, Int)
+// Body in DrawableVisualState.cpp (exact 218B retail).
 
 //------------------------------------------------------------------------------------------------
 // ?drawEmoticon@Drawable@@AAEXPBUIRegion2D@@@Z

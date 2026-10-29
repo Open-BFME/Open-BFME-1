@@ -1,6 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringbaseascii /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?applyTint@Drawable@@QAEXURGBColor@@IIIMM@Z: game/GameEngine/Source/GameClient/Drawable.cpp
-// readable body of ?setEmoticon@Drawable@@QAEXABVAsciiString@@H@Z: game/GameEngine/Source/GameClient/Drawable.cpp
 // readable body of ?replaceModelConditionState@Drawable@@QAEXABVModelConditionFlags@@II@Z: game/GameEngine/Source/GameClient/Drawable.cpp
 
 typedef int Int;
