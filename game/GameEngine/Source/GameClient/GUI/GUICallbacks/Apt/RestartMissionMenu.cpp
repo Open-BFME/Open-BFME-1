@@ -148,11 +148,12 @@ extern GlobalData *TheWritableGlobalData;	// ?TheWritableGlobalData@@3PAVGlobalD
 extern GameState *TheGameState;			// ?TheGameState@@3PAVGameState@@A @ 0x012EF190
 extern RecorderClass *TheRecorder;		// ?TheRecorder@@3PAVRecorderClass@@A @ 0x012ED62C
 extern GameEngine *TheGameEngine;		// ?TheGameEngine@@3PAVGameEngine@@A @ 0x012ED524
-extern Glo012F1028Type *Glo012F1028;	// ?Glo012F1028@@3PAVGlo012F1028Type@@A @ 0x012F1028
+class LivingWorldLogic;	// data_rows.csv owns ?TheLivingWorldLogic@@3PAVLivingWorldLogic@@A @ 0x012F1028
+extern LivingWorldLogic *TheLivingWorldLogic;
 extern MessageStream *TheMessageStream;	// ?TheMessageStream@@3PAVMessageStream@@A @ 0x012ED5EC
 extern InGameUI *TheInGameUI;			// ?TheInGameUI@@3PAVInGameUI@@A @ 0x012F148C
 
-#define TheLivingWorldLogic Glo012F1028
+#define Glo012F1028 ( reinterpret_cast<Glo012F1028Type *>( TheLivingWorldLogic ) )
 
 __declspec(noinline) void restartMissionMenu()
 {
@@ -181,8 +182,8 @@ __declspec(noinline) void restartMissionMenu()
 	((BfmeGameLogicPause *)TheBfmeGameLogic)->clearGameData(false, false);
 	TheGameEngine->setQuitting(false);
 
-	if (TheLivingWorldLogic != 0)
-		TheLivingWorldLogic->rva0003b313();
+	if (Glo012F1028 != 0)
+		Glo012F1028->rva0003b313();
 	if (replayFile.isNotEmpty())
 		TheRecorder->playbackFile(replayFile);
 	else
