@@ -2617,3 +2617,16 @@ following block rotated. `int inner = m_current[m_x604];` before the call
 was exact. A local for the outer index, a pointer to the array, a helper or a
 named result were all inert. Source:
 game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerGetMusicTrackName.cpp.
+
+## Read a position through an inline pointer accessor (2026-10-29)
+
+The 0x00261CC0 distance-record builder (298 B, VC7.1 /O2 STLport) sat at a
+0.930 shape for several sessions: ours kept the output vector in EBX and the
+input in EDI, read X/Y as `[eax+38h]`/`[eax+3Ch]`, and missed retail's
+`fld [eax+3Ch]; add eax,38h; fld [eax]`. Reading the candidate through
+`const Position *p = entry->m_subject->getPosition();` (inline
+`return &m_position;`) and building `Vector3(p->x, p->y, p->z) - position`
+was exact: the pointer temp forms the `add`, and the register roles and loop
+alignment followed. Also needed: a POD record instead of `_STL::pair`
+(pair's copy constructor adds an aligned frame and copy machinery). Source:
+game/GameEngine/Source/GameLogic/Object/SpecialPower/Rva00261CC0BuildPairs.cpp.
