@@ -84,7 +84,12 @@ class Glo012F1028Type;
 class GameClient;
 class BfmeAwakenDebug;
 extern Rva009EB960 *Rva0134FAA0;
-extern Glo012F1028Type *Glo012F1028;
+// Retail 0x012F1028 is EA's TheLivingWorldLogic (data_rows.csv owns
+// ?TheLivingWorldLogic@@3PAVLivingWorldLogic@@A, LivingWorldLogic.cpp); the
+// Glo012F1028 spelling is only a pin nothing defines.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
+#define Glo012F1028 ( reinterpret_cast<Glo012F1028Type *>( TheLivingWorldLogic ) )
 extern ScriptEngine *TheScriptEngine;
 extern GameClient *TheGameClient;
 extern void *g_Rva00F36E5C; // VA 01336E5C debug manager cell (data_rows.csv owner)

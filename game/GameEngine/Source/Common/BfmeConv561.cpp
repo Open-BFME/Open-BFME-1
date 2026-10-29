@@ -80,7 +80,12 @@ public:
 // Retail's loads at 0x00383950 are 0x012F1028: the global BfmeConv2113.cpp
 // defines; this TU keeps its own view type and casts at the use.
 class Glo012F1028Type;
-extern Glo012F1028Type *Glo012F1028;
+// Retail 0x012F1028 is EA's TheLivingWorldLogic (data_rows.csv owns
+// ?TheLivingWorldLogic@@3PAVLivingWorldLogic@@A, LivingWorldLogic.cpp); the
+// Glo012F1028 spelling is only a pin nothing defines.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
+#define Glo012F1028 ( reinterpret_cast<Glo012F1028Type *>( TheLivingWorldLogic ) )
 
 // The matched caller at 0x00383950 reaches this method through ILT 0x0000E458.
 // Retail 0x00366130 walks the sub-object's 0x58-byte Living World player-army

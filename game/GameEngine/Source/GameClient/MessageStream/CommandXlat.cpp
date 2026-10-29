@@ -611,7 +611,12 @@ extern GameWindowTransitionsHandler* TheTransitionHandler;
 // 0x012F1028 is the one Glo012F1028 global.  Rva003968A0 above is this TU's
 // view of that object (its test() is a pinned callee), so the use casts.
 class Glo012F1028Type;
-extern Glo012F1028Type* Glo012F1028;
+// Retail 0x012F1028 is EA's TheLivingWorldLogic (data_rows.csv owns
+// ?TheLivingWorldLogic@@3PAVLivingWorldLogic@@A, LivingWorldLogic.cpp); the
+// Glo012F1028 spelling is only a pin nothing defines.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
+#define Glo012F1028 ( reinterpret_cast<Glo012F1028Type *>( TheLivingWorldLogic ) )
 class GameSpyBuddyMessageQueueInterface;
 extern GameSpyBuddyMessageQueueInterface *TheGameSpyBuddyMessageQueue;
 class Rva005127A0InGameChat;

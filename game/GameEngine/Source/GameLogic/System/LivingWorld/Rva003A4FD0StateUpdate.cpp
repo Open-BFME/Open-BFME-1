@@ -32,7 +32,12 @@ public:
 	char m_unmodelled00[ 0x28 ];
 	LivingWorldRegionManager *m_regionManager;
 };
-extern Glo012F1028Type *Glo012F1028;
+// Retail 0x012F1028 is EA's TheLivingWorldLogic (data_rows.csv owns
+// ?TheLivingWorldLogic@@3PAVLivingWorldLogic@@A, LivingWorldLogic.cpp); the
+// Glo012F1028 spelling is only a pin nothing defines.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
+#define Glo012F1028 ( reinterpret_cast<Glo012F1028Type *>( TheLivingWorldLogic ) )
 
 class BfmeHostCB
 {

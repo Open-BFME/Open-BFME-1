@@ -119,7 +119,12 @@ public:
 // GameLogic class above is its view of that layout and mangles identically.
 extern GameLogic *TheGameLogic;
 extern GameClient *TheGameClient;
-extern void *Glo012F1028;
+// Retail 0x012F1028 is EA's TheLivingWorldLogic (data_rows.csv owns
+// ?TheLivingWorldLogic@@3PAVLivingWorldLogic@@A, LivingWorldLogic.cpp); the
+// Glo012F1028 spelling is only a pin nothing defines.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
+#define Glo012F1028 ( reinterpret_cast<void *>( TheLivingWorldLogic ) )
 
 class AudioEventRTS
 {

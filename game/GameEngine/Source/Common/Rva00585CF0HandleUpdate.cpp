@@ -137,7 +137,12 @@ public:
 	char m_pad00[0x28];
 	Rva003C8340 *m_field28;
 };
-extern Glo012F1028Type *Glo012F1028;
+// Retail 0x012F1028 is EA's TheLivingWorldLogic (data_rows.csv owns
+// ?TheLivingWorldLogic@@3PAVLivingWorldLogic@@A, LivingWorldLogic.cpp); the
+// Glo012F1028 spelling is only a pin nothing defines.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
+#define Glo012F1028 ( reinterpret_cast<Glo012F1028Type *>( TheLivingWorldLogic ) )
 class Rva003BCA20 { public: void go(); };
 class BfmeGameCW { public: void rva0060D4C0(void *what); };
 extern BfmeGameCW *g_bfmeGameCW;
