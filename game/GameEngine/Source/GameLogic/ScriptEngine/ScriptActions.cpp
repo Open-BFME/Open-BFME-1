@@ -32,6 +32,10 @@
 
 // string_base.h first: StringBase<char> befriends AsciiString, whose opt-in member
 // below builds the by-value argument copy through retail's out-of-line 0x00887B60.
+// Zero Hour's Object.h defines getAI inline at its own m_ai offset (0x19C) and this
+// unit emits that COMDAT copy; rename it so only retail's 0x000E59A0 (BFME reads
+// 0x204) is ?getAI@Object@@QAEPAVAIUpdateInterface@@XZ. Inlined calls are unchanged.
+#define getAI getAI_ZHLayout
 #include "string_base.h"
 #define BFME_ASCIISTRING_STRINGBASE_COPY
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine

@@ -32,6 +32,10 @@
 // Desc: The railroad track following railroad carriage/locomotive logic module
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Zero Hour's Object.h defines getAI inline at its own m_ai offset (0x19C) and this
+// unit emits that COMDAT copy; rename it so only retail's 0x000E59A0 (BFME reads
+// 0x204) is ?getAI@Object@@QAEPAVAIUpdateInterface@@XZ. Inlined calls are unchanged.
+#define getAI getAI_ZHLayout
 #include "PreRTS.h"	
 
 #include "Common/Player.h"

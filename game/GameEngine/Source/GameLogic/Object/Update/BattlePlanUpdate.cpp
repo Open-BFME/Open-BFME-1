@@ -30,6 +30,10 @@
 // Desc:   Update module to handle building states and battle plan execution & changes
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Zero Hour's Object.h defines getAI inline at its own m_ai offset (0x19C) and this
+// unit emits that COMDAT copy; rename it so only retail's 0x000E59A0 (BFME reads
+// 0x204) is ?getAI@Object@@QAEPAVAIUpdateInterface@@XZ. Inlined calls are unchanged.
+#define getAI getAI_ZHLayout
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #define DEFINE_MAXHEALTHCHANGETYPE_NAMES						// for TheMaxHealthChangeTypeNames[]

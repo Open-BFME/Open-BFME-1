@@ -31,6 +31,10 @@
 // Author: Graham Smallwood, February 2002
 // Desc:   State machine that controls when and with who a Truck docks
 
+// Zero Hour's Object.h defines getAI inline at its own m_ai offset (0x19C) and this
+// unit emits that COMDAT copy; rename it so only retail's 0x000E59A0 (BFME reads
+// 0x204) is ?getAI@Object@@QAEPAVAIUpdateInterface@@XZ. Inlined calls are unchanged.
+#define getAI getAI_ZHLayout
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 // BFME de-pooled this glue: retail's per-class `operator delete(void*, MagicEnum)`
