@@ -1,12 +1,16 @@
 // cl: /O2 /Ob0 /DNDEBUG /MD
 // Retail 0x005792A0: refresh the Skirmish APT after its state object permits it.
+//
+// Returns the state's verdict: the slot-5 mode dispatch at 0x0057EDB0 tests AL
+// after its call through ILT 0x00040E7B, and both exits leave the callee's AL
+// (the predicate's false, or apply's result) in EAX.
 
 class SkirmishScreenState
 {
+public:
+	bool shouldRefresh( void );
+	bool apply( void *info, int flag );
 };
-
-extern "C" void __cdecl __identifier("?j_0003029c@@YAXXZ")();
-extern "C" void __cdecl __identifier("?j_0003ab48@@YAXXZ")();
 
 class SkirmishScreenAnimation
 {
@@ -20,33 +24,24 @@ public:
 class BfmeAptScreenSkirmish
 {
 public:
-	void _bfme_refresh( void );
+	bool _bfme_refresh( void );
 
 private:
 	char m_pad0[ 0x25C ];
 	SkirmishScreenState m_state;
-	char m_pad260[ 0x14C ];
+	char m_pad25D[ 0x14F ];
 	SkirmishScreenAnimation m_animation;
 };
 
 class SkirmishGameInfo;
 extern SkirmishGameInfo *TheSkirmishGameInfo;
 
-#pragma intrinsic(_ReadWriteBarrier)
-extern "C" void _ReadWriteBarrier(void);
-
-void BfmeAptScreenSkirmish::_bfme_refresh( void )
+// ?_bfme_refresh@BfmeAptScreenSkirmish@@QAE_NXZ
+bool BfmeAptScreenSkirmish::_bfme_refresh( void )
 {
-	union { void (*raw)(); bool (SkirmishScreenState::*member)(); }
-		query = { __identifier("?j_0003029c@@YAXXZ") };
-	union { void (*raw)(); bool (SkirmishScreenState::*member)(void *, int); }
-		apply = { __identifier("?j_0003ab48@@YAXXZ") };
-	if( !(m_state.*query.member)() )
-	{
-		_ReadWriteBarrier();
-		return;
-	}
+	if( !m_state.shouldRefresh() )
+		return false;
 
 	m_animation.reset();
-	(m_state.*apply.member)( TheSkirmishGameInfo, 1 );
+	return m_state.apply( TheSkirmishGameInfo, 1 );
 }
