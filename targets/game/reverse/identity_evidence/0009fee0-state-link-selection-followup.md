@@ -50,7 +50,9 @@ a new match or symbol alias.
 
 Verification: 60/60 matched rows across TurretAI, AITNGuard and the two
 retail provider TUs; 11 strings, two constants, 29 DIR32 references and body
-guard pass. Follow-up census validation remains required.
+guard pass. The final e730466093 census recovers all 474 bytes across these
+13 sources with no newly unlinked source. Combined baseline-to-final gain:
+1,038 authored linked bytes; see [final results](0009fee0-state-comdat-results.md).
 
 ## Remaining vtable evidence
 

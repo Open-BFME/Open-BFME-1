@@ -46,7 +46,9 @@ emit `8b411c85c074048b4004c3b83f420f00c3`, no relocations, COMDAT ANY(2).
 
 The earlier census reports 19084 affected authored bytes for StateMachine's
 getter, with zero sole-blocker bytes. This is diagnostic scope, not a linked
-gain. Fresh before/after link validation remains required.
+gain. Accepted fresh before/after validation is recorded in
+[final results](0009fee0-state-comdat-results.md): the combined repairs gain
+1,038 authored linked bytes with no newly unlinked source.
 
 The normal full commit gate passed all 3,403 matched rows across 109 TUs,
 including relocation, string/constant/data-reference and body checks.
@@ -54,4 +56,4 @@ Supplemental checks cover the identity-dependent sources; AITNGuard passed
 13/13 rows, TurretAI 43/43, and the separate opaque getter 1/1. Full COFF
 inspection found all 37 State-family definitions byte-exact, with no
 relocations and selection ANY(2). This is object-level evidence; measured
-linked coverage is reported separately after the census.
+linked coverage is reported separately in the final results.

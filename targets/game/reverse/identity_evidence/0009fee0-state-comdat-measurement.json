@@ -1,0 +1,2140 @@
+{
+  "baseline_to_final": {
+    "before": {
+      "head": "4e2915d862",
+      "history": {
+        "date": "2026-10-28 16:21",
+        "commit": "4e2915d862",
+        "objects": "22894",
+        "unresolved": "89469",
+        "alias": "60471",
+        "pinned_elsewhere": "8172",
+        "dump": "944",
+        "data": "3221",
+        "import": "924",
+        "unpinned": "15729",
+        "duplicates": "2251",
+        "comdat_conflicts": "7658",
+        "comdat_vtables": "858",
+        "scaffold_aliases": "",
+        "scaffold_unresolved": "",
+        "scaffold_crashed": "",
+        "files": "22439",
+        "files_linked": "14768",
+        "blocking_names": "88712",
+        "addresses": "76",
+        "linked_bytes": "2824342",
+        "linked_authored": "2567897",
+        "game_code": "8333045",
+        "files_linked_prev_rule": "15166",
+        "linked_bytes_prev_rule": "2909280",
+        "linked_authored_prev_rule": "2652835"
+      },
+      "figures": {
+        "linked_bytes": 2824342,
+        "linked_authored": 2567897,
+        "game_code": 8333045
+      }
+    },
+    "after": {
+      "head": "e730466093",
+      "history": {
+        "date": "2026-10-28 21:56",
+        "commit": "e730466093",
+        "objects": "22895",
+        "unresolved": "89469",
+        "alias": "60471",
+        "pinned_elsewhere": "8172",
+        "dump": "944",
+        "data": "3221",
+        "import": "924",
+        "unpinned": "15729",
+        "duplicates": "2248",
+        "comdat_conflicts": "7651",
+        "comdat_vtables": "857",
+        "scaffold_aliases": "",
+        "scaffold_unresolved": "",
+        "scaffold_crashed": "",
+        "files": "22440",
+        "files_linked": "14772",
+        "blocking_names": "88712",
+        "addresses": "76",
+        "linked_bytes": "2825380",
+        "linked_authored": "2568935",
+        "game_code": "8333045",
+        "files_linked_prev_rule": "15172",
+        "linked_bytes_prev_rule": "2909990",
+        "linked_authored_prev_rule": "2653545"
+      },
+      "figures": {
+        "linked_bytes": 2825380,
+        "linked_authored": 2568935,
+        "game_code": 8333045
+      }
+    },
+    "delta": {
+      "linked_bytes": 1038,
+      "linked_authored": 1038,
+      "game_code": 0
+    },
+    "source_changes": [
+      {
+        "source": "game/GameEngine/Source/Common/RTS/ActionManagerCanEnterObject.cpp",
+        "before": "no",
+        "after": "yes",
+        "before_linked_authored_bytes": 0,
+        "after_linked_authored_bytes": 847
+      },
+      {
+        "source": "game/GameEngine/Source/Common/Rva00097E50To000A30B0TinyBodies.cpp",
+        "before": "yes",
+        "after": "yes",
+        "before_linked_authored_bytes": 89,
+        "after_linked_authored_bytes": 81
+      },
+      {
+        "source": "game/GameEngine/Source/Common/Rva00232180Dword.cpp",
+        "before": null,
+        "after": "yes",
+        "before_linked_authored_bytes": 0,
+        "after_linked_authored_bytes": 4
+      },
+      {
+        "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIUpdateInterfaceGetCurrentStateID.cpp",
+        "before": "no",
+        "after": "yes",
+        "before_linked_authored_bytes": 0,
+        "after_linked_authored_bytes": 20
+      },
+      {
+        "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdGuardInnerState_update.cpp",
+        "before": "no",
+        "after": "yes",
+        "before_linked_authored_bytes": 0,
+        "after_linked_authored_bytes": 175
+      }
+    ],
+    "note": "Source bytes are diagnostic and may overlap; the global delta uses the repository coverage accounting."
+  },
+  "intermediate_to_final": {
+    "before": {
+      "head": "4094737c79",
+      "history": {
+        "date": "2026-10-28 19:12",
+        "commit": "4094737c79",
+        "objects": "22895",
+        "unresolved": "89469",
+        "alias": "60471",
+        "pinned_elsewhere": "8172",
+        "dump": "944",
+        "data": "3221",
+        "import": "924",
+        "unpinned": "15729",
+        "duplicates": "2250",
+        "comdat_conflicts": "7654",
+        "comdat_vtables": "858",
+        "scaffold_aliases": "",
+        "scaffold_unresolved": "",
+        "scaffold_crashed": "",
+        "files": "22440",
+        "files_linked": "14759",
+        "blocking_names": "88712",
+        "addresses": "76",
+        "linked_bytes": "2824906",
+        "linked_authored": "2568461",
+        "game_code": "8333045",
+        "files_linked_prev_rule": "15171",
+        "linked_bytes_prev_rule": "2909909",
+        "linked_authored_prev_rule": "2653464"
+      },
+      "figures": {
+        "linked_bytes": 2824906,
+        "linked_authored": 2568461,
+        "game_code": 8333045
+      }
+    },
+    "after": {
+      "head": "e730466093",
+      "history": {
+        "date": "2026-10-28 21:56",
+        "commit": "e730466093",
+        "objects": "22895",
+        "unresolved": "89469",
+        "alias": "60471",
+        "pinned_elsewhere": "8172",
+        "dump": "944",
+        "data": "3221",
+        "import": "924",
+        "unpinned": "15729",
+        "duplicates": "2248",
+        "comdat_conflicts": "7651",
+        "comdat_vtables": "857",
+        "scaffold_aliases": "",
+        "scaffold_unresolved": "",
+        "scaffold_crashed": "",
+        "files": "22440",
+        "files_linked": "14772",
+        "blocking_names": "88712",
+        "addresses": "76",
+        "linked_bytes": "2825380",
+        "linked_authored": "2568935",
+        "game_code": "8333045",
+        "files_linked_prev_rule": "15172",
+        "linked_bytes_prev_rule": "2909990",
+        "linked_authored_prev_rule": "2653545"
+      },
+      "figures": {
+        "linked_bytes": 2825380,
+        "linked_authored": 2568935,
+        "game_code": 8333045
+      }
+    },
+    "delta": {
+      "linked_bytes": 474,
+      "linked_authored": 474,
+      "game_code": 0
+    },
+    "source_changes": [
+      {
+        "source": "game/GameEngine/Source/Common/StateConstructor.cpp",
+        "before": "no",
+        "after": "yes",
+        "before_linked_authored_bytes": 0,
+        "after_linked_authored_bytes": 59
+      },
+      {
+        "source": "game/GameEngine/Source/GameLogic/AI/AIAttackMeleeHordeWaitStateDeletingDestructor.cpp",
+        "before": "no",
+        "after": "yes",
+        "before_linked_authored_bytes": 0,
+        "after_linked_authored_bytes": 35
+      },
+      {
+        "source": "game/GameEngine/Source/GameLogic/AI/AIHarvestPrepareSiteStateDeletingDestructor.cpp",
+        "before": "no",
+        "after": "yes",
+        "before_linked_authored_bytes": 0,
+        "after_linked_authored_bytes": 35
+      },
+      {
+        "source": "game/GameEngine/Source/GameLogic/AI/AITNGuardOuterStateDeletingDestructor.cpp",
+        "before": "no",
+        "after": "yes",
+        "before_linked_authored_bytes": 0,
+        "after_linked_authored_bytes": 35
+      },
+      {
+        "source": "game/GameEngine/Source/GameLogic/AI/DozerPrimaryIdleStateDeletingDestructor.cpp",
+        "before": "no",
+        "after": "yes",
+        "before_linked_authored_bytes": 0,
+        "after_linked_authored_bytes": 35
+      },
+      {
+        "source": "game/GameEngine/Source/GameLogic/AI/StateDeletingDestructor.cpp",
+        "before": "no",
+        "after": "yes",
+        "before_linked_authored_bytes": 0,
+        "after_linked_authored_bytes": 30
+      },
+      {
+        "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdFollowWaypointPathStateDeletingDestructor.cpp",
+        "before": "no",
+        "after": "yes",
+        "before_linked_authored_bytes": 0,
+        "after_linked_authored_bytes": 35
+      },
+      {
+        "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdGuardAttackAggressorStateDeletingDestructor.cpp",
+        "before": "no",
+        "after": "yes",
+        "before_linked_authored_bytes": 0,
+        "after_linked_authored_bytes": 35
+      },
+      {
+        "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdGuardInnerStateDeletingDestructor.cpp",
+        "before": "no",
+        "after": "yes",
+        "before_linked_authored_bytes": 0,
+        "after_linked_authored_bytes": 35
+      },
+      {
+        "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdGuardOuterStateDeletingDestructor.cpp",
+        "before": "no",
+        "after": "yes",
+        "before_linked_authored_bytes": 0,
+        "after_linked_authored_bytes": 35
+      },
+      {
+        "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdNormalFlightStateDeletingDestructor.cpp",
+        "before": "no",
+        "after": "yes",
+        "before_linked_authored_bytes": 0,
+        "after_linked_authored_bytes": 35
+      },
+      {
+        "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdateDozerDeletingDestructor.cpp",
+        "before": "no",
+        "after": "yes",
+        "before_linked_authored_bytes": 0,
+        "after_linked_authored_bytes": 35
+      },
+      {
+        "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdateSupplyTruckDeletingDestructor.cpp",
+        "before": "no",
+        "after": "yes",
+        "before_linked_authored_bytes": 0,
+        "after_linked_authored_bytes": 35
+      }
+    ],
+    "note": "Source bytes are diagnostic and may overlap; the global delta uses the repository coverage accounting."
+  },
+  "before_inventory": {
+    "head": "4e2915d8626f12f7aae03803686734fcad534b7c",
+    "objects": 22894,
+    "errors": [],
+    "reference_scan": {
+      "complete": true,
+      "verified_objects": 22894
+    },
+    "families": {
+      "??0TurretAI@@QAE@PAVObject@@PBVTurretAIData@@W4WhichTurretType@@@Z": {
+        "definitions": [
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^turret^a^i_ctor_^thunk.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/TurretAI_ctor_Thunk.cpp",
+            "sha256": "82756dbc131a39b210ab4991b45ed91b1cde121c602551b2b1e6f287feebd024",
+            "selection": 1,
+            "section": 39
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^turret^a^i.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp",
+            "sha256": "8c5c6f065f6687faf2517a65e286f124f8e8afe625b346b2ea77d9fe3592ebda",
+            "selection": 1,
+            "section": 523
+          }
+        ],
+        "undefined_references": [
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
+            "sha256": "3a505db50b866d3207639d9b9cd39d21620debd58044c00538a1be846fe4e5f1"
+          }
+        ]
+      },
+      "??_7AIAttackFireWeaponState@@6B@": {
+        "definitions": [
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^attack^action^states.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIAttackActionStates.cpp",
+            "sha256": "e7a6947a235af3d0d42d3b9d880096327bbdbc6678e8eed7b8b0c500c60418cf",
+            "selection": 2,
+            "section": 20
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^attack^melee^state^machine^ctor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AttackMeleeStateMachineCtor.cpp",
+            "sha256": "436d8f458682c43a1f27c24106116249dca0a6d2ace4a13657c2bc8f44fe30ca",
+            "selection": 2,
+            "section": 25
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^rva001812^b0^a^i^horde^machine^ctor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/Rva001812B0AIHordeMachineCtor.cpp",
+            "sha256": "cc5bb0b8df4a8616898d2ed500ca196a0b9e91280279360d9b916101f870f100",
+            "selection": 2,
+            "section": 12
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^attack^fire^while^moving^machine^ctor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AttackFireWhileMovingMachineCtor.cpp",
+            "sha256": "1f63f2e69d82dead036640baa5652af242b49f14befffa844556f325c9a1b348",
+            "selection": 2,
+            "section": 16
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^turret^a^i.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp",
+            "sha256": "8c5c6f065f6687faf2517a65e286f124f8e8afe625b346b2ea77d9fe3592ebda",
+            "selection": 2,
+            "section": 416
+          }
+        ],
+        "undefined_references": [
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^attack^state^machine^ctor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AttackStateMachineCtor.cpp",
+            "sha256": "6efee86c0a00d114e8f8b62b8a9e30f0570eaab924b4d7c41c3e7f29b892a9ec"
+          }
+        ]
+      },
+      "??_7State@@6B@": {
+        "definitions": [
+          {
+            "object": "game_^game^engine_^source_^common_^state^constructor.obj",
+            "source": "game/GameEngine/Source/Common/StateConstructor.cpp",
+            "sha256": "f7aa22b95ea36adaa98eada5cb2f0c895f8ce88b180a497b69226bfd3c184863",
+            "selection": 2,
+            "section": 12
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/StateDeletingDestructor.cpp",
+            "sha256": "cdcb2a699630048aefce0f7291851b8b3c16ec7f30c78c8d37a36ec386b1268e",
+            "selection": 2,
+            "section": 4
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^dock^wait^for^clearance^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIDockWaitForClearanceStateDeletingDestructor.cpp",
+            "sha256": "1a8b8951edf991b284b65cd514acec6f9f013895a24d7a1ff906ea482476e1f0",
+            "selection": 2,
+            "section": 6
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^dock^process^dock^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIDockProcessDockStateDeletingDestructor.cpp",
+            "sha256": "19ba2e325d7306bfcea37020f09d8829565db22de300a1e0eff564587c6ad07a",
+            "selection": 2,
+            "section": 6
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^guard^state^deleting^destructors.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIGuardStateDeletingDestructors.cpp",
+            "sha256": "4fb716a2c7b83f063875f2390bd0ffc0464b779d1d975beececea601162e146e",
+            "selection": 2,
+            "section": 11
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^harvest^prepare^site^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIHarvestPrepareSiteStateDeletingDestructor.cpp",
+            "sha256": "9e8a57d7187d6d1bc5ce45d117255963c84bd904612f560d2f486697e9f5f48b",
+            "selection": 2,
+            "section": 6
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^failure^continue^state^deleting^destructors.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/FailureContinueStateDeletingDestructors.cpp",
+            "sha256": "be3746246849f10c3539fb167db9aab29ab7f2041594af3f5aab0e3ab9efe265",
+            "selection": 2,
+            "section": 11
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^attack^melee^horde^wait^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIAttackMeleeHordeWaitStateDeletingDestructor.cpp",
+            "sha256": "1cd5eb7be04d801b8ce136044aadfd7e6bdfd91a33f30bd7d19f3e8fa558788e",
+            "selection": 2,
+            "section": 6
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^move^and^tighten^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIMoveAndTightenStateDeletingDestructor.cpp",
+            "sha256": "b0adf3a5ae0a9c134cb12071f4b612a99a04da352d02178f05e89a85d6b23b0f",
+            "selection": 2,
+            "section": 4
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^t^n^guard^outer^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AITNGuardOuterStateDeletingDestructor.cpp",
+            "sha256": "9b7b6d369591ff5106b8bd0c1c76cebf40714a66fa5ccfc60f5fb236eeef997b",
+            "selection": 2,
+            "section": 6
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^turret^a^i.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp",
+            "sha256": "8c5c6f065f6687faf2517a65e286f124f8e8afe625b346b2ea77d9fe3592ebda",
+            "selection": 2,
+            "section": 392
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^turret^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/TurretStateDeletingDestructor.cpp",
+            "sha256": "48d9bec7d8e9148cdd18db227789d14205322396a942f3251d934414b3a9d152",
+            "selection": 2,
+            "section": 6
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^turret^idle^state^deleting^destructors.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/TurretIdleStateDeletingDestructors.cpp",
+            "sha256": "3a3d0ea21678048bcc69b9e1a3f2bc1bf105f6e347020fab7b134da59bfe787b",
+            "selection": 2,
+            "section": 6
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^turret^a^i^recenter^turret^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/TurretAIRecenterTurretStateDeletingDestructor.cpp",
+            "sha256": "01c617fb51c75af3714d72a3573fd4759f4b7e33afa76d47f3329aab8a3150fb",
+            "selection": 2,
+            "section": 6
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^dozer^primary^idle^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/DozerPrimaryIdleStateDeletingDestructor.cpp",
+            "sha256": "1e1cf0f8385cb8fe899d5ebe0cbb95bf705c106d51531b31938c2a62af5b2521",
+            "selection": 2,
+            "section": 6
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^giant^bird^normal^flight^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdNormalFlightStateDeletingDestructor.cpp",
+            "sha256": "3fd4e935dc634afcb6220166f9ba2c598d764ae9ef38725ee87089d9130d0487",
+            "selection": 2,
+            "section": 8
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^giant^bird^follow^waypoint^path^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdFollowWaypointPathStateDeletingDestructor.cpp",
+            "sha256": "fe055ab7f955b1c822e0dc6de4f3cee43952a9bf9f8aecc5660191ccf5ef39ae",
+            "selection": 2,
+            "section": 8
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^giant^bird^guard^inner^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdGuardInnerStateDeletingDestructor.cpp",
+            "sha256": "acc55f147fe7666b1d9eee20fe0028e077d89ae2520d1c66deec7a37928449eb",
+            "selection": 2,
+            "section": 8
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^giant^bird^guard^outer^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdGuardOuterStateDeletingDestructor.cpp",
+            "sha256": "f6600e2d70d75937fa0d0e387ab0f030c62de75d8e7514dee1054f2ac3c61407",
+            "selection": 2,
+            "section": 8
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^giant^bird^guard^attack^aggressor^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdGuardAttackAggressorStateDeletingDestructor.cpp",
+            "sha256": "fb5262789b890ccd790e743c99b7b242266d2e129478c5f1b5ee1c8a1733a731",
+            "selection": 2,
+            "section": 8
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^supply^truck^wants^to^pick^up^or^deliver^boxes^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckWantsToPickUpOrDeliverBoxesStateDeletingDestructor.cpp",
+            "sha256": "dfee8a5d7dcba5356ade9f534fbd790cd950c6bb3dbce66cecfb62da128b661c",
+            "selection": 2,
+            "section": 8
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^worker^a^i^update^dozer^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdateDozerDeletingDestructor.cpp",
+            "sha256": "4f2c4490fd64c48f5e75c3e7d5f7a63336448d6b9798bb27cb6d5cb6da5e584f",
+            "selection": 2,
+            "section": 8
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^worker^a^i^update^supply^truck^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdateSupplyTruckDeletingDestructor.cpp",
+            "sha256": "c8a7cdfbde0effca93fd34e89cfeaf411a243ff2a6db27c7e9f5947489d115f9",
+            "selection": 2,
+            "section": 8
+          }
+        ],
+        "undefined_references": []
+      },
+      "?getCurrentStateID@AIUpdateInterface@@QBEIXZ": {
+        "definitions": [
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^states.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIStates.cpp",
+            "sha256": "3d3a632bd5f17b4a96183a123b2a0527e58679b62f835bba0fb66a0be16fda38",
+            "selection": 2,
+            "section": 472
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
+            "sha256": "3a505db50b866d3207639d9b9cd39d21620debd58044c00538a1be846fe4e5f1",
+            "selection": 2,
+            "section": 392
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^a^i^update^interface^get^current^state^i^d.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIUpdateInterfaceGetCurrentStateID.cpp",
+            "sha256": "88c99d93099562257b0bc93e3e1ff108d82daae6f2f2e3b446cd16ae309df964",
+            "selection": 1,
+            "section": 9
+          }
+        ],
+        "undefined_references": [
+          {
+            "object": "game_^game^engine_^source_^common_^r^t^s_^action^manager^can^enter^object.obj",
+            "source": "game/GameEngine/Source/Common/RTS/ActionManagerCanEnterObject.cpp",
+            "sha256": "24c13c1df66e5c93d1e3675ed8c8fe32e835d311d53a8cd9d4d1c1b0d68860f8"
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^state^target^dispatch_attack^ordinary^target.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIStateTargetDispatch_attackOrdinaryTarget.cpp",
+            "sha256": "0af6d8053d4758b678519ae6233a5abfeb0f75764ff4aeb8f6b5da9ef30da373"
+          }
+        ]
+      },
+      "?getCurrentStateID@StateMachine@@QBEIXZ": {
+        "definitions": [
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^states.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIStates.cpp",
+            "sha256": "3d3a632bd5f17b4a96183a123b2a0527e58679b62f835bba0fb66a0be16fda38",
+            "selection": 2,
+            "section": 165
+          },
+          {
+            "object": "game_^game^engine_^source_^common_^state^machine.obj",
+            "source": "game/GameEngine/Source/Common/StateMachine.cpp",
+            "sha256": "ef6034c651fe076417f3470b3694cb20048b4bdadec2d9602c9cdcd9895f6327",
+            "selection": 2,
+            "section": 580
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
+            "sha256": "3a505db50b866d3207639d9b9cd39d21620debd58044c00538a1be846fe4e5f1",
+            "selection": 2,
+            "section": 336
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^supply^truck^a^i^update_update^and^private^dock_^thunk.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate_updateAndPrivateDock_Thunk.cpp",
+            "sha256": "635f40a7c7fe77a648dd1b5a39a125c5650dabb40588fadcea8b5775a0f2766c",
+            "selection": 2,
+            "section": 7
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^a^i^update^interface^get^current^state^i^d.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIUpdateInterfaceGetCurrentStateID.cpp",
+            "sha256": "88c99d93099562257b0bc93e3e1ff108d82daae6f2f2e3b446cd16ae309df964",
+            "selection": 2,
+            "section": 5
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^t^n^guard.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp",
+            "sha256": "b13f3e87c4ca8299a5f153690fd26058d8a1603cd07436510a954b62ffad69c0",
+            "selection": 2,
+            "section": 38
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^jet^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/JetAIUpdate.cpp",
+            "sha256": "7ec5533ddf937fd2b46e6cc8ef4a957e434db7afc3eb1735e7a6f7f87a078c2c",
+            "selection": 2,
+            "section": 100
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^guard^retaliate.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIGuardRetaliate.cpp",
+            "sha256": "9a8d845766e564db8a66158eda6261a2b82dc2bef4cbccd5c299f6a4bf9d904d",
+            "selection": 2,
+            "section": 47
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^turret^a^i.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp",
+            "sha256": "8c5c6f065f6687faf2517a65e286f124f8e8afe625b346b2ea77d9fe3592ebda",
+            "selection": 2,
+            "section": 50
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^rva0024^f280^state^gated^move^callback.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/Rva0024F280StateGatedMoveCallback.cpp",
+            "sha256": "2b56b9ca951702bc667383d65882451c22daa34764fc43aa2b09a9ce5bda7cf2",
+            "selection": 2,
+            "section": 5
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^worker^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate.cpp",
+            "sha256": "109052d1e8c90489aec1c20d2986eac696f759ac4687c7ab63fca24324f82f91",
+            "selection": 2,
+            "section": 32
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^hack^internet^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/HackInternetAIUpdate.cpp",
+            "sha256": "823b3c2a239d44fdb65784be8a3d3d545490b5cbbb95f80f469eddc53700aedf",
+            "selection": 2,
+            "section": 67
+          }
+        ],
+        "undefined_references": [
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^attack^state_on^enter.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIAttackState_onEnter.cpp",
+            "sha256": "7a9d7ec5e06c5c23ca41a10b73f8468c5152554c7e9894a6ab877d5ba28f9073"
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^state^target^dispatch_attack^ordinary^target.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIStateTargetDispatch_attackOrdinaryTarget.cpp",
+            "sha256": "0af6d8053d4758b678519ae6233a5abfeb0f75764ff4aeb8f6b5da9ef30da373"
+          }
+        ]
+      },
+      "?getID@State@@QBEIXZ": {
+        "definitions": [
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^states.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIStates.cpp",
+            "sha256": "3d3a632bd5f17b4a96183a123b2a0527e58679b62f835bba0fb66a0be16fda38",
+            "selection": 2,
+            "section": 163
+          },
+          {
+            "object": "game_^game^engine_^source_^common_^state^machine.obj",
+            "source": "game/GameEngine/Source/Common/StateMachine.cpp",
+            "sha256": "ef6034c651fe076417f3470b3694cb20048b4bdadec2d9602c9cdcd9895f6327",
+            "selection": 2,
+            "section": 570
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
+            "sha256": "3a505db50b866d3207639d9b9cd39d21620debd58044c00538a1be846fe4e5f1",
+            "selection": 2,
+            "section": 334
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^supply^truck^a^i^update_update^and^private^dock_^thunk.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate_updateAndPrivateDock_Thunk.cpp",
+            "sha256": "635f40a7c7fe77a648dd1b5a39a125c5650dabb40588fadcea8b5775a0f2766c",
+            "selection": 2,
+            "section": 5
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^a^i^update^interface^get^current^state^i^d.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIUpdateInterfaceGetCurrentStateID.cpp",
+            "sha256": "88c99d93099562257b0bc93e3e1ff108d82daae6f2f2e3b446cd16ae309df964",
+            "selection": 2,
+            "section": 3
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^t^n^guard.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp",
+            "sha256": "b13f3e87c4ca8299a5f153690fd26058d8a1603cd07436510a954b62ffad69c0",
+            "selection": 2,
+            "section": 36
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^jet^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/JetAIUpdate.cpp",
+            "sha256": "7ec5533ddf937fd2b46e6cc8ef4a957e434db7afc3eb1735e7a6f7f87a078c2c",
+            "selection": 2,
+            "section": 98
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^guard^retaliate.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIGuardRetaliate.cpp",
+            "sha256": "9a8d845766e564db8a66158eda6261a2b82dc2bef4cbccd5c299f6a4bf9d904d",
+            "selection": 2,
+            "section": 45
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^state^machine_xfer.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIStateMachine_xfer.cpp",
+            "sha256": "80844a6909fd93ec9031b5c2fb0e2c076cb6ab4bab9a4be11becae1a0d33b96a",
+            "selection": 2,
+            "section": 13
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^t^n^guard^attack^aggressor^state_update_^bfme.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AITNGuardAttackAggressorState_update_Bfme.cpp",
+            "sha256": "40002059049c296534787e2bd2521050ce5737c8fec52fe2f6e3dbb429df98e2",
+            "selection": 2,
+            "section": 5
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^turret^a^i.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp",
+            "sha256": "8c5c6f065f6687faf2517a65e286f124f8e8afe625b346b2ea77d9fe3592ebda",
+            "selection": 2,
+            "section": 48
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^rva0024^f280^state^gated^move^callback.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/Rva0024F280StateGatedMoveCallback.cpp",
+            "sha256": "2b56b9ca951702bc667383d65882451c22daa34764fc43aa2b09a9ce5bda7cf2",
+            "selection": 2,
+            "section": 3
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^worker^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate.cpp",
+            "sha256": "109052d1e8c90489aec1c20d2986eac696f759ac4687c7ab63fca24324f82f91",
+            "selection": 2,
+            "section": 30
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^hack^internet^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/HackInternetAIUpdate.cpp",
+            "sha256": "823b3c2a239d44fdb65784be8a3d3d545490b5cbbb95f80f469eddc53700aedf",
+            "selection": 2,
+            "section": 65
+          }
+        ],
+        "undefined_references": []
+      },
+      "?getMachine@State@@QAEPAVStateMachine@@XZ": {
+        "definitions": [
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^states.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIStates.cpp",
+            "sha256": "3d3a632bd5f17b4a96183a123b2a0527e58679b62f835bba0fb66a0be16fda38",
+            "selection": 2,
+            "section": 161
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^t^n^guard.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp",
+            "sha256": "b13f3e87c4ca8299a5f153690fd26058d8a1603cd07436510a954b62ffad69c0",
+            "selection": 2,
+            "section": 34
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^dock.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIDock.cpp",
+            "sha256": "28f3127becaa158199aac450546513f65ccbc1239c42199b47e7a8ffc5f98c55",
+            "selection": 2,
+            "section": 17
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^guard.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIGuard.cpp",
+            "sha256": "9b4f00fbbea40d7b191214a6b7c9ac9e38d87b30f7e345f26d25ac98c2a3323e",
+            "selection": 2,
+            "section": 41
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^guard^inner^state^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIGuardInnerStateUpdate.cpp",
+            "sha256": "898511493a1dcfd0aae8175826e53f980ff6b00a1e13e50681d06b35ed42dfcb",
+            "selection": 2,
+            "section": 15
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^guard^retaliate.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIGuardRetaliate.cpp",
+            "sha256": "9a8d845766e564db8a66158eda6261a2b82dc2bef4cbccd5c299f6a4bf9d904d",
+            "selection": 2,
+            "section": 43
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^attack^melee^engage^state_on^enter.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_onEnter.cpp",
+            "sha256": "824330821ec704f9a7d582afbc26fbf81ef753f13edffe590935d646dbfd79a0",
+            "selection": 2,
+            "section": 9
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^attack^melee^engage^state_update^internal.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_updateInternal.cpp",
+            "sha256": "4084f72613396256a492d477e297e1f1806f6013d35a6d5bd8133782b8072473",
+            "selection": 2,
+            "section": 21
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^turret^a^i.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp",
+            "sha256": "8c5c6f065f6687faf2517a65e286f124f8e8afe625b346b2ea77d9fe3592ebda",
+            "selection": 2,
+            "section": 46
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^dozer^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerAIUpdate.cpp",
+            "sha256": "21eae896c33ec067f8128f70079ec419f2e2730ff59d315b25fc1d1aa2b92480",
+            "selection": 2,
+            "section": 69
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^giant^bird^guard^inner^state_update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdGuardInnerState_update.cpp",
+            "sha256": "c5440b13cbd832a0c6589952182e84c8d5e12c1e3ac70a0ed06e357d088d45ad",
+            "selection": 2,
+            "section": 11
+          }
+        ],
+        "undefined_references": []
+      },
+      "?onEnter@AITNGuardIdleState@@UAE?AW4StateReturnType@@XZ": {
+        "definitions": [
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^t^n^guard^idle^state^on^enter.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AITNGuardIdleStateOnEnter.cpp",
+            "sha256": "7e299ce1763f8ed2ef06700c01c1dfd56c4799bbc21ece878995ef15758e216b",
+            "selection": 1,
+            "section": 13
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^t^n^guard.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp",
+            "sha256": "b13f3e87c4ca8299a5f153690fd26058d8a1603cd07436510a954b62ffad69c0",
+            "selection": 1,
+            "section": 117
+          }
+        ],
+        "undefined_references": []
+      }
+    }
+  },
+  "after_inventory": {
+    "head": "e730466093c5a7ead6d08411316355bcc3780a0e",
+    "objects": 22895,
+    "errors": [],
+    "reference_scan": {
+      "complete": true,
+      "verified_objects": 22895
+    },
+    "families": {
+      "??0TurretAI@@QAE@PAVObject@@PBVTurretAIData@@W4WhichTurretType@@@Z": {
+        "definitions": [
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^turret^a^i_ctor_^thunk.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/TurretAI_ctor_Thunk.cpp",
+            "sha256": "846b49709984de5e7aaf8dc92ed2571255cf97c2fdf6012dbeac6eeaf49d0ee0",
+            "selection": 1,
+            "section": 39
+          }
+        ],
+        "undefined_references": [
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
+            "sha256": "bbddc592df7451423a1aab3193575ce4ad3a376fd6943f6709ea117d68cbb14e"
+          }
+        ]
+      },
+      "??_7AIAttackFireWeaponState@@6B@": {
+        "definitions": [
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^turret^a^i.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp",
+            "sha256": "2c8595a2cdd29cc4655d6915933fc03c3f15da635e8c7d4f641dca4c7711fac0",
+            "selection": 2,
+            "section": 390
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^attack^action^states.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIAttackActionStates.cpp",
+            "sha256": "e7a6947a235af3d0d42d3b9d880096327bbdbc6678e8eed7b8b0c500c60418cf",
+            "selection": 2,
+            "section": 20
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^attack^melee^state^machine^ctor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AttackMeleeStateMachineCtor.cpp",
+            "sha256": "436d8f458682c43a1f27c24106116249dca0a6d2ace4a13657c2bc8f44fe30ca",
+            "selection": 2,
+            "section": 25
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^rva001812^b0^a^i^horde^machine^ctor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/Rva001812B0AIHordeMachineCtor.cpp",
+            "sha256": "cc5bb0b8df4a8616898d2ed500ca196a0b9e91280279360d9b916101f870f100",
+            "selection": 2,
+            "section": 12
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^attack^fire^while^moving^machine^ctor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AttackFireWhileMovingMachineCtor.cpp",
+            "sha256": "1f63f2e69d82dead036640baa5652af242b49f14befffa844556f325c9a1b348",
+            "selection": 2,
+            "section": 16
+          }
+        ],
+        "undefined_references": [
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^attack^state^machine^ctor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AttackStateMachineCtor.cpp",
+            "sha256": "6efee86c0a00d114e8f8b62b8a9e30f0570eaab924b4d7c41c3e7f29b892a9ec"
+          }
+        ]
+      },
+      "??_7State@@6B@": {
+        "definitions": [
+          {
+            "object": "game_^game^engine_^source_^common_^state^constructor.obj",
+            "source": "game/GameEngine/Source/Common/StateConstructor.cpp",
+            "sha256": "f7aa22b95ea36adaa98eada5cb2f0c895f8ce88b180a497b69226bfd3c184863",
+            "selection": 2,
+            "section": 12
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/StateDeletingDestructor.cpp",
+            "sha256": "cdcb2a699630048aefce0f7291851b8b3c16ec7f30c78c8d37a36ec386b1268e",
+            "selection": 2,
+            "section": 4
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^dock^wait^for^clearance^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIDockWaitForClearanceStateDeletingDestructor.cpp",
+            "sha256": "1a8b8951edf991b284b65cd514acec6f9f013895a24d7a1ff906ea482476e1f0",
+            "selection": 2,
+            "section": 6
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^dock^process^dock^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIDockProcessDockStateDeletingDestructor.cpp",
+            "sha256": "19ba2e325d7306bfcea37020f09d8829565db22de300a1e0eff564587c6ad07a",
+            "selection": 2,
+            "section": 6
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^guard^state^deleting^destructors.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIGuardStateDeletingDestructors.cpp",
+            "sha256": "4fb716a2c7b83f063875f2390bd0ffc0464b779d1d975beececea601162e146e",
+            "selection": 2,
+            "section": 11
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^harvest^prepare^site^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIHarvestPrepareSiteStateDeletingDestructor.cpp",
+            "sha256": "9e8a57d7187d6d1bc5ce45d117255963c84bd904612f560d2f486697e9f5f48b",
+            "selection": 2,
+            "section": 6
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^failure^continue^state^deleting^destructors.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/FailureContinueStateDeletingDestructors.cpp",
+            "sha256": "be3746246849f10c3539fb167db9aab29ab7f2041594af3f5aab0e3ab9efe265",
+            "selection": 2,
+            "section": 11
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^attack^melee^horde^wait^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIAttackMeleeHordeWaitStateDeletingDestructor.cpp",
+            "sha256": "1cd5eb7be04d801b8ce136044aadfd7e6bdfd91a33f30bd7d19f3e8fa558788e",
+            "selection": 2,
+            "section": 6
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^move^and^tighten^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIMoveAndTightenStateDeletingDestructor.cpp",
+            "sha256": "b0adf3a5ae0a9c134cb12071f4b612a99a04da352d02178f05e89a85d6b23b0f",
+            "selection": 2,
+            "section": 4
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^t^n^guard^outer^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AITNGuardOuterStateDeletingDestructor.cpp",
+            "sha256": "9b7b6d369591ff5106b8bd0c1c76cebf40714a66fa5ccfc60f5fb236eeef997b",
+            "selection": 2,
+            "section": 6
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^turret^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/TurretStateDeletingDestructor.cpp",
+            "sha256": "48d9bec7d8e9148cdd18db227789d14205322396a942f3251d934414b3a9d152",
+            "selection": 2,
+            "section": 6
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^turret^idle^state^deleting^destructors.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/TurretIdleStateDeletingDestructors.cpp",
+            "sha256": "3a3d0ea21678048bcc69b9e1a3f2bc1bf105f6e347020fab7b134da59bfe787b",
+            "selection": 2,
+            "section": 6
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^turret^a^i^recenter^turret^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/TurretAIRecenterTurretStateDeletingDestructor.cpp",
+            "sha256": "01c617fb51c75af3714d72a3573fd4759f4b7e33afa76d47f3329aab8a3150fb",
+            "selection": 2,
+            "section": 6
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^dozer^primary^idle^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/DozerPrimaryIdleStateDeletingDestructor.cpp",
+            "sha256": "1e1cf0f8385cb8fe899d5ebe0cbb95bf705c106d51531b31938c2a62af5b2521",
+            "selection": 2,
+            "section": 6
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^giant^bird^normal^flight^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdNormalFlightStateDeletingDestructor.cpp",
+            "sha256": "3fd4e935dc634afcb6220166f9ba2c598d764ae9ef38725ee87089d9130d0487",
+            "selection": 2,
+            "section": 8
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^giant^bird^follow^waypoint^path^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdFollowWaypointPathStateDeletingDestructor.cpp",
+            "sha256": "fe055ab7f955b1c822e0dc6de4f3cee43952a9bf9f8aecc5660191ccf5ef39ae",
+            "selection": 2,
+            "section": 8
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^giant^bird^guard^inner^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdGuardInnerStateDeletingDestructor.cpp",
+            "sha256": "acc55f147fe7666b1d9eee20fe0028e077d89ae2520d1c66deec7a37928449eb",
+            "selection": 2,
+            "section": 8
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^giant^bird^guard^outer^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdGuardOuterStateDeletingDestructor.cpp",
+            "sha256": "f6600e2d70d75937fa0d0e387ab0f030c62de75d8e7514dee1054f2ac3c61407",
+            "selection": 2,
+            "section": 8
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^giant^bird^guard^attack^aggressor^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdGuardAttackAggressorStateDeletingDestructor.cpp",
+            "sha256": "fb5262789b890ccd790e743c99b7b242266d2e129478c5f1b5ee1c8a1733a731",
+            "selection": 2,
+            "section": 8
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^supply^truck^wants^to^pick^up^or^deliver^boxes^state^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckWantsToPickUpOrDeliverBoxesStateDeletingDestructor.cpp",
+            "sha256": "dfee8a5d7dcba5356ade9f534fbd790cd950c6bb3dbce66cecfb62da128b661c",
+            "selection": 2,
+            "section": 8
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^worker^a^i^update^dozer^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdateDozerDeletingDestructor.cpp",
+            "sha256": "4f2c4490fd64c48f5e75c3e7d5f7a63336448d6b9798bb27cb6d5cb6da5e584f",
+            "selection": 2,
+            "section": 8
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^worker^a^i^update^supply^truck^deleting^destructor.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdateSupplyTruckDeletingDestructor.cpp",
+            "sha256": "c8a7cdfbde0effca93fd34e89cfeaf411a243ff2a6db27c7e9f5947489d115f9",
+            "selection": 2,
+            "section": 8
+          }
+        ],
+        "undefined_references": []
+      },
+      "?getCurrentStateID@AIUpdateInterface@@QBEIXZ": {
+        "definitions": [
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^a^i^update^interface^get^current^state^i^d.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIUpdateInterfaceGetCurrentStateID.cpp",
+            "sha256": "0c8fcc1f86777e160005ed3e63689c9ff211bfba8cca555218079a1f768be069",
+            "selection": 1,
+            "section": 9
+          }
+        ],
+        "undefined_references": [
+          {
+            "object": "game_^game^engine_^source_^common_^r^t^s_^action^manager^can^enter^object.obj",
+            "source": "game/GameEngine/Source/Common/RTS/ActionManagerCanEnterObject.cpp",
+            "sha256": "817ba8b70f5c017c56e6b37bc14c0063a2fe51ab93d2a1d857ab0601382925dc"
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^state^target^dispatch_attack^ordinary^target.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIStateTargetDispatch_attackOrdinaryTarget.cpp",
+            "sha256": "0af6d8053d4758b678519ae6233a5abfeb0f75764ff4aeb8f6b5da9ef30da373"
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^states.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIStates.cpp",
+            "sha256": "6de0d856ebbeee3c3674a72925241fda4f7b504b1dc080b046a088cb2842359e"
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
+            "sha256": "bbddc592df7451423a1aab3193575ce4ad3a376fd6943f6709ea117d68cbb14e"
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^jet^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/JetAIUpdate.cpp",
+            "sha256": "fd72cacb8b0fc1d15f46d5e13952ab3cbf9f57faf1cd91935e7b0a44c55141b1"
+          }
+        ]
+      },
+      "?getCurrentStateID@StateMachine@@QBEIXZ": {
+        "definitions": [
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^states.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIStates.cpp",
+            "sha256": "6de0d856ebbeee3c3674a72925241fda4f7b504b1dc080b046a088cb2842359e",
+            "selection": 2,
+            "section": 165
+          },
+          {
+            "object": "game_^game^engine_^source_^common_^state^machine.obj",
+            "source": "game/GameEngine/Source/Common/StateMachine.cpp",
+            "sha256": "899e9c248ab130fc742c4e26fa5ce75c75376a21bbd60d83705b3de0a718538d",
+            "selection": 2,
+            "section": 580
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
+            "sha256": "bbddc592df7451423a1aab3193575ce4ad3a376fd6943f6709ea117d68cbb14e",
+            "selection": 2,
+            "section": 336
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^turret^a^i.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp",
+            "sha256": "2c8595a2cdd29cc4655d6915933fc03c3f15da635e8c7d4f641dca4c7711fac0",
+            "selection": 2,
+            "section": 50
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^t^n^guard.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp",
+            "sha256": "5e844f195fc0c3343436e73a38ea471f09a835a36dbeb3e11e8022e95567aa3b",
+            "selection": 2,
+            "section": 34
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^supply^truck^a^i^update_update^and^private^dock_^thunk.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate_updateAndPrivateDock_Thunk.cpp",
+            "sha256": "635f40a7c7fe77a648dd1b5a39a125c5650dabb40588fadcea8b5775a0f2766c",
+            "selection": 2,
+            "section": 7
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^a^i^update^interface^get^current^state^i^d.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIUpdateInterfaceGetCurrentStateID.cpp",
+            "sha256": "0c8fcc1f86777e160005ed3e63689c9ff211bfba8cca555218079a1f768be069",
+            "selection": 2,
+            "section": 5
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^jet^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/JetAIUpdate.cpp",
+            "sha256": "fd72cacb8b0fc1d15f46d5e13952ab3cbf9f57faf1cd91935e7b0a44c55141b1",
+            "selection": 2,
+            "section": 100
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^guard^retaliate.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIGuardRetaliate.cpp",
+            "sha256": "72c4fbdd4a4461eb26623b9252129890b2ae61848837d73ed780ba01d9c08e79",
+            "selection": 2,
+            "section": 47
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^rva0024^f280^state^gated^move^callback.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/Rva0024F280StateGatedMoveCallback.cpp",
+            "sha256": "2b56b9ca951702bc667383d65882451c22daa34764fc43aa2b09a9ce5bda7cf2",
+            "selection": 2,
+            "section": 5
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^worker^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate.cpp",
+            "sha256": "e26f360775e02824037d2489c7f1c3bb8d88d376585ef5507c6be1d9646c8cc5",
+            "selection": 2,
+            "section": 32
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^hack^internet^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/HackInternetAIUpdate.cpp",
+            "sha256": "bfeaa0f39039d4995962f24e727cd0a86a258ffcc8036b582e90d1f57977fd4a",
+            "selection": 2,
+            "section": 67
+          }
+        ],
+        "undefined_references": [
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^attack^state_on^enter.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIAttackState_onEnter.cpp",
+            "sha256": "7a9d7ec5e06c5c23ca41a10b73f8468c5152554c7e9894a6ab877d5ba28f9073"
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^state^target^dispatch_attack^ordinary^target.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIStateTargetDispatch_attackOrdinaryTarget.cpp",
+            "sha256": "0af6d8053d4758b678519ae6233a5abfeb0f75764ff4aeb8f6b5da9ef30da373"
+          }
+        ]
+      },
+      "?getID@State@@QBEIXZ": {
+        "definitions": [
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^states.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIStates.cpp",
+            "sha256": "6de0d856ebbeee3c3674a72925241fda4f7b504b1dc080b046a088cb2842359e",
+            "selection": 2,
+            "section": 163
+          },
+          {
+            "object": "game_^game^engine_^source_^common_^state^machine.obj",
+            "source": "game/GameEngine/Source/Common/StateMachine.cpp",
+            "sha256": "899e9c248ab130fc742c4e26fa5ce75c75376a21bbd60d83705b3de0a718538d",
+            "selection": 2,
+            "section": 570
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
+            "sha256": "bbddc592df7451423a1aab3193575ce4ad3a376fd6943f6709ea117d68cbb14e",
+            "selection": 2,
+            "section": 334
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^turret^a^i.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp",
+            "sha256": "2c8595a2cdd29cc4655d6915933fc03c3f15da635e8c7d4f641dca4c7711fac0",
+            "selection": 2,
+            "section": 48
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^t^n^guard.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp",
+            "sha256": "5e844f195fc0c3343436e73a38ea471f09a835a36dbeb3e11e8022e95567aa3b",
+            "selection": 2,
+            "section": 32
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^supply^truck^a^i^update_update^and^private^dock_^thunk.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate_updateAndPrivateDock_Thunk.cpp",
+            "sha256": "635f40a7c7fe77a648dd1b5a39a125c5650dabb40588fadcea8b5775a0f2766c",
+            "selection": 2,
+            "section": 5
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^a^i^update^interface^get^current^state^i^d.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIUpdateInterfaceGetCurrentStateID.cpp",
+            "sha256": "0c8fcc1f86777e160005ed3e63689c9ff211bfba8cca555218079a1f768be069",
+            "selection": 2,
+            "section": 3
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^jet^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/JetAIUpdate.cpp",
+            "sha256": "fd72cacb8b0fc1d15f46d5e13952ab3cbf9f57faf1cd91935e7b0a44c55141b1",
+            "selection": 2,
+            "section": 98
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^guard^retaliate.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIGuardRetaliate.cpp",
+            "sha256": "72c4fbdd4a4461eb26623b9252129890b2ae61848837d73ed780ba01d9c08e79",
+            "selection": 2,
+            "section": 45
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^state^machine_xfer.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIStateMachine_xfer.cpp",
+            "sha256": "80844a6909fd93ec9031b5c2fb0e2c076cb6ab4bab9a4be11becae1a0d33b96a",
+            "selection": 2,
+            "section": 13
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^t^n^guard^attack^aggressor^state_update_^bfme.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AITNGuardAttackAggressorState_update_Bfme.cpp",
+            "sha256": "40002059049c296534787e2bd2521050ce5737c8fec52fe2f6e3dbb429df98e2",
+            "selection": 2,
+            "section": 5
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^rva0024^f280^state^gated^move^callback.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/Rva0024F280StateGatedMoveCallback.cpp",
+            "sha256": "2b56b9ca951702bc667383d65882451c22daa34764fc43aa2b09a9ce5bda7cf2",
+            "selection": 2,
+            "section": 3
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^worker^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate.cpp",
+            "sha256": "e26f360775e02824037d2489c7f1c3bb8d88d376585ef5507c6be1d9646c8cc5",
+            "selection": 2,
+            "section": 30
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^hack^internet^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/HackInternetAIUpdate.cpp",
+            "sha256": "bfeaa0f39039d4995962f24e727cd0a86a258ffcc8036b582e90d1f57977fd4a",
+            "selection": 2,
+            "section": 65
+          }
+        ],
+        "undefined_references": []
+      },
+      "?getMachine@State@@QAEPAVStateMachine@@XZ": {
+        "definitions": [
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^states.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIStates.cpp",
+            "sha256": "6de0d856ebbeee3c3674a72925241fda4f7b504b1dc080b046a088cb2842359e",
+            "selection": 2,
+            "section": 161
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^turret^a^i.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp",
+            "sha256": "2c8595a2cdd29cc4655d6915933fc03c3f15da635e8c7d4f641dca4c7711fac0",
+            "selection": 2,
+            "section": 46
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^t^n^guard.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp",
+            "sha256": "5e844f195fc0c3343436e73a38ea471f09a835a36dbeb3e11e8022e95567aa3b",
+            "selection": 2,
+            "section": 30
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^dock.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIDock.cpp",
+            "sha256": "3997e82c11e35a60a125d7e18611bd69c80b0aaf77fb8b1fe907f33da8a26f75",
+            "selection": 2,
+            "section": 17
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^guard.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIGuard.cpp",
+            "sha256": "aa3a87ef06128c0870c1de0b621c9e8f2bf76e69a2d29ee6f87f941896ff087e",
+            "selection": 2,
+            "section": 41
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^guard^inner^state^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIGuardInnerStateUpdate.cpp",
+            "sha256": "898511493a1dcfd0aae8175826e53f980ff6b00a1e13e50681d06b35ed42dfcb",
+            "selection": 2,
+            "section": 15
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^guard^retaliate.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIGuardRetaliate.cpp",
+            "sha256": "72c4fbdd4a4461eb26623b9252129890b2ae61848837d73ed780ba01d9c08e79",
+            "selection": 2,
+            "section": 43
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^attack^melee^engage^state_on^enter.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_onEnter.cpp",
+            "sha256": "824330821ec704f9a7d582afbc26fbf81ef753f13edffe590935d646dbfd79a0",
+            "selection": 2,
+            "section": 9
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^attack^melee^engage^state_update^internal.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_updateInternal.cpp",
+            "sha256": "4084f72613396256a492d477e297e1f1806f6013d35a6d5bd8133782b8072473",
+            "selection": 2,
+            "section": 21
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^dozer^a^i^update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerAIUpdate.cpp",
+            "sha256": "5005cb0facae04126577e9838611e60dcf0dc58a4ff1c1e127ff0aa7f2bb9b89",
+            "selection": 2,
+            "section": 69
+          },
+          {
+            "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^giant^bird^guard^inner^state_update.obj",
+            "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdGuardInnerState_update.cpp",
+            "sha256": "f416768f11adca04bfe497c49ec9989418cf80663cc92d582d05fc79252f6155",
+            "selection": 2,
+            "section": 11
+          }
+        ],
+        "undefined_references": []
+      },
+      "?onEnter@AITNGuardIdleState@@UAE?AW4StateReturnType@@XZ": {
+        "definitions": [
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^t^n^guard^idle^state^on^enter.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AITNGuardIdleStateOnEnter.cpp",
+            "sha256": "568fb72200bb84d19ef1cc8f5afec38a862d0269894e039ae2084b049b0fe79d",
+            "selection": 1,
+            "section": 13
+          }
+        ],
+        "undefined_references": [
+          {
+            "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^t^n^guard.obj",
+            "source": "game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp",
+            "sha256": "5e844f195fc0c3343436e73a38ea471f09a835a36dbeb3e11e8022e95567aa3b"
+          }
+        ]
+      }
+    }
+  },
+  "getter_object_proofs": [
+    {
+      "symbol": "?getMachine@State@@QAEPAVStateMachine@@XZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/AIStates.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^states.obj",
+      "object_sha256": "6de0d856ebbeee3c3674a72925241fda4f7b504b1dc080b046a088cb2842359e",
+      "definition": true,
+      "bytes": "8b411cc3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getID@State@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/AIStates.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^states.obj",
+      "object_sha256": "6de0d856ebbeee3c3674a72925241fda4f7b504b1dc080b046a088cb2842359e",
+      "definition": true,
+      "bytes": "8b4104c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getCurrentStateID@StateMachine@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/AIStates.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^states.obj",
+      "object_sha256": "6de0d856ebbeee3c3674a72925241fda4f7b504b1dc080b046a088cb2842359e",
+      "definition": true,
+      "bytes": "8b411c85c074048b4004c3b83f420f00c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getCurrentStateID@AIUpdateInterface@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/AIStates.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^states.obj",
+      "definition": false
+    },
+    {
+      "symbol": "?getID@State@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update.obj",
+      "object_sha256": "bbddc592df7451423a1aab3193575ce4ad3a376fd6943f6709ea117d68cbb14e",
+      "definition": true,
+      "bytes": "8b4104c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getCurrentStateID@StateMachine@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update.obj",
+      "object_sha256": "bbddc592df7451423a1aab3193575ce4ad3a376fd6943f6709ea117d68cbb14e",
+      "definition": true,
+      "bytes": "8b411c85c074048b4004c3b83f420f00c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getCurrentStateID@AIUpdateInterface@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update.obj",
+      "definition": false
+    },
+    {
+      "symbol": "?getID@State@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIUpdateInterfaceGetCurrentStateID.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^a^i^update^interface^get^current^state^i^d.obj",
+      "object_sha256": "25b8ab77c5025e471ccaeac89866ade92807c2c57d0ebab99ec684778f9c1e8b",
+      "definition": true,
+      "bytes": "8b4104c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getCurrentStateID@StateMachine@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIUpdateInterfaceGetCurrentStateID.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^a^i^update^interface^get^current^state^i^d.obj",
+      "object_sha256": "25b8ab77c5025e471ccaeac89866ade92807c2c57d0ebab99ec684778f9c1e8b",
+      "definition": true,
+      "bytes": "8b411c85c074048b4004c3b83f420f00c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getCurrentStateID@AIUpdateInterface@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIUpdateInterfaceGetCurrentStateID.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^a^i^update^interface^get^current^state^i^d.obj",
+      "object_sha256": "25b8ab77c5025e471ccaeac89866ade92807c2c57d0ebab99ec684778f9c1e8b",
+      "definition": true,
+      "bytes": "8b49308b411c85c074048b4004c3b83f420f00c3",
+      "relocations": [],
+      "selection": 1
+    },
+    {
+      "symbol": "?getID@State@@QBEIXZ",
+      "source": "game/GameEngine/Source/Common/StateMachine.cpp",
+      "object": "game_^game^engine_^source_^common_^state^machine.obj",
+      "object_sha256": "899e9c248ab130fc742c4e26fa5ce75c75376a21bbd60d83705b3de0a718538d",
+      "definition": true,
+      "bytes": "8b4104c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getCurrentStateID@StateMachine@@QBEIXZ",
+      "source": "game/GameEngine/Source/Common/StateMachine.cpp",
+      "object": "game_^game^engine_^source_^common_^state^machine.obj",
+      "object_sha256": "899e9c248ab130fc742c4e26fa5ce75c75376a21bbd60d83705b3de0a718538d",
+      "definition": true,
+      "bytes": "8b411c85c074048b4004c3b83f420f00c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getID@State@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate_updateAndPrivateDock_Thunk.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^supply^truck^a^i^update_update^and^private^dock_^thunk.obj",
+      "object_sha256": "635f40a7c7fe77a648dd1b5a39a125c5650dabb40588fadcea8b5775a0f2766c",
+      "definition": true,
+      "bytes": "8b4104c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getCurrentStateID@StateMachine@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate_updateAndPrivateDock_Thunk.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^supply^truck^a^i^update_update^and^private^dock_^thunk.obj",
+      "object_sha256": "635f40a7c7fe77a648dd1b5a39a125c5650dabb40588fadcea8b5775a0f2766c",
+      "definition": true,
+      "bytes": "8b411c85c074048b4004c3b83f420f00c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getMachine@State@@QAEPAVStateMachine@@XZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^t^n^guard.obj",
+      "object_sha256": "5e844f195fc0c3343436e73a38ea471f09a835a36dbeb3e11e8022e95567aa3b",
+      "definition": true,
+      "bytes": "8b411cc3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getID@State@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^t^n^guard.obj",
+      "object_sha256": "5e844f195fc0c3343436e73a38ea471f09a835a36dbeb3e11e8022e95567aa3b",
+      "definition": true,
+      "bytes": "8b4104c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getCurrentStateID@StateMachine@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^t^n^guard.obj",
+      "object_sha256": "5e844f195fc0c3343436e73a38ea471f09a835a36dbeb3e11e8022e95567aa3b",
+      "definition": true,
+      "bytes": "8b411c85c074048b4004c3b83f420f00c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getID@State@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/JetAIUpdate.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^jet^a^i^update.obj",
+      "object_sha256": "fd72cacb8b0fc1d15f46d5e13952ab3cbf9f57faf1cd91935e7b0a44c55141b1",
+      "definition": true,
+      "bytes": "8b4104c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getCurrentStateID@StateMachine@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/JetAIUpdate.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^jet^a^i^update.obj",
+      "object_sha256": "fd72cacb8b0fc1d15f46d5e13952ab3cbf9f57faf1cd91935e7b0a44c55141b1",
+      "definition": true,
+      "bytes": "8b411c85c074048b4004c3b83f420f00c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getCurrentStateID@AIUpdateInterface@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/JetAIUpdate.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^jet^a^i^update.obj",
+      "definition": false
+    },
+    {
+      "symbol": "?getMachine@State@@QAEPAVStateMachine@@XZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/AIGuardRetaliate.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^guard^retaliate.obj",
+      "object_sha256": "72c4fbdd4a4461eb26623b9252129890b2ae61848837d73ed780ba01d9c08e79",
+      "definition": true,
+      "bytes": "8b411cc3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getID@State@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/AIGuardRetaliate.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^guard^retaliate.obj",
+      "object_sha256": "72c4fbdd4a4461eb26623b9252129890b2ae61848837d73ed780ba01d9c08e79",
+      "definition": true,
+      "bytes": "8b4104c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getCurrentStateID@StateMachine@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/AIGuardRetaliate.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^guard^retaliate.obj",
+      "object_sha256": "72c4fbdd4a4461eb26623b9252129890b2ae61848837d73ed780ba01d9c08e79",
+      "definition": true,
+      "bytes": "8b411c85c074048b4004c3b83f420f00c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getMachine@State@@QAEPAVStateMachine@@XZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^turret^a^i.obj",
+      "object_sha256": "2c8595a2cdd29cc4655d6915933fc03c3f15da635e8c7d4f641dca4c7711fac0",
+      "definition": true,
+      "bytes": "8b411cc3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getID@State@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^turret^a^i.obj",
+      "object_sha256": "2c8595a2cdd29cc4655d6915933fc03c3f15da635e8c7d4f641dca4c7711fac0",
+      "definition": true,
+      "bytes": "8b4104c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getCurrentStateID@StateMachine@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^turret^a^i.obj",
+      "object_sha256": "2c8595a2cdd29cc4655d6915933fc03c3f15da635e8c7d4f641dca4c7711fac0",
+      "definition": true,
+      "bytes": "8b411c85c074048b4004c3b83f420f00c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getID@State@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/Rva0024F280StateGatedMoveCallback.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^rva0024^f280^state^gated^move^callback.obj",
+      "object_sha256": "2b56b9ca951702bc667383d65882451c22daa34764fc43aa2b09a9ce5bda7cf2",
+      "definition": true,
+      "bytes": "8b4104c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getCurrentStateID@StateMachine@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/Rva0024F280StateGatedMoveCallback.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^rva0024^f280^state^gated^move^callback.obj",
+      "object_sha256": "2b56b9ca951702bc667383d65882451c22daa34764fc43aa2b09a9ce5bda7cf2",
+      "definition": true,
+      "bytes": "8b411c85c074048b4004c3b83f420f00c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getID@State@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^worker^a^i^update.obj",
+      "object_sha256": "e26f360775e02824037d2489c7f1c3bb8d88d376585ef5507c6be1d9646c8cc5",
+      "definition": true,
+      "bytes": "8b4104c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getCurrentStateID@StateMachine@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^worker^a^i^update.obj",
+      "object_sha256": "e26f360775e02824037d2489c7f1c3bb8d88d376585ef5507c6be1d9646c8cc5",
+      "definition": true,
+      "bytes": "8b411c85c074048b4004c3b83f420f00c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getID@State@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/HackInternetAIUpdate.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^hack^internet^a^i^update.obj",
+      "object_sha256": "bfeaa0f39039d4995962f24e727cd0a86a258ffcc8036b582e90d1f57977fd4a",
+      "definition": true,
+      "bytes": "8b4104c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getCurrentStateID@StateMachine@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/HackInternetAIUpdate.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^hack^internet^a^i^update.obj",
+      "object_sha256": "bfeaa0f39039d4995962f24e727cd0a86a258ffcc8036b582e90d1f57977fd4a",
+      "definition": true,
+      "bytes": "8b411c85c074048b4004c3b83f420f00c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getID@State@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/AIStateMachine_xfer.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^state^machine_xfer.obj",
+      "object_sha256": "80844a6909fd93ec9031b5c2fb0e2c076cb6ab4bab9a4be11becae1a0d33b96a",
+      "definition": true,
+      "bytes": "8b4104c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getID@State@@QBEIXZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/AITNGuardAttackAggressorState_update_Bfme.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^t^n^guard^attack^aggressor^state_update_^bfme.obj",
+      "object_sha256": "40002059049c296534787e2bd2521050ce5737c8fec52fe2f6e3dbb429df98e2",
+      "definition": true,
+      "bytes": "8b4104c3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getMachine@State@@QAEPAVStateMachine@@XZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/AIDock.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^dock.obj",
+      "object_sha256": "3997e82c11e35a60a125d7e18611bd69c80b0aaf77fb8b1fe907f33da8a26f75",
+      "definition": true,
+      "bytes": "8b411cc3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getMachine@State@@QAEPAVStateMachine@@XZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/AIGuard.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^guard.obj",
+      "object_sha256": "aa3a87ef06128c0870c1de0b621c9e8f2bf76e69a2d29ee6f87f941896ff087e",
+      "definition": true,
+      "bytes": "8b411cc3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getMachine@State@@QAEPAVStateMachine@@XZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/AIGuardInnerStateUpdate.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^guard^inner^state^update.obj",
+      "object_sha256": "898511493a1dcfd0aae8175826e53f980ff6b00a1e13e50681d06b35ed42dfcb",
+      "definition": true,
+      "bytes": "8b411cc3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getMachine@State@@QAEPAVStateMachine@@XZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_onEnter.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^attack^melee^engage^state_on^enter.obj",
+      "object_sha256": "824330821ec704f9a7d582afbc26fbf81ef753f13edffe590935d646dbfd79a0",
+      "definition": true,
+      "bytes": "8b411cc3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getMachine@State@@QAEPAVStateMachine@@XZ",
+      "source": "game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_updateInternal.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^a^i_^a^i^attack^melee^engage^state_update^internal.obj",
+      "object_sha256": "4084f72613396256a492d477e297e1f1806f6013d35a6d5bd8133782b8072473",
+      "definition": true,
+      "bytes": "8b411cc3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getMachine@State@@QAEPAVStateMachine@@XZ",
+      "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerAIUpdate.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^dozer^a^i^update.obj",
+      "object_sha256": "5005cb0facae04126577e9838611e60dcf0dc58a4ff1c1e127ff0aa7f2bb9b89",
+      "definition": true,
+      "bytes": "8b411cc3",
+      "relocations": [],
+      "selection": 2
+    },
+    {
+      "symbol": "?getMachine@State@@QAEPAVStateMachine@@XZ",
+      "source": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdGuardInnerState_update.cpp",
+      "object": "game_^game^engine_^source_^game^logic_^object_^update_^a^i^update_^giant^bird^guard^inner^state_update.obj",
+      "object_sha256": "b3fac948f0bd68767279cacec3639f6608776004b43a8ff26d7d9f325bc10d3c",
+      "definition": true,
+      "bytes": "8b411cc3",
+      "relocations": [],
+      "selection": 2
+    }
+  ],
+  "family_blockers": {
+    "before": {
+      "?getCurrentStateID@AIUpdateInterface@@QBEIXZ": {
+        "duplicates": [
+          "game/GameEngine/Source/GameLogic/AI/AIStates.cpp",
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIUpdateInterfaceGetCurrentStateID.cpp"
+        ],
+        "losers": [
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AIStates.cpp"
+        ],
+        "wrong_selected": [
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AIStates.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AIStateTargetDispatch_attackOrdinaryTarget.cpp",
+          "game/GameEngine/Source/Common/RTS/ActionManagerCanEnterObject.cpp",
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIUpdateInterfaceGetCurrentStateID.cpp"
+        ]
+      },
+      "?getCurrentStateID@StateMachine@@QBEIXZ": {
+        "duplicates": [],
+        "losers": [
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
+          "game/GameEngine/Source/Common/StateMachine.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AIStates.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AIGuardRetaliate.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp",
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/HackInternetAIUpdate.cpp",
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/JetAIUpdate.cpp",
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate.cpp"
+        ],
+        "wrong_selected": [
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
+          "game/GameEngine/Source/Common/StateMachine.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AIStates.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AIGuardRetaliate.cpp",
+          "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp",
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/HackInternetAIUpdate.cpp",
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/JetAIUpdate.cpp",
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate.cpp",
+          "game/GameEngine/Source/GameLogic/AI/Rva0024F280StateGatedMoveCallback.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AIStateTargetDispatch_attackOrdinaryTarget.cpp",
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIUpdateInterfaceGetCurrentStateID.cpp",
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate_updateAndPrivateDock_Thunk.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AIAttackState_onEnter.cpp"
+        ]
+      },
+      "?getID@State@@QBEIXZ": {
+        "duplicates": [],
+        "losers": [
+          "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp",
+          "game/GameEngine/Source/GameLogic/AI/Rva0024F280StateGatedMoveCallback.cpp",
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIUpdateInterfaceGetCurrentStateID.cpp",
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckAIUpdate_updateAndPrivateDock_Thunk.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AITNGuardAttackAggressorState_update_Bfme.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AIStateMachine_xfer.cpp"
+        ],
+        "wrong_selected": []
+      },
+      "?getMachine@State@@QAEPAVStateMachine@@XZ": {
+        "duplicates": [],
+        "losers": [
+          "game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_onEnter.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AIGuardInnerStateUpdate.cpp",
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdGuardInnerState_update.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_updateInternal.cpp"
+        ],
+        "wrong_selected": []
+      },
+      "??_7State@@6B@": {
+        "duplicates": [],
+        "losers": [
+          "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp"
+        ],
+        "wrong_selected": []
+      },
+      "??_7AIAttackFireWeaponState@@6B@": {
+        "duplicates": [],
+        "losers": [
+          "game/GameEngine/Source/GameLogic/AI/AttackFireWhileMovingMachineCtor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp"
+        ],
+        "wrong_selected": []
+      },
+      "??0TurretAI@@QAE@PAVObject@@PBVTurretAIData@@W4WhichTurretType@@@Z": {
+        "duplicates": [
+          "game/GameEngine/Source/GameLogic/AI/TurretAI_ctor_Thunk.cpp",
+          "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp"
+        ],
+        "losers": [
+          "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp"
+        ],
+        "wrong_selected": []
+      },
+      "?onEnter@AITNGuardIdleState@@UAE?AW4StateReturnType@@XZ": {
+        "duplicates": [
+          "game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AITNGuardIdleStateOnEnter.cpp"
+        ],
+        "losers": [
+          "game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp"
+        ],
+        "wrong_selected": []
+      }
+    },
+    "intermediate": {
+      "?getCurrentStateID@AIUpdateInterface@@QBEIXZ": {
+        "duplicates": [],
+        "losers": [],
+        "wrong_selected": []
+      },
+      "?getCurrentStateID@StateMachine@@QBEIXZ": {
+        "duplicates": [],
+        "losers": [],
+        "wrong_selected": []
+      },
+      "?getID@State@@QBEIXZ": {
+        "duplicates": [],
+        "losers": [],
+        "wrong_selected": []
+      },
+      "?getMachine@State@@QAEPAVStateMachine@@XZ": {
+        "duplicates": [],
+        "losers": [],
+        "wrong_selected": []
+      },
+      "??_7State@@6B@": {
+        "duplicates": [],
+        "losers": [
+          "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp"
+        ],
+        "wrong_selected": [
+          "game/GameEngine/Source/Common/StateConstructor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AIAttackMeleeHordeWaitStateDeletingDestructor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AIDockProcessDockStateDeletingDestructor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AIDockWaitForClearanceStateDeletingDestructor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AIGuardStateDeletingDestructors.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AIHarvestPrepareSiteStateDeletingDestructor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AITNGuardOuterStateDeletingDestructor.cpp",
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdateDozerDeletingDestructor.cpp",
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdateSupplyTruckDeletingDestructor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/DozerPrimaryIdleStateDeletingDestructor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/FailureContinueStateDeletingDestructors.cpp",
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdFollowWaypointPathStateDeletingDestructor.cpp",
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdGuardAttackAggressorStateDeletingDestructor.cpp",
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdGuardInnerStateDeletingDestructor.cpp",
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdGuardOuterStateDeletingDestructor.cpp",
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdNormalFlightStateDeletingDestructor.cpp",
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/SupplyTruckWantsToPickUpOrDeliverBoxesStateDeletingDestructor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/TurretIdleStateDeletingDestructors.cpp",
+          "game/GameEngine/Source/GameLogic/AI/TurretAIRecenterTurretStateDeletingDestructor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/TurretStateDeletingDestructor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AIMoveAndTightenStateDeletingDestructor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/StateDeletingDestructor.cpp"
+        ]
+      },
+      "??_7AIAttackFireWeaponState@@6B@": {
+        "duplicates": [],
+        "losers": [
+          "game/GameEngine/Source/GameLogic/AI/AttackFireWhileMovingMachineCtor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp"
+        ],
+        "wrong_selected": [
+          "game/GameEngine/Source/GameLogic/AI/AIAttackActionStates.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AttackFireWhileMovingMachineCtor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AttackMeleeStateMachineCtor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AttackStateMachineCtor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/Rva001812B0AIHordeMachineCtor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp"
+        ]
+      },
+      "??0TurretAI@@QAE@PAVObject@@PBVTurretAIData@@W4WhichTurretType@@@Z": {
+        "duplicates": [
+          "game/GameEngine/Source/GameLogic/AI/TurretAI_ctor_Thunk.cpp",
+          "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp"
+        ],
+        "losers": [
+          "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp"
+        ],
+        "wrong_selected": [
+          "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp",
+          "game/GameEngine/Source/GameLogic/AI/TurretAI_ctor_Thunk.cpp",
+          "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp"
+        ]
+      },
+      "?onEnter@AITNGuardIdleState@@UAE?AW4StateReturnType@@XZ": {
+        "duplicates": [
+          "game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AITNGuardIdleStateOnEnter.cpp"
+        ],
+        "losers": [
+          "game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp"
+        ],
+        "wrong_selected": [
+          "game/GameEngine/Source/GameLogic/AI/AITNGuard.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AITNGuardIdleStateOnEnter.cpp"
+        ]
+      }
+    },
+    "after": {
+      "?getCurrentStateID@AIUpdateInterface@@QBEIXZ": {
+        "duplicates": [],
+        "losers": [],
+        "wrong_selected": []
+      },
+      "?getCurrentStateID@StateMachine@@QBEIXZ": {
+        "duplicates": [],
+        "losers": [],
+        "wrong_selected": []
+      },
+      "?getID@State@@QBEIXZ": {
+        "duplicates": [],
+        "losers": [],
+        "wrong_selected": []
+      },
+      "?getMachine@State@@QAEPAVStateMachine@@XZ": {
+        "duplicates": [],
+        "losers": [],
+        "wrong_selected": []
+      },
+      "??_7State@@6B@": {
+        "duplicates": [],
+        "losers": [],
+        "wrong_selected": []
+      },
+      "??_7AIAttackFireWeaponState@@6B@": {
+        "duplicates": [],
+        "losers": [
+          "game/GameEngine/Source/GameLogic/AI/AttackFireWhileMovingMachineCtor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp"
+        ],
+        "wrong_selected": [
+          "game/GameEngine/Source/GameLogic/AI/AIAttackActionStates.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AttackFireWhileMovingMachineCtor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AttackMeleeStateMachineCtor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/AttackStateMachineCtor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/Rva001812B0AIHordeMachineCtor.cpp",
+          "game/GameEngine/Source/GameLogic/AI/TurretAI.cpp"
+        ]
+      },
+      "??0TurretAI@@QAE@PAVObject@@PBVTurretAIData@@W4WhichTurretType@@@Z": {
+        "duplicates": [],
+        "losers": [],
+        "wrong_selected": []
+      },
+      "?onEnter@AITNGuardIdleState@@UAE?AW4StateReturnType@@XZ": {
+        "duplicates": [],
+        "losers": [],
+        "wrong_selected": []
+      }
+    }
+  },
+  "selected_name_delta": {
+    "removed_wrong_selected": [
+      "?getCurrentStateID@AIUpdateInterface@@QBEIXZ",
+      "?getCurrentStateID@StateMachine@@QBEIXZ"
+    ],
+    "added_wrong_selected": [
+      "??_7AIAttackFireWeaponState@@6B@"
+    ]
+  },
+  "final_artifacts": {
+    "head": "e730466093c5a7ead6d08411316355bcc3780a0e",
+    "files": {
+      "build/link_census/census.json": {
+        "bytes": 21425231,
+        "sha256": "13d804b8e57e104b996dfef27184a30e77d0d99b3d4195a0687b88b715127da6"
+      },
+      "build/link_census/link_index.pkl": {
+        "bytes": 273026644,
+        "sha256": "52c6050f6acae814a9f19a6bf83ca5ed32523f309ad2c671268ceed49e9950b1"
+      },
+      "targets/game/reverse/link_status.csv": {
+        "bytes": 1857503,
+        "sha256": "939932cfef1c95ed10dbf4c1df965a58ef0b1eecf62cc37206fed6329856269c"
+      },
+      "targets/game/reverse/link_census_history.csv": {
+        "bytes": 7013,
+        "sha256": "cc1724bd64d07620bcaa46da3ec0fcbcd7126f53f5fc29dcda97eacfd86e315f"
+      }
+    }
+  }
+}

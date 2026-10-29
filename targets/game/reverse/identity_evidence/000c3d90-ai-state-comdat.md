@@ -68,3 +68,7 @@ three AsciiStrings and ten dwords (52 bytes); both the ZH header and
 peerdefs shim declare only two strings. Replacing the AsciiString view
 alone cannot repair the record layout. Do not bind a 36-byte ZH record to
 the 52-byte retail copy constructor merely to remove a linker blocker.
+
+Accepted fresh census results for the combined AI/State repairs are in
+[final results](0009fee0-state-comdat-results.md): +1,038 authored linked
+bytes, three existing consumer TUs unlocked, no newly unlinked source.
