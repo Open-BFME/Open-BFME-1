@@ -40,7 +40,6 @@ extern void j_00023911();
 extern void j_0001ee7a();
 extern void j_00023a38();
 extern void j_00002f13();
-extern void j_000280f6();
 extern void j_00020d24();
 
 extern "C" __declspec(dllimport) void __stdcall AIL_set_stream_loop_count(void *stream, int count);
@@ -486,11 +485,7 @@ private:
 	}
 
 	// 0x006B1FC0 via ILT 0x000280F6: ZH findLowestPrioritySound, the playing event of lowest priority.
-	AudioEventRTS *findLowestPrioritySound(AudioEventRTS *event)
-	{
-		typedef AudioEventRTS *(Rva006ABDA0Call::*Function)(AudioEventRTS *);
-		return (reinterpret_cast<Rva006ABDA0Call *>(this)->*thunk006ABDA0<Function>(j_000280f6))(event);
-	}
+	AudioEventRTS *findLowestPrioritySound(AudioEventRTS *event);
 
 	char m_pad628[0x9c4 - 0x628];
 	_STL::list<void *> m_list9c4;				// +0x9c4
