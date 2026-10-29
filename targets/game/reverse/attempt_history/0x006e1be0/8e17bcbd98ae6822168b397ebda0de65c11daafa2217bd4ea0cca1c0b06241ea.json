@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "8e17bcbd98ae6822168b397ebda0de65c11daafa2217bd4ea0cca1c0b06241ea",
+  "symbol": "?method@Rva006E1BE0@@UBEMMMM@Z",
+  "score_kind": "measured",
+  "score": 0.9318,
+  "source": "// ?method@Rva006E1BE0@@UBEMMMM@Z\n// partial score=0.9318 date=2026-10-29\n// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\n//\n// Identity review: the exact constructor 0x006E2310 and destructor\n// 0x006E2480 install vtable 0x0111E250, whose slot 16 reaches 0x006E1BE0\n// through thunk 0x0002B53F.  No caller, literal, or layout witness recovers\n// the original method spelling, so this is an address-derived opaque virtual\n// member rather than the prior free __stdcall claim.\n\nstruct Rva006E1BE0Vec4\n{\n\tfloat x;\n\tfloat y;\n\tfloat z;\n\tfloat w;\n};\n\nclass BfmeRef006e2480;\nextern BfmeRef006e2480 *g_bfmeObj006e1be0;\n\nclass Rva006E1BE0\n{\npublic:\n\tvirtual float method(float x, float y, float z) const;\n};\n\nfloat Rva006E1BE0::method(float x, float y, float z) const\n{\n\tchar *object = (char *)g_bfmeObj006e1be0;\n\tfloat result = 1000000.0f;\n\tif (object)\n\t{\n\t\tRva006E1BE0Vec4 row = *(Rva006E1BE0Vec4 *)(object + 0x84);\n\t\tresult = row.z * z;\n\t\tresult += row.y * y;\n\t\tresult += row.x * x;\n\t\tresult += row.w;\n\t}\n\treturn result;\n}\n"
+}
