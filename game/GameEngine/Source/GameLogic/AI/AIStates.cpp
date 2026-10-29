@@ -4881,24 +4881,8 @@ void AIMoveAndEvacuateState::loadPostProcess( void )
 }  // end loadPostProcess
 
 //----------------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AIMoveAndEvacuateState_onEnter.cpp
-// ?onEnter@AIMoveAndEvacuateState@@UAE?AW4StateReturnType@@XZ present-unmatched
-StateReturnType AIMoveAndEvacuateState::onEnter()
-{
-	Object *obj = getMachineOwner();
-
-	getMachine()->lock("AIMoveAndEvacuateState::onEnter");		// This state is not user interruptable.
-
-	m_origin = *obj->getPosition();
-	setAdjustsDestination(true);
-
-	// if we have a goal object, move to it, otherwise move to goal position
-	if (getMachine()->getGoalObject())
-		m_goalPosition = *getMachine()->getGoalObject()->getPosition();
-	else
-		m_goalPosition = *getMachine()->getGoalPosition();
-	return AIInternalMoveToState::onEnter();
-}
+// AIMoveAndEvacuateState::onEnter()
+// Body in AIMoveAndEvacuateState.cpp (exact 151B retail).
 
 //----------------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AIMoveAndEvacuateState_update_Bfme.cpp
