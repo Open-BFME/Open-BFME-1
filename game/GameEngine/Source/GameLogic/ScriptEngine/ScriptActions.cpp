@@ -3303,32 +3303,8 @@ void ScriptActions::doTeamDelete(const AsciiString& teamName, Bool ignoreDead)
 //-------------------------------------------------------------------------------------------------
 /** doTeamWander */
 //-------------------------------------------------------------------------------------------------
-// ?doTeamWander@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
-void ScriptActions::doTeamWander(const AsciiString& teamName, const AsciiString& waypointPathLabel)
-{
-	Team *team = TheScriptEngine->getTeamNamed(teamName);
-
-	if (!team) {
-		return;
-	}
-
-	// Have all the members of the team wander.
-	for (DLINK_ITERATOR<Object> iter = team->iterate_TeamMemberList(); !iter.done(); iter.advance())
-	{
-		Object *obj = iter.cur();
-		AIUpdateInterface *ai = obj->getAIUpdateInterface();
-		if (!ai) {
-			continue;
-		}
-		Coord3D pos = *obj->getPosition();
-		Waypoint *way = TheTerrainLogic->getClosestWaypointOnPath( &pos, waypointPathLabel );
-		if (!way) {
-			return;
-		}
-		ai->chooseLocomotorSet(LOCOMOTORSET_WANDER);
-		ai->aiWander(way, CMD_FROM_SCRIPT);
-	}
-}
+// ScriptActions::doTeamWander(const AsciiString&, const AsciiString&)
+// Body in ScriptActionsTeamWanderPanic.cpp (exact 212B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** doTeamIncreasePriority */
