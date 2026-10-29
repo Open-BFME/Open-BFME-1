@@ -21491,5 +21491,15 @@
   "after_sha256": "7c3f3d95d3521408f6b0cee6e779a51a8daecd60947902c3b7d834aafe171b61",
   "evidence": "targets/game/reverse/identity_evidence/0x0024eca0-askdg-callee-spelling.md",
   "reason": "askDG was a bank-local name bound by /alternatename to ILT 0x00036C05; symbols.csv pins that ILT as the thiscall ?bfmeAskRaw@Gen_0021AD10@@AAEPAXPAX@Z, which the converted source calls."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0069f540.cpp",
+  "new_path": "game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva0069F540.cpp",
+  "old_name": "eraseKey",
+  "new_name": "rva0069F540",
+  "before_sha256": "c33d6eb8023fe9a48698a2c8d51511ede8554350e13e775f253532a25d9d6ee7",
+  "after_sha256": "013bd33c752e61acaa61084e5f92ffa0269c857fefce5ff18dc6cdc5a829d65d",
+  "evidence": "targets/game/reverse/identity_evidence/0x0069f540-erasekey-bank-name.md",
+  "reason": "eraseKey was a bank-local guess on a non-virtual placeholder owner; retail 0x0069F540 is MilesAudioManager vtable slot 88 and ilt_oracle contradicts ?eraseKey@Rva0069F540Owner@@QAEXPAX@Z, so the virtual keeps an address-derived name."
  }
 ]
