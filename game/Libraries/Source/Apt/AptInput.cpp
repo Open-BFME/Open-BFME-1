@@ -147,7 +147,7 @@ static __forceinline BfmeStringData1285 *localEmptyString1285()
 	return (BfmeStringData1285 *)&g_rva012D5298Empty;
 }
 
-extern float g_bfmeDirectionWeight1285;
+extern const float g_bfmeDirectionWeight1285;
 extern float g_bfmeInvalidScore1285;
 // AptInput reaches the same singleton through two independently witnessed class slices.
 extern void *g_bfmeHolderBU;
