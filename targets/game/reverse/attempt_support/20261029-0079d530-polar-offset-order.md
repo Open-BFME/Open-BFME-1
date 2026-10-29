@@ -43,3 +43,7 @@ Follow-up (same session):
 - An unused `float ox=cos*d;` before the struct, `(float)(cos(middle)*distance)` casts,
   reusing firstVector/secondVector as the offset (frame changes, 965-981 B), and a
   forceinline polar helper returning BfmeVec2CY (not inlined: 968-981 B) do not help.
+- Late additions: an inline ctor taking `const float &` arguments (either body order, with
+  field or CSE'd uses) and placing `544.x += cos*d` before the offset.y store (VC7.1 keeps
+  the statement store order, so cx is stored to 544.x before fsin) reproduce the same two
+  outcomes; no case computes cos first while keeping sy as the memory-home value.
