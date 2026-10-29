@@ -214,18 +214,8 @@ static DynamicAudioEventInfo  * getNoSoundMarker()
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/DrawableVisualState.cpp
-// ?clear@DrawableIconInfo@@QAEXXZ present-unmatched
-void DrawableIconInfo::clear()
-{
-	for (int i = 0; i < MAX_ICONS; ++i)
-	{
-		if (m_icon[i])
-			m_icon[i]->deleteInstance();
-		m_icon[i] = NULL;
-		m_keepTillFrame[i] = 0;
-	}
-}
+// DrawableIconInfo::clear()
+// Body in DrawableVisualState.cpp (exact 50B retail).
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
