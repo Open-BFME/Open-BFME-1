@@ -37936,7 +37936,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_00525590@@YAXXZ,,0x00525590,220,game/gen_asm/d_00525450.asm,matched,gen-dump;ghidra=FUN_00925590
 ?d_005256d0@@YAXXZ,,0x005256D0,219,game/gen_asm/d_00525450.asm,matched,gen-dump;ghidra=FUN_009256d0
 ?d_00525800@@YAXXZ,,0x00525800,220,game/gen_asm/d_00525450.asm,matched,gen-dump;ghidra=FUN_00925800
-?d_005280a0@@YAXXZ,,0x005280A0,570,game/gen_asm/d_00525450.asm,matched,gen-dump;ghidra=FUN_009280a0
 ?d_00529be0@@YAXXZ,,0x00529BE0,186,game/gen_asm/d_00525450.asm,matched,gen-dump;ghidra=FUN_00929be0
 ?d_0052a2e0@@YAXXZ,,0x0052A2E0,1306,game/gen_asm/d_00525450.asm,matched,gen-dump;ghidra=FUN_0092a2e0
 ?d_005337e0@@YAXXZ,,0x005337E0,1382,game/gen_asm/d_00499050.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=ret+int3 callers=1;ghidra=FUN_009337e0
@@ -173390,3 +173389,4 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?bfmeSyncEGF@BfmeThingEGF@@QAEXXZ,,0x00271B40,249,game/GameEngine/Source/Common/Rva00271B40ShadowSync.cpp,matched,list-tag shadow sync sibling of bfmeGoEGFc per identity_evidence/00271b40-call-setup-retry.md;model=claude-opus-5-5;host=app
 ?rva002A1F80@RespawnUpdate@@QAEXPAVObject@@@Z,,0x002A1F80,489,game/GameEngine/Source/GameLogic/Object/Update/RespawnUpdateRva002A1F80.cpp,matched,RespawnUpdate revival apply per identity_evidence/002a1f80-masm-codegen-blocker.md; C++ replaces the MASM dump via a per-arm FX test;model=claude-opus-5-5;host=app
 ?rva0024ECA0@Rva0024ECA0Owner@@QAEXPAURva0024ECA0Object@@@Z,,0x0024ECA0,126,game/GameEngine/Source/GameLogic/Object/Contain/Rva0024ECA0.cpp,matched,model=claude-opus-5-5;host=app
+?rva005280A0@MpGameSetup@@QAE_NXZ,,0x005280A0,570,game/GameEngine/Source/GameClient/GUI/MpGameSetupRva005280A0.cpp,matched,model=claude-opus-5-5;host=app
