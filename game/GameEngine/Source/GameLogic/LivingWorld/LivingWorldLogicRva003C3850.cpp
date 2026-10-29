@@ -318,7 +318,10 @@ extern GameLogic *TheGameLogic;
 extern Keyboard *TheKeyboard;
 extern GlobalData *TheWritableGlobalData;
 extern CampaignManager *TheLivingWorldLogic;
-extern Gen_00609320 *g_bfmeStateDF;
+// Retail 0x012F7048 is ?g_rva012F7048LivingWorld@@3PAVRva006092D0State@@A (data_rows.csv,
+// GameClient/LivingWorld.cpp); g_bfmeStateDF was only a pin.
+extern Rva006092D0State *g_rva012F7048LivingWorld;
+#define g_bfmeStateDF ( *(Gen_00609320 **)&g_rva012F7048LivingWorld )
 extern const AsciiString Rva01336E50EmptyString;
 #define Rva01336E50Empty Rva01336E50EmptyString
 

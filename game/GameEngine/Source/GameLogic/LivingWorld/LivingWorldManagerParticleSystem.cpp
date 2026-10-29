@@ -148,7 +148,11 @@ public:
 	volatile unsigned char m_enabled;
 };
 
-extern Gen_00609320 *g_bfmeStateDF;
+// Retail 0x012F7048 is ?g_rva012F7048LivingWorld@@3PAVRva006092D0State@@A (data_rows.csv,
+// GameClient/LivingWorld.cpp); g_bfmeStateDF was only a pin.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
+#define g_bfmeStateDF ( *(Gen_00609320 **)&g_rva012F7048LivingWorld )
 
 class BfmeLivingWorldManager
 {

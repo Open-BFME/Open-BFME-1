@@ -33,7 +33,11 @@ public:
 	void bfmeRemove(int handle);				// retail thunk 0x00010FFA -> 0x003C6D40
 };
 
-extern BfmeGameCW *g_bfmeGameCW;				// retail 0x012F706C
+// Retail 0x012F706C is ?TheLivingWorldManager@@3PAVLivingWorldManager@@A (data_rows.csv,
+// LivingWorld/LivingWorldManager.cpp); g_bfmeGameCW was only a pin.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
+#define g_bfmeGameCW ( *(BfmeGameCW **)&TheLivingWorldManager )
 
 inline BfmeItemH **bfmeCopyItems(BfmeItemH **destination, BfmeItemH **first, BfmeItemH **last)
 {

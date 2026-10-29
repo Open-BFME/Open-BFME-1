@@ -70,7 +70,11 @@ public:
 	virtual void slot8();
 	virtual bool slot9(const void *coord, int *outXY);
 };
-extern Gen_00609320 *g_bfmeStateDF;
+// Retail 0x012F7048 is ?g_rva012F7048LivingWorld@@3PAVRva006092D0State@@A (data_rows.csv,
+// GameClient/LivingWorld.cpp); g_bfmeStateDF was only a pin.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
+#define g_bfmeStateDF ( *(Gen_00609320 **)&g_rva012F7048LivingWorld )
 void bfmeGo1077B(int a, float b, float c);
 
 void BfmeHostYF::bfmeNoteYF_00585C20(BfmeHandleYF h)
@@ -145,7 +149,11 @@ extern LivingWorldLogic *TheLivingWorldLogic;
 #define Glo012F1028 ( reinterpret_cast<Glo012F1028Type *>( TheLivingWorldLogic ) )
 class Rva003BCA20 { public: void go(); };
 class BfmeGameCW { public: void rva0060D4C0(void *what); };
-extern BfmeGameCW *g_bfmeGameCW;
+// Retail 0x012F706C is ?TheLivingWorldManager@@3PAVLivingWorldManager@@A (data_rows.csv,
+// LivingWorld/LivingWorldManager.cpp); g_bfmeGameCW was only a pin.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
+#define g_bfmeGameCW ( *(BfmeGameCW **)&TheLivingWorldManager )
 struct Rva005A63D0Mouse {
 	virtual void bfmeSlot0AAX();
 	virtual void bfmeSlot1AAX();

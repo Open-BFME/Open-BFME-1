@@ -26,7 +26,11 @@ class Gen_003BEA30;
 // the call.
 class BfmeGameCW;
 class BfmeSinkAM { public: void registerItem(int,Gen_003BEA30*,int); };
-extern BfmeGameCW *g_bfmeGameCW;
+// Retail 0x012F706C is ?TheLivingWorldManager@@3PAVLivingWorldManager@@A (data_rows.csv,
+// LivingWorld/LivingWorldManager.cpp); g_bfmeGameCW was only a pin.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
+#define g_bfmeGameCW ( *(BfmeGameCW **)&TheLivingWorldManager )
 class UnicodeString;
 class Rva003A5450 {
 public:

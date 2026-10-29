@@ -48,7 +48,11 @@ public:
 	BfmeItemEQV *rva006155e0(void *key);
 };
 class BfmeGameCW;
-extern BfmeGameCW *g_bfmeGameCW;
+// Retail 0x012F706C is ?TheLivingWorldManager@@3PAVLivingWorldManager@@A (data_rows.csv,
+// LivingWorld/LivingWorldManager.cpp); g_bfmeGameCW was only a pin.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
+#define g_bfmeGameCW ( *(BfmeGameCW **)&TheLivingWorldManager )
 extern Region2D Rva012F7078Region;
 extern FieldParse Rva011172B0SoundFields[];
 

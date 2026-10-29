@@ -16,7 +16,11 @@ public:
 // (?g_bfmeGameCW@@3PAVBfmeGameCW@@A) at 0x012F706C; this TU reads three
 // adjacent members of it, so the retail pointer is reinterpreted here.
 class BfmeGameCW;
-extern BfmeGameCW *g_bfmeGameCW;
+// Retail 0x012F706C is ?TheLivingWorldManager@@3PAVLivingWorldManager@@A (data_rows.csv,
+// LivingWorld/LivingWorldManager.cpp); g_bfmeGameCW was only a pin.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
+#define g_bfmeGameCW ( *(BfmeGameCW **)&TheLivingWorldManager )
 extern BfmeTextCW g_bfmeDefaultCW;
 
 BfmeTextCW * __stdcall bfmeSelectCW(int which)

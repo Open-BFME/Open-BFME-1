@@ -2,7 +2,11 @@
 // (?g_bfmeGameCW@@3PAVBfmeGameCW@@A). This TU only calls one member on it
 // through its own BfmeGameCZ view, so the class is only forward-declared.
 class BfmeGameCW;
-extern BfmeGameCW *g_bfmeGameCW;
+// Retail 0x012F706C is ?TheLivingWorldManager@@3PAVLivingWorldManager@@A (data_rows.csv,
+// LivingWorld/LivingWorldManager.cpp); g_bfmeGameCW was only a pin.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
+#define g_bfmeGameCW ( *(BfmeGameCW **)&TheLivingWorldManager )
 
 class BfmeSlotCZ
 {

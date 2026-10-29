@@ -3,7 +3,11 @@
 // address, so it forward-declares the class and reinterprets it. The +0x16C
 // member address is taken in bytes, so it does not need sizeof(BfmeGameCW).
 class BfmeGameCW;
-extern BfmeGameCW *g_bfmeGameCW;
+// Retail 0x012F706C is ?TheLivingWorldManager@@3PAVLivingWorldManager@@A (data_rows.csv,
+// LivingWorld/LivingWorldManager.cpp); g_bfmeGameCW was only a pin.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
+#define g_bfmeGameCW ( *(BfmeGameCW **)&TheLivingWorldManager )
 
 class BfmeOwnCZ
 {

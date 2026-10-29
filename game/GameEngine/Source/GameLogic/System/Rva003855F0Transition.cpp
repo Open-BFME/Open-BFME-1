@@ -87,8 +87,16 @@ public:
 	void run(bool flag);
 };
 class Glo012F1028Type;
-extern BfmeGameCW *g_bfmeGameCW;
-extern Gen_00609320 *g_bfmeStateDF;
+// Retail 0x012F706C is ?TheLivingWorldManager@@3PAVLivingWorldManager@@A (data_rows.csv,
+// LivingWorld/LivingWorldManager.cpp); g_bfmeGameCW was only a pin.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
+#define g_bfmeGameCW ( *(BfmeGameCW **)&TheLivingWorldManager )
+// Retail 0x012F7048 is ?g_rva012F7048LivingWorld@@3PAVRva006092D0State@@A (data_rows.csv,
+// GameClient/LivingWorld.cpp); g_bfmeStateDF was only a pin.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
+#define g_bfmeStateDF ( *(Gen_00609320 **)&g_rva012F7048LivingWorld )
 // Retail 0x012F1028 is EA's TheLivingWorldLogic (data_rows.csv owns
 // ?TheLivingWorldLogic@@3PAVLivingWorldLogic@@A, LivingWorldLogic.cpp); the
 // Glo012F1028 spelling is only a pin nothing defines.

@@ -61,7 +61,11 @@ public:
 	BfmeLivingWorldNameMap m_nameMap;
 };
 
-extern "C" BfmeLivingWorldManager *g_bfmeGameCW;
+// Retail 0x012F706C is ?TheLivingWorldManager@@3PAVLivingWorldManager@@A (data_rows.csv,
+// LivingWorld/LivingWorldManager.cpp); g_bfmeGameCW was only a pin.
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
+#define g_bfmeGameCW ( *(BfmeLivingWorldManager **)&TheLivingWorldManager )
 
 // ?parseLivingWorldObject00614F50@@YAXPAVINI@@@Z
 void parseLivingWorldObject00614F50( INI *ini )

@@ -27,7 +27,11 @@ public:
 	virtual void buildFramePoint(void *source, Gen0060CBB0Scratch *point);
 };
 
-extern "C" BfmeStateDF *g_bfmeStateDF;
+// Retail 0x012F7048 is ?g_rva012F7048LivingWorld@@3PAVRva006092D0State@@A (data_rows.csv,
+// GameClient/LivingWorld.cpp); g_bfmeStateDF was only a pin.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
+#define g_bfmeStateDF ( *(BfmeStateDF **)&g_rva012F7048LivingWorld )
 
 // 0x012F1028 is the one Glo012F1028 global.  It must not be extern "C": the
 // unmangled spelling could never link against the retail-defining name.
