@@ -23,6 +23,16 @@
 // look like allocation noise rather than a source-level fact.  Same fix as
 // IMECandidateMainDraw 0x004C4AB0.
 
+// This unit's GameWindow view defines the winGet*Color accessors inline 4 bytes
+// past retail's slots (0x0047A260/0x0047A2A0/0x0047A2E0, 0x00484260, 0x0059E4A0,
+// 0x0078CF80) and emits those COMDAT copies; rename them so only retail-equal
+// copies carry the names. Inlined calls are unchanged.
+#define winGetEnabledColor winGetEnabledColor_LocalView
+#define winGetEnabledBorderColor winGetEnabledBorderColor_LocalView
+#define winGetDisabledColor winGetDisabledColor_LocalView
+#define winGetDisabledBorderColor winGetDisabledBorderColor_LocalView
+#define winGetHiliteColor winGetHiliteColor_LocalView
+#define winGetHiliteBorderColor winGetHiliteBorderColor_LocalView
 #include <wchar.h>
 #include "string_base.h"
 #include "Common/UnicodeString.h"
