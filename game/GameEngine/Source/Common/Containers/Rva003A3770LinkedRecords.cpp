@@ -36,7 +36,19 @@ struct Rva003A3770Input
     }
 };
 
-class Waypoint;
+class Waypoint
+{
+public:
+    AsciiString getName() const;
+};
+
+// ?zeroPoint@@YAXAAVCoord3D@@@Z absent-from-retail
+static __forceinline void zeroPoint(Coord3D &point)
+{
+    point.x = 0.0f;
+    point.y = 0.0f;
+    point.z = 0.0f;
+}
 
 struct Rva003A35A0Element
 {
@@ -52,6 +64,16 @@ struct Rva003A35A0Element
     ~Rva003A35A0Element();
     Rva003A35A0Element &operator=(const Rva003A35A0Element &);
     Rva003A35A0Element *rva003A25A0(const Waypoint *);
+    // ?clear@Rva003A35A0Element@@QAEXXZ absent-from-retail
+    __forceinline void clear()
+    {
+        m_key = 0;
+        for (int i = 0; i < 10; ++i)
+        {
+            m_prefix[i] = 0;
+            zeroPoint(m_points[i]);
+        }
+    }
 };
 
 struct Rva003A3770Vec
@@ -76,6 +98,19 @@ private:
     char m_pad[0x2c];
     Rva003A3770Vec m_vec;
 };
+
+// Refills one record from a waypoint: name, location and id, then clears the
+// key and the ten prefix/point pairs. The caller below names this body.
+// ?rva003A25A0@Rva003A35A0Element@@QAEPAU1@PBVWaypoint@@@Z
+Rva003A35A0Element *Rva003A35A0Element::rva003A25A0(const Waypoint *source)
+{
+    const Rva003A3770Input *waypoint = reinterpret_cast<const Rva003A3770Input *>(source);
+    m_name = source->getName();
+    m_location = waypoint->m_position;
+    m_tail = waypoint->m_id;
+    clear();
+    return this;
+}
 
 // ?method@Rva003A3770Obj@@QAEXPAX@Z
 void Rva003A3770Obj::method(void *arg)
