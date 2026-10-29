@@ -1,5 +1,4 @@
 // ?update@PhysicsBehavior@@UAE?AW4UpdateSleepTime@@XZ
-// partial score=0.9814 date=2026-10-13
 // Retail RVA 0x0029B760, 862 bytes, __thiscall, returns UpdateSleepTime.
 // Identity proven in reverse/identity_evidence/0029b760-physicsbehavior-update.md:
 // constructor 0x0029A880 installs the +0x10 update-interface table 0x010C0BBC
@@ -34,7 +33,7 @@ public:
 	_STL::bitset<320> m_bits;
 };
 #define BFME_HAVE_MODELCONDITIONFLAGS
-struct Coord3D { float x, y, z; };
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 #define BFME_HAVE_COORD3D
 #define THING_TU_MEMBERS void setPosition(const Coord3D *); void rva00132200(const Matrix3D *);
 #define OBJECT_TU_MEMBERS void notifyModelConditionChanged();
@@ -159,13 +158,19 @@ UpdateSleepTime PhysicsBehavior::update()
 		}
 		else
 		{
-			if (((WordBitTest000D2F40 *)((char *)obj + 0x110))->test(153)
-					&& obj->m_modelConditionFlags.test(153))
+			// The call is written in both arms: VC7.1 tail-merges the two
+			// copies, which is what puts the receiver lea before push 0.
+			if (((WordBitTest000D2F40 *)((char *)obj + 0x110))->test(153))
 			{
-				obj->m_modelConditionFlags.reset(153);
-				obj->notifyModelConditionChanged();
+				if (obj->m_modelConditionFlags.test(153))
+				{
+					obj->m_modelConditionFlags.reset(153);
+					obj->notifyModelConditionChanged();
+				}
+				rva0029A6A0(false);
 			}
-			rva0029A6A0(false);
+			else
+				rva0029A6A0(false);
 		}
 	}
 
@@ -204,8 +209,12 @@ UpdateSleepTime PhysicsBehavior::update()
 	}
 	else
 	{
-		Vector3 next = 2.0f * Vector3(pos.x, pos.y, pos.z)
-				- Vector3(obj->m_cachedPos.x, obj->m_cachedPos.y, obj->m_cachedPos.z);
+		// Extrapolate one step past the last waypoint. Built in place with
+		// *= and -=, the product shares next's slot (retail frame 0x4C).
+		Vector3 previous(obj->m_cachedPos.x, obj->m_cachedPos.y, obj->m_cachedPos.z);
+		Vector3 next(pos.x, pos.y, pos.z);
+		next *= 2.0f;
+		next -= previous;
 		setHint0029B760(obj, (const Coord3D *)&next);
 	}
 

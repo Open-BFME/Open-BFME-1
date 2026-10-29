@@ -2484,3 +2484,18 @@ retail's `mov ebp,ecx` plus one volume dword (0x006B1FC0 went 74 diffs to
 exact). Unused frame words next to float locals can be enregistered members.
 Sources: game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerIsPlayingLowerPriority006B2110.cpp,
 MilesAudioManagerFindLowestPrioritySound.cpp.
+
+## Tail-merged duplicate call puts the receiver before its push (2026-10-29)
+
+PhysicsBehavior::update (0x0029B760, 862 B) kept `push 0; lea ecx,[esi-0x10]`
+where retail has `lea ecx,[esi-0x10]; push 0` at a three-way join before
+`rva0029A6A0(false)`. Qualified, default-argument, wrapper, local-receiver
+and folded-argument spellings were all byte-identical. Writing the call in
+both arms of the guarding `if` (`if (a) { if (b) {...} f(false); } else
+f(false);`) lets VC7.1 cross-jump the two copies, and the merged tail keeps
+the receiver-first order: exact. Other duplications (`a && b` in one test,
+three copies) restructure the body. In the same body a 12-byte frame excess
+(0x58 vs 0x4C) came from `2.0f * A - B` materialising the product as its own
+temporary; `Vector3 b(...); Vector3 next(...); next *= 2.0f; next -= b;`
+shares one slot like retail (constructing `b` first keeps retail's load
+order). Source: game/GameEngine/Source/GameLogic/Object/Update/PhysicsBehaviorUpdate.cpp.
