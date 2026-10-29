@@ -4221,16 +4221,8 @@ void Drawable::updateHiddenStatus()
 //-------------------------------------------------------------------------------------------------
 /** Hide or un-hide drawable */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/DrawableVisualState.cpp
-// ?setDrawableHidden@Drawable@@QAEX_N@Z present-unmatched
-void Drawable::setDrawableHidden( Bool hidden )
-{
-	if (hidden != m_hidden)
-	{
-		m_hidden = hidden;
-		updateHiddenStatus();
-	}
-}
+// Drawable::setDrawableHidden(Bool)
+// Body in DrawableVisualState.cpp (exact 74B retail).
 
 //-------------------------------------------------------------------------------------------------
 // ?updateDrawableClipStatus@Drawable@@QAEXIIW4WeaponSlotType@@@Z present-unmatched
