@@ -6493,21 +6493,8 @@ StateReturnType AIWaitState::update()
 
 //----------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AIAttackStateDestructors.cpp
-// ??1AIAttackState@@MAE@XZ present-unmatched
-AIAttackState::~AIAttackState()
-{
-	// nope, don't do this, since we may well still have it targeted
-	// even though we're leaving this state.
-	// turn it off when we do setCurrentVictim(NULL).
-	//addSelfAsTargeter(false);
-
-	if (m_attackMachine) 
-	{
-		m_attackMachine->halt();
-		m_attackMachine->deleteInstance();
-	}
-}
+// AIAttackState::~AIAttackState()
+// Body in AIAttackStateDestructors.cpp (exact 126B retail).
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */

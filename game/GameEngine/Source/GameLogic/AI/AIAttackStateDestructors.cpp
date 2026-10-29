@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
-// readable body of ??1AIAttackState@@MAE@XZ: game/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // BFME layout reconstruction for the AIAttackState destructor at 0x0017CA40.
 // Its emitted scalar-deleting wrapper is retail 0x001840E0; the matched
 // constructor at 0x0017C910 independently establishes the class identity.
