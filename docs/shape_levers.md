@@ -2591,3 +2591,29 @@ also takes the inner index lookup was exact too. A helper over an
 already-computed local index was inert (8). Inert on 0x008D1F10, whose index
 comes from a loop-found slot. Source:
 game/Libraries/Source/EA/Apt/Rva8CD2F0GetProperty.cpp (b883857bb0).
+
+## Release-and-return inside a search loop saves EBP in the prologue (2026-10-29)
+
+MilesAudioManager 0x0069F540 (106 B, /O2, STLport vector) uses EBP only for
+the loop's `end()` reload. With `if (match) { erase; flag = true; break; }`
+and one `if (held) ReleaseMutex` after the loop, VC7.1 pushed EBP at the loop
+entry and popped it at the exit (56 bytes off, every instruction otherwise
+equal; while/do, iterator scope, flags all inert). Writing the found branch
+as `{ erase; flag = true; if (held) ReleaseMutex(mutex); return; }` with the
+same release after the loop was exact: the two releases tail-merge, so the
+bytes after the loop are unchanged, and EBP is saved in the prologue. A
+`break` followed by `if (it != end())` was worse (114 B). Also there: an
+explicit specialization declaration
+`template <> vector<T>::iterator vector<T>::erase(iterator);` keeps an STLport
+member out of line where retail calls it. Source:
+game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva0069F540.cpp.
+
+## Load an array index into a local before passing it (2026-10-29)
+
+MilesAudioManager::getMusicTrackName 0x0069D920 (277 B) had 8 bytes left:
+for `getSlot(m_x604, m_current[m_x604])` retail loads the element into ECX
+and the hidden return pointer into EDX; ours used EDX and EAX, and the
+following block rotated. `int inner = m_current[m_x604];` before the call
+was exact. A local for the outer index, a pointer to the array, a helper or a
+named result were all inert. Source:
+game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerGetMusicTrackName.cpp.
