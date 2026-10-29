@@ -1,5 +1,6 @@
 // ?rva0089ECD0@Rva0089ECD0@@QAAXPBDZZ
-// partial score=0.8691 date=2026-10-29
+// partial score=0.8909 date=2026-10-29
+// Caller loop follows Open BFME 2 EAString.cpp rva006D5300 (b5a7b8290a): buffer/result outside the loop, break, finalise after (36 -> 30 diffs).
 // cl: /O2 /DNDEBUG /MD
 // Bank only: native original method name remains unproved; address retained.
 // Physical retail ABI is cdecl member varargs (this then format on stack).
@@ -89,21 +90,23 @@ void Rva0089ECD0::ChangeBuffer(unsigned int reserve, unsigned int offset,
 
 void Rva0089ECD0::rva0089ECD0(const char *format, ...)
 {
-	unsigned int extra = strlen(format) * 4;
+	unsigned int count = strlen(format) * 4;
 	unsigned int oldSize = m_data->m_size;
+	va_list args;
+	va_start(args, format);
+	char *buffer;
+	int result;
 	for (;;)
 	{
-		ChangeBuffer(oldSize + extra, 0, 0, CB_NO_PUSH_ZERO, 0);
-		StringDataC *data = m_data;
-		int written = _vsnprintf(reinterpret_cast<char *>(data) + 8 + oldSize,
-			data->m_maxSize - oldSize, format, reinterpret_cast<char *>(&format + 1));
-		if (written >= 0)
-		{
-			(reinterpret_cast<char *>(data) + 8)[oldSize + written] = 0;
-			m_data->m_size = (unsigned short)(oldSize + written);
-			m_data->m_hash = 0;
-			return;
-		}
-		extra *= 2;
+		ChangeBuffer(oldSize + count, 0, 0, CB_NO_PUSH_ZERO, 0);
+		buffer = reinterpret_cast<char *>(m_data) + 8;
+		result = _vsnprintf(buffer + oldSize, m_data->m_maxSize - oldSize, format, args);
+		if (result >= 0)
+			break;
+		count *= 2;
 	}
+	buffer[oldSize + result] = 0;
+	m_data->m_size = (unsigned short)(oldSize + result);
+	m_data->m_hash = 0;
+	va_end(args);
 }
