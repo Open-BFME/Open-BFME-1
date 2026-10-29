@@ -20,7 +20,8 @@ class FXList
 {
 public:
 	virtual ~FXList();
-	Bool isEmpty() const;
+	// 0x0042DAA0 via ILT 0x00011F77, matched as FXList::bfmeIsBlocked.
+	Bool bfmeIsBlocked();
 	void doFXObj(const Object *primary, const Object *secondary) const;
 };
 
@@ -145,7 +146,7 @@ void CrateCollide::onCollide(Object *other, const Coord3D *, const Coord3D *)
 		if (dispatch->executeCrateBehavior(other))
 		{
 			executeFX = modData->m_executeFX;
-			if (executeFX != NULL && executeFX->isEmpty() == FALSE)
+			if (executeFX != NULL && executeFX->bfmeIsBlocked() == FALSE)
 			{
 				executeFX->doFXObj(other, NULL);
 			}

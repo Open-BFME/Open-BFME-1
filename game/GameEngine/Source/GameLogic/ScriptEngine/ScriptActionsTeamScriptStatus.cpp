@@ -61,13 +61,9 @@ class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
 	public BfmeObjectDlinkPad, public BfmeObjectVbptrCarrier
 {
 public:
+	// 0x001D01D0 (ILT 0x0002BF2B), matched in its own unit.
+	void setScriptStatus(ObjectScriptStatusBit bit, Bool set);
 	unsigned char m_tail[0x194];
-};
-
-class BfmeX1026
-{
-public:
-	void bfmeSet1026(Int bit, char set);
 };
 
 typedef Object *(Object::*BfmeGetNextTeamMemberFunc)(void) const;
@@ -135,7 +131,7 @@ public:
 
 extern ScriptEngine *TheScriptEngine;
 // Retail calls this address (0x002EFB20) with two explicit stack args and
-// cleans the stack itself afterward, unlike the thiscall bfmeSet1026 its two
+// cleans the stack itself afterward, unlike the thiscall setScriptStatus its two
 // siblings use -- see Object/Update/Rva002EFB20Helper.cpp for the body, which
 // is a cdecl helper of its own and not a FlammableUpdate method.
 namespace Rva002EFB20
@@ -172,7 +168,7 @@ void ScriptActions::doTeamEnableStealth(
 			{
 				continue;
 			}
-			((BfmeX1026 *)obj)->bfmeSet1026(
+			obj->setScriptStatus(
 				OBJECT_STATUS_SCRIPT_UNSTEALTHED, !enabled);
 		}
 	}
@@ -197,7 +193,7 @@ void ScriptActions::doTeamSetStrictControlEnabled(
 			{
 				continue;
 			}
-			((BfmeX1026 *)obj)->bfmeSet1026(
+			obj->setScriptStatus(
 				OBJECT_STATUS_SCRIPT_STRICT_CONTROL, enabled);
 		}
 	}
