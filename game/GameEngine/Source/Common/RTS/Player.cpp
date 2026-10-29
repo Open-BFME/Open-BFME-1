@@ -3551,18 +3551,8 @@ void Player::deleteUpgradeList( void )
 //=================================================================================================
 /** Find an upgrade in our list of upgrades with matching name key */
 //=================================================================================================
-// ?findUpgrade@Player@@QAEPAVUpgrade@@PBVUpgradeTemplate@@@Z present-unmatched
-Upgrade *Player::findUpgrade( const UpgradeTemplate *upgradeTemplate )
-{
-	Upgrade *upgrade;
-
-	for( upgrade = m_upgradeList; upgrade; upgrade = upgrade->friend_getNext() )
-		if( upgrade->getTemplate() == upgradeTemplate )
-			return upgrade;
-
-	return NULL;
-	
-}  // end findUpgrade
+// Player::findUpgrade(const UpgradeTemplate *)
+// Body in Player_findUpgrade.cpp (exact 33B retail).
 
 //=================================================================================================
 /** Does the player have this completed upgrade */
