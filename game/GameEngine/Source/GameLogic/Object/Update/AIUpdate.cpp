@@ -6226,66 +6226,8 @@ void AIUpdateInterface::privateCommandButton( const CommandButton *commandButton
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?privateCommandButtonObject@AIUpdateInterface@@ present-unmatched
-void AIUpdateInterface::privateCommandButtonObject( const CommandButton *commandButton, Object *obj, CommandSourceType cmdSource )
-{
-	if( !commandButton )
-	{
-		return;
-	}
-
-	if (getObject()->isKindOf(KINDOF_PROJECTILE))
-		return;
-
-	//First of all, it's quite possible to get this far with an object incapable of performing such a task. Scripts will have
-	//entire teams of multiple unit types and want to order units to do something... if they can, great.. if not, ignore.
-	Object *owner = getObject();
-	if( owner )
-	{
-		AIUpdateInterface *ai = owner->getAI();
-		//Make sure the owner has the same command button.
-		const CommandSet *commandSet = TheControlBar->findCommandSet( owner->getCommandSetString() );
-		if( commandSet )
-		{
-			for( int i = 0; i < MAX_COMMANDS_PER_SET; i++ )
-			{
-				const CommandButton *aCommandButton = commandSet->getCommandButton(i);
-				if( commandButton == aCommandButton )
-				{
-					//We found the matching command button so now order the unit to do what the button wants.
-					switch( commandButton->getCommandType() )
-					{
-						//OBJECT BASED COMMANDS ONLY VIA AI
-						case GUI_COMMAND_COMBATDROP:
-							if( ai )
-							{
-								ai->aiCombatDrop( obj, *(obj->getPosition()), cmdSource );
-							}
-							break;
-						default:
-						{
-							AsciiString myName = owner->getTemplate()->getName().str();
-							AsciiString myNickname;
-							AsciiString targetName = obj->getTemplate()->getName().str();
-							AsciiString targetNickname;
-							if( owner->getName().isNotEmpty() )
-							{
-								myNickname.format( "('%s')", owner->getName().str() );
-							}
-							if( obj->getName().isNotEmpty() )
-							{
-								targetNickname.format( "('%s')", obj->getName().str() );
-							}
-
-							DEBUG_ASSERTCRASH( 0, ("AIUpdate::privateCommandButtonPosition() -- unit %s %s, command %s at unit %s %s not implemented.",
-								myName.str(), myNickname.str(), commandButton->getTextLabel().str(), targetName.str(), targetNickname.str() ) );
-						}
-					}
-				}
-			}
-		}
-	}
-}
+// AIUpdateInterface::privateCommandButtonObject(const CommandButton*, Object*, CommandSourceType)
+// Body in AIUpdateInterfaceCommandButton.cpp (exact 486B retail).
 
 // ------------------------------------------------------------------------------------------------
 // AIUpdateInterface::getGroup is defined at its retail address (0x0026FB30) in
