@@ -19,14 +19,16 @@ public:
 extern "C" int __cdecl atexit(void (__cdecl *callback)());
 void bfmeForward_00C70BD0(void);
 
-class Rva00C6C790Init : public BfmeThingTB
+// Retail 0x0130A451 is recorded as TheBfmeObject_00C70BD0 (the object
+// S3SingletonForwarders.cpp's 0x00C70BD0 forwarder tears down).
+class Gen_00C70BD0Target : public BfmeThingTB
 {
 public:
-	Rva00C6C790Init()
+	Gen_00C70BD0Target()
 	{
 		bfmeGoTB();
 		atexit(bfmeForward_00C70BD0);
 	}
 };
 
-Rva00C6C790Init g_rva0130A451;
+Gen_00C70BD0Target TheBfmeObject_00C70BD0;
