@@ -25,3 +25,12 @@ cmp (11). Plain stores without the nested trio: the 0x46 store sinks below
 
 The name_corrections entry for this bank records a positional token pairing
 (`p5` -> `m_bfme0cJG` in the reset argument), not a rename.
+
+## Register-choice observations (same session, later)
+Returning `p5` as int (`return p5;`, no extra bytes, EAX already holds it)
+moves the flag to `setne cl`: the byte register follows liveness, so retail has
+EAX and ECX both unavailable at +0x5F. Inert with the int return: cast `this`,
+trio pointer, `TailJG *` local, bool local; `return m_0c` reloads (122 B).
+Inline `__fastcall` static/free reset helpers (flag second or third) stay `al`.
+The function is only reached through slot 2 of the vtable at 0x010C7E28
+(`??_7GiantBirdNested@@6B@` in dir32), so its return type is not proven void.
