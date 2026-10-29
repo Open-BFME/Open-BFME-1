@@ -2499,3 +2499,9 @@ three copies) restructure the body. In the same body a 12-byte frame excess
 temporary; `Vector3 b(...); Vector3 next(...); next *= 2.0f; next -= b;`
 shares one slot like retail (constructing `b` first keeps retail's load
 order). Source: game/GameEngine/Source/GameLogic/Object/Update/PhysicsBehaviorUpdate.cpp.
+
+Second instance: 0x00271B40 (249 B, 55 earlier trials) had `mov ecx,edi`
+before `push imm` at all three calls of one arm. Spelling `if (p &&
+p->active()) A else B` as `if (!p) B else if (p->active()) A else B` (B
+written twice) matched exactly; duplicating only part of B fixed only the
+calls it covered. Source: game/GameEngine/Source/Common/Rva00271B40ShadowSync.cpp.
