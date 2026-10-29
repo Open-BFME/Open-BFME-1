@@ -3375,32 +3375,8 @@ void ScriptActions::doTeamDecreasePriority(const AsciiString& teamName)
 //-------------------------------------------------------------------------------------------------
 /** doTeamPanic */
 //-------------------------------------------------------------------------------------------------
-// ?doTeamPanic@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
-void ScriptActions::doTeamPanic(const AsciiString& teamName, const AsciiString& waypointPathLabel)
-{
-	Team *team = TheScriptEngine->getTeamNamed(teamName);
-
-	if (!team) {
-		return;
-	}
-
-	// Get the center point for the team
-	for (DLINK_ITERATOR<Object> iter = team->iterate_TeamMemberList(); !iter.done(); iter.advance())
-	{
-		Object *obj = iter.cur();
-		AIUpdateInterface *ai = obj->getAIUpdateInterface();
-		if (!ai) {
-			continue;
-		}
-		Coord3D pos = *obj->getPosition();
-		Waypoint *way = TheTerrainLogic->getClosestWaypointOnPath( &pos, waypointPathLabel );
-		if (!way) {
-			return;
-		}
-		ai->chooseLocomotorSet(LOCOMOTORSET_PANIC);
-		ai->aiPanic(way, CMD_FROM_SCRIPT);
-	}
-}
+// ScriptActions::doTeamPanic(const AsciiString&, const AsciiString&)
+// Body in ScriptActionsTeamWanderPanic.cpp (exact 212B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** doNamedKill */
