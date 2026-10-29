@@ -162,19 +162,12 @@ static inline void setType(PathfindCell *cell, PathfindCell::CellType type)
 	((Gen_003F68B0 *)cell)->bfmeSetMode((unsigned int)type);
 }
 
+// Pathfinder::getCell(layer, x, y) is retail 0x003D4E80, matched in
+// PathfindCheckDestination.cpp; retail inlines it here. A file-static
+// forwarder: a member here emitted a non-retail COMDAT of that name.
 class Pathfinder
 {
 public:
-	PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y)
-	{
-		(void)layer;
-		if (x < m_lowX || x > m_highX || y < m_lowY || y > m_highY) {
-			return 0;
-		}
-		return &m_map[x][y];
-	}
-
-private:
 	unsigned char m_prefix[0x10];
 	PathfindCell **m_map;
 	Int m_lowX;
@@ -182,6 +175,15 @@ private:
 	Int m_highX;
 	Int m_highY;
 };
+
+static inline PathfindCell *pathfinderGetCell(Pathfinder *pathfinder, PathfindLayerEnum layer, Int x, Int y)
+{
+	(void)layer;
+	if (x < pathfinder->m_lowX || x > pathfinder->m_highX || y < pathfinder->m_lowY || y > pathfinder->m_highY) {
+		return 0;
+	}
+	return &pathfinder->m_map[x][y];
+}
 
 class AI
 {
@@ -329,7 +331,7 @@ void PathfindLayer::classifyCells(void)
 					if (m_bridge->isCellEntryPoint(&cellBounds, &entryZ)) {
 						setType(cell, PathfindCell::CELL_CLEAR);
 						cell->setConnectLayer(LAYER_GROUND);
-						PathfindCell *groundCell = TheAI->pathfinder()->getCell(
+						PathfindCell *groundCell = pathfinderGetCell(TheAI->pathfinder(),
 							LAYER_GROUND, cellX, cellY);
 						groundCell->setConnectLayer(cell->getLayer());
 					}
@@ -348,7 +350,7 @@ void PathfindLayer::classifyCells(void)
 						center.x, center.y, LAYER_GROUND);
 					Real bridgeHeight = m_bridge->getBridgeHeight(&center, 0);
 					if (groundHeight + g_bfmeDirectionWeight1285 > bridgeHeight) {
-						PathfindCell *groundCell = TheAI->pathfinder()->getCell(
+						PathfindCell *groundCell = pathfinderGetCell(TheAI->pathfinder(),
 							LAYER_GROUND, cellX, cellY);
 						if (groundCell->getType() != PathfindCell::CELL_OBSTACLE) {
 							setType(groundCell, PathfindCell::CELL_BRIDGE_IMPASSABLE);
@@ -386,7 +388,7 @@ void PathfindLayer::classifyCells(void)
 				PathfindCell *cell = &m_layerCells[i][j];
 				PathfindLayerEnum connectLayer = cell->getConnectLayer();
 				if (connectLayer == LAYER_GROUND || (int)connectLayer >= 0x10) {
-					PathfindCell *groundCell = TheAI->pathfinder()->getCell(
+					PathfindCell *groundCell = pathfinderGetCell(TheAI->pathfinder(),
 						LAYER_GROUND, i + m_xOrigin, j + m_yOrigin);
 					if (groundCell) {
 						groundCell->setConnectLayer(LAYER_INVALID);
