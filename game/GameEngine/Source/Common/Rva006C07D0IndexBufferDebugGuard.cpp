@@ -73,7 +73,10 @@ public:
 	virtual class BfmeMsgIBD *bfmeOwn6cIBD(int a, int b);
 };
 
-extern Rva00889690Obj *g_rva00889690;
+// Retail 0x01336E5C is ?g_Rva00F36E5C@@3PAXA (data_rows.csv,
+// debug/Rva00F36E5C.cpp); g_rva00889690 was only a pin.
+extern void *g_Rva00F36E5C;
+#define g_rva00889690 ( *(Rva00889690Obj **)&g_Rva00F36E5C )
 
 // ?d_006c07d0@@YAXXZ
 void __cdecl Rva006C07D0(void *param)

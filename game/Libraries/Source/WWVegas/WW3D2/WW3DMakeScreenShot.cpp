@@ -98,7 +98,10 @@ public:
 	virtual Rva008FD930DebugStream *Get_Stream(const char *owner, int context);
 };
 
-extern Rva00889690Obj *g_rva00889690;
+// Retail 0x01336E5C is ?g_Rva00F36E5C@@3PAXA (data_rows.csv,
+// debug/Rva00F36E5C.cpp); g_rva00889690 was only a pin.
+extern void *g_Rva00F36E5C;
+#define g_rva00889690 ( *(Rva00889690Obj **)&g_Rva00F36E5C )
 extern void _bfme_debugRecordCallsite(int kind);
 
 // ?BFME_DX8_ErrorCode@@YAXI@Z absent-from-retail

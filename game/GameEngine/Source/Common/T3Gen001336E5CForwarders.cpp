@@ -72,7 +72,10 @@ public:
 	virtual void slotA0( void *a );
 };
 
-extern Rva00889690Obj *g_rva00889690;					///< retail [0x01336E5C]
+// Retail 0x01336E5C is ?g_Rva00F36E5C@@3PAXA (data_rows.csv,
+// debug/Rva00F36E5C.cpp); g_rva00889690 was only a pin.
+extern void *g_Rva00F36E5C;
+#define g_rva00889690 ( *(Rva00889690Obj **)&g_Rva00F36E5C )
 
 // ?Rva0005BBB0@@YAXPAX0@Z
 void Rva0005BBB0( void *a, void *b )

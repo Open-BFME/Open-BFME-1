@@ -34,7 +34,10 @@ public:
 	virtual SubtitleCrashMessage *getCrashMessage(void *first, void *second);
 };
 
-extern Rva00889690Obj *g_rva00889690;
+// Retail 0x01336E5C is ?g_Rva00F36E5C@@3PAXA (data_rows.csv,
+// debug/Rva00F36E5C.cpp); g_rva00889690 was only a pin.
+extern void *g_Rva00F36E5C;
+#define g_rva00889690 ( *(Rva00889690Obj **)&g_Rva00F36E5C )
 void _bfme_debugRecordCallsite(int kind);
 
 // Retail's AsciiString copy constructor is the 19-byte forwarder at 0x0005EE50

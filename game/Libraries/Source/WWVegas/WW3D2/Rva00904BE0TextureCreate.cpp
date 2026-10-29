@@ -77,7 +77,10 @@ public:
 	virtual Rva00904BE0Message *slot6c(int first, int second);
 };
 
-extern Rva00889690Obj *g_rva00889690;
+// Retail 0x01336E5C is ?g_Rva00F36E5C@@3PAXA (data_rows.csv,
+// debug/Rva00F36E5C.cpp); g_rva00889690 was only a pin.
+extern void *g_Rva00F36E5C;
+#define g_rva00889690 ( *(Rva00889690Obj **)&g_Rva00F36E5C )
 
 // retail VA 0x0111D770: the "DX8 error " literal the debug stream reports.
 // Not recorded in dir32_addresses.csv, so it keeps an address-derived name.

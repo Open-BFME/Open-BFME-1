@@ -33,7 +33,10 @@ public:
     virtual BFMEIndexBufferDebugStream *Get_Stream(void *owner, void *context);
 };
 
-extern Rva00889690Obj *g_rva00889690;
+// Retail 0x01336E5C is ?g_Rva00F36E5C@@3PAXA (data_rows.csv,
+// debug/Rva00F36E5C.cpp); g_rva00889690 was only a pin.
+extern void *g_Rva00F36E5C;
+#define g_rva00889690 ( *(Rva00889690Obj **)&g_Rva00F36E5C )
 
 static __forceinline void BFME_DX8_ErrorCode(unsigned result)
 {
