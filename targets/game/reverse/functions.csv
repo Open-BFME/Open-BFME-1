@@ -38144,7 +38144,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_006e2ac0@@YAXXZ,,0x006E2AC0,13048,game/gen_asm/d_006e2ac0.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=ret+int3 callers=1;ghidra=FUN_00ae2ac0
 ?d_006eb500@@YAXXZ,,0x006EB500,1215,game/gen_asm/d_006e0580.asm,matched,gen-dump;ghidra=FUN_00aeb500
 ?d_006ebd20@@YAXXZ,,0x006EBD20,405,game/gen_asm/d_006e0580.asm,matched,gen-dump;ghidra=FUN_00aebd20
-?d_006ee0c0@@YAXXZ,,0x006EE0C0,641,game/gen_asm/d_006e7d70.asm,matched,gen-dump;bounds=high
 ?d_006ee800@@YAXXZ,,0x006EE800,2784,game/gen_asm/d_006ebf20.asm,matched,gen-dump;ghidra=FUN_00aee800
 ?d_006f21b0@@YAXXZ,,0x006F21B0,1285,game/gen_asm/d_006ebf20.asm,matched,gen-dump;ghidra=FUN_00af21b0
 ?d_006f2cc0@@YAXXZ,,0x006F2CC0,3881,game/gen_asm/d_006f2cc0.asm,matched,gen-dump;ghidra=FUN_00af2cc0
@@ -173392,3 +173391,4 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ??$iter_swap@PAVAsciiString@@PAV1@@_STL@@YAXPAVAsciiString@@0@Z,,0x009CC6E0,5,game/GameEngineDevice/Source/Win32Device/Common/Win32BIGFileSystem_loadBigFiles.cpp,matched,unclaimed gap body whose bytes and every relocation target match the symbol this TU emits (byte-and-reloc scan of compiled objects); 16-aligned start exactly where the preceding matched row ends; terminal ret/jmp then int3 or next row
 ?getMusicTrackName@MilesAudioManager@@UBE?AVAsciiString@@XZ,,0x0069D920,277,game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerGetMusicTrackName.cpp,matched,MilesAudioManager vtable 0x0111C0C0 slot 34; ilt_oracle CONFIRMED exact; Zero Hour MilesAudioManager::getMusicTrackName shape; slot lookup 0x0069D620 via pinned ILT 0x0001815B;model=claude-opus-5-5;host=app
 ?rva0069F540@MilesAudioManager@@UAEXPAX@Z,,0x0069F540,106,game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva0069F540.cpp,matched,MilesAudioManager vtable 0x0111C0C0 slot 88; mutex-guarded vector<Gen_p8pod> erase via ILT 0x0001698C; release inside found branch gives prologue EBP save;model=claude-opus-5-5;host=app
+?rva006EE0C0@W3DDisplay@@UAEXH@Z,,0x006EE0C0,641,game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006EE0C0.cpp,matched,W3DDisplay primary vtable 0x0111EDD0 slot 89 (ctor/dtor-installed); ret 4 int mode; frame text DisplayString and clear colour are body-local statics;model=claude-opus-5-5;host=app
