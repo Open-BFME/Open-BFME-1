@@ -4920,25 +4920,8 @@ void AIUpdateInterface::privateForceAttackObject( Object *victim, Int maxShotsTo
 }
 
 //-----------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateGuardRetaliate.cpp
-// ?privateGuardRetaliate@AIUpdateInterface@@ present-unmatched
-void AIUpdateInterface::privateGuardRetaliate( Object *victim, const Coord3D *pos, Int maxShotsToFire, CommandSourceType cmdSource )
-{
-	if (!victim) {
-		return;
-	}
-
-	getStateMachine()->clear();
-	getStateMachine()->setGoalObject( victim );
-	setGoalPositionClipped( pos, cmdSource );
-	setLastCommandSource( cmdSource );
-	getStateMachine()->setState( AI_GUARD_RETALIATE );
-
-	// do this after setting it as the current state, as the max-shots-to-fire is reset in AttackState::onEnter()
-	Weapon* weapon = getObject()->getCurrentWeapon();
-	if (weapon)
-		weapon->setMaxShotCount(maxShotsToFire);
-}
+// AIUpdateInterface::privateGuardRetaliate(Object*, const Coord3D*, Int, CommandSourceType)
+// Body in AIUpdateInterfacePrivateCommands.cpp (exact 85B retail).
 
 //----------------------------------------------------------------------------------------
 /**
