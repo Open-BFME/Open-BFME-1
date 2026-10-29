@@ -179,7 +179,9 @@ void Rva00514D80() { if( reinterpret_cast<Glo00EF4988 * &>(g_Rva005127A0InGameCh
 // flag guard, free callee.  The five callees keep their ledger names.
 
 void d_003f9140();
-void d_0076cb10();
+// 0x0076CB10 is Rva0076CB10Owner::run (Rva0076CB10RenderFlags.cpp), a
+// __thiscall member on this same owner; the guard tail-jumps with this in ecx.
+class Rva0076CB10Owner { public: void run(); };
 // 0x00609710 is Rva00609710Owner::rva00609710 (U4Blend00609600.cpp, 5521ab7a48), a
 // __thiscall member; the guard tail-jumps to it with this still in ecx.
 class Rva00609710Owner { public: void rva00609710(); };
@@ -190,7 +192,7 @@ class Rva003D5780 { public: void go(); char m_lead[ 0x10 ]; int m_flag; };
 void Rva003D5780::go() { if( m_flag ) d_003f9140(); }
 
 class Rva0076EFE0 { public: void go(); char m_lead[ 0x34 ]; int m_flag; };
-void Rva0076EFE0::go() { if( m_flag ) d_0076cb10(); }
+void Rva0076EFE0::go() { if( m_flag ) reinterpret_cast<Rva0076CB10Owner *>( this )->run(); }
 
 class Rva00609850 { public: void go(); char m_lead[ 0x60 ]; bool m_flag; };
 void Rva00609850::go() { if( m_flag ) reinterpret_cast<Rva00609710Owner *>( this )->rva00609710(); }
