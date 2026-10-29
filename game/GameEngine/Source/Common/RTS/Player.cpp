@@ -1036,18 +1036,8 @@ void Player::setPlayerType(PlayerType t, Bool skirmish)
 //=============================================================================
 // This is called from PlayerList->newGame()
 //
-// ?setDefaultTeam@Player@@QAEXXZ present-unmatched
-void Player::setDefaultTeam(void) {
-	AsciiString tname;
-	tname.set("team");
-	tname.concat(m_playerName);
-	Team *dt = TheTeamFactory->findTeam(tname);
-	DEBUG_ASSERTCRASH(dt, ("no team"));
-	if (dt) {
-		m_defaultTeam = dt;
-		dt->setActive();
-	}
-}
+// Player::setDefaultTeam()
+// Body in Player_setDefaultTeam.cpp (exact 177B retail).
 
 //=============================================================================
 // This is called from PlayerList->newGame()
