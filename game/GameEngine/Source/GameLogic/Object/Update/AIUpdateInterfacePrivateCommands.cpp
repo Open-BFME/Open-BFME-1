@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /MD
-// readable body of ?privateGuardObject@AIUpdateInterface@@: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 // readable body of ?privateGuardPosition@AIUpdateInterface@@: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 //
 // The AIUpdateInterface private command handlers that share one shape: guard

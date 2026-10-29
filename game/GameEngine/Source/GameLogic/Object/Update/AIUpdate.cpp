@@ -5483,28 +5483,8 @@ void AIUpdateInterface::privateGuardTunnelNetwork( GuardMode guardMode, CommandS
 /**
  * Guard the given spot
  */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateGuardObject.cpp
-// ?privateGuardObject@AIUpdateInterface@@ present-unmatched
-void AIUpdateInterface::privateGuardObject( Object *objectToGuard, GuardMode guardMode, CommandSourceType cmdSource )
-{
-	if (getObject()->isMobile() == FALSE)
-		return;
-
-	if (getObject()->isKindOf(KINDOF_PROJECTILE))
-		return;
-
-	if (m_guardTargetType[1] == GUARDTARGET_NONE) {
-		m_guardTargetType[1] = GUARDTARGET_OBJECT;
-	} else {
-		m_guardTargetType[0] = GUARDTARGET_OBJECT;
-	}
-	m_guardMode = guardMode;
-	m_objectToGuard = objectToGuard->getID();
-
-	getStateMachine()->clear();
-	setLastCommandSource( cmdSource );
-	getStateMachine()->setState( AI_GUARD );
-}
+// AIUpdateInterface::privateGuardObject(Object*, GuardMode, CommandSourceType)
+// Body in AIUpdateInterfacePrivateCommands.cpp (exact 106B retail).
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
