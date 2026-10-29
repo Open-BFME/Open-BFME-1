@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "7c2ee65e40e8195da147312e8f6799a80c3689ec8f46847f4482600828780bdf",
+  "symbol": "?rva003A50F0@Rva003A50F0Element@@QAEXXZ",
+  "score_kind": "measured",
+  "score": 0.6704,
+  "source": "// ?rva003A50F0@Rva003A50F0Element@@QAEXXZ\n// partial score=0.6704 date=2026-10-30\n// cl: /O2\nextern \"C\" double sqrt(double x);\n#pragma intrinsic(sqrt)\nclass Rva003A40A0Host { public: float limit(); };\nclass Rva003A4FD0State { public: void update(void *delta); };\nstruct Rva003A50F0Vec\n{\n\tfloat x, y;\n\t__forceinline void scale(float s) { x *= s; y *= s; }\n};\nstruct Rva003A50F0Dir\n{\n\tfloat x, y;\n\tRva003A50F0Dir(float ax, float ay) : x(ax), y(ay) {}\n\t__forceinline void scale(float s) { x *= s; y *= s; }\n};\nclass Rva003A50F0Element\n{\npublic:\n\tvoid rva003A50F0();\nprivate:\n\tchar m_pad[0x0c];\n\tRva003A50F0Vec m_current;\n\tRva003A50F0Vec m_target;\n};\n// ?rva003A50F0@Rva003A50F0Element@@QAEXXZ\nvoid Rva003A50F0Element::rva003A50F0()\n{\n\tRva003A50F0Vec dir = m_target;\n\tRva003A50F0Dir delta(dir.x - m_current.x, dir.y - m_current.y);\n\tfloat inv = 1.0f / (float)sqrt(delta.x * delta.x + delta.y * delta.y);\n\tdir.x = delta.x * inv;\n\tdir.y = delta.y * inv;\n\tfloat amount = reinterpret_cast<Rva003A40A0Host *>(this)->limit();\n\tdir.scale(amount);\n\tm_current.x += dir.x;\n\tm_current.y += dir.y;\n\tRva003A50F0Vec remaining;\n\tremaining.x = m_target.x - m_current.x;\n\tremaining.y = m_target.y - m_current.y;\n\tif (sqrt(remaining.y * remaining.y + remaining.x * remaining.x) < 1.0)\n\t\treinterpret_cast<Rva003A4FD0State *>(this)->update(&remaining);\n}\n"
+}
