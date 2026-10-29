@@ -1967,6 +1967,26 @@ while retaining the five-byte destructor. A declaration-only control keeps
 the same14-byte position-copy residue as the GiantBird case. See
 identity_evidence/0015e510-visible-team-position.md.
 
+## Callees must share the TU for a by-reference local to stay unaliased (2026-10-29)
+
+GeometryInfo::getBestContactPoint (0x0087F590, 1066 B) kept 16 bytes at
++0x2EE: retail loads all three coordinates of a stack candidate before
+storing them, ours stored x first. About 40 copy spellings were inert.
+Defining GeometryInfo::bfmeIntersects (the callee that receives the
+candidate by reference) in the same TU made it exact; a noinline stub that
+reads its arguments works too, one that stores the pointer to a global
+does not, and definition order does not matter. bfmeIntersects itself (a
+MASM dump for a 6-byte reload swap at +0x1BD) went exact once the transform
+0x0087E900 and BfmeObjF0::set 0x0087F0F0, which receive its stack centres,
+were defined in the TU as well. Measured effect: VC7.1 /O2 /Ob2 /G6
+/EHs-c- treats a local whose address only reaches visible non-capturing
+callees as unaliased. Hypothesis: retail split units hide this whenever the
+rows were split into one-function files. Diagnose with a stub callee, then
+rehome the real rows into one TU. Source:
+game/GameEngine/Source/Common/System/GeometryInfoCollidesWith.cpp (commit
+dd411199b9); handoff
+targets/game/reverse/attempt_support/0087f590-getbestcontactpoint-visible-intersects-20261029.md.
+
 ## A datum that is file-static in retail cannot stay a data row (2026-10-21)
 
 When a bank is exact only while a global is `static`, believe it: retail's
