@@ -37342,7 +37342,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_002A1870@@YAXXZ,,0x002A1870,1,game/GameEngine/Source/Common/Rva002A1870.cpp,matched,opaque address-derived body with proven ret boundary
 ?d_002a0d90@@YAXXZ,,0x002A0D90,781,game/gen_asm/d_0029c7b0.asm,matched,gen-dump;ghidra=FUN_006a0d90
 ?d_002a19a0@@YAXXZ,,0x002A19A0,14,game/GameEngine/Source/Common/VtableSlot2StoreThunk.cpp,matched,object-symbol=?getEightieth@VtableSlot2StoreThunk@@QBE?AUVtableSlot2Result@@XZ;Open-BFME5 clean C++ vtable slot 2 value return
-?d_002a1a80@@YAXXZ,,0x002A1A80,121,game/gen_asm/d_0029c7b0.asm,matched,gen-dump;ghidra=FUN_006a1a80
 ?d_002a5a30@@YAXXZ,,0x002A5A30,10,game/GameEngine/Source/Common/VirtualSlot5CallThunk.cpp,matched,object-symbol=?invokeZeroOne@VirtualSlot11CallThunk@@QAEXXZ;Open-BFME5 clean C++ virtual slot 11 call
 ?d_002a5fb0@@YAXXZ,,0x002A5FB0,367,game/gen_asm/d_0029c7b0.asm,matched,gen-dump;ghidra=FUN_006a5fb0
 ?d_002a8540@@YAXXZ,,0x002A8540,814,game/gen_asm/d_002a7010.asm,matched,gen-dump;ghidra=FUN_006a8540
@@ -173390,3 +173389,4 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?rva002A1F80@RespawnUpdate@@QAEXPAVObject@@@Z,,0x002A1F80,489,game/GameEngine/Source/GameLogic/Object/Update/RespawnUpdateRva002A1F80.cpp,matched,RespawnUpdate revival apply per identity_evidence/002a1f80-masm-codegen-blocker.md; C++ replaces the MASM dump via a per-arm FX test;model=claude-opus-5-5;host=app
 ?rva0024ECA0@Rva0024ECA0Owner@@QAEXPAURva0024ECA0Object@@@Z,,0x0024ECA0,126,game/GameEngine/Source/GameLogic/Object/Contain/Rva0024ECA0.cpp,matched,model=claude-opus-5-5;host=app
 ?rva005280A0@MpGameSetup@@QAE_NXZ,,0x005280A0,570,game/GameEngine/Source/GameClient/GUI/MpGameSetupRva005280A0.cpp,matched,model=claude-opus-5-5;host=app
+?getDeadImage@RespawnUpdate@@UAEPBVImage@@XZ,,0x002A1A80,121,game/GameEngine/Source/GameLogic/Object/Update/RespawnUpdate_getDeadImage.cpp,matched,identity: ??_7RespawnUpdate@@6BRU_DeepBase@@@ slot 12 ILT 0x00030EB3; ilt_oracle CONFIRMED exact; name from Open-BFME-2 b5a7b8290 RespawnUpdateRva004AF25D.cpp;model=claude-opus-5-5;host=app
