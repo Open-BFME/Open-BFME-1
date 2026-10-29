@@ -1336,7 +1336,7 @@ name,address,notes
 ??$__uninitialized_copy@PBUGen_t_003be710_m12cd@@PAU1@@_STL@@YAPAUGen_t_003be710_m12cd@@PBU1@0PAU1@ABU__false_type@0@@Z,0x003BD480,family-emit payload member
 ??$__uninitialized_copy@PBUGen_t_00434540_m12cd@@PAU1@@_STL@@YAPAUGen_t_00434540_m12cd@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00433CF0,family-emit payload member
 ??$__uninitialized_copy@PBUGen_t_0052d610_m12cd@@PAU1@@_STL@@YAPAUGen_t_0052d610_m12cd@@PBU1@0PAU1@ABU__false_type@0@@Z,0x0052D210,family-emit payload member
-??$__uninitialized_copy@PBUGen_t_00531f10_m12cd@@PAU1@@_STL@@YAPAUGen_t_00531f10_m12cd@@PBU1@0PAU1@ABU__false_type@0@@Z,0x005313B0,family-emit payload member
+??$__find@PAVUnicodeString@@V1@@_STL@@YAPAVUnicodeString@@PAV1@0ABV1@ABUrandom_access_iterator_tag@0@@Z,0x005313B0,ilt_oracle CONFIRMED at ILT 0x00007220 (the generated __uninitialized_copy spelling is CONTRADICTED); called by the find() front end 0x00531F10
 ??$__uninitialized_copy@PBUGen_t_00582270_m12cd@@PAU1@@_STL@@YAPAUGen_t_00582270_m12cd@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00581CE0,family-emit payload member
 ??$__uninitialized_copy@PBUGen_t_005859c0_m12cd@@PAU1@@_STL@@YAPAUGen_t_005859c0_m12cd@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00585310,family-emit payload member
 ??$__uninitialized_copy@PBUGen_t_005859f0_m12cd@@PAU1@@_STL@@YAPAUGen_t_005859f0_m12cd@@PBU1@0PAU1@ABU__false_type@0@@Z,0x005853B0,family-emit payload member
