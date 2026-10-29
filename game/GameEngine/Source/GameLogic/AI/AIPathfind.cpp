@@ -28,6 +28,12 @@
 // AIPathfind.cpp
 // AI pathfinding system
 // Author: Michael S. Booth, October 2001
+// The Zero Hour header's inline PathfindCell::getParentCell reads its own
+// PathfindCellInfo layout (m_cell at +0x0C), not retail 0x003D4CA0 (+0x28);
+// declare it here so calls bind to the retail body instead of emitting a copy.
+#define getParentCell(a) getParentCell_##a
+#define getParentCell_void getParentCell(void) const; PathfindCell *zhInlineGetParentCell(void)
+#define getParentCell_ getParentCell()
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "GameLogic/AIPathfind.h"
@@ -70,6 +76,9 @@
 //------------------------------------------------------------------------------ Performance Timers 
 #include "Common/PerfMetrics.h"
 #include "Common/PerfTimer.h"
+#undef getParentCell
+#undef getParentCell_
+#undef getParentCell_void
 
 //-------------------------------------------------------------------------------------------------
 
