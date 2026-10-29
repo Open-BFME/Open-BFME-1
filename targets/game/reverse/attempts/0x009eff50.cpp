@@ -1,5 +1,5 @@
 // ?refresh@Q1Receiver0134FAAC@@QAEXXZ
-// partial score=0.9956 date=2026-10-25
+// partial score=0.9962 date=2026-10-29
 // ?refresh@Q1Receiver0134FAAC@@QAEXXZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
@@ -29,6 +29,17 @@
 // per key) while the earlier local copy keeps the out-of-line 0x0003AFD0;
 // the +0x44 lookup result is a const_iterator (as in the matched
 // Queue_Keys_009EFBF0), which is what puts it in memory at retail's slot.
+//
+// 2026-10-29: pass 1's sum now reads queues[1] + queues[0] + queues[2]
+// (14 -> 12 differing bytes). Residue is load scheduling in the two count
+// tails only: retail schedules the deque-1 size term first in both tails
+// (pass 0 at +0xB28, pass 1 at +0xB8F); ours starts deque 0 in pass 0 and
+// deque 2 second in pass 1. Refuted this round: deque-1-first or any
+// re-parenthesised pass-0 sum (breaks the hoisted node terms, 3232B+),
+// braced/temporary/assignment-chain pass-0 forms, branch-polarity swap,
+// every r0/r1/r2 declaration order, late declarations, and the BFME 2
+// donor's r1-before-r0 + per-arm addressing arrangement
+// (AssetManagerImplRefresh.cpp, 3169B/296 diffs here).
 
 #include <deque>
 #include <hash_map>
@@ -301,6 +312,6 @@ void Q1Receiver0134FAAC::refresh()
 		if (pass == 0)
 			m_field1e0 = r0.size() + r1.size() + r2.size();
 		else
-			m_field1e4 = queues[0].size() + queues[1].size() + queues[2].size() - m_field1e0;
+			m_field1e4 = queues[1].size() + queues[0].size() + queues[2].size() - m_field1e0;
 	}
 }
