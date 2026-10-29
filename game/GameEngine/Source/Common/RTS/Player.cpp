@@ -3935,23 +3935,8 @@ void Player::addNewSharedSpecialPowerTimer( const SpecialPowerTemplate *temp, Un
 
 }
 
-// ?expressSpecialPowerReadyFrame@Player@@QAEXPBVSpecialPowerTemplate@@I@Z present-unmatched
-void Player::expressSpecialPowerReadyFrame( const SpecialPowerTemplate *temp, UnsignedInt frame )
-{
-	SpecialPowerReadyTimerType *timer;
-	SpecialPowerReadyTimerListIterator it;
-	for( it = m_specialPowerReadyTimerList.begin(); it != m_specialPowerReadyTimerList.end(); ++it )
-	{
-		timer = &(*it);
-		if ( timer->m_templateID == temp->getID() )
-		{
-			timer->m_readyFrame = frame;
-			return;
-		}
-	}
-
-	addNewSharedSpecialPowerTimer( temp, frame );
-}
+// Player::expressSpecialPowerReadyFrame(const SpecialPowerTemplate *, UnsignedInt)
+// Body in Player_expressSpecialPowerReadyFrame.cpp (exact 147B retail).
 
 
 
