@@ -1,0 +1,35 @@
+// cl: /O2
+extern "C" double sqrt(double x);
+#pragma intrinsic(sqrt)
+class Rva003A40A0Host { public: float limit(); };
+class Rva003A4FD0State { public: void update(void *delta); };
+struct Rva003A50F0Vec { float x, y; };
+class Rva003A50F0Element
+{
+public:
+	void rva003A50F0();
+private:
+	char m_pad[0x0c];
+	Rva003A50F0Vec m_current;
+	Rva003A50F0Vec m_target;
+};
+// ?rva003A50F0@Rva003A50F0Element@@QAEXXZ
+void Rva003A50F0Element::rva003A50F0()
+{
+	Rva003A50F0Vec dir = m_target;
+	dir.x -= m_current.x;
+	dir.y -= m_current.y;
+	float inv = 1.0f / (float)sqrt(dir.y * dir.y + dir.x * dir.x);
+	dir.x *= inv;
+	dir.y *= inv;
+	float amount = reinterpret_cast<Rva003A40A0Host *>(this)->limit();
+	dir.x *= amount;
+	dir.y *= amount;
+	m_current.x += dir.x;
+	m_current.y += dir.y;
+	Rva003A50F0Vec remaining;
+	remaining.x = m_target.x - m_current.x;
+	remaining.y = m_target.y - m_current.y;
+	if (sqrt(remaining.y * remaining.y + remaining.x * remaining.x) < 1.0)
+		reinterpret_cast<Rva003A4FD0State *>(this)->update(&remaining);
+}
