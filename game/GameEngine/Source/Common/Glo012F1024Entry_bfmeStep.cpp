@@ -310,7 +310,9 @@ public:
 	void go(void);
 };
 
-extern Rva0060D5E0 *g_Rva0060D5E0;
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
+#define g_Rva0060D5E0 ((Rva0060D5E0 *)TheLivingWorldManager)
 
 class Gen_0060D600
 {
@@ -318,7 +320,7 @@ public:
 	void bfmeForward(void *value);
 };
 
-extern Gen_0060D600 *g_Gen0060D600;
+#define g_Gen0060D600 ((Gen_0060D600 *)TheLivingWorldManager)
 
 class Rva0060D620
 {
@@ -326,7 +328,7 @@ public:
 	void go(void);
 };
 
-extern Rva0060D620 *g_Rva0060D620;
+#define g_Rva0060D620 ((Rva0060D620 *)TheLivingWorldManager)
 
 class Glo012F1028Sub
 {

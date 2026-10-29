@@ -96,7 +96,8 @@ class LivingWorldLogic;
 class GlobalData;
 extern int g_012B7638;
 extern "C" int __identifier("?g_012B7638@@3HA") = 1;
-extern BfmeLivingWorldManagerIcons *TheLivingWorldManager;
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
 static inline Rva012F706COwner *RVA012F706CView() { return (Rva012F706COwner *)TheLivingWorldManager; }
 extern LivingWorldLogic *TheLivingWorldLogic;
 static inline Rva012F1028Owner *RVA012F1028View() { return (Rva012F1028Owner *)TheLivingWorldLogic; }

@@ -6427,7 +6427,9 @@ class GameClient;
 extern GameClient *TheGameClient;
 extern Rva0038DA10Network* g012F7714;
 extern Rva0038C1E0 g012F08A0;
-extern Rva0060D3D0* g012F706C;
+class LivingWorldManager;
+extern LivingWorldManager *TheLivingWorldManager;
+#define g012F706C ((Rva0060D3D0 *)TheLivingWorldManager)
 
 // 0x012EF214 is retail's TheAI singleton; extern AI *TheAI comes from
 // GameLogic/AI.h, already in this TU's include closure. Rva0038DA10AI stays as
