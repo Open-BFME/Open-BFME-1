@@ -4167,29 +4167,8 @@ void AIUpdateInterface::privateMoveToObject( Object *obj, CommandSourceType cmdS
 //----------------------------------------------------------------------------------------
 // Face a specified object -- succeed when facing
 //----------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateFaceObject.cpp
-// ?privateFaceObject@AIUpdateInterface@@ present-unmatched
-void AIUpdateInterface::privateFaceObject( Object *obj, CommandSourceType cmdSource )
-{
-	if( !getObject()->isMobile() )
-	{
-		return;
-	}
-
-	//Resetting the locomotor here was initially added for scripting purposes. It has been moved
-	//to the responsibility of the script to reset the locomotor before moving. This is needed because
-	//other systems (like the battle drone) change the locomotor based on what it's trying to do, and
-	//doesn't want to get reset when ordered to move.
-	//chooseLocomotorSet(LOCOMOTORSET_NORMAL);
-
-	getStateMachine()->clear();
-	getStateMachine()->setGoalObject( obj );
-	m_blockedFrames = 0;
-	m_isBlocked = FALSE;
-	m_isBlockedAndStuck = FALSE;
-	setLastCommandSource( cmdSource );
-	getStateMachine()->setState( AI_FACE_OBJECT );
-}
+// AIUpdateInterface::privateFaceObject(Object*, CommandSourceType)
+// Body in AIUpdateInterfacePrivateCommands.cpp (exact 130B retail).
 
 //----------------------------------------------------------------------------------------
 // Face a specified position -- succeed when facing
