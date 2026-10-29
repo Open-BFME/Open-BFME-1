@@ -38,7 +38,10 @@ public:
 };
 
 extern GameWindowManager *TheWindowManager;
-extern void *Rva0048CD50WindowHandle;
+// Retail 0x012ED238 is ?ApplicationHWnd@@3PAXA (data_rows.csv,
+// Win32Device/GameClient/Win32Mouse_translateEvent.cpp); Rva0048CD50WindowHandle was only a pin.
+extern void *ApplicationHWnd;
+#define Rva0048CD50WindowHandle ( *(void **)&ApplicationHWnd )
 
 extern "C"
 {

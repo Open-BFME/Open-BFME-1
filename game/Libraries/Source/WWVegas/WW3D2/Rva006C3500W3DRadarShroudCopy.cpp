@@ -196,7 +196,10 @@ public:
 	virtual BfmeAwakenDebugStream *slot6c(int first, int second);
 };
 
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+// Retail 0x01336E5C is ?g_Rva00F36E5C@@3PAXA (data_rows.csv,
+// debug/Rva00F36E5C.cpp); TheBfmeAwakenDebug was only a pin.
+extern void *g_Rva00F36E5C;
+#define TheBfmeAwakenDebug ( *(BfmeAwakenDebug **)&g_Rva00F36E5C )
 
 static __forceinline void recordSurfaceError(int result)
 {

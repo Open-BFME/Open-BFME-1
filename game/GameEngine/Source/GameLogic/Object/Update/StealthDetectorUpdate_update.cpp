@@ -322,7 +322,11 @@ class Radar {public: void createEvent(const Coord3D*,RadarEventType,float); };
 extern Radar *TheRadar;
 
 struct Rva002EE330PlayerList {Player *local(){return sdField<Player*>(this,0xc);}};
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+// Retail 0x012ED748 is ?ThePlayerList@@3PAVPlayerList@@A (data_rows.csv,
+// RTS/PlayerList.cpp); Rva002EE330ThePlayers was only a pin.
+class PlayerList;
+extern PlayerList *ThePlayerList;
+#define Rva002EE330ThePlayers ( *(Rva002EE330PlayerList **)&ThePlayerList )
 
 class GameTextInterface {public:
 virtual void slot00();

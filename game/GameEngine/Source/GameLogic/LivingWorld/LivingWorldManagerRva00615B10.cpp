@@ -64,7 +64,11 @@ public:
 };
 
 class Glo012F7048Type;
-extern Glo012F7048Type *Glo012F7048;
+// Retail 0x012F7048 is ?g_rva012F7048LivingWorld@@3PAVRva006092D0State@@A (data_rows.csv,
+// GameClient/LivingWorld.cpp); Glo012F7048 was only a pin.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
+#define Glo012F7048 ( *(Glo012F7048Type **)&g_rva012F7048LivingWorld )
 class Mouse;
 extern Mouse *TheMouse;
 

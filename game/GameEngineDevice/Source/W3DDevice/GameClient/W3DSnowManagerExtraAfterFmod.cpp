@@ -36,7 +36,11 @@ public:
 };
 
 extern OVERRIDE<WeatherSetting> TheWeatherSetting;
-extern BFMEFrameState *g_bfmeGlo012F0FE0;
+// Retail 0x012F0FE0 is ?TheGlobalWeatherSystem@@3PAURetailGlobalWeatherSystem@@A (data_rows.csv,
+// System/WeatherData.cpp); g_bfmeGlo012F0FE0 was only a pin.
+struct RetailGlobalWeatherSystem;
+extern RetailGlobalWeatherSystem *TheGlobalWeatherSystem;
+#define g_bfmeGlo012F0FE0 ( *(BFMEFrameState **)&TheGlobalWeatherSystem )
 extern "C" float g_bfmeDefaultBU;
 
 class W3DSnowManager

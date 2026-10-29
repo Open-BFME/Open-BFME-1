@@ -102,7 +102,10 @@ static void RTSFlagsToOSFlags( UnsignedInt buttonFlags, UnsignedInt otherFlags,
     if ( otherFlags & 0x12 )
         outWindowsFlags |= 0x10;
 }
-extern void *Rva0048CD50WindowHandle;
+// Retail 0x012ED238 is ?ApplicationHWnd@@3PAXA (data_rows.csv,
+// Win32Device/GameClient/Win32Mouse_translateEvent.cpp); Rva0048CD50WindowHandle was only a pin.
+extern void *ApplicationHWnd;
+#define Rva0048CD50WindowHandle ( *(void **)&ApplicationHWnd )
 
 extern "C" __declspec( dllimport ) int __stdcall MessageBoxW(
     void *window, const WideChar *message, const WideChar *caption, UnsignedInt flags );

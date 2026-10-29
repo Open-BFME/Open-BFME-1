@@ -148,7 +148,11 @@ public:
 	virtual void setShoreLineDetail();
 };
 
-extern "C" TerrainVisualDispatch *g_bfmeTerrainVisual;
+// Retail 0x012F7014 is ?TheTerrainVisual@@3PAVTerrainVisual@@A (data_rows.csv,
+// Terrain/TerrainVisual.cpp); g_bfmeTerrainVisual was only a pin.
+class TerrainVisual;
+extern TerrainVisual *TheTerrainVisual;
+#define g_bfmeTerrainVisual ( *(TerrainVisualDispatch **)&TheTerrainVisual )
 
 #define BFME_A1087_SLOT(n) virtual void slot##n();
 class BfmeA1087

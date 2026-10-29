@@ -34,7 +34,11 @@ class LivingWorldManager;
 class Rva002EECE0;
 extern Rva006092D0State *g_rva012F7048LivingWorld;
 extern LivingWorldManager *TheLivingWorldManager;
-extern Rva002EECE0 *g_rva002eece0;
+// Retail 0x012F4B98 is ?TheAptPalantir@@3PAVAptPalantir@@A (data_rows.csv,
+// GUI/AptPalantirConstructor.cpp); g_rva002eece0 was only a pin.
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;
+#define g_rva002eece0 ( *(Rva002EECE0 **)&TheAptPalantir )
 
 extern void j_00048c4d();
 extern void j_0000ea7f();

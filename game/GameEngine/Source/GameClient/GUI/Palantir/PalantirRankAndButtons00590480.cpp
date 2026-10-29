@@ -40,7 +40,11 @@ public:
 	Rva00589320Player *getLocalPlayer( void );
 };
 
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+// Retail 0x012ED748 is ?ThePlayerList@@3PAVPlayerList@@A (data_rows.csv,
+// RTS/PlayerList.cpp); Rva002EE330ThePlayers was only a pin.
+class PlayerList;
+extern PlayerList *ThePlayerList;
+#define Rva002EE330ThePlayers ( *(Rva002EE330PlayerList **)&ThePlayerList )
 #define RVA00590480_PLAYER_LIST Rva002EE330ThePlayers
 
 class Rva00564970

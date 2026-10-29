@@ -120,7 +120,10 @@ public:
 // The global is only passed through GameWindow::winSetUserData; its concrete
 // object layout is outside this body, so keep the declaration opaque.
 extern IMEManagerInterface *TheIMEManager;
-extern void *Rva0048CD50WindowHandle;
+// Retail 0x012ED238 is ?ApplicationHWnd@@3PAXA (data_rows.csv,
+// Win32Device/GameClient/Win32Mouse_translateEvent.cpp); Rva0048CD50WindowHandle was only a pin.
+extern void *ApplicationHWnd;
+#define Rva0048CD50WindowHandle ( *(void **)&ApplicationHWnd )
 
 extern "C"
 {

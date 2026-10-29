@@ -151,7 +151,10 @@ public:
 	virtual Rva001AD080DebugReport *slot6c(Int first, Int second);
 };
 
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+// Retail 0x01336E5C is ?g_Rva00F36E5C@@3PAXA (data_rows.csv,
+// debug/Rva00F36E5C.cpp); TheBfmeAwakenDebug was only a pin.
+extern void *g_Rva00F36E5C;
+#define TheBfmeAwakenDebug ( *(BfmeAwakenDebug **)&g_Rva00F36E5C )
 
 class Rva001AD080TerrainVisual
 {
@@ -169,7 +172,11 @@ public:
 		Int, void *, Int, const AsciiString &, const AsciiString &);
 };
 
-extern "C" Rva001AD080TerrainVisual *g_bfmeTerrainVisual;
+// Retail 0x012F7014 is ?TheTerrainVisual@@3PAVTerrainVisual@@A (data_rows.csv,
+// Terrain/TerrainVisual.cpp); g_bfmeTerrainVisual was only a pin.
+class TerrainVisual;
+extern TerrainVisual *TheTerrainVisual;
+#define g_bfmeTerrainVisual ( *(Rva001AD080TerrainVisual **)&TheTerrainVisual )
 
 class Rva001A5A60Record
 {

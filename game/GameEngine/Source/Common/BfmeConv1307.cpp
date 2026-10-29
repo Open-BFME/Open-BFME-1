@@ -79,7 +79,11 @@ public:
 };
 
 extern BfmeOverrideTBA *g_bfmeGlo012F15F8;
-extern BfmeFrameTBA *g_bfmeGlo012F0FE0;
+// Retail 0x012F0FE0 is ?TheGlobalWeatherSystem@@3PAURetailGlobalWeatherSystem@@A (data_rows.csv,
+// System/WeatherData.cpp); g_bfmeGlo012F0FE0 was only a pin.
+struct RetailGlobalWeatherSystem;
+extern RetailGlobalWeatherSystem *TheGlobalWeatherSystem;
+#define g_bfmeGlo012F0FE0 ( *(BfmeFrameTBA **)&TheGlobalWeatherSystem )
 
 static const BfmeOverrideTBA *bfmeWalkTBA(const BfmeOverrideTBA *d)
 {

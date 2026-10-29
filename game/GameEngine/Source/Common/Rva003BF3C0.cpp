@@ -13,7 +13,11 @@ public:
 	int m_at04;
 };
 
-extern Glo012F7048Type *Glo012F7048;
+// Retail 0x012F7048 is ?g_rva012F7048LivingWorld@@3PAVRva006092D0State@@A (data_rows.csv,
+// GameClient/LivingWorld.cpp); Glo012F7048 was only a pin.
+class Rva006092D0State;
+extern Rva006092D0State *g_rva012F7048LivingWorld;
+#define Glo012F7048 ( *(Glo012F7048Type **)&g_rva012F7048LivingWorld )
 
 // The singleton at 0x012F706C is retail's ?g_bfmeGameCW@@3PAVBfmeGameCW@@A
 // (dir32_addresses.csv); isOpen/lookup are pinned under the local view's

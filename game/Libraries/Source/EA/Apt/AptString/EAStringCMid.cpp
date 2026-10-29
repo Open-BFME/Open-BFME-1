@@ -11,7 +11,11 @@ struct BfmeAllocVKJ
 	void (__cdecl *free)(void *);
 };
 
-extern BfmeAllocVKJ *g_bfmeAllocVKJ;
+// Retail 0x01337A30 is ?g_rva01337A30AllocPair@@3PAUBfmeStringPool3AF0@@A (data_rows.csv,
+// Apt/Apt.cpp); g_bfmeAllocVKJ was only a pin.
+struct BfmeStringPool3AF0;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
+#define g_bfmeAllocVKJ ( *(BfmeAllocVKJ **)&g_rva01337A30AllocPair )
 
 struct BfmeStringPool3AF0
 {

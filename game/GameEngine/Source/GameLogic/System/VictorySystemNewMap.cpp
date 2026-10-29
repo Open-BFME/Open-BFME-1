@@ -43,7 +43,10 @@ public:
 	UnsignedInt m_playerCount;
 };
 
-extern PlayerList *Rva002EE330ThePlayers;
+// Retail 0x012ED748 is ?ThePlayerList@@3PAVPlayerList@@A (data_rows.csv,
+// RTS/PlayerList.cpp); Rva002EE330ThePlayers was only a pin.
+extern PlayerList *ThePlayerList;
+#define Rva002EE330ThePlayers ThePlayerList
 
 struct Region3D
 {

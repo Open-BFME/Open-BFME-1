@@ -10,7 +10,11 @@ public:
 
 class Rva003C6200Global;
 class Rva002EECE0;
-extern Rva002EECE0 *g_rva002eece0;
+// Retail 0x012F4B98 is ?TheAptPalantir@@3PAVAptPalantir@@A (data_rows.csv,
+// GUI/AptPalantirConstructor.cpp); g_rva002eece0 was only a pin.
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;
+#define g_rva002eece0 ( *(Rva002EECE0 **)&TheAptPalantir )
 #define Glo012F4B98 (reinterpret_cast<Rva003C6200Global *>(g_rva002eece0))
 
 class Rva003C6200Global

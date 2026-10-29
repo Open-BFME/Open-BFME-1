@@ -37,10 +37,19 @@ extern "C" __declspec(dllimport) double __cdecl floor(double);
 
 enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1, LAYER_LAST = 15 };
 
-extern const Real g_pathfindCellSize;
-extern const Real g_pathfindDoubleCellSize;
+// Retail 0x01075C74 is ?g_bfmeDirectionWeight1285@@3MB (data_rows.csv,
+// AI/PathfinderDirectionWeight1285.cpp); g_pathfindCellSize was only a pin.
+extern const float g_bfmeDirectionWeight1285;
+#define g_pathfindCellSize g_bfmeDirectionWeight1285
+// Retail 0x010977E0 is ?g_Rva010977E0@@3MB (data_rows.csv,
+// AI/PathfinderCellConstants.cpp); g_pathfindDoubleCellSize was only a pin.
+extern const float g_Rva010977E0;
+#define g_pathfindDoubleCellSize g_Rva010977E0
 extern const float g_rva01075350;
-extern const Real g_pathfindCellCenterBias;
+// Retail 0x01095F98 is ?g_Rva01095F98@@3MA (data_rows.csv,
+// AI/PathfinderCellConstants.cpp); g_pathfindCellCenterBias was only a pin.
+extern float g_Rva01095F98;
+#define g_pathfindCellCenterBias g_Rva01095F98
 
 // Template view read by getRadiusAndCenter (PathfindGetRadiusAndCenterE30.cpp).
 class BfmeOverridable

@@ -107,7 +107,10 @@ public:
 	virtual BfmeAwakenLog *slot6C(int first, int second);
 };
 
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+// Retail 0x01336E5C is ?g_Rva00F36E5C@@3PAXA (data_rows.csv,
+// debug/Rva00F36E5C.cpp); TheBfmeAwakenDebug was only a pin.
+extern void *g_Rva00F36E5C;
+#define TheBfmeAwakenDebug ( *(BfmeAwakenDebug **)&g_Rva00F36E5C )
 extern void _bfme_debugRecordCallsite(int kind);
 extern bool _bfme_debugReportingEnabled(void);
 

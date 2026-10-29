@@ -11,7 +11,11 @@
 // update/processProgress/init methods.
 
 class Rva00490350Base;
-extern Rva00490350Base *Rva00490350Head;
+// Retail 0x012F3350 is ?g_bfmeHeadCA@@3PAVGen_004902A0@@A (data_rows.csv,
+// Common/Bfme5TinyTen.cpp); Rva00490350Head was only a pin.
+class Gen_004902A0;
+extern Gen_004902A0 *g_bfmeHeadCA;
+#define Rva00490350Head ( *(Rva00490350Base **)&g_bfmeHeadCA )
 
 class Rva00490350Base
 {

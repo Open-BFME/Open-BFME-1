@@ -70,7 +70,10 @@ struct BfmeEndSceneDevice { BfmeEndSceneDeviceVtable *vtable;
 };
 class BfmeAwakenLog { public: virtual BfmeAwakenLog *slot00(int); virtual void slot04(void); virtual void slot08(void); virtual void slot0c(void); virtual void slot10(void); virtual void slot14(void); virtual void slot18(void); virtual void slot1c(void); virtual void slot20(void); virtual void slot24(void); virtual void slot28(void); virtual void slot2c(void); virtual void slot30(void); virtual void slot34(void); virtual BfmeAwakenLog *slot38(const char *); virtual void slot3c(void); virtual void slot40(void); virtual void slot44(void); virtual void slot48(void); virtual BfmeAwakenLog *slot4c(int); };
 class BfmeAwakenDebug { public: virtual void slot00(void); virtual void slot04(void); virtual void slot08(void); virtual void slot0c(void); virtual void slot10(void); virtual void slot14(void); virtual void slot18(void); virtual void slot1c(void); virtual void slot20(void); virtual void slot24(void); virtual void slot28(void); virtual void slot2c(void); virtual void slot30(void); virtual void slot34(void); virtual void slot38(void); virtual void slot3c(void); virtual void slot40(void); virtual void slot44(void); virtual void slot48(void); virtual void slot4c(void); virtual void slot50(void); virtual void slot54(void); virtual void slot58(void); virtual void slot5c(void); virtual void slot60(void); virtual void slot64(void); virtual void slot68(void); virtual BfmeAwakenLog *slot6c(int, int); };
-extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+// Retail 0x01336E5C is ?g_Rva00F36E5C@@3PAXA (data_rows.csv,
+// debug/Rva00F36E5C.cpp); TheBfmeAwakenDebug was only a pin.
+extern void *g_Rva00F36E5C;
+#define TheBfmeAwakenDebug ( *(BfmeAwakenDebug **)&g_Rva00F36E5C )
 extern void _bfme_debugRecordCallsite(int);
 extern void __cdecl Rva009DB560Sleep(unsigned long);
 
