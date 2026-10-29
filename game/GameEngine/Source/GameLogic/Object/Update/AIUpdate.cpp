@@ -6221,58 +6221,8 @@ void AIUpdateInterface::privateCommandButton( const CommandButton *commandButton
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?privateCommandButtonPosition@AIUpdateInterface@@ present-unmatched
-void AIUpdateInterface::privateCommandButtonPosition( const CommandButton *commandButton, const Coord3D *pos, CommandSourceType cmdSource )
-{
-	if( !commandButton )
-	{
-		return;
-	}
-
-	if (getObject()->isKindOf(KINDOF_PROJECTILE))
-		return;
-
-	//First of all, it's quite possible to get this far with an object incapable of performing such a task. Scripts will have
-	//entire teams of multiple unit types and want to order units to do something... if they can, great.. if not, ignore.
-	Object *owner = getObject();
-	if( owner )
-	{
-		AIUpdateInterface *ai = owner->getAI();
-		if( ai )
-		{
-			//Make sure the owner has the same command button.
-			const CommandSet *commandSet = TheControlBar->findCommandSet( owner->getCommandSetString() );
-			if( commandSet )
-			{
-				for( int i = 0; i < MAX_COMMANDS_PER_SET; i++ )
-				{
-					const CommandButton *aCommandButton = commandSet->getCommandButton(i);
-					if( commandButton == aCommandButton )
-					{
-						//We found the matching command button so now order the unit to do what the button wants.
-						switch( commandButton->getCommandType() )
-						{
-							//LOCATION BASED COMMANDS ONLY VIA AI
-							case GUI_COMMAND_NONE:
-							default:
-								if( owner->getName().isNotEmpty() )
-								{
-									DEBUG_ASSERTCRASH( 0, ("AIUpdate::privateCommandButtonPosition() -- unit %s ('%s'), command %s not implemented.",
-										owner->getTemplate()->getName().str(), owner->getName().str(), commandButton->getTextLabel().str() ) );
-								}
-								else
-								{
-									DEBUG_ASSERTCRASH( 0, ("AIUpdate::privateCommandButtonPosition() -- unit %s, command %s not implemented.",
-										owner->getTemplate()->getName().str(), commandButton->getTextLabel().str() ) );
-								}
-								break;
-						}
-					}
-				}
-			}
-		}
-	}
-}
+// AIUpdateInterface::privateCommandButtonPosition(const CommandButton*, const Coord3D*, CommandSourceType)
+// Body in AIUpdateInterfaceCommandButton.cpp (exact 104B retail).
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
