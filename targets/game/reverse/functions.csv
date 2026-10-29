@@ -166903,8 +166903,8 @@ uw_00c4470c,,0x00C4470C,11,game/gen_small/uw_gen_005.cpp,matched,gen-funclet;obj
 uw_00c44770,,0x00C44770,11,game/gen_small/uw_gen_010.cpp,matched,gen-funclet;object-symbol=$L1243
 uw_00c44790,,0x00C44790,11,game/gen_small/uw_gen_010.cpp,matched,gen-funclet;object-symbol=$L1243
 uw_00c447b0,,0x00C447B0,11,game/gen_small/uw_gen_010.cpp,matched,gen-funclet;object-symbol=$L1243
-uw_00c447f0,,0x00C447F0,8,game/GameEngine/Source/GameNetwork/DisconnectManager.cpp,matched,gen-funclet;parent=?populateDisconnectScreen@DisconnectManager@@IAEXPAVConnectionManager@@@Z;object-symbol=$L50479
-uw_00c44810,,0x00C44810,8,game/GameEngine/Source/GameNetwork/DisconnectManager.cpp,matched,gen-funclet;parent=?disconnectPlayer@DisconnectManager@@IAEXHPAVConnectionManager@@@Z;object-symbol=$L50175
+uw_00c447f0,,0x00C447F0,8,game/GameEngine/Source/GameNetwork/DisconnectManager.cpp,matched,gen-funclet;parent=?populateDisconnectScreen@DisconnectManager@@IAEXPAVConnectionManager@@@Z;object-symbol=$L50455
+uw_00c44810,,0x00C44810,8,game/GameEngine/Source/GameNetwork/DisconnectManager.cpp,matched,gen-funclet;parent=?disconnectPlayer@DisconnectManager@@IAEXHPAVConnectionManager@@@Z;object-symbol=$L50151
 uw_00c44830,,0x00C44830,8,game/gen_small/uw_gen_007.cpp,matched,gen-funclet;object-symbol=$L9702
 uw_00c44838,,0x00C44838,8,game/gen_small/uw_gen_009.cpp,matched,gen-funclet;object-symbol=$L1483
 uw_00c44840,,0x00C44840,8,game/gen_small/uw_gen_005.cpp,matched,gen-funclet;object-symbol=$L7287

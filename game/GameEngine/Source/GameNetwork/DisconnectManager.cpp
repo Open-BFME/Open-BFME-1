@@ -26,6 +26,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 
+// This unit's GameSlot view defines markAsDisconnected inline unlike retail's
+// (0x40) and emits that COMDAT copy; rename it so only retail-equal
+// copies carry the name. Inlined calls are unchanged.
+#define markAsDisconnected markAsDisconnected_LocalView
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 // BFME de-pooled this glue: retail's per-class `operator delete(void*, MagicEnum)`

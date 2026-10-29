@@ -33,6 +33,10 @@
 // unit emits that COMDAT copy; rename it so only retail's 0x000E59A0 (BFME reads
 // 0x204) is ?getAI@Object@@QAEPAVAIUpdateInterface@@XZ. Inlined calls are unchanged.
 #define getAI getAI_ZHLayout
+// This unit's Object view defines isCurWeaponLocked inline unlike retail's
+// (0x264 weapon set) and emits that COMDAT copy; rename it so only retail-equal
+// copies carry the name. Inlined calls are unchanged.
+#define isCurWeaponLocked isCurWeaponLocked_LocalView
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 // BFME de-pooled this glue: retail's per-class `operator delete(void*, MagicEnum)`

@@ -28,6 +28,10 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 
+// This unit's ShaderClass view defines Get_Alpha_Test inline unlike retail's
+// (2-bit field) and emits that COMDAT copy; rename it so only retail-equal
+// copies carry the name. Inlined calls are unchanged.
+#define Get_Alpha_Test Get_Alpha_Test_LocalView
 #include "streakrender.h"
 #include "ww3d.h"
 #include "rinfo.h"

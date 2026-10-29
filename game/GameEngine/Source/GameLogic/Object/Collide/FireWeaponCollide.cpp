@@ -34,6 +34,10 @@
 
 
 // INCLUDES ///////////////////////////////////////////////////////////////////////////////////////
+// This unit's FireWeaponCollide view defines getFireWeaponCollideModuleData inline unlike retail's
+// (0x4) and emits that COMDAT copy; rename it so only retail-equal
+// copies carry the name. Inlined calls are unchanged.
+#define getFireWeaponCollideModuleData getFireWeaponCollideModuleData_LocalView
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 #define DEFINE_OBJECT_STATUS_NAMES
 #include "Common/Xfer.h"
