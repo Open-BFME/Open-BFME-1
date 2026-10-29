@@ -2,7 +2,6 @@
 #include "Common/AsciiString.h"
 
 // readable body of ?onEnter@AIDockState@@UAE?AW4StateReturnType@@XZ: game/GameEngine/Source/GameLogic/AI/AIStates.cpp
-// readable body of ?onExit@AIDockState@@UAEXW4StateExitType@@@Z: game/GameEngine/Source/GameLogic/AI/AIStates.cpp
 //
 // AIDockState::onEnter — retail 0x0016CDB0 (183B).
 // AIDockState::onExit  — retail 0x0016CEA0 (75B).

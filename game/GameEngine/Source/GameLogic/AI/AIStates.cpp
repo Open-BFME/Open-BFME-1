@@ -7294,28 +7294,8 @@ StateReturnType AIDockState::onEnter()
  * For whatever reason, we are leaving the AI_DOCK state.
  * Destroy the docking sub-machine.
  */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AIDockState_onExit.cpp
-// ?onExit@AIDockState@@UAEXW4StateExitType@@@Z present-unmatched
-void AIDockState::onExit( StateExitType status )
-{
-	// destroy the dock machine
-	if (m_dockMachine) {
-		m_dockMachine->halt();// GS, you have to halt before you delete to do cleanup.
-		m_dockMachine->deleteInstance();
-		m_dockMachine = NULL;
-	}	else {
-		DEBUG_LOG(("Dock exited immediately\n"));
-	}
-
-	// stop ignoring our goal object
-	AIUpdateInterface *ai = getMachineOwner()->getAI();
-	if (ai)
-	{
-		ai->setCanPathThroughUnits(false);
-		ai->ignoreObstacle( NULL );
-	}
-	
-}
+// AIDockState::onExit( StateExitType status )
+// Body in AIDockState.cpp (exact 75B retail).
 
 /**
  * We are in the AI_DOCK state, execute the docking behavior.
