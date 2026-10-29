@@ -2965,50 +2965,8 @@ void ScriptActions::doTeamFollowWaypoints(const AsciiString& teamName, const Asc
 //-------------------------------------------------------------------------------------------------
 /** doTeamFollowWaypointsExact */
 //-------------------------------------------------------------------------------------------------
-// ?doTeamFollowWaypointsExact@ScriptActions@@IAEXABVAsciiString@@0_N@Z present-unmatched
-void ScriptActions::doTeamFollowWaypointsExact(const AsciiString& teamName, const AsciiString& waypointPathLabel, Bool asTeam)
-{
-	Team *theTeam = TheScriptEngine->getTeamNamed( teamName );
-	if (!theTeam) {
-		return;
-	}
-
-	AIGroup* theGroup = TheAI->createGroup();
-	if (!theGroup) {
-		return;
-	}
-	theTeam->getTeamAsAIGroup(theGroup);
-	Int count = 0;
-	Coord3D pos;
-	pos.x=pos.y=pos.z=0;
-
-	// Get the center point for the team
-	for (DLINK_ITERATOR<Object> iter = theTeam->iterate_TeamMemberList(); !iter.done(); iter.advance())
-	{
-		Object *obj = iter.cur();
-		Coord3D objPos = *obj->getPosition();
-		pos.x += objPos.x;
-		pos.y += objPos.y;
-		pos.z += objPos.z; // Not actually used by getClosestWaypointOnPath, but hey, might as well be correct.
-		count++;
-	}
-	if (count==0) return; // empty team.
-	pos.x /= count;
-	pos.y /= count;
-	pos.z /= count;
-
-	Waypoint *way = TheTerrainLogic->getClosestWaypointOnPath( &pos, waypointPathLabel );
-	if (!way) {
-		return;
-	}
-	DEBUG_ASSERTLOG(TheTerrainLogic->isPurposeOfPath(way, waypointPathLabel), ("***Wrong waypoint purpose. Make jba fix this.\n"));
-	if (asTeam) 
-	{
-		theGroup->groupFollowWaypointPathAsTeamExact(way, CMD_FROM_SCRIPT);
-	}	else {
-		theGroup->groupFollowWaypointPathExact(way, CMD_FROM_SCRIPT);
-	}
-}
+// ScriptActions::doTeamFollowWaypointsExact(const AsciiString&, const AsciiString&, Bool)
+// Body in ScriptActionsTeamMovement.cpp (exact 316B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** doNamedGuard */
