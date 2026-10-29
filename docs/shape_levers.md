@@ -2449,12 +2449,18 @@ volume by a clamped fade factor, then tests an integer priority
 (`jl`/`jg`) before comparing the product. With `Real v = helper(*it);`
 VC7.1 forwards the single-use product into the equal-priority block
 (`fmul st(1)` after `jne`, two x87 pops on the other paths). Writing
-`const Real &v = helper(*it);` made it compute `fmulp st(1)` at the clamp
-join as retail does; `*=`, out-parameters, compare helpers and branch
+`const Real &v = helper(*it);`, or storing it into a record member (the
+landed form, below), made it compute `fmulp st(1)` at the clamp join as
+retail does; `*=`, out-parameters, compare helpers and branch
 spellings were all inert. In the same body, an inline member taking the list
 element by `const Ref &` and loading `AudioEventRTS *event = playing->m_event;`
 into a local reproduced retail's `mov edx,ecx; mov eax,[edx+0x14]` copy, and
 `if (p > priority) continue;` gave retail's `jg` (plain `==` gives `jne`).
-Retail's `sub esp,8` with the volume at the upper word needed an 8-byte
-local (`struct {Real pad; Real value;}`); no natural spelling was found.
-Source: game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerIsPlayingLowerPriority006B2110.cpp.
+Retail's `sub esp,8` with the volume at the upper word, and sibling
+0x006B1FC0's unused word under every float, came from a `{int priority;
+Real volume;}` record: the priority member stays in a register, the volume
+member keeps its frame slot, and copying the winning record whole gives
+retail's `mov ebp,ecx` plus one volume dword (0x006B1FC0 went 74 diffs to
+exact). Unused frame words next to float locals can be enregistered members.
+Sources: game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerIsPlayingLowerPriority006B2110.cpp,
+MilesAudioManagerFindLowestPrioritySound.cpp.

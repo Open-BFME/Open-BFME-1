@@ -15,12 +15,11 @@
 // keeps the address-derived name canPlayNow already declares.
 //
 // Shape notes: the inline const-reference helper reproduces retail's
-// `mov edx,ecx` element copy (sibling 0x006B1FC0 has it too); binding its
-// result to a const reference keeps the product at the clamp join instead of
-// forwarding it into the equal-priority test. Retail's frame holds an 8-byte
-// object whose upper word is the event volume (sub esp,8; volume at [esp+0x14];
-// 0x006B1FC0 shows the same unused word under each float); the pair below
-// reproduces that slot, its real type is unknown.
+// `mov edx,ecx` element copy (sibling 0x006B1FC0 has it too). Each rank is
+// one {priority, volume} record as in 0x006B1FC0 findLowestPrioritySound:
+// the priority word stays in a register, the volume in the record's upper
+// word (retail sub esp,8 with the volume at [esp+0x14]).
+
 #include <list>
 
 typedef float Real;
@@ -68,9 +67,9 @@ struct Rva006B2110AudioSettings
 	int m_fadeAudioFrames;
 };
 
-struct Rva006B2110VolumePair
+struct Rva006B2110Rank
 {
-	Real m_pad;
+	int m_priority;
 	Real m_volume;
 };
 
@@ -111,10 +110,9 @@ private:
 bool Rva006B2110::method(AudioEventRTS *event) const
 {
 	Rva006B2110 *self = const_cast<Rva006B2110 *>(this);
-	int priority = event->m_info->m_priority;
-	Rva006B2110VolumePair volumePair;
-	volumePair.m_volume = self->compute((Rva006AE150Argument *)event, 1);
-	Real &volume = volumePair.m_volume;
+	Rva006B2110Rank rank;
+	rank.m_priority = event->m_info->m_priority;
+	rank.m_volume = self->compute((Rva006AE150Argument *)event, 1);
 
 	const PlayingAudioList *list;
 	if (event->isPositionalAudio())
@@ -125,14 +123,14 @@ bool Rva006B2110::method(AudioEventRTS *event) const
 	for (PlayingAudioList::const_iterator it = list->begin(); it != list->end(); ++it)
 	{
 		AudioEventRTS *other = (*it)->m_event;
-		const Real &otherVolume = self->getFadedVolume(*it);
-
-		int otherPriority = other->m_info->m_priority;
-		if (otherPriority < priority)
+		Rva006B2110Rank otherRank;
+		otherRank.m_volume = self->getFadedVolume(*it);
+		otherRank.m_priority = other->m_info->m_priority;
+		if (otherRank.m_priority < rank.m_priority)
 			return true;
-		if (otherPriority > priority)
+		if (otherRank.m_priority > rank.m_priority)
 			continue;
-		if (otherVolume < volume)
+		if (otherRank.m_volume < rank.m_volume)
 			return true;
 	}
 	return false;
