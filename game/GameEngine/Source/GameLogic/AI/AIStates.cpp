@@ -7224,27 +7224,8 @@ void AIDockState::crc( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Xfer Method */
 // ------------------------------------------------------------------------------------------------
-// ?xfer@AIDockState@@MAEXPAVXfer@@@Z present-unmatched
-void AIDockState::xfer( Xfer *xfer )
-{
-  // version
-  XferVersion currentVersion = 1;
-  XferVersion version = currentVersion;
-  xfer->xferVersion( &version, currentVersion );
-
-	Bool hasMachine = m_dockMachine!=NULL;
-	
-	xfer->xferBool(&hasMachine);
-
-	if (hasMachine && m_dockMachine==NULL)	{
-		// create new state machine for attack behavior
-		m_dockMachine = newInstance(AIDockMachine)( getMachineOwner());
-	}
-	if (hasMachine) {
-		xfer->xferSnapshot(m_dockMachine);
-	}
-	xfer->xferBool(&m_usingPrecisionMovement);
-}  // end xfer
+// AIDockState::xfer( Xfer *xfer )
+// Body in AIDockState_xfer.cpp (exact 218B retail).
 
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
