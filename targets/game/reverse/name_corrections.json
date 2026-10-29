@@ -21451,5 +21451,35 @@
   "after_sha256": "b1a87e7fcb4eca079ae02b2509106cb5cd20cc774a010387fc564f5e4b6957fe",
   "evidence": "targets/game/reverse/identity_evidence/005cb720-fxparticlesystem-texture-resolve.md",
   "reason": "The bank's ParticleSystemManager::preloadAssets(TimeOfDay) name is refuted: the body ends with a plain RET (no stack argument) and retail's ILT contradicts the name; FXParticleSystem::ParticleSystemManager vtable 0x0110FDCC slot 14 owns it. The semantic name is unproven, so the method keeps an address-derived name."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0087f590.cpp",
+  "new_path": "game/GameEngine/Source/Common/System/GeometryInfoCollidesWith.cpp",
+  "old_name": "AsciiString",
+  "new_name": "BfmeShapeName",
+  "before_sha256": "ca9c87c353edf97a275ef8951380b184b3fc3439a45fd3be8dfbf4b90ee13cad",
+  "after_sha256": "2952adb72095971bea8e7fdca2f660ddaf7e53c55ab8567559d839bab1be1aeb",
+  "evidence": "targets/game/reverse/attempt_support/0087f590-getbestcontactpoint-visible-intersects-20261029.md",
+  "reason": "Retail destroys the shape name with a direct StringBase<char>::releaseBuffer call and no default construction; the native AsciiString member emits 498 bytes, so the shape record keeps a name view (BfmeShapeName) that only releases."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0087f590.cpp",
+  "new_path": "game/GameEngine/Source/Common/System/GeometryInfoCollidesWith.cpp",
+  "old_name": "Coord3D",
+  "new_name": "BfmePosF0",
+  "before_sha256": "ca9c87c353edf97a275ef8951380b184b3fc3439a45fd3be8dfbf4b90ee13cad",
+  "after_sha256": "2952adb72095971bea8e7fdca2f660ddaf7e53c55ab8567559d839bab1be1aeb",
+  "evidence": "targets/game/reverse/attempt_support/0087f590-getbestcontactpoint-visible-intersects-20261029.md",
+  "reason": "The set row 0x0087F0F0 is ?set@BfmeObjF0@@QAEPAV1@PBUBfmePosF0@@PBUBfmeShapeF0@@H@Z, so the placed-position record type in the unit that defines it must be spelled BfmePosF0."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0087f590.cpp",
+  "new_path": "game/GameEngine/Source/Common/System/GeometryInfoCollidesWith.cpp",
+  "old_name": "fprintf",
+  "new_name": "bfmeRetailCritterDesyncLog",
+  "before_sha256": "ca9c87c353edf97a275ef8951380b184b3fc3439a45fd3be8dfbf4b90ee13cad",
+  "after_sha256": "2952adb72095971bea8e7fdca2f660ddaf7e53c55ab8567559d839bab1be1aeb",
+  "evidence": "targets/game/reverse/attempt_support/0087f590-getbestcontactpoint-visible-intersects-20261029.md",
+  "reason": "ILT 0x0003A17A reaches the ledger row _bfmeRetailCritterDesyncLog at 0x00065C80 (a CRC parameter-check logger, not the CRT fprintf); the call uses that row name."
  }
 ]
