@@ -45,11 +45,12 @@ public:
 	char bfmePopCB();
 };
 
-// 0x003A4390's pinned spelling: return by value the string member at +4.
-class Gen003BD7D0Node
+// 0x003A4390: return by value the string member at +4; matched as
+// ?getName@Rva003A4390Owner@@QAE?AVAsciiString@@XZ (Rva003A4390NameGetter.cpp).
+class Rva003A4390Owner
 {
 public:
-	AsciiString rva003a4390();
+	AsciiString getName();
 };
 
 class Rva003A4FD0State
@@ -82,7 +83,7 @@ void Rva003A4FD0State::update( void *arg )
 		LivingWorldRegion *region = manager->rva003C8160( &point );
 		if( region && manager->rva003CAE00( region ) )
 		{
-			AsciiString name = ( (Gen003BD7D0Node *)this )->rva003a4390();
+			AsciiString name = ( (Rva003A4390Owner *)this )->getName();
 			manager->rva003C9CB0( (char *)region + 4, &name, 0, arg );
 			Glo012F1028->rva003BE020( region );
 		}

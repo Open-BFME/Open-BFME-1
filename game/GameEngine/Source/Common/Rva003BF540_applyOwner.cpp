@@ -61,10 +61,17 @@ extern Rva006092D0State *g_rva012F7048LivingWorld;
 
 class Rva003BF010Arg;
 
-class Gen003BD7D0Node
+// 0x003A4390: return by value the string member at +4; matched as
+// ?getName@Rva003A4390Owner@@QAE?AVAsciiString@@XZ (Rva003A4390NameGetter.cpp).
+class Rva003A4390Owner
 {
 public:
-	AsciiString rva003a4390();
+	AsciiString getName();
+};
+
+class Gen003BD7D0Node : public Rva003A4390Owner
+{
+public:
 
 	char m_pad00[0x44];
 	bool m_at44;
@@ -165,11 +172,11 @@ void Rva003BF540::applyOwner(Gen003BD7D0Node *owner)
 		|| static_cast<unsigned char>(g_bfmeStateDF->bfmeDisabled()) || reinterpret_cast<Rva003BD830Owner *>(this)->anyReady() || TheControlBar == 0)
 		return;
 
-	int id = ((Rva00367E30Logic *)TheGameLogic)->rva00383890(owner->rva003a4390());
+	int id = ((Rva00367E30Logic *)TheGameLogic)->rva00383890(owner->getName());
 	if (id < 0)
 		return;
 
-	AsciiString label = ((Rva00367E30Logic *)TheGameLogic)->rva003870f0(owner->rva003a4390());
+	AsciiString label = ((Rva00367E30Logic *)TheGameLogic)->rva003870f0(owner->getName());
 	if (!owner->m_at44)
 		label += "Army";
 
