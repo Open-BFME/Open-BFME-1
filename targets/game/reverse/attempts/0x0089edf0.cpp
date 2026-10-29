@@ -1,5 +1,5 @@
 // ?rva0089EDF0@@YAXPAVBfmeStrVKI@@PBDZZ
-// partial score=0.7344 date=2026-10-02
+// partial score=0.8828 date=2026-10-29
 // ?rva0089EDF0@@YAXPAVBfmeStrVKI@@PBDZZ
 // cl: /O2 /DNDEBUG /MD
 // Bank only: native original method name remains unproved; address retained.
@@ -57,6 +57,7 @@ void BfmeStrVKI::rva0089EDF0ChangeBuffer(unsigned int reserve, unsigned int offs
 {
 	StringDataC *oldData = m_data;
 	BfmeStrVKI *self = this;
+	const char *source = (char *)oldData + sizeof(StringDataC) + offset;
 	if (oldData->m_refCount == 1 && reserve <= oldData->m_maxSize)
 	{
 		self->m_data->m_size = (unsigned short)internalSize;
@@ -74,8 +75,7 @@ void BfmeStrVKI::rva0089EDF0ChangeBuffer(unsigned int reserve, unsigned int offs
 		self->m_data->m_maxSize = (unsigned short)(allocationSize - 9);
 		self->m_data->m_size = (unsigned short)internalSize;
 		self->m_data->m_hash = 0;
-		memcpy((char *)self->m_data + sizeof(StringDataC),
-		    (char *)oldData + sizeof(StringDataC) + offset, copy);
+		memcpy((char *)self->m_data + sizeof(StringDataC), source, copy);
 		if (pushZero != CB_NO_PUSH_ZERO)
 			((char *)self->m_data + sizeof(StringDataC))[internalSize] = 0;
 	}
