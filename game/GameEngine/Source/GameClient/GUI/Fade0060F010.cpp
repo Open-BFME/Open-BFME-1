@@ -140,26 +140,6 @@ public:
 	void append( const Rva003C2280Item *item );
 };
 
-extern void b_003c48e0();
-
-class Rva003C48E0Call
-{
-public:
-	void clear();
-};
-
-static __forceinline void clearRegion( Glo012F1028Type *owner )
-{
-	typedef void (Rva003C48E0Call::*Function)();
-	union
-	{
-		void (*raw)(void);
-		Function member;
-	} fn;
-	fn.raw = b_003c48e0;
-	(reinterpret_cast<Rva003C48E0Call *>(owner)->*fn.member)();
-}
-
 class File
 {
 public:
@@ -244,6 +224,12 @@ private:
 	char *m_data;
 	int m_size;
 };
+
+// Retail calls the matched Rva003C48E0::rva003C48E0 body defined below.
+static __forceinline void clearRegion( Glo012F1028Type *owner )
+{
+	reinterpret_cast<Rva003C48E0 *>( owner )->rva003C48E0();
+}
 extern void j_000353b4();
 
 void Rva003C48E0::rva003C48E0()

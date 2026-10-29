@@ -33,7 +33,9 @@ public:
 
 typedef Rva00896100Item Gen00896320Item;
 
-extern void b_008939c0(void);
+// Matched row at retail 0x008939C0 (Rva008939C0RefArrayResize.cpp).
+class BfmeElemCU;
+void *Rva008939C0(BfmeElemCU *data, int count, int capacity);
 BfmeDropObjectA **Rva008953C0Copy(BfmeDropObjectA **first,
 	BfmeDropObjectA **last, BfmeDropObjectA **result);
 
@@ -70,13 +72,13 @@ void Gen_00896320::rva00896100(int capacity)
 		return;
 	}
 
-	Gen00896320Item *newData = (Gen00896320Item *)((void *(__cdecl *)(void *, int, int))b_008939c0)(0, 0, capacity + 1);
+	Gen00896320Item *newData = (Gen00896320Item *)Rva008939C0(0, 0, capacity + 1);
 	Gen00896320Item *oldEnd = m_begin + m_count;
 	Rva008953C0Copy((BfmeDropObjectA **)m_begin,
 		(BfmeDropObjectA **)oldEnd, (BfmeDropObjectA **)newData);
 	m_capacity = capacity;
 	if (m_begin != m_inline)
-		((void (__cdecl *)(void *, int, int))b_008939c0)(m_begin, 0, 0);
+		Rva008939C0((BfmeElemCU *)m_begin, 0, 0);
 	m_begin = newData;
 	const Gen00896320Item empty;
 	m_begin[m_count].bfmeAssignVGO(empty);
