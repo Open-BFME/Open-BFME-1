@@ -39,3 +39,23 @@ retail start [1Ch] / end [14h], ours start [14h] / end [1Ch]. Further inert
 (still 9 B): the difference through a `__forceinline` `bfmeTicks(end, start)`
 helper, through `LARGE_INTEGER *ps = &start`, through
 `const LARGE_INTEGER *pe = &end`, and as `-(start - end)`.
+
+Session 484 (a1), bank unchanged (467/467, 9 B). New measurements:
+- `m = (Real)(end.QuadPart - start.QuadPart) * 1000.0f / (Real)freq.QuadPart`
+  (no store back) puts start at [1Ch] and end at [14h] exactly as retail
+  (+0x44/+0x17E lea's match), but the int64->fild temporary gets its own
+  slot (frame 0x30, 42 B). So the start/end order IS weight-driven: with
+  equal weights the tie goes to reverse first use, as retail; storing the
+  difference back into `start` makes start heavier and moves it to [14h].
+- `end.QuadPart -= start.QuadPart; start.QuadPart = end.QuadPart;` (or
+  `start = end`) also ties the weights and gives retail's slots, but the
+  store to `end` is kept (address-taken) and fild is forwarded from end
+  (475 B).
+- Folded-away extra end references do not count (weights are taken after
+  optimisation): `+ (end - end)`, `+ end * 0`, `(void)end`, a dead
+  `end != end` test, and a separate `__int64 diff` copied into start all
+  reproduce the bank exactly (9 B). `#include <windows.h>` / the full
+  `_LARGE_INTEGER` union with `u`: inert.
+- Remaining hypothesis: retail's fild temporary is packed into dead
+  `start`'s slot (slot sharing for the conversion temp), i.e. the source
+  is the temp form and something lets VC7.1 reuse start's home; not found.
