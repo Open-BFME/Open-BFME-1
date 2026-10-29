@@ -142,7 +142,7 @@ public:
 	unsigned char m_unmodelled[0x50];
 	int m_transitionEndFrame;
 
-private:
+	// Public in BFME: 0x0048A520 is matched as the QAE spelling.
 	TransitionGroup *findGroup(AsciiString groupName);
 };
 

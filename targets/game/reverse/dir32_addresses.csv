@@ -8132,7 +8132,6 @@ name,va
 ?bfmeCantConnectBeforeOnline@@3EA,0x012F716D
 ?bfmeCb1098@@YAXXZ,0x00412D69
 ?bfmeCb974D@@YGXXZ,0x0064F2D0
-?bfmeCbVJM@@YGXXZ,0x00BF6870
 ?bfmeChunkParserVE@@YAXXZ,0x0041579E
 ?bfmeContainedAttackVisitor@@YAXPAVObject@@PAX@Z,0x0040DE6D
 ?bfmeCopy@@YAXPBXIPAX@Z,0x00DA91A0

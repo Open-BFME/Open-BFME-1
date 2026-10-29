@@ -24,10 +24,17 @@ public:
 	BfmeNodeY *m_bfmeNext;					// +0x00
 };
 
+// The element teardown at 0x00351980 (ILT 0x0001FD0C) is matched as Rva00351980::invoke.
+class Rva00351980
+{
+public:
+	void invoke(void);
+};
+
 class BfmeElementY
 {
 public:
-	~BfmeElementY(void);					// retail 0x0001FD0C (ILT, adjustor to 0x00351980)
+
 
 	unsigned char m_bfmeHead[0x10];				// +0x00
 	BfmeNodeY *m_bfmeList;					// +0x10
@@ -56,6 +63,6 @@ void __cdecl bfmeUnregisterY(BfmeSecondY *second)
 		}
 
 		--second->m_bfmeEnd;
-		second->m_bfmeEnd->~BfmeElementY();
+		((Rva00351980 *)second->m_bfmeEnd)->invoke();
 	}
 }

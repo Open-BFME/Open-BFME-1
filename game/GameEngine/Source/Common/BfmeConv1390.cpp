@@ -23,7 +23,10 @@ public:
 
 // The callback retail pushes is the cdecl function at 0x007F6870 (VA 0x00BF6870),
 // owned by Rva007F6870GameLobbyCallback.cpp; only its address reaches this body.
-extern "C" void __identifier("?bfmeCbVJM@@YGXXZ")(void *message, void *owner);
+class Rva007E8810Message;
+class Rva007F65E0Owner;
+void __cdecl rva007F6870GameLobbyCallback(Rva007E8810Message *message,
+	Rva007F65E0Owner *owner);
 
 class BfmeAVJM
 {
@@ -65,7 +68,7 @@ void BfmeThingVJM::bfmeGoVJM(int a, int b)
 	m_bfme10->bfmeA20VJM(&msg, a, b);
 	m_bfme14->bfmeB08VJM(&msg,
 		reinterpret_cast<void (__stdcall *)()>(
-			&__identifier("?bfmeCbVJM@@YGXXZ")),
+			&rva007F6870GameLobbyCallback),
 		this, m_bfme6dc);
 	((Gen_007e86c0 *)&msg)->m();
 }
