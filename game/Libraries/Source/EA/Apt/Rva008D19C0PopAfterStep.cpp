@@ -11,14 +11,16 @@ struct Rva00899560Pool;
 extern Rva00899560Pool *g_rva01337810GcRoots;
 // The existing MASM owners use address-derived void() symbols. Retail passes
 // two cdecl stack arguments to each step and only ECX to the idle hook.
-extern void d_008d0b00();
+class Rva8D0B00State;
+struct Rva8D0B00Context;
+void rva8D0B00RouteAction(Rva8D0B00State *state, Rva8D0B00Context *context);	// Apt opcode 0x3D, 0x008D0B00
 extern void d_008d0f10();
 extern void d_008a30c0();
 typedef void (__cdecl *Rva008D19C0Step)(Rva008D19C0Stack*, int);
 typedef void (__fastcall *Rva008D19C0Idle)(Rva8CD130IdleHook*);
 void aptPopAfter008D19C0(Rva008D19C0Stack* stack, int arg)
 {
-	(reinterpret_cast<Rva008D19C0Step>(d_008d0b00))(stack, arg);
+	(reinterpret_cast<Rva008D19C0Step>(rva8D0B00RouteAction))(stack, arg);
 	Rva008D19C0Value* top = stack->m_values[stack->m_count - 1];
 	unsigned char flags = (unsigned char)(top->m_bits >> 30);
 	if (!(flags & 1))

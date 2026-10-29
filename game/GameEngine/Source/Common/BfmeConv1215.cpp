@@ -33,7 +33,9 @@ extern Rva00899560Pool *g_rva01337810GcRoots;
 // (game/gen_asm/d_008cb600.asm and game/gen_asm/d_008a0830.asm); the
 // bfmeStep1215* spellings were pins for them, not definitions.  The owners are
 // address-derived void() symbols, so reference those and cast at the calls.
-extern void d_008d0b00();
+class Rva8D0B00State;
+struct Rva8D0B00Context;
+void rva8D0B00RouteAction(Rva8D0B00State *state, Rva8D0B00Context *context);	// Apt opcode 0x3D, 0x008D0B00
 extern void d_008a30c0();
 
 typedef void (__cdecl *Rva008D0B00Step)(BfmeA1215 *a, const unsigned char **b);
@@ -54,7 +56,7 @@ void bfmeGo1215(BfmeA1215 *a, const unsigned char **b)
 	++a->m_bfme00;
 	if (!((unsigned char)(e->m_bfme04 >> 30) & 1))
 		e->bfmeV1215A();
-	(reinterpret_cast<Rva008D0B00Step>(d_008d0b00))(a, b);
+	(reinterpret_cast<Rva008D0B00Step>(rva8D0B00RouteAction))(a, b);
 	e = a->m_bfme08[a->m_bfme00 - 1];
 	if (!((unsigned char)(e->m_bfme04 >> 30) & 1))
 		e->bfmeV1215B();

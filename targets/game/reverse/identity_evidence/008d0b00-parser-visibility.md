@@ -52,3 +52,20 @@ A useful reopening experiment must retain the independently reproduced prefix th
 The saved bank was recompiled after recording exactly one partial verdict. Its source body is byte-for-byte the retained cleaned trial after removing the generated bank metadata. The repeated probe is build/route008d0b00/bank-final-probe.log, and the strict saved-bank failure is build/route008d0b00/bank-scoped-gate.log. The final ledger check passed in build/route008d0b00/check-csv-final.log. The saved-bank class check passed, and a scoped source-name comparison against the immutable original archive found no descriptive-to-placeholder substitutions. Raw name output is build/route008d0b00/name-preservation.log; command exit codes and measured elapsed time are in build/route008d0b00/handoff-receipt.json. No background process started for this investigation remains active.
 
 The default Git whitespace diagnostic reports the carriage return on the repository tool's appended CRLF verdict row as trailing whitespace. The row was left in its required generated format. The same diagnostic with CR-at-end-of-line handling reports no whitespace error. Both outputs are retained as build/route008d0b00/diff-check.log and build/route008d0b00/diff-check-crlf.log.
+
+## Resolution (2026-10-29, claude-opus-5-5)
+
+The visibility hypothesis held. Two source changes closed the remaining
+suffix. (1) The release loop is spelled the way the matched opcode-0x2B sibling
+spells it (`value = owner->m_stack[owner->m_count - i]`, with the unsigned-char flag
+test inline): 352/352 bytes with 34 differences, all of them one ESI/EDI swap.
+(2) The locals follow Open BFME 2's `_FunctionAptActionCallFunction`
+(Code/Libraries/Source/Apt/AptActionInterpreterConstantHandlers.cpp,
+donor revision b5a7b8290a): separate `name`, `params` and `function`
+locals, with `function = name` in the non-string arm, in place of one
+reassigned `top`. That makes it exact. BFME 1 facts: the opcode-table slot 0x3D
+(VA 0x012D5B5C) and the complete 352-byte extent. Carried from the donor:
+only the local-variable structure. The method keeps its address-derived name.
+The body now shares game/Libraries/Source/EA/Apt/Rva008C6320.cpp with the real
+0x008C6320 and ParsePath8C4DA0 (0x008C4DA0) rows, rehomed there from
+ParsePath8C4DA0.cpp, so both parser bodies are visible under their ledger names.
