@@ -1,5 +1,5 @@
 // ?rva8D0B00RouteAction@@YAXPAVRva8D0B00State@@PAURva8D0B00Context@@@Z
-// partial score=0.7273 date=2026-10-15
+// partial score=0.9034 date=2026-10-29
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 struct Rva8D0B00StringBlock
@@ -214,11 +214,8 @@ void rva8D0B00RouteAction(Rva8D0B00State *state,
 	top->addRef();
 	for (int i = 1; i <= 2; ++i)
 	{
-		int index = owner->m_count - i;
-		Rva8D0B00Value **entries = owner->m_stack;
-		Rva8D0B00Value *value = entries[index];
-		unsigned char flags = (unsigned char)(value->m_flags >> 30);
-		if (!(flags & 1))
+		Rva8D0B00Value *value = owner->m_stack[owner->m_count - i];
+		if (!((unsigned char)(value->m_flags >> 30) & 1))
 			value->release();
 	}
 	owner->m_count -= 2;
