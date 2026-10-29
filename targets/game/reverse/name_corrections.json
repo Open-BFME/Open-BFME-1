@@ -21431,5 +21431,15 @@
   "after_sha256": "f292198c2825be782870726340ea0793a482be64d82164e0250b46a840da4109",
   "evidence": "targets/game/reverse/identity_evidence/0009fee0-state-accessor-comdat.md",
   "reason": "The exact-name ILT contradicts this State getter claim; independently matched State constructor and bounded exact-name ILT candidates establish the real getters at 0x0009FEE0/0x0009FEF0. Preserve this unrelated four-byte body with an address-derived identity."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0079d3a0.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/AptPalantirRva0079D3A0.cpp",
+  "old_name": "init",
+  "new_name": "rva0079d3a0",
+  "before_sha256": "3571ef961d8eae2ffcfc0c644522803d10e4b3c5bf675bd71a8d82aba9e064bd",
+  "after_sha256": "ffb24019c7c94e9cd5df40c4ad84a3de5d63fb07202296f8b78e5dd186a72dca",
+  "evidence": "targets/game/reverse/identity_evidence/0079d3a0-aptpalantir-slot11.md",
+  "reason": "The bank's W3DGameWindowManager::init name is refuted: AptPalantir vtable 0x01127A48 slot 11 owns the body and it calls the AptPalantir base reset. The semantic name is unproven, so the method keeps an address-derived name."
  }
 ]
