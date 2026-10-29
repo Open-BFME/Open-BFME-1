@@ -1,6 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
 // readable body of ?onStructureConstructionComplete@Player@@QAEXPAVObject@@0_N@Z: game/GameEngine/Source/Common/RTS/Player.cpp
-// readable body of ?buildSpecificTeam@Player@@QAEXPAVTeamPrototype@@@Z: game/GameEngine/Source/Common/RTS/Player.cpp
 // readable body of ?setPlayerType@Player@@QAEXW4PlayerType@@_N@Z: game/GameEngine/Source/Common/RTS/Player.cpp
 
 // The player's AIPlayer at Player+0x220: the method that makes it, and the

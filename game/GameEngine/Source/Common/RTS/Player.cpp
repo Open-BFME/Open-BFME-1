@@ -3048,16 +3048,8 @@ Bool Player::allowedToBuild(const ThingTemplate *tmplate) const
 }
 
 //=============================================================================
-// byte-exact reconstruction: game/GameEngine/Source/Common/Rva000C9740Wrap.cpp
-// ?buildSpecificTeam@Player@@QAEXPAVTeamPrototype@@@Z present-unmatched
-void Player::buildSpecificTeam( TeamPrototype *teamProto) 
-{
-	if (m_ai) 
-	{
-		// Do a priority build.
-		m_ai->buildSpecificAITeam(teamProto, true);
-	}
-}
+// Player::buildSpecificTeam(TeamPrototype *)
+// Body in PlayerAIDispatch.cpp (exact 27B retail).
 
 //=============================================================================
 // ?buildBaseDefense@Player@@QAEX_N@Z present-unmatched
