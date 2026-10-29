@@ -4347,18 +4347,8 @@ void Player::getCurrentSelectionAsAIGroup(AIGroup *group)
 //-------------------------------------------------------------------------------------------------
 /** Select a hotkey team based on this GameMessage */
 //-------------------------------------------------------------------------------------------------
-// ?setCurrentlySelectedAIGroup@Player@@QAEXPAVAIGroup@@@Z present-unmatched
-void Player::setCurrentlySelectedAIGroup(AIGroup *group) {
-	if (m_currentSelection == NULL) {
-		m_currentSelection = newInstance( Squad );
-	}
-
-	m_currentSelection->clearSquad();
-
-	if (group != NULL) {
-		m_currentSelection->squadFromAIGroup(group, true);
-	}
-}
+// Player::setCurrentlySelectedAIGroup(AIGroup *)
+// Body in PlayerSetCurrentlySelectedAIGroup.cpp (exact 102B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** Select a hotkey team based on this GameMessage */
