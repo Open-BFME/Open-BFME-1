@@ -38,6 +38,11 @@
 // unit emits that COMDAT copy; rename it so only retail's 0x000E59A0 (BFME reads
 // 0x204) is ?getAI@Object@@QAEPAVAIUpdateInterface@@XZ. Inlined calls are unchanged.
 #define getAI getAI_ZHLayout
+// This unit's Locomotor view defines getLegalSurfaces inline unlike retail's
+// 0x001B5060 (first load [ecx+4]) and emits that COMDAT copy;
+// rename it so only retail-equal copies carry the name. Inlined calls are
+// unchanged.
+#define getLegalSurfaces getLegalSurfaces_LocalView
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "GameLogic/AIPathfind.h"

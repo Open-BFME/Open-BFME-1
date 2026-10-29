@@ -43,6 +43,11 @@
 // doesSpecialPowerHaveOverridableDestinationActive at slot 4 / +0x10
 // (ZH: 7 / +0x1c).
 
+// This unit's Locomotor view defines getLegalSurfaces inline unlike retail's
+// 0x001B5060 (first load [ecx+4]) and emits that COMDAT copy;
+// rename it so only retail-equal copies carry the name. Inlined calls are
+// unchanged.
+#define getLegalSurfaces getLegalSurfaces_LocalView
 #include "GameLogic/Object.h"
 
 //-------------------------------------------------------------------------------------------------
