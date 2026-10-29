@@ -4218,23 +4218,8 @@ void Player::applyBattlePlanBonusesForObject( Object *obj ) const
 //-------------------------------------------------------------------------------------------------
 //Object has just left our team, so remove it's bonuses!
 //-------------------------------------------------------------------------------------------------
-// ?removeBattlePlanBonusesForObject@Player@@QBEXPAVObject@@@Z present-unmatched
-void Player::removeBattlePlanBonusesForObject( Object *obj ) const
-{
-	//Copy bonuses, and invert them.
-	BattlePlanBonuses* bonus = newInstance(BattlePlanBonuses);
-	*bonus = *m_battlePlanBonuses;
-	bonus->m_armorScalar					= 1.0f / __max( bonus->m_armorScalar, 0.01f );
-	bonus->m_sightRangeScalar			= 1.0f / __max( bonus->m_sightRangeScalar, 0.01f );
-	bonus->m_bombardment					= -ALL_PLANS; //Safe to remove as it clears the weapon bonus flag
-	bonus->m_searchAndDestroy			= -ALL_PLANS; //Safe to remove as it clears the weapon bonus flag
-	bonus->m_holdTheLine					= -ALL_PLANS; //Safe to remove as it clears the weapon bonus flag
-
-	DUMPBATTLEPLANBONUSES(bonus, this, obj);
-	localApplyBattlePlanBonusesToObject( obj, bonus );
-
-	bonus->deleteInstance();
-}
+// Player::removeBattlePlanBonusesForObject(Object *) const
+// Body in PlayerBattlePlanBonuses.cpp (exact 196B retail).
 
 //-------------------------------------------------------------------------------------------------
 //Battle plan bonuses changing, so apply to all of our objects!
