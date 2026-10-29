@@ -1,85 +1,195 @@
-// ?method@Rva006B4590Owner@@QAEXPBVAudioEventRTS@@@Z
-// partial score=0.2391 date=2026-10-03
-// Draft only: address-qualified lifetime/call views are deliberately UNBOUND.
-// Canonical AudioEventRTS needs BFME112B cutover; do not pin duplicate aliases.
-// Current setAudioPriority callee identity at B23A0 needs independent audit.
+// ?friend_forcePlayAudioEventRTS@MilesAudioManager@@UAEXPBVAudioEventRTS@@@Z
+// partial score=0.2536 date=2026-10-29
+// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
-// cl: /O2 /MD /EHsc /D_STLP_USE_STATIC_LIB /I. /Iinputs/vendor/stlport /Iinputs/reference/shims/audio /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /DWIN32 /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+//
+// MilesAudioManager::friend_forcePlayAudioEventRTS (retail 0x006B4590, 481 B).
+//
+// Identity: MilesAudioManager vtable 0x0111C0C0 slot 66 routes through ILT
+// 0x000415F6 to this body (ilt_oracle CONFIRMED for this name), and it keeps
+// Zero Hour's force-play flow: resolve the event info, check the sound class
+// is on, copy the event, generate its filename and play info, apply the
+// adjusted value keyed by the event name, AIL_quick_load_and_play the file,
+// set its volume against the slot volume with pan 0.5 and remember the handle
+// in m_audioForcePlayed. BFME holds the manager mutex (+0x95C) throughout and
+// keeps the adjusted-value map and volume per audio slot (+0xB8, 0x1C4 apart).
+//
+// The layouts below are TU-local views of only the witnessed fields.
+
 #define _STLP_NO_EXCEPTIONS 1
-typedef union { struct { unsigned long LowPart, HighPart; }; unsigned __int64 QuadPart; } ULARGE_INTEGER;
-#include "PreRTS.h"
-#include "Common/AudioEventRTS.h"
-#include "mss.h"
-typedef void *HAUDIO;
-extern "C" __declspec(dllimport) HAUDIO __stdcall AIL_quick_load_and_play(const char *, int, int);
-extern "C" __declspec(dllimport) void __stdcall AIL_quick_set_volume(HAUDIO, float, float);
-class Rva006B4590Owner { public: void method(const AudioEventRTS *); };
-#include <map>
 #include <list>
-// BFME AudioEventRTS is 112 bytes. This deliberately unbound lifetime view
-// needs the canonical BFME header cutover before any production promotion.
-struct Rva006B4590Event {
-    Rva006B4590Event(const AudioEventRTS &);
-    ~Rva006B4590Event();
-    char bytes[0x70];
-    AudioEventRTS *native() { return (AudioEventRTS *)this; }
-    AsciiString &key() { return *(AsciiString *)(bytes+0x14); }
-    int index() { return *(int *)(bytes+0x28); }
-};
-class Rva006B4590EventCalls {
-public:
- unsigned getSoundClass() const;
- void bfmeGenerateFilename();
-};
-class Rva006B4590ManagerCalls {
-public:
- void rva006B15A0(const AsciiString *);
- void rva006AF840();
-};
-class Rva006915E0 {
-public:
- Rva006915E0(void *mutex) : m_held(false) { m_mutex=mutex; if(WaitForSingleObject(mutex,0xFFFFFFFF)!=0x102)m_held=true; }
- ~Rva006915E0() { release(); }
- void release() { if(m_held) {ReleaseMutex(m_mutex);m_held=false;} }
-private:
- void *m_mutex; bool m_held;
-};
-namespace _STL { template<> struct less<AsciiString> { bool operator()(const AsciiString&a,const AsciiString&b)const{return a.compare(b)<0;} }; }
-struct Rva005C7770Value { AsciiString m_key; };
-struct Rva005C7770KeyOfValue { const AsciiString &operator()(const Rva005C7770Value &x)const{return x.m_key;} };
-typedef _STL::_Rb_tree<AsciiString,Rva005C7770Value,Rva005C7770KeyOfValue,_STL::less<AsciiString>,_STL::allocator<Rva005C7770Value> > Rva006B4590Tree;
-struct Rva006B4590Virtuals {
-#define S(n) virtual void slot##n();
- S(0) S(1) S(2) S(3) S(4) S(5) S(6) S(7) S(8) S(9) S(10) S(11) S(12) S(13) S(14) S(15) S(16) S(17) S(18) S(19) S(20) S(21) S(22) S(23) S(24) S(25) S(26) S(27) S(28) S(29) S(30) S(31) S(32) S(33) S(34) S(35) S(36) S(37) S(38) S(39) S(40) S(41) S(42)
- virtual void slot43(const AudioEventRTS *);
- S(44) S(45)
- virtual bool slot46(unsigned);
-};
-void Rva006B4590Owner::method(const AudioEventRTS *eventToPlay)
+#include <map>
+#include "ascii_string.h"
+
+extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
+	void *handle, unsigned long milliseconds);
+extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
+
+typedef void *HAUDIO;
+extern "C" __declspec(dllimport) HAUDIO __stdcall AIL_quick_load_and_play(const char *filename, int loopCount, int wait);
+extern "C" __declspec(dllimport) void __stdcall AIL_quick_set_volume(HAUDIO audio, float volume, float pan);
+
+typedef float Real;
+typedef int Int;
+
+enum AudioPriority
 {
- char *self=(char *)this;
- Rva006915E0 lock(*(void **)(self+0x95c));
- if(!*(void **)((char *)eventToPlay+8)) {
-  ((Rva006B4590Virtuals *)this)->slot43(eventToPlay);
-  if(!*(void **)((char *)eventToPlay+8))return;
- }
- if(!((Rva006B4590Virtuals *)this)->slot46(((const Rva006B4590EventCalls *)eventToPlay)->getSoundClass()))return;
- Rva006B4590Event event(*eventToPlay);
- ((Rva006B4590EventCalls *)&event)->bfmeGenerateFilename();
- event.native()->generatePlayInfo();
- Rva006B4590Tree *tree=(Rva006B4590Tree *)(self+0x270+event.index()*0x1c4);
- void *node=tree->find(event.key())._M_node;
- if(node!=*(void **)tree) {
-  AudioPriority *value=(AudioPriority *)((char *)node+0x14);
-  if(value)event.native()->setAudioPriority(*value);
- }
- AsciiString filename=event.native()->getFilename();
- HAUDIO audio=AIL_quick_load_and_play(filename.str(),1,0);
- if(audio) {
-  ((Rva006B4590ManagerCalls *)this)->rva006B15A0(&filename);
-  ((Rva006B4590ManagerCalls *)this)->rva006AF840();
-  float volume=*(float *)(self+0x1ac+event.index()*0x1c4);
-  AIL_quick_set_volume(audio,event.native()->getPitchShift()*volume,0.5f);
-  ((std::list<HAUDIO> *)(self+0x9bc))->push_back(audio);
- }
+	AP_LOWEST
+};
+
+class AudioEventRTS
+{
+public:
+	AudioEventRTS(const AudioEventRTS &right);
+	~AudioEventRTS();
+
+	void bfmeGenerateFilename();
+	void generatePlayInfo();
+	AsciiString getFilename();
+	Real getPitchShift() const;
+	void setAudioPriority(AudioPriority priority);
+	unsigned int getSoundClass() const;
+
+	char m_unmodelled00[0x8];
+	const void *m_eventInfo;				// +0x08
+	char m_unmodelled0C[0x14 - 0xc];
+	AsciiString m_eventName;				// +0x14
+	char m_unmodelled18[0x28 - 0x18];
+	Int m_slot;								// +0x28
+	char m_unmodelled2C[0x70 - 0x2c];
+};
+
+class MilesAudioScopedMutex
+{
+public:
+	__forceinline MilesAudioScopedMutex(void *mutex)
+	{
+		m_held = 0;
+		m_mutex = mutex;
+		if (WaitForSingleObject(m_mutex, 0xFFFFFFFFu) != 0x102u)
+			m_held = 1;
+	}
+
+	__forceinline ~MilesAudioScopedMutex(void)
+	{
+		if (m_held)
+		{
+			ReleaseMutex(m_mutex);
+			m_held = 0;
+		}
+	}
+
+private:
+	void *m_mutex;
+	unsigned char m_held;
+};
+
+namespace _STL
+{
+template <>
+struct less<AsciiString>
+{
+	bool operator()(const AsciiString &a, const AsciiString &b) const { return a.compare(b) < 0; }
+};
+}
+
+// The adjusted-value map's node holds the name at +0x10 and the value at
+// +0x14; its find is the matched _M_find at 0x005C7770.
+struct Rva005C7770Value
+{
+	AsciiString m_key;
+	AudioPriority m_value;
+};
+
+struct Rva005C7770KeyOfValue
+{
+	const AsciiString &operator()(const Rva005C7770Value &x) const { return x.m_key; }
+};
+
+typedef _STL::_Rb_tree<AsciiString, Rva005C7770Value, Rva005C7770KeyOfValue,
+	_STL::less<AsciiString>, _STL::allocator<Rva005C7770Value> > AdjustedValueTree;
+
+struct MilesAudioSlot
+{
+	char m_unmodelled000[0xf4];
+	Real m_volume;							// +0xF4
+	char m_unmodelled0F8[0x1b8 - 0xf8];
+	AdjustedValueTree m_adjustedValues;		// +0x1B8
+};
+
+#define MILES_SLOT(n) virtual void slot##n(void);
+
+class MilesAudioManager
+{
+public:
+	MILES_SLOT(00) MILES_SLOT(01) MILES_SLOT(02) MILES_SLOT(03) MILES_SLOT(04)
+	MILES_SLOT(05) MILES_SLOT(06) MILES_SLOT(07) MILES_SLOT(08) MILES_SLOT(09)
+	MILES_SLOT(10) MILES_SLOT(11) MILES_SLOT(12) MILES_SLOT(13) MILES_SLOT(14)
+	MILES_SLOT(15) MILES_SLOT(16) MILES_SLOT(17) MILES_SLOT(18) MILES_SLOT(19)
+	MILES_SLOT(20) MILES_SLOT(21) MILES_SLOT(22) MILES_SLOT(23) MILES_SLOT(24)
+	MILES_SLOT(25) MILES_SLOT(26) MILES_SLOT(27) MILES_SLOT(28) MILES_SLOT(29)
+	MILES_SLOT(30) MILES_SLOT(31) MILES_SLOT(32) MILES_SLOT(33) MILES_SLOT(34)
+	MILES_SLOT(35) MILES_SLOT(36) MILES_SLOT(37) MILES_SLOT(38) MILES_SLOT(39)
+	MILES_SLOT(40) MILES_SLOT(41) MILES_SLOT(42)
+	virtual void getInfoForAudioEvent(const AudioEventRTS *eventToFindAndFill);
+	MILES_SLOT(44) MILES_SLOT(45)
+	virtual bool isOn(unsigned int soundClass);
+	MILES_SLOT(47) MILES_SLOT(48) MILES_SLOT(49) MILES_SLOT(50) MILES_SLOT(51)
+	MILES_SLOT(52) MILES_SLOT(53) MILES_SLOT(54) MILES_SLOT(55) MILES_SLOT(56)
+	MILES_SLOT(57) MILES_SLOT(58) MILES_SLOT(59) MILES_SLOT(60) MILES_SLOT(61)
+	MILES_SLOT(62) MILES_SLOT(63) MILES_SLOT(64) MILES_SLOT(65)
+	virtual void friend_forcePlayAudioEventRTS(const AudioEventRTS *eventToPlay);
+
+	void rva006B15A0(const AsciiString *filename);
+	void rva006AF840();
+
+private:
+	char m_unmodelled004[0xb8 - 0x4];
+	MilesAudioSlot m_slots[1];				// +0xB8, 0x1C4 apart
+	char m_unmodelled27C[0x95c - 0xb8 - sizeof(MilesAudioSlot)];
+	void *m_mutex;							// +0x95C
+	char m_unmodelled960[0x9bc - 0x960];
+	_STL::list<HAUDIO> m_audioForcePlayed;	// +0x9BC
+};
+
+#undef MILES_SLOT
+
+// ?friend_forcePlayAudioEventRTS@MilesAudioManager@@UAEXPBVAudioEventRTS@@@Z
+void MilesAudioManager::friend_forcePlayAudioEventRTS(const AudioEventRTS *eventToPlay)
+{
+	MilesAudioScopedMutex scopedLock(m_mutex);
+
+	if (!eventToPlay->m_eventInfo)
+	{
+		getInfoForAudioEvent(eventToPlay);
+		if (!eventToPlay->m_eventInfo)
+			return;
+	}
+
+	if (!isOn(eventToPlay->getSoundClass()))
+		return;
+
+	AudioEventRTS event = *eventToPlay;
+
+	event.bfmeGenerateFilename();
+	event.generatePlayInfo();
+
+	AdjustedValueTree &values = m_slots[event.m_slot].m_adjustedValues;
+	AdjustedValueTree::iterator it = values.find(event.m_eventName);
+	if (it != values.end())
+	{
+		AudioPriority *value = &it->m_value;
+		if (value)
+			event.setAudioPriority(*value);
+	}
+
+	AsciiString fileToPlay = event.getFilename();
+	HAUDIO haud = AIL_quick_load_and_play(fileToPlay.str(), 1, 0);
+	if (haud)
+	{
+		rva006B15A0(&fileToPlay);
+		rva006AF840();
+		AIL_quick_set_volume(haud, m_slots[event.m_slot].m_volume * event.getPitchShift(), 0.5f);
+		m_audioForcePlayed.push_back(haud);
+	}
 }
