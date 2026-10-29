@@ -6525,18 +6525,8 @@ void AIAttackState::crc( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/Rva0016F9E0AIAttackState_loadPostProcess.cpp
-// ?loadPostProcess@AIAttackState@@MAEXXZ present-unmatched
-void AIAttackState::loadPostProcess( void )
-{
-	Object* victim = getMachineGoalObject();
-	if (victim) 
-	{
-		m_victimTeam = victim->getTeam();
-	}
-	Object* source = getMachineOwner();
-	m_lockedWeaponOnEnter = source->isCurWeaponLocked() ? source->getCurrentWeapon() : NULL;
-}  // end loadPostProcess
+// AIAttackState::loadPostProcess( void )
+// Body in AIAttackState_loadPostProcess.cpp (exact 154B retail).
 
 #ifdef STATE_MACHINE_DEBUG
 //----------------------------------------------------------------------------------------------------------

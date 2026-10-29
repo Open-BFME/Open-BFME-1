@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
-// readable body of ?loadPostProcess@AIAttackState@@MAEXXZ: game/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // BFME AIAttackState::loadPostProcess, retail 0x0016F9E0.
 
 typedef bool Bool;
