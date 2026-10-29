@@ -1239,12 +1239,8 @@ const LocomotorTemplateVector* AIUpdateModuleData::findLocomotorTemplateVector(L
 
 //-------------------------------------------------------------------------------------------------
 // subclasses may want to override this, to use a subclass of AIStateMachine.
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/AIUpdateMakeStateMachine.cpp
-// ?makeStateMachine@AIUpdateInterface@@ present-unmatched
-AIStateMachine* AIUpdateInterface::makeStateMachine()
-{
-	return newInstance(AIStateMachine)( getObject(), "AIUpdateInterfaceMachine");
-}
+// AIUpdateInterface::makeStateMachine()
+// Body in AIUpdateMakeStateMachine.cpp (exact 99B retail).
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------

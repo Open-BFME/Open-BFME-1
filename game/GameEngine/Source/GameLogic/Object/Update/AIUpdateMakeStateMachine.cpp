@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?makeStateMachine@AIUpdateInterface@@: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 
 // FILE: AIUpdateMakeStateMachine.cpp /////////////////////////////////////////
 //
