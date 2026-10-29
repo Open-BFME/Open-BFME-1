@@ -38,7 +38,9 @@ public:
 };
 class BfmeThingFactory {};
 extern GameLogic *TheGameLogic;
-extern BfmeThingFactory *TheThingFactory;
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
+#define TheThingFactory ((BfmeThingFactory *)TheThingFactory)
 extern int g_color12B7FC8;
 
 struct LivingWorldArmy {

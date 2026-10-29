@@ -102,7 +102,9 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
-extern BfmeThingFactory *TheThingFactory;
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
+#define TheThingFactory ((BfmeThingFactory *)TheThingFactory)
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 struct TCreateUnitsInfo

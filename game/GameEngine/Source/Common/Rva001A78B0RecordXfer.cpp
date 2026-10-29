@@ -26,7 +26,9 @@ class BfmeThingFactory
 public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
-extern BfmeThingFactory *TheThingFactory;
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
+#define TheThingFactory ((BfmeThingFactory *)TheThingFactory)
 
 class MidVirtualSlot90Receiver;
 void Rva0010C3E0(MidVirtualSlot90Receiver *receiver, void *context);

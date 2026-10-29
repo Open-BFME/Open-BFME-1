@@ -13,7 +13,9 @@ public:
 	const ThingTemplate *findTemplate( const AsciiString &name );
 };
 
-extern BfmeThingFactory *TheThingFactory;
+class ThingFactory;
+extern ThingFactory *TheThingFactory;
+#define TheThingFactory ((BfmeThingFactory *)TheThingFactory)
 
 class Rva001DB720Predicate
 {
