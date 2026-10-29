@@ -306,7 +306,7 @@ extern TeamFactory *TheTeamFactory;
 extern ThingFactory *TheThingFactory;
 extern ScriptEngine *TheScriptEngine;
 extern GameLogic *TheGameLogic;
-extern const Real g_bfmeDefaultBU;
+extern Real g_bfmeDefaultBU;
 
 static Team *bfmeFindTeam(const AsciiString &name,
 	const AsciiString &owner)

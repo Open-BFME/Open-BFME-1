@@ -10,7 +10,7 @@ typedef unsigned short UnsignedShort;
 #include "vector3.h"
 
 extern const Real g_bfmeScaleBK;
-extern const Real g_bfmeDefaultBU;
+extern Real g_bfmeDefaultBU;
 
 #define Rva010F653CHeightScale 0.0390625f
 #define Rva010977E0NormalAxis 20.0f

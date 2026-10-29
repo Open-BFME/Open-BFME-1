@@ -16,7 +16,7 @@
 extern "C" void *__cdecl memset(void *d, int c, unsigned int n);
 
 extern const float g_rva01075350;
-extern const float g_bfmeDefaultBU;
+extern float g_bfmeDefaultBU;
 extern double Gen01085F58;
 
 class ModelConditionFlags

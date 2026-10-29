@@ -18,7 +18,7 @@ enum FilterModes
 	FM_NULL_MODE = 0
 };
 
-extern const Real g_bfmeDefaultBU;
+extern Real g_bfmeDefaultBU;
 extern const Real g_bfmeK1253;
 
 extern bool HighlightRendering;

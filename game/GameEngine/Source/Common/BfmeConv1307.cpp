@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-extern const float g_bfmeDefaultBU;
+extern float g_bfmeDefaultBU;
 extern const float g_rva01075350;
 extern const float g_0112100C;
 #pragma comment(linker, "/alternatename:?g_0112100C@@3PB=__real@3727c5ac")

@@ -96,7 +96,7 @@ extern Display *TheDisplay;
 extern GlobalData *TheWritableGlobalData;
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 extern const Real g_bfmeZeroCY;
-extern const Real g_bfmeDefaultBU;
+extern Real g_bfmeDefaultBU;
 Real g_Va012BAA30 = 0.033333335f;
 
 static Rva006E8310TerrainLighting *lightingAt(unsigned char *base,

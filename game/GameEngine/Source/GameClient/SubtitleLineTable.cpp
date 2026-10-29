@@ -66,7 +66,7 @@ public:
 extern VideoPlayerInterface *TheVideoPlayer;
 // Retired readonly-zero DIR32 spellings: ?BfmeZeroRange@@3MB / ?BfmeZeroRange@@3MA.
 // This body already expresses the retail readonly zero as 0.0f.
-extern const float g_bfmeDefaultBU;
+extern float g_bfmeDefaultBU;
 
 // ?Rva0081D600ParseLineTable@@YAXPAVINI@@PAX1PBX@Z
 // Open BFME 2: Code/GameEngine/Source/GameClient/Rva006883F0Finish.cpp.
