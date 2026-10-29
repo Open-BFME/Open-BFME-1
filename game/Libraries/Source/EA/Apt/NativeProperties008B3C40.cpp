@@ -88,7 +88,15 @@ static __forceinline Rva008995E0Value *pooledBoolean(bool value) {
 }
 struct StringBlock008B3C40 { unsigned short refs, length; };
 struct String008B3C40 { StringBlock008B3C40 *data; };
-extern StringBlock008B3C40 g_default012D5298;
+// Retail 0x012D5298 is ?g_rva012D5298Empty@@3VStringDataC@EAStringC@@A
+// (data_rows.csv, Common/Data/Rva012D5298.cpp); g_default012D5298 was only a pin.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
+#define g_default012D5298 ( *(StringBlock008B3C40 *)&g_rva012D5298Empty )
 class BfmeStrVKK { public: void bfmeTruncVKK(unsigned); };
 class Rva008A9B00 {
 public:

@@ -5,7 +5,15 @@ struct Rva008CF3C0Block
 	unsigned short m_ref;
 };
 
-extern Rva008CF3C0Block g_default012D5298;
+// Retail 0x012D5298 is ?g_rva012D5298Empty@@3VStringDataC@EAStringC@@A
+// (data_rows.csv, Common/Data/Rva012D5298.cpp); g_default012D5298 was only a pin.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
+#define g_default012D5298 ( *(Rva008CF3C0Block *)&g_rva012D5298Empty )
 
 struct Rva008CF3C0Pool
 {

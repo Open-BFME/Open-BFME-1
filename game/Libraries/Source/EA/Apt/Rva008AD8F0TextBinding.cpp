@@ -6,7 +6,15 @@
 // host layout request, and re-anchors the character for centred and right alignment.
 
 struct BfmeStringData3AF0 { unsigned short m_refCount, m_length, m_capacity, m_unknown06; };
-extern BfmeStringData3AF0 g_bfmeDefaultString1284;
+// Retail 0x012D5298 is ?g_rva012D5298Empty@@3VStringDataC@EAStringC@@A
+// (data_rows.csv, Common/Data/Rva012D5298.cpp); g_bfmeDefaultString1284 was only a pin.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
+#define g_bfmeDefaultString1284 ( *(BfmeStringData3AF0 *)&g_rva012D5298Empty )
 
 class BfmeStrVKI {
 public:

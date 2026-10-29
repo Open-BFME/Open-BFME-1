@@ -4,7 +4,15 @@
 // pops a frame label or number, moves the target clip there and sets its play flag.
 
 struct Rva008CAAE0StringBlock { unsigned short m_refs; };
-extern Rva008CAAE0StringBlock g_bfmeDefaultString1284;
+// Retail 0x012D5298 is ?g_rva012D5298Empty@@3VStringDataC@EAStringC@@A
+// (data_rows.csv, Common/Data/Rva012D5298.cpp); g_bfmeDefaultString1284 was only a pin.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
+#define g_bfmeDefaultString1284 ( *(Rva008CAAE0StringBlock *)&g_rva012D5298Empty )
 extern void (__cdecl **g_bfmeStringPool1284)(void *);
 
 class Rva008CAAE0String

@@ -1,7 +1,15 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Two independent 206-byte bodies: 008B3AA0 and 008B3B70, each followed by 2 INT3 bytes.
 struct StringBlock008B3AA0 { unsigned short field00; };
-extern StringBlock008B3AA0 g_default012D5298;
+// Retail 0x012D5298 is ?g_rva012D5298Empty@@3VStringDataC@EAStringC@@A
+// (data_rows.csv, Common/Data/Rva012D5298.cpp); g_default012D5298 was only a pin.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
+#define g_default012D5298 ( *(StringBlock008B3AA0 *)&g_rva012D5298Empty )
 struct StringPool008B3AA0 { void *field00; void (__cdecl *free)(void *); };
 struct BfmeStringPool3AF0;
 extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;

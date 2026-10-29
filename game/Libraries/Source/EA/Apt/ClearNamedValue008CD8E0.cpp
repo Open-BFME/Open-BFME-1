@@ -3,7 +3,15 @@
 // replace the stack operand with pooled integer 1. Factory layout and tables
 // agree with the existing AptInteger::Create at 0x008A11E0.
 struct Rva8CD130StringBlock { unsigned short m_refs; };
-extern Rva8CD130StringBlock g_bfmeDefaultString1284;
+// Retail 0x012D5298 is ?g_rva012D5298Empty@@3VStringDataC@EAStringC@@A
+// (data_rows.csv, Common/Data/Rva012D5298.cpp); g_bfmeDefaultString1284 was only a pin.
+class EAStringC
+{
+public:
+	class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
+#define g_bfmeDefaultString1284 ( *(Rva8CD130StringBlock *)&g_rva012D5298Empty )
 extern void (__cdecl **Rva01337A30ReleaseTable)(void *);
 class Rva8CD130String {
 public:
