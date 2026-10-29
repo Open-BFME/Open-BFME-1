@@ -25,7 +25,7 @@
 // hands back.
 //
 // The player counter keeps its address-derived name: PlayerList's body at
-// 0x000DF510 is reached through a raw pointer-to-member, never by name.
+// 0x000DF510 is the matched PlayerList::unidentified_000df510 row.
 
 typedef bool Bool;
 typedef int Int;
@@ -104,22 +104,13 @@ public:
 	virtual Object *getUnitNamed(Parameter *) = 0;		// slot 26, vtable+0x68
 };
 
-extern void b_000df510();
-
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 public:
-	Int countPlayers(Bool includeObservers)		// address-derived: retail 0x000DF510
-	{
-		typedef Int (PlayerList::*CountFn)(Bool);
-		union {
-			Int (*raw)(void);
-			CountFn member;
-		} fn;
-		fn.raw = (Int (*)(void))b_000df510;
-		return (this->*fn.member)(includeObservers);
-	}
+	// Matched row at retail 0x000DF510 (PlayerListUnidentified000DF510.cpp).
+	Int unidentified_000df510(Bool includeObservers);
+	Int countPlayers(Bool includeObservers) { return unidentified_000df510(includeObservers); }
 };
 
 extern ScriptEngine *TheScriptEngine;
