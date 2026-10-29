@@ -4437,29 +4437,8 @@ void ScriptActions::doTeamGarrisonNearestBuilding(const AsciiString& teamName)
 //-------------------------------------------------------------------------------------------------
 /** doTeamExitAllBuildings */
 //-------------------------------------------------------------------------------------------------
-// ?doTeamExitAllBuildings@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
-void ScriptActions::doTeamExitAllBuildings(const AsciiString& teamName)
-{
-	Team *theTeam = TheScriptEngine->getTeamNamed( teamName );
-	if (!theTeam) {
-		return;
-	}
-		
-	for (DLINK_ITERATOR<Object> iter = theTeam->iterate_TeamMemberList(); !iter.done(); iter.advance()) {
-		Object *obj = iter.cur();
-		if (!obj) {
-			continue;
-		}
-
-		AIUpdateInterface *ai = obj->getAIUpdateInterface();
-		if (!ai) {
-			continue;
-		}
-
-		ai->chooseLocomotorSet(LOCOMOTORSET_NORMAL);
-		ai->aiExit(NULL, CMD_FROM_SCRIPT);
-	}
-}
+// ScriptActions::doTeamExitAllBuildings(const AsciiString&)
+// Body in ScriptActionsTeamMemberFlags.cpp (exact 112B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** doUnitGarrisonSpecificBuilding */
