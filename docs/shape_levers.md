@@ -2565,3 +2565,29 @@ vptr load after the call, as retail does. Exact. Inert on GetProperty
 two values read from one array, every scratch register in a different role.
 Source: game/Libraries/Source/EA/Apt/AptActionInterpreterRva008CB3C0.cpp
 (fbfea42889). VC7.1 /O2 /MD /EHsc.
+
+## Split a reassigned local into the source's named locals (2026-10-29)
+
+Apt opcode 0x3D handler 0x008D0B00 (352 B) kept a whole-body ESI/EDI swap
+(retail state=ESI, top=EDI) after every alias, order and loop spelling was
+tried. One variable `top` was reassigned twice: `top = top->at(0)` and
+`top = makeValue(...)`. Open BFME 2's `_FunctionAptActionCallFunction` uses
+separate `name`, `params` and `function` locals, with `function = name` in
+the non-string arm. Splitting it the same way was exact: the swap came from
+live-range weights, not from spelling. Signature: a global callee-saved
+register exchange in a body where one pointer local is reassigned along
+several paths. Source: game/Libraries/Source/EA/Apt/Rva008C6320.cpp
+(cebc07a933). VC7.1 /O2 /MD /EHsc.
+
+## Fetch a table entry through an inline getter taking the index (2026-10-29)
+
+GetProperty 0x008CD2F0 (254 B) kept 8 register differences: retail forms
+`lea ecx,[eax*4+keys]` (a new register) where ours reused `lea eax,[eax*4+keys]`,
+and the following release loop rotated. More than 100 spellings had left it.
+Passing the key as `rva8CD2F0GetString(g_routeIndices[n])`, an inline
+`return &g_bfmeRouteKeys1282[code];`, was exact. That is Open BFME 2's
+`Rva0070B4F0GetString(g_aptPropertyCodes[n])` shape. An inline helper that
+also takes the inner index lookup was exact too. A helper over an
+already-computed local index was inert (8). Inert on 0x008D1F10, whose index
+comes from a loop-found slot. Source:
+game/Libraries/Source/EA/Apt/Rva8CD2F0GetProperty.cpp (b883857bb0).
