@@ -109,7 +109,10 @@ public:
 	void setLifetimeRange(UnsignedInt minFrames, UnsignedInt maxFrames);
 };
 
-extern GlobalData *TheGlobalData;
+// Retail 0x012ED5C8 is ?TheWritableGlobalData@@3PAVGlobalData@@A (data_rows.csv,
+// Common/GlobalData.cpp); TheGlobalData was only a pin.
+extern GlobalData *TheWritableGlobalData;
+#define TheGlobalData TheWritableGlobalData
 extern GameLogic *TheGameLogic;
 extern ThingFactory *TheThingFactory;
 extern NameKeyGenerator *TheNameKeyGenerator;

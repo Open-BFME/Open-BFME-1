@@ -14,7 +14,10 @@ typedef float Real;
 typedef unsigned short UnsignedShort;
 typedef bool Bool;
 
-extern const float BfmeBoundaryZero3D;
+// Retail 0x01075350 is ?g_rva01075350@@3MB (data_rows.csv,
+// Common/BfmeAngleWrap0079D0.cpp); BfmeBoundaryZero3D was only a pin.
+extern const float g_rva01075350;
+#define BfmeBoundaryZero3D g_rva01075350
 #define g_rva01075350 BfmeBoundaryZero3D
 
 class Object;

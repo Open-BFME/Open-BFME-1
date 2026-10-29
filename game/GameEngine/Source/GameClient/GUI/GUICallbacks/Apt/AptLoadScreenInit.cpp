@@ -94,7 +94,10 @@ extern ImageCollection *TheMappedImageCollection;
 // (data_rows.csv, GUI/WindowManager.cpp); g_theWindowManager was only a pin.
 extern WindowManager *g_rva012F19E8WindowManager;
 #define g_theWindowManager g_rva012F19E8WindowManager
-extern BfmeThingBIF *Rva00579160TheManager;
+// Retail 0x012F19E8 is ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A (data_rows.csv,
+// GUI/WindowManager.cpp); Rva00579160TheManager was only a pin.
+extern WindowManager *g_rva012F19E8WindowManager;
+#define Rva00579160TheManager ( *(BfmeThingBIF **)&g_rva012F19E8WindowManager )
 
 class GameSlot
 {
@@ -345,7 +348,11 @@ public:
 	virtual void stopMusic(int a, int b, int c);
 };
 
-extern AudioClient *TheAudioClientUpdate;
+// Retail 0x012ED668 is ?TheAudio@@3PAVAudioManager@@A (data_rows.csv,
+// Common/Audio/GameAudio.cpp); TheAudioClientUpdate was only a pin.
+class AudioManager;
+extern AudioManager *TheAudio;
+#define TheAudioClientUpdate ( *(AudioClient **)&TheAudio )
 extern UnicodeString Rva0051BA90RankOrUnavailableText(int rank);
 
 class AptLoadScreen

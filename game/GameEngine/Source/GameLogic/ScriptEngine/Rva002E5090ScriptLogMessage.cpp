@@ -54,7 +54,11 @@ public:
     void AppendDebugMessage(const AsciiString &message, bool forcePause);
 };
 
-extern void *TheGlobalData;
+// Retail 0x012ED5C8 is ?TheWritableGlobalData@@3PAVGlobalData@@A (data_rows.csv,
+// Common/GlobalData.cpp); TheGlobalData was only a pin.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+#define TheGlobalData ( *(void **)&TheWritableGlobalData )
 extern ScriptEngine *TheScriptEngine;
 
 typedef void (__cdecl *Rva002E5090VoidCallback)(void);

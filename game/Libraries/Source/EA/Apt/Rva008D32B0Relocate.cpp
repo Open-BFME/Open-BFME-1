@@ -41,7 +41,11 @@ struct Rva008D32B0Pool {
 // Chain head at 0x013387D0; defined in game/GameEngine/Source/Common/Rva008D2A10Link.cpp
 class Rva008D2A10;
 extern Rva008D2A10 *g_rva008D2A10;
-extern Rva008D32B0Pool *g_rva8CD130IdleHook;
+// Retail 0x01337810 is ?g_rva01337810GcRoots@@3PAURva00899560Pool@@A (data_rows.csv,
+// Apt/Apt.cpp); g_rva8CD130IdleHook was only a pin.
+struct Rva00899560Pool;
+extern Rva00899560Pool *g_rva01337810GcRoots;
+#define g_rva8CD130IdleHook ( *(Rva008D32B0Pool **)&g_rva01337810GcRoots )
 // Retail vtables: ??_7AptValue@@6B@ at 0x01135D68, ??_7AptInteger@@6B@ at
 // 0x01136400 (targets/game/reverse/dir32_addresses.csv). Referenced by their
 // own mangled names, the way CameraPath_dtor.cpp and WorldHeightMapRva0074ACB0Load.cpp

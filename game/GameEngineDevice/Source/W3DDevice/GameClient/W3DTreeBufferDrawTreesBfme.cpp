@@ -110,7 +110,11 @@ public:
   char gap2ff8[0x30b8 - 0x2ff8];
   Rva00737B70Shroud *shroud;
 };
-extern BfmeA1087 *g_bfmeA1087;
+// Retail 0x012F7FE0 is ?TheTerrainRenderObject@@3PAVBaseHeightMapRenderObjClass@@A (data_rows.csv,
+// W3DDevice/GameClient/BaseHeightMap.cpp); g_bfmeA1087 was only a pin.
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
+#define g_bfmeA1087 ( *(BfmeA1087 **)&TheTerrainRenderObject )
 struct Rva00737B70Coord {
   float x, y, z;
   void set(float px, float py, float pz) {

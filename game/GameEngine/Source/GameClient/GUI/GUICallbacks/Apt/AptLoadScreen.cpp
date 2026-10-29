@@ -258,7 +258,11 @@ public:
 	virtual void slot60(); virtual void slot64(); virtual void slot68();
 	virtual void slot6C(int one, int two, int three);
 };
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+// Retail 0x012ED668 is ?TheAudio@@3PAVAudioManager@@A (data_rows.csv,
+// Common/Audio/GameAudio.cpp); TheAudioClientUpdate was only a pin.
+class AudioManager;
+extern AudioManager *TheAudio;
+#define TheAudioClientUpdate ( *(Rva005A00B0AudioClient **)&TheAudio )
 
 class GameWindowTransitionsHandler
 {

@@ -202,7 +202,11 @@ __forceinline void DX8Wrapper::Set_DX8_Render_State007B6520(unsigned long state,
 }
 
 struct GlobalData007B6520 { char pad00[0xa77]; bool byteA77; };
-extern void *TheGlobalData;
+// Retail 0x012ED5C8 is ?TheWritableGlobalData@@3PAVGlobalData@@A (data_rows.csv,
+// Common/GlobalData.cpp); TheGlobalData was only a pin.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+#define TheGlobalData ( *(void **)&TheWritableGlobalData )
 // Each head read observes the manager's current list after batching calls.
 #define head m_1c
 // ?render007B6520@W3DProjectedShadowManager@@QAEHAAVRenderInfoClass@@@Z

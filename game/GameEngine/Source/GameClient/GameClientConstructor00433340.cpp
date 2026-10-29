@@ -143,7 +143,11 @@ extern InGameUI *TheInGameUI;
 extern Shell *TheShell;
 class IMEManagerInterface;
 extern IMEManagerInterface *TheIMEManager;
-extern Rva00579160Manager *Rva00579160TheManager;
+// Retail 0x012F19E8 is ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A (data_rows.csv,
+// GUI/WindowManager.cpp); Rva00579160TheManager was only a pin.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
+#define Rva00579160TheManager ( *(Rva00579160Manager **)&g_rva012F19E8WindowManager )
 extern GameWindowManager *TheWindowManager;
 extern FontLibrary *TheFontLibrary;
 extern Mouse *TheMouse;

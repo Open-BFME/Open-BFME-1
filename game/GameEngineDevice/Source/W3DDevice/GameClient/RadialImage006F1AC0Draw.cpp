@@ -124,7 +124,10 @@ struct RadialImage006F1AC0 {
  char unknown00[0x164]; Render006F1AC0 *field164;
  void draw(Image *,float,float,float,float,float,unsigned long);
 };
-extern const float BfmeBoundaryZero3D;
+// Retail 0x01075350 is ?g_rva01075350@@3MB (data_rows.csv,
+// Common/BfmeAngleWrap0079D0.cpp); BfmeBoundaryZero3D was only a pin.
+extern const float g_rva01075350;
+#define BfmeBoundaryZero3D g_rva01075350
 extern const float Rva0109BF40ZeroRange;
 inline float pi006F1AC0() { return 3.14159265358979323846f; }
 void RadialImage006F1AC0::draw(Image *image,float left,float top,float right,float bottom,float percent,unsigned long color)

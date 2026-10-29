@@ -56,7 +56,10 @@ public:
 	unsigned char m_unmodelled_1E8[0xA8D - 0x1E8];
 	bool m_showObjectHealth;				// +0xA8D
 };
-extern GlobalData *TheGlobalData;
+// Retail 0x012ED5C8 is ?TheWritableGlobalData@@3PAVGlobalData@@A (data_rows.csv,
+// Common/GlobalData.cpp); TheGlobalData was only a pin.
+extern GlobalData *TheWritableGlobalData;
+#define TheGlobalData TheWritableGlobalData
 
 class InGameUI
 {

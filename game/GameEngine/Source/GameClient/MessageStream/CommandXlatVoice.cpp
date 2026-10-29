@@ -473,7 +473,10 @@ extern MessageStream* TheMessageStream;
 extern PlayerList* ThePlayerList;
 extern View* TheTacticalView;
 extern GameLogic* TheGameLogic;
-extern GlobalData* TheGlobalData;
+// Retail 0x012ED5C8 is ?TheWritableGlobalData@@3PAVGlobalData@@A (data_rows.csv,
+// Common/GlobalData.cpp); TheGlobalData was only a pin.
+extern GlobalData *TheWritableGlobalData;
+#define TheGlobalData TheWritableGlobalData
 extern Mouse* TheMouse;
 extern Radar* TheRadar;
 extern ControlBar* TheControlBar;

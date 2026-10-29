@@ -24,7 +24,10 @@ extern int g_stack01338748;
 class BfmeTracker4310;
 extern BfmeTracker4310 *g_bfmeTracker4310;
 struct Rva00899560Pool;
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+// Retail 0x01337810 is ?g_rva01337810GcRoots@@3PAURva00899560Pool@@A (data_rows.csv,
+// Apt/Apt.cpp); g_rva8CD130IdleHook was only a pin.
+extern Rva00899560Pool *g_rva01337810GcRoots;
+#define g_rva8CD130IdleHook g_rva01337810GcRoots
 extern void d_00894380();
 extern void d_00891fa0();
 extern void d_00896710();

@@ -117,7 +117,11 @@ public:
 };
 
 extern Display *TheDisplay;
-extern ClientSubsystem *TheAudioClientUpdate;
+// Retail 0x012ED668 is ?TheAudio@@3PAVAudioManager@@A (data_rows.csv,
+// Common/Audio/GameAudio.cpp); TheAudioClientUpdate was only a pin.
+class AudioManager;
+extern AudioManager *TheAudio;
+#define TheAudioClientUpdate ( *(ClientSubsystem **)&TheAudio )
 
 class BfmeOwnAC
 {

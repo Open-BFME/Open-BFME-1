@@ -138,7 +138,11 @@ virtual void slot68();
 virtual void slot69();
 virtual AudioEventInfoRef find(const AsciiString *) const;
 };
-extern void *TheAudioClientUpdate;
+// Retail 0x012ED668 is ?TheAudio@@3PAVAudioManager@@A (data_rows.csv,
+// Common/Audio/GameAudio.cpp); TheAudioClientUpdate was only a pin.
+class AudioManager;
+extern AudioManager *TheAudio;
+#define TheAudioClientUpdate ( *(void **)&TheAudio )
 // ?rva000BDD20@@YAXPAVINI@@PAX1PBX@Z
 void __cdecl rva000BDD20(INI *ini, void *, void *store, const void *) {
     _STL::vector<Rva000BD3B0Element> *sounds = (_STL::vector<Rva000BD3B0Element> *)store;

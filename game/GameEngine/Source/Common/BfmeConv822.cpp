@@ -95,7 +95,11 @@ struct BfmeObj2B1
 	BfmeSub78_2B1 *m_sub78;
 };
 
-extern BfmeObj2B1 *g_obj12F060C;
+// Retail 0x012F060C is ?TheLuaScriptEngine@@3PAVLuaScriptEngine@@A (data_rows.csv,
+// Common/RTS/Team_updateState.cpp); g_obj12F060C was only a pin.
+class LuaScriptEngine;
+extern LuaScriptEngine *TheLuaScriptEngine;
+#define g_obj12F060C ( *(BfmeObj2B1 **)&TheLuaScriptEngine )
 
 int __cdecl bfmeAction2B1(void *arg)
 {

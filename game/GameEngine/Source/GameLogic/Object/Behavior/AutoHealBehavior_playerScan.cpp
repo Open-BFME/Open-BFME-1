@@ -292,7 +292,10 @@ public:
 	Real m_getHealedAnimationDisplayTimeInSeconds;
 	Real m_getHealedAnimationZRisePerSecond;
 };
-extern GlobalData *TheGlobalData;
+// Retail 0x012ED5C8 is ?TheWritableGlobalData@@3PAVGlobalData@@A (data_rows.csv,
+// Common/GlobalData.cpp); TheGlobalData was only a pin.
+extern GlobalData *TheWritableGlobalData;
+#define TheGlobalData TheWritableGlobalData
 
 class PartitionFilter
 {

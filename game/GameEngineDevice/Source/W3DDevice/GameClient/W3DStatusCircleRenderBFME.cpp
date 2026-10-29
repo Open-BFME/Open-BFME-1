@@ -133,7 +133,10 @@ extern float g_worldMatrix[16];
 extern unsigned char g_rva007A2330Flag;
 extern float g_bfmeDefaultBU;
 extern const float g_bfmeScaleB3;
-extern const Real BfmeBoundaryZero3D;
+// Retail 0x01075350 is ?g_rva01075350@@3MB (data_rows.csv,
+// Common/BfmeAngleWrap0079D0.cpp); BfmeBoundaryZero3D was only a pin.
+extern const float g_rva01075350;
+#define BfmeBoundaryZero3D g_rva01075350
 #define g_rva01075350 BfmeBoundaryZero3D
 
 void j_00008d5f();

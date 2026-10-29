@@ -33,7 +33,10 @@ extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 struct BfmePickWorld1284;
 extern BfmePickWorld1284 *g_bfmeHolderBU;
 extern Rva00893030Manager *g_rva00893030Manager;
-extern Rva00899560Pool *g_rva8CD130IdleHook;
+// Retail 0x01337810 is ?g_rva01337810GcRoots@@3PAURva00899560Pool@@A (data_rows.csv,
+// Apt/Apt.cpp); g_rva8CD130IdleHook was only a pin.
+extern Rva00899560Pool *g_rva01337810GcRoots;
+#define g_rva8CD130IdleHook g_rva01337810GcRoots
 extern void (*TheBfmeFree)(void *, unsigned int);
 
 extern void bfmeGoDWG();

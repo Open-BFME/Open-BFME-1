@@ -189,7 +189,11 @@ struct Rva005A00B0AudioClient
 	virtual const Coord3D *getListenerPosition006059F0() const;
 };
 
-extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+// Retail 0x012ED668 is ?TheAudio@@3PAVAudioManager@@A (data_rows.csv,
+// Common/Audio/GameAudio.cpp); TheAudioClientUpdate was only a pin.
+class AudioManager;
+extern AudioManager *TheAudio;
+#define TheAudioClientUpdate ( *(Rva005A00B0AudioClient **)&TheAudio )
 
 class U4Owner00604C00;
 class U4Notify

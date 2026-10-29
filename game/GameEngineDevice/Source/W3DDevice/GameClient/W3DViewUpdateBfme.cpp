@@ -202,7 +202,11 @@ class BfmeA1087 { public:
  char gap0004[12293];
  bool field3009; // +0x3009
 };
-extern BfmeA1087 *g_bfmeA1087;
+// Retail 0x012F7FE0 is ?TheTerrainRenderObject@@3PAVBaseHeightMapRenderObjClass@@A (data_rows.csv,
+// W3DDevice/GameClient/BaseHeightMap.cpp); g_bfmeA1087 was only a pin.
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
+#define g_bfmeA1087 ( *(BfmeA1087 **)&TheTerrainRenderObject )
 class GameClient { public:
  virtual void slot000();
  virtual void slot004();

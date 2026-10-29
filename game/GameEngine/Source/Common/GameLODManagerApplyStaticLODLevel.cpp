@@ -190,7 +190,11 @@ public:
 };
 #undef BFME_A1087_SLOT
 
-extern BfmeA1087 *g_bfmeA1087;
+// Retail 0x012F7FE0 is ?TheTerrainRenderObject@@3PAVBaseHeightMapRenderObjClass@@A (data_rows.csv,
+// W3DDevice/GameClient/BaseHeightMap.cpp); g_bfmeA1087 was only a pin.
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
+#define g_bfmeA1087 ( *(BfmeA1087 **)&TheTerrainRenderObject )
 extern void W3DRadarResetLock();
 extern char bfmeUnlock1179();
 

@@ -59,7 +59,10 @@ public:
 };
 extern Display *TheDisplay;
 class GlobalData { public: char pad[3000]; bool flagBB8; };
-extern GlobalData *TheGlobalData;
+// Retail 0x012ED5C8 is ?TheWritableGlobalData@@3PAVGlobalData@@A (data_rows.csv,
+// Common/GlobalData.cpp); TheGlobalData was only a pin.
+extern GlobalData *TheWritableGlobalData;
+#define TheGlobalData TheWritableGlobalData
 struct Rva00465D50Point { int x,y; };
 class Rva00465D50Owner { public: void apply(Rva00465D50Point *); };
 class WindowManager;	///< retail pointee at 0x012F19E8 (defined in GUI/WindowManager.cpp)

@@ -63,7 +63,11 @@ public:
 	void run(void);						// retail 0x008A30C0
 };
 
-extern Rva8CD130IdleHook *g_rva8CD130IdleHook;			// retail 0x01337810
+// Retail 0x01337810 is ?g_rva01337810GcRoots@@3PAURva00899560Pool@@A (data_rows.csv,
+// Apt/Apt.cpp); g_rva8CD130IdleHook was only a pin.
+struct Rva00899560Pool;
+extern Rva00899560Pool *g_rva01337810GcRoots;
+#define g_rva8CD130IdleHook ( *(Rva8CD130IdleHook **)&g_rva01337810GcRoots )
 
 class Rva00897260Node;
 

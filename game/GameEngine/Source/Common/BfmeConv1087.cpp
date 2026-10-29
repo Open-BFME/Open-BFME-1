@@ -28,7 +28,11 @@ extern BfmeM1087 *g_bfmeM1087;
 class GameLogic;
 extern GameLogic *TheGameLogic;
 extern BfmeN1087 *g_bfmeN1087;
-extern BfmeA1087 *g_bfmeA1087;
+// Retail 0x012F7FE0 is ?TheTerrainRenderObject@@3PAVBaseHeightMapRenderObjClass@@A (data_rows.csv,
+// W3DDevice/GameClient/BaseHeightMap.cpp); g_bfmeA1087 was only a pin.
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
+#define g_bfmeA1087 ( *(BfmeA1087 **)&TheTerrainRenderObject )
 
 class BfmeQ1087
 {

@@ -66,7 +66,11 @@ struct Rva00893410Registry {
         else values[count++] = v;
     }
 };
-extern Rva00893410Registry *g_rva8CD130IdleHook;
+// Retail 0x01337810 is ?g_rva01337810GcRoots@@3PAURva00899560Pool@@A (data_rows.csv,
+// Apt/Apt.cpp); g_rva8CD130IdleHook was only a pin.
+struct Rva00899560Pool;
+extern Rva00899560Pool *g_rva01337810GcRoots;
+#define g_rva8CD130IdleHook ( *(Rva00893410Registry **)&g_rva01337810GcRoots )
 struct Rva008C3B60Node;
 extern Rva008C3B60Node *g_rva01338478NodeHead;
 class BfmeNestedBE;
