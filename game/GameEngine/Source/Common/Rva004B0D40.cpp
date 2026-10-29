@@ -34,7 +34,10 @@ public:
 	virtual void v20(); virtual void v24(); virtual void v28();
 	virtual const Coord2DBase *getScreenPoint();		// +0x2c
 };
-extern WindowManager *g_theWindowManager;
+// Retail 0x012F19E8 is ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A
+// (data_rows.csv, GUI/WindowManager.cpp); g_theWindowManager was only a pin.
+extern WindowManager *g_rva012F19E8WindowManager;
+#define g_theWindowManager g_rva012F19E8WindowManager
 
 // bfmeGo1073B (BfmeConv1073.cpp) takes the target's +0x08 block.
 struct BfmeN1073

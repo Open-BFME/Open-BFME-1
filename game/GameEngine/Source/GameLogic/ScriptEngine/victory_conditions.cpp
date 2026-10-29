@@ -261,7 +261,10 @@ public:
 		const void *p1, const void *p2, const void *p3, const void *p4, const void *p5);
 };
 
-extern WindowManager *g_theWindowManager;	///< retail [0x012F19E8]
+// Retail 0x012F19E8 is ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A
+// (data_rows.csv, GUI/WindowManager.cpp); g_theWindowManager was only a pin.
+extern WindowManager *g_rva012F19E8WindowManager;
+#define g_theWindowManager g_rva012F19E8WindowManager
 
 // Display as far as the banner methods need it: they flip a byte at +0x13C
 // (1 on hide, 0 on show). Member identity open.

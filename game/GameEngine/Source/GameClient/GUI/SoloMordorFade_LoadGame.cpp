@@ -14,7 +14,10 @@ class WindowManager
 public:
 	void unidentified_000144bb(int a);
 };
-extern WindowManager *g_theWindowManager;
+// Retail 0x012F19E8 is ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A
+// (data_rows.csv, GUI/WindowManager.cpp); g_theWindowManager was only a pin.
+extern WindowManager *g_rva012F19E8WindowManager;
+#define g_theWindowManager g_rva012F19E8WindowManager
 
 class Display
 {

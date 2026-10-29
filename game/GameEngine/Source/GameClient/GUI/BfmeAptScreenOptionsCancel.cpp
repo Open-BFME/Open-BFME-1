@@ -127,7 +127,10 @@ extern BfmeAptScreenOptions *g_obj12F4AD4;
 extern GameWindowManager *TheWindowManager;
 // The quit-menu hand-off goes to BFME's Apt window manager (0x012F19E8), not TheWindowManager.
 class WindowManager;
-extern WindowManager *g_theWindowManager;
+// Retail 0x012F19E8 is ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A
+// (data_rows.csv, GUI/WindowManager.cpp); g_theWindowManager was only a pin.
+extern WindowManager *g_rva012F19E8WindowManager;
+#define g_theWindowManager g_rva012F19E8WindowManager
 extern Display *TheDisplay;
 // The linked build has one mangled name for the global at 0x012ED668: the
 // canonical `AudioManager *TheAudio`, defined in GameAudio.cpp.
