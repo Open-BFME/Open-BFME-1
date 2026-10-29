@@ -21401,5 +21401,15 @@
     "after_sha256": "7d87ba26218169e9c04cd00391b6ba7896ab2f8abbfc0c4340c52107eff72598",
     "evidence": "targets/game/reverse/identity_evidence/00438d50-initmapstringfile-sort.md",
     "reason": "retail initMapStringFile 0x00438D50 sorts with STLport sort (ILTs 0x000323F3/0x00007F4F), never qsort; the ZH qsort copy was non-retail and removed, and only its funclet row moved"
+  },
+  {
+    "old_path": "targets/game/reverse/attempts/0x003a1080.cpp",
+    "new_path": "targets/game/reverse/attempts/0x003a1080.cpp",
+    "old_name": "p5",
+    "new_name": "m_bfme0cJG",
+    "before_sha256": "f34047a967d012124ae2697804f6e072838038dc17a170753dc25474fd27ab86",
+    "after_sha256": "35de82af9647b706585a03c469346afd334e7c849c8987cc1fcc968c9f50412e",
+    "evidence": "targets/game/reverse/attempt_support/20261029-003a1080-bfmesetupjg-tail-substruct.md",
+    "reason": "bank rewrite: the 0x46 flag now reads the stored field m_bfme0cJG instead of parameter p5 (same value); positional token pairing, no rename"
   }
 ]
