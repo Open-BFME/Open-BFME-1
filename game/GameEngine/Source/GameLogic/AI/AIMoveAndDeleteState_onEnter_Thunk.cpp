@@ -75,7 +75,10 @@ private:
 // RVA -- the leading bytes are the same CritterDesync debug guard seen at
 // several other onEnter() sites in this build (string table confirms
 // "CritterDesync: setAdjustDestination(FALSE) 60" at retail 0x0017EF50).
-extern unsigned char g_012F0239;
+// Retail 0x012F0239 is ?Glo012F0239@@3_NA (data_rows.csv,
+// S3CritterDesyncCountdown.cpp); g_012F0239 was only a pin nothing defines.
+extern bool Glo012F0239;
+#define g_012F0239 ( *(unsigned char *)&Glo012F0239 )
 // Retail 0x012ED4FC is ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
 // (data_rows.csv); g_012ED4FC was only a pin nothing defines.
 class CRCParameterCheck;
