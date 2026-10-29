@@ -16,6 +16,10 @@
 // build-queue iterator keeps its next getter (ILT 0x0002FEE6) in a frame slot
 // because the loops reset it.
 
+// This unit's local Script view defines getAction inline at its own offset
+// (not +0x28) and emits that COMDAT copy; rename it so only retail's 0x00112980
+// (reads +0x28) carries the name. Inlined calls are unchanged.
+#define getAction getAction_LocalView
 #include "ObjectDlinkPmf.h"
 
 typedef bool Bool;

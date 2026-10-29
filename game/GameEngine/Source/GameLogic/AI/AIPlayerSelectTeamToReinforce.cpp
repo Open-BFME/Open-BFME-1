@@ -27,6 +27,10 @@
 // AICommandInterface at +0x20).
 
 #define _STLP_NO_EXCEPTIONS 1
+// This unit's local TeamPrototype view defines getTemplateInfo inline at its own offset
+// (not +0x68) and emits that COMDAT copy; rename it so only retail's 0x003BCD70
+// (lea eax,[ecx+0x68]) carries the name. Inlined calls are unchanged.
+#define getTemplateInfo getTemplateInfo_LocalView
 #include <list>
 
 #include "ascii_string.h"

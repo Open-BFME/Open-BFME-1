@@ -2,6 +2,10 @@
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib /Igame/GameEngine/Source/Common/System /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 #define _STLP_NO_EXCEPTIONS 1
 // stlport
+// This unit's local ParticleSystem view defines getSystemID inline at its own offset
+// (not +0x268) and emits that COMDAT copy; rename it so only retail's 0x0049C950
+// (reads +0x268) carries the name. Inlined calls are unchanged.
+#define getSystemID getSystemID_LocalView
 #include "ascii_string.h"
 #include "game_client_random_variable.h"
 #include <list>

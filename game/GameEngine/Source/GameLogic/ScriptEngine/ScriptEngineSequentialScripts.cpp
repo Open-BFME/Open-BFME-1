@@ -6,6 +6,10 @@
 // its original EA type name is not established. The erase view names only its
 // independently decoded address and ABI, not an original template identity.
 
+// This unit's local Script view defines getAction inline at its own offset
+// (not +0x28) and emits that COMDAT copy; rename it so only retail's 0x00112980
+// (reads +0x28) carries the name. Inlined calls are unchanged.
+#define getAction getAction_LocalView
 #include <vector>
 
 typedef bool Bool;

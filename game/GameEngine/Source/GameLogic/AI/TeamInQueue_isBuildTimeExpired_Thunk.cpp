@@ -26,6 +26,10 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
+// This unit's local TeamPrototype view defines getTemplateInfo inline at its own offset
+// (not +0x68) and emits that COMDAT copy; rename it so only retail's 0x003BCD70
+// (lea eax,[ecx+0x68]) carries the name. Inlined calls are unchanged.
+#define getTemplateInfo getTemplateInfo_LocalView
 class TeamPrototype
 {
 public:

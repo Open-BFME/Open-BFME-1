@@ -2,6 +2,10 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Include /Igame/GameEngine/Source/GameLogic/Object/Damage
 // Evidence: targets/game/reverse/identity_evidence/002525e0-damage-transition-retry.md.
 #define class struct
+// This unit's local ParticleSystem view defines getSystemID inline at its own offset
+// (not +0x268) and emits that COMDAT copy; rename it so only retail's 0x0049C950
+// (reads +0x268) carries the name. Inlined calls are unchanged.
+#define getSystemID getSystemID_LocalView
 #include "coord3d.h"
 #undef class
 #include "ascii_string.h"

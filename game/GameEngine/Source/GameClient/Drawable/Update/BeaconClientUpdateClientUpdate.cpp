@@ -77,6 +77,10 @@ class Drawable;
 class ParticleSystemHandle;
 class ParticleSystemTemplate;
 
+// This unit's local ParticleSystem view defines getSystemID inline at its own offset
+// (not +0x268) and emits that COMDAT copy; rename it so only retail's 0x0049C950
+// (reads +0x268) carries the name. Inlined calls are unchanged.
+#define getSystemID getSystemID_LocalView
 class ParticleSystem
 {
 public:

@@ -11,6 +11,10 @@
 // and always centres the drawable on the midpoint of the two positions.
 // Layout and handle model follow the matched LaserUpdateClientUpdate.cpp.
 
+// This unit's local ParticleSystem view defines getSystemID inline at its own offset
+// (not +0x268) and emits that COMDAT copy; rename it so only retail's 0x0049C950
+// (reads +0x268) carries the name. Inlined calls are unchanged.
+#define getSystemID getSystemID_LocalView
 #include "string_base.h"
 #include "coord.h"
 #include "matrix3d.h"

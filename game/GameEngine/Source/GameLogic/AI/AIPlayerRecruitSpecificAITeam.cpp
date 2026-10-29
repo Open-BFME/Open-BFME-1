@@ -27,6 +27,10 @@
 // +0x23C, AI +0x204 (its AICommandInterface at +0x20); TeamInQueue as in
 // AIPlayerBuildSpecificAITeam.cpp.
 
+// This unit's local TeamPrototype view defines getTemplateInfo inline at its own offset
+// (not +0x68) and emits that COMDAT copy; rename it so only retail's 0x003BCD70
+// (lea eax,[ecx+0x68]) carries the name. Inlined calls are unchanged.
+#define getTemplateInfo getTemplateInfo_LocalView
 #include "ascii_string.h"
 
 typedef bool Bool;
