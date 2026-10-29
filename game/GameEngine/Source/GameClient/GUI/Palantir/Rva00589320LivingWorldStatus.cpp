@@ -41,6 +41,15 @@ public:
 	Rva00589320Player *getLocalPlayer();
 };
 
+// 0x000DF860 via ILT 0x0000762B, matched as BfmeThingRV::bfmePickRV
+// (BfmeThreeHundredTwentyFour.cpp).
+class BfmeMemberRV;
+class BfmeThingRV
+{
+public:
+	BfmeMemberRV *bfmePickRV();
+};
+
 class PlayerList;
 
 // Retail 0x012F1028 is EA's TheLivingWorldLogic (data_rows.csv owns
@@ -77,7 +86,7 @@ int Rva00589320(void)
 		return 1;
 
 	Rva00589320Player *player =
-		((Rva002EE330PlayerList *)ThePlayerList)->getLocalPlayer();
+		(Rva00589320Player *)((BfmeThingRV *)ThePlayerList)->bfmePickRV();
 	if (!player)
 		return 1;
 

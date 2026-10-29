@@ -168,10 +168,13 @@ public:
 	OVERRIDE<ThingTemplate> m_template;
 };
 
-class BfmeObjZC
+// 0x0041D150 via ILT 0x0003EE55, matched in
+// BFMERopeDrawableLinearInterpolatedPosition.cpp.
+struct BfmeLinearCoord3D;
+class BFMERopeDrawableGetPositionShim
 {
 public:
-	Coord3D *bfmePosZC();
+	const BfmeLinearCoord3D *getPositionLinear() const;
 };
 
 class Snapshot
@@ -203,7 +206,7 @@ void Drawable::getHealthBoxPosition(Coord3D &position) const
 			placed = true;
 	}
 	if (!placed)
-		position = *((BfmeObjZC *)this)->bfmePosZC();
+		position = *(const Coord3D *)((BFMERopeDrawableGetPositionShim *)this)->getPositionLinear();
 	float healthBoxHeight;
 	if (object->m_template == 0)
 		healthBoxHeight = 10.0f;
