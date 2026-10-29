@@ -2547,3 +2547,21 @@ Signature: retail has two identical compare heads that jump into each
 other's fall-through tails. Source:
 game/GameEngine/Source/GameLogic/Object/Update/RespawnUpdate_getDeadImage.cpp
 (4c3a25ff35). VC7.1 /O2 /MD /EHsc.
+
+## Two pops from one array: declaration order sets the register rotation (2026-10-29)
+
+Apt opcode handler 0x008CB3C0 (259 B, AptActionInterpreter::_FunctionRva008CB3C0)
+sat at 0.64 for four sessions with normalised shape 1.000: every scratch
+register rotated (retail keeps top's flag word in EDX and copies it to EAX/ECX,
+ours in ECX; the release loop used EAX/ECX instead of ECX/EDX). Both builds
+load `under` (`m_stack[top-2]`, EBP) before `top` (`m_stack[top-1]`, EDI), so
+the load order looked settled. Declaring `top` first in the source
+(`AptValue *top = ...[-1]; AptValue *under = ...[-2];`) leaves the load order
+unchanged but gives retail's allocation everywhere (100 -> 10 diffs). The last
+10 came from `top->slot18(under->lookup(key))`: VC7.1 loads top's vptr before
+evaluating the argument; a `found` local holding the lookup result puts the
+vptr load after the call, as retail does. Exact. Inert on GetProperty
+0x008CD2F0, whose bank already declares top first. Signature: shape 1.000,
+two values read from one array, every scratch register in a different role.
+Source: game/Libraries/Source/EA/Apt/AptActionInterpreterRva008CB3C0.cpp
+(fbfea42889). VC7.1 /O2 /MD /EHsc.
