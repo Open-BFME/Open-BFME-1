@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "5a4057e1a90e52e8c837d752d994ca99116c0f2fbf9377f67487c9d83419fb04",
+  "symbol": "?rva005847F0@BannerUI@@QAEXXZ",
+  "score_kind": "measured",
+  "score": 0.3415,
+  "source": "// ?rva005847F0@BannerUI@@QAEXXZ\n// partial score=0.3415 date=2026-10-29\n// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/stlp_nodealloc\n// stlport\n#include <vector>\n\nclass GameLogic\n{\n};\nextern GameLogic *TheGameLogic;\n\nclass CampaignObject\n{\npublic:\n\tbool isActive() const { return m_active; }\n\tbool isPaused() const { return m_paused; }\n\nprivate:\n\tchar m_pad00[0x2c];\n\tbool m_active;\n\tbool m_paused;\n};\n\nextern CampaignObject *TheLivingWorldLogic;\n\nextern void j_0003fb02();\n\nclass BannerUI\n{\npublic:\n\tvoid rva005847F0();\n\tint rva00584330(int objectId);\n\nprivate:\n\tchar m_pad00[0x40];\n\tint m_field40;\n};\n\nvoid BannerUI::rva005847F0()\n{\n\tif (TheGameLogic)\n\t{\n\t\tif (TheLivingWorldLogic && TheLivingWorldLogic->isActive() && !TheLivingWorldLogic->isPaused())\n\t\t{\n\t\t\t_STL::vector<unsigned int> ids;\n\t\t\ttypedef void (GameLogic::*Collect)(_STL::vector<unsigned int> *);\n\t\t\tunion { void (__cdecl *raw)(); Collect member; } collect;\n\t\t\tcollect.raw = j_0003fb02;\n\t\t\t(TheGameLogic->*collect.member)(&ids);\n\t\t\tfor (_STL::vector<unsigned int>::iterator it = ids.begin(); it != ids.end(); ++it)\n\t\t\t\trva00584330(*it);\n\t\t}\n\t\tm_field40 = -1;\n\t}\n}\n"
+}

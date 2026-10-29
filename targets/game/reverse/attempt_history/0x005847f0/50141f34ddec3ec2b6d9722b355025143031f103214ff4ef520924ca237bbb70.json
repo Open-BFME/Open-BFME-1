@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "50141f34ddec3ec2b6d9722b355025143031f103214ff4ef520924ca237bbb70",
+  "symbol": "?handle@Gen005847F0@@QAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.3707317073,
+  "source": "// ?handle@Gen005847F0@@QAEXXZ\n// partial score=0.3707317073 date=2026-09-28\n// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/stlp_nodealloc\n// stlport\n#include <vector>\nclass GameLogic {\npublic:\n void collectObjectIds005847F0(_STL::vector<unsigned int>* ids);\n};\nclass CampaignObject {\npublic:\n char pad[0x2c];\n bool at2c;\n bool at2d;\n bool active() const { bool flag=at2c; if(at2d) return false; return flag; }\n};\nextern GameLogic* TheBfmeGameLogic;\nextern CampaignObject* TheLivingWorldLogic;\nclass Gen005847F0 {\npublic:\n char pad[0x40];\n int at40;\n void handle();\n void processObject00584330(unsigned int id);\n};\nvoid Gen005847F0::handle() {\n if (TheBfmeGameLogic) {\n  if (TheLivingWorldLogic && TheLivingWorldLogic->active()) {\n   _STL::vector<unsigned int> ids;\n   TheBfmeGameLogic->collectObjectIds005847F0(&ids);\n   for (_STL::vector<unsigned int>::iterator it=ids.begin(); it!=ids.end(); ++it)\n    processObject00584330(*it);\n  }\n  at40=-1;\n }\n}\n"
+}
