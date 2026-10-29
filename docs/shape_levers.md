@@ -2630,3 +2630,14 @@ was exact: the pointer temp forms the `add`, and the register roles and loop
 alignment followed. Also needed: a POD record instead of `_STL::pair`
 (pair's copy constructor adds an aligned frame and copy machinery). Source:
 game/GameEngine/Source/GameLogic/Object/SpecialPower/Rva00261CC0BuildPairs.cpp.
+
+## Two-float local with an inline constructor keeps loads on x87 (2026-10-30)
+
+Formation pass 0x0015A960 (278 B, VC7.1 /O2): retail loads `start->x` and
+`start->y` with `fld` before the per-bucket TheAI reload, uses them as
+`fsubr st(2)` / `fadd st(1)` and pops both dead at the end. Plain `Real x, y`
+locals folded the loads into memory operands; a `Coord2D` copy (or
+field-by-field copy into the escaping offset struct) became integer moves.
+`struct BucketStartPoint { Real x, y; BucketStartPoint(Real ax, Real ay) : x(ax), y(ay) {} };
+BucketStartPoint pos(start->x, start->y);` was exact. Source:
+game/GameEngine/Source/Common/Rva0015A960FormationProcess.cpp.
