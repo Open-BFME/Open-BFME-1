@@ -1,11 +1,10 @@
 // ?bfmeSyncEGF@BfmeThingEGF@@QAEXXZ
-// partial score=0.95 date=2026-09-04
-// ?bfmeSyncEGF@BfmeThingEGF@@QAEXXZ
-// partial score=0.95 date=2026-09-03
-// Open-BFME6: convert 0x00271B40 list-tag shadow sync, sibling of bfmeGoEGFc.
-// 249B body exact except 3 else-path thiscall sites: retail mov ecx,edi then
-// push imm; ours push imm then mov ecx,edi. Same 12 bytes, no lever flipped it
-// (local/ref/fastcall/inlined-thiscall/TU-dummy /Os).
+// Retail 0x00271B40, 249 bytes (RET at +0xF8, INT3 padding to 0x00271C80).
+// List-tag shadow sync, sibling of bfmeGoEGFc (Rva0026F2C0ListTag.cpp);
+// identity notes in targets/game/reverse/identity_evidence/00271b40-call-setup-retry.md.
+// The no-tag case repeats the not-active arm instead of sharing it through
+// `p && p->fastActive()`: VC7.1 cross-jumps the two copies, which is what
+// puts `mov ecx,edi` before each immediate push as in retail.
 
 class Drawable
 {
@@ -131,7 +130,20 @@ void BfmeThingEGF::bfmeSyncEGF()
 		extra = draw->m_flag3ac != 0;
 
 	BfmeSubF2C *p = m_p;
-	if (p && p->fastActive())
+	if (!p)
+	{
+		if (!m_flag339)
+			return;
+		((BfmeA1057 *)draw)->bfmeGo1057A(5);
+		draw->setShadowsEnabled(true);
+		m_flag339 = false;
+		if (!extra)
+			return;
+		if (!m_object->isLocallyControlled())
+			return;
+		((Rva004141A0GuardedVCall *)draw)->forward(1, ((ObjectAttemptDamageFlagHook *)m_object)->value());
+	}
+	else if (p->fastActive())
 	{
 		if (m_flag339)
 			return;
