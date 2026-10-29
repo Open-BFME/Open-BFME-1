@@ -28,6 +28,10 @@
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
 #define _BFME_RETAIL_PLAYER_INFO_LAYOUT
 #define __PLACEMENT_VEC_NEW_INLINE
+// PeerDefs.h's PlayerInfo has no declared copy constructor, so copies here
+// emitted an implicit ??0PlayerInfo@@QAE@ABV0@@Z COMDAT of the Zero Hour
+// layout. Declare it instead: the retail body is 0x004F1120 (Open2Records.cpp).
+#define PlayerInfo() PlayerInfo( const PlayerInfo &other ); PlayerInfo()
 #include <map>
 
 // Use the retail placement-copy helper from UnicodeStringConstruct.cpp.
@@ -59,6 +63,7 @@ namespace _STL { template <> void _Construct(UnicodeString *, const UnicodeStrin
 #include "GameNetwork/RankPointValue.h"
 #include "GameLogic/GameLogic.h"
 #include "string_base.h"
+#undef PlayerInfo
 
 // Retail 0x004D51B0 / 0x004D52D0: the PeerRequest constructor and destructor
 // are out of line (called through ILT 0x171fc / 0x16bd5 from 71 / 78 sites).

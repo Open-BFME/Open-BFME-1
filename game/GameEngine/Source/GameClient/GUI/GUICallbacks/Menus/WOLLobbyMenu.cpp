@@ -32,6 +32,10 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 
 // INCLUDES ///////////////////////////////////////////////////////////////////////////////////////
+// PeerDefs.h's PlayerInfo has no declared copy constructor, so copies here
+// emitted an implicit ??0PlayerInfo@@QAE@ABV0@@Z COMDAT of the Zero Hour
+// layout. Declare it instead: the retail body is 0x004F1120 (Open2Records.cpp).
+#define PlayerInfo() PlayerInfo( const PlayerInfo &other ); PlayerInfo()
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "Common/GameEngine.h"
@@ -72,6 +76,7 @@
 #include "GameNetwork/GameSpy/PersistentStorageThread.h"
 #include "GameNetwork/GameSpy/LobbyUtils.h"
 #include "GameNetwork/RankPointValue.h"
+#undef PlayerInfo
 
 #ifdef _INTERNAL
 // for occasional debugging...
