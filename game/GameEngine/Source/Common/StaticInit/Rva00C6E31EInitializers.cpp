@@ -10,8 +10,15 @@ void Rva00C715DERelease();
 // which walks the four slots and deletes each non-null Win32 DC.
 // Use the same object as Win32DcCache.cpp and Rva00C715CAForwarder.cpp.
 // Retired binding: ?g_rva0134FB38@@3URva0134FB38Storage@@A.
-class DcPool;
-extern DcPool TheDcPool;
+// The pool itself (VA 0134FB38, 16 bytes): zero-filled storage this
+// initializer clears and registers for teardown; same four-slot layout as
+// the Win32DcCache.cpp view.
+class DcPool
+{
+private:
+    long m_slots[4];
+};
+DcPool TheDcPool;
 
 // CRT initializer table slot RVA 00EA5518 proves this entry independently
 // of the preceding and following ATL initializers.
