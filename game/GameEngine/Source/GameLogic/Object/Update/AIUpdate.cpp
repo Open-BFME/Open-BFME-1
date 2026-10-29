@@ -5157,19 +5157,8 @@ void AIUpdateInterface::privateResumeConstruction( Object *obj, CommandSourceTyp
 /**
  * Get repaired at the repair depot
  */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateGetRepaired.cpp
-// ?privateGetRepaired@AIUpdateInterface@@ present-unmatched
-void AIUpdateInterface::privateGetRepaired( Object *repairDepot, CommandSourceType cmdSource )
-{
-
-	// sanity, if we can't get repaired from here get out of here
-	if( TheActionManager->canGetRepairedAt( getObject(), repairDepot, cmdSource ) == FALSE )
-		return;
-
-	// dock with the repair depot
-	aiDock( repairDepot, cmdSource );
-
-}
+// AIUpdateInterface::privateGetRepaired(Object*, CommandSourceType)
+// Body in AIUpdateInterfacePrivateCommands.cpp (exact 74B retail).
 
 //----------------------------------------------------------------------------------------
 /**
