@@ -5200,30 +5200,8 @@ void AIUpdateInterface::privateExit( Object *objectToExit, CommandSourceType cmd
 /**
  * Get out of whatever it is inside of this frame
  */
-// ?privateExitInstantly@AIUpdateInterface@@ present-unmatched
-void AIUpdateInterface::privateExitInstantly( Object *objectToExit, CommandSourceType cmdSource )
-{
-	Object *us = getObject();
-	if (!objectToExit)
-	{
-		objectToExit = us->getContainedBy();
-	}
-
-	if (!objectToExit)
-		return;
-
-  if ( objectToExit->isDisabledByType( DISABLED_SUBDUED ) )
-    return;
-
-	// we must go thru this state (rather than calling exitObjectViaDoor directly!), 
-	// because a few containers might need to delay to allow
-	// us to exit (eg, Chinooks must land), meaning we might have to wait a bit, and coordinate
-	// with the container by actually NOTIFYING it that we want to exit...
-	getStateMachine()->clear();
-	getStateMachine()->setGoalObject( objectToExit );
-	setLastCommandSource( cmdSource );
-	getStateMachine()->setState( AI_EXIT_INSTANTLY );
-}
+// AIUpdateInterface::privateExitInstantly(Object*, CommandSourceType)
+// Body in AIUpdateInterfacePrivateCommands.cpp (exact 104B retail).
 
 
 //----------------------------------------------------------------------------------------
