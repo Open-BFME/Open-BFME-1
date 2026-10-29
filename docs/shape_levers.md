@@ -2441,3 +2441,20 @@ defining the cursors `p` then `q` loads `*q` before `*p` in the mismatch
 delta (exact). The diff spelling, local temporaries and a delta helper call
 had no effect. VC7.1 `/MD /EHsc`, STLport. Source
 `game/Libraries/Source/WWVegas/WWLib/stlport_unicode_string_find.cpp`.
+
+## A const-reference result keeps an x87 product at its join (2026-10-29)
+
+Mismatch: 0x006B2110 (228 B, `/O2 /Ob1 /EHsc`, STLport) multiplies a
+volume by a clamped fade factor, then tests an integer priority
+(`jl`/`jg`) before comparing the product. With `Real v = helper(*it);`
+VC7.1 forwards the single-use product into the equal-priority block
+(`fmul st(1)` after `jne`, two x87 pops on the other paths). Writing
+`const Real &v = helper(*it);` made it compute `fmulp st(1)` at the clamp
+join as retail does; `*=`, out-parameters, compare helpers and branch
+spellings were all inert. In the same body, an inline member taking the list
+element by `const Ref &` and loading `AudioEventRTS *event = playing->m_event;`
+into a local reproduced retail's `mov edx,ecx; mov eax,[edx+0x14]` copy, and
+`if (p > priority) continue;` gave retail's `jg` (plain `==` gives `jne`).
+Retail's `sub esp,8` with the volume at the upper word needed an 8-byte
+local (`struct {Real pad; Real value;}`); no natural spelling was found.
+Source: game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerIsPlayingLowerPriority006B2110.cpp.
