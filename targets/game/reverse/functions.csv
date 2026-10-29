@@ -37542,7 +37542,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_003a1a30@@YAXXZ,,0x003A1A30,566,game/gen_asm/d_002e22f0.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=ret+int3 callers=1;ghidra=FUN_007a1a30
 ?d_003a1d00@@YAXXZ,,0x003A1D00,702,game/gen_asm/d_003a04a0.asm,matched,gen-dump;ghidra=FUN_007a1d00
 ?d_003a2700@@YAXXZ,,0x003A2700,2291,game/gen_asm/d_002e22f0.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=ret+int3 callers=1;ghidra=FUN_007a2700
-?d_003a40a0@@YAXXZ,,0x003A40A0,117,game/gen_asm/d_003a04a0.asm,matched,gen-dump;ghidra=FUN_007a40a0
 ?d_003a50f0@@YAXXZ,,0x003A50F0,179,game/gen_asm/d_003a04a0.asm,matched,gen-dump;ghidra=FUN_007a50f0
 ?d_003a60a0@@YAXXZ,,0x003A60A0,1,game/GameEngine/Source/Common/Rva003A60C0Noop.cpp,matched,carved one byte ret with no semantic evidence; address-derived identity preserves the boundary
 ?d_003a6150@@YAXXZ,,0x003A6150,1,game/GameEngine/Source/Common/Rva003A6150.cpp,matched,carved ret body; caller and ret plus int3 boundary evidence; address-derived identity
@@ -173390,3 +173389,4 @@ _Rva00814770,,0x00814770,1511,game/Libraries/Source/DirtySock/Y4CommTickIdle.c,m
 _Rva00814FE0,,0x00814FE0,396,game/Libraries/Source/DirtySock/Y4CommTickIdle.c,matched,reconstructed;extent 367->396 B includes the switch jump table the body indexes (object emits it after the code);model=claude-opus-5-5;host=app
 _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,matched,extent 2207->2247 B includes the switch jump table the body indexes (object emits it after the code);model=claude-opus-5-5;host=app
 ?rva003A25A0@Rva003A35A0Element@@QAEPAU1@PBVWaypoint@@@Z,,0x003A25A0,282,game/GameEngine/Source/Common/Containers/Rva003A3770LinkedRecords.cpp,matched,named by the matched caller Rva003A3770Obj::method in this TU (ILT call); RET4 +0x117 INT3 +0x11A;model=claude-opus-5-5;host=app
+?limit@Rva003A40A0Host@@QAEMXZ,,0x003A40A0,117,game/GameEngine/Source/Common/Rva003A40A0Limit.cpp,matched,ret +0x74 INT3 +0x75; only caller unmatched 0x003A50F0 via ILT 0x000239D9; callee Keyboard::isShift via ILT 0x000156B3;model=claude-opus-5-5;host=app
