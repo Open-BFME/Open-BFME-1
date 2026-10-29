@@ -3222,29 +3222,8 @@ Bool Player::addSkillPoints(Int delta)
 // Player::addSkillPointsForKill: defined in Player_addSkillPointsForKill.cpp.
 
 //=============================================================================
-// ?resetSciences@Player@@QAEXXZ present-unmatched
-void Player::resetSciences()
-{
-	m_sciences.clear();
-
-	if (getPlayerTemplate())
-		m_sciences = getPlayerTemplate()->getIntrinsicSciences();
-
-	for (Int i = 1; i <= m_rankLevel; ++i)
-	{
-		const RankInfo* rank = TheRankInfoStore->getRankInfo(i);
-		if (rank)
-		{
-			for (ScienceVec::const_iterator it = rank->m_sciencesGranted.begin(); it != rank->m_sciencesGranted.end(); ++it)
-			{
-				addScience(*it);
-			}
-		}
-	}
-
-	for (ScienceVec::const_iterator it = m_sciences.begin(); it != m_sciences.end(); ++it)
-		TheScriptEngine->notifyOfAcquiredScience(getPlayerIndex(), *it);
-}
+// Player::resetSciences()
+// Body in Player_resetSciences.cpp (exact 250B retail).
 
 //=============================================================================
 /// returns TRUE if sciences were gained/lost.
