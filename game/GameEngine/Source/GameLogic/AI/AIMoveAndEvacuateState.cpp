@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?update@AIMoveAndEvacuateState@@UAE?AW4StateReturnType@@XZ: game/GameEngine/Source/GameLogic/AI/AIStates.cpp
 //
 // AIMoveAndEvacuateState, both halves: onEnter locks the machine, records where
 // the owner started and turns destination adjustment on; update (retail

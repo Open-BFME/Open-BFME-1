@@ -4885,33 +4885,8 @@ void AIMoveAndEvacuateState::loadPostProcess( void )
 // Body in AIMoveAndEvacuateState.cpp (exact 151B retail).
 
 //----------------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AIMoveAndEvacuateState_update_Bfme.cpp
-// ?update@AIMoveAndEvacuateState@@UAE?AW4StateReturnType@@XZ present-unmatched
-StateReturnType AIMoveAndEvacuateState::update()
-{
-	Object *obj = getMachine()->getOwner();
-	if (obj->isEffectivelyDead()) 
-	{
-		return STATE_FAILURE;
-	}
-
-	// do movement
-	StateReturnType status = AIInternalMoveToState::update();
-	if (status != STATE_CONTINUE) 
-	{
-		Object *obj = getMachineOwner();
-		if (obj->isEffectivelyDead()) 
-		{
-			return STATE_FAILURE;
-		}
-
-		AIUpdateInterface *ai = obj->getAI();
-		ai->aiEvacuate(FALSE, CMD_FROM_AI);
-		obj->getTeam()->setActive();
-	}
-
-	return status;
-}
+// AIMoveAndEvacuateState::update()
+// Body in AIMoveAndEvacuateState.cpp (exact 110B retail).
 
 //----------------------------------------------------------------------------------------------------------
 void AIMoveAndEvacuateState::onExit( StateExitType status )
