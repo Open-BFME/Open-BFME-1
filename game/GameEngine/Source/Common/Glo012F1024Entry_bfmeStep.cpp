@@ -343,7 +343,8 @@ public:
 	void j_00008c0b(void);
 };
 
-extern Glo012F1028Type *Glo012F1028;				// 0x012F1028
+// The address-derived Glo012F1028 spelling is only a pin; read the defined name above.
+#define Glo012F1028 ( reinterpret_cast<Glo012F1028Type *>( TheLivingWorldLogic ) )
 
 
 // ?j_0003152a@Glo012F1024Item@@QAEXXZ
