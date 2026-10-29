@@ -225,9 +225,12 @@ public:
 	unsigned char m_flag2c;
 	unsigned char m_flag2d;
 };
-class Glo012F1028Type;
-extern Glo012F1028Type *Glo012F1028;
-#define Glo012F1028Ptr ((class Glo012F1028 *)Glo012F1028)
+// Retail 0x012F1028 is EA's TheLivingWorldLogic (data_rows.csv owns
+// ?TheLivingWorldLogic@@3PAVLivingWorldLogic@@A, LivingWorldLogic.cpp); the
+// Glo012F1028 spelling is only a pin nothing defines.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
+#define Glo012F1028Ptr ((class Glo012F1028 *)TheLivingWorldLogic)
 
 class Shell
 {
