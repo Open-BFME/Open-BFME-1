@@ -2397,3 +2397,29 @@ view; Zero Hour's own accessor `m_info ? m_info->m_obstacleIsFence : false`
 over an `UnsignedInt m_obstacleIsFence:1` member (anonymous union over the
 raw word) made it exact. VC7.1 `/DNDEBUG /MD`, STLport. Source
 `game/GameEngine/Source/GameLogic/AI/PathfinderClearCellForDiameter.cpp`.
+
+## Store groups from a `__forceinline` member instead of volatile fields (2026-10-29)
+
+Mismatch (0x003A25A0 rva003A25A0, 282 B record refill, bank 102 diffs with
+`volatile` on the tail field): retail stores the waypoint id right after its
+load, then the key and the ten prefix/point zeroes interleaved, and reloads
+the saved fs:0 mid-run; ours sank the id store and moved the reload. Source
+change: the zeroing as `__forceinline void clear() { m_key = 0; for (int i =
+0; i < 10; ++i) { m_prefix[i] = 0; zeroPoint(m_points[i]); } }` (plain
+`inline` was not inlined there: 140 B with a call), plus `m_name =
+source->getName();` instead of `m_name.set(...)`, which fixed the push/lea
+order before `StringBase<char>::set`. Measured effect: whole body exact, no
+volatile. The same sub-struct idea took 0x003A1080 from 5 to 2 diffs and the
+default ctor 0x003A18D0 from 55 to 12 (not exact). VC7.1 `/DNDEBUG /DWIN32
+/MD /EHsc`, STLport. Source
+`game/GameEngine/Source/Common/Containers/Rva003A3770LinkedRecords.cpp`.
+
+## Double sqrt result moves the dead x87 pop after fsqrt (2026-10-29)
+
+Mismatch (0x003A40A0 limit, 117 B, bank 4 diffs): retail `faddp; fsqrt;
+fstp st(1); fstp [esp+4]`, ours popped the dead `dy` before `fsqrt` with
+`float d2 = dx*dx + dy*dy; len = (float)sqrt(d2);`, and after the store with
+`len = (float)sqrt(dx*dx + dy*dy);`. Source change: `double root =
+sqrt(dx * dx + dy * dy); len[0] = (float)root;`. Measured effect: whole body
+exact (the bank's volatile reads are still needed for the dx spill). VC7.1
+`/O2`, intrinsic sqrt. Source `game/GameEngine/Source/Common/Rva003A40A0Limit.cpp`.
