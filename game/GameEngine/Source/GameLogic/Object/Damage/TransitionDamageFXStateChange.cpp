@@ -106,7 +106,10 @@ public:
 #undef OBJECT_TU_MEMBERS
 #undef THING_TU_MEMBERS
 class GameLogic {public:Object *findObjectByID(int);};
-extern GameLogic *TheBfmeGameLogic;
+// Retail 0x012F0898 is ?TheGameLogic@@3PAVGameLogic@@A (data_rows.csv,
+// GameLogic.cpp); TheBfmeGameLogic was only a pin nothing defines.
+extern GameLogic *TheGameLogic;
+#define TheBfmeGameLogic TheGameLogic
 class FXList {
 public:
  bool bfmeIsBlocked();

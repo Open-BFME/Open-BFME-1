@@ -60,7 +60,10 @@ public:
 	Object *findObjectByID( ObjectID id );
 };
 
-extern GameLogic *TheBfmeGameLogic;
+// Retail 0x012F0898 is ?TheGameLogic@@3PAVGameLogic@@A (data_rows.csv,
+// GameLogic.cpp); TheBfmeGameLogic was only a pin nothing defines.
+extern GameLogic *TheGameLogic;
+#define TheBfmeGameLogic TheGameLogic
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DozerAIUpdate.h
 class DozerAIInterface

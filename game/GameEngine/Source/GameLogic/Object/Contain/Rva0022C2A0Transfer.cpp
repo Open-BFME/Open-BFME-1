@@ -33,7 +33,10 @@ class Gen_0022CD40 { public: void bfmeSeed(BfmeSeedTarget *target); };
 class MidVirtualSlot90Receiver;
 Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *target, void *context);
 class GameLogic { public: void destroyObject(Object *object); };
-extern GameLogic *TheBfmeGameLogic;
+// Retail 0x012F0898 is ?TheGameLogic@@3PAVGameLogic@@A (data_rows.csv,
+// GameLogic.cpp); TheBfmeGameLogic was only a pin nothing defines.
+extern GameLogic *TheGameLogic;
+#define TheBfmeGameLogic TheGameLogic
 
 class Rva0022C2A0
 {

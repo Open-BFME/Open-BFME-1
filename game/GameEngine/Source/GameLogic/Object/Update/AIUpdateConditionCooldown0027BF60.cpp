@@ -94,7 +94,10 @@ public:
 	UnsignedInt m_bfmeFrame;					///< retail this+0x3C
 };
 
-extern GameLogic *TheBfmeGameLogic;				// 0x012F0898
+// Retail 0x012F0898 is ?TheGameLogic@@3PAVGameLogic@@A (data_rows.csv,
+// GameLogic.cpp); TheBfmeGameLogic was only a pin nothing defines.
+extern GameLogic *TheGameLogic;
+#define TheBfmeGameLogic TheGameLogic
 
 class AIUpdateInterface
 {

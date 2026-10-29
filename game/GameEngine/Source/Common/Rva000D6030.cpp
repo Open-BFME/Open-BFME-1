@@ -15,7 +15,10 @@
 class ThingTemplate;
 #include "Thing/GameLogicObjectLookup.h"
 
-extern GameLogic *TheBfmeGameLogic;
+// Retail 0x012F0898 is ?TheGameLogic@@3PAVGameLogic@@A (data_rows.csv,
+// GameLogic.cpp); TheBfmeGameLogic was only a pin nothing defines.
+extern GameLogic *TheGameLogic;
+#define TheBfmeGameLogic TheGameLogic
 
 class Player;
 

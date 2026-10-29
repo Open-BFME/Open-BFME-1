@@ -11,7 +11,10 @@ class Rva001CF980Result;
 #include "object.h"
 #include "GameLogicObjectLookup.h"
 #include "FXListRetail.h"
-extern GameLogic *TheBfmeGameLogic;
+// Retail 0x012F0898 is ?TheGameLogic@@3PAVGameLogic@@A (data_rows.csv,
+// GameLogic.cpp); TheBfmeGameLogic was only a pin nothing defines.
+extern GameLogic *TheGameLogic;
+#define TheBfmeGameLogic TheGameLogic
 struct Frame0037B9F0 { char pad00[0x3c]; unsigned frame3c; unsigned getFrame() const { return frame3c; } };
 class Rva001CF980Result { public:
     virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0c();

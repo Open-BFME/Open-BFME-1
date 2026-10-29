@@ -19,7 +19,11 @@ struct Rva00367E30Logic
 	unsigned int m_bfme3CYH;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail 0x012F0898 is ?TheGameLogic@@3PAVGameLogic@@A (data_rows.csv,
+// GameLogic.cpp); TheBfmeGameLogic was only a pin nothing defines.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+#define TheBfmeGameLogic ( reinterpret_cast<Rva00367E30Logic *>( TheGameLogic ) )
 
 class Object
 {

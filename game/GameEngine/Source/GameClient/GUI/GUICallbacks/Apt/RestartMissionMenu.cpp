@@ -143,7 +143,10 @@ extern BfmeAptScreenQuitMenu *g_obj12F4B40;
 extern Shell *TheShell;					// ?TheShell@@3PAVShell@@A @ 0x012F4B58
 extern WindowManager *g_rva012F19E8WindowManager;	// ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A @ 0x012F19E8
 class GameLogic;	// pointer-type only: retail's global is ?TheBfmeGameLogic@@3PAVGameLogic@@A
-extern GameLogic *TheBfmeGameLogic;	// @ 0x012F0898
+// Retail 0x012F0898 is ?TheGameLogic@@3PAVGameLogic@@A (data_rows.csv,
+// GameLogic.cpp); TheBfmeGameLogic was only a pin nothing defines.
+extern GameLogic *TheGameLogic;
+#define TheBfmeGameLogic TheGameLogic
 extern GlobalData *TheWritableGlobalData;	// ?TheWritableGlobalData@@3PAVGlobalData@@A @ 0x012ED5C8
 extern GameState *TheGameState;			// ?TheGameState@@3PAVGameState@@A @ 0x012EF190
 extern RecorderClass *TheRecorder;		// ?TheRecorder@@3PAVRecorderClass@@A @ 0x012ED62C

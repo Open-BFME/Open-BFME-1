@@ -22,7 +22,11 @@ struct Rva00367E30Logic : GameLogic
 {
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail 0x012F0898 is ?TheGameLogic@@3PAVGameLogic@@A (data_rows.csv,
+// GameLogic.cpp); TheBfmeGameLogic was only a pin nothing defines.
+class GameLogic;
+extern GameLogic *TheGameLogic;
+#define TheBfmeGameLogic ( reinterpret_cast<Rva00367E30Logic *>( TheGameLogic ) )
 
 // destroyObject is reached through the retail ILT thunk 0x0001D0DE.
 extern void j_0001d0de();
