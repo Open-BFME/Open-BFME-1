@@ -2530,3 +2530,20 @@ The same toggle was inert on four other banks whose externs pass that test
 (0x004C15D0, 0x008A5250, 0x008D1F10; 0x008CD2F0 needs a sized array).
 Source: game/GameEngine/Source/GameClient/GUI/MpGameSetupRva005280A0.cpp
 (484f23cbde).
+
+## Two heads over shared tails: same test, opposite polarity per arm (2026-10-29)
+
+RespawnUpdate::getDeadImage (0x002A1A80, 121 B; bank 114 B) ends in a
+portrait fallback reached from two paths (failed find, empty name). Retail
+keeps two copies of the 7-byte `mov eax,[edi+4]; test eax,eax; jcc` template
+null test, one `jne` to the non-null tail and one `je` to the null tail, over
+shared null and non-null tails. One fallback after the join, or the fallback
+written in both arms with the same `m_template ? ... : 0` accessor, gives one
+head (VC7.1 cross-jumps the identical copies: 114 B). Writing the fallback in
+both arms with the opposite-polarity spelling `!m_template ? 0 : ...` in the
+second arm keeps both heads and still merges the tails: exact. A local
+`currentTemplate` in one arm (the Open-BFME-2 donor's spelling) still merged.
+Signature: retail has two identical compare heads that jump into each
+other's fall-through tails. Source:
+game/GameEngine/Source/GameLogic/Object/Update/RespawnUpdate_getDeadImage.cpp
+(4c3a25ff35). VC7.1 /O2 /MD /EHsc.
