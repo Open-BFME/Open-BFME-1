@@ -4300,28 +4300,8 @@ void Player::applyBattlePlanBonusesForPlayerObjects( const BattlePlanBonuses *bo
 //-------------------------------------------------------------------------------------------------
 /** Create a hotkey team based on this GameMessage */
 //-------------------------------------------------------------------------------------------------
-// ?processCreateTeamGameMessage@Player@@QAEXHPAVGameMessage@@@Z present-unmatched
-void Player::processCreateTeamGameMessage(Int hotkeyNum, GameMessage *msg) {
-	// GameMessage arguments are the object ID's of the objects that are to be in this team.
-
-	if ((hotkeyNum < 0) || (hotkeyNum >= NUM_HOTKEY_SQUADS)) {
-		DEBUG_CRASH(("processCreateTeamGameMessage got an invalid hotkey number"));
-		return;
-	}
-
-	m_squads[hotkeyNum]->clearSquad();
-
-	UnsignedByte numArgs = msg->getArgumentCount();
-	for (UnsignedByte i = 0; i < numArgs; ++i) {
-		ObjectID objID = msg->getArgument(i)->objectID;
-		Object *obj = TheGameLogic->findObjectByID(objID);
-		if (obj != NULL) {
-			// first, remove it from any other hotkey squads it is in.
-			removeObjectFromHotkeySquad(obj);
-			m_squads[hotkeyNum]->addObject(obj);
-		}
-	}
-}
+// Player::processCreateTeamGameMessage(Int, GameMessage *)
+// Body in Player_processCreateTeamGameMessage.cpp (exact 123B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** Select a hotkey team based on this GameMessage */
