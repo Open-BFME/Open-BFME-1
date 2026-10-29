@@ -2505,3 +2505,28 @@ before `push imm` at all three calls of one arm. Spelling `if (p &&
 p->active()) A else B` as `if (!p) B else if (p->active()) A else B` (B
 written twice) matched exactly; duplicating only part of B fixed only the
 calls it covered. Source: game/GameEngine/Source/Common/Rva00271B40ShadowSync.cpp.
+
+Third instance: 0x0024ECA0 (126 B, 22 trials, bank at 3 bytes) had `push
+edi; mov ecx,esi` where retail has `mov ecx,esi; push edi` at a slot-30
+virtual call reached by two failing tests. `if (!a() && b()) A else B; F;`
+and nested two-copy forms stayed off; one if/else-if chain over all four
+outcomes with the slot-30 call written in both failing arms and the shared
+final call after the join, `if (deep) {...; A} else if (a()) B else if
+(b()) A else B; F;`, matched exactly with plain virtual calls (the bank's
+fastcall vtable adapters, used to steer the vtable register, were no longer
+needed). Writing F inside each arm left it 8 bytes off. Source:
+game/GameEngine/Source/GameLogic/Object/Contain/Rva0024ECA0.cpp (7087e16095).
+
+## A body-private flag is file-static: its store sinks past the receiver copy (2026-10-29)
+
+MpGameSetup::rva005280A0 (0x005280A0, 570 B; bank at 9 diffs) had a byte
+store to 0x012B77AF ahead of `mov ecx,esi` at +0x1E0, where retail copies the
+receiver first. All five retail references to 0x012B77AF lie inside this body.
+A file `static bool` made it exact; `extern` and `extern volatile` both left
+5 diffs, and so did the bank's `*reinterpret_cast<bool *>(0x012B77AF)`.
+Check the retail references to a global first (search .text for the address
+dword): if every reference is inside one function, try it as a file static.
+The same toggle was inert on four other banks whose externs pass that test
+(0x004C15D0, 0x008A5250, 0x008D1F10; 0x008CD2F0 needs a sized array).
+Source: game/GameEngine/Source/GameClient/GUI/MpGameSetupRva005280A0.cpp
+(484f23cbde).
