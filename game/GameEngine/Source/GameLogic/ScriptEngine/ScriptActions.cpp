@@ -4579,24 +4579,8 @@ void ScriptActions::doNamedEnableStealth( const AsciiString& unitName, Bool enab
 //-------------------------------------------------------------------------------------------------
 /** doTeamEnableStealth */
 //-------------------------------------------------------------------------------------------------
-// ?doTeamEnableStealth@ScriptActions@@IAEXABVAsciiString@@_N@Z present-unmatched
-void ScriptActions::doTeamEnableStealth( const AsciiString& teamName, Bool enabled )
-{
-	Team *team = TheScriptEngine->getTeamNamed( teamName );
-	if( !team ) 
-	{
-		return;
-	}
-		
-	for( DLINK_ITERATOR<Object> iter = team->iterate_TeamMemberList(); !iter.done(); iter.advance() )
-	{
-		Object *obj = iter.cur();
-		if( obj ) 
-		{
-			obj->setScriptStatus( OBJECT_STATUS_SCRIPT_UNSTEALTHED, !enabled );
-		}
-	}
-}
+// ScriptActions::doTeamEnableStealth(const AsciiString&, Bool)
+// Body in ScriptActionsTeamScriptStatus.cpp (exact 105B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** doNamedSetUnmanned */
