@@ -4977,20 +4977,8 @@ AsciiString AIAttackMoveToState::getName(  ) const
 #endif
 
 //----------------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/Rva0017A370AIAttackMoveToState_onEnter.cpp
-// ?onEnter@AIAttackMoveToState@@UAE?AW4StateReturnType@@XZ present-unmatched
-StateReturnType AIAttackMoveToState::onEnter()
-{
-	Object *owner = getMachineOwner();
-	AIUpdateInterface *ai = owner->getAI();
-	m_attackMoveMachine->clear();
-	m_attackMoveMachine->setState( AI_IDLE );	
-	m_commandSrc = ai->getLastCommandSource();
-	m_retryCount = ATTACK_RETRY_COUNT;
-	m_frameToSleepUntil = 0;
-
-	return AIMoveToState::onEnter();
-}
+// AIAttackMoveToState::onEnter()
+// Body in AIAttackMoveToState_onEnter.cpp (exact 109B retail).
 
 //----------------------------------------------------------------------------------------------------------
 class BfmeAttackMoveStateMachineSetState

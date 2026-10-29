@@ -1,4 +1,3 @@
-// readable body of ?onEnter@AIAttackMoveToState@@UAE?AW4StateReturnType@@XZ: game/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // BFME layout reconstruction for retail RVA 0x0017A370.
 
 enum StateReturnType { STATE_CONTINUE = 0 };
