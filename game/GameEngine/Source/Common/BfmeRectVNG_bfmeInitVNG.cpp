@@ -15,10 +15,12 @@ struct BfmeRefVNG
 	void *m_referent;
 };
 
+// Retail 0x003BBB70 is a constructor (base then derived vftable, returns
+// this), reached from the new-expression in Glo012F1024Item::j_00021f26.
 class BfmeRectVNG
 {
 public:
-	BfmeRectVNG *bfmeInitVNG(unsigned w, const BfmeRefVNG &ref, char f);
+	BfmeRectVNG(unsigned w, const BfmeRefVNG &ref, char f);
 
 	void *volatile m_bfme00;
 	unsigned m_bfme04;
@@ -27,8 +29,8 @@ public:
 	void *m_bfme0c;
 };
 
-// ?bfmeInitVNG@BfmeRectVNG@@QAEPAV1@IABUBfmeRefVNG@@D@Z
-BfmeRectVNG *BfmeRectVNG::bfmeInitVNG(unsigned w, const BfmeRefVNG &ref, char f)
+// ??0BfmeRectVNG@@QAE@IABUBfmeRefVNG@@D@Z
+BfmeRectVNG::BfmeRectVNG(unsigned w, const BfmeRefVNG &ref, char f)
 {
 	m_bfme00 = &g_bfmeVtaVNE;
 	m_bfme08 = f;
@@ -39,5 +41,4 @@ BfmeRectVNG *BfmeRectVNG::bfmeInitVNG(unsigned w, const BfmeRefVNG &ref, char f)
 	m_bfme0c = ref.m_referent;
 	if (m_bfme0c != 0)
 		InterlockedIncrement((long *)((char *)m_bfme0c + 4));
-	return this;
 }

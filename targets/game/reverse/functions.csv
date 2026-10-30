@@ -31538,9 +31538,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?bfmeInitVKT@BfmeThingVKT@@QAEPAV1@ABUBfmeBlockVKT@@0@Z,,0x002E26C0,46,game/GameEngine/Source/Common/BfmeConv1410.cpp,matched,
 ?bfmeInitVKV@BfmeThingVKV@@QAEPAV1@ABV1@@Z,,0x00605200,83,game/GameEngine/Source/Common/BfmeConv1411.cpp,matched,
 ?bfmeInitVN@BfmeBaseVN@@QAEPAV1@ID@Z,,0x003BBAF0,66,game/GameEngine/Source/Common/Rva003BBAF0Ctor.cpp,matched,
-?bfmeInitVNE@BfmeRectVNE@@QAEPAV1@IID@Z,,0x003BBF70,104,game/GameEngine/Source/Common/BfmeConv1507.cpp,matched,
 ?bfmeInitVNF@BfmeBoxVNF@@QAEPAV1@IPBUBfmeVecVNF@@HID@Z,,0x003BBD70,132,game/GameEngine/Source/Common/BfmeConv1509.cpp,matched,
-?bfmeInitVNG@BfmeRectVNG@@QAEPAV1@IABUBfmeRefVNG@@D@Z,,0x003BBB70,95,game/GameEngine/Source/Common/BfmeRectVNG_bfmeInitVNG.cpp,matched,
 ?bfmeInitVSG@BfmeCreditsVSG@@QAEXXZ,,0x0051ED80,29,game/GameEngine/Source/Common/BfmeConv1577.cpp,matched,
 ?bfmeInitXB@BfmeThingXB@@QAEPAV1@PAX00@Z,,0x00192720,58,game/GameEngine/Source/Common/BfmeThreeHundredSeventyTwo.cpp,matched,
 ?bfmeInitZA@BfmeThingZA@@QAEPAV1@PBUBfmeVecZA@@0@Z,,0x002E2700,60,game/GameEngine/Source/Common/BfmeThreeHundredSeventySeven.cpp,matched,
@@ -173401,3 +173399,5 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ??0?$vector@UGen_p8cd@@V?$allocator@UGen_p8cd@@@_STL@@@_STL@@QAE@ABV?$allocator@UGen_p8cd@@@1@@Z,,0x009F54D0,15,game/GameEngine/Source/Common/Rva009F5970StateCtor.cpp,matched,STLport vector(const allocator&) for this unit's 8-byte element view; called directly by the default-ctor closure 0x009F5680; this-zero3 body; element identity unproven (Gen_p8cd);model=claude-opus-5-5;host=app
 ??_F?$vector@UGen_p8cd@@V?$allocator@UGen_p8cd@@@_STL@@@_STL@@QAEXXZ,,0x009F5680,13,game/GameEngine/Source/Common/Rva009F5970StateCtor.cpp,matched,vector default-constructor closure passed to the eh vector constructor iterator by Rva009F5970State ctor (push 0x00DF5680 at RVA 0x009F5B90); calls vector(const allocator&) 0x009F54D0 with a stack allocator temp;model=claude-opus-5-5;host=app
 ?rva00841160Dispatch@@YAXPAVRva00841160Owner@@@Z,,0x00841160,19,game/Libraries/Source/STLport/Rva00841180VirtualDispatch.cpp,matched,unreferenced virtual-base destructor dispatch (vbtable adjust then slot0 with flag 0); same 19 bytes as 0x00841180; opaque name;model=claude-opus-5-5;host=app
+??0BfmeRectVNE@@QAE@IID@Z,,0x003BBF70,104,game/GameEngine/Source/Common/BfmeConv1507.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/003bbf70-003bbb70-bfmerect-ctors.md;constructor not init method: base then derived vftable and new-expression EH state in caller 0x3ADED0;model=claude-opus-5-5;host=app
+??0BfmeRectVNG@@QAE@IABUBfmeRefVNG@@D@Z,,0x003BBB70,95,game/GameEngine/Source/Common/BfmeRectVNG_bfmeInitVNG.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/003bbf70-003bbb70-bfmerect-ctors.md;constructor not init method: base then derived vftable and new-expression EH state in caller 0x3ADCC0;model=claude-opus-5-5;host=app
