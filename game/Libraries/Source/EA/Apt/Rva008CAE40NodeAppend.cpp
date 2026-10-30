@@ -29,7 +29,9 @@ public:
 
 extern Rva008B2EA0Node *rva008B2EA0Create();
 extern Rva008CAE40RefBlock *g_rva008CAE40DefaultBlock;
-extern void (__cdecl **Rva01337A30ReleaseTable)(void *);
+// VA 0x01337A30 is Apt.cpp's ?g_rva01337A30AllocPair@@3PAUBfmeStringPool3AF0@@A (data_rows).
+struct BfmeStringPool3AF0 { void *m_alloc; void (__cdecl *m_free)(void *storage); };
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 void rva008CAE40NodeAppend(Rva008CAE40Array *array)
 {
@@ -39,7 +41,7 @@ void rva008CAE40NodeAppend(Rva008CAE40Array *array)
     Rva008CAE40RefBlock *old_block = node->m_block;
     --old_block->m_refs;
     if (old_block->m_refs == 0)
-        Rva01337A30ReleaseTable[1](old_block);
+        g_rva01337A30AllocPair->m_free(old_block);
     node->m_block = g_rva008CAE40DefaultBlock;
 
     array->m_values[array->m_count] = node;

@@ -10,17 +10,19 @@ public:
 	class StringDataC;
 };
 extern EAStringC::StringDataC g_rva012D5298Empty;
-extern void (__cdecl **Rva01337A30ReleaseTable)(void *);
+// VA 0x01337A30 is Apt.cpp's ?g_rva01337A30AllocPair@@3PAUBfmeStringPool3AF0@@A (data_rows).
+struct BfmeStringPool3AF0 { void *m_alloc; void (__cdecl *m_free)(void *storage); };
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 class BfmeStrVKI {
 public:
  void bfmeSetVKI(const char *);
  BfmeStrVKI(const char *s) { bfmeSetVKI(s); }
- ~BfmeStrVKI() { BfmeHdrVKI *p=m_bfme00; --p->m_bfme00; if(p->m_bfme00==0) Rva01337A30ReleaseTable[1](p); }
+ ~BfmeStrVKI() { BfmeHdrVKI *p=m_bfme00; --p->m_bfme00; if(p->m_bfme00==0) g_rva01337A30AllocPair->m_free(p); }
  BfmeStrVKI &operator=(const BfmeStrVKI &s) {
   ++s.m_bfme00->m_bfme00;
   BfmeHdrVKI *p=m_bfme00;
   --p->m_bfme00;
-  if(p->m_bfme00==0) Rva01337A30ReleaseTable[1](p);
+  if(p->m_bfme00==0) g_rva01337A30AllocPair->m_free(p);
   m_bfme00=s.m_bfme00;
   return *this;
  }

@@ -22,7 +22,9 @@ struct EvaSideSound0089C900
 struct EAStringData;
 extern EAStringData g_emptyStringData;
 
-extern void (__cdecl **Rva01337A30ReleaseTable)(void *);
+// VA 0x01337A30 is Apt.cpp's ?g_rva01337A30AllocPair@@3PAUBfmeStringPool3AF0@@A (data_rows).
+struct BfmeStringPool3AF0 { void *m_alloc; void (__cdecl *m_free)(void *storage); };
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 extern void (*g_bfmeFreeDWF)(void *);
 
 class Q3EhMember0089C900
@@ -76,7 +78,7 @@ Q3EhMember0089C900::~Q3EhMember0089C900()
 					EvaStringData0089C900 *data = entry->m_string;
 					--data->m_refCount;
 					if (data->m_refCount == 0)
-						Rva01337A30ReleaseTable[1](data);
+						g_rva01337A30AllocPair->m_free(data);
 					entry->m_string = 0;
 					}
 			}

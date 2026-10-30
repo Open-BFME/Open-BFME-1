@@ -22,7 +22,9 @@ struct Rva008C6320StringData
 	char text[ 1 ];
 };
 
-extern void (__cdecl **g_bfmeStringPool1284)( void * );
+// VA 0x01337A30 is Apt.cpp's ?g_rva01337A30AllocPair@@3PAUBfmeStringPool3AF0@@A (data_rows).
+struct BfmeStringPool3AF0 { void *m_alloc; void (__cdecl *m_free)(void *storage); };
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 class BfmeStrVKI
 {
@@ -32,7 +34,7 @@ public:
 	{
 		Rva008C6320StringData *block = data;
 		if( --block->references == 0 )
-			g_bfmeStringPool1284[ 1 ]( block );
+			g_rva01337A30AllocPair->m_free(block );
 	}
 	void bfmeSetVKI( const char *text );
 	const char *str() const { return (const char *)data + 8; }
@@ -122,7 +124,7 @@ bool rva008C6320( BfmeNode1220 *context, BfmeNode1220 *scope,
 		++inputBlock->references;
 		Rva008C6320StringData *oldBlock = nameOut->data;
 		if( --oldBlock->references == 0 )
-			g_bfmeStringPool1284[ 1 ]( oldBlock );
+			g_rva01337A30AllocPair->m_free(oldBlock );
 		nameOut->data = input.data;
 		*targetOut = context;
 		return false;
@@ -134,7 +136,7 @@ parse:
 	++parsedName.data->references;
 	Rva008C6320StringData *oldBlock = nameOut->data;
 	if( --oldBlock->references == 0 )
-		g_bfmeStringPool1284[ 1 ]( oldBlock );
+		g_rva01337A30AllocPair->m_free(oldBlock );
 	nameOut->data = parsedName.data;
 	return absolute;
 }
@@ -147,7 +149,6 @@ struct Rva8D0D80StringBlock
 };
 
 extern Rva8D0D80StringBlock g_bfmeDefaultString1284;
-extern void (__cdecl **Rva01337A30ReleaseTable)(void *);
 
 class Rva8D0B00String
 {
@@ -164,7 +165,7 @@ public:
 		Rva8D0D80StringBlock *block = m_block;
 		--block->m_refs;
 		if (block->m_refs == 0)
-			Rva01337A30ReleaseTable[1](block);
+			g_rva01337A30AllocPair->m_free(block);
 	}
 
 public:

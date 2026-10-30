@@ -45,7 +45,7 @@ struct BfmeStringPool3AF0
 	void (__cdecl *free)(void *);
 };
 
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;	// VA 0x01337A30, defined by Apt.cpp
 // Retail 0x012D5298 is ?g_rva012D5298Empty@@3VStringDataC@EAStringC@@A
 // (data_rows.csv, Common/Data/Rva012D5298.cpp); g_bfmeDefaultString1284 was only a pin.
 class EAStringC
@@ -65,14 +65,14 @@ public:
 	{
 		BfmeStringData3AF0 *old = m_data;
 		if (--old->refCount == 0)
-			g_bfmeStringPool1284->free(old);
+			g_rva01337A30AllocPair->free(old);
 	}
 	__forceinline BfmeStrVKI &operator=(const BfmeStrVKI &other)
 	{
 		++other.m_data->refCount;
 		BfmeStringData3AF0 *old = m_data;
 		if (--old->refCount == 0)
-			g_bfmeStringPool1284->free(old);
+			g_rva01337A30AllocPair->free(old);
 		m_data = other.m_data;
 		return *this;
 	}

@@ -10,7 +10,9 @@ struct Rva8D0D80StringBlock
 };
 class EAStringC { public: class StringDataC; };
 extern EAStringC::StringDataC g_rva012D5298Empty;
-extern void (__cdecl **Rva01337A30ReleaseTable)(void *);
+// VA 0x01337A30 is Apt.cpp's ?g_rva01337A30AllocPair@@3PAUBfmeStringPool3AF0@@A (data_rows).
+struct BfmeStringPool3AF0 { void *m_alloc; void (__cdecl *m_free)(void *storage); };
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 int bfmeCompareVSC(const char *, const char *);
 
 class Rva8D0D80String
@@ -34,7 +36,7 @@ public:
         ++other.m_block->m_refs;
         Rva8D0D80StringBlock *old = m_block;
         --old->m_refs;
-        if (old->m_refs == 0) Rva01337A30ReleaseTable[1](old);
+        if (old->m_refs == 0) g_rva01337A30AllocPair->m_free(old);
         m_block = other.m_block;
     }
 };

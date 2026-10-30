@@ -27,7 +27,8 @@ public:
 };
 extern EAStringC::StringDataC g_rva012D5298Empty;
 #define g_bfmeDefaultString1284 ( *(BfmeStringData3AF0 *)&g_rva012D5298Empty )
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+// VA 0x01337A30 is Apt.cpp's ?g_rva01337A30AllocPair@@3PAUBfmeStringPool3AF0@@A (data_rows).
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 unsigned int AptGetSwfVersion();
 
@@ -42,7 +43,7 @@ public:
 	{
 		BfmeStringData3AF0 *old = m_data;
 		if (--old->m_refCount == 0)
-			g_bfmeStringPool1284->free(old);
+			g_rva01337A30AllocPair->free(old);
 	}
 	int getLength() const { return m_data->m_length; }
 	char *text() const { return (char *)(m_data + 1); }

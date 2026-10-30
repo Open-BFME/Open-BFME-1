@@ -13,7 +13,9 @@ public:
 };
 extern EAStringC::StringDataC g_rva012D5298Empty;
 #define g_bfmeDefaultString1284 ( *(Rva008CAAE0StringBlock *)&g_rva012D5298Empty )
-extern void (__cdecl **g_bfmeStringPool1284)(void *);
+// VA 0x01337A30 is Apt.cpp's ?g_rva01337A30AllocPair@@3PAUBfmeStringPool3AF0@@A (data_rows).
+struct BfmeStringPool3AF0 { void *m_alloc; void (__cdecl *m_free)(void *storage); };
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 
 class Rva008CAAE0String
 {
@@ -28,7 +30,7 @@ public:
 		Rva008CAAE0StringBlock *block = m_block;
 		--block->m_refs;
 		if (block->m_refs == 0)
-			g_bfmeStringPool1284[1](block);
+			g_rva01337A30AllocPair->m_free(block);
 	}
 	Rva008CAAE0StringBlock *m_block;
 };
