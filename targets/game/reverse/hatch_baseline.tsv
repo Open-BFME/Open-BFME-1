@@ -537,6 +537,7 @@ address_global	game/GameEngine/Source/Common/Rva007AAFA0AdvanceNodes.cpp	g_Va013
 address_global	game/GameEngine/Source/Common/Rva007AAFA0AdvanceNodes.cpp	g_Va01306DA0	3	allow=04370f88ef9bff8a7e47aa4957fdee98eac85c5f
 address_global	game/GameEngine/Source/Common/Rva007D74B0ConditionalGlobals.cpp	g_Rva012F9D04	2
 address_global	game/GameEngine/Source/Common/Rva007D74B0ConditionalGlobals.cpp	g_Rva012F9D0C	2
+address_global	game/GameEngine/Source/Common/Rva007E4D40MovieInit.cpp	g_Va01309848	10	allow=eabefe28d95b4d7134cf3719d505c4a9407ace83
 address_global	game/GameEngine/Source/Common/Rva007E9A50Lookups.cpp	g_Rva012C37F8	2
 address_global	game/GameEngine/Source/Common/Rva007E9A50Lookups.cpp	g_Rva012C3958	2
 address_global	game/GameEngine/Source/Common/Rva007E9A50Lookups.cpp	g_Rva012C3988	2

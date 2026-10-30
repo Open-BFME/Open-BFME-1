@@ -29,15 +29,24 @@ AsciiString GetRegistryLanguage();
 class Rva009A58C0 { public: static void store(int); };
 void Rva009A4D00Init();
 
-extern unsigned char g_Va01309848;
-extern char g_Va01309849[];
-extern char g_Va0130994D[];
-extern unsigned char g_Va0130998D;
-extern char g_Va0130998E[];
-extern char g_Va01309A92[];
-extern unsigned char g_Va01309AD2;
-extern char g_Va01309AD3[];
-extern char g_Va01309BD7[];
+// VA 0x01309848: three 325-byte movie search-path records (enabled flag, path,
+// label), zero-filled .bss in retail. This initializer fills them; the VP6
+// player open 0x007E5080 walks all three by the same stride.
+struct Rva01309848MoviePath
+{
+    unsigned char m_enabled;
+    char m_path[260];
+    char m_label[64];
+};
+Rva01309848MoviePath g_Va01309848[3];
+#define g_Va01309849 (g_Va01309848[0].m_path)
+#define g_Va0130994D (g_Va01309848[0].m_label)
+#define g_Va0130998D (g_Va01309848[1].m_enabled)
+#define g_Va0130998E (g_Va01309848[1].m_path)
+#define g_Va01309A92 (g_Va01309848[1].m_label)
+#define g_Va01309AD2 (g_Va01309848[2].m_enabled)
+#define g_Va01309AD3 (g_Va01309848[2].m_path)
+#define g_Va01309BD7 (g_Va01309848[2].m_label)
 class Gen_00C70BC0Target;
 extern Gen_00C70BC0Target TheBfmeObject_00C70BC0;
 extern unsigned int g_Va01308838[1024];
@@ -61,7 +70,7 @@ void Rva007E4A00::init()
     AsciiString &path = *(AsciiString *)((char *)TheWritableGlobalData + 0xdc0);
     const void *header = *(const void **)&path;
     if (header && *(const unsigned short *)((const char *)header + 4)) {
-        g_Va01309848 = 1;
+        g_Va01309848[0].m_enabled = 1;
         sprintf(g_Va01309849, "%s%s\\", path.str(), "Data\\Movies");
         strcpy(g_Va0130994D, "Mod Path");
     }
