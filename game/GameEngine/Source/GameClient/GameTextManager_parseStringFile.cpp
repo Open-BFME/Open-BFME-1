@@ -42,10 +42,12 @@ inline AsciiString &AsciiString::operator=( const char *str )
 	return *this;
 }
 
-inline UnicodeString &UnicodeString::operator=( const wchar_t *str )
+// UnicodeString::operator=( const wchar_t * ), expanded in place.  A local
+// inline definition of the member would emit a COMDAT next to the strong
+// retail body in unicode_string.cpp (0x00083D20).
+static __forceinline void assignWide( UnicodeString &string, const wchar_t *str )
 {
-	((StringBase<unsigned short> *)this)->set( (const unsigned short *)str, str ? wcslen( str ) : 0 );
-	return *this;
+	((StringBase<unsigned short> *)&string)->set( (const unsigned short *)str, str ? wcslen( str ) : 0 );
 }
 
 __forceinline UnicodeString::~UnicodeString()
@@ -153,7 +155,7 @@ Bool GameTextManager::parseStringFile( File *file )
 					translateCopy( m_tbuffer, buffer2 );
 					stripSpaces( m_tbuffer );
 
-					m_stringInfo[ listCount ].text = m_tbuffer;
+					assignWide( m_stringInfo[ listCount ].text, m_tbuffer );
 					readString = true;
 				}
 			}
