@@ -39,11 +39,9 @@ private:
 	unsigned char m_bfmeU;
 };
 
-// Retail 0x00894800 (GHIDRA FUN_00c94800) is called with the parameter block
-// on the stack; its body takes that block as its [esp+8] argument.  Call it
-// through the defining name so the emitted call references
-// ?d_00894800@@YAXXZ directly.
-extern void d_00894800();
+// Retail 0x00894800, the Apt library bootstrap in Apt.cpp, takes the
+// parameter block.
+extern void Rva00894800( Gen_004659D0 *parameters );
 
 extern void j_00025086();
 extern void j_00039f1d();
@@ -81,8 +79,7 @@ void WindowManager::init()
 	Gen_004659D0 parameters;
 	parameters.setBfmeT();
 	int windowIndex;
-	typedef void ( __cdecl *ConfigureWindowParameters )( Gen_004659D0 * );
-	( (ConfigureWindowParameters)(void *)d_00894800 )( &parameters );
+	Rva00894800( &parameters );
 	*reinterpret_cast< unsigned int * >(
 		reinterpret_cast< unsigned char * >( &g_rva01337810GcRoots ) + 8 ) |= 2;
 	j_00025086();

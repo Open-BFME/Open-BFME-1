@@ -38269,7 +38269,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_00893b30@@YAXXZ,,0x00893B30,346,game/gen_asm/d_0088a430.asm,matched,gen-dump;ghidra=FUN_00c93b30
 ?d_008941a0@@YAXXZ,,0x008941A0,429,game/gen_asm/d_0088a430.asm,matched,gen-dump;ghidra=FUN_00c941a0
 ?d_00894380@@YAXXZ,,0x00894380,728,game/gen_asm/d_0084de40.asm,matched,gen-dump;switch-carved start=int3-aligned end=switch-table+int3 refs=0
-?d_00894800@@YAXXZ,,0x00894800,524,game/gen_asm/d_0088a430.asm,matched,gen-dump;ghidra=FUN_00c94800
 ?d_00895510@@YAXXZ,,0x00895510,308,game/gen_asm/d_00894a90.asm,matched,gen-dump;ghidra=FUN_00c95510
 ?d_00895790@@YAXXZ,,0x00895790,287,game/gen_asm/d_00894a90.asm,matched,gen-dump;ghidra=FUN_00c95790
 ?d_008961e0@@YAXXZ,,0x008961E0,316,game/gen_asm/d_00894a90.asm,matched,gen-dump;ghidra=FUN_00c961e0
@@ -173403,3 +173402,5 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?Set_Render_Device@WW3D@@SA_NPBDHHHH_N@Z,,0x008FD0E0,44,game/Libraries/Source/WWVegas/WW3D2/ww3d.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/008fd0e0-ww3d-set-render-device-family.md;model=claude-opus-5-5;host=app
 ?Set_Any_Render_Device@WW3D@@SA_NXZ,,0x008FD110,11,game/Libraries/Source/WWVegas/WW3D2/ww3d.cpp,matched,identity=targets/game/reverse/identity_evidence/008fd0e0-ww3d-set-render-device-family.md;model=claude-opus-5-5;host=app
 ?Set_Next_Render_Device@WW3D@@SA_NXZ,,0x008FD160,11,game/Libraries/Source/WWVegas/WW3D2/ww3d.cpp,matched,identity=targets/game/reverse/identity_evidence/008fd0e0-ww3d-set-render-device-family.md;model=claude-opus-5-5;host=app
+?Rva00894800@@YAXPAVGen_004659D0@@@Z,,0x00894800,524,game/Libraries/Source/Apt/Apt.cpp,matched,EA file evidence wb1 Apt.cpp; caller WindowManager::init 0x0046C5F0; name address-derived;model=claude-opus-5-5;host=app
+?Rva00891C90@@YAXPAXI@Z,,0x00891C90,13,game/Libraries/Source/Apt/Apt.cpp,matched,default TheBfmeFree hook stored by 0x00894800+0x70;model=claude-opus-5-5;host=app

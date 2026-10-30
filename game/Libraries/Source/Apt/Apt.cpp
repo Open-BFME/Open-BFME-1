@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHs-c-
+// cl: /DNDEBUG /MD /EHsc
 
 // The Apt allocator-hook pair pointer at VA 0x01337A30, and the Apt GC-root
 // registry vector pointer at VA 0x01337810.  Evidence:
@@ -156,3 +156,188 @@ void __cdecl Rva00892A00Query(void **firstResult, void **secondResult)
       if (secondResult)
           *secondResult = 0;
   }
+
+// Retail RVA 0x00894800, 524 bytes: the Apt library bootstrap.  EA file
+// evidence (wb1) places it in Apt.cpp; its original name is unproved, so the
+// name keeps the address.  WindowManager::init (0x0046C5F0) passes its
+// Gen_004659D0 parameter block; a null block selects a default-constructed
+// local.  The body installs the default sized-free hook, then allocates the
+// GC-root and registry vectors, the manager, tracker, item-table and
+// BfmeThingUEW singletons through each class's inline operator new (the
+// allocator hook at VA 0x01337828).  Retail's five unwind states call each
+// class's out-of-line sized operator delete, a `jmp [TheBfmeFree]` body at
+// 0x008917F0 (Gen_008A3070, states 0 and 1), 0x00891700 (Rva008947A0Owner),
+// 0x00891750 (Gen_uw_00893e70) and 0x00891690 (BfmeThingUEW); those rows
+// are still generated import scaffolds, so the deletes stay declarations
+// (identity_evidence/00894800-apt-bootstrap-class-deletes.md).  Class views
+// are TU-local: sizes come from the allocation requests, the ctor names
+// from the ledger.
+
+typedef unsigned int size_t;
+
+extern void *(*Rva008C5D70Alloc)(unsigned int size);
+extern void (*TheBfmeFree)(void *storage, unsigned int size);
+extern void (*g_bfmeFreeDWF)(void *storage);
+
+
+class Gen_004659D0
+{
+public:
+	Gen_004659D0();
+	int m_bfmeA;
+	int m_bfmeB;
+	int m_bfmeC;
+	int m_bfmeD;
+	int m_bfmeE;
+	int m_bfmeF;
+	int m_bfmeG;
+	int m_bfmeH;
+	int m_bfmeI;
+	int m_bfmeJ;
+	int m_bfmeK;
+	int m_bfmeL;
+	int m_bfmeM;
+	int m_bfmeN;
+	int m_bfmeO;
+	int m_bfmeP;
+	int m_bfmeQ;
+	int m_bfmeR;
+	int m_bfmeS;
+	unsigned char m_bfmeT;
+	unsigned char m_bfmeU;
+};
+
+struct BfmeRefEMI;
+struct BfmeStringData3AF0
+{
+	unsigned short m_refs;
+};
+extern BfmeRefEMI *g_bfmeRefEMIa;
+extern BfmeStringData3AF0 g_bfmeDefaultString1284;
+extern unsigned char g_bfmeDispatchEnabled1281;
+
+class BfmeSpecXA;
+class BfmePoolXA
+{
+public:
+	void bfmeSetupXA(BfmeSpecXA *spec);
+};
+struct Rva008AE770Stack;
+extern Rva008AE770Stack Rva008AE770TheStack;
+
+void bfmeResetAll();
+void bfmeAppend(int, int, int);
+void bfmeArenaInit(unsigned int);
+extern int g_bfme1017H;
+void d_008bf100();
+void Rva0089BBF0InitGlobals();
+struct Rva008A1DF0State;
+void *Rva008A1DF0(Rva008A1DF0State *, int);
+void d_008a1e80();
+
+class Gen_008A3070
+{
+public:
+	Gen_008A3070(int capacity);
+	static void *operator new(size_t size) { return Rva008C5D70Alloc(size); }
+	static void operator delete(void *storage, size_t size);
+private:
+	int m_capacity, m_count;
+	void **m_items;
+};
+struct Registry008C3F10;
+extern Registry008C3F10 *g_registry01337814;
+
+class Rva00893030Manager
+{
+public:
+	Rva00893030Manager() : m_value(0) {}
+	static void *operator new(size_t size) { return Rva008C5D70Alloc(size); }
+private:
+	int m_value;
+};
+extern Rva00893030Manager *g_rva00893030Manager;
+
+class Rva008947A0Owner
+{
+public:
+	Rva008947A0Owner();
+	static void *operator new(size_t size) { return Rva008C5D70Alloc(size); }
+	static void operator delete(void *storage, size_t size);
+private:
+	int m_fields[6];
+};
+class BfmeTracker4310;
+extern BfmeTracker4310 *g_bfmeTracker4310;
+
+class Rva00892640Item
+{
+public:
+	Rva00892640Item();
+	~Rva00892640Item();
+private:
+	int m_fields[2];
+};
+class Gen_uw_00893e70
+{
+public:
+	Gen_uw_00893e70() : m_first(0), m_second(0), m_items(m_storage) {}
+	static void *operator new(size_t size) { return Rva008C5D70Alloc(size); }
+	static void operator delete(void *storage, size_t size);
+private:
+	int m_first;
+	int m_second;
+	Rva00892640Item *m_items;
+	Rva00892640Item m_storage[2];
+};
+extern Gen_uw_00893e70 *g_rva013377F0;
+
+struct BfmeThingUEWConfig;
+struct BfmeThingUEW
+{
+	BfmeThingUEW(BfmeThingUEWConfig *config);
+	static void *operator new(size_t size) { return Rva008C5D70Alloc(size); }
+	static void operator delete(void *storage, size_t size);
+	char m_fields[0x12b4];
+};
+
+// Retail RVA 0x00891C90, 13 bytes: the default sized-free hook the bootstrap
+// stores into TheBfmeFree.  It forwards only the pointer to the free hook at
+// VA 0x0133782C; the unused size formal keeps retail's call/pop/ret.
+void Rva00891C90(void *storage, unsigned int)
+{
+	g_bfmeFreeDWF(storage);
+}
+
+void Rva00894800(Gen_004659D0 *parameters)
+{
+	Gen_004659D0 defaults;
+	Gen_004659D0 *config = parameters ? parameters : &defaults;
+
+	if (!g_bfmeRefEMIa)
+	{
+		++g_bfmeDefaultString1284.m_refs;
+		g_bfmeRefEMIa = (BfmeRefEMI *)&g_bfmeDefaultString1284;
+	}
+	g_bfmeDispatchEnabled1281 = config->m_bfmeT;
+	flag0133781D = config->m_bfmeU;
+	((BfmePoolXA *)&Rva008AE770TheStack)->bfmeSetupXA((BfmeSpecXA *)config);
+
+	if (!TheBfmeFree)
+		TheBfmeFree = Rva00891C90;
+	g_rva01337A30AllocPair = (BfmeStringPool3AF0 *)&Rva008C5D70Alloc;
+	bfmeResetAll();
+
+	g_rva01337810GcRoots = (Rva00899560Pool *)new Gen_008A3070(config->m_bfmeN);
+	g_registry01337814 = (Registry008C3F10 *)new Gen_008A3070(config->m_bfmeS);
+	((void (__cdecl *)(int))(void *)d_008bf100)(config->m_bfmeO);
+	Rva0089BBF0InitGlobals();
+	g_rva00893030Manager = new Rva00893030Manager;
+	g_bfmeTracker4310 = (BfmeTracker4310 *)new Rva008947A0Owner;
+	g_rva013377F0 = new Gen_uw_00893e70;
+	BfmeThingUEW *thing = new BfmeThingUEW((BfmeThingUEWConfig *)config);
+	g_bfmeHolderBU = (BfmePickWorld1284 *)thing;
+	bfmeAppend((int)thing, (int)Rva008A1DF0, (int)d_008a1e80);
+	bfmeArenaInit(0x800);
+	g_bfme1017H = 1;
+}
