@@ -72,3 +72,13 @@ bool Rva0037C310Owner::update0037B9F0()
     }
     return !expired;
 }
+
+// Retail 0x0037B0D0 (32 B, RET4): copies the narrow string at +0x3C into the
+// hidden return slot through StringBase<char>'s copy constructor 0x00887B60.
+// The two calls above reach it directly; its row was a gen-alias to a
+// byte-equal TerrainRoads getter copy.
+// ?copyString0037B0D0@Config0037B9F0@@QAE?AVAsciiString@@XZ
+__declspec(noinline) AsciiString Config0037B9F0::copyString0037B0D0()
+{
+    return text3c;
+}
