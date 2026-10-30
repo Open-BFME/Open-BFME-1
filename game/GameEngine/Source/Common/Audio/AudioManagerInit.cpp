@@ -131,6 +131,15 @@ private:
 // ?TheGameLODManager@@3PAVGameLODManager@@A, global at 0x012ED5AC. The body reads
 // the LOD index at +0x16cc and a stride-8 table of speaker counts at +0x170,
 // clamping the result to 2 before storing it as a word at this+0x628.
+//
+// Retired gate-debt spelling (body_guard dir32 line, recorded by an earlier full
+// gate): ?TheGameLODManager@@3PAVGameLODManager006B8220@@A. The 77fe20ccd7 lift
+// declared the global with this view as pointee (extern GameLODManager006B8220
+// *TheGameLODManager); 7f0eed140c re-declared it with plain pointee GameLODManager
+// and moved the view to the reinterpret_casts below, so the rebuilt object's
+// single DIR32 reference at +0x357 spells the plain recorded name at base
+// 0x012ED5AC (matched 4B .data row in data_rows; dir32_addresses.csv). No source
+// or object in the current tree can emit the retired name.
 class GameLODManager006B8220
 {
 public:

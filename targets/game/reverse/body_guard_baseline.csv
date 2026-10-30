@@ -395,7 +395,6 @@ dir32,0x012DBD60,?g_rva00EDBD60DistanceProcs@@3PAP6AMPBX0H@ZA,"nothing in the le
 dir32,0x012DBDE0,___defaultmatherr,"nothing in the ledger owns 0x012DBDE0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012ED4EC,?g_rva012ED4EC@@3VAsciiString@@A,"retail 0x012ED4EC is already recorded as _g_bfmeNameVSF; reference that name, not a new one"
 dir32,0x012ED524,?EngineGlobal0040E9E0@@3PAUEngine0040E9E0@@A,"retail 0x012ED524 is already recorded as ?EngineGlobal007629F0@@3PAUEngine007629F0@@A (+9 more); reference that name, not a new one"
-dir32,0x012ED5AC,?TheGameLODManager@@3PAVGameLODManager006B8220@@A,"retail 0x012ED5AC is already recorded as ?Rva012ED5AC@@3PAVOptionPreferences@@A (+7 more); reference that name, not a new one"
 dir32,0x012ED5C8,?TheGlobalData@@3PAURva002FE590Globals@@A,"retail 0x012ED5C8 is already recorded as ?GenFallback0012ED5C8@@3PAVGenFallback@@A (+57 more); reference that name, not a new one"
 dir32,0x012ED5C8,?TheWritableGlobalData@@3PAUGlo012ED5C8Type@@A,"retail 0x012ED5C8 is already recorded as ?GenFallback0012ED5C8@@3PAVGenFallback@@A (+57 more); reference that name, not a new one"
 dir32,0x012ED5C8,?TheWritableGlobalData@@3PAUGlobalData007B14A0@@A,"retail 0x012ED5C8 is already recorded as ?GenFallback0012ED5C8@@3PAVGenFallback@@A (+57 more); reference that name, not a new one"
