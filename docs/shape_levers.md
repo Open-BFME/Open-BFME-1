@@ -1987,6 +1987,19 @@ game/GameEngine/Source/Common/System/GeometryInfoCollidesWith.cpp (commit
 dd411199b9); handoff
 targets/game/reverse/attempt_support/0087f590-getbestcontactpoint-visible-intersects-20261029.md.
 
+Session 494 confirmed it three more times on VC7.1 /O2. (1) 0x00231C50: a
+local record pushed through an inlined STLport push_back. Retail copies the
+element with loads running ahead of stores and keeps the angle temp in the
+dead argument slot. That needed vector::_M_insert_overflow (0x00231A00)
+**and** the `__uninitialized_fill_n` it hands the value to, both defined in
+the TU. A declared-only callee one level down is enough to make the local
+escape (commit a72edf759c). (2) 0x00150A70: both offset words load before the
+first store only beside the visible rotate helper 0x00150100 (2fc4c0669c).
+(3) 0x002672B0: a visible aiMoveToPosition makes the bank exact. Not landed;
+attempt_support/002672b0-siegedeploy-initiate.md says why. The stub must
+leave its pointees alone: one that writes through them (0x001E65C0) feeds
+the caller more information and adds diffs.
+
 ## A datum that is file-static in retail cannot stay a data row (2026-10-21)
 
 When a bank is exact only while a global is `static`, believe it: retail's

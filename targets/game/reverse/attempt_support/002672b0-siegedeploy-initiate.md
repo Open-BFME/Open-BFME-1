@@ -44,3 +44,19 @@ reuse of inverse; a separate step vector reproduces the y pattern but moves
 the stores (0.986, 726 B). The retail idiom is unique in .text (regex search).
 Pins needed to land: callers use Coord3D class spelling; bfmeGroundCellThreshold
 is ledgered with PBUCoord3D (needs an alias pin at ILT 0x0003CE25).
+
+## Session 494: the last pair is an escape-analysis effect
+
+When AICommandInterface::aiMoveToPosition is visible in the same TU as a
+non-capturing noinline stub, the bank probes EXACT 650/650. Retail calls it
+through ILT 0x0003436A, and its body is 0x000D86C0 (matched in
+AICommandInterfaceMovementOrders.cpp). Without that visibility there are 6
+diffs: the lea &p / p.z store pair at +0x224. The real aiMoveToPosition only
+copies *pos into its command parms, so it does not capture the pointer, and
+retail's unit probably saw it. Two obstacles remain before landing:
+(1) the matched aiMoveToPosition row is spelled with a struct Coord3D (PBU),
+while this body's own name and its callers need class Coord3D (PBV). One TU
+cannot spell both, so rehoming needs the two spellings reconciled first.
+(2) The 0x002666A0 callee pin (ILT 0x00020455) is still open. Diagnostic
+source: build-only stub, see docs/shape_levers.md "Callees must share the
+TU".
