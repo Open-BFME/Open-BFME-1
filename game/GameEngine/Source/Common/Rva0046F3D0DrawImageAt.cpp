@@ -122,6 +122,16 @@ template<> inline bool StringBase<char>::isEmpty() const { return !m_data || m_d
 
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *, const char *);
 
+// AsciiString::isEmpty, expanded in place.  Calling the member would emit
+// ?isEmpty@AsciiString@@QBE_NXZ and ?isEmpty@?$StringBase@D@@QBE_NXZ COMDATs
+// that are not retail's bodies.  The buffer pointer is the string's first
+// word; its length is at +4.
+static __forceinline bool asciiIsEmpty( const AsciiString &string )
+{
+	const char *data = *reinterpret_cast<const char * const *>(&string);
+	return !data || *reinterpret_cast<const unsigned short *>(data + 4) == 0;
+}
+
 class BfmeStrVMZ;
 char bfmeGetParamVMZ(const char *hay, const char *key, BfmeStrVMZ *out);
 
@@ -145,7 +155,7 @@ extern const Rva0046F280ModeName g_Va010F738C[6] = {
 static Int getMode0046F280( Rva0046F3D0ModeSource *source )
 {
 	AsciiString value;
-	if (!bfmeGetParamVMZ((const char *)source, "_mode", (BfmeStrVMZ *)&value) || value.isEmpty())
+	if (!bfmeGetParamVMZ((const char *)source, "_mode", (BfmeStrVMZ *)&value) || asciiIsEmpty(value))
 		return 2;
 	for (unsigned int i = 0; i < 6; ++i)
 	{

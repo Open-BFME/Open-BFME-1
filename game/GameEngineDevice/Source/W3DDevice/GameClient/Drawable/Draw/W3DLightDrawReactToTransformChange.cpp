@@ -23,16 +23,19 @@ class AsciiString
 public:
 	BfmeAsciiStringData *data;
 
-	__forceinline bool isEmpty() const
-	{
-		return data == 0 || data->length == 0;
-	}
-
 	__forceinline const char *str() const
 	{
 		return data ? data->text : "";
 	}
 };
+
+// AsciiString::isEmpty, expanded in place.  An inline member would emit a
+// ?isEmpty@AsciiString@@QBE_NXZ COMDAT that is not retail's body (retail
+// routes that name through ILT 0x0005E4C0 to StringBase<char>::isEmpty).
+static __forceinline bool asciiIsEmpty( const AsciiString &string )
+{
+	return string.data == 0 || string.data->length == 0;
+}
 
 class W3DLightDrawModuleData
 {
@@ -96,7 +99,7 @@ void W3DLightDraw::reactToTransformChange(const Matrix3D *, const Coord3D *, flo
 	if (m_light)
 	{
 		Matrix3D transform = *m_drawable->getTransformMatrix();
-		if (!m_moduleData->boneName.isEmpty())
+		if (!asciiIsEmpty(m_moduleData->boneName))
 		{
 			Matrix3D boneTransform;
 			const char *boneName = m_moduleData->boneName.str();

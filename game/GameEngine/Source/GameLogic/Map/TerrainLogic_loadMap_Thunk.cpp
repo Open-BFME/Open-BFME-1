@@ -22,13 +22,6 @@ public:
 	AsciiString(const char *text) : StringBase<char>(text) {}
 	~AsciiString() {}
 
-	Bool isEmpty(void) const
-	{
-		return m_data == 0 ||
-			*reinterpret_cast<const UnsignedShort *>(
-				reinterpret_cast<const char *>(m_data) + 4) == 0;
-	}
-
 	const char *str(void) const
 	{
 		static const char empty = 0;
@@ -43,6 +36,17 @@ public:
 
 	static AsciiString TheEmptyString;
 };
+
+// AsciiString::isEmpty, expanded in place.  An inline member would emit a
+// ?isEmpty@AsciiString@@QBE_NXZ COMDAT that is not retail's body (retail
+// routes that name through ILT 0x0005E4C0 to StringBase<char>::isEmpty).
+// The buffer pointer is the string's first word; its length is at +4.
+static __forceinline Bool asciiIsEmpty(const AsciiString &string)
+{
+	const char *data = *reinterpret_cast<const char * const *>(&string);
+	return data == 0 ||
+		*reinterpret_cast<const UnsignedShort *>(data + 4) == 0;
+}
 
 class MapObject
 {
@@ -149,7 +153,7 @@ private:
 Bool TerrainLogic::loadMapAbi(AsciiString filename, ChunkInputStream *stream,
 	Bool tailFlag, Bool query)
 {
-	if (filename.isEmpty())
+	if (asciiIsEmpty(filename))
 		return false;
 
 	m_filenameString = filename;
