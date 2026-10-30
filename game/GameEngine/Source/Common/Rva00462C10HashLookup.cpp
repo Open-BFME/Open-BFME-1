@@ -5,7 +5,7 @@
 // return the found payload or 0" shape, but this body:
 //   - the "this" for the lookup is a fixed global hashtable object at
 //     0x012F19A4 (defined by game/GameEngine/Source/Common/
-//     Rva00C6B390StaticInitializers.cpp as g_rva012F19A4), loaded as a plain
+//     Rva00C6B390StaticInitializers.cpp under the recorded name below), loaded as a plain
 //     address, not a pointer that needs a null check
 //   - the lookup calls the private hashtable _M_find implementation
 //     directly through its own ILT thunk (0x0002E5A5 -> retail 0x00460C00,

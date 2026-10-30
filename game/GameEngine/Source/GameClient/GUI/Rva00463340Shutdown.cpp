@@ -52,8 +52,8 @@ struct NameClearFunctor00462540 {
 	}
 	AsciiString m_name;
 };
-struct Rva00C6B860Init;
-extern Rva00C6B860Init g_rva012F19A4;
+class Gen_00C700A0Target;
+extern Gen_00C700A0Target TheBfmeObject_00C700A0;	// 0x012F19A4
 struct Rva00C6B840Init;
 extern Rva00C6B840Init g_rva012F1990;
 
@@ -70,11 +70,11 @@ struct Rva00463340Buckets {
 };
 static __forceinline WindowTable::iterator windowTableBegin()
 {
-    return reinterpret_cast<Rva00463340Buckets *>(&g_rva012F19A4)->begin();
+    return reinterpret_cast<Rva00463340Buckets *>(&TheBfmeObject_00C700A0)->begin();
 }
 static __forceinline WindowTable::iterator windowTableEnd()
 {
-    return WindowTable::iterator(0, reinterpret_cast<WindowTable::iterator::_Hashtable *>(&g_rva012F19A4));
+    return WindowTable::iterator(0, reinterpret_cast<WindowTable::iterator::_Hashtable *>(&TheBfmeObject_00C700A0));
 }
 
 void bfmeStep1_004647E0(void)
