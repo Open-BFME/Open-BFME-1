@@ -1,5 +1,5 @@
 // ?j_00015e42@Glo012F1024Item@@QAEXXZ
-// partial score=0.849 date=2026-10-30
+// partial score=0.85 date=2026-10-30
 // ?j_00015e42@Glo012F1024Item@@QAEXXZ
 // partial score=0.85 date=2026-10-30 (s500 a1: 1-byte struct temp arg; 29 diffs)
 // cl: /DNDEBUG /MD /EHsc
