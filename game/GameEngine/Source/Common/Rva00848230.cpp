@@ -29,3 +29,17 @@ void *Rva00848260::method(void *p1, void *p2, void *p3, void *p4, void *p5, void
     slot08(p1, p2, p3, p4, p5, p6, p7, p8, p9);
     return p1;
 }
+class Rva00848320
+{
+    virtual void slot00() = 0;
+    virtual void slot04(void *, void *, void *, void *, void *, void *, void *) = 0;
+public:
+    void *method(void *, void *, void *, void *, void *, void *, void *);
+};
+// Same 47 bytes as 0x00848230 (seven words forwarded to slot +4, returns p1);
+// its own unreferenced body, so its own address view.
+void *Rva00848320::method(void *p1, void *p2, void *p3, void *p4, void *p5, void *p6, void *p7)
+{
+    slot04(p1, p2, p3, p4, p5, p6, p7);
+    return p1;
+}
