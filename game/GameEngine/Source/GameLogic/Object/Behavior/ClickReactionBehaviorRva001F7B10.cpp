@@ -1,7 +1,14 @@
-// ?rva001F7B10@ClickReactionBehavior@@UAEXXZ
-// partial score=0.5156 date=2026-10-02
 // cl: /O2 /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /I.
 // stlport
+// ClickReactionBehavior secondary interface at +0x20, slot 1, retail RVA
+// 001F7B10 (316 B of code plus its five-entry case table, 340 B). The ctor
+// 0x001F7860 installs table VA 0x010A3190 whose slot 1 reaches this body
+// through ILT 0x00012134; no source-backed method name is known, so it keeps
+// its address. Evidence: identity_evidence/001f7b10-corrected-bank.md.
+// Retail's mask switch is one inline condition setter per case: cl
+// cross-jumps the five copies into `mov eax,mask; jmp join`, which is what
+// puts the object in ESI and the mask in EAX (one computed mask and a single
+// test after the switch swaps ESI/EDI for the whole body).
 #include <algorithm>
 #define OBJECT_TU_MEMBERS void notifyModelConditionChanged();
 #include "game/GameEngine/Source/GameLogic/Object/object.h"
@@ -137,6 +144,14 @@ private:
     int m_unmodelled28;
 };
 extern int GetGameLogicRandomValue(int,int,char*,int);
+static __forceinline void setModelConditionBit(Object *obj, int bit)
+{
+    unsigned int mask = 1u << (bit & 31);
+    if (!(obj->m_modelConditionFlags[bit >> 5] & mask)) {
+        obj->m_modelConditionFlags[bit >> 5] |= mask;
+        obj->notifyModelConditionChanged();
+    }
+}
 void ClickReactionBehavior::rva001F7B10()
 {
     Object *object = m_object;
@@ -159,18 +174,13 @@ void ClickReactionBehavior::rva001F7B10()
     if (reaction <= 3) reaction=GetGameLogicRandomValue(1,3,"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Behavior\\ClickReactionBehavior.cpp",0x74);
     if (reaction <= 0) return;
     int index = reaction - 1;
-    unsigned int condition;
     switch(index) {
-    case 0: condition=0x04000000; break;
-    case 1: condition=0x08000000; break;
-    case 2: condition=0x10000000; break;
-    case 3: condition=0x20000000; break;
-    case 4: condition=0x40000000; break;
-    default: condition=0x40000000; break;
-    }
-    if (!(object->m_modelConditionFlags[4]&condition)) {
-        object->m_modelConditionFlags[4] |= condition;
-        object->notifyModelConditionChanged();
+    case 0: setModelConditionBit(object, 154); break;
+    case 1: setModelConditionBit(object, 155); break;
+    case 2: setModelConditionBit(object, 156); break;
+    case 3: setModelConditionBit(object, 157); break;
+    case 4: setModelConditionBit(object, 158); break;
+    default: setModelConditionBit(object, 158); break;
     }
     drawable->applyPendingModelConditionFlags(false);
     if (index >= 0 && index < 5) m_unmodelled28=data->m_unmodelled0C[index];

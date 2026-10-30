@@ -2692,3 +2692,19 @@ gave 264/264 exact: the arms tail-merge into one store, but the second use of
 constant-to-register choice is made before cross-jumping removes duplicate
 stores, so a retail constant register with "too few" uses points at a merged
 duplicate. Source: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine_updateFades.cpp.
+
+## A switch picking a constant for one shared use: inline the use per case (2026-10-30)
+
+ClickReactionBehavior 0x001F7B10 (VC7.1 `/O2`). Retail's case table arms
+are `mov eax,mask; jmp join` and the join tests `[obj+0x120]` against EAX
+with the object in ESI. The bank computed `condition` in the switch and did
+one `if (!(flags & condition)) { flags |= condition; notify(); }` after it:
+ECX held the mask and ESI/EDI were swapped for the whole body (41 bytes, 22
+inert spellings). Calling a forceinline set-condition helper in every case
+(`case 0: setBit(obj, 154); break; ...`, default repeating case 4) gave
+340/340 exact: cl emits five inline copies, cross-jumps their identical
+tails after the mask load into one join, and the register choice follows
+those copies. Look for this when retail's switch arms load only a
+constant and jump to one join. Donor hint: BFME 2's ClickReactionBehavior
+calls setModelConditionState in each case. Source:
+game/GameEngine/Source/GameLogic/Object/Behavior/ClickReactionBehaviorRva001F7B10.cpp.
