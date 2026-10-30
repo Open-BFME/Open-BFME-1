@@ -1,622 +1,155 @@
 // ?onDie@SlowDeathBehavior@@UAEXPBVDamageInfo@@@Z
-// partial score=0.45 date=2026-09-10
-// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// partial score=0.9952 date=2026-10-30
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
-/*
-**	Command & Conquer Generals Zero Hour(tm)
-**	Copyright 2025 Electronic Arts Inc.
-**
-**	This program is free software: you can redistribute it and/or modify
-**	it under the terms of the GNU General Public License as published by
-**	the Free Software Foundation, either version 3 of the License, or
-**	(at your option) any later version.
-**
-**	This program is distributed in the hope that it will be useful,
-**	but WITHOUT ANY WARRANTY; without even the implied warranty of
-**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-**	GNU General Public License for more details.
-**
-**	You should have received a copy of the GNU General Public License
-**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+//
+// SlowDeathBehavior::onDie (retail 0x0020A150, 842 B).  Clean C++ conversion
+// of the former __emit lift in
+// game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehavior_onDie_Thunk.cpp.
+//
+// The receiver is the DieModuleInterface subobject at complete-object +0x20
+// (object pointer at this-0x18, SlowDeathBehaviorInterface at this+4, whose
+// slot 2 is the landed isDieApplicable 0x001F7080).  BFME replaces Zero
+// Hour's two-pass roll with a weighted rejection loop: every applicable
+// SlowDeathBehaviorInterface and its probability go into two STLport
+// vectors, a roll picks one, and a pick that no longer accepts the death
+// (isDieApplicable, then BFME's fourth interface slot +0x0C) is removed by
+// swapping in the last entry, until one begins its slow death.  BFME 2
+// (Open-BFME-2 Code/GameEngine/Source/GameLogic/Object/Behavior/
+// SlowDeathBehaviorUpdate.cpp, 0x0045E6B8) has the same loop; BFME 1 adds
+// the selectable-when-dead test on ThingTemplate +0x4CA and passes
+// file/line to the random call.  Like SlowDeathBehavior_beginSlowDeath.cpp,
+// this TU keeps the BFME1 layout as compact local views; the Zero Hour
+// layout of SlowDeathBehavior.cpp cannot hold this body.
 
-////////////////////////////////////////////////////////////////////////////////
-//																																						//
-//  (c) 2001-2003 Electronic Arts Inc.																				//
-//																																						//
-////////////////////////////////////////////////////////////////////////////////
+#include <vector>
 
-// FILE: SlowDeathBehavior.cpp ///////////////////////////////////////////////////////////////////////
-// Author:
-// Desc:
-///////////////////////////////////////////////////////////////////////////////////////////////////
+typedef int Int;
+typedef bool Bool;
 
+class DamageInfo;
 
-// INCLUDES ///////////////////////////////////////////////////////////////////////////////////////
-#include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
-#define DEFINE_SLOWDEATHPHASE_NAMES
-#include "Common/GameLOD.h"
-#include "Common/INI.h"
-#include "Common/RandomValue.h"
-#include "Common/Thing.h"
-#include "Common/ThingTemplate.h"
-#include "Common/Xfer.h"
-#include "GameClient/Drawable.h"
-#include "GameClient/FXList.h"
-#include "GameClient/InGameUI.h"
-#include "GameLogic/GameLogic.h"
-#include "GameLogic/Module/BodyModule.h"
-#include "GameLogic/Module/PhysicsUpdate.h"
-#include "GameLogic/Module/SlowDeathBehavior.h"
-#include "GameLogic/Module/AIUpdate.h"
-#include "GameLogic/Module/SlavedUpdate.h"
-#include "GameLogic/Object.h"
-#include "GameLogic/ObjectCreationList.h"
-#include "GameLogic/Weapon.h"
-#include "GameClient/Drawable.h"
+template<class T> inline T &at(void *p, unsigned off) { return *(T *)((char *)p+off); }
+template<class T> inline const T &at(const void *p, unsigned off) { return *(const T *)((const char *)p+off); }
 
-#ifdef _INTERNAL
-// for occasional debugging...
-//#pragma optimize("", off)
-//#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
-#endif
-
-const Real BEGIN_MIDPOINT_RATIO = 0.35f;
-const Real END_MIDPOINT_RATIO = 0.65f;
-
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/SlowDeathBehaviorModuleData_ctor_Thunk.cpp
-// ??0SlowDeathBehaviorModuleData@@QAE@XZ present-unmatched
-SlowDeathBehaviorModuleData::SlowDeathBehaviorModuleData()
+// Overridable: final override resolved inline one level, recursing through
+// the out-of-line body (0x00087A80).
+class Overridable
 {
-	m_sinkRate = 0;
-	m_probabilityModifier = 10;
-	m_modifierBonusPerOverkillPercent = 0;
-	m_sinkDelay = 0;
-	m_sinkDelayVariance = 0;
-	m_destructionDelay = 0;
-	m_destructionDelayVariance = 0;
-	m_destructionAltitude = -10;
-	m_maskOfLoadedEffects = 0; //assume no ocl, fx, or weapons.
-	m_flingForce = 0;
-	m_flingForceVariance = 0;
-	m_flingPitch = 0;
-	m_flingPitchVariance = 0;
-	// redundant.
-	//m_fx.clear();
-	//m_ocls.clear();
-	//m_weapons.clear();
-}
+public:
+	virtual void slot00();
+	const Overridable *getFinalOverride() const
+	{
+		if (m_nextOverride)
+			return m_nextOverride->getFinalOverride();
+		return this;
+	}
+	Overridable *m_nextOverride;
+};
+class ThingTemplate : public Overridable {};
 
-//-------------------------------------------------------------------------------------------------
-static void parseFX( INI* ini, void *instance, void * /*store*/, const void* /*userData*/ )
+class AIUpdateInterface
 {
-	SlowDeathBehaviorModuleData* self = (SlowDeathBehaviorModuleData*)instance;
-	SlowDeathPhaseType sdphase = (SlowDeathPhaseType)INI::scanIndexList(ini->getNextToken(), TheSlowDeathPhaseNames);
-	for (const char* token = ini->getNextToken(); token != NULL; token = ini->getNextTokenOrNull())
-	{
-		const FXList *fxl = TheFXListStore->findFXList((token));	// could be null! this is OK!
-		FXListVec * const bfmeFx = (FXListVec *)((char *)self + 0x58);
-		bfmeFx[sdphase].push_back(fxl);
-		if (fxl)
-			*((Byte *)self + 0x1A4) |= SlowDeathBehaviorModuleData::HAS_FX;
-	}
-}
+public:
+	Bool isAiInDeadState() const { return at<Bool>(this, 0x32b); }	// m_isAiDead
+	void markAsDead();
+};
 
-//-------------------------------------------------------------------------------------------------
-static void parseOCL( INI* ini, void *instance, void * /*store*/, const void* /*userData*/ )
+class SlowDeathBehaviorInterface
 {
-	SlowDeathBehaviorModuleData* self = (SlowDeathBehaviorModuleData*)instance;
-	SlowDeathPhaseType sdphase = (SlowDeathPhaseType)INI::scanIndexList(ini->getNextToken(), TheSlowDeathPhaseNames);
-	for (const char* token = ini->getNextToken(); token != NULL; token = ini->getNextTokenOrNull())
-	{
-		const ObjectCreationList *ocl = TheObjectCreationListStore->findObjectCreationList(token);	// could be null! this is OK!
-		// BFME's SlowDeathBehaviorModuleData puts m_ocls at this+0x88, not the
-		// +0x64 the header gives it: retail @0x00209815 does
-		// lea esi,[ebx+ecx*4+0x88]. Correcting the header is the real fix and
-		// the full gate is red (docs/lessons.md), so the array base is taken at
-		// the retail offset here.
-		OCLVec * const bfmeOcls = (OCLVec *)((char *)self + 0x88);
-		bfmeOcls[sdphase].push_back(ocl);
-		if (ocl)
-			// and m_maskOfLoadedEffects at this+0x1A4, not +0xBC: retail
-			// @0x00209862 does or byte ptr [ebx+0x1A4],2.
-			*((Byte *)self + 0x1A4) |= SlowDeathBehaviorModuleData::HAS_OCL;
-	}
-}
+public:
+	virtual void beginSlowDeath(const DamageInfo *damageInfo) = 0;
+	virtual Int getProbabilityModifier(const DamageInfo *damageInfo) const = 0;
+	virtual Bool isDieApplicable(const DamageInfo *damageInfo) const = 0;
+	virtual Bool slot0C() = 0;	// BFME-only slot, identity unproven
+};
 
-//-------------------------------------------------------------------------------------------------
-static void parseWeapon( INI* ini, void *instance, void * /*store*/, const void* /*userData*/ )
+class BehaviorModuleInterface
 {
-	SlowDeathBehaviorModuleData* self = (SlowDeathBehaviorModuleData*)instance;
-	SlowDeathPhaseType sdphase = (SlowDeathPhaseType)INI::scanIndexList(ini->getNextToken(), TheSlowDeathPhaseNames);
-	for (const char* token = ini->getNextToken(); token != NULL; token = ini->getNextTokenOrNull())
-	{
-		const WeaponTemplate *wt = TheWeaponStore->findWeaponTemplate(token);	// could be null! this is OK!
-		self->m_weapons[sdphase].push_back(wt);
-		if (wt)
-			self->m_maskOfLoadedEffects |= SlowDeathBehaviorModuleData::HAS_WEAPON;
-	}
-}
-
-//-------------------------------------------------------------------------------------------------
-/*static*/ void SlowDeathBehaviorModuleData::buildFieldParse(MultiIniFieldParse& p)
+public:
+	virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0c();
+	virtual void slot10(); virtual void slot14(); virtual void slot18(); virtual void slot1c();
+	virtual void slot20(); virtual void slot24(); virtual void slot28(); virtual void slot2c();
+	virtual void slot30(); virtual void slot34(); virtual void slot38(); virtual void slot3c();
+	virtual void slot40(); virtual void slot44(); virtual void slot48(); virtual void slot4c();
+	virtual void slot50(); virtual void slot54();
+	virtual SlowDeathBehaviorInterface *getSlowDeathBehaviorInterface();
+};
+class BehaviorModule
 {
-  UpdateModuleData::buildFieldParse(p);
+public:
+	char pad00[0x0c];
+	BehaviorModuleInterface m_interface;	// +0x0C
+};
 
-	static const FieldParse dataFieldParse[] =
-	{
-		{ "SinkRate",													INI::parseVelocityReal,						NULL, offsetof( SlowDeathBehaviorModuleData, m_sinkRate ) },
-		{ "ProbabilityModifier",							INI::parseInt,										NULL, offsetof( SlowDeathBehaviorModuleData, m_probabilityModifier ) },
-		{ "ModifierBonusPerOverkillPercent",	INI::parsePercentToReal,					NULL, offsetof( SlowDeathBehaviorModuleData, m_modifierBonusPerOverkillPercent ) },
-		{ "SinkDelay",												INI::parseDurationUnsignedInt,		NULL, offsetof( SlowDeathBehaviorModuleData, m_sinkDelay ) },
-		{ "SinkDelayVariance",								INI::parseDurationUnsignedInt,		NULL, offsetof( SlowDeathBehaviorModuleData, m_sinkDelayVariance ) },
-		{ "DestructionDelay",									INI::parseDurationUnsignedInt,		NULL, offsetof( SlowDeathBehaviorModuleData, m_destructionDelay ) },
-		{ "DestructionDelayVariance",					INI::parseDurationUnsignedInt,		NULL, offsetof( SlowDeathBehaviorModuleData, m_destructionDelayVariance ) },
-		{ "DestructionAltitude",							INI::parseReal,										NULL, offsetof( SlowDeathBehaviorModuleData, m_destructionAltitude ) },
-		{ "FX",																parseFX,													NULL, 0 },
-		{ "OCL",															parseOCL,													NULL, 0 },
-		{ "Weapon",														parseWeapon,											NULL, 0 },
-		{ "FlingForce",												INI::parseReal,										NULL, offsetof( SlowDeathBehaviorModuleData, m_flingForce) },
-		{ "FlingForceVariance",								INI::parseReal,										NULL, offsetof( SlowDeathBehaviorModuleData, m_flingForceVariance) },
-		{ "FlingPitch",												INI::parseAngleReal,							NULL, offsetof( SlowDeathBehaviorModuleData, m_flingPitch) },
-		{ "FlingPitchVariance",								INI::parseAngleReal,							NULL, offsetof( SlowDeathBehaviorModuleData, m_flingPitchVariance) },
-		{ 0, 0, 0, 0 }
-	};
-  p.add(dataFieldParse);
-	p.add(DieMuxData::getFieldParse(), offsetof( SlowDeathBehaviorModuleData, m_dieMuxData ));
-}
-
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehavior_ctor_Thunk.cpp
-// ??0SlowDeathBehavior@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
-SlowDeathBehavior::SlowDeathBehavior( Thing *thing, const ModuleData* moduleData ) : UpdateModule( thing, moduleData )
+// upstream: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Override.h
+template <class T> class OVERRIDE
 {
-	m_flags = 0;
-	m_sinkFrame = 0;
-	m_midpointFrame = 0;
-	m_destructionFrame = 0;
-	m_acceleratedTimeScale = 1.0f;
-
-	if (getSlowDeathBehaviorModuleData()->m_probabilityModifier < 1)
+public:
+	const T *operator*() const
 	{
-		DEBUG_CRASH(("ProbabilityModifer must be >= 1.\n"));
-		throw INI_INVALID_DATA;
+		if (!m_overridable)
+			return 0;
+		return (T *)m_overridable->getFinalOverride();
 	}
+	operator const T *() const { return operator*(); }
+private:
+	const T *m_overridable;
+};
 
-	setWakeFrame(getObject(), UPDATE_SLEEP_FOREVER);
-}
-
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// ??1SlowDeathBehavior@@MAE@XZ present-unmatched
-SlowDeathBehavior::~SlowDeathBehavior( void )
+class Object
 {
-}
+public:
+	const ThingTemplate *getTemplate() const { return m_template; }
+	AIUpdateInterface *getAIUpdateInterface() { return at<AIUpdateInterface *>(this, 0x204); }
+	BehaviorModule **getBehaviorModules() const { return at<BehaviorModule **>(this, 0x1f0); }
+	void setSelectable(bool selectable);
+private:
+	virtual void slot00();
+	OVERRIDE<ThingTemplate> m_template;	// +0x04
+};
 
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// ?getProbabilityModifier@SlowDeathBehavior@@UBEHPBVDamageInfo@@@Z present-unmatched
-Int SlowDeathBehavior::getProbabilityModifier( const DamageInfo *damageInfo ) const
+class GameLogic
 {
-	// Calculating how far past dead we were allows us to pick more spectacular deaths when
-	// severly killed, and more sedate ones when only slightly killed.
-	// eg ( 200 hp max, had 10 left, took 50 damage, 40 overkill, (40/200) * 100 = 20 overkill %)
-	Int overkillDamage = damageInfo->out.m_actualDamageDealt - damageInfo->out.m_actualDamageClipped;
-	Real overkillPercent = (float)overkillDamage / (float)getObject()->getBodyModule()->getMaxHealth();
-	Int overkillModifier = overkillPercent * getSlowDeathBehaviorModuleData()->m_modifierBonusPerOverkillPercent;
+public:
+	void deselectObject(Object *obj, unsigned short playerMask, bool affectClient);
+};
+extern GameLogic *TheGameLogic;
 
-	return max( getSlowDeathBehaviorModuleData()->m_probabilityModifier + overkillModifier, 1 );
-}
+int GetGameLogicRandomValue(int lo, int hi, char *file, int line);
 
-//-------------------------------------------------------------------------------------------------
-// Line-number padding and filename restore so GameLogicRandomValueReal calls match retail.
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-#line 310 "F:\\\\bfme\\\\Code\\\\gameengine\\\\Source\\\\GameLogic\\\\Object\\\\Behavior\\\\SlowDeathBehavior.cpp"
-static void calcRandomForce(Real minMag, Real maxMag, Real minPitch, Real maxPitch, Coord3D& force)
+class UpdateModule
 {
-	Real angle = GameLogicRandomValueReal(-PI, PI);
-	Real pitch = GameLogicRandomValueReal(minPitch, maxPitch);
-	Real mag = GameLogicRandomValueReal(minMag, maxMag);
-
-	Matrix3D mtx(1);
-	mtx.Scale(mag);
-	mtx.Rotate_Z(angle);
-	mtx.Rotate_Y(-pitch);
-
-	Vector3 v = mtx.Get_X_Vector();
-
-	force.x = v.X;
-	force.y = v.Y;
-	force.z = v.Z;
-}
-#line 339
-
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-void SlowDeathBehavior::beginSlowDeath(const DamageInfo *damageInfo)
+public:
+	virtual void slot00();
+protected:
+	Object *getObject() const { return m_object; }
+	const void *m_moduleData;
+	Object *m_object;	// +0x08
+	char pad0c[0x14];
+};
+class DieModuleInterface
 {
-	if (!isSlowDeathActivated())
-	{
-		const SlowDeathBehaviorModuleData* d = getSlowDeathBehaviorModuleData();
-		Object* obj = getObject();
+public:
+	virtual void onDie(const DamageInfo *damageInfo) = 0;
+};
 
-		if (d->m_sinkRate && obj->isKindOf(KINDOF_INFANTRY))
-		{
-
-			Drawable *draw = getObject()->getDrawable();
-			if ( draw )
-			{
-				// this object sinks slowly after it dies so don't draw a
-				// floating shadow decal on the ground above it.
-				obj->getDrawable()->setShadowsEnabled(false);
-				draw->setTerrainDecalFadeTarget( 0.0f, -0.2f );
-			}
-
-
-
-		}
-
-
-		// Ask game detail manager if we need to speedup all deaths to improve performance
-		Real timeScale = TheGameLODManager->getSlowDeathScale();
-		m_acceleratedTimeScale = 1.0f;	// assume normal death speed.
-
-		if (timeScale == 0.0f && !d->hasNonLodEffects())
-		{
-			// Deaths happen instantly so just delete the object and return
-			TheGameLogic->destroyObject(obj);
-			return;
-		}
-		else
-		{
-			// timescale is some non-zero value so we may need to speed up death
-			if( getObject()->isKindOf( KINDOF_HULK ) && TheGameLogic->getHulkMaxLifetimeOverride() != -1 )
-			{
-				//Scripts don't want hulks around, so start sinking immediately!
-				m_sinkFrame = 1;
-				m_midpointFrame = (LOGICFRAMES_PER_SECOND/2) + 1;
-				m_destructionFrame = LOGICFRAMES_PER_SECOND + 1;
-				m_acceleratedTimeScale = 1.0f;
-			}
-			else
-			{
-				m_sinkFrame = timeScale * (d->m_sinkDelay + GameLogicRandomValue(0, d->m_sinkDelayVariance));
-				m_destructionFrame = timeScale * (d->m_destructionDelay + GameLogicRandomValue(0, d->m_destructionDelayVariance));
-				m_midpointFrame = GameLogicRandomValue( BEGIN_MIDPOINT_RATIO * m_destructionFrame, END_MIDPOINT_RATIO * m_destructionFrame );
-				m_acceleratedTimeScale = timeScale;
-			}
-		}
-
-		UnsignedInt now = TheGameLogic->getFrame();
-
-		if (d->m_flingForce > 0)
-		{
-
-
-			//Just in case this is a stingersoldier or other HELD object, lets set them free so they will fly
-			// with their own physics during slow death
-			if( obj->isDisabledByType( DISABLED_HELD ) )
-			{
-				static NameKeyType key_SlavedUpdate = NAMEKEY( "SlavedUpdate" );
-				SlavedUpdate* slave = (SlavedUpdate*)obj->findUpdateModule( key_SlavedUpdate );
-				if( slave )
-				{
-					slave->onSlaverDie( NULL );
-				}
-			}
-
-			PhysicsBehavior* physics = obj->getPhysics();
-			if (physics)
-			{
-				// make sure we are at least a bit above the ground
-				const Real MIN_ALTITUDE = 1.0f;
-				Real altitude = obj->getHeightAboveTerrain();
-				if (altitude < MIN_ALTITUDE)
-				{
-					Coord3D pos = *obj->getPosition();
-					pos.z += MIN_ALTITUDE;
-					obj->setPosition(&pos);
-				}
-
-				Coord3D force;
-				calcRandomForce(d->m_flingForce, d->m_flingForce + d->m_flingForceVariance,
-												d->m_flingPitch, d->m_flingPitch + d->m_flingPitchVariance, force);
-				physics->setAllowToFall(true);
-				physics->applyForce(&force);
-				physics->setExtraBounciness(-1.0);					// we don't want this guy to bounce at all
-				physics->setExtraFriction(-3 * SECONDS_PER_LOGICFRAME_REAL);							// reduce his ground friction a bit
-				physics->setAllowBouncing(true);
-				Real orientation = atan2(force.y, force.x);
-				physics->setAngles(orientation, 0, 0);
-				obj->getDrawable()->setModelConditionState(MODELCONDITION_EXPLODED_FLAILING);
-				m_flags |= (1<<FLUNG_INTO_AIR);
-			}
-			setWakeFrame(obj, UPDATE_SLEEP_NONE);
-		}
-		else
-		{
-			// we don't need to wake up immediately, but only when the first of these
-			// counters wants to trigger....
-			Int whenToWakeTime = m_sinkFrame;
-			if (whenToWakeTime > m_destructionFrame)
-				whenToWakeTime = m_destructionFrame;
-			if (whenToWakeTime > m_midpointFrame)
-				whenToWakeTime = m_midpointFrame;
-			setWakeFrame(obj, UPDATE_SLEEP(whenToWakeTime));
-		}
-		m_sinkFrame += now;
-		m_destructionFrame += now;
-		m_midpointFrame += now;
-
-		m_flags |= (1<<SLOW_DEATH_ACTIVATED);
-
-		doPhaseStuff(SDPHASE_INITIAL);
-
-	}
-}
-
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-void SlowDeathBehavior::doPhaseStuff(SlowDeathPhaseType sdphase)
+class SlowDeathBehavior : public UpdateModule, public DieModuleInterface, public SlowDeathBehaviorInterface
 {
-	const SlowDeathBehaviorModuleData* d = getSlowDeathBehaviorModuleData();
-	Int idx, listSize;
+public:
+	virtual void onDie(const DamageInfo *damageInfo);
+	virtual void beginSlowDeath(const DamageInfo *damageInfo);
+	virtual Int getProbabilityModifier(const DamageInfo *damageInfo) const;
+	virtual Bool isDieApplicable(const DamageInfo *damageInfo) const;
+	virtual Bool slot0C();
+};
 
-	if (!d->m_maskOfLoadedEffects)
-		return;	//has no ocl, fx, or weapons.
-
-	listSize = d->m_fx[sdphase].size();
-	if (listSize > 0)
-	{
-		idx = GameLogicRandomValue(0, listSize-1);
-		const FXListVec& v = d->m_fx[sdphase];
-		DEBUG_ASSERTCRASH(idx>=0&&idx<v.size(),("bad idx"));
-		const FXList* fxl = v[idx];
-		FXList::doFXObj(fxl, getObject(), NULL);
-	}
-
-	listSize = d->m_ocls[sdphase].size();
-	if (listSize > 0)
-	{
-		idx = GameLogicRandomValue(0, listSize-1);
-		const OCLVec& v = d->m_ocls[sdphase];
-		DEBUG_ASSERTCRASH(idx>=0&&idx<v.size(),("bad idx"));
-		const ObjectCreationList* ocl = v[idx];
-		ObjectCreationList::create(ocl, getObject(), NULL);
-	}
-
-	listSize = d->m_weapons[sdphase].size();
-	if (listSize > 0)
-	{
-		idx = GameLogicRandomValue(0, listSize-1);
-		const WeaponTemplateVec& v = d->m_weapons[sdphase];
-		DEBUG_ASSERTCRASH(idx>=0&&idx<v.size(),("bad idx"));
-		const WeaponTemplate* wt = v[idx];
-		if (wt)
-		{
-			TheWeaponStore->createAndFireTempWeapon(wt, getObject(), getObject()->getPosition());
-		}
-	}
-}
-
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// ?update@SlowDeathBehavior@@UAE?AW4UpdateSleepTime@@XZ present-unmatched
-UpdateSleepTime SlowDeathBehavior::update()
-{
-	//DEBUG_LOG(("updating SlowDeathBehavior %08lx\n",this));
-	DEBUG_ASSERTCRASH(isSlowDeathActivated(), ("hmm, this should not be possible"));
-
-	const SlowDeathBehaviorModuleData* d = getSlowDeathBehaviorModuleData();
-	Object* obj = getObject();
-
-	Real timeScale = TheGameLODManager->getSlowDeathScale();
-
-	// Check if we have normal time scale but LODManager is requeseting acceleration
-	if (timeScale != 1.0f && m_acceleratedTimeScale == 1.0f && !d->hasNonLodEffects())
-	{
-		// speed of deaths has been increased since beginning of death
-		// so adjust it to current levels.
-		if (timeScale == 0)
-		{
-			// instant death
-			TheGameLogic->destroyObject(obj);
-			return UPDATE_SLEEP_NONE;
-		}
-
-		m_sinkFrame = (Real)m_sinkFrame * timeScale;
-		m_midpointFrame = (Real)m_midpointFrame * timeScale;
-		m_destructionFrame = (Real)m_destructionFrame * timeScale;
-		m_acceleratedTimeScale = timeScale;
-	};
-
-	UnsignedInt now = TheGameLogic->getFrame();
-
-
-	if ((m_flags & (1<<FLUNG_INTO_AIR)) != 0)
-	{
-		if ((m_flags & (1<<BOUNCED)) == 0)
-		{
-			++m_sinkFrame;
-			++m_midpointFrame;
-			++m_destructionFrame;
-			if (!obj->isAboveTerrain())
-			{
-				obj->clearAndSetModelConditionFlags(MAKE_MODELCONDITION_MASK(MODELCONDITION_EXPLODED_FLAILING),
-																						MAKE_MODELCONDITION_MASK(MODELCONDITION_EXPLODED_BOUNCING));
-				m_flags |= (1<<BOUNCED);
-			}
-
-			// Here we want to make sure we die if we collide with a tree on the way down
-			PhysicsBehavior *phys = obj->getPhysics();
-			if ( phys )
-			{
-				ObjectID treeID = phys->getLastCollidee();
-				Object *tree = TheGameLogic->findObjectByID( treeID );
-				if ( tree )
-				{
-					if (tree->isKindOf( KINDOF_SHRUBBERY ) )
-					{
-						obj->setDisabled( DISABLED_HELD );
-						obj->clearModelConditionFlags( MAKE_MODELCONDITION_MASK(MODELCONDITION_EXPLODED_FLAILING) );
-						obj->clearModelConditionFlags( MAKE_MODELCONDITION_MASK(MODELCONDITION_EXPLODED_BOUNCING) );
-						obj->setModelConditionFlags(   MAKE_MODELCONDITION_MASK(MODELCONDITION_PARACHUTING) ); //looks like he is snagged in a tree
-						obj->setPositionZ( obj->getPosition()->z - (d->m_sinkRate * 50.0f) );// make him sink faster
-						if ( !obj->isAboveTerrain() )
-							TheGameLogic->destroyObject(obj);
-
-					}
-				}
-			}
-
-
-
-		}
-	}
-
-	if ( (now >= m_sinkFrame && d->m_sinkRate > 0.0f) )
-	{
-		// disable Physics (if any) so that we can control the sink...
-		obj->setDisabled( DISABLED_HELD );
-		Coord3D pos = *obj->getPosition();
-		pos.z -= d->m_sinkRate / m_acceleratedTimeScale;
-		obj->setPosition( &pos );
-	}
-
-	if( now >= m_midpointFrame && (m_flags & (1<<MIDPOINT_EXECUTED)) == 0 )
-	{
-		doPhaseStuff(SDPHASE_MIDPOINT);
-		m_flags |= (1<<MIDPOINT_EXECUTED);
-	}
-
-	if (now >= m_destructionFrame)
-	{
-		doPhaseStuff(SDPHASE_FINAL);
-		TheGameLogic->destroyObject(obj);
-	}
-
-	return UPDATE_SLEEP_NONE;
-}
-
-//-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehavior_onDie_Thunk.cpp
-// ?onDie@SlowDeathBehavior@@UAEXPBVDamageInfo@@@Z present-unmatched
 void SlowDeathBehavior::onDie( const DamageInfo *damageInfo )
 {
-	Object *obj = getObject();
-
 	if (!isDieApplicable(damageInfo))
 		return;
 
-	AIUpdateInterface *ai = obj->getAIUpdateInterface();
+	AIUpdateInterface *ai = getObject()->getAIUpdateInterface();
 	if (ai)
 	{
 		// has another AI already handled us. (hopefully another SlowDeathBehavior)
@@ -626,94 +159,51 @@ void SlowDeathBehavior::onDie( const DamageInfo *damageInfo )
 	}
 
 	// deselect this unit for all players.
-	TheGameLogic->deselectObject(obj, PLAYERMASK_ALL, TRUE);
+	TheGameLogic->deselectObject(getObject(), 0xffff, true);
+
+	Object *obj = getObject();
+	if (obj->getTemplate() && !at<Bool>(obj->getTemplate(), 0x4ca))
+		obj->setSelectable(false);
 
 	Int total = 0;
-	for (BehaviorModule** update = obj->getBehaviorModules(); *update; ++update)
+	std::vector<Int> probabilities;
+	std::vector<SlowDeathBehaviorInterface *> behaviors;
+	for (BehaviorModule** update = getObject()->getBehaviorModules(); *update; ++update)
 	{
-		SlowDeathBehaviorInterface* sdu = (*update)->getSlowDeathBehaviorInterface();
-		if (sdu != NULL && sdu->isDieApplicable(damageInfo))
+		SlowDeathBehaviorInterface* sdu = (*update)->m_interface.getSlowDeathBehaviorInterface();
+		if (sdu != 0 && sdu->isDieApplicable(damageInfo))
 		{
-			total += sdu->getProbabilityModifier( damageInfo );
-		}
-	}
-	DEBUG_ASSERTCRASH(total > 0, ("Hmm, this is wrong"));
-
-
-	// this returns a value from 1...total, inclusive
-	Int roll = GameLogicRandomValue(1, total);
-
-	for (/* UpdateModuleInterface** */ update = obj->getBehaviorModules(); *update; ++update)
-	{
-		SlowDeathBehaviorInterface* sdu = (*update)->getSlowDeathBehaviorInterface();
-		if (sdu != NULL && sdu->isDieApplicable(damageInfo))
-		{
-			roll -= sdu->getProbabilityModifier( damageInfo );
-			if (roll <= 0)
-			{
-				sdu->beginSlowDeath(damageInfo);
-				return;
-			}
+			Int probability = sdu->getProbabilityModifier( damageInfo );
+			total += probability;
+			probabilities.push_back(probability);
+			behaviors.push_back(sdu);
 		}
 	}
 
-	DEBUG_CRASH(("We should never get here"));
+	while (!behaviors.empty())
+	{
+#line 813 "F:\\\\bfme\\\\Code\\\\gameengine\\\\Source\\\\GameLogic\\\\Object\\\\Behavior\\\\SlowDeathBehavior.cpp"
+		Int roll = GetGameLogicRandomValue(0, total - 1, __FILE__, __LINE__);
+		std::vector<Int>::iterator it = probabilities.begin();
+		for (; it != probabilities.end(); ++it)
+		{
+			if (roll < *it)
+				break;
+			roll -= *it;
+		}
+		total -= *it;
+		Int index = it - probabilities.begin();
+
+		SlowDeathBehaviorInterface *sdu = behaviors[index];
+		if (sdu && sdu->isDieApplicable(damageInfo) && sdu->slot0C())
+		{
+			sdu->beginSlowDeath(damageInfo);
+			return;
+		}
+
+		behaviors[index] = behaviors.back();
+		behaviors.pop_back();
+		probabilities[index] = probabilities.back();
+		probabilities.pop_back();
+	}
 }
-
-// ------------------------------------------------------------------------------------------------
-/** CRC */
-// ------------------------------------------------------------------------------------------------
-// ?crc@SlowDeathBehavior@@MAEXPAVXfer@@@Z present-unmatched
-void SlowDeathBehavior::crc( Xfer *xfer )
-{
-
-	// extend base class
-	UpdateModule::crc( xfer );
-
-}  // end crc
-
-// ------------------------------------------------------------------------------------------------
-/** Xfer method
-	* Version Info:
-	* 1: Initial version */
-// ------------------------------------------------------------------------------------------------
-// ?xfer@SlowDeathBehavior@@MAEXPAVXfer@@@Z present-unmatched
-void SlowDeathBehavior::xfer( Xfer *xfer )
-{
-
-	// version
-	XferVersion currentVersion = 1;
-	XferVersion version = currentVersion;
-	xfer->xferVersion( &version, currentVersion );
-
-	// extend base class
-	UpdateModule::xfer( xfer );
-
-	// sink frame
-	xfer->xferUnsignedInt( &m_sinkFrame );
-
-	// midpoint frame
-	xfer->xferUnsignedInt( &m_midpointFrame );
-
-	// destruction frame
-	xfer->xferUnsignedInt( &m_destructionFrame );
-
-	// accelerated time scale
-	xfer->xferReal( &m_acceleratedTimeScale );
-
-	// flags
-	xfer->xferUnsignedInt( &m_flags );
-
-}  // end xfer
-
-// ------------------------------------------------------------------------------------------------
-/** Load post process */
-// ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@SlowDeathBehavior@@MAEXXZ present-unmatched
-void SlowDeathBehavior::loadPostProcess( void )
-{
-
-	// extend base class
-	UpdateModule::loadPostProcess();
-
-}  // end loadPostProcess
