@@ -37226,7 +37226,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_002157c0@@YAXXZ,,0x002157C0,288,game/gen_asm/d_0020eb40.asm,matched,gen-dump;ghidra=FUN_006157c0
 ?d_00215e50@@YAXXZ,,0x00215E50,547,game/gen_asm/d_0020eb40.asm,matched,gen-dump;ghidra=FUN_00615e50
 ?d_00216690@@YAXXZ,,0x00216690,139,game/gen_asm/d_0020eb40.asm,matched,gen-dump;ghidra=FUN_00616690
-?d_00216d90@@YAXXZ,,0x00216D90,1138,game/gen_asm/d_0020eb40.asm,matched,gen-dump;ghidra=FUN_00616d90
 ?d_00218270@@YAXXZ,,0x00218270,81,game/gen_asm/d_001fecd0.asm,matched,gen-dump;bounds=high
 ?d_002194c0@@YAXXZ,,0x002194C0,1,game/GameEngine/Source/Common/Rva002194C0Noop.cpp,matched,carved ret boundary; address-derived identity
 ?d_0021a7d0@@YAXXZ,,0x0021A7D0,14,game/GameEngine/Source/Common/VtableSlot2StoreThunk.cpp,matched,object-symbol=?getSixtyThird@VtableSlot2StoreThunk@@QBE?AUVtableSlot2Result@@XZ;Open-BFME5 clean C++ vtable slot 2 value return
@@ -173392,3 +173391,4 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?rva00150A70@AIGroup@@QAEXPAUCoord3D@@PBU2@H@Z,,0x00150A70,181,game/GameEngine/Source/GameLogic/AI/Rva00150100Rotate.cpp,matched,AIGroup member-list formation walk; exact only beside its visible non-capturing helper Rva00150100Rotate (escape lever); BFME2 donor AIGroupSetPositionInFormation.cpp null-member return;model=claude-opus-5-5;host=app
 ?update@SiegeDeploySpecialPower@@UAE?AW4UpdateSleepTime@@XZ,,0x00266F40,704,game/GameEngine/Source/GameLogic/Object/SpecialPower/SiegeDeploySpecialPowerUpdate.cpp,matched,ctor 0x266240 vtable 0x010B7494 (+0x10) slot0 = ILT 0x7DBA; ilt_oracle CONFIRMED; BFME2 donor 20a0cb6173 SiegeDeploySpecialPowerUpdate.cpp control flow;model=claude-opus-5-5;host=app
 ?update@RainOfFireUpdate@@UAE?AW4UpdateSleepTime@@XZ,,0x002A0D90,789,game/GameEngine/Source/GameLogic/Object/Update/RainOfFireUpdate.cpp,matched,ctor 0x2A0920 vtable 0x010C1844 (+0x10) slot0; ilt_oracle CONFIRMED; BFME2 donor 20a0cb6173 RainOfFireUpdate.cpp control flow;model=claude-opus-5-5;host=app
+?onCollide@SquishCollide@@UAEXPAVObject@@PBVCoord3D@@1@Z,,0x00216D90,1138,game/GameEngine/Source/GameLogic/Object/Collide/SquishCollide.cpp,matched,ctor 0x216BA0 vtable 0x010A9F94 (+0x10) slot0; ilt_oracle CONFIRMED (PBV); BFME2 donor 20a0cb6173 SquishCollide.cpp control flow;model=claude-opus-5-5;host=app
