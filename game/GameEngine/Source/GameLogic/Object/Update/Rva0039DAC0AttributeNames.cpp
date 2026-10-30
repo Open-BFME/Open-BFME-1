@@ -58,7 +58,15 @@ struct Rva00EF1000Storage;
 extern Rva00EF1000Storage Rva00EF1000Global;
 #define TheBfmeAttributePool (reinterpret_cast<BfmeAttributePool &>(Rva00EF1000Global))
 
-extern const char *TheKindOfBitNames[];			// 0x012AA068
+// The KindOf name table at VA 0x012AA068 is BitFlags<181>::s_bitNameList, a
+// private static defined in game/GameEngine/Source/Common/System/KindOf.cpp.
+template<int NUMBITS>
+class BitFlags
+{
+	friend class Rva0039DAC0Owner;
+private:
+	static const char *s_bitNameList[];
+};
 
 class Rva0039DAC0Owner
 {
@@ -95,7 +103,7 @@ void Rva0039DAC0Owner::appendNames(AsciiString *out)
 	{
 		if (entry->testKind(bit))
 		{
-			const char *name = TheKindOfBitNames[bit];
+			const char *name = BitFlags<181>::s_bitNameList[bit];
 			if (name != 0)
 				out->StringBase<char>::concat(name, strlen(name));
 		}

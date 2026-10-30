@@ -47,7 +47,12 @@
 #include "GameClient/Shell.h"
 #include "GameLogic/ScriptEngine.h"
 
+// ShellHooks.h declares the table `char *`; it is defined `const char *`
+// (Scripts.cpp, DIR32 record ?TheShellHookNames@@3PAPBDA).
+#define TheShellHookNames TheShellHookNamesZHDeclaration
 #include "GameClient/ShellHooks.h"
+#undef TheShellHookNames
+extern const char *TheShellHookNames[];
 
 #include "GameSpy/ghttp/ghttp.h"
 

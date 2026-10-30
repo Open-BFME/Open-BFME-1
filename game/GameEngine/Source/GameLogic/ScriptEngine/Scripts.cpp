@@ -89,7 +89,12 @@ public:
 #include "Common/Player.h"
 #include "Common/Xfer.h"
 
+// ShellHooks.h declares the table `char *`; retail's consumers (DIR32 record
+// ?TheShellHookNames@@3PAPBDA) read it as `const char *`, so the header's
+// declaration is renamed out of the way and the table is defined const below.
+#define TheShellHookNames TheShellHookNamesZHDeclaration
 #include "GameClient/ShellHooks.h"
+#undef TheShellHookNames
 
 #include "GameLogic/Ai.h"
 #include "GameLogic/Object.h"
@@ -131,7 +136,7 @@ ScriptAction *Rva001FC3D0ScriptAction::getAction(void) const
 // These strings must be in the same order as they are in their definitions 
 // (See SHELL_SCRIPT_HOOK_* )
 //
-char *TheShellHookNames[]=
+const char *TheShellHookNames[]=
 {
 	"ShellMainMenuCampaignPushed", //SHELL_SCRIPT_HOOK_MAIN_MENU_CAMPAIGN_SELECTED,
 	"ShellMainMenuCampaignHighlighted", //SHELL_SCRIPT_HOOK_MAIN_MENU_CAMPAIGN_HIGHLIGHTED,
