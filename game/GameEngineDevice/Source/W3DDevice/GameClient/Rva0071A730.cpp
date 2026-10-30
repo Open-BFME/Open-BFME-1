@@ -35,7 +35,8 @@ struct StringClass {
 }
 extern BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(char *,int,int);
 extern void BoxSetTexture(unsigned,TextureBaseClass *&);
-extern ShaderClass Rva00ED6E18;
+// The multiplicative preset shader at retail 0x012D6E18 is the static member
+// ShaderClass::_PresetMultiplicativeShader (shader.h); reference it by name.
 struct Rva0071A730Filter { char pad0[12]; int field0c,field10; };
 struct Rva0071A730Texture { TextureClass *p;
  void assign(const BFMEWaterTrackTextureHandle &v) { if(v.m_texture) v.m_texture->Add_Ref(); if(p) p->Release_Ref(); p=v.m_texture; }
@@ -178,7 +179,7 @@ void Rva0071A730::method() {
   ((Gen_00920a60*)field48.filter())->m(0);
  }
  BoxSetTexture(0,*(TextureBaseClass**)&field44.p); BoxSetTexture(1,*(TextureBaseClass**)&field48.p);
- ShaderClass shader=Rva00ED6E18; *(unsigned*)&shader=(*(unsigned*)&shader&0xfe9fffff)|0x800000;
+ ShaderClass shader=ShaderClass::_PresetMultiplicativeShader; *(unsigned*)&shader=(*(unsigned*)&shader&0xfe9fffff)|0x800000;
  // The local StringClass view preserves the volatile terminator read.
  if(ShaderClass::ShaderDirty || *(unsigned*)&shader!=*(unsigned*)&DX8Wrapper::render_state.shader) {
   DX8Wrapper::render_state.shader=shader; DX8Wrapper::render_state_changed|=0x8000; Rva0071A730Detail::StringClass str(0,false,StringClass::m_NullChar);
