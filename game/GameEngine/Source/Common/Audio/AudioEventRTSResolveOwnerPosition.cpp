@@ -108,10 +108,13 @@ public:
 	float m_y;
 };
 
-class LivingWorldOwnerLookup
+// The lookup ILT 0x00020379 jumps to 0x003BD7D0, defined as
+// ?find@Rva003BF540@@QAEPAVGen003BD7D0Node@@H@Z (Rva003BF540_find.cpp).
+class Gen003BD7D0Node;
+class Rva003BF540
 {
 public:
-	void *findOwnerByID(ObjectID id);
+	Gen003BD7D0Node *find(int id);
 };
 
 // The retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined
@@ -186,7 +189,7 @@ return;
 		if (Glo012F1028 != 0)
 		{
 			LivingWorldOwner *owner = (LivingWorldOwner *)
-				((LivingWorldOwnerLookup *)Glo012F1028)->findOwnerByID(m_ownerID);
+				((Rva003BF540 *)Glo012F1028)->find(m_ownerID);
 			if (owner != 0)
 			{
 				m_found = 1;
