@@ -355,12 +355,14 @@ extern "C" void *__identifier("??_7Rva005ED7D0@@6BV3Slot1@@@")[];
 extern "C" void *__identifier("??_7Rva005ED7D0@@6BV3Slot0@@@")[];
 // ?g_vtbl_01112304@@3PAPAXA: use recorded owner ??_7Rva005ED980@@6BV3Slot3@@@
 extern "C" void *__identifier("??_7Rva005ED980@@6BV3Slot3@@@")[];
-extern void *g_vtbl_01112318[];
+// ?g_vtbl_01112318@@3PAPAXA: use the owner recorded at 0x01112318.
+extern "C" void *__identifier("??_7Rva005ED980@@6BV3Slot2@@@")[];
 // ?g_vtbl_0111231C@@3PAPAXA: use the owner recorded at 0x0111231C.
 extern "C" void *__identifier("??_7Rva005ED980@@6BV3Slot1@@@")[];
 // ?g_vtbl_01112320@@3PAPAXA now references its recorded retail vtable directly.
 extern "C" void *__identifier("??_7Rva005ED980@@6BV3Slot0@@@")[];
-extern void *g_vtbl_01112344[];
+// ?g_vtbl_01112344@@3PAPAXA: use the owner recorded at 0x01112344.
+extern "C" void *__identifier("??_7Rva005EDB10@@6BV3Slot3@@@")[];
 // ?g_vtbl_01112358@@3PAPAXA: use the owner recorded at 0x01112358.
 extern "C" void *__identifier("??_7Rva005EDB10@@6BV3Slot2@@@")[];
 // ?g_vtbl_0111235C@@3PAPAXA: reference the recorded retail owner.
@@ -371,14 +373,16 @@ extern "C" void *__identifier("??_7Rva005EDB10@@6BV3Slot0@@@")[];
 extern "C" void *__identifier("??_7Rva005EDC80@@6BV3Slot3@@@")[];
 // ?g_vtbl_01112398@@3PAPAXA: use the owner recorded at 0x01112398.
 extern "C" void *__identifier("??_7Rva005EDC80@@6BV3Slot2@@@")[];
-extern void *g_vtbl_0111239C[];
+// ?g_vtbl_0111239C@@3PAPAXA: use the owner recorded at 0x0111239C.
+extern "C" void *__identifier("??_7Rva005EDC80@@6BV3Slot1@@@")[];
 // ?g_vtbl_011123A0@@3PAPAXA: use the owner recorded at 0x011123A0.
 extern "C" void *__identifier("??_7Rva005EDC80@@6BV3Slot0@@@")[];
 // ?g_vtbl_011123C4@@3PAPAXA: use the owner recorded at 0x011123C4.
 extern "C" void *__identifier("??_7Rva005EDDE0@@6BV3Slot3@@@")[];
 // ?g_vtbl_011123D8@@3PAPAXA: use the owner recorded at 0x011123D8.
 extern "C" void *__identifier("??_7Rva005EDDE0@@6BV3Slot2@@@")[];
-extern void *g_vtbl_011123DC[];
+// ?g_vtbl_011123DC@@3PAPAXA: use the owner recorded at 0x011123DC.
+extern "C" void *__identifier("??_7Rva005EDDE0@@6BV3Slot1@@@")[];
 // ?g_vtbl_011123E0@@3PAPAXA: use the owner recorded at 0x011123E0.
 extern "C" void *__identifier("??_7Rva005EDDE0@@6BV3Slot0@@@")[];
 extern void *g_vtbl_01112404[4];
@@ -1025,7 +1029,7 @@ public:
 __forceinline void initializeCylinderEmissionVolumeModule(void *module)
 {
     *(unsigned int *)module = (unsigned int)__identifier("??_7Rva005EDDE0@@6BV3Slot0@@@");
-    *(unsigned int *)((unsigned char *)module + 0x14) = (unsigned int)g_vtbl_011123DC;
+    *(unsigned int *)((unsigned char *)module + 0x14) = (unsigned int)__identifier("??_7Rva005EDDE0@@6BV3Slot1@@@");
     *(unsigned int *)((unsigned char *)module + 0x18) = (unsigned int)__identifier("??_7Rva005EDDE0@@6BV3Slot2@@@");
     *(unsigned int *)((unsigned char *)module + 0x1c) = (unsigned int)__identifier("??_7Rva005EDDE0@@6BV3Slot3@@@");
 }
@@ -1138,7 +1142,7 @@ __forceinline void initializeBoxEmissionVolumeModule(void *module)
     *(unsigned int *)module = (unsigned int)__identifier("??_7Rva005EDB10@@6BV3Slot0@@@");
     *(unsigned int *)((unsigned char *)module + 0x14) = (unsigned int)__identifier("??_7Rva005EDB10@@6BV3Slot1@@@");
     *(unsigned int *)((unsigned char *)module + 0x18) = (unsigned int)__identifier("??_7Rva005EDB10@@6BV3Slot2@@@");
-    *(unsigned int *)((unsigned char *)module + 0x1c) = (unsigned int)g_vtbl_01112344;
+    *(unsigned int *)((unsigned char *)module + 0x1c) = (unsigned int)__identifier("??_7Rva005EDB10@@6BV3Slot3@@@");
 }
 
 class LineEmissionVolumeModuleCtorShim {
@@ -1150,7 +1154,7 @@ __forceinline void initializeLineEmissionVolumeModule(void *module)
 {
     *(unsigned int *)module = (unsigned int)__identifier("??_7Rva005ED980@@6BV3Slot0@@@");
     *(unsigned int *)((unsigned char *)module + 0x14) = (unsigned int)__identifier("??_7Rva005ED980@@6BV3Slot1@@@");
-    *(unsigned int *)((unsigned char *)module + 0x18) = (unsigned int)g_vtbl_01112318;
+    *(unsigned int *)((unsigned char *)module + 0x18) = (unsigned int)__identifier("??_7Rva005ED980@@6BV3Slot2@@@");
     *(unsigned int *)((unsigned char *)module + 0x1c) = (unsigned int)__identifier("??_7Rva005ED980@@6BV3Slot3@@@");
 }
 
@@ -1194,7 +1198,7 @@ public:
 __forceinline void initializeSphereEmissionVolumeModule(void *module)
 {
     *(unsigned int *)module = (unsigned int)__identifier("??_7Rva005EDC80@@6BV3Slot0@@@");
-    *(unsigned int *)((unsigned char *)module + 0x14) = (unsigned int)g_vtbl_0111239C;
+    *(unsigned int *)((unsigned char *)module + 0x14) = (unsigned int)__identifier("??_7Rva005EDC80@@6BV3Slot1@@@");
     *(unsigned int *)((unsigned char *)module + 0x18) = (unsigned int)__identifier("??_7Rva005EDC80@@6BV3Slot2@@@");
     *(unsigned int *)((unsigned char *)module + 0x1c) = (unsigned int)__identifier("??_7Rva005EDC80@@6BV3Slot3@@@");
 }
