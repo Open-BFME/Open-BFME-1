@@ -22,11 +22,16 @@ class UnicodeString : private StringBase<unsigned short>
 public:
 	UnicodeString( const UnicodeString &other ) : StringBase<unsigned short>( other ) {}
 	~UnicodeString() {}
-	int compare( const UnicodeString &other ) const
-	{
-		return StringBase<unsigned short>::compare( other );
-	}
 };
+
+// UnicodeString::compare, expanded in place: the StringBase<unsigned short>
+// compare call.  An inline member would emit a ?compare@UnicodeString@@QBEHABV1@@Z
+// COMDAT; retail has no such body (the name routes through ILT 0x000226EC).
+static __forceinline int wideCompare( const UnicodeString &string, const UnicodeString &other )
+{
+	return reinterpret_cast<const StringBase<unsigned short> &>( string ).compare(
+		reinterpret_cast<const StringBase<unsigned short> &>( other ) );
+}
 
 class GameWindow;
 
@@ -47,7 +52,7 @@ bool BfmeAptScreenOnlineLogin::bfmeSetTextAt78( const UnicodeString &text )
 {
 	bool result = false;
 	UnicodeString current = bfmeGetTextAt78();
-	if( current.compare( text ) == 0 )
+	if( wideCompare( current, text ) == 0 )
 		return false;
 
 	if( m_control78 )
