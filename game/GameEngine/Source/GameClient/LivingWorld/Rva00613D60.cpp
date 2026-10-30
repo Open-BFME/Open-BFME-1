@@ -200,13 +200,16 @@ public:
 
 extern InGameUI *TheInGameUI;
 
-class Glo012F7090Type
-{
-public:
-								///< ILT 0x0001B5DB
-};
-
-extern Glo012F7090Type *Glo012F7090;
+// The pointee at retail 0x012F7090 is SinglePlayerSkirmishGameInfo: its ctor
+// (??0SinglePlayerSkirmishGameInfo@@QAE@XZ, 0x00619720, matched) publishes its
+// new(0x27C) result there (at 0x0061B58B), and its Snapshot table 0x011171C8
+// names the class (identity_evidence/0061fda0-singleplayerskirmishgameinfo-xfer.md).
+// The global's EA name is unproven (the class is BFME-1-only; no donor or image
+// evidence names the pointer), so the pointer keeps the address name. A data row
+// cannot own it: its retail .data cell holds a runtime pointer, not a zero or a
+// relocatable address, so tools/add_data_match.py cannot verify the datum.
+class SinglePlayerSkirmishGameInfo;
+extern SinglePlayerSkirmishGameInfo *g_Va012F7090;
 
 class GameInfo
 {
@@ -259,7 +262,7 @@ void Rva00613D60Owner::rva00613d60(Rva00613D60Region *region)
 	path.format(AsciiString("maps\\%s\\%s.map"), name, name);
 	reinterpret_cast<Rva006C9270GlobalData *>(TheWritableGlobalData)->m_mapPath.format(path);
 
-	if (Glo012F7090 != 0)
+	if (g_Va012F7090 != 0)
 		InitGameLogicRandom(g_bfmeNowVNH());
 	else
 		InitGameLogicRandom(0);
@@ -280,9 +283,9 @@ void Rva00613D60Owner::rva00613d60(Rva00613D60Region *region)
 	TheMouse->setCursorTooltip(UnicodeString::TheEmptyString, -1, 0, 1.0f);
 
 	int extra;
-	if (Glo012F7090 != 0)
+	if (g_Va012F7090 != 0)
 	{
-		((GameInfo *)Glo012F7090)->setMap(path);
+		((GameInfo *)g_Va012F7090)->setMap(path);
 		message->appendIntegerArgument(6);
 		extra = Glo012F1028->m_at90;
 		message->appendIntegerArgument(extra);

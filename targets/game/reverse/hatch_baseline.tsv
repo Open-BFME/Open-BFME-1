@@ -817,6 +817,7 @@ address_global	game/GameEngine/Source/GameClient/GUI/SkirmishScreenShowError.cpp
 address_global	game/GameEngine/Source/GameClient/GameClient.cpp	g_Rva0107301CEmptyString	2
 address_global	game/GameEngine/Source/GameClient/HouseColorSystem.cpp	g_Va010EBD64	2	allow=446496c6481d057a16a17fde9745146982a96357
 address_global	game/GameEngine/Source/GameClient/HouseColorSystem.cpp	g_Va010EBD74	2	allow=446496c6481d057a16a17fde9745146982a96357
+address_global	game/GameEngine/Source/GameClient/LivingWorld/Rva00613D60.cpp	g_Va012F7090	4	allow=722c665ea7afc14c4a81beb9d109f123ec5c30d5
 address_global	game/GameEngine/Source/GameClient/MessageStream/CommandXlat.cpp	g_Rva005127A0InGameChat	2
 address_global	game/GameEngine/Source/GameClient/MessageStream/CommandXlatVoice.cpp	g_Rva005127A0InGameChat	1
 address_global	game/GameEngine/Source/GameClient/Rva006A9800.cpp	g_Rva13595EC	2

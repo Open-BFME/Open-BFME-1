@@ -462,7 +462,6 @@ dir32,0x012F7024,??_B?1??getModuleNameKey@BeaconClientUpdate@@UBE?AW4NameKeyType
 dir32,0x012F7048,?g_bfmeStateDF@@3PAURva006174D0State@@A,"retail 0x012F7048 is already recorded as ?Glo012F7048@@3PAVGlo012F7048CampaignGateMode@@A (+16 more); reference that name, not a new one"
 dir32,0x012F7048,?g_rva012F7048LivingWorld@@3PAVRva006092D0State@@A,"retail 0x012F7048 is already recorded as ?Glo012F7048@@3PAVGlo012F7048CampaignGateMode@@A (+16 more); reference that name, not a new one"
 dir32,0x012F7078,?g_bfmeBoxYP@@3URegion2D@@A,"retail 0x012F7078 is already recorded as ?Rva012F7078Region@@3URegion2D@@A (+2 more); reference that name, not a new one"
-dir32,0x012F7090,?Glo012F7090@@3PAVGlo012F7090Type@@A,"nothing in the ledger owns 0x012F7090. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F77A8,?cursorResources@@3PAY07PAXA,"retail 0x012F77A8 is already recorded as _g_bfmeSITable (+1 more); reference that name, not a new one"
 dir32,0x012F7FE0,?TheTerrainRenderObject@@3PAVRva0074B480TerrainAbi@@A,"retail 0x012F7FE0 is already recorded as ?TheBfmeGlobal_012f7fe0@@3PAVBfmeGlobal_012f7fe0@@A (+14 more); reference that name, not a new one"
 dir32,0x012F7FE0,?g_012F7FE0@@3PAVDisplay006E2540@@A,"retail 0x012F7FE0 is already recorded as ?TheBfmeGlobal_012f7fe0@@3PAVBfmeGlobal_012f7fe0@@A (+14 more); reference that name, not a new one"
