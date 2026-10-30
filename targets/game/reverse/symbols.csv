@@ -81031,7 +81031,6 @@ name,address,notes
 ?concat@BfmeSmallScaleDownString@@QAEXPBDH@Z,0x00887D60,Open-BFME5 view-class spelling of the two-argument concat already pinned as ?concat@AsciiString@@QAEXPBDH@Z; BFME passes an explicit length where the vendored declaration takes only the pointer
 ?concat@UnicodeString@@QAEXPBGH@Z,0x00888600,Apt disconnect-screen quit message uses the StringBase<unsigned short> concat body
 ?configure@ShroudManagerImpl@@QAEXURegion3D@@M@Z,0x008FB5F0,RVA 0x008FBAD0 validated Region3D configure call target
-?configureWindowParameters@@YAXPAVGen_004659D0@@@Z,0x00894800,typed parameter adapter for the generated Apt parameter configurator called by WindowManager::init at 0x0046C5F0
 ?connectCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPConnectResponseArg@@@Z,0x000314AD
 ?construct@AODHordeContainModuleDataBaseShim@@QAEXXZ,0x0000ED77,AODHordeContain ModuleData base
 ?construct@AnimSetConstructShim@_STL@@SAXPAUAnimSet@GenericObjectCreationNugget@@ABU34@@Z,0x00754B20,_STL _Construct AnimSet incremental-link thunk target through a TU-local forwarding shim
