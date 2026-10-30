@@ -1,5 +1,6 @@
 // ?d_00516850@@YAXXZ
-// partial score=0.3975 date=2026-09-21
+// partial score=0.5021 date=2026-10-30
+// ?bfmeGo1078A@BfmeQ1078@@QAE_NHPAPAVGameInfo@@@Z
 // ?bfmeGo1078A@BfmeQ1078@@QAE_NHPAPAVGameInfo@@@Z [retail body 0x00516850]
 // Address-derived: same BfmeQ layout family as BfmeConv1072.cpp/BfmeConv1073.cpp
 // (fields m_bfme250 @0x250 and m_bfme3d4 @0x3d4 match those siblings exactly).
@@ -62,34 +63,29 @@ private:
 
 bool BfmeQ1078::bfmeGo1078A(int row, GameInfo **outItem)
 {
-	bool result = false;
-	GameInfo *item = (GameInfo *)GadgetListBoxGetItemData(m_bfme3b4, row, 0);
-	*outItem = item;
-
-	if (!((Rva00685200 *)TheLAN)->has((Rva00685200Node *)item)) {
+	bool ok = false;
+	*outItem = (GameInfo *)GadgetListBoxGetItemData(m_bfme3b4, row, 0);
+	if (!((Rva00685200 *)TheLAN)->has((Rva00685200Node *)*outItem))
 		*outItem = 0;
-		if (m_bfme3d4 & 2) {
-			g_bfmeR1078->bfmeRun1078(m_bfme250, g_bfmeFmtB1073, 0, 0, 0, 0, 0, 0);
-			m_bfme3d4 &= ~2;
-		}
-		return result;
+	if (*outItem)
+	{
+		int players = (*outItem)->getNumPlayers();
+		if (players < ((Rva0061EE90GameInfo *)*outItem)->countNonClosed())
+			ok = true;
 	}
 
-	if (item) {
-		int numPlayers = item->getNumPlayers();
-		int nonClosed = ((Rva0061EE90GameInfo *)item)->countNonClosed();
-		if (numPlayers < nonClosed) {
-			if (!(m_bfme3d4 & 2)) {
-				g_bfmeR1078->bfmeRun1078(m_bfme250, g_bfmeFmt1078, 0, 0, 0, 0, 0, 0);
-				m_bfme3d4 |= 2;
-			}
-			return true;
+	if (ok)
+	{
+		if (!(m_bfme3d4 & 2))
+		{
+			g_bfmeR1078->bfmeRun1078(m_bfme250, g_bfmeFmt1078, 0, 0, 0, 0, 0, 0);
+			m_bfme3d4 |= 2;
 		}
 	}
-
-	if (m_bfme3d4 & 2) {
+	else if (m_bfme3d4 & 2)
+	{
 		g_bfmeR1078->bfmeRun1078(m_bfme250, g_bfmeFmtB1073, 0, 0, 0, 0, 0, 0);
 		m_bfme3d4 &= ~2;
 	}
-	return result;
+	return ok;
 }
