@@ -80,7 +80,7 @@ extern GameEngine *TheGameEngine;
 class GameClient;
 extern GameClient *TheGameClient;
 
-class Rva00411840Drawable
+class Drawable
 {
 public:
     void setInstanceMatrix(const Matrix3D *instance, bool preservePrevious);
@@ -98,7 +98,7 @@ private:
 };
 
 // ?setInstanceMatrix@Drawable@@QAEXPBVMatrix3D@@_N@Z
-void Rva00411840Drawable::setInstanceMatrix(const Matrix3D *instance,
+void Drawable::setInstanceMatrix(const Matrix3D *instance,
     bool preservePrevious)
 {
     m_previousInstance = m_instance;
