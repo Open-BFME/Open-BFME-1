@@ -46,14 +46,18 @@ public:
 		: StringBase<WideChar>( other ) {}
 	~UnicodeString() {}
 
-	const WideChar *str() const
-	{
-		if( m_data )
-			return reinterpret_cast<const WideChar *>(
-				reinterpret_cast<const char *>( m_data ) + 8 );
-		return &BFMEEmptyUnicodeString;
-	}
 };
+
+// UnicodeString::str, expanded in place.  An inline member would emit a
+// ?str@UnicodeString@@QBEPBGXZ COMDAT that is not retail's body (0x0005F270).
+// The buffer pointer is the string's first word; the text starts at +8.
+static __forceinline const WideChar *wideStr( const UnicodeString &string )
+{
+	const char *data = *reinterpret_cast<const char * const *>( &string );
+	if( data )
+		return reinterpret_cast<const WideChar *>( data + 8 );
+	return &BFMEEmptyUnicodeString;
+}
 
 class GameTextInterface
 {
@@ -98,7 +102,7 @@ void BfmeAptScreenMapTransfer::processTimeout( int secondsLeft )
 	int minutes = secondsLeft / 60;
 	int seconds = secondsLeft - minutes * 60;
 	WideChar buffer[ 0x104 ];
-	swprintf( buffer, TheGameText->fetch( "MapTransfer:Timeout" ).str(),
+	swprintf( buffer, wideStr( TheGameText->fetch( "MapTransfer:Timeout" ) ),
 		minutes, seconds );
 
 	UnicodeString text( buffer );

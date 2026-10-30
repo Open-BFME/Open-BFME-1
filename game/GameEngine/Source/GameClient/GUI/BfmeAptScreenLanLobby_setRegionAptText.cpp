@@ -34,16 +34,21 @@ public:
 	UnicodeString() : StringBase<unsigned short>() {}
 	UnicodeString(const UnicodeString &other) : StringBase<unsigned short>(other) {}
 	void format(UnicodeString fmt, ...);
-	const unsigned short *str() const
-	{
-		return m_data == 0 ? 0 : (const unsigned short *)m_data + 4;
-	}
 	bool isNotEmpty() const
 	{
 		return m_data != 0 && ((const UnicodeStringData *)m_data)->length != 0;
 	}
 	~UnicodeString() {}
 };
+
+// UnicodeString::str, expanded in place.  An inline member would emit a
+// ?str@UnicodeString@@QBEPBGXZ COMDAT that is not retail's body (0x0005F270).
+// The buffer pointer is the string's first word; the text starts at +8.
+static __forceinline const unsigned short *wideStr(const UnicodeString &string)
+{
+	const unsigned short *data = *reinterpret_cast<const unsigned short * const *>(&string);
+	return data == 0 ? 0 : data + 4;
+}
 
 struct AsciiStringData
 {
@@ -128,6 +133,6 @@ void _bfme_setLivingWorldRegionConquered(
 	variableName.format(AsciiString("APT:LivingWorldRegionConquered%d"), index);
 	UnicodeString text;
 	if (textValue.isNotEmpty())
-		text.format(TheGameText->fetch(label), textValue.str());
+		text.format(TheGameText->fetch(label), wideStr(textValue));
 	g_rva012F19E8WindowManager->bfme_setAptText(variableName, text);
 }
