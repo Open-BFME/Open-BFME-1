@@ -1,6 +1,24 @@
-// ?getPreAttackDelay@Weapon@@QBEHPBVObject@@0PBUCoord3D@@@Z
-// partial score=0.9164 date=2026-10-12
-// cl: /DNDEBUG /MD /EHsc /FAsc /Fabuild/luna_10_001e6f10.cod
+// ?getPreAttackDelay@Weapon@@QBEHPBVObject@@0PBVCoord3D@@@Z
+// partial score=1.0 date=2026-10-30
+// ?getPreAttackDelay@Weapon@@QBEHPBVObject@@0PBVCoord3D@@@Z
+// partial score=1.0 date=2026-10-30 (EXACT; landing blocked by ILT pin deadlock)
+// cl: /DNDEBUG /MD /EHsc
+//
+// Weapon::getPreAttackDelay, retail RVA 0x001E6F10 (275 bytes, RET 0x0C).
+// Identity: the matched Weapon::preFireWeapon (0x001E8970) calls this body
+// through ILT 0x00013818 with source, victim and a position pointer; the
+// Zero Hour twin (GeneralsMD Weapon.cpp Weapon::getPreAttackDelay) gives the
+// prefire-type tests (per clip, per attack) and the WeaponBonus /
+// computeBonus / pre-attack-delay scaling.  BFME adds a per-position type (3)
+// that returns no delay while the source's last shot position equals its
+// own, an AI shot count for the per-clip test, and the Weapon's +0x58 delay
+// added to the result.
+//
+// Retail keeps 1.0f in EAX and interleaves the last three WeaponBonus stores
+// with the computeBonus argument pushes.  That comes from an inlined clear()
+// whose loop is written as do/while (a pointer for-loop gives the same
+// bytes); the counted for-loop and explicit stores give immediates or keep
+// all six stores before the lea.
 
 typedef unsigned int UnsignedInt;
 
@@ -9,8 +27,11 @@ struct Coord3DBase
 	float x, y, z;
 };
 
-struct Coord3D : public Coord3DBase
+// Class-keyed, as BFME declares it: tools/ilt_oracle.py confirms the PBV
+// decoration for this body and contradicts the struct-keyed one.
+class Coord3D : public Coord3DBase
 {
+public:
 	bool equals(const Coord3DBase &other) const;
 };
 
@@ -65,7 +86,8 @@ public:
 	UNUSED_AI_SLOT(56) UNUSED_AI_SLOT(57) UNUSED_AI_SLOT(58) UNUSED_AI_SLOT(59)
 	UNUSED_AI_SLOT(60) UNUSED_AI_SLOT(61) UNUSED_AI_SLOT(62) UNUSED_AI_SLOT(63)
 #undef UNUSED_AI_SLOT
-	virtual UnsignedInt getShotCount(const ObjectFilter *filter) = 0;
+	// Slot 64 (+0x100); its name is not recovered.
+	virtual UnsignedInt slot64ShotCount(const ObjectFilter *filter) = 0;
 };
 
 class Object
@@ -94,8 +116,11 @@ public:
 
 extern GameLogic *TheGameLogic;
 
-struct WeaponBonus
+class WeaponBonus
 {
+public:
+	__forceinline WeaponBonus() { clear(); }
+	__forceinline void clear() { int i = 0; do { m_field[i] = 1.0f; } while (++i < 6); }
 	float m_field[6];
 };
 
@@ -116,7 +141,7 @@ public:
 	int getPreAttackDelay(const Object *source, const Object *victim,
 		const Coord3D *position) const;
 
-private:
+protected:
 	void computeBonus(const Object *source, UnsignedInt extra,
 		WeaponBonus &bonus) const;
 
@@ -130,6 +155,7 @@ private:
 	int m_preAttackJitter;
 };
 
+// ?getPreAttackDelay@Weapon@@QBEHPBVObject@@0PBVCoord3D@@@Z
 int Weapon::getPreAttackDelay(const Object *source, const Object *victim,
 	const Coord3D *position) const
 {
@@ -144,7 +170,7 @@ int Weapon::getPreAttackDelay(const Object *source, const Object *victim,
 				Object *owner = TheGameLogic->findObjectByID(m_ownerID);
 				AIUpdateInterface *ai = owner ? owner->getAI() : 0;
 				if (ai)
-					shotCount = ai->getShotCount(&m_template->m_shotCountFilter);
+					shotCount = ai->slot64ShotCount(&m_template->m_shotCountFilter);
 				else
 					shotCount = m_ammoInClip;
 			}
@@ -175,13 +201,6 @@ int Weapon::getPreAttackDelay(const Object *source, const Object *victim,
 
 	{
 		WeaponBonus bonus;
-		unsigned int one = 0x3f800000;
-		((unsigned int*)bonus.m_field)[0] = one;
-		((unsigned int*)bonus.m_field)[1] = one;
-		((unsigned int*)bonus.m_field)[2] = one;
-		((unsigned int*)bonus.m_field)[3] = one;
-		((unsigned int*)bonus.m_field)[4] = one;
-		((unsigned int*)bonus.m_field)[5] = one;
 		computeBonus(source, 0, bonus);
 		return static_cast<int>(m_template->m_preAttackDelay * bonus.m_field[4])
 			+ m_preAttackJitter;
