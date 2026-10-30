@@ -36348,7 +36348,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_00068be0@@YAXXZ,,0x00068BE0,11,game/GameEngine/Source/Common/Rva68BE0SecondArgumentStore.cpp,matched,object-symbol=?store@Rva68BE0SecondArgumentStore@@QAEPAV1@II@Z;hand-reconciled C++
 ?d_00068e30@@YAXXZ,,0x00068E30,1,game/GameEngine/Source/Common/Audio/Rva00068E30NoOp.cpp,matched,carved one-byte ret; no caller or identity table proves a semantic owner so the address-derived name remains
 ?d_000694c0@@YAXXZ,,0x000694C0,5,game/GameEngine/Source/Common/SenaryIdentityWithArgumentThunk.cpp,matched,object-symbol=?identity@SenaryIdentityWithArgumentThunk@@QAEPAU1@H@Z;Open-BFME5 clean C++ senary identity with one argument
-?d_0006a520@@YAXXZ,,0x0006A520,611,game/gen_asm/d_0001466e.asm,matched,gen-dump;ghidra=FUN_0046a520
 ?d_0006b040@@YAXXZ,,0x0006B040,1,game/GameEngine/Source/Common/Rva0006B040NoOp.cpp,matched,address-derived no-op body; retail boundary is a single ret
 ?d_0006b410@@YAXXZ,,0x0006B410,5,game/GameEngine/Source/Common/VirtualSlotFiveDispatchThunk.cpp,matched,object-symbol=?dispatch@VirtualSlotFiveDispatchThunk@@QAEXXZ;Open-BFME5 clean C++ virtual slot five tail dispatch
 ?d_0006b420@@YAXXZ,,0x0006B420,5,game/GameEngine/Source/Common/VirtualSlotEightDispatchThunk.cpp,matched,object-symbol=?dispatch@VirtualSlotEightDispatchThunk@@QAEXXZ;Open-BFME5 clean C++ virtual slot eight tail dispatch
@@ -173392,3 +173391,4 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?rva001F7B10@ClickReactionBehavior@@UAEXXZ,,0x001F7B10,340,game/GameEngine/Source/GameLogic/Object/Behavior/ClickReactionBehaviorRva001F7B10.cpp,matched,model=claude-opus-5-5;host=app
 ?setStealthLook@Drawable@@QAEXW4StealthLookType@@MMM@Z,,0x00416820,416,game/GameEngine/Source/GameClient/DrawableSetStealthLook.cpp,matched,model=claude-opus-5-5;host=app
 ?bfmeProcess1236@BfmeNode1236List@@QAEXPAX0H@Z,,0x008D3860,496,game/Libraries/Source/Apt/BfmeNode1236ListProcess.cpp,matched,model=claude-opus-5-5;host=app
+?evaluate@U4Curve006095D0@@QBEMH@Z,,0x0006A520,652,game/GameEngine/Source/Common/FCurve.cpp,matched,model=claude-opus-5-5;host=app
