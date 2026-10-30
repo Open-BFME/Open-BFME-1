@@ -162,12 +162,14 @@ class XferLoad
 {
 public:
 	void SkipBadBlock(void *snapshot, int size);
+	virtual void XferImpl(unsigned int type, void *data, unsigned int size);
 
 private:
-	unsigned char m_pad0[8];
+	unsigned char m_pad4[4];
 	BfmeSkipCallback m_callback;
 	void *m_ctx;
-	unsigned char m_pad1[4];
+	Bool m_isLoading;
+	unsigned char m_pad11[3];
 	BfmeByteStream *m_stream;
 	int m_count;
 	int m_extra;
@@ -184,6 +186,45 @@ void XferLoad::SkipBadBlock(void *snapshot, int size)
 		m_callback(snapshot, m_ctx, m_extra);
 	m_extra = -1;
 	--m_count;
+}
+
+// EA name XferLoad::XferImpl (ea_evidence chain+direct, strong; file wb1).
+// Ported from Open BFME 2 Code/Libraries/Source/xfer/xfer_load.cpp
+// (open-bfme-2 20a0cb6173): read and check the four-byte tag, skipping
+// 'RCSD' prefixed records, then read the payload.
+void XferLoad::XferImpl(unsigned int type, void *data, unsigned int size)
+{
+	if ((size && !data) || !m_stream)
+		return;
+
+	if (m_isLoading && type)
+	{
+		unsigned int marker;
+		for (;;)
+		{
+			if (m_stream->read(&marker, 4) != 4)
+			{
+				throw XferException(1, 0);
+			}
+			if (marker != 0x44534352)
+				break;
+			reinterpret_cast<Gen009D8C30 *>(this)->bfmeSkipPrefixed();
+		}
+		if (marker != type)
+		{
+			const unsigned char *markerBytes = reinterpret_cast<const unsigned char *>(&marker);
+			char found[5] = {char(markerBytes[3]), char(markerBytes[2]),
+				char(markerBytes[1]), char(markerBytes[0]), 0};
+			const unsigned char *typeBytes = reinterpret_cast<const unsigned char *>(&type);
+			char expected[5] = {char(typeBytes[3]), char(typeBytes[2]),
+				char(typeBytes[1]), char(typeBytes[0]), 0};
+			throw XferException(0, "Expected '%s' but found '%s'", expected, found);
+		}
+	}
+	if (size && m_stream->read(data, size) != int(size))
+	{
+		throw XferException(1, 0);
+	}
 }
 
 // Ported from Open BFME 2 Code/Libraries/Source/xfer/xfer_load.cpp.

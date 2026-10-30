@@ -38394,7 +38394,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_009c2ce0@@YAXXZ,,0x009C2CE0,2374,game/gen_asm/d_009a7b00.asm,matched,gen-dump;int3-carved start=int3-aligned end=ret+int3 refs=0
 ?d_009cc710@@YAXXZ,,0x009CC710,832,game/gen_asm/d_009a4740.asm,matched,gen-dump;carved start=ghidra-start end=ret-tail callers=0;ghidra=FUN_00dcc710
 ?d_009d7de0@@YAXXZ,,0x009D7DE0,438,game/gen_asm/d_009cf9a0.asm,matched,gen-dump;ghidra=FUN_00dd7de0
-?d_009d8f50@@YAXXZ,,0x009D8F50,314,game/gen_asm/d_009cf9a0.asm,matched,gen-dump;ghidra=FUN_00dd8f50
 ?d_009d9d90@@YAXXZ,,0x009D9D90,5472,game/gen_asm/d_009d9a30.asm,matched,gen-dump;ghidra=FUN_00dd9d90
 ?d_009efd40@@YAXXZ,,0x009EFD40,504,game/gen_small/dumps_000.cpp,matched,gen-dump;ghidra=FUN_00defd40
 ?d_009eff50@@YAXXZ,,0x009EFF50,3186,game/gen_asm/d_009a4740.asm,matched,gen-dump;carved start=ghidra-start end=ret+int3 callers=0;ghidra=FUN_00deff50
@@ -173392,3 +173391,4 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?bfmeProcess1236@BfmeNode1236List@@QAEXPAX0H@Z,,0x008D3860,496,game/Libraries/Source/Apt/BfmeNode1236ListProcess.cpp,matched,model=claude-opus-5-5;host=app
 ?evaluate@U4Curve006095D0@@QBEMH@Z,,0x0006A520,652,game/GameEngine/Source/Common/FCurve.cpp,matched,model=claude-opus-5-5;host=app
 ?bfmeApplyVTU@BfmeOwnVTU@@QAE_NPAVFile@@@Z,,0x009CC020,468,game/Libraries/Source/file/TextFile.cpp,matched,BfmeOwnVTU tokenizer over File (size slot11 read slot3) into m_buffer +4 and 8B token vector +8; class table g_Va0134CC58; returns true; wb1 chain names TextFile::ParseFile (BFME2 label) not adopted; BFME2 donor Code/Libraries/Source/file/TextFile.cpp loop shape @20a0cb6173;model=claude-opus-5-5;host=app
+?XferImpl@XferLoad@@UAEXIPAXI@Z,,0x009D8F50,314,game/Libraries/Source/xfer/xfer_load.cpp,matched,EA name XferLoad::XferImpl from ea_evidence chain+direct strong and wb1 file xfer_load.cpp; tag check with RCSD skip then payload read; BFME2 donor Code/Libraries/Source/xfer/xfer_load.cpp @20a0cb6173 compiled exact first try;model=claude-opus-5-5;host=app
