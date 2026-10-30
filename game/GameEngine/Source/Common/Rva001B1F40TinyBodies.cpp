@@ -36,6 +36,28 @@ void *Rva001B20C0Address::get() const
 	return (void *)((const char *)this + 0x58);
 }
 
+// Retail 0x001B2070, reached through ILT 0x000347E3 from
+// ScriptConditionsNamedContain.cpp and two unconverted callers, which spell
+// the pinned name below. Defined here, away from that caller: in the caller's
+// TU VC7.1 sees that the body leaves ECX alone and reallocates the caller.
+class BfmeNamedContain
+{
+public:
+	int getContainCount(void) const;
+
+private:
+	struct Counter { char m_pad[0x0c]; int m_count; };
+
+	char m_pad[0x2c];
+	Counter *m_counter;				// this+0x2C
+};
+
+// ?getContainCount@BfmeNamedContain@@QBEHXZ
+int BfmeNamedContain::getContainCount(void) const
+{
+	return m_counter->m_count;
+}
+
 // ?Rva001B20A0Noop@@YAXXZ
 void Rva001B20A0Noop()
 {
