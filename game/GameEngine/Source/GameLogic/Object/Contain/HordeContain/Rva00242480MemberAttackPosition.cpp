@@ -87,7 +87,7 @@ typedef _STL::_Rb_tree<int, int, _STL::_Identity<int>, _STL::less<int>, _STL::al
 struct Node00242480 { unsigned color; Node00242480 *parent,*left,*right; int key,value; };
 struct Iterator00242480 { Node00242480 *node; Iterator00242480(){} Iterator00242480(const Iterator00242480& rhs):node(rhs.node){} };
 struct BfmeMemberIndexIterator : Iterator00242480 {};
-class BfmeMemberIndexMap { public: BfmeMemberIndexIterator find(const int &id); };
+class BfmeMemberIndexMap { public: BfmeMemberIndexIterator find(const int &id); Node00242480 *m_header; };
 struct IndexMap00242480 : BfmeMemberIndexMap {};
 struct TargetMap00242480 {
     bool contains(int key) { const IntSetTree00242480 &keys=*(const IntSetTree00242480*)this; _STL::_Rb_tree_iterator<int, _STL::_Const_traits<int> > found=keys.find(key); return found._M_node!=keys._M_header; }
@@ -131,4 +131,25 @@ void Rva00242480HordeContain::method(const Coord3D *pos) {
   if(ai->query184()) continue;
   ((AICommandInterface*)((char*)member->m_ai+0x20))->aiAttackPosition(pos,0x7fffffff,CMD_FROM_AI);
  }
+}
+
+// Retail 0x002230A0 (71 B, RET 8): STLport's int-key _Rb_tree::find over the
+// member index map, reached from the slotKey lookup above. Its row was a
+// gen-alias to a byte-equal map<int,GameSpyStagingRoom*> instantiation in
+// PeerDefs.cpp; the pinned view name stays.
+// ?find@BfmeMemberIndexMap@@QAE?AUBfmeMemberIndexIterator@@ABH@Z
+__declspec(noinline) BfmeMemberIndexIterator BfmeMemberIndexMap::find(const int &id)
+{
+    Node00242480 *y = m_header;
+    Node00242480 *x = m_header->parent;
+    while (x != 0)
+        if (!(x->key < id))
+            y = x, x = x->left;
+        else
+            x = x->right;
+    BfmeMemberIndexIterator it;
+    it.node = y;
+    if (y == m_header || id < y->key)
+        it.node = m_header;
+    return it;
 }
