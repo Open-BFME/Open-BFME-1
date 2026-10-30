@@ -35,12 +35,6 @@ static inline bool isTargetSprite( const AptObject *o )
 	return kind >= 12 && kind <= 19 && !( (unsigned char)~( o->m_flags >> 15 ) & 1 );
 }
 
-class Rva8CD130IdleHook
-{
-public:
-	void run();
-};
-
 class Rva8CCED0IdleHook
 {
 public:
@@ -50,9 +44,14 @@ public:
 
 // Retail 0x01337810 is ?g_rva01337810GcRoots@@3PAURva00899560Pool@@A (data_rows.csv,
 // Apt/Apt.cpp); g_rva8CD130IdleHook was only a pin.
-struct Rva00899560Pool;
+// The native tail jump at 0x008CA917 reaches this existing registry-drain
+// owner at 0x008A30C0 with the same ECX and no stack arguments.
+struct Rva00899560Pool
+{
+	void rva008A30C0();
+};
 extern Rva00899560Pool *g_rva01337810GcRoots;
-#define g_rva8CD130IdleHook ( *(Rva8CD130IdleHook **)&g_rva01337810GcRoots )
+#define g_rva8CD130IdleHook ( *(Rva00899560Pool **)&g_rva01337810GcRoots )
 
 class AptActionInterpreter
 {
@@ -88,5 +87,5 @@ void AptActionInterpreter::_FunctionAptActionGotoFrame(
 	}
 
 	if ( ( (Rva8CCED0IdleHook *)g_rva8CD130IdleHook )->m_enabled && interpreter->m_stackTop == 0 )
-		g_rva8CD130IdleHook->run();
+		g_rva8CD130IdleHook->rva008A30C0();
 }

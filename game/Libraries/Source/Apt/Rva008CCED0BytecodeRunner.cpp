@@ -36,10 +36,10 @@ extern int g_rva8CCED0RouteMarker;
 class AptValue;
 extern AptValue *g_bfmeFallbackDB;
 
-class Rva8CD130IdleHook
+// Native 0x008A30C0 consumes the existing registry receiver, no stack args.
+struct Rva00899560Pool
 {
-public:
-	void run();
+	void rva008A30C0();
 };
 
 class Rva8CCED0IdleHook
@@ -48,14 +48,13 @@ public:
 	int m_unused;
 	int m_enabled;
 	// ?run@Rva8CCED0IdleHook@@QAEXXZ absent-from-retail
-	void run() { ((Rva8CD130IdleHook *)this)->run(); }
+	void run() { ((Rva00899560Pool *)this)->rva008A30C0(); }
 };
 
 // Retail 0x01337810 is ?g_rva01337810GcRoots@@3PAURva00899560Pool@@A (data_rows.csv,
 // Apt/Apt.cpp); g_rva8CD130IdleHook was only a pin.
-struct Rva00899560Pool;
 extern Rva00899560Pool *g_rva01337810GcRoots;
-#define g_rva8CD130IdleHook ( *(Rva8CD130IdleHook **)&g_rva01337810GcRoots )
+#define g_rva8CD130IdleHook ( *(Rva00899560Pool **)&g_rva01337810GcRoots )
 
 class Rva00899770;
 class BfmeStrVKI;

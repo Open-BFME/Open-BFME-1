@@ -77,12 +77,12 @@ class Rva8CD130IdleHook
 public:
 	int m_unused;
 	int m_enabled;
-	void run();
 };
 
 // Retail 0x01337810 is ?g_rva01337810GcRoots@@3PAURva00899560Pool@@A (data_rows.csv,
 // Apt/Apt.cpp); g_rva8CD130IdleHook was only a pin.
-struct Rva00899560Pool;
+// Native call reaches this existing owner with the unchanged registry pointer.
+struct Rva00899560Pool { void rva008A30C0(); };
 extern Rva00899560Pool *g_rva01337810GcRoots;
 #define g_rva8CD130IdleHook ( *(Rva8CD130IdleHook **)&g_rva01337810GcRoots )
 
@@ -129,5 +129,5 @@ void rva8CD130NamedDispatch(Rva8CD130State *state, Rva8CD130Context *context)
 	}
 	owner->m_count -= 2;
 	if (g_rva8CD130IdleHook->m_enabled != 0 && owner->m_count == 0)
-		g_rva8CD130IdleHook->run();
+		((Rva00899560Pool *)g_rva8CD130IdleHook)->rva008A30C0();
 }

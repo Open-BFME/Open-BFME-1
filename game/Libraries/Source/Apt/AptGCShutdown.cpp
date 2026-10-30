@@ -57,17 +57,16 @@ inline void bfmeRemove(BfmeItemDX *item)
 		g_bfmeHeadDX = next;
 }
 
-class Rva8CD130IdleHook
+// Both native calls reach the existing registry-drain owner, thiscall/no args.
+struct Rva00899560Pool
 {
-public:
-	void run(void);						// retail 0x008A30C0
+	void rva008A30C0();					// retail 0x008A30C0
 };
 
 // Retail 0x01337810 is ?g_rva01337810GcRoots@@3PAURva00899560Pool@@A (data_rows.csv,
 // Apt/Apt.cpp); g_rva8CD130IdleHook was only a pin.
-struct Rva00899560Pool;
 extern Rva00899560Pool *g_rva01337810GcRoots;
-#define g_rva8CD130IdleHook ( *(Rva8CD130IdleHook **)&g_rva01337810GcRoots )
+#define g_rva8CD130IdleHook ( *(Rva00899560Pool **)&g_rva01337810GcRoots )
 
 class Rva00897260Node;
 
@@ -108,7 +107,7 @@ void __cdecl rva00897360(bool skipItems)
 {
 	int removed = 0;
 
-	g_rva8CD130IdleHook->run();
+	g_rva8CD130IdleHook->rva008A30C0();
 
 	BfmeItemDX *item = g_bfmeHeadDX;
 
@@ -161,7 +160,7 @@ void __cdecl rva00897360(bool skipItems)
 		((void (__cdecl *)(const char *, ...))g_bfmeCallback1226)(
 			"Apt-GC---------------------- Sweeping of %d objects\n", removed);
 
-	g_rva8CD130IdleHook->run();
+	g_rva8CD130IdleHook->rva008A30C0();
 
 	shutdownChain008D2A40();
 	shutdownChain008D29D0();
