@@ -123492,7 +123492,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?j_006f91e0@@YAXXZ,,0x006F91E0,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=thunk_FUN_00af89e0
 ?j_006fbfc0@@YAXXZ,,0x006FBFC0,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x00025027
 ?j_006fd6f0@@YAXXZ,,0x006FD6F0,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00d43e70
-?j_00702580@@YAXXZ,,0x00702580,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00d33420
 ?j_00711b30@@YAXXZ,,0x00711B30,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x00943AD0
 ?j_00711ed6@@YAXXZ,,0x00711ED6,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x000299B0
 ?j_00713506@@YAXXZ,,0x00713506,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x000080FD
@@ -173392,3 +173391,4 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?locoUpdate_moveTowardsAngle@Locomotor@@QAEXPAVObject@@M@Z,,0x001BCE20,542,game/GameEngine/Source/GameLogic/Object/Locomotor_rva001BC820.cpp,matched,ZH Locomotor::locoUpdate_moveTowardsAngle; ilt_oracle CONFIRMED exact; defined beside 0x001BC820 whose visible body fixes the desiredPos copy schedule;model=claude-opus-5-5;host=app
 ?rva002672B0@SiegeDeploySpecialPower@@UAEXPBXPBVObject@@PBUCoord3D@@I0@Z,,0x002672B0,650,game/GameEngine/Source/GameLogic/Object/SpecialPower/SiegeDeploySpecialPowerInitiate.cpp,matched,SiegeDeploySpecialPower +0x20 interface slot 0 (vtable 0x00CB7468 via ILT 0x000199C0); BFME 2 donor initiateIntentToDoSpecialPower shape; aiMoveToPosition visible inline;model=claude-opus-5-5;host=app
 ?update@HeightDieUpdate@@UAE?AW4UpdateSleepTime@@XZ,,0x00295760,654,game/GameEngine/Source/GameLogic/Object/Update/HeightDieUpdate.cpp,matched,HeightDieUpdate vtable 0x010BF608 slot 0 via ILT 0x0002C926 from ctor 0x00295550; ilt_oracle CONFIRMED; ZH HeightDieUpdate::update semantics + BFME2 donor 20a0cb6173 filter/iterator shape; ScriptActions-style next() reading m_finish into a local;model=claude-opus-5-5;host=app
+??1W3DShroudMaterialPassClass@@UAE@XZ,,0x00702580,5,game/Libraries/Source/WWVegas/WW3D2/W3DShroudMaterialPassClassDeletingDestructor.cpp,matched,implicit dtor: retail 5 B jmp to ??1MaterialPassClass@@UAE@XZ 0x00933420 with no vptr re-seat; reached by ILT 0x00016DC9 (pinned ??1W3DShroudMaterialPassClass@@UAE@XZ ilt-verified) from matched ??_G 0x00702550;model=claude-opus-5-5;host=app
