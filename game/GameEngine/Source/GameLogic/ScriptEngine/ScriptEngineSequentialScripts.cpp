@@ -310,6 +310,7 @@ class ScriptEngine
 public:
 	void appendSequentialScript(Bfme5CtorA0 *script);
 	void AppendDebugMessage(const AsciiString &message, Bool forcePause);
+	Bfme5CtorA0 **rva0033B1D0(Bfme5CtorA0 **it, Bool cleanDanglers, Bool eraseEmpty);
 
 protected:
 	typedef _STL::vector<Bfme5CtorA0 *> VecSequentialScriptPtr;
@@ -586,4 +587,44 @@ void ScriptEngine::evaluateAndProgressAllSequentialScripts(void)
 	}
 	m_currentPlayer = 0;
 	--m_updateCount;
+}
+
+// Retail 0x0033B1D0 (127 B, RET 0xC): an out-of-line copy of BFME's
+// three-argument sequential-script cleanup that nothing calls directly (no
+// REL32 to the body or its ILT 0x00009C82). The body is Zero Hour's
+// ScriptEngine::cleanupSequentialScript (GeneralsMD ScriptEngine.cpp:8066)
+// with the erase gated by a third flag: a null entry is erased in place
+// (inlined vector erase), otherwise the chain or the head record is deleted
+// and an emptied entry is erased through the out-of-line erase 0x00339D10.
+// The original member name is not established, so the address names it.
+Bfme5CtorA0 **ScriptEngine::rva0033B1D0(Bfme5CtorA0 **it, Bool cleanDanglers, Bool eraseEmpty)
+{
+	Bfme5CtorA0 *seqScript = *it;
+	if (!seqScript)
+	{
+		if (eraseEmpty)
+			return m_sequentialScripts.erase(it);
+		return it;
+	}
+
+	if (cleanDanglers)
+	{
+		while (seqScript)
+		{
+			Bfme5CtorA0 *scriptToDelete = seqScript;
+			seqScript = seqScript->m_nextScriptInSequence;
+			delete scriptToDelete;
+		}
+		*it = 0;
+	}
+	else
+	{
+		*it = seqScript->m_nextScriptInSequence;
+		delete seqScript;
+	}
+
+	if (*it == 0 && eraseEmpty)
+		return reinterpret_cast<Rva00339D10Vector *>(&m_sequentialScripts)->rva00339D10(it);
+
+	return it;
 }
