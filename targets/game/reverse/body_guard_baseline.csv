@@ -378,7 +378,6 @@ dir32,0x011343B4,_g_011343B4,"nothing in the ledger owns 0x011343B4. Give the da
 dir32,0x011343D4,_g_011343D4,"nothing in the ledger owns 0x011343D4. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01136058,??_7Rva008B2DF0Middle@@6B@,"retail 0x01136058 is already recorded as ??_7Gen_uwm_00899380@@6B@ (+14 more); reference that name, not a new one"
 dir32,0x01137808,??_7Rva008DCC70Link@@6B@,the name encodes 0x008DCC70 but retail reads 0x01137808
-dir32,0x0113BD28,?BfmeDynamicFVFTable@@3QBIB,"retail 0x0113BD28 is already recorded as ?BfmeDynamicFVFTable@@3PAIA (+1 more); reference that name, not a new one"
 dir32,0x0113CBAC,??_7Rva00938BC0VtableReseat@@6B@,"retail 0x0113CBAC is already recorded as ??_7Rva00938BF0Deleting@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x0113DF00,___GUID_ee883b17_0778_4b18_a12b_e44c0d298412,"retail 0x0113DF00 is already recorded as ?g_bfmeIidTSA@@3UBfmeGuidTSA@@A (+4 more); reference that name, not a new one"
 dir32,0x0113DF48,__GUID_2b2cc8b0_2dc0_48c6_b6fd_c07820a6477e,"nothing in the ledger owns 0x0113DF48. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
