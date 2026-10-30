@@ -78,7 +78,12 @@
 // W3DGadgetRadioButtonDraw ===================================================
 /** Draw tabs with standard graphics */
 //=============================================================================
-void W3DGadgetTabControlDraw( GameWindow *tabControl, WinInstanceData *instData )
+// Retail 0x00797600 is W3DGadgetTabControlDraw.cpp's body. This Zero Hour
+// copy stays only because it emits the GadgetTabControlGet*Tab* COMDATs
+// ledgered on this unit; under its own name it was a second, non-retail
+// definition the link could keep.
+// ?W3DGadgetTabControlDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z present-unmatched
+void W3DGadgetTabControlDraw_ZHReference( GameWindow *tabControl, WinInstanceData *instData )
 {
 	ICoord2D origin, size;
 
