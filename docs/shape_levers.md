@@ -2735,3 +2735,17 @@ operands was inert (cl canonicalizes commutative x87 operands). Writing
 CSE creates the temporaries, gave 652/652 exact. Measured effect only; the
 ordering rule cl uses for named locals versus CSE temps is not known.
 Source: game/GameEngine/Source/Common/FCurve.cpp.
+
+## A temp-register rotation can be the wrong container indirection (2026-10-30)
+
+AttackPriority Target parser 0x0014C8E0 (196 B, /O2 STLport list) sat at five
+bytes for 20+ attempts: retail loads store->EAX, priority->EDX, `[store]`->ECX
+and `[ecx]`->EDI before allocating the node; ours rotated the three temps.
+The bank read the store as a `list *` and appended with `insert(end())`. The
+same two loads also fit an in-place list whose sentinel's `_M_next` is
+`begin()`: `((list *)store)->push_front(entry)` (force-inlined
+`insert(begin(), value)`) was exact, and it agrees with the caller handing
+`initFromINI` the AINamedListNode tail list itself. Before more register
+spellings, check whether a double dereference really is pointer-to-container
+plus sentinel, or container sentinel plus `_M_next`. Source:
+game/GameEngine/Source/GameLogic/AI/AI_parseAttackPriorityTarget.cpp.

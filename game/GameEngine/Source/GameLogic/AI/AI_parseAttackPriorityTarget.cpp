@@ -1,5 +1,3 @@
-// ?parseTarget@Rva0014C8E0@@SAXPAVINI@@PAX1PBX@Z
-// partial score=0.974489796 date=2026-09-21
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME: the Target field parser of the AI AttackPriority block, retail
@@ -14,7 +12,10 @@
 //
 // The body reads a ThingTemplate through INI::parseThingTemplate at 0x000BAD60
 // and a count through INI::parseInt, builds an eight-byte record on the stack,
-// and appends it to the list the store argument points at. The record copy runs
+// and pushes it onto the front of the list the store argument addresses. The
+// store is the list itself (the AINamedListNode tail parseAttackPriority hands
+// initFromINI): retail loads the sentinel from the store and links the new node
+// before the sentinel's next, which is insert(begin()). The record copy runs
 // through the landed Open2Construct14BBC0 at 0x0014BBC0.
 #include "string_base.h"
 #include "ascii_string.h"
@@ -54,7 +55,7 @@ void Open2Construct14BBC0( Open2Rec14BBC0 *place, const Open2Rec14BBC0 &value );
 #include <list>
 namespace _STL {
 template <> __forceinline void _Construct<Open2Rec14BBC0, Open2Rec14BBC0>(Open2Rec14BBC0 *place, const Open2Rec14BBC0 &value) { Open2Construct14BBC0(place, value); }
-template <> __forceinline void list<Open2Rec14BBC0, allocator<Open2Rec14BBC0> >::push_back(const Open2Rec14BBC0 &value) { insert(end(), value); }
+template <> __forceinline void list<Open2Rec14BBC0, allocator<Open2Rec14BBC0> >::push_front(const Open2Rec14BBC0 &value) { insert(begin(), value); }
 }
 
 typedef _STL::list<Open2Rec14BBC0, _STL::allocator<Open2Rec14BBC0> > Open2Rec14BBC0List;
@@ -77,13 +78,14 @@ void Rva0014C8E0::parseTarget( INI *ini, void *instance, void *store, const void
 	if( tmpl != 0 && tmpl->m_name != 0 && tmpl->m_name->m_length != 0 )
 	{
 		entry.m_at00.set( *(const AsciiString *)&tmpl->m_name );
-		Open2Rec14BBC0List *items = *(Open2Rec14BBC0List **)store;
+		Open2Rec14BBC0List *items = (Open2Rec14BBC0List *)store;
 		entry.m_at04 = priority;
-		items->push_back( entry );
+		items->push_front( entry );
 	}
 }
 
-// Native list and force-inlined native push_back preserve the retail FS restore
-// before pop ESI. Five bytes remain in the store/priority/list register shuttle
-// at +0x6b..+0x79. The _Construct specialization delegates to the already-landed
-// Open2Construct14BBC0; no new pin is required by this reconstruction.
+// Native list and force-inlined native push_front preserve the retail FS restore
+// before pop ESI. The earlier list-pointer push_back reading left a five-byte
+// store/priority/list register rotation at +0x6B; the in-place list with
+// push_front is exact. The _Construct specialization delegates to the
+// already-landed Open2Construct14BBC0; no new pin is required.
