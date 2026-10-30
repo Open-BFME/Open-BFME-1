@@ -2765,3 +2765,18 @@ same two loads also fit an in-place list whose sentinel's `_M_next` is
 spellings, check whether a double dereference really is pointer-to-container
 plus sentinel, or container sentinel plus `_M_next`. Source:
 game/GameEngine/Source/GameLogic/AI/AI_parseAttackPriorityTarget.cpp.
+
+## Polygon crossing loop: query through the pointer, vertex copy first, `++it` (2026-10-30)
+
+InGameUI lasso point test 0x0043E260 (253 B, /O2 /Ob2 STLport list<ICoord2D>)
+sat at 0.34 with the query point copied into `x`/`y` locals. Measured steps on
+a fresh rewrite (probe, VC7.1): reading `point->x`/`point->y` at every use
+reproduced retail's prologue, where the query lives in frame slots instead of
+EBX (0.80 -> shape 0.90); separate `if (...) return false;` per bounds field
+instead of one `||` chain let VC7.1 tail-merge the returns inline as retail
+does (-> 253/253 B, 20 bytes); copying the vertex (`ICoord2D p1 = *it;`)
+before `next = it; ++next;` fixed the y1/x2/y2 EDX/ECX/EAX rotation (-> 4
+bytes); and a `for (...; ++it)` increment instead of `it = next` turned the
+loop test into retail's `mov eax,esi; cmp eax,edi` (CSE of `it->_M_next`):
+exact. Declaration order, load order, do-while and goto forms were inert.
+Source: game/GameEngine/Source/GameClient/InGameUIRva0043E260LassoPointTest.cpp.
