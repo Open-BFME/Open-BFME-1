@@ -210,6 +210,7 @@ public:
 	void j_0002a969(void);
 	void j_00021f26(void);
 	void j_0002eeec(void);
+	void j_00015e42(void);
 	void j_00019eca(void);
 	void j_00040c32(void);
 	void j_00036124(void);
@@ -231,7 +232,9 @@ public:
 	BfmeElem20Vector m_bfmeFlag20;				// +0x90
 	char m_bfmePad98[0x04];
 	BfmeFlag16Vector m_bfmeFlag16;				// +0x9C
-	char m_bfmeMiddleB[0xB4 - 0xA4];
+	char m_bfmePadA4[0x04];
+	BfmeElem16Vector m_bfmeSpecs;				// +0xA8
+	char m_bfmeMiddleB[0xB4 - 0xB0];
 	BfmeElem16Vector m_bfmeQueue;
 	char m_bfmeMiddleC[0xC0 - 0xBC];
 	BfmeElem12Vector m_bfmeOuter;
@@ -381,6 +384,121 @@ void Glo012F1024Item::j_00040c32(void)
 	{
 		BfmeElem16 *position = m_bfmeQueue.m_bfmeBegin + index;
 		g_bfmeGlobal_012f706c->bfmeGoDGE(position, (char *)position + 4);
+	}
+}
+
+// The three spec lists below each rebuild one kind of record and hand it to
+// the global at 0x012F1028 (Rva003C2280Owner::append at 0x003C2280). Every
+// field of a spec is read through an inline accessor: retail loads all three
+// constructor arguments before the first push and copies the flag byte through
+// a frame temporary, which is what an inline call returning `char` gives
+// (plain field reads push the flag first and swap the scratch registers).
+class Rva003C2280Item;
+class Rva003C2280Owner
+{
+public:
+	void append(const Rva003C2280Item *item);
+};
+
+struct BfmeRefVNG
+{
+	void *m_referent;
+};
+
+class BfmeRectVNE
+{
+public:
+	BfmeRectVNE(unsigned w, unsigned h, char f);	// 0x003BBF70
+	char m_bfmeBody[0x10];
+};
+
+class BfmeRectVNG
+{
+public:
+	BfmeRectVNG(unsigned w, const BfmeRefVNG &ref, char f);	// 0x003BBB70
+	char m_bfmeBody[0x10];
+};
+
+class BfmeRectVNH
+{
+public:
+	BfmeRectVNH(unsigned w, const AsciiString &s, char f);	// 0x003BC090
+	char m_bfmeBody[0x10];
+};
+
+// 16-byte records of the +0xA8 list.
+struct BfmeSpecVNE
+{
+	int m_bfmeHead;
+	unsigned int m_bfmeWidth;					// +0x04
+	char m_bfmeFlag;						// +0x08
+	char m_bfmePad09[3];
+	unsigned int m_bfmeHeight;					// +0x0C
+
+	unsigned int getWidth(void) const { return m_bfmeWidth; }
+	unsigned int getHeight(void) const { return m_bfmeHeight; }
+	char getFlag(void) const { return m_bfmeFlag; }
+};
+
+// 16-byte records of the +0x9C list (the flag byte j_0000ca59 tests).
+struct BfmeSpecVNG
+{
+	int m_bfmeHead;
+	unsigned int m_bfmeWidth;					// +0x04
+	BfmeRefVNG m_bfmeRef;						// +0x08
+	char m_bfmeFlag;						// +0x0C
+	char m_bfmePad0D[3];
+
+	unsigned int getWidth(void) const { return m_bfmeWidth; }
+	const BfmeRefVNG &getRef(void) const { return m_bfmeRef; }
+	char getFlag(void) const { return m_bfmeFlag; }
+};
+
+// 20-byte records of the +0x90 list.
+struct BfmeSpecVNH
+{
+	int m_bfmeHead;
+	unsigned int m_bfmeWidth;					// +0x04
+	char m_bfmePad08[4];
+	AsciiString m_bfmeName;						// +0x0C
+	char m_bfmeFlag;						// +0x10
+	char m_bfmePad11[3];
+
+	unsigned int getWidth(void) const { return m_bfmeWidth; }
+	const AsciiString &getName(void) const { return m_bfmeName; }
+	char getFlag(void) const { return m_bfmeFlag; }
+};
+
+// ?j_00021f26@Glo012F1024Item@@QAEXXZ
+void Glo012F1024Item::j_00021f26(void)
+{
+	for (unsigned int index = 0; index < m_bfmeFlag16.bfmeSize(); ++index)
+	{
+		BfmeSpecVNG *begin = (BfmeSpecVNG *)m_bfmeFlag16.m_bfmeBegin;
+		((Rva003C2280Owner *)Glo012F1028)->append((Rva003C2280Item *)new BfmeRectVNG(
+			begin[index].getWidth(), begin[index].getRef(), begin[index].getFlag()));
+	}
+}
+
+// ?j_0002eeec@Glo012F1024Item@@QAEXXZ
+void Glo012F1024Item::j_0002eeec(void)
+{
+	for (unsigned int index = 0; index < m_bfmeFlag20.bfmeSize(); ++index)
+	{
+		BfmeSpecVNH *begin = (BfmeSpecVNH *)m_bfmeFlag20.m_bfmeBegin;
+		((Rva003C2280Owner *)Glo012F1028)->append((Rva003C2280Item *)new BfmeRectVNH(
+			begin[index].getWidth(), begin[index].getName(), begin[index].getFlag()));
+	}
+}
+
+// ?j_00015e42@Glo012F1024Item@@QAEXXZ
+void Glo012F1024Item::j_00015e42(void)
+{
+	for (unsigned int index = 0; index < m_bfmeSpecs.bfmeSize(); ++index)
+	{
+		BfmeSpecVNE *begin = (BfmeSpecVNE *)m_bfmeSpecs.m_bfmeBegin;
+		((Rva003C2280Owner *)Glo012F1028)->append((Rva003C2280Item *)new BfmeRectVNE(
+			begin[index].getWidth(), begin[index].getHeight(), begin[index].getFlag()));
 	}
 }
 

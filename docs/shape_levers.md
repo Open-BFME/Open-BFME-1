@@ -2780,3 +2780,22 @@ bytes); and a `for (...; ++it)` increment instead of `it = next` turned the
 loop test into retail's `mov eax,esi; cmp eax,edi` (CSE of `it->_M_next`):
 exact. Declaration order, load order, do-while and goto forms were inert.
 Source: game/GameEngine/Source/GameClient/InGameUIRva0043E260LassoPointTest.cpp.
+
+## Inline accessor args: all loads before the first push (2026-10-30)
+
+Glo012F1024Item spec-list rebuilders 0x003ADCC0 / 0x003ADDB0 / 0x003ADED0
+(192/224/192 B, `/DNDEBUG /MD /EHsc`, VC7.1) sat at 63-141 diffs for 50+
+attempts as a this/begin/offset "regalloc" wall. Retail evaluates
+`new X(width, ref-or-height, flag)` by loading every argument into a register
+before the first push, and copies the flag byte through a frame temporary
+(`mov cl,[e+8]; mov [esp+10],cl; ... mov edx,[esp+10]; push edx`). Plain field
+reads (`begin[i].m_flag`) push the flag first, zero-extend it in a register
+(`xor ecx,ecx; mov cl,..`) and rotate EBX/ESI/EDI; a 1-byte struct returned by
+value from an inline helper reproduces the temp but not the order. Reading
+every field through an inline accessor on the record
+(`begin[i].getWidth(), begin[i].getRef(), begin[i].getFlag()` with
+`char getFlag() const`) was exact for all three; the width accessor alone
+fixed the argument order on 0x003ADDB0. Measured, not explained: inline calls
+appear to be evaluated as a group before the pushes. Element pointer or
+reference locals (`Spec &e = begin[i]`) instead make VC7.1 add base+offset
+once (180 B). Source: game/GameEngine/Source/Common/Glo012F1024Entry_bfmeStep.cpp.
