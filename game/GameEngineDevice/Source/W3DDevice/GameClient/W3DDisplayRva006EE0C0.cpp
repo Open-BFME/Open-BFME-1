@@ -68,6 +68,13 @@ public:
 };
 
 extern FontLibrary *TheFontLibrary;
+// Retail 0x004772D0 is ?getFont@FontLibraryBFMERetail@@QAEPAVGameFont@@PAVAsciiString@@ME@Z
+// (FontLibraryBFMERetail_getFont.cpp); call it by that defined name.
+class FontLibraryBFMERetail
+{
+public:
+	GameFont *getFont(AsciiString *name, float pointSize, unsigned char style);
+};
 
 #define RVA006EE0C0_SLOT(n) virtual void slot##n(void);
 
@@ -247,7 +254,7 @@ void W3DDisplay::rva006EE0C0(Int mode)
 			frameText = TheDisplayStringManager->newDisplayString();
 			{
 				AsciiString fontName("FixedSys");
-				frameText->setFont(TheFontLibrary->getFont(&fontName, 12.0f, 0));
+				frameText->setFont(reinterpret_cast<FontLibraryBFMERetail *>(TheFontLibrary)->getFont(&fontName, 12.0f, 0));
 			}
 			frameText->slot10(-1, 0);
 		}

@@ -81,6 +81,13 @@ extern DisplayStringManager *TheDisplayStringManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 #define g_theWindowManager g_rva012F19E8WindowManager
 extern FontLibrary *TheFontLibrary;
+// Retail 0x004772D0 is ?getFont@FontLibraryBFMERetail@@QAEPAVGameFont@@PAVAsciiString@@ME@Z
+// (FontLibraryBFMERetail_getFont.cpp); call it by that defined name.
+class FontLibraryBFMERetail
+{
+public:
+	GameFont *getFont(AsciiString *name, float pointSize, unsigned char style);
+};
 int Rva00510DC0DisplayWidth = 0;
 int Rva00510DC0DisplayHeight;
 extern int g_guiFxWindowHandle;
@@ -98,7 +105,7 @@ void Rva00510DC0(UnicodeString *text, AsciiString *face, int size,
 	float minScale = (dimensions[0] < dimensions[1]) ? dimensions[0] : dimensions[1];
 	float scaledSize = size * minScale;
 	_ReadWriteBarrier();
-	GameFont *font = TheFontLibrary->getFont(
+	GameFont *font = reinterpret_cast<FontLibraryBFMERetail *>(TheFontLibrary)->getFont(
 		face, scaledSize, style);
 	if (font == 0)
 		return;
