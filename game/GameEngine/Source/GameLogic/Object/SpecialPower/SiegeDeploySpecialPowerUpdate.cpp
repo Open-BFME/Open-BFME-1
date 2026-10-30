@@ -1,6 +1,23 @@
-// ?method@Rva00266F40@@QAEHXZ
-// partial score=0.3239 date=2026-10-03
 // cl: /DNDEBUG /MD /I.
+//
+// Open-BFME: SiegeDeploySpecialPower::update at retail RVA 0x00266F40
+// (704 bytes including its five-entry switch table).
+// BFME 1 target evidence: the matched constructor 0x00266240 installs vtable
+// VA 0x010B7494 at +0x10, whose slot 0 is ILT 0x00007DBA -> this body, and
+// ilt_oracle CONFIRMS ?update@SiegeDeploySpecialPower@@UAE?AW4UpdateSleepTime@@XZ
+// (ZH UpdateModuleInterface::update is that interface's first virtual).
+// `this` is the +0x10 subobject: module data at +4, Object at +8, the phase
+// at +0x38 drives transition 0x00266B50, +0x3C counts frames against module
+// data +0x1D0, +0x40 is the target ObjectID, +0x54 takes the approach point
+// 0x002666A0 for direction +0x64, +0x60 alternates moving/facing, +0x70 is
+// the stop request.
+// Donor (open-bfme-2 20a0cb6173, Code/GameEngine/Source/GameLogic/Object/
+// SpecialPower/SiegeDeploySpecialPowerUpdate.cpp, retail 0x004C5E80 there)
+// supplies the control flow; its `ok` flag queried once per branch is what
+// gives retail's Object-in-EBP/target-in-EBX allocation (the older && || form
+// swapped them), and field reads go through a `self` copy of `this`
+// (direct member access reallocates every register). Field, slot and
+// helper names stay address-derived.
 #include <math.h>
 #include "game/Libraries/Source/WWVegas/WWMath/coord3d.h"
 inline Coord3D::Coord3D() {}
@@ -16,7 +33,7 @@ enum ObjectStatusTypes { Rva00266F40Status63=63 };
 class Rva00266EB0SiegeDeployBase {public: void transition(int);void clearStatusBit63();};
 class GameLogic {public: Object *findObjectByID(int);};
 extern GameLogic *TheGameLogic;
-class AICommandInterface {public: void aiMoveToPosition(const Coord3D*,CommandSourceType);void aiBfmeCommand39(const Coord3D*,CommandSourceType);};
+class AICommandInterface {public: void aiMoveToPosition(const Coord3D*,CommandSourceType);};
 class Rva00266F40AIView { public:
 virtual void slot0();
 virtual void slot1();
@@ -148,49 +165,71 @@ virtual void slot126();
 virtual void slot127();
 virtual int slot128();
 };
-extern void j_0002fc7a();extern void j_0003c740();extern void j_0003bff7();extern void j_0001336d();extern void j_00020455();
+extern void j_0002fc7a();extern void j_0003c740();extern void j_0003bff7();extern void j_0001336d();extern void j_00020455();extern void j_00040732();
 class Rva00266F40Action {public: void method();};
 static __forceinline void *rva001F8AB0(Object *o) {union {void(*raw)();void*(__cdecl*fn)(Object*);}c;c.raw=j_0002fc7a;return c.fn(o);}
 static __forceinline void rva001F84C0(void *o) {union {void(*raw)();void(Rva00266F40Action::*fn)();}c;c.raw=j_0003c740;(((Rva00266F40Action*)o)->*c.fn)();}
 static __forceinline bool rva001F9180(void *o,int a) {union {void(*raw)();bool(Rva00266F40Action::*fn)(int);}c;c.raw=j_0003bff7;return (((Rva00266F40Action*)o)->*c.fn)(a);}
 static __forceinline void rva001F1370(void *o,int a,int b) {union {void(*raw)();void(Rva00266F40Action::*fn)(int,int);}c;c.raw=j_0001336d;(((Rva00266F40Action*)o)->*c.fn)(a,b);}
-static __forceinline Coord3D rva002666A0(void *o,Object *target,Coord3D *pos,bool *ok) {union {void(*raw)();Coord3D(Rva00266F40Action::*fn)(Object*,Coord3D*,bool*);}c;c.raw=j_00020455;return (((Rva00266F40Action*)o)->*c.fn)(target,pos,ok);}
+// aiBfmeCommand39 (0x00266A30) is ledgered with the struct-keyed Coord3D spelling.
+static __forceinline void rva00266A30(void *o,const Coord3D *pos,CommandSourceType src) {union {void(*raw)();void(Rva00266F40Action::*fn)(const Coord3D*,CommandSourceType);}c;c.raw=j_00040732;(((Rva00266F40Action*)o)->*c.fn)(pos,src);}
 class AIUpdateInterface {public: void ignoreObstacle(const Object*);};
-struct Rva00266F40Data {char pad[0x1d0];unsigned count;};
-class Rva00266F40 {public: int method(); char pad00[0x28];int state;unsigned counter;int target;char pad34[0x10];Coord3D pos;bool toggle;char pad51[3];Coord3D delta;bool pending;};
-struct Rva00266F40Layout {char pad[4];Rva00266F40Data *data;Object *object;char pad0c[0x2c];int state;unsigned counter;int target;char pad44[0x10];Coord3D pos;bool toggle;char pad61[3];Coord3D delta;bool pending;};
-int Rva00266F40::method()
+struct Rva00266F40ModuleData {char pad[0x1d0];unsigned count;};
+enum UpdateSleepTime { UPDATE_SLEEP_NONE = 1, UPDATE_SLEEP_FOREVER = 0x3fffffff };
+// Private view of the +0x10 update-interface subobject (the vptr of vtable
+// VA 0x010B7494 at +0); the primary base and its module data and Object
+// pointers sit at -0x10, -0xC and -8.
+class SiegeDeploySpecialPower
 {
- Rva00266F40 *self=this;
+public:
+ virtual UpdateSleepTime update();
+private:
+ char pad00[0x28 - 4];
+ int m_phase;
+ unsigned m_frame;
+ int m_targetID;
+ char pad34[0x10];
+ Coord3D m_approach;
+ bool m_turn;
+ char pad51[3];
+ Coord3D m_direction;
+ bool m_stop;
+};
+UpdateSleepTime SiegeDeploySpecialPower::update()
+{
+ SiegeDeploySpecialPower *self=this;
  Object *object=*(Object**)((char*)this-8);
- if(object->m_privateStatus&1) {void *m=rva001F8AB0(object);if(m)rva001F84C0(m);return 0x3fffffff;}
- if(!self->state)return 0x3fffffff;
- if(self->pending) {((Rva00266EB0SiegeDeployBase*)((char*)this-0x10))->transition(4);self->pending=false;return 1;}
+ if(object->m_privateStatus&1) {void *m=rva001F8AB0(object);if(m)rva001F84C0(m);return UPDATE_SLEEP_FOREVER;}
+ if(!self->m_phase)return UPDATE_SLEEP_FOREVER;
+ if(self->m_stop) {((Rva00266EB0SiegeDeployBase*)((char*)this-0x10))->transition(4);self->m_stop=false;return UPDATE_SLEEP_NONE;}
  Rva00266F40AIView *ai=(Rva00266F40AIView*)object->m_ai;
- if(!ai) {((Rva00266EB0SiegeDeployBase*)((char*)this-0x10))->clearStatusBit63();return 0x3fffffff;}
- if(!object->getDrawable())return 0x3fffffff;
- if((!ai->slot96()&&ai->slot128()!=2)||(ai->slot96()&&ai->slot128()==0)) {((Rva00266EB0SiegeDeployBase*)((char*)this-0x10))->clearStatusBit63();return 0x3fffffff;}
+ if(!ai) {((Rva00266EB0SiegeDeployBase*)((char*)this-0x10))->clearStatusBit63();return UPDATE_SLEEP_FOREVER;}
+ if(!object->getDrawable())return UPDATE_SLEEP_FOREVER;
+ if((!ai->slot96()&&ai->slot128()!=2)||(ai->slot96()&&ai->slot128()==0)) {((Rva00266EB0SiegeDeployBase*)((char*)this-0x10))->clearStatusBit63();return UPDATE_SLEEP_FOREVER;}
  Object *target=0;
- if(self->target) {target=TheGameLogic->findObjectByID(self->target);if(!target||(target->m_privateStatus&1)) {target=0;self->target=0;if(self->state==3)((Rva00266EB0SiegeDeployBase*)((char*)this-0x10))->transition(4);}}
+ if(self->m_targetID) {target=TheGameLogic->findObjectByID(self->m_targetID);if(!target||(target->m_privateStatus&1)) {target=0;self->m_targetID=0;if(self->m_phase==3)((Rva00266EB0SiegeDeployBase*)((char*)this-0x10))->transition(4);}}
  if(!target)((Rva00266EB0SiegeDeployBase*)((char*)this-0x10))->transition(4);
- switch(self->state) {
- case 0:target->clearStatus(Rva00266F40Status63);return 0x3fffffff;
+ switch(self->m_phase) {
+ case 0:target->clearStatus(Rva00266F40Status63);return UPDATE_SLEEP_FOREVER;
  case 1: {
- {Coord3D position=object->m_cachedPos;position+=self->delta;
- if(fabs(object->bfmeRelativeAngleTo(&position))<0.15f && (object->bfmeGeometryIntersects(target)||ai->slot96())) {
- void *module=rva001F8AB0(object);
- if(module&&rva001F9180(module,0)) {ai->slot122();rva001F1370((char*)ai+0x20,0,2);((Rva00266EB0SiegeDeployBase*)((char*)this-0x10))->transition(2);break;}
+ bool ok;
+ {Coord3D position=object->m_cachedPos;position+=self->m_direction;
+ ok=fabs(object->bfmeRelativeAngleTo(&position))<0.15f;
+ if(ok) {ok=false;
+ if(object->bfmeGeometryIntersects(target)) {void *module=rva001F8AB0(object);if(module&&rva001F9180(module,0))ok=true;}
+ else if(ai->slot96()) {void *module=rva001F8AB0(object);if(module&&rva001F9180(module,0))ok=true;}
  }
  }
+ if(ok) {ai->slot122();rva001F1370((char*)ai+0x20,0,2);((Rva00266EB0SiegeDeployBase*)((char*)this-0x10))->transition(2);break;}
  if(ai->slot96()) {
  ((AIUpdateInterface*)ai)->ignoreObstacle(target);
- self->toggle=!self->toggle;
- if(self->toggle) {bool ok=false;union {void(*raw)();Coord3D(Rva00266F40Action::*fn)(Object*,Coord3D*,bool*);}c;c.raw=j_00020455;self->pos=(((Rva00266F40Action*)((char*)this-0x10))->*c.fn)(target,&self->delta,&ok);if(ok)((AICommandInterface*)((char*)ai+0x20))->aiMoveToPosition(&self->pos,CMD_FROM_AI);}
- else {Coord3D position=object->m_cachedPos;position+=self->delta;((AICommandInterface*)((char*)ai+0x20))->aiBfmeCommand39(&position,CMD_FROM_AI);}
+ self->m_turn=!self->m_turn;
+ if(self->m_turn) {bool docked=false;union {void(*raw)();Coord3D(Rva00266F40Action::*fn)(Object*,Coord3D*,bool*);}c;c.raw=j_00020455;self->m_approach=(((Rva00266F40Action*)((char*)this-0x10))->*c.fn)(target,&self->m_direction,&docked);if(docked)((AICommandInterface*)((char*)ai+0x20))->aiMoveToPosition(&self->m_approach,CMD_FROM_AI);}
+ else {Coord3D position=object->m_cachedPos;position+=self->m_direction;rva00266A30((char*)ai+0x20,&position,CMD_FROM_AI);}
  }
  break;}
- case 2:if(++self->counter>=(*(Rva00266F40Data**)((char*)this-12))->count)((Rva00266EB0SiegeDeployBase*)((char*)this-0x10))->transition(3);break;
+ case 2:if(++self->m_frame>=(*(Rva00266F40ModuleData**)((char*)this-12))->count)((Rva00266EB0SiegeDeployBase*)((char*)this-0x10))->transition(3);break;
  case 4:((Rva00266EB0SiegeDeployBase*)((char*)this-0x10))->transition(0);break;
  }
- return 1;
+ return UPDATE_SLEEP_NONE;
 }
