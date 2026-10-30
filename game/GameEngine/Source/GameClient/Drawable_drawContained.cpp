@@ -408,7 +408,9 @@ class Object
 public:
 	Player *getControllingPlayer() const;
 	const Coord3D *getPosition() const { return &m_pos; }
-	const GeometryInfo &getGeometryInfo() const { return m_geometryInfo; }
+	// Local view: its inline copy reads this view's offset, not retail's Object::getGeometryInfo
+	// (0x0049C910); renamed so the COMDAT never carries the retail name. Inlined calls are unchanged.
+	const GeometryInfo &getGeometryInfo_LocalView() const { return m_geometryInfo; }
 	ContainModuleInterface *getContain() const { return m_contain; }
 private:
 	unsigned char m_unmodelled_000[0x38];
@@ -500,11 +502,11 @@ void Drawable::drawContained()
 	pos.z = obj->getPosition()->z;
 	pos.x += TheGlobalData->m_containerPipWorldOffset.x;
 	pos.y += TheGlobalData->m_containerPipWorldOffset.y;
-	pos.z += TheGlobalData->m_containerPipWorldOffset.z + obj->getGeometryInfo().getMaxHeightAbovePosition();
+	pos.z += TheGlobalData->m_containerPipWorldOffset.z + obj->getGeometryInfo_LocalView().getMaxHeightAbovePosition();
 	if (TheTacticalView->worldToScreen(&pos, &screenCenter) != 0)
 		return;
 
-	Real bounding = obj->getGeometryInfo().getBoundingSphereRadius() * scale;
+	Real bounding = obj->getGeometryInfo_LocalView().getBoundingSphereRadius() * scale;
 
 	Int posx = m_healthBarRegion.lo.x;
 	Int posy = screenCenter.y + REAL_TO_INT(TheGlobalData->m_containerPipScreenOffset.y * bounding);
