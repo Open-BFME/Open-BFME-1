@@ -95,7 +95,8 @@ extern GameClient *TheGameClient;
 extern Display *TheDisplay;
 extern GlobalData *TheWritableGlobalData;
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
-extern const Real g_bfmeZeroCY;
+// VA 0x01075350 is the shared .rdata zero float defined as ?g_rva01075350@@3MB (data_rows).
+extern const Real g_rva01075350;
 extern Real g_bfmeDefaultBU;
 Real g_Va012BAA30 = 0.033333335f;
 
@@ -109,7 +110,7 @@ static Rva006E8310TerrainLighting *lightingAt(unsigned char *base,
 // ?update@Rva006E8310TransitionState@@QAEXXZ
 void Rva006E8310TransitionState::update()
 {
-	if (duration != g_bfmeZeroCY)
+	if (duration != g_rva01075350)
 	{
 		unsigned int elapsed = reinterpret_cast<Rva006E8310GameClient *>(TheGameClient)->getFrame() - startFrame;
 		Real seconds = static_cast<Real>(elapsed) * g_Va012BAA30;
