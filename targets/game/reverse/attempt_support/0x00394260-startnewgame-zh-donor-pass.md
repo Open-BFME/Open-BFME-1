@@ -145,3 +145,23 @@ bank inputs (bank file + TU + ledger + shims + shape_levers) are
 byte-unchanged and the in-repo ZH donor tree is unchanged. Per "do not repeat
 unchanged scans", no re-probe (shape 0.892 / 4655 non-reloc / 172 structural,
 frame 0x344 vs 0x340 stands). Verdict 16 (7th draw) recorded. Block stands.
+
+## Re-draw 2026-10-30 (8th draw)
+
+Re-drawn from the deferred pool against 5f0d3fd46d (360 commits / 818 files
+since verdict 16's tree). Both Resume conditions verified unmet: (a) the four
+dump callees 0x0019FF20/0x0038F7B0/0x003916F0/0x00392D00 are still gen-dump
+rows (functions.csv 37149/37502/37504/37506); (b) all 11 new shape_levers
+entries since 8bbb61ae41 were read in full (container-indirection temp
+rotation; visible-callee escape x3; x87 CSE operand order; switch-constant
+cross-jump; constant-register tail-merge; shared trailing call saves +
+register-arg order; offset-struct locals; EBP-prologue release-and-return +
+index local; local split + inline table getter; array-pop declaration order;
+opposite-polarity heads; tail-merge receivers x2 + body-private static; TU
+by-reference locals; forceinline store-group + sqrt pop order) - none targets
+the zero-register (ebx/ebp) lifetime, spill-choice or frame slot-packing
+family that walls this body. The only diff in this body's TU (GameLogic.cpp,
+0f9a68d7fb) is the g012F706C -> TheLivingWorldManager macro, outside
+startNewGame. Bank inputs otherwise byte-unchanged, so no re-probe per "do not
+repeat unchanged scans" (shape 0.892 / 4655 non-reloc / 172 structural, frame
+0x344 vs 0x340 stands). Verdict 17 (8th draw) recorded. Block stands.
