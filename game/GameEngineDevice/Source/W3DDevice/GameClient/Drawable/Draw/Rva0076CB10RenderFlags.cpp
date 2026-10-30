@@ -77,7 +77,11 @@ class Rva000C4A70
 public:
 	bool field(void) const;
 };
-struct WordBitTest000D2F40 { bool test(unsigned index) const; };
+struct WordBitTest000D2F40
+{
+	bool test(unsigned index) const;
+	unsigned m_words[1];
+};
 class Rva0076CB10Drawable
 {
 public:
@@ -177,4 +181,14 @@ void Rva0076CB10Owner::run()
 	}
 	if (obj->byte344() & 1)
 		m_render->setFlags(0, 1);
+}
+
+// Retail 0x000D2F40 (37 B, thiscall RET4), reached through ILT 0x0000666D
+// from the condition-bit test above: word index>>5, mask 1<<(index&31),
+// normalized bool. Its STLport bitset spelling is shared by many byte-equal
+// copies, so the address-derived caller name stays.
+// ?test@WordBitTest000D2F40@@QBE_NI@Z
+__declspec(noinline) bool WordBitTest000D2F40::test(unsigned index) const
+{
+	return (m_words[index >> 5] & (1U << (index & 31))) != 0;
 }

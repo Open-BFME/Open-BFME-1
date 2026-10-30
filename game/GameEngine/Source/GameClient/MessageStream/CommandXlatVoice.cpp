@@ -47,7 +47,7 @@ struct RvaC4390Interface;
 struct RvaC4390First { public: RvaC4390Interface* getInterface(); };
 struct RvaC4390Second { public: RvaC4390First* resolve(int); };
 class AssistedTargetingObjectShim { public: void* find(int); };
-void d_001cdbe0(); void d_00278830(); void d_002acd90(); void dup_000d2f40();
+void d_001cdbe0(); void d_00278830(); void d_002acd90();
 char bfmeGo1098B(int,int,int);
 class BfmeThingDDE { public: int bfmeGoDDE(); };
 struct BfmeFlagHolder; class BfmeFlagCandidate; struct BfmeThingEGA;
@@ -113,10 +113,9 @@ public:
 
 };
 
+struct WordBitTest000D2F40 { bool test(unsigned index) const; };
 class Rva000D2F40 { public: char pad00[0x10]; unsigned field10;bool rva000D2F40(int a) const {
- typedef bool (Rva000D2F40::*Function)(int) const;
- union { void (*raw)(); Function member; } fn; fn.raw=dup_000d2f40;
- return (this->*fn.member)(a);
+ return reinterpret_cast<const WordBitTest000D2F40 *>(this)->test(a);
 } };
 enum CrushSquishTestType { Rva005AA450CrushTest };
 enum Relationship { Rva005AA450Relationship };
