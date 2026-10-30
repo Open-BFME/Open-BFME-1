@@ -1,4 +1,4 @@
-# 0x008FC830 W3DRadarResetSurface::clear(UnsignedInt), 508 B (session a1/502, 2026-10-30)
+# 0x008FC830 W3DRadarResetSurface::clear(UnsignedInt), 508 B (session a1/502, 2026-10-30) -- LANDED, see docs/shape_levers.md (`opaque |= white ? 0xff : 0`)
 
 Link queue #14 blocker `?clear@W3DRadarResetSurface@@QAEXI@Z` (unlocks
 Rva006C3500W3DRadarShroudCopy.cpp). Retail row is still the gen dump

@@ -173,3 +173,72 @@ unsigned int SurfaceClass::Rva008FCA30_Surface_Byte_Size() const
 		size /= 2;
 	return size;
 }
+
+// W3DRadarResetSurface::clear, retail 0x008FC830 (508 B, RET4).
+// [BFME 2 donor] Open-BFME-2 20a0cb6173 Code/Libraries/Source/WWVegas/WW3D2/
+// SurfaceByteSize.cpp clear(bool), matched there at 0x00116780. BFME 1 target
+// evidence: the body reads one COM pointer at +0, calls this TU's
+// Get_Description and Rva008FC4F0_PixelSize, uses LockRect/UnlockRect slots
+// 0x34/0x38, fills rows from the argument's low byte and writes packed
+// FF FE FF FF 55 55 55 55 DXT blocks. Its matched callers (W3DRadar.cpp,
+// Rva006C3500W3DRadarShroudCopy.cpp) spell the argument UnsignedInt.
+// Shape: the row height stays a local (the donor's desc.Height store is not
+// retail), and OR-ing the re-selected fill into the opaque byte is what makes
+// VC7.1 materialise 0xFF in dl (`or dl,0xff`) rather than store immediates.
+class W3DRadarResetSurface
+{
+public:
+	void clear(unsigned int color);
+
+private:
+	BfmeSurfaceResource *m_surface;
+};
+
+// ?clear@W3DRadarResetSurface@@QAEXI@Z
+void W3DRadarResetSurface::clear(unsigned int color)
+{
+	if (!m_surface)
+		return;
+	SurfaceClass::SurfaceDescription desc;
+	reinterpret_cast<SurfaceClass *>(this)->Get_Description(desc);
+	unsigned size = Rva008FC4F0_PixelSize(desc) * desc.Width;
+	D3DLOCKED_RECT lock;
+	::ZeroMemory(&lock, sizeof(lock));
+	BFME_Surface_ErrorCode(m_surface->LockRect(&lock, 0, 0));
+	unsigned char *bits = (unsigned char *)lock.pBits;
+	unsigned char white = (unsigned char)color;
+	unsigned fill = white ? 255 : 0;
+	unsigned height;
+	if (size == 0 && (desc.Format == 0x31545844 || desc.Format == 0x32545844 ||
+		desc.Format == 0x33545844 || desc.Format == 0x34545844 || desc.Format == 0x35545844)) {
+		size = lock.Pitch;
+		height = desc.Height >> 2;
+		if (white) {
+			int n = size >> 3;
+			struct Block { unsigned first, second; };
+			Block packed;
+			unsigned char *block = (unsigned char *)&packed;
+			unsigned char opaque = (unsigned char)fill;
+			opaque |= white ? 0xff : 0;
+			block[0] = opaque; block[1] = 254; block[2] = opaque; block[3] = opaque;
+			block[4] = 85; block[5] = 85; block[6] = 85; block[7] = 85;
+			for (unsigned y = height; y > 0; --y) {
+				unsigned char *row = bits;
+				for (int j = 0; j < n; ++j) {
+					*(Block *)row = packed;
+					row += 8;
+				}
+				bits += lock.Pitch;
+			}
+			BFME_Surface_ErrorCode(m_surface->UnlockRect());
+			return;
+		}
+	} else {
+		height = desc.Height;
+	}
+	for (unsigned y = height; y > 0; --y) {
+		memset(bits, fill, size);
+		bits += lock.Pitch;
+	}
+	BFME_Surface_ErrorCode(m_surface->UnlockRect());
+}

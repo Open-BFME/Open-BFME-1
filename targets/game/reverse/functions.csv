@@ -38331,7 +38331,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_008d22c0@@YAXXZ,,0x008D22C0,1357,game/gen_asm/d_00882630.asm,matched,gen-dump;carved start=ghidra-start end=ret+int3 callers=0;ghidra=FUN_00cd22c0
 ?d_008d60c0@@YAXXZ,,0x008D60C0,414,game/gen_asm/d_008d1540.asm,matched,gen-dump;ghidra=FUN_00cd60c0
 ?d_008f8520@@YAXXZ,,0x008F8520,734,game/gen_asm/d_008ecd00.asm,matched,gen-dump;ghidra=FUN_00cf8520
-?d_008fc830@@YAXXZ,,0x008FC830,508,game/gen_small/dumps_000.cpp,matched,gen-dump;ghidra=FUN_00cfc830
 ?d_008ff6a0@@YAXXZ,,0x008FF6A0,281,game/gen_asm/d_008fa4b0.asm,matched,gen-dump;ghidra=FUN_00cff6a0
 ?d_009016a0@@YAXXZ,,0x009016A0,1107,game/gen_asm/d_00882630.asm,matched,gen-dump;carved start=ghidra-start end=ret+int3 callers=0;ghidra=FUN_00d016a0
 ?d_009080a0@@YAXXZ,,0x009080A0,201,game/Libraries/Source/WWVegas/WW3D2/dxwrapper.cpp,matched,Open-BFME5 clean C++ render device descriptor vector constructor;object-symbol=??0?$VectorClass@VRenderDeviceDescClass@@@@QAE@HPBVRenderDeviceDescClass@@@Z
@@ -173404,3 +173403,4 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?Set_Next_Render_Device@WW3D@@SA_NXZ,,0x008FD160,11,game/Libraries/Source/WWVegas/WW3D2/ww3d.cpp,matched,identity=targets/game/reverse/identity_evidence/008fd0e0-ww3d-set-render-device-family.md;model=claude-opus-5-5;host=app
 ?Rva00894800@@YAXPAVGen_004659D0@@@Z,,0x00894800,524,game/Libraries/Source/Apt/Apt.cpp,matched,EA file evidence wb1 Apt.cpp; caller WindowManager::init 0x0046C5F0; name address-derived;model=claude-opus-5-5;host=app
 ?Rva00891C90@@YAXPAXI@Z,,0x00891C90,13,game/Libraries/Source/Apt/Apt.cpp,matched,default TheBfmeFree hook stored by 0x00894800+0x70;model=claude-opus-5-5;host=app
+?clear@W3DRadarResetSurface@@QAEXI@Z,,0x008FC830,508,game/Libraries/Source/WWVegas/WW3D2/SurfaceClass_DrawPixel.cpp,matched,[BFME 2 donor] Open-BFME-2 20a0cb6173 SurfaceByteSize.cpp clear(bool) at BFME2 0x00116780; BFME1 callers W3DRadar.cpp/Rva006C3500 spell UnsignedInt; pin 0x008FC830; COM slots 0x34/0x38; this-TU Get_Description/PixelSize; DXT block FF FE FF FF 55x4;model=claude-opus-5-5;host=app
