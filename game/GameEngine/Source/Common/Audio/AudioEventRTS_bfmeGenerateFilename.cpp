@@ -17,13 +17,10 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
-class AudioEventRTS;
-// ILT 0x0000ADFD, the lazy filename generator 0x000B3970 (this in ECX).
-void __fastcall j_0000adfd(AudioEventRTS *self);
-
 class AudioEventRTS
 {
 public:
+	void generateFilenameRva000B3970();	// 0x000B3970 lazy filename generator
 	void bfmeGenerateFilename();
 
 private:
@@ -57,6 +54,6 @@ void AudioEventRTS::bfmeGenerateFilename()
 		m_filenameDirty = 1;
 		m_shouldRegenerateFilename = 0;
 		if (m_isLogicalAudio)
-			j_0000adfd(this);
+			generateFilenameRva000B3970();
 	}
 }

@@ -79080,7 +79080,6 @@ name,address,notes
 ?bfmeNotifyCLC@BfmeMidCLC@@QAEXXZ,0x0002191D,pin
 ?bfmeNotifyCell@VictorySystem@@QAEXIPAUBfmeVec1268@@@Z,0x0000ED4A,"Lead verified ILT to1DF930; thiscall player index and coordinate pointer, ret8, dispatches actions on spatial results"
 ?bfmeNotifyDDE@@YAXXZ,0x0000ADFD,pin
-?j_0000adfd@@YIXPAVAudioEventRTS@@@Z,0x0000ADFD,self-addressed ILT 0x0000ADFD (jmp 0x000B3970) called with ECX=this by getFilename 0x000B3B70 and bfmeGenerateFilename 0x000B4840
 ?bfmeNotifyESN@@YGXPAVBfmeSinkESN@@@Z,0x0000A3B2,pin
 ?bfmeNotifyETB@BfmeSinkETB@@QAEXPAVBfmeItemETB@@HPAVBfmeArgETB@@H@Z,0x00035D0A,pin
 ?bfmeNotifyETD@BfmeSinkETD@@QAEXHHHPAVBfmeOwnerETD@@@Z,0x0004399B,pin

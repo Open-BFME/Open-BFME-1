@@ -181,6 +181,18 @@ void *Rva000AF870::fieldAt08() const
 	return reinterpret_cast<char *>(const_cast<Rva000AF870 *>(this)) + 0x8;
 }
 
+class Rva000AF880
+{
+public:
+	void *fieldAt0C() const;
+};
+
+// ?fieldAt0C@Rva000AF880@@QBEPAXXZ
+void *Rva000AF880::fieldAt0C() const
+{
+	return reinterpret_cast<char *>(const_cast<Rva000AF880 *>(this)) + 0xc;
+}
+
 class Rva000AF890
 {
 public:

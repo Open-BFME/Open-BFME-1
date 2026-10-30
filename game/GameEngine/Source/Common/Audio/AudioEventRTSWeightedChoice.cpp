@@ -1,6 +1,9 @@
 // Address-derived static helper; retail debug file identifies AudioEventRTS.cpp.
 // count is total weight, not vector length. Entries are 8B (name pointer, weight).
 // MSVC chooses EAX=count, EDX=range, CL=logical when the body is visible.
+// The range comes first: generateFilename's register-to-register setup at
+// 0x000B3A4A moves EAX before EDX, which MSVC's right-to-left argument order
+// reproduces only with (range, count, logical).
 // The write barrier emits no bytes; it preserves retail separate zero-return tails.
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 #include "ascii_string.h"
@@ -18,7 +21,7 @@ extern "C" void _WriteBarrier();
 #pragma intrinsic(_WriteBarrier)
 struct WeightedSoundB2430 { AsciiString name; unsigned weight; };
 struct WeightedSoundRangeB2430 { WeightedSoundB2430 *begin,*end,*capacity; };
-static __declspec(noinline) int bfmeWeightedChoiceB2430(unsigned totalWeight,const WeightedSoundRangeB2430*range,bool useLogicRandom) {
+static __declspec(noinline) int bfmeWeightedChoiceB2430(const WeightedSoundRangeB2430*range,unsigned totalWeight,bool useLogicRandom) {
  if (!(totalWeight>0)) return -1;
  unsigned remainingWeight;
  if(useLogicRandom) remainingWeight=GetGameLogicRandomValue(0,totalWeight-1,"F:\\bfme\\Code\\gameengine\\Source\\Common\\Audio\\AudioEventRTS.cpp",55);
@@ -67,9 +70,25 @@ public:
 	void *fieldAt60() const;
 };
 
+// The out-of-line accessors at 0x000AF880 and 0x000AF890 return the filename
+// string at AudioEventInfo+0x0C and the weighted-sound vector at +0x40.
+class Rva000AF880
+{
+public:
+	void *fieldAt0C() const;
+};
+
+class Rva000AF890
+{
+public:
+	void *fieldAt40() const;
+};
+
 class AudioEventInfo
 {
 public:
+	const AsciiString &getFilename() const { return *(const AsciiString *)((const Rva000AF880 *)this)->fieldAt0C(); }
+	const WeightedSoundRangeB2430 *getSounds() const { return (const WeightedSoundRangeB2430 *)((const Rva000AF890 *)this)->fieldAt40(); }
 	const WeightedSoundRangeB2430 *getAttackSounds() { return (const WeightedSoundRangeB2430 *)((Rva000AF8A0FieldAddress *)this)->get(); }
 	const WeightedSoundRangeB2430 *getDecaySounds() { return (const WeightedSoundRangeB2430 *)((Rva000AF8B0 *)this)->fieldAt60(); }
 
@@ -78,7 +97,11 @@ public:
 	char m_pad18[4];
 	float m_pitchShiftMin;					// +0x1C
 	float m_pitchShiftMax;					// +0x20
-	char m_pad24[0x5c - 0x24];
+	char m_pad24[0x3c - 0x24];
+	unsigned m_control;					// +0x3C
+	char m_pad40[0x4c - 0x40];
+	unsigned m_totalWeight;					// +0x4C
+	char m_pad50[0x5c - 0x50];
 	unsigned m_attackTotalWeight;				// +0x5C
 	char m_pad60[0x6c - 0x60];
 	unsigned m_decayTotalWeight;				// +0x6C
@@ -105,18 +128,26 @@ public:
 protected:
 	void adjustForLocalization(AsciiString &strToAdjust);
 
+public:
+	void generateFilenameRva000B3970();
+
 private:
-	char m_pad00[8];
+	char m_pad00[4];
+	AsciiString m_filenameToLoad;				// +0x04
 	AudioEventInfo *m_eventInfo;				// +0x08
 	char m_pad0C[0x18 - 0x0c];
 	AsciiString m_attackName;				// +0x18
 	AsciiString m_decayName;				// +0x1C
 	char m_pad20[0x42 - 0x20];
 	bool m_isLogicalAudio;					// +0x42
-	char m_pad43[0x4c - 0x43];
+	char m_pad43[0x46 - 0x43];
+	bool m_needsFilenameGenerated;				// +0x46
+	char m_pad47[0x4c - 0x47];
 	float m_pitchShift;					// +0x4C
 	float m_volumeShift;					// +0x50
-	char m_pad54[0x60 - 0x54];
+	char m_pad54[0x58 - 0x54];
+	unsigned m_playingAudioIndex;				// +0x58
+	char m_pad5C[0x60 - 0x5c];
 	int m_portionToPlayNext;				// +0x60
 };
 
@@ -135,7 +166,7 @@ void AudioEventRTS::generatePlayInfo()
 	{
 		m_portionToPlayNext = PP_Attack;
 		unsigned attackTotalWeight = m_eventInfo->m_attackTotalWeight;
-		int attackToPlay = bfmeWeightedChoiceB2430(attackTotalWeight, m_eventInfo->getAttackSounds(), m_isLogicalAudio);
+		int attackToPlay = bfmeWeightedChoiceB2430(m_eventInfo->getAttackSounds(), attackTotalWeight, m_isLogicalAudio);
 		if (attackToPlay >= 0)
 		{
 			m_attackName = generateFilenamePrefix(retainAudioType(peekEventInfo()->m_soundType), false);
@@ -150,7 +181,7 @@ void AudioEventRTS::generatePlayInfo()
 		}
 
 		unsigned decayTotalWeight = m_eventInfo->m_decayTotalWeight;
-		int decayToPlay = bfmeWeightedChoiceB2430(decayTotalWeight, m_eventInfo->getDecaySounds(), m_isLogicalAudio);
+		int decayToPlay = bfmeWeightedChoiceB2430(m_eventInfo->getDecaySounds(), decayTotalWeight, m_isLogicalAudio);
 		if (decayToPlay >= 0)
 		{
 			m_decayName = generateFilenamePrefix(retainAudioType(peekEventInfo()->m_soundType), false);
@@ -174,4 +205,73 @@ void AudioEventRTS::generatePlayInfo()
 
 // ?forceWeightedChoiceB2430@@YAHIPBUWeightedSoundRangeB2430@@_N@Z absent-from-retail
 // Absent-from-retail callsite to expose the static helper to MSVC optimization.
-int forceWeightedChoiceB2430(unsigned count, const WeightedSoundRangeB2430*range,bool logical) { return bfmeWeightedChoiceB2430(count,range,logical); }
+int forceWeightedChoiceB2430(unsigned count, const WeightedSoundRangeB2430*range,bool logical) { return bfmeWeightedChoiceB2430(range,count,logical); }
+
+// ?generateFilenameRva000B3970@AudioEventRTS@@QAEXXZ
+// Retail 0x000B3970, 400 bytes: Zero Hour's AudioEventRTS::generateFilename
+// (AudioEventRTS.cpp) behind BFME's needs-generate flag at +0x46, with the
+// weighted random choice retried until it differs from the last index, and
+// without the delay roll (BFME's bfmeGenerateFilename does that). It shares
+// this TU with the static weighted-choice helper for the helper's register
+// convention. Both arms end in one adjustForLocalization, which MSVC
+// tail-duplicates; the two empty-name exits stay separate statements.
+// Retail's ILT table contradicts the plain public generateFilename spelling
+// (QAEXXZ); a const member fits (ABEXXZ or IBEXXZ, tools/ilt_oracle.py), as
+// BFME's lazy getFilename path suggests, so the address keeps the name open.
+void AudioEventRTS::generateFilenameRva000B3970()
+{
+	if (!m_needsFilenameGenerated || !m_eventInfo)
+		return;
+
+	m_needsFilenameGenerated = false;
+	m_filenameToLoad = generateFilenamePrefix(retainAudioType(peekEventInfo()->m_soundType), false);
+
+	if (retainAudioType(peekEventInfo()->m_soundType) != AT_SoundEffect)
+	{
+		m_filenameToLoad.StringBase<char>::concat(m_eventInfo->getFilename());
+	}
+	else
+	{
+		const WeightedSoundRangeB2430 *sounds = m_eventInfo->getSounds();
+		unsigned totalWeight = m_eventInfo->m_totalWeight;
+		if (totalWeight == 0 || sounds->begin == sounds->end)
+		{
+			m_filenameToLoad = AsciiString::TheEmptyString;
+			return;
+		}
+
+		unsigned which;
+		if (m_eventInfo->m_control & 2)
+		{
+			if ((unsigned)(sounds->end - sounds->begin) > 1)
+			{
+				do
+				{
+					which = bfmeWeightedChoiceB2430(sounds, totalWeight, m_isLogicalAudio);
+				}
+				while (which == m_playingAudioIndex);
+
+				if (which == (unsigned)-1)
+				{
+					m_filenameToLoad = AsciiString::TheEmptyString;
+					return;
+				}
+				m_playingAudioIndex = which;
+			}
+			else
+			{
+				which = 0;
+				m_playingAudioIndex = which;
+			}
+		}
+		else
+		{
+			which = ++m_playingAudioIndex % (unsigned)(sounds->end - sounds->begin);
+		}
+
+		const WeightedSoundB2430 *begin = sounds->begin;
+		m_filenameToLoad.StringBase<char>::concat(begin[which].name);
+		m_filenameToLoad.StringBase<char>::concat(generateFilenameExtension(retainAudioType(peekEventInfo()->m_soundType)));
+	}
+	adjustForLocalization(m_filenameToLoad);
+}
