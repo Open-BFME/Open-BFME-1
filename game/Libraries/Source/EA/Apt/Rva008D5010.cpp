@@ -14,11 +14,13 @@ public:
 };
 extern EAStringC::StringDataC g_rva012D5298Empty;
 #define g_bfmeDefaultString1284 ( *(Rva8CD130StringBlock *)&g_rva012D5298Empty )
-extern void (__cdecl **Rva01337A30ReleaseTable)(void *);
+// Apt.cpp defines the allocator-hook pair pointer at VA 0x01337A30 (data_rows).
+struct BfmeStringPool3AF0 { void *m_alloc; void (__cdecl *m_free)(void *storage); };
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 class Rva8CD130String {
 public:
  Rva8CD130String() { block=&g_bfmeDefaultString1284; ++block->refs; }
- __forceinline ~Rva8CD130String() { Rva8CD130StringBlock *p=block; --p->refs; if(p->refs==0) Rva01337A30ReleaseTable[1](p); }
+ __forceinline ~Rva8CD130String() { Rva8CD130StringBlock *p=block; --p->refs; if(p->refs==0) g_rva01337A30AllocPair->m_free(p); }
  Rva8CD130StringBlock *block;
 };
 class Rva8CD130Value { public: void getName(Rva8CD130String *); };
