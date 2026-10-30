@@ -60,7 +60,12 @@ public:
 	ICoord2D m_regionInput;
 };
 
-extern CampaignObject *TheLivingWorldLogic;
+// Retail 0x012F1028 is EA's `LivingWorldLogic *TheLivingWorldLogic`, defined
+// once in game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp.
+// CampaignObject above is this TU's own view of that address, so the reads
+// cast at the use.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 
 class Gen_00609320
 {
@@ -127,7 +132,7 @@ void LivingWorldRegionManager::rva003C8B90()
 	else
 		TheMouse->setCursor(1);
 
-	ICoord2D screen = TheLivingWorldLogic->m_regionInput;
+	ICoord2D screen = ((CampaignObject *)TheLivingWorldLogic)->m_regionInput;
 	if (!m_enabled)
 	{
 		TheMouse->setCursorTooltip(UnicodeString::TheEmptyString, -1, 0, 1.0f);
@@ -135,7 +140,7 @@ void LivingWorldRegionManager::rva003C8B90()
 		return;
 	}
 
-	if (TheLivingWorldLogic->m_regionInputEnabled)
+	if (((CampaignObject *)TheLivingWorldLogic)->m_regionInputEnabled)
 	{
 		Coord3D world;
 		g_bfmeStateDF->screenToTerrain(&screen, &world);

@@ -100,7 +100,11 @@ class Mouse;
 extern Mouse *TheMouse;
 extern AptPalantir *TheAptPalantir;
 extern InGameUI *TheInGameUI;
-extern CampaignObject *TheLivingWorldLogic;
+// Retail 0x012F1028 is EA's `LivingWorldLogic *TheLivingWorldLogic`, defined
+// once in game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp;
+// CampaignObject is this TU's view of it, so the stores cast at the use.
+class LivingWorldLogic;
+extern LivingWorldLogic *TheLivingWorldLogic;
 
 void rva00612160Post()
 {
@@ -116,7 +120,7 @@ void rva00612160Post()
 	((BfmeVirtualMouseSetCursor *)TheMouse)->setCursor(1);
 	TheAptPalantir->hide(true);
 	TheInGameUI->freeMessageResources();
-	TheLivingWorldLogic->sub->flag = 1;
+	((CampaignObject *)TheLivingWorldLogic)->sub->flag = 1;
 }
 
 // Two-step sibling at retail 0x00612070.  The surviving callback names are
@@ -133,5 +137,5 @@ void rva00612070Post()
 	((BfmeVirtualMouseSetCursor *)TheMouse)->setCursor(1);
 	TheAptPalantir->hide(true);
 	TheInGameUI->freeMessageResources();
-	TheLivingWorldLogic->sub->flag = 1;
+	((CampaignObject *)TheLivingWorldLogic)->sub->flag = 1;
 }
