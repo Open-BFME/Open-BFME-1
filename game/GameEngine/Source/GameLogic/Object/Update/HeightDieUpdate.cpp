@@ -1,5 +1,3 @@
-// ?update@HeightDieUpdate@@UAE?AW4UpdateSleepTime@@XZ
-// partial score=0.6193 date=2026-10-30
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 //
@@ -50,6 +48,7 @@ enum DeathType
 	DEATH_NORMAL = 0
 };
 
+// class-gate: allow Coord3D struct-keyed view: the pinned callee ?setPosition@Object@@QAEXPBUCoord3D@@@Z (ILT 0x0003A1A7) and the TerrainLogic height queries are spelled PBU in this TU
 struct Coord3D
 {
 	Real x;
@@ -136,15 +135,12 @@ public:
 struct BfmeWideResult
 {
 	~BfmeWideResult() { ((BfmeThingCAD *)this)->bfmeGoCAD(); }
-	__forceinline Object *next()
+	Object *next(void)
 	{
-		Rva00295760Payload *payload = m_value;
-		if (payload->m_cursor == payload->m_finish)
+		Rva00295760Pair *end = m_value->m_finish;
+		if (m_value->m_cursor == end)
 			return 0;
-		Rva00295760Pair *cursor = payload->m_cursor;
-		Object *obj = cursor->first;
-		payload->m_cursor = cursor + 1;
-		return obj;
+		return (m_value->m_cursor++)->first;
 	}
 	Rva00295760Payload *m_value;
 };

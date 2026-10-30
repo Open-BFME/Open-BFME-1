@@ -21551,5 +21551,15 @@
   "after_sha256": "e1f46fd255597fa54a1b0e7f2c686b76a8056c1345f5d94085862c1d9c5e060a",
   "evidence": "targets/game/reverse/identity_evidence/0x008d3860-bfmeprocess1236.md",
   "reason": "The bank's apply was a placeholder callee spelling; the ledger names the 0x008BEF00 callee ?rva008BEF00@BfmeSubmitter1283@@QAEXPAUBfmeDescriptor1288@@PAUBfmeContext1288@@@Z, which the body must call to link"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00295760.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/HeightDieUpdate.cpp",
+  "old_name": "payload",
+  "new_name": "m_value",
+  "before_sha256": "91e4c9d3c0c01165e423edf66a14cd140bfdc7a56069534cdbec0e1ede4643f2",
+  "after_sha256": "ff749f0a0d45931e5829597123fd86fe765414285f0b9397c8e92467c3286916",
+  "evidence": "targets/game/reverse/attempt_support/00295760-heightdieupdate-update.md",
+  "reason": "not a rename: the bank's next() local copy `payload` of m_value was removed so next() reads m_value directly (the ScriptActions_doTeamGarrisonNearestBuilding.cpp iterator shape), which is what made the body byte-exact; positional pairing matched the dropped local to the member"
  }
 ]
