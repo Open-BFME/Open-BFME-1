@@ -42,7 +42,7 @@ public:
 	virtual void v18(); virtual void v1c(); virtual void v20(); virtual void v24(); virtual void v28();
 	virtual void v2c(); virtual void v30();
 	virtual void v34(); // +0x34
-	unsigned char bfmeDisabled() const;
+	int bfmeDisabled() const;
 };
 
 class InGameUI
@@ -134,7 +134,7 @@ void Calls004329D0::rva005B4D40()
 
 	if (m_isScrolling)
 	{
-		if (g_bfmeStateDF->bfmeDisabled())
+		if (static_cast<unsigned char>(g_bfmeStateDF->bfmeDisabled()))
 		{
 			if (m_scrollType & SCROLL_RMB)
 				m_scrollType -= SCROLL_RMB;
