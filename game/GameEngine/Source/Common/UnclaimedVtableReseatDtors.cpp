@@ -56,7 +56,24 @@ BFME_VTABLE_RESEAT_DTOR( Rva007FA970VtableReseat )
 BFME_VTABLE_RESEAT_DTOR( Rva007FBB50VtableReseat )
 BFME_VTABLE_RESEAT_DTOR( Rva007FCFB0VtableReseat )
 BFME_VTABLE_RESEAT_DTOR( Rva00801420VtableReseat )
-BFME_VTABLE_RESEAT_DTOR( Rva00802200VtableReseat )
+// 0x0112C4E8 is the vftable the dir32 record owns as ??_7Rva00802380Base@@6B@
+// (with ??_7T2EmptyDtor_00802360@@6B@ at the same address); this class's own
+// vftable was the unrecorded name the dir32 gate debt at 0x0112C4E8 retires.
+// novtable suppresses it (and its ??_G); the seven-byte body is the explicit
+// store of the recorded vtable alone.
+// retired debt: ??_7Rva00802200VtableReseat@@6B@ replaced with ??_7Rva00802380Base@@6B@
+extern "C" void *__identifier("??_7Rva00802380Base@@6B@")[];
+
+class __declspec(novtable) Rva00802200VtableReseat
+{
+public:
+	virtual ~Rva00802200VtableReseat();
+};
+
+Rva00802200VtableReseat::~Rva00802200VtableReseat()
+{
+	*(volatile void **)this = (void *)__identifier("??_7Rva00802380Base@@6B@");
+}
 BFME_VTABLE_RESEAT_DTOR( Rva00802280VtableReseat )
 BFME_VTABLE_RESEAT_DTOR( Rva00802870VtableReseat )
 BFME_VTABLE_RESEAT_DTOR( Rva00802E30VtableReseat )
