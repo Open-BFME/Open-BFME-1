@@ -95,13 +95,23 @@ enum WeaponStatus
 	PRE_ATTACK
 };
 
+extern void j_00013818();
+
 class Weapon
 {
 public:
 	void preFireWeapon(const Object *source, const Object *victim,
 		const Coord3D *position);
-	int getPreAttackDelay(const Object *source, const Object *victim,
-		const Coord3D *position) const;
+	// Retail calls Weapon::getPreAttackDelay (body 0x001E6F10, class-keyed
+	// Coord3D) through ILT 0x00013818; this unit's struct-keyed Coord3D
+	// cannot spell that name, so the call goes to the ILT thunk's own name.
+	int getPreAttackDelayThroughIlt(const Object *source, const Object *victim,
+		const Coord3D *position) const
+	{
+		typedef int (Weapon::*Fn)(const Object *, const Object *, const Coord3D *) const;
+		union { void (*fn)(); Fn call; } u = { j_00013818 };
+		return (this->*u.call)(source, victim, position);
+	}
 
 protected:
 	void computeBonus(const Object *source, UnsignedInt extra, WeaponBonus &bonus) const;
@@ -137,7 +147,7 @@ void Weapon::preFireWeapon(const Object *source, const Object *victim,
 		jitter = 0;
 	m_preAttackJitter = jitter;
 
-	int delay = getPreAttackDelay(source, victim, position);
+	int delay = getPreAttackDelayThroughIlt(source, victim, position);
 	if (delay <= 0)
 		return;
 

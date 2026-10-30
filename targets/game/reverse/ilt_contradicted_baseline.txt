@@ -6469,8 +6469,6 @@ pins	0x00013647	?updatePos@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@@Z
 pins	0x0001366F	?setStatus@Object@@QAEXV?$BitFlags@$0CN@@@_N@Z
 pins	0x00013746	??4StlStr@@QAEAAV0@PBD@Z
 pins	0x00013796	?_M_range_initialize@?$basic_string@GV?$char_traits@G@_STL@@V?$allocator@G@2@@_STL@@AAEXPBG0ABUforward_iterator_tag@2@@Z
-pins	0x00013818	?getPreAttackDelay@Weapon@@QBEHPBVObject@@0PBUCoord3D@@@Z
-pins	0x00013818	?getPreAttackDelay@Weapon@@QBEHPBVObject@@HH@Z
 pins	0x0001393A	?parseScience@INI@@SAXPAV1@PAX1PBX@Z
 pins	0x00013994	??1ParticleSystemHandle@@QAE@XZ
 pins	0x000139AD	?construct@DefaultModuleTemplate0CopyCtorShim@FXParticleSystem@@QAEXPBX@Z

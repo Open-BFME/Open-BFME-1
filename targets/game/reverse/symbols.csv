@@ -84448,8 +84448,6 @@ name,address,notes
 ?getPosition@Team@@QAEXPAUCoord3D@@@Z,0x000241FE,Team position copy called by AIGuardMachine::getGuardScanPos
 ?getPowerName@ManTheWallsSpecialPower@@UBE?AVAsciiString@@XZ,0x00268A60,ICF alias helper of SpecialPowerModule::getPowerName at 0x00268A60
 ?getPowerName@ProductionSpeedBonus@@UBE?AVAsciiString@@XZ,0x00268A60,ICF alias helper of SpecialPowerModule::getPowerName at 0x00268A60
-?getPreAttackDelay@Weapon@@QBEHPBVObject@@0PBUCoord3D@@@Z,0x00013818,three-pointer overload called by Weapon::preFireWeapon at 0x001E8970; retail ILT resolves to body 0x001E6F10
-?getPreAttackDelay@Weapon@@QBEHPBVObject@@HH@Z,0x00013818,Open-BFME5 ILT to Weapon::getPreAttackDelay body 0x001E6F10; preFireWeapon 0x001E8970 calls this three-arg form
 ?getPreferredColor@LANPreferences@@QAEHXZ,0x00043D24,REL32 pin from LanGameOptionsMenuInit at 0x004CDB4F. Its LANPreferences color getter returns Int in EAX.
 ?getPreferredFaction@LANPreferences@@QAEHXZ,0x00027D3B,REL32 pin from LanGameOptionsMenuInit at 0x004CDB5B. Its LANPreferences faction getter returns Int in EAX.
 ?getPreferredHeight@Locomotor@@QBEMXZ,0x0002ECAD,Open-BFME5 ILT thunk to four-byte body 0x001B46A0; reads Locomotor m_preferredHeight at +0x3C as established by the BFME locomotor layout shim
