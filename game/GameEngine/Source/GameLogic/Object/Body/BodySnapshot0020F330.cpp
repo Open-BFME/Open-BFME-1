@@ -2,7 +2,7 @@
 // Primary-body snapshot: six float fields, damage snapshot, particle node IDs,
 // four extension float/flag pairs, packed flags, and final enum field.
 // XferException identity and ABI are already RTTI-proven at ThrowInfo011DFE5C.
-// Node vtable010A74E8 is the existing Rva0020DE10Poly deleting-destructor owner.
+// Node vtable010A74E8 belongs to BodyParticleSystem (ActiveBody particle-system list node).
 // The transferred ID must outlive the loading block, keeping its stack slot
 // distinct from the native throw temporary. The version pair occupies 4 bytes.
 // cl: /DNDEBUG /MD /EHsc
@@ -20,10 +20,10 @@ class BfmeSeedTarget;
 class Gen_00212790 { public: void bfmeSeed(BfmeSeedTarget*); };
 class FlagXfer0020F000;
 class BitFlagSnapshot0020F000 { public: void xfer(FlagXfer0020F000*);unsigned bits; };
-class Rva0020DE10Poly { public: virtual ~Rva0020DE10Poly(){}unsigned id;Rva0020DE10Poly *next; };
+class BodyParticleSystem { public: virtual ~BodyParticleSystem(){}unsigned id;BodyParticleSystem *next; };
 struct Snapshot0020F330 { virtual void xfer(FlagPairTarget*);char pad[0x58]; };
 class Gen0020F330 { public:
- char pad[0x18]; float f18,f1c,f20,f24,f28,f2c;unsigned f30,f34,f38,f3c;Snapshot0020F330 snapshot;unsigned f9c,fa0;bool fa4,fa5,fa6,fa7;Rva0020DE10Poly *head;float fac[4];bool fbc[4];char gapc0[12];unsigned fcc;BitFlagSnapshot0020F000 fd0;
+ char pad[0x18]; float f18,f1c,f20,f24,f28,f2c;unsigned f30,f34,f38,f3c;Snapshot0020F330 snapshot;unsigned f9c,fa0;bool fa4,fa5,fa6,fa7;BodyParticleSystem *head;float fac[4];bool fbc[4];char gapc0[12];unsigned fcc;BitFlagSnapshot0020F000 fd0;
  void handle(FlagPairTarget*);
 };
 void Gen0020F330::handle(FlagPairTarget *target) {
@@ -36,15 +36,15 @@ void Gen0020F330::handle(FlagPairTarget *target) {
  unsigned id;
  if(!target->isCRC()) {
   unsigned short count=0;
-  for(Rva0020DE10Poly *n=head;n;n=n->next)++count;
+  for(BodyParticleSystem *n=head;n;n=n->next)++count;
   target->uint16(&count);
   if(target->isSaving()) {
-   for(Rva0020DE10Poly *n=head;n;n=n->next) Rva0010C2E0((MidVirtualSlot90Receiver*)target,&n->id);
+   for(BodyParticleSystem *n=head;n;n=n->next) Rva0010C2E0((MidVirtualSlot90Receiver*)target,&n->id);
   } else {
    if(head) throw XferException(5,0);
    for(unsigned short i=0;i<count;++i) {
     Rva0010C2E0((MidVirtualSlot90Receiver*)target,&id);
-    Rva0020DE10Poly *n=new Rva0020DE10Poly;
+    BodyParticleSystem *n=new BodyParticleSystem;
     n->id=id;n->next=head;head=n;
    }
   }

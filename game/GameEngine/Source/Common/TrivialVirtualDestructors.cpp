@@ -32,7 +32,6 @@
 BFME_TRIVIAL_VIRTUAL_DTOR( Rva000FBE10Poly )
 BFME_TRIVIAL_VIRTUAL_DTOR( Rva001DDC90Poly )
 BFME_TRIVIAL_VIRTUAL_DTOR( Rva00202E70Poly )
-BFME_TRIVIAL_VIRTUAL_DTOR( Rva0020DE10Poly )
 BFME_TRIVIAL_VIRTUAL_DTOR( Rva00410A60Poly )
 BFME_TRIVIAL_VIRTUAL_DTOR( Rva005D47A0Poly )
 BFME_TRIVIAL_VIRTUAL_DTOR( Rva005D4800Poly )
@@ -49,5 +48,20 @@ BFME_TRIVIAL_VIRTUAL_DTOR( Rva006709E0Poly )
 
 // The carved retail boundary at 0x005D47E0 contains only ret.
 void Rva005D47E0Noop(void)
+{
+}
+
+// 0x0020DE10 / 0x0020DE20 are BodyParticleSystem's destructor and deleting
+// destructor: ActiveBody::createParticleSystems (0x0020ED10, ZH twin
+// `newInstance(BodyParticleSystem)`) installs their vtable 0x010A74E8 on each
+// new node. Unlike Zero Hour's protected MEMORY_POOL_GLUE destructor, the ILT
+// order confirms a public one (??_G...UAE) in BFME.
+// Evidence: targets/game/reverse/identity_evidence/0x0020DE10-bodyparticlesystem-dtor.md
+class BodyParticleSystem
+{
+public:
+	virtual ~BodyParticleSystem();
+};
+BodyParticleSystem::~BodyParticleSystem()
 {
 }

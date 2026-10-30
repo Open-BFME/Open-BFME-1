@@ -111,10 +111,9 @@ extern ParticleSystemManager *TheParticleSystemManager;
 
 class BodyParticleSystem
 {
-protected:
+public:
 	virtual ~BodyParticleSystem();
 
-public:
 	enum BodyParticleSystemMagicEnum
 	{
 		BodyParticleSystem_GLUE_NOT_IMPLEMENTED = 0
