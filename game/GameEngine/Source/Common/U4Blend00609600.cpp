@@ -10,12 +10,8 @@ extern void j_00038ebf();
 class U4Curve006095D0
 {
 public:
-	float evaluate(int t) const
-	{
-		typedef float (U4Curve006095D0::*Evaluate)(int) const;
-		union { void (*fn)(); Evaluate call; } route = { j_00038ebf };
-		return (this->*route.call)(t);
-	}
+	// FCurve.cpp defines the body (0x0006A520); calls bind through ILT 0x00038EBF.
+	float evaluate(int t) const;
 	// 0x00609710 passes the time as a real float through the same ILT.
 	float evaluate(float t) const
 	{

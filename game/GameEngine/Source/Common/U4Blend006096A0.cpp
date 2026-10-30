@@ -4,18 +4,11 @@
 // Retail 0x006096A0 (86B): evaluate the +0x18 curve twice (once per component)
 // and write lo + (hi - lo) * t into a Coord2D out-parameter.
 
-// ILT 0x00038EBF routes to the curve evaluator at 0x0006A520; retail calls through it.
-extern void j_00038ebf();
-
 class U4Curve006095D0
 {
 public:
-	float evaluate(int t) const
-	{
-		typedef float (U4Curve006095D0::*Evaluate)(int) const;
-		union { void (*fn)(); Evaluate call; } route = { j_00038ebf };
-		return (this->*route.call)(t);
-	}
+	// FCurve.cpp defines the body (0x0006A520); calls bind through ILT 0x00038EBF.
+	float evaluate(int t) const;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
