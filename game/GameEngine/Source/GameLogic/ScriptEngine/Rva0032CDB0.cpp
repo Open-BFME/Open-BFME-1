@@ -193,10 +193,20 @@ public:
     virtual int valueAt150(bool mode) const = 0;
 };
 
+// Retail calls ILT 0x0000D3B9 -> 0x001BFE20, the row defined as
+// Object::unidentified_001BFE20 (contain module at +0x1FC, slot +0x68). The
+// Object shim here has no such member, so the call names that definition.
+extern "C" void __identifier("?unidentified_001BFE20@Object@@QBEPAXXZ")(void);
 class BfmeHold1004
 {
 public:
-    BfmeX1004 *bfmeFind1004();
+    BfmeX1004 *bfmeFind1004()
+    {
+        typedef BfmeX1004 *(BfmeHold1004::*FindCall)();
+        union { void (*raw)(); FindCall member; } call;
+        call.raw = __identifier("?unidentified_001BFE20@Object@@QBEPAXXZ");
+        return (this->*call.member)();
+    }
 };
 
 class Rva0032CDB0
