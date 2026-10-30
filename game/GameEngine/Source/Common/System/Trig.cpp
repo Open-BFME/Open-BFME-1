@@ -4,6 +4,14 @@
 #include <math.h>
 
 
+// Retail 0x00873900 (10 B, unreferenced), directly before Sin: the same
+// fld [esp+4] / call __CIasin / ret shape as ASin below. Its own body with no
+// caller or symbol, so the name keeps the address.
+float Rva00873900ASin(float x)
+{
+    return (float)asin(x);
+}
+
 float Sin(float radians)
 {
     return sinf(radians);

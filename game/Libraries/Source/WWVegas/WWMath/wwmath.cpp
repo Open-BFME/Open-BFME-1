@@ -47,6 +47,14 @@ float		WWMath::Random_Float(void)
 	return ((float)(rand() & 0xFFF)) / (float)(0xFFF);
 }
 
+// Retail 0x008D8E80 (10 B, unreferenced): fld [esp+4] / call __CIasin / ret,
+// between Random_Float and Init. The shape is WWMath::Asin's body, but no
+// caller or symbol proves which inline it is, so the name keeps the address.
+float Rva008D8E80Asin(float val)
+{
+	return (float)asin(val);
+}
+
 
 /*
 ** The table-driven WWMath::Fast_Sin/Fast_Cos/Fast_Acos helpers are declared inline in
