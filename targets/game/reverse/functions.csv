@@ -125426,7 +125426,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?m@Gen_009f2670@@QAEXXZ,,0x009F2670,8,game/gen_small/fun_005.cpp,matched,gen-shim;skeleton=delegate-d8;ghidra=FUN_00df2670
 ?m@Gen_009f2b10@@QAEXXZ,,0x009F2B10,8,game/gen_small/fun_005.cpp,matched,gen-shim;skeleton=store-imm-d8;ghidra=FUN_00df2b10
 ?m@Gen_009f4aa0@@QAEPAXHH@Z,,0x009F4AA0,11,game/gen_small/fun_005.cpp,matched,gen-shim;skeleton=this-store-arg2;ghidra=FUN_00df4aa0
-?m@Gen_009f54d0@@QAEPAXH@Z,,0x009F54D0,15,game/gen_small/fun_005.cpp,matched,gen-shim;skeleton=this-zero3-4;ghidra=FUN_00df54d0
 ?m@Gen_009f7fb3@@QAEHXZ,,0x009F7FB3,3,game/gen_small/fun_005.cpp,matched,gen-shim;skeleton=ret-zero;ghidra=FUN_00df7fb3
 ?m@Gen_00a3c880@@QAEPAXXZ,,0x00A3C880,13,game/gen_small/fun_005.cpp,matched,gen-shim;skeleton=this-zero3;ghidra=FUN_00e3c880
 ?m@Gen_00a40650@@QAEHXZ,,0x00A40650,4,game/gen_small/fun_005.cpp,matched,gen-shim;skeleton=getter-d8;ghidra=FUN_00e40650
@@ -173399,3 +173398,5 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?get@Rva009D0640Owner@@QBE?AU?$_Rb_tree_iterator@URva009CFBE0Value@@U?$_Const_traits@URva009CFBE0Value@@@_STL@@@_STL@@ABVAsciiString@@@Z,,0x009D0640,21,game/Libraries/Source/WWVegas/WWLib/RvaTreeBoundsAsciiString.cpp,matched,unreferenced out-of-line lower_bound over the tree whose _M_lower_bound is 0x009CFBE0 (direct call); RET 8 then INT3; opaque owner view like 0x009D0AA0;model=claude-opus-5-5;host=app
 ?Rva00873900ASin@@YAMM@Z,,0x00873900,10,game/GameEngine/Source/Common/System/Trig.cpp,matched,unreferenced fld [esp+4] / call __CIasin / ret directly before Sin; same shape as ASin 0x00873950; opaque name;model=claude-opus-5-5;host=app
 ?Rva008D8E80Asin@@YAMM@Z,,0x008D8E80,10,game/Libraries/Source/WWVegas/WWMath/wwmath.cpp,matched,unreferenced fld [esp+4] / call __CIasin / ret between WWMath::Random_Float and Init; WWMath::Asin shape but unproven; opaque name;model=claude-opus-5-5;host=app
+??0?$vector@UGen_p8cd@@V?$allocator@UGen_p8cd@@@_STL@@@_STL@@QAE@ABV?$allocator@UGen_p8cd@@@1@@Z,,0x009F54D0,15,game/GameEngine/Source/Common/Rva009F5970StateCtor.cpp,matched,STLport vector(const allocator&) for this unit's 8-byte element view; called directly by the default-ctor closure 0x009F5680; this-zero3 body; element identity unproven (Gen_p8cd);model=claude-opus-5-5;host=app
+??_F?$vector@UGen_p8cd@@V?$allocator@UGen_p8cd@@@_STL@@@_STL@@QAEXXZ,,0x009F5680,13,game/GameEngine/Source/Common/Rva009F5970StateCtor.cpp,matched,vector default-constructor closure passed to the eh vector constructor iterator by Rva009F5970State ctor (push 0x00DF5680 at RVA 0x009F5B90); calls vector(const allocator&) 0x009F54D0 with a stack allocator temp;model=claude-opus-5-5;host=app
