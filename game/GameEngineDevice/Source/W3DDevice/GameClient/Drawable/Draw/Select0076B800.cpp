@@ -135,12 +135,14 @@ struct Rva0076B6E0Drawable
  char m_pad100[0x3ac - 0x100];
  bool m_flag3ac;
 };
-struct Rva006C9270GlobalData
+class GlobalData
 {
+public:
  char m_pad000[0xa76];
  bool m_flagA76;
 };
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+// The defined global is ?TheWritableGlobalData@@3PAVGlobalData@@A (data_rows).
+extern GlobalData *TheWritableGlobalData;
 class RadiusDecalTemplate
 {
 public:

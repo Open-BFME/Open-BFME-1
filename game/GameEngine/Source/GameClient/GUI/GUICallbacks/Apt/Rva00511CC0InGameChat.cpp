@@ -230,7 +230,8 @@ public:
 
 extern GameInfo *TheGameInfo;
 
-class Rva006C9270GlobalData
+// Local view of the retail GlobalData (?TheWritableGlobalData@@3PAVGlobalData@@A); field +0xB0C only.
+class GlobalData
 {
 private:
 	char m_padB0C[0xb0c];
@@ -239,7 +240,7 @@ public:
 	int m_fieldB0C;
 };
 
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 class Rva005127A0InGameChat
 {

@@ -49,8 +49,9 @@ class Drawable { public: const TWheelInfo *getWheelInfo() const; char head[0xfc]
 class ParticleSystem { public: void stop(); };
 ParticleSystem *Make00001B18();
 struct Rva00781660Handle { ParticleSystem *system; void *previous, *next; operator bool() const { return system != 0; } ParticleSystem *operator->() const { if (!system) return Make00001B18(); return system; } };
-struct Rva006C9270GlobalData { char head[0xa80]; bool m_showClientPhysics; };
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+class GlobalData { public:  char head[0xa80]; bool m_showClientPhysics; };
+// The defined global is ?TheWritableGlobalData@@3PAVGlobalData@@A (data_rows).
+extern GlobalData *TheWritableGlobalData;
 class GameEngine { public: char head[0x34]; int field34; };
 extern GameEngine *TheGameEngine;
 class ScriptEngine { public: bool isTimeFrozenDebug(); bool _bfme_isClientFrameFrozen(); bool isFrozen() { return isTimeFrozenDebug() || _bfme_isClientFrameFrozen(); } };

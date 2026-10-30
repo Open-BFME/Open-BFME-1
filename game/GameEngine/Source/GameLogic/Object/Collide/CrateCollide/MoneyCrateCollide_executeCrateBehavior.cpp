@@ -39,8 +39,9 @@ public:
 	float unidentified_00009e12(Int index) const;
 };
 
-class Rva006C9270GlobalData;
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+class GlobalData;
+// The defined global is ?TheWritableGlobalData@@3PAVGlobalData@@A (data_rows).
+extern GlobalData *TheWritableGlobalData;
 
 class Rva000C97C0PlayerThunk
 {

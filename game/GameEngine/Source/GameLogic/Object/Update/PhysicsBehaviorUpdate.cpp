@@ -122,8 +122,9 @@ extern AI *TheAI;
 class Pathfinder { public: void Rva003E4190(Object *); };
 
 // Retail 0x012ED5C8 is TheWritableGlobalData (dir32); the body reads +0x1AC.
-struct BfmeGlobalData { char pad00[0x1ac]; float at1ac; };
-extern BfmeGlobalData *TheWritableGlobalData;
+class GlobalData { public:  char pad00[0x1ac]; float at1ac; };
+// The defined global is ?TheWritableGlobalData@@3PAVGlobalData@@A (data_rows).
+extern GlobalData *TheWritableGlobalData;
 extern float g_bfmeScaleBC;
 
 // Object+0x178/+0x186 is the next-position hint inside m_unmodelled138; the

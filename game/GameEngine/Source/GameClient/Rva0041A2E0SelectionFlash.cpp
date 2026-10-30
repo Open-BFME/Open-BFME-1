@@ -113,14 +113,16 @@ public:
 	void flash(const RGBColor *);
 };
 
-struct Rva006C9270GlobalData
+class GlobalData
 {
+public:
 	unsigned char m_beforeSaturation[0xbf0];
 public:
-	float m_selectionSaturation;
-	unsigned char m_selectionHouseColor;
+	float m_selectionFlashSaturationFactor;
+	unsigned char m_selectionFlashHouseColor;
 };
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+// The defined global is ?TheWritableGlobalData@@3PAVGlobalData@@A (data_rows).
+extern GlobalData *TheWritableGlobalData;
 extern const float g_bfmeK1253;
 
 // ?flash@Rva0041A2E0@@QAEXPBURGBColor@@@Z
@@ -176,12 +178,12 @@ void Rva0041A2E0::flash(const RGBColor *color)
 		return;
 
 	RGBColor selectedColor;
-	if (TheWritableGlobalData->m_selectionHouseColor)
+	if (TheWritableGlobalData->m_selectionFlashHouseColor)
 		selectedColor.setFromInt(object->getIndicatorColor());
 	else
 		selectedColor.setFromInt(-1);
 
-	float saturation = TheWritableGlobalData->m_selectionSaturation;
+	float saturation = TheWritableGlobalData->m_selectionFlashSaturationFactor;
 	selectedColor.red *= saturation;
 	selectedColor.green *= saturation;
 	selectedColor.blue *= saturation;

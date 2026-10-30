@@ -120,7 +120,9 @@ public:
 class GameLogic;
 class ScriptEngine;
 extern GameLogic *TheGameLogic;
-extern char *TheWritableGlobalData;
+// The defined global is ?TheWritableGlobalData@@3PAVGlobalData@@A (data_rows).
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 class GameEngine;
 extern GameEngine *TheGameEngine;
 
@@ -245,7 +247,7 @@ void Rva00726290W3DStatusCircle::Render(RenderInfoClass &)
 
 	Bool setIndex = false;
 	Rva00726290Matrix3D tm(true);
-	if (*(Bool *)(TheWritableGlobalData + 0xa9c) &&
+	if (*(Bool *)((char *)TheWritableGlobalData + 0xa9c) &&
 		*(Int *)((char *)TheGameLogic + 0x10c) != 4) {
 		if (__identifier("?m_needUpdate@W3DStatusCircle@@1_NA"))
 			((W3DStatusCircle *)this)->updateCircleVB();

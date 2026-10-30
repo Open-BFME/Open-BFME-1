@@ -136,8 +136,9 @@ extern BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(
 extern void W3DRadarResetLock(void);
 extern char bfmeUnlock1179(void);
 extern void j_00034d56(void);
-struct Rva006C9270GlobalData;
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+class GlobalData;
+// The defined global is ?TheWritableGlobalData@@3PAVGlobalData@@A (data_rows).
+extern GlobalData *TheWritableGlobalData;
 extern char *Rva006A16B0Empty;
 extern "C" char bfmeTagBNH[];
 struct BfmeObjRB;
