@@ -33,3 +33,18 @@ Rva00846B40Iterator Rva00846B40(const char *first, const char *last, Rva00846B40
 {
     return Rva008460D0(first, last, output, _STL::random_access_iterator_tag(), (int *)0);
 }
+
+// Retail 0x008460D0 (114 B): the duplicate random-access __copy into an
+// ostreambuf_iterator that 0x00846B40 calls. Its row was a gen-alias to the
+// NumFacetsInstantiations COMDAT copy; the body follows STLport's
+// random-access __copy loop under the address-derived name above.
+// ?Rva008460D0@@YA?AV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@PBD0V12@ABUrandom_access_iterator_tag@2@PAH@Z
+__declspec(noinline) Rva00846B40Iterator Rva008460D0(const char *first, const char *last, Rva00846B40Iterator result, const _STL::random_access_iterator_tag &, int *)
+{
+    for (int n = last - first; n > 0; --n) {
+        *result = *first;
+        ++first;
+        ++result;
+    }
+    return result;
+}
