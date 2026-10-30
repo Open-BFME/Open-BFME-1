@@ -188,41 +188,146 @@ Bool W3DMouse::releaseD3DCursorTextures(MouseCursor cursor)
 }
 
 /**Load the textures required to display the selected cursor*/
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DMouseLoadD3DCursorTexturesThunk.cpp
-// ?loadD3DCursorTextures@W3DMouse@@ present-unmatched
+// ?loadD3DCursorTextures@W3DMouse@@ retail 0x00701330, 559 bytes.
+
+// BFME1 keeps the loaded cursor textures in the global owning-handle table
+// pinned at VA 0x012F8798 (initializer Rva00C6C4A0MouseTextureArrayInit.cpp);
+// each cell holds one counted texture pointer.
+extern TextureClass *g_w3dMouseCursorTextures[50][MAX_2D_CURSOR_ANIM_FRAMES];
+
+// The counted handle BFMEGetWaterTrackTexture hands back; its destructor is
+// inlined here and tracked by the EH states. The release goes through the
+// pinned 0x009EB7A0 leaf under its WaterTracks surrogate pin; the ZH header's
+// Release_Ref is __forceinline and retail calls the out-of-line body.
+class BFMEWaterTrackTexture
+{
+public:
+	void Release_Ref();
+};
+class BFMEWaterTrackTextureHandle
+{
+public:
+	BFMEWaterTrackTexture *m_texture;
+	~BFMEWaterTrackTextureHandle()
+	{
+		if (m_texture)
+			m_texture->Release_Ref();
+	}
+};
+extern BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(char *name, int mipCount, int format);
+
+// Out-of-line refcounted cell assignment, reached through the pinned ILT
+// thunk (same call ScreenZoomFilter::init makes).
+class TextureHolder
+{
+public:
+	void bind(const BFMEWaterTrackTextureHandle &h);
+};
+
+// The COM surface behind a cursor slot: QueryInterface/AddRef/Release.
+struct BfmeCursorD3DSurface8
+{
+	virtual long __stdcall QueryInterface() = 0;
+	virtual unsigned long __stdcall AddRef() = 0;
+	virtual unsigned long __stdcall Release() = 0;
+};
+
+// getSurfaceLevel hands the surface back inside a four-byte wrapper whose
+// destructor (pinned at 0x008FC5B0) releases it again.
+class W3DRadarResetSurface
+{
+public:
+	~W3DRadarResetSurface();
+	void *m_surface;
+};
+
+class W3DRadarResetTexture
+{
+public:
+	W3DRadarResetSurface getSurfaceLevel();
+};
+
+// The COM-handle slot assignment the single-frame path reaches through the
+// pinned thunk j_00008030 (??4Open2ComHandle at 0x007001E0).
+class Open2ComHandle
+{
+public:
+	void *m_surface;
+	Open2ComHandle &operator=(const Open2ComHandle &other);
+};
+extern void j_00008030(void);
+extern char Rva006A16B0Empty[];
+extern "C" __declspec(dllimport) int __cdecl sprintf(char *buffer, const char *format, ...);
+
+// Loop-body cell assignment, inlined: bump the source's count, release the
+// old block, store (the Gen_006CBA30_UpdateTexture.cpp pattern).
+static __forceinline TextureClass *bfmeCursorCellAssign(TextureClass *&destination,
+	const BFMEWaterTrackTextureHandle &texture)
+{
+	if (texture.m_texture)
+		++*(unsigned short *)((char *)texture.m_texture + 4);
+	if (destination)
+		((BFMEWaterTrackTexture *)destination)->Release_Ref();
+	destination = (TextureClass *)texture.m_texture;
+	return destination;
+}
+
+static __forceinline void bfmeCursorSlotAssign(void *&destination, const W3DRadarResetSurface &source)
+{
+	if (source.m_surface)
+		((BfmeCursorD3DSurface8 *)source.m_surface)->AddRef();
+	if (destination)
+		((BfmeCursorD3DSurface8 *)destination)->Release();
+	destination = source.m_surface;
+}
+
 Bool W3DMouse::loadD3DCursorTextures(MouseCursor cursor)
 {
-	if (cursor == NONE || cursorTextures[cursor][0])
+	if (cursor == NONE || g_w3dMouseCursorTextures[cursor][0])
 		return TRUE;	//no texture for this cursor or texture already loaded
 
-	WW3DAssetManager *am=WW3DAssetManager::Get_Instance();
-	Int animFrames=m_cursorInfo[cursor].numFrames;
+	Int animFrames = m_cursorInfo[cursor].numFrames;
 
 	if (!animFrames)
 		return FALSE;	//no animation frames defined.
-	
-	const char *baseName=m_cursorInfo[cursor].textureName.str();
+
+	const char *baseName;
+	{
+		const void *data = *(const void * const *)&m_cursorInfo[cursor].textureName;
+		baseName = data ? (const char *)data + 8 : Rva006A16B0Empty;
+	}
 	char FrameName[64];
 
 	//Clamp to reasonable number
 	if (animFrames > MAX_2D_CURSOR_ANIM_FRAMES)
 		animFrames = MAX_2D_CURSOR_ANIM_FRAMES;
 
-	m_currentFrames=0;
+	m_currentFrames = 0;
 
 	if (animFrames == 1)
 	{	//single animation frame without trailing numbers
-		sprintf(FrameName,"%s.tga",baseName);
-		cursorTextures[cursor][0]=	am->Get_Texture(FrameName);
-		m_currentD3DSurface[0]=cursorTextures[cursor][0]->Get_Surface_Level();
+		sprintf(FrameName, "%s.tga", baseName);
+		((TextureHolder *)&g_w3dMouseCursorTextures[cursor][0])->bind(
+			BFMEGetWaterTrackTexture(FrameName, 0, 0));
+		typedef Open2ComHandle &(Open2ComHandle::*SlotAssign)(const Open2ComHandle &);
+		union
+		{
+			void (*fn)();
+			SlotAssign call;
+		} u = { j_00008030 };
+		(((Open2ComHandle *)&m_currentD3DSurface[0])->*u.call)(
+			*(const Open2ComHandle *)&((W3DRadarResetTexture *)&g_w3dMouseCursorTextures[cursor][0])->getSurfaceLevel());
 		m_currentFrames = 1;
 	}
 	else
 	for (Int i=0; i<animFrames; i++)
 	{
-		sprintf(FrameName,"%s%04d.tga",baseName,i);
-		if ((cursorTextures[cursor][i]=am->Get_Texture(FrameName)) != NULL)
-		{	m_currentD3DSurface[m_currentFrames]=cursorTextures[cursor][i]->Get_Surface_Level();
+		sprintf(FrameName, "%s%04d.tga", baseName, i);
+		if (bfmeCursorCellAssign(g_w3dMouseCursorTextures[cursor][i],
+			BFMEGetWaterTrackTexture(FrameName, 0, 0)) != NULL)
+		{
+			bfmeCursorSlotAssign(*(void **)&m_currentD3DSurface[m_currentFrames],
+				((W3DRadarResetTexture *)&g_w3dMouseCursorTextures[cursor][i])->getSurfaceLevel());
 			m_currentFrames++;
 		}
 	}
