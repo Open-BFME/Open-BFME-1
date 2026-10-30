@@ -1,5 +1,5 @@
 // ?method@Rva002B26C0Owner@@QAEXXZ
-// partial score=0.254 date=2026-10-02
+// partial score=0.7421 date=2026-10-30
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/bfmekindof /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
 #define _STLP_USE_STATIC_LIB 1
@@ -118,7 +118,7 @@ struct BfmeWideResult {
 };
 class BfmeWideForwardC {
 public:
-    BfmeWideResult bfmeForwardWideC(int,float,int,int,int);
+    BfmeWideResult bfmeForwardWideC(int,int,int,int,int);
 };
 class PartitionManager;
 extern PartitionManager *ThePartitionManager;
@@ -150,6 +150,7 @@ public:
     char rva000000c0[0x204-0xc0];
     char *rva00000204;
 };
+extern const float g_bfmeK1266A;
 class Rva002B26C0Owner {
 public:
     void method();
@@ -164,17 +165,17 @@ void Rva002B26C0Owner::method()
     ((Rva00027BC9Object *)object)->getPosition(&center);
     center.z = object->rva00000038.z;
     BfmeWideResult result = ((BfmeWideForwardC *)ThePartitionManager)->bfmeForwardWideC(
-        (int)&center, radius, 0,
+        (int)&center, *(int *)&radius, 0,
         (int)Rva00260180SelfFilter(object)
           .link(&Rva0025ED50RootFilter())
           ->link(&Rva000FBDC0Filter())
           ->link(&PartitionFilterRejectByObjectStatus(
-             Rva00260180ObjectStatusMask(Rva00260180ObjectStatusMask::kInit,26),
+             Rva00260180ObjectStatusMask(Rva00260180ObjectStatusMask::kInit,58),
              Rva00260180ObjectStatusMask()))
           ->link(&Rva0025ED50ObjectFilter(object))
           ->link(&PartitionFilterAcceptByKindOf(
-            Rva00260180KindOfMask(Rva00260180KindOfMask::kInit,2),
-            *reinterpret_cast<const Rva00260180KindOfMask *>(&KINDOFMASK_NONE))), 2);
+            *reinterpret_cast<const Rva00260180KindOfMask *>(&KINDOFMASK_NONE),
+            Rva00260180KindOfMask(Rva00260180KindOfMask::kInit,2))), 2);
     if (result.size() > 0) {
         Object *other;
         while ((other = result.next()) != 0) {
@@ -186,13 +187,18 @@ void Rva002B26C0Owner::method()
             position.z = other->rva00000038.z;
             if (pathfinder->getLayer(&position) == 1 &&
                 pathfinder->Rva003DF250(other,&position)) continue;
-            Coord3D destination;
-            destination.x = position.x + (center.x - object->rva00000038.x) * 0.5f;
-            destination.y = position.y + (center.y - object->rva00000038.y) * 0.5f;
-            destination.z = position.z;
+            Coord3D delta;
+            delta.x = center.x - object->rva00000038.x;
+            delta.y = center.y - object->rva00000038.y;
+            delta.z = 0;
+            delta.x *= 3.0f;
+            delta.y *= 3.0f;
+            Coord3D &dest = position;
+            dest.x += delta.x;
+            dest.y += delta.y;
             pathfinder->adjustDestination(other,
-              *(const LocomotorSet *)(other->rva00000204+0x1a8),&destination,0);
-            ((BfmeHostTP *)other)->bfmeSetPositionTP((const BfmePosTP *)&destination,true);
+              *(const LocomotorSet *)(other->rva00000204+0x1a8),&dest,0);
+            ((BfmeHostTP *)other)->bfmeSetPositionTP((const BfmePosTP *)&dest,true);
             if (other->slot28()) other->slot28()->bfmeGo1057A(10);
         }
     }
