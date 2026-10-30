@@ -1,5 +1,15 @@
 [
  {
+  "old_path": "targets/game/reverse/attempts/0x0043e260.cpp",
+  "new_path": "targets/game/reverse/attempts/0x0043e260.cpp",
+  "old_name": "testPoint",
+  "new_name": "rva0043e260",
+  "before_sha256": "8d1799f08a3ac41846e32b27b0173869a8fc68ba9b7584a7d1d46c8caa7af201",
+  "after_sha256": "c589facb0c593bafc968d9fce8104c7b71b7e30cb2ec3063a8b5c66cf5ae2daa",
+  "evidence": "targets/game/reverse/identity_evidence/0043e260-lasso-point-test-name.md",
+  "reason": "Bank adopts the pinned caller-linked name ?rva0043e260@InGameUI@@QAE_NPBUICoord2D@@@Z (matched caller rva00442fd0@InGameUI); testPoint@Rva0043E260Owner was an attempt-local placeholder"
+ },
+ {
   "old_path": "targets/game/reverse/attempts/0x0088c4e0.cpp",
   "new_path": "game/GameEngine/Source/Common/Rva0088C4E0PostStaticInitLookup.cpp",
   "old_name": "purecallHandler",
