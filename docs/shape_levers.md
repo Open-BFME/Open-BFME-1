@@ -2315,6 +2315,22 @@ loop's latch inverted (jge outer + jmp top) or swapped EBX/EDI/EBP.
 VC7.1 /O2 (TU flags `/DNDEBUG /DWIN32 /MD /EHsc`, stringinline shim).
 Source `game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamGarrisonNearestBuilding.cpp`.
 
+Measured again on 2026-10-30 at 0x00295760 HeightDieUpdate::update (654 B):
+a `__forceinline` next() that first copies `m_value` into a `payload` local
+and then compares `payload->m_cursor == payload->m_finish` left every scratch
+register of the inlined next() rotated by one (241 masked diffs). The plain
+member `Pair *end = m_value->m_finish; if (m_value->m_cursor == end) return 0;
+return (m_value->m_cursor++)->first;` was exact. Same TU flags; source
+`game/GameEngine/Source/GameLogic/Object/Update/HeightDieUpdate.cpp` (259163f582).
+The swap was inert on 0x00259910 and 0x002FF0C0, whose residue lies elsewhere.
+
+Related warning from 0x002B26C0 (2026-10-30): a whole-function "zero kept in
+EBP" register residue around a filter chain was a wrong ObjectStatus mask bit
+in the source (26 instead of 58: retail's 0x04000000 store lands in the
+mask's second dword). Fixing the constant took the bank from 551 to 210
+differing bytes and removed EBP. Compare every filter mask and argument store
+with retail before treating such a body as a register-allocation wall.
+
 ## Volatile float local reproduces a dead-argument-home spill reloaded after a call (2026-10-28)
 
 Mismatch (0x0027DB50 AIUpdateInterface::privateAttackPosition, 555/562 B
