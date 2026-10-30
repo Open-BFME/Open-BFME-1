@@ -6,8 +6,10 @@ enum StateReturnType
     STATE_RETURN_DEFAULT
 };
 
-struct Coord3D
+// Class-keyed as in the defined ?adjustDestination@Pathfinder@@...PAVCoord3D@@PBV4@@Z (0x003F6090).
+class Coord3D
 {
+public:
     float x;
     float y;
     float z;
