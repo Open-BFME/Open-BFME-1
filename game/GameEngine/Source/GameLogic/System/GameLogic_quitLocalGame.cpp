@@ -70,9 +70,17 @@ public:
 class InGameUI
 {
 public:
-	void _bfme_setEngineInputEnabled(Bool enabled);
 	char m_pad[0x12BE];
 	unsigned char m_flag12BE;
+};
+
+// Retail's call goes through ILT 0x00045A1B to the existing 0x0043B260
+// engine-input owner. Its this pointer is unchanged; 0x0043B280 is the
+// separate script-input flag setter.
+class BfmeInGameUI_setInputEnabled
+{
+public:
+	void setEngineInputEnabled(Bool enabled);
 };
 
 class AudioManager
@@ -149,7 +157,7 @@ void GameLogic::_bfme_quitLocalGame(void)
 			m_gamePaused = false;
 			TheMouse->_bfme_setEngineVisibility(vis);
 			if (m_inputEnabledMemory)
-				TheInGameUI->_bfme_setEngineInputEnabled(true);
+				reinterpret_cast<BfmeInGameUI_setInputEnabled *>(TheInGameUI)->setEngineInputEnabled(true);
 			TheAudio->audioOp(0x3F, 3, 0);
 			TheAudio->audioOp(0x3F, 4, 1);
 		}
