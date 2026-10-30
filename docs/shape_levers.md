@@ -2799,3 +2799,10 @@ fixed the argument order on 0x003ADDB0. Measured, not explained: inline calls
 appear to be evaluated as a group before the pushes. Element pointer or
 reference locals (`Spec &e = begin[i]`) instead make VC7.1 add base+offset
 once (180 B). Source: game/GameEngine/Source/Common/Glo012F1024Entry_bfmeStep.cpp.
+The same unit's 0x003AE030 (313 B) went exact the same way: a `float getN()`
+accessor gives retail's x87 `fld`/`fstp` frame temporary for a float argument,
+`for (unsigned i...; i < vec.bfmeSize(); ...)` through the vector view keeps
+begin out of the size computation (raw `end - begin` lets VC7.1 CSE it), and
+assigning a member through a named pointer local
+(`Tree *map = ...m(); node->m_map = *map;`) instead of one expression lets
+VC7.1 keep the EH state -1 in EBP as retail does (320 -> 313 B).
