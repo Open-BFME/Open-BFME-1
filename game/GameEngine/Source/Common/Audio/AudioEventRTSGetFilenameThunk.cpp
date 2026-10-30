@@ -7,11 +7,14 @@
 // BFME lazily regenerates a dirty filename when event metadata is available.
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
+class AudioEventRTS;
+// ILT 0x0000ADFD, the lazy filename generator 0x000B3970 (this in ECX).
+void __fastcall j_0000adfd(AudioEventRTS *self);
+
 class AudioEventRTS
 {
 public:
 	AsciiString getFilename();
-	void generateFilename();
 
 private:
 	void *m_vtable;
@@ -24,6 +27,6 @@ private:
 AsciiString AudioEventRTS::getFilename()
 {
 	if (m_filenameDirty && m_eventInfo != 0)
-		generateFilename();
+		j_0000adfd(this);
 	return m_filenameToLoad;
 }

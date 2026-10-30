@@ -79080,6 +79080,7 @@ name,address,notes
 ?bfmeNotifyCLC@BfmeMidCLC@@QAEXXZ,0x0002191D,pin
 ?bfmeNotifyCell@VictorySystem@@QAEXIPAUBfmeVec1268@@@Z,0x0000ED4A,"Lead verified ILT to1DF930; thiscall player index and coordinate pointer, ret8, dispatches actions on spatial results"
 ?bfmeNotifyDDE@@YAXXZ,0x0000ADFD,pin
+?j_0000adfd@@YIXPAVAudioEventRTS@@@Z,0x0000ADFD,self-addressed ILT 0x0000ADFD (jmp 0x000B3970) called with ECX=this by getFilename 0x000B3B70 and bfmeGenerateFilename 0x000B4840
 ?bfmeNotifyESN@@YGXPAVBfmeSinkESN@@@Z,0x0000A3B2,pin
 ?bfmeNotifyETB@BfmeSinkETB@@QAEXPAVBfmeItemETB@@HPAVBfmeArgETB@@H@Z,0x00035D0A,pin
 ?bfmeNotifyETD@BfmeSinkETD@@QAEXHHHPAVBfmeOwnerETD@@@Z,0x0004399B,pin
@@ -84034,7 +84035,6 @@ name,address,notes
 ?gen009D8190@@YAXPAXPBX@Z,0x009D8190,pair construct callee of Gen009D7B80 insert
 ?gen009ED790@@YAXPAX0@Z,0x009ED790,address-derived subobject constructor of the allocating-factory family; target read from the REL32 at its call sites
 ?gen009EE320@@YAPAXXZ,0x009EE320,address-derived callee of the 22-byte cached-pointer fill family; target read from the REL32 at its call sites
-?generateFilename@AudioEventRTS@@QAEXXZ,0x000B3970,Open-BFME5 matched caller at 0x000B3B70 names the lazy filename generator
 ?generateGameSpyGameResultsPacket@GameSpyStagingRoom@@QAE?AVAsciiString@@_N@Z,0x006386F0,ZH StagingRoomGameInfo.cpp:603 line for line plus BFME extras: TheVictoryConditions 0x012F079C getEndFrame +0x44 / hasAchievedVictory +0x24; getMap backslash-to-slash loop; format "\seed\%d\hostname\%s\mapname\%s\numplayers\%d\duration\%d\gamemode\exiting\localplayer\%d\ladder\%s" with ladder = none/1v1/2v2 from m_isQM +0x43c and the QM ladder type +0x440; per player "\player_%d\%s\pid_%d\%d\team_%d\%d\result_%d\%s\side_%d\%s\auth_%d\%s\authtoken_%d\%s" with result loss/discon/desync(TheGameLogic+0x6c unless the Bool argument)/win and America->USA; ILT 0x00022A34 called by the score screen 0x004E6F0D and 0x000A614B; this is the body the ledger name on 0x0085E420 belongs to
 ?generateIndexBuffer@WaterRenderObjClass@@IAEJHH@Z,0x0001F019,WaterRenderObjClass::generateIndexBuffer retail ILT used by enableWaterGrid
 ?generatePlayInfo@AudioEventRTS@@QAEXXZ,0x0003828A,AudioManager getAudioLengthMS calls this retail ILT

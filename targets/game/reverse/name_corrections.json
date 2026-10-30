@@ -21501,5 +21501,35 @@
   "after_sha256": "013bd33c752e61acaa61084e5f92ffa0269c857fefce5ff18dc6cdc5a829d65d",
   "evidence": "targets/game/reverse/identity_evidence/0x0069f540-erasekey-bank-name.md",
   "reason": "eraseKey was a bank-local guess on a non-virtual placeholder owner; retail 0x0069F540 is MilesAudioManager vtable slot 88 and ilt_oracle contradicts ?eraseKey@Rva0069F540Owner@@QAEXPAX@Z, so the virtual keeps an address-derived name."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Audio/AudioEventRTSGetFilenameThunk.cpp",
+  "new_path": "game/GameEngine/Source/Common/Audio/AudioEventRTSGetFilenameThunk.cpp",
+  "old_name": "generateFilename",
+  "new_name": "j_0000adfd",
+  "before_sha256": "01be07fdd460447f39e2a04a6bbbeb15e4ae0f98c14216872e336e03759b03ad",
+  "after_sha256": "65c64173ca63936c7580988f33ca3627b2e9084208b9a258292bf3f600be5069",
+  "evidence": "targets/game/reverse/identity_evidence/000b3970-generatefilename-ilt-contradiction.md",
+  "reason": "retail's ILT contradicts ?generateFilename@AudioEventRTS@@QAEXXZ for the 0x000B3970 body; the caller now reaches it through the self-addressed ILT name j_0000adfd (0x0000ADFD), and the body lands under an address-derived name"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Audio/AudioEventRTS_bfmeGenerateFilename.cpp",
+  "new_path": "game/GameEngine/Source/Common/Audio/AudioEventRTS_bfmeGenerateFilename.cpp",
+  "old_name": "generateFilename",
+  "new_name": "bfmeGenerateFilename",
+  "before_sha256": "93808264ef5cd31059629770f824ba0139cd8ee6b3119e00f9c9c8a4dedb1932",
+  "after_sha256": "0542a89fdb2402aad53d3767e096f4bb35d362acae8b41f41855cea7d426b7d4",
+  "evidence": "targets/game/reverse/identity_evidence/000b3970-generatefilename-ilt-contradiction.md",
+  "reason": "retail's ILT contradicts ?generateFilename@AudioEventRTS@@QAEXXZ for the 0x000B3970 body; the caller now reaches it through the self-addressed ILT name j_0000adfd (0x0000ADFD), and the body lands under an address-derived name"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Audio/AudioEventRTS_bfmeGenerateFilename.cpp",
+  "new_path": "game/GameEngine/Source/Common/Audio/AudioEventRTS_bfmeGenerateFilename.cpp",
+  "old_name": "generateFilename",
+  "new_name": "j_0000adfd",
+  "before_sha256": "93808264ef5cd31059629770f824ba0139cd8ee6b3119e00f9c9c8a4dedb1932",
+  "after_sha256": "0542a89fdb2402aad53d3767e096f4bb35d362acae8b41f41855cea7d426b7d4",
+  "evidence": "targets/game/reverse/identity_evidence/000b3970-generatefilename-ilt-contradiction.md",
+  "reason": "retail's ILT contradicts ?generateFilename@AudioEventRTS@@QAEXXZ for the 0x000B3970 body; the caller now reaches it through the self-addressed ILT name j_0000adfd (0x0000ADFD), and the body lands under an address-derived name"
  }
 ]
