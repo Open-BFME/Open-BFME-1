@@ -74,6 +74,53 @@ private:
 	Thing *m_bfmeThing;					// +0x214
 };
 
+// Retail 0x001CB020 (119 B) is a second copy of the same resolver, 0xA0
+// bytes ahead of the one above and differing only in its rel32 operands.
+// Every caller reaches it through ILT 0x0000FAA6, which the matched callers
+// (AIUpdateConditionCooldown0027BF60.cpp, Rva00242B90.cpp,
+// StealthUpdate_markAsDetected.cpp, RunReadyAction0027A7A0.cpp, ...) spell
+// with the pinned address-free placeholder below; its owner is unknown.
+class BfmeObjAS
+{
+public:
+	BfmeObjAS *bfmeParentAS(Int allowLookup);
+
+private:
+	char m_bfmeHeadA[0x04];
+	BfmeOverridable *m_bfmeTemplate;			// +0x04
+	char m_bfmeHeadB[0x78 - 0x08];
+	Int m_bfmeObjectID;					// +0x78
+	char m_bfmeHeadC[0x214 - 0x7C];
+	Thing *m_bfmeThing;					// +0x214
+};
+
+// ?bfmeParentAS@BfmeObjAS@@QAEPAV1@H@Z
+BfmeObjAS *BfmeObjAS::bfmeParentAS(Int allowLookup)
+{
+	BfmeOverridable *final = m_bfmeTemplate;
+
+	if (final && final->m_bfmeNextOverride)
+		final = final->m_bfmeNextOverride->friend_getFinalOverride();
+
+	if (final->m_bfmeFlags & 0x1000)
+		return this;
+
+	Thing *thing = m_bfmeThing;
+
+	if (thing && thing->isKindOf(BFME_KINDOF_6C))
+		return (BfmeObjAS *)thing;
+
+	if ((char)allowLookup)
+	{
+		thing = TheGameLogic->findObjectByID(m_bfmeObjectID);
+
+		if (thing && thing->isKindOf(BFME_KINDOF_6C))
+			return (BfmeObjAS *)thing;
+	}
+
+	return 0;
+}
+
 // ?resolve@RvaC4390Second@@QAEPAURvaC4390First@@H@Z
 RvaC4390First *RvaC4390Second::resolve(Int allowLookup)
 {

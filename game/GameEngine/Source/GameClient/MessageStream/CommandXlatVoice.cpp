@@ -26,7 +26,7 @@ struct IRegion2D { ICoord2D lo,hi; int width() const { return hi.x-lo.x; } int h
 // Retail 0x00417060, landed as ?rva00417060@Rva00417060@@QBEPAXXZ (address-keyed).
 class Rva00417060 { public: void *rva00417060() const; };
 void d_00416fe0();
-void dup_001cb020();
+class BfmeObjAS { public: BfmeObjAS *bfmeParentAS(int); };
 struct Q3IndexedItem;
 struct Q3IndexedOwner { public:
  Q3IndexedItem* Rva0049B320();
@@ -162,9 +162,7 @@ __forceinline Rva001C3920* rva001C3920(int a) const {
  typedef Rva001C3920* (Object::*Function)(int) const;
  return (this->*reinterpret_cast<Function>(&Object::findSpecialPowerModuleInterface))(a);
 }Object* rva001CB020(int a) {
- typedef Object* (Object::*Function)(int);
- union { void (*raw)(); Function member; } fn; fn.raw=dup_001cb020;
- return (this->*fn.member)(a);
+ return (Object*)reinterpret_cast<BfmeObjAS *>(this)->bfmeParentAS(a);
 } Relationship getRelationship(const Object*) const;
 __forceinline Rva002ACD90* rva001BEE60(int a) {
  typedef Rva002ACD90* (Object::*Function)(int);
