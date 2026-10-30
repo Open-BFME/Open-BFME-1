@@ -26,3 +26,21 @@ declaration order, const pos, copy-init, compound p.x/p.y, pointer dest,
 body-assignment copy ctor (other orders worse), inline pushPoint helper,
 forward via 3-arg ctor or getXVector (worse), single-call dest form (worse).
 To land: pin the 0x002666A0 callee (ILT 0x00020455) or land it first.
+
+## 0x002666A0 approach-point helper (725 B) — same session
+
+Bank attempts/0x002666a0.cpp: 723/725 B, shape 0.976. Everything matches
+except the normalize block: retail keeps 1/len live on the x87 stack to the
+end (`fld [y]; fmul st(2)`, `fld [z]; fmul st(2)`, final `fstp st(0)`),
+ours consumes it at z (`fld st(1); fmul [y]`, `fxch; fmul [z]`), which also
+shifts the loop-head pad by 3. Got here with: targetPosition pointer local at
+the top, STLport bitset<86> BitFlags(kInit,63), `position = copyAt(index)`
+(Rva002060B0Triple float view with a user copy ctor), `*(Rva00206100Point*)
+dockPosition = point(index)`, struct copy `position = *targetPosition` before
+the `+= offset` adds. Inert for the normalize: operand order, statement
+order permutations (worse), named length/lengthSqr, const or function-scope
+inverse, inline normalize/scale members, free inline normalize helper, dead
+reuse of inverse; a separate step vector reproduces the y pattern but moves
+the stores (0.986, 726 B). The retail idiom is unique in .text (regex search).
+Pins needed to land: callers use Coord3D class spelling; bfmeGroundCellThreshold
+is ledgered with PBUCoord3D (needs an alias pin at ILT 0x0003CE25).
