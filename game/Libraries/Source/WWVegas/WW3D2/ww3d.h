@@ -117,9 +117,9 @@ public:
 
 	static int					Get_Render_Device(void);
 	static bool					Set_Render_Device( int dev=-1, int resx=-1, int resy=-1, int bits=-1, int windowed=-1, bool resize_window = false, bool reset_device=false, bool restore_assets=true);
-	static WW3DErrorType		Set_Render_Device( const char *dev_name, int resx=-1, int resy=-1, int bits=-1, int windowed=-1, bool resize_window = false  );
-	static WW3DErrorType		Set_Next_Render_Device(void);
-	static WW3DErrorType		Set_Any_Render_Device( void );
+	static bool					Set_Render_Device( const char *dev_name, int resx=-1, int resy=-1, int bits=-1, int windowed=-1, bool resize_window = false  );
+	static bool					Set_Next_Render_Device(void);
+	static bool					Set_Any_Render_Device( void );
 
 	static void					Get_Pixel_Center(float &x, float &y);
 	static void					Get_Render_Target_Resolution(int & set_w,int & set_h,int & get_bits,bool & get_windowed);

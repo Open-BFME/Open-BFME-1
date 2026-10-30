@@ -436,15 +436,10 @@ WW3DErrorType WW3D::Shutdown(void)
  * HISTORY:                                                                                    *
  *   3/24/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Set_Render_Device@WW3D@@SA?AW4WW3DErrorType@@PBDHHHH_N@Z present-unmatched
-WW3DErrorType WW3D::Set_Render_Device( const char * dev_name, int width, int height, int bits, int windowed, bool resize_window )
+bool WW3D::Set_Render_Device( const char * dev_name, int width, int height, int bits, int windowed, bool resize_window )
 {
 	bool success = DX8Wrapper::Set_Render_Device(dev_name,width,height,bits,windowed,resize_window);
-	if (success) {
-		return WW3D_ERROR_OK;
-	} else {
-		return WW3D_ERROR_INITIALIZATION_FAILED;
-	}
+	return success ? true : false;
 }
 
 
@@ -460,15 +455,10 @@ WW3DErrorType WW3D::Set_Render_Device( const char * dev_name, int width, int hei
  * HISTORY:                                                                                    *
  *   3/24/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Set_Any_Render_Device@WW3D@@ present-unmatched
-WW3DErrorType WW3D::Set_Any_Render_Device( void )
+bool WW3D::Set_Any_Render_Device( void )
 {
 	bool success = DX8Wrapper::Set_Any_Render_Device();
-	if (success) {
-		return WW3D_ERROR_OK;
-	} else {
-		return WW3D_ERROR_INITIALIZATION_FAILED;
-	}
+	return success ? true : false;
 }
 
 
@@ -503,15 +493,10 @@ bool WW3D::Set_Render_Device(int dev, int width, int height, int bits, int windo
  * HISTORY:                                                                                    *
  *   3/26/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?Set_Next_Render_Device@WW3D@@ present-unmatched
-WW3DErrorType WW3D::Set_Next_Render_Device(void)
+bool WW3D::Set_Next_Render_Device(void)
 {
 	bool success = DX8Wrapper::Set_Next_Render_Device();
-	if (success) {
-		return WW3D_ERROR_OK;
-	} else {
-		return WW3D_ERROR_INITIALIZATION_FAILED;
-	}
+	return success ? true : false;
 }
 
 /***********************************************************************************************
