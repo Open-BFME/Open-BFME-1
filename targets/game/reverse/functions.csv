@@ -37061,7 +37061,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_001604b0@@YAXXZ,,0x001604B0,4,game/GameEngine/Source/Common/Rva001604B0DwordGetter.cpp,matched,object-symbol=?get@Rva001604B0DwordField@@QBEIXZ;address-derived dword getter;carved boundary and retail bytes prove the body
 ?d_0016bb20@@YAXXZ,,0x0016BB20,8,game/GameEngine/Source/Common/VirtualSlot5CallThunk.cpp,matched,object-symbol=?invokeOne@VirtualSlot5CallThunk@@QAEXXZ;Open-BFME5 clean C++ virtual slot 5 call
 ?d_0016f150@@YAXXZ,,0x0016F150,352,game/gen_asm/d_0015f070.asm,matched,gen-dump;ghidra=FUN_0056f150
-?d_0016f340@@YAXXZ,,0x0016F340,238,game/gen_asm/d_0016f340.asm,matched,gen-dump;ghidra=FUN_0056f340
 ?d_0016f4f0@@YAXXZ,,0x0016F4F0,243,game/gen_asm/d_0016f340.asm,matched,gen-dump;ghidra=FUN_0056f4f0
 ?d_00176a50@@YAXXZ,,0x00176A50,1041,game/gen_asm/d_0016f340.asm,matched,gen-dump;ghidra=FUN_00576a50
 ?d_00177720@@YAXXZ,,0x00177720,622,game/gen_asm/d_00177320.asm,matched,gen-dump;ghidra=FUN_00577720
@@ -173392,3 +173391,4 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?Rva006077C0ParseSoundState@@YAXPAVINI@@PAX1PBX@Z,,0x006077C0,291,game/GameEngine/Source/GameClient/Drawable/Behavior/Rva006077C0ParseSoundState.cpp,matched,SoundState FieldParse callback via ILT 0x1D55C; push_back inlined on instance+8; element calls via ILT names; evidence identity_evidence/006077c0-soundstate-parse.md;model=claude-opus-5-5;host=app
 ?Rva00C3D83BCleanup@@YAXXZ,,0x00C3D83B,23,game/GameEngine/Source/GameClient/Drawable/Behavior/Rva006077C0ParseSoundState.cpp,matched,gen-funclet;object-symbol=$L4168;parent=?Rva006077C0ParseSoundState@@YAXPAVINI@@PAX1PBX@Z;retail parent6077C0 -> handlerC3D852 -> FuncInfoE2D3D4 state1/0 placement delete ILT2AAA9;RET C3D851;model=claude-opus-5-5;host=app
 ?getPreAttackDelay@Weapon@@QBEHPBVObject@@0PBVCoord3D@@@Z,,0x001E6F10,275,game/GameEngine/Source/GameLogic/Object/Weapon_getPreAttackDelay.cpp,matched,ZH Weapon::getPreAttackDelay twin; called by matched preFireWeapon 0x001E8970 via ILT 0x13818 (ilt_oracle CONFIRMED PBV); do/while forceinline WeaponBonus clear gives EAX 1.0f interleave;model=claude-opus-5-5;host=app
+?internalUpdate@AICombineState@@IAE?AW4StateReturnType@@XZ,,0x0016F340,238,game/GameEngine/Source/GameLogic/AI/AICombineStateInternalUpdate.cpp,matched,BFME2 donor AICombineStateInternalUpdate.cpp nested-if port with BFME1 offsets; ilt_oracle CONFIRMED at ILT 0x37E34;model=claude-opus-5-5;host=app
