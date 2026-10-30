@@ -19,7 +19,9 @@ struct BfmeStringPoolESP
 	void *m_unused;
 	void (__cdecl *free)(void *);
 };
-extern unsigned char g_bfmeFlagESP;
+// VA 0x013377FC, zero-filled .bss in retail; cleared here (0x00891E70) and tested
+// then set by BfmeNode1236List::bfmeProcess1236 (0x008D3860).
+unsigned char g_bfmeFlagESP;
 
 class BfmeStrVKI
 {
