@@ -1,5 +1,7 @@
 // ?j_00015e42@Glo012F1024Item@@QAEXXZ
-// partial score=0.9 date=2026-09-18
+// partial score=0.849 date=2026-10-30
+// ?j_00015e42@Glo012F1024Item@@QAEXXZ
+// partial score=0.85 date=2026-10-30 (s500 a1: 1-byte struct temp arg; 29 diffs)
 // cl: /DNDEBUG /MD /EHsc
 
 // Open-BFME5: Glo012F1024Entry::bfmeStep, retail 0x003A7320, 62 bytes. The body
@@ -347,34 +349,32 @@ extern Glo012F1028Type *Glo012F1028;				// 0x012F1028
 
 extern Gen_003C02B0 *Glo012F1028Remove;				// 0x012F1028
 
+struct BfmeFlag1VNE { char m_bfmeValue; };
+inline BfmeFlag1VNE bfmeFlagOf(char c) { BfmeFlag1VNE f; f.m_bfmeValue = c; return f; }
+struct BfmeSpec16VNE
+{
+	int m_bfmeHead;
+	unsigned int m_bfmeWidth;
+	char m_bfmeFlag;
+	char m_bfmePad[3];
+	unsigned int m_bfmeHeight;
+};
 class BfmeRectVNE
 {
 public:
-	BfmeRectVNE(unsigned width, unsigned height, char flag);
+	BfmeRectVNE(unsigned width, unsigned height, BfmeFlag1VNE flag);
 	char m_bfmeBody[0x10];
 };
 
-#pragma comment(linker, "/alternatename:??0BfmeRectVNE@@QAE@IID@Z=?bfmeInitVNE@BfmeRectVNE@@QAEPAV1@IID@Z")
+#pragma comment(linker, "/alternatename:??0BfmeRectVNE@@QAE@IIUBfmeFlag1VNE@@@Z=?bfmeInitVNE@BfmeRectVNE@@QAEPAV1@IID@Z")
 
 // ?j_00015e42@Glo012F1024Item@@QAEXXZ
 void Glo012F1024Item::j_00015e42(void)
 {
-	unsigned int index = 0;
-	unsigned int count = m_bfmeUnknownA8.bfmeSize();
-	if (count > 0)
+	for (unsigned int i = 0; i < m_bfmeUnknownA8.bfmeSize(); ++i)
 	{
-		do
-		{
-			BfmeElem16 *begin = m_bfmeUnknownA8.bfmeBegin();
-			BfmeElem16 *element = begin + index;
-			char flag = *(char *)((char *)element + 8);
-			BfmeRectVNE *item = new BfmeRectVNE(
-				*(unsigned int *)((char *)element + 4),
-				*(unsigned int *)((char *)element + 0xC),
-				flag);
-			Glo012F1028->append((Rva003C2280Item *)item);
-			++index;
-		} while (index < m_bfmeUnknownA8.bfmeSize());
+		BfmeSpec16VNE *element = (BfmeSpec16VNE *)(m_bfmeUnknownA8.bfmeBegin() + i);
+		Glo012F1028->append((Rva003C2280Item *)new BfmeRectVNE(element->m_bfmeWidth, element->m_bfmeHeight, bfmeFlagOf(element->m_bfmeFlag)));
 	}
 }
 
