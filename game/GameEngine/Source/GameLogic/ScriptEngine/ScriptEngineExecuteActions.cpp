@@ -42,9 +42,6 @@ class ScriptActionsInterface;
 extern ScriptActionsInterface *TheScriptActions;
 #define TheScriptActions ((ScriptActions *)TheScriptActions)
 
-// ILT00049963 reaches the existing address-only body003369D0, which reads
-// the ScriptEngine receiver, takes ScriptAction* and returns with RET4.
-extern "C" void __cdecl __identifier("?d_003369d0@@YAXXZ")();
 
 class ScriptEngine
 {
@@ -69,6 +66,7 @@ protected:
 	protected:
 	void Rva00345a50(ScriptAction *action, int randomMode, bool copyCounter, bool seconds);
 	void Rva00345910(ScriptAction *action, bool enabled);
+	void Rva003369d0(ScriptAction *action);
 	void executeActions(ScriptAction *head);
 };
 
@@ -120,16 +118,7 @@ void ScriptEngine::executeActions(ScriptAction *head)
 		case 153: restartTimer(action); break;
 		case 150: setTimer(action, false, true); break;
 		case 151: setTimer(action, true, true); break;
-		case 124: case 125: case 126: case 127: {
-			union
-			{
-				void (__cdecl *symbol)();
-				void (ScriptEngine::*member)(ScriptAction *);
-			} helper;
-			helper.symbol = &__identifier("?d_003369d0@@YAXXZ");
-			(this->*helper.member)(action);
-			break;
-		}
+		case 124: case 125: case 126: case 127: Rva003369d0(action); break;
 		case 132: setPriorityThing(action); break;
 		case 133: setPriorityKind(action); break;
 		case 134: setPriorityDefault(action); break;

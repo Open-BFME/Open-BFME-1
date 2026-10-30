@@ -2675,3 +2675,20 @@ and its other caller generatePlayInfo all exact: MSVC evaluates register
 arguments right to left, so the order of the moves exposes the declared
 parameter order. A matched caller whose argument arrives in EAX from a call
 cannot show this (EDX must be written first either way).
+
+## A store repeated in both arms makes a constant worth a register (2026-10-30)
+
+ScriptEngine camera-fade setter 0x003369D0 (VC7.1 `/O2`, no `/Ob`
+override; TU ScriptEngine_updateFades.cpp). Retail does `push ebx; mov ebx,1`
+before the jump table and uses EBX/BL at three sites: the `m_fade = 1` case
+store, the inlined `getParameter(1)` bound compare, and the final
+`m_fadeActive = true` after the optional `updateFades()` call. Ours emitted
+three immediates (0.93 bank, every other byte equal). One extra
+`m_fadeActive = true` before the call reproduced the EBX constant but kept the
+store (268 B). Writing the flag in both arms,
+`if (inc == 0) { updateFades(); m_fadeActive = true; } else m_fadeActive = true;`,
+gave 264/264 exact: the arms tail-merge into one store, but the second use of
+1 is already counted when the register cost is decided. Hypothesis: the
+constant-to-register choice is made before cross-jumping removes duplicate
+stores, so a retail constant register with "too few" uses points at a merged
+duplicate. Source: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine_updateFades.cpp.
