@@ -4340,6 +4340,46 @@ typedef HRESULT (__stdcall *MaterialSetConstantFn)(IDirect3DDevice8 *, unsigned,
       memcpy(&DX8Wrapper::Vertex_Shader_Constants[reg_],data_,sizeof(Vector4)*(count_)); \
       IDirect3DDevice8 *device_ = DX8Wrapper::_Get_D3D_Device8(); \
       (*(MaterialSetConstantFn **)device_)[0x178/4](device_,reg_,data_,count_); number_of_DX8_calls++; } }
+// Retail 0x007CBB70 (270 B plus its 16-byte jump table), called only by
+// Install_Materials below: steps the fade state at +0x40 / level at +0x44 by
+// 1/60 per call and returns the color at +0x38 scaled by the level, as an
+// opaque-alpha packed int. Retail calls RGBColor::setFromInt out of line.
+#pragma inline_depth(0)
+unsigned Rva007CBB30::methodRva007CBB70()
+{
+    switch (m_at40)
+    {
+    case 0:
+        m_at44 += 1.0f / 60.0f;
+        if (m_at44 >= 1.0f) { m_at44 = 1.0f; m_at40 = 1; }
+        break;
+    case 2:
+        m_at44 -= 1.0f / 60.0f;
+        if (m_at44 <= 0.0f) { m_at40 = 3; m_at44 = 0.0f; }
+        break;
+    case 1:
+        m_at44 = 1.0f;
+        break;
+    case 3:
+        m_at44 = 0.0f;
+        break;
+    }
+    if (m_at44 < 1.0f)
+    {
+        if (m_at44 > 0.0f)
+        {
+            RGBColor rgb;
+            rgb.setFromInt(m_at38);
+            rgb.red *= m_at44;
+            rgb.green *= m_at44;
+            rgb.blue *= m_at44;
+            return (0xff << 24) | ((int)(rgb.red * 255.0) << 16) | ((int)(rgb.green * 255.0) << 8) | ((int)(rgb.blue * 255.0));
+        }
+        return 0;
+    }
+    return m_at38;
+}
+#pragma inline_depth()
 extern __declspec(align(4)) unsigned char Rva013071A0[4];
 extern unsigned Rva013071A4;
 extern Vector4 Rva0130718C;

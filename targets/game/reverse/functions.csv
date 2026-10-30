@@ -38221,7 +38221,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_007c1f30@@YAXXZ,,0x007C1F30,1089,game/gen_asm/d_007be000.asm,matched,gen-dump;ghidra=FUN_00bc1f30
 ?d_007c2f20@@YAXXZ,,0x007C2F20,662,game/gen_asm/d_007be000.asm,matched,gen-dump;ghidra=FUN_00bc2f20
 ?d_007c7fd0@@YAXXZ,,0x007C7FD0,12130,game/gen_asm/d_007c7fd0.asm,matched,gen-dump;ghidra=FUN_00bc7fd0
-?d_007cbb70@@YAXXZ,,0x007CBB70,270,game/gen_asm/d_007c7fd0.asm,matched,gen-dump;ghidra=FUN_00bcbb70
 ?d_007ce290@@YAXXZ,,0x007CE290,8147,game/gen_asm/d_007ccf50.asm,matched,gen-dump;ghidra=FUN_00bce290
 ?d_007d24a0@@YAXXZ,,0x007D24A0,1749,game/gen_asm/d_00776ac0.asm,matched,gen-dump;carved start=rel32-call/jmp end=ret+int3 callers=1
 ?d_007d5020@@YAXXZ,,0x007D5020,3851,game/gen_asm/d_007d1f00.asm,matched,gen-dump;bounds=high
@@ -173392,3 +173391,4 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?bfmeWeightedChoiceB2430@@YAHPBUWeightedSoundRangeB2430@@I_N@Z,,0x000B2430,104,game/GameEngine/Source/Common/Audio/AudioEventRTSWeightedChoice.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/000b2430-weighted-choice-parameter-order.md;file-static weighted sound choice; parameter order range count logical proven by the generateFilename 0x000B3970 register-argument order (identity_evidence/000b2430-weighted-choice-parameter-order.md);model=claude-opus-5-5;host=app
 ?fieldAt0C@Rva000AF880@@QBEPAXXZ,,0x000AF880,4,game/GameEngine/Source/Common/Rva000A33E0To000B51D0CarvedAccessors.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/000af880-eventinfo-field0c-accessor.md;lea eax [ecx+0xC] ret accessor called by AudioEventRTS::generateFilename 0x000B3970 through ILT 0x00010E0B with ECX=m_eventInfo (identity_evidence/000af880-eventinfo-field0c-accessor.md);model=claude-opus-5-5;host=app
 ?generateFilenameRva000B3970@AudioEventRTS@@QAEXXZ,,0x000B3970,400,game/GameEngine/Source/Common/Audio/AudioEventRTSWeightedChoice.cpp,matched,ZH AudioEventRTS::generateFilename twin with BFME needs-generate flag +0x46 and weighted retry loop; shares the TU with the static weighted-choice helper for its private register ABI;model=claude-opus-5-5;host=app
+?methodRva007CBB70@Rva007CBB30@@QAEIXZ,,0x007CBB70,288,game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp,matched,model=claude-opus-5-5;host=app
