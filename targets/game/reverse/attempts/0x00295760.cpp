@@ -1,20 +1,54 @@
 // ?update@HeightDieUpdate@@UAE?AW4UpdateSleepTime@@XZ
-// partial score=0.41 date=2026-09-26
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/GameEngine/Source/Common/System /Igame/GameEngine/Include /Igame/GameEngine/Include/Precompiled /Igame/Libraries/Source/WWVegas/WWLib
+// partial score=0.6193 date=2026-10-30
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+//
+// HeightDieUpdate::update, retail 0x00295760 (654 bytes).
+// BFME 1 target evidence: the matched constructor 0x00295550 installs vtable
+// VA 0x010BF608 at +0x10, whose slot 0 reaches this body (ILT 0x0002C926),
+// and ilt_oracle confirms ?update@HeightDieUpdate@@UAE?AW4UpdateSleepTime@@XZ.
+// `this` is the UpdateModuleInterface subobject: module data at -0xC, the
+// Object at -8; m_hasDied +0x10, m_particlesDestroyed +0x11, m_lastPosition
+// +0x14, m_earliestDeathFrame +0x20 (module+0x20..+0x30). Module data:
+// +0x08 target height above terrain, +0x0C includes structures, +0x0D only
+// when moving down, +0x10 destroy-attached-particles height, +0x14 snap to
+// ground, +0x18 initial delay.
+// Zero Hour HeightDieUpdate::update is the semantic source; the BFME 2 donor
+// (open-bfme-2 20a0cb6173, Code/GameEngine/Source/GameLogic/Object/Update/
+// HeightDieUpdate.cpp, retail 0x0048FD1B there) supplies the BFME partition
+// query shape: a KindOf filter temporary built from MAKE_KINDOF_MASK(7) and
+// KINDOFMASK_NONE, and the wide iterator result. The filter declarations
+// follow the matched Rva002FA7C0ScriptAction.cpp.
 
-#define _STLP_USE_STATIC_LIB 1
-#define _STLP_NO_EXCEPTIONS 1
-#define BFME_STLP_NODE_ALLOC 1
-#define __PLACEMENT_VEC_NEW_INLINE
-#include <vector>
-#include "PreRTS.h"
+#include <bitset>
 
+typedef bool Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
 typedef float Real;
-typedef bool Bool;
+
+enum UpdateSleepTime
+{
+	UPDATE_SLEEP_NONE = 1,
+	UPDATE_SLEEP_FOREVER = 0x3fffffff
+};
+enum PathfindLayerEnum
+{
+	LAYER_INVALID = 0,
+	LAYER_GROUND = 1
+};
+enum DistanceCalculationType
+{
+	FROM_BOUNDINGSPHERE_3D = 3
+};
+enum DamageType
+{
+	DAMAGE_UNRESISTABLE = 8
+};
+enum DeathType
+{
+	DEATH_NORMAL = 0
+};
 
 struct Coord3D
 {
@@ -23,370 +57,299 @@ struct Coord3D
 	Real z;
 };
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_INVALID = 0,
-	UPDATE_SLEEP_NONE = 1
-};
-
-enum DamageType
-{
-	DAMAGE_NORMAL = 0
-};
-
-enum DeathType
-{
-	DEATH_NORMAL = 8
-};
-
-enum PathfindLayerEnum
-{
-	PATHFIND_LAYER_GROUND = 1
-};
-
-enum IterOrderType
-{
-	ITER_FASTEST = 0,
-	ITER_SORTED_NEAR_TO_FAR = 1
-};
-
-class Thing
-{
-public:
-	virtual void slot00() = 0;
-	void setPosition(const Coord3D *position);
-};
-
-class GeometryInfo
-{
-public:
-	Real getMaxHeightAbovePosition() const throw();
-};
-
-class Object
-{
-public:
-	const Coord3D *getPosition() const
-	{
-		return reinterpret_cast<const Coord3D *>(
-			reinterpret_cast<const UnsignedByte *>(this) + 0x38);
-	}
-	void setPosition(const Coord3D *position);
-	void kill(DamageType damageType, DeathType deathType);
-	void *getContainedBy() const
-	{
-		return *reinterpret_cast<void *const *>(
-			reinterpret_cast<const UnsignedByte *>(this) + 0x214);
-	}
-	const GeometryInfo &getGeometryInfo() const
-	{
-		return *reinterpret_cast<const GeometryInfo *>(
-			reinterpret_cast<const UnsignedByte *>(this) + 0xac);
-	}
-	Real getBoundingCircleRadius() const
-	{
-		return *reinterpret_cast<const Real *>(
-			reinterpret_cast<const UnsignedByte *>(this) + 0xbc);
-	}
-};
-
-class HeightDieUpdateModuleData
-{
-public:
-	virtual ~HeightDieUpdateModuleData();
-
-	private:
-	UnsignedInt m_gap4;
-
-	public:
-	Real m_targetHeightAboveTerrain;
-	Bool m_targetHeightIncludesStructures;
-	Bool m_onlyWhenMovingDown;
-	UnsignedByte m_pad0e;
-	UnsignedByte m_pad0f;
-	Real m_destroyAttachedParticlesAtHeight;
-	Bool m_snapToGroundOnDeath;
-	UnsignedByte m_pad15;
-	UnsignedByte m_pad16;
-	UnsignedByte m_pad17;
-	UnsignedInt m_initialDelay;
-};
-
-class GameLogic
-{
-public:
-	unsigned char m_pad00[0x3c];
-	UnsignedInt m_frame;
-};
-
-#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
-
-class TerrainLogic
-{
-public:
-	virtual void slot00() = 0;
-	virtual void slot04() = 0;
-	virtual void slot08() = 0;
-	virtual void slot0c() = 0;
-	virtual void slot10() = 0;
-	virtual void slot14() = 0;
-	virtual Real getGroundHeight(Real x, Real y, Coord3D *normal) const;
-	virtual Real getLayerHeight(Real x, Real y, PathfindLayerEnum layer,
-		Coord3D *normal, Bool clamp) const;
-	PathfindLayerEnum getHighestLayerForDestination(const Coord3D *position,
-		Bool includeBridge);
-};
-
-#define TheTerrainLogic (*(TerrainLogic **)0x012EF4CC)
-
-template <int NUMBITS>
+template <size_t NUMBITS>
 class BitFlags
 {
 public:
-	enum BogusInitType { kInit = 0 };
-	BitFlags(BogusInitType, Int);
+	enum BogusInitType
+	{
+		kInit = 0
+	};
+
+	__declspec(nothrow) BitFlags(BogusInitType, Int bit);
+	~BitFlags() {}
 
 private:
-	UnsignedByte m_bits[NUMBITS / 8];
+	_STL::bitset<NUMBITS> m_bits;
 };
 
 typedef BitFlags<192> KindOfMaskType;
-#define KINDOFMASK_NONE (*reinterpret_cast<const KindOfMaskType *>(0x012ED8B8))
+
+#define MAKE_KINDOF_MASK(bit) KindOfMaskType(KindOfMaskType::kInit, (bit))
+
+extern const KindOfMaskType KINDOFMASK_NONE;
+
+class Object;
 
 class PartitionFilter
 {
 public:
 	PartitionFilter() : m_next(0) {}
 	virtual ~PartitionFilter() {}
-	virtual Bool allow(Object *) = 0;
-	virtual Int getPlayerMask();
+	virtual Bool allow(Object *object) = 0;
 
 	PartitionFilter *m_next;
 };
 
-class PartitionFilterAcceptByKindOf : public PartitionFilter
+struct VptrZeroBlock24
+{
+	unsigned int m_dword00;
+	unsigned int m_dword04;
+	unsigned int m_dword08;
+	unsigned int m_dword0c;
+	unsigned int m_dword10;
+	unsigned int m_dword14;
+};
+
+class Rva000C3DD0VptrZeroBlockObject : public PartitionFilter
 {
 public:
-	PartitionFilterAcceptByKindOf(const KindOfMaskType &mustBeSet,
-		const KindOfMaskType &mustBeClear);
-	virtual ~PartitionFilterAcceptByKindOf() {}
-	virtual Bool allow(Object *);
+	__declspec(nothrow) Rva000C3DD0VptrZeroBlockObject(
+		const VptrZeroBlock24 &first, const VptrZeroBlock24 &second);
+	virtual Bool allow(Object *object);
 
-	KindOfMaskType m_mustBeSet;
-	KindOfMaskType m_mustBeClear;
+	VptrZeroBlock24 m_first;
+	VptrZeroBlock24 m_second;
 };
 
-struct Rva0025ED50Entry
+// The partition iterator: a pair vector with a cursor (BfmeWideResultForward.cpp).
+struct Rva00295760Pair
 {
-	Object *object;
-	UnsignedInt unknown04;
+	Object *first;
+	int second;
+};
+struct Rva00295760Payload
+{
+	Rva00295760Pair *m_start;
+	Rva00295760Pair *m_finish;
+	Rva00295760Pair *m_endOfStorage;
+	Rva00295760Pair *m_cursor;
 };
 
-struct Rva0025ED50ResultData
+// Release of the iterator payload, ledgered as 0x000C5FC0.
+class BfmeThingCAD
 {
-	std::vector<Rva0025ED50Entry> entries;
-	Rva0025ED50Entry *current;
-	Int references;
+public:
+	void bfmeGoCAD();
 };
 
-struct Rva0025ED50WideResult
+struct BfmeWideResult
 {
-	Rva0025ED50ResultData *value;
-
-	Rva0025ED50WideResult();
-	Rva0025ED50WideResult(const Rva0025ED50WideResult &);
-	~Rva0025ED50WideResult()
+	~BfmeWideResult() { ((BfmeThingCAD *)this)->bfmeGoCAD(); }
+	__forceinline Object *next()
 	{
-		if (--value->references == 0)
-			delete value;
-	}
-
-	Object *next(Object *&object)
-	{
-		if (value->current == value->entries.end())
+		Rva00295760Payload *payload = m_value;
+		if (payload->m_cursor == payload->m_finish)
 			return 0;
-		object = (value->current++)->object;
-		return object;
+		Rva00295760Pair *cursor = payload->m_cursor;
+		Object *obj = cursor->first;
+		payload->m_cursor = cursor + 1;
+		return obj;
 	}
+	Rva00295760Payload *m_value;
 };
 
-class PartitionManager
+// ThePartitionManager's iterateObjectsInRange as the ledger spells it.
+class BfmeWideForwardC
 {
 public:
-	Rva0025ED50WideResult iterate(const Coord3D *, Real, IterOrderType,
-		PartitionFilter *, Bool);
+	BfmeWideResult bfmeForwardWideC(Int pos, Int range, Int distCalc, Int filters, Int order);
+};
+extern BfmeWideForwardC *ThePartitionManager;
+
+class GeometryInfo
+{
+public:
+	Real getMaxHeightAbovePosition() const;
+	unsigned char m_pad00[0x10];
+	Real m_boundingCircleRadius;			// +0x10
 };
 
-#define ThePartitionManager (*(PartitionManager **)0x012ED5B8)
+class Thing
+{
+public:
+	void setPosition(const Coord3D *pos);
+};
+
+class Object : public Thing
+{
+public:
+	void kill(DamageType damageType = DAMAGE_UNRESISTABLE, DeathType deathType = DEATH_NORMAL);
+	const Coord3D *getPosition() const { return &m_position; }
+	const GeometryInfo &getGeometryInfo() const { return m_geometryInfo; }
+	Object *getContainedBy() const { return m_containedBy; }
+	unsigned char m_pad000[0x38];
+	Coord3D m_position;				// +0x38
+	unsigned char m_pad044[0xac - 0x44];
+	GeometryInfo m_geometryInfo;			// +0xAC
+	unsigned char m_padc0[0x214 - 0xc0];
+	Object *m_containedBy;				// +0x214
+};
+
+class GameLogic
+{
+public:
+	unsigned char m_pad00[0x3c];
+	UnsignedInt m_frame;				// +0x3C
+};
+extern GameLogic *TheGameLogic;
+
+class TerrainLogic
+{
+public:
+	virtual void t00(); virtual void t01(); virtual void t02();
+	virtual void t03(); virtual void t04(); virtual void t05();
+	virtual Real getGroundHeight(Real x, Real y, Coord3D *normal = 0) const;
+	virtual Real getLayerHeight(Real x, Real y, PathfindLayerEnum layer, Coord3D *normal = 0, Bool clip = true) const;
+	PathfindLayerEnum getHighestLayerForDestination(const Coord3D *pos, Bool onlyHealthyBridges = false);
+};
+extern TerrainLogic *TheTerrainLogic;
 
 class ParticleSystemManager
 {
 public:
-	void destroyAttachedSystems(Object *object);
+	void destroyAttachedSystems(Object *obj);
 };
+extern ParticleSystemManager *TheParticleSystemManager;
 
-#define TheParticleSystemManager (*(ParticleSystemManager **)0x012F64BC)
-
-class Rva00295760Module
+struct HeightDieUpdateModuleData
 {
-public:
-	virtual ~Rva00295760Module();
-
-protected:
-	const HeightDieUpdateModuleData *m_moduleData;
+	unsigned char m_pad00[8];
+	Real m_targetHeightAboveTerrain;		// +0x08
+	Bool m_targetHeightIncludesStructures;		// +0x0C
+	Bool m_onlyWhenMovingDown;			// +0x0D
+	unsigned char m_pad0e[2];
+	Real m_destroyAttachedParticlesAtHeight;	// +0x10
+	Bool m_snapToGroundOnDeath;			// +0x14
+	unsigned char m_pad15[3];
+	UnsignedInt m_initialDelay;			// +0x18
 };
 
-class Rva00295760ObjectModule : public Rva00295760Module
-{
-public:
-	virtual void onCapture(Object *, Object *);
-
-protected:
-	Object *m_object;
-};
-
-class Rva00295760BehaviorModuleInterface
-{
-public:
-	virtual void getBody();
-	virtual void getCollide();
-	virtual void getContain();
-	virtual void getCreate();
-	virtual void getDamage();
-	virtual void getDestroy();
-	virtual void getDie();
-	virtual void getSpecialPower();
-	virtual void getUpdate();
-};
-
-class Rva00295760BehaviorModule : public Rva00295760ObjectModule,
-	public Rva00295760BehaviorModuleInterface
-{
-};
-
-class Rva00295760UpdateModuleInterface
-{
-public:
-	virtual UpdateSleepTime update() = 0;
-};
-
-class Rva00295760UpdateModule : public Rva00295760BehaviorModule,
-	public Rva00295760UpdateModuleInterface
-{
-protected:
-	UnsignedInt m_nextCallFrame;
-	Int m_indexInLogic;
-	Int m_updateState;
-
-	Object *getObject() const
-	{
-		return m_object;
-	}
-	const HeightDieUpdateModuleData *getModuleData() const
-	{
-		return m_moduleData;
-	}
-};
-
-class HeightDieUpdate : public Rva00295760UpdateModule
+class HeightDieUpdate
 {
 public:
 	virtual UpdateSleepTime update();
-
-protected:
-	Bool m_hasDied;
-	Bool m_particlesDestroyed;
-	Coord3D m_lastPosition;
-	UnsignedInt m_earliestDeathFrame;
+	Object *getObject() const { return *(Object **)((char *)this - 8); }
+	const HeightDieUpdateModuleData *getHeightDieUpdateModuleData() const
+	{
+		return *(const HeightDieUpdateModuleData **)((char *)this - 0xc);
+	}
+private:
+	unsigned char m_pad04[0x10 - 4];
+	Bool m_hasDied;					// +0x10
+	Bool m_particlesDestroyed;			// +0x11
+	unsigned char m_pad12[2];
+	Coord3D m_lastPosition;				// +0x14
+	UnsignedInt m_earliestDeathFrame;		// +0x20
 };
 
-// ?update@HeightDieUpdate@@UAE?AW4UpdateSleepTime@@XZ
-UpdateSleepTime HeightDieUpdate::update()
+UpdateSleepTime HeightDieUpdate::update( void )
 {
-	UnsignedInt now = TheBfmeGameLogic->m_frame;
-	if (m_earliestDeathFrame == (UnsignedInt)-1)
-		m_earliestDeathFrame = now + getModuleData()->m_initialDelay;
-	if (m_earliestDeathFrame > now)
+	UnsignedInt now = TheGameLogic->m_frame;
+	if( m_earliestDeathFrame == 0xffffffff )
+		m_earliestDeathFrame = getHeightDieUpdateModuleData()->m_initialDelay + now;
+
+	// If at least a one frame delay has been set, then stop for a while
+	if( m_earliestDeathFrame > now )
 		return UPDATE_SLEEP_NONE;
 
-	if (getObject()->getContainedBy() != 0)
+	// do nothing if we're contained within other objects ... like a transport
+	if( getObject()->getContainedBy() != 0 )
 	{
+		// keep track of our last position even though we're not doing anything yet
 		m_lastPosition = *getObject()->getPosition();
-		return UPDATE_SLEEP_NONE;
 	}
-
-	const HeightDieUpdateModuleData *modData = getModuleData();
-	const Coord3D *position = getObject()->getPosition();
-	Bool directionOK = true;
-	if (!m_hasDied)
+	else
 	{
-		if (modData->m_onlyWhenMovingDown)
-		{
-			if (position->z >= m_lastPosition.z)
-				directionOK = false;
-		}
 
-		Real terrainHeight = TheTerrainLogic->getGroundHeight(
-			position->x, position->y, 0);
-		if (modData->m_targetHeightIncludesStructures)
+		const HeightDieUpdateModuleData *modData = getHeightDieUpdateModuleData();
+		const Coord3D *pos = getObject()->getPosition();
+
+		Bool directionOK = true;
+		if( m_hasDied == false )
 		{
-			PathfindLayerEnum layer =
-				TheTerrainLogic->getHighestLayerForDestination(position, false);
-			if (layer != PATHFIND_LAYER_GROUND)
+			if( modData->m_onlyWhenMovingDown )
 			{
-				Real layerHeight = TheTerrainLogic->getLayerHeight(
-					position->x, position->y, layer, 0, true);
-				if (layerHeight > terrainHeight)
-					terrainHeight = layerHeight;
+				if( pos->z >= m_lastPosition.z )
+					directionOK = false;
+			}
+
+			// get the terrain height
+			Real terrainHeightAtPos = TheTerrainLogic->getGroundHeight( pos->x, pos->y );
+
+			// if including structures, check for bridges
+			if( modData->m_targetHeightIncludesStructures )
+			{
+				PathfindLayerEnum layer = TheTerrainLogic->getHighestLayerForDestination( pos );
+				if( layer != LAYER_GROUND )
+				{
+					Real layerHeight = TheTerrainLogic->getLayerHeight( pos->x, pos->y, layer );
+					if( layerHeight > terrainHeightAtPos )
+						terrainHeightAtPos = layerHeight;
+				}
+			}
+
+			Real targetHeight = terrainHeightAtPos + modData->m_targetHeightAboveTerrain;
+
+			if( modData->m_targetHeightIncludesStructures == true )
+			{
+				Real tallestHeight = 0.0f;
+
+				// scan all objects in the radius of our extent and find the tallest height among them
+				Real range = getObject()->getGeometryInfo().m_boundingCircleRadius;
+				BfmeWideResult iter = ThePartitionManager->bfmeForwardWideC( (Int)getObject()->getPosition(),
+					*(Int *)&range, FROM_BOUNDINGSPHERE_3D,
+					(Int)&Rva000C3DD0VptrZeroBlockObject( *(const VptrZeroBlock24 *)&MAKE_KINDOF_MASK( 7 ),
+						*(const VptrZeroBlock24 *)&KINDOFMASK_NONE ),
+					0 );
+				Object *obj;
+				Real thisHeight;
+				while( (obj = iter.next()) != 0 )
+				{
+					// ignore ourselves
+					if( obj == getObject() )
+						continue;
+
+					// store the height of the tallest object under us
+					thisHeight = obj->getGeometryInfo().getMaxHeightAbovePosition();
+					if( thisHeight > tallestHeight )
+						tallestHeight = thisHeight;
+				}
+
+				if( tallestHeight > modData->m_targetHeightAboveTerrain )
+					targetHeight = tallestHeight + terrainHeightAtPos;
+			}
+
+			// if we are below the target height ... DIE!
+			if( pos->z < targetHeight && directionOK )
+			{
+				// snap us to the ground on death, and never leave us below ground
+				if( modData->m_snapToGroundOnDeath || pos->z < terrainHeightAtPos )
+				{
+					Coord3D ground;
+					ground.x = pos->x;
+					ground.y = pos->y;
+					ground.z = terrainHeightAtPos;
+					getObject()->setPosition( &ground );
+				}
+
+				// kill the object
+				getObject()->kill();
+
+				// we have died ... don't do this again
+				m_hasDied = true;
 			}
 		}
 
-		Real targetHeight = terrainHeight +
-			modData->m_targetHeightAboveTerrain;
-		if (modData->m_targetHeightIncludesStructures == true)
+		// below the destroy-attached-particles height, clean them up
+		if( m_particlesDestroyed == false && pos->z < modData->m_destroyAttachedParticlesAtHeight && (m_hasDied || directionOK) )
 		{
-			BitFlags<192> mustBeSet(BitFlags<192>::kInit, 7);
-			PartitionFilterAcceptByKindOf filter(mustBeSet, KINDOFMASK_NONE);
-			Rva0025ED50WideResult iterator = ThePartitionManager->iterate(
-				position, getObject()->getBoundingCircleRadius(),
-				(static_cast<IterOrderType>(3)), &filter, false);
-			Real tallestHeight = 0.0f;
-			Object *other;
-			while (iterator.next(other))
-			{
-				if (other == getObject())
-					continue;
-				Real height = other->getGeometryInfo().getMaxHeightAbovePosition();
-				if (height > tallestHeight)
-					tallestHeight = height;
-			}
-			if (tallestHeight > modData->m_targetHeightAboveTerrain)
-				targetHeight = tallestHeight + terrainHeight;
+			TheParticleSystemManager->destroyAttachedSystems( getObject() );
+			m_particlesDestroyed = true;
 		}
 
-		if (position->z < targetHeight && directionOK)
-		{
-			if (!modData->m_snapToGroundOnDeath || position->z < terrainHeight)
-			{
-				Coord3D groundPosition;
-				groundPosition.x = position->x;
-				groundPosition.y = position->y;
-				groundPosition.z = terrainHeight;
-				getObject()->setPosition(&groundPosition);
-			}
-			getObject()->kill(DAMAGE_NORMAL, DEATH_NORMAL);
-			m_hasDied = true;
-		}
+		// save our current position as the last position we monitored
+		m_lastPosition = *pos;
 	}
-
-	if (!m_particlesDestroyed &&
-		position->z < modData->m_destroyAttachedParticlesAtHeight &&
-		(m_hasDied || directionOK))
-	{
-		TheParticleSystemManager->destroyAttachedSystems(getObject());
-		m_particlesDestroyed = true;
-	}
-
-	m_lastPosition = *position;
 	return UPDATE_SLEEP_NONE;
 }
