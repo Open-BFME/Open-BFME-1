@@ -1,7 +1,9 @@
 // cl: /O2 /GR- /DNDEBUG /DWIN32 /MD /EHsc-
 // Retail 0x001BC820 is a second locomotor movement dispatcher.  Its named
 // callees and the appearance jump table distinguish it from the already
-// claimed Locomotor::locoUpdate_moveTowardsPosition at 0x002BAFB8.
+// claimed Locomotor::locoUpdate_moveTowardsPosition at 0x002BAFB8. Its caller
+// Locomotor::locoUpdate_moveTowardsAngle (0x001BCE20) is defined at the end of
+// this unit.
 
 // The retail compiler keeps each guarded owner load in an explicit shared
 // merge: test the interface, load the owner or zero EAX, then test EAX again.
@@ -18,15 +20,47 @@ typedef float Real;
 
 struct Coord3D
 {
+	Coord3D() {}
+	~Coord3D() {}
+	Coord3D(const Coord3D &that) { x = that.x; y = that.y; z = that.z; }
+
 	Real x;
 	Real y;
 	Real z;
 };
 
+// Retail copies the saved transform row by row, as WWMath's Matrix3D
+// assignment does; the member names follow WWMath's Vector4/Matrix3D.
+class Vector4
+{
+public:
+	__forceinline Vector4 &operator=(const Vector4 &v)
+	{
+		X = v.X;
+		Y = v.Y;
+		Z = v.Z;
+		W = v.W;
+		return *this;
+	}
+
+	Real X;
+	Real Y;
+	Real Z;
+	Real W;
+};
+
 class Matrix3D
 {
 public:
-	Real m_cell[12];
+	__forceinline Matrix3D &operator=(const Matrix3D &m)
+	{
+		Row[0] = m.Row[0];
+		Row[1] = m.Row[1];
+		Row[2] = m.Row[2];
+		return *this;
+	}
+
+	Vector4 Row[3];
 };
 
 enum KindOfType { KINDOF_FIRST };
@@ -38,6 +72,8 @@ class Thing
 public:
 	void rva00132200(const Matrix3D *matrix);
 	Bool isKindOf(KindOfType kind) const;
+	const Matrix3D *getTransformMatrix() const { return &m_transform; }
+	void setTransformMatrix(const Matrix3D *matrix);
 
 	void *m_vtable;
 	Real m_template;
@@ -90,12 +126,21 @@ public:
 	char m_blocked;
 };
 
+class ObjectModule;
+
 class Object : public Thing
 {
 public:
-	char m_pad038[0x94 - 0x38];
+	const Coord3D *getPosition() const { return &m_cachedPos; }
+	Real getAngle() const { return m_angle; }
+
+	Coord3D m_cachedPos;
+	Real m_angle;
+	char m_pad048[0x94 - 0x48];
 	unsigned char m_statusBits;
-	char m_pad095[0x204 - 0x95];
+	char m_pad095[0x1fc - 0x95];
+	ObjectModule *m_module;
+	char m_pad200[0x204 - 0x200];
 	AIUpdateInterface *m_ai;
 	Rva001BC820Blocker *m_blocker;
 };
@@ -104,6 +149,12 @@ class Overridable
 {
 public:
 	Overridable *getFinalOverride();
+	const Overridable *getFinalOverride() const
+	{
+		if (m_nextOverride)
+			return m_nextOverride->getFinalOverride();
+		return this;
+	}
 
 	void *m_vtable;
 	Overridable *m_nextOverride;
@@ -114,6 +165,25 @@ class LocomotorTemplate : public Overridable
 public:
 	char m_pad008[0x70 - 0x08];
 	int m_appearance;
+	char m_pad074[0x80 - 0x74];
+	Real m_angleThreshold001BCE20;
+};
+
+template <class T> class OVERRIDE
+{
+public:
+	const T *operator->() const { return getFinalOverride(); }
+	operator const T *() const { return getFinalOverride(); }
+	const T *getFinalOverride() const
+	{
+		if (!m_overridable)
+			return 0;
+		const Overridable *overridable = m_overridable;
+		return (const T *)overridable->getFinalOverride();
+	}
+
+private:
+	T *m_overridable;
 };
 
 class Rva001B9D00Mover
@@ -148,6 +218,7 @@ class Rva001BA1C0Handler
 {
 public:
 	void rva001BA1C0(Object *obj, const Coord3D *goalPos);
+	Bool behavior(void *object, const Coord3D *position);
 };
 
 class Rva001BBBC0Mover
@@ -214,18 +285,18 @@ void Rva001BC820Locomotor::locoUpdate_moveTowardsPosition(Object *obj,
 	// without accessing float storage through an incompatible integer pointer.
 	Matrix3D *saved = &m_savedTransform;
 	const Matrix3D *live = &obj->m_transform;
-	memcpy(&saved->m_cell[0], &live->m_cell[0], sizeof(Real));
-	memcpy(&saved->m_cell[1], &live->m_cell[1], sizeof(Real));
-	memcpy(&saved->m_cell[2], &live->m_cell[2], sizeof(Real));
-	memcpy(&saved->m_cell[3], &live->m_cell[3], sizeof(Real));
-	memcpy(&saved->m_cell[4], &live->m_cell[4], sizeof(Real));
-	memcpy(&saved->m_cell[5], &live->m_cell[5], sizeof(Real));
-	memcpy(&saved->m_cell[6], &live->m_cell[6], sizeof(Real));
-	memcpy(&saved->m_cell[7], &live->m_cell[7], sizeof(Real));
-	memcpy(&saved->m_cell[8], &live->m_cell[8], sizeof(Real));
-	memcpy(&saved->m_cell[9], &live->m_cell[9], sizeof(Real));
-	memcpy(&saved->m_cell[10], &live->m_cell[10], sizeof(Real));
-	memcpy(&saved->m_cell[11], &live->m_cell[11], sizeof(Real));
+	memcpy(&saved->Row[0].X, &live->Row[0].X, sizeof(Real));
+	memcpy(&saved->Row[0].Y, &live->Row[0].Y, sizeof(Real));
+	memcpy(&saved->Row[0].Z, &live->Row[0].Z, sizeof(Real));
+	memcpy(&saved->Row[0].W, &live->Row[0].W, sizeof(Real));
+	memcpy(&saved->Row[1].X, &live->Row[1].X, sizeof(Real));
+	memcpy(&saved->Row[1].Y, &live->Row[1].Y, sizeof(Real));
+	memcpy(&saved->Row[1].Z, &live->Row[1].Z, sizeof(Real));
+	memcpy(&saved->Row[1].W, &live->Row[1].W, sizeof(Real));
+	memcpy(&saved->Row[2].X, &live->Row[2].X, sizeof(Real));
+	memcpy(&saved->Row[2].Y, &live->Row[2].Y, sizeof(Real));
+	memcpy(&saved->Row[2].Z, &live->Row[2].Z, sizeof(Real));
+	memcpy(&saved->Row[2].W, &live->Row[2].W, sizeof(Real));
 
 	if (locomotorGameLogic()->m_stamp <= m_stampLimit && desiredSpeed > m_maxSpeed)
 		desiredSpeed = m_maxSpeed;
@@ -318,4 +389,169 @@ void Rva001BC820Locomotor::locoUpdate_moveTowardsPosition(Object *obj,
 
 	((Thing *)obj)->rva00132200(&m_savedTransform);
 	m_moving = 0;
+}
+
+class MotionNode;
+
+
+class ObjectModule
+{
+public:
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void slot04();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void slot07();
+	virtual void slot08();
+	virtual void slot09();
+	virtual void slot10();
+	virtual void slot11();
+	virtual void slot12();
+	virtual void slot13();
+	virtual void slot14();
+	virtual void slot15();
+	virtual void slot16();
+	virtual void slot17();
+	virtual void slot18();
+	virtual void slot19();
+	virtual void slot20();
+	virtual void slot21();
+	virtual void slot22();
+	virtual void slot23();
+	virtual void slot24();
+	virtual void slot25();
+	virtual MotionNode *getMotion();
+};
+
+class MotionNode
+{
+public:
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void slot04();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void slot07();
+	virtual void slot08();
+	virtual void slot09();
+	virtual void slot10();
+	virtual void slot11();
+	virtual void slot12();
+	virtual void slot13();
+	virtual void slot14();
+	virtual void beforeUpdate();
+	virtual void afterUpdate();
+};
+
+class Rva001B4A50
+{
+public:
+	void method(Real angle);
+};
+
+struct Rva001B59ScaleContext;
+
+class Rva001B59FloatView
+{
+public:
+	float getScaledFirst(const Rva001B59ScaleContext *context) const;
+};
+
+class BfmeD1054;
+class BfmeC1054
+{
+public:
+	void bfmeGo1054C(BfmeD1054 *p, int b, int c);
+};
+
+
+
+
+
+Real normalizeAngle(Real angle);
+Real Cos(Real angle);
+Real Sin(Real angle);
+
+class Locomotor
+{
+public:
+	void locoUpdate_moveTowardsAngle(Object *obj, Real goalAngle);
+
+private:
+	enum LocoFlag { MAINTAIN_POS_IS_VALID = 2 };
+	void setFlag(LocoFlag f, Bool set)
+	{
+		if (set)
+			m_flags |= (1 << f);
+		else
+			m_flags &= ~(1 << f);
+	}
+
+	void *m_vtable;
+	OVERRIDE<LocomotorTemplate> m_template;
+	char m_pad008[0x40 - 0x08];
+	unsigned m_flags;
+	char m_pad044[0x64 - 0x44];
+	Matrix3D m_savedTransform;
+};
+
+// Locomotor::locoUpdate_moveTowardsAngle, retail 0x001BCE20 (542 B, thiscall
+// ret 8): Zero Hour's body with BFME's callees; ilt_oracle CONFIRMS the name at
+// the address. It lives beside 0x001BC820 because retail's schedule of the
+// desiredPos copy needs that callee's body visible in the same unit: compiled
+// elsewhere it keeps twelve register bytes off (goalAngle loaded before the
+// position copy).
+void Locomotor::locoUpdate_moveTowardsAngle(Object *obj, Real goalAngle)
+{
+	setFlag(MAINTAIN_POS_IS_VALID, false);
+
+	if (obj == 0 || m_template == 0)
+		return;
+
+	Rva001BC820Blocker *blocker = obj->m_blocker;
+	if (blocker != 0 && blocker->m_blocked != 0)
+		return;
+
+	m_savedTransform = *obj->getTransformMatrix();
+
+	Real delta = normalizeAngle(goalAngle - obj->getAngle());
+	Real angleThreshold = m_template->m_angleThreshold001BCE20;
+	Real cosDelta = Cos(delta);
+	if (Cos(angleThreshold) > cosDelta)
+	{
+		ObjectModule *module = obj->m_module;
+		MotionNode *motion = module != 0 ? (MotionNode *)module->getMotion() : 0;
+		if (motion != 0)
+		{
+			motion->beforeUpdate();
+			((Rva001B4A50 *)this)->method(goalAngle);
+			obj->setTransformMatrix(&m_savedTransform);
+			motion->afterUpdate();
+		}
+	}
+
+	Real minSpeed = ((const Rva001B59FloatView *)this)->getScaledFirst((const Rva001B59ScaleContext *)obj);
+	if (minSpeed > 0)
+	{
+		Coord3D desiredPos = *obj->getPosition();
+		desiredPos.x += Cos(goalAngle) * minSpeed * 2;
+		desiredPos.y += Sin(goalAngle) * minSpeed * 2;
+		const Real onPathDistToGoal = 99999.0f;
+		Bool blocked;
+		((Rva001BC820Locomotor *)this)->locoUpdate_moveTowardsPosition(obj, desiredPos, onPathDistToGoal, minSpeed, &blocked);
+		return;
+	}
+	else
+	{
+		Coord3D desiredPos = *obj->getPosition();
+		desiredPos.x += Cos(goalAngle) * 1000.0f;
+		desiredPos.y += Sin(goalAngle) * 1000.0f;
+		((BfmeC1054 *)this)->bfmeGo1054C((BfmeD1054 *)obj, (int)&desiredPos, 0);
+		((Rva001BA1C0Handler *)this)->behavior(obj, obj->getPosition());
+	}
 }
