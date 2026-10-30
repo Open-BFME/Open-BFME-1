@@ -2641,3 +2641,37 @@ field-by-field copy into the escaping offset struct) became integer moves.
 `struct BucketStartPoint { Real x, y; BucketStartPoint(Real ax, Real ay) : x(ax), y(ay) {} };
 BucketStartPoint pos(start->x, start->y);` was exact. Source:
 game/GameEngine/Source/Common/Rva0015A960FormationProcess.cpp.
+
+## One shared trailing call puts every save before the branch (2026-10-30)
+
+AudioEventRTS::generateFilenameRva000B3970 0x000B3970 (400 B, /DNDEBUG /MD
+/EHsc, AudioEventRTSWeightedChoice.cpp). Retail pushes EBX/EBP/EDI right after
+the two early-out tests, before the music/sound-effect branch, and each arm has
+its own `adjustForLocalization` call and epilogue. With
+`if (!sfx) { concat; adjust; return; } ... concat; concat; adjust;` ours
+pushed only EDI there and EBX/EBP at the sound-effect arm's entry (403 B,
+shape 0.969); if/else, single exit and flipped arms were the same or worse.
+Ending both arms in one statement after the if/else,
+`if (!sfx) { concat; } else { ...; concat; concat; } adjust(m_filename);`,
+gave 400/400 with 12 bytes left: MSVC tail-duplicates the shared call and
+epilogue into both arms but places the saves before the branch. Two further
+measured levers in the same body: the empty-name exits had to stay two
+separate `name = TheEmptyString; return;` statements (one `goto` target put
+the `push` before `mov ecx,ebp`), and `const T *begin = sounds->begin;
+concat(begin[which].name)` let MSVC reuse the dead range register for the
+element base (`mov edi,[edi]; lea edx,[edi+eax*8]`). Source:
+game/GameEngine/Source/Common/Audio/AudioEventRTSWeightedChoice.cpp (bb497fd54f).
+
+## Register-argument move order follows the helper's parameter order (2026-10-30)
+
+Same body: the file-static weighted-choice helper 0x000B2430 takes its
+arguments in EAX/EDX/CL (a compiler-private convention). With both values
+already in callee-saved registers, retail sets them up as
+`mov cl,..; mov eax,ebx; mov edx,edi`; ours emitted `mov edx,edi; mov eax,ebx`
+under the parameter order (count, range, logical). Locals, casts, loop
+spellings and a forceinline wrapper with swapped parameters were all inert.
+Declaring the helper as (range, count, logical) made the caller, the helper
+and its other caller generatePlayInfo all exact: MSVC evaluates register
+arguments right to left, so the order of the moves exposes the declared
+parameter order. A matched caller whose argument arrives in EAX from a call
+cannot show this (EDX must be written first either way).
