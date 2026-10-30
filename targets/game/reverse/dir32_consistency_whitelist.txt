@@ -216,6 +216,35 @@ __real@3eb33333
 ??_7SpawnPointProductionExitUpdateModuleData@@6B@
 ??_7SupplyCenterProductionExitUpdateModuleData@@6B@
 
+# ScriptEngine's implicit ActionTemplate element destructor -- single-base and
+# unowned, a different shape from the doubly-linked FX element dtors above but the
+# same family (a compiler-generated element dtor with no standalone body).
+#
+# ScriptEngineRva00347E60.cpp declares `class ActionTemplate : public Template {}`
+# and holds `ActionTemplate m_actionTemplates[543]` at +0x1C. The ScriptEngine ctor
+# (??0ScriptEngine@@QAE@XZ, 0x00347E60) and its $L cleanup funclet (?dup_00C1848E,
+# note "ActionTemplate543x124 atthis+1C callbackILT34F72") reference the element's
+# implicit complete dtor -- the compiler's SEH element-dtor function pointer -- as
+# a DIR32 to 0x00434F72.
+#
+# Retail realizes that implicit dtor NOT as a standalone body but as an ILT thunk:
+# ?j_00034f72 (RVA 0x00034F72, 5B, gen-thunk) tail-jumps to the base
+# ??1Template@@IAE@XZ (0x003394E0, 125B, Template.cpp, matched). No standalone
+# ??1ActionTemplate@@QAE@XZ body exists in the image, so no ledger row, symbols.csv
+# pin or data row owns the name -- the gate's unrecorded_dir32_problem reaches its
+# "nothing in the ledger owns" fallthrough and dir32_record.py refuses to record it.
+#
+# The element must stay ActionTemplate (not Template): the element ctor
+# ??0ActionTemplate@@QAE@XZ IS a standalone 12B body (0x0033B090, matched), so
+# renaming the element to Template would break the ctor's byte match. The sibling
+# ??1ConditionTemplate@@QAE@XZ is a standalone 5B body (0x00339590) -- a
+# link-layout difference, not a name difference.
+#
+# Every reference is from the byte-matched ctor/funclet and the name is the
+# compiler's own SEH symbol, not a guessed global. Same class as the whitelisted
+# FX element dtors above.
+??1ActionTemplate@@QAE@XZ
+
 # EnterCriticalSection/LeaveCriticalSection are imported through two IAT slots in
 # retail (two import descriptors), exactly like memmove/closesocket above:
 # mutex.cpp and wwmemlog.cpp resolve 0x1358D18 (0x1358E74 for Leave) while
