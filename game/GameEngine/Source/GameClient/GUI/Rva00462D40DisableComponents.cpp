@@ -79,7 +79,9 @@ struct Rva012F19A4Table
 
 class Gen_00C700A0Target;
 extern Gen_00C700A0Target TheBfmeObject_00C700A0;
-extern char g_bfmeDoneSJA;
+// VA 0x012F4CA4, zero-filled .bss in retail; written by 0x00462CB0, 0x00462D40 (here)
+// and bfmeGoSJA 0x00463810, read by 0x005B9C70.
+char g_bfmeDoneSJA;
 extern GameWindowManager *TheWindowManager;
 
 void Rva00462D40(void *name)
