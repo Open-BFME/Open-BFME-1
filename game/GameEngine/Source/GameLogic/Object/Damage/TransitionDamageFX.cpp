@@ -324,7 +324,7 @@ static Coord3D getLocalEffectPos( const FXLocInfo *locInfo, Drawable *draw )
 //-------------------------------------------------------------------------------------------------
 /** Switching damage states */
 //-------------------------------------------------------------------------------------------------
-// ?onBodyDamageStateChange@TransitionDamageFX@@ present-unmatched
+#if 0 // ?onBodyDamageStateChange@TransitionDamageFX@@UAEXPBVDamageInfo@@W4BodyDamageType@@1@Z is owned by TransitionDamageFXStateChange.cpp (retail 0x002525E0).  Two strong definitions collided at link; retail has exactly one.  The line count is kept so every later __LINE__ is unchanged.
 void TransitionDamageFX::onBodyDamageStateChange( const DamageInfo* damageInfo, 
 																									BodyDamageType oldState, 
 																									BodyDamageType newState )
@@ -443,7 +443,7 @@ void TransitionDamageFX::onBodyDamageStateChange( const DamageInfo* damageInfo,
 	}  // end if
 			
 }  // end onBodyDamageStateChange
-
+#endif
 // ------------------------------------------------------------------------------------------------
 /** CRC */
 // ------------------------------------------------------------------------------------------------
