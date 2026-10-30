@@ -21571,5 +21571,15 @@
   "after_sha256": "ff749f0a0d45931e5829597123fd86fe765414285f0b9397c8e92467c3286916",
   "evidence": "targets/game/reverse/attempt_support/00295760-heightdieupdate-update.md",
   "reason": "not a rename: the bank's next() local copy `payload` of m_value was removed so next() reads m_value directly (the ScriptActions_doTeamGarrisonNearestBuilding.cpp iterator shape), which is what made the body byte-exact; positional pairing matched the dropped local to the member"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva003C1A50_reset.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva003C1A50_reset.cpp",
+  "old_name": "go",
+  "new_name": "bfmeClear",
+  "before_sha256": "2cc835131bb595cb07217adabc4e43df5eb7383850d2d73503aa2da1045823cc",
+  "after_sha256": "b6538ae7a034c9dd0f5bf9ee2b075f79b82ce3302ce03feb36ac407b523f1873",
+  "evidence": "targets/game/reverse/attempt_support/reset-existing-owners-qwen-20261030.md",
+  "reason": "False declaration pairing: removed Glo012F706CType::go calls ILT 0001F7DF to existing BfmeThingBLE::bfmeGoBLE at 00610050; new Gen_003C0EF0::bfmeClear is the distinct ILT 000214E0 target at 003C0EF0. Full native caller and provider decodes plus unchanged 84 caller bytes and five exact REL32 corrections establish the separate identities. go is not renamed to bfmeClear. This entry follows docs/naming_evidence.md Keeping names and covers only these source snapshots."
  }
 ]

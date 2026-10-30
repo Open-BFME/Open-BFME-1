@@ -5,32 +5,43 @@
 // d_003b8450 reset path: clearOwned + clearTwoVec, settle +0x74/+0x80/+0x78/
 // +0xC8/+0xCC, singleton go, clearSingleton, set m_at2C, tail-reset UI.
 
-// The singleton at 0x012F706C is retail's ?g_bfmeGameCW@@3PAVBfmeGameCW@@A
-// (dir32_addresses.csv); only the members are pinned under the local view's
-// name, so the global carries its real type and the view is applied at the
-// calls.
-class BfmeGameCW;
-
-class Glo012F706CType
+// These existing row owners consume this caller's unadjusted ECX, with no
+// stack arguments. Their full native bodies are independently byte-verified.
+class Gen_003C0EF0
 {
 public:
-	void go();
-	void resetUi();
+	void bfmeClear();
+};
+class Gen_003C0F70
+{
+public:
+	void bfmeClear();
+};
+class Gen_003C0DB0
+{
+public:
+	void bfmeClear();
+};
+class BfmeThingBLE
+{
+public:
+	void bfmeGoBLE();
+};
+class Rva0060FFC0Owner
+{
+public:
+	void resetUiState();
 };
 
 // Retail 0x012F706C is ?TheLivingWorldManager@@3PAVLivingWorldManager@@A (data_rows.csv,
 // LivingWorld/LivingWorldManager.cpp); g_bfmeGameCW was only a pin.
 class LivingWorldManager;
 extern LivingWorldManager *TheLivingWorldManager;
-#define g_bfmeGameCW ( *(BfmeGameCW **)&TheLivingWorldManager )
 
 class Rva003C1A50
 {
 public:
 	void run();
-	void clearOwned();
-	void clearTwoVec();
-	void clearSingleton();
 
 private:
 	char m_pad00[ 0x2C ];
@@ -49,15 +60,15 @@ private:
 // ?run@Rva003C1A50@@QAEXXZ
 void Rva003C1A50::run()
 {
-	clearOwned();
-	clearTwoVec();
+	reinterpret_cast<Gen_003C0EF0 *>(this)->bfmeClear();
+	reinterpret_cast<Gen_003C0F70 *>(this)->bfmeClear();
 	m_at74 = 1;
 	m_at80 = false;
 	m_at78 = false;
 	m_atC8 = true;
 	m_atCC = 0x78;
-	reinterpret_cast<Glo012F706CType *>(g_bfmeGameCW)->go();
-	clearSingleton();
+	reinterpret_cast<BfmeThingBLE *>(TheLivingWorldManager)->bfmeGoBLE();
+	reinterpret_cast<Gen_003C0DB0 *>(this)->bfmeClear();
 	m_at2C = true;
-	reinterpret_cast<Glo012F706CType *>(g_bfmeGameCW)->resetUi();
+	reinterpret_cast<Rva0060FFC0Owner *>(TheLivingWorldManager)->resetUiState();
 }
