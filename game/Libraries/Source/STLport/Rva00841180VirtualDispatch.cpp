@@ -8,6 +8,23 @@
 // so byte equality does not identify a stream specialization or original name.
 // Keep an independent address-derived layout view and entry for each body.
 
+// Retail 0x00841160: the same 19-byte virtual-base destructor dispatch,
+// unreferenced, directly before 0x00841180.
+class Rva00841160Base
+{
+public:
+    virtual ~Rva00841160Base();
+};
+
+class Rva00841160Owner : public virtual Rva00841160Base
+{
+};
+
+void rva00841160Dispatch(Rva00841160Owner *object)
+{
+    object->~Rva00841160Owner();
+}
+
 class Rva00841180Base
 {
 public:
