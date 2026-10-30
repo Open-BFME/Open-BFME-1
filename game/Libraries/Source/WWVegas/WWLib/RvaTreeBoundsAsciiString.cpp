@@ -387,6 +387,18 @@ Bool BfmeTreeBoundsAnchor009C9CE0( const Rva009C9CE0Tree &tree, const AsciiStrin
 	return tree.lower_bound( key ) != tree.upper_bound( key );
 }
 
+// retail 0x009CA130: unreferenced out-of-line lower_bound copy over this tree.
+struct Rva009CA130Owner : Rva009C9CE0Tree
+{
+	const_iterator get( const AsciiString &key ) const;
+};
+
+Rva009CA130Owner::const_iterator
+Rva009CA130Owner::get( const AsciiString &key ) const
+{
+	return Rva009C9CE0Tree::lower_bound( key );
+}
+
 struct Rva009CFBE0Value
 {
 	AsciiString m_key;
@@ -405,6 +417,18 @@ typedef _STL::_Rb_tree<AsciiString, Rva009CFBE0Value, Rva009CFBE0KeyOfValue,
 Bool BfmeTreeBoundsAnchor009CFBE0( const Rva009CFBE0Tree &tree, const AsciiString &key )
 {
 	return tree.lower_bound( key ) != tree.upper_bound( key );
+}
+
+// retail 0x009D0640: unreferenced out-of-line lower_bound copy over this tree.
+struct Rva009D0640Owner : Rva009CFBE0Tree
+{
+	const_iterator get( const AsciiString &key ) const;
+};
+
+Rva009D0640Owner::const_iterator
+Rva009D0640Owner::get( const AsciiString &key ) const
+{
+	return Rva009CFBE0Tree::lower_bound( key );
 }
 
 struct Rva009D0AA0Owner : Rva009CFBE0Tree
