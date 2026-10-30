@@ -21531,5 +21531,25 @@
   "after_sha256": "0542a89fdb2402aad53d3767e096f4bb35d362acae8b41f41855cea7d426b7d4",
   "evidence": "targets/game/reverse/identity_evidence/000b3970-generatefilename-ilt-contradiction.md",
   "reason": "retail's ILT contradicts ?generateFilename@AudioEventRTS@@QAEXXZ for the 0x000B3970 body; the caller now reaches it through the self-addressed ILT name j_0000adfd (0x0000ADFD), and the body lands under an address-derived name"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008d3860.cpp",
+  "new_path": "game/Libraries/Source/Apt/BfmeNode1236ListProcess.cpp",
+  "old_name": "doFrameControls",
+  "new_name": "bfmeProcess1236",
+  "before_sha256": "e869583bf8b0630207d060399ff6672849a1a54c2c3394957acf7541176c6b5d",
+  "after_sha256": "e1f46fd255597fa54a1b0e7f2c686b76a8056c1345f5d94085862c1d9c5e060a",
+  "evidence": "targets/game/reverse/identity_evidence/0x008d3860-bfmeprocess1236.md",
+  "reason": "The bank's doFrameControls came from a trace literal, which is a lead, not proof; the matched callers 0x008D2810 and Rva008D2130.cpp call this body by the pinned ?bfmeProcess1236@BfmeNode1236List@@QAEXPAX0H@Z, so the landed row keeps that name"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x008d3860.cpp",
+  "new_path": "game/Libraries/Source/Apt/BfmeNode1236ListProcess.cpp",
+  "old_name": "apply",
+  "new_name": "rva008BEF00",
+  "before_sha256": "e869583bf8b0630207d060399ff6672849a1a54c2c3394957acf7541176c6b5d",
+  "after_sha256": "e1f46fd255597fa54a1b0e7f2c686b76a8056c1345f5d94085862c1d9c5e060a",
+  "evidence": "targets/game/reverse/identity_evidence/0x008d3860-bfmeprocess1236.md",
+  "reason": "The bank's apply was a placeholder callee spelling; the ledger names the 0x008BEF00 callee ?rva008BEF00@BfmeSubmitter1283@@QAEXPAUBfmeDescriptor1288@@PAUBfmeContext1288@@@Z, which the body must call to link"
  }
 ]

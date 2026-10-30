@@ -48,13 +48,13 @@ public:
  char m_reserved[0x50];
  BfmeCounter8C5700 *m_counter;
 };
-extern void d_008d3860();
+class BfmeNode1236List {
+public:
+ void bfmeProcess1236(void *walk,void *owner,int frame);
+};
 extern void d_008bde60();
 static __forceinline void Rva008D2130Dispatch(BfmeA1227 *frames,Rva008D2130List *list,BfmeThingCBC *owner,int index) {
- typedef void (BfmeA1227::*Call)(Rva008D2130List *,BfmeThingCBC *,int);
- union { void (*raw)(); Call member; } f;
- f.raw=d_008d3860;
- (frames->*f.member)(list,owner,index);
+ ((BfmeNode1236List *)frames)->bfmeProcess1236(list,owner,index);
 }
 static __forceinline void Rva008D2130Merge(Rva008D2130List *list,BfmeThingBE *value,Rva0089C860State *temporary,Rva0089C860State *previous) {
  typedef void (Rva008D2130List::*Call)(BfmeThingBE *,Rva0089C860State *,Rva0089C860State *);
