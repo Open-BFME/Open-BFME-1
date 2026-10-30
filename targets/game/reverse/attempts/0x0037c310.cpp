@@ -1,5 +1,6 @@
-// ?d_0037c310@@YAXXZ
-// partial score=0.4337606837606838 date=2026-09-27
+// ?CanBeActivatedFor@EmotionNugget@@QAE_NHHPBVObject@@@Z
+// partial score=0.9183 date=2026-10-30
+// ?CanBeActivatedFor@EmotionNugget@@QAE_NHHPBVObject@@@Z
 // Retail 0x0037C310..0x0037C4E1. Established address-derived identity from
 // matched TargetEligibility00290990::accepts and pinned ILT 0x000466B4.
 // Two native maps at +0x14/+0x20 record object/template cooldown frames.
@@ -183,35 +184,33 @@ class ThingTemplate { public: char pad00[0x478]; unsigned short at478; };
 struct GameLogic0037C310 { char pad00[0x3c]; unsigned frame3c; };
 extern GameLogic0037C310 *TheGameLogic0037C310;
 struct Config0037C310 {
-    int at00,at04; bool at08,at09; char pad0a[0x12];
-    int at1c,at20,at24,at28; bool at2c,at2d;
+    int at00,at04; unsigned char at08,at09; char pad0a[0x12];
+    int at1c,at20,at24,at28; unsigned char at2c,at2d;
 };
 typedef _STL::map<int,unsigned> ObjectFrameMap0037C310;
 typedef _STL::map<unsigned short,unsigned> TemplateFrameMap0037C310;
-class Rva0037C310Owner {
+class EmotionNugget {
 public:
-    bool Rva0037C310(int a,int b,Object *target);
+    bool CanBeActivatedFor(int a,int b,const Object *target);
     Object *object00; const Config0037C310 *data04; char pad08[8]; unsigned frame10;
     ObjectFrameMap0037C310 objects14;
     TemplateFrameMap0037C310 templates20;
 };
-bool Rva0037C310Owner::Rva0037C310(int a,int b,Object *target)
+bool EmotionNugget::CanBeActivatedFor(int a,int b,const Object *target)
 {
-    const Config0037C310 *data=data04;
-    if (data->at08 || data->at09) {
+    if (data04->at08 || data04->at09) {
         AIUpdateInterface *ai=object00->m_ai;
         if (!ai) return false;
         if (ai->ask180() && !ai->ask134()) {
-            if((data=data04)->at08) return false;
-        } else if((data=data04)->at09) return false;
+            if (data04->at08) return false;
+        } else if (data04->at09) return false;
     }
-    if (data->at2c || data->at2d) {
-        bool computer=object00->bfmeIsComputerControlled();
-        data=data04;
-        if(computer) {
-            if(data->at2d) return false;
-        } else if(data->at2c) return false;
+    if (data04->at2c || data04->at2d) {
+        if (object00->bfmeIsComputerControlled()) {
+            if (data04->at2d) return false;
+        } else if (data04->at2c) return false;
     }
+    const Config0037C310 *data=data04;
     if(data->at1c*a+data->at20>=0) return false;
     if(data->at24*b+data->at28>=0) return false;
     unsigned frame=TheGameLogic0037C310->frame3c;
@@ -230,8 +229,7 @@ bool Rva0037C310Owner::Rva0037C310(int a,int b,Object *target)
             templates20.erase(ti);
         }
     }
-    int kind=data04->at04;
-    if(kind>=4 && kind<=7) {
+    if(data04->at04>=4 && data04->at04<=7) {
         Object *object=object00;
         bool allowed=true;
         float bonus=0;
@@ -239,7 +237,9 @@ bool Rva0037C310Owner::Rva0037C310(int a,int b,Object *target)
             if(object->isKindOf(Kind108))
                 object=((ContainView0037C310 *)object->unidentified_001BFE20())->getF4();
             if(object) {
-                if(object->getAttributeModifierBonus(4,&bonus)) allowed=bonus<0.5f;
+                if(object->getAttributeModifierBonus(4,&bonus)) {
+                    if (bonus < 0.5f) allowed=true; else allowed=false;
+                }
                 if(object->getAIUpdateInterface() && object->getAIUpdateInterface()->getAIStateType()==State45) return false;
                 if(!allowed) return false;
             }
