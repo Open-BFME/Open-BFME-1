@@ -37208,7 +37208,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_001e49e0@@YAXXZ,,0x001E49E0,144,game/gen_asm/d_001dc690.asm,matched,gen-dump;ghidra=FUN_005e49e0
 ?d_001e4c60@@YAXXZ,,0x001E4C60,12,game/GameEngine/Source/Common/Stride8TableLookupThunk.cpp,matched,object-symbol=?lookup@Stride8Table@@QBEPAUStride8TableEntry@@I@Z;Open-BFME5 clean C++ eight-byte table lookup
 ?d_001e65c0@@YAXXZ,,0x001E65C0,444,game/gen_asm/d_001dc690.asm,matched,gen-dump;ghidra=FUN_005e65c0
-?d_001e6f10@@YAXXZ,,0x001E6F10,275,game/gen_asm/d_001dc690.asm,matched,gen-dump;ghidra=FUN_005e6f10
 ?d_001e9380@@YAXXZ,,0x001E9380,1519,game/gen_asm/d_00096570.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=ret+int3 callers=1;ghidra=FUN_005e9380
 ?d_001e9fd0@@YAXXZ,,0x001E9FD0,1253,game/gen_asm/d_001e7c30.asm,matched,gen-dump;ghidra=FUN_005e9fd0
 ?d_001eba30@@YAXXZ,,0x001EBA30,214,game/gen_asm/d_001e7c30.asm,matched,gen-dump;ghidra=FUN_005eba30
@@ -173392,3 +173391,4 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?XferImpl@XferLoad@@UAEXIPAXI@Z,,0x009D8F50,314,game/Libraries/Source/xfer/xfer_load.cpp,matched,EA name XferLoad::XferImpl from ea_evidence chain+direct strong and wb1 file xfer_load.cpp; tag check with RCSD skip then payload read; BFME2 donor Code/Libraries/Source/xfer/xfer_load.cpp @20a0cb6173 compiled exact first try;model=claude-opus-5-5;host=app
 ?Rva006077C0ParseSoundState@@YAXPAVINI@@PAX1PBX@Z,,0x006077C0,291,game/GameEngine/Source/GameClient/Drawable/Behavior/Rva006077C0ParseSoundState.cpp,matched,SoundState FieldParse callback via ILT 0x1D55C; push_back inlined on instance+8; element calls via ILT names; evidence identity_evidence/006077c0-soundstate-parse.md;model=claude-opus-5-5;host=app
 ?Rva00C3D83BCleanup@@YAXXZ,,0x00C3D83B,23,game/GameEngine/Source/GameClient/Drawable/Behavior/Rva006077C0ParseSoundState.cpp,matched,gen-funclet;object-symbol=$L4168;parent=?Rva006077C0ParseSoundState@@YAXPAVINI@@PAX1PBX@Z;retail parent6077C0 -> handlerC3D852 -> FuncInfoE2D3D4 state1/0 placement delete ILT2AAA9;RET C3D851;model=claude-opus-5-5;host=app
+?getPreAttackDelay@Weapon@@QBEHPBVObject@@0PBVCoord3D@@@Z,,0x001E6F10,275,game/GameEngine/Source/GameLogic/Object/Weapon_getPreAttackDelay.cpp,matched,ZH Weapon::getPreAttackDelay twin; called by matched preFireWeapon 0x001E8970 via ILT 0x13818 (ilt_oracle CONFIRMED PBV); do/while forceinline WeaponBonus clear gives EAX 1.0f interleave;model=claude-opus-5-5;host=app

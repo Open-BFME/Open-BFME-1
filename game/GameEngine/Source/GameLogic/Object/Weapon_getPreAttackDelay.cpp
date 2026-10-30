@@ -1,7 +1,4 @@
 // ?getPreAttackDelay@Weapon@@QBEHPBVObject@@0PBVCoord3D@@@Z
-// partial score=1.0 date=2026-10-30
-// ?getPreAttackDelay@Weapon@@QBEHPBVObject@@0PBVCoord3D@@@Z
-// partial score=1.0 date=2026-10-30 (EXACT; landing blocked by ILT pin deadlock)
 // cl: /DNDEBUG /MD /EHsc
 //
 // Weapon::getPreAttackDelay, retail RVA 0x001E6F10 (275 bytes, RET 0x0C).
@@ -29,6 +26,7 @@ struct Coord3DBase
 
 // Class-keyed, as BFME declares it: tools/ilt_oracle.py confirms the PBV
 // decoration for this body and contradicts the struct-keyed one.
+// class-gate: allow Coord3D the canonical header is struct-keyed but ilt_oracle CONFIRMS the class-keyed PBVCoord3D decoration at ILT 0x00013818
 class Coord3D : public Coord3DBase
 {
 public:
