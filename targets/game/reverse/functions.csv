@@ -37050,7 +37050,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_0014bad0@@YAXXZ,,0x0014BAD0,40,game/GameEngine/Source/Common/Rva14BAD0ListConstructor.cpp,matched,object-symbol=??0Rva14BAD0List@@QAE@H@Z;Open-BFME5 clean C++ RVA 14BAD0 sentinel list constructor
 ?d_0014c8e0@@YAXXZ,,0x0014C8E0,196,game/gen_asm/d_0014af50.asm,matched,gen-dump;ghidra=FUN_0054c8e0
 ?d_0014d120@@YAXXZ,,0x0014D120,1951,game/gen_asm/d_0014af50.asm,matched,gen-dump;ghidra=FUN_0054d120
-?d_00150a70@@YAXXZ,,0x00150A70,181,game/gen_asm/d_0014af50.asm,matched,gen-dump;ghidra=FUN_00550a70
 ?d_00155490@@YAXXZ,,0x00155490,509,game/gen_small/dumps_000.cpp,matched,gen-dump;ghidra=FUN_00555490
 ?d_00156c60@@YAXXZ,,0x00156C60,3172,game/gen_asm/d_00096570.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=ret+int3 callers=1;ghidra=FUN_00556c60
 ?d_00157be0@@YAXXZ,,0x00157BE0,2937,game/gen_asm/d_00096570.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=ret+int3 callers=1;ghidra=FUN_00557be0
@@ -173392,3 +173391,4 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?getPreAttackDelay@Weapon@@QBEHPBVObject@@0PBVCoord3D@@@Z,,0x001E6F10,275,game/GameEngine/Source/GameLogic/Object/Weapon_getPreAttackDelay.cpp,matched,ZH Weapon::getPreAttackDelay twin; called by matched preFireWeapon 0x001E8970 via ILT 0x13818 (ilt_oracle CONFIRMED PBV); do/while forceinline WeaponBonus clear gives EAX 1.0f interleave;model=claude-opus-5-5;host=app
 ?internalUpdate@AICombineState@@IAE?AW4StateReturnType@@XZ,,0x0016F340,238,game/GameEngine/Source/GameLogic/AI/AICombineStateInternalUpdate.cpp,matched,BFME2 donor AICombineStateInternalUpdate.cpp nested-if port with BFME1 offsets; ilt_oracle CONFIRMED at ILT 0x37E34;model=claude-opus-5-5;host=app
 ?rva00231C50@Formation00231C50@@QAEXH@Z,,0x00231C50,812,game/GameEngine/Source/GameLogic/Object/Behavior/FlightDeckInfoVectorInsertOverflowBody.cpp,matched,AODHordeContain.cpp literal family; exact only with _M_insert_overflow (0x231A00) and STLport __uninitialized_fill_n visible in the same TU (escape lever); BFME2 donor AODHordeContainInitOffsets.cpp block-local angle;model=claude-opus-5-5;host=app
+?rva00150A70@AIGroup@@QAEXPAUCoord3D@@PBU2@H@Z,,0x00150A70,181,game/GameEngine/Source/GameLogic/AI/Rva00150100Rotate.cpp,matched,AIGroup member-list formation walk; exact only beside its visible non-capturing helper Rva00150100Rotate (escape lever); BFME2 donor AIGroupSetPositionInFormation.cpp null-member return;model=claude-opus-5-5;host=app
