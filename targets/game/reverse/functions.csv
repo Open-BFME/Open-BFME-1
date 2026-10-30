@@ -37629,7 +37629,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_00415b60@@YAXXZ,,0x00415B60,11,game/GameEngine/Source/Common/SecondArgumentStoreThunk.cpp,matched,object-symbol=?setFromSecondArgument@SecondArgumentStoreThunk@@QAEPAU1@KK@Z;Open-BFME5 clean C++ second argument store
 ?d_00415b70@@YAXXZ,,0x00415B70,22,game/GameEngine/Source/Common/PointerValueNotEqualThunk.cpp,matched,object-symbol=?pointerValuesDiffer@@YA_NPBK0@Z;Open-BFME5 clean C++ pointer value inequality
 ?d_00416420@@YAXXZ,,0x00416420,10,game/GameEngine/Source/Common/SecondWordClearThunk.cpp,matched,object-symbol=?clearSecond@SecondWordClearThunk@@QAEPAU1@XZ;Open-BFME5 clean C++ second word clear
-?d_00416820@@YAXXZ,,0x00416820,390,game/gen_asm/d_00411110.asm,matched,gen-dump;ghidra=FUN_00816820
 ?d_00416fe0@@YAXXZ,,0x00416FE0,97,game/gen_asm/d_00411110.asm,matched,gen-dump;ghidra=FUN_00816fe0
 ?d_00417430@@YAXXZ,,0x00417430,351,game/gen_asm/d_00411110.asm,matched,gen-dump;ghidra=FUN_00817430
 ?d_004175f0@@YAXXZ,,0x004175F0,231,game/gen_asm/d_00411110.asm,matched,gen-dump;ghidra=FUN_008175f0
@@ -173392,3 +173391,4 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?methodRva007CBB70@Rva007CBB30@@QAEIXZ,,0x007CBB70,288,game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp,matched,model=claude-opus-5-5;host=app
 ?Rva003369d0@ScriptEngine@@IAEXPAVScriptAction@@@Z,,0x003369D0,264,game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine_updateFades.cpp,matched,model=claude-opus-5-5;host=app
 ?rva001F7B10@ClickReactionBehavior@@UAEXXZ,,0x001F7B10,340,game/GameEngine/Source/GameLogic/Object/Behavior/ClickReactionBehaviorRva001F7B10.cpp,matched,model=claude-opus-5-5;host=app
+?setStealthLook@Drawable@@QAEXW4StealthLookType@@MMM@Z,,0x00416820,416,game/GameEngine/Source/GameClient/DrawableSetStealthLook.cpp,matched,model=claude-opus-5-5;host=app

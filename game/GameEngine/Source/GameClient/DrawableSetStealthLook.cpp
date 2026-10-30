@@ -1,19 +1,16 @@
-// ?setStealthLook@Drawable@@QAEXW4StealthLookType@@MMM@Z
-// partial score=0.25 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2
 
-// Real C++ reconstruction of the BFME-only four-argument
-// ?setStealthLook@Drawable@@QAEXW4StealthLookType@@MMM@Z body at 0x00416820.
-// The retail body is 390 bytes and ends with ret 0x10 at +0x185.  Its identity
-// is established independently of the anonymous dump: the named
-// StealthUpdate::changeVisualDisguise body at 0x00267D80 calls ILT 0x0000F763
-// with (2, 0.2f, 0.7f, 2.0f), and that thunk resolves to this address.  The
-// retail body also carries the six-way StealthLookType jump table and the
-// Drawable.cpp source literal.  The existing one-argument ZH spelling remains
-// in Drawable.cpp; this TU declares the distinct BFME ABI locally.
-//
-// Only offsets and the unlabelled module vtable slot are named by address.
-// Their BFME semantic names are not asserted here.
+// Drawable::setStealthLook, BFME's four-argument form, retail 0x00416820
+// (390 B plus its six-entry case table, 416 B). Identity: the matched
+// StealthUpdate::changeVisualDisguise 0x00267D80 calls ILT 0x0000F763 with
+// (2, 0.2f, 0.7f, 2.0f) and ilt_oracle CONFIRMS this spelling; the body uses
+// the Drawable.cpp source literal. The ZH one-argument setStealthLook stays
+// in Drawable.cpp; this TU declares the BFME ABI locally. Structure follows
+// ZH's switch (enum in ZH order: retail compares 4 = VISIBLE_FRIENDLY_DETECTED).
+// Offsets other than the ZH-named stealth fields keep their addresses.
+// The clamp is one value expression (retail keeps it on x87 and stores once),
+// and the second module loop re-tests the element so cl drops the 4-byte
+// loop-head pad retail does not have (shape_levers "lea or mov edi,edi nop").
 
 typedef unsigned char UnsignedByte;
 typedef unsigned int UnsignedInt;
@@ -23,15 +20,14 @@ typedef bool Bool;
 
 enum StealthLookType
 {
-	STEALTHLOOK_NONE = 0,
-	STEALTHLOOK_VISIBLE_FRIENDLY = 1,
-	STEALTHLOOK_VISIBLE_FRIENDLY_DETECTED = 2,
-	STEALTHLOOK_DISGUISED_ENEMY = 3,
-	STEALTHLOOK_VISIBLE_DETECTED = 4,
-	STEALTHLOOK_INVISIBLE = 5
+	STEALTHLOOK_NONE,
+	STEALTHLOOK_VISIBLE_FRIENDLY,
+	STEALTHLOOK_DISGUISED_ENEMY,
+	STEALTHLOOK_VISIBLE_DETECTED,
+	STEALTHLOOK_VISIBLE_FRIENDLY_DETECTED,
+	STEALTHLOOK_INVISIBLE
 };
 
-extern const Real g_bfmeScaleBK;
 extern Real GetGameClientRandomValueReal(Real low, Real high, char *file,
 	Int line);
 
@@ -130,11 +126,11 @@ private:
 	UnsignedByte m_pad154[0x08];
 	StealthLookType m_stealthLook; // +0x15C
 	UnsignedByte m_pad160[0x184];
-	UnsignedInt m_value2E4;
+	Real m_secondMaterialPassOpacity; // +0x2E4
 	UnsignedByte m_pad2E8[0x33];
-	UnsignedByte m_flag31B;
+	Bool m_flag31B;
 	UnsignedByte m_pad31C[0x92];
-	UnsignedByte m_flag3AE;
+	Bool m_hiddenByStealth; // +0x3AE
 
 public:
 	void setStealthLook(StealthLookType look, Real first, Real second,
@@ -144,80 +140,63 @@ public:
 void Drawable::setStealthLook(StealthLookType look, Real first, Real second,
 	Real third)
 {
-	if (look == m_stealthLook)
-		return;
-
-	// The two retail compares clamp the third argument to the BFME scale
-	// floor and the unlabelled 60.0f ceiling at 0x0108882C.
-	Real clamped = third;
-	if (clamped < g_bfmeScaleBK)
-		clamped = g_bfmeScaleBK;
-	else if (clamped > *(const Real *)0x0108882C)
-		clamped = *(const Real *)0x0108882C;
-	m_valueB8 = 1.0f;
-	m_valueBC = 1.0f;
-	m_valueC0 = clamped;
-
-	m_valueD4 = (Int)(third * *(const Real *)0x0108615C);
-	m_valueD0 = m_valueB4;
-	m_stealthLook = look;
-
-	Bool updateFirstPass = true;
-	switch (look)
+	if (look != m_stealthLook)
 	{
-		case STEALTHLOOK_NONE:
-		case STEALTHLOOK_VISIBLE_FRIENDLY_DETECTED:
-			m_flag3AE = 0;
-			m_value2E4 = 0;
-			break;
+		m_valueBC = 1.0f;
+		m_valueB8 = 1.0f;
+		m_valueC0 = third < 0.1f ? 0.1f : (third > 60.0f ? 60.0f : third);
+		m_valueD4 = (Int)(third * 30.0f);
+		m_valueD0 = m_valueB4;
+		m_stealthLook = look;
 
-		case STEALTHLOOK_VISIBLE_FRIENDLY:
-		case STEALTHLOOK_VISIBLE_DETECTED:
-			m_valueC4 = (first + second) * 0.5f;
-			m_valueB8 = first;
-			m_valueC8 = (second - first) * 0.5f;
-			m_valueBC = second;
-			m_valueCC = GetGameClientRandomValueReal(
-				0.0f,
-				3.1415927f,
-				(char *)"F:\\bfme\\Code\\gameengine\\Source\\GameClient\\Drawable.cpp",
-				0xD9C);
-			m_flag3AE = 0;
-			if (look == STEALTHLOOK_VISIBLE_DETECTED)
-			{
-				m_value2E4 = 1;
-				updateFirstPass = false;
-			}
-			else
-				m_value2E4 = 0;
-			break;
+		switch (look)
+		{
+			case STEALTHLOOK_NONE:
+				m_hiddenByStealth = false;
+				m_secondMaterialPassOpacity = 0.0f;
+				break;
 
-		case STEALTHLOOK_DISGUISED_ENEMY:
-			m_flag3AE = 0;
-			m_value2E4 = 1;
-			updateFirstPass = false;
-			break;
+			case STEALTHLOOK_VISIBLE_FRIENDLY:
+			case STEALTHLOOK_VISIBLE_FRIENDLY_DETECTED:
+				m_valueC4 = (first + second) * 0.5f;
+				m_valueB8 = first;
+				m_valueC8 = (second - first) * 0.5f;
+				m_valueBC = second;
+				m_valueCC = GetGameClientRandomValueReal(0.0f, 3.1415927f,
+					"F:\\bfme\\Code\\gameengine\\Source\\GameClient\\Drawable.cpp", 0xD9C);
+				m_hiddenByStealth = false;
+				if (look == STEALTHLOOK_VISIBLE_FRIENDLY_DETECTED)
+					m_secondMaterialPassOpacity = 1.0f;
+				else
+					m_secondMaterialPassOpacity = 0.0f;
+				break;
 
-		case STEALTHLOOK_INVISIBLE:
-			m_flag3AE = (m_flag31B == 0);
-			m_value2E4 = 0;
-			break;
+			case STEALTHLOOK_DISGUISED_ENEMY:
+				m_hiddenByStealth = false;
+				m_secondMaterialPassOpacity = 0.0f;
+				break;
 
-		default:
-			updateFirstPass = false;
-			break;
-	}
+			case STEALTHLOOK_VISIBLE_DETECTED:
+				m_hiddenByStealth = false;
+				m_secondMaterialPassOpacity = 1.0f;
+				break;
 
-	if (updateFirstPass)
-	{
-		for (BfmeDrawableStealthModule **module = m_modules;
-			*module; ++module)
+			case STEALTHLOOK_INVISIBLE:
+				m_hiddenByStealth = !m_flag31B;
+				m_secondMaterialPassOpacity = 0.0f;
+				break;
+		}
+
+		for (BfmeDrawableStealthModule **module = m_modules; *module; ++module)
 			(*module)->slotE0(true);
+		(reinterpret_cast<Gen_00411DD0 *>(this))->bfmeChanged();
+		BfmeDrawableStealthModule **m2 = m_modules;
+		while (*m2)
+		{
+			BfmeDrawableStealthModule *mod = *m2;
+			if (mod)
+				mod->slotE0(false);
+			m2++;
+		}
 	}
-
-	(reinterpret_cast<Gen_00411DD0 *>(this))->bfmeChanged();
-
-	for (BfmeDrawableStealthModule **module = m_modules;
-		*module; ++module)
-		(*module)->slotE0(false);
 }
