@@ -1,14 +1,33 @@
 // ?getAimPosition@WeaponTemplate@@QAEPAUCoord3D@@PAU2@PBVObject@@1H@Z
-// partial score=0.52 date=2026-09-22
-// cl: /DNDEBUG /MD /EHsc
+// partial score=0.9234 date=2026-10-30
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+//
+// Retail RVA 0x001E65C0, 444 bytes (RET 0x10 at +0x1B9, INT3 at +0x1BC).
+// Caller: matched Weapon::bfmeGetLOSVictimPos (Weapon_bfmeGetLOSVictimPos.cpp)
+// supplies the result buffer, source, victim and the bool-tested 4th word, so
+// the ledger's reloc-derived name and ABI are kept.
+//
+// Structure carried from the BFME 2 donor
+// inputs/reference/open-bfme-2 Code/GameEngine/Source/GameLogic/Object/
+// WeaponTemplateTargetPositions.cpp (adjustTargetPositionOnVictim, 0x002CAB3A,
+// donor rev 20a0cb6173): the jitter call is an ARGUMENT of
+// getWorldspaceBestContactPoint (cl pushes the trailing false first), the
+// height adjustment only runs on the non-flag path, and the outer arm reads
+// pos.z through a volatile cast to keep its own add path.  BFME 1 facts from
+// retail: x87 (not SSE) arms `aim + z`, `zDelta + z`, `z + zDelta`; inline
+// isNotEmpty (cmp word [m_data+4]); getter 0x001E2640 via ILT 0x00022B3D.
+//
+// Residue (34 bytes, all frame displacement): every instruction matches, but
+// retail places the string in the dead victim argument slot and zDelta in
+// the dead flag slot (frame 0x0C); ours gives zDelta the victim slot and the
+// string a frame slot (frame 0x10).  See
+// targets/game/reverse/attempt_support/20261030-getaimposition-frame-slot.md.
 
-// BFME WeaponTemplate::getAimPosition, retail RVA 0x001E65C0 (444 bytes).
-// The caller at Weapon::bfmeGetLOSVictimPos supplies the hidden Coord3D
-// return buffer, source object, victim object, and weapon slot.  BFME's
-// preferred-target-bone accessor returns its one-pointer AsciiString into the
-// stack slot later reused for the local string; the accessor body is the
-// existing 0x001E2640 ICF body (ILT 0x00022B3D), whose +0x80 source offset is
-// the matched WeaponTemplate layout's PreferredTargetBone field.
+#include "ascii_string.h"
+template <> inline bool StringBase<char>::isNotEmpty() const
+{
+	return m_data && m_data->length != 0;
+}
 
 typedef bool Bool;
 typedef int Int;
@@ -25,39 +44,6 @@ class Matrix3D;
 enum KindOfType
 {
 	KINDOF_UNKNOWN = 0
-};
-
-template <typename T>
-class StringBase
-{
-	friend class BFMERetailAsciiString;
-
-	private:
-	StringBase(const StringBase<T> &other);
-	void releaseBuffer();
-	T *m_data;
-};
-
-class BFMERetailAsciiString : private StringBase<char>
-{
-public:
-	BFMERetailAsciiString(const BFMERetailAsciiString &other)
-		: StringBase<char>(other)
-	{
-	}
-	~BFMERetailAsciiString() { releaseBuffer(); }
-
-	const char *str() const
-	{
-		return m_data ? (const char *)m_data + 8 : "";
-	}
-
-	Bool isNotEmpty() const
-	{
-		return m_data != 0 && *(const unsigned short *)((const char *)m_data + 4) != 0;
-	}
-
-private:
 };
 
 class Thing
@@ -97,57 +83,56 @@ extern char g_bfmeFmt1041[];
 extern Int GetGameLogicRandomValue(Int minimum, Int maximum,
 	char *format, Int value);
 
+class Rva001E2640Owner
+{
+public:
+	AsciiString rva001E2640() const;
+};
+
 class WeaponTemplate
 {
 public:
-	BFMERetailAsciiString getPreferredTargetBone() const;
 	Coord3D *getAimPosition(Coord3D *result, const Object *source,
 		const Object *victim, Int weaponSlot);
 
 private:
-	char m_padding[0x80];
-	BFMERetailAsciiString m_preferredTargetBone;
 };
 
 // ?getAimPosition@WeaponTemplate@@QAEPAUCoord3D@@PAU2@PBVObject@@1H@Z
 Coord3D *WeaponTemplate::getAimPosition(Coord3D *result,
 	const Object *source, const Object *victim, Int weaponSlot)
 {
-	Coord3D local = { 0.0f, 0.0f, 0.0f };
+	Coord3D pos;
+	pos.x = 0.0f;
+	pos.y = 0.0f;
+	pos.z = 0.0f;
 	if (victim == 0)
 	{
-		result->x = local.x;
-		result->y = local.y;
-		result->z = local.z;
+		result->x = pos.x;
+		result->y = pos.y;
+		result->z = pos.z;
 		return result;
 	}
-
-	BFMERetailAsciiString preferredTargetBone = getPreferredTargetBone();
+	AsciiString preferredTargetBone =
+		((const Rva001E2640Owner *)this)->rva001E2640();
 	if (preferredTargetBone.isNotEmpty() &&
 		victim->getSingleLogicalBonePosition(preferredTargetBone.str(),
-			&local, 0))
+			&pos, 0))
 	{
-		result->y = local.y;
-		result->z = local.z;
+		result->x = pos.x;
+		result->y = pos.y;
+		result->z = pos.z;
+		return result;
+	}
+	if ((unsigned char)weaponSlot != 0)
+	{
+		victim->getWorldspaceBestContactPoint(&pos,
+			(const Coord3D *)((const char *)source + 0x38), 0, 3,
+			GetGameLogicRandomValue(0, 0xBC614E, g_bfmeFmt1041, 0x62D), 0);
 	}
 	else
 	{
-		if ((unsigned char)weaponSlot != 0)
-		{
-			Int seed = GetGameLogicRandomValue(0, 0xBC614E, g_bfmeFmt1041,
-				0x62D);
-			victim->getWorldspaceBestContactPoint(&local,
-				(const Coord3D *)((const char *)source + 0x38), 0, 3, seed, 0);
-		}
-		else
-		{
-			const Coord3D *victimPosition =
-				(const Coord3D *)((const char *)victim + 0x38);
-			local.x = victimPosition->x;
-			local.y = victimPosition->y;
-			local.z = victimPosition->z;
-		}
-
+		pos = *(const Coord3D *)((const char *)victim + 0x38);
 		float zDelta = ((const BfmeBoundaryGeometry3D *)
 			((const char *)victim + 0xAC))->bfmeZDeltaToCenter();
 
@@ -155,20 +140,19 @@ Coord3D *WeaponTemplate::getAimPosition(Coord3D *result,
 			!source->isKindOf((KindOfType)11) &&
 			!source->testStatus(0x54) && victim->testStatus(0x54))
 		{
-			float aimHeight = TheWritableGlobalData->m_bfmeAimHeight;
-			if (aimHeight < zDelta)
-				aimHeight = zDelta;
-			local.z += aimHeight;
+			if (TheWritableGlobalData->m_bfmeAimHeight < zDelta)
+				pos.z = *(volatile float *)&TheWritableGlobalData->m_bfmeAimHeight + pos.z;
+			else
+				pos.z = zDelta + pos.z;
 		}
 		else
 		{
-			local.z += zDelta;
+			pos.z = *(volatile float *)&pos.z + zDelta;
 		}
-
-		result->y = local.y;
-		result->z = local.z;
 	}
 
-	result->x = local.x;
+	result->x = pos.x;
+	result->y = pos.y;
+	result->z = pos.z;
 	return result;
 }
