@@ -1,19 +1,24 @@
-// ?rva002672B0@SiegeDeploySpecialPower@@UAEXPBXPBVObject@@PBVCoord3D@@I0@Z
-// partial score=0.9908 date=2026-10-30
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
 // Retail 0x002672B0 (650 B, ret 0x14): slot 0 of SiegeDeploySpecialPower's +0x20 interface
 // vtable 0x00CB7468 (ILT 0x000199C0).  Shape from the BFME 2 donor
 // Code/GameEngine/Source/GameLogic/Object/SpecialPower/SiegeDeploySpecialPower.cpp
 // (initiateIntentToDoSpecialPower, open-bfme-2 20a0cb6173); the real name is
 // ILT-contradicted for 3456 signature variants, so the method keeps its address.
+// AICommandInterface::aiMoveToPosition is defined inline below, as Zero Hour's
+// AI.h does: retail's order of the &p lea and the p.z store before that call
+// needs the callee's body visible (it only copies *pos). Its COMDAT compiles
+// to the retail body 0x000D86C0, ledgered in AICommandInterfaceMovementOrders.cpp.
+// Coord3D is struct-keyed to spell that callee as the ledger does.
+#include <vector>
 typedef bool Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef float Real;
 
-class Coord3D
+// class-gate: allow Coord3D user copy constructor: the canonical POD header emits 681 B / 257 diffs; retail's x87 copy of targetObj->m_position needs the copy-ctor view
+struct Coord3D
 {
-public:
 	Coord3D() {}
 	Coord3D(const Coord3D &other) : x(other.x), y(other.y), z(other.z) {}
 	Real x;
@@ -142,11 +147,54 @@ public:
 };
 extern BfmeWideForwardC *ThePartitionManager;
 
+class Team;
+class Waypoint;
+class PolygonTrigger;
+class CommandButton;
+class Path;
+
+enum AICommandType
+{
+	AICMD_MOVE_TO_POSITION = 0x00
+};
+
+struct DamageInfo
+{
+	char m_bfme_body[0x5C];
+};
+
+class AICommandParms
+{
+public:
+	AICommandParms(AICommandType cmd, CommandSourceType commandSource);
+
+	AICommandType m_cmd;
+	CommandSourceType m_cmdSource;
+	Coord3D m_pos;
+	Object *m_obj;
+	Object *m_otherObj;
+	const Team *m_team;
+	std::vector<Coord3D> m_coords;
+	const Waypoint *m_waypoint;
+	const PolygonTrigger *m_polygon;
+	int m_intValue;
+	DamageInfo m_damage;
+	const CommandButton *m_commandButton;
+	Path *m_path;
+};
+
 class AICommandInterface
 {
 public:
+	virtual void aiDoCommand(const AICommandParms *parms);
+
 	void aiIdle(CommandSourceType cmdSource);
-	void aiMoveToPosition(const Coord3D *pos, CommandSourceType cmdSource);
+	void aiMoveToPosition(const Coord3D *pos, CommandSourceType cmdSource)
+	{
+		AICommandParms parms(AICMD_MOVE_TO_POSITION, cmdSource);
+		parms.m_pos = *pos;
+		aiDoCommand(&parms);
+	}
 };
 
 class AIUpdateInterface
@@ -203,6 +251,13 @@ public:
 };
 class SiegeDeployIface24 { public: virtual void slot00(); };
 
+// 0x002666A0 (approach point toward a dock, still a gen dump) is reached
+// through its ILT 0x00020455, as SiegeDeploySpecialPowerUpdate.cpp does.
+extern void j_00020455();
+class Rva002666A0Caller
+{
+};
+
 struct Rva002666A0Point
 {
 	Real x;
@@ -219,7 +274,6 @@ public:
 	virtual void slot01();
 	virtual Bool slot02();
 
-	Rva002666A0Point rva002666A0(Object *dock, Coord3D *dockPosition, Bool *docked);
 
 	unsigned char m_unmodelled28[0x18];
 	Int m_dockID;							// +0x40
@@ -272,7 +326,13 @@ void SiegeDeploySpecialPower::rva002672B0(const void *specialPowerTemplate, cons
 	if (dockObject)
 	{
 		Bool docked = false;
-		m_approachPoint = rva002666A0(dockObject, &m_dockPosition, &docked);
+		union
+		{
+			void (*raw)();
+			Rva002666A0Point (Rva002666A0Caller::*fn)(Object *, Coord3D *, Bool *);
+		} approach;
+		approach.raw = j_00020455;
+		m_approachPoint = (((Rva002666A0Caller *)this)->*approach.fn)(dockObject, &m_dockPosition, &docked);
 		if (docked)
 		{
 			ai->ignoreObstacle(dockObject);
