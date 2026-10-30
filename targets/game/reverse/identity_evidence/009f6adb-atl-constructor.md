@@ -23,7 +23,7 @@ With /O1 /GS /MD, the native algorithm matches171B and all nine relocations:
 | --- | --- | --- |
 | 0C | ___security_cookie, VA012DBDB0 | Existing /GS data pin and checker |
 | 17 | Rva009F69B1 constructor | Existing matched26B body |
-| 1C | ___ImageBase, VA00400000 | PE optional-header image base; native source uses &__ImageBase |
+| 1C | _g_Va00400000, VA00400000 | PE optional-header image base; native source uses &__ImageBase. The declaration is spelled g_Va00400000 because VA00400000 is the non-section PE header region (no data row can be byte-verified there) and the unrecorded-dir32 rule accepts an address-encoded name. VS2003 link.exe defines ___ImageBase as a built-in absolute symbol equal to /BASE: a minimal TU with `extern "C" IMAGE_DOS_HEADER __ImageBase;` linked /NODEFAULTLIB /BASE:0x10000000 exits 0 and emits `mov eax, 0x10000000` (build/d15_ib/). The rename changes only the COFF symbol name, not the relocation addend 0 or the body bytes. |
 | 3C | _memset via009F75C4 | Existing import route;148B OSVERSIONINFO zeroing |
 | 50 | GetVersionExA IAT VA01358E20 | Existing import binding and native source |
 | 87 | GUID_ATLVer70, VA01145854 | All16 retail bytes e03d4c396f3cd211817b00c04f797ab7 equal native atlbase.cpp line26 |
