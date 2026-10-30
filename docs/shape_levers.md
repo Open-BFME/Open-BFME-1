@@ -2708,3 +2708,17 @@ those copies. Look for this when retail's switch arms load only a
 constant and jump to one join. Donor hint: BFME 2's ClickReactionBehavior
 calls setModelConditionState in each case. Source:
 game/GameEngine/Source/GameLogic/Object/Behavior/ClickReactionBehaviorRva001F7B10.cpp.
+
+## Do not name a CSE'd subexpression: it flips x87 operand order (2026-10-30)
+
+U4Curve006095D0::evaluate 0x0006A520 (VC7.1, FCurve.cpp `/EHs-c- /MD`).
+Retail computes `(float)cycle` and `(float)cycle * range` once into stack
+slots and later uses them as `fld [offset]; fadd [time]` and
+`fld [cycles]; fmul [delta]`. With `float cycles = (float)cycle;` and
+`float offset = cycles * range;` as named locals every byte matched except
+those two pairs, which loaded the other operand first; swapping the source
+operands was inert (cl canonicalizes commutative x87 operands). Writing
+`(float)cycle` and `(float)cycle * range` at each use, so the compiler's own
+CSE creates the temporaries, gave 652/652 exact. Measured effect only; the
+ordering rule cl uses for named locals versus CSE temps is not known.
+Source: game/GameEngine/Source/Common/FCurve.cpp.
