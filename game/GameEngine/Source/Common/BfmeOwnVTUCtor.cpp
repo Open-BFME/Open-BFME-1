@@ -6,7 +6,8 @@
 // standalone class, not proven to derive from ArchiveFileSystem/
 // Win32BIGFileSystem despite the adjacent vtable slots -- IDENTITY IS NOT
 // RECOVERED beyond the address-derived pins already on record
-// (?bfmeApplyVTU@BfmeOwnVTU@@QAEXH@Z, 0x009CC020).
+// (?bfmeApplyVTU@BfmeOwnVTU@@QAE_NPAVFile@@@Z, 0x009CC020, in
+// game/Libraries/Source/file/TextFile.cpp: a bool tokenizer over a File).
 //
 // Retail zeroes four dwords at +4/+8/+0xC/+0x10 immediately after the vptr
 // store, then calls bfmeInit1182() (already matched, no args) and
@@ -17,6 +18,8 @@
 // out-of-line (declared, not defined here) to force that unwind path.
 
 void bfmeInit1182(void);
+
+class File;
 
 // Three words with a real destructor -- forces the SEH unwind frame retail
 // shows, and the "this" stash to [esp+4] lands right after this subobject
@@ -62,7 +65,7 @@ public:
 	BfmeOwnVTU(int state);
 	virtual ~BfmeOwnVTU();
 
-	void bfmeApplyVTU(int state);
+	bool bfmeApplyVTU(File *file);
 
 private:
 	BfmeOwnVTUHead m_head;	// +0x4 .. +0xc
@@ -72,5 +75,5 @@ private:
 BfmeOwnVTU::BfmeOwnVTU(int state)
 {
 	bfmeInit1182();
-	bfmeApplyVTU(state);
+	bfmeApplyVTU((File *)state);
 }

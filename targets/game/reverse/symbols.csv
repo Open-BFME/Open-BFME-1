@@ -76815,7 +76815,6 @@ name,address,notes
 ?bfmeApplyTP@BfmeInnerTP@@QAEXH@Z,0x00024D70,pin inner apply for BfmeConv2025
 ?bfmeApplyVKP@BfmeBlockVKP@@QAEXHH@Z,0x0000AF06,pin
 ?bfmeApplyVMQ@@YAHPADH@Z,0x007EE720,pin
-?bfmeApplyVTU@BfmeOwnVTU@@QAEXH@Z,0x009CC020,pin
 ?bfmeApplyXA@BfmeStateXA@@QAEXPAXH@Z,0x00047807
 ?bfmeApplyXC@BfmeStateXC@@QAEXPAXH@Z,0x00047807
 ?bfmeApplyXJ@BfmeOwnerXJ@@QAEXPAXPAVBfmeThingXJ@@@Z,0x0003392E
