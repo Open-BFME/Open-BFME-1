@@ -502,6 +502,98 @@ void Glo012F1024Item::j_00015e42(void)
 	}
 }
 
+struct BfmeVecVNF
+{
+	int m_bfme00;
+	int m_bfme04;
+	int m_bfme08;
+};
+
+class BfmeBoxVNF
+{
+public:
+	BfmeBoxVNF(unsigned w, const BfmeVecVNF *v, float n, unsigned h, char f);	// 0x003BBD70
+	char m_bfmeBody[0x20];
+};
+
+class Rva00064E90Tree
+{
+public:
+	Rva00064E90Tree &operator=(const Rva00064E90Tree &other);
+	char m_bfmeBody[0x08];
+};
+
+void j_00013abb(void);	// ILT 0x00013ABB -> 0x000650B0 -> tree operator= 0x00064E90
+
+class Gen_00064110
+{
+public:
+	void *m(void);
+};
+
+class BfmeRectVNI
+{
+public:
+	BfmeRectVNI(unsigned w, char f);	// 0x003BC360
+	char m_bfmeHead[0x0C];
+	Rva00064E90Tree m_bfmeMap;				// +0x0C
+	char m_bfmeTail[0x1C - 0x14];
+};
+
+// 32-byte records of the +0x78 list.
+struct BfmeSpecVNF
+{
+	int m_bfmeHead;
+	unsigned int m_bfmeWidth;					// +0x04
+	BfmeVecVNF m_bfmeVec;						// +0x08
+	float m_bfmeN;							// +0x14
+	unsigned int m_bfmeHeight;					// +0x18
+	char m_bfmeFlag;						// +0x1C
+	char m_bfmePad1D[3];
+
+	unsigned int getWidth(void) const { return m_bfmeWidth; }
+	const BfmeVecVNF *getVec(void) const { return &m_bfmeVec; }
+	float getN(void) const { return m_bfmeN; }
+	unsigned int getHeight(void) const { return m_bfmeHeight; }
+	char getFlag(void) const { return m_bfmeFlag; }
+};
+
+// 24-byte records of the +0x84 list.
+struct BfmeSpecVNI
+{
+	int m_bfmeHead;
+	unsigned int m_bfmeWidth;					// +0x04
+	char m_bfmeFlag;						// +0x08
+	char m_bfmePad09[3];
+	Rva00064E90Tree m_bfmeMap;				// +0x0C
+	char m_bfmeTail[0x18 - 0x14];
+
+	unsigned int getWidth(void) const { return m_bfmeWidth; }
+	char getFlag(void) const { return m_bfmeFlag; }
+};
+
+// ?j_0002a969@Glo012F1024Item@@QAEXXZ
+void Glo012F1024Item::j_0002a969(void)
+{
+	for (unsigned int index = 0; index < m_bfmeFlag32.bfmeSize(); ++index)
+	{
+		BfmeSpecVNF *begin = (BfmeSpecVNF *)m_bfmeFlag32.m_bfmeBegin;
+		((Rva003C2280Owner *)Glo012F1028)->append((Rva003C2280Item *)new BfmeBoxVNF(
+			begin[index].getWidth(), begin[index].getVec(), begin[index].getN(),
+			begin[index].getHeight(), begin[index].getFlag()));
+	}
+
+	for (BfmeSpecVNI *it = (BfmeSpecVNI *)m_bfmeFlag24.m_bfmeBegin; it != (BfmeSpecVNI *)m_bfmeFlag24.m_bfmeEnd; ++it)
+	{
+		BfmeRectVNI *node = new BfmeRectVNI(it->getWidth(), it->getFlag());
+		Rva00064E90Tree *map = (Rva00064E90Tree *)((Gen_00064110 *)&it->m_bfmeMap)->m();
+		union { void (*raw)(void); Rva00064E90Tree &(Rva00064E90Tree::*member)(const Rva00064E90Tree &); } assign;
+		assign.raw = j_00013abb;
+		(node->m_bfmeMap.*assign.member)(*map);
+		((Rva003C2280Owner *)Glo012F1028)->append((Rva003C2280Item *)node);
+	}
+}
+
 // ?j_0000ca59@Glo012F1024Item@@QAE_NXZ
 bool Glo012F1024Item::j_0000ca59(void)
 {

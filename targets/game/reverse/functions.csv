@@ -31538,7 +31538,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?bfmeInitVKT@BfmeThingVKT@@QAEPAV1@ABUBfmeBlockVKT@@0@Z,,0x002E26C0,46,game/GameEngine/Source/Common/BfmeConv1410.cpp,matched,
 ?bfmeInitVKV@BfmeThingVKV@@QAEPAV1@ABV1@@Z,,0x00605200,83,game/GameEngine/Source/Common/BfmeConv1411.cpp,matched,
 ?bfmeInitVN@BfmeBaseVN@@QAEPAV1@ID@Z,,0x003BBAF0,66,game/GameEngine/Source/Common/Rva003BBAF0Ctor.cpp,matched,
-?bfmeInitVNF@BfmeBoxVNF@@QAEPAV1@IPBUBfmeVecVNF@@HID@Z,,0x003BBD70,132,game/GameEngine/Source/Common/BfmeConv1509.cpp,matched,
 ?bfmeInitVSG@BfmeCreditsVSG@@QAEXXZ,,0x0051ED80,29,game/GameEngine/Source/Common/BfmeConv1577.cpp,matched,
 ?bfmeInitXB@BfmeThingXB@@QAEPAV1@PAX00@Z,,0x00192720,58,game/GameEngine/Source/Common/BfmeThreeHundredSeventyTwo.cpp,matched,
 ?bfmeInitZA@BfmeThingZA@@QAEPAV1@PBUBfmeVecZA@@0@Z,,0x002E2700,60,game/GameEngine/Source/Common/BfmeThreeHundredSeventySeven.cpp,matched,
@@ -37514,7 +37513,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_003a6150@@YAXXZ,,0x003A6150,1,game/GameEngine/Source/Common/Rva003A6150.cpp,matched,carved ret body; caller and ret plus int3 boundary evidence; address-derived identity
 ?d_003ad560@@YAXXZ,,0x003AD560,548,game/gen_asm/d_003ad560.asm,matched,gen-dump;ghidra=FUN_007ad560
 ?d_003ad8b0@@YAXXZ,,0x003AD8B0,524,game/gen_asm/d_003ad560.asm,matched,gen-dump;ghidra=FUN_007ad8b0
-?d_003ae030@@YAXXZ,,0x003AE030,313,game/gen_asm/d_003ad560.asm,matched,gen-dump;ghidra=FUN_007ae030
 ?d_003ae490@@YAXXZ,,0x003AE490,288,game/gen_asm/d_003ad560.asm,matched,gen-dump;ghidra=FUN_007ae490
 ?d_003b2d40@@YAXXZ,,0x003B2D40,1,game/GameEngine/Source/Common/Rva0008TinyBodies.cpp,matched,carved one byte ret with no semantic evidence; address-derived identity preserves the boundary
 ?d_003b2d50@@YAXXZ,,0x003B2D50,1,game/GameEngine/Source/Common/Rva0008TinyBodies.cpp,matched,carved one-byte ret with no semantic identity evidence
@@ -173401,3 +173399,5 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?j_00021f26@Glo012F1024Item@@QAEXXZ,,0x003ADCC0,192,game/GameEngine/Source/Common/Glo012F1024Entry_bfmeStep.cpp,matched,ILT 0x00021F26 from bfmeEnter; +0x9C spec list rebuilt as BfmeRectVNG via inline accessors;model=claude-opus-5-5;host=app
 ?j_0002eeec@Glo012F1024Item@@QAEXXZ,,0x003ADDB0,224,game/GameEngine/Source/Common/Glo012F1024Entry_bfmeStep.cpp,matched,ILT 0x0002EEEC from bfmeEnter; +0x90 spec list rebuilt as BfmeRectVNH via inline accessors;model=claude-opus-5-5;host=app
 ?j_00015e42@Glo012F1024Item@@QAEXXZ,,0x003ADED0,192,game/GameEngine/Source/Common/Glo012F1024Entry_bfmeStep.cpp,matched,ILT 0x00015E42; +0xA8 spec list rebuilt as BfmeRectVNE via inline accessors;model=claude-opus-5-5;host=app
+??0BfmeBoxVNF@@QAE@IPBUBfmeVecVNF@@MID@Z,,0x003BBD70,132,game/GameEngine/Source/Common/BfmeConv1509.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/003bbf70-003bbb70-bfmerect-ctors.md;constructor not init method: base then derived vftable; caller 0x3AE030 passes a float third argument;model=claude-opus-5-5;host=app
+?j_0002a969@Glo012F1024Item@@QAEXXZ,,0x003AE030,313,game/GameEngine/Source/Common/Glo012F1024Entry_bfmeStep.cpp,matched,ILT 0x0002A969 from bfmeEnter; +0x78 and +0x84 spec lists rebuilt as BfmeBoxVNF and BfmeRectVNI via inline accessors;model=claude-opus-5-5;host=app
