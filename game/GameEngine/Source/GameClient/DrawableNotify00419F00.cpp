@@ -152,7 +152,16 @@ class Rva0036ff70Module
     int query(int (*)(void *, void *), void *);
 };
 
-int mark00410C90(void *, void *);
+struct Rva00410C90Provider;
+
+// The callback address passed to query below is rva00410C90SetFlag, the
+// matched 30B function at RVA00410C90 (Common/Rva00410C90SetFlag.cpp): it
+// reads the first argument as the provider pointer and ignores the second
+// callback slot, so the address is cast to query's two-slot function
+// pointer. The retired mark00410C90 placeholder spelled
+// ?mark00410C90@@YAHPAX0@Z at the same address. Declaring the parameter
+// type as struct (not class) keeps the provider TU's exact mangled name.
+int rva00410C90SetFlag(Rva00410C90Provider *);
 
 class Drawable
 {
@@ -372,7 +381,7 @@ void Drawable::notify00419F00()
                 d->m_status |= 0x40;
                 return;
             }
-            ((Rva0036ff70Module *)behavior)->query(mark00410C90, 0);
+            ((Rva0036ff70Module *)behavior)->query((int (*)(void *, void *))rva00410C90SetFlag, 0);
         }
     }
 }
