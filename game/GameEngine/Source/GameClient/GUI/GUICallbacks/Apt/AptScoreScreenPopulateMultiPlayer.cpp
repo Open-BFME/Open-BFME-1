@@ -44,7 +44,6 @@ class StringBase<char>
 	};
 
 public:
-	Bool isNotEmpty() const { return m_data != 0 && m_data->length != 0; }
 	const char *str() const { return m_data ? &m_data->data[0] : ""; }
 
 private:
@@ -61,6 +60,16 @@ public:
 	AsciiString(const AsciiString &that) : StringBase<char>(that) {}
 	~AsciiString() {}
 };
+
+// StringBase<char>::isNotEmpty, expanded in place.  An inline member would emit
+// a ?isNotEmpty@?$StringBase@D@@QBE_NXZ COMDAT beside the retail body
+// (0x0005E510).  The buffer pointer is the string's first word; its length is
+// at +4.
+static __forceinline Bool asciiIsNotEmpty(const StringBase<char> &string)
+{
+	const char *data = *reinterpret_cast<const char * const *>(&string);
+	return data != 0 && *reinterpret_cast<const unsigned short *>(data + 4) != 0;
+}
 
 enum NameKeyType
 {
@@ -204,7 +213,7 @@ void BfmeAptScreenScoreScreen::_bfme_populateMultiPlayer(Int type)
 		if (slot->isOccupied())
 		{
 			AsciiString name = slot->getInternalPlayerName();
-			if (name.isNotEmpty())
+			if (asciiIsNotEmpty(name))
 			{
 				Player *player = ThePlayerList->findPlayerWithNameKey(
 					TheNameKeyGenerator->nameToKey(name.str()));
