@@ -28,8 +28,8 @@ struct RankPoints
 };
 
 extern RankPoints *TheRankPointValues;
-extern const char *RankLabels00554510Good[];
-extern const char *RankLabels00554510Evil[];
+extern const char *RankLabels00554510Good[10];
+extern const char *RankLabels00554510Evil[11];
 class GameSpyInfoInterface { public:
  virtual void slot00();
  virtual void slot04();
@@ -123,3 +123,25 @@ void __stdcall rankTooltip00554510(const char *name) {
  tooltip.format(TheGameText->fetch("APT:CurrentLevelStringFormat"),level.str());
  TheMouse->setCursorTooltip(tooltip,-1,0,1.0f);
 }
+
+// The rank-label tables this callback indexes, defined at their retail
+// .data addresses: ten pointers at VA 0x012B7AE0 (slot 0 is NUL; the
+// callback's good-branch rank scan reaches index 10 only out of bounds,
+// landing on the Evil table's first slot, as in retail) and eleven at
+// VA 0x012B7B08. Every pointee is a pooled narrow literal that the
+// sibling rank tables at VA 0x012B7DAC, 0x012B7DD4 and 0x012B8018
+// reference as well (compiler-literal pins in symbols.csv;
+// identity_evidence/012b7dac-012b7dd4-skirmish-rank-name-tables.md), and
+// the label content agrees with the BFME 2 donor's good/evil rank tables
+// (open-bfme-2 Code/GameEngine/Source/GameNetwork/RankPointValue.cpp).
+extern "C" const char *__identifier("?RankLabels00554510Good@@3PAPBDA")[10] =
+{
+	0, "Peasant", "Page", "Squire", "Knight", "RoyalGuard",
+	"CaptainOfTheGuard", "HighLord", "Prince", "King"
+};
+
+extern "C" const char *__identifier("?RankLabels00554510Evil@@3PAPBDA")[11] =
+{
+	"Wizard", "Scum", "Vermin", "Beast", "Goblin", "Orc",
+	"MountainTroll", "Berserker", "DarkWizard", "RingWraith", "DarkLord"
+};
