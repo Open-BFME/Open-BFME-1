@@ -79,9 +79,8 @@ extern Radar *TheRadar;
 
 // The callback at 0x0036CFD0 is defined by BfmeConv1939.cpp. It returns
 // a full EAX integer and ignores the query interface's context argument.
-// Gate debt ?bfmeCheckDJ@@YAHPAVBfmeThingDJ@@@Z: reference _bfmeRva0036CFD0Callback.
-class BfmeThingDJ;
-extern "C" Int __cdecl bfmeRva0036CFD0Callback(BfmeThingDJ *thing);
+// Retail pushes its ILT 0x0002DC95, whose defined name is ?j_0002dc95@@YAXXZ.
+void j_0002dc95();
 
 // ?run@Rva00370730CastleMemberInterface@@QAEXHHH@Z
 void Rva00370730CastleMemberInterface::run( Int, Int, Int mode )
@@ -109,7 +108,7 @@ void Rva00370730CastleMemberInterface::run( Int, Int, Int mode )
 					if( module != 0 )
 					{
 						Rva0036ff70Callback callback =
-							reinterpret_cast<Rva0036ff70Callback>(bfmeRva0036CFD0Callback);
+							reinterpret_cast<Rva0036ff70Callback>(j_0002dc95);
 						if( ( (Rva0036ff70Module *)module )->query(
 							callback, 0 ) == 1 )
 						{

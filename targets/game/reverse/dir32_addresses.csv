@@ -14599,7 +14599,6 @@ _bfmeOnEAB,0x01105E6C
 _bfmePathVftIC,0x010C7E28
 _bfmeRetailCritterDesyncFlag,0x012F0239
 _bfmeRetailCritterDesyncSink,0x012ED4FC
-_bfmeRva0036CFD0Callback,0x0042DC95
 _bfmeStrAEYC,0x01076C18
 _bfmeStrBEYC,0x01076C14
 _bfmeStrDWK,0x010BBAA8
