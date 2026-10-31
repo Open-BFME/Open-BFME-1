@@ -1,5 +1,5 @@
 // ?ParseObjectDataChunk@@YA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z
-// partial score=0.9289 date=2026-10-16
+// partial score=0.9934 date=2026-10-31
 // cl: /DNDEBUG /MD /EHsc
 // Retail 0x00454760, the "Object" chunk callback MapUtil's
 // ParseObjectsDataChunk (0x00454A60) registers: Zero Hour MapUtil.cpp:129.
@@ -103,6 +103,7 @@ public:
 	BfmeSlotJA *bfmeGo932A();
 };
 
+struct Coord3D;
 class Vector3
 {
 public:
@@ -118,6 +119,8 @@ public:
 		Y = v.Y;
 		Z = v.Z;
 	}
+	// Retail reads x and y before storing x, z, y (template-branch argument copy).
+	Vector3(const Coord3D &c, int) { unsigned x = *(const volatile unsigned *)&c.x; unsigned y = *(const volatile unsigned *)&c.y; *(unsigned *)&X = x; *(unsigned *)&Z = *(const unsigned *)&c.z; *(unsigned *)&Y = y; }
 	Real X;
 	Real Y;
 	Real Z;
@@ -200,6 +203,13 @@ extern _STL::list<Rva00452280Element, _STL::allocator<Rva00452280Element> > Rva0
 #define K_OBJECTS_VERSION_2 2
 
 // ?ParseObjectDataChunk@@YA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z
+// The waypoint store reads x and y before writing, like the template branch's Vector3.
+static inline void assignWaypoint(Rva000C0D00Value &w, const Coord3D &c)
+{
+	unsigned x = *(const volatile unsigned *)&c.x; unsigned y = *(const volatile unsigned *)&c.y; *(volatile unsigned *)&w.x = x; unsigned z = *(const volatile unsigned *)&c.z; *(volatile unsigned *)&w.y = y; *(volatile unsigned *)&w.z = z;
+}
+
+// ?ParseObjectDataChunk@@YA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z
 Bool ParseObjectDataChunk(DataChunkInput &file, DataChunkInfo *info, void *userData)
 {
 	Bool readDict = info->version >= K_OBJECTS_VERSION_2;
@@ -225,7 +235,7 @@ Bool ParseObjectDataChunk(DataChunkInput &file, DataChunkInfo *info, void *userD
 	Rva0088B70ThingRegistry *factory = reinterpret_cast<Rva0088B70ThingRegistry *>(TheThingFactory);
 	Rva0041230aMapObject *pThisOne;
 	if (factory->acceptsThingTemplateName(name))
-		pThisOne = new Rva0041230aMapObject(reinterpret_cast<const Vector3 &>(loc), name, angle, flags, &d,
+		pThisOne = new Rva0041230aMapObject(Vector3(loc, 0), name, angle, flags, &d,
 			reinterpret_cast<Rva0088B70ThingRegistry *>(TheThingFactory)->findTemplate(name));
 	else
 		pThisOne = new Rva0041230aMapObject(reinterpret_cast<const Vector3 &>(loc), name, angle, flags, &d, 0);
@@ -234,7 +244,7 @@ Bool ParseObjectDataChunk(DataChunkInput &file, DataChunkInfo *info, void *userD
 	{
 		pThisOne->setIsWaypoint();
 
-		(*Rva012F1588)[pThisOne->getWaypointName()] = reinterpret_cast<const Rva000C0D00Value &>(loc);
+		assignWaypoint((*Rva012F1588)[pThisOne->getWaypointName()], loc);
 	}
 	else if (pThisOne->getThingTemplate() && (pThisOne->getThingTemplate()->m_kindOf & 0x1000))
 	{
