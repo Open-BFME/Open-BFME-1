@@ -12,6 +12,14 @@ struct Q4Sort00755050
     void *m_state;
     bool operator()(int left, int right) const;
 };
+// Retail's push step is ILT 0x00009214 -> 0x007534F0, the row defined in
+// S4StlSortHelpers.cpp as __push_heap over S4Cmp007534F0 (same one-word
+// comparator); this unit's own comparator spelling names nothing.
+struct S4Cmp007534F0
+{
+    void *m_state;
+    bool operator()(int, int) const;
+};
 
 namespace _STL
 {
@@ -41,7 +49,8 @@ namespace _STL
 			*(first + holeIndex) = *(first + (secondChild - 1));
 			holeIndex = secondChild - 1;
 		}
-		__push_heap(first, holeIndex, topIndex, value, compare);
+		__push_heap(first, holeIndex, topIndex, value,
+			*reinterpret_cast<const S4Cmp007534F0 *>(&compare));
 	}
 
 	template void __adjust_heap<int *, int, int, Q4Cmp00753DD0>(
