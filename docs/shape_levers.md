@@ -2837,3 +2837,22 @@ both arms the same order and an exact 484 B body. Arm order, ternary and
 `goto`-free early-exit variants did not move it. Measured on this body only.
 Source: game/GameEngine/Source/GameClient/GUI/AptMainMenuStateStep.cpp
 (1c0c3a1c78).
+
+## STLport hash_map walks: visible begin() body, inlined `_M_skip_to_next` (2026-10-31)
+
+Mismatch: loops over an STLport `hash_map` compiled within a few bytes of retail
+but hoisted the iterator's table load above the null test, or lacked retail's
+per-iteration store of the iterator's table word; with this checkout's STLport
+the increment also called `_M_skip_to_next` out of line where retail inlines the
+hash-and-scan. Transformation: (1) inline the advance with `/Ob2`, or with a
+`__forceinline` copy of `_hashtable.c`'s `_M_skip_to_next`; (2) make the
+out-of-line `hashtable::begin()` the loop calls visible in the TU
+(`class RvaXTable : public Map::_Ht { iterator begin() { /* STLport body */ } }`
+and an inline `hash_map::begin()` forwarder), landing that COMDAT as the begin
+row; (3) where retail stores the table word every step, copy the iterator into
+a `const_iterator` each iteration. Effect: 0x00425720 (204 B) and 0x00340980
+(149 B, former 0.85 wall) exact, plus their begin bodies 0x00423D00/0x0033CD30
+(78 B each). VC7.1 /O2 (+/Ob2 for 0x00340980). Measured on these two walks
+only; the declared-only begin() was the common cause. Sources:
+game/GameEngine/Source/GameClient/EvaRva00425720NameLookup.cpp,
+game/GameEngine/Source/GameClient/Rva00340980FXListNameWalk.cpp (3ec9d788cd, d0f31f6951).
