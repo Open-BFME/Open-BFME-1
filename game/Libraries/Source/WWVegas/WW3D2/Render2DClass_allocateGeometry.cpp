@@ -1,6 +1,15 @@
-// ?d_009369a0@@YAXXZ
-// partial score=0.38 date=2026-09-10
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// Retail RVA 0x009369A0, 773 bytes, RET 16: Render2DClass's batch allocator
+// that the Add_Quad bodies reserve vertices and 16-bit indices through.
+// Statement shape ported from the BFME 2 donor allocateGeometry006e in
+// Code/Libraries/Source/WWVegas/WW3D2/Render2DClassReset.cpp (open-bfme-2
+// b5a7b8290) onto BFME 1's older layout (the 0.38 bank's views): batches are
+// a DynamicVectorClass of 0x74-byte Rva00933C60 records at +0x34, the raw
+// vertex array's operator[] is bounds-checked, the index array grows through
+// the imported realloc. Levers: Add() reads ActiveCount itself, the batch is
+// built trivially and then takes the texture through a const& setter (retail
+// sets the EH state before re-testing the handle), and the index array's Add
+// is __forceinline.
 // BFME Render2D uses a pre-vendored layout.  Keep this mirror local so the
 // older retail offsets do not alter the shared Zero Hour declarations.
 
@@ -45,9 +54,9 @@ public:
 	Render2DPackedVert *Add(int count);
 	BfmeRenderVertex &operator[](int index)
 	{
-		if ((unsigned)index < (unsigned)Count)
-			return ((BfmeRenderVertex *)Data)[index];
-		return *(BfmeRenderVertex *)Data;
+		if ((unsigned)index >= (unsigned)Count)
+			return *(BfmeRenderVertex *)Data;
+		return ((BfmeRenderVertex *)Data)[index];
 	}
 
 	BfmeRenderVertex *Data;
@@ -59,9 +68,23 @@ public:
 class Render2DIndexArray
 {
 public:
+	__forceinline unsigned short *Add(unsigned int count)
+	{
+		if (count == 0 || count >= 0x80000000u)
+			return 0;
+		Count += count;
+		if (Count <= Size)
+			return Data + (Count - count);
+		Size = Count + GrowthStep;
+		Data = (unsigned short *)realloc(Data, Size * sizeof(unsigned short));
+		if (Data == 0)
+			return 0;
+		return Data + (Count - count);
+	}
+
 	unsigned short *Data;
-	int Size;
-	int Count;
+	unsigned int Size;
+	unsigned int Count;
 	int GrowthStep;
 };
 
@@ -69,6 +92,13 @@ class Rva00933C60
 {
 public:
 	Rva00933C60 &operator=(Rva00933C60 const &other);
+
+	__forceinline void Set_Texture(TextureClass *const &texture)
+	{
+		if (texture)
+			texture->Add_Ref();
+		m_texture = texture;
+	}
 
 	__forceinline ~Rva00933C60()
 	{
@@ -102,6 +132,8 @@ public:
 		m_field50 = -1;
 		m_field18 = -1;
 		m_field6C = 0;
+		m_field38 = -1;
+		m_field54 = -1;
 		m_field1C = -1;
 		m_field70 = 0;
 	}
@@ -172,9 +204,9 @@ public:
 	virtual int ID(T const *);
 	virtual int ID(T const &);
 
-	__forceinline bool Add(T const &object, int count)
+	__forceinline bool Add(T const &object)
 	{
-		if (count >= Length())
+		if (ActiveCount >= Length())
 		{
 			if ((IsAllocated || !VectorMax) && GrowthStep > 0)
 			{
@@ -225,93 +257,47 @@ BfmeRenderVertex *Render2DClass::allocateGeometry006e(
 	BfmeUInt32 **indices,
 	BfmeUInt32 *baseVertexPair)
 {
-	Rva00933C60 *batch;
-	*baseVertexPair = ArrayA.Count | (ArrayA.Count << 16);
-
-	if (CurrentBatch < 0)
+	*baseVertexPair = (ArrayA.Count << 16) | ArrayA.Count;
+	if (CurrentBatch < 0 && IsDirty && Texture)
 	{
-		if (IsDirty)
+		unsigned int i;
+		for (i = 1; i < (unsigned int)Batches.Count(); ++i)
 		{
-			TextureClass *texture = Texture;
-			if (texture)
-			{
-				int found = 1;
-				int count = Batches.Count();
-				if ((unsigned int)count > 1)
-				{
-					for (; (unsigned int)found < (unsigned int)Batches.Count(); ++found)
-					{
-						if (Batches[found].m_texture == texture)
-							break;
-					}
-				}
-
-				if (found == count)
-				{
-					Rva00933C60 newBatch;
-					if (TextureClass *newTexture = Texture)
-						newTexture->Add_Ref();
-					newBatch.m_texture = Texture;
-					newBatch.Initialize();
-					Batches.Add(newBatch, count);
-				}
-				CurrentBatch = found;
-			}
+			if (Batches[i].m_texture == Texture)
+				break;
 		}
+		if (i == (unsigned int)Batches.Count())
+		{
+			Rva00933C60 batch;
+			batch.Set_Texture(Texture);
+			batch.Initialize();
+			Batches.Add(batch);
+		}
+		CurrentBatch = i;
 	}
-
-	batch = &Batches[
-		(IsDirty && Texture) ? CurrentBatch : 0];
-	BfmeRenderVertex *vertices =
-		(BfmeRenderVertex *)ArrayA.Add((int)vertexCount);
-	if (indexCount != 0 && indexCount < 0x80000000u)
+	Rva00933C60 &batch = Batches[(IsDirty && Texture) ? CurrentBatch : 0];
+	BfmeRenderVertex *vertices = (BfmeRenderVertex *)ArrayA.Add(vertexCount);
+	*indices = (BfmeUInt32 *)ArrayB.Add(indexCount);
+	(&batch.m_field58)[Shader] += indexCount;
+	if ((&batch.m_field3C)[Shader] >= 0)
 	{
-		unsigned short *data = ArrayB.Data;
-		ArrayB.Count += indexCount;
-		if ((unsigned)ArrayB.Count > (unsigned)ArrayB.Size)
+		int last = (&batch.m_field3C)[Shader];
+		if (ArrayA[last].m_field10 + ArrayA[last].m_field14 == ArrayB.Count)
 		{
-			ArrayB.Size = ArrayB.Count + ArrayB.GrowthStep;
-			ArrayB.Data = (unsigned short *)realloc(
-				data, (unsigned)ArrayB.Size * 2);
-			if (ArrayB.Data)
-				*indices = (BfmeUInt32 *)((unsigned short *)ArrayB.Data +
-					(ArrayB.Count - indexCount));
-			else
-				*indices = 0;
+			ArrayA[last].m_field14 += indexCount;
+			return vertices;
 		}
-		else
-		{
-			*indices = (BfmeUInt32 *)((unsigned short *)ArrayB.Data +
-				(ArrayB.Count - indexCount));
-		}
+		unsigned int count = ArrayA.Count;
+		ArrayA[last].m_field0C = count - vertexCount;
 	}
 	else
 	{
-		*indices = 0;
+		(&batch.m_field04)[Shader] = ArrayA.Count - vertexCount;
+		(&batch.m_field20)[Shader] = ArrayB.Count - indexCount;
 	}
-
-	int mode = Shader;
-	(reinterpret_cast<int *>(&batch->m_field58))[mode] += indexCount;
-	int previous = (reinterpret_cast<int *>(&batch->m_field3C))[mode];
-	if (previous >= 0)
-	{
-		if (ArrayA[previous].m_field14 +
-			ArrayA[previous].m_field10 == ArrayB.Count)
-		{
-			ArrayA[previous].m_field14 += indexCount;
-			return vertices;
-		}
-	}
-
-	ArrayA[previous].m_field0C = ArrayA.Count - vertexCount;
-	(reinterpret_cast<int *>(&batch->m_field04))[mode] =
-		ArrayA.Count - vertexCount;
-	(reinterpret_cast<int *>(&batch->m_field20))[mode] =
-		ArrayB.Count - indexCount;
 	vertices->m_field0C = 0;
 	vertices->m_field10 = ArrayB.Count - indexCount;
 	vertices->m_field14 = indexCount;
-	(reinterpret_cast<int *>(&batch->m_field3C))[mode] =
-		ArrayA.Count - vertexCount;
+	(&batch.m_field3C)[Shader] = ArrayA.Count - vertexCount;
 	return vertices;
 }
