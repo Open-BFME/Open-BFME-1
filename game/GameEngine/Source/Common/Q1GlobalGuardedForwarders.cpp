@@ -39,12 +39,19 @@ public:
 	void m009F0CC0( int value );
 	void m009F0E50( int value );
 	void m009F0D40( int value );
-	void m009EEEC0( int value );
 	void m009EC970( int value );
 	void m009EC9A0( int value );
 	void m009ECA30( int value );
 	void m009F1AE0();
 	void m009EC960( void *value );
+};
+
+// Rva009EBBC0 reaches this existing provider at 0x009EEEC0 with the
+// unchanged global receiver and one int argument (callee RET 4).
+class BfmeQ1172
+{
+public:
+	void bfmeGo1172( int value );
 };
 
 class AssetManagerImpl;
@@ -75,7 +82,7 @@ Q1_GLOBAL_GUARDED_FORWARD( Rva009EBAC0, ((Q1Receiver0134FAAC *)g_theAssetRegistr
 Q1_GLOBAL_GUARDED_FORWARD( Rva009EBAE0, ((Q1Receiver0134FAAC *)g_theAssetRegistry), m009F0CC0 )
 Q1_GLOBAL_GUARDED_FORWARD( Rva009EBB00, ((Q1Receiver0134FAAC *)g_theAssetRegistry), m009F0E50 )
 Q1_GLOBAL_GUARDED_FORWARD( Rva009EBB20, ((Q1Receiver0134FAAC *)g_theAssetRegistry), m009F0D40 )
-Q1_GLOBAL_GUARDED_FORWARD( Rva009EBBC0, ((Q1Receiver0134FAAC *)g_theAssetRegistry), m009EEEC0 )
+Q1_GLOBAL_GUARDED_FORWARD( Rva009EBBC0, ((BfmeQ1172 *)g_theAssetRegistry), bfmeGo1172 )
 Q1_GLOBAL_GUARDED_FORWARD( Rva009EBBE0, ((Q1Receiver0134FAAC *)g_theAssetRegistry), m009EC970 )
 Q1_GLOBAL_GUARDED_FORWARD( Rva009EBC00, ((Q1Receiver0134FAAC *)g_theAssetRegistry), m009EC9A0 )
 Q1_GLOBAL_GUARDED_FORWARD( Rva009EBC50, ((Q1Receiver0134FAAC *)g_theAssetRegistry), m009ECA30 )
