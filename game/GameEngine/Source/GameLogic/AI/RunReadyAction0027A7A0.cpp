@@ -16,10 +16,17 @@
 #include <hash_map>
 struct Coord3D { float x,y,z; Coord3D() {} Coord3D(const Coord3D& o) { x=o.x;y=o.y;z=o.z; } };
 enum KindOfType {}; enum DamageType {}; enum DeathType {}; enum PathfindLayerEnum {};
+extern "C" void __cdecl __identifier("?d_003fd7d0@@YAXXZ")();
 class Object; class BfmeObjectAI; class Rva001B7200Locomotor;
 struct Rva001B7200PathPoint { float real00; Coord3D coord04; float real10[3]; PathfindLayerEnum layer; int int20; };
 class Path { public:
- void computePointOnPath(Object*,Rva001B7200Locomotor*,Rva001B7200PathPoint*,bool);
+ void computePointOnPath(Object* o,Rva001B7200Locomotor*const& l,Rva001B7200PathPoint* p,bool f) {
+  // retail 0x003FD7D0 is still the gen-dump row ?d_003fd7d0 (unmatched C++); call it by that defined name.
+  // The const& locomotor parameter keeps retail's edx/eax choice for the pushed arguments.
+  union { void (__cdecl *symbol)(); void (Path::*member)(Object*,Rva001B7200Locomotor*,Rva001B7200PathPoint*,bool); } c;
+  c.symbol = &__identifier("?d_003fd7d0@@YAXXZ");
+  (this->*c.member)(o,l,p,f);
+ }
  Coord3D bfmeGetLastValidWaypointPosition() const;
  protected: virtual ~Path(); friend class BfmeObjectAI;
 };
