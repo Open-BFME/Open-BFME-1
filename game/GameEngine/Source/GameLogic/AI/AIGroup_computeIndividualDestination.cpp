@@ -116,11 +116,23 @@ extern TerrainLogic *TheTerrainLogic;
 // Retail ILT thunk at 0x000294E2 reached from AIGroup::computeIndividualDestination.
 extern void j_000294e2();
 
+extern "C" void __identifier("?adjustDestination@Pathfinder@@QAE_NPAVObject@@ABVLocomotorSet@@PAVCoord3D@@PBV4@@Z")(void);
+
 class Pathfinder
 {
 public:
+	// The matched definition (PathfinderAdjustDestination003F6090.cpp) class-keys
+	// Coord3D as BFME does; this unit keys it as a struct, so the call names the
+	// defined symbol directly.
 	bool adjustDestination(Object *object, const LocomotorSet &locomotorSet,
-		Coord3D *destination, const Coord3D *groupDestination);
+		Coord3D *destination, const Coord3D *groupDestination)
+	{
+		typedef bool (Pathfinder::*Call)(Object *, const LocomotorSet &, Coord3D *,
+			const Coord3D *);
+		union { void (*raw)(); Call member; } call;
+		call.raw = __identifier("?adjustDestination@Pathfinder@@QAE_NPAVObject@@ABVLocomotorSet@@PAVCoord3D@@PBV4@@Z");
+		return (this->*call.member)(object, locomotorSet, destination, groupDestination);
+	}
 };
 
 class AI
