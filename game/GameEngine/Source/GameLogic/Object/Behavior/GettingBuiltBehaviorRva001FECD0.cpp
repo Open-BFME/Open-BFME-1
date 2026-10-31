@@ -1,5 +1,3 @@
-// ?rva001FECD0@GettingBuiltBehavior@@UAEX_N@Z
-// partial score=0.9972 date=2026-10-29
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
 // Retail 0x001FECD0, 718 bytes: slot 4 of GettingBuiltBehavior's secondary
@@ -7,8 +5,10 @@
 // this-0x20 is the module, this-0x1C its module data and this-0x18 the Object.
 // The Bool argument skips the affordability check and the cost withdrawal; the
 // body starts or resumes construction and plays the matching build loop.
-// Residue (5 bytes at +0x234): retail loads ECX for Rva00087750Ref::operator=
-// before pushing the source reference; this spelling pushes first.
+// The build-loop sound is picked by three arms that each test and assign
+// their own module-data reference (the BFME 2 GettingBuiltBehaviorRva00453652
+// shape); VC7.1 cross-jumps the three operator= calls, which is what puts the
+// receiver lea before the source push at +0x234.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -30,12 +30,7 @@ enum UpdateSleepTime
 class Player;
 class Object;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Overridable
 {
@@ -400,16 +395,25 @@ void GettingBuiltBehavior::rva001FECD0(Bool alreadyPaid)
 			TheAudio->removeAudioEvent(m_audioHandle);
 
 		AudioEventInfoRef sound;
-		const AudioEventInfoRef *loop = m_field35 ? &data->m_ref2
-			: (!m_field33 ? &data->m_ref0 : &data->m_ref1);
-		if (loop->m_ptr != 0)
+		if (m_field35)
 		{
-			if (m_field35) sound = *loop; else sound = *loop;
-			if (sound.m_ptr != 0)
-			{
-				AudioEventRTS audioEvent(sound, object->getID());
-				m_audioHandle = TheAudio->addAudioEvent(&audioEvent);
-			}
+			if (data->m_ref2.m_ptr != 0)
+				sound = data->m_ref2;
+		}
+		else if (!m_field33)
+		{
+			if (data->m_ref0.m_ptr != 0)
+				sound = data->m_ref0;
+		}
+		else
+		{
+			if (data->m_ref1.m_ptr != 0)
+				sound = data->m_ref1;
+		}
+		if (sound.m_ptr != 0)
+		{
+			AudioEventRTS audioEvent(sound, object->getID());
+			m_audioHandle = TheAudio->addAudioEvent(&audioEvent);
 		}
 	}
 }
