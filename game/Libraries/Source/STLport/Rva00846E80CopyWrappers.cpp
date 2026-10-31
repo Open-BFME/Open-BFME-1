@@ -34,6 +34,15 @@ Rva00846B40Iterator Rva00846B40(const char *first, const char *last, Rva00846B40
     return Rva008460D0(first, last, output, _STL::random_access_iterator_tag(), (int *)0);
 }
 
+// 0x00846AA0 (45 B) is an unreferenced second retail copy of the same
+// wrapper, byte-identical to 0x00846B40 and calling the same 0x008460D0
+// duplicate; retail has no identical-COMDAT folding, so it keeps its own
+// address-derived name.
+Rva00846B40Iterator Rva00846AA0(const char *first, const char *last, Rva00846B40Iterator output)
+{
+    return Rva008460D0(first, last, output, _STL::random_access_iterator_tag(), (int *)0);
+}
+
 // Retail 0x008460D0 (114 B): the duplicate random-access __copy into an
 // ostreambuf_iterator that 0x00846B40 calls. Its row was a gen-alias to the
 // NumFacetsInstantiations COMDAT copy; the body follows STLport's
