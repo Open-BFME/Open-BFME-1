@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "a17b48298d8dccee746ed82d4b25cc427e7442ade3c9b27cea3e68f447d4919c",
+  "symbol": "?method@Rva006E1BE0@@UBEMMMM@Z",
+  "score_kind": "measured",
+  "score": 0.9318,
+  "source": "// ?method@Rva006E1BE0@@UBEMMMM@Z\n// partial score=0.9318 date=2026-10-31\n// cl: /DNDEBUG /MD /EHsc\n// s514: real globals (no absolute-address macros): 999999.0f is __real@497423f0 at 0x0111E238, the pointer is the dir32-recorded ?g_bfmeObj006e1be0@@3PAVBfmeRef006e2480@@A at 0x012F8048. Still 6 diffs: fstp st(0) before add eax,0x84 (retail after).\nstruct Rva006E1BE0Vec4\n{\n\tfloat x;\n\tfloat y;\n\tfloat z;\n\tfloat w;\n};\n\nclass BfmeRef006e2480\n{\npublic:\n\tchar m_pad00[0x84];\n\tRva006E1BE0Vec4 m_row;\n};\n\nextern BfmeRef006e2480 *g_bfmeObj006e1be0;\n\nclass Rva006E1BE0\n{\npublic:\n\tvirtual float method(float x, float y, float z) const;\n};\n\nfloat Rva006E1BE0::method(float x, float y, float z) const\n{\n\tfloat result = 999999.0f;\n\tif (g_bfmeObj006e1be0)\n\t{\n\t\tRva006E1BE0Vec4 row = g_bfmeObj006e1be0->m_row;\n\t\tresult = row.z * z;\n\t\tresult += row.y * y;\n\t\tresult += row.x * x;\n\t\tresult += row.w;\n\t}\n\treturn result;\n}\n"
+}
