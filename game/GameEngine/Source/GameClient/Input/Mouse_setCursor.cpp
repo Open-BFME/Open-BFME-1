@@ -5,9 +5,15 @@
 // text display string +0x4DAC.
 // class-gate: allow AsciiString retail inlines isEmpty (cmp word [m_data+4]); ascii_string.h/string_base.h declare it out of line, which emits movzx/test (probe 0.962)
 
+// isEmpty is a file-static helper: an inline AsciiString::isEmpty member is
+// emitted as a non-retail COMDAT (link queue #3) even though every call inlines.
+class AsciiString;
+static __forceinline bool asciiIsEmpty(const AsciiString &s);
+
 template <typename T>
 class StringBase
 {
+	friend bool asciiIsEmpty(const AsciiString &s);
 	friend class AsciiString;
 	friend class UnicodeString;
 
@@ -31,9 +37,11 @@ class StringBase
 class AsciiString : private StringBase<char>
 {
 public:
-	bool isEmpty() const { return m_data == 0 || m_data->length == 0; }
+	friend bool asciiIsEmpty(const AsciiString &s);
 	const char *str() const { return m_data ? m_data->data : ""; }
 };
+
+static __forceinline bool asciiIsEmpty(const AsciiString &s) { return s.m_data == 0 || s.m_data->length == 0; }
 
 class UnicodeString : private StringBase<unsigned short>
 {
@@ -102,7 +110,7 @@ void Mouse::setCursor(MouseCursor cursor)
 		return;
 
 	CursorInfo *cursorInfo = &m_cursorInfo[cursor];
-	if (cursorInfo->cursorText.isEmpty() == false)
+	if (asciiIsEmpty(cursorInfo->cursorText) == false)
 		setMouseText(TheGameText->fetch(cursorInfo->cursorText.str()),
 		             &cursorInfo->cursorTextColor, &cursorInfo->cursorTextDropColor);
 	else

@@ -118,7 +118,7 @@ expired:
         Drawable *parent=TheGameClient->findDrawableByID(m_parentID);
         Drawable *target=TheGameClient->findDrawableByID(m_targetID);
         if(parent && target) {
-            if(!data->m_parentFireBoneName.isEmpty()) {
+            if(!data->m_parentFireBoneName.StringBase<char>::isEmpty()) {
                 Matrix3D matrix(true);
                 parent->getCurrentWorldspaceClientBonePositions(data->m_parentFireBoneName.str(),matrix);
                 m_startPos.set(matrix.Get_X_Translation(),matrix.Get_Y_Translation(),matrix.Get_Z_Translation());
