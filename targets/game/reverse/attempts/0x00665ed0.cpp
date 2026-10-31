@@ -1,4 +1,4 @@
-// ?sendFrameInfoToPlayer@BFMEConnectionManager@@QAEXH@Z
+// ?rva00665ED0@BFMEConnectionManager@@QAEXXZ
 // partial score=0.9872 date=2026-10-27
 // cl: /DNDEBUG /MD /GX /D_STLP_USE_STATIC_LIB
 // stlport

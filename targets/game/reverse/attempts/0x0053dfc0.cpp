@@ -1,5 +1,5 @@
 // ?acceptJoinGame@BfmeAptScreenOnlineCustomMatch@@QAEXPBD@Z
-// partial score=0.9158 date=2026-10-24
+// partial score=0.9935 date=2026-10-31
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 //
@@ -225,7 +225,8 @@ void BfmeAptScreenOnlineCustomMatch::acceptJoinGame( const char *unused )
 	if( m_state != 10 )
 		return;
 
-	AsciiString password( GadgetTextEntryGetText( m_passwordEntry ) );
+	GameWindow *passwordEntry = m_passwordEntry;
+	AsciiString password( GadgetTextEntryGetText( passwordEntry ) );
 	m_field1B4 = false;
 	m_nameEntry->winEnable( false );
 	m_passwordEntry->winEnable( false );
@@ -241,7 +242,8 @@ void BfmeAptScreenOnlineCustomMatch::acceptJoinGame( const char *unused )
 	GameSpyStagingRoom *room = findSelectedStagingRoom();
 	if( room == 0 )
 	{
-		( (BfmeMgr19E *)g_rva012F19E8WindowManager )->add( m_owner->m_actionOwner, "CallChild", 1, "ClosePassword", 0, 0, 0, 0 );
+		void *actionOwner = m_owner->m_actionOwner;
+		( (BfmeMgr19E *)g_rva012F19E8WindowManager )->add( actionOwner, "CallChild", 1, "ClosePassword", 0, 0, 0, 0 );
 		m_state = 1;
 		GSMessageBoxOk( TheGameText->fetch( "GUI:JoinFailedDefault" ),
 			TheGameText->fetch( "GUI:HostLeft" ), 0 );
