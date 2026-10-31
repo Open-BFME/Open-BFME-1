@@ -1228,26 +1228,7 @@ UnicodeString GameTextManager::fetch( const Char *label, Bool *exists )
 // GameTextManager::getStringsWithLabelPrefix
 //============================================================================
 
-// ?getStringsWithLabelPrefix@GameTextManager@@UAEAAV?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@VAsciiString@@@Z present-unmatched
-AsciiStringVec& GameTextManager::getStringsWithLabelPrefix(AsciiString label)
-{
-	m_asciiStringVec.clear();
-	if (m_stringLUT) {
-		for (int i = 0; i < m_textCount; ++i) {		
-			if (strstr(m_stringLUT[i].label->str(), label.str()) == m_stringLUT[i].label->str()) {
-				m_asciiStringVec.push_back(*m_stringLUT[i].label);
-			}
-		}
-	}
-	if (m_mapStringLUT) {
-		for (int i = 0; i < m_mapTextCount; ++i) {		
-			if (strstr(m_mapStringLUT[i].label->str(), label.str()) == m_mapStringLUT[i].label->str()) {
-				m_asciiStringVec.push_back(*m_mapStringLUT[i].label);
-			}
-		}
-	}
-	return m_asciiStringVec;
-}
+// ?getStringsWithLabelPrefix@GameTextManager@@UAEAAV?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@VAsciiString@@@Z: retail body is in GameTextManagerLabelPrefix.cpp
 
 //============================================================================
 // GameTextManager::readLine

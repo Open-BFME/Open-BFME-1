@@ -294,30 +294,7 @@ void ShellMenuSchemeManager::init( void )
 {
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/ShellMenuScheme_set.cpp
-// ?setShellMenuScheme@ShellMenuSchemeManager@@QAEXVAsciiString@@@Z present-unmatched
-void ShellMenuSchemeManager::setShellMenuScheme( AsciiString name )
-{
-	if(name.isEmpty())
-	{
-		m_currentScheme = NULL;
-		return;
-	}
-
-	ShellMenuSchemeListIt it;
-	it = m_schemeList.begin();
-	name.toLower();
-	while(it != m_schemeList.end())
-	{
-		ShellMenuScheme *scheme = *it;
-		if(scheme->m_name.compare(name) == 0)
-		{
-			m_currentScheme = scheme;
-			break;
-		}
-		++it;
-	}
-}
+// ?setShellMenuScheme@ShellMenuSchemeManager@@QAEXVAsciiString@@@Z: retail body is in ShellMenuScheme_set.cpp
 
 void ShellMenuSchemeManager::draw( void )
 {

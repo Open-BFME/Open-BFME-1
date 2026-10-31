@@ -427,85 +427,7 @@ Bool ActiveBody::shouldRetaliate(Object *obj)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?attemptHealing@ActiveBody@@ present-unmatched
-void ActiveBody::attemptHealing( DamageInfo *damageInfo )
-{
-	validateArmorAndDamageFX();
-
-	// sanity
-	if( damageInfo == NULL )
-		return;
-
-	if( damageInfo->in.m_damageType != DAMAGE_HEALING )
-	{
-		// Healing and Damage are separate, so this shouldn't happen
-		attemptDamage( damageInfo );
-		return;
-	}
-
-	Object* obj = getObject();
-
-	// srj sez: sorry, once yer dead, yer dead.
-	// Special case for bridges, cause the system now things they're dead
-	///@todo we need to figure out what has changed so we don't have to hack this (CBD 11-1-2002)
-	if( obj->isKindOf( KINDOF_BRIDGE ) == FALSE && 
-			obj->isKindOf( KINDOF_BRIDGE_TOWER ) == FALSE &&
-			obj->isEffectivelyDead())
-		return;
-
-	// initialize these, just in case we bail out early
-	damageInfo->out.m_actualDamageDealt = 0.0f;
-	damageInfo->out.m_actualDamageClipped = 0.0f;
-
-	Real amount = m_curArmor.adjustDamage(damageInfo->in.m_damageType, damageInfo->in.m_amount);
-
-	// sanity check the damage value -- can't apply negative healing
-	if( amount > 0.0f )
-	{
-		BodyDamageType oldState = m_curDamageState;
-
-		// do the damage simplistic damage ADDITION
-		internalChangeHealth( amount );
-
-		// record the actual damage done from this, and when it happened
-		damageInfo->out.m_actualDamageDealt = amount;
-		damageInfo->out.m_actualDamageClipped = m_prevHealth - m_currentHealth;
-
-		//then copy the whole DamageInfo struct for easy lookup 
-		//(object pointer loses scope as soon as atteptdamage's caller ends)
-		m_lastDamageInfo = *damageInfo;
-		m_lastDamageCleared = false;
-		m_lastDamageTimestamp = TheGameLogic->getFrame();
-		m_lastHealingTimestamp = TheGameLogic->getFrame();
-
-		// if our health has gone UP then do run the damage module callback
-		if( m_currentHealth > m_prevHealth )
-		{
-			for (BehaviorModule** m = obj->getBehaviorModules(); *m; ++m)
-			{
-				DamageModuleInterface* d = (*m)->getDamage();
-				if (!d)
-					continue;
-
-				d->onHealing( damageInfo );
-			}
-		}
-
-		if (m_curDamageState != oldState)
-		{
-			for (BehaviorModule** m = obj->getBehaviorModules(); *m; ++m)
-			{
-				DamageModuleInterface* d = (*m)->getDamage();
-				if (!d)
-					continue;
-
-				d->onBodyDamageStateChange( damageInfo, oldState, m_curDamageState );
-			}
-		}
-	}
-
-	doDamageFX(damageInfo);
-}
+// ?attemptHealing@ActiveBody@@UAEXPAVDamageInfo@@@Z: retail body is in ActiveBody_attemptHealing.cpp
 
 //-------------------------------------------------------------------------------------------------
 /** Simple setting of the health value, it does *NOT* track any transition
@@ -941,42 +863,7 @@ Real ActiveBody::getInitialHealth() const
 // ------------------------------------------------------------------------------------------------
 /** Set or unset the overridable indestructible flag in the body */
 // ------------------------------------------------------------------------------------------------
-// ?setIndestructible@ActiveBody@@ present-unmatched
-void ActiveBody::setIndestructible( Bool indestructible )
-{
-
-	m_indestructible = indestructible;
-
-	// for bridges, we mirror this state on its towers
-	Object *us = getObject();
-	if( us->isKindOf( KINDOF_BRIDGE ) )
-	{
-		BridgeBehaviorInterface *bbi = BridgeBehavior::getBridgeBehaviorInterfaceFromObject( us );
-		if( bbi )
-		{
-			Object *tower;
-
-			// get tower
-			for( Int i = 0; i < BRIDGE_MAX_TOWERS; ++i )
-			{
-
-				tower = TheGameLogic->findObjectByID( bbi->getTowerID( BridgeTowerType(i) ) );
-				if( tower )
-				{
-					BodyModuleInterface *body = tower->getBodyModule();
-
-					if( body )
-						body->setIndestructible( indestructible );
-
-				}  // end if
-
-			}  // end for, i
-
-		}  // end if
-
-	}  // end if
-
-}  // end setIndestructible
+// ?setIndestructible@ActiveBody@@UAEX_N@Z: retail body is in ActiveBody_setIndestructible.cpp
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------

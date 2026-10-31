@@ -152,35 +152,7 @@ ThingTemplate *ThingFactory::newTemplate( const AsciiString& name )
 	* is *NOT* added to master template list, it is a hidden place to store
 	* override values for 'thingTemplate' */
 //-------------------------------------------------------------------------------------------------
-// ?newOverride@ThingFactory@@ present-unmatched
-ThingTemplate* ThingFactory::newOverride( ThingTemplate *thingTemplate )
-{
-
-	// sanity
-	DEBUG_ASSERTCRASH( thingTemplate, ("newOverride(): NULL 'parent' thing template\n") );
-
-	// sanity just for debuging, the weapon must be in the master list to do overrides
-	DEBUG_ASSERTCRASH( findTemplate( thingTemplate->getName() ) != NULL,
-										 ("newOverride(): Thing template '%s' not in master list\n", 
-										 thingTemplate->getName().str()) );
-
-	// find final override of the 'parent' template
-	ThingTemplate *child = (ThingTemplate*) thingTemplate->friend_getFinalOverride();
-
-	// allocate new template
-	ThingTemplate *newTemplate = newInstance(ThingTemplate);
-
-	// copy data from final override to 'newTemplate' as a set of initial default values
-	*newTemplate = *child;
-	newTemplate->setCopiedFromDefault();
-
-	newTemplate->markAsOverride();
-	child->setNextOverride(newTemplate);
-
-	// return the newly created override for us to set values with etc
-	return newTemplate;
-
-}  // end newOverride
+// ?newOverride@ThingFactory@@AAEPAVThingTemplate@@PAV2@@Z: retail body is in ThingFactory_newOverride.cpp
 
 //-------------------------------------------------------------------------------------------------
 /** Init */

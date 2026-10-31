@@ -217,12 +217,7 @@ SkirmishPreferences::~SkirmishPreferences()
 {
 }
 
-// byte-exact reconstruction: game/GameEngine/Source/Common/SkirmishPreferences_setSlotList.cpp
-// ?setSlotList@SkirmishPreferences@@ present-unmatched
-void SkirmishPreferences::setSlotList(void)
-{
-	setAsciiString("SlotList", GameInfoToAsciiString(TheSkirmishGameInfo));
-}
+// ?setSlotList@SkirmishPreferences@@QAEXXZ: retail body is in SkirmishPreferences_setSlotList.cpp
 
 // BFME getUserName is emitted by SkirmishPreferences_getUserName.cpp.
 
@@ -245,27 +240,7 @@ Bool SkirmishPreferences::usesSystemMapDir(void)
 	return FALSE;
 }
 
-// ?getPreferredMap@SkirmishPreferences@@ present-unmatched
-AsciiString SkirmishPreferences::getPreferredMap(void)
-{
-	AsciiString ret;
-	SkirmishPreferences::const_iterator it = find("Map");
-	if (it == end())
-	{
-		ret = getDefaultMap(TRUE);
-		return ret;
-	}
-
-	ret = QuotedPrintableToAsciiString(it->second);
-	ret.trim();
-	if (ret.isEmpty() || !isValidMap(ret, TRUE))
-	{
-		ret = getDefaultMap(TRUE);
-		return ret;
-	}
-	
-	return ret;
-}
+// ?getPreferredMap@SkirmishPreferences@@QAE?AVAsciiString@@XZ: retail body is in SkirmishPreferences_getPreferredMap.cpp
 
 static const char superweaponRestrictionKey[] = "SuperweaponRestrict";
 

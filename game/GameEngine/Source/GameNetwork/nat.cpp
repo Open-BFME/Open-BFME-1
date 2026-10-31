@@ -167,111 +167,7 @@ NAT::~NAT() {
 // check to see if this connection is done for us, or if it has failed.
 enum { MS_TO_WAIT_FOR_STATS = 5000 };
 // The former NATUpdateThunk claim was a GameSpy chat filter timeout; NAT::update remains unmatched.
-// ?update@NAT@@ present-unmatched
-NATStateType NAT::update() {
-	static UnsignedInt s_startStatWaitTime = 0;
-	if (m_NATState == NATSTATE_DONE) {
-		m_NATState = NATSTATE_IDLE;
-	} else if (m_NATState == NATSTATE_WAITFORSTATS) {
-		// check for all stats
-		Bool gotAllStats = TRUE;
-		Bool timedOut = FALSE;
-		for (Int i=0; i<MAX_SLOTS; ++i)
-		{
-			const GameSpyGameSlot *slot = TheGameSpyGame->getGameSpySlot(i);
-			if (slot && slot->isHuman())
-			{
-				PSPlayerStats stats = TheGameSpyPSMessageQueue->findPlayerStatsByID(slot->getProfileID());
-				if (stats.id == 0)
-				{
-					gotAllStats = FALSE;
-					//DEBUG_LOG(("Failed to find stats for %ls(%d)\n", slot->getName().str(), slot->getProfileID()));
-				}
-			}
-		}
-		// check for timeout.  Timing out is not a fatal error - it just means we didn't get the other
-		// player's stats.  We'll see 0/0 as his record, but we can still play him just fine.
-		UnsignedInt now = timeGetTime();
-		if (now > s_startStatWaitTime + MS_TO_WAIT_FOR_STATS)
-		{
-			DEBUG_LOG(("Timed out waiting for stats.  Let's just start the dang game.\n"));
-			timedOut = TRUE;
-		}
-		if (gotAllStats || timedOut)
-		{
-			m_NATState = NATSTATE_DONE;
-			TheEstablishConnectionsMenu->endMenu();
-			if (TheFirewallHelper != NULL) {
-				delete TheFirewallHelper;
-				TheFirewallHelper = NULL;
-			}
-		}
-	} else if (m_NATState == NATSTATE_DOCONNECTIONPATHS) {
-		if (allConnectionsDoneThisRound() == TRUE) {
-			// we finished this round, move on to the next one.
-			++m_connectionRound;
-//			m_roundTimeout = timeGetTime() + TheGameSpyConfig->getRoundTimeout();
-			m_roundTimeout = timeGetTime() + m_timeForRoundTimeout;
-			DEBUG_LOG(("NAT::update - done with connection round, moving on to round %d\n", m_connectionRound));
-
-			// we finished that round, now check to see if we're done, or if there are more rounds to go.
-			if (allConnectionsDone() == TRUE) {
-				// we're all done, time to go back home.
-				m_NATState = NATSTATE_WAITFORSTATS;
-
-				// 2/19/03 BGC - we have successfully negotaited a NAT thingy, so our behavior must be correct
-				// so therefore we don't need to refresh our NAT even if we previously thought we had to.
-				TheFirewallHelper->flagNeedToRefresh(FALSE);
-
-				s_startStatWaitTime = timeGetTime();
-				DEBUG_LOG(("NAT::update - done with all connections, woohoo!!\n"));
-				/*
-				m_NATState = NATSTATE_DONE;
-				TheEstablishConnectionsMenu->endMenu();
-				if (TheFirewallHelper != NULL) {
-					delete TheFirewallHelper;
-					TheFirewallHelper = NULL;
-				}
-				*/
-			} else {
-				doThisConnectionRound();
-			}
-		}
-		NATConnectionState state = connectionUpdate();
-
-		if (timeGetTime() > m_roundTimeout) {
-			DEBUG_LOG(("NAT::update - round timeout expired\n"));
-			setConnectionState(m_localNodeNumber, NATCONNECTIONSTATE_FAILED);
-			notifyUsersOfConnectionFailed(m_localNodeNumber);
-		}
-
-		if (state == NATCONNECTIONSTATE_FAILED) {
-			// if we fail
-			m_NATState = NATSTATE_FAILED;
-			TheEstablishConnectionsMenu->endMenu();
-			if (TheFirewallHelper != NULL) {
-				// we failed NAT negotiation, perhaps we need to redetect our firewall settings.
-				// We don't trust the user to do it for themselves so we force them to do it next time
-				// the log in.
-				// 2/19/03 - ok, we don't want to do this right away, if the user tries to play in another game
-				// before they log out and log back in the game won't have a chance at working.
-				// so we need to simply flag it so that when they log out the firewall behavior gets blown away.
-				TheFirewallHelper->flagNeedToRefresh(TRUE);
-//				TheWritableGlobalData->m_firewallBehavior = FirewallHelperClass::FIREWALL_TYPE_UNKNOWN;
-//				TheFirewallHelper->writeFirewallBehavior();
-
-				delete TheFirewallHelper;
-				TheFirewallHelper = NULL;
-			}
-			// we failed to connect, so we don't have to pass on the transport to the network.
-			if (m_transport != NULL) {
-				delete m_transport;
-				m_transport = NULL;
-			}
-		}
-	}
-	return m_NATState;
-}
+// ?update@NAT@@QAE?AW4NATStateType@@XZ: retail body is in NAT_update.cpp
 
 
 // update transport, check for PROBE packets from our target.
@@ -758,23 +654,7 @@ void NAT::notifyUsersOfConnectionDone(Int nodeIndex) {
 // reachable from the source side.
 // ?notifyUsersOfConnectionFailed@NAT@@IAEXH@Z: retail body is in NAT_notifyUsersOfConnectionFailed.cpp
 
-// byte-exact reconstruction: game/GameEngine/Source/GameNetwork/NATSendMangledPortNumberToTargetThunk.cpp
-// ?sendMangledPortNumberToTarget@NAT@@IAEXGPAVGameSlot@@@Z present-unmatched
-void NAT::sendMangledPortNumberToTarget(UnsignedShort mangledPort, GameSlot *targetSlot) {
-	PeerRequest req;
-	AsciiString options;
-	options.format("PORT%d %d %08X", m_localNodeNumber, mangledPort, m_localIP);
-
-	req.peerRequestType = PeerRequest::PEERREQUEST_UTMPLAYER;
-	req.UTM.isStagingRoom = TRUE;
-	req.id = "NAT/";
-	AsciiString hostName;
-	hostName.translate(targetSlot->getName());
-	req.nick = hostName.str();
-	req.options = options.str();
-	DEBUG_LOG(("NAT::sendMangledPortNumberToTarget - sending \"%s\" to %s\n", options.str(), hostName.str()));
-	TheGameSpyPeerMessageQueue->addRequest(req);
-}
+// ?sendMangledPortNumberToTarget@NAT@@IAEXGPAVGameSlot@@@Z: retail body is in NATSendMangledPortNumberToTargetThunk.cpp
 
 void NAT::processGlobalMessage(Int slotNum, const char *options) {
 	const char *ptr = options;

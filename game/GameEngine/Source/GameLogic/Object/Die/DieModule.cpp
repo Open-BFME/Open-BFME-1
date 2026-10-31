@@ -60,20 +60,7 @@ DieMuxData::DieMuxData() :
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Module/DieMuxDataGetFieldParseThunk.cpp
-// ?getFieldParse@DieMuxData@@ present-unmatched
-const FieldParse* DieMuxData::getFieldParse() 
-{
-	static const FieldParse dataFieldParse[] = 
-	{
-		{ "DeathTypes",				INI::parseDeathTypeFlags,						NULL, offsetof( DieMuxData, m_deathTypes ) },
-		{ "VeterancyLevels",	INI::parseVeterancyLevelFlags,			NULL, offsetof( DieMuxData, m_veterancyLevels ) },
-		{ "ExemptStatus",			ObjectStatusMaskType::parseFromINI,	NULL,	offsetof( DieMuxData, m_exemptStatus ) },
-		{ "RequiredStatus",		ObjectStatusMaskType::parseFromINI, NULL,	offsetof( DieMuxData, m_requiredStatus ) },
-		{ 0, 0, 0, 0 }
-	};
-  return dataFieldParse;
-}
+// ?getFieldParse@DieMuxData@@SAPBUFieldParse@@XZ: retail body is in DieMuxDataGetFieldParseThunk.cpp
 
 // 0x001FB090 and 0x00255120: two unreferenced retail copies of the same
 // one-bit flag test, (flags & (1 << (n - 1))) != 0.  Both are reached only

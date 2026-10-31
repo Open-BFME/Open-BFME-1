@@ -996,31 +996,7 @@ void WaterRenderObjClass::updateMapOverrides(void)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjReplaceSkyboxTextureRetail.cpp
-// ?replaceSkyboxTexture@WaterRenderObjClass@@QAEXABVAsciiString@@0@Z present-unmatched
-void WaterRenderObjClass::replaceSkyboxTexture(const AsciiString& oldTexName, const AsciiString& newTextName)
-{
-	W3DAssetManager* assetManager = ((W3DAssetManager*)W3DAssetManager::Get_Instance());
-
-	assetManager->replacePrototypeTexture(m_skyBox, oldTexName.str(), newTextName.str());
-
-	//Enable clamping on all textures used by the skybox (to reduce corner seams).
-	if (m_skyBox && m_skyBox->Class_ID() == RenderObjClass::CLASSID_MESH)
-	{
-		MeshClass *mesh=(MeshClass*) m_skyBox;
-		MaterialInfoClass	*material = mesh->Get_Material_Info();
-
-		for (Int i=0; i<material->Texture_Count(); i++)
-		{
-			if (material->Peek_Texture(i))
-			{		
-				material->Peek_Texture(i)->Get_Filter().Set_U_Addr_Mode(TextureFilterClass::TEXTURE_ADDRESS_CLAMP);
-				material->Peek_Texture(i)->Get_Filter().Set_V_Addr_Mode(TextureFilterClass::TEXTURE_ADDRESS_CLAMP);
-			}
-		}
-	}
-
-}
+// ?replaceSkyboxTexture@WaterRenderObjClass@@QAEXABVAsciiString@@0@Z: retail body is in WaterRenderObjGridAndSkybox.cpp
 
 //-------------------------------------------------------------------------------------------------
 /** Adjusts various water/sky rendering settings that depend on time of day. */
@@ -2916,57 +2892,7 @@ void WaterRenderObjClass::crc( Xfer *xfer )
 	* Version Info:
 	* 1: Initial version */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjXferRetail.cpp
-// ?xfer@WaterRenderObjClass@@MAEXPAVXfer@@@Z present-unmatched
-void WaterRenderObjClass::xfer( Xfer *xfer )
-{
-
-	// version
-	XferVersion currentVersion = 1;
-	XferVersion version = currentVersion;
-	xfer->xferVersion( &version, currentVersion );
-
-	// grid cells x
-	Int cellsX = m_gridCellsX;
-	xfer->xferInt( &cellsX );
-	if( cellsX != m_gridCellsX )
-	{
-
-		DEBUG_CRASH(( "WaterRenderObjClass::xfer - cells X mismatch\n" ));
-		throw SC_INVALID_DATA;
-
-	}  // end if
-	
-	// grid cells Y
-	Int cellsY = m_gridCellsY;
-	xfer->xferInt( &cellsY );
-	if( cellsY != m_gridCellsY )
-	{
-	
-		DEBUG_CRASH(( "WaterRenderObjClass::xfer - cells Y mismatch\n" ));
-		throw SC_INVALID_DATA;
-
-	}  // end if
-
-	// xfer each of the mesh data points
-	for( Int i = 0; i < m_meshDataSize; ++i )
-	{
-
-		// height
-		xfer->xferReal( &m_meshData[ i ].height );
-
-		// velocity
-		xfer->xferReal( &m_meshData[ i ].velocity );
-
-		// status
-		xfer->xferUnsignedByte( &m_meshData[ i ].status );
-
-		// preferred height
-		xfer->xferUnsignedByte( &m_meshData[ i ].preferredHeight );
-
-	}  // end for, i
-
-}  // end xfer
+// ?xfer@WaterRenderObjClass@@MAEXPAVXfer@@@Z: retail body is in WaterRenderObjGridAndSkybox.cpp
 
 // ------------------------------------------------------------------------------------------------
 /** Load post process */

@@ -280,22 +280,7 @@ W3DTankDraw::W3DTankDraw( Thing *thing, const ModuleData* moduleData )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?tossEmitters@W3DTankDraw@@ present-unmatched
-void W3DTankDraw::tossEmitters( void )
-{
-	if (m_treadDebrisLeft)
-	{
-		m_treadDebrisLeft->attachToObject(NULL);
-		m_treadDebrisLeft->destroy();
-		m_treadDebrisLeft = NULL;
-	}
-	if (m_treadDebrisRight)
-	{
-		m_treadDebrisRight->attachToObject(NULL);
-		m_treadDebrisRight->destroy();
-		m_treadDebrisRight = NULL;
-	}
-}
+// ?tossEmitters@W3DTankDraw@@IAEXXZ: retail body is in W3DTankDrawEmitters.cpp
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -317,16 +302,7 @@ W3DTankDraw::~W3DTankDraw()
 
  * Start creating debris from the tank treads
  */
-// ?startMoveDebris@W3DTankDraw@@ present-unmatched
-void W3DTankDraw::startMoveDebris( void )
-{
-	if (getDrawable()->isDrawableEffectivelyHidden())
-		return;
-	if (m_treadDebrisLeft)
-    m_treadDebrisLeft->start();
-	if (m_treadDebrisRight)
-    m_treadDebrisRight->start();
-}
+// ?startMoveDebris@W3DTankDraw@@IAEXXZ: retail body is in W3DTankDrawEmitters.cpp
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------

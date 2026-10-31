@@ -850,33 +850,7 @@ Int Mouse::getCursorIndex(const AsciiString& name)
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?setCursor@Mouse@@ present-unmatched
-void Mouse::setCursor( MouseCursor cursor )
-{
-	
-	// if cursor has not changed do nothing
-	if( m_currentCursor == cursor )
-		return;
-
-	// only if we have a display cursor do we do anything with mouse text
-	if( m_cursorTextDisplayString != NULL )
-	{
-		CursorInfo *cursorInfo = &m_cursorInfo[ cursor ];
-
-		//
-		// if there is text present into the cursor info, set it into the mouse, otherwise
-		// just clear out the text for the cursor text
-		//
-		if( cursorInfo->cursorText.isEmpty() == FALSE )
-			setMouseText( TheGameText->fetch( cursorInfo->cursorText.str() ),
-										 &(cursorInfo->cursorTextColor),
-										 &(cursorInfo->cursorTextDropColor) );
-		else
-			setMouseText( UnicodeString( L"" ), NULL, NULL );
-
-	}  // end if
-
-}  // end setCursor
+// ?setCursor@Mouse@@UAEXW4MouseCursor@1@@Z: retail body is in Mouse_setCursor.cpp
 
 //-------------------------------------------------------------------------------------------------
 /** Parse MouseCursor entry */

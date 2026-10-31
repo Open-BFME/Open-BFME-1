@@ -739,53 +739,7 @@ StateReturnType AIGuardIdleState::onEnter( void )
 }
 
 //--------------------------------------------------------------------------------------
-// ?update@AIGuardIdleState@@ present-unmatched
-StateReturnType AIGuardIdleState::update( void )
-{
-	//DEBUG_LOG(("AIGuardIdleState frame %d: %08lx\n",TheGameLogic->getFrame(),getMachineOwner()));
-
-	UnsignedInt now = TheGameLogic->getFrame();
-	if (now < m_nextEnemyScanTime)
-		return STATE_SLEEP(m_nextEnemyScanTime - now);
-
-	m_nextEnemyScanTime = now + TheAI->getAiData()->m_guardEnemyScanRate;
-
-#ifdef STATE_MACHINE_DEBUG
-	//getMachine()->setDebugOutput(true);
-#endif
-	Object *owner = getMachineOwner();
-	AIUpdateInterface *ai = owner->getAIUpdateInterface();
-	// Check to see if we have created a crate we need to pick up.
-	if (ai->getCrateID() != INVALID_ID) 
-	{
-		getMachine()->setState(AI_GUARD_GET_CRATE);
-		return STATE_SLEEP(m_nextEnemyScanTime - now);
-	}
-
-	// if anyone is in the inner area, return success.
-	if (getGuardMachine()->lookForInnerTarget()) 
-	{
-		return STATE_SUCCESS;	// Transitions to AIGuardInnerState.
-	}
-
-	// See if the object we are guarding moved.
-	Object* targetToGuard = getGuardMachine()->findTargetToGuardByID();
-	if (targetToGuard) 
-	{
-		Coord3D pos = *targetToGuard->getPosition();
-		Real delta = m_guardeePos.x-pos.x;
-		if (delta*delta > 4*PATHFIND_CELL_SIZE_F*PATHFIND_CELL_SIZE_F) {
-			m_guardeePos = pos;
-			return STATE_FAILURE; // goes to AIGuardReturnState.
-		}
-		delta = m_guardeePos.y-pos.y;
-		if (delta*delta > 4*PATHFIND_CELL_SIZE_F*PATHFIND_CELL_SIZE_F) {
-			m_guardeePos = pos;
-			return STATE_FAILURE; // goes to AIGuardReturnState.
-		}
-	} 
-	return STATE_SLEEP(m_nextEnemyScanTime - now);
-}
+// ?update@AIGuardIdleState@@UAE?AW4StateReturnType@@XZ: retail body is in AIGuardIdleStateDestructor.cpp
 
 //--------------------------------------------------------------------------------------
 // ?onExit@AIGuardIdleState@@ present-unmatched

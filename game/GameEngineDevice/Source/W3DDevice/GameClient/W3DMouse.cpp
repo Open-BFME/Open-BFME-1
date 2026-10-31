@@ -81,21 +81,7 @@ public:
 
 } thread;
 
-// ?Thread_Function@MouseThreadClass@@ present-unmatched
-void MouseThreadClass::Thread_Function()
-{
-
-	//poll mouse and update position
-
-	while (running) 
-	{
-		isThread=TRUE;
-		if (TheMouse)
-			TheMouse->draw();
-		isThread=FALSE;
-		Switch_Thread();
-	}
-}
+// ?Thread_Function@MouseThreadClass@@UAEXXZ: retail body is in W3DMouseConstructor.cpp
 
 // ??0W3DMouse@@ present-unmatched
 W3DMouse::W3DMouse( void )
@@ -172,20 +158,7 @@ void W3DMouse::freePolygonAssets(void)
 }
 
 /**Release the textures required to display the selected cursor*/
-// ?releaseD3DCursorTextures@W3DMouse@@ present-unmatched
-Bool W3DMouse::releaseD3DCursorTextures(MouseCursor cursor)
-{
-	if (cursor == NONE || !cursorTextures[cursor][0])
-		return TRUE;	//no texture for this cursor or texture never loaded
-
-	for (Int i=0; i<MAX_2D_CURSOR_ANIM_FRAMES; i++)
-	{
-		REF_PTR_RELEASE(m_currentD3DSurface[i]);
-		REF_PTR_RELEASE(cursorTextures[cursor][i]);
-	}
-
-	return TRUE;
-}
+// ?releaseD3DCursorTextures@W3DMouse@@AAE_NW4MouseCursor@Mouse@@@Z: retail body is in W3DMouseConstructor.cpp
 
 /**Load the textures required to display the selected cursor*/
 // ?loadD3DCursorTextures@W3DMouse@@ retail 0x00701330, 559 bytes.
@@ -362,21 +335,7 @@ void W3DMouse::initD3DAssets(void)
 	}
 }
 
-// ?freeD3DAssets@W3DMouse@@ present-unmatched
-void W3DMouse::freeD3DAssets(void)
-{
-	//free pointers to texture surfaces.
-	for (Int i=0; i<MAX_2D_CURSOR_ANIM_FRAMES; i++)
-		REF_PTR_RELEASE(m_currentD3DSurface[i]);
-
-	//free textures.
-	for (i=0; i<NUM_MOUSE_CURSORS; i++)
-	{
-		for (Int j=0; j<MAX_2D_CURSOR_ANIM_FRAMES; j++)
-			REF_PTR_RELEASE(cursorTextures[i][j]);
-	}
-
-}
+// ?freeD3DAssets@W3DMouse@@AAEXXZ: retail body is in W3DMouseConstructor.cpp
 
 // The BFME render-object ABI retains five virtual slots that the ZH header
 // omits before the animation overload used by the cursor models.
@@ -980,76 +939,7 @@ void W3DMouse::draw(void)
 	m_drawing = FALSE;
 }
 
-// ?setRedrawMode@W3DMouse@@ present-unmatched
-void W3DMouse::setRedrawMode(RedrawMode mode)
-{
-	MouseCursor cursor = getMouseCursor();
-
-	//Turn off the previous cursor mode
-	setCursor(NONE);
-
-	m_currentRedrawMode=mode;
-
-	switch (mode)
-	{
-		case RM_WINDOWS:
-		{	//Windows mouse doesn't need an update thread.
-			if (thread.Is_Running())
-				thread.Stop();
-			freeD3DAssets();	//using Windows resources
-			freeW3DAssets();
-			freePolygonAssets();
-			m_currentD3DCursor = NONE;
-			m_currentW3DCursor = NONE;
-			m_currentPolygonCursor = NONE;
-		}
-		break;
-
-		case RM_W3D:
-		{	//Model mouse updated only at render time so doesn't
-			//require thread.
-			if (thread.Is_Running())
-				thread.Stop();
-			freeD3DAssets();	//using packed Image data, not textures.
-			freePolygonAssets();
-			m_currentD3DCursor = NONE;
-			m_currentPolygonCursor = NONE;
-			initW3DAssets();
-		}
-		break;
-
-		case RM_POLYGON:
-		{	//Polygon mouse updated only at render time so doesn't
-			//require thread.
-			if (thread.Is_Running())
-				thread.Stop();
-			freeD3DAssets();	//using packed Image data, not textures.
-			freeW3DAssets();
-			m_currentD3DCursor = NONE;
-			m_currentW3DCursor = NONE;
-			m_currentPolygonCursor = NONE;
-			initPolygonAssets();
-		}
-		break;
-
-		case RM_DX8:
-		{	//this cursor type is drawn by DX8 and can be refreshed
-			//independent of rendering rate.  Uses another thread to do
-			//position updates.
-			initD3DAssets();	//make sure textures loaded.
-			freeW3DAssets();
-			freePolygonAssets();
-			if (!thread.Is_Running())
-				thread.Execute();
-			m_currentW3DCursor = NONE;
-			m_currentPolygonCursor = NONE;
-			break;
-		}
-	}
-
-	setCursor(NONE);
-	setCursor(cursor);
-}
+// ?setRedrawMode@W3DMouse@@UAEXW4RedrawMode@Mouse@@@Z: retail body is in W3DMouseConstructor.cpp
 
 void W3DMouse::setCursorDirection(MouseCursor cursor)
 {

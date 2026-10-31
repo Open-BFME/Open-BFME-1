@@ -829,17 +829,7 @@ FXList::FXList()
 // byte-exact reconstruction: game/GameEngine/Source/GameClient/FXListLifecycle.cpp
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/FXListLifecycle.cpp
-// ?clear@FXList@@QAEXXZ present-unmatched
-void FXList::clear()
-{
-	for (FXNuggetList::iterator it = m_nuggets.begin(); it != m_nuggets.end(); ++it)
-	{
-		if (*it)
-			(*it)->deleteInstance();
-	}
-	m_nuggets.clear();
-}
+// ?clear@FXList@@QAEXXZ: retail body is in FXListLifecycle.cpp
 
 //-------------------------------------------------------------------------------------------------
 // ?doFXObj@FXList@@IBEXPBVObject@@0@Z present-unmatched

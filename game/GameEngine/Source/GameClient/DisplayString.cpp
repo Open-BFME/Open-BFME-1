@@ -131,15 +131,7 @@ void DisplayString::reset( void )
 // DisplayString::removeLastChar ==============================================
 /** Remove the last character from the string text */
 //=============================================================================
-// ?removeLastChar@DisplayString@@ present-unmatched
-void DisplayString::removeLastChar( void )
-{
-	m_textString.removeLastChar();
-
-	// our text has now changed
-	notifyTextChanged();
-
-}  // end removeLastChar
+// ?removeLastChar@DisplayString@@UAEXXZ: retail body is in BfmeConv454.cpp
 
 // DisplayString::appendChar ==================================================
 /** Append character to the end of the string */

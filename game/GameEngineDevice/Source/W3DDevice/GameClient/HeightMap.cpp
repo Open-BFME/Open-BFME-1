@@ -179,15 +179,7 @@ void HeightMapRenderObjClass::freeIndexVertexBuffers(void)
 //=============================================================================
 /** Frees the w3d resources used to draw the terrain. */
 //=============================================================================
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/HeightMapRenderObjClass_freeMapResources.cpp
-// ?freeMapResources@HeightMapRenderObjClass@@UAEHXZ present-unmatched
-Int HeightMapRenderObjClass::freeMapResources(void)
-{
-	BaseHeightMapRenderObjClass::freeMapResources();
-	freeIndexVertexBuffers();
-
-	return 0;
-}
+// ?freeMapResources@HeightMapRenderObjClass@@UAEHXZ: retail body is in HeightMapRenderObjClass_freeMapResources.cpp
 
 
 //=============================================================================
@@ -952,92 +944,7 @@ Int HeightMapRenderObjClass::updateVBForLightOptimized(DX8VertexBufferClass	*pVB
 The coordinates in partialRange are map cell coordinates, relative to the entire map.
 The vertex coordinates and texture coordinates, as well as static lighting are updated.
 */
-// ?doPartialUpdate@HeightMapRenderObjClass@@UAEXABUIRegion2D@@PAVWorldHeightMap@@PAV?$RefMultiListIterator@VRenderObjClass@@@@@Z present-unmatched
-void HeightMapRenderObjClass::doPartialUpdate(const IRegion2D &partialRange, WorldHeightMap *htMap, RefRenderObjListIterator *pLightsIterator)
-{	
-	// Adjust range into the current drawn map range.
-	Int minX = partialRange.lo.x - htMap->getDrawOrgX();
-	Int maxX = partialRange.hi.x - htMap->getDrawOrgX();
-	Int minY = partialRange.lo.y - htMap->getDrawOrgY();
-	Int maxY = partialRange.hi.y - htMap->getDrawOrgY();
-	if (minX<0) minX = 0;
-	if (minY<0) minY = 0;
-	if (maxX > m_x-1) maxX = m_x-1;
-	if (maxY > m_y-1) maxY = m_y-1;
-	if (maxX < minX) return;
-	if (maxY < minY) return;
-	if (m_originX == 0 && m_originY == 0) {
-		// simple case.
-		updateBlock(minX, minY, maxX, maxY,
-								htMap, pLightsIterator);
-	}
-	else
-	{
-		minY = minY+m_originY;
-		maxY = maxY+m_originY;
-
-		if (minY> m_y-1) {
-			minY -= m_y-1;
- 			maxY -= m_y-1;
-		}
-		if (maxY > m_y-1) {
-			maxY -= m_y-1;
-			updateBlock(0, minY, m_x-1, m_y-1, htMap, pLightsIterator);
-			updateBlock(0, 0, m_x-1, maxY, htMap, pLightsIterator);
-		} else {
-			updateBlock(0, minY, m_x-1, maxY, htMap, pLightsIterator);
-		}
-	}
-
-	if (!m_extraBlendTilePositions)
-	{	//Need to allocate memory
-		m_extraBlendTilePositions = NEW Int[DEFAULT_MAX_MAP_EXTRABLEND_TILES];
-		m_extraBlendTilePositionsSize = DEFAULT_MAX_MAP_EXTRABLEND_TILES;
-	}
-	
-	//Find list of all extra blend tiles used on map.  These are tiles with 3 materials/textures
-	//over the same tile and require an extra render pass.
-
-	Int i, j;
-	//First remove any existing extra blend tiles within this partial region
-	for (j=0; j<m_numExtraBlendTiles; j++)
-	{	Int x = m_extraBlendTilePositions[j] & 0xffff;
-		Int y = m_extraBlendTilePositions[j] >> 16;
-		if (x >= partialRange.lo.x && x < partialRange.hi.x &&
-			y >= partialRange.lo.y && y < partialRange.hi.y)
-		{	//this tile is inside region being updated so remove it by shifting tile array
-			memcpy(m_extraBlendTilePositions+j,m_extraBlendTilePositions+j+1,(m_numExtraBlendTiles-1-j)*sizeof(Int));
-			m_numExtraBlendTiles--;
-			j--;	//need to look at index j again because this tile was removed
-		}
-	}
-
-	for (j=partialRange.lo.y; j<partialRange.hi.y; j++)
-		for (i=partialRange.lo.x; i<partialRange.hi.x; i++)
-		{
-			if (j<0 || i<0) continue;
-			Real U[4],V[4];
-			UnsignedByte alpha[4];
-			Bool flipState,cliffState;
-			if (htMap->getExtraAlphaUVData(i,j,U,V,alpha,&flipState, &cliffState))
-			{	if (m_numExtraBlendTiles >= m_extraBlendTilePositionsSize)
-				{	//no more room to store extra blend tiles so enlarge the buffer.
-					Int *tempPositions=NEW Int[m_extraBlendTilePositionsSize+512];
-					memcpy(tempPositions, m_extraBlendTilePositions, m_extraBlendTilePositionsSize*sizeof(Int));
-					delete [] m_extraBlendTilePositions;
-					//enlarge by more tiles to reduce memory trashing
-					m_extraBlendTilePositions = tempPositions;
-					m_extraBlendTilePositionsSize += 512;
-				}
-				//Pack x and y position into single integer since maps are limited in size
-				m_extraBlendTilePositions[m_numExtraBlendTiles]=i | (j <<16);
-				m_numExtraBlendTiles++;
-			}
-		}
-	updateShorelineTiles(partialRange.lo.x,partialRange.lo.y,partialRange.hi.x,partialRange.hi.y,htMap);
-
-	updateViewImpassableAreas(TRUE, minX, maxX, minY, maxY);
-}
+// ?doPartialUpdate@HeightMapRenderObjClass@@UAEXABUIRegion2D@@PAVWorldHeightMap@@PAV?$RefMultiListIterator@VRenderObjClass@@@@@Z: retail body is in HeightMapRenderObjClass_doPartialUpdate.cpp
 
 //=============================================================================
 // HeightMapRenderObjClass::updateBlock

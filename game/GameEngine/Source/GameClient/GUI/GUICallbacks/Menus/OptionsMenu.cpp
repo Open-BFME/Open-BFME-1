@@ -527,15 +527,7 @@ Int OptionPreferences::getIdealStaticGameDetail(void)
 	return TheGameLODManager->getStaticGameLODIndex(it->second);
 }
 
-// ?getStaticGameDetail@OptionPreferences@@QAEHXZ present-unmatched
-Int OptionPreferences::getStaticGameDetail(void)
-{
-	OptionPreferences::const_iterator it = find("StaticGameLOD");
-	if (it == end())
-		return TheGameLODManager->getStaticLODLevel();
-
-	return TheGameLODManager->getStaticGameLODIndex(it->second);
-}
+// ?getStaticGameDetail@OptionPreferences@@QAEHXZ: retail body is in OptionPreferencesGetStaticGameDetail.cpp
 
 // ?getSendDelay@OptionPreferences@@QAE_NXZ
 // Body in game/masm_dumps/_getSendDelay_OptionPreferences__QAE_NXZ_90AF0.asm (exact 105B retail).

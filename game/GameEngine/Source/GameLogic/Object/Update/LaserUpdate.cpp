@@ -216,40 +216,7 @@ void LaserUpdate::updateEndPos()
 //-------------------------------------------------------------------------------------------------
 /** The update callback. */
 //-------------------------------------------------------------------------------------------------
-// ?clientUpdate@LaserUpdate@@ present-unmatched
-void LaserUpdate::clientUpdate( void )
-{
-	updateStartPos();
-	updateEndPos();
-
-	if( m_decaying )
-	{
-		UnsignedInt now = TheGameLogic->getFrame();
-		m_currentWidthScalar = 1.0f - (Real)(now - m_decayStartFrame) / (Real)(m_decayFinishFrame - m_decayStartFrame);
-		m_dirty = true;
-		if( m_currentWidthScalar <= 0.0f )
-		{
-			m_currentWidthScalar = 0.0f;
-
-			//When decay is finished... delete the laser.
-			//TheGameLogic->destroyObject( getObject() );
-			return;
-		}
-	}
-	else if( m_widening )
-	{
-		//We need to resize our laser width based on the growth ratio completed.
-		UnsignedInt now = TheGameLogic->getFrame();
-		m_currentWidthScalar = (Real)(now - m_widenStartFrame) / (Real)(m_widenFinishFrame - m_widenStartFrame);
-		m_dirty = true;
-		if( m_currentWidthScalar >= 1.0f )
-		{
-			m_currentWidthScalar = 1.0f;
-			m_widening = false;
-		}
-	}
-	return;
-}
+// ?clientUpdate@LaserUpdate@@UAEXXZ: retail body is in LaserUpdateClientUpdate.cpp
 
 // ?setDecayFrames@LaserUpdate@@ present-unmatched
 void LaserUpdate::setDecayFrames( UnsignedInt decayFrames )
@@ -453,60 +420,7 @@ void LaserUpdate::crc( Xfer *xfer )
 	* Version Info:
 	* 1: Initial version */
 // ------------------------------------------------------------------------------------------------
-// ?xfer@LaserUpdate@@ present-unmatched
-void LaserUpdate::xfer( Xfer *xfer )
-{
-
-	// version
-	XferVersion currentVersion = 1;
-	XferVersion version = currentVersion;
-	xfer->xferVersion( &version, currentVersion );
-
-	// extend base class
-	ClientUpdateModule::xfer( xfer );
-
-	// start pos
-	xfer->xferCoord3D( &m_startPos );
-
-	// end pos
-	xfer->xferCoord3D( &m_endPos );
-
-	// dirty
-	xfer->xferBool( &m_dirty );
-
-	// particle system ID
-	xfer->xferUser( &m_particleSystemID, sizeof( ParticleSystemID ) );
-
-	// target particle system id
-	xfer->xferUser( &m_targetParticleSystemID, sizeof( ParticleSystemID ) );
-
-	// widening
-	xfer->xferBool( &m_widening );
-
-	// decaying
-	xfer->xferBool( &m_decaying );
-
-	// widen start frame
-	xfer->xferUnsignedInt( &m_widenStartFrame );
-
-	// widen finish frame
-	xfer->xferUnsignedInt( &m_widenFinishFrame );
-
-	// current width scalar
-	xfer->xferReal( &m_currentWidthScalar );
-
-	// decay start frame
-	xfer->xferUnsignedInt( &m_decayStartFrame );
-
-	// decay finish frame
-	xfer->xferUnsignedInt( &m_decayFinishFrame );
-
-	xfer->xferDrawableID(&m_parentID);
-	xfer->xferDrawableID(&m_targetID);
-
-	xfer->xferAsciiString(&m_parentBoneName);
-
-}  // end xfer
+// ?xfer@LaserUpdate@@MAEXPAVXfer@@@Z: retail body is in LaserUpdate_xfer.cpp
 
 // ------------------------------------------------------------------------------------------------
 /** Load post process */

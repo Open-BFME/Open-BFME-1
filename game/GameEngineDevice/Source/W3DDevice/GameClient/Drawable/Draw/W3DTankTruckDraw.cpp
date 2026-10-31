@@ -202,28 +202,7 @@ void W3DTankTruckDraw::stopMoveDebris( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?tossEmitters@W3DTankTruckDraw@@ present-unmatched
-void W3DTankTruckDraw::tossEmitters()
-{
-	if (m_dustEffect)
-	{
-		m_dustEffect->attachToObject(NULL);
-		m_dustEffect->destroy();
-		m_dustEffect = NULL;
-	}
-	if (m_dirtEffect)
-	{
-		m_dirtEffect->attachToObject(NULL);
-		m_dirtEffect->destroy();
-		m_dirtEffect = NULL;
-	}
-	if (m_powerslideEffect)
-	{
-		m_powerslideEffect->attachToObject(NULL);
-		m_powerslideEffect->destroy();
-		m_powerslideEffect = NULL;
-	}
-}
+// ?tossEmitters@W3DTankTruckDraw@@IAEXXZ: retail body is in W3DTankTruckDrawTossEmitters.cpp
 
 //-------------------------------------------------------------------------------------------------
 // BFME keeps the shroud flag at DrawModule+0x2d where this tree reads it at
@@ -327,18 +306,7 @@ void W3DTankTruckDraw::updateBones( void ) {
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setHidden@W3DTankTruckDraw@@ present-unmatched
-void W3DTankTruckDraw::setHidden(Bool h)
-{
-	W3DModelDraw::setHidden(h);
-	if (h)
-	{
-		enableEmitters(false);
-#ifdef SHOW_TANK_DEBRIS
-		stopMoveDebris();
-#endif
-	}
-}
+// ?setHidden@W3DTankTruckDraw@@UAEX_N@Z: retail body is in W3DTankTruckDrawSetHidden.cpp
 
 /**Update uv coordinates on each tread object to simulate movement*/
 // ?updateTreadPositions@W3DTankTruckDraw@@ present-unmatched

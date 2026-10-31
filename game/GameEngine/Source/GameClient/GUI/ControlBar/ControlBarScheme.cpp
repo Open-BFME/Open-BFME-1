@@ -930,29 +930,7 @@ ControlBarScheme *ControlBarSchemeManager::newControlBarScheme( AsciiString name
 //
 // Find a scheme based on name
 //-----------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/ControlBarScheme_find.cpp
-// ?findControlBarScheme@ControlBarSchemeManager@@QAEPAVControlBarScheme@@VAsciiString@@@Z present-unmatched
-ControlBarScheme *ControlBarSchemeManager::findControlBarScheme( AsciiString name )
-{
-	name.toLower();
-	
-	ControlBarSchemeList::iterator it = m_schemeList.begin();
-
-	// iterate through the list and return the scheme that we're looking for
-	while (it != m_schemeList.end())
-	{
-		ControlBarScheme *CBScheme = *it;
-		if( !CBScheme )
-		{
-			DEBUG_ASSERTCRASH(FALSE,("There's no ControlBarScheme in the ControlBarSchemeList:m_schemeList"));
-			return NULL;
-		}
-		if(CBScheme->m_name.compareNoCase( name ) == 0)
-			return CBScheme;
-		it ++;	
-	}
-	return NULL;
-}
+// ?findControlBarScheme@ControlBarSchemeManager@@QAEPAVControlBarScheme@@VAsciiString@@@Z: retail body is in ControlBarScheme_find.cpp
 
 //
 // Preload assets
@@ -1000,32 +978,7 @@ void ControlBarSchemeManager::preloadAssets( TimeOfDay timeOfDay )
 //
 // Find a scheme based on name
 //-----------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/ControlBarSchemeManager_initMethodThunk.cpp
-// ?init@ControlBarSchemeManager@@QAEXXZ present-unmatched
-void ControlBarSchemeManager::init( void )
-{
-
-	INI ini;
-	// Read from INI all the ControlBarSchemes
-	ini.load( AsciiString( "Data\\INI\\Default\\ControlBarScheme.ini" ), INI_LOAD_OVERWRITE, NULL );
-	ini.load( AsciiString( "Data\\INI\\ControlBarScheme.ini" ), INI_LOAD_OVERWRITE, NULL );
-
-//	//Load the user modified control bar schemes
-//	WIN32_FIND_DATA findData;
-//	AsciiString userDataPath;
-//	if(TheGlobalData)
-//	{
-//		userDataPath.format("%sINI\\ControlBarScheme.ini",TheGlobalData->getPath_UserData().str());
-//		if	(FindFirstFile(userDataPath.str(), &findData) !=INVALID_HANDLE_VALUE)
-//			ini.load(userDataPath,  INI_LOAD_OVERWRITE, NULL );
-//	}
-	if( m_schemeList.size() <= 0 )
-	{
-		DEBUG_ASSERTCRASH(FALSE,("There's no ControlBarScheme in the ControlBarSchemeList:m_schemeList that was just read from the INI file"));
-		return;
-	}
-
-}
+// ?init@ControlBarSchemeManager@@QAEXXZ: retail body is in ControlBarSchemeManagerInit.cpp
 
 //
 // only recommended to use if you know what you're doing, cause you could actually load in

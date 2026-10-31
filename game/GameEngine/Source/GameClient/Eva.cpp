@@ -284,74 +284,13 @@ Eva::~Eva()
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/EvaInit.cpp
-// ?init@Eva@@ present-unmatched
-void Eva::init()
-{
-	// parse the INI here, etc.
-	INI ini;
-	ini.load( AsciiString( "Data\\INI\\Default\\Eva.ini" ), INI_LOAD_OVERWRITE, NULL);
-	ini.load( AsciiString( "Data\\INI\\Eva.ini" ), INI_LOAD_OVERWRITE, NULL);
-}
+// ?init@Eva@@UAEXXZ: retail body is in EvaInit.cpp
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/EvaReset.cpp
-// ?reset@Eva@@ present-unmatched
-void Eva::reset()
-{
-	m_previousUnitCount = 0;
-	m_previousBuildingCount = 0;
-
-	// remove all pending counters, etc, here.
-	EvaCheckVecIt it;
-	for (it = m_checks.begin(); it != m_checks.end(); /* empty */) {
-		it = m_checks.erase(it);
-	}
-
-	// remove all things flagged as "need to play"
-	for (Int i = 0; i < EVA_COUNT; ++i) {
-		m_shouldPlay[i] = FALSE;
-	}	
-
-	// If we were previously disabled, re-enable ourselves.
-	m_enabled = TRUE;
-}
+// ?reset@Eva@@UAEXXZ: retail body is in EvaReset.cpp
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/EvaUpdate.cpp
-// ?update@Eva@@ present-unmatched
-void Eva::update()
-{
-	if (!m_enabled) {
-		return;
-	}
-
-	m_localPlayer = ThePlayerList->getLocalPlayer();
-	UnsignedInt frame = TheGameLogic->getFrame();
-
-	// Don't update for the first few frames. This way, we don't have to deal with our initial power
-	// being 0, etc.
-	if (frame < 2) {
-		return;
-	}
-
-	for (Int mesg = (Int)EVA_FIRST; mesg < (Int)EVA_COUNT; ++mesg) {
-		if (isTimeForCheck((EvaMessage)mesg, frame)) {
-			if (messageShouldPlay((EvaMessage)mesg, frame)) {
-				playMessage((EvaMessage)mesg, frame);
-			}
-		}
-	}
-
-	processPlayingMessages(frame);	
-	m_localPlayer = NULL;
-
-	// Reset all of the flags that have been set to true that haven't actually been probed, because
-	// they will need to trigger again to be valid messages.
-	for (Int i = EVA_FIRST; i < EVA_COUNT; ++i) {
-		m_shouldPlay[i] = FALSE;
-	}
-}
+// ?update@Eva@@UAEXXZ: retail body is in EvaUpdate.cpp
 
 //-------------------------------------------------------------------------------------------------
 // ?nameToMessage@Eva@@ present-unmatched

@@ -102,45 +102,7 @@ void PoisonedBehavior::onHealing( DamageInfo *damageInfo )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/promoted_update_PoisonedBehavior_UAE_AW4UpdateSleepTime_XZ_00202BD0.cpp
-// ?update@PoisonedBehavior@@UAE?AW4UpdateSleepTime@@XZ present-unmatched
-UpdateSleepTime PoisonedBehavior::update()
-{
-	const PoisonedBehaviorModuleData* d = getPoisonedBehaviorModuleData();
-	UnsignedInt now = TheGameLogic->getFrame();
-
-	if( m_poisonOverallStopFrame == 0 )
-	{
-		DEBUG_CRASH(("hmm, this should not happen"));
-		return UPDATE_SLEEP_FOREVER;
-		//we aren't poisoned, so nevermind
-	}
-
-	if (m_poisonDamageFrame != 0 && now >= m_poisonDamageFrame)
-	{
-		// If it is time to do damage, then do it and reset the damage timer
-		DamageInfo damage;
-		damage.in.m_amount = m_poisonDamageAmount;
-		damage.in.m_sourceID = INVALID_ID;
-		damage.in.m_damageType = DAMAGE_UNRESISTABLE; // Not poison, as that will infect us again
-		damage.in.m_damageFXOverride = DAMAGE_POISON; // but this will ensure that the right effect is played
-		damage.in.m_deathType = m_deathType;
-		getObject()->attemptDamage( &damage );
-
-		m_poisonDamageFrame = now + d->m_poisonDamageIntervalData;
-	}
-
-	// If we are now at zero we need to turn off our special effects... 
-	// unless the poison killed us, then we continue to be a pulsating toxic pus ball
-	if( m_poisonOverallStopFrame != 0 && 
-			now >= m_poisonOverallStopFrame &&
-			!getObject()->isEffectivelyDead())
-	{
-		stopPoisonedEffects();
-	}
-
-	return calcSleepTime();
-}
+// ?update@PoisonedBehavior@@UAE?AW4UpdateSleepTime@@XZ: retail body is in PoisonedBehavior_update.cpp
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------

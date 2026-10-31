@@ -144,45 +144,7 @@ const ThingTemplate *ProductionPrerequisite::getExistingBuildFacilityTemplate( c
 }
 
 //-----------------------------------------------------------------------------
-// ?isSatisfied@ProductionPrerequisite@@QBE_NPBVPlayer@@@Z present-unmatched
-Bool ProductionPrerequisite::isSatisfied(const Player *player) const
-{
-	Int i;
-
-	if (!player)
-		return false;
-
-	// gotta have all the prereq sciences.
-	for (i = 0; i < m_prereqSciences.size(); i++)
-	{
-		if (!player->hasScience(m_prereqSciences[i]))
-			return false;
-	}
-
-	// the player must have at least one instance of each prereq unit.
-	Int ownCount[MAX_PREREQ];
-	Int cnt = calcNumPrereqUnitsOwned(player, ownCount);
-
-	// fix up the "or" cases. (start at 1!)
-	for (i = 1; i < cnt; i++)
-	{
-		if (m_prereqUnits[i].flags & UNIT_OR_WITH_PREV)
-		{
-			ownCount[i] += ownCount[i-1];	// lump 'em together for prereq purposes
-			ownCount[i-1] = -1;						// flag for "ignore me"
-		}
-	}
-
-	for (i = 0; i < cnt; i++)
-	{
-		if (ownCount[i] == -1)	// the magic "ignore me" flag
-			continue;	
-		if (ownCount[i] == 0)		// everything not ignored, is required
-			return false;
-	}
-
-	return true;
-}
+// ?isSatisfied@ProductionPrerequisite@@QBE_NPBVPlayer@@@Z: retail body is in ProductionPrerequisiteIsSatisfied.cpp
 
 //-------------------------------------------------------------------------------------------------
 /** Add a unit prerequisite, if 'orWithPrevious' is set then this unit is said

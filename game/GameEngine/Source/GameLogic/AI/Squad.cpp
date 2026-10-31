@@ -273,63 +273,7 @@ void Squad::crc( Xfer *xfer )
 	* Version Info:
 	* 1: Initial version */
 // ------------------------------------------------------------------------------------------------
-// ?xfer@Squad@@MAEXPAVXfer@@@Z present-unmatched
-void Squad::xfer( Xfer *xfer )
-{
-
-	// version
-	XferVersion currentVersion = 1;
-	XferVersion version = currentVersion;
-	xfer->xferVersion( &version, currentVersion );
-
-	// length of object ID list
-	UnsignedShort objectCount = m_objectIDs.size();
-	xfer->xferUnsignedShort( &objectCount );
-
-	// object id elements
-	ObjectID objectID;
-	if( xfer->getXferMode() == XFER_SAVE )
-	{
-
-		// save each object id
-		VecObjectIDIt it;
-		for( it = m_objectIDs.begin(); it != m_objectIDs.end(); ++it )
-		{
-
-			// save object ID
-			objectID = *it;
-			xfer->xferObjectID( &objectID );
-
-		}  // end for, it
-
-	}  // end if, save
-	else
-	{
-		
-		// the cached objects list should be empty
-		if( m_objectsCached.size() != 0 )
-		{
-
-			DEBUG_CRASH(( "Squad::xfer - m_objectsCached should be emtpy, but is not\n" ));
-			throw SC_INVALID_DATA;
-
-		}  // end of
-
-		// read all items
-		for( UnsignedShort i = 0; i < objectCount; ++i )
-		{
-
-			// read id
-			xfer->xferObjectID( &objectID );
-
-			// put on list
-			m_objectIDs.push_back( objectID );
-
-		}  // end for, i
-
-	}  // end else, load
-
-}  // end xfer
+// ?xfer@Squad@@MAEXPAVXfer@@@Z: retail body is in Squad_xfer.cpp
 
 // ------------------------------------------------------------------------------------------------
 /** Load post process */

@@ -138,27 +138,7 @@ Bool LANPreferences::usesSystemMapDir(void)
 	return FALSE;
 }
 
-// ?getPreferredMap@LANPreferences@@ present-unmatched
-AsciiString LANPreferences::getPreferredMap(void)
-{
-	AsciiString ret;
-	LANPreferences::const_iterator it = find("Map");
-	if (it == end())
-	{
-		ret = getDefaultMap(TRUE);
-		return ret;
-	}
-
-	ret = QuotedPrintableToAsciiString(it->second);
-	ret.trim();
-	if (ret.isEmpty() || !isValidMap(ret, TRUE))
-	{
-		ret = getDefaultMap(TRUE);
-		return ret;
-	}
-	
-	return ret;
-}
+// ?getPreferredMap@LANPreferences@@QAE?AVAsciiString@@XZ: retail body is in LANPreferences_getPreferredMap.cpp
 
 class BFMELANPreferenceKey
 {

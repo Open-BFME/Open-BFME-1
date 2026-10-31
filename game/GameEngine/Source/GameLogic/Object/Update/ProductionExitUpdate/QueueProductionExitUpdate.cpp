@@ -64,104 +64,7 @@ QueueProductionExitUpdate::~QueueProductionExitUpdate()
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?exitObjectViaDoor@QueueProductionExitUpdate@@UAEXPAVObject@@W4ExitDoorType@@@Z present-unmatched
-void QueueProductionExitUpdate::exitObjectViaDoor( Object *newObj, ExitDoorType exitDoor )
-{
-	DEBUG_ASSERTCRASH(exitDoor == DOOR_1, ("multiple exit doors not supported here"));
-
-	Object *creationObject = getObject();
-	if (creationObject)
-	{
-		const QueueProductionExitUpdateModuleData* md = getQueueProductionExitUpdateModuleData();
-
-		Real exitAngle = creationObject->getOrientation();
-		const Matrix3D *transform = creationObject->getTransformMatrix();
-		Vector3 loc;
-		Coord3D createPoint;
-
-		//
-		// calculate the position to create the object at, we take the coord specified
-		// in INI which is in model space, rotate it to match the building angle
-		// and translate for building location via a transform call
-		//
-		loc.Set( md->m_unitCreatePoint.x, md->m_unitCreatePoint.y, md->m_unitCreatePoint.z );
-		transform->Transform_Vector( *transform, loc, &loc );
-
-		Bool creationInAir = FALSE;
-		if( TheTerrainLogic )
-		{
-			if( loc.Z != TheTerrainLogic->getGroundHeight( loc.X, loc.Y ) )
-				creationInAir = TRUE;
-		}
-		// make sure the point is on the terrain
-		if( creationInAir && !md->m_allowAirborneCreationData )
-			loc.Z = TheTerrainLogic ? TheTerrainLogic->getGroundHeight( loc.X, loc.Y ) : 0.0f;
-
-		// we need it in Coord3D form
-		createPoint.x = loc.X;
-		createPoint.y = loc.Y;
-		createPoint.z = loc.Z;
-
-		newObj->setPosition( &createPoint );
-		newObj->setOrientation( exitAngle );
-
-		//
-		// Objects that are created in the air from producers that are in the air get 
-		// a kick that will make their starting speed equal mine.  
-		//
-		PhysicsBehavior *newObjectPhysics = newObj->getPhysics();
-		PhysicsBehavior *myPhysics = creationObject->getPhysics();
-
-		if( (myPhysics != NULL) && creationInAir && (newObjectPhysics != NULL) )
-		{
-			Coord3D startingForce = *myPhysics->getVelocity();
-			startingForce.x *= newObjectPhysics->getMass();
-			startingForce.y *= newObjectPhysics->getMass();
-			startingForce.z *= newObjectPhysics->getMass();
-			newObjectPhysics->applyMotiveForce( &startingForce );
-
-			const Real STARTING_PITCH_COEFF = 0.04f;
-			Real pitchRate = newObjectPhysics->getCenterOfMassOffset() * STARTING_PITCH_COEFF;
-			newObjectPhysics->setPitchRate( pitchRate );
-		}
-
-
-		/** @todo This really should be automatically wrapped up in an actication sequence
-		for objects in general */
-		// tell the AI about it
-		TheAI->pathfinder()->addObjectToPathfindMap( newObj );
-		Coord3D tmp;
-		getNaturalRallyPoint(tmp);
-		// Grid it.
-		TheAI->pathfinder()->snapPosition(newObj, &tmp);
-		std::vector<Coord3D> exitPath;
-		exitPath.push_back(tmp);
-
-		AIUpdateInterface  *ai = newObj->getAIUpdateInterface();
-		if (m_rallyPointExists)
-		{
-			tmp = m_rallyPoint;
-			if (ai && ai->isDoingGroundMovement()) 
-			{
-				if (TheAI->pathfinder()->adjustDestination(newObj, ai->getLocomotorSet(), &tmp))
-					exitPath.push_back(tmp);
-
-			}
-		} else {
-			// Double the destination to keep redguards from stacking.
-			exitPath.push_back(tmp);
-		}
-		if (ai) {
-			ai->aiFollowExitProductionPath( &exitPath, creationObject, CMD_FROM_AI );
-		}
-		m_currentDelay = md->m_exitDelayData;
-
-		if (m_currentBurstCount)
-			m_currentBurstCount--; // fewer and fewer units to burst
-
-	}
-
-}
+// ?exitObjectViaDoor@QueueProductionExitUpdate@@UAEXPAVObject@@W4ExitDoorType@@@Z: retail body is in QueueProductionExitUpdateExitObjectViaDoor.cpp
 
 
 // ?getExitPosition@QueueProductionExitUpdate@@UBE_NAAUCoord3D@@@Z present-unmatched
@@ -217,40 +120,7 @@ Bool QueueProductionExitUpdate::isFreeToExit() const
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?exitObjectByBudding@QueueProductionExitUpdate@@UAEXPAVObject@@0@Z present-unmatched
-void QueueProductionExitUpdate::exitObjectByBudding( Object *newObj, Object *budHost )
-{
-	if (budHost) // object has provided a host for us
-	{
-		const Coord3D *newPos = budHost->getPosition();
-		Real     newAngle = budHost->getOrientation();
-		PathfindLayerEnum newLayer = budHost->getLayer();
-
-		newObj->setPosition( newPos );
-		newObj->setOrientation( newAngle );
-		newObj->setLayer(newLayer);
-
-	}
-	else // we need to just copy the host object
-	{
-		newObj->setPosition( getObject()->getPosition() );
-		newObj->setOrientation( getObject()->getOrientation() );
-	}
-
-	//This causes the formation to break like billard balls
-	AIUpdateInterface *ai = newObj->getAI();
-	if (ai)
-	{
-		ai->aiMoveToPosition( newObj->getPosition(), CMD_FROM_AI );// IOW, I cant stay here, if somebody else is here
-	}
-
-	const QueueProductionExitUpdateModuleData* data = getQueueProductionExitUpdateModuleData();
-	m_currentDelay = data->m_exitDelayData;
-
-	if (m_currentBurstCount)
-		m_currentBurstCount--; // fewer and fewer units to burst
-
-}
+// ?exitObjectByBudding@QueueProductionExitUpdate@@UAEXPAVObject@@0@Z: retail body is in QueueProductionExitInterface.cpp
 
 
 
