@@ -2,11 +2,10 @@
 
 template <typename T> class StringBase
 {
-protected:
-	StringBase(const T *text);
 	friend class UnicodeString;
 
 private:
+	StringBase(const T *text);
 	void releaseBuffer();
 	void *m_data;
 };
