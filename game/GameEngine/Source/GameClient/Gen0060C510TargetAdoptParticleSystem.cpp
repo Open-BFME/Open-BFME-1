@@ -18,6 +18,7 @@ public:
 class ParticleSystemZA;
 ParticleSystemZA *bfmeNullSystemZA();
 
+extern "C" void __cdecl __identifier("?apply@U1Sub@@QAEAAV1@PAVU1CachedHolder@@@Z")();
 class ParticleSystemHandle
 {
 public:
@@ -26,7 +27,13 @@ public:
 		return m_system != 0;
 	}
 
-	ParticleSystemHandle &operator=(const ParticleSystemHandle &that) throw();
+	// 0x005C21D0 is ledgered as ?apply@U1Sub@@QAEAAV1@PAVU1CachedHolder@@@Z; call it by that defined name.
+	ParticleSystemHandle &operator=(const ParticleSystemHandle &that) throw()
+	{
+		union { void (__cdecl *symbol)(); ParticleSystemHandle &(ParticleSystemHandle::*member)(const ParticleSystemHandle &); } c;
+		c.symbol = &__identifier("?apply@U1Sub@@QAEAAV1@PAVU1CachedHolder@@@Z");
+		return (this->*c.member)(that);
+	}
 
 	ParticleSystem *operator->() const
 	{
