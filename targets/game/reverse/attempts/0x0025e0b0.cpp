@@ -1,5 +1,5 @@
 // ?update@Rva0025E0B0Module@@QAEXPAVObject@@@Z
-// partial score=0.78 date=2026-09-15
+// partial score=0.8125 date=2026-09-15
 // Clean scratch reconstruction for retail RVA 0x0025E0B0, exact extent 128B.
 // This is intentionally address-labelled; the original module owner is not
 // asserted from dump adjacency.
