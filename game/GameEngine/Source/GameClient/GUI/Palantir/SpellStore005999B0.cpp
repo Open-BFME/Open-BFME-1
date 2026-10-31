@@ -24,7 +24,10 @@ int bfmeQuiet();
 class GameLogic;
 extern GameLogic *TheGameLogic;
 class GameLogicPortraitShim { public: bool isInMultiplayerOrSkirmishGame(); };
-extern void *Screen005999B0;
+// Retail 0x005999C8 reads the existing AptPalantir singleton at VA 0x012F4B98.
+// AptPalantirConstructor.cpp owns this four-byte pointer (data_rows.csv).
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;
 enum ScienceType { INVALID_SCIENCE=-1 };
 class Player { public:
  bool hasScience(ScienceType) const;
@@ -55,7 +58,7 @@ class Rva005999B0Screen { public:
 };
 void Rva005999B0Screen::frameUpdate()
 {
- if(!Screen005999B0 || !(unsigned char)bfmeQuiet()) { ((BfmeH1066*)this)->bfmeGo1066A(0); return; }
+ if(!TheAptPalantir || !(unsigned char)bfmeQuiet()) { ((BfmeH1066*)this)->bfmeGo1066A(0); return; }
  if(!field258) return;
  int mode=((GameLogicPortraitShim *)TheGameLogic)->isInMultiplayerOrSkirmishGame()?1:0;
  if(mode!=field25c) {
