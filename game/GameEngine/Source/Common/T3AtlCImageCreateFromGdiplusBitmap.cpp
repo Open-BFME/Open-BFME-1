@@ -4,7 +4,16 @@
 // is an absent-from-retail emission anchor for that inline COMDAT; retail's own
 // Load body reaches the same private member through ILT 0x0003CF29.
 
+// Retail's ATL::GetStringTypeExWFake and CompareStringWFake are the
+// W3Win9xGetStringType.cpp and W3Win9xCompareString.cpp bodies; rename the
+// header's inline copies so this TU does not emit competing COMDATs.
+#pragma push_macro("GetStringTypeExWFake")
+#pragma push_macro("CompareStringWFake")
+#define GetStringTypeExWFake GetStringTypeExWFakeCStringT
+#define CompareStringWFake CompareStringWFakeCStringT
 #include <atlimage.h>
+#pragma pop_macro("CompareStringWFake")
+#pragma pop_macro("GetStringTypeExWFake")
 
 namespace Rva0005FAC0Emission
 {
