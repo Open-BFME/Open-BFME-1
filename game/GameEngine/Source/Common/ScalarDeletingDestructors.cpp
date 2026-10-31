@@ -86,6 +86,10 @@ Rva007F96A0Deleting::Rva007F96A0Deleting()
 {
 }
 BFME_SCALAR_DELETING_DTOR( Rva007FA8E0Deleting )
+// its constructor only stores this class's vftable
+Rva007FA8E0Deleting::Rva007FA8E0Deleting()
+{
+}
 BFME_SCALAR_DELETING_DTOR( Rva007FAD50Deleting )
 // its constructor only stores this class's vftable
 Rva007FAD50Deleting::Rva007FAD50Deleting()
