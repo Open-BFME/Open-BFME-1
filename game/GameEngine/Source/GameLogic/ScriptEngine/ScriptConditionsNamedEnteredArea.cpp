@@ -63,24 +63,25 @@ public:
 	Overridable *m_nextOverride;
 };
 
-// BFME's ThingTemplate has its compact KindOf word at +0xD0; bit 24 is
-// KINDOF_INERT. This offset and flag are also recovered in ObjectFields.cpp.
+// BFME's ThingTemplate keeps its KindOf bits in three words at +0xC8, read
+// as in Thing_isKindOf.cpp (retail 0x000A2CB0); KINDOF_INERT is word 2
+// (+0xD0) bit 24, also recovered in ObjectFields.cpp.
 enum KindOfType
 {
-	KINDOF_INERT = 24
+	KINDOF_INERT = 88
 };
 
 class ThingTemplate : public Overridable
 {
 public:
-	Bool isKindOf(KindOfType type) const
+	Bool isKindOf(KindOfType t) const
 	{
-		return (m_kindof & (1UL << type)) != 0;
+		return (m_kindof[(UnsignedInt)t >> 5] & (1 << ((UnsignedInt)t & 31))) != 0;
 	}
 
 private:
-	unsigned char m_bfmeTemplatePad[0xc8];
-	UnsignedInt m_kindof;
+	unsigned char m_bfmeTemplatePad[0xc0];
+	UnsignedInt m_kindof[3];
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
