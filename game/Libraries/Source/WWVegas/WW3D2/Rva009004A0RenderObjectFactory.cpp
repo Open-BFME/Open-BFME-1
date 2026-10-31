@@ -56,11 +56,18 @@ private:
 public:
  void push_back(T);
  void add(const T &c) { push_back(c); }
- const T *c_str() const { return first ? first : ""; }
  void append(const T *s) { append(s,s+strlen(s),forward_iterator_tag()); }
 };
 }
 typedef _STL::basic_string<char,_STL::char_traits<char>,_STL::allocator<char> > Rva009004A0String;
+
+// The sprintf arguments test each buffer for null in line.  Spelled as a
+// member, that test was emitted as a ?c_str@...basic_string COMDAT unlike
+// retail's 3-byte c_str (0x00640980), so it is a file-static helper.
+static __forceinline const char *stringOrEmpty(const Rva009004A0String &s)
+{
+ return s.first ? s.first : "";
+}
 extern void j_0000b109();
 class Rva00900FF0VecOfVec;
 static __forceinline void destroyVec009004A0(Rva00900FF0VecOfVec &value);
@@ -117,7 +124,7 @@ Rva009004A0Object *Rva009004A0CreateRenderObject(const char *name,float scale,un
  for(unsigned j=0;j<b.size();++j) sb.append(b.first[j].first);
  for(unsigned k=0;k<c.size();++k) sc.add(char((int)c.first[k]+'0'));
  char combined[2048];
- sprintf(combined,"#%d!%g!%s#%s#%s!%s",color,scale,sa.c_str(),name,sb.c_str(),sc.c_str());
+ sprintf(combined,"#%d!%g!%s#%s#%s!%s",color,scale,stringOrEmpty(sa),name,stringOrEmpty(sb),stringOrEmpty(sc));
  _strlwr(combined);
  if(!Render_Obj_Exists(combined)) Add_Prototype(new Rva00900FF0(combined,name,*(int*)&scale,color,a,b,c));
  proto.assign((void*)&Rva009EBCE0_GetPrototype(combined));
