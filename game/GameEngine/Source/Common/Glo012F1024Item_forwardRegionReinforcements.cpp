@@ -90,6 +90,11 @@ public:
 	void run(void);
 };
 
+// The matched definition (V4GuardedTailCallsWithArgs.cpp) types its eight
+// stack slots as ints; this call keeps its own typed argument shape and names
+// that defined symbol.
+extern "C" void __identifier("?forward@Rva003BCA50@@QAEXHHHHHHHH@Z")(void);
+
 class Rva003BCA50
 {
 public:
@@ -100,7 +105,17 @@ public:
 		unsigned int farDistanceTime,
 		unsigned char pathFindRule20,
 		unsigned char pathFindRulePlayerOwned,
-		unsigned char autoSummon);
+		unsigned char autoSummon)
+	{
+		typedef void (Rva003BCA50::*Call)(const AsciiString &,
+			const Rva0076F980Mid &, unsigned int, unsigned int, unsigned int,
+			unsigned char, unsigned char, unsigned char);
+		union { void (*raw)(); Call member; } call;
+		call.raw = __identifier("?forward@Rva003BCA50@@QAEXHHHHHHHH@Z");
+		(this->*call.member)(regionName, addReinforcementArmy, closeDistanceTime,
+			mediumDistanceTime, farDistanceTime, pathFindRule20,
+			pathFindRulePlayerOwned, autoSummon);
+	}
 };
 
 // ?j_00010712@Glo012F1024Item@@QAEXXZ
