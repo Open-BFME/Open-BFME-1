@@ -55,11 +55,14 @@ struct DozerTaskInfo
 	unsigned int m_taskOrderFrame;
 };
 
-struct Coord3D
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
+
+static __forceinline void zeroCoord3D(Coord3D &p)
 {
-	void zero() { x = 0; y = 0; z = 0; }
-	unsigned int x, y, z;
-};
+	p.x = 0.0f;
+	p.y = 0.0f;
+	p.z = 0.0f;
+}
 
 struct DozerDockPointInfo
 {
@@ -100,7 +103,7 @@ DozerAIUpdate::DozerAIUpdate(Thing *thing, const ModuleData *data)
 		for (int j = 0; j != 3; ++j)
 		{
 			m_dockPoint[i][j].valid = false;
-			m_dockPoint[i][j].location.zero();
+			zeroCoord3D(m_dockPoint[i][j].location);
 		}
 	}
 	m_currentTask = -1;

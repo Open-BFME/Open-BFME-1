@@ -2912,6 +2912,19 @@ the existing stack initializer and zero constructor (3/3 rows). See
 the address/relocation proof and controls. Applicability beyond the measured
 cases is not established.
 
+## Canonical coordinates: retain the original zeroing group (2026-11-01)
+
+DozerAIUpdate's 272-byte constructor clears nine dock locations. Replacing
+its private Coord3D::zero call with three direct canonical-float stores moves
+the induction pointer from the final coordinate word to the first (+3E4 to
++3DC), changing four displacements. A TU-local force-inline zeroCoord3D
+helper with the same X/Y/Z stores restores the original pointer and every
+byte; the 24-byte array cleanup also remains exact. VC7.1 `/DNDEBUG /MD
+/EHsc`; see `dozer-dock-coord3d-20261101.md` under attempt_support.
+This is a measured grouping effect, not a general optimizer guarantee.
+In AIPlayerFindSupplyCenter, capturing the former setter's Y input before X,
+then storing X/Y, similarly preserves the original x87 schedule (886 bytes).
+
 ## One inline union call stays out of line, the later one inlines: keep it inline (2026-10-31)
 
 Retail Render2DSentenceClass::Draw_Sentence 0x0093EB50 (1983 B) calls
