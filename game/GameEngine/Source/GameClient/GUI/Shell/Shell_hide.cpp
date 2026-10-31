@@ -49,11 +49,16 @@ class IMEManagerInterface;
 extern IMEManagerInterface *TheIMEManager;				// 0x012F3344
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
+// The release is StringBase<unsigned short>'s private member (0x008881D0,
+// matched in StringBase.cpp); no retail body carries an UnicodeString name.
+template <typename T> class StringBase
 {
-	protected:
 	friend class Display;
 	void releaseBuffer();
+};
+
+class UnicodeString : public StringBase<unsigned short>
+{
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Display.h
