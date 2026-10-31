@@ -2765,42 +2765,8 @@ to break the tie.
 //-------------------------------------------------------------------------------------------------
 /* Returns max speed we can have and not run into unit that is blocking us.
 */
-// ?calculateMaxBlockedSpeed@AIUpdateInterface@@ present-unmatched
-Real AIUpdateInterface::calculateMaxBlockedSpeed(Object *other) const
-{
-	Coord3D ourDir = *getObject()->getUnitDirectionVector2D();
-	Coord3D otherDir = *other->getUnitDirectionVector2D();
-	// Dot product is our directions projected onto each other.
-	Coord2D vectorToOther;
-	vectorToOther.x = other->getPosition()->x - getObject()->getPosition()->x;
-	vectorToOther.y = other->getPosition()->y - getObject()->getPosition()->y;
-	vectorToOther.normalize();
-	Real dotProduct = vectorToOther.x*otherDir.x	+ vectorToOther.y*otherDir.y;
-	if (dotProduct<0) return 0; // They are running into us.
-
-	Real speedFactor = dotProduct;
-	PhysicsBehavior *otherPhysics = other->getPhysics();
-	if (!otherPhysics) {
-		return m_curMaxBlockedSpeed;
-	}	
-	Coord3D otherVel = *otherPhysics->getVelocity();
-	otherVel.z = 0;
-	// Calculate how fast other is moving away from us...
-	Real awaySpeed = otherVel.length() * speedFactor;				 
-
-	// Now calculate the amount we are moving relative to towards them...
-	dotProduct = vectorToOther.x*ourDir.x	+ vectorToOther.y*ourDir.y;
-	if (dotProduct<=0) {
-		// Unexpected - we are moving away.  Shouldn't be blocked...
-		return m_curMaxBlockedSpeed;
-	}
-	Real maxSpeed = awaySpeed / dotProduct;
-	if (other->getFormationID()!=NO_FORMATION_ID && getObject()->getFormationID()==other->getFormationID()) {
-		maxSpeed *= 0.55f; // don't let formations crowd each other.
-	}
-	if (maxSpeed>m_curMaxBlockedSpeed) return m_curMaxBlockedSpeed;
-	return maxSpeed;
-}
+// ?calculateMaxBlockedSpeed@AIUpdateInterface@@IBEMPAVObject@@@Z
+// Defined by the matched body in AIUpdateInterfaceCalculateMaxBlockedSpeed.cpp (retail 0x0026EED0).
 
 
 //-------------------------------------------------------------------------------------------------

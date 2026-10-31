@@ -64,3 +64,7 @@ promoted products (4 B); `-(-a - b)` (293 B); `dir->x/dir->y` read again
 instead of ourDir (279 B); helper taking `Coord2D *` (4 B); vectorToOther
 declared before ourDir (4 B); a block-scope copy of vectorToOther (311 B);
 ourDir.y stored before ourDir.x (10 B, the copy order is load-bearing).
+
+Landed s509 (claude-opus-5-5): volatile reads of both ourDir terms in the second dot product
+(`*(const volatile Real *)&ourDir.x * vectorToOther.x + ...`) made it exact; the ZH copy in
+AIUpdate.cpp became a 'defined in' note (its $L pin re-bound by eh_state_pins.py --fix).

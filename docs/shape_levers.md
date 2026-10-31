@@ -2876,3 +2876,11 @@ the base through `*(AptValue **const volatile *)&interpreter->m_registers58` in 
 made the last 5 bytes exact (making the index volatile too undoes it). In 0x001F9180 the same
 trick fixed the load order but mirrored the registers, so check the register mapping too.
 Source: game/Libraries/Source/EA/Apt/AptActionInterpreterPush.cpp.
+Further s509 uses: `AIGroup::groupScatter` 0x00155490 (retail copies position x then y through
+EAX one at a time; ours preloaded y into EDX): one reused `unsigned t` with volatile reads and
+volatile stores (`t = *(const volatile unsigned *)&p.x; *(volatile unsigned *)&dst.x = t; t = ...y`)
+is exact, separate temps leave y in EDX (2 B). `AIUpdateInterface::calculateMaxBlockedSpeed`
+0x0026EED0 (x87 dot product, retail fld ourDir.y / fmul vectorToOther.y): reading both ourDir
+terms through `*(const volatile Real *)&` made the last 4 bytes exact (only y: 2 B; volatile on
+the other vector: inert). Sources: game/GameEngine/Source/GameLogic/AI/AIGroupScatter.cpp,
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceCalculateMaxBlockedSpeed.cpp.

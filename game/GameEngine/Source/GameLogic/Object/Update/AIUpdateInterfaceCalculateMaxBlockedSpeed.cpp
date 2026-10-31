@@ -1,18 +1,18 @@
 // ?calculateMaxBlockedSpeed@AIUpdateInterface@@IBEMPAVObject@@@Z
-// partial score=0.9862 date=2026-10-28
 // cl: /DNDEBUG /MD /EHsc
 // AIUpdateInterface::calculateMaxBlockedSpeed, retail 0x0026EED0, 289 B (ret 4).
 // ilt_oracle CONFIRMS ?calculateMaxBlockedSpeed@AIUpdateInterface@@IBEMPAVObject@@@Z.
 // Zero Hour AIUpdate.cpp:1258 twin; BFME replaces the physics velocity with
 // Object::bfmeGetNonnegativePreferredLocomotorHeight (ILT 0x47C8).
-// 289/289 B, 4 bytes off: the second dot fld's vectorToOther where retail
-// fld's ourDir (+0xB6..+0xC2). Reading getObject() inside a member helper
-// (not passing it in) gives retail's EAX. See attempt_support handoff.
+// Reading getObject() inside a member helper (not passing it in) gives retail's
+// EAX; reading ourDir through volatile lvalues in the second dot makes retail
+// load ourDir and multiply by vectorToOther. See attempt_support handoff.
 typedef float Real;
 typedef int Int;
 extern "C" double __cdecl sqrt(double value);
 #pragma intrinsic(sqrt)
-struct Coord3D { Real x, y, z; };
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
+// class-gate: allow Coord2D ZH's inline length()/normalize() (absent from the canonical header) are inlined into this body
 struct Coord2D
 {
 	Real x, y;
@@ -32,9 +32,9 @@ class Thing
 {
 public:
 	const Coord3D *getUnitDirectionVector2D() const;
-	const Coord3D *getPosition() const { return &m_position; }
+	const Coord3D *getPosition() const { return &m_cachedPos; }
 	char m_pad00[0x38];
-	Coord3D m_position;
+	Coord3D m_cachedPos;
 	char m_pad44[0x31c - 0x44];
 	Int m_formationID;
 };
@@ -74,7 +74,7 @@ Real AIUpdateInterface::calculateMaxBlockedSpeed(Object *other) const
 	Real awaySpeed = other->bfmeGetNonnegativePreferredLocomotorHeight() * speedFactor;
 
 	// Now calculate the amount we are moving relative to towards them...
-	dotProduct = ourDir.x*vectorToOther.x + ourDir.y*vectorToOther.y;
+	dotProduct = *(const volatile Real *)&ourDir.x*vectorToOther.x + *(const volatile Real *)&ourDir.y*vectorToOther.y;
 	if (dotProduct<=0) {
 		return m_curMaxBlockedSpeed;
 	}
