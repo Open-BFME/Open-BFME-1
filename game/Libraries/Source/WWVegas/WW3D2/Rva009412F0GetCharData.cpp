@@ -20,8 +20,9 @@ struct Rva00941400CharRecord;
 // declaration mismatch. Call BFME-1's public/struct provider directly;
 // both declarations return EAX and consume one unsigned-short stack slot.
 extern "C" void __identifier("?Get_Char_Data@FontCharsClass@@QAEPBUFontCharsClassCharDataStruct@@G@Z")();
-// The generated loader target uses thiscall, takes one stack argument, and returns with RET 4.
-void d_0093f440();
+// The GDI loader (0x0093F440, FontCharsClass_Store_GDI_Char.cpp) uses thiscall, takes one stack
+// argument, and returns with RET 4.
+extern "C" void __identifier("?Store_GDI_Char@FontCharsClass@@QAEPBUFontCharsClassCharDataStruct@@G@Z")();
 class Rva00941400Font {
 public:
  const Rva00941400CharRecord *Get_Char_Data(unsigned short ch);
@@ -31,7 +32,7 @@ public:
  const Rva00941400CharRecord *load(unsigned short ch) {
   union {void(*p)();const Rva00941400CharRecord*(Rva00941400Font::*m)(unsigned short);}u;
   typedef char MemberWidth[sizeof(u)==4?1:-1];
-  u.p=d_0093f440;return (this->*u.m)(ch);
+  u.p=__identifier("?Store_GDI_Char@FontCharsClass@@QAEPBUFontCharsClassCharDataStruct@@G@Z");return (this->*u.m)(ch);
  }
 };
 const Rva00941400CharRecord *Rva00941400Font::Get_Char_Data(unsigned short ch) {
