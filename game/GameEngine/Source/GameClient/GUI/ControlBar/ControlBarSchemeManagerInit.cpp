@@ -17,7 +17,7 @@ class AsciiString : private StringBase<char>
 public:
 	AsciiString(const char *text) : StringBase<char>(text) {}
 	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
+	~AsciiString();
 };
 
 enum INILoadType { INI_LOAD_OVERWRITE = 1 };

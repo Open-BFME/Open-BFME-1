@@ -21,7 +21,7 @@ public:
 
     AsciiString( const AsciiString &other )
         : StringBase<char>( other ) {}
-    ~AsciiString() {}
+    ~AsciiString();
 };
 
 class GameSlot

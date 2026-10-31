@@ -34,7 +34,7 @@ class AsciiString : private StringBase<char>
 public:
 	AsciiString() : StringBase<char>() {}
 	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
+	~AsciiString();
 };
 typedef bool Bool;
 typedef int Int;
