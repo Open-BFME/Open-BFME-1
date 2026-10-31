@@ -15,7 +15,8 @@ class RenderObjClass;
 typedef _STL::vector<_STL::string> Rva009013A0StringVector;
 bool parseDescriptor009013A0(const char *, _STL::string &, float &, int &,
     Rva009013A0StringVector &, Rva009013A0StringVector &, int &);
-RenderObjClass *Rva009016A0(const char *, float, int,
+// retail 0x009016A0 is still the gen-dump row ?d_009016a0 (no C++ row yet); call it by that defined name
+extern "C" RenderObjClass *__cdecl __identifier("?d_009016a0@@YAXXZ")(const char *, float, int,
     Rva009013A0StringVector &, Rva009013A0StringVector &,
     Rva009013A0StringVector &, int);
 RenderObjClass *Create_Render_Obj(const char *name, float scale, int color)
@@ -31,6 +32,6 @@ RenderObjClass *Create_Render_Obj(const char *name, float scale, int color)
     if (*name == '#')
         parseDescriptor009013A0(name, parsedName, parsedScale, parsedColor,
             field1, field3, field5);
-    return Rva009016A0(parsedName.c_str(), parsedScale, parsedColor,
+    return __identifier("?d_009016a0@@YAXXZ")(parsedName.c_str(), parsedScale, parsedColor,
         field1, field2, field3, field5);
 }

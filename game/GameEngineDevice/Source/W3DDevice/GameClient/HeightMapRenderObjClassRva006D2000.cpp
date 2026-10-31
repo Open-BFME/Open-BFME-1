@@ -1,11 +1,17 @@
 // cl: /DNDEBUG /MD /EHsc
 // Retail RVA006D2000, 242B. HeightMapRenderObjClass vtable slot133 (+0x214) via ILT393CE.
 // Address-derived memory view: pristine ZH HeightMap.h has different BFME fields.
+extern "C" void __cdecl __identifier("?d_0072d210@@YAXXZ")();
 class WorldHeightMap;
 struct Rva0072E150Region { int loX, loY, hiX, hiY; };
 class W3DTerrainBackground {
 public:
-    void rva0072D210(const Rva0072E150Region &, WorldHeightMap *, bool, bool);
+    void rva0072D210(const Rva0072E150Region & a0,WorldHeightMap * a1,bool a2,bool a3) {
+     // retail body is still the gen-dump row ?d_0072d210@@YAXXZ (no C++ row yet); call it by that defined name
+     union { void (__cdecl *symbol)(); void (W3DTerrainBackground::*member)(const Rva0072E150Region &,WorldHeightMap *,bool,bool); } c;
+     c.symbol = &__identifier("?d_0072d210@@YAXXZ");
+     (this->*c.member)(a0,a1,a2,a3);
+    }
     char rva00000000[0xC4];
 };
 class Rva00490350Base;

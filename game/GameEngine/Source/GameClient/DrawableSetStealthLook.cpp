@@ -34,6 +34,7 @@ extern Real GetGameClientRandomValueReal(Real low, Real high, char *file,
 // Drawable's BFME module list calls an unlabelled module vtable entry at
 // +0xE0.  Keeping all preceding entries explicit makes the call ABI honest
 // without assigning a semantic name that the retail image does not provide.
+extern "C" void __cdecl __identifier("?d_00411cd0@@YAXXZ")();
 class BfmeDrawableStealthModule
 {
 public:
@@ -104,7 +105,12 @@ class Drawable;
 class Gen_00411DD0
 {
 private:
-	void bfmeChanged();
+	void bfmeChanged() {
+	 // retail body is still the gen-dump row ?d_00411cd0@@YAXXZ (no C++ row yet); call it by that defined name
+	 union { void (__cdecl *symbol)(); void (Gen_00411DD0::*member)(); } c;
+	 c.symbol = &__identifier("?d_00411cd0@@YAXXZ");
+	 (this->*c.member)();
+	}
 	friend class Drawable;
 };
 

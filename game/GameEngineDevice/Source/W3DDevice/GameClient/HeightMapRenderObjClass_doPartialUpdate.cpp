@@ -17,6 +17,7 @@ extern "C" __declspec(dllimport) double __cdecl ceil(double value);
 // Former COFF reference ?g_rva006D1D80Scale@@3MB: retail 0x0109DF58 is
 // __real@3d800000 (0.0625f), checked through the literal operands below.
 
+extern "C" void __cdecl __identifier("?d_0072d210@@YAXXZ")();
 class WorldHeightMap
 {
 public:
@@ -32,8 +33,12 @@ class W3DTerrainBackground
 {
 public:
 	void setFlip(WorldHeightMap *map);
-	void rva0072D210(const Rva0072E150Region &region, WorldHeightMap *dirty,
-		Bool a, Bool b);
+	void rva0072D210(const Rva0072E150Region & a0,WorldHeightMap * a1,Bool a2,Bool a3) {
+	 // retail body is still the gen-dump row ?d_0072d210@@YAXXZ (no C++ row yet); call it by that defined name
+	 union { void (__cdecl *symbol)(); void (W3DTerrainBackground::*member)(const Rva0072E150Region &,WorldHeightMap *,Bool,Bool); } c;
+	 c.symbol = &__identifier("?d_0072d210@@YAXXZ");
+	 (this->*c.member)(a0,a1,a2,a3);
+	}
 
 	char m_body[0xC4];
 };
