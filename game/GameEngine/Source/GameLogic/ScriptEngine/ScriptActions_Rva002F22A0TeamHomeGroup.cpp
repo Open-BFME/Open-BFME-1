@@ -26,7 +26,11 @@ public:
 	UnsignedInt m_words[6];
 };
 typedef BitFlags<116> KindOfMaskType;
-extern const KindOfMaskType KINDOFMASK_NONE;
+// KINDOFMASK_NONE is defined once, as the 24-byte BitFlags<192> in
+// Common/System/KindOf.cpp (data_rows.csv, 0x012ED8B8); this unit's narrower
+// mask view reads that definition.
+extern "C" const char __identifier("?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B")[24];
+#define KINDOFMASK_NONE (*reinterpret_cast<const KindOfMaskType *>(__identifier("?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B")))
 
 class AIGroup;
 
