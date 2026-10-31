@@ -1,5 +1,5 @@
 // ?triggerAbilityEffect@ToggleMountedSpecialAbilityUpdate@@MAEXXZ
-// partial score=0.734 date=2026-10-30
+// partial score=0.7488 date=2026-10-31
 // cl: /DNDEBUG /MD /EHsc
 //
 // ToggleMountedSpecialAbilityUpdate::triggerAbilityEffect, retail
@@ -16,6 +16,13 @@
 // Donor (open-bfme-2 20a0cb6173, Code/GameEngine/Source/GameLogic/Object/
 // Update/ToggleMountedSpecialAbilityEffect.cpp, retail 0x004ADF0B there,
 // 417 B) supplies the control flow; BFME 1 has no mounted-template branch.
+// s504: reading the mount test through a `words` pointer local and setting the
+// bit unconditionally in the else arm reproduce retail's reload of +0x128
+// before `or eax,0x800` (shape 1.000, 407/406). Remaining: the static key
+// reload after the guard join is `mov ecx,[key]; push ecx` here versus
+// retail `mov eax,[key]; push eax` (+1 B). Inert for it: non-const static,
+// int key, findUpdateModule inline wrapper, key copy local, Module* local,
+// words[9]/test(299) spellings, rotation_sweep --pairs (76 toggles).
 
 enum NameKeyType
 {
@@ -155,7 +162,8 @@ void ToggleMountedSpecialAbilityUpdate::triggerAbilityEffect()
 		return;
 	if (m_state != 1)
 		return;
-	if ((obj->m_conditions.words[7] & 0x800))
+	unsigned int *words = obj->m_conditions.words;
+	if (words[7] & 0x800)
 	{
 		Rva0026C9E0Contain *contain = obj->m_contain;
 		if (contain && contain->v100(0) > 0)
@@ -174,7 +182,8 @@ void ToggleMountedSpecialAbilityUpdate::triggerAbilityEffect()
 	}
 	else
 	{
-		obj->setCondition235();
+		obj->m_conditions.words[7] |= 0x800;
+		obj->notifyModelConditionChanged();
 		obj->m_ai->v1FC(7);
 		((Gen001C9A10 *)obj)->handle(0x15);
 		((Rva001BEEE0GuardedVCall *)obj)->forward(6);
