@@ -1,85 +1,20 @@
-// ?groupScatter@AIGroup@@QAEXW4CommandSourceType@@@Z
-// partial score=0.9214 date=2026-10-13
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
-// Open-BFME: the AIGroup orders that walk the member list and forward one
-// command to each member's own AICommandInterface.
-//
-//   ?groupTightenToPosition@         0x00155720, 295 bytes
-//   ?groupFollowWaypointPathAsTeam@  0x00155A80,  85 bytes
-//   ?groupHunt@                      0x00156270,  53 bytes
-//   ?groupEvacuate@                  0x00156690, 260 bytes
-//   ?groupGuardPosition@             0x00156840,  77 bytes
-//   ?groupBfmeCommand44@             0x001569C0,  85 bytes
-//   ?groupStealthIdle@               0x00156B10, 173 bytes
-//
-// One walk, seven commands. The member list is the node pointer at AIGroup+0x04,
-// walked as an STLport sentinel ring -- next is begin, the node itself is end --
-// with the member object at node+0x08, its AI at object+0x204 and the command
-// interface at AI+0x20. Four files each drew that chain of four structs out in
-// full; it is one chain and it is drawn once here.
-//
-// Around the walk they differ in the guard and in what they do with the member:
-// groupHunt has none, groupGuardPosition and groupBfmeCommand44 drop out on a
-// null argument, groupFollowWaypointPathAsTeam asks isReady() first and runs a
-// group prep, groupStealthIdle skips any member without a StealthUpdate module,
-// groupEvacuate splits three ways on what the member is,
-// and groupTightenToPosition does not forward from the walk at all -- it uses the
-// walk only to fill a heap SimpleObjectIterator with each member's squared
-// distance to the target, sorts NEAR_TO_FAR, and forwards from THAT, which is
-// what the extra 200 bytes buy. (It never deletes the iterator.)
-//
-// The member class had two names and one layout. Four of the seven called it
-// BfmeGroupMember and described it as `char m_bfmeHead[0x204]` with the AI
-// pointer behind it; the other three called it Object and named fields inside
-// that head -- a vptr at +0x00, the template at +0x04, the position at +0x38,
-// the status byte at +0x90, the disabled mask at +0x1A4, the contain module at
-// +0x1FC -- all of which the opaque head simply swallowed, and no two of the
-// three named the same subset. One class, named Object, below. Two of its fields
-// are corroborated from outside this lane: the contain module at +0x1FC is what
-// AIUpdateInterface::privateExitInstantly reads, and the status at +0x90 is what
-// bfmeCurrentWeaponTemplateFlag4 tests.
-//
-// groupGuardPosition is the one that could not simply share an enum with its
-// three neighbours, and this is the reason the file has two of each. Its
-// decorated name is
-//   ?groupGuardPosition@AIGroup@@QAEXPBUCoord3D@@W4GuardMode@1@W4CommandSourceType@1@@Z
-// -- the `@1@` says BOTH enums are nested inside AIGroup -- while groupHunt is
-//   ?groupHunt@AIGroup@@QAEXW4CommandSourceType@@@Z
-// with the same-named enum at file scope, and the callees on the far side of
-// every one of these calls take the file-scope spelling too. So AIGroup carries
-// its own nested GuardMode and CommandSourceType for the one method whose
-// mangled name demands them, the other three qualify their parameter as
-// `::CommandSourceType`, and groupGuardPosition casts across at the call. Two
-// types with one name is not a mistake here; it is what the retail symbols say.
-//
-// this is spilled to the frame and reloaded after every call in
-// groupGuardPosition, and the end of the list is re-read from it each trip,
-// because a guard order can change the membership underneath the walk.
-
+// AIGroup::groupScatter (retail 0x00155490, 525 B, ret 4 at +0x20A). The member
+// walk, sort and per-member move order follow AIGroupForwardedOrders.cpp's views;
+// this unit needs STLport static-lib settings that file does not use.
 #include <math.h>
 #include <vector>
 // stlport
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-
-	void set(const Coord3D *other)
-	{
-		x = other->x;
-		y = other->y;
-		z = other->z;
-	}
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 typedef float Real;
 
-extern const float BfmeZeroRange;
+extern const float BfmeBoundaryZero3D;
 extern const float g_bfmeDefaultBU;
 
+// class-gate: allow Coord2D ZH's inline length()/normalize() (absent from the canonical header) are inlined into retail's scatter delta
 struct Coord2D
 {
 	Real x;
@@ -93,7 +28,7 @@ struct Coord2D
 	void normalize(void)
 	{
 		Real len = length();
-		if (len != BfmeZeroRange)
+		if (len != BfmeBoundaryZero3D)
 		{
 			x *= g_bfmeDefaultBU / len;
 			y *= g_bfmeDefaultBU / len;
@@ -255,7 +190,6 @@ private:
 
 extern AI *TheAI;
 
-#pragma comment(linker, "/alternatename:?removeGoal@Pathfinder@@QAEXPAVObject@@@Z=?j_00015d02@@YAXXZ")
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 
@@ -515,8 +449,11 @@ void AIGroup::groupScatter(::CommandSourceType cmdSource)
 	for (Object *theUnit = iter->first(); theUnit; theUnit = iter->next())
 	{
 		Coord3D unitPos;
-		unitPos.x = theUnit->getPosX();
-		unitPos.y = theUnit->getPosY();
+		// Retail copies x then y through one register: one temp, volatile reads and stores.
+		unsigned t = *(const volatile unsigned *)&theUnit->m_position.x;
+		*(volatile unsigned *)&unitPos.x = t;
+		t = *(const volatile unsigned *)&theUnit->m_position.y;
+		*(volatile unsigned *)&unitPos.y = t;
 		center.x -= g_01076C24;
 		unitPos.z = theUnit->getPosZ();
 		BfmeGroupAI *ai = theUnit->getAI();
@@ -530,68 +467,4 @@ void AIGroup::groupScatter(::CommandSourceType cmdSource)
 		dest.y += delta.y * 4 * theUnit->getBoundingCircleRadius();
 		ai->m_bfmeCommands.aiMoveToPosition(&dest, cmdSource);
 	}
-}
-
-// ?isReady@AIGroup@@QAEDXZ
-// The group-ready gate is reached by the matched
-// groupFollowWaypointPathAsTeam body through ILT 0x000104B0.  A member with
-// disabled bit 8, no AI or locomotor, or an immobile final override template
-// is removed when the group has more than one member.  A one-member group
-// containing one of those units is not ready; all other paths return true.
-char AIGroup::isReady()
-{
-	BfmeListNodeBase *head = m_bfmeMembers;
-	BfmeListNodeBase *it = head->m_bfmeNext;
-	if (it != head)
-	{
-		for (;;)
-		{
-		Object *obj = ((BfmeMemberNode *)it)->m_bfmeValue;
-		unsigned char disabled = obj->getDisabledMask();
-		char remove = 0;
-		if (disabled & 8)
-			remove = 1;
-		BfmeGroupAI *ai = obj->m_ai;
-		if (ai == 0 || ai->m_curLocomotor == 0)
-			remove = 1;
-		else
-		{
-			const ThingTemplate *tmpl = obj->m_template;
-			const ThingTemplate *finalTemplate = tmpl;
-			if (tmpl != 0 && tmpl->m_nextOverride != 0)
-				finalTemplate =
-					(const ThingTemplate *)tmpl->m_nextOverride->getFinalOverride();
-			if (finalTemplate->isKindOf(KINDOF_IMMOBILE))
-				remove = true;
-		}
-
-		it = it->m_bfmeNext;
-		if (!remove)
-		{
-			if (it == head)
-				break;
-			continue;
-		}
-
-		BfmeListNodeBase *countIt = m_bfmeMembers->m_bfmeNext;
-		int count = 0;
-		if (countIt != m_bfmeMembers)
-		{
-			do
-			{
-				countIt = countIt->m_bfmeNext;
-				++count;
-			} while (countIt != m_bfmeMembers);
-		}
-		if (count == 1)
-			return 0;
-
-		obj->leaveGroup();
-		head = m_bfmeMembers;
-		it = head->m_bfmeNext;
-		if (it == head)
-			break;
-		}
-	}
-	return 1;
 }
