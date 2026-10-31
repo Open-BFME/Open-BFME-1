@@ -44,3 +44,17 @@ BfmeElemAA *bfmeCopyAA(BfmeElemAA *first, BfmeElemAA *last, BfmeElemAA *dest)
 	}
 	return dest;
 }
+
+// 0x0087F0B0: the unreferenced 32-byte forwarder beside 0x0087F090, the same
+// tag-plus-null dispatch shape into bfmeCopyAA.  Address-derived name;
+// identity unproven.
+struct BfmeTagAA
+{
+};
+
+BfmeElemAA *rva0087F0B0CopyAA(BfmeElemAA *first, BfmeElemAA *last, BfmeElemAA *dest)
+{
+	typedef BfmeElemAA *(*FullCopy)(BfmeElemAA *, BfmeElemAA *, BfmeElemAA *, const BfmeTagAA &, int *);
+	BfmeTagAA tag;
+	return ((FullCopy)&bfmeCopyAA)(first, last, dest, tag, 0);
+}

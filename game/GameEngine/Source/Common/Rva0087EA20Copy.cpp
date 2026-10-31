@@ -42,3 +42,21 @@ BfmeElemA2 *bfmeCopyA2(BfmeElemA2 *first, BfmeElemA2 *last, BfmeElemA2 *dest)
 	}
 	return dest;
 }
+
+// 0x0087F090: unreferenced 32-byte cdecl forwarder after the fill helpers,
+// the same shape as the matched rva0087F0D0FillBE: it reserves a stack slot
+// for an empty tag and passes its address plus a null pointer behind the three
+// iterators (STLport's copy -> __copy(first, last, result, iterator tag,
+// distance*) dispatch).  bfmeCopyA2 reads only the three iterators, so the
+// call goes through a five-parameter view of that body.  Address-derived name;
+// identity unproven.
+struct BfmeTagA2
+{
+};
+
+BfmeElemA2 *rva0087F090CopyA2(BfmeElemA2 *first, BfmeElemA2 *last, BfmeElemA2 *dest)
+{
+	typedef BfmeElemA2 *(*FullCopy)(BfmeElemA2 *, BfmeElemA2 *, BfmeElemA2 *, const BfmeTagA2 &, int *);
+	BfmeTagA2 tag;
+	return ((FullCopy)&bfmeCopyA2)(first, last, dest, tag, 0);
+}
