@@ -2157,7 +2157,6 @@ emit	game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDra
 emit	game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw_updateBonesForClientParticleSystemsMethodThunk.cpp	*	590
 emit	game/GameEngineDevice/Source/W3DDevice/GameClient/MapObjectCtorThunk.cpp	*	386
 emit	game/GameEngineDevice/Source/W3DDevice/GameClient/RoadSegment_updateSegLightingMethodThunk.cpp	*	161
-emit	game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow_UpdateMethodThunk.cpp	*	758
 emit	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DBridgeBuffer.cpp	*	2836
 emit	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayGatherDebugStatsThunk.cpp	*	4490
 emit	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayStringManagerNewDisplayStringThunk.cpp	*	774

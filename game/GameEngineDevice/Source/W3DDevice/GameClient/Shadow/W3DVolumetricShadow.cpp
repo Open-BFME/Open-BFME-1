@@ -1625,7 +1625,7 @@ void W3DVolumetricShadow::SetGeometry( W3DShadowGeometry *geometry )
  the shadow volume for this shadow from the silhouette of the geometry
  and any light sources
 */
-// byte-exact reconstruction: game/GameEngine/Source/Common/W3DVolumetricShadow_UpdateMethodThunk.cpp
+// byte-exact reconstruction (BFME Update(Bool)): game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadowUpdate.cpp
 // ?Update@W3DVolumetricShadow@@ present-unmatched
 void W3DVolumetricShadow::Update()
 {
