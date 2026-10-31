@@ -16,11 +16,22 @@ class ScriptActions;
 class Object;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
+// Retail calls ILT 0x00018CF5 -> 0x004115A0, the row defined in
+// Bfme5ListenerFanOut.cpp as Bfme5FanOwner::bfmeSetMode(char).
+class Bfme5FanOwner
+{
+public:
+	void bfmeSetMode(char mode);
+};
+
 class Drawable
 {
 private:
 	friend class ScriptActions;
-	void bfmeSetIndicatorOn(Bool enabled);
+	void bfmeSetIndicatorOn(Bool enabled)
+	{
+		reinterpret_cast<Bfme5FanOwner *>(this)->bfmeSetMode(enabled);
+	}
 };
 
 class BfmeObjectVirtualTail

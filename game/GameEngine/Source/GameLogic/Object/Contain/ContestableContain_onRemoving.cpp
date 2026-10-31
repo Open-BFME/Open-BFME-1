@@ -28,10 +28,21 @@
 class Object;
 
 // The helper behind ILT 0x0000FAA6 (0x001CB020), called with 0 on the object.
+// 0x001CB020 is defined as BfmeObjAS::bfmeParentAS (RvaC4390Second_resolve.cpp).
+class BfmeObjAS
+{
+public:
+	BfmeObjAS *bfmeParentAS(int index);
+};
+
 class Rva0025DF30Object
 {
 public:
-	Rva0025DF30Object *related(int);
+	Rva0025DF30Object *related(int index)
+	{
+		return reinterpret_cast<Rva0025DF30Object *>(
+			reinterpret_cast<BfmeObjAS *>(this)->bfmeParentAS(index));
+	}
 };
 
 class GarrisonContain

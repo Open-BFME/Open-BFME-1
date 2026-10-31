@@ -218,7 +218,8 @@ void MeshClass::Replace_Texture(const BfmeHandleCX &oldTexture, const BfmeHandle
 	MaterialInfoClass *material = getMaterialInfo();
 	for (int index = 0; index < material->Texture_Count(); ++index)
 	{
-		if (material->Get_Texture(index) == oldTexture)
+		// Retail calls ILT 0x000366DD -> 0x007A0340, defined as Gen_007A0340::bfmeGet.
+		if (reinterpret_cast<const Gen_007A0340 *>(material)->bfmeGet(index) == oldTexture)
 		{
 			model->Replace_Texture(oldTexture, newTexture);
 			material->Replace_Texture(index, newTexture);
