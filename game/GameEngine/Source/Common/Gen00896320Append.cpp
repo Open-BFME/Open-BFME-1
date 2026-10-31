@@ -4,6 +4,7 @@
 // inline handle at +0x0C. Its allocator callbacks are the one-word ctor/dtor
 // pair at 0x00892B80 and 0x00784A70; slot assignment calls BfmeRefVGO.
 
+extern "C" void __cdecl __identifier("?d_008961e0@@YAXXZ")();
 class BfmeDropObjectA;
 class BfmeRefVGO
 {
@@ -43,7 +44,12 @@ class Gen_00896320
 {
 public:
 	void append(void **source);
-	void helper(void *first, void *last, void *result);
+	void helper(void * a0,void * a1,void * a2) {
+	 // retail body is still the gen-dump row ?d_008961e0@@YAXXZ (no C++ row yet); call it by that defined name
+	 union { void (__cdecl *symbol)(); void (Gen_00896320::*member)(void *,void *,void *); } c;
+	 c.symbol = &__identifier("?d_008961e0@@YAXXZ");
+	 (this->*c.member)(a0,a1,a2);
+	}
 	void rva00896100(int capacity);
 
 private:

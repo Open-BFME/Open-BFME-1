@@ -31,6 +31,7 @@ typedef UnsignedInt AudioHandle;
 // __single_inheritance so the pointer-to-member below is the compact
 // "just an address" representation retail compiled with; without it MSVC falls
 // back to the general form and emits the whole vtordisp dance.
+extern "C" void __cdecl __identifier("?d_004237e0@@YAXXZ")();
 class __single_inheritance AudioManager;
 extern AudioManager *TheAudio;
 
@@ -98,7 +99,12 @@ public:
 private:
 	// 0x004237E0 through the ILT entry at 0x0000F32B: walks the check-info table
 	// and starts the highest-priority pending line.  Retail never named it.
-	void _bfme_serviceHighestPriorityCheck( void );
+	void _bfme_serviceHighestPriorityCheck() {
+	 // retail body is still the gen-dump row ?d_004237e0@@YAXXZ (no C++ row yet); call it by that defined name
+	 union { void (__cdecl *symbol)(); void (Eva::*member)(); } c;
+	 c.symbol = &__identifier("?d_004237e0@@YAXXZ");
+	 (this->*c.member)();
+	}
 
 	char            m_head[ 0x08 ];		// +0x04 pad and the +0x08 vtable pointer
 	EvaCheckInfoVec m_checkInfos;		// +0x0c

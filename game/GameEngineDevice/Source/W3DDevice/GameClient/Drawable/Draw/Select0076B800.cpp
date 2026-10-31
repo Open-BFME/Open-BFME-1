@@ -143,10 +143,16 @@ public:
 };
 // The defined global is ?TheWritableGlobalData@@3PAVGlobalData@@A (data_rows).
 extern GlobalData *TheWritableGlobalData;
+// Retail 0x00458450 (ILT 0x00015744) is ledgered as ??4Rva00458450@@QAEXABV0@@Z.
+class Rva00458450
+{
+public:
+ void operator=(const Rva00458450 &other);
+};
 class RadiusDecalTemplate
 {
 public:
- void operator=(const RadiusDecalTemplate &other);
+ void operator=(const RadiusDecalTemplate &other) { *(Rva00458450 *)this = *(const Rva00458450 *)&other; }
  char m_pad[0x40];
 };
 class Rva0076B6E0View

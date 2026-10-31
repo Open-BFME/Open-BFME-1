@@ -5,6 +5,7 @@
 // Retail 0x008C6320 scans the input block text at +8 and writes argument 4;
 // only the resulting node is passed to BfmeNode1220::bfmeTest1220.
 
+extern "C" void __cdecl __identifier("?d_0089c290@@YAXXZ")();
 struct Rva8CC570StringBlock
 {
 	unsigned short m_refs;
@@ -48,7 +49,12 @@ private:
 class BfmeNode1220
 {
 	public:
-	int bfmeTest1220(int *value, int zero);
+	int bfmeTest1220(int * a0,int a1) {
+	 // retail body is still the gen-dump row ?d_0089c290@@YAXXZ (no C++ row yet); call it by that defined name
+	 union { void (__cdecl *symbol)(); int (BfmeNode1220::*member)(int *,int); } c;
+	 c.symbol = &__identifier("?d_0089c290@@YAXXZ");
+	 return (this->*c.member)(a0,a1);
+	}
 	void *m_vptr;
 };
 

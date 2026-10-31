@@ -4,6 +4,7 @@ typedef unsigned int ObjectID;
 typedef unsigned int UnsignedInt;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
+extern "C" void __cdecl __identifier("?d_002475a0@@YAXXZ")();
 struct Coord3D
 {
 	float x, y, z;
@@ -122,7 +123,12 @@ public:
 	void refreshTrackedLargeUnit();
 	int bfmeGetMemberIndex(int memberID);
 	void xfer(BfmeXfer *xfer);
-	void bfmeBaseXfer(BfmeXfer *xfer);
+	void bfmeBaseXfer(BfmeXfer * a0) {
+	 // retail body is still the gen-dump row ?d_002475a0@@YAXXZ (no C++ row yet); call it by that defined name
+	 union { void (__cdecl *symbol)(); void (BfmeAODHordeContainOwner::*member)(BfmeXfer *); } c;
+	 c.symbol = &__identifier("?d_002475a0@@YAXXZ");
+	 (this->*c.member)(a0);
+	}
 
 private:
 	unsigned char m_pad00[0x120];

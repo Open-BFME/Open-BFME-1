@@ -18,6 +18,7 @@ extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
 	void *handle, unsigned long milliseconds);
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
 
+extern "C" void __cdecl __identifier("?d_0069d620@@YAXXZ")();
 struct AudioEventInfo
 {
 	char m_pad00[0x84];
@@ -61,7 +62,12 @@ struct Rva0069F740Ref { ListNode<PlayingAudio *> *m_node; };
 class Rva0069F740Owner
 {
 public:
-	Rva0069F740Ref getSlot(int group, int inner);
+	Rva0069F740Ref getSlot(int a0,int a1) {
+	 // retail body is still the gen-dump row ?d_0069d620@@YAXXZ (no C++ row yet); call it by that defined name
+	 union { void (__cdecl *symbol)(); Rva0069F740Ref (Rva0069F740Owner::*member)(int,int); } c;
+	 c.symbol = &__identifier("?d_0069d620@@YAXXZ");
+	 return (this->*c.member)(a0,a1);
+	}
 };
 
 class Rva0069F740Lock

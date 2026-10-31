@@ -63,10 +63,17 @@ public:
 	}
 };
 
+// The 4-byte list advance at 0x000C8A30 (ILT 0x00022A70) is ledgered as ?m@Gen_000c8a30@@QAEHXZ.
+struct Gen_000c8a30 { int m(); };
 class BfmeTeamInstanceLink
 {
 public:
 	BfmeTeamInstanceLink *_bfme_nextInInstanceList() const;
+};
+union BfmeTeamInstanceLinkNext
+{
+	int (Gen_000c8a30::*defined)();
+	BfmeTeamInstanceLink *(BfmeTeamInstanceLink::*next)() const;
 };
 
 // Preserve the native pointer-to-member representation used by both loops.
@@ -151,7 +158,9 @@ Bool ScriptConditions::rva0032c680(
 	for (std::list<BfmePlayerTeamPrototypeInstances *>::iterator node=player->m_playerTeamPrototypes.begin();
          node!=player->m_playerTeamPrototypes.end(); ++node)
 	{
-		DLINK_ITERATOR<BfmeTeamInstanceLink> teams((*node)->m_teamInstanceList, &BfmeTeamInstanceLink::_bfme_nextInInstanceList);
+		BfmeTeamInstanceLinkNext advance;
+		advance.defined = &Gen_000c8a30::m;
+		DLINK_ITERATOR<BfmeTeamInstanceLink> teams((*node)->m_teamInstanceList, advance.next);
 		for (; !teams.done(); teams.advance())
 		{
 			BfmeTeamInstance *team = (BfmeTeamInstance *)teams.cur();

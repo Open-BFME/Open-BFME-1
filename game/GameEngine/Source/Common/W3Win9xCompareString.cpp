@@ -112,10 +112,14 @@ namespace ATL
 	ATL::_ATL_SAFE_ALLOCA_IMPL::CAtlSafeAllocBufferManager<ATL::CCRTAllocator> \
 		_AtlSafeAllocaManager
 
+// ATL::AtlW2AHelper's retail body 0x0005B8E0 is ledgered as Rva0005B8E0WideToAnsi
+char *__stdcall Rva0005B8E0WideToAnsi(char *destination, const WCHAR *source,
+	int destinationLength, UINT codePage) throw();
+
 #define W3_W2A_EX(text) \
 	(((_lpw_ex = (text)) == 0) ? 0 : \
 	(_convert_ex = (lstrlenW(_lpw_ex) + 1) * sizeof(WCHAR), \
-	ATL::AtlW2AHelper( \
+	Rva0005B8E0WideToAnsi( \
 		(char *)W3_SAFE_ALLOCA(_AtlSafeAllocaManager, _convert_ex), \
 		_lpw_ex, _convert_ex, _acp_ex)))
 

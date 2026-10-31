@@ -16,6 +16,7 @@
 #include <list>
 typedef bool Bool;
 
+extern "C" void __cdecl __identifier("?d_00228050@@YAXXZ")();
 class Player;
 class Object;
 enum Relationship { ENEMIES = 0, NEUTRAL, ALLIES };
@@ -52,7 +53,12 @@ public:
 class Rva00228050OpenContain
 {
 public:
-	Bool method(Object *other);
+	Bool method(Object * a0) {
+	 // retail body is still the gen-dump row ?d_00228050@@YAXXZ (no C++ row yet); call it by that defined name
+	 union { void (__cdecl *symbol)(); Bool (Rva00228050OpenContain::*member)(Object *); } c;
+	 c.symbol = &__identifier("?d_00228050@@YAXXZ");
+	 return (this->*c.member)(a0);
+	}
 };
 
 class Rva0021AC30ContestableContain : public Rva00228050OpenContain

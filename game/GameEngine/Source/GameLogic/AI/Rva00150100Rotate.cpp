@@ -64,6 +64,7 @@ enum CommandSourceType
 	CMD_DEFAULT_SWITCH_WEAPON = 4
 };
 
+extern "C" void __cdecl __identifier("?d_0015ab50@@YAXXZ")();
 class Object;
 
 class BfmePosTP
@@ -108,7 +109,12 @@ class AIGroup
 {
 public:
 	void rva00150A70(Coord3D *anchor, const Coord3D *facing, int commandSource);
-	void prepFollow(::CommandSourceType commandSource, int unused);	// ILT 0x0002E636
+	void prepFollow(::CommandSourceType a0,int a1) {
+	 // retail body is still the gen-dump row ?d_0015ab50@@YAXXZ (no C++ row yet); call it by that defined name
+	 union { void (__cdecl *symbol)(); void (AIGroup::*member)(::CommandSourceType,int); } c;
+	 c.symbol = &__identifier("?d_0015ab50@@YAXXZ");
+	 (this->*c.member)(a0,a1);
+	}
 
 private:
 	char m_bfmeHead[0x04];

@@ -3,6 +3,7 @@
 // MSVC gives this body a different decorated name from the nonconst-target
 // overload at 0x001EAA40.
 
+extern "C" void __cdecl __identifier("?d_001e9fd0@@YAXXZ")();
 struct Coord3D
 {
 	float x;
@@ -31,9 +32,12 @@ class Weapon
 public:
 	virtual ~Weapon();
 	void loadAmmoNow(const Object *source);
-	bool privateFireWeapon(const Object *source, const Coord3D *sourcePos,
-		const Object *victim, int victimId, const Coord3D *victimPos,
-		int a, int b, int c, int *projectileID);
+	bool privateFireWeapon(const Object * a0,const Coord3D * a1,const Object * a2,int a3,const Coord3D * a4,int a5,int a6,int a7,int * a8) {
+	 // retail body is still the gen-dump row ?d_001e9fd0@@YAXXZ (no C++ row yet); call it by that defined name
+	 union { void (__cdecl *symbol)(); bool (Weapon::*member)(const Object *,const Coord3D *,const Object *,int,const Coord3D *,int,int,int,int *); } c;
+	 c.symbol = &__identifier("?d_001e9fd0@@YAXXZ");
+	 return (this->*c.member)(a0,a1,a2,a3,a4,a5,a6,a7,a8);
+	}
 	void deleteInstance() { delete this; }
 
 	int m_pad04;
