@@ -167,8 +167,9 @@ unsigned char Rva00882F70::get( void )
 
 // 0x00892350: `mov byte ptr [0x0133780C],1 / ret`, between the Rva00892340 and
 // Rva00892360 setters: raises the Apt flag AptTick00894660.cpp tests and
-// clears. Unreferenced in retail.
-extern unsigned char g_rva0133780C;
+// clears. Unreferenced in retail. The byte is defined here, beside its
+// only writer.
+unsigned char g_rva0133780C;
 
 class Rva00892350
 {
