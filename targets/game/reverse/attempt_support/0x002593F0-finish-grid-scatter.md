@@ -26,3 +26,7 @@ Measured levers:
 
 Next idea: a non-volatile shape that keeps x/y memory-only (address really escaping somewhere), or a
 store/load scheduling lever that loads y before x with pos.x stored first.
+
+Landed s509 (claude-opus-5-5): `int iy = *(volatile int *)&y; pos.x = x; *(int *)&pos.y = iy;`
+gave the exact 512 B. Ruled out first in s509: `pos.x = *(Real *)&x` (13 B, stores reorder), any
+non-volatile y read (75 B hoist), int copies of both (204 B), const-ref temp of y.

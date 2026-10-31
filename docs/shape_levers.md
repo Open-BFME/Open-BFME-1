@@ -2856,3 +2856,17 @@ a `const_iterator` each iteration. Effect: 0x00425720 (204 B) and 0x00340980
 only; the declared-only begin() was the common cause. Sources:
 game/GameEngine/Source/GameClient/EvaRva00425720NameLookup.cpp,
 game/GameEngine/Source/GameClient/Rva00340980FXListNameWalk.cpp (3ec9d788cd, d0f31f6951).
+
+### Volatile loop variables loaded in the wrong order
+
+Mismatch: a grid loop whose `x`/`y` are `volatile Real` (needed so VC7.1 stops
+hoisting `y` into a callee-saved register for the inner loop) stores
+`pos.x = x; pos.y = y;` with retail loading `y` first (`mov eax,[y]; mov edx,[x]`)
+and ours `x` first: volatile reads follow source order, and swapping the stores,
+a `Real` temp (x87 `fld/fst`) or a non-volatile read of either variable (the hoist
+returns, 75 B) were all worse. Transformation: read `y` first as raw bits,
+`int iy = *(volatile int *)&y; pos.x = x; *(int *)&pos.y = iy;`. Effect: the
+integer temp keeps both loads in EAX/EDX in retail's order with retail's stores;
+the last 4 bytes of 0x002593F0 (512 B) matched. VC7.1 `/O2 /DNDEBUG /MD /EHsc`,
+STLport static. Measured on this body only. Source:
+game/GameEngine/Source/GameLogic/Object/SpecialPower/Rva002593F0Finish.cpp.

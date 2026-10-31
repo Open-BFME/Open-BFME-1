@@ -1,5 +1,4 @@
 // ?finish@Rva00259670Primary@@QAEXPAVRva0025D7E0Subject@@@Z
-// partial score=0.9274 date=2026-10-31
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // Retail 0x002593F0/512B: the finish step matched caller 0x00259670
@@ -10,15 +9,10 @@
 // the caller-backed address-derived names stay.
 #include "ascii_string.h"
 #include <bitset>
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 typedef float Real;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
 
 struct Region3D
 {
@@ -141,8 +135,10 @@ void Rva00259670Primary::finish(Rva0025D7E0Subject *)
 			volatile Real x;
 			for (x = (Real)(int)(spacing + extent.lo.x); *(Real *)&x < extent.hi.x - spacing; x = (Real)(int)(*(Real *)&x + spacing))
 			{
+				// retail loads y before x: read it first, as raw bits, so it stays a volatile load
+				int iy = *(volatile int *)&y;
 				pos.x = x;
-				pos.y = y;
+				*(int *)&pos.y = iy;
 				pos.z = TheTerrainLogic->getGroundHeight(pos.x, pos.y, 0);
 				const ThingTemplate *tmpl = ((BfmeThingFactory *)TheThingFactory)->findTemplate(data->m_templateName);
 				if (tmpl)
