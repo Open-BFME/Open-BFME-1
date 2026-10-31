@@ -155,9 +155,9 @@ public:
 class MeshMatDescClass {
 public:
  // +0x00..+0x58: counts, UV buffers, UV sources, colour arrays (BFME layout)
- int PassCount; int VertexCount; int PolyCount; int m_unknown0C;
+ int PassCount; int VertexCount; int PolyCount;
  UVBufferClass *UV[8]; int UVSource[4][2]; ShareBufferClass<unsigned> *ColorArray[2];
- char pad58[0xA8-0x58];
+ char pad54[0xA8-0x54];
  VertexMaterialClass *single[16]; void *arrays[4];
  unsigned Get_Pass_Count() const {return PassCount;}
  VertexMaterialClass *Peek_Material(int,int) const;
@@ -171,7 +171,7 @@ public:
 // 0x000D1FBD).
 struct AddMeshMatView
 {
- int PassCount; int VertexCount; int PolyCount; int m_unknown0C;
+ int PassCount; int VertexCount; int PolyCount;
  UVBufferClass *UV[8]; int UVSource[4][2]; ShareBufferClass<unsigned> *ColorArray[2];
  Vector2 *Get_UV_Array(int pass,int stage)
  {
@@ -182,7 +182,6 @@ struct AddMeshMatView
  Vector2 *Get_UV_Array_By_Index(int index,bool create)
  {
   if(create && !UV[index])UV[index]=new UVBufferClass(VertexCount,"MeshMatDescClass::UV");
-  if(!create && m_unknown0C!=0 && index<2)return Get_UV_Array(0,index);
   if(UV[index])return UV[index]->Get_Array();
   return 0;
  }
@@ -200,7 +199,7 @@ public:
 };
 class MeshModelClass : public MeshGeometryClass {
 public:
- char pad[0x24]; int PolyCount; int VertexCount; PolygonBuffer *polygons; ShareBufferClass<Vector3> *Vertex[2]; char pad38[0x94-0x38]; MeshMatDescClass *CurMatDesc;
+ char pad[0x24]; int PolyCount; int VertexCount; PolygonBuffer *polygons; ShareBufferClass<Vector3> *Vertex[2]; char pad38[0x9C-0x38]; MeshMatDescClass *CurMatDesc;
  int Get_Polygon_Count() const { return PolyCount; }
  int Get_Vertex_Count() const { return VertexCount; }
  bool Needs_Vertex_Normals();

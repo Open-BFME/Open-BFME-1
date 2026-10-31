@@ -37,3 +37,17 @@ game/Libraries/Source/WWVegas/WW3D2/ to probe. Result: 1058/1008 B, shape 0.838.
 retail keeps uvcount in [esp+0x10] and stores each cascade value there (ours keeps EAX); retail
 tests `byte [this+0xE0] & 0x80` directly (ours caches this in EDI and loads BL); about 50 bytes
 more code in ours, not yet located. The visible-callee question is still untested.
+
+## Third pass: shape 1.000
+With MeshModelClass::CurMatDesc at +0x9C and MeshMatDescClass without the donor's +0x0C field
+(UV[8] at +0x0C, UVSource +0x2C, ColorArray[2] +0x4C/+0x50; the UV getter has no create-flag
+test), the `.cpp.txt` unit probes **1011/1008 B, shape 1.000** (allocation only).
+Visibility measured by deleting bodies (build/a1s513/amvis.py in that session): every one of the
+Vertex_Split_Table ctor, Peek_Texture, Peek_Shader, DX8TextureCategoryClass::Add_Mesh,
+Insert_To_Texture_Category and Generate_Texture_Categories must stay defined in the unit (any
+missing one: 1047 B, shape 0.910); DX8PolygonRendererClass::Set_Vertex_Index_Range is optional.
+So landing needs those six rows rehomed into this unit (their current units:
+VertexSplitTableConstructorBFME.cpp, dx8renderer.cpp, DX8TextureCategoryAddMesh.cpp,
+DX8FVFCategoryContainerInsertToTextureCategory.cpp,
+DX8FVFCategoryContainerGenerateTextureCategoriesBFME.cpp), verifying each moved row, plus the
+3-byte frame-slot residue in Add_Mesh itself.
