@@ -5,7 +5,25 @@
 // vtable slot at +0x0c for getTextLength/getTooltipTextLength.  This narrow
 // ABI slice keeps those proven facts local to the recovered body.
 
+// Zero Hour's UnicodeString::releaseBuffer has no retail body: retail's
+// inlined destructors call StringBase<unsigned short>::releaseBuffer
+// (0x008881D0, StringBase.cpp).  The header's declaration and its inline
+// callers are renamed to a TU-local inline that calls that body by name.
+#include "Lib/BaseType.h"
+#include "Common/Debug.h"
+#include "Common/Errors.h"
+#define releaseBuffer() bfmeReleaseWideBuffer()
 #include "Common/UnicodeString.h"
+#undef releaseBuffer
+extern "C" void __identifier("?releaseBuffer@?$StringBase@G@@AAEXXZ")(void);
+// ?bfmeReleaseWideBuffer@UnicodeString@@IAEXXZ absent-from-retail
+inline void UnicodeString::bfmeReleaseWideBuffer()
+{
+	typedef void (UnicodeString::*ReleaseCall)();
+	union { void (*raw)(); ReleaseCall member; } call;
+	call.raw = __identifier("?releaseBuffer@?$StringBase@G@@AAEXXZ");
+	(this->*call.member)();
+}
 
 typedef int Int;
 

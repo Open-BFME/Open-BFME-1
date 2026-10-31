@@ -48,6 +48,27 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 // SYSTEM INCLUDES ////////////////////////////////////////////////////////////
+// Zero Hour's UnicodeString::releaseBuffer has no retail body: retail's
+// inlined destructors call StringBase<unsigned short>::releaseBuffer
+// (0x008881D0, StringBase.cpp).  The header's declaration and its inline
+// callers are renamed to a TU-local inline that calls that body by name;
+// the header is pulled in ahead of PreRTS.h so the rename stays local to it.
+#include "Lib/BaseType.h"
+#include "Common/Debug.h"
+#include "Common/Errors.h"
+#define releaseBuffer() bfmeReleaseWideBuffer()
+#include "Common/UnicodeString.h"
+#undef releaseBuffer
+extern "C" void __identifier("?releaseBuffer@?$StringBase@G@@AAEXXZ")(void);
+// ?bfmeReleaseWideBuffer@UnicodeString@@IAEXXZ absent-from-retail
+inline void UnicodeString::bfmeReleaseWideBuffer()
+{
+	typedef void (UnicodeString::*ReleaseCall)();
+	union { void (*raw)(); ReleaseCall member; } call;
+	call.raw = __identifier("?releaseBuffer@?$StringBase@G@@AAEXXZ");
+	(this->*call.member)();
+}
+
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 // USER INCLUDES //////////////////////////////////////////////////////////////
