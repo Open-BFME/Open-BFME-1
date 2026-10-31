@@ -1,5 +1,5 @@
 // ?computePointOnPath@Rva003FD7D0Path@@QAEXPAVObject@@PAVLocomotor@@PAURva003FD7D0Point@@_N@Z
-// partial score=0.3180851063829787 date=2026-09-22
+// partial score=0.3181 date=2026-09-22
 // cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // Complete reconstruction of the 940-byte Path cursor body at RVA 003FD7D0.
 // ABI: hub 002417E0 +015D and target ret16. Object argument is unused.
