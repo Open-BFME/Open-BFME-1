@@ -15,12 +15,7 @@ struct RGBColor
 	volatile Real blue;
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord2D
-{
-	volatile Real x;
-	volatile Real y;
-};
+#include "../../../Libraries/Include/Lib/Coord2D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
 class FXNugget
@@ -53,7 +48,7 @@ private:
 	volatile ShaderType m_shader;
 	volatile Real m_size;
 	RGBColor m_color;
-	Coord2D m_offset;
+	volatile Coord2D m_offset;
 	volatile Bool m_orientToObject;
 	unsigned char m_padD5[3];
 	volatile UnsignedInt m_opacityStart;
