@@ -547,7 +547,7 @@ void W3DRadar::drawSingleGenericEvent( Int pixelX, Int pixelY, Int width, Int he
 //-------------------------------------------------------------------------------------------------
 /** Draw all the radar events */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_drawEvents_Thunk.cpp
+// byte-exact reconstruction (BFME five-int form): game/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadarDrawEvents.cpp
 // ?drawEvents@W3DRadar@@ present-unmatched
 void W3DRadar::drawEvents( Int pixelX, Int pixelY, Int width, Int height )
 {
