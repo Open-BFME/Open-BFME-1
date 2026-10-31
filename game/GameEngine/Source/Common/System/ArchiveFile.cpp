@@ -140,71 +140,9 @@ void ArchiveFile::addFile(const AsciiString& path, const ArchivedFileInfo *fileI
 	//path.concat(fileInfo->m_filename);
 }
 
-// ?getFileListInDirectory@ArchiveFile@@ present-unmatched
-void ArchiveFile::getFileListInDirectory(const AsciiString& currentDirectory, const AsciiString& originalDirectory, const AsciiString& searchName, FilenameList &filenameList, Bool searchSubdirectories) const
-{
+// ?getFileListInDirectory@ArchiveFile@@QBEXABVAsciiString@@00AAV?$set@VAsciiString@@U?$less_than_nocase@VAsciiString@@@rts@@V?$allocator@VAsciiString@@@_STL@@@_STL@@_N@Z: retail body is in game/GameEngine/Source/Common/System/ArchiveFileGetFileList.cpp
 
-	AsciiString searchDir;
-	const DetailedArchivedDirectoryInfo *dirInfo = &m_rootDirectory;
-
-	searchDir = originalDirectory;
-	searchDir.toLower();
-	AsciiString token;
-	
-	searchDir.nextToken(&token, "\\/");
-
-	while (token.getLength() > 0) {
-
-		DetailedArchivedDirectoryInfoMap::const_iterator it = dirInfo->m_directories.find(token);
-		if (it != dirInfo->m_directories.end())
-		{
-			dirInfo = &it->second;
-		}
-		else
-		{
-			// if the directory doesn't exist, then there aren't any files to be had.
-			return;
-		}
-
-		searchDir.nextToken(&token, "\\/");
-	}
-
-	getFileListInDirectory(dirInfo, originalDirectory, searchName, filenameList, searchSubdirectories);
-}
-
-// ?getFileListInDirectory@ArchiveFile@@ present-unmatched
-void ArchiveFile::getFileListInDirectory(const DetailedArchivedDirectoryInfo *dirInfo, const AsciiString& currentDirectory, const AsciiString& searchName, FilenameList &filenameList, Bool searchSubdirectories) const
-{
-	DetailedArchivedDirectoryInfoMap::const_iterator diriter = dirInfo->m_directories.begin();
-	while (diriter != dirInfo->m_directories.end()) {
-		const DetailedArchivedDirectoryInfo *tempDirInfo = &(diriter->second);
-		AsciiString tempdirname;
-		tempdirname = currentDirectory;
-		if ((tempdirname.getLength() > 0) && (!tempdirname.endsWith("\\"))) {
-			tempdirname.concat('\\');
-		}
-		tempdirname.concat(tempDirInfo->m_directoryName);
-		getFileListInDirectory(tempDirInfo, tempdirname, searchName, filenameList, searchSubdirectories);
-		diriter++;
-	}
-
-	ArchivedFileInfoMap::const_iterator fileiter = dirInfo->m_files.begin();
-	while (fileiter != dirInfo->m_files.end()) {
-		if (SearchStringMatches(fileiter->second.m_filename, searchName)) {
-			AsciiString tempfilename;
-			tempfilename = currentDirectory;
-			if ((tempfilename.getLength() > 0) && (!tempfilename.endsWith("\\"))) {
-				tempfilename.concat('\\');
-			}
-			tempfilename.concat(fileiter->second.m_filename);
-			if (filenameList.find(tempfilename) == filenameList.end()) {
-				// only insert into the list if its not already in there.
-				filenameList.insert(tempfilename);
-			}
-		}
-		fileiter++;
-	}
-}
+// ?getFileListInDirectory@ArchiveFile@@QBEXPBVDetailedArchivedDirectoryInfo@@ABVAsciiString@@1AAV?$set@VAsciiString@@U?$less_than_nocase@VAsciiString@@@rts@@V?$allocator@VAsciiString@@@_STL@@@_STL@@_N@Z: retail body is in game/GameEngine/Source/Common/System/ArchiveFileGetFileList.cpp
 
 void ArchiveFile::attachFile(File *file) 
 {
@@ -215,41 +153,4 @@ void ArchiveFile::attachFile(File *file)
 	m_file = file;
 }
 
-// ?getArchivedFileInfo@ArchiveFile@@ present-unmatched
-const ArchivedFileInfo * ArchiveFile::getArchivedFileInfo(const AsciiString& filename) const
-{
-	AsciiString path;
-	path = filename;
-	path.toLower();
-	AsciiString token;
-
-	const DetailedArchivedDirectoryInfo *dirInfo = &m_rootDirectory;
-
-	path.nextToken(&token, "\\/");
-
-	while ((token.find('.') == NULL) || (path.find('.') != NULL)) {
-
-		DetailedArchivedDirectoryInfoMap::const_iterator it = dirInfo->m_directories.find(token);
-		if (it != dirInfo->m_directories.end())
-		{
-			dirInfo = &it->second; 
-		}
-		else
-		{
-			return NULL;
-		}
-
-		path.nextToken(&token, "\\/");
-	}
-
-	ArchivedFileInfoMap::const_iterator it = dirInfo->m_files.find(token);
-	if (it != dirInfo->m_files.end())
-	{
-		return &it->second;
-	}
-	else
-	{
-		return NULL;
-	}
-
-}
+// ?getArchivedFileInfo@ArchiveFile@@IBEPBUArchivedFileInfo@@ABVAsciiString@@@Z: retail body is in game/GameEngine/Source/Common/System/ArchiveFileGetArchivedFileInfo.cpp

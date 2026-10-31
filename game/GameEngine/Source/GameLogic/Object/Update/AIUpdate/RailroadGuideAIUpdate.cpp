@@ -597,9 +597,11 @@ void RailroadBehavior::loadTrackData( void )
 		trackPoint.m_distanceFromFirst = 0;
 		trackPoint.m_isFirstPoint = TRUE;
 		trackPoint.m_isLastPoint = FALSE;
-		trackPoint.m_isTunnelOrBridge = scanner->getName().endsWith("Tunnel");
-		trackPoint.m_isStation = scanner->getName().endsWith("Station");
-		trackPoint.m_isDisembark = scanner->getName().endsWith("Disembark");
+		// StringBase<char> spelling: the AsciiString forwarder was emitted as a jmp COMDAT
+		// that wins over the retail AsciiString::endsWith body (link queue #456).
+		trackPoint.m_isTunnelOrBridge = scanner->getName().StringBase<char>::endsWith("Tunnel");
+		trackPoint.m_isStation = scanner->getName().StringBase<char>::endsWith("Station");
+		trackPoint.m_isDisembark = scanner->getName().StringBase<char>::endsWith("Disembark");
 		trackPoint.m_isPingPong = FALSE;
 		trackPoint.m_position.set( scanner->getLocation() );
 		trackPoint.m_handle = scanner->getID();
@@ -631,10 +633,10 @@ void RailroadBehavior::loadTrackData( void )
 				trackPoint.m_distanceFromFirst = m_track->m_length;
 				trackPoint.m_isFirstPoint = FALSE;
 				trackPoint.m_isLastPoint = anotherWaypoint->getLink( 0 ) == NULL;
-				trackPoint.m_isTunnelOrBridge = anotherWaypoint->getName().endsWith("Tunnel");
-				trackPoint.m_isStation = anotherWaypoint->getName().endsWith("Station");
-				trackPoint.m_isPingPong = scanner->getName().endsWith("PingPong");
-				trackPoint.m_isDisembark = scanner->getName().endsWith("Disembark");
+				trackPoint.m_isTunnelOrBridge = anotherWaypoint->getName().StringBase<char>::endsWith("Tunnel");
+				trackPoint.m_isStation = anotherWaypoint->getName().StringBase<char>::endsWith("Station");
+				trackPoint.m_isPingPong = scanner->getName().StringBase<char>::endsWith("PingPong");
+				trackPoint.m_isDisembark = scanner->getName().StringBase<char>::endsWith("Disembark");
 				trackPoint.m_position.set( anotherWaypoint->getLocation() );
 				trackPoint.m_handle = scanner->getID();
 				track->push_back( trackPoint );

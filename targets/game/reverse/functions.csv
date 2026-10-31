@@ -171696,7 +171696,7 @@ uw_00c60c50,,0x00C60C50,8,game/gen_small/uw_gen_000.cpp,matched,gen-funclet;obje
 uw_00c60c58,,0x00C60C58,8,game/gen_small/uw_gen_008.cpp,matched,gen-funclet;object-symbol=$L1317
 uw_00c60c70,,0x00C60C70,8,game/gen_small/uw_gen_012.cpp,matched,gen-funclet;object-symbol=$L526
 uw_00c60c90,,0x00C60C90,8,game/gen_small/uw_gen_016.cpp,matched,gen-funclet;object-symbol=$L9191
-uw_00c60cb0,,0x00C60CB0,11,game/GameEngine/Source/Common/System/ArchiveFile.cpp,matched,gen-funclet;parent=??1ArchiveFile@@UAE@XZ;object-symbol=$L45369;eh-state-pin $L45364->$L45369: retail unwind map (??1ArchiveFile@@UAE@XZ states [0]) binds this address to $L45369;repin-model=claude-opus-5.5
+uw_00c60cb0,,0x00C60CB0,11,game/GameEngine/Source/Common/System/ArchiveFile.cpp,matched,gen-funclet;parent=??1ArchiveFile@@UAE@XZ;object-symbol=$L41679;eh-state-pin $L45364->$L45369: retail unwind map (??1ArchiveFile@@UAE@XZ states [0]) binds this address to $L45369;repin-model=claude-opus-5.5;eh-state-pin $L45369->$L41679: retail unwind map (??1ArchiveFile@@UAE@XZ states [0]) binds this address to $L41679;repin-model=claude-opus-5-5
 uw_00c60cd0,,0x00C60CD0,8,game/gen_small/uw_gen_007.cpp,matched,gen-funclet;object-symbol=$L12775
 uw_00c60cd8,,0x00C60CD8,8,game/gen_small/uw_gen_002.cpp,matched,gen-funclet;object-symbol=$L394
 uw_00c60ce0,,0x00C60CE0,8,game/gen_small/uw_gen_007.cpp,matched,gen-funclet;object-symbol=$L12784
