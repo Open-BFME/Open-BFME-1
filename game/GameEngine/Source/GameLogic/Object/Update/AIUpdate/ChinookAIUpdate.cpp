@@ -29,6 +29,10 @@
 
 // ChinookAIUpdate.cpp //////////
 
+// The Zero Hour AI.h inline AICommandInterface::aiMoveToPosition compiles to a
+// non-retail 142-byte COMDAT here (Zero Hour AICommandParms); this macro turns it
+// into a declaration so calls bind to the retail body 0x000D86C0.
+#define aiMoveToPosition(a, b) aiMoveToPosition(a, b); void zhInlineAiMoveToPosition(a, b)
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 // BFME de-pooled this glue: retail's per-class `operator delete(void*, MagicEnum)`
@@ -81,6 +85,7 @@ public:
 #include "GameLogic/Module/ChinookAIUpdate.h"
 #include "GameLogic/Module/PhysicsUpdate.h"
 #include "GameLogic/PartitionManager.h"
+#undef aiMoveToPosition
 
 const Real BIGNUM = 99999.0f;
 

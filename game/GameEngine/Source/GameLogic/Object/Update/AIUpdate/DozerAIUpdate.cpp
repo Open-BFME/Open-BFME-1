@@ -35,6 +35,10 @@
 // unit emits that COMDAT copy; rename it so only retail's 0x000E59A0 (BFME reads
 // 0x204) is ?getAI@Object@@QAEPAVAIUpdateInterface@@XZ. Inlined calls are unchanged.
 #define getAI getAI_ZHLayout
+// The Zero Hour AI.h inline AICommandInterface::aiMoveToPosition compiles to a
+// non-retail 142-byte COMDAT here (Zero Hour AICommandParms); this macro turns it
+// into a declaration so calls bind to the retail body 0x000D86C0.
+#define aiMoveToPosition(a, b) aiMoveToPosition(a, b); void zhInlineAiMoveToPosition(a, b)
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 // BFME de-pooled this glue: retail's per-class `operator delete(void*, MagicEnum)`
@@ -90,6 +94,7 @@ public:
 #include "GameLogic/Module/CreateModule.h"
 #include "GameLogic/Module/DozerAIUpdate.h"
 #include "GameClient/InGameUI.h"
+#undef aiMoveToPosition
 
 // BFME's AudioManager vtable puts addAudioEvent at slot 17; the ZH header lands
 // it at 12, so the call comes out [edx+0x30] instead of [edx+0x44].

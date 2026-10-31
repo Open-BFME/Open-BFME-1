@@ -41,6 +41,10 @@
 // rename it so only retail-equal copies carry the name. Inlined calls are
 // unchanged.
 #define getLegalSurfaces getLegalSurfaces_LocalView
+// The Zero Hour SpecialPower.h inline SpecialPowerTemplate::isShortcutPower emits a
+// COMDAT that clashes with the strong retail body 0x00268920 defined in
+// SpecialPowerTemplate_isShortcutPower_Thunk.cpp; this macro makes it a declaration.
+#define isShortcutPower() isShortcutPower() const; Bool zhInlineIsShortcutPower()
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 // BFME de-pooled this glue: retail's per-class `operator delete(void*, MagicEnum)`
@@ -157,6 +161,7 @@ template Int BitFlags<116>::getSingleBitFromName(const char *);
 #include "Common/MiscAudio.h"
 #include "Common/AudioEventInfo.h"
 #include "Common/DynamicAudioEventInfo.h"
+#undef isShortcutPower
 
 #ifdef _INTERNAL
 // for occasional debugging...

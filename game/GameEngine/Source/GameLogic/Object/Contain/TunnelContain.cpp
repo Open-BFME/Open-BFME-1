@@ -4,6 +4,10 @@
 #define __PLACEMENT_VEC_NEW_INLINE
 // stlport
 
+// The Zero Hour AI.h inline AICommandInterface::aiMoveToPosition compiles to a
+// non-retail 142-byte COMDAT here (Zero Hour AICommandParms); this macro turns it
+// into a declaration so calls bind to the retail body 0x000D86C0.
+#define aiMoveToPosition(a, b) aiMoveToPosition(a, b); void zhInlineAiMoveToPosition(a, b)
 #include "PreRTS.h"
 #include "Common/RandomValue.h"
 #include "Common/TunnelTracker.h"
@@ -11,6 +15,7 @@
 #include "GameLogic/Module/AIUpdate.h"
 #include "GameLogic/Module/TunnelContain.h"
 #include "GameLogic/Object.h"
+#undef aiMoveToPosition
 
 class BfmeTerrainGroundHeight
 {

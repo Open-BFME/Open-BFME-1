@@ -45,6 +45,10 @@
 //
 //-----------------------------------------------------------------------------
 
+// The Zero Hour AI.h inline AICommandInterface::aiMoveToPosition compiles to a
+// non-retail 142-byte COMDAT here (Zero Hour AICommandParms); this macro turns it
+// into a declaration so calls bind to the retail body 0x000D86C0.
+#define aiMoveToPosition(a, b) aiMoveToPosition(a, b); void zhInlineAiMoveToPosition(a, b)
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #define DEFINE_SCIENCE_AVAILABILITY_NAMES
@@ -112,6 +116,7 @@ template Int BitFlags<116>::size() const;
 // link, so the AsciiString keys below go through the const char* overload.
 
 #include "GameNetwork/GameInfo.h"
+#undef aiMoveToPosition
 
 // Retail's BuildListInfo merges ZH's MemoryPoolObject and Snapshot bases (see
 // inputs/reference/shims/buildlistinfo/GameLogic/SidesList.h), so m_nextBuildList sits at

@@ -35,6 +35,10 @@
 // unit emits that COMDAT copy; rename it so only retail's 0x000E59A0 (BFME reads
 // 0x204) is ?getAI@Object@@QAEPAVAIUpdateInterface@@XZ. Inlined calls are unchanged.
 #define getAI getAI_ZHLayout
+// The Zero Hour AI.h inline AICommandInterface::aiMoveToPosition compiles to a
+// non-retail 142-byte COMDAT here (Zero Hour AICommandParms); this macro turns it
+// into a declaration so calls bind to the retail body 0x000D86C0.
+#define aiMoveToPosition(a, b) aiMoveToPosition(a, b); void zhInlineAiMoveToPosition(a, b)
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "Common/RandomValue.h"
@@ -47,6 +51,7 @@
 #include "GameLogic/Module/AIUpdate.h"
 #include "GameLogic/Module/PhysicsUpdate.h"
 #include "GameLogic/Module/QueueProductionExitUpdate.h"
+#undef aiMoveToPosition
 
 //-------------------------------------------------------------------------------------------------
 // Retail module registration places this constructor at RVA 0x002D0620.

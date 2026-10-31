@@ -34,6 +34,10 @@
 // Desc:  Slaved unit(s) remain close to their master. Used by angry Mob members (various)
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+// The Zero Hour AI.h inline AICommandInterface::aiMoveToPosition compiles to a
+// non-retail 142-byte COMDAT here (Zero Hour AICommandParms); this macro turns it
+// into a declaration so calls bind to the retail body 0x000D86C0.
+#define aiMoveToPosition(a, b) aiMoveToPosition(a, b); void zhInlineAiMoveToPosition(a, b)
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "GameClient/InGameUI.h"// selection logic
@@ -57,6 +61,7 @@
 #include "GameClient/Drawable.h"
 #include "Common/ThingFactory.h"
 #include "Common/ThingTemplate.h" 
+#undef aiMoveToPosition
 
 
 

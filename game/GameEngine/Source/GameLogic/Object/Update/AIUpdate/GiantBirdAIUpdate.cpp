@@ -88,7 +88,7 @@ public:
 class Pathfinder
 {
 public:
-	void removeGoal(Object *obj);
+	void removeGoal003E3D20(Object *obj);
 	void updateGoal(Object *obj, const Coord3D *newGoalPos,
 		PathfindLayerEnum layer, const char *file, Int line);
 };
@@ -156,7 +156,7 @@ void GiantBirdNormalFlightState::onExit(StateExitType status)
 		obj->m_conditionFlags118 &= ~0x80u;
 		obj->notifyModelConditionChanged();
 	}
-	TheAI->pathfinder()->removeGoal(obj);
+	TheAI->pathfinder()->removeGoal003E3D20(obj);
 #line 381 "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\AIUpdate\\GiantBirdAIUpdate.cpp"
 	TheAI->pathfinder()->updateGoal(obj, (const Coord3D *)((const char *)obj + 0x38), LAYER_GROUND, __FILE__, __LINE__);
 }
