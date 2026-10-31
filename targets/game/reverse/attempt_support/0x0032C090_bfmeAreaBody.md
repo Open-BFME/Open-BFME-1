@@ -45,3 +45,9 @@ player null as if-block / count and pPlayer declared at function top /
 barrier at 5 other positions / Parameter* first arg + Condition cast.
 Next ideas: something else in retail that blocks the TheScriptEngine PRE
 naturally (would also change RA); compiler-flag sweep on the TU.
+
+## s509 (claude-opus-5-5): still 8 diffs
+- Flags on the bank TU: /Ob1 /Ob2 /G6 /GX /Ox inert (8); /G7 315, /Os 369, /Oy- 503.
+- The barrier can be replaced by the dir32-recorded alias `?TheBfmeGlobal_012f076c@@3PAVBfmeGlobal_012f076c@@A`
+  (same 0x012F076C) in either the cache test or the end `setCustomFrame` read: same 8 diffs, so the
+  PRE hoist and the customData/engine register rotation are independent.
