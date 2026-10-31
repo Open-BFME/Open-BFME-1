@@ -45,8 +45,8 @@ public:
 // the linked name of the value this factory hands initFromINIMultiProc is the
 // address-identified thunk ?j_0001dab6@@YAXXZ (matched row in
 // game/gen_small/gthunks_032.cpp). No retail body carries a free-function
-// W3DStreakDrawFieldParse, so nothing may be declared under that name here.
-extern "C" void __cdecl __identifier("W3DStreakDrawFieldParse")();
+// W3DStreakDraw field-parse alias, so nothing may be declared under that name here.
+void j_0001dab6();	// ILT 0x0041DAB6, the matched ?j_0001dab6@@YAXXZ row
 
 class W3DStreakDraw
 {
@@ -60,6 +60,6 @@ ModuleData *W3DStreakDraw::friend_newModuleData(INI *ini)
 	W3DStreakDrawModuleData *data = new W3DStreakDrawModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&__identifier("W3DStreakDrawFieldParse")));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0001dab6));
 	return (ModuleData *)data;
 }

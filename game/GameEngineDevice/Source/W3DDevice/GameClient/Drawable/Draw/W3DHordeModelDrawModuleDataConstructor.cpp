@@ -59,7 +59,6 @@ private:
 	int m_194;
 };
 
-extern "C" char W3DHordeModelDrawFieldParse;
 extern "C" char W3DHordeModelDrawModuleData_vtbl;
 
 W3DHordeModelDrawModuleData::W3DHordeModelDrawModuleData()

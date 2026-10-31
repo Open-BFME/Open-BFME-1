@@ -30,7 +30,7 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl __identifier("EmotionTrackerUpdateFieldParse")();
+void j_00017fd5();	// ILT 0x00417FD5, the matched ?j_00017fd5@@YAXXZ row
 
 class EmotionTrackerUpdate
 {
@@ -44,7 +44,7 @@ ModuleData *EmotionTrackerUpdate::friend_newModuleData(INI *ini)
 	EmotionTrackerUpdateModuleData *data = new EmotionTrackerUpdateModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(__identifier("EmotionTrackerUpdateFieldParse")));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_00017fd5));
 	return (ModuleData *)data;
 }
 
@@ -53,5 +53,5 @@ ModuleData *EmotionTrackerUpdate::friend_newModuleData(INI *ini)
 // symbol the build defines at that address is the five-byte ILT thunk
 // ?j_00017fd5@@YAXXZ (game/gen_small/gthunks_026.cpp), a `jmp` to 0x00290E30, the
 // module-data class's static field-parse builder.  The old
-// `extern "C" EmotionTrackerUpdateFieldParse` was invented in this TU and nothing
+// `extern "C"` EmotionTrackerUpdate field-parse name was invented in this TU and nothing
 // defines it; the thunk is retail's real spelling of this operand.

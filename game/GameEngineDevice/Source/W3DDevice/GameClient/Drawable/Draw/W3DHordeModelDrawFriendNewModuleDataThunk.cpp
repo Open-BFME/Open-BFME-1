@@ -42,7 +42,7 @@ public:
 // Retail pushes 0x00427179 here: the ILT thunk at RVA 0x00027179
 // (game/gen_small/gthunks_043.cpp, ?j_00027179@@YAXXZ) that reaches the real
 // builder at 0x00753A80, so the address taken is the thunk's, not the body's.
-extern "C" void __cdecl W3DHordeModelDrawFieldParse(MultiIniFieldParse &parse);	// DIR32-recorded name of ILT 0x00427179
+void j_00027179();	// ILT 0x00427179, the matched ?j_00027179@@YAXXZ row
 
 class W3DHordeModelDraw
 {
@@ -55,6 +55,6 @@ ModuleData *W3DHordeModelDraw::friend_newModuleData(INI *ini)
 {
 	W3DHordeModelDrawModuleData *data = new W3DHordeModelDrawModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, W3DHordeModelDrawFieldParse);
+		ini->initFromINIMultiProc(data, reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_00027179));
 	return (ModuleData *)data;
 }

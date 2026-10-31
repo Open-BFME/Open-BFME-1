@@ -36,7 +36,7 @@ public:
 // would link straight to the builder and change the bytes, so the thunk is
 // referenced and the cast keeps the proc type initFromINIMultiProc declares for
 // its second argument.
-extern "C" void __cdecl W3DQuadrupedDrawFieldParse(MultiIniFieldParse &parse);	// DIR32-recorded name of ILT 0x0041E2A9
+void j_0001e2a9();	// ILT 0x0041E2A9, the matched ?j_0001e2a9@@YAXXZ row
 
 class W3DQuadrupedDraw
 {
@@ -49,6 +49,6 @@ ModuleData *W3DQuadrupedDraw::friend_newModuleData(INI *ini)
 {
 	W3DQuadrupedDrawModuleData *data = new W3DQuadrupedDrawModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, W3DQuadrupedDrawFieldParse);
+		ini->initFromINIMultiProc(data, reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0001e2a9));
 	return (ModuleData *)data;
 }

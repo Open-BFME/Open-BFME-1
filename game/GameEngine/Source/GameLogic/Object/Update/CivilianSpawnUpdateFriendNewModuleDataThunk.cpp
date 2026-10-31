@@ -30,7 +30,7 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl __identifier("CivilianSpawnUpdateFieldParse")();
+void j_0000b825();	// ILT 0x0040B825, the matched ?j_0000b825@@YAXXZ row
 
 class CivilianSpawnUpdate
 {
@@ -44,7 +44,7 @@ ModuleData *CivilianSpawnUpdate::friend_newModuleData(INI *ini)
 	CivilianSpawnUpdateModuleData *data = new CivilianSpawnUpdateModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(__identifier("CivilianSpawnUpdateFieldParse")));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0000b825));
 	return (ModuleData *)data;
 }
 
@@ -53,5 +53,5 @@ ModuleData *CivilianSpawnUpdate::friend_newModuleData(INI *ini)
 // symbol the build defines at that address is the five-byte ILT thunk
 // ?j_0000b825@@YAXXZ (game/gen_small/gthunks_011.cpp), a `jmp` to 0x0028A2D0, the
 // module-data class's static field-parse builder.  The old
-// `extern "C" CivilianSpawnUpdateFieldParse` was invented in this TU and nothing
+// `extern "C"` CivilianSpawnUpdate field-parse name was invented in this TU and nothing
 // defines it; the thunk is retail's real spelling of this operand.

@@ -43,7 +43,7 @@ public:
 // proc, which here rides the matched ILT thunk ?j_0002c8c7@@YAXXZ at RVA
 // 0x0002C8C7 (route 0x0026B620). The pushed immediate is the thunk's own
 // address, not its target's.
-extern "C" void __cdecl __identifier("TaintSpecialPowerFieldParse")();
+void j_0002c8c7();	// ILT 0x0042C8C7, the matched ?j_0002c8c7@@YAXXZ row
 
 class TaintSpecialPower
 {
@@ -57,6 +57,6 @@ ModuleData *TaintSpecialPower::friend_newModuleData(INI *ini)
 	TaintSpecialPowerModuleData *data = new TaintSpecialPowerModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&__identifier("TaintSpecialPowerFieldParse")));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0002c8c7));
 	return (ModuleData *)data;
 }

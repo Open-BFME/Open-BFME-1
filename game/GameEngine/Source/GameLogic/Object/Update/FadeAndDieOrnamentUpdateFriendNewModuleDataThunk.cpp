@@ -33,11 +33,11 @@ public:
 // The pushed immediate is 0x004318BD = the five-byte ILT thunk at 0x000318BD,
 // which the ledger defines as ?j_000318bd@@YAXXZ (game/gen_small/gthunks_055.cpp)
 // and which chains to the field-parse builder at 0x00124330.  Nothing defines a
-// FadeAndDieOrnamentUpdateFieldParse, and naming the real builder would link
+// FadeAndDieOrnamentUpdate field-parse alias, and naming the real builder would link
 // straight to it and change the pushed immediate, so the thunk is referenced
 // and the cast keeps the proc type initFromINIMultiProc declares for its
 // second argument.
-extern "C" void __cdecl FadeAndDieOrnamentUpdateFieldParse(MultiIniFieldParse &parse);	// DIR32-recorded name of ILT 0x004318BD
+void j_000318bd();	// ILT 0x004318BD, the matched ?j_000318bd@@YAXXZ row
 
 class FadeAndDieOrnamentUpdate
 {
@@ -50,6 +50,6 @@ ModuleData *FadeAndDieOrnamentUpdate::friend_newModuleData(INI *ini)
 {
 	FadeAndDieOrnamentUpdateModuleData *data = new FadeAndDieOrnamentUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, FadeAndDieOrnamentUpdateFieldParse);
+		ini->initFromINIMultiProc(data, reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_000318bd));
 	return (ModuleData *)data;
 }

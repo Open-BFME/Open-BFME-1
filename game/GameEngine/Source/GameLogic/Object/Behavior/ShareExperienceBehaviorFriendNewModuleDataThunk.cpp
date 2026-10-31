@@ -35,7 +35,7 @@ public:
 // to the matched forwarder at 0x00205720. The proc is taken by address only, so
 // the thunk's no-argument cdecl declaration is the honest view; the
 // cast restores the MultiIniFieldParse ABI.
-extern "C" void __cdecl __identifier("ShareExperienceBehaviorFieldParse")();
+void j_0003a657();	// ILT 0x0043A657, the matched ?j_0003a657@@YAXXZ row
 
 class ShareExperienceBehavior
 {
@@ -49,6 +49,6 @@ ModuleData *ShareExperienceBehavior::friend_newModuleData(INI *ini)
 	ShareExperienceBehaviorModuleData *data = new ShareExperienceBehaviorModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&__identifier("ShareExperienceBehaviorFieldParse")));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0003a657));
 	return (ModuleData *)data;
 }

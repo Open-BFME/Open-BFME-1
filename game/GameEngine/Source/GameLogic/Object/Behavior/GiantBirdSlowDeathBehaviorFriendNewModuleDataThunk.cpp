@@ -34,8 +34,8 @@ public:
 // 0x0043C268 = `jmp 0x005FFB10`, which the ledger owns as
 // ?j_0003c268@@YAXXZ (game/gen_small/gthunks_067.cpp). The body it jumps to
 // (RVA 0x001FFB10) is still unclaimed, so name the thunk: nothing defines a
-// GiantBirdSlowDeathBehaviorFieldParse symbol at link time.
-extern "C" void __cdecl __identifier("GiantBirdSlowDeathBehaviorFieldParse")(MultiIniFieldParse &parse);
+// GiantBirdSlowDeathBehavior field-parse alias symbol at link time.
+void j_0003c268();	// ILT 0x0043C268, the matched ?j_0003c268@@YAXXZ row
 
 class GiantBirdSlowDeathBehavior
 {
@@ -48,6 +48,6 @@ ModuleData *GiantBirdSlowDeathBehavior::friend_newModuleData(INI *ini)
 {
 	GiantBirdSlowDeathBehaviorModuleData *data = new GiantBirdSlowDeathBehaviorModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &__identifier("GiantBirdSlowDeathBehaviorFieldParse"));
+		ini->initFromINIMultiProc(data, reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0003c268));
 	return (ModuleData *)data;
 }

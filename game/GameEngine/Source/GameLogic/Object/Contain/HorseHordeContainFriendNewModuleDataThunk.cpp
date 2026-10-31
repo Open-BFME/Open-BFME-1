@@ -30,8 +30,8 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-// ?j_000334f6@@YAXXZ: reference recorded _HorseHordeContainFieldParse
-extern "C" void __cdecl HorseHordeContainFieldParse(MultiIniFieldParse &parse);
+// ?j_000334f6@@YAXXZ: reference recorded HorseHordeContain field-parse alias
+void j_000334f6();	// ILT 0x004334F6, the matched ?j_000334f6@@YAXXZ row
 
 class HorseHordeContain
 {
@@ -44,6 +44,6 @@ ModuleData *HorseHordeContain::friend_newModuleData(INI *ini)
 {
 	HorseHordeContainModuleData *data = new HorseHordeContainModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, HorseHordeContainFieldParse);
+		ini->initFromINIMultiProc(data, reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_000334f6));
 	return (ModuleData *)data;
 }

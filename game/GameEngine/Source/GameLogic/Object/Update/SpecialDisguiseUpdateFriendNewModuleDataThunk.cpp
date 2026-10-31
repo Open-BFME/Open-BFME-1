@@ -35,9 +35,9 @@ public:
 // build defines at that address is the five-byte ILT thunk ?j_0004331a@@YAXXZ, which
 // game/gen_small/gthunks_075.cpp implements as a `jmp` to the module-data
 // class's static field-parse builder.  The old
-// `extern "C" SpecialDisguiseUpdateFieldParse` was invented in this TU and nothing
+// `extern "C"` SpecialDisguiseUpdate field-parse name was invented in this TU and nothing
 // defines it; the thunk is retail's real spelling of this operand.
-extern "C" void __cdecl __identifier("SpecialDisguiseUpdateFieldParse")();
+void j_0004331a();	// ILT 0x0044331A, the matched ?j_0004331a@@YAXXZ row
 
 class SpecialDisguiseUpdate
 {
@@ -51,6 +51,6 @@ ModuleData *SpecialDisguiseUpdate::friend_newModuleData(INI *ini)
 	SpecialDisguiseUpdateModuleData *data = new SpecialDisguiseUpdateModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(__identifier("SpecialDisguiseUpdateFieldParse")));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0004331a));
 	return (ModuleData *)data;
 }

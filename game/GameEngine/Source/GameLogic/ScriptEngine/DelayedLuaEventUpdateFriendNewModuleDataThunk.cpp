@@ -30,7 +30,7 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl __identifier("DelayedLuaEventUpdateFieldParse")();
+void j_0001b199();	// ILT 0x0041B199, the matched ?j_0001b199@@YAXXZ row
 
 class DelayedLuaEventUpdate
 {
@@ -44,7 +44,7 @@ ModuleData *DelayedLuaEventUpdate::friend_newModuleData(INI *ini)
 	DelayedLuaEventUpdateModuleData *data = new DelayedLuaEventUpdateModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(__identifier("DelayedLuaEventUpdateFieldParse")));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0001b199));
 	return (ModuleData *)data;
 }
 
@@ -53,5 +53,5 @@ ModuleData *DelayedLuaEventUpdate::friend_newModuleData(INI *ini)
 // symbol the build defines at that address is the five-byte ILT thunk
 // ?j_0001b199@@YAXXZ (game/gen_small/gthunks_029.cpp), a `jmp` to 0x0028BC00, the
 // module-data class's static field-parse builder.  The old
-// `extern "C" DelayedLuaEventUpdateFieldParse` was invented in this TU and nothing
+// `extern "C"` DelayedLuaEventUpdate field-parse name was invented in this TU and nothing
 // defines it; the thunk is retail's real spelling of this operand.

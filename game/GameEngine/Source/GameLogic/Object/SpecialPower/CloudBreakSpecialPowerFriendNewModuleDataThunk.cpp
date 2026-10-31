@@ -49,7 +49,7 @@ public:
 // EA identity of the builder it reaches is
 // ?buildFieldParse@CloudBreakSpecialPowerModuleData@@SAXAAVMultiIniFieldParse@@@Z,
 // still address-derived in the ledger.
-extern "C" void __cdecl CloudBreakSpecialPowerFieldParse(MultiIniFieldParse &parse);	// DIR32-recorded name of ILT 0x0043EC8E
+void j_0003ec8e();	// ILT 0x0043EC8E, the matched ?j_0003ec8e@@YAXXZ row
 
 class CloudBreakSpecialPower
 {
@@ -63,6 +63,6 @@ ModuleData *CloudBreakSpecialPower::friend_newModuleData(INI *ini)
 	CloudBreakSpecialPowerModuleData *data = new CloudBreakSpecialPowerModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			CloudBreakSpecialPowerFieldParse);
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0003ec8e));
 	return (ModuleData *)data;
 }

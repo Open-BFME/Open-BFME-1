@@ -34,8 +34,8 @@ public:
 // thunk in front of it, 0x004215DA = `jmp 0x005FAB70`, which the ledger owns
 // as ?j_000215da@@YAXXZ (game/gen_small/gthunks_036.cpp). The body the thunk
 // jumps to (RVA 0x001FAB70) is still unclaimed, so name the thunk, not a
-// body: nothing defines a CritterEmitterUpdateFieldParse symbol at link time.
-extern "C" void __cdecl __identifier("CritterEmitterUpdateFieldParse")(MultiIniFieldParse &parse);
+// body: nothing defines a CritterEmitterUpdate field-parse alias symbol at link time.
+void j_000215da();	// ILT 0x004215DA, the matched ?j_000215da@@YAXXZ row
 
 class CritterEmitterUpdate
 {
@@ -48,6 +48,6 @@ ModuleData *CritterEmitterUpdate::friend_newModuleData(INI *ini)
 {
 	CritterEmitterUpdateModuleData *data = new CritterEmitterUpdateModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &__identifier("CritterEmitterUpdateFieldParse"));
+		ini->initFromINIMultiProc(data, reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_000215da));
 	return (ModuleData *)data;
 }

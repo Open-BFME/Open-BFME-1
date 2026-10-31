@@ -53,7 +53,7 @@ public:
 		void (__cdecl *buildFieldParse)(MultiIniFieldParse &));
 };
 
-extern "C" void __cdecl AODHordeContainFieldParse(MultiIniFieldParse &parse);
+void j_000334f6();	// ILT 0x004334F6, the matched ?j_000334f6@@YAXXZ row (shared with HorseHordeContain)
 
 class AODHordeContain
 {
@@ -66,6 +66,6 @@ ModuleData *AODHordeContain::friend_newModuleData(INI *ini)
 {
 	AODHordeContainModuleData *data = new AODHordeContainModuleData;
 	if (ini)
-		ini->initFromINIMultiProc(data, &AODHordeContainFieldParse);
+		ini->initFromINIMultiProc(data, reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_000334f6));
 	return (ModuleData *)data;
 }

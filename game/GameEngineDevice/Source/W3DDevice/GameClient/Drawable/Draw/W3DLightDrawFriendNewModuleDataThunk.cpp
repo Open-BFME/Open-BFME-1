@@ -45,8 +45,8 @@ public:
 // the linked name of the value this factory hands initFromINIMultiProc is the
 // address-identified thunk ?j_0003b5d9@@YAXXZ (matched row in
 // game/gen_small/gthunks_066.cpp). No retail body carries a free-function
-// W3DLightDrawFieldParse, so nothing may be declared under that name here.
-extern "C" void __cdecl __identifier("W3DLightDrawFieldParse")();
+// W3DLightDraw field-parse alias, so nothing may be declared under that name here.
+void j_0003b5d9();	// ILT 0x0043B5D9, the matched ?j_0003b5d9@@YAXXZ row
 
 class W3DLightDraw
 {
@@ -60,6 +60,6 @@ ModuleData *W3DLightDraw::friend_newModuleData(INI *ini)
 	W3DLightDrawModuleData *data = new W3DLightDrawModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(&__identifier("W3DLightDrawFieldParse")));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>(j_0003b5d9));
 	return (ModuleData *)data;
 }
