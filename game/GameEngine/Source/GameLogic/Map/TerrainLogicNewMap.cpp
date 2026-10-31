@@ -12,6 +12,7 @@
 typedef bool Bool;
 typedef float Real;
 
+extern "C" void __cdecl __identifier("?buildBeacons@TerrainLogic@@IAEXXZ")();
 struct Coord3D
 {
 	Real x;
@@ -58,7 +59,12 @@ private:
 	// Retail calls this no-argument member through ILT 0x00010DCA after
 	// updating every waypoint.  Its 0x001ADF10 body consumes ECX as the same
 	// TerrainLogic receiver; no public semantic spelling is yet proven.
-	void rva001ADF10(void);
+	void rva001ADF10() {
+	 // retail body is ledgered as ?buildBeacons@TerrainLogic@@IAEXXZ; call it by that defined name
+	 union { void (__cdecl *symbol)(); void (TerrainLogic::*member)(); } c;
+	 c.symbol = &__identifier("?buildBeacons@TerrainLogic@@IAEXXZ");
+	 (this->*c.member)();
+	}
 };
 
 void TerrainLogic::newMap(Bool)

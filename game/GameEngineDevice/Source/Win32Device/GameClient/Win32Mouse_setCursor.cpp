@@ -2,6 +2,7 @@
 
 #include <windows.h>
 
+extern "C" void __cdecl __identifier("?test@Rva005A44B0@@QAEHXZ")();
 class Mouse
 {
 public:
@@ -19,7 +20,12 @@ class Win32Mouse
 {
 public:
 	virtual void setCursor(Mouse::MouseCursor cursor);
-	bool isCursorVisible();
+	bool isCursorVisible() {
+	 // retail body is ledgered as ?test@Rva005A44B0@@QAEHXZ; call it by that defined name
+	 union { void (__cdecl *symbol)(); bool (Win32Mouse::*member)(); } c;
+	 c.symbol = &__identifier("?test@Rva005A44B0@@QAEHXZ");
+	 return (this->*c.member)();
+	}
 
 private:
 	char m_fields[0x4da8 - 4];

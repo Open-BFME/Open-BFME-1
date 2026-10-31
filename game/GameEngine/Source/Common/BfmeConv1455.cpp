@@ -10,7 +10,9 @@ public:
 };
 
 void *bfmeGo929C(void);
-void bfmeDeleteVMP(void *p, unsigned n);
+// 0x007F0170 is ledgered as the static ??3Gen007F0170@@SAXPAX@Z operator delete.
+extern "C" void __cdecl __identifier("??3Gen007F0170@@SAXPAX@Z")(void *p, unsigned n);
+#define bfmeDeleteVMP __identifier("??3Gen007F0170@@SAXPAX@Z")
 
 struct BfmeBufVMP
 {

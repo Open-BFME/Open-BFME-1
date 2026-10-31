@@ -1,11 +1,17 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
+extern "C" void __cdecl __identifier("?applyLoginGadgets0054FB10@BfmeAptScreenOnlineLogin@@QAE_NXZ")();
 class BfmeAptScreenOnlineLogin
 {
 public:
 	void _bfme_syncLoginGadgets();
 	void _bfme_refreshLoginState();
-	void _bfme_applyLoginGadgets();
+	void _bfme_applyLoginGadgets() {
+	 // retail body is ledgered as ?applyLoginGadgets0054FB10@BfmeAptScreenOnlineLogin@@QAE_NXZ; call it by that defined name
+	 union { void (__cdecl *symbol)(); void (BfmeAptScreenOnlineLogin::*member)(); } c;
+	 c.symbol = &__identifier("?applyLoginGadgets0054FB10@BfmeAptScreenOnlineLogin@@QAE_NXZ");
+	 (this->*c.member)();
+	}
 	bool _bfme_loginGadgetsState();
 
 private:

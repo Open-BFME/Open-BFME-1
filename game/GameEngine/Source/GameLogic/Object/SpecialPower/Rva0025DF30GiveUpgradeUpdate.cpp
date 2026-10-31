@@ -1,11 +1,17 @@
 // cl: /DNDEBUG /MD /EHsc
 
+extern "C" void __cdecl __identifier("?clearStatus@Object@@QAEXW4ObjectStatusTypes@@@Z")();
 class Object;
 
 class Rva0025DF30Object
 {
 public:
-	void applyUpgrade( int upgrade );
+	void applyUpgrade(int a0) {
+	 // retail body is ledgered as ?clearStatus@Object@@QAEXW4ObjectStatusTypes@@@Z; call it by that defined name
+	 union { void (__cdecl *symbol)(); void (Rva0025DF30Object::*member)(int); } c;
+	 c.symbol = &__identifier("?clearStatus@Object@@QAEXW4ObjectStatusTypes@@@Z");
+	 (this->*c.member)(a0);
+	}
 	Rva0025DF30Object *related( int which );
 };
 
