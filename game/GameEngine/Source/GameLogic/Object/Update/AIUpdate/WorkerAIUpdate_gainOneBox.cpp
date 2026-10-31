@@ -20,31 +20,26 @@ public:
 	}
 };
 
-struct Coord3D
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
+
+static __forceinline void setCoord3D(Coord3D &value, const Coord3D *other)
 {
-	Real x;
-	Real y;
-	Real z;
+	value.x = other->x;
+	value.y = other->y;
+	value.z = other->z;
+}
 
-	inline void set(const Coord3D *other)
-	{
-		x = other->x;
-		y = other->y;
-		z = other->z;
-	}
+static __forceinline void subCoord3D(Coord3D &value, const Coord3D *other)
+{
+	value.x -= other->x;
+	value.y -= other->y;
+	value.z -= other->z;
+}
 
-	inline void sub(const Coord3D *other)
-	{
-		x -= other->x;
-		y -= other->y;
-		z -= other->z;
-	}
-
-	inline Real length() const
-	{
-		return (Real)sqrt(x * x + y * y + z * z);
-	}
-};
+static __forceinline Real coord3DLength(const Coord3D &value)
+{
+	return (Real)sqrt(value.x * value.x + value.y * value.y + value.z * value.z);
+}
 
 class AudioEventRTS
 {
@@ -169,9 +164,9 @@ Bool WorkerAIUpdate::gainOneBox(Int remainingStock)
 		if (bestWarehouse)
 		{
 			Coord3D delta;
-			delta.set(getObject()->getPosition());
-			delta.sub(bestWarehouse->getPosition());
-			if (delta.length() > getWarehouseScanDistance() / 4)
+			setCoord3D(delta, getObject()->getPosition());
+			subCoord3D(delta, bestWarehouse->getPosition());
+			if (coord3DLength(delta) > getWarehouseScanDistance() / 4)
 				playDepleted = true;
 		}
 		else
