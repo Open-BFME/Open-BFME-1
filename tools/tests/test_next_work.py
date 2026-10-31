@@ -32,6 +32,71 @@ def get_selection_json(extra=(), env=None):
     return json.loads(proc.stdout)
 
 
+@pytest.fixture
+def link_picker(monkeypatch, capsys):
+    import build
+    import next_work
+    import repair_queue
+
+    # Keep the existing queue boundary stable: live claims can change between
+    # calls, and these tests exercise the CLI dispatch rather than census IO.
+    items = [dict(tier="link", target_rva=f"0x{rva:08X}",
+                  function=f"?owner_{rva:08x}@@QAEXXZ", source=source,
+                  size=30, credit=0, why="unit does not link",
+                  pass_test=f"python3 tools/link_check.py {source}",
+                  claim_required=True,
+                  claim_command=f"python3 tools/claims.py claim 0x{rva:08X}")
+             for rva, source in ((0x1230, "game/one.cpp"),
+                                 (0x4560, "game/two.cpp"))]
+    monkeypatch.setattr(next_work, "check_ledger", lambda: "check_csv: OK")
+    monkeypatch.setattr(build, "load_claim_rows", lambda **kwargs: [])
+    monkeypatch.setattr(next_work, "drift_quick_wins", lambda: [])
+    monkeypatch.setattr(next_work, "structural_candidates", lambda *args: [])
+    monkeypatch.setattr(next_work, "ghidra_absent_candidates",
+                        lambda *args: ([], "unused"))
+    monkeypatch.setattr(repair_queue, "link_items", lambda: (items, "fixture census"))
+
+    def invoke(*args):
+        monkeypatch.setattr(sys, "argv", ["next_work.py", "--tier", "link", *args])
+        next_work.main()
+        return capsys.readouterr().out
+
+    return invoke
+
+
+def test_explicit_link_tier_uses_the_existing_queue(link_picker):
+    ranked = json.loads(link_picker("--ranked", "--json"))
+    selected = json.loads(link_picker("--json"))
+    assert ranked["link_meta"] == selected["link_meta"]
+    assert selected["tier"] == "link repair"
+    assert selected["selection_meta"]["pool"] == len(ranked["link"])
+    if ranked["link"]:
+        assert selected["selection"] in ranked["link"]
+        assert selected["selection"]["claim_required"]
+    else:
+        assert selected["selection"] is None
+    human = link_picker("--ranked", "--limit", "1")
+    assert "== L. link repairs" in human
+    assert ranked["link_meta"] in human
+
+
+def test_explicit_link_shards_partition_the_existing_queue(link_picker):
+    complete = json.loads(link_picker("--ranked", "--json"))["link"]
+    shards = [json.loads(link_picker("--ranked", "--json", "--shard", f"{i}/2"))
+              for i in range(2)]
+    key = lambda item: (item["target_rva"], item["function"], item["source"])
+    keys = [{key(item) for item in data["link"]} for data in shards]
+    assert not keys[0].intersection(keys[1])
+    assert keys[0].union(keys[1]) == {key(item) for item in complete}
+
+
+def test_empty_off_turn_queues_return_no_work():
+    import next_work
+
+    assert next_work.selected_queue(None, [], [], [], [], [],
+                                    repair_turn=False) == ("validated queue", [])
+
+
 def sourced_rows():
     """Live ledger rows a work finder must respect: every one but the dumps.
 

@@ -1211,6 +1211,7 @@ def selected_queue(tier, drifts, structural, ghidra_absent, anchored, named,
                    packets=(), finish=(), carved=(), similar=(), repair=(), link=(), repair_turn=True):
     queues = {
         "repair": ("gate-debt repair", repair),
+        "link": ("link repair", link),
         "finish": ("near-landed body", finish),
         "carved": ("carved anonymous body", carved),
         "packet": ("Zero Hour work packet", packets),
@@ -1617,6 +1618,12 @@ def main():
     for queue in (named, ghidra_absent, anchored, carved):
         repair_queue.annotate_dest(queue)
     repair = apply_shard(repair_queue.all_repair_items(), args.shard) if args.tier in (None, "repair") else []
+    # Linking is normally selected first through link_check.py. The explicit
+    # --tier link view uses the existing eligibility-filtered repair queue;
+    # selecting it must not introduce a second eligibility or claim policy.
+    link, link_note = (repair_queue.link_items() if args.tier == "link" else
+                       ([], "link tier not requested; use tools/link_check.py next first"))
+    link = apply_shard(link, args.shard)
     shard_meta = (None if args.shard is None else
                   {"index": args.shard[0], "count": args.shard[1]})
 
@@ -1632,6 +1639,7 @@ def main():
             "anchored_meta": anchored_note, "anchored": anchored,
             "similar": similar_q,
             "repair": repair,
+            "link": link, "link_meta": link_note,
             "structural_meta": structural_meta,
             "suppressed_logged": suppressed,
             "shard": shard_meta,
@@ -1640,6 +1648,16 @@ def main():
         return
 
     if args.ranked:
+        if args.tier == "link":
+            print(ledger)
+            print(f"== L. link repairs ({len(link)}) ==")
+            print(f"  {link_note}")
+            for candidate in link[:args.limit]:
+                print(f"  {candidate['size']:>5}B {candidate['target_rva']} "
+                      f"{candidate['function']} ({candidate['source']})")
+                print(f"       {candidate['why']}")
+                print(f"       pass test: {candidate['pass_test']}")
+            return
         if args.tier in (None, "repair"):
             print(f"== R. gate-debt repairs ({len(repair)}) ==")
             for candidate in repair[:args.limit]:
@@ -1667,7 +1685,7 @@ def main():
     turn = args.tier is not None or repair_queue.repair_turn(args.repair_every)
     label, candidates = selected_queue(args.tier, drifts, structural, ghidra_absent,
                                        anchored, named, packets, finish, carved, similar_q, repair=repair,
-                                       repair_turn=turn)
+                                       link=link, repair_turn=turn)
     if not candidates:
         candidate = None
     elif label == "near-landed body":
@@ -1681,8 +1699,11 @@ def main():
         meta = dict(meta, cluster=[
             c["function"] for c in cluster_of(candidate, candidates)]) \
             if candidate and label != "carved anonymous body" else meta
-        print(json.dumps({"ledger": ledger, "tier": label,
-                          "selection": candidate, "selection_meta": meta}, indent=2))
+        result = {"ledger": ledger, "tier": label,
+                  "selection": candidate, "selection_meta": meta}
+        if args.tier == "link":
+            result["link_meta"] = link_note
+        print(json.dumps(result, indent=2))
         return
     print(ledger)
     if suppressed:
