@@ -72,17 +72,39 @@ struct CostMapNodeShim
 	Real m_value;									///< retail node+0x14
 };
 
-struct CostMapIteratorShim
+// The map is STLport's map<NameKeyType, Real>; retail calls its tree's const
+// find<NameKeyType> through ILT 0x0001D980 -> 0x000D0EF0, so the tree is
+// declared under the template names that mangle to that ledger row.
+namespace _STL
 {
-	CostMapIteratorShim(const CostMapIteratorShim &other);	///< forces the hidden-pointer return
+template <class T1, class T2> struct pair { T1 first; T2 second; };
+template <class Pair> struct _Select1st { };
+template <class T> struct less { };
+template <class T> class allocator { };
+template <class Value> struct _Const_traits { };
+
+template <class Value, class Traits>
+struct _Rb_tree_iterator
+{
+	_Rb_tree_iterator(const _Rb_tree_iterator &other);	///< forces the hidden-pointer return
 	CostMapNodeShim *m_node;
 };
 
-struct CostMapShim
+template <class Key, class Value, class KeyOfValue, class Compare, class Alloc>
+class _Rb_tree
 {
+public:
+	typedef _Rb_tree_iterator<Value, _Const_traits<Value> > const_iterator;
+	template <class KT> const_iterator find(const KT &key) const;
+
 	CostMapNodeShim *m_header;						///< doubles as the end sentinel
-	CostMapIteratorShim find(const Int &key);		///< ILT thunk at 0x0001D980
 };
+}
+
+typedef _STL::pair<const NameKeyType, Real> CostMapValue;
+typedef _STL::_Rb_tree<NameKeyType, CostMapValue, _STL::_Select1st<CostMapValue>,
+	_STL::less<NameKeyType>, _STL::allocator<CostMapValue> > CostMapShim;
+typedef CostMapShim::const_iterator CostMapIteratorShim;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
@@ -112,9 +134,9 @@ Bool Player::canAffordBuild(const ThingTemplate *whatToBuild) const
 // ?getProductionCostChangePercent@Player@@QBEMABVAsciiString@@@Z
 Real Player::getProductionCostChangePercent(const AsciiString &name) const
 {
-	Int key = (Int)TheNameKeyGenerator->nameToKey(name.str());
+	NameKeyType key = TheNameKeyGenerator->nameToKey(name.str());
 
-	CostMapShim *map = (CostMapShim *)&m_costMap;
+	const CostMapShim *map = &m_costMap;
 	CostMapIteratorShim it = map->find(key);
 	// Written so the hit is the fall-through: retail branches away on a miss,
 	// and testing for equality instead puts the 0 first and inverts the jump.
