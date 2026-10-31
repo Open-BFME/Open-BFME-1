@@ -6,6 +6,10 @@
 // its constructor/destructor twins at 0x000DA590/0x000D3FA0 establish the
 // embedded hash-map layout, but no semantic class name is proven.
 
+// Without _STLP_NO_EXCEPTIONS the hashtable<pair<const int, void *>>::_M_insert
+// COMDAT emitted here is a 76-byte copy, not retail's 111-byte 0x000D3600
+// (stlport_hashtable_int_ptr_insert.cpp).
+#define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 
 typedef bool Bool;

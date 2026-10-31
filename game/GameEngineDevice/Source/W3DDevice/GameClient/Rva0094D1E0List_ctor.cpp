@@ -6,15 +6,19 @@
 // (0x24 bytes) is self-linked, the capacity is clamped to 0x800 and
 // the cached node at +0x14 starts at the tree's leftmost link.
 
+struct Rva0094D1E0ListTree;
+
 namespace _STL
 {
+// The small-block allocation calls _M_allocate directly.  An inline
+// allocate() forwarder here was emitted as a 5-byte
+// ?allocate@?$__node_alloc@$00$0A@@_STL@@SAPAXI@Z COMDAT, not retail's
+// 29-byte size-checking body.
 template <bool threads, int inst>
 class __node_alloc
 {
+	friend struct ::Rva0094D1E0ListTree;
 	static void *_M_allocate( unsigned int n );
-
-public:
-	static void *allocate( unsigned int n ) { return _M_allocate( n ); }
 };
 }
 
@@ -35,7 +39,7 @@ struct Rva0094D1E0ListTree
 	Rva0094D1E0ListTree()
 	{
 		m_header = 0;
-		m_header = (Rva0094D1E0ListNode *)_STL::__node_alloc<true, 0>::allocate( 0x24 );
+		m_header = (Rva0094D1E0ListNode *)_STL::__node_alloc<true, 0>::_M_allocate( 0x24 );
 		m_count = 0;
 		m_header->m_color = 0;
 		m_header->m_parent = 0;
