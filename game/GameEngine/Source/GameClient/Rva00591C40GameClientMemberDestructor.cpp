@@ -61,10 +61,20 @@ namespace rts
 typedef std::hash_map<AsciiString, Rva0046AF20Mapped,
 	rts::hash<AsciiString>, rts::equal_to<AsciiString> > Rva0046AF20Map;
 
+extern "C" void __identifier( "?invoke@Rva0046DE10@@QAEXXZ" )( void );
+
 class WindowManager
 {
 public:
-	void removeAptObject( const AsciiString &name );
+	// Retail calls ILT 0x0001E277 -> 0x0046DE10, the 9-byte this-adjusting
+	// tail thunk defined as Rva0046DE10::invoke; the call names that symbol.
+	void removeAptObject( const AsciiString &name )
+	{
+		typedef void ( WindowManager::*Call )( const AsciiString & );
+		union { void ( *raw )(); Call member; } call;
+		call.raw = __identifier( "?invoke@Rva0046DE10@@QAEXXZ" );
+		( this->*call.member )( name );
+	}
 
 private:
 	unsigned char m_pad[ 0x94 ];
