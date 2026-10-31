@@ -23,13 +23,25 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
+class BfmeObj1133
+{
+public:
+	int bfmeGo1133(void) const;
+};
+
 class ThingTemplate : public Overridable
 {
 public:
 	unsigned char m_unreconstructed_008[0x45C - 8];
 	UnsignedInt m_field045C;
 
-	bool bfmeTemplatePredicate() const;
+	bool bfmeTemplatePredicate() const
+	{
+		// 0x0032A220 is ledgered as BfmeObj1133::bfmeGo1133; a bool-typed member pointer keeps the al test.
+		union { int (BfmeObj1133::*defined)(void) const; bool (ThingTemplate::*predicate)(void) const; } c;
+		c.defined = &BfmeObj1133::bfmeGo1133;
+		return (this->*c.predicate)();
+	}
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h

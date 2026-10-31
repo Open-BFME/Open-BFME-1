@@ -25,10 +25,18 @@ public:
 	Object *getGoalObject();
 };
 
+// The +0x20 inner object's 0x001F1370 call target is ledgered as AICommandInterface::rva001F1370.
+enum CommandSourceType;
+class AICommandInterface
+{
+public:
+	void rva001F1370(int value, CommandSourceType commandSource);
+};
+
 class BfmeInnerCPB
 {
 public:
-	void bfmeOneCPB(Int first, Int second);
+	void bfmeOneCPB(Int first, Int second) { ((AICommandInterface *)this)->rva001F1370(first, (CommandSourceType)second); }
 
 private:
 	unsigned char m_unobserved00[0x10];

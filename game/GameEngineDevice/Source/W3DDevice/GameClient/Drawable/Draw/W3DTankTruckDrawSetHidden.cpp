@@ -28,11 +28,18 @@ public:
 	BfmeTankTruckParticlePtr *m_next;
 };
 
+// The base setHidden at 0x00762640 is ledgered as W3DModelDraw::setHidden.
+class W3DModelDraw
+{
+public:
+	void setHidden(unsigned char hidden);
+};
+
 class BfmeA1035
 {
 public:
 	virtual void unusedVirtual(void);
-	void bfmeStep1035(char hidden);
+	void bfmeStep1035(char hidden) { ((W3DModelDraw *)this)->setHidden((unsigned char)hidden); }
 };
 
 class W3DTankTruckDraw : public BfmeA1035

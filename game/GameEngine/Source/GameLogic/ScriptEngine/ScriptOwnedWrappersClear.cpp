@@ -7,10 +7,18 @@ class ScriptGroupPoolObject
 public:
 };
 
+// ILT 0x00022039 reaches 0x00350E00, ledgered as the PoolAllocation<ScriptPoolObject>
+// scalar deleting destructor; call it by that defined name.
+extern "C" void __cdecl __identifier("??_G?$PoolAllocation@VScriptPoolObject@@@@QAEPAXI@Z")();
 class ScriptPoolObject
 {
 public:
-	void deleteInstance(int);
+	void deleteInstance(int flags)
+	{
+		union { void (__cdecl *symbol)(); void *(ScriptPoolObject::*member)(unsigned int); } c;
+		c.symbol = &__identifier("??_G?$PoolAllocation@VScriptPoolObject@@@@QAEPAXI@Z");
+		(this->*c.member)(flags);
+	}
 };
 
 struct ScriptGroupWrapper

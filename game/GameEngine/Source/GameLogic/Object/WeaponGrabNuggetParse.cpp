@@ -59,8 +59,11 @@ public:
 };
 
 class INI;
-void q4Notify001E5C90( INI *a, BfmeThingUBA *m, void *store, const void *userData );
-void q4Notify001E5FD0( INI *a, Rva002DCBA0 *m, void *store, const void *userData );
+// The 0x002DAD80 / 0x002DC830 parsers are ledgered in Q4IniMultiFieldParse.cpp under these names.
+extern "C" void __cdecl __identifier("?Rva002DAD80@@YAXPAVINI@@PAX@Z")( INI *a, BfmeThingUBA *m, void *store, const void *userData );
+extern "C" void __cdecl __identifier("?Rva002DC830@@YAXPAVINI@@PAX@Z")( INI *a, Rva002DCBA0 *m, void *store, const void *userData );
+#define q4Notify001E5C90 __identifier("?Rva002DAD80@@YAXPAVINI@@PAX@Z")
+#define q4Notify001E5FD0 __identifier("?Rva002DC830@@YAXPAVINI@@PAX@Z")
 
 void parseGrabNugget( INI *ini, WeaponTemplate *weapon )
 {

@@ -36,7 +36,9 @@ public:
 
 class INI;
 
-void q4Parse001E5940(INI *a, Made001E5940 *m, int c, int d);
+// The 0x002DC7B0 parser is ledgered as ?Rva002DC7B0@@YAXPAVINI@@PAX@Z (Q4IniMultiFieldParse.cpp).
+extern "C" void __cdecl __identifier("?Rva002DC7B0@@YAXPAVINI@@PAX@Z")(INI *a, Made001E5940 *m, int c, int d);
+#define q4Parse001E5940 __identifier("?Rva002DC7B0@@YAXPAVINI@@PAX@Z")
 
 void parseDamageNugget(INI *ini, WeaponTemplate *weapon)
 {
