@@ -2911,3 +2911,22 @@ the existing stack initializer and zero constructor (3/3 rows). See
 `targets/game/reverse/attempt_support/apt-slot-stack-field-20261031.md` for
 the address/relocation proof and controls. Applicability beyond the measured
 cases is not established.
+
+## One inline union call stays out of line, the later one inlines: keep it inline (2026-10-31)
+
+Retail Render2DSentenceClass::Draw_Sentence 0x0093EB50 (1983 B) calls
+`RectClass::operator+=(const RectClass&)` (0x0093C800) at its first site, the
+extent pre-pass, but inlines the same union (x87 `fcomp`/`fstp` min/max) at the
+second site after Add_Quad. Declaring the operator out of line gave the call at
+both sites (shape 0.844); the Zero Hour rect.h inline definition with MIN/MAX
+reproduced both shapes at once (0.844 -> 0.960, then exact with other levers).
+Measured effect: VC7.1's per-function inline budget is spent on the later site
+and leaves the earlier one as a call; hypothesis only, not tested elsewhere.
+The emitted `??YRectClass` COMDAT matched retail 0x0093C800 byte for byte.
+Same body: a scalar `float height` computed before a `Vector2 size` that holds
+only the width reproduced retail's split spill slots (height in the dead data
+pointer's slot, width in the Vector2), where `Vector2 size(w, h)` or two
+scalars kept a wrong slot map. Source
+`game/Libraries/Source/WWVegas/WW3D2/Render2DSentenceDrawSentence.cpp`
+(`/DNDEBUG /MD /EHsc`, commit 274f3cb001); the variants are in
+`targets/game/reverse/attempt_support/20261031-render2dsentence-draw-sentence-93eb50.md`.
