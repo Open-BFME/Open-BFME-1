@@ -5,7 +5,10 @@
 // ledger identity must keep this address until a caller selects one copy.
 
 class AsciiString;
-extern void Rva009C9AA0Target();
+// The target is the 0x009C9AA0 ledger row (ArchiveTreeFind.cpp), named by its
+// defined STLport _M_find symbol rather than an address-derived stand-in.
+#define Rva009C9AA0Target __identifier("??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@1@ABVAsciiString@@@Z")
+extern "C" void Rva009C9AA0Target(void);
 
 class Rva009CA020FindRoute
 {
