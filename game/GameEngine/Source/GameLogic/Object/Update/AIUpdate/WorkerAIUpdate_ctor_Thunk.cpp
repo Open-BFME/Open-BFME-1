@@ -13,19 +13,14 @@ typedef float Real;
 extern "C" void _ReadWriteBarrier();
 #pragma intrinsic(_ReadWriteBarrier)
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 
-	void zero()
-	{
-		x = 0.0f;
-		y = 0.0f;
-		z = 0.0f;
-	}
-};
+static __forceinline void zeroCoord3D(Coord3D &p)
+{
+	p.x = 0.0f;
+	p.y = 0.0f;
+	p.z = 0.0f;
+}
 
 class __declspec(novtable) AIUpdateCore
 {
@@ -186,7 +181,7 @@ WorkerAIUpdate::WorkerAIUpdate(Thing *thing, const ModuleData *moduleData)
 		for (Int j = 0; j < 3; j++)
 		{
 			m_dockPoint[i][j].valid = 0;
-			m_dockPoint[i][j].location.zero();
+			zeroCoord3D(m_dockPoint[i][j].location);
 		}
 	}
 	m_currentTask = -1;
