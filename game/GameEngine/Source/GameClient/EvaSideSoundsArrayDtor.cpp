@@ -19,8 +19,9 @@ struct EvaSideSound0089C900
 	unsigned int m_value;
 };
 
-struct EAStringData;
-extern EAStringData g_emptyStringData;
+// The existing shared sentinel at VA 0x012D5298 is owned by Data/Rva012D5298.cpp.
+class EAStringC { public: class StringDataC; };
+extern EAStringC::StringDataC g_rva012D5298Empty;
 
 // VA 0x01337A30 is Apt.cpp's ?g_rva01337A30AllocPair@@3PAUBfmeStringPool3AF0@@A (data_rows).
 struct BfmeStringPool3AF0 { void *m_alloc; void (__cdecl *m_free)(void *storage); };
@@ -64,7 +65,7 @@ Q3EhMember0089C900::~Q3EhMember0089C900()
 				EvaStringData0089C900 *string = *(EvaStringData0089C900 **)((char *)self->m_elements + offset);
 				if (string != 0)
 					{
-						if (string != reinterpret_cast<EvaStringData0089C900 *>(&g_emptyStringData))
+						if (string != reinterpret_cast<EvaStringData0089C900 *>(&g_rva012D5298Empty))
 						{
 							EvaTaggedValue0089C900 *sound = (EvaTaggedValue0089C900 *)((unsigned int)*(unsigned int *)((char *)self->m_elements + offset + 4) & ~1u);
 							if (sound != 0 && (*(unsigned int *)((char *)self->m_elements + offset + 4) & 1) == 0)
