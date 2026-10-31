@@ -76,7 +76,15 @@ Rva007F89B0Deleting::Rva007F89B0Deleting()
 {
 }
 BFME_SCALAR_DELETING_DTOR( Rva007F8F40Deleting )
+// its constructor only stores this class's vftable
+Rva007F8F40Deleting::Rva007F8F40Deleting()
+{
+}
 BFME_SCALAR_DELETING_DTOR( Rva007F96A0Deleting )
+// its constructor only stores this class's vftable
+Rva007F96A0Deleting::Rva007F96A0Deleting()
+{
+}
 BFME_SCALAR_DELETING_DTOR( Rva007FA8E0Deleting )
 BFME_SCALAR_DELETING_DTOR( Rva007FAD50Deleting )
 // its constructor only stores this class's vftable
@@ -84,7 +92,15 @@ Rva007FAD50Deleting::Rva007FAD50Deleting()
 {
 }
 BFME_SCALAR_DELETING_DTOR( Rva007FBBE0Deleting )
+// its constructor only stores this class's vftable
+Rva007FBBE0Deleting::Rva007FBBE0Deleting()
+{
+}
 BFME_SCALAR_DELETING_DTOR( Rva007FD040Deleting )
+// its constructor only stores this class's vftable
+Rva007FD040Deleting::Rva007FD040Deleting()
+{
+}
 BFME_SCALAR_DELETING_DTOR( Rva00889250Deleting )
 BFME_SCALAR_DELETING_DTOR( Rva00938BF0Deleting )
 BFME_SCALAR_DELETING_DTOR( Rva009CDDF0Deleting )
