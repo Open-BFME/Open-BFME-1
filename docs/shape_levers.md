@@ -2898,3 +2898,16 @@ is exact, separate temps leave y in EDX (2 B). `AIUpdateInterface::calculateMaxB
 terms through `*(const volatile Real *)&` made the last 4 bytes exact (only y: 2 B; volatile on
 the other vector: inert). Sources: game/GameEngine/Source/GameLogic/AI/AIGroupScatter.cpp,
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceCalculateMaxBlockedSpeed.cpp.
+
+Further measured use: replacing the dangling array global in
+`EA/Apt/Rva008C66A0SlotRelease.cpp` (008C66A0, 129 B) with the existing
+stack's +8 field reverses the EAX/ECX field loads and changes one SIB byte.
+Read only the array pointer through `AptValue ** volatile *`, then index it
+with the ordinary count. This restores both load order and later EDX flag
+temporary. Making the count volatile too restores the SIB but changes that
+temporary to EAX and shortens TEST, so is not equivalent in code shape.
+VC7.1 `/O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc`; verified together with
+the existing stack initializer and zero constructor (3/3 rows). See
+`targets/game/reverse/attempt_support/apt-slot-stack-field-20261031.md` for
+the address/relocation proof and controls. Applicability beyond the measured
+cases is not established.

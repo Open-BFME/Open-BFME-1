@@ -46,7 +46,6 @@ struct Rva008AE770Stack
 };
 
 extern Rva008AE770Stack Rva008AE770TheStack;
-extern AptValue **g_bfmeArr1233;
 extern AptValue *g_bfmeFallbackDB;
 // retail 0x013377D8; its one definition is ?g_bfmeHolderBU@@3PAUBfmePickWorld1284@@A
 struct BfmePickWorld1284;
@@ -54,7 +53,10 @@ extern BfmePickWorld1284 *g_bfmeHolderBU;
 
 AptValue *__cdecl dup_008c66a0()
 {
-	AptValue *arg = g_bfmeArr1233[Rva008AE770TheStack.m_count - 1];
+	// Native 0x008C66A0 loads VA 0x01338750: the existing stack's +8 field.
+	// One volatile pointer read retains VC7.1's native array-before-count order.
+	AptValue **values = *reinterpret_cast<AptValue ** volatile *>(&Rva008AE770TheStack.m_rva01338750);
+	AptValue *arg = values[Rva008AE770TheStack.m_count - 1];
 	if (!arg->isUndefined())
 	{
 		int index = arg->toInteger();
