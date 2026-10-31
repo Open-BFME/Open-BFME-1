@@ -2547,6 +2547,19 @@ fastcall vtable adapters, used to steer the vtable register, were no longer
 needed). Writing F inside each arm left it 8 bytes off. Source:
 game/GameEngine/Source/GameLogic/Object/Contain/Rva0024ECA0.cpp (7087e16095).
 
+Fourth instance: 0x001FECD0 (718 B, MASM dump) had `push eax; lea ecx,[sound]`
+before `operator=` where retail leads with the lea. A dead duplicate test,
+`if (m_field35) sound = *loop; else sound = *loop;`, moved the lea but kept
+m_field35 live, leaving `mov dl` for retail's `mov al` (2 bytes). The real
+shape, from the matched BFME 2 GettingBuiltBehaviorRva00453652.cpp, is three
+arms that each test and assign their own reference (`if (m_35) { if
+(ref2.p) sound = ref2; } else if (!m_33) { if (ref0.p) sound = ref0; } else
+{ if (ref1.p) sound = ref1; }`), which matched exactly. When a duplicated arm
+fixes the order but leaves a register letter off, look for distinct real
+arms instead. Source:
+game/GameEngine/Source/GameLogic/Object/Behavior/GettingBuiltBehaviorRva001FECD0.cpp
+(38c88524d9).
+
 ## A body-private flag is file-static: its store sinks past the receiver copy (2026-10-29)
 
 MpGameSetup::rva005280A0 (0x005280A0, 570 B; bank at 9 diffs) had a byte
