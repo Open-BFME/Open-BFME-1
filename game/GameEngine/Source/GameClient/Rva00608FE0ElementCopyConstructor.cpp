@@ -16,7 +16,7 @@ struct BfmeLegendStringVec
 };
 
 #pragma comment(linker, "/alternatename:??0BfmeLegendStringVec@@QAE@ABU0@@Z=?j_00015474@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1BfmeLegendStringVec@@QAE@XZ=??1SubsystemLegendEntry@@QAE@XZ")
+#pragma comment(linker, "/alternatename:??1BfmeLegendStringVec@@QAE@XZ=??1?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@XZ")
 
 struct Rva00606A80Member
 {
