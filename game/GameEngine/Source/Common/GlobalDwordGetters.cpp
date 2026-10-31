@@ -44,6 +44,7 @@ class Rva006E1BD0
 public:
 	static int s_value;
 };
+extern int g_Va012C8394;
 extern int g_Va012D6DB0;
 extern int g_Va012D6DB4;
 extern int g_Va012D6DB8;
@@ -421,3 +422,7 @@ int Rva00AFE960Get( void )
 	return FreeCount;
 }
 
+int Rva0084DBF0Get( void )
+{
+	return g_Va012C8394;
+}

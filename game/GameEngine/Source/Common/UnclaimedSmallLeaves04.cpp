@@ -954,4 +954,53 @@ float Rva008915B0Two()
 	return 2.0f;
 }
 
+
+// 0x007F1D60 (6 bytes): 64-bit value at +0
+class Rva007F1D60
+{
+public:
+	__int64 get() const;
+
+	__int64 m_0;
+};
+
+__int64 Rva007F1D60::get() const
+{
+	return m_0;
+}
+
+// 0x008A0DF0 (6 bytes): returns 0x200
+int Rva008A0DF0()
+{
+	return 0x200;
+}
+
+// 0x0098E9A0 (13 bytes): address of dword element n of the array at +0xC
+class Rva0098E9A0
+{
+public:
+	int *at( int n );
+
+	char m_lead[ 0xC ];
+	int *m_C;
+};
+
+int *Rva0098E9A0::at( int n )
+{
+	return &m_C[ n ];
+}
+
 #pragma pack( pop )
+
+// 0x008DB4E0 (10 bytes): cdecl, arcsine of its float argument through the
+// intrinsic __CIasin helper; the result stays on the x87 stack as a double.
+// Retail calls the helper and returns rather than tail-jumping; holding the
+// result in a local before returning it keeps the call.
+extern "C" double __cdecl asin( double );
+#pragma intrinsic( asin )
+
+double Rva008DB4E0Asin( float x )
+{
+	double result = asin( x );
+	return result;
+}
