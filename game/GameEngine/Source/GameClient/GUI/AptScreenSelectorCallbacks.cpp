@@ -10,6 +10,7 @@
 // Retail compiles all three with a tail jump, so each one ends in a jmp rather
 // than a call and a ret.
 
+extern "C" void __cdecl __identifier("?d_000dfcd0@@YAXXZ")();
 class GameMessage;
 
 // ?TheMessageStream@@3PAVMessageStream@@A, the same thirteen empty slots and
@@ -60,7 +61,12 @@ struct Rva00579160Manager
 class BfmeGlob938A
 {
 public:
-	void bfmeTail938A( int f );
+	void bfmeTail938A(int a0) {
+	 // retail body is still the gen-dump row ?d_000dfcd0@@YAXXZ (no C++ row yet); call it by that defined name
+	 union { void (__cdecl *symbol)(); void (BfmeGlob938A::*member)(int); } c;
+	 c.symbol = &__identifier("?d_000dfcd0@@YAXXZ");
+	 (this->*c.member)(a0);
+	}
 };
 
 extern MessageStream *TheMessageStream;

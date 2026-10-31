@@ -1,3 +1,4 @@
+extern "C" void __cdecl __identifier("?d_00417430@@YAXXZ")();
 class BfmeVirtQR
 {
 public:
@@ -23,7 +24,12 @@ class BfmeHostQR
 {
 public:
 	void *bfmeApplyQR(void *arg);
-	void Rva00417430AudioSelector(void *out, int selector);
+	void Rva00417430AudioSelector(void * a0,int a1) {
+	 // retail body is still the gen-dump row ?d_00417430@@YAXXZ (no C++ row yet); call it by that defined name
+	 union { void (__cdecl *symbol)(); void (BfmeHostQR::*member)(void *,int); } c;
+	 c.symbol = &__identifier("?d_00417430@@YAXXZ");
+	 (this->*c.member)(a0,a1);
+	}
 
 	unsigned char m_bfmeHeadQR[0xfc];
 	BfmeMidQR *m_bfmeFCQR;

@@ -6,6 +6,7 @@
 
 typedef bool Bool;
 
+extern "C" void __cdecl __identifier("?d_0032c090@@YAXXZ")();
 class PolygonTrigger;
 
 template <class T> class StringBase
@@ -74,7 +75,12 @@ extern ScriptEngine *TheScriptEngine;
 class ScriptConditions
 {
 protected:
-	Bool bfmeAreaBody(Parameter *a, Parameter *b, Parameter *c);
+	Bool bfmeAreaBody(Parameter * a0,Parameter * a1,Parameter * a2) {
+	 // retail body is still the gen-dump row ?d_0032c090@@YAXXZ (no C++ row yet); call it by that defined name
+	 union { void (__cdecl *symbol)(); Bool (ScriptConditions::*member)(Parameter *,Parameter *,Parameter *); } c;
+	 c.symbol = &__identifier("?d_0032c090@@YAXXZ");
+	 return (this->*c.member)(a0,a1,a2);
+	}
 	Bool bfmeAreaGate(Parameter *a, Parameter *b, Parameter *c);
 };
 
