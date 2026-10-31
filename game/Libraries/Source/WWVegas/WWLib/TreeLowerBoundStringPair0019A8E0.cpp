@@ -28,6 +28,44 @@ extern "C" int __cdecl memcmp(const void *buf1, const void *buf2, unsigned int c
 
 #include "ascii_string.h"
 
+// AsciiString::compare(const AsciiString &), expanded in place.  Calling the
+// member emits a ?compare@AsciiString@@QBEHABV1@@Z COMDAT that is not retail's
+// 0x0005FEB0 body.  The buffer pointer is the string's first word; its length
+// is the unsigned short at +4 and the characters start at +8.  The body is a
+// member of a TU-local view: as a free function it left operator< out of line.
+namespace
+{
+struct AsciiCompareView
+{
+	struct Header
+	{
+		int refCount;
+		unsigned short length;
+		unsigned short capacity;
+		char data[1];
+	};
+	Header *m_data;
+	int compare( const AsciiCompareView &s ) const
+	{
+		int thatLen = s.m_data ? s.m_data->length : 0;
+		const char *thatData = s.m_data ? &s.m_data->data[0] : (const char *)"";
+		int thisLen = m_data ? m_data->length : 0;
+		const char *thisData = m_data ? &m_data->data[0] : (const char *)"";
+		int n = thisLen < thatLen ? thisLen : thatLen;
+		int c = memcmp(thisData, thatData, n);
+		if (c != 0)
+			return c;
+		return thisLen - thatLen;
+	}
+};
+
+}
+
+static __forceinline int asciiCompare( const AsciiString &left, const AsciiString &right )
+{
+	return reinterpret_cast<const AsciiCompareView &>(left).compare(reinterpret_cast<const AsciiCompareView &>(right));
+}
+
 // Gen_t_0019a8e0_m12cd / Gen_t_0019bca0_m12cd from game/gen_small/fam_009.cpp:
 // a 12-byte key with a declared copy ctor/dtor -- two AsciiStrings (the
 // fields the descent actually compares) plus a third dword the comparator
@@ -43,9 +81,9 @@ struct Gen_t_0019a8e0_m12cd
 
 inline bool operator<(const Gen_t_0019a8e0_m12cd &left, const Gen_t_0019a8e0_m12cd &right)
 {
-	return left.m_first.compare(right.m_first) < 0
-		|| (!(right.m_first.compare(left.m_first) < 0)
-			&& left.m_second.compare(right.m_second) < 0);
+	return asciiCompare(left.m_first, right.m_first) < 0
+		|| (!(asciiCompare(right.m_first, left.m_first) < 0)
+			&& asciiCompare(left.m_second, right.m_second) < 0);
 }
 
 typedef _STL::_Rb_tree<Gen_t_0019a8e0_m12cd, Gen_t_0019a8e0_m12cd, _STL::_Identity<Gen_t_0019a8e0_m12cd>,
@@ -66,9 +104,9 @@ struct Gen_t_0019bca0_m12cd
 
 inline bool operator<(const Gen_t_0019bca0_m12cd &left, const Gen_t_0019bca0_m12cd &right)
 {
-	return left.m_first.compare(right.m_first) < 0
-		|| (!(right.m_first.compare(left.m_first) < 0)
-			&& left.m_second.compare(right.m_second) < 0);
+	return asciiCompare(left.m_first, right.m_first) < 0
+		|| (!(asciiCompare(right.m_first, left.m_first) < 0)
+			&& asciiCompare(left.m_second, right.m_second) < 0);
 }
 
 typedef _STL::_Rb_tree<Gen_t_0019bca0_m12cd, Gen_t_0019bca0_m12cd, _STL::_Identity<Gen_t_0019bca0_m12cd>,

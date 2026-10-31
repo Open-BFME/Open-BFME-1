@@ -11,6 +11,37 @@ typedef int Int;
 
 #include "ascii_string.h"
 
+// AsciiString::compare(const AsciiString &), expanded in place.  Calling the
+// member emits a ?compare@AsciiString@@QBEHABV1@@Z COMDAT that is not retail's
+// 0x0005FEB0 body.  The buffer pointer is the string's first word; its length
+// is the unsigned short at +4 and the characters start at +8.
+struct AsciiCompareView
+{
+	struct Header
+	{
+		int refCount;
+		unsigned short length;
+		unsigned short capacity;
+		char data[1];
+	};
+	Header *m_data;
+};
+
+static __forceinline int asciiCompare( const AsciiString &left, const AsciiString &right )
+{
+	const AsciiCompareView &s = reinterpret_cast<const AsciiCompareView &>(right);
+	const AsciiCompareView &t = reinterpret_cast<const AsciiCompareView &>(left);
+	int thatLen = s.m_data ? s.m_data->length : 0;
+	const char *thatData = s.m_data ? &s.m_data->data[0] : (const char *)"";
+	int thisLen = t.m_data ? t.m_data->length : 0;
+	const char *thisData = t.m_data ? &t.m_data->data[0] : (const char *)"";
+	int n = thisLen < thatLen ? thisLen : thatLen;
+	int c = memcmp(thisData, thatData, n);
+	if (c != 0)
+		return c;
+	return thisLen - thatLen;
+}
+
 class Rva001417F0ModuleInfo
 {
 public:
@@ -51,7 +82,7 @@ Bool ModuleInfo::clearModuleDataWithTag(const AsciiString &tagToClear,
 	for (std::vector<Nugget>::iterator it = m_info.begin();
 		it != m_info.end(); )
 	{
-		if (it->m_moduleTag.compare(tagToClear) == 0)
+		if (asciiCompare(it->m_moduleTag, tagToClear) == 0)
 		{
 			clearedModuleNameOut = it->first;
 			it = m_info.erase(it);
