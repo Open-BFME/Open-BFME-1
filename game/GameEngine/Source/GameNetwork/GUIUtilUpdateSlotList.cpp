@@ -118,7 +118,9 @@ void UpdateSlotList( GameInfo *myGame, GameWindow *comboPlayer[],
 			{
 				UnicodeString newName = slot->getName();
 				UnicodeString oldName = GadgetComboBoxGetText(comboPlayer[i]);
-				if (comboPlayer[i] && newName.compare(oldName))
+				// StringBase spelling: the UnicodeString::compare forwarder would be
+				// emitted here as a COMDAT; retail calls ILT 0x000226EC directly.
+				if (comboPlayer[i] && ((const StringBase<wchar_t> *)&newName)->compare(*(const StringBase<wchar_t> *)&oldName))
 				{
 					GadgetComboBoxSetText(comboPlayer[i], newName);
 				}

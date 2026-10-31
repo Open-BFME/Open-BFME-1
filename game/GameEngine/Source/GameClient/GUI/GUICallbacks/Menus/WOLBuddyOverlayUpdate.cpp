@@ -32,6 +32,14 @@ inline UnicodeString &UnicodeString::operator=(const UnicodeString &s)
 	return *this;
 }
 
+// UnicodeString::str, expanded in place.  Calling the member would emit a
+// ?str@UnicodeString@@QBEPBGXZ COMDAT whose null-string operand is
+// StringBase<unsigned short>'s TheNullChr, not retail 0x0005F270's.
+static __forceinline const wchar_t *unicodeStr( const UnicodeString &string )
+{
+	return (const wchar_t *)((const StringBase<unsigned short> *)&string)->str();
+}
+
 typedef int GPProfile;
 typedef int Color;
 // Layout independently matched by PeerDefsGroupRoomMapOperator.cpp and
@@ -275,7 +283,7 @@ void updateBuddyInfo(void)
 
 		// insert status into box
 		AsciiString marker;
-		marker.format("Buddy:%ls", info.m_statusString.str());
+		marker.format("Buddy:%ls", unicodeStr(info.m_statusString));
 		if (!((const StringBase<unsigned short> *)&info.m_statusString)->compareNoCase(L"Offline") ||
 			!((const StringBase<unsigned short> *)&info.m_statusString)->compareNoCase(L"Online") ||
 			!((const StringBase<unsigned short> *)&info.m_statusString)->compareNoCase(L"Matching"))
@@ -286,19 +294,19 @@ void updateBuddyInfo(void)
 				 !((const StringBase<unsigned short> *)&info.m_statusString)->compareNoCase(L"Loading") ||
 				 !((const StringBase<unsigned short> *)&info.m_statusString)->compareNoCase(L"Playing"))
 		{
-			formatStr.format(TheGameText->fetch(marker), info.m_locationString.str());
+			formatStr.format(TheGameText->fetch(marker), unicodeStr(info.m_locationString));
 		}
 		else if (!((const StringBase<unsigned short> *)&info.m_statusString)->compareNoCase(L"Chatting"))
 		{
 			UnicodeString roomName;
-			GroupRoomMap::iterator gIt = TheGameSpyInfo->getGroupRoomList()->find(_wtoi(info.m_locationString.str()));
+			GroupRoomMap::iterator gIt = TheGameSpyInfo->getGroupRoomList()->find(_wtoi(unicodeStr(info.m_locationString)));
 			if (gIt != TheGameSpyInfo->getGroupRoomList()->end())
 			{
 				AsciiString s;
 				s.format("GUI:%s", gIt->second.m_name.str());
 				roomName = TheGameText->fetch(s);
 			}
-			formatStr.format(TheGameText->fetch(marker), roomName.str());
+			formatStr.format(TheGameText->fetch(marker), unicodeStr(roomName));
 		}
 		else
 		{
