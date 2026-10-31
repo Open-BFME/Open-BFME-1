@@ -16,7 +16,15 @@
 #include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // Inline here, as in retail's caller: a null buffer or a zero length.
-template <> inline bool StringBase<char>::isEmpty() const { return !m_data || !m_data->length; }
+// AsciiString::isEmpty, expanded in place.  Calling the member would emit
+// ?isEmpty@AsciiString@@QBE_NXZ and ?isEmpty@?$StringBase@D@@QBE_NXZ COMDATs
+// that are not retail's bodies.  The buffer pointer is the string's first
+// word; its length is at +4.
+static __forceinline bool asciiIsEmpty( const AsciiString &string )
+{
+	const char *data = *reinterpret_cast<const char * const *>(&string);
+	return !data || *reinterpret_cast<const unsigned short *>(data + 4) == 0;
+}
 
 class Image;
 
@@ -92,7 +100,7 @@ const Image *RespawnUpdate::getDeadImage()
 		return m_cachedImage;
 
 	Object *obj = m_object;
-	if (!m_moduleData->m_imageName.isEmpty())
+	if (!asciiIsEmpty(m_moduleData->m_imageName))
 	{
 		m_cachedImage = TheMappedImageCollection->findImageByName(m_moduleData->m_imageName);
 		if (m_cachedImage)

@@ -19,8 +19,17 @@
 #include "coord.h"
 #include "matrix3d.h"
 
-template<> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
 #include "ascii_string.h"
+
+// AsciiString::isEmpty, expanded in place.  Calling the member would emit
+// ?isEmpty@AsciiString@@QBE_NXZ and ?isEmpty@?$StringBase@D@@QBE_NXZ COMDATs
+// that are not retail's bodies.  The buffer pointer is the string's first
+// word; its length is at +4.
+static __forceinline bool asciiIsEmpty( const AsciiString &string )
+{
+	const char *data = *reinterpret_cast<const char * const *>(&string);
+	return !data || *reinterpret_cast<const unsigned short *>(data + 4) == 0;
+}
 
 enum WhichTurretType { TURRET_INVALID = -1, TURRET_MAIN = 0 };
 
@@ -131,7 +140,7 @@ void LaserUpdate::initLaser(const Object *parent, const Coord3D *startPos, const
 
     m_rva00603BB0ExpiryFrame = (unsigned)((float)TheGameClient->getFrame() + data->m_rva00603FE0LifetimeMsec * 0.03f);
 
-    if( parent && !data->m_parentFireBoneName.isEmpty() )
+    if( parent && !asciiIsEmpty(data->m_parentFireBoneName) )
     {
         if( data->m_parentFireBoneOnTurret )
         {
