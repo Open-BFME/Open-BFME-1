@@ -29,29 +29,9 @@ public:
 	StringBase( const StringBase<T> &src );
 	~StringBase();
 
-	int compare( const StringBase<T> &str ) const
-	{
-		int thatLen = str.m_data ? str.m_data->length : 0;
-		const T *thatData = str.m_data ? &str.m_data->data[ 0 ] : (const T *)L"";
-		int thisLen = m_data ? m_data->length : 0;
-		const T *thisData = m_data ? &m_data->data[ 0 ] : (const T *)L"";
-		int n = thisLen < thatLen ? thisLen : thatLen;
-		int c = 0;
-		while ( n > 0 )
-		{
-			if ( *thisData != *thatData )
-			{
-				c = *thisData - *thatData;
-				break;
-			}
-			++thisData;
-			++thatData;
-			--n;
-		}
-		if ( c != 0 )
-			return c;
-		return thisLen - thatLen;
-	}
+	// Declared only: the one call stays out of line (ILT 0x000226EC), and an
+	// inline body here would emit a non-retail COMDAT beside 0x0005FFA0.
+	int compare( const StringBase<T> &str ) const;
 
 	struct Header
 	{
@@ -131,7 +111,9 @@ Rva0068FAF0Tree::_M_find<BfmeWideString>( const BfmeWideString &key ) const
 		else
 			node = _S_right( node );
 	}
-	if ( result == this->_M_header._M_data || key.compare( _S_key( result ) ) < 0 )
-		result = this->_M_header._M_data;
+	// Read once after the walk: retail keeps it in ESI across the call.
+	_Link_type header = this->_M_header._M_data;
+	if ( result == header || key.compare( _S_key( result ) ) < 0 )
+		result = header;
 	return result;
 }
