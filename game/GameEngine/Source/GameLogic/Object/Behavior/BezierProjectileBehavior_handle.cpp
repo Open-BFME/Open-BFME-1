@@ -55,6 +55,11 @@ class BezierLaunchHelper
 public:
 	Bool fire(Object *found, Object *launcher, Object *victim, void *extra);
 };
+// ILT target 0x001E63A0 is ledgered as WeaponTemplate::shouldProjectileCollideWith; the caller
+// reaches it by that defined name through a call-site member pointer (an inline forwarder
+// changed the frame).
+extern "C" void __cdecl __identifier("?shouldProjectileCollideWith@WeaponTemplate@@QBE_NPBVObject@@00W4ObjectID@@@Z")();
+union FireU { void (__cdecl *symbol)(); Bool (BezierLaunchHelper::*member)(Object *, Object *, Object *, void *); };
 
 class BezierProjectileBehavior
 {
@@ -94,5 +99,7 @@ Bool BezierProjectileBehavior::handle(Object *victim)
 	Object *found = TheGameLogic->findObjectByID(getLauncherID());
 	Object *owner = *(Object **)((char *)this - 0x18);
 	void *extra = m_extra18;
-	return m_launcher->fire(found, owner, v, extra);
+	FireU u;
+	u.symbol = &__identifier("?shouldProjectileCollideWith@WeaponTemplate@@QBE_NPBVObject@@00W4ObjectID@@@Z");
+	return (m_launcher->*u.member)(found, owner, v, extra);
 }
