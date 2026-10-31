@@ -15,6 +15,24 @@
 class Object;
 class Rva002622D0Subject;
 
+// Same allocator view as Rva002622D0SubjectVectorBase.cpp, so the
+// _Vector_base(size_t, const allocator &) COMDAT emitted here is retail's
+// 97-byte 0x001D95B0 body rather than a second, inlined-allocation copy.
+void *__cdecl bfmeNodeAllocateAt00061CE0(unsigned int bytes);
+
+namespace _STL
+{
+	template <>
+	inline Rva002622D0Subject **allocator<Rva002622D0Subject *>::allocate(
+		size_type count, const void *)
+	{
+		if (count != 0)
+			return static_cast<Rva002622D0Subject **>(
+				bfmeNodeAllocateAt00061CE0(count * sizeof(Rva002622D0Subject *)));
+		return 0;
+	}
+}
+
 struct Rva00262120Entry
 {
 	Object *object;
