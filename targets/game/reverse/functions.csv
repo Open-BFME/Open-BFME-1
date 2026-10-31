@@ -37316,7 +37316,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_002a8540@@YAXXZ,,0x002A8540,814,game/gen_asm/d_002a7010.asm,matched,gen-dump;ghidra=FUN_006a8540
 ?d_002a9000@@YAXXZ,,0x002A9000,833,game/gen_asm/d_002a7010.asm,matched,gen-dump;ghidra=FUN_006a9000
 ?d_002ad670@@YAXXZ,,0x002AD670,1885,game/gen_asm/d_002a7010.asm,matched,gen-dump;ghidra=FUN_006ad670
-?d_002b26c0@@YAXXZ,,0x002B26C0,756,game/gen_asm/d_002afb20.asm,matched,gen-dump;ghidra=FUN_006b26c0
 ?d_002b32a0@@YAXXZ,,0x002B32A0,3352,game/gen_asm/d_002afb20.asm,matched,gen-dump;ghidra=FUN_006b32a0
 ?d_002ba390@@YAXXZ,,0x002BA390,1159,game/gen_asm/d_002afb20.asm,matched,gen-dump;ghidra=FUN_006ba390
 ?d_002be4a0@@YAXXZ,,0x002BE4A0,1160,game/gen_asm/d_002baa40.asm,matched,gen-dump;ghidra=FUN_006be4a0
@@ -173408,3 +173407,4 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?calculateMaxBlockedSpeed@AIUpdateInterface@@IBEMPAVObject@@@Z,,0x0026EED0,289,game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceCalculateMaxBlockedSpeed.cpp,matched,AIUpdateInterface::calculateMaxBlockedSpeed; ilt_oracle CONFIRMED protected const spelling; ZH AIUpdate.cpp twin with BFME locomotor height; handoff targets/game/reverse/attempt_support/20261028-0026eed0-calculateMaxBlockedSpeed.md;model=claude-opus-5-5;host=app
 ?update@GiantBirdSwoopState@@UAE?AW4StateReturnType@@XZ,,0x002C3550,689,game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdSwoopState_update.cpp,matched,vtable 0x010C7868 slot 6 via ILT 0x00446A92; slots 4/5 are the matched onEnter/onExit; class name GiantBirdSwoopState fits ILT windows for update+onEnter+onExit; volatile word copies keep retail load/store order;model=claude-opus-5-5;host=app
 ?rva002C38B0@GiantBirdSwoopState@@QAEX_N@Z,,0x002C38B0,578,game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdSwoopState_update.cpp,matched,thiscall ret 4 helper reached from matched GiantBirdSwoopState::update through ILT 0x000163D3; BFME2 donor AIGiantBirdSwoopState::rva0036C438 control flow minus its weapon path; method name unproven so address-derived;model=claude-opus-5-5;host=app
+?method@Rva002B26C0Owner@@QAEXXZ,,0x002B26C0,756,game/GameEngine/Source/GameLogic/Object/Update/WallUpgradeUpdate_rva002B26C0.cpp,matched,called on the wall update module by matched GeometryUpgrade 0x002D5980; destination is the scanned position with a volatile z store-back (retail z self-copy); handoff 20261030-002b26c0-partition-move-out.md;model=claude-opus-5-5;host=app

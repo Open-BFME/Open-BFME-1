@@ -1,7 +1,17 @@
-// ?method@Rva002B26C0Owner@@QAEXXZ
-// partial score=0.7421 date=2026-10-30
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/bfmekindof /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
+//
+// Rva002B26C0Owner::method, retail 0x002B26C0 (756 B, thiscall, bare RET),
+// inside the WallUpgradeUpdate unit (0x002B2100..0x002B25E0) and called on
+// the wall update module by the matched GeometryUpgrade body 0x002D5980
+// (Rva002D5980.cpp).  It scans ThePartitionManager around the owner with a
+// six-filter chain and moves every eligible object out by three times the
+// owner-to-center offset, then adjusts the destination, sets the position
+// and kicks the object's AI.  The method name stays address-derived.
+// The destination is the scanned position itself: retail reloads its z and
+// stores it back after the argument pushes, which only the volatile z store
+// below keeps (a plain z = z is dropped and shifts the register choice).
+// Handoff: targets/game/reverse/attempt_support/20261030-002b26c0-partition-move-out.md
 #define _STLP_USE_STATIC_LIB 1
 #define _STLP_NO_EXCEPTIONS 1
 #define BFME_STLP_NODE_ALLOC 1
@@ -193,9 +203,11 @@ void Rva002B26C0Owner::method()
             delta.z = 0;
             delta.x *= 3.0f;
             delta.y *= 3.0f;
+            Real nx = position.x + delta.x;
+            Real ny = position.y + delta.y;
+            Real nz = position.z;
+            position.x = nx; position.y = ny; *(volatile Real *)&position.z = nz;
             Coord3D &dest = position;
-            dest.x += delta.x;
-            dest.y += delta.y;
             pathfinder->adjustDestination(other,
               *(const LocomotorSet *)(other->rva00000204+0x1a8),&dest,0);
             ((BfmeHostTP *)other)->bfmeSetPositionTP((const BfmePosTP *)&dest,true);
