@@ -44,19 +44,14 @@ int GetGameLogicRandomValue(int lo, int hi, char *file, int line);
 float bfmeCosVNB(float value);
 float bfmeSinVNB(float value);
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
-	void zero()
-	{
-		x = 0;
-		y = 0;
-		z = 0;
-	}
-};
+static __forceinline void zeroCoord3D(Coord3D &position)
+{
+	position.x = 0;
+	position.y = 0;
+	position.z = 0;
+}
 
 class Object
 {
@@ -139,7 +134,7 @@ void SlavedUpdate::startSlavedEffects(const Object *slaver)
 void SlavedUpdate::stopSlavedEffects()
 {
 	m_slaver = 0;
-	m_guardPointOffset.zero();
+	zeroCoord3D(m_guardPointOffset);
 	m_object->clearStatus(MAKE_OBJECT_STATUS_MASK(OBJECT_STATUS_UNSELECTABLE));
 	m_object->clearDisabled(DISABLED_HELD);
 }
