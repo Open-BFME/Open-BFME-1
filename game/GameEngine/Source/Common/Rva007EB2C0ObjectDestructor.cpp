@@ -27,8 +27,16 @@ extern void Rva007F0060(void);
 class Rva007EB2C0Object
 {
 public:
+	Rva007EB2C0Object();
 	virtual ~Rva007EB2C0Object();
 };
+
+// 0x007EB1B0: the class's empty constructor, which only stores the recorded
+// vftable 0x01129CB4 (mov eax,ecx / mov [eax],vftable / ret).  Unreferenced
+// in retail; it sits after an int3 pad.
+Rva007EB2C0Object::Rva007EB2C0Object()
+{
+}
 
 Rva007EB2C0Object::~Rva007EB2C0Object()
 {

@@ -35,9 +35,11 @@ T2EmptyDtor_00802ea0::~T2EmptyDtor_00802ea0() {}
 // constructor: mov eax,ecx / mov [eax],<this class's vftable> / ret
 T2EmptyDtor_00802ea0::T2EmptyDtor_00802ea0() {}
 
-struct T2EmptyDtor_00806460 { virtual ~T2EmptyDtor_00806460(); };
+struct T2EmptyDtor_00806460 { T2EmptyDtor_00806460(); virtual ~T2EmptyDtor_00806460(); };
 // ??1T2EmptyDtor_00806460@@UAE@XZ absent-from-retail
 T2EmptyDtor_00806460::~T2EmptyDtor_00806460() {}
+// constructor (0x008062E0): mov eax,ecx / mov [eax],<this class's vftable> / ret
+T2EmptyDtor_00806460::T2EmptyDtor_00806460() {}
 
 struct T2EmptyDtor_00832560 { virtual ~T2EmptyDtor_00832560(); };
 // ??1T2EmptyDtor_00832560@@UAE@XZ absent-from-retail
