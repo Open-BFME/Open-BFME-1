@@ -39,7 +39,9 @@ class UnicodeString : private StringBase<unsigned short>
 public:
 	UnicodeString( const UnicodeString &other )
 		: StringBase<unsigned short>( other ) {}
-	~UnicodeString() {}
+	// Declared only: nothing here destroys one, and an inline {} body was
+	// emitted as a non-retail ??1UnicodeString@@QAE@XZ COMDAT (retail 0x0005EEA0).
+	~UnicodeString();
 
 	static UnicodeString TheEmptyString;
 };

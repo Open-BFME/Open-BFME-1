@@ -120,7 +120,9 @@ void __cdecl iniParseFactionVictoryDefinition(INI *ini)
 	name.StringBase<char>::set(token, token ? (int)strlen(token) : 0);
 
 	if (name.compareNoCase("neutral") == 0)
-		name.clear();
+		// StringBase spelling: the AsciiString::clear forwarder would be emitted as
+		// a COMDAT; the inlined StringBase<char>::clear calls releaseBuffer.
+		name.StringBase<char>::clear();
 
 	if (TheVictorySystem == 0)
 	{
