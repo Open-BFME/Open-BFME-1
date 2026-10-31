@@ -1,6 +1,5 @@
-// ?rva0051D700@BfmeAptScreenMainMenu@@QAEHXZ
-// partial score=0.7996 date=2026-10-28
 // cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
+//
 // Retail 0x0051D700, 484 bytes: slots 5 and 6 of BfmeAptScreenMainMenu's
 // vtable (0x011061C4, through ILT 0x000026A8), installed by the matched
 // constructor at 0x0051F3A0.  It steps the main menu's pending state at
@@ -10,6 +9,12 @@
 // movie; state 5 runs the firewall helper at +0x268 and either starts
 // multiplayer or raises the no-admin message box, then like state 6 clears
 // the state.  The member name is unrecorded and keeps the address.
+//
+// The APT action calls go through WindowManager::_bfme_callAptFunction
+// (0x004675F0) on the 0x012F19E8 window manager, with the movie level read
+// into a block-scoped local as OnlineLoginUpdate.cpp does; that local is what
+// lets both state-5 arms share the manager/level loads retail hoists above
+// the init() test.
 #include "StringInline.h"
 
 class GameWindow;
@@ -50,18 +55,13 @@ public:
 };
 extern BfmeSinkBOE *g_bfmeSinkBOE;
 
-class BfmeLevelAN
-{
-public:
-	char *bfmeBuildAN( unsigned int movie, int name, int a, int b, int c, int d, int e, int f );
-};
 class WindowManager
 {
 public:
+	void *_bfme_callAptFunction( unsigned int, const char *, int, const char *, const char *, const char *, const char *, const char * );
 	void bfme_hideBackground( bool hide );
 };
-struct Rva00579160Manager;
-extern Rva00579160Manager *Rva00579160TheManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 class GameTextInterface
 {
@@ -112,7 +112,7 @@ int BfmeAptScreenMainMenu::rva0051D700()
 				TheShell->showShell( true );
 				m_rva259 = false;
 				m_state = 0;
-				((WindowManager *)Rva00579160TheManager)->bfme_hideBackground( false );
+				g_rva012F19E8WindowManager->bfme_hideBackground( false );
 			}
 			else
 				m_state = 2;
@@ -124,19 +124,27 @@ int BfmeAptScreenMainMenu::rva0051D700()
 			{
 				g_bfmeSinkBOE->slot14();
 				if( g_bfmeSinkBOE->m_rva30 )
-					((BfmeLevelAN *)Rva00579160TheManager)->bfmeBuildAN( m_movie, (int)"HideCredits", 0, 0, 0, 0, 0, 0 );
+					g_rva012F19E8WindowManager->_bfme_callAptFunction( m_movie, "HideCredits", 0, 0, 0, 0, 0, 0 );
 			}
 			break;
 
 		case 5:
 			if( !m_firewall.init() )
 			{
-				((BfmeLevelAN *)Rva00579160TheManager)->bfmeBuildAN( m_movie, (int)"FirewallMessageClose", 0, 0, 0, 0, 0, 0 );
+				{
+					unsigned int level = m_movie;
+					g_rva012F19E8WindowManager->_bfme_callAptFunction( level,
+						"FirewallMessageClose", 0, 0, 0, 0, 0, 0 );
+				}
 				GSMessageBoxOk( TheGameText->fetch( "GUI:FirewallNoAdminTitle" ),
 					TheGameText->fetch( "GUI:FirewallNoAdminMessage" ), 0 );
 			}
 			else
-				((BfmeLevelAN *)Rva00579160TheManager)->bfmeBuildAN( m_movie, (int)"FirewallMessageClose", 1, (int)"startMulti", 0, 0, 0, 0 );
+			{
+				unsigned int level = m_movie;
+				g_rva012F19E8WindowManager->_bfme_callAptFunction( level,
+					"FirewallMessageClose", 1, "startMulti", 0, 0, 0, 0 );
+			}
 			// fall through
 		case 6:
 			m_state = 0;
