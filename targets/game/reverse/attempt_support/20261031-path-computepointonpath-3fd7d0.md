@@ -34,3 +34,14 @@ Shape 0.953 (probe), 950 vs 940 B. Supersedes the 0.62 GPT-5 bank (different con
 2. `lea ebx,[esi+4]` hoisted above the clear (retail after the z store).
 3. Found branch: retail loads dir.y*d before storing x (fxch); ours sequential.
 4. Final walk loop aligned (`lea esp,[esp]`); retail no alignment.
+
+## s514 correction and retest
+- The tracked `attempts/0x003fd7d0.cpp` still holds the 2026-09-22 0.318 (author-estimate) body: re_log measures
+  byte exactness (0.155 for the shape-0.956 source), so the newer body only lives in
+  `attempt_history/0x003fd7d0/d3da6ca81c7f807c40e029e9f4beccaa0bb6d9302a4d47081b1823b7e93f364a.json` (s514 h0 + header).
+- Retested un-rotating conditions: `node && searching`, `node ? searching : false` (934 B, 0.935),
+  `searching ? node != 0 : false`, `Int searching`, flag cleared in the found branch + `continue` with
+  `if (searching && m_pathTail)` (all 0.956, identical), `searching & (node != 0)` (0.904).
+  In every && form the zero is not a survivor of the out-record clear: ours re-materialises `xor edx,edx`
+  in the pre-header (LICM-hoisted constant for the head `cmp ecx,edx`). Retail's head is a plain truth test,
+  so the un-rotation must come from a construct that is not a compare-with-0 value.
