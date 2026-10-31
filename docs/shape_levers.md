@@ -1,5 +1,19 @@
 # Shape levers: the checklist for "everything matches except..."
 
+## Keep a TU-specific FP operation out of a shared COMDAT (2026-10-31)
+
+`MemberMotion00230BF0.cpp` needs a local x/z/y squared-distance sum under
+MSVC 7.1 `/O2 /DNDEBUG /MD`. Its inlined expression matches all 1,020 native
+caller bytes, but its external `Coord3D::length` copy does not match the
+existing 33-byte x/y/z provider at `000B6CA0`. `__forceinline` alone leaves
+all 47 definitions unchanged. Expand the three-step sum into a local float
+at the sole call site and remove this TU's method definition: all 46 retained
+code bodies/relocations stay identical, only the wrong debug-referenced copy
+disappears, and the real provider remains exact. No shared-header or flag
+change is needed. This observation is specific to the witnessed inline
+operation; it does not establish general FP reassociation equivalence.
+See `targets/game/reverse/attempt_support/member-motion-length-emitter-20261031.md`.
+
 At RVA 00793260, an empty default constructor on the four local ICoord2D
 views fixes the progress register home in the 553-byte draw callback.
 Restore the native enabled-color assignment order at the same time: the

@@ -28,7 +28,6 @@ inline Coord3D& Coord3D::operator=(const Coord3D &p) {
  Coord3DBase *base=this; *base=p; return *this;
 }
 inline Coord3D& Coord3D::Sub(const Coord3DBase &p) {x-=p.x; y-=p.y; z-=p.z; return *this;}
-inline float Coord3D::length() const {float v=x*x;v=v+z*z;v=v+y*y;return (float)sqrt(v);}
 inline void Coord3D::scale(float a) {x*=a;y*=a;z*=a;}
 inline void Coord3D::add(const Coord3DBase *p) {x+=p->x;y+=p->y;z+=p->z;}
 
@@ -249,7 +248,12 @@ void MemberMotion00230BF0::apply(MemberObject00230BF0 *obj,const Coord3D *destin
  delta.y=destination->y;
  delta.z=destination->z;
  delta.Sub(position);
- if(delta.length()>speed) {
+ // Retail evaluates this local distance in x/z/y order. Keep it local rather
+ // than emitting a conflicting out-of-line copy of the shared Coord3D::length.
+ float distanceSquared=delta.x*delta.x;
+ distanceSquared=distanceSquared+delta.z*delta.z;
+ distanceSquared=distanceSquared+delta.y*delta.y;
+ if((float)sqrt(distanceSquared)>speed) {
   delta.normalize();
   delta.scale(speed);
   position.add(&delta);
