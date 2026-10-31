@@ -35,25 +35,7 @@ enum NameKeyType
 
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-
-	void zero()
-	{
-		x = 0.0f;
-		y = 0.0f;
-		z = 0.0f;
-	}
-	void set(Real ax, Real ay, Real az)
-	{
-		x = ax;
-		y = ay;
-		z = az;
-	}
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct Region2D
 {
@@ -288,12 +270,18 @@ Object *AIPlayer::findSupplyCenter(Int minimumCash)
 	Real bestDistanceSquared = 0;
 	Object *candidateObject;
 	Coord3D enemyCenter;
-	enemyCenter.zero();
+	enemyCenter.x = 0.0f;
+	enemyCenter.y = 0.0f;
+	enemyCenter.z = 0.0f;
 	Region2D bounds;
 	Player *enemy = getAiEnemy();
 	if (enemy) {
 		getPlayerStructureBounds(&bounds, enemy->getPlayerIndex());
-		enemyCenter.set((bounds.lo.x + bounds.hi.x) * 0.5f, (bounds.lo.y + bounds.hi.y) * 0.5f, 0);
+		Real centerY = (bounds.lo.y + bounds.hi.y) * 0.5f;
+		Real centerX = (bounds.lo.x + bounds.hi.x) * 0.5f;
+		enemyCenter.x = centerX;
+		enemyCenter.y = centerY;
+		enemyCenter.z = 0.0f;
 	}
 
 	do {
