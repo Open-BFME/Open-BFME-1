@@ -38308,7 +38308,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_008c64c0@@YAXXZ,,0x008C64C0,470,game/gen_asm/d_008c39e0.asm,matched,gen-dump;ghidra=FUN_00cc64c0
 ?d_008c8ac0@@YAXXZ,,0x008C8AC0,2954,game/gen_asm/d_008c39e0.asm,matched,gen-dump;ghidra=FUN_00cc8ac0
 ?d_008c9650@@YAXXZ,,0x008C9650,1304,game/gen_asm/d_008c39e0.asm,matched,gen-dump;ghidra=FUN_00cc9650
-?d_008ca9d0@@YAXXZ,,0x008CA9D0,155,game/gen_asm/d_008c4940.asm,matched,gen-dump;int3-carved start=int3-aligned;abs-ref end=jmp+int3 refs=1
 ?d_008cbdf0@@YAXXZ,,0x008CBDF0,1757,game/gen_asm/d_008cb600.asm,matched,gen-dump;ghidra=FUN_00ccbdf0
 ?d_008cc690@@YAXXZ,,0x008CC690,687,game/gen_asm/d_008cb600.asm,matched,gen-dump;ghidra=FUN_00ccc690
 ?d_008cc940@@YAXXZ,,0x008CC940,917,game/gen_asm/d_008cb600.asm,matched,gen-dump;ghidra=FUN_00ccc940
@@ -173408,3 +173407,4 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?rva0087F0B0CopyAA@@YAPAUBfmeElemAA@@PAU1@00@Z,,0x0087F0B0,32,game/GameEngine/Source/Common/Rva0087EAA0Copy.cpp,matched,unreferenced cdecl forwarder after 0x0087F090; stack tag address plus null into bfmeCopyAA;model=claude-opus-5-5;host=cal-desktop
 ?setFlashCount@Drawable@@QAEXH@Z,,0x002ED3D0,13,game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doNamedFlash_Thunk.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/002ed3d0-drawable-setflashcount.md;Drawable::setFlashCount: retail stores this+0x160 as the matched doTeamFlash 0x002F3E90 inlines it; 0x006FCF50 (this+0xCC) is CommandButton::setFlashCount;model=claude-opus-5-5;host=app
 ?finish@Rva00259670Primary@@QAEXPAVRva0025D7E0Subject@@@Z,,0x002593F0,512,game/GameEngine/Source/GameLogic/Object/SpecialPower/Rva002593F0Finish.cpp,matched,address-derived finish step; matched caller Rva00259670Dispatch::run reaches it through ILT 0x00041A4C on this-0x10; handoff targets/game/reverse/attempt_support/0x002593F0-finish-grid-scatter.md;model=claude-opus-5-5;host=app
+?_FunctionAptActionPush@AptActionInterpreter@@SAXPAV1@PAULocalContextT@1@@Z,,0x008CA9D0,155,game/Libraries/Source/EA/Apt/AptActionInterpreterPush.cpp,matched,EA Apt ActionScript Push: slot 0x96 (SWF ActionPush) of the opcode table at 0x00ED5A68 points here; siblings in AptActionInterpreterStoreRegister.cpp;model=claude-opus-5-5;host=app

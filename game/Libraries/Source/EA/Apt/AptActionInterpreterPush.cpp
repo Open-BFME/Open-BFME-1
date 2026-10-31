@@ -1,5 +1,4 @@
 // ?_FunctionAptActionPush@AptActionInterpreter@@SAXPAV1@PAULocalContextT@1@@Z
-// partial score=0.9677 date=2026-10-16
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 // EA Apt ActionScript Push (opcode 0x96), retail 0x008CA9D0: slot 0x96 of
@@ -77,7 +76,8 @@ void AptActionInterpreter::_FunctionAptActionPush(
 			interpreter->push(interpreter->m_constants[value->m_index]);
 		else if (value->getType() == 4 && !value->isUndefined())
 		{
-			AptValue *r = interpreter->m_registers58[value->m_index];
+			// Retail loads the register table before the index: read it first.
+			AptValue *r = (*(AptValue **const volatile *)&interpreter->m_registers58)[value->m_index];
 			if (r)
 				interpreter->push(r);
 			else

@@ -2870,3 +2870,9 @@ integer temp keeps both loads in EAX/EDX in retail's order with retail's stores;
 the last 4 bytes of 0x002593F0 (512 B) matched. VC7.1 `/O2 /DNDEBUG /MD /EHsc`,
 STLport static. Measured on this body only. Source:
 game/GameEngine/Source/GameLogic/Object/SpecialPower/Rva002593F0Finish.cpp.
+Second use (s509): `_FunctionAptActionPush` 0x008CA9D0 (155 B), retail loads the register-table
+base before the index (`mov eax,[esi+0x58]; mov ecx,[ecx+8]; mov ecx,[eax+ecx*4]`); reading
+the base through `*(AptValue **const volatile *)&interpreter->m_registers58` in the subscript
+made the last 5 bytes exact (making the index volatile too undoes it). In 0x001F9180 the same
+trick fixed the load order but mirrored the registers, so check the register mapping too.
+Source: game/Libraries/Source/EA/Apt/AptActionInterpreterPush.cpp.
