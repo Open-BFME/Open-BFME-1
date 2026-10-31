@@ -37,3 +37,30 @@ void Rva007EBAA0(void)
 	else
 		g_Va0130A5A0 = 0;
 }
+
+// 0x007EBA60: the getter twin directly above the creator.  Same lazy
+// allocation of the 0x0130A5A0 singleton, but it returns the cell.  Retail
+// keeps one result variable (the loaded cell or the allocation) in EAX across
+// both paths, so the failed-allocation arm stores the zero register and still
+// returns the allocator's null.  No reference to this address survives in
+// retail, so the name keeps the address.
+Rva007EB810Diag *Rva007EBA60Get(void)
+{
+	Rva007EB810Diag *p = g_Va0130A5A0;
+	if (!p)
+	{
+		p = (Rva007EB810Diag *)Gen007F0130::operator new(0x14);
+		if (p)
+		{
+			*((int *)p + 2) = 0;
+			*((int *)p + 3) = 0;
+			*((int *)p + 4) = 0;
+			*(int *)p = (int)g_bfmeVftTDA;
+			*((int *)p + 1) = (int)&Rva007EB820PrintMessage;
+			g_Va0130A5A0 = p;
+		}
+		else
+			g_Va0130A5A0 = 0;
+	}
+	return p;
+}
