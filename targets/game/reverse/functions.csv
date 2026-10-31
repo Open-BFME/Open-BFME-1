@@ -37321,7 +37321,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_002ba390@@YAXXZ,,0x002BA390,1159,game/gen_asm/d_002afb20.asm,matched,gen-dump;ghidra=FUN_006ba390
 ?d_002be4a0@@YAXXZ,,0x002BE4A0,1160,game/gen_asm/d_002baa40.asm,matched,gen-dump;ghidra=FUN_006be4a0
 ?d_002c11d0@@YAXXZ,,0x002C11D0,5,game/GameEngine/Source/Common/Rva002C11D0Thunk.cpp,matched,unconditional tail thunk to shared destructor body
-?d_002c3550@@YAXXZ,,0x002C3550,689,game/gen_asm/d_002bbb80.asm,matched,gen-dump;bounds=high
 ?d_002c38b0@@YAXXZ,,0x002C38B0,578,game/gen_asm/d_002c38b0.asm,matched,gen-dump;ghidra=FUN_006c38b0
 ?d_002c3e00@@YAXXZ,,0x002C3E00,382,game/gen_asm/d_002c38b0.asm,matched,gen-dump;ghidra=FUN_006c3e00
 ?d_002c4910@@YAXXZ,,0x002C4910,86,game/gen_asm/d_002c38b0.asm,matched,gen-dump;ghidra=FUN_006c4910
@@ -173408,3 +173407,4 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?_FunctionAptActionPush@AptActionInterpreter@@SAXPAV1@PAULocalContextT@1@@Z,,0x008CA9D0,155,game/Libraries/Source/EA/Apt/AptActionInterpreterPush.cpp,matched,EA Apt ActionScript Push: slot 0x96 (SWF ActionPush) of the opcode table at 0x00ED5A68 points here; siblings in AptActionInterpreterStoreRegister.cpp;model=claude-opus-5-5;host=app
 ?groupScatter@AIGroup@@QAEXW4CommandSourceType@@@Z,,0x00155490,525,game/GameEngine/Source/GameLogic/AI/AIGroupScatter.cpp,matched,AIGroup::groupScatter; matched caller GameLogicDispatch (currentlySelectedGroup->groupScatter) and ZH AIGroup.cpp body; views from AIGroupForwardedOrders.cpp;model=claude-opus-5-5;host=app
 ?calculateMaxBlockedSpeed@AIUpdateInterface@@IBEMPAVObject@@@Z,,0x0026EED0,289,game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceCalculateMaxBlockedSpeed.cpp,matched,AIUpdateInterface::calculateMaxBlockedSpeed; ilt_oracle CONFIRMED protected const spelling; ZH AIUpdate.cpp twin with BFME locomotor height; handoff targets/game/reverse/attempt_support/20261028-0026eed0-calculateMaxBlockedSpeed.md;model=claude-opus-5-5;host=app
+?update@GiantBirdSwoopState@@UAE?AW4StateReturnType@@XZ,,0x002C3550,689,game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdSwoopState_update.cpp,matched,vtable 0x010C7868 slot 6 via ILT 0x00446A92; slots 4/5 are the matched onEnter/onExit; class name GiantBirdSwoopState fits ILT windows for update+onEnter+onExit; volatile word copies keep retail load/store order;model=claude-opus-5-5;host=app
