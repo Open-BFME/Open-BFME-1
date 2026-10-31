@@ -27,11 +27,21 @@ public:
 
 class Rva0024ECA0Owner;
 
+// ILT 0x00036C05 -> 0x00248AE0 is defined as bfmeAskDG (BfmeOneHundredEightySix.cpp),
+// a stdcall body that ignores ECX; the call names that symbol.
+extern "C" void __identifier( "?bfmeAskDG@@YGHPAUBfmeThingDG@@@Z" )( void );
+
 // Pinned thiscall spelling of ILT 0x00036C05 (symbols.csv).
 class Gen_0021AD10
 {
 	friend class Rva0024ECA0Owner;
-	void *bfmeAskRaw( void *a );
+	void *bfmeAskRaw( void *a )
+	{
+		typedef void *( Gen_0021AD10::*Call )( void * );
+		union { void ( *raw )(); Call member; } call;
+		call.raw = __identifier( "?bfmeAskDG@@YGHPAUBfmeThingDG@@@Z" );
+		return ( this->*call.member )( a );
+	}
 };
 
 #define BFME_SLOT( N ) virtual void bfmeSlot##N( void ) = 0

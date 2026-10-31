@@ -26,10 +26,20 @@ public:
 typedef bool (*DataChunkParser)(DataChunkInput &file, DataChunkInfo *info, void *userData);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
+// ILT 0x00015BD1 -> 0x00103840 is defined as DataChunkInput::registerParser
+// (DataChunkInput.cpp, BFME UserParser return); the call names that symbol.
+extern "C" void __identifier("?registerParser@DataChunkInput@@QAEPAVUserParser@@ABVAsciiString@@0P6A_NAAV1@PAUDataChunkInfo@@PAX@Z3@Z")(void);
+
 class DataChunkInput
 {
 public:
-	void registerParser(const AsciiString &name, DataChunkInfo *info, DataChunkParser parser, int flags);
+	void registerParser(const AsciiString &name, DataChunkInfo *info, DataChunkParser parser, int flags)
+	{
+		typedef void (DataChunkInput::*Call)(const AsciiString &, DataChunkInfo *, DataChunkParser, int);
+		union { void (*raw)(); Call member; } call;
+		call.raw = __identifier("?registerParser@DataChunkInput@@QAEPAVUserParser@@ABVAsciiString@@0P6A_NAAV1@PAUDataChunkInfo@@PAX@Z3@Z");
+		(this->*call.member)(name, info, parser, flags);
+	}
 	bool parse(void *userData);
 
 	unsigned char m_unreconstructed_00[0x20];

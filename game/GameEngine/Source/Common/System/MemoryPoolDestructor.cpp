@@ -27,11 +27,21 @@ public:
 	Int m_bfmeKind;						// +0x60
 };
 
+// ILT 0x00009787 -> 0x003D55C0 is defined as bfmeRunReadyObjectAI
+// (RunReadyObjectAI.cpp), which ignores ECX; the call names that symbol.
+extern "C" void __identifier("?bfmeRunReadyObjectAI@@YAXXZ")(void);
+
 class Rva003D8530Owner
 {
 public:
 	void bfmeDrop(void *entry);				// ILT 0x00016DB0
-	void bfmeFlush(void);					// ILT 0x00009787
+	void bfmeFlush(void)					// ILT 0x00009787
+	{
+		typedef void (Rva003D8530Owner::*Call)(void);
+		union { void (*raw)(); Call member; } call;
+		call.raw = __identifier("?bfmeRunReadyObjectAI@@YAXXZ");
+		(this->*call.member)();
+	}
 };
 
 // 0x012EF214 is retail's TheAI singleton, defined as `AI *TheAI` in
