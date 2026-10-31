@@ -2807,3 +2807,20 @@ begin out of the size computation (raw `end - begin` lets VC7.1 CSE it), and
 assigning a member through a named pointer local
 (`Tree *map = ...m(); node->m_map = *map;`) instead of one expression lets
 VC7.1 keep the EH state -1 in EBP as retail does (320 -> 313 B).
+
+## Block-scoped argument local lets both if/else call arms hoist their loads (2026-10-31)
+
+BfmeAptScreenMainMenu state step 0x0051D700 (484 B, `/DNDEBUG /MD /EHsc`,
+VC7.1) sat at 0.80 (496 B, 73 diffs). Its state-5 `if/else` makes one
+`_bfme_callAptFunction(level, name, ...)` call per arm. Retail hoists the
+shared prefix of both arms above `test al,al`: `mov ecx,[manager]`, four
+`push 0`, `mov eax,[this+0x250]`, `push 0`. With the member passed directly
+(`mgr->f( m_movie, ... )`) VC7.1 hoisted only the pushes: the else arm loaded
+the level into ECX before its pushes and the manager after, so the arms no
+longer shared the load prefix. Reading the level into a block-scoped local in
+each arm (`{ unsigned int level = m_movie; mgr->f( level, ... ); }`, the
+spelling matched OnlineLoginUpdate.cpp already uses for the same callee) gave
+both arms the same order and an exact 484 B body. Arm order, ternary and
+`goto`-free early-exit variants did not move it. Measured on this body only.
+Source: game/GameEngine/Source/GameClient/GUI/AptMainMenuStateStep.cpp
+(1c0c3a1c78).
