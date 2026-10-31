@@ -102,6 +102,8 @@ void LargeGroupAudioKeyMap::rva003D47A0Load(Xfer *xfer)
 	}
 
 	AsciiString name;
-	while (value.nextToken(&name, 0))
+	// StringBase spelling: the AsciiString::nextToken forwarder would be
+	// emitted as a COMDAT; retail calls StringBase<char>::nextToken directly.
+	while (((StringBase<char> *)&value)->nextToken((StringBase<char> *)&name, 0))
 		bfmeAddKey(name);
 }
