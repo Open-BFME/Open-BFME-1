@@ -1,33 +1,26 @@
-class BfmeItemCV
-{
-public:
-	BfmeItemCV(void *src);
-
-	unsigned char m_bfmePadCV[0xc];
-};
-
 class BfmeNodeCV
 {
 public:
-	BfmeNodeCV *bfmeCopyCV(const BfmeNodeCV &src);
+	// The new-expression below reaches this body again through ILT, so the
+	// body is the class's recursive copy constructor (identity_evidence/
+	// 00350380-00350410-node-copy-constructors.md).
+	BfmeNodeCV(const BfmeNodeCV &src);
 
-	BfmeItemCV *m_bfmeItemCV;
+	BfmeNodeCV *m_bfmeItemCV;
 	int m_bfmeBCV;
 	int m_bfmeCCV;
 };
 
-BfmeNodeCV *BfmeNodeCV::bfmeCopyCV(const BfmeNodeCV &src)
+BfmeNodeCV::BfmeNodeCV(const BfmeNodeCV &src)
 {
-	BfmeItemCV *p;
+	BfmeNodeCV *p;
 
 	if (src.m_bfmeItemCV != 0)
-		p = new BfmeItemCV(src.m_bfmeItemCV);
+		p = new BfmeNodeCV(*src.m_bfmeItemCV);
 	else
 		p = 0;
 
 	m_bfmeItemCV = p;
 	m_bfmeBCV = src.m_bfmeBCV;
 	m_bfmeCCV = src.m_bfmeCCV;
-
-	return this;
 }

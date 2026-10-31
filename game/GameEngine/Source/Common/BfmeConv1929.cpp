@@ -1,33 +1,26 @@
-class BfmeItemCU
-{
-public:
-	BfmeItemCU(void *src);
-
-	unsigned char m_bfmePadCU[0xc];
-};
-
 class BfmeNodeCU
 {
 public:
-	BfmeNodeCU *bfmeCopyCU(const BfmeNodeCU &src);
+	// The new-expression below reaches this body again through ILT, so the
+	// body is the class's recursive copy constructor (identity_evidence/
+	// 00350380-00350410-node-copy-constructors.md).
+	BfmeNodeCU(const BfmeNodeCU &src);
 
-	BfmeItemCU *m_bfmeItemCU;
+	BfmeNodeCU *m_bfmeItemCU;
 	int m_bfmeBCU;
 	int m_bfmeCCU;
 };
 
-BfmeNodeCU *BfmeNodeCU::bfmeCopyCU(const BfmeNodeCU &src)
+BfmeNodeCU::BfmeNodeCU(const BfmeNodeCU &src)
 {
-	BfmeItemCU *p;
+	BfmeNodeCU *p;
 
 	if (src.m_bfmeItemCU != 0)
-		p = new BfmeItemCU(src.m_bfmeItemCU);
+		p = new BfmeNodeCU(*src.m_bfmeItemCU);
 	else
 		p = 0;
 
 	m_bfmeItemCU = p;
 	m_bfmeBCU = src.m_bfmeBCU;
 	m_bfmeCCU = src.m_bfmeCCU;
-
-	return this;
 }
