@@ -11,10 +11,22 @@ class Player;
 class Drawable;
 class ObjectStatusMaskType;
 
+// Retail calls ILT 0x000316FB -> 0x00216600, defined in BfmeFlagsZXAny.cpp as
+// BfmeFlagsZX::bfmeAnyZX(const BfmeFlagsZX *) const; the test forwards to it.
+class BfmeFlagsZX
+{
+public:
+	bool bfmeAnyZX( const BfmeFlagsZX *other ) const;
+};
+
 class ObjectStatusMaskType
 {
 public:
-	bool testForAny( const ObjectStatusMaskType &that ) const;
+	bool testForAny( const ObjectStatusMaskType &that ) const
+	{
+		return reinterpret_cast<const BfmeFlagsZX *>( this )->bfmeAnyZX(
+			reinterpret_cast<const BfmeFlagsZX *>( &that ) );
+	}
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
