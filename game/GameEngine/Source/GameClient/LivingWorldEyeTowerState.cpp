@@ -9,11 +9,22 @@ struct Gen0060CBB0Pair
 	float second;
 };
 
+// Retail calls ILT 0x0003B430 -> 0x006096A0, defined in U4Blend006096A0.cpp
+// as U4Blend006095D0::blend2; this call names that symbol.
+extern "C" void __identifier("?blend2@U4Blend006095D0@@QBEXPBUCoord2D@@0PAU2@H@Z")(void);
+
 class BfmeStateDF
 {
 public:
 	void interpolate(Gen0060CBB0Pair *first, Gen0060CBB0Pair *second,
-		Gen0060CBB0Pair *third, float progress);
+		Gen0060CBB0Pair *third, float progress)
+	{
+		typedef void (BfmeStateDF::*Call)(Gen0060CBB0Pair *, Gen0060CBB0Pair *,
+			Gen0060CBB0Pair *, float);
+		union { void (*raw)(); Call member; } call;
+		call.raw = __identifier("?blend2@U4Blend006095D0@@QBEXPBUCoord2D@@0PAU2@H@Z");
+		(this->*call.member)(first, second, third, progress);
+	}
 };
 // Retail 0x012F7048 is ?g_rva012F7048LivingWorld@@3PAVRva006092D0State@@A (data_rows.csv,
 // GameClient/LivingWorld.cpp); g_bfmeStateDF was only a pin.
