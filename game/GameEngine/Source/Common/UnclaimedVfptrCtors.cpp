@@ -57,9 +57,16 @@ class Rva008011C0VfptrCtor
 {
 public:
 	Rva008011C0VfptrCtor();
+	~Rva008011C0VfptrCtor();
 	void *m_vftable;
 };
 Rva008011C0VfptrCtor::Rva008011C0VfptrCtor()
+{
+	m_vftable = g_bfmeVftBVHW;
+}
+// Retail 0x00801210 (unreferenced, 16-aligned after this class's other bodies):
+// it re-seats the same vftable and returns nothing, so it is this class's destructor.
+Rva008011C0VfptrCtor::~Rva008011C0VfptrCtor()
 {
 	m_vftable = g_bfmeVftBVHW;
 }
