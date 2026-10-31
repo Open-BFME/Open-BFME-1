@@ -36,7 +36,7 @@ multi_name.different = 0
 size_outlier.indicted = 1
 ctor_vtable.contradicted = 19
 ctor_vtable.unreadable = 0
-one_identity.surplus = 2092
+one_identity.surplus = 2091
 # Retail registration proves DynamicPortalBehaviour owns ctor 001F8B80 and factory 001156B0; four false aliases retired.
 # fcf825b4f7 retired the false FXNugget zero-store claim; the body still has aliases.
 # 4c8346b3c9 retired the GDIFileStream ctor over-claim at 0x00087A50 (a zero-store body).
@@ -1492,8 +1492,6 @@ null_reloc.max_unreadable = 1000
 @ one_identity.surplus 0x006EAC20 ??A?$VectorClass@VResolutionDescClass@@@@QBEABVResolutionDescClass@@H@Z
 @ one_identity.surplus 0x006FB870 ?createNewMessageQueue@GameSpyPSMessageQueueInterface@@SAPAV1@XZ
 @ one_identity.surplus 0x006FB870 ?createSnowManager@W3DGameClient@@MAEPAVSnowManager@@XZ
-@ one_identity.surplus 0x006FCF50 ?setFlashCount@CommandButton@@QBEXH@Z
-@ one_identity.surplus 0x006FCF50 ?setFlashCount@Drawable@@QAEXH@Z
 @ one_identity.surplus 0x00701E90 ??A?$SimpleDynVecClass@VKeyClass@?$PrimitiveAnimationChannelClass@VVector2@@@@@@QAEAAVKeyClass@?$PrimitiveAnimationChannelClass@VVector2@@@@H@Z
 @ one_identity.surplus 0x00701E90 ??A?$SimpleDynVecClass@VKeyClass@?$PrimitiveAnimationChannelClass@VVector2@@@@@@QBEABVKeyClass@?$PrimitiveAnimationChannelClass@VVector2@@@@H@Z
 @ one_identity.surplus 0x00701E90 ??A?$SimpleDynVecClass@VVector3@@@@QAEAAVVector3@@H@Z
