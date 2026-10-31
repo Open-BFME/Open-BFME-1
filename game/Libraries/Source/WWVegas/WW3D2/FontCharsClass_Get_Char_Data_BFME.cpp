@@ -26,16 +26,15 @@ private:
 	FontCharDataMap m_characterData;
 };
 
-// The loader at 0x00940D40 is linked as the gen-dump ?d_00940d40@@YAXXZ, so the
-// thiscall is reached through a member-pointer call (the pattern the Apt
-// callers of ?d_008cc940 use).
-extern void d_00940d40();
+// The loader at 0x00940D40 (FontCharsClass_loadCharacterData.cpp) is reached
+// through a member-pointer call to its name, keeping this body's bytes.
+extern "C" void __identifier("?loadCharacterData@FontCharsClass@@QAEPBUFontCharsClassCharDataStruct@@G@Z")();
 typedef const FontCharsClassCharDataStruct *(FontCharsClass::*FontCharsLoadCharacterData)(unsigned short character);
 
 const FontCharsClassCharDataStruct *FontCharsClass::Get_Char_Data(
 	unsigned short character)
 {
-	union { void (*fn)(); FontCharsLoadCharacterData call; } loadCharacterData = { d_00940d40 };
+	union { void (*fn)(); FontCharsLoadCharacterData call; } loadCharacterData = { __identifier("?loadCharacterData@FontCharsClass@@QAEPBUFontCharsClassCharDataStruct@@G@Z") };
 	unsigned short originalCharacter = character;
 	FontCharsClass *font = this;
 	for (;;)
