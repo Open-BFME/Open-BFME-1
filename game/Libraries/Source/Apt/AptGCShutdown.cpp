@@ -94,8 +94,9 @@ extern int g_bfmeCountDU;					// retail 0x013379A4
 // retired debt: ?g_bfmeEntriesDU@@3PAVRva008972B0Source@@A replaced with ?g_bfmeEntriesDU@@3PAVBfmeTripleDU@@A
 extern BfmeTripleDU g_bfmeEntriesDU[];			// retail 0x013378E0
 
-// Same callback storage and variadic call view as TraceRva008C7D30.cpp.
-extern "C" void (__cdecl *g_bfmeCallback1226)(const void *, const void *);
+// VA 0x0133783C is the existing installer-owned hook cell, also used by
+// TraceRva008C7D30.cpp. Keep its owner type and cast only the printf call view.
+extern void (__cdecl *g_bfmeSlot04VB)(void);
 
 void __cdecl shutdownChain008D2A40(void);			// retail 0x008D2A40
 void __cdecl shutdownChain008D29D0(void);			// retail 0x008D29D0
@@ -157,7 +158,7 @@ void __cdecl rva00897360(bool skipItems)
 	}
 
 	if (removed != 0)
-		((void (__cdecl *)(const char *, ...))g_bfmeCallback1226)(
+		((void (__cdecl *)(const char *, ...))g_bfmeSlot04VB)(
 			"Apt-GC---------------------- Sweeping of %d objects\n", removed);
 
 	g_rva8CD130IdleHook->rva008A30C0();
