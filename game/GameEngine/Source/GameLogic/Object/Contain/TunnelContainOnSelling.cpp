@@ -20,9 +20,9 @@ private:
 class Player
 {
 public:
-	TunnelTracker *getTunnelSystem() { return m_tunnelSystem; }
-
-private:
+	// The tunnel tracker is read in place.  An inline getTunnelSystem()
+	// member was emitted as a ?getTunnelSystem@Player COMDAT (+0x22C) that
+	// conflicts with the ledger row of that name at 0x00106680 (+0x15C).
 	unsigned char m_unreconstructed_000[0x22c];
 	TunnelTracker *m_tunnelSystem;
 };
@@ -73,7 +73,7 @@ void TunnelContain::onSelling()
 	if (owningPlayer == 0)
 		return;
 
-	TunnelTracker *tunnelTracker = owningPlayer->getTunnelSystem();
+	TunnelTracker *tunnelTracker = owningPlayer->m_tunnelSystem;
 	if (tunnelTracker == 0)
 		return;
 
