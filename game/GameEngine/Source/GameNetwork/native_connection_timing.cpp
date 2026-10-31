@@ -768,7 +768,7 @@ public:
 	void sendGameCommand(void *msg);
 	Bool isDuplicateCommand(NetCommandMsg *msg);
 	void sendPlayerLeaveCommands();
-	void sendFrameInfoToPlayer(int slot);
+	void rva00665ED0();
 	void sendChat(UnicodeString text, int playerMask);
 	void sendGameSpyStatsAuthKey(void *key);
 	void sendKeepAliveCommand();
@@ -3994,120 +3994,26 @@ void BFMEConnectionManager::sendPlayerLeaveCommands()
 	m_localLeaveStarted = timeGetTime();
 }
 
-// Sends command type 3 (FRAMEINFO), the single-recipient counterpart to sendFrameInfo. Named from the type its message carries.
-__declspec(naked) void BFMEConnectionManager::sendFrameInfoToPlayer(int slot)
+// Sends command type 3 (FRAMEINFO) to the packet router (or, on the router,
+// to everyone else). Retail pops and reads no argument, so the ZH
+// sendFrameInfoToPlayer(int) spelling does not fit and the name stays
+// address-derived. The volatile frame read keeps retail's reuse of the dead
+// TheGameLogic register (EAX) for frame - 1.
+void BFMEConnectionManager::rva00665ED0()
 {
-	__asm {
-		push 0FFFFFFFFh
-		push 104428Bh
-		mov eax, dword ptr fs:[0h]
-		push eax
-		mov dword ptr fs:[0h], esp
-		push ecx
-		push esi
-		push edi
-		push 28h
-		mov edi, ecx
-		__emit 0E8h
-		__emit 03Fh
-		__emit 0C0h
-		__emit 021h
-		__emit 000h   // call 0x881F30
-		mov esi, eax
-		add esp, 4h
-		mov dword ptr [esp+8h], esi
-		test esi, esi
-		mov dword ptr [esp+14h], 0h
-		je L00_665F31
-		mov ecx, esi
-		__emit 0E8h
-		__emit 0A7h
-		__emit 0D3h
-		__emit 09Ah
-		__emit 0FFh   // call 0x132B4
-		mov dword ptr [esi], 111A220h
-		mov dword ptr [esi+1Ch], 0h
-		mov dword ptr [esi+20h], 0h
-		mov dword ptr [esi+24h], 0FFFFFFFFh
-		mov dword ptr [esi+14h], 3h
-		jmp L01_665F33
-L00_665F31:
-		xor esi, esi
-L01_665F33:
-		__emit 0A1h
-		__emit 098h
-		__emit 008h
-		__emit 02Fh
-		__emit 001h   // mov eax, dword ptr [0x12f0898]
-		mov eax, dword ptr [eax+3Ch]
-		dec eax
-		mov dword ptr [esi+1Ch], eax
-		__emit 08Bh
-		__emit 00Dh
-		__emit 064h
-		__emit 014h
-		__emit 02Fh
-		__emit 001h   // mov ecx, dword ptr [0x12f1464]
-		mov edx, dword ptr [ecx]
-		mov dword ptr [esp+14h], 0FFFFFFFFh
-		call dword ptr [edx+68h]
-		mov dword ptr [esi+20h], eax
-		mov eax, dword ptr [esi+14h]
-		push eax
-		__emit 0E8h
-		__emit 014h
-		__emit 0FCh
-		__emit 09Ah
-		__emit 0FFh   // call 0x15B72
-		add esp, 4h
-		test al, al
-		je L02_665F6E
-		__emit 0E8h
-		__emit 0EEh
-		__emit 0A5h
-		__emit 09Ch
-		__emit 0FFh   // call 0x30558
-		mov word ptr [esi+10h], ax
-L02_665F6E:
-		mov eax, dword ptr [edi+12028h]
-		mov dword ptr [esi+0Ch], eax
-		mov eax, dword ptr [edi+12028h]
-		mov ecx, dword ptr [edi+1202Ch]
-		cmp eax, ecx
-		jne L03_665F94
-		xor edx, edx
-		mov dl, 1h
-		mov ecx, eax
-		shl dl, cl
-		not dl
-		push edx
-		jmp L04_665F9B
-L03_665F94:
-		xor eax, eax
-		mov al, 1h
-		shl al, cl
-		push eax
-L04_665F9B:
-		mov ecx, edi
-		push esi
-		__emit 0E8h
-		__emit 0D7h
-		__emit 091h
-		__emit 09Dh
-		__emit 0FFh   // call 0x3F17A
-		mov ecx, esi
-		__emit 0E8h
-		__emit 0FAh
-		__emit 0A0h
-		__emit 09Bh
-		__emit 0FFh   // call 0x200A4
-		mov ecx, dword ptr [esp+0Ch]
-		pop edi
-		pop esi
-		mov dword ptr fs:[0h], ecx
-		add esp, 10h
-		ret
-	}
+	NetFrameCommandMsg *msg = new NetFrameCommandMsg;
+	msg->setFrame(*(volatile unsigned int *)&TheGameLogic->frame - 1);
+	msg->setPlayerFrame(TheGameClient->getFrame());
+	if ((unsigned char)DoesCommandRequireACommandID(msg->getNetCommandType()))
+		msg->setID(GenerateNextCommandID());
+	msg->setPlayerID(m_localSlot);
+	if (m_localSlot == m_packetRouterSlot)
+		reinterpret_cast<ConnectionManager *>(this)->sendLocalCommand(
+			msg, (unsigned char)~(1 << m_localSlot));
+	else
+		reinterpret_cast<ConnectionManager *>(this)->sendLocalCommand(
+			msg, (unsigned char)(1 << m_packetRouterSlot));
+	msg->detach();
 }
 
 // Network::sendDisconnectChat forwards a by-value string here through ILT 0x00001B54.

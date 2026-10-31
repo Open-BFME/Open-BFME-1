@@ -21591,5 +21591,25 @@
   "after_sha256": "b6d647b94ad1d53c3ae14f06700784c9a787644d116c7af5b645e312b47dd52d",
   "evidence": "targets/game/reverse/identity_evidence/002c38b0-giantbirdswoop-helper.md",
   "reason": "setSwooping was an unproven placeholder spelling of the ILT 0x000163D3 callee chosen while 0x002C38B0 was still a dump; the landed body re-acquires the victim contact point and retargets the swoop goal, nothing names the method, so it takes the address-derived name rva002C38B0."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameNetwork/native_connection_timing.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/native_connection_timing.cpp",
+  "old_name": "sendFrameInfoToPlayer",
+  "new_name": "rva00665ED0",
+  "before_sha256": "799bf236b3313d0c00d51e2600b8cdb679ef5e46435a7354d910b352fc659eca",
+  "after_sha256": "958e12106a0c5e0d39718d7cd625235fe2d615498f7ff57e034ea97c304f6fe3",
+  "evidence": "targets/game/reverse/identity_evidence/00665ed0-connection-frameinfo.md",
+  "reason": "sendFrameInfoToPlayer(int) was the ZH spelling carried by the naked lift; retail 0x00665ED0 pops and reads no argument and ilt_oracle contradicts both the int and the no-argument spellings, so the converted body takes the address-derived name rva00665ED0."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "sendFrameInfoToPlayer",
+  "new_name": "rva00665ED0",
+  "before_sha256": "746aec1875775bbd53c8a40ca72728dfb13d5fef3d0a3ed2db30b1e8025bb1a5",
+  "after_sha256": "cfca5252e8d9a649bc619c6629cc48211c59340f9e69e857c66d3c43adc820a3",
+  "evidence": "targets/game/reverse/identity_evidence/00665ed0-connection-frameinfo.md",
+  "reason": "sendFrameInfoToPlayer(int) was the ZH spelling carried by the naked lift; retail 0x00665ED0 pops and reads no argument and ilt_oracle contradicts both the int and the no-argument spellings, so the converted body takes the address-derived name rva00665ED0."
  }
 ]
