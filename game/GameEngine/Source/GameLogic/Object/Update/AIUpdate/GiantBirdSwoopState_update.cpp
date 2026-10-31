@@ -11,7 +11,9 @@
 // the owner onto the goal position once in range.
 // Retail loads the goal range and copies the goal position word by word in
 // source order; the volatile word copies keep that load/store schedule.
+// update calls the goal re-acquire helper 0x002C38B0 defined below.
 
+typedef bool Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef float Real;
@@ -24,6 +26,7 @@ enum StateReturnType
 };
 
 #include "../../../../../../Libraries/Include/Lib/Coord3D.h"
+#include <math.h>
 
 extern void j_000309f4(void);
 
@@ -48,10 +51,57 @@ public:
 	unsigned char m_tail[0x48];
 };
 
+class Object;
+
+class BfmeModelConditionFlags
+{
+public:
+	enum Init
+	{
+		K_INIT = 0
+	};
+
+	BfmeModelConditionFlags(Init, unsigned int bit)
+	{
+		m_bits[4] = 1u << bit;
+	}
+
+	~BfmeModelConditionFlags()
+	{
+	}
+
+	bool testForAny(const BfmeModelConditionFlags &that) const
+	{
+		return (m_bits[4] & that.m_bits[4]) != 0;
+	}
+
+	void setAny(const BfmeModelConditionFlags &that)
+	{
+		m_bits[4] |= that.m_bits[4];
+	}
+
+	unsigned int m_bits[5];
+};
+
+class Locomotor
+{
+public:
+	unsigned char m_unreconstructed00[0x44];
+	Real m_height44;
+};
+
 class AIUpdateInterface
 {
 public:
-	unsigned char m_unreconstructed000[0x3f8];
+	Bool findNearestLabeledContactPointOnTarget(Object *target,
+		Coord3D *pointOut, const Coord3D *callerPos, Bool flag);
+	Bool testFlag3f0(Int bit) const { return (m_flags3f0 >> bit) & 1; }
+
+	unsigned char m_unreconstructed000[0x1cc];
+	Locomotor *m_curLocomotor;
+	unsigned char m_unreconstructed1d0[0x3f0 - 0x1d0];
+	UnsignedInt m_flags3f0;
+	unsigned char m_unreconstructed3f4[4];
 	UnsignedInt m_goalObjectID3f8;
 	unsigned char m_unreconstructed3fc[0x424 - 0x3fc];
 	bool m_isMoving424;
@@ -61,6 +111,8 @@ public:
 	Real m_goalRange470;
 	unsigned char m_unreconstructed474[8];
 	Coord3D m_goalPosition47c;
+	unsigned char m_unreconstructed488[0x494 - 0x488];
+	Int m_mode494;
 };
 
 class Object
@@ -71,8 +123,15 @@ public:
 	unsigned char m_unreconstructed044[0x94 - 0x44];
 	UnsignedInt m_status94;
 	unsigned char m_unreconstructed098[0xac - 0x98];
+	Bool getWorldspaceBestContactPoint(Coord3D *pointOut,
+		const Coord3D *callerPos, const char *preferredPoint, Int arg4,
+		Int seed, Bool skipCollideTest) const;
+	void notifyModelConditionChanged();
+
 	GeometryInfo m_geometryInfoAC;
-	unsigned char m_unreconstructed108[0x204 - 0x108];
+	unsigned char m_unreconstructed108[0x110 - 0x108];
+	BfmeModelConditionFlags m_modelConditionFlags;
+	unsigned char m_unreconstructed124[0x204 - 0x124];
 	AIUpdateInterface *m_ai;
 	unsigned char m_unreconstructed208[0x344 - 0x208];
 	unsigned char m_privateStatus;
@@ -81,15 +140,38 @@ public:
 class StateMachine
 {
 public:
+	void setGoalPosition(const Coord3D *pos);
+
 	unsigned char m_unreconstructed00[0x10];
 	Object *m_owner;
 };
 
-class GameLogic;
+class GameLogic
+{
+public:
+	Object *findObjectByID(Int id);
+};
 extern GameLogic *TheGameLogic;
 
+class TerrainLogic
+{
+public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02();
+	virtual void slot03(); virtual void slot04(); virtual void slot05();
+	virtual Real getGroundHeight(Real x, Real y, Coord3D *normal);
+};
+extern TerrainLogic *TheTerrainLogic;
+
+class Rva002BC260GoalOwner
+{
+public:
+	void run(void *arg1, void *arg2, void *arg3, unsigned char arg4);
+};
+extern int g_012F02D4;
+extern int g_Rva012F02DC;
+Int GetGameLogicRandomValue(Int lo, Int hi, char *file, Int line);
+
 extern void j_0001f253();
-extern void j_000163d3();
 extern void j_00018e8a();
 extern void j_00017607();
 extern void j_0003daa5();
@@ -101,7 +183,6 @@ extern void j_0003a1a7();
 struct GiantBirdSwoopStateCall
 {
 	Object *findObjectByID(UnsignedInt id);
-	void setSwooping(bool swooping);
 	Int chooseGoal(Real height, bool fullRange);
 	bool isMobile() const;
 	Real getCurLocomotorSpeed();
@@ -139,19 +220,96 @@ class GiantBirdSwoopState : public State
 {
 public:
 	virtual StateReturnType update();
+	void rva002C38B0(Bool force);
 
 	unsigned char m_unreconstructed20[8];
 	Coord3D m_goal28;
 	bool m_chooseGoal34;
 	unsigned char m_unreconstructed35[7];
 	Real m_damping3C;
-
-	void setSwooping(bool swooping)
-	{
-		typedef void (GiantBirdSwoopStateCall::*SetSwoopingCall)(bool);
-		((GiantBirdSwoopStateCall *)this->*giantBirdSwoopMember<SetSwoopingCall>(j_000163d3))(swooping);
-	}
 };
+
+static __forceinline Real giantBirdSwoopLength(const Coord3D &p)
+{
+	return (Real)sqrt(p.x * p.x + p.y * p.y + p.z * p.z);
+}
+
+// Retail 0x002C38B0 (578 B, thiscall, ret 4), reached from update through
+// ILT 0x000163D3.  Re-acquires the victim's contact point, sets model
+// condition bit 0x20000 near the victim and retargets the swoop goal once it
+// has moved far enough (or when forced).  Control flow follows the BFME 2
+// donor AIGiantBirdSwoopState::rva0036C438 (open-bfme-2
+// Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/
+// AIGiantBirdSwoopStateOnEnter.cpp), without BFME 2's weapon-target path,
+// which BFME 1's body does not have.
+void GiantBirdSwoopState::rva002C38B0(Bool force)
+{
+	Object *owner = m_machine->m_owner;
+	AIUpdateInterface *ai = owner->m_ai;
+	if (owner->m_modelConditionFlags.m_bits[4] & 0x20000)
+	{
+		owner->m_modelConditionFlags.m_bits[4] &= ~0x20000;
+		owner->notifyModelConditionChanged();
+	}
+	if (ai == 0)
+		return;
+	Object *victim = TheGameLogic->findObjectByID(ai->m_goalObjectID3f8);
+	if (victim == 0)
+		return;
+
+	Coord3D pos;
+	const Coord3D *ownerPos = &owner->m_position38;
+	if (!ai->findNearestLabeledContactPointOnTarget(victim, &pos, ownerPos, false))
+	{
+#line 622 "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\AIUpdate\\GiantBirdAIUpdate.cpp"
+		victim->getWorldspaceBestContactPoint(&pos, ownerPos, 0, 1,
+			GetGameLogicRandomValue(0, 12345678, __FILE__, __LINE__), false);
+	}
+
+	const Coord3D *goal = &m_goal28;
+	Coord3D delta;
+	delta.x = pos.x - goal->x;
+	delta.y = pos.y - goal->y;
+	delta.z = pos.z - goal->z;
+	Real moved = giantBirdSwoopLength(delta);
+	delta = pos;
+	delta.x -= ownerPos->x;
+	delta.y -= ownerPos->y;
+	delta.z -= ownerPos->z;
+	Real range = giantBirdSwoopLength(delta);
+
+	if (ai->m_goalRange470 * 4.0f > range)
+	{
+		BfmeModelConditionFlags nearMask(BfmeModelConditionFlags::K_INIT, 17);
+		if (!owner->m_modelConditionFlags.testForAny(nearMask))
+		{
+			owner->m_modelConditionFlags.setAny(nearMask);
+			owner->notifyModelConditionChanged();
+		}
+	}
+
+	if (moved > 10.0f || force)
+	{
+		Real near8 = ai->m_goalRange470 * 8.0f;
+		if (range < near8 || moved > near8 || force)
+		{
+			m_goal28 = pos;
+			if (ai->m_mode494 == 0)
+			{
+				Locomotor *locomotor = ai->m_curLocomotor;
+				if (locomotor != 0)
+				{
+					m_goal28.z = TheTerrainLogic->getGroundHeight(m_goal28.x, m_goal28.y, 0) + locomotor->m_height44;
+					m_machine->setGoalPosition(&m_goal28);
+				}
+			}
+			if (ai->testFlag3f0(2) || ai->testFlag3f0(3))
+				((Rva002BC260GoalOwner *)ai)->run(&m_goal28, &g_Rva012F02DC, 0, 0);
+			else
+				((Rva002BC260GoalOwner *)ai)->run(&m_goal28, &g_012F02D4, 0, 0);
+		}
+	}
+}
 
 static __forceinline Real giantBirdSwoopLengthSquared(const Coord3D &p)
 {
@@ -176,7 +334,7 @@ StateReturnType GiantBirdSwoopState::update()
 		Real speed = (1.0f - m_damping3C) * ai->m_goalRange470;
 		m_damping3C *= 0.8f;
 		ai->m_goalRange470 = speed;
-		setSwooping(false);
+		rva002C38B0(false);
 		if (m_chooseGoal34)
 		{
 			typedef Int (GiantBirdSwoopStateCall::*ChooseGoalCall)(Real, bool);
@@ -206,7 +364,7 @@ StateReturnType GiantBirdSwoopState::update()
 		Real distanceSquared = giantBirdSwoopLengthSquared(delta);
 		Real radius = geometry.radius();
 		if (distanceSquared < radius * geometry.radius() * 0.5f)
-			setSwooping(true);
+			rva002C38B0(true);
 		Real range;
 		*(Int *)&range = *(volatile Int *)&ai->m_goalRange470;
 		Coord3D next;

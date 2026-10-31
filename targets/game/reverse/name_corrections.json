@@ -21581,5 +21581,15 @@
   "after_sha256": "b6538ae7a034c9dd0f5bf9ee2b075f79b82ce3302ce03feb36ac407b523f1873",
   "evidence": "targets/game/reverse/attempt_support/reset-existing-owners-qwen-20261030.md",
   "reason": "False declaration pairing: removed Glo012F706CType::go calls ILT 0001F7DF to existing BfmeThingBLE::bfmeGoBLE at 00610050; new Gen_003C0EF0::bfmeClear is the distinct ILT 000214E0 target at 003C0EF0. Full native caller and provider decodes plus unchanged 84 caller bytes and five exact REL32 corrections establish the separate identities. go is not renamed to bfmeClear. This entry follows docs/naming_evidence.md Keeping names and covers only these source snapshots."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdSwoopState_update.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdSwoopState_update.cpp",
+  "old_name": "setSwooping",
+  "new_name": "rva002C38B0",
+  "before_sha256": "bd650d8c33c0520aa2d1ffa10a2541fc206d9d7c255f7b30a6a5b858ccc9d317",
+  "after_sha256": "b6d647b94ad1d53c3ae14f06700784c9a787644d116c7af5b645e312b47dd52d",
+  "evidence": "targets/game/reverse/identity_evidence/002c38b0-giantbirdswoop-helper.md",
+  "reason": "setSwooping was an unproven placeholder spelling of the ILT 0x000163D3 callee chosen while 0x002C38B0 was still a dump; the landed body re-acquires the victim contact point and retargets the swoop goal, nothing names the method, so it takes the address-derived name rva002C38B0."
  }
 ]
