@@ -21611,5 +21611,15 @@
   "after_sha256": "cfca5252e8d9a649bc619c6629cc48211c59340f9e69e857c66d3c43adc820a3",
   "evidence": "targets/game/reverse/identity_evidence/00665ed0-connection-frameinfo.md",
   "reason": "sendFrameInfoToPlayer(int) was the ZH spelling carried by the naked lift; retail 0x00665ED0 pops and reads no argument and ilt_oracle contradicts both the int and the no-argument spellings, so the converted body takes the address-derived name rva00665ED0."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "flashAsSelected",
+  "new_name": "bfmeCallEMA",
+  "before_sha256": "b8a1f2ae2e5515b54ccc826ffe726d805d28c8aca4ae4ef2b95f6a05b436d056",
+  "after_sha256": "66af03ef3061372449132dfb5d52a9c2a783e67b1a2a5d606c45dea6afd91984",
+  "evidence": "targets/game/reverse/identity_evidence/0076e4f0-particlesysbone-parser.md",
+  "reason": "flashAsSelected was the ZH name carried by the naked lift; 0x0076E4F0 is a cdecl three-pointer function (no ECX use, caller-cleaned) called by the matched ParticleSysBone FieldParse callback 0x0076E7B0 and its twin, i.e. the ParticleSysBone parsing body, so the row takes the address's existing placeholder pin bfmeCallEMA."
  }
 ]

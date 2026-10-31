@@ -1302,7 +1302,7 @@ void Drawable::onLevelStart()
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameClient/DrawableFlashAsSelectedThunk.cpp
+// (0x0076E4F0, once lifted under this name, is the ParticleSysBone parser in ParseParticleSysBone.cpp)
 // ?flashAsSelected@Drawable@@QAEXPBURGBColor@@@Z present-unmatched
 void Drawable::flashAsSelected( const RGBColor *color ) ///< drawable takes care of the details if you spec no color
 {
