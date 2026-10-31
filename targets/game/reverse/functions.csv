@@ -168718,7 +168718,7 @@ uw_00c4f8e9,,0x00C4F8E9,11,game/gen_small/uw_gen_013.cpp,matched,gen-funclet;obj
 uw_00c4f8f4,,0x00C4F8F4,11,game/gen_small/uw_gen_015.cpp,matched,gen-funclet;object-symbol=$L15923
 uw_00c4f8ff,,0x00C4F8FF,11,game/gen_small/uw_gen_014.cpp,matched,gen-funclet;object-symbol=$L14001
 uw_00c4f920,,0x00C4F920,14,game/gen_small/uw_gen_014.cpp,matched,gen-funclet;object-symbol=$L13733
-uw_00c4f960,,0x00C4F960,8,game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp,matched,gen-funclet;parent=?parseWeaponBoneName@@YAXPAVINI@@PAX1PBX@Z;object-symbol=$L124618
+uw_00c4f960,,0x00C4F960,8,game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDraw.cpp,matched,gen-funclet;parent=?parseWeaponBoneName@@YAXPAVINI@@PAX1PBX@Z;object-symbol=$L124449
 uw_00c4f980,,0x00C4F980,8,game/gen_small/uw_gen_008.cpp,matched,gen-funclet;object-symbol=$L1316
 uw_00c4f9a0,,0x00C4F9A0,8,game/gen_small/uw_gen_000.cpp,matched,gen-funclet;object-symbol=$L4794
 uw_00c4f9c0,,0x00C4F9C0,8,game/gen_small/uw_gen_014.cpp,matched,gen-funclet;object-symbol=$L12912

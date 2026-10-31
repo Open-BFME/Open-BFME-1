@@ -2835,39 +2835,8 @@ void W3DModelDraw::setTerrainDecalOpacity(Real o)
 
 
 //-------------------------------------------------------------------------------------------------
-// ?nukeCurrentRender@W3DModelDraw@@AAEXPAVMatrix3D@@@Z present-unmatched
-void W3DModelDraw::nukeCurrentRender(Matrix3D* xform)
-{
-	// this needs to be "dirtied" so that the new pausing of the animation will be triggered.
-	m_pauseAnimation = false;
-
-	// changing geometry, so we need to remove shadow if present
-	if (m_shadow)
-		m_shadow->release();
-	m_shadow = NULL;
-
-	if(m_terrainDecal)
-		m_terrainDecal->release();
-	m_terrainDecal = NULL;
-
-	// remove existing render object from the scene
-	if (m_renderObject)
-	{
-		// save the transform for the new model
-		if (xform)
-			*xform = m_renderObject->Get_Transform();
-		W3DDisplay::m_3DScene->Remove_Render_Object(m_renderObject);
-		REF_PTR_RELEASE(m_renderObject);
-		m_renderObject = NULL;
-	}
-	else
-	{
-		if (xform)
-		{	
-			*xform = *getDrawable()->getTransformMatrix();
-		}
-	}
-}
+// W3DModelDraw::nukeCurrentRender: the retail body 0x0075C050 lives in
+// W3DModelDrawNukeCurrentRender.cpp; a second strong definition here broke the link.
 
 //-------------------------------------------------------------------------------------------------
 #if defined(_DEBUG) || defined(_INTERNAL)	//art wants to see buildings without flags as a test.
