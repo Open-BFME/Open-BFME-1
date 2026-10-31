@@ -27,6 +27,11 @@ struct Rva0039F0A0
 	bool accepts(const void *tmpl, Player *player1, Player *player2);
 };
 
+// accepts (0x0039F0A0) is still the gen-dump row ?d_0039f0a0 (no C++ row yet); the caller
+// reaches it by that defined name. A call-site PMF keeps retail's late receiver load.
+extern "C" void __cdecl __identifier("?d_0039f0a0@@YAXXZ")();
+union AcceptsU { void (__cdecl *symbol)(); bool (Rva0039F0A0::*member)(const void *, Player *, Player *); };
+
 struct Rva000D6030Item
 {
 	Rva0039F0A0 *m_accepts;	// +0x00
@@ -73,7 +78,9 @@ float Rva000D6030Owner::rva000d6030(const ThingTemplate *tmpl)
 
 			if (!(flagsA & 8) && !(flagsB & 0x80000))
 			{
-				if (item->m_accepts->accepts(tmpl, 0, 0))
+				AcceptsU u;
+				u.symbol = &__identifier("?d_0039f0a0@@YAXXZ");
+				if ((item->m_accepts->*u.member)(tmpl, 0, 0))
 				{
 					unsigned int count = item->m_array.size();
 
