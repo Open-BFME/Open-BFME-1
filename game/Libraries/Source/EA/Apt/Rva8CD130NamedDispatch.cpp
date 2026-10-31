@@ -2,6 +2,8 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // readable Apt two-value named dispatch, retail 0x008CD130 (224 bytes).
 
+extern "C" void __cdecl __identifier("?d_008cc940@@YAXXZ")();
+extern "C" void __cdecl __identifier("?d_008cc690@@YAXXZ")();
 struct Rva8CD130StringBlock
 {
 	unsigned short m_refs;
@@ -64,8 +66,13 @@ struct Rva8CD130Context
 class Rva8CD130State
 {
 public:
-	void append(void *first, void *second, Rva8CD130String *name,
-		Rva8CD130Value *top, int one1, int one2, int zero);
+	void append(void *const& a0,void *const& a1,Rva8CD130String * a2,Rva8CD130Value * a3,int a4,int a5,int a6) {
+	 // retail body is still the gen-dump row ?d_008cc690@@YAXXZ (no C++ row yet); call it by that defined name
+	 // const& parameters keep retail's register choice for the pushed arguments
+	 union { void (__cdecl *symbol)(); void (Rva8CD130State::*member)(void *,void *,Rva8CD130String *,Rva8CD130Value *,int,int,int); } c;
+	 c.symbol = &__identifier("?d_008cc690@@YAXXZ");
+	 (this->*c.member)(a0,a1,a2,a3,a4,a5,a6);
+	}
 
 	int m_count;
 	int m_unused;
@@ -90,7 +97,13 @@ class BfmeStrVKI;
 class Rva00899770;
 class Rva008AE770Stack {
 public:
-    Rva00899770 *createString(void *, int, BfmeStrVKI *, int, int, int);
+    Rva00899770 * createString(void *const& a0,void *const& a1,BfmeStrVKI * a2,int a3,int a4,int a5) {
+     // retail body is still the gen-dump row ?d_008cc940@@YAXXZ (no C++ row yet); call it by that defined name
+     // const& parameters keep retail's register choice for the pushed arguments
+     union { void (__cdecl *symbol)(); Rva00899770 * (Rva008AE770Stack::*member)(void *,int,BfmeStrVKI *,int,int,int); } c;
+     c.symbol = &__identifier("?d_008cc940@@YAXXZ");
+     return (this->*c.member)(a0,(int)a1,a2,a3,a4,a5);
+    }
 };
 
 // 008CD050..008CD12E, bounded by INT3 padding. Resolve the top value's
@@ -102,7 +115,7 @@ void Rva008CD050(Rva8CD130State *state, Rva8CD130Context *context)
         Rva8CD130String name;
         top->getName(&name);
         Rva8CD130Value *value = (Rva8CD130Value *)((Rva008AE770Stack *)state)->createString(
-            context->m_first, (int)context->m_second, (BfmeStrVKI *)&name, 1, 1, 0);
+            context->m_first, context->m_second, (BfmeStrVKI *)&name, 1, 1, 0);
         Rva8CD130Value *old = state->m_stack[state->m_count - 1];
         if (!old->maxRefCountHit()) old->release();
         --state->m_count;

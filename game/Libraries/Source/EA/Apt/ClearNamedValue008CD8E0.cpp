@@ -2,6 +2,7 @@
 // Address-derived Apt handler, retail 0x008CD8E0: clear named value and
 // replace the stack operand with pooled integer 1. Factory layout and tables
 // agree with the existing AptInteger::Create at 0x008A11E0.
+extern "C" void __cdecl __identifier("?d_008cc690@@YAXXZ")();
 struct Rva8CD130StringBlock { unsigned short m_refs; };
 // Retail 0x012D5298 is ?g_rva012D5298Empty@@3VStringDataC@EAStringC@@A
 // (data_rows.csv, Common/Data/Rva012D5298.cpp); g_bfmeDefaultString1284 was only a pin.
@@ -74,7 +75,13 @@ class Rva008CF3C0String;
 class Rva008A9B00;
 class Rva008CF3C0State {
 public:
- void append(void *,void *,Rva008CF3C0String *,Rva008A9B00 *,int,int,int);
+ void append(void *const& a0,void *const& a1,Rva008CF3C0String * a2,Rva008A9B00 * a3,int a4,int a5,int a6) {
+  // retail body is still the gen-dump row ?d_008cc690@@YAXXZ (no C++ row yet); call it by that defined name
+  // const& parameters keep retail's register choice for the pushed arguments
+  union { void (__cdecl *symbol)(); void (Rva008CF3C0State::*member)(void *,void *,Rva008CF3C0String *,Rva008A9B00 *,int,int,int); } c;
+  c.symbol = &__identifier("?d_008cc690@@YAXXZ");
+  (this->*c.member)(a0,a1,a2,a3,a4,a5,a6);
+ }
  int m_00; int m_04; Rva8CD130Value **m_08;
 };
 struct Rva008CD8E0Context { unsigned m_00; void *m_04; void *m_08; };
