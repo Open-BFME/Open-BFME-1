@@ -1,5 +1,5 @@
 // ?helper@Gen_00896320@@QAEXPAX00@Z
-// partial score=0.846 date=2026-10-31
+// partial score=0.8165 date=2026-10-31
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // The 0x008961E0 helper calls rva00896100 with its unchanged Gen_00896320
 // receiver. The target reads count/capacity/data at +0/+4/+8 and uses one
@@ -21,6 +21,19 @@ public:
 };
 
 __declspec(noinline) void bfmeDropA(void *value);
+class Rva00894D80Accessor { public: static void increment(unsigned int *value); };
+__declspec(noinline) BfmeRefVGO &BfmeRefVGO::bfmeAssignVGO(const BfmeRefVGO &o)
+{
+	if (&o != this)
+	{
+		if (m_bfmeP && Rva00894D90Accessor::decrement(m_bfmeP) == 0)
+			bfmeDropA(m_bfmeP);
+		m_bfmeP = o.m_bfmeP;
+		if (m_bfmeP)
+			Rva00894D80Accessor::increment(m_bfmeP);
+	}
+	return *this;
+}
 
 class Rva00896100Item : public BfmeRefVGO
 {
