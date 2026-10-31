@@ -2930,3 +2930,35 @@ scalars kept a wrong slot map. Source
 `game/Libraries/Source/WWVegas/WW3D2/Render2DSentenceDrawSentence.cpp`
 (`/DNDEBUG /MD /EHsc`, commit 274f3cb001); the variants are in
 `targets/game/reverse/attempt_support/20261031-render2dsentence-draw-sentence-93eb50.md`.
+
+## Calling a differently named defined body: forwarder parameter and PMF levers (2026-11-01)
+
+Link repairs that make a caller name the ledger's defined symbol for a callee
+(gen-dump `?d_XXXXXXXX@@YAXXZ`, or a matched row under another class name)
+use `extern "C" void __identifier("MANGLED")();` and a member-pointer union
+(`c.symbol = &__identifier(...); (this->*c.member)(args)`) in an inline
+forwarder that keeps the caller's own declaration. Measured with VC7.1
+`/O2`, caller bytes otherwise unchanged:
+
+- An inline forwarder taking every argument by value swapped the scratch
+  registers of the pushed arguments (retail `mov edx,[...]; lea eax,[esp+N];
+  push eax; push edx`, ours eax/edx swapped). Declaring the forwarder's first
+  one or two parameters `T *const &` restored retail's choice in 5 of 6
+  callers (0x0027A7A0, 0x008CD740, 0x008CD8E0, 0x008CD130, 0x008CE910); which
+  index needs it varies, so probe each set.
+- An `(int)` cast argument at the call site kept 4 diffs; taking that
+  parameter as `void *const &` and casting inside the forwarder was exact
+  (0x008CD050).
+- When the forwarder loaded the receiver before the pushes (0x000D6030) or
+  changed the frame (0x001F08B0), building the union locally at the call site
+  and calling `(obj->*u.member)(...)` there was exact.
+- A callee defined as `int f()` but tested as `bool` by the caller keeps
+  retail's `test al,al` only through a bool-typed member pointer union
+  (0x00419E40); `!= 0` or a cast gave `test eax,eax` (1 B).
+- The forwarder COMDAT the TU still emits is a 5-byte `jmp` to the defined
+  name, like the retail ILT thunk; never do this for a destructor (members are
+  still destroyed, and the COMDAT is a non-retail body under the pinned name).
+
+Hypothesis only: the by-value copies give the inliner new temporaries whose
+allocation order differs from the original out-of-line call's arguments.
+Commits 8913dad1e2, a47c11e11b, e1b32cfad8, d28c3940b2, e5dd1e3e1f, a91f678d01.
