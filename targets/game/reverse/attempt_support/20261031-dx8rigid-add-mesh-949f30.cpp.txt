@@ -1,0 +1,649 @@
+// cl: /DNDEBUG /MD /EHsc /Og /Oi /Ot /Oy /Ob1 /Gs /G6 /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
+// Retail dx8renderer.cpp's Vertex_Split_Table closure (BFME 2, WW3D2 region
+// /O2 /arch:SSE /G7): DX8RigidFVFCategoryContainer::Add_Mesh (0x00148180) and
+// every function its local split table is passed to, directly or through a
+// callee: the Vertex_Split_Table constructor (0x001454D0), Peek_Texture
+// (0x00144380), Peek_Shader (0x001443D0), Peek_Material (0x00145560),
+// DX8FVFCategoryContainer::Generate_Texture_Categories (0x00146BA0) and
+// Insert_To_Texture_Category (0x00146950), and
+// DX8TextureCategoryClass::Add_Mesh (0x00145620).
+//
+// Structural inference (compiler behaviour, probed): MSVC 7.1 keeps the
+// split table's fields in callee-saved registers across those calls only when
+// every receiver of &split_table has its body in the same unit; with any one
+// of them declaration-only, Add_Mesh compiles to 939 bytes instead of
+// retail's 919 (build/nbr/r45/148180port probes p1..p6). Retail therefore
+// compiled them together. The bodies were matched separately before
+// (VertexSplitTableConstructorBFME.cpp, VertexSplitTablePeekTexture.cpp,
+// VertexSplitTablePeekShader.cpp, DX8GenerateTextureCategoriesBFME2.cpp,
+// DX8InsertTextureCategory.cpp, DX8TextureCategoryAddMesh.cpp) and are
+// brought together here unchanged, over one set of BFME layout views.
+// Semantic guide for all of them: Zero Hour dx8renderer.cpp (BFME1 donor
+// revision 9cbfb551fe20). dx8renderer.cpp itself cannot host them: its
+// Zero Hour headers give TextureClass an int reference count with an inline
+// Release_Ref and RefCountPtr inline constructors, where these bodies use
+// BFME's 16-bit count at +4, the out-of-line Release_Ref (0x0061ED10) and the
+// out-of-line RefCountPtr<TextureClass> constructor/destructor.
+//
+// Target layout facts (from the matched bodies): MeshModelClass PolyCount
+// +0x24, VertexCount +0x28, polygon buffer +0x2C, vertex buffers +0x30/+0x34,
+// CurMatDesc +0x94; MeshMatDescClass UV[8] +0x10, UVSource +0x30, ColorArray
+// +0x50, single shaders +0x98, materials +0xA8, texture arrays +0xC8,
+// material arrays +0xE8, shader arrays +0xF8; DX8FVFCategoryContainer
+// index_buffer +0xD0, used_indices +0xD4, FVF +0xD8, sorting +0xE4;
+// DX8RigidFVFCategoryContainer vertex_buffer +0xE8, used_vertices +0xEC.
+// The compiler-generated vector constructor iterator (??_H) takes the
+// optimization state of the first function that needs it. Retail links one
+// copy, the /O1 body at 0x00001423; this unemitted anchor makes this unit's
+// copy that same body (carried from DX8GenerateTextureCategoriesBFME2.cpp).
+struct BfmeVciAnchorElem { BfmeVciAnchorElem(); };
+#pragma optimize("gsy", on)
+static void bfmeVciAnchor() { BfmeVciAnchorElem anchor[2]; (void)anchor; }
+#pragma optimize("", on)
+// multilist.h's inline members are retail's size-optimised bodies: compile
+// them for size (as hlod.cpp/decalsys.cpp do) so this unit's copies match
+// (carried from DX8InsertTextureCategory.cpp).
+#pragma optimize("s", on)
+#include "multilist.h"
+#pragma optimize("", on)
+#include "multilist.h"
+// Use the same BFME aligned-buffer view as DX8SkinClearVisibleList.cpp.
+// Destruction binds to the rowed providers; the visible imported constructor
+// retains Add_Mesh's inline allocation without emitting an /O2 standalone copy.
+class RefCountClass
+{
+public:
+ RefCountClass() : NumRefs(1) {}
+ virtual void Delete_This();
+protected:
+ virtual ~RefCountClass();
+private:
+ int NumRefs;
+};
+template <class T> class ShareBufferClass : public RefCountClass
+{
+public:
+ ShareBufferClass(int count, const char *msg, int alignment = 0);
+ virtual ~ShareBufferClass();
+ T *Get_Array() { return Array; }
+ int Get_Count() { return Count; }
+protected:
+ T *RawBuffer;
+ T *Array;
+ int Count;
+ int Alignment;
+};
+template <> __declspec(dllimport) __forceinline
+ShareBufferClass<unsigned>::ShareBufferClass(int count, const char *msg, int alignment)
+ : Count(count), Alignment(alignment)
+{
+ if (Alignment == 0) {
+  RawBuffer = new unsigned[Count];
+  Array = RawBuffer;
+ } else {
+  RawBuffer = (unsigned *)new char[Count * sizeof(unsigned) + Alignment];
+  Array = (unsigned *)(((unsigned int)RawBuffer + Alignment - 1) & ~(Alignment - 1));
+ }
+}
+// ShareBufferClassUnsignedCtor.cpp supplies the retail buffer destructor.
+template <> ShareBufferClass<unsigned int>::~ShareBufferClass();
+#include "vector2.h"
+#include "vector3.h"
+#include <string.h>
+// <new>'s nothrow array delete: the split table's inline destructor adds no
+// EH state to Add_Mesh (retail sets none before it).
+#define __PLACEMENT_VEC_NEW_INLINE	// always.h defines array placement-new itself
+#include <new>
+
+// MeshModelClass::Peek_Texture (hidden RefCountPtr return, 0x00143560) is
+// matched as Rva006FD440::bfmeGet (Rva006FD510MeshMatDescGetTexture.cpp);
+// bind the spelling at link time (carried from VertexSplitTablePeekTexture.cpp).
+#pragma comment(linker, "/alternatename:?Peek_Texture@MeshModelClass@@QBE?AV?$RefCountPtr@VTextureClass@@@@HHH@Z=?bfmeGet@Rva006FD440@@QBE?AVBfmeHandleCX@@HHH@Z")
+
+class TextureClass { public: virtual void Delete_This(); unsigned short refs; void Release_Ref(); };
+struct BFME2TextureResource { unsigned Vtable; unsigned short Refs; void Release_Ref(); };
+struct BFME2TextureRef
+{
+	BFME2TextureResource *Ptr;
+	BFME2TextureRef(BFME2TextureResource *p) : Ptr(p) { if (Ptr) ++Ptr->Refs; }
+	BFME2TextureRef(const BFME2TextureRef &p) : Ptr(p.Ptr) { if (Ptr) ++Ptr->Refs; }
+	~BFME2TextureRef() { if (Ptr) Ptr->Release_Ref(); }
+};
+class BFME2TextureCategory { public: BFME2TextureRef Get_Texture(int stage) throw(); };
+inline bool operator==(const BFME2TextureRef &left, TextureClass *right)
+{ return reinterpret_cast<TextureClass *>(left.Ptr) == right; }
+
+template<class T> class RefCountPtr {
+public:
+ T *Referent;
+ RefCountPtr();
+ RefCountPtr(const RefCountPtr &refCountPtr) : Referent(refCountPtr.Referent) { if(Referent) ++Referent->refs; }
+ ~RefCountPtr(){if(Referent) Referent->Release_Ref();}
+ T *Peek_Referent() const {return Referent;}
+ RefCountPtr &operator=(const RefCountPtr &v) { if(v.Referent) ++v.Referent->refs; if(Referent) Referent->Release_Ref(); Referent=v.Referent; return *this; }
+ bool operator==(const RefCountPtr &rhs) const {return Referent==rhs.Referent;}
+};
+class ShaderClass {
+public:
+ unsigned ShaderBits;
+ ShaderClass() : ShaderBits(0x10441b) {}
+ ShaderClass(const unsigned int bits) : ShaderBits(bits) {}
+ ShaderClass(const ShaderClass &shader) : ShaderBits(shader.ShaderBits) {}
+ bool operator==(const ShaderClass &s) const { return ShaderBits == s.ShaderBits; }
+ void Set_NPatch_Enable() { ShaderBits |= 0x20000; }
+};
+class VertexMaterialClass {
+public:
+ char pad[0x64]; mutable unsigned crc; mutable bool dirty;
+ unsigned long Get_CRC() const { if(dirty) { crc=Compute_CRC(); dirty=false; } return crc; }
+private: unsigned long Compute_CRC() const;
+};
+inline static bool Equal_Material(const VertexMaterialClass *vertexMaterial,const VertexMaterialClass *b) {
+ int ca=vertexMaterial?vertexMaterial->Get_CRC():0, cb=b?b->Get_CRC():0;
+ return ca==cb;
+}
+typedef unsigned short TriIndex[3];
+struct PolygonBuffer { char pad[12]; TriIndex *data; };
+// Zero Hour meshmatdesc.h UVBufferClass: Get_UV_Array_By_Index's create branch
+// constructs it.
+class UVBufferClass : public ShareBufferClass<Vector2>
+{
+public:
+ UVBufferClass(int count, const char* msg);
+ unsigned CRC;
+};
+class MeshMatDescClass {
+public:
+ // +0x00..+0x58: counts, UV buffers, UV sources, colour arrays (BFME layout)
+ int PassCount; int VertexCount; int PolyCount; int m_unknown0C;
+ UVBufferClass *UV[8]; int UVSource[4][2]; ShareBufferClass<unsigned> *ColorArray[2];
+ char pad58[0xA8-0x58];
+ VertexMaterialClass *single[16]; void *arrays[4];
+ unsigned Get_Pass_Count() const {return PassCount;}
+ VertexMaterialClass *Peek_Material(int,int) const;
+ bool Has_Material_Array(int p) const { return arrays[p]!=0; }
+ ShaderClass Get_Shader(int index,int pass) const;
+};
+// Inline material-descriptor accessors as Zero Hour's meshmatdesc.h writes them
+// (create branches included; Add_Mesh's register allocation depends on their
+// shape). A separate view, so this unit emits no copies under the
+// MeshMatDescClass names whose retail bodies are /O1 (0x000D1F1A, 0x000D1F40,
+// 0x000D1FBD).
+struct AddMeshMatView
+{
+ int PassCount; int VertexCount; int PolyCount; int m_unknown0C;
+ UVBufferClass *UV[8]; int UVSource[4][2]; ShareBufferClass<unsigned> *ColorArray[2];
+ Vector2 *Get_UV_Array(int pass,int stage)
+ {
+  if(UVSource[pass][stage]==-1)return 0;
+  if(UV[UVSource[pass][stage]]!=0)return UV[UVSource[pass][stage]]->Get_Array();
+  return 0;
+ }
+ Vector2 *Get_UV_Array_By_Index(int index,bool create)
+ {
+  if(create && !UV[index])UV[index]=new UVBufferClass(VertexCount,"MeshMatDescClass::UV");
+  if(!create && m_unknown0C!=0 && index<2)return Get_UV_Array(0,index);
+  if(UV[index])return UV[index]->Get_Array();
+  return 0;
+ }
+ unsigned *Get_Color_Array(int index,bool create)
+ {
+  if(create && !ColorArray[index])ColorArray[index]=new ShareBufferClass<unsigned>(VertexCount,"MeshMatDescClass::ColorArray");
+  if(ColorArray[index])return ColorArray[index]->Get_Array();
+  return 0;
+ }
+};
+// Get_Vertex_Normal_Array(bool) is the 44-byte row 0x0016AB90.
+class MeshGeometryClass {
+public:
+ const Vector3 *Get_Vertex_Normal_Array(bool alternate);
+};
+class MeshModelClass : public MeshGeometryClass {
+public:
+ char pad[0x24]; int PolyCount; int VertexCount; PolygonBuffer *polygons; ShareBufferClass<Vector3> *Vertex[2]; char pad38[0x94-0x38]; MeshMatDescClass *CurMatDesc;
+ int Get_Polygon_Count() const { return PolyCount; }
+ int Get_Vertex_Count() const { return VertexCount; }
+ bool Needs_Vertex_Normals();
+ unsigned Get_Pass_Count() const {return CurMatDesc->Get_Pass_Count();}
+ const TriIndex *Get_Polygon_Array() const { return polygons->data; }
+ Vector3 *Get_Vertex_Array(bool secondary=false) { if(secondary){return Vertex[1]->Get_Array();} return Vertex[0]->Get_Array(); }
+ VertexMaterialClass *Peek_Material(int i,int p) const; // out of line at 0x00143550 (MeshModelMatDescForwarders.cpp)
+ RefCountPtr<TextureClass> Peek_Texture(int index,int pass,int stage) const;
+ RefCountPtr<TextureClass> Peek_Single_Texture(int pass,int stage) const;
+ __declspec(dllimport) __forceinline ShaderClass Get_Shader(int index, int pass) const { return CurMatDesc->Get_Shader(index, pass); }
+ unsigned *Get_Color_Array(int array_index,bool create=true) { return ((AddMeshMatView *)CurMatDesc)->Get_Color_Array(array_index,create); }
+ Vector2 *Get_UV_Array_By_Index(int index,bool create=false) { return ((AddMeshMatView *)CurMatDesc)->Get_UV_Array_By_Index(index,create); }
+};
+// Retail inlines MeshModelClass::Peek_Material in this unit and tail-calls the
+// descriptor. A file-local copy of the forwarder keeps that inlining without
+// emitting a second external Peek_Material body beside the rowed one.
+static inline VertexMaterialClass *Model_Peek_Material(const MeshModelClass *model,int i,int p) { return model->CurMatDesc->Peek_Material(i,p); }
+
+class DX8Caps {public: char pad[0x13b]; bool npatches; bool Support_NPatches() const {return npatches;}};
+class DX8Wrapper {protected:static DX8Caps *CurrentCaps; public:static DX8Caps *Get_Current_Caps() {return CurrentCaps;}};
+class WW3D {private:static unsigned NPatchesLevel; public:static unsigned Get_NPatches_Level(){return NPatchesLevel;}};
+
+class Vertex_Split_Table
+{
+	MeshModelClass* mmc;
+	bool npatch_enable;
+	unsigned polygon_count;
+	TriIndex* polygon_array;
+	bool allocated_polygon_array;
+public:
+	Vertex_Split_Table(MeshModelClass* mmc_);
+	~Vertex_Split_Table() { if (allocated_polygon_array) { delete[] polygon_array; } }
+	const Vector3* Get_Vertex_Array() const { return mmc->Get_Vertex_Array(); }
+	const Vector3* Get_Vertex_Normal_Array() const { return mmc->Get_Vertex_Normal_Array(false); }
+	const unsigned* Get_Color_Array(unsigned index) const { return mmc->Get_Color_Array(index,false); }
+	const Vector2* Get_UV_Array(unsigned uv_array_index) const { return mmc->Get_UV_Array_By_Index(uv_array_index); }
+	unsigned Get_Vertex_Count() const { return mmc->Get_Vertex_Count(); }
+	unsigned Get_Polygon_Count() const { return polygon_count; }
+	unsigned Get_Pass_Count() const { return mmc->Get_Pass_Count(); }
+	RefCountPtr<TextureClass> Peek_Texture(unsigned idx,unsigned pass,unsigned stage);
+	VertexMaterialClass* Peek_Material(unsigned index,unsigned pass)
+	{
+		MeshMatDescClass *desc=mmc->CurMatDesc; if(desc->Has_Material_Array(pass)) return Model_Peek_Material(mmc,mmc->Get_Polygon_Array()[index][0],pass);
+		// Retail inlines the target descriptor lookup at +A8 here.
+		return mmc->CurMatDesc->single[pass];
+	}
+	ShaderClass Peek_Shader(unsigned idx,unsigned pass);
+	MeshModelClass* Get_Mesh_Model_Class() { return mmc; }
+	unsigned short* Get_Polygon_Array(unsigned pass) { return (unsigned short*)polygon_array; }
+};
+
+// ??0Vertex_Split_Table@@QAE@PAVMeshModelClass@@@Z (0x001454D0): ALLOW_NPATCHES is
+// MeshGeometryClass flag 0x10000 (+0x18); caps Support_NPatches at +0x13B.
+Vertex_Split_Table::Vertex_Split_Table(MeshModelClass* mmc_)
+	:
+	mmc(mmc_),
+	npatch_enable(false),
+	allocated_polygon_array(false)
+{
+	if (DX8Wrapper::Get_Current_Caps()->Support_NPatches() && mmc->Needs_Vertex_Normals()) {
+		if (*(const unsigned *)((const char *)mmc + 0x18) & 0x10000) {
+			npatch_enable=true;
+		}
+	}
+	polygon_count=mmc->Get_Polygon_Count();
+	allocated_polygon_array=true;
+	polygon_array=new TriIndex[polygon_count];
+	memcpy(polygon_array, mmc->Get_Polygon_Array(), mmc->Get_Polygon_Count()*sizeof(TriIndex));
+}
+
+// 0x00144380: texture-array test on CurMatDesc+0xC8, then the indexed or
+// single texture getter (0x00143560 / 0x000D206A).
+RefCountPtr<TextureClass> Vertex_Split_Table::Peek_Texture(unsigned int index,unsigned int pass,unsigned int stage)
+{
+	char *model = reinterpret_cast<char *>(mmc);
+	char *desc = *reinterpret_cast<char **>(model + 0x94);
+	unsigned int texture_array_index = 0x32 + pass * 2 + stage;
+	if (*reinterpret_cast<void **>(desc + texture_array_index * 4) != 0)
+		return mmc->Peek_Texture(index,pass,stage);
+	return mmc->Peek_Single_Texture(pass,stage);
+}
+
+// 0x001443D0: shader arrays +0xF8, single shaders +0x98, NPatch bit 17;
+// MeshMatDescClass::Get_Shader is 0x0015B6C0.
+ShaderClass Vertex_Split_Table::Peek_Shader(unsigned int index,unsigned int pass)
+{
+	char *model = reinterpret_cast<char *>(mmc);
+	char *desc = *reinterpret_cast<char **>(model + 0x94);
+	unsigned int *shader_array = reinterpret_cast<unsigned int *>(desc + 0xF8);
+	if (shader_array[pass] != 0) {
+		ShaderClass shader(0x0010441b);
+		if (index < *reinterpret_cast<unsigned int *>(model + 0x24))
+			shader = mmc->Get_Shader(index,pass);
+		if (npatch_enable)
+			shader.Set_NPatch_Enable();
+		return shader;
+	}
+	if (!npatch_enable)
+		return *reinterpret_cast<ShaderClass *>(desc + 0x98 + pass * 4);
+	ShaderClass shader = *reinterpret_cast<ShaderClass *>(desc + 0x98 + pass * 4);
+	shader.Set_NPatch_Enable();
+	return shader;
+}
+
+class IndexBufferClass {
+public:
+ virtual ~IndexBufferClass(); char pad[20];
+ class AppendLockClass {
+ public:
+  IndexBufferClass *buffer; unsigned short *indices; char deviceLock;
+  AppendLockClass(IndexBufferClass*,unsigned,unsigned,int);
+  ~AppendLockClass();
+  unsigned short *Get_Index_Array() const {return indices;}
+ };
+};
+class SortingIndexBufferClass:public IndexBufferClass {public: SortingIndexBufferClass(unsigned short);};
+class DX8IndexBufferClass:public IndexBufferClass {public: enum UsageType {USAGE_DEFAULT=0,USAGE_NPATCHES=4}; DX8IndexBufferClass(unsigned,UsageType);};
+
+class DX8TextureCategoryClass;
+class DX8FVFCategoryContainer;
+class DX8PolygonRendererClass : public MultiListObjectClass {
+public:
+ DX8PolygonRendererClass(unsigned,MeshModelClass*,DX8TextureCategoryClass*,unsigned,unsigned,bool,unsigned);
+ MeshModelClass *model; DX8TextureCategoryClass *category;
+ unsigned indexOffset,vertexOffset,indexCount,minIndex,range,firstPolygon,polygonRange;
+ bool strip; unsigned pass;
+ void Set_Vertex_Index_Range(unsigned mn,unsigned rng);
+ void Set_Vertex_Index_Range(unsigned mn,unsigned rng,unsigned first,unsigned polys) {
+  range=rng; minIndex=mn; firstPolygon=first; polygonRange=polys;
+ }
+};
+class DX8TextureCategoryClass : public MultiListObjectClass {
+public:
+ virtual ~DX8TextureCategoryClass();
+ DX8TextureCategoryClass(DX8FVFCategoryContainer *container,TextureClass **textures,ShaderClass shader,VertexMaterialClass *material,int pass);
+ unsigned Add_Mesh(Vertex_Split_Table&,unsigned,unsigned,IndexBufferClass*,unsigned);
+ int pass; RefCountPtr<TextureClass> textures[2]; ShaderClass shader;
+ VertexMaterialClass *material; MultiListClass<DX8PolygonRendererClass> PolygonRendererList;
+ void *container, *tasks;
+ const RefCountPtr<TextureClass>& Peek_Texture(unsigned s) const { return textures[s]; }
+ const VertexMaterialClass *Peek_Material() const { return material; }
+ ShaderClass Get_Shader() const { return shader; }
+};
+typedef MultiListClass<DX8TextureCategoryClass> TextureCategoryList;
+typedef MultiListIterator<DX8TextureCategoryClass> TextureCategoryListIterator;
+
+class BfmeHandleCX;
+struct Textures_Material_And_Shader_Booking_Struct {
+ RefCountPtr<TextureClass> textures[2][64]; VertexMaterialClass *materials[64]; ShaderClass shaders[64]; unsigned count;
+ Textures_Material_And_Shader_Booking_Struct():count(0) {for(int i=0;i<64;++i) materials[i]=0;}
+ bool Add_Textures_Material_And_Shader(BfmeHandleCX*,VertexMaterialClass*,ShaderClass);
+};
+
+class DX8FVFCategoryContainer : public MultiListObjectClass
+{
+public:
+	virtual ~DX8FVFCategoryContainer();
+protected:
+	TextureCategoryList texture_category_list[4];
+	TextureCategoryList visible_texture_category_list[4];
+	void *visible_matpass_head;
+	void *visible_matpass_tail;
+	void *unknown_D0;
+	int unknown_D4;
+	IndexBufferClass *index_buffer;
+	int used_indices;
+	unsigned FVF;
+	unsigned passes;
+	unsigned uv_coordinate_channels;
+	bool sorting;
+	bool anything_to_render;
+	bool any_delayed_passes_to_render;
+
+	void Generate_Texture_Categories(Vertex_Split_Table& split_table,unsigned vertex_offset);
+	void Insert_To_Texture_Category(Vertex_Split_Table &split_table,TextureClass **texs,VertexMaterialClass *mat,ShaderClass shader,int pass,unsigned vertex_offset);
+};
+
+class VertexBufferClass {
+public:
+ class AppendLockClass {
+  VertexBufferClass *VertexBuffer; void *Vertices; char device_lock;
+ public:
+  AppendLockClass(VertexBufferClass*,unsigned,unsigned,int flags=0);
+  ~AppendLockClass();
+  void *Get_Vertex_Array() { return Vertices; }
+ };
+};
+struct S2FVFInfo
+{
+ unsigned fvf;
+ bool basis;
+ unsigned count,stride,location,extension,normal,extensionEnd,blend,tex[8],diffuse,specular,basisOffset,basisSecond,basisEnd,extensionData,formatIndex;
+ unsigned Get_FVF_Size()const { return stride; }
+ unsigned Get_Location_Offset()const { return location; }
+ unsigned Get_Normal_Offset()const { return normal; }
+ unsigned Get_Diffuse_Offset()const { return diffuse; }
+ unsigned Get_Specular_Offset()const { return specular; }
+ unsigned Get_Tex_Offset(unsigned n)const { return tex[n]; }
+};
+class BfmeDynamicVBBase
+{
+ public:virtual ~BfmeDynamicVBBase();
+ char pad[16];
+ S2FVFInfo *format;
+ char tail[4];
+ const S2FVFInfo&FVF_Info()const { return *format; }
+};
+class SortingVertexBufferClass:public BfmeDynamicVBBase
+{
+ public:SortingVertexBufferClass(unsigned short);
+ void *buffer;
+};
+class DX8VertexBufferClass:public BfmeDynamicVBBase
+{
+ public:enum UsageType {USAGE_DEFAULT=0,USAGE_NPATCHES=4};
+ DX8VertexBufferClass(unsigned,unsigned short,UsageType,unsigned);
+ void *buffer;
+};
+class BfmeDynamicSortingVB:public BfmeDynamicVBBase
+{
+ public:BfmeDynamicSortingVB(unsigned short);
+ void *buffer;
+};
+class BfmeDynamicNativeVB:public BfmeDynamicVBBase
+{
+ public:BfmeDynamicNativeVB(unsigned,unsigned short,unsigned,unsigned);
+ void *buffer;
+};
+typedef char AddMeshFVFSize[(sizeof(S2FVFInfo)==96)?1:-1];
+typedef char AddMeshVBSize[(sizeof(BfmeDynamicNativeVB)==32)?1:-1];
+
+class DX8RigidFVFCategoryContainer : public DX8FVFCategoryContainer
+{
+public:
+	~DX8RigidFVFCategoryContainer();
+	virtual void Add_Mesh(MeshModelClass* mmc);
+protected:
+	VertexBufferClass *vertex_buffer;
+	int used_vertices;
+	void *delayed_matpass_head;
+	void *delayed_matpass_tail;
+};
+// ?Add_Mesh@DX8TextureCategoryClass@@QAEIAAVVertex_Split_Table@@IIPAVIndexBufferClass@@I@Z
+unsigned DX8TextureCategoryClass::Add_Mesh(Vertex_Split_Table &split_table,unsigned vertex_offset,
+ unsigned index_offset,IndexBufferClass *index_buffer,unsigned pass)
+{
+ int poly_count=split_table.Get_Polygon_Count();
+ unsigned index_count=0, polygons=0;
+ for(int i=0;i<poly_count;++i) {
+  bool all_textures_same=true;
+  for(unsigned stage=0;stage<2;++stage)
+   all_textures_same=all_textures_same && (split_table.Peek_Texture(i,pass,stage)==Peek_Texture(stage));
+  VertexMaterialClass *mat=split_table.Peek_Material(i,pass);
+  ShaderClass shd=split_table.Peek_Shader(i,pass);
+  if(all_textures_same && Equal_Material(mat,material) && shd==shader) ++polygons;
+ }
+ if(polygons) {
+  index_count=polygons*3;
+  bool stripify=false;
+  const TriIndex *_src_indices=(const TriIndex*)split_table.Get_Polygon_Array(pass); const TriIndex *&src_indices=_src_indices;
+  DX8PolygonRendererClass *p_renderer=new DX8PolygonRendererClass(index_count,
+   split_table.Get_Mesh_Model_Class(),this,vertex_offset,index_offset,stripify,pass);
+  PolygonRendererList.Add_Tail(p_renderer);
+  IndexBufferClass::AppendLockClass l(index_buffer,index_offset,index_count,0);
+  unsigned short *dst_indices=l.Get_Index_Array();
+  unsigned short vmin=0xffff,vmax=0,firstPolygon=0xffff,lastPolygon=0;
+  for(int i=0;i<poly_count;++i) {
+   bool all_textures_same=true;
+   for(unsigned stage=0;stage<2;++stage)
+    all_textures_same=all_textures_same && (split_table.Peek_Texture(i,pass,stage)==Peek_Texture(stage));
+   VertexMaterialClass *mat=split_table.Peek_Material(i,pass);
+   ShaderClass shd=split_table.Peek_Shader(i,pass);
+   if(all_textures_same && Equal_Material(mat,material) && shd==shader) {
+    if(firstPolygon==0xffff) firstPolygon=(unsigned short)i;
+    lastPolygon=(unsigned short)i;
+    unsigned short idx;
+    idx=(unsigned short)(src_indices[i][0]+vertex_offset);
+    vmin=vmin<idx?vmin:idx; vmax=vmax>idx?vmax:idx; *dst_indices++=idx;
+    idx=(unsigned short)(src_indices[i][1]+vertex_offset);
+    vmin=vmin<idx?vmin:idx; vmax=vmax>idx?vmax:idx; *dst_indices++=idx;
+    idx=(unsigned short)(src_indices[i][2]+vertex_offset);
+    vmin=vmin<idx?vmin:idx; vmax=vmax>idx?vmax:idx; *dst_indices++=idx;
+   }
+  }
+  p_renderer->Set_Vertex_Index_Range(vmin,vmax-vmin+1,firstPolygon,lastPolygon-firstPolygon+1);
+ }
+ return index_count;
+}
+
+// ?Set_Vertex_Index_Range@DX8PolygonRendererClass@@QAEXII@Z (0x001435F0, 17 B).
+void DX8PolygonRendererClass::Set_Vertex_Index_Range(unsigned mn,unsigned rng)
+{
+ minIndex=mn; range=rng;
+}
+
+// 0x00146950: called at 0x00146E23; texture comparison through the
+// reference-counted handle getter 0x00143400.
+void DX8FVFCategoryContainer::Insert_To_Texture_Category(
+	Vertex_Split_Table &split_table,
+	TextureClass **texs,
+	VertexMaterialClass *mat,
+	ShaderClass shader,
+	int pass,
+	unsigned vertex_offset)
+{
+	bool fit_in_existing_category = false;
+	TextureCategoryListIterator it(&texture_category_list[pass]);
+	while (!it.Is_Done()) {
+		DX8TextureCategoryClass *tex_category = it.Peek_Obj();
+		bool all_textures_same = true;
+		for (unsigned stage = 0; stage < 2; ++stage) {
+			all_textures_same = all_textures_same &&
+				(reinterpret_cast<BFME2TextureCategory *>(tex_category)->Get_Texture(stage) == texs[stage]);
+		}
+		if (all_textures_same &&
+			Equal_Material(tex_category->Peek_Material(), mat) &&
+			tex_category->Get_Shader() == shader) {
+			used_indices += tex_category->Add_Mesh(
+				split_table, vertex_offset, used_indices, index_buffer, pass);
+			fit_in_existing_category = true;
+			break;
+		}
+		it.Next();
+	}
+
+	if (!fit_in_existing_category) {
+		DX8TextureCategoryClass *new_tex_category = new DX8TextureCategoryClass(
+			this, texs, shader, mat, pass);
+		used_indices += new_tex_category->Add_Mesh(
+			split_table, vertex_offset, used_indices, index_buffer, pass);
+
+		bool found_similar_category = false;
+		TextureCategoryListIterator category_it(&texture_category_list[pass]);
+		while (!category_it.Is_Done()) {
+			if (reinterpret_cast<BFME2TextureCategory *>(category_it.Peek_Obj())->Get_Texture(0) == texs[0]) {
+				texture_category_list[pass].Add_After(new_tex_category, category_it.Peek_Obj());
+				found_similar_category = true;
+				break;
+			}
+			category_it.Next();
+		}
+
+		if (!found_similar_category) {
+			texture_category_list[pass].Add_Tail(new_tex_category);
+		}
+	}
+}
+
+// 0x00146BA0 (788 B, ret 8). Binding the shader getter result then
+// copy-initializing preserves retail's stack homes.
+void DX8FVFCategoryContainer::Generate_Texture_Categories(Vertex_Split_Table& split_table,unsigned vertex_offset) {
+ int polygon_count=split_table.Get_Polygon_Count();
+ int index_count=polygon_count*3*split_table.Get_Pass_Count();
+ if(!index_buffer) {
+  int ib_size=12000; if(ib_size<index_count) ib_size=index_count;
+  if(sorting) index_buffer=new SortingIndexBufferClass(ib_size);
+  else index_buffer=new DX8IndexBufferClass(ib_size,(DX8Wrapper::Get_Current_Caps()->Support_NPatches() && WW3D::Get_NPatches_Level()>1)?DX8IndexBufferClass::USAGE_NPATCHES:DX8IndexBufferClass::USAGE_DEFAULT);
+ }
+ for(unsigned pass=0;pass<split_table.Get_Pass_Count();++pass) {
+  Textures_Material_And_Shader_Booking_Struct booking;
+  for(int i=0;i<polygon_count;++i) {
+   RefCountPtr<TextureClass> textures[2];
+   for(int stage=0;stage<2;++stage) textures[stage]=split_table.Peek_Texture(i,pass,stage);
+   VertexMaterialClass *mat=split_table.Peek_Material(i,pass);
+   const ShaderClass &shaderValue=split_table.Peek_Shader(i,pass); ShaderClass shader=shaderValue;
+   if(!booking.Add_Textures_Material_And_Shader(reinterpret_cast<BfmeHandleCX*>(textures),mat,shader))continue;
+   Insert_To_Texture_Category(split_table,reinterpret_cast<TextureClass**>(textures),mat,shader,pass,vertex_offset);
+  }
+ }
+}
+
+
+// ?Add_Mesh@DX8RigidFVFCategoryContainer@@UAEXPAVMeshModelClass@@@Z (0x00148180,
+// 919 B, ret 4). Zero Hour's body with BFME's buffers: the sorting/native
+// vertex-buffer constructors 0x00139660 / 0x0013AC00 (four arguments), the
+// 96-byte FVF record behind +0x14 of the buffer, the four-argument append
+// lock 0x001395B0, the alternate-aware normal getter and the UV count taken
+// straight from the FVF's texture-count field.
+void DX8RigidFVFCategoryContainer::Add_Mesh(MeshModelClass* mmc_)
+{
+ Vertex_Split_Table split_table(mmc_);
+ int needed_vertices=split_table.Get_Vertex_Count();
+ if(!vertex_buffer)
+ {
+  int vb_size=4000;
+  if(needed_vertices > vb_size)vb_size=needed_vertices;
+  if(sorting)vertex_buffer=(VertexBufferClass*)new SortingVertexBufferClass(vb_size);
+  else vertex_buffer=(VertexBufferClass*)new DX8VertexBufferClass(FVF,vb_size,(DX8Wrapper::Get_Current_Caps()->Support_NPatches() && WW3D::Get_NPatches_Level()>1)?DX8VertexBufferClass::USAGE_NPATCHES:DX8VertexBufferClass::USAGE_DEFAULT,0);
+
+ }
+ VertexBufferClass::AppendLockClass l((VertexBufferClass*)vertex_buffer,used_vertices,split_table.Get_Vertex_Count(),0);
+
+ const S2FVFInfo fi=((BfmeDynamicVBBase*)vertex_buffer)->FVF_Info();
+ unsigned char *vb=(unsigned char*)l.Get_Vertex_Array();
+
+ unsigned int i;
+ const Vector3 *locs=split_table.Get_Vertex_Array();
+ const Vector3 *norms=split_table.Get_Vertex_Normal_Array();
+ const unsigned *diffuse=split_table.Get_Color_Array(0);
+ const unsigned *specular=split_table.Get_Color_Array(1);
+ for(i=0;i<split_table.Get_Vertex_Count();++i)
+ {
+  *(Vector3*)(vb+fi.Get_Location_Offset())=locs[i];
+  if((FVF&0x10)==0x10 && norms)*(Vector3*)(vb+fi.Get_Normal_Offset())=norms[i];
+  if((FVF&0x40)==0x40)
+  {
+   if(diffuse)*(unsigned*)(vb+fi.Get_Diffuse_Offset())=diffuse[i];
+   else *(unsigned*)(vb+fi.Get_Diffuse_Offset())=0xFFFFFFFF;
+
+  }
+  if((FVF&0x80)==0x80)
+  {
+   if(specular)*(unsigned*)(vb+fi.Get_Specular_Offset())=specular[i];
+   else *(unsigned*)(vb+fi.Get_Specular_Offset())=0xFFFFFFFF;
+
+  }
+  vb+=fi.Get_FVF_Size();
+
+ }
+ int uvcount=0;
+ if((FVF&0x100)==0x100) uvcount=1;
+ if((FVF&0x200)==0x200) uvcount=2;
+ if((FVF&0x300)==0x300) uvcount=3;
+ if((FVF&0x400)==0x400) uvcount=4;
+ if((FVF&0x500)==0x500) uvcount=5;
+ if((FVF&0x600)==0x600) uvcount=6;
+ if((FVF&0x700)==0x700) uvcount=7;
+ if((FVF&0x800)==0x800) uvcount=8;
+ for(int j=0;j<uvcount;++j)
+ {
+  unsigned char *vb=(unsigned char*)l.Get_Vertex_Array();
+  const Vector2 *uvs=split_table.Get_UV_Array(j);
+  if(uvs)for(i=0;i<split_table.Get_Vertex_Count();++i)
+  {
+   *(Vector2*)(vb+fi.Get_Tex_Offset(j))=uvs[i];
+   vb+=fi.Get_FVF_Size();
+
+  }
+
+ }
+ Generate_Texture_Categories(split_table,used_vertices);
+ used_vertices+=needed_vertices;
+
+}
+
+

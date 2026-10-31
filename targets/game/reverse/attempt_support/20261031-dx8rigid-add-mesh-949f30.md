@@ -27,3 +27,13 @@ Landing then needs the merge the donor describes: BFME 1 matches those callees i
 DX8FVFCategoryContainerInsertToTextureCategory.cpp, DX8TextureCategoryAddMesh.cpp, dx8renderer.cpp
 Peek_*), so test first whether BFME 1 really needs them visible (declare-only probe) before
 `bfme2_sweep.py rehome`.
+
+## Second pass (same session)
+`20261031-dx8rigid-add-mesh-949f30.cpp.txt` is the donor unit with the BFME 1 fixes above applied
+(two container fields `unknown_D0`/`unknown_D4` before index_buffer as in
+DX8FVFCategoryContainerGenerateTextureCategoriesBFME.cpp, SortingVertexBufferClass /
+DX8VertexBufferClass constructors, the TEX1..TEX8 cascade with `int` uvcount/j). Copy it to
+game/Libraries/Source/WWVegas/WW3D2/ to probe. Result: 1058/1008 B, shape 0.838. Remaining:
+retail keeps uvcount in [esp+0x10] and stores each cascade value there (ours keeps EAX); retail
+tests `byte [this+0xE0] & 0x80` directly (ours caches this in EDI and loads BL); about 50 bytes
+more code in ours, not yet located. The visible-callee question is still untested.
