@@ -63,35 +63,8 @@
 // BFME updates the shape vector; these former scalar-layout copies differed.
 
 //-----------------------------------------------------------------------------
-// ?GeometryInfo::set present-unmatched
-void GeometryInfo::set(GeometryType type, Bool isSmall, Real height, Real majorRadius, Real minorRadius)
-{
-	m_type = type;
-	m_isSmall = isSmall;
-
-	switch(m_type)
-	{
-		case GEOMETRY_SPHERE:
-			m_majorRadius = majorRadius;
-			m_minorRadius = majorRadius;
-			m_height = majorRadius;
-			break;
-
-		case GEOMETRY_CYLINDER:
-			m_majorRadius = majorRadius;
-			m_minorRadius = majorRadius;
-			m_height = height;
-			break;
-
-		case GEOMETRY_BOX:
-			m_majorRadius = majorRadius;
-			m_minorRadius = minorRadius;
-			m_height = height;
-			break;
-	};
-
-	calcBoundingStuff();
-}
+// GeometryInfo::set: the retail body 0x008804E0 is GeometryInfoSet.cpp; the
+// Zero Hour copy here was a second, non-retail strong definition.
 
 //-----------------------------------------------------------------------------
 static Real calcDotProduct(const Coord3D& a, const Coord3D& b)
