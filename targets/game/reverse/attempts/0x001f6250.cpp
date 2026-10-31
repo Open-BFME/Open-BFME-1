@@ -1,5 +1,5 @@
 // ?onDamage@BridgeTowerBehavior@@UAEXPAVDamageInfo@@@Z
-// partial score=0.8794 date=2026-09-11
+// partial score=0.9922 date=2026-10-31
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
 // stlport
 // Readable reconstruction of ?onDamage@BridgeTowerBehavior@@UAEXPAVDamageInfo@@@Z.
@@ -261,7 +261,8 @@ void BridgeTowerBehavior::onDamage(DamageInfo *damageInfo)
 
 	if (bridgeInterface)
 	{
-		Object *source = TheGameLogic->findObjectByID(damageInfo->in.m_sourceID);
+		ObjectID sourceID = damageInfo->in.m_sourceID;
+		Object *source = TheGameLogic->findObjectByID(sourceID);
 		if (source == NULL ||
 			(source->isKindOf(KINDOF_BRIDGE) == false &&
 				source->isKindOf(KINDOF_BRIDGE_TOWER) == false))
