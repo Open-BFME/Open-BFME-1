@@ -77,7 +77,7 @@ void Rva0014C8E0::parseTarget( INI *ini, void *instance, void *store, const void
 	Open2Rec14BBC0 entry;
 	if( tmpl != 0 && tmpl->m_name != 0 && tmpl->m_name->m_length != 0 )
 	{
-		entry.m_at00.set( *(const AsciiString *)&tmpl->m_name );
+		entry.m_at00.StringBase<char>::set( *(const AsciiString *)&tmpl->m_name );
 		Open2Rec14BBC0List *items = (Open2Rec14BBC0List *)store;
 		entry.m_at04 = priority;
 		items->push_front( entry );
