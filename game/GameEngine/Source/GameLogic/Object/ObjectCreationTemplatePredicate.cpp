@@ -17,10 +17,21 @@ class ThingFactory;
 extern ThingFactory *TheThingFactory;
 #define TheThingFactory ((BfmeThingFactory *)TheThingFactory)
 
+// Retail calls ILT 0x00007B4E -> 0x000D57B0, the row defined in
+// RTS/Player_canBuild.cpp as Player::canBuild; the predicate is that player.
+class Player
+{
+public:
+	bool canBuild( const ThingTemplate *tmplate ) const;
+};
+
 class Rva001DB720Predicate
 {
 public:
-	bool accepts( ThingTemplate *thingTemplate );
+	bool accepts( ThingTemplate *thingTemplate )
+	{
+		return reinterpret_cast<const Player *>( this )->canBuild( thingTemplate );
+	}
 };
 
 class Rva001DB720NameList
