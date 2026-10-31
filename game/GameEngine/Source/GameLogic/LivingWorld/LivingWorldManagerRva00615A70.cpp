@@ -13,10 +13,21 @@
 #include "Common/STLTypedefs.h"
 #include <hash_map>
 
+// The matched definition (BfmeThingNAStateUpdates.cpp) class-keys Coord2D, as
+// BFME does; this unit's own row keys it as a struct, so the call names the
+// defined symbol directly.
+extern "C" void __identifier("?bfmeUpdateBFromPointGuardedNA@BfmeThingNA@@QAEXABVCoord2D@@@Z")(void);
+
 class BfmeThingNA
 {
 public:
-	void bfmeUpdateBFromPointGuardedNA(const Coord2D &point);
+	void bfmeUpdateBFromPointGuardedNA(const Coord2D &point)
+	{
+		typedef void (BfmeThingNA::*Call)(const Coord2D &);
+		union { void (*raw)(); Call member; } call;
+		call.raw = __identifier("?bfmeUpdateBFromPointGuardedNA@BfmeThingNA@@QAEXABVCoord2D@@@Z");
+		(this->*call.member)(point);
+	}
 };
 
 typedef _STL::hash_map<AsciiString, BfmeThingNA *,
