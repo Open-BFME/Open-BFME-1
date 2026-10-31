@@ -12,8 +12,15 @@ public:
 class Rva007FA990Base4
 {
 public:
+	Rva007FA990Base4();
 	virtual void v4();
 };
+
+// Retail 0x007F8710 (unreferenced, after int3 padding): its constructor only
+// stores this class's vftable 0x0112B89C, the secondary-base vftable 0x007FA990 seats at +4.
+Rva007FA990Base4::Rva007FA990Base4()
+{
+}
 
 struct Rva007FA990Cell
 {
