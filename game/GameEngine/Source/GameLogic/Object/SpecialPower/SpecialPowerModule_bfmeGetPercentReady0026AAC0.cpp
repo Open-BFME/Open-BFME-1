@@ -57,18 +57,19 @@ class SpecialPowerTemplate : public Overridable
 {
 public:
 	bool isShortcutPower(void) const;			///< pinned at 0x00268920
-	unsigned int getReloadTime(void) const
-	{
-		SpecialPowerTemplate *self = const_cast<SpecialPowerTemplate *>(this);
-		const SpecialPowerTemplate *resolved = (const SpecialPowerTemplate *)self->finalOverrideUnrolledLocals();
-		unsigned int reload = resolved->m_reloadTime;
-		return reload;
-	}
-
-private:
 	unsigned char m_unreconstructed_08[0x18 - 0x08];
 	unsigned int m_reloadTime;					// +0x18
 };
+
+// getReloadTime() as a file-static helper: an in-class inline accessor makes
+// VC7.1 emit a non-retail ?getReloadTime COMDAT next to SpecialPowerModule.cpp's.
+static __forceinline unsigned int getReloadTime0026AAC0(const SpecialPowerTemplate *power)
+{
+	SpecialPowerTemplate *self = const_cast<SpecialPowerTemplate *>(power);
+	const SpecialPowerTemplate *resolved = (const SpecialPowerTemplate *)self->finalOverrideUnrolledLocals();
+	unsigned int reload = resolved->m_reloadTime;
+	return reload;
+}
 
 class Player
 {
@@ -163,7 +164,7 @@ float SpecialPowerModule::bfmeGetPercentReady0026AAC0() const
 		}
 	}
 
-	float percent = g_bfmeDefaultBU - ((readyFrame - TheGameLogic->getFrame()) / (float)modData->m_specialPowerTemplate->getReloadTime());
+	float percent = g_bfmeDefaultBU - ((readyFrame - TheGameLogic->getFrame()) / (float)getReloadTime0026AAC0(modData->m_specialPowerTemplate));
 
 	return percent;
 }
