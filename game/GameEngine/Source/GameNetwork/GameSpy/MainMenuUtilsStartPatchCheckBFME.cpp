@@ -32,7 +32,8 @@ static bool cantConnectBeforeOnline;
 static unsigned char showOnlineShellFlag;
 static int checksLeftBeforeOnline;
 extern volatile unsigned char g_rva012F7178PatchCheckLayoutActive;
-extern bool s_asyncDNSLookupInProgress;
+// Shared one-byte owner in MainMenuUtils.cpp (VA 0x012F717A, data_rows.csv).
+extern unsigned char s_asyncDNSLookupInProgress;
 extern int timeThroughOnline;
 extern GameTextInterface *TheGameText;
 extern const unsigned short g_Rva01088AF4EmptyWideString[];

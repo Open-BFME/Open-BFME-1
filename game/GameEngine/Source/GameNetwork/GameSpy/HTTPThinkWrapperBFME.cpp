@@ -2,8 +2,9 @@
 // body keeps the asynchronous DNS state machine, then tail-calls ghttpThink
 // when HTTP processing remains enabled.
 
-extern bool s_asyncDNSLookupInProgress;
-extern bool cantConnectBeforeOnline;
+// Match MainMenuUtils.cpp's existing one-byte data owners and their COFF names.
+extern unsigned char s_asyncDNSLookupInProgress;
+extern unsigned char cantConnectBeforeOnline;
 extern bool isHttpOk;
 
 extern int asyncGethostbyname(char *name);
