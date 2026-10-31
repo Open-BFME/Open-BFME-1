@@ -4,12 +4,7 @@
 
 #include <vector>
 #include "ascii_string.h"
-
-struct Coord2D
-{
-	float m_x;
-	float m_y;
-};
+#include "../../../Libraries/Include/Lib/Coord2D.h"
 
 typedef _STL::vector<AsciiString> Rva003C1EE0TempList;
 
@@ -71,8 +66,8 @@ int LivingWorldLogic::select(void *input, void *candidate,
 	Rva003C1EE0InputView *view = (Rva003C1EE0InputView *)input;
 	if (candidate == 0)
 	{
-		out->m_y = 0.0f;
-		out->m_x = 1.0f;
+		out->y = 0.0f;
+		out->x = 1.0f;
 		return view->m_resultCC;
 	}
 	int selectedIndex;
