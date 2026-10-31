@@ -9,11 +9,25 @@ class LivingWorldManager;
 extern LivingWorldManager *TheLivingWorldManager;
 #define g_bfmeGameCW ( *(BfmeGameCW **)&TheLivingWorldManager )
 
+// Retail calls ILT 0x00032010 -> 0x003A48B0, the row defined in
+// LivingWorld/Rva003A48B0ApplyByName.cpp as Rva003A48B0Owner::applyByName;
+// the member spelling below forwards to that definition.
+class AsciiString;
+class Rva003A48B0Owner
+{
+public:
+	void applyByName(const AsciiString *name, char flag, int mode);
+};
+
 class BfmeOwnCZ
 {
 public:
 	void bfmeSetCZ(int enable);
-	void bfmeApplyCZ(void *target, int first, int second);
+	void bfmeApplyCZ(void *target, int first, int second)
+	{
+		reinterpret_cast<Rva003A48B0Owner *>(this)->applyByName(
+			(const AsciiString *)target, (char)first, second);
+	}
 
 	unsigned char m_bfmeHeadCZ[0x38];
 	char m_bfmeStateCZ;
