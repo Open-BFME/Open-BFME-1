@@ -210,12 +210,22 @@ void ExperienceTracker::xfer(Xfer *xfer)
 		m_scalarTable->xfer(xfer);
 }
 
+// Spelled as ExperienceTrackerProgression.cpp's retail body 0x001B2380 (the
+// volatile template slot keeps its add/load pair) so this visible copy's
+// COMDAT is byte-identical to it.
+inline const ThingTemplate *bfmeFinalTemplate(ThingTemplate *const volatile *templateSlot)
+{
+	const ThingTemplate *t = *templateSlot;
+	if (t == 0)
+		return 0;
+	if (t->m_nextOverride)
+		t = static_cast<const ThingTemplate *>(t->m_nextOverride->getFinalOverride());
+	return t;
+}
+
 inline bool ExperienceTracker::isTrainable() const
 {
-	const ThingTemplate *t = m_parent->m_template;
-	if (t && t->m_nextOverride)
-		t = static_cast<const ThingTemplate *>(t->m_nextOverride->getFinalOverride());
-	return t->m_isTrainable;
+	return bfmeFinalTemplate(&m_parent->m_template)->m_isTrainable;
 }
 
 bool ExperienceTracker::isAcceptingExperiencePoints() const

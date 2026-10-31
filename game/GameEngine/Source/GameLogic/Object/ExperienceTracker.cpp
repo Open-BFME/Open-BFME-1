@@ -74,11 +74,8 @@ ExperienceTracker::~ExperienceTracker()
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/ExperienceTrackerProgression.cpp
-// ?isTrainable@ExperienceTracker@@ present-unmatched
-Bool ExperienceTracker::isTrainable() const
-{
-	return m_parent->getTemplate()->isTrainable();
-}
+// ExperienceTracker::isTrainable: the retail body is in ExperienceTrackerProgression.cpp;
+// the Zero Hour copy here was a second, non-retail strong definition.
 
 //-------------------------------------------------------------------------------------------------
 // ExperienceTracker::isAcceptingExperiencePoints is defined byte-exact in
