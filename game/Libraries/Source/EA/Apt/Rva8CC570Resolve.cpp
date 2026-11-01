@@ -49,12 +49,6 @@ private:
 class BfmeNode1220
 {
 	public:
-	int bfmeTest1220(int * a0,int a1) {
-	 // retail body is still the gen-dump row ?d_0089c290@@YAXXZ (no C++ row yet); call it by that defined name
-	 union { void (__cdecl *symbol)(); int (BfmeNode1220::*member)(int *,int); } c;
-	 c.symbol = &__identifier("?d_0089c290@@YAXXZ");
-	 return (this->*c.member)(a0,a1);
-	}
 	void *m_vptr;
 };
 
@@ -99,8 +93,16 @@ Rva8CCCE0Value *rva8CC570Resolve(void *fallback, void *scope, void *data)
 	BfmeNode1220 *resolvedName = (BfmeNode1220 *)lookupResult;
 	if (resolvedName != 0)
 	{
-		Rva8CCCE0Value *result = (Rva8CCCE0Value *)resolvedName->bfmeTest1220(
-			(int *)&key, (int)scope);
+        // Call the ledger-owned retail dump directly with its witnessed ABI.
+        // Keeping this in the caller avoids emitting a different body under
+        // BfmeNode1220::bfmeTest1220's pinned retail name.
+        union {
+            void (__cdecl *symbol)();
+            int (BfmeNode1220::*member)(int *, int);
+        } call;
+        call.symbol = &__identifier("?d_0089c290@@YAXXZ");
+        Rva8CCCE0Value *result = (Rva8CCCE0Value *)(resolvedName->*call.member)(
+            (int *)&key, (int)scope);
 		if (result != 0 && result->slot9())
 			return result;
 	}
