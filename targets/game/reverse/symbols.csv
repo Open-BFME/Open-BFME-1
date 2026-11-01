@@ -86759,7 +86759,7 @@ name,address,notes
 ?onExit@Rva00172D80StateBase@@UAEXH@Z,0x00029311,ILT to the assigned 0x00172D80 body called by the state exit cleanup at 0x001741B0
 ?onExit@Rva002985D0Update@@AAEX_N0@Z,0x0000F975,Open-BFME5 near-twin sibling of SpecialAbilityUpdate::onExit; reuses the pinned ILT at 0x0000F975
 ?onExit@Rva002BDF10Base@@UAEXW4StateExitType@@@Z,0x00008990,address-derived GiantBird-family base exit thunk used by 0x002BDF10
-?onExit@SpecialAbilityUpdate@@AAEX_N0@Z,0x0000F975,SpecialAbilityUpdate destructor cleanup call target
+?onExit@SpecialAbilityUpdate@@MAEX_N0@Z,0x0000F975,SpecialAbilityUpdate destructor cleanup call target; ilt_oracle CONFIRMED protected virtual spelling (AAE contradicted)
 ?onExitReached@DockUpdate@@UAEXPAVObject@@@Z,0x002cc7f0,vtable-slot ??_7DockUpdate@@6BDockUpdateInterface@@@ slot 11 anchors=13
 ?onLevelStart@Drawable@@QAEXXZ,0x00015B81,Open-BFME5 ILT thunk to body 0x00412500; GameLogic start-new-game sequence and the exact Drawable module broadcast establish onLevelStart semantics
 ?onLimitPassed@Gen0060BE20@@AAEXXZ,0x0000F880,limit tail-call ILT used by exact Living World eye tower gate at 0x0060BE20

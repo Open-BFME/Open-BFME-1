@@ -71,8 +71,11 @@ class SpecialAbilityUpdate : public SpecialAbilityUpdateUpdateModule,
 public:
 	virtual ~SpecialAbilityUpdate();
 
+protected:
+	// ilt_oracle confirms the protected virtual spelling MAE for ILT 0x0000F975.
+	virtual void onExit(bool, bool);
+
 private:
-	void onExit(bool, bool);
 	unsigned char m_pad[0x10];
 	AudioEventRTS m_prepSoundLoop;
 	_STL::list<int> m_specialObjectIDList;
@@ -80,5 +83,5 @@ private:
 
 SpecialAbilityUpdate::~SpecialAbilityUpdate()
 {
-	onExit(true, true);
+	SpecialAbilityUpdate::onExit(true, true);
 }
