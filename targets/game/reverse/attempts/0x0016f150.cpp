@@ -1,51 +1,125 @@
 // ?method@Rva0016F150@@QAE_NPAUCoord3D@@PAVObject@@PAX@Z
-// partial score=0.4631 date=2026-10-09
+// partial score=0.7358 date=2026-11-01
 // cl: /DNDEBUG /MD /Igame/Libraries/Include
+//
+// Retail 0x0016F150: 352 bytes, ret 0x0C (this unused).  Reached through
+// ILT 0x0002255C from 0x00182F70 (+0x2DC/+0x33C).  Walks a destination
+// back toward the object in 10-unit steps (count from the 2D distance
+// times -0.05) until Pathfinder::lineClear accepts the segment from the
+// candidate to itself on the object's layer, then stores the accepted
+// candidate.  No retail name evidence: the method keeps the address name.
+
 #include <math.h>
 #include "Lib/Coord3D.h"
-class Rva0016F150Vector : public Coord3D {
-public:
-    Rva0016F150Vector() {}
-    Rva0016F150Vector(const Coord3D &p) { x=p.x; y=p.y; z=p.z; }
-    void copy(const Coord3D &p) { struct Raw {unsigned x,y,z;}; *(Raw*)this=*(const Raw*)&p; }
-    void copyTo(Coord3D *p) const { struct Raw {unsigned x,y,z;}; *(Raw*)p=*(const Raw*)this; }
-    void sub(const Coord3D *p) { x-=p->x; y-=p->y; z-=p->z; }
-    void scale(float s) { x*=s; y*=s; z*=s; }
-    float length2D() const { float a=x,b=y; return (float)sqrt(a*a+b*b); }
-    float length() const { float a=x,b=y,c=z; return (float)sqrt(a*a+b*b+c*c); }
-    void normalize() { float len=length(); float inv=1.0f/len; x*=inv; y*=inv; z*=inv; }
-};
-class Object { public: int getLayer() const; };
-enum PathfindLayerEnum { LAYER_INVALID=0, LAYER_GROUND=1 };
-class Rva0016F150CallReceiver {};
-extern void j_000432a2();
-template<class T> __forceinline T member(void (*raw)()) { union { void (*raw)(); T m; } u; u.raw=raw; return u.m; }
-#define CALL(T,p,f) (((Rva0016F150CallReceiver*)(p))->*member<T>(f))
-typedef int (Rva0016F150CallReceiver::*LineClear)(Object*,int,PathfindLayerEnum,const Coord3D*,const Coord3D*);
-class AI;
-extern AI *TheAI;
-class Rva0016F150 {
-public: bool method(Coord3D *destination, Object *object, void *unused);
-};
-bool Rva0016F150::method(Coord3D *destination, Object *object, void *unused)
+
+typedef int Int;
+typedef bool Bool;
+typedef float Real;
+
+enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1 };
+
+class AIUpdateInterface
 {
-    void *ai=*(void**)((char*)object+0x204);
-    if(!ai) return false;
-    Rva0016F150Vector direction=*destination;
-    Rva0016F150Vector candidate; candidate.copy(*destination);
-    direction.sub((Coord3D*)((char*)object+0x38));
-    direction.z=0.0f;
-    int count=-(int)(direction.length2D()*-0.05f)-1;
-    direction.normalize();
-    direction.scale(10.0f);
-    for(int i=0;i<count;++i) {
-        void *pathfinder=*(void**)((char*)TheAI+0x0c);
-        int queryValue=*(int*)((char*)ai+0x1b8);
-        if((unsigned char)CALL(LineClear,pathfinder,j_000432a2)(object,queryValue,(PathfindLayerEnum)object->getLayer(),&candidate,&candidate)) {
-            candidate.copyTo(destination);
-            return true;
-        }
-        candidate.sub(&direction);
-    }
-    return false;
+public:
+	char m_unreconstructed000[0x1b8];
+	Int m_1b8;
+};
+
+class Object
+{
+public:
+	Int getLayer() const;
+	const Coord3D *getPosition() const { return &m_position; }
+	AIUpdateInterface *getAI() const { return m_ai; }
+
+private:
+	char m_unreconstructed000[0x38];
+	Coord3D m_position;
+	char m_unreconstructed044[0x204 - 0x44];
+	AIUpdateInterface *m_ai;
+};
+
+class Pathfinder
+{
+public:
+	Int lineClear(Object *obj, Int locomotorSet, PathfindLayerEnum layer,
+		const Coord3D *from, const Coord3D *to);
+};
+
+class AI
+{
+public:
+	Pathfinder *pathfinder() { return m_pathfinder; }
+
+	char m_unreconstructed00[0x0c];
+	Pathfinder *m_pathfinder;
+};
+extern AI *TheAI;
+
+inline Real coordLength(const Coord3D &c)
+{
+	return (Real)sqrt(c.x * c.x + c.y * c.y + c.z * c.z);
+}
+
+inline Real coordLength2D(const Coord3D &c)
+{
+	return (Real)sqrt(c.x * c.x + c.y * c.y);
+}
+
+inline void coordNormalize(Coord3D &c)
+{
+	Real inv = 1.0f / coordLength(c);
+	c.x *= inv;
+	c.y *= inv;
+	c.z *= inv;
+}
+
+inline void coordScale(Coord3D &c, Real s)
+{
+	c.x *= s;
+	c.y *= s;
+	c.z *= s;
+}
+
+class Rva0016F150
+{
+public:
+	Bool method(Coord3D *destination, Object *obj, void *unused);
+};
+
+// ?method@Rva0016F150@@QAE_NPAUCoord3D@@PAVObject@@PAX@Z
+Bool Rva0016F150::method(Coord3D *destination, Object *obj, void *unused)
+{
+	AIUpdateInterface *ai = obj->getAI();
+	if (!ai)
+		return false;
+
+	Coord3D candidate;
+	candidate.x = destination->x;
+	candidate.y = destination->y;
+	candidate.z = destination->z;
+	Coord3D dir;
+	dir.x = destination->x;
+	dir.y = destination->y;
+	dir.z = 0.0f;
+	dir.x -= obj->getPosition()->x;
+	dir.y -= obj->getPosition()->y;
+	Int count = -(Int)(coordLength2D(dir) * -0.05f) - 1;
+	coordNormalize(dir);
+	coordScale(dir, 10.0f);
+
+	for (Int i = 0; i < count; i++)
+	{
+		Int loco = ai->m_1b8;
+		if ((unsigned char)TheAI->pathfinder()->lineClear(obj, loco,
+				(PathfindLayerEnum)obj->getLayer(), &candidate, &candidate))
+		{
+			*destination = candidate;
+			return true;
+		}
+		candidate.x -= dir.x;
+		candidate.y -= dir.y;
+		candidate.z -= dir.z;
+	}
+	return false;
 }
