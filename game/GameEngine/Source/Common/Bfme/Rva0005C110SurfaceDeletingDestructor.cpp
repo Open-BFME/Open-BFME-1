@@ -10,6 +10,9 @@ public:
     __declspec(noinline) virtual ~Rva0005C110Surface();
 };
 
-Rva0005C110Surface::~Rva0005C110Surface()
+// ~Rva0005C110Surface is matched out of line (Rva0005C110SurfaceDestructor.cpp). The implicit copy constructor (no
+// retail twin) emits the vftable and with it ??_G without a second destructor body.
+void forceRva0005C110SurfaceDeletingDestructorCopy(const Rva0005C110Surface &that)
 {
+	Rva0005C110Surface value(that);
 }

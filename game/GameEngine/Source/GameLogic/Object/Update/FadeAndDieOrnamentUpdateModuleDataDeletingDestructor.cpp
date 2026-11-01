@@ -32,6 +32,9 @@ private:
 	BFMERetailAsciiString m_buffer;
 };
 
-FadeAndDieOrnamentUpdateModuleData::~FadeAndDieOrnamentUpdateModuleData()
+// ~FadeAndDieOrnamentUpdateModuleData is matched out of line (FadeAndDieOrnamentUpdateModuleDataDestructorThunk.cpp). The implicit copy constructor (no
+// retail twin) emits the vftable and with it ??_G without a second destructor body.
+void forceFadeAndDieOrnamentUpdateModuleDataDeletingDestructorCopy(const FadeAndDieOrnamentUpdateModuleData &that)
 {
+	FadeAndDieOrnamentUpdateModuleData value(that);
 }

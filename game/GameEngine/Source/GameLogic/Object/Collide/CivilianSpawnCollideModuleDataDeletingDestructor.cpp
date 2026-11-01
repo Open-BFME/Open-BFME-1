@@ -11,8 +11,11 @@ public:
 	__declspec(noinline) virtual ~CivilianSpawnCollideModuleData();
 };
 
-CivilianSpawnCollideModuleData::~CivilianSpawnCollideModuleData()
+// ~CivilianSpawnCollideModuleData is matched out of line (CivilianSpawnCollideModuleDataCtorThunk.cpp). The implicit copy constructor (no
+// retail twin) emits the vftable and with it ??_G without a second destructor body.
+void forceCivilianSpawnCollideModuleDataDeletingDestructorCopy(const CivilianSpawnCollideModuleData &that)
 {
+	CivilianSpawnCollideModuleData value(that);
 }
 
 void Force_CivilianSpawnCollideModuleData_Deleting_Destructor(

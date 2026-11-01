@@ -11,8 +11,11 @@ public:
 	__declspec(noinline) virtual ~ExperienceTracker();
 };
 
-ExperienceTracker::~ExperienceTracker()
+// ~ExperienceTracker is matched out of line (ExperienceTrackerBFMEDtor.cpp). The implicit copy constructor (no
+// retail twin) emits the vftable and with it ??_G without a second destructor body.
+void forceExperienceTrackerDeletingDestructorCopy(const ExperienceTracker &that)
 {
+	ExperienceTracker value(that);
 }
 
 void Force_ExperienceTracker_Deleting_Destructor(ExperienceTracker *value)

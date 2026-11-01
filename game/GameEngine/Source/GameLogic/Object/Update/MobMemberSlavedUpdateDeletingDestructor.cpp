@@ -12,8 +12,11 @@ public:
 	__declspec(noinline) virtual ~MobMemberSlavedUpdate();
 };
 
-MobMemberSlavedUpdate::~MobMemberSlavedUpdate()
+// ~MobMemberSlavedUpdate is matched out of line (MobMemberSlavedUpdateDestructorThunk.cpp). The implicit copy constructor (no
+// retail twin) emits the vftable and with it ??_G without a second destructor body.
+void forceMobMemberSlavedUpdateDeletingDestructorCopy(const MobMemberSlavedUpdate &that)
 {
+	MobMemberSlavedUpdate value(that);
 }
 
 void Force_MobMemberSlavedUpdate_Deleting_Destructor(

@@ -27,6 +27,9 @@ private:
 	UpgradeSoundSelectorClientBehaviorModuleDataMember m_member;
 };
 
-UpgradeSoundSelectorClientBehaviorModuleData::~UpgradeSoundSelectorClientBehaviorModuleData()
+// ~UpgradeSoundSelectorClientBehaviorModuleData is matched out of line (UpgradeSoundSelectorClientBehaviorModuleDataDestructorThunk.cpp). The implicit copy constructor (no
+// retail twin) emits the vftable and with it ??_G without a second destructor body.
+void forceUpgradeSoundSelectorClientBehaviorModuleDataDeletingDestructorCopy(const UpgradeSoundSelectorClientBehaviorModuleData &that)
 {
+	UpgradeSoundSelectorClientBehaviorModuleData value(that);
 }

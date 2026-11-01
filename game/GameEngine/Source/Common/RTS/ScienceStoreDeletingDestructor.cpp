@@ -10,6 +10,9 @@ public:
     __declspec(noinline) virtual ~ScienceStore();
 };
 
-ScienceStore::~ScienceStore()
+// ~ScienceStore is matched out of line (Science.cpp). The implicit copy constructor (no
+// retail twin) emits the vftable and with it ??_G without a second destructor body.
+void forceScienceStoreDeletingDestructorCopy(const ScienceStore &that)
 {
+	ScienceStore value(that);
 }

@@ -27,6 +27,9 @@ private:
 	ModelConditionSoundSelectorClientBehaviorModuleDataMember m_member;
 };
 
-ModelConditionSoundSelectorClientBehaviorModuleData::~ModelConditionSoundSelectorClientBehaviorModuleData()
+// ~ModelConditionSoundSelectorClientBehaviorModuleData is matched out of line (ModelConditionSoundSelector.cpp). The implicit copy constructor (no
+// retail twin) emits the vftable and with it ??_G without a second destructor body.
+void forceModelConditionSoundSelectorClientBehaviorModuleDataDeletingDestructorCopy(const ModelConditionSoundSelectorClientBehaviorModuleData &that)
 {
+	ModelConditionSoundSelectorClientBehaviorModuleData value(that);
 }

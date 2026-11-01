@@ -9,6 +9,9 @@ public:
 
 // The scalar destructor remains ledger-backed by its retail MASM dump; this
 // definition emits the compiler-owned deleting destructor at the vtable slot.
-ToppleUpdateModuleData::~ToppleUpdateModuleData()
+// ~ToppleUpdateModuleData is matched out of line (ToppleUpdateModuleDataDestructorThunk.cpp). The implicit copy constructor (no
+// retail twin) emits the vftable and with it ??_G without a second destructor body.
+void forceToppleUpdateModuleDataDeletingDestructorCopy(const ToppleUpdateModuleData &that)
 {
+	ToppleUpdateModuleData value(that);
 }

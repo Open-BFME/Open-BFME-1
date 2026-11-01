@@ -30,6 +30,9 @@ private:
 	Rva0039D550 m_handle08;
 };
 
-SpecialEnemySenseUpdateModuleData::~SpecialEnemySenseUpdateModuleData()
+// ~SpecialEnemySenseUpdateModuleData is matched out of line (SpecialEnemySenseUpdateModuleDataCtorThunk.cpp). The implicit copy constructor (no
+// retail twin) emits the vftable and with it ??_G without a second destructor body.
+void forceSpecialEnemySenseUpdateModuleDataDeletingDestructorCopy(const SpecialEnemySenseUpdateModuleData &that)
 {
+	SpecialEnemySenseUpdateModuleData value(that);
 }
