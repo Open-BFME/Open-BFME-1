@@ -23,3 +23,25 @@ single or double inline accessor, direct m_ai, function-scope AI variable
 shared with the head, forceinline predicate helper, a separate `unit` variable
 for the redirected object, const Object*, `||` with !allowed, nested ifs,
 `State45 ==` order, assignment in the condition. An int `allowed` is worse (111).
+
+## Session 519 (claude-opus-5-5): the target map block decides ECX vs ESI
+
+- Retail twin: `Rva002E6170ObjectRandomChance` (LuaScriptBindingsLuaA.cpp,
+  0x2E6170+0x97) runs the same bonus + `m_ai && state == 0x2D` tail and gets
+  `mov ecx,[esi+0x204]`. The bank's tail alone, compiled as a small member
+  function in this TU (with the getF4 redirect), also gets ECX.
+- Bisection on the bank: deleting the whole `if(target){...}` map block gives
+  ECX; deleting either half (objects14 find/erase, or templates20 find/erase)
+  also gives ECX; deleting only either erase keeps ESI; deleting the head
+  blocks (at08/at09 AI, at2c/at2d) keeps ESI. So both map lookups together
+  push the allocator over to ESI; the rest of the body is not the cause.
+- Inert (34 diffs): scoped blocks around each lookup, find(target->m_id) /
+  find(template) without key locals (worse: 210/175), frame re-read in the
+  first compare, ObjectID enum key + BFME_HAVE_OBJECTID, data local in its own
+  scope, flag assignment instead of early return (`allowed=false`; `return
+  allowed` gives 33), non-const / int-returning getAIStateType, ternary
+  redirect, forceinline helpers for the tail or for the map block.
+- Lead: retail's second lookup calls `_Rb_tree::_M_find<unsigned short>`
+  (0x37B060, returns the node in EAX), the first an sret `find` (0x2231C0).
+  A map spelling with fewer inlined iterator temporaries is the next thing to
+  try.
