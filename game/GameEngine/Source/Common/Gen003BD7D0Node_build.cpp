@@ -10,8 +10,16 @@ class Gen003BD8D0Built
 
 class BfmeJ1052
 {
+};
+
+// The callee (ILT 0x00046150 -> 0x003C8160) is the matched
+// LivingWorldRegionManager::rva003C8160; call it by that defined name.
+class LivingWorldRegion;
+struct Coord3D;
+class LivingWorldRegionManager
+{
 public:
-	void bfmeUse1052( int *value );
+	LivingWorldRegion *rva003C8160( Coord3D *position );
 };
 
 class Glo012F1028Type
@@ -50,12 +58,12 @@ Gen003BD8D0Built *Gen003BD7D0Node::build()
 	int *valueAddress = value;
 	BfmeJ1052 *sub = Glo012F1028->m_bfmeSub;
 	typedef Gen003BD8D0Built *(BfmeJ1052::*ReturnCall)( int * );
-	typedef void (BfmeJ1052::*VoidCall)( int * );
+	typedef LivingWorldRegion *(LivingWorldRegionManager::*RegionCall)( Coord3D * );
 	union
 	{
 		ReturnCall asReturn;
-		VoidCall asVoid;
+		RegionCall asRegion;
 	} call;
-	call.asVoid = &BfmeJ1052::bfmeUse1052;
+	call.asRegion = &LivingWorldRegionManager::rva003C8160;
 	return (sub->*call.asReturn)(valueAddress);
 }
