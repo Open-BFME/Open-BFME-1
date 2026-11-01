@@ -513,53 +513,142 @@ void Display::stopMovie( void )
 // Display::update
 //============================================================================
 
-// ?update@Display@@UAEXXZ present-unmatched
+// Retail 0x0040DE00 (502 bytes; Display vtable 0x010F0DC0 slot 5, see
+// targets/game/reverse/identity_evidence/0040de00-display-update.md). BFME
+// replaced Zero Hour's frame pump with the stream's advance call (slot +0x18)
+// and the movie-frame trace shared with MovieFrame0040E9E0.cpp; the hold-time
+// logic is Zero Hour's without the copyright display string. On the last frame
+// a movie without flag 0x80 stops; with 0x200000 it ramps the playback rate
+// down by 0.05 per update after a +0x10C frame delay. The ZH Display.h layout
+// differs from BFME's, so the body reads the object through a retail-offset
+// view. BFME 2's DisplayMovieUpdateRva0025CC7A.cpp (Display::update) is the
+// same body four bytes higher. The 0x80 test is a byte read of the flags.
+class Rva0040DE00MovieStream
+{
+public:
+	virtual void slot00(); virtual void slot04(); virtual void slot08();
+	virtual void slot0C(); virtual void slot10(); virtual void slot14();
+	virtual unsigned advance( int flags );
+	virtual void slot1C(); virtual void slot20(); virtual void slot24();
+	virtual void slot28(); virtual void slot2C(); virtual void slot30();
+	virtual void slot34(); virtual void slot38(); virtual void slot3C();
+	virtual void slot40();
+	virtual void setRate( float rate );
+	virtual float getRate();
+};
+
+class Rva0040DE00DisplayView
+{
+public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02(); virtual void slot03();
+	virtual void slot04(); virtual void slot05(); virtual void slot06(); virtual void slot07();
+	virtual void slot08(); virtual void slot09(); virtual void slot10(); virtual void slot11();
+	virtual void slot12(); virtual void slot13(); virtual void slot14(); virtual void slot15();
+	virtual void slot16(); virtual void slot17(); virtual void slot18(); virtual void slot19();
+	virtual void slot20(); virtual void slot21(); virtual void slot22(); virtual void slot23();
+	virtual void slot24(); virtual void slot25(); virtual void slot26(); virtual void slot27();
+	virtual void slot28(); virtual void slot29(); virtual void slot30(); virtual void slot31();
+	virtual void slot32(); virtual void slot33(); virtual void slot34(); virtual void slot35();
+	virtual void slot36(); virtual void slot37(); virtual void slot38(); virtual void slot39();
+	virtual void slot40(); virtual void slot41(); virtual void slot42(); virtual void slot43();
+	virtual void slot44(); virtual void slot45(); virtual void slot46(); virtual void slot47();
+	virtual void slot48(); virtual void slot49(); virtual void slot50(); virtual void slot51();
+	virtual void slot52(); virtual void slot53(); virtual void slot54(); virtual void slot55();
+	virtual void slot56(); virtual void slot57(); virtual void slot58();
+	virtual void stopMovie();                           // +0xEC
+
+	char m_pad04[ 0x30 ];
+	Rva0040DE00MovieStream *m_videoStream;              // +0x34
+	int m_movieFlags;                                   // +0x38
+	int m_3C;
+	int m_40;
+	char m_pad44[ 0x14 ];
+	bool m_movieEnded;                                  // +0x58
+	char m_pad59[ 0x83 ];
+	Int m_movieHoldTime;                                // +0xDC
+	Int m_copyrightHoldTime;                            // +0xE0
+	UnsignedInt m_elapsedMovieTime;                     // +0xE4
+	UnsignedInt m_elapsedCopywriteTime;                 // +0xE8
+	char m_padEC[ 0x20 ];
+	Int m_fadeOutDelay;                                 // +0x10C
+};
+
+class BfmeObjDC { public: void bfmeGoDC(); };
+extern "C" UnsignedInt __stdcall bfme_timeGetTime( void );
+extern Rva0040DE00MovieStream *g_Va012F1268;
+extern Int g_Va012F12B8;
+extern __int64 Previous0040E9E0, Current0040E9E0, Elapsed0040E9E0;
+extern bool Trace0040E9E0;
+extern double Sum0040E9E0;
+extern Int Count0040E9E0;
+
+// A per-use cast, not a view pointer local: the local swaps the operands of
+// the first hold-time sum.
+#define MOVIE_VIEW ( (Rva0040DE00DisplayView *)this )
+
 void Display::update( void )
 {
-	if ( m_videoStream && m_videoBuffer )
+	char text[ 40 ];
+	if ( MOVIE_VIEW->m_videoStream && !MOVIE_VIEW->m_40 )
 	{
-		if ( m_videoStream->isFrameReady())
+		g_Va012F1268 = MOVIE_VIEW->m_videoStream;
+		Elapsed0040E9E0 = Current0040E9E0 - Previous0040E9E0;
+		unsigned result = MOVIE_VIEW->m_videoStream->advance( MOVIE_VIEW->m_movieFlags );
+		if ( result & 4 )
+			++g_Va012F12B8;
+		( (BfmeObjDC *)this )->bfmeGoDC();
+		if ( Trace0040E9E0 )
 		{
-			m_videoStream->frameDecompress();
-			m_videoStream->frameRender( m_videoBuffer );
-			if( m_videoStream->frameIndex() != m_videoStream->frameCount() - 1)
-				m_videoStream->frameNext();
-			else if( m_copyrightHoldTime >= 0 ||m_movieHoldTime >= 0 )
+			Previous0040E9E0 = Current0040E9E0;
+			Sum0040E9E0 += (double)( Current0040E9E0 - Previous0040E9E0 );
+			if ( Count0040E9E0++ > 30 )
 			{
-				if( m_elapsedCopywriteTime == 0 && m_elapsedCopywriteTime >= 0)
+				Interval0040F780 = ( 1.0 / 30.0 ) / (double)Counter0040F780 * 1000.0;
+				sprintf( text, "Avg frame time %4.4f\n", Interval0040F780 * Sum0040E9E0 );
+				OutputDebugStringA( text );
+				Sum0040E9E0 = 0.0;
+				Count0040E9E0 = 0;
+			}
+		}
+		if ( result & 2 )
+		{
+			if ( MOVIE_VIEW->m_copyrightHoldTime < 0 && MOVIE_VIEW->m_movieHoldTime < 0 )
+			{
+				MOVIE_VIEW->m_movieEnded = true;
+				if ( !( (char)MOVIE_VIEW->m_movieFlags & 0x80 ) )
+					MOVIE_VIEW->stopMovie();
+				else if ( MOVIE_VIEW->m_movieFlags & 0x200000 )
 				{
-					//display the copyrighttext;		
-					if(m_copyrightDisplayString)
-						m_copyrightDisplayString->deleteInstance();
-					m_copyrightDisplayString = TheDisplayStringManager->newDisplayString();
-					m_copyrightDisplayString->setText(TheGameText->fetch("GUI:EACopyright"));
-					if (TheGlobalLanguageData && TheGlobalLanguageData->m_copyrightFont.name.isNotEmpty())
-					{	FontDesc	*fontdesc=&TheGlobalLanguageData->m_copyrightFont;
-						m_copyrightDisplayString->setFont(TheFontLibrary->getFont(fontdesc->name,
-							TheGlobalLanguageData->adjustFontSize(fontdesc->size),
-							fontdesc->bold));	
+					if ( MOVIE_VIEW->m_fadeOutDelay <= 0 )
+					{
+						Real rate = MOVIE_VIEW->m_videoStream->getRate() - 0.05f;
+						if ( rate <= 0.0f )
+							MOVIE_VIEW->stopMovie();
+						else
+							MOVIE_VIEW->m_videoStream->setRate( rate );
 					}
 					else
-						m_copyrightDisplayString->setFont(TheFontLibrary->getFont("Courier", 
-						TheGlobalLanguageData->adjustFontSize(12), TRUE));	
-					m_elapsedCopywriteTime = timeGetTime();
-				}
-				if(m_movieHoldTime + m_elapsedMovieTime < timeGetTime() && 
-						m_copyrightHoldTime + m_elapsedCopywriteTime < timeGetTime())
-				{
-					m_movieHoldTime = -1;
-					m_elapsedMovieTime = 0;
-					m_elapsedCopywriteTime = 0;
-					m_copyrightHoldTime = -1;
+						--MOVIE_VIEW->m_fadeOutDelay;
 				}
 			}
 			else
 			{
-				stopMovie();
+				if ( MOVIE_VIEW->m_elapsedCopywriteTime == 0 )
+					MOVIE_VIEW->m_elapsedCopywriteTime = bfme_timeGetTime();
+				if ( MOVIE_VIEW->m_movieHoldTime + MOVIE_VIEW->m_elapsedMovieTime < bfme_timeGetTime() &&
+						MOVIE_VIEW->m_copyrightHoldTime + MOVIE_VIEW->m_elapsedCopywriteTime < bfme_timeGetTime() )
+				{
+					MOVIE_VIEW->m_movieHoldTime = -1;
+					MOVIE_VIEW->m_elapsedMovieTime = 0;
+					MOVIE_VIEW->m_elapsedCopywriteTime = 0;
+					MOVIE_VIEW->m_copyrightHoldTime = -1;
+				}
 			}
 		}
 	}
 }
+
+#undef MOVIE_VIEW
 
 //============================================================================
 // Display::reset
