@@ -1,6 +1,16 @@
-// ?d_0088d240@@YAXXZ
-// partial score=0.8 date=2026-09-14
 // cl: /DNDEBUG /MD /EHs-c- /Oy-
+//
+// [BFME 2 donor] Crash minidump writer, retail 0x0088D240 (437 bytes): loads
+// MiniDumpWriteDump from the dbghelp module handle at 0x01336E80, names the
+// file "DUMP-%04d%02d%02d-%02d%02d%02d-%ld-%ld.dmp" (VA 0x01133678), enables
+// SeDebugPrivilege on the thread or process token and writes a full (flag
+// set) or data-segment dump.  Callers: the exception filter
+// (DebugExceptionhandler_ExceptionFilter.cpp) and Rva00889760.cpp.  The
+// statement order is the BFME 2 donor's (open-bfme-2 45afcff3,
+// Code/Libraries/Source/WWVegas/WWDebug/debug_stack.cpp, its 0x0003C550)
+// minus the version strings BFME 1's file name lacks; that order (token
+// cleared just before OpenThreadToken, info zero-initialised, the ok/adjusted
+// pair) is what matched.  The old bank's declarations are kept.
 
 extern "C" __declspec(dllimport) void *__stdcall GetProcAddress( void *module, const char *name );
 extern "C" __declspec(dllimport) void __stdcall GetLocalTime( void *st );
@@ -59,59 +69,56 @@ struct Rva0088D240ExInfo
 
 typedef int ( __stdcall *Rva0088D240MiniDump )( void *process, unsigned long pid, void *file, int dumpType, void *exinfo, void *user, void *cb );
 
-extern "C" void d_0088d240( void *a, bool b )
+extern "C" void d_0088d240( void *exptr, bool fullMemory )
 {
-	int ok = 0;
-	void *hToken;
-	Rva0088D240ExInfo exinfo;
-	Rva0088D240MiniDump miniDump;
-	unsigned long retLen;
-	Rva0088D240Time st;
-	Rva0088D240TokenPriv tp;
-	Rva0088D240TokenPriv prev;
-	char buf[264];
-	void *hFile;
+	if ( !g_Va01336E80 )
+		return;
+	Rva0088D240MiniDump writeDump = (Rva0088D240MiniDump)GetProcAddress( (void*)g_Va01336E80, "MiniDumpWriteDump" );
+	if ( !writeDump )
+		return;
 
-	if ( g_Va01336E80 == 0 )
-		return;
-	miniDump = (Rva0088D240MiniDump)GetProcAddress( (void*)g_Va01336E80, "MiniDumpWriteDump" );
-	if ( miniDump == 0 )
-		return;
-	GetLocalTime( &st );
-	_snprintf( buf, 0x106, "DUMP-%04d%02d%02d-%02d%02d%02d-%ld-%ld.dmp",
-		st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond,
+	Rva0088D240Time time;
+	GetLocalTime( &time );
+	char fileName[264];
+	_snprintf( fileName, 0x106, "DUMP-%04d%02d%02d-%02d%02d%02d-%ld-%ld.dmp",
+		time.wYear, time.wMonth, time.wDay, time.wHour, time.wMinute, time.wSecond,
 		GetCurrentProcessId(), GetCurrentThreadId() );
-	hFile = CreateFileA( buf, 0xC0000000, 3, ok, 2, ok, ok );
-	if ( hFile == (void*)-1 )
+
+	void *file = CreateFileA( fileName, 0xC0000000, 3, 0, 2, 0, 0 );
+	if ( file == (void*)-1 )
 		return;
-	hToken = (void*)ok;
-	if ( !OpenThreadToken( GetCurrentThread(), 0x28, 1, &hToken ) )
+
+	void *token = 0;
+	if ( !OpenThreadToken( GetCurrentThread(), 0x28, 1, &token ) )
 	{
 		if ( GetLastError() != 0x3F0 )
 			return;
-		if ( !OpenProcessToken( GetCurrentProcess(), 0x28, &hToken ) )
+		if ( !OpenProcessToken( GetCurrentProcess(), 0x28, &token ) )
 			return;
 	}
-	exinfo.ThreadId = 0;
-	exinfo.ExceptionPointers = 0;
-	exinfo.ClientData = 0;
-	exinfo.ThreadId = GetCurrentThreadId();
-	exinfo.ExceptionPointers = a;
-	exinfo.ClientData = 1;
-	tp.PrivilegeCount = 1;
-	tp.Privileges[0].Attributes = 2;
-	if ( LookupPrivilegeValueA( ok, "SeDebugPrivilege", &tp.Privileges[0].Luid ) )
-	{
-		retLen = 0x10;
-		if ( AdjustTokenPrivileges( hToken, ok, &tp, 0x10, &prev, &retLen ) )
-		{
-			if ( GetLastError() != 0x514 )
-				ok = 1;
-		}
-	}
-	miniDump( GetCurrentProcess(), GetCurrentProcessId(), hFile, b ? 2 : 1, &exinfo, 0, 0 );
+
+	Rva0088D240ExInfo info = { 0 };
+	info.ThreadId = GetCurrentThreadId();
+	info.ExceptionPointers = exptr;
+	info.ClientData = 1;
+
+	Rva0088D240TokenPriv privileges;
+	privileges.PrivilegeCount = 1;
+	privileges.Privileges[0].Attributes = 2;
+	Rva0088D240TokenPriv previous;
+	int ok = 0;
+	ok = LookupPrivilegeValueA( 0, "SeDebugPrivilege", &privileges.Privileges[0].Luid );
 	if ( ok )
-		AdjustTokenPrivileges( hToken, 0, &prev, 0, 0, 0 );
-	bfmeClose1033( (int)hToken );
-	bfmeClose1033( (int)hFile );
+	{
+		unsigned long previousSize = sizeof(previous);
+		ok = AdjustTokenPrivileges( token, 0, &privileges, previousSize, &previous, &previousSize );
+	}
+	int adjusted = ok && GetLastError() != 0x514;
+
+	writeDump( GetCurrentProcess(), GetCurrentProcessId(), file, fullMemory ? 2 : 1, &info, 0, 0 );
+
+	if ( adjusted )
+		AdjustTokenPrivileges( token, 0, &previous, 0, 0, 0 );
+	bfmeClose1033( (int)token );
+	bfmeClose1033( (int)file );
 }

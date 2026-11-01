@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHs-c- /Oy-
 
-void d_0088d240();
+extern "C" void d_0088d240( void *exptr, bool fullMemory );
 
 int d_00889760( void *a, void *b, void *c )
 {

@@ -38234,7 +38234,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_00889d20@Rva00889D20Class@@QAE_NPAX00@Z,,0x00889D20,78,game/GameEngine/Source/Common/Bfme/Rva00889D20.cpp,matched,
 ?d_00889d70@Rva00889D70Class@@QAE_NPAX0@Z,,0x00889D70,85,game/Libraries/Source/debug/Rva00889D70.cpp,matched,append unique pair to intrusive list at this+0x10
 ?d_00889dd0@Rva00889DD0Class@@QAEXH@Z,,0x00889DD0,55,game/Libraries/Source/debug/Rva00889DD0.cpp,matched,
-?d_0088d240@@YAXXZ,,0x0088D240,437,game/gen_asm/d_0088a430.asm,matched,gen-dump;ghidra=FUN_00c8d240
 ?d_0088e8d0@@YGXKKKPBK@Z,,0x0088E8D0,160,game/Libraries/Source/WWVegas/WWDebug/DebugRaiseExceptionHook0088E8D0.cpp,matched,Open BFME 2 DebugRaiseExceptionHook.cpp donor; BFME 1 import installer proves entry and stdcall four-argument ABI; scalar assembly captures EIP EBP ESP after C trial failed;model=gpt-6.1-sol;host=fleet
 ?d_00891fa0@@YAXXZ,,0x00891FA0,81,game/GameEngine/Source/Common/Rva00891FA0Diagnostics.cpp,matched,address-derived diagnostics callback sequence exact
 ?d_00892fd0@@YAXXZ,,0x00892FD0,71,game/gen_asm/d_00882630.asm,matched,gen-dump;carved start=ghidra-start end=ret+int3 callers=0;ghidra=FUN_00c92fd0
@@ -173424,3 +173423,4 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?cellCallback@Rva003DE940GroundCellsStruct@@QAEHPAVPathfindCell@@0HH@Z,,0x003DE940,284,game/GameEngine/Source/GameLogic/AI/GroundCellsStructCellCallback.cpp,matched,BFME member form of ZH groundCellsCallback; body is the copy the matched groundCellsAlongLine003E2620 inlines; negative from guard first;model=claude-opus-5-5;host=app
 ?rva0078ac80@@YGXPAUCoord2D@@000@Z,,0x0078AC80,207,game/GameEngineDevice/Source/W3DDevice/GameClient/Rva0078AC80ClipToRenderTarget.cpp,matched,free stdcall render-target clip helper; zero clamp as (v <= 0) ? 0 : v; width compared on both axes as retail;model=claude-opus-5-5;host=app
 ?notify@Rva0069F4D0Block@@QAEXPAXH@Z,,0x0069F3B0,181,game/GameEngine/Source/Common/Rva00699180Volume.cpp,matched,removal counterpart of applyEntryList; in the TU of the visible productClamp/refreshPair bodies (keeps ECX); searching-flag loop keeps retail's unrotated head;model=claude-opus-5-5;host=app
+_d_0088d240,,0x0088D240,437,game/Libraries/Source/debug/Rva0088D240MiniDump.cpp,matched,BFME2 donor crash minidump writer (open-bfme-2 45afcff3 WWDebug/debug_stack.cpp) minus version strings; donor statement order matched;model=claude-opus-5-5;host=app
