@@ -91168,3 +91168,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??0StringInfo@@QAE@XZ,0x00006604,route=0x004368D0; StringInfo array-news in ParseCSF/initMapStringFile/init pass this ILT as the element ctor; body rowed at 0x004368D0
 ?_M_insert@?$_Rb_tree@HU?$pair@$$CBHURva0036DEF0Payload@@@_STL@@U?$_Select1st@U?$pair@$$CBHURva0036DEF0Payload@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHURva0036DEF0Payload@@@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHURva0036DEF0Payload@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHURva0036DEF0Payload@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBHURva0036DEF0Payload@@@2@0@Z,0x002CDB8,Payload insert_unique at 0x00372570 reaches _M_insert through this ILT; body rowed opaquely at 0x00370BF0
 ??1?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAE@XZ,0x00005277,pin
+??0MoveHint0043AAD0@@QAE@XZ,0x0000602D,pin
