@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
+// Default STLport node allocator, like retail's out-of-line vector COMDATs (the NEWALLOC override made this TU emit non-retail copies).
 // GameLogic::registerObject, RVA0x0038E4C0,298B. Object constructor1D29A0
 // calls this at1D39D9 through ILT2923F immediately after partition registration;
 // the corresponding Object.cpp constructor names registerObject explicitly.
@@ -9,7 +10,6 @@
 // with independently recovered friend_awakenUpdateModule at38D870.
 // The link helper retains its existing neutral matched identity at1BEB70.
 
-#define _STLP_USE_NEWALLOC 1
 #include <vector>
 #include <hash_map>
 
