@@ -20,15 +20,8 @@ struct Coord3D
 	float z;
 };
 
-struct Coord2D
-{
-	float x;
-	float y;
-	__forceinline friend float operator *(const Coord2D &left, const Coord2D &right)
-	{
-		return left.x * right.x + left.y * right.y;
-	}
-};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
+__forceinline float operator *(const Coord2D &left,const Coord2D &right){return left.x*right.x+left.y*right.y;}
 
 // Both formation-refresh guards go through ILT 0x00044774, the ledger's 5-byte
 // row ?j_00044774@@YAXXZ (game/gen_small/thunks_033.cpp), as tools/callees.py
