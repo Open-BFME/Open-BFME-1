@@ -33,7 +33,8 @@ struct BfmeRenderVertex
 
 typedef BfmeUInt32 (__cdecl *BfmeColorConverter)(BfmeUInt32 color);
 
-extern "C" float g_BfmeRender2DZ;
+extern float g_bfmeStencilDepthRef;
+#define g_BfmeRender2DZ g_bfmeStencilDepthRef
 
 // retail 0x012D7198: the one definition of this storage is the static member
 // `Rva00782E10::s_value`, whose address `Rva00782E10::store` writes
