@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/campaignmanagerascii /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 
 // FILE: INIBannerType.cpp ////////////////////////////////////////////////////
@@ -23,7 +23,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 
-#include "Common/AsciiString.h"
+#include "ascii_string.h"
 
 struct FieldParse;
 
