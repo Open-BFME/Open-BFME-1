@@ -41,7 +41,7 @@ int Rva005A67E0Owner::translate(const GameMessage *msg)
     int type=msg->type;
     char *button=&buttons[classifyRva005A6410Value(type)];
     char active=1;
-    bool any=std::find(buttons,buttons+4,active)!=buttons+4;
+    bool any=_STL::__find(buttons,buttons+4,active,_STL::random_access_iterator_tag())!=buttons+4;
     const MouseStatus *status;
     active=!any && (status=&TheMouse->status) && (status->left || status->right || status->middle);
     switch(type) {
