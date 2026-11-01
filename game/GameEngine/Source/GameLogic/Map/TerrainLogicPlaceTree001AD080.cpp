@@ -203,6 +203,71 @@ public:
 	UnsignedShort m_field2e;
 };
 
+// Retail's 48-byte-record push_back overflow (0x001ACA90, reached through ILT
+// 0x00021E04) keeps _Construct out of line; the shared STLport spelling inlines
+// it. The overflow below mirrors Rva001ACA90VectorInsertOverflow.cpp's body for
+// this element type so the copy this TU emits is retail's, and the placement
+// copy in push_back is spelled directly so _Construct stays declared only.
+namespace _STL {
+template<> void _Construct<Rva001A5A60Record, Rva001A5A60Record>(Rva001A5A60Record*, const Rva001A5A60Record&);
+
+__forceinline Rva001A5A60Record* copyRva001A5A60Records(Rva001A5A60Record* first, Rva001A5A60Record* last,
+	Rva001A5A60Record* result)
+{
+	if (first != last) {
+		do {
+			_Construct(result, *first);
+			++first;
+			++result;
+		} while (first != last);
+	}
+	return result;
+}
+
+__forceinline Rva001A5A60Record* fillRva001A5A60Records(Rva001A5A60Record* result, unsigned int count,
+	const Rva001A5A60Record& value)
+{
+	for (; count > 0; --count) {
+		_Construct(result, value);
+		++result;
+	}
+	return result;
+}
+
+template<> void vector<Rva001A5A60Record>::_M_insert_overflow(Rva001A5A60Record* position,
+	const Rva001A5A60Record& value, const __false_type&, unsigned int fillLength, bool atEnd)
+{
+	unsigned int oldSize = (unsigned int)(_M_finish - _M_start);
+	const unsigned int& growth = oldSize < fillLength ? fillLength : oldSize;
+	unsigned int length = growth + oldSize;
+	Rva001A5A60Record* newStart = _M_end_of_storage.allocate(length);
+	Rva001A5A60Record* newFinish = copyRva001A5A60Records(_M_start, position, newStart);
+	if (fillLength == 1) {
+		_Construct(newFinish, value);
+		++newFinish;
+	} else {
+		newFinish = fillRva001A5A60Records(newFinish, fillLength, value);
+	}
+	if (!atEnd)
+		newFinish = copyRva001A5A60Records(position, _M_finish, newFinish);
+	_M_clear();
+	_M_finish = newFinish;
+	_M_start = newStart;
+	_M_end_of_storage._M_data = newStart + length;
+}
+
+template<> __forceinline void vector<Rva001A5A60Record>::push_back(const Rva001A5A60Record& x)
+{
+	if (_M_finish != _M_end_of_storage._M_data) {
+		new (_M_finish) Rva001A5A60Record(x);
+		++_M_finish;
+	} else {
+		__false_type tag;
+		_M_insert_overflow(_M_finish, x, tag, 1, true);
+	}
+}
+}
+
 class GameLogic
 {
 	char pad[0x3c];

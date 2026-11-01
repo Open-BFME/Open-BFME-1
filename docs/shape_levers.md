@@ -3090,3 +3090,21 @@ spill, the reloads and the shared slot (254 -> 20 differing bytes). At
 0x0016F150 (banked) a count taken from a 2D length and a normalise using
 a 3D length with z = 0 reproduce retail's shared squares with two sums and
 two `fsqrt`; identical length expressions are CSE'd into one `fsqrt`.
+
+## Keep `_Construct` out of line in one vector overflow COMDAT while push_back inlines it (2026-11-01)
+
+Retail's push_back overflow at 0x001ACA90 calls the 19-byte `_Construct`
+(0x001A6D80, four sites) while the TU that places a tree (0x001AD080,
+game/GameEngine/Source/GameLogic/Map/TerrainLogicPlaceTree001AD080.cpp)
+needs the same `_Construct` inlined at its one push_back. The shared STLport
+overflow inlined every `_Construct` and emitted a 339-byte COMDAT that was not
+retail's. Measured: declaring `template<> void _Construct<R, R>(R*, const R&);`
+(no body), spelling `vector<R>::push_back` as `new (_M_finish) R(x)` and
+defining `vector<R>::_M_insert_overflow` with the replica's `if (first != last)
+do {...} while` copy loop and `for (; count > 0; --count)` fill loop reproduces
+the 340-byte retail body (identical bytes; relocations resolve to the same
+addresses) and leaves the 594-byte placeAt body exact. For-loop copies in the
+overflow gave 334 bytes with swapped ESI/EDI; the loop forms are the lever.
+Hypothesis, untested elsewhere: the same pair of spellings applies to other
+vectors whose retail overflow keeps `_Construct` out of line. VC7.1 `/O2`,
+`/D_STLP_NO_EXCEPTIONS`.
