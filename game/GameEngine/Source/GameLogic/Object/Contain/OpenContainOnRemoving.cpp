@@ -115,7 +115,12 @@ public:
 class Rva00225BE0RiderMap { public: unsigned int erase(const Int &); unsigned char m_data[12]; };
 class Rva00224870RiderMap { public: unsigned int erase(const Int &); unsigned char m_data[12]; };
 struct RiderTimeNode { unsigned int m_color; RiderTimeNode *m_parent,*m_left,*m_right; ObjectID m_id; unsigned int m_frame; };
-typedef _STL::map<Int,unsigned int> RiderTimeMap;
+// Mapped type unproven: map<int,unsigned>::find names the 0x00195120 instantiation
+// but retail calls 0x002231C0 here, so find gets its own view. Erase keeps the
+// map<int,unsigned> spelling pinned to 0x00223760.
+struct Rva002231C0Time { unsigned int m_frame; };
+typedef _STL::map<Int,unsigned int> RiderTimeEraseView;
+typedef _STL::map<Int,Rva002231C0Time> RiderTimeMap;
 typedef RiderTimeMap::iterator RiderTimeIterator;
 class Rva002231C0RiderTimeMap : public RiderTimeMap
 {
@@ -184,7 +189,7 @@ void OpenContain::onRemoving(Object *rider)
    if (it != m_riderTimes.end())
    {
     unsigned int entryFrame = ((RiderTimeNode *)it._M_node)->m_frame;
-    m_riderTimes.erase(it);
+    ((RiderTimeEraseView &)m_riderTimes).erase((const RiderTimeEraseView::iterator &)it);
     if (theGameLogicFrame()->m_frame-entryFrame > data->m_minimumFrames)
     {
      for (int *bonus = data->m_bonusBegin; bonus != data->m_bonusEnd; ++bonus)
