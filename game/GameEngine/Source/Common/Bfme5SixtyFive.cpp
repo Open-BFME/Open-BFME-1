@@ -1,7 +1,10 @@
+// Player::hasUpgradeComplete(const UpgradeTemplate *) const: ilt_oracle
+// CONFIRMS ?hasUpgradeComplete@Player@@QBE_NPBVUpgradeTemplate@@@Z at
+// 0x000D5930 (ILT 0x000235BF).
 // Two more: another bit test taken from the argument and a clamp between two
 // bounds.
 
-class BfmeThingEL
+class UpgradeTemplate
 {
 public:
 	int m_bfmeHead[8];					// +0x00
@@ -11,15 +14,15 @@ public:
 class Player
 {
 public:
-	bool hasUpgradeComplete(const BfmeThingEL *thing) const;
+	bool hasUpgradeComplete(const UpgradeTemplate *thing) const;
 
 private:
 	int m_bfmeHead[35];					// +0x00
 	unsigned int m_bfmeWords[8];				// +0x8C
 };
 
-// ?hasUpgradeComplete@Player@@QBE_NPBVBfmeThingEL@@@Z
-bool Player::hasUpgradeComplete(const BfmeThingEL *thing) const
+// ?hasUpgradeComplete@Player@@QBE_NPBVUpgradeTemplate@@@Z
+bool Player::hasUpgradeComplete(const UpgradeTemplate *thing) const
 {
 	if (thing == 0)
 		return false;
