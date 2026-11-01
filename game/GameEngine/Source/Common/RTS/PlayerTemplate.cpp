@@ -677,3 +677,38 @@ void INI::parsePlayerTemplateDefinition( INI* ini )
 {
 	PlayerTemplateStore::parsePlayerTemplateDefinition(ini);
 }
+
+//-------------------------------------------------------------------------------------------------
+// 0x000E15A0: ThePlayerTemplateStore's index lookup by name key (the LivingWorld
+// slot setup at 0x00619C40 calls it).  BFME keeps the KEYNAME debug name of each
+// template in release builds.
+struct Rva000E15A0Record
+{
+	NameKeyType m_at00;
+	char m_at04[0x120];
+	NameKeyType getKey() const { return m_at00; }
+};
+
+class Rva000E15A0
+{
+public:
+	bool method(NameKeyType key, UnsignedInt *outIndex);
+	char m_at00[8];
+	std::vector<Rva000E15A0Record> m_records;
+
+	UnsignedInt count() const { return m_records.size(); }
+};
+
+bool Rva000E15A0::method(NameKeyType key, UnsignedInt *outIndex)
+{
+	for (UnsignedInt index = 0; index < count(); ++index)
+	{
+		AsciiString name = KEYNAME(m_records[index].getKey());
+		if (m_records[index].getKey() == key)
+		{
+			*outIndex = index;
+			return true;
+		}
+	}
+	return false;
+}
