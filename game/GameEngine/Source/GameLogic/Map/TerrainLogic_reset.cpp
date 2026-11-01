@@ -61,10 +61,13 @@ public:
 	virtual Bridge *getFirstBridge();
 };
 
-class Member48
+// Callees spelled with their ledger-defined names: the +0x48 list clear is
+// the gen-tgrid _List_base<Gen_t_001acc70_p4cd>::clear (0x001ACC70), the
+// 48-byte vector erase copies through STLport __copy (0x001A5BA0,
+// BfmeTerrainP48Copy.cpp) and the free helper is bfmeGoFAE (0x0018EE40).
+struct Gen_t_001acc70_p4cd
 {
-public:
-	void clearA();
+	int m_value;
 };
 
 struct BfmeTerrainP48
@@ -72,15 +75,29 @@ struct BfmeTerrainP48
 	int m_words[12];
 };
 
-struct RandomAccessIteratorTag
+namespace _STL
+{
+template <class _Tp> class allocator;
+template <class _Tp, class _Alloc> class _List_base
+{
+public:
+	void clear();
+};
+struct random_access_iterator_tag
 {
 };
+template <class _RandomAccessIter, class _OutputIter, class _Distance>
+_OutputIter __copy(_RandomAccessIter __first, _RandomAccessIter __last,
+	_OutputIter __result, const random_access_iterator_tag &, _Distance *);
+}
 
-BfmeTerrainP48 *copyP48(BfmeTerrainP48 *first, BfmeTerrainP48 *last,
-	BfmeTerrainP48 *result, const RandomAccessIteratorTag &, int *);
+typedef _STL::_List_base<Gen_t_001acc70_p4cd, _STL::allocator<Gen_t_001acc70_p4cd> > Member48;
 
-void resetHelper4949a();
-void bfmeFreeArray(void *p);
+void bfmeGoFAE();
+
+// VC7.1 has no implicit array delete: without this declaration delete[]
+// calls ??3 instead of retail's ??_V (0x00881EF0).
+void __cdecl operator delete[]( void *p );
 
 class TerrainLogic
 {
@@ -123,13 +140,13 @@ void TerrainLogic::reset()
 	}
 	*(Bridge **)((char *)first + 0x34) = 0;
 
-	((Member48 *)((char *)this + 0x44))->clearA();
-	resetHelper4949a();
+	((Member48 *)((char *)this + 0x44))->clear();
+	bfmeGoFAE();
 
 	BfmeTerrainP48 *result = m_p48begin;
 	BfmeTerrainP48 *finish = m_p48end;
-	RandomAccessIteratorTag tag;
-	m_p48end = copyP48(finish, finish, result, tag, 0);
+	_STL::random_access_iterator_tag tag;
+	m_p48end = _STL::__copy(finish, finish, result, tag, (int *)0);
 
 	int fillVal = -1;
 	int *fill = m_fill;
@@ -144,7 +161,7 @@ void TerrainLogic::reset()
 	m_bridgeDamageStatesChanged = 1;
 
 	void *array = *(void **)((char *)first + 0x18);
-	bfmeFreeArray(array);
+	delete[] (char *)array;
 	*(void **)((char *)first + 0x18) = 0;
 	m_field18F4 = 0;
 }
