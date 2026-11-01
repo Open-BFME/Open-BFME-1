@@ -6,7 +6,8 @@
 // does; spelling those calls twice changes the callee-saved register assignment.
 #include "ascii_string.h"
 #define Rva01336E50EmptyString AsciiString::TheEmptyString
-struct Coord3D { float x,y,z; };
+#include "../../../Libraries/Include/Lib/Coord3D.h"
+
 struct SampleFile006B4090 { char pad00[8]; char format[0x14]; int channels; char pad20[12]; void *data; };
 struct Event006B4090 { char pad00[0x14]; AsciiString name; char pad18[0x10]; int field28; char pad2c[0x1c]; bool field48; };
 struct Playing006B4090 { char pad00[8]; unsigned handle; int type; char pad10[4]; Event006B4090 *event; SampleFile006B4090 *file; char pad1c[0x1f]; bool field3b;
