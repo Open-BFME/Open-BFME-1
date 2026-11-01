@@ -8,21 +8,8 @@ typedef bool Bool;
 typedef float Real;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord2D
-{
-	Real x;
-	Real y;
-
-	void bfmeNormalizePathVector()
-	{
-		Real length = (Real)sqrt(x * x + y * y);
-		if (length != 0.0f)
-		{
-			x /= length;
-			y /= length;
-		}
-	}
-};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
+static __forceinline void normalizePathCoord(Coord2D &p){float length=(float)sqrt(p.x*p.x+p.y*p.y);if(length!=0.0f){p.x/=length;p.y/=length;}}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
@@ -89,7 +76,7 @@ Real Path::bfmeComputeFlightDistToGoal(const Coord3D *currentPosition,
 		Coord2D pathVector;
 		pathVector.x = nextNode->m_position.x - curNode->m_position.x;
 		pathVector.y = nextNode->m_position.y - curNode->m_position.y;
-		pathVector.bfmeNormalizePathVector();
+		normalizePathCoord(pathVector);
 
 		Real dotProduct = posToGoalVector.x * pathVector.x +
 			posToGoalVector.y * pathVector.y;
