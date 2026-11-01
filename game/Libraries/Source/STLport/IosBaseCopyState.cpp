@@ -56,7 +56,10 @@ public:
 protected:
 	void _M_copy_state(const ios_base &x);
 	void _M_setstate_nothrow(int state) { _M_iostate |= state; }
-	void _M_check_exception_mask()
+	// dllimport + forceinline (BFME 2 donor 5452ce5952): the three call sites
+	// below always inline this helper, and the unit no longer emits a
+	// non-retail out-of-line copy competing with the kept 14-byte caller.
+	__declspec(dllimport) __forceinline void _M_check_exception_mask()
 	{
 		if (_M_iostate & _M_exception_mask)
 			fputs("ios failure", stderr);

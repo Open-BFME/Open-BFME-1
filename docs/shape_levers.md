@@ -3157,3 +3157,14 @@ member names) emits the retail body exactly
 (game/GameEngineDevice/Source/MilesAudioDevice/ResolveAudioPointers006AA940.cpp)
 while the 439-byte caller stays exact. A caller's pair-shaped member accesses
 do not prove an `_STL::pair` base; the overflow's copy form decides.
+
+## Suppress a stray out-of-line COMDAT with `dllimport __forceinline` (2026-11-01)
+
+An in-class helper that every call site inlines is still emitted as an
+out-of-line COMDAT, which loses against the kept copy when its shape differs
+(here a 33-byte fputs-inlined `_M_check_exception_mask` vs the kept 14-byte
+caller of `_M_throw_failure`). Measured (BFME 2 donor 5452ce5952, adapted):
+`__declspec(dllimport) __forceinline` on the helper keeps all call sites
+inlined and the unit emits no out-of-line copy at all, while the 432-byte
+`ios_base::_M_copy_state` row stays exact
+(game/Libraries/Source/STLport/IosBaseCopyState.cpp).
