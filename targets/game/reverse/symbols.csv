@@ -78474,7 +78474,6 @@ name,address,notes
 ?bfmeGet_002198b0@BfmeChainResult@@QAEPAXXZ,0x00036165,Open-BFME5 ILT the lookup at 0x002198B0 tail-jumps through
 ?bfmeGet_002198d0@BfmeChainResult@@QAEPAXXZ,0x000456E2,Open-BFME5 ILT the lookup at 0x002198D0 tail-jumps through
 ?bfmeGhttpThink@@YAXXZ,0x0087AC30,HTTPThinkWrapper BFME tail-call target; canonical GameSpy ghttpThink body
-?bfmeGlobalCGD@@YAXXZ,0x009A3AD0,pin
 ?bfmeGo1046E@BfmeD1046@@QAEXXZ,0x008BE6D0,Legacy cleanup caller spelling; matched constructor and unwind lifetimes prove owned-pointer destructor; RET+2d and INT3+2e prove46B; evidence=identity_evidence/008be6d0-owned-pointer-destructor.md
 ?bfmeGo1057A@BfmeA1057@@QAEXH@Z,0x00046A1F,call-site callee of Gen_0022F900::bfmeGain; ILT 0x00046A1F -> bfmeGo1057A 0x00410D80
 ?bfmeGo1VMZ@BfmeThingVMZ@@QAEXHHMMMM@Z,0x00015451,float-arg ABI alias of matched ?bfmeGo1VMZ@BfmeThingVMZ@@QAEXHHHHHH@Z body 0x0040E0D0 (ILT jmp); thiscall ret 0x18 six dword args; caller 0x00491A40 +0x74/+0xCA pushes float consts and fstp result in args 3-6

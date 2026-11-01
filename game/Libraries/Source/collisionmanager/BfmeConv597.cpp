@@ -41,7 +41,10 @@ public:
 	bool m_bfmeBusy;
 };
 
-void bfmeGlobalCGD();
+// Retail calls CollisionManagerImpl::UpdateSort (0x009A3AD0, defined in
+// collisionmanager_impl.cpp) right after bfmeOneCGD without reloading ECX, so
+// the call is spelled as a plain function under the member's name.
+extern "C" void __identifier("?UpdateSort@CollisionManagerImpl@@QAEXXZ")();
 
 // Walk the 0x493-slot table at this+0xAE10 from the cursor at this+0xC064 and
 // move every node whose two sub-objects are both flagged at sub+0x04 out of its
@@ -100,7 +103,7 @@ void BfmeThingCGD::bfmeGoCGD()
 	{
 		m_bfmeBusy = true;
 		bfmeOneCGD();
-		bfmeGlobalCGD();
+		__identifier("?UpdateSort@CollisionManagerImpl@@QAEXXZ")();
 		bfmeTwoCGD();
 		m_bfmeBusy = false;
 	}
