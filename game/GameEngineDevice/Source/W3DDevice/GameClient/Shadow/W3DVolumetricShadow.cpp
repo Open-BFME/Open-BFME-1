@@ -76,6 +76,18 @@ extern W3DShadowHelperManager *TheW3DShadowHelperManager;
 #include "wwshade/shdmesh.h"
 #include "wwshade/shdsubmesh.h"
 
+// The 3x4 identity at retail .data VA 0x012D6848 that
+// W3DVolumetricShadow::RenderVolume and updateVolumes (0x007BF3C0) read for
+// static meshes; defined once as its twelve floats under the recorded name
+// (retail initialises it statically, no constructor runs).
+extern Matrix3D Rva00ED6848IdentityMatrix;
+extern "C" float __identifier("?Rva00ED6848IdentityMatrix@@3VMatrix3D@@A")[12] =
+{
+	1.0f, 0.0f, 0.0f, 0.0f,
+	0.0f, 1.0f, 0.0f, 0.0f,
+	0.0f, 0.0f, 1.0f, 0.0f
+};
+
 struct Rva007BDB70Record
 {
 	unsigned char bytes[22];
