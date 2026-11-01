@@ -44,6 +44,11 @@ inline UnicodeString &UnicodeString::operator=( const wchar_t *str )
 
 struct StringInfo
 {
+	// Declared, not defined: the out-of-line 13-byte body lives in
+	// StringInfoCtor.cpp. Defining it here (or leaving the implicit
+	// one) emits a non-retail copy (an out-of-line UnicodeString call
+	// retail's zeroing body never makes).
+	StringInfo();
 	AsciiString label;
 	UnicodeString text;
 	~StringInfo();
