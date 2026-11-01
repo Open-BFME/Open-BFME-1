@@ -242,6 +242,7 @@ public:
 	};
 
 	WaterRenderObjClass(void);
+	virtual ~WaterRenderObjClass(void);	// matched in WaterRenderObjVirtualDestructor.cpp
 
 	WaterGridRef *				m_gridRef;			// +0xcc
 	unsigned long				m_d0;				// +0xd0
