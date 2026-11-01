@@ -51,6 +51,9 @@ template<class R, class A, class B> __forceinline R call2(void (*raw)(), void *s
     return (((Call367470*)self)->*f.member)(a,b);
 }
 class BfmeSharedString : public AsciiString {
+public:
+    // Retain inline cleanup without emitting a competing standalone destructor.
+    __declspec(dllimport) __forceinline ~BfmeSharedString() {}
 };
 __forceinline bool equal367470(const BfmeSharedString &a,const AsciiString &b) {
     return a.StringBase<char>::compare(b)==0;

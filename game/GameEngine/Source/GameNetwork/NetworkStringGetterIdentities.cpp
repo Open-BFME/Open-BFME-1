@@ -14,7 +14,8 @@ private:
 class BfmeSharedString : private StringBase<char> {
 public:
     BfmeSharedString(const BfmeSharedString& other) : StringBase<char>(other) {}
-    ~BfmeSharedString() {}
+    // Retain inline cleanup without emitting a competing standalone destructor.
+    __declspec(dllimport) __forceinline ~BfmeSharedString() {}
 };
 
 // The sole caller4C79D5 is DownloadManagerMunkee::OnError, which passes this
