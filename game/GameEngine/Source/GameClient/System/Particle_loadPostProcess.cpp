@@ -38,14 +38,16 @@ public:
 	}
 };
 
-class ParticleSystem
+class ParticleSystem;
+
+// Retail stores the control particle at system+0x1A0 inline here, while the
+// out-of-line ParticleSystem::setControlParticle (0x0021D740) writes +0x330:
+// a file-static helper keeps this TU from emitting a competing COMDAT under
+// the real member name.
+static __forceinline void setControlParticle(ParticleSystem *system, Particle *particle)
 {
-public:
-	void setControlParticle(Particle *particle)
-	{
-		*reinterpret_cast<Particle **>(reinterpret_cast<char *>(this) + 0x1A0) = particle;
-	}
-};
+	*reinterpret_cast<Particle **>(reinterpret_cast<char *>(system) + 0x1A0) = particle;
+}
 
 class ParticleSystemManager
 {
@@ -90,7 +92,7 @@ void Particle::loadPostProcess()
 	{
 		BfmeParticleSystemHandle system =
 			TheParticleSystemManager->findParticleSystemByID(m_systemUnderControlID);
-		system->setControlParticle(this);
+		setControlParticle(system.operator->(), this);
 		m_systemUnderControl = system;
 		if (m_systemUnderControlID == INVALID_PARTICLE_SYSTEM_ID)
 		{
