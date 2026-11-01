@@ -1,8 +1,7 @@
 // ?method@Rva00228050OpenContain@@QAE_NPAVObject@@@Z
-// partial score=0.3948 date=2026-10-26
+// partial score=0.9299 date=2026-11-01
 // cl: /DNDEBUG /MD /EHsc
 // stlport
-#include <list>
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
@@ -74,7 +73,17 @@ protected:
 	friend class Rva00228050OpenContain;
 };
 
-typedef std::list<Object *> ContainedItemsList;
+struct ContainedItemNode
+{
+	ContainedItemNode *m_next;
+	ContainedItemNode *m_prev;
+	Object *m_item;
+};
+
+struct ContainedItemsList
+{
+	ContainedItemNode *m_node;
+};
 
 class ContainInterface00228050
 {
@@ -105,10 +114,13 @@ private:
 
 Bool Rva00228050OpenContain::method(Object *other)
 {
-	for (ContainedItemsList::iterator it = m_containList.begin(); it != m_containList.end(); )
+	ContainedItemNode *volatile next;
+	for (ContainedItemNode *cur = m_containList.m_node->m_next; cur != m_containList.m_node; cur = next)
 	{
-		Object *rider = *it++;
-		if (rider->getControllingPlayer() == other->getControllingPlayer())
+		Object *rider = cur->m_item;
+		next = cur->m_next;
+		Player *riderPlayer = rider->getControllingPlayer();
+		if (riderPlayer == other->getControllingPlayer())
 			continue;
 		ThingTemplate *thing = rider->m_template;
 		if (thing != 0 && thing->m_nextOverride != 0)
