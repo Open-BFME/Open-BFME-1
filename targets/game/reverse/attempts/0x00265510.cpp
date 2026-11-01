@@ -1,5 +1,7 @@
+// ?d_00265510@@YAXXZ
+// partial score=0.5573 date=2026-11-01
 // ?updateAt00265510@RousingSpeechUpdate@@QAEXXZ
-// partial score=0.24 date=2026-09-15
+// partial date=2026-11-01: data->m_fxList read twice puts data in EBP like retail; only the fx-in-EDI-across-bfmeIsBlocked reload remains
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
 // stlport
 #include <list>
@@ -162,9 +164,8 @@ void RousingSpeechUpdate::updateAt00265510()
 				object->applyAttributeModifier(*modifier, -1);
 				setRousingCondition(object, 191);
 				object->m_rousingOwner = m_object->m_id;
-				RousingSpeechFXList *fx = data->m_fxList;
-				if (fx != 0 && !fx->bfmeIsBlocked())
-					fx->doFXObj(object, 0);
+				if (data->m_fxList != 0 && !data->m_fxList->bfmeIsBlocked())
+					data->m_fxList->doFXObj(object, 0);
 				logic = TheBfmeGameLogic;
 			}
 		}
