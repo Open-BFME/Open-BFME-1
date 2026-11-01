@@ -3560,51 +3560,26 @@ void ScriptActions::doNamedCustomColor(const AsciiString& unitName, Color c)
 //-------------------------------------------------------------------------------------------------
 /** doNamedFlash */
 //-------------------------------------------------------------------------------------------------
-// Attempted and reverted, and the reason is structural rather than codegen.
-// BFME multiplies the designer's seconds by 5, not by the reference header's
-// LOGICFRAMES_PER_SECOND of 30, and still divides by 15 -- a ten-second flash is
-// three flashes here where the reference gives twenty. It reaches the drawable
-// through Object vtable slot 10 where the reference inlines a field read at
-// +0x80, and its flash count and colour are at drawable+0x160 and +0x164 where
-// the reference puts them at +0xCC and +0xD0. Writing all of that lands the
-// body, but the two reference-shaped setters at +0xCC are themselves matched
-// rows claiming THIS file, and doNamedFlash is their only caller: moving the
-// body off them orphans both. The donor carries BFME's own pair, which is why
-// it can hold the body and this file cannot.
-// byte-exact reconstruction: game/GameEngine/Source/Common/ScriptActions_doNamedFlash_Thunk.cpp
-// ?doNamedFlash@ScriptActions@@IAEXABVAsciiString@@HPBURGBColor@@@Z present-unmatched
-void ScriptActions::doNamedFlash(const AsciiString& unitName, Int timeInSeconds, const RGBColor *color)
+// Body in ScriptActions_doNamedFlash_Thunk.cpp (exact 124B retail @ 0x2EE7C0).
+// BFME multiplies the designer's seconds by 5 and reads the drawable through
+// Object vtable slot 10; its flash fields are at drawable+0x160 and +0x164.
+
+// 0x002C7E10 stores +0xD0 and has no rel32 caller; its class is unproven, and
+// Drawable's flash colour is at +0x164, so it cannot be Drawable::setFlashColor.
+class Rva002C7E10Setter
 {
-	/** This is called the first time this unit is told by the script to flash. timeInSeconds will tell the drawable 
-	how long to flash for.  Sets drawable to start flashing but only allows drawable's update to
-	call the actual flash method */
+public:
+	void set(Int value);
 
-	//sanity
-	Object *obj = TheScriptEngine->getUnitNamed( unitName );
-	if ( !obj )
-	{
-		return;
-	}
-	Drawable *drawable = obj->getDrawable();
-	if( !drawable )
-	{
-		return;
-	}
+private:
+	char m_paddingBeforeD0[0xD0];
+	Int m_fieldD0;
+};
 
-	if( timeInSeconds > 0 )
-	{
-		// set count for drawable, but do not flash, allow drawable update to handle it
-
-		/* The designer specifies how long he wants the unit to flash for.  We will
-		convert this number into a count of how many times to call the doNamedFlash method */
-		Int frames = LOGICFRAMES_PER_SECOND * timeInSeconds;
-		// every time the framecount % 20 == 0, drawable::update will call doNamedFlash
-		Int count = frames / DRAWABLE_FRAMES_PER_FLASH;
-		Color flashy = (color == NULL) ? obj->getIndicatorColor() : color->getAsInt();
-		drawable->setFlashColor( flashy );
-		drawable->setFlashCount( count );
-		return;
-	}
+// ?set@Rva002C7E10Setter@@QAEXH@Z
+void Rva002C7E10Setter::set(Int value)
+{
+	m_fieldD0 = value;
 }
 
 //-------------------------------------------------------------------------------------------------

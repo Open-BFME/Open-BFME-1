@@ -21661,5 +21661,15 @@
   "after_sha256": "7a1f3aec4b85b98cd0c1c7e322acfadbea6e7dda2d5ce37d6c701e65b54ac922",
   "evidence": "targets/game/reverse/identity_evidence/01338480-bfmeobjdae-respell.md",
   "reason": "Link queue respelling: g_bfmeValues1220 and bfmeObjDAE share VA 0x01338480 (dir32_addresses.csv) and only _bfmeObjDAE is defined (Rva00C6DC90ArrayInit.cpp vector ctor iterator 178x4); the descriptive name stays as the macro spelling"
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "Drawable",
+  "new_name": "Rva002C7E10Setter",
+  "before_sha256": "f8daf6e677750f57d53b14ee45112d9a7ac640050cfeca7643558ecca7dd8318",
+  "after_sha256": "3f1fe5121fc2d4e9cfdd0d1cdb1b0f3a18c6771951c96bfbcfb74a5360a934c1",
+  "evidence": "targets/game/reverse/identity_evidence/002c7e10-not-drawable-setflashcolor.md",
+  "reason": "0x002C7E10 stores +0xD0 and has no rel32 caller; Drawable's flash colour is +0x164 and the ILT oracle contradicts the old name, so the body keeps an address-derived name."
  }
 ]

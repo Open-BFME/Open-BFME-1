@@ -2760,7 +2760,6 @@ functions	0x002C75C0	?getClassMemoryPool@WanderAIUpdate@@CAPAVMemoryPool@@XZ
 functions	0x002C7A80	??1WorkerAIUpdate@@UAE@XZ
 functions	0x002C7BD0	?getClassMemoryPool@WorkerAIUpdate@@CAPAVMemoryPool@@XZ
 functions	0x002C7D30	?getPlayerIndex@Player@@QBEHXZ
-functions	0x002C7E10	?setFlashColor@Drawable@@QAEXH@Z
 functions	0x002C7EE0	?setStoredPosition@WorkerAIUpdate@@QAEXPAUCoord3D@@H@Z
 functions	0x002C8070	?getDockPoint@WorkerAIUpdate@@UAEPBUCoord3D@@W4DozerTask@@W4DozerDockPoint@@@Z
 functions	0x002C80C0	?isSupplyTruckBrainActiveAndBusy@WorkerAIUpdate@@QAEHXZ
