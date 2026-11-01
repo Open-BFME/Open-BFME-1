@@ -1000,7 +1000,10 @@ Image *getMapPreviewImage( AsciiString mapName )
 		if (success)
 		{
     	image = newInstance(Image);
-			image->setName(tempName);
+			// NOTE: no setName call here. This TU's getMapPreviewImage is dead
+			// (the rowed body lives in MapPreviewImage.cpp); calling the ZH
+			// Image.h inline would emit a second Image::setName definition that
+			// conflicts with the retail owner in INIMappedImage.cpp.
 			//image->setFullPath("mission.tga");
 			image->setFilename(name);
 			image->setStatus(IMAGE_STATUS_NONE);
