@@ -130,6 +130,7 @@ public:
 };
 
 extern AudioEventRTS BfmeTheEmptyAudioEvent;		// 0x12f1318
+extern AudioEventRTS g_Va012F14A8;		// 0x12f14a8
 class Gen_00C6FFA0Target
 {
 public:
@@ -453,6 +454,14 @@ public:
 };
 
 extern Gen_00C70B00Target TheBfmeObject_00C70B00;		// 0x1306f3c
+extern Gen_00C70B00Target g_Va0134B0F4;		// 0x134b0f4
+extern Gen_00C70B00Target g_Va0134B10C;		// 0x134b10c
+// ILT 0x0002880D destructor target (pinned there as the gen-uw spelling).
+struct Gen_uwm_0002880d
+{
+	~Gen_uwm_0002880d();
+};
+extern Gen_uwm_0002880d g_Va0134C65C;		// 0x134c65c
 class Gen_00C70B10Target
 {
 public:
@@ -919,6 +928,11 @@ void bfmeForward_00C6FFC0(void)
 {
 	TheBfmeObject_00C6FFC0.bfmeForward();
 }
+// ?bfmeForward_00C6FFD0@@YAXXZ
+void bfmeForward_00C6FFD0(void)
+{
+	g_Va012F14A8.~AudioEventRTS();
+}
 // ?bfmeForward_00C6FFF0@@YAXXZ
 void bfmeForward_00C6FFF0(void)
 {
@@ -1367,6 +1381,16 @@ void bfmeForward_00C71310(void)
 {
 	TheBfmeObject_00C71310.bfmeForward();
 }
+// ?bfmeForward_00C713B0@@YAXXZ
+void bfmeForward_00C713B0(void)
+{
+	g_Va0134B0F4.bfmeForward();
+}
+// ?bfmeForward_00C713C0@@YAXXZ
+void bfmeForward_00C713C0(void)
+{
+	g_Va0134B10C.bfmeForward();
+}
 // ?bfmeForward_00C71460@@YAXXZ
 void bfmeForward_00C71460(void)
 {
@@ -1391,6 +1415,11 @@ void bfmeForward_00C71490(void)
 void bfmeForward_00C714A0(void)
 {
 	TheBfmeObject_00C714A0.bfmeForward();
+}
+// ?bfmeForward_00C71510@@YAXXZ
+void bfmeForward_00C71510(void)
+{
+	g_Va0134C65C.~Gen_uwm_0002880d();
 }
 // ?bfmeForward_00C71550@@YAXXZ
 void bfmeForward_00C71550(void)
