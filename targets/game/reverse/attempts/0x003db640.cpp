@@ -1,5 +1,5 @@
 // ??0Rva003DB640Info@@QAE@PAVPathfinder@@PAVObject@@H@Z
-// partial score=0.6106 date=2026-10-24
+// partial score=0.7345 date=2026-11-01
 // cl: /DNDEBUG /MD
 typedef int Int;
 typedef bool Bool;
@@ -19,7 +19,7 @@ public:
 	unsigned char m_pad08[0x444 - 0x08];
 	Int m_field444;
 	unsigned char m_pad448[0x4CC - 0x448];
-	UnsignedByte m_field4CC;
+	char m_field4CC;
 };
 
 class Object
@@ -43,10 +43,19 @@ class Pathfinder;
 
 struct Rva003DB640Query
 {
-	Int m_surfaces;
-	Bool m_flag0;
-	Bool m_flag1;
+	unsigned int m_surfaces;
+	unsigned char m_flag0;
+	unsigned char m_flag1;
+	unsigned char m_pad06[2];
 	Int m_radius;
+
+	void set(unsigned int surfaces, char flag, Bool computer, Int maxLayer)
+	{
+		m_surfaces = surfaces;
+		m_flag0 = flag == 0;
+		m_flag1 = computer;
+		m_radius = maxLayer - 1;
+	}
 };
 
 class Rva003DB640Info
@@ -97,15 +106,13 @@ Rva003DB640Info::Rva003DB640Info(Pathfinder *pathfinder, Object *object, Int val
 	m_at34 = false;
 	m_at38 = 0;
 	Int radius = object->getTemplate()->m_field444;
-	UnsignedByte flag = object->getTemplate()->m_field4CC;
-	Bool computer = object->bfmeIsComputerControlled();
-	m_query.m_surfaces = validSurfaces;
-	m_query.m_flag1 = computer;
-	m_query.m_flag0 = flag == 0;
-	m_query.m_radius = radius - 1;
+	char flag = object->getTemplate()->m_field4CC;
+	m_query.set(validSurfaces, flag, object->bfmeIsComputerControlled(), radius);
 	m_at48 = 0;
 	m_at4C = 0;
-	m_current = m_query;
+	const Rva003DB640Query &q = m_query;
+	Rva003DB640Query &c = m_current;
+	c = q;
 	m_at19 = false;
 	m_at20 = 0;
 	m_at14 = 0;
