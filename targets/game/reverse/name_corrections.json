@@ -21621,5 +21621,15 @@
   "after_sha256": "66af03ef3061372449132dfb5d52a9c2a783e67b1a2a5d606c45dea6afd91984",
   "evidence": "targets/game/reverse/identity_evidence/0076e4f0-particlesysbone-parser.md",
   "reason": "flashAsSelected was the ZH name carried by the naked lift; 0x0076E4F0 is a cdecl three-pointer function (no ECX use, caller-cleaned) called by the matched ParticleSysBone FieldParse callback 0x0076E7B0 and its twin, i.e. the ParticleSysBone parsing body, so the row takes the address's existing placeholder pin bfmeCallEMA."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x002a8540.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/SpecialAbilityUpdate_onExit.cpp",
+  "old_name": "call",
+  "new_name": "bfmeGo1274",
+  "before_sha256": "26b01d7731908d66213a3a899e2112d267684f9261cbf89d70fbd6a21cd58a27",
+  "after_sha256": "4d34596304a397bbf06c3dd61be5f932306dccfc1b82acada0f3054dc8c8b1f1",
+  "evidence": "targets/game/reverse/identity_evidence/002a8540-specialabilityupdate-onexit.md",
+  "reason": "call was the replaced bank's generic member-pointer cast helper (BfmeNoArgCall::call over j_0002333a), not a name for 0x002A6DE0; the converted body calls that address by its ledger row bfmeGo1274."
  }
 ]
