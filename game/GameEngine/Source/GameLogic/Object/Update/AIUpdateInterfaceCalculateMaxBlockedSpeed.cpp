@@ -12,22 +12,25 @@ typedef int Int;
 extern "C" double __cdecl sqrt(double value);
 #pragma intrinsic(sqrt)
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
-// class-gate: allow Coord2D ZH's inline length()/normalize() (absent from the canonical header) are inlined into this body
+// class-gate: allow Coord2D ZH's inline length()/normalize() (absent from the canonical header) are inlined into this body as file statics
 struct Coord2D
 {
 	Real x, y;
-	Real length() const { return (Real)sqrt(x * x + y * y); }
-	void normalize()
-	{
-		Real len = length();
-		if (len != 0.0f)
-		{
-			Real inv = 1.0f / len;
-			x *= inv;
-			y *= inv;
-		}
-	}
 };
+// ZH's inline Coord2D::length/normalize, kept file-local: the external names
+// are ledger rows defined elsewhere (normalize strong in coord2d.cpp at
+// 0x0014FF40) and the COMDAT copies emitted here duplicated them at link.
+static Real length(const Coord2D &v) { return (Real)sqrt(v.x * v.x + v.y * v.y); }
+static void normalize(Coord2D &v)
+{
+	Real len = length(v);
+	if (len != 0.0f)
+	{
+		Real inv = 1.0f / len;
+		v.x *= inv;
+		v.y *= inv;
+	}
+}
 class Thing
 {
 public:
@@ -53,7 +56,7 @@ protected:
 	{
 		v.x = to->getPosition()->x - getObject()->getPosition()->x;
 		v.y = to->getPosition()->y - getObject()->getPosition()->y;
-		v.normalize();
+		normalize(v);
 		return v.x*ox + v.y*oy;
 	}
 	char m_pad00[8];
