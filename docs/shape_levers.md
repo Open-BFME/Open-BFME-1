@@ -3108,3 +3108,40 @@ overflow gave 334 bytes with swapped ESI/EDI; the loop forms are the lever.
 Hypothesis, untested elsewhere: the same pair of spellings applies to other
 vectors whose retail overflow keeps `_Construct` out of line. VC7.1 `/O2`,
 `/D_STLP_NO_EXCEPTIONS`.
+
+## Read a field into a local before storing it to swap a callee-saved pair (2026-11-01)
+
+At 0x002157C0 (Rva002157C0Owner::refresh, landed in
+game/GameEngine/Source/GameLogic/Object/Body/Rva002157C0Refresh.cpp) a list
+walk kept the entry pointer in EBP and the inlined AsciiString compare's
+length in EBX, where retail has the reverse, across 17 bytes of the
+295-byte body. Measured: replacing `m_fieldE4 = entry->field74;` in the
+found branch with `int value = entry->field74; m_fieldE4 = value;` gives
+retail's allocation exactly (the load then goes into EAX, as retail does).
+The compare spelling (header AsciiString::compare, a getLength()/str()
+helper, or an early-return or folded `c = lengths` result) does not matter
+once that local is present. Hypothesis: the extra local changes the
+weights the VC7.1 allocator uses to colour the two loop values. VC7.1
+`/O2`, `/DNDEBUG /MD /EHsc`.
+
+## Sign test of a flags byte and per-use view casts (2026-11-01)
+
+Display::update 0x0040DE00 (game/GameEngine/Source/GameClient/Display.cpp):
+- Retail reads `mov al,[esi+0x38]; test al,al; js` for bit 0x80 of an int
+  flags field. `(char)m_flags & 0x80` (or any of the char/unsigned char
+  casts, or `*(char *)&m_flags & 0x80`) is exact; `(signed char)m_flags < 0`
+  gives the same load but `jl`, and `m_flags & 0x80` gives `test byte` with a
+  different branch layout (500 bytes, 155 diffs).
+- In a TU whose header layout differs from BFME's, the member was written
+  through a retail-offset view. `View *self = (View *)this;` swapped the
+  operands of one `int + unsigned` sum (2 diffs);
+  `#define MOVIE_VIEW ((View *)this)` used at every access was exact, the
+  same as a member of the view class compiled standalone.
+
+## VC7.1 `delete[]` calls `??3` unless `operator delete[]` is declared (2026-11-01)
+
+TerrainLogic::reset 0x001ACF90 (TerrainLogic_reset.cpp) frees a byte array
+with `??_V@YAXPAX@Z`. In a TU without `<new>`, `delete[] (char *)p` compiled
+to a call to `??3@YAXPAX@Z` and an explicit `operator delete[](p)` failed with
+C3861. Declaring `void __cdecl operator delete[](void *p);` makes
+`delete[] (char *)p` call `??_V`, as retail does.
