@@ -32,6 +32,11 @@
 #include "Common/UnicodeString.h"
 #include "Lib/BaseType.h"
 
+// Retail inlines ~AsciiString at every scope exit and calls
+// StringBase<char>::releaseBuffer (0x00887940) directly, never the
+// 0x0005EE90 jmp body the out-of-line declaration would bind to.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+
 
 enum { MAX_PURCHASE_SCIENCE_RANK_3 = 12 };
 enum { CP_PURCHASE_SCIENCE = 1 };

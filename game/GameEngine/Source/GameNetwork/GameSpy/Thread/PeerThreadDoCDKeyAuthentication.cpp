@@ -24,6 +24,11 @@ extern "C"
 
 #include "Common/MiniLog.h"
 
+// Retail inlines ~AsciiString at every scope exit and calls
+// StringBase<char>::releaseBuffer (0x00887940) directly, never the
+// 0x0005EE90 jmp body the out-of-line declaration would bind to.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+
 class PSRequest
 {
 public:

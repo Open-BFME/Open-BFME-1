@@ -65,6 +65,11 @@
 #include "GameClient/GameText.h"
 #include "GameNetwork/GUIUtil.h"
 
+// Retail inlines ~AsciiString at every scope exit and calls
+// StringBase<char>::releaseBuffer (0x00887940) directly, never the
+// 0x0005EE90 jmp body the out-of-line declaration would bind to.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+
 //-------------------------------------------------------------------------------------------------
 // WindowLayout::hide is virtual in BFME (vtable slot 0x10) and non-virtual in
 // the vendored ZH header. Editing the header would touch every TU that includes

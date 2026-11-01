@@ -34,6 +34,11 @@
 #include "GameLogic/GameLogic.h"
 #include "GameLogic/SidesList.h"
 
+// Retail inlines ~AsciiString at every scope exit and calls
+// StringBase<char>::releaseBuffer (0x00887940) directly, never the
+// 0x0005EE90 jmp body the out-of-line declaration would bind to.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+
 // The addSide call goes through the ILT thunk at 0x0001CA12 in retail
 // (body 0x0019A780), and that body is not the one the ledger currently
 // places ?addSide@SidesList@@QAEXPBVDict@@@Z at, so the call site names the

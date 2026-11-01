@@ -40,6 +40,12 @@
 
 #include "AsciiString.h"
 
+// Retail inlines ~AsciiString at every scope exit and calls
+// StringBase<char>::releaseBuffer (0x00887940) directly, never the
+// 0x0005EE90 jmp body the out-of-line declaration would bind to.
+// ??1AsciiString@@QAE@XZ present-unmatched (its row is 0x0005EE90 in AsciiStringNative.cpp)
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+
 class Xfer;
 class UserParser;
 class DataChunkInput;
