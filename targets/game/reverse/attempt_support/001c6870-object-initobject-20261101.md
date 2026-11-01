@@ -41,3 +41,8 @@ battle-plan sum orders, inline vs forceinline accessors, /G5 /G6 /G7 /GB /O1 /Os
 Find a site-2 spelling that keeps `test dword [mem], imm32` while the -1 stays CSE'd, or the
 retail-side reason the -1 is CSE'd with a dword test (a third -1 use? different m_lastWeaponCondition
 declaration?).
+
+## Later data point
+- `(w & 0x1000000) < 1` at site 2 keeps the CSE with an imm32 `and eax,0x1000000; cmp eax,1` (937 B),
+  so the 0x1000000 immediate itself is not what blocks the CSE: only the `test dword [mem],imm32`
+  form does (also `!= mask`, `> 0`). `(w >> 24) & 1` and `>> 24` forms narrow like the Int version.
