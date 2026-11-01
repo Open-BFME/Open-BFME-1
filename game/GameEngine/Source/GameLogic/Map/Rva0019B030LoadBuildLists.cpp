@@ -119,14 +119,14 @@ static __forceinline BuildListCallback0019B030 callbackAt0019B030(unsigned addre
 }
 
 typedef bool (*CallbackBase0019B030)(DataChunkInput &, DataChunkInfo *, void *);
-extern void j_0001579e();
+extern void __cdecl bfmeChunkParserVE(void);
 extern void j_0000f51a();
 extern void j_00013c6e();
 class ParserBase0019B030 {
 public:
   ParserBase0019B030(DataChunkInput *table, const AsciiString &name, const AsciiString &parent) {
     table_ = table;
-    parser_ = table->registerParser(name, parent, (CallbackBase0019B030)j_0001579e, this);
+    parser_ = table->registerParser(name, parent, (CallbackBase0019B030)bfmeChunkParserVE, this);
   }
   ~ParserBase0019B030() {
     reinterpret_cast<BfmeSubVE *>(table_)->bfmeDropVE(parser_);

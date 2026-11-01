@@ -11,7 +11,7 @@ inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer()
 
 // Retail vtable 0x0107C7D0, pinned as _bfmeVftVE (targets/game/reverse/symbols.csv).
 extern "C" int _bfmeVftVE[];
-extern void j_0001579e();
+extern void __cdecl bfmeChunkParserVE(void);
 
 class UserParser;
 class DataChunkInput;
@@ -34,7 +34,7 @@ public:
         m_vftable = _bfmeVftVE;
         m_table = table;
         m_parser = table->registerParser(*name, *label,
-            (BfmeParserCallback)j_0001579e, this);
+            (BfmeParserCallback)bfmeChunkParserVE, this);
     }
     ~BfmeParserRegistrationVE();
 

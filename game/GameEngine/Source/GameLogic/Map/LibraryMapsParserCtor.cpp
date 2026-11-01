@@ -18,7 +18,7 @@ extern "C" int _bfmeVftVE[];
 extern "C" int g_0109C030[];
 
 typedef bool (*BfmeParserCallback)(DataChunkInput &, DataChunkInfo *, void *);
-void j_0001579e();
+extern void __cdecl bfmeChunkParserVE(void);
 
 class DataChunkInput
 {
@@ -36,7 +36,7 @@ public:
         m_vftable = _bfmeVftVE;
         m_table = table;
         m_parser = table->registerParser(*name, *label,
-            (BfmeParserCallback)j_0001579e, this);
+            (BfmeParserCallback)bfmeChunkParserVE, this);
     }
     ~BfmeParserRegistrationVE();
 

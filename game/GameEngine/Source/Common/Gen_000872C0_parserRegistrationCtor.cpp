@@ -20,7 +20,7 @@ public:
 
 // Retail vtable 0x0107C7D0, pinned as _bfmeVftVE.
 extern "C" int _bfmeVftVE[];
-void j_0001579e();
+extern void __cdecl bfmeChunkParserVE(void);
 
 class BfmeParserRegistrationVE
 {
@@ -40,5 +40,5 @@ BfmeParserRegistrationVE::BfmeParserRegistrationVE(
 	m_vftable = _bfmeVftVE;
 	m_table = table;
 	m_parser = table->registerParser(*name, *label,
-		(BfmeParserCallback)j_0001579e, this);
+		(BfmeParserCallback)bfmeChunkParserVE, this);
 }
