@@ -16,6 +16,20 @@
 
 #include "ascii_string.h"
 
+// Retail AsciiString::compare shape (repe cmpsb over the shared prefix, then
+// the length difference), spelled as the StringBase<char> specialization so
+// this TU emits no AsciiString::compare COMDAT of its own. Same spelling as
+// game/GameEngine/Source/GameNetwork/Rva00692570KeyLess.cpp.
+template <> inline int StringBase<char>::compare(const StringBase<char> &str) const
+{
+	int otherLength = str.m_data ? str.m_data->length : 0;
+	const char *otherData = str.m_data ? str.m_data->data : (const char *)"";
+	int length = m_data ? m_data->length : 0;
+	const char *data = m_data ? m_data->data : (const char *)"";
+	int result = memcmp(data, otherData, length < otherLength ? length : otherLength);
+	return result ? result : length - otherLength;
+}
+
 struct Gen_t_000bbe70_m4pod { int a[1]; };
 bool operator==(const Gen_t_000bbe70_m4pod &, const Gen_t_000bbe70_m4pod &);
 bool operator<(const Gen_t_000bbe70_m4pod &, const Gen_t_000bbe70_m4pod &);
@@ -98,7 +112,7 @@ void LightPointSystem::rva0039CB60(BfmeUniqueIntegerStoreC8C0 *indices, const As
 	for (unsigned int i = 0; i < m_levels.size(); ++i)
 	{
 		const LightPointLevel *level = (const LightPointLevel *)m_levels[i]->finalOverrideViaConstFriend();
-		if (level->m_name.compare(name) == 0)
+		if (level->m_name.StringBase<char>::compare(name) == 0)
 		{
 			addLightPointLevelIndex(indices, i);
 			return;

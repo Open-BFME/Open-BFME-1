@@ -15,6 +15,20 @@
 
 #include "ascii_string.h"
 
+// Retail AsciiString::compare shape (repe cmpsb over the shared prefix, then
+// the length difference), spelled as the StringBase<char> specialization so
+// this TU emits no AsciiString::compare COMDAT of its own. Same spelling as
+// game/GameEngine/Source/GameNetwork/Rva00692570KeyLess.cpp.
+template <> inline int StringBase<char>::compare(const StringBase<char> &str) const
+{
+	int otherLength = str.m_data ? str.m_data->length : 0;
+	const char *otherData = str.m_data ? str.m_data->data : (const char *)"";
+	int length = m_data ? m_data->length : 0;
+	const char *data = m_data ? m_data->data : (const char *)"";
+	int result = memcmp(data, otherData, length < otherLength ? length : otherLength);
+	return result ? result : length - otherLength;
+}
+
 namespace rts
 {
 	template <class T>
@@ -87,7 +101,7 @@ ParticleSystemTemplate *ParticleSystemManager::findParentTemplate(const AsciiStr
 	TemplateMap::iterator end(const_cast<TemplateMap &>(m_templateMap).end());
 	for (; begin != end; ++(*(CommandButtonMap::iterator *)&begin)) {
 		ParticleSystemTemplate *sysTemplate = (*begin).second;
-		if (name.compare(sysTemplate->m_slaveSystemName) == 0) {
+		if (name.StringBase<char>::compare(sysTemplate->m_slaveSystemName) == 0) {
 			if (! parentNum--) {
 				return sysTemplate;
 			}
