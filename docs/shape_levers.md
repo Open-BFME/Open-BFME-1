@@ -2990,3 +2990,22 @@ MIN-outer orders grew the body by 4 bytes. VC7.1 `/O2`, plain C++ TU
 (game/GameEngine/Source/GameClient/SubtitleEntryRender_rva004341A0.cpp). It is
 not known whether the duplicated MIN subexpression or the operand order is
 what moves the block.
+
+## Inline key accessor puts the loop's probe key in a register (2026-11-01)
+
+Retail 0x000E15A0 (Rva000E15A0::method in PlayerTemplate.cpp) walks 0x124-byte
+records, builds `AsciiString name = KEYNAME(rec.key)` each pass and compares
+the record key with the `key` parameter. Retail keeps `key` in EBP, builds
+`name` in key's dead argument home and so has no local slot: the prologue is
+the frameless form (`mov eax,fs:[0]` before `push -1`, no `push ecx`). Reading
+`m_records[index].m_at00` directly in both places kept `key` in its home,
+gave `name` its own slot and cost 126 bytes. Reading the record key through a
+one-line inline `getKey() const` accessor in both places (ZH
+`PlayerTemplate::getNameKey()`) was exact, with no other change. A bool `found`
+local also moved `key` into EBP, but its `sete` stayed. VC7.1 `/O2`, STLport
+vector. This was measured on one body only.
+
+The same body shape (helper result built in a dead parameter's home, no local
+slot) is still open at 0x0068BFA0 LANAPI::handleGameStart. Accessors for the
+address compare, the in-progress flag and the message payload were all inert
+there (286/285 B).
