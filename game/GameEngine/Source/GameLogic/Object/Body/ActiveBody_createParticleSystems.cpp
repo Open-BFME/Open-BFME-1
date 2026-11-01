@@ -112,7 +112,7 @@ extern ParticleSystemManager *TheParticleSystemManager;
 class BodyParticleSystem
 {
 public:
-	virtual ~BodyParticleSystem();
+	virtual ~BodyParticleSystem() {}
 
 	enum BodyParticleSystemMagicEnum
 	{
