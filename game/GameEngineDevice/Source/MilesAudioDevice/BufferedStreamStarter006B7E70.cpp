@@ -20,7 +20,8 @@ extern "C" __declspec(dllimport) void __stdcall AIL_set_3D_sample_loop_count(uns
 extern void j_0003b741(); extern void j_00001ece(); extern void j_00016f86(); extern void j_000311bf();
 extern void j_0001dff2(); extern void j_00029910(); extern void j_00047519(); extern void j_0002e668();
 template<class M> inline M member006B7E70(void (*fn)()) { union { void(*f)(); M m; } u; u.f=fn; return u.m; }
-struct Coord3D { float x,y,z; };
+#include "../../../Libraries/Include/Lib/Coord3D.h"
+
 struct WaveInfo006B7E70 { int format; void *data; unsigned size; int rate,bits,channels; unsigned extra[3]; };
 struct SampleFile006B7E70 { char pad00[8]; WaveInfo006B7E70 info; };
 class FileRef006B7E70 {
