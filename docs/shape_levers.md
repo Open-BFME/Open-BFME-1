@@ -3033,3 +3033,22 @@ instead of a destructor (a destructor added an unwind state retail lacks,
 even with the fill declared `throw()`), and read the table name into a
 `const char *` before declaring the string local (otherwise the load used ECX
 instead of EAX before the push).
+
+## Bool result kept in BL while one path returns a literal (2026-11-01)
+
+Retail 0x00516850 (BfmeAptScreenLanLobby::getGameInfoRva00516850 in
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/BfmeAptScreenLanLobby_getGameInfoRva00516850.cpp)
+zeroes BL at entry and returns `mov al,bl` from its shared failure epilogue,
+while the success path ends `mov al,1` in its own epilogue and reuses EBX
+for the constant 2 (`test bl,al` / `or [esi+0x3D4],ebx`). A separate
+`return true` (or `ok = true; return ok;`) in the success arm lets VC7.1
+fold `ok` everywhere (`xor al,al`, no BL, 204-237 B); one shared
+`return ok;` with `ok = true;` before the flag update kept `mov bl,1` live
+across the arm. Exact: one `return ok;` at the end of the function and
+`ok = true;` as the last statement of the success arm (after the flag
+update). The optimiser then duplicates the return into the success arm with
+the constant, while the failure copy keeps BL. Wrapping the success compare
+in its own `if (*game)` block (else arm repeating the failure block) also
+reproduced retail's second failure copy, the flag byte load hoisted above
+the compare's jge, and the `*game` re-read (EBX is busy with `ok`, so EBP
+only lives inside the count block). Measured on this body, VC7.1 `/O2`.
