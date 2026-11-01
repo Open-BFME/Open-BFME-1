@@ -84,6 +84,13 @@
 #include "GameLogic/TurretAI.h"
 #include "GameLogic/Weapon.h"
 #include "Common/Radar.h"									// For TheRadar
+
+// BFME keeps StateMachine's lock flag at +0x40 (lock at retail 0x0014E5E0); the Zero
+// Hour header this unit uses says +0x34, so calling lock() would emit a wrong copy.
+static __forceinline void lockBfmeMachine(StateMachine *machine)
+{
+	*((char *)machine + 0x40) = 1;
+}
 #undef aiMoveToPosition
 
 #define SLEEPY_AI
@@ -2648,7 +2655,7 @@ UpdateSleepTime AIUpdateInterface::update( void )
 		/// @todo Yikes! If we are not interruptable, and we die, what do we do? (MSB)
 		getStateMachine()->clear();
 		getStateMachine()->setState( AI_DEAD );
-		getStateMachine()->lock("AIUpdateInterface::update");
+		lockBfmeMachine(getStateMachine());
 		// strangely, dead things need to NOT sleep at all. (but they don't stay dead for long,
 		// so this is not too bad.)
 		subMachineSleep = UPDATE_SLEEP_NONE;
@@ -5174,7 +5181,7 @@ void AIUpdateInterface::doQuickExit( const std::vector<Coord3D>* path )
 
 	getStateMachine()->setTemporaryState( AI_FOLLOW_EXITPRODUCTION_PATH, 10*LOGICFRAMES_PER_SECOND);
 	if (locked) {
-		getStateMachine()->lock("Relocking in doQuickExit.");
+		lockBfmeMachine(getStateMachine());
 	}
 }
 

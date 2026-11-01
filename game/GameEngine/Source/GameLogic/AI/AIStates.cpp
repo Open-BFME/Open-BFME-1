@@ -109,6 +109,13 @@ public:
 #include "GameLogic/Module/PhysicsUpdate.h"
 #include "GameLogic/Module/StealthUpdate.h"
 
+// BFME keeps StateMachine's lock flag at +0x40 (lock at retail 0x0014E5E0); the Zero
+// Hour header this unit uses says +0x34, so calling lock() would emit a wrong copy.
+static __forceinline void lockBfmeMachine(StateMachine *machine)
+{
+	*((char *)machine + 0x40) = 1;
+}
+
 #ifdef _INTERNAL
 // for occasional debugging...
 //#pragma optimize("", off)
@@ -7966,7 +7973,7 @@ StateReturnType AIGuardState::update()
 		return STATE_FAILURE;
 	}
 
-	getMachine()->lock("AIGuardState::update");	// We don't want to switch out of guard during the update.
+	lockBfmeMachine(getMachine());	// We don't want to switch out of guard during the update.
 	StateReturnType ret = m_guardMachine->updateStateMachine();
 	getMachine()->unlock();
 	return ret;
@@ -8241,7 +8248,7 @@ StateReturnType AITunnelNetworkGuardState::update()
 		return STATE_FAILURE;
 	}
 
-	getMachine()->lock("AITunnelNetworkGuardState::update");	// We don't want to switch out of guard during the update.
+	lockBfmeMachine(getMachine());	// We don't want to switch out of guard during the update.
 	StateReturnType ret = m_guardMachine->updateStateMachine();
 	getMachine()->unlock();
 	return ret;
@@ -8458,7 +8465,7 @@ StateReturnType AIHuntState::update()
 		}
 	}
 
-	getMachine()->lock("AIHuntState::update");	// The idle state in the sub machine can sometimes acquire targets.
+	lockBfmeMachine(getMachine());	// The idle state in the sub machine can sometimes acquire targets.
 																	// It is important to not switch out of this state via a sub machine call. jba.
 	/*
 		Note the use of CONVERT_SLEEP_TO_CONTINUE; even if the sub-machine
