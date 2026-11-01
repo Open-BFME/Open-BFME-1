@@ -14,7 +14,7 @@ class AsciiString : public StringBase<char>
 {
 public:
 	AsciiString() : StringBase<char>() {}
-	~AsciiString();
+	~AsciiString() {}
 
 	const char *str() const
 	{

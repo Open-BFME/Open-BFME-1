@@ -23,7 +23,7 @@ class AsciiString : private StringBase<char>
 {
 public:
     __forceinline AsciiString(const AsciiString &source) : StringBase<char>(source) {}
-    ~AsciiString();
+    ~AsciiString() {}
 };
 
 struct RGBColor

@@ -76,7 +76,7 @@ public:
 	AsciiString() : StringBase<char>() {}
 	AsciiString(const char *text) : StringBase<char>(text) {}
 	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString();
+	~AsciiString() { releaseBuffer(); }
 
 	void toLower() { StringBase<char>::toLower(); }
 	void __cdecl format(AsciiString fmt, ...);

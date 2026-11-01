@@ -38,7 +38,7 @@ public:
 		: StringBase<char>(other)
 	{
 	}
-	~AsciiString();
+	~AsciiString() {}
 
 	void translate(const UnicodeString &source);
 	void concat(const char *source)

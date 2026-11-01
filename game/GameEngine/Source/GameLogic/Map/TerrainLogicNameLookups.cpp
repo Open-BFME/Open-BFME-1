@@ -77,6 +77,9 @@ public:
 	StringBase(const StringBase<T> &other);	// retail 0x00887B60
 
 	const BfmeAsciiStringData *m_data;
+private:
+	void releaseBuffer(void);			// retail 0x00887940
+	friend class AsciiString;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
@@ -84,7 +87,7 @@ class AsciiString : public StringBase<char>
 {
 public:
 	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString();						// retail 0x00887940
+	~AsciiString() { releaseBuffer(); }
 
 	__declspec(nothrow) int compare(const AsciiString &other) const;		// retail 0x000220C5
 	int compare(const char *text) const;					// retail 0x0004B01A

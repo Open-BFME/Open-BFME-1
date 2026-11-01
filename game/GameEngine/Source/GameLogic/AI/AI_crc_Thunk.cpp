@@ -24,7 +24,7 @@ class AsciiString : public StringBase<char>
 public:
 	AsciiString() : StringBase<char>() {}
 	void set(const char *text, int length);
-	~AsciiString();
+	~AsciiString() {}
 };
 
 // Pathfinder's Snapshot subobject follows its service-interface vptr at +4.

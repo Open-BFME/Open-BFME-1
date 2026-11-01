@@ -41,7 +41,7 @@ public:
     AsciiString() : StringBase<char>() {}
     AsciiString(const AsciiString &source) :
         StringBase<char>(*(const StringBase<char> *)&source) {}
-    ~AsciiString();
+    ~AsciiString() { releaseBuffer(); }
     AsciiString &operator=(const AsciiString &source);
 
     void toLower() { StringBase<char>::toLower(); }
