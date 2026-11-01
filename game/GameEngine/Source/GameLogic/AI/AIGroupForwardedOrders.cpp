@@ -198,7 +198,8 @@ public:
 	void aiHunt(CommandSourceType commandSource);
 	void aiIdle(CommandSourceType commandSource);			// ILT 0x00024D70
 	void aiTightenToPosition(const Coord3D *position, CommandSourceType commandSource);
-	void aiFollowPathAppend(const Coord3D *position, CommandSourceType commandSource);
+	// aiFollowPathAppend; the ledger defines its body 0x00153480 as aiBfmeCommand35.
+	void aiBfmeCommand35(const Coord3D *position, CommandSourceType commandSource);
 	void aiMoveToAndEvacuate(const Coord3D *position, CommandSourceType commandSource);	// ILT 0x00027903 -> 0x001528E0
 	void aiEvacuate(bool exposeStealthUnits, CommandSourceType commandSource);		// ILT 0x000344C3 -> 0x000D8AC0
 	void aiGuardPosition(const Coord3D *position, ::GuardMode mode,
@@ -343,7 +344,7 @@ void AIGroup::groupTightenToPosition(const Coord3D *position, bool addWaypoint,
 		if (!addWaypoint)
 			memberAI->m_bfmeCommands.aiTightenToPosition(position, commandSource);
 		else
-			memberAI->m_bfmeCommands.aiFollowPathAppend(position, commandSource);
+			memberAI->m_bfmeCommands.aiBfmeCommand35(position, commandSource);
 	}
 }
 
