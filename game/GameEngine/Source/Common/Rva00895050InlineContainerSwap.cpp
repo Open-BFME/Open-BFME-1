@@ -119,3 +119,27 @@ void Gen_uw_00893e70::Rva00895050(Gen_uw_00893e70 *other)
 	Rva00892640CopyItems(other->m_inline, other->m_inline + 2, m_inline);
 	Rva00892640CopyItems(temporary, temporary + 2, other->m_inline);
 }
+
+// 0x00893B30: reallocate an item array.  A null array gets a fresh one;
+// otherwise the first min(count, capacity) items are assigned into a new
+// array (none when the capacity is zero) and the old array is deleted.  The
+// copy advances the incoming pointer itself, so the delete[] receives the
+// advanced pointer whenever items were copied, exactly as retail does.
+Rva00892640Item *Rva00893B30ResizeItems(
+	Rva00892640Item *data, int logical_count, int new_capacity)
+{
+	if (data == 0)
+		return new Rva00892640Item[new_capacity];
+
+	Rva00892640Item *new_data = 0;
+	if (new_capacity != 0)
+	{
+		new_data = new Rva00892640Item[new_capacity];
+		int count = new_capacity < logical_count ? new_capacity : logical_count;
+		Rva00892640Item *dest = new_data;
+		while (count--)
+			*dest++ = *data++;
+	}
+	delete[] data;
+	return new_data;
+}
