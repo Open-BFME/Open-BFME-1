@@ -166,12 +166,18 @@ Render2DSentenceClass::Set_Font (FontCharsClass *font)
 //	Reset_Polys
 //
 ////////////////////////////////////////////////////////////////////////////////////
+// Retail 0x0093D0F0 calls the non-virtual BFME Render2DClass::Reset
+// (0x00934820, ?Reset@Render2DClass@@QAEXXZ) directly; this TU's header still
+// declares the Zero Hour virtual, so the call names the BFME member.
+extern "C" void __identifier("?Reset@Render2DClass@@QAEXXZ")();
+class Render2DResetCall {};
 void
-// ?Reset_Polys@Render2DSentenceClass@@QAEXXZ present-unmatched
+// ?Reset_Polys@Render2DSentenceClass@@QAEXXZ
 Render2DSentenceClass::Reset_Polys (void)
 {
 	for (int index = 0; index < Renderers.Count (); index ++) {
-		Renderers[index].Renderer->Reset ();
+		union { void (*raw)(); void (Render2DResetCall::*member)(); } reset = { __identifier("?Reset@Render2DClass@@QAEXXZ") };
+		(((Render2DResetCall *)Renderers[index].Renderer)->*reset.member) ();
 	}
 
 	return ;
