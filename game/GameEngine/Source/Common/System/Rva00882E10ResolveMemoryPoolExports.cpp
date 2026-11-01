@@ -44,3 +44,23 @@ void rva00882E10ResolveMemoryPoolExports()
 	g_rva0130E9B0 = (RvaSizeFn)GetProcAddress(module, "?_GetBlockSize@MemoryPool@@YAIPAX@Z");
 	g_rva0130E998 = (RvaVoidFn)GetProcAddress(module, "?_VerifyIntegrity@MemoryPool@@YAXXZ");
 }
+
+// Three unreferenced six-byte bodies follow the resolver in their own
+// int3-padded slots, each one `jmp dword ptr [slot]` through a pointer this
+// routine fills: out-of-line forwarders to the IsValidBlock, GetBlockSize and
+// VerifyIntegrity exports that nothing in the image calls. Address-derived
+// names; the forwarders' own identities are not recovered.
+bool Rva00882EF0IsValidBlock(void *block)
+{
+	return g_rva0130E99C(block);
+}
+
+unsigned int Rva00882F00GetBlockSize(void *block)
+{
+	return g_rva0130E9B0(block);
+}
+
+void Rva00882F10VerifyIntegrity()
+{
+	g_rva0130E998();
+}
