@@ -58,6 +58,8 @@ class InstantDeathBehaviorModuleData : public DieModuleData
 {
 public:
 	InstantDeathBehaviorModuleData();
+	// Matched out of line (InstantDeathBehaviorModuleDataDestructorThunk.cpp).
+	virtual ~InstantDeathBehaviorModuleData();
 
 private:
 	VectorStorage m_fx;

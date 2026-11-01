@@ -4,12 +4,14 @@
 class InstantDeathBehaviorModuleData
 {
 public:
-    __declspec(noinline) virtual ~InstantDeathBehaviorModuleData();
+    virtual ~InstantDeathBehaviorModuleData();
 };
 
-// The scalar destructor's retail body remains ledger-backed by its MASM dump;
-// this definition emits the compiler-owned deleting destructor at the vtable
-// slot.
-InstantDeathBehaviorModuleData::~InstantDeathBehaviorModuleData()
+// The scalar destructor is matched out of line in
+// InstantDeathBehaviorModuleDataDestructorThunk.cpp. The implicit copy
+// constructor (no retail twin) emits the vftable and with it the
+// compiler-owned deleting destructor, without a second destructor body.
+void forceInstantDeathBehaviorModuleDataDeletingDestructor(const InstantDeathBehaviorModuleData &that)
 {
+	InstantDeathBehaviorModuleData value(that);
 }
