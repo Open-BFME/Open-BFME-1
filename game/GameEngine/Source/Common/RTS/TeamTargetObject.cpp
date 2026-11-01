@@ -80,20 +80,21 @@ public:
 	Object *getTeamTargetObject();
 	void setTeamTargetObject(const Object *target);
 
-	__forceinline Player *getControllingPlayer() const
-	{
-		TeamPrototype *proto = m_proto;
-		if (!proto)
-			return 0;
-		return proto->m_owningPlayer;
-	}
-
-private:
 	char m_pad0[4];
 	TeamPrototype *m_proto;					// +4
 	char m_pad1[0xE0];					// 0xE8 - 8
 	unsigned int m_commonAttackTarget;			// +0xE8
 };
+
+// Team::getControllingPlayer is matched out of line in Team.cpp; a file-static
+// copy keeps the inlined reads here without a second COMDAT of that name.
+static __forceinline Player *getControllingPlayer(const Team *team)
+{
+	TeamPrototype *proto = team->m_proto;
+	if (!proto)
+		return 0;
+	return proto->m_owningPlayer;
+}
 
 // ?getTeamTargetObject@Team@@QAEPAVObject@@XZ
 Object *Team::getTeamTargetObject()
@@ -104,7 +105,7 @@ Object *Team::getTeamTargetObject()
 	Object *target = TheGameLogic->findObjectByID(m_commonAttackTarget);
 	if (target)
 	{
-		Player *viewer = getControllingPlayer();
+		Player *viewer = getControllingPlayer(this);
 		if (target->isStealthedAndUndetected((const Object *)viewer))
 			target = 0;
 		else if (target->m_privateStatus & 1)
@@ -126,9 +127,9 @@ void Team::setTeamTargetObject(const Object *target)
 		m_commonAttackTarget = 0;
 		return;
 	}
-	if (getControllingPlayer()->getPlayerType() == PLAYER_COMPUTER)
+	if (getControllingPlayer(this)->getPlayerType() == PLAYER_COMPUTER)
 	{
-		if (getControllingPlayer()->getPlayerDifficulty() == DIFFICULTY_EASY)
+		if (getControllingPlayer(this)->getPlayerDifficulty() == DIFFICULTY_EASY)
 			return;
 		m_commonAttackTarget = target->getID();
 	}
