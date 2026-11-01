@@ -1,5 +1,5 @@
 // ?buildGroundPath@Pathfinder@@IAEPAVPath@@PBUCoord3D@@PAVPathfindCell@@_NH@Z
-// partial score=0.9743 date=2026-10-17
+// partial score=0.9807 date=2026-11-01
 // ?buildGroundPath@Pathfinder@@IAEPAVPath@@PBUCoord3D@@PAVPathfindCell@@_NH@Z
 // Open-BFME reconstruction of the BFME Pathfinder ground-path builder.
 // The surrounding layout follows the GPLv3 GeneralsMD reference tree; the
@@ -216,7 +216,9 @@ Path *Pathfinder::buildGroundPath(const Coord3D *fromPos,
 			nextDir.sub(currentPosition);
 			Real dirX = prevDir.x + nextDir.x;
 			Real dirY = nextDir.y + prevDir.y;
-			Real scale = g_bfmeDefaultBU / sqrt(dirX * dirX + dirY * dirY);
+			Real lenSq = dirX * dirX;
+			lenSq += dirY * dirY;
+			Real scale = g_bfmeDefaultBU / sqrt(lenSq);
 			Coord3D offset;
 			offset.x = scale * dirX;
 			offset.y = scale * dirY;
