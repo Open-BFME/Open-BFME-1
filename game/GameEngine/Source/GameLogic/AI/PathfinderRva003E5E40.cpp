@@ -43,11 +43,10 @@ extern const float g_rva01075350;
 extern float g_Rva01095F98;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	Real x, y, z;
-	void set( const Coord3D *sourcePosition ) { x = sourcePosition->x; y = sourcePosition->y; z = sourcePosition->z; }
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
+static __forceinline void copyCoord3D(Coord3D &point, const Coord3D *other)
+{ point.x=other->x; point.y=other->y; point.z=other->z; }
+
 struct ICoord2D { Int x, y; };
 struct IRegion2D { ICoord2D lo, hi; };
 
@@ -302,7 +301,7 @@ Bool Pathfinder::rva003E5E40( Object *object )
 	Bool center;
 	getRadiusAndCenter( object, iRadius, center );
 	Coord3D adjustDest;
-	adjustDest.set( worldPosition );
+	copyCoord3D(adjustDest, worldPosition);
 	if (!center)
 	{
 		adjustDest.x += PATHFIND_CELL_SIZE_F/2;
