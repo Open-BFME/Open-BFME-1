@@ -7,13 +7,8 @@
 typedef float Real;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord2D
-{
-	Real x;
-	Real y;
-
-	Real length() const { return (Real)sqrt(x * x + y * y); }
-};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
+static __forceinline float coordLength(const Coord2D &p){return (float)sqrt(p.x*p.x+p.y*p.y);}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
@@ -48,7 +43,7 @@ const PathNode *PathNode::getNextOptimized(Coord2D *dir, Real *dist) const
 
 	dir->x = m_nextOpti->m_pos.x - m_pos.x;
 	dir->y = m_nextOpti->m_pos.y - m_pos.y;
-	*dist = dir->length();
+	*dist = coordLength(*dir);
 	if (*dist < 0.01f)
 		*dist = 0.01f;
 	Real invDist = 1.0f / *dist;
