@@ -88446,7 +88446,7 @@ name,address,notes
 ?setObjectCount@ScriptEngine@@QAEXHABVAsciiString@@H@Z,0x00349090,Independent33B body selects player map at170E0+12*index and stores thirdarg through string-key map subscript thenRET12; matched getObjectCount345F80 uses same maps; upstream setter and caller329400 agree
 ?setObjectID@AudioEventRTS@@QAEXI@Z,0x00019A6A,Open-BFME5 ILT thunk; ?onContaining@OpenContain@@UAEXPAVObject@@_N@Z at 0x00221720 stamps the entering object id on its copy of the enter sound
 ?setObjectID@BfmeAudioEventRTS@@QAEXI@Z,0x00019A6A,Object::defect at RVA 0x001D22C0 sets the copied audio event ID through thunk 0x00019A6A. The OpenContain::onContaining caller and AudioEventRTS setter pin identify the target.
-?setObjectsShouldReceiveDifficultyBonus@ScriptEngine@@QAEX_N@Z,0x000126BB,GameLogic::prepareNewGame direct-call ILT thunk
+?setObjectsShouldReceiveDifficultyBonus@ScriptEngine@@QAEX_N@Z,0x002ED530,actual bool byte-store body at +0x17634; retail ILT oracle CONFIRMED; old 0x126BB routes to independently identified setGlobalDifficulty at 0x337070
 ?setObserverWindows@@YAXPAVPlayer@@H@Z,0x004E3720,ZH setObserverWindows(Player* Int): i<0||i>=8 returns; StaticTextPlayer%d gets getPlayerDisplayName + winHide(FALSE) + winSetEnabledTextColors(0xffffffff) when player else winHide(TRUE); the 9 stat windows winHide(TRUE); GameWindowWinner%d winHide(FALSE) + winSetEnabledImage(getPlayerTemplate()->getSideIconImage 0x000E0B80); ILT 0x00033483; sole caller grabMultiPlayerInfo 0x004E8230 for isPlayerObserver players
 ?setOpacity@RadiusDecal@@QAEXM@Z,0x0003F2A1
 ?setOpacity@Shadow@@QAEXH@Z,0x0000DC7E,REL32 pin from W3DModelDraw terrain-decal setter

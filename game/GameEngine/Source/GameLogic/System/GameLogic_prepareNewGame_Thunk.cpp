@@ -103,7 +103,7 @@ public:
 class ScriptEngine
 {
 public:
-	void setObjectsShouldReceiveDifficultyBonus(Bool receive);
+	void setGlobalDifficulty(GameDifficulty difficulty);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shell.h
@@ -148,7 +148,7 @@ extern Shell *TheShell;
 
 void GameLogic::prepareNewGame(Int gameMode, GameDifficulty diff, Int rankPoints)
 {
-	TheScriptEngine->setObjectsShouldReceiveDifficultyBonus(true);
+	TheScriptEngine->setGlobalDifficulty(DIFFICULTY_NORMAL);
 	TheGameLogic->m_gameDifficulty = diff;
 
 	if (!m_background)

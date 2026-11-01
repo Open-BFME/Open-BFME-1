@@ -13,10 +13,17 @@ static inline Rva00367E30Logic *theBfmeGameLogic()
 	return (Rva00367E30Logic *)TheGameLogic;
 }
 
+enum GameDifficulty
+{
+	DIFFICULTY_EASY,
+	DIFFICULTY_NORMAL,
+	DIFFICULTY_HARD
+};
+
 class ScriptEngine
 {
 public:
-	void bfmeResetAAV(int a);
+	void setGlobalDifficulty(GameDifficulty difficulty);
 };
 
 extern ScriptEngine *TheScriptEngine;
@@ -85,7 +92,7 @@ void bfmeShutdownAAV(void)
 	g_bfmeDirtyYH = 0;
 
 	theBfmeGameLogic()->bfmeStopAAV(0, 0);
-	TheScriptEngine->bfmeResetAAV(g_bfmeArgAAV);
+	TheScriptEngine->setGlobalDifficulty((GameDifficulty)g_bfmeArgAAV);
 
 	if (g_bfmeFlagAAV == 0 && g_bfmePtrAAV != 0)
 	{

@@ -94,10 +94,8 @@ public:
 class ScriptEngine
 {
 public:
-	void setObjectsShouldReceiveDifficultyBonus(Bool receive);
+	void setGlobalDifficulty(GameDifficulty difficulty);
 };
-
-typedef void (ScriptEngine::*SetDifficultyBonus)(int);
 
 static GameDifficulty s_AIDiff = DIFFICULTY_NORMAL;
 static NameKeyType buttonOkID = NAMEKEY_INVALID;
@@ -138,8 +136,7 @@ WindowMsgHandledType DifficultySelectSystem(GameWindow *window, UnsignedInt msg,
 
 		if (controlID == buttonOkID)
 		{
-			(TheScriptEngine->*reinterpret_cast<SetDifficultyBonus>(
-				&ScriptEngine::setObjectsShouldReceiveDifficultyBonus))(*(int *)&s_AIDiff);
+			TheScriptEngine->setGlobalDifficulty(s_AIDiff);
 			WindowLayout *layout = window->winGetLayout();
 			layout->destroyWindows();
 			delete layout;
