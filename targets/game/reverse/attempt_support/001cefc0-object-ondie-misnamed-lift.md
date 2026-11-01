@@ -112,3 +112,49 @@ constant through `_Unchecked_set` without sharing it, but using
 flag tests reuse the loaded word (0.958). Two this-load orders are left:
 tryEvent (retail loads TheRadar before `lea eax,[esi+0x38]`) and the killer
 findObjectByID (retail pushes the ID before loading TheGameLogic).
+
+## Session 2026-11-01 (muse-spark-1.3, link #25, owner spark30-20261101-b)
+
+Baseline re-verified by probe: 1483/1493 B, shape 0.983, 11 structural
+diffs, first at +0x43. The bank file is current (setStatus-temp schedule
+confirmed fixed in the emitted code). All 10 missing bytes are accounted
+for: EBP-CSE net -7 (+5 `mov ebp,imm`, -12 across the three
+register-operand sites), die loop +1 (`mov`+`lea`+`call` is 9 B vs
+retail's 8 B `lea`+`mov`+`call`), missing `lea esp,[esp]` align pad -4
+(retail aligns the spawner loop at +0x340). The pad should appear on its
+own once the upstream bytes close.
+
+Linking half is done externally: Object.cpp's ZH onDie was dropped by
+ddcdb01426, so no second strong definition remains; what is left is pure
+byte recovery of the 1493 B body under its proven onDie name.
+
+New failed trials (private path build/ondie-trial/, each probed; do not repeat):
+- T1 flipped selfInflicted to `m_sourceID == m_id`: folds to
+  `mov eax,[ebp+8]; cmp eax,[esi+0x74]`, 0.979/1481 B. Worse; current
+  operand order stands (the +0x2d `cmp eax,edx` vs `cmp edx,eax` stays a
+  pure rename).
+- T2 die loop through an explicit `BehaviorModuleInterface *behavior = *d`
+  local: compiler forwards it away, byte-identical 0.983.
+- T2b die interface declared in the `if` condition: byte-identical 0.983.
+- T3 `Radar *radar = TheRadar;` ahead of tryEvent: the scheduler emits
+  `lea ecx` first anyway, byte-identical 0.983. Downstream scheduling is
+  context-driven, not source-order-driven; fix upstream first.
+- T4 die loop as an implicit-inline member mirroring
+  getSpawnBehaviorInterface: catastrophic 0.884/1395 B. The die loop must
+  stay inline in onDie.
+- T5 die loop as do-while with pre-check: 0.931/1430 B, producer still
+  mov-first. The mov-first scheduling is invariant across loop forms.
+
+Coupling notes: the spawner loop (inlined member, slot +0x74,
+return-consumer) matches retail's lea-first exactly while the die loop
+(same layout, slot +0x18, call-consumer) stays mov-first under every
+tried form; the EBP-CSE hoist sits above the `je` with EBP dead in both
+versions, so it is a pure heuristic choice, likely sensitive to the same
+upstream state. Retrying downstream orderings (tryEvent, killer push)
+before the CSE/die-loop move is wasted effort.
+
+Donor: BFME 2 6584c19 Code/GameEngine/Source/GameLogic/Object/ObjectOnDie.cpp
+read (798 B, /O1 /G7 /arch:SSE; check-inside setStatusBit/clearStatusBit
+over raw m_bits[4]; Team canonical header 8c0120e29c). No transferable
+lever for these residues: BFME 1's body is 1493 B with a different flag
+layout, and the check-inside-helpers family was already tried inert.
