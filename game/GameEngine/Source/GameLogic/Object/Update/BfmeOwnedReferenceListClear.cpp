@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 
-class BfmeRefAB
+class Overridable
 {
 public:
-	BfmeRefAB *bfmeRelease();
+	Overridable *deleteOverrides();
 };
 
 class BfmeOwnedReference
@@ -11,7 +11,7 @@ class BfmeOwnedReference
 public:
 	virtual ~BfmeOwnedReference();
 
-	BfmeRefAB *m_reference;
+	Overridable *m_reference;
 	bool m_owned;
 };
 
@@ -34,7 +34,7 @@ void BfmeOwnedReferenceList::clearEntries()
 			if (entry->m_owned) {
 				delete entry;
 			} else if (entry->m_reference != 0) {
-				entry->m_reference = entry->m_reference->bfmeRelease();
+				entry->m_reference = entry->m_reference->deleteOverrides();
 			}
 		}
 	}

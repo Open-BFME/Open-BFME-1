@@ -11,27 +11,31 @@
 #define _STLP_LINK_TIME_INSTANTIATION
 #include <vector>
 
-class BfmeRefAB
+// ZH Overridable (Common/Overridable.h); ilt_oracle CONFIRMS
+// ?deleteOverrides@Overridable@@QAEPAV1@XZ at ILT 0x00032D1C -> 0x000E6CC0.
+class Overridable
 {
 public:
-	virtual ~BfmeRefAB(void);
+	virtual ~Overridable(void);
 
-	__declspec(noinline) BfmeRefAB *bfmeRelease(void);	// retail thunk 0x00032D1C -> 0x00432D1C
+	__declspec(noinline) Overridable *deleteOverrides(void);	// retail thunk 0x00032D1C -> 0x00432D1C
 
-	BfmeRefAB *m_bfmeRef;
-	bool m_bfmeOwned;
+	Overridable *m_nextOverride;
+	bool m_isOverride;
 };
 
-// ?bfmeRelease@BfmeRefAB@@QAEPAV1@XZ
-__declspec(noinline) BfmeRefAB *BfmeRefAB::bfmeRelease(void)
+// ?deleteOverrides@Overridable@@QAEPAV1@XZ
+// Inline in ZH Overridable.h: ScienceStoreReset.cpp and ThingFactory_reset.cpp
+// emit the same pick-any COMDAT, so this copy must not be a strong definition.
+inline __declspec(noinline) Overridable *Overridable::deleteOverrides(void)
 {
-	if (m_bfmeOwned)
+	if (m_isOverride)
 	{
 		delete this;
 		return 0;
 	}
-	if (m_bfmeRef)
-		m_bfmeRef = m_bfmeRef->bfmeRelease();
+	if (m_nextOverride)
+		m_nextOverride = m_nextOverride->deleteOverrides();
 	return this;
 }
 
@@ -40,7 +44,7 @@ class BfmeElemAB
 public:
 	virtual ~BfmeElemAB(void);				// slot +0x00
 
-	BfmeRefAB *m_bfmeRef;					// +0x04
+	Overridable *m_bfmeRef;					// +0x04
 	bool m_bfmeOwned;					// +0x08
 };
 
@@ -52,7 +56,7 @@ inline void bfmeDrop(BfmeElemAB *element)
 	}
 	else if (element->m_bfmeRef)
 	{
-		element->m_bfmeRef = element->m_bfmeRef->bfmeRelease();
+		element->m_bfmeRef = element->m_bfmeRef->deleteOverrides();
 	}
 }
 

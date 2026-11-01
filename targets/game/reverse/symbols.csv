@@ -79350,7 +79350,6 @@ name,address,notes
 ?bfmeRelease1036@@YAXPAX@Z,0x00804330,pin
 ?bfmeRelease359530@Rva0035B3D0TableView@@QAEXH@Z,0x00359530,direct body pin; retail 0x0035B3D0 calls through ILT 0x0003E85B with owner+0x2C and the wrapper record index; body releases the 20-byte table record; campaign=luna36h-20260907;lane=expand01;model=gpt-5.6-sol-ultra
 ?bfmeRelease964@BfmeItem964@@QAEXXZ,0x000024A5,pin
-?bfmeRelease@BfmeRefAB@@QAEPAV1@XZ,0x00032D1C,Open-BFME5 the ICF thunk (to 0x00432D1C) the drop helper at 0x003CFC90 gives a borrowed reference back through
 ?bfmeRelease@BfmeRingOwnerA@@QAEXH@Z,0x00039D97,Gen_00587C50 first ring release thunk
 ?bfmeRelease@BfmeRingOwnerB@@QAEXH@Z,0x00037353,Gen_00587C50 second ring release thunk
 ?bfmeRelease@BfmeSharedBlock@@QAEXXZ,0x009EB7A0,Open-BFME5 the shared-block release the refcounted assignments at 0x005D1E50 and its siblings call
