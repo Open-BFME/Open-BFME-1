@@ -10,9 +10,15 @@ struct BfmeMidCPB
 	BfmeInnerCPB m_bfmeInner;
 };
 
+// ILT 0x0003E126 -> matched body 0x001BEEB0, Object::setSelectable.
+class Object
+{
+public:
+	void setSelectable(bool selectable);
+};
+
 struct BfmeSubCPB
 {
-	void bfmeTwoCPB(int value);
 	unsigned char m_bfmeHead[0x94];
 	unsigned int m_bfmeFlags;
 	unsigned char m_bfmeGap[0x16c];
@@ -36,5 +42,5 @@ void BfmeThingCPB::bfmeGoCPB()
 	if (mid == 0)
 		return;
 	mid->m_bfmeInner.bfmeOneCPB(0, 2);
-	sub->bfmeTwoCPB(0);
+	((Object *)sub)->setSelectable(false);
 }
