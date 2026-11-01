@@ -1,5 +1,5 @@
 // ?rva003D59C0@@YGHHPBURva003D59C0Obj@@HH@Z
-// partial score=0.5641 date=2026-09-24
+// partial score=0.7692 date=2026-11-01
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 //
 // Open-BFME5: stdcall filter at retail 0x003D59C0 (39B).
@@ -21,5 +21,6 @@ int __stdcall rva003D59C0(int, const Rva003D59C0Obj *obj, int, int)
 	unsigned low = bits & 7u;
 	if (low != 0u && low != 1u)
 		return 1;
-	return (int)(((unsigned char)(bits >> 18)) & 1u);
+	unsigned char b2 = (unsigned char)(bits >> 16);
+	return (b2 >> 2) & 1;
 }
