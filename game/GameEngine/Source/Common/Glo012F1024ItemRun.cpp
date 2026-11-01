@@ -9,10 +9,12 @@
 class LivingWorldLogic;
 extern LivingWorldLogic *TheLivingWorldLogic;
 
-class Glo012F1028Type
+// ILT 0x00008C0B jumps to the matched body 0x003C1230, which the ledger
+// defines as Gen_003C1230::bfmeClear.
+class Gen_003C1230
 {
 public:
-	void j_00008c0b(void);
+	void bfmeClear(void);
 };
 
 class Glo012F1024Item
@@ -28,7 +30,7 @@ public:
 void Glo012F1024Item::run(void)
 {
 	if (j_0000ca59())
-		((Glo012F1028Type *)TheLivingWorldLogic)->j_00008c0b();
+		((Gen_003C1230 *)TheLivingWorldLogic)->bfmeClear();
 	j_0002a969();
 	j_00021f26();
 	j_0002eeec();
