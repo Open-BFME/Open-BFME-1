@@ -33,6 +33,7 @@ class DieModuleData : public Snapshot
 {
 public:
 	DieModuleData() {}
+	virtual ~DieModuleData();	// matched out of line (DieModuleDataDestructorThunk.cpp)
 	virtual void dieModuleDataAnchor();
 
 private:
