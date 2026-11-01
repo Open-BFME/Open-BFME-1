@@ -53,12 +53,15 @@ private:
 	};
 
 	Header *m_data;
+private:
+	void releaseBuffer(void);
+	friend class AsciiString;
 };
 
 class AsciiString : public StringBase<char>
 {
 public:
-	~AsciiString();						// folded onto releaseBuffer, 0x00887940
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 };
 
 inline bool operator==(const AsciiString &left, const AsciiString &right)

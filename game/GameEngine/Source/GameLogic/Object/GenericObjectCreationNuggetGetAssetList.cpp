@@ -9,6 +9,8 @@ friend class AsciiString;
 private:
 	StringBase() {}
 	StringBase(const StringBase<T> &that);
+private:
+	void releaseBuffer(void);
 };
 
 class AsciiString : private StringBase<char>
@@ -20,7 +22,7 @@ public:
 		((StringBase<char> *)this)->StringBase<char>::StringBase(
 			*(const StringBase<char> *)&that);
 	}
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 	bool isEmpty() const
 	{
 		return m_data == 0 || *(const unsigned short *)(m_data + 4) == 0;

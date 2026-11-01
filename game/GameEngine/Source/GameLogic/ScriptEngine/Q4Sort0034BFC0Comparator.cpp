@@ -26,12 +26,15 @@ public:
 
 private:
 	void *m_data;
+private:
+	void releaseBuffer(void);
+	friend class AsciiString;
 };
 
 class AsciiString : public StringBase<char>
 {
 public:
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 	__declspec(nothrow) int compareNoCase(const AsciiString &other) const
 	{

@@ -38,12 +38,14 @@ public:
 	bool endsWithNoCase(const T *p, Int len) const;
 	void removeLastChar();
 	int compare(const T *p) const;
+private:
+	void releaseBuffer(void);
 };
 
 class AsciiString : private StringBase<char>
 {
 public:
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 	bool isEmpty() const { return m_data == 0 || m_data->length == 0; }
 	const char *str() const { return m_data ? &m_data->data[0] : ""; }

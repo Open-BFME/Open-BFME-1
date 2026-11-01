@@ -15,6 +15,9 @@ public:
 	StringBase(const StringBase<T> &other);
 
 	char *m_data;
+private:
+	void releaseBuffer(void);
+	friend class AsciiString;
 };
 
 class AsciiString : private StringBase<char>
@@ -25,7 +28,7 @@ public:
 		((StringBase<char> *)this)->StringBase<char>::StringBase(
 			*(const StringBase<char> *)&other);
 	}
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 	const char *str() const
 	{

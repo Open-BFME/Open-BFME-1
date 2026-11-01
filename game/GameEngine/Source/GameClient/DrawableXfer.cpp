@@ -17,6 +17,11 @@ template<class T> inline T &field(void *p, int o) { return *(T*)((char*)p+o); }
 struct RGBColor { float r,g,b; };
 #define _OPERATOR_NEW_DEFINED_
 #include "matrix3d.h"
+
+// Retail inlines ~AsciiString at every scope exit and calls
+// StringBase<char>::releaseBuffer (0x00887940) directly, never the
+// 0x0005EE90 jmp body the out-of-line declaration would bind to.
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 typedef Matrix3D RvaMatrix;
 class XferException
 {

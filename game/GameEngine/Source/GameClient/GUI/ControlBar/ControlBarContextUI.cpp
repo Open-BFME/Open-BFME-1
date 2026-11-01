@@ -54,6 +54,7 @@ class StringBase
 private:
 	StringBase(const char *s);
 	StringBase(const StringBase &that);
+	void releaseBuffer(void);
 	friend class UnicodeString;
 	friend class AsciiString;
 };
@@ -69,7 +70,7 @@ public:
 	}
 
 	AsciiString(const AsciiString &that);
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 private:
 

@@ -25,6 +25,8 @@ private:
 	StringBase() : m_data(0) {}
 	StringBase(const T *text);
 	StringBase(const StringBase &other);
+private:
+	void releaseBuffer(void);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
@@ -34,7 +36,7 @@ public:
 	AsciiString() { m_data = 0; }
 	AsciiString(const char *text) : StringBase<char>(text) {}
 	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 	void __cdecl format(AsciiString format, ...);
 	const char *str() const { return m_data ? m_data->data : ""; }
 };
