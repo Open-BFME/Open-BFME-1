@@ -39,23 +39,9 @@ extern Int GetGameLogicRandomValue(int minimum, int maximum, char *file, int lin
 extern void j_0003f4f9();
 extern void j_000362aa();
 
-struct Coord2D
-{
-	Real x;
-	Real y;
-
-	Real length() const { return (Real)sqrt(x * x + y * y); }
-
-	void normalize()
-	{
-		Real len = length();
-		if (len != 0)
-		{
-			x /= len;
-			y /= len;
-		}
-	}
-};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
+static __forceinline float coordLength(const Coord2D &p){return (float)sqrt(p.x*p.x+p.y*p.y);}
+static __forceinline void normalizeCoord(Coord2D &p){float len=coordLength(p);if(len!=0){p.x/=len;p.y/=len;}}
 
 struct Coord3D
 {
@@ -231,7 +217,7 @@ Bool AISkirmishPlayer::computeSuperweaponTarget(const SpecialPowerTemplate *powe
 		Coord2D offset;
 		offset.x = goalPos.x - m_baseCenter.x;
 		offset.y = goalPos.y - m_baseCenter.y;
-		offset.normalize();
+		normalizeCoord(offset);
 		offset.x *= m_baseRadius;
 		offset.y *= m_baseRadius;
 		*retPos = m_baseCenter;
