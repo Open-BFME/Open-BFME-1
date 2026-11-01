@@ -22,12 +22,8 @@ extern "C" __declspec(dllimport) void __stdcall AIL_set_3D_sample_occlusion(
 	unsigned int sample, Real occlusion);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
+
 
 // AudioEventInfo+0x70 m_lowPassFreq (name_oracle field_names witness).
 struct Rva006B3F90AudioInfo
