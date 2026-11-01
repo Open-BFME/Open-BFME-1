@@ -91170,3 +91170,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??1?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAE@XZ,0x00005277,pin
 ??0MoveHint0043AAD0@@QAE@XZ,0x0000602D,pin
 ??0Rva0069CEE0@@QAE@XZ,0x0000EB65,pin
+??_F?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAEXXZ,0x0000F4ED,pin
