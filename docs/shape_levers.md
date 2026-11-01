@@ -2975,3 +2975,18 @@ forwarder that keeps the caller's own declaration. Measured with VC7.1
 Hypothesis only: the by-value copies give the inliner new temporaries whose
 allocation order differs from the original out-of-line call's arguments.
 Commits 8913dad1e2, a47c11e11b, e1b32cfad8, d28c3940b2, e5dd1e3e1f, a91f678d01.
+
+## Clamp block after the return: nested max(min()) macro form (2026-11-01)
+
+Retail 0x004340C0 clamps a line index to [0, 15] as `cmp esi,15; jge cold;
+test esi,esi; jg join; xor esi,esi; join: ...; ret; cold: mov esi,15; jmp join`.
+The upper-clamp block sits after the function's `ret`. Statement forms put it
+inline: if/else-if in either polarity, two independent ifs, a ternary chain, a
+goto to a label after the return and inline clamp helpers all left 53-61 bytes
+of layout difference. The macro expression
+`index = MAX(MIN(index, 15), 0);` with `#define MAX(a,b) (((a) > (b)) ? (a) : (b))`
+and the matching MIN was exact. `MAX(0, MIN(index, 15))` left 54 bytes, and both
+MIN-outer orders grew the body by 4 bytes. VC7.1 `/O2`, plain C++ TU
+(game/GameEngine/Source/GameClient/SubtitleEntryRender_rva004341A0.cpp). It is
+not known whether the duplicated MIN subexpression or the operand order is
+what moves the block.

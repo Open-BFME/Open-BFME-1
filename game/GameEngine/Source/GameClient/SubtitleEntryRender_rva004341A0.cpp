@@ -13,6 +13,8 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef float Real;
 
+#include <math.h>
+
 // Owner view: byte +0x60 selects the alternate coordinate path and the float
 // row at +0x24 is indexed by line.  Proven by the decoded helper 0x004340C0.
 class Rva0081D520Owner
@@ -25,12 +27,9 @@ public:
 
 extern Int __cdecl bfmeAlignVIL(Int alignment, Int length, Int unused,
 	Real low, Real high);
-// The coordinate helper at 0x004340C0 is still the dump row ?d_004340c0@@YAXXZ, so the
-// call names that row's symbol through its cdecl signature; the pinned
-// ?rva004340C0SubtitleCoordinate@@YAHHPAVRva0081D520Owner@@MM@Z has no definition.
-extern void d_004340c0();
-#define rva004340C0SubtitleCoordinate \
-	(reinterpret_cast<Int (__cdecl *)(Int, Rva0081D520Owner *, Real, Real)>(d_004340c0))
+// Line coordinate helper 0x004340C0, defined at the end of this unit.
+Int __cdecl rva004340C0SubtitleCoordinate(Int index, Rva0081D520Owner *owner,
+	Real low, Real high);
 
 class Display;
 extern Display *TheDisplay;
@@ -181,4 +180,35 @@ void Rva00434810SubtitleEntry::rva004341A0(Int frame,
 			m_displayStrings[index]->slot34(x, y);
 		}
 	}
+}
+
+// 0x004340C0: screen coordinate of subtitle line `index` between the two
+// endpoints.  The only callers are the two loops above.  The alternate mode
+// scales the owner's per-line factor; the default mode steps the endpoint
+// span in fifteenths, with the line clamped to [0, 15] by the nested
+// min/max macro form, which is what places the upper-clamp block after the
+// return as retail does.
+#define RVA004340C0_MAX(a, b) (((a) > (b)) ? (a) : (b))
+#define RVA004340C0_MIN(a, b) (((a) < (b)) ? (a) : (b))
+
+__declspec(noinline) Int __cdecl rva004340C0SubtitleCoordinate(Int index,
+	Rva0081D520Owner *owner, Real low, Real high)
+{
+	const Real difference = (Real)fabs(high - low);
+	if (owner->m_alternateMode)
+	{
+		const Int highCoordinate = (Int)high;
+		const Int lowCoordinate = (Int)low;
+		const Int *selectedCoordinate = highCoordinate < lowCoordinate ?
+			&highCoordinate : &lowCoordinate;
+		return (Int)(difference * owner->m_lineCoordinates[index]) +
+			*selectedCoordinate;
+	}
+
+	const Int highCoordinate = (Int)high;
+	const Int lowCoordinate = (Int)low;
+	index = RVA004340C0_MAX(RVA004340C0_MIN(index, 15), 0);
+	const Int *selectedCoordinate = highCoordinate < lowCoordinate ?
+		&highCoordinate : &lowCoordinate;
+	return ((Int)difference / 15) * index + *selectedCoordinate;
 }
