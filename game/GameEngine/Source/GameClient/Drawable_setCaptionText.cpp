@@ -53,7 +53,7 @@ public:
 class AsciiString : private StringBase<char>
 {
 public:
-	~AsciiString() { releaseBuffer(); }
+	~AsciiString() {}
 };
 
 typedef unsigned char UnsignedByte;

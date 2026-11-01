@@ -38,7 +38,7 @@ class AsciiString
 public:
 	AsciiString(void);
 	AsciiString(const AsciiString &other);
-	~AsciiString(void);
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 	AsciiString &operator=(const AsciiString &other);
 

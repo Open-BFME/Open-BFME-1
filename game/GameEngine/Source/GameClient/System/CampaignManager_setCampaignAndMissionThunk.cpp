@@ -28,7 +28,7 @@ public:
     {
         ((StringBase<char> *)this)->StringBase<char>::StringBase(*(const StringBase<char> *)&that);
     }
-    ~AsciiString();
+    ~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
     void toLower() { ((StringBase<char> *)this)->toLower(); }
     bool isEmpty() const
     {

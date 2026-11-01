@@ -38,7 +38,7 @@ public:
         ((StringBase<char> *)this)->StringBase<char>::StringBase(
             *(const StringBase<char> *)&that);
     }
-    ~AsciiString();
+    ~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
     void set(const char *text)
     {
         ((StringBase<char> *)this)->set(text, text ? strlen(text) : 0);

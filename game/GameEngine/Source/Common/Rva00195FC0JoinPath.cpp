@@ -11,7 +11,7 @@ public:
 	// encodes the base copy ctor at 0x00887B60 directly, so the delegation has
 	// to be visible here.
 	AsciiString( const AsciiString &other ) : m_data( other.m_data ) {}
-	~AsciiString();
+	~AsciiString() {}
 
 	void concat( const char *text, Int length );
 	void concat( char ch ) { concat( &ch, 1 ); }

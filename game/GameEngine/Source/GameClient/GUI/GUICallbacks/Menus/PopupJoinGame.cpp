@@ -104,7 +104,7 @@ public:
     AsciiString(char c);
     AsciiString(const char *text) : StringBase<char>(text) {}
     AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-    ~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+    ~AsciiString() {}
     const char *str() const { return m_data ? m_data->m_text : ""; }
     int getLength() const;
     bool isEmpty() const;

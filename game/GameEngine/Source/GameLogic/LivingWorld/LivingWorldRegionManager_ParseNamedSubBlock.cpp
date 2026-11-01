@@ -12,10 +12,7 @@ class AsciiString : private StringBase<char>
 {
 public:
 	AsciiString(const char *text) : StringBase<char>(text) {}
-	~AsciiString()
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
+	~AsciiString() {}
 };
 
 class INI

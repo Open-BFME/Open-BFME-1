@@ -57,10 +57,7 @@ public:
 	AsciiString(void) : StringBase<char>() {}
 	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
 	AsciiString(const char *text) : StringBase<char>(text) {}
-	~AsciiString(void)
-	{
-		((BFMERetailAsciiString *)this)->releaseBuffer();
-	}
+	~AsciiString() {}
 	const char *str(void) const
 	{
 		void *data = *(void *const *)this;
