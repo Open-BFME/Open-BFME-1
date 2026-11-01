@@ -68,12 +68,8 @@ extern "C" __declspec(dllimport) void __stdcall AIL_set_3D_position(
 	unsigned int sample, float x, float y, float z);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
+
 
 class Rva006B3F90Owner
 {
