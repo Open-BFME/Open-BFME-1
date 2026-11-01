@@ -42,6 +42,8 @@ struct Rva00899560Pool
 
 BfmeStringPool3AF0 *g_rva01337A30AllocPair = 0;
 Rva00899560Pool *g_rva01337810GcRoots = 0;
+struct Registry008C3F10;
+Registry008C3F10 *g_registry01337814 = 0;
 
 // Raw configuration byte at VA 0x0133781D, initially loader-zeroed.
 // Bootstrap RVA 0x00894800+0x53/+0x56 copies config+0x4D here. Readers
