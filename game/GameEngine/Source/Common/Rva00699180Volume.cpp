@@ -49,6 +49,7 @@ extern unsigned char g_012BA144;
 
 class Rva00699180Owner
 {
+	friend class Rva0069F4D0Block;
 public:
 	void removeByKey(unsigned int key);
 	void refreshPair(int a, int b);
@@ -223,6 +224,58 @@ void Rva00699180Owner::removeByKey(unsigned int key)
 			((Rva00699430Owner *)this)->productClamp(i);
 			for (int j = 0; j < 2; ++j)
 				refreshPair(i, j);
+		}
+	}
+}
+
+// Retail 0x0069F3B0: for every (bucket, value) record of the source's
+// +0x8C list, erase the first matching (value, key) entry from that bucket,
+// then re-clamp the bucket's product and refresh its two output pairs (the
+// removal counterpart of Rva006A8210Entry::applyEntryList).  Matched caller
+// Rva0069F4D0ChannelNotify declares the receiver and name.
+struct Rva0069F4D0Record
+{
+	int m_bucket;
+	float m_value;
+};
+
+class Rva0069F4D0Block
+{
+public:
+	void notify(void *source, int key);
+};
+
+void Rva0069F4D0Block::notify(void *source, int key)
+{
+	Rva00699180Owner *owner = (Rva00699180Owner *)this;
+	const Rva0069F4D0Record *const *range =
+		(const Rva0069F4D0Record *const *)(*(const int *)source + 0x8C);
+	const Rva0069F4D0Record *it = range[0];
+	const Rva0069F4D0Record *end = range[1];
+
+	for (; it != end; ++it)
+	{
+		const int bucketIndex = it->m_bucket;
+		if (bucketIndex != -1)
+		{
+			float value = it->m_value;
+			_STL::vector<Rva00699180Pair>::iterator last = owner->m_buckets[bucketIndex].end();
+			_STL::vector<Rva00699180Pair>::iterator found = owner->m_buckets[bucketIndex].begin();
+			bool searching = true;
+			while (searching && found != last)
+			{
+				if (found->m_value == value && found->m_key == (unsigned int)key)
+				{
+					owner->m_buckets[bucketIndex].erase(found);
+					searching = false;
+				}
+				else
+					++found;
+			}
+
+			((Rva00699430Owner *)this)->productClamp(bucketIndex);
+			for (int i = 0; i < 2; ++i)
+				owner->refreshPair(bucketIndex, i);
 		}
 	}
 }
