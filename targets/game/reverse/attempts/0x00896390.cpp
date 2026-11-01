@@ -1,88 +1,105 @@
-// ?release@Gen00896390Owner@@QAEXPAX@Z
-// partial score=0.29 date=2026-09-21
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-//
-// Address-derived: no owning class or method identity is proven. Structural
-// evidence: this+4 is the SAME Gen_00896320 registry (m_count/pad/m_begin,
-// retail 0x00896320) already landed as ::append in Gen00896320Append.cpp --
-// this body rebases ecx by 4 and calls the same still-dump but pinned
-// ::helper (retail 0x008961E0) on it. The array holds 4-byte pointer-sized
-// items; the search loop compares each item against the caller's stack
-// parameter by identity. On a hit, the parameter itself is decremented as a
-// BfmeDropObjectA refcount (retail 0x00895260's own class, BfmeDtorVBW.cpp,
-// m_refCount at +0, sizeof 0x18); on a miss, ::helper is asked to look up or
-// materialise one via three stack-local out-params, and the result pointer
-// is decremented instead. Either way, a refcount that reaches zero is
-// destroyed and released through TheBfmeFree (retail global 0x01337830).
+// ?release@BfmeTracker4310@@QAEXVBfmeRefHolder@@@Z
+// partial score=0.715 date=2026-11-01
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// (method name "release" kept from the earlier bank for the name gate; the body adds unless present)
+// BfmeTracker4310::rva00896390, retail 0x00896390 (214 bytes, ret 4): add a
+// counted Apt object to the tracker's handle vector at +4 unless the same
+// object is already there; the by-value handle is released on both paths.
+// Its only caller is bfmeRva00896470 (Rva00896470RefHolderSubmit.cpp) on the
+// tracker singleton. The Open BFME 2 donor AptLinker::rva006D1450 in
+// Code/GameEngine/Source/Common/Bfme5ThirtyFour.cpp (45afcff3) is the same
+// operation (its caller Rva006D1520 is the donor of bfmeRva00896470); the
+// append is Gen_00896320::append (Gen00896320Append.cpp), inlined here.
 
-extern void ( __cdecl *TheBfmeFree )( void *storage, unsigned int size );
-
-struct Gen00896320Item
-{
-	void *value;
-};
-
-class Gen_00896320
-{
-public:
-	void append( void **source );
-	void helper( void *first, void *last, void *result );
-
-	unsigned m_count;
-	char m_pad04[ 4 ];
-	Gen00896320Item *m_begin;
-};
+extern void (__cdecl *TheBfmeFree)(void *p, unsigned int bytes);	// data_rows 0x01337830
 
 class BfmeDropObjectA
 {
 public:
-	~BfmeDropObjectA();
+	~BfmeDropObjectA(void);
 
-	int m_refCount;
+	void operator delete(void *p, unsigned int bytes) { TheBfmeFree(p, bytes); }
+
+private:
+	char m_bfmePad[0x18];
 };
 
-struct Gen00896390Owner
+class BfmeRefHolder
 {
-	void *m_unknown00;
-	Gen_00896320 m_registry;			// +4
+public:
+	BfmeRefHolder(const BfmeRefHolder &other) : m_obj(other.m_obj)
+	{
+		if (m_obj) ++*(int *)m_obj;
+	}
 
-	void release( void *key );
+	~BfmeRefHolder()
+	{
+		BfmeDropObjectA *r = m_obj;
+		if (r && --*(int *)r == 0)
+			delete m_obj;
+	}
+
+	BfmeDropObjectA *m_obj;
 };
 
-void Gen00896390Owner::release( void *key )
+extern "C" void __cdecl __identifier("?d_008961e0@@YAXXZ")();
+
+class Gen_00896320
 {
-	Gen00896320Item *begin = m_registry.m_begin;
-	Gen00896320Item *end = &m_registry.m_begin[ m_registry.m_count ];
-
-	Gen00896320Item *it;
-	for ( it = begin; it != end; ++it )
+public:
+	void append(void **source)
 	{
-		if ( it->value == key )
-			break;
+		BfmeDropObjectA **end = &m_begin[m_count];
+		BfmeDropObjectA **next = (BfmeDropObjectA **)source + 1;
+		BfmeDropObjectA **begin = (BfmeDropObjectA **)source;
+		helper(&begin, &next, &end);
+	}
+	void helper(void *a0, void *a1, void *a2)
+	{
+		// retail 0x008961E0 is still the gen-dump row ?d_008961e0@@YAXXZ
+		union { void (__cdecl *symbol)(); void (Gen_00896320::*member)(void *, void *, void *); } c;
+		c.symbol = &__identifier("?d_008961e0@@YAXXZ");
+		(this->*c.member)(a0, a1, a2);
 	}
 
-	BfmeDropObjectA *target;
-	if ( it != end )
+	bool contains(BfmeDropObjectA *value)
 	{
-		target = ( BfmeDropObjectA * )key;
-	}
-	else
-	{
-		BfmeDropObjectA buffer;
-		struct { void *position; void *storage; } positionAndStorage = { end, &buffer };
-		BfmeDropObjectA *result = 0;
-		struct { void *hint; BfmeDropObjectA **resultSlot; } hintAndResult = { 0, &result };
-		void *unused;
-		m_registry.helper( &unused, &hintAndResult, &positionAndStorage );
-		target = result;
-	}
-
-	if ( target != 0 )
-	{
-		if ( --target->m_refCount == 0 )
+		BfmeDropObjectA **entry = m_begin;
+		if (entry != entry + m_count)
 		{
-			target->~BfmeDropObjectA();
-			TheBfmeFree( target, 0x18 );
+			do
+			{
+				if (*entry == value)
+					return true;
+				++entry;
+			}
+			while (entry != m_begin + m_count);
 		}
+		return false;
 	}
+	unsigned m_count;
+	int m_capacity;
+	BfmeDropObjectA **volatile m_begin;
+};
+
+class BfmeTracker4310
+{
+public:
+	void release(BfmeRefHolder object);
+
+private:
+	void *m_chain;						// +0x00
+	Gen_00896320 m_entries;					// +0x04
+};
+
+// ?release@BfmeTracker4310@@QAEXVBfmeRefHolder@@@Z
+void BfmeTracker4310::release(BfmeRefHolder object)
+{
+	if (m_entries.contains(object.m_obj))
+		return;
+	m_entries.append((void **)&object);
 }
+
+
+
+
