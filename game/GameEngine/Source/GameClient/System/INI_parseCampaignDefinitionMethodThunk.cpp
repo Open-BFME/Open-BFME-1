@@ -55,7 +55,6 @@ class RetailLayoutString
 public:
 	RetailLayoutString() : m_data(0) {}
 	~RetailLayoutString() { ((StringBase<char> *)this)->clear(); }
-	void set(const char *text, int length);
 	const char *str() const;
 
 private:
@@ -71,7 +70,7 @@ void INI::parseCampaignDefinition(INI *ini)
 	// read the name
 	const char *c = ini->getNextToken();
 	int length = c ? (int)strlen(c) : 0;
-	name.set(c, length);
+	((StringBase<char> *)&name)->set(c, length);	// 0x00887D20, defined as StringBase<char>::set
 
 	// Parse only when the campaign manager exists.
 	DEBUG_ASSERTCRASH(TheCampaignManager, ("parseCampaignDefinition: Unable to Get TheCampaignManager\n"));
