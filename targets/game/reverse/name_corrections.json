@@ -21631,5 +21631,35 @@
   "after_sha256": "4d34596304a397bbf06c3dd61be5f932306dccfc1b82acada0f3054dc8c8b1f1",
   "evidence": "targets/game/reverse/identity_evidence/002a8540-specialabilityupdate-onexit.md",
   "reason": "call was the replaced bank's generic member-pointer cast helper (BfmeNoArgCall::call over j_0002333a), not a name for 0x002A6DE0; the converted body calls that address by its ledger row bfmeGo1274."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1569.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1569.cpp",
+  "old_name": "g_bfmeRouteKeys1282",
+  "new_name": "bfmeObjDAE",
+  "before_sha256": "4d3f1530a3be0642f8b6e0766eb2ec40ccee7c070bb9beca3ca3efe213a7f7d8",
+  "after_sha256": "2959fb5dee4f3b72d9309fd4edc11c1524f1461faedec3a7407a6a6796aca027",
+  "evidence": "targets/game/reverse/identity_evidence/01338480-bfmeobjdae-respell.md",
+  "reason": "Link queue respelling: g_bfmeRouteKeys1282 and bfmeObjDAE share VA 0x01338480 (dir32_addresses.csv) and only _bfmeObjDAE is defined (Rva00C6DC90ArrayInit.cpp vector ctor iterator 178x4); the descriptive name stays as the macro spelling"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva008981TaggedRecords.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva008981TaggedRecords.cpp",
+  "old_name": "g_bfmeValues1220",
+  "new_name": "bfmeObjDAE",
+  "before_sha256": "9e2854a09606bebe2973d89494ced37298f7c58844f90c158278f0647cb6dbfa",
+  "after_sha256": "5e2a616b3fb86a8559ea5ff52863fecd0c1336e8700ea429ea38658dbf0d45ae",
+  "evidence": "targets/game/reverse/identity_evidence/01338480-bfmeobjdae-respell.md",
+  "reason": "Link queue respelling: g_bfmeValues1220 and bfmeObjDAE share VA 0x01338480 (dir32_addresses.csv) and only _bfmeObjDAE is defined (Rva00C6DC90ArrayInit.cpp vector ctor iterator 178x4); the descriptive name stays as the macro spelling"
+ },
+ {
+  "old_path": "game/Libraries/Source/EA/Apt/BfmeNode1220_bfmeAllows.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/BfmeNode1220_bfmeAllows.cpp",
+  "old_name": "g_bfmeValues1220",
+  "new_name": "bfmeObjDAE",
+  "before_sha256": "913893c0b99e835612b4f26013ec613ba54350d72399ab0255e509662b9acdd2",
+  "after_sha256": "7a1f3aec4b85b98cd0c1c7e322acfadbea6e7dda2d5ce37d6c701e65b54ac922",
+  "evidence": "targets/game/reverse/identity_evidence/01338480-bfmeobjdae-respell.md",
+  "reason": "Link queue respelling: g_bfmeValues1220 and bfmeObjDAE share VA 0x01338480 (dir32_addresses.csv) and only _bfmeObjDAE is defined (Rva00C6DC90ArrayInit.cpp vector ctor iterator 178x4); the descriptive name stays as the macro spelling"
  }
 ]

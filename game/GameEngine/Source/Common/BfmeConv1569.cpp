@@ -10,7 +10,9 @@ struct BfmeKeyVSC
 	char m_bfme08[1];
 };
 
-extern "C" BfmeKeyVSC *g_bfmeRouteKeys1282[0xb2];
+// Retail 0x01338480 is defined once, as bfmeObjDAE (Rva00C6DC90ArrayInit.cpp).
+extern "C" BfmeKeyVSC *__identifier("bfmeObjDAE")[0xb2];
+#define g_bfmeRouteKeys1282 __identifier("bfmeObjDAE")
 
 // Retail 0x009F6FA0 is the MSVCR71 _strcmpi import thunk (IAT slot
 // 0x0135933C); game/gen_small/imports_000.cpp lands it as the no-argument

@@ -52,7 +52,9 @@ bool Rva008982D0Chars::equalIgnoringCase(const char *text)
 // equalIgnoringCase leaf above): the address of entry `index` of the Apt int
 // table at 0x01338480 (g_bfmeValues1220, as BfmeNode1220_bfmeAllows.cpp
 // declares it). Address-derived name.
-extern int g_bfmeValues1220[];
+// Retail 0x01338480 is defined once, as bfmeObjDAE (Rva00C6DC90ArrayInit.cpp).
+extern "C" int __identifier("bfmeObjDAE")[];
+#define g_bfmeValues1220 __identifier("bfmeObjDAE")
 
 int *Rva008982F0Entry( int index )
 {
