@@ -43,7 +43,7 @@ extern void bfmeGoDWG();
 extern void d_00893820();
 extern void j_00894110();
 extern void rva00897360(bool);
-extern void d_00899af0();
+void AptValueShutdown(int);
 extern void d_008acac0();
 extern void d_008a30c0();
 extern void rva008B8B80ReleaseAll();
@@ -96,7 +96,7 @@ void dup_00894A90(int mode)
 	delete (Rva00896060Delete *)g_rva00893030Manager;
 	delete (Rva00894110Delete *)g_rva013377F0;
 
-	((IntCall)d_00899af0)(mode);
+	AptValueShutdown(mode);
 	rva008B8B80ReleaseAll();
 	rva008B61D0ReleaseGlobals();
 	rva008A4630ReleaseGlobals();
