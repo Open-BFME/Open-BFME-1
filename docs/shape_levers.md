@@ -3052,3 +3052,41 @@ in its own `if (*game)` block (else arm repeating the failure block) also
 reproduced retail's second failure copy, the flag byte load hoisted above
 the compare's jge, and the `*game` re-read (EBX is busy with `ok`, so EBP
 only lives inside the count block). Measured on this body, VC7.1 `/O2`.
+
+## MIN on a real STLport size() recomputes size-1 in the taken arm (2026-11-01)
+
+Retail 0x001EFB20 (BezierProjectileBehavior::rva001EFB20 in
+game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehavior_rva001EFB20.cpp,
+commit a136374cd3) computes `size-1` (imul 0x2AAAAAAB / sar), compares it
+with the step index (`jae`) and recomputes `size-1` from fresh `+0x48`/`+0x44`
+loads in the arm that keeps it. A raw begin/end pointer pair with an inline
+count accessor lets VC7.1 CSE the second computation; a real
+`_STL::vector<Coord3D>` member with the macro `MIN(m_path.size() - 1, index)`
+reproduces the recompute. In the same body `MAX(0, i - 1)` emits retail's
+`setl dl` clamp (`MAX(i - 1, 0)` gives `setle`), a per-field copy of
+`*getPosition()` loads straight from `[esi+0x38]` instead of through a
+`lea` pointer, and `const Coord3D &t = v[i]; d.x = t.x; ...; d.x -= pos.x`
+keeps retail's forwarded x/y loads with the raw z store. VC7.1 `/O2`.
+
+## A matched caller that inlines the dump's body is the donor (2026-11-01)
+
+Retail 0x003DE940 (the ground line-walk cell callback,
+game/GameEngine/Source/GameLogic/AI/GroundCellsStructCellCallback.cpp,
+commit c5de10b811) was banked at 0.33. The matched line walk
+`groundCellsAlongLine003E2620` in PathfinderFindGroundPath.cpp inlines the
+same logic; copying its statements (and calling the out-of-line open-list
+insert) was exact on the second compile once the guard was spelled
+`if (!from) return 0;`, which gives retail's shrink-wrapped early exit.
+Before rewriting a dump, look for matched bodies that carry the same callee
+sequence (build/a1s522/inl.py in session 522 scans call sequences).
+
+## A volatile local reproduces a value retail keeps in its stack slot (2026-11-01)
+
+At 0x00235150 (banked, attempts/0x00235150.cpp) retail spills the owner
+Object to a stack local and reloads it at each use while keeping the layer
+argument in EBP, which also lets the `Real angle` out-parameter share the
+layer's dead argument home. `Object *volatile owner = ...` reproduces the
+spill, the reloads and the shared slot (254 -> 20 differing bytes). At
+0x0016F150 (banked) a count taken from a 2D length and a normalise using
+a 3D length with z = 0 reproduce retail's shared squares with two sums and
+two `fsqrt`; identical length expressions are CSE'd into one `fsqrt`.
