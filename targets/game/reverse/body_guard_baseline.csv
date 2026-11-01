@@ -238,7 +238,6 @@ dir32,0x0110B638,?g_shellMenuSchemeImageFieldParse@@3QBUFieldParse@@B,"retail 0x
 dir32,0x0110B6A0,?g_shellMenuSchemeLineFieldParse@@3QBUFieldParse@@B,"retail 0x0110B6A0 is already recorded as ?g_shellMenuSchemeLineFieldParse@@3QBEB; reference that name, not a new one"
 dir32,0x0110FE48,??_7ParticleSystem@@6B@,"nothing in the ledger owns 0x0110FE48. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01110500,?g_01110500@FXParticleSystem@@3QBUModuleCategoryEntry@1@B,"nothing in the ledger owns 0x01110500. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x011106F4,?g_011106F4@@3QBDB,"retail 0x011106F4 is already recorded as ??_7ParticleModuleSnapshotSlice@FXParticleSystem@@6B@ (+4 more); reference that name, not a new one"
 dir32,0x01110850,?g_01110850@FXParticleSystem@@3QBDB,"retail 0x01110850 is already recorded as ??_7?$CategoryModuleClass@$02@FXParticleSystem@@6B@; reference that name, not a new one"
 dir32,0x01110868,?g_01110868@FXParticleSystem@@3QBDB,"retail 0x01110868 is already recorded as ??_7?$CategoryModuleClass@$06@FXParticleSystem@@6B@; reference that name, not a new one"
 dir32,0x01110880,?g_01110880@FXParticleSystem@@3QBDB,"retail 0x01110880 is already recorded as ??_7?$CategoryModuleClass@$03@FXParticleSystem@@6B@; reference that name, not a new one"

@@ -154,7 +154,8 @@ V3_DERIVED_PLAIN( Rva005ED0D0, Rva005ED110 )
 extern "C" void *bfmeVftCUAb[];
 // retired debt: ?g_0110F9AC@@3QBDB replaced with ??_7?$CategoryModuleInfo@$04@FXParticleSystem@@6B@
 extern "C" const char __identifier("??_7?$CategoryModuleInfo@$04@FXParticleSystem@@6B@")[];
-extern const char g_011106F4[];
+// retired debt: ?g_011106F4@@3QBDB replaced with ??_7ParticleModuleSnapshotSlice@FXParticleSystem@@6B@
+extern "C" const char __identifier("??_7ParticleModuleSnapshotSlice@FXParticleSystem@@6B@")[];
 // retired debt: ?g_01111828@@3QBDB replaced with ??_7?$DefaultParticleModule@$04@FXParticleSystem@@6BParticleModuleCategorySlice@1@@
 extern "C" const char __identifier("??_7?$DefaultParticleModule@$04@FXParticleSystem@@6BParticleModuleCategorySlice@1@@")[];
 extern const char g_0111182C[], g_01111824[];
@@ -201,7 +202,7 @@ class Rva005EDFA0ThirdBase
 {
 public:
 	Rva005EDFA0ThirdBase( const Rva005EDFA0ThirdBase & )
-		: m_vftable( (void *)g_011106F4 )
+		: m_vftable( (void *)__identifier("??_7ParticleModuleSnapshotSlice@FXParticleSystem@@6B@") )
 	{
 	}
 
