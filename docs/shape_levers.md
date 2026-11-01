@@ -3009,3 +3009,27 @@ The same body shape (helper result built in a dead parameter's home, no local
 slot) is still open at 0x0068BFA0 LANAPI::handleGameStart. Accessors for the
 address compare, the in-progress flag and the message payload were all inert
 there (286/285 B).
+
+## Global re-read as the receiver keeps a callee save inside the if (2026-11-01)
+
+Retail 0x00899AF0 (AptValueShutdown in game/Libraries/Source/Apt/AptValueShutdown.cpp)
+tests a global pointer in ECX, then inside the `if` block saves EDI, copies ECX
+to EDI, calls the close helper on ECX and deletes through EDI, restoring EDI
+before the join. `T *p = g; p->close(); delete p;` (and `T *p = g; if (p)`)
+loaded the global straight into EDI in the entry block and pushed EDI at entry
+(144 diffs). Exact: take the copy for the delete first and call the helper on
+the global itself, `T *p = (T *)g; ((U *)g)->close(); delete p;`; the test and
+the receiver share one load, and only the copy lives across the call. Measured
+on this body, VC7.1 `/O2`.
+
+## Pooled string compare: int lengths and an explicit release (2026-11-01)
+
+Retail 0x00895510 (Rva00895510HasName.cpp) copies a table name into a pooled
+string, compares it with another and releases it. Three source changes took
+it from 317 B/229 diffs to exact: compare the lengths as `int` locals (a
+direct `a->m_length != b->m_length` compiled to a 16-bit `cmp cx, word`
+where retail `movzx`es both), release the string by an explicit inline call
+instead of a destructor (a destructor added an unwind state retail lacks,
+even with the fill declared `throw()`), and read the table name into a
+`const char *` before declaring the string local (otherwise the load used ECX
+instead of EAX before the push).
