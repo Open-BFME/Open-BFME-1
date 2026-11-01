@@ -22,10 +22,13 @@ extern Rva008AE770Stack Rva008AE770TheStack;
 
 class Gen0089C880 { public: void handle(); };
 extern void (__cdecl *TheBfmeFree)(void *, unsigned int);
+// The destructor route 8976E0 -> 89CC70 -> 89C900 ends at the matched
+// Q3EhMember0089C900 cleanup; the first jump body owns this call target,
+// as in BfmeSubB1035Destroy.cpp.
+extern void j_008976e0();
 class BfmeChildA
 {
 public:
-	~BfmeChildA();
 	static void operator delete(void *p, unsigned int n) { TheBfmeFree(p, n); }
 private:
 	char m_bytes[16];
@@ -62,7 +65,11 @@ void AptValueShutdown(int)
 	{
 		BfmeChildA *table = (BfmeChildA *)g_Rva01337A28Index;
 		((Gen0089C880 *)g_Rva01337A28Index)->handle();
-		delete table;
+		if (table)
+		{
+			((void (__fastcall *)(BfmeChildA *))j_008976e0)(table);
+			BfmeChildA::operator delete(table, sizeof(BfmeChildA));
+		}
 		g_Rva01337A28Index = 0;
 	}
 	RELEASE(g_Va013379B4);
