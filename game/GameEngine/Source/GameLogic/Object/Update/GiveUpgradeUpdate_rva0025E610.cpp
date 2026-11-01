@@ -95,13 +95,12 @@ public:
 
 extern GameLogic *TheGameLogic;
 
-// Existing typed pin: this ILT/body is shared by the neighboring charge
-// application and carries the live receiver in ECX with no stack arguments.
-class Rva0025EF90Owner
-{
-public:
-	void callAt002A9850();
-};
+// 0x002A9850 is defined only under ??1WeaponSetSpecialAbilityUpdate@@UAE@XZ
+// (2403-byte row); call it by that defined name. The qualified explicit
+// destructor call keeps static thiscall dispatch (receiver in ECX).
+// Identity is disputed (pin says address-derived method); this binds the
+// defined name without adjudicating.
+class WeaponSetSpecialAbilityUpdate { public: virtual ~WeaponSetSpecialAbilityUpdate(); };
 
 // Existing matched target-check ABI/name, reached through ILT 0x00008995.
 class SpecialAbilityUpdate
@@ -191,7 +190,7 @@ void Rva0025E610Owner::runAt0025E610()
 	if (m_created)
 		return;
 
-	reinterpret_cast<Rva0025EF90Owner *>(this)->callAt002A9850();
+	reinterpret_cast<WeaponSetSpecialAbilityUpdate *>(this)->WeaponSetSpecialAbilityUpdate::~WeaponSetSpecialAbilityUpdate();
 
 	Object *object = m_object;
 	Object *target = TheGameLogic->findObjectByID(m_objectID);

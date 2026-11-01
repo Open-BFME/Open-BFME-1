@@ -173,13 +173,12 @@ public:
 	Bool m_cancelDisguise;
 };
 
-// 0x002A9850 is SpecialAbilityUpdate::triggerAbilityEffect (ilt_oracle);
-// this pinned address-derived view names it for the direct base call.
-class Rva0025EF90Owner
-{
-public:
-	void callAt002A9850();
-};
+// 0x002A9850 is defined only under ??1WeaponSetSpecialAbilityUpdate@@UAE@XZ
+// (2403-byte row); call it by that defined name. The qualified explicit
+// destructor call keeps static thiscall dispatch (receiver in ECX).
+// Identity is disputed (pin says address-derived method, ilt_oracle said
+// triggerAbilityEffect); this binds the defined name without adjudicating.
+class WeaponSetSpecialAbilityUpdate { public: virtual ~WeaponSetSpecialAbilityUpdate(); };
 
 class ToggleMountedSpecialAbilityUpdate
 {
@@ -198,7 +197,7 @@ private:
 
 void ToggleMountedSpecialAbilityUpdate::triggerAbilityEffect()
 {
-	((Rva0025EF90Owner *)this)->callAt002A9850();
+	((WeaponSetSpecialAbilityUpdate *)this)->WeaponSetSpecialAbilityUpdate::~WeaponSetSpecialAbilityUpdate();
 
 	Object *obj = getObject();
 	if( !obj->getAI()->isIdle() )

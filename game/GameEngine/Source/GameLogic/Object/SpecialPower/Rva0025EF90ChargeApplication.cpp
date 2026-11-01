@@ -49,7 +49,6 @@ public:
 extern GameLogic *TheGameLogic;
 class Rva0025EF90Owner {
 public:
-    void callAt002A9850();
     void callAt0025ED50();
     void applyCharge();
     char prefix[8];
@@ -58,9 +57,15 @@ public:
     _STL::list<ObjectID> ids;
 };
 typedef char ListSizeCheck[(sizeof(_STL::list<ObjectID>) == 4) ? 1 : -1];
+// 0x002A9850 is defined only under ??1WeaponSetSpecialAbilityUpdate@@UAE@XZ
+// (2403-byte row); call it by that defined name. The qualified explicit
+// destructor call keeps static thiscall dispatch (receiver in ECX).
+// Identity is disputed (pin says address-derived method); this binds the
+// defined name without adjudicating.
+class WeaponSetSpecialAbilityUpdate { public: virtual ~WeaponSetSpecialAbilityUpdate(); };
 void Rva0025EF90Owner::applyCharge()
 {
-    callAt002A9850();
+    ((WeaponSetSpecialAbilityUpdate *)this)->WeaponSetSpecialAbilityUpdate::~WeaponSetSpecialAbilityUpdate();
     callAt0025ED50();
     if (!ids.empty()) {
         for (_STL::list<ObjectID>::iterator i=ids.begin(); i!=ids.end(); ++i) {
