@@ -1,7 +1,18 @@
 // ?update@Player@@QAEXXZ
-// partial score=0.2269 date=2026-10-15
+// partial score=0.9819 date=2026-11-01
+// ?update@Player@@QAEXXZ
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib /Igame/GameEngine/Source/Common/System
 // stlport
+// s529 (claude-opus-5-5): 551/551 B, 10 non-reloc diffs, shape 0.995. Levers that
+// moved it from 400 diffs: `--(int &)it->second` (retail's mov ecx,eax/dec/mov eax,ecx
+// countdown), ZH DLINK_ITERATOR with the const PMF _bfme_nextInInstanceList (shrink-wraps
+// EBX/EDI saves after the AI call and pops before the local-player test), and an inline
+// iterate_TeamInstanceList() accessor on the prototype view (EAX for *pit). Residue: ours
+// loads it._M_ht into EBX between `test esi,esi` and the guard je; retail loads it after
+// the je (separate preheader). Inert: end/iterator locals, while/do/if-do/while(true)
+// loop forms, (*it). spelling, continue, it++, forceinline helper, /G5 /G7 /Oy-;
+// a volatile store to it._M_ht does split the preheader (load moves after je) but adds
+// the store.
 // Retail 0x000D9A80, 551 bytes: Player::update. Sole caller is the matched
 // PlayerList::update (0x000DF2D0) through ILT 0x0004771C. Zero Hour twin:
 // inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/Common/RTS/Player.cpp.
@@ -60,7 +71,22 @@ class Team
 {
 public:
 	void updateGenericScripts();
-	Team *_bfme_nextInInstanceList();
+	Team *_bfme_nextInInstanceList() const;
+};
+
+template <class OBJCLASS>
+class DLINK_ITERATOR
+{
+public:
+	typedef OBJCLASS* (OBJCLASS::*GetNextFunc)() const;
+private:
+	OBJCLASS* m_cur;
+	GetNextFunc m_getNextFunc;
+public:
+	DLINK_ITERATOR(OBJCLASS* cur, GetNextFunc getNextFunc) : m_cur(cur), m_getNextFunc(getNextFunc) {}
+	void advance() { if (m_cur) m_cur = (m_cur->*m_getNextFunc)(); }
+	bool done() const { return m_cur == 0; }
+	OBJCLASS* cur() const { return m_cur; }
 };
 
 // TeamPrototype+0x274 heads its team instance list (ZH iterate_TeamInstanceList).
@@ -68,6 +94,7 @@ struct Rva000D9A80PrototypeView
 {
 	unsigned char m_unreconstructed_000[0x274];
 	Team *m_teamInstanceHead;
+	DLINK_ITERATOR<Team> iterate_TeamInstanceList() { return DLINK_ITERATOR<Team>(m_teamInstanceHead, &Team::_bfme_nextInInstanceList); }
 };
 
 class AIPlayer
@@ -173,18 +200,19 @@ void Player::update()
 	{
 		if (it->second != 0)
 		{
-			if ((it->second = (Rva000D6C60Mapped)(it->second - 1)) == 0)
+			--(int &)it->second;
+			if (it->second == 0)
 				m_rva1D8Values[it->first] = m_rva1ECValues[it->first];
 		}
 	}
 
 	// Allow the teams this player owns to update themselves.
 	PlayerTeamList prototypes(m_playerTeamPrototypes);
-	for (PlayerTeamList::iterator pit = prototypes.begin(); pit != prototypes.end(); ++pit)
+	for (PlayerTeamList::iterator pit = prototypes.begin(), pend = prototypes.end(); pit != pend; ++pit)
 	{
-		for (Team *team = ((Rva000D9A80PrototypeView *)*pit)->m_teamInstanceHead;
-			team != 0; team = team->_bfme_nextInInstanceList())
+		for (DLINK_ITERATOR<Team> iter = ((Rva000D9A80PrototypeView *)*pit)->iterate_TeamInstanceList(); !iter.done(); iter.advance())
 		{
+			Team *team = iter.cur();
 			if (!team)
 				continue;
 			team->updateGenericScripts();
