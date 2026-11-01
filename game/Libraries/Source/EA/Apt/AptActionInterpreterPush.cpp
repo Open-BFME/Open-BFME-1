@@ -62,7 +62,9 @@ public:
 	}
 };
 
-extern AptValue *gpUndefinedValue;
+// retail 0x013379BC; defined as g_bfmeFallbackDB (Bfme5AppendFallback8CAFF0.cpp)
+extern AptValue *g_bfmeFallbackDB;
+#define gpUndefinedValue g_bfmeFallbackDB
 
 void AptActionInterpreter::_FunctionAptActionPush(
 	AptActionInterpreter *interpreter, LocalContextT *context)
