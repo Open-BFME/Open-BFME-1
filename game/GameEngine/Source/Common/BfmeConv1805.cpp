@@ -21,7 +21,10 @@ class BfmeGameCW;
 class LivingWorldManager;
 extern LivingWorldManager *TheLivingWorldManager;
 #define g_bfmeGameCW ( *(BfmeGameCW **)&TheLivingWorldManager )
-extern BfmeTextCW g_bfmeDefaultCW;
+// retail 0x01336E50 is ?TheEmptyString@AsciiString@@2V1@A, defined by
+// Common/System/AsciiString.cpp; this TU only takes its address.
+extern "C" BfmeTextCW __identifier("?TheEmptyString@AsciiString@@2V1@A");
+#define g_bfmeDefaultCW __identifier("?TheEmptyString@AsciiString@@2V1@A")
 
 BfmeTextCW * __stdcall bfmeSelectCW(int which)
 {
