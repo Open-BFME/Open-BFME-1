@@ -12,6 +12,8 @@ template <class T> class StringBase
 
 private:
 	StringBase(const StringBase<T> &source);
+private:
+	void releaseBuffer(void);
 };
 
 struct AsciiStringData
@@ -32,7 +34,7 @@ public:
 		((StringBase<char> *)this)->StringBase<char>::StringBase(
 			*(const StringBase<char> *)&source);
 	}
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 	int compareNoCase(const AsciiString &source) const
 	{

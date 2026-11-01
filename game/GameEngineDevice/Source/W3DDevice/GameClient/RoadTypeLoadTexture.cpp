@@ -60,7 +60,7 @@ class AsciiString
 {
 public:
 	AsciiString &operator=(const AsciiString &other) { ((StringBase<char> *)this)->set(*(const StringBase<char> *)&other); return *this; }
-	~AsciiString(void);
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 	Char *str(void) const
 	{

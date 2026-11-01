@@ -46,6 +46,8 @@ template <class T> class StringBase
 private:
 	StringBase(const StringBase &);
 	~StringBase();
+private:
+	void releaseBuffer(void);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
@@ -57,7 +59,7 @@ public:
 		((StringBase<char> *)this)->StringBase<char>::StringBase(
 			*(const StringBase<char> *)&that);
 	}
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 private:
 	char *m_text;

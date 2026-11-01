@@ -32,6 +32,8 @@ class StringBase
 private:
 	friend class AsciiString;
 	StringBase(const StringBase<T> &source);
+private:
+	void releaseBuffer(void);
 };
 
 class AsciiString
@@ -47,7 +49,7 @@ public:
 			*(const StringBase<char> *)&that);
 	}
 
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 	bool isEmpty() const
 	{

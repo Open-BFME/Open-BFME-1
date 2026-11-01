@@ -15,6 +15,8 @@ private:
 
 public:
 	Int compare(const StringBase &) const throw();
+private:
+	void releaseBuffer(void);
 };
 
 class AsciiString
@@ -25,7 +27,7 @@ public:
 		((StringBase<char> *)this)->StringBase<char>::StringBase(
 			*(const StringBase<char> *)&that);
 	}
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 private:
 	char *m_text;

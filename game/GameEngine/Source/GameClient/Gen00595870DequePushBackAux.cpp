@@ -26,6 +26,8 @@ private:
 	};
 
 	Header *m_data;
+private:
+	void releaseBuffer(void);
 };
 
 class AsciiString
@@ -38,7 +40,7 @@ class AsciiString
 		((StringBase<char> *)this)->StringBase<char>::StringBase(
 			*(const StringBase<char> *)&other);
 	}
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 	private:
 	void *m_data;

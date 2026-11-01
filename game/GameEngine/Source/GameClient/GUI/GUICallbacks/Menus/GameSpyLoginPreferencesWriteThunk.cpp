@@ -36,6 +36,8 @@ private:
     void concat(const T *text, int length);
 
     Header *m_data;
+private:
+	void releaseBuffer(void);
 };
 
 class AsciiString
@@ -50,7 +52,7 @@ public:
             *(const StringBase<char> *)&other);
     }
 
-    ~AsciiString();
+    ~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
     const char *str(void) const
     {

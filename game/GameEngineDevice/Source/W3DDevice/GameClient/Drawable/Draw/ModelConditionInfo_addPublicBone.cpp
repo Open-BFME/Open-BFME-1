@@ -39,6 +39,8 @@ private:
 	};
 
 	Header *m_data;
+private:
+	void releaseBuffer(void);
 };
 
 class AsciiString
@@ -51,7 +53,7 @@ public:
 		((StringBase<char> *)this)->StringBase<char>::StringBase(
 			*(const StringBase<char> *)&src);
 	}
-	~AsciiString();						// 0x00887940
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 	Bool isEmpty(void) const { return m_data == 0 || m_data->length == 0; }
 	Bool isNone(void) const;				// 0x008881A0

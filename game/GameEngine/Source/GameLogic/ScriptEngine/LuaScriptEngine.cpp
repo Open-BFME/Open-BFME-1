@@ -92,7 +92,7 @@ private:
 
 public:
 	AsciiString() : m_data(0) {}
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 	AsciiString &operator=(const AsciiString &other) { ((StringBase<char> *)this)->set(*(const StringBase<char> *)&other); return *this; }
 	bool isEmpty() const { return m_data == 0 || m_data->m_length == 0; }
 	const char *str() const { return m_data->m_text; }

@@ -81,6 +81,8 @@ template <class T> class StringBase
 	private:
 	StringBase(const StringBase &);
 	~StringBase();
+private:
+	void releaseBuffer(void);
 };
 
 struct BfmeStringData { int references; unsigned short length; unsigned short capacity; char text[1]; };
@@ -94,7 +96,7 @@ public:
 		((StringBase<char> *)this)->StringBase<char>::StringBase(
 			*(const StringBase<char> *)&that);
 	}
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 	AsciiString &operator+=(const AsciiString &text);
 
 	BfmeStringData *m_text;

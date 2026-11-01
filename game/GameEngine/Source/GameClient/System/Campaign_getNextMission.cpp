@@ -51,7 +51,7 @@ class AsciiString
 public:
 	AsciiString(void) : m_data(0) {}
 	AsciiString(const AsciiString &that);
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 	AsciiString &operator=(const AsciiString &that) { ((StringBase<char> *)this)->set(*(const StringBase<char> *)&that); return *this; }		// retail 0x00887C90
 

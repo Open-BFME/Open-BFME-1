@@ -15,6 +15,9 @@ public:
 
 private:
 	void *m_data;
+private:
+	void releaseBuffer(void);
+	friend class AsciiString;
 };
 
 struct BfmeAsciiStringData
@@ -30,7 +33,7 @@ class AsciiString
 {
 public:
 	AsciiString(const AsciiString &that);
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 	Bool isEmpty(void) const
 	{

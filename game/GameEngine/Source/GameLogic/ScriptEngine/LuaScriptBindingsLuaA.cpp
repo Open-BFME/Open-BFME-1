@@ -242,7 +242,7 @@ class AsciiString
 public:
 	AsciiString() { m_data = 0; }
 	AsciiString( const char *text );
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 	AsciiString &operator=(const AsciiString &text) { ((StringBase<char> *)this)->set(*(const StringBase<char> *)&text); return *this; }
 	const char *str() const
 	{
