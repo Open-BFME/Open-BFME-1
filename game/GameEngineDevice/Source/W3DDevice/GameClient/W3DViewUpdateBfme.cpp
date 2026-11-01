@@ -2,7 +2,8 @@
 // BFME W3DView::update, retail 0x007446A0.
 // Constructor 0x00745B10 installs SubsystemInterface table 0x01121764 at +0xFC. Slot 5 reaches this body through ILT 0x00007F31.
 #include <math.h>
-struct Coord3D { float x,y,z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
+
 struct Coord2D { float x,y; Coord2D &operator=(const Coord2D &o) { x=o.x; y=o.y; return *this; } };
 class RenderObjClass;
 template<class T> class RefMultiListIterator;
