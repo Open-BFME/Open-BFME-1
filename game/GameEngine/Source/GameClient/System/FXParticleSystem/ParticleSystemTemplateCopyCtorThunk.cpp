@@ -35,6 +35,8 @@ class ParticleSystemTemplate : public ParticleSystemInfo
 {
 public:
 	ParticleSystemTemplate(const ParticleSystemTemplate &other);
+	// Matched out of line (FXParticleSystem_ParticleSystemTemplateDestructorThunk.cpp).
+	virtual ~ParticleSystemTemplate();
 
 private:
 	AsciiString m_name;

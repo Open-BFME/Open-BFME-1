@@ -91,6 +91,8 @@ class RenderObjectDrawModule
 public:
 	RenderObjectDrawModule(TrackingPtr<ParticleSystem> &system,
 		const void *source);
+	// Matched out of line (RenderObjectDrawModuleDestructor.cpp).
+	virtual ~RenderObjectDrawModule();
 
 	unsigned int m_field58;
 };

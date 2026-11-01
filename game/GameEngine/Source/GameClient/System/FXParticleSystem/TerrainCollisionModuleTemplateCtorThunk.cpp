@@ -96,6 +96,8 @@ class TerrainCollisionModuleTemplate
 {
 public:
     TerrainCollisionModuleTemplate();
+    // Matched out of line (FXParticleSystem_TerrainCollisionModuleTemplateDestructorThunk.cpp).
+    virtual ~TerrainCollisionModuleTemplate();
 };
 
 // ??0TerrainCollisionModuleTemplate@FXParticleSystem@@QAE@XZ

@@ -98,6 +98,8 @@ class LifeEventModuleTemplate
 {
 public:
 	LifeEventModuleTemplate();
+	// Matched out of line (LifeEventModuleTemplateDestructorThunk.cpp).
+	virtual ~LifeEventModuleTemplate();
 };
 
 // ??0LifeEventModuleTemplate@FXParticleSystem@@QAE@XZ
