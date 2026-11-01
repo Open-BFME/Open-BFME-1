@@ -18,7 +18,7 @@ extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
 	void *handle, unsigned long milliseconds);
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
 
-extern "C" void __cdecl __identifier("?d_0069d620@@YAXXZ")();
+extern void j_0001815b();
 struct AudioEventInfo
 {
 	char m_pad00[0x84];
@@ -61,13 +61,6 @@ struct Rva0069F740Ref { ListNode<PlayingAudio *> *m_node; };
 
 class Rva0069F740Owner
 {
-public:
-	Rva0069F740Ref getSlot(int a0,int a1) {
-	 // retail body is still the gen-dump row ?d_0069d620@@YAXXZ (no C++ row yet); call it by that defined name
-	 union { void (__cdecl *symbol)(); Rva0069F740Ref (Rva0069F740Owner::*member)(int,int); } c;
-	 c.symbol = &__identifier("?d_0069d620@@YAXXZ");
-	 return (this->*c.member)(a0,a1);
-	}
 };
 
 class Rva0069F740Lock
@@ -128,7 +121,9 @@ AsciiString MilesAudioManager::getMusicTrackName(void) const
 	}
 
 	int inner = m_current[m_x604];
-	ListNode<PlayingAudio *> *it = ((Rva0069F740Owner *)this)->getSlot(m_x604, inner).m_node;
+	typedef Rva0069F740Ref (Rva0069F740Owner::*GetSlot)(int, int);
+	union { void (*fn)(); GetSlot call; } getSlot = { j_0001815b };
+	ListNode<PlayingAudio *> *it = (((Rva0069F740Owner *)this)->*getSlot.call)(m_x604, inner).m_node;
 	if (it != m_sentinel) {
 		return it->m_data->m_audioEventRTS->getEventName();
 	}
