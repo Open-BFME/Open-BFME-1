@@ -56,7 +56,10 @@ struct BfmeObjECF
 	BfmeVtblECF *m_bfmeVtbl;
 };
 
-extern BfmeObjECF *g_bfmeObjECF;
+// The browser pointer cell VA 0x0134B280 is defined once as
+// ?Rva00959410Dispatch@@3URva00959410Ptr@@A (DX8WebBrowserShutdownStorage.cpp).
+extern "C" BfmeObjECF *__identifier("?Rva00959410Dispatch@@3URva00959410Ptr@@A");
+#define g_bfmeObjECF __identifier("?Rva00959410Dispatch@@3URva00959410Ptr@@A")
 
 void bfmeGoECF()
 {

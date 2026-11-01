@@ -37,7 +37,10 @@ struct BfmePtrESQ
 	}
 };
 
-extern BfmePtrESQ g_bfmeDispatchESQ;
+// The browser pointer cell VA 0x0134B280 is defined once as
+// ?Rva00959410Dispatch@@3URva00959410Ptr@@A (DX8WebBrowserShutdownStorage.cpp).
+extern "C" BfmePtrESQ __identifier("?Rva00959410Dispatch@@3URva00959410Ptr@@A");
+#define g_bfmeDispatchESQ __identifier("?Rva00959410Dispatch@@3URva00959410Ptr@@A")
 
 void bfmeSendESQ(const char *text)
 {
