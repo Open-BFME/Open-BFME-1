@@ -31,7 +31,12 @@ class ThingTemplate;
 class BfmeThingFactory { public: const ThingTemplate *findTemplate(const AsciiString &); };
 class ThingFactory { public: Object *newObject(const ThingTemplate *, Team *, const ObjectStatusMaskType &, unsigned int); };
 extern ThingFactory *TheThingFactory;
-class Rva001BE220Receiver { public: void dispatch(int condition, unsigned int duration); };
+// 0x001BE220 is defined as ?invoke@Rva001BE220@@QAEXXZ (11-byte tail thunk).
+class Rva001BE220Receiver { };
+extern "C" void __identifier("?invoke@Rva001BE220@@QAEXXZ")(void);
+static __forceinline void dispatchRva001BE220(Rva001BE220Receiver *receiver, int condition, unsigned int duration)
+{ typedef void (Rva001BE220Receiver::*Call)(int, unsigned int); union { void (*raw)(); Call member; } call;
+  call.raw = __identifier("?invoke@Rva001BE220@@QAEXXZ"); (receiver->*call.member)(condition, duration); }
 extern void j_00004d63();
 class Rva0024A350MapCall { public: void invoke(Object *object) { union { void (*entry)(); void (Rva0024A350MapCall::*method)(Object *); } call; call.entry=j_00004d63; (this->*call.method)(object); } };
 class TransportContain { friend class HordeSiegeEngineContain; protected: virtual void createPayload(); };
@@ -95,7 +100,7 @@ void HordeSiegeEngineContain::createPayload()
 			{
 				int scaledCount = (int)(*(float *)((char *)payloadTemplate + 0x2f4) * 5.0f);
 				if (scaledCount > 0)
-					((Rva001BE220Receiver *)payload)->dispatch(0xcf, scaledCount);
+					dispatchRva001BE220((Rva001BE220Receiver *)payload, 0xcf, scaledCount);
 
 				if (!owner->getName().isEmpty())
 				{

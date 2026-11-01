@@ -154,11 +154,23 @@ public:
 	Bool m_flag338;								// +0x338
 };
 
+// The ledger defines the 11-byte tail thunk at 0x001BE220 as
+// ?invoke@Rva001BE220@@QAEXXZ; this call keeps its own argument shape and
+// names that defined symbol.
+extern "C" void __identifier("?invoke@Rva001BE220@@QAEXXZ")(void);
+
 class Rva001BE220Receiver
 {
-public:
-	void dispatch(Int condition, UnsignedInt frames);
 };
+
+static __forceinline void dispatchRva001BE220(Rva001BE220Receiver *receiver,
+		Int condition, UnsignedInt frames)
+{
+	typedef void (Rva001BE220Receiver::*Call)(Int, UnsignedInt);
+	union { void (*raw)(); Call member; } call;
+	call.raw = __identifier("?invoke@Rva001BE220@@QAEXXZ");
+	(receiver->*call.member)(condition, frames);
+}
 
 class BfmeMsgXI;
 class BfmeOwnerXI
@@ -410,8 +422,8 @@ void SpecialAbilityUpdate::onExit(Bool cleanup, Bool aborted)
 						{
 							contain->release(target, data->m_containValue, obj);
 							body->setPercent(100.0f, 0);
-							((Rva001BE220Receiver *)obj)->dispatch(data->m_specialConditionType, data->m_specialConditionFrames);
-							((Rva001BE220Receiver *)target)->dispatch(data->m_specialConditionType, data->m_specialConditionFrames);
+							dispatchRva001BE220((Rva001BE220Receiver *)obj, data->m_specialConditionType, data->m_specialConditionFrames);
+							dispatchRva001BE220((Rva001BE220Receiver *)target, data->m_specialConditionType, data->m_specialConditionFrames);
 							if (obj->m_ai)
 								obj->m_ai->m_commandInterface.rva001F1370(data->m_specialConditionFrames, CMD_FROM_AI);
 						}

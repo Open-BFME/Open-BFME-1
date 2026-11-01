@@ -23,7 +23,12 @@ class Object { public:
  Player *getControllingPlayer() const;
  bool hasUpgrade(const UpgradeTemplate*) const;
 };
-struct Rva001BE220Receiver { void dispatch(int,unsigned int); };
+// 0x001BE220 is defined as ?invoke@Rva001BE220@@QAEXXZ (11-byte tail thunk).
+struct Rva001BE220Receiver { };
+extern "C" void __identifier("?invoke@Rva001BE220@@QAEXXZ")(void);
+static __forceinline void dispatchRva001BE220(Rva001BE220Receiver *receiver, int condition, unsigned int duration)
+{ typedef void (Rva001BE220Receiver::*Call)(int, unsigned int); union { void (*raw)(); Call member; } call;
+  call.raw = __identifier("?invoke@Rva001BE220@@QAEXXZ"); (receiver->*call.member)(condition, duration); }
 struct BFMEReportDamageSource { void report(Object*,int); };
 class GameLogic { public: char pad[0x3c]; unsigned int frame; Object *findObjectByID(int); };
 extern GameLogic *TheGameLogic;
@@ -56,7 +61,7 @@ void FreeLifeBody::internalChangeHealth(float amount,DamageInfo *info) {
   if(fieldD8 && !((float)TheGameLogic->frame-(float)fieldDC > (float)fieldE0)) goto fallback;
   fieldD8=true;
   fieldDC=TheGameLogic->frame;
-  if(md->field70 != -1) ((Rva001BE220Receiver*)obj)->dispatch(md->field70,md->field74);
+  if(md->field70 != -1) dispatchRva001BE220((Rva001BE220Receiver*)obj,md->field70,md->field74);
   restore(fieldD4*100.0f,false);
   if(info) {
    Object *source=TheGameLogic->findObjectByID(info->source);
