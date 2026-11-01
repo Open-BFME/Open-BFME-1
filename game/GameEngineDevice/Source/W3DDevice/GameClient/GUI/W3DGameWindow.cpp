@@ -122,7 +122,7 @@ class AsciiString : private StringBase<char>
 {
 public:
 	AsciiString(const char *text) : StringBase<char>(text) {}
-	~AsciiString();
+	~AsciiString() {}
 };
 class ImageCollection
 {

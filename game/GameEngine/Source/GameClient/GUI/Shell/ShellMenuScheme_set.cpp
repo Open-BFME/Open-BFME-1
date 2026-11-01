@@ -36,11 +36,19 @@ struct BfmeAsciiStringData
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
+// StringBase<char>::releaseBuffer (0x00887940): retail inlines ~AsciiString
+// at every scope exit and calls it directly, never the 0x0005EE90 stub.
+template <class T> class StringBase
+{
+	void releaseBuffer(void);
+	friend class AsciiString;
+};
+
 class AsciiString
 {
 public:
 	AsciiString(const AsciiString &that);
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
 	void toLower(void);					// retail 0x00887DA0
 

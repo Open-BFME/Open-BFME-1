@@ -47,7 +47,7 @@ class AsciiString : private StringBase<char>
 public:
     AsciiString(const AsciiString &other)
         : StringBase<char>(other) {}
-    ~AsciiString();
+    ~AsciiString() {}
     void set(const AsciiString &other)
     {
         StringBase<char>::set(other);

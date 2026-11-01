@@ -7,12 +7,20 @@
 // (__node_alloc<true,0>::_M_allocate, 0x0082E540), not ::operator new.
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
+// StringBase<char>::releaseBuffer (0x00887940): retail inlines ~AsciiString
+// at every scope exit and calls it directly, never the 0x0005EE90 stub.
+template <class T> class StringBase
+{
+	void releaseBuffer(void);
+	friend class AsciiString;
+};
+
 class AsciiString
 {
 	void *m_data;
 public:
 	AsciiString() : m_data(0) {}
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 	AsciiString &operator=(const AsciiString &source);
 	void set(const char *text, int length);
 };

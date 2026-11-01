@@ -33,10 +33,18 @@ struct BfmeAsciiStringData
 	char m_text[1];
 };
 
+// StringBase<char>::releaseBuffer (0x00887940): retail inlines ~AsciiString
+// at every scope exit and calls it directly, never the 0x0005EE90 stub.
+template <class T> class StringBase
+{
+	void releaseBuffer(void);
+	friend class AsciiString;
+};
+
 class AsciiString
 {
 public:
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 	bool isEmpty() const
 	{
 		return m_data == 0 || m_data->m_length == 0;

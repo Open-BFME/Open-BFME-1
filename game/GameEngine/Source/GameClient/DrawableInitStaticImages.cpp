@@ -11,7 +11,7 @@ public:
     AsciiString(const char *text) : StringBase<char>(text) { }
     AsciiString(const AsciiString &other)
         : StringBase<char>(other) { }
-    ~AsciiString() { releaseBuffer(); }
+    ~AsciiString() { }
 };
 
 class Image;

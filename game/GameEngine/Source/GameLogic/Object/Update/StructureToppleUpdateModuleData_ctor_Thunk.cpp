@@ -30,11 +30,19 @@ private:
 };
 
 // The retail body uses the two-argument AsciiString setter at 0x00887D20.
+// StringBase<char>::releaseBuffer (0x00887940): retail inlines ~AsciiString
+// at every scope exit and calls it directly, never the 0x0005EE90 stub.
+template <class T> class StringBase
+{
+	void releaseBuffer(void);
+	friend class AsciiString;
+};
+
 class AsciiString
 {
 public:
 	AsciiString() : m_data(0) {}
-	~AsciiString();
+	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 	AsciiString &operator=(const AsciiString &source)
 	{
 		set(source);
