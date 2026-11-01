@@ -639,65 +639,49 @@ void AIRappelState::onExit( StateExitType status )
 	NOTE NOTE NOTE NOTE NOTE
 
 */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AIStateMachineConstructorThunk.cpp
-// ??0AIStateMachine@@QAE@PAVObject@@VAsciiString@@@Z present-unmatched
-AIStateMachine::AIStateMachine( Object *obj, AsciiString name ) : StateMachine( obj, name )
+// Retail AIStateMachine::AIStateMachine (0x00185A20) is defined in
+// AIStateMachineConstructor.cpp; the Zero Hour-only duplicate strong definition
+// that lived here kept retail's copy out of the link, so it is removed.
+// ?emitAIStateMachineDependencies@@YAXXZ absent-from-retail
+void emitAIStateMachineDependencies()
 {
-	DEBUG_ASSERTCRASH(getOwner(), ("An AI State Machine '%s' was constructed without an owner, please tell JKMCD", name));
-	DEBUG_ASSERTCRASH(getOwner()->getAI(), ("An AI State Machine '%s' was constructed without an AIUpdateInterface, please tell JKMCD", name));
-
-	m_goalPath.clear();
-	m_goalWaypoint = NULL;
-	m_goalSquad = NULL;
-
-	m_temporaryState = NULL;
-	m_temporaryStateFramEnd = 0;
-
-	// order matters: first state is the default state.
-	defineState( AI_IDLE,																	newInstance(AIIdleState)( this, AIIdleState::LOOK_FOR_TARGETS), AI_IDLE, AI_IDLE );
-	defineState( AI_MOVE_TO,															newInstance(AIMoveToState)( this ), AI_IDLE, AI_IDLE );
-	defineState( AI_MOVE_OUT_OF_THE_WAY,									newInstance(AIMoveOutOfTheWayState)( this ), AI_IDLE, AI_IDLE );
-	defineState( AI_MOVE_AND_TIGHTEN,											newInstance(AIMoveAndTightenState)( this ), AI_IDLE, AI_IDLE );
-	defineState( AI_MOVE_AWAY_FROM_REPULSORS,							newInstance(AIMoveAwayFromRepulsorsState)( this ), AI_WANDER_IN_PLACE, AI_WANDER_IN_PLACE );
-	defineState( AI_WANDER_IN_PLACE,											newInstance(AIWanderInPlaceState)( this ), AI_MOVE_AWAY_FROM_REPULSORS, AI_MOVE_AWAY_FROM_REPULSORS );
-	defineState( AI_ATTACK_MOVE_TO,												newInstance(AIAttackMoveToState)( this ), AI_IDLE, AI_IDLE );
-	defineState( AI_ATTACKFOLLOW_WAYPOINT_PATH_AS_TEAM,					newInstance(AIAttackFollowWaypointPathState)( this, true ), AI_IDLE, AI_IDLE );
-	defineState( AI_ATTACKFOLLOW_WAYPOINT_PATH_AS_INDIVIDUALS,	newInstance(AIAttackFollowWaypointPathState)( this, false ), AI_IDLE, AI_IDLE );
-	
-	defineState( AI_FOLLOW_WAYPOINT_PATH_AS_TEAM,					newInstance(AIFollowWaypointPathState)( this, true ), AI_IDLE, AI_IDLE );
-	defineState( AI_FOLLOW_WAYPOINT_PATH_AS_INDIVIDUALS,	newInstance(AIFollowWaypointPathState)( this, false ), AI_IDLE, AI_IDLE );
-	defineState( AI_FOLLOW_WAYPOINT_PATH_AS_TEAM_EXACT,		newInstance(AIFollowWaypointPathExactState)( this, true ), AI_IDLE, AI_IDLE );
-	defineState( AI_FOLLOW_WAYPOINT_PATH_AS_INDIVIDUALS_EXACT,newInstance(AIFollowWaypointPathExactState)( this, false ), AI_IDLE, AI_IDLE );
-	defineState( AI_FOLLOW_PATH,													newInstance(AIFollowPathState)( this ), AI_IDLE, AI_IDLE );
-	defineState( AI_FOLLOW_EXITPRODUCTION_PATH,						newInstance(AIFollowPathState)( this ), AI_IDLE, AI_IDLE );
-	defineState( AI_MOVE_AND_EVACUATE,					newInstance(AIMoveAndEvacuateState)( this ), AI_IDLE, AI_IDLE );
-	defineState( AI_MOVE_AND_EVACUATE_AND_EXIT,	newInstance(AIMoveAndEvacuateState)( this ), AI_MOVE_AND_DELETE, AI_MOVE_AND_DELETE );
-	defineState( AI_MOVE_AND_DELETE,						newInstance(AIMoveAndDeleteState)( this ), AI_IDLE, AI_IDLE );
-	defineState( AI_WAIT,												newInstance(AIWaitState)( this ), AI_IDLE, AI_IDLE );
-	defineState( AI_ATTACK_POSITION,						newInstance(AIAttackState)( this, false, false, false,  NULL ), AI_IDLE, AI_IDLE );
-	defineState( AI_ATTACK_OBJECT,							newInstance(AIAttackState)( this, false, true, false, NULL ), AI_IDLE, AI_IDLE );
-	defineState( AI_FORCE_ATTACK_OBJECT,				newInstance(AIAttackState)( this, false, true, true, NULL ), AI_IDLE, AI_IDLE );
-
-	defineState( AI_ATTACK_AND_FOLLOW_OBJECT,		newInstance(AIAttackState)( this, true, true, false, NULL ), AI_IDLE, AI_IDLE );
-	defineState( AI_ATTACK_SQUAD,								newInstance(AIAttackSquadState)( this, NULL ), AI_IDLE, AI_IDLE );
-	defineState( AI_WANDER,											newInstance(AIWanderState)( this ), AI_IDLE, AI_MOVE_AWAY_FROM_REPULSORS );
-	defineState( AI_PANIC,											newInstance(AIPanicState)( this ), AI_IDLE, AI_MOVE_AWAY_FROM_REPULSORS );
-	defineState( AI_DEAD,												newInstance(AIDeadState)( this ), AI_IDLE, AI_IDLE );
-	defineState( AI_DOCK,												newInstance(AIDockState)( this ), AI_IDLE, AI_IDLE );
-	defineState( AI_ENTER,											newInstance(AIEnterState)( this ), AI_IDLE, AI_IDLE );
-	defineState( AI_EXIT,												newInstance(AIExitState)( this ), AI_IDLE, AI_IDLE );
-	defineState( AI_EXIT_INSTANTLY,							newInstance(AIExitInstantlyState)( this ), AI_IDLE, AI_IDLE );
-	defineState( AI_GUARD,											newInstance(AIGuardState)( this ), AI_IDLE, AI_IDLE );
-	defineState( AI_GUARD_TUNNEL_NETWORK,				newInstance(AITunnelNetworkGuardState)( this ), AI_IDLE, AI_IDLE );
-	defineState( AI_GUARD_RETALIATE,						newInstance(AIGuardRetaliateState)( this ), AI_IDLE, AI_IDLE );
-	defineState( AI_HUNT,												newInstance(AIHuntState)( this ), AI_IDLE, AI_IDLE );
-	defineState( AI_ATTACK_AREA,								newInstance(AIAttackAreaState)( this ), AI_IDLE, AI_IDLE );
-	defineState( AI_FACE_OBJECT,								newInstance(AIFaceState)( this, true ), AI_IDLE, AI_IDLE );
-	defineState( AI_FACE_POSITION,							newInstance(AIFaceState)( this, false ), AI_IDLE, AI_IDLE );
-	defineState( AI_PICK_UP_CRATE,							newInstance(AIPickUpCrateState)( this ), AI_IDLE, AI_IDLE );
-
-	defineState( AI_RAPPEL_INTO,								newInstance(AIRappelState)( this ), AI_IDLE, AI_IDLE );
-	defineState( AI_BUSY,												newInstance(AIBusyState)( this ), AI_IDLE, AI_IDLE );
+	StateMachine *machine = NULL;
+	// Retain this TU's matched per-class placement-delete wrappers (and the
+	// Busy state's inline methods) previously ODR-used by the removed
+	// constructor's placement-new registrations. Same absent-from-retail
+	// anchor pattern as emitAttackStateMachineDependencies above.
+	(void)newInstance(AIIdleState)(machine, AIIdleState::LOOK_FOR_TARGETS);
+	(void)newInstance(AIMoveToState)(machine);
+	(void)newInstance(AIMoveOutOfTheWayState)(machine);
+	(void)newInstance(AIMoveAndTightenState)(machine);
+	(void)newInstance(AIMoveAwayFromRepulsorsState)(machine);
+	(void)newInstance(AIWanderInPlaceState)(machine);
+	(void)newInstance(AIAttackMoveToState)(machine);
+	(void)newInstance(AIAttackFollowWaypointPathState)(machine, true);
+	(void)newInstance(AIFollowWaypointPathState)(machine, true);
+	(void)newInstance(AIFollowWaypointPathExactState)(machine, true);
+	(void)newInstance(AIFollowPathState)(machine);
+	(void)newInstance(AIMoveAndEvacuateState)(machine);
+	(void)newInstance(AIMoveAndDeleteState)(machine);
+	(void)newInstance(AIWaitState)(machine);
+	(void)newInstance(AIAttackState)(machine, false, false, false, NULL);
+	(void)newInstance(AIAttackSquadState)(machine, NULL);
+	(void)newInstance(AIWanderState)(machine);
+	(void)newInstance(AIPanicState)(machine);
+	(void)newInstance(AIDeadState)(machine);
+	(void)newInstance(AIDockState)(machine);
+	(void)newInstance(AIEnterState)(machine);
+	(void)newInstance(AIExitState)(machine);
+	(void)newInstance(AIExitInstantlyState)(machine);
+	(void)newInstance(AIGuardState)(machine);
+	(void)newInstance(AITunnelNetworkGuardState)(machine);
+	(void)newInstance(AIGuardRetaliateState)(machine);
+	(void)newInstance(AIHuntState)(machine);
+	(void)newInstance(AIAttackAreaState)(machine);
+	(void)newInstance(AIFaceState)(machine, true);
+	(void)newInstance(AIPickUpCrateState)(machine);
+	(void)newInstance(AIRappelState)(machine);
+	(void)newInstance(AIBusyState)(machine);
 }
 
 //----------------------------------------------------------------------------------------------------------
