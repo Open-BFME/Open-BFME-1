@@ -3168,3 +3168,22 @@ caller of `_M_throw_failure`). Measured (BFME 2 donor 5452ce5952, adapted):
 inlined and the unit emits no out-of-line copy at all, while the 432-byte
 `ios_base::_M_copy_state` row stays exact
 (game/Libraries/Source/STLport/IosBaseCopyState.cpp).
+
+## End a dead pointer's live range before loading the next one (2026-11-01)
+
+At 0x00176F70 (AIAttackMeleeApproachState::onEnter, landed in
+game/GameEngine/Source/GameLogic/AI/AIAttackMeleeApproachState_onEnter.cpp,
+commit f6daad0cdd) the second of two identical distance checks kept
+`TheAI->getAiData()` in EDI where retail uses ESI, the register of the
+then-dead `source` (3 bytes: the load and two `fld/fadd [reg+0x9x]`). The
+bank loaded the data pointer first and then copied `*source->getPosition()`,
+so `source` was still live at the load. Measured: reading source's x/y first
+(`Coord3D raw; raw.y = pos->y; raw.x = pos->x;`), then loading the data
+pointer, then `delta.z = 0; delta.x = raw.x; delta.y = raw.y;
+delta.Sub2D(previous54);` gives retail's bytes exactly. Loading the pointer
+after the delta stores also picks ESI but schedules the load late (22
+diffs); a full `Coord3D raw(*pos)` copy loads x before y and adds an `fxch`
+(749 B); moving the block into a forceinline helper makes the two checks
+identical and they cross-jump (589 B). Hypothesis: the allocator coalesces
+a new value into a register only when the old value's last IL use precedes
+the new definition. VC7.1 `/Ob1`, `/O2` defaults of `build.sh`.
