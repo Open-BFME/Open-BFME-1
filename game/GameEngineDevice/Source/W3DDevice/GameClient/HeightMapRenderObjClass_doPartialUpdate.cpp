@@ -33,15 +33,19 @@ class W3DTerrainBackground
 {
 public:
 	void setFlip(WorldHeightMap *map);
-	void rva0072D210(const Rva0072E150Region & a0,WorldHeightMap * a1,Bool a2,Bool a3) {
-	 // retail body is still the gen-dump row ?d_0072d210@@YAXXZ (no C++ row yet); call it by that defined name
-	 union { void (__cdecl *symbol)(); void (W3DTerrainBackground::*member)(const Rva0072E150Region &,WorldHeightMap *,Bool,Bool); } c;
-	 c.symbol = &__identifier("?d_0072d210@@YAXXZ");
-	 (this->*c.member)(a0,a1,a2,a3);
-	}
+	// retail body is still the gen-dump row ?d_0072d210@@YAXXZ (no C++ row yet); call it by that defined name
 
 	char m_body[0xC4];
 };
+
+// Static (internal linkage): an inline member here would emit a COMDAT copy of
+// the pinned member name that retail-truth judges wrong (5-byte jmp vs the
+// 1920-byte body). The static forwarder inlines to a direct call instead.
+static __forceinline void Rva0072D210Forward(W3DTerrainBackground *tile, const Rva0072E150Region &a0, WorldHeightMap *a1, Bool a2, Bool a3) {
+	 union { void (__cdecl *symbol)(); void (W3DTerrainBackground::*member)(const Rva0072E150Region &,WorldHeightMap *,Bool,Bool); } c;
+	 c.symbol = &__identifier("?d_0072d210@@YAXXZ");
+	 (tile->*c.member)(a0,a1,a2,a3);
+}
 
 class RenderObjClass;				///< opaque; only used for the template ABI name below
 
@@ -116,7 +120,7 @@ void HeightMapRenderObjClass::doPartialUpdate(const IRegion2D &partialRange,
 		{
 			W3DTerrainBackground *tile = &m_tiles[y * m_mapWidth + x];
 			tile->setFlip(pMap);
-			tile->rva0072D210(
+			Rva0072D210Forward(tile,
 				reinterpret_cast<const Rva0072E150Region &>(partialRange),
 				pMap, true, m_bfme3014);
 		}
