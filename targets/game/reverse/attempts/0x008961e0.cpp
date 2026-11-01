@@ -1,5 +1,5 @@
 // ?helper@Gen_00896320@@QAEXPAX00@Z
-// partial score=0.8165 date=2026-10-31
+// partial score=0.9462 date=2026-11-01
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // The 0x008961E0 helper calls rva00896100 with its unchanged Gen_00896320
 // receiver. The target reads count/capacity/data at +0/+4/+8 and uses one
@@ -144,7 +144,8 @@ void Gen_00896320::helper(void *first, void *last, void *pos)
 	int newCapacity = (int)(capacity * 2.0f);
 	if (newCapacity < newCount)
 		newCapacity = newCount;
-	int index = where - m_begin;
+	Gen00896320Item *begin = *(Gen00896320Item *volatile *)&m_begin;
+	int index = where - begin;
 	rva00896100(newCapacity);
 	Gen00896320Item *newWhere = &m_begin[index];
 	helper(first, last, &newWhere);
