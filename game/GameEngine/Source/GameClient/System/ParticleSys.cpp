@@ -2078,72 +2078,9 @@ void ParticleSystem::xfer( Xfer *xfer )
 
 }  // end xfer
 
-// ------------------------------------------------------------------------------------------------
-/** Load post process */
-// ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/ParticleSystem_loadPostProcessMethodThunk.cpp
-// ?loadPostProcess@ParticleSystem@@MAEXXZ present-unmatched
-void ParticleSystem::loadPostProcess( void )
-{
-
-	// call base class post process
-	ParticleSystemInfo::loadPostProcess();
-
-	// reconnect slave pointers if needed
-	if( m_slaveSystemID != INVALID_PARTICLE_SYSTEM_ID )
-	{
-
-		// sanity
-		if( m_slaveSystem != NULL )
-		{
-
-			DEBUG_CRASH(( "ParticleSystem::loadPostProcess - m_slaveSystem is not NULL but should be\n" ));
-			throw SC_INVALID_DATA;
-
-		}  // end if
-
-		// assign system
-		m_slaveSystem = TheParticleSystemManager->findParticleSystem( m_slaveSystemID );
-
-		// sanity
-		if( m_slaveSystem == NULL || m_slaveSystem->isDestroyed() == TRUE )
-		{
-
-			DEBUG_CRASH(( "ParticleSystem::loadPostProcess - m_slaveSystem is NULL or destroyed\n" ));
-			throw SC_INVALID_DATA;
-
-		}  // end if
-
-	}  // end if
-
-	// reconnect master pointers if needed
-	if( m_masterSystemID != INVALID_PARTICLE_SYSTEM_ID )
-	{
-
-		// sanity
-		if( m_masterSystem != NULL )
-		{
-
-			DEBUG_CRASH(( "ParticleSystem::loadPostProcess - m_masterSystem is not NULL but should be\n" ));
-			throw SC_INVALID_DATA;
-
-		}  // end if
-
-		// assign system
-		m_masterSystem = TheParticleSystemManager->findParticleSystem( m_masterSystemID );
-
-		// sanity
-		if( m_masterSystem == NULL || m_masterSystem->isDestroyed() == TRUE )
-		{
-
-			DEBUG_CRASH(( "ParticleSystem::loadPostProcess - m_masterSystem is NULL or destroyed\n" ));
-			throw SC_INVALID_DATA;
-
-		}  // end if
-
-	}  // end if
-
-}  // end loadPostProcess
+// ParticleSystem::loadPostProcess lives in its byte-verified owner TU
+// (game/GameEngine/Source/GameClient/System/ParticleSystem_loadPostProcess.cpp,
+// retail 0x005C5100); this monolith must not emit a second strong definition.
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // ParticleSystemTemplate /////////////////////////////////////////////////////////////////////////
