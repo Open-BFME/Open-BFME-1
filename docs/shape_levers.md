@@ -3227,3 +3227,17 @@ retail's `mov ecx,eax / dec ecx / mov eax,ecx / test` countdown that
 `(it->second = it->second - 1) == 0` and five other spellings did not.
 Result 551/551 B, 10 diffs (400 before); the residue is a hoisted
 `it._M_ht` load placed above the loop guard `je`. Measured on this body only.
+
+## Keep a lookup's exception contract through a static inline adapter (2026-11-01)
+
+The three OptionPreferences LOD getters used a throw() pin-only tree lookup.
+Calling the real STLport tree through a member-pointer union changed their EH
+shape. A static __forceinline throw() helper returning
+`tree->find<AsciiString>(key)._M_node` preserves all three callers (106/106/87 B)
+under MSVC 7.1 3077, /MD /EHsc and their existing STLport context. The helper
+emits no body. Match the provider's AsciiString header and less specialization
+as well: the old header emitted an 83-byte wrong _M_find while callers still
+passed; the provider's context emits the exact 194-byte copy including
+relocations. Declaration-only explicit _M_find specializations hit C1001 in
+this context. Measured only on these getters; evidence and controls:
+`targets/game/reverse/attempt_support/20261101-options-tree-lookup.md`.
