@@ -18,7 +18,8 @@ typedef unsigned short UnsignedShort;
 #include <math.h>
 #include <stdlib.h>
 
-struct Coord3D { Real x, y, z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
+
 
 enum PathfindLayerEnum
 {
