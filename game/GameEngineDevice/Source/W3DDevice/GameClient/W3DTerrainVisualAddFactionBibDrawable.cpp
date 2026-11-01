@@ -11,19 +11,8 @@ extern void j_000309f4(void);
 #include "vector3.h"
 #include "vector4.h"
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-
-	void set(Real nx, Real ny, Real nz)
-	{
-		x = nx;
-		y = ny;
-		z = nz;
-	}
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
+static __forceinline void setCoord3D(Coord3D &p, float x,float y,float z){p.x=x;p.y=y;p.z=z;}
 
 class Matrix3D
 {
@@ -175,7 +164,7 @@ void W3DTerrainVisual::addFactionBibDrawable(Drawable *factionBuilding,
 		const Matrix3D *mtx = factionBuilding->getTransformMatrix();
 		Vector3 corners[4];
 		Coord3D pos;
-		pos.set(0, 0, 0);
+		setCoord3D(pos,0,0,0);
 		Real exitWidth = factionBuilding->getTemplate()->getFactoryExitWidth();
 		Real extraWidth = factionBuilding->getTemplate()->getFactoryExtraBibWidth() + extra;
 		const GeometryInfo info = factionBuilding->getTemplate()->getTemplateGeometryInfo();
