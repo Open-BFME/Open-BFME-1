@@ -14,7 +14,7 @@ enum DeathType { DEATH_NONE = 1 };
 enum KindOfType { KINDOF_SWARM_DOZER = 15 };
 
 class ModelConditionFlags { public:
-	bool test(int bit) const { return bits.test(bit); }
+	__forceinline bool test(int bit) const { return bits.test(bit); }
 	void set(int bit) { bits.set(bit); }
 	void reset(int bit) { bits.reset(bit); }
 private: _STL::bitset<320> bits;
@@ -131,7 +131,9 @@ public:
 	ObjectID getID() const { return m_id; }
 	Bool isEffectivelyDead() const { return (m_privateStatus & 1) != 0; }
 	void setEffectivelyDead(Bool dead);
-	__forceinline void clearModelConditionState(int bit)
+	// Imported-forceinline keeps the proven caller inlining without exporting
+	// this TU-only model-condition view as retail's differently shaped helper.
+	__declspec(dllimport) __forceinline void clearModelConditionState(int bit)
 	{
 		if (m_modelConditionFlags.test(bit))
 		{
