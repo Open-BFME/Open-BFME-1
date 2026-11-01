@@ -99,16 +99,23 @@ struct BfmeWideResultData
 	}
 };
 
+// Release of the iterator payload, ledgered as 0x000C5FC0 (same as HeightDieUpdate).
+class BfmeThingCAD
+{
+public:
+	void bfmeGoCAD();
+};
+
 struct Gen_uw_0002c471
 {
 	BfmeWideResultData *value;
-	~Gen_uw_0002c471();
 };
 
 struct BfmeWideResult : Gen_uw_0002c471
 {
 	BfmeWideResult();
 	BfmeWideResult(const BfmeWideResult &);
+	~BfmeWideResult() { ((BfmeThingCAD *)this)->bfmeGoCAD(); }
 
 	Object *next(Object *&object)
 	{
