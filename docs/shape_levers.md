@@ -3187,3 +3187,25 @@ diffs); a full `Coord3D raw(*pos)` copy loads x before y and adds an `fxch`
 identical and they cross-jump (589 B). Hypothesis: the allocator coalesces
 a new value into a register only when the old value's last IL use precedes
 the new definition. VC7.1 `/Ob1`, `/O2` defaults of `build.sh`.
+
+## Naked constructors append `mov eax,[ebp-4]`; naked dtors/voids emit exactly (2026-11-01)
+
+`??0OpenContain@@QAE@PAVThing@@PBVModuleData@@@Z` at 0x002277A0 (722 B,
+OpenContainConstructorThunk.cpp): the 722 `__emit` bytes are retail-exact,
+but the object section is 725 bytes — MSVC 7.1 appends `8b 45 fc`
+(`mov eax,[ebp-4]`) after the `ret 8`, where retail has `cc cc cc`.
+Measured matrix under default flags (`-O2 -GR- -EHsc-`): naked void member
+with 2 and 722 emits exact; the real 722-emit stream as a naked void member
+exact; the same stream as a naked ctor with params +3; as a naked
+param-less ctor +3; as a naked dtor exact. Minimal repro: 2 emits
+(`90 c3`) as a naked ctor emit 5 bytes (`90 c3 8b 45 fc`), as a naked dtor
+or void member exactly 2. Hypothesis: the ctor "return this" epilogue is
+emitted even for naked. Consequence: the row-sized byte gate passes such
+dumps while the census judges the full section and reports wrong_selected,
+so the 7 files holding naked-ctor dumps (GameResultsQueueCtorThunk,
+FireWeaponWhenDeadBehavior_ctor_Thunk, CastleBehaviorCtorThunk,
+AIUpdateInterfaceCtorThunk, GiantBirdAIUpdateCtorThunk,
+OpenContainConstructorThunk, fx_particle_system_bulk — 19 naked ctors
+total) can only link after real C++ conversion (lift lane). Naked dtors
+are unaffected. Evidence:
+targets/game/reverse/attempt_support/002277a0-opencontain-ctor-phantom.md.
