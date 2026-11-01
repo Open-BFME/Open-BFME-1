@@ -83,19 +83,21 @@ class Shell : public SubsystemInterface
 protected:
 	void doPush(AsciiString layoutFile);
 
-	void linkScreen(WindowLayout *screen)
-	{
-		if (screen == 0)
-			return;
-		if (m_screenCount == 16)
-			return;
-		m_screenStack[m_screenCount++] = screen;
-	}
-
-private:
+public:
 	WindowLayout *m_screenStack[16];
 	Int m_screenCount;
 };
+
+// Shell::linkScreen is matched out of line in Shell.cpp; a file-static copy
+// keeps the inlined push here without a second COMDAT of that name.
+static __forceinline void linkScreen(Shell *shell, WindowLayout *screen)
+{
+	if (screen == 0)
+		return;
+	if (shell->m_screenCount == 16)
+		return;
+	shell->m_screenStack[shell->m_screenCount++] = screen;
+}
 
 void Shell::doPush(AsciiString layoutFile)
 {
@@ -103,7 +105,7 @@ void Shell::doPush(AsciiString layoutFile)
 		GameSpyCloseAllOverlays();
 
 	WindowLayout *newScreen = TheWindowManager->winCreateLayout(layoutFile);
-	linkScreen(newScreen);
+	linkScreen(this, newScreen);
 
 	if (TheIMEManager)
 		TheIMEManager->detatch();
