@@ -89,7 +89,7 @@ struct Rva004585F0GameLogicLayout
 	volatile UnsignedByte drawIconUI;
 };
 
-class Rva004585F0RadiusDecal
+class RadiusDecal
 {
 public:
 	void update();
@@ -126,7 +126,7 @@ extern "C" __declspec(dllimport) double ceil(double);
 extern Real bfmeSinVNB(Real);
 
 // ?update@RadiusDecal@@QAEXXZ
-void Rva004585F0RadiusDecal::update()
+void RadiusDecal::update()
 {
 	if (bfmeExtra == RVA004585F0_ZERO)
 	{
