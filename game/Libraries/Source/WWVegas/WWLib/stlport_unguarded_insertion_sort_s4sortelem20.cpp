@@ -18,7 +18,10 @@ class BfmeSortElem20Tail
 {
 public:
 	BfmeSortElem20Tail(const BfmeSortElem20Tail &other);
-	__forceinline ~BfmeSortElem20Tail(void)
+	// Noinline: retail's S4 dtor calls this out of line through ILT 0xE921.
+	// Inlining it would route the vector call direct and the S4 dtor copy
+	// would no longer be retail's body.
+	__declspec(noinline) ~BfmeSortElem20Tail(void)
 	{
 		typedef _STL::vector<Gen002E1260> RetailVector;
 		reinterpret_cast<RetailVector *>(this)->~RetailVector();
