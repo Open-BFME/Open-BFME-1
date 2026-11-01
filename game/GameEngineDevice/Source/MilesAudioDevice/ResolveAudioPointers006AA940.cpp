@@ -20,7 +20,10 @@ public:
 	char *text;
 	int tag;
 };
-struct Pair006AA940 : _STL::pair<void*,float> {};
+// Eight-byte pointer/float element as plain data: retail's 305-byte overflow
+// at 0x006A3F90 moves elements as block copies, which an _STL::pair base
+// (out-of-line _Construct calls) does not reproduce.
+struct Pair006AA940 { void *first; float second; };
 struct Word006AA940 { int value; };
 class ResolveAudioPointers006AA940 {
 public:

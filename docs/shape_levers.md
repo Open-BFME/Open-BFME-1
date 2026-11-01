@@ -3145,3 +3145,15 @@ with `??_V@YAXPAX@Z`. In a TU without `<new>`, `delete[] (char *)p` compiled
 to a call to `??3@YAXPAX@Z` and an explicit `operator delete[](p)` failed with
 C3861. Declaring `void __cdecl operator delete[](void *p);` makes
 `delete[] (char *)p` call `??_V`, as retail does.
+
+## Vector overflow over an 8-byte pair: `_STL::pair` base vs POD element (2026-11-01)
+
+Retail's 305-byte `vector` overflow at 0x006A3F90 moves elements as block
+copies (only `_M_allocate`/`_M_deallocate`/`operator new`/`operator delete`
+calls). An element deriving from `_STL::pair<void *, float>` instantiated a
+306-byte overflow calling `_Construct` out of line at four sites. Measured:
+plain `struct Pair006AA940 { void *first; float second; }` (same layout and
+member names) emits the retail body exactly
+(game/GameEngineDevice/Source/MilesAudioDevice/ResolveAudioPointers006AA940.cpp)
+while the 439-byte caller stays exact. A caller's pair-shaped member accesses
+do not prove an `_STL::pair` base; the overflow's copy form decides.
