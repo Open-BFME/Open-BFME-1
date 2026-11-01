@@ -22,20 +22,19 @@ public:
 
 class BfmeThingDI;
 
-// bfmeRunCOF keeps its pinned spelling at ILT 0x0001BB21; the culling
+// The effect call through ILT 0x0001BB21 is FXList::doFXPos (body 0x004280D0); the culling
 // predicate the callers reach through ILT 0x00011F77 is FXList::bfmeIsBlocked
 // (body 0x0042DAA0), so that call is spelled with the FXList class.
 class FXList
 {
 public:
 	Bool bfmeIsBlocked();
+	// ILT 0x0001BB21 -> matched body 0x004280D0.
+	void doFXPos(const Coord3D *primary, const class Matrix3D *primaryMtx,
+		float primarySpeed, const Coord3D *secondary) const;
 };
 
-class BfmeThingCOF
-{
-public:
-	void bfmeRunCOF(void *a, void *b, void *c, void *d);
-};
+class BfmeThingCOF;
 
 extern void j_00035e5e();
 class WeaponStore;
@@ -125,7 +124,7 @@ Bool BezierProjectileBehavior::rva001F1CE0(Object *other)
 	{
 		BfmeThingCOF *effect = data->m_effect94;
 		if (effect != 0 && !((FXList *)effect)->bfmeIsBlocked())
-			effect->bfmeRunCOF(&object->m_position, 0, 0, 0);
+			((FXList *)effect)->doFXPos(&object->m_position, 0, 0.0f, 0);
 
 		BfmeThingCOF *ocl = data->m_effect9C;
 		if (ocl != 0)
@@ -139,7 +138,7 @@ Bool BezierProjectileBehavior::rva001F1CE0(Object *other)
 	{
 		BfmeThingCOF *effect = data->m_effect98;
 		if (effect != 0 && !((FXList *)effect)->bfmeIsBlocked())
-			effect->bfmeRunCOF(&object->m_position, 0, 0, 0);
+			((FXList *)effect)->doFXPos(&object->m_position, 0, 0.0f, 0);
 
 		effect = data->m_effectA0;
 		if (effect != 0)
