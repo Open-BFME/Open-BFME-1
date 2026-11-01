@@ -5,20 +5,14 @@ typedef bool Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	void set(float setX, float setY, float setZ)
-	{
-		x = setX;
-		y = setY;
-		z = setZ;
-	}
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-	float x;
-	float y;
-	float z;
-};
+static __forceinline void setCoord3D(Coord3D &point, float x, float y, float z)
+{
+	point.x = x;
+	point.y = y;
+	point.z = z;
+}
 
 struct Vector3
 {
@@ -247,7 +241,7 @@ Bool Object::getWorldspaceBestContactPoint(Coord3D *pointOut,
 		localPoint.z = m_geometryInfo.getMaxHeightAbovePosition();
 
 	Vector3 worldPoint = *transform * *(const Vector3 *)&localPoint;
-	pointOut->set(worldPoint.X, worldPoint.Y, worldPoint.Z);
+	setCoord3D(*pointOut, worldPoint.X, worldPoint.Y, worldPoint.Z);
 
 	if (g_bfmeDockingTraceActive && TheCRCParameterCheck)
 	{
