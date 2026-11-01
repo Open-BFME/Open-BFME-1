@@ -1,5 +1,5 @@
-// ?d_00240b10@@YAXXZ
-// partial score=0.1457 date=2026-09-28
+// ?run@MemberRemove00240B10@@QAEXPAVObject@@@Z
+// partial score=0.6113 date=2026-11-01
 // cl: /DNDEBUG /MD /EHsc /Igame/GameEngine/Source
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
@@ -27,8 +27,8 @@ public:
 __forceinline ObjectID id00240B10(Object *obj) {return obj->m_id;}
 void MemberRemove00240B10::run(Object *member) {
  int *value;
- ObjectID first=at0d0;
- ObjectID id=id00240B10(member);
+ ObjectID first=*(volatile ObjectID*)&at0d0;
+ ObjectID id=*(volatile ObjectID*)&member->m_id;
  if(first!=id && at0d8!=id) {
   typedef bool (Route00240B10::*Kind)(int);
   union {void (*fn)(); Kind call;} kind={j_0003251f};
