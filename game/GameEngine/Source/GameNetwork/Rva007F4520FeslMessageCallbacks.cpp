@@ -17,7 +17,8 @@ public:
 class BfmeHostBT { public: void Rva007F7C70(Rva007E8810Message *); };
 
 void Rva007F4520Callback(Rva007E8810Message *message, Rva007F45E0Aries *owner) { owner->rva007F4530(message); }
-void Rva007F6730Callback(Rva007E8810Message *message, Rva007F66B0Browser *owner) { owner->onLobbyCounts(message); }
+class Rva007F6740Receiver;
+void Rva007F6730Callback(Rva007E8810Message *message, Rva007F6740Receiver *owner) { ((Rva007F66B0Browser *)owner)->onLobbyCounts(message); }
 void Rva007F7970Callback(Rva007E8810Message *message, BfmeThingZI *owner) { owner->rva007F7640(message); }
 void Rva007F83E0Callback(Rva007E8810Message *message, BfmeThingZI *owner) { owner->rva007F7DA0(message); }
 void Rva007F83F0Callback(Rva007E8810Message *message, BfmeHostBT *owner) { owner->Rva007F7C70(message); }
