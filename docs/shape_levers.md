@@ -3209,3 +3209,21 @@ OpenContainConstructorThunk, fx_particle_system_bulk — 19 naked ctors
 total) can only link after real C++ conversion (lift lane). Naked dtors
 are unaffected. Evidence:
 targets/game/reverse/attempt_support/002277a0-opencontain-ctor-phantom.md.
+
+## ZH `DLINK_ITERATOR` PMF walk shrink-wraps callee-saved pushes (2026-11-01)
+
+Retail 0x000D9A80 Player::update (bank `targets/game/reverse/attempts/0x000d9a80.cpp`,
+VC7.1 /O2 /MD /EHsc, STLport) pushes EBX/EDI only after the `m_ai->update()`
+call and pops them before the local-player test; a plain
+`for (Team *t = head; t; t = t->_bfme_nextInInstanceList())` walk gave
+prologue pushes and 400 differing bytes. Writing the inner walk as ZH does,
+`for (DLINK_ITERATOR<Team> iter = proto->iterate_TeamInstanceList(); !iter.done(); iter.advance())`
+with the const PMF `&Team::_bfme_nextInInstanceList` (the PMF call folds to a
+direct call), moved the saves exactly like retail; an inline
+`iterate_TeamInstanceList()` accessor on the prototype view (instead of
+constructing the iterator in place) also fixed the EAX/ECX choice for `*pit`.
+In the same body `--(int &)it->second; if (it->second == 0)` reproduced
+retail's `mov ecx,eax / dec ecx / mov eax,ecx / test` countdown that
+`(it->second = it->second - 1) == 0` and five other spellings did not.
+Result 551/551 B, 10 diffs (400 before); the residue is a hoisted
+`it._M_ht` load placed above the loop guard `je`. Measured on this body only.
