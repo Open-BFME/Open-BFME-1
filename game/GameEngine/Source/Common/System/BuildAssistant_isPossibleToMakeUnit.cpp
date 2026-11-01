@@ -56,7 +56,7 @@ class Player
 {
 public:
     Bool canBuild(const ThingTemplate *) const;
-    Bool hasUpgradeComplete(const UpgradeTemplate *);
+    Bool hasUpgradeComplete(const UpgradeTemplate *) const;
     unsigned char m_unmodelled00[0x684];
     Rva000F9700Owner m_field684;
 };

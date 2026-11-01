@@ -12,7 +12,7 @@ class UpgradeTemplate;
 class Player
 {
 public:
-	Bool hasUpgradeComplete(const UpgradeTemplate *upgrade);
+	Bool hasUpgradeComplete(const UpgradeTemplate *upgrade) const;
 };
 
 class BodyModuleInterface

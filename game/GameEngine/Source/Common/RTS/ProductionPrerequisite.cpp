@@ -47,7 +47,12 @@
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "Common/ProductionPrerequisite.h"
+// BFME 1 made Player::hasUpgradeComplete const (ilt_oracle CONFIRMS
+// ?hasUpgradeComplete@Player@@QBE_NPBVUpgradeTemplate@@@Z at 0x000D5930);
+// the Zero Hour header declares it non-const, so qualify it while it is read.
+#define hasUpgradeComplete(arg) hasUpgradeComplete(arg) const
 #include "Common/Player.h"
+#undef hasUpgradeComplete
 #include "Common/ThingFactory.h"
 #include "Common/ThingTemplate.h"
 #include "GameLogic/Object.h"

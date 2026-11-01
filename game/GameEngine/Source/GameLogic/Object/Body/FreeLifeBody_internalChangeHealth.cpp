@@ -18,7 +18,7 @@
 // Direct dispatch ABI is independently pinned at 001BE220: condition + duration.
 class UpgradeTemplate;
 class DamageInfo { public: char pad[8]; int source; };
-class Player { public: bool hasUpgradeComplete(const UpgradeTemplate*); };
+class Player { public: bool hasUpgradeComplete(const UpgradeTemplate*) const; };
 class Object { public:
  Player *getControllingPlayer() const;
  bool hasUpgrade(const UpgradeTemplate*) const;

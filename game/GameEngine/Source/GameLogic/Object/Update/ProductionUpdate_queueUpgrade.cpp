@@ -69,7 +69,7 @@ public:
 class Player
 {
 public:
-	Bool hasUpgradeComplete(const UpgradeTemplate *upgrade);
+	Bool hasUpgradeComplete(const UpgradeTemplate *upgrade) const;
 	class Upgrade *addUpgrade(const UpgradeTemplate *upgrade, UpgradeStatusType status);
 
 	char m_bfmeHead[0x48];

@@ -977,7 +977,6 @@ functions	0x001050C0	?createAptScreenInGameChat@@YGPAXPAX@Z
 functions	0x00105140	?createAptScreenSpellStore@@YGPAXPAX@Z
 functions	0x001051C0	?createAptScreenQuickMatchMenu@@YGPAXPAX@Z
 functions	0x00106610	?Get_User_Type@ParticleEmitterDefClass@@QBEHXZ
-functions	0x00106670	?getID@State@@QBEIXZ
 functions	0x00106680	?getTunnelSystem@Player@@QAEPAVTunnelTracker@@XZ
 functions	0x001066D0	_floorf
 functions	0x001066F0	??$min@M@@YAMMM@Z
@@ -2280,7 +2279,6 @@ functions	0x00231A00	?_M_insert_overflow@?$vector@UFlightDeckInfo@FlightDeckBeha
 functions	0x00231BE0	?push_back@?$vector@UFlightDeckInfo@FlightDeckBehavior@@V?$allocator@UFlightDeckInfo@FlightDeckBehavior@@@_STL@@@_STL@@QAEXABUFlightDeckInfo@FlightDeckBehavior@@@Z
 functions	0x00232090	?getNext@LANGameInfo@@QAEPAV1@XZ
 functions	0x00232170	?winGetInputFunc@GameWindow@@QAEP6A?AW4WindowMsgHandledType@@PAV1@III@ZXZ
-functions	0x00232180	?getMachine@State@@QAEPAVStateMachine@@XZ
 functions	0x00233490	??$_Construct@UDetonatorInfo@MinefieldBehavior@@U12@@_STL@@YAXPAUDetonatorInfo@MinefieldBehavior@@ABU12@@Z
 functions	0x00233490	??$_Construct@UEvaCheck@@U1@@_STL@@YAXPAUEvaCheck@@ABU1@@Z
 functions	0x00233490	??$_Construct@UStationPointData@GarrisonContain@@U12@@_STL@@YAXPAUStationPointData@GarrisonContain@@ABU12@@Z
@@ -4760,7 +4758,6 @@ functions	0x006BEB90	?loadMapAbi@W3DTerrainLogic@@UAE_NVAsciiString@@PAVChunkInp
 functions	0x006BF1D0	?friend_newModuleData@SpectreGunshipUpdate@@SAPAVModuleData@@PAVINI@@@Z
 functions	0x006C19B0	?clearShroud@W3DRadar@@UAEXXZ
 functions	0x006C1BB0	?legalRadarPoint@@YA_NHH@Z
-functions	0x006C3170	?drawEvents@W3DRadar@@IAEXHHHH@Z
 functions	0x006C43F0	?renderObjectList@W3DRadar@@IAEXPBVRadarObject@@PAVTextureClass@@_N@Z
 functions	0x006C5430	??$Bound@M@@YAMMMM@Z
 functions	0x006C56E0	?getDataPtr@WorldHeightMap@@QAEPAEXZ
@@ -5099,9 +5096,7 @@ functions	0x006FBC00	?createRayEffectByTemplate@W3DGameClient@@UAEXPBUCoord3D@@0
 functions	0x006FC0D0	?drawPlaceAngle@W3DInGameUI@@QAEXPAVView@@@Z
 functions	0x006FCED0	??0AABoxClass@@QAE@ABV0@@Z
 functions	0x006FCF50	?setFlashCount@CommandButton@@QBEXH@Z
-functions	0x006FCF50	?setFlashCount@Drawable@@QAEXH@Z
 functions	0x007001E0	??4Open2ComHandle@@QAEAAV0@ABV0@@Z
-functions	0x00701330	?loadD3DCursorTextures@W3DMouse@@
 functions	0x00701E90	??A?$SimpleDynVecClass@VKeyClass@?$PrimitiveAnimationChannelClass@VVector2@@@@@@QAEAAVKeyClass@?$PrimitiveAnimationChannelClass@VVector2@@@@H@Z
 functions	0x00701E90	??A?$SimpleDynVecClass@VKeyClass@?$PrimitiveAnimationChannelClass@VVector2@@@@@@QBEABVKeyClass@?$PrimitiveAnimationChannelClass@VVector2@@@@H@Z
 functions	0x00701E90	??A?$SimpleDynVecClass@VVector3@@@@QAEAAVVector3@@H@Z
@@ -5797,7 +5792,6 @@ functions	0x007BB8D0	?Clear@?$DynamicVectorClass@VTangentsClass@HermiteSpline3DC
 functions	0x007BB950	??8?$VectorClass@VTCBClass@TCBSpline3DClass@@@@UBE_NABV0@@Z
 functions	0x007BBA50	?ID@?$DynamicVectorClass@VTCBClass@TCBSpline3DClass@@@@UAEHABVTCBClass@TCBSpline3DClass@@@Z
 functions	0x007BD0E0	??1HAnimManagerClass@@QAE@XZ
-functions	0x007BF7D0	?Update@W3DVolumetricShadow@@IAEXXZ
 functions	0x007C10D0	??0W3DShadowHelperManager@@QAE@XZ
 functions	0x007C1100	?Destroy_Iterator@SimpleSceneClass@@UAEXPAVSceneIterator@@@Z
 functions	0x007C1180	?ReAcquireResources@W3DVolumetricShadowManager@@QAE_NXZ
@@ -6350,7 +6344,6 @@ pins	0x0000F871	?groupIdle@AIGroup@@QAEXH@Z
 pins	0x0000F8D0	??0NetFrameResendRequestCommandMsg@@QAE@XZ
 pins	0x0000F94D	?refreshAllPlayerControls@SkirmishScreenState@@QAEXXZ
 pins	0x0000F952	?insert_unique@?$_Rb_tree@$$CBV?$BitFlags@$0L@@@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@U?$_Select1st@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@@3@UMapHelper@?$SparseMatchFinder@VArmorTemplateSet@@V?$BitFlags@$0L@@@@@V?$allocator@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@@2@@2@U32@ABU?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@2@@Z
-pins	0x0000F975	?onExit@SpecialAbilityUpdate@@AAEX_N0@Z
 pins	0x0000F9AC	??_GLocomotorTemplate@@MAEPAXI@Z
 pins	0x0000F9B6	?ReAcquireResources@W3DVolumetricShadowManager@@QAE_NXZ
 pins	0x0000FA3D	??4ParticleSystemHandle@@QAEAAV0@ABV0@@Z
@@ -7046,7 +7039,6 @@ pins	0x0002331C	?hasAnyShortcutSpecialPower@Player@@QAEHXZ
 pins	0x0002337B	?parse@HemisphericalEmissionVelocityTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z
 pins	0x0002337B	?parse@SphericalEmissionVelocityTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z
 pins	0x00023411	??1?$_List_base@UEvacuationRecord@@V?$allocator@UEvacuationRecord@@@_STL@@@_STL@@QAE@XZ
-pins	0x000235BF	?hasUpgradeComplete@Player@@QAE_NPBVUpgradeTemplate@@@Z
 pins	0x00023641	??1TeamPrototype@@MAE@XZ
 pins	0x00023650	??1LifeEventModule@FXParticleSystem@@UAE@XZ
 pins	0x0002378B	?setColor@CustomMatchPreferences@@QAEXH@Z
@@ -8325,7 +8317,6 @@ pins	0x000AAF30	?destroy@UserPreferencesDestructorShim@@QAEXXZ
 pins	0x000AB7F0	_customMatchPreferencesCtorTarget
 pins	0x000B1DF0	?parse@INIParseSoundsListShim@@SAXPAVINI@@PAX1PBX@Z
 pins	0x000B2CC0	?init@AudioEventRTS@@QAEXABVAsciiString@@W4ObjectID@@@Z
-pins	0x000B3970	?generateFilename@AudioEventRTS@@QAEXXZ
 pins	0x000B69A0	?evaluate@BezierSegmentEvaluateShim@@QBEXMPAUCoord3D@@@Z
 pins	0x000B8670	?bkt_num_key@AudioEventHashtableBktNumKeyShim@_STL@@QBEIABVAsciiString@@I@Z
 pins	0x000B8670	?bkt_num_key@AudioEventInfoBktNumKeyShim@_STL@@QBEIABVAsciiString@@I@Z

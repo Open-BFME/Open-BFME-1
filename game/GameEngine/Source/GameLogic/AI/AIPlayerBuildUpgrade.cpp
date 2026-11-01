@@ -106,7 +106,7 @@ class Player
 public:
 	NameKeyType getPlayerNameKey() const { return m_playerNameKey; }
 	Bool hasUpgradeInProduction(const UpgradeTemplate *upgradeTemplate);
-	Bool hasUpgradeComplete(const UpgradeTemplate *upgradeTemplate);
+	Bool hasUpgradeComplete(const UpgradeTemplate *upgradeTemplate) const;
 private:
 	char m_unmodelled000[0x20];
 	NameKeyType m_playerNameKey;					// +0x20

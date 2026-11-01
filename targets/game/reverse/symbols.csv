@@ -85670,7 +85670,7 @@ name,address,notes
 ?hasScience@Player@@QBE_NW4ScienceType@@@Z,0x0000943F,retail target of playerHasPrereqsForScience inner-loop call; thunk-table entry; real body unresolved
 ?hasSinglePlayerBeenDefeated@VictoryConditions@@UAE_NPAVPlayer@@@Z,0x0035FDF0,vtable 0x010E8D90 slot 11 (+0x2C) via ILT 0x000151CC; ZH body: m_victoryConditions bits select hasAnyObjects 0x000CE0B0 / hasAnyUnits 0x000CE070 / hasAnyBuildings(mask 0x8000) 0x000CDF70; BFME adds isPlayerObserver -> false and isPlayerDead 0x000C9D00 -> true and increments the +0xC0 counter at 0x0035FEB9 on every true
 ?hasUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x0000BA37,Open-BFME5 ILT thunk from CommandButton::isReady call sites (body 0x001C9F50)
-?hasUpgradeComplete@Player@@QAE_NPBVUpgradeTemplate@@@Z,0x000235BF,RefundDie::onDie matched caller identifies the completed-upgrade predicate ILT
+?hasUpgradeComplete@Player@@QBE_NPBVUpgradeTemplate@@@Z,0x000235BF,ilt_oracle CONFIRMS the const name at 0x000D5930 (QAE spelling contradicted); RefundDie::onDie matched caller identifies the completed-upgrade predicate
 ?hasUpgradeInProduction@Player@@QAE_NPBVUpgradeTemplate@@@Z,0x00020C8E,ProductionUpdate queueUpgrade player upgrade check thunk
 ?hasUpgradeMask@BfmeUpgradeMaskTester@@QBE_NI@Z,0x001C59C0,alias of the Object spelling; Object.cpp reaches the mask test through a view class because the reference Object.h does not declare it
 ?hasUpgradeMask@Object@@QBE_NI@Z,0x001C59C0,Open-BFME5 the mask test Object::hasUpgrade tail-jumps to; unnamed in the image

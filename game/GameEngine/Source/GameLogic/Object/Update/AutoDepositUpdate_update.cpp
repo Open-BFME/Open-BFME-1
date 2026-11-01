@@ -98,7 +98,7 @@ class Rva000C97C0PlayerThunk { public: int unidentified_00024938(int amount); };
 class Player
 {
 public: 
-	Bool hasUpgradeComplete(const UpgradeTemplate *upgrade); 
+	Bool hasUpgradeComplete(const UpgradeTemplate *upgrade) const; 
 	Bool hasAnyObjects(const ObjectFilter *mustBePresent, Bool flag) const; 
 	Color getPlayerColor() const { return m_color; }
 

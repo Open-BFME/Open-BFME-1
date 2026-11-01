@@ -54,7 +54,7 @@ public:
 class Player
 {
 public:
-	bool hasUpgradeComplete( const UpgradeTemplate *upgrade );
+	bool hasUpgradeComplete( const UpgradeTemplate *upgrade ) const;
 	bool hasAnyObjects( const ObjectFilter *filter, bool includeDead ) const;
 
 	Money *getMoney()

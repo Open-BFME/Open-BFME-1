@@ -55,7 +55,7 @@ class Player
 {
 public:
     bool hasScience(ScienceType science) const;
-    bool hasUpgradeComplete(const UpgradeTemplate *upgrade);
+    bool hasUpgradeComplete(const UpgradeTemplate *upgrade) const;
 };
 
 // ?isSatisfied@ProductionPrerequisite@@QBE_NPBVPlayer@@@Z
