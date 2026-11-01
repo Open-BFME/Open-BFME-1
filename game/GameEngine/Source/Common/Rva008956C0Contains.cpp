@@ -43,14 +43,12 @@ public:
 	BfmeDropObjectA *m_object;				// +0x00
 };
 
-// The aligned call uses ECX for the receiver, passes one handle on the stack,
-// tests an int result, and returns with four argument bytes popped.
-void __cdecl d_00895510(void);					// retail 0x00895510
-
-class Rva00895510Receiver;
-
-typedef int (__fastcall *Rva00895510Fn)(Rva00895510Receiver *,
-	RefHandle008956C0);
+// Retail 0x00895510 (Rva00895510HasName.cpp): thiscall, the handle by value.
+class Rva00895510Receiver
+{
+public:
+	int method(RefHandle008956C0 candidate);
+};
 
 class Rva008956C0Entry
 {
@@ -89,8 +87,7 @@ int Rva008956C0List::contains008956C0(RefHandle008956C0 candidate)
 	{
 		do
 		{
-			if (((Rva00895510Fn)d_00895510)(node->m_entry->getReceiver(),
-				candidate))
+			if (node->m_entry->getReceiver()->method(candidate))
 				return 1;
 
 			node = node->m_next;

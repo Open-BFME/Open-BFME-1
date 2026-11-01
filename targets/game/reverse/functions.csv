@@ -38250,7 +38250,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_00892fd0@@YAXXZ,,0x00892FD0,71,game/gen_asm/d_00882630.asm,matched,gen-dump;carved start=ghidra-start end=ret+int3 callers=0;ghidra=FUN_00c92fd0
 ?d_008941a0@@YAXXZ,,0x008941A0,429,game/gen_asm/d_0088a430.asm,matched,gen-dump;ghidra=FUN_00c941a0
 ?d_00894380@@YAXXZ,,0x00894380,728,game/gen_asm/d_0084de40.asm,matched,gen-dump;switch-carved start=int3-aligned end=switch-table+int3 refs=0
-?d_00895510@@YAXXZ,,0x00895510,308,game/gen_asm/d_00894a90.asm,matched,gen-dump;ghidra=FUN_00c95510
 ?d_00895790@@YAXXZ,,0x00895790,287,game/gen_asm/d_00894a90.asm,matched,gen-dump;ghidra=FUN_00c95790
 ?d_008961e0@@YAXXZ,,0x008961E0,316,game/gen_asm/d_00894a90.asm,matched,gen-dump;ghidra=FUN_00c961e0
 ?d_00896390@@YAXXZ,,0x00896390,214,game/gen_asm/d_00894a90.asm,matched,gen-dump;ghidra=FUN_00c96390
@@ -173424,3 +173423,4 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?method@Rva000E15A0@@QAE_NW4NameKeyType@@PAI@Z,,0x000E15A0,208,game/GameEngine/Source/Common/RTS/PlayerTemplate.cpp,matched,model=claude-opus-5-5;host=app
 ?AptValueShutdown@@YAXH@Z,,0x00899AF0,297,game/Libraries/Source/Apt/AptValueShutdown.cpp,matched,[BFME 2 donor] AptValueShutdownBFME2.cpp 45afcff3 name; sole caller dup_00894A90 forwards its int; identity_evidence/00899af0-aptvalueshutdown.md; global re-read receiver plus copy for delete keeps EDI saved inside the if;model=claude-opus-5-5;host=app
 ?bfmeCall936F@@YAXH@Z,,0x00893820,314,game/Libraries/Source/Apt/AptReleaseUnreferenced00893820.cpp,matched,[BFME 2 donor] rva006CE1C0Rva006CE1C0Farm.cpp 45afcff3 later version of the sweep; pinned caller name kept; empty handle temp unwinds through RefHandle008958D0 dtor 0x00784A70; inline registry removeAt;model=claude-opus-5-5;host=app
+?method@Rva00895510Receiver@@QAEHVRefHandle008956C0@@@Z,,0x00895510,308,game/Libraries/Source/Apt/Rva00895510HasName.cpp,matched,address-derived receiver; sole caller contains008956C0 passes its handle by value in ECX/thiscall; pooled-string compare by int length then identity then memcmp; explicit release keeps the copy out of the unwind map;model=claude-opus-5-5;host=app
