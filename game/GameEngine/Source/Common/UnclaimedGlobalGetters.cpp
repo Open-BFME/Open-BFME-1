@@ -1,4 +1,4 @@
-// Six unclaimed five/six-byte free functions with one shape:
+// Eight unclaimed five/six-byte free functions with one shape:
 //
 //     mov eax,[<global>] / ret      (mov al,[<global>] / ret for the byte)
 //
@@ -62,3 +62,12 @@ void *Rva008A4B00Global() { return g_bfmeFallbackDB; }
 void *Rva008A4B10Global() { return g_bfmeFallbackDB; }
 void *Rva00850720Global() { return theBlockParseList; }
 bool Rva0090C7F0Global() { return g_0134050C; }
+
+// 0x0134050D is DX8Wrapper::IsWindowed, a protected static (data_rows.csv
+// ?IsWindowed@DX8Wrapper@@1_NA, defined in dxwrapper.cpp).  The free functions
+// below reach that defining symbol through __identifier instead of a friend or
+// derived view; the load is a plain `mov al,[...]`.
+extern "C" bool __identifier("?IsWindowed@DX8Wrapper@@1_NA");
+
+bool Rva008FD610IsWindowed() { return __identifier("?IsWindowed@DX8Wrapper@@1_NA"); }
+bool Rva008FD780IsWindowed() { return __identifier("?IsWindowed@DX8Wrapper@@1_NA"); }
