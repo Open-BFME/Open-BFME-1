@@ -10,10 +10,12 @@ class VisPolyClass
 protected:
 	virtual ~VisPolyClass();
 private:
-	friend void forceVisPolyClassDeletingDestructor();
+	friend void forceVisPolyClassDeletingDestructor(const VisPolyClass &);
 };
 
-void forceVisPolyClassDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceVisPolyClassDeletingDestructor(const VisPolyClass &that)
 {
-	VisPolyClass value;
+	VisPolyClass value(that);
 }

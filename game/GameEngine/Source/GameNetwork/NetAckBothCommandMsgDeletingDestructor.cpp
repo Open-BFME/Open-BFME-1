@@ -22,7 +22,9 @@ public:
 	virtual ~NetAckBothCommandMsg() {}
 };
 
-void forceNetAckBothCommandMsgDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceNetAckBothCommandMsgDeletingDestructor(const NetAckBothCommandMsg &that)
 {
-	NetAckBothCommandMsg value;
+	NetAckBothCommandMsg value(that);
 }

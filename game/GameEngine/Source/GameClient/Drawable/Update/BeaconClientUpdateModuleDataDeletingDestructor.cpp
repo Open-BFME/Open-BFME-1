@@ -12,7 +12,9 @@ public:
 	virtual ~BeaconClientUpdateModuleData();
 };
 
-void forceBeaconClientUpdateModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceBeaconClientUpdateModuleDataDeletingDestructor(const BeaconClientUpdateModuleData &that)
 {
-	BeaconClientUpdateModuleData value;
+	BeaconClientUpdateModuleData value(that);
 }

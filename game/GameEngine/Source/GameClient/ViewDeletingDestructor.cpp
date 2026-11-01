@@ -14,7 +14,9 @@ public:
 	virtual ~View();
 };
 
-void forceViewDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceViewDeletingDestructor(const View &that)
 {
-	View value;
+	View value(that);
 }

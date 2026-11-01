@@ -12,7 +12,9 @@ public:
 	virtual ~W3DHordeModelDrawModuleData();
 };
 
-void forceW3DHordeModelDrawModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceW3DHordeModelDrawModuleDataDeletingDestructor(const W3DHordeModelDrawModuleData &that)
 {
-	W3DHordeModelDrawModuleData value;
+	W3DHordeModelDrawModuleData value(that);
 }

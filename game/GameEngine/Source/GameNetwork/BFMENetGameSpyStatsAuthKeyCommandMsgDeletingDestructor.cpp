@@ -11,7 +11,9 @@ public:
 	virtual ~BFMENetGameSpyStatsAuthKeyCommandMsg();
 };
 
-void forceBFMENetGameSpyStatsAuthKeyCommandMsgDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceBFMENetGameSpyStatsAuthKeyCommandMsgDeletingDestructor(const BFMENetGameSpyStatsAuthKeyCommandMsg &that)
 {
-	BFMENetGameSpyStatsAuthKeyCommandMsg value;
+	BFMENetGameSpyStatsAuthKeyCommandMsg value(that);
 }

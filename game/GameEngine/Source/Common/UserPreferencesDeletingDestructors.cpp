@@ -16,8 +16,11 @@ public:
 	virtual ~IgnorePreferences();
 };
 
-void forceUserPreferencesDeletingDestructors()
+// The implicit copy constructors (no retail twins) emit the vftables and with
+// them ??_G without second, non-retail copies of the default constructors.
+void forceUserPreferencesDeletingDestructors(const GameSpyMiscPreferences &miscThat,
+	const IgnorePreferences &ignoreThat)
 {
-	GameSpyMiscPreferences misc;
-	IgnorePreferences ignore;
+	GameSpyMiscPreferences misc(miscThat);
+	IgnorePreferences ignore(ignoreThat);
 }

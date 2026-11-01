@@ -11,7 +11,9 @@ public:
 	virtual ~Win32LocalFile();
 };
 
-void forceWin32LocalFileDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceWin32LocalFileDeletingDestructor(const Win32LocalFile &that)
 {
-	Win32LocalFile value;
+	Win32LocalFile value(that);
 }

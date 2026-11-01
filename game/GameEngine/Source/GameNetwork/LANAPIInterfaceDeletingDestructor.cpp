@@ -12,7 +12,9 @@ public:
 	virtual ~LANAPIInterface();
 };
 
-void forceLANAPIInterfaceDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceLANAPIInterfaceDeletingDestructor(const LANAPIInterface &that)
 {
-	LANAPIInterface value;
+	LANAPIInterface value(that);
 }

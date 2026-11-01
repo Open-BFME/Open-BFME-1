@@ -11,7 +11,9 @@ public:
 	virtual ~TunnelTracker();
 };
 
-void forceTunnelTrackerDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceTunnelTrackerDeletingDestructor(const TunnelTracker &that)
 {
-	TunnelTracker value;
+	TunnelTracker value(that);
 }

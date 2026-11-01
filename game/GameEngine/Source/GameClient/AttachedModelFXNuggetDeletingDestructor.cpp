@@ -10,10 +10,12 @@ class AttachedModelFXNugget
 protected:
 	virtual ~AttachedModelFXNugget();
 private:
-	friend void forceAttachedModelFXNuggetDeletingDestructor();
+	friend void forceAttachedModelFXNuggetDeletingDestructor(const AttachedModelFXNugget &);
 };
 
-void forceAttachedModelFXNuggetDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceAttachedModelFXNuggetDeletingDestructor(const AttachedModelFXNugget &that)
 {
-	AttachedModelFXNugget value;
+	AttachedModelFXNugget value(that);
 }

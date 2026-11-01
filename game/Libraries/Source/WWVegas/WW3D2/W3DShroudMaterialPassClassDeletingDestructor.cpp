@@ -22,7 +22,9 @@ private:
 	friend void forceW3DShroudMaterialPassClassDeletingDestructor();
 };
 
-void forceW3DShroudMaterialPassClassDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceW3DShroudMaterialPassClassDeletingDestructor(const W3DShroudMaterialPassClass &that)
 {
-	W3DShroudMaterialPassClass value;
+	W3DShroudMaterialPassClass value(that);
 }

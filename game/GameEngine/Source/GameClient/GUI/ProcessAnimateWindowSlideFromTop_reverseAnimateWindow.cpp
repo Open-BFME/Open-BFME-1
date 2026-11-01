@@ -66,7 +66,7 @@ class ProcessAnimateWindowSlideFromTop
 {
 protected:
 	virtual ~ProcessAnimateWindowSlideFromTop();
-	friend void forceProcessAnimateWindowSlideFromTopDeletingDestructor();
+	friend void forceProcessAnimateWindowSlideFromTopDeletingDestructor(const ProcessAnimateWindowSlideFromTop &);
 
 public:
 	virtual void initReverseAnimateWindow( AnimateWindow *, UnsignedInt );
@@ -81,9 +81,11 @@ private:
 	Real m_speedUpRatio;
 };
 
-void forceProcessAnimateWindowSlideFromTopDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceProcessAnimateWindowSlideFromTopDeletingDestructor(const ProcessAnimateWindowSlideFromTop &that)
 {
-	ProcessAnimateWindowSlideFromTop value;
+	ProcessAnimateWindowSlideFromTop value(that);
 }
 
 extern "C" UnsignedInt __stdcall bfme_timeGetTime( void );

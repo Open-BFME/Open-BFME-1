@@ -10,10 +10,12 @@ class DynamicDecalFXNugget
 protected:
 	virtual ~DynamicDecalFXNugget();
 private:
-	friend void forceDynamicDecalFXNuggetDeletingDestructor();
+	friend void forceDynamicDecalFXNuggetDeletingDestructor(const DynamicDecalFXNugget &);
 };
 
-void forceDynamicDecalFXNuggetDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceDynamicDecalFXNuggetDeletingDestructor(const DynamicDecalFXNugget &that)
 {
-	DynamicDecalFXNugget value;
+	DynamicDecalFXNugget value(that);
 }

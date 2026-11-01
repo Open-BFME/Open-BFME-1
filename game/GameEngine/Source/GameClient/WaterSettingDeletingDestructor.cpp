@@ -11,7 +11,9 @@ public:
 	virtual ~WaterSetting();
 };
 
-void forceWaterSettingDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceWaterSettingDeletingDestructor(const WaterSetting &that)
 {
-	WaterSetting value;
+	WaterSetting value(that);
 }

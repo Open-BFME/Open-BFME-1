@@ -11,7 +11,9 @@ public:
 	virtual ~TerrainType();
 };
 
-void forceTerrainTypeDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceTerrainTypeDeletingDestructor(const TerrainType &that)
 {
-	TerrainType value;
+	TerrainType value(that);
 }

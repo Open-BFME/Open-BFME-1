@@ -64,7 +64,7 @@ protected:
 	virtual ~ProcessAnimateWindowSlideFromTopFast();
 
 private:
-	friend void forceProcessAnimateWindowSlideFromTopFastDeletingDestructor();
+	friend void forceProcessAnimateWindowSlideFromTopFastDeletingDestructor(const ProcessAnimateWindowSlideFromTopFast &);
 
 public:
 	virtual void initReverseAnimateWindow(AnimateWindow *, UnsignedInt);
@@ -80,9 +80,11 @@ private:
 };
 
 // Instantiation makes MSVC emit the protected scalar-deleting destructor at 0x00497970.
-void forceProcessAnimateWindowSlideFromTopFastDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceProcessAnimateWindowSlideFromTopFastDeletingDestructor(const ProcessAnimateWindowSlideFromTopFast &that)
 {
-	ProcessAnimateWindowSlideFromTopFast value;
+	ProcessAnimateWindowSlideFromTopFast value(that);
 }
 
 extern "C" UnsignedInt __stdcall bfme_timeGetTime(void);

@@ -12,7 +12,9 @@ public:
 	virtual ~W3DVolumetricShadow();
 };
 
-void forceW3DVolumetricShadowDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceW3DVolumetricShadowDeletingDestructor(const W3DVolumetricShadow &that)
 {
-	W3DVolumetricShadow value;
+	W3DVolumetricShadow value(that);
 }

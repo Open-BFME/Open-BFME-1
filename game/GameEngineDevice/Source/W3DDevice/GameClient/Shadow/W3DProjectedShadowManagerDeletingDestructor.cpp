@@ -12,7 +12,9 @@ public:
 	virtual ~W3DProjectedShadowManager();
 };
 
-void forceW3DProjectedShadowManagerDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceW3DProjectedShadowManagerDeletingDestructor(const W3DProjectedShadowManager &that)
 {
-	W3DProjectedShadowManager value;
+	W3DProjectedShadowManager value(that);
 }

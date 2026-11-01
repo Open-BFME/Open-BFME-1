@@ -15,7 +15,9 @@ private:
 	friend void forceRva00641C60QueueDeletingDestructor();
 };
 
-void forceRva00641C60QueueDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceRva00641C60QueueDeletingDestructor(const Rva00641C60Queue &that)
 {
-	Rva00641C60Queue value;
+	Rva00641C60Queue value(that);
 }

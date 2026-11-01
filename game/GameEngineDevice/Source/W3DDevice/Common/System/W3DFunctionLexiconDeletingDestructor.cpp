@@ -11,7 +11,9 @@ public:
 	virtual ~W3DFunctionLexicon();
 };
 
-void forceW3DFunctionLexiconDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceW3DFunctionLexiconDeletingDestructor(const W3DFunctionLexicon &that)
 {
-	W3DFunctionLexicon value;
+	W3DFunctionLexicon value(that);
 }

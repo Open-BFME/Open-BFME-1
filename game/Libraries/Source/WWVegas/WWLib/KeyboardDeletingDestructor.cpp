@@ -12,7 +12,9 @@ public:
 	virtual ~Keyboard();
 };
 
-void forceKeyboardDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceKeyboardDeletingDestructor(const Keyboard &that)
 {
-	Keyboard value;
+	Keyboard value(that);
 }

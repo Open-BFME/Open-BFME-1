@@ -11,7 +11,9 @@ public:
 	virtual ~BuffNuggetFXNugget();
 };
 
-void forceBuffNuggetFXNuggetDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceBuffNuggetFXNuggetDeletingDestructor(const BuffNuggetFXNugget &that)
 {
-	BuffNuggetFXNugget value;
+	BuffNuggetFXNugget value(that);
 }

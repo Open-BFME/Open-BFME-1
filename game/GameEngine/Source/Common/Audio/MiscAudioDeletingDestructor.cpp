@@ -17,7 +17,9 @@ public:
 // reaches MiscAudio's matched complete destructor at 0x006952F0.
 #pragma comment(linker, "/alternatename:??1MiscAudio@@UAE@XZ=?j_00009048@@YAXXZ")
 
-void forceMiscAudioDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceMiscAudioDeletingDestructor(const MiscAudio &that)
 {
-	MiscAudio value;
+	MiscAudio value(that);
 }

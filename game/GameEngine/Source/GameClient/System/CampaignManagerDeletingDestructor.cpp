@@ -12,7 +12,9 @@ public:
 	virtual ~CampaignManager();
 };
 
-void forceCampaignManagerDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceCampaignManagerDeletingDestructor(const CampaignManager &that)
 {
-	CampaignManager value;
+	CampaignManager value(that);
 }

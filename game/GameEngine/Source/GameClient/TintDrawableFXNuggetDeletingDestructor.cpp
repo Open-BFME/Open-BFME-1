@@ -10,10 +10,12 @@ class TintDrawableFXNugget
 protected:
 	virtual ~TintDrawableFXNugget();
 private:
-	friend void forceTintDrawableFXNuggetDeletingDestructor();
+	friend void forceTintDrawableFXNuggetDeletingDestructor(const TintDrawableFXNugget &);
 };
 
-void forceTintDrawableFXNuggetDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceTintDrawableFXNuggetDeletingDestructor(const TintDrawableFXNugget &that)
 {
-	TintDrawableFXNugget value;
+	TintDrawableFXNugget value(that);
 }

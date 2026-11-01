@@ -13,7 +13,9 @@ public:
 	virtual ~HotKeyManager();
 };
 
-void forceHotKeyManagerDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceHotKeyManagerDeletingDestructor(const HotKeyManager &that)
 {
-	HotKeyManager value;
+	HotKeyManager value(that);
 }

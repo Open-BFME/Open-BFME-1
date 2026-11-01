@@ -11,7 +11,9 @@ public:
 	virtual ~Pinger();
 };
 
-void forcePingerDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forcePingerDeletingDestructor(const Pinger &that)
 {
-	Pinger value;
+	Pinger value(that);
 }
