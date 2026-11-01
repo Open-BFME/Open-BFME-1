@@ -37538,7 +37538,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_003dae40@@YAXXZ,,0x003DAE40,633,game/gen_asm/d_003d51a0.asm,matched,gen-dump;ghidra=FUN_007dae40
 ?d_003db640@@YAXXZ,,0x003DB640,226,game/gen_asm/d_003d51a0.asm,matched,gen-dump;ghidra=FUN_007db640
 ?d_003dce70@@YAXXZ,,0x003DCE70,1776,game/gen_asm/d_003d51a0.asm,matched,gen-dump;ghidra=FUN_007dce70
-?d_003de940@@YAXXZ,,0x003DE940,284,game/gen_asm/d_003d5070.asm,matched,gen-dump;bounds=high
 ?d_003df580@@YAXXZ,,0x003DF580,2029,game/gen_asm/d_002e22f0.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=ret+int3 callers=1;ghidra=FUN_007df580
 ?d_003dff70@@YAXXZ,,0x003DFF70,808,game/gen_asm/d_003dd7a0.asm,matched,gen-dump;ghidra=FUN_007dff70
 ?d_003e0930@@YAXXZ,,0x003E0930,938,game/gen_asm/d_003dd7a0.asm,matched,gen-dump;ghidra=FUN_007e0930
@@ -173424,3 +173423,4 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?onExit@SpecialAbilityUpdate@@MAEX_N0@Z,,0x002A8540,814,game/GameEngine/Source/GameLogic/Object/Update/SpecialAbilityUpdate_onExit.cpp,matched,[BFME 2 donor] SpecialAbilityUpdate.cpp onExit 45afcff3; ilt_oracle CONFIRMED MAE; forceinline setModelConditionState + volatile flag test + handle local;model=claude-opus-5-5;host=app
 ?rva001F7430@ClearanceTestingSlowDeathBehavior@@UAE_NXZ,,0x001F7430,675,game/GameEngine/Source/GameLogic/Object/Behavior/ClearanceTestingSlowDeathBehaviorRva001F7430.cpp,matched,[BFME 2 donor] Rva00483C35Rva00483F19.cpp 45afcff3 clearance test; ctor 0x001F7140 vtable 0x010A2FF0 slot 3 via ILT 0x0001DBDD; method name address-derived;model=claude-opus-5-5;host=app
 ?rva001EFB20@BezierProjectileBehavior@@QAEXPAVObject@@@Z,,0x001EFB20,356,game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehavior_rva001EFB20.cpp,matched,fresh rewrite: STLport vector size MIN recompute; MAX(0 idx-1); per-field position copy; reference element then field copy; do-while step test; sole caller rva001F1CE0 declares the name;model=claude-opus-5-5;host=app
+?cellCallback@Rva003DE940GroundCellsStruct@@QAEHPAVPathfindCell@@0HH@Z,,0x003DE940,284,game/GameEngine/Source/GameLogic/AI/GroundCellsStructCellCallback.cpp,matched,BFME member form of ZH groundCellsCallback; body is the copy the matched groundCellsAlongLine003E2620 inlines; negative from guard first;model=claude-opus-5-5;host=app
