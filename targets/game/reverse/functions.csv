@@ -38403,7 +38403,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_00bf4181@@YAXXZ,,0x00BF4181,11,game/gen_asm/d_00aa0d0d.asm,matched,gen-dump;ghidra=Unwind@00ff4181
 ?d_00bf41b4@@YAXXZ,,0x00BF41B4,11,game/gen_asm/d_00aa0d0d.asm,matched,gen-dump;ghidra=Unwind@00ff41b4
 ?d_00bf41c7@@YAXXZ,,0x00BF41C7,11,game/gen_asm/d_00aa0d0d.asm,matched,gen-dump;ghidra=Unwind@00ff41c7
-?d_00bf75f0@@YAXXZ,,0x00BF75F0,39,game/gen_asm/d_00aa0d0d.asm,matched,gen-dump;ghidra=Unwind@00ff75f0
 ?d_00bf9cf0@@YAXXZ,,0x00BF9CF0,25,game/gen_asm/d_00aa0d0d.asm,matched,gen-dump;ghidra=Unwind@00ff9cf0
 ?d_00bfc2fe@@YAXXZ,,0x00BFC2FE,8,game/gen_asm/d_009f6921.asm,matched,gen-dump;ghidra=Unwind@00ffc2fe
 ?d_00bfc306@@YAXXZ,,0x00BFC306,11,game/gen_asm/d_00aa0d0d.asm,matched,gen-dump;ghidra=Unwind@00ffc306
@@ -122535,7 +122534,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?j_00078e80@@YAXXZ,,0x00078E80,5,game/gen_small/thunks_036.cpp,matched,gen-thunk;target=thunk_FUN_00478df0
 ?j_0007bce0@@YAXXZ,,0x0007BCE0,5,game/gen_small/thunks_036.cpp,matched,gen-thunk;target=FUN_00d05b10
 ?j_0007e5e0@@YAXXZ,,0x0007E5E0,5,game/gen_small/gthunks_084.cpp,matched,gen-thunk;gap;target=0x000106FE
-?j_00080800@@YAXXZ,,0x00080800,5,game/gen_small/thunks_036.cpp,matched,gen-thunk;target=thunk_FUN_00480340
 ?j_00081e60@@YAXXZ,,0x00081E60,5,game/gen_small/thunks_036.cpp,matched,gen-thunk;target=thunk_FUN_00481a40
 ?j_00081f50@@YAXXZ,,0x00081F50,5,game/gen_small/gthunks_084.cpp,matched,gen-thunk;gap;target=0x000488BA
 ?j_000872b0@@YAXXZ,,0x000872B0,5,game/gen_small/thunks_036.cpp,matched,gen-thunk;target=thunk_FUN_004681c0
@@ -173424,3 +173422,5 @@ _CommUdpProcess,,0x00817B30,2247,game/Libraries/Source/DirtySock/commudp.cpp,mat
 ?dup_00C56E4B@@YAXXZ,,0x00C56E4B,11,game/GameEngine/Source/Common/Rva00895050InlineContainerSwap.cpp,matched,authored C++ cleanup;gen-funclet;parent=?Rva00893B30ResizeItems@@YAPAURva00892640Item@@PAU1@HH@Z;object-symbol=$L479;retail parent 0x00893B30 pushes handler stub 0x00C56E56 whose FuncInfo 0x00E462AC unwind state 1 names this action (operator delete of the new-expression);label mapped by state index;model=claude-opus-5-5;host=app
 ?dup_00C217D0@@YAXXZ,,0x00C217D0,25,game/GameEngine/Source/GameClient/FXListStoreClone.cpp,matched,authored C++ cleanup;gen-funclet;parent=?clone@FxClone0042CDF0@@QAE?AVFxHandle0042CDF0@@PBD@Z;object-symbol=$L5045;retail parent 0x0042CDF0 pushes handler stub 0x00C21815 whose FuncInfo 0x00E11C10 unwind state 0 names this action (guarded returned handle at ebp+4);label mapped by state index;model=claude-opus-5-5;host=app
 ?dup_00C217F4@@YAXXZ,,0x00C217F4,25,game/GameEngine/Source/GameClient/FXListStoreClone.cpp,matched,authored C++ cleanup;gen-funclet;parent=?clone@FxClone0042CDF0@@QAE?AVFxHandle0042CDF0@@PBD@Z;object-symbol=$L5049;retail parent 0x0042CDF0 pushes handler stub 0x00C21815 whose FuncInfo 0x00E11C10 unwind states 2/3 name this action (guarded AsciiString at ebp+8);label mapped by state index;model=claude-opus-5-5;host=app
+??1UserPreferencesMap00080800@@QAE@XZ,,0x00080800,5,game/GameEngine/Source/Common/UserPreferencesDestructorBody.cpp,matched,implicit destructor of the map base of UserPreferencesBodyShim (5-byte jmp to the tree destructor ILT 0x0000B992); the matched parent 0x000AAF30 inlines it on the normal path and its unwind funclet 0x00BF75F0 reaches this body through ILT 0x000301D9; class name address-derived;model=claude-opus-5-5;host=app
+?dup_00BF75F0@@YAXXZ,,0x00BF75F0,39,game/GameEngine/Source/Common/UserPreferencesDestructorBody.cpp,matched,authored C++ cleanup;gen-funclet;parent=??1UserPreferencesBodyShim@@UAE@XZ;object-symbol=$L348;retail parent 0x000AAF30 unwind state destroys the map base at this+4 through ILT 0x000301D9 -> 0x00080800;label mapped by state index;model=claude-opus-5-5;host=app;eh-state-pin $L328->$L348: retail unwind map (??1UserPreferencesBodyShim@@UAE@XZ states [0]) binds this address to $L348;repin-model=claude-opus-5-5
