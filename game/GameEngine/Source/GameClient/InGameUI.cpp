@@ -9084,6 +9084,33 @@ struct Rva00442660Element { int m_body; };
 typedef _STL::list<Rva00442660Element, _STL::allocator<Rva00442660Element> >
 	BfmeWorldAnimationListStorageView;
 
+// Retail's push_front (0x00442660, 47 bytes) takes the successor before it
+// allocates and builds a 12-byte node inline. This TU's _List_node carries
+// the 32-byte SuperweaponInfo tail and its _M_create_node stays a call, so the
+// shared header would emit a COMDAT that is not retail's; a local plain node
+// view gives the retail allocation size and the inlined construction.
+struct Rva00442660Node
+{
+	Rva00442660Node *m_next;
+	Rva00442660Node *m_prev;
+	Rva00442660Element m_data;
+};
+
+namespace _STL {
+template<> inline __declspec(noinline) void
+list<Rva00442660Element, allocator<Rva00442660Element> >::push_front(const Rva00442660Element &x)
+{
+	Rva00442660Node *next = reinterpret_cast<Rva00442660Node *>(_M_node._M_data)->m_next;
+	Rva00442660Node *node = allocator<Rva00442660Node>().allocate(1);
+	_Construct(&node->m_data, x);
+	Rva00442660Node *prev = next->m_prev;
+	node->m_next = next;
+	node->m_prev = prev;
+	prev->m_next = node;
+	next->m_prev = node;
+}
+}
+
 // ------------------------------------------------------------------------------------------------
 /** Add a 2D animation at a spot in the world */
 // ------------------------------------------------------------------------------------------------
