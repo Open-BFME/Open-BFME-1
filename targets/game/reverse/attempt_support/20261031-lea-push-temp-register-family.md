@@ -30,3 +30,11 @@ retail may have had a value live in EAX across these sites that our source drops
 recomputes. For example, 0x0022DD10 calls the same getter twice: once for the test, and
 again after the list is built. Look for a source spelling that keeps such a value alive
 without adding loads.
+
+## Compiler build ruled out (2026-11-01)
+
+The retail PE Rich header lists C++ objects as product 96 build 3077 (1266 objects) and C
+as product 95 build 3077: the same cl 13.10.3077 as `inputs/toolchains/vs2003`. The
+family is not a service-pack difference. 0x0022DD10 also stayed at 2 diffs with the
+getter result in a named variable reassigned before `fill()`, a provider local, a block
+around the list and a bool predicate local.
