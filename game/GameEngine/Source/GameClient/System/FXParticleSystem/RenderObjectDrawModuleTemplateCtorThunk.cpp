@@ -29,7 +29,8 @@ class CategoryModuleTemplateBase : public ModuleTemplate,
 {
 public:
     CategoryModuleTemplateBase() {}
-    virtual ~CategoryModuleTemplateBase() {}
+    // Defined out of line (the matched CategoryModuleTemplateBase<N> destructor row).
+    virtual ~CategoryModuleTemplateBase();
 };
 
 template <int Category>

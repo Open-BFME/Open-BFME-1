@@ -32,7 +32,8 @@ class CategoryModuleTemplateBase
 {
 public:
 	CategoryModuleTemplateBase() {}
-	virtual ~CategoryModuleTemplateBase() {}
+	// Defined out of line (the matched CategoryModuleTemplateBase<N> destructor row).
+	virtual ~CategoryModuleTemplateBase();
 };
 
 class WindModuleInfo
@@ -49,7 +50,8 @@ class CategoryModuleTemplate
 {
 public:
 	CategoryModuleTemplate();
-	virtual ~CategoryModuleTemplate() {}
+	// Defined out of line (the matched CategoryModuleTemplate<6> destructor row).
+	virtual ~CategoryModuleTemplate();
 };
 
 // MSVC mangles CategoryModuleTemplate<7> as @$06.
