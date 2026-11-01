@@ -1,0 +1,97 @@
+diff --git a/game/GameEngine/Source/Common/RTS/Team_notifyTeamOfObjectDeath.cpp b/game/GameEngine/Source/Common/RTS/Team_notifyTeamOfObjectDeath.cpp
+index ba64d080bc..08ec577322 100644
+--- a/game/GameEngine/Source/Common/RTS/Team_notifyTeamOfObjectDeath.cpp
++++ b/game/GameEngine/Source/Common/RTS/Team_notifyTeamOfObjectDeath.cpp
+@@ -106,9 +106,14 @@ public:
+ // Same view as GameLogicSendObjectCreated.cpp: ctor 0x000EDBB0, inline
+ // cleanup through the eh vector destructor iterator and base vtable 01073744
+ // (the Snapshot base vtable; dir32 records it as ??_7BfmeSnapshotBase@@6B@).
++// Retail dtor 0x000EDC40 destroys the three events, then restores the base
++// vtable (VA 0x01073744, the ?bfmeVtable000A1B30 pin). The store lives in the
++// base dtor so this TU's out-of-line ??1DelayedLuaEventList@@UAE@XZ COMDAT is
++// retail's body; inline destruction sites dead-store-eliminate it.
++extern int bfmeVtable000A1B30[];
+ class BfmeSnapshotBase {
+ public:
+-	virtual ~BfmeSnapshotBase() {}
++	virtual ~BfmeSnapshotBase() { *(int **)this = bfmeVtable000A1B30; }
+ };
+ class __declspec(novtable) DelayedLuaEventList : public BfmeSnapshotBase {
+ public:
+diff --git a/game/GameEngine/Source/GameLogic/AI/AIWaypointPathStates.cpp b/game/GameEngine/Source/GameLogic/AI/AIWaypointPathStates.cpp
+index a2cd66ff02..73e8c59bd3 100644
+--- a/game/GameEngine/Source/GameLogic/AI/AIWaypointPathStates.cpp
++++ b/game/GameEngine/Source/GameLogic/AI/AIWaypointPathStates.cpp
+@@ -75,10 +75,15 @@ public:
+ 	unsigned char m_data[0x18];
+ };
+ 
++// Retail dtor 0x000EDC40 destroys the three events, then restores the base
++// vtable (VA 0x01073744, the ?bfmeVtable000A1B30 pin). The store lives in the
++// base dtor so this TU's out-of-line ??1DelayedLuaEventList@@UAE@XZ COMDAT is
++// retail's body; inline destruction sites dead-store-eliminate it.
++extern int bfmeVtable000A1B30[];
+ class BfmeDelayedLuaEventListBase
+ {
+ public:
+-	virtual ~BfmeDelayedLuaEventListBase() {}
++	virtual ~BfmeDelayedLuaEventListBase() { *(int **)this = bfmeVtable000A1B30; }
+ };
+ 
+ class __declspec(novtable) DelayedLuaEventList : public BfmeDelayedLuaEventListBase
+diff --git a/game/GameEngine/Source/GameLogic/AI/Rva002BCEE0DelayedLuaDispatch.cpp b/game/GameEngine/Source/GameLogic/AI/Rva002BCEE0DelayedLuaDispatch.cpp
+index 0457377126..936a7278d8 100644
+--- a/game/GameEngine/Source/GameLogic/AI/Rva002BCEE0DelayedLuaDispatch.cpp
++++ b/game/GameEngine/Source/GameLogic/AI/Rva002BCEE0DelayedLuaDispatch.cpp
+@@ -20,10 +20,15 @@ public:
+ 	unsigned int m_count;
+ };
+ 
++// Retail dtor 0x000EDC40 destroys the three events, then restores the base
++// vtable (VA 0x01073744, the ?bfmeVtable000A1B30 pin). The store lives in the
++// base dtor so this TU's out-of-line ??1DelayedLuaEventList@@UAE@XZ COMDAT is
++// retail's body; inline destruction sites dead-store-eliminate it.
++extern int bfmeVtable000A1B30[];
+ class BfmeDelayedLuaEventListBase
+ {
+ public:
+-	virtual ~BfmeDelayedLuaEventListBase(void) {}
++	virtual ~BfmeDelayedLuaEventListBase(void) { *(int **)this = bfmeVtable000A1B30; }
+ };
+ 
+ class __declspec(novtable) DelayedLuaEventList : public BfmeDelayedLuaEventListBase
+diff --git a/game/GameEngine/Source/GameLogic/Object/Update/FlameCleanup00293E50.cpp b/game/GameEngine/Source/GameLogic/Object/Update/FlameCleanup00293E50.cpp
+index edbc2d2664..481325a3a5 100644
+--- a/game/GameEngine/Source/GameLogic/Object/Update/FlameCleanup00293E50.cpp
++++ b/game/GameEngine/Source/GameLogic/Object/Update/FlameCleanup00293E50.cpp
+@@ -14,7 +14,9 @@ class Rva001C1EA0Object { public: void rva001C1EA0(bool); };
+ class BfmeMarksYE { public: void bfmeSetYE(unsigned char,unsigned char); };
+ class Rva002918E0Object { public: void set(unsigned char); };
+ class BfmeDelayedLuaEvent { public: ~BfmeDelayedLuaEvent(); char data[0x18]; };
+-class BfmeDelayedLuaEventListBase { public: virtual ~BfmeDelayedLuaEventListBase() {} };
++// Retail dtor 0x000EDC40 restores base vtable VA 0x01073744 (?bfmeVtable000A1B30 pin) after the event cleanup.
++extern int bfmeVtable000A1B30[];
++class BfmeDelayedLuaEventListBase { public: virtual ~BfmeDelayedLuaEventListBase() { *(int **)this = bfmeVtable000A1B30; } };
+ class __declspec(novtable) DelayedLuaEventList : public BfmeDelayedLuaEventListBase { public: DelayedLuaEventList(); __forceinline ~DelayedLuaEventList() {} BfmeDelayedLuaEvent events[3]; };
+ class BfmeOwnerBR { public: void bfmeGo939B(int,Object*,DelayedLuaEventList*); };
+ extern BfmeOwnerBR* g_script00293E50;
+diff --git a/game/GameEngine/Source/GameLogic/System/GameLogicSendObjectCreated.cpp b/game/GameEngine/Source/GameLogic/System/GameLogicSendObjectCreated.cpp
+index f04fdf68c6..08724705f6 100644
+--- a/game/GameEngine/Source/GameLogic/System/GameLogicSendObjectCreated.cpp
++++ b/game/GameEngine/Source/GameLogic/System/GameLogicSendObjectCreated.cpp
+@@ -16,9 +16,14 @@ public:
+ // destroys them and restores base vtable 01073744. It does not install the
+ // derived vtable on entry. This destructor view preserves that behavior and
+ // its base cleanup state when inlined; the base's original name is unknown.
++// Retail dtor 0x000EDC40 destroys the three events, then restores the base
++// vtable (VA 0x01073744, the ?bfmeVtable000A1B30 pin). The store lives in the
++// base dtor so this TU's out-of-line ??1DelayedLuaEventList@@UAE@XZ COMDAT is
++// retail's body; inline destruction sites dead-store-eliminate it.
++extern int bfmeVtable000A1B30[];
+ class BfmeDelayedLuaEventListBase {
+ public:
+-    virtual ~BfmeDelayedLuaEventListBase() {}
++    virtual ~BfmeDelayedLuaEventListBase() { *(int **)this = bfmeVtable000A1B30; }
+ };
+ class __declspec(novtable) DelayedLuaEventList : public BfmeDelayedLuaEventListBase {
+ public:
