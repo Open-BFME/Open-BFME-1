@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringbaseascii /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 // Retail 0x004A2CB0 (576 bytes, thiscall, no stack arguments). Its only caller is
 // the carved GameLogic body at 0x00394260, which loads ECX from TheControlBar and
@@ -13,7 +13,7 @@
 // Shape: the early `return` on a null TheMappedImageCollection (rather than an
 // enclosing `if` block) is what puts the side copy at frame +0 and the shared
 // string temporary at +4, as in retail.
-#include "Common/AsciiString.h"
+#include "ascii_string.h"
 
 class Image
 {
