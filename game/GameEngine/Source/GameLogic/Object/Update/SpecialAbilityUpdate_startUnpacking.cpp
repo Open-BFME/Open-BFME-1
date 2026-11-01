@@ -53,7 +53,10 @@ class Object { public:
  void clearAndSetModelConditionFlags(const BitFlags<320>&,const BitFlags<320>&);
  void setStatus(const BitFlags<86>&,bool);
  void notifyModelConditionChanged();
+protected: // retail defines ?findModule@Object@@IBEPAVModule@@W4NameKeyType@@@Z (0x001BEE60)
+ friend class SpecialAbilityUpdate;
  Module* findModule(NameKeyType) const;
+public:
  char pad004[0x10c]; BitFlags<320> conditions;
  char pad138[0xcc]; void* ai;
  void setCondition(int n) { if(!conditions.test(n)) { conditions.set(n); notifyModelConditionChanged(); } }
