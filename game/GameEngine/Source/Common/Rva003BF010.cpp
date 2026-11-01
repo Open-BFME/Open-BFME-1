@@ -16,7 +16,7 @@ public:
 	{
 	}
 	~AsciiString() {}
-	bool isEmpty() const;
+	using StringBase<char>::isEmpty; // link: ?isEmpty@AsciiString is only a pin; retail 0x5E4C0 is the defined StringBase<char> row
 };
 
 class Gen_00609320
