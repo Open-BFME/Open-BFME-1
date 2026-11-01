@@ -1009,14 +1009,11 @@ Real Object::getLargestWeaponRange() const
 // ModelConditionFlags ABI is kept separate from this ZH-layout TU.
 
 //=============================================================================
-// ?setModelConditionState@Object@@QAEXW4ModelConditionFlagType@@@Z present-unmatched
-void Object::setModelConditionState( ModelConditionFlagType a )
-{
-	if (m_drawable)
-	{
-		m_drawable->setModelConditionState(a);
-	}
-}
+// Object::setModelConditionState is inline in BFME (test the condition bit at
+// +0x110, set it, notify): retail has no out-of-line copy, and its callers
+// (ProneUpdate_startProneEffects.cpp, RadarUpdate_extendRadar.cpp,
+// SlavedUpdateOnObjectCreated.cpp) carry the inline body. The ZH drawable
+// forwarder that stood here duplicated their COMDATs at link.
 
 // BFME builds a single-bit mask on the stack -- three dwords, where the
 // reference ModelConditionFlags is four -- and hands it to an apply helper that
