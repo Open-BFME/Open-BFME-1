@@ -77,20 +77,19 @@ void rva8CCCE0ResolveValue(void *first, void *second, Rva8CCCE0Value *value,
 	Rva8CCCE0Value **result);
 void bfmeResetEVF(void *ctx, BfmeStrVKI *text);
 
-// The sized deallocation the unwind cleanup calls is the import thunk
-// 0x00891A80; its only defined linker name is the gen-import row.
-extern "C" void __cdecl __identifier("?ji_00891a80@@YAXXZ")(void *memory, unsigned bytes);
-class Gen_uws16_00891a80
-{
-public:
-	static void operator delete(void *memory, unsigned bytes) { __identifier("?ji_00891a80@@YAXXZ")(memory, bytes); }
-};
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned int);
-class Rva008A9B00 : public Gen_uws16_00891a80
+extern void (__cdecl *TheBfmeFree)(void *, unsigned int);
+class Rva008A9B00
 {
 public:
 	Rva008A9B00();
 	void *operator new(unsigned bytes) { return Rva008C5D70Alloc(bytes); }
+	// Retail EH state 0 pushes 16 and the allocation pointer, calls 00891A80,
+	// the six-byte jump through callback VA 01337830, then removes eight bytes.
+	// Same inline body as Rva008C6990StringTransform.cpp, whose copy is retail's.
+	__forceinline static void operator delete(void *memory, unsigned bytes) {
+		TheBfmeFree(memory, bytes);
+	}
 	void *m_unknown00;
 	unsigned m_flags;
 	BfmeStringData3AF0 *m_data;
