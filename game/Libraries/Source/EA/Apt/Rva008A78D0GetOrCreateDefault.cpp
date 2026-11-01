@@ -3,7 +3,8 @@
 // Address-derived owner; constructor and sized-delete identities are pinned independently.
 
 extern void *(*Rva008C5D70Alloc)(unsigned int bytes);
-extern void *Rva00897640(unsigned int bytes);
+class BfmeItemDX;
+void bfmePush(BfmeItemDX *block);
 
 class Rva008A78D0VBase
 {
@@ -20,9 +21,14 @@ public:
 class Rva00899FC0 : public Rva00897670HeaderedDelete
 {
 public:
-	static void *operator new(unsigned int bytes)
+	// Full 33-byte allocator body, same as Rva008B4DA0CandidateLookup.cpp:
+	// grow the request by 8, advance past the header, push the tracked block.
+	__declspec(noinline) static void *operator new(unsigned int n)
 	{
-		return Rva00897640(bytes);
+		char *raw = (char *)Rva008C5D70Alloc(n + 8);
+		char *block = raw + 8;
+		bfmePush((BfmeItemDX *)block);
+		return block;
 	}
 
 	__declspec(noinline) Rva00899FC0(int callback);
