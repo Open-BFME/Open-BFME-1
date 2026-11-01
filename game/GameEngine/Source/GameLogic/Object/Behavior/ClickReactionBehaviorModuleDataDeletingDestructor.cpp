@@ -10,10 +10,12 @@ class ClickReactionBehaviorModuleData
 protected:
 	virtual ~ClickReactionBehaviorModuleData();
 private:
-	friend void forceClickReactionBehaviorModuleDataDeletingDestructor();
+	friend void forceClickReactionBehaviorModuleDataDeletingDestructor(const ClickReactionBehaviorModuleData &);
 };
 
-void forceClickReactionBehaviorModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceClickReactionBehaviorModuleDataDeletingDestructor(const ClickReactionBehaviorModuleData &that)
 {
-	ClickReactionBehaviorModuleData value;
+	ClickReactionBehaviorModuleData value(that);
 }

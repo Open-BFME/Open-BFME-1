@@ -10,10 +10,12 @@ class BezierProjectileBehaviorModuleData
 protected:
 	virtual ~BezierProjectileBehaviorModuleData();
 private:
-	friend void forceBezierProjectileBehaviorModuleDataDeletingDestructor();
+	friend void forceBezierProjectileBehaviorModuleDataDeletingDestructor(const BezierProjectileBehaviorModuleData &);
 };
 
-void forceBezierProjectileBehaviorModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceBezierProjectileBehaviorModuleDataDeletingDestructor(const BezierProjectileBehaviorModuleData &that)
 {
-	BezierProjectileBehaviorModuleData value;
+	BezierProjectileBehaviorModuleData value(that);
 }

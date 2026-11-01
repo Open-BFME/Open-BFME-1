@@ -11,7 +11,9 @@ public:
 	virtual ~EvacuateDamageModuleData();
 };
 
-void forceEvacuateDamageModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceEvacuateDamageModuleDataDeletingDestructor(const EvacuateDamageModuleData &that)
 {
-	EvacuateDamageModuleData value;
+	EvacuateDamageModuleData value(that);
 }

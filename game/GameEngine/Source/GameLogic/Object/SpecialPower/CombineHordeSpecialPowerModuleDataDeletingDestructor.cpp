@@ -21,7 +21,9 @@ class CombineHordeSpecialPowerModuleData : public SpecialPowerModuleData
 {
 };
 
-void forceCombineHordeSpecialPowerModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceCombineHordeSpecialPowerModuleDataDeletingDestructor(const CombineHordeSpecialPowerModuleData &that)
 {
-	CombineHordeSpecialPowerModuleData value;
+	CombineHordeSpecialPowerModuleData value(that);
 }

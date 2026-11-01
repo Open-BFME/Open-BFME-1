@@ -12,7 +12,9 @@ public:
 	virtual ~TaintSpecialPowerModuleData();
 };
 
-void forceTaintSpecialPowerModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceTaintSpecialPowerModuleDataDeletingDestructor(const TaintSpecialPowerModuleData &that)
 {
-	TaintSpecialPowerModuleData value;
+	TaintSpecialPowerModuleData value(that);
 }

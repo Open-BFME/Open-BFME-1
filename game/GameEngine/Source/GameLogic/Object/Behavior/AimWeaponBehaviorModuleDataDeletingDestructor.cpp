@@ -10,10 +10,12 @@ class AimWeaponBehaviorModuleData
 public:
 	virtual ~AimWeaponBehaviorModuleData();
 private:
-	friend void forceAimWeaponBehaviorModuleDataDeletingDestructor();
+	friend void forceAimWeaponBehaviorModuleDataDeletingDestructor(const AimWeaponBehaviorModuleData &);
 };
 
-void forceAimWeaponBehaviorModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceAimWeaponBehaviorModuleDataDeletingDestructor(const AimWeaponBehaviorModuleData &that)
 {
-	AimWeaponBehaviorModuleData value;
+	AimWeaponBehaviorModuleData value(that);
 }

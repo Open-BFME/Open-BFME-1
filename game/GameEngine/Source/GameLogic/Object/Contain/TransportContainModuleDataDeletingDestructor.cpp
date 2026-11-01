@@ -12,7 +12,9 @@ public:
 	virtual ~TransportContainModuleData();
 };
 
-void forceTransportContainModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceTransportContainModuleDataDeletingDestructor(const TransportContainModuleData &that)
 {
-	TransportContainModuleData value;
+	TransportContainModuleData value(that);
 }

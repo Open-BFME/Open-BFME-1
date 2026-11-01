@@ -12,7 +12,9 @@ public:
 	virtual ~DeflectSpecialPowerModuleData();
 };
 
-void forceDeflectSpecialPowerModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceDeflectSpecialPowerModuleDataDeletingDestructor(const DeflectSpecialPowerModuleData &that)
 {
-	DeflectSpecialPowerModuleData value;
+	DeflectSpecialPowerModuleData value(that);
 }

@@ -13,7 +13,9 @@ private:
 	friend void forceReflectDamageModuleDataDeletingDestructor();
 };
 
-void forceReflectDamageModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceReflectDamageModuleDataDeletingDestructor(const ReflectDamageModuleData &that)
 {
-	ReflectDamageModuleData value;
+	ReflectDamageModuleData value(that);
 }

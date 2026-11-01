@@ -10,10 +10,12 @@ class ApplyRandomForceNugget
 protected:
 	virtual ~ApplyRandomForceNugget();
 private:
-	friend void forceApplyRandomForceNuggetDeletingDestructor();
+	friend void forceApplyRandomForceNuggetDeletingDestructor(const ApplyRandomForceNugget &);
 };
 
-void forceApplyRandomForceNuggetDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceApplyRandomForceNuggetDeletingDestructor(const ApplyRandomForceNugget &that)
 {
-	ApplyRandomForceNugget value;
+	ApplyRandomForceNugget value(that);
 }

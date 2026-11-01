@@ -10,10 +10,12 @@ class DestroyEnvironmentUpdateModuleData
 public:
 	virtual ~DestroyEnvironmentUpdateModuleData();
 private:
-	friend void forceDestroyEnvironmentUpdateModuleDataDeletingDestructor();
+	friend void forceDestroyEnvironmentUpdateModuleDataDeletingDestructor(const DestroyEnvironmentUpdateModuleData &);
 };
 
-void forceDestroyEnvironmentUpdateModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceDestroyEnvironmentUpdateModuleDataDeletingDestructor(const DestroyEnvironmentUpdateModuleData &that)
 {
-	DestroyEnvironmentUpdateModuleData value;
+	DestroyEnvironmentUpdateModuleData value(that);
 }

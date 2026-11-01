@@ -11,7 +11,9 @@ public:
 	virtual ~VictoryConditions();
 };
 
-void forceVictoryConditionsDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceVictoryConditionsDeletingDestructor(const VictoryConditions &that)
 {
-	VictoryConditions value;
+	VictoryConditions value(that);
 }

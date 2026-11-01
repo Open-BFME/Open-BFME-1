@@ -12,7 +12,9 @@ public:
 	virtual ~WeaponChangeSpecialPowerModuleModuleData();
 };
 
-void forceWeaponChangeSpecialPowerModuleModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceWeaponChangeSpecialPowerModuleModuleDataDeletingDestructor(const WeaponChangeSpecialPowerModuleModuleData &that)
 {
-	WeaponChangeSpecialPowerModuleModuleData value;
+	WeaponChangeSpecialPowerModuleModuleData value(that);
 }

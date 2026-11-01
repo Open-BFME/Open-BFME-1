@@ -10,10 +10,12 @@ class SiegeDockingBehaviorModuleData
 public:
 	virtual ~SiegeDockingBehaviorModuleData();
 private:
-	friend void forceSiegeDockingBehaviorModuleDataDeletingDestructor();
+	friend void forceSiegeDockingBehaviorModuleDataDeletingDestructor(const SiegeDockingBehaviorModuleData &);
 };
 
-void forceSiegeDockingBehaviorModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceSiegeDockingBehaviorModuleDataDeletingDestructor(const SiegeDockingBehaviorModuleData &that)
 {
-	SiegeDockingBehaviorModuleData value;
+	SiegeDockingBehaviorModuleData value(that);
 }

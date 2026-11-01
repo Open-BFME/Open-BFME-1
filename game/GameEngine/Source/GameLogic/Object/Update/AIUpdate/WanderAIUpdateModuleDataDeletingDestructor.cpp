@@ -14,7 +14,9 @@ public:
 	virtual ~WanderAIUpdateModuleData();
 };
 
-void forceWanderAIUpdateModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceWanderAIUpdateModuleDataDeletingDestructor(const WanderAIUpdateModuleData &that)
 {
-	WanderAIUpdateModuleData value;
+	WanderAIUpdateModuleData value(that);
 }

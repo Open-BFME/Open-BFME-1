@@ -8,7 +8,9 @@ public:
 	virtual ~HordeGarrisonContainModuleData();
 };
 
-void forceHordeGarrisonContainModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceHordeGarrisonContainModuleDataDeletingDestructor(const HordeGarrisonContainModuleData &that)
 {
-	HordeGarrisonContainModuleData value;
+	HordeGarrisonContainModuleData value(that);
 }

@@ -10,10 +10,12 @@ class DemoTrapUpdateModuleData
 protected:
 	virtual ~DemoTrapUpdateModuleData();
 private:
-	friend void forceDemoTrapUpdateModuleDataDeletingDestructor();
+	friend void forceDemoTrapUpdateModuleDataDeletingDestructor(const DemoTrapUpdateModuleData &);
 };
 
-void forceDemoTrapUpdateModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceDemoTrapUpdateModuleDataDeletingDestructor(const DemoTrapUpdateModuleData &that)
 {
-	DemoTrapUpdateModuleData value;
+	DemoTrapUpdateModuleData value(that);
 }

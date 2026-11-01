@@ -10,10 +10,12 @@ class DualWeaponBehaviorModuleData
 public:
 	virtual ~DualWeaponBehaviorModuleData();
 private:
-	friend void forceDualWeaponBehaviorModuleDataDeletingDestructor();
+	friend void forceDualWeaponBehaviorModuleDataDeletingDestructor(const DualWeaponBehaviorModuleData &);
 };
 
-void forceDualWeaponBehaviorModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceDualWeaponBehaviorModuleDataDeletingDestructor(const DualWeaponBehaviorModuleData &that)
 {
-	DualWeaponBehaviorModuleData value;
+	DualWeaponBehaviorModuleData value(that);
 }

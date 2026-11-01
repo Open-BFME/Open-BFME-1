@@ -10,10 +10,12 @@ class OrConditionAllocation
 protected:
 	virtual ~OrConditionAllocation();
 private:
-	friend void forceOrConditionAllocationDeletingDestructor();
+	friend void forceOrConditionAllocationDeletingDestructor(const OrConditionAllocation &);
 };
 
-void forceOrConditionAllocationDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceOrConditionAllocationDeletingDestructor(const OrConditionAllocation &that)
 {
-	OrConditionAllocation value;
+	OrConditionAllocation value(that);
 }

@@ -21,7 +21,9 @@ class ScavengerSpecialPowerModuleData : public SpecialPowerModuleData
 {
 };
 
-void forceScavengerSpecialPowerModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceScavengerSpecialPowerModuleDataDeletingDestructor(const ScavengerSpecialPowerModuleData &that)
 {
-	ScavengerSpecialPowerModuleData value;
+	ScavengerSpecialPowerModuleData value(that);
 }

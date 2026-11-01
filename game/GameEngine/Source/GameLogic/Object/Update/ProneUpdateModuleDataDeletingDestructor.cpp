@@ -13,7 +13,9 @@ private:
 	friend void forceProneUpdateModuleDataDeletingDestructor();
 };
 
-void forceProneUpdateModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceProneUpdateModuleDataDeletingDestructor(const ProneUpdateModuleData &that)
 {
-	ProneUpdateModuleData value;
+	ProneUpdateModuleData value(that);
 }

@@ -10,10 +10,12 @@ class LocomotorTemplate
 protected:
 	virtual ~LocomotorTemplate();
 private:
-	friend void forceLocomotorTemplateDeletingDestructor();
+	friend void forceLocomotorTemplateDeletingDestructor(const LocomotorTemplate &);
 };
 
-void forceLocomotorTemplateDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceLocomotorTemplateDeletingDestructor(const LocomotorTemplate &that)
 {
-	LocomotorTemplate value;
+	LocomotorTemplate value(that);
 }

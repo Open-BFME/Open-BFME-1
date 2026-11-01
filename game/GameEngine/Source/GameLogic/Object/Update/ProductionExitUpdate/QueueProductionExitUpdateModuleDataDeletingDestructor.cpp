@@ -10,10 +10,12 @@ class QueueProductionExitUpdateModuleData
 public:
 	virtual ~QueueProductionExitUpdateModuleData();
 private:
-	friend void forceQueueProductionExitUpdateModuleDataDeletingDestructor();
+	friend void forceQueueProductionExitUpdateModuleDataDeletingDestructor(const QueueProductionExitUpdateModuleData &);
 };
 
-void forceQueueProductionExitUpdateModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceQueueProductionExitUpdateModuleDataDeletingDestructor(const QueueProductionExitUpdateModuleData &that)
 {
-	QueueProductionExitUpdateModuleData value;
+	QueueProductionExitUpdateModuleData value(that);
 }

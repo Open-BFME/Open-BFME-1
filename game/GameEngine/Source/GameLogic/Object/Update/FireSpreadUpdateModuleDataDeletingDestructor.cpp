@@ -10,10 +10,12 @@ class FireSpreadUpdateModuleData
 public:
 	virtual ~FireSpreadUpdateModuleData();
 private:
-	friend void forceFireSpreadUpdateModuleDataDeletingDestructor();
+	friend void forceFireSpreadUpdateModuleDataDeletingDestructor(const FireSpreadUpdateModuleData &);
 };
 
-void forceFireSpreadUpdateModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceFireSpreadUpdateModuleDataDeletingDestructor(const FireSpreadUpdateModuleData &that)
 {
-	FireSpreadUpdateModuleData value;
+	FireSpreadUpdateModuleData value(that);
 }

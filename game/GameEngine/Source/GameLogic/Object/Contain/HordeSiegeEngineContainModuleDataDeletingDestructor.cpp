@@ -11,7 +11,9 @@ public:
 	virtual ~HordeSiegeEngineContainModuleData();
 };
 
-void forceHordeSiegeEngineContainModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceHordeSiegeEngineContainModuleDataDeletingDestructor(const HordeSiegeEngineContainModuleData &that)
 {
-	HordeSiegeEngineContainModuleData value;
+	HordeSiegeEngineContainModuleData value(that);
 }
