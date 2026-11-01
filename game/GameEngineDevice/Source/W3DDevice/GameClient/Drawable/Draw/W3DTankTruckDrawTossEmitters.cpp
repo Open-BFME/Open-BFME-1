@@ -15,15 +15,26 @@ public:
 class ParticleSystemZA;
 ParticleSystemZA *bfmeNullSystemZA();
 
+// The field-clear helper behind ILT 0x00015640 is the matched body 0x005C2240,
+// which the ledger defines as BfmeNodeZK::bfmeLeaveZK.
+class BfmeNodeZK
+{
+public:
+	void bfmeLeaveZK(void);
+};
+
 class ParticleSystemFieldClearShim
 {
 public:
-	void clear(void);
-
 	ParticleSystem *m_system;
 	ParticleSystemFieldClearShim *m_previous;
 	ParticleSystemFieldClearShim *m_next;
 };
+
+static __forceinline void clearField(ParticleSystemFieldClearShim *field)
+{
+	((BfmeNodeZK *)field)->bfmeLeaveZK();
+}
 
 class W3DTankTruckDraw
 {
@@ -62,18 +73,18 @@ void W3DTankTruckDraw::tossEmitters(void)
 	{
 		m_dustEffect->attachToObject(0);
 		m_dustEffect->destroy();
-		m_dustEffect.clear();
+		clearField(&m_dustEffect);
 	}
 	if (m_dirtEffect)
 	{
 		m_dirtEffect->attachToObject(0);
 		m_dirtEffect->destroy();
-		m_dirtEffect.clear();
+		clearField(&m_dirtEffect);
 	}
 	if (m_powerslideEffect)
 	{
 		m_powerslideEffect->attachToObject(0);
 		m_powerslideEffect->destroy();
-		m_powerslideEffect.clear();
+		clearField(&m_powerslideEffect);
 	}
 }
