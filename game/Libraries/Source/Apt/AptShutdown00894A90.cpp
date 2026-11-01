@@ -40,7 +40,7 @@ extern Rva00899560Pool *g_rva01337810GcRoots;
 extern void (*TheBfmeFree)(void *, unsigned int);
 
 extern void bfmeGoDWG();
-extern void d_00893820();
+void bfmeCall936F(int);
 extern void j_00894110();
 extern void rva00897360(bool);
 void AptValueShutdown(int);
@@ -71,7 +71,6 @@ class BfmeStrVKI { public: BfmeStringData3AF0 *m_data; };
 extern BfmeStrVKI g_String012D5140;
 extern int g_bfme1017H;
 extern int g_stack01338748;
-typedef void (__cdecl *IntCall)(int);
 
 class Rva00894A60SizedDeleting { public: virtual ~Rva00894A60SizedDeleting(); };
 class Rva00894350SizedDeleting { public: virtual ~Rva00894350SizedDeleting(); };
@@ -89,7 +88,7 @@ void dup_00894A90(int mode)
 {
 	bfmeGoDWG();
 	((AptAnimationPoolData *)(*(char **)&g_bfmeHolderBU))->PreDestroy();
-	((IntCall)d_00893820)(1);
+	bfmeCall936F(1);
 
 	void *zero = 0;
 	delete (Rva00894A10Delete *)g_bfmeTracker4310;
