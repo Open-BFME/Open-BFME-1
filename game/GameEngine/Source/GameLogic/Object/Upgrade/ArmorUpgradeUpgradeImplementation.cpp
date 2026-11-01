@@ -14,7 +14,13 @@
 typedef unsigned int UnsignedInt;
 typedef int ArmorSetType;
 
-extern UnsignedInt g_Va012B2C98[];
+// Armor-set to model-condition table, retail .data VA 0x012B2C98: one entry
+// per ArmorSetType (ArmorSetFlags is BitFlags<11>), the last without a
+// condition. ArmorUpgrade::upgradeImplementation and removeUpgrade index it.
+UnsignedInt g_Va012B2C98[11] =
+{
+	0x11b, 0x11c, 0x11d, 0x121, 0x11e, 0x11f, 0x120, 0x122, 0x123, 0x124, 0
+};
 
 
 class BodyModuleInterface
