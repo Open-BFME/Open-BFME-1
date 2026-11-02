@@ -38006,7 +38006,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_00618f90@@YAXXZ,,0x00618F90,8,game/gen_asm/d_006176a0.asm,matched,gen-dump;ghidra=FUN_00a18f90
 ?d_00619170@@YAXXZ,,0x00619170,8,game/gen_asm/d_006176a0.asm,matched,gen-dump;ghidra=FUN_00a19170
 ?d_00619540@@YAXXZ,,0x00619540,215,game/gen_asm/d_006176a0.asm,matched,gen-dump;ghidra=FUN_00a19540
-?d_0061a0f0@@YAXXZ,,0x0061A0F0,213,game/gen_asm/d_006176a0.asm,matched,gen-dump;ghidra=FUN_00a1a0f0
 ?d_0061b500@@YAXXZ,,0x0061B500,894,game/gen_asm/d_006176a0.asm,matched,gen-dump;ghidra=FUN_00a1b500
 ?d_0061bd90@@YAXXZ,,0x0061BD90,179,game/gen_asm/d_006176a0.asm,matched,gen-dump;ghidra=FUN_00a1bd90
 ?d_00628330@@YAXXZ,,0x00628330,1,game/GameEngine/Source/GameClient/Rva00628330Noop.cpp,matched,carved one-byte ret body with no proven owner
@@ -173466,3 +173465,4 @@ uw_00c06438,,0x00C06438,8,game/GameEngine/Source/GameLogic/AI/AIStateMachineCons
 ?getBridgeHeight@Bridge@@QAEMPBVCoord3D@@PAV2@@Z,,0x001A7520,664,game/GameEngine/Source/GameLogic/Map/BridgeGetBridgeHeight.cpp,matched,BFME2 donor BridgeGetBridgeHeight.cpp port; ilt_oracle CONFIRMED class-keyed name for ILT 0x0000B802 slot 8601; polygon-area pointer at +0x8C;model=claude-opus-5-5;host=app
 ?friend_getGoalPathPosition@AIUpdateInterface@@QBEPBVCoord3D@@H@Z,,0x0016FFD0,62,game/GameEngine/Source/GameLogic/AI/AIFollowPathAsTeamState_onEnter.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/a1-aifollowpathasteam-onenter-179740.md;ZH inline AIUpdateInterface::friend_getGoalPathPosition out-of-line copy emitted by onEnter's third call; ilt_oracle CONFIRMED slot 7875;model=claude-opus-5-5;host=app
 ?onEnter@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ,,0x00179740,670,game/GameEngine/Source/GameLogic/AI/AIFollowPathAsTeamState_onEnter.cpp,matched,BFME2 donor AIAttackApproachTargetStateOnEnter.cpp port; vtable 0x01099C08 slot 4; ilt_oracle CONFIRMED; ZH friend_getGoalPathPosition inline over STLport goal path;model=claude-opus-5-5;host=app
+?rva0061A0F0@Rva0061A0F0Owner@@QAEXXZ,,0x0061A0F0,213,game/GameEngine/Source/GameLogic/LivingWorld/Rva0061A0F0Dispatch.cpp,matched,address-derived owner/method; vector at +0x9C of 0x24-byte Rva00619C40Entry records; 0x003B3950 string then 0x00619C40 via caller-ABI member pin; handoff targets/game/reverse/attempt_support/0061a0f0-unrotated-loop-20261102.md;model=claude-opus-5-5;host=app

@@ -1,5 +1,23 @@
 # Shape levers: the checklist for "everything matches except..."
 
+## Head-tested found loop and an uncached element address (2026-11-02)
+
+`Rva0061A0F0Owner::rva0061A0F0` (0x0061A0F0, 213 B, MSVC 7.1 `/DNDEBUG /MD
+/EHsc`) walks a vector of 0x24-byte records until the first one whose flag
+byte is clear. Retail keeps the loop head-tested (`xor cl,cl; xor esi,esi;
+test cl,cl; jne exit`, back-edge `jmp` to the test) and reads the flag as
+`mov dl,[esi+eax+0x18]`, then recomputes `lea ecx,[esi+eax]` for the getter's
+receiver. `for (i = 0; !found; ++i)` and every while/continue/goto form rotate
+the loop (219 B, 90 diffs). A foldable first term,
+`bool searching = true; ... searching && !found`, keeps the head test (211 B,
+81 diffs; same lever as Path::computePointOnPath, s512). With the record
+pointer CSE'd (`m_entries[i]` on a raw pointer or an inline `operator[]`) the
+receiver stays live in ECX and this/index/flag take ESI/EDI/AL. Spelling each
+use `m_entries.begin()[i]` (inline `begin()` on a vector view at +0x9C) gave
+the exact body: the address is recomputed per use and the allocation follows.
+Source: `game/GameEngine/Source/GameLogic/LivingWorld/Rva0061A0F0Dispatch.cpp`,
+handoff `targets/game/reverse/attempt_support/0061a0f0-unrotated-loop-20261102.md`.
+
 ## By-value owning handle built from a returned handle: auto_ptr_ref transfer (2026-11-02)
 
 `ControlBar::bfmeShowDN` (0x004C15D0, 678 B, MSVC 7.1 `/DNDEBUG /DWIN32 /MD

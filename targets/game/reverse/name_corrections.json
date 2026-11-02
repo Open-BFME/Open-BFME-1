@@ -21701,5 +21701,85 @@
     "after_sha256": "0c690e1af73dd6f676b03caf4ba2471b29a6e5ab78cca331e21acbc6dec4658b",
     "evidence": "targets/game/reverse/identity_evidence/20261102-004c15d0-popup-unit.md",
     "reason": "False pairing of the naming checker after the popup bodies moved into one unit; the original name is kept verbatim in the new source and no symbol was renamed."
+  },
+  {
+    "old_path": "targets/game/reverse/attempts/0x0061a0f0.cpp",
+    "new_path": "game/GameEngine/Source/GameLogic/LivingWorld/Rva0061A0F0Dispatch.cpp",
+    "old_name": "AsciiString",
+    "new_name": "BfmeRoomYC",
+    "before_sha256": "f7dd8e4f3da3ed6e5e4d58117a30a59f19b7ffc254ccb3d3908acf5c2cd96aa7",
+    "after_sha256": "9e04e0f4473e3e68a0d50264e6a6bc81bd5964ca08d00a341fdd86579515d452",
+    "evidence": "targets/game/reverse/attempt_support/0061a0f0-unrotated-loop-20261102.md",
+    "reason": "The ledger callee 0x003B3950 returns its string under the BfmeRoomYC view; the bank declared a guessed AsciiString getter."
+  },
+  {
+    "old_path": "targets/game/reverse/attempts/0x0061a0f0.cpp",
+    "new_path": "game/GameEngine/Source/GameLogic/LivingWorld/Rva0061A0F0Dispatch.cpp",
+    "old_name": "byte18",
+    "new_name": "m_byte18",
+    "before_sha256": "f7dd8e4f3da3ed6e5e4d58117a30a59f19b7ffc254ccb3d3908acf5c2cd96aa7",
+    "after_sha256": "9e04e0f4473e3e68a0d50264e6a6bc81bd5964ca08d00a341fdd86579515d452",
+    "evidence": "targets/game/reverse/attempt_support/0061a0f0-unrotated-loop-20261102.md",
+    "reason": "Bank field placeholder renamed to the project m_ member convention; same opaque offset field."
+  },
+  {
+    "old_path": "targets/game/reverse/attempts/0x0061a0f0.cpp",
+    "new_path": "game/GameEngine/Source/GameLogic/LivingWorld/Rva0061A0F0Dispatch.cpp",
+    "old_name": "dispatch",
+    "new_name": "rva0061A0F0",
+    "before_sha256": "f7dd8e4f3da3ed6e5e4d58117a30a59f19b7ffc254ccb3d3908acf5c2cd96aa7",
+    "after_sha256": "9e04e0f4473e3e68a0d50264e6a6bc81bd5964ca08d00a341fdd86579515d452",
+    "evidence": "targets/game/reverse/attempt_support/0061a0f0-unrotated-loop-20261102.md",
+    "reason": "Bank name was a guess; the owner and method identity are unproven so the landed body keeps the address-derived name."
+  },
+  {
+    "old_path": "targets/game/reverse/attempts/0x0061a0f0.cpp",
+    "new_path": "game/GameEngine/Source/GameLogic/LivingWorld/Rva0061A0F0Dispatch.cpp",
+    "old_name": "dispatchEntry",
+    "new_name": "rva00619C40",
+    "before_sha256": "f7dd8e4f3da3ed6e5e4d58117a30a59f19b7ffc254ccb3d3908acf5c2cd96aa7",
+    "after_sha256": "9e04e0f4473e3e68a0d50264e6a6bc81bd5964ca08d00a341fdd86579515d452",
+    "evidence": "targets/game/reverse/attempt_support/0061a0f0-unrotated-loop-20261102.md",
+    "reason": "Guessed bank name for the 0x00619C40 receiver; the landed caller view uses the address-derived member pinned at 0x00619C40."
+  },
+  {
+    "old_path": "targets/game/reverse/attempts/0x0061a0f0.cpp",
+    "new_path": "game/GameEngine/Source/GameLogic/LivingWorld/Rva0061A0F0Dispatch.cpp",
+    "old_name": "getString",
+    "new_name": "Rva003B3950Room",
+    "before_sha256": "f7dd8e4f3da3ed6e5e4d58117a30a59f19b7ffc254ccb3d3908acf5c2cd96aa7",
+    "after_sha256": "9e04e0f4473e3e68a0d50264e6a6bc81bd5964ca08d00a341fdd86579515d452",
+    "evidence": "targets/game/reverse/attempt_support/0061a0f0-unrotated-loop-20261102.md",
+    "reason": "Guessed bank getter names; the landed body calls the ledger row 0x003B3950 Rva003B3950Room and the address-derived 0x006196F0 pin."
+  },
+  {
+    "old_path": "targets/game/reverse/attempts/0x0061a0f0.cpp",
+    "new_path": "game/GameEngine/Source/GameLogic/LivingWorld/Rva0061A0F0Dispatch.cpp",
+    "old_name": "getString",
+    "new_name": "rva006196F0",
+    "before_sha256": "f7dd8e4f3da3ed6e5e4d58117a30a59f19b7ffc254ccb3d3908acf5c2cd96aa7",
+    "after_sha256": "9e04e0f4473e3e68a0d50264e6a6bc81bd5964ca08d00a341fdd86579515d452",
+    "evidence": "targets/game/reverse/attempt_support/0061a0f0-unrotated-loop-20261102.md",
+    "reason": "Guessed bank getter names; the landed body calls the ledger row 0x003B3950 Rva003B3950Room and the address-derived 0x006196F0 pin."
+  },
+  {
+    "old_path": "targets/game/reverse/attempts/0x0061a0f0.cpp",
+    "new_path": "game/GameEngine/Source/GameLogic/LivingWorld/Rva0061A0F0Dispatch.cpp",
+    "old_name": "opaque00",
+    "new_name": "m_opaque00",
+    "before_sha256": "f7dd8e4f3da3ed6e5e4d58117a30a59f19b7ffc254ccb3d3908acf5c2cd96aa7",
+    "after_sha256": "9e04e0f4473e3e68a0d50264e6a6bc81bd5964ca08d00a341fdd86579515d452",
+    "evidence": "targets/game/reverse/attempt_support/0061a0f0-unrotated-loop-20261102.md",
+    "reason": "Bank field placeholder renamed to the project m_ member convention; same opaque offset field."
+  },
+  {
+    "old_path": "targets/game/reverse/attempts/0x0061a0f0.cpp",
+    "new_path": "game/GameEngine/Source/GameLogic/LivingWorld/Rva0061A0F0Dispatch.cpp",
+    "old_name": "opaque19",
+    "new_name": "m_opaque19",
+    "before_sha256": "f7dd8e4f3da3ed6e5e4d58117a30a59f19b7ffc254ccb3d3908acf5c2cd96aa7",
+    "after_sha256": "9e04e0f4473e3e68a0d50264e6a6bc81bd5964ca08d00a341fdd86579515d452",
+    "evidence": "targets/game/reverse/attempt_support/0061a0f0-unrotated-loop-20261102.md",
+    "reason": "Bank field placeholder renamed to the project m_ member convention; same opaque offset field."
   }
 ]

@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "3c073b5ab18e494735a6df8ad2c19199b55d10181650105bd3a7976bbbcecee8",
+  "symbol": "?d_0061a0f0@@YAXXZ",
+  "score_kind": "measured",
+  "score": 0.6009,
+  "source": "// ?d_0061a0f0@@YAXXZ\n// partial score=0.6009 date=2026-11-02\n// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib\n// Bank 2026-11-02 (a1/536): un-rotated loop via a foldable `searching &&`\n// term; 211/213 B, 81 diffs. Names kept from the earlier bank for\n// name_regression; the ledger spellings for landing (Rva003B3950Room on\n// Glo012F1024Type returning BfmeRoomYC, getName on Rva003A4390Owner, member\n// pin for 0x00619C40) are in\n// targets/game/reverse/attempt_support/0061a0f0-unrotated-loop-20261102.md.\n#include \"ascii_string.h\"\nclass Rva003B3950StringOwner {\npublic:\n    AsciiString getString();\n};\nextern Rva003B3950StringOwner *Rva012F1024StringOwner;\nclass Rva006196F0Entry {\npublic:\n    AsciiString getString();\n    char opaque00[0x18];\n    unsigned char byte18;\n    char opaque19[0xB];\n};\nstruct Rva00619C40Entry;\nclass Rva0061A0F0Owner {\npublic:\n    void dispatch();\n    void dispatchEntry(Rva00619C40Entry *, int, const AsciiString &);\n    char opaque00[0x9C];\n    Rva006196F0Entry *entries;\n};\nvoid Rva0061A0F0Owner::dispatch()\n{\n    AsciiString name = Rva012F1024StringOwner->getString();\n    if (name.getLength() == 0)\n        name.format(AsciiString(\"NoActNameFound\"));\n    bool found = false;\n    bool searching = true;\n    for (int index = 0; searching && !found; ++index) {\n        if (entries[index].byte18 == 0) {\n            dispatchEntry((Rva00619C40Entry *)&entries[index], 1, entries[index].getString());\n            found = true;\n        }\n    }\n}\n"
+}

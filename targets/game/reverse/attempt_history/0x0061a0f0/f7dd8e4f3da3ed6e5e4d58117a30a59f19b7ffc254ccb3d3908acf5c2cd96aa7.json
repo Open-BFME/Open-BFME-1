@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "f7dd8e4f3da3ed6e5e4d58117a30a59f19b7ffc254ccb3d3908acf5c2cd96aa7",
+  "symbol": "?dispatch@Rva0061A0F0Owner@@QAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.5446,
+  "source": "// ?dispatch@Rva0061A0F0Owner@@QAEXXZ\n// partial score=0.5446 date=2026-10-10\n// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib\n#include \"ascii_string.h\"\nclass Rva003B3950StringOwner {\npublic:\n    AsciiString getString();\n};\nextern Rva003B3950StringOwner *Rva012F1024StringOwner;\nclass Rva006196F0Entry {\npublic:\n    AsciiString getString();\n    char opaque00[0x18];\n    unsigned char byte18;\n    char opaque19[0xB];\n};\nstruct Rva00619C40Entry;\nvoid __stdcall dispatchEntry(Rva00619C40Entry *, int, const AsciiString &);\nclass Rva0061A0F0Owner {\npublic:\n    void dispatch();\n    void dispatchEntry(Rva006196F0Entry *, int, const AsciiString &);\n    char opaque00[0x9C];\n    Rva006196F0Entry *entries;\n};\nvoid Rva0061A0F0Owner::dispatch()\n{\n    AsciiString name = Rva012F1024StringOwner->getString();\n    if (name.getLength() == 0)\n        name.format(AsciiString(\"NoActNameFound\"));\n    bool found = false;\n    for (int index = 0; !found; ++index) {\n        if (entries[index].byte18 == 0) {\n            ::dispatchEntry((Rva00619C40Entry *)&entries[index], 1, entries[index].getString());\n            found = true;\n        }\n    }\n}\n"
+}
