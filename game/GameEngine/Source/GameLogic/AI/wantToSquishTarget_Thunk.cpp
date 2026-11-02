@@ -41,6 +41,11 @@ public:
 	Bool isKindOf(KindOfType kind) const;
 };
 
+// getFinalOverride is reached through ILT 0x000022BB (body 0x00087A80, matched as
+// Overridable::getFinalOverride); the ledger defines that ILT as ?j_000022bb@@YAXXZ,
+// so the call names it through a member pointer.
+extern void j_000022bb(void);
+
 class Object : public Thing
 {
 public:
@@ -51,8 +56,10 @@ public:
 	Bool hasAI() const
 	{
 		ThingTemplate *finalTemplate = m_template;
+		union { void (*raw)(void); ThingTemplate *(ThingTemplate::*member)(); } finalOverride;
+		finalOverride.raw = j_000022bb;
 		if (finalTemplate && finalTemplate->m_override)
-			finalTemplate = finalTemplate->m_override->getFinalOverride();
+			finalTemplate = (finalTemplate->m_override->*finalOverride.member)();
 		return finalTemplate->m_hasAI;
 	}
 	Object *getContainedBy() const { return m_containedBy; }

@@ -42,6 +42,11 @@ private:
 	BfmeAttackPriorityMap *m_priorityMap;
 };
 
+// getFinalOverride is reached through ILT 0x000022BB (body 0x00087A80, matched as
+// Overridable::getFinalOverride); the ledger defines that ILT as ?j_000022bb@@YAXXZ,
+// so the call names it through a member pointer.
+extern void j_000022bb(void);
+
 Int AttackPriorityInfo::getPriority(const ThingTemplate *thingTemplate) const
 {
 	Int priority = m_defaultPriority;
@@ -49,8 +54,10 @@ Int AttackPriorityInfo::getPriority(const ThingTemplate *thingTemplate) const
 	if (thingTemplate)
 	{
 		const ThingTemplate *resolved = thingTemplate;
+		union { void (*raw)(void); ThingTemplate *(ThingTemplate::*member)(); } finalOverride;
+		finalOverride.raw = j_000022bb;
 		if (thingTemplate->m_nextOverride)
-			resolved = thingTemplate->m_nextOverride->getFinalOverride();
+			resolved = (thingTemplate->m_nextOverride->*finalOverride.member)();
 
 		BfmeAttackPriorityMap *priorityMap = m_priorityMap;
 		thingTemplate = resolved;

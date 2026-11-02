@@ -16,6 +16,11 @@ typedef unsigned int UnsignedInt;
 
 #define NULL 0
 
+// getFinalOverride is reached through ILT 0x000022BB (body 0x00087A80, matched as
+// Overridable::getFinalOverride); the ledger defines that ILT as ?j_000022bb@@YAXXZ,
+// so the call names it through a member pointer.
+extern void j_000022bb(void);
+
 class ThingTemplate;
 class Object;
 class Player;
@@ -222,8 +227,10 @@ Object *AIPlayer::findFactory(const ThingTemplate *thing, Bool busyOK,
 			goto nextFactory;
 
 		ThingTemplate *factoryTemplate = factory->m_template;
+		union { void (*raw)(void); ThingTemplate *(ThingTemplate::*member)(); } finalOverride;
+		finalOverride.raw = j_000022bb;
 		if (factoryTemplate != NULL && factoryTemplate->m_nextOverride != NULL)
-			factoryTemplate = factoryTemplate->m_nextOverride->getFinalOverride();
+			factoryTemplate = (factoryTemplate->m_nextOverride->*finalOverride.member)();
 		if ((factoryTemplate->m_shadowOffsetY & 0x40000000) == 0)
 			goto nextFactory;
 		if ((factory->m_status & 4) != 0 ||
