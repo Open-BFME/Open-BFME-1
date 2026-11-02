@@ -8,12 +8,8 @@
 
 #define PATHFIND_CELL_SIZE_F 10.0f
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
+
 
 class Object
 {

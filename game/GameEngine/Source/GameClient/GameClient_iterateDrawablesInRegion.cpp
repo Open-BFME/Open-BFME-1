@@ -4,12 +4,8 @@
 // Drawable::getNextDrawable is the inline m_nextDrawable load at +0x104.
 // getPosition is the already-pinned Drawable ILT at 0x0004B12D.
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
+
 
 struct Region3D
 {

@@ -17,12 +17,8 @@ extern float GetGameClientRandomValueReal( float low, float high,
 extern const float g_rva01075350;
 extern float g_bfmeDefaultBU;
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
+
 
 static char kRetailFile[] =
 	"F:\\bfme\\Code\\gameengine\\Source\\GameClient\\System\\FXParticleSystem\\fxpsemittervolumemodule.cpp";

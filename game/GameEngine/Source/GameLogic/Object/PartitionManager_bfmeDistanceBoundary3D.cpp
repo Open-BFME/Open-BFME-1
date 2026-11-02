@@ -9,12 +9,8 @@ extern "C" double __cdecl sqrt(double value);
 
 extern const float g_rva01075350;
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
+
 
 class BfmeBoundaryGeometry3D
 {

@@ -5,10 +5,8 @@
 
 typedef int Int;
 
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
+
 
 struct ICoord2D
 {

@@ -4,12 +4,8 @@
 // overload at 0x001EAA40.
 
 extern "C" void __cdecl __identifier("?d_001e9fd0@@YAXXZ")();
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
+
 
 class Object
 {
