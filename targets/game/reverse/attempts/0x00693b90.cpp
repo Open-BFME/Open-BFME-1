@@ -1,5 +1,5 @@
 // ?rva00693B90@Rva00694710AudioWorker@@QAE?AVRva006910F0Handle@@ABVAsciiString@@H@Z
-// partial score=0.5619 date=2026-11-02
+// partial score=0.9676 date=2026-11-02
 // ?Rva00694230@Gen0002857EOwner@@QAEXPAVGen0002857E@@@Z
 // cl: /O2 /Ob2 /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB /Iinputs/vendor/stlport /Igame/Libraries/Source/WWVegas/WWLib /I.
 // stlport
@@ -325,6 +325,21 @@ public:
 	void *m_mutex;					// 0x48
 };
 
+
+static __forceinline Rva00693B90Node *findNode(Rva00693B90Node *head, Gen0002857E *file)
+{
+	Rva00693B90Node *n = head->m_next;
+	while (n != head && n->m_data != file)
+		n = n->m_next;
+	return n;
+}
+static __forceinline Rva00693B90Node *findNode0(Rva00693B90Node *head, Gen0002857E *file)
+{
+	for (Rva00693B90Node *n = head->m_next; n != head; n = n->m_next)
+		if (n->m_data == file)
+			return n;
+	return 0;
+}
 // ?rva00693B90@Rva00694710AudioWorker@@QAE?AVRva006910F0Handle@@ABVAsciiString@@H@Z
 Rva006910F0Handle Rva00694710AudioWorker::rva00693B90(const AsciiString &name, int priority)
 {
@@ -351,7 +366,9 @@ Rva006910F0Handle Rva00694710AudioWorker::rva00693B90(const AsciiString &name, i
 		if (!record->m_pinned && record->m_priority < level)
 		{
 			Rva00693B90Node *head = m_lists[record->m_priority].m_node;
-			for (Rva00693B90Node *n = head->m_next; n != head; n = n->m_next)
+			bool searching = true;
+			Rva00693B90Node *n = head->m_next;
+			while (searching && n != head)
 			{
 				if (n->m_data == file)
 				{
@@ -373,6 +390,7 @@ Rva006910F0Handle Rva00694710AudioWorker::rva00693B90(const AsciiString &name, i
 					pos->m_prev = node;
 					break;
 				}
+				n = n->m_next;
 			}
 		}
 		((Rva006BA130MaxField *)file)->update(level);
@@ -382,10 +400,13 @@ Rva006910F0Handle Rva00694710AudioWorker::rva00693B90(const AsciiString &name, i
 	if (m_failed.find(name) != m_failed.end())
 		return Rva006910F0Handle();
 
+	{
 	BfmeRecordBQ *record = new BfmeRecordBQ((int)this, (const AsciiStringBQ &)name);
-	Rva006910F0Handle handle((Gen0002857E *)record);
+	Gen0002857E *file;
+	Rva006910F0Handle handle(file = (Gen0002857E *)record);
 	m_files[name] = (Gen0002857E *)record;
-	m_lists[level].push_back((Gen0002857E *)record);
+	m_lists[level].push_back(file);
 	((Rva006BA130MaxField *)record)->update(level);
 	return handle;
+	}
 }

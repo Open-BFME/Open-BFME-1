@@ -50,3 +50,21 @@ home before the handle ctor call, ours right before push_back (an early
 `file` local gets its own slot and grows the frame; const-ref and block-scope
 spellings inert); one epilogue `pop ebx` placement. EH throw() levers via
 eh_levers/shape_search: 28 trials, no gain.
+
+## Update (s541, 2026-11-02): shape 0.994, 17 diffs, size and frame exact
+
+- List scan un-rotated by the foldable first term (same lever as 0x0061A0F0 and
+  Path::computePointOnPath): `bool searching = true; Node *n = head->m_next;
+  while (searching && n != head) { if (n->m_data == file) { ...; break; } n = n->m_next; }`
+  -> 525/525 B, 29 diffs. Inline find helpers (returning head or 0) and goto
+  loops stay rotated (0.966/0.977).
+- Push_back temp stored before the handle ctor (retail +0x18F): declare
+  `Gen0002857E *file;` and construct `Rva006910F0Handle handle(file = (Gen0002857E *)record);`,
+  then `push_back(file)`. Without a block the local gets its own slot (frame
+  0x1C); wrapping the new-record path in `{ }` restores frame 0x18 (17 diffs).
+- Remaining: slot permutation (ours: handle in the dead `name` home +0x3C, file
+  at +0x10, new temp +0x18, mutex +0x24/+0x28, iterator +0x1C; retail: file and
+  new temp share +0x3C, handle +0x10, mutex +0x1C/+0x20, iterator +0x24) and
+  the epilogue `pop ebx` after `mov fs:[0],ecx` in retail. Inert: block placement
+  of file/record/handle (R/S/T/U), `handle = Handle(...)`, comma expression;
+  using `file` for the map store or update() regresses to 0.955/0.988.
