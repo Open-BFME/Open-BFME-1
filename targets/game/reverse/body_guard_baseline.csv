@@ -442,7 +442,6 @@ dir32,0x012F4ABC,?g_rva012F4ABC@@3PAURva0055A240Global@@A,"retail 0x012F4ABC is 
 dir32,0x012F4B80,?key012F4B80@@3VAsciiString@@A,"?key012F4B80@@3VAsciiString@@A is a function the ledger places elsewhere, not at 0x012F4B80"
 dir32,0x012F4B84,?key012F4B84@@3VAsciiString@@A,"?key012F4B84@@3VAsciiString@@A is a function the ledger places elsewhere, not at 0x012F4B84"
 dir32,0x012F4B88,?key012F4B88@@3VAsciiString@@A,"?key012F4B88@@3VAsciiString@@A is a function the ledger places elsewhere, not at 0x012F4B88"
-dir32,0x012F4C5C,?Rva00EF4C5C@@3PAVRva005A49E0RangeTest@@A,"retail 0x012F4C5C is already recorded as ?Mouse0040F780@@3PAVMouse@@A (+12 more); reference that name, not a new one"
 dir32,0x012F4C84,?Rva00EF4C84@@3PAVRva005B5440@@A,"retail 0x012F4C84 is already recorded as ?g_bfmeSingletonVVD@@3PAVBfmeOwnVVD@@A (+1 more); reference that name, not a new one"
 dir32,0x012F7014,?TheTerrainVisual@@3PAVTerrainVisual001AC3D0@@A,"retail 0x012F7014 is already recorded as ?TheTerrainVisual@@3PAVRva001A8820TerrainVisual@@A (+10 more); reference that name, not a new one"
 dir32,0x012F7014,?TheTerrainVisual@@3PAVTerrainVisual001AE610@@A,"retail 0x012F7014 is already recorded as ?TheTerrainVisual@@3PAVRva001A8820TerrainVisual@@A (+10 more); reference that name, not a new one"

@@ -405,7 +405,12 @@ struct Rva005A49E0Point;
 class Rva005A49E0RangeTest {
 public: bool isBeyondRange(const Rva005A49E0Point *, const Rva005A49E0Point *) const;
 };
-extern Rva005A49E0RangeTest *Rva00EF4C5C;
+// 0x012F4C5C is the global the dir32 record owns as ?TheMouse@@3PAVMouse@@A
+// (the retail Mouse*); the address-derived Rva00EF4C5C spelling was the
+// unrecorded name the dir32 gate debt at 0x012F4C5C retires, so the extern is
+// declared under the recorded mangled name.
+extern "C" Rva005A49E0RangeTest *__identifier("?TheMouse@@3PAVMouse@@A");
+#define Rva00EF4C5C __identifier("?TheMouse@@3PAVMouse@@A")
 class Rva005B5440 { public: void clearFlags(); };
 extern Rva005B5440 *Rva00EF4C84;
 // Retail reads byte +0x60 of TheWritableGlobalData (0x012ED5C8), the BFME
