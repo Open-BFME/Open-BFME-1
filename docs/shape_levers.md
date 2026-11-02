@@ -3424,3 +3424,16 @@ float *)&dir.X + start.X` per component made it exact. On the same body
 `!= OUTSIDE` return: it gave retail's `cmp eax,1; setne al` tail and also
 moved the early `return false` block to retail's place right after the first
 test. Measured on this body only.
+
+## Try/catch body: constant register follows the return shape (2026-11-03)
+
+Retail 0x004889A0 (`GameWindowManager::winCreateLayout`, 257 B,
+`GameWindowManager_winCreateLayout_Thunk.cpp`) keeps EH state 1 in EBX
+(`mov ebx,1` ... `mov byte ptr [ebp-4],bl`) and stores state 0 as immediates.
+Spellings that `return` straight out of the try (`return cb(&info);`) or out of
+both arms gave VC7.1 an EBX=0 register instead (`cmp al,bl`, 0.84-0.86). One
+`WindowLayout *layout` assigned in the try arm and the `new` arm, a single
+`return layout;` after the if/else, `catch (...) { return 0; }`, and the early
+`if (!info.load(filename)) return 0;` was exact. Separately, retail pops no
+argument after `call eax`, so the callback pointer is `__stdcall`. Measured on
+this body only (default `/DNDEBUG /MD /EHsc`).

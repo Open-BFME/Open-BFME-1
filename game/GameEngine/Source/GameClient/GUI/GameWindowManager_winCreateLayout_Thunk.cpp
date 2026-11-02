@@ -1,284 +1,94 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?winCreateLayout@GameWindowManager@@UAEPAVWindowLayout@@VAsciiString@@@Z: game/GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Retail RVA 0x004889A0, 257 bytes (ret 4): BFME's winCreateLayout. Zero Hour
+// newed a WindowLayout and let it load the file; BFME loads a WindowLayoutInfo
+// first (WindowLayoutInfo::load, 0x00487870), returns NULL when that fails,
+// hands the info to its +0x10 create callback inside try/catch(...) when one is
+// set (a __stdcall pointer: retail pops no argument), and otherwise news a
+// 0x24-byte WindowLayout and passes it the info
+// (0x00497CE0 through ILT 0x0000C0A4, pinned under an address-derived name).
+// Layout of WindowLayoutInfo follows WindowLayoutInfoConstructor.cpp.
+
+#include "string_base.h"
+
+class AsciiString : private StringBase<char>
+{
+public:
+	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
+	~AsciiString() {}
+};
 
 class WindowLayout;
-// The mangled signature takes AsciiString by value; the naked body below already
-// inlines the retail releaseBuffer cleanup, so this TU-local view keeps the
-// parameter's compiler cleanup from emitting a second destructor call past the
-// __emit ret that retail does not have.
-// class-gate: allow AsciiString the canonical dtor emits a second releaseBuffer call past the __emit ret (lea ecx,[ebp+8]; call) that retail 0x004889A0 does not carry: it ends at ret 4 +0xfe with int3 padding
-class AsciiString
+class WindowLayoutInfo;
+
+typedef WindowLayout *(__stdcall *WindowLayoutCreateFunc)(WindowLayoutInfo *info);
+
+class WindowLayoutInfo
 {
-	char m_pad[16];
+public:
+	WindowLayoutInfo();
+	~WindowLayoutInfo();
+	bool load(AsciiString filename);
+
+	unsigned int version;
+	void *init;
+	void *update;
+	void *shutdown;
+	WindowLayoutCreateFunc _bfme_unk_10;
+	AsciiString initNameString;
+	AsciiString updateNameString;
+	AsciiString shutdownNameString;
+	AsciiString _bfme_unk_20;
+	AsciiString _bfme_unk_24;
+	void *windows;
 };
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
+
+class WindowLayout
+{
+public:
+	WindowLayout();
+
+private:
+	unsigned char m_unmodelled[0x24];
+};
+
+// 0x00497CE0, reached through ILT 0x0000C0A4 and pinned there under this name.
+class BfmeQuickMatchScreenBase
+{
+	friend class GameWindowManager;
+private:
+	void bfmeAttach(void *info);
+};
+
 class GameWindowManager
 {
 public:
-	virtual WindowLayout *winCreateLayout(AsciiString);
+	virtual WindowLayout *winCreateLayout(AsciiString filename);
 };
 
 // ?winCreateLayout@GameWindowManager@@UAEPAVWindowLayout@@VAsciiString@@@Z
-__declspec(naked) WindowLayout *GameWindowManager::winCreateLayout(AsciiString)
+WindowLayout *GameWindowManager::winCreateLayout(AsciiString filename)
 {
-	__asm {
-		__emit 0x55
-		__emit 0x8b
-		__emit 0xec
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0x8b
-		__emit 0x6b
-		__emit 0x02
-		__emit 0x01
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xec
-		__emit 0x34
-		__emit 0x53
-		__emit 0x56
-		__emit 0x57
-		__emit 0x89
-		__emit 0x65
-		__emit 0xf0
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0xc0
-		__emit 0xc7
-		__emit 0x45
-		__emit 0xfc
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xe8
-		__emit 0xe8
-		__emit 0xd0
-		__emit 0xb9
-		__emit 0xff
-		__emit 0x51
-		__emit 0x8d
-		__emit 0x45
-		__emit 0x08
-		__emit 0x89
-		__emit 0x65
-		__emit 0xec
-		__emit 0x8b
-		__emit 0xcc
-		__emit 0xbb
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x88
-		__emit 0x5d
-		__emit 0xfc
-		__emit 0xe8
-		__emit 0x79
-		__emit 0xf1
-		__emit 0x3f
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0xc0
-		__emit 0xe8
-		__emit 0x9d
-		__emit 0xa5
-		__emit 0xbb
-		__emit 0xff
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x1e
-		__emit 0x8b
-		__emit 0x45
-		__emit 0xd0
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x47
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0xc0
-		__emit 0x51
-		__emit 0xc6
-		__emit 0x45
-		__emit 0xfc
-		__emit 0x02
-		__emit 0xff
-		__emit 0xd0
-		__emit 0x8b
-		__emit 0xf0
-		__emit 0x89
-		__emit 0x5d
-		__emit 0xfc
-		__emit 0xeb
-		__emit 0x66
-		__emit 0xb8
-		__emit 0x11
-		__emit 0x8a
-		__emit 0x88
-		__emit 0x00
-		__emit 0xc3
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0xc0
-		__emit 0xc6
-		__emit 0x45
-		__emit 0xfc
-		__emit 0x00
-		__emit 0xe8
-		__emit 0x50
-		__emit 0xcc
-		__emit 0xb8
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0x08
-		__emit 0xc7
-		__emit 0x45
-		__emit 0xfc
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xe8
-		__emit 0x14
-		__emit 0xef
-		__emit 0x3f
-		__emit 0x00
-		__emit 0x33
-		__emit 0xc0
-		__emit 0x8b
-		__emit 0x4d
-		__emit 0xf4
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0x5b
-		__emit 0x8b
-		__emit 0xe5
-		__emit 0x5d
-		__emit 0xc2
-		__emit 0x04
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x24
-		__emit 0xe8
-		__emit 0xe8
-		__emit 0x94
-		__emit 0x3f
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x89
-		__emit 0x45
-		__emit 0xec
-		__emit 0x85
-		__emit 0xc0
-		__emit 0xc6
-		__emit 0x45
-		__emit 0xfc
-		__emit 0x04
-		__emit 0x74
-		__emit 0x09
-		__emit 0x8b
-		__emit 0xc8
-		__emit 0xe8
-		__emit 0x82
-		__emit 0xc5
-		__emit 0xbb
-		__emit 0xff
-		__emit 0xeb
-		__emit 0x02
-		__emit 0x33
-		__emit 0xc0
-		__emit 0x8d
-		__emit 0x55
-		__emit 0xc0
-		__emit 0x52
-		__emit 0x8b
-		__emit 0xc8
-		__emit 0x88
-		__emit 0x5d
-		__emit 0xfc
-		__emit 0x8b
-		__emit 0xf0
-		__emit 0xe8
-		__emit 0x33
-		__emit 0x36
-		__emit 0xb8
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0xc0
-		__emit 0xc6
-		__emit 0x45
-		__emit 0xfc
-		__emit 0x00
-		__emit 0xe8
-		__emit 0xf0
-		__emit 0xcb
-		__emit 0xb8
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0x08
-		__emit 0xc7
-		__emit 0x45
-		__emit 0xfc
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xe8
-		__emit 0xb4
-		__emit 0xee
-		__emit 0x3f
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4d
-		__emit 0xf4
-		__emit 0x5f
-		__emit 0x8b
-		__emit 0xc6
-		__emit 0x5e
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x5b
-		__emit 0x8b
-		__emit 0xe5
-		__emit 0x5d
-		__emit 0xc2
-		__emit 0x04
-		__emit 0x00
+	WindowLayoutInfo info;
+	if (!info.load(filename))
+		return 0;
+
+	WindowLayout *layout;
+	if (info._bfme_unk_10)
+	{
+		try
+		{
+			layout = info._bfme_unk_10(&info);
+		}
+		catch (...)
+		{
+			return 0;
+		}
 	}
+	else
+	{
+		layout = new WindowLayout;
+		((BfmeQuickMatchScreenBase *)layout)->bfmeAttach(&info);
+	}
+	return layout;
 }
