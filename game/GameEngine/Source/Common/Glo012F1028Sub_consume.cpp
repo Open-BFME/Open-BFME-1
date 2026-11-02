@@ -1,18 +1,17 @@
-// ?consume@Glo012F1028Sub@@QAEXPAVAsciiString@@@Z
-// partial score=0.788 date=2026-10-26
-// cl: /O2 /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
-// ?consume@Glo012F1028Sub@@QAEXPAVAsciiString@@@Z 0x003C88E0 283 B
-// 283/283 B, shape 0.963, 60 non-reloc diffs (was 280 B / 191). Left: retail
-// keeps m_begin in ESI across the size guard (push esi before the guard,
-// key pointer in ECX); ours keeps it in ECX and pushes ebp/esi/edi later.
-// Gains: compare via getLength()/str() (TheNullChr fallback); explicit size
-// guard before the for (owner EBX); release helper taking Resource *& with
-// its own null test and store (keeps both +0x24 stores, the duplicate null
-// test and the EDI zero register). Inert: owner local, size() accessor,
-// != 0 guard, while loop, query ref, member/view compare, param order,
-// iterator pointer, /Ox /Ob1 /Ob2, shape_family_levers.
+// cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
+// Glo012F1028Sub::consume (retail 0x003C88E0, 283 B, ret 4). The caller at
+// 0x003B41A0 reaches it through ILT 0x00045B88, where symbols.csv pins this
+// name. It walks the record-pointer vector at +0x28 for the record whose name
+// equals *key; when that record is not the current selection (+0x04), it
+// releases the resource at +0x24 and clears the selection, then selects it.
+// The records are a real STLport vector<T*>. Raw begin/end members with an
+// explicit size guard missed retail by 60 bytes: they loaded the start
+// pointer first and kept it in ECX. vector::size() in the for condition
+// matches retail exactly.
 
 #include "ascii_string.h"
+#include <vector>
 
 static inline int CompareAscii003C88E0(const AsciiString &self, const AsciiString &other)
 {
@@ -77,19 +76,16 @@ private:
 	Glo012F1028Record *m_selected;
 	char m_pad08[0x1c];
 	Glo012F1028Resource *m_resource;
-	Glo012F1028Record **m_begin;
-	Glo012F1028Record **m_end;
+	std::vector<Glo012F1028Record *> m_records;
 };
 
 void Glo012F1028Sub::consume(AsciiString *key)
 {
-	unsigned int index = 0;
-	if ((unsigned int)(m_end - m_begin) > 0)
-	for (; index < (unsigned int)(m_end - m_begin); ++index)
+	for (unsigned int index = 0; index < m_records.size(); ++index)
 	{
-		if (CompareAscii003C88E0(*key, m_begin[index]->m_name) == 0)
+		if (CompareAscii003C88E0(*key, m_records[index]->m_name) == 0)
 		{
-			if (m_selected != 0 && m_selected != m_begin[index])
+			if (m_selected != 0 && m_selected != m_records[index])
 			{
 				if (m_resource != 0)
 					releaseGlo012F1028Resource(m_resource);
@@ -97,7 +93,7 @@ void Glo012F1028Sub::consume(AsciiString *key)
 				m_resource = 0;
 				m_selected = 0;
 			}
-			m_selected = m_begin[index];
+			m_selected = m_records[index];
 			return;
 		}
 	}
