@@ -11,3 +11,4 @@ extern "C" void *(__cdecl *bfme_memmove_ptr)(void *, const void *, unsigned int)
 
 template class _STL::vector<int>;
 template void _STL::vector<int>::_M_initialize_aux<int>(int, int, const _STL::__true_type &);
+template _STL::vector<int>::vector(int, int, const _STL::allocator<int> &);

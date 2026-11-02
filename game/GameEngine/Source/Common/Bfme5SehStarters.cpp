@@ -1,4 +1,4 @@
-// Four constructors that zero three words and hand two arguments plus the
+// Three constructors that zero three words and hand two arguments plus the
 // address of one of them to a starter.
 //
 // The three zero stores are not one object: the frame's copy of this lands
@@ -32,16 +32,6 @@ private:
 	int m_bfmeC;						// +0x00
 };
 
-class Gen_0049A330 : public BfmeSehPair
-{
-public:
-	Gen_0049A330(void *first, void *second, void *third);
-	void bfmeStart(void *first, void *second, void **slot);	// retail 0x00014100
-
-private:
-	BfmeSehSlot m_bfmeSlot;					// +0x08
-};
-
 class Gen_00654F20 : public BfmeSehPair
 {
 public:
@@ -71,12 +61,6 @@ public:
 private:
 	BfmeSehSlot m_bfmeSlot;					// +0x08
 };
-
-// ??0Gen_0049A330@@QAE@PAX00@Z
-Gen_0049A330::Gen_0049A330(void *first, void *second, void *third)
-{
-	bfmeStart(first, second, &second);
-}
 
 // ??0Gen_00654F20@@QAE@PAX00@Z
 Gen_00654F20::Gen_00654F20(void *first, void *second, void *third)
