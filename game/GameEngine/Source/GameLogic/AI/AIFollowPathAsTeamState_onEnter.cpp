@@ -1,11 +1,19 @@
-// ?onEnter@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.9582 date=2026-11-02
-// ?onEnter@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ retail 0x00179740 (670 B, ret at +0x29D).
-// BFME 2 donor: open-bfme-2 45afcff3a6 Code/GameEngine/Source/GameLogic/AI/AIAttackApproachTargetStateOnEnter.cpp
-// (AIFollowPathAsTeamState::onEnter, BFME 2 0x0034E3A5) ported to BFME 1 offsets; ZH AIStateMachine::getGoalPathPosition
-// over a real STLport vector<Coord3D> at state machine +0x44 (inlined twice, out of line via ILT 0xA9D4 the third time).
-// cl: /DNDEBUG /MD /EHsc- /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc- /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Include
 // stlport
+//
+// AIFollowPathAsTeamState::onEnter, retail 0x00179740 (670 B, ret at +0x29D), and the
+// out-of-line copy of AIUpdateInterface::friend_getGoalPathPosition at 0x0016FFD0 (62 B).
+// BFME 1 evidence: vtable 0x01099C08 slot 4 names onEnter (attempt log); ilt_oracle
+// CONFIRMS both decorations below (onEnter's ILT, and slot 7875 for 0x0016FFD0 with the
+// class-keyed Coord3D). Retail inlines friend_getGoalPathPosition at the first two
+// sites and calls it through ILT 0x0000A9D4 at the third: MSVC 7.1 makes the same
+// choice here, and the out-of-line copy it emits is byte-identical to 0x0016FFD0.
+// BFME 2 donor: open-bfme-2 45afcff3a6 Code/GameEngine/Source/GameLogic/AI/
+// AIAttackApproachTargetStateOnEnter.cpp (AIFollowPathAsTeamState::onEnter, BFME 2
+// 0x0034E3A5) supplies the statement order and the CritterDesync log calls; BFME 1
+// offsets come from the retail listing and the matched computePath sibling
+// (AIFollowPathAsTeamState_computePath_Bfme.cpp). Zero Hour: AIStates.cpp
+// AIStateMachine::getGoalPathPosition and AIFollowPathState::onEnter.
 #include <vector>
 #include <math.h>
 typedef bool Bool;
@@ -13,26 +21,25 @@ typedef float Real;
 typedef int Int;
 enum StateReturnType { STATE_CONTINUE = 0, STATE_FAILURE = -2 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
+// class-gate: allow Coord3D BFME's class-keyed Coord3D (ilt_oracle confirms PBVCoord3D for 0x0016FFD0) with the canonical x/y/z layout
+class Coord3D
 {
+public:
 	Real x;
 	Real y;
 	Real z;
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord2D
-{
-	Real x;
-	Real y;
-	Real length() const { return (Real)sqrt(x * x + y * y); }
-};
+#include "Lib/Coord2D.h"
 
-class Path
+// Zero Hour's inline Coord2D::length (BaseType.h), absent from the canonical header.
+static inline Real coord2DLength(const Coord2D &c) { return (Real)sqrt(c.x * c.x + c.y * c.y); }
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
+class AIStateMachine
 {
 public:
-	const Coord3D *getPoint(Int i) const
+	const Coord3D *getGoalPathPosition(Int i) const
 	{
 		if (i < 0 || i >= m_goalPath.size())
 			return 0;
@@ -48,13 +55,14 @@ class AIUpdateInterface
 public:
 	virtual void slot000();
 	void setPathExtraDistance(Real dist);
-	Int getCommandSource()
+	Int vslot200()
 	{
 		typedef Int (AIUpdateInterface::*Slot)();
 		return (this->*(*(Slot *)&((*(void ***)this)[128])))();
 	}
+	const Coord3D *friend_getGoalPathPosition(Int index) const { return m_stateMachine->getGoalPathPosition(index); }
 	unsigned char m_pad04[0x30 - 0x04];
-	Path *m_goalPath;
+	AIStateMachine *m_stateMachine;
 	unsigned char m_pad34[0x194 - 0x34];
 	Int m_currentGoalPathIndex;
 	unsigned char m_pad198[0x1a0 - 0x198];
@@ -96,7 +104,6 @@ extern bool Glo012F0239;
 class CRCParameterCheck;
 extern CRCParameterCheck *TheCRCParameterCheck;
 extern void j_0003a17a(void);
-extern void j_0000a9d4(void);
 typedef void (__cdecl *BfmeCritterDesyncLog)(void *, const char *, ...);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
@@ -106,13 +113,13 @@ public:
 	virtual StateReturnType onEnter();
 protected:
 	Object *getMachineOwner() const { return m_machine->getOwner(); }
-	void setAdjustsDestination(Bool b) { m_adjustDestination = b; }
+	void setAdjustsDestination(Bool b) { m_adjustDestinations = b; }
 	unsigned char m_pad04[0x1c - 0x04];
 	StateMachine *m_machine;
 	unsigned char m_pad20[4];
 	Coord3D m_goalPosition;
 	unsigned char m_pad30[0x4c - 0x30];
-	Bool m_adjustDestination;
+	Bool m_adjustDestinations;
 };
 
 class AIFollowPathAsTeamState : public AIInternalMoveToState
@@ -126,43 +133,34 @@ private:
 	Bool m_rva59;
 	Bool m_rva5A;
 	Bool m_rva5B;
-	Int m_lastCommandSource;
-	AttackMoveMachine *m_attackMove;
+	Int m_rva5C;
+	AttackMoveMachine *m_rva60;
 	Int m_64;
 	Bool m_rva68;
 };
 
-static __forceinline Coord3D *getPathPoint(AIUpdateInterface *ai, Int index)
-{
-	typedef Coord3D *(AIUpdateInterface::*GetPointCall)(Int);
-	union
-	{
-		void (*asFunction)(void);
-		GetPointCall asMember;
-	} call;
-	call.asFunction = j_0000a9d4;
-	return (ai->*call.asMember)(index);
-}
+// ?friend_getGoalPathPosition@AIUpdateInterface@@QBEPBVCoord3D@@H@Z (0x0016FFD0, emitted out of line by the third call)
 
+// ?onEnter@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ
 StateReturnType AIFollowPathAsTeamState::onEnter()
 {
 	Object *obj = getMachineOwner();
 	AIUpdateInterface *ai = obj->getAI();
 	m_index = 0;
-	if (m_attackMove)
+	if (m_rva60)
 	{
-		m_attackMove->slot5();
-		m_attackMove->slot8(0);
+		m_rva60->slot5();
+		m_rva60->slot8(0);
 	}
-	m_lastCommandSource = ai->getCommandSource();
+	m_rva5C = ai->vslot200();
 	m_rva68 = false;
 	m_rva5B = false;
-	const Coord3D *pos = ai->m_goalPath->getPoint(m_index);
+	const Coord3D *pos = ai->friend_getGoalPathPosition(m_index);
 	if (pos == 0)
 		return STATE_FAILURE;
 	m_64 = ai->m_rva1A0;
 	m_goalPosition = *pos;
-	const Coord3D *nextPos = ai->m_goalPath->getPoint(m_index + 1);
+	const Coord3D *nextPos = ai->friend_getGoalPathPosition(m_index + 1);
 	m_adjustFinal = true;
 	while (nextPos)
 	{
@@ -181,7 +179,7 @@ StateReturnType AIFollowPathAsTeamState::onEnter()
 			break;
 		m_index++;
 		m_goalPosition = *nextPos;
-		nextPos = ai->m_goalPath->getPoint(m_index + 1);
+		nextPos = ai->friend_getGoalPathPosition(m_index + 1);
 	}
 	ai->m_currentGoalPathIndex = m_index;
 
@@ -197,8 +195,8 @@ StateReturnType AIFollowPathAsTeamState::onEnter()
 		Coord2D delta;
 		delta.x = nextPos->x - pos->x;
 		delta.y = nextPos->y - pos->y;
-		Real offset = delta.length();
-		if (getPathPoint(ai, followingIndex))
+		Real offset = coord2DLength(delta);
+		if (ai->friend_getGoalPathPosition(followingIndex))
 			offset += 40.0f;
 		ai->setPathExtraDistance(offset);
 		if (Glo012F0239 && TheCRCParameterCheck)

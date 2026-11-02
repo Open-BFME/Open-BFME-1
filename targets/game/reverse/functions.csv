@@ -37045,7 +37045,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_0016f4f0@@YAXXZ,,0x0016F4F0,243,game/gen_asm/d_0016f340.asm,matched,gen-dump;ghidra=FUN_0056f4f0
 ?d_00176a50@@YAXXZ,,0x00176A50,1041,game/gen_asm/d_0016f340.asm,matched,gen-dump;ghidra=FUN_00576a50
 ?d_00177720@@YAXXZ,,0x00177720,622,game/gen_asm/d_00177320.asm,matched,gen-dump;ghidra=FUN_00577720
-?d_00179740@@YAXXZ,,0x00179740,670,game/gen_asm/d_00096570.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=ret+int3 callers=1;ghidra=FUN_00579740
 ?d_00179b10@@YAXXZ,,0x00179B10,1517,game/gen_asm/d_00177320.asm,matched,gen-dump;ghidra=FUN_00579b10
 ?d_0017cae0@@YAXXZ,,0x0017CAE0,1108,game/gen_asm/d_00177320.asm,matched,gen-dump;ghidra=FUN_0057cae0
 ?d_00182f70@@YAXXZ,,0x00182F70,1107,game/gen_asm/d_00180810.asm,matched,gen-dump;ghidra=FUN_00582f70
@@ -58160,7 +58159,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?getPlayersWithRelationship@PlayerList@@QAEGHH_N@Z,,0x000DF5A0,268,game/GameEngine/Source/Common/RTS/PlayerListGetPlayersWithRelationship.cpp,matched,
 ?getPlayingHandle@AudioEventRTS@@QAEIXZ,,0x000C8A70,4,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-icf;object-symbol=?getPlayingHandle@AudioEventRTS@@QAEIXZ
 ?getPoint@Rva0016F770Path@@QAEPAURva0016F770Coord3D@@H@Z,,0x0016F770,56,game/GameEngine/Source/GameLogic/AI/Rva0016F770PathPointLookup.cpp,matched,bounds checked twelve byte point lookup identity address derived
-?getPoint@Rva0016FFD0PathOwner@@QAEPAURva0016FFD0Coord3D@@H@Z,,0x0016FFD0,62,game/GameEngine/Source/GameLogic/AI/Rva0016FFD0PathPointLookup.cpp,matched,STLport vector bounds checked coordinate lookup
 ?getPointOrad@LightEnvironmentClass@@QBEMH@Z,,0x00903370,14,game/Libraries/Source/WWVegas/WW3D2/dxwrapper.cpp,matched,
 ?getPointerOffset0075D6F0@PointerOffsetAccessor0075D6F0@@QBEPADXZ,,0x0075D6F0,6,game/GameEngine/Source/Common/Rva0075D6B0Accessors.cpp,matched,carved boundary; address-derived pointer plus 0x10 accessor; sole ILT caller proves member ABI only
 ?getPointerToTileData@WorldHeightMap@@QAEPAEHHH@Z,,0x0074C920,273,game/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp,matched,
@@ -173466,3 +173464,5 @@ uw_00c06438,,0x00C06438,8,game/GameEngine/Source/GameLogic/AI/AIStateMachineCons
 ?hideBuildTooltipLayout@ControlBar@@QAEXXZ,,0x004C1940,61,game/GameEngine/Source/GameClient/GUI/GUICallbacks/ControlBarPopupDescription.cpp,matched,rehomed into the popup unit that owns the VA 0x012F368C file static (Zero Hour ControlBarPopupDescription.cpp);model=claude-opus-5-5;host=app
 ?ControlBarPopupDescriptionUpdateFunc@@YAXPAVWindowLayout@@PAX@Z,,0x004C1990,267,game/GameEngine/Source/GameClient/GUI/GUICallbacks/ControlBarPopupDescription.cpp,matched,rehomed into the popup unit that owns the VA 0x012F368C file static (Zero Hour ControlBarPopupDescription.cpp);model=claude-opus-5-5;host=app
 ?getBridgeHeight@Bridge@@QAEMPBVCoord3D@@PAV2@@Z,,0x001A7520,664,game/GameEngine/Source/GameLogic/Map/BridgeGetBridgeHeight.cpp,matched,BFME2 donor BridgeGetBridgeHeight.cpp port; ilt_oracle CONFIRMED class-keyed name for ILT 0x0000B802 slot 8601; polygon-area pointer at +0x8C;model=claude-opus-5-5;host=app
+?friend_getGoalPathPosition@AIUpdateInterface@@QBEPBVCoord3D@@H@Z,,0x0016FFD0,62,game/GameEngine/Source/GameLogic/AI/AIFollowPathAsTeamState_onEnter.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/a1-aifollowpathasteam-onenter-179740.md;ZH inline AIUpdateInterface::friend_getGoalPathPosition out-of-line copy emitted by onEnter's third call; ilt_oracle CONFIRMED slot 7875;model=claude-opus-5-5;host=app
+?onEnter@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ,,0x00179740,670,game/GameEngine/Source/GameLogic/AI/AIFollowPathAsTeamState_onEnter.cpp,matched,BFME2 donor AIAttackApproachTargetStateOnEnter.cpp port; vtable 0x01099C08 slot 4; ilt_oracle CONFIRMED; ZH friend_getGoalPathPosition inline over STLport goal path;model=claude-opus-5-5;host=app
