@@ -2020,9 +2020,7 @@ AIAttackMoveStateMachine::~AIAttackMoveStateMachine()
 // note - has no crc/xfer as has no member vars. jba.
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AIMoveToStateCtorThunk.cpp
-// ??0AIMoveToState@@QAE@PAVStateMachine@@@Z present-unmatched
-// This constructor cannot come home: class shape. Recorded with the part that
+// The ZH AIMoveToState constructor that stood here could not come home: class shape. Recorded with the part that
 // DID work, because that half is reusable elsewhere.
 //
 // What worked: retail constructs the "AIMoveToState" name by CALLING
@@ -2044,11 +2042,7 @@ AIAttackMoveStateMachine::~AIAttackMoveStateMachine()
 // from the CLASS, not from the body, so no cast or view in this .cpp reaches it,
 // and the initializer-list order is not the cause -- reordering base-first
 // against member-first produces byte-identical output.
-AIMoveToState::AIMoveToState(StateMachine *machine) : m_isMoveTo(true), AIInternalMoveToState( machine, "AIMoveToState" )
-{
-	// m_isMoveTo is a boolean that specifies that this thing is ACTUALLY A MOVE TO.
-	// child classes should set it false. (We don't have or want RTTI, so...)
-}
+// ??0AIMoveToState@@QAE@PAVStateMachine@@@Z: retail body is in game/GameEngine/Source/GameLogic/AI/AIMoveToStateCtorThunk.cpp
 
 //----------------------------------------------------------------------------------------------------------
 // ?onEnter@AIMoveToState@@UAE?AW4StateReturnType@@XZ: retail body is in game/GameEngine/Source/GameLogic/AI/AIMoveToState_onEnter_Thunk.cpp

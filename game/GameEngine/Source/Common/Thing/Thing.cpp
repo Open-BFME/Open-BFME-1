@@ -331,12 +331,7 @@ void Thing::setTransformMatrix( const Matrix3D *mx )
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/Thing/Thing_isKindOf.cpp
-// ?isKindOf@Thing@@QBE_NW4KindOfType@@@Z present-unmatched
-Bool Thing::isKindOf(KindOfType t) const 
-{ 
-	return getTemplate()->isKindOf(t); 
-}
+// ?isKindOf@Thing@@QBE_NW4KindOfType@@@Z: retail body is in game/GameEngine/Source/Common/Thing/Thing_isKindOf.cpp
 
 //-------------------------------------------------------------------------------------------------
 struct Thing_BFME_Retail_ThingTemplateKindOf
