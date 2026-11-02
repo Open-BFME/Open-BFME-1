@@ -62,6 +62,100 @@ public:
     Rva0089D5B0Entry *entries;
     void rva0089D180();
     void rva0089D5B0(const Rva8D0D80String &key, Rva8D0D80Value *value);
+    void add(Rva8D0D80String *key, Rva8D0D80Value *value);
+    __forceinline void hashSet(const Rva8D0D80String &key, Rva8D0D80Value *value)
+    {
+        {
+            int empty = -1;
+            int slot = (count - 1) & key.m_block->m_hash;
+            if (!entries[slot].key.m_block)
+            {
+                entries[slot].key.initialize(key);
+                value->addRef();
+                void *stored = value;
+                if (value->slot5() == 1) stored = (void *)((unsigned)value | 1);
+                entries[slot].value = stored;
+                return;
+            }
+            if (entries[slot].key.m_block == (void *)&g_rva012D5298Empty)
+                empty = slot;
+            else if (entries[slot].key == key)
+            {
+                ((AptNativeHash *)this)->SetAt(slot, (BfmeHeldC680 *)value);
+                return;
+            }
+            int low = slot - 8;
+            int high;
+            if (low < 0)
+            {
+                low = 0;
+                high = 16;
+                if (count <= high) high = count - 1;
+            }
+            else
+            {
+                high = slot + 8;
+                if (high > count - 1)
+                {
+                    high = count - 1;
+                    low = high - 16;
+                    if (low < 0) low = 0;
+                }
+            }
+            int index = slot;
+            int remaining = high - slot;
+            while (remaining)
+            {
+                --remaining;
+                ++index;
+                if (!entries[index].key.m_block)
+                {
+                    entries[index].key.initialize(key);
+                    ((BfmeStoreC6E0 *)this)->bfmePutC6E0(index, (BfmeHeldC6E0 *)value);
+                    return;
+                }
+                if (entries[index].key.m_block == (void *)&g_rva012D5298Empty)
+                {
+                    if (empty != -1) empty = index;
+                }
+                else if (entries[index].key == key)
+                {
+                    ((AptNativeHash *)this)->SetAt(index, (BfmeHeldC680 *)value);
+                    return;
+                }
+            }
+            index = slot;
+            remaining = slot - low;
+            while (remaining)
+            {
+                --index;
+                --remaining;
+                if (!entries[index].key.m_block)
+                {
+                    entries[index].key.initialize(key);
+                    ((BfmeStoreC6E0 *)this)->bfmePutC6E0(index, (BfmeHeldC6E0 *)value);
+                    return;
+                }
+                if (entries[index].key.m_block == (void *)&g_rva012D5298Empty)
+                {
+                    if (empty != -1) empty = index;
+                }
+                else if (entries[index].key == key)
+                {
+                    ((AptNativeHash *)this)->SetAt(index, (BfmeHeldC680 *)value);
+                    return;
+                }
+            }
+            if (empty == -1)
+            {
+                rva0089D180();
+                rva0089D5B0(key, value);
+                return;
+            }
+            entries[empty].key.assign(key);
+            ((BfmeStoreC6E0 *)this)->bfmePutC6E0(empty, (BfmeHeldC6E0 *)value);
+        }
+    }
 };
 
 // ?rva0089D5B0@Rva8D0D80Table@@QAEXABVRva8D0D80String@@PAVRva8D0D80Value@@@Z
@@ -157,4 +251,50 @@ void Rva8D0D80Table::rva0089D5B0(const Rva8D0D80String &key, Rva8D0D80Value *val
         }
         rva0089D180();
     }
+}
+
+// 0x0089D890 (814 B): Open BFME 2 45afcff3 Code/Libraries/Source/Apt/
+// AptNativeHash.cpp names this AptNativeHash::Set (its alternatename maps
+// Rva8D0D80Table::add to Set). Retail inlines the table allocation and one
+// HashSet copy; that copy ends with Expand + an out-of-line HashSet call where
+// the out-of-line body above loops instead.
+struct BfmeKey1279;
+class BfmeLookup1279 { public: void bfmeErase1279(BfmeKey1279 &key); };
+class BfmeTaggedItem;
+class Gen_00897510 { public: void bfmeSet(BfmeTaggedItem *item); };
+class Gen_008974C0 { public: void bfmeSet(BfmeTaggedItem *item); };
+class BfmeThing929G { public: void bfmeInit929G(); };
+extern void *(__cdecl *Rva008C5D70Alloc)(unsigned);
+extern "C" void *__cdecl memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+
+
+void Rva8D0D80Table::add(Rva8D0D80String *key, Rva8D0D80Value *value)
+{
+    if (!value)
+    {
+        ((BfmeLookup1279 *)this)->bfmeErase1279(*(BfmeKey1279 *)key);
+        return;
+    }
+    if (key->m_block == (void *)&g_rva012D5298Empty)
+        return;
+    if (key->m_block->m_hash == 0)
+        ((BfmeThing929G *)key)->bfmeInit929G();
+    unsigned int h = key->m_block->m_hash;
+    if (h == 0x699 && bfmeCompareVSC((const char *)(key->m_block + 1), "prototype") == 0)
+    {
+        ((Gen_00897510 *)this)->bfmeSet((BfmeTaggedItem *)value);
+        return;
+    }
+    else if (h == 0x6bbd && bfmeCompareVSC((const char *)(key->m_block + 1), "__proto__") == 0)
+    {
+        ((Gen_008974C0 *)this)->bfmeSet((BfmeTaggedItem *)value);
+        return;
+    }
+    if (!entries)
+    {
+        entries = (Rva0089D5B0Entry *)Rva008C5D70Alloc(count * 8);
+        memset(entries, 0, count * 8);
+    }
+    hashSet(*key, value);
 }
