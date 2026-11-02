@@ -1,5 +1,7 @@
+// ?d_00529be0@@YAXXZ
+// partial score=1.0 date=2026-11-02
 // ?shouldRefresh@SkirmishScreenState@@QAE_NXZ
-// partial score=0.93 date=2026-09-15
+// EXACT 2026-11-02 (a1/536) via foldable searching term; landing blocked on ILT pin retire: see targets/game/reverse/attempt_support/00529be0-exact-pin-retire-20261102.md
 // cl: /DNDEBUG /MD /EHsc
 
 class Rva00520460
@@ -45,7 +47,8 @@ bool SkirmishScreenState::shouldRefresh( void )
 		return false;
 
 	int key = Rva005277B0( 0, 0 );
-	while ( Rva00527730( key, (int)0xB9DC8031 ) != (int)0x66DE9C79 )
+	bool searching = true;
+	while ( searching && Rva00527730( key, (int)0xB9DC8031 ) != (int)0x66DE9C79 )
 	{
 		if ( !m_first[ (short)Rva005278B0( key, key ) ] )
 			return false;

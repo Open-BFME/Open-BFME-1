@@ -1,0 +1,88 @@
+diff --git a/targets/game/reverse/attempts/0x00529be0.cpp b/game/GameEngine/Source/GameClient/GUI/SkirmishScreenStateRva00529BE0.cpp
+similarity index 55%
+rename from targets/game/reverse/attempts/0x00529be0.cpp
+rename to game/GameEngine/Source/GameClient/GUI/SkirmishScreenStateRva00529BE0.cpp
+index 0cc8878aca..0616585770 100644
+--- a/targets/game/reverse/attempts/0x00529be0.cpp
++++ b/game/GameEngine/Source/GameClient/GUI/SkirmishScreenStateRva00529BE0.cpp
+@@ -1,6 +1,15 @@
+-// ?shouldRefresh@SkirmishScreenState@@QAE_NXZ
+-// partial score=0.93 date=2026-09-15
+ // cl: /DNDEBUG /MD /EHsc
++// SkirmishScreenState::rva00529BE0 (retail 0x00529BE0, 186 B, plain ret).
++// Reached through ILT 0x0003029C from the matched SkirmishScreenState callers
++// (pinned there as shouldRefresh, a spelling ilt_oracle contradicts, so the
++// method keeps an address-derived name). False unless the +0x28 slot record
++// reports present and +0x108 is set; then walks the BigObf-hooked key sequence
++// (0x005277B0 init, 0x00527730 compare, 0x00527830 advance) and returns false
++// at the first key whose four window arrays hold a null.
++//
++// Retail keeps the loop head-tested, with the init and advance calls sharing
++// the `add esp,8; mov esi,eax` head; only the foldable `searching &&` first
++// term keeps MSVC from rotating it (the earlier 0.93 bank: 209 B).
+ 
+ class Rva00520460
+ {
+@@ -23,7 +32,7 @@ int __cdecl Rva00527830( int a, int b );
+ class SkirmishScreenState
+ {
+ public:
+-	bool shouldRefresh( void );
++	bool rva00529BE0( void );
+ 
+ private:
+ 	unsigned char m_head[ 0x28 ];
+@@ -37,7 +46,7 @@ private:
+ 	int m_unmodelled108;
+ };
+ 
+-bool SkirmishScreenState::shouldRefresh( void )
++bool SkirmishScreenState::rva00529BE0( void )
+ {
+ 	if ( !m_slotRecord.has() )
+ 		return false;
+@@ -45,7 +54,8 @@ bool SkirmishScreenState::shouldRefresh( void )
+ 		return false;
+ 
+ 	int key = Rva005277B0( 0, 0 );
+-	while ( Rva00527730( key, (int)0xB9DC8031 ) != (int)0x66DE9C79 )
++	bool searching = true;
++	while ( searching && Rva00527730( key, (int)0xB9DC8031 ) != (int)0x66DE9C79 )
+ 	{
+ 		if ( !m_first[ (short)Rva005278B0( key, key ) ] )
+ 			return false;
+diff --git a/targets/game/reverse/deleted_rows.csv b/targets/game/reverse/deleted_rows.csv
+index e76766c9e5..91bb07cc05 100644
+--- a/targets/game/reverse/deleted_rows.csv
++++ b/targets/game/reverse/deleted_rows.csv
+@@ -37774,3 +37774,4 @@ tg_0033cd30,0x0033CD30,claim superseded by the gate-required claim for ?begin@Rv
+ ?getPoint@Rva0016FFD0PathOwner@@QAEPAURva0016FFD0Coord3D@@H@Z,0x0016FFD0,claim superseded by the gate-required claim for ?friend_getGoalPathPosition@AIUpdateInterface@@QBEPBVCoord3D@@H@Z at 0x0016FFD0/62B from game/GameEngine/Source/GameLogic/AI/AIFollowPathAsTeamState_onEnter.cpp. The prior claim at 0x0016FFD0/62B from game/GameEngine/Source/GameLogic/AI/Rva0016FFD0PathPointLookup.cpp was retired.
+ ?d_00179740@@YAXXZ,0x00179740,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?onEnter@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ, a gate-required claim from game/GameEngine/Source/GameLogic/AI/AIFollowPathAsTeamState_onEnter.cpp over the same 670-byte range. The game/gen_asm/d_00096570.asm scaffold reproduces those bytes but carries no identity."
+ ?d_0061a0f0@@YAXXZ,0x0061A0F0,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?rva0061A0F0@Rva0061A0F0Owner@@QAEXXZ, a gate-required claim from game/GameEngine/Source/GameLogic/LivingWorld/Rva0061A0F0Dispatch.cpp over the same 213-byte range. The game/gen_asm/d_006176a0.asm scaffold reproduces those bytes but carries no identity."
++?d_00529be0@@YAXXZ,0x00529BE0,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?rva00529BE0@SkirmishScreenState@@QAE_NXZ, a gate-required claim from game/GameEngine/Source/GameClient/GUI/SkirmishScreenStateRva00529BE0.cpp over the same 186-byte range. The game/gen_asm/d_00525450.asm scaffold reproduces those bytes but carries no identity."
+diff --git a/targets/game/reverse/functions.csv b/targets/game/reverse/functions.csv
+index 3a45372d4c..bc679a8066 100644
+--- a/targets/game/reverse/functions.csv
++++ b/targets/game/reverse/functions.csv
+@@ -37866,7 +37866,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
+ ?d_00525590@@YAXXZ,,0x00525590,220,game/gen_asm/d_00525450.asm,matched,gen-dump;ghidra=FUN_00925590
+ ?d_005256d0@@YAXXZ,,0x005256D0,219,game/gen_asm/d_00525450.asm,matched,gen-dump;ghidra=FUN_009256d0
+ ?d_00525800@@YAXXZ,,0x00525800,220,game/gen_asm/d_00525450.asm,matched,gen-dump;ghidra=FUN_00925800
+-?d_00529be0@@YAXXZ,,0x00529BE0,186,game/gen_asm/d_00525450.asm,matched,gen-dump;ghidra=FUN_00929be0
+ ?d_0052a2e0@@YAXXZ,,0x0052A2E0,1306,game/gen_asm/d_00525450.asm,matched,gen-dump;ghidra=FUN_0092a2e0
+ ?d_005337e0@@YAXXZ,,0x005337E0,1382,game/gen_asm/d_00499050.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=ret+int3 callers=1;ghidra=FUN_009337e0
+ ?d_00533ea0@@YAXXZ,,0x00533EA0,999,game/gen_asm/d_00499050.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=ret+int3 callers=1;ghidra=FUN_00933ea0
+@@ -173466,3 +173465,4 @@ uw_00c06438,,0x00C06438,8,game/GameEngine/Source/GameLogic/AI/AIStateMachineCons
+ ?friend_getGoalPathPosition@AIUpdateInterface@@QBEPBVCoord3D@@H@Z,,0x0016FFD0,62,game/GameEngine/Source/GameLogic/AI/AIFollowPathAsTeamState_onEnter.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/a1-aifollowpathasteam-onenter-179740.md;ZH inline AIUpdateInterface::friend_getGoalPathPosition out-of-line copy emitted by onEnter's third call; ilt_oracle CONFIRMED slot 7875;model=claude-opus-5-5;host=app
+ ?onEnter@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ,,0x00179740,670,game/GameEngine/Source/GameLogic/AI/AIFollowPathAsTeamState_onEnter.cpp,matched,BFME2 donor AIAttackApproachTargetStateOnEnter.cpp port; vtable 0x01099C08 slot 4; ilt_oracle CONFIRMED; ZH friend_getGoalPathPosition inline over STLport goal path;model=claude-opus-5-5;host=app
+ ?rva0061A0F0@Rva0061A0F0Owner@@QAEXXZ,,0x0061A0F0,213,game/GameEngine/Source/GameLogic/LivingWorld/Rva0061A0F0Dispatch.cpp,matched,address-derived owner/method; vector at +0x9C of 0x24-byte Rva00619C40Entry records; 0x003B3950 string then 0x00619C40 via caller-ABI member pin; handoff targets/game/reverse/attempt_support/0061a0f0-unrotated-loop-20261102.md;model=claude-opus-5-5;host=app
++?rva00529BE0@SkirmishScreenState@@QAE_NXZ,,0x00529BE0,186,game/GameEngine/Source/GameClient/GUI/SkirmishScreenStateRva00529BE0.cpp,matched,address-derived method (ILT 0x0003029C shouldRefresh pin contradicted by ilt_oracle); class from the matched callers; head-tested key loop via foldable searching term;model=claude-opus-5-5;host=app
+diff --git a/targets/game/reverse/re_attempts.log b/targets/game/reverse/re_attempts.log
+index a0ef9c40bc..b1e531c930 100644
+--- a/targets/game/reverse/re_attempts.log
++++ b/targets/game/reverse/re_attempts.log
+@@ -59801,3 +59801,4 @@ uw_00c06438	0x00C06438	8	landed	landed-by=add_match source=game/GameEngine/Sourc
+ ?update@Rva002995E0@@QAEIXZ	0x2995E0	309	attempted	t=12min model=claude-opus-5-5 blocker=eh/frame/eh-prologue retail flow re-derived (m_field20 expiry -> setStatus bit 18 {0x40000,0,0} temp; m_field18==0 -> store frame if found; !found -> m_field18=0 then j_55a6 if m_field14; else j_17c79 / frame>md+0xC+m_field18 -> j_1085c). Adding the m_field18=0 store to the bank alone spills found to [esp+0x13], grows the frame to 0x10 and reorders the EH prologue (push handler before mov fs:0) 313 B 0.871; with the found-only store arm 291 B 0.772. Bank unchanged
+ ?d_0061a0f0@@YAXXZ	0x0061A0F0	213	partial	boundary=ret at +0xD4 (213 B); foldable searching&&!found term un-rotates the found loop like retail (219->211 B 90->81 diffs shape 0.953); residue this/index/found register swap + uncached &entries[i] receiver; landing needs ledger callee spellings + member pin for 0x00619C40 (caller sets ECX); handoff targets/game/reverse/attempt_support/0061a0f0-unrotated-loop-20261102.md t=25min model=claude-opus-5-5 blocker=regalloc/register-rotation score=0.6009 stash=targets/game/reverse/attempts/0x0061a0f0.cpp submitted=0.62 measured=0.6009 alternative=targets/game/reverse/attempt_history/0x0061a0f0/3c073b5ab18e494735a6df8ad2c19199b55d10181650105bd3a7976bbbcecee8.json
+ ?rva0061A0F0@Rva0061A0F0Owner@@QAEXXZ	0x0061A0F0	213	landed	landed-by=add_match source=game/GameEngine/Source/GameLogic/LivingWorld/Rva0061A0F0Dispatch.cpp extent=0x0061A0F0..0x0061A1C5 size=213B model=claude-opus-5-5 ; notes: address-derived owner/method; vector at +0x9C of 0x24-byte Rva00619C40Entry records; 0x003B3950 string then 0x00619C40 via caller-ABI member pin; handoff targets/game/reverse/attempt_support/0061a0f0-unrotated-loop-20261102.md; model=claude-opus-5-5; host=app
++?rva00529BE0@SkirmishScreenState@@QAE_NXZ	0x00529BE0	186	landed	landed-by=add_match source=game/GameEngine/Source/GameClient/GUI/SkirmishScreenStateRva00529BE0.cpp extent=0x00529BE0..0x00529C9A size=186B model=claude-opus-5-5 ; notes: address-derived method (ILT 0x0003029C shouldRefresh pin contradicted by ilt_oracle); class from the matched callers; head-tested key loop via foldable searching term; model=claude-opus-5-5; host=app
