@@ -51,6 +51,11 @@ class TerrainLogic
 public:
     PathfindLayerEnum getLayerForDestination(Object *, const Coord3D *);
 };
+
+// TerrainLogic::getLayerForDestination (0x001A7C20) is defined struct-keyed; the calls
+// name it through a member pointer.
+extern "C" void __identifier("?getLayerForDestination@TerrainLogic@@QAE?AW4PathfindLayerEnum@@PAVObject@@PBUCoord3D@@@Z")(void);
+
 extern TerrainLogic *TheTerrainLogic;
 
 class LocomotorSet
@@ -158,8 +163,10 @@ bool AISkirmishPlayer::checkBridges(Object *unit, Waypoint *way)
 int Pathfinder::findBrokenBridge(const void *locomotorSetPointer, const Coord3D *from, const Coord3D *to)
 {
     const LocomotorSet &locomotorSet = *(const LocomotorSet *)locomotorSetPointer;
-    PathfindLayerEnum destinationLayer = TheTerrainLogic->getLayerForDestination(0, to);
-    PathfindLayerEnum fromLayer = TheTerrainLogic->getLayerForDestination(0, from);
+    union { void (*raw)(void); PathfindLayerEnum (TerrainLogic::*member)(Object *, const Coord3D *); } layerCall;
+    layerCall.raw = __identifier("?getLayerForDestination@TerrainLogic@@QAE?AW4PathfindLayerEnum@@PAVObject@@PBUCoord3D@@@Z");
+    PathfindLayerEnum destinationLayer = (TheTerrainLogic->*layerCall.member)(0, to);
+    PathfindLayerEnum fromLayer = (TheTerrainLogic->*layerCall.member)(0, from);
     ICoord2D cell;
     worldToCell(from, &cell);
     PathfindCell *parentCell = getCell(fromLayer, cell.x, cell.y);
