@@ -42,7 +42,7 @@ class UnicodeString : private StringBase<unsigned short>
 public:
 	UnicodeString() : StringBase<unsigned short>() {}
 	UnicodeString( const UnicodeString &other ) : StringBase<unsigned short>( other ) {}
-	~UnicodeString() { releaseBuffer(); }
+	~UnicodeString() {}
 	bool isEmpty() const { return m_data == 0 || m_data->length == 0; }
 	int compare( const UnicodeString &other ) const throw();
 };

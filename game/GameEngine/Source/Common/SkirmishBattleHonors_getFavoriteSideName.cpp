@@ -15,10 +15,7 @@ public:
 		: StringBase<unsigned short>(other)
 	{
 	}
-	~UnicodeString()
-	{
-		((StringBase<unsigned short> *)this)->~StringBase();
-	}
+	~UnicodeString() {}
 
 	static UnicodeString TheEmptyString;
 

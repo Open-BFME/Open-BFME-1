@@ -55,7 +55,7 @@ public:
 
 	UnicodeString() : StringBase<unsigned short>() {}
 	UnicodeString(const UnicodeString &other) : StringBase<unsigned short>(other) {}
-	~UnicodeString() { releaseBuffer(); }
+	~UnicodeString() {}
 
 	UnicodeString &operator=(const UnicodeString &other)
 	{

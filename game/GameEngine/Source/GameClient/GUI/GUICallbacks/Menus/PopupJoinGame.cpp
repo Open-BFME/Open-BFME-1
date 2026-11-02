@@ -133,7 +133,7 @@ public:
     UnicodeString(unsigned short c);
     explicit UnicodeString(const unsigned short *text) : StringBase<unsigned short>(text) {}
     UnicodeString(const UnicodeString &other) : StringBase<unsigned short>(other) {}
-    ~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+    ~UnicodeString() {}
     int getLength() const;
     bool isEmpty() const { return m_data == 0 || m_data->m_text[0] == 0; }
     bool isNotEmpty() const { return !isEmpty(); }
