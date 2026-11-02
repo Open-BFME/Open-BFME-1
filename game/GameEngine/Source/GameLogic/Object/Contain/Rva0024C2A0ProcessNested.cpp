@@ -50,8 +50,16 @@ public:
 	void handleNested(Object *object, void *arg);
 };
 
+// handleNested is reached through ILT 0x00047690, whose body 0x002284D0 the ledger
+// defines as ?exitObjectViaDoor@OpenContain@@UAEXPAVObject@@W4ExitDoorType@@@Z; the
+// calls name that symbol through a member-pointer view.
+extern "C" void __identifier("?exitObjectViaDoor@OpenContain@@UAEXPAVObject@@W4ExitDoorType@@@Z")(void);
+typedef void (Rva0024C2A0Owner::*Rva0024C2A0HandleCall)(Object *, void *);
+
 void Rva0024C2A0Owner::processNested(Object *subject, void *arg)
 {
+	union { void (*raw)(void); Rva0024C2A0HandleCall member; } handle;
+	handle.raw = __identifier("?exitObjectViaDoor@OpenContain@@UAEXPAVObject@@W4ExitDoorType@@@Z");
 	Rva0024C2A0Contain *contain = subject->m_contain;
 	if (contain == 0)
 		return;
@@ -65,14 +73,14 @@ void Rva0024C2A0Owner::processNested(Object *subject, void *arg)
 		if (!object->m_skip)
 		{
 			result->removeNested(object);
-			handleNested(object, arg);
+			(this->*handle.member)(object, arg);
 		}
 	}
 	for (_STL::list<Object *>::iterator it = nested.begin(); it != nested.end(); ++it)
 	{
 		Object *object = *it;
 		result->removeNested(object);
-		handleNested(object, arg);
+		(this->*handle.member)(object, arg);
 	}
-	handleNested(subject, arg);
+	(this->*handle.member)(subject, arg);
 }

@@ -73,7 +73,6 @@ public:
 	virtual Drawable *getDrawable() const = 0;
 
 	Bool clearDisabled(DisabledType type);
-	void rva001CA2E0();
 	void notifyModelConditionChanged();
 
 	Team *getTeam() const
@@ -280,11 +279,19 @@ private:
 typedef char CaveContainSizeMustBeE4[(sizeof(CaveContain) == 0xE4) ? 1 : -1];
 
 // ?onRemoving@CaveContain@@UAEXPAVObject@@@Z
+extern void j_0002ae5f(void);
+
 void CaveContain::onRemoving(Object *obj)
 {
 	OpenContain::onRemoving(obj);
 	obj->clearDisabled(DISABLED_HELD);
-	obj->rva001CA2E0();
+	{
+		// ILT 0x0002AE5F (body 0x001CA2E0, still a gen dump) is defined as
+		// ?j_0002ae5f@@YAXXZ; call it through a member-pointer view.
+		union { void (*raw)(void); void (Object::*member)(); } call;
+		call.raw = j_0002ae5f;
+		(obj->*call.member)();
+	}
 	obj->setPosition(getObject()->getPosition());
 
 	if (obj->getDrawable() != 0)

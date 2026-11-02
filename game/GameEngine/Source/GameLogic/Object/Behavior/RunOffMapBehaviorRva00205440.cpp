@@ -169,6 +169,17 @@ public:
 	void report(Object *victim, int setting);
 };
 
+// report is reached through ILT 0x0001B94B (body 0x001C9490, still a gen dump); the
+// ledger defines that ILT as ?j_0001b94b@@YAXXZ, so the call names it through a
+// member-pointer view.
+extern void j_0001b94b(void);
+static __forceinline void reportDamageSource(BFMEReportDamageSource *source, Object *victim, int setting)
+{
+	union { void (*raw)(void); void (BFMEReportDamageSource::*member)(Object *, int); } call;
+	call.raw = j_0001b94b;
+	(source->*call.member)(victim, setting);
+}
+
 struct RunOffMapBehaviorModuleData
 {
 	char m_unmodelled_00[0x14];
@@ -245,7 +256,7 @@ void RunOffMapBehavior::rva00205440()
 		int sourceID = obj->getBodyModule()->getLastDamageInfo() ? obj->getBodyModule()->getLastDamageInfo()->m_sourceID : 0;
 		Object *source = TheGameLogic->findObjectByID(sourceID);
 		if (source)
-			((BFMEReportDamageSource *)source)->report(obj, 1);
+			reportDamageSource((BFMEReportDamageSource *)source, obj, 1);
 		obj->kill(DAMAGE_8, DEATH_NORMAL);
 		return;
 	}

@@ -30,6 +30,17 @@ static __forceinline void dispatchRva001BE220(Rva001BE220Receiver *receiver, int
 { typedef void (Rva001BE220Receiver::*Call)(int, unsigned int); union { void (*raw)(); Call member; } call;
   call.raw = __identifier("?invoke@Rva001BE220@@QAEXXZ"); (receiver->*call.member)(condition, duration); }
 struct BFMEReportDamageSource { void report(Object*,int); };
+
+// report is reached through ILT 0x0001B94B (body 0x001C9490, still a gen dump); the
+// ledger defines that ILT as ?j_0001b94b@@YAXXZ, so the call names it through a
+// member-pointer view.
+extern void j_0001b94b(void);
+static __forceinline void reportDamageSource(BFMEReportDamageSource *source, Object *victim, int setting)
+{
+	union { void (*raw)(void); void (BFMEReportDamageSource::*member)(Object *, int); } call;
+	call.raw = j_0001b94b;
+	(source->*call.member)(victim, setting);
+}
 class GameLogic { public: char pad[0x3c]; unsigned int frame; Object *findObjectByID(int); };
 extern GameLogic *TheGameLogic;
 struct Rva002134E0Data { char pad[0x70]; int field70; unsigned int field74; char pad78[4]; UpgradeTemplate *field7c; };
@@ -65,7 +76,7 @@ void FreeLifeBody::internalChangeHealth(float amount,DamageInfo *info) {
   restore(fieldD4*100.0f,false);
   if(info) {
    Object *source=TheGameLogic->findObjectByID(info->source);
-   if(source) ((BFMEReportDamageSource*)source)->report(obj,3);
+   if(source) reportDamageSource((BFMEReportDamageSource*)source,obj,3);
   }
   return;
  }

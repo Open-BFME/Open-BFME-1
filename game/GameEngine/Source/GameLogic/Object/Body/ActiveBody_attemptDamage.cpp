@@ -215,6 +215,17 @@ struct RvaC4390First { RvaC4390Interface *getInterface(); };
 class Rva0025DF30Object { public: Rva0025DF30Object *related(Int); };
 class Gen_001be760 { public: void m(Int); };
 class BFMEReportDamageSource { public: void report(Object *victim, Int); };
+
+// report is reached through ILT 0x0001B94B (body 0x001C9490, still a gen dump); the
+// ledger defines that ILT as ?j_0001b94b@@YAXXZ, so the call names it through a
+// member-pointer view.
+extern void j_0001b94b(void);
+static __forceinline void reportDamageSource(BFMEReportDamageSource *source, Object *victim, int setting)
+{
+	union { void (*raw)(void); void (BFMEReportDamageSource::*member)(Object *, int); } call;
+	call.raw = j_0001b94b;
+	(source->*call.member)(victim, setting);
+}
 class BfmeObj1004;
 char bfmeGo1004A(BfmeObj1004 *);
 
@@ -462,10 +473,10 @@ void ActiveBody::attemptDamage(DamageInfo *damageInfo)
 		static NameKeyType respawnKey = TheNameKeyGenerator->nameToKey("RespawnUpdate");
 		if (obj->findModule(respawnKey) && m_currentHealth <= 1.01f && m_prevHealth > 1.01f) {
 			if (damager)
-				((BFMEReportDamageSource *)damager)->report(obj, 1);
+				reportDamageSource((BFMEReportDamageSource *)damager, obj, 1);
 		} else if (m_currentHealth <= 0.0f && m_prevHealth > 0.0f) {
 			if (damager)
-				((BFMEReportDamageSource *)damager)->report(obj, 1);
+				reportDamageSource((BFMEReportDamageSource *)damager, obj, 1);
 			if (bfmeGo1004A((BfmeObj1004 *)obj)) {
 				m_currentHealth = 1.0f;
 			} else {
