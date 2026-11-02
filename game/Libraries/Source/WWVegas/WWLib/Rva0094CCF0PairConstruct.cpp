@@ -26,8 +26,10 @@ void _Construct(T1 *destination, const T2 &source);
 
 typedef pair<const unsigned int, Rva0094CCF0Value> Rva0094CCF0Pair;
 
+// inline: Rva0094D1E0List_rva0094D250.cpp instantiates the same body
+// (generic STLport _Construct), so both copies are select-any.
 template <>
-__declspec(noinline) void _Construct(Rva0094CCF0Pair *destination,
+inline __declspec(noinline) void _Construct(Rva0094CCF0Pair *destination,
 	const Rva0094CCF0Pair &source)
 {
 	if (destination != 0)
