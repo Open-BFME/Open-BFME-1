@@ -151,7 +151,7 @@ extern GlobalData *TheWritableGlobalData;
 
 void __cdecl InitGameLogicRandom(unsigned int now);										///< ILT 0x0002E8BB
 
-extern int (__cdecl *g_bfmeNowVNH)(void);
+extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
 
 class GameMessage
 {
@@ -263,7 +263,7 @@ void Rva00613D60Owner::rva00613d60(Rva00613D60Region *region)
 	reinterpret_cast<Rva006C9270GlobalData *>(TheWritableGlobalData)->m_mapPath.format(path);
 
 	if (g_Va012F7090 != 0)
-		InitGameLogicRandom(g_bfmeNowVNH());
+		InitGameLogicRandom(timeGetTime());
 	else
 		InitGameLogicRandom(0);
 

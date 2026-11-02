@@ -20,8 +20,10 @@ typedef bool Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
-extern int (*g_bfmeNowVNH)(void);
-__declspec(nothrow) inline UnsignedInt bfmeNow(void) { return g_bfmeNowVNH(); }
+// WINMM timeGetTime through its import slot 0x01359544, read as a plain pointer so
+// each call reloads the slot as retail does.
+extern "C" unsigned long (__stdcall *__identifier("_imp__timeGetTime@0"))(void);
+__declspec(nothrow) inline UnsignedInt bfmeNow(void) { return __identifier("_imp__timeGetTime@0")(); }
 
 class GameWindow;
 struct BfmeMsgDN;

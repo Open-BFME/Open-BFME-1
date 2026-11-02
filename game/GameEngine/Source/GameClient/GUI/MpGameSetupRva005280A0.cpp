@@ -79,7 +79,7 @@ private:
 
 static bool s_rva005280A0Flag;
 
-extern int (__cdecl *g_bfmeNowVNH)(void);
+extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
 
 bool MpGameSetup::rva005280A0(void)
 {
@@ -110,7 +110,7 @@ bool MpGameSetup::rva005280A0(void)
 		return false;
 	}
 
-	int (__cdecl *nowFunction)(void) = g_bfmeNowVNH;
+	unsigned long (__stdcall *nowFunction)(void) = timeGetTime;
 	int remaining = m_field1C - nowFunction();
 	if (remaining > 0)
 	{
