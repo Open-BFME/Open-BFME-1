@@ -81009,7 +81009,6 @@ name,address,notes
 ?compareNoCaseRaw@?$StringBase@G@@ABEHPBG0H@Z,0x0009ECA0,case-insensitive wide comparison helper reached by the 0x0009F090 list search
 ?compareNoCaseRaw@Rva0009ECA0NoCaseTraits@@QBEHPBG0H@Z,0x000480F4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00887120 calls; autopin
 ?compress@LZHLCompressor@@QAEIPAEPBEI@Z,0x00825680,retail LZHLCompress 0x00823130 passes ECX handle and dst/src/size; ret12 member returns named LZHLEncoder::flush and calls named LZBuffer helpers plus compressor updateTable; canonical _lz.h signature; member body remains present-unmatched
-?compute@BridgeGetBridgeHeightShim@@QAEMPBUCoord3D@@PAU2@@Z,0x001A7520,Bridge getBridgeHeight incremental-link thunk target through a TU-local forwarding shim
 ?compute@Rva0018CF10Owner@@QBEMPBURva0018CF10Point@@0@Z,0x0002CEEE,pin; ILT of bfmeBoundaryDistanceSquared3D used by Rva0018CF10Owner::distanceSquaredTo
 ?computeAODFormationPosition_002310F0@@YAXXZ,0x002310F0,"address-qualified identity: AODHordeContain +0xE4 interface vtable 0x010AE230 slot 7 override; Horde and Horse tables route this slot to base 0x002458B0; writes a three-float member formation destination"
 ?computeAggregateStates@SpawnBehavior@@QAEXXZ,0x0020BAE0,ZH SpawnBehavior.cpp aggregate-health/slave traversal matches independent callee at 0020BAE0; primary thiscall receiver; no stack args; update +13 call

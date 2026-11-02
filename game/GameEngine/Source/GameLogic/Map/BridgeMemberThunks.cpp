@@ -22,11 +22,9 @@ public:
     bool isPointOnBridge(const Coord3D *);
 };
 
-class BridgeGetBridgeHeightShim
-{
-public:
-    float compute(const Coord3D *pos, Coord3D *normal);
-};
+// The body behind this thunk is ?getBridgeHeight@Bridge@@QAEMPBVCoord3D@@PAV2@@Z
+// (class-keyed Coord3D, ilt_oracle CONFIRMED for slot 8601) in BridgeGetBridgeHeight.cpp.
+extern "C" void __identifier("?getBridgeHeight@Bridge@@QAEMPBVCoord3D@@PAV2@@Z")(void);
 
 class BridgePointOnBridgeShim
 {
@@ -37,7 +35,10 @@ public:
 // ?getBridgeHeight@Bridge@@QAEMPBUCoord3D@@PAU2@@Z
 float Bridge::getBridgeHeight(const Coord3D *pos, Coord3D *normal)
 {
-    return ((BridgeGetBridgeHeightShim *)this)->compute(pos, normal);
+    typedef float (Bridge::*Body)(const Coord3D *, Coord3D *);
+    union { void (*raw)(void); Body body; } target;
+    target.raw = __identifier("?getBridgeHeight@Bridge@@QAEMPBVCoord3D@@PAV2@@Z");
+    return (this->*target.body)(pos, normal);
 }
 
 // ?isPointOnBridge@Bridge@@QAE_NPBUCoord3D@@@Z
