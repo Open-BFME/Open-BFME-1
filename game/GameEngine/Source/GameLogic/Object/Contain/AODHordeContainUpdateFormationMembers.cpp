@@ -35,6 +35,9 @@ public:
 template<int N> class BitFlags { public: UnsignedInt m_bits[(N + 31) / 32]; };
 
 #define THING_TU_MEMBERS Real bfmeRelativeAngleTo(const struct Coord3D *point) const;
+// Thing::bfmeRelativeAngleTo (0x00150510) is defined struct-keyed; the calls name it
+// through a member pointer.
+extern "C" void __identifier("?bfmeRelativeAngleTo@Thing@@QBEMPBUCoord3D@@@Z")(void);
 #define OBJECT_TU_MEMBERS int getID() const { return m_id; } void bfmeClearYG(const BitFlags<320> &flags); Real distanceSquared(const Object *other) const { return ((const Gen_0016E370 *)this)->bfmeDistanceSquared((const BfmeSpotCN *)other); }
 #include "game/GameEngine/Source/GameLogic/Object/object.h"
 #include "game/Libraries/Source/WWVegas/WWMath/coord3d.h"
@@ -135,6 +138,8 @@ void BfmeAODHordeContainOwner::updateFormationMembers()
 		if (m_set114.find(member->getID()) == m_set114.end()) {
 			Coord3D pos;
 			Real angle = 0.0f;
+			union { void (*raw)(void); Real (Thing::*member)(const Coord3D *) const; } angleCall;
+			angleCall.raw = __identifier("?bfmeRelativeAngleTo@Thing@@QBEMPBUCoord3D@@@Z");
 			iface()->memberPosition(&pos, member, &angle);
 			angle += orient;
 			if (!m_map1a8.empty()) {
@@ -156,7 +161,7 @@ void BfmeAODHordeContainOwner::updateFormationMembers()
 				if (member == a) {
 					if (distSq < 410.0f) {
 						member->bfmeClearYG(m_flags158);
-						angle = member->bfmeRelativeAngleTo(bPos) + member->m_cachedAngle;
+						angle = (member->*angleCall.member)(bPos) + member->m_cachedAngle;
 					}
 				} else if (member == b) {
 					if (distSq < 410.0f)
@@ -166,11 +171,11 @@ void BfmeAODHordeContainOwner::updateFormationMembers()
 					pos.normalize();
 					pos.scale(20.0f);
 					pos.add(aPos);
-					angle = member->bfmeRelativeAngleTo(aPos) + member->m_cachedAngle;
+					angle = (member->*angleCall.member)(aPos) + member->m_cachedAngle;
 				} else if (distSq < 410.0f) {
 					int index = indexOf(member->getID());
 					member->bfmeClearYG(m_flags180);
-					angle = member->bfmeRelativeAngleTo(aPos) + member->m_cachedAngle;
+					angle = (member->*angleCall.member)(aPos) + member->m_cachedAngle;
 					pos = *(const Coord3D *)member->m_cachedPos;
 					pos.sub(aPos);
 					pos.normalize();
@@ -217,9 +222,9 @@ void BfmeAODHordeContainOwner::updateFormationMembers()
 					}
 				}
 				if (target)
-					angle = member->bfmeRelativeAngleTo((const Coord3D *)target->m_cachedPos) + member->m_cachedAngle;
+					angle = (member->*angleCall.member)((const Coord3D *)target->m_cachedPos) + member->m_cachedAngle;
 			} else if (m_flag220) {
-				angle = member->bfmeRelativeAngleTo(&m_pos214) + member->m_cachedAngle;
+				angle = (member->*angleCall.member)(&m_pos214) + member->m_cachedAngle;
 			}
 			primary()->placeMember(member, &pos, angle, !ai->bfmeBlocksFormationRefresh());
 		}

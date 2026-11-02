@@ -27,6 +27,9 @@ __forceinline Coord3D& Coord3D::operator=(const Coord3D&o) {struct Words{int x,y
 enum ObjectStatusTypes { Rva00266F40Status63=63 };
 #define BFME_HAVE_COORD3D
 #define THING_TU_MEMBERS float bfmeRelativeAngleTo(const Coord3D*) const;
+// Thing::bfmeRelativeAngleTo (0x00150510) is defined struct-keyed; the call names it
+// through a member pointer.
+extern "C" void __identifier("?bfmeRelativeAngleTo@Thing@@QBEMPBUCoord3D@@@Z")(void);
 #define OBJECT_TU_MEMBERS void clearStatus(ObjectStatusTypes); bool bfmeGeometryIntersects(const Object*) const;
 #include "game/GameEngine/Source/GameLogic/Object/object.h"
 #include "game/GameEngine/Source/GameLogic/command_source_type.h"
@@ -214,7 +217,11 @@ UpdateSleepTime SiegeDeploySpecialPower::update()
  case 1: {
  bool ok;
  {Coord3D position=object->m_cachedPos;position+=self->m_direction;
- ok=fabs(object->bfmeRelativeAngleTo(&position))<0.15f;
+ {
+  union { void (*raw)(void); float (Thing::*member)(const Coord3D*) const; } angleCall;
+  angleCall.raw = __identifier("?bfmeRelativeAngleTo@Thing@@QBEMPBUCoord3D@@@Z");
+  ok=fabs((object->*angleCall.member)(&position))<0.15f;
+ }
  if(ok) {ok=false;
  if(object->bfmeGeometryIntersects(target)) {void *module=rva001F8AB0(object);if(module&&rva001F9180(module,0))ok=true;}
  else if(ai->slot96()) {void *module=rva001F8AB0(object);if(module&&rva001F9180(module,0))ok=true;}
