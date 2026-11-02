@@ -14,11 +14,13 @@ public:
 
 extern GameLogic *TheGameLogic;
 
+// Retail's base call uses this rowed ILT, which forwards through 0x002B2070
+// and 0x0004049E to the empty body 0x001EF410. Keep the receiver ABI while
+// naming the actual thunk definition, as Rva00225960ListDrain.cpp does.
+extern void j_00015e0b();
+
 class BfmeA987
 {
-public:
-	void bfmeBase987();
-
 protected:
 	int m_base;
 };
@@ -54,7 +56,9 @@ private:
 // ?loadPostProcess@BroadcastStealthUpdate@@QAEXXZ
 void BroadcastStealthUpdate::loadPostProcess()
 {
-	bfmeBase987();
+	union { void (*raw)(); void (BfmeA987::*typed)(); } baseCall;
+	baseCall.raw = &j_00015e0b;
+	(this->*baseCall.typed)();
 
 	if (!m_objects.empty())
 	{
