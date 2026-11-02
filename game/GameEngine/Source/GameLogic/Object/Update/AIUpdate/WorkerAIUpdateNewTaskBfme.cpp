@@ -6,7 +6,8 @@
 // BFME retains docking diagnostics around the position-selection helper.
 // Preserve OVERRIDE and individual getTemplate/getName/getID accessors:
 // combining the name lookup changes register allocation across logging calls.
-struct Coord3D {float x,y,z;};
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
+
 class Overridable {
 public:
  virtual ~Overridable();
