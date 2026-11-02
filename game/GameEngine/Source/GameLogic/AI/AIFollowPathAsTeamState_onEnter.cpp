@@ -141,6 +141,17 @@ private:
 
 // ?friend_getGoalPathPosition@AIUpdateInterface@@QBEPBVCoord3D@@H@Z (0x0016FFD0, emitted out of line by the third call)
 
+// setPathExtraDistance is reached through ILT 0x0000EBAB, whose body 0x0026FE90 the
+// ledger defines as ?set@Rva0026FE90DwordSlot@@QAEXH@Z; the calls name it through a
+// member pointer that keeps the Real argument.
+extern "C" void __identifier("?set@Rva0026FE90DwordSlot@@QAEXH@Z")(void);
+static __forceinline void setPathExtraDistanceVia(AIUpdateInterface *ai, Real dist)
+{
+	union { void (*raw)(void); void (AIUpdateInterface::*member)(Real); } call;
+	call.raw = __identifier("?set@Rva0026FE90DwordSlot@@QAEXH@Z");
+	(ai->*call.member)(dist);
+}
+
 // ?onEnter@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ
 StateReturnType AIFollowPathAsTeamState::onEnter()
 {
@@ -198,7 +209,7 @@ StateReturnType AIFollowPathAsTeamState::onEnter()
 		Real offset = coord2DLength(delta);
 		if (ai->friend_getGoalPathPosition(followingIndex))
 			offset += 40.0f;
-		ai->setPathExtraDistance(offset);
+		setPathExtraDistanceVia(ai, offset);
 		if (Glo012F0239 && TheCRCParameterCheck)
 			((BfmeCritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,
 				"CritterDesync: setAdjustDestination(FALSE) 45");
@@ -210,7 +221,7 @@ StateReturnType AIFollowPathAsTeamState::onEnter()
 			((BfmeCritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,
 				"CritterDesync: setAdjustDestination(m_adjustFinal=%s) 46", m_adjustFinal ? "TRUE" : "FALSE");
 		setAdjustsDestination(m_adjustFinal);
-		ai->setPathExtraDistance(0.0f);
+		setPathExtraDistanceVia(ai, 0.0f);
 	}
 	return ret;
 }
