@@ -3,15 +3,17 @@
 // STLport facet index initialization.
 
 #include <ostream>
+#include <istream>
 
 extern template _STL::locale::id
 _STL::num_put<char, _STL::ostreambuf_iterator<char, _STL::char_traits<char> > >::id;
+extern template _STL::locale::id
+_STL::num_get<char, _STL::istreambuf_iterator<char, _STL::char_traits<char> > >::id;
 
 extern int g_bfmeSlot00VA;
 extern int g_bfmeSlot01VA;
 extern int g_bfmeSlot02VA;
 extern int g_bfmeSlot03VA;
-unsigned int g_rva005380a0_id;
 extern int g_bfmeSlot05VA;
 extern int g_bfmeSlot07VA;
 extern int g_bfmeSlot08VA;
@@ -37,7 +39,7 @@ void bfmeAssignSlotsVA(void)
 	g_bfmeSlot01VA = 9;
 	g_bfmeSlot02VA = 10;
 	g_bfmeSlot03VA = 11;
-	g_rva005380a0_id = 12;
+	_STL::num_get<char>::id._M_index = 12;
 	g_bfmeSlot05VA = 13;
 	_STL::num_put<char>::id._M_index = 14;
 	g_bfmeSlot07VA = 15;

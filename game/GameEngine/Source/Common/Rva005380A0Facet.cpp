@@ -1,25 +1,15 @@
-// cl: /O2 /Ob0
+// cl: /O2 /Ob0 /DNDEBUG /MD /D_STLP_USE_STATIC_LIB
+// stlport
 
-namespace _STL
-{
-class locale
-{
-public:
-	class facet;
-	class id;
-	facet *_M_use_facet(const id &) const;
-};
-}
+#include <istream>
 
 class Rva005380A0
-{
-};
+{};
 
-extern unsigned int g_rva005380a0_id;
+template _STL::locale::id
+_STL::num_get<char, _STL::istreambuf_iterator<char, _STL::char_traits<char> > >::id;
 
 void *rva005380a0(Rva005380A0 *obj)
 {
-	const _STL::locale::id *facetId =
-		reinterpret_cast<const _STL::locale::id *>(&g_rva005380a0_id);
-	return reinterpret_cast<_STL::locale *>(obj)->_M_use_facet(*facetId);
+	return reinterpret_cast<_STL::locale *>(obj)->_M_use_facet(_STL::num_get<char>::id);
 }

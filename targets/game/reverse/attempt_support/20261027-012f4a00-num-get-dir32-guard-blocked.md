@@ -113,6 +113,43 @@ record + pass test. It is completable and fully planned, but the double full-gat
 cost made it the wrong item to finish this loop turn; the next served item (the
 0x00394260 6th re-draw) is quick. Resume here: execute steps 1-8 in order.
 
+## Resolution (2026-11-02)
+
+Steps 1-4 executed exactly as planned and scoped-verified (both TUs green,
+byte-matched; data row zero-filled 4 B at 0x012F4A00; the three retires
+landed, leaving NO name at the VA). Step 5's full gate ran on the then-HEAD
+(95fc3b901f) and went RED on 11 unrecorded DIR32 names unrelated to this
+item (none baselined; the repo had been running scoped gates only since they
+appeared). Our name was NOT among the failures: with the game names retired
+and the data row in place, `unrecorded_dir32_problem(STLport, VA)` passes via
+`data.get(sym)==base`, exactly as step 5 predicted — the full-gate run
+confirms the guard analysis. No proposal was written (the gate is red), so
+step 6 (`record`) could not run.
+
+Deviated from the banked plan at the user's direction: the item landed
+WITHOUT the dir32 record. The matched data row already gives the STLport
+name its ledger identity at 0x012F4A00, so the DIR32 consistency check
+passes without the record; the canonical-name record line is a deferred
+follow-up for a full-gate green window (the proposal would then include the
+name; one-line `dir32_record.py record` commit).
+
+Steps 7-8 completed: pass-test PASS, rebase onto c4a7c4b2c9 (which also fixed
+3 of the 11 unrelated names — upstream had recorded
+?cantConnectBeforeOnline@@3EA, ?mustDownloadPatch@@3EA and
+?s_asyncDNSLookupInProgress@@3EA at 0x012F716D/0x012F716C/0x012F717A),
+scoped re-verification on the rebased tree, commit, push.
+
+Eight of the unrelated names remain open at c4a7c4b2c9 (all unrecorded in
+origin's dir32_addresses.csv, none baselined; full-gate red until repaired):
+??_7Waypoint@@6B@ 0x0109C3DC (vtable owned by the matched Waypoint
+ctor/dtor rows), ??_7ParticleInfo@@6B@ 0x0110FE78 (vtable owned by the
+matched ParticleInfo rows), ??_7BfmeHolderCU@@6B@ 0x0111126C (14 names
+already recorded at the VA; the BfmeHolderCU spelling unrecorded),
+??m_curFadeFrame@ScreenCrossFadeFilter@@1HA@@3HA 0x0130720C (matched data
+row under the near-spelling ?m_curFadeFrame@ScreenCrossFadeFilter@@1HA),
+?nShadowDecalVertsInBatch@@3HA 0x01306E20, ?d_008c66a0/d_008c6ad0
+0x00CC66A0/0x00CC6AD0, __fmode 0x0134FBAC.
+
 ## Ruled out
 
 - Recording the STLport name alone (the guard refuses it while the base holds the
