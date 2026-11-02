@@ -25,6 +25,11 @@
 #include "ascii_string.h"
 #include "unicode_string.h"
 
+// Retail inlines ~UnicodeString at every scope exit and calls
+// StringBase<unsigned short>::releaseBuffer (0x008881D0) directly, never
+// the 0x0005EEA0 jmp body the out-of-line declaration would bind to.
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
 	void *handle, unsigned long milliseconds);
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);

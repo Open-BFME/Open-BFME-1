@@ -448,7 +448,7 @@ public:
 			*(const StringBase<unsigned short> *)&that);
 	}
 
-	~UnicodeString();
+	~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
 	// Variadic member: MSVC compiles these __cdecl with this pushed first, and
 	// the format string is a UnicodeString BY VALUE.

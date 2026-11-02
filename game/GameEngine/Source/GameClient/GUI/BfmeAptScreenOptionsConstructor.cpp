@@ -47,7 +47,7 @@ public:
 		((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(
 			*(const StringBase<unsigned short> *)&other );
 	}
-	~UnicodeString();
+	~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 	void format( UnicodeString format, ... );
 	void format( const unsigned short *format, ... );
 	void concat( const unsigned short *text, int length );

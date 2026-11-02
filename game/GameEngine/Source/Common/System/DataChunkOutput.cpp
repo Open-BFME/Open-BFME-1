@@ -28,6 +28,7 @@ private:
     void releaseBuffer();	// 0x00887940: retail's string release; ~StringBase's 0x0005E490 stub is never called here
     void concat(const T *, int);
     BfmeStringData *m_data;
+	friend class UnicodeString;
 };
 
 // The retail call sites inline these wrappers around the private char base.
@@ -46,7 +47,7 @@ public:
 class UnicodeString
 {
 public:
-	~UnicodeString();
+	~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
 	int getLength(void) const
 	{

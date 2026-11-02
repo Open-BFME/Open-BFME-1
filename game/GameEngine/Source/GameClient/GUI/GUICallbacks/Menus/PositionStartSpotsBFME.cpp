@@ -91,7 +91,7 @@ class UnicodeString : private StringBase<unsigned short>
 public:
 	UnicodeString(const unsigned short *text) : StringBase<unsigned short>(text) {}
 	UnicodeString(const UnicodeString &other) : StringBase<unsigned short>(other) {}
-	~UnicodeString();
+	~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 };
 
 class Image

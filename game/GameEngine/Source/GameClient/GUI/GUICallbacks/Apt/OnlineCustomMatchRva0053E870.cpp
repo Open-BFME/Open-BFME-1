@@ -7,6 +7,11 @@
 
 #include "unicode_string.h"
 
+// Retail inlines ~UnicodeString at every scope exit and calls
+// StringBase<unsigned short>::releaseBuffer (0x008881D0) directly, never
+// the 0x0005EEA0 jmp body the out-of-line declaration would bind to.
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 class GameWindow;
 class GameSpyStagingRoom;
 class LadderInfo;

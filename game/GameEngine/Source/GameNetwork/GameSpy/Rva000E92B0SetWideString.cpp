@@ -17,7 +17,7 @@ public:
 	{
 		((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short> *)&other);
 	}
-	~UnicodeString();
+	~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 	__forceinline UnicodeString &operator=(const UnicodeString &other)
 	{
 		((StringBase<unsigned short> *)this)->set(*(const StringBase<unsigned short> *)&other);

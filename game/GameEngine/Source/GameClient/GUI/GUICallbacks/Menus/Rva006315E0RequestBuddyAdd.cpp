@@ -14,6 +14,11 @@
 #include "GameNetwork/GameSpy/PeerDefs.h"
 #include "GameNetwork/GameSpy/BuddyThread.h"
 
+// Retail inlines ~UnicodeString at every scope exit and calls
+// StringBase<unsigned short>::releaseBuffer (0x008881D0) directly, never
+// the 0x0005EEA0 jmp body the out-of-line declaration would bind to.
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 static __forceinline void bfmeUnicodeStringSet(UnicodeString &dest, const UnicodeString &source)
 {
 	((StringBase<unsigned short> *)&dest)->set(*(const StringBase<unsigned short> *)&source);

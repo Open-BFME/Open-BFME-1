@@ -25,7 +25,7 @@ public:
 		: StringBase<WideChar>(other)
 	{
 	}
-	~UnicodeString();
+	~UnicodeString() {}
 };
 
 class AsciiString : private StringBase<char>

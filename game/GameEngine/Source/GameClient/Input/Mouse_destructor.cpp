@@ -17,6 +17,7 @@ template <class T> class StringBase
 {
 	void releaseBuffer(void);
 	friend class AsciiString;
+	friend class UnicodeString;
 };
 
 class AsciiString
@@ -31,7 +32,7 @@ private:
 class UnicodeString
 {
 public:
-	~UnicodeString();
+	~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
 private:
 	char m_body[4];

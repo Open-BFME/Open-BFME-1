@@ -70,6 +70,11 @@ extern "C" __declspec(dllimport) char *getenv( const char *name );
 
 #include "GameNetwork/IPEnumeration.h"
 
+// Retail inlines ~UnicodeString at every scope exit and calls
+// StringBase<unsigned short>::releaseBuffer (0x008881D0) directly, never
+// the 0x0005EEA0 jmp body the out-of-line declaration would bind to.
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 // Retail inlines ~AsciiString at every scope exit and calls
 // StringBase<char>::releaseBuffer (0x00887940) directly, never the
 // 0x0005EE90 jmp body the out-of-line declaration would bind to.

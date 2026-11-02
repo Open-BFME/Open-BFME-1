@@ -67,7 +67,7 @@ public:
 		((StringBase<WCHAR> *)this)->StringBase<WCHAR>::StringBase(
 			*(const StringBase<WCHAR> *)&that );
 	}
-	~UnicodeString( void );
+	~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
 	const WCHAR *str( void ) const
 	{

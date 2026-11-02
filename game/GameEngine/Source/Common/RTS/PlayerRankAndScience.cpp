@@ -71,13 +71,16 @@ public:
 
 protected:
 	Character *m_data;
+private:
+	void releaseBuffer(void);
+	friend class UnicodeString;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : public StringBase<unsigned short>
 {
 public:
-	~UnicodeString();
+	~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 	UnicodeString &operator=(const UnicodeString &other)
 	{
 		set(other);

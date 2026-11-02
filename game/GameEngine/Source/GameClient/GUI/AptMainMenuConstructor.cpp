@@ -53,7 +53,7 @@ public:
 	UnicodeString() : m_data( 0 ) {}
 	UnicodeString( const unsigned short *text );
 	UnicodeString( const UnicodeString &other );
-	~UnicodeString();
+	~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 	const unsigned short *str() const
 	{
 		return m_data ? (const unsigned short *)((char *)m_data + 8)

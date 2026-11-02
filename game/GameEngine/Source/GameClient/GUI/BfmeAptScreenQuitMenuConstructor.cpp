@@ -37,7 +37,7 @@ public:
 		((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(
 			*(const StringBase<unsigned short> *)&other );
 	}
-	~UnicodeString();
+	~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
 	private:
 	UnicodeStringData *m_data;

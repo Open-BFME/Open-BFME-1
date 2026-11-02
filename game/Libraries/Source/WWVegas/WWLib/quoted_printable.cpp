@@ -82,7 +82,7 @@ public:
 		return m_data ? (const unsigned short *)((const char *)m_data + 8)
 		              : &BFMEEmptyUnicodeString;
 	}
-	~UnicodeString();
+	~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 };
 
 #include "quoted_printable.h"

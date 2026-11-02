@@ -16,6 +16,11 @@
 #include <wchar.h>
 #include "unicode_string.h"
 
+// Retail inlines ~UnicodeString at every scope exit and calls
+// StringBase<unsigned short>::releaseBuffer (0x008881D0) directly, never
+// the 0x0005EEA0 jmp body the out-of-line declaration would bind to.
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 int Rva0009B4B0( int a, int b );					///< ILT thunk 0x000019F6
 
 class GameInfo

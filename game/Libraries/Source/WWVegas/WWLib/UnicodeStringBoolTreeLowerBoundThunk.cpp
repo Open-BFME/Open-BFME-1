@@ -44,6 +44,8 @@ public:
 
 private:
 	Header *m_data;
+private:
+	void releaseBuffer(void);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
@@ -55,7 +57,7 @@ public:
 		((StringBase<WideChar> *)this)->StringBase<WideChar>::StringBase(
 			*(const StringBase<WideChar> *)&other);
 	}
-	~UnicodeString();
+	~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
 	int compareNoCase(const UnicodeString &other) const throw()
 	{

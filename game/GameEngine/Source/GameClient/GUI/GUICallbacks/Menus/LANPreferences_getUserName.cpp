@@ -39,7 +39,7 @@ public:
 		((StringBase<wchar_t> *)this)->StringBase<wchar_t>::StringBase(
 			*(const StringBase<wchar_t> *)&other);
 	}
-	~UnicodeString();
+	~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
 	UnicodeString &operator=(const UnicodeString &other)
 	{

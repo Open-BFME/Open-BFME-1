@@ -96,6 +96,8 @@ template <typename T> class StringBase
 
 private:
 	StringBase( const StringBase<T> &that );
+private:
+	void releaseBuffer(void);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
@@ -108,7 +110,7 @@ public:
 		((StringBase<WCHAR> *)this)->StringBase<WCHAR>::StringBase(
 			*(const StringBase<WCHAR> *)&that );
 	}
-	~UnicodeString();
+	~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 	void format( UnicodeString format, ... );
 
 private:

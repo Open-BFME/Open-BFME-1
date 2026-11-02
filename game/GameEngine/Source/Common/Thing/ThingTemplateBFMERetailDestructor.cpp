@@ -12,6 +12,11 @@
 #include "ascii_string.h"
 #include "unicode_string.h"
 
+// Retail inlines ~UnicodeString at every scope exit and calls
+// StringBase<unsigned short>::releaseBuffer (0x008881D0) directly, never
+// the 0x0005EEA0 jmp body the out-of-line declaration would bind to.
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 typedef char AsciiStringMustBeFourBytes[sizeof(AsciiString) == 4 ? 1 : -1];
 typedef char UnicodeStringMustBeFourBytes[sizeof(UnicodeString) == 4 ? 1 : -1];
 
