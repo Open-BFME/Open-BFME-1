@@ -4,6 +4,14 @@
 // AIFollowPathAsTeamState::update, retail 0x00179B10 (1517 B).
 // BFME 1 evidence: AIFollowPathAsTeamState vtable 0x01099C08 (installed by the matched
 // ctor 0x00183990) reaches this body; `ilt_oracle.py check
+// The matched Thing::bfmeRelativeAngleTo (0x00150510) and
+// TerrainLogic::getLayerForDestination (0x001A7C20) key Coord3D as a struct, and the
+// updateGoal body behind ILT 0x000294E2 is still a gen dump (?j_000294e2 is the ILT's
+// row), so those calls name the defined symbols through member pointers.
+extern "C" void __identifier("?bfmeRelativeAngleTo@Thing@@QBEMPBUCoord3D@@@Z")(void);
+extern "C" void __identifier("?getLayerForDestination@TerrainLogic@@QAE?AW4PathfindLayerEnum@@PAVObject@@PBUCoord3D@@@Z")(void);
+extern void j_000294e2(void);
+
 // ?update@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ 0x179B10` is CONFIRMED.
 // Siblings: onEnter 0x00179740, computePath 0x001795F0, isAttack 0x0016C2B0 in this
 // directory. Class views and member names follow the onEnter TU; matched helpers keep
@@ -406,7 +414,9 @@ StateReturnType AIFollowPathAsTeamState::update()
 			Real speed = ownerAI2->getCurLocomotorSpeed();
 			if (ai->isDoingGroundMovement())
 				ai->setDesiredSpeed(speed);
-			Real angle = obj->bfmeRelativeAngleTo((const Coord3D *)turnTo);
+			union { void (*raw)(void); Real (Thing::*member)(const Coord3D *) const; } angleCall;
+			angleCall.raw = __identifier("?bfmeRelativeAngleTo@Thing@@QBEMPBUCoord3D@@@Z");
+			Real angle = (obj->*angleCall.member)((const Coord3D *)turnTo);
 			Real facing = normalizeAngle(obj->getOrientation() + angle);
 			ai->setSlot1E4(facing);
 		}
@@ -500,8 +510,12 @@ StateReturnType AIFollowPathAsTeamState::update()
 				}
 			}
 			Object *goalOwner = getMachineOwner();
-			((Rva003E9720Pathfinder *)TheAI->pathfinder())->rva003E9720(goalOwner, &m_goalPosition,
-				TheTerrainLogic->getLayerForDestination(goalOwner, &m_goalPosition),
+			union { void (*raw)(void); PathfindLayerEnum (TerrainLogic::*member)(Object *, const Coord3D *); } layerCall;
+			layerCall.raw = __identifier("?getLayerForDestination@TerrainLogic@@QAE?AW4PathfindLayerEnum@@PAVObject@@PBUCoord3D@@@Z");
+			union { void (*raw)(void); void (Rva003E9720Pathfinder::*member)(Object *, const Coord3D *, int, const char *, int); } goalCall;
+			goalCall.raw = j_000294e2;
+			(((Rva003E9720Pathfinder *)TheAI->pathfinder())->*goalCall.member)(goalOwner, &m_goalPosition,
+				(TheTerrainLogic->*layerCall.member)(goalOwner, &m_goalPosition),
 				"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp", 0x20a1);
 		}
 	}
