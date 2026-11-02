@@ -21781,5 +21781,15 @@
     "after_sha256": "9e04e0f4473e3e68a0d50264e6a6bc81bd5964ca08d00a341fdd86579515d452",
     "evidence": "targets/game/reverse/attempt_support/0061a0f0-unrotated-loop-20261102.md",
     "reason": "Bank field placeholder renamed to the project m_ member convention; same opaque offset field."
+  },
+  {
+    "old_path": "targets/game/reverse/attempts/0x00529be0.cpp",
+    "new_path": "game/GameEngine/Source/GameClient/GUI/SkirmishScreenStateRva00529BE0.cpp",
+    "old_name": "shouldRefresh",
+    "new_name": "rva00529BE0",
+    "before_sha256": "b0f14b4c1211160d3aa9daaea6a385445b215b8ac0e45fa0f4953fa5755fbef4",
+    "after_sha256": "1515b2469d6d8349102fe417e874aa933fa57e397bb436db39c5aa850f7e02d2",
+    "evidence": "targets/game/reverse/attempt_support/00529be0-exact-pin-retire-20261102.md",
+    "reason": "ilt_oracle contradicts ?shouldRefresh@SkirmishScreenState@@QAE_NXZ for 0x00529BE0 (p_false 4.57e-4); the landed body keeps an address-derived method name."
   }
 ]
