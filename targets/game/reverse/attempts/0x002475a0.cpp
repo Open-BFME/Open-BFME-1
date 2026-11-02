@@ -1,453 +1,268 @@
-// ?d_002475a0@@YAXXZ
-// partial score=0.43 date=2026-09-25
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// ?DoXfer@HordeContain@@MAEXAAVXfer@@@Z
+// partial score=0.4405 date=2026-11-02
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame /Igame/GameEngine/Source/GameLogic/Object /Igame/GameEngine/Source/Common/System
 // stlport
-
-#define _STLP_USE_NEWALLOC 1
+// HordeContain::DoXfer, retail 0x002475A0 (1814 bytes, ret 4 at +0x713).
+// The matched AODHordeContain transfer reaches it as its base transfer through
+// ILT 0x00024BDB; ilt_oracle CONFIRMS ?DoXfer@HordeContain@@MAEXAAVXfer@@@Z.
+// [BFME 2 donor] Open-BFME-2 45afcff3 HordeContainXfer.cpp (version 13) gave
+// the opening order; BFME 1 is version 3 and every field, width and helper
+// below is read from the retail body. Container offsets match
+// HordeContainDestructors.cpp. Member names are offset labels.
 #define _STLP_NO_EXCEPTIONS 1
-#define _STLP_USE_STATIC_LIB 1
+#include "object.h"
+#include "xfer.h"
+#include "Libraries/Source/WWVegas/WWMath/coord3d.h"
 #include <list>
 #include <map>
 #include <set>
 #include <vector>
 
-// Retail 0x002475A0 is reached by HordeContain's base-transfer ILT at
-// 0x00024BDB.  The matched AODHordeContain transfer caller proves that role,
-// but no source evidence proves the canonical private HordeContain field
-// names.  Keep the owner address-derived while retaining the witnessed
-// STLport/Xfer layout and the callee spellings printed by tools/callees.py.
-
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-
-struct Rva002475A0XferVersion
-{
-	Rva002475A0XferVersion() {}
-	Rva002475A0XferVersion(unsigned char version, unsigned char currentVersion)
-		: m_version(version), m_currentVersion(currentVersion) {}
-
-	unsigned char m_version;
-	unsigned char m_currentVersion;
-};
-
-class Rva002475A0Xfer
-{
-public:
-	virtual void slot00();
-	virtual Bool isLoading();
-	virtual void slot02();
-	virtual void slot03();
-	virtual Bool isLightCRC();
-	virtual void slot05();
-	virtual void slot06();
-	virtual void slot07();
-	virtual void slot08();
-	virtual void slot09();
-	virtual Rva002475A0Xfer &xferVersion(Rva002475A0XferVersion *version);
-	virtual void slot11();
-	virtual void slot12();
-	virtual void slot13();
-	virtual void slot14();
-	virtual void slot15();
-	virtual void slot16();
-	virtual void slot17();
-	virtual void slot18();
-	virtual void slot19();
-	virtual void slot20();
-	virtual void slot21();
-	virtual void slot22();
-	virtual void slot23();
-	virtual Rva002475A0Xfer &xferSnapshot(void *value);
-	virtual void slot25();
-	virtual void slot26();
-	virtual void slot27();
-	virtual void slot28();
-	virtual Rva002475A0Xfer &xferUnsignedInt(UnsignedInt *value);
-	virtual Rva002475A0Xfer &xferInt(int *value);
-	virtual void slot31();
-	virtual void slot32();
-	virtual void slot33();
-	virtual void slot34();
-	virtual Rva002475A0Xfer &xferBool(Bool *value);
-};
-
-static __forceinline void rva002475a0XferVersion(
-	Rva002475A0Xfer *xfer, const Rva002475A0XferVersion &version)
-{
-	xfer->xferVersion((Rva002475A0XferVersion *)&version);
-}
-
-extern void j_0000c9b4();
-extern void j_0001f91f();
-extern void j_00026dd7();
-extern void j_000353c8();
-extern void j_00036ac5();
-extern void j_0003d37a();
-extern void j_00047ba9();
-extern void j_000499f9();
-extern void *__cdecl operator new(unsigned int size);
-
-// The owning class's destructor witnesses these STLport instantiations at the
-// same offsets.  The 4-byte tree payload and the 28-byte vector payload keep
-// the address-derived/generated type spellings of their retail helpers.
-struct Gen_t_000ef440_k4
-{
-	int value;
-};
-
-bool operator==(const Gen_t_000ef440_k4 &left,
-	const Gen_t_000ef440_k4 &right)
-{
-	return left.value == right.value;
-}
-
-bool operator<(const Gen_t_000ef440_k4 &left,
-	const Gen_t_000ef440_k4 &right)
-{
-	return left.value < right.value;
-}
-
-struct Gen_t_00223550_p4pod
-{
-	int a[1];
-};
-
-bool operator==(const Gen_t_00223550_p4pod &left,
-	const Gen_t_00223550_p4pod &right)
-{
-	return left.a[0] == right.a[0];
-}
-
-bool operator<(const Gen_t_00223550_p4pod &left,
-	const Gen_t_00223550_p4pod &right)
-{
-	return left.a[0] < right.a[0];
-}
+struct Rva00226FA0Less : std::less<int> {};
+struct Gen_t_000ef440_k4 { int a[1]; };
+struct Gen_t_0023db70_m4pod { void *p; };
 
 struct Rva00244A80Element
 {
-	int m_head;
-	int m_snapshot0;
-	int m_snapshot1;
-	int m_snapshot2;
-	Bool m_flag;
-	unsigned char m_padding[3];
-	int m_tail0;
-	int m_tail1;
-};
-
-template <class Type>
-class Rva002475A0PublicVector : public _STL::vector<Type>
-{
-public:
-	using _STL::vector<Type>::_M_start;
-	using _STL::vector<Type>::_M_finish;
-	using _STL::vector<Type>::_M_end_of_storage;
-	using _STL::vector<Type>::_M_fill_insert;
-	using _STL::vector<Type>::_M_insert_overflow;
-};
-
-class Rva002475A0BaseCall
-{
-public:
-	void xfer(Rva002475A0Xfer *xfer);
-};
-
-class Rva002475A0FieldCall
-{
-public:
-	void xfer(Rva002475A0Xfer *xfer);
-};
-
-class Rva002475A0MapCall
-{
-};
-
-class Rva002475A0SetCall
-{
-};
-
-class Rva002475A0VectorCall
-{
-};
-
-template <class Type>
-class Rva002475A0Vector4
-{
-public:
-	void push_back(const Type &value)
+	Rva00244A80Element() : m_id(0), m_flag(true), m_18(0), m_1C(0)
 	{
-		if (_M_finish != _M_end_of_storage)
-		{
-			if (_M_finish != 0)
-				*_M_finish = value;
-			++_M_finish;
-		}
-		else
-		{
-			typedef void (Rva002475A0VectorCall::*Call)(
-				Type *, const Type &, const _STL::__false_type &,
-				UnsignedInt, Bool);
-			union { void (*raw)(); Call member; } vectorCall;
-			vectorCall.raw = j_00047ba9;
-			(((Rva002475A0VectorCall *)this)->*vectorCall.member)(
-				_M_finish, value,
-				reinterpret_cast<const _STL::__false_type &>(value), 1, true);
-		}
+		m_position.x = 0;
+		m_position.y = 0;
+		m_position.z = 0;
 	}
-
-	Type *_M_start;
-	Type *_M_finish;
-	Type *_M_end_of_storage;
+	int m_id;
+	Coord3DBase m_position;
+	bool m_flag;
+	int m_18;
+	int m_1C;
 };
 
-#pragma comment(linker, "/alternatename:?xfer@Rva002475A0BaseCall@@QAEXPAVRva002475A0Xfer@@@Z=?j_0003d37a@@YAXXZ")
-#pragma comment(linker, "/alternatename:?xfer@Rva002475A0FieldCall@@QAEXPAVRva002475A0Xfer@@@Z=?j_00026dd7@@YAXXZ")
-#pragma comment(linker, "/alternatename:?_M_fill_insert@?$vector@URva00244A80Element@@V?$allocator@URva00244A80Element@@@_STL@@@_STL@@QAEXPAURva00244A80Element@@IABU3@@Z=?j_00036ac5@@YAXXZ")
-
-static __forceinline void rva002475a0ObjectID(
-	Rva002475A0Xfer *xfer, UnsignedInt *value)
-{
-	typedef void (__cdecl *Call)(Rva002475A0Xfer *, UnsignedInt *);
-	((Call)j_0000c9b4)(xfer, value);
+namespace _STL {
+template <> pair<_Rb_tree_iterator<Gen_t_000ef440_k4, _Nonconst_traits<Gen_t_000ef440_k4> >, bool>
+_Rb_tree<Gen_t_000ef440_k4, Gen_t_000ef440_k4, _Identity<Gen_t_000ef440_k4>, less<Gen_t_000ef440_k4>, allocator<Gen_t_000ef440_k4> >::insert_unique(const Gen_t_000ef440_k4 &);
+template <> void vector<Rva00244A80Element, allocator<Rva00244A80Element> >::_M_fill_insert(Rva00244A80Element *, unsigned int, const Rva00244A80Element &);
+template <> void vector<Gen_t_0023db70_m4pod, allocator<Gen_t_0023db70_m4pod> >::_M_insert_overflow(Gen_t_0023db70_m4pod *, const Gen_t_0023db70_m4pod &, const __false_type &, unsigned int, bool);
 }
+bool operator<(const Gen_t_000ef440_k4 &, const Gen_t_000ef440_k4 &);
 
-// ?xfer@Rva002475A0HordeContain@@QAEXPAVRva002475A0Xfer@@@Z
-class Rva002475A0HordeContain
+class BfmeSeedTarget;
+class Gen_0022CD40 { public: void bfmeSeed(BfmeSeedTarget *target); void xfer(Xfer *target) { bfmeSeed((BfmeSeedTarget *)target); } };
+class Rva001CB270BitFlags { public: void xfer(Xfer *xfer); unsigned int m_bits[10]; };
+class MidVirtualSlot90Receiver;
+Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *target, void *context);
+void bfmeHandOver_000353C8(BfmeSeedTarget *target, void *item);
+
+struct Rva002475A0Record
 {
-public:
-	void xfer(Rva002475A0Xfer *xfer);
+	Rva002475A0Record() : m_id(0), m_value(-1) {}
+	int m_id;
+	int m_value;
+};
+
+class HordeContain
+{
+protected:
+	virtual void DoXfer(Xfer &xfer);
 
 private:
-	unsigned char m_head[0xe8];
-	Bool m_flagE8;
-	Bool m_flagE9;
-	unsigned char m_paddingEA[0x2a];
-	_STL::set<Gen_t_000ef440_k4> m_set;
-	_STL::map<int, Gen_t_00223550_p4pod> m_map;
-	unsigned char m_padding12c[0x0c];
-	_STL::list<int> m_list;
-	unsigned char m_padding13c[0x78];
-	UnsignedInt m_objectID1b4;
-	int m_value1b8;
-	UnsignedInt m_objectID1bc;
-	Rva002475A0Vector4<int> m_vector4;
-	int m_value1cc;
-	int m_value1d0;
-	int m_value1d4;
-	Rva002475A0PublicVector<Rva00244A80Element> m_vector28;
-	UnsignedInt m_objectID1e4;
-	UnsignedInt m_value1e8;
-	UnsignedInt m_value1ec;
-	Bool m_flag1f0;
-	unsigned char m_padding1f1[7];
-	UnsignedInt m_objectID1f8;
-	Bool m_flag1fc;
-	Bool m_flag1fd;
-	Bool m_flag1fe;
-	unsigned char m_padding1ff;
-	int m_value200;
-	Bool m_flag204;
-	Bool m_flag205;
-	unsigned char m_padding206[2];
-	UnsignedInt m_objectID208;
-	int m_value20c;
-	unsigned char m_padding210[4];
-	unsigned char m_snapshot214[0x0c];
-	Bool m_flag220;
-	Bool m_flag221;
+	char m_head[0xE8 - 0x04];
+	bool m_E8;
+	bool m_E9;
+	char m_unmodelledEA[2];
+	Rva001CB270BitFlags m_EC;
+	std::set<Gen_t_000ef440_k4> m_set;
+	std::map<int, int, Rva00226FA0Less> m_map;
+	char m_unmodelled12C[0x138 - 0x12C];
+	std::list<int> m_list;
+	char m_unmodelled13C[4];
+	unsigned int m_140;
+	char m_snapshot214[0x1B4 - 0x144];
+	int m_objectID1b4;
+	int m_1B8;
+	int m_objectID1bc;
+	std::vector<Gen_t_0023db70_m4pod> m_1C0;
+	unsigned int m_1CC;
+	int m_1D0;
+	int m_1D4;
+	std::vector<Rva00244A80Element> m_1D8;
+	int m_objectID1e4;
+	unsigned int m_1E8;
+	unsigned int m_1EC;
+	bool m_1F0;
+	char m_unmodelled1F1[0x1F8 - 0x1F1];
+	int m_1F8;
+	bool m_1FC;
+	bool m_1FD;
+	bool m_1FE;
+	char m_unmodelled1FF;
+	int m_200;
+	bool m_204;
+	bool m_205;
+	char m_unmodelled206[2];
+	int m_208;
+	int m_20C;
+	char m_unmodelled210[4];
+	Coord3DBase m_214;
+	bool m_220;
+	bool m_221;
 };
 
-#pragma comment(linker, "/alternatename:?insert_unique@?$_Rb_tree@UGen_t_000ef440_k4@@U1@U?$_Identity@UGen_t_000ef440_k4@@@_STL@@U?$less@UGen_t_000ef440_k4@@@3@V?$allocator@UGen_t_000ef440_k4@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@UGen_t_000ef440_k4@@U?$_Nonconst_traits@UGen_t_000ef440_k4@@@_STL@@@_STL@@_N@2@ABUGen_t_000ef440_k4@@@Z=?j_000499f9@@YAXXZ")
-
-void Rva002475A0HordeContain::xfer(Rva002475A0Xfer *xfer)
+void HordeContain::DoXfer(Xfer &xfer)
 {
-	((Rva002475A0BaseCall *)this)->xfer(xfer);
-	if (xfer->isLightCRC())
+	((Gen_0022CD40 *)this)->xfer(&xfer);
+	if (xfer.IsLightCRC())
 		return;
 
-	const Rva002475A0XferVersion &version = Rva002475A0XferVersion(1, 3);
-	rva002475a0XferVersion(xfer, version);
-	xfer->xferBool(&m_flagE8);
-	xfer->xferUnsignedInt((UnsignedInt *)((unsigned char *)this + 0x140));
-	xfer->xferBool(&m_flagE9);
-	xfer->xferBool(&m_flag1fe);
+	Xfer::Version version;
+	version.data[0] = 1;
+	version.data[1] = 3;
+	xfer == version;
+
+	xfer == m_E8;
+	xfer == m_140;
+	xfer == m_E9;
+	xfer == m_1FE;
 
 	int listCount = m_list.size();
-	xfer->xferInt(&listCount);
-	if (xfer->isLoading())
+	xfer == listCount;
+	if (xfer.IsLoading())
 	{
-		int listValue = 0;
+		int value = 0;
 		for (int i = 0; i < listCount; ++i)
 		{
-			xfer->xferInt(&listValue);
-			m_list.push_back(listValue);
+			xfer == value;
+			m_list.push_back(value);
 		}
 	}
 	else
 	{
-		for (_STL::list<int>::iterator it = m_list.begin();
-			it != m_list.end(); ++it)
+		for (std::list<int>::iterator it = m_list.begin(); it != m_list.end(); ++it)
 		{
-			int listValue = *it;
-			xfer->xferInt(&listValue);
+			int value = *it;
+			xfer == value;
 		}
 	}
 
 	int mapCount = m_map.size();
-	xfer->xferInt(&mapCount);
-	if (xfer->isLoading())
+	xfer == mapCount;
+	if (xfer.IsLoading())
 	{
-		UnsignedInt key = 0;
+		int key = 0;
 		int value = 0;
 		for (int i = 0; i < mapCount; ++i)
 		{
-			rva002475a0ObjectID(xfer, &key);
-			xfer->xferInt(&value);
-			typedef void **(Rva002475A0MapCall::*Call)(void **);
-			union { void (*raw)(); Call member; } mapCall;
-			mapCall.raw = j_0001f91f;
-			void **slot = (((Rva002475A0MapCall *)&m_map)->*mapCall.member)(
-				(void **)&key);
-			*(int *)slot = value;
+			Rva0010C3C0((MidVirtualSlot90Receiver *)&xfer, &key);
+			xfer == value;
+			m_map[key] = value;
 		}
 	}
 	else
 	{
-		for (_STL::map<int, Gen_t_00223550_p4pod>::iterator it =
-			m_map.begin(); it != m_map.end(); ++it)
+		for (std::map<int, int, Rva00226FA0Less>::iterator it = m_map.begin(); it != m_map.end(); ++it)
 		{
-			UnsignedInt key = (UnsignedInt)it->first;
-			int value = it->second.a[0];
-			rva002475a0ObjectID(xfer, &key);
-			xfer->xferInt(&value);
+			int key = it->first;
+			int value = it->second;
+			Rva0010C3C0((MidVirtualSlot90Receiver *)&xfer, &key);
+			xfer == value;
 		}
 	}
 
-	((Rva002475A0FieldCall *)((unsigned char *)this + 0xec))->xfer(xfer);
+	m_EC.xfer(&xfer);
 
 	int setCount = m_set.size();
-	xfer->xferInt(&setCount);
-	if (xfer->isLoading())
+	xfer == setCount;
+	if (xfer.IsLoading())
 	{
-		Gen_t_000ef440_k4 value;
+		int id = 0;
 		for (int i = 0; i < setCount; ++i)
 		{
-			rva002475a0ObjectID(xfer, (UnsignedInt *)&value.value);
-			m_set.insert(value);
+			Rva0010C3C0((MidVirtualSlot90Receiver *)&xfer, &id);
+			m_set.insert(*(Gen_t_000ef440_k4 *)&id);
 		}
 	}
 	else
 	{
-		for (_STL::set<Gen_t_000ef440_k4>::iterator it =
-			m_set.begin(); it != m_set.end(); ++it)
+		for (std::set<Gen_t_000ef440_k4>::iterator it = m_set.begin(); it != m_set.end(); ++it)
 		{
-			int value = it->value;
-			rva002475a0ObjectID(xfer, (UnsignedInt *)&value);
+			int id = it->a[0];
+			Rva0010C3C0((MidVirtualSlot90Receiver *)&xfer, &id);
 		}
 	}
 
-	if (version.m_currentVersion < 3)
+	if (version.data[1] < 3)
 	{
-		Rva002475A0Vector4<int> *vector4 = &m_vector4;
-		int vectorCount = (int)(vector4->_M_finish - vector4->_M_start);
-		xfer->xferInt(&vectorCount);
-		if (xfer->isLoading())
+		int count = m_1C0.size();
+		xfer == count;
+		if (xfer.IsLoading())
 		{
-			for (int i = 0; i < vectorCount; ++i)
+			for (int i = 0; i < count; ++i)
 			{
-				void *record = operator new(8);
-				if (record != 0)
-				{
-					((UnsignedInt *)record)[0] = 0;
-					((UnsignedInt *)record)[1] = (UnsignedInt)-1;
-				}
-				Rva002475A0XferVersion oldVersion;
-				oldVersion.m_version = 1;
-				oldVersion.m_currentVersion = 1;
-				xfer->xferVersion(&oldVersion);
-				typedef void (__cdecl *HandOver)(Rva002475A0Xfer *, void *);
-				((HandOver)j_000353c8)(xfer, record);
-				xfer->xferInt((int *)((unsigned char *)record + 4));
-
-				vector4->push_back((int)record);
+				Rva002475A0Record *record = new Rva002475A0Record;
+				Xfer::Version recordVersion;
+				recordVersion.data[0] = 1;
+				recordVersion.data[1] = 1;
+				xfer == recordVersion;
+				bfmeHandOver_000353C8((BfmeSeedTarget *)&xfer, record);
+				xfer == record->m_value;
+				Gen_t_0023db70_m4pod entry;
+				entry.p = record;
+				m_1C0.push_back(entry);
 			}
 		}
 		else
 		{
-			for (int i = 0; i < vectorCount; ++i)
+			for (int i = 0; i < count; ++i)
 			{
-				void *record = (void *)vector4->_M_start[i];
-				Rva002475A0XferVersion oldVersion;
-				oldVersion.m_version = 1;
-				oldVersion.m_currentVersion = 1;
-				xfer->xferVersion(&oldVersion);
-				typedef void (__cdecl *HandOver)(Rva002475A0Xfer *, void *);
-				((HandOver)j_000353c8)(xfer, record);
-				xfer->xferInt((int *)((unsigned char *)record + 4));
+				Rva002475A0Record *record = (Rva002475A0Record *)m_1C0[i].p;
+				Xfer::Version recordVersion;
+				recordVersion.data[0] = 1;
+				recordVersion.data[1] = 1;
+				xfer == recordVersion;
+				bfmeHandOver_000353C8((BfmeSeedTarget *)&xfer, record);
+				xfer == record->m_value;
 			}
 		}
 	}
 
-	xfer->xferBool(&m_flag1fc);
-	xfer->xferBool(&m_flag1fd);
-	int vector28Count = (int)m_vector28.size();
-	xfer->xferInt(&vector28Count);
-	if (xfer->isLoading())
+	xfer == m_1FC;
+	xfer == m_1FD;
+
+	int recordCount = m_1D8.size();
+	xfer == recordCount;
+	if (xfer.IsLoading())
 	{
-		Rva00244A80Element value;
-		value.m_head = 0;
-		value.m_snapshot0 = 0;
-		value.m_snapshot1 = 0;
-		value.m_snapshot2 = 0;
-		value.m_flag = true;
-		value.m_tail0 = 0;
-		value.m_tail1 = 0;
-		int oldCount = (int)m_vector28.size();
-		if (vector28Count < oldCount)
-			m_vector28._M_finish = m_vector28._M_start + vector28Count;
-		else if (vector28Count > oldCount)
-		{
-			m_vector28._M_fill_insert(m_vector28._M_finish,
-				(unsigned)(vector28Count - oldCount), value);
-		}
+		m_1D8.resize(recordCount);
 	}
-	for (int i = 0; i < vector28Count; ++i)
+	for (int i = 0; i < recordCount; ++i)
 	{
-		Rva00244A80Element value;
-		value.m_head = 0;
-		value.m_snapshot0 = 0;
-		value.m_snapshot1 = 0;
-		value.m_snapshot2 = 0;
-		value.m_flag = true;
-		value.m_tail0 = 0;
-		value.m_tail1 = 0;
-		if (!xfer->isLoading())
-			value = m_vector28.begin()[i];
-		xfer->xferSnapshot(&value.m_snapshot0);
-		xfer->xferBool(&value.m_flag);
-		if (xfer->isLoading())
-			m_vector28.begin()[i] = value;
+		Rva00244A80Element record;
+		if (!xfer.IsLoading())
+			record = m_1D8[i];
+		xfer == record.m_position;
+		xfer == record.m_flag;
+		if (xfer.IsLoading())
+			m_1D8[i] = record;
 	}
 
-	rva002475a0ObjectID(xfer, &m_objectID1e4);
-	xfer->xferUnsignedInt(&m_value1e8);
-	rva002475a0ObjectID(xfer, &m_objectID1b4);
-	xfer->xferInt((int *)((unsigned char *)this + 0x1b8));
-	rva002475a0ObjectID(xfer, &m_objectID1bc);
-	xfer->xferInt(&m_value20c);
-	xfer->xferUnsignedInt((UnsignedInt *)((unsigned char *)this + 0x1cc));
-	xfer->xferInt(&m_value1d0);
-	xfer->xferInt(&m_value1d4);
-	xfer->xferSnapshot(&m_snapshot214).xferBool(&m_flag220);
-	xfer->xferUnsignedInt(&m_value1ec);
-	xfer->xferBool(&m_flag1f0);
-	xfer->xferUnsignedInt(&m_value1ec);
-	rva002475a0ObjectID(xfer, &m_objectID1f8);
-	xfer->xferInt(&m_value200);
-	xfer->xferBool(&m_flag204);
-	xfer->xferBool(&m_flag205);
-	rva002475a0ObjectID(xfer, &m_objectID208);
-	if (version.m_currentVersion > 1)
-		xfer->xferBool(&m_flag221);
+	Rva0010C3C0((MidVirtualSlot90Receiver *)&xfer, &m_objectID1e4);
+	xfer == m_1E8;
+	Rva0010C3C0((MidVirtualSlot90Receiver *)&xfer, &m_objectID1b4);
+	xfer == m_1B8;
+	Rva0010C3C0((MidVirtualSlot90Receiver *)&xfer, &m_objectID1bc);
+	xfer == m_20C;
+	xfer == m_1CC;
+	xfer == m_1D0;
+	xfer == m_1D4;
+	(xfer == m_214) == m_220;
+	xfer == m_1EC;
+	xfer == m_1F0;
+	xfer == m_1EC;
+	Rva0010C3C0((MidVirtualSlot90Receiver *)&xfer, &m_1F8);
+	xfer == m_200;
+	xfer == m_204;
+	xfer == m_205;
+	Rva0010C3C0((MidVirtualSlot90Receiver *)&xfer, &m_208);
+	if (version.data[1] > 1)
+		xfer == m_221;
 }
+// bank s532: 1795/1814 B shape 0.914; frame 0x60 vs 0x40 (see attempt_support/20261102-002475a0-hordecontain-doxfer.md)
