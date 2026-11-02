@@ -37992,7 +37992,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_006171d0@@YAXXZ,,0x006171D0,576,game/gen_asm/d_0060bd30.asm,matched,gen-dump;ghidra=FUN_00a171d0
 ?d_006186c0@@YAXXZ,,0x006186C0,97,game/gen_asm/d_006176a0.asm,matched,gen-dump;ghidra=FUN_00a186c0
 ?d_00618EF0@@YAXXZ,,0x00618EF0,1,game/GameEngine/Source/Common/Rva00618EF0.cpp,matched,opaque address-derived body with proven ret boundary
-?d_00618c90@@YAXXZ,,0x00618C90,276,game/gen_asm/d_006176a0.asm,matched,gen-dump;ghidra=FUN_00a18c90
 ?d_00618f20@@YAXXZ,,0x00618F20,1,game/GameEngine/Source/Common/Rva00618F20Noop.cpp,matched,Carved one-byte ret body; address-derived identity is the only proven name.
 ?d_00618f90@@YAXXZ,,0x00618F90,8,game/gen_asm/d_006176a0.asm,matched,gen-dump;ghidra=FUN_00a18f90
 ?d_00619170@@YAXXZ,,0x00619170,8,game/gen_asm/d_006176a0.asm,matched,gen-dump;ghidra=FUN_00a19170
@@ -173460,3 +173459,4 @@ uw_00c06438,,0x00C06438,8,game/GameEngine/Source/GameLogic/AI/AIStateMachineCons
 ??0Rva002E56F0@@QAE@ABH@Z,,0x002E56F0,15,game/GameEngine/Source/Common/UnclaimedZeroTripleConstructors.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/00067020-zero-triple-ctors.md;model=muse-spark-1.3;host=ymo-workstation
 ??0Rva002F89F0@@QAE@ABH@Z,,0x002F89F0,15,game/GameEngine/Source/Common/UnclaimedZeroTripleConstructors.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/00067020-zero-triple-ctors.md;model=muse-spark-1.3;host=ymo-workstation
 ?setup@Rva0051A5A0Host@@QAEXH@Z,,0x00518FF0,282,game/GameEngine/Source/Common/Rva0051A5A0HostSetup.cpp,matched,address-derived owner via matched caller 0x0051A5A0; tab-list rebuild like BfmeAptScreenOnlineLogin_onInitGadget; _STLP_NO_EXCEPTIONS from out-of-line push_back 0x00469A90 body; null-check locals fix byte register;model=claude-opus-5-5;host=app
+?rva0004a444@Rva00615D50Object@@QAE_NPBUICoord2D@@@Z,,0x00618C90,276,game/GameEngine/Source/GameLogic/LivingWorld/Rva00618A90Update.cpp,matched,ILT 0x0004A444 pin and matched 0x00615D50 caller; ret4 +0x111 then int3; cold rewrite on real WWMath types: start copy then in-place sum with volatile dir-first reads; explicit OUTSIDE test gives retail entry/return layout;model=claude-opus-5-5;host=app
