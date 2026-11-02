@@ -207,6 +207,11 @@ protected:
 	UnsignedInt m_timer;
 };
 
+// setPathExtraDistance is reached through ILT 0x0000EBAB, whose body 0x0026FE90 the
+// ledger defines as ?set@Rva0026FE90DwordSlot@@QAEXH@Z; the call names it through a
+// member pointer that keeps the Real argument.
+typedef void (AIUpdateInterface::*Rva0026FE90RealCall)(Real);
+extern "C" void __identifier("?set@Rva0026FE90DwordSlot@@QAEXH@Z")(void);
 StateReturnType AIPanicState::onEnter()
 {
 	m_currentWaypoint = getMachine()->getGoalWaypoint();
@@ -232,7 +237,9 @@ StateReturnType AIPanicState::onEnter()
 	m_timer = 0;
 	m_waitFrames = 10 + (getMachineOwner()->getID() & 0x7);
 	// Update the extra path distance.   AIInternalMoveToState::onEnter resets it.
-	ai->setPathExtraDistance(calcExtraPathDistance());
+	union { void (*raw)(void); Rva0026FE90RealCall member; } setExtra;
+	setExtra.raw = __identifier("?set@Rva0026FE90DwordSlot@@QAEXH@Z");
+	(ai->*setExtra.member)(calcExtraPathDistance());
 	if (obj)
 	{
 		obj->setModelConditionState(MODELCONDITION_PANICKING);
