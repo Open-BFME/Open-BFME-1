@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
-struct Coord3D { float x,y,z; };
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
+
 typedef bool Bool; typedef int Int;
 class Overridable { public: virtual ~Overridable(); const Overridable *getFinalOverride()const {if(next)return next->getFinalOverride();return this;} Overridable *next; };
 template<class T>class OVERRIDE {const T*p;public:const T*operator*()const{if(!p)return 0;return(T*)p->getFinalOverride();}operator const T*()const{return operator*();}};
