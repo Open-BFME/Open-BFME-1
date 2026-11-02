@@ -1,5 +1,5 @@
 // ?rebuild@Rva0089D180Table@@QAEXXZ
-// partial score=0.2606060606 date=2026-09-22
+// partial score=0.2606 date=2026-09-22
 // cl: /O2 /DNDEBUG /MD /EHsc
 // Retail 0089D180..0089D4B8 inclusive: 825 bytes, then seven INT3 bytes.
 // Address-derived owner. Witnessed table: capacity +0, entries +4,
