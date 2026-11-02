@@ -1,5 +1,5 @@
 // ?onEnter@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.9463 date=2026-11-02
+// partial score=0.9582 date=2026-11-02
 // ?onEnter@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ retail 0x00179740 (670 B, ret at +0x29D).
 // BFME 2 donor: open-bfme-2 45afcff3a6 Code/GameEngine/Source/GameLogic/AI/AIAttackApproachTargetStateOnEnter.cpp
 // (AIFollowPathAsTeamState::onEnter, BFME 2 0x0034E3A5) ported to BFME 1 offsets; ZH AIStateMachine::getGoalPathPosition
@@ -193,11 +193,12 @@ StateReturnType AIFollowPathAsTeamState::onEnter()
 	StateReturnType ret = AIInternalMoveToState::onEnter();
 	if (nextPos)
 	{
+		Int followingIndex = m_index + 2;
 		Coord2D delta;
 		delta.x = nextPos->x - pos->x;
 		delta.y = nextPos->y - pos->y;
 		Real offset = delta.length();
-		if (getPathPoint(ai, m_index + 2))
+		if (getPathPoint(ai, followingIndex))
 			offset += 40.0f;
 		ai->setPathExtraDistance(offset);
 		if (Glo012F0239 && TheCRCParameterCheck)
