@@ -1,139 +1,151 @@
 // ?bfmeFind1024@BfmeTab1024@@QAEHH@Z
-// partial score=0.36 date=2026-09-21
-// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD
-// BfmeTab1024::bfmeFind1024(int key), retail 0x0089CEF0, size 520.
-// Identity: pinned per this lane's brief (?bfmeFind1024@BfmeTab1024@@QAEHH@Z)
-// and independently confirmed by the landed caller
-// Code/Libraries/Source/EA/Apt/Rva00899C20NodePredicate.cpp, which calls
-// `g_Va013387D8->m_table.bfmeFind1024(reinterpret_cast<int>(&g_Va013385F8))`
-// and casts the int result straight to a lookup-result pointer. The
-// string-header shape (refCount/size/maxSize/hash, data at +8, hash at +6)
-// and the data==key / hash-match / bfmeCompareVSC probe idiom are lifted
-// from the landed sibling BfmeStringList0089CBA0::find (0x0089CBA0,
-// Code/GameEngine/Source/Common/BfmeStringList0089CBA0.cpp), the closest
-// matched neighbour, except this table is open-addressed (mask + bucket
-// array with linear-probe wraparound) rather than a plain array scan.
+// partial score=0.1365 date=2026-11-02
+// partial score=0.2431 date=2026-10-04
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// RVA 0089CC80 (617 B): erase one member from an Apt object's open-addressed
+// member table. Rva00899800TableSet.cpp calls it as
+// BfmeLookup1279::bfmeErase1279 with the member name. The table probes the
+// name's hash slot, then a 16-slot window around it (forward, then back);
+// keys compare by identity or by hash plus case-insensitive text. A removed
+// slot keeps the shared empty string as its tombstone. Names that are not in
+// the table may still be the object's two reserved links, "prototype" (hash
+// 0x699) and "__proto__" (hash 0x6BBD), which live in their own slots.
+// String block and pool follow Rva008AD750RefreshString.cpp.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+int bfmeCompareVSC(const char *, const char *);
 
-extern "C" int __cdecl bfmeCompareVSC(const char *left, const char *right);	// pinned retail 0x009F6FA0
-class BfmeString1024Base
+struct BfmeStringData3AF0 { unsigned short m_refCount, m_length, m_capacity, m_unknown06; };
+struct BfmeStringPool3AF0 { void *m_unknown00; void (__cdecl *free)(void *); };
+extern BfmeStringData3AF0 g_bfmeDefaultString1284;
+extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+
+class BfmeThing929G { public: void bfmeInit929G(); };
+
+struct BfmeKey1279
+{
+    const char *text() const { return (const char *)(m_data + 1); }
+    BfmeStringData3AF0 *m_data;
+};
+
+class Rva0089CC80Object
 {
 public:
-	void bfmeInit929G();				// pinned retail 0x0089E700
+    virtual void retain();
+    virtual void release();
 };
 
-struct BfmeStringData1024
+static inline void releaseTagged(unsigned int tagged)
 {
-	unsigned short m_refCount;
-	unsigned short m_size;
-	unsigned short m_maxSize;
-	unsigned short m_hash;
-};
-
-// The `int key` parameter is really the address of one of these, reinterpreted.
-class BfmeString1024 : public BfmeString1024Base
-{
-public:
-	BfmeStringData1024 *m_data;
-};
-
-extern BfmeStringData1024 g_bfmeDefaultString1284;	// VA 0x012D5298
+    ((Rva0089CC80Object *)(tagged & ~1U))->release();
+}
 
 struct Bucket1024
 {
-	BfmeStringData1024 *m_data;
-	Int m_value;
+    BfmeStringData3AF0 *m_key;
+    unsigned int m_value;
 };
+
+static __forceinline bool keysEqual(const BfmeStringData3AF0 *left, const BfmeStringData3AF0 *right)
+{
+    if (left == right)
+        return true;
+    if (left->m_unknown06 != right->m_unknown06)
+        return false;
+    return bfmeCompareVSC((const char *)(left + 1), (const char *)(right + 1)) == 0;
+}
+
+static __forceinline bool keysEqualHash(const BfmeStringData3AF0 *left, const BfmeStringData3AF0 *right, unsigned short hash)
+{
+    if (left == right)
+        return true;
+    if (left->m_unknown06 != hash)
+        return false;
+    return bfmeCompareVSC((const char *)(left + 1), (const char *)(right + 1)) == 0;
+}
 
 class BfmeTab1024
 {
 public:
-	Int bfmeFind1024(Int key);
+    int bfmeFind1024(int key);
 
-	Int m_size;			// +0x00 (bucket count)
-	Bucket1024 *m_buckets;		// +0x04
-	Int m_specialSlot;		// +0x0c
+    __forceinline Bucket1024 *find(const BfmeKey1279 &key, unsigned short hash);
+
+    int m_capacity;
+    Bucket1024 *m_entries;
+    unsigned int m_proto08;
+    unsigned int m_prototype0c;
 };
 
-// The two literal-name special cases handled once every regular probe has
-// walked off the end of the chain and landed on the shared default/empty
-// string bucket.
-extern const char g_bfmeApt1136034[];	// VA 0x01136034
-extern const char g_bfmeApt1136040[];	// VA 0x01136040
-
-Int BfmeTab1024::bfmeFind1024(Int key)
+__forceinline Bucket1024 *BfmeTab1024::find(const BfmeKey1279 &key, unsigned short hash)
 {
-	BfmeString1024 *self = (BfmeString1024 *)key;
-	BfmeStringData1024 *keyData = self->m_data;
+    int nIndex = (m_capacity - 1) & hash;
+    BfmeStringData3AF0 *probe = m_entries[nIndex].m_key;
+    if (!probe)
+        return 0;
+    if (probe != &g_bfmeDefaultString1284) {
+        if (keysEqualHash(probe, key.m_data, hash))
+            return &m_entries[nIndex];
+    }
+    int nBoundMin = nIndex - 8;
+    int nBoundMax;
+    if (nBoundMin < 0) {
+        nBoundMin = 0;
+        nBoundMax = 0x10;
+        if (m_capacity <= 0x10)
+            nBoundMax = m_capacity - 1;
+    } else {
+        nBoundMax = nIndex + 8;
+        if (nBoundMax > m_capacity - 1) {
+            nBoundMax = m_capacity - 1;
+            nBoundMin = nBoundMax - 0x10;
+            if (nBoundMin < 0)
+                nBoundMin = 0;
+        }
+    }
+    int current = nIndex, i = nBoundMax - nIndex;
+    while (i--) {
+        ++current;
+        probe = m_entries[current].m_key;
+        if (!probe)
+            return 0;
+        if (probe != &g_bfmeDefaultString1284) {
+            if (keysEqual(probe, key.m_data))
+                return &m_entries[current];
+        }
+    }
+    current = nIndex;
+    i = nIndex - nBoundMin;
+    while (i--) {
+        --current;
+        probe = m_entries[current].m_key;
+        if (!probe)
+            return 0;
+        if (probe != &g_bfmeDefaultString1284) {
+            if (keysEqual(probe, key.m_data))
+                return &m_entries[current];
+        }
+    }
+    return 0;
+}
 
-	if (keyData->m_hash == 0)
-		self->bfmeInit929G();
-
-	keyData = self->m_data;
-	unsigned short hash = keyData->m_hash;
-
-	if (m_buckets == 0)
-		return 0;
-
-	int mask = m_size - 1;
-	int index = mask & (int)hash;
-	int probeCount = mask - index;
-
-	for (int step = 0; step <= probeCount; ++step)
-	{
-		Bucket1024 *bucket = &m_buckets[index + step];
-		BfmeStringData1024 *data = bucket->m_data;
-		if (data == 0)
-			return 0;
-
-		if (data == (BfmeStringData1024 *)&g_bfmeDefaultString1284)
-			break;
-
-		if (data == keyData)
-			return (Int)bucket;
-
-		if (data->m_hash == hash)
-		{
-			int equal = bfmeCompareVSC((const char *)data + 8, (const char *)keyData + 8) == 0;
-			if (equal)
-				return bucket->m_value & ~1;
-		}
-	}
-
-	for (int step = 0; step < index; ++step)
-	{
-		Bucket1024 *bucket = &m_buckets[step];
-		BfmeStringData1024 *data = bucket->m_data;
-		if (data == 0)
-			return 0;
-
-		if (data == (BfmeStringData1024 *)&g_bfmeDefaultString1284)
-			break;
-
-		if (data->m_hash == hash)
-		{
-			int equal = bfmeCompareVSC((const char *)data + 8, (const char *)keyData + 8) == 0;
-			if (equal)
-				return bucket->m_value & ~1;
-		}
-	}
-
-	if (hash == 0x699)
-	{
-		if (bfmeCompareVSC((const char *)keyData + 8, g_bfmeApt1136034) != 0)
-			return 0;
-		return m_specialSlot & ~1;
-	}
-
-	if (hash == 0x6bbd)
-	{
-		if (bfmeCompareVSC((const char *)keyData + 8, g_bfmeApt1136040) != 0)
-			return 0;
-		return 0;
-	}
-
-	return 0;
+int BfmeTab1024::bfmeFind1024(int keyArg)
+{
+    BfmeKey1279 &key = *(BfmeKey1279 *)keyArg;
+    if (key.m_data->m_unknown06 == 0)
+        ((BfmeThing929G *)&key)->bfmeInit929G();
+    unsigned short hash = key.m_data->m_unknown06;
+    int hashValue = hash;
+    if (m_entries) {
+        Bucket1024 *entry = find(key, hash);
+        if (entry)
+            return entry->m_value & ~1U;
+    }
+    if (hashValue == 0x699) {
+        if (bfmeCompareVSC(key.text(), "prototype") == 0)
+            return m_prototype0c & ~1U;
+    } else if (hashValue == 0x6bbd) {
+        if (bfmeCompareVSC(key.text(), "__proto__") == 0)
+            return m_proto08 & ~1U;
+    }
+    return 0;
 }
