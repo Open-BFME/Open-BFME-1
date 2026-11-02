@@ -150,9 +150,10 @@ public:
 		Object **data = &node->m_data;
 		if( data != 0 )
 			*data = object;
+		Rva000CFFE0Node *prev = pos->m_prev;
 		node->m_next = pos;
-		node->m_prev = pos->m_prev;
-		pos->m_prev->m_next = node;
+		node->m_prev = prev;
+		prev->m_next = node;
 		pos->m_prev = node;
 	}
 	Rva000CFFE0Node *m_node;
