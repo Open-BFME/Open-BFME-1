@@ -28,7 +28,7 @@ private:
 };
 
 // Apt name lookup 0x0089C290 (929 B with its jump tables). Open BFME 2
-// donor (45afcff3) Code/Libraries/Source/Apt/AptValue.cpp names the same body
+// donor (59e3f8f8) Code/Libraries/Source/Apt/AptValue.cpp names the same body
 // AptValue::findChild; the BFME 1 ledger keeps the reloc-derived caller name.
 // The keyword switch, _level atoi(+6) and prototype walk follow the donor.
 extern "C" int __cdecl atoi(const char *);

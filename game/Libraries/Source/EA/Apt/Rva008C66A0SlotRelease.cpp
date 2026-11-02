@@ -78,7 +78,7 @@ AptValue *__cdecl dup_008c66a0()
 }
 
 // Retail 0x008C64C0 (470 bytes): the paired registration callback (Apt
-// setInterval). Open BFME 2 45afcff3 AptActionInterpreterConstantHandlers.cpp
+// setInterval). Open BFME 2 59e3f8f8 AptActionInterpreterConstantHandlers.cpp
 // callback006FEFF0 supplies the shape: claim the first free 32-byte timer,
 // resolve object+method callbacks through findChild (bfmeTest1220), copy the
 // remaining arguments, return AptInteger::Create(slot).
