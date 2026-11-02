@@ -5977,3 +5977,9 @@ game/GameEngine/Source/Common/Thing/ThingTemplateConstructor.cpp|member||m_byte0
 game/GameEngine/Source/Common/Thing/ThingTemplateConstructor.cpp|member||m_byte04cd,ec9da13d52af0b29e15bc2a9,glm,20261024145050-e87cf0,2026-10-24
 game/GameEngine/Source/Common/Thing/ThingTemplateConstructor.cpp|member||m_dword04d0,d8aa60627257345b3e101e18,glm,20261024145050-e87cf0,2026-10-24
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContainReleaseMember.cpp|member||m_bfmeId,a4e0ea5e4ad8161637ae53bc,claude-opus,20261102205527-1628b7,2026-11-02
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide.cpp|param|bfmeLength|s,8214cbdc54f3d55e1c1a84ab,claude-opus,20261102205813-f7a2be,2026-11-02
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide.cpp|param|bfmeStr|s,27529a478648500ce27160ef,claude-opus,20261102205813-f7a2be,2026-11-02
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide.cpp|param|bfmeSet|s,ecf828b462f219f6c20f94f4,claude-opus,20261102205813-f7a2be,2026-11-02
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide.cpp|param|bfmeConcat|s,f4e8c45694023f2fac62a1df,claude-opus,20261102205813-f7a2be,2026-11-02
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide.cpp|param|bfmeConcat#2|s,f6778076e171ef50a93f7c33,claude-opus,20261102205813-f7a2be,2026-11-02
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide.cpp|param|bfmeFind|s,14e8a9dfccacb5ac61c4db8f,claude-opus,20261102205813-f7a2be,2026-11-02

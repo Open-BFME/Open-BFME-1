@@ -52,15 +52,15 @@ public:
 	}
 };
 
-static inline Int bfmeLength(const AsciiString &s)
+static inline Int bfmeLength(const AsciiString &str)
 {
-	const char *data = *(const char * const *)&s;
+	const char *data = *(const char * const *)&str;
 	return data ? *(const unsigned short *)(data + 4) : 0;
 }
 
-static inline const char *bfmeStr(const AsciiString &s)
+static inline const char *bfmeStr(const AsciiString &str)
 {
-	const char *data = *(const char * const *)&s;
+	const char *data = *(const char * const *)&str;
 	return data ? data + 8 : "";
 }
 
@@ -79,10 +79,10 @@ static inline void bfmeConcat(AsciiString &s, char value)
 	((StringBase<char> *)&s)->concat(&value, 1);
 }
 
-static inline const char *bfmeFind(const AsciiString &s, char value)
+static inline const char *bfmeFind(const AsciiString &str, char value)
 {
-	const char *p = bfmeStr(s);
-	const char *end = p + bfmeLength(s);
+	const char *p = bfmeStr(str);
+	const char *end = p + bfmeLength(str);
 	for (; p != end; ++p)
 		if (*p == value)
 			return p;
