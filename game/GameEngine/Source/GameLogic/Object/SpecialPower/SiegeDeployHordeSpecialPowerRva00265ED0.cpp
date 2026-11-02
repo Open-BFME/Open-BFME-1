@@ -99,19 +99,12 @@ private:
 	UnsignedInt m_kindOfWordD0;				// +0xD0, one word of the KindOf mask
 };
 
-// Existing pin at ILT 0x0001336D for the two-word AI helper on the +0x20 base.
-class BfmeRvaAIView
-{
-public:
-	void setHeldState(Int a, Int b);
-};
-
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 public:
 	void aiIdle(CommandSourceType cmdSource);
-	BfmeRvaAIView *view() { return (BfmeRvaAIView *)this; }
+	void rva001F1370(Int value, CommandSourceType source);	// 0x001F1370 via ILT 0x0001336D
 };
 
 class AIUpdateInterfaceHead
@@ -330,7 +323,7 @@ void SiegeDeployHordeSpecialPower::rva00265ED0(const SpecialPowerTemplate *speci
 					module->slot12(targetObj->getPosition());
 				}
 
-				others[i]->getAI()->view()->setHeldState(0, 2);
+				others[i]->getAI()->rva001F1370(0, CMD_FROM_AI);
 			}
 		}
 	}

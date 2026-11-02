@@ -96,6 +96,7 @@ class AICommandInterface
 public:
     virtual void slot00();
     void aiIdle(CommandSourceType source);
+    void rva001F1370(Int value, CommandSourceType source);	// 0x001F1370 via ILT 0x0001336D
     void aiAttackPosition(const Coord3D *position, Int maxShots,
         CommandSourceType source);
 };
@@ -147,12 +148,6 @@ class Gen001C9AC0
 {
 public:
     void handle(Int player);
-};
-
-class BfmeRvaAIView
-{
-public:
-    void setHeldState(Int value, Int source);
 };
 
 static void setModelConditionState(Object *object, Int bit)
@@ -292,7 +287,7 @@ UpdateSleepTime RampageBehavior::update()
         else
         {
             setModelConditionState(object, 152);
-            reinterpret_cast<BfmeRvaAIView *>(&ai->m_commands)->setHeldState(0, CMD_FROM_AI);
+            ai->m_commands.rva001F1370(0, CMD_FROM_AI);
             m_rampageFrames = data->m_frames1c;
         }
 
