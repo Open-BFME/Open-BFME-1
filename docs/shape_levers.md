@@ -3227,6 +3227,13 @@ retail's `mov ecx,eax / dec ecx / mov eax,ecx / test` countdown that
 `(it->second = it->second - 1) == 0` and five other spellings did not.
 Result 551/551 B, 10 diffs (400 before); the residue is a hoisted
 `it._M_ht` load placed above the loop guard `je`. Measured on this body only.
+Follow-up (2026-11-02, exact): the hash-table begin() is an out-of-line call
+wrapped in an inline helper that returns a named local. Returning
+`HashB::iterator(first._M_cur, first._M_ht)` instead of `first` moved the
+`it._M_ht` load into its own preheader after the guard `je`, as in retail.
+The body is now 551/551 B exact (`game/GameEngine/Source/Common/RTS/Player_update_Thunk.cpp`).
+About 20 loop, iterator, end-local, while/do and cl-flag variants (/G5 /G7 /Oy-,
+the Player.cpp node-allocator defines) had no effect. Measured on this body only.
 
 ## Keep a lookup's exception contract through a static inline adapter (2026-11-01)
 

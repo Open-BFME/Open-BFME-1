@@ -869,54 +869,9 @@ void Player::addToPriorityBuildList(AsciiString templateName, Coord3D *pos, Real
 } 
 
 //=============================================================================
-void Player::update()
-{
-	if (m_ai)
-		m_ai->update();
-
-	// Allow the teams this player owns to update themselves.
-	for( PlayerTeamList::iterator it = m_playerTeamPrototypes.begin(); it != m_playerTeamPrototypes.end(); ++it ) 
-	{
-		for( DLINK_ITERATOR<Team> iter = (*it)->iterate_TeamInstanceList(); !iter.done(); iter.advance() ) 
-		{
-			Team *team = iter.cur();
-			if( !team ) 
-			{
-				continue;
-			}
-			team->updateGenericScripts();
-		}
-	}
-
-	if( m_energy.getPowerSabotagedTillFrame() != 0 && TheGameLogic->getFrame() > m_energy.getPowerSabotagedTillFrame() )
-	{
-		m_energy.setPowerSabotagedTillFrame( 0 ); //Tells us we're no longer sabotaged for above check.
-		onPowerBrownOutChange( !m_energy.hasSufficientPower() );
-	}
-
-	//Update the academy stats (this only checks applicable things that require a polling method)
-	getAcademyStats()->update();
-
-	//Kris: August 25, 2003 (DAY OF CODE LOCK -- NO NEW FEATURES, REALLY!)
-	if( ThePlayerList->getLocalPlayer() == this )
-	{
-		UnsignedInt now = TheGameLogic->getFrame();
-		//Only check and post the message once every second so we don't spam the message stream to account for lag.
-		if( now % LOGICFRAMES_PER_SECOND == 0 )
-		{
-			if( TheGlobalData->m_clientRetaliationModeEnabled != isLogicalRetaliationModeEnabled() )
-			{
-				//Post a logical message that will switch the retaliation mode on or off.
-				GameMessage *msg = TheMessageStream->appendMessage( GameMessage::MSG_ENABLE_RETALIATION_MODE );
-				if( msg )
-				{
-					msg->appendIntegerArgument( getPlayerIndex() );
-					msg->appendBooleanArgument( TheGlobalData->m_clientRetaliationModeEnabled );
-				}
-			}
-		}
-	}
-}
+// Player::update (retail 0x000D9A80) lives in Player_update_Thunk.cpp: BFME
+// walks the +0x200 countdown table and drops the ZH sabotage and academy
+// updates, which this TU's Zero Hour Player layout cannot express.
 
 // BFME's newMap is not the reference one-liner through the AI player's virtual.
 // It reads a flag at +0x118 of the pointer at Player+0x04 and hands it, with the
@@ -5281,3 +5236,8 @@ void Player::loadPostProcess( void )
 {
 
 }  // end loadPostProcess
+
+// list<TeamPrototype*>'s copy constructor (retail 0x000D3230, ILT 0x00047CAD;
+// tools/ilt_oracle.py confirms the name at the thunk). Player::update copies
+// m_playerTeamPrototypes through it out of line, so this unit emits it.
+template std::list<TeamPrototype*>::list(const std::list<TeamPrototype*>&);

@@ -17,12 +17,14 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
-class Rva000CF880Target;
+class TeamPrototype;
 
-// retail 0x000CF880
-void BfmeListInsertRangeAnchor000CF880( _STL::list<Rva000CF880Target *> &dst,
-	_STL::list<Rva000CF880Target *>::iterator where,
-	const _STL::list<Rva000CF880Target *> &src )
+// retail 0x000CF880: list<TeamPrototype *>, Player's m_playerTeamPrototypes
+// (ILT 0x000129E0; tools/ilt_oracle.py confirms the name at the thunk, and
+// the list copy constructor 0x000D3230 that Player::update calls reaches it).
+void BfmeListInsertRangeAnchor000CF880( _STL::list<TeamPrototype *> &dst,
+	_STL::list<TeamPrototype *>::iterator where,
+	const _STL::list<TeamPrototype *> &src )
 {
 	dst.insert( where, src.begin(), src.end() );
 }
