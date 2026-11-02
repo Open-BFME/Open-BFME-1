@@ -38,9 +38,13 @@ public:
  unsigned char body[0x28];
  void clear(bool);
  void rva0094D250(const BFMEWaterTrackTextureHandle&);
- BFMEWaterTrackTextureHandle rva0094D9F0();
  void lookup(const BFMEWaterTrackTextureHandle &key, BfmeVec2EY *size, BfmeVec2EY *origin) { ((BfmeHostEY*)this)->bfmeLookupEY((void*)&key,size,origin); }
 };
+// 0x0094D9F0 fills the hidden result handle and returns it in EAX; the ledger
+// defines it as ?assign@Rva0094D9F0@@ (Rva0094D9F0Assign.cpp), so the calls name
+// that symbol directly.
+extern "C" void __identifier("?assign@Rva0094D9F0@@QAEPAVRva0094D9F0Handle@@PAV2@@Z")(void);
+typedef BFMEWaterTrackTextureHandle (Rva0094D1E0List::*Rva0094D9F0Call)();
 // ABI adapters to existing ledger bodies. 0x0094D250 takes ECX plus a reference
 // to the one-pointer handle and returns with RET 4. 0x0094D9F0 takes ECX plus
 // the hidden result pointer, fills it, and returns that pointer in EAX.
@@ -114,8 +118,10 @@ void W3DShrubBuffer::updateTexture()
 		if (types[i].doShadow)
 			list1480.lookup(BFMEGetWaterTrackTexture((char*)types[i].textureName.str(),0,0),&types[i].coord2c,&types[i].coord3c);
 	}
-	texture1450 = list1458.rva0094D9F0();
-	texture1454 = list1480.rva0094D9F0();
+	union { void (*raw)(); Rva0094D9F0Call member; } call;
+	call.raw = __identifier("?assign@Rva0094D9F0@@QAEPAVRva0094D9F0Handle@@PAV2@@Z");
+	texture1450 = (list1458.*call.member)();
+	texture1454 = (list1480.*call.member)();
 	if ((unsigned)((BfmeThingEF*)&texture1450)->bfmeAskEF() > 1024 ||
 		(unsigned)((BfmeThingGN*)&texture1450)->bfmeAskGN() > 1024) {
 		if (_bfme_debugReportingEnabled()) {
