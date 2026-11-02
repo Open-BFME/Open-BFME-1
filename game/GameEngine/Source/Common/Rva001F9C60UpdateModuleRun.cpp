@@ -17,6 +17,9 @@ class BfmeBaseTCB
 public:
 	void bfmeInitTCB();
 };
+// The body 0x002D9F30 behind ILT 0x0000835F is defined as
+// ?setCondition@Rva002D9F30Owner@@QAEXXZ; the call names it through a member-pointer view.
+extern "C" void __identifier("?setCondition@Rva002D9F30Owner@@QAEXXZ")(void);
 
 class DynamicPortalBehaviour
 {
@@ -135,7 +138,11 @@ public:
 // Ported from Open BFME 2 Code/GameEngine/Source/GameLogic/Object/Behavior/DynamicPortalBehaviourSlots.cpp.
 void Rva001F9C60UpdateModule::run(void)
 {
-	((BfmeBaseTCB *)((char *)this - 0x10))->bfmeInitTCB();
+	{
+		union { void (*raw)(void); void (BfmeBaseTCB::*member)(); } call;
+		call.raw = __identifier("?setCondition@Rva002D9F30Owner@@QAEXXZ");
+		(((BfmeBaseTCB *)((char *)this - 0x10))->*call.member)();
+	}
 
 	Object *obj = *(Object **)((char *)this - 8);
 	Drawable *drawable = obj->getDrawable();

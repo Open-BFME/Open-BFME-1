@@ -96,6 +96,9 @@ class BfmeBaseTCB
 public:
 	void bfmeInitTCB();
 };
+// The body 0x002D9F30 behind ILT 0x0000835F is defined as
+// ?setCondition@Rva002D9F30Owner@@QAEXXZ; the call names it through a member-pointer view.
+extern "C" void __identifier("?setCondition@Rva002D9F30Owner@@QAEXXZ")(void);
 
 class ArmorUpgrade
 {
@@ -115,7 +118,11 @@ void ArmorUpgrade::upgradeImplementation()
 	if (!data || data->ignoreArmorUpgrade)
 		return;
 
-	((BfmeBaseTCB *)((char *)this - 0x10))->bfmeInitTCB();
+	{
+		union { void (*raw)(void); void (BfmeBaseTCB::*member)(); } call;
+		call.raw = __identifier("?setCondition@Rva002D9F30Owner@@QAEXXZ");
+		(((BfmeBaseTCB *)((char *)this - 0x10))->*call.member)();
+	}
 
 	BodyModuleInterface *body = object->bodyModule();
 	if (!body)
