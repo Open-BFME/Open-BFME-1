@@ -1,6 +1,6 @@
 // cl: /O2 /DNDEBUG /MD /EHsc
 //
-// Eighty-five 15-byte thiscall constructors with identical bytes, each its own
+// Eighty-six 15-byte thiscall constructors with identical bytes, each its own
 // retail body (retail was linked without identical-COMDAT folding):
 //     mov eax,ecx ; xor ecx,ecx ; mov [eax],ecx ; mov [eax+4],ecx ;
 //     mov [eax+8],ecx ; ret 4
@@ -1538,6 +1538,24 @@ public:
 };
 
 Rva002E0510::Rva002E0510( const int & )
+{
+	m_0 = 0;
+	m_4 = 0;
+	m_8 = 0;
+}
+
+// 0x002E5690 (15 bytes): reached through ILT stub 0x0002DA06
+class Rva002E5690
+{
+public:
+	Rva002E5690( const int &unused );
+
+	void *m_0;
+	void *m_4;
+	void *m_8;
+};
+
+Rva002E5690::Rva002E5690( const int & )
 {
 	m_0 = 0;
 	m_4 = 0;
