@@ -1,5 +1,30 @@
 # Shape levers: the checklist for "everything matches except..."
 
+## By-value owning handle built from a returned handle: auto_ptr_ref transfer (2026-11-02)
+
+`ControlBar::bfmeShowDN` (0x004C15D0, 678 B, MSVC 7.1 `/DNDEBUG /DWIN32 /MD
+/EHsc`) passes a clone handle returned by value into the by-value parameter of
+the matched `Rva004C1510Handle::operator=` (0x004C1510). Retail builds the
+argument as `mov ecx,[eax]; push ecx; mov edx,esp; mov dword [eax],0;
+mov [edx],ecx` (pointer in ECX, argument slot in EDX, source cleared before the
+store). A converting constructor `Handle(Other &o) : m_ptr(o.release())`, and
+about twenty member/template/body-assign/conversion-operator spellings, give
+the swapped registers (3 bytes). The STLport `auto_ptr_ref` shape matches:
+the source handle gets `operator Ref() { return Ref(*this, get()); }`, the ref
+holds `Other &m_r; T *const m_p` with `release() const { m_r.m_ptr = 0; return
+m_p; }`, the destination has `Handle(Ref r) { m_ptr = r.release(); }`, and the
+call is spelled `dst = Handle(src->clone());` (two user conversions need the
+explicit constructor). Measured effect: the pointer load moves before the
+argument-slot materialisation. Hypothesis: the value is captured when the ref
+is built, before the inlined constructor's `this` exists. Same session the
+global at VA 0x012F368C had to be a file static of the unit holding all four
+bodies that reference it (Zero Hour's `theAnimateWindowManager`); an extern
+leaves 13 bytes. Source: `game/GameEngine/Source/GameClient/GUI/GUICallbacks/
+ControlBarPopupDescription.cpp`, evidence
+`targets/game/reverse/identity_evidence/20261102-004c15d0-popup-unit.md`.
+Not transferable as-is to a by-value STLport list iterator argument
+(0x006ADAE0: building the iterator from its node pointer stays at 7 bytes).
+
 ## Keep a TU-specific FP operation out of a shared COMDAT (2026-10-31)
 
 `MemberMotion00230BF0.cpp` needs a local x/z/y squared-distance sum under
