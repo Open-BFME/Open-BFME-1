@@ -4,12 +4,8 @@
 // the three Matrix3D translation components at +0xCC/+0xDC/+0xEC followed by
 // the reference source's local-identity invalidation at +0x1A4.
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
+
 
 class Matrix3D
 {

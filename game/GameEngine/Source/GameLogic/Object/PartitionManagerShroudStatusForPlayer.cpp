@@ -2,10 +2,8 @@
 // BFME PartitionManager::getShroudStatusForPlayer, RVA 0x008F7430, 8 bytes: tail call into the shroud grid at +0x0C.
 // The grid lookup is Gen_008F7CD0::bfmeCheckFD in BfmeConv1757.cpp.
 
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
+
 
 struct BfmePointFD;
 

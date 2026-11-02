@@ -2,12 +2,8 @@
 // Open-BFME: BFME unit-vector angle helper, retail body 0x003FD650 (108B).
 // The named ILT 0x00022C6E is called by Path::bfmeBuildTurnArc.
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
+
 
 extern float ACos(float);
 

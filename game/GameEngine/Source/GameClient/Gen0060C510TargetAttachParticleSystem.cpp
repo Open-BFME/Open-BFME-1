@@ -2,12 +2,8 @@
 // The first Living World target list calls this method through thunk 0x00037BCD.
 // The method adopts the handle, then stores the target origin at this+0xA0.
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
+
 
 class BfmeParticleSystemHandle;
 

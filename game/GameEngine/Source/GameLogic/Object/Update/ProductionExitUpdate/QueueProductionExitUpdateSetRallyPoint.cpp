@@ -1,11 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /GX- /O2 /Ob1
 // QueueProductionExitUpdate::setRallyPoint at 0x002D0CA0.
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
+
 
 class Object;
 Object *bfmeQueryRallyOverride(Object *obj, const Coord3D *pos);

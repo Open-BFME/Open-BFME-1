@@ -4,12 +4,8 @@
 // column of a row-major transform based at +0x64. Nothing names the owner, so
 // the class keeps an address-derived name.
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
+
 
 class Rva001B49E0Owner
 {
