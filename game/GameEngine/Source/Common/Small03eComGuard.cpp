@@ -65,7 +65,9 @@ void Rva00958760Ptr::addRef(void)
 // 0x00958940 is the second family's release leaf, the same shape as
 // 0x00958760. Address-derived names.
 struct _GUID { unsigned char bytes[16]; };
-extern "C" const _GUID __GUID_ee883b17_0778_4b18_a12b_e44c0d298412;
+// __uuidof names the compiler's own __GUID_<uuid> symbol; an extern "C"
+// declaration would reference the underscore-decorated ___GUID_<uuid> instead.
+struct __declspec(uuid("ee883b17-0778-4b18-a12b-e44c0d298412")) IFEBrowserEngine2;
 
 class Rva00958770Iid
 {
@@ -75,7 +77,7 @@ public:
 
 const _GUID &Rva00958770Iid::get(void)
 {
-	return __GUID_ee883b17_0778_4b18_a12b_e44c0d298412;
+	return __uuidof(IFEBrowserEngine2);
 }
 
 class Rva00958940Ptr
@@ -94,5 +96,5 @@ void Rva00958940Ptr::release(void)
 
 const _GUID &Rva00958940Ptr::iid(void)
 {
-	return __GUID_ee883b17_0778_4b18_a12b_e44c0d298412;
+	return __uuidof(IFEBrowserEngine2);
 }
