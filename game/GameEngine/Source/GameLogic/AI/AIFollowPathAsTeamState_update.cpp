@@ -1,20 +1,14 @@
-// ?update@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ
-// partial score=1.0 date=2026-11-02
-// EXACT 1517/1517 modulo relocations: AIUpdateInterface *ownerAI2 = getMachineOwner()->m_ai local fixes the +0x1F1 EDX/EAX swap
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
-// BFME ?update@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ at retail
-// RVA 0x00179B10 (1517 bytes).
 //
-// BANK ONLY. Native STLport vector access improves the served 1515B/655dif
-// to 1520B/627dif against full1517B through RET17A0FC, quality0.5827.
-// Loop threading/cold update block placement and x87 dx retention remain wrong.
-// Guard, redundant pointer test, count accessor, direct/template sqr controls
-// did not improve the served bank; explicit labels worsened native vector.
-// Inherited semantic names, hand-written Object/State/AI views, dynamic slot
-// contracts and all56 relocation bindings remain unaudited for promotion.
-// Vtable layout alone does not establish the old asserted source identity.
-
+// AIFollowPathAsTeamState::update, retail 0x00179B10 (1517 B).
+// BFME 1 evidence: AIFollowPathAsTeamState vtable 0x01099C08 (installed by the matched
+// ctor 0x00183990) reaches this body; `ilt_oracle.py check
+// ?update@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ 0x179B10` is CONFIRMED.
+// Siblings: onEnter 0x00179740, computePath 0x001795F0, isAttack 0x0016C2B0 in this
+// directory. Class views and member names follow the onEnter TU; matched helpers keep
+// their address-derived ledger names. Naming getMachineOwner()->m_ai in a pointer local
+// before getCurLocomotorSpeed() reproduces retail's EDX/EAX pick at +0x1F1.
 #include <math.h>
 #include <vector>
 
@@ -45,8 +39,11 @@ struct Coord3DBase
 	Real z;
 };
 
-struct Coord3D : public Coord3DBase
+// class-gate: allow Coord3D the matched callees ?Scale@Coord3D@@QAEAAV1@M@Z (0x0014FFD0) and
+// friend_getGoalPathPosition (0x0016FFD0, PBVCoord3D) are class-keyed; Lib/Coord3D.h is struct-keyed
+class Coord3D : public Coord3DBase
 {
+public:
 	void add(const Coord3DBase *other);			// 0x000B6570
 	Coord3D &Scale(Real scale);				// 0x0014FFD0
 };
@@ -76,7 +73,6 @@ public:
 	virtual void setGoalObject(Object *object) = 0;		// +0x38
 
 	Object *getGoalObject();				// 0x000A1490
-	void setGoalPosition(const Coord3D *pos);		// 0x000A0880
 
 	unsigned char m_pad04[0x10 - 4];
 	Object *m_owner;					// +0x10
@@ -89,12 +85,7 @@ public:
 	}
 };
 
-struct Rva0016FFD0Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+typedef Coord3D Rva0016FFD0Coord3D;
 
 class Rva0016FFD0Path
 {
@@ -152,11 +143,11 @@ public:
 	void setDesiredSpeed(Real speed);			// 0x0026EDC0
 	void friend_startingMove();				// 0x0026F0E0
 
-	Rva0016FFD0Path *getPath() { return m_path; }
-	const Rva0016FFD0Coord3D *friend_getGoalPathPosition(int index) const { return m_path->getPoint(index); }
+	Rva0016FFD0Path *getPath() { return m_stateMachine; }
+	const Rva0016FFD0Coord3D *friend_getGoalPathPosition(int index) const { return m_stateMachine->getPoint(index); }
 
 	unsigned char m_pad04[0x30 - 4];
-	Rva0016FFD0Path *m_path;				// +0x30
+	Rva0016FFD0Path *m_stateMachine;				// +0x30
 	unsigned char m_pad34[0x48 - 0x34];
 	int m_field48;						// +0x48
 	unsigned char m_pad4c[0x194 - 0x4c];
@@ -193,11 +184,11 @@ class Thing
 public:
 	void setOrientation(Real angle);			// 0x00132E40
 	Real bfmeRelativeAngleTo(const Coord3D *pos) const;	// 0x00150510
-	Real getOrientation() const { return m_orientation; }
+	Real getOrientation() const { return m_cachedAngle; }
 
 	unsigned char m_pad00[0x38];
-	Coord3D m_position;					// +0x38
-	Real m_orientation;					// +0x44
+	Coord3D m_cachedPos;					// +0x38
+	Real m_cachedAngle;					// +0x44
 };
 
 class Object : public Thing
@@ -220,13 +211,29 @@ public:
 		Coord3D *dest, const Coord3D *groupDest);	// 0x003F6090
 };
 
-// Five-argument BFME updateGoal (ILT 0x000294E2, debug file and line).
-class BfmeIdlePathfinder
+// Five-argument BFME Pathfinder updateGoal (ILT 0x000294E2 -> 0x003E9720, debug file
+// and line), under an address-derived view: the body's row is still a gen dump.
+class Rva003E9720Pathfinder
 {
 public:
-	void updateGoal(Object *obj, const Coord3D *goal, int layer,
+	void rva003E9720(Object *obj, const Coord3D *goal, int layer,
 		const char *file, int line);
 };
+
+// The matched definitions key Coord3D as a struct (StateMachine::setGoalPosition
+// 0x000A0880); this unit class-keys it, as the matched Scale and
+// friend_getGoalPathPosition callees require, so this call names the defined symbol
+// directly.
+extern "C" void __identifier("?setGoalPosition@StateMachine@@QAEXPBUCoord3D@@@Z")(void);
+
+static __forceinline void callSetGoalPosition(StateMachine *machine, const Coord3D *pos)
+{
+	typedef void (StateMachine::*Call)(const Coord3D *);
+	union { void (*raw)(); Call member; } call;
+	call.raw = __identifier("?setGoalPosition@StateMachine@@QAEXPBUCoord3D@@@Z");
+	(machine->*call.member)(pos);
+}
+
 
 class AI
 {
@@ -274,7 +281,9 @@ public:
 	unsigned char m_pad30[0x4c - 0x30];
 	Bool m_adjustsDestination;				// +0x4c
 
+protected:
 	Bool getAdjustsDestination() const;			// 0x001724B0
+public:
 	void setAdjustsDestination(Bool b) { m_adjustsDestination = b; }
 };
 
@@ -348,7 +357,7 @@ StateReturnType AIFollowPathAsTeamState::update()
 		}
 	}
 
-	getMachine()->setGoalPosition(&m_goalPosition);
+	callSetGoalPosition(getMachine(), &m_goalPosition);
 	StateReturnType status = STATE_SUCCESS;
 
 	if (m_field68)
@@ -413,7 +422,7 @@ StateReturnType AIFollowPathAsTeamState::update()
 	m_field5B = false;
 
 	Object *owner = getMachineOwner();
-	const Coord3D *ownerPos = &owner->m_position;
+	const Coord3D *ownerPos = &owner->m_cachedPos;
 	Coord3D start;
 	start.x = ownerPos->x;
 	start.y = ownerPos->y;
@@ -491,7 +500,7 @@ StateReturnType AIFollowPathAsTeamState::update()
 				}
 			}
 			Object *goalOwner = getMachineOwner();
-			((BfmeIdlePathfinder *)TheAI->pathfinder())->updateGoal(goalOwner, &m_goalPosition,
+			((Rva003E9720Pathfinder *)TheAI->pathfinder())->rva003E9720(goalOwner, &m_goalPosition,
 				TheTerrainLogic->getLayerForDestination(goalOwner, &m_goalPosition),
 				"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp", 0x20a1);
 		}

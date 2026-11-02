@@ -88948,6 +88948,7 @@ name,address,notes
 ?updateFades@ScriptEngine@@IAEXXZ,0x0000F8DF,BFME ScriptEngine fade update body called via ILT
 ?updateFormationMembers@BfmeAODHordeContainOwner@@QAEXXZ,0x00010D6B,ILT thunk used by AOD formation update
 ?updateGoal@BfmeIdlePathfinder@@QAEXPAVObject@@PBUCoord3D@@HPBDH@Z,0x000294E2,TU-local ABI adapter for the five-argument Pathfinder updateGoal ILT called by retail AIIdleState::doInitIdleState
+?rva003E9720@Rva003E9720Pathfinder@@QAEXPAVObject@@PBVCoord3D@@HPBDH@Z,0x000294E2,abi-view=?d_003e9720@@YAXXZ;address-derived class-keyed Coord3D view of the five-argument Pathfinder updateGoal ILT; called by retail AIFollowPathAsTeamState::update 0x00179B10 at +0x5A9
 ?updateGoal@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@HPBDH@Z,0x003E9720,address-derived five-argument pathfinder refresh used by 0x002BDF10
 ?updateGoal@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@W4PathfindLayerEnum@@PBDH@Z,0x003E9720,BFME five-argument updateGoal called by GiantBirdNormalFlightState::onExit at 0x002BE180; source file and line are encoded in the retail call
 ?updateHiddenStatus@Drawable@@AAEXXZ,0x0004A160,ILT to Drawable hidden status refresh called by setDrawableHidden
