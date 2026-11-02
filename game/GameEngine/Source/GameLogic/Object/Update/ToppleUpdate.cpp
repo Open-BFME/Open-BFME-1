@@ -115,9 +115,6 @@ ToppleUpdate::ToppleUpdate( Thing *thing, const ModuleData* moduleData ) : Updat
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // ??1ToppleUpdate@@MAE@XZ present-unmatched
-ToppleUpdate::~ToppleUpdate( void )
-{
-}
 
 //-------------------------------------------------------------------------------------------------
 Real angleClosestTo(Real a1, Real a2, Real desired)

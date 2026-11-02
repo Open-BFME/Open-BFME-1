@@ -101,9 +101,6 @@ StructureToppleUpdate::StructureToppleUpdate( Thing *thing, const ModuleData* mo
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // ??1StructureToppleUpdate@@MAE@XZ present-unmatched
-StructureToppleUpdate::~StructureToppleUpdate( void )
-{
-}
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/StructureToppleObjectCreationLists.cpp

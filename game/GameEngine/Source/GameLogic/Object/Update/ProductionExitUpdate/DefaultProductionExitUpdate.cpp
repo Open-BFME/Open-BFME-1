@@ -65,9 +65,6 @@ DefaultProductionExitUpdate::DefaultProductionExitUpdate( Thing *thing, const Mo
 
 //-------------------------------------------------------------------------------------------------
 // ??1DefaultProductionExitUpdate@@ present-unmatched
-DefaultProductionExitUpdate::~DefaultProductionExitUpdate()
-{
-}
 
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdateGetExitPosition.cpp
 // The retail exit-position body is emitted by DefaultProductionExitUpdate_getNaturalRallyPoint.cpp.

@@ -205,6 +205,3 @@ Rva0061A5F0::Rva0061A5F0( const AsciiString &name )
 }
 
 // ??1Rva0061A5F0@@QAE@XZ
-Rva0061A5F0::~Rva0061A5F0()
-{
-}

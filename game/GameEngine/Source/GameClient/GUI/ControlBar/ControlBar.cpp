@@ -566,10 +566,6 @@ CommandButton::CommandButton( void )
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // ??1CommandButton@@MAE@XZ present-unmatched
-CommandButton::~CommandButton( void )
-{
-	
-}
 
 //-------------------------------------------------------------------------------------------------
 Bool CommandButton::isValidRelationshipTarget(Relationship r) const

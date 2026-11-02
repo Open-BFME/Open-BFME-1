@@ -75,9 +75,6 @@ W3DSupplyDraw::W3DSupplyDraw( Thing *thing, const ModuleData* moduleData ) : W3D
 
 //-------------------------------------------------------------------------------------------------
 // ??1W3DSupplyDraw@@MAE@XZ present-unmatched
-W3DSupplyDraw::~W3DSupplyDraw()
-{
-}
 
 // W3DSupplyDraw::updateDrawModuleSupplyStatus: retail's body (0x0077DDF0) is
 // W3DSupplyDrawUpdate.cpp; Zero Hour's version is not defined here.

@@ -123,9 +123,6 @@ OCLUpdate::OCLUpdate( Thing *thing, const ModuleData* moduleData ) : UpdateModul
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // ??1OCLUpdate@@MAE@XZ present-unmatched
-OCLUpdate::~OCLUpdate( void )
-{
-}
 
 // Retail OCLUpdate::update (0x00298BB0) is implemented in OCLUpdateUpdate.cpp.
 // Preserve the existing native string equality body at 0x00832760 in this TU.

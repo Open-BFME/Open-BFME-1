@@ -86,9 +86,6 @@ StructureCollapseUpdate::StructureCollapseUpdate( Thing *thing, const ModuleData
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/StructureCollapseUpdateLifecycle.cpp
 // ??1StructureCollapseUpdate@@MAE@XZ present-unmatched
-StructureCollapseUpdate::~StructureCollapseUpdate( void )
-{
-}
 
 //-------------------------------------------------------------------------------------------------
 // ?parseFX@@YAXPAVINI@@PAX1PBX@Z present-unmatched

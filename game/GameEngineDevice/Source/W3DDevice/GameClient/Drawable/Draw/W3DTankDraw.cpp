@@ -235,9 +235,6 @@ W3DTankDrawModuleData::W3DTankDrawModuleData() :
 
 //-------------------------------------------------------------------------------------------------
 // ??1W3DTankDrawModuleData@@ present-unmatched
-W3DTankDrawModuleData::~W3DTankDrawModuleData()
-{
-}
 
 //-------------------------------------------------------------------------------------------------
 // ?buildFieldParse@W3DTankDrawModuleData@@ present-unmatched

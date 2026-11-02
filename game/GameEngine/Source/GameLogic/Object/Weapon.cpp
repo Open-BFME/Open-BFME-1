@@ -1673,9 +1673,6 @@ Weapon::Weapon(const Weapon& that)
 // Retail assignment and BFME reset layout live in WeaponCopyAssignment.cpp.
 
 //-------------------------------------------------------------------------------------------------
-Weapon::~Weapon()
-{
-}
 
 //-------------------------------------------------------------------------------------------------
 // Retail Weapon::computeBonus is defined in Weapon_computeBonus.cpp.
