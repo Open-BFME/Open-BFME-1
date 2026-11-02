@@ -69,6 +69,18 @@ Small structural residue besides the frame (10 instructions): the goalPos initia
 y before storing x in retail, the in-loop goalPos copy is loads-then-stores in retail, and the
 ground lookup's join (`xor eax,eax` + single store) differs.
 
+Exhaustive scope sweep (1400 compiled variants, build/a1_538/combo3.py): clip temp
+{inline helper, block, function}, ground temp {inline, block, shared}, cellCoord {for body,
+before the loop, enclosing block, function}, goal cell index {reuse, block, plain}, goal
+section block {none, inner, outer}, currentPosition {function, block to the loop end},
+startCellNdx declared early/late, info in a nested block or not. Frames seen: 0x80, 0x84,
+0x88, 0x8c, 0x90; never 0x78. All 0x80 variants are the function-scope shared-cell form
+(669 diffs). Bisect: dropping the while loop's closed-list/examine tail moves startCellNdx
+up to retail's -96 and lets all four 8-byte temps overlay, so the examine call's use of
+startCellNdx (by reference) takes part in the ordering. Also inert: info without the ctor
+but with explicit field stores, extra dead reads of the clip temp, info hoisted to function
+scope (changes the code).
+
 Next step: find the source shape that keeps the cell temps block-scoped AND lets the ground
 temp overlay the clip temp (8 B frame), then the copies. Scripts: build/a1_538/combo2.py,
 build/a1_538/slots.sh, build/a1_538/ov/gen.py (not tracked).
