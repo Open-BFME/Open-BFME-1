@@ -1,0 +1,28 @@
+--- a/game/Libraries/Source/WWVegas/WW3D2/Render2DClassAddLine.cpp
++++ b/game/Libraries/Source/WWVegas/WW3D2/Render2DClassAddLine.cpp
+@@ -57,6 +57,7 @@
+ typedef BfmeUInt32 (__cdecl *BfmeColorConverter)(BfmeUInt32 color);
+ 
+ extern const float g_rva01075350;
++extern const float g_rva0107533C;
+ extern float g_bfmeStencilDepthRef;
+ #define g_BfmeRender2DZ g_bfmeStencilDepthRef
+ 
+@@ -114,7 +115,7 @@
+ 
+ 	float oolen = WWMath::Inv_Sqrt(len2);
+ 	oolen *= width;
+-	oolen *= *(const float *)0x0107533c;
++	oolen *= g_rva0107533C;
+ 	corner_offset.X *= oolen;
+ 	corner_offset.Y = (*(volatile float *)&corner_offset.Y) * oolen;
+ 
+@@ -161,7 +162,7 @@
+ 
+ 	float oolen = WWMath::Inv_Sqrt(len2);
+ 	oolen *= width;
+-	oolen *= *(const float *)0x0107533c;
++	oolen *= g_rva0107533C;
+ 	corner_offset.X *= oolen;
+ 	corner_offset.Y = (*(volatile float *)&corner_offset.Y) * oolen;
+ 

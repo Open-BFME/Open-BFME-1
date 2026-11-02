@@ -10,5 +10,6 @@ public:
 
 unsigned int Rva009723C0Proto::rva00972310()
 {
-    return 0x00424f58;
+    // Retail 0x00972350 dispatches this slot and compares its BOX type tag.
+    return ('B' << 16) | ('O' << 8) | 'X';
 }
