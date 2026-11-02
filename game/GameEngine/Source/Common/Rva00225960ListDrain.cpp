@@ -40,9 +40,12 @@ public:
 
 class BfmeA987
 {
-public:
-	void bfmeBase987();
 };
+
+// The call goes through ILT 0x00015E0B (-> 0x002B2070 -> 0x0004049E -> the empty
+// body 0x001EF410); the ledger defines that ILT as ?j_00015e0b@@YAXXZ, so the
+// thiscall names it through a member-pointer view.
+void j_00015e0b();
 
 class Rva00225960Owner
 {
@@ -70,7 +73,9 @@ void Rva00225960Owner::rva00225960()
 {
 	void *owner = m_owner;
 
-	((BfmeA987 *)this)->bfmeBase987();
+	union { void (*raw)(void); void (BfmeA987::*typed)(); } base987;
+	base987.raw = &j_00015e0b;
+	(((BfmeA987 *)this)->*base987.typed)();
 
 	if (!m_activeList.empty()) {
 		throw XferException(5, 0);
