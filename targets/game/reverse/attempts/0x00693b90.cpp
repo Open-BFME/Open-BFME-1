@@ -1,5 +1,5 @@
 // ?rva00693B90@Rva00694710AudioWorker@@QAE?AVRva006910F0Handle@@ABVAsciiString@@H@Z
-// partial score=0.9676 date=2026-11-02
+// partial score=0.9829 date=2026-11-02
 // ?Rva00694230@Gen0002857EOwner@@QAEXPAVGen0002857E@@@Z
 // cl: /O2 /Ob2 /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB /Iinputs/vendor/stlport /Igame/Libraries/Source/WWVegas/WWLib /I.
 // stlport
@@ -400,13 +400,17 @@ Rva006910F0Handle Rva00694710AudioWorker::rva00693B90(const AsciiString &name, i
 	if (m_failed.find(name) != m_failed.end())
 		return Rva006910F0Handle();
 
+	Gen0002857E *file;
 	{
 	BfmeRecordBQ *record = new BfmeRecordBQ((int)this, (const AsciiStringBQ &)name);
-	Gen0002857E *file;
-	Rva006910F0Handle handle(file = (Gen0002857E *)record);
+	file = (Gen0002857E *)record;
+	{
+	Rva006910F0Handle handle(file);
 	m_files[name] = (Gen0002857E *)record;
 	m_lists[level].push_back(file);
 	((Rva006BA130MaxField *)record)->update(level);
 	return handle;
 	}
+	}
 }
+

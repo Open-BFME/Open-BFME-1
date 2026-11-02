@@ -68,3 +68,21 @@ eh_levers/shape_search: 28 trials, no gain.
   the epilogue `pop ebx` after `mov fs:[0],ecx` in retail. Inert: block placement
   of file/record/handle (R/S/T/U), `handle = Handle(...)`, comma expression;
   using `file` for the map store or update() regresses to 0.955/0.988.
+
+## Update (s542, 2026-11-02): 9 diffs, epilogue and iterator/mutex slots exact
+
+- Declaring `Gen0002857E *file;` at function scope (after the m_failed test or
+  anywhere earlier) and moving the handle into a nested block
+  (`{ record = new ...; file = (Gen0002857E *)record; { Handle handle(file);
+  m_files[name] = (Gen0002857E *)record; push_back(file); update(record); return handle; } }`)
+  fixed the mutex/iterator slots and the `pop ebx` placement (17 -> 9 bytes).
+  The new-expression temp now sits in the dead `name` home like retail.
+- Left: one swap, three instructions (+0x186/+0x18F/+0x1A5 and the copy/dtor at
+  +0x1C1/+0x1CD use the same pair): retail puts `file` in the dead `name` home
+  (+0x3C, shared with the new temp) and the handle at +0x10; ours the reverse.
+- Inert (all 9): file at function top / before the mutex / before the failed test,
+  record at function scope, both decls without the outer block, handle(file = ...),
+  `handle = file` copy-init, const-ref-extended handle temp, file assigned inside
+  the handle block. Worse: file declared inside the record block (36), file used for
+  the map store (140) or update (75), file declared after the handle (47/58),
+  `Gen *const &file` (36), handle and push_back built from casts of record (58).
