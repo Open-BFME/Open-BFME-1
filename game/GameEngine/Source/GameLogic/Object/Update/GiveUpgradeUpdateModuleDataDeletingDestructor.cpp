@@ -5,7 +5,7 @@
 // wrapper through ILT 0x00040309.  The real destructor body is separately
 // matched at 0x0025DE90.
 
-class SpecialAbilityUpdateModuleData
+class __declspec(novtable) SpecialAbilityUpdateModuleData
 {
 public:
 	virtual ~SpecialAbilityUpdateModuleData();
@@ -13,10 +13,14 @@ public:
 
 class GiveUpgradeUpdateModuleData : public SpecialAbilityUpdateModuleData
 {
+	friend void forceGiveUpgradeUpdateModuleDataDeletingDestructorCopy(const GiveUpgradeUpdateModuleData &that);
 public:
 	__declspec(noinline) virtual ~GiveUpgradeUpdateModuleData();
 };
 
-GiveUpgradeUpdateModuleData::~GiveUpgradeUpdateModuleData()
+// ~GiveUpgradeUpdateModuleData is matched out of line (GiveUpgradeUpdateModuleDataDestructor.cpp). The implicit copy constructor (no
+// retail twin) emits the vftable and with it ??_G without a second destructor body.
+void forceGiveUpgradeUpdateModuleDataDeletingDestructorCopy(const GiveUpgradeUpdateModuleData &that)
 {
+	GiveUpgradeUpdateModuleData value(that);
 }

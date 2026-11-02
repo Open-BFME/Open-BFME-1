@@ -5,7 +5,7 @@
 // this wrapper through ILT 0x0000FC09.  The empty derived destructor is folded
 // with SpecialPowerModuleData::~SpecialPowerModuleData in the retail image.
 
-class SpecialPowerModuleData
+class __declspec(novtable) SpecialPowerModuleData
 {
 public:
 	virtual ~SpecialPowerModuleData();
@@ -13,10 +13,14 @@ public:
 
 class GrabPassengerSpecialPowerModuleData : public SpecialPowerModuleData
 {
+	friend void forceGrabPassengerSpecialPowerModuleDataDeletingDestructorCopy(const GrabPassengerSpecialPowerModuleData &that);
 public:
 	__declspec(noinline) virtual ~GrabPassengerSpecialPowerModuleData();
 };
 
-GrabPassengerSpecialPowerModuleData::~GrabPassengerSpecialPowerModuleData()
+// ~GrabPassengerSpecialPowerModuleData is matched out of line (SpecialPowerModuleDataDestructorThunk.cpp). The implicit copy constructor (no
+// retail twin) emits the vftable and with it ??_G without a second destructor body.
+void forceGrabPassengerSpecialPowerModuleDataDeletingDestructorCopy(const GrabPassengerSpecialPowerModuleData &that)
 {
+	GrabPassengerSpecialPowerModuleData value(that);
 }

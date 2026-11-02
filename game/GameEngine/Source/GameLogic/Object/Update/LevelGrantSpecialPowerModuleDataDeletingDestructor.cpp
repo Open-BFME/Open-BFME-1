@@ -16,7 +16,7 @@
 
 // Emission surrogate: this 0x260-byte prefix includes the actual 0x254-byte
 // base plus three derived scalar fields. It is not the base class layout.
-class LevelGrantSpecialPowerModuleDataBase
+class __declspec(novtable) LevelGrantSpecialPowerModuleDataBase
 {
 public:
 	virtual ~LevelGrantSpecialPowerModuleDataBase();
@@ -27,6 +27,7 @@ private:
 
 class LevelGrantSpecialPowerModuleData : public LevelGrantSpecialPowerModuleDataBase
 {
+	friend void forceLevelGrantSpecialPowerModuleDataDeletingDestructorCopy(const LevelGrantSpecialPowerModuleData &that);
 public:
 	__declspec(noinline) virtual ~LevelGrantSpecialPowerModuleData();
 
@@ -34,6 +35,9 @@ private:
 	Rva0039D550 m_acceptanceFilter;
 };
 
-LevelGrantSpecialPowerModuleData::~LevelGrantSpecialPowerModuleData()
+// ~LevelGrantSpecialPowerModuleData is matched out of line (LevelGrantSpecialPowerModuleDataConstructor.cpp). The implicit copy constructor (no
+// retail twin) emits the vftable and with it ??_G without a second destructor body.
+void forceLevelGrantSpecialPowerModuleDataDeletingDestructorCopy(const LevelGrantSpecialPowerModuleData &that)
 {
+	LevelGrantSpecialPowerModuleData value(that);
 }

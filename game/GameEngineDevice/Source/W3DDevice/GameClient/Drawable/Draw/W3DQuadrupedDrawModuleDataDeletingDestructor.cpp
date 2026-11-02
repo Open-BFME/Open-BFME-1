@@ -12,7 +12,7 @@ private:
 	unsigned char m_pad[4];
 };
 
-class W3DQuadrupedDrawModuleDataBase
+class __declspec(novtable) W3DQuadrupedDrawModuleDataBase
 {
 public:
 	virtual ~W3DQuadrupedDrawModuleDataBase();
@@ -22,12 +22,16 @@ private:
 
 class W3DQuadrupedDrawModuleData : public W3DQuadrupedDrawModuleDataBase
 {
+	friend void forceW3DQuadrupedDrawModuleDataDeletingDestructorCopy(const W3DQuadrupedDrawModuleData &that);
 public:
 	virtual ~W3DQuadrupedDrawModuleData();
 private:
 	W3DQuadrupedElement m_arr[4];
 };
 
-W3DQuadrupedDrawModuleData::~W3DQuadrupedDrawModuleData()
+// ~W3DQuadrupedDrawModuleData is matched out of line (W3DQuadrupedDrawModuleDataDestructorThunk.cpp). The implicit copy constructor (no
+// retail twin) emits the vftable and with it ??_G without a second destructor body.
+void forceW3DQuadrupedDrawModuleDataDeletingDestructorCopy(const W3DQuadrupedDrawModuleData &that)
 {
+	W3DQuadrupedDrawModuleData value(that);
 }
