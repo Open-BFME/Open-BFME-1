@@ -16,11 +16,11 @@ public:
 // destroys them and restores base vtable 01073744. It does not install the
 // derived vtable on entry. This destructor view preserves that behavior and
 // its base cleanup state when inlined; the base's original name is unknown.
-class BfmeDelayedLuaEventListBase {
+class Inner01073744 {
 public:
-    virtual ~BfmeDelayedLuaEventListBase() {}
+    virtual ~Inner01073744() {}
 };
-class __declspec(novtable) DelayedLuaEventList : public BfmeDelayedLuaEventListBase {
+class __declspec(novtable) DelayedLuaEventList : public Inner01073744 {
 public:
     DelayedLuaEventList();
     __forceinline ~DelayedLuaEventList() {}

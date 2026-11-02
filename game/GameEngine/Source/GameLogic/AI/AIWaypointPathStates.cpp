@@ -75,13 +75,13 @@ public:
 	unsigned char m_data[0x18];
 };
 
-class BfmeDelayedLuaEventListBase
+class Inner01073744
 {
 public:
-	virtual ~BfmeDelayedLuaEventListBase() {}
+	virtual ~Inner01073744() {}
 };
 
-class __declspec(novtable) DelayedLuaEventList : public BfmeDelayedLuaEventListBase
+class __declspec(novtable) DelayedLuaEventList : public Inner01073744
 {
 public:
 	DelayedLuaEventList();

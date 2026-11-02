@@ -20,13 +20,13 @@ public:
 	unsigned int m_count;
 };
 
-class BfmeDelayedLuaEventListBase
+class Inner01073744
 {
 public:
-	virtual ~BfmeDelayedLuaEventListBase(void) {}
+	virtual ~Inner01073744(void) {}
 };
 
-class __declspec(novtable) DelayedLuaEventList : public BfmeDelayedLuaEventListBase
+class __declspec(novtable) DelayedLuaEventList : public Inner01073744
 {
 public:
 	DelayedLuaEventList(void);             // ILT 0x00019CF9
