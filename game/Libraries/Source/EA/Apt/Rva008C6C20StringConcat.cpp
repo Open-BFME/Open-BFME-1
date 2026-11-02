@@ -218,3 +218,92 @@ void Rva008C7C80(Rva008C7C80State *state)
     if (!value->maxRefCountHit())
         value->slot00();
 }
+
+// Retail 0x008C3C00 (510 bytes): the Apt string-pool lookup-or-insert that the
+// action-stream parser 0x008CBDF0 calls. Open BFME 2 59e3f8f8
+// Code/Libraries/Source/EA/Apt/Rva0070DBB0StringPool.cpp (its StringPool
+// GetFromPool) supplies the flow; BFME 1 has no usage counters, inlines the
+// lowercase FNV hash (hashLower 0x0089DC90) and this unit's string create.
+class BfmeStrVKI
+{
+public:
+    void bfmeSetVKI(const char *);
+};
+
+class BfmeThing929G
+{
+public:
+    void bfmeInit929G();
+};
+
+class Rva008C3C00Text
+{
+public:
+    __forceinline Rva008C3C00Text(const char *text) { ((BfmeStrVKI *)this)->bfmeSetVKI(text); }
+    __forceinline ~Rva008C3C00Text()
+    {
+        BfmeStringData3AF0 *old = m_data;
+        if (--old->m_refCount == 0)
+            g_rva01337A30AllocPair->free(old);
+    }
+    BfmeStringData3AF0 *m_data;
+};
+
+extern "C" int __cdecl strcmp(const char *, const char *);
+#pragma intrinsic(strcmp)
+
+static __forceinline unsigned short hashLowerRva008C3C00(const char *text)
+{
+    unsigned int hash = 0x811c9dc5;
+    const char *s = text;
+    for (;;) {
+        int c = *s;
+        if (!c)
+            break;
+        ++s;
+        if (c <= 0x5a && c >= 0x41)
+            c += 0x20;
+        hash = (hash ^ c) * 16777619;
+    }
+    if ((unsigned short)hash == 0)
+        return 0x4567;
+    return (unsigned short)hash;
+}
+
+// Retail 0x01338470/0x01338474 are the recorded string-pool bucket table
+// and bucket count.
+class BfmeNode3AF0;
+extern BfmeNode3AF0 **g_bfmeHashArr3AF0;
+extern int g_bfmeHashCount3AF0;
+#define g_rva008C3C00Buckets ((Rva008C3B60Node **&)g_bfmeHashArr3AF0)
+
+struct Rva008C3C00VNode
+{
+    virtual void addRef();
+};
+
+Rva008C3B60Node *rva008C3C00(const char *text)
+{
+    unsigned short hash = hashLowerRva008C3C00(text);
+    unsigned short bucket = (unsigned short)((int)hash % g_bfmeHashCount3AF0);
+    for (Rva008C3B60Node *node = g_rva008C3C00Buckets[bucket]; node; node = node->m_next)
+    {
+        if (node->m_data->m_unknown06 == hash && strcmp((const char *)(node->m_data + 1), text) == 0)
+        {
+            if ((node->m_flags & 0x3fc0) != 0x3fc0)
+                node->m_flags += 0x40;
+            return node;
+        }
+    }
+    Rva008C3B60Node *node = CreateStringRva008C6C20();
+    {
+        Rva008C3C00Text temp(text);
+        ((Rva8CD130String *)&node->m_data)->assign(*(Rva8CD130String *)&temp);
+    }
+    ((BfmeThing929G *)&node->m_data)->bfmeInit929G();
+    node->m_next = g_rva008C3C00Buckets[bucket];
+    g_rva008C3C00Buckets[bucket] = node;
+    ((Rva008C3C00VNode *)node)->addRef();
+    node->m_flags += 0x40;
+    return node;
+}
