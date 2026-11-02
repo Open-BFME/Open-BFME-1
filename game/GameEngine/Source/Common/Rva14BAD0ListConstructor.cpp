@@ -30,11 +30,18 @@ struct Rva14BAD0List
     Rva14BAD0List *initialize(char *flag, int value);
 };
 
+// initialize is reached through ILT 0x00021C42 (body 0x0014B540, still a gen dump),
+// which the ledger defines as ?j_00021c42@@YAXXZ; the call names it through a
+// member pointer.
+extern void j_00021c42(void);
+
 // ?d_0014bad0@@YAXXZ
 Rva14BAD0List::Rva14BAD0List(int)
 {
     char flag;
-    initialize(&flag, 0);
+    union { void (*raw)(void); Rva14BAD0List *(Rva14BAD0List::*member)(char *, int); } call;
+    call.raw = j_00021c42;
+    (this->*call.member)(&flag, 0);
 
     Rva14BAD0ListNode *sentinel = static_cast<Rva14BAD0ListNode *>(_STL::vectorSmallAllocate(12));
     sentinel->next = sentinel;

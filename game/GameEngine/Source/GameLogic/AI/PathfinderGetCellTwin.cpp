@@ -26,6 +26,10 @@ public:
 	PathfindCell *bfmeGetCellTwin(PathfindLayerEnum layer, const Coord3D *worldPosition);
 };
 
+// The cell lookup is reached through ILT 0x00042249 (body 0x003D4F00), which the
+// ledger defines as ?j_00042249@@YAXXZ; the call names it through a member pointer.
+extern void j_00042249(void);
+
 // ?bfmeGetCellTwin@Pathfinder@@QAEPAVPathfindCell@@W4PathfindLayerEnum@@PBUCoord3D@@@Z
 PathfindCell *Pathfinder::bfmeGetCellTwin(PathfindLayerEnum layer, const Coord3D *worldPosition)
 {
@@ -33,5 +37,7 @@ PathfindCell *Pathfinder::bfmeGetCellTwin(PathfindLayerEnum layer, const Coord3D
 	Bool overflow = worldToCell(worldPosition, &cellIndex);
 	if (overflow)
 		return 0;
-	return bfmeGetCellByIndicesTwin(layer, cellIndex.x, cellIndex.y);
+	union { void (*raw)(void); PathfindCell *(Pathfinder::*member)(PathfindLayerEnum, int, int); } call;
+	call.raw = j_00042249;
+	return (this->*call.member)(layer, cellIndex.x, cellIndex.y);
 }

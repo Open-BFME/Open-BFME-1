@@ -22,6 +22,10 @@ public:
 	BfmeMapGH m_bfmeMapGH;
 };
 
+// The map lookup is reached through ILT 0x00018C5A (body 0x006109B0), which the
+// ledger defines as ?j_00018c5a@@YAXXZ; the call names it through a member pointer.
+extern void j_00018c5a(void);
+
 void *BfmeOwnerGH::bfmeFindGH(void *k)
 {
 	if (k == 0)
@@ -32,7 +36,9 @@ void *BfmeOwnerGH::bfmeFindGH(void *k)
 	{
 		BfmeNodeGH *n;
 
-		m_bfmeMapGH.bfmeLookupGH(&n, &k);
+		union { void (*raw)(void); void (BfmeMapGH::*member)(BfmeNodeGH **, void **); } call;
+		call.raw = j_00018c5a;
+		(m_bfmeMapGH.*call.member)(&n, &k);
 
 		if (n == m_bfmeMapGH.m_bfmeEndGH)
 			return 0;

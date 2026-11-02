@@ -6,14 +6,13 @@
 // (the predicate's false, or apply's result) in EAX.
 
 class SkirmishScreenState;
-// 0x00529BE0's pinned ILT spelling shouldRefresh is contradicted by
-// ilt_oracle; the call goes through the self-addressed caller view of
-// ILT 0x0003029C (a fastcall receiver in ECX, as retail's thiscall site).
-bool __fastcall j_0003029c(SkirmishScreenState *self);
+// The predicate behind ILT 0x0003029C is matched as
+// ?rva00529BE0@SkirmishScreenState@@QAE_NXZ (0x00529BE0).
 class SkirmishScreenState
 {
 public:
-	bool shouldRefresh() { return j_0003029c(this); }
+	bool rva00529BE0();
+	bool shouldRefresh() { return rva00529BE0(); }
 	bool apply( void *info, int flag );
 };
 
@@ -44,7 +43,7 @@ extern SkirmishGameInfo *TheSkirmishGameInfo;
 // ?_bfme_refresh@BfmeAptScreenSkirmish@@QAE_NXZ
 bool BfmeAptScreenSkirmish::_bfme_refresh( void )
 {
-	if( !j_0003029c( &m_state ) )
+	if( !m_state.rva00529BE0() )
 		return false;
 
 	m_animation.reset();
