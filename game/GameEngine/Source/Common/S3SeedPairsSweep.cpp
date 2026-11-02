@@ -113,7 +113,7 @@ class Rva0022C2A0
 public:
     void method(Xfer *xfer);
 };
-extern "C" void __cdecl __identifier("?d_002298b0@@YAXXZ")();
+extern "C" void __cdecl __identifier("?DoXfer@OpenContain@@MAEXAAVXfer@@@Z")();
 extern void j_00011cbb();
 
 class Gen_000EC810
@@ -1033,7 +1033,7 @@ void Gen_0022CD40::bfmeSeed(BfmeSeedTarget *target)
     {
         void (*raw)();
         void (Gen_0022CD40::*member)(BfmeSeedTarget *);
-    } handoff = { __identifier("?d_002298b0@@YAXXZ") };
+    } handoff = { __identifier("?DoXfer@OpenContain@@MAEXAAVXfer@@@Z") };
     (this->*handoff.member)(target);
 	target->bfmeTakeAt78(&m_bfmeItem0);
 	target->bfmeTakeAt74(&m_bfmeItem1);

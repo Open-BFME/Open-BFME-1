@@ -52,7 +52,7 @@ protected:
 class Rva00113E70Target;
 class Rva00113E70Caller { public: void invoke(Rva00113E70Target *target); };
 // Same matched opaque target and one-slot thiscall view as S3SeedPairsSweep.
-extern "C" void __cdecl __identifier("?d_002298b0@@YAXXZ")();
+extern "C" void __cdecl __identifier("?DoXfer@OpenContain@@MAEXAAVXfer@@@Z")();
 
 struct BfmeSeedPair
 {
@@ -568,7 +568,7 @@ void Gen_0022F410::bfmeSeed(BfmeSeedTarget *target)
     {
         void (*raw)();
         void (Gen_0022F410::*member)(BfmeSeedTarget *);
-    } handoff = { __identifier("?d_002298b0@@YAXXZ") };
+    } handoff = { __identifier("?DoXfer@OpenContain@@MAEXAAVXfer@@@Z") };
     (this->*handoff.member)(target);
 
 	if ( !target->bfmeSkip() )
