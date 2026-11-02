@@ -3,13 +3,20 @@
 
 class AptPalantir
 {
+	friend void forceAptPalantirDeletingDestructorCopy(const AptPalantir &that);
 public:
 	virtual ~AptPalantir();
 };
 
-__declspec(noinline) AptPalantir::~AptPalantir() {}
 
 void Force_AptPalantir_Deleting_Destructor(AptPalantir *palantir)
 {
 	delete palantir;
+}
+
+// ~AptPalantir is matched out of line (AptPalantirDestructor.cpp). The implicit copy constructor (no
+// retail twin) emits the vftable and with it ??_G without a second destructor body.
+void forceAptPalantirDeletingDestructorCopy(const AptPalantir &that)
+{
+	AptPalantir value(that);
 }

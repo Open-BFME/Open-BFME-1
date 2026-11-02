@@ -6,15 +6,20 @@
 
 class FontCharsClass
 {
+	friend void forceFontCharsClassDeletingDestructorCopy(const FontCharsClass &that);
 public:
 	virtual ~FontCharsClass();
 };
 
-__declspec(noinline) FontCharsClass::~FontCharsClass()
-{
-}
 
 void Force_FontCharsClass_Deleting_Destructor(FontCharsClass *font)
 {
 	delete font;
+}
+
+// ~FontCharsClass is matched out of line (FontCharsClassDestructorBFME.cpp). The implicit copy constructor (no
+// retail twin) emits the vftable and with it ??_G without a second destructor body.
+void forceFontCharsClassDeletingDestructorCopy(const FontCharsClass &that)
+{
+	FontCharsClass value(that);
 }

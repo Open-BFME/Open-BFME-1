@@ -4,13 +4,20 @@
 
 class ThingFactory
 {
+	friend void forceThingFactoryDeletingDestructorCopy(const ThingFactory &that);
 public:
 	virtual ~ThingFactory();
 };
 
-__declspec(noinline) ThingFactory::~ThingFactory() {}
 
 void Force_ThingFactory_Deleting_Destructor(ThingFactory *p)
 {
 	delete p;
+}
+
+// ~ThingFactory is matched out of line (ThingFactoryDestructorThunk.cpp). The implicit copy constructor (no
+// retail twin) emits the vftable and with it ??_G without a second destructor body.
+void forceThingFactoryDeletingDestructorCopy(const ThingFactory &that)
+{
+	ThingFactory value(that);
 }

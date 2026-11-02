@@ -2,13 +2,13 @@
 
 class AptPlayerStatus
 {
+	friend void forceAptPlayerStatusDeletingDestructorCopy(const AptPlayerStatus &that);
 public:
 	virtual ~AptPlayerStatus();
 	virtual int input(unsigned int message, unsigned int key, unsigned int state);
 	void ReturnToGame(const char *argument);
 };
 
-__declspec(noinline) AptPlayerStatus::~AptPlayerStatus() {}
 
 void Force_AptPlayerStatus_Deleting_Destructor(AptPlayerStatus *status)
 {
@@ -50,4 +50,11 @@ accepted:
 	if (state & KEY_STATE_UP)
 		ReturnToGame(0);
 	return 1;
+}
+
+// ~AptPlayerStatus is matched out of line (AptPlayerStatusDestructor.cpp). The implicit copy constructor (no
+// retail twin) emits the vftable and with it ??_G without a second destructor body.
+void forceAptPlayerStatusDeletingDestructorCopy(const AptPlayerStatus &that)
+{
+	AptPlayerStatus value(that);
 }

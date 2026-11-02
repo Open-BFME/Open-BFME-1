@@ -7,16 +7,21 @@
 
 class Team
 {
+	friend void forceTeamDeletingDestructorCopy(const Team &that);
 protected:
 	__declspec(noinline) virtual ~Team();
 	friend void Force_Team_Deleting_Destructor(Team *value);
 };
 
-Team::~Team()
-{
-}
 
 void Force_Team_Deleting_Destructor(Team *value)
 {
 	delete value;
+}
+
+// ~Team is matched out of line (TeamDestructorThunk.cpp). The implicit copy constructor (no
+// retail twin) emits the vftable and with it ??_G without a second destructor body.
+void forceTeamDeletingDestructorCopy(const Team &that)
+{
+	Team value(that);
 }

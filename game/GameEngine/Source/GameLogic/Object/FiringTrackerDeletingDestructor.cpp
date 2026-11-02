@@ -7,16 +7,21 @@
 
 class FiringTracker
 {
+	friend void forceFiringTrackerDeletingDestructorCopy(const FiringTracker &that);
 protected:
 	__declspec(noinline) virtual ~FiringTracker();
 	friend void Force_FiringTracker_Deleting_Destructor(FiringTracker *value);
 };
 
-FiringTracker::~FiringTracker()
-{
-}
 
 void Force_FiringTracker_Deleting_Destructor(FiringTracker *value)
 {
 	delete value;
+}
+
+// ~FiringTracker is matched out of line (FiringTrackerBFMEDtor.cpp). The implicit copy constructor (no
+// retail twin) emits the vftable and with it ??_G without a second destructor body.
+void forceFiringTrackerDeletingDestructorCopy(const FiringTracker &that)
+{
+	FiringTracker value(that);
 }
