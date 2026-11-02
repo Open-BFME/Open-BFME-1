@@ -303,7 +303,6 @@ dir32,0x0112A590,??_7Rva007EFF30VfptrCtor@@6B@,the name encodes 0x007EFF30 but r
 dir32,0x0112A5F8,??_7Rva007F03B0ReseatTailDtor@@6B@,"retail 0x0112A5F8 is already recorded as ??_7Gen007F1BF0@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x0112AB34,??_7Rva007F1C80ReseatTailDtor@@6B@,"retail 0x0112AB34 is already recorded as ??_7Gen007F2120@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x0112AC70,??_7Rva007F2200ReseatTailDtor@@6B@,"retail 0x0112AC70 is already recorded as ??_7Gen007F2E30@@6B@ (+1 more); reference that name, not a new one"
-dir32,0x0112AF04,??_7Rva007F2E90ReseatTailDtor@@6B@,"retail 0x0112AF04 is already recorded as ??_7Gen007F33E0@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x0112B048,??_7Rva007F3590ReseatTailDtor@@6B@,"retail 0x0112B048 is already recorded as ??_7Gen007F40C0@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x0112B248,??_7Rva007F4120ReseatTailDtor@@6B@,"retail 0x0112B248 is already recorded as ??_7Gen007F47E0@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x0112B3B8,??_7Rva007FA670VtableReseat@@6B@,"retail 0x0112B3B8 is already recorded as ??_7Rva007FA8E0Deleting@@6B@ (+2 more); reference that name, not a new one"

@@ -50,7 +50,24 @@ BFME_VPTR_TAIL_JUMP_DTOR( Rva007E9080ReseatTailDtor, BfmeDirtyBase )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva007F03B0ReseatTailDtor, BfmeDirtyBase )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva007F1C80ReseatTailDtor, BfmeDirtyBase )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva007F2200ReseatTailDtor, BfmeDirtyBase )
-BFME_VPTR_TAIL_JUMP_DTOR( Rva007F2E90ReseatTailDtor, BfmeDirtyBase )
+// 0x0112AF04 is the vftable the dir32 record owns as ??_7Gen007F33E0@@6B@
+// (with ??_7Rva007F2F50CleanupDeleting@@6B@ at the same address); this class's
+// own vftable was the unrecorded name the dir32 gate debt at 0x0112AF04 retires.
+// novtable suppresses it (and its ??_G); the eleven-byte body is the explicit
+// store of the recorded vtable followed by the tail-jump into the base dtor.
+// retired debt: ??_7Rva007F2E90ReseatTailDtor@@6B@ replaced with ??_7Gen007F33E0@@6B@
+extern "C" void *__identifier("??_7Gen007F33E0@@6B@")[];
+
+class __declspec(novtable) Rva007F2E90ReseatTailDtor : public BfmeDirtyBase
+{
+public:
+	virtual ~Rva007F2E90ReseatTailDtor();
+};
+
+Rva007F2E90ReseatTailDtor::~Rva007F2E90ReseatTailDtor()
+{
+	*(volatile void **)this = (void *)__identifier("??_7Gen007F33E0@@6B@");
+}
 BFME_VPTR_TAIL_JUMP_DTOR( Rva007F3590ReseatTailDtor, BfmeDirtyBase )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva007F4120ReseatTailDtor, BfmeDirtyBase )
 BFME_VPTR_TAIL_JUMP_DTOR( Rva007F48A0ReseatTailDtor, Rva00803890Base )
