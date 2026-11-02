@@ -100,12 +100,6 @@ public:
 	int m_value;
 };
 
-class Rva000DF810 { public: unsigned char call(Object *); };
-// ?isLocalAlliedWith@PlayerList@@QAEEPAVObject@@@Z absent-from-retail
-__forceinline unsigned char PlayerList::isLocalAlliedWith(Object *object)
-{
-	return ((Rva000DF810 *)this)->call(object);
-}
 // ?setAptText@WindowManager@@QAEXABVAsciiString@@ABVUnicodeString@@@Z absent-from-retail
 __forceinline void WindowManager::setAptText(const AsciiString &label, const UnicodeString &text)
 {
