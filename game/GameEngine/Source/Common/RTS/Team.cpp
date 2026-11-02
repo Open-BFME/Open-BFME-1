@@ -2863,40 +2863,8 @@ static Bool isInBuildVariations(const ThingTemplate* ttWithVariations, const Thi
 // Body in Team_tryToRecruit.asm (exact 568B retail).
 
 // ------------------------------------------------------------------------
-// ?evacuateTeam@Team@@QAEXXZ present-unmatched
-void Team::evacuateTeam(void)
-{
-	std::list<Object *> objectsToProcess;
-
-	for (DLINK_ITERATOR<Object> iter = iterate_TeamMemberList(); !iter.done(); iter.advance()) {
-		Object *obj = iter.cur();
-		if (!obj || obj->isDestroyed() || obj->isEffectivelyDead()) {
-			continue;
-		}
-
-		ContainModuleInterface *cmi = obj->getContain();
-		UnsignedInt numContained = 0;
-		if (cmi != NULL) {
-			numContained = cmi->getContainCount();
-		}
-		if (numContained > 0) {
-			objectsToProcess.push_back(obj);
-		}
-	}
-
-	// evacuate any containers
-	std::list<Object *>::iterator objIt;
-	for (objIt = objectsToProcess.begin(); objIt != objectsToProcess.end(); ++objIt)
-	{
-		Object *obj = *objIt;
-		ContainModuleInterface *cmi = obj->getContain();
-		if (cmi)
-		{
-			cmi->removeAllContained();
-		}
-	}
-	objectsToProcess.clear();
-}
+// ?evacuateTeam@Team@@QAEXXZ
+// Body in Team_evacuateTeam.cpp (exact 326B retail).
 
 // ------------------------------------------------------------------------
 // ?killTeam@Team@@QAEXXZ present-unmatched
