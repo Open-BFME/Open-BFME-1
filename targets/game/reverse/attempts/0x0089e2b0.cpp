@@ -1,5 +1,5 @@
-// ?d_0089e2b0@@YAXXZ
-// partial score=0.40 date=2026-09-21
+// ?Replace@EAStringC@@QAEHPBD0@Z
+// partial score=0.6461 date=2026-11-02
 // ?Replace@EAStringC@@QAEHPBD0@Z
 // Supersedes an earlier "score=0.78" self-report on this RVA that
 // re-verification with probe.py and shape_search showed was inflated
@@ -92,8 +92,8 @@ int EAStringC::Replace(const char *find, const char *replacement)
 
 	int newLength = m_pData->m_uSize + (replacementLength - findLength) * count;
 	EAStringC result(newLength);
-	char *destination = result.GetInternalBuffer();
-	char *destinationStart = destination;
+	char *destinationStart = result.GetInternalBuffer();
+	char *destination = destinationStart;
 	const char *source = GetInternalBuffer();
 
 	for (int remaining = count; remaining > 0; --remaining)
