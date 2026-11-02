@@ -14,12 +14,14 @@
 // throws. The callee is the per-site copy of the constructor the ledger already
 // pins at the ILT, not the body it names at 0x001B60E0.
 //
-// The row is named for its address rather than the symbol: the mangled name is
-// already claimed at 0x001B6920 by a different 98-byte copy of the same
-// function.
+// The mangled LocomotorStore::newLocomotor name is the matched 98-byte row at
+// 0x001B6920; retail was linked without identical-COMDAT folding, so this
+// different 95-byte body cannot share that identity. Nothing in retail .text
+// calls it or its ILT 0x00018F52, so it keeps an address-derived owner name and
+// no longer emits a second definition of the matched symbol.
 
 class LocomotorTemplate;
-class LocomotorStore;
+class Rva00465AB0LocomotorStore;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Locomotor.h
 class Locomotor
@@ -27,21 +29,22 @@ class Locomotor
 protected:
 	Locomotor(const LocomotorTemplate *tmpl);		// ILT 0x0002EDF7
 
-	friend class LocomotorStore;
+	friend class Rva00465AB0LocomotorStore;
 
 private:
 	char m_bfmeBody[0x2C];
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Locomotor.h
-class LocomotorStore
+// Shape of ZH LocomotorStore::newLocomotor (upstream layout:
+// inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Locomotor.h).
+class Rva00465AB0LocomotorStore
 {
 public:
 	Locomotor *newLocomotor(const LocomotorTemplate *tmpl) const;
 };
 
-// ?newLocomotor@LocomotorStore@@QBEPAVLocomotor@@PBVLocomotorTemplate@@@Z
-Locomotor *LocomotorStore::newLocomotor(const LocomotorTemplate *tmpl) const
+// ?newLocomotor@Rva00465AB0LocomotorStore@@QBEPAVLocomotor@@PBVLocomotorTemplate@@@Z
+Locomotor *Rva00465AB0LocomotorStore::newLocomotor(const LocomotorTemplate *tmpl) const
 {
 	return new Locomotor(tmpl);
 }
