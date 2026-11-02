@@ -1,4 +1,4 @@
-# 0x007F09B0, 0x007F0B60, 0x007F9050, 0x008088E0: address-derived +0x14 setters
+# Seventeen address-derived +0x14 setters (0x00097090 ... 0x008088E0)
 
 Each address holds its own 10-byte body (int3-padded on both sides):
 
@@ -21,3 +21,14 @@ game/GameEngine/Source/Common/UnclaimedOffset14Setters.cpp.
 The names are derived from the address and say only what the bytes do; the
 argument type (int) is a placeholder for an unwitnessed dword. Identity is not
 recovered.
+
+## Thirteen more (same session)
+
+0x00097090 0x001A1A10 0x002B9D20 0x0036ADB0 0x0037D090 0x004E25B0 0x005376C0
+0x006013E0 0x00662780 0x006D4520 0x006DF630 0x00751B40 0x007B7F90 have the same
+ten bytes and were single `?dup_` gen-alias rows. Each is the target of a gen-thunk
+ILT stub (`?j_XXXXXXXX`, noted per body in the source), so it is an external
+function with a real decorated name; ilt_oracle contradicts the address-derived
+`?set@RvaXXXXXXXX@@QAEXH@Z` spelling as it would any placeholder. The real names
+are not recovered; these rows only replace the borrowed-COMDAT placeholders with
+their own C++ bodies.
