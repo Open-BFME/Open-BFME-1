@@ -30,7 +30,7 @@ void __cdecl bfmeGoVHI(BfmeMultiVHI *m)
 }
 
 bool __cdecl _bfme_debugReportingEnabled();
-void __cdecl bfmeRecordVHJ(int n);
+void __cdecl _bfme_debugRecordCallsite(int n);
 
 class BfmeMsgVHJ
 {
@@ -107,7 +107,7 @@ char __stdcall bfmeGoVHK(int a, int b, int c, int d, int e, int f)
 {
 	if (_bfme_debugReportingEnabled())
 	{
-		bfmeRecordVHJ(1);
+		_bfme_debugRecordCallsite(1);
 		g_rva00889690->bfmeOwn60VHJ();
 		g_rva00889690->bfmeOwn6cVHJ(0, 0)->bfmeSlot38VHJ("GlowOutline buffs are no longer supported. They need to be removed from an INI file.")->bfmeSlot4cVHJ(2);
 	}

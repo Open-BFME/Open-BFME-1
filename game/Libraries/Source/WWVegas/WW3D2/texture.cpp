@@ -117,7 +117,7 @@ TextureBaseClass::TextureBaseClass
 }
 
 bool __cdecl _bfme_debugReportingEnabled();
-void __cdecl bfmeRecordVHJ(int n);
+void __cdecl _bfme_debugRecordCallsite(int n);
 
 class BfmeMsgVHJ
 {
@@ -211,7 +211,7 @@ void BfmeThingVHN::bfmeGoVHN(int code)
 		return;
 	if (_bfme_debugReportingEnabled())
 	{
-		bfmeRecordVHJ(1);
+		_bfme_debugRecordCallsite(1);
 		g_rva00889690->bfmeOwn60VHJ();
 		g_rva00889690->bfmeOwn6cVHJ(0, 0)->bfmeSlot38VHJ("Texture '")->bfmeSlot38VHJ(t->m_bfme18)->bfmeSlot38VHJ("' is not a bump map format. Use run/art/textures/_convert_textures.bat to save as a v8u8 dds format to eliminate redundant loads.")->bfmeSlot4cVHJ(2);
 	}
