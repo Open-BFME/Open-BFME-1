@@ -928,3 +928,9 @@ game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide
 game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide.cpp|param|bfmeLength|s,str,claude-opus+gpt-6.1-sol,applied,2026-11-02
 game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide.cpp|param|bfmeStr|s,str,claude-opus+gpt-6.1-sol,applied,2026-11-02
 game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide.cpp|param|bfmeFind|s,str,claude-opus+gpt-6.1-sol,applied,2026-11-02
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeRefCount,m_refCount,claude-opus+gpt-6.1-sol,agreed,2026-11-02
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeNext,m_next,claude-opus+gpt-6.1-sol,agreed,2026-11-02
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeBridges,m_bridgeListHead,claude-opus+gpt-6.1-sol,agreed,2026-11-02
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeRefCount,m_refCount,claude-opus+gpt-6.1-sol,applied,2026-11-02
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeNext,m_next,claude-opus+gpt-6.1-sol,applied,2026-11-02
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeBridges,m_bridgeListHead,claude-opus+gpt-6.1-sol,applied,2026-11-02

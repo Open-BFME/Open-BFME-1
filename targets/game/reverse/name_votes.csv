@@ -5983,3 +5983,7 @@ game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide
 game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide.cpp|param|bfmeConcat|s,f4e8c45694023f2fac62a1df,claude-opus,20261102205813-f7a2be,2026-11-02
 game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide.cpp|param|bfmeConcat#2|s,f6778076e171ef50a93f7c33,claude-opus,20261102205813-f7a2be,2026-11-02
 game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide.cpp|param|bfmeFind|s,14e8a9dfccacb5ac61c4db8f,claude-opus,20261102205813-f7a2be,2026-11-02
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeRefCount,af90f25e8a58c1c6f96e8624,claude-opus,20261102210122-68b92d,2026-11-02
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeNext,870c241631ef8e68e0376400,claude-opus,20261102210122-68b92d,2026-11-02
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeBridges,0a53d9d4b82c2d953cab242e,claude-opus,20261102210122-68b92d,2026-11-02
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|local|Bfme5BridgeList::bfmeAnyBridgeAt|b,cb612bd5bc237d57058cfdf0,claude-opus,20261102210122-68b92d,2026-11-02

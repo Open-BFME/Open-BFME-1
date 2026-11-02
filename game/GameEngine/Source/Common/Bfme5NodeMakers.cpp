@@ -9,7 +9,7 @@ extern void *g_bfme5RefVtable;
 struct Bfme5RefNode
 {
 	void *m_bfmeVptr;
-	int m_bfmeRefCount;
+	int m_refCount;
 	int m_bfmePad;
 };
 
@@ -27,7 +27,7 @@ Bfme5RefHolderA::Bfme5RefHolderA(int unused)
 	Bfme5RefNode *p;
 
 	if (q) {
-		q->m_bfmeRefCount = 0;
+		q->m_refCount = 0;
 		q->m_bfmeVptr = &g_bfme5RefVtable;
 		p = q;
 	} else {
@@ -37,7 +37,7 @@ Bfme5RefHolderA::Bfme5RefHolderA(int unused)
 	m_bfmeNode = p;
 
 	if (p)
-		++p->m_bfmeRefCount;
+		++p->m_refCount;
 }
 
 class Bfme5RefHolderB
@@ -54,7 +54,7 @@ Bfme5RefHolderB::Bfme5RefHolderB(int unused)
 	Bfme5RefNode *p;
 
 	if (q) {
-		q->m_bfmeRefCount = 0;
+		q->m_refCount = 0;
 		q->m_bfmeVptr = &g_bfme5RefVtable;
 		p = q;
 	} else {
@@ -64,7 +64,7 @@ Bfme5RefHolderB::Bfme5RefHolderB(int unused)
 	m_bfmeNode = p;
 
 	if (p)
-		++p->m_bfmeRefCount;
+		++p->m_refCount;
 }
 
 struct Bfme5RbNode
@@ -235,7 +235,7 @@ public:
 	bool isPointOnBridge(const Coord3D *p);
 
 	char m_bfmePad[4];
-	Bridge *m_bfmeNext;
+	Bridge *m_next;
 };
 
 class Bfme5BridgeList
@@ -244,12 +244,12 @@ public:
 	char bfmeAnyBridgeAt(const Coord3D *p);
 
 	char m_bfmePad[0x858];
-	Bridge *m_bfmeBridges;
+	Bridge *m_bridgeListHead;
 };
 
 char Bfme5BridgeList::bfmeAnyBridgeAt(const Coord3D *p)
 {
-	for (Bridge *b = m_bfmeBridges; b != 0; b = b->m_bfmeNext)
+	for (Bridge *b = m_bridgeListHead; b != 0; b = b->m_next)
 		if (b->isPointOnBridge(p))
 			return 1;
 
