@@ -32,30 +32,65 @@ struct Rva0069A6F0Playing
 	float m_effectsScale;
 };
 
+// The playing-handle lookup at retail 0x00699E50, address-named
+// BfmeThingYX::bfmePickYX: a reading chosen by the sort of playing handle.
+// setReverb keeps ECX live across the call, so the body sits in this TU.
+struct BfmeSlotYX
+{
+	int m_bfmeFirst;			// 0x00
+	int m_bfmeSecond;			// 0x04
+	unsigned char m_bfmeBody[0x38];		// 0x08
+};
+
+struct BfmeItemYX
+{
+	unsigned char m_bfmeHead[8];		// 0x0
+	int m_bfmeValue;			// 0x8
+	int m_bfmeKind;				// 0xc
+};
+
+struct BfmeBoxYX
+{
+	BfmeItemYX *m_bfmeItem;			// 0x0
+};
+
+class BfmeThingYX
+{
+public:
+	int bfmePickYX(BfmeBoxYX *box) const;
+
+private:
+	unsigned char m_bfmeHead[0xb44];	// 0x000
+	BfmeSlotYX *m_bfmeTable;		// 0xb44
+};
+
+int BfmeThingYX::bfmePickYX(BfmeBoxYX *box) const
+{
+	BfmeItemYX *item = box->m_bfmeItem;
+
+	switch (item->m_bfmeKind)
+	{
+		case 1:
+			return item->m_bfmeValue;
+
+		case 2:
+			return m_bfmeTable[item->m_bfmeValue].m_bfmeSecond;
+
+		case 4:
+			return 0;
+	}
+
+	return 0;
+}
+
 class Rva0069A6F0Owner
 {
 public:
 	void setReverb(Rva0069A6F0Playing **pp);
-	int getHandle(Rva0069A6F0Playing **pp);
 
 	char m_bytes[0xb44];
 	char *m_samplePool;
 };
-
-// ?getHandle@Rva0069A6F0Owner@@QAEHPAPAURva0069A6F0Playing@@@Z present-unmatched
-int Rva0069A6F0Owner::getHandle(Rva0069A6F0Playing **pp)
-{
-	Rva0069A6F0Playing *p = *pp;
-	switch (p->m_type)
-	{
-	case 1:
-		return p->m_handle;
-	case 2:
-		return *(int *)(m_samplePool + (p->m_handle << 6) + 4);
-	default:
-		return 0;
-	}
-}
 
 void Rva0069A6F0Owner::setReverb(Rva0069A6F0Playing **pp)
 {
@@ -83,7 +118,7 @@ void Rva0069A6F0Owner::setReverb(Rva0069A6F0Playing **pp)
 	case 1:
 	case 2:
 	{
-		int handle = getHandle(pp);
+		int handle = reinterpret_cast<const BfmeThingYX *>(this)->bfmePickYX((BfmeBoxYX *)pp);
 		if (handle)
 		{
 			float level;

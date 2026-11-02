@@ -1,54 +1,10 @@
-// A reading chosen by the sort of thing asked about, a flag taken away with a
+// A flag taken away with a
 // side effect when it is the tenth one, and a search that marks the first cell
 // carrying a given key.
 
-struct BfmeSlotYX
-{
-	int m_bfmeFirst;			// 0x00
-	int m_bfmeSecond;			// 0x04
-	unsigned char m_bfmeBody[0x38];		// 0x08
-};
-
-struct BfmeItemYX
-{
-	unsigned char m_bfmeHead[8];		// 0x0
-	int m_bfmeValue;			// 0x8
-	int m_bfmeKind;				// 0xc
-};
-
-struct BfmeBoxYX
-{
-	BfmeItemYX *m_bfmeItem;			// 0x0
-};
-
-class BfmeThingYX
-{
-public:
-	int bfmePickYX(BfmeBoxYX *box) const;
-
-private:
-	unsigned char m_bfmeHead[0xb44];	// 0x000
-	BfmeSlotYX *m_bfmeTable;		// 0xb44
-};
-
-int BfmeThingYX::bfmePickYX(BfmeBoxYX *box) const
-{
-	BfmeItemYX *item = box->m_bfmeItem;
-
-	switch (item->m_bfmeKind)
-	{
-		case 1:
-			return item->m_bfmeValue;
-
-		case 2:
-			return m_bfmeTable[item->m_bfmeValue].m_bfmeSecond;
-
-		case 4:
-			return 0;
-	}
-
-	return 0;
-}
+// BfmeThingYX::bfmePickYX (retail 0x00699E50) lives in Rva0069A6F0SetReverb.cpp,
+// beside its caller setReverb, which keeps ECX live across the call only when
+// the callee body is visible.
 
 class BfmeJobYY
 {
