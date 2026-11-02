@@ -56,6 +56,11 @@ public:
 	virtual void bfmeRestore() = 0;
 };
 
+class SkirmishScreenState;
+// Self-addressed caller view of ILT 0x0003029C (body 0x00529BE0); the
+// shouldRefresh spelling is contradicted by ilt_oracle.
+bool __fastcall j_0003029c(SkirmishScreenState *self);
+
 class SkirmishScreenStateMember28
 {
 public:
@@ -71,7 +76,7 @@ public:
 	virtual void slot01() = 0;
 	virtual void slot02() = 0;
 
-	bool shouldRefresh();
+	bool shouldRefresh() { return j_0003029c(this); }
 	bool rebuildColorCombo005284F0(int index);
 	void refreshPlayerTypeCombo00527220(int index);
 	void refreshPlayerTeamControl(int index);

@@ -88595,7 +88595,7 @@ name,address,notes
 ?setupShadowBuffers@W3DVolumetricShadowManager@@QAEXXZ,0x0003DF87,render helper ILT
 ?shader@StreakCalls005F43B0@@QAEXVShaderClass@@@Z,0x00918DA0,additive: retail call target of the red row ?draw@LightningDraw005F43B0@@QAEHPAX0PAH@Z
 ?shouldCreate@OCLUpdate@@IAE_NXZ,0x00047AE6,ILT to 0x00298B80; upstream OCLUpdate deadline and under-construction predicate
-?shouldRefresh@SkirmishScreenState@@QAE_NXZ,0x0003029C,SkirmishScreenState refresh predicate ILT used by BfmeAptScreenSkirmish refresh
+?j_0003029c@@YI_NPAVSkirmishScreenState@@@Z,0x0003029C,self-addressed caller view of the ILT to 0x00529BE0 (ecx=SkirmishScreenState); replaces the ilt_oracle-contradicted shouldRefresh pin;model=claude-opus-5-5
 ?shouldSkip@BridgeAreaEffectsFXShim@@QBE_NXZ,0x00011F77,BridgeBehavior doAreaEffects retail call at 0x001F24A4 invokes the BFME FX rate gate
 ?show00592D60@Glo012F4B98Type@@QAEXPAVAsciiString@@P6AX_N@Z@Z,0x00043E4B,Reviewed592D60 first arg string pointer sent as window message40; second stored508 and consumed by589290 as cdecl callback(bool)
 ?showAptScreen@CampaignReviewRegistry@@QAEXABVAsciiString@@VCampaignReviewShowHolder@@@Z,0x000338ED,CampaignReview Continue registration through the APT screen registry

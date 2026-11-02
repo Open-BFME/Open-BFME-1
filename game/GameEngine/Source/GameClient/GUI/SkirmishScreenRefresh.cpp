@@ -5,16 +5,15 @@
 // after its call through ILT 0x00040E7B, and both exits leave the callee's AL
 // (the predicate's false, or apply's result) in EAX.
 
-extern "C" void __cdecl __identifier("?d_00529be0@@YAXXZ")();
+class SkirmishScreenState;
+// 0x00529BE0's pinned ILT spelling shouldRefresh is contradicted by
+// ilt_oracle; the call goes through the self-addressed caller view of
+// ILT 0x0003029C (a fastcall receiver in ECX, as retail's thiscall site).
+bool __fastcall j_0003029c(SkirmishScreenState *self);
 class SkirmishScreenState
 {
 public:
-	bool shouldRefresh() {
-	 // retail body is still the gen-dump row ?d_00529be0@@YAXXZ (no C++ row yet); call it by that defined name
-	 union { void (__cdecl *symbol)(); bool (SkirmishScreenState::*member)(); } c;
-	 c.symbol = &__identifier("?d_00529be0@@YAXXZ");
-	 return (this->*c.member)();
-	}
+	bool shouldRefresh() { return j_0003029c(this); }
 	bool apply( void *info, int flag );
 };
 
@@ -45,7 +44,7 @@ extern SkirmishGameInfo *TheSkirmishGameInfo;
 // ?_bfme_refresh@BfmeAptScreenSkirmish@@QAE_NXZ
 bool BfmeAptScreenSkirmish::_bfme_refresh( void )
 {
-	if( !m_state.shouldRefresh() )
+	if( !j_0003029c( &m_state ) )
 		return false;
 
 	m_animation.reset();
