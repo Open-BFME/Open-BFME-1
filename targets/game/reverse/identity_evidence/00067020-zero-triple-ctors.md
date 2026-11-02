@@ -1,4 +1,4 @@
-# Forty address-derived zero-triple constructors (0x00067020 ... 0x00195790)
+# Sixty address-derived zero-triple constructors (0x00067020 ... 0x00236160)
 
 Each address holds its own 15-byte body (int3-padded on both sides):
 
@@ -66,3 +66,23 @@ parameter is a placeholder for an unread reference. Identity is not recovered.
 | 0x00195710 | 0x0002AECD |
 | 0x00195770 | 0x0003397E |
 | 0x00195790 | 0x00042C76 |
+| 0x001957F0 | 0x00048806 |
+| 0x001B69A0 | 0x0003484C |
+| 0x001B6B70 | 0x000462F9 |
+| 0x001C4AD0 | 0x00027F9D |
+| 0x001D7130 | 0x00023AB5 |
+| 0x001D71B0 | 0x0004356D |
+| 0x001DF8A0 | 0x0002B8E1 |
+| 0x001E5040 | 0x00021210 |
+| 0x001E5060 | 0x000262EC |
+| 0x001E5100 | 0x0002978F |
+| 0x001F9580 | 0x00046790 |
+| 0x001F95A0 | 0x0001A311 |
+| 0x002061D0 | 0x00037A47 |
+| 0x00208540 | 0x0004382E |
+| 0x0020EFE0 | 0x00045188 |
+| 0x00230270 | 0x0002CBE2 |
+| 0x00235EE0 | 0x00043027 |
+| 0x00235F40 | 0x0003378A |
+| 0x00235FA0 | 0x0002A626 |
+| 0x00236160 | 0x00005ABF |

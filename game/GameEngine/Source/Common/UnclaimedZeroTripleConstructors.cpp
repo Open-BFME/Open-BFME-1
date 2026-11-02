@@ -1,6 +1,6 @@
 // cl: /O2 /DNDEBUG /MD /EHsc
 //
-// Forty 15-byte thiscall constructors with identical bytes, each its own
+// Sixty 15-byte thiscall constructors with identical bytes, each its own
 // retail body (retail was linked without identical-COMDAT folding):
 //     mov eax,ecx ; xor ecx,ecx ; mov [eax],ecx ; mov [eax+4],ecx ;
 //     mov [eax+8],ecx ; ret 4
@@ -728,6 +728,366 @@ public:
 };
 
 Rva00195790::Rva00195790( const int & )
+{
+	m_0 = 0;
+	m_4 = 0;
+	m_8 = 0;
+}
+
+// 0x001957F0 (15 bytes): reached through ILT stub 0x00048806
+class Rva001957F0
+{
+public:
+	Rva001957F0( const int &unused );
+
+	void *m_0;
+	void *m_4;
+	void *m_8;
+};
+
+Rva001957F0::Rva001957F0( const int & )
+{
+	m_0 = 0;
+	m_4 = 0;
+	m_8 = 0;
+}
+
+// 0x001B69A0 (15 bytes): reached through ILT stub 0x0003484C
+class Rva001B69A0
+{
+public:
+	Rva001B69A0( const int &unused );
+
+	void *m_0;
+	void *m_4;
+	void *m_8;
+};
+
+Rva001B69A0::Rva001B69A0( const int & )
+{
+	m_0 = 0;
+	m_4 = 0;
+	m_8 = 0;
+}
+
+// 0x001B6B70 (15 bytes): reached through ILT stub 0x000462F9
+class Rva001B6B70
+{
+public:
+	Rva001B6B70( const int &unused );
+
+	void *m_0;
+	void *m_4;
+	void *m_8;
+};
+
+Rva001B6B70::Rva001B6B70( const int & )
+{
+	m_0 = 0;
+	m_4 = 0;
+	m_8 = 0;
+}
+
+// 0x001C4AD0 (15 bytes): reached through ILT stub 0x00027F9D
+class Rva001C4AD0
+{
+public:
+	Rva001C4AD0( const int &unused );
+
+	void *m_0;
+	void *m_4;
+	void *m_8;
+};
+
+Rva001C4AD0::Rva001C4AD0( const int & )
+{
+	m_0 = 0;
+	m_4 = 0;
+	m_8 = 0;
+}
+
+// 0x001D7130 (15 bytes): reached through ILT stub 0x00023AB5
+class Rva001D7130
+{
+public:
+	Rva001D7130( const int &unused );
+
+	void *m_0;
+	void *m_4;
+	void *m_8;
+};
+
+Rva001D7130::Rva001D7130( const int & )
+{
+	m_0 = 0;
+	m_4 = 0;
+	m_8 = 0;
+}
+
+// 0x001D71B0 (15 bytes): reached through ILT stub 0x0004356D
+class Rva001D71B0
+{
+public:
+	Rva001D71B0( const int &unused );
+
+	void *m_0;
+	void *m_4;
+	void *m_8;
+};
+
+Rva001D71B0::Rva001D71B0( const int & )
+{
+	m_0 = 0;
+	m_4 = 0;
+	m_8 = 0;
+}
+
+// 0x001DF8A0 (15 bytes): reached through ILT stub 0x0002B8E1
+class Rva001DF8A0
+{
+public:
+	Rva001DF8A0( const int &unused );
+
+	void *m_0;
+	void *m_4;
+	void *m_8;
+};
+
+Rva001DF8A0::Rva001DF8A0( const int & )
+{
+	m_0 = 0;
+	m_4 = 0;
+	m_8 = 0;
+}
+
+// 0x001E5040 (15 bytes): reached through ILT stub 0x00021210
+class Rva001E5040
+{
+public:
+	Rva001E5040( const int &unused );
+
+	void *m_0;
+	void *m_4;
+	void *m_8;
+};
+
+Rva001E5040::Rva001E5040( const int & )
+{
+	m_0 = 0;
+	m_4 = 0;
+	m_8 = 0;
+}
+
+// 0x001E5060 (15 bytes): reached through ILT stub 0x000262EC
+class Rva001E5060
+{
+public:
+	Rva001E5060( const int &unused );
+
+	void *m_0;
+	void *m_4;
+	void *m_8;
+};
+
+Rva001E5060::Rva001E5060( const int & )
+{
+	m_0 = 0;
+	m_4 = 0;
+	m_8 = 0;
+}
+
+// 0x001E5100 (15 bytes): reached through ILT stub 0x0002978F
+class Rva001E5100
+{
+public:
+	Rva001E5100( const int &unused );
+
+	void *m_0;
+	void *m_4;
+	void *m_8;
+};
+
+Rva001E5100::Rva001E5100( const int & )
+{
+	m_0 = 0;
+	m_4 = 0;
+	m_8 = 0;
+}
+
+// 0x001F9580 (15 bytes): reached through ILT stub 0x00046790
+class Rva001F9580
+{
+public:
+	Rva001F9580( const int &unused );
+
+	void *m_0;
+	void *m_4;
+	void *m_8;
+};
+
+Rva001F9580::Rva001F9580( const int & )
+{
+	m_0 = 0;
+	m_4 = 0;
+	m_8 = 0;
+}
+
+// 0x001F95A0 (15 bytes): reached through ILT stub 0x0001A311
+class Rva001F95A0
+{
+public:
+	Rva001F95A0( const int &unused );
+
+	void *m_0;
+	void *m_4;
+	void *m_8;
+};
+
+Rva001F95A0::Rva001F95A0( const int & )
+{
+	m_0 = 0;
+	m_4 = 0;
+	m_8 = 0;
+}
+
+// 0x002061D0 (15 bytes): reached through ILT stub 0x00037A47
+class Rva002061D0
+{
+public:
+	Rva002061D0( const int &unused );
+
+	void *m_0;
+	void *m_4;
+	void *m_8;
+};
+
+Rva002061D0::Rva002061D0( const int & )
+{
+	m_0 = 0;
+	m_4 = 0;
+	m_8 = 0;
+}
+
+// 0x00208540 (15 bytes): reached through ILT stub 0x0004382E
+class Rva00208540
+{
+public:
+	Rva00208540( const int &unused );
+
+	void *m_0;
+	void *m_4;
+	void *m_8;
+};
+
+Rva00208540::Rva00208540( const int & )
+{
+	m_0 = 0;
+	m_4 = 0;
+	m_8 = 0;
+}
+
+// 0x0020EFE0 (15 bytes): reached through ILT stub 0x00045188
+class Rva0020EFE0
+{
+public:
+	Rva0020EFE0( const int &unused );
+
+	void *m_0;
+	void *m_4;
+	void *m_8;
+};
+
+Rva0020EFE0::Rva0020EFE0( const int & )
+{
+	m_0 = 0;
+	m_4 = 0;
+	m_8 = 0;
+}
+
+// 0x00230270 (15 bytes): reached through ILT stub 0x0002CBE2
+class Rva00230270
+{
+public:
+	Rva00230270( const int &unused );
+
+	void *m_0;
+	void *m_4;
+	void *m_8;
+};
+
+Rva00230270::Rva00230270( const int & )
+{
+	m_0 = 0;
+	m_4 = 0;
+	m_8 = 0;
+}
+
+// 0x00235EE0 (15 bytes): reached through ILT stub 0x00043027
+class Rva00235EE0
+{
+public:
+	Rva00235EE0( const int &unused );
+
+	void *m_0;
+	void *m_4;
+	void *m_8;
+};
+
+Rva00235EE0::Rva00235EE0( const int & )
+{
+	m_0 = 0;
+	m_4 = 0;
+	m_8 = 0;
+}
+
+// 0x00235F40 (15 bytes): reached through ILT stub 0x0003378A
+class Rva00235F40
+{
+public:
+	Rva00235F40( const int &unused );
+
+	void *m_0;
+	void *m_4;
+	void *m_8;
+};
+
+Rva00235F40::Rva00235F40( const int & )
+{
+	m_0 = 0;
+	m_4 = 0;
+	m_8 = 0;
+}
+
+// 0x00235FA0 (15 bytes): reached through ILT stub 0x0002A626
+class Rva00235FA0
+{
+public:
+	Rva00235FA0( const int &unused );
+
+	void *m_0;
+	void *m_4;
+	void *m_8;
+};
+
+Rva00235FA0::Rva00235FA0( const int & )
+{
+	m_0 = 0;
+	m_4 = 0;
+	m_8 = 0;
+}
+
+// 0x00236160 (15 bytes): reached through ILT stub 0x00005ABF
+class Rva00236160
+{
+public:
+	Rva00236160( const int &unused );
+
+	void *m_0;
+	void *m_4;
+	void *m_8;
+};
+
+Rva00236160::Rva00236160( const int & )
 {
 	m_0 = 0;
 	m_4 = 0;
