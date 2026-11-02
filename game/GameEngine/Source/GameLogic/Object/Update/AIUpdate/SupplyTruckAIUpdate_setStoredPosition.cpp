@@ -3,12 +3,8 @@
 // Coord3D at +0x34c and a validity byte at +0x358 when the second argument is 0.
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
+
 
 class BfmeThingCTA
 {

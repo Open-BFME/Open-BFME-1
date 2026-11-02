@@ -6,10 +6,8 @@
 
 typedef float Real;
 
-struct Coord3D
-{
-	Real x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
+
 
 class GeometryInfo
 {

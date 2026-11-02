@@ -9,12 +9,8 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Include/Lib/Coord3D.h"
+
 
 template <>
 void _STL::vector<Coord3D, _STL::allocator<Coord3D> >::_M_fill_insert(

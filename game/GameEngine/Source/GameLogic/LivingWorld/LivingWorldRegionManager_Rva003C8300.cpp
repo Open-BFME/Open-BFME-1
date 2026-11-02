@@ -3,7 +3,8 @@
 // manager and returns a LivingWorldRegion pointer. Retail forwards that EAX
 // unchanged; 0x003C83E0 consumes it as the next update's item argument.
 
-struct Coord3D { float x, y, z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
+
 struct Rva003C8300Pair { int first, second; };
 class LivingWorldRegion;
 

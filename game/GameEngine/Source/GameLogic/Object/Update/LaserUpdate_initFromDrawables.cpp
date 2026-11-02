@@ -6,10 +6,8 @@
 // the 776-byte body at 0x00603FE0 (ILT 0x00024FC3).
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
+
 
 enum DrawableID
 {
