@@ -34,3 +34,15 @@ int helpers (if/return, switch, local flag), __forceinline helper taking the
 version, GameLogic inline member, function-scope state shared with the load
 branch (frame changes, 456 diffs). The join wants a byte value whose true arm
 is materialised as 32-bit constants; not found yet.
+
+## Update (same session): 16 diffs
+`unsigned char active; if (ver >= 2) active = intHelper(mode); else active =
+mode != 8; int state = active;` (intHelper: `if (mode == 8 || mode == 4) return 0;
+return 1;`) reproduces retail's instruction shape exactly: 32-bit constants in
+the true arm, setne al in the else arm, movzx at the join. Only the register
+tie remains: retail loads TheGameLogic into EDX in the else arm and zero-extends
+into ECX after loading the Xfer vtable into EDX; ours uses ECX / EDX / EAX.
+Inert there: separate `int state; state = active;`, xferInt(&state),
+operator== call spelling, Xfer* local, swapped if/else polarity (48 diffs),
+initialise-then-override (532 B), GameLogic pointer local, (unsigned) cast;
+bool/char join types and a function-scope shared state are worse.

@@ -1,5 +1,5 @@
 // ?DoXfer@LivingWorldLogic@@UAEXAAVXfer@@@Z
-// partial score=0.9631 date=2026-11-02
+// partial score=0.9705 date=2026-11-02
 // cl: /DNDEBUG /MD /EHsc /Igame
 // LivingWorldLogic::DoXfer, retail 0x003C4490 (542 bytes, ret 4 at +0x21B).
 //
@@ -194,11 +194,17 @@ void LivingWorldLogic::DoXfer(Xfer &xfer)
 	}
 	else
 	{
-		int state = (version.data[1] >= 2) ? Rva003C4490Active(((Rva003C4490GameLogicView *)TheGameLogic)->m_mode) : (int)(bool)(((Rva003C4490GameLogicView *)TheGameLogic)->m_mode != 8);
+		unsigned char active;
+		if (version.data[1] >= 2)
+			active = Rva003C4490Active(((Rva003C4490GameLogicView *)TheGameLogic)->m_mode);
+		else
+			active = ((Rva003C4490GameLogicView *)TheGameLogic)->m_mode != 8;
+		int state = active;
 		xfer == state;
 	}
 }
 
 
 
-// bank s532: 542/542 B, 20 non-reloc diffs, all in the save-tail state bool (+0x1EE..+0x214)
+
+// bank s532: 542/542 B, 16 non-reloc diffs: register tie at the save-tail join (+0x1F4..+0x214)
