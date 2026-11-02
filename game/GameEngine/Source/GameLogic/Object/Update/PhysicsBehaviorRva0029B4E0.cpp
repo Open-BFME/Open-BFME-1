@@ -10,7 +10,8 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 #include <vector>
-struct Coord3D { float x,y,z; };
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
+
 #define BFME_HAVE_COORD3D
 class ModelConditionFlags { public: bool test(int n) const { return bits.test(n); } void reset(int n) { bits.reset(n); } void set(int n) { bits.set(n); } _STL::bitset<320> bits; };
 #define BFME_HAVE_MODELCONDITIONFLAGS
