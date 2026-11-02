@@ -68,7 +68,22 @@ class Gen_003CFC90
 {
 };
 
-class LargeGroupAudio : public SubsystemInterface,
+// The first base is spelled Rva004948B0Base: retail's own vftable mangling
+// at 0x010EE13C is ??_7LargeGroupAudio@@6BRva004948B0Base@@@ (the dir32 record
+// owns it), so that base spelling is what the emitted primary vftable must
+// carry; it retires the ??_7LargeGroupAudio@@6BSubsystemInterface@@@ gate debt.
+// Same layout as SubsystemInterface (vptr + m_name, 8 bytes); its destructor
+// resolves to the same matched 14-byte body at 0x009A1A40 via the existing
+// ??1Rva004948B0Base@@UAE@XZ pin.
+class Rva004948B0Base
+{
+public:
+	virtual ~Rva004948B0Base();
+
+	char m_name[4];
+};
+
+class LargeGroupAudio : public Rva004948B0Base,
 	public HordeContainModuleDataBase
 {
 public:

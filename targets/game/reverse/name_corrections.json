@@ -21832,4 +21832,15 @@
   "evidence": "targets/game/reverse/attempt_support/0x00693b90-cache-lookup.md",
   "reason": "the bank now spells the pinned caller-linked name ?rva00693B90@Rva00694710AudioWorker (pin at 0x00693B90, called by matched 0x00694130); method was an attempt-local placeholder"
  }
+ ,
+ {
+  "old_path": "game/GameEngine/Source/Common/INI/LargeGroupAudioDestructor.cpp",
+  "new_path": "game/GameEngine/Source/Common/INI/LargeGroupAudioDestructor.cpp",
+  "old_name": "SubsystemInterface",
+  "new_name": "Rva004948B0Base",
+  "before_sha256": "8e1db06f775300c6b86378838ae59739284231b306d8c44b92df8e8db379479f",
+  "after_sha256": "ef9b00bc6e5de0489fd813474a5492ec2657ce6ac0d8b26941d1363bc22d4e73",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "Retail vftable mangling at 0x010EE13C is ??_7LargeGroupAudio@@6BRva004948B0Base@@@ (dir32_addresses.csv owns that name there), so retail spells the first base Rva004948B0Base; the rename makes the emitted primary vftable the recorded name and retires the ??_7LargeGroupAudio@@6BSubsystemInterface@@@ dir32 gate debt. Layout unchanged (vptr+m_name, 8B); base dtor still resolves to matched 0x009A1A40 via the ??1Rva004948B0Base@@UAE@XZ pin."
+ }
 ]
