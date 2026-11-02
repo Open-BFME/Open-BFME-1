@@ -3248,3 +3248,22 @@ passed; the provider's context emits the exact 194-byte copy including
 relocations. Declaration-only explicit _M_find specializations hit C1001 in
 this context. Measured only on these getters; evidence and controls:
 `targets/game/reverse/attempt_support/20261101-options-tree-lookup.md`.
+
+## Byte compare of a held flag word; label the shared `return 0` (2026-11-02)
+
+0x0089C290 (Apt findChild, `game/GameEngine/Source/Common/BfmeSlotTaggedReplace.cpp`,
+MSVC 7.1 /O2 /MD). Two residues after a donor-shaped rewrite:
+
+- Retail `mov edi,[edi+4]; mov ecx,edi; and ecx,0x3f; cmp cl,0x1c; ...;
+  mov edx,edi; shr edx,0xf` (flag word kept whole, 32-bit `and`, byte
+  compare). `(unsigned char)(f & 0x3f) == 0x1c` narrowed to `mov cl,al; and
+  cl,0x3f` or a byte load; `((f & 0x3f) & 0xff) == 0x1c` with
+  `f = *(volatile unsigned int *)&m_flags04` reproduced retail exactly.
+- Retail lays the switch's `return 0` block before the last case group, and the
+  later not-found `if (undefined) return 0` jumps back to it. Every case order
+  (24 permutations) and `break`/after-switch spelling kept the copy at the
+  not-found site. `default: undefined: return 0;` placed right after the
+  preceding case, with `goto undefined;` at the not-found test, was exact;
+  the label on `case 16`'s own `return 0` or on `case 1` was not.
+
+Measured on this body only.
