@@ -1,4 +1,4 @@
-# Eighty-six address-derived zero-triple constructors (0x00067020 ... 0x002E5690)
+# Eighty-seven address-derived zero-triple constructors (0x00067020 ... 0x002E56B0)
 
 Each address holds its own 15-byte body (int3-padded on both sides):
 
@@ -112,3 +112,4 @@ parameter is a placeholder for an unread reference. Identity is not recovered.
 | 0x002DB590 | 0x0000C1E4 |
 | 0x002E0510 | 0x0000940D |
 | 0x002E5690 | 0x0002DA06 |
+| 0x002E56B0 | 0x00041E89 |
