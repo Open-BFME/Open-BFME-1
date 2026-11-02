@@ -46,3 +46,4 @@ Inert there: separate `int state; state = active;`, xferInt(&state),
 operator== call spelling, Xfer* local, swapped if/else polarity (48 diffs),
 initialise-then-override (532 B), GameLogic pointer local, (unsigned) cast;
 bool/char join types and a function-scope shared state are worse.
+Also inert at 16 (same session): pointer-taking inline helpers for either arm (logic->m_mode), else-arm helper returning bool, 8 != mode / !(mode == 8) spellings, shape_family_levers register/bool/... choices (8 trials). A shared GameLogic pointer local across both arms is worse (536 B, 44 diffs).
