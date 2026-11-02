@@ -3329,3 +3329,25 @@ confirmed. The same two-level inline wrapper also fixed the loop latch
 tail-duplicated). Lesson: when retail inlines a helper at some sites and calls
 it at others, write the inline helper at every site before trying call-shape
 tricks, and probe the helper's emitted copy against the called body.
+
+## Visible STL callee chain keeps a temporary's key in a register (2026-11-02)
+
+Retail 0x0094D250 (`Rva0094D1E0List::rva0094D250`, 253 B) inserts
+`make_pair(handle, Value())` into a texture-keyed tree, then destroys the
+converted `pair<const Key,V>` temporary. Retail tests the key it copied in ESI
+after `insert_unique` returns; our build reloaded it from the temporary
+(`mov ecx,[esp+N]`) whenever any of `insert_unique`, `_M_insert` or `_Construct`
+was only declared (bisected on a real-STLport diagnostic: an opaque
+`_M_insert` specialization alone brings the reload back). With the whole
+chain defined in the TU (still out of line) the key stays in a register. A
+second, independent effect: retail's 16-byte zeroed `Value()` shares its
+slot with the 8-byte `pair<iterator,bool>` result (frame 0x38); ours kept
+both (0x40) until the out-of-line maker (`rva0094C5A0MakePair`, 0x0094C5A0)
+had a visible `inline __declspec(noinline)` body. Retail STLport config
+(`_STLP_NO_EXCEPTIONS`, `__PLACEMENT_VEC_NEW_INLINE`, as in
+`Rva0094D370TextureMap.cpp`) was needed for `_M_insert` to inline its node
+allocation and match its own row. Each emitted ledger-named COMDAT was
+compared with retail before landing; the maker row moved into the TU and the
+`_Construct` specialization elsewhere became `inline` (select-any). VC7.1
+`/O2 /EHsc`. Same family as the visible-callee escape lever; measured on one
+body.
