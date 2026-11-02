@@ -3404,3 +3404,23 @@ m_window3BC; ...`) made it exact. Byte/bool parameter types, volatile reads,
 nested ifs, rotation_sweep and flag sweeps were inert. Measured on this body
 only; the same define was inert on four banks whose containers are
 hand-written views.
+
+## Copy the start point before an in-place sum; volatile reads order the fadd operands (2026-11-02)
+
+0x00618C90 (`Rva00615D50Object::rva0004a444`,
+`game/GameEngine/Source/GameLogic/LivingWorld/Rva00618A90Update.cpp`, MSVC 7.1
+/O2 /EHsc, ZH `WWMath/vector3.h`, `aabox.h`, `lineseg.h`, `colmath.h`). Retail
+builds `LineSegClass(start, start + dir * 3000)` but its frame shows a fourth
+Vector3 whose X/Y stay on the x87 stack and whose Z alone is stored, and the
+sum is written back into `start`'s own slot. `LineSegClass ray(start, start +
+dir)` (bank 0.35, then 255 B on the real headers) cannot produce either; the
+measured shape is `Vector3 origin = start; start += dir; LineSegClass
+ray(origin, start);` (276/276, 9 diffs). The residue was retail loading each
+`dir` component before the `start` component it adds (`fld dir.X; fadd
+start.X`); `+=`, `start = dir + start`, `Vector3::Add(dir, start, &start)`
+and scale/copy reorderings were inert or worse, while `start.X = *(volatile
+float *)&dir.X + start.X` per component made it exact. On the same body
+`if (Overlap_Test(...) == OUTSIDE) return false; return true;` replaced the
+`!= OUTSIDE` return: it gave retail's `cmp eax,1; setne al` tail and also
+moved the early `return false` block to retail's place right after the first
+test. Measured on this body only.
